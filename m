@@ -1,80 +1,110 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962422D8796
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 19:31:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757532681; cv=pass; b=fhrCTDVIDunJ6ihtxDTgsXHDIZWAhmhotcTaqwEN93PidUcLG1j8aN92nM0J9fXQAm+NsWB71UxSVSNRhVKPiSw1X6rmWTyS1r/OPDTQBoabuVqjnT7GoHpr7wEd4fLAXxCZq0hutb1TUvy8hAAloktF1/5B0HJBwtqfxqM0EkI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757532681; c=relaxed/simple;
-	bh=TepjwicdtR2Onzp2KAFqnf6kN1z8LXptpbxH8c4RCTk=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33EE2BB1D
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 20:05:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757534762; cv=none; b=gfMLkjRH2bYPA8HcKN739UUnH9H/9k5hn6R/RL5KYYP3iH6+daWwcC0CRGOjVqfJ4UxFP64VTEqHcPRwvb6vcssuEwDz4O9aHdh5p1z/1eR01DgCDUqDgIp8IQnq6nsOkmxS+DUSRnyvitBRgt3+VfsYyxHCY04M4XpHYyq1rg0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757534762; c=relaxed/simple;
+	bh=LxW/PiZILtdVhxOfG7tKpzzUAcmjElF5bjYg/NFhQZk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BwEGmZvtr2NYPEHlkdxrAr72P0XG7bPXlrbisGIuoHoxxrWRifqZrS7rzHR5vPspl6aa8HEjdwbakZQkD6Qkb5Aa0lnKry3+oQqqt//xBluEt3pf6UT5TP48iRVylpm/HQ+3WE9CJUYs1QUMMF8br9f7t5ppnwiLTHj9zNfxuRo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=GmJ6BDUB; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	 MIME-Version:Content-Type; b=gRSfWZX70p/2MX4LFukRZ5jRNK6VDDuclopfj/j81ojYQdYA3ALD5iS7Ts7vztK7ScqQCwr5j5oToKMdlCaLZea/kmbQOE9/WXMa6jlcqEF130KX5XwfBfS6INy7CRVNOERLj3NOegNyp0mgf/joYw2VmrRFxBm8RHTOJfR2jh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cWubggq4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cFP6HJdq; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="GmJ6BDUB"
-ARC-Seal: i=1; a=rsa-sha256; t=1757532654; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=hoUBh7qlKRYmAoMoxUxKGmYd/PTxcmw9hJctdZHEymVxz0lVG82dOkwzCVer4WQ3zla0EsGoMgMQ/E21GIzL2i6jTcetjaLC5ETPo25cim6O6lgoQcv4qocB/4MiW2j8J2PsHLcElpg/toT8Ql6HfeCtUPvu+tBOQ7Q70C8m+zs=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1757532654; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=zCbVP7Ejq7Ugxrqaz2Lf/gGr8KhVmiEaRIp0e9An1pU=; 
-	b=WgQzNitA0JGaFclucjjLpOGDnHvFn+mgDV8hs4qDuhQ/23gmzq2e5mYnOHbbQkUynpy8aPyRh3fDUFqxtDYa4UoStb4C5a6ronybDtGrV9dDG9+sBYZ6xxVoIxjKUW04Xeh2nL5W5aJAMKSNXPF3n4QL+gglAGp/xDaA2PM0Gd0=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1757532654;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=zCbVP7Ejq7Ugxrqaz2Lf/gGr8KhVmiEaRIp0e9An1pU=;
-	b=GmJ6BDUBtF2GVfkxI3Uh5WK6Z22ubPIvDxjM8ErfRNui+/HWcSEIeNIHEfP0OEFq
-	UGQaK7FtYQ6uC7hQZbZkLGm+QqgGOX9qKjEQaQOUVqchJx4Ta0X1IWh9M0POjpQSL2U
-	tjv2ok+Ohq7viTrCKPOAe+q99h/B9hZofyrk+7eY=
-Received: by mx.zohomail.com with SMTPS id 1757532651174662.1290929415784;
-	Wed, 10 Sep 2025 12:30:51 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
- Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio
- C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>, Jonathan
- Nieder <jrnieder@gmail.com>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon
- <steadmon@google.com>, Ben Knoble <ben.knoble@gmail.com>, Brandon Williams
- <bmwill@google.com>
-Subject: Re: [PATCH v2 06/10] submodule: encode gitdir paths to avoid conflicts
-In-Reply-To: <aMHATMvn4Sdcz7mJ@szeder.dev>
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
- <20250908140117.262205-1-adrian.ratiu@collabora.com>
- <20250908140117.262205-7-adrian.ratiu@collabora.com>
- <aMHATMvn4Sdcz7mJ@szeder.dev>
-Date: Wed, 10 Sep 2025 22:30:46 +0300
-Message-ID: <878qim6r6h.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cWubggq4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cFP6HJdq"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 06C121400365;
+	Wed, 10 Sep 2025 16:05:59 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 10 Sep 2025 16:05:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757534759; x=1757621159; bh=LxW/PiZILt
+	dVhxOfG7tKpzzUAcmjElF5bjYg/NFhQZk=; b=cWubggq4JzrDySId/ZzRiToQd+
+	IS+nHgWBPIPwWJL8eOj8xaaZn8u+0/PbDzOQKWKbZEQk2OHZLzZeiIbVAb0OU/t4
+	4Xab+X+DBADk0++hum1OtHR6qc56Zh3W/xLi6lUtdGvLEEF9nkY7ZTAqXZs+It3Z
+	/8jXKdQ2j1TjgZr4tpvPMjZxg3laWowI73PDlBq3snHpry7h07rOOarsT0tppNHX
+	yl+PoJfnqDeDUyyaVAYSHKVFD82Q/S53ILg2JhUS1AAibx8Uulehn2EwIt/F+IuE
+	SscRj61w1dpuwi/bgDXvluDaS/7gsQeGEz2rZrxfQu0QAm5B+pSyr0mSM/kw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757534759; x=1757621159; bh=LxW/PiZILtdVhxOfG7tKpzzUAcmjElF5bjY
+	g/NFhQZk=; b=cFP6HJdq5OFtiZSG5mAgzhENSGchfaLutnhmvdlMn7ihb/mNIr0
+	SuMF1oaOCJ+x4LFEmUib2OBVevdlhPidfu5RRkkNDt7seXIFtZ8PbXGQ98Dc8Qx4
+	/aczTvHUAjTOKf7oSqfhD2mrjx5YK9Rzs7slh2Oac+8CtJxRHKqA+/T4odnBJTuO
+	58xaH5uzLtJqgw22U3qBfbO2GKx1CcYB4yF0JqrAb5oAN0Rx6j/7bvfuzhdpcOwY
+	WjTBQwz4SpsVGx08dppOhDMicYt7MtokJZyqO/LM0ZHI2ZxRLJOgDKAXNw31uFD/
+	6HORTkuB2nF3cg5F5NGElzspzfxToFNS/iw==
+X-ME-Sender: <xms:JtrBaFrbzlJdTstym8adL0jyTcr2FPkyaFajUmtUSqvIBI7Jw5q35g>
+    <xme:JtrBaEn_qvHVy52QiJzw1gssfuH3Oe1CRyVlt5xY1AIwmYjoHZfFxgLdZ9AtHmevV
+    VS4w7v24C7M0U0Kvw>
+X-ME-Received: <xmr:JtrBaN1lX6HKnCVqi1LEhvL5TcF0Efjd0FdD3ZFqjJa84pznd5IC6YvdzOfb_ChIKaWto-e9W7ku0BhW2HQeOlwNiSr9N0mJ5gdA-IE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgedvtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhm
+    rghilhdrtghomhdprhgtphhtthhopehsohhrghgrnhhovhesghhmrghilhdrtghomhdprh
+    gtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehmrghrthhi
+    nhhvohhniiesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrg
+    hughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:JtrBaJR7HSEkLDH1XlZQeosiPiHmkPec814v13WncMt7lEAjwc2dYQ>
+    <xmx:JtrBaOyTvLue-4QFFFi6IvzKj5d2vH0ITaQTbU6JVBpQQFsvEpAVvQ>
+    <xmx:JtrBaBBUhOQZAUOChNiTnUvDiXFijnXt8EtSsG0yY5n_4nYzI5K9uw>
+    <xmx:JtrBaCELUsH0FI-e0mUzs0GXc7VIl0r9lbuPG3n-LtSBwYH8B591lw>
+    <xmx:JtrBaLaEtk6DprD0IoIbtMqMrMh8mxRkcyTZg89L3mnoJV9zMY0XijX6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 10 Sep 2025 16:05:58 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Sergey
+ Organov <sorganov@gmail.com>,  =?utf-8?Q?Jean-No=C3=ABl?= AVILA
+ <jn.avila@free.fr>,  Martin
+ von Zweigbergk <martinvonz@gmail.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH RFC v3 00/18] Introduce git-history(1) command for easy
+ history editing
+In-Reply-To: <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
+	(Patrick Steinhardt's message of "Thu, 04 Sep 2025 16:27:30 +0200")
+References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
+	<20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
+Date: Wed, 10 Sep 2025 13:05:57 -0700
+Message-ID: <xmqqcy7yrs2i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-ZohoMailClient: External
+Content-Type: text/plain
 
-On Wed, 10 Sep 2025, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrote:
-> On Mon, Sep 08, 2025 at 05:01:13PM +0300, Adrian Ratiu wrote:=20
->> +	struct strbuf encoded_sub_name =3D STRBUF_INIT, tmp =3D=20
->> STRBUF_INIT; +	size_t base_len, encoded_len;=20
->>  	char *gitdir_path, *key;=20
->> +	long name_max;=20
->=20
-> Some of these new variables are not used or are only written:=20
-=20
-I moved the logic to a new commit but forgot to also move the=20
-variable definitions to the new commit. :)
+Patrick Steinhardt <ps@pks.im> writes:
 
-Will fix this in v3, alongside running more tests & diagnostics on=20
-each commit to ensure they are also bisectable and so on.
+> Note: this patch series is growing quite large overall. I'll send one
+> last version of the complete series with the RFC tag, but after that
+> I'll probably split the series into two and stop after introducing the
+> "reorder" command.
 
-Thanks for spotting this!
+I haven't merged this to 'seen', not because I do not like what it
+does, but simply because I do not have enough concentration to deal
+with conflicts with some in-flight topics (IIRC it textually overlapped
+with Peff's add-i color topic).
+
+Thanks.
