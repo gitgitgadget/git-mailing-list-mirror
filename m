@@ -1,191 +1,114 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25E030FC03
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 21:42:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B671311C3A
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 21:42:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757540549; cv=none; b=CDXIVLm2kcy/GRQnrWjp8Y+/iuPWyqRbchuEUDOJ8FRHleUe2Z0k87sr27DDwbc5vI3/4muHbIZRTbVArm88d84WLXLP0M3I4EgTDoqOos1aDWl6gw6K+lL95y3WMvx7tCVhr9OAFuJtN28J5oREb1GqtAkL7oSwInPWBM3fuQg=
+	t=1757540550; cv=none; b=EEUPnAZT6oLO07jnYCyof0PxtaxN5TM4cgrpdWagdMSg65u8B+ZlsjYPnQJHUdKjVOA+D+XAcR8FJEUvPmexWs2XcWatbZXGn73ktUnIzJUQi82gxVWYL6NgzqqnGIiXnEDzAYgOLuwPHaws+EKiDS9C/06bnsD0cxiAUG4Sx+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757540549; c=relaxed/simple;
-	bh=8WNEujM+RBPIO4wujmh52M1HVQ5eBqZFHQA0r0MOY/4=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=fTgzm6wC8kNPUUgUraIX22oNqNgZFqwUkVOt7qP/3ePhneXFxn9tb9xLNcMt3aUVKMNaQUZudMPS2Oa5g49jsCBlxR9jcGYR9FQT3ZXgFFmsUeLLZSXS+QYtv10aULXoJfLPevHkFVsL75ratULuiqgBFkYpQjw5jxTsPSpkLgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=bgs9qkjC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jF4ayjxF; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1757540550; c=relaxed/simple;
+	bh=5FCVWlJxDyF8zFHDRbhBndsT9XjUrwBZJxUD7k7WBFM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=foTVOsZ+eYd9DeYXdD6dExV5TD86Su+CW3oIMt7ImZYaGFP97TOBYzW16hc0k+tDyFsYNYapAWtmGYzp/au5S476/puiGzpBNJNYtGTmYbfsOenQxFpKYJlT/H+g2gaZekPUniVP7aDdZLBxWWlshliNMEXMnl9p9k09xWhtKeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jvWI8DwT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NsOEtfiv; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="bgs9qkjC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jF4ayjxF"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 808017A0228;
-	Wed, 10 Sep 2025 17:42:26 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Wed, 10 Sep 2025 17:42:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757540546;
-	 x=1757626946; bh=bhJhFb6YmlKSG20zBI2C2LV/trDXmUDTUuRScK+55F8=; b=
-	bgs9qkjCnU8sLXafnL/xRzgiuJTzbjHDdnxB6hDVs9EFnijK8+i8sP4ulxMN/2EO
-	md+QqdWbNrkyYj/N0F6EA6N/FQKI/QNWeNvp6UkdSYgfgTVrrKbPsN8vu2X+5YkC
-	aBW/BdDpKXyYUoy4FJKxt1/HzimwZnwiYt7J21EuG7FikZnWWSSFyqBXlJ8h3uFD
-	weIsDImyQrWqPY30nxNgK94WvnH0j30iu2ocJ+3IE7O3N50L6RX0Mq7YQYhNNEzW
-	J0vUjyvlArSS4rATMnPTK9KZC9aTSLADMVvA7508OadfgixZZQNVTMXhBmh74rrw
-	Ffe37aZSlqsNGLvVjFr0Vg==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jvWI8DwT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NsOEtfiv"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7A2B8EC028F;
+	Wed, 10 Sep 2025 17:42:28 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Wed, 10 Sep 2025 17:42:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757540548; x=1757626948; bh=ZgpdtVpeG6
+	h+OHlQ+q0m4d/sZpgXiGPNcqIGfOlAaT0=; b=jvWI8DwT0hh74nrXfReqRMvC8C
+	l4wAOEwyVLjF+rQCb2pPIFFQYaC8nFqmD9kwbydcCBFHn722JXI9IsGNS/AUvJCf
+	3tG0wpPPNfgqE4Yaj4SrAwZbX31njHpkDetdKyzL4339R5Xmeld5WUk+Z2l+k9A+
+	pSN0soko40S+y1bKC4q007Ly2Y8Sa7OCIp34iftwktWeckVREhZ7JZFg8sdzktGu
+	5JMKe3GS2SLtnMvYJjW1C0Wi3M5d/ESXYS4ZC1aZXvezNu+XwD+7A0y1VRrie0EA
+	lzVbFT4/sV20cqfN8F2At5T9nkJBRsScEsRBMwEihZwGc+7X2200UEnMPp7g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757540546; x=
-	1757626946; bh=bhJhFb6YmlKSG20zBI2C2LV/trDXmUDTUuRScK+55F8=; b=j
-	F4ayjxFTOinVGqXpxFatVEkUDRc//WwSi1wNOX+UKAzV5jcAM0OE68S7dDtk0x5Z
-	t9PPQxN7im2ipalC1Qm1evEcjfuX1zflrYMJXDoAwRnYEHYqIi7KhmYyLwdn4rZx
-	rRcLu/o0b/1ijhQvnEsY+m53QwTK3zZRI4OGogxSvYXCVTLvU88AAu5IVUlMSkvn
-	p+iOe2ygYuG+rWRshZfV9lgqyE0F73IflJ6fnubFmOstJnbnmA6f0xzbLg6AdPaU
-	96LdE1GWWviXR6hnsFBw8YHZqalXxxRfhTa+wzdM4g8SDV+uLHK9xpvJpY7H6jC6
-	0aKHcTdFSFtQdDIG78lQw==
-X-ME-Sender: <xms:wfDBaFV3Y5xJpjhgUds7P7qdV56olVARktjXFEQRJ0-LbiTpVzXshGs>
-    <xme:wfDBaFlJ4vNyMVQG2_arO9pKNFCyMZr4tgsXMRUz2ryzJeGSWvg91fCuK2Yl0Il-U
-    _My6iInfBiPlpMFEw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeegtdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757540548; x=1757626948; bh=ZgpdtVpeG6h+OHlQ+q0m4d/sZpgXiGPNcqI
+	GfOlAaT0=; b=NsOEtfivmfeZK7f7e6ZLaHpyeQWar5RpPh+cICWTL7zY5U4/8/Q
+	R1UjljaOTgukug2g8aQD8VfBP+1TRvuSObZx/hEEflJro/VawDzy/+aJRIWRGTV+
+	wXLlAnvJjXY8MQKJP9Wo/2Ui0r3RPHiEX7wcelH35LLIxbhZLBVad+xS3XBwuKn/
+	pmd/9QVyB3LcnuqXwEu/Gt7FjwRmIo+Y4/5tcpQa4CIkfKxMwaG/Jcx/YAtjtGUq
+	9E5+fDc4Vgh3kMKWzzN/ZXtpRe4aCZyyK7CiDJ4eer0+JICNQ4iA3PinqKXPthLD
+	RWrR2Sng7cThhExQZ+oiAl+vdmkWUihIkOA==
+X-ME-Sender: <xms:xPDBaAbzWPUWaHu-kyrpDeB5W4aRtcjcKrZbTZ6TXk0tr-xpMCxCOw>
+    <xme:xPDBaOrlPNMtpdp7RSqBn5NmsZw4Ig91opKD5T9XdrQFwghG_yAX7fAZxuDqBOM_m
+    cINAJMFc6Ol2xZHWA>
+X-ME-Received: <xmr:xPDBaEakAHBMjtwPbXJFfTqfTBPuoPNyxkUIZ9g3swnJdZebnitmF0hm3EIlEwaslEg1y61BktLRwDy9m2caTlVJSm0nkX3r2cWqqok>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeeflecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeehudfgvefgfefg
-    ffdvhfffvdevveegheehudetvdfgueffjeevjedugeevfedvfeenucffohhmrghinhepkh
-    gvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
-    gtohhmpdhnsggprhgtphhtthhopeduiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    oheptggssedvheeisghithdrohhrghdprhgtphhtthhopehsrghnuggrlhhssegtrhhush
-    hthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehpihgvrhhrvgdqvghmmhgr
-    nhhuvghlrdhprghtrhihsegvmhgsvggtohhsmhdrtghomhdprhgtphhtthhopegvshgthh
-    ifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopehsrghmsehgvghnthhoohdr
-    ohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtph
-    htthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtthhopegv
-    iigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvg
-    hnsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:wfDBaIdsHml8SatYlJipUwiU0jYskMsK3zvuKMQ0MJIz4GvIosOJKA>
-    <xmx:wfDBaCGKlFAS4GsXHtIRnp1FkbFYuVc9QzFCYL6XfRCZPjgdBrIqfQ>
-    <xmx:wfDBaI7Vd2sZWAjY-1G8dCGVoIjjFUsJuK5GJRhQ5tTyyG5REzv0Yw>
-    <xmx:wfDBaFsJHYPnDNny0BL6VWF6jg9bRAfYWIIoCEXIjFwyDXto-rXBIA>
-    <xmx:wvDBaM9IGLfGg3aVyAm69qkKtwVpACw-vLqHnrgJqfGwImZbOxph2oLS>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 8E3FD1EA006B; Wed, 10 Sep 2025 17:42:25 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
+    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
+    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
+    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
+    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehp
+    vghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:xPDBaGRRxtJ--DEqGUe5nECSH7KZHrkDzWTMCJa0MfynDN-eSTFuSg>
+    <xmx:xPDBaL4AUrY6_bPfRJS7r-iJWT4ctez8lBCvp7yv3kyUTY2w01aYvQ>
+    <xmx:xPDBaLwOkC6EVh300HBeMNE730M13yyOPlgH-TqGZHbU-LpGTKAeFw>
+    <xmx:xPDBaKTuEUHGzRGQ-pO7cjbFIk85d_tdnaTpriMFQg0FOKp54kk_lA>
+    <xmx:xPDBaOuk18daQBwaX6eyHHxCoBrhZmd_5ckkdK5v3TkzwrHiUcCyIves>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 10 Sep 2025 17:42:27 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Sep 2025, #03; Mon, 8)
+In-Reply-To: <20250910155450.GA1135031@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 10 Sep 2025 11:54:50 -0400")
+References: <xmqqjz28v21e.fsf@gitster.g>
+	<20250910155450.GA1135031@coredump.intra.peff.net>
+Date: Wed, 10 Sep 2025 14:42:26 -0700
+Message-ID: <xmqqv7lqougt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A3EHoYSPFnJR
-Date: Wed, 10 Sep 2025 23:42:05 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Patrick Steinhardt" <ps@pks.im>, git@vger.kernel.org
-Cc: "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- "D. Ben Knoble" <ben.knoble@gmail.com>, "Christian Brabandt" <cb@256bit.org>,
- "Collin Funk" <collin.funk1@gmail.com>,
- "Eli Schwartz" <eschwartz@gentoo.org>, "Elijah Newren" <newren@gmail.com>,
- "Ezekiel Newren" <ezekielnewren@gmail.com>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
- "Junio C Hamano" <gitster@pobox.com>,
- "Phillip Wood" <phillip.wood123@gmail.com>,
- "Pierre-Emmanuel Patry" <pierre-emmanuel.patry@embecosm.com>,
- "Sam James" <sam@gentoo.org>, "Taylor Blau" <me@ttaylorr.com>
-Message-Id: <53a9efd2-52d7-4520-81eb-2129ccfd26d4@app.fastmail.com>
-In-Reply-To: <20250910-b4-pks-rust-breaking-change-v4-7-4a63fc69278d@pks.im>
-References: <20250910-b4-pks-rust-breaking-change-v4-0-4a63fc69278d@pks.im>
- <20250910-b4-pks-rust-breaking-change-v4-7-4a63fc69278d@pks.im>
-Subject: Re: [PATCH RFC v4 7/9] BreakingChanges: announce Rust becoming mandatory
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Sep 10, 2025, at 17:35, Patrick Steinhardt wrote:
-> Over the last couple of years the appetite for bringin Rust into the
+Jeff King <peff@peff.net> writes:
 
-s/bringin/bringing/
-
-https://lore.kernel.org/git/CAPig+cThyuo7=3DA2f7_XkE_TZmSRc5i=3DEFgZOw_p=
-Kgu+Ckgx70w@mail.gmail.com/
-
->[snip]
-> ---
->  Documentation/BreakingChanges.adoc | 36 +++++++++++++++++++++++++++++=
-+++++++
->  1 file changed, 36 insertions(+)
+> On Mon, Sep 08, 2025 at 06:37:49PM -0700, Junio C Hamano wrote:
 >
-> diff --git a/Documentation/BreakingChanges.adoc
-> b/Documentation/BreakingChanges.adoc
-> index f8d2eba061..3550e9fc27 100644
-> --- a/Documentation/BreakingChanges.adoc
-> +++ b/Documentation/BreakingChanges.adoc
-> @@ -165,6 +165,42 @@ A prerequisite for this change is that the
-> ecosystem is ready to support the
->  "reftable" format. Most importantly, alternative implementations of
-> Git like
->  JGit, libgit2 and Gitoxide need to support it.
+>> * jk/curl-global-trace-components (2025-08-27) 1 commit
+>>  - curl: add support for curl_global_trace() components
+>> 
+>>  Adjust to the way newer versions of cURL selectivel enables tracing
+>>  options, so that our tests can continue to work.
+>> 
+>>  Will merge to 'next'?
+>>  source: <20250827080702.GA3572995@coredump.intra.peff.net>
 >
-> +* Git will require Rust as a mandatory part of the build process.
-> While Git
-> +  already started to adopt Rust in Git 2.52, all parts written in Rust
-> are
-> +  optional for the time being. This includes:
-> ++
-> +  ** Subsystems that have an alternative implementation in Rust to te=
-st
-> +     interoperability between our C and Rust codebase.
-> +  ** Newly written features that are not mission critical for a fully
-> functional
-> +     Git client.
-> ++
-> +These changes are meant as test balloons to allow distributors of Git
-> to prepare
-> +for Rust becoming a mandatory part of the build process. There will be
-> multiple
-> +milestones for the introduction of Rust:
-> ++
-> +1. Initially, with Git 2.52, support for Rust will be auto-detected by
-> Meson and
-> +   disabled in our Makefile so that the project can sort out the
-> initial
-> +   infrastructure.
-> +2. In Git 2.53, both build systems will default-enable support for
-> Rust.
-> +   Consequently, builds will break by default if Rust is not available
-> on the
-> +   build host. The use of Rust can still be explicitly disabled via
-> build
-> +   flags.
-> +3. In Git 3.0, the build options will be removed and support for Rust
-> is
-> +   mandatory.
-> ++
+> It doesn't seem to have gotten a lot of interest. But we have to do
+> _something_ if we want tests to keep passing with the new version of
+> curl. The other obvious alternatives is to try to modify the tests so
+> that we don't have to modify the code to support the extra debugging
+> knob. But I suspect that debugging knob may come in handy at some point
+> in the future, and is worth having.
+>
+> -Peff
 
-Some minutiae: the HTML output is like
+Thanks for pinging.  I was hoping that other people, not you, to say
+the above, but perhaps our developer population is too small for
+that?
 
-    3. In Git 3.0, ...
-
-       You can explicitly ...
-
-But it seems from the text that the paragraph after (3) should go back
-to the previous level:
-
-    3. In ...
-
-    You ...
-
-You=E2=80=99ll need to put these three list items in an `--` in order to=
- get the
-latter.  Or that=E2=80=99s one option (that I tried).
-
-> +You can explicitly ask both Meson and our Makefile-based system to
-> enable Rust
-> +by saying `meson configure -Drust=3Denabled` and `make
-> WITH_RUST=3DYesPlease`,
-> +respectively.
->[snip]
+Let's merge it to 'next'.
