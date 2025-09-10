@@ -1,129 +1,214 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013DC30CD8E
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 20:24:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD682EF66E
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 20:26:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757535855; cv=none; b=NKvEvMTJsmmhh+QGLaZYsS81KbST5yt6FJseeHmNahc8XhuMP1VmcUmjApwuApy0Eij85gMyBhhuIA/Ifa897+WalQGQ6Aun/ka098Tge9RskizIU0/SaT9v3RUbv4tYlCdykMYT2MM0wYH7Mo9I/mWZqPjicOe6nMIXqlhhkL0=
+	t=1757535978; cv=none; b=AOT+O27oHYhiqrQ8rbEFMfCTk6wmxAOgxe1bbJ4JF48qMNSUuiiakruKtKec11wgEormGb6QBoRYZ2xkYJRnf9qRZCPBUT1nDiM+OoNGUXbB8oIT/YKKZ2KMsawv2+EiXK2gt8InF1kTT9xV0zrkD+pcnN4KWw/jlYORtlpUDdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757535855; c=relaxed/simple;
-	bh=twNF2YwN3DAo9cR/32mOr+P4Wu7WNrdArY+SevRaTD4=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=HXVThhe2jLyXTZAZs449j2ktEhMwHWQrO1K5ydpxtNJkRJP4+e6g7YjoFDBgDOK1cRk2q1hGOqY78/qjsg5bFzkQ0RuS9te9uJfWdyqXBn/YOMnt1A9WypuK96i3A7voy8Yhs3AWpbyLtlDju8LcKbjveODeu2NrN4nO//jd3Tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=gLlONXv3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IO6H46Wn; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1757535978; c=relaxed/simple;
+	bh=oXf21hOC24n4Fr7dKooDVqgepdoBMSZcGxi1xowVEWU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Mp8fjRzDZc1nYD0csILPHq6lWVKvO5UV+omhcOhKBXc8wto690K+PTFS6meqDL0zXZkT1WZhnlheasB5P1HAwKwlBjDWHWfx4IkryzG3OkO7+U/llNQVilkcvwsjweBVIxr6UJDwRbe/l28SKVAvYTxf2iL6u0GrNr6RSPzsvbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vo+/oLQl; arc=none smtp.client-ip=209.85.215.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="gLlONXv3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IO6H46Wn"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D5A297A017E;
-	Wed, 10 Sep 2025 16:24:11 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Wed, 10 Sep 2025 16:24:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1757535851; x=1757622251; bh=jEepLlTbS/8QLxlnaEmasgplQa6nU8bf
-	iC2fWqg0Emg=; b=gLlONXv3Ie+x2Wf3SCdiCt0HANJItBxMfLWPCDnRyOqCHX9Z
-	LDhPijs8DD0jomd69yDQj1i0D0ROPZFH8zxPHwrWpdRp2cOtOVrUvYCZqbarYp8Y
-	v94JaMQJWlM0AX3tKcGA5sqXZwA8AEP4OJGgKLTA1eyvur0f22XeUL68wMRmaUMm
-	4+HGQwXdrx4H4KyiovDBUUkAW0wXzX8pIXBwvdh3yFRvclBqTu43c5U2qqAbH7a1
-	shhnh0A9lYc3pV5XHSzDmdh8ka2XL6HooR/g86U13cUk39FJU/Kauvl+2hwXpHzm
-	NL+7xn/iukhV1O0kyyT+CxcGBfUEK/K6DGoJzA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757535851; x=
-	1757622251; bh=jEepLlTbS/8QLxlnaEmasgplQa6nU8bfiC2fWqg0Emg=; b=I
-	O6H46Wn0CUnf4IRvt9cYXCbKcfeXKvTEAZJS8NxaKOYbTEzTziqyXd55OBFHTDZ+
-	0r+b3vFoznXvi7Mj+rvHPhMXFHRax5kRvMqlFsu+cehrJIV8h5uLP6y9WQkzQCki
-	i8tDbyUU9FIOvXuGbuiZO5EEamm2kas0Dr0s9mXsV9yd+HGGWuhmeZTeFwBiBkdi
-	3NnhCLtj8bV3CBtFPIn/8MFaa3XucIXlpSMD360iXTJZmxZYaYg4DbypiNEUYlFc
-	P7nJ79XERJca1v/HEX0w+gLx+2CYHllA6tGlfOWdAeh0QMvYDpUduZPa2uqZo6vD
-	kZ28suqTqImtliOkh4vxw==
-X-ME-Sender: <xms:a97BaAr6hbvVasIV23ribz5BHksC9zbLNT1r7t-0XrXZ2pFkEjRpQng>
-    <xme:a97BaGqO3qvgf6WXPWovWyxJ-1I7fYOfjDmbk4AZUU0P8ePdi4jxoLh2UDDHuYlbs
-    FkOkRb18xnEXMnSqQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgedvgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnh
-    grmhgvqeenucggtffrrghtthgvrhhnpeefteeghfegfeevleeguddvkeetheeiveffudej
-    lefgudffffejleffffeludekjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofh
-    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphgv
-    fhhfsehpvghffhdrnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsuhhnshhhihhnvges
-    shhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrgh
-X-ME-Proxy: <xmx:a97BaLH7TwtPZxXuf4vJoqibW6X54UsiH_gdKsJqAU86X0OpRSHwOQ>
-    <xmx:a97BaJH_0Jjq6_uzw2qe_Dzumd6panu-JyMcwAW1_s6VUXAqKd-ISA>
-    <xmx:a97BaJQ1db3a98MpnU3z_0s8gooTYzNcwzuciFH3B0l7eOLwW6nqPQ>
-    <xmx:a97BaKI-g8NAFS3ykqP2g9cdDH2LNkJWfW5wWAlsN__W0WrbOAAVWQ>
-    <xmx:a97BaIUuiN8FgcigJOybL3YCv_yzGi6v-FymRRS-JaYKzHmYD2LwN0Ti>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 22E9B1EA0068; Wed, 10 Sep 2025 16:24:11 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vo+/oLQl"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-b4d4881897cso43865a12.0
+        for <git@vger.kernel.org>; Wed, 10 Sep 2025 13:26:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757535973; x=1758140773; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RMQ2oPRGaVicfoE0HkdC/qaJiCO9Dr1s4Ho4C4YlRko=;
+        b=Vo+/oLQl5kG0k0aQfcn6ZrWx5b1FSTdyV7/CBlmalUva6Et1ct+tXvmjkCnsJCF7d+
+         HgT5gn95ZMDilIX1BjD5VVysLNsPPeTihI6a4PtVYxrona7CKpWiRkn3sn/umzM/YFQi
+         ECRiTgT05bLn1DvJmO6uPgGq/onagF1bml3wergC7R1uAHe5DFAKVMXMX/7EYLCpIFI9
+         qDuvHG87nSt5Yxy8YYuacMhUfyZIebGnLa3N0PbxiC6pkA42eNorhwV8VdbQAGhGsgYV
+         BSNYFZgv1B+Jr0iVVRKRFeThenm0b0gRCsc6khtx0hvYXnAhUI0j34o1oQgqxISZo4wX
+         9l6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757535973; x=1758140773;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RMQ2oPRGaVicfoE0HkdC/qaJiCO9Dr1s4Ho4C4YlRko=;
+        b=aQ8JEQOvsJvKjz93sXTm5sAkkUmrJTxvOGrqwPbQrCv3Hz5kd4E7dg8jRuQEQRB8Ur
+         iu/QC0v1vM7ZAbv2y6kMyhtEatGt5F9TWRA5+4KGopiiOAJKpcjh8vukJ2YqBLqXXZTR
+         UM7Zv5mOlnOoL9raP299RmW5F4ahayks4Gylb4jE2g8/kXKf3S6S8GYRqnw6dr7/x8RT
+         AnkElU0o/mwX3Kmd6PX/iVNp4TKxa0NeCbZmnMBMckuINPpSIRNto++qoi2eZbn+CDtG
+         2DpL+chYRxKUFqP7rrAWLF4uJC/nAcoVX2IuPQLKWKu60K5xpy/loBooroZm9H4t/SrP
+         GyUw==
+X-Gm-Message-State: AOJu0YwKiRdvGSCQNwif62kR9FRXzvYsqpmIveS1ugs2msv9l06R6Umr
+	i0N0kF0CQpUFiHM0uu4P37tSoym0Jf24983MrO8ECqUF/FiNoW/O9toY
+X-Gm-Gg: ASbGnct3SUO1mdAVe5+jKOzHbo1ywgvgjClqpyweww5cUTyBGbVKJ1ZWqokJxMKj3RW
+	gJrVOP9ZmQ9UunYNggH73pdVAjD0mQGe1PJrEtB4/GMYJFa1Ov/Df8cOi0axuTr9vx00moqDvV0
+	2kzS7PQzCsoFouc1IZuqTFCB7F71JMLyqcSqzMTTWClCeMQkneZ5Xp0nJSZnOHr0q/BR7EAw/If
+	MQY8gOJrv/eSRWGE8yN2gJQ3aa8PwHG1EK7q0upZtMATiw0S02jcxGkl+u4z6OG9D3RZqYSCAOi
+	5oj+oXhBUEUi8cBHBkppCxZgyOr6NrDdf6KOzgWYxpraKagocEzUPGI/iNK1AQjfFTQGUhwmuj7
+	Bfh27/DquOUGInNRA5yLj0Y7TaokOTpk22NqpXq+nkpnqPt/JNv9S6EVh4XmZEPu44ZhG+39MxC
+	gDu2yOB2sKnSDN7cQR7Hqs27Y=
+X-Google-Smtp-Source: AGHT+IEb4P/hVqOa4PSDLimQLVtchc2HYPOlKTF/csG6Bkv2Wbg++wynkMk3AVgtdFu2XPCbvWu7lg==
+X-Received: by 2002:a17:90b:1344:b0:329:d50e:2f1d with SMTP id 98e67ed59e1d1-32d43f96f7cmr22979054a91.20.1757535972945;
+        Wed, 10 Sep 2025 13:26:12 -0700 (PDT)
+Received: from ?IPV6:2406:7400:56:7e97:9da:149a:656d:6410? ([2406:7400:56:7e97:9da:149a:656d:6410])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32dbb60fc17sm3563260a91.24.2025.09.10.13.26.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Sep 2025 13:26:12 -0700 (PDT)
+Message-ID: <58064c0d-1139-4c57-ae34-756e52bf5695@gmail.com>
+Date: Thu, 11 Sep 2025 01:56:06 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AAEK-xvrxHXR
-Date: Wed, 10 Sep 2025 22:23:50 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, "Eric Sunshine" <sunshine@sunshineco.com>,
- "Jeff King" <peff@peff.net>, "Patrick Steinhardt" <ps@pks.im>
-Message-Id: <20fd7486-5f65-490c-866e-d07a19d2b75a@app.fastmail.com>
-In-Reply-To: <xmqqjz27ti6i.fsf@gitster.g>
-References: <cover.1757345711.git.code@khaugsbakk.name>
- <cover.1757446619.git.code@khaugsbakk.name>
- <66e6a9554b16b2079e5613a415a2d27a601d146b.1757446619.git.code@khaugsbakk.name>
- <xmqqjz27ti6i.fsf@gitster.g>
-Subject: Re: [PATCH v4 1/7] git: add `deprecated` category to --list-cmds
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] replay: document --update-refs and --batch options
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>,
+ Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+ Toon Claes <toon@iotcl.com>, John Cai <johncai86@gmail.com>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
+ <20250908043620.57848-3-siddharthasthana31@gmail.com>
+ <CAP8UFD3Db-n3CY=KBpn-2Nt=SYY=5ckF3J_4ho6C19SVcrfdsQ@mail.gmail.com>
+ <7f90e1b6-acba-40f2-9e51-ad09c2bf6999@gmail.com>
+ <CAP8UFD1J8fgjZ+din3P_=FjZZFJ+ocqvwTFjBNjpnhrx6=nMqg@mail.gmail.com>
+Content-Language: en-US
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+In-Reply-To: <CAP8UFD1J8fgjZ+din3P_=FjZZFJ+ocqvwTFjBNjpnhrx6=nMqg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, Sep 9, 2025, at 23:44, Junio C Hamano wrote:
-> kristofferhaugsbakk@fastmail.com writes:
+
+On 09/09/25 12:56, Christian Couder wrote:
+> Hi Siddharth,
 >
->>     Incorporate Patrick=E2=80=99s suggestions about the for-loop refa=
-ctor and
->>     formatting the overlong lines.  Now drop the function doc since it
->>     doesn=E2=80=99t apply anymore.
+> On Tue, Sep 9, 2025 at 8:36 AM Siddharth Asthana
+> <siddharthasthana31@gmail.com> wrote:
+>> On 08/09/25 11:30, Christian Couder wrote:
+>>> On Mon, Sep 8, 2025 at 6:36 AM Siddharth Asthana
+>>>> Also document the --batch option which can be used with --update-refs
+>>>> to allow partial failures in ref updates.
+>>> It looks like a --update option was also added by the previous patch.
+>>> Is it documented here too?
+>>>
+>>> Why was this [--update | --update-refs [--batch]] set of options
+>>> selected over other possibilities like for example
+>>> [--update-iteratively | --update-atomically | --update-batch]?
+>> I was trying to provide both simple and advanced modes. --update for
+>> users who just want "make it work like piping to git update-ref --stdin"
+>> and --update-refs for those who want control over transaction modes. But
+>> I see this creates confusion.
+>>
+>> Would you prefer a single option like --update-refs with an optional
+>> mode parameter? Something like --update-refs[=batch] where default is
+>> atomic?
+> My preference would be something like [--update-atomically |
+> --update-batch] first. (Maybe names like `--batch-update` and
+> `--atomic-update` are better?)
 >
-> So, if "include" is specified, a command that does not match any of
-> criteria given by those flags is not included, and if "exclude" is
-> specified, a command that matches any of the criteria given is not
-> included.  Which probably makes sense.
+> And then something like --update-iteratively could perhaps be added as
+> an alternative, if:
+>
+>    - it works exactly the same as piping to `git update-ref --stdin`, and
+>    - some users want to use it to blindly replace piping to `git
+> update-ref --stdin`, and
+>    - we document that it is not efficient (compared to
+> update-atomically and --update-batch) and should only be used to
+> blindly (bug for bug) replace piping to `git update-ref --stdin` when
+> performance is not an issue.
+>
+>>> Also how does this --update-refs option compare to the --update-refs
+>>> option in git rebase? Is it working in the same way?
+>> No, they are different. git rebase --update-refs updates refs that point
+>> to commits being rebased. --update-refs updates the target branches from
+>> the replay operation itself. The naming collision is unfortunate should
+>> I use a different name?
 
-On second thought I want to add back the =E2=80=9Cmutually exclusive=E2=80=
-=9D check
-since using both still doesn=E2=80=99t make sense.  (Dunno why I thought
-otherwise.  Patrick=E2=80=99s change was strictly a refactoring.)
 
-> The only user of "include" uses the DEPRECATED flag bit without any
-> exclude option, so it is yet to be seen which one between the previous
-> and the current design gives an easier-to-use behaviour, but I have no
-> objection to the updated design presented here.
+Hi Christian,
 
-I=E2=80=99m happy with it.  :) But people can suggest an alternative if =
-they
-would like only one of the include/exclude.
 
-Us Java app. programmers are only permitted to practice bitfields in our
-spare time.
+> Yeah, my opinion is that "rebase" and "replay" are commands doing
+> similar things, so having an `--update-refs` option in both commands
+> is a good thing only if the option has the same purpose in both
+> commands. If the purpose is a bit different, I think it's better to
+> use different names to avoid confusion.
 
---=20
-Kristoffer
+
+You make an excellent point about the naming collision. The purposes are 
+indeed different:
+- `git rebase --update-refs` updates refs that point to commits being 
+rebased
+- `git replay --update-refs` (in my patch) updates the target branches 
+from the replay operation
+
+Since Elijah and Junio have endorsed making ref updates the default 
+behavior, this actually simplifies our naming significantly. The new 
+design would be:
+- Default: atomic ref updates using transactions (no flag needed)
+- `--output-commands`: print update commands for traditional pipeline users
+- `--allow-partial`: enable partial failure tolerance when some refs 
+can't be updated
+
+This completely avoids the rebase naming collision while providing the 
+atomic transaction behavior that's important for server-side operations 
+like Gitaly. The default behavior gives us the reliability we need 
+without any naming confusion.
+
+>
+>>>> +--update-refs::
+>>>> +       Update the relevant refs using ref transactions instead of outputting
+>>>> +       update-ref commands. By default, uses atomic mode where all ref updates
+>>>> +       succeed or all fail.
+>>> This seems to imply that --update doesn't update the refs atomically.
+>> That correct --update doesn't use transactions it updates refs one by
+>> one like `git update-ref --stdin` does. Should I make this clearer in
+>> the documentation?
+> Yes, please.
+>
+>>>> Use with `--batch` to allow partial updates.
+>>> What about --update, when should it be used?
+>> Good point. My thinking was --update for simple cases where you want the
+>> exact same behavior as piping to `git update-ref --stdin` and
+>> --update-refs when you want transaction guarantees. But I am starting to
+>> think this distinction might be confusing users more than helping them.
+>>
+>> Would it be cleaner to just have --update-refs with the batch mode
+>> option and drop --update entirely? The sequential behavior can be
+>> achieved with --update-refs --batch if someone really needs it.
+> About the options that should be implemented, see my opinion above.
+>
+> About possible confusion, I think that to avoid it, it is important to:
+>
+>    - name the options properly (see above what I think about the
+> `--update-refs` name), and to
+>
+>    - document thoroughly how all the options differ from each other and
+> from piping to `git update-ref --stdin`
+>
+> Thanks.
+
+
+Absolutely agree. The simplified approach with default atomic behavior 
+eliminates most of the confusion points you identified. I will ensure 
+the documentation clearly explains when users would want 
+`--output-commands` (for custom scripting) versus  the default atomic 
+behavior (for reliable operations).
+
+The atomic-by-default approach also means better performance since we're 
+using batched transactions (addressing Patrick's reftable concerns) and 
+better UX since users get reliable behavior without needing to 
+understand transaction modes.
+
+Thanks for catching the naming issue christian - it led to a much 
+cleaner design,
+Siddharth
+
+
