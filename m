@@ -1,142 +1,163 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57062571D8
-	for <git@vger.kernel.org>; Wed, 10 Sep 2025 09:52:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFB92D5951
+	for <git@vger.kernel.org>; Wed, 10 Sep 2025 10:49:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757497969; cv=none; b=XrZqgUREH8v7u5tosP+42AFq9BkToWI/w5qpjweEYQ0brvFM4y2iTfGp2W9/W4XSF07DfUSUCsHwNYC8ZVPaZC34ozYeal8gcq478wB9AdAleuksXeih9Y3xdZRSb9WwvThwfN64++iN/uWUCvPOF7O1cG1HiMQifBJSgWzfDb8=
+	t=1757501368; cv=none; b=b8QRwhKuo/AnkzDD7onJGnRK/f42t3OFLGc29XhjgNP+KytVOxfjmnQE4i497qhKSH5L8Cl5gwohRvR3LHPPrk82g9mLxNdoT8DjJgmM0VGVduQJvEbBxSVICL9ijAUXMBm/nvusGWhkrvxvC6jq01kgimh92yezhhIIwXHEX7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757497969; c=relaxed/simple;
-	bh=PCI5VUX8jCzbijHDBquw8tFqqHs7fJAdr4zS8i+dPTA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RI+fyZJbWpt/XyPNfqhANSUHbNmvXvWPhXHBdVMRnYdmlfkyXfNwLg2sUYb28isZEhIqZZtfzzjFT4onVe4VGjPMEpxTAN9o/0O5jE32yvHu04kXZKD9t29F4+tSBbZRbbK0LgbSKDrB+UUG4DEXE1IcTS0cV7SMYMNZ45POTPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WE+uTZ4T; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757501368; c=relaxed/simple;
+	bh=HagHysg3iNxqfJe9hLSsEVvU8GF0P3WHZacTVbHONI4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KjyfNazkIofsEvEU2O03d0juRhFcjyMFv6mHsInwHHSqQpjkSWm7YXa6s1izlKsL23EB9iPa3+MhKjoC2a/qVl+Lp+cdMhZOH0EaGxp1iru1bD/MnLMgJ/EgkItHjaHagmFH+XHjMangpgp8LeJH9cK8XC97RpRLUySUHseRu0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BAq4qgWz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gOeys3q9; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WE+uTZ4T"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3dea538b826so5561020f8f.2
-        for <git@vger.kernel.org>; Wed, 10 Sep 2025 02:52:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757497966; x=1758102766; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=74kMluN9rDOedoTStS/ZbI7PoTcYBkx34PNCXDSa0DA=;
-        b=WE+uTZ4TBrL4iKrlEEznJ9sAtwd5X27OwUAiMBe0kTLTaQjO/nvUaYtx9Piqmd0Jlb
-         oYajb7fOxXe8pOIDFcrAzMG0Bf65tjZV7g95Zs5OZENrItyTNcYTzXLAgQh1YPvtVVgt
-         U5Hbm6n6yZ3N68GzTZQ4dviaz3LiNG5ZVfxK4Gnz76KCxO0svzou+dlmLD7dW3ioAdxC
-         w8oxKxjvSSANpIRNZFyrnwtNDX9dNVVsUxOCib8F0lUGHC3PrTWylWs60AH6DPey3HeZ
-         aFL37Vg1IXbYHc3m5TaUWYeMk21Pkje1THRLZNaCBJNDD0XROylCsVhya6tPYP/lII1G
-         16ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757497966; x=1758102766;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=74kMluN9rDOedoTStS/ZbI7PoTcYBkx34PNCXDSa0DA=;
-        b=ElgRVJXONAscU5NBWQB7n1ifxq62EpodF3+AuCFaZLZD+a32CM5bGQej+1NSfmOr97
-         cLOmhZV6gS6mOJy4PDjGpu056ZODhJv0TdMnpdf58MV3Ha/7ir1xhKJjd4g5kl6qkEmf
-         H3BR7k/QmVm/tKlwaZF+YQDv+NlujR4Gvxi5BXSkpswjzvSV37lq7Q8lqM4uTknhi+9X
-         tGuh5ZsNViNNw753rRUk7j/DTHUwVIdzPlTy8bOGrM0eGSPuTfabSlLsOAgdReaW674Y
-         DL+6MpjtJSGgY07HhC9K8veWHc8eEKcU2av4XlTn5vRRh7t7hl29KBFPLZPwEg8ZYrn3
-         wyvQ==
-X-Gm-Message-State: AOJu0YyU9QIzdfRlxA1gVlvQEoybvuxlOYmFRCrq0UNCdMTyZVckV+VG
-	XWGB6aesPytyx0R6sTDqIPk6YmylJSqsc7rK+nG+6b0cUBT9MDI8RxRf
-X-Gm-Gg: ASbGncsgJhIjSNyq3O0eAOQMeuQsbqu/88nu9NVzw7dH6zn1v6rB0kjOsd5n7HcNwMi
-	ovK5/W3wHCd8ILGygy6oJ72mswhRqnf2DZko9NyXFNf8ZZKQkZqSY92lcBueMVRqIccWS3E/1Qz
-	TFpDszpyhxWVLqk9R6IGV7L8GzQZZvCLr/zgeX38vkLw59P/kCg6z4Le6jfPwNOFglNFHWGOPIq
-	4FhUgNAla4TMy76uPGAPAf5+O9EKQ4/6CGDz+WtyS9sWnAYvw/DO3QAs19/3OHQm/gQysHmJuz+
-	kZc6ImeXutGdt9uUg5oG6smIKvygdlLfeW9XDgN2Bl/8hCeDldqlMMHkA2OheEw1aI2SwxWGyaG
-	VDVnlTpaqdJsZ9bxXQbfjU+CP2Tu1WGi7NVujpJLJAeBBsm1HyckKEnXqMecNMLzhrrtw0OB7hA
-	8=
-X-Google-Smtp-Source: AGHT+IFJC6an/Cyv+1zhUGaKz/7iD9ipl2vVLI2e1YoMsIhEMqkvrVapDLCoRn6o7IBgQJ7RvC8pxQ==
-X-Received: by 2002:a05:6000:220d:b0:3e5:5261:9fa6 with SMTP id ffacd0b85a97d-3e6429cd6c2mr11980224f8f.23.1757497965872;
-        Wed, 10 Sep 2025 02:52:45 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e7521ca0e9sm6611877f8f.25.2025.09.10.02.52.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Sep 2025 02:52:45 -0700 (PDT)
-Message-ID: <94d614fb-63b8-4733-b78d-b55c482fbed8@gmail.com>
-Date: Wed, 10 Sep 2025 10:52:44 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BAq4qgWz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gOeys3q9"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7773D1D001E9;
+	Wed, 10 Sep 2025 06:49:24 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Wed, 10 Sep 2025 06:49:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1757501364; x=1757587764; bh=9TFU41K2AI
+	oHxQMTQjVFywNkVwWT7W2Rmzr13lwPBJ8=; b=BAq4qgWz5pcdE5yU78dHLWGrPV
+	AzRMASCxt7j8yhJ1idIiw9ahMe6kpRuSrEUOrW1mz4NuqKuFhGcomZwCoBr3ujMU
+	3uQthDskgi/bfU+ScWpGeysWme++tDFb1HIbfzFQxKwwrK1hoY8bD4EkAtb3jCmf
+	7f8a4yI7FDTagii8XCQydQb0l9++OjDe9bvuM+sbEBqNsXKEXIBISpvbkfudoltI
+	o++sDp/SwvJDRQONbVVg0ht9lrWSAiNWHR4o42Fr2pbatBAmi25Mps66sTsg4ENu
+	DVcF9IHUj7SuPN0ZYPEMD6JyTayrntBcb1Ffo0qcpLRtUqbnXd7vdlhzoOVA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757501364; x=1757587764; bh=9TFU41K2AIoHxQMTQjVFywNkVwWT7W2Rmzr
+	13lwPBJ8=; b=gOeys3q9QQlN8Y23by647jNkAvUdYEvwW05V087p0mfBZ9IO7gh
+	sFBbQjojUHBG9zuu6kcLcTG1fORup7Vy9HH5x5/4CfkRdZMRs9GleZ93tmKkdbSm
+	aWbWvtxO8mbx3IGIapR70n98YtZ0z+UD2n8MWe2l370Lb8lRaXAgjxM+cfG3Q+7B
+	KxW4SfS1bbd0wVO1xEYMNnmYmotefuKdZKsNJT+Pzfudm5ptCCBOCFmChXdlOn7M
+	Dhu2IzbIFuTbxImm9JglLkdXWtZN860PttW2QhmSF02as/XB/Va6cmI/xBNmuHFa
+	njFghXOLIYFr9lEN5dDJpkTrFstssOOALGA==
+X-ME-Sender: <xms:slfBaMGhu0OGX7pTUJWCo0MuuHXBeAvzJ4l2IUvf-WFlrTKvIY8XEA>
+    <xme:slfBaBLl6ZIqmMbo_hy-LIsrDtjIN2lqKc20Ys9sovz25hdb3tvWbhNVKrcz-_VJq
+    ByoQZ6cIAkqHIqLpw>
+X-ME-Received: <xmr:slfBaMnYY5WMOzB7BvN7DhjUK2ZWPm8HFPQyfunpmYi4eV_fTyWwYRjgGSGzb4cT00ZN44ZpEXGxcoGsXTAhQRDaTKm4ppbgofs9uB4cqEg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfedtlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeduhedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepsggvnhdrkh
+    hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptgholhhlihhnrdhfuhhnkhdu
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrh
+    gvnhesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughu
+    nhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopegtohhnthgrtghtsehhrggtkhhtihhvih
+    hsrdhmvg
+X-ME-Proxy: <xmx:slfBaKzovgue5ZWpkWJgtAgwKgqu2AjneCGYqq5PP5ZkvpRiPeyTnw>
+    <xmx:slfBaGsMjl-sFQy5anss-I2uVE036WiGiguf8R-8bIKcFcYV3t9qeQ>
+    <xmx:slfBaMHbKuyePHeSgVS2I8p9sh4dMHdq6BleLuB1zq2XuaPFpEGMMw>
+    <xmx:slfBaM7GLFp7AwCmYu5DJFfFPua7PGOA2TqaUPTcsQvNav_TJFBENw>
+    <xmx:tFfBaB2K4_3FeWeeF7y6aYothB_DHlfD36iRJh6c-HdL_-aOZcPk-Jx9>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 10 Sep 2025 06:49:20 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ad14bd4c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 10 Sep 2025 10:49:18 +0000 (UTC)
+Date: Wed, 10 Sep 2025 12:49:15 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org,
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH RFC v2 0/7] Introduce Rust and announce that it will
+ become mandatorty
+Message-ID: <aMFXqww91uxp_xCk@pks.im>
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
+ <20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im>
+ <8a5394eb-bad4-42e0-82a8-fa73123e205a@gmail.com>
+ <aLrzqR2Z9jz5CuJu@pks.im>
+ <7c25d5a6-1b34-485e-93f9-25bbe37d5bd4@gmail.com>
+ <aME1Bfv-IPq0zRG5@pks.im>
+ <740cf3c1-2d82-4675-ab22-80d1f362395e@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Git Stash Synchronization - Best Workflow?
-To: Brooke Kuhlmann <brooke@alchemists.io>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, "brian m . carlson" <sandals@crustytoothpaste.net>
-References: <7B1CCA36-23F1-410D-84ED-6E965989EA8B@alchemists.io>
- <5dee5f49-eeb6-49e2-8bca-6ae6a1d6be5d@gmail.com>
- <CE34C4BA-1ED4-458C-A31F-3DDB61ECCAAF@alchemists.io>
- <7a206ee3-d68b-40fd-8133-79e4c2be7174@gmail.com>
- <FEB150D4-2B5E-41CF-ADCE-93DD0B48D364@alchemists.io>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <FEB150D4-2B5E-41CF-ADCE-93DD0B48D364@alchemists.io>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <740cf3c1-2d82-4675-ab22-80d1f362395e@gmail.com>
 
-Hi Brooke
+On Wed, Sep 10, 2025 at 10:32:02AM +0100, Phillip Wood wrote:
+> On 10/09/2025 09:21, Patrick Steinhardt wrote:
+> > On Tue, Sep 09, 2025 at 10:12:39AM +0100, Phillip Wood wrote:
+> > > On 05/09/2025 15:28, Patrick Steinhardt wrote:
+> > > > 
+> > > > I have a plan layed out in the BreakingChanges document that mentions
+> > > > how I'm proposing to do the transition:
+> > > > 
+> > > >     1. We introduce it with auto-detection for Meson and default-disabled
+> > > >        for our Makefile in Git 2.52.
+> > > 
+> > > I'm not sure how much this helps us. You've said elsewhere that you don't
+> > > want to be inundated with bug reports which is fair enough, but I'm fairly
+> > > skeptical that we're going to get enough people enabling this get a useful
+> > > amount of early feedback. So I wonder if it would be better just to bite the
+> > > bullet and enable it by default from the start. I think I saw Elijah making
+> > > a similar argument elsewhere in this thread.
+> > 
+> > The patch series may not be ready for all platforms yet though. Windows
+> > support is still untested and probably not working, so I first need to
+> > get that done. This is basically the reason why I'm proposing to have it
+> > auto-detected at first: I want to be able to iterate without breaking
+> > any platforms yet.
+> > 
+> > How about we do a compromise: we initially introduce it
+> > default-disabled, but default-enable it in the next release already
+> > instead of first tying it to `-Dbreaking_changes=true`? That would
+> > accelerate the proposed timeline a bit.
+> 
+> If we really can't get the windows support working before the next release
+> then making it disabled by default on that platform makes sense and in that
+> case it is probably simpler to make the default the same across all
+> platforms. It would be nice to get the windows side working, I had assumed
+> that would be fairly easy because the patches exist in Ezekiel's series but
+> maybe I'm missing something. I'm also hopeless at keeping track of when the
+> next release is so maybe there isn't much time.
 
-On 06/09/2025 13:50, Brooke Kuhlmann wrote:
->> That sounds like a bug if you're getting the rejected message above
->> but the ref on the remote is still being updated. I'll try and take
->> a look at that next week.
+Oh, it's probably not going to be hard, and yes, I'll pick the patches
+from Ezekiel's series in the follow-up.
 
-I'm unable to reproduce this. In the script below the final push succeeds.
+My intention here is to focus more on the overall roadmap in this patch
+series though, so I'm trying to keep it as simple as possible initially.
+Agreeing on the roadmap is the more important thing, and seeing that we
+talk about a timeline that is going to stretch across at least a year I
+don't see a reason why we would need to rush making this opt-out rather
+than opt-in.
 
-     set -ex
-     dir="$(mktemp -d)"
-     cd "$dir"
-     git init --bare origin
-     git init repo
-     cd repo
-     git remote add origin "file://${PWD%/*}/origin"
-     git config core.logAllRefUpdates always
-     git config remote.origin.fetch refs/stashes/*:refs/remote/origin/stashes/*
-     echo a >a
-     git add a
-     git commit -m a
-     echo b >a
-     git stash push
-     echo c >a
-     git stash push
-     git stash export --to-ref refs/stashes/test
-     git push origin refs/stashes/test
-     git stash pop
-     git stash push -m message
-     git stash export --to-ref refs/stashes/test
-     git push --force-with-lease --force-if-includes  origin refs/stashes/test
+One step at a time :)
 
->> You need to pass the name of the ref whose reflog you want to look at,
->> otherwise it defaults to showing the reflog for HEAD. You should be
->> able to see the reflog for you exported stashes.> 
-> I gave this a try and every time I use `git reflog refs/stashes/$USER`,
->  I always get a blank response. No errors and no output.
-Ah, I wonder if core.logAllRefUpdates only affects the creation of new
-refs. You can force the creation of a reflog by running
-
-	oid=$(git rev-parse --verify refs/stashes/$USER) &&
-	git update-ref -d refs/stashes/$USER &&
-	git update-ref --create-reflog -m 'export stashes' refs/stashes/$USER $oid
-
-the same applies to refs/remote/stashes/origin/$USER
-
->> Let's try and find why the remote update say's it rejected when it isn't
->> and then we can think about the best way to document pushing and
->> pulling exported stashes.
-I haven't thought much about the pulling side of this. "git stash import"
-appends to the existing stashes so I'm not sure how we'd cope with forced
-updates - have got got any experience of handling this from your
-experiments?
-
-Thanks
-
-Phillip
+Patrick
