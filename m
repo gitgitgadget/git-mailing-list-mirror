@@ -1,103 +1,204 @@
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98982512EE
-	for <git@vger.kernel.org>; Thu, 11 Sep 2025 20:38:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFFD299A94
+	for <git@vger.kernel.org>; Thu, 11 Sep 2025 20:43:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757623090; cv=none; b=DzD5vIYj2shC5d4bFPxxPBLLvr1NNuFaUWyn2GSuwceUttvd2LEFNWs277kc4aTDqZaKw6+NUtXGMDYNXVNazs06qK3Dgw7IADZlz0mrLG15dlytNpcpck4DDJhNDlGuxWOnZGkVflBhvx9wA+53y9ojJm79jA6iWxMmwoRHU2Q=
+	t=1757623386; cv=none; b=QcVsuRmnWHudYRfdGQOuFIETR0f6IbbbW7vOE/a3O/0gRw/dG/tGU9eooir0dkX08hDPU6D6feSL+nkgLymGhFN9ZDUY2zfKmtNEZgK/44BfOnmazqWMnXZVQzIHbDbl6Cv+jG6RJsFmStWkj/oJK6tUWMNMB6Obluuv9xtO8wQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757623090; c=relaxed/simple;
-	bh=siF1NQT4eY9dFQJzesIXZ6gHV4Jv10IulqPMcsnJnck=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=qwF9eCEV+hdU9/5WOtsnZAiZDyt1WAfT0LQ8EYIN65c4IizmleilRLCy4830BCkpMROBr7diFN5LkRrSKZ3KkVRaZXM3E+5TGnM9Yx/9kE0W27n57+dzh/uW3t9NyduuSi3krPihUYmPuQFv2+0X1jEF/n2aBb4uTI0f+Y1KKDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OyGkrPDm; arc=none smtp.client-ip=209.85.166.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757623386; c=relaxed/simple;
+	bh=Gucyw4oO6w31H7onPYMBWC5+44pgNQHrP+/XqCUnNgg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lBckkj/ukW23k5jyJtgGXTiLlUPubj6nJRahIZT/WZDN3eAbUwK1Q795/ow7Y7uy946aes0W9RfbGzstp5orvlWLCstUftasVOynfIdAYDTlbEl2B7qP/mD5ijhyxiBi328oaJsjDVGnIbrcTHS4sd/LtfP/O5uSPWA9nABvUTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=A0ZLErr+; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OyGkrPDm"
-Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-3f660084016so6345545ab.3
-        for <git@vger.kernel.org>; Thu, 11 Sep 2025 13:38:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757623087; x=1758227887; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=al4VzNBqxWWOskH1QQv+oZGjh/913EFQSVfoUgDw8fA=;
-        b=OyGkrPDm/sYI8UKK/QbxJFiFnAzYhthXaqSrn55PaKMSTWyd8mn/hZQOv7LJfuPuH7
-         S6Z8N6sYgY/FK2Qo4E7ZhDdfntiN5Z+2/nW3+zUzW3vuVSkRFMamR65G6IB2of6AK89T
-         Bq7dA6a7m/VXOOkmqaeB//tgyWJrWXww50Zhmj3TB6eZyadoZgtQUx7EUegFVZN5BNzl
-         W7bAduN3ob30HzpKjFbNJcCafnCxAVztf/Rs1Kc/4H+vgDSXxc35ujqnEz/Vxd8yS0Lo
-         Zw3B8vNggzdllng/Oj0sWCfwf8601w6hZSlqk200l6Mcn/AzeT8bU4U1UiPBKw/YH55l
-         RCug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757623087; x=1758227887;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=al4VzNBqxWWOskH1QQv+oZGjh/913EFQSVfoUgDw8fA=;
-        b=snGWkzWXd7RNlM8JpGsZvBissgHRZekEmUTfsycF4Lt6AZAlwVZvys2M61hYL4OsXv
-         TQ4PS/wIH0MeOETcoZFvNHw51s9FsFvxlTHnnn+SnOnUFJ6fwnSCPIXexMCXgeB8wEPm
-         a9yD9X3Zy+Pd6loS7da5f+S98NKfPLgnO6NNBpUvqPrD/ohun8BvZA/jrtriJJgX6spR
-         3RxjkODvSN+3Ljxt8Cfpb1JJSu2modYzQpBdvAPx1VPeam5YX7QSM1k+aPdT7moNfGM3
-         PlJ4u6zzBAtd9ylMH9CkMgMeeQ1hb3492HHR+0J2R3s3fTz6ct/cCbhdaoDMkfOThU7v
-         YNpQ==
-X-Gm-Message-State: AOJu0Yy9HrD9Yn9AIBocB/i+oNdaWN4TjNBpS/ksAg1dfuhXAZbxBTI0
-	sqUtpHJH+SUzH/t+jfHX77pJO/mBltxZAwwK+ICS0GlGK6lz/hHZVDTdTWwuEQ==
-X-Gm-Gg: ASbGncvN5TFAs7dI7nvySh7pBIfEkMFX9P2DeCGsyeeQia93tJPFnP5Ufw7AMtbkPSW
-	caCRe7pcb1lBSIE/FcKBQ0lMG9s89nftVOB8eRIehBFKFpu0wvC5/C1B36tEheYxWEWQMNNvnSu
-	l/bJCiIFfOWYd9WQQnHV9fBf4Kvp3HmVopV+a+KoxmktqPs1LBACmscuzLoU22R529xRJU5uf/d
-	UlCo5Rc6UtijOn9RIEo9E4NFJYKNSniw529kgHZqCjkNxi/iZ1wpYJRx3Ap2vMKlTdCrmUz7KiS
-	HcQdEvJObJTfID7v9t3BxPHfsYFGq8BNTgse13GHwrfYspnHYe3CB8iPtc6bbZANfSHi54LCQY6
-	+f/J7yYxlioRuiu/ehXOI/Sk7BLqUVUG03wQ=
-X-Google-Smtp-Source: AGHT+IGoJfBQUr6WO3IqwnushyiGr8qjSIhWEncGGL6xa0DrQj+Nyvx6/5K7glPGJ+xFun4QWOFFSg==
-X-Received: by 2002:a05:6e02:170c:b0:41e:96c7:adaa with SMTP id e9e14a558f8ab-420a4737623mr15451365ab.23.1757623087391;
-        Thu, 11 Sep 2025 13:38:07 -0700 (PDT)
-Received: from [127.0.0.1] ([52.173.163.41])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-511f3062bc3sm945539173.47.2025.09.11.13.38.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Sep 2025 13:38:06 -0700 (PDT)
-Message-Id: <pull.1970.git.1757623086030.gitgitgadget@gmail.com>
-From: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 11 Sep 2025 20:38:06 +0000
-Subject: [PATCH] libsecret/Makefile: add install target
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="A0ZLErr+"
+Received: (qmail 57078 invoked by uid 109); 11 Sep 2025 20:43:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Gucyw4oO6w31H7onPYMBWC5+44pgNQHrP+/XqCUnNgg=; b=A0ZLErr+wOOqQT5eVyOZV+r1tg/G9AaCwxx9c6hb9LhsorWw4NTdps/s/z/8Szdy0yyg9YlI6XSvLuHhKKIYGsRmRRjlmqY0ScKsbHPIrA7YC1SKrTHDO2W6Q4evl8GWC99pcuMP4V8YfDRKuDJVx+bDlojEWbK72WxvypXhpdb40glOfmUlQNWdv3LVMnETubOnTUUJP+eNyOhoAde4xkO4OZMpAY38NvSqriHQa4rS3Ts4TUZ44mJJQk4nFIvRhUxDGkfo9VNHp7Ewm2WtnxEDw3rtDNWylizOfzuXVOjpdWYHhceC8ndPlOvBuJDidh/6pP5i7KF6qknvxw2Meg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Sep 2025 20:43:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 90839 invoked by uid 111); 11 Sep 2025 20:43:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Sep 2025 16:43:02 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 11 Sep 2025 16:43:02 -0400
+From: Jeff King <peff@peff.net>
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4 2/7] git: allow alias-shadowing deprecated builtins
+Message-ID: <20250911204302.GA1907101@coredump.intra.peff.net>
+References: <cover.1757345711.git.code@khaugsbakk.name>
+ <cover.1757446619.git.code@khaugsbakk.name>
+ <672253e0e7167c40290d1fef6d5076adfbe25d80.1757446619.git.code@khaugsbakk.name>
+ <20250910051347.GA556174@coredump.intra.peff.net>
+ <20250910154859.GB562601@coredump.intra.peff.net>
+ <b39ba543-24ad-4bd6-be6e-dc1b8a416eb0@app.fastmail.com>
+ <20250910183418.GA1157772@coredump.intra.peff.net>
+ <eefc3524-9ecf-44e5-a6ba-1b4a0aff3158@app.fastmail.com>
+ <20250911203256.GA1894340@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: M Hickford <mirth.hickford@gmail.com>,
-    M Hickford <mirth.hickford@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250911203256.GA1894340@coredump.intra.peff.net>
 
-From: M Hickford <mirth.hickford@gmail.com>
+On Thu, Sep 11, 2025 at 04:32:56PM -0400, Jeff King wrote:
 
-Signed-off-by: M Hickford <mirth.hickford@gmail.com>
----
-    libsecret/Makefile: add install target
+> It is a little funny to do it up front even when we're going to directly
+> run a builtin, but I don't think it harms much. OTOH I find the whole
+> placement a little odd in the first place. We are speculatively adding
+> to the cmd list before even finding out if we have an alias. It kind of
+> feels like this should be part of handle_alias() in the first place.
+> We'd need to pass in the cmd_list variable for it to add to and check.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1970%2Fhickford%2Flibsecret-makefile-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1970/hickford/libsecret-makefile-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1970
+IOW, something like this (perhaps as a preparatory patch):
 
- contrib/credential/libsecret/Makefile | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/contrib/credential/libsecret/Makefile b/contrib/credential/libsecret/Makefile
-index 97ce9c92fb..6fe70065ab 100644
---- a/contrib/credential/libsecret/Makefile
-+++ b/contrib/credential/libsecret/Makefile
-@@ -26,3 +26,7 @@ $(MAIN): $(OBJS)
+diff --git a/git.c b/git.c
+index ca66e24639..06de0bacf3 100644
+--- a/git.c
++++ b/git.c
+@@ -365,7 +365,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 	return (*argv) - orig_argv;
+ }
  
- clean:
- 	@$(RM) $(MAIN) $(OBJS)
+-static int handle_alias(struct strvec *args)
++static int handle_alias(struct strvec *args, struct string_list *cmd_list)
+ {
+ 	int envchanged = 0, ret = 0, saved_errno = errno;
+ 	int count, option_count;
+@@ -376,6 +376,8 @@ static int handle_alias(struct strvec *args)
+ 	alias_command = args->v[0];
+ 	alias_string = alias_lookup(alias_command);
+ 	if (alias_string) {
++		struct string_list_item *seen;
 +
-+install: $(MAIN)
-+	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
-+	$(INSTALL) -m 755 $(MAIN) $(DESTDIR)$(gitexecdir)
+ 		if (args->nr == 2 && !strcmp(args->v[1], "-h"))
+ 			fprintf_ln(stderr, _("'%s' is aliased to '%s'"),
+ 				   alias_command, alias_string);
+@@ -423,6 +425,24 @@ static int handle_alias(struct strvec *args)
+ 		if (!strcmp(alias_command, new_argv[0]))
+ 			die(_("recursive alias: %s"), alias_command);
+ 
++		seen = unsorted_string_list_lookup(cmd_list, args->v[0]);
++		if (seen) {
++			struct strbuf sb = STRBUF_INIT;
++			for (size_t i = 0; i < cmd_list->nr; i++) {
++				struct string_list_item *item = &cmd_list->items[i];
++
++				strbuf_addf(&sb, "\n  %s", item->string);
++				if (item == seen)
++					strbuf_addstr(&sb, " <==");
++				else if (i == cmd_list->nr - 1)
++					strbuf_addstr(&sb, " ==>");
++			}
++			die(_("alias loop detected: expansion of '%s' does"
++			      " not terminate:%s"), cmd_list->items[0].string, sb.buf);
++		}
++
++		string_list_append(cmd_list, args->v[0]);
++
+ 		trace_argv_printf(new_argv,
+ 				  "trace: alias expansion: %s =>",
+ 				  alias_command);
+@@ -811,7 +831,6 @@ static int run_argv(struct strvec *args)
+ {
+ 	int done_alias = 0;
+ 	struct string_list cmd_list = STRING_LIST_INIT_DUP;
+-	struct string_list_item *seen;
+ 
+ 	while (1) {
+ 		/*
+@@ -821,7 +840,7 @@ static int run_argv(struct strvec *args)
+ 		 * deprecation complaint in the meantime.
+ 		 */
+ 		if (is_deprecated_command(args->v[0]) &&
+-		    handle_alias(args)) {
++		    handle_alias(args, &cmd_list)) {
+ 			done_alias = 1;
+ 			continue;
+ 		}
+@@ -874,30 +893,12 @@ static int run_argv(struct strvec *args)
+ 		/* .. then try the external ones */
+ 		execv_dashed_external(args->v);
+ 
+-		seen = unsorted_string_list_lookup(&cmd_list, args->v[0]);
+-		if (seen) {
+-			struct strbuf sb = STRBUF_INIT;
+-			for (size_t i = 0; i < cmd_list.nr; i++) {
+-				struct string_list_item *item = &cmd_list.items[i];
+-
+-				strbuf_addf(&sb, "\n  %s", item->string);
+-				if (item == seen)
+-					strbuf_addstr(&sb, " <==");
+-				else if (i == cmd_list.nr - 1)
+-					strbuf_addstr(&sb, " ==>");
+-			}
+-			die(_("alias loop detected: expansion of '%s' does"
+-			      " not terminate:%s"), cmd_list.items[0].string, sb.buf);
+-		}
+-
+-		string_list_append(&cmd_list, args->v[0]);
+-
+ 		/*
+ 		 * It could be an alias -- this works around the insanity
+ 		 * of overriding "git log" with "git show" by having
+ 		 * alias.log = show
+ 		 */
+-		if (!handle_alias(args))
++		if (!handle_alias(args, &cmd_list))
+ 			break;
+ 		done_alias = 1;
+ 	}
 
-base-commit: 4975ec3473b4bc61bc8a3df1ef29d0b7e7959e87
--- 
-gitgitgadget
+
+And then along with that:
+
+  - a new test at least of the looping deprecated case (we have an
+    existing test for non-deprecated looping aliases)
+
+  - while we are moving all this code, I might consider calling cmd_list
+    something more obvious like "expanded_aliases" or something.
+
+  - the placement above puts it next to the direct-recursion check in
+    handle_alias(). But it does change the output a bit, since we now do
+    the check after the "-h" expansion. So Before we'd print:
+
+      $ git -c alias.one=two -c alias.two=one one -h
+      'one' is aliased to 'two'
+      'two' is aliased to 'one'
+      fatal: alias loop detected: expansion of 'one' does not terminate:
+      one <==
+      two ==>
+
+    And now we'll print:
+
+      $ ./git -c alias.one=two -c alias.two=one one -h
+      'one' is aliased to 'two'
+      'two' is aliased to 'one'
+      'one' is aliased to 'two'
+      fatal: alias loop detected: expansion of 'one' does not terminate:
+        one <==
+        two ==>
+
+    with one extra "-h" line. Probably not a big deal, but that perhaps
+    points to the fact that we could be detecting the cycle one loop
+    sooner. I.e., as soon as we see that "two" points to "one" we know
+    we have cycled. We could probably be checking new_argv there
+    instead, after adding the current name to cmd_list (and in fact that
+    would catch the direct-recursion case automatically and we would not
+    need to do so manually, though maybe people prefer the more specific
+    message it produces).
+
+    I'll leave that as an exercise for the reader. ;)
+
+-Peff
