@@ -1,136 +1,153 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45927362095
-	for <git@vger.kernel.org>; Thu, 11 Sep 2025 17:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51A4220698
+	for <git@vger.kernel.org>; Thu, 11 Sep 2025 17:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757610147; cv=none; b=MDxpZRb+r4sn1ZyCLBXbTWCTvdoyQ67kHDBswnZlV5jNpYPi2bt1FjuwTGgF1fV7P4fzw331sEruRXbdkFnpVg4hCgMkjYgjDXdcMJQgQZX0Sz/0G4ncNrmW4t1LN4NH8gaZYM46UGXL1T600EaZJwBJPVR282tMEiG9z+MStgI=
+	t=1757611910; cv=none; b=mKaQxNcN7TT0hFKulX6vunESXr5S+5n2Rtb3/knwBvhxd8Bm7TdDC83vA290/EEUj5Md2xCfjm515PGfFi6qg4WTvAfQ6RCxzvyGNYDaBpb/1nyT4UFo0ml/fmAOtsOgY/zZNqhbWjVsrm+vrrFV/oRTYdWrqUWSXbfxLIX9008=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757610147; c=relaxed/simple;
-	bh=JTILwjAS9w3RnkjhcTq7CdmeuNcaI67pSki3fTY9o60=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PeVJT8hMboqY7CwmSKup0z4gY7sbAmm+rbNWbLX5yYRSTsKiPF5L7CXawohWWoFWyIqDLG9tYC7ZtYu/5CXUoN/9yVGtVoo8w9U+fETJtP8JK4q/OZH+GOA3W2wDByapPFSZd3RoT61ha3Fpd+J4NKCI2imLCGwmr4gHTDcCpsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=0ajkbjav; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KfBEQqtv; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757611910; c=relaxed/simple;
+	bh=JMivT4PNPm/P/PpB/wNhX0+criqyvkxZxEUrFE9TQIQ=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=N2WDHkoZjn9n1/8oZ6x60KzysfE3amFwURsVl+VWwV6ygATn7C5Y++Y92sOFAz73iFnisMyLWVLh39aihH9bodgF3zVU2OcfRI5g0fXqRj8yWZ1pfcxhr2ScCiWKS0B0jmBxh3q48wJmdRIgLtbMfMnGmocptPtVtpsi6HUPn1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=ZcXJhLoW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bd3txx9+; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="0ajkbjav";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KfBEQqtv"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4C8DC7A03E1;
-	Thu, 11 Sep 2025 13:02:24 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 11 Sep 2025 13:02:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1757610144;
-	 x=1757696544; bh=sxdJ8/bWUaeme4784Ek4dIeKIwzkYhdqtWfBOmYoM2I=; b=
-	0ajkbjavmvhl3di+b5ndCP8Db8TmkWPQBWUjeelomdoTAQfcdAuBj4IZHjjc+qWL
-	zPbYn0EMKOnWKTtOhjyFiSPHPjAhyQBPrFcZmfpzc631DRsv1zSmW6zJuFqh3BDP
-	4TbelcfyPAqNJA6SGYdaKtOORUNmnXUREHXkbwhGkRbM+WoImhFsXQ3VQU75iy/B
-	+wSHrvuz4m4fQkStvTPtCUaAUoQcWRR7YG0/oHKgPO5yiJpManhz5iq+VeS8lxoZ
-	7215WQMJwgaUaGHji96Uq/yfNcpu2PRd66/xvxXmNUE+CC5HlrUeavCxVFch4sfW
-	SUtZJvLnAMrorNUw3xktvA==
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="ZcXJhLoW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bd3txx9+"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EB09F7A01E0;
+	Thu, 11 Sep 2025 13:31:45 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Thu, 11 Sep 2025 13:31:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+	 t=1757611905; x=1757698305; bh=JNwnXZEuz3/ejk559EeUZfzUk9K20ofc
+	R976L5c+XyY=; b=ZcXJhLoWiYGXj5/wEWOds5/Nn+CzastaapmZFM5MW469tyyu
+	kF9ViVwZI2K7jZtXyensAIMRJoS/a8/QdH1jB880U+6k4Z5gnz4S8UsxNLCK0lMh
+	w1C07TBsi0TLlZ9zcuKDd91oaiqfrzFtZMoMdEle5NB+xjkS7xBjWvXadyT78NCq
+	zNyziyPoaVOhmt8pEt0NXH4r/TnmuCSnVqVYlFyQLzgc5RvxBX/7fcyEM+rGdp57
+	hc1vDLhLcbKtyxpnA9QDf4B6iz6rll/XMbyu3FHAsbWJPCWwxWKp5Gd/rqaMfmDY
+	4WiswrZOKA+QVAgoGGa32CdFOc3kykc0OFtWCQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757610144; x=
-	1757696544; bh=sxdJ8/bWUaeme4784Ek4dIeKIwzkYhdqtWfBOmYoM2I=; b=K
-	fBEQqtvI581qf5Z8xjw3UcMvJxnXbno+THcTWhUWr2O1LOdDHFCmxRGT6FRAl+Z+
-	7QowrTgt9vxQeBZX/D/skCV3ojkOnhp2RpK3M/KTFImbZFloBt4pEjgAlZkpC8hJ
-	UAdj6PKeDIuBTzYUJZiXIgefkWvBvUrj8kkFugyhQBrtT5Mhy+Cghpg+HgQZ447v
-	dvjjUN1PewZPF7L2XZcfUmwgmKptocACH2RiH5mYJQoUGQ/AKN/1EpDLSNFJ6pxi
-	rdLm2XK2KYWFcnXbLeA/acSs1uBUR5cuXBlvfixdv7JjjW/xXm+J6csN0bDjRA9t
-	h2HBRluaVIMuu9P/ICUlg==
-X-ME-Sender: <xms:nwDDaGmdR5SCHjnyv3vfQOKwvxfsQTv-BWmh8PRjW-QCviaswozWPQ>
-    <xme:nwDDaIZpoBKcWoyl1qbb2Nxk7zq9xbWpwW4VRNUS48ZZRQvHGEZELPY_IGuJ7oleM
-    tLE0pJdtyZsoCyFVQ>
-X-ME-Received: <xmr:nwDDaBNgw2EhrgWDGY20cDXuWbZMXMxxjJYWpf_c54ofg9Bwrf8Csu6GIEYx2IzNSkv1e0b3jaxhmSWsdJ9Qr6m8RcCpgBpVpozq9vU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvieejudcutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757611905; x=
+	1757698305; bh=JNwnXZEuz3/ejk559EeUZfzUk9K20ofcR976L5c+XyY=; b=B
+	d3txx9+d/7dUhd93cstlWQnN4vA48jAoen9FOfISh8ySsihGdp4neZYePngPIysd
+	Ov6a5Bdu3Nj1iulb3dYCgVufH9j+mQQ/eLK9aFW2wuyhNxr2s+JvzBWyhO+HM1IE
+	L0bytU5a7jz79lUV0jhYAfANfiv89DoJKB+Uxv31ETAa7pL/4w4MqvNORJ11joqU
+	/317wMR+NnASWo6lrlvFqcWmbnG7Sf/UWSPALlQxDGGR3j61GbFz3NQ5NtWKhHoh
+	CUUnxCddAd9AgUEJlKTyH1p1UN2xWjIFTGACXe5rviHdqC6NM3k72Ph5lBoV6kL+
+	TEyY4nTWGCwNDy9WHnGQQ==
+X-ME-Sender: <xms:gQfDaHECC40d-3D_3vxP1Xi6lorDuKe-Uy9HJgjeEFuVvvWotD4kjz4>
+    <xme:gQfDaEWsA3ioEgZhCX6mEkWy26xOKeY8EJm1NVJm2bCRvZRN8hR-H35fHAHT6rkMg
+    yBQL7WysMPdXqVACg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvieejjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshiivgguvghrrdguvghvsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:nwDDaNYvRuFBM8vimgQL_3jbbYQVhSvcQQyb8IjTpVhC1ZggTj96Zg>
-    <xmx:oADDaP3vuvUogKnpb_wrwXy3-gc3t51qfAfJ4SKPrvdWKU6uBsVETw>
-    <xmx:oADDaDeQXL9ZAHJHGv5h9oBHZ5VZpXo1z82EqimPIs5ArjNAQbu--Q>
-    <xmx:oADDaAG422PNT8pxHuMbicaKp4dzLOooGm6lSxLJszoTZ8_AF9_nkg>
-    <xmx:oADDaJ1DEbT321uCzFKPTQkdnsPyYIlQr0xKCDgAOFUv1VR8RlT9AQ8N>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Sep 2025 13:02:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>
-Subject: Re: [PATCH 0/3] ci: don't compile whole project when testing docs
- with Meson
-In-Reply-To: <20250911-b4-pks-meson-docs-target-v1-0-a92c666ecef9@pks.im>
-	(Patrick Steinhardt's message of "Thu, 11 Sep 2025 11:16:05 +0200")
-References: <20250911-b4-pks-meson-docs-target-v1-0-a92c666ecef9@pks.im>
-Date: Thu, 11 Sep 2025 10:02:22 -0700
-Message-ID: <xmqqwm64orc1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnh
+    grmhgvqeenucggtffrrghtthgvrhhnpeefteeghfegfeevleeguddvkeetheeiveffudej
+    lefgudffffejleffffeludekjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofh
+    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphgv
+    fhhfsehpvghffhdrnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoh
+    epshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:gQfDaLnCcihod3qW2nkOdvzf7qWFCO3R4SdhmOHpUFOrFW_c39Owaw>
+    <xmx:gQfDaL_bcHn2mcH4IOsCVfrgjUHsLQ0ZNsSJpBBJa2DLM1xOd3blJw>
+    <xmx:gQfDaAqEi1SGMhHKoDPbopeeC7PqWoQaYpTWg4C_KDuY6d6GRgcE6Q>
+    <xmx:gQfDaEl8eROR7z3BUlCOBLo9_bQS2Lm0F6ItlE_G9NEQyJP96yTkmg>
+    <xmx:gQfDaPsaX4Ten4QtKzfdV-RYvNWChKGGtcgme3bsH-zTvv10dREYf8A5>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 3CB761EA0068; Thu, 11 Sep 2025 13:31:45 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: Ai977590-_NN
+Date: Thu, 11 Sep 2025 19:31:04 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Jeff King" <peff@peff.net>
+Cc: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
+ git@vger.kernel.org, "Eric Sunshine" <sunshine@sunshineco.com>,
+ "Patrick Steinhardt" <ps@pks.im>
+Message-Id: <eefc3524-9ecf-44e5-a6ba-1b4a0aff3158@app.fastmail.com>
+In-Reply-To: <20250910183418.GA1157772@coredump.intra.peff.net>
+References: <cover.1757345711.git.code@khaugsbakk.name>
+ <cover.1757446619.git.code@khaugsbakk.name>
+ <672253e0e7167c40290d1fef6d5076adfbe25d80.1757446619.git.code@khaugsbakk.name>
+ <20250910051347.GA556174@coredump.intra.peff.net>
+ <20250910154859.GB562601@coredump.intra.peff.net>
+ <b39ba543-24ad-4bd6-be6e-dc1b8a416eb0@app.fastmail.com>
+ <20250910183418.GA1157772@coredump.intra.peff.net>
+Subject: Re: [PATCH v4 2/7] git: allow alias-shadowing deprecated builtins
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Wed, Sep 10, 2025, at 20:34, Jeff King wrote:
+> On Wed, Sep 10, 2025 at 07:58:32PM +0200, Kristoffer Haugsbakk wrote:
+>
+>> > So we just need to loop again when it told us that it found an alia=
+s (it
+>> > is tempting to just continue in the loop body, but that would miss =
+the
+>> > case of a deprecated alias that resolves to another deprecated alia=
+s).
+>>
+>> Yeah, that=E2=80=99s subtle.
+>>
+>> Do you think this should be a test case?  I guess it doesn=E2=80=99t =
+hurt.
+>
+> Yeah, probably would be easy to add. We need two deprecated command
+> names, but it looks like we do have that at this point. :)
 
-> these two patches introduce a new "docs" alias into Meson and use it in
-> our "documentation" CI jobs so that we stop compiling all of Git only to
-> verify the generated manpages. This fixes the issue reported by Gábor in
-> [1].
+Thanks. That works fine:
 
-There are three patches ;-).
 
-The end-user facing get_option() is called "docs", unlike what the
-"make" side understands, which is "make doc", even though internally
-we call the target internally as "doc_targets" (not "docs_target").
+     test_expect_success 'can alias-shadow via two deprecated builtins' '
+             # some git(1) commands will fail... (see above)
+             test_might_fail git status -h >expect &&
+             test_file_not_empty expect &&
+             test_might_fail git -c alias.whatchanged=3Dpack-redundant \
+                     -c alias.pack-redundant=3Dstatus whatchanged -h >ac=
+tual &&
+             test_cmp expect actual
+     '
 
-I wonder if we want to let people say "meson compile doc" to match
-the other world?
+But it turns out there is a regression in my code with the recursion
+detection.  Compare:
 
-Will queue.  Thanks.
+    $ ./git -c alias.one=3Dtwo -c alias.two=3Dtwo one -h
+    'one' is aliased to 'two'
+    'two' is aliased to 'two'
+    fatal: recursive alias: two
 
->
-> Thanks!
->
-> Patrick
->
-> [1]: <aLCf0UaTxy5Nxpv/@szeder.dev>
->
-> ---
-> Patrick Steinhardt (3):
->       meson: introduce a "docs" alias to compile documentation only
->       meson: print docs backend as part of the summary
->       ci: don't compile whole project when testing docs with Meson
->
->  Documentation/howto/meson.build     |  4 ++--
->  Documentation/meson.build           |  8 ++++----
->  Documentation/technical/meson.build |  4 ++--
->  ci/test-documentation.sh            |  4 ++--
->  contrib/contacts/meson.build        |  4 ++--
->  contrib/subtree/meson.build         |  4 ++--
->  meson.build                         | 10 ++++++++++
->  7 files changed, 24 insertions(+), 14 deletions(-)
->
->
-> ---
-> base-commit: ab427cd991100e94792fce124b0934135abdea4b
-> change-id: 20250911-b4-pks-meson-docs-target-56d8a21e84bf
+with:
+
+    $ ./git -c alias.whatchanged=3Dpack-redundant -c alias.pack-redundan=
+t=3Dwhatchanged whatchanged -h
+    'whatchanged' is aliased to 'pack-redundant'
+    'pack-redundant' is aliased to 'whatchanged'
+    'whatchanged' is aliased to 'pack-redundant'
+    'pack-redundant' is aliased to 'whatchanged'
+    'whatchanged' is aliased to 'pack-redundant'
+    'pack-redundant' is aliased to 'whatchanged'
+    'whatchanged' is aliased to 'pack-redundant'
+    'pack-redundant' is aliased to 'whatchanged'
+    [forever]
+
+Both for your suggested change and my v4.
