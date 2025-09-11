@@ -1,65 +1,65 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD003375BD
-	for <git@vger.kernel.org>; Thu, 11 Sep 2025 13:52:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA28833436D
+	for <git@vger.kernel.org>; Thu, 11 Sep 2025 14:07:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757598755; cv=none; b=UIY5qrNisD3xMT6uoek8PddoFANjX3IyYMaLf8jYg52xe6HoEsC4hUb3z3huo4Cs2LYIiQU+86kVnaPxpWIwPw63kUC4DRiO/D8ZtmUV5SZLFP5o0GTg8Ljc61tm83g8MkaElkf8KnD+fAMQH2CMzq8k4RjjOwsiaf4o7APA9Bo=
+	t=1757599624; cv=none; b=IGO0DgJbQSxUfxgYzc4n5LQXWbG24aSketYJiEMwMmp7HsHDGrdCvPeGBj8YmVFpGqes85OXX6I8GVwymjiRy8SUsaOssk0f5u2FQz4aaCJ8zUjwhuFEE+lw5cKDTSqJYoTeYr7VAxsHNNNkITacG4RKr0yti96FtD5A+ZF1Aic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757598755; c=relaxed/simple;
-	bh=QKNH3RzTO82ZkwTTscOcbwW2fKi+qQfZXMPt9KmUF58=;
+	s=arc-20240116; t=1757599624; c=relaxed/simple;
+	bh=z9QtfO6CJXVt8EkoPxpqqyQTMUYoIPOUDcu9dJ6jBvs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Go5vy6ToiNKUsNPsjN6OGfj1Epd9XQdeDMLzDosalzYyzHOaDI8xoALesbijXJ+X96pHzZdEHkY7kuLDRbvYDE+OUaFn37oQwuKB96faPFiYSScMnxXHuEiPSTVEz/Bv3ZiO1b+18jJSMQMHm/XORZ/FwE3N09rbSZGUpwk7CBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S4oIdyLv; arc=none smtp.client-ip=209.85.160.181
+	 In-Reply-To:Content-Type; b=Eq7DCHVsXA7zJKLvdWgaKY/3qqEc0dY4RtxdMAxKvxvLF/3JV+5xhPxwItCE7+Dw9q5QCtOjm/nPbcjUVoaC1DJ9uLwlNrbFYnEcP+s671VMO+f7O6/PS5bUgz5c0GxKX5+5OZYy+BOLXal5hvBc2nLHPbQEK99nJ6vt3OqGV9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R+IGsyb/; arc=none smtp.client-ip=209.85.222.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S4oIdyLv"
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-4b490287648so13623851cf.2
-        for <git@vger.kernel.org>; Thu, 11 Sep 2025 06:52:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R+IGsyb/"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-8173e8effa1so48542785a.0
+        for <git@vger.kernel.org>; Thu, 11 Sep 2025 07:07:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757598753; x=1758203553; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757599621; x=1758204421; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=mJWEFRl1Hz2PlyAApC6sE/5AhXXFNltgjiyeNLXfmBE=;
-        b=S4oIdyLv9Xf/e5gdJc2S6Gp2rohJhH2Cuyg0TDfM1r7Hc/2j/a9VxuNSQFOiDLaq36
-         UXLhC1OwpluJ7m9FYlhoZAdrgXFyV/4SS5kv8UYMd8vsXpRwsqbIafdhPdFDi+HDFG7H
-         q5c16jMTctZXeZlEOCo6jF+ndyrHpI5fg1wGw7KWLD5cfyqJS8dnACz/IjOVbTuDmKkn
-         jUKwUO9FX0eKSN4HvInsr5uOnu4PHF38vr+u7xOPCnYwAI9rYRJNvD7iQGfqGQB2tYB+
-         fxcI2SyyFq5r3W/7NCrdLPU9ZnMp3A0OgFuXTOuMsy8vgZ81vXTJAnLT4ORf+FqpVFuU
-         dGxQ==
+        bh=0UMmhFxn1CVUNEzjSqQdawFTMBskbuKyRGdI/C9GXZA=;
+        b=R+IGsyb/JseB1cWnkCmQGBiwz+6ieX7uLHg4AcSJygG1sLMcizTKu8IuBXkxirLHUU
+         3z2oCc1l2ZQ9Azp5zO9wm30ZT70ApdXCmw/wQ/zzUbt2VuC54u/J7Ou5xAbzRTZErcA8
+         QY6WqEd/Fi1+HCLgX9f8CtGy3GfCjy/FIaP5Akh3vL+MdtlIn+8g43y34gxdn56ehpKv
+         S3ox4CMfuEZT5MLz8PqKQCI+AnAbUdzbK4eTwoSC0H+X/yD5gox2jQX+/SaTUylEGmLi
+         MgcxDjgr4NgFJ0EdyMKS+KZ9j6fOMPLPacfSEynhL3cw8AXMHpZjzlfm1zV6ru80MMpa
+         g9Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757598753; x=1758203553;
+        d=1e100.net; s=20230601; t=1757599621; x=1758204421;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mJWEFRl1Hz2PlyAApC6sE/5AhXXFNltgjiyeNLXfmBE=;
-        b=KpWS/DpgQ+CXVgh/Ojsn1uYvtEkZlxZFX+OR2O6gvxrV2CODA+WNEM0+Umlh4575Ei
-         88x6ggVkXVTNJNqFy5kUueJMj0ym1EpufLNA0aeMHrhzb01pvfP0hIjjBi+5Jg0RxIkS
-         OgMfAfz5ZzzICaCJxgr70+rkZKIJgJ/H3dwPFDeDLDO1gHFFyUoMgAyJ6dz31kqaEwI2
-         WstgzgBKpEQMCe9CuucyHTBSIeLn4B4wcmNAv16gDCc3hLfB/kWGRfcILK0B9dVALOCI
-         eSayOnPAVjvlVPN8e7bD/75wA9jPLRMIS0zcU5gbSwt/ELw+8Sh857BSTjkwccGGwnSo
-         ousQ==
-X-Gm-Message-State: AOJu0YxyfW2uWzQ9splxvGV757yIhc8pmVOLQUoyhjTsgU/EMIwAD4yU
-	a5Jr1IyWf6NsyG3J8suLMKHtuScaeUdEbrfL0xl6Qg9FIx5g8ThE/HBucJ+YQw==
-X-Gm-Gg: ASbGncu6R1x8qgZaSY8vELpb8cEPFNBTWVwzhc8jDykZW9wPq9680EW+YMFHLmDq9zz
-	YHIM0rsvNh/qecjngsCr4mZzAwLwLYBOP9P3lRs1+HZR8FQMp3+n5rEUyaiHNlB5P8AQZYk1LZK
-	XyEVNQmluw+WfNU3pdrMgJLutGh1QwrtYFdyQEP7qtjIaxXiTqWU5OdGykStPHMZe6jcS9qSjKv
-	lA6FcrZIXP19IEu9AJenRsLKbZuTwaw/8pq/MbQTt83Rv5G9gYrfJGrqa/p9MpdZPLuVK4GcaL5
-	j8R6OsdBElati8Rr2A+ju+a3/3VJaVu4Z6R8cGL7F52hOO365LVeqvg12mLsJxNX7Z3y7YMVA9I
-	7MAOP2AGqomkiMAgB4FXw7tHw1WlGJayeVg9i8X0G951AJFzIPZwey9H2RblPKlKKbcAf9gQcl5
-	6EQ85TC7EtnM0N+4U=
-X-Google-Smtp-Source: AGHT+IFbavzi3fwgBicP2Vd650aTbZH+9i5lh1YSSRlyPYvMcCh7KdSDNNsigi4G4OW0i6pVVMGgvw==
-X-Received: by 2002:a05:622a:180a:b0:4b5:f59a:93f6 with SMTP id d75a77b69052e-4b5f8445b70mr288494791cf.50.1757598752817;
-        Thu, 11 Sep 2025 06:52:32 -0700 (PDT)
-Received: from ?IPV6:2605:a601:a6de:d300:d5ef:df1b:dc3e:13b8? ([2605:a601:a6de:d300:d5ef:df1b:dc3e:13b8])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b639dcd8f8sm10414451cf.44.2025.09.11.06.52.31
+        bh=0UMmhFxn1CVUNEzjSqQdawFTMBskbuKyRGdI/C9GXZA=;
+        b=BF+HTOidqF1Erz5PVHsTfYfAVtXfjvdpmYVn2ivn0k536xQ9rWIEK4RCJ6c3AB40xs
+         TI47yJgTNH18cXbWN48aDZzvNXbrwHRVYvw032N1JbgjJrsSh4EZIlCZiuy2lOBb0gqs
+         aWeQVua1D88rJTIrypOUZ6EFb1CVR8RSc8PdYnuJuyO5VTAkuFGd5ymYw//66zBQMduH
+         QQ6Zh6C63pCxyKHye0d29027GcAf8comwL2sFzHIOapD3hSKdhhfgQ8StNFe52GhgNb6
+         1TXZLfmL0hP9p3y2iSE9UyLPaEnOlMQs6RPggSdBeQAT29OlvoKOPdOfV9kXsJGVS10B
+         Thwg==
+X-Gm-Message-State: AOJu0YwcEZaqxT1QtgxC6qySO1RSOcEiMyPfwSSTk/mctycvlFWEKnAp
+	UBNIIiuYGCaacZIKq/9QpITq628HUOgtz7h1nvQz8KOPDd5vJsMpe4tT
+X-Gm-Gg: ASbGnctpFPV0PX9+MWl92mva6s6i3zicXS29CSkDZD3Gtt7xRK/NTkLIy8kGQoCjy+p
+	JRcOtXBXr+bcxMpp8+lNCKmjVZWVHRzYlx368nAvE25RkJNnYGBVPF3/10npvFi94KiQOjTzEW9
+	qZN8d0zO+zdT6ogwZ2ih5iop5O2POOYW0BPDrNyrN6qzIn52EvCZKuT8T2sLSfxi8Sec9pH+8oJ
+	Rme5U3F2OyLPoEONiE8t+NpDoopnjhPpGJw2EMoF4aTUTBP8sPehtqiNcMsuTZqqXrd9cYKq4YF
+	CGZHhqK0Mcuijr23dCHqPI06dqvdhXZYfo32EHloP9N9z6D/RwjliMOJZ245Vh0JeWKIu2ox8h4
+	PJvZSdA/L0A16af9Qkh9TDrXVke1xz8Az9vL0DTT917aVo3UAj9Ynwrol0A4T0XJqf+eMm9erZ4
+	xv/fsRieIohM8ebowFWHI4
+X-Google-Smtp-Source: AGHT+IGUXcne+IWRNwcj6sYpml5aKQIbTPXuRX7xlG5wyMqjKUijXRc+UPzjcu6YP1VWOBucv6QMBA==
+X-Received: by 2002:a05:620a:4515:b0:818:2b52:2315 with SMTP id af79cd13be357-8182b522920mr1790985985a.49.1757599620210;
+        Thu, 11 Sep 2025 07:07:00 -0700 (PDT)
+Received: from ?IPV6:2605:a601:a6de:d300:5913:c7c1:28e1:c1ec? ([2605:a601:a6de:d300:5913:c7c1:28e1:c1ec])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-763c131f7bdsm11065166d6.70.2025.09.11.07.06.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Sep 2025 06:52:32 -0700 (PDT)
-Message-ID: <4ed3dd55-6eba-4cce-ba00-626f4d9cddab@gmail.com>
-Date: Thu, 11 Sep 2025 09:52:30 -0400
+        Thu, 11 Sep 2025 07:06:59 -0700 (PDT)
+Message-ID: <879b6673-1af9-4bb3-add3-a61c87d98777@gmail.com>
+Date: Thu, 11 Sep 2025 10:06:59 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,68 +67,71 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/8] sparse-checkout: match some 'clean' behavior
+Subject: Re: [PATCH v2 5/8] sparse-checkout: add --verbose option to 'clean'
 To: Elijah Newren <newren@gmail.com>,
  Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, gitster@pobox.com, Patrick Steinhardt <ps@pks.im>
 References: <pull.1941.git.1751973594.gitgitgadget@gmail.com>
  <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
- <221f3e5fb0c56b75f8fbfa9f4aa34ae93fad0cdb.1752716054.git.gitgitgadget@gmail.com>
- <CABPp-BGQmoPQ9TOLjZPpPPEJ__0rsHgRMJ-nkiW4GcQjPCvaBA@mail.gmail.com>
+ <f464bb5ed6be91940c3abb54b77cb7b9d893bd67.1752716054.git.gitgitgadget@gmail.com>
+ <CABPp-BFaPG1YpGOcTm=aX6n1XZ3upQ4iYB=nNND4bvsNZ=CqqQ@mail.gmail.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CABPp-BGQmoPQ9TOLjZPpPPEJ__0rsHgRMJ-nkiW4GcQjPCvaBA@mail.gmail.com>
+In-Reply-To: <CABPp-BFaPG1YpGOcTm=aX6n1XZ3upQ4iYB=nNND4bvsNZ=CqqQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 8/5/25 6:06 PM, Elijah Newren wrote:
+On 8/5/25 6:22 PM, Elijah Newren wrote:
 > On Wed, Jul 16, 2025 at 6:34 PM Derrick Stolee via GitGitGadget
 > <gitgitgadget@gmail.com> wrote:
 >>
 >> From: Derrick Stolee <stolee@gmail.com>
 >>
->> The 'git sparse-checkout clean' subcommand is somewhat similar to 'git
->> clean' in that it will delete files that should not be in the worktree.
->> The big difference is that it focuses on the directories that should not
->> be in the worktree due to cone-mode sparse-checkout. It also does not
->> discriminate in the kinds of files and focuses on deleting entire
->> directories.
+>> The 'git sparse-checkout clean' subcommand is focused on directories,
+>> deleting any tracked sparse directories to clean up the worktree and
+>> make the sparse index feature work optimally.
 >>
->> However, there are some restrictions that would be good to bring over
->> from 'git clean', specifically how it refuses to do anything without the
->> '-f'/'--force' or '-n'/'--dry-run' arguments. The 'clean.requireForce'
->> config can be set to 'false' to imply '--force'.
->>
->> Add this behavior to avoid accidental deletion of files that cannot be
->> recovered from Git.
+>> However, this directory-focused approach can leave users wondering why
+>> those directories exist at all. In my experience, these files are left
+>> over due to ignore or exclude patterns, Windows file handles, or
+>> possibly merge conflict resolutions.
 > 
-> I'm a bit surprised by this.  Given that the only kinds of files that
-> this command cleans out are untracked and ignored files, and Junio's
-> comments about clean.requireForce over in
-> https://lore.kernel.org/git/xmqqv7o2togi.fsf@gitster.g/, I thought his
-> comments could be interpreted as not wanting clean.requireForce to
-> apply in more places.  Did I misunderstand?
+> Seems reasonable.  And based on your previous testcases, it might not
+> even be merge conflict resolutions, but just someone placing a
+> (possibly-modified) copy of a tracked file back into the directory.
 > 
-> Alternatively, maybe you thought that there were files other than
-> untracked and ignored which `sparse-checkout clean` would clean up,
-> and it was because of those files that we wanted the extra protection?
->   (In that case, it'd make sense, but it seems to go against what was
-> demonstrated in the final testcase of the previous patch.)
+> (I've seen folks do that, so it's not "just" your testcase doing
+> something unusual.)
+> 
+>> Add a new '--verbose' option for users to see all the files that are
+>> being deleted (with '--force') or would be deleted (with '--dry-run').
+> 
+> Does that answer the users' question?  You said above in your
+> experience it came from a few different reasons; will users want to
+> know which reason(s) for which files, or will they only want to know
+> the files that are present?
 
-My thought process here was that users expect 'git clean' to be extra
-careful to prevent removing files. While Junio mentioned regret in
-the decision to require the '-f', I didn't want to have such a major
-difference between the two commands.
+I've had users asking for answers to both of these questions:
 
-I also interpreted Junio's comments to be that he wished that
-clean.requireForce was 'false' by default instead of the current
-assumption of 'true' if unset.
+  1. What files will this remove? (I want to make sure it won't remove
+     something I care about.)
 
-I'm open to reviewers providing a firm stance towards "the new
-command should deviate closer to how we wish 'git clean' worked"
-and overriding my choice to match behavior.
+  2. What files were causing my sparse index to expand? (I want to
+     understand how my workflow impacts this behavior.)
+
+> You stated in the commit message that "users wonder...why those
+> directories exist at all."  Presuming that listing files is sufficient
+> to answer those users questions, this patch looks good to me.  I'm
+> unsure if that answers the question, or if some kind of classification
+> of the files would also be wanted (ignored, untracked, conflicted,
+> tracked-with-unstaged-changes, tracked-wtih-no-changes,
+> tracked-with-staged-changes).  Maybe the answer is we start with this
+> and wait for user feedback and only add more if there's demand, but if
+> so it might be nice to state as much in the commit message.
+
+Sounds like a plan. This verbose output is intended to be human-
+readable and can easily be expanded in the future.
 
 Thanks,
 -Stolee
-
 
