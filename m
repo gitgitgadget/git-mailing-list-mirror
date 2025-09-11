@@ -1,65 +1,65 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D64032A3F2
-	for <git@vger.kernel.org>; Thu, 11 Sep 2025 13:37:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD003375BD
+	for <git@vger.kernel.org>; Thu, 11 Sep 2025 13:52:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757597871; cv=none; b=qzJ12wBZMQKUf7U2RY01Ioofx2MSiG8uzQRFmixqi75Y0fWXIeX80BYtZ14PJSCf2bDRXKyN4WGYIvlGXdmwUOHPPld3qB2dPTnKU0FVMOsGEZF1R4W7aZfo+1tl4Toa3/H4240YSq4PGM/KcJj2x35RcRsL874aFPSJSU4S5FU=
+	t=1757598755; cv=none; b=UIY5qrNisD3xMT6uoek8PddoFANjX3IyYMaLf8jYg52xe6HoEsC4hUb3z3huo4Cs2LYIiQU+86kVnaPxpWIwPw63kUC4DRiO/D8ZtmUV5SZLFP5o0GTg8Ljc61tm83g8MkaElkf8KnD+fAMQH2CMzq8k4RjjOwsiaf4o7APA9Bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757597871; c=relaxed/simple;
-	bh=ubRipzTk9UEK4N6FjDchuMiX2siMBslQiNMeFcaqdLU=;
+	s=arc-20240116; t=1757598755; c=relaxed/simple;
+	bh=QKNH3RzTO82ZkwTTscOcbwW2fKi+qQfZXMPt9KmUF58=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IH+2QqQYFSYwTxTdHuJOpBzRssA01qM1Ou71LmlfLInyW/XeCqjyE1/Z5wsT8DBoqlrUZ1q6MyMnhkBsJmit9OR4I0LjcYhl71nNPjPxQc80R4Xc2V2gaeSfQB3TkDOsMHUiE+jzmlJubJ9OZkIcBfDWuWE8nZ7PLpvHaATuvAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IlpiDMMF; arc=none smtp.client-ip=209.85.222.182
+	 In-Reply-To:Content-Type; b=Go5vy6ToiNKUsNPsjN6OGfj1Epd9XQdeDMLzDosalzYyzHOaDI8xoALesbijXJ+X96pHzZdEHkY7kuLDRbvYDE+OUaFn37oQwuKB96faPFiYSScMnxXHuEiPSTVEz/Bv3ZiO1b+18jJSMQMHm/XORZ/FwE3N09rbSZGUpwk7CBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S4oIdyLv; arc=none smtp.client-ip=209.85.160.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IlpiDMMF"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-8127215a4c6so169550085a.0
-        for <git@vger.kernel.org>; Thu, 11 Sep 2025 06:37:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S4oIdyLv"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-4b490287648so13623851cf.2
+        for <git@vger.kernel.org>; Thu, 11 Sep 2025 06:52:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757597868; x=1758202668; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757598753; x=1758203553; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5HeACD6QmSL//ID8CkpQV1qSNfGVAIkzEusAsMtSa4w=;
-        b=IlpiDMMFDavkq/5z55uYFy5+xOvSc/d92Xp53TUsae7YC0Uc7nOYiMzej17259wo7c
-         92bcPNmtsU3GQ4sJnporGaro1Z+wg6C9p5S5exhakoUpd/uLclOVlNHo46Go3WYIjIKT
-         LrKMNoCojXlbP7/cLLxKv7HG3QtKwv0bgUzeUkEfxG3vIPRr134wxF28JECVZCOxxWou
-         1CpcdPZF98QOz6WaPJz5qFPidAFjwo4AcQhP2DMwk9e2sfsidQTvHxQs7geHBIIpofd6
-         RjlavU6tczK0aW/GILlRa46M5rOHCOsAbZVb3U3cfteoqOgkVIErcw276N7WQWs4mBeU
-         I4og==
+        bh=mJWEFRl1Hz2PlyAApC6sE/5AhXXFNltgjiyeNLXfmBE=;
+        b=S4oIdyLv9Xf/e5gdJc2S6Gp2rohJhH2Cuyg0TDfM1r7Hc/2j/a9VxuNSQFOiDLaq36
+         UXLhC1OwpluJ7m9FYlhoZAdrgXFyV/4SS5kv8UYMd8vsXpRwsqbIafdhPdFDi+HDFG7H
+         q5c16jMTctZXeZlEOCo6jF+ndyrHpI5fg1wGw7KWLD5cfyqJS8dnACz/IjOVbTuDmKkn
+         jUKwUO9FX0eKSN4HvInsr5uOnu4PHF38vr+u7xOPCnYwAI9rYRJNvD7iQGfqGQB2tYB+
+         fxcI2SyyFq5r3W/7NCrdLPU9ZnMp3A0OgFuXTOuMsy8vgZ81vXTJAnLT4ORf+FqpVFuU
+         dGxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757597868; x=1758202668;
+        d=1e100.net; s=20230601; t=1757598753; x=1758203553;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5HeACD6QmSL//ID8CkpQV1qSNfGVAIkzEusAsMtSa4w=;
-        b=G2E4H1nw8Bz6EBGzW7vvaTtdq4BcffHhlSrlOHsovUv6s+X+O47uWGTMgEz7QKhOO9
-         8UBlweMXtjmb66mogFUTt9w+/m8M2bG839dbBt/TwLqRsyIdlwdgel192/wnY4GxY25R
-         sS5e1wxS9ubaP0lQeOqJucrP7ax42DFwDsxZGC2+eZcYStxJ5Ut85vxZr832lpPwsCnA
-         0040ifyQfeFZyLb7xgunduD7R6r5C2ibfkyWut5Rhy/ROm02nzAeI8q9jDa/GiPG7T6Q
-         UK8Fjjj2nSJlqZsD+eEHPlaj5RZMp697uHIz7oIlOlJTG0MeHGGiZd88ol6FAqTb2ofl
-         iqkw==
-X-Gm-Message-State: AOJu0YynLXDwkMv7tnEyQfq5k1jyWTuDpBWMeO/Xo5b/SsBcuKxv4+9+
-	vTCwN0pxInj2fKS7JKC9vAA44/v/rEnTEQQ+TrmpLbsFnVyCT5OoKb+c
-X-Gm-Gg: ASbGncsw40OKM8FftiwdX5Jf1RgheJvRC5S94YScngjNuZl6cq/31cXZor1XAnhZQ21
-	vnOK5RC0VC+ikQEkAKAlri/HS+opxnvycHvFqZQTvRBEjn0vn4DDLPJ+QhGA/1huvUWG8r5/Lke
-	dbclhPszcHnIb/852xHhpsdEeQv5BBDOFvHhwglxyOVbPXoV0d9KHMdQlgbLKY/v2hJEDaAv7/L
-	iYnfB6e0ds/8INXsKYtKUHIVXlgL1Us4zJGSmY+0nAOzoWxfz9/gg9d0HTEzyu2NskEJsQyUFDd
-	XuRqZdarx0mg0wce5eh7ANQ8ADckLHltbdxz/8siW/pM9baoKnt+PLinNw7BFfvYvKklxwd/TEO
-	4RJOL+lKSpsNX6otY/9TKq9zE6upcBwmd08obeHcYjS62sNyhgwfmnXQ+fmS1itxoZotzSp/QxL
-	Hr4X9aMAyiXlClv5o5Yhb/EBVYHpRQEq4=
-X-Google-Smtp-Source: AGHT+IGpUoRodr1nK+/YXxje0xLU2VnKFnqVYbIXkIKok775zWyyRfKJXTD8EgJaKgzvMgFKF45Z1w==
-X-Received: by 2002:a05:620a:3909:b0:80b:bb34:371c with SMTP id af79cd13be357-81ff18133ddmr442229085a.4.1757597867934;
-        Thu, 11 Sep 2025 06:37:47 -0700 (PDT)
+        bh=mJWEFRl1Hz2PlyAApC6sE/5AhXXFNltgjiyeNLXfmBE=;
+        b=KpWS/DpgQ+CXVgh/Ojsn1uYvtEkZlxZFX+OR2O6gvxrV2CODA+WNEM0+Umlh4575Ei
+         88x6ggVkXVTNJNqFy5kUueJMj0ym1EpufLNA0aeMHrhzb01pvfP0hIjjBi+5Jg0RxIkS
+         OgMfAfz5ZzzICaCJxgr70+rkZKIJgJ/H3dwPFDeDLDO1gHFFyUoMgAyJ6dz31kqaEwI2
+         WstgzgBKpEQMCe9CuucyHTBSIeLn4B4wcmNAv16gDCc3hLfB/kWGRfcILK0B9dVALOCI
+         eSayOnPAVjvlVPN8e7bD/75wA9jPLRMIS0zcU5gbSwt/ELw+8Sh857BSTjkwccGGwnSo
+         ousQ==
+X-Gm-Message-State: AOJu0YxyfW2uWzQ9splxvGV757yIhc8pmVOLQUoyhjTsgU/EMIwAD4yU
+	a5Jr1IyWf6NsyG3J8suLMKHtuScaeUdEbrfL0xl6Qg9FIx5g8ThE/HBucJ+YQw==
+X-Gm-Gg: ASbGncu6R1x8qgZaSY8vELpb8cEPFNBTWVwzhc8jDykZW9wPq9680EW+YMFHLmDq9zz
+	YHIM0rsvNh/qecjngsCr4mZzAwLwLYBOP9P3lRs1+HZR8FQMp3+n5rEUyaiHNlB5P8AQZYk1LZK
+	XyEVNQmluw+WfNU3pdrMgJLutGh1QwrtYFdyQEP7qtjIaxXiTqWU5OdGykStPHMZe6jcS9qSjKv
+	lA6FcrZIXP19IEu9AJenRsLKbZuTwaw/8pq/MbQTt83Rv5G9gYrfJGrqa/p9MpdZPLuVK4GcaL5
+	j8R6OsdBElati8Rr2A+ju+a3/3VJaVu4Z6R8cGL7F52hOO365LVeqvg12mLsJxNX7Z3y7YMVA9I
+	7MAOP2AGqomkiMAgB4FXw7tHw1WlGJayeVg9i8X0G951AJFzIPZwey9H2RblPKlKKbcAf9gQcl5
+	6EQ85TC7EtnM0N+4U=
+X-Google-Smtp-Source: AGHT+IFbavzi3fwgBicP2Vd650aTbZH+9i5lh1YSSRlyPYvMcCh7KdSDNNsigi4G4OW0i6pVVMGgvw==
+X-Received: by 2002:a05:622a:180a:b0:4b5:f59a:93f6 with SMTP id d75a77b69052e-4b5f8445b70mr288494791cf.50.1757598752817;
+        Thu, 11 Sep 2025 06:52:32 -0700 (PDT)
 Received: from ?IPV6:2605:a601:a6de:d300:d5ef:df1b:dc3e:13b8? ([2605:a601:a6de:d300:d5ef:df1b:dc3e:13b8])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b639dab2ecsm10080081cf.30.2025.09.11.06.37.46
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b639dcd8f8sm10414451cf.44.2025.09.11.06.52.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Sep 2025 06:37:47 -0700 (PDT)
-Message-ID: <4ce92ef9-61ef-491e-80a3-370e92fd10fd@gmail.com>
-Date: Thu, 11 Sep 2025 09:37:46 -0400
+        Thu, 11 Sep 2025 06:52:32 -0700 (PDT)
+Message-ID: <4ed3dd55-6eba-4cce-ba00-626f4d9cddab@gmail.com>
+Date: Thu, 11 Sep 2025 09:52:30 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,178 +67,68 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/8] sparse-checkout: add basics of 'clean' command
+Subject: Re: [PATCH v2 3/8] sparse-checkout: match some 'clean' behavior
 To: Elijah Newren <newren@gmail.com>,
  Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, gitster@pobox.com, Patrick Steinhardt <ps@pks.im>
 References: <pull.1941.git.1751973594.gitgitgadget@gmail.com>
  <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
- <7e8f7c2d6c8c740d42bc6d157fa491b558b9ff6a.1752716054.git.gitgitgadget@gmail.com>
- <CABPp-BFzMLGJwz4QqYtvw3zRYgmC=Mb8T8GCOsrLZqT2z+8H7A@mail.gmail.com>
+ <221f3e5fb0c56b75f8fbfa9f4aa34ae93fad0cdb.1752716054.git.gitgitgadget@gmail.com>
+ <CABPp-BGQmoPQ9TOLjZPpPPEJ__0rsHgRMJ-nkiW4GcQjPCvaBA@mail.gmail.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CABPp-BFzMLGJwz4QqYtvw3zRYgmC=Mb8T8GCOsrLZqT2z+8H7A@mail.gmail.com>
+In-Reply-To: <CABPp-BGQmoPQ9TOLjZPpPPEJ__0rsHgRMJ-nkiW4GcQjPCvaBA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 8/5/25 5:32 PM, Elijah Newren wrote:
+On 8/5/25 6:06 PM, Elijah Newren wrote:
 > On Wed, Jul 16, 2025 at 6:34 PM Derrick Stolee via GitGitGadget
 > <gitgitgadget@gmail.com> wrote:
-> 
-> Sorry for the long delay in responding...
-> 
-> [...]
->> Add a new subcommand to 'git sparse-checkout' that removes these
->> tracked-but-sparse directories. This necessarily removes all files
->> contained within, including tracked and untracked files. Of particular
-> 
-> Nice to see tracked files also being addressed in v2.
-> 
->> importance are ignored and excluded files which would normally be
->> ignored even by 'git clean -f' unless the '-x' or '-X' option is
->> provided. This is the most extreme method for doing this, but it works
->> when the sparse-checkout is in cone mode and is expected to rescope
->> based on directories, not files.
 >>
->> The current implementation always deletes these sparse directories
->> without warning. This is unacceptable for a released version, but those
->> features will be added in changes coming immediately after this one.
+>> From: Derrick Stolee <stolee@gmail.com>
 >>
->> Note that untracked directories within the sparse-checkout remain.
+>> The 'git sparse-checkout clean' subcommand is somewhat similar to 'git
+>> clean' in that it will delete files that should not be in the worktree.
+>> The big difference is that it focuses on the directories that should not
+>> be in the worktree due to cone-mode sparse-checkout. It also does not
+>> discriminate in the kinds of files and focuses on deleting entire
+>> directories.
+>>
+>> However, there are some restrictions that would be good to bring over
+>> from 'git clean', specifically how it refuses to do anything without the
+>> '-f'/'--force' or '-n'/'--dry-run' arguments. The 'clean.requireForce'
+>> config can be set to 'false' to imply '--force'.
+>>
+>> Add this behavior to avoid accidental deletion of files that cannot be
+>> recovered from Git.
 > 
-> You've changed the wording here relative to v1, but you haven't
-> addressed the part that was ambiguous/misleading in v1.  In fact, you
-> may have made a different part ambiguous as well, and made readers
-> think that this sentence contradicts your above claims that this
-> command is meant to clean out untracked directories underneath sparse
-> directories.  Perhaps something like:
+> I'm a bit surprised by this.  Given that the only kinds of files that
+> this command cleans out are untracked and ignored files, and Junio's
+> comments about clean.requireForce over in
+> https://lore.kernel.org/git/xmqqv7o2togi.fsf@gitster.g/, I thought his
+> comments could be interpreted as not wanting clean.requireForce to
+> apply in more places.  Did I misunderstand?
 > 
-> "Note that untracked directories in the sparse-checkout that are not
-> within sparse directories will not be removed by this command; it only
-> cleans up paths under directories that are supposed to be sparse."
+> Alternatively, maybe you thought that there were files other than
+> untracked and ignored which `sparse-checkout clean` would clean up,
+> and it was because of those files that we wanted the extra protection?
+>   (In that case, it'd make sense, but it seems to go against what was
+> demonstrated in the final testcase of the previous patch.)
 
-Both here and in the documentation, things can get a bit confusing.
-In the v3 I'm preparing, I'm taking the following approach:
+My thought process here was that users expect 'git clean' to be extra
+careful to prevent removing files. While Junio mentioned regret in
+the decision to require the '-f', I didn't want to have such a major
+difference between the two commands.
 
-  * In the commit message, focus on the implementation details and how
-    that impacts the behavior of the tool.
+I also interpreted Junio's comments to be that he wished that
+clean.requireForce was 'false' by default instead of the current
+assumption of 'true' if unset.
 
-  * In the documentation, focus on the list of files that will be
-    "considered for removal". Use the most broad definition there:
-    in a tracked directory that is outside of the sparse-checkout.
-    Add pointers that could explain exceptions and how to remove
-    these exceptions, but don't attempt to explain all special
-    cases.
-
->> +test_expect_success 'clean with staged sparse change' '
->> +       git -C repo sparse-checkout set --cone deep/deeper1 &&
->> +       mkdir repo/deep/deeper2 repo/folder1 repo/folder2 &&
->> +       touch repo/deep/deeper2/file &&
->> +       touch repo/folder1/file &&
->> +       echo dirty >repo/folder2/a &&
->> +
->> +       git -C repo add --sparse folder1/file &&
->> +
->> +       # deletes deep/deeper2/ but leaves folder1/ and folder2/
->> +       cat >expect <<-\EOF &&
->> +       Removing deep/deeper2/
->> +       EOF
->> +
->> +       git -C repo sparse-checkout clean >out &&
->> +       test_cmp expect out &&
->> +
->> +       test_path_is_missing repo/deep/deeper2 &&
->> +       test_path_exists repo/folder1
-> 
-> What about repo/folder2/ ?
-> 
-> Anyway, this test shows that neither staged nor unstaged changes are
-> cleaned up (which at least resolves the conflicting documentation you
-> provided on the matter) -- or would if you also checked repo/folder2.
-> 
-> What it doesn't show is that tracked files with neither staged nor
-> unstaged changes are not cleaned up either:
-> 
-> $ mkdir repo/folder2
-> $ echo dirty >repo/folder2/a
-> $ touch repo/folder2/untracked
-> $ cd repo
-> $ git status --porcelain
->   M folder2/a
-> ?? folder2/untracked
-> 
-> # So, we have both a unstaged change and an untracked file; let's undo
-> the unstaged change
-> 
-> $ git checkout HEAD folder2/a
-> Updated 1 path from 8cc814f
-> $ git status --porcelain
-> ?? folder2/untracked
-> $ ls folder2/
-> a  untracked
-> 
-> # Both files are still present -- the untracked file, and the
-> untracked file with no changes either staged or unstaged -- what does
-> `git sparse-checkout clean` do?
-
-It seems that the unstaged modification to a tracked, sparse file
-is enough to prevent the sparse directory collapse. This is
-similar to how 'git sparse-checkout reapply' will refuse to remove
-those modified changes. I'll be sure to update my advice around
-special cases to include this (and lock it in with a test case).
-
-> $ git sparse-checkout clean
-> $ ls folder2/
-> a  untracked
-> $ git status --porcelain
-> ?? folder2/untracked
-> 
-> # Absolutely nothing.  Not only does it not clean anything up, it
-> gives no warnings about not cleaning up what should be cleaned up.
-
-At this point, the SKIP_WORKTREE bit is still removed because
-we've staged the change.
-
-> Let's try sparse-checkout reapply:
-> 
-> $ git sparse-checkout reapply
-> warning: directory 'folder2/' contains untracked files, but is not in
-> the sparse-checkout cone
-> $ git status --porcelain
-> ?? folder2/untracked
-> $ ls folder2/
-> untracked
->
-> # So `sparse-checkout reapply` does correctly remove folder2/a for us,
-> while warning about the untracked file.  (If folder2/a would have
-> still had changes, it would have warned about it instead of
-> removing.).  Let's try `sparse-checkout clean` now...
-> 
-> $ git sparse-checkout clean
-> Removing folder2/
-> $ git status --porcelain
-> $ ls folder2/
-> ls: cannot access 'folder2/': No such file or directory
-> $
-> 
-> I think these cases either need to be a new testcase or part of this
-> last testcase, and the commit message and documentation should be
-> clearer about tracked-and-staged, tracked-with-unstaged-changes, and
-> tracked-with-no-changes files...or at least comment that they'll be
-> discussed later in the patch series.  (I have a feeling I just did a
-> lot of work to discover as I read your next patches that you cover
-> these later...)
-
-No! you found interesting ways to test special cases. Thanks!
-
-Describing the lifecycle of a sparse file (with sibling untracked
-change) going from modified to staged to sparse to unlock the
-cleaning would be helpful documentation.
-
-I do think there is an interesting extra functionality that we
-should consider for the future: "What files are in my worktree
-that _should_ be sparse? Why is 'clean' not removing them?"
+I'm open to reviewers providing a firm stance towards "the new
+command should deviate closer to how we wish 'git clean' worked"
+and overriding my choice to match behavior.
 
 Thanks,
 -Stolee
+
 
