@@ -1,259 +1,172 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E3A218592
-	for <git@vger.kernel.org>; Thu, 11 Sep 2025 02:22:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7119C7D07D
+	for <git@vger.kernel.org>; Thu, 11 Sep 2025 06:06:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757557371; cv=none; b=ICCcPJOBUcWUOMX1T7KDVqREAQqhN6eJnWw6Y/Fqn9M2qNLC5aCT3JrBkZMmg5BZZl3fldBQBf/EMoK1ewY2hOBnjhq4NSoY0JbZaZxSaWaPVZUsY2letGN6KXb5INa8nICoDRygiC+ngYRu/KPd0kAnCCQBcwF9pUl4VRjgEJM=
+	t=1757570808; cv=none; b=ZVb3ugUSpnfinqMWFz07tZm/KSs0f0j6vHW+xVLlVhsZ02lW7XgYholgMMlaaFlbeWMzMlZ/pKk5dmRlyEQFH9oY/Sp9lOt03PqraYAVPcCfCbivAZ8T6Qzs/kC3xwzRzptyf1Vo4yq3Hm+5kPd6uE5NtWb4kKXrVXyqmmKs/0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757557371; c=relaxed/simple;
-	bh=h4/MjVQ8x9roa1dbMroLN7h4hS7X9bhfL4FPXp1gz2s=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=HFLWfOefBB2FdlP/bpK+5eB3quW0vy1lGy1xSKjdH7/Tgr5SmkIXFwpKm0GcWZsBQv4ccz631KVKAMuxp1rk08tQMrh7/NwAErFrcbQKk97cZJieSabphTiDAXbZZP8yIV3uD0bT1J58wAcUSl37xqO5X/q6nryI9fXTJyfp0w8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io; spf=pass smtp.mailfrom=alchemists.io; dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b=a6MVglEr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=blXebFb7; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alchemists.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alchemists.io
+	s=arc-20240116; t=1757570808; c=relaxed/simple;
+	bh=pRcy/wrXM2KiXJ22KzVJcwmY3QXQatN4BZbJjlEPw1I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c9GpgWJ9QlXdJfMZz7bAFyCiNIlHGFpUSlX6vz13BqzSLTwX0153f56jRULYl6BEyxafcQ/goqBahYYfATxgY0FAC8sY1GYeI46LSr+TVWPDYIx96YDWVCisOeDOSn4PAxNtqVsjN2/lSo10VVuwqupwwdmAByUIsFfRqRBHCrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AUugYXeA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W32UTb3/; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=alchemists.io header.i=@alchemists.io header.b="a6MVglEr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="blXebFb7"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3C73C1D000B4;
-	Wed, 10 Sep 2025 22:22:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AUugYXeA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W32UTb3/"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id F31551D0013C;
+	Thu, 11 Sep 2025 02:06:43 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Wed, 10 Sep 2025 22:22:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alchemists.io;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
-	 t=1757557367; x=1757643767; bh=gavXIy7W37M2Kx0wjxZnG73LUuBJ+tZo
-	3Yzi86ZCgHA=; b=a6MVglErh5AII3glW84rTW3vV8KR14t/WRbEa9jOrU+Gv3GT
-	w9PNFtHvs3YldRYfWEAYuKm0RiV0uUjLjDP1ZaqTUvk/gbrxO/loVVshaKUQlcsa
-	slIisxRCD769/a5Df6CW6KPRtqd7MKjJki/7riEOoinlGEqwNww2gHOg3OEXuBNY
-	k+cJlQT1O6rJtsSqWUi62fp/yGB0tSBtMdwlFqvzXKFCzzHxI7qp75LkPvZv7a+R
-	b4lu3ebxjwfim2rDXc2lHNvrk0hhMH8Fu76Bd2t79WcMDlM70jWVpZX07lhyNwa1
-	GFHnLPIJuMs2iYY7ebOBdEKL96Dqf+KohW+kCw==
+  by phl-compute-06.internal (MEProxy); Thu, 11 Sep 2025 02:06:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1757570803; x=1757657203; bh=pawYCOTRwP
+	EmkHtWlrve/H/U32U9x0bxpHEaEpkqRVw=; b=AUugYXeAOCDItxh+le7FAh9wZA
+	j+N14YIVQ9PgxPw1k9idHY0GOm99jwfj7XYGJvjKbpGn4Dual//4qMfPY9aMoAsY
+	Go2uJXQC5ga1k5O380dVHb8Sgoqt7pP4NTea+1wxoR/dHZtxWsLyayw4oxmDpsfA
+	bFWXTbuDp9LzM+jB9mbjNpwQhWZIIRMgknAAwx2kTqEchRdF5AL6gd5fQDXOBcom
+	f0CGVPZ2Yo7ZEOGI3eLc2YqL+EUmEmLIZV2MZN8pI5h41PxczpyODFZj0BCHm6dV
+	IIL8+8FQ4PNxolM9IMJobo/wi33ex41BwEB8eq5D871zMGr3pLdG/DcN4MjQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757557367; x=
-	1757643767; bh=gavXIy7W37M2Kx0wjxZnG73LUuBJ+tZo3Yzi86ZCgHA=; b=b
-	lXebFb7pCsA6L1V1VjvmvVmnpiVw7OiMZ0g/zLy/1CprVPEr3saRchBr1DzZV7yg
-	E+qskVwNoTn3p6X+F+XQEcz3xpOKPLxBMf5IHRFXQ+L9rjSApD4y+fwelPRfbALU
-	hsusosMCFhJRAOaxXVYpR8TN8swD05wdMdVSH827w6tzPXE6S6TC6lFwDrF4EMb0
-	CvsL3x0XWScQyYOu9T0ybsdxR8+JL7kZ33jUnIEbDvbOBNvlL8r7Ft/KtiV3Xppn
-	gS/lL+48FZAZaqwSBT5d/QaB6OM0ZSilgcyeV/KZqEP4MBZ5TO7ItN6xwVbkfWdj
-	UQA2yNKdGWzySx6ARjm6g==
-X-ME-Sender: <xms:djLCaNNVp7rNKV8Yh0NDuPVccxjbkLc0yOana_D0AtgUWqXlRA1xIg>
-    <xme:djLCaG2YQFMBiiStwNrGYkRFn6UZ0F9S_vPFhJz0bECU2G1dqaZl8f_P2x7pNqYNn
-    Ok7hwDC9wTbg0mb>
-X-ME-Received: <xmr:djLCaJNVgJCjIESia-mGw-rm2olyk4knFhiPXCchCr8DcrhSOzmUiLGKefYFVQci7xlC>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeeliecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757570803; x=1757657203; bh=pawYCOTRwPEmkHtWlrve/H/U32U9x0bxpHE
+	aEpkqRVw=; b=W32UTb3/qznSj6lTGZaOSm5C12zTZM8Z6LInqTtqf5ZAQAAICI0
+	X/DjoKtfc/Oxumfme+YLmo0o4ON2cneEZoVHXnR0K4acbOQ4UnQd+LKB40IDiJN+
+	W5blW4UWZNzWBC7bHLaVzlWpFjkUjM8QggPt6iX8GSyFyz45LisQrVqM1PzxiDpI
+	XvV4G6gXHQb4xEGkmw/bWsHpq87ibdLFidZuX3GX+mE0Ab/iy0iy+IHlur/zdH3b
+	/ndktHrZXph4apAu6vx58yG8SXt3sLhKK/9pdCRZP4dkbHA2+9IZfzqtVpP7ofE+
+	lqZvznqz+f1Zx3Dze0kGTKNbsw1XpOHHZ0g==
+X-ME-Sender: <xms:8mbCaEVAdJuDO-espoI7wEaV7WqUTvs84pYiXQXWItVWe90libRsOg>
+    <xme:8mbCaFgZZkuLwEJXb1-LdrBx8kbXKdrW_8pfWJQ3DqK0swroE9N2928azHT9acbPU
+    2BcdjVyJDq_EPe1YQ>
+X-ME-Received: <xmr:8mbCaED4RvfcbHx7eqGF0MdYTp3u7259bMuk7Rft87k4p-SLCwuV0d0l6H_vI1Nu8SYkbKfkmNSQe0tWIPucO2xyC9LqLNYTPeFSNgq2iQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvheegudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurheptggguffhjgffvefgkfhfvffosehtqhhmtd
-    hhtddvnecuhfhrohhmpeeurhhoohhkvgcumfhuhhhlmhgrnhhnuceosghrohhokhgvsegr
-    lhgthhgvmhhishhtshdrihhoqeenucggtffrrghtthgvrhhnpedvvdejveevhfeiffelfe
-    fggeeitdejfffgfeelhfetudehgfehjefhteekueegveenucffohhmrghinhepghhithhh
-    uhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homhepsghrohhokhgvsegrlhgthhgvmhhishhtshdrihhopdhnsggprhgtphhtthhopeef
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougesug
-    hunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsth
-    gvrdhnvght
-X-ME-Proxy: <xmx:djLCaG2L3Z4AkP06t3jD9f16lIK8zjT-J8teM7om4jFS_19LMH3Dlg>
-    <xmx:djLCaAEMQyG42bixsqPpy_pTGQbOzCae7ySHJC3dJzyYHGyiWvH4uA>
-    <xmx:djLCaD4QK8NS_G6Tw5cEmizBuqfllM_ERNvitbp1uyowMKYl04i9Ug>
-    <xmx:djLCaGusNWD-vU4c6ADZ-W3BFDIebvSxl9uMWPnD5oFVO9hvg_5iRg>
-    <xmx:dzLCaIepc_rLUxhuDF0aL_uJpcBsXNNMxrTKn23r1VOjgNbSPgRDMu_g>
-Feedback-ID: i78e840cc:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Sep 2025 22:22:45 -0400 (EDT)
-Content-Type: text/plain;
-	charset=us-ascii
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtth
+    hopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthho
+    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheptghhrhhishgtohholhesthhugi
+    hfrghmihhlhidrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhes
+    ghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:8mbCaLvBf48snOQUIq3VYmVlnKiIeV_KODGcpYlTStrvO-NHo4sD7Q>
+    <xmx:8mbCaId8j4Srf1hZxsUO_MiLRiQ5xnBfKvg5xwMg6YPihzdXQUi2Uw>
+    <xmx:8mbCaA-gMLwGFAvvWgbp2zwNWroArJj-RUBUr6FuCuptg7VL4I-OzQ>
+    <xmx:8mbCaLSACZMS17K7m655HTznyla3UAR1RUb9Xri7Q7CLq2jY0mPcRQ>
+    <xmx:82bCaDVJhVZHuCRQT4eIOnqIgZaO4FNl6tpmYD1czEebc3xkFrjtgEQo>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 11 Sep 2025 02:06:41 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id a4bb5eb7 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 11 Sep 2025 06:06:39 +0000 (UTC)
+Date: Thu, 11 Sep 2025 08:06:31 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 1/2] gpg-interface: refactor 'enum sign_mode' parsing
+Message-ID: <aMJm57VmWb3h167z@pks.im>
+References: <20250910080839.2142651-1-christian.couder@gmail.com>
+ <20250910080839.2142651-2-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: Git Stash Synchronization - Best Workflow?
-From: Brooke Kuhlmann <brooke@alchemists.io>
-In-Reply-To: <94d614fb-63b8-4733-b78d-b55c482fbed8@gmail.com>
-Date: Wed, 10 Sep 2025 20:22:34 -0600
-Cc: git@vger.kernel.org,
- "brian m . carlson" <sandals@crustytoothpaste.net>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <E308F060-D39C-4C7A-9F38-2CA33BCE4AB2@alchemists.io>
-References: <7B1CCA36-23F1-410D-84ED-6E965989EA8B@alchemists.io>
- <5dee5f49-eeb6-49e2-8bca-6ae6a1d6be5d@gmail.com>
- <CE34C4BA-1ED4-458C-A31F-3DDB61ECCAAF@alchemists.io>
- <7a206ee3-d68b-40fd-8133-79e4c2be7174@gmail.com>
- <FEB150D4-2B5E-41CF-ADCE-93DD0B48D364@alchemists.io>
- <94d614fb-63b8-4733-b78d-b55c482fbed8@gmail.com>
-To: phillip.wood@dunelm.org.uk
-X-Mailer: Apple Mail (2.3826.700.81)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250910080839.2142651-2-christian.couder@gmail.com>
 
-Hey Phillip
+On Wed, Sep 10, 2025 at 10:08:38AM +0200, Christian Couder wrote:
+> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+> index c06ee0b213..3994a8f898 100644
+> --- a/builtin/fast-export.c
+> +++ b/builtin/fast-export.c
+> @@ -59,24 +57,17 @@ static struct hashmap anonymized_seeds;
+>  static struct revision_sources revision_sources;
+>  
+>  static int parse_opt_sign_mode(const struct option *opt,
+> -				     const char *arg, int unset)
+> +			       const char *arg, int unset)
+>  {
+>  	enum sign_mode *val = opt->value;
+> +
+>  	if (unset)
+>  		return 0;
+> -	else if (!strcmp(arg, "abort"))
+> -		*val = SIGN_ABORT;
+> -	else if (!strcmp(arg, "verbatim") || !strcmp(arg, "ignore"))
+> -		*val = SIGN_VERBATIM;
+> -	else if (!strcmp(arg, "warn-verbatim") || !strcmp(arg, "warn"))
+> -		*val = SIGN_WARN_VERBATIM;
+> -	else if (!strcmp(arg, "warn-strip"))
+> -		*val = SIGN_WARN_STRIP;
+> -	else if (!strcmp(arg, "strip"))
+> -		*val = SIGN_STRIP;
+> -	else
+> -		return error("Unknown %s mode: %s", opt->long_name, arg);
+> -	return 0;
+> +
+> +	if (!parse_sign_mode(arg, val))
+> +		return 0;
+> +
+> +	return error("Unknown %s mode: %s", opt->long_name, arg);
 
-> I'm unable to reproduce this. In the script below the final push =
-succeeds.
+Would it make sense to maybe reverse the error handling and say
+something like:
 
-That's because you need to export every time before you push. Like this:
+    if (parse_sign_mode(arg, val) < 0)
+        return error("Unknown %s mode: %s", opt->long_name, arg);
 
-touch one.txt
-git stash push --include-untracked --message "One"
+    return 0;
 
-git stash export --to-ref "refs/stashes/$USER"
-git push --no-verify --force-with-lease --force-if-includes origin =
-"refs/stashes/$USER"
+That reads a bit more natural to me at least.
 
-git stash pop
-git stash push --include-untracked --message "One II"
+> diff --git a/gpg-interface.h b/gpg-interface.h
+> index 60ddf8bbfa..44856cc55f 100644
+> --- a/gpg-interface.h
+> +++ b/gpg-interface.h
+> @@ -104,4 +104,19 @@ int check_signature(struct signature_check *sigc,
+>  void print_signature_buffer(const struct signature_check *sigc,
+>  			    unsigned flags);
+>  
+> +/* Modes for --signed-tags=<mode> and --signed-commits=<mode> options */
 
-git stash export --to-ref "refs/stashes/$USER"
-git push --no-verify --force-with-lease --force-if-includes origin =
-"refs/stashes/$USER"
+Nit: let's finish this sentence with a dot.
 
-The above will yield the following error:
+> +enum sign_mode {
+> +	SIGN_ABORT,
+> +	SIGN_WARN_VERBATIM,
+> +	SIGN_VERBATIM,
+> +	SIGN_WARN_STRIP,
+> +	SIGN_STRIP,
+> +};
+> +
+> +/*
+> + * Return 0 if `arg` can be parsed into an `enum sign_mode`. Return -1
+> + * otherwise.
+> + */
+> +int parse_sign_mode(const char *arg, enum sign_mode *mode);
 
- ! [rejected]                  refs/stashes/bkuhlmann -> =
-refs/stashes/bkuhlmann (remote ref updated since checkout)
-error: failed to push some refs to 'https://github.com/bkuhlmann/test'
-hint: Updates were rejected because the tip of the remote-tracking =
-branch has
-hint: been updated since the last checkout. If you want to integrate the
-hint: remote changes, use 'git pull' before pushing again.
-hint: See the 'Note about fast-forwards' in 'git push --help' for =
-details.
+Okay, makes sense.
 
-However, if you perform the above with only the single "git stash =
-export" then you won't get the error as you discovered in your workflow.
-
-The only way I've been able to make this work is to do this:
-
-touch one.txt
-git stash push --include-untracked --message "One"
-
-git stash export --to-ref "refs/stashes/$USER"
-git push --no-verify --force origin "refs/stashes/$USER"
-
-git stash pop
-git stash push --include-untracked --message "One II"
-
-git stash export --to-ref "refs/stashes/$USER"
-git push --no-verify --force origin "refs/stashes/$USER"
-
-Notice that I always export before the push AND that I'm using `--force` =
-each time. That's the only way to ensure your local stash is in sync =
-with the remote stash.
-
-You can always verify that the remote stash is being updated by always =
-clearing your local stash and then immediately importing to check if =
-your stash message was updated properly. Example:
-
-git stash clear
-git stash import "refs/stashes/$USER"
-git stash list
-
-Once you perform the import, and immediately list what's in your stash, =
-you should see something similar to the following:
-
-stash@{0} 6ba4eaea3751 On main: One II
-
-When your remote stash isn't updated, you'll see this:
-
-stash@{0} 6ba4eaea3751 On main: One
-
-(Notice the difference between the message of "One" versus "One II")
-
-> You can force the creation of a reflog
-
-I tried that too which makes the error go away but doesn't update the =
-remote stash at all. Example:
-
-touch one.txt
-git stash push --include-untracked --message "One"
-
-git stash export --to-ref "refs/stashes/$USER"
-git push --no-verify --force-with-lease --force-if-includes origin =
-"refs/stashes/$USER"
-
-git stash pop
-git stash push --include-untracked --message "One II"
-
-oid=3D$(git rev-parse --verify refs/stashes/$USER) &&
-  git update-ref -d refs/stashes/$USER &&
-  git update-ref --create-reflog -m 'export stashes' refs/stashes/$USER =
-$oid
-
-git push --no-verify --force-with-lease --force-if-includes origin =
-"refs/stashes/$USER"
-
-The above works but if I run `git stash clear && git stash import =
-"refs/stashes/$USER"`, I find that my local stash doesn't have the =
-message change (still using "One" instead of "One II" which means the =
-remote stash never got updated).
-
-Sadly, I can only seem to make this work when using a force push but =
-would definitely be nice to not have to use a force push.
-
->=20
->    set -ex
->    dir=3D"$(mktemp -d)"
->    cd "$dir"
->    git init --bare origin
->    git init repo
->    cd repo
->    git remote add origin "file://${PWD%/*}/origin"
->    git config core.logAllRefUpdates always
->    git config remote.origin.fetch =
-refs/stashes/*:refs/remote/origin/stashes/*
->    echo a >a
->    git add a
->    git commit -m a
->    echo b >a
->    git stash push
->    echo c >a
->    git stash push
->    git stash export --to-ref refs/stashes/test
->    git push origin refs/stashes/test
->    git stash pop
->    git stash push -m message
->    git stash export --to-ref refs/stashes/test
->    git push --force-with-lease --force-if-includes  origin =
-refs/stashes/test
->=20
->>> You need to pass the name of the ref whose reflog you want to look =
-at,
->>> otherwise it defaults to showing the reflog for HEAD. You should be
->>> able to see the reflog for you exported stashes.>
->> I gave this a try and every time I use `git reflog =
-refs/stashes/$USER`,
->> I always get a blank response. No errors and no output.
-> Ah, I wonder if core.logAllRefUpdates only affects the creation of new
-> refs. You can force the creation of a reflog by running
->=20
-> 	oid=3D$(git rev-parse --verify refs/stashes/$USER) &&
-> 	git update-ref -d refs/stashes/$USER &&
-> 	git update-ref --create-reflog -m 'export stashes' =
-refs/stashes/$USER $oid
->=20
-> the same applies to refs/remote/stashes/origin/$USER
->=20
->>> Let's try and find why the remote update say's it rejected when it =
-isn't
->>> and then we can think about the best way to document pushing and
->>> pulling exported stashes.
-> I haven't thought much about the pulling side of this. "git stash =
-import"
-> appends to the existing stashes so I'm not sure how we'd cope with =
-forced
-> updates - have got got any experience of handling this from your
-> experiments?
->=20
-> Thanks
->=20
-> Phillip
-
+Patrick
