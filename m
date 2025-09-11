@@ -1,175 +1,160 @@
-Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6112A2E92B0
-	for <git@vger.kernel.org>; Thu, 11 Sep 2025 09:35:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D0554652
+	for <git@vger.kernel.org>; Thu, 11 Sep 2025 10:14:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757583356; cv=none; b=MayQ/MEaVSjYz4ZG+gD2a96YaPmAW5zHH5BDXmm7PROpyQYXSkb7QflqyIiZKLcm+IE7WCMM5ou334iuwhRjF2hn1QunJz8T5zsn99eLk5rgmq1BpXam3AY9+JjXlEr2r7FdondhRzinnytaeftH7AoUuryrjzjE1jhzH/09ewo=
+	t=1757585664; cv=none; b=RTWoGKP0aaKypPwBEKg2mLr7CzepItDxiO+JzulOSW5tPH1HnPuxDlAenFpa4RVCGXK9931UZMbbBNdd343lftrs35RzW+WLub+YtIQ4/JIMXDF1EM+Mr2MXwzwloTusVeDV45o6eDDb8sbleTgrTE3JLJzg3s4xXUAZOGrMxDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757583356; c=relaxed/simple;
-	bh=KowuMH0ivrg6XdhQsNZNihREgzghu5G5RONmineyBLg=;
+	s=arc-20240116; t=1757585664; c=relaxed/simple;
+	bh=DAGszaeUkU08jtD7eG6llft55HNugkA8r7gRvJqp18c=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XzFRFdjU8Y9YqXl49fTMfnrh5wFjHCJHjAhSeuRm/U1qF2IuA3SN9hMqlRwKvO2/HmhnoIWVgSqEGFMFP5TJ2P6eT82PYbBejvV0uPnExu56cQMzVQNXuUY+Rm82hJH6yHKzGBvbVNOnXlrAyETeE7arV9NdOnD/ebcj1ZsLrpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JR3NDtIB; arc=none smtp.client-ip=209.85.222.52
+	 To:Cc:Content-Type; b=kd9ccoDnXu/2a8pY2xgTMOdAPtAuDyel9xngNbIFROKCJIMzqDlqlyJsYVv5QLBfl81JlSFn4RU1Afg9zgVsvoQ/ineBwHb6yaQQUmEZFdixT3KC7fMtnQJW+il897qZJnRcrEfrE2FVTUy8z0nFZcquJ1k5c9OgqAQyCfIHBZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KsHWxKLQ; arc=none smtp.client-ip=209.85.217.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JR3NDtIB"
-Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-89ea3532bfbso145409241.2
-        for <git@vger.kernel.org>; Thu, 11 Sep 2025 02:35:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KsHWxKLQ"
+Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-5290c67854eso398506137.3
+        for <git@vger.kernel.org>; Thu, 11 Sep 2025 03:14:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757583353; x=1758188153; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757585661; x=1758190461; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Cd2d+5I3ZTxLhH6hV6sC8P0Mgsh1AoOAjjnNIQmEObs=;
-        b=JR3NDtIBwBtlHW7fz9/+1Mpfi6QH4vUOB+AjMY/dCXlbvNCWkFAc6KPb7MCG+J0Mv6
-         4dNmVmqo8T359OGTH5B2I8aC9MrHvIwQilKH7lA1o0uIhiob0JqRBDjv1xtMqdzGz0pD
-         xTooGCPbW3QxG0si1Od8yD54B01canrDYWomvlSq78WrgGylm19EGfXjt6K0/TCUTH8T
-         gXE82zzXkef5fT+Nrt7f2V89K2c6v9TWG7oraio7iGsf/ZHi99tVw2L5FD5tXphzS+xD
-         M2flrRq3iDtylrBJUR4tcCTlyx3c2pw/wjVnEmViWE8K3yosFRS6b6o4uY80By8Qglws
-         pdJg==
+        bh=iZe+venJDuBl33YgGTt0Dzk4nVt+1FHzY/ghyfyrkl4=;
+        b=KsHWxKLQnqj1MaYHiQKIUqqITnXw4CEhacWP+xdCU5xEt/wBlQaBt/M3A3Apwy4A/e
+         MGB7oNf6qETjroF2v8atfsskkVlU+JMQLDZLLZ97kZ4tfBE9+m0LNoBg5+n349Y4BlM7
+         IPHnEu14Tj/j3vo11+f7BD0d2xPNA0HLyV5RJeah/8eI/UxFSPsB5NJRieszUNdBW0XO
+         9C4jV7qcynmbO8pM54pyaS/5l8alAfMKAjGhG4o6jgXcIYyEuyOk/OVsWOA7thhwEDqI
+         I2r1Vs+9LG7Q2KZ+Ta47Hw6Xd//Y8m9XsYloXVxvpNeMW1hypD1XvkPTdEBU5kat/7uT
+         2N7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757583353; x=1758188153;
+        d=1e100.net; s=20230601; t=1757585661; x=1758190461;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Cd2d+5I3ZTxLhH6hV6sC8P0Mgsh1AoOAjjnNIQmEObs=;
-        b=plrPE7RqteO00ltLotrEFbJ3x3/dzoM/g820PQeoB9HJc2Da187e/0VcsDeANHSdhM
-         GJCGuKz/el+8pY4XkTGMK37I5FUJaWycWs52cvVUQFiEVMm5T+YLdJPrm54xYY350xDT
-         bA9IRafAtQDMkY8TxNJfm0OyEQ7+F/KE4bTH3BBjk8DCSrNauBacgejZf43aLN0Aq2Oj
-         fnHBpOKXNe86Jt3taJ3CFpm4oL9tq6MGSx9Ack3E+e82QE9spbKRpeoXqR/5A5qX0aT0
-         NO1M5qNV3IIfuVC8AqnUzFKXQ1iFIw6KG3aAo2LQnTVqP7N+k6AruedzWVsJepAsED+m
-         3wHA==
-X-Gm-Message-State: AOJu0YyZOnfMIKDy1bsVUk9BvBSQqgaTbkmNyb3zRtJJIma7dkDdJkKF
-	U5+SLJXKsMWmX0B1845auJ61yWS/ll6ziVivDdoR4CgvGpQhFhjuIuo3PpvDfzFqtD7eu25JVj6
-	e/L5jpKQEub0PMq7bWYE87a0qZiBKE2Kyf/oe
-X-Gm-Gg: ASbGncuiPxPc0cXA2FnVWdLqsDX31RrDKg6jTMh6EgDW+6zfS0WtvYlSiWNF3HHj+Jf
-	fg1GIDsFOsPYmW7ihQSaQjA4jrmk/7ZQQvm56SA5FpRB/rsHxGdLdtmSSwDTXA6W5uSmKq4zEEA
-	OrjDYmU2iul2exWSDtW9XFuoP6Llb9Y3lYMP3/Fp8nraU3ncWPPUYjBP2VK4Y37nj/zmbO6VPI+
-	IkAgxw1c0SdYC685IVDHX1lE/bF9JJdNJk+c6dDtxtIk2GIOWnH
-X-Google-Smtp-Source: AGHT+IHAgqbxJ3+gixZqNQHZllKwZP4/N7MwUOcZurzd+VgZYJzkLsv3Xq8qdqLeG5Sc6HeXbozqjtKXOVg2aSQJj9A=
-X-Received: by 2002:a05:6102:160e:b0:4e2:a235:2483 with SMTP id
- ada2fe7eead31-53d13a4fb07mr4597784137.19.1757583353059; Thu, 11 Sep 2025
- 02:35:53 -0700 (PDT)
+        bh=iZe+venJDuBl33YgGTt0Dzk4nVt+1FHzY/ghyfyrkl4=;
+        b=wkrm2ghYmTpiO0bONUkv8AppcPeiPyx+kcbFZmeT4i7+m3fpQh+JTb2+3P9Vccn8mJ
+         YTcDEFtb5dLCPyldCBa7m8z4SMfizMgzEaisJA6KksxUJWFr/TgOCI+4MzF+9Nb6+flw
+         F4wDpFJbbIygbbKCji7sYhpIFTR5Zoe87XdhYrjVO4rPD7GptkIgV5Tr3vO55Pk9PJoJ
+         6MegowFH82sCmZPuRMpv3O8hypwsNo15ycjEat0qUC8k59ENOL2olSlLn8lyZ4TYLkC7
+         Og5hsraeLWfiT4+WUjZrcZzmhjC7byZVxgt1FePTiU5c7C8h5C0r19lZwO/ZoOTgRj2v
+         v2ng==
+X-Gm-Message-State: AOJu0Yx7Nc0lagwH3kvpkpF0/eEG+gQZtuaLDgQ0xB8N7NXuBTCPnjve
+	fW/NzMVa3I9GAuOHxvO2APuF8igdhdDkWPV19K2mUfyoSLnquKz6PixTzBx+FbBi265a07Ow3Iy
+	hsdTbUmc/uBP8tqyBZNvm9/cNcNJm2zo=
+X-Gm-Gg: ASbGnct3cV2KVw5yz75snvT5Cft2NWqiu8KL6vH+WGB1oQld1fwiaBAQ+BM1Lm3MZfq
+	jQ8aM7Z8KzW8do+FvMitaBUdZIzfAqlBWJ9i7xDoWz7Fh/eqEMAmmC+QBjD7BiWYF2xAZEM+NX2
+	cQy+zWpQ45jEwYalExGCGF38ZbRDHbXKieptONehBnYn8siPU0fnAjd+zAI1JZQphBJOMgQNOfo
+	dsbxgEhxHm59gta0+khEswvGu+M3+M8IUWeo+GEdH/V9MXp++1R1WACgpU4e2o=
+X-Google-Smtp-Source: AGHT+IHfpJZF9H919yexyU7Mm40dSVPdE3DtuXPgvNcUY6+qatULIRc3Y7+5gS6Fqj+IS/tcoRmWZRBPyW3ds1xlaaQ=
+X-Received: by 2002:a05:6102:f88:b0:51f:65da:4ada with SMTP id
+ ada2fe7eead31-53d218dd118mr7913484137.17.1757585661484; Thu, 11 Sep 2025
+ 03:14:21 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 11 Sep 2025 05:35:52 -0400
+ HTTPREST; Thu, 11 Sep 2025 03:14:20 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 11 Sep 2025 05:35:52 -0400
+ HTTPREST; Thu, 11 Sep 2025 03:14:20 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aL_SwghVaAXL-yeX@pks.im>
+In-Reply-To: <aL_SydrNjXdQrtFC@pks.im>
 References: <20250908-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v2-0-b2eb2459befb@gmail.com>
- <20250908-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v2-1-b2eb2459befb@gmail.com>
- <aL_SwghVaAXL-yeX@pks.im>
+ <20250908-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v2-2-b2eb2459befb@gmail.com>
+ <aL_SydrNjXdQrtFC@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 11 Sep 2025 05:35:52 -0400
-X-Gm-Features: AS18NWDIq9G-hJGZ5gOyhwOJvPQk0tXyTXhTDizJp00I4ShN6OL0GoVAmlgI5PI
-Message-ID: <CAOLa=ZRDY6ORDngq0Np0Y_8SFXRWWKAmmsecQfpqeqrLCfbN0g@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] refs/files: catch conflicts on case-insensitive file-systems
+Date: Thu, 11 Sep 2025 03:14:20 -0700
+X-Gm-Features: AS18NWAOYOy7ZRJbdcFsjUaLoW8LX5sTGBgcv3wOEfAqciNaR5SAf2VZbdSlnBY
+Message-ID: <CAOLa=ZTf=Es5MJvdC=zTUWoJnASF=Mqf9+RXrnHOYDZ9YuFEtg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] refs/files: use correct error type when lock exists
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Joe Drew <joe.drew@indexexchange.com>, peff@peff.net, 
 	gitster@pobox.com
-Content-Type: multipart/mixed; boundary="0000000000006c3cb4063e834320"
+Content-Type: multipart/mixed; boundary="00000000000003ff96063e83cd7b"
 
---0000000000006c3cb4063e834320
+--00000000000003ff96063e83cd7b
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Mon, Sep 08, 2025 at 02:37:35PM +0200, Karthik Nayak wrote:
->> diff --git a/refs.h b/refs.h
->> index eedbb599c5..41915086b3 100644
->> --- a/refs.h
->> +++ b/refs.h
->> @@ -31,6 +31,8 @@ enum ref_transaction_error {
->>  	REF_TRANSACTION_ERROR_INVALID_NEW_VALUE = -6,
->>  	/* Expected ref to be symref, but is a regular ref */
->>  	REF_TRANSACTION_ERROR_EXPECTED_SYMREF = -7,
->> +	/* Cannot create ref due to case-insensitive filesystem */
->> +	REF_TRANSACTION_ERROR_CASE_CONFLICT = -8,
+> On Mon, Sep 08, 2025 at 02:37:36PM +0200, Karthik Nayak wrote:
+>> When fetching references into a repository, if a lock for a particular
+>> reference exists, then `lock_raw_ref()` throws the generic error
+>> 'REF_TRANSACTION_ERROR_GENERIC'. This causes the entire set of batched
+>> updates to fail.
 >
-> Nice that we now have a specific error code for this error case. It
-> removes some of the guesswork we previously had to do.
+> This isn't quite accurate anymore as we may also raise
+> `REF_TRANSACTION_ERROR_CASE_CONFLICT` now.
 >
 
-Yeah Agreed. I dislike adding a common error which only affects a single
-reference backend, but this is nicer.
+Good catch, will fixup.
 
 >> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index 088b52c740..58005d2732 100644
+>> index 58005d2732..2730713d23 100644
 >> --- a/refs/files-backend.c
 >> +++ b/refs/files-backend.c
->> @@ -647,6 +647,19 @@ static void unlock_ref(struct ref_lock *lock)
->>  	}
->>  }
->>
->> +static bool duplicate_reference_case_cmp(struct ref_transaction *transaction,
->> +					 struct ref_update *update)
->
-> I think the name could use some improvement. How about
-> `transaction_has_case_conflicting_update()`?
->
-
-That does read better, will change.
-
->> +{
->> +	for (size_t i = 0; i < transaction->nr; i++) {
->> +		if (transaction->updates[i] == update)
->> +			break;
->
-> Why do we break here? Shouldn't we continue?
->
-
-We break because we only care about matching updates up to the index of
-the provided updates. Further updates should recall the function.
-
-I'll add a comment to explain this.
-
->> @@ -776,6 +790,9 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
+>> @@ -790,9 +790,13 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
 >>  			goto retry;
 >>  		} else {
 >>  			unable_to_lock_message(ref_file.buf, myerr, err);
->> +			if (myerr == EEXIST && ignore_case &&
->> +			    duplicate_reference_case_cmp(transaction, update))
->> +				ret = REF_TRANSACTION_ERROR_CASE_CONFLICT;
+>> -			if (myerr == EEXIST && ignore_case &&
+>> -			    duplicate_reference_case_cmp(transaction, update))
+>> -				ret = REF_TRANSACTION_ERROR_CASE_CONFLICT;
+>> +			if (myerr == EEXIST) {
+>> +				if (ignore_case && duplicate_reference_case_cmp(transaction, update))
+>> +					ret = REF_TRANSACTION_ERROR_CASE_CONFLICT;
+>> +				else
+>> +					ret = REF_TRANSACTION_ERROR_CREATE_EXISTS;
+>> +			}
+>> +
 >>  			goto error_return;
 >>  		}
 >>  	}
 >
-> Okay. If we cannot lock the reference we now try to detect whether this
-> is because of a case conflict. That only catches the case though where
-> we have a case conflict in the same transaction, right? How about the
-> case where there's preexisting refs on disk that cause a conflict?
+> Hm. So if I understand correctly, we now return CREATE_EXISTS in case we
+> have a conflict with a preexisting case-conflicting reference, but we
+> return CASE_CONFLICT in case we have a conflict with an update in the
+> same transaction?
 >
 
-Existing references aren't an issue since in those situations we can
-create the lock file. The issue here arises because within the same
-transaction we try to create the lock file twice which causes the
-conflict.
+It's not a reference, rather the lock that causes the conflict. So a
+preexisting case-conflicting reference lock would raise the GENERIC
+error. Which would fail all updates.
+
+> It feels awkward, but I guess that's the best thing we can do. We
+> happily overwrite case-conflicting preexisting refs, so we wouldn't even
+> see EEXIST in that case. So the only case where we still see that error
+> is on a D/F conflict, and in that case it makes sense to return
+> CREATE_EXISTS.
+>
+> I feel like this should be added as a comment though, as it gives some
+> important non-obvious context.
+>
+
+Yeah, it would be beneficial, will add some comments here.
 
 > Patrick
 
---0000000000006c3cb4063e834320
+--00000000000003ff96063e83cd7b
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: e5f27947fa28a04c_0.1
+X-Attachment-Id: b1bb095efc17e5f7_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1qQ2wvY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMDd5Qy80dFYzN3IwZkpldWhGcWVjM1I0dWJ0bnc2VApMMGl5bU9EYmlo
-ZjVuK3pMT0l4VFJkYjJaeDNRR1oxR3JRRjA5dysvK29YMDJEVkw5YUphelU1SXJkV2Q4UlNICjls
-OW9HRTl4RUNPZlNXT2w5MXNtQkYxL2M1RElmeWNyMzdzWG93Z0tlcUZYdHlxK080azNpeHlwK3hv
-Uk9VK0sKamNwR1V4Tk5QTjQ5Q0J4SFZvRXpwdjN4YWh5TlhqcW9ZcjkyNDJSd2NISURKN3BKS244
-VFFJL3R2LzZTcHA0YQpQT05hMFhOZXI2U2FaVzNPQThTWm5UMnVTRUt4Rks4dHhwNFZUdjJVdDRR
-aHN6eFZmdzhTeHkrMnFIdzJxWjNCCk95ZnpkYWM3UmhOQWozUGhNaExwZnBSOXY3U2dMeTBGM0RU
-YlRYZFBXU1p4aVltR3lXMzBYcm96RDBrWjFCb0EKRFo2QlliSEhaVkNPSFVQYmxzUVdTSCt4Zm1I
-eXJmN2VaaHBmaWRMOEFhYWVGbHhLNCtKM3ZRc3VSeTBxUkpBRgpNMW5rN0ZhK2VIejBma29WV1F6
-Sm5neUVFTVJTb2VsQjVLWWJRMFpUQW43eXUyUlVSdCtCT0NZdXJJVk0yT3YxCnUzL3Y4ZDZOdnNG
-bEY1cm1kejNuTmxvREk0dVdMOVVZY0xTL21WYz0KPTE1enIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qQ29Qc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md0VhQy80NlZwMEgzVUVwSDhkR2w0TDFkZ01uMWhLTwo5QjlVbTc0b0da
+cFAwUVlONmFLb3UrYkM1a2xRYVhxUVVlLzZuSWhLWFpVYjgxQm1DVGFGM3BvWlc2SnhKWlhZCllY
+U2Jjbkd6S3duZ1c1eFhHcGhNV1BmUnltTkhrRys1OHM3ZjhDampDZHJFR2tFZzZnZ0RoN0djVmdF
+MzlWRXkKMDFlakpKSDhJdElXY0h5WmQvTGNFYlFTZTNHSWY4b1lBQjJrTXJpRU9nTzNqZnNsS2k4
+NTNFdnZxVVdHOVF3RQpuamNVYTFzMnlpUXRvbzNoUXpjaS9RdjU5N1pDNERHZGV6OElWNFQzYUhk
+a2kxSW5sMTdvaUFITVg4OGpOT3E2CktrSDRodWtMQnFWTjZaZTgrK1ZxazZuY2tqTE5LNlF5TjFQ
+czNUTk5PNU1MMzR0ejREOEJGZzBLd1dvMytzeGkKRzAyRjBhU2dBS1M5RnhKUHlxaHJVSHVEWUhu
+ZEUrY3loa0ZvSDl3MjJsSGVMWm1ncC81Ym1oRVFJYWhlZjZGQwpCdzZ2dVArcU8vYWN3Zkh0OHdw
+VnFOK3ZPRUxVRExLdVpMVEoweitkSDU3dHh2b2dPSVlwQWUwNitRaG55cVYrCkxkRXNHallCRnJZ
+SjFUR2YwRXMveU1rNmE0dEIrYnF5U0pPZkdMTT0KPXdnRFAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000006c3cb4063e834320--
+--00000000000003ff96063e83cd7b--
