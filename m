@@ -1,132 +1,110 @@
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC5F3112D9
-	for <git@vger.kernel.org>; Thu, 11 Sep 2025 15:34:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5262A8C1
+	for <git@vger.kernel.org>; Thu, 11 Sep 2025 16:01:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757604885; cv=none; b=R9dGvuM4dYl5j3S9U23LBFPgMCsM8ABTgKIoyzbxd8hnC/HWgEj7xz6AFHn2YMy6qVxVKIJ+OlrC4lqAru/XbWMVWz9agHxqT+GOBogAgWexW1DjeN7Kds7ojMHQMq6dr2V0ne0P3gG11YWPna9mHtdHr9e/X2t3sqXXL3Kp3s8=
+	t=1757606499; cv=none; b=VzDEU2cp/M8KjQ8ENKewuMKqkR5l+Q/c85v4V6uSVJH04aM1m0UioSQ24GnNbqJeNVrtR+7O4vUaG42Nl1Hmk9gvvJPV/j6q1pd5tmi2X0UvHrxLqj1Y8qHPWuRPL+UChe4Ng42lFC/Nd3YyfcLS/02gvQ/8I5dRnoZMqcJqYk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757604885; c=relaxed/simple;
-	bh=IOaGA5gTv+yb+AzvI3vvFjpOvv2g9t4ZxpV4KSjG/Aw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=icpkgcbWTzbavWs32yTg8BJ6/qDZn3vfh0NPwrZQMHQd2Qj4Goqnqqa3yAK4vzZWgJyxE15YWEzS1tuKM/pbRhy6evGL+zRJerIH5CPZOWq0t17NcdAeJ2M3UwAM0l/DKNnVQZcZpH+TB/lgJByIK8+jKo4j/LOQoFPcPG+Rbn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HUXpDn4u; arc=none smtp.client-ip=209.85.210.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757606499; c=relaxed/simple;
+	bh=LiGk6YzbHPrZfmNPM4gfTJp/F7PpuBuOVYPBp7KF5Ss=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LFbc+qvxOpueanYZ2Smqg+y98qOGote3arjet7/dobCYSys/uihzQ++sMjx5vg0EoS6XLR7gHITNQ0JdEftZoXWC6vGmZZU+vMMkmi6c8c2KZKCX9GAAqJnFHKl81lIGU3JUVh8NBcyRNjl+lFwTxvP1ZKWOn05hrG4/q/LtjUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Lq++K+7H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZAO257A4; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HUXpDn4u"
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-74595f3852cso633105a34.0
-        for <git@vger.kernel.org>; Thu, 11 Sep 2025 08:34:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757604883; x=1758209683; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=h4h6cX6+GACjJNdiD/slW78FvGGNLw51ruXom41cjtE=;
-        b=HUXpDn4us08Hhii50wP6sqH9eKirQQFR9GpKXtrLJjacG/hBcI9uSxiN4BVRtDcqki
-         MGh0W6Hx7JI5ChzC8WffatZWMFe1fT5NjP5MZs01PAav9GPxjN44A1x7yQXWBccfBaHL
-         2oA+fWSZE6orkki5HFXZQj+WrTcfINIPd/gTWizFppx1cMbsv8LmeMJv8osucAVX4M8J
-         J74uX0ilfoOARpkaY68aIxbKL9tXdOLBOBzr8f6I2yAYVqy+B66zy53YC5Ho7m9a53/M
-         coVSmIvYaVCNqJlUXDOC0+4W0v2rhMZgHI2/zaOIvpAfuXwVSbQ46+tIe+9PUGmmAFjF
-         SmOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757604883; x=1758209683;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=h4h6cX6+GACjJNdiD/slW78FvGGNLw51ruXom41cjtE=;
-        b=w/TCAJowbsRlfMovv16nuBHd3fZbwJ8/FMA+CeMnuM8SS1y2T6U7AtA88hB7QmrFY2
-         bJj7gsgHg44Cz7qwuJSaiL1VF9GoBhhrym03cLQI9DnKjWf2My0J7uUU9CQOASDuZS7p
-         v0OWUOt0wYWQndoVHAsGxy1IVA5GDaa5+nPxamProKw8qq/ttEv8rAzuau9k6hHy8LNU
-         PkB06zoDW4v3zUUQXXA3JM+td1lm++JzZ9Hnyvnhs+xMj+QT6pBheXQDm9nOdsyMZ+0y
-         hk24mJJCHaxUXswwgFhihRBo3AW29hU0fZMdlC9lGuWkgeYS8wdMlv9wQ7KeWbwHQipI
-         xf7g==
-X-Gm-Message-State: AOJu0YzRH8KdyWqJk5hWq3NvCh8zq/noNCi3FZp+lNK0obv63RvmeceC
-	X/J8lvvRzFDvke3QodCOp6KtJK/N0ak9oku42OWpWAhVrpE7q3CPSoraod6wcg==
-X-Gm-Gg: ASbGncuBnDkpRbWJEHLyAPswOaDngReMOPT3dO7T805jgWoiYxuTCLgTurhKaWZGxAv
-	b+edpk5IIGPiOSxZNDr7PTNi5SrfsvW2iyNOh7Jr9i5xAntDtpfnfGh3huVLZSIaNFRAC2jrdWT
-	dnCt0jvE2qMEq1/SeZZnt8iBtepHxwtstIV5zYfUAhYJIpqEnksoyebhy31xrv/K0aGNqSMdjCR
-	q1hVIPlQSQjekdgf06y94sJkAEyQ6HSEbByVkD8+qmx+cGMwmUWT+OD+72hLzvel+OrU7P/OkqK
-	w9C01PK4E83DlP4UNZuySxy9a3c47ZxTQ1d4EMOH2HJSfSnklrlf6Ewdann0yF5LrmFaTID5Akx
-	b5csORaeooqNEVm7mhgC8J5TvV40=
-X-Google-Smtp-Source: AGHT+IHqmcvR3zFCNSWHLK+Br1b5Bj7Ijz4DtntzrFsuV9kDnYGIxyVYiGt6BMZGU0Xcd3YGTsPkJw==
-X-Received: by 2002:a05:6808:10cc:b0:439:af0a:dc8d with SMTP id 5614622812f47-43b29ca0eb9mr8004678b6e.38.1757604883267;
-        Thu, 11 Sep 2025 08:34:43 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-43b82661c0dsm288958b6e.0.2025.09.11.08.34.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Sep 2025 08:34:42 -0700 (PDT)
-Date: Thu, 11 Sep 2025 10:34:42 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/6] builtin/update-index: end ODB transaction when
- --verbose is specified
-Message-ID: <3cmqsfz5j2h36mw7yzwbrgfgchaettcnidvkiboqqktkm3dd5k@h6rmgjnqdmq2>
-References: <20250909191134.555689-1-jltobler@gmail.com>
- <20250909191134.555689-3-jltobler@gmail.com>
- <aMJu7vPKfnxt9UiC@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lq++K+7H";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZAO257A4"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E13AC7A0348;
+	Thu, 11 Sep 2025 12:01:35 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Thu, 11 Sep 2025 12:01:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757606495; x=1757692895; bh=NI+F2nTYlv
+	uQViVnyg7L0lokQEIYdohWEZOWmxFvUgs=; b=Lq++K+7HnTLGk1tFiVaV5RBzyu
+	f4Qags2bPjrWTUdveVY3sB7rfa+N4QIownDAUKkQ3YY9b+8OZEmy70w8JdLC41nu
+	EjjTCwqwRBJ6+A0mChxs506FcET0nWzzQxEJL5XW5rNyswCFo+FyOLkdU/b9PygW
+	QX9jrUIg+sg4doElo7km79J2R/G1TxGkioeEDcfNAPuLp0k5icV+WW9uLFL8ug+E
+	d5r2n8fZ0nuLwQ+pFq+BEXP3Ws/HdQjclcmcuLabxEfb6UzDNug8f96YQLKSOfeS
+	/iDLGp+/aS214gz6Ehxf0/9nz+WlwwfoK7igbCPEkY9GRuA2BlXzAG5YfTdQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757606495; x=1757692895; bh=NI+F2nTYlvuQViVnyg7L0lokQEIYdohWEZO
+	WmxFvUgs=; b=ZAO257A474EN8cpx4gCh/AI3JJGaWfd0nPBY4ydF3CxE9JQKHBr
+	qnFWKsJ4zDiRAajftudMEGkU4XGApVzSNv6Zc9IUGd3zIMpvDbbsCay3vZu0pL3q
+	uud3Pzc36EpdPnVKMo1kn61VKjEpUuNJJ1yfdvGEk8i27OumB8JOGLfuSEabypVV
+	U44Ykrf2uaQb3wpeyNtp8Ic87W/iDR3NqGEy5tvnY6eEedsNerJPx5UxCQ9K6SV4
+	J/BKrpWxWzlXog3qcpklDtW3tU0VeXpnvmArunHgoqhTYKzs4J9tI43b9WiqI2La
+	qkHH2hZsy9a8IVrf3JuZYp7x+Fx87DAMd6g==
+X-ME-Sender: <xms:XfLCaFm4pn68cazvWnAv0oPvGl2zXoDeTiiJBaNcn1iJoTkDi0aDmA>
+    <xme:XfLCaGAC5_5YP7aKO5vqV6B_NovC0AKsJ2W6kfUmSEDCTPchgKv5bcxyzitbEKMK_
+    wmHczhSdBhd6_s2BA>
+X-ME-Received: <xmr:XfLCaMhAtmV0Sf3-vglpvy5n3cgpmRs1QQ-pcHx0vF17sVkSilu3p8qJfOdkfH0OS-QEowSMrtEye_Rn_dSMgDzUfUK9wMeiygUzCdM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvieeitdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtoheprghskhdoghhitheshhhofiguohhirdhlrghnugdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllh
+    hiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepiigrtghhrdhf
+    vghtthgvrhhssegrphholhhlohhgrhgrphhhqhhlrdgtohhmpdhrtghpthhtoheptghhrh
+    hishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehprghtrhhikhes
+    phhsphgufhhkihhtrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:XfLCaLyV8LeDgNEFvRrl3pHDsnvB8enQ-_EjPZ6Xsoy8FThwcdo14w>
+    <xmx:XfLCaF2J-rsmj7pxRCI26WV-rjmtW94Zx57qtyMd5Ysp1etC9QJvXw>
+    <xmx:XfLCaI_f7-8Age0J5TcAj9L7BN-k8HKtI5i0bi4rXxjAfbQNsIkW7g>
+    <xmx:XfLCaFpfXdPe0UeXmcsmC89S9211ZSxjkthLD_YV1BGycdVT97ckyw>
+    <xmx:X_LCaGVPy4OoE9uQ97LWKOCM9jIjnKF4k3NQxjcC3R_FGE2qnKW8oaYY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 11 Sep 2025 12:01:33 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Colin Stagner <ask+git@howdoi.land>,  git@vger.kernel.org,
+  phillip.wood@dunelm.org.uk,  Zach FettersMoore
+ <zach.fetters@apollographql.com>,  Christian Couder
+ <chriscool@tuxfamily.org>,  Patrik Weiskircher <patrik@pspdfkit.com>
+Subject: Re: [PATCH v3] contrib/subtree: fix split with squashed subtrees
+In-Reply-To: <dd71ebee-8629-43c3-aa2a-40124400f262@gmail.com> (Phillip Wood's
+	message of "Wed, 10 Sep 2025 10:39:00 +0100")
+References: <20250824191048.1938340-1-ask+git@howdoi.land>
+	<20250910031124.1807856-1-ask+git@howdoi.land>
+	<dd71ebee-8629-43c3-aa2a-40124400f262@gmail.com>
+Date: Thu, 11 Sep 2025 09:01:32 -0700
+Message-ID: <xmqqms71ou5f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aMJu7vPKfnxt9UiC@pks.im>
+Content-Type: text/plain
 
-On 25/09/11 08:40AM, Patrick Steinhardt wrote:
-> On Tue, Sep 09, 2025 at 02:11:30PM -0500, Justin Tobler wrote:
-> > With 23a3a303 (update-index: use the bulk-checkin infrastructure,
-> > 2022-04-04), object database transactions were added to
-> > git-update-index(1) to facilitate writing objects in bulk. With
-> > transactions, newly added objects are instead written to a temporary
-> > object directory and migrated to the primary object database upon
-> > transaction commit.
-> > 
-> > When the --verbose option is specified, each individual object is
-> > explicitly flushed via flush_odb_transaction() prior to reporting the
-> > update. Flushing the object database transaction migrates pending
-> > objects to the primary object database without marking the transaction
-> > as complete. This is done so objects are immediately visible to
-> > git-update-index(1) callers using the --verbose option and that rely on
-> > parsing verbose output to know when objects are written.
-> > 
-> > As soon as verbose output is requested in git-update-index(1), all
-> > subsequent object writes are flushed prior to being reported and thus no
-> > longer benefit from being transactional. Furthermore, the mechanism to
-> > flush a transaction without committing is rather awkward. Drop the call
-> > to flush_odb_transaction() in favor of ending the transaction early when
-> > the --verbose flag is encountered.
-> 
-> Okay, this interface feels somewhat weird indeed. If we now end the
-> transaction early, does the transaction still serve any purpose at all?
-> Like, do we use it to batch steps _before_ we start reporting stuff?
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-We only start reporting updates when the --verbose option is first
-encountered. Options are not all processed upfront. This means in the
-follow example:
+> Hi Colin
+>
+> Thanks for working on this. I'm not particularly familiar with
+> git-subtree but as far as I can see this version looks good.
+>
+> Thanks
+>
+> Phillip
 
-  $ git update-index --add foo --add bar --verbose --stdin
+Thanks, both of you.  Queued.
 
-both "foo" and "bar" are silently added via a transaction. After the
---verbose option, subsequent updates are reported. At this point there
-is no reason for the transaction to continue as all subsequent object
-writes must be fully written before being reported. Thus the transaction
-is ended early.
-
-> If the answer is "no", we might be able to just not create a transaction
-> altogether. 
-
-We still use a transaction in the normal case when objects are written
-without --verbose enabled. This matches the existing behavior.
-
-> If the answer is "yes" we should probably point out in the
-> commit message that the transaction still has a purpose.
-
-Yes, transactions still have a purpose, but only for object written
-before the --verbose option is first encountered. I'll try to clarify
-this in the commit message.
-
--Justin
