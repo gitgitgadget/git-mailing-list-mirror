@@ -1,132 +1,137 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B8535CEB3
-	for <git@vger.kernel.org>; Thu, 11 Sep 2025 16:21:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5598350D53
+	for <git@vger.kernel.org>; Thu, 11 Sep 2025 16:29:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757607714; cv=none; b=F7AnQVr8eyg9Csy0GZqT/IWf2n7axfIFSMPgQ/GDbxriyjWYkJ6lP6Q4X8kuxcxokntuw+MQ3nzS35ack/hqaDFfhOsuTa8bF6H5ZgCI5PV9p+IFq6I27Yta2DlnmGrMIwm/BZYpuzbB0hGQcz0+rtAhk7ICaBlO5J9rIG7yuIg=
+	t=1757608196; cv=none; b=HATfpQdktcqp+PjeAKYdM20nesczbNoC2sJ14FfgsCj7j0yNPnTPsew/Gl5cvVO5fwM4YClS/6s4wbu3pAUB3eBRQX8bamLNRBcVcrsb8V5l1M5PVXW9XgceKqiQCQuxj5OqYNUvFHb3IhKJQKQSQZV1CPtQ2izlkDg7tPbpZEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757607714; c=relaxed/simple;
-	bh=Cyf6e9Emh1wTOeCP9WJl3VOekdLJCt/h6M74f7WQ3sc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=oBT/0CX2n5XXOT64VzA5AqhlDVtzKE+qVnA9TCB6y8lA5uPvI8Tel/9DTWbJWne2J4Yc27HdNLh5P+8r7r2HFXWqAI2yC2owouZIhjewdvg5x34XBw7EEpWGJ0kpiIw6Sm00HjjrLrGlT/RFIE/veOj+Vqw8QaR/+ir2WaE7730=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FMK8IegS; arc=none smtp.client-ip=209.85.222.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757608196; c=relaxed/simple;
+	bh=3ObGAAc+8ujEzU7+3NHeEFbzDHtC+/+n2LS7Wy96Gpk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WtQVUyl0n7TsNQ5/Ib/OHnu34cCkvr+TTSiSni5abkAL6l9jMjS1LeAJyDIexpQku+Xe+Fa/rkMUE0Qyc8ttdnECUahGmXWSRMotSsjHtzCEZ3beZvHOOVHZ8t3aZ4Usfa+TmL/1sS9mzgxNsbN1lrLn5ic5iGY09Ub0S52vsJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YsGiMjhu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mMxyv1uj; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FMK8IegS"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-807e414be94so94098485a.1
-        for <git@vger.kernel.org>; Thu, 11 Sep 2025 09:21:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757607712; x=1758212512; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Nief4bxMvrlBQMTCcOnUGCQ9rRemPHmxKHD62UhMuEw=;
-        b=FMK8IegS8lJCWK5uKPPGHOsBU2vPVEtD6LtQllmg3yOODTK7wBY30qnyCpuUSp13Nb
-         wV5dC6vqOYnmKxVXKWX+dqsa0l/c9+kaEbM6XaAgf1Q4ROq73pyLW6f+1TImX+KhVRrY
-         FeTgY5z8xM6C50tE6NNGFm4/sMrjjLE7tonBUTNLtxsXJUerYCOmxltCv5lIcWTYpSPQ
-         J7jbwTGgfl5iyzgxur+pelg3DlJbiRZB4z4dGEyyxcYJOSXD9XjwPPWtx7nWTQzdjePw
-         PxlBlwt5bJPVELxyNtmXJ8BX8mGfWsjkpAvgU2+a3ewjVvQlDfapypCo4CaSvMJFPxub
-         L4qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757607712; x=1758212512;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Nief4bxMvrlBQMTCcOnUGCQ9rRemPHmxKHD62UhMuEw=;
-        b=hyO/UeGmPl94BQiustMm5iB3CEbYuqpPOID/yG0dfyRnfjDcdj52IrT0qJNJbc47Jf
-         Wb+T6V+jGzVcmKWBxhGZtpyqp1dv+MFuqZs3j8TWFFxcaX8MHbddQo+rGoq89AethQvI
-         15uRdrue8tl9KE+snGCDGHrQVRb3FErst3oVzb7/gHuzQPVD8xldgceS3PyfnS2r/j0j
-         43QY6daWlrti2U9CWVM7s3hcVR2YOeyE0yuEKETI2biabjQxamgIKrfk1xNS4IITUsi+
-         muIzZhXVF9QVEeT8sjo267dS8l52aa2DrzFWpoCMztX4Y5YyqBhJsJe8dzBwOb7a6LAF
-         6+Pg==
-X-Gm-Message-State: AOJu0Yyz5NPH3yUuELeR/rZ+yiNvMJ77DIAnSfYLzJACWJWT7sXkXiRZ
-	332PsVkgV+WlZo3AgqcjEMiETEx1ZT8M5fDSK+rVlAa/QyNDT/gQ8gdE
-X-Gm-Gg: ASbGncu9Pchzio0rXMZgCAX3+pbV8KCCCWeZnjW/aMuDPwn+wHiYtOtcRVjzI5RKW8T
-	31RfXlHivcbXt5JHzGNx/c6jL0CejS7W5987JPymIZXChpeFot3NDdHVGStPHRG12+GpahakvWx
-	blsgsJ7Ox7at7NWLO+Gunx1XncVkGsnrqP8kdOZ91OwHdX9yWsEBYkM67JAytCM5u++DP535Jj2
-	bWkzYVaAIeWxOqCGSbv/hP91sAphmE362U5NV/2nMOHmo+Fu269zMNXzRGTLWEGf2i+hdRKt1Oc
-	npaAEF0QacCxXufw7UBjvMF2JcxeYILnOMiHEUcNbmUqdWeAviYSURJl84tmNcmL4421zR6n4RJ
-	/NDlAej6QdLZIjnKUcdG4s3amiKUW+3BupLSejkI7vVtrY30bkPl5jwXffHCj4reRZzsjBaJl/c
-	+i57hPsH0UCe7RKMZjno1zWcE=
-X-Google-Smtp-Source: AGHT+IE0aGpaIvPATBRYY205b++yfA1GJP9Z89F7mggK50vUjzAlTaZ5UTvMxt3vJZLwIy1wphuEpw==
-X-Received: by 2002:a05:620a:2a01:b0:7e8:46ff:baac with SMTP id af79cd13be357-813be24afefmr2211546085a.1.1757607711549;
-        Thu, 11 Sep 2025 09:21:51 -0700 (PDT)
-Received: from ?IPV6:2605:a601:a6de:d300:e181:657e:57d:cd88? ([2605:a601:a6de:d300:e181:657e:57d:cd88])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-820cec300a4sm122299585a.57.2025.09.11.09.21.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Sep 2025 09:21:51 -0700 (PDT)
-Message-ID: <ad8a0156-bfd8-4a6e-b196-6e591e536b8c@gmail.com>
-Date: Thu, 11 Sep 2025 12:21:49 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YsGiMjhu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mMxyv1uj"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9F6641D00408;
+	Thu, 11 Sep 2025 12:29:53 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 11 Sep 2025 12:29:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757608193; x=1757694593; bh=Sp9aIS77K/
+	2bcLEpKaNYA1RtRxtuZoPVmfiBU/7GSWk=; b=YsGiMjhuf2e8jTCwTp+APNGSsy
+	38FDpr3tinqi4SZ05cqIuSTO1IHQ09Z0Zhl8+6V/M1lbH66Om+gZSlQG9+ZjDZ3K
+	JvJFWWZ0cV1y7RiG8e64qiKDLo7CJqJnh6hRI8SSmTfTbr98ducXQiKj50DcsR0j
+	GqTV5hvjr8IOKyLBipduifxnzCWIB1DUQ10DyYqrDq5pu/obzaqgCe3AWeoqF1KP
+	ANjDuKlk8Bh6NQoFD0d0ELZmzOCObppb0tAjNRaogwJP58R03G7lCo/zgP5UncS9
+	hKUdPLdFJYhZ40YGKIzA9PqdZN0Hna9zbl4w7ZtsuHflYg8t3i7tBbtlugmg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757608193; x=1757694593; bh=Sp9aIS77K/2bcLEpKaNYA1RtRxtuZoPVmfi
+	BU/7GSWk=; b=mMxyv1ujNY2w/LwZNpW7KLeS4RIyHw4IcCDL+xGpTHgt+Rimxhm
+	DKABFALt0TH/53Ea7aepyo3WznFD8ha2krm1ZNTJRbxh9PRsIvUiB/U3pR1oBUft
+	iIpfbycWrIknpmlJVP1Ue39SUW0+vxU5ltDs0kEcp9ltvk5/9hjWwPaM9qTooV4S
+	Mhh6OQTTK4dRV/9ryrKzdCXWYS+Jrh4jUpesSDrNCdwAwXq25y4GqDhxc0chX3S6
+	luLf+HYfNLHvJ2UDP+kjO73ZYDZRG4Sk4vPn8PzC7ojg94+u7zsPIzlwWgmWCCY2
+	KqnRUBS5eJ7GVkfx7vJTBgBM7B/0FtczEjg==
+X-ME-Sender: <xms:AfnCaIoRnzsKTvmYUeSfalj17bwvwQaTCaJQ36ZbJNtCQEtMp2_uag>
+    <xme:AfnCaLhI0qq_yKmhUmh9ZiYuMVm0iZi7C0QNREtK-9dLpLRB_UcYAHQ1FdZJsMqSR
+    rfee47zc1lmtPBQwQ>
+X-ME-Received: <xmr:AfnCaM_7ClDpPz6GgeT_97D8DRYPCAhBV2P0uQTRQfMTHbSQebpgUNpqWjiPnsKuEXUeI7sE-P6C7QujXKkwtBqGX-BwJbfMWBSJmEw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvieeihecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoheptghhrhhish
+    htihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshgrnhgu
+    rghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepjhhohh
+    grnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoheptghhrhhi
+    shgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:AfnCaPVgPRm9nJTah67TYH4QH2ghZF97uzBa6RThrqBwQ-7pHuN8tA>
+    <xmx:AfnCaIAcvM1PjBYLDNmb8odfEU8jaTCJzaDBnPP_pRjHtGZroUjZ5g>
+    <xmx:AfnCaMEeuqn4nCWG2dyXbYUDMQTLVWz0lSJ1rx18zBYcqOfNlppe1A>
+    <xmx:AfnCaB5lmKvl8HFPf9vwqneu1_vRgICtVedLb4l-nNO7p7ls5H9pCQ>
+    <xmx:AfnCaMl2IKa2XzbS7asCjcb5VJEy8o_BU8k6edZMD2vNv5gxC5jiinSM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 11 Sep 2025 12:29:52 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Christian Couder <christian.couder@gmail.com>,  git@vger.kernel.org,
+  Elijah Newren <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m .
+ carlson" <sandals@crustytoothpaste.net>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 1/2] gpg-interface: refactor 'enum sign_mode' parsing
+In-Reply-To: <aMJm57VmWb3h167z@pks.im> (Patrick Steinhardt's message of "Thu,
+	11 Sep 2025 08:06:31 +0200")
+References: <20250910080839.2142651-1-christian.couder@gmail.com>
+	<20250910080839.2142651-2-christian.couder@gmail.com>
+	<aMJm57VmWb3h167z@pks.im>
+Date: Thu, 11 Sep 2025 09:29:51 -0700
+Message-ID: <xmqqcy7xosu8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 8/8] sparse-checkout: make 'clean' clear more files
-From: Derrick Stolee <stolee@gmail.com>
-To: Elijah Newren <newren@gmail.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, Patrick Steinhardt <ps@pks.im>
-References: <pull.1941.git.1751973594.gitgitgadget@gmail.com>
- <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
- <82c24ce51980d85e1a53e746b462397e6e6c908a.1752716054.git.gitgitgadget@gmail.com>
- <CABPp-BHLcy-A4yLR8gP1Sjt_EKQ4K08kPyb7G6yifdZj+0MJNg@mail.gmail.com>
- <9b8d6c20-e91d-4ef6-9260-5016870f27c7@gmail.com>
-Content-Language: en-US
-In-Reply-To: <9b8d6c20-e91d-4ef6-9260-5016870f27c7@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On 9/11/25 11:26 AM, Derrick Stolee wrote:
-> On 8/5/25 8:21 PM, Elijah Newren wrote:
->> On Wed, Jul 16, 2025 at 6:34 PM Derrick Stolee via GitGitGadget
+Patrick Steinhardt <ps@pks.im> writes:
 
->>>                  git sparse-checkout clean -f >out &&
->>> -               test_line_count = 0 out &&
->>> -               test_path_exists folder1/even/more/dirs/file &&
->>> -
->>> -               git sparse-checkout reapply &&
->>> -               test_path_is_missing folder1
->>> +               test_cmp expect out &&
->>> +               test_path_is_missing folder1 &&
->>> +               test_path_is_missing deep/deeper2
->>
->> Yes, but why does `git status` show folder1/even/more/dirs/file as
->> being locally deleted?  Does the code forget to update the
->> SKIP_WORKTREE status after clearing out the files?
-> 
-> This is an interesting quirk about how "git add --sparse <path>"
-> works, which is to remove the SKIP_WORKTREE bit. It's further
-> interesting that the file is still being "tracked as a deletion"
-> while also being "collapsed to a sparse directory".
-> 
-> By expanding the earlier test cases to include these post-clean
-> statuses, we can see that this change is causing this new view
-> of a deleted file. I will see what I can do to determine exactly
-> what's different this time and how we can minimize that
-> strangeness (or: consider dropping this patch).
+>> +	if (!parse_sign_mode(arg, val))
+>> +		return 0;
+>> +
+>> +	return error("Unknown %s mode: %s", opt->long_name, arg);
+>
+> Would it make sense to maybe reverse the error handling and say
+> something like:
+>
+>     if (parse_sign_mode(arg, val) < 0)
+>         return error("Unknown %s mode: %s", opt->long_name, arg);
+>
+>     return 0;
+>
+> That reads a bit more natural to me at least.
 
-I'm coming to the conclusion that I should drop this patch
-for now and consider this more aggressive cleaning mechanism
-for a later update.
+I also thought that the original had a "Huh?" factor, but my
+reaction was more like "wouldn't it be easier to see if these are
+both sides of if/else?", i.e.
 
-The strangest part of what's going on here is that the in-
-memory sparse index collapses the folder2/ entry but an on-
-disk sparse index does not in this state. That's what's
-leading to this deleted entry.
+	if (parse_sign_mode(...))
+		return error(...);
+	else
+		return 0;
 
-I think the unpack_trees_options values are involved, but a
-few experiments led to no change in my tests.
+which made me think that the differences were mostly subjective and
+refrained from commenting.
 
-(With that, I have a v3 nearly ready, but I'll wait a day to
-see if feedback on top of my comments causes me to rethink
-anything.)
+But after I see your version, I tend to agree that it is easier to
+see the flow if the most-straightforward success case ran through to
+the end, while exceptional cases (i.e. an error return, or the
+initial "unset" case) did early returns.  I have to add, however,
+that I feel that this is mostly subjective and falls into "once it
+is in the tree, it's not really worth the patch noise to go and fix
+it up" category.  If we will have v2 of this series, I do prefer to
+see it written more in your way, though.
 
-Thanks,
--Stolee
+Thanks.
 
