@@ -1,72 +1,70 @@
-Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51A22ED855
-	for <git@vger.kernel.org>; Thu, 11 Sep 2025 22:54:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D87635
+	for <git@vger.kernel.org>; Thu, 11 Sep 2025 23:00:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757631252; cv=none; b=uxCq/0mot5iv63S5VexbMJSi3Z7fC4n0reXSpotkQjf+AioYCKwV66FogoGjwLBGSa4gDPGAT8z/bKt61byfB2nyApcR474VF1E4xCQSESgyluvlxiB6YzG2r8zzu/Jf4FnhxT1wupq5DiQg5KxoRl5fQr+TpHYF6aZ2HVYl18A=
+	t=1757631632; cv=none; b=Egl6yvaVLCs5AwyOi5eBRlbj/9clKtGfrVJHAE0xqtLwK07gsmvDJujW/iRmcTK/pGfgUlhmsjRye6V4e882SuZcj40E0wXKrzOIdSisVfWwnvLkNuoePPDMF4sMARVRiHnirO5keAIpaf0CzcKG9Qh7DngWbaeFvO7anwsDeWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757631252; c=relaxed/simple;
-	bh=0lIaLDLTL2B9Vszfj2z+CECaoedE0BYJCpij4/bTVRA=;
+	s=arc-20240116; t=1757631632; c=relaxed/simple;
+	bh=7ATogErDmn9qn8U341HtVIR3aSgCoMKysDm+gIw9mNg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZNsMgYYyQ49DF3/Unnn24Ktb+nmCxJS/sA+9BWUJ9cq6rgVyzgs25Yv0Sz+8VhdRIAiVR0qkSsH6q1Q3FB9Vcbc4aoKQC2+fNqUms7ozwaj6HfoLsiwBO6e5I+syhdUEuMw2s116KoZFyiIZcJW46U7Ka45X/mapqNo6UdxXze4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=SHQFEn8X; arc=none smtp.client-ip=74.125.224.42
+	 Content-Type:Content-Disposition:In-Reply-To; b=IsocZZsKajn+t2dUz8htGVImUR6H/y9ZHmPYG4mYhFoqNlgzerbMS/GVSZkUEHZzSpEK09IVTmhEHtam1D/T7YqqfFWDgUrwWY0vFxnDsVm4VS2ydoIT9wdhqHuxGnFI2zN68fS2fJHaCbEGTyJcleI1wV1KPAbaxQpq4+0cq94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Y/wymZnK; arc=none smtp.client-ip=74.125.224.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="SHQFEn8X"
-Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-60f476e97f1so445092d50.2
-        for <git@vger.kernel.org>; Thu, 11 Sep 2025 15:54:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Y/wymZnK"
+Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-61381743635so901429d50.1
+        for <git@vger.kernel.org>; Thu, 11 Sep 2025 16:00:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1757631250; x=1758236050; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1757631630; x=1758236430; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9SXSyrnZJ9rXyI1dA1wGk2FXhok6DCxLI/mJbLbctJ4=;
-        b=SHQFEn8XxWhEvpyKu+XkhR6e2g45ibUydfG9ogn7MSjgWvCBN3gDLMvOLkc5wsWmqo
-         WKSr7tPhj71FzRkRZiI7fhvcLzb9M0Y3r986nkqSAoXMAPVJkzWL+WcizkqAbwrs0Sp5
-         Arsy/pyc9q3kLOwrVY9t2st/wodSTKDJT/Nx3lmgj8NXLSlry4U4nSEb0Hn9KeBjQLhI
-         hfXhTZ00n1YUd6URHfNYv/vQJVFBKLMI6r7rJ9lOB41V+7nSGHQXyRC1WgdrEA69WuMu
-         ozFqxcCrRGA4T0SsO1Qm/e6AiN3CgtCmguasPJFGhDuUSelwr3/Z6MoX3pGsU9LkmTUL
-         OXZQ==
+        bh=J+EXG1xpRaWImaAX25REl3lOO+i67FlXx6uXQXbwoWg=;
+        b=Y/wymZnK2Yvaqma5KV2PBQAnw+gACXfpM91lA+bY0pnyc0X/7RAXGjw7GiU/M+Czff
+         Nk6xUsX5uwxjV5gkYeQbFGfmQEfsg3R/7WHrpDw84sJSSWbiES+me4kqwdUPTxxpQci6
+         jCnjm6Ch+C3UM0riP3mSOVRzGFYJpa3IgRpDSPUgyDXqaI6LBpEIfntYu0hb7qId2y7n
+         wKiMal1ebTM227PrBnW8t/Q2qqjUHHgd8H2l3vk1DQ1GogXuGJxHB9PziRurAb6ce4xz
+         ydIv7Zu2F/NPJ+2APe4WMWglqnmNSRzQCebZQzWACFr6UhJIDsiut2aLKEssz+14NXWT
+         B1iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757631250; x=1758236050;
+        d=1e100.net; s=20230601; t=1757631630; x=1758236430;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9SXSyrnZJ9rXyI1dA1wGk2FXhok6DCxLI/mJbLbctJ4=;
-        b=Qzkh7G2wPqEDvC6Fr3iZ2rxPeQoQHNTLv+0pGpaWbF5ku+nZD4ZIJRPgcqwbvS1r8o
-         JpFVOoOaNekjSjRLorH1KAGFcEXmX4Wt0m3UwUB6Vp04rPVVdgOLUzqdqh3kFBEAV8Wz
-         4aF8dPSibnLWL6ux9+BaGMYtwKdtg8WBsl+/0vB54OHLvpsxCZ5if+WmvYiEE+rMTYw6
-         dS6Ga0CJX2ZgjimyT9qq0RmCXyBG7wk1S3OGxxV4b46obvGnynwq0KFxzgtZCP9zxjxp
-         xCMxPIKuzecsLbzGWS9Y40XN9yVguvqmpbc3hcbbZbsQg9b0od+MORuhqdo5S8E1qMZ+
-         daqw==
-X-Gm-Message-State: AOJu0YxiHSOUMpjowzrVFHGwXApnbFf5L+KzI3lPMwYaQtlcImvdPaQF
-	AEYBDOX+0ogIXuASL2vFcNLk9366iWajl4ss9623tLRroq3E00bpeZyWsBuAlbCcyxZDGBqdOnE
-	b+zzi
-X-Gm-Gg: ASbGncvUfAfcIxy6QW+U9WDIaGipqW+q5qExV+AmHs0sOPHZZZkBvR8M71ckTDX5o0+
-	T6Dpvf2V96Ra3CL6DlNNt4c61wEpYJz98OyrWfySFjcWMH+l3cXSup/XdMtZEIePt1OBwZBeH52
-	IFJZ44FOg9a80+cx3RWuLGoqEyHJ39FQ2tIYN65CoRTTIOW1DUAKmUCzHi+JPcynO2IaBJYk/xm
-	1DL7ibyCjrOuhj2A7Cdy5/eo+FByE8JHQS2HynWnS4REGYYx1kinzNgpLLvoTh7eh4u0zgn4AdC
-	0cCh20+bj8L2J2SWRhHopeU1aCeQ1u3C6CVOiEnslRusIKUlNYlybXwJ9q7hu/+jIg6Tfl0KGjN
-	rF11NYJlnui/gUBCEDNHKC+NomYTBMFCh/z8oii/DdvPCCAq7+QmejgAf3WFrCTDYM1ayU4rgtK
-	Y+RTdXeg+EckBvFBhYvSypHvGkNTY9eCDcCS6C
-X-Google-Smtp-Source: AGHT+IG5ZkD886dNU/HUva4i/mg//ABdvNCHqZcDSyn5xpjajI8/GgCphjTcqKDH5tzMV0QFirkYBw==
-X-Received: by 2002:a53:dc82:0:b0:600:f59f:7829 with SMTP id 956f58d0204a3-6272453e747mr849898d50.38.1757631249768;
-        Thu, 11 Sep 2025 15:54:09 -0700 (PDT)
+        bh=J+EXG1xpRaWImaAX25REl3lOO+i67FlXx6uXQXbwoWg=;
+        b=uB2mwl3YDWynJT8aM1kZ1ihqivJxWHV9h5YM+IGq4djd54B4x667jzVKtsCgQADkBI
+         8LgkSvsSLPL9g7oekVlLDxxMZmAefAqCUAhO0BqjXyL/sPF1iI2Dl2N6visav6drpS2G
+         OkK+omefmwizn6Bh+41drwuF8A0ftQeP8iba/iKnWH9Fukn16aia63sFFt2NxStPTWfz
+         5GMlW7lzZQ/o1cReagfnjnK3YIkrSBWEBKt6MwWkUAdpI4y0UC2yhi+w3xH/xwtrsQ1/
+         2aSTEOjl65GgK9674xnBO1dPha3vj2HTK3mhs2Jq7wfFXP3wry4RFMcDSB9OfEFCDdct
+         aGKA==
+X-Gm-Message-State: AOJu0Yy4MwCWDGnbrns1u7iXBbFvGTn9VtRQaaaGDw95/xasxw7/vHRu
+	LoAR67H37xe1PR/IzBf1j48FdTbbaFu7pNKGLxt0esutbFfUUePxOJGJSqJ/5lte13A=
+X-Gm-Gg: ASbGnctn75N0Vq1/wQlH76rLZSf9hL24t786UhLvnWK7mQAHQSH8tFKmM3NMBp5k3jE
+	hBCBab9ogbBiIqYEOlGCuXRteJ+B3u6VPDEKB7KD44CzHG/pCi38fYenzByqqnImn5J5/FcfiK3
+	PQn9fln0KrS7WH8oKMdvg8koiBwE4nNge7i/Lk/s1pllv0A7+0HIMAX4qVIg7L4I2muoT+zEera
+	cMYdzb5BVA8h4kA379rb77Aq1/tACftUYHUHaDbgaFmViVwSeM6ir1IkJDMRJdWvSBxsoP+H9Bp
+	kW9fggcjq2vaoMA242qjkNpvI12ZU9z1aWwYaCZrAy3qDZb9qQjHkIzjekglQhC/DgXkAQTeTZX
+	s8MPzui91KGa3dfcIbEkXt/9Y11MTkg5sxRzKfPwyYxAxljehCewdzovGnZCMnDDsXjBKOjP2Oq
+	K7/YC8VFm/VfGTfETxu9tYhZW/6g==
+X-Google-Smtp-Source: AGHT+IFud4wnK3qiGx7bGTeO/r3dj9LMQPwrB1fhj22tbOlQHvWCtK8dtCs4axaHFA7ASBbn7L0uYA==
+X-Received: by 2002:a53:7b03:0:b0:604:3849:9b8a with SMTP id 956f58d0204a3-6272164e7bbmr827083d50.32.1757631629730;
+        Thu, 11 Sep 2025 16:00:29 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-72f791a35bcsm6658927b3.39.2025.09.11.15.54.09
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-72f79c78dbasm6832947b3.73.2025.09.11.16.00.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Sep 2025 15:54:09 -0700 (PDT)
-Date: Thu, 11 Sep 2025 18:54:08 -0400
+        Thu, 11 Sep 2025 16:00:29 -0700 (PDT)
+Date: Thu, 11 Sep 2025 19:00:27 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/6] commit-graph: return commit graph from
- `repo_find_commit_pos_in_graph()`
-Message-ID: <aMNTELw0Wk8jWoPc@nand.local>
+Subject: Re: [PATCH 6/6] odb: move commit-graph into the object sources
+Message-ID: <aMNUi9+MZd0rtmOT@nand.local>
 References: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
- <20250904-b4-pks-commit-graph-via-source-v1-4-d932c2481e1a@pks.im>
+ <20250904-b4-pks-commit-graph-via-source-v1-6-d932c2481e1a@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,16 +73,115 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250904-b4-pks-commit-graph-via-source-v1-4-d932c2481e1a@pks.im>
+In-Reply-To: <20250904-b4-pks-commit-graph-via-source-v1-6-d932c2481e1a@pks.im>
 
-On Thu, Sep 04, 2025 at 02:49:58PM +0200, Patrick Steinhardt wrote:
+On Thu, Sep 04, 2025 at 02:50:00PM +0200, Patrick Steinhardt wrote:
+> Commit graphs are inherently tied to one specific object source.
+> Furthermore, with the upcoming pluggable object sources, it is not even
+> guaranteed that an object source may even have a commit graph as these
+> are specific to the actual on-disk data format.
+>
+> Prepare for this future by moving the commit-graph pointer from `struct
+> object_database` to `struct odb_source`. Eventually, this will allow us
+> to make commit graphs an implementation detail of an object source's
+> backend.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  bloom.c        |  8 +++++---
->  commit-graph.c | 18 ++++++++++++------
->  commit-graph.h | 12 ++++++------
->  3 files changed, 23 insertions(+), 15 deletions(-)
+>  commit-graph.c | 65 +++++++++++++++++++++++++++++++++++++++++-----------------
+>  commit-graph.h |  2 +-
+>  odb.c          |  9 ++++----
+>  odb.h          |  6 +++---
+>  packfile.c     |  3 +--
+>  5 files changed, 56 insertions(+), 29 deletions(-)
+>
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 0e25b14076..9929c1ed87 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -721,11 +721,15 @@ static struct commit_graph *load_commit_graph_chain(struct odb_source *source)
+>
+>  struct commit_graph *read_commit_graph_one(struct odb_source *source)
+>  {
+> -	struct commit_graph *g = load_commit_graph_v1(source);
+> +	struct commit_graph *g;
+> +
+> +	if (source->commit_graph_attempted)
+> +		return NULL;
 
-All makes sense and looks good to me.
+I wonder if some callers will find this surprising. The current analog
+of this function is commit-graph.c::prepare_commit_graph(), which does:
+
+    if (r->objects->commit_graph_attempted)
+        return r->objects->commit_graph;
+
+, but this function returns NULL on the second (and subsequent) calls,
+even if the object source in question has a commit graph that was loaded
+in an earlier step.
+
+> +	source->commit_graph_attempted = true;
+>
+> +	g = load_commit_graph_v1(source);
+>  	if (!g)
+>  		g = load_commit_graph_chain(source);
+> -
+>  	return g;
+>  }
+>
+> @@ -737,6 +741,7 @@ struct commit_graph *read_commit_graph_one(struct odb_source *source)
+>   */
+>  static struct commit_graph *prepare_commit_graph(struct repository *r)
+>  {
+> +	bool all_attempted = true;
+>  	struct odb_source *source;
+>
+>  	/*
+> @@ -749,9 +754,19 @@ static struct commit_graph *prepare_commit_graph(struct repository *r)
+>  	if (!r->gitdir || r->commit_graph_disabled)
+>  		return NULL;
+>
+> -	if (r->objects->commit_graph_attempted)
+> -		return r->objects->commit_graph;
+> -	r->objects->commit_graph_attempted = 1;
+> +	odb_prepare_alternates(r->objects);
+> +	for (source = r->objects->sources; source; source = source->next) {
+> +		all_attempted &= source->commit_graph_attempted;
+> +		if (source->commit_graph)
+> +			return source->commit_graph;
+> +	}
+> +
+> +	/*
+> +	 * There is no point in re-trying to load commit graphs if we already
+> +	 * tried loading all of them beforehand.
+> +	 */
+> +	if (all_attempted)
+> +		return NULL;
+>
+>  	prepare_repo_settings(r);
+>
+> @@ -768,14 +783,16 @@ static struct commit_graph *prepare_commit_graph(struct repository *r)
+>  	if (!commit_graph_compatible(r))
+>  		return NULL;
+>
+> -	odb_prepare_alternates(r->objects);
+>  	for (source = r->objects->sources; source; source = source->next) {
+> -		r->objects->commit_graph = read_commit_graph_one(source);
+> -		if (r->objects->commit_graph)
+> -			break;
+> +		if (source->commit_graph_attempted)
+> +			continue;
+> +
+> +		source->commit_graph = read_commit_graph_one(source);
+> +		if (source->commit_graph)
+> +			return source->commit_graph;
+
+Is this what callers expect? The pre-image here returned the
+commit-graph belonging to the current repository's object database, not
+any of its alternate(s).
+
+I'm not opposed to the idea that perhaps loading commit-graphs from
+alternates would be useful, but I am uncomfortable making that change in
+this series.
 
 Thanks,
 Taylor
