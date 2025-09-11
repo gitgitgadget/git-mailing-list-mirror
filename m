@@ -1,122 +1,110 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7128626B942
-	for <git@vger.kernel.org>; Thu, 11 Sep 2025 23:42:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905AF221269
+	for <git@vger.kernel.org>; Thu, 11 Sep 2025 23:44:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757634141; cv=none; b=LBvHuxQja2Tu7GeJckWmd1cVAZtaz651yncuByFg/ySpr3g7rA6lKChjzfWDebhuZHaLY6xWXduvDihqg+fv6aW1jvvmvR/MZTWGBRB3RAwJnC6tj1eixRUdlDUKQgYrL7XmxMXT2vuD+CM33Ef1XFWMIWNDQgc/C8bWtV5HP8k=
+	t=1757634299; cv=none; b=SvWaL+P2llvSxfDy41sKNK8luNn/7qzNoPrrsaOu3PMdsKmb98o7lZx6IWnWfFlmh1rnaDxs59fzVFmaYCH9XV11/mYeAoPiYRppV3n9eRl35wXXLQG4UXy0lkk9izFccpZmMaAb8OdP5NL+iQZaOfptZLlvRQsG9g8skFn/yNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757634141; c=relaxed/simple;
-	bh=qjkGNWdsAdWMmALlOA3CuR/GNeB58Y8NOtYeN37VGrU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n3XnoHc/0vR0zJVS5GfunXHwBxomlCBxZDGuCaUgqXqdg88iL/9MU4XYI7QHifj/fTQ7Gn0mH2jvOCAYzNOBexEj6LpiGgZHEeCJX9FlyfRf/OhuUlcK/JLvcvLlXBenMwTXHGEmpBq0aXGXg8NoxYjPidcbEPZxkSCw6G6lgz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Nqen5bHL; arc=none smtp.client-ip=209.85.128.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1757634299; c=relaxed/simple;
+	bh=qZhRloqygTq4pErbSBPiDd3ZIBXX1dJNTtGuS+WVO9s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jtuLNyy/7Rg7GaIAfx2NIkOW4E2dmrQUVW02ioae0zi4PdrnPCp+vznwMiTG1Y+lrdLrqr10ar4BbsPeezYBKouNP+WfB3Bas0BWRC1xCQYeh5iXG91a+3Rn9hyAVjSXrYME8Q3F7zXzzmWOO2PvOgo7RzY0EsRCorNeisCcOGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V28uPX2k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XGnbbgHc; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Nqen5bHL"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-71d60501806so9298987b3.2
-        for <git@vger.kernel.org>; Thu, 11 Sep 2025 16:42:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1757634139; x=1758238939; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q1MPBLoqLLOw8QHVGC4kkGK5bDqEaZX64w9Ov9to0Hw=;
-        b=Nqen5bHLHwhm5t+P1ap/4qbnar9gEgmRwtgbL2WK9hvJXUUxQkXxnK3CmWX/3f63Xf
-         M7DR8BEEX5rjnhuV7Y8wOtxzXkuUgjep4jG1LYGR4o17iwe8aBooU9Sr6bwYQ+N+tDzj
-         egaaVNDigFXLFf+hD5ZdKvQTf8AR7quo6vI9A5bDS3tcfGhGfwwx762OyHHHSF/W0NQY
-         PFmTc5KqnmHOR1UegG6VV9jpVF/RWM0uiQUN2QPR76ZNfD8VJfm8NxJg7Fj23dGdJx6Q
-         1YX5a9eX619gmKHsRpW/ua3GhgRe2ArP0Wk/7LwbwM8Rlvhgah27BRl5vs9m+U+nhGNJ
-         Y8hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757634139; x=1758238939;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Q1MPBLoqLLOw8QHVGC4kkGK5bDqEaZX64w9Ov9to0Hw=;
-        b=LQphBjUm3qU1NVKVp78HPKR0K68FKdx9QV3LTE4R0N8nIvEhqXs2iHa9YacFkJ+/Oc
-         +SEqhsi5Rl+fi/0BSwYDQ0RbvVHMaNTYK9lKb3OBEl+abTzfD1tnAbFgqsuIXcw6bcSA
-         UAoZnAz/cwzW7wfcv0tmhwav0SeMasdARxU63AFsoE1xMoWZuE98cjPS0dk/CJF/jP+d
-         LIh7ZifBsPj+MqS4ID9CVmo746y3DKKCy+oQ9id2PyJaVjhA2KfzTNFC/xVqtCP3ry3h
-         hCdn36B5eholkyxBqXXEZ0xSDYaYss1H5yL/fcPjDOlqU58so8sB0J7g+mnk42EAKAPr
-         tbKg==
-X-Gm-Message-State: AOJu0YyI8z7x+XUNpmwl1qwZ8W2rCfClx1hNaECIefJu4Ne5xHjfm72k
-	ATa9r/BT8tgAaQ3THCUYyqeArO+qFeXBHxjErK4swKDcNjRrzwsoBumsBHwzkgelGJc=
-X-Gm-Gg: ASbGnctqZz7m8RV11OhTgD+3/EorEStFsG56MtgQdKfSV5xwGc4DN6uZMtxhtSogdi2
-	a7eKC2ozvTuiIVKNAKDw/3cJa/ZGhcq/smdEW2OjxYZIyygep7WXs8Lhyy+Q6r0AiUGS/rfkcqB
-	UFvByE3SdvaJ/tezVOutsGUxOZmeJHHgnjIOBEhXWZYJ5rkxHaIKDmy2p+bdVCJl1efsf3U5EsW
-	mrGzBwbfE/1tuBiFtLkYV4wmYV3r9SMu7BAlroUjFKJ76Rcow0qabrwjnEXQpbAVRlhcp1aWKB9
-	TDdTqurUX/Fi90s3FIPFmgRnFXyI7FTQWeN9CNiXC9BgqP8hFe46TgtJ2SIEKx7qQLc2jije6Mr
-	pBsDuSeg2ub3RR88TqMmIxUI+RoA24FAaAAZcUEcbeK3f6v7IWuYLyTphCDCRYJeqoAWxnJUlxo
-	LCj6JljWYnT8a+jo2UcL3RvZ8a1A==
-X-Google-Smtp-Source: AGHT+IG27ofjSLYKzfBqs7bpMBw013PTKVltyTZG500eEC8v6Vt8UF+mdwxemw6guHxa+MScCQ2xTw==
-X-Received: by 2002:a05:690c:7108:b0:724:6d3d:67fc with SMTP id 00721157ae682-73062ca60bbmr8737807b3.8.1757634139392;
-        Thu, 11 Sep 2025 16:42:19 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-72f76830c64sm7064007b3.19.2025.09.11.16.42.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Sep 2025 16:42:18 -0700 (PDT)
-Date: Thu, 11 Sep 2025 19:42:16 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 00/15] packfile: carve out a new packfile store
-Message-ID: <aMNeWPD6spSMB1yh@nand.local>
-References: <20250819-b4-pks-packfiles-store-v1-0-1660842e125a@pks.im>
- <20250909-b4-pks-packfiles-store-v4-0-151c4ba3619f@pks.im>
- <aMNd0RkdaW4cWMtw@nand.local>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V28uPX2k";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XGnbbgHc"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 71C2F7A0320;
+	Thu, 11 Sep 2025 19:44:56 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 11 Sep 2025 19:44:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757634296; x=1757720696; bh=nRPQakz3rn
+	jTQa/Sf1tvIfUPYoWN8nkK1Nm2W98kWMU=; b=V28uPX2k8SPAUOJXYD6GQSYlj0
+	zTseRufMVx2WZkkPfgX+CrwBMvsSidwNcPJT1VVe3ZI2NpjxxiG55GPv42EXN3cM
+	q2Q4Hdy6kHGa3BfQBeb0uyFisyurTw1lhGi8lPlRQgO9ID46H6woHev7sgsX8HjF
+	7c9gzjQqANA2d6hm0p1FI8PQZTmqjKflgsAh72kf5zflrCyD+IRU4Qb/LsjAbUJp
+	wF7uln2XCebyyoSvQv1j2z0r6y99xInPmVJu0JSLvlVIZRfwS0aRjhNxxgi5awUN
+	+LlCevb7jKpPdNBQcLVgzAXSYaqetaTNamVk9AMDTsMsG6qAA+QHt/W8D+DQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757634296; x=1757720696; bh=nRPQakz3rnjTQa/Sf1tvIfUPYoWN8nkK1Nm
+	2W98kWMU=; b=XGnbbgHct9hwTJ3jGdABK/LQn6A7b7OlCj4enQldxHpu7jNDJ+0
+	XJTeP4JTuWorb6ERXBEg3Yml8dN2vg2oAASfCjLG4qcRsFT3bJ3qAIESCteeuVqf
+	jak65kHjRbpEyNF4SOyLN6clTQXIharVzZQ1x5rqCVSpBkDsKaou/QsdvnDmpUJE
+	1GsNYTVpJ9YTAUMFf1/M2fIrjiVext2cUb9pSuweUAEQPE3HUkaAP6y+0wuSZ7hE
+	Fr0tgGhroZL3Hwz2sTXu3gtD/b6Gixh7C7O9SDUSLSvQtmPcqVZN8J3Hyg+uTv7G
+	E4MLAAi/4oNhmE+SVtKUSYKrkolaIRsE1Tg==
+X-ME-Sender: <xms:-F7DaPhMB9mQqE-Hpsxuv7iM1enqzipZYNMwn6EDW75b4J2j9snk0Q>
+    <xme:-F7DaEfwpUS4bjPBOecMG7UqOlWXN2iCRLV0PQX24NuTnxATRpRvSM0VuW4hnKjkA
+    qLWm-6R9SNJ38BCsA>
+X-ME-Received: <xmr:-F7DaPiH6EcQyUcv7jXORK9Ddvbkpa5-IuWsIvOhX3QI1l-LLNdOEBdMgQCSIHKBEfhLY0tBsOvfGtDIO-tVNpF7Kyx-kbxpHVbWbBY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvjeehvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoh
+    epshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughg
+    vghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:-F7DaMyDQFf44IBPzB5SMWlV2FWlW9U7YZQ656R_-8QoQ-K0RzRceg>
+    <xmx:-F7DaLOEIRSE-7igOwl0zs_PI-jt4VqA56VmBMbmlfF9qjr0PVHv8A>
+    <xmx:-F7DaNXIikxiA1lYZiLlEgLpKG8LIQQSsDzDm0tHczipM3YuBOiMFw>
+    <xmx:-F7DaP3ksCB-HqyKTAz-JPCIgX7qoo8pH4Haa8osWRAPfohUbLI2sw>
+    <xmx:-F7DaHK8Xs_AhqzSvXFurPT-KDf8b4bNbVSEmFRwaNhu9ZWNfLOrCE_->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 11 Sep 2025 19:44:55 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Derrick Stolee <stolee@gmail.com>,  Derrick Stolee via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Patrick Steinhardt
+ <ps@pks.im>
+Subject: Re: [PATCH v3 0/6] midx-write: fix segfault and do several cleanups
+In-Reply-To: <aMNXhDn9O5+swQ2u@nand.local> (Taylor Blau's message of "Thu, 11
+	Sep 2025 19:13:08 -0400")
+References: <pull.1965.v2.git.1756589007.gitgitgadget@gmail.com>
+	<pull.1965.v3.git.1757100378.gitgitgadget@gmail.com>
+	<xmqqcy843d27.fsf@gitster.g>
+	<cc0c30f4-5e03-423e-a6d5-f8effb953f68@gmail.com>
+	<aMNXhDn9O5+swQ2u@nand.local>
+Date: Thu, 11 Sep 2025 16:44:54 -0700
+Message-ID: <xmqqjz24o8p5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aMNd0RkdaW4cWMtw@nand.local>
+Content-Type: text/plain
 
-On Thu, Sep 11, 2025 at 07:40:01PM -0400, Taylor Blau wrote:
-> On Tue, Sep 09, 2025 at 01:02:59PM +0200, Patrick Steinhardt wrote:
-> > Changes in v4:
-> >   - Small code style improvement as suggested by Junio.
-> >   - Some commit message improvements as suggested by Karthik.
-> >   - Link to v3: https://lore.kernel.org/r/20250902-b4-pks-packfiles-store-v3-0-6925278efeda@pks.im
->
-> Thanks for these changes. I think that this series is getting closer,
-> but I do not think that it is quite ready yet.
->
-> The largest outstanding topic is that this round claims that
-> get_all_packs() behaves identically to get_packed_git(), but this is not
-> the case. I mentioned in a response to the patch that removes the latter
-> function, but I think we should:
->
->  - Permit both get_all_packs() and get_packed_git() to coexist for now.
->
->  - In a follow-up series, transition get_packed_git() callers one-by-one
->    to use get_all_packs() instead. Each of these commits should include
->    IMHO a justification that the change is safe as-is, or include fixes
->    to make it safe. I think any "fixes" here are limited to "if
->    (p->multi_pack_index) continue;".
->
->  - Once there are no longer any callers of get_packed_git(), we can
->    remove it.
->
-> If you want to pursue that in this series, I am happy to review and
-> discuss it, but IMHO there is already enough going on here that I think
-> it makes more sense to do that in a separate follow-up.
+Taylor Blau <me@ttaylorr.com> writes:
 
-Oops, hit "send" too early.
+> On Fri, Sep 05, 2025 at 03:57:10PM -0400, Derrick Stolee wrote:
+>> > All incremental changes made sense to me.  Will replace.
+>> >
+>> > Shall we mark the topic ready for 'next' by now?
+>>
+>> I believe it's ready. Thanks.
+>
+> Agreed. I still have this nagging feeling that the reproduction case can
+> be made smaller, and I wish it weren't flaky (as I understand it to be
+> on Stolee's machine). But I don't see any reason that should hold up
+> this series.
 
-The other outstanding topic that I want to raise is that I think
-transitioning away from get_all_packs() to the new API in all callers is
-premature. I would *much* rather see us do this call-by-call when it is
-necessary to do so rather than forcing all callers onto the new API.
-
-If there is a compelling reason that we must force callers to all use
-the new API now, I'm happy to discuss that, but as-is I worry that we
-are changing things too quickly here.
-
-Thanks,
-Taylor
+Thanks, all.
