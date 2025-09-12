@@ -1,94 +1,117 @@
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2190819994F
-	for <git@vger.kernel.org>; Fri, 12 Sep 2025 18:06:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2127932A818
+	for <git@vger.kernel.org>; Fri, 12 Sep 2025 18:14:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757700411; cv=none; b=p62rGEQ6C3q01E5Jj4nj53Qh5kb0f+fBQhJNdaDRG6Rua6klk1zj1UsYeG8jaR91Eh9zrcixvM2YPjqfrLPhE+r0OW07G/8AHD89yBX+7AkUOH2BYIkh7ns9FrvQebNO6cHJDGz/uZPKuAjJq9weN/ubdqE9tFtqUrPbS7gc4uY=
+	t=1757700876; cv=none; b=XfVHtbgJfd3pgDGi/2xCVv7Bt5Vj8HWSe4k7vHCVVSeROemY0ol/jbYczfvrTZQhlLDxxnJUkac8ymdRFRnmDxLzfyMutU8qjsTBNUGK6L3DkvDDQdbw8nobmIBKgW2NJqzsWUfv91/ey9is/CzQ4wMqeFWGvBD4JFr462Ng2Wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757700411; c=relaxed/simple;
-	bh=5cVneYgshvIbRR0hukyeug/6oKr8ISngo6ocyNjQzWo=;
+	s=arc-20240116; t=1757700876; c=relaxed/simple;
+	bh=tOxvFNx0Mi6QWWLhW2Uem2E+FRbWpES11kEdpZ3NAZs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tJfAPvsSxYyO5Vt34wiuGUW46wgHBE1/ug3KBT/s95FZ8UlveUUaAYbRLa0aIYdIF7ky/H3SrkaduO9dWMsHdcbBiTQCjX+6gXOPOoMcKOpPgceXFpWdYGN6SI0EMy2PTjttHvtlBGBpcVjI1wRetMlzJDwW8tYOw1kJAQHAArc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MxJdNehL; arc=none smtp.client-ip=209.85.219.169
+	 To:Cc:Content-Type; b=BIbywoF247fFPTO64cmOy37cMthBbPdktKrl2Tl/HV9FGkDMnqFf8o252SPK0VrAQn9qtITnp/zGrUMplzK4/Sk/KiWHIh7aq6nOmC224E2ghcurh/lVV4eeMVjPKuhkluCUaB14jN2kRsdYPvvYRBVn/hQfbRSzcIluIF4TB80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=krlo50tB; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MxJdNehL"
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e98a18faa35so2231799276.0
-        for <git@vger.kernel.org>; Fri, 12 Sep 2025 11:06:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="krlo50tB"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-b079c13240eso365865966b.1
+        for <git@vger.kernel.org>; Fri, 12 Sep 2025 11:14:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757700409; x=1758305209; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757700873; x=1758305673; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZwC0u7/hHYyGV6+mjhbbf4ASwlzdDn0X/3b7jZMhB3g=;
-        b=MxJdNehLQilxWBQFrAa7ZDYTqYrORAhEhG6Q2OiWwW2fV/8Vv2lLJMqmvIrGiJbrvi
-         GxOuSKpvYRMSd6g8Fy34aDCbhTKe8/s072gsaK9yVk520gU5bZJwMNgBZD0PmjHpMTRH
-         E2lRWtticjwzUqSmWVq3ILxFOVI0TLHvcTF6NaVxW+0+6zoBPX4rMgderuLCr6bw7ku8
-         WVMbnLutOvP3Bj3DjiXqaQL4mcEjhT065LwHJYBCGMAqncVkMgggJPRW2O3MCPaArJD+
-         4477KcNak5zwqznC2Wz2Z3qa8T4dMrLkk2Nsa8pi7Jl4VeI6fO9zQ7YJWkTv55mrey2I
-         gL4g==
+        bh=ykPEwCvEDNhI7W5snGTWshHaQ6IgY/9lNg/pVehnhXI=;
+        b=krlo50tB++vlGfXeN0+LxMZZOBaALHTrzTHij/uXX0ssFEvzNGcAif92p36MpypHcH
+         cyuGsK5zu/oH64bLj5JjwaWjwwPLGcANuI7CoPcVK+qV0tzYGYNAs6YI/6TBXp3K5Y5h
+         ZtNTTUMj8XcEvWEzkm/HTfaVz8FYJU4kdbpWhoEfnlAMSesehH+8HwzRw95rJ3VubPVE
+         VUImxO26EUYwB98LvGTqqhsxbhAL6XAgJLlscG4O05MYAAtqE1VnjBa5HyzLlnOsjWfC
+         MxLAD4ogqnnOm6TxL42ou1zM3F+GxmNb56+twMbZu9b9ztA40ZKJNoLiQDcyXwsOD7sG
+         82fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757700409; x=1758305209;
+        d=1e100.net; s=20230601; t=1757700873; x=1758305673;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ZwC0u7/hHYyGV6+mjhbbf4ASwlzdDn0X/3b7jZMhB3g=;
-        b=eZpAtucw03CkHnvrkacRVEdQqbVWk2PlBK4rhMTzu9PjB+NXw3HyUy6JrY/ICD6MHH
-         ANGin2VLqnXWbygLJZ/KF/IgNgQMOuANdzon7uFeINEhTVD6bvljbdOmKZFH8lhCbaLp
-         Km+mAb1I22t6IG1OxVfEzaBwYMRddBEelNIPhI+xuzqNctkkLaadZaKY3Jm/NIQXnuqi
-         qAz8tXL1l1yT+SzXI6AO4W0WxBRs5NT5LP+ct6JDEOoOnfDtRObbaea7eyCXDgEWCZkP
-         WTg7E273ZiVVNxCsmr7hGqjPPPCCS3V6va1aRMKMEdfBmqWCoASy0ABM5nLff2nhnCRJ
-         uNkg==
-X-Forwarded-Encrypted: i=1; AJvYcCV7/QybXy5WzhCsdnkbOtQH8rj/XaGubSqVLuueyNhX40PDK4Ek7t0U075NioLiMWA/CxM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwMKVJfoMsr8gRkNl1KtkZxs3dPbx/Zvb1zyvJtvmJijIKDbLSv
-	bcJctuW7eU2GZ+T9dsf0dpnCVWedHQK428RciPKWKXKLsm24xrc72XnAIM8Ff8foKbSYlvx66uB
-	xPJrRwI7WRtpVOOWMO1z9jo/ZIwkPsZp2XJQg
-X-Gm-Gg: ASbGnctYCqNGMNQH9qQ5rcW1fsEXXCBW7M2iVR5KKJ4+UdLzhXYd3gi/gd86AQnmoHm
-	veD+iAwPy+uzG2qWyq3Fdvu9DAWr2YWL1BrAXdeumP2ALXbH2M5AIlfZK2WCVs8eTs5UgjITj3s
-	a07wngO2kDJDNqt5NNsypWZLzXqMi9Zdf0rucOK82ecSomUGvfqSz34BL9E1XpWWtECg2DIJpvZ
-	BJns+nGSl6FNCCqD71mnkdr3Z1lug==
-X-Google-Smtp-Source: AGHT+IFAvDTgMlIWh/ffaluRMMBzjRAO1fchvBWYpi1akAAVSXYrUVZ3ZNw6jH4HqmzOcNjPrCknxnmSJuAd5H+9mIk=
-X-Received: by 2002:a05:690e:154f:10b0:600:f8c2:2264 with SMTP id
- 956f58d0204a3-6271e757025mr3042179d50.7.1757700408860; Fri, 12 Sep 2025
- 11:06:48 -0700 (PDT)
+        bh=ykPEwCvEDNhI7W5snGTWshHaQ6IgY/9lNg/pVehnhXI=;
+        b=rDdfIn/MrD2jegxln3Q5KCRbd42ygoP6c59EVfyB3JLn0JJdzv0pO+oTj+s/2B2R6W
+         CKfbliCs7FkYpW1+sdZVFrfIw9w50C2qsbwkJ/EKu9xGJS+o5glSPDfFQXhrMgKTlLiH
+         vlqF/P4rHmsp6AFH+NOR/+Pn4M5gEriZzA4d14aL/XFJfa3eoc+Meu3rWtngc44t1LI0
+         4CV1QpXGrlDU8UIpvh6a67GeAxn8DJc9ZqL29btokkryKBOMpM8CNtjm90y1Psrg00mU
+         R3PUlgWeNIDD/7up8WWQLniG8SJsn0ViagvhTKjTvxweUaFTQoscfye1T+OHhv+uGwdn
+         rvSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWpb6hpZjuC/gFunLeoySISl0tmoZ8FN3MdFn8YtFETqLrgdMwwzyG4qcPIrSufbSDeaNw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwzSVmw0VJKU+p8KXi2ZfoHUewO586ufuJYuTT7lYc9I+feUtOq
+	AzUYaP76cB1oCzM6HgluT7ZmOYteN/i07+85Re8Df5s/kuD40FsDeeNr7hpcOzKVaztFm0MQlQJ
+	Fhplqd0+FlbaeqOr06fvLdiQkdhUUUYo=
+X-Gm-Gg: ASbGnct10vsiCOZhUaSyB5OqgJmMkX2KgNF/0gowdy93zWBOPjf93JrhctmEFPOui/H
+	s7G8D7VqfsWrFdFyRWbcsxB8e95RkXG/4K23QP+hBZCp3XQaolgnGmuBhNTBx+L2Z6hWilBJTJQ
+	pJ3hcqKumvgH9MBvdXZzwRBGBIPGsJLVj0ZrjcSwyi7rVNTlQ16TZhN+jAnR8oj6qQwWZiusmhT
+	vJf3T8QauhKZgxnDuQip9cERuhZaLTTb3KQbYPi6v82xmOk0OC4M2+tw7X1Q+g=
+X-Google-Smtp-Source: AGHT+IHoy2wwcbc+eYaJpggc20MJhUoEOeutbhn8dZ8iBxVGefTvDpvGcWNCEltWGXby2dhPVMP/MA2Ux8tyg/Xmg1o=
+X-Received: by 2002:a17:907:970b:b0:b04:616c:d762 with SMTP id
+ a640c23a62f3a-b07c335324cmr343799266b.0.1757700873185; Fri, 12 Sep 2025
+ 11:14:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAJKmQvf-sLxowLJLitvqDmyL1BXXDK+anDE2jaBSEabApMNVoQ@mail.gmail.com>
- <071101dc23f5$fbf06e30$f3d14a90$@nexbridge.com> <xmqqtt17my71.fsf@gitster.g>
-In-Reply-To: <xmqqtt17my71.fsf@gitster.g>
-From: usharerose <ushareroses@gmail.com>
-Date: Sat, 13 Sep 2025 02:06:37 +0800
-X-Gm-Features: Ac12FXyyej52JC4tlyVXNQi2oSyP__jie1nh_fpeieBYmRH_PhDRJWZwrM3-WZA
-Message-ID: <CAJKmQvd1r3NvWKnswHFBf-HJ+H63wBhKF-Q2VABZAbvUXacUQw@mail.gmail.com>
-Subject: Re: [DISCUSS] validation on git config user.email
-To: Junio C Hamano <gitster@pobox.com>
-Cc: rsbecker@nexbridge.com, git@vger.kernel.org
+References: <20250512-pks-contrib-spring-cleanup-v3-10-32e151b0bfb0@pks.im>
+ <5580aa89-09f1-426e-8483-c99481c998ab@gmail.com> <2b3c951b-0400-4cc5-b790-17ff77154ec2@app.fastmail.com>
+ <e6003a2c-bc1b-4cf5-aae7-ef5aa9c82f10@gmail.com>
+In-Reply-To: <e6003a2c-bc1b-4cf5-aae7-ef5aa9c82f10@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Fri, 12 Sep 2025 14:14:22 -0400
+X-Gm-Features: AS18NWDm3gIbCGBZFqN03FJNR4wIn_T-6H3M1h3ebnkdsse7391FtuenX8jYY6c
+Message-ID: <CALnO6CBDcDEXe3a_mpdwTi7ujL-fU5QrDeK704X+5bbkpNgb5w@mail.gmail.com>
+Subject: Re: [PATCH v3 10/11] contrib: remove "git-new-workdir"
+To: Gabriel Scherer <gabriel.scherer@gmail.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Patrick Steinhardt <ps@pks.im>, 
+	Matthieu Moy <git@matthieu-moy.fr>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Todd Zullinger <tmz@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Sep 13, 2025 at 12:29=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
-> That is a very good point.  We need to remember that not all users
-> use the value of the field we define to be "email" to send emails
-> to, just like some people use "name" field to store something that
-> is not their name.
+On Mon, Sep 8, 2025 at 11:23=E2=80=AFAM Gabriel Scherer
+<gabriel.scherer@gmail.com> wrote:
+> On 08/09/2025 11:58, Kristoffer Haugsbakk wrote:
+> > On Mon, Sep 8, 2025, at 11:28, Gabriel Scherer wrote:
+> >> I understand
+> >> why its designers felt that this would provide better guarantees (it
+> >> is not a good idea to mutate branch names that are checked out
+> >> somewhere else), but checking out various branches to test them and
+> >> inspect their code (before returning to the feature branch I am
+> >> actively working on) is a common part of my workflow.
+> >
+> > I agree, that=E2=80=99s a great use of worktrees.  But I never feel lik=
+e I have
+> > to checkout the branch itself.  I detach on top of the branch.
+>
+> I'm afraid `git checkout -d` is not part of my typical git workflow. I
+> could retrain myself to use it, when I get into a worktree error, but it
+> is cumbersome to know of this new complexity=C2=B9, and various things wo=
+rk
+> less well in detached state -- for example my bash prompt tells me in
+> which branch I am, and in detached state it only shows the commit hash.
 
-Thanks for your reply, Junio.
+From a quick glance, the old script symlinks various repository state
+together. You could probably get something equally useful out of
 
-My intention behind the original question was not to suggest adding
-the feature of validation for email legitimacy, but rather to inquire
-about and understand the rationale behind the initial design decision
-to forgo strict validation when the user identity feature (user.email)
-was implemented.
+    git clone --shared . ../new-worktree
 
-So, is the case ("not all users use the value of the field we define
-to be 'email' to send emails to") more of a case of "exploiting a
-perceived backdoor that later became justified" or "a thoughtfully
-made design decision from the beginning"?
+(Provide branch options, etc., as desired?)
+
+With "git config --global alias.new-workdir 'clone --shared'" or
+similar, you might even have less finger re-training to do.
+
+Alternatively, you could maintain the script yourself by e.g. copying
+it to somewhere on your $PATH or extracting the contrib/workdir
+history into a repo of your choice.
+
+--=20
+D. Ben Knoble
