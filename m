@@ -1,136 +1,92 @@
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291E032145E
-	for <git@vger.kernel.org>; Fri, 12 Sep 2025 17:37:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7866326D65
+	for <git@vger.kernel.org>; Fri, 12 Sep 2025 17:44:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757698665; cv=none; b=cY3SeCbiJ2Upm5KEU8r1rqvCdvQVVrEQSeGydBB9/VFJlwQHpO641ApA9IbUjB69C9uPyUTVGkDuXEOwi9irMaOhOIJfC9kXsK4Km2FR6UYQ1Nq/qnaeRFJ11qq4Fn2e/g4zcKgd/HbgyPuQED9+5/gBFfs9a9Fd3rFpLKPytMU=
+	t=1757699095; cv=none; b=fRDQj59LcYxg2ZSEF0NGTOURWkVJmCSUFmgrQXU/5T91w5k55/q88xpolZATdjNaOl592vC6JGQEkeTZy6OJW/lB5Hb1VrTdu+GYuwJpl7hpLYT0eo9JWss0lyY5j0mht4fp5N1ca90MfnUYZonmT7ujEx/ZA/OH3u5Bu71poSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757698665; c=relaxed/simple;
-	bh=pJtsXOmXLL69WAZF3kUZYVdVHTlnngAS3hnhZo9wSeo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZOTCCjSJko8OMQqRCzJS5R/MVgkmJZm/2RNL25n6y1fVNobcgmtVPJYJomle6Dtmx9nINrAH6ET+arS/QXEiLrHhAuFerdgGtEStURNo85WN1OzmeWj9oV5NaTRSTFB4Njlz+DfS/I5/D4sa+gEXGSyp4bXkbnBEutIkqBtxSB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VouK4KRR; arc=none smtp.client-ip=209.85.210.52
+	s=arc-20240116; t=1757699095; c=relaxed/simple;
+	bh=56+u9R75gAp0OpC3dkDgNLC2rpxG31KnJo2OTrJ3cao=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=S5zAF3cxNZurxRghYkTIMXoooIPSJrN8/9CciySPzawVj2jE+lK7ixOFwDmCH1t4cHpRUMiigjPePDwJhRoSvD6+ODUPHbijeaCqwfmHsaqeIN2MUvtp/EOA9DuXG1PFzfDoDhpz4fKQMiFWiMXFw6SyYz5lwyC663/xGxWyIfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j0pbfD6w; arc=none smtp.client-ip=209.85.219.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VouK4KRR"
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-745a415bf72so859701a34.2
-        for <git@vger.kernel.org>; Fri, 12 Sep 2025 10:37:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j0pbfD6w"
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e970e624b7cso3072294276.0
+        for <git@vger.kernel.org>; Fri, 12 Sep 2025 10:44:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757698663; x=1758303463; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xY7n2pepW1hDciaF8IdkxXHZCM0Ov1ry6l79N54rRtc=;
-        b=VouK4KRR43go1d+S9GzGoonTxK/i2+1daIdlhWmLdw8mxWijGW4NxHnt/oLxdghHxJ
-         sU6zQPFCkHMtjQwDVspM57FI/dCrwcmtO64mNT4aH0MUW4GITFy+mC0RjMqYE31mB98e
-         Y0qztsLES/Y+VsqhA7pAxUK58Of+4ZEf7ws7/DF5jDuSseCJFCwsS271rViwsXC09SVI
-         6GZFWiPgdbV/IrcgPBDbE8e3SPKohEauReZxgrhO91/NVrSFMyMJYlydafje3+bTpeqC
-         kasH5v68nb4IwxaVbjLn2Pgy8ypv4iIhhLnMfa1hjgN64yE1pG8xiPmnSuUMsC8IT/g2
-         Kb1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757698663; x=1758303463;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1757699092; x=1758303892; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xY7n2pepW1hDciaF8IdkxXHZCM0Ov1ry6l79N54rRtc=;
-        b=LndXnojeMpMunzj9ireUe64OK1AOLtTSgx5Sn2cu74gWczSBC/9thuYsdzoACset9n
-         snW1gK6rQYgWpoVZZNwpnR0GdcgF2akp0rVkpeN5ZIx2ffS5WVYFotgk+onnwKGiSOz+
-         BzPp+gejOheaevKteXvkB3KJlBZsgY9O2xmxP90ixGDMS2cXNb8zowVePLF4BlPp24E3
-         JUpaHJHtS9b0R1lf/xAjbaZ/Jpnv9tQeQNH1nVbhV6aZhG3HUvRgxOUXTaHTu5fm1B3I
-         uvD8kgkoZHOtfkWlDx0lklS/LHMVpOEbZTKskIOMILBYN1IEFILcBiNCt5tjoGNUjcGW
-         xLlQ==
-X-Gm-Message-State: AOJu0YzFrsUQ250YLyfCKkVmKtaNi0eYDW/ucu+ny2hXA2eZTZuC2GcP
-	9eUvAPZfa4T2/Sp4KaxeG+VbvSHwnEWkf/R/Ml9UErxsUZQnKNNMjki4ZUKJ5Q==
-X-Gm-Gg: ASbGncucSP3EusrcEjKeczEzHF/TFp8fKwgxOxPAjH5iMVlqve0RDAxLXszIycizvbE
-	73RE717Gf0wfN49t/9d8nn2HKtnKLCz1KHNnhdId90aVKmOByxhpsaksWk6pE6aoOXV1lWt8niR
-	nB1WZ+kTtEx+iqB8E1+dx2Nj2HIGmipU0G8icB1u8QHsajRn3lvMaYV9YWT52m/Xz6cG2u9cYkh
-	WlRbP42bo7Cs7HCbB9M3nxwc52vITrPx44QJU+zbnIvzCE3FgAD5HbdCNTXh57hXffXiib1YXjK
-	EgDiqUQoiHNGC/KRCbCz9Ubpp/jP7ky8gW0jSiBUMVm2ddrgo9sJwN/C1yP1OUBR7uGFzuitJ8n
-	XvPzsY7EPp00kZORuCItFmhuMa0NOfdq9EE0oEQ==
-X-Google-Smtp-Source: AGHT+IGP1pa1FPKkwLvRMN/9+f0V1mhdmNzTIz5NKdEUd449WYocBqLzPCfsb7ij7fkHwW1eLkfIhQ==
-X-Received: by 2002:a05:6808:18a1:b0:43a:81be:b702 with SMTP id 5614622812f47-43b8d8e58e1mr1724806b6e.20.1757698663003;
-        Fri, 12 Sep 2025 10:37:43 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-43b82aff516sm896819b6e.31.2025.09.12.10.37.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Sep 2025 10:37:42 -0700 (PDT)
-Date: Fri, 12 Sep 2025 12:37:41 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] bundle-uri: do not abort on invalid packet line
-Message-ID: <yqyn5w6oq47lhrcbuziip5tajzrpylirswr5kyfyu35n3k7vgj@jn4rc7cwqwow>
-References: <20250912-b4-toon-bundle-uri-no-uri-v1-0-f4525a406df8@iotcl.com>
- <20250912-b4-toon-bundle-uri-no-uri-v1-2-f4525a406df8@iotcl.com>
+        bh=56+u9R75gAp0OpC3dkDgNLC2rpxG31KnJo2OTrJ3cao=;
+        b=j0pbfD6w6f6UE/PGOpikZmKWKDVHljay9Q4f4OzujW4WbDkyMmfUq3/nq51T/ElJFD
+         2qloFrDku8WBMhIZj46gx8AW92C9bxOCX3hmsf9jkrYmyBUmCwCv6RIbIitO57KCgSy3
+         8K8sTqfmFkm2Vv0ftk41zwPW3mvpwK63aD4AkkhsSiEKEGP9N/ZIpWR9MsG44RaUtZnq
+         q9jJf/bzE+nq2NkVp6cNHKoAsJK65mr4LJJYTV03HQZcOEuX2VyPhbsV7e8gj/nk5YsS
+         XEHa9WWjWy0vIjwbvWapYc95hWWuUEw7GLklFRAQL/3YShE4LRHkfOfKO4bcNxgbSBba
+         bhxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757699092; x=1758303892;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=56+u9R75gAp0OpC3dkDgNLC2rpxG31KnJo2OTrJ3cao=;
+        b=eTxkwBsnz9KTOmhQOfHgDO/jZH5abNgLkpBE6tlIKiTfon63xi01GnYXd7v1whnIaP
+         dkDcEyCL9Lq4nPJ29360HQbN3DUafhJZR5ol0hXpoTNm6r3ODfcCPfJhVYAzXJzDAwZj
+         eXzcDiIkso6Xm8hNdRgKmtnYd+rNzoP1R+fq3PtXF/JExGBvLmKGA6cEvljRI8if0MbG
+         lCExQEiOEQUersp4vXFRFU5+CG9+5JWE6kOLJtG9+R+GgMLFM4BgYdVqtjMSsAxN7Tv7
+         /v0wyX5y2arYU4GKfg5vNVVnpjc+rCtnP+xSDT9w/mJEkCm+xDHwMDrfyKQUIYHrwmeF
+         HqeQ==
+X-Gm-Message-State: AOJu0YzOAGhcaPHTzu0cuXmvOEXsk/GHpnsAI4N9cJPHasXyEajf3OgA
+	SfFOqY8WbV6JiT+vAZF6oQWXSQlsTSgJPdCYhtofB0WBX5xJpgQui1Nf06AWq120JHUDrMvX/fg
+	YhgK9yctmcf22T8DjR+wZXrwS1GPJ6Gpvt3V+
+X-Gm-Gg: ASbGncsiUBBfsn28Z57IsbE+m4YSq3o9/ye9KPhjBJvz+LQSpaeJ2QoDn4RUuBjkxzf
+	vi4I5glHhybjlAaXotkKZzqt9bHGDpM0T66hG/HSBaOLmf3j98JB/4NMsZklHxvNwJtw0XeJ/iE
+	QKXW/VhDJFMLkBBabwu/w/JApslzKXiVtOOlE1SWKTXZEcMbHNhAgiBYYO5b0YYjcwGZasIHLPI
+	fbJ9vRo
+X-Google-Smtp-Source: AGHT+IFEi1OZUeJpyIaZiH+8SJyCtla3fnx2rIHZmBTj1TKD6PYjp/smUFhZ0OZzxCyA++UgeRqbziQibA0bOd5+WDw=
+X-Received: by 2002:a53:ab51:0:b0:604:3849:9c10 with SMTP id
+ 956f58d0204a3-627410bf4b3mr2785725d50.0.1757699092505; Fri, 12 Sep 2025
+ 10:44:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250912-b4-toon-bundle-uri-no-uri-v1-2-f4525a406df8@iotcl.com>
+References: <CAJKmQvf-sLxowLJLitvqDmyL1BXXDK+anDE2jaBSEabApMNVoQ@mail.gmail.com>
+ <071101dc23f5$fbf06e30$f3d14a90$@nexbridge.com> <CAJKmQvcqLzJDnpYg5K7_eUNCUdLCkkFse-wB+4R8KGxKo_e+0w@mail.gmail.com>
+ <071e01dc2409$f9785230$ec68f690$@nexbridge.com>
+In-Reply-To: <071e01dc2409$f9785230$ec68f690$@nexbridge.com>
+From: usharerose <ushareroses@gmail.com>
+Date: Sat, 13 Sep 2025 01:44:41 +0800
+X-Gm-Features: Ac12FXxNNN6mFKU27UJ8R_0Z07GqBNWREFMupP-BrWMdJ377fAJiBTNuFtVNFgw
+Message-ID: <CAJKmQvcEzs+rhM2+WeFphXqOUD3QGaRGM+yFUkVfKWYpyM3qLQ@mail.gmail.com>
+Subject: Re: [DISCUSS] validation on git config user.email
+To: rsbecker@nexbridge.com
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 25/09/12 06:46PM, Toon Claes wrote:
-> On clone, when the client sends the `bundle-uri` command, the server
-> might respond with invalid data. For example if it sends information
-> about a bundle where the 'uri' is empty, it produces the following
-> error:
-> 
->     Cloning into 'foo'...
->     error: bundle-uri: line has empty key or value
->     error: error on bundle-uri response line 4: bundle.bundle-1.uri=
->     error: could not retrieve server-advertised bundle-uri list
-> 
-> This error doesn't cause git-clone(1) to abort, because the return value
-> from `transport_get_remote_bundle_uri()` is ignored in
-> `builtin/clone.c`. This should allow the clone to continue *without* the
-> use of bundle URIs.
-> 
-> Although when cloning over HTTP, the following error occurs after the
-> above error messages:
-> 
->     fatal: expected 'packfile'
-> 
-> This is happens because there remains unprocessed data from the
-> bundle-URI negotiation.
-> 
-> Fix the error by continuing to read packet data when an invalid
-> bundle-uri line is received.
+On Sat, Sep 13, 2025 at 1:23=E2=80=AFAM <rsbecker@nexbridge.com> wrote:
+> I cannot answer decisively. The functionality was first used in this cust=
+omer about
+> four years ago. I do not think any changes were required in git to accomp=
+lish this.
+> It is possible GitHub had to have an enhancement but only they can answer=
+ that.
 
-Is there any reason that the server should be expected to invalid data
-to the client? If the server is misconfigured, I wonder if it should
-instead handle this issue by not sending the invalid bundle-uri in the
-first place and printing a warning message on the server-side. From
-client perspective, if it's a server-side issue there may not be much
-they can do about the error and it could cause some confusion.
+Appreciate you sharing what you know, Randall. My intention behind the
+original question was not to suggest adding validation for email
+legitimacy, but rather to inquire about and understand the rationale
+behind the initial design decision to forgo strict validation when the
+user identity feature (user.email) was implemented.
 
-> Signed-off-by: Toon Claes <toon@iotcl.com>
-> ---
->  connect.c                   |  4 ++--
->  t/t5558-clone-bundle-uri.sh | 25 +++++++++++++++++++++++++
->  2 files changed, 27 insertions(+), 2 deletions(-)
-> 
-> diff --git a/connect.c b/connect.c
-> index 8352b71faf..d2e2bd8cce 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -536,8 +536,8 @@ int get_remote_bundle_uri(int fd_out, struct packet_reader *reader,
->  		if (!bundle_uri_parse_line(bundles, line))
->  			continue;
->  
-> -		return error(_("error on bundle-uri response line %d: %s"),
-> -			     line_nr, line);
-> +		warning(_("ignore invalid bundle-uri response line %d: %s"),
-> +			    line_nr, line);
+I will try to find answers from other sources of information.
 
-If I'm understanding correctly, an error here indicates some sort of
-issue between the client and remote Git server while figuring out the
-bundle-uri capability. I think it is reasonable for the client to always
-expect the server to communicate in a way it understands and IMO should
-probably be handled by fixing the server-side instead.
-
--Justin
+Thank you again for your help.
