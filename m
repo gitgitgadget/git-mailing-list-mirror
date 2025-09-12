@@ -1,131 +1,149 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBC224A046
-	for <git@vger.kernel.org>; Fri, 12 Sep 2025 22:21:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7811E21019C
+	for <git@vger.kernel.org>; Fri, 12 Sep 2025 22:57:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757715673; cv=none; b=ssU30t9yn6VuTCmW2RDQZn0/O8GEeqdDslNuhq5NAeih+huEdolDYhsNIBaLOgWKfaiUh/UQZdrhx5BPCWNrfsJGbqpwfA+lNvhB0DBnxOATR1FhsNOlVp7vhETiSFkklKnwBHl46azdUpCskU5eIg5OgwX3YS2X/by1n9axH7k=
+	t=1757717824; cv=none; b=HxYsW7UFac2mv9cp4ajfFB91Xqhr754v1i3rhTLccyNyBRLNn1oNOHEVNr6MQcZfiHbABtEqVM36wf//tWdMjC4EaCeJEw7FTyTxx/w5u0z54QI9xsrmJahnOquNAvFIs8W+Wy6ruCihwhS3eAGjWluQWUCncBX7IIj9S4WTGWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757715673; c=relaxed/simple;
-	bh=NCnoTJXg0s4GgLE7sVLSFAxcmGZIaYP+YnFNIhQGZvg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZwhOBfTcGudUtZ/M1f5OOP0ilzRM2qt2Sp/Ac5X6jn8fhLRHuh9xMzg61Rji6VfnBuadLdlSqnRcTCEg0Srbn15n1YFTgxjHk1rxzRAR4MXjSOc3KbM06bB/HgFZYr0hNWNu02KoJHo9GGlelUqIGavjWYpsAuHLIoqDzti9IW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q1m+/Qkn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nYrcTW2+; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757717824; c=relaxed/simple;
+	bh=TjVAKKlsRVpdxeHazG/Xwwb3xp//rYC+ioGdPHR4CO8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jHLJuNgvV8PzVOnLy/3ZdTUO+Psa99x+LJ2uwJDvS/MU+tTs68Wak4nfJQMa4yy7Jw8ONL18Jwe0EP527aMNxlVUdWMoHcs0t2iwil2Ve/6SCS6tpOAckkescX5PebdqYeCRHWrclJ1ezUGBlzyrxnv+8HK5RarFMdJfzimxQ5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cQd90otF; arc=none smtp.client-ip=209.85.166.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q1m+/Qkn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nYrcTW2+"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0EA09EC021F;
-	Fri, 12 Sep 2025 18:21:10 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 12 Sep 2025 18:21:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757715670; x=1757802070; bh=T1Bfu61jll
-	JcyugXl81QeFRsqtweXBW0ouPRVwj1xr4=; b=Q1m+/Qkn5yIA2KfMTr6632L0YM
-	4KcjiHpp3/J+q7cimSCjbh5yIBJ6UsHCa+R4tOUqHOPYDmNq3VjOrsghKzNC8ONt
-	hioG9GVO2TT4m2XdA3v0e3cmT9OABLuMIM5Rivr4wkMrLyoi0osrEsUzBZfUMC2t
-	QC7RcGDEnUGW0oLZDAGKrOtwYkSg2pCtamJprckuOqD0W8xnQrIY+2U5Qmh08Ymd
-	ffjEWbdiwKYE8e+teRhy3xjOtVpxIQRB3l/jLqcrqX8rCzcifENaAPlZ89y3WThr
-	TniBpm1sN4b072N6Y/e3F+lUwj7faLDVfDCCexFu1c8w6ICe1LpuZxZ4FSoA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757715670; x=1757802070; bh=T1Bfu61jllJcyugXl81QeFRsqtweXBW0ouP
-	RVwj1xr4=; b=nYrcTW2+l9uqN3pZoDekvgT7MG/M5oTXRN2W+PnE+TpiqgfhqC+
-	GIy5buCKyYk5x0fkZ5Um0B63neYDaKFPL1PL4N9p9VQPGqXa0TFRz1YmPd9b/db3
-	OP2MFjLuVOjoptOIWxn7zAHtiSq8lCYUbSeCc3dTuLhQ/qzxBYbX4fhyOid5JSRc
-	LgQmo9BYkvDAfGR45Ec3tWuu9KZH9XHHHZpAT6jksEDYuOsorOWAu7jr5Gbb/q4J
-	8tEh+mrRD/YMFlkng73pTWWfezLHNp10P84VyUGNM7xAfRRuUGeFo+ZXIEZ5qt8N
-	7iXwFXy2LJ8Y2Mh0hjhAM+s3OwNl0N9n2/w==
-X-ME-Sender: <xms:1ZzEaOJPrYojX6C1g_pFSzW3JPZaGsUAMzHXVIqeyRyJbRAEGjZoqg>
-    <xme:1ZzEaB1IjtUysnfNm5-1jQJGgK5oxgfe38mYdLlgkbBz5BEXbvz4_8OTd0NrmVROJ
-    GUrGWUWy_GtD0ox7A>
-X-ME-Received: <xmr:1ZzEaLLDj5Oif_ZwhJzaIIS_i_DdGt5T-_1PYl3k3MgG4Wxo8p40eEj3rPLvQyRWXMT0ltzOfi-5Fa3rv1J93i7lMcEq3x7ATb6FJJA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeftddvfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghgrsghrihgvlhdrshgthhgvrhgvrhesghhmrghilh
-    drtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgt
-    phhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtg
-    homhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesmhgrthht
-    hhhivghuqdhmohihrdhfrhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    shhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehtmhiise
-    hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:1ZzEaMgWPh5n0ptpzwCiH6ojVnlQLifLKY9rd1Ioj3R--4VFvuymaQ>
-    <xmx:1ZzEaLDaSfK7KFTUpwgIgXr8OJk8R108KUl_WG06a57bWX2Pql9rXw>
-    <xmx:1ZzEaO6l7FH4lhh-zao1vjCRChe6iX8NUufTh7Si41gxx1isSnK7FA>
-    <xmx:1ZzEaAGLsJz03EOmVDodJv8z8e5PZ0Hn8ZuGV04_-1DxsKiepcK1Ng>
-    <xmx:1pzEaJ5hWilw9w1jGk-yfCtcLUXIj5h5MPYZOFiIAtwDmcJfH2FYaMUD>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Sep 2025 18:21:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Gabriel Scherer <gabriel.scherer@gmail.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Patrick Steinhardt <ps@pks.im>,
-  Matthieu Moy <git@matthieu-moy.fr>,  git@vger.kernel.org,  Elijah Newren
- <newren@gmail.com>,  Eric Sunshine <sunshine@sunshineco.com>,  Todd
- Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH v3 10/11] contrib: remove "git-new-workdir"
-In-Reply-To: <b4628cc8-3aad-4911-bcd1-6880d7707250@gmail.com> (Gabriel
-	Scherer's message of "Fri, 12 Sep 2025 20:55:41 +0200")
-References: <20250512-pks-contrib-spring-cleanup-v3-10-32e151b0bfb0@pks.im>
-	<5580aa89-09f1-426e-8483-c99481c998ab@gmail.com>
-	<2b3c951b-0400-4cc5-b790-17ff77154ec2@app.fastmail.com>
-	<e6003a2c-bc1b-4cf5-aae7-ef5aa9c82f10@gmail.com>
-	<CALnO6CBDcDEXe3a_mpdwTi7ujL-fU5QrDeK704X+5bbkpNgb5w@mail.gmail.com>
-	<b4628cc8-3aad-4911-bcd1-6880d7707250@gmail.com>
-Date: Fri, 12 Sep 2025 15:21:08 -0700
-Message-ID: <xmqqldmjjorv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cQd90otF"
+Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-417661eccb2so22084735ab.0
+        for <git@vger.kernel.org>; Fri, 12 Sep 2025 15:57:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757717822; x=1758322622; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sfLbF0XXcnCFsTVG2xWx59aRKkeE34qo4GhIYvXLaGk=;
+        b=cQd90otFRo0KXef5Fdii2y/VjHSR7SIa1Qblq8RX6kbQJPdqN3FQenNm74cHMaIPTn
+         AGmoDAQA18l0rVpgV3GBAVyrGx4+Cz8udAkEdeMMtxdIPbb7FJzSxbul7Vx4AgBgsnH9
+         sHDTDtcGWigj2vTvJWlwzcJ46gfGd2ZqtBG2LYXKzDrRZ7tzCzel+BJQqiPcVLCZvwYn
+         us1kTCZ650+oqS75dsiHNGk83zp0spUpY+BPNgT3KPMqz4BI8cbHbrEpulYAbDyeB+Vj
+         9K6C1HOk3eAK+fXPxub41U6f1poQetwlKkpORN9e4rnprYlYH2d3zXkstY2Rqep1fnHy
+         7Ytw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757717822; x=1758322622;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sfLbF0XXcnCFsTVG2xWx59aRKkeE34qo4GhIYvXLaGk=;
+        b=CXjrTnVYudAaGL0/Y/BNpWQAmj5w+cro1fT0M7FvZlW4d6PLQthbH6Xw+cfG+S+iCF
+         zN04Ns+USNXY/bFBrGhaAnREqEo3j4pGh0DzCNrm8QuPcd4uwkAnW/3pnsYDWMJwgwFB
+         mwc4r4oW2aKnHQNeAXv8J/pOWSZ8Xc0YP1v+X9hfg9fBAnYi/HkPncND7XnRTQB8Zh7y
+         GKSkDMTw4lZvhWPBifPB0GAXQrLdXwqad5Pxh4+5OWeUn2LhvKms/S/q8xjXRwbHSGpx
+         9xcGjd9jmsxpyseeq291oQEF+gjjILznusBjnIvN8B9n5R17Oa2CF63vbGCZTDX3YC2Z
+         uMyw==
+X-Gm-Message-State: AOJu0YwP/YSdLHvc0loYzV2GncVh1Ry3V5nsKy/ZGM9M2p3hThaRFhcV
+	ir01TCIy52lGVXwxG5Z7aXVEMN0eB8MKobkTqjFdy7MgESc/5iWGnJ2FKQQTsEXNOQpLLtqCgwQ
+	SufHjZ8AhTr3OMN2ywxuxkPJjqS9DcjEoxw==
+X-Gm-Gg: ASbGncvIBAYGNoFcI0JinWW7djAUDAoO2793BdDTmSEWPj0G/hCY+p9l7DfQ6YD4Zck
+	IyRnN6pCYh1zy57IymJQUjo4nsFoc203mh7TYCF4bT8UljoZWCViwf/X0NCTuqAO+ydrS4kZCJA
+	I31XucCuWfYcaywf1JKaPMwdzwt7VNmRzit0Igo0VzpoMMLSrkhFwxQlKTPJC2cU1EVXyd25A6Y
+	SlJyj9V/xWEOt7QjxAgBFO67/y/3HYYdAe4MavHtQ==
+X-Google-Smtp-Source: AGHT+IEsg9vxiIdMBB66aEQ4rIdQrrIZerXoiG2Aa7iSemggbWg1LVxeBd1MO2HSDU2Livh3GCzIoWsGbeDMZX24eGk=
+X-Received: by 2002:a05:6e02:b43:b0:405:b792:32dd with SMTP id
+ e9e14a558f8ab-420a30271e3mr66399795ab.16.1757717822552; Fri, 12 Sep 2025
+ 15:57:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <SN6PR03MB428572C742338251D0399FDFAE08A@SN6PR03MB4285.namprd03.prod.outlook.com>
+In-Reply-To: <SN6PR03MB428572C742338251D0399FDFAE08A@SN6PR03MB4285.namprd03.prod.outlook.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 12 Sep 2025 15:56:50 -0700
+X-Gm-Features: Ac12FXzsC8ROhOMPxtPrFD1NPWqOInGurecPt4aYNfp-sC6YzmIyG_0IfAc78nI
+Message-ID: <CABPp-BHYEYgqo=G8q2XKReNn6PM+FWn1_8qfKq-ONS6pXXeN2A@mail.gmail.com>
+Subject: Re: [BUG] Git merge produces inconsistent indentation in merged result
+To: Guo Tingsheng <CoriCraft16@outlook.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Gabriel Scherer <gabriel.scherer@gmail.com> writes:
+On Fri, Sep 12, 2025 at 6:14=E2=80=AFAM Guo Tingsheng <CoriCraft16@outlook.=
+com> wrote:
+>
+> Hello Git developers,
+>
+> I would like to report a potential formatting issue I encountered when te=
+sting Git merges.
+>
+> Environment:
+> - git version: 2.43.0
+> - OS: Ubuntu 24.04 LTS
+>
+> Steps to reproduce:
+> 1. Start from a commit containing the following method:
+>
+>    public void process() {
+>        if (flag) {
+>            execute();
+>        }
+>    }
+>
+> 2. On branch A, modify the code by adding a new conditional block with in=
+dentation consistent with the surrounding style:
+>
+>    public void process() {
+>        if (flag) {
+>            execute();
+>        }
+>        if (shouldLog) {
+>            logger.log("Action executed.");
+>        }
+>    }
+>
+> 3. On branch B, make no changes to this function.
+>
+> 4. Merge branch A and branch B using:
+>    git merge A
+>
+> Expected result:
+> - The merged file should retain the indentation style introduced by branc=
+h A:
+>
+>    public void process() {
+>        if (flag) {
+>            execute();
+>        }
+>        if (shouldLog) {
+>            logger.log("Action executed.");
+>        }
+>    }
+>
+> Actual result:
+> - Git reduces the indentation of the newly added lines, producing inconsi=
+stent formatting:
+>
+>    public void process() {
+>        if (flag) {
+>            execute();
+>        }
+>    if (shouldLog) {
+>        logger.log("Action executed.");
+>    }
+>    }
+>
+> Additional information:
+> - This issue appears to occur non-deterministically across different test=
+ cases.
+> - It does not seem related to core.whitespace or space-change options, bu=
+t instead to how Git decides indentation for newly introduced blocks.
+> - The problem was reproduced using multiple merge strategies (ort, recurs=
+ive).
 
-> I have a naive question. 'workdir' is a script that has been around
-> for a long while, and apparently causes no maintenance burden
-> whatsoever.
-
-Not free of maintenance burden, unfortunately.
-
-The "git worktree" was added with a clear intention that we do not
-want to keep the hacky "workdir" script with known limitation and
-sharp edges to break your history and replacing it with something
-more sensible.  Once it has become in serviceable shape, there is no
-reason to spend engineering effort to see if "workdir" is still
-working every time the implementation of the repository on the
-filesystem changes, assess how much work is involved to keep it
-working if a change would break it, and judge if it is worth to
-update "workdir" to keep it working or add yet another known
-limitation to the list of "this hack does not work with X, Y, ...".
-
-That has happened recently when we added the reftable support.
-
-In short, keeping it is distracting of us, *and* of dubious value
-especially becauseit is not as good as its more modern replacement.
-
-> It was removed based on the impression that nobody was
-> using it
-
-Again, not really.  The true reason is more like "Nobody *should* be
-using it", mixed with "There is a designed replacement these days.
-They should learn to use it instead of that old hack".
+I've never seen or heard of such a thing before; can you create a
+testcase to reproduce it, either a repository that others can clone
+together with the commands to trigger it, or a bunch of commands to
+both create a simple repository and demonstrate the issue?
