@@ -1,157 +1,158 @@
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0AC21019C
-	for <git@vger.kernel.org>; Fri, 12 Sep 2025 22:57:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FCD21019C
+	for <git@vger.kernel.org>; Fri, 12 Sep 2025 22:57:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757717829; cv=none; b=kBuuvQMPpRDa6TSc6ugbu4GertdNamWdU+XRHR+EvozsYLuFSb5PsbSGmHqvoITb3OII1e+8Ifdf4CcreNOvlIzezDjMuFqMSGfRrJIqGda8uk4pBynM/BrtEMeHilY7O6P3MrrHfbmSa0kwQMM2CpYhqe2UbBKACAn6Brw+CcI=
+	t=1757717833; cv=none; b=Tp6QJftSTQ+lasx5CR45H/XFaVL5XjeXJPdNbo9vz08t5BZrg8KHPg5NKBzixwLOi68PySFbzN7kCbBmT2JMlQFktSDSTOQo2tu4I9YycoQJKfM6voVMUxhHQWNEm8DKxJRSueztvxP0DOpPf0l/OFhRxj6RyODjjE5yArMvplc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757717829; c=relaxed/simple;
-	bh=3CBvgd7JLmLsYmzjGZ8OW0rmi7JMzwWRQZokA6iEJlg=;
+	s=arc-20240116; t=1757717833; c=relaxed/simple;
+	bh=AaK+fzPLGJxdHuO+iWxjK4f83jmD2mCG7EylPO1wPz0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kVfyRkeoqI94mCNvD8r9CnyvEx3nCyUWY5+adU1yU2GNzOQ2k35gdzzZWwgeHlK44Z491OSfLsFmlLXeyjAPuT05NSfbjmTBF4ExAnF+TWlX1QVRwb+q7onXqdp5xlvPw1dS2A1H5sgaxZ1v0BaPwTEL/lfSisniOcnGTEz40pA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AOUhkk3s; arc=none smtp.client-ip=209.85.166.172
+	 To:Cc:Content-Type; b=BaqqfvMy06Quvjo7jXMu8UWyCPZoStQDzWeaovKqs4yMf6XUKORhZBUYh4aAR4aeFbfSr8G8MUxwQfv81YQcMGYyt4y7U4ZXfzo8Em+zSwcDYf3bV/ZIrrnP/9oA1+pNlz1zvDbMSk/V/sKJ1GkSfniSz9aQA+KRj3gfMtK6LPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HQFQb+NB; arc=none smtp.client-ip=209.85.166.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AOUhkk3s"
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-40f9e28b09dso12183465ab.0
-        for <git@vger.kernel.org>; Fri, 12 Sep 2025 15:57:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HQFQb+NB"
+Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-407ec3048a0so25614895ab.3
+        for <git@vger.kernel.org>; Fri, 12 Sep 2025 15:57:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757717827; x=1758322627; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757717831; x=1758322631; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NBF9GH03yh0gbA601l55KVf3ZnZXppxj4+WVY+nawhA=;
-        b=AOUhkk3sWh5zOulonCKywFbWDVoOK+3cUU+YZKPOVfY6N8NhStTEVCrsF8+8B5UDKo
-         34x3C9GCNUFt4lcwR9BvYvVAMi5thvRKz1k/KvCcfPGicrGMQJdOC2y29vlXoHwTeDvW
-         Z9qEb8kNmqe3UhwM8wbCIkUiA6TPRg5JZpA06hMtP5waHfBWV6dDdzvFnH+ldUkP/5ao
-         hioN7E0u3Kj8G/KCIAXBlf+3HXuOYXlKIznqUiCHsJaGS8lB9johfriqgAfPJA6stMZF
-         atN8eNHKgeVRQRrMflaMDAknk+Sa+SXRL4TeVpAWKUhz0puyoN9jaZqrXwQ4D36M14iP
-         eLKg==
+        bh=+FFc/hEhj5CKfmHq/+e/QLOdAkfFOyTq/ASLSvZcTyc=;
+        b=HQFQb+NB6I16Oy0GBkdccRSBWJkY2jepntX/SU5dtd970wLolzqdKH6z94mZ28U0PW
+         s6KPySD+u7mmXQFlh61RKJfRnqrlifn84778lmSisqW/xZibAuQQys3wj9wPcxzktXLT
+         8LCTHFN+Vf2ZftU0gGV8ASgOn3wEquW46CNHUF6KukncfsVHritjI12gnDK5WADhFe71
+         tM+3fYL8pW84L12zPku6tSHCy0IWn37AA+pMBnXWOTcbx8x0ISU34C7fm9ndPCJG8gsS
+         tieL6lHV2izoQMe4jiUxnMWY0OhIJkrKnCQiPWR9DTjGRXiDkR7rxVqAowdCRYI5O9Np
+         pNlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757717827; x=1758322627;
+        d=1e100.net; s=20230601; t=1757717831; x=1758322631;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NBF9GH03yh0gbA601l55KVf3ZnZXppxj4+WVY+nawhA=;
-        b=ErLluXdgQqfZMGjgK7rdvrH7FHW0ECcVjGtXOZ+u0LbevDmiGyjmEVKItUUNUvH0zi
-         ZhEKZwiDVkbxARUp2q+ccOqFk5NvHGRNm2JDRLYA01l/HIS9Fegd6TudM4r0b9hO0D73
-         UQjj7SNMOerAXgIkBmd3REhdOYhYO5XyCPG73+B3AigV1Icpz7a9v3zsGTz4KQtwPZhO
-         EdE3InTXhNSJRcgacrUK6vbEA2rdiGdqOuyz1EXOQMwF21lg+ez8jXkZ5B5nVN0jymQ/
-         0xwvPY1xWbTFZ2CCH+BCIOOl01CybRkmrbTCUS6Z4TH6NRx2Z4lSFaWA7qeTwPdFB8Fk
-         b6sQ==
-X-Gm-Message-State: AOJu0Yy8Q9r/5HC49oHVskleC7Z//joaZ3v0ARUiyz9QXYx+YwluX+1M
-	5GaJNsNGubyVmatJSefWdIeEr/PyVx1E4zKItSE2njR27vhAnUumpFZx1/FZrjRMqaAF2VuUSqd
-	8+OqXoseWjK5Vk/GLFHDRjlEi1dqxne4rZg==
-X-Gm-Gg: ASbGncsZjop5ND3ecnjWnnQeNHcscfTHcjMH79Fk57+ZxZjAw6r48Ilq1n+YOwfNISu
-	EunJM32sd2b9bka/EjEcpgfVw8HQuLgDdq5PY0xOsc2I+p5I+yALyS8T3Ghc7X8QsURzVmfiJ1j
-	7aEfbNcxfooodbWg8SO0j1iyG54Vgal1KNw9GhMHdwW/lG7J0HtT4hs5pu/b1spYZnCga+48xSu
-	V7L9e1ldQHqOIJSIM7AEntvCEiBJ4ujzp7PmWRyMbfdNDDRzyhX
-X-Google-Smtp-Source: AGHT+IEKdxg405JNePcZ7hbxy6mw4v85wGawubWwGCm5B/CIAZOfbmkkb/ETyQAMnpEhfhWS4/xid21G4McWPneoGCs=
-X-Received: by 2002:a05:6e02:194a:b0:401:9e1:ce68 with SMTP id
- e9e14a558f8ab-4209e36cd6amr76984535ab.13.1757717827059; Fri, 12 Sep 2025
- 15:57:07 -0700 (PDT)
+        bh=+FFc/hEhj5CKfmHq/+e/QLOdAkfFOyTq/ASLSvZcTyc=;
+        b=uxFwy7A+vaK1JTeNa/wF2J/QM7/5d7NCrUbVSipuhiCoWZojoD1/LntMspLCIQzaMl
+         tlI/Xgo4kOTiyTe08+ZLL2Yapbs0qT7shZHzxZWPUUtKZqXz99MfkGO/AdxNDGCiBszV
+         tGtbecvqPQ0IkjS0yHJrU9agcWXLIKrACM0Km6/EnBJG3qKoTNLHUUSRsXrJfN1wIBCv
+         LdJ+17Flb0nsxETYjuvYvlD98mpJm3oWm6XKajeKQR7xY1kVUcfTjMWeG81iosu61cFe
+         Bd18secYYz48CBG3DzOR22qUwhVcteaaM39pvz5vHNAN4KYFYZvQ9GJdske7JXKR5YEb
+         dUvw==
+X-Gm-Message-State: AOJu0YxmgyQKIPpOvvx/cUX+wyDHa2kSOSnsgnKK16NMIwDaUceLd8Lu
+	s4R1tR4Tdmw/40J8tA4MRP6PAeXy4J5CZRL6H0w8moMvnu3BkVXUNcKOwxtd+L5bGAAXrMEIG77
+	7j8kkXKqIrBvLaUadd9Wy62MxrL1uX10=
+X-Gm-Gg: ASbGnctMaeaZRgI4OCYbfq3A9uT4Kum2we0jVETBy4a+dNHd1le5TbOyNH2XdGyLAfG
+	RdzmsanOUHmhOAAdZ2fAJENzVdLMlsySXr/dTjADSQfTxgnOa52ENnxrbNgmh0TwTr22M7q6BtE
+	TPnDkdpHrucprfQFKj2JNFEO2U6Y3eIcNUDQNp2UiaB6a4mtQtnxC6XlWrI/mNY9QmHh1LbffeF
+	297jKFO+voOF3aU0ug/UD5fo0PC2aOY6CqWc9WYLA==
+X-Google-Smtp-Source: AGHT+IFn0TGF5d9VJFOfGTlAfomLo0GQ1ljwdm5JdMvToc104QoEmLvEG+g0KiaiuB3pkMbK9agaKTNP6K6ur6kjMzI=
+X-Received: by 2002:a05:6e02:4406:10b0:422:62f8:20ef with SMTP id
+ e9e14a558f8ab-42262f82257mr35416285ab.19.1757717831358; Fri, 12 Sep 2025
+ 15:57:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <SN6PR03MB4285CA9885AE7952EEF762E1AE08A@SN6PR03MB4285.namprd03.prod.outlook.com>
-In-Reply-To: <SN6PR03MB4285CA9885AE7952EEF762E1AE08A@SN6PR03MB4285.namprd03.prod.outlook.com>
+References: <SN6PR03MB4285B971FAD1CD485B9A8840AE08A@SN6PR03MB4285.namprd03.prod.outlook.com>
+In-Reply-To: <SN6PR03MB4285B971FAD1CD485B9A8840AE08A@SN6PR03MB4285.namprd03.prod.outlook.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Fri, 12 Sep 2025 15:56:55 -0700
-X-Gm-Features: Ac12FXxO06ABuVuoRsyVd8CMEaUSYc_lerABZgCn1mA39_4pxyHBW79UuEYtZ4Y
-Message-ID: <CABPp-BGeZ6no5LdBGKjykQLqUHRjFis7ZtGdEwnzg0gy_CkLqA@mail.gmail.com>
-Subject: Re: [BUG] git merge sometimes loses changes from one branch
+Date: Fri, 12 Sep 2025 15:57:00 -0700
+X-Gm-Features: Ac12FXz5xMcWDqSNH5Yp9k5hsJ4BY72vJLGW2vnMpx9EEX6GxLzThxmEwAnxCAM
+Message-ID: <CABPp-BGawdV9n9BtrwVXO1Vc2pBcuq1UtQA-1XEyHD4zB1vVCg@mail.gmail.com>
+Subject: Re: [BUG] git merge reports conflict when two branches add
+ independent methods at the same location
 To: Guo Tingsheng <CoriCraft16@outlook.com>
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 12, 2025 at 6:41=E2=80=AFAM Guo Tingsheng <CoriCraft16@outlook.=
+On Fri, Sep 12, 2025 at 6:38=E2=80=AFAM Guo Tingsheng <CoriCraft16@outlook.=
 com> wrote:
 >
 > Hello Git developers,
 >
-> I would like to report a potential issue in Git's merge behavior, where c=
-hanges from one branch may be lost even when the other branch does not modi=
-fy the same location.
+> I would like to report a potential issue in Git's merge behavior, where s=
+emantically independent changes at the same position are reported as a conf=
+lict, even though they could be merged automatically.
 >
 > Environment:
 > - git version: 2.43.0
 > - OS: Ubuntu 24.04 LTS
 >
 > Steps to reproduce:
-> 1. On branch A, modify a file at a certain location:
+> 1. Start with a file containing only:
 >
->    @@ -1026,7 +1028,9 @@
->    public final class AutoBuilderCompilationTest {
->                 "  }",
->                 "}");
->         Compilation compilation =3D
->    -        javac().withProcessors(new AutoBuilderProcessor()).compile(ja=
-vaFileObject);
->    +        javac()
->    +            .withProcessors(new AutoBuilderProcessor())
->    +            .compile(javaFileObject);
->         assertThat(compilation).failed();
->         assertThat(compilation)
->             .hadErrorContaining(
+>    public class Calculator {
+>    }
 >
-> 2. On branch B, make no changes to this location.
+> 2. On branch A, add a new method `add`:
 >
-> 3. Merge branch A and branch B.
+>    @@ -1,1 +1,3 @@
+>    public class Calculator {
+>    +    public static double add(double a, double b) {
+>    +        return a + b;
+>    +    }
+>
+> 3. On branch B, add a new method `subtract`:
+>
+>    @@ -1,1 +1,3 @@
+>    public class Calculator {
+>    +    public static double subtract(double a, double b) {
+>    +        return a - b;
+>    +    }
+>
+> 4. Merge branch A and branch B.
 >
 > Expected result:
-> - The merge should retain the changes made in branch A:
+> - The merge should succeed automatically, producing a file that contains =
+both methods (order does not matter).
+>   For example:
 >
->    @@ -1026,7 +1028,9 @@
->    public final class AutoBuilderCompilationTest {
->                 "  }",
->                 "}");
->         Compilation compilation =3D
->    -        javac().withProcessors(new AutoBuilderProcessor()).compile(ja=
-vaFileObject);
->    +        javac()
->    +            .withProcessors(new AutoBuilderProcessor())
->    +            .compile(javaFileObject);
->         assertThat(compilation).failed();
->         assertThat(compilation)
->             .hadErrorContaining(
+>    public class Calculator {
+>        public static double add(double a, double b) {
+>            return a + b;
+>        }
+>        public static double subtract(double a, double b) {
+>            return a - b;
+>        }
+>    }
 >
 > Actual result:
-> - Git sometimes produces a merged result where the modification from bran=
-ch A is lost, yielding:
->
->    @@ -1026,7 +1028,9 @@
->    public final class AutoBuilderCompilationTest {
->                 "  }",
->                 "}");
->         Compilation compilation =3D
->            javac().withProcessors(new AutoBuilderProcessor()).compile(jav=
-aFileObject);
->         assertThat(compilation).failed();
->         assertThat(compilation)
->             .hadErrorContaining(
+> - Git reports a conflict and aborts the merge, requiring manual conflict =
+resolution.
 >
 > Additional information:
-> - This issue occurs even when the other branch (B) does not modify the sa=
-me location.
-> - It appears to happen non-deterministically and may lead to subtle bugs =
-in real-world merges.
+> - Although the two changes occur at the same location in the file, they a=
+re independent additions with no semantic overlap.
+> - It would be desirable for Git's merge algorithm to automatically combin=
+e such changes, as the final merged state is deterministic and conflict-fre=
+e.
+> - This limitation may impact developer productivity in real-world project=
+s where multiple contributors extend the same class or configuration file i=
+ndependently.
 
-My only guess here would be having a non-unique merge-base, where one
-of the merge bases also introduced this change, so that it appears
-that A made no change relative to the consolidated merge base while
-also making it look like branch B undid the change relative to that
-consolidated merge base.  But, that's a wild guess and I have no idea
-if that's related to what you're seeing or if there's some unrelated
-issue at play.
+Thanks for the report, but how is Git supposed to know that they are
+independent changes with no semantic overlap?  Git doesn't understand
+the semantics of the files it tracks.  It has no idea whether the
+things being added are functions, or statements/expressions within a
+function, or college essays, or hand-written recipes, or data dumps,
+or anything else.  It would need to know those semantics, which would
+probably require something on the level of use of AI to determine that
+the changes are independent non-competing additions with no semantic
+overlap and that you want to keep both.  Instead, it knows which lines
+are the same between the two sides, and which have been modified since
+the common point of history.
 
-Can you create a testcase to reproduce this, either a repository that
-others can clone together with the commands to trigger it, or a bunch
-of commands to both create a simple repository and demonstrate the
-issue?
+Without this knowledge about the meaning of the content, assuming both
+are wanted is wrong.  It would mean that all the other cases where two
+sides each add lines would also end up with both sets of lines, even
+when those are conflicting lines in a recipe or conflicting statements
+in a function, or whatever.  When both sides modify the same area in
+different ways, it's a potential conflict that needs to be given back
+to the user to resolve.
