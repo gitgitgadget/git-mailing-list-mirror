@@ -1,133 +1,182 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD32155CB3
-	for <git@vger.kernel.org>; Fri, 12 Sep 2025 13:47:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0153093B6
+	for <git@vger.kernel.org>; Fri, 12 Sep 2025 14:05:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757684856; cv=none; b=tBpkl9VvWLwoBFnkQQEf9TsJOIv/WujuLFbIZsxRFYG36d4/rLiO774C3hntXLbeqDav6DwUwcJYB8JV+a/1naHYALzvBK386svFX/lerwc3JVhoKC5KOqPi+O4aThlXwfW8siMCBqkbIhGkoiLJ4Q7f2AngWS0Nt5aDRIn5sE4=
+	t=1757685937; cv=none; b=gow4YmSIFzl2+K8QpZBXqPx4aMN/904bZ0Iygq8zUGcl60UQhKP0bQCJB+L3gNSWHyl1gD8njh48wmJT7zd24K+HOLIBYCogGtgvGiJLvZy/9NM8vdXDBhRDiwiaJqkHqUmI3HD8L11MZzXTL0YEvlDbCLGO2+1wwP3p4/QiQb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757684856; c=relaxed/simple;
-	bh=FtPypTobgKYKVmR2tH9vY+TxXfZ3qNcdaSLDECOawe0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PFzQ5sT+wN7aoUTmKxv9zUu+zltkTfmU/RbiKTANXu0JkKa+ev08XPRr45U9awlVmcwFGH2eDuELHOrM8/JUG652fuBe1o2COIpm4T9YUtGigOHS6EaXotGW+XMKo+ZZuU8cHP99cbC9HGjvhFH7r5EyIXaM/scttQxxTCcAxGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GY6yF8ca; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757685937; c=relaxed/simple;
+	bh=/WhCAMvPNMhRdzPch+1fUpuV7zrEdF1cwJ+Ylbf0gJg=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=fLxZLBVyteCokONSawfIjO0VdEl7/x7KWB9vIYvITrTKNYiMpXPaDFb1VQOGJiNPT4jlwv7kwtH99IkdcFy/6rPHH8wvGxK2zfvMGWdgALHqd7RU2J4Rczt72/fhTe1kcNuTnzADh41qlkkDTg9oIrRf0fArhQZbC7tmpp5F0XQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=YUQs4HHW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gwqYsQBj; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GY6yF8ca"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6237202020bso3194796a12.3
-        for <git@vger.kernel.org>; Fri, 12 Sep 2025 06:47:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757684853; x=1758289653; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fwBmT6AMNfTYDqsIDNO9Wxk2ePZHEm6kxtxP44uLc04=;
-        b=GY6yF8ca5b3bN57n7hGKfdfeCIpq1s0GftQCVppxHnsWEOf6cS5WFcZzUy+0LDKMzP
-         9W1ATmtNS67w0XdnVPSf/gPA6uIXG0fW6N9evZ45tS/uvLw0KX31AU7KeoExyq6PS8qH
-         fm5ZThG9DM8TsfnPbGNGld5jIaVrQr8r96Rgw6U/0QTZzz7xWlaDLgtdD0k1UhjU3KPK
-         DmEZz4aFkdvSysxdybzyL5/1E0nuNmq0P4lMTiQydZRhVp0KvrnsUaQcWK+yhCw4UnYy
-         oxKs8l64iWN1LkQshdQbyRcKeIC+qaJwB14dR6DkfwlQ01a2hKR3Am/1JdqrnUCWNh1T
-         kDmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757684853; x=1758289653;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fwBmT6AMNfTYDqsIDNO9Wxk2ePZHEm6kxtxP44uLc04=;
-        b=FmS17WWo8rux9iyIXooKWqapEnzA8XldX+f2q1yAyMlScdymmSmFQli4g+hHIfQyh7
-         tYyq4FgvP2TgJXODCq9VU/D7dji7Nu7vscAADEYPhNPAnJs2oamHzAtF5/xLwQl/g6Fy
-         UG81xSKxKMmsK/EXCJWonoxV+JGK1tFhweGzfjLk8Fg6uo3pg+4F38yUZgXoYNxiAUBy
-         EjYtxg+3xaxgveWrliifOUrGJmD649iDNBtalwFmaW9KANV4F5KD+5wCCLAIJta5GCMo
-         imYskmXU1ywBUmhQVnHnCtasSNdUBY+newwmvqR2r2KkemHbJzD3huSGXqTK1oo5Iu/n
-         caQw==
-X-Forwarded-Encrypted: i=1; AJvYcCVpGlDK6vkMvwBO1tSYt8pbjRdYtDkwFmKZ0MVuRVg0jyJ5yXTG/8a0BtyD6qVdhRv0XbA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJyJSyLk4QBEGPZ1hGZveTT7HJjW1DpJqVCNY9Sx1pxRH7usdV
-	js8BFyMhEu1ppWKlDIKJTs+FN/oPA1BhzB+qjJpXK+4/IGvdD8E3hTG3cvG8nrJTJKrIHykCChi
-	FUradA5mFp/aWQTh6mQ+1VwgWwKz3ag0=
-X-Gm-Gg: ASbGncuFDsfKngUjJvQvpIItHXk69pY+4GrhEXARqtAnbXSi8HOURUls/0VoUouAy8d
-	0aqQ1pFvvZWKG6hY2KUyaC+vY7qtieKnl5ppLNccJYoMHvajkKmAf7V59gNf16k/Unuu3jiolvF
-	bj9uxx3JMSMFwjyklL07k50nJVUT1v2fCnkI0pbS9v4dFzTrbKwRnC0yEC/xrm4CB/GdZbOkzUe
-	vjD5YZsBw==
-X-Google-Smtp-Source: AGHT+IGMTVREXnqlQNSgv4rhT1AFOjn5gAAQ7TArpplL06WQpkoJBqbeISa5KcqKCadfEKO6F1CepJtUpCXzwFvBBjA=
-X-Received: by 2002:a05:6402:524c:b0:627:f13f:5e90 with SMTP id
- 4fb4d7f45d1cf-62ed82fe0c8mr3149351a12.26.1757684853157; Fri, 12 Sep 2025
- 06:47:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="YUQs4HHW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gwqYsQBj"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 717EB7A02CB;
+	Fri, 12 Sep 2025 10:05:34 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-04.internal (MEProxy); Fri, 12 Sep 2025 10:05:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757685934;
+	 x=1757772334; bh=+zjei4y8HRzhbQywfuhSrB6dnMT2ECLbCeXTydhi500=; b=
+	YUQs4HHW+gQ93ykDZoFvC4Vfcw1rtGam+TaO1rpLz6bNCRm59Ova7TnMeIgn5aQO
+	3CE7JnkFM6CmD6S7MKHpzXO05W2ZN0/jEMcWP6adKDoIAhAMs+Nx9e2ZyPVzxqLj
+	4xiZS5DMjXCe2x2wHfQnVkHXYWB01waPV+3zJUo2VtpBMZkUigUN4TrKOz3efMUj
+	AOrPUTpSH9uRRZ3Q87yBxpBJtj7wFncqgCHCZ1a7TrZFCo3+xmaAx8h9D6EJj1zr
+	6oMYdJ9q/Q8y7LvvndxYYdBz+QKLw6H/nkUx88pgVTE8TKHR2PfrzGjPgv9KwFnW
+	OY5r0PY9/wKjV+W7rYv9rw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757685934; x=
+	1757772334; bh=+zjei4y8HRzhbQywfuhSrB6dnMT2ECLbCeXTydhi500=; b=g
+	wqYsQBjSZgISmX1uMMx6RoKCxSAkwpLn8OAjrehq6oFqmTxF3UApXOX9kDZUhSbx
+	BTsnnwHGWysoLesJS735wGzs/I2PpSOkbBrEPmcFr8JAxn22RU9KTUUT4n71AnF8
+	0H+BnNoweZ/AS1YGryNx9sOQv2+wVShJbHB3Yfd2lOPRoRiTk8Xi1qypoZ1tWdEf
+	4lazrFqii+Xf6VZKhstrNXUQUyanxecm0MTWxedhF6mEvpZNONUuocKmLtGjUmhk
+	/4QxHpCD8czxcN145mR8pZqFx7970CYwPbnIA8WmE55EhSu27HCtmq/1E0eTukho
+	fOgWrzvtgd7bZLk3EbJ1g==
+X-ME-Sender: <xms:rijEaJ8zvrs9P-PftqETO30_JFdNbSVjaea6fM_u0Pi-NQEu-CtycA>
+    <xme:rijEaNvw5pKeyyprSGyG3iGTk8kkJxt1WFUZ-zWs644ZuNMmoHScjbpDuI-1lcgJE
+    f-_K8DqiWHIuO00C28>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvledvgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfluhhlihgr
+    ucfgvhgrnhhsfdcuoehjuhhlihgrsehjvhhnshdrtggrqeenucggtffrrghtthgvrhhnpe
+    ffffeiteefteeukeelveeukedvuedvhedtgfdvgefhhfegtdetgeejhefgveevffenucff
+    ohhmrghinhepkhgvrhhnvghlrdhorhhgpdhgihhtqdhstghmrdgtohhmnecuvehluhhsth
+    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirgesjhhvnhhs
+    rdgtrgdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+    epsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihht
+    ghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:rijEaKl_D5nFpAPk-31Vz2UXhAlFK-VkIyxQ1NRuCHfY2J3cHagUIA>
+    <xmx:rijEaIuseMDZYlhDZYfusxZc_9zpZNZX4n8Ct4qaft739EpIcgpitQ>
+    <xmx:rijEaFnaGwN5393sgNRytrgaVqe7J6lsmvp5F68m_jit1fM5Lk3w6Q>
+    <xmx:rijEaLv35j7otz7P9sGUCHT-MrLGq2pybhQ2rRmJUnF2mCpmvJ2Xtg>
+    <xmx:rijEaEh4BtZpTKTCUGTTRyAs0SMtvtoTkz7ZV0gDJh_xeIAmiDFDNwRU>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id F00CC780271; Fri, 12 Sep 2025 10:05:33 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250910080839.2142651-1-christian.couder@gmail.com>
- <20250910080839.2142651-3-christian.couder@gmail.com> <aMJm8rSOeQsO_qTG@pks.im>
- <xmqq4it9ornz.fsf@gitster.g>
-In-Reply-To: <xmqq4it9ornz.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 12 Sep 2025 15:47:21 +0200
-X-Gm-Features: AS18NWAR0Ptg3o0sC2kJP9uU0m2iR3uYZhbSqlVOP-LcBlowpiyCzq4t5wjwFkw
-Message-ID: <CAP8UFD1ULfGqzQwn1ZhgCdS5Ri_Y3rd-F+=-zsRKtKFg0k4hVQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] fast-import: add '--signed-commits=<mode>' option
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Elijah Newren <newren@gmail.com>, 
-	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: AJ8O7vPh7Xgs
+Date: Fri, 12 Sep 2025 10:05:13 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+Message-Id: <236a79f4-e9a2-4335-bbff-79ae0cc67e9b@app.fastmail.com>
+In-Reply-To: <1629C205-700F-4A8A-84BE-302D172416F8@gmail.com>
+References: <pull.1962.v4.git.1757531669.gitgitgadget@gmail.com>
+ <1629C205-700F-4A8A-84BE-302D172416F8@gmail.com>
+Subject: Re: [PATCH v4 0/7] doc: git-checkout: clarify DESCRIPTION section
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Sep 11, 2025 at 6:55=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+>> * Rewrite all the commit messages to try to take a more Problem / Sol=
+ution
+>>   approach, from Junio's review and thanks to help from @nasamuffin in
+>>   Discord. Also change the cover letter format to match the style in
+>>   https://lore.kernel.org/git/CAOLa=3DZStgwBN0fMK3YxoqeR+1i772f621sup=
+va3Kvr7YPq4g8g@mail.gmail.com/T/#m8c99a3144cbdfb445e04f8f83a79364bfe8d79=
+7d
+>>   , which hopefully matches the norms of this mailing list better.
 >
-> Patrick Steinhardt <ps@pks.im> writes:
+> This was pleasant reading to me. Not sure how it felt for you to write=
+?=20
+> Or if the convention was just not spelled out enough to get you where=20
+> you wanted to be? :)
+
+This one took a few hours because I had to backfill all of the "Changes =
+in v2...",
+"Changes in v3..." but I think future ones will be faster to write.
+
+Re the convention not being spelled out: in the "my first contribution" =
+guide, it says:
+
+> Edit your cover letter again. Now is a good time to mention what's dif=
+ferent
+> between your last version and now, if it's something significant. You =
+do not
+> need the exact same body in your second cover letter; focus on explain=
+ing to
+> reviewers the changes you've made that may not be as visible.
+
+The key elements that I was missing from this were:
+
+1. it's actually probably good to keep some (most?) of the body from you=
+r original
+  cover letter, so that folks don't have to go back to remember what thi=
+s is about
+2. It's useful to flag which review comments you addressed and which you=
+ didn't,
+  and why, not just what the changes you made are
+
+(I might have gotten those 2 points wrong though!)
+
+>>     +    Make this section more accessible to users who don't know wh=
+at the terms
+>>     +    "pathspec", "tree-ish", and "index" mean by using more famil=
+iar language,
+>>     +    adding examples, and using simpler sentence structures.
 >
-> >> +/* Process signatures (up to 2: one "sha1" and one "sha256") */
-> >
-> > Hm. Does "up to 2" indicate that the commit may have two signatures at
-> > once? If so...
-> >
-> >> +static void import_signature(struct signature_data *sig_sha1,
-> >> +                         struct signature_data *sig_sha256,
-> >> +                         const char *v)
-> >> +{
-> >> +    struct signature_data sig =3D { NULL, NULL, STRBUF_INIT };
-> >> +
-> >> +    parse_one_signature(&sig, v);
-> >> +
-> >> +    if (!strcmp(sig.hash_algo, "sha1"))
-> >> +            store_signature(sig_sha1, &sig, "SHA-1");
-> >> +    else if (!strcmp(sig.hash_algo, "sha256"))
-> >> +            store_signature(sig_sha256, &sig, "SHA-256");
-> >
-> > ... then the code here seems to indicate otherwise as you only parse
-> > either the "sha1" signature or the "sha256" signature, but never both.
+> Without re-examining the individual patches, I see that 2/7 and 7/7=20
+> (possibly also new 1/7) lost pointers to pathspecs. I think I mentione=
+d=20
+> this previously: I hope we can find some way to direct folks towards=20
+> the glossary entries that describe them. I would consider pathspecs a=20
+> power-user feature, and they create lots of useful affordances. So it=20
+> is fair to more gently introduce newcomers, but I would also still lik=
+e=20
+> to make sure it clear when commands accept pathspec =E2=80=9Cmagic=E2=80=
+=9D :)
 >
-> Correct and not quite.  The caller can call you twice in its loop.
-> But if the input was malformed and had two "sha1" (and no "sha256"),
-> this will not barf (as the original, so it is not a new bug).
+> OTOH, I=E2=80=99ll take a look at the docs after this series lands and=
+ see if=20
+> it feels like something is missing. It may be just fine to have=20
+> pathspecs in the synopses and add a sentence somewhere after the gentl=
+e=20
+> introduction =E2=80=9CFor more ways to specify paths, see=E2=80=A6=E2=80=9D
 
-store_signature() should barf if it has already been called with the
-same first argument:
+Sorry for not mentioning that. My idea was to just leave <pathspec> in t=
+he
+synopsis, and then folks can look it up in the glossary if they're curio=
+us.
 
-static void store_signature(struct signature_data *stored_sig,
-                struct signature_data *new_sig,
-                const char *hash_type)
-{
-    if (stored_sig->hash_algo) {
-        warning("multiple %s signatures found, "
-            "ignoring additional signature",
-            hash_type);
-        strbuf_release(&new_sig->data);
-        free(new_sig->hash_algo);
-    } else {
-        *stored_sig =3D *new_sig;
-    }
-}
+In the web documentation (https://git-scm.com/docs/git-checkout), the wo=
+rd
+"pathspec" is underlined, and hovering over it will show the definition,=
+ which
+I think will help with discoverability. Of course in the terminal versio=
+n of the
+man pages it's harder to build in affordances like that.
 
-> In any case, I also found that "up to 2" comment somewhat strange.
-> It was more understandable back when it was near the loop, but not
-> here.
+Do you think that the concept of a "pathspec" is especially useful/power=
+ful
+in the case of `git checkout`? If we're thinking more globally, i wonder=
+ if we
+could find a Git command where more complex pathspecs are especiallly
+useful and then include some examples of using a complex pathspec there.
 
-In V2 I just removed that comment, as I am not sure it really helps.
-
-Thanks.
+If we include a compelling example and then a "see X for more about..." =
+(here or
+somewhere else) I think it would be much more likely to motivate users t=
+o follow
+the breadcrumbs to learn more.
