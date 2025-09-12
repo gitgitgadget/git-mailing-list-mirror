@@ -1,141 +1,126 @@
-Received: from scc-mailout-kit-02.scc.kit.edu (scc-mailout-kit-02.scc.kit.edu [129.13.231.82])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786AC4A23
-	for <git@vger.kernel.org>; Fri, 12 Sep 2025 16:29:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=129.13.231.82
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D67221FCA
+	for <git@vger.kernel.org>; Fri, 12 Sep 2025 16:33:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757694599; cv=none; b=rlb+UoVqXjOMSvdeV4WBfULDJE9Lq1skefuzaklzlFi1bueq5a8HMkKD1CA6+IgT5pXBtnBS4NhYKcK3ZMbWtfBLytH/HO+3gxvq126xjYHBSvAHiMkcPvt5zd99NayTgsobTuYrQ3XZRYLj7PFGI0htmbMtrfb6xvbRhh90g6M=
+	t=1757694783; cv=none; b=mu2aI8iyCRKf7WLQVqE2WNqmcJMHEOPj6oV9D6/Bcri0/Mh9zq8VJdQv0KxyaNSsNPZn38SkjpK06AK2zA9u2EuzXJGopFYTzAu1dOWapyu9EDdRpY2un1+GpQk0YW7b+cO/lcsuOrfPZaA7GfAHszMKRO4LWfnKzpWCK02q6IE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757694599; c=relaxed/simple;
-	bh=iCmJYE+2KnDeDHyV4n+PBqi/YjvgPTcBQdW1lTWjYzk=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=hymnJ92yeGzqAM3Af3xan0Yl9PU8e8D4M6A//KHAJ5qiVyVv8avmZGygICn4Tup8ed3S2KZLB2aDvU1fINoAQtGHLBb8RPmJyxm8SUfkt3EY59dYJxcYVp4/76Aqcseb++8mHTFOTxib2jXrbP9lBwlQZ/k+KampJxnlnIRQISQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kit.edu; spf=pass smtp.mailfrom=kit.edu; dkim=pass (2048-bit key) header.d=kit.edu header.i=@kit.edu header.b=cVjXFrOw; arc=none smtp.client-ip=129.13.231.82
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kit.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kit.edu
+	s=arc-20240116; t=1757694783; c=relaxed/simple;
+	bh=Vqd73kfgK6Ob+o1ieKtC9eTJ7pkljLWrQtnxPyYG/jw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qiya5qtLqn6uxDfjB+yEvDcLwzF5DUJE/3UU4ObYKg5hwMSvt221/ZvbHGVOB1PkiHB7XXYbs3l3NUfI/CgZM6DaGMx6Ll07il7pRMrezc08QprJ4ADwPIAvexoZG+Fn7AN3uppK773Py/7NVBhG8snDPOj3ZBFuZs+M+YoE6JU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=19LpjqRu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k+zC/KJI; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kit.edu header.i=@kit.edu header.b="cVjXFrOw"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=kit.edu;
-	s=kit1; h=Content-Transfer-Encoding:Content-Type:Subject:From:To:MIME-Version
-	:Date:Message-ID:Sender:Reply-To:Cc:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=x2AXu4RTrXt8JKO6VD3812/u76QHnIZmZd/kffr2yss=; b=cVjXFrOwHHTP9UnSTyBtEDex8r
-	8nceL3+rwPhiV85ueYjPA5BeCtBj8bXMrcTXAYKRQbFMXnxCu6/0ef+cvmOFi+1R3/WP7Nut/lQMp
-	e3oqUUaDV2Go6WAzSHb614FDkSRdemlasSm75o/PFtbogweZLI92z5hTkktjNRxvEppowslQy/CcI
-	pAOcnZ0W9BOAH+bwKFL2342eWrRZ30KEvGPIuz0AFxtOXtLR1jn3dE3OPgxoEWuLapIvTeKVqg8uE
-	BefzsEMVZwloTse2P6uI+q48JKFNgIdwaYxhduFWdzXj0CEOFZibxWLW30O8bObymvYh+Omq1PVKa
-	HiFaV5zg==;
-Received: from kit-msx-49.kit.edu ([2a00:1398:9:f612::149])
-	by scc-mailout-kit-02.scc.kit.edu with esmtps (TLS1.2:ECDHE_SECP384R1__RSA_SHA256__AES_256_GCM:256)
-	(envelope-from <darko.veberic@kit.edu>)
-	id 1ux6Pz-00G6rK-0V
-	for git@vger.kernel.org;
-	Fri, 12 Sep 2025 18:14:35 +0200
-Received: from [IPV6:2a00:1398:4:b001:2ef0:5dff:fe01:2c47]
- (2a00:1398:4:b001:2ef0:5dff:fe01:2c47) by smtp.kit.edu
- (2a00:1398:9:f612::106) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 12 Sep
- 2025 18:14:34 +0200
-Message-ID: <874521b6-8311-467e-b49e-44124154b5b6@kit.edu>
-Date: Fri, 12 Sep 2025 18:14:34 +0200
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="19LpjqRu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k+zC/KJI"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 064AF7A0169;
+	Fri, 12 Sep 2025 12:33:01 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Fri, 12 Sep 2025 12:33:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1757694780;
+	 x=1757781180; bh=x8bUR4Z6lqme3V4q1q2mGUO5Fmv1C2QNYnx11c6ntdw=; b=
+	19LpjqRuwHBQ8JlT//x0J6Pat3BVBRAH8x3u/goc7rruXcw1wHNOEUi7kM2obWa7
+	gadHLwdhKWGHTkN/CIHlpXyBOzBWSyP+Jj9iRdE3apWQlxeYlFePHLL3p9nS2Oud
+	3sYEeZJqkVvWSQW1lfpwTrifwXT6lv6Nxf0w11uoDuhT/83bqVM03k3tXJNpWbQO
+	c+Pr001qUzUcW8TFweDiu7+4UI8XZXF71xqXUZ3mrgj8+waGB3+kl2hs8IJBHTUU
+	zDv93B8s9HgBtpMYVq/97zJWTo5sjgWU2/oFRpmVum+w1ycLuNPgnMYVkd5lolTk
+	9WWehSJdiZ9dIrR1dMO/Zg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757694780; x=
+	1757781180; bh=x8bUR4Z6lqme3V4q1q2mGUO5Fmv1C2QNYnx11c6ntdw=; b=k
+	+zC/KJIH7zHBefAwpefcYTif+vhD/er3rBqC0XlT7Q4Q9wAinQ0jjFk49nIEe//W
+	eJTyOYkOyWqJ24zDofB9F6Pve5vp4hlKeL3W5uvwRja/qUDuYDj0EeXel7fu5C1l
+	35kbIwm1VhcA1t/2NdhVdM2XwUy0HSbGcBP7ZDUwcP+O6wUfAG4Ur5JSaQeCvkIi
+	Nft/RHgQB274s+RtZlaL3YG8fAKYKVFueOrKGagKtPFnqDHNpsX3My0zsj85Jlm7
+	ZThqUjeEXXWQRsbkyHc3oio9wOkz9cIZNTVVqk/ey7M/EaXkdSr3G47hRMHS+oLH
+	aLHAfVAldNoV6bzXh/EgA==
+X-ME-Sender: <xms:O0vEaAGcK0EKf_pZ1RSYeprnNAzy5e-_sswGD5JOnnEaGOzb6V_rgw>
+    <xme:O0vEaENuohIOEcpKhSa9VGcqM5F0NcejmZXDN5V-Gv_eGlkvsSDIp5nCpeJuUGgIn
+    uwus6yK3jCB2Fx5kQ>
+X-ME-Received: <xmr:O0vEaEVwY29ThFJX2DJdbvVnHm45Un5BEoDVUZyhxIeUD82c0aUOvxSUcFGgwLxSgCxt7u30fxcA9G1846lBhShY8Tq8zApZsCpgwP8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvleehgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudejpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopegtohhnthgrtghtsehhrggtkhhtihhvihhsrd
+    hmvgdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdr
+    nhgvthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtph
+    htthhopegtsgesvdehiegsihhtrdhorhhgpdhrtghpthhtoheptgholhhlihhnrdhfuhhn
+    khdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtoh
+    hordhorhhg
+X-ME-Proxy: <xmx:PEvEaDwJ0OnKcwFucsi6ydlYVtgvTf22CSXRnwJjS-mzLCtEx9qFcA>
+    <xmx:PEvEaMNUaD1OTQ8ST2bMT6G9zPe0dadhZvO076R9yUnYw757ck2nKQ>
+    <xmx:PEvEaNpOBP7fRTbnwKRRmqi_u5tBpqIxXCfZIvFltR0SD9RPmVJk7g>
+    <xmx:PEvEaL84J3F9t9yQZmsybyDJ8_Iqd7lfCsGQ4rx8_CkOuewBHGym9w>
+    <xmx:PEvEaFFwm5vfUmnSbKoYGpgzEQKp3hgnSg7ex5iKBxEixgcKv-7RsA36>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 12 Sep 2025 12:32:59 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  "Haelwenn
+ (lanodan) Monnier" <contact@hacktivis.me>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Ben Knoble <ben.knoble@gmail.com>,
+  Christian Brabandt <cb@256bit.org>,  Collin Funk
+ <collin.funk1@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,  Elijah
+ Newren <newren@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Pierre-Emmanuel Patry
+ <pierre-emmanuel.patry@embecosm.com>,  Sam James <sam@gentoo.org>,  Taylor
+ Blau <me@ttaylorr.com>
+Subject: Re: [PATCH RFC v4 0/9] Introduce Rust and announce that it will
+ become mandatory
+In-Reply-To: <aMRADFAoh68aWkdD@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1bor?=
+ =?utf-8?Q?=22's?= message of "Fri,
+	12 Sep 2025 17:45:16 +0200")
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
+	<20250910-b4-pks-rust-breaking-change-v4-0-4a63fc69278d@pks.im>
+	<aMRADFAoh68aWkdD@szeder.dev>
+Date: Fri, 12 Sep 2025 09:32:58 -0700
+Message-ID: <xmqqplbvmy11.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: <git@vger.kernel.org>
-Content-Language: en-US
-From: Darko Veberic <darko.veberic@kit.edu>
-Subject: git merge/rebase feature request
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-hi,
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-Please answer the following questions to help us understand your issue.
+>>  3:  ccac54a247 !  3:  873f9d82f5 Makefile: introduce infrastructure to build internal Rust library
+>>     @@ .gitignore
+>>      @@
+>>       /fuzz_corpora
+>>      +/target/
+>>     ++/Cargo.lock
+>
+> The Cargo.lock build artifact is back in .gitignore in this version of
+> the patch series, but the 'clean' target is not updated accordingly to
+> remove it.
 
-   Disclaimer: this is not a bug report per-se but a feature request!
+I too noticed a leftover Cargo.lock file but was a bit too
+distracted to report it (and instead kept going with "git clean -f"
+X-<); my bad.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-
-   git rebase main
-
-What did you expect to happen? (Expected behavior)
-
-   all fine, it just would be very useful if git would issue some more 
-information (see below).
-
-What happened instead? (Actual behavior)
-
-   a fictitious example of the output from the merge command is as follows:
-
-     Auto-merging x/y.z
-     CONFLICT (content): Merge conflict in x/y.z
-     Auto-merging a/b.c
-     CONFLICT (content): Merge conflict in a/b.c
-     error: could not apply 9cd549b33... start with initial status, 
-update some refs
-     hint: Resolve all conflicts manually, mark them as resolved with
-     hint: "git add/rm <conflicted_files>", then run "git rebase 
---continue".
-     hint: You can instead skip this commit: run "git rebase --skip".
-     hint: To abort and get back to the state before "git rebase", run 
-"git rebase --abort".
-     Could not apply 9cd549b33... start with initial status, update some 
-refs
-
-What's different between what you expected and what actually happened?
-
-   a very useful output before the lines above would be:
-
-     Rebasing branches:
-       --ours = "main"
-       --theirs = "my_great_feature_branch"
-
-   and vice-versa when doing a "git merge main" ie
-
-     Merging branches:
-       --ours = "my_great_feature_branch"
-       --theirs = "main"
-
-   this helps greatly in the otherwise confusing choice of command-line 
-options when trying to keep one of the versions intact:
-
-     git checkout (--ours|--theirs) -- x/y.z
-
-
-
-[System Info]
-git version:
-git version 2.43.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 6.8.0-79-generic #79-Ubuntu SMP PREEMPT_DYNAMIC Tue Aug 12 
-14:42:46 UTC 2025 x86_64
-compiler info: gnuc: 13.3
-libc info: glibc: 2.39
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
-
-
--- 
-darko.
-
-dr darko veberic 大口 ~~~~~~~~~~~~~~~~~~~
-karlsruhe institute of technology (kit)
-institute for astroparticle physics (iap)
-campus nord 425, postfach 3640
-76021 karlsruhe, germany
-mobile: +49 151 5600 7386
-office: +49 721 608 24704
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+Thanks for being extra careful.
