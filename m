@@ -1,149 +1,149 @@
-Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2183376A6
-	for <git@vger.kernel.org>; Fri, 12 Sep 2025 18:55:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA65C33A004
+	for <git@vger.kernel.org>; Fri, 12 Sep 2025 18:55:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757703321; cv=none; b=Jt1hGQMhy4bFynPlR99wRjVt7doA272d1UUCmdKHyXN4Ah9i24wCsYhR7XZcoHpD4hBIKhM6subvmWwPd4XtYuKXB7cNROW+FoU2UMTot1lGVtPaFgcIZyWP253CltSYECK4ap7/VnkFpUNSpRM+FtHisvBymNgCWc1xHb5RNxg=
+	t=1757703348; cv=none; b=icWruM4dVvIidXsY+OvEH8SphVFrhbDoPpmpyCOxgv0syzEJqqEZXYLg1VIyHeoLy383K/l6HEMuHd6gaPjjDRh5Gu5xp2R2mkqcKJbD4hQEOCumWfJHwZ1WqiyFd9KWfi3EAgOsOCHeYNgmnT/888/mglr4Wez4ZrFkUS6m1ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757703321; c=relaxed/simple;
-	bh=THsjd64h3D+Uhz4r2qlj07fKKh7ECYRUEBPodGh+QR0=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=pRAudZQ/kNygyWLmJnUnTfoLnOf6c4ByoiyUL3saNvHDhaJWvEi/Vs3heJU68gZ9EMS2JyS9gQ5gLvQAeW/E4tlAlPuzsRix/TyIZa5GYCALEDaHWGA39qUKGJMN5qIuBpMzvERZkYgeHX01F1NxFStkSkYdVDLJ/xuwcbUMcok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y6AZri9E; arc=none smtp.client-ip=209.85.166.41
+	s=arc-20240116; t=1757703348; c=relaxed/simple;
+	bh=GPW9Xn+J4jLZmoFBRXf4vn37Fc7fRUBlPv5Bi03G71Q=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=SfPRwRc1SdQ56DswQuBt5t5qNyrAv0fmOJzu84LqwZqHwicfLmfYGPZFuuyTwUU1kmmqEHi6jAb72Thpot1y4vJz473zigmFs/CDxMIg8kOZmwzDdpFyctoVroE5+a/79G9RyzPDQR3LE8pZMODz5dvvpNwCUCNv3pKgssX5F34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AjKpfo9T; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y6AZri9E"
-Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-88f49be4c21so59840839f.1
-        for <git@vger.kernel.org>; Fri, 12 Sep 2025 11:55:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AjKpfo9T"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3e537dc30f7so1306496f8f.2
+        for <git@vger.kernel.org>; Fri, 12 Sep 2025 11:55:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757703318; x=1758308118; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FtGw5/sNH5Bpxufyyr3tvmRkwRO3TPdQzneqSpDkkQ4=;
-        b=Y6AZri9Ecic3YuEDq/9uiiPCcis/NFQmUzBTcJ4pgDThWKB6wZ02b6ktT/Z8TGq3Xf
-         hirh30WK+hIjbKI3ZbAp3+v0QqOT47tZsanbSnfHqHq/HN0es8oNXLEi5Rnv7TAElIlg
-         Q5Hkf7muS9K3igK0D9SsaUTg57ylIFpuheBJp7cBrOpLfn2wMWaNIKNHbqVpLgb3pQhB
-         oYUQOHzIldsVMRKxSDiO8+E4zVjD5T8nASoA5reY4YCdzU/Wngs4jCjNhdgrQOkB3XrQ
-         Iy/pg5QCb5h23wC1zNw80kUvNeXPiq6Ls3BTeaZ+XWHhGdfCITp25n6cGBoj6v8VoZj9
-         ssAw==
+        d=gmail.com; s=20230601; t=1757703345; x=1758308145; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=X3+dXm5/E1QGLfEPKgd3ALeTEg8Uywij8LxEen9ZajA=;
+        b=AjKpfo9T7Xbqi4dYDZFdhlS2kRf8LeQw7pU/W137vZEU4c+I39bkae+F6/51BpXBOL
+         FsivukiOnzU2x/yHIiafnQu897hRzurQa+65u3LNViP+BYi6sLQYjlTb8DaaaXxOH1SQ
+         2X+PooW6tbkvfuBAbC8rHTdrrvHKq24CjKIf5sr3MAHhKDHlEGAB4hIM8QJ3bf1uwVXL
+         fDG0TT+A5zuyJfz5UCqr6SAuCLo8ss57omKgV5xRtVWVl7qK0KWTFShsrGLZ2JQQVxAR
+         AgmMaTJL28uvgWdzYq1J82larpbzIiSEa8bBNnvyV7mH6hfepZuAIdzB1ceiQ/Je0DZf
+         7qKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757703318; x=1758308118;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FtGw5/sNH5Bpxufyyr3tvmRkwRO3TPdQzneqSpDkkQ4=;
-        b=rDnfhoZw+Vxt7QqiisK35XbPM0K6PawivJEKQ1xelhfwa7MdNJn+jaBHT6ZoYK6/YC
-         9w0b4TliJinW1qmPFXipCC2JQo1r0iCAh/OnKPjd2HprRM1K3gn8R0pHgHhLCP0UW45P
-         I4U8muBzJkBOMW1j/4clynFkA3FO8x5L+5jbspagye47oY6hDxZVgJbCLQ8ucqJRR4qk
-         DfUv1sbOtmE8l49hqsf/LVd69D50bNOcHk9DXFa1uISv5mUwzg1aWqddm9l3mTVIXnAc
-         UScI70EB7b6v+qyRa8IqfY0qbhjJAVTurSmaYn0xxOYcnCmHfBPUGs7auyUQ34PUDHXn
-         wm6Q==
-X-Gm-Message-State: AOJu0YwCS8OYZObuKY7vwsnjlvW9pSMDLi4WCmpGOQPiULqG6b6hKpc+
-	oJq8BrZ0+8CCvGu/QXY7kJyyOD0FYI5NtL/2XwHIAa9zK++Vu0bI6e6Fiep76A==
-X-Gm-Gg: ASbGncu2Kg+hV84Xhy17g4K2x27EaWP4gcMrcT2shZ+bPF796jE2eKrJjDTtaM9707x
-	x3HGI/DaFUBaL/FBxRVlT60HqqU8EghfEPI1eHV+D9INKE7n5Py7tFzgJ8dQNIM1Qj/tFxJBXB6
-	ziKdpfiiWuC6uqby2oFZiSOdLQtbUyZnYyhpkTUQVMRrYpaCGMWwD44GidhJAl8FTSnZ9SMtdVz
-	dhhjH8EdAp8dA8fTmbG/5pDnellr8H1n83Q/A5PKSSKh4ZQkpkMEOSnnm1Vnj6WLJEt1OxiICjl
-	8XQEi4y2VdssdJhbUv62FXjIxyS9HJM6ezGWco06J1XZGdV1Ew1oW6Lr3sOujYiTysLyTuee/P0
-	q7uyBwc0V++7ljuENMnHNZnaOvAM=
-X-Google-Smtp-Source: AGHT+IH6HY8bJ6OS+1oRId3BhELyoXHEy6wCa5d0qsyaYc36ZdxPzFdGnlrlWCjqu0K4m7tkJUkmmw==
-X-Received: by 2002:a05:6602:496:b0:887:3efb:6101 with SMTP id ca18e2360f4ac-89032ddeb5cmr738589539f.7.1757703318183;
-        Fri, 12 Sep 2025 11:55:18 -0700 (PDT)
-Received: from [127.0.0.1] ([172.183.157.180])
-        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-88f2f0f96bfsm198581439f.18.2025.09.12.11.55.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Sep 2025 11:55:17 -0700 (PDT)
-Message-Id: <59732f1e4783372d3d997f43b028269831719f63.1757703309.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
-References: <pull.1964.git.1756240823.gitgitgadget@gmail.com>
-	<pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 12 Sep 2025 18:55:09 +0000
-Subject: [PATCH v2 4/4] doc: git-push: clarify "what to push"
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1757703345; x=1758308145;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=X3+dXm5/E1QGLfEPKgd3ALeTEg8Uywij8LxEen9ZajA=;
+        b=ddbrO3g3Vr/x0pBkjlPTG7Jw1RGljbEQiTXSfZSUx5jg9TLlms2GDLS8MzvpOlVCxv
+         WxkvMoW57hIeP85mNteCqAI3EtNGG9/9xxL8b/3tY0hmdr7brxlHXpln57qlF6rJ9i5G
+         qxUCg7tBU/j9lMo0ieR/sme52DR0eNPJle9K9/4lMvB8nwh6nR3GDTQBLTBONIaWGzTJ
+         ECfy7KHXTteDwjjBMyLEhfnChcMjjlKSfgi92IoPU/7Rmv2JCRS51juIGcti3Gu7NNU1
+         3iFGMRwU7n0UKf+I2HEwl7SUVUPp7yO01Duk5CRcnjM5BB8JtmY0fEDu1sPWTEDSvNFz
+         ECoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX8Kne/NQGQspNbbyN3Xq7GglzBzmlyOUrWdrYsKSX0MsKnLD1D3/KqiOg0cdSo06fldy4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwynE6mzWEQGk4j8+vtcAPHtHP5nL2TazTytybv4tbD7h1bs5KU
+	sYTi+5MVbQIp78FFHCWGVORMOALF0gzkYeW7yUA/R4H0/yhNmDIQ4OXX
+X-Gm-Gg: ASbGncuXESxskqKtOkzpH1wS15C8v33YPyzXaQ5fmbKW3mkNBwziVQL9fEiMB/RmmJ5
+	FKgRg20wUsi0P6d+yV8j9KGS6AvkxcATUgEpkC6Epw1GKXboFKsIRGmXOwzhqbPxPZ4BrpYBEv6
+	MENvVZ3qRn4kVYLmay/jTCi7jYgjB8NZW/TcVqgOurGbH+Zt1m3rDW4IhNkRVBlsQs6tzzjgGUl
+	T1LiodHGpjGLo+vXUBKa+z1eBl/29riMswgvuOCO9NPw+8nNTbLQg0EjwMju3XBB7no/Hr1uJi3
+	Lg29NkxZe8EbJd4qHa5AWVyLMTP81TUcxBvP3BN1nQMiqACYd3GexFHcGGygQ2sisnTAy2SBUA9
+	l8FSbnzLZMqNkaJ57FziUV+WEqG9wzenDOvEj3WwJSOstyGVXbdNjYWPY3Y/BAgzcOmQyaN4FxO
+	TWmgV4v6Z0pHwvWIPtszaZmp6wF9IyZ9Y=
+X-Google-Smtp-Source: AGHT+IFL1qJYxV9Vsov2jtTK9KBbPMZD67zuogmgaGnrbLlSoPxlwTsum4DKMeKvv/KfZt0VQQBgAw==
+X-Received: by 2002:a05:6000:2307:b0:3d1:6d7a:ab24 with SMTP id ffacd0b85a97d-3e76579311cmr4266148f8f.17.1757703344882;
+        Fri, 12 Sep 2025 11:55:44 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:226:25e0:1d51:1977:518b:89cc? ([2a01:e0a:226:25e0:1d51:1977:518b:89cc])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e7607870cfsm7672680f8f.19.2025.09.12.11.55.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 12 Sep 2025 11:55:44 -0700 (PDT)
+Message-ID: <b4628cc8-3aad-4911-bcd1-6880d7707250@gmail.com>
+Date: Fri, 12 Sep 2025 20:55:41 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+User-Agent: Mozilla Thunderbird
+From: Gabriel Scherer <gabriel.scherer@gmail.com>
+Subject: Re: [PATCH v3 10/11] contrib: remove "git-new-workdir"
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Patrick Steinhardt <ps@pks.im>, Matthieu Moy <git@matthieu-moy.fr>,
+ git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Elijah Newren <newren@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+ Todd Zullinger <tmz@pobox.com>
+References: <20250512-pks-contrib-spring-cleanup-v3-10-32e151b0bfb0@pks.im>
+ <5580aa89-09f1-426e-8483-c99481c998ab@gmail.com>
+ <2b3c951b-0400-4cc5-b790-17ff77154ec2@app.fastmail.com>
+ <e6003a2c-bc1b-4cf5-aae7-ef5aa9c82f10@gmail.com>
+ <CALnO6CBDcDEXe3a_mpdwTi7ujL-fU5QrDeK704X+5bbkpNgb5w@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CALnO6CBDcDEXe3a_mpdwTi7ujL-fU5QrDeK704X+5bbkpNgb5w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-From: Julia Evans <julia@jvns.ca>
+On 12/09/2025 20:14, D. Ben Knoble wrote:
+>  From a quick glance, the old script symlinks various repository state
+> together. You could probably get something equally useful out of
+>
+>      git clone --shared . ../new-worktree
+>
+> (Provide branch options, etc., as desired?)
 
-From user feedback: 6 users says they found the "what to push"
-paragraphs confusing, for many different reasons, including:
 
-* what does "..." in <refspec>... mean?
-* "consult XXX configuration" is hard to parse
-* it refers to the `git-config` man page even though the config
-  information for `git push` is included in this man page under
-  CONFIGURATION
-* the default ("push to a branch with the same name") is what they use
-  99% of the time, they would have expected it to appear earlier instead
-  of at the very end
-* not understanding what the term "upstream" means in Git
-  ("are branches tracked by some system besides their names?"")
+Quick testing seems to indicate that --shared shares less than I would 
+expect / am used to. For example, the remotes are not shared (unlike 
+with `git worktree` and `new-workdir`).
 
-Address all of these by using a numbered "in order of precedence" list
-(similar to the previous commit), by giving a little bit of context
-around "upstream branch": it's something that you may have to set
-explicitly, and referring to the new UPSTREAM BRANCHES section.
+I currently have 73 remotes configured for the repository I am creating 
+workdirs for, and I am happy to keep them configured in a single place.
 
-The default behaviour is still discussed pretty late but it should be
-easier to skim now to get to the relevant information.
+(The fact that the branch state is synchronized between all 
+workdirs/worktrees is also a feature for my use-case, I don't have to 
+constantly re-synchronize the work{dirs,trees} for my usage.)
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
- Documentation/git-push.adoc | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/git-push.adoc b/Documentation/git-push.adoc
-index 909c69766c..2b2f753db4 100644
---- a/Documentation/git-push.adoc
-+++ b/Documentation/git-push.adoc
-@@ -27,18 +27,20 @@ argument (for example `git push dev`), then if that's not specified the
- upstream configuration for the current branch, and then defaults
- to `origin`.
- 
--When the command line does not specify what to push with `<refspec>...`
--arguments or `--all`, `--mirror`, `--tags` options, the command finds
--the default `<refspec>` by consulting `remote.*.push` configuration,
--and if it is not found, honors `push.default` configuration to decide
--what to push (See linkgit:git-config[1] for the meaning of `push.default`).
--
--When neither the command-line nor the configuration specifies what to
--push, the default behavior is used, which corresponds to the `simple`
--value for `push.default`: the current branch is pushed to the
--corresponding upstream branch, but as a safety measure, the push is
--aborted if the upstream branch does not have the same name as the
--local one.
-+To decide which branches, tags, or other refs to push, Git uses
-+(in order of precedence):
-+
-+1. The `<refspec>` argument(s) (for example `main` in `git push origin main`)
-+   or the `--all`, `--mirror`, or `--tags` options
-+2. The `remote.*.push` configuration for the repository being pushed to
-+3. The `push.default` configuration. The default is `push.default=simple`,
-+   which will push to a branch with the same name as the current branch.
-+   See the CONFIGURATION section below for more on `push.default`.
-+
-+As a safety measure, `git push` may fail if you haven't set an upstream
-+for the current branch, depending on what `push.default` is set to.
-+See the UPSTREAM BRANCHES section below for more on how to set and
-+use upstreams.
- 
- You can make interesting things happen to a repository
- every time you push into it, by setting up 'hooks' there.  See
--- 
-gitgitgadget
+> Alternatively, you could maintain the script yourself by e.g. copying
+> it to somewhere on your $PATH or extracting the contrib/workdir
+> history into a repo of your choice.
+
+
+I have a naive question. 'workdir' is a script that has been around for 
+a long while, and apparently causes no maintenance burden whatsoever. It 
+was removed based on the impression that nobody was using it (let me 
+quote the patch description at the end of the present email) -- I 
+certainly understand that it is hard to gather information about this. 
+My question: now that it is clear that some people are using it, what is 
+the reason not to include it again in the contrib/ repository of git 
+upstream? If Patrick is not interested in reverting this change, would I 
+be welcome in sending a patch to do so?
+
+
+I feel like I am making git developers relive the "workflow" xkcd comic 
+(  https://xkcd.com/1172/ ). But I have the impression that 'git 
+worktree' really has an interface limitation in the way 'checkout' is 
+restricted; I would be happy to migrate to it if there was a way to 
+disable this limitation. My use-case is to have several working 
+directories for a single shared instance of a git directory, in such a 
+way that I can work in each working directory independently of the 
+others. In contrast 'worktree' puts limits/constraints, for a given 
+workdir, depending on the state of the *other* workdirs, which would 
+force me to have a global map in mind of the state of each workdir.
+
+
+From: Patrick Steinhardt <ps@pks.im>
+> The "git-new-workdir" command has been introduced to make it possible to
+> have a separate working directory in a different place. The command thus
+> predates git-worktree(1), which is what people use nowadays to create
+> any such working directory. As such, the script doesn't really have much
+> of a reason to exist nowadays anymore.
+>
+> It also doesn't seem like the script is still in use: the last time it
+> has received an update was in e32afab7b03 (git-new-workdir: don't fail
+> if the target directory is empty, 2014-11-26), more than a decade ago.
+> Remove it as well as the tests that depend on it.
+
