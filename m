@@ -1,144 +1,195 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF6C7494
-	for <git@vger.kernel.org>; Fri, 12 Sep 2025 20:54:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5720C41C63
+	for <git@vger.kernel.org>; Fri, 12 Sep 2025 21:04:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757710481; cv=none; b=EvoRM+4ipmlNKuC2ZpTRMrXB/8zAL4JCjly7mKLQDETau7U/otjWmEjXa/A/eiCW6JpYkgv5X9kojcAdgdBtb9qvevmnRqeaLkSddyn5DPuOFsnkPCqyBoN2k3x3Pht1k3hSrnqO/SP/4TgSqGi/u3+A9Ft8X3UJ93p0puB34x8=
+	t=1757711066; cv=none; b=HG1N3V48oBhZ1eBGpp7guR1h/NuopkRmC2cxFuq9Gqettkq6EE796sWHeFFY67GGRmj3vpJmbzEVM27gMQgoDk4H2DNLX+cYktKvk3mpWsAZVFprYpqRadCk+Zd1v96pJkOE14YwLup7m/8tVDJZ79paTeXku4rO5m1YAT4Or1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757710481; c=relaxed/simple;
-	bh=cZSNRkvhglTMo7ymg0Rekdwtlu/vLCmKxSO62thhJ0I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JCqiqJk/hq3FTPSJp+YoMvY++aA4XGwRrEn3JoX8FGOS73dRVhQDtojTE46h8eAgq2DKeEDyBNSxMSJVhIRYAdZLZos0AX5ICjz4znugSh4OtA3P1moJGDztsp3QO5ctNk8jPb7JsOtD/r/ep8FxiEW0kPhEmn7Z+GlgEqpP5gY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hTqnU3AF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bywsDp7K; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757711066; c=relaxed/simple;
+	bh=XzU8ZWgutTeRWkGJOCobb55hjrkSa+DnT/SLI0ej44E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HBmnjYMpad8cRCIrT9o8WZJc1Y+waYylIU+9LnJ+Zovo+FWqtfD6itm93QkyGPOEQe7T78W11MLxbZ3GEPDJ6Z/bb6KKryNL0WnY3D9RoPTGMIwg2icI1ywjpReZ6pq06cGg80a56hbP6DVsdVBLiGKGo/Ww1Th472USU8PiMGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=C0bhf4/G; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hTqnU3AF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bywsDp7K"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id ED51E14001A9;
-	Fri, 12 Sep 2025 16:54:38 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 12 Sep 2025 16:54:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757710478; x=1757796878; bh=1qOyXzvy/v
-	fnec2/D3uwzRXhS1KV4EFHTkXvdajhg7I=; b=hTqnU3AFESM0tlorXHCMnXHa6R
-	P2iekIT7z8ve+I1Gn8E4PES+U/EvIfEfFhHPfz7d+Q71f6EipPrpF68OwN0wRaPa
-	ob9Tuq6vWpKqRIHJOf3YWcJ8Z0vzVFUGlIhgu2MaD2dNDWc8WrBYEtp9qFzAXjt1
-	8J+M/FmSxCC6o9aGEZDJn+jkGPgZeV3xzvnQ1uhjTA9IAkh0mrZd3+dbv8r+VxFz
-	2kQ6Wda7jSUj8r1Z/1fT3MDxCMxPS+lQgVspaYIjjGI+1pZN41bsjYfhCu+DD6fA
-	tLZZfiAvTnIXP4mzpt7S0vWmFXGr25AsmEwumQuwONpougfw1l1TOGd35Q9Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757710478; x=1757796878; bh=1qOyXzvy/vfnec2/D3uwzRXhS1KV4EFHTkX
-	vdajhg7I=; b=bywsDp7KobKi1nKALxkRGl+ufPElpP/bcoZ2kFXrdS5H1B0BVRT
-	fbboYdB7bOig6Ze5LXSp7fV8DVerLWFkZVOSxRlQxUHdDzuV80OJ9+N3iyCBGDXt
-	0z1MuH/yOEL7PxqPG+U7DcMhSzJbl2Vc1XWzAVWZEKw9EX7qTz/gtY8ex3o6yv3y
-	r0pTxLqSVV/zRVYvIPIlTQCbZcjeJP1NxAZJto74+f+Oqr4zaraY+8rMJrkckJQn
-	8F94b9Bwpmh1kCROyhD3PhNIxipk3NcSNeIh5uwpoJHXjiM92zJCCYXE90eyJzua
-	3YlJDY8mjLInhksvJhNniX6FsQ5ZUW1SQdQ==
-X-ME-Sender: <xms:jojEaO7LcKJSnZb2C8tsGL1jkOxAk5qSo_lNIe0M81EBy1JkJySRxQ>
-    <xme:jojEaAUDai03ye5t9r9y8aqdFGYZlmLF7vUkqxK0Acm4wtzcwGVR7RS7oPZCzFjn8
-    7AfkQe-lm2Q8nkigg>
-X-ME-Received: <xmr:jojEaN42Y5fmDNcSbnrDCOmZF6ECXJpf3EDKK7bHkNP-DeVQ1QwjX0cf1P4njwct81WNWbU0ejZD85ARka6BBt1u2VgOZ-aiAAhpW2Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeftddtiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    sggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofh
-    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepjhhu
-    lhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:jojEaLqfpxcvgvIVCGfqCv8Naq50k29ldYrOLrgJ3mq1cfNgmdVTgw>
-    <xmx:jojEaAk9iMb3BDwEikkhsqE_JABhmxNhuNDSLoCEVzZnmFauSktDsg>
-    <xmx:jojEaHOJLA-K-rtZuTPXyflU-Ikg8Dz7obb-GwQgF2Q6qdx3fn4TkQ>
-    <xmx:jojEaEPcRejWIEMckNSwsfMFP1i9nvaqg3Nw8fxXUEZNYsMJ9AO_Fw>
-    <xmx:jojEaHd2JyliYs65c8q-Ca3aUfTYVDPP8b-Am2wKWceNEoxLbLnOvIG6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Sep 2025 16:54:38 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,
-  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Julia Evans
- <julia@jvns.ca>
-Subject: Re: [PATCH v2 1/4] doc: git-push: clarify intro
-In-Reply-To: <270edd2b00e63ef396ae69a9a7e9113a54f0df82.1757703309.git.gitgitgadget@gmail.com>
-	(Julia Evans via GitGitGadget's message of "Fri, 12 Sep 2025 18:55:06
-	+0000")
-References: <pull.1964.git.1756240823.gitgitgadget@gmail.com>
-	<pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
-	<270edd2b00e63ef396ae69a9a7e9113a54f0df82.1757703309.git.gitgitgadget@gmail.com>
-Date: Fri, 12 Sep 2025 13:54:37 -0700
-Message-ID: <xmqqjz23l7ci.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="C0bhf4/G"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1757711056;
+	bh=XzU8ZWgutTeRWkGJOCobb55hjrkSa+DnT/SLI0ej44E=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=C0bhf4/GvExVuKqE331MXE86s3r97FT4xasLDJMiTXVHzvGpJ75wJTRuAVfHfR5j6
+	 pbbCWIUUie20HU4i2J1s7dGS9OtmufzQXMl4J8gz3EeHSeEBoiA++mQyVyv9XXPqqk
+	 3nFNF7I+IPeMhbSiIFnCwgS8Y7wy3jKvzNFWQWB4sbvD5pYeQi7Z3un2Bp0YmJ39lt
+	 CvoyvuTeOQ7otvkMu+xwi9H4kAK+im2t9fElWETpSaWilHLjsmJXA2j1X770JftwsO
+	 MSqnfpNCuKAf+L6qMxqO8MJcIWXfOZU8BuGYqPWbD7ogWuThcCvlm/nqe4z2u00IGO
+	 qpFzUcE6D3+jgSniL+ASIPKar1rdaO3lWa/kBNWfjQQa+iKyQLcytvu84EB8i3tHID
+	 8KJ5xDy4vSDePzbXxsA0Fakq4N5h6a45a2IaAFU9eLwWMJmZlB0B5hBf8LPYXcFvaS
+	 hHfET7sDRGUU0abLc1s+BKBVwCgpqWsVIvhP6PQhTsV+jSyBcRE
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:15f2:efe9:8d23:8468])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0853520105;
+	Fri, 12 Sep 2025 21:04:16 +0000 (UTC)
+Date: Fri, 12 Sep 2025 21:04:14 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Emily Shaffer <nasamuffin@google.com>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: What kind of help is needed for SHA-256 work in the next ~year?
+Message-ID: <aMSKztysdyCKK50X@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Emily Shaffer <nasamuffin@google.com>,
+	Git List <git@vger.kernel.org>
+References: <CAJoAoZm+yeF7KUbVBqUh0zc58b1jXVPEtWimrUutX_5ifixxgw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="RF0GnXKeqgbhAnTm"
+Content-Disposition: inline
+In-Reply-To: <CAJoAoZm+yeF7KUbVBqUh0zc58b1jXVPEtWimrUutX_5ifixxgw@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Julia Evans <julia@jvns.ca>
->
-> From user feedback, 5 users are unsure what "ref" and/or "objects" means
-> in this context. 3 users said they don't know what "complete the refs"
-> means.
+--RF0GnXKeqgbhAnTm
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Well, "this concept I do not understand" from many users is not
-necessarily mean that the concept does not have to be taught.
+On 2025-09-12 at 17:59:06, Emily Shaffer wrote:
+> brian has been working on the SHA-256 implementation and now on the
+> interop, pretty much solo, for quite some time. I realize that it's a
+> bit late in the party to ask, but as we're talking about switching the
+> default for new repositories in Git 3.0, I think it is past time for
+> the rest of the project to pitch in if we can.
 
-> -Updates remote refs using local refs, while sending objects
-> -necessary to complete the given refs.
->
-> +Updates one or more branches, tags, or other references in a remote
-> +repository from your local repository.
+I do very much appreciate you asking this.
 
-This is a very good rewrite of the first half of the sentence.
-Complete loss of the latter is a bit disturbing.
+> What kind of help would be useful to you at this point, brian? How
+> much of the work is planned and ready for you to delegate to someone
+> else (and what's the timeline like, if you have one)? Do you need help
+> with testing any parts of the existing code in scaled scenarios? My
+> understanding is that you have a roadmap to guide your own work, but
+> if it's not shareable, is that something you could use some program
+> management help with? Anything like that?
 
-    Send data that records commits, directories, and files
-    (collectively called "objects"), and update branches, tags and
-    other references at the remote repository, to make newer part of
-    the history available there.
+I have about 93 patches in my `sha256-interop` branch right now, which
+is based off v4 of Patrick's Rust series.  Much of the functionality
+works: the legacy loose object maps (which I'm replacing with the new
+binary format), pack index v3, full clones and pushes, and some shallow
+functionality.
 
-or something?
+A lot of what I need help with is getting these patches production ready
+and sent to the list.  (Some of them are clearly marked as WIP with a
+comment why.)  For instance, pack index v3 works just fine, but we need
+more tests for it.  I haven't done any sort of scale testing yet,
+either, so if that's something we want, then help with that would be
+great.
 
-> @@ -44,6 +40,9 @@ corresponding upstream branch, but as a safety measure, the push is
->  aborted if the upstream branch does not have the same name as the
->  local one.
->  
-> +You can make interesting things happen to a repository
-> +every time you push into it, by setting up 'hooks' there.  See
-> +documentation for linkgit:git-receive-pack[1].
->  
->  OPTIONS[[OPTIONS]]
->  ------------------
+Similarly, even when the binary loose object maps work, we'll still need
+to prune old objects from them and compact the maps as part of `git gc`,
+which would be something I'd appreciate help with.
 
-Moving the description of the secondary effect down like this is a
-welcome change.
+I do have permission to work on this as part of my job (starting in
+about October), but we want to release in a year and I'm expecting at
+least 200 (if not 300 or more) total patches for this project.  What I
+don't want to do is try to shovel several 50-patch series in at the last
+minute, which would be unkind to reviewers and not produce the best
+quality code, so trying to get the existing patches cleaned up and in
+relatively soon would help us make more progress at a more leisurely
+pace.  I also still do have other duties at work as well (after all, my
+team is responsible for serving your Git traffic, which I think we'd all
+like to continue), so assistance would be super helpful.
 
-The original had two blank lines to separate the previous section
-and the subsequent OPTIONS section, but now we have only one.  It
-would not make a difference in the rendered output, but having a
-blank lines between paragraphs and two blank lines between sections,
-if done consistently, would help reading the documentation in the
-source form.
+There are also a giant heap of broken tests when run in compatibility
+mode.  Some of those tests are broken because, say, we lack support for
+partial clone, and we'll fix those by implementing partial clone. But
+there are lots of tests that are broken for boring reasons, such as the
+fact that in compatibility mode we can't accept broken objects (because
+they can't be mapped into the other algorithm), and those need to be
+marked or fixed accordingly.  Getting those marked or fixed would be a
+super helpful contribution (I even have a test prerequisite for this
+purpose), as would fixing other routine test failures.
 
-Thanks.
+I have some tests for fetching and pushing in interoperability mode
+which will run even when the entire testsuite is run in single-hash
+mode, but I think we're also going to want more tests: HTTP, the Git
+protocol, protocols v0 and v2, single-hash servers and dual-hash clients
+and the reverse, unsupported cases[0], and so on.  That would also be very
+helpful since it will help us make sure our changes are very robust.
+
+We'll also need to implement partial clone and submodule support.
+Submodules are especially tricky because to look up the object mapping,
+we also need the submodule to be in interoperability mode.  And, because
+people are absolutely going to want this kind of thing, we ideally need
+some script or command to convert repositories from a single-hash (say,
+SHA-1) to dual-hash (interoperability) mode taking into account
+submodules (which must be done _before_ the main repo) and all the other
+edge cases, whether that's in place[1] or to a separate (bare or non-bare)
+repository[2].  Someone picking that work up would be greatly appreciated.
+
+And there's still more beyond that as well.  Some of this I can pick up,
+but assistance would of course be appreciated.
+
+I'm going to spend the next week kind of tying up some loose ends in my
+current work and getting things in my branch in a state where someone
+could pick some of this work up.  I'll also write up a complete list of
+what still needs to be done in case folks would like to help out and
+send it to the list in reply to this thread.
+
+As for project management, I would be fine with simply using
+GitHub/GitLab/Forgejo issues/projects in an otherwise empty repository
+for tracking who's working on what if that's acceptable to others.  I do
+feel some sort of tracking like this would be useful if we have multiple
+contributors, since it will help avoid accidentally working on the same
+thing as someone else, but I'm not super picky as to what it is.
+
+> I can't guarantee that Google will be able to jump on and help right
+> away, but at least understanding what needs doing is a good start for
+> me to be able to ask around - especially if we're looking ahead to
+> 2026, that gives me more room to try and get help. I thought to ask on
+> the list instead of mailing brian directly because I assume that's the
+> case for the other corporate contributors to the project, too ;)
+
+I appreciate the offer.  I think with our desired timeframe, there's
+definitely enough work for two or three, and possibly more, people.  I
+would be very grateful for any assistance that can be provided here.
+
+[0] For instance, we cannot do a shallow or partial clone to a dual-hash
+client unless the server supports mapping using both algorithms, since
+those types of clone have incomplete history and therefore the client
+cannot perform all of the conversion themselves.  We will want to
+provide a nice error message to the user and some documentation for this
+case.
+[1] In place is ideal, since that could also be useful for forges who
+want to do this conversion, but any command is better than no command.
+[2] I think a shell command would be fine for this, although Dscho and
+the other Windows folks may not love the performance.  This might also
+be an exciting opportunity to write some Rust if the authors prefer that
+approach.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--RF0GnXKeqgbhAnTm
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaMSKzgAKCRB8DEliiIei
+gWxZAQD/hgL9KhlKzSmuwBGnaoTee95LNV72sOaxb8XYg3PnyQEAtbz4AlodfalA
+KsOXYjp6J0pMykJlYlMANE11yZSB2AE=
+=mk5i
+-----END PGP SIGNATURE-----
+
+--RF0GnXKeqgbhAnTm--
