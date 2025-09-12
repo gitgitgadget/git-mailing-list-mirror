@@ -1,97 +1,99 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51D332145E
-	for <git@vger.kernel.org>; Fri, 12 Sep 2025 16:52:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E04258ED9
+	for <git@vger.kernel.org>; Fri, 12 Sep 2025 17:11:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757695953; cv=none; b=BqBc72axp66Tk/33ilGWBGOEa4nrqI7tTu0pfe1Glp7xkcRlsXNhAYaOAZ9/wZVYDXJ3LQWPyw76++mwu9e0YBrZDZiI5m4FD+PsTQ6Qmp27UQOq4n41twTMCO9hNQMnhxt0OFTdLcNsRB/z+SjSxWvJmulPbPN/GO5cyK7qlo0=
+	t=1757697087; cv=none; b=CNbHAUET6zGhINiZxi6Ao3PPiGNL1iq63swLrUvAaj8cYBmy5g7Qs2ZeSoYV2lmWx9XIWDNfdZdILi+u2tNwtwsXFwjSEFku6bi3uTFpLw+Pt9HS9k5gaCyqxc0z06PKgPkB7KuvHFawoZ7jDApcrsg8Z0zVRCJjFzAj00Mjygk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757695953; c=relaxed/simple;
-	bh=50vOBM9Vp5/nJnpUZajBoDLBx70/fouiWJuDYV3Yp1o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=thyf9WT2MOFNShNlShUt4qR4jtYwnRGODLuFKeoxclG4+coHDNktzioOrGFBLF72oW3AfuFFY/5/nVy5QycJvZ/XEQVFOnZbiBmV/jaCMHnvEFrGvXUd8yr7UchpQTHV+Nn5HtNZ+h6Us8LicJJY/HFXPnCNJLob2fcepDONdLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VY3DisDi; arc=none smtp.client-ip=209.85.219.175
+	s=arc-20240116; t=1757697087; c=relaxed/simple;
+	bh=qsqeClzFJHS3LIirdQRd1C0T39rWenUQG0rmCOM9Z+I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E9AWuLMvcN83OzxeOnGSglKsqOcLOJSXzSCekorn1p8seXSAn1MdedhWKQL0lLN+EA7/4g87XfEzPYb02O16IZuXWp4ru5fE+SMTkyOiHUNeoVvF46IG/YLbLB4HoROPyeCmTyIfdTNNMBwD/AlOOrKwlN9DHl1uAupc59OQc+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZObwkrve; arc=none smtp.client-ip=209.85.210.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VY3DisDi"
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e96e1c82b01so1290718276.1
-        for <git@vger.kernel.org>; Fri, 12 Sep 2025 09:52:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZObwkrve"
+Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-750e52fb2deso1802871a34.1
+        for <git@vger.kernel.org>; Fri, 12 Sep 2025 10:11:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757695951; x=1758300751; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=50vOBM9Vp5/nJnpUZajBoDLBx70/fouiWJuDYV3Yp1o=;
-        b=VY3DisDi1W8kyXDSnip0PPtw2tqAjsB9AlhipG8/jW6CBA9gbCB+ZjCX25dClgxOhv
-         ul1tU26r0rrWTAWoc6vcffTx/UpJJnu9R+dJwHygk2zRbXi99/OLYGg8BD0loWVJTvmd
-         KthO42pE9g+Ozg3Ec2dWV2CMxpAva3Hz9n7e/Hffm4/EH7D3u2ABTVOOMsGEr6pQXOMn
-         GNxns8BDCOd39CC2EBYNUqQZT//g6Sv41jwMzbtoJRz4fCZFCuOgp3m2cYrWEVvfzG8F
-         VeNImT4zYY2PexComG4rB761tUEM5Z1Y2QZsw4FiM8MmgIdIAk4/RBD6NOh/iO/ms58l
-         O0YA==
+        d=gmail.com; s=20230601; t=1757697085; x=1758301885; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=P6CvHl7bP+7TJYaK/m4y6DjrKT+S8k7jgPBr8YIMKr4=;
+        b=ZObwkrveu7tCeKJamneLJQ+Mep1blT+HYQ7vxZlunnyx4paNH6h+/dQTRjvU/r9nY6
+         B/8DlluYonfHzQA4w+DwzbUh3t9N8GQNKHQUM1A6a73pE10qPiJQ8rt1cMZV9UyKY9AQ
+         UMNT0A/6p25A6IY+ymIGcFMDJMvED9qnXTGE+pewFzfsHgpCTaFvDtSbd4m6RPlyrKEW
+         sHKVaziTjYtcj2jhx/nFEvMjPKxWBfF5/1zFi6ugwVra8uvhiEXLz/HNiFKWcgLMgZAi
+         d+sGQ0HLv1VlFic1liuUAqTCkRI6JshuukKznzjClWC8oTgz/N5V6Ttq01GKHqqYTA7e
+         tfNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757695951; x=1758300751;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=50vOBM9Vp5/nJnpUZajBoDLBx70/fouiWJuDYV3Yp1o=;
-        b=I9xPm2OJSMyYNIjFzuzm0skR0A5dGFzoRZRq5dzei4LNNMyHW389/YCAzLCVDJiFbi
-         4mW/DOofy8jx03/kfWlQOUYQ0XWfgjfrwD+lBI5na8oqPfg3bhc1OcH2A4wu8D9+9jvS
-         NhzgTXprCHGT0UPYMC9F+u3i0cbvRsJhodlhOS6wCDMqPrSpVfJBf6Bf3xkUXtgu305c
-         8RplOaUIHkDg6OxoXJOYueHQetL3LMuSqJmMqXEJn5glV6kNHNGpCiiwgjyfVyFESqJc
-         xj1om0aeSXFgk45X5jeVTs8DJLm5SsCInkz2Si4E78gIsyE3GiLvHjYYNcTa29R1V7qW
-         HiYA==
-X-Gm-Message-State: AOJu0Yz3lQQ010riJbvJq2JrrIfkIGlDvvMpmv3IOz29kFS3lIqcAOc0
-	/bUxhcbmWrrDLZn3kXwjMMZxbRUEcojpRkGHQjDdxrwp68F8fX0F2NM4wWx//BWNXB+AnnYQ6M6
-	rnlFhmNCQLSYMZkTrW14Kjvny9a5vlylulA3v
-X-Gm-Gg: ASbGncsiLtBcouLRdpgf9/ab/2DLWK0SeLneDU8vgh67DAiUp4dV/Zfihzr+eyGaU3j
-	doBq9dlbf7m2Vt7MaUa0zWJt9Fzc0MFyZwICsJAm7viz04OiJH2v8X9v70cvHURvdgLol+P7yGM
-	pH8XHwZi3UreLTvPUrpdIIlUJpA5pb409HLDjX00JPSdM4HNTjjJYtPlU1HpkgyGzPq+UYHLVOj
-	5kPW7Zj
-X-Google-Smtp-Source: AGHT+IGe8VOqGcrEabRn598lpsXVic8TVmmkjrXN2w5xsoGYj80pa+MfrR0sDF4FTe2dGwXhcDRsp1xz/Ahjrqlkj4I=
-X-Received: by 2002:a05:690c:4d49:b0:71c:1673:7bcb with SMTP id
- 00721157ae682-73064434cfemr38578447b3.27.1757695950505; Fri, 12 Sep 2025
- 09:52:30 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1757697085; x=1758301885;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=P6CvHl7bP+7TJYaK/m4y6DjrKT+S8k7jgPBr8YIMKr4=;
+        b=u+QJN6AZiUzarwSC/wc3BOQJzK5MHoyC0++bF5MMtW+vDIHBVHx8TmXXsAVa7cl0hJ
+         kq4DSBICVCR/3xI3lSRJ6V7nNQPcm2uZxPIn+v/JMD6idqH04B2jEoHvl+CzM9vYN0p4
+         modKCoDOkjUuH968TdDzr8yWpuqRW1e3Rexl7QQGC8APZuqO7qN4iGBEk+xzqxMgHhIQ
+         Ebc41xR7GnyDGiqkcZtpnZECH7wLQ2ECY9XKo4BjxU4y4P2EbYueeJkXxKVdBjQGN2r5
+         /BPlV2cBpmGaKpiU7QQwhRilG2S7pYEmCPlWY2NBMg2HG6KhsXNrq41ONp3LEVTSGJud
+         Tr9w==
+X-Gm-Message-State: AOJu0YyaSLQtmo2RgRudneVI6r9dHhF1+EyDTb+sxgFcMDrK3ZE8TWym
+	dmy/xGx0Ae6A8MrPgU2qN6PLoVqrEY9U0Sz8W8HUl4aFXGG5gFCcaTs9N2ph5Q==
+X-Gm-Gg: ASbGncutny4lCpxn+txMu4AcJkdr+d6ydaf6I/EgzwE7PTfy29lDRohwBURdxQh6dh6
+	xWELRX9ydKNfNEyZ0AvZp/R8E11B14+oyOx4eM3vG5+SvqGtb8h8oh8JaF50ktDXuKdKWhChOsI
+	B0l/NHtDxj/D7saKvGwwcSh49hpCSMcvG9cGw3GEYumESfJ8pSa42LWF1gXvUBflY668LKATA+S
+	+XDtRLpFQHYw3CC+jA5mpmC2Atf+uvSElvFWaQ3JnBhGE3hA5P+ADKtq3g4SXgQj4UmjwIYNpPJ
+	vwitEYTxtHoy3UsYLeBqPkEW12afGE004UqM5PzgNKB/M2h6vZ8jC/DEcz32WdzSvf9swYpA22F
+	i2CcS3grP/6StxBxCB58ygxizybY=
+X-Google-Smtp-Source: AGHT+IEeiKnumie7V0UQwJbGuqfaF7f4+ljhg/oK7V5nwecJLPUZ86yjNvNs/5wKavC5LiZO7ixuLg==
+X-Received: by 2002:a05:6830:310b:b0:745:9564:bf0c with SMTP id 46e09a7af769-7535481d512mr1964796a34.18.1757697084893;
+        Fri, 12 Sep 2025 10:11:24 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-621b7d220absm530600eaf.16.2025.09.12.10.11.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Sep 2025 10:11:24 -0700 (PDT)
+Date: Fri, 12 Sep 2025 12:11:23 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] bundle-uri: ignore bundles without uri
+Message-ID: <5hm6qdyn5ifs2kr33nwuc67qa3vdgis6w26rlvicrdzznzazzt@uytayxq5r25n>
+References: <20250912-b4-toon-bundle-uri-no-uri-v1-0-f4525a406df8@iotcl.com>
+ <20250912-b4-toon-bundle-uri-no-uri-v1-1-f4525a406df8@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAJKmQvf-sLxowLJLitvqDmyL1BXXDK+anDE2jaBSEabApMNVoQ@mail.gmail.com>
- <071101dc23f5$fbf06e30$f3d14a90$@nexbridge.com>
-In-Reply-To: <071101dc23f5$fbf06e30$f3d14a90$@nexbridge.com>
-From: usharerose <ushareroses@gmail.com>
-Date: Sat, 13 Sep 2025 00:52:18 +0800
-X-Gm-Features: AS18NWBr8HETzSEFG-xKIFETgkPorkZ5zW1jPVPIOmqBCvtQhTtxiMNMd6QM_vw
-Message-ID: <CAJKmQvcqLzJDnpYg5K7_eUNCUdLCkkFse-wB+4R8KGxKo_e+0w@mail.gmail.com>
-Subject: Re: [DISCUSS] validation on git config user.email
-To: rsbecker@nexbridge.com
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250912-b4-toon-bundle-uri-no-uri-v1-1-f4525a406df8@iotcl.com>
 
-On Fri, Sep 12, 2025 at 11:00=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
-> Some customers integrate single sign-on (SSO) via the user.email value. I=
-n the case
-> of one customer I helped, the value is an SSO token used by GitHub for th=
-eir
-> integration. The token value does not conform to any valid email address =
-format.
-> Adding an email validation will lock them out of using git.
+On 25/09/12 06:46PM, Toon Claes wrote:
+> Bundle-URI can use the heuristic 'creationToken'. With this heuristic
+> each bundle should specify a 'creationToken' next to the 'uri'
+> attribute. But this allows misconfiguration where only a 'creationToken'
+> and no 'uri' is specified for a bundle . Because Git expects each bundle
+> to have a 'uri', this causes a segmentation fault.
+> 
+> Harden Git against bundles with missing 'uri' and skip bundles which
+> miss this attribute.
 
-Thanks for your reply, Randall.
+Ultimately, the remote Git server is the source of truth and bundle-uri
+serves as a supplementary mechanism to retrieve objects. In cases where
+there are errors related to retrieving objects from the specified
+bundle-uri, it certainly makes sense for Git to warn/ignore these issues
+and continue on as if there was no bundle-uri.
 
-I've fully understood the scenario you described. My follow-up
-question is: was this use case something that was discovered and
-utilized later because people found that Git doesn't validate the
-email format, or was it a scenario that the architects anticipated
-early on in the project's history, leading to the deliberate decision
-to skip the validation for flexibility?
+I'm not sure though if this should extend to client-side
+misconfiguration. We don't want to segfault, but maybe we should return
+an error indicating the misconfiguration instead of just papering over
+it? At the very least, it would probably make sense to provide some sort
+of warning that the bundle-uri was misconfigured and not used.
 
-In other words, is this more of a case of "exploiting a perceived
-backdoor that later became justified" or "a thoughtfully made design
-decision from the beginning"?
-
-Thanks again for sharing your insight.
+-Justin
