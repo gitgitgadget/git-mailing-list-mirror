@@ -1,69 +1,69 @@
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6868D3375AB
-	for <git@vger.kernel.org>; Fri, 12 Sep 2025 18:55:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2183376A6
+	for <git@vger.kernel.org>; Fri, 12 Sep 2025 18:55:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757703318; cv=none; b=Z5tmXy6zYSsV9dYvawQVAhXlqqB19gE9AmqU2N++Xw5GjkQEHOa8+c19QqObVE+NDaiWgYG+fo+TIcQJ9bR0UemkQxxF+my4TtCP2pKAxf7qMGnQymhYFS7dsNPdd8X7EOJuSV7CzBrAJnbJgVQDoQfhWp6R8+vS7b50CeAJwEA=
+	t=1757703321; cv=none; b=Jt1hGQMhy4bFynPlR99wRjVt7doA272d1UUCmdKHyXN4Ah9i24wCsYhR7XZcoHpD4hBIKhM6subvmWwPd4XtYuKXB7cNROW+FoU2UMTot1lGVtPaFgcIZyWP253CltSYECK4ap7/VnkFpUNSpRM+FtHisvBymNgCWc1xHb5RNxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757703318; c=relaxed/simple;
-	bh=RXDPxHDR56ca2VWW487GSeTNwUInKw4VDvPq2J6slvI=;
+	s=arc-20240116; t=1757703321; c=relaxed/simple;
+	bh=THsjd64h3D+Uhz4r2qlj07fKKh7ECYRUEBPodGh+QR0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=S6B4LgK/Nh3/rlRPRB86UJjRYl6HMUUpFaRKernU8/LF8lbTlhiAs0lL/GVrs6c1dINMr3SEnWqYX+6ERUoZTzz3QgL03sDwswNR5GUYorPIKEBlY5Ou+i9pnxzhhY+9e3pb0d5fXRdeA4zIaC8I5/X78ix+76oZMay5BKGb+RQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cEoThEcl; arc=none smtp.client-ip=209.85.166.172
+	 MIME-Version:To:Cc; b=pRAudZQ/kNygyWLmJnUnTfoLnOf6c4ByoiyUL3saNvHDhaJWvEi/Vs3heJU68gZ9EMS2JyS9gQ5gLvQAeW/E4tlAlPuzsRix/TyIZa5GYCALEDaHWGA39qUKGJMN5qIuBpMzvERZkYgeHX01F1NxFStkSkYdVDLJ/xuwcbUMcok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y6AZri9E; arc=none smtp.client-ip=209.85.166.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cEoThEcl"
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-406630d3b17so24758195ab.0
-        for <git@vger.kernel.org>; Fri, 12 Sep 2025 11:55:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y6AZri9E"
+Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-88f49be4c21so59840839f.1
+        for <git@vger.kernel.org>; Fri, 12 Sep 2025 11:55:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757703316; x=1758308116; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757703318; x=1758308118; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OTfxScHb/TxsA4mMzw3nu2MKKryR4TQMnnr14RRUPPQ=;
-        b=cEoThEcl3W0D3cWZvJa6adwfVbdIJSGwP9X5pFSZIvKq1KpA40F8WxsIANVXa/nFZZ
-         fP+AuhqlN+nIBsymWcN10DbocQqmN0+6gfNkpCItQrDWqbxp1mF1Lv4IZdFnZR+g8fWW
-         Af84eimNeEbYWAzjZVIYtVjED+xFqI8LmfBKbJwk9f5GeS9Jabc1OsztwW2XOHCkRGPW
-         yTdPHdH+AJ3dAW4pMFYOXROYTh4iQJYM9F+QojtUIGAglhbrDNgwYFCMTDTLkbUDOupv
-         WhFnUGdFJ2/5/7XBIjYddVyZ898NUh3mCOh6gDkN109eXRDLhE+D5vTcZYClY+LhXQkY
-         hkYg==
+        bh=FtGw5/sNH5Bpxufyyr3tvmRkwRO3TPdQzneqSpDkkQ4=;
+        b=Y6AZri9Ecic3YuEDq/9uiiPCcis/NFQmUzBTcJ4pgDThWKB6wZ02b6ktT/Z8TGq3Xf
+         hirh30WK+hIjbKI3ZbAp3+v0QqOT47tZsanbSnfHqHq/HN0es8oNXLEi5Rnv7TAElIlg
+         Q5Hkf7muS9K3igK0D9SsaUTg57ylIFpuheBJp7cBrOpLfn2wMWaNIKNHbqVpLgb3pQhB
+         oYUQOHzIldsVMRKxSDiO8+E4zVjD5T8nASoA5reY4YCdzU/Wngs4jCjNhdgrQOkB3XrQ
+         Iy/pg5QCb5h23wC1zNw80kUvNeXPiq6Ls3BTeaZ+XWHhGdfCITp25n6cGBoj6v8VoZj9
+         ssAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757703316; x=1758308116;
+        d=1e100.net; s=20230601; t=1757703318; x=1758308118;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OTfxScHb/TxsA4mMzw3nu2MKKryR4TQMnnr14RRUPPQ=;
-        b=xGOMMZ55GIOsAD+A5n411RE5Y1ev5vPRC8kaA3yfFdeN9K76SmHx1gUSZOg1q9Z++T
-         X7RFBrYc7Bxi77NvhlQIthJf2kEwwY5duUxTgleD41lsAcdCYsh0YC043UCvz0R1x7RP
-         6y0K3YELMGjx5YeSkoPfk9S9rysoteVZxWRawxxIFyo02U9thdXpr8nm8OAO8hbBA9e4
-         HwUZcy0Xi2wjb5oYVqJjageTMbkZFGt7XZIbmDNj5NFDuTf/z7Fq3IRlDzuamDOZeG7D
-         5FCZmecL/IlaHa+Y9CHmsCbBo04NFe6UDaaT3HZYgKA6FSvh0kgca021hOl4aJCojrst
-         /ehA==
-X-Gm-Message-State: AOJu0YwvSrCBrKE/ukIWNzS759oth3Na1ow3iZG6Ftt+kTMCxdYWgPEO
-	nt2e8fIsolLCB4C8TgbfoIWHUd1Yd/OHyIXOBaioAcyUe/0MTZNvdYNnvY7rNQ==
-X-Gm-Gg: ASbGncswVLCZyEwlWoaElOyUtO86f5OzaYdRneX437wOnLDuLyXJHmKRyxWrSPbl1mz
-	pb/VQ8r80TEbrZIIWsQlJl/GKov43NDiIY0AW+Dy04RXVzlDBMLiaN1iuQtTJzkX/wh+q7usFL5
-	busyM/xyQTV4BWApeGhP87FOHpH3Jmt6nVUBGYmiuQ2+5/eOK136mgXIM7Unrt5IrZjkQnBM+UB
-	F64dEWqTiiL4u63Z74waUmf91SffQMf7GK3h4k2Mh5JY6iPcurEMZOdY3/Uo1SitsXdKp8cAKb7
-	OX5g7ra+Rfg/zG/dC/5VxPywqYpmYyGMJvxmZJT0zPcdx3GHpXO1pqQ7MZhUiM7F9BZZgCgYHw3
-	Vd8ztqMlVS9y1MWk4q4cRKZsG/gIt1I8/HfSWEg==
-X-Google-Smtp-Source: AGHT+IEE8RZQZh7gju27LW8VLVnsQ7+SjAuBMLB/4Aa7DWqEgIHJ+/ALP3U89k+ge96FamtFCkhsfw==
-X-Received: by 2002:a05:6e02:19ce:b0:416:75eb:265e with SMTP id e9e14a558f8ab-420a4ee1eb0mr65146815ab.23.1757703316152;
-        Fri, 12 Sep 2025 11:55:16 -0700 (PDT)
+        bh=FtGw5/sNH5Bpxufyyr3tvmRkwRO3TPdQzneqSpDkkQ4=;
+        b=rDnfhoZw+Vxt7QqiisK35XbPM0K6PawivJEKQ1xelhfwa7MdNJn+jaBHT6ZoYK6/YC
+         9w0b4TliJinW1qmPFXipCC2JQo1r0iCAh/OnKPjd2HprRM1K3gn8R0pHgHhLCP0UW45P
+         I4U8muBzJkBOMW1j/4clynFkA3FO8x5L+5jbspagye47oY6hDxZVgJbCLQ8ucqJRR4qk
+         DfUv1sbOtmE8l49hqsf/LVd69D50bNOcHk9DXFa1uISv5mUwzg1aWqddm9l3mTVIXnAc
+         UScI70EB7b6v+qyRa8IqfY0qbhjJAVTurSmaYn0xxOYcnCmHfBPUGs7auyUQ34PUDHXn
+         wm6Q==
+X-Gm-Message-State: AOJu0YwCS8OYZObuKY7vwsnjlvW9pSMDLi4WCmpGOQPiULqG6b6hKpc+
+	oJq8BrZ0+8CCvGu/QXY7kJyyOD0FYI5NtL/2XwHIAa9zK++Vu0bI6e6Fiep76A==
+X-Gm-Gg: ASbGncu2Kg+hV84Xhy17g4K2x27EaWP4gcMrcT2shZ+bPF796jE2eKrJjDTtaM9707x
+	x3HGI/DaFUBaL/FBxRVlT60HqqU8EghfEPI1eHV+D9INKE7n5Py7tFzgJ8dQNIM1Qj/tFxJBXB6
+	ziKdpfiiWuC6uqby2oFZiSOdLQtbUyZnYyhpkTUQVMRrYpaCGMWwD44GidhJAl8FTSnZ9SMtdVz
+	dhhjH8EdAp8dA8fTmbG/5pDnellr8H1n83Q/A5PKSSKh4ZQkpkMEOSnnm1Vnj6WLJEt1OxiICjl
+	8XQEi4y2VdssdJhbUv62FXjIxyS9HJM6ezGWco06J1XZGdV1Ew1oW6Lr3sOujYiTysLyTuee/P0
+	q7uyBwc0V++7ljuENMnHNZnaOvAM=
+X-Google-Smtp-Source: AGHT+IH6HY8bJ6OS+1oRId3BhELyoXHEy6wCa5d0qsyaYc36ZdxPzFdGnlrlWCjqu0K4m7tkJUkmmw==
+X-Received: by 2002:a05:6602:496:b0:887:3efb:6101 with SMTP id ca18e2360f4ac-89032ddeb5cmr738589539f.7.1757703318183;
+        Fri, 12 Sep 2025 11:55:18 -0700 (PDT)
 Received: from [127.0.0.1] ([172.183.157.180])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-51202c9b8e3sm755987173.66.2025.09.12.11.55.14
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-88f2f0f96bfsm198581439f.18.2025.09.12.11.55.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Sep 2025 11:55:15 -0700 (PDT)
-Message-Id: <374740c678a62edd5cb5bace7517a36ce7ac00b5.1757703309.git.gitgitgadget@gmail.com>
+        Fri, 12 Sep 2025 11:55:17 -0700 (PDT)
+Message-Id: <59732f1e4783372d3d997f43b028269831719f63.1757703309.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
 References: <pull.1964.git.1756240823.gitgitgadget@gmail.com>
 	<pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 12 Sep 2025 18:55:08 +0000
-Subject: [PATCH v2 3/4] doc: git-push: clarify "where to push"
+Date: Fri, 12 Sep 2025 18:55:09 +0000
+Subject: [PATCH v2 4/4] doc: git-push: clarify "what to push"
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,34 +81,69 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
 
 From: Julia Evans <julia@jvns.ca>
 
-Be clearer about what we're describing ("which repository" instead of
-"what to push"), and start with a positive "try X, then Y, then Z"
-instead of a negative ("if X is not specified..").
+From user feedback: 6 users says they found the "what to push"
+paragraphs confusing, for many different reasons, including:
+
+* what does "..." in <refspec>... mean?
+* "consult XXX configuration" is hard to parse
+* it refers to the `git-config` man page even though the config
+  information for `git push` is included in this man page under
+  CONFIGURATION
+* the default ("push to a branch with the same name") is what they use
+  99% of the time, they would have expected it to appear earlier instead
+  of at the very end
+* not understanding what the term "upstream" means in Git
+  ("are branches tracked by some system besides their names?"")
+
+Address all of these by using a numbered "in order of precedence" list
+(similar to the previous commit), by giving a little bit of context
+around "upstream branch": it's something that you may have to set
+explicitly, and referring to the new UPSTREAM BRANCHES section.
+
+The default behaviour is still discussed pretty late but it should be
+easier to skim now to get to the relevant information.
 
 Signed-off-by: Julia Evans <julia@jvns.ca>
 ---
- Documentation/git-push.adoc | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/git-push.adoc | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
 diff --git a/Documentation/git-push.adoc b/Documentation/git-push.adoc
-index ec396b4cf2..909c69766c 100644
+index 909c69766c..2b2f753db4 100644
 --- a/Documentation/git-push.adoc
 +++ b/Documentation/git-push.adoc
-@@ -22,10 +22,10 @@ DESCRIPTION
- Updates one or more branches, tags, or other references in a remote
- repository from your local repository.
+@@ -27,18 +27,20 @@ argument (for example `git push dev`), then if that's not specified the
+ upstream configuration for the current branch, and then defaults
+ to `origin`.
  
--When the command line does not specify where to push with the
--`<repository>` argument, `branch.*.remote` configuration for the
--current branch is consulted to determine where to push.  If the
--configuration is missing, it defaults to 'origin'.
-+To decide which repository to push to, Git uses the `<repository>`
-+argument (for example `git push dev`), then if that's not specified the
-+upstream configuration for the current branch, and then defaults
-+to `origin`.
+-When the command line does not specify what to push with `<refspec>...`
+-arguments or `--all`, `--mirror`, `--tags` options, the command finds
+-the default `<refspec>` by consulting `remote.*.push` configuration,
+-and if it is not found, honors `push.default` configuration to decide
+-what to push (See linkgit:git-config[1] for the meaning of `push.default`).
+-
+-When neither the command-line nor the configuration specifies what to
+-push, the default behavior is used, which corresponds to the `simple`
+-value for `push.default`: the current branch is pushed to the
+-corresponding upstream branch, but as a safety measure, the push is
+-aborted if the upstream branch does not have the same name as the
+-local one.
++To decide which branches, tags, or other refs to push, Git uses
++(in order of precedence):
++
++1. The `<refspec>` argument(s) (for example `main` in `git push origin main`)
++   or the `--all`, `--mirror`, or `--tags` options
++2. The `remote.*.push` configuration for the repository being pushed to
++3. The `push.default` configuration. The default is `push.default=simple`,
++   which will push to a branch with the same name as the current branch.
++   See the CONFIGURATION section below for more on `push.default`.
++
++As a safety measure, `git push` may fail if you haven't set an upstream
++for the current branch, depending on what `push.default` is set to.
++See the UPSTREAM BRANCHES section below for more on how to set and
++use upstreams.
  
- When the command line does not specify what to push with `<refspec>...`
- arguments or `--all`, `--mirror`, `--tags` options, the command finds
+ You can make interesting things happen to a repository
+ every time you push into it, by setting up 'hooks' there.  See
 -- 
 gitgitgadget
-
