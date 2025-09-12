@@ -1,234 +1,117 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9E02AC17
-	for <git@vger.kernel.org>; Fri, 12 Sep 2025 15:45:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F522DF71D
+	for <git@vger.kernel.org>; Fri, 12 Sep 2025 16:12:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757691942; cv=none; b=o3cFYMJ4ofx82HtpXMpWZ7+W0g27n5FUW34s2udAx8uN+0xrsfrjKwh5qU07oVws58DPtOxYtfVJq6Fb0PQ8YNbVyvVaOSFdxsACbIJVZ1eXrTAfydldtcOeo1YnsBqE6dY2+MqGOeIKYnMDeLWUwQKGRj38BmpPzPGhzq/jU0A=
+	t=1757693580; cv=none; b=XkhPsgZPOyJidwKkuS4CopNNLUPM1d1InW3XYWETepTNBas4cplpbEQPtGvWr28Jk+XaWQspFN7MDlgqU533/kJYAWd6yCHJ5QTieXns6zKhWeKfZj3GqyEK1tWJ2cX1P5l3hZ3k+iVT+PSrWhobwIipsPJTGh99DUv2yhY1gRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757691942; c=relaxed/simple;
-	bh=X8hobMiivGD10p4lKtIbT3jYgrv+vunnDjhV1GtuLeM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kRxoU+/dcILe2nwgmTnFGOTkdGZ6fEoU6YdvWhHEFvz0DNdkApv5PZgfTYVn31BoecmXPyV4sLNmJx5Pn104X45/nkhQ1taSTzKnibILlM6QVYYw+1Rh/exYaVHRUYfqA9kRfCyfbHhxQLHTUgFeZ3dr7385GLViB5/ug4RBg8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DLATzlIj; arc=none smtp.client-ip=209.85.215.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757693580; c=relaxed/simple;
+	bh=QntCL539zi/vlMi8+2dIihU2MfRXZI/6jW6zC3kVvdk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=h0v8fxjzOLronleGDkb37O2V+dlnNfNHg8PWHQvCcAp+UPre9Z9n9OutGk4pSAxt+EoVEhsS5uENEoiKtU5WSWLP5DT0l7C3An1I23G2gcrdSkHHmvJEyczRodPStSjkuKLC1yjNk/h9S4NRCgq9CG/l3XKikMtRp4qQea3xHAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uuDfY6RO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nGudu+LR; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DLATzlIj"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-b523fb676efso1620567a12.3
-        for <git@vger.kernel.org>; Fri, 12 Sep 2025 08:45:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757691940; x=1758296740; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lIzDryCmUvZkhcdwR/HwSv/H9fp0uaRTiOze9c+Ne7Y=;
-        b=DLATzlIjDs0exJcF9qgJTIC4tIkk5i1MG//4A8u9DnELmWRh1Kn+uGFxOVXbFzNo0o
-         doQ9Kg0cC0td+TKuMK5kk2hDVKA5PSmo3cGMPvRdI+Ny493KUSuZi9tlvK61wMYdYhV3
-         zQgWn9RZonhdLb5oUmMabAgZ/GfXuzOiWQfwX+4xYxz5QIBqu4Uek0nKvUmVdbLAd8fK
-         vzjpfS44AHj+ClKydYJ6w2F3CGHEgf0kqp3QDaaovozy1jandejf8xcZcjwYyzadYnUV
-         O6HAAORL8UXi6VLB4Sy3T6O6COyG8qOJ/dksql9YtruzXukZLZKL+mBaXdMiDwR40Beo
-         tQog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757691940; x=1758296740;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lIzDryCmUvZkhcdwR/HwSv/H9fp0uaRTiOze9c+Ne7Y=;
-        b=RygIYHSUXQzo95XCtYUwfxa/G4jQ4PNU1678RNOwgmITkC9xFBNTtHqffBy8Ia9aoL
-         Thp/vcqI1pt0HyXsU4lv+8M90mvLcTyxOFykWE5/PAxXXOO4Uu3hkmu60Yej2ZX+Vx2Y
-         iTd9M4YkURjYw5cREySvgNDWxZmsofyjc5rl6T5pVe26R8xIzKBfMzEXOd70cYdvlltL
-         o7QwSlsw7IR4hqaCTj4EyYABWLWO+QQJ61dNR55Q6EJvaAgFzmtauSLVZTQDm4jtOKLJ
-         DmUuwBWmzSjyt1xbSopSForP7KF46UbBeMPBgrQeOxTt0jZmNeJbM8aXnAiHScivYfMn
-         hv8g==
-X-Gm-Message-State: AOJu0YzL24U3Qa6nGkup/V8NpbhfjPYfENTTll7o6iwcC5ms8Lv8BLyb
-	qtlEACoFp7N92aEtGUvF9ZAUKzfL2tJ3d85af05Xfhm6edEn6WzsR1RJ
-X-Gm-Gg: ASbGncv3coDAtm10W+ga7YCqBn5gH0i1ZqljJTAVj6jaPwELBKWqFsWX6qWTA2J8XYm
-	6dUjnvwVgtpbrHwe79MgLkcAQ9UoAIyeEfPcw5OeiiL1iUIb/z7P9fyfgY8m1FvBEuUZFsXul4P
-	ByKAAAEgin/uDTd3iJuCpNbzrT7hyWCVfmXGHt1X1fhuZGekU33j2du7ugsd1r/B5SlzZOnbhxr
-	sRs6yehYNIyojWva209jwt29hubRgABV2Uk4ToUG9bTI9jpMR11BnDLgDW54OexSih93o+HhmNf
-	/OWrqzLzmYHcDRcjGB1VHX8WL0rKnZc2G0edpKC6jOGAaWxDxPaSmUpx0YziOwqSUdm0o9iNUwa
-	kJLFZIg6ZXoap3Fo45EGyItjOgKBQbEY6VcXxrN6elc5JxpvUvvLNQEs1juFlflOdIfP4L8nteI
-	8fgjqoCNew
-X-Google-Smtp-Source: AGHT+IHpgEfalb3hVvyHemhM4wLifcMSo5QhPMBNtG6B9MAWwyO+sO26Z3HKBAOHbD39bMJp06DA9Q==
-X-Received: by 2002:a17:903:1b4c:b0:24c:b2a4:7089 with SMTP id d9443c01a7336-25d26077175mr44069745ad.31.1757691940328;
-        Fri, 12 Sep 2025 08:45:40 -0700 (PDT)
-Received: from localhost (20014C4D24C63F003E6BA6C1CC8ACD92.dsl.pool.telekom.hu. [2001:4c4d:24c6:3f00:3e6b:a6c1:cc8a:cd92])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-25d9c7e5b16sm22647365ad.87.2025.09.12.08.45.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Sep 2025 08:45:39 -0700 (PDT)
-Date: Fri, 12 Sep 2025 17:45:16 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Christian Brabandt <cb@256bit.org>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH RFC v4 0/9] Introduce Rust and announce that it will
- become mandatory
-Message-ID: <aMRADFAoh68aWkdD@szeder.dev>
-References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
- <20250910-b4-pks-rust-breaking-change-v4-0-4a63fc69278d@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uuDfY6RO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nGudu+LR"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 50A947A01D2;
+	Fri, 12 Sep 2025 12:12:57 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Fri, 12 Sep 2025 12:12:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757693577; x=1757779977; bh=lH/ts2OBSI
+	bXbGtY1P1iWO+Z3N77DWtTtbw2UYgp748=; b=uuDfY6ROjRM3yXIBrdqwNigvFB
+	v1AJAcVfzWnjQ6BHPlf5PmWOKv0ttFM17G0M6Z3zDvvxw/scMGcZAlLvsIJOvz8p
+	OAq9KdUnVPgB7ml0REzV8JJpQxyGalIb1DINmu500DIbpoasihoOE3Fgnvo3QHZG
+	4yT1rMUDXXUXEy9HJjr84fYA61DTE6s08T0DlzZD2gNR7tM2nSsVsWjxAGdcdKkQ
+	KnQ0Kxpb/3V0Gt6mLaLGFEfNwlsdZlrIz3P5IckZeLxdNXGUHmDmjjp2DtaZST6T
+	AIPf2zzqGvwydFhThTBRflZ8HN8q4ne/dp+nqiMVTqx2fBC1xv2i3qcxUdvA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757693577; x=1757779977; bh=lH/ts2OBSIbXbGtY1P1iWO+Z3N77DWtTtbw
+	2UYgp748=; b=nGudu+LRFfUDQIUU4Y/k4GAaPjDvpd0e4N8CJqfePKRYRtjuGM1
+	vOid5oTJacXr99facPha6fFd9CKSkWX6NjDuWG3Umqxd7ZK76nCfWPsbaTGAnGnJ
+	O7RpdxkIOYFbDQj8hayU0kmuI718A5F4hfJ61vn0E79kK6CKQYip98wHRUBDck7w
+	h5SlCxtf6hy0Wo15BwD3fpyovPe056cCWOjXjmd8XvJ+1fUgbAOUsztcazHQTeBR
+	Rh6ITwSGEV31BUn6UZzkHfg11Zr8cuxaNls0i4I3VZFE2cEwPoHYZ4+JaUiyeLLu
+	3u7/WmC7775kq/osy1cmKzIAmP+Rfp5IUMQ==
+X-ME-Sender: <xms:iEbEaP3nY9uU6S7N6HEP19Gt8PoAUwjJQPvoZ0nPWXmDvhWzhoZKYw>
+    <xme:iEbEaGhv9rcS6w6mAtOjus_dTgVDgZkJS3w0qQsT25Mlg9pAMbvhKvq1_InZWsZd3
+    2ak6YRJP1DH2ie2Lg>
+X-ME-Received: <xmr:iEbEaAVP0oN0C6smppSIwezfDruGc7GB6863OozGr_O0pWpqRAz1VhmiA3FACEE7lxhSFc6iFXLVF0HJ2OyRnD96LOx1AFe0ks2n_ss>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvleehtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprh
+    gtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:iEbEaFXym6g0pd4ZmWuQoxBiVWi80RoSmzLVaXa6DK1cs0AW4iJQ4A>
+    <xmx:iEbEaAirqpEKFkQPWJN1jG5R7MS2hNormm1WEZHdFwsmpLa8s2EfjQ>
+    <xmx:iEbEaAZ5vARPWfpaE1jHuR8ilJD3Z6Ep_-_g_xoJdCTutrK_0NZq7g>
+    <xmx:iEbEaNrvUB30whV4-JLSy6l816yyTn2PctC3Lan7ViPg85KaAB_hVQ>
+    <xmx:iUbEaDa5AIPyJDz95_Tl_LCh2cXuC2LPMhfvkdu5378ila3WHiq_VaJI>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 12 Sep 2025 12:12:56 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  newren@gmail.com,  Patrick Steinhardt <ps@pks.im>,
+  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v3 0/7] sparse-checkout: add 'clean' command
+In-Reply-To: <pull.1941.v3.git.1757673011.gitgitgadget@gmail.com> (Derrick
+	Stolee via GitGitGadget's message of "Fri, 12 Sep 2025 10:30:04
+	+0000")
+References: <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
+	<pull.1941.v3.git.1757673011.gitgitgadget@gmail.com>
+Date: Fri, 12 Sep 2025 09:12:55 -0700
+Message-ID: <xmqq348rodiw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250910-b4-pks-rust-breaking-change-v4-0-4a63fc69278d@pks.im>
+Content-Type: text/plain
 
-On Wed, Sep 10, 2025 at 05:35:46PM +0200, Patrick Steinhardt wrote:
-> Hi,
-> 
-> this small patch series introduces Rust into the core of Git. This patch
-> series is designed as a test balloon, similar to how we introduced test
-> balloons for C99 features in the past. The goal is threefold:
-> 
->   - Give us some time to experiment with Rust and introduce proper build
->     infrastructure.
-> 
->   - Give distributors time to ease into the new toolchain requirements.
->     Introducing Rust is impossible for some platforms and hard for
->     others.
-> 
->   - Announce that Git 3.0 will make Rust a mandatory part of our build
->     infrastructure.
-> 
-> The test balloon itself is quite uninteresting: I've chosen to convert
-> the "varint.c" subsystem, mostly because it is trivial and does not have
-> any dependencies. But it does allow us to verify that C to Rust interop
-> works as expected, and to play around with tooling. All tests pass with
-> the "varint.rs" implementation.
-> 
-> For now, the series only contains support for Meson. If we agree to go
-> down this route I'll also introduce support for Rust into our Makefiles
-> at a later point in time.
-> 
-> Furthermore missing is additional tooling:
-> 
->   - At least one CI job to verify that Rust builds and works as
->     expected.
-> 
->   - Tooling and CI jobs to ensure that we have consistent formatting via
->     `cargo format`.
-> 
-> And probably lots more. As said, the entire goal is for us to have an
-> easy playground that we can experiment on and develop the infrastructure
-> incrementally without yet having to commit to anything.
-> 
-> I'm mostly splitting out the topic of introducing Rust from the larger
-> series that introduce it into xdiff so that we can focus more on the
-> actual process of introducing Rust into Git and less on the potential
-> features that we want to build on top of it.
-> 
-> Changes in v2:
->   - Introduce support for building the Rust library via our Makefile.
->   - Introduce a '-DWITH_RUST' define. This define is used to print
->     whether or not Git is built with Rust via `git version
->     --build-options`.
->   - Adjust Meson to not depend on v1.9.0 and newer anymore.
->   - Introduce a roadmap into our BreakingChanges document to explain how
->     we'll iterate towards mandatory Rust support.
->   - Rework the Fedora job to do a full compile-and-test run with Meson
->     and breaking changes enabled.
->   - Adapt our breaking-changes jobs to enable Rust support.
->   - Link to v1: https://lore.kernel.org/r/20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im
-> 
-> Changes in v3:
->   - Reorder all uses of `WITH_RUST` after the include of "config.mak".
->   - Add a test to verify overflow behaviour in Rust and explicitly use
->     `add_wrapping()`.
->   - Use explicit dependencies for the Rust library in our Makefile.
->   - Fix Alma Linux CI job.
->   - Stop tying maintenance of our LTS release to the availability of
->     gcc-rs.
->   - Add a fallback to Meson to use cargo directly.
->   - I've fixed the Rust edition to 2018 for now. This is intentionally
->     conservative so that we might be able to use Rust 1.49. For now, we
->     don't have any reason to use a newer edition, either. So let's take
->     the oldest version we can live with for now and then bump it as
->     required.
->   - Link to v2: https://lore.kernel.org/r/20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im
-> 
-> Changes in v4:
->   - Convert "varint.c" to use explicit integer width so that we don't
->     need to use C types in Rust.
->   - Adapt Meson to unconditionally use Cargo.
->   - Don't use the unstable `--out-dir` option in Cargo. Instead, we
->     resort to a wrapper script in Meson.
->   - Shorten the timeline a bit to drop the extra step that ties Rust
->     support to `-Dbreaking_changes=true`. This accelerates the timeline
->     until distros are made forcibly aware of the upcoming changes in
->     Rust.
->   - Link to v3: https://lore.kernel.org/r/20250908-b4-pks-rust-breaking-change-v3-0-1cd7189fed3b@pks.im
-> 
-> Thanks!
-> 
-> Patrick
-> 
-> ---
-> Patrick Steinhardt (9):
->       meson: add infrastructure to build internal Rust library
->       Makefile: reorder sources after includes
->       Makefile: introduce infrastructure to build internal Rust library
->       help: report on whether or not Rust is enabled
->       varint: use explicit width for integers
->       varint: reimplement as test balloon for Rust
->       BreakingChanges: announce Rust becoming mandatory
->       ci: convert "pedantic" job into full build with breaking changes
->       ci: enable Rust for breaking-changes jobs
-> 
->  .github/workflows/main.yml         |   4 +-
->  .gitignore                         |   2 +
->  .gitlab-ci.yml                     |   4 +-
->  Cargo.toml                         |   9 ++
->  Documentation/BreakingChanges.adoc |  36 +++++++
->  Makefile                           | 214 ++++++++++++++++++++++---------------
->  ci/install-dependencies.sh         |   8 +-
->  ci/run-build-and-tests.sh          |  31 ++----
->  dir.c                              |  18 ++--
->  help.c                             |   6 ++
->  meson.build                        |  15 ++-
->  meson_options.txt                  |   2 +
->  read-cache.c                       |   6 +-
->  shared.mak                         |   1 +
->  src/cargo-meson.sh                 |  32 ++++++
->  src/lib.rs                         |   1 +
->  src/meson.build                    |  41 +++++++
->  src/varint.rs                      |  92 ++++++++++++++++
->  varint.c                           |   6 +-
->  varint.h                           |   4 +-
->  20 files changed, 401 insertions(+), 131 deletions(-)
-> 
-> Range-diff versus v3:
-> 
->  1:  a25408af71 <  -:  ---------- meson: add infrastructure to build internal Rust library
->  -:  ---------- >  1:  ccdb7e264d meson: add infrastructure to build internal Rust library
->  2:  a9c639b0f3 =  2:  b88c80f7e9 Makefile: reorder sources after includes
->  3:  ccac54a247 !  3:  873f9d82f5 Makefile: introduce infrastructure to build internal Rust library
->     @@ .gitignore
->      @@
->       /fuzz_corpora
->      +/target/
->     ++/Cargo.lock
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-The Cargo.lock build artifact is back in .gitignore in this version of
-the patch series, but the 'clean' target is not updated accordingly to
-remove it.
+> NEW: This series is rebased on a recent master to remove dependence on the
+> updates to the global variables used by the sparse-checkout system.
+>
+> When using cone-mode sparse-checkout, users specify which tracked
+> directories they want (recursively) and any directory not part of the parent
+> paths for those directories are considered "out of scope". When changing
+> sparse-checkouts, there are a variety of reasons why these "out of scope"
+> directories could remain, including:
+>
+>  * The user has .gitignore or .git/info/exclude files that tell Git to not
+>    remove files of a certain type.
+>  * Some filesystem blocker prevented the removal of a tracked file. This is
+>    usually more of an issue on Windows where a read handle will block file
+>    deletion.
 
->       /GIT-BUILD-DIR
->       /GIT-BUILD-OPTIONS
->       /GIT-CFLAGS
->  4:  b357ff9463 =  4:  4e70509175 help: report on whether or not Rust is enabled
+The updated documentation was easeier to follow (even though I had a
+"Huh?" moment with "Opportunistically" a bit).  Comparing with the
+previous version (with my rebase to get rid of the dependence on the
+other topic) and this one, I see a few more code paths have learned
+to pass "struct repository *" pointers throughout the callchain,
+which is very nice.
+
+Will replace.  Thanks.
