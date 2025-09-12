@@ -1,147 +1,97 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8964A28641B
-	for <git@vger.kernel.org>; Fri, 12 Sep 2025 16:48:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51D332145E
+	for <git@vger.kernel.org>; Fri, 12 Sep 2025 16:52:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757695733; cv=none; b=feQ6AEJ2H393ocH4wDkKHYu7UqpNsW57TP5r6+EFPtCQxj/JqbSptaY3Z+P6QhlVglGhU5dioD6ZabRYn3aOFtgX94tEHvfkagfFgwYGOMZuHxszIXGGIC+bcj052O4633L4hC5mTifsl052oZDSTAxJrWKYMPF+nz/wxLnK/AM=
+	t=1757695953; cv=none; b=BqBc72axp66Tk/33ilGWBGOEa4nrqI7tTu0pfe1Glp7xkcRlsXNhAYaOAZ9/wZVYDXJ3LQWPyw76++mwu9e0YBrZDZiI5m4FD+PsTQ6Qmp27UQOq4n41twTMCO9hNQMnhxt0OFTdLcNsRB/z+SjSxWvJmulPbPN/GO5cyK7qlo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757695733; c=relaxed/simple;
-	bh=4+MN15pWFK1uxaCvKgHLg8GYBbbmWtHs/Ex03Z+WHIw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Yx5hFJ0HijdPzGJieSAhSjpvLc2JhG8Oj1aWxR5y1eFwj0B9NDFTjTNzm1StPlm7GoS3xHNbPNA/MeEpZ1KElo/NpSStNJU4EXN5sbSaSj92dOfoGNsYJNKkIIsvlufhble5QVFwLR1BjwIsvGAJy5lE6MwKd46Cm3QortskRVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=d/8TIKRg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dkcduVLh; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757695953; c=relaxed/simple;
+	bh=50vOBM9Vp5/nJnpUZajBoDLBx70/fouiWJuDYV3Yp1o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=thyf9WT2MOFNShNlShUt4qR4jtYwnRGODLuFKeoxclG4+coHDNktzioOrGFBLF72oW3AfuFFY/5/nVy5QycJvZ/XEQVFOnZbiBmV/jaCMHnvEFrGvXUd8yr7UchpQTHV+Nn5HtNZ+h6Us8LicJJY/HFXPnCNJLob2fcepDONdLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VY3DisDi; arc=none smtp.client-ip=209.85.219.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="d/8TIKRg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dkcduVLh"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id A78061D00258;
-	Fri, 12 Sep 2025 12:48:50 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Fri, 12 Sep 2025 12:48:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1757695730;
-	 x=1757782130; bh=A4g9hi50B4gZ7+v2xiv9eechvI5I95FyPHfBYChUDqw=; b=
-	d/8TIKRgaEu0AUx/e2cURH68w7DEuqv4I50UaMzrTWG5yh+OmanJOT7kJ1cS33Rs
-	zvyugigOQPEII87IOMyzKYwxYLdX5zcpC6tNkW6zjYb8+IXbLnHIj5cGcDz2teY8
-	KvMv4rZ65g486kYMhDShwtxd7DHQte6SGg4+TqnjhMkqZ2CEJf/aN9IWA3SZX0cX
-	xunzNV9aUB63uoWcT6PPBasY3O8Ub+HOpRQylyeFYrpGtX33wWQ5egaIPVLmlAHa
-	KScFwiPdQ3HCVubcpJ+egjKEtVgDfl+rDhgsSLut6Qk8POE0kc9McOmuFfGtJbSf
-	zdZb+JI+/oFRlEIP87QYGQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757695730; x=
-	1757782130; bh=A4g9hi50B4gZ7+v2xiv9eechvI5I95FyPHfBYChUDqw=; b=d
-	kcduVLhOBUgxQznMtZ7JVDOtHJUyLlMixDBFoBYds8aU3oUPG4ZAupdgp+vv/Mrg
-	cheaIA1N7nlIsLjG8cg/CyVE2Uma1dQqocAOqQHfgqKPprrZQgCpMe7r2fD0KTrS
-	U+z6D2VETbkUpbU2albSDdnc607TqnJfv6JDPTeQ5hfkKruq/tw8+IaSZd7nwTau
-	yGE3PaRU4iXZWpJyoSCqQ02syip8NTjd08arPKyEx4gUK2l0RCdvMz4PHrE4uRHh
-	4cPN+B2nmJ+xGc/FTnci0mDdeNwMwvx5m9GXbIjmVjYE+NPiW0OWT/O5gVSl6DmZ
-	lAoUFvtNgP/YE44pcLoMg==
-X-ME-Sender: <xms:8k7EaGqg0DdB2FA_c0JdG5m2uOeYg-s0-y2DFx5hug_Ymtn_4C5E2A>
-    <xme:8k7EaH6RKTZt4y2p12M7-zUbY1BwIHShc_qYzzWjfXo6rMqCRNMTKPnR79_mgdm8d
-    1zFappbUUAdHxRKtw>
-X-ME-Received: <xmr:8k7EaEqqXLWkcXTjkM4W3DlaVDBWAFgKwlCskLlyJRjARZ8IKH1NvEQzbQIgvEovJ5DlGdlCVZHN_rC0bX4W4t94XoAhGbiOZNPnon0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvleehjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgfgsehtkefotd
-    dtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeekgfdtuedvjeffgfehueefueeghf
-    dtjefhgfekhffhteeiffetheelhedtgfehtdenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtohhrihgt
-    rhgrfhhtudeisehouhhtlhhoohhkrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:8k7EaBh5DAx75WdGLCc65axBRDmzMH_oJJtzkgz8pSEg4bgdl8b46w>
-    <xmx:8k7EaGKgzNIVtR1gj7FNg0AcQl3LNclXefQK4Nl4P7zzx8Vdv2GvnA>
-    <xmx:8k7EaJBfY93O8r8z0BsbVYBokeWAQik-9TkZ3ICooUX6gp9tRXOqew>
-    <xmx:8k7EaOjQGecCimeFRdcmrwW9LhAEUufeig_Hbcw56QKFadTcfTQm6w>
-    <xmx:8k7EaBf6QJUTd7_rmQYww7uf2PRubIgSngewWxFfoSX5_lAFv9UQXelG>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Sep 2025 12:48:49 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Guo Tingsheng <CoriCraft16@outlook.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [BUG] git apply misplaces patch when similar code fragments
- exist in the same file
-In-Reply-To: <SN6PR03MB428591529FBE9413B427B030AE08A@SN6PR03MB4285.namprd03.prod.outlook.com>
-	(Guo Tingsheng's message of "Fri, 12 Sep 2025 13:33:20 +0000")
-References: <SN6PR03MB428591529FBE9413B427B030AE08A@SN6PR03MB4285.namprd03.prod.outlook.com>
-Date: Fri, 12 Sep 2025 09:48:48 -0700
-Message-ID: <xmqqfrcrmxan.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VY3DisDi"
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e96e1c82b01so1290718276.1
+        for <git@vger.kernel.org>; Fri, 12 Sep 2025 09:52:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757695951; x=1758300751; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=50vOBM9Vp5/nJnpUZajBoDLBx70/fouiWJuDYV3Yp1o=;
+        b=VY3DisDi1W8kyXDSnip0PPtw2tqAjsB9AlhipG8/jW6CBA9gbCB+ZjCX25dClgxOhv
+         ul1tU26r0rrWTAWoc6vcffTx/UpJJnu9R+dJwHygk2zRbXi99/OLYGg8BD0loWVJTvmd
+         KthO42pE9g+Ozg3Ec2dWV2CMxpAva3Hz9n7e/Hffm4/EH7D3u2ABTVOOMsGEr6pQXOMn
+         GNxns8BDCOd39CC2EBYNUqQZT//g6Sv41jwMzbtoJRz4fCZFCuOgp3m2cYrWEVvfzG8F
+         VeNImT4zYY2PexComG4rB761tUEM5Z1Y2QZsw4FiM8MmgIdIAk4/RBD6NOh/iO/ms58l
+         O0YA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757695951; x=1758300751;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=50vOBM9Vp5/nJnpUZajBoDLBx70/fouiWJuDYV3Yp1o=;
+        b=I9xPm2OJSMyYNIjFzuzm0skR0A5dGFzoRZRq5dzei4LNNMyHW389/YCAzLCVDJiFbi
+         4mW/DOofy8jx03/kfWlQOUYQ0XWfgjfrwD+lBI5na8oqPfg3bhc1OcH2A4wu8D9+9jvS
+         NhzgTXprCHGT0UPYMC9F+u3i0cbvRsJhodlhOS6wCDMqPrSpVfJBf6Bf3xkUXtgu305c
+         8RplOaUIHkDg6OxoXJOYueHQetL3LMuSqJmMqXEJn5glV6kNHNGpCiiwgjyfVyFESqJc
+         xj1om0aeSXFgk45X5jeVTs8DJLm5SsCInkz2Si4E78gIsyE3GiLvHjYYNcTa29R1V7qW
+         HiYA==
+X-Gm-Message-State: AOJu0Yz3lQQ010riJbvJq2JrrIfkIGlDvvMpmv3IOz29kFS3lIqcAOc0
+	/bUxhcbmWrrDLZn3kXwjMMZxbRUEcojpRkGHQjDdxrwp68F8fX0F2NM4wWx//BWNXB+AnnYQ6M6
+	rnlFhmNCQLSYMZkTrW14Kjvny9a5vlylulA3v
+X-Gm-Gg: ASbGncsiLtBcouLRdpgf9/ab/2DLWK0SeLneDU8vgh67DAiUp4dV/Zfihzr+eyGaU3j
+	doBq9dlbf7m2Vt7MaUa0zWJt9Fzc0MFyZwICsJAm7viz04OiJH2v8X9v70cvHURvdgLol+P7yGM
+	pH8XHwZi3UreLTvPUrpdIIlUJpA5pb409HLDjX00JPSdM4HNTjjJYtPlU1HpkgyGzPq+UYHLVOj
+	5kPW7Zj
+X-Google-Smtp-Source: AGHT+IGe8VOqGcrEabRn598lpsXVic8TVmmkjrXN2w5xsoGYj80pa+MfrR0sDF4FTe2dGwXhcDRsp1xz/Ahjrqlkj4I=
+X-Received: by 2002:a05:690c:4d49:b0:71c:1673:7bcb with SMTP id
+ 00721157ae682-73064434cfemr38578447b3.27.1757695950505; Fri, 12 Sep 2025
+ 09:52:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <CAJKmQvf-sLxowLJLitvqDmyL1BXXDK+anDE2jaBSEabApMNVoQ@mail.gmail.com>
+ <071101dc23f5$fbf06e30$f3d14a90$@nexbridge.com>
+In-Reply-To: <071101dc23f5$fbf06e30$f3d14a90$@nexbridge.com>
+From: usharerose <ushareroses@gmail.com>
+Date: Sat, 13 Sep 2025 00:52:18 +0800
+X-Gm-Features: AS18NWBr8HETzSEFG-xKIFETgkPorkZ5zW1jPVPIOmqBCvtQhTtxiMNMd6QM_vw
+Message-ID: <CAJKmQvcqLzJDnpYg5K7_eUNCUdLCkkFse-wB+4R8KGxKo_e+0w@mail.gmail.com>
+Subject: Re: [DISCUSS] validation on git config user.email
+To: rsbecker@nexbridge.com
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Guo Tingsheng <CoriCraft16@outlook.com> writes:
+On Fri, Sep 12, 2025 at 11:00=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
+> Some customers integrate single sign-on (SSO) via the user.email value. I=
+n the case
+> of one customer I helped, the value is an SSO token used by GitHub for th=
+eir
+> integration. The token value does not conform to any valid email address =
+format.
+> Adding an email validation will lock them out of using git.
 
-> 2. In another branch, Commit_2 introduces additional import statements before HeaderComponent, shifting its return statement further down (around line 10).  
->    In Commit_2, the button text in HeaderComponent is modified as follows:
->
->    @@ -10,6 +10,6 @@
->         return `
->             <div class="layout-section">
->    -            <button>Click Me</button>
->    +            <button>点击</button>
->             </div>
->         `;
->     }
+Thanks for your reply, Randall.
 
-This hunk shown here may be a fabrication (it only has two
-pre-context but three post-context lines, which is unusual unless
-the shorter one is at the end of the file), but in any case, a patch
-hunk above is applied to a location that has exactly these lines:
+I've fully understood the scenario you described. My follow-up
+question is: was this use case something that was discovered and
+utilized later because people found that Git doesn't validate the
+email format, or was it a scenario that the architects anticipated
+early on in the project's history, leading to the deliberate decision
+to skip the validation for flexibility?
 
-        return `
-            <div class="layout-section">
-                <button>Click Me</button>
-            </div>
-        `;
-    }
+In other words, is this more of a case of "exploiting a perceived
+backdoor that later became justified" or "a thoughtfully made design
+decision from the beginning"?
 
-that is the closest to line #10.
-
-If there are more than one places in the target file that the
-preimage (i.e. the context lines that are shown with " " at the
-beginning, and the preimage lines that are shown with "-" at the
-beginning) would match, the patch is ambiguous.
-
-It is very much expected, depending on what other changes have
-happened to the target file since they diverged to make the matching
-places move from the original place, it would be applied to a
-"wrong" place by chance, as the preimage does not uniquely identify
-where the patch hunk should to be applied in such a situation.
-
-You can generate a patch with wider context if you can _anticipate_
-the issue (for example, you may _know_ that commit-1 already had
-multiple lines that match the preimage in the hunk before running
-"git diff" or "git format-patch") to give it a better chance to be
-unambiguous, e.g. "git diff -U8".  But in general it is impossible
-to guarantee that your preimage in the hunk will be and stay to be
-unambiguous.  After all, the receiving end can make independent
-changes that happen to match the preimage the patch is looking for,
-no matter how wide the context you pick when you generate your
-patch.
-
-It might be a good starter project for aspiring Git developers to
-teach "git apply" to notice this situation and warn about it.  The
-tool cannot by definition to always pick the right place to patch,
-but the tool should be able to recognise a situation where a patch
-hunk is ambiguous and can apply to multiple places in the target and
-let you know about it.
-
+Thanks again for sharing your insight.
