@@ -1,261 +1,122 @@
-Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazolkn19011024.outbound.protection.outlook.com [52.103.13.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7A350276
-	for <git@vger.kernel.org>; Sat, 13 Sep 2025 07:29:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.13.24
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757748576; cv=fail; b=OJ+4mNe0j3XgwIQA20WPmF9g1870n2oLU/md7y9hT3p+irdoduFp9KoDF4LDRVtP2q2gfPhekdqLUp8dtApk32gzp4rziPa/sRBRviYR96wQCXZh1wlws/gkL5+MwRZEa0tlhl9OjjQjpmEW8I3+laWFSQKTufuKGB9ighJ4/6s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757748576; c=relaxed/simple;
-	bh=JgvevVVLf6gtAUELso8EPyuCgaYyX+WHjzECp+ZwSvA=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=KMIE+ZPvT1fz6mzRuLoJSSQxczuAWvY7D7bHJ1MMTIOUn8/XdJymx1DlL7I2J27OGb8PzPL8OkfWRkieNuPwl/Hm4G8yFqyUXpqqkdGQNCtu8bZ2JZWvWQySV3R8ir+162e/tt5NaYpFw+iVNPZMhWwX3IhL0XXmgBwdvBMh67g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=LB61kKwy; arc=fail smtp.client-ip=52.103.13.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7893AB67F
+	for <git@vger.kernel.org>; Sat, 13 Sep 2025 11:33:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757763186; cv=none; b=nBaA8AoTpYlEaD4zXEmqEtjYUFCRTBO+B1O9aoLOvD+p+8KAtwe1HSOsQFvImufRhhbSaZrtAIZH14nyTioQhw3yIUvsc8jyR2zyVIcM2Su+TaylXp4biVKAQ3+MXcs2yN7W46d1fp54nGnnnQKb5xhKr5sx04+Z8sS8xePrZvk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757763186; c=relaxed/simple;
+	bh=KxBF1Jdwgp/pHE/vhSiL2HSXqGZUjeH27RQnDXQC0D4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=aJmCgGn5AouQPDbNu0odLWWKGH3+IVFzkcvBRd5BiYIITtmBFbkrRz9TBg4t0ntkXbadYS6n+DgWsYPtD06LWLpGBSZOi0jqKBg9EOf+x3TOPZ8cVIFRzvg9036XFIjjGiEuZ5VRa4gnToCCgYugMA7h2UaO+ikQ5yczSIJSw0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=THFVOciA; arc=none smtp.client-ip=209.85.219.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="LB61kKwy"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=io3AsMY1hTidN5cC4Bz4sEy/ZeIvBbxKAkpTE6rOV+tKgAKmdfcYtUNtHvU4FF0uG0SGca9XL8k8AW9m4xWqlrD289+jFJf7uzYbs5aAmAtZ0Mka5NV2rPTHMCIRwwmj3e63aVhKl+rrQk169AnmeHt7qRrRqA4/AjFu3WfvNVU1VF8nOV9hvAdZbY83UI0KrtScjKESAEukEztCrZqtvrIRf4qzDe39e7RIx50deWChunHAtKufgJUy0Xr1riO7W90oNatVlboOEyQvtogn72reZbNwuPtE48Swp19X2DJ0eJEf0z3ev6BEOchHX4GzSBIU16cfRStzDCf9fUXlpg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JgvevVVLf6gtAUELso8EPyuCgaYyX+WHjzECp+ZwSvA=;
- b=Uh3Pz4q9WP9XBFd0jC50yLTL4GA3ymaCMSB3oDUm/pQkjCobL9vhHXmsUvnKn6MgjOzX7mllRynltB7hXiotq8xbKXb8CuWPesHauujyTVsI6olXVjBpawZvYoVOdvwxsQqH60rJKHl1ZNrBk5CWhXV8J6dyXqSjWv2OUHdyeBB0ejjUu2xhGi901UfZM8+1LKdye2ixWS9tcD2SmXZ0ZaCxR2IzOHX8FTp3GHfYrhBXxKL3s4Wm+bpz1wf6EpiMpsW2ilddmMIQmSv3k2b61elqMngCsNt11qjJANhrs/hQrvF+3Bg58TLFyrICsSAwJ/sfjzWb/5wyCwZjIgdAxg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JgvevVVLf6gtAUELso8EPyuCgaYyX+WHjzECp+ZwSvA=;
- b=LB61kKwyAQJaScHsUG2Q0piNLZh7aqH3lODcsWnwCjs8SpovlD9OVFCJdOUN4hYgfezpaAby0fPZw66PkFSmdnvAQPyJGlrNwi6S44YO+mSDjmqDc1mwL2c1922ZEc6wrUuXcKbgdgaaU7a96Oc/8NGL7/xgWmSYvKEliyId8oPujCUG4Mn3ky4HE16wlSvWdDtY3dvd0b6du7GOxVYgJXMpljYUK9aFhQHaCNv9ZvG5dShv2yC/2fMNJsRUH+3UweApEdWwvgoVdQ6SM46njxOKlgLKcQHqNZSIJ0X9BhbSYRoTPYwbZu4OybMQ2Q2Tb2Ecz+047zA8MfxsdZqPJA==
-Received: from BYAPR03MB4280.namprd03.prod.outlook.com (2603:10b6:a03:75::15)
- by BY1PR03MB7945.namprd03.prod.outlook.com (2603:10b6:a03:5b4::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9115.19; Sat, 13 Sep
- 2025 07:29:32 +0000
-Received: from BYAPR03MB4280.namprd03.prod.outlook.com
- ([fe80::9bfd:665:b22:1b89]) by BYAPR03MB4280.namprd03.prod.outlook.com
- ([fe80::9bfd:665:b22:1b89%4]) with mapi id 15.20.9115.010; Sat, 13 Sep 2025
- 07:29:32 +0000
-From: Guo Tingsheng <CoriCraft16@outlook.com>
-To: Junio C Hamano <gitster@pobox.com>
-CC: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject:
- =?utf-8?B?5Zue5aSNOiBbQlVHXSBnaXQgYXBwbHkgbWlzcGxhY2VzIHBhdGNoIHdoZW4g?=
- =?utf-8?Q?similar_code_fragments_exist_in_the_same_file?=
-Thread-Topic: [BUG] git apply misplaces patch when similar code fragments
- exist in the same file
-Thread-Index: AQHcI+mst9hjUm1ElEy6MTQvegh4srSPwm44gAD1wAQ=
-Date: Sat, 13 Sep 2025 07:29:31 +0000
-Message-ID:
- <BYAPR03MB4280844D32D821EFF98AE9A6AE0BA@BYAPR03MB4280.namprd03.prod.outlook.com>
-References:
- <SN6PR03MB428591529FBE9413B427B030AE08A@SN6PR03MB4285.namprd03.prod.outlook.com>
- <xmqqfrcrmxan.fsf@gitster.g>
-In-Reply-To: <xmqqfrcrmxan.fsf@gitster.g>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BYAPR03MB4280:EE_|BY1PR03MB7945:EE_
-x-ms-office365-filtering-correlation-id: a7195a60-34fe-4644-f5fd-08ddf297480f
-x-microsoft-antispam:
- BCL:0;ARA:14566002|8062599012|8060799015|19110799012|31061999003|461199028|15080799012|15030799006|41001999006|7042599007|40105399003|440099028|3412199025|102099032|3430499032;
-x-microsoft-antispam-message-info:
- =?utf-8?B?YjZ5RW9lREFKWGZURmxhYWpMVEdXS1gxUW5JMXoreUgrc0Z4cmRmaGxkRDM2?=
- =?utf-8?B?TWYzNEhSUW5MbjVoZkcrK2pJbVM3Y3AzOFl6NzhsNVVyQ21BQVhtRHBPcDFS?=
- =?utf-8?B?bWxwVGMvRENjSlI1RVp4enZoT3VUeWhjV0hsSC83M2RmWmRZZDFpbngrVG1w?=
- =?utf-8?B?WGJwZzdTUkRmSEMvaUFhQzNsOVphQks2aDN0SkxERW4xY2s5dkJzOUE3NGl2?=
- =?utf-8?B?MTNpb1FXd2wzcW51WUtzeFpSMmVqTmRjMlJvc1FXQ1A5TnNuckR5VGUzeWZM?=
- =?utf-8?B?N3ZFOTlxTUZPY1hzVVN4ZmhtdGJtaWpEUVFvZlhiUFYwV3V6a0JoMWdwQWRC?=
- =?utf-8?B?S1JqaCt0OWZUUWNTNlc2RWRscFhQM013U3NPRmtmb1k5NVVVOVcxS2JJSW52?=
- =?utf-8?B?VWNFWEtmenl0ZjM5ZUd2UWcwTWRBQU5PcHFrN3BMc2pPUkJFU24zRUtHWmVP?=
- =?utf-8?B?OUtMZGFOZFFnWVZMNnRScVhvZUJQNHQvTEtCZkJsYlcvMzVQWDVDbS9JYkYz?=
- =?utf-8?B?Z3Y1L2hpVGpJcWJWOW1ycnFWQ0tFUGtIUllNSG5oNnRTV0V6eXluNVZQQk5M?=
- =?utf-8?B?dDA3T0tVMEx3NTBId3FjTm1yTUFnd0taWTlHeEk1VnllOHh2Q3V5aUN5WW9O?=
- =?utf-8?B?RktaSUNYMHlaRytXQVRMNkpQRFZVZGNnK2wxVnNiZ0kxNFZwNWh1djNaeThS?=
- =?utf-8?B?YmN2aDZWb2FuRlI3VGhNTHE0L1JSSlI0UllYVzlqMnVuUU11dHRPNjYzNVhY?=
- =?utf-8?B?UlBRbTdkMllMVEZGdFAvOW9Rcnl1TU9pdmZxZXM3VWdLVjNOSmtHcmRSSkUz?=
- =?utf-8?B?aFJUcjZsWUZQdDNpakZsR2ZKYys1WHZiL0R1dWFiTVBlS1BrbzlaQlR1R2tR?=
- =?utf-8?B?VXpPYzRBYlFSWWJWSDF2c1U3eVZabWw5YmpWdjdjd1dONUZheVhUZ1VqOE5D?=
- =?utf-8?B?UVUwUC8ycHgzd3h3Z3h0VlF1clY2a2hBbndhUWNQL1ZtcnlJT1pUODV2bVdv?=
- =?utf-8?B?ODRFLzI5U3ZBN1QzcDJLc2c4N1pBMUEyQitUNHRqbFozUVZjQWt6R1E5dUNx?=
- =?utf-8?B?dXZjMmZUcFNpTDc4V09xblVDcHhKUjVvQUptaUxCVjRGb2ZtdVV4TGJESUJZ?=
- =?utf-8?B?cE90bFNkdDAxcisvNXhpYkpWTnRjQlhWNTRXcTBQYkNYSWtLZUEvSXdxczJa?=
- =?utf-8?B?ZG10SmZ4TWQwcUdmOWQvUnNCSHEyMmxMRkt5N0p2WHdmMHNkT0tYZFVRckFw?=
- =?utf-8?B?VjlnaUlLNmoxa2Fnc21abklFTjdMTFJ1QURuSGp4blNGdWZpUkF0YVpjYzhl?=
- =?utf-8?B?aEIvZWUraFlMUk9YL1ZjSDdrY1N4VmdTVldrcDhBNmFra1djSXZ0SlBtd2s5?=
- =?utf-8?B?L1EzZDQ3M01GdFNaWmVJbEZVeEQ4cHVBdzFXUjlsdFgxa1BVSFdoTGxzd0FM?=
- =?utf-8?B?cGtubGtZWEtadFR0K3pxQmdqTER3QmlNb3NsdmJlZ3pBU1l6V0xhZVpLTFJQ?=
- =?utf-8?B?WWlUZUJDYzlaM0p1aDVtSnNjcXgxbEhvc01CT3BMa3FSNE96TmJmVEVjRGkw?=
- =?utf-8?B?UUR5YnZzODZqWXBPbFZzTVd6UG9kOUV6OWxPNW1sZlA3UnV6NkdIK1FhK3hn?=
- =?utf-8?Q?vJIAmqo/Chs4dKesFTn50GCbilWgJftixNT5KbYqt3WM=3D?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?NERWMExrdW9mZTRSRWxmaHVRNzZpbFl1cnowOE5tc0ZSUVBMN3JBdDdyNHFB?=
- =?utf-8?B?WTBwUE9taloydkdDUUdHNzlsTHNaREhNN00xUlFNeXE1V3ppY1VIZDZSNGhP?=
- =?utf-8?B?QjBYVlFYeWpGYlZRa1RZVitpeHJaUjhSUjByTm1WMjYvTUZxeFB2aUhtaWJS?=
- =?utf-8?B?bW95eU1INDBRaGJIbk9kSXJZem9UQjVrVEc5eDV0Znc4aU91RGtzRXU5bXBq?=
- =?utf-8?B?aVpzZXFUUU5CVTdIUFFxb3Z4cnNUM1J1c3RyL2dQZUxRTVJxZE4xVnowVHVa?=
- =?utf-8?B?TkNhZkJXSCtwcUFxQVJhK280b09POUhycDhMNzJIQU43RCtwSTlaN2NQV1Rr?=
- =?utf-8?B?M2F4UWdqblNDV24vNnJLUkQxR3daSWwxTWFtMTRnaHhuaFJVcmpnMjhReEgv?=
- =?utf-8?B?Nm5ibEF3ajFWeHcwUVJoVm9sVkl1Tmd0aXFlMlZXbGtxK1hSV0RWWWxJVlVY?=
- =?utf-8?B?VFY3YmRNSXQ3NndaTitBdktRYU8wUjFTdlVwelNia0l1SXIvdnB4bnRPWTMv?=
- =?utf-8?B?MStRQlY2dXJVNFFFOU9Icmtla0NLSjBXazNrU0tONVpienMySW5LZmM2MDAw?=
- =?utf-8?B?M0NibUtFQ0xRdWNIRU9ORFJqZ0ZRWW9PMWhzZVVyOUY5TS8zOElRNjlGdms3?=
- =?utf-8?B?Uzh5Q0U3VmdIcW5XWE12Z3FnUGpZaVFxRDNHSlV5SXRpcm1BUjViRzQxeUta?=
- =?utf-8?B?ekZldG1zYmZRS1hOMWtoWUJhV3FXZ1RSVjJpS0Y5bUFPbXMwSyt1OEJVZ3Br?=
- =?utf-8?B?M1FSMnJNU1ppOGhkc2tMck9RU0xmdDVBSEsrSXdUbjhFdDRuS0M0V0kxQi9k?=
- =?utf-8?B?S0NTYmNwQmhKQ1hrQUlZZVYybmw2T0tMeDc5aE5zNHpwSDgwSlc1Z09jdDNv?=
- =?utf-8?B?eHYzOGRGL21DV1hRM09TazJOMXhvL2ZEeXRzTjNsNXdSeEs5U2wwWjJ5UDh0?=
- =?utf-8?B?NG5BSDdlbnJ3MUpORFhMSVFhM1MweHFHSW95dG1Cd0U0c0RlbXdBazFwSDBP?=
- =?utf-8?B?L0ZEenR6bXJxMUUyUVZCR3QzNTRvWjZnWmJwYnNCMld4aWM1clQvMGxDR0pC?=
- =?utf-8?B?Z0YrMlhiVXY0SHMzdlpXWHl3YlVVUVJtTTgvV0REVU03NFZtWE5KOG9tYXdU?=
- =?utf-8?B?d2lsRjZLYyt6N1VtMVJjNDZuQ2NtMHVuWGcwWWNwZlJTUVdYbWY2ZjN1RjMw?=
- =?utf-8?B?b2F1KzNZbGdBN2xiNkkwcE9HakdRSlBXL0liUGVxdkxuWjIzSmRVVCs4NWVw?=
- =?utf-8?B?N0ZFMHh5V2Rsci80UW4xaGpoRjZaUUlYaGdhb3paVXorZ2o0N21WTnphQVMv?=
- =?utf-8?B?R1FDOWQyQmNrOWpUdkUxM1F3dHVUUkxMenBUOGJNWmdwQ2hzUmZSN3o5TUIx?=
- =?utf-8?B?LzJjZkpkaWtOekwwV3cydWJqTm8wa1U5bzJhL1A3L3p5TUpaSitXRkxYVGMy?=
- =?utf-8?B?bkVtRHpVdzBBMnB0ZnBLOWZjbWlGRVZDUnVTYnQ1cTBCU0RONnNRNzA2ZE5h?=
- =?utf-8?B?VzQ2YUg0WUh2dzlZTlFnb3EzYy9WWXJpRzRwWW1IQ080eEZlZWR5S2lhNEZN?=
- =?utf-8?B?QWcrb2J3dFRTMi83andTM3dYUkdjSDhNOGRQMlhWMGxyVTNQYUtETy9QcUZ2?=
- =?utf-8?Q?LwoTDqFd51WETHhqUR6CorJq/iPILu6DdXgxjo7AsU5g=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="THFVOciA"
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-ea3dbcc5525so1070226276.2
+        for <git@vger.kernel.org>; Sat, 13 Sep 2025 04:33:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757763183; x=1758367983; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=c+XNgv4Xz2Z7QNz4CxMULp2oh2yvFIRiQ86q65FsIVg=;
+        b=THFVOciAlNA0bMhtBxPuhKXCRCHFgeE8mgQ4g0qkRFknFC6s6KyibOc1qTYbZ7CF9u
+         Z4zocQc9v+hHLTLEPlisPD/GAZP7/WxO1VZPcOpEothvI6c0UkbYBLvIoWIFs+coiyiv
+         J1D585xlJxBFYgBTLSqGC7FeATCPnu4FSw1qvea+77L/dgdTq+IegeE2A30s1j9zwGP6
+         ZOOejuEUZNA/OtN+HykOsk1lmWGDHkYgbFSV8OoczRetsB02oKCI8BK0EVZ4Y3033xLp
+         lBHDoVSZG9pqYLpio2mUupy3jpy7CVWe5j2lE3othr2MuX+vJxHkiquvcLTyQVuEwr6L
+         EN0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757763183; x=1758367983;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=c+XNgv4Xz2Z7QNz4CxMULp2oh2yvFIRiQ86q65FsIVg=;
+        b=tbmjmrfxsbv5Pt4cNlkw6fOLrK2s+ZrUW+fjrRmQM6mkpWJkN88wNMWBtwvHIpo1qz
+         jThIHlcNrM3XcUI7a9nBVRPAEfRTHIVIQNzbXGXMyUAZvJpTs3aWjKN28WEUP4dmfjQd
+         pE9/VvxXjvRojyZDSbXL5o/DAOLJz+Cngriz6HJ84x1SKeaX464xiIHh/haSYrTeyXA8
+         4jBVSAfwD39PdiP+al8nhQW53a8/ZLLqSM2X8p1vYu0muKgll1/++IFDgjmZYEUCFCNG
+         g0x0MDWbi2IAIaJD9GkOLMXs4EY6VA+xK1zFVcUH/A7BNwrbuTIwflpnr5wxuHpE4ydE
+         XH9A==
+X-Gm-Message-State: AOJu0YzfwVIXgYiGLgCT/tXTESQwVW3hP203q0K2BwzYBXIUMqP3Cfov
+	4f9QPiUyewtk8UdZSMqQm3maH7xM8CPUPe+eKaF0F3EWzGEERPSU0hmpNSBo+qJH
+X-Gm-Gg: ASbGncsPbHrEIP5uvmnTD0j8itpOIZDdftFnsa6L6eAaRuTjVT+/qBCa+98wgkZcK9e
+	eLrcBE4s5Llo1DNCWPHDISO3MQWfYiALea9N3cTphBcoz4+K4RcTJzL7ijMDudo1NnRblHoOauX
+	Y/4ArFPCCTQX++Xzpabjl/4lpWr+Wd5V+WvA3JOHgRPQjGjmaaaElKgtbkLtY3oZ4D3wUQwiGTj
+	6o8QUQbQAVx1DZb9DwNOEwUyDqpM7JPlyTjf7z6mCA3sm/9hSIWKtz3y+1q5UPyLQ78obtesRjS
+	bYFyvU9ZRWpWPkZUsTra4FyAiV+Agfk30StHiQf9qI3qzPFqKmNp8DacTR7He826vLzMwKxyP8U
+	cmt1MCB9EvaGR8xsYCSeOGBXRydernkbfXK1D3wrJlVPDGw9YSD8QyzpM6JGUDQo7L+LxtlS4RF
+	FsPfAGW0+VG+zlS2ZBs/i8OUdqfK38PXs=
+X-Google-Smtp-Source: AGHT+IHheBWJKK4+g4P2edir7YJbW+G1UOBLFSUZ1OS+sIWG6nNMU/POMsShNaVH7S24ccjShi9MLQ==
+X-Received: by 2002:a05:6902:4004:b0:e97:f18:127 with SMTP id 3f1490d57ef6-ea3d9a734b5mr5537547276.33.1757763182671;
+        Sat, 13 Sep 2025 04:33:02 -0700 (PDT)
+Received: from USROMMRAPPAZZ01.infor.com (pool-74-105-50-139.nwrknj.fios.verizon.net. [74.105.50.139])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-ea3cf267a90sm2158258276.33.2025.09.13.04.33.00
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 13 Sep 2025 04:33:01 -0700 (PDT)
+From: Michael Rappazzo <rappazzo@gmail.com>
+To: git@vger.kernel.org
+Cc: j6t@kdbg.org,
+	Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH] gitk: fix error when remote tracking branch is deleted
+Date: Sat, 13 Sep 2025 07:31:51 -0400
+Message-ID: <20250913113253.74362-1-rappazzo@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR03MB4280.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: a7195a60-34fe-4644-f5fd-08ddf297480f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Sep 2025 07:29:31.9375
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY1PR03MB7945
+Content-Transfer-Encoding: 8bit
 
-SGkgSnVuaW8sCgo+IFRoaXMgaHVuayBzaG93biBoZXJlIG1heSBiZSBhIGZhYnJpY2F0aW9uIChp
-dCBvbmx5IGhhcyB0d28KPiBwcmUtY29udGV4dCBidXQgdGhyZWUgcG9zdC1jb250ZXh0IGxpbmVz
-LCB3aGljaCBpcyB1bnVzdWFsIHVubGVzcwo+IHRoZSBzaG9ydGVyIG9uZSBpcyBhdCB0aGUgZW5k
-IG9mIHRoZSBmaWxlKSwKClllcywgeW91IGFyZSByaWdodC4gVGhlIGV4YW1wbGUgSSBzaG93ZWQg
-ZWFybGllciB3YXMgbWFuLW1hZGUsIGluIG9yZGVyIHRvIGlsbHVzdHJhdGUgdGhlIGlzc3VlIG1v
-cmUgY2xlYXJseS4gVGhlIHJlYWwgY2FzZSBpcyBsb25nZXIsIGFuZCBJIHdpbGwgc2hvdyBpdCBh
-dCB0aGUgZW5kIG9mIHRoaXMgbWFpbC4KClRoZSBzY2VuYXJpbyB3aGVyZSBJIG9ic2VydmVkIHRo
-aXMgYnVnIGlzIGFzIGZvbGxvd3M6ICAKSSBwaWNrIHR3byBhZGphY2VudCBjb21taXRzIEEgKGVh
-cmxpZXIpIGFuZCBCIChsYXRlcikgZnJvbSBHaXQgaGlzdG9yeS4gVXNpbmcgQSBhcyB0aGUgYmFz
-ZSwgSSBleHRyYWN0IHRoZSBjaGFuZ2VzIGludHJvZHVjZWQgYnkgQiBpbnRvIGEgcGF0Y2guIFRo
-ZW4gSSBzcGxpdCB0aGlzIHBhdGNoIGludG8gdHdvIHNtYWxsZXIgcGF0Y2hlcyBieSBkaXZpZGlu
-ZyBodW5rcyByYW5kb21seSwgYW5kIGFwcGx5IHRoZW0gc2VwYXJhdGVseSBvbnRvIEEgdG8gY3Jl
-YXRlIHR3byBicmFuY2hlcy4gRmluYWxseSwgSSBtZXJnZSB0aGVzZSB0d28gYnJhbmNoZXMsIGFu
-ZCBjb21wYXJlIHRoZSBtZXJnZWQgcmVzdWx0IGFnYWluc3QgY29tbWl0IEIgdG8gdmVyaWZ5IG1l
-cmdlIGNvcnJlY3RuZXNzLgoKSW4gdGhpcyBwcm9jZXNzLCBlYWNoIGJyYW5jaOKAmXMgcGF0Y2gg
-aXMgZGlyZWN0bHkgY3V0IGZyb20gQuKAmXMgcGF0Y2guIFRoZSBsaW5lIG51bWJlcnMgaW4gZWFj
-aCBodW5rIHN0aWxsIGRlc2NyaWJlIHRoZSBwb3NpdGlvbnMgcmVsYXRpdmUgdG8gQiB2cy4gQS4g
-SG93ZXZlciwgc2luY2UgZWFjaCBicmFuY2ggb25seSBjYXJyaWVzIGEgc3Vic2V0IG9mIELigJlz
-IGh1bmtzLCB0aGUgbGluZSBudW1iZXJzIG1heSBubyBsb25nZXIgY29ycmVzcG9uZCBleGFjdGx5
-IHRvIHRoZSByaWdodCBwb3NpdGlvbnMuIEFzIGEgcmVzdWx0LCBHaXQgZmFsbHMgYmFjayB0byBm
-dXp6eSBtYXRjaGluZywgYW5kIGluIGNhc2VzIHdoZXJlIHRoZXJlIGFyZSBzaW1pbGFyIGNvZGUg
-ZnJhZ21lbnRzLCB0aGUgcGF0Y2ggbWF5IGJlIGFwcGxpZWQgdG8gdGhlIHdyb25nIGxvY2F0aW9u
-LgoKPiBBZnRlciBhbGwsIHRoZSByZWNlaXZpbmcgZW5kIGNhbiBtYWtlIGluZGVwZW5kZW50Cj4g
-Y2hhbmdlcyB0aGF0IGhhcHBlbiB0byBtYXRjaCB0aGUgcHJlaW1hZ2UgdGhlIHBhdGNoIGlzIGxv
-b2tpbmcgZm9yLAo+IG5vIG1hdHRlciBob3cgd2lkZSB0aGUgY29udGV4dCB5b3UgcGljayB3aGVu
-IHlvdSBnZW5lcmF0ZSB5b3VyCj4gcGF0Y2guCgpJIGZ1bGx5IGFncmVlIHdpdGggeW91ciBwb2lu
-dDogbm8gbWF0dGVyIGhvdyBtdWNoIGNvbnRleHQgd2UgaW5jbHVkZSwgd2UgY2Fubm90IGFic29s
-dXRlbHkgZ3VhcmFudGVlIHByZWNpc2UgbWF0Y2hpbmcsIGJlY2F1c2UgdGhlIGJyYW5jaGVzIG1h
-eSBoYXZlIGluZGVwZW5kZW50IGNoYW5nZXMuIFRoZXJlZm9yZSwgSSB0aGluayB5b3VyIHN1Z2dl
-c3Rpb24gb2YgZW1pdHRpbmcgd2FybmluZ3MgaW4gcG90ZW50aWFsbHkgYW1iaWd1b3VzIHNpdHVh
-dGlvbnMgd291bGQgYmUgdmVyeSBoZWxwZnVsLgoKQmVsb3cgaXMgYSByZWFsIGV4YW1wbGUgSSBv
-YnNlcnZlZDoKCkJyYW5jaCAxIGNoYW5nZToKQEAgLTEzMSw3ICsxNDUsNyBAQCBwdWJsaWMgY2xh
-c3MgRXhjZWxXcml0ZXIgewogICAgIH0KIAogICAgIC8qKgotICAgICAqIFdyaXRlIGRhdGEgdG8g
-YSBzaGVldAorICAgICAqIFdyaXRlIGRhdGEoTGlzdDxMaXN0PFN0cmluZz4+KSB0byBhIHNoZWV0
-CiAgICAgICogQHBhcmFtIGRhdGEgIERhdGEgdG8gYmUgd3JpdHRlbgogICAgICAqIEBwYXJhbSBz
-aGVldCBXcml0ZSB0byB0aGlzIHNoZWV0CiAgICAgICogQHBhcmFtIHRhYmxlIFdyaXRlIHRvIHRo
-aXMgdGFibGUKCkJyYW5jaCAyIGNoYW5nZToKQEAgLTE1Niw3ICsxNzAsNyBAQCBwdWJsaWMgY2xh
-c3MgRXhjZWxXcml0ZXIgewogICAgIH0KIAogICAgIC8qKgotICAgICAqIFdyaXRlIGRhdGEgdG8g
-YSBzaGVldAorICAgICAqIFdyaXRlIGRhdGEoTGlzdDxMaXN0PE9iamVjdD4+KSB0byBhIHNoZWV0
-CiAgICAgICogQHBhcmFtIGRhdGEgIERhdGEgdG8gYmUgd3JpdHRlbgogICAgICAqIEBwYXJhbSBz
-aGVldCBXcml0ZSB0byB0aGlzIHNoZWV0CiAgICAgICogQHBhcmFtIHRhYmxlIFdyaXRlIHRvIHRo
-aXMgdGFibGUKCk1lcmdpbmcgdGhlc2UgdHdvIGJyYW5jaGVzIGFuZCBjb21wYXJpbmcgdGhlIHJl
-c3VsdCB3aXRoIGNvbW1pdCBCIHVzaW5nIGBnaXQgZGlmZmAgZ2l2ZXM6CgpkaWZmIC0tZ2l0IGEv
-c3JjL21haW4vamF2YS9jb20vYWxpYmFiYS9leGNlbC9FeGNlbFdyaXRlci5qYXZhIGIvc3JjL21h
-aW4vamF2YS9jb20vYWxpYmFiYS9leGNlbC9FeGNlbFdyaXRlci5qYXZhCmluZGV4IGU0MDYxZTBl
-Li45MWMzNGE2MyAxMDA2NDQKLS0tIGEvc3JjL21haW4vamF2YS9jb20vYWxpYmFiYS9leGNlbC9F
-eGNlbFdyaXRlci5qYXZhCisrKyBiL3NyYy9tYWluL2phdmEvY29tL2FsaWJhYmEvZXhjZWwvRXhj
-ZWxXcml0ZXIuamF2YQpAQCAtMTQ1LDcgKzE0NSw3IEBAIHB1YmxpYyBjbGFzcyBFeGNlbFdyaXRl
-ciB7CiAgICAgfQogCiAgICAgLyoqCi0gICAgICogV3JpdGUgZGF0YShMaXN0PExpc3Q8U3RyaW5n
-Pj4pIHRvIGEgc2hlZXQKKyAgICAgKiBXcml0ZSBkYXRhKExpc3Q8TGlzdDxPYmplY3Q+PikgdG8g
-YSBzaGVldAogICAgICAqIEBwYXJhbSBkYXRhICBEYXRhIHRvIGJlIHdyaXR0ZW4KICAgICAgKiBA
-cGFyYW0gc2hlZXQgV3JpdGUgdG8gdGhpcyBzaGVldAogICAgICAqIEBwYXJhbSB0YWJsZSBXcml0
-ZSB0byB0aGlzIHRhYmxlCkBAIC0xNzAsNyArMTcwLDcgQEAgcHVibGljIGNsYXNzIEV4Y2VsV3Jp
-dGVyIHsKICAgICB9CiAKICAgICAvKioKLSAgICAgKiBXcml0ZSBkYXRhKExpc3Q8TGlzdDxPYmpl
-Y3Q+PikgdG8gYSBzaGVldAorICAgICAqIFdyaXRlIGRhdGEoTGlzdDxMaXN0PFN0cmluZz4+KSB0
-byBhIHNoZWV0CiAgICAgICogQHBhcmFtIGRhdGEgIERhdGEgdG8gYmUgd3JpdHRlbgogICAgICAq
-IEBwYXJhbSBzaGVldCBXcml0ZSB0byB0aGlzIHNoZWV0CiAgICAgICogQHBhcmFtIHRhYmxlIFdy
-aXRlIHRvIHRoaXMgdGFibGUKCkFzIHNob3duLCB0aGUgY29tbWVudCBpbnRlbmRlZCBmb3IgbGlu
-ZSAxNDUgKGBMaXN0PExpc3Q8U3RyaW5nPj5gKSB3YXMgaW5jb3JyZWN0bHkgYXBwbGllZCBhdCBs
-aW5lIDE3MCwgYW5kIHRoZSBvbmUgaW50ZW5kZWQgZm9yIGxpbmUgMTcwIChgTGlzdDxMaXN0PE9i
-amVjdD4+YCkgd2FzIG1pc3BsYWNlZCBhdCBsaW5lIDE0NS4gVGhpcyBkZW1vbnN0cmF0ZXMgaG93
-IGZ1enp5IG1hdGNoaW5nIGNhbiBtaXNhcHBseSBwYXRjaGVzIHdoZW4gc2ltaWxhciBmcmFnbWVu
-dHMgZXhpc3QuCgpUaGFua3MsCkNvcmkKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fXwrlj5Hku7bkuro6wqBKdW5pbyBDIEhhbWFubyA8Z2l0c3RlckBwb2JveC5jb20+CuWP
-kemAgeaXtumXtDrCoDIwMjXlubQ55pyIMTPml6UgMDo0OArmlLbku7bkuro6wqBHdW8gVGluZ3No
-ZW5nIDxDb3JpQ3JhZnQxNkBvdXRsb29rLmNvbT4K5oqE6YCBOsKgZ2l0QHZnZXIua2VybmVsLm9y
-ZyA8Z2l0QHZnZXIua2VybmVsLm9yZz4K5Li76aKYOsKgUmU6IFtCVUddIGdpdCBhcHBseSBtaXNw
-bGFjZXMgcGF0Y2ggd2hlbiBzaW1pbGFyIGNvZGUgZnJhZ21lbnRzIGV4aXN0IGluIHRoZSBzYW1l
-IGZpbGUKwqAKR3VvIFRpbmdzaGVuZyA8Q29yaUNyYWZ0MTZAb3V0bG9vay5jb20+IHdyaXRlczoK
-Cj4gMi4gSW4gYW5vdGhlciBicmFuY2gsIENvbW1pdF8yIGludHJvZHVjZXMgYWRkaXRpb25hbCBp
-bXBvcnQgc3RhdGVtZW50cyBiZWZvcmUgSGVhZGVyQ29tcG9uZW50LCBzaGlmdGluZyBpdHMgcmV0
-dXJuIHN0YXRlbWVudCBmdXJ0aGVyIGRvd24gKGFyb3VuZCBsaW5lIDEwKS7CoAo+wqDCoMKgIElu
-IENvbW1pdF8yLCB0aGUgYnV0dG9uIHRleHQgaW4gSGVhZGVyQ29tcG9uZW50IGlzIG1vZGlmaWVk
-IGFzIGZvbGxvd3M6Cj4KPsKgwqDCoCBAQCAtMTAsNiArMTAsNiBAQAo+wqDCoMKgwqDCoMKgwqDC
-oCByZXR1cm4gYAo+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIDxkaXYgY2xhc3M9ImxheW91dC1z
-ZWN0aW9uIj4KPsKgwqDCoCAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCA8YnV0dG9uPkNsaWNrIE1l
-PC9idXR0b24+Cj7CoMKgwqAgK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgPGJ1dHRvbj7ngrnlh7s8
-L2J1dHRvbj4KPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCA8L2Rpdj4KPsKgwqDCoMKgwqDCoMKg
-wqAgYDsKPsKgwqDCoMKgIH0KClRoaXMgaHVuayBzaG93biBoZXJlIG1heSBiZSBhIGZhYnJpY2F0
-aW9uIChpdCBvbmx5IGhhcyB0d28KcHJlLWNvbnRleHQgYnV0IHRocmVlIHBvc3QtY29udGV4dCBs
-aW5lcywgd2hpY2ggaXMgdW51c3VhbCB1bmxlc3MKdGhlIHNob3J0ZXIgb25lIGlzIGF0IHRoZSBl
-bmQgb2YgdGhlIGZpbGUpLCBidXQgaW4gYW55IGNhc2UsIGEgcGF0Y2gKaHVuayBhYm92ZSBpcyBh
-cHBsaWVkIHRvIGEgbG9jYXRpb24gdGhhdCBoYXMgZXhhY3RseSB0aGVzZSBsaW5lczoKCsKgwqDC
-oMKgwqDCoMKgIHJldHVybiBgCsKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgPGRpdiBjbGFzcz0ibGF5
-b3V0LXNlY3Rpb24iPgrCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgPGJ1dHRvbj5DbGlj
-ayBNZTwvYnV0dG9uPgrCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIDwvZGl2PgrCoMKgwqDCoMKgwqDC
-oCBgOwrCoMKgwqAgfQoKdGhhdCBpcyB0aGUgY2xvc2VzdCB0byBsaW5lICMxMC4KCklmIHRoZXJl
-IGFyZSBtb3JlIHRoYW4gb25lIHBsYWNlcyBpbiB0aGUgdGFyZ2V0IGZpbGUgdGhhdCB0aGUKcHJl
-aW1hZ2UgKGkuZS4gdGhlIGNvbnRleHQgbGluZXMgdGhhdCBhcmUgc2hvd24gd2l0aCAiICIgYXQg
-dGhlCmJlZ2lubmluZywgYW5kIHRoZSBwcmVpbWFnZSBsaW5lcyB0aGF0IGFyZSBzaG93biB3aXRo
-ICItIiBhdCB0aGUKYmVnaW5uaW5nKSB3b3VsZCBtYXRjaCwgdGhlIHBhdGNoIGlzIGFtYmlndW91
-cy4KCkl0IGlzIHZlcnkgbXVjaCBleHBlY3RlZCwgZGVwZW5kaW5nIG9uIHdoYXQgb3RoZXIgY2hh
-bmdlcyBoYXZlCmhhcHBlbmVkIHRvIHRoZSB0YXJnZXQgZmlsZSBzaW5jZSB0aGV5IGRpdmVyZ2Vk
-IHRvIG1ha2UgdGhlIG1hdGNoaW5nCnBsYWNlcyBtb3ZlIGZyb20gdGhlIG9yaWdpbmFsIHBsYWNl
-LCBpdCB3b3VsZCBiZSBhcHBsaWVkIHRvIGEKIndyb25nIiBwbGFjZSBieSBjaGFuY2UsIGFzIHRo
-ZSBwcmVpbWFnZSBkb2VzIG5vdCB1bmlxdWVseSBpZGVudGlmeQp3aGVyZSB0aGUgcGF0Y2ggaHVu
-ayBzaG91bGQgdG8gYmUgYXBwbGllZCBpbiBzdWNoIGEgc2l0dWF0aW9uLgoKWW91IGNhbiBnZW5l
-cmF0ZSBhIHBhdGNoIHdpdGggd2lkZXIgY29udGV4dCBpZiB5b3UgY2FuIF9hbnRpY2lwYXRlXwp0
-aGUgaXNzdWUgKGZvciBleGFtcGxlLCB5b3UgbWF5IF9rbm93XyB0aGF0IGNvbW1pdC0xIGFscmVh
-ZHkgaGFkCm11bHRpcGxlIGxpbmVzIHRoYXQgbWF0Y2ggdGhlIHByZWltYWdlIGluIHRoZSBodW5r
-IGJlZm9yZSBydW5uaW5nCiJnaXQgZGlmZiIgb3IgImdpdCBmb3JtYXQtcGF0Y2giKSB0byBnaXZl
-IGl0IGEgYmV0dGVyIGNoYW5jZSB0byBiZQp1bmFtYmlndW91cywgZS5nLiAiZ2l0IGRpZmYgLVU4
-Ii7CoCBCdXQgaW4gZ2VuZXJhbCBpdCBpcyBpbXBvc3NpYmxlCnRvIGd1YXJhbnRlZSB0aGF0IHlv
-dXIgcHJlaW1hZ2UgaW4gdGhlIGh1bmsgd2lsbCBiZSBhbmQgc3RheSB0byBiZQp1bmFtYmlndW91
-cy7CoCBBZnRlciBhbGwsIHRoZSByZWNlaXZpbmcgZW5kIGNhbiBtYWtlIGluZGVwZW5kZW50CmNo
-YW5nZXMgdGhhdCBoYXBwZW4gdG8gbWF0Y2ggdGhlIHByZWltYWdlIHRoZSBwYXRjaCBpcyBsb29r
-aW5nIGZvciwKbm8gbWF0dGVyIGhvdyB3aWRlIHRoZSBjb250ZXh0IHlvdSBwaWNrIHdoZW4geW91
-IGdlbmVyYXRlIHlvdXIKcGF0Y2guCgpJdCBtaWdodCBiZSBhIGdvb2Qgc3RhcnRlciBwcm9qZWN0
-IGZvciBhc3BpcmluZyBHaXQgZGV2ZWxvcGVycyB0bwp0ZWFjaCAiZ2l0IGFwcGx5IiB0byBub3Rp
-Y2UgdGhpcyBzaXR1YXRpb24gYW5kIHdhcm4gYWJvdXQgaXQuwqAgVGhlCnRvb2wgY2Fubm90IGJ5
-IGRlZmluaXRpb24gdG8gYWx3YXlzIHBpY2sgdGhlIHJpZ2h0IHBsYWNlIHRvIHBhdGNoLApidXQg
-dGhlIHRvb2wgc2hvdWxkIGJlIGFibGUgdG8gcmVjb2duaXNlIGEgc2l0dWF0aW9uIHdoZXJlIGEg
-cGF0Y2gKaHVuayBpcyBhbWJpZ3VvdXMgYW5kIGNhbiBhcHBseSB0byBtdWx0aXBsZSBwbGFjZXMg
-aW4gdGhlIHRhcmdldCBhbmQKbGV0IHlvdSBrbm93IGFib3V0IGl0Lgo=
+When a remote tracking branch is deleted (e.g., via 'git push --delete
+origin branch'), the headids array entry for that branch is removed, but
+upstreamofref may still reference it. This causes gitk to show an error
+and prevents the Tags and Heads view from opening.
+
+Fix by checking that headids($upstreamofref($n)) exists before accessing
+it in the refill_reflist function.
+
+Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+---
+To reproduce the case:
+```
+mkdir sample-repo-remote &&
+cd sample-repo-remote &&
+git init --bare --initial-branch master && 
+cd .. &&
+git clone sample-repo-remote sample-repo &&
+cd sample-repo &&
+git commit --allow-empty -m "Sample commit" &&
+git push origin master &&
+git push origin master:master2 &&
+git branch master2 origin/master2 &&
+git push --delete origin master2
+```
+Then run gitk --all then bring up the "Tags and Heads" view.
+
+
+ gitk | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/gitk b/gitk
+index 6e4d71d585..3cfc9ef291 100755
+--- a/gitk
++++ b/gitk
+@@ -10294,7 +10294,9 @@ proc refill_reflist {} {
+         if {![string match "remotes/*" $n] && [string match $reflistfilter $n]} {
+             if {[commitinview $headids($n) $curview]} {
+                 lappend localrefs [list $n H]
+-                if {[info exists upstreamofref($n)] && [commitinview $headids($upstreamofref($n)) $curview]} {
++                if {[info exists upstreamofref($n)] && \
++                        [info exists headids($upstreamofref($n))] && \
++                        [commitinview $headids($upstreamofref($n)) $curview]} {
+                     lappend trackedremoterefs [list $upstreamofref($n) R]
+                 }
+             } else {
+-- 
+2.51.0
+
