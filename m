@@ -1,94 +1,109 @@
-Received: from mail2-relais-roc.national.inria.fr (mail2-relais-roc.national.inria.fr [192.134.164.83])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE971E515
-	for <git@vger.kernel.org>; Sat, 13 Sep 2025 14:14:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.134.164.83
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC481A3142
+	for <git@vger.kernel.org>; Sat, 13 Sep 2025 14:42:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757772899; cv=none; b=hB8G+Glu3Jl/2EmOpEfdfg9FAHNoLXORgTibCJq/kpYrXIGZ45DDEWe8l7V5S7o6HnKwSrKw6UxSqDWlwO71PzMSdOwkj5gdhcyNN65cHEWzgA3RJKAMtgHwgi+3+FXJ7iT3FNjKe6VsKrKr8MzwwGBX93np5hSlEaH5y4aiFc0=
+	t=1757774561; cv=none; b=JdQvyPBt27JcLBv79vf6etaxWtdO6nQKjreCWVMW7mzi54vck8cSdwue+KLXsyo3d69ZyoqL98hVCgJOTr/nGcpPj8v53KRipvyhLmaCwRKvQSqaQZAoTZ2KwWsXepejlGXUdse+//lQHqN/IQWhvwMnGlCD3fAOZg8wF8xRGiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757772899; c=relaxed/simple;
-	bh=mjFCK7zjqcMCQRoSz0CHhUdP2+D7HJ+WMGt9dQIOj5E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mkgECA3WhnfnPtGuw1sSRJ+7Dao0h4OOZIivLVGJbsLVhYaPvn/lMz5Hq7hqx5+KhCqIvgHWeDKEGi0hm4OuCCB8gcvOcM7bItUO73JAeaHnFFQuIH3gv9zJ3TVurfGqYmRtD//rbz3kaajdLhix0/ZVtRVpF6HHNVtcsyv44nI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=inria.fr; spf=pass smtp.mailfrom=inria.fr; dkim=pass (1024-bit key) header.d=inria.fr header.i=@inria.fr header.b=snPUl1Wu; arc=none smtp.client-ip=192.134.164.83
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=inria.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=inria.fr
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=inria.fr header.i=@inria.fr header.b="snPUl1Wu"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=inria.fr; s=dc;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=cSIt3MlXa9vN3RYgnr6WtD14J3bEFqfZmyroDS5bYBg=;
-  b=snPUl1WuOxM7HuW7Q2rcHJZDLTqXCEp2YqtQGEdloqiuW2twRba/lmIt
-   xr6Avxkzk/zFTEaoYO4ozlJ8/m4IWvTbDVF9WlCwT966dJ57FEEKeoArQ
-   ilxHVMS213RjHIF6d0Zvwtd3oZJFWrPkffO/ALaWx4lasoNzhQtQhbLjU
-   Y=;
-X-CSE-ConnectionGUID: ukkF80AjQta+Kj5n8lbhWg==
-X-CSE-MsgGUID: ocKpvbpKSkOoUmIBY9qzhA==
-Authentication-Results: mail2-relais-roc.national.inria.fr; dkim=none (message not signed) header.i=none; spf=SoftFail smtp.mailfrom=gabriel.scherer@inria.fr; dmarc=fail (p=none dis=none) d=inria.fr
-X-IronPort-AV: E=Sophos;i="6.18,261,1751234400"; 
-   d="scan'208";a="238904510"
-Received: from 88-126-14-38.subs.proxad.net (HELO localhost) ([88.126.14.38])
-  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Sep 2025 16:13:43 +0200
-From: Gabriel Scherer <gabriel.scherer@inria.fr>
-To: git@vger.kernel.org
-Cc: Gabriel Scherer <gabriel.scherer@inria.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 3/3] rebase: hint when failing on branch used by another worktree
-Date: Sat, 13 Sep 2025 16:13:20 +0200
-Message-ID: <20250913141327.2775228-4-gabriel.scherer@inria.fr>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250913141327.2775228-1-gabriel.scherer@inria.fr>
-References: <20250913141327.2775228-1-gabriel.scherer@inria.fr>
+	s=arc-20240116; t=1757774561; c=relaxed/simple;
+	bh=S+6NCe0XEKYqg0Q52mOLjnCpKUeOUsGbYrqD8vf6iCg=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PKxvI9xCINSVZnKgAGdoulYiykM569/yHCb4FAKNpA7jH1xVDEbFLtErUSwhf1oVJxa92QnL07Gjn52EYntVxwlro+UwnxLsSHHoLfuI6b2d5ZVBVEM51ng9rgKTz+IXlPcBrFnYh5sgrAzsXGSM3q2KzIfaJf6c1kQTS8pJMS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 58DEgSfd4141695
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 13 Sep 2025 14:42:29 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Johannes Sixt'" <j6t@kdbg.org>
+Cc: <git@vger.kernel.org>
+References: <074901dc2422$2039a910$60acfb30$@nexbridge.com> <a5e01f0f-1789-427c-83c3-90644fa234c9@kdbg.org>
+In-Reply-To: <a5e01f0f-1789-427c-83c3-90644fa234c9@kdbg.org>
+Subject: RE: [QUESTION] mergetool environment variables
+Date: Sat, 13 Sep 2025 10:42:24 -0400
+Organization: Nexbridge Inc.
+Message-ID: <000201dc24bc$a1b8d9d0$e52a8d70$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIIYP6OPNj0v3uszpSJmTqcmvS4YAMVDl7/tCAM3DA=
+Content-Language: en-ca
+X-Antivirus: Norton (VPS 250913-2, 9/13/2025), Outbound message
+X-Antivirus-Status: Clean
 
-From: "Gabriel.Scherer" <gabriel.scherer@inria.fr>
+On September 13, 2025 3:05 AM, Johannes Sixt wrote:
+>Am 12.09.25 um 22:16 schrieb rsbecker@nexbridge.com:
+>> I am trying to integrate a custom mergetool with a shell wrapper.
+>> What I get from the online help is the following description =
+referring
+>> to the command and environment variables.
+>>
+>> mergetool.<tool>.cmd
+>> Specify the command to invoke the specified merge tool.
+>> The specified command is evaluated in shell with the following
+>> variables available: BASE is the name of a
+>
+>Take note: this talks about "variables", not "environment variables".
+>
+>> temporary file containing the common base of the files to be merged,
+>> if available; LOCAL is the name of a temporary file containing the
+>> contents of the file on the current branch; REMOTE is the name of a
+>> temporary file containing the contents of the file from the branch
+>> being merged; MERGED contains the name of the file to which the merge
+>> tool should write the results of a successful merge.
+>>
+>> When I try to use this from a shell, simply with:
+>> #!/bin/sh
+>> env
+>> exit 1
+>>
+>> the described environment variables: BASE, LOCAL, REMOTE, and MERGED,
+>> are not present.
+>
+>Look at the scripts in the directory mergetools/ and note that they are =
+only (large)
+>shell code fragements without a shbang line. They are not even =
+executable.
 
-Signed-off-by: Gabriel Scherer <gabriel.scherer@inria.fr>
----
- builtin/rebase.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+Let me try to infer what is happening and please correct me if my =
+assumptions
+are wrong:
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 7a57ebd852..05c86117fc 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -9,6 +9,7 @@
- 
- #include "builtin.h"
- 
-+#include "advice.h"
- #include "abspath.h"
- #include "environment.h"
- #include "gettext.h"
-@@ -1687,8 +1688,15 @@ int cmd_rebase(int argc,
- 		strbuf_reset(&buf);
- 		strbuf_addf(&buf, "refs/heads/%s", branch_name);
- 		if (!refs_read_ref(get_main_ref_store(the_repository), buf.buf, &branch_oid)) {
--			if (!options.ignore_other_worktrees)
--				die_if_checked_out(buf.buf, 1);
-+			if (!options.ignore_other_worktrees) {
-+				int code = die_message_if_checked_out(buf.buf, 1);
-+				if (code) {
-+					advise_if_enabled(
-+						ADVICE_BRANCH_USED_IN_OTHER_WORKTREE,
-+						_("Use --ignore-other-worktrees to proceed anyway."));
-+					exit(code);
-+				}
-+			}
- 			options.head_name = xstrdup(buf.buf);
- 			options.orig_head =
- 				lookup_commit_object(the_repository,
--- 
-2.51.0
+Git includes an existing shell fragment with the appropriate tool name =
+from
+git-core/mergetools/tool-name instead of creating a dedicated shell in =
+which to
+run the merge tool script.
+
+It then uses ${merge-tool-path} to execute the tool based on whether =
+diff_cmd() or
+merge_cmd() is invoked. Because BASE, LOCAL, REMOTE, and MERGED are not
+exported, they are not visible to sub-shells.
+
+This does not apply if the tool is unknown to the mergetools directory, =
+so must be
+contributed and packaged into git to work according to the =
+documentation.
+
+So a custom mergetool will not have access to these variables and has to =
+hack
+through what is in the working index based on file_BASE_num, etc. =
+instead of
+having direct information on what is being merged.
+
+That about right?
 
