@@ -1,66 +1,65 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EECC261393
-	for <git@vger.kernel.org>; Sat, 13 Sep 2025 20:54:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E674261B6C
+	for <git@vger.kernel.org>; Sat, 13 Sep 2025 20:54:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757796881; cv=none; b=RmC5C6BczK8p2yggATUNzGs1e/DJhYH72Pm9Kxs+e9sWbWQx/eYhffIFXdKktlAmM/j2rt5rlHDWo4aislRa/HrkjUMmKhfj79p9kNz4CrI8xVTKHhCXfdZAreY7M/7732BJEKWlLXr7AFVeZHYDcdNqPiRjFz7tJ3ZxBXTcVOg=
+	t=1757796881; cv=none; b=T+U04W1BmjM1QRAJ04KscdcA5MZiW41HNq6VK+GvOGb4OGeyj+33JUZd6xlVW6naNbdznWSctupoEiT+T44Peyil1sdi5vYrN9+EenxOHPBOcQcdPyzJWYhj3LVHlFZGAi2WzNgYA+4V665G8op35Hg/pxtljcYFnpJt/d9YeM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1757796881; c=relaxed/simple;
-	bh=HNsKTCXVXQnjQdgAJqBAH6WF1n0o6ZY6eQKb7uqT21M=;
+	bh=YpdjhjRtQSPX0O2SsppHL8EXLsfVW1NMwTlP+4LdaJI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BCNRn9NMy/68FwblHO2RJwrGwIIUHgg2QHhWas+QhCgQwZv+B76GqZucueEIxacg2GmQiaKCbW4osJboyo13RY/AP0iF9dZkxkVbMljmpgSWzPvyfUkUyLJ/Qvh0kBd+BT3h/fEgW2asf7HLbKJ7b0Dpjp+BzRmevrrQFtylcYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dg6/aezV; arc=none smtp.client-ip=209.85.218.49
+	 In-Reply-To:To:Cc; b=HhVZ1zgBYxIsfaXjHm1KuCjzVJ3YYTy+r/AcFppHP0J0UAZT65buxOiVUHtqEV6MbCaXjGHw177rDFHPNEq+eESzTODW7AD83CLbgTVHwa4U1wzThGQlLrFGOjIZk5e1N7MEeD7AU7QbfuQQufo+GY9wgwN/A2QP+29Zy1cp34Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D0jxKSs/; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dg6/aezV"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-b079c13240eso488007466b.1
-        for <git@vger.kernel.org>; Sat, 13 Sep 2025 13:54:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D0jxKSs/"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-b03fa5c5a89so453761466b.2
+        for <git@vger.kernel.org>; Sat, 13 Sep 2025 13:54:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757796876; x=1758401676; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757796878; x=1758401678; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=QKREtk2oSoLLPPHF+BJ9H9OGH1UTirl3rb/sP60BrW0=;
-        b=dg6/aezVTeUzv3OxZsYT2L/G1gFZHWa5UUaJ91vc85kisxkIxisZiRTQjru+WGN0gc
-         Mym/BRC+1MiuNqBClevCrYgJKKaoeE+it/FuhhyeemxLZjpCnKvsbYUrC0IvB0iDbcMi
-         OUa4g3vF9qEEjIlEYv4OfPJbNSXLrSccPwA3OJ8M1fjSLZXu3g6viy4XlDA2zsKmpaxr
-         io454qepXvRx4fvQwzUaMyaw2MbLyKpKbSlfgDYVcCpKiLt/hootb7puigALnAhR96iA
-         au6RuNFObW7drHVsbnwqKbuemikxuoTiXHcRgLgZfJVAOoXN7ne5vGnqrrLNFtQUUuKC
-         Q5Vg==
+        bh=yIUC+1yPEzHPkylf13Ugd3Q2BVlkcy5VmAHSs/mXueE=;
+        b=D0jxKSs/JQHBXcfVEmjZTWKTcMll66rQ8yeGR/iOkyIeqwz6fZzZ8WI3SqwzRQi5AQ
+         uDJm9O3/C6SFjaL3c6rNNSD6uFUIKSBuYFI5A/hlbX3GquGLrIHXQ9aEucvgstAmQ368
+         4CLzqxYDHKt/xYeDzXwOyU02ikYgZ4jGQ6GsZY53Op8NlchdN5HRmQO28l7axliS09gu
+         24ojRDNtg86XDMa9lD4p+l6HlBR3FXbbAfByAnRlINyqoIk146xhjgHQmgwV9sS72kJi
+         j8HAt2Q6PDiv/Psb3xWzTP73X5qtCiH/QKf/qxzD9HutKo5Ai50kuso9oYkvl4ArlgaT
+         9mtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757796876; x=1758401676;
+        d=1e100.net; s=20230601; t=1757796878; x=1758401678;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QKREtk2oSoLLPPHF+BJ9H9OGH1UTirl3rb/sP60BrW0=;
-        b=fVyD42Od/ZhEHJmcLCxukLxyrMQdBmE+qHNxo014VVAGkP7gc9iWPmNA3YCOMJW6V2
-         KjVJLgsdHKDbZeG2gx1FQPiRuze332IHImMLNMhtZUwUmWmjNMoOxyCGL0pSeEiFXUZh
-         3smojEYDK2HJd2mox4r+sZ2fqGyD0PIETY85G0W0j3Jt0sA0J8dChSDKwMov08HKYegM
-         g42zay4/QYpK4TszYFsm03m2rftmQ27/2Wg4jdcaPe8Weo+tGbPmAJHYB8o4soaSbtZC
-         YwFNFMN6Y31RfYuY8usNkgqVXivwYDFEWLVCSbYktSl2EXyT1VOIiCUOtzxlnD+TZzPK
-         KTcA==
-X-Gm-Message-State: AOJu0Yw6IDtclwFm1QDQxa3vOfullj8afPKohqmYgl0ldHt0ySz4hQ/r
-	ZO4MA12pWrJfRraU6zOwQgtqNTZMSoVloFYOMaC+NYEgqWKB5gLMgUyC
-X-Gm-Gg: ASbGnctTKKHmniYpl5LOzN8HLWeHxZpttLJi2PB1q9AkY27FX82TUQT6sNoRvHKTMP2
-	dMkQTrxM8rg1Qfo4OidkFqtbhaI1x1GiJgRpVSYunA/o5sJOv1VvPDIQwyiuFclGpm3TTuJ8piE
-	TncHXZ0TtjS8sIbz6wmd4Oae5gTwoixc82xyuVZsv/o+DS0xqip9UBjVSMqk8CJ7Ga4g3zXOG/w
-	rmdZNbMZgdPVr5U8vpbeaSjHjEpePFAANuxQzHYru9oJOAWiRV2Z2M5PRLSDEGzND+KOUwLpWog
-	cFjKfPMKxl9Chlp/LMFnXdNmgxbMw56L5MEkvpaVVDmL6U9xZeHKlioGNZVIt7h6BvPZuZ9jDL/
-	zbu1AVR9W84X7NFcnWShb7BdFEIzeMMQYfMM4VCI=
-X-Google-Smtp-Source: AGHT+IGeQv0cKHri12pVX+bBTBosjC8ZMsN91uoiBF+pg/X6JuQSHVvIcgY1jeEusG99yY42BPhF5w==
-X-Received: by 2002:a17:907:6d08:b0:b04:26a7:f77e with SMTP id a640c23a62f3a-b07c3869126mr703470466b.51.1757796876503;
-        Sat, 13 Sep 2025 13:54:36 -0700 (PDT)
+        bh=yIUC+1yPEzHPkylf13Ugd3Q2BVlkcy5VmAHSs/mXueE=;
+        b=U9Xl79IE2gEUznXGTTODnl6QvK8EyL3m2glISJVbPE7x0DK3WJpUMk6J5AdBnF5nEA
+         plS8kbZp7mqX6OPHzr9JcIWHvgGSD7n0slFyiRUWVHJcpC6K9yI/CyA8Qwv7OIKknjvA
+         UmSzvs2tpd+6aq0XWVVRKtuqJqLt9TMTwStOe2xITQSN1QKJryYEV7zsrXaQM5pD5Gcq
+         Ev4xLe9rv+D6SZZpvK7gPfGQeKMDeUYQImIVcKU2lI1mGA8G2yfJqPaGTBVSwuCn4u/y
+         4pr2IqDsrvHj/OlyH6P4vE7WFdVINndKybO3Z1lqRPZm9eo+1wVwEmquIPdTuuLRFW1l
+         l2JA==
+X-Gm-Message-State: AOJu0YzKr/A0J1ABKgmxM7+CXUe9QlPIMvG4x7qOHsX6b39/PnYkd4yA
+	UpTt2fdI6xfMlzdu3VWcBlp3UG71NpHp+j75dLcXiwpqVLT/FWw6sE8vHdkpGo19
+X-Gm-Gg: ASbGnctBGs2U/gOx3bUSdX1JuAU7ifIJG2JNAhesUALrEH7K8qxlNOEZhhTJvV633Q8
+	cpxvoHJKI2mA17TYZZLak+OWdt7xVLkrgHBZYDCzs/86vHDo3KhliiLHXxwvZzII8jJRpInOi8E
+	tk4eGowsMy90TZB5mmfqJPzvL60xY0BCa0t1Gh94FFBaFzneBEhRxzIg168iAGxi1EQvFVxa5ca
+	7nZ6IeCE0FdI5g7gZRipsSj0FZ0QyTZceOkPNj1w36Ls7wgdXXHwUrnllPrst+t/LuAmPEuXu3V
+	zgyjkaSBdbiCpkDMlJLempAl8WfTeThX6PELiC4w4048X9q+i93PvgCiKo2SLTOXeoah/8g/kxp
+	SahmWa4iNv5TVxDP7vZhDD6FqcMK2
+X-Google-Smtp-Source: AGHT+IHWKGQFKHD5PIH3h5AmWvGJex3AVgIFb1w2oo8amkOqJ0yPsPHpiarVPZMe4jxukgIksJAqdg==
+X-Received: by 2002:a17:907:3e21:b0:b07:c1d1:4b66 with SMTP id a640c23a62f3a-b07c356d5ffmr719671566b.14.1757796877432;
+        Sat, 13 Sep 2025 13:54:37 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:2455:8268:bc00:5b4f:6b96:ff06:27eb])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b07b32ef574sm635383466b.73.2025.09.13.13.54.35
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b07b32ef574sm635383466b.73.2025.09.13.13.54.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 13 Sep 2025 13:54:36 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Sat, 13 Sep 2025 22:54:31 +0200
-Subject: [PATCH v3 3/4] refs/files: handle F/D conflicts in
- case-insensitive FS
+Date: Sat, 13 Sep 2025 22:54:32 +0200
+Subject: [PATCH v3 4/4] refs/files: handle D/F conflicts during locking
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,133 +68,196 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-3-195569740b57@gmail.com>
+Message-Id: <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-4-195569740b57@gmail.com>
 References: <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-0-195569740b57@gmail.com>
 In-Reply-To: <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-0-195569740b57@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, joe.drew@indexexchange.com, 
  peff@peff.net, ps@pks.im, gitster@pobox.com
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4292; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=HNsKTCXVXQnjQdgAJqBAH6WF1n0o6ZY6eQKb7uqT21M=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGjF2giLGcwB78z/Ug7jhpD7N3laVgq0vuMjY
- vLqkCcYcI2b0okBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJoxdoIAAoJED7VnySO
- Rox/jNAL/ii0ZUeBmaXvt3L3GdxN0fEqLjKi4kQ5adxT+4LJm1J3jUwFSttJP3PZMr1WH2Sd3mO
- maJlImq10DbvZjPadq/F8jRUtfT2D95Ye3gTzD9+KOPnL0ymiXnCuqSr8rMtoeECD5pDhlCS7/5
- 0PKrPcyTNBPiTlsSinL9FCk5+gvHI7rKpDH3Eq6XQAooRntrBM7g6HaVIz++Jb6ulRib5/jju/V
- dRoI8ZDDyqU8gCx5SU2C2EZmrnaot8q2xB8S+vp2fbtDPogtDOQM6OtJv27c16ykhEA37RBzjVC
- GvScYglHHiU250ZGrkhUtoScJ494oSQNCsFez8eWnq8prEvjmtkQOKNjqiTHYz4ZemSLtBxjlVH
- Xb8MfC6r799K9cQSDee3xU3jCKgK21xdltwkL+LcDFM/NnSr0F+TK+8oLw/9FwbStJlc83F5cLC
- iUgOjoiZtMWRJJcVCGToC60acEHAKEmTF3NdxHrxe8o7BLoF3zc4LbutrmWW2yuvOLKifiglvG7
- Vs=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6338; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=YpdjhjRtQSPX0O2SsppHL8EXLsfVW1NMwTlP+4LdaJI=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGjF2gkmIwEXxbJOVDQZMbqbJK43NhcB5BF/c
+ UmyVQalRe9f94kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJoxdoJAAoJED7VnySO
+ Rox/24cMAJHxe3BrxnKRRWKxW3ys4yRMTHrcB6SJlxddbTqbKXmUlpyT+E1Wdbu9GBM9xWaBO3W
+ 9Yt9wF1Kb0vsh9DP6ahqb8cIV7jK9POTGqg6m09S5aazg5hsGvwmmm7+CaPL7qd2kKadU0NL/vA
+ ZYpdBrlRPhfY2+Hli5lpKDfmlMDiaIejEGKTvVo4PUSF8tbQys9lQEhVpYx2BFaiLLUo/QFP94Q
+ DwHaY605PItbUGSeBdMFCHiPI+R6zW9Vf/pkZDj0acnf4VTJbsjbAP3EFqKz/wVRPDZiXzJlgPQ
+ LHFsfs5d1RFxf3TimTelNe5XYoxdwaMYGajPyV/1EjwR+QQwCEF0EwPwDYPFaX4eh+AyE0Yn7oB
+ 4xxt5bGy2FUdjkuvfaCFjr7A6MKcQliNs0igWr5Pkps8fLoZfs2JxSI6RhEbdoSRrbnZjtiWbNA
+ G+VSd8tmVV6TlCEbDzzJnvJRxiIGuEBkzenyTk9NldYM8ih8SLM8gf6sKFP4y1XPcrV9RM6TDd4
+ Gg=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-When using the files-backend on case-insensitive filesystems, there is
-possibility of hitting F/D conflicts when creating references within a
-single transaction, such as:
+The previous commit added the necessary validation and checks for F/D
+conflicts in the files backend when working on case insensitive systems.
 
-  - 'refs/heads/foo'
-  - 'refs/heads/Foo/bar'
+There is still a possibility for D/F conflicts. This is a different from
+the F/D since for F/D conflicts, there would not be a conflict during
+the lock creation phase:
 
-Ideally such conflicts are caught in `refs_verify_refnames_available()`
-which is responsible for checking F/D conflicts within a given
-transaction. This utility function is shared across the reference
-backends. As such, it doesn't consider the issues of using a
-case-insensitive file system, which only affects the files-backend.
+    refs/heads/foo.lock
+    refs/heads/foo/bar.lock
 
-While one solution would be to make the function aware of such issues,
-this feels like leaking implementation details of file-backend specific
-issues into the utility function. So opt for the more simpler option, of
-lowercasing all references sent to this function when on a
-case-insensitive filesystem and operating on the files-backend.
+However there would be a conflict when the locks are committed, since we
+cannot have 'refs/heads/foo/bar' and 'refs/heads/foo'. These kinds of
+conflicts are checked and resolved in
+`refs_verify_refnames_available()`, so the previous commit ensured that
+for case-insensitive filesystems, we would lowercase the inputs to that
+function.
 
-To do this, simply use a `struct strbuf` to convert the refname to a
-lower case and append it to the list of refnames to be checked. Since we
-use a `struct strbuf` and the memory is cleared right after, make sure
-that the string list duplicates all provided string.
+For D/F conflicts, there is a conflict during the lock creation phase
+itself:
 
-Without this change, the user would simply be left with a repository
-with '.lock' files which were created in the 'prepare' phase of the
-transaction, as the 'commit' phase would simply abort and not do the
-necessary cleanup.
+    refs/heads/foo/bar.lock
+    refs/heads/foo.lock
 
-Reported-by: Junio C Hamano <gitster@pobox.com>
+As in `lock_raw_ref()` after creating the lock, we also check for D/F
+conflicts. This can occur in case-insensitive filesystems when trying to
+fetch case-conflicted references like:
+
+    refs/heads/Foo/new
+    refs/heads/foo
+
+D/F conflicts can also occur in case-sensitive filesystems, when the
+repository already contains a directory with a lock file
+'refs/heads/foo/bar.lock' and trying to fetch 'refs/heads/foo'. This
+doesn't concern directories containing garbage files as those are
+handled on a higher level.
+
+To fix this, simply categorize the error as a name conflict. Also remove
+this reference from the list of valid refnames for availability checks.
+By categorizing the error and removing it from the list of valid
+references, batched updates now knows to reject such reference updates
+and apply the other reference updates.
+
+Fix a small typo in `ref_transaction_maybe_set_rejected()` while here.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- refs/files-backend.c | 19 +++++++++++++++++--
- t/t5510-fetch.sh     | 20 ++++++++++++++++++++
- 2 files changed, 37 insertions(+), 2 deletions(-)
+ refs.c               |  9 ++++++++-
+ refs/files-backend.c | 11 ++++++-----
+ t/t5510-fetch.sh     | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 60 insertions(+), 6 deletions(-)
 
+diff --git a/refs.c b/refs.c
+index 4c1c339ed9..e7109ea5fe 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1223,7 +1223,7 @@ int ref_transaction_maybe_set_rejected(struct ref_transaction *transaction,
+ 		return 0;
+ 
+ 	if (!transaction->rejections)
+-		BUG("transaction not inititalized with failure support");
++		BUG("transaction not initialized with failure support");
+ 
+ 	/*
+ 	 * Don't accept generic errors, since these errors are not user
+@@ -1232,6 +1232,13 @@ int ref_transaction_maybe_set_rejected(struct ref_transaction *transaction,
+ 	if (err == REF_TRANSACTION_ERROR_GENERIC)
+ 		return 0;
+ 
++	/*
++	 * Rejected refnames shouldn't be considered in the availability
++	 * checks, so remove them from the list.
++	 */
++	string_list_remove(&transaction->refnames,
++			   transaction->updates[update_idx]->refname, 0);
++
+ 	transaction->updates[update_idx]->rejection_err = err;
+ 	ALLOC_GROW(transaction->rejections->update_indices,
+ 		   transaction->rejections->nr + 1,
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 69e50a16db..817b56f4ce 100644
+index 817b56f4ce..fec7713ea6 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -905,8 +905,23 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
- 		 * If the ref did not exist and we are creating it, we have to
- 		 * make sure there is no existing packed ref that conflicts
- 		 * with refname. This check is deferred so that we can batch it.
-+		 *
-+		 * For case-insensitive filesystems, we should also check for F/D
-+		 * conflicts between 'foo' and 'Foo/bar'. So let's lowercase
-+		 * the refname.
- 		 */
--		item = string_list_append(refnames_to_check, refname);
-+		if (ignore_case) {
-+			struct strbuf lower = STRBUF_INIT;
-+
-+			strbuf_addstr(&lower, refname);
-+			strbuf_tolower(&lower);
-+
-+			item = string_list_append_nodup(refnames_to_check,
-+							strbuf_detach(&lower, NULL));
-+		} else {
-+			item = string_list_append(refnames_to_check, refname);
-+		}
-+
- 		item->util = xmalloc(sizeof(update_idx));
- 		memcpy(item->util, &update_idx, sizeof(update_idx));
- 	}
-@@ -2831,7 +2846,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
- 			       "ref_transaction_prepare");
- 	size_t i;
- 	int ret = 0;
--	struct string_list refnames_to_check = STRING_LIST_INIT_NODUP;
-+	struct string_list refnames_to_check = STRING_LIST_INIT_DUP;
- 	char *head_ref = NULL;
- 	int head_type;
- 	struct files_transaction_backend_data *backend_data;
+@@ -869,6 +869,7 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
+ 				goto error_return;
+ 			} else if (remove_dir_recursively(&ref_file,
+ 							  REMOVE_DIR_EMPTY_ONLY)) {
++				ret = REF_TRANSACTION_ERROR_NAME_CONFLICT;
+ 				if (refs_verify_refname_available(
+ 						    &refs->base, refname,
+ 						    extras, NULL, 0, err)) {
+@@ -876,14 +877,14 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
+ 					 * The error message set by
+ 					 * verify_refname_available() is OK.
+ 					 */
+-					ret = REF_TRANSACTION_ERROR_NAME_CONFLICT;
+ 					goto error_return;
+ 				} else {
+ 					/*
+-					 * We can't delete the directory,
+-					 * but we also don't know of any
+-					 * references that it should
+-					 * contain.
++					 * Directory conflicts can occur if there
++					 * is an existing lock file in the directory
++					 * or if the filesystem is case-insensitive
++					 * and the directory contains a valid reference
++					 * but conflicts with the update.
+ 					 */
+ 					strbuf_addf(err, "there is a non-empty directory '%s' "
+ 						    "blocking reference '%s'",
 diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 6f8db0ace4..08dbea6503 100755
+index 08dbea6503..6b2739db26 100755
 --- a/t/t5510-fetch.sh
 +++ b/t/t5510-fetch.sh
-@@ -53,6 +53,12 @@ test_expect_success "clone and setup child repos" '
- 		cd case_sensitive &&
- 		git branch branch1 &&
- 		git branch bRanch1
+@@ -59,6 +59,12 @@ test_expect_success "clone and setup child repos" '
+ 		cd case_sensitive_fd &&
+ 		git branch foo/bar &&
+ 		git branch Foo
 +	) &&
-+	git clone --ref-format=reftable . case_sensitive_fd &&
++	git clone --ref-format=reftable . case_sensitive_df &&
 +	(
-+		cd case_sensitive_fd &&
-+		git branch foo/bar &&
-+		git branch Foo
++		cd case_sensitive_df &&
++		git branch Foo/bar &&
++		git branch foo
  	)
  '
  
-@@ -1572,6 +1578,20 @@ test_expect_success REFFILES 'existing reference lock in repo' '
+@@ -1592,6 +1598,46 @@ test_expect_success CASE_INSENSITIVE_FS,REFFILES 'F/D conflict on case insensiti
  	)
  '
  
-+test_expect_success CASE_INSENSITIVE_FS,REFFILES 'F/D conflict on case insensitive filesystem' '
++test_expect_success CASE_INSENSITIVE_FS,REFFILES 'D/F conflict on case insensitive filesystem' '
 +	test_when_finished rm -rf case_insensitive &&
 +	(
 +		git init --bare case_insensitive &&
 +		cd case_insensitive &&
-+		git remote add origin -- ../case_sensitive_fd &&
++		git remote add origin -- ../case_sensitive_df &&
 +		test_must_fail git fetch -f origin "refs/heads/*:refs/heads/*" 2>err &&
 +		test_grep "failed: refname conflict" err &&
 +		git rev-parse refs/heads/main >expect &&
-+		git rev-parse refs/heads/foo/bar >actual &&
++		git rev-parse refs/heads/Foo/bar >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success REFFILES 'D/F conflict on case sensitive filesystem with lock' '
++	(
++		git init --ref-format=reftable base &&
++		cd base &&
++		echo >file update &&
++		git add . &&
++		git commit -m "updated" &&
++		git branch -M main &&
++
++		git update-ref refs/heads/foo @ &&
++		git update-ref refs/heads/branch @ &&
++		cd .. &&
++
++		git init --ref-format=files --bare repo &&
++		cd repo &&
++		git remote add origin ../base &&
++		mkdir refs/heads/foo &&
++		touch refs/heads/foo/random.lock &&
++		test_must_fail git fetch origin "refs/heads/*:refs/heads/*" 2>err &&
++		test_grep "some local refs could not be updated; try running" err &&
++		git rev-parse refs/heads/main >expect &&
++		git rev-parse refs/heads/branch >actual &&
 +		test_cmp expect actual
 +	)
 +'
