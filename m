@@ -1,271 +1,288 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E674261B6C
-	for <git@vger.kernel.org>; Sat, 13 Sep 2025 20:54:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E94F212D7C
+	for <git@vger.kernel.org>; Sat, 13 Sep 2025 20:56:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757796881; cv=none; b=T+U04W1BmjM1QRAJ04KscdcA5MZiW41HNq6VK+GvOGb4OGeyj+33JUZd6xlVW6naNbdznWSctupoEiT+T44Peyil1sdi5vYrN9+EenxOHPBOcQcdPyzJWYhj3LVHlFZGAi2WzNgYA+4V665G8op35Hg/pxtljcYFnpJt/d9YeM0=
+	t=1757796980; cv=none; b=EfbdzB68218hye7n/e1OnjI1Mv6dKf6EEBgYZIDyrwWhttjPQ8NFebj/B9fDnATFPbmegAFU+5Vosz6fLRhKc/vlJKoCi7NmUZ9ezYHiX7d9J2agasKqwn85dXbQ7x5zW3Z3MDgo9akahA2Jc49mgRmNOM8VbqM1WWQwt33m//Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757796881; c=relaxed/simple;
-	bh=YpdjhjRtQSPX0O2SsppHL8EXLsfVW1NMwTlP+4LdaJI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=HhVZ1zgBYxIsfaXjHm1KuCjzVJ3YYTy+r/AcFppHP0J0UAZT65buxOiVUHtqEV6MbCaXjGHw177rDFHPNEq+eESzTODW7AD83CLbgTVHwa4U1wzThGQlLrFGOjIZk5e1N7MEeD7AU7QbfuQQufo+GY9wgwN/A2QP+29Zy1cp34Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D0jxKSs/; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757796980; c=relaxed/simple;
+	bh=U1jf13NyobGdv5MIpo2kH3paTRRfQBl57ozeN7ObrCc=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=nXsmxJLgdidGuStD50a+AISxv3+dlelIxs4NAyuHO9L7DtdMiVJlBmczb1HKfHn+9kj5S6ccYOSHiSeexB/L3ndXBeT+EVmc/x9Pf/SVJP3NnBS0JwA0hC28VGP86V26bXL+2MYuzO/btwuEe8wIk2mJp8K4ca2oZHA7ZueZPLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=gMPySf7I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O84iopzL; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D0jxKSs/"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-b03fa5c5a89so453761466b.2
-        for <git@vger.kernel.org>; Sat, 13 Sep 2025 13:54:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757796878; x=1758401678; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yIUC+1yPEzHPkylf13Ugd3Q2BVlkcy5VmAHSs/mXueE=;
-        b=D0jxKSs/JQHBXcfVEmjZTWKTcMll66rQ8yeGR/iOkyIeqwz6fZzZ8WI3SqwzRQi5AQ
-         uDJm9O3/C6SFjaL3c6rNNSD6uFUIKSBuYFI5A/hlbX3GquGLrIHXQ9aEucvgstAmQ368
-         4CLzqxYDHKt/xYeDzXwOyU02ikYgZ4jGQ6GsZY53Op8NlchdN5HRmQO28l7axliS09gu
-         24ojRDNtg86XDMa9lD4p+l6HlBR3FXbbAfByAnRlINyqoIk146xhjgHQmgwV9sS72kJi
-         j8HAt2Q6PDiv/Psb3xWzTP73X5qtCiH/QKf/qxzD9HutKo5Ai50kuso9oYkvl4ArlgaT
-         9mtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757796878; x=1758401678;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yIUC+1yPEzHPkylf13Ugd3Q2BVlkcy5VmAHSs/mXueE=;
-        b=U9Xl79IE2gEUznXGTTODnl6QvK8EyL3m2glISJVbPE7x0DK3WJpUMk6J5AdBnF5nEA
-         plS8kbZp7mqX6OPHzr9JcIWHvgGSD7n0slFyiRUWVHJcpC6K9yI/CyA8Qwv7OIKknjvA
-         UmSzvs2tpd+6aq0XWVVRKtuqJqLt9TMTwStOe2xITQSN1QKJryYEV7zsrXaQM5pD5Gcq
-         Ev4xLe9rv+D6SZZpvK7gPfGQeKMDeUYQImIVcKU2lI1mGA8G2yfJqPaGTBVSwuCn4u/y
-         4pr2IqDsrvHj/OlyH6P4vE7WFdVINndKybO3Z1lqRPZm9eo+1wVwEmquIPdTuuLRFW1l
-         l2JA==
-X-Gm-Message-State: AOJu0YzKr/A0J1ABKgmxM7+CXUe9QlPIMvG4x7qOHsX6b39/PnYkd4yA
-	UpTt2fdI6xfMlzdu3VWcBlp3UG71NpHp+j75dLcXiwpqVLT/FWw6sE8vHdkpGo19
-X-Gm-Gg: ASbGnctBGs2U/gOx3bUSdX1JuAU7ifIJG2JNAhesUALrEH7K8qxlNOEZhhTJvV633Q8
-	cpxvoHJKI2mA17TYZZLak+OWdt7xVLkrgHBZYDCzs/86vHDo3KhliiLHXxwvZzII8jJRpInOi8E
-	tk4eGowsMy90TZB5mmfqJPzvL60xY0BCa0t1Gh94FFBaFzneBEhRxzIg168iAGxi1EQvFVxa5ca
-	7nZ6IeCE0FdI5g7gZRipsSj0FZ0QyTZceOkPNj1w36Ls7wgdXXHwUrnllPrst+t/LuAmPEuXu3V
-	zgyjkaSBdbiCpkDMlJLempAl8WfTeThX6PELiC4w4048X9q+i93PvgCiKo2SLTOXeoah/8g/kxp
-	SahmWa4iNv5TVxDP7vZhDD6FqcMK2
-X-Google-Smtp-Source: AGHT+IHWKGQFKHD5PIH3h5AmWvGJex3AVgIFb1w2oo8amkOqJ0yPsPHpiarVPZMe4jxukgIksJAqdg==
-X-Received: by 2002:a17:907:3e21:b0:b07:c1d1:4b66 with SMTP id a640c23a62f3a-b07c356d5ffmr719671566b.14.1757796877432;
-        Sat, 13 Sep 2025 13:54:37 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:2455:8268:bc00:5b4f:6b96:ff06:27eb])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b07b32ef574sm635383466b.73.2025.09.13.13.54.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Sep 2025 13:54:36 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Sat, 13 Sep 2025 22:54:32 +0200
-Subject: [PATCH v3 4/4] refs/files: handle D/F conflicts during locking
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="gMPySf7I";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O84iopzL"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2DD611400078;
+	Sat, 13 Sep 2025 16:56:16 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Sat, 13 Sep 2025 16:56:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757796976;
+	 x=1757883376; bh=dg3jjsqZbsq8MTmQbJhnVgNFRPcGtOLIO+XuIweJK9c=; b=
+	gMPySf7IuiZ7aCEPW1XKKpznRDTBFVJo44XQ6t5RgIaLNz8MdQNbrd67NlZgOUOg
+	aoyIE+0W/AmUDuMki3gNKL0st+ybma1KYFYnd8ile3scrx+aFnq7+QhK8qFWW5L7
+	Qoyanu5FbdZQ6RTXn8nEPMbYNpzjCOymQRRR0t7IeelHktOvDVSW8FT4NC4kUYmv
+	Gv9lJF766tkTSp1iwrodaeYCx/FbNri3u72F9RBXVFQeCiFJ7hutS1rQDZotQxVC
+	naVUp0r7bsWIm3YSonvgHtFxERNpjhKmxZ9GNEq2oP+EATtZXU+9eZqhtchCMTom
+	y+AjkApIGYS2ucvPLeHdyw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757796976; x=
+	1757883376; bh=dg3jjsqZbsq8MTmQbJhnVgNFRPcGtOLIO+XuIweJK9c=; b=O
+	84iopzLXmnEMa9M+0AJ8K0vIN4kqJ5OoOXiJk0DPFWZ2CkEo0VG/XeceV69dgpr8
+	fb4Ikjcq05A5BQW/AoJxG6Mnkc2DbTiLUO4QM1bnA0Twom/7jbAsg9SilDZf9shn
+	/7pHa0Rujh6YhigyGlISa3KcX4CJtnWAhZ4Udv2lFqVcyFGjwozxVN4978BN9xeE
+	qSbMc0TFenPvyMula6evIYjcbZZzvRRZIZQDPbgG9JnaTyC1tW9PKmCnTRG9PP5s
+	T1YnutZUPneRAko+k3N3uqKkiLsTnXkv04JFiWjHTSmmOuG/g7AgGPhy+Q0qzXEd
+	RrgCZjMk2N+3G1Ibie+Tg==
+X-ME-Sender: <xms:b9rFaGEfFAfjr5Akb18Ujsto59b7_CkCywuhVTCqIjsgKvDCTcPa4TI>
+    <xme:b9rFaHWeJGvJTZEBOUPN6SasNqzOOyPXhdImB4Ufx9Kr_ZIXras8bNogalRpsDhIa
+    Fl3bs2kqQ1z7eOP5Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefvdelgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
+    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohephedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghl
+    mhdrohhrghdruhhkpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghgrsghrihgvlhdrshgthhgvrhgvrhesihhnrhhirgdrfhhrpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:b9rFaPo3AKMkyrxXsty9Qme55YYj6DKouNGFI56nOtyeUwmTOsKV1A>
+    <xmx:b9rFaHm5E1bU-xTu5JbADlv6oDghpPWSU4116aGwzxN4nYAXB1p4eA>
+    <xmx:b9rFaOjvBUD850F3wpMEJ3Yt-1dPjGahZgWhjpFoX6b5Ptt1utC8UA>
+    <xmx:b9rFaHfwtDoGtyGBwJeB6aQWezyNeYCw7lTLdu9IYEms-Dx6LpDkkg>
+    <xmx:cNrFaKEXFPKMkdnEWArRWbeKGKNBcJwbngTwnjsxZLzUwmqif_X90uNt>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id CB8011EA006B; Sat, 13 Sep 2025 16:56:15 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-4-195569740b57@gmail.com>
-References: <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-0-195569740b57@gmail.com>
-In-Reply-To: <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-0-195569740b57@gmail.com>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, joe.drew@indexexchange.com, 
- peff@peff.net, ps@pks.im, gitster@pobox.com
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6338; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=YpdjhjRtQSPX0O2SsppHL8EXLsfVW1NMwTlP+4LdaJI=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGjF2gkmIwEXxbJOVDQZMbqbJK43NhcB5BF/c
- UmyVQalRe9f94kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJoxdoJAAoJED7VnySO
- Rox/24cMAJHxe3BrxnKRRWKxW3ys4yRMTHrcB6SJlxddbTqbKXmUlpyT+E1Wdbu9GBM9xWaBO3W
- 9Yt9wF1Kb0vsh9DP6ahqb8cIV7jK9POTGqg6m09S5aazg5hsGvwmmm7+CaPL7qd2kKadU0NL/vA
- ZYpdBrlRPhfY2+Hli5lpKDfmlMDiaIejEGKTvVo4PUSF8tbQys9lQEhVpYx2BFaiLLUo/QFP94Q
- DwHaY605PItbUGSeBdMFCHiPI+R6zW9Vf/pkZDj0acnf4VTJbsjbAP3EFqKz/wVRPDZiXzJlgPQ
- LHFsfs5d1RFxf3TimTelNe5XYoxdwaMYGajPyV/1EjwR+QQwCEF0EwPwDYPFaX4eh+AyE0Yn7oB
- 4xxt5bGy2FUdjkuvfaCFjr7A6MKcQliNs0igWr5Pkps8fLoZfs2JxSI6RhEbdoSRrbnZjtiWbNA
- G+VSd8tmVV6TlCEbDzzJnvJRxiIGuEBkzenyTk9NldYM8ih8SLM8gf6sKFP4y1XPcrV9RM6TDd4
- Gg=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+X-ThreadId: AGvZemVQfBlV
+Date: Sat, 13 Sep 2025 22:55:01 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Gabriel Scherer" <gabriel.scherer@inria.fr>, git@vger.kernel.org
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+ "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Phillip Wood" <phillip.wood@dunelm.org.uk>
+Message-Id: <be510685-3be1-4f71-806a-6b580bb1cf21@app.fastmail.com>
+In-Reply-To: <20250913141327.2775228-2-gabriel.scherer@inria.fr>
+References: <20250913141327.2775228-1-gabriel.scherer@inria.fr>
+ <20250913141327.2775228-2-gabriel.scherer@inria.fr>
+Subject: Re: [PATCH 1/3] checkout: provide hint when failing due to another worktree
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-The previous commit added the necessary validation and checks for F/D
-conflicts in the files backend when working on case insensitive systems.
+Unrelated: I found it confusing that my `co =3D checkout` alias did not
+work with this fresh-off-the-press Advice:[1]
 
-There is still a possibility for D/F conflicts. This is a different from
-the F/D since for F/D conflicts, there would not be a conflict during
-the lock creation phase:
+```
+$ ./git co master
+fatal: 'master' is already used by worktree at '<path>'
+$ ./git checkout master
+fatal: 'master' is already used by worktree at '<patch>'
+hint: Use --detach to avoid this restriction,
+hint: or --ignore-other-worktrees to ignore it.
+hint: Disable this message with "git config set advice.branchUsedInOther=
+Worktree false"
+```
 
-    refs/heads/foo.lock
-    refs/heads/foo/bar.lock
+But it did for this older Advice (which is in my installed git(1)):
 
-However there would be a conflict when the locks are committed, since we
-cannot have 'refs/heads/foo/bar' and 'refs/heads/foo'. These kinds of
-conflicts are checked and resolved in
-`refs_verify_refnames_available()`, so the previous commit ensured that
-for case-insensitive filesystems, we would lowercase the inputs to that
-function.
+```
+$ ./git co -b .. @
+fatal: '..' is not a valid branch name
+hint: See `man git check-ref-format`
+hint: Disable this message with "git config set advice.refSyntax false"
+```
 
-For D/F conflicts, there is a conflict during the lock creation phase
-itself:
+It=E2=80=99s because aliases are run as a subprocess from the `git` in `=
+PATH`:
 
-    refs/heads/foo/bar.lock
-    refs/heads/foo.lock
+```
+strvec_push(&cmd.args, "git");
+```
 
-As in `lock_raw_ref()` after creating the lock, we also check for D/F
-conflicts. This can occur in case-insensitive filesystems when trying to
-fetch case-conflicted references like:
+[1]: Chain of events:
 
-    refs/heads/Foo/new
-    refs/heads/foo
+1. Try to trigger the Advice in this series
+2. ... but it doesn=E2=80=99t
+3. Is the code wrong?
+4. Wait, I=E2=80=99m using my alias (which I always use; I don=E2=80=99t=
+ think about it)
+5. I test with `git checkout`: it works
+6. ... so aliases don=E2=80=99t work with Advice?
+7. Test an existing Advice that I know about
+8. ... but it does work with aliases
+9.=E2=80=9315. ...
 
-D/F conflicts can also occur in case-sensitive filesystems, when the
-repository already contains a directory with a lock file
-'refs/heads/foo/bar.lock' and trying to fetch 'refs/heads/foo'. This
-doesn't concern directories containing garbage files as those are
-handled on a higher level.
+It was part of the process.  I didn=E2=80=99t *decide* to get hung up on=
+ it. ;)
 
-To fix this, simply categorize the error as a name conflict. Also remove
-this reference from the list of valid refnames for availability checks.
-By categorizing the error and removing it from the list of valid
-references, batched updates now knows to reject such reference updates
-and apply the other reference updates.
+On Sat, Sep 13, 2025, at 16:13, Gabriel Scherer wrote:
+> From: "Gabriel.Scherer" <gabriel.scherer@inria.fr>
+>
+> When checkout/switch fails because the target branch is already used
+> by another worktree, we now hint that the user could use --detach or
+> --ignore-other-worktrees.
 
-Fix a small typo in `ref_transaction_maybe_set_rejected()` while here.
+The commit message is supposed to discuss what the code does without the
+patch in the present tense.  What the patch does is in the imperative
+mood.  Refer to `Documentation/SubmittingPatches`, =E2=80=9Cimperative m=
+ood=E2=80=9D.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- refs.c               |  9 ++++++++-
- refs/files-backend.c | 11 ++++++-----
- t/t5510-fetch.sh     | 46 ++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 60 insertions(+), 6 deletions(-)
+Maybe there should be a paragraph which motivates the need for an Advice
+and these two in particular?  You could also concievably advise removing
+the worktree. :)
 
-diff --git a/refs.c b/refs.c
-index 4c1c339ed9..e7109ea5fe 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1223,7 +1223,7 @@ int ref_transaction_maybe_set_rejected(struct ref_transaction *transaction,
- 		return 0;
- 
- 	if (!transaction->rejections)
--		BUG("transaction not inititalized with failure support");
-+		BUG("transaction not initialized with failure support");
- 
- 	/*
- 	 * Don't accept generic errors, since these errors are not user
-@@ -1232,6 +1232,13 @@ int ref_transaction_maybe_set_rejected(struct ref_transaction *transaction,
- 	if (err == REF_TRANSACTION_ERROR_GENERIC)
- 		return 0;
- 
-+	/*
-+	 * Rejected refnames shouldn't be considered in the availability
-+	 * checks, so remove them from the list.
-+	 */
-+	string_list_remove(&transaction->refnames,
-+			   transaction->updates[update_idx]->refname, 0);
-+
- 	transaction->updates[update_idx]->rejection_err = err;
- 	ALLOC_GROW(transaction->rejections->update_indices,
- 		   transaction->rejections->nr + 1,
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 817b56f4ce..fec7713ea6 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -869,6 +869,7 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
- 				goto error_return;
- 			} else if (remove_dir_recursively(&ref_file,
- 							  REMOVE_DIR_EMPTY_ONLY)) {
-+				ret = REF_TRANSACTION_ERROR_NAME_CONFLICT;
- 				if (refs_verify_refname_available(
- 						    &refs->base, refname,
- 						    extras, NULL, 0, err)) {
-@@ -876,14 +877,14 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
- 					 * The error message set by
- 					 * verify_refname_available() is OK.
- 					 */
--					ret = REF_TRANSACTION_ERROR_NAME_CONFLICT;
- 					goto error_return;
- 				} else {
- 					/*
--					 * We can't delete the directory,
--					 * but we also don't know of any
--					 * references that it should
--					 * contain.
-+					 * Directory conflicts can occur if there
-+					 * is an existing lock file in the directory
-+					 * or if the filesystem is case-insensitive
-+					 * and the directory contains a valid reference
-+					 * but conflicts with the update.
- 					 */
- 					strbuf_addf(err, "there is a non-empty directory '%s' "
- 						    "blocking reference '%s'",
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 08dbea6503..6b2739db26 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -59,6 +59,12 @@ test_expect_success "clone and setup child repos" '
- 		cd case_sensitive_fd &&
- 		git branch foo/bar &&
- 		git branch Foo
-+	) &&
-+	git clone --ref-format=reftable . case_sensitive_df &&
-+	(
-+		cd case_sensitive_df &&
-+		git branch Foo/bar &&
-+		git branch foo
- 	)
- '
- 
-@@ -1592,6 +1598,46 @@ test_expect_success CASE_INSENSITIVE_FS,REFFILES 'F/D conflict on case insensiti
- 	)
- '
- 
-+test_expect_success CASE_INSENSITIVE_FS,REFFILES 'D/F conflict on case insensitive filesystem' '
-+	test_when_finished rm -rf case_insensitive &&
-+	(
-+		git init --bare case_insensitive &&
-+		cd case_insensitive &&
-+		git remote add origin -- ../case_sensitive_df &&
-+		test_must_fail git fetch -f origin "refs/heads/*:refs/heads/*" 2>err &&
-+		test_grep "failed: refname conflict" err &&
-+		git rev-parse refs/heads/main >expect &&
-+		git rev-parse refs/heads/Foo/bar >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success REFFILES 'D/F conflict on case sensitive filesystem with lock' '
-+	(
-+		git init --ref-format=reftable base &&
-+		cd base &&
-+		echo >file update &&
-+		git add . &&
-+		git commit -m "updated" &&
-+		git branch -M main &&
-+
-+		git update-ref refs/heads/foo @ &&
-+		git update-ref refs/heads/branch @ &&
-+		cd .. &&
-+
-+		git init --ref-format=files --bare repo &&
-+		cd repo &&
-+		git remote add origin ../base &&
-+		mkdir refs/heads/foo &&
-+		touch refs/heads/foo/random.lock &&
-+		test_must_fail git fetch origin "refs/heads/*:refs/heads/*" 2>err &&
-+		test_grep "some local refs could not be updated; try running" err &&
-+		git rev-parse refs/heads/main >expect &&
-+		git rev-parse refs/heads/branch >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
+> Note: this error can also happen on rebase, which unfortunately does
+> not support --ignore-other-worktrees. We do not show advice in this
+> case, and leave 'rebase --ignore-other-worktrees' to future work.
 
--- 
-2.50.1
+After reading this I thought this was not handled by this patch series.
+But you add the this option to git-rebase(1) in the second patch.
 
+=E2=80=9CFuture work=E2=80=9D suggests to me something ranging from:
+
+=E2=80=A2 there is another patch series that deal with this; or
+=E2=80=A2 there are no plans to do this (but it could be done in theory).
+
+>
+> Signed-off-by: Gabriel Scherer <gabriel.scherer@inria.fr>
+> ---
+>  Documentation/config/advice.adoc |  3 +++
+>  advice.c                         |  1 +
+>  advice.h                         |  1 +
+>  branch.c                         | 13 +++++++++++--
+>  branch.h                         |  4 ++++
+>  builtin/checkout.c               | 12 ++++++++++--
+>  6 files changed, 30 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/config/advice.adoc
+> b/Documentation/config/advice.adoc
+> index 257db58918..9ee64f44ea 100644
+> --- a/Documentation/config/advice.adoc
+> +++ b/Documentation/config/advice.adoc
+> @@ -27,6 +27,9 @@ all advice messages.
+>  		Shown when a fetch refspec for multiple remotes maps to
+>  		the same remote-tracking branch namespace and causes branch
+>  		tracking set-up to fail.
+> +	branchUsedInOtherWorktree::
+> +		Shown when the user attemps to switch to a branch
+> +		that is already checked out in another worktree.
+
+This maintains sort-order which is good.  It is also consistent in all
+points with 95c987e6fad (advice: make all entries stylistically
+consistent, 2024-03-05) for what it=E2=80=99s worth.
+
+I also think the wording/formulation is great.
+
+>  	checkoutAmbiguousRemoteBranchName::
+>  		Shown when the argument to
+>  		linkgit:git-checkout[1] and linkgit:git-switch[1]
+> diff --git a/advice.c b/advice.c
+> index e5f0ff8449..5c9b763472 100644
+> --- a/advice.c
+> +++ b/advice.c
+> @@ -50,6 +50,7 @@ static struct {
+>  	[ADVICE_AMBIGUOUS_FETCH_REFSPEC]		=3D { "ambiguousFetchRefspec" },
+>  	[ADVICE_AM_WORK_DIR] 				=3D { "amWorkDir" },
+>  	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	=3D { "checkoutAmbig=
+uousRemoteBranchName" },
+> +	[ADVICE_BRANCH_USED_IN_OTHER_WORKTREE]		=3D { "branchUsedInOtherWork=
+tree" },
+
+This too looks like it should be in sort order.  If so you are inserting
+at the wrong place.
+
+>  	[ADVICE_COMMIT_BEFORE_MERGE]			=3D { "commitBeforeMerge" },
+>  	[ADVICE_DEFAULT_BRANCH_NAME]			=3D { "defaultBranchName" },
+>  	[ADVICE_DETACHED_HEAD]				=3D { "detachedHead" },
+> diff --git a/advice.h b/advice.h
+> index 727dcecf4a..6b11df945b 100644
+> --- a/advice.h
+> +++ b/advice.h
+> @@ -16,6 +16,7 @@ enum advice_type {
+>  	ADVICE_ADD_IGNORED_FILE,
+>  	ADVICE_AMBIGUOUS_FETCH_REFSPEC,
+>  	ADVICE_AM_WORK_DIR,
+> +	ADVICE_BRANCH_USED_IN_OTHER_WORKTREE,
+
+Correct sort order (if there is one).
+
+>  	ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
+>  	ADVICE_COMMIT_BEFORE_MERGE,
+>  	ADVICE_DEFAULT_BRANCH_NAME,
+> diff --git a/branch.c b/branch.c
+> index 26be358347..76aa2cbf44 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -844,7 +844,7 @@ void remove_branch_state(struct repository *r, int
+> verbose)
+>  	remove_merge_branch_state(r);
+>  }
+>[snip diff]
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index f9453473fe..e4b78f4a05 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -1582,8 +1582,16 @@ static void
+> die_if_switching_to_a_branch_in_use(struct checkout_opts *opts,
+>  		return;
+>  	head_ref =3D refs_resolve_refdup(get_main_ref_store(the_repository),
+>  				       "HEAD", 0, NULL, &flags);
+> -	if (head_ref && (!(flags & REF_ISSYMREF) || strcmp(head_ref,
+> full_ref)))
+> -		die_if_checked_out(full_ref, 1);
+> +	if (head_ref && (!(flags & REF_ISSYMREF) || strcmp(head_ref,
+> full_ref))) {
+> +		int code =3D die_message_if_checked_out(full_ref, 1);
+> +		if (code) {
+> +			advise_if_enabled(
+> +				ADVICE_BRANCH_USED_IN_OTHER_WORKTREE,
+> +				_("Use --detach to avoid this restriction,\n"
+> +				"or --ignore-other-worktrees to ignore it."));
+
+I don=E2=80=99t know if `--detach` will =E2=80=9Cavoid=E2=80=9D the rest=
+riction.  (In fact
+`--ignore-other-worktrees` might be the one that *avoids* it (turns it
+off)?)
+
+Technically the only point of being-on-a-branch is to be able to advance
+it.  You know that.  But does the advice-receiver?  Because they might
+use the hint to get what they want immediately.  Then later wonder why
+all the work they did on the branch =E2=80=9Chad no effect=E2=80=9D.
+
+> +			exit(code);
+> +		}
+> +	}
+>  	free(head_ref);
+>  }
+>
+> --
+> 2.51.0
+
+No updates to tests were covered in another email.
+
+--=20
+Kristoffer Haugsbakk
