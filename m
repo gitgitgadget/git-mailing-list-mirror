@@ -1,150 +1,92 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673232BD016
-	for <git@vger.kernel.org>; Sat, 13 Sep 2025 22:06:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D065F1E9B0B
+	for <git@vger.kernel.org>; Sat, 13 Sep 2025 22:13:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757801181; cv=none; b=RxcYOpcdTReym3nGJvAQBT+lhtoLa6zHm8QyHeyreflQjVx5ldbKdJ/R2mULzO02Aog35nnIfa6IbJPH1W432t3tBM384+E4RnHvnnvaCQbuVcpa7qm5VFqxGE0/xujjK3E+lU+Ch4p/aNFzhkDvg3Houx06AM66eZkCvaajK9s=
+	t=1757801599; cv=none; b=Xlxf+/zI5R3lqz4o+2QuiHMVn08vbb7BJLhyWBaY7bOBeLT6ojS4vQ6FIuj9J8kVlxbU2IIaJtq2U/7FL//3J9zEY0wRRerRc0S23fW9aY7jS14gDgOm9ZBiamAmhR5AKOSV4EHOiJhLp+aHUzMZBQHm/l8svSw81TgX1j2XBDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757801181; c=relaxed/simple;
-	bh=AgGp3zzpyCcAdRu0TjkefLOOogOyIsbVPtQuNAUFvz8=;
+	s=arc-20240116; t=1757801599; c=relaxed/simple;
+	bh=udY0Jvq01/H+tnHnIkcyGACkBCE4ITR/bf9vkNaLaoM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W+daL4w0cykA4oTIbnRKSsyxYMAUArED+ub61Gy6PZ5e6CzYqmyYUAZ7LFXrDQ8m0vwvOWT/6PwC79RHqiFfLt1erfukD90M3V6+iQKO+aXXyHlZGudRhUGojFTpoVEagAlKx+iA/B3RwbOoRm2sGYw9H0uAs7i/bISHqyKOSKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Tk2Z8CsK; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ii/eVOn2SQtoCMXW9CiigDpI5drt69w2tPNW3qdVDHI5AD3SbH7kt85xOGPUJ3/ecdvCNjDZYisHXcsgDdCARH8GHJ+w3oBXTSQAzIGyZvhIypEopWnaVCfr4q6mzkJ5ph7RAa2GWZSqbif+IXMNQjNc37ey78xHaus5c9SM4rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qj4NZo0S; arc=none smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Tk2Z8CsK"
-Received: (qmail 74996 invoked by uid 109); 13 Sep 2025 22:06:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=AgGp3zzpyCcAdRu0TjkefLOOogOyIsbVPtQuNAUFvz8=; b=Tk2Z8CsK+8Pm48MBtrBWGyo13ef9MsyXgZNN7TaN1H5ivELwHbyog0pz3bb47Z9UCBb5clbNV+zkCInoWHEQ4nYWPD62iGXgRuDoSartw/V0gLFUdIc1LIeZKstqP4ZAIFLk21Di327vpa4x/8Wa9KRFEgbrVDSZEugnhpslwAc7cYvWw14QFcWPh2hBmvFpu7HluVwioyKtAafzTuZGnVXrfKBUk18b1LWVMECRxcY+l/d8fUuhnZp8BLBnlfH4H5kV8T6beKeOmctVbw4/Qg8IH8Onva3uSG7T99VQOmnTx6xZ28dmz9o4lZx67uNusJHI0fX29kNtWFHREPQS4w==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 13 Sep 2025 22:06:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 123416 invoked by uid 111); 13 Sep 2025 22:06:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 13 Sep 2025 18:06:09 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 13 Sep 2025 18:06:09 -0400
-From: Jeff King <peff@peff.net>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 2/7] git: allow alias-shadowing deprecated builtins
-Message-ID: <20250913220609.GA435444@coredump.intra.peff.net>
-References: <cover.1757446619.git.code@khaugsbakk.name>
- <672253e0e7167c40290d1fef6d5076adfbe25d80.1757446619.git.code@khaugsbakk.name>
- <20250910051347.GA556174@coredump.intra.peff.net>
- <20250910154859.GB562601@coredump.intra.peff.net>
- <b39ba543-24ad-4bd6-be6e-dc1b8a416eb0@app.fastmail.com>
- <20250910183418.GA1157772@coredump.intra.peff.net>
- <eefc3524-9ecf-44e5-a6ba-1b4a0aff3158@app.fastmail.com>
- <20250911203256.GA1894340@coredump.intra.peff.net>
- <20250911204302.GA1907101@coredump.intra.peff.net>
- <98d206ca-3dc1-42cc-9f01-e3241d5a24af@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qj4NZo0S"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-b54c707374fso56489a12.1
+        for <git@vger.kernel.org>; Sat, 13 Sep 2025 15:13:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757801597; x=1758406397; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=iqXKNkfKk0YRah1n2j1j7mNGGsrp8qxPLOyM1FI7BAI=;
+        b=Qj4NZo0StS7Q8VP+0bECfbaq/Dje3vggGmtlRoNsvioOAUmN65Ni3tg2bUuUPq1ysq
+         u4kN9IYhCcBRuzd5nxIGL/LuOawCOM2WhhBbNPlGrr62zJeVCZqQWsBHLM+mflnkpFoZ
+         u/6S+rfkCRaG2X6ISFbUCVkbR4QoVFNkXQI7jdMV7H0fcqXPSDReVBJ+MsqH1Mob9bmP
+         0hw+XkA0VtLXRA7wcVxrkYWtEtVE6fY7aRR3cw5hr/E0GQohM/Ro1wwr4KvmFZEcjtyg
+         6mZrDCjuEomi0rRWRLd1BsHwujsKOYBaC1kVP0s06XlD32Yn5WrgypGzBk1vkicfeunY
+         hpQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757801597; x=1758406397;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iqXKNkfKk0YRah1n2j1j7mNGGsrp8qxPLOyM1FI7BAI=;
+        b=q4vrI4lqO9yy6c6oyQ7uU62ZqVRmlIwfBZDbJyXk4mJJua7Bnt1iaEQdZb3vxLIa3b
+         ysAFIP8BL42YcARBEJQSHS0Cyrot3llZz7T+DXZpcsMXj8UJ9SinOtI/fNkUrvctpcoF
+         pS+fuiZfCHTlJ7UVinUVOu0pXfQndYwfyP/YTJ/dKrirhih8gGaPzjavlozAuRagMwzk
+         uaYcxr9HyWexlJYTLWcjnJ4ow/h2jvk3+QNDDwhtP/toMo8Or+LnSQk0DrAxYvPLEhPz
+         vJqXVZQCB1lFoDAGEscsD2KzM73A8fnoOckY9T7nrVSC7LmJY0LmcdCg9frCn1AH1h9w
+         0sdg==
+X-Gm-Message-State: AOJu0YxgC4PNSn2Mq3FXaQx8Oo8KrPBAHiQ+FtP1qv7W38ygeW8QJrPV
+	T/52tYqA9HHbrSdGoaWkAlX8DUy26kTqMREqmZ0vP4/oFX3UVEpFv29Lz4UQyg==
+X-Gm-Gg: ASbGncullULn7kCjo6kPoXg4ROSjGmUuPJDsjylsc7Pt88GHqDt6KDLBQwzBg5qeSSs
+	VzFK1zJNheZ4dCzRbBpJOka1MzlhNd/9a4aYGXlQ6Qd15rKeKzpyVzTn+c8alWRG1YPPEKdH2jk
+	N0VzBEWSg6as9stXaLfSB9xaH0K00NasLX3tnWjjAEuCB66lWjL+LIZ2nZ+8D/vNstvuCzcKYCo
+	YDe7snZSgV0PwIFneUTkutvvOlklHKqG/dNGN28Z9hnqGsg9FEqBb7Jb1JkxkvmUugqZSiMxnL8
+	ixk3m1kXeJ+BLoDpKzQ/kdBjFmWrX1Om59ma5SuIFTA5FWjVA45tv0QXWQH7Ty8VnbpQm7QOs/T
+	pBTaN4ll9En8YWKCo43LKWrHrWeeW9U9c74UKoMFH1W9Fy3rYm8ojdwx+pAwf7xRGogCIhmc2Pw
+	==
+X-Google-Smtp-Source: AGHT+IGHqEGOBerwG0ceQzXbPZKL04OBk3IYnrYqeWUuOXKkbw4sr8acOMmKMJ+WXzYhv8l2RU1mBg==
+X-Received: by 2002:a17:902:ebc5:b0:24b:164d:4e61 with SMTP id d9443c01a7336-25d243ef720mr70402965ad.13.1757801596957;
+        Sat, 13 Sep 2025 15:13:16 -0700 (PDT)
+Received: from Reys-MacBook-Air.local (c-73-70-17-6.hsd1.ca.comcast.net. [73.70.17.6])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32df96f6118sm2028032a91.4.2025.09.13.15.13.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 13 Sep 2025 15:13:16 -0700 (PDT)
+Date: Sat, 13 Sep 2025 15:13:14 -0700
+From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To: Marc-Jano Knopp <y--gitbugs@marc-jano.de>
+Cc: git@vger.kernel.org
+Subject: Re: safe.directory does not work at all (git 2.39.5, 2.51.0)
+Message-ID: <lamzerhpp6kbgzbhztgaqvdcymaqvec232sen67t6wx4rmobih@lqqivgroonmp>
+References: <duuus2ifgydpwpja6vccvxbcnxdgy6mc6h63okzv7xdqo23fpi@ermurkhms4j3>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <98d206ca-3dc1-42cc-9f01-e3241d5a24af@app.fastmail.com>
+In-Reply-To: <duuus2ifgydpwpja6vccvxbcnxdgy6mc6h63okzv7xdqo23fpi@ermurkhms4j3>
 
-On Sat, Sep 13, 2025 at 04:10:57PM +0200, Kristoffer Haugsbakk wrote:
-
-> The code in the `while(1)` speculatively adds commands to the list
-> before finding out if it’s an alias.  Let’s instead move it inside
-> `handle_alias(...)` and in turn only run this logic when we have found
-> an alias.
+On Sat, Sep 13, 2025 at 07:38:53PM -0800, Marc-Jano Knopp wrote:
+> $ git clone myuser@my.server:/git/main/test.git
+> Cloning into 'test'...
+> fatal: detected dubious ownership in repository at '/git/main/test.git'
+> To add an exception for this directory, call:
 > 
-> This is not a refactor since the error output is changed; we will
-> now print
-> 
->     '<cmd1>' is aliased to '<cmd2>'
-> 
-> while iterating in addition to the final `fatal` message.
+>         git config --global --add safe.directory /git/main/test.git
+> fatal: Could not read from remote repository.
 
-If you want to get rid of that last paragraph, I think it really is as
-simple as checking the expanded alias new_argv[0] as soon as we see it,
-like:
+it is a little confusing, but the message comes from the git command
+running in "my.server".
 
-diff --git a/git.c b/git.c
-index 06de0bacf3..f11ce416a3 100644
---- a/git.c
-+++ b/git.c
-@@ -425,7 +425,9 @@ static int handle_alias(struct strvec *args, struct string_list *cmd_list)
- 		if (!strcmp(alias_command, new_argv[0]))
- 			die(_("recursive alias: %s"), alias_command);
- 
--		seen = unsorted_string_list_lookup(cmd_list, args->v[0]);
-+		string_list_append(cmd_list, args->v[0]);
-+
-+		seen = unsorted_string_list_lookup(cmd_list, new_argv[0]);
- 		if (seen) {
- 			struct strbuf sb = STRBUF_INIT;
- 			for (size_t i = 0; i < cmd_list->nr; i++) {
-@@ -441,8 +443,6 @@ static int handle_alias(struct strvec *args, struct string_list *cmd_list)
- 			      " not terminate:%s"), cmd_list->items[0].string, sb.buf);
- 		}
- 
--		string_list_append(cmd_list, args->v[0]);
--
- 		trace_argv_printf(new_argv,
- 				  "trace: alias expansion: %s =>",
- 				  alias_command);
+doest it work if you run the same command after first doing ssh with "myuser"
+account into "my.server"?
 
-It is important to move the append of args->v[0] up (though arguably it
-should be alias_command here, which is a local-variable alias that the
-rest of the function uses). Adding it up-front is not needed for loop
-detection, but it is shown as part of the output when we do find a loop.
-
-You could _also_ ditch the "recursive alias" check above at that point,
-though I think it produces a slightly nicer message:
-
-  $ ./git -c alias.foo=foo foo
-  fatal: recursive alias: foo
-
-vs:
-
-  $ ./git -c alias.foo=foo foo
-  fatal: alias loop detected: expansion of 'foo' does not terminate:
-    foo <==
-
-Though perhaps if the output code marked it as both the start and end of
-the loop it would be more sensible. Maybe like:
-
-diff --git a/git.c b/git.c
-index f11ce416a3..f1a83f2e6a 100644
---- a/git.c
-+++ b/git.c
-@@ -422,9 +422,6 @@ static int handle_alias(struct strvec *args, struct string_list *cmd_list)
- 		if (count < 1)
- 			die(_("empty alias for %s"), alias_command);
- 
--		if (!strcmp(alias_command, new_argv[0]))
--			die(_("recursive alias: %s"), alias_command);
--
- 		string_list_append(cmd_list, args->v[0]);
- 
- 		seen = unsorted_string_list_lookup(cmd_list, new_argv[0]);
-@@ -436,8 +433,8 @@ static int handle_alias(struct strvec *args, struct string_list *cmd_list)
- 				strbuf_addf(&sb, "\n  %s", item->string);
- 				if (item == seen)
- 					strbuf_addstr(&sb, " <==");
--				else if (i == cmd_list->nr - 1)
--					strbuf_addstr(&sb, " ==>");
-+				if (i == cmd_list->nr - 1)
-+					strbuf_addstr(&sb, item == seen ? ">" : " ==>");
- 			}
- 			die(_("alias loop detected: expansion of '%s' does"
- 			      " not terminate:%s"), cmd_list->items[0].string, sb.buf);
-
-I dunno. Maybe it is not worth tinkering with too much. But the "this
-changes the output" justification from your proposed message seems to me
-an indication that the refactor is a little iffy.
-
--Peff
+Carlo
