@@ -1,211 +1,169 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FF62DC796
-	for <git@vger.kernel.org>; Sat, 13 Sep 2025 18:11:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D6314B977
+	for <git@vger.kernel.org>; Sat, 13 Sep 2025 19:24:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757787120; cv=none; b=RYY/HiMgTkXr+Ibcs2KsclRpai54DTNbceUmMMeC1xr3WzjC9U3heNfeDNLWkPKQ+dbNHg+He6d8h75hp6M0OvZVby2OHlaB7s7w0eOguDdsm2gXhxQ0Vl9XFQrTx25rc/K7rWBXCGMpLUvPqmsTyymiYlJ6m8M/3l0MVX5nM78=
+	t=1757791490; cv=none; b=tGF36zjl6QkT9euy84z1ndZ/+Ip/DzMO7q7GaHHok98hNJY9wBdyCy88fRfQOAkSXa3UeHCDuEdVUG7SeGEINsG8kGZVZRZs/QPoMeuKVUjbQdl+asCceyx6ihXYrWhuQ8tc8fap3McOLhGQAjh4vhUjGknCHP7gg9J7OllPGyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757787120; c=relaxed/simple;
-	bh=9gEVP6O/SFpk6gFMD8XfSe9zs9eMu/1zQExFULIdh7o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Q2vMSebh7rB/PYVGhYtKbvyTaUlL77RK/oN1NCHShaGkVyiUOV3DjK1PqDeyKKapSBqz2cF4Fd3sRyy/f51vjaxgA+WnQ0LLBg0kkm0enh//7/L3O6FkXBdoI/tNXDsu31MK16SjJxBfogCRuLccMwA7A7lt4iMbs9XtzKYOil8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Saxb/8su; arc=none smtp.client-ip=209.85.128.178
+	s=arc-20240116; t=1757791490; c=relaxed/simple;
+	bh=LcyCADXntSfHJOczKM0J6WvtfrN0BUApb0cxHunvMHA=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=dgFXwj/6e//kNGDhfnHDD4L6saJQOJzFokaPsQzgo7NuTtU+ZIUZEw4rJH+ynbfRMO3QEWzN+OpGam9gWLq1ZDfwW9ufcVS/0tQqtzaBk1VU6ezPYEQzOkSMB8JzNAqv0m394UIshyedr493xhJ18WI+zjUAkst9dGlNn+yU5gE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XRJZmnDe; arc=none smtp.client-ip=209.85.219.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Saxb/8su"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-72267c05050so25373417b3.3
-        for <git@vger.kernel.org>; Sat, 13 Sep 2025 11:11:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XRJZmnDe"
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-ea3d9ac7700so1185984276.1
+        for <git@vger.kernel.org>; Sat, 13 Sep 2025 12:24:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757787118; x=1758391918; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=auQ4OGuzAbnifEysjvfodoyxuuCmZ4O8p+CTa8UZVFg=;
-        b=Saxb/8suXBhK8piU3rmp4kfN5zEGWrSuA3kjbaVzG+4bubIWmiM/ykmGg75cE/gvWK
-         S0fz11ivTCFGRO7b0T54o7KF3TW3FLkZLZJd4kaR2LiN+G+28PxviVcgQHsmapSR8tc8
-         qi7hzUSFpYhD5p9yQAJldoJdvATE59DHMnlS3r5fiA2wx6yCFzVmPla2AAYA9vTJK5u5
-         SrhdK/iv6b5yLOESDcfcRC7nnj3yLln1JcpqI95zAlFhITEz33wFUFZpcnr2EA8+lvrS
-         n/V8LxM40s7phYYTQV8BnhxQeeszj4f61oo0Dc/MvX8sE1DqLjtC5Q5L1lfWOcb5Z7cD
-         TWdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757787118; x=1758391918;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20230601; t=1757791488; x=1758396288; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=auQ4OGuzAbnifEysjvfodoyxuuCmZ4O8p+CTa8UZVFg=;
-        b=MYUvBApM012XmJAKeKpG+EhHG4PgBYOmSA77u/j1v7vSzWO5drOMhq5CRm+2SV1CXD
-         cWHbVCIsvdu8o9pgOHSryefmynCGbnI2AF1Jr4Tgt8cvJJ4Bh+u83iBqKYHFidEqajV7
-         0+V6aa13ZrRCvA3kTQWxDI2l+LnR/WPRCfmypJDcynLNVQwL6xgsd0D2BFpOXfenuG3D
-         HZP8F0F0WLnD2fMoyvAbSarUYmoEyqweMbT3e3ixQ0rJBaErjCA7AmuINnZ0/+BNeJYO
-         hwV1hyJcVgH3PiCZcE4fx8AR/EWjY8D7svnD6uCHDHrauQDm7JgNppxD+vT7kFWObOet
-         dS4A==
-X-Gm-Message-State: AOJu0Yz+gdSozo//NUmCUtj9HuCIUareSwIP/C8ED27xdWfuiRSE1rt0
-	IeswSNp+wLo+DeO8IJrfKesVVWO1CH1esL7H4vbLwUfZoIIacMLY3EFDL8tsQpKm
-X-Gm-Gg: ASbGnctHGQgLE7O+Je2c4GGMhNcXLMon1im+V07p73QuY4e/dZJga/0XqGRIb5ySHOY
-	2XRGi4lAWV9c5N3FkbKkzmHbvrZTMiXjtq8ohrM7nHFrxPhTonRQuYSliq6thM7mScEBVZdCRiF
-	qB/1cJV4Xlh6Rfj9sQm8PlI/HYJkru+QmI2FzvBpdCzDjSgaoCrJKCOb2Fyo3B/oZzf90pBZoP7
-	D+M7gt2eQVgdCvYM9uS9+wv5r8/pnoAlFmuxuaqYBiXuVnE3cg3gG5z8kwMoExGrFFf4AWL4m6M
-	i6JwNp/RWZYLgLxsvU1G0zqyWi2IVk6HPB2urV/fdqNfHOhqVvP81xiRGoKgzGWpDSQ0A3RQhds
-	NQE3qz/UlQzOw2QFzRp87lW0JhEuwe/00XHPP4U0RgqTe5CLZSuEJcieSKDYEHoAX2azhU4u0Yt
-	SS3UX/TwSYKLcMREUB6o8740I2vpc7M1E=
-X-Google-Smtp-Source: AGHT+IHvDz+QgHjdx9C2HeGnKZsRGYck5x0HNgDeSy1nUy8MeE9jMFor7kOExkr87SAzyJWlhdQAlg==
-X-Received: by 2002:a05:690c:650a:b0:724:3a98:701b with SMTP id 00721157ae682-7306357d21fmr66693757b3.21.1757787117562;
-        Sat, 13 Sep 2025 11:11:57 -0700 (PDT)
-Received: from USROMMRAPPAZZ01.infor.com (pool-74-105-50-139.nwrknj.fios.verizon.net. [74.105.50.139])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-72f79a8b7e2sm19882947b3.64.2025.09.13.11.11.56
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 13 Sep 2025 11:11:57 -0700 (PDT)
-From: Michael Rappazzo <rappazzo@gmail.com>
-To: git@vger.kernel.org
-Cc: j6t@kdbg.org,
-	Michael Rappazzo <rappazzo@gmail.com>
-Subject: [PATCH] gitk: make the 'Tags and Heads' window geometry sticky
-Date: Sat, 13 Sep 2025 14:10:06 -0400
-Message-ID: <20250913181153.46575-1-rappazzo@gmail.com>
-X-Mailer: git-send-email 2.51.0
+        bh=9nxATIQnFEsKUkaxegtzy/oH8vmlDUqjZD/zYh6iHwA=;
+        b=XRJZmnDeZN7qsxuGQ7a3gIOqYiLvfiCJnMw+xouI/oPGQPw9E/Vhe/tlZFhm0DC8ke
+         ZLxIlhArfPoP0tbJdKYFwIdIaVO+rSjwn888u40wAXyIs2qmTFEIp6dHzIoxnEYYCSZ0
+         k639AZAi+P4lTwXDN4vnptCKTqRnVH8zOrXODiAkI6/bodACOQ3q7PM1nlrLeQ2MkM5U
+         LLrQi4lVz4VfwxkeGG5eTTIDk0kdHJck4tk/kOhE8pUL79U5WRI4ZFsK3kdkA7xZ10LW
+         PigtdUfENxPve2d4Ih7tN2Jn3AkKOBEUZnhcPz5EhySfg0NZqteBuJW/HoFO/QvzPm7Y
+         VMXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757791488; x=1758396288;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9nxATIQnFEsKUkaxegtzy/oH8vmlDUqjZD/zYh6iHwA=;
+        b=bz041A7Y1BVmVwYoW8l2M85WHtNOKw+60AFYDFsnJFWfLv1kGT2B2vgLowobBmFprH
+         88Dc3M5c9bYlRM1bBcUZceFPKqLfsETKgnfXEVLZsHAbHmieq6+dAmaRrgt+6N9gQjs2
+         TjHJ4ERsCBAEOXrnkJloVPowvy6FO8JG/MYpo5KjojNEd6i5UTiEJXHqFWnCgNC9HQYw
+         qotAs/TCwMENu22FN+5WHAd0BeTjqZoGk/h8ArJUp/y9Eu/sQGJ1r5hevnVka6ApJBtI
+         JRqA3lF/vjSOTRhI166Z3O8Zp8kEBDgo+sJmJ2aUYOVcjg+SclNUmbkHymcQVGihmS1n
+         wWjQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWjKFh8qhNTMaq3Z/0rK5Y+N6cID0dkx6A0NlEZWPbbmYC2TLRG67c6NHouBlIqjfpowek=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzoDMaQGrl/OJQAnBgJAelps/jv3o4e0yKQveuItw/dBx+bmMnw
+	XoQQlNSZG7nRniI9zrCarTDfUj/gK2r796p1hPMdNimgLehadmllVBixuYR0dJtw
+X-Gm-Gg: ASbGnctz2Q33WrhliHtKdvSOl80JWWXGy9XOXn+LtdW4QC+FbP+rqZbDojYUsfRfnOU
+	GKHvdOk6MtB3zjs+zFvdpYLmeVujC1DrPhNFTE/l93gvDR/PlDkA5VOQtaZHd1WmDAD4yCzxDvV
+	lVo+vllBenlGmq79rJsy5KQRTXX7vNhHucGuIxA55s8EU8zwGkrOqYqD6CqEXnKnNoK7N1GfnAO
+	omJ57CElO7QJEbILvwfz/yr4QuSSjgnglyW3gt+Nbcs8XK6ZftHZfu4I+mBXYmjtATV1Jom6m5m
+	0Ab7tDmpeSFyojs+HBoPEjXwi5V7KCFtr6Ff5zx0P7571rOeWvaOWHM3QuqtTZkA7HLVn5PBWHX
+	GtvQBKrvPYhrpLIfOWtcxyxYMAQLpzQLBjY7puK9YTJT6YYDUeJ/N1yw29k9tuDiWQbDkm8GtEg
+	zGQ8FVhbSJD/oEb8ly1F3g0OH2lA==
+X-Google-Smtp-Source: AGHT+IGc76GfjxA6S6T992FzEddXsr1DqsULkzDPwbStCdbVbsRGhnXgwKH703awzMmC/9Sh8pAGjA==
+X-Received: by 2002:a05:6902:6b0e:b0:e9b:eaf2:4d55 with SMTP id 3f1490d57ef6-ea3d9a7ab0dmr6054298276.31.1757791488092;
+        Sat, 13 Sep 2025 12:24:48 -0700 (PDT)
+Received: from smtpclient.apple (99-144-70-174.lightspeed.chrlnc.sbcglobal.net. [99.144.70.174])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-ea3feaeeab8sm362778276.5.2025.09.13.12.24.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 13 Sep 2025 12:24:47 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: [BUG] git merge reports conflict when two branches add independent methods at the same location
+Date: Sat, 13 Sep 2025 15:24:36 -0400
+Message-Id: <1020FC45-71F8-44AD-AF5A-BBC98AFC6C84@gmail.com>
+References: <CABPp-BGawdV9n9BtrwVXO1Vc2pBcuq1UtQA-1XEyHD4zB1vVCg@mail.gmail.com>
+Cc: Guo Tingsheng <CoriCraft16@outlook.com>, git@vger.kernel.org
+In-Reply-To: <CABPp-BGawdV9n9BtrwVXO1Vc2pBcuq1UtQA-1XEyHD4zB1vVCg@mail.gmail.com>
+To: Elijah Newren <newren@gmail.com>
+X-Mailer: iPhone Mail (21F90)
 
-Currently, the Tags and Heads window always opens at a default position
-and size, requiring users to reposition it each time. 
 
-This change saves and restores the Tags and Heads window size and position
-relative to the main gitk window. The geometry is stored in the config file
-as `geometry(showrefs)` and persists between gitk sessions. The window
-position is stored relative to the main window, so it maintains the same
-spatial relationship when the main window is moved or when gitk is restarted
-on different monitors.
+> Le 12 sept. 2025 =C3=A0 18:57, Elijah Newren <newren@gmail.com> a =C3=A9cr=
+it :
+>=20
+> =EF=BB=BFOn Fri, Sep 12, 2025 at 6:38=E2=80=AFAM Guo Tingsheng <CoriCraft1=
+6@outlook.com> wrote:
+>>=20
+>> Hello Git developers,
+>>=20
+>> I would like to report a potential issue in Git's merge behavior, where s=
+emantically independent changes at the same position are reported as a confl=
+ict, even though they could be merged automatically.
+>>=20
+>> Environment:
+>> - git version: 2.43.0
+>> - OS: Ubuntu 24.04 LTS
+>>=20
+>> Steps to reproduce:
+>> 1. Start with a file containing only:
+>>=20
+>>   public class Calculator {
+>>   }
+>>=20
+>> 2. On branch A, add a new method `add`:
+>>=20
+>>   @@ -1,1 +1,3 @@
+>>   public class Calculator {
+>>   +    public static double add(double a, double b) {
+>>   +        return a + b;
+>>   +    }
+>>=20
+>> 3. On branch B, add a new method `subtract`:
+>>=20
+>>   @@ -1,1 +1,3 @@
+>>   public class Calculator {
+>>   +    public static double subtract(double a, double b) {
+>>   +        return a - b;
+>>   +    }
+>>=20
+>> 4. Merge branch A and branch B.
+>>=20
+>> Expected result:
+>> - The merge should succeed automatically, producing a file that contains b=
+oth methods (order does not matter).
+>>  For example:
+>>=20
+>>   public class Calculator {
+>>       public static double add(double a, double b) {
+>>           return a + b;
+>>       }
+>>       public static double subtract(double a, double b) {
+>>           return a - b;
+>>       }
+>>   }
+>>=20
+>> Actual result:
+>> - Git reports a conflict and aborts the merge, requiring manual conflict r=
+esolution.
+>>=20
+>> Additional information:
+>> - Although the two changes occur at the same location in the file, they a=
+re independent additions with no semantic overlap.
+>> - It would be desirable for Git's merge algorithm to automatically combin=
+e such changes, as the final merged state is deterministic and conflict-free=
+.
+>> - This limitation may impact developer productivity in real-world project=
+s where multiple contributors extend the same class or configuration file in=
+dependently.
+>=20
+> Thanks for the report, but how is Git supposed to know that they are
+> independent changes with no semantic overlap?  Git doesn't understand
+> the semantics of the files it tracks.  It has no idea whether the
+> things being added are functions, or statements/expressions within a
+> function, or college essays, or hand-written recipes, or data dumps,
+> or anything else.  It would need to know those semantics, which would
+> probably require something on the level of use of AI to determine that
+> the changes are independent non-competing additions with no semantic
+> overlap and that you want to keep both.
 
-Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
----
- gitk | 75 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 73 insertions(+), 2 deletions(-)
+Sorry, can=E2=80=99t resist: we=E2=80=99ve been writing semantic analysis co=
+de for decades. It wouldn=E2=80=99t take AI to get this right.
 
-diff --git a/gitk b/gitk
-index 6e4d71d585..49b2ceefc0 100755
---- a/gitk
-+++ b/gitk
-@@ -3114,6 +3114,19 @@ proc savestuff {w} {
-         puts $f "set geometry(pwsash1) \"[.tf.histframe.pwclist sashpos 1] 1\""
-         puts $f "set geometry(botwidth) [winfo width .bleft]"
-         puts $f "set geometry(botheight) [winfo height .bleft]"
-+        if {[winfo exists .showrefs]} {
-+            set geom [parse_geometry [wm geometry .showrefs]]
-+            set main_geom [parse_geometry [wm geometry .]]
-+            if {[llength $geom] == 4 && [llength $main_geom] == 4} {
-+                lassign $geom w h x y
-+                lassign $main_geom mw mh mx my
-+                set rel_x [expr {$x - $mx}]
-+                set rel_y [expr {$y - $my}]
-+                puts $f "set geometry(showrefs) \"${w}x${h}+${rel_x}+${rel_y}\""
-+            }
-+        } elseif {[info exists geometry(showrefs)]} {
-+            puts $f "set geometry(showrefs) \"$geometry(showrefs)\""
-+        }
- 
-         array set view_save {}
-         array set views {}
-@@ -10207,11 +10220,13 @@ proc showrefs {} {
-     if {[winfo exists $top]} {
-         raise $top
-         refill_reflist
-+        wm protocol $top WM_DELETE_WINDOW [list destroy_showrefs $top]
-         return
-     }
-     ttk_toplevel $top
-     wm title $top [mc "Tags and heads: %s" [file tail [pwd]]]
-     make_transient $top .
-+    wm protocol $top WM_DELETE_WINDOW [list destroy_showrefs $top]
-     text $top.list -background $bgcolor -foreground $fgcolor \
-         -selectbackground $selectbgcolor -font mainfont \
-         -xscrollcommand "$top.xsb set" -yscrollcommand "$top.ysb set" \
-@@ -10237,8 +10252,8 @@ proc showrefs {} {
-     ttk::checkbutton $top.sort -text [mc "Sort refs by type"] \
-         -variable sortrefsbytype -command {refill_reflist}
-     grid $top.sort - -sticky w -pady 2
--    ttk::button $top.close -command [list destroy $top] -text [mc "Close"]
--    bind $top <Key-Escape> [list destroy $top]
-+    ttk::button $top.close -command [list destroy_showrefs $top] -text [mc "Close"]
-+    bind $top <Key-Escape> [list destroy_showrefs $top]
-     grid $top.close -
-     grid columnconfigure $top 0 -weight 1
-     grid rowconfigure $top 0 -weight 1
-@@ -10247,6 +10262,7 @@ proc showrefs {} {
-     bind $top.list <ButtonRelease-1> {sel_reflist %W %x %y; break}
-     set reflist {}
-     refill_reflist
-+    bind $top <Map> [list restore_showrefs_geometry $top]
- }
- 
- proc sel_reflist {w x y} {
-@@ -10279,6 +10295,61 @@ proc reflistfilter_change {n1 n2 op} {
-     after 200 refill_reflist
- }
- 
-+proc parse_geometry {geom_string} {
-+    if {[regexp {^(\d+)x(\d+)\+(-?\d+)\+(-?\d+)$} $geom_string -> w h x y]} {
-+        return [list $w $h $x $y]
-+    }
-+    return {}
-+}
-+
-+proc save_showrefs_geometry {top} {
-+    global geometry
-+
-+    if {![winfo exists $top] || ![winfo exists .]} return
-+
-+    set geom [parse_geometry [wm geometry $top]]
-+    set main_geom [parse_geometry [wm geometry .]]
-+    if {[llength $geom] == 4 && [llength $main_geom] == 4} {
-+        lassign $geom w h x y
-+        lassign $main_geom mw mh mx my
-+        set rel_x [expr {$x - $mx}]
-+        set rel_y [expr {$y - $my}]
-+        set geometry(showrefs) "${w}x${h}+${rel_x}+${rel_y}"
-+    }
-+}
-+
-+proc restore_showrefs_geometry {top} {
-+    global geometry
-+
-+    if {![info exists geometry(showrefs)] || ![winfo exists $top] || ![winfo exists .]} return
-+
-+    set saved_geom [parse_geometry $geometry(showrefs)]
-+    set main_geom [parse_geometry [wm geometry .]]
-+    if {[llength $saved_geom] == 4 && [llength $main_geom] == 4} {
-+        lassign $saved_geom w h rel_x rel_y
-+        lassign $main_geom mw mh mx my
-+
-+        set abs_x [expr {$mx + $rel_x}]
-+        set abs_y [expr {$my + $rel_y}]
-+
-+        # Ensure window stays on screen
-+        set screen_w [winfo screenwidth .]
-+        set screen_h [winfo screenheight .]
-+        if {$abs_x < 0} { set abs_x 0 }
-+        if {$abs_y < 0} { set abs_y 0 }
-+        if {$abs_x + $w > $screen_w} { set abs_x [expr {$screen_w - $w}] }
-+        if {$abs_y + $h > $screen_h} { set abs_y [expr {$screen_h - $h}] }
-+
-+        wm geometry $top "${w}x${h}+${abs_x}+${abs_y}"
-+    }
-+    bind $top <Map> {}
-+}
-+
-+proc destroy_showrefs {top} {
-+    save_showrefs_geometry $top
-+    destroy $top
-+}
-+
- proc refill_reflist {} {
-     global reflist reflistfilter showrefstop headids tagids otherrefids sortrefsbytype
-     global curview upstreamofref
--- 
-2.51.0
+What=E2=80=99s hard about the situation is that it doesn=E2=80=99t generaliz=
+e easily: a semantic analyzer that can resolve conflicts for one file, proje=
+ct, language, etc., is not necessarily of any help to its brethren.
 
+Still, if you write a lot of Java or similar code and have this problem freq=
+uently, building a merge strategy option or mergetool you can use to resolve=
+ this easily seems worthwhile. (Not something mainline Git needs, of course,=
+ for all the reasons pointed out here.)=
