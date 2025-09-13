@@ -1,158 +1,73 @@
-Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FCD21019C
-	for <git@vger.kernel.org>; Fri, 12 Sep 2025 22:57:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF91A937
+	for <git@vger.kernel.org>; Sat, 13 Sep 2025 07:04:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757717833; cv=none; b=Tp6QJftSTQ+lasx5CR45H/XFaVL5XjeXJPdNbo9vz08t5BZrg8KHPg5NKBzixwLOi68PySFbzN7kCbBmT2JMlQFktSDSTOQo2tu4I9YycoQJKfM6voVMUxhHQWNEm8DKxJRSueztvxP0DOpPf0l/OFhRxj6RyODjjE5yArMvplc=
+	t=1757747097; cv=none; b=fwXstOSxdMO8AxTvwlAB8bXon+dRDcieWTkx7yqDT5Artal+TniUgLt8ULhcd3UYkLexitvBBC2lUWeoK3o24jASHpVjsnqvPufTO0YyUF/G6gNek5HeDXDdYeYXboEVPqxnOaWh5YHd/ANYak3IXE0xxcxJlhtoLmhrfVcusxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757717833; c=relaxed/simple;
-	bh=AaK+fzPLGJxdHuO+iWxjK4f83jmD2mCG7EylPO1wPz0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BaqqfvMy06Quvjo7jXMu8UWyCPZoStQDzWeaovKqs4yMf6XUKORhZBUYh4aAR4aeFbfSr8G8MUxwQfv81YQcMGYyt4y7U4ZXfzo8Em+zSwcDYf3bV/ZIrrnP/9oA1+pNlz1zvDbMSk/V/sKJ1GkSfniSz9aQA+KRj3gfMtK6LPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HQFQb+NB; arc=none smtp.client-ip=209.85.166.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HQFQb+NB"
-Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-407ec3048a0so25614895ab.3
-        for <git@vger.kernel.org>; Fri, 12 Sep 2025 15:57:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757717831; x=1758322631; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+FFc/hEhj5CKfmHq/+e/QLOdAkfFOyTq/ASLSvZcTyc=;
-        b=HQFQb+NB6I16Oy0GBkdccRSBWJkY2jepntX/SU5dtd970wLolzqdKH6z94mZ28U0PW
-         s6KPySD+u7mmXQFlh61RKJfRnqrlifn84778lmSisqW/xZibAuQQys3wj9wPcxzktXLT
-         8LCTHFN+Vf2ZftU0gGV8ASgOn3wEquW46CNHUF6KukncfsVHritjI12gnDK5WADhFe71
-         tM+3fYL8pW84L12zPku6tSHCy0IWn37AA+pMBnXWOTcbx8x0ISU34C7fm9ndPCJG8gsS
-         tieL6lHV2izoQMe4jiUxnMWY0OhIJkrKnCQiPWR9DTjGRXiDkR7rxVqAowdCRYI5O9Np
-         pNlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757717831; x=1758322631;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+FFc/hEhj5CKfmHq/+e/QLOdAkfFOyTq/ASLSvZcTyc=;
-        b=uxFwy7A+vaK1JTeNa/wF2J/QM7/5d7NCrUbVSipuhiCoWZojoD1/LntMspLCIQzaMl
-         tlI/Xgo4kOTiyTe08+ZLL2Yapbs0qT7shZHzxZWPUUtKZqXz99MfkGO/AdxNDGCiBszV
-         tGtbecvqPQ0IkjS0yHJrU9agcWXLIKrACM0Km6/EnBJG3qKoTNLHUUSRsXrJfN1wIBCv
-         LdJ+17Flb0nsxETYjuvYvlD98mpJm3oWm6XKajeKQR7xY1kVUcfTjMWeG81iosu61cFe
-         Bd18secYYz48CBG3DzOR22qUwhVcteaaM39pvz5vHNAN4KYFYZvQ9GJdske7JXKR5YEb
-         dUvw==
-X-Gm-Message-State: AOJu0YxmgyQKIPpOvvx/cUX+wyDHa2kSOSnsgnKK16NMIwDaUceLd8Lu
-	s4R1tR4Tdmw/40J8tA4MRP6PAeXy4J5CZRL6H0w8moMvnu3BkVXUNcKOwxtd+L5bGAAXrMEIG77
-	7j8kkXKqIrBvLaUadd9Wy62MxrL1uX10=
-X-Gm-Gg: ASbGnctMaeaZRgI4OCYbfq3A9uT4Kum2we0jVETBy4a+dNHd1le5TbOyNH2XdGyLAfG
-	RdzmsanOUHmhOAAdZ2fAJENzVdLMlsySXr/dTjADSQfTxgnOa52ENnxrbNgmh0TwTr22M7q6BtE
-	TPnDkdpHrucprfQFKj2JNFEO2U6Y3eIcNUDQNp2UiaB6a4mtQtnxC6XlWrI/mNY9QmHh1LbffeF
-	297jKFO+voOF3aU0ug/UD5fo0PC2aOY6CqWc9WYLA==
-X-Google-Smtp-Source: AGHT+IFn0TGF5d9VJFOfGTlAfomLo0GQ1ljwdm5JdMvToc104QoEmLvEG+g0KiaiuB3pkMbK9agaKTNP6K6ur6kjMzI=
-X-Received: by 2002:a05:6e02:4406:10b0:422:62f8:20ef with SMTP id
- e9e14a558f8ab-42262f82257mr35416285ab.19.1757717831358; Fri, 12 Sep 2025
- 15:57:11 -0700 (PDT)
+	s=arc-20240116; t=1757747097; c=relaxed/simple;
+	bh=prH14jtzfoyssAJGUCyzNTOmlgj5DjvTdOBG9BY6yq0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=aMLGlejSk7WgYitABN2luySv+3wiE7UfxmjLiTndXcwQDH4PhUW7JVh1onfWGtu29B9slJrED+tadGk9wfHlYB00WTPrNxBCmVS0NyMMOMJHraJVdu78X+ZN1xrKaha3Z+jvxhkmx7+d47/aGDoyCh235T2yvNR/vtB/FlGfZcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.104] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4cP2Ng4hR9zRnmF;
+	Sat, 13 Sep 2025 09:04:51 +0200 (CEST)
+Message-ID: <a5e01f0f-1789-427c-83c3-90644fa234c9@kdbg.org>
+Date: Sat, 13 Sep 2025 09:04:50 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <SN6PR03MB4285B971FAD1CD485B9A8840AE08A@SN6PR03MB4285.namprd03.prod.outlook.com>
-In-Reply-To: <SN6PR03MB4285B971FAD1CD485B9A8840AE08A@SN6PR03MB4285.namprd03.prod.outlook.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Fri, 12 Sep 2025 15:57:00 -0700
-X-Gm-Features: Ac12FXz5xMcWDqSNH5Yp9k5hsJ4BY72vJLGW2vnMpx9EEX6GxLzThxmEwAnxCAM
-Message-ID: <CABPp-BGawdV9n9BtrwVXO1Vc2pBcuq1UtQA-1XEyHD4zB1vVCg@mail.gmail.com>
-Subject: Re: [BUG] git merge reports conflict when two branches add
- independent methods at the same location
-To: Guo Tingsheng <CoriCraft16@outlook.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [QUESTION] mergetool environment variables
+To: rsbecker@nexbridge.com
+References: <074901dc2422$2039a910$60acfb30$@nexbridge.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+In-Reply-To: <074901dc2422$2039a910$60acfb30$@nexbridge.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Sep 12, 2025 at 6:38=E2=80=AFAM Guo Tingsheng <CoriCraft16@outlook.=
-com> wrote:
->
-> Hello Git developers,
->
-> I would like to report a potential issue in Git's merge behavior, where s=
-emantically independent changes at the same position are reported as a conf=
-lict, even though they could be merged automatically.
->
-> Environment:
-> - git version: 2.43.0
-> - OS: Ubuntu 24.04 LTS
->
-> Steps to reproduce:
-> 1. Start with a file containing only:
->
->    public class Calculator {
->    }
->
-> 2. On branch A, add a new method `add`:
->
->    @@ -1,1 +1,3 @@
->    public class Calculator {
->    +    public static double add(double a, double b) {
->    +        return a + b;
->    +    }
->
-> 3. On branch B, add a new method `subtract`:
->
->    @@ -1,1 +1,3 @@
->    public class Calculator {
->    +    public static double subtract(double a, double b) {
->    +        return a - b;
->    +    }
->
-> 4. Merge branch A and branch B.
->
-> Expected result:
-> - The merge should succeed automatically, producing a file that contains =
-both methods (order does not matter).
->   For example:
->
->    public class Calculator {
->        public static double add(double a, double b) {
->            return a + b;
->        }
->        public static double subtract(double a, double b) {
->            return a - b;
->        }
->    }
->
-> Actual result:
-> - Git reports a conflict and aborts the merge, requiring manual conflict =
-resolution.
->
-> Additional information:
-> - Although the two changes occur at the same location in the file, they a=
-re independent additions with no semantic overlap.
-> - It would be desirable for Git's merge algorithm to automatically combin=
-e such changes, as the final merged state is deterministic and conflict-fre=
-e.
-> - This limitation may impact developer productivity in real-world project=
-s where multiple contributors extend the same class or configuration file i=
-ndependently.
+Am 12.09.25 um 22:16 schrieb rsbecker@nexbridge.com:
+> I am trying to integrate a custom mergetool with a shell wrapper.
+> What I get from the online help is the following description referring
+> to the command and environment variables.
+> 
+> mergetool.<tool>.cmd 
+> Specify the command to invoke the specified merge tool.
+> The specified command is evaluated in shell with the
+> following variables available: BASE is the name of a
 
-Thanks for the report, but how is Git supposed to know that they are
-independent changes with no semantic overlap?  Git doesn't understand
-the semantics of the files it tracks.  It has no idea whether the
-things being added are functions, or statements/expressions within a
-function, or college essays, or hand-written recipes, or data dumps,
-or anything else.  It would need to know those semantics, which would
-probably require something on the level of use of AI to determine that
-the changes are independent non-competing additions with no semantic
-overlap and that you want to keep both.  Instead, it knows which lines
-are the same between the two sides, and which have been modified since
-the common point of history.
+Take note: this talks about "variables", not "environment variables".
 
-Without this knowledge about the meaning of the content, assuming both
-are wanted is wrong.  It would mean that all the other cases where two
-sides each add lines would also end up with both sets of lines, even
-when those are conflicting lines in a recipe or conflicting statements
-in a function, or whatever.  When both sides modify the same area in
-different ways, it's a potential conflict that needs to be given back
-to the user to resolve.
+> temporary file containing the common base of the files
+> to be merged, if available; LOCAL is the name of a
+> temporary file containing the contents of the file on
+> the current branch; REMOTE is the name of a temporary
+> file containing the contents of the file from the branch
+> being merged; MERGED contains the name of the file
+> to which the merge tool should write the results of a
+> successful merge.
+> 
+> When I try to use this from a shell, simply with:
+> #!/bin/sh
+> env
+> exit 1
+> 
+> the described environment variables: BASE, LOCAL,
+> REMOTE, and MERGED, are not present.
+
+Look at the scripts in the directory mergetools/ and note that they are
+only (large) shell code fragements without a shbang line. They are not
+even executable.
+
+-- Hannes
+
