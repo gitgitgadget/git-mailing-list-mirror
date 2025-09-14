@@ -1,78 +1,88 @@
-Received: from mail.marc-jano.de (mail.marc-jano.de [116.203.25.149])
+Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4152DC79E
-	for <git@vger.kernel.org>; Sun, 14 Sep 2025 18:27:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.25.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3958357C9F
+	for <git@vger.kernel.org>; Sun, 14 Sep 2025 18:33:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757874429; cv=none; b=RS+2tYenu1NreSscywiNIHnySjmPOqg4anr+RZ8RwJ3/ekafgPHRLPqJvAjF9BzXRSsBHqlR6ylDU/pagWIpnHVc3ONSUD7KcY27EpLw/I9LyDBxZVxuq/mI1huOgV2yMMx7LSfUdc5UQnH/Pfmgf8zFsyQZAGOQDimtcZG1CUE=
+	t=1757874798; cv=none; b=Avk1FCf9gTwC1b6YSmsz1gHmeC0bHawAuO0IaxIOG9RRwXztBuJsiCcdklftfDtrSTnoJ9oNuli5H0QfJl+tM7rdXn7Vq4PZb+RPEGHGE8p/2ViI0luNomUzftEFHOtvctQibJRKL1+C9yddRCLYiIzoCFyPLtipBeJ91zMtqkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757874429; c=relaxed/simple;
-	bh=8zJD6Wr4jCUd938tG2h6Xe1pc+s125Pcsui0jA0VXA8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rjb+tIDVKB9KhzdWxIpy2+9//QGucKB5hzM7Ng6ALc5WdWbOvBUw7PY4AatZApOKCRfTiWIk4lgDuBdweDVMm19F2093SMA/vuKQAIi8XQBuqSjBQLanyXiECBzHrRvFwctNloRHSHeKi7AN4KGUD/WaWvQKSf6V0P5fAzTblcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=marc-jano.de; spf=pass smtp.mailfrom=marc-jano.de; dkim=pass (2048-bit key) header.d=marc-jano.de header.i=@marc-jano.de header.b=SMd+VpsK; arc=none smtp.client-ip=116.203.25.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=marc-jano.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marc-jano.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marc-jano.de header.i=@marc-jano.de header.b="SMd+VpsK"
-Received: from pc1.trash.bin (IP-212232090054.dynamic.medianet-world.de [212.232.90.54])
-	by mail.marc-jano.de (Postfix) with ESMTPSA id D181B85B3D;
-	Sun, 14 Sep 2025 20:26:56 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=marc-jano.de;
-	s=default; t=1757874416;
-	bh=8zJD6Wr4jCUd938tG2h6Xe1pc+s125Pcsui0jA0VXA8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SMd+VpsKHCArOMoCMS/bhPTo0Cx4C1tqBqF0Sn37ddrMgXtj8iCjzfb6zx/JQC2Qr
-	 dJcVxxGZg06nt1zlhzyLX4P0lEmmRU39wegguXMPZseERQbeXuhSJC3qDj+wYjyi+O
-	 w+ll3aTfXRuRNWwHdI0vKD8yp2pJawPrlIIo5a6kha4ymCeSJoa/b3pPYWnUXchq5C
-	 MSqng7Rarm0REwBvw6MkTgOT9SxVf6wo0wzVMOAtKYqHpPFaXHCgYefKd9vtSkpwfi
-	 Jr7BJdVlWiR7aRUNh1QBGJZfYeBEcjeBEx8QLeDmxp7pjsk1nIaRkUdVLB3TtWfOWP
-	 H7Qk7WRLQV3hQ==
-Received: from pcdm2.trash.bin (unknown [192.168.4.71])
-	by pc1.trash.bin (Postfix) with SMTP id 0779A1B0810D;
-	Sun, 14 Sep 2025 20:26:54 +0200 (CEST)
-Received: by pcdm2.trash.bin (sSMTP sendmail emulation); Sun, 14 Sep 2025 20:26:53 +0200
-Date: Sun, 14 Sep 2025 20:26:53 +0200
-From: Marc-Jano Knopp <y--gitbugs@marc-jano.de>
-To: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-Cc: git@vger.kernel.org
-Subject: [SOLVED] Re: safe.directory does not work at all (git 2.39.5, 2.51.0)
-Message-ID: <hbghuae56gm6ypox6q34mt4q6awoeb3itxsnmgpouycn7qodch@4pjsh24jhmqs>
-References: <duuus2ifgydpwpja6vccvxbcnxdgy6mc6h63okzv7xdqo23fpi@ermurkhms4j3>
- <lamzerhpp6kbgzbhztgaqvdcymaqvec232sen67t6wx4rmobih@lqqivgroonmp>
+	s=arc-20240116; t=1757874798; c=relaxed/simple;
+	bh=zUzq02YwDqdbGvEMNQw6rBMemBVho4LehDW714uvvF0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=RKooZ08KUxGSoJfpvGo1g6N6wqYgLj2y6uPBdzx+AhuiuHNn6okf0VlbleLoA8S/xEspmtmkOAS13KSQExgssPVeJim/S8lw63YunxEue+7ryHiBejWKHdKE5kUNlZtnMlUcy+dVqbajkprhHmYFYLL7XtKM6g3Pt6FQMkZJZ38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.104] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4cPxcM0LtWzRnQP;
+	Sun, 14 Sep 2025 20:33:07 +0200 (CEST)
+Message-ID: <8cd33841-9959-4cd9-99f2-84cac042ceec@kdbg.org>
+Date: Sun, 14 Sep 2025 20:32:14 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <lamzerhpp6kbgzbhztgaqvdcymaqvec232sen67t6wx4rmobih@lqqivgroonmp>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] gitk: fix error when remote tracking branch is deleted
+To: Michael Rappazzo <rappazzo@gmail.com>
+References: <20250913113253.74362-1-rappazzo@gmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+In-Reply-To: <20250913113253.74362-1-rappazzo@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sun, 2025-09-14, at 00:13:14 (+0200), Carlo Marcelo Arenas Belón wrote:
-> On Sat, Sep 13, 2025 at 07:38:53PM -0800, Marc-Jano Knopp wrote:
-> > $ git clone myuser@my.server:/git/main/test.git
-> > Cloning into 'test'...
-> > fatal: detected dubious ownership in repository at '/git/main/test.git'
-> > To add an exception for this directory, call:
-> > 
-> >         git config --global --add safe.directory /git/main/test.git
-> > fatal: Could not read from remote repository.
+Am 13.09.25 um 13:31 schrieb Michael Rappazzo:
+> When a remote tracking branch is deleted (e.g., via 'git push --delete
+> origin branch'), the headids array entry for that branch is removed, but
+> upstreamofref may still reference it. This causes gitk to show an error
+> and prevents the Tags and Heads view from opening.
 > 
-> it is a little confusing, but the message comes from the git command
-> running in "my.server".
+> Fix by checking that headids($upstreamofref($n)) exists before accessing
+> it in the refill_reflist function.
+> 
+> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
 
-D'oh! Is there a way for the layman to see if a message comes from the
-client or the server?
+Thank you, this looks reasonable. Queued.
 
+> ---
+> To reproduce the case:
+> ```
+> mkdir sample-repo-remote &&
+> cd sample-repo-remote &&
+> git init --bare --initial-branch master && 
+> cd .. &&
+> git clone sample-repo-remote sample-repo &&
+> cd sample-repo &&
+> git commit --allow-empty -m "Sample commit" &&
+> git push origin master &&
+> git push origin master:master2 &&
+> git branch master2 origin/master2 &&
+> git push --delete origin master2
+> ```
+> Then run gitk --all then bring up the "Tags and Heads" view.
+> 
+> 
+>  gitk | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/gitk b/gitk
+> index 6e4d71d585..3cfc9ef291 100755
+> --- a/gitk
+> +++ b/gitk
+> @@ -10294,7 +10294,9 @@ proc refill_reflist {} {
+>          if {![string match "remotes/*" $n] && [string match $reflistfilter $n]} {
+>              if {[commitinview $headids($n) $curview]} {
+>                  lappend localrefs [list $n H]
+> -                if {[info exists upstreamofref($n)] && [commitinview $headids($upstreamofref($n)) $curview]} {
+> +                if {[info exists upstreamofref($n)] && \
+> +                        [info exists headids($upstreamofref($n))] && \
+> +                        [commitinview $headids($upstreamofref($n)) $curview]} {
+>                      lappend trackedremoterefs [list $upstreamofref($n) R]
+>                  }
+>              } else {
 
-> doest it work if you run the same command after first doing ssh with "myuser"
-> account into "my.server"?
-
-Yes, it does! Thanks a million! *smooch* <3  :)
-
-
-MJK
