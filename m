@@ -1,104 +1,126 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE4A2AC17
-	for <git@vger.kernel.org>; Sun, 14 Sep 2025 13:10:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AD01E4BE
+	for <git@vger.kernel.org>; Sun, 14 Sep 2025 13:48:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757855450; cv=none; b=XYAB03xtYGtBghPV2ujOSEIQYI8Q1Npdn2sLq0W6aSHNl7s5sycPPQ6ZR7SHh45XAt6WzvzzQu2N1HLWhcA9Q/hgfpBu+dxbbv6rt90Q/2IEcUQl/XUUUicyrHSQN+mYLjQsHjAfZRdLOdiBh2kBSwS2D6U/UeA4Z4H7+GbVOyc=
+	t=1757857731; cv=none; b=ZH415CGjMAETUHJd7S63cfCGl6hzzGQVxH0CLdbemat1fDwrSAsCpfmdh/xkhRkIXjQBMmrg3g0tr2ERKoFcg3ElfNfwYXDHXSrOU2nVGgtJjGWmrfnQ+42w/ajyeqpk/5Wf6VXNPsx7x1GeObN1O2Y1x9pGxK8kpe1sfDElp38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757855450; c=relaxed/simple;
-	bh=WbytImRQaH9/ilbBpMxL0mg0nbRCZPjN2GJs2mhU+o4=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Eti+jYUUMU8TeoQWWRWfxC9g6J5EL6OsDB/qSnRN177184iksRn7MWaeSr9f0g5wYjrSUfIvWjrKtNUFHLENWrkYRYFqzNc2AN7mOLqMdISw2AB3iZJUl/5xX6OfqELDb4i22V+jZrTDCSeclepIDtlEyicl7fQKqWEYVZSqOXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=RuT71PKm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nMEKF6x0; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1757857731; c=relaxed/simple;
+	bh=96jtWZun7Db2y40c+QntJUPD+/Xx/x6RV10hkuct1EA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Y8E+TC3gFnDx/VBKdJQ7+sCjTBZsZwSUJv11J2VvCBerypXCsHFCkh1ydd9DvgllsmogQ0/rV9H0/YbZQ89rHDtiS0+IHyQh8+q53mJBMj912DxF3bFBcprP8pyqNXd5Jop9V4HqSdrgtKoqbInmNzaSBeNlPJnnl6QDjjtJCD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WIZM6iUU; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="RuT71PKm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nMEKF6x0"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5F040EC018C;
-	Sun, 14 Sep 2025 09:10:46 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Sun, 14 Sep 2025 09:10:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757855446;
-	 x=1757941846; bh=B78ZxlYVTUTW+k5iYoB7Y5Ai9+Tv+5+YVfoXqlWp8dw=; b=
-	RuT71PKmB3DCtIdAed1V5k1N7SchdcyWlGVVGmatbxbZ+YkkhpYRoOe6RO2zX5+l
-	yntApsIevF89HTN343Aq5GsBjuQ4dBpEIxP2aWzRhlq2di1LlJNhw/2fVjX2kfsV
-	HHQL5lBlG2ViH1RmEZItZqq8OT3cKt0WuD0GJmT/yBRdi7pv+kYDvo5Zx3lDmnQx
-	5udbMh+4LAt5cJFh86+vnzGOP1zyvJX11As8b21MfGFIg4g1cayiG9+XfKWbDOQV
-	3RQ+9K/9qMknm9EwbiZqWUvxwCwgYG1Pkf+KgUgowuYRkKJXAaJoOYNCTAWh7LoH
-	3nKY6WHxUYE2LjKV/J5WRw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1757855446; x=1757941846; bh=B
-	78ZxlYVTUTW+k5iYoB7Y5Ai9+Tv+5+YVfoXqlWp8dw=; b=nMEKF6x0mjSKIvKhd
-	x5non1HIOqUi37zED6rPTCERW8X94s5KFr4NsYZEIyDcRwb601W/mzI/uwNkFBnT
-	RblwbLQ2+Bhfb8bi9Xtm+yja4oJqHznjC8Ccpz2MzQFeRwnmlXX+78Lbe+PZZZo+
-	PTIOby0MzGH5PMHvkDUUelftceEXt9zlT4NSP2DWMfUMNUrxLk8dQyTrfi/Jofcu
-	GZ4wXRO738XoFYqopaQAwUHVuKRmgxkEHKApsYjqwjvTqZh0e4+n7yUzywfCf25n
-	nQJnsXwFHMb2pNehRJ9Ak0olK4tFDEFiDHCSZ72b/lvQR6uNU0rAkIyLIfCwcK51
-	sGz+w==
-X-ME-Sender: <xms:1r7GaMCyHXXRdOzM82hydZV_JnvWT9LTHBkbREWzL4-XJY6ScRQWMEQ>
-    <xme:1r7GaOi3Mx3Cw9VrQGCOB3WcnGwsf7NseNewO77rmAazicTPZMIXCh_3iWnOiEbZm
-    ycvbjCzVQ4kcFTjng>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefgeeklecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhsthho
-    fhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkh
-    hksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepvdeigedtgfetgefh
-    ffetteeludevheetfeekffehheefieehudekveelveffhfejnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
-    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvg
-    epshhmthhpohhuthdprhgtphhtthhopegsjhhovghrnhgsrghsthhirghnsehpohhsthgv
-    ohdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:1r7GaAFIXaJ0RAUOVhJEoHA3hEWRJhSYsMcRrxEo7x8bCLjkmaUU_Q>
-    <xmx:1r7GaCQMGxmOD4c6i7Q2TyxNdy1j3s5rCti-iPlQcddg9ggLi8NoCA>
-    <xmx:1r7GaMFuNAQcDZg7gXd-6gU5DxA7-N6Xqs_eAfmO7W57kerUcO9nYQ>
-    <xmx:1r7GaO9AVTlvrKNQEeJibQKY7rgouHgo4VqAYCADtgbCTYKxgrMANQ>
-    <xmx:1r7GaIzRSGKPuC6qg9SZoTdT3cTTQrPQqr8ckqpgcpp5EoZqXQAUb1IC>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id E87911EA0068; Sun, 14 Sep 2025 09:10:45 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WIZM6iUU"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3e4b5aee522so1998515f8f.1
+        for <git@vger.kernel.org>; Sun, 14 Sep 2025 06:48:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757857728; x=1758462528; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=HJ3ewvN6MYL0nrmEH5gdJTTjY45HOJhLd9BHmmpb61Q=;
+        b=WIZM6iUU9dTBOSp2RrgoCl/g/BKZPnmHgPawwjRf860gAXOaQMn2U/Mr/e/HzbZlMH
+         7GamxStwS+KV/uxhSD1LYQWUw8+YI+C3ntW8nVQ5gXVVEcuaJE7kvn+XPRZvfC3bf6IP
+         YHfSwHD3kWNYWJGOoAW2zGf6xvkNKdbrkUgHUp1YklSw4GKQdIz1pYXkmUWlbxjzFddS
+         /CULB5/H+sQ6VleSi7J7rr7vD+ugQoC7dxefFZz+hMyqkpNpOLO9lg8jOY+E5AyvTm6Q
+         3ExtDOXNMhTpMA+gy6T4TIu3Q7p4N0pkvX6eRd7+PBHllE/avdJ29oKTJ9rHBNliMlrW
+         +Irg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757857728; x=1758462528;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HJ3ewvN6MYL0nrmEH5gdJTTjY45HOJhLd9BHmmpb61Q=;
+        b=PogMcgSRafFY2z2W3AAPgLg8IIiGey4qe55cX3prCxrWLI6aDMYDpy18/bIWw8gBrN
+         ZEqihTFpL6qlS6XtWMzTORv3qX80/uKUzgKKgCBLzJTPquUL9dSsD923GHsgRfwL8wV0
+         E+o9P49GSsDcAFHzC3zuGMv3PFUtl4uyxaAEYVaOuLUm9p11vuvLbEdV8ntEUdDlWLBa
+         UE0gc4WerTzUkeZpt9OaNM6BYQxwmpNizyHAib2PPE35zoJKVBRai6VY8B0VL39geWHv
+         wjXbIhm6gKkroEU+omR22P/Pr+Wzuj1o2zf02cM16+bfUE8lrEViFHxvwC9TXtnT6CfN
+         WXwQ==
+X-Gm-Message-State: AOJu0YzoDAyppqr7i9IKtLjZkUAJ1i9xDqehzmAEgJD5aa5GOpXcGp3O
+	bgOXD8cEzwn7EVreM+lPLsiOttDLryW5BV9Lodx0sclQC3yDJ1OHroSmXI2raQ==
+X-Gm-Gg: ASbGncvkETq1gfw2oi/iomd0bGnCkuxE2n9DrgugaPIbBFvZlx1JeNzeVaznOI6QW10
+	F9IqKcdl2iVrvevm62kBeKt4io/Lqd+GGp6w1Oq6VjQk7v4/rjlRVCwQKOdz+GTg0Lxa10ybu9p
+	aA80aHKDgbYhBpL3Sa6JEjttkReuAE2fVqZQMk9WaKqBmjxZiuEAJ5aMsrJ7BCZ8uN+/vzVM10Q
+	A1Acd9YCHkERsqsmgeiQn2Gs/4RAmvrjahrvC1Y5OfEoWHWekBTbN+szJqhsqlsLhRAiSYOW41f
+	PBKDRifT+AXfRI9q6hp49tTS8fK0ik+IoZMh7QS3C4fcuu99HSwokXzsvm7Kl93NSl19LSFUSw+
+	x/7Y8XTsieC/0V5g+hebJpOVXK6VLGA3oq0WTrmnglmy+lbh9QjPEw4dbcrp+fx4GA88XsAHz/N
+	xOp+472pR/UQ==
+X-Google-Smtp-Source: AGHT+IE1ImLYlCj06yaV7757SdEjLEIUBG/FtKqDdAWNPYiWPt2zzAJh+f0VX+3VHnbV673DpGzEeA==
+X-Received: by 2002:a05:6000:3103:b0:3e7:47e3:5af0 with SMTP id ffacd0b85a97d-3e7659e7823mr9345570f8f.52.1757857727742;
+        Sun, 14 Sep 2025 06:48:47 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e911188fb9sm4622276f8f.28.2025.09.14.06.48.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 14 Sep 2025 06:48:47 -0700 (PDT)
+Message-ID: <a57d5857-b096-4d92-993a-3f09d15cdcb9@gmail.com>
+Date: Sun, 14 Sep 2025 14:48:45 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: ApBtbmhnwsVo
-Date: Sun, 14 Sep 2025 15:10:20 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Bjoern Bastian" <bjoernbastian@posteo.de>, git@vger.kernel.org
-Message-Id: <7897d2d0-5564-4514-ab3b-7310b626f4c3@app.fastmail.com>
-In-Reply-To: <aMa5kSQVlhVX7Iii@eismeer>
-References: <aMa5kSQVlhVX7Iii@eismeer>
-Subject: Re: Usage of git whatchanged
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [QUESTION] mergetool environment variables
+To: rsbecker@nexbridge.com, 'Johannes Sixt' <j6t@kdbg.org>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <074901dc2422$2039a910$60acfb30$@nexbridge.com>
+ <a5e01f0f-1789-427c-83c3-90644fa234c9@kdbg.org>
+ <000201dc24bc$a1b8d9d0$e52a8d70$@nexbridge.com>
+ <9a03a436-8240-4566-9383-7afbf740719e@kdbg.org>
+ <004101dc250d$18173950$4845abf0$@nexbridge.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <004101dc250d$18173950$4845abf0$@nexbridge.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi
+Hi Randall
 
-On Sun, Sep 14, 2025, at 14:48, Bjoern Bastian wrote:
-> I still use 'git whatchanged' that has been available for a long time
-> and though being longer than 'git log --raw' is much quicker to type,
-> as 'git wh' is already sufficient for syntax completion. Obviously,
-> for this reason I won't use it with the '--i-still-use-this' option.
+On 14/09/2025 01:18, rsbecker@nexbridge.com wrote:
+> On September 13, 2025 5:04 PM, Johannes Sixt wrote:
+>> To: rsbecker@nexbridge.com
+>> Cc: git@vger.kernel.org
+>> Subject: Re: [QUESTION] mergetool environment variables
+>>
+>> Am 13.09.25 um 16:42 schrieb rsbecker@nexbridge.com:
+>>> Let me try to infer what is happening and please correct me if my
+>>> assumptions are wrong:
+>> I'm sorry to say that I can't help. I tried to disentangle what is going on, but this
+>> stuff is far too convoluted to be understood in a few minutes. I cannot tell if it is
+>> possible to write a mergetool that is not installed with Git.
+>>
+>> I would just copy one of the existing tool scripts and run `make install` from the Git
+>> source directory.
+> 
+> Yes, it needs to be in the git install area. Adding export BASE export LOCAL, etc.,
+> works to resolve the situation. I wonder whether that should be documented.
 
-`git log --raw --no-merged` is the closest equivalent.
+Looking at t7610-mergetool.sh I think you can use mergetool.<tool>.cmd 
+to call a user defined merge tool. The value of the config variable is 
+eval'd in the shell so if you run
 
-What if you made a `wh` alias?
+     git config mergetool.my-tool.cmd 'my-tool "$BASE" "$LOCAL" "$REMOTE"'
 
-    wh = log --raw --no-merged
+then
 
--- 
-Kristoffer Haugsbakk
+     git mergetool --tool=my-tool
+
+will run
+
+     my-tool <base-file> <local-file> <remote-file>
+
+on each unmerged file
+
+Thanks
+
+Phillip
+
