@@ -1,82 +1,82 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7384F30CD92
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 12:53:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9210430EF87
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 12:53:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757940788; cv=none; b=Vn3EPCxQ6l5alq7daMUD09yTcGvH89v5uu4YCV5ESLUFwRvL+M3eh9qfG1L8/+b3QGmT9w4AKnJEMssmSQ/djXfLwpVJlcDB7vWMovaXRnHX+5nV4qMdvT91CmLgQNnNjyHBpOfe308SMzGEdK08hmz2euNck3YoAmy408fueIA=
+	t=1757940791; cv=none; b=rPhTSN0gHWMW2kYBEGCisWaoECUsARoIkaoL2G8lkSOjWK/W1asLNOsH6ODsKmJpLaXKo1ypyU4xY6KberYjF1OnTf0jTGGKnX21sq/nPUbM24r6Pi3RqqGRmO/OLjlk+dyNZeK3WcUXKRcWnsYhxmar/dNprXCLokHTPoKIMYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757940788; c=relaxed/simple;
-	bh=OLPnuE7nu4ADZxrS+fVcvW2P4VCOlWnlSTlG4UZLWec=;
+	s=arc-20240116; t=1757940791; c=relaxed/simple;
+	bh=LFLOzEjSb780rTfp/1v1VSq0abMY0adOlRd9QxgOF4c=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=m1xYTArlubTbbq6074E+6i/9fIYA7zfgHBnl9sOgjaYniiYztQrPYknQNooh08/fCunYAf2E/O5+ezoPzxbKBwiN0EbFkF2V+aFtFVsFp8D+HCu2UDaPB1Q9yYhQs4Et8cepZfMhY9Qn6lp7kN4ocf3VIdVDYey8ihM1kerEi6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c/3XXWDa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YhWJ32vY; arc=none smtp.client-ip=103.168.172.146
+	 In-Reply-To:To:Cc; b=Abojhx71tFqgAv2NFBFabUodA0SIzbBY6/uXwrazGggQ2ge7Iwdop6vAmEhAKQ//3zAMP2dPgP4aMoHgNFhky7neejE0hXTJeNXg/jVUmGFq4kfCamqNMseCc22I8YtFA6Zlnfe3mD06zGXAEFJNUKfJvNGnXwCOyaQX+r2Ym8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j2TBqjqV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YR42ocBk; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c/3XXWDa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YhWJ32vY"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j2TBqjqV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YR42ocBk"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9B659EC0299;
-	Mon, 15 Sep 2025 08:53:05 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BFF3A14001D1;
+	Mon, 15 Sep 2025 08:53:08 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 15 Sep 2025 08:53:05 -0400
+  by phl-compute-03.internal (MEProxy); Mon, 15 Sep 2025 08:53:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757940785;
-	 x=1758027185; bh=z5Hh+ZZnFYl4W70ggh0l0mRSOnR2zm/X376gykQiy64=; b=
-	c/3XXWDa1dAMINIatLv19lq+qjhKHEhzQzL8wAPUGDnfiE5jZKW7VBgCaEl3nXNe
-	7VHIZaZ/1w70qHCKQt93A0Mn6TzctCe3cIlmQ6d93vdd0Idpo2GuGNqMlH5nFFP5
-	DUMo193qa+BxpuuQzDEvs1y1f3cIr9CjizkWZt68mxkXnPZ3fkLMqAisVIZiesBV
-	YimXAPtd7egI6vl9kvMGWzxxQXzc8ujX7xfX4Odc0fMCl10rhj80ZqE5tM14xfvC
-	sf7r+ZumQHY89yDy5A2u6uYfNlodjNs+8TDPJbUFW8HX5X6p5saLz1G/JOKz0MCH
-	p60Xih+oS6kgsDXC9gJiew==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757940788;
+	 x=1758027188; bh=hzPQs10QBVCmx1cPd0wH3TcJR+notJ1ZKr/XW/AC/r8=; b=
+	j2TBqjqVeQiIEhH8OnWdwuh8bkASBm6olpXQvTDX+EdJdSqx9VSuVbyecKhw4BTn
+	MCD9WkdWic4o1mhX7iqjOgS06XGmeTwULNAQwviECqKY4Rt7Zic97eOWJkNQxETb
+	7st+BLBMV0jmXz6dQ4Nhprx/ySvBoj1XhvwP/c3U0OtDw5UbST9p9OqkKmFRBdUx
+	ljB3vYcTvc0gyy8CSCY4uwIMM55nQwvwuzitubD/GKzyfd8lQgTTFYVR8TNOdPLP
+	ny3/mNZvt1VyRY9qMihH6ebk/Ap+MRmwxUXBsieYOsXpUJ2biabjHS+M0TlT0sNR
+	5DwYmU51QMCUE2cCAop1Hg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757940785; x=
-	1758027185; bh=z5Hh+ZZnFYl4W70ggh0l0mRSOnR2zm/X376gykQiy64=; b=Y
-	hWJ32vYkUTSdXPHnCF0YobsddIujmT81uK9oYePdpuzJOh3/fsvzTwaXaNlzkvHM
-	YtjSIbqCBrqva0t3AN1T4YroWYeUoWI9JZaY367AaAYGCxHsetEsB9STiQDJZRQf
-	2PGZjJKPjaDHcOu/USH/gI/kE+gO6fSftzJa/vAD3O3k21YWba9ZFhItDlDeuRaK
-	kApFIxDy9WHbTX2rpdFPCCuDvRhin3HsbAzgRX6JW6sV2KPLXGiLzWodK+zIWDB+
-	YQNSBdH0HoS8B8YGSgaVfMFMYn4K0VFuepV+lP2k4PYvVOX3D0Z9zLyek8dFXKgJ
-	O/QA4fSo873eCl1VDcl+A==
-X-ME-Sender: <xms:MQzIaHxCi6z6BRL3X219m8J0SZLKqlegHwaVqqo_6LxCphv1A_G_Gg>
-    <xme:MQzIaJ3EQNUVxIABSNsHrkEYHIyBIZzL4SssMnApXIeB00zI7369LTUT7a9uJ-7Bb
-    pHvZcmOpas4LX-FQw>
-X-ME-Received: <xmr:MQzIaN7SFD2rbUEyZziwY3heH3nwqIkswhaP4fuqKAw7aVrFKAU_MG4mNY7gDFoXIXIkqOUxj8mt07N7MJlw3cm1emiekh92UFsalMI9uPK6FA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757940788; x=
+	1758027188; bh=hzPQs10QBVCmx1cPd0wH3TcJR+notJ1ZKr/XW/AC/r8=; b=Y
+	R42ocBk8xbfTtIZHmgZESWjxbAHmaHNK1twKYJh0ozQZxEdGTtvPwFWqFjnHjnmQ
+	IN8bUGSw3pPsz67STsueeQTOwWwDtRXGDga1LUbO+BxVTkp/cjeI+gj/oLhIpwfQ
+	7moIoZ/uSIpQnhk1oJC4z5WXRwRSDFIrSVlZxB/8M8kl0r8f+SwK39SbwggWwsj/
+	2CFyOSeNpj+l/GfGkddWgkx0GOjVxc+dDRyOcYgj+7FyoGqNM2FaNd5ER3NOOcim
+	zCsL2SBPD71972p84UwyT+TtqDQ+avMqwgVpfogE/5hOXuGneZLqSIjyjVN5S2v+
+	zeFxKX0dKgV/UrrJpukhg==
+X-ME-Sender: <xms:NAzIaNPhZE1rGL-VhH128skHnshR5auQJyabb0Gbpnu8Em9doCB32Q>
+    <xme:NAzIaKjGRS1BS3Ia6kBDfk0U4coBu8l3jW4FlsvZX10vS8KaPAS4Aoirw7f8LlHk4
+    XlEiymlXTy6eECEYw>
+X-ME-Received: <xmr:NAzIaI2TMKM0bdqQDP_T5QXnUz63Ya5jsz9jEVGOewzW5xb_vOnpgMCnvCcNbX-Y8OtJOmMWAXgJhPjhgYp6CcG_eHx1uWuKYB36bFyrQHJ7LA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefjeejgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhfffugggtgffkfhgjvfevofesthekredtredtjeenucfhrhhomheprfgrthhrihgt
+    hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epfefhueegleehfeejkedtffehvdfhvdetfefgtdduffduveevteegueeutdekhfegnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsiigvuggvrhdrug
-    gvvhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
     htmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:MQzIaEVyOk2DufoPwkYbvgI_lNR-jRNmONwQ8sL7z-45lXmmHZtZAQ>
-    <xmx:MQzIaEDzvuBawPDXJD2ucGm8G7kQ8Cz8H6tqj9470CG2EtzUD4AgBA>
-    <xmx:MQzIaL4lxIZx0-OPjjgRxP4bnfcYlPm7dejaeD1ulcwt6J22Mkp5nQ>
-    <xmx:MQzIaHyswUVCd1g88RvSqTLUoXBW-TYIULCTk8O2JS3wZjbhEPn1sg>
-    <xmx:MQzIaNvgqJClkdRDJ2vzt7EIvEB8TWh4KjMdr6ghRmIjn2-SZHP7bIIM>
+X-ME-Proxy: <xmx:NAzIaMi2fBnJwtszIur3O5kV-TSR7F2cTzu9sMNb2pAeNyMk9-byDg>
+    <xmx:NAzIaAfRRyUj7aXmd0LgRQNu7cF244OgSCz39G0q-Oof4-G3D7rlXA>
+    <xmx:NAzIaHldv7G1M1SEcdFGErn5rZaRINtJ6eZWqhfZ9hBU-Ut1qERZPA>
+    <xmx:NAzIaBtpLtGqEOoJJ60QA6YsSC94TraVDGN8ioPr7OSVL-KCtf4ZIQ>
+    <xmx:NAzIaJfT-fp9DoIqT7haohdQg2upJn6apBpQtqnR4Ll7X1JCMuR4C6uF>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Sep 2025 08:53:04 -0400 (EDT)
+ 15 Sep 2025 08:53:07 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 948a7974 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 15 Sep 2025 12:53:04 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 00f450cc (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 15 Sep 2025 12:53:07 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 15 Sep 2025 14:52:51 +0200
-Subject: [PATCH v2 4/5] builtin/config: special-case retrieving colors
- without a key
+Date: Mon, 15 Sep 2025 14:52:52 +0200
+Subject: [PATCH v2 5/5] builtin/config: do not spawn pager when printing
+ color codes
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,8 +84,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250915-pks-config-color-v2-4-e4290bd8d13c@pks.im>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250915-pks-config-color-v2-5-e4290bd8d13c@pks.im>
 References: <20250915-pks-config-color-v2-0-e4290bd8d13c@pks.im>
 In-Reply-To: <20250915-pks-config-color-v2-0-e4290bd8d13c@pks.im>
 To: git@vger.kernel.org
@@ -94,88 +94,61 @@ Cc: =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 X-Mailer: b4 0.14.2
 
-Our documentation for git-config(1) has a section where it explains how
-to parse and use colors as Git would configure them. In order to get the
-ANSI color escape sequence to reset the colors to normal we recommend
-the following command:
+With `git config get --type=color` the user asks us to parse a specific
+configuration key and turn the value into an ANSI color escape sequence.
+The printed string can then for example be used as part of shell scripts
+to reuse the same colors as Git.
 
-    $ git config get --type=color --default="reset" ""
+Right now though we set up the auto-pager, which means that the string
+may instead be written to the pager command. This is of course quite
+nonsensical; there shouldn't be any use case where the color code should
+end up in the pager instead of in the TTY.
 
-This command is not supposed to parse any configuration keys. Instead,
-it is expected to parse the "reset" default value and turn it into a
-proper ANSI color escape sequence.
+Fix this by disabling the pager in case the user is asking us to print
+color sequences.
 
-It was reported though [1] that this command doesn't work:
-
-    $ git config get --type=color --default="reset" ""
-    error: key does not contain a section:
-
-This error was introduced in 4e51389000 (builtin/config: introduce "get"
-subcommand, 2024-05-06), where we introduced the "get" subcommand to
-retrieve configuration values. The preimage of that commit used `git
-config --get-color "" "reset"` instead, which still works.
-
-This use case is really quite specific to parsing colors, as it wouldn't
-make sense to give git-config(1) a default value and an empty config key
-only to return that default value unmodified. But with `--type=color` we
-don't return the value directly; we instead parse the value into an ANSI
-escape sequence.
-
-As such, we can easily special-case this one use case:
-
-    - If the provided config key is empty;
-
-    - the user is asking for a color code and the user; and
-
-    - the user has provided a default value,
-
-then we call `get_color()` directly. Do so to make the documented
-command work as expected.
-
-[1]: <aI+oQvQgnNtC6DVw@szeder.dev>
-
-Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/config.c  |  2 ++
- t/t1300-config.sh | 11 +++++++++++
- 2 files changed, 13 insertions(+)
+ builtin/config.c  | 3 ++-
+ t/t1300-config.sh | 9 +++++++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index afd48bfa51..f50c11df57 100644
+index f50c11df57..6708d91814 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -923,6 +923,8 @@ static int cmd_config_get(int argc, const char **argv, const char *prefix,
+@@ -919,7 +919,8 @@ static int cmd_config_get(int argc, const char **argv, const char *prefix,
+ 	location_options_init(&location_opts, prefix);
+ 	display_options_init(&display_opts);
+ 
+-	setup_auto_pager("config", 1);
++	if (display_opts.type != TYPE_COLOR)
++		setup_auto_pager("config", 1);
  
  	if (url)
  		ret = get_urlmatch(&location_opts, &display_opts, argv[0], url);
-+	else if (display_opts.type == TYPE_COLOR && !strlen(argv[0]) && display_opts.default_value)
-+		ret = get_color(&location_opts, "", display_opts.default_value);
- 	else
- 		ret = get_value(&location_opts, &display_opts, argv[0], value_pattern,
- 				get_value_flags, flags);
 diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 6d1015acfd..3cf5d17aba 100755
+index 3cf5d17aba..358d636379 100755
 --- a/t/t1300-config.sh
 +++ b/t/t1300-config.sh
-@@ -1083,11 +1083,22 @@ test_expect_success 'get --type=color' '
- 	rm .git/config &&
- 	git config ${mode_set} foo.color "red" &&
- 	git config --get --type=color foo.color >actual.raw &&
-+	git config get --type=color foo.color >actual-subcommand.raw &&
-+	test_cmp actual.raw actual-subcommand.raw &&
- 	test_decode_color <actual.raw >actual &&
- 	echo "<RED>" >expect &&
- 	test_cmp expect actual
+@@ -9,6 +9,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-terminal.sh
+ 
+ for mode in legacy subcommands
+ do
+@@ -1099,6 +1100,14 @@ test_expect_success 'get --type=color with default value only' '
+ 	test_cmp actual.raw actual-subcommand.raw
  '
  
-+test_expect_success 'get --type=color with default value only' '
-+	git config --get-color "" "red" >actual.raw &&
++test_expect_success TTY 'get --type=color does not use a pager' '
++	test_config core.pager "echo foobar" &&
++	test_terminal git config get --type=color --default="red" "" >actual.raw &&
 +	test_decode_color <actual.raw >actual &&
 +	echo "<RED>" >expect &&
-+	test_cmp expect actual &&
-+	git config get --type=color --default="red" "" >actual-subcommand.raw &&
-+	test_cmp actual.raw actual-subcommand.raw
++	test_cmp expect actual
 +'
 +
  test_expect_success 'set --type=color' '
