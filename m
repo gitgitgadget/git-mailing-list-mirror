@@ -1,169 +1,144 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C8334F476
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 15:29:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375B821CC71
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 15:36:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757950151; cv=none; b=rrfcZWT4SS1j+sGa2VjbNNnWVL9ELROf04w3l1RMaZJmfv21j9iYI5rgtkCa27jHAdrTjZt32WaQxADsyLyJOCLdVO0uD7u3lRlRuyC1gO5maGLjcMcryZBQFW9Vha6846WDGymQ/1VZCDdyvSE1njiCEQLN5JMuYyjT/MLu6vk=
+	t=1757950569; cv=none; b=CQjJ89OJf7JAoMRfuEiAzRiSgNWzOTH8gVQV0Hss5+RRtnm7m1ThkQkD+KzXyD8toUDPA8XtoLm+PMbDsGxN59fpQfm6PykyaE1oGEHfryIBUl+DLbW2+TsT2r/7sx92JjEliWrBOHKAQiRXH1d6le2Lsf99hesMCFt3OFQf5k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757950151; c=relaxed/simple;
-	bh=IZR6Tu+51i5UOs0d2ux4Wezz2U8QIr7UI2EZwEB+3JY=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=URuNp1iKk/WqXeRhUbNOmWOOuC/cBuZY0XSALWvu/G7I3d9oU1k8ipmy5f9JxJm9t7V81UUBzpRLvR4ogevKm9CmJGmTsODgX9AaU7gJ2CkeOrgZ8WazAga3YBN1v2szvhBoLO3ccoflBU34EXXAWUUT8M+KwhYraNBxjwODTXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cUcil4M2; arc=none smtp.client-ip=209.85.222.182
+	s=arc-20240116; t=1757950569; c=relaxed/simple;
+	bh=xQgSMHjMpuoxAbamp1OZoEJKezQMcnXzcgijmZTTIVY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RIIXtszXd3JN5QF7GZggXlZOlDAYtEuj0lw1Z0oni0EvPgIsEFXmzaqp/YiRwU/hPqb+94G/Nq5FjiHI5XWWbhKpi035VIt/HhCfY2FWy6svN3NeclAZBWW8GOF3TXXBK98pk361FHXx9Fnx4ItcwPpQJb7Wsuae/TZCzgMu6t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O56ypGpy; arc=none smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cUcil4M2"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-8112c7d196eso468965585a.3
-        for <git@vger.kernel.org>; Mon, 15 Sep 2025 08:29:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O56ypGpy"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-62f1987d53aso2256499a12.0
+        for <git@vger.kernel.org>; Mon, 15 Sep 2025 08:36:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757950148; x=1758554948; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1757950565; x=1758555365; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4hdZdGITdwuUfzuUV/RkAlKFWPkU7UwtfFk0hHq6L0M=;
-        b=cUcil4M2G+uYcd4rvDSIQtosvvR2hrOduYjsrH3VhEfeKFiumi6KSr4KI+rRUfIfCw
-         zEDSQK3dzsalnYRGwoZ4eDm52yVhKMvdp/cc+jVy4DZfD597tAdvdzofRvC4+CzgL28S
-         jGTOboFShye7NkVFbKm7OEdejRM5SNdoqVXyCKo80TQzJCNkUd7bWSROvfczPnug3g9j
-         kEewybMgyDREFIaUZTFNutEkfgkdcocGn1CsIXPrwthfW/dy3SePNlfPovUW4fw/o3Wn
-         yVmdrqAOmzqK+OOhCHIJlO77hUX191BwzHyFPG4z4DFC9LecoG2Me3yfgav7qsREVOhO
-         m0gQ==
+        bh=a/pUuAYQDEcOxIyjicCh6nI/hO+ZOoTUjNFY1sLHyRM=;
+        b=O56ypGpyEAbNru366RQI/MGmDqQ2rQ38O7J/FRTquLR+gNbGsXYhj5Mz4xT5qorEaT
+         sdhIJ1y+tN0P4Jy8OAasDd1TMFMQwTpXnf4eQGs8CdHdSRXkcJvSqs+jPuzjZJSnelrz
+         eLfJ6Q9VnVYUlRQKOeM+Ex2rxJlI4awE0AUEAHhfMBP/tdc7p2Gy6Zy8UppbdbFkcEdu
+         JCKMIQ89q9aK608KrlHaOouFfBlwToZQT07IY22Kx5m3PDEHzDRthMBJIgeDoA9HHfiG
+         xW7nFQwju5DdF02lcxzEAx2U4qdSqYa5iJ8J0kr6RSYbHdvy5jW/N33euUosHLpuoZIp
+         1JUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757950148; x=1758554948;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1757950565; x=1758555365;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4hdZdGITdwuUfzuUV/RkAlKFWPkU7UwtfFk0hHq6L0M=;
-        b=n0C6rCAV0o0wrxqcgSMDcfY0jV0jZWiL6wabdl4yBsCspRmEqGHazvgxF2SQLgjQ+P
-         d3GlGotVctY3mPGG8uZV5WXLeFfcvYuSyY6JIWFKffGczatiXI5dOvSRH06S6YUh1Beb
-         RRrNFEo49p5DoF1rVUp2RR6iLMPN5gppL1eFuv9LnjB6v2epuLA9W/0C/y+rYhvIfEDC
-         ULFgUQZBqElPcJgXbnE45Q4IXHTN/kHAcbVd/hkD9Sp8Qi7sIx8qXK3t/QMOxl1F+ub9
-         89braiAp4KDsFYwMn/nuY9/no2PLC7OCBCbbt0qQ4re6H0S+WDI0ZUSXkE6F4PRO3BtW
-         dSLg==
-X-Gm-Message-State: AOJu0YzOazajmc5vlfly6TDaMECpoJw1dZukb2/Be8ZaqzfLrnxSJQzb
-	xkJCPxgZRVEmbPv5cXzga5KmS5tq242D7GqlhnEg8SnueOzdBjLIXyiZqP/u1w==
-X-Gm-Gg: ASbGncvnvC1VkfSXoq38BMKpVREJllXWtXkHsiWxJ29jp9qnWB3fjZuEZ2nKCEtZFSj
-	0KwZWY+HreOiDIufnb8AR/ApFZ3hMdB+bj8XQIFDAesPW0BPhQ9oZI8Ti1ciDVpUxrNPKf4MGW8
-	naBfbLe7kWwhH37z0Rb+bwXwhwTbLfa4dkk8DLWgMD/kpbSZDXNV741CvhunN99rUJiw3zL5uc3
-	On1zzWElyk5KtkWjD7Lup2V2kK7Z0PTLxo53rYgB+bkKyzR0iFKTiXcdhVHuf63YNWzQPC9XBRn
-	hwxRPKHkDJ1QbmhXl63YnJ2KyeNRV8rUkEoha0Y36DEdSbfD+rS3PLd4Wdrj5Ec1Np4Yt6vl+LZ
-	aca/ckNFqXigMImUqYBT3N5SLJ3nX9EF9cUA=
-X-Google-Smtp-Source: AGHT+IEdi60/mBhaYG/iPtuKVl32seVlf+esMUJlC76NN1/ehLM7E5xr8FTaLSApxhPtZSDWzt1LnA==
-X-Received: by 2002:a05:620a:448a:b0:823:be81:f218 with SMTP id af79cd13be357-823fcc673f5mr1319074785a.18.1757950148214;
-        Mon, 15 Sep 2025 08:29:08 -0700 (PDT)
-Received: from [127.0.0.1] ([20.109.95.166])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-820c974dbc6sm809072285a.24.2025.09.15.08.29.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Sep 2025 08:29:07 -0700 (PDT)
-Message-Id: <3a831b1a2d16296acd53dde57c1a612efab66512.1757950144.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1863.v2.git.1757950144.gitgitgadget@gmail.com>
-References: <pull.1863.git.1740149837.gitgitgadget@gmail.com>
-	<pull.1863.v2.git.1757950144.gitgitgadget@gmail.com>
-From: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 15 Sep 2025 15:29:04 +0000
-Subject: [PATCH v2 2/2] add-patch: update hunk splitability after editing
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=a/pUuAYQDEcOxIyjicCh6nI/hO+ZOoTUjNFY1sLHyRM=;
+        b=qxB9NXVpQ9pQcZz8faRTPT3YN6hM8mJj/ui4g0/U03QqYvmi0FP1RcEN16AhRzbjFM
+         EsCAm3kYw3D8tXLkWxWky1o0HeC5TDRFPlidwSIFs3hCqxraA7MVZWp2GKQzSi0Rrnw0
+         gQheRkQiSEJcz8fIII9if5Tz9Df2FWmK6yExlIvnFqNj3HFjAt1JpwNDOOiskF+QPX88
+         hy50nLjqyi/KbeJv2KKMPnb8jY3A6tll//2M6390MU4AbKipHBofEGMjcYisaDPA0mjm
+         xTzeN/mLfgD+7E8YdUqHmpqlK1LfkJRoSRY2debqd2UrjHGNrLZGrbN5nBChCq3wIFwK
+         Haaw==
+X-Forwarded-Encrypted: i=1; AJvYcCUHJbjw3jeAFec/hXkUB61RbVZ2pPnYzbBrvRFviOKarDxJWqUY08fUeP2s2nPKKwdQ1OY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwBZIKQt2P0ONODKJNM/248hF1cfhQYFlkjPbsZEAqYEiFL9PSk
+	fr4qdPAAdVj4y+zH/9F7Wq42VLrk85apFiBtVIhmrIBeF2TE/+TzFnsVVru+8Xf8Wt750FoGAQV
+	bDOB+p88ba2fM9Iut9nfwWampsKK2DeVf/NAP1JA=
+X-Gm-Gg: ASbGncsiQAS+dW5/I8fkgFB0pxjBDlCp1seXo+PJnx+M1pCUWIimKCboXbW1MkDFxUI
+	fyMIhHKyEretdZWXCriTry8teZSRVD77YGPrGDEKy9XjR7RJMhMuvg8Y6D1V4/0kecrjQjDfxTZ
+	bEeYkRkG1ugPAdM0pJkUzZamH96/ochh/CVo42kbK3dmtdSMN9Vp4RBmGAAJBoG5Z8eQHLKSecl
+	VVSUL1ioeCem8Z9hrJnjlQUy7kbLcjQwzhH8CQvcw==
+X-Google-Smtp-Source: AGHT+IHw2hIQfexCa4iWgrsAffmKoVgv72PHIEX9aE/eTXafr/okEH2DHdRPn3Wwid2Xi30OdggqPcQYNvEwbttVs3c=
+X-Received: by 2002:a05:6402:354b:b0:620:bf3a:f6e8 with SMTP id
+ 4fb4d7f45d1cf-62ed7eccfc7mr11384622a12.4.1757950565277; Mon, 15 Sep 2025
+ 08:36:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>,
-    Junio C Hamano <gitster@pobox.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <074901dc2422$2039a910$60acfb30$@nexbridge.com>
+ <a5e01f0f-1789-427c-83c3-90644fa234c9@kdbg.org> <000201dc24bc$a1b8d9d0$e52a8d70$@nexbridge.com>
+ <9a03a436-8240-4566-9383-7afbf740719e@kdbg.org> <004101dc250d$18173950$4845abf0$@nexbridge.com>
+ <a57d5857-b096-4d92-993a-3f09d15cdcb9@gmail.com>
+In-Reply-To: <a57d5857-b096-4d92-993a-3f09d15cdcb9@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 15 Sep 2025 11:35:53 -0400
+X-Gm-Features: AS18NWDA-OfeSA_nfJw2ylHUpCNi9xWU-q2tn6TZRvJ7PnBy6sS5j1QDpU6wUlQ
+Message-ID: <CALnO6CDqDWLHfitqxHqOtL5Ej9XMfZUmC9j1dgQG6xiZGHQZMA@mail.gmail.com>
+Subject: Re: [QUESTION] mergetool environment variables
+To: phillip.wood@dunelm.org.uk
+Cc: rsbecker@nexbridge.com, Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+The text of this reply sat in my drafts, so my apologies for getting
+it out later than I intended. I agree with Phillip's reply below, to
+which I've moved the text so it makes sense :)
 
-If, when the user edits a hunk, they change deletion lines into
-context lines or vice versa, then the number of hunks that the edited
-hunk can be split into may differ from the unedited hunk. This means
-that so we should recalculate `hunk->splittable_into` after the hunk
-has been edited. In practice users are unlikely to hit this bug as it
-is doubtful that a user who has edited a hunk will split it afterwards.
+On Sun, Sep 14, 2025 at 9:51=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
+>
+> Hi Randall
+>
+> On 14/09/2025 01:18, rsbecker@nexbridge.com wrote:
+> > On September 13, 2025 5:04 PM, Johannes Sixt wrote:
+> >> To: rsbecker@nexbridge.com
+> >> Cc: git@vger.kernel.org
+> >> Subject: Re: [QUESTION] mergetool environment variables
+> >>
+> >> Am 13.09.25 um 16:42 schrieb rsbecker@nexbridge.com:
+> >>> Let me try to infer what is happening and please correct me if my
+> >>> assumptions are wrong:
+> >> I'm sorry to say that I can't help. I tried to disentangle what is goi=
+ng on, but this
+> >> stuff is far too convoluted to be understood in a few minutes. I canno=
+t tell if it is
+> >> possible to write a mergetool that is not installed with Git.
+> >>
+> >> I would just copy one of the existing tool scripts and run `make insta=
+ll` from the Git
+> >> source directory.
+> >
+> > Yes, it needs to be in the git install area. Adding export BASE export =
+LOCAL, etc.,
+> > works to resolve the situation. I wonder whether that should be documen=
+ted.
+>
+> Looking at t7610-mergetool.sh I think you can use mergetool.<tool>.cmd
+> to call a user defined merge tool. The value of the config variable is
+> eval'd in the shell so if you run
+>
+>      git config mergetool.my-tool.cmd 'my-tool "$BASE" "$LOCAL" "$REMOTE"=
+'
+>
+> then
+>
+>      git mergetool --tool=3Dmy-tool
+>
+> will run
+>
+>      my-tool <base-file> <local-file> <remote-file>
+>
+> on each unmerged file
+>
+> Thanks
+>
+> Phillip
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- add-patch.c                | 12 +++++++++++-
- t/t3701-add-interactive.sh | 26 ++++++++++++++++++++++++++
- 2 files changed, 37 insertions(+), 1 deletion(-)
+I run a custom merge tool, and I am fairly certain it has access to
+these variables. But I pass them in the config defining the tool to
+the =C2=AB main =C2=BB command in the versions where I use them.
 
-diff --git a/add-patch.c b/add-patch.c
-index 32157e31ed..0754f54a38 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -1191,19 +1191,29 @@ static ssize_t recount_edited_hunk(struct add_p_state *s, struct hunk *hunk,
- {
- 	struct hunk_header *header = &hunk->header;
- 	size_t i;
-+	char ch, marker = ' ';
- 
-+	hunk->splittable_into = 0;
- 	header->old_count = header->new_count = 0;
- 	for (i = hunk->start; i < hunk->end; ) {
--		switch(normalize_marker(&s->plain.buf[i])) {
-+		ch = normalize_marker(&s->plain.buf[i]);
-+		switch (ch) {
- 		case '-':
- 			header->old_count++;
-+			if (marker == ' ')
-+				hunk->splittable_into++;
-+			marker = ch;
- 			break;
- 		case '+':
- 			header->new_count++;
-+			if (marker == ' ')
-+				hunk->splittable_into++;
-+			marker = ch;
- 			break;
- 		case ' ':
- 			header->old_count++;
- 			header->new_count++;
-+			marker = ch;
- 			break;
- 		}
- 
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 43a856e0c0..77f99e9ecb 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -1311,4 +1311,30 @@ test_expect_success WITH_BREAKING_CHANGES 'splitting previous hunk marks split h
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'splitting edited hunk' '
-+	# Before the first hunk is edited it can be split into two
-+	# hunks, after editing it can be split into three hunks.
-+
-+	write_script fake-editor.sh <<-\EOF &&
-+	sed "s/^ c/-c/" "$1" >"$1.tmp" &&
-+	mv "$1.tmp" "$1"
-+	EOF
-+
-+	test_write_lines a b c d e f g h i j k l m n >file &&
-+	git add file &&
-+	test_write_lines A b c d E f g h i j k l M n >file &&
-+	(
-+		test_set_editor "$(pwd)/fake-editor.sh" &&
-+		if test_have_prereq WITH_BREAKING_CHANGES
-+		then
-+			test_write_lines e K s j y n y q
-+		else
-+			test_write_lines e K s n K n y q
-+		fi | git add -p file
-+	) &&
-+	git cat-file blob :file >actual &&
-+	test_write_lines a b d e f g h i j k l M n >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-gitgitgadget
+See history around
+https://github.com/benknoble/Dotfiles/blob/4a4fe9678bdc5b34dc826058fbe85d29=
+cc4d7722/links/gitconfig#L130.
+
+Otherwise this would seem an unfortunate interface.
+
+--=20
+D. Ben Knoble
