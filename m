@@ -1,54 +1,54 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3512C181
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 07:31:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470582C0F67
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 07:44:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757921465; cv=none; b=EB2VSXPY+rwOYMq8UK+u97YveWPM/p0rjs7A9NEyewq1Y7RdBwsgvovwduikTuaF4dr/6DcnUaVY3Dp7wOERfJUdZgKUG2+2+wDT+XKubW/CwEpjaHKcR90GY98bEfx4aSof4IfobgXi1S/W+lruyItGzyzwGqU9knsD4fP924o=
+	t=1757922281; cv=none; b=O6G/tETuNhBVlG7gAeGQseDCgBo6gkSqrDvBfHnax2NgmdCK2OFSSJRixJ7bJUd+ndYctq5/C1el5eVHNO0lK7iJ0z4xCCqymQ2aBUHXttYGa9F3abJdn7RSxdYh7F+SnxZwhY9j1S7NK75F0mSIAPg7b7nP1+1YHp++Evynp8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757921465; c=relaxed/simple;
-	bh=Os9WlL5FxN8hSrBdZ4AX7MffFeLxRlvsYboOoNs1n20=;
+	s=arc-20240116; t=1757922281; c=relaxed/simple;
+	bh=2cD4A7grQ9TkmAghOQYuIZL5yCP8KfSilF1+GmXugpc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SOzjvRgTVwWI66tfGyphX1msHyxvDYurOxoRBns95iGYhhcquZAcLUxh2bW5bZ+u6ZeyD+vgVaYB87q+txkmGVBG9j/k1lnlyUFFti6gwu0SVKdNdmN4ZH+JxN/6gYjgjrsfnU2TrmfR5HbT8+aYmKFSVFTz+kfK1+dZ5pK4Vdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qUtlKvtr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WMEHrNCh; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=AtcHpeqeox87Kieroe9fi0JtfbjHr7ztKD2TVXL075UzGXno8LEPOML8KEqQMqt439X5li1nQSz4bNzC4UaPR7xh6D+KOCN1nEVEQBoSY0E4JIQB37SJSudZ9dG85zw4M8YsG89lyASLKpzNeXNvvoioMsWAUgLgkdKI0P5VrnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jS2D1nUQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=juM/G0j5; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qUtlKvtr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WMEHrNCh"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 953B014001AA;
-	Mon, 15 Sep 2025 03:31:02 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jS2D1nUQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="juM/G0j5"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 831A8EC0239;
+	Mon, 15 Sep 2025 03:44:38 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 15 Sep 2025 03:31:02 -0400
+  by phl-compute-10.internal (MEProxy); Mon, 15 Sep 2025 03:44:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1757921462; x=1758007862; bh=YK2bHI3Dve
-	fKlhK8fjDMQ/Kp4k7KomgFKj+oQ62c0tU=; b=qUtlKvtrdYSvrTHhZELAxVGFyG
-	wqI0Q9I8q9RISJO8dHRNXSKvjfsZqf08KR1BT5uUKM4wZ++sbyKAfy+3MxXA6ltl
-	r9Pwbi5PIxGi1lKsXywjWObTwlzIoWs2YdAZXonJj9Gmc4jxcWu6pNtZP/RI+P1x
-	FlYEx8GoZ4x5irYlEXLM6fkBbptG3/NVSgvD1dfMibUNfV5AcRT+QfvKpgAsf1w3
-	u2UE1GhtYoTsNVmUQNBYnGUnuetIUAVSc84VFOlDys0+jqfecY94+nFXQT41vwLt
-	VrHvPiO/q14Y6cZjWxHld2cPRi/fQ/4PZno9SZ9QoY/x/rjmQSCgrnfnXpLw==
+	:subject:to:to; s=fm1; t=1757922278; x=1758008678; bh=6rvEoZq/6z
+	QJERVQFgrGhmrjfFhhou5EyXmwZT+ljCQ=; b=jS2D1nUQn5M83NoWUJJPThhsNQ
+	SL2vB8HuUNvjpil1t5UNK9Njp2+Z3EBcai+HQu0sS48F1re3VLf3APTnf71iZOsC
+	kDhun9kE9wOEs2SFyybbiwg22YRI0JsRxzNJcEFTpI2yw66jMD9x5dTED+OdQGAp
+	z1jCLtNHohGdax4TsjnixlYVeIEBN2kUx49zpkGfHoVJsbm9Jl2amBcvJuYmuzVy
+	iUWlwH3Wrk5HVAxu4/gtDpI8gDhQxCUgUMpm/O7dEujBbLbd6YDCeR38g/Dacm62
+	dk65bsE0YUrrgWLmR0WVMLEaGkOTw2BDI2dpCdpHR4tiih+gmDIqweDliPOg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757921462; x=1758007862; bh=YK2bHI3DvefKlhK8fjDMQ/Kp4k7KomgFKj+
-	oQ62c0tU=; b=WMEHrNChGiJR3bkKTLVU/D80JPYajKnoPl+FqE00n13pi10ixxf
-	JhOp6H5ucLsuM2rpzRBuzyt4pBhLMO62521aOTTHXlUfOPRtMgVXmAZAipc/sWMr
-	HxcEGW4tFpimUHwmJjTnGfYeJP1DrjHtD+47EVK6obaEGpJ7+n5U7gu27ObCUzUR
-	980XbXX3i4oPod1xPrPTecvu2gVpKpVat1zwCVVKdkm/nFUl1oA1EQ72d+CwxYTi
-	J4FZrC1SXlbPlEAq08NKRZJA3EeBAhsA9KnN0cDO53jJsorF6Q76aDo3gZWNpI05
-	F+WnlaDmbBcBtWbHb1ovlgLZQlTJ5Rkcenw==
-X-ME-Sender: <xms:tsDHaP5J9L0dvEFvIuCnAeAJRmQhQvpDi1biInlW9Otv-dggYlehwg>
-    <xme:tsDHaPfCj0Oxg9fSc68zLDktmlw0ZwoHhtgA3v_aF1lLtHqU99IxGJl96-y1RPmXg
-    HS5DlW6qUkf1i3K6A>
-X-ME-Received: <xmr:tsDHaDD7M7SchZog7HloXI3y26y35xL4rlf2qh_snmYDKIIVwZt0JXVfr5DBZA6KaN2Xs55MMvU8vbJprqJ9MvfMG7XfT93fHtoVsO2RwcvV8w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefjedutdcutefuodetggdotefrod
+	1757922278; x=1758008678; bh=6rvEoZq/6zQJERVQFgrGhmrjfFhhou5EyXm
+	wZT+ljCQ=; b=juM/G0j5C1niqbOr8xtFFDo8VT1HbItymZBn/WomHGyrdqa8j7V
+	qgpGXwTeoocqbo5k2V0YCeC/y0nQXvZXLvJWyCYnX01m61Rh2eGq1XXOCb+ENMUw
+	VGT2XzAEPVb72BWXSTc/Fzzsh8grjbU/Nqb2XZv9EfFrxYl8eZ9q11IHC2mjFfgd
+	yr8LBqThI1+KhrkMuu0BxcoWcoBQWTGUjfq2U0ZQfKclsrLtJI90Y4NyGO4x3J+2
+	plWVT2MKSmvkThR52Eg3WUPSUWJpjvumUv7nWCgNBMu/GwSHKXWiSCDRVk5R3XnO
+	nEb4sp1byxMMPrTJbwDFUTNAc3yTDJ0CRfg==
+X-ME-Sender: <xms:5sPHaAxkDBvgbvF4Oz1t-LK67uN1Hnw0AgqH7zBKa3tH7RtdpgPjGg>
+    <xme:5sPHaO1uI7eAPExxOCSpbtbe-wsKANkSrmJ_Cb0qrpqW3VplmdQs3l0b6_uGlP81j
+    VpWFMWTnjgLFYs5pA>
+X-ME-Received: <xmr:5sPHaO42W3FCeepDhdc6mncdD7OrRSSrxvi8W2Fw-Iw-ed4aMVIUXiCmskDsxFyLlKG6G-aQWQgG1D4kNBpzwZ2QIvlJrKC2SYqqJnD88_1Nkg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefjedufecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
@@ -56,32 +56,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefjedutdcutefuodetgg
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
     pdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
-X-ME-Proxy: <xmx:tsDHaC9JUEsoF7OoSRCn31fhtknyBXIsH0kE28-DjHtReTsg9hc4Kg>
-    <xmx:tsDHaOKw2boC_7oqJYk_ubiB6Sczubc7eYXDBgivg3eTgmcZOyZz2Q>
-    <xmx:tsDHaLhv3rdYsv0M4SDik9VzG9jm0hxCVL5jMqlKez1_LRB2NYTN3A>
-    <xmx:tsDHaO7H4cpcM8TKlD47BNRmZHkERwwNZnuqgaxfMAkPZpSQ9RWH5A>
-    <xmx:tsDHaKToNKhsAYh2SrF8r8WhOEpD8_E84gD9_UFKO2h7yo0YDYtAGSaF>
+X-ME-Proxy: <xmx:5sPHaBVt2esnQd0o0vSA6_bYpSN09Bq4rxl_PvJTjW4KEaqb6gIQZA>
+    <xmx:5sPHaNCdhtdo8zpTnkxXUqKZr7YSlcBrqoCCCc594Kwmp9GKpN1GTA>
+    <xmx:5sPHaA4lxRlxWeHDsCdVYLYnqQBLZZtD8qS9rus9CBv5lmNsxbJ7XQ>
+    <xmx:5sPHaIxBUID49YyjQQH75d0X8KrFx0751eMMU5XLGEnzLvqOB6zM8g>
+    <xmx:5sPHaPo1qb0PYbX1o5rk5iRiPwGgwgN3FmCxTu795Tmi33JMWQh1j7Dz>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Sep 2025 03:31:01 -0400 (EDT)
+ 15 Sep 2025 03:44:37 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 67f5c23e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 15 Sep 2025 07:30:59 +0000 (UTC)
-Date: Mon, 15 Sep 2025 09:30:56 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 10ccfc54 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 15 Sep 2025 07:44:36 +0000 (UTC)
+Date: Mon, 15 Sep 2025 09:44:32 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 14/16] packfile: remove `get_packed_git()`
-Message-ID: <aMfAsIEX9Wf8LOx8@pks.im>
+Subject: Re: [PATCH v2 02/16] odb: move list of packfiles into `struct
+ packfile_store`
+Message-ID: <aMfD4JuwJPHmh5WI@pks.im>
 References: <20250821-b4-pks-packfiles-store-v2-0-d10623355e9f@pks.im>
- <20250821-b4-pks-packfiles-store-v2-14-d10623355e9f@pks.im>
- <aK5hpwcCgjkgQB1N@nand.local>
- <aLav7vdfxPGTVDQd@pks.im>
- <aMNahx/RBoRljSZd@nand.local>
+ <20250821-b4-pks-packfiles-store-v2-2-d10623355e9f@pks.im>
+ <aKz0/WNu/GRYh3/W@nand.local>
+ <aLav4UAcfQjvNzMF@pks.im>
+ <aMNYaPSnf6JP7bNj@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,76 +91,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aMNahx/RBoRljSZd@nand.local>
+In-Reply-To: <aMNYaPSnf6JP7bNj@nand.local>
 
-On Thu, Sep 11, 2025 at 07:25:59PM -0400, Taylor Blau wrote:
-> On Tue, Sep 02, 2025 at 10:50:54AM +0200, Patrick Steinhardt wrote:
-> > On Tue, Aug 26, 2025 at 09:38:47PM -0400, Taylor Blau wrote:
-> > > On Thu, Aug 21, 2025 at 09:39:12AM +0200, Patrick Steinhardt wrote:
-> > > > We have two different functions to retrieve packfiles for a packfile
-> > > > store:
+On Thu, Sep 11, 2025 at 07:16:56PM -0400, Taylor Blau wrote:
+> On Tue, Sep 02, 2025 at 10:50:41AM +0200, Patrick Steinhardt wrote:
+> > > > diff --git a/packfile.c b/packfile.c
+> > > > index 8fbf1cfc2d..6478e4cc30 100644
+> > > > --- a/packfile.c
+> > > > +++ b/packfile.c
+> > > > @@ -2344,5 +2339,23 @@ struct packfile_store *packfile_store_new(struct object_database *odb)
 > > > >
-> > > >   - `get_packed_git()` returns the list of packfiles after having called
-> > > >     `prepare_packed_git()`.
-> > > >
-> > > >   - `get_all_packs()` calls `prepare_packed_git()`, as well, but also
-> > > >     calls `prepare_midx_pack()` for each pack.
+> > > >  void packfile_store_free(struct packfile_store *store)
+> > > >  {
+> > > > +	packfile_store_close(store);
 > > >
-> > > Yeah, having two of these functions that are named so similarly as to
-> > > suggest they do the same thing (even though they don't) is unfortunate,
-> > > and I am glad that we are looking at it here.
+> > > Seeing a call to packfile_store_close() here was a little surprising to
+> > > me. The code that you are moving has a comment that says:
 > > >
-> > > > This means that the latter function also properly loads the info of
-> > > > whether or not a packfile is part of a multi-pack index. Preparing this
-> > > > extra information also shouldn't be significantly more expensive:
+> > >    * `close_object_store()` only closes the packfiles, but doesn't free
+> > >    * them. We thus have to do this manually.
 > > >
-> > > Right; get_packed_git() only loads the non-MIDX'd packs, and
-> > > get_all_packs() loads everything (regardless whether or not a pack is
-> > > part of the MIDX or not).
+> > > , so I would have expected to preserve that behavior.
 > >
-> > I initially understood the distinction of these functions to be exactly
-> > this. But after looking further I don't think this is the actual
-> > distinction: both functions end up loading all packfiles in the repo,
-> > with the only distinction being that `get_all_packs()` also prepares the
-> > MIDX for each MIDX'd packfile.
-> 
-> Calling both get_packed_git() and get_all_packs() both result in:
-> 
->  - prepare_packed_git(), which calls
->  - prepare_packed_git_one(), which calls
->  - for_each_file_in_pack_dir(), which calls (via callback)
->  - prepare_pack
-> 
-> prepare_pack() only calls add_packed_git() and install_packed_git() if
-> the file it's look at ends in "*.idx", *and* there is either no MIDX, or
-> (if there is one) the packfile is not listed in the MIDX.
-> 
-> get_all_packs(), on the other hand, *does* call prepare_midx_pack() on
-> all MIDXs across all ODB sources, after having called
-> prepare_packed_git(). And prepare_midx_pack() will add MIDX'd packs to
-> the global list of packs, which is what differentiates these two calls.
-> 
-> I think this gets a little funky in practice if you have already called
-> prepare_midx_pack() on one or more MIDX'd packfiles before calling
-> get_packed_git(), because of the side effect of prepare_midx_pack()
-> installing packs into the global list.
-> 
-> So the above behavior isn't guaranteed, but there definitely is a
-> difference between those two functions depending on whether or not some
-> other site has called prepare_midx_pack().
-> 
-> > > So I think that want_object_in_pack_mtime() may need a small tweak, and
-> > > I am not 100% certain that cmd_grep() is OK to convert.
+> > This behaviour is preserved though. Calling `packfile_store_close()`
+> > does not free the packfiles, it only closes them. And we continue to
+> > call `packfile_store_close()` in `close_object_store()`, so nothing
+> > changes.
 > >
-> > I initially misunderstood the distinction between these two functions
-> > the same as you did, and had a similar list to the above in the initial
-> > commit message. But with the adjusted understanding of the actual
-> > difference between these functions I think it shouldn't be necessary
-> > anymore to go through each caller one by one.
+> > The only change in behaviour is that we now also know to close packfiles
+> > when freeing the packfile store.
 > 
-> From the above, I am not sure that this is true.
+> Why is that change necessary? I am not trying to be overly pedantic
+> here, but as you note above this code is extremely fragile, so I am
+> trying to avoid any changes that are not strictly necessary.
 
-Yeah, I'll drop that part from this patch series for now and will handle
-this in a subsequent series.
+Hm, okay. I'll drop that part then. We can revisit this at a later point
+in time once we move the logic to close the object database into the
+respective sources.
 
 Patrick
