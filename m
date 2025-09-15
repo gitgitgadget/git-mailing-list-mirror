@@ -1,200 +1,126 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C7D258EED
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 10:09:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCF62F9C53
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 10:17:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757930994; cv=none; b=W1Jd4Jbw0oN16TL0OXb2lunwP9lcg7KF3QcadF+jaj4Bu8dSmnWm2Fy+xegHa2MJjexqtGANLBnOsUpdkmf8cbx3iubzw0H/EPQdVcZPEJbT4RfCGYM6gx7CGzWDdAL+w2gttAl3+BiJKXV2FYGQVDzQ/ekhS25+r7r1zRQztnE=
+	t=1757931469; cv=none; b=RPDjZkc5MlZ2uKAM0ZJCraSbXVAuXDwmnawaRiTusAPMvVoWHUrU1FhWLresSXfPCtRFMIIN+50dGpESgtfoRBqpNqlvujLMcxqRSKB8eQCjpxc17Ol3li8hOoa6MHhZWDckjN9YQC/TX8U6CEUVI0O00KFft6y2g471cn+PdGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757930994; c=relaxed/simple;
-	bh=EYLyqjlq4GRdCiMsH2AZ0tmmJp01fmEDG/ZPQL8PEgc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KMNGmcFQg87bPtye9vJzBS0aLkdm129FsJOk40Vt/53JzQbDD+P6K0NJRxG5thNlIe5UkVykQ93q/BuXAZdhMJbJe0Rl41GUDWWhVyUJ0TsVUION2RLhFYP/7wAGLsF+2Y1iBKS8DXi9xV49h/3meou8lLqhQzucMBVBD9AkNO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S9iibTzx; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1757931469; c=relaxed/simple;
+	bh=aSFipCxHPb78dR7Sc5vDnzNp6sU7dPyM9hAqYGgNhLY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Hr1haAN+LY9kUyB146Ho4ZhajzGs7yMhKt0borALVtmbk1VToBdmqUkazb50NAJ2PgyDas/D+u6jKyKWdMxSZsEW5IeU51QwgE60q4xfmsMI0iax+AXNIDWuCbTP1TofCUCSMgbfC93RhblNtxqeGItx3iZVZBjKhGEwAflvF60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xyy1cKjR; arc=none smtp.client-ip=209.85.218.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S9iibTzx"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-45e03730f83so18059525e9.0
-        for <git@vger.kernel.org>; Mon, 15 Sep 2025 03:09:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xyy1cKjR"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-b04271cfc3eso502520266b.3
+        for <git@vger.kernel.org>; Mon, 15 Sep 2025 03:17:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757930991; x=1758535791; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=hta5YmRoMmkxBtDXydVO0JrSCdZxxF3VUebZJKcYk7A=;
-        b=S9iibTzxKJJykCejyIR4bvjbtYsvJAksppTdOtwrVT1noVT36sQX9cOb1+FQoEaMDt
-         VEgGd251QDttzdHrjD3pDjy6oMK3BPxsx8O0Ft8++/C8jCD9j0gwttmPVpu1fy/JWn6/
-         kRVnlT9icDo/HRE92khiOZL5nNoXkjb7WAsijU3mQp+GoDXYrhdZf0vt08i7AvXWXN6T
-         VkKSvWtltTeSJQ827CsWW/hO7KjXlUKiWn/g5iQQ9mxOTk0rAWDXNmuu4PvENc2b/8YC
-         cyVIo+oLYV7c4TWs+gRXiQCc1CLvg656cA03QvwXCmassI+SLhvKztjlyLRosfxVe/+A
-         kGHA==
+        d=gmail.com; s=20230601; t=1757931466; x=1758536266; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zKGNdTJ3ohxByxxq+sEDr7tRlaoTCuGqKUhXQySPvyA=;
+        b=Xyy1cKjR2guY4jk3gcVHkJReOwR073+GR+DgG23jXUE+sDuCQBsAP3Zr6rp0/LHkSj
+         5Sr1PelMy01y1izikIEXRzEGfpBsCZC7MDiYUu6tsS6CUrGFFL+cEfwL7uv0s22nwQGh
+         Q9/atZ33hnsHF6a299V6OphcSUA4Jq2EBCPSrHn7T/5UHKrIu/w0NIFbR+obgv/FwXKC
+         uw0kgztld6wPhLWH6qGh7muDxf5jFPQaRoddOciAh9Jj/YsOOYafVZ/snCcYgkPdE+AA
+         cGHrKFyBUj+SclKNp8fRl1FV7n6N9ORK+QFkTdjShf/c7Bj+Q0oGH65pB5DIJWcasCnY
+         LKdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757930991; x=1758535791;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hta5YmRoMmkxBtDXydVO0JrSCdZxxF3VUebZJKcYk7A=;
-        b=lKaZ6hm6PQPzC4RTgPwSs43L4e1tZzJVG22PwCln7LeQWitYYcWiBflcpppejeKpVT
-         B+I35n21vX2q4vXd5Q1hHDAu4meN0qecXoD4upVrqDE58aFZNdynEJ/h8REgIiJNLXVD
-         WszNYaC4jZy/r9n2NTiFeyaAgfgm1bi/sr2Ub74+IrivXdQHFk3ndsrWD9gM4T5qkDo1
-         d0genb/Nlp2SdkEbBr1LIfsOob3CdFByB9fk0/MtWFV/yAtq9/y95VIxF9Vj0mmB7fou
-         I+0RwlX4z46QVM0u2wZy/lhhTgRfyr+/nuLtr4cw8k40a6Oc/Bo+TMpy802P83/bLi6C
-         AkqQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWCeFa0JVXTyF4VHWAlWVcX4jj8LQj3iRAo496T9pYHjhIajiECgBBx+hjHLSR9gp6KvLE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyycu38NIQDJi2R6lkUlYSTLPhNyP/L9GzvvmGV/thBdErwqECO
-	Ns/iJCfMtWuWJ7Ahnv0u5ZCuR8UUlOCYuiV5nvOPc6QepHvuq6EEPqk/
-X-Gm-Gg: ASbGncuwWUwARScFEAk5X34HUmkDwzrSHlr6V+0j+cvOxEGxlfkTI/Aj37vebaH71Ri
-	d2UvsQuDD0liuxJQOaju2gA4dINbq31WprQO6cp7RXIsNpo07cJ13PXAVrtFetkB7+FzUnxnd1+
-	D+tLOxRjEE2hEV5uM4Z24opLp0NFfnTy8J1eo444IL/56TkietpiTP/UW2UsvpKrtlYYGv5Lm2Y
-	SbeCMCMKgkplRdY9Jlk3WlhPIjOv+04ABLWj+D2X/DuF6RygkcJAIf6rn7CkRwR+3QvZNgALXEg
-	HqGzaGAEQqk9FDZp+cWZD0p9p1nJODCabdvWTSZsj4HsXZ+FDjg0KhfcWxzqBeuhtGZQNP9ra+b
-	wvyXqC7qqv8h1E+tnHMBM6U+nAmxv8oNwBoBInwA0Ok6g7RjKkx6t0B97He3ACPrnYr5ql8HM9b
-	x6xoZhSUNbIg==
-X-Google-Smtp-Source: AGHT+IFgikV+ruwYVOF3kXaXElP7Iiw9ZLJZ4s/1ao3m44AAoRm1FOANYuUU+7hk3Fnh+XDcHzVczg==
-X-Received: by 2002:a05:600c:3b08:b0:45f:2c39:51af with SMTP id 5b1f17b1804b1-45f2c395323mr35899785e9.0.1757930990577;
-        Mon, 15 Sep 2025 03:09:50 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e7ff9f77c4sm10974162f8f.27.2025.09.15.03.09.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Sep 2025 03:09:50 -0700 (PDT)
-Message-ID: <779ec8b7-9939-4860-bdc2-6d620ecfad24@gmail.com>
-Date: Mon, 15 Sep 2025 11:09:48 +0100
+        d=1e100.net; s=20230601; t=1757931466; x=1758536266;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zKGNdTJ3ohxByxxq+sEDr7tRlaoTCuGqKUhXQySPvyA=;
+        b=TAEDIe3IOitu097hF6zGBVCG5+cRZfLLMmHucH0P+EhjwlS8VnnP3tMjgm8cNsaRrm
+         YI1CaYPpneLVRXuupj1hdqBfXwcTIfkx3z2sjLFPJxZEr9A1CFu8l/hsozqSwD0EHARi
+         gnrFmFvGpVJf3jTwvVWamPrrb9KqwR30z93kZGm1fOVPS228MC7awr389cCAMwD7t9tj
+         X5v/N4yUZtU3Fg7c8By0lL41A1Y9ci44CgFGec04IpkwY1fubl4+Iev6JqGPuWjKFLyl
+         kX7lyZJ7C0zrL2WYbK6gBOoamK8RpKyVow32nfssavWzyWuUG2Bbycp/k129a/fMZS5w
+         FxHg==
+X-Gm-Message-State: AOJu0YztIvzhnc0opxo9ImTvNTd1oOlJPPYBitBza0pNmiTOxrJHIfAK
+	u24EbO86qNuIygrtKfKIejgoslUKnENUAwExbQTenjD8yNFa9MaVkTg3ZfrXiSsP8wzhLBm1hVn
+	Ouh3IJ1DZDJq3U3EPsMcXhbPVwtMUAT4=
+X-Gm-Gg: ASbGnctharU6rzWDkpdHZInyrWhnQ3AuoGzsJNVOGUDs1JQ6xCdMkUAXu8M1ZyTNoFe
+	t5TN1sorM6jYgBcq7V1yclK5Z3vjlquF1yt1LUCLtBflnirbC6mikaAk4tl51+93qB1lafdlrB/
+	7aIWpRakMsgVBbaygzVdJm37d57lVRM556A3iNpXVQEbKgBrpMiizWLxuvsTF6FTQDrcPtY6wPF
+	1CiEws67A==
+X-Google-Smtp-Source: AGHT+IHuZUun5OLi5kvxusrjC140PVQHJTbV8wNw6vYvkQaDGG8KtlB2rlXwmc9eR0zvfQHvfYkU0hxgDoDJXAQDMFM=
+X-Received: by 2002:a17:907:3fa1:b0:b04:5200:5ebe with SMTP id
+ a640c23a62f3a-b07c396d4b9mr1321013666b.54.1757931465829; Mon, 15 Sep 2025
+ 03:17:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/3] rebase: support --ignore-other-worktrees
-To: Gabriel Scherer <gabriel.scherer@inria.fr>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, "D. Ben Knoble"
- <ben.knoble@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20250913141327.2775228-1-gabriel.scherer@inria.fr>
- <20250913141327.2775228-3-gabriel.scherer@inria.fr>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20250913141327.2775228-3-gabriel.scherer@inria.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250912124042.2523683-1-christian.couder@gmail.com>
+ <20250912124042.2523683-3-christian.couder@gmail.com> <aMex06JNPVeHaw_d@pks.im>
+In-Reply-To: <aMex06JNPVeHaw_d@pks.im>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 15 Sep 2025 12:17:33 +0200
+X-Gm-Features: AS18NWDA5NJV6lRcjhX_d8JxeiJ_2lP2FGykuqjzAPXXvDi9ZTNCA2J7x44m21E
+Message-ID: <CAP8UFD3-3zjBBHP-Y9nLO-qEyhkWhD_pxFZhk6rzrC31LanDMQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] fast-import: add '--signed-commits=<mode>' option
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>, 
+	"brian m . carlson" <sandals@crustytoothpaste.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Gabriel
+On Mon, Sep 15, 2025 at 8:27=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> On Fri, Sep 12, 2025 at 02:40:42PM +0200, Christian Couder wrote:
 
-On 13/09/2025 15:13, Gabriel Scherer wrote:
-> From: "Gabriel.Scherer" <gabriel.scherer@inria.fr>
-> 
-> rebase can currently fail if the branch to rebase is checked out in
-> another worktree, and there is no way for users to override this
-> error. We add support for the '--ignore-other-worktrees' option of
-> 'checkout'.
+> >
+> > -     /* Process signatures (up to 2: one "sha1" and one "sha256") */
+> >       while (skip_prefix(command_buf.buf, "gpgsig ", &v)) {
+> >               struct signature_data sig =3D { NULL, NULL, STRBUF_INIT }=
+;
+> >
+> > -             parse_one_signature(&sig, v);
+> > +             if (signed_commit_mode =3D=3D SIGN_ABORT)
+> > +                     die(_("encountered signed commit; use "
+> > +                           "--signed-commits=3D<mode> to handle it"));
+> >
+> > -             if (!strcmp(sig.hash_algo, "sha1"))
+> > -                     store_signature(&sig_sha1, &sig, "SHA-1");
+> > -             else if (!strcmp(sig.hash_algo, "sha256"))
+> > -                     store_signature(&sig_sha256, &sig, "SHA-256");
+> > -             else
+> > -                     BUG("parse_one_signature() returned unknown hash =
+algo");
+> > +             parse_one_signature(&sig, v);
+> >
+> > +             switch (signed_commit_mode) {
+> > +             case SIGN_ABORT:
+> > +                     BUG("SIGN_ABORT should be handled before calling =
+parse_one_signature()");
+> > +                     break;
+>
+> Let's be defensive and convert this into a `default:` case so that any
+> unhandled value will cause a BUG.
 
-I'm not sure we want to be encouraging users to rebase a branch that is 
-already checked out in another worktree. Unlike the checkout case where 
-they maybe just reading the code and not updating the branch, rebase 
-will update the branch which is going to be confusing. We could, 
-perhaps, add a hint suggesting that if they are making experimental 
-changes, they might want to rebase a detached HEAD instead with
+Ok, maybe something like BUG("invalid signed_commit_mode value %d",
+signed_commit_mode) then?
 
-     git rebase <upstream> <branch>^0
+Note that if we later develop new modes like "re-sign" or
+"strip-if-invalid", and users tries one such mode with an old version
+of Git, that should already be handled by the following code in
+parse_one_option():
 
-but I'm not sure if that is helpful or if using a detached HEAD will 
-just confuse users.
+    } else if (skip_prefix(option, "signed-commits=3D", &option)) {
+        if (parse_sign_mode(option, &signed_commit_mode))
+            usagef(_("unknown --signed-commits mode '%s'"), option);
+    } ...
 
-Thanks
-
-Phillip
-
-> Signed-off-by: Gabriel Scherer <gabriel.scherer@inria.fr>
-> ---
->   Documentation/git-rebase.adoc |  6 ++++++
->   builtin/rebase.c              | 11 ++++++++++-
->   t/t3400-rebase.sh             |  4 +++-
->   3 files changed, 19 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-> index 005caf6164..b703d4056e 100644
-> --- a/Documentation/git-rebase.adoc
-> +++ b/Documentation/git-rebase.adoc
-> @@ -305,6 +305,12 @@ see the `--empty` flag.
->   +
->   See also INCOMPATIBLE OPTIONS below.
->   
-> +--ignore-other-worktrees::
-> +	By default, `git rebase` refuses when the branch to rebase is
-> +	already checked out or otherwise in use by another
-> +	worktree. With this option, other worktrees are ignored and
-> +	the rebase proceeds anyway.
-> +
->   --reapply-cherry-picks::
->   --no-reapply-cherry-picks::
->   	Reapply all clean cherry-picks of any upstream commit instead
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 3c85768d29..7a57ebd852 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -128,6 +128,7 @@ struct rebase_options {
->   	struct strbuf git_format_patch_opt;
->   	int reschedule_failed_exec;
->   	int reapply_cherry_picks;
-> +	int ignore_other_worktrees;
->   	int fork_point;
->   	int update_refs;
->   	int config_autosquash;
-> @@ -146,6 +147,7 @@ struct rebase_options {
->   		.git_format_patch_opt = STRBUF_INIT,	\
->   		.fork_point = -1,			\
->   		.reapply_cherry_picks = -1,             \
-> +		.ignore_other_worktrees = -1,           \
->   		.allow_empty_message = 1,               \
->   		.autosquash = -1,                       \
->   		.rebase_merges = -1,                    \
-> @@ -1234,6 +1236,8 @@ int cmd_rebase(int argc,
->   			 N_("automatically re-schedule any `exec` that fails")),
->   		OPT_BOOL(0, "reapply-cherry-picks", &options.reapply_cherry_picks,
->   			 N_("apply all changes, even those already present upstream")),
-> +		OPT_BOOL(0, "ignore-other-worktrees", &options.ignore_other_worktrees,
-> +			 N_("do not check if another worktree is using the branch to rebase")),
->   		OPT_END(),
->   	};
->   	int i;
-> @@ -1580,6 +1584,10 @@ int cmd_rebase(int argc,
->   			(options.flags & REBASE_INTERACTIVE_EXPLICIT);
->   	}
->   
-> +	if (options.ignore_other_worktrees == -1) {
-> +		options.ignore_other_worktrees = 0;
-> +	}
-> +
->   	if (options.type == REBASE_UNSPECIFIED) {
->   		if (!strcmp(options.default_backend, "merge"))
->   			options.type = REBASE_MERGE;
-> @@ -1679,7 +1687,8 @@ int cmd_rebase(int argc,
->   		strbuf_reset(&buf);
->   		strbuf_addf(&buf, "refs/heads/%s", branch_name);
->   		if (!refs_read_ref(get_main_ref_store(the_repository), buf.buf, &branch_oid)) {
-> -			die_if_checked_out(buf.buf, 1);
-> +			if (!options.ignore_other_worktrees)
-> +				die_if_checked_out(buf.buf, 1);
->   			options.head_name = xstrdup(buf.buf);
->   			options.orig_head =
->   				lookup_commit_object(the_repository,
-> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-> index c0c00fbb7b..08448b4d4e 100755
-> --- a/t/t3400-rebase.sh
-> +++ b/t/t3400-rebase.sh
-> @@ -407,7 +407,9 @@ test_expect_success 'switch to branch checked out elsewhere fails' '
->   	# we test in both worktrees to ensure that works
->   	# as expected with "first" and "next" worktrees
->   	test_must_fail git -C wt1 rebase shared shared &&
-> -	test_must_fail git -C wt2 rebase shared shared
-> +	test_must_fail git -C wt2 rebase shared shared &&
-> +        # with --ignore-other-worktrees the rebase succeeds
-> +	git -C wt1 rebase --ignore-other-worktrees shared shared
->   '
->   
->   test_expect_success 'switch to branch not checked out' '
-
+Thanks,
+Christian.
