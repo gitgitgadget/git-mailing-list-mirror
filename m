@@ -1,69 +1,69 @@
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE4D296BBE
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 20:30:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E576C296BD8
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 20:30:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757968211; cv=none; b=IV44fu3isKE/tacyUZsItlt9iPuWa6RCa6HgjfrWw+tFDtLnjcb6Hw9UuEBVui9ZFp+IdXqQ1yI5npz7jG8skr1IEUccy4+Y37seGa6RtAq6iL3mTr6qsMMERFUqMGO87z+CXX6acUmPHMFNA4q/XUOQjoNfdr4NUtD1nD6/DEw=
+	t=1757968212; cv=none; b=QZtKFF/M9dPCeQ9kuKaETQCWPqiP0k8CAyjihF6021b18n/Os5OCnJfC23sZ9OV2Mycpo0PYk6nQhaweO6NGUG/wjCkZW5Rm5h2H8XKR3a4alRZlGXPafxWlo28/QzXaiKraF9RID2t3EWoOpisciueGHw+TYOcjLGNBzSlheMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757968211; c=relaxed/simple;
-	bh=TThAJu3H6Gf5EwQRlN19oDqsvtXGoaoLTokrpjyWj+8=;
+	s=arc-20240116; t=1757968212; c=relaxed/simple;
+	bh=PRNtIyZsBEXcYWqniTorG6s1EgSC6k2bL8vzajC4A+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=idiscR6ZSgj9oowR8iHMJEJ5fkuo5u0IZL3/GJhTvxhCzqhH2URCO+1Y/jePcNVrcv6T+OEZ91YmS/Cyu8wpwbE+De6Fw/nOdSusBMVt1HluL6djyDozaGHWy82V+wrwsREbntisRof4oRhRc14Sid5hcHTNZBOWO2QV97LHd8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YS+PMIgE; arc=none smtp.client-ip=209.85.160.48
+	 MIME-Version; b=siNDed++d6iYoJ/dqXVuVMcdgt2X4wARfBXACLoon50mPaQLtQGBDxKtSX7eWqzd0CODQL+5IbPZSlWqyxLBlOnWwWb11VZrHUwmIuPP6l6KppkKZ1NOqNq2YSxldPkKa1+wnQzAGChx0yNIJI/cKn1CyV40kJFgKFPOTa1ofxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QIhMfOyM; arc=none smtp.client-ip=209.85.210.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YS+PMIgE"
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-3197f534179so3344853fac.2
-        for <git@vger.kernel.org>; Mon, 15 Sep 2025 13:30:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QIhMfOyM"
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-746c0ee5d77so3614590a34.3
+        for <git@vger.kernel.org>; Mon, 15 Sep 2025 13:30:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757968208; x=1758573008; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757968209; x=1758573009; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZZCG5JoTkoyAI+FQnC1Ln7s3i3t0vtVhJ1gNA4suVmY=;
-        b=YS+PMIgEdQxHdk6C1sYR8wtFCMVKxGZCi5WMQfQywXEB8kITjAsME8ZbeEnYUdpTcl
-         4xlvJu/9wDGxQ2AJHYmDddR8g5TctWKMszcgmtYscHd8KEq8eUdrteH2HzJ1Q1Fgm+2v
-         jsyVEJ/jPFanB0SS76PGAKW35/Ve3wea7+WMtaiuCJr9uuz77qz9iFBkQ9Vqi5RjR7ih
-         1BASFatkqCyhTWkirymhGAzPrd+7UkwnRWWlhf/4faQeIhQI8ydbkKv0hUlZX29mOWvj
-         7KJCCRNf42LEAyuUoYyqCamA3m2Z4xpMQrb5pNaLhMyityTPW8RCT/qamOOA6X4hG2eE
-         N2KA==
+        bh=R2/iyyWSW5nl82FOfem36g3aryzYBT1VYXPtCqcit2o=;
+        b=QIhMfOyMRF+kYpFmrfZZsF2O4w2ATWkxGW6KM+HrwtRvBLQz3Lf0KVgcJCYaRplIEC
+         6C8ddyN4gB5ma5AD9/knom+porIyxUZvASTC0DGXfOX944AhmGTvFNNU9tmuGplSnNDg
+         YYZ+5Ph6IQVe4XzUjfUDYV/gNkPsSgQoMlWrnJn6BJ0y5XfvdHnC9CEXtMoMBH1LhR4O
+         9vBu5QMoUE5Xg0M/MgHXuu+q75NEIjdt5MgJV3ayeLD9RAuwGfGfobno+ehVWgd5C8FR
+         dtHQ5+htq9scdgspa7yfVm6YwdE/q6B78RrbL7FlFng3/PjT+VUqdqwKB2MLcv9XUgHr
+         MMLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757968208; x=1758573008;
+        d=1e100.net; s=20230601; t=1757968209; x=1758573009;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ZZCG5JoTkoyAI+FQnC1Ln7s3i3t0vtVhJ1gNA4suVmY=;
-        b=E/nZI8xSiZb2TwBEubnB7xPWTMCxUQvAB6C6VSH2Pu3qs8uJSTam0/KRIVtl+A0Fj1
-         C2Mud8MYPW78uMlT4UsPMr6tbme0m/InGWEn5k6vvZ64jBaWqgciI+qs1h6JN8tTdUwq
-         a+rjF5csmMbgHBlNwXhGGv1L/3kns77poYkWw5Vk7Kaffmjg1Y79wflJd4KusGVMTjIP
-         Kdw0yRZbx9D9JLs10VoJrD+dUdu3ribFviLoo+JV6OGIC+Il+3ahgAP8DeXkAK5Yws0h
-         y2CZ7ZQaNNmnTkfGCqwProMpyhAshIy5Ep5b1zwRzBxE7eoBg0peuaUfHGdyAPgnTc3p
-         xvGw==
-X-Gm-Message-State: AOJu0Yy2XflvjO5I1JMMYyVan8OKtGeDasJiKCgAfhZxNyBdfEBnKtGP
-	H/EQlMxoar/k8uZxg2jIxSMFKC9oyUfB93887ai7auLBURK5G+Rccx+qpmfn/w==
-X-Gm-Gg: ASbGncv/oc3baG2NdXSDQd3f+nqeyOVXmhVjiiuqg/k2NYVSWSp1z0i8UMGRPIADs2+
-	HozDE7hFaJ6fQjnbohAC0g4NVv/8vWLzSGXEYsl6EumDzP4NcFGljY0WwGRwozBw/US23rKo+iQ
-	hGrkKxpMwh8jYhDAIfzbTKw72KHOWgsZkP8K/5hFe9+uBGPW2LaCyKbLMCqTuDqtnRFRjg3vpcX
-	02qflHOCgLs+gCXi8imC5apS6c3TqRWOiG3zKs+kdVyt9jdis/u6W8BWW7KySbdc3V/j4zlEbDV
-	4e3LN3kkbW0cBp9HCIxSH7+fePQE4bzsf9C21vinJuOFCOMRUDCDvYg36kY+EYczfyLNVtybUuT
-	oCGNTEln9bVYxC9Zd+HZrqYydXBfvUxtGwoQ1DWMO2Q==
-X-Google-Smtp-Source: AGHT+IGs8zXqbq1ykh4H9CWTehbVwWgT4OFO2LbW94VSnHxAa2aOqYPR43Neu2qr3NtcXaDUuQJNUA==
-X-Received: by 2002:a05:6870:d88f:b0:32a:a799:675e with SMTP id 586e51a60fabf-32e560cce41mr6830883fac.1.1757968208378;
-        Mon, 15 Sep 2025 13:30:08 -0700 (PDT)
+        bh=R2/iyyWSW5nl82FOfem36g3aryzYBT1VYXPtCqcit2o=;
+        b=Nccp5+IQiBTLjqW9exjvWqcCGMPDX3oI2K06TPrE8Dd1vYn+peS6h+yuKHCUk0GBuU
+         Z8pRVgdVqyydQZcacM0VHsGGcN418HTdx22zNiFRkNv8cel6/Wh9TNtEeJE0bCmfcE85
+         3bxtsQUTruZ5dNW0CHVcNnXzKsScFDFUVHu6w6vEJdOkdziHMdf/q6dC26lmbI0sO60q
+         f+aEpGR//wvJMNejOUpftty8/KOf1IvaMaU+BFbPAAmwffOJGaJhjIOcRmc3QlmCnW6+
+         NncdtSx3ICeo2IvsipimPELnr+n2ZomXTA35pjDVycQrm7eotVaARadJG2n4D4Q33pAD
+         ExgQ==
+X-Gm-Message-State: AOJu0Yy7ljqmdhqo1csiasiLRjyd9PWTPzNKsPM3S1GZ+2KlCzSaCzxS
+	DkTM4Kjmipjaw4DBdyRaapNs8YMiGAa7CpxU/zsIYiSrn9clEek2Fk+DQc8E+A==
+X-Gm-Gg: ASbGncuITKBjUg+Wzqh9Ag2RlV36QRaedKLmJEABT2rvPVTYOseMv0etkvI5fEHokBF
+	bobx03vTUjLJ5eZwdf/cjADyXtmupoqLnpFcr307dmT/5QJVlzuHKCJqn3jC/qJTWEYlbO9f0Jr
+	astusyZZ/zAHv/yALnZK2XgNaSwohvq33cgHngn6kwERqgsCr4swNyNEBw+rZ1bKpPg2367rdYf
+	n6Wx6VlZLVHUsZ2pr2Ck3VWCiOz2AGk6XJeXEszTzdZIsU7nELnz9wF2TXjTdGV1kLAJ2ikz8kd
+	r/XUiqDRDRiFM5wz//qx44YWyvysw2y0lJPShgkAEZKjgDM9oEpSAzdncZN+0gmS4aGdttkNsI+
+	NQu4ZcQBpqFz4APA8kxNHffCELj/SCkOpN7WElB9O6g==
+X-Google-Smtp-Source: AGHT+IFKrYdWEk2pb9ji5k0Qbqe/cdBbqsQpSzPCuNvGbryo0EQVwZneejl11XvmDGQ2QNyw891BYA==
+X-Received: by 2002:a05:6830:3814:b0:743:968b:3440 with SMTP id 46e09a7af769-753550e1e9emr7218920a34.20.1757968209499;
+        Mon, 15 Sep 2025 13:30:09 -0700 (PDT)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7524c260735sm3114325a34.39.2025.09.15.13.30.07
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7524c260735sm3114325a34.39.2025.09.15.13.30.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 15 Sep 2025 13:30:08 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 1/6] bulk-checkin: remove ODB transaction nesting
-Date: Mon, 15 Sep 2025 15:29:51 -0500
-Message-ID: <20250915202956.3784935-2-jltobler@gmail.com>
+Subject: [PATCH v2 2/6] builtin/update-index: end ODB transaction when --verbose is specified
+Date: Mon, 15 Sep 2025 15:29:52 -0500
+Message-ID: <20250915202956.3784935-3-jltobler@gmail.com>
 X-Mailer: git-send-email 2.51.0.193.g4975ec3473b
 In-Reply-To: <20250915202956.3784935-1-jltobler@gmail.com>
 References: <20250909191134.555689-1-jltobler@gmail.com>
@@ -76,187 +76,79 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-ODB transactions support being nested. Only the outermost
-{begin,end}_odb_transaction() start and finish a transaction. This is
-done so that certain object write codepaths that occur internally can be
-optimized via ODB transactions without having to worry if a transaction
-has already been started or not. This can make the interface a bit
-awkward to use, as calling {begin,end}_odb_transaction() does not
-guarantee that a transaction is actually started or ended. Thus, in
-situations where a transaction must be explicitly flushed,
-flush_odb_transaction() must be used.
+With 23a3a303 (update-index: use the bulk-checkin infrastructure,
+2022-04-04), object database transactions were added to
+git-update-index(1) to facilitate writing objects in bulk. With
+transactions, newly added objects are instead written to a temporary
+object directory and migrated to the primary object database upon
+transaction commit.
 
-To better clarify ownership sematics around a transaction and further
-remove the need for flush_odb_transaction() as part of the transaction
-interface, instead be more explicit and require callers who use ODB
-transactions internally to ensure there is not already a pending
-transaction before beginning or ending a transaction.
+When the --verbose option is specified, each of the following objects is
+explicitly flushed via flush_odb_transaction() prior to reporting the
+update. Flushing the object database transaction migrates pending
+objects to the primary object database without marking the transaction
+as complete. This is done so objects are immediately visible to
+git-update-index(1) callers using the --verbose option and that rely on
+parsing verbose output to know when objects are written.
+
+Due to how git-update-index(1) parses options, each filename argument is
+evaluated with only the set of options that precede it. Therefore, it is
+possible for an initial set of objects to be written in a transaction
+before a --verbose option is encountered.
+
+As soon as the --verbose option is parsed in git-update-index(1), all
+subsequent object writes are flushed prior to being reported and thus no
+longer benefit from being transactional. Furthermore, the mechanism to
+flush a transaction without committing is rather awkward. Drop the call
+to flush_odb_transaction() in favor of ending the transaction early when
+the --verbose flag is encountered.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- bulk-checkin.c | 22 ++++++++++------------
- bulk-checkin.h |  9 ++++-----
- cache-tree.c   |  9 +++++++--
- object-file.c  |  9 ++++++---
- read-cache.c   |  7 +++++--
- 5 files changed, 32 insertions(+), 24 deletions(-)
+ builtin/update-index.c | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 124c493067..6299d1c9b3 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -33,7 +33,6 @@ struct bulk_checkin_packfile {
- struct odb_transaction {
- 	struct object_database *odb;
- 
--	int nesting;
- 	struct tmp_objdir *objdir;
- 	struct bulk_checkin_packfile packfile;
- };
-@@ -368,12 +367,11 @@ void fsync_loose_object_bulk_checkin(struct odb_transaction *transaction,
- 
- struct odb_transaction *begin_odb_transaction(struct object_database *odb)
- {
--	if (!odb->transaction) {
--		CALLOC_ARRAY(odb->transaction, 1);
--		odb->transaction->odb = odb;
--	}
-+	if (odb->transaction)
-+		BUG("ODB transaction already started");
- 
--	odb->transaction->nesting += 1;
-+	CALLOC_ARRAY(odb->transaction, 1);
-+	odb->transaction->odb = odb;
- 
- 	return odb->transaction;
- }
-@@ -389,14 +387,14 @@ void flush_odb_transaction(struct odb_transaction *transaction)
- 
- void end_odb_transaction(struct odb_transaction *transaction)
- {
--	if (!transaction || transaction->nesting == 0)
--		BUG("Unbalanced ODB transaction nesting");
--
--	transaction->nesting -= 1;
--
--	if (transaction->nesting)
-+	if (!transaction)
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 2ba2d29c95..d36bc55752 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -70,14 +70,6 @@ static void report(const char *fmt, ...)
+ 	if (!verbose)
  		return;
  
-+	/*
-+	 * Ensure the transaction ending matches the pending transaction.
-+	 */
-+	ASSERT(transaction == transaction->odb->transaction);
+-	/*
+-	 * It is possible, though unlikely, that a caller could use the verbose
+-	 * output to synchronize with addition of objects to the object
+-	 * database. The current implementation of ODB transactions leaves
+-	 * objects invisible while a transaction is active, so flush the
+-	 * transaction here before reporting a change made by update-index.
+-	 */
+-	flush_odb_transaction(the_repository->objects->transaction);
+ 	va_start(vp, fmt);
+ 	vprintf(fmt, vp);
+ 	putchar('\n');
+@@ -1150,6 +1142,21 @@ int cmd_update_index(int argc,
+ 			const char *path = ctx.argv[0];
+ 			char *p;
+ 
++			/*
++			 * It is possible, though unlikely, that a caller could
++			 * use the verbose output to synchronize with addition
++			 * of objects to the object database. The current
++			 * implementation of ODB transactions leaves objects
++			 * invisible while a transaction is active, so end the
++			 * transaction here early before processing the next
++			 * update. All further updates are performed outside of
++			 * a transaction.
++			 */
++			if (transaction && verbose) {
++				end_odb_transaction(transaction);
++				transaction = NULL;
++			}
 +
- 	flush_odb_transaction(transaction);
- 	transaction->odb->transaction = NULL;
- 	free(transaction);
-diff --git a/bulk-checkin.h b/bulk-checkin.h
-index ac8887f476..b4536d81fc 100644
---- a/bulk-checkin.h
-+++ b/bulk-checkin.h
-@@ -38,9 +38,9 @@ int index_blob_bulk_checkin(struct odb_transaction *transaction,
- /*
-  * Tell the object database to optimize for adding
-  * multiple objects. end_odb_transaction must be called
-- * to make new objects visible. Transactions can be nested,
-- * and objects are only visible after the outermost transaction
-- * is complete or the transaction is flushed.
-+ * to make new objects visible. Only a single transaction
-+ * can be pending at a time and must be ended before
-+ * beginning another.
-  */
- struct odb_transaction *begin_odb_transaction(struct object_database *odb);
- 
-@@ -53,8 +53,7 @@ void flush_odb_transaction(struct odb_transaction *transaction);
- 
- /*
-  * Tell the object database to make any objects from the
-- * current transaction visible if this is the final nested
-- * transaction.
-+ * current transaction visible.
-  */
- void end_odb_transaction(struct odb_transaction *transaction);
- 
-diff --git a/cache-tree.c b/cache-tree.c
-index d225554eed..f88555a773 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -474,7 +474,7 @@ static int update_one(struct cache_tree *it,
- 
- int cache_tree_update(struct index_state *istate, int flags)
- {
--	struct odb_transaction *transaction;
-+	struct odb_transaction *transaction = NULL;
- 	int skip, i;
- 
- 	i = verify_cache(istate, flags);
-@@ -490,10 +490,15 @@ int cache_tree_update(struct index_state *istate, int flags)
- 
- 	trace_performance_enter();
- 	trace2_region_enter("cache_tree", "update", the_repository);
--	transaction = begin_odb_transaction(the_repository->objects);
-+
-+	if (!the_repository->objects->transaction)
-+		transaction = begin_odb_transaction(the_repository->objects);
-+
- 	i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
- 		       "", 0, &skip, flags);
-+
- 	end_odb_transaction(transaction);
-+
- 	trace2_region_leave("cache_tree", "update", the_repository);
- 	trace_performance_leave("cache_tree_update");
- 	if (i < 0)
-diff --git a/object-file.c b/object-file.c
-index bc15af4245..c2db58d62e 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1264,12 +1264,15 @@ int index_fd(struct index_state *istate, struct object_id *oid,
- 		ret = index_core(istate, oid, fd, xsize_t(st->st_size),
- 				 type, path, flags);
- 	} else {
--		struct odb_transaction *transaction;
-+		struct odb_transaction *transaction = NULL;
- 
--		transaction = begin_odb_transaction(the_repository->objects);
--		ret = index_blob_bulk_checkin(transaction,
-+		if (!the_repository->objects->transaction)
-+			transaction = begin_odb_transaction(the_repository->objects);
-+
-+		ret = index_blob_bulk_checkin(the_repository->objects->transaction,
- 					      oid, fd, xsize_t(st->st_size),
- 					      path, flags);
-+
- 		end_odb_transaction(transaction);
- 	}
- 
-diff --git a/read-cache.c b/read-cache.c
-index 229b8ef11c..6d2ff487f6 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -3947,7 +3947,7 @@ int add_files_to_cache(struct repository *repo, const char *prefix,
- 		       const struct pathspec *pathspec, char *ps_matched,
- 		       int include_sparse, int flags)
- {
--	struct odb_transaction *transaction;
-+	struct odb_transaction *transaction = NULL;
- 	struct update_callback_data data;
- 	struct rev_info rev;
- 
-@@ -3973,8 +3973,11 @@ int add_files_to_cache(struct repository *repo, const char *prefix,
- 	 * This function is invoked from commands other than 'add', which
- 	 * may not have their own transaction active.
- 	 */
--	transaction = begin_odb_transaction(repo->objects);
-+	if (!repo->objects->transaction)
-+		transaction = begin_odb_transaction(repo->objects);
-+
- 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
-+
- 	end_odb_transaction(transaction);
- 
- 	release_revisions(&rev);
+ 			setup_work_tree();
+ 			p = prefix_path(prefix, prefix_length, path);
+ 			update_one(p);
 -- 
 2.51.0.193.g4975ec3473b
 
