@@ -1,129 +1,113 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D912B2D7
-	for <git@vger.kernel.org>; Sun, 14 Sep 2025 19:52:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB6E5C96
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 01:51:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757879578; cv=none; b=eSTL9Q9MbXpC1qbfATyvRtKbWmYF2uhKTukqzlNHA7BldvurgcbWQJAjOH5cQyTyoEGmUc6IhcC/Ts24jvI3QkLXEMdcRJQVkMb+SuinnxHL/+Pj9JtDnRUMTrrt9buh3BPh9OmkH0IWyvU+AibOgErZDcGiNht+LV8q2YVboyg=
+	t=1757901098; cv=none; b=tCIpVAFKYwJiSlBwu+8Wj/MXaruWmeO684rd2BTLxvVhxKAQdhaxr5LeI5uFeb7wmriAyPoTI29H/vlzv4tqeD422zhZbco29Lk7ziSDjklcsbOXQDVq5uETJiIbxgCFYGvgISfv8iuajbYK+u4YA6lYu24DNsTIK7snTnry5AM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757879578; c=relaxed/simple;
-	bh=fHG1fSDNj9pEk07Zwt/08ZM8l45/LPoz6cMbB8NgcTY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WUflzTfxmKrh+il9/OKTG3IYEB6+CFOHTjbOWbEbB2kl4dY+WPAyZVOA8eox48b3VaedJ3Cl/SVaDWuFH9Gew7uty6NX6RWaH2I7JK1j7Rq5KAYkK8axoKwNx1RpTrN62pYMBlzC4W5Oo1II0li7ZqAf8lNuUR9NYIlOGvwZI9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=aVkMQc8U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CooaWTou; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1757901098; c=relaxed/simple;
+	bh=kdldX80usR2hV1Qp/PSyUL+g6e7YUu+U8vmJmA4tPjQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EbcgIuOHGmDynh3VUufDdmsgax+lKNjSWrTLARZnHZnAvFzfhLJSOkatDADVIAUYZ6xbM/MB5m6CnW0gj0CFcvG0UP91DHiJ+r5CmYG7BRxuJIgQSzyyfJvoovcOoqIAqOWGjjwGze8oiX2djIfYFuPBKMgBjBasN3DgCF6CWXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PMXgR2YI; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="aVkMQc8U";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CooaWTou"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7680B7A0060;
-	Sun, 14 Sep 2025 15:52:56 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Sun, 14 Sep 2025 15:52:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1757879576; x=
-	1757965976; bh=BJ8pgPuYFh04N/uSN3OPxGh2IBHkwwZIOUCEKG+BeM8=; b=a
-	VkMQc8UrbVivp8Ox8N9BvZsNU76nPIJdBItJUwA9IIuUY8hwd3uLHtEsr19Bui4m
-	TOy+CyliC2nbGcPfTsFrDihYU33wFKIluTY4LyR0NDI7/ljAIB4SqLbKkUmAhbDV
-	U1qaGYQE+LAErRRyOXZD9tEvIWYDSNI/XKNfV5f8InOLs6H5v0qJeIpmIk+pFiBE
-	RHgddBIInTULM+CdeO2RvP98NWurXeYuxIAU8D3u6dyvqfMumMmOQSlVAoTD4i45
-	N15jW0/YZ6PtbvipQDcGTWeCCzzMDL5iWXqzV/aBBLfzNn93y52a6MrK56WwdEV3
-	diDzzaZRMhJ+wD+RkVbXQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1757879576; x=1757965976; bh=B
-	J8pgPuYFh04N/uSN3OPxGh2IBHkwwZIOUCEKG+BeM8=; b=CooaWToucFiFWns/d
-	us3CnRnxUZfCi+rS/TWhLLpQj6QURC5L4kmxCtdLKIqmwssstkfEUFTbWzdZKXe8
-	NNX0UxnFk9p+t15qLQrB1EAcU/wg4bBqeDJPV7Qb2ZLzxYN1nB5BGA3DzxnyhLvT
-	R7VYDWT10vCFZZ8/kFhJ/bPhBRmFu61SCDp3m87l8e35MbE/Pz7xEUnL0NoVb3fx
-	gHD+V1ZOcyrDR3lx7EGQbRhQpr7fxNkmmTLuC4UOw54n7WVgCT5xJ3ywCbzlDJZm
-	tTCONiA62kEIoufywe8tbLIL4X2zV8SZ9TMPpt0GqpxxJAzIBm6+OEYMw8zr1Vrc
-	4MLVQ==
-X-ME-Sender: <xms:GB3HaO92UomcPfadlcQdwEhIrl6SV9LCO1pQYQXzIVXrSKcbtCVsI-U>
-    <xme:GB3HaHK4Dr7u6lt-N4aal3BgAwTzuHDZZ1kTxi8KBN9Dbe8FMM8oVP_hvi7nempDe
-    QOZEKlPC8mpj-8B5Q>
-X-ME-Received: <xmr:GB3HaEdkAO-4AFGzPSRX8K8laUxVv7ECvMH3Nu4KRcpFC706XmjZAAD7voRTiCAKsJ8Z4fEowntgHwmALPZ4vbbUur9va-yf2DEd5mJObyUY29ekwymtVO-Q_A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefheejtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpehkrhhishhtohhf
-    fhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrh
-    hnpeefheetkeeftdeiffdvjeetueethfeugfetgfdtveehhfevffeuffdtheeitdefuden
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhish
-    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghp
-    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomhdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghm
-    vgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehpvghf
-    fhesphgvfhhfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:GB3HaG9LLIfebdcqH_hmUrYnAr1MIWoU8duGHF1lCegY5KkLYVsNAw>
-    <xmx:GB3HaBr3JbWDQGAs__tKGB2Wd00slLYKAaYwzm-IE15Wm29gbtbZBQ>
-    <xmx:GB3HaLAILKMld-wG8MgQ4akn9ecFbTYCenzGtD9UmFmhnWrKzTtimg>
-    <xmx:GB3HaDzXm6rGWf8vSrzaW46QjTST9KI04-aOoW9wf_1zFw4TlEm_gw>
-    <xmx:GB3HaNVlia4x6583CunARo1az5UjadyuhQPWjUBYwEB5eexr2U2wdmV->
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 14 Sep 2025 15:52:54 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	git@vger.kernel.org,
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PMXgR2YI"
+Received: (qmail 83474 invoked by uid 109); 15 Sep 2025 01:44:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=kdldX80usR2hV1Qp/PSyUL+g6e7YUu+U8vmJmA4tPjQ=; b=PMXgR2YIulY3hJ06rAb/+j7zwgzyu6HeGULk39jv5bdBoyqtwl2xMzZ171Meo11IikMT3nRWLsKT2UxHBJrDDx3bgdQO0ihA0bAeUTKjQRqcMz9iGiE1SUnG4XJjp+jiAg3H1VrtOZU2pR+yE53bUPIH8nTcKuO1NbPLGpoyqW43UqvXBcsETdaZV9fCOCj0TlHRWhIfuS5Go61hO7IRXwITIgQ2FHRY/HkPn4ZCTVEMxJVp/Ojo+BnVaacKZZKUD3dnigBzl1kwgfBVppT0WS5EmLRiFA45wYjQrbUJw6R+BIWc4MBuLkL5U+GMUOM00Z/OAdvLpXw1GrLI9Ic0gw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 15 Sep 2025 01:44:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 140224 invoked by uid 111); 15 Sep 2025 01:44:52 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 14 Sep 2025 21:44:52 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sun, 14 Sep 2025 21:44:51 -0400
+From: Jeff King <peff@peff.net>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org,
 	Eric Sunshine <sunshine@sunshineco.com>,
-	peff@peff.net,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v5 8/8] BreakingChanges: remove claim about whatchanged reports
-Date: Sun, 14 Sep 2025 21:49:42 +0200
-Message-ID: <5021647c2450bc124af20e5d7aa8bd6dd859e57a.1757879060.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.51.0.16.gcd94ab5bf81
-In-Reply-To: <cover.1757879060.git.code@khaugsbakk.name>
-References: <cover.1757446619.git.code@khaugsbakk.name> <cover.1757879060.git.code@khaugsbakk.name>
+Subject: Re: [PATCH v4 2/7] git: allow alias-shadowing deprecated builtins
+Message-ID: <20250915014451.GA44900@coredump.intra.peff.net>
+References: <20250910051347.GA556174@coredump.intra.peff.net>
+ <20250910154859.GB562601@coredump.intra.peff.net>
+ <b39ba543-24ad-4bd6-be6e-dc1b8a416eb0@app.fastmail.com>
+ <20250910183418.GA1157772@coredump.intra.peff.net>
+ <eefc3524-9ecf-44e5-a6ba-1b4a0aff3158@app.fastmail.com>
+ <20250911203256.GA1894340@coredump.intra.peff.net>
+ <20250911204302.GA1907101@coredump.intra.peff.net>
+ <98d206ca-3dc1-42cc-9f01-e3241d5a24af@app.fastmail.com>
+ <20250913220609.GA435444@coredump.intra.peff.net>
+ <eb7e569a-b297-41d2-82b0-956210292b64@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <eb7e569a-b297-41d2-82b0-956210292b64@app.fastmail.com>
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On Sun, Sep 14, 2025 at 07:24:14PM +0200, Kristoffer Haugsbakk wrote:
 
-This was written in e836757e14b (whatschanged: list it in
-BreakingChanges document, 2025-05-12) which was on the same
-topic that added the `--i-still-use-this` requirement.[1]
+> > If you want to get rid of that last paragraph, I think it really is as
+> > simple as checking the expanded alias new_argv[0] as soon as we see it,
+> > like:
+> 
+> I tried using both of these changes (the patches) but the `alias...`
+> test suite started failing.
 
-Maybe it was a work-in-progress comment/status.
+Hmm, it still passes for me. If I do just this on top of your v5, it
+likewise passes (except for your new test which expects the redundant
+line).
 
-[1]: jc/you-still-use-whatchanged
-
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
-
-Notes (series):
-    Footnote solely to avoid awkward paragraph wrapping...
-
- Documentation/BreakingChanges.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
-index f8d2eba061c..c4985163c3c 100644
---- a/Documentation/BreakingChanges.adoc
-+++ b/Documentation/BreakingChanges.adoc
-@@ -235,7 +235,7 @@ These features will be removed.
-   equivalent `git log --raw`.  We have nominated the command for
-   removal, have changed the command to refuse to work unless the
-   `--i-still-use-this` option is given, and asked the users to report
--  when they do so.  So far there hasn't been a single complaint.
-+  when they do so.
- +
- The command will be removed.
+diff --git a/git.c b/git.c
+index 10315742f8..c5fad56813 100644
+--- a/git.c
++++ b/git.c
+@@ -425,7 +425,10 @@ static int handle_alias(struct strvec *args, struct string_list *expanded_aliase
+ 		if (!strcmp(alias_command, new_argv[0]))
+ 			die(_("recursive alias: %s"), alias_command);
  
--- 
-2.51.0.16.gcd94ab5bf81
+-		seen = unsorted_string_list_lookup(expanded_aliases, args->v[0]);
++		string_list_append(expanded_aliases, alias_command);
++		seen = unsorted_string_list_lookup(expanded_aliases,
++						   new_argv[0]);
++
+ 		if (seen) {
+ 			struct strbuf sb = STRBUF_INIT;
+ 			for (size_t i = 0; i < expanded_aliases->nr; i++) {
+@@ -441,8 +444,6 @@ static int handle_alias(struct strvec *args, struct string_list *expanded_aliase
+ 			      " not terminate:%s"), expanded_aliases->items[0].string, sb.buf);
+ 		}
+ 
+-		string_list_append(expanded_aliases, args->v[0]);
+-
+ 		trace_argv_printf(new_argv,
+ 				  "trace: alias expansion: %s =>",
+ 				  alias_command);
 
+> I ended up with not changing it for v5.  I missed the first time around
+> that this informational message is only “logged” in the specific case of
+> `<git cmd> -h`.  In turn you only get one more line of output when you
+> are (1) chaining deprecated aliases, and (2) making a loop.
+
+I don't think (1) is necessary. With your v5 I get:
+
+  $ ./git -c alias.one=two -c alias.two=one one -h
+  'one' is aliased to 'two'
+  'two' is aliased to 'one'
+  'one' is aliased to 'two'
+  fatal: alias loop detected: expansion of 'one' does not terminate:
+    one <==
+    two ==>
+
+So the extra line is printed even without deprecated aliases.
+
+-Peff
