@@ -1,91 +1,111 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B775630DEDE
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 13:40:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88222C027C
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 14:10:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757943640; cv=none; b=NJcwZmpqYnYlbg2u4cc6oZfQjr5IfUjcN7Am4OvofyXy/J/JmIqUu98/PpDsT8qWqR6l5HtLG8/736RFItL9kGN9eMTbHtAvAjXUl5GxGioKIqY6opLuwOiJbwrJPtwTGe+18Zo1m3ixXwskV0JcRDt5XPNkaKzt0VoBBRsAiL8=
+	t=1757945455; cv=none; b=uAXhpCGmTQGT3S5QHr769i4nbqKTSup0H2YksCd9vtoX1jxjLtyriOV7qcW3IoARABpmdj4VpU1kKD8EaDJX3bPyQM4DUI/ZUVeKrLzMaUrstMNwbBH2z9Ad/Q/Op1TXulfh5ujrhkj7V/zRw/Hp8q9JQ5L3wAxwfUjuyCoiCLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757943640; c=relaxed/simple;
-	bh=IbWo318A00NFQQexc4dwPo1zOTIo9dTlHsrU9sZbLAo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oYQM9bX+L0yIVE4E6zT24cLVgjP91dtUjOPsQAjYzr9kpeW7Uea5KqRB+d3xnVyOkRoaROi/R1OxxvuTF52Ox4nWkucgxWWqixDzKZNO+6Unq1cXRm7iLsJYPS2fp4v86wiOCNdZCtwvtOBnJ5vVQ3Z1TEqMIMZz3nRHnP0eSQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A/udtB05; arc=none smtp.client-ip=209.85.128.176
+	s=arc-20240116; t=1757945455; c=relaxed/simple;
+	bh=xI45n1JlTFeNTa96iNgG4Ov6q5BL7AYTQocCzLFQ6Qo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZG3JmQEJ5X5XJ4/YcdKAlsAZCrCOd5OAyGWAeIv7ozbdZ6il86AwPERYX7L75ofdfpHHUCRp86JWJsGt9wHVwLH5T3nb/TDFgGB6mVC8QNQEQRm//BvH4e/QId85pviDB8uX/8pgDxvUPQnrJtHmKOABqPRxzi/SJ20K7WVGZDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DDUPCukB; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A/udtB05"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-71d71bcab6fso36767527b3.0
-        for <git@vger.kernel.org>; Mon, 15 Sep 2025 06:40:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DDUPCukB"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3eb0a50a60aso758338f8f.3
+        for <git@vger.kernel.org>; Mon, 15 Sep 2025 07:10:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757943637; x=1758548437; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IbWo318A00NFQQexc4dwPo1zOTIo9dTlHsrU9sZbLAo=;
-        b=A/udtB05JCGQvVqQ2iPPXXTXTILD0gebLYFky3L2fEyVNX2Wuer3ayGWCtk5+GLIyu
-         zaBY5wenzZ97mnl2XPBaFgrIImXnTZmRiYUd78vsFWTAxHKa1gKbFsBrKS2jvHUpYryV
-         svBrhKpfu1Ru0/H0xtzad2bWo4AK8p0IJ8uN/79fICBWqrp+4Zi7PVHXe5TgzsM1WVBV
-         VQ7THFSxc87+/gEzQvVlNtqWEGzzQ/6Yn7r4kFykXkUzmOJQvznGm7daeVl2kMGy7VeX
-         RDcaFQF2nhUaWj1P06IcdHJ6pYCCy+axh8myAZ5nxcvFF6kt+IRDBu1O+GGWmHoOh+Eg
-         v1nA==
+        d=gmail.com; s=20230601; t=1757945452; x=1758550252; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=TrbXeDPHs4QdJxvAFmcQubXo8TQA8UAxZf4g3roZWVQ=;
+        b=DDUPCukBPlPDzD4J2nC/Eo5OXFYwRPCuEtJnpWGUv2oNhkN+A6G43Abe7mB35ia0Xt
+         z8y97orrioTIKYP4v4B6GuKPJR1CfIQQDdE8RctD0v0iOdn6idXUwzQNMHyBvfimKflB
+         jTWfEc3RuAtvAkCMJvk4w5MIffU3aslsG8jeeFUvUeXt3U4bpXXpUoHK6pKAgKAkZUX/
+         nxduY/+/eLfoz4k5DSiHdih4j9NBmnHHxuUli5kVq9HEaJ1ycPd3HlLIUtdjG31gU77b
+         JFmxSl/fLC7HrpgieONcdVPIBB0FNG3ty5M94WXGjBatGcGXgcKS3T8OvfjzLOs/myeA
+         iOeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757943637; x=1758548437;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IbWo318A00NFQQexc4dwPo1zOTIo9dTlHsrU9sZbLAo=;
-        b=g7SA/yuZRj2DOFBiPHE2Rx0fn3QvB6c2zvxBMvWNo+XH+/CZEUsYuN5KnfOe7yuLQs
-         za6HGLRybsGynyc1Plmnvw9mIjWEN0T0SsLvdVessFMWtU43WzovbMK5ycevmYBcJAjg
-         yqgM+GHckx9Wgk5Pv5G1q3NL08P1qM0HqDHdSYKk+SWuW9f0Z0XB6e0LREK3nFCwWYAl
-         v3ALx82YFo190aqvRYX0Jn2IlB2dC0cEh/T7ZaRBqfrR7UxlgDEEU0/mlHww2puFSQBc
-         qgbZVKNsFcbpMd/azAnWVGZu7HZaeZEaXG6crHtx2gCwjv3ILK0iuu+0BRPOlMDi7eWK
-         bohQ==
-X-Gm-Message-State: AOJu0YzvkptoCrfAWrSQ2k8EQueNZ7bSYFSH0Toi4JH5xcAV4rWajlqv
-	dVVpfira4uQUKUGtXTAlefvmEpM+CYbyVyX9G3isZU3efeM87CGNQd9wjOlfF2KN6/GImKRVzpp
-	t1cJ8Nxh25HMA9UUtRQ6w9XBx6cGkGZGa5JGASM8=
-X-Gm-Gg: ASbGncsFEfljXNZOfGf1tAPiM+tjEPyiOtMDuBL+vtMsZLfJ9RkZys6HggBh+2RELzp
-	QKoIBomBxjQW2HNwGw0a6afC1rnJgpoVq76WkkEdPdfGzWVzo9xnfThtsvQm1+gcH00DCMVIym1
-	Aed5Un5IVdUbuYr+4ns+3PWfme3J/fyVMxhir8Wkr7lFUpUtQHGx9P8K2yATx+aYDjBFoDyFHPQ
-	4C+rfpX
-X-Google-Smtp-Source: AGHT+IFq2OVqgEQxOrPqJfP6ESsHslSqdOpLN1wo8w58oYmpIFYzEGcsX86noxQ4PZqCuGDGxpd1BCXsuMaCkgngXok=
-X-Received: by 2002:a05:690e:201b:b0:624:1660:ba01 with SMTP id
- 956f58d0204a3-627262e88f0mr8606105d50.37.1757943637198; Mon, 15 Sep 2025
- 06:40:37 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1757945452; x=1758550252;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TrbXeDPHs4QdJxvAFmcQubXo8TQA8UAxZf4g3roZWVQ=;
+        b=hX+yWOTxdMcnl3joY/zt1JbxxU6A427GAeGirBKWx5ljiUeDXEGB/MF4A3TFnzEHfP
+         2eE5oFXFb807eSgedJL3yJDobe68Qy1UVEgG8/J+jvPZeYcfyWy1W6FqkP+fFs82N1N3
+         w59qTLVA5lso11dw4UbU7fWvVMeWz3IX7mec135RD705mpBhGgfH1A90ck9F/XJnnNC0
+         zCi5GoStK6dKp4cV9iYxcDYSGaAG3dZ85dj3cHtAx7ZZVtn7fSb8ScW8g9wrYRJJmPEL
+         ei8D5Z1Ta02e/8ATc3I5iWRE99SXzU3Syp2vIeDrfBlpkzwe7AwjNorAEhPWrqd+FysV
+         Q9uQ==
+X-Gm-Message-State: AOJu0YzxPR8PCzJVK4qo3Hhk3qGaorqc7Y+BmLqk9/bKQIhNm72YpOyC
+	G0R0xBTEaMl04sXXdK7WvnuIh6Y9FPdam3ucawU7MLP+sMvUigYEj6gz
+X-Gm-Gg: ASbGncsaxOM2EHQts07zwCHdDMccEiTId7uTrozJshVLudxrXi+5S/UjepgBvetXsgb
+	0kddK8/CsZ/pMVmx3ffSlwJWzTYNOvFZEmLRgkPJ/ei6Qa8BmGw5ZAuCgGuRLMC13pzg4BSoH7V
+	QoePwo0hpquZJNHMUsG86kJSFokybl3lkZmdsEWmdIZekvPjlaUt9zukptZX1EwFPEYvkkgxF0U
+	KGVJbsKFAM/Yi1T/Q12r1Wyda3drPeReHLSqRlJeGP93c442Yti9hfVDQrrRfmpJKYu/k6irphL
+	8yXttiqafjj+XsgkMMsqEtghme4W2CZHE9nUrBSgor7fTxg4iLS+uwn1bcocrQPbtSsiHczSQdV
+	5SLfq5XQS2dmZL0hy9reFnwAf0XoN9mAWbmZ3FiTScdINLN4tslG97hhAv53LidL7l5xJQ8NNoK
+	FATLmxFfJJCg==
+X-Google-Smtp-Source: AGHT+IHx/YK4Asa0mNdoj7umTAXdBTIrQA2FZ6UryGnvK65Jd5wCakIUUxlb4CNxsbLFTuXqOq4NPg==
+X-Received: by 2002:a05:6000:18a6:b0:3e7:486b:45cb with SMTP id ffacd0b85a97d-3e765594133mr10434530f8f.3.1757945451791;
+        Mon, 15 Sep 2025 07:10:51 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e760775880sm18106524f8f.2.2025.09.15.07.10.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Sep 2025 07:10:51 -0700 (PDT)
+Message-ID: <66e9aa8d-762e-4f51-b049-347b76578bf9@gmail.com>
+Date: Mon, 15 Sep 2025 15:10:50 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAJKmQvf-sLxowLJLitvqDmyL1BXXDK+anDE2jaBSEabApMNVoQ@mail.gmail.com>
- <62774477-81d2-4959-aa5f-fe0dca023a2a@app.fastmail.com>
-In-Reply-To: <62774477-81d2-4959-aa5f-fe0dca023a2a@app.fastmail.com>
-From: usharerose <ushareroses@gmail.com>
-Date: Mon, 15 Sep 2025 21:40:25 +0800
-X-Gm-Features: AS18NWAEwSZXgIoYNFx7HIEuT48oKUYnt2jdHg0huvoLg5-n9NYsh9JnMmZWVp4
-Message-ID: <CAJKmQvcUQnsgcWW5EgUEaDwZKdtWXnJ1aoVQTAdvG3+te5p1ug@mail.gmail.com>
-Subject: Re: [DISCUSS] validation on git config user.email
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH RFC v3 02/18] sequencer: add option to rewind HEAD after
+ picking commits
+To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>, Sergey Organov <sorganov@gmail.com>,
+ =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>,
+ Martin von Zweigbergk <martinvonz@gmail.com>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+References: <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
+ <20250904-b4-pks-history-builtin-v3-2-509053514755@pks.im>
+ <f74b9dfe-b05c-431e-8872-92e2bbb75b8c@gmail.com> <aMfdQFYdL1xoHADp@pks.im>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <aMfdQFYdL1xoHADp@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, Sep 14, 2025 at 7:58=E2=80=AFPM Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
-> What=E2=80=99s the positive case for email validation?
+On 15/09/2025 10:32, Patrick Steinhardt wrote:
+> On Wed, Sep 10, 2025 at 03:04:00PM +0100, Phillip Wood wrote:
+>> Hi Patrick
+>>
+>> On 04/09/2025 15:27, Patrick Steinhardt wrote:
+> 
+> You probably refer to the condition in `sequencer_pick_revisions()`
+> here? Everything else is basically new code.
 
-Thanks for your reply, Kris. My intention behind the original question
-was not to suggest adding validation for email legitimacy, but rather
-to inquire about and understand the rationale behind the initial
-design decision to forgo strict validation when the user identity
-feature (user.email) was implemented.
+I was thinking of the code that restores HEAD at the end of 
+pick_commits() as rebase does something similar already (it looks like 
+you're using the same reflog message). Though thinking about it again 
+I'm not sure if "git history" detaches HEAD at the start like rebase 
+does. Rewriting the history with a detached HEAD is probably a good idea 
+as it will stop the branch reflog being polluted. One nice aspect of 
+rebase detaching HEAD is that at the end you can check the result by running
 
-I've come across many explanations, but they mostly list the various
-application scenarios for `user.email` value. I haven't found an
-officially recognized answer regarding whether the above applications
-were explicitly considered during the initial design phase. Therefore,
-I would like to consult the official community here.
+     git range-diff $branch@{1}...HEAD
 
-Thank you again for your help.
+Thanks
+
+Phillip
+
