@@ -1,144 +1,184 @@
-Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B321229B36
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 23:37:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFA35C96
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 23:58:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757979431; cv=none; b=Ta6nHQUhgi7R9fkb0geNhQFMVJu0ghuNRijnnvYzvIHIX4Nc6fIKgUSldFczLIyeyMGp0H/s6FMugoZUmHHifSdHN98rV8mLfHgyUn/ZtH6xwJ7lypXZ1JMD5qucq+XrHXy6OKw8Lau67uR1Jj5NOUpuepsK1wMA952LeArE3rw=
+	t=1757980717; cv=none; b=mrEZxuJEZkjHtQ3BDsG6zBATL2dbMMnadU3RK4T8TqV89v5LAXEI1eimdCRLSCotyICeuKpsdGToqATwbTJmtHRgYk6ThW/VKQwgbMSQZFtuP9skhWdD+ZYs6YLfW/oFJyMgcHsPrJJCiv0oOMNogN6AcclW3MuPLt/Igk0sTSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757979431; c=relaxed/simple;
-	bh=ICiIQDLLPTZpBy0A7c7Bm7iA/Nni/KRYtOP7vtYkfmI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f6Ql5akGjd+o4Sag9d3RkJhZD7fzyX7DEOPUOLIxn1M7IUQd0Vhg8fGbv7Yp47LBGRGvgSADQx2kjy6U8HkuWCzLp64UxyfR374vdVN9IwJ/8lzOvCU2nZv/ezMDz5aIj5TMcvcDK4DYpvAeD5bkWvuq8GC1wpEHfQhqBR8u/5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=EkAN7yP4; arc=none smtp.client-ip=74.125.224.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1757980717; c=relaxed/simple;
+	bh=HrHlzsdAANrK+fgj1bmiDExsko1vG99x2pgx2J1NDlY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Bm3rBM/88wIcx4m7zNJFI3xfqkOXBqYfVAH2AtfTVmQmew7BEXPrugvnbmCT5Ns+g6mn2mtrXerIpCIXdj5hiyeXTzv9vQ2ODte7qUoBflBOPvOQcjjT3m5ApBOKREr3wDDmBCqGYWr1ieMjSAJoCjBQxiJD92yu7Uyy63tNDOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TSstcoHq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AE3y3UfF; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="EkAN7yP4"
-Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-62f9c2df5a3so910835d50.1
-        for <git@vger.kernel.org>; Mon, 15 Sep 2025 16:37:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1757979428; x=1758584228; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GECwwr4BB0FbNE/I2LUauygXRWXbOG5l3bppdi7MFBM=;
-        b=EkAN7yP4puvk7ERFfXRLF8cD3e/7wDs3OC/ZRt6r/xatL32Xpm/Y2cgJj75hVs4iM0
-         umabMzN4nlCgo+F1QSoNquimkchReiv1o36rbMplgKa23a3FmBxzuWMDOixhPs11KHK3
-         PVfkuyKz/uuXYwAEBDgUr7d4XI1FhgYC1/a11TsHBPkIy2sWpzWYgXBMQ9wRdQxF5Pi1
-         G8znHMOaTl5MOoL/JygJVWcvN3TuSZ+ZSHgXVK++doo04iLUcneU4uu8ndRfgZAyxzww
-         liUtOhCG83WpZX5ljrfPxvhhJHNr3YugcJy9givXXup+yoUlo+tk4M56coZPeBwtyWPO
-         dCyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757979428; x=1758584228;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GECwwr4BB0FbNE/I2LUauygXRWXbOG5l3bppdi7MFBM=;
-        b=RcMrTjsfgGvzjt2quENWhRJ6M9Q023Lkpy4dCGJMsV6FeHl8niGLeQfmdZ8qqRyLs3
-         JjNj+96tRu8KngRo2XQjpIbbi/FQaCoZqLNEfd2E0iX80h8QzRqstqouufQFpOnX7AmG
-         npWkJ+tR/a3IomxKv64mTTYiQYKK6NGRVc+2nbiXp23/AXhdID1Dt4tLvin9KWUrEVdh
-         0m0thvKOddEqbpI72Lx6R/WXoFN/iZ3GG0U4DeiEL5Zw2laCvQcl62ti0EmmAIBZbcmZ
-         xJ5wbbvTFhN9jNl4tJCUxwY+sFXu/Pq2xcqF22/kJ+Wt7/XtzdD6z2FxxkheAnPmiasL
-         +cqg==
-X-Forwarded-Encrypted: i=1; AJvYcCVQlvoVq7mvG6bwpaoPfmbCRl3pokkd5rZFd2x32w/9tw7WphEmBouUhJobG0m8GQp6Ars=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxxxxi8s53u5ZJ9qxXECPB4hF8Zknpfqa3d2PEFAQxyen2fle7w
-	RXc5bNpVlNXdm3AQ+5oYFoki0A/J4+qBSTVjCvyw4gWlfZp8TLic10WKENbQreUrSW4=
-X-Gm-Gg: ASbGncscqlEMtYfQY59yPDSnuuh4rTHMn0fUXLBiOkT146TYWZArbhUPelm3G0pe+64
-	KHqsdufOaJ8tJT7MgHswG0yRAPQHs69QM8i0tLuxgEZ8m55UY8KiEHAMsQ0sinkcxYfld0oreRB
-	NiPsFAoG5CSBmnft+2PyiIMhGY1163eAsIbBlyFwVq0jfObXpRamGBCNcXjaYCktSnjU1M5GDs5
-	TH8lLW1EvDfzWywwh1mbsU3BQN3n1vrdUJA8ji4C2tL+Q3zOnuC/oS/JM+xXUchgrpnCoaN0jT/
-	U0wzZyMzHLK+JFcYUUxTFAfjeyKYaA3TBYHS0mbhLBBAVkh2tWZyUodYLBebf1hnPzvJQWknvcd
-	+jNvdJYmsR/p1MXNle8lbW37fWYoDZSeayN8CCCHe1oeM9EmJbdRMlfkxIpA1gn7sjwNYzpbxbN
-	UKMgRpu1iV/qmKRJsESAMotKcWuI7F/GLodrlw
-X-Google-Smtp-Source: AGHT+IF57X032NERwneQxAnve4SoJ0633kueWYIQRfrHbvTG8d1Agpzaxv6rPhC2gdaP9LvOuroV1Q==
-X-Received: by 2002:a05:690e:424a:b0:631:9db5:d501 with SMTP id 956f58d0204a3-6319db5d687mr3539331d50.26.1757979428030;
-        Mon, 15 Sep 2025 16:37:08 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-72f79c78dbasm36086357b3.73.2025.09.15.16.37.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Sep 2025 16:37:07 -0700 (PDT)
-Date: Mon, 15 Sep 2025 19:36:56 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/6] bulk-checkin: remove ODB transaction nesting
-Message-ID: <aMijGE2CveYcQaWc@nand.local>
-References: <20250909191134.555689-1-jltobler@gmail.com>
- <20250909191134.555689-2-jltobler@gmail.com>
- <aMJu4yoO5-Xp52oJ@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TSstcoHq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AE3y3UfF"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5C7FA1D001B3;
+	Mon, 15 Sep 2025 19:58:34 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Mon, 15 Sep 2025 19:58:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1757980714; x=1758067114; bh=GC+PPkogu6
+	aj+XzBijhDBHmp+AwzGwRYE2OGR9dai4E=; b=TSstcoHq8YVPuG0S21H46dYfqd
+	XAlFHQ5zJ5elUjMDpiABrqtH6+fsdfARtBf68GtfeMTh0qwJgmFKm5EokUb+vT9m
+	jxDS/s2MaelLeHxvuNUlC8oIQ4yBo0BApQl8wJTkRdMZ9wWuWniEbzU2UoEoxuFm
+	tKF3ixkthiqD2bmMSoc59h6jxKPxawBavjJKc03sV9fKKN9ITWQiZgSRXLyQW0On
+	8s8lAxWdp3EFKdxn7y/sHbEZEpiaQ16Mg08tdkH62luP9BrqLeXJoVV7Sy97p53h
+	uvh45q+EBQmUKWcuUb91PTl8OxiUvO1WWjUem52QmZwgcKHPpCzZZwOgTdLA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757980714; x=1758067114; bh=GC+PPkogu6aj+XzBijhDBHmp+AwzGwRYE2O
+	GR9dai4E=; b=AE3y3UfF7rccnN+oQi7zrV/285gyAAHt6W/Ckl+bmg3U8VqqVFr
+	crvwJwAc7BHRO+2tVIElWb/pp3p4WauaOcrAlSJaJnDV8W6/wod/OLFGyvocCS32
+	QDqzrA6IiOIiafbwGgTKPmHczCjli8fh7FuiINriQs4nsA58NNsixvXRlpR7NN65
+	QD9uh/9MXfLjj7WKrRkT97oGGUtMiyZfxiPlPwzXDq/s0qM16s/JBFdQ6JZrkgn9
+	QfdRvYmU+xlYJmdewoSm22jYMWIFOkgeObQsPXjQ1r3ceszHq3Ygjdbs1+veXbyV
+	U+xvC5GYq7KkcM/qdAJZ/B1ZGw9TotJX4RQ==
+X-ME-Sender: <xms:KajIaP_Nn6o29YlmIq7sVhkYsYbXmqmSS_K1eOVhWScEwrtO8vozog>
+    <xme:KajIaHNiROWl3Wqku1SUsqAXFxhzore0cWIs1ukRRpDq1l-jUjFUcQkdR4JGUfnON
+    i7SFdltRkz3Uk8N8A>
+X-ME-Received: <xmr:KajIaDdnNhCH-LYy2xu3Qmcry8LCNDY_laHuwQCx3nM9AGm4YZcs1uQGmBxLn9TTvWHSs3tyBHp81f3XUlNFA4Aau7mz1gbNCROv2Gg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefledtjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:KqjIaGUZr9XjanUfXo9mPCqBmxQbETYPTSKlRev-6wCBgBhChTVjqA>
+    <xmx:KqjIaLjndk855JWDokkWQQCadZi_ukZvgqfX4Vkj6mDTHxGDHLrJtw>
+    <xmx:KqjIaF9BqS1mNTea4xV5yNOv8Hsk8dHaCPrXRf5H1fH0sZwNujgvnQ>
+    <xmx:KqjIaNZw0R4uL3j9NOTaFm_40kgdQEr7h2pyjHzHz0iMn6DJC_zCDA>
+    <xmx:KqjIaBsr0GovquTMjKnIQbNxwZKqEt02B0-6CqrIyvvfCvv8ACIsJhAH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 15 Sep 2025 19:58:33 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  karthik.188@gmail.com
+Subject: Re: [PATCH] repo: add --all to git-repo-info
+In-Reply-To: <20250915223618.13093-1-lucasseikioshiro@gmail.com> (Lucas Seiki
+	Oshiro's message of "Mon, 15 Sep 2025 19:36:17 -0300")
+References: <20250915223618.13093-1-lucasseikioshiro@gmail.com>
+Date: Mon, 15 Sep 2025 16:58:32 -0700
+Message-ID: <xmqqfrcnclp3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aMJu4yoO5-Xp52oJ@pks.im>
+Content-Type: text/plain
 
-On Thu, Sep 11, 2025 at 08:40:35AM +0200, Patrick Steinhardt wrote:
-> On Tue, Sep 09, 2025 at 02:11:29PM -0500, Justin Tobler wrote:
-> > ODB transactions support being nested. Only the outermost
-> > {begin,end}_odb_transaction() start and finish a transaction. This is
-> > done so that certain object write codepaths that occur internally can be
-> > optimized via ODB transactions without having to worry if a transaction
-> > has already been started or not. This can make the interface a bit
-> > awkward to use, as calling {begin,end}_odb_transaction() does not
-> > guarantee that a transaction is actually started or ended.
-> >
-> > Instead, be more explicit and require callers who use ODB transactions
-> > internally to ensure there is not already a pending transaction before
-> > beginning or ending a transaction.
->
-> I think one bit missing in the commit message is to explain what this
-> buys us. Does it for example enable subsequent changes? Or is this
-> really only done to have clean ownership semantics for the transaction?
+Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 
-In addition, it would be useful to hear from the commit message *why*
-this is safe to do. Justin's message suggests that nested transactions
-are noops, so doing something like:
+> Add a new flag `--all` to git-repo-info for requesting all the available
+> keys. By using this flag, the user can retrieve all the values instead
+> of searching what are the desired keys for what they wants.
 
-  begin_odb_transaction();
-    begin_odb_transaction();
-      write_object();
-    end_odb_transaction(); <- object not yet added to the main ODB
-  end_odb_transaction();   <- now it is
+I initially read these three lines as "we let you grab all the keys
+(without value), so that the caller do it once and then iterate over
+them, asking for the values individually".
 
-only results in the object being added to the main ODB when the final
-end_odb_transaction() is called.
+I think "for requesting all the available keys" can be tweaked to
+avoid such a misunderstanding?
 
-Instead it looks like this patch pushes us towards having callers check
-whether or not there is a transaction in progress before starting a new
-one. So it seems like this is safe to do only for callers that check
-whether or not there is an ongoing transaction before beginning a new
-one.
+    for requesting values for all the available keys
 
-(I think this is what the second paragraph of the quoted part is trying
-to say, but I think it may be clearer to say "To preserve the same
-semantics, callers MUST ensure there is not [...]").
+or something, perhaps?
 
-That's more work for callers, and at first blush feels a little more
-error-prone.
+> -git repo info [--format=(keyvalue|nul)] [-z] [<key>...]
+> +git repo info [--format=(keyvalue|nul)] [-z] [--all] [<key>...]
 
-Specifically, if some new piece of code is written that does not first
-check whether there is an ongoing transaction, it could result in a
-BUG() either at the time it is written, or worse, later on when that
-function is called in the context of an outer transaction.
+Wouldn't it be more like
 
-So I am not sure whether this patch is making things simpler or safer.
-Certainly the bulk-checkin API is a little simpler, since we no longer
-have to keep track of the nesting level within an odb_transaction. But I
-think it pushes more burden onto the callers in a way that I worry could
-create the potential for BUG()s later on.
+	..... [--all | <key>...]
 
-I think that takes us back to Patrick's question: what do we gain by
-simplifying the internals of the bulk-checkin API, and how does (or
-doesn't) that justify the added burden on callers? Looking at the newer
-version of this patch in [1], I see that you addressed what we gain, but
-I am still curious about how we justify the added cost.
+or does giving both --all and an indiviual key do something
+interesting (like, just make sure these individual keys are valid,
+but otherwise do the same as a simple --all)?
 
-Thanks,
-Taylor
+> +`info [--format=(keyvalue|nul)] [-z] [--all] [<key>...]`::
+>  	Retrieve metadata-related information about the current repository. Only
+>  	the requested data will be returned based on their keys (see "INFO KEYS"
+>  	section below).
+>  +
+>  The values are returned in the same order in which their respective keys were
+> -requested.
+> +requested. The `--all` flag requests all keys.
 
-[1]: https://lore.kernel.org/git/20250915202956.3784935-2-jltobler@gmail.com/
+"requests values for all the keys."
+
+>  	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
+>  
+> +	if (all_keys) {
+> +		print_all_fields(repo, format);
+> +		return 0;
+> +	}
+> +
+>  	return print_fields(argc, argv, repo, format);
+
+OK, so "git repo info --all no-such-key" will silently ignore
+no-such-key.  I do not have much problem as long as it is
+documented, but there are a few equally plausible alternative
+designs.
+
+ * "git repo info --all anything" ignores "anything" no matter what
+   they are, as "--all" makes all keys on the command line ignored.
+
+ * The same as above, but it warns about the extra command line
+   arguments that are ignored.
+
+ * "git repo info --all object.format" is rejected merely because
+   "--all" is defined to be incompatible with giving any individual
+   key.
+
+ * "git repo info --all object.format" works as if the command is
+   given all the defined keys and then object.format, i.e.
+   object.format is reported twice.  If you ask "git repo info
+   --all no.such.key", it would fail while asking for no.such.key
+   because there is no such key.
+
+I think the first one is what you have implemented.
+
+I see no practical reason why anybody want to pass a concrete key
+when asking "--all", but the first one feels the least intuitive one
+among these four.  I think the last one is the most logical that
+lets users discover why it behaves that way the most easily, even
+though it is debatable that succeeding and doing exactly what was
+requested in that way is better than rejecting (or perhaps ignoring
+with warning) these requests with extra command line arguments.
+
+> diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
+> index 2beba67889..b1391a47b6 100755
+> --- a/t/t1900-repo.sh
+> +++ b/t/t1900-repo.sh
+> @@ -110,4 +110,10 @@ test_expect_success 'git repo info uses the last requested format' '
+>  	test_cmp expected actual
+>  '
+>  
+> +test_expect_success 'git repo info --all returns all fields' '
+> +	git repo info layout.bare layout.shallow object.format references.format >expect &&
+> +	git repo info --all >actual &&
+> +	test_cmp expect actual
+
+We would want tests that asks "--all object.format" and "--all no.key",
+after deciding what should happen.
+
+Thanks.
