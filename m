@@ -1,126 +1,106 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCF62F9C53
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 10:17:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76732D6E71
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 10:29:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757931469; cv=none; b=RPDjZkc5MlZ2uKAM0ZJCraSbXVAuXDwmnawaRiTusAPMvVoWHUrU1FhWLresSXfPCtRFMIIN+50dGpESgtfoRBqpNqlvujLMcxqRSKB8eQCjpxc17Ol3li8hOoa6MHhZWDckjN9YQC/TX8U6CEUVI0O00KFft6y2g471cn+PdGc=
+	t=1757932184; cv=none; b=bAlWe04S214iZyqeCcdle8OpULZwbP5hG6/4N8hdWMPKY6GpIkS27ndJSic7QKLQazvOsbSs1dA5VsDa/I1fUy9bkUdLCPCPYzm3DLoqFfQ6iodRn2tbRXsAbNFTQMmAjsmtMX3WAsqx6hq+EwVnmkiigdu4RMIG0lecH7iHxuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757931469; c=relaxed/simple;
-	bh=aSFipCxHPb78dR7Sc5vDnzNp6sU7dPyM9hAqYGgNhLY=;
+	s=arc-20240116; t=1757932184; c=relaxed/simple;
+	bh=mgxY/P6UWN9siYM2UCSMBceb71oeqkJtxGKMQPOgskw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Hr1haAN+LY9kUyB146Ho4ZhajzGs7yMhKt0borALVtmbk1VToBdmqUkazb50NAJ2PgyDas/D+u6jKyKWdMxSZsEW5IeU51QwgE60q4xfmsMI0iax+AXNIDWuCbTP1TofCUCSMgbfC93RhblNtxqeGItx3iZVZBjKhGEwAflvF60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xyy1cKjR; arc=none smtp.client-ip=209.85.218.51
+	 To:Cc:Content-Type; b=VCAywgkpoWV/GKcLuhOnrSU95NdMgIPxLCiUqC1YF6oqWQTene/TNNnTT8AKWIVaClbRZOWoXukGfr9mzDFD2ho+ao5fSHv52DDpgjwuW2TkjoCOimAP7Dmh62qk0cL3YQ0GpfqjYK3q5jqCBQ6wJZb4CKqKBbpQgsl0RoAOZL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DHMBQnOY; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xyy1cKjR"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-b04271cfc3eso502520266b.3
-        for <git@vger.kernel.org>; Mon, 15 Sep 2025 03:17:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DHMBQnOY"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-b046fc9f359so608506966b.0
+        for <git@vger.kernel.org>; Mon, 15 Sep 2025 03:29:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757931466; x=1758536266; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757932181; x=1758536981; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zKGNdTJ3ohxByxxq+sEDr7tRlaoTCuGqKUhXQySPvyA=;
-        b=Xyy1cKjR2guY4jk3gcVHkJReOwR073+GR+DgG23jXUE+sDuCQBsAP3Zr6rp0/LHkSj
-         5Sr1PelMy01y1izikIEXRzEGfpBsCZC7MDiYUu6tsS6CUrGFFL+cEfwL7uv0s22nwQGh
-         Q9/atZ33hnsHF6a299V6OphcSUA4Jq2EBCPSrHn7T/5UHKrIu/w0NIFbR+obgv/FwXKC
-         uw0kgztld6wPhLWH6qGh7muDxf5jFPQaRoddOciAh9Jj/YsOOYafVZ/snCcYgkPdE+AA
-         cGHrKFyBUj+SclKNp8fRl1FV7n6N9ORK+QFkTdjShf/c7Bj+Q0oGH65pB5DIJWcasCnY
-         LKdw==
+        bh=gAmET/DiNLa1MZIGgUmKV0cqbRSyPGJ6YbrgxexdpAc=;
+        b=DHMBQnOYMpzIUHFC6obFdAZ1PHlY33rTBBfVhxWrdza8eogllizt0VYrO8XHiONQe/
+         F97uLKHzVk3FNFOQ5KyNZMSA7HGob7C4nH9ia6DPXyySIn3xKPpjFNWe47XwZNgvk/Ox
+         z1fjYXPsRRYkdTkqXVqHimGVXOMG666B+ChCl3ohtZcG0FEIesqz1SFQNArUokiRxMQz
+         0LlAeD/HIO5m5UA0VIB949v06fxSPQ9GQq9+Z3444r1XMbXX38Mxuh8OvkmbN/G55LWE
+         35Y8GmSZENZSR2omWPqMj/VscdnFP2lsMkMsfniWs3/AGcfmIuxhUd+vGvaPIBfFUjat
+         dGkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757931466; x=1758536266;
+        d=1e100.net; s=20230601; t=1757932181; x=1758536981;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zKGNdTJ3ohxByxxq+sEDr7tRlaoTCuGqKUhXQySPvyA=;
-        b=TAEDIe3IOitu097hF6zGBVCG5+cRZfLLMmHucH0P+EhjwlS8VnnP3tMjgm8cNsaRrm
-         YI1CaYPpneLVRXuupj1hdqBfXwcTIfkx3z2sjLFPJxZEr9A1CFu8l/hsozqSwD0EHARi
-         gnrFmFvGpVJf3jTwvVWamPrrb9KqwR30z93kZGm1fOVPS228MC7awr389cCAMwD7t9tj
-         X5v/N4yUZtU3Fg7c8By0lL41A1Y9ci44CgFGec04IpkwY1fubl4+Iev6JqGPuWjKFLyl
-         kX7lyZJ7C0zrL2WYbK6gBOoamK8RpKyVow32nfssavWzyWuUG2Bbycp/k129a/fMZS5w
-         FxHg==
-X-Gm-Message-State: AOJu0YztIvzhnc0opxo9ImTvNTd1oOlJPPYBitBza0pNmiTOxrJHIfAK
-	u24EbO86qNuIygrtKfKIejgoslUKnENUAwExbQTenjD8yNFa9MaVkTg3ZfrXiSsP8wzhLBm1hVn
-	Ouh3IJ1DZDJq3U3EPsMcXhbPVwtMUAT4=
-X-Gm-Gg: ASbGnctharU6rzWDkpdHZInyrWhnQ3AuoGzsJNVOGUDs1JQ6xCdMkUAXu8M1ZyTNoFe
-	t5TN1sorM6jYgBcq7V1yclK5Z3vjlquF1yt1LUCLtBflnirbC6mikaAk4tl51+93qB1lafdlrB/
-	7aIWpRakMsgVBbaygzVdJm37d57lVRM556A3iNpXVQEbKgBrpMiizWLxuvsTF6FTQDrcPtY6wPF
-	1CiEws67A==
-X-Google-Smtp-Source: AGHT+IHuZUun5OLi5kvxusrjC140PVQHJTbV8wNw6vYvkQaDGG8KtlB2rlXwmc9eR0zvfQHvfYkU0hxgDoDJXAQDMFM=
-X-Received: by 2002:a17:907:3fa1:b0:b04:5200:5ebe with SMTP id
- a640c23a62f3a-b07c396d4b9mr1321013666b.54.1757931465829; Mon, 15 Sep 2025
- 03:17:45 -0700 (PDT)
+        bh=gAmET/DiNLa1MZIGgUmKV0cqbRSyPGJ6YbrgxexdpAc=;
+        b=RiCZctAmkb0Mq3OIe8XUYiduZZ7nqEfdaupTQMeMjVpIVLZSJ6O0uvEM+8P4XY6I+0
+         gbotv/cLBSyWllYQKIcdvfcD4J8NSo6aL0tXrXxwLnVD9zxsUncoKnivcA/THO+QyizZ
+         sKU6GB7pm0znqQ2BAb62EDHl67BqWGWFi3rEkOaBaiw9F2Sm96nj3UmIJRxYZ98AYWRy
+         60uNmWWxV04KaDX+VvdaBh8GdZY8h+cfJx6FzWdpr2kWvHRIKoG0Bp7pfP4+BxdXyh90
+         vo1Jm7NDd2Wql1mKg6PuLEfVd7mZLkxHzAVweEb6JXNIKdt+AAjC0ExgtDFxUN0KDvc4
+         OC3g==
+X-Gm-Message-State: AOJu0YwZih/o/LytmGbg0oiRJZ8vy05DBJ0QRDTLTKB+5JYVYxnA4Hg2
+	a0XKTZEsw0SqIB/IQm+y/CAWsSa4h213ltf0pTF4ktUg28rAohWD8vXzhsZBjfxreFMtYkHT109
+	RrgOOP+u0pL0kMSO1Ro4qoKbn1Qcb4pM=
+X-Gm-Gg: ASbGncsjjDYiZd2u/iniqerQgSEU9zAL/IFJFCfFjijCaPe7oDEahhwIX/kZoYMP8+g
+	r9bmvmaUVfC3LK/wmkVg7L5UOhKhQMMmlOhwB5l17khv31niLAvSzwmOzCJiJN9gAtcyaeQFlbY
+	uevaQmoKM9lXRiLgaONA6MCkJeedkdPVj4gJ+ZhMSrHAlUgwy2wlyXH3zK5LLMg9Ud35vNnEfIa
+	8kT7Mo5hnI70Jww+/yI
+X-Google-Smtp-Source: AGHT+IEJKOrJLlbCY+g0RHU6pGhLl4XeISc1i6IkdrwsxRoY5u00ZmmWG/X5KDLRCLXqkmNaiQLlNopIR0bMOjEDkUY=
+X-Received: by 2002:a17:907:d16:b0:b04:6338:c936 with SMTP id
+ a640c23a62f3a-b07c35b8e53mr1287195466b.17.1757932181027; Mon, 15 Sep 2025
+ 03:29:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250912124042.2523683-1-christian.couder@gmail.com>
- <20250912124042.2523683-3-christian.couder@gmail.com> <aMex06JNPVeHaw_d@pks.im>
-In-Reply-To: <aMex06JNPVeHaw_d@pks.im>
+References: <20250910080839.2142651-1-christian.couder@gmail.com>
+ <20250910080839.2142651-3-christian.couder@gmail.com> <xmqqtt1as08f.fsf@gitster.g>
+ <CAP8UFD0EAuGdMWY2ff_kjaQnZ3w7VP2ftM6Y4Hr3T4HQTsFB3w@mail.gmail.com> <xmqqa52zoizs.fsf@gitster.g>
+In-Reply-To: <xmqqa52zoizs.fsf@gitster.g>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 15 Sep 2025 12:17:33 +0200
-X-Gm-Features: AS18NWDA5NJV6lRcjhX_d8JxeiJ_2lP2FGykuqjzAPXXvDi9ZTNCA2J7x44m21E
-Message-ID: <CAP8UFD3-3zjBBHP-Y9nLO-qEyhkWhD_pxFZhk6rzrC31LanDMQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] fast-import: add '--signed-commits=<mode>' option
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>, 
-	"brian m . carlson" <sandals@crustytoothpaste.net>, 
+Date: Mon, 15 Sep 2025 12:29:28 +0200
+X-Gm-Features: AS18NWBl6VwWVMJKtGAFgDgHzi9C5SZph-N23wd3OHmCNWfs9HLbMm8EaM4H8R4
+Message-ID: <CAP8UFD2RVZHqb4EwULmmR3hJJKuxajeOOLe5_p3DYcz2dmdzYg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] fast-import: add '--signed-commits=<mode>' option
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, 
+	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 15, 2025 at 8:27=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+On Fri, Sep 12, 2025 at 4:14=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> On Fri, Sep 12, 2025 at 02:40:42PM +0200, Christian Couder wrote:
-
-> >
-> > -     /* Process signatures (up to 2: one "sha1" and one "sha256") */
-> >       while (skip_prefix(command_buf.buf, "gpgsig ", &v)) {
-> >               struct signature_data sig =3D { NULL, NULL, STRBUF_INIT }=
-;
-> >
-> > -             parse_one_signature(&sig, v);
-> > +             if (signed_commit_mode =3D=3D SIGN_ABORT)
-> > +                     die(_("encountered signed commit; use "
-> > +                           "--signed-commits=3D<mode> to handle it"));
-> >
-> > -             if (!strcmp(sig.hash_algo, "sha1"))
-> > -                     store_signature(&sig_sha1, &sig, "SHA-1");
-> > -             else if (!strcmp(sig.hash_algo, "sha256"))
-> > -                     store_signature(&sig_sha256, &sig, "SHA-256");
-> > -             else
-> > -                     BUG("parse_one_signature() returned unknown hash =
-algo");
-> > +             parse_one_signature(&sig, v);
-> >
-> > +             switch (signed_commit_mode) {
-> > +             case SIGN_ABORT:
-> > +                     BUG("SIGN_ABORT should be handled before calling =
-parse_one_signature()");
-> > +                     break;
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> Let's be defensive and convert this into a `default:` case so that any
-> unhandled value will cause a BUG.
+> >> ...  Was it so important that we pass a
+> >> broken signature without inspecting in STRIP mode?  I am guessing
+> >> that is the reason why the new code tries hard to avoid calling the
+> >> parse_one_signature() function in these case arms.
+> >
+> > Yeah, I thought it was cleaner and a bit faster if we don't parse
+> > signatures when in STRIP mode. That's why I did it like this.
+>
+> I do not think parsing performance matters all that much here, but I
+> think it is a good idea to recover from malformed signature lines if
+> the parsing code can detect some.  It is likely that the user may be
+> using STRIP hoping that they can skip bad or unknown signature data
+> in the incoming stream, so it is beneficial to be lenient there.
 
-Ok, maybe something like BUG("invalid signed_commit_mode value %d",
-signed_commit_mode) then?
+Yeah, parse_one_signature() expects a signature to be in the 'gpgsig
+<hash-algo> <signature-format>' and might die() in case it cannot
+validate <hash-algo> or <signature-format>.
 
-Note that if we later develop new modes like "re-sign" or
-"strip-if-invalid", and users tries one such mode with an old version
-of Git, that should already be handled by the following code in
-parse_one_option():
+So it seems to me that I should change the code back so that its
+behavior is the same as in v1, while trying to avoid what you called
+code ergonomics regression when you reviewed v1. Ok, let's see if I
+find a way to do that.
 
-    } else if (skip_prefix(option, "signed-commits=3D", &option)) {
-        if (parse_sign_mode(option, &signed_commit_mode))
-            usagef(_("unknown --signed-commits mode '%s'"), option);
-    } ...
-
-Thanks,
-Christian.
+Thanks.
