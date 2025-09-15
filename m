@@ -1,69 +1,69 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E576C296BD8
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 20:30:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F582877C2
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 20:30:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757968212; cv=none; b=QZtKFF/M9dPCeQ9kuKaETQCWPqiP0k8CAyjihF6021b18n/Os5OCnJfC23sZ9OV2Mycpo0PYk6nQhaweO6NGUG/wjCkZW5Rm5h2H8XKR3a4alRZlGXPafxWlo28/QzXaiKraF9RID2t3EWoOpisciueGHw+TYOcjLGNBzSlheMg=
+	t=1757968212; cv=none; b=Onk4n3bPCzG42msho6i/STOne9K/jSshWGGvNDRl0MkHNi0roLsW6RYf6/g3a73/sRReGo2jNXz4LCMELecJB2Sz4HYQ3uCcPBkrHoJTsYGfdvrV/C0R+1B3VFOajWRI6EYWpo7vhVVeBBP4EaRE9aPEEx3bZLwmTs4Rx71yxEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1757968212; c=relaxed/simple;
-	bh=PRNtIyZsBEXcYWqniTorG6s1EgSC6k2bL8vzajC4A+o=;
+	bh=e1oi95+AO/h5N/DCNb4cJ/8u8qTahEOzeUXlgngM5JA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=siNDed++d6iYoJ/dqXVuVMcdgt2X4wARfBXACLoon50mPaQLtQGBDxKtSX7eWqzd0CODQL+5IbPZSlWqyxLBlOnWwWb11VZrHUwmIuPP6l6KppkKZ1NOqNq2YSxldPkKa1+wnQzAGChx0yNIJI/cKn1CyV40kJFgKFPOTa1ofxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QIhMfOyM; arc=none smtp.client-ip=209.85.210.50
+	 MIME-Version; b=BDQfa/ZBcLBbzWRiqEiY6qyV7hh576u/nxnWslb5z84KWto6wHQVc4HvpqCehjUyMr+MelEfMEbHiZvy4ywhwa3tI5n47OCPihLVxfYWmh3nAKvXoZ0P2qQmbqU9IC2NdfMqgSSqEkzcs6D1ts2KiUgwrIcQtjGc9BablPm/Wgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UFYwVWi8; arc=none smtp.client-ip=209.85.210.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QIhMfOyM"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-746c0ee5d77so3614590a34.3
-        for <git@vger.kernel.org>; Mon, 15 Sep 2025 13:30:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UFYwVWi8"
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-74c1251df00so2415649a34.0
+        for <git@vger.kernel.org>; Mon, 15 Sep 2025 13:30:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757968209; x=1758573009; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757968210; x=1758573010; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=R2/iyyWSW5nl82FOfem36g3aryzYBT1VYXPtCqcit2o=;
-        b=QIhMfOyMRF+kYpFmrfZZsF2O4w2ATWkxGW6KM+HrwtRvBLQz3Lf0KVgcJCYaRplIEC
-         6C8ddyN4gB5ma5AD9/knom+porIyxUZvASTC0DGXfOX944AhmGTvFNNU9tmuGplSnNDg
-         YYZ+5Ph6IQVe4XzUjfUDYV/gNkPsSgQoMlWrnJn6BJ0y5XfvdHnC9CEXtMoMBH1LhR4O
-         9vBu5QMoUE5Xg0M/MgHXuu+q75NEIjdt5MgJV3ayeLD9RAuwGfGfobno+ehVWgd5C8FR
-         dtHQ5+htq9scdgspa7yfVm6YwdE/q6B78RrbL7FlFng3/PjT+VUqdqwKB2MLcv9XUgHr
-         MMLQ==
+        bh=+OC8208b5GXoeYGX7TYfFOu9O6CmQ1pQy/kNorZNf38=;
+        b=UFYwVWi8FbOz71hRA0IMv2McYzg5zeUcIlqehYbj1IG2s8t9AGZtt+r2/IQML7nptI
+         ZeLP99w7cEERlyDGCdJ2ZAv1h9HAdi4kSF8EbRI7JCh+IPNghWKmFXsRsNtczat3tMT3
+         4C5cMH6x2nGkxKBuGI/EABIpzi3RRE5D5bxxUzRt/kZF1Y2lMn2iH5vA9DVpGJ2Xzp+C
+         vfiH7s7nc9W7HmP5gzZnfdGUg213bT4Lx31E6y8Cah+K2StzGlK77TE9mFG1d4HzSTxm
+         +C5wGQXRFPMhv7SussriqRNbCqqzT6ztuG9Ku28zSe7dzly5Go0+OuGfTreRWMn7BvXL
+         0dlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757968209; x=1758573009;
+        d=1e100.net; s=20230601; t=1757968210; x=1758573010;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=R2/iyyWSW5nl82FOfem36g3aryzYBT1VYXPtCqcit2o=;
-        b=Nccp5+IQiBTLjqW9exjvWqcCGMPDX3oI2K06TPrE8Dd1vYn+peS6h+yuKHCUk0GBuU
-         Z8pRVgdVqyydQZcacM0VHsGGcN418HTdx22zNiFRkNv8cel6/Wh9TNtEeJE0bCmfcE85
-         3bxtsQUTruZ5dNW0CHVcNnXzKsScFDFUVHu6w6vEJdOkdziHMdf/q6dC26lmbI0sO60q
-         f+aEpGR//wvJMNejOUpftty8/KOf1IvaMaU+BFbPAAmwffOJGaJhjIOcRmc3QlmCnW6+
-         NncdtSx3ICeo2IvsipimPELnr+n2ZomXTA35pjDVycQrm7eotVaARadJG2n4D4Q33pAD
-         ExgQ==
-X-Gm-Message-State: AOJu0Yy7ljqmdhqo1csiasiLRjyd9PWTPzNKsPM3S1GZ+2KlCzSaCzxS
-	DkTM4Kjmipjaw4DBdyRaapNs8YMiGAa7CpxU/zsIYiSrn9clEek2Fk+DQc8E+A==
-X-Gm-Gg: ASbGncuITKBjUg+Wzqh9Ag2RlV36QRaedKLmJEABT2rvPVTYOseMv0etkvI5fEHokBF
-	bobx03vTUjLJ5eZwdf/cjADyXtmupoqLnpFcr307dmT/5QJVlzuHKCJqn3jC/qJTWEYlbO9f0Jr
-	astusyZZ/zAHv/yALnZK2XgNaSwohvq33cgHngn6kwERqgsCr4swNyNEBw+rZ1bKpPg2367rdYf
-	n6Wx6VlZLVHUsZ2pr2Ck3VWCiOz2AGk6XJeXEszTzdZIsU7nELnz9wF2TXjTdGV1kLAJ2ikz8kd
-	r/XUiqDRDRiFM5wz//qx44YWyvysw2y0lJPShgkAEZKjgDM9oEpSAzdncZN+0gmS4aGdttkNsI+
-	NQu4ZcQBpqFz4APA8kxNHffCELj/SCkOpN7WElB9O6g==
-X-Google-Smtp-Source: AGHT+IFKrYdWEk2pb9ji5k0Qbqe/cdBbqsQpSzPCuNvGbryo0EQVwZneejl11XvmDGQ2QNyw891BYA==
-X-Received: by 2002:a05:6830:3814:b0:743:968b:3440 with SMTP id 46e09a7af769-753550e1e9emr7218920a34.20.1757968209499;
-        Mon, 15 Sep 2025 13:30:09 -0700 (PDT)
+        bh=+OC8208b5GXoeYGX7TYfFOu9O6CmQ1pQy/kNorZNf38=;
+        b=Zh4eP9XJ7jrDIrs0/IRD+OSnUjExWKc6oGZumt/30jNRb1JsWALa7dO+A+CQuPm63P
+         tEbKUZnGFzvoJggyhlHWG7JrAZPOGMKcVIU1WDNRx+uCBoPnIiRchSUvN48OYbFBpbz0
+         zRO+kck5qrT63TXzyHFosWIgpFeqGvNdigdjfM9XW/7dxKxNwuKT7yoZHTzZC1XQ/lxe
+         OFGm9Rlw0ilejiyEq89Z3m5NPu8Mk4CcjSSClls+e44lG1f0muw7fNBo4kW/n7F7lzlM
+         J26uua5FMUOhL6OuKmR59JLUSjTtnHVw4kVab/ygIJXDnSS0b65vjRreHohWWvkm3CnW
+         IYPg==
+X-Gm-Message-State: AOJu0YyQmvQq7Rhk3VxKhh5W6wwS5x2b7m+s2VQSkHZhknAlmqgViEu/
+	lb8nu9Z0KA5WiekcZKeEkq0jdgoF8opUkbSfPoCGiUWUQhYkd6v7VTYw4/tEnA==
+X-Gm-Gg: ASbGncvHeEtl5rmTvTgq3FopYFpyO2BrYMODKwLi78P/I8vNvNBQK9aXOn3yQqeK0R3
+	FTbiuIRpiHGnmU6k36Zj0wBASciiwjnakYUKQgfr791TngKVWgLRhv7ivjgGX683OY8XFJ2nYQO
+	ooEaU7DRlTXuxFAGJh6YGZVVY9ZXRWVTMYc/I4uvRpvl8csZ+nHqQ/Msc6svMYR532nY1dy/kCh
+	ZfcHpvRa2Ebg2PleTrZbtCb1DW5+ECTLKtEyfHKgy0zVdXbg1sS/RsPHviDMpExzfqJtWyyMrQ/
+	5in85x3YqLDMdRGWj1pBg6cXlS83p1yfdIuLylc2ZBWpYYb/nHoByNFWzCWp4zyZM4OB5ONryiQ
+	RMAW68zmzkImswHCCveDfLVldTxezjWo=
+X-Google-Smtp-Source: AGHT+IGKCllkzkp8RPa4fgHML7CeegRu9mwOlbNvGGuahTrehPUGjtuNEfl7gzLxBkqstpDV1+Do2A==
+X-Received: by 2002:a05:6830:490a:b0:748:8b42:779e with SMTP id 46e09a7af769-75355ac0c4bmr8126675a34.27.1757968210125;
+        Mon, 15 Sep 2025 13:30:10 -0700 (PDT)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7524c260735sm3114325a34.39.2025.09.15.13.30.08
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7524c260735sm3114325a34.39.2025.09.15.13.30.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Sep 2025 13:30:08 -0700 (PDT)
+        Mon, 15 Sep 2025 13:30:09 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 2/6] builtin/update-index: end ODB transaction when --verbose is specified
-Date: Mon, 15 Sep 2025 15:29:52 -0500
-Message-ID: <20250915202956.3784935-3-jltobler@gmail.com>
+Subject: [PATCH v2 3/6] bulk-checkin: drop flush_odb_transaction()
+Date: Mon, 15 Sep 2025 15:29:53 -0500
+Message-ID: <20250915202956.3784935-4-jltobler@gmail.com>
 X-Mailer: git-send-email 2.51.0.193.g4975ec3473b
 In-Reply-To: <20250915202956.3784935-1-jltobler@gmail.com>
 References: <20250909191134.555689-1-jltobler@gmail.com>
@@ -76,79 +76,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-With 23a3a303 (update-index: use the bulk-checkin infrastructure,
-2022-04-04), object database transactions were added to
-git-update-index(1) to facilitate writing objects in bulk. With
-transactions, newly added objects are instead written to a temporary
-object directory and migrated to the primary object database upon
-transaction commit.
-
-When the --verbose option is specified, each of the following objects is
-explicitly flushed via flush_odb_transaction() prior to reporting the
-update. Flushing the object database transaction migrates pending
-objects to the primary object database without marking the transaction
-as complete. This is done so objects are immediately visible to
-git-update-index(1) callers using the --verbose option and that rely on
-parsing verbose output to know when objects are written.
-
-Due to how git-update-index(1) parses options, each filename argument is
-evaluated with only the set of options that precede it. Therefore, it is
-possible for an initial set of objects to be written in a transaction
-before a --verbose option is encountered.
-
-As soon as the --verbose option is parsed in git-update-index(1), all
-subsequent object writes are flushed prior to being reported and thus no
-longer benefit from being transactional. Furthermore, the mechanism to
-flush a transaction without committing is rather awkward. Drop the call
-to flush_odb_transaction() in favor of ending the transaction early when
-the --verbose flag is encountered.
+Object database transactions can be explicitly flushed via
+flush_odb_transaction() without actually completing the transaction.
+This makes the provided transactional interface a bit awkward. Now that
+there are no longer any flush_odb_transaction() call sites, drop the
+function to simplify the interface and further ensure that a transaction
+is only finalized when end_odb_transaction() is invoked.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- builtin/update-index.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ bulk-checkin.c | 12 ++----------
+ bulk-checkin.h |  7 -------
+ 2 files changed, 2 insertions(+), 17 deletions(-)
 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 2ba2d29c95..d36bc55752 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -70,14 +70,6 @@ static void report(const char *fmt, ...)
- 	if (!verbose)
- 		return;
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 6299d1c9b3..e1d8367967 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -376,15 +376,6 @@ struct odb_transaction *begin_odb_transaction(struct object_database *odb)
+ 	return odb->transaction;
+ }
  
--	/*
--	 * It is possible, though unlikely, that a caller could use the verbose
--	 * output to synchronize with addition of objects to the object
--	 * database. The current implementation of ODB transactions leaves
--	 * objects invisible while a transaction is active, so flush the
--	 * transaction here before reporting a change made by update-index.
--	 */
--	flush_odb_transaction(the_repository->objects->transaction);
- 	va_start(vp, fmt);
- 	vprintf(fmt, vp);
- 	putchar('\n');
-@@ -1150,6 +1142,21 @@ int cmd_update_index(int argc,
- 			const char *path = ctx.argv[0];
- 			char *p;
+-void flush_odb_transaction(struct odb_transaction *transaction)
+-{
+-	if (!transaction)
+-		return;
+-
+-	flush_batch_fsync(transaction);
+-	flush_bulk_checkin_packfile(transaction);
+-}
+-
+ void end_odb_transaction(struct odb_transaction *transaction)
+ {
+ 	if (!transaction)
+@@ -395,7 +386,8 @@ void end_odb_transaction(struct odb_transaction *transaction)
+ 	 */
+ 	ASSERT(transaction == transaction->odb->transaction);
  
-+			/*
-+			 * It is possible, though unlikely, that a caller could
-+			 * use the verbose output to synchronize with addition
-+			 * of objects to the object database. The current
-+			 * implementation of ODB transactions leaves objects
-+			 * invisible while a transaction is active, so end the
-+			 * transaction here early before processing the next
-+			 * update. All further updates are performed outside of
-+			 * a transaction.
-+			 */
-+			if (transaction && verbose) {
-+				end_odb_transaction(transaction);
-+				transaction = NULL;
-+			}
-+
- 			setup_work_tree();
- 			p = prefix_path(prefix, prefix_length, path);
- 			update_one(p);
+-	flush_odb_transaction(transaction);
++	flush_batch_fsync(transaction);
++	flush_bulk_checkin_packfile(transaction);
+ 	transaction->odb->transaction = NULL;
+ 	free(transaction);
+ }
+diff --git a/bulk-checkin.h b/bulk-checkin.h
+index b4536d81fc..35e0564082 100644
+--- a/bulk-checkin.h
++++ b/bulk-checkin.h
+@@ -44,13 +44,6 @@ int index_blob_bulk_checkin(struct odb_transaction *transaction,
+  */
+ struct odb_transaction *begin_odb_transaction(struct object_database *odb);
+ 
+-/*
+- * Make any objects that are currently part of a pending object
+- * database transaction visible. It is valid to call this function
+- * even if no transaction is active.
+- */
+-void flush_odb_transaction(struct odb_transaction *transaction);
+-
+ /*
+  * Tell the object database to make any objects from the
+  * current transaction visible.
 -- 
 2.51.0.193.g4975ec3473b
 
