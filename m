@@ -1,119 +1,122 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A47221FAE
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 04:12:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21552652A4
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 06:05:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757909529; cv=none; b=pY1E5EuKHgzgidZsjxnj5d53VL0m74XIjeoX0tu05gO4mS9QmjQD5qg+eXuXo9WBtP+8cHg4+JezzUM6AT284u3WjkiZ8UIuGyJGS6i77Le/JNlmJWi7b5KYrFjdWLZi1s+1FYjXwRCrz/lzSbXiWvdFU/tVJFaRlf16GXXPGbk=
+	t=1757916306; cv=none; b=oWxezajCVZzmrO4IhF+COi0qEPr1inzb10A4iWu9cIsHiPbIViYZ32ATw7J2Mo9jgUs4Ar6FC+q8qW8z4USYhUyztp8yLZ+kYjR+F7qomhbrA9WxZxbAni75hLG640yfuRNytbmMHLqQuk3Jd0Yq5Go9frWOl/QGVKiP26pH9ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757909529; c=relaxed/simple;
-	bh=BzBEae2ZYtWsT26cL7CS6Oq7y5Y5i0K4T82SRebC0yo=;
-	h=Content-Type:MIME-Version:From:To:Subject:Date:Message-id; b=sq71MtlSLwTnx1Cw76Fs5jVNqTYOgLonaqVl/iFF7I14uLzaN2V0wz/gaPPi/Kofs3E8Dl8MA+rwjaNEUween1JWYinyjtNfiGcrxSVbbt+umBj7nKs+bbcneggGdNLTO8uxE3CFdA0Buc8d2XE0/wDSU0MPJn2b0ICkcK9ABxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ownmail.net; spf=pass smtp.mailfrom=ownmail.net; dkim=pass (2048-bit key) header.d=ownmail.net header.i=@ownmail.net header.b=m4+Hmdnh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZGIOmWq8; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ownmail.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ownmail.net
+	s=arc-20240116; t=1757916306; c=relaxed/simple;
+	bh=1L37ewgighCksADXPUpuijxML/OhGk7XFjrFFSKxpio=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k6C0uzvMOFK79fv7NekHAwmt51yMs9zu4R2iQX7ZySnnRhV3WuhL4jeMiQfDHNYfzLMOQOETqylOq4u4vzvtQpjPVmNbEjOFwrQpHwxbiEgboxfYZSzAlHCa8QeyOcSNFHm7Ts61oDNzd2fgnWiJWUJGHH+06r4DowLTCgLoLy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ltxe/baD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XmcLaKY5; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ownmail.net header.i=@ownmail.net header.b="m4+Hmdnh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZGIOmWq8"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ltxe/baD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XmcLaKY5"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 54F197A0096
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 00:12:05 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id D9870EC020E;
+	Mon, 15 Sep 2025 02:05:00 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 15 Sep 2025 00:12:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ownmail.net; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:reply-to
-	:subject:subject:to:to; s=fm1; t=1757909525; x=1757995925; bh=LN
-	V94/1iuTbpmtYQhjoehPntb/KqT1OXf61/tQPAAn4=; b=m4+HmdnhEEZUUk1fin
-	ci3yE72JRFFoHBVnvfG1Dqlv0AFDfXtCkpeJjYCniO6N5PNclqvoZlyVghznSWqB
-	VjY5NhOdER35kEtQYUHUcn2kgFe0WPEf/sh+TsfZOsli7+51jMSsMle+D5DdmMb2
-	N3ISwtDnvNfXRtK2SQK7hiWC8/hvhxndmWgqRrcnonxYOubxhEGf029zBgwo2zR7
-	ovZA3ter0RwBLaXGa1wnrPauLPkOyWrWHBO0CMPM6TthFSXMb5kDaWjHDSYvZh9o
-	mMZqs/f/uOm7SWWNPSLJAmSKu8Xwn6pcxfI4fAnamJkASE8ahWnwZp6Fwg1hCUKs
-	aNyg==
+  by phl-compute-02.internal (MEProxy); Mon, 15 Sep 2025 02:05:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757916300;
+	 x=1758002700; bh=B4qgWXh1DDQNmhA/siYT/ooVwsIImLm9IntFRTooopE=; b=
+	ltxe/baDA12oEg6OHygJPYeQIMIXURtgLA852LECstcsMTDR0rtPHU+eSwZNTVov
+	+3PTBg5FQ3XKuUw+J2yf1OEAEw1bnnTx0pShn65RU7DJB/jV16FQWP4YI7i6btrM
+	TQbyWtuzW6Ya2xmN2dlnz/QviOFcwiFzEt9DeL9xOVBDoFGIMYtlCnqbvaSbgV2l
+	jH3Jb0/0lKuW7Co3/dTjZtzDDoynLIu1HObga1p1p2eoA2rmXm1m9D4j2mAkKV9D
+	tpHrWEaM3m9n4dg0SWG9bnEDB7LTHnZeIOc9I2RZIvE2eftCC8De33r/FI4LZFZO
+	mqbEMABJLDNgLP5o3HI0ig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1757909525; x=1757995925; bh=LNV94/1iuTbpmtYQhjoehPntb/Kq
-	T1OXf61/tQPAAn4=; b=ZGIOmWq8nJcVtFv/y3/bmjpGC95lfJ8SZ44eDxyzq6Np
-	e9Gwoh44AkvrE1JcTo/OsB5ByRZ3f5XANfhRLWFTG0bHqposZwcz0Q/U3aSThRdH
-	zTko7ac6cWeXsZi5Pv/kOwz0m3ktnwpF+dSpSYPNoXQpZTpiqpE0Jx4BMLbmIR+n
-	xD1bbGXldEnldBgfzmQpFKCJ2Ey4tnApjiUqwEFf08EVvX+8taD5ClNNBZmOqduO
-	SsvoirSPgezna6S1L52WcUFNHqokv6JwFgY2JwrWRNPaMkdkV8qePcy1aCCoDdbL
-	hfdGBML7e/jK1Hf+rUzySTfDrP6y1p3n/BxYY95qhQ==
-X-ME-Sender: <xms:FZLHaDaOWgIqbELfpat-YMnvcEk5BUiBdIW5_-StmVU3KLWnr6m9wA>
-    <xme:FZLHaEZ8Pca3srnLl_vkDhxyF1f4xOFb11kFKrmLTrQwjV3R-A8RHgMgmh7hQAvaA
-    0_GpyEGO5EsOQ>
-X-ME-Received: <xmr:FZLHaPVO0lJUp0GNlmf0Nc2qXhPzfPyjvPsnnR1XGJGoBzrx-FZOU92SLMqS4xtUAfNWZYJozCw6Ia6EmzGZvoDU2nX4cXMgv1aBsmFR2S53>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefieejtdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757916300; x=
+	1758002700; bh=B4qgWXh1DDQNmhA/siYT/ooVwsIImLm9IntFRTooopE=; b=X
+	mcLaKY5rRzV7fKMr1G3sfpitOMHFBDKrMdvoXXJib/qmPs73i6bBH/dzMJNbCCnY
+	z6Ay8PaLvt7zavTU3PpX4D1pbIt+8mKP6owKyCfK6I8SfPYaGe6zsX2BZZjEz515
+	zrNOx58lpkMTm1dZuK38mYvvWR1eUl6KWF6pOgun0LhvQrz1xYozvEw1GimapJJt
+	LeWI58gEizCeWdh0zSadFIJJhgXPyjhswCFv9yejhOwaTJ4BxccBxHskhN+xaHLX
+	z5ds6dUdmbPGDT6zxrsyZQKkJE+R9/nuu7FGN2rGknWHVwl6UmGhOxrcjhgbSqD8
+	bgLxAyojwQEvuo5/5IXzQ==
+X-ME-Sender: <xms:jKzHaMsKXBVRSzv4eEeYYyyenxsKc6AM7Y99peM849ZhSUlBwWjCpw>
+    <xme:jKzHaMsChfuDFtoiYQqPZzQxjdYu5WY-kFZyl140iSJ75atcLq4zj7gtb43P3kfIm
+    t5sj9mW73ctzVRBjw>
+X-ME-Received: <xmr:jKzHaBMWEx6_hIlQi6Ou529N-NCS0OU0XRWnGJKRahab5eQpwP7E76AmjDECQncimArBNiDLODRkVHYFfHwh_8XHkf1cYlOAn4-606O4VGckEQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefieelvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurheptgfgggfhvffufffkrhesthejredttddtje
-    enucfhrhhomheppfgvihhluehrohifnhcuoehnvghilhgssehofihnmhgrihhlrdhnvght
-    qeenucggtffrrghtthgvrhhnpedtgfdvveekgeejueefffdtueekgeehvdelfeeggeevve
-    eiudegvefgkeeuteehudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
-    ihhlfhhrohhmpehnvghilhgssehofihnmhgrihhlrdhnvghtpdhnsggprhgtphhtthhope
-    dupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhg
-X-ME-Proxy: <xmx:FZLHaL2xfBcOIkv9c0w0uTK0rHYar9VidjzKGgeRUhej0UDFYTzqWQ>
-    <xmx:FZLHaGZoronclnHn--b_32rccHGpiRBq18JW9A0cEemEqywCpQwJaw>
-    <xmx:FZLHaOogFRLGVSbmEsBdpU8u_aweAIZl07xlZSTRu3WD9qXee2eUgQ>
-    <xmx:FZLHaCrf3MqPuzpuMFgOjvPmxpDAfs_XzE1klhhzs4y8CNvR_vZN4g>
-    <xmx:FZLHaOy_2yufRtvVWad42Tk0bJJ8aEtTFrawmVGg3yeeD0Un221CkUgO>
-Feedback-ID: iab3e480c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 15 Sep 2025 00:12:04 -0400 (EDT)
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertd
+    dttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehke
+    dvveetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:jKzHaK3z2jFrtTG-Ib5qHNtWY4vcQ7INQW9sqZO3--vNg4nt6Zn5rQ>
+    <xmx:jKzHaNOvNKUsQaE5pbmYDpfTe9x63JsRCmaElMeS4oM881MWi-vgxA>
+    <xmx:jKzHaK14vSvnZB1rFtSXl2vmBMhTepsBPCCmdKk4fJHNVRi2jDwtcQ>
+    <xmx:jKzHaEGQwoIj8G3zNgCVCkwXuAqz8xFNkinGWcZ528f0oclOSnFZHQ>
+    <xmx:jKzHaBXD4Utc4eiBwuL0vgYO1xiDYoB_u2kKuquzQIf4BDIgymZhukuT>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 15 Sep 2025 02:04:59 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3d3afd67 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 15 Sep 2025 06:04:57 +0000 (UTC)
+Date: Mon, 15 Sep 2025 08:04:54 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH 0/3] ci: don't compile whole project when testing docs
+ with Meson
+Message-ID: <aMeshpRtFWyE0ja4@pks.im>
+References: <20250911-b4-pks-meson-docs-target-v1-0-a92c666ecef9@pks.im>
+ <xmqqwm64orc1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: NeilBrown <neilb@ownmail.net>
-To: git@vger.kernel.org
-Subject: [PATCH] send-email: don't duplicate Reply-to:
-Date: Mon, 15 Sep 2025 14:12:01 +1000
-Message-id: <175790952167.1696783.4795702220839036460@noble.neil.brown.name>
-Reply-To: NeilBrown <neil@brown.name>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqwm64orc1.fsf@gitster.g>
 
+On Thu, Sep 11, 2025 at 10:02:22AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > these two patches introduce a new "docs" alias into Meson and use it in
+> > our "documentation" CI jobs so that we stop compiling all of Git only to
+> > verify the generated manpages. This fixes the issue reported by Gábor in
+> > [1].
+> 
+> There are three patches ;-).
 
-If I run
-  git send-email --compose --reply-to 'ME <my@address.net>' .....
+Oops, yeah. I added the summary patch close before sending this out :)
 
-and edit the intro message, then the message will get two copies of the
-Reply-To field.  gmail.com rejects such messages.
+> The end-user facing get_option() is called "docs", unlike what the
+> "make" side understands, which is "make doc", even though internally
+> we call the target internally as "doc_targets" (not "docs_target").
+> 
+> I wonder if we want to let people say "meson compile doc" to match
+> the other world?
+> 
+> Will queue.  Thanks.
 
-This happens because a Reply-To is inserted into the intro message
-template, and then the intro message headers are copied and another
-Reply-to is added.
+The reason why I picked 'docs' is that the accompanying user-facing
+option is also named the same way. It's thus a bit more consistent with
+itself to call the target 'docs' as well.
 
-This patch fixes the problem by noticing the Reply-To: header when the
-intro is parsed, and using it to assign $reply_to rather than blindly
-coping it into the new headers.
+So I slightly lean towards keeping 'docs', but I don't feel too strongly
+about it.
 
-Signed-off-by: NeilBrown <neil@brown.name>
----
- git-send-email.perl | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 437f8ac46a85..e2248c223119 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1931,6 +1931,9 @@ sub pre_process_file {
- 					$in_reply_to = $1;
- 				}
- 			}
-+			elsif (/^Reply-To: (.*)/i) {
-+				$reply_to = $1;
-+			}
- 			elsif (/^References: (.*)/i) {
- 				if (!$initial_in_reply_to || $thread) {
- 					$references = $1;
--- 
-2.50.0.107.gf914562f5916.dirty
-
+Patrick
