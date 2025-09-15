@@ -1,122 +1,137 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21552652A4
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 06:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1012652A4
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 06:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757916306; cv=none; b=oWxezajCVZzmrO4IhF+COi0qEPr1inzb10A4iWu9cIsHiPbIViYZ32ATw7J2Mo9jgUs4Ar6FC+q8qW8z4USYhUyztp8yLZ+kYjR+F7qomhbrA9WxZxbAni75hLG640yfuRNytbmMHLqQuk3Jd0Yq5Go9frWOl/QGVKiP26pH9ZI=
+	t=1757916529; cv=none; b=KScEsXFrRblutsoUNf0jV6vUTBRSQLgRoAYddboF9nSLgoykjpLdvEoZJOkbyswU4Rjacg1Bnfmcpdi0G5u7JbFBYipdHtQlBN3u/IQfIVazGjVxz2I1VIHTJ8wufd2fp7kNj9PSjxwuPdnuDKVKtxqbOPSvcyHjUtu5SZW9GUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757916306; c=relaxed/simple;
-	bh=1L37ewgighCksADXPUpuijxML/OhGk7XFjrFFSKxpio=;
+	s=arc-20240116; t=1757916529; c=relaxed/simple;
+	bh=MjUf6jeGgpWaIJ1imXL9Sum7uPF+eQhnfBG775F+3hk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k6C0uzvMOFK79fv7NekHAwmt51yMs9zu4R2iQX7ZySnnRhV3WuhL4jeMiQfDHNYfzLMOQOETqylOq4u4vzvtQpjPVmNbEjOFwrQpHwxbiEgboxfYZSzAlHCa8QeyOcSNFHm7Ts61oDNzd2fgnWiJWUJGHH+06r4DowLTCgLoLy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ltxe/baD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XmcLaKY5; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=sEeNtpAz3YISQUN1IfNnmXhUDBNoq8KKJh1ZIMfKyqSU7/ZvEHEqXaFjzXt8aXurelKxuPyQoKLrmL87Z+7fn5M7AKw+eS2iXODcIqR7varir50vAQzQCiEz6qbok5DjUj0rMoNvHE4xcE2uazgh6y9L8kmbAQQwnI2s059o6Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TYxYyq6D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HTjewE+E; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ltxe/baD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XmcLaKY5"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id D9870EC020E;
-	Mon, 15 Sep 2025 02:05:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TYxYyq6D";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HTjewE+E"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3828EEC017E;
+	Mon, 15 Sep 2025 02:08:46 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 15 Sep 2025 02:05:00 -0400
+  by phl-compute-11.internal (MEProxy); Mon, 15 Sep 2025 02:08:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757916300;
-	 x=1758002700; bh=B4qgWXh1DDQNmhA/siYT/ooVwsIImLm9IntFRTooopE=; b=
-	ltxe/baDA12oEg6OHygJPYeQIMIXURtgLA852LECstcsMTDR0rtPHU+eSwZNTVov
-	+3PTBg5FQ3XKuUw+J2yf1OEAEw1bnnTx0pShn65RU7DJB/jV16FQWP4YI7i6btrM
-	TQbyWtuzW6Ya2xmN2dlnz/QviOFcwiFzEt9DeL9xOVBDoFGIMYtlCnqbvaSbgV2l
-	jH3Jb0/0lKuW7Co3/dTjZtzDDoynLIu1HObga1p1p2eoA2rmXm1m9D4j2mAkKV9D
-	tpHrWEaM3m9n4dg0SWG9bnEDB7LTHnZeIOc9I2RZIvE2eftCC8De33r/FI4LZFZO
-	mqbEMABJLDNgLP5o3HI0ig==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1757916526; x=1758002926; bh=JFWsLWwQ1W
+	7OMLPjgtZV4wdUUPCr4s2QHpDDFZBHuAY=; b=TYxYyq6DN/uy2X1DCD8nWpoiXd
+	KrKwixRhExIaB5UozPL5Ub+QK2JSdWdp7amW1hPYHKeMFttSVIzF7OACUMkz13Jy
+	iG9U6+urK2ztG5b+BHWlFtMSsGE4SjLC786sLpieT+ESp81nEp5H3DEWFED1qgVw
+	fKRq9EFqDQAQ4AxDy5l1Rh2le+TZ4VEVIH3JvYdOQqdLE/HOsz6/yv8vYIUahBWS
+	o1cwMSUTMd443ECN/vlALZrz2ly/Q4atOGQ2MTztp79Xopbsv/QpYyQszUVFbn/h
+	wkg1ngOZmry6Z3AYRJ0BB8O95WRBIZSSEMAecbll/BoBU+TdP0VzPrmwCI6A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757916300; x=
-	1758002700; bh=B4qgWXh1DDQNmhA/siYT/ooVwsIImLm9IntFRTooopE=; b=X
-	mcLaKY5rRzV7fKMr1G3sfpitOMHFBDKrMdvoXXJib/qmPs73i6bBH/dzMJNbCCnY
-	z6Ay8PaLvt7zavTU3PpX4D1pbIt+8mKP6owKyCfK6I8SfPYaGe6zsX2BZZjEz515
-	zrNOx58lpkMTm1dZuK38mYvvWR1eUl6KWF6pOgun0LhvQrz1xYozvEw1GimapJJt
-	LeWI58gEizCeWdh0zSadFIJJhgXPyjhswCFv9yejhOwaTJ4BxccBxHskhN+xaHLX
-	z5ds6dUdmbPGDT6zxrsyZQKkJE+R9/nuu7FGN2rGknWHVwl6UmGhOxrcjhgbSqD8
-	bgLxAyojwQEvuo5/5IXzQ==
-X-ME-Sender: <xms:jKzHaMsKXBVRSzv4eEeYYyyenxsKc6AM7Y99peM849ZhSUlBwWjCpw>
-    <xme:jKzHaMsChfuDFtoiYQqPZzQxjdYu5WY-kFZyl140iSJ75atcLq4zj7gtb43P3kfIm
-    t5sj9mW73ctzVRBjw>
-X-ME-Received: <xmr:jKzHaBMWEx6_hIlQi6Ou529N-NCS0OU0XRWnGJKRahab5eQpwP7E76AmjDECQncimArBNiDLODRkVHYFfHwh_8XHkf1cYlOAn4-606O4VGckEQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefieelvdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757916526; x=1758002926; bh=JFWsLWwQ1W7OMLPjgtZV4wdUUPCr4s2QHpD
+	DFZBHuAY=; b=HTjewE+E2l7EJL/emTTqgMGJMmhtqr8Pyt1GBQjRsls7FIfsk6j
+	Hv48OP6BdOywg80/w7+GozQuU0VgzUBFJWnee2PBzIXS948CbvdWn1EM0VQcL/va
+	LU1tD0OIpDftcaEcWw5wL6guPDClVmFo6BJWrVXgue1BMG+h9KT6AidTmrjeNFuz
+	flpVBkuCs9drPDbbTtK/YAXN4juPFJu1HlJP4UJKxw5KQCcr2vKAXLusPa7F2/sq
+	cB3qxwmBIgJuzZPkSvD3+/bSnsQFe8qVJ6Yqkdl7OjFfo9Mx5YREYb8Yc1f1FkUF
+	G9rLi0gcaxpTdEo4eLF8ip+sBZ7ACXIdDbw==
+X-ME-Sender: <xms:bq3HaBRWU_PqApZgwto9pZ9J_KjDocUvW0pAkskTXe7YF2ikwGdvFA>
+    <xme:bq3HaK-UimDHUrC6fqPM8tUFSjDVDFgmYgcBfXkmqqQnJyaYhYAnUPrkmCb-El6et
+    YjwXl8l1bKdOGorww>
+X-ME-Received: <xmr:bq3HaIrRxJcDdX6nGkyl7_uyzPi8MhtWgSy_vL2qQcR59gYtxMbQs9hvFfBnyCIP6NPszc_aaYH9pjiyEAKj7XRut9TJ_HxyaKrplQ8I_WSVVg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefieelfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertd
-    dttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehke
-    dvveetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:jKzHaK3z2jFrtTG-Ib5qHNtWY4vcQ7INQW9sqZO3--vNg4nt6Zn5rQ>
-    <xmx:jKzHaNOvNKUsQaE5pbmYDpfTe9x63JsRCmaElMeS4oM881MWi-vgxA>
-    <xmx:jKzHaK14vSvnZB1rFtSXl2vmBMhTepsBPCCmdKk4fJHNVRi2jDwtcQ>
-    <xmx:jKzHaEGQwoIj8G3zNgCVCkwXuAqz8xFNkinGWcZ528f0oclOSnFZHQ>
-    <xmx:jKzHaBXD4Utc4eiBwuL0vgYO1xiDYoB_u2kKuquzQIf4BDIgymZhukuT>
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:bq3HaHmxDTTrHZqElAQ6Vgu1O10G3YRhtKW8wEMlNFyrVcTiA3hV8A>
+    <xmx:bq3HaPIxa55Vl9L0eMxfFqq7hOE_8bhU9qPjJfCdKHGKiVCFRTpzVA>
+    <xmx:bq3HaMxiMIVboRq_LWorkqaa5NvBq4MEx2oO7l8rQiKxcuyRL5c5vg>
+    <xmx:bq3HaHtQP9wEu4d0R2mVBi2KXbfMebjRV3BRhJU3h9gnsuCMMSEAWw>
+    <xmx:bq3HaCgk4FOS9O4ANq69XzN4jIMcr-zFeu5UB5LRM7WARHS5BQr5S1Ik>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Sep 2025 02:04:59 -0400 (EDT)
+ 15 Sep 2025 02:08:45 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3d3afd67 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 15 Sep 2025 06:04:57 +0000 (UTC)
-Date: Mon, 15 Sep 2025 08:04:54 +0200
+	by mail (OpenSMTPD) with ESMTPSA id ee6a3e8b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 15 Sep 2025 06:08:44 +0000 (UTC)
+Date: Mon, 15 Sep 2025 08:08:41 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 0/3] ci: don't compile whole project when testing docs
- with Meson
-Message-ID: <aMeshpRtFWyE0ja4@pks.im>
-References: <20250911-b4-pks-meson-docs-target-v1-0-a92c666ecef9@pks.im>
- <xmqqwm64orc1.fsf@gitster.g>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/6] builtin/update-index: end ODB transaction when
+ --verbose is specified
+Message-ID: <aMetaZxCN8CDsr6g@pks.im>
+References: <20250909191134.555689-1-jltobler@gmail.com>
+ <20250909191134.555689-3-jltobler@gmail.com>
+ <aMJu7vPKfnxt9UiC@pks.im>
+ <3cmqsfz5j2h36mw7yzwbrgfgchaettcnidvkiboqqktkm3dd5k@h6rmgjnqdmq2>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqwm64orc1.fsf@gitster.g>
+In-Reply-To: <3cmqsfz5j2h36mw7yzwbrgfgchaettcnidvkiboqqktkm3dd5k@h6rmgjnqdmq2>
 
-On Thu, Sep 11, 2025 at 10:02:22AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Thu, Sep 11, 2025 at 10:34:42AM -0500, Justin Tobler wrote:
+> On 25/09/11 08:40AM, Patrick Steinhardt wrote:
+> > On Tue, Sep 09, 2025 at 02:11:30PM -0500, Justin Tobler wrote:
+> > > With 23a3a303 (update-index: use the bulk-checkin infrastructure,
+> > > 2022-04-04), object database transactions were added to
+> > > git-update-index(1) to facilitate writing objects in bulk. With
+> > > transactions, newly added objects are instead written to a temporary
+> > > object directory and migrated to the primary object database upon
+> > > transaction commit.
+> > > 
+> > > When the --verbose option is specified, each individual object is
+> > > explicitly flushed via flush_odb_transaction() prior to reporting the
+> > > update. Flushing the object database transaction migrates pending
+> > > objects to the primary object database without marking the transaction
+> > > as complete. This is done so objects are immediately visible to
+> > > git-update-index(1) callers using the --verbose option and that rely on
+> > > parsing verbose output to know when objects are written.
+> > > 
+> > > As soon as verbose output is requested in git-update-index(1), all
+> > > subsequent object writes are flushed prior to being reported and thus no
+> > > longer benefit from being transactional. Furthermore, the mechanism to
+> > > flush a transaction without committing is rather awkward. Drop the call
+> > > to flush_odb_transaction() in favor of ending the transaction early when
+> > > the --verbose flag is encountered.
+> > 
+> > Okay, this interface feels somewhat weird indeed. If we now end the
+> > transaction early, does the transaction still serve any purpose at all?
+> > Like, do we use it to batch steps _before_ we start reporting stuff?
 > 
-> > these two patches introduce a new "docs" alias into Meson and use it in
-> > our "documentation" CI jobs so that we stop compiling all of Git only to
-> > verify the generated manpages. This fixes the issue reported by Gábor in
-> > [1].
+> We only start reporting updates when the --verbose option is first
+> encountered. Options are not all processed upfront. This means in the
+> follow example:
 > 
-> There are three patches ;-).
-
-Oops, yeah. I added the summary patch close before sending this out :)
-
-> The end-user facing get_option() is called "docs", unlike what the
-> "make" side understands, which is "make doc", even though internally
-> we call the target internally as "doc_targets" (not "docs_target").
+>   $ git update-index --add foo --add bar --verbose --stdin
 > 
-> I wonder if we want to let people say "meson compile doc" to match
-> the other world?
-> 
-> Will queue.  Thanks.
+> both "foo" and "bar" are silently added via a transaction. After the
+> --verbose option, subsequent updates are reported. At this point there
+> is no reason for the transaction to continue as all subsequent object
+> writes must be fully written before being reported. Thus the transaction
+> is ended early.
 
-The reason why I picked 'docs' is that the accompanying user-facing
-option is also named the same way. It's thus a bit more consistent with
-itself to call the target 'docs' as well.
-
-So I slightly lean towards keeping 'docs', but I don't feel too strongly
-about it.
+That's... huh. I really have no idea, but is this design intentional or
+an accident?
 
 Patrick
