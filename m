@@ -1,84 +1,86 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC622FF157
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 11:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964912FD7A3
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 11:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757935411; cv=none; b=KeGLUqozmXXS5tfTbSzVAhQIuzf6u9wpt8TPzXWxKDokfv8eugJYIOfBAo3QWOXu67CojW57vktHQ/jRkQCtP+IaeZA0RReAYmz+959YMbRGZcOeJl4j15dYjJC/lKZJ/60c3U6NUfet8U3NO0ARXkJ5CKwUMaz8TC3UvZJYufg=
+	t=1757935415; cv=none; b=u/wrUdWof5wHA3wmZgxN4ljiu49sTEIGplW6z/Fobgj0MocJIsk/JvDjYdTxsI5Ugw89CyJGoHzRba6hvCxvy5XQvCMYAINGJZLMGUfY6WphkDMZl4g8ceOEaGT+z9r3jM5ulnXRT6MM5uJA5kLoaKBkx+CfQaroPkmyucG6Fts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757935411; c=relaxed/simple;
-	bh=3t24RFtZ+OSaMbOvrFxrX5E9EfisKetQ/N5arM78pU8=;
+	s=arc-20240116; t=1757935415; c=relaxed/simple;
+	bh=auOL+cx2FEjMMUWJveGPoYHWBO7wAR0edcrdeLzdfok=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Po9iC/a9n1k22143Ri3LZrynjJ2qxs+jlEl4hApV86Ajo1MQCkn1Dxu0GiEFtvTj/qbRajfqeGErKpovFLGAxVG/IknS6kjeqFwdh1GZ07v2OMP7fX6MrsV3oBTOPa7PxNSQNIlZQDGz7Q79wOVyLwrFw9HNTFjpbxKXWKwwFXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QpCdVc6U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WP8SUQ2Z; arc=none smtp.client-ip=103.168.172.145
+	 In-Reply-To:To:Cc; b=CUXKQJ137HljQkJL30lKUEF+jipPlDstRXHvFymWSf5nAh7tJhBkNOb3fjonnvDR7iFci0/vtQK2ptaJ7J/5ri4e2iSznMWsXG29++/f5D/SmwdW5yKyF3os1Ii/ZOqT/Vt7zqgPNsFP0vkKloZ9pTyv/QnncgYB5cYMKvIIalY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qfkpGtbB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OgRd0Gc+; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QpCdVc6U";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WP8SUQ2Z"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 72702EC02D0;
-	Mon, 15 Sep 2025 07:23:28 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qfkpGtbB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OgRd0Gc+"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id DC979EC02D4;
+	Mon, 15 Sep 2025 07:23:31 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Mon, 15 Sep 2025 07:23:28 -0400
+  by phl-compute-03.internal (MEProxy); Mon, 15 Sep 2025 07:23:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757935408;
-	 x=1758021808; bh=JM0M7eWMfpcHHEwqCBM8JzjsY7c6NNmYqAqCqshToDM=; b=
-	QpCdVc6UsQ7k2H7o7EOhm2I+ESqqpY0o4QGRM/TlneGib4Raf3WFbZGBsngAdvj3
-	jIG3G/2MDdMPcvnucDt2wF/Yt/sC9lIZd0xsIcvYACh4+OjiDwJjxOVKr5DRsFyX
-	/o0jV6A84KaQafMcJUpar0r4TCPku2VMj2C14N6fdzsqoRqLXMOxliSYNfjx/fHx
-	DOJ7En41SdpAiKvjNWy9N1nmCxfD7GgREfTacAcqK9jyiHi9XO/jZ8ljmBYIwgK0
-	Rx5swO8LXUl2EdFqkL4ksGHcevM9zuI0Z3IZgkZBf+K/Nequ/TMjgz0LWDN3Rk8/
-	RVkeSeWtWJeKvpDo0UzpNA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757935411;
+	 x=1758021811; bh=Ea4lKYxy2KpwvUewEiYJIo9DQxm32+W81Z7P4uF2EEk=; b=
+	qfkpGtbBRnAhmsrNMIKjqjdeRWoxVPo08wdCeQHnvcNJcOlU/BAb1/4ZCtbZHNJb
+	L17MSVbwOskju/N2FjTox2NKUMFJDm0ZsNtDruF9c6vYtZyQ4mckapi2gENW+16l
+	HpS2Dc5PQJ4SbWYuUB50ua5W9NF9HTozU588cWBqAT/nFYW7OU0RHLhj+Afq47Qy
+	xpw7W9gDR6dsQspJZJWhmRf3iE79mN8I4nFG0DGHiLCL2p89QSltaqJe/F0hCNOg
+	8kBaJpGws8BtydHfDwxFcPeP1of46RD8SROHB59rb+8SP0y/BjRjEAiJTZ8ehZkt
+	B2SjdRvIuP5aBPUCouheqw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757935408; x=
-	1758021808; bh=JM0M7eWMfpcHHEwqCBM8JzjsY7c6NNmYqAqCqshToDM=; b=W
-	P8SUQ2ZZcplDBsroVHVtCHkZaeI2uPUy+8IOxHlN0kVEBVI454By3mfGoQ28kcOi
-	wz0AdZv5gyWd9gJiSIqIb8XkZ7aWfLu8neDTc+BORcfij+YPuwinHvRBc05vQnNX
-	XnU5WUlx3rRiAZzTz+oAWwukyTxon7xNDMMNhlX9FXQEmAJS0R/mLHMIFxEWt4sm
-	2mmZf/X6mfRyeA9j4x+obhtr2TJhGWb5K9WbsZ5SZKC/6V3ycqj2f/2DbZQzuEgV
-	5yrvPzxM0bxJTnkZ5glgsw5ZznJOjOnK6EDG3tbQ16bbrgl3fDDkI35HbSpUno4H
-	451opU59OCvYaRVp8rEVg==
-X-ME-Sender: <xms:MPfHaEx6M5VppVM1qYNONF70tzc2G2O--pQ86ISjmNBhlewtOMdOcA>
-    <xme:MPfHaP0pbcNCjZO5aasRW-gGe9TT8ZrGUoAkLG8EkMQTpY9DL2nWCue5n5p9_h60p
-    A5mIc250oijHrZvLA>
-X-ME-Received: <xmr:MPfHaF85G3-9zXZ6oOCrxIc9kVuOgyuSpXgzOVQLaXGolMmkGF6MrfCgDRrtRbgDuhaHbjtuWhIoaemfGzzhuf1lJ1NUCv6njw5_BDo0DSTnow>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757935411; x=
+	1758021811; bh=Ea4lKYxy2KpwvUewEiYJIo9DQxm32+W81Z7P4uF2EEk=; b=O
+	gRd0Gc+QLMASAHxBUArMWeipbRXNRolneKxI4slH+5HfRP5t4zUcwztBZOgXTnom
+	s2kiFlvkexQLdLXVVCWFgxwniEAh5r+CseaYTrnRu69naakZ7aNEIzSEadIaIrfS
+	6+KEjxKbCqj6E4o9TCECGQqM6uU6eLUqgoyv6hFMIuTHjNmNbTrPC3QnG+kw/wXa
+	Z4PhO5ZHil1D8dQGB51DwD/NSwYFvjK/jv8f5O9N1IFqVQ4nrIG/5voahxSwZSEp
+	wWPhWJSjhyUi2mst3pus43ls2XMaL63KS+8A+ckK3wXmfNcIUObg1F1EtCaCiHOk
+	KT5OPcWNOnWteSfvVtS7g==
+X-ME-Sender: <xms:M_fHaP6n3rPV2CDJIZSRNhap6vocw4XM_qbaLITC5o3_5bG9Pq2_uQ>
+    <xme:M_fHaFgrxyOgCsYvllF1a5lnKHgBY0gC_cf3d_IG9KfCaaQqCNwU1jJ1d3WCtbzR1
+    HbwMFhZikrx7mh6QA>
+X-ME-Received: <xmr:M_fHaBlUcMiZrVT6Pl27iXt9Nn_P54pLx7HGru_oRRy785d2VeLqSHj-ieDlvKMhlSoT99Gk8Jl43QQBKTUrz-qg5IpOPf9f5b-739lsEY8FPw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefjeehiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepudeipdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
-    dprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthho
-    pegtohhnthgrtghtsehhrggtkhhtihhvihhsrdhmvgdprhgtphhtthhopegvshgthhifrg
-    hrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopehsrghmsehgvghnthhoohdrohhr
-    ghdprhgtphhtthhopegtsgesvdehiegsihhtrdhorhhgpdhrtghpthhtohepphhhihhllh
-    hiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
-X-ME-Proxy: <xmx:MPfHaPQmao0E2xhckLuAUUGWAloTl7R5G_TbiBrHCMgNt0-hrLMbcw>
-    <xmx:MPfHaMlVcyrQpl2bWs8LKJOVZFMmwV_yDqJJvktS4Z05cxccKmuhNg>
-    <xmx:MPfHaKVaAPXof5mLqxBg7ZnhkK8JetI9gQNODtH5iYU3kU1ixuAiZA>
-    <xmx:MPfHaBfyrr7EPWBi9WFsTMM_GR2qecUndBJ-cOblPxOGdCb1UfBJuQ>
-    <xmx:MPfHaL9W0nij_49Of5ytk700HonUK_fBHbXASfokEhzliR6dnu86njqX>
+    thhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehpihgvrhhrvgdqvg
+    hmmhgrnhhuvghlrdhprghtrhihsegvmhgsvggtohhsmhdrtghomhdprhgtphhtthhopehk
+    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhs
+    thgvrhesphhosghogidrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthi
+    htohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghn
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhord
+    horhhgpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:M_fHaEtPGZNL5hy456SP_o2GXbLT3rRHbIEQv_p4Kgln_0e0_ZNI_g>
+    <xmx:M_fHaHCE2zVLq-DU3PUVLHbYYWApRwuuqRrqmYbaAvGihit9jLKpnA>
+    <xmx:M_fHaJWLBXP8Yuea4BWI0qxHSZMouBW7CaYn3GqwGYfaJfNG0VBm6w>
+    <xmx:M_fHaIGKpreKL7toe6bHlrOpsI0jgQxKpRrJIC8WOPQf_uZhbkoP_g>
+    <xmx:M_fHaLrcec4bcXCWBREU28TL-Ph3kswUqSs0DQ40NAJ7WMOK1EGZdqNI>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Sep 2025 07:23:26 -0400 (EDT)
+ 15 Sep 2025 07:23:29 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 80ff0b42 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 15 Sep 2025 11:23:26 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 19170fb9 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 15 Sep 2025 11:23:29 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 15 Sep 2025 13:22:54 +0200
-Subject: [PATCH v5 7/9] BreakingChanges: announce Rust becoming mandatory
+Date: Mon, 15 Sep 2025 13:22:55 +0200
+Subject: [PATCH v5 8/9] ci: convert "pedantic" job into full build with
+ breaking changes
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +89,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250915-b4-pks-rust-breaking-change-v5-7-dc3a32fbb216@pks.im>
+Message-Id: <20250915-b4-pks-rust-breaking-change-v5-8-dc3a32fbb216@pks.im>
 References: <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
 In-Reply-To: <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
 To: git@vger.kernel.org
@@ -104,95 +106,156 @@ Cc: "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 X-Mailer: b4 0.14.2
 
-Over the last couple of years the appetite for bringing Rust into the
-codebase has grown significantly across the developer base. Introducing
-Rust is a major change though and has ramifications for the whole
-ecosystem:
+The "pedantic" CI job is building on Fedora with `DEVOPTS=pedantic`.
+This build flag doesn't do anything anymore starting with 6a8cbc41ba
+(developer: enable pedantic by default, 2021-09-03), where we have
+flipped the default so that developers have to opt-out of pedantic
+builds via the "no-pedantic" option. As such, all this job really does
+is to do a normal build on Fedora, which isn't all that interesting.
 
-  - Some platforms have a Rust toolchain available, but have not yet
-    integrated it into their build infrastructure.
+Convert that job into a full build-and-test job that uses Meson with
+breaking changes enabled. This plugs two gaps:
 
-  - Some platforms don't have any support for Rust at all.
+  - We now test on another distro that we didn't run tests on
+    beforehand.
 
-  - Some platforms may have to figure out how to fit Rust into their
-    bootstrapping sequence.
+  - We verify that breaking changes work as expected with Meson.
 
-Due to this, and given that Git is a critical piece of infrastructure
-for the whole industry, we cannot just introduce such a heavyweight
-dependency without doing our due diligence.
-
-Instead, preceding commits have introduced a test balloon into our build
-infrastructure that convert one tiny subsystem to use Rust. For now,
-using Rust to build that subsystem is entirely optional -- if no Rust
-support is available, we continue to use the C implementation. This test
-balloon has the intention to give distributions time and let them ease
-into our adoption of Rust.
-
-Having multiple implementations of the same subsystem is not sustainable
-though, and the plan is to eventually be able to use Rust freely all
-across our codebase. As such, there is the intent to make Rust become a
-mandatory part of our build process.
-
-Add an announcement to our breaking changes that Rust will become
-mandatory in Git 3.0. A (very careful and non-binding) estimate might be
-that this major release might be released in the second half of next
-year, which should give distributors enough time to prepare for the
-change.
+Furthermore, in a subsequent commit we'll modify both jobs that use
+breaking changes to also enable Rust. By converting the Fedora job to
+use Meson, we ensure that we test our Rust build infrastructure for both
+build systems.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/BreakingChanges.adoc | 38 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ .github/workflows/main.yml |  4 ++--
+ .gitlab-ci.yml             |  4 ++--
+ ci/install-dependencies.sh |  6 +++++-
+ ci/run-build-and-tests.sh  | 29 ++++++++---------------------
+ 4 files changed, 17 insertions(+), 26 deletions(-)
 
-diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
-index f8d2eba061..0512411030 100644
---- a/Documentation/BreakingChanges.adoc
-+++ b/Documentation/BreakingChanges.adoc
-@@ -165,6 +165,44 @@ A prerequisite for this change is that the ecosystem is ready to support the
- "reftable" format. Most importantly, alternative implementations of Git like
- JGit, libgit2 and Gitoxide need to support it.
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index d122e79415..393ea4d1cc 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -379,6 +379,8 @@ jobs:
+         - jobname: linux-breaking-changes
+           cc: gcc
+           image: ubuntu:rolling
++        - jobname: fedora-breaking-changes-meson
++          image: fedora:latest
+         - jobname: linux-leaks
+           image: ubuntu:rolling
+           cc: gcc
+@@ -396,8 +398,6 @@ jobs:
+         # Supported until 2025-04-02.
+         - jobname: linux32
+           image: i386/ubuntu:focal
+-        - jobname: pedantic
+-          image: fedora:latest
+         # A RHEL 8 compatible distro.  Supported until 2029-05-31.
+         - jobname: almalinux-8
+           image: almalinux:8
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index af10ebb59a..4248506909 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -45,6 +45,8 @@ test:linux:
+       - jobname: linux-breaking-changes
+         image: ubuntu:20.04
+         CC: gcc
++      - jobname: fedora-breaking-changes-meson
++        image: fedora:latest
+       - jobname: linux-TEST-vars
+         image: ubuntu:20.04
+         CC: gcc
+@@ -58,8 +60,6 @@ test:linux:
+       - jobname: linux-asan-ubsan
+         image: ubuntu:rolling
+         CC: clang
+-      - jobname: pedantic
+-        image: fedora:latest
+       - jobname: linux-musl-meson
+         image: alpine:latest
+       - jobname: linux32
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index d061a47293..35bd05b85b 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -30,8 +30,12 @@ alpine-*)
+ 		bash cvs gnupg perl-cgi perl-dbd-sqlite perl-io-tty >/dev/null
+ 	;;
+ fedora-*|almalinux-*)
++	case "$jobname" in
++	*-meson)
++		MESON_DEPS="meson ninja";;
++	esac
+ 	dnf -yq update >/dev/null &&
+-	dnf -yq install shadow-utils sudo make gcc findutils diffutils perl python3 gawk gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
++	dnf -yq install shadow-utils sudo make pkg-config gcc findutils diffutils perl python3 gawk gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel $MESON_DEPS >/dev/null
+ 	;;
+ ubuntu-*|i386/ubuntu-*|debian-*)
+ 	# Required so that apt doesn't wait for user input on certain packages.
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 01823fd0f1..3680446649 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -5,12 +5,11 @@
  
-+* Git will require Rust as a mandatory part of the build process. While Git
-+  already started to adopt Rust in Git 2.52, all parts written in Rust are
-+  optional for the time being. This includes:
-++
-+  ** Subsystems that have an alternative implementation in Rust to test
-+     interoperability between our C and Rust codebase.
-+  ** Newly written features that are not mission critical for a fully functional
-+     Git client.
-++
-+These changes are meant as test balloons to allow distributors of Git to prepare
-+for Rust becoming a mandatory part of the build process. There will be multiple
-+milestones for the introduction of Rust:
-++
-+--
-+1. Initially, with Git 2.52, support for Rust will be auto-detected by Meson and
-+   disabled in our Makefile so that the project can sort out the initial
-+   infrastructure.
-+2. In Git 2.53, both build systems will default-enable support for Rust.
-+   Consequently, builds will break by default if Rust is not available on the
-+   build host. The use of Rust can still be explicitly disabled via build
-+   flags.
-+3. In Git 3.0, the build options will be removed and support for Rust is
-+   mandatory.
-+--
-++
-+You can explicitly ask both Meson and our Makefile-based system to enable Rust
-+by saying `meson configure -Drust=enabled` and `make WITH_RUST=YesPlease`,
-+respectively.
-++
-+The Git project will declare the last version before Git 3.0 to be a long-term
-+support release. This long-term release will receive important bug fixes for at
-+least four release cycles and security fixes for six release cycles. The Git
-+project will hand over maintainership of the long-term release to distributors
-+in case they need to extend the life of that long-term release even further. In
-+that case, the backporting process will be handled by these distributors, but
-+the backported patches will be reviewed on the mailing list and pulled in by the
-+Git maintainer.
-+
- === Removals
+ . ${0%/*}/lib.sh
  
- * Support for grafting commits has long been superseded by git-replace(1).
+-run_tests=t
+-
+ case "$jobname" in
+-linux-breaking-changes)
++fedora-breaking-changes-musl|linux-breaking-changes)
+ 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ 	export WITH_BREAKING_CHANGES=YesPlease
++	MESONFLAGS="$MESONFLAGS -Dbreaking_changes=true"
+ 	;;
+ linux-TEST-vars)
+ 	export OPENSSL_SHA1_UNSAFE=YesPlease
+@@ -36,12 +35,6 @@ linux-sha256)
+ linux-reftable|linux-reftable-leaks|osx-reftable)
+ 	export GIT_TEST_DEFAULT_REF_FORMAT=reftable
+ 	;;
+-pedantic)
+-	# Don't run the tests; we only care about whether Git can be
+-	# built.
+-	export DEVOPTS=pedantic
+-	run_tests=
+-	;;
+ esac
+ 
+ case "$jobname" in
+@@ -54,21 +47,15 @@ case "$jobname" in
+ 		-Dtest_output_directory="${TEST_OUTPUT_DIRECTORY:-$(pwd)/t}" \
+ 		$MESONFLAGS
+ 	group "Build" meson compile -C build --
+-	if test -n "$run_tests"
+-	then
+-		group "Run tests" meson test -C build --print-errorlogs --test-args="$GIT_TEST_OPTS" || (
+-			./t/aggregate-results.sh "${TEST_OUTPUT_DIRECTORY:-t}/test-results"
+-			handle_failed_tests
+-		)
+-	fi
++	group "Run tests" meson test -C build --print-errorlogs --test-args="$GIT_TEST_OPTS" || (
++		./t/aggregate-results.sh "${TEST_OUTPUT_DIRECTORY:-t}/test-results"
++		handle_failed_tests
++	)
+ 	;;
+ *)
+ 	group Build make
+-	if test -n "$run_tests"
+-	then
+-		group "Run tests" make test ||
+-		handle_failed_tests
+-	fi
++	group "Run tests" make test ||
++	handle_failed_tests
+ 	;;
+ esac
+ 
 
 -- 
 2.51.0.450.g87641ccf93.dirty
