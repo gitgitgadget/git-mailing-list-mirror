@@ -1,173 +1,152 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E7C2ED846
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 09:34:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6E3258EED
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 10:09:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757928847; cv=none; b=uiMhnNromZtiZbZ5Pdmmgr6igkg9jhmtYPbI2ULXEdIIUnbpD0kGBDI6AfBjh+Z9xVc6rtCMhr/Lte1+p6EQSX/KyI0BHndyore9/VinLPkYuoYU90Fv5b53Qvscyu7IurYis8YohoKlSFx3DuJQq+Y+bUL4gx3Drf2OazY4M4U=
+	t=1757930987; cv=none; b=UAxzebzvIZyoQbtnO+s61GQZUQtH4MOr8NaZ1hCO1SK8oEgp8zE97v6SgAJdJcEMrl+2QnWK29PKw70WZtJUVPp9j4utxMwxIZxBnPHEd9YdhXmALNhvwvUW06gOFcPIY253vFNQjsWUoyD6r590hFd0QcCiqwjA1da9teZBZKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757928847; c=relaxed/simple;
-	bh=HfmmPz5XhyRhztCV8Jq2Nv7Lh//tgKocTAj8e+5QM0I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VNVQrrx0hmndJYQpvZdMy3ofJlMMYOhgR7PEfMzajKcWTlfvQsP6nYPnuRdlhYDUkukl1i6G9OATZjVU+p8Zz5s0YYoqKKHZxIRDiBNzc4xyA09W4dg6+EtQpwW2crs82ZzxDbsu8EnEWsWRH/2eN24edia+zeS1yPH1bJOF3WU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ktkM9yp5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ka/zlAkY; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1757930987; c=relaxed/simple;
+	bh=Rx0Pq57QuCMORGAMJZ4wcJ21ErFS+wEVeTzeadaG70o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SlmZ5ksLR6YjR2uBsG5Cv13TqABvAVlrV3Em9/E5av/IotTFHcl7hOtaE1Hjmo08V5TyWjHT7whAGySne2DFCU+vZ7P4jyaQbr5SZ6WciDEmA42bMM1OgFGQVl0Tfrre37B3Yn80s+tNQW+tqhUaFe1R8OT+vwlxulf1A+O8lvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FOxXhRVy; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ktkM9yp5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ka/zlAkY"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6E05614001C9;
-	Mon, 15 Sep 2025 05:34:05 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 15 Sep 2025 05:34:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1757928845; x=1758015245; bh=GB2/yge7UW
-	yqZ2H4vTj13WavPy//zUgpCxPdpS7DdlQ=; b=ktkM9yp5TjSBhZfyvWGu1R/Zw3
-	IKCcZZpE7u3qTVBVacL7SclRvMJXF7X83PyLFqJuDxsJO4ksWKm3BqJ7Mc82YBqg
-	lKZjrzXMm3Ee2B7pxKw1SuSAvwn3eLFC9RW767rEl30xXPDIQHfb275WOMz2YBqM
-	mxatBhaCo6YG8VfKxoDLHCV2X3I5AqM67pm1K3+NF8HdNsKV9LsogoR90mtdR4vz
-	H+7CUW1hZFoKCtDksKN9S1BHgFHfc7B1ePycdROFbW49J5natGGL4tjqrrsX5oVO
-	K7pF3xe1/ohdYWx31fgQmbzDcTeaidRoEaXHnwwkmpimKKUvLS7T4xvJ1Psg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757928845; x=1758015245; bh=GB2/yge7UWyqZ2H4vTj13WavPy//zUgpCxP
-	dpS7DdlQ=; b=Ka/zlAkYvZskhJxQulDijiWF7OMI7mYSqXcWcAOrtPIRWtT8RXF
-	ov+A4njmMF70JYiOl90wEk6/K04yB/IIL3tRACcbmZQjeg1QoPkOOF7EOUZ4d4/4
-	OdyBr7NofuIN28zb0+pqb0nWP/9Q9anQ7PLN00aUmykEkLkaK7IniGuH9I6cDjyZ
-	9TGyr3sxjkzkBRaBN6RpjQSydQilhUx3mQuTvq+eQ2knXt5B9vOkZ8f6EaUeiG++
-	H3srG6ZUHD2GpN9gkZZlJITzACcxTqtIwOaX+PISFNGdReYjR+PB2UsF3JvyBWY8
-	JpIyryRsKDO9MlEeppwocoPUv/HwjiJlrIw==
-X-ME-Sender: <xms:jd3HaNucmjraHq6PvCXoW2s4Oh21uDwPekxzHhkYEFCGnpuc60Yu0g>
-    <xme:jd3HaDZJMvTKAgQ1k1QJiRAtNBsr-BFb1uvL68nUuxf9jf2lJRMSRd3D20Z5EXUEv
-    uB_W1s4BD8B0-1muw>
-X-ME-Received: <xmr:jd3HaMbN4O1c-9BPiW8QQbsuXM9ZnIWWZvDq43y1S1usjcvLhHHz-75uxZExGXAAyrOSKXs6iXbQjco4-oMSxlwIukKBxELrD-5UNMyYIwC4KQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefjeefgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
-    grihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghp
-    thhtohepmhgrrhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhorh
-    hgrghnohhvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:jd3HaMkPXtBfLExcnshySzswyDWTl3dhHOCvCsnGXcvH6N2_5kW1Iw>
-    <xmx:jd3HaH1MP_aDDHr0UvXhwvTHIx36ux_EFopeMw4k7bnUdqp0bhyVdA>
-    <xmx:jd3HaM0vqyP69kuGPNcOAznIGBk4sWPLXbUPrtfsGjiVz6vdb9r-6g>
-    <xmx:jd3HaJpohQZJGEL0cn5VUlqsVRk991eEz1bGrQ6wEgBB1YUIgQoIxw>
-    <xmx:jd3HaJMfYX6zpyayoCKOqHPgTnDTgVblqHPDmXTFbGcFGquTLwm8tLx6>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Sep 2025 05:34:04 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 12cdc6bd (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 15 Sep 2025 09:34:03 +0000 (UTC)
-Date: Mon, 15 Sep 2025 11:33:59 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sergey Organov <sorganov@gmail.com>,
-	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
-	Martin von Zweigbergk <martinvonz@gmail.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH RFC v3 00/18] Introduce git-history(1) command for easy
- history editing
-Message-ID: <aMfdh8NxUj1v89Uu@pks.im>
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
- <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
- <CABPp-BHeXtJPq7BE1UZ+zH0C-9VzQcSYRo+t0P-KWth68Zd94Q@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FOxXhRVy"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3ea115556b2so736579f8f.2
+        for <git@vger.kernel.org>; Mon, 15 Sep 2025 03:09:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757930983; x=1758535783; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=XDCk+fSFRyRbbn77WNlKnFlSR4gOi6CaQ7tfXqiiqRk=;
+        b=FOxXhRVyYIGyFp1MSIlhsbxWiETZaf1k0XlINTQ4zcidvHpEsXTY+BuRFBQbvB3VOK
+         SzHpSQrjbw1WdIIGqi2AUWsCUrEkPlapdteekJ/oi1O1tZ5N2H+/lgqE6daulI/kAq8T
+         EsJns0ppmYmrp40f2PVpC8Gv+llQmsKm9URenqE2SfFa0x9bA0lAljlJrDLXXY9GG8N8
+         C/mAKgcjwbtbexq0Sn/RruCS37PJESc+povsSU6iGNQnIbxgrYT+Unxp89nBXKgI94Em
+         ueHWbEra4OVx2x53yKokZjwwltl84uxx2P8M7mUm4TdvSqJVi9kZAS45dFczE55jEJq6
+         EHLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757930983; x=1758535783;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XDCk+fSFRyRbbn77WNlKnFlSR4gOi6CaQ7tfXqiiqRk=;
+        b=VMhsiBnWtlymV6R9WypiPvOB1DfQWz9k9ONyNcffQu3f7/uS6g/u8gAuG6onIcd2a2
+         JZ8SfR8b+UfZyjAlP6xVhUK1wnqcrO38Mb9loIIMbCGi3/zgkIebYAw50XDQ+xrf36wd
+         3Da83AUkDobBEUktkwdxdQQiRUhNiiOanx8rINvkr8NKOMyibPP8bsDOfaWVkKY219kP
+         2+rwPplDJ2Rsj1kvSV95t5Wf7iFUiCN3hKtteiTNzQfqoAc3vf85UoxLpnR1qcRDuwUN
+         qIgqCEqf6KZbwmLbst6TB3WwKiY0Q8zvdN9mI7t4019zL0xpQPQtfbsefmj2s47kRTab
+         ZNew==
+X-Forwarded-Encrypted: i=1; AJvYcCUBQv3gVPv+fMzmTC6K7bjqMdDTiedWd8pqIKaDGwuUvUGRB2f/XMOCxB+1c5ldRVkfbTI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxR8hiYcGoKC7WKRzQbkKXNZBFaV9se59e4AYz9uLVGKv1a2mSk
+	90GZBuoxCN6i8QaAAz8jYJgKVg7HXry7+9lA8LhpdqIX6pneOM281nkz
+X-Gm-Gg: ASbGncuYBhTQ5l1jCK+ui+C86GaWVae3D9n4wjp3ydqBqvsfMgBFVzvEPtWQICl6q6I
+	21MV8zEKL1RLV4tA1f65YOUj0ZqxXXXlVejql4fd8ipAJq4dIZX84Ud+8WKjAZWnFI5MCetHfU+
+	d3pu+OEdQcnAXxNezOyIBvSmjQTfX9lVgSM73HJbYxU4NOCFPooeTkryY00Bubn7GcYKL6+6cQI
+	/d1rebvTQ7inwaNVd+Z6mrcezQ+f4j1oFAO+wz83SJ1Wkh4kjQSFgls2mxzsa7w6CrI1awGjk5+
+	nvF+Q8nTlAE/4T5Qtlc+7+fwBYAQNpTDt7xCcH8PbLiF/EK+yP3egqwGpCM2cPhZuoklnnh9hMf
+	kTbwSfCt8tnsrnvM1Xjo2VytMdLbA3gMIAv/Z7UgwDptiVa4o662Rs4bbUxA+ioVhr5dLM0hYup
+	175Bw8NfFNog==
+X-Google-Smtp-Source: AGHT+IGunyTwWdD8ebNnBhkm+yi4qBPNlzDRUhRJxuLBVBYZqKMSOc7fUqKfNQVFzRALolHbgCYTZw==
+X-Received: by 2002:a05:6000:310d:b0:3c8:7fbf:2d6d with SMTP id ffacd0b85a97d-3e7659f4128mr8301440f8f.50.1757930983340;
+        Mon, 15 Sep 2025 03:09:43 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e9996f384bsm6546797f8f.56.2025.09.15.03.09.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Sep 2025 03:09:42 -0700 (PDT)
+Message-ID: <c7f9da8f-61ae-4ebe-b09e-a0c72f84a334@gmail.com>
+Date: Mon, 15 Sep 2025 11:09:41 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABPp-BHeXtJPq7BE1UZ+zH0C-9VzQcSYRo+t0P-KWth68Zd94Q@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/3] extend --ignore-other-worktrees to 'rebase', add
+ hints
+To: Gabriel Scherer <gabriel.scherer@inria.fr>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, "D. Ben Knoble"
+ <ben.knoble@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20250913141327.2775228-1-gabriel.scherer@inria.fr>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20250913141327.2775228-1-gabriel.scherer@inria.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, Sep 06, 2025 at 11:46:48PM -0700, Elijah Newren wrote:
-> So, this brings up a question.  Should we have git-rebase &
-> git-cherry-pick & git-replay & git-history, or should we consolidate?
-> I had envisioned having git-replay consolidate both cherry-pick and
-> rebase functionality into one (then got pulled away by combination of
-> work reassgniment & multiple life crises hitting at once taking my
-> focus away for quite some time).  But now we're going in the other
-> direction.  And further along that other direction is another extreme
-> -- just having these be top-level commands, e.g. "git reorder", "git
-> split", etc.
+Hi Gabriel
 
-Yeah, we should consolidate from my point of view. With the current
-status quo I'd say that:
+On 13/09/2025 15:13, Gabriel Scherer wrote:
+> The old 'workdir' contribution script was removed from git upstream in May
+> 2025, as it is largely superseded by the 'worktree' command.
+> 
+> One significant difference between the old script and the command is that
+> 'git' refuses to checkout or rebase branches that are already checked out in
+> another worktree. My understanding of the reasoning is that users may be
+> surprised when a clean worktree becomes dirty as its index is changed from
+> another worktree. However, this safety net adds a mental burden to worktree
+> users, as they have to keep the other worktrees in mind when moving
+> branches. Old goats like me who are used to the old 'workdir' script find
+> this restriction somewhat painful.
+> 
+> See the discussion thread
+>    https://lore.kernel.org/git/5580aa89-09f1-426e-8483-c99481c998ab@gmail.com/
+> about this transition.
+> 
+> The present patch series tries to provide a smoother migration path for
+> supporters of worktree independence:
+> 
+>   - when 'checkout' refuses because the branch is used in another worktree,
+>     display a 'hint' that mentions the possibility of using '--detach'
+>     instead, and the '--ignore-other-worktrees' option to proceed anyway.
 
-  - git-replay(1) becomes the home for all plumbing-level functionality
-    used by scripts and on the server-side.
+I think this is a good idea, though I agree with Junio that we want the 
+hint to be a bit more explicit about where using --detach or 
+--ignore-other-worktrees are appropriate.
+>   - add support for '--ignore-other-worktrees' in 'rebase' as well, with
+>     a similar hint.
 
-  - git-history(1) becomes the home for history editing functionality
-    that is user-facing. Potentially, we could also move (or rather
-    alias) git-rebase(1) into git-history(1) to complete that vision at
-    one point in time.
+I'm less convinced this is a good idea as the rebase command updates the 
+branch which is going to be confusing if the branch is checked out 
+elsewhere.
 
-The main reason why I propose to introduce a top-level command with
-different subcommands is that it helps users discover related
-functionality. If we had "git reorder", "git split" et cetera as
-separate subcommands it would be way harder for a user to find out "what
-commands do I have to modify history?"
+Thanks
 
-In the worst case, users can still create an alias for git-split(1).
+Phillip
+> In the future I would be interested in adding an option
+> 'branch.ignoreOtherWorktrees' to be able to ignore other worktrees globally.
+> 
+> Note: this is my first experience submitting a patch to the Git project, so
+> I apologize in advance for any mishap and welcome beginner-level feedback.
+> 
+> Cc: Junio C Hamano <gitster@pobox.com>
+> Cc: D. Ben Knoble <ben.knoble@gmail.com>
+> Cc: Phillip Wood <phillip.wood@dunelm.org.uk>
+> 
+> Signed-off-by: Gabriel Scherer <gabriel.scherer@inria.fr>
+> 
+> Gabriel.Scherer (3):
+>    checkout: provide hint when failing due to another worktree
+>    rebase: support --ignore-other-worktrees
+>    rebase: hint when failing on branch used by another worktree
+> 
+>   Documentation/config/advice.adoc |  3 +++
+>   Documentation/git-rebase.adoc    |  6 ++++++
+>   advice.c                         |  1 +
+>   advice.h                         |  1 +
+>   branch.c                         | 13 +++++++++++--
+>   branch.h                         |  4 ++++
+>   builtin/checkout.c               | 12 ++++++++++--
+>   builtin/rebase.c                 | 19 ++++++++++++++++++-
+>   t/t3400-rebase.sh                |  4 +++-
+>   9 files changed, 57 insertions(+), 6 deletions(-)
+> 
 
-> In a separate conversation we had (and I hope I'm paraphrasing
-> correctly; if not please correct me), you mentioned you wanted
-> git-history to be the home of history rewriting, and viewed git-replay
-> as just a server side thing (whereas I created git-replay specifically
-> as a user-focusing thing and then Christian changed it into a
-> server-side thing since that part was complete and enough for his
-> purposes).  But if git history is the home of history editing, how far
-> does that go?  Do we have a "git history reset"?  "git history
-> commit"?  "git history fast-export/fast-import"  "git history
-> filter-repo"?  Or is it just the home for certain kinds of history
-> rewriting operations?  If so, which ones?
-
-My take in once sentence: git-history(1) modifies a preexisting sequence
-of commits. With that definition we rule out:
-
-  - "git history commit" because this creates a new commit on top.
-
-  - "git history fast-export" because this doesn't edit the commit
-    sequence.
-
-  - "git history fast-import" because this imports nonexistent commits.
-
-  - "git history reset" (which I assume is an alias of git-reset(1))
-    because this command doesn't only care about commits, but it also
-    modifies the working tree depending on the mode.
-
-Something like "git history filter-repo" would probably be in the
-picture though, as it matches the above definition.
-
-I was also wondering whether "git history" is too broad with that
-definition in mind. At one point in time I though about "git histedit"
-instead, which may be a bit of a better fit?
-
-> That all said, I'm a big fan of the idea of incorporating more of jj
-> capabilities, and you clearly marked the command as experimental
-> (thanks!), which leave us room to adjust later if we don't like this
-> path.  So I don't want to serve as a roadblock, I just think it's a
-> useful conversation to have...
-
-Definitely, thanks a lot for your thoughts!
-
-Patrick
