@@ -1,87 +1,88 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884511FDA61
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 17:28:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8401D19ABD8
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 17:44:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757957308; cv=none; b=NJEW6EZlcAggfipoHrAnrQl5XlCLZsset7lhxxsUBBFgCFv55sVf7aD2V3mWjgS70l1SjW0CP2rpTIuoPJQKAhrwcZTPTxG243wvyn7WJZi3RmCOWRUKB6nLEMx1lyW0hIkjrL1kdfuVcET+A9nPzDYbrj7kkeU3wnjeIEiIQkY=
+	t=1757958270; cv=none; b=bp8cuUE7bzHGNcMqSpJTnhWP7Ha7U+pNcSYKh1dqZPBxDFuXsjgXu6Fe/QOIbXBiVyx3JWfUxz7UhWnQ1txrhVM+7fEMK1Krc4pU38nm9UUM++xnB+4WLqc55W3boFCQXXngGM+s7OUzqNv/JIdKmr7s8EtwIZuj5G1RZn2vHk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757957308; c=relaxed/simple;
-	bh=kKfyF7+ErNbIVEeDgpDiDx3TbcR80waKjW6LcARfLIY=;
+	s=arc-20240116; t=1757958270; c=relaxed/simple;
+	bh=PzC16XBR5LoiNNSWwKbxGsInxWTBja2W9f+WkiQqUH4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=a4oN48czWaLsxBSwn5GlahPhSrhDqYIDRouhhPjRwuznVPhAbnI2m02/J3HPqRx8CVh1124kycm97wFQ5Y6K+kzlzMju7/babLyVjB4Keq1vfAGvZTs2vWIH8RUNnulHeVcMm/bNF/QgTd6p6Uake7yKdce5BTzbuocMmb6yjRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FHA8h58Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FCHF72ip; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=VMsYGuGjLjCKDAKIdxnZadYoE65gAvdLnrRDcmTabDGmqRjeoNEUv+UadDL8n75nDqVWHjYUr79OS33muaAe8RmIpssTx2X4TX2I5nIcOcvoMi2xtT14kTN7RRUqFA8nIZnLcyHiBZwk/vIL7SUROP9ppo05ouVvZqaMrtQVrgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CrW3IpIa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NOdRlt58; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FHA8h58Z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FCHF72ip"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BA1F914000B6;
-	Mon, 15 Sep 2025 13:28:25 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CrW3IpIa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NOdRlt58"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id AF70AEC01EC;
+	Mon, 15 Sep 2025 13:44:27 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Mon, 15 Sep 2025 13:28:25 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 15 Sep 2025 13:44:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757957305; x=1758043705; bh=Ui7HnW9UAu
-	eq+XH9Llq/p86e1zfLPucKq7VzJS6WVAc=; b=FHA8h58ZO0EIM7iMk9R9SrZ5TY
-	H3drfiNjBiaDMhjxzsr0hhyguMEFFDi7+3oU5uRM1kclwZk3uQYoIHuedtgvN3f0
-	G+SMOMtAAGjFeFINyN7Q7gZhVWho20r7Ns+SGwjAWZ91VCo4Hph/iesCDXAZJXyK
-	+GJXSDw4nqHHo7aDmV7IW0r9hcrKH0vphkHZN7bx5GQbNqkJgeFk/T82ZqRd+51g
-	QMqq6pLqdhiz+gvuj8iKdY3MH4KCJI80f34yJXzilYk0bDfs6BYBGc6UoUeAFkaf
-	EESMojGa48xEZVyoLbZSY5AcLOsmAHtVP8GzwNH+9iMlF/aFq7ZV0xFinuUA==
+	:subject:to:to; s=fm3; t=1757958267; x=1758044667; bh=PzC16XBR5L
+	oiNNSWwKbxGsInxWTBja2W9f+WkiQqUH4=; b=CrW3IpIajKgRQEMvttADHsbuYf
+	IYqZVUp3dMWWjEX4JKC/cwLObEbiEn04mn0hSZim2rUvRm7H3qesaTONjMSlL6RV
+	eMYZBJBTYl/dMcRXHCx7peco5lWBjVVuKelVsRD30Cm01Q+gpDtHWjmm3jIXMvoI
+	y1UTEhKEtDuoBMHbgFUyk6Z66MRC1vHSnWN9nTyiMYZ04qe5lH2RdD5gt6ZgyG6f
+	vBnNI9HknIC23OMOcU4pLpKLXjKyjvAcE3KT+Qjh4qmvZ273iWuhvFhGVdP9riZD
+	sOodHH9oEzv2bqq9YC4W1xhunRTEhs251C4JEchozik8wOOkJU9aBMdCjmzQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757957305; x=1758043705; bh=Ui7HnW9UAueq+XH9Llq/p86e1zfLPucKq7V
-	zJS6WVAc=; b=FCHF72ipS6cENI1RgDG6CpX67lSEv6Ov6sBBOnrgot9Gyf+p9B6
-	SyYrvHjsmCrkfVc0OGiwN8IR8JvPj496k4aeX07Ce62U90tQ41JwbtBorB4HAOdZ
-	l53I6/+vQPfuk9ucOf4r9YKV6mKfZzMiyVGXhwidvILCt3jj7F/7YxuJS7d2jgvF
-	dl04yK4rFWHStzDfKWD9WnGV9IEvANI6jkoUff03wpkMKz6lHoeHZwEvbP0brZ3L
-	erOr5RK9+88aeCdANqJwEaGCzW9WaYKbzxLhCstikRqS3jY58tPLY3OuS+bPbjmi
-	p3L8/ahoDUL+q0qO8nU+gS0vUJ1E/46HkEg==
-X-ME-Sender: <xms:uUzIaBeefIsMRVMwsrx1N_VRZcaWEjdAoceEC20t_DU2JTssL-HuWw>
-    <xme:uUzIaKuMXqzDh5VRTBcxK222mvSfR_2Ro7Fz5UsEM7sVo6pHcAYLrNmAKSsZ2LXg0
-    LwqaQw5Ib9L5zOYng>
-X-ME-Received: <xmr:uUzIaA-x6NM6TDKQSo8M1BZwiDdb_qNvc8oGfI4wCfZaAObPBZpDPMmFIcX6qnkJbPP8LU4Up0Fj_77v3GHo9Gb0Q139KPmhn3IN4N8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefkedvlecutefuodetggdotefrod
+	1757958267; x=1758044667; bh=PzC16XBR5LoiNNSWwKbxGsInxWTBja2W9f+
+	WkiQqUH4=; b=NOdRlt58XRlXkqgPWkK+6YJiIpsr8WrMofimD2hiTFed4byOPiI
+	V+7GjPzHputtQvPny5mCmqa1/E+CYInQEcsxRIOLCAmy6pqWt1flI0y3SaeqKXap
+	tKl/G8dgxJpS0cSIKh8YH3jIkInMtwnTcYyeUZmbQCCBtQ5nLaLq2fxy9tR2eM4U
+	yCEZYxaS+IDi9PLtWKMTeXuGCNiKYLXJtLEf3Oj6uPiBD7yzLHYYj3tvZ0jbmg13
+	F0YULeWkT0msmVfNgO8XSEiBOkzJHAA38fakyrmho1SE18X5OjLq8H8cmvBs9jx3
+	Oa/KL1KQBuEopH5mHFBAzV5PkpTNrLrisXw==
+X-ME-Sender: <xms:e1DIaJXadta_jV6ReB-WbZpcy2REqsuq5ar5Mo69wdnCB8jLXa3HBQ>
+    <xme:e1DIaKW-zjZRU8rYvc0BK4FOprLHrQ3QpqSQyL2PqjiV9AraiQetqAH_qrfXf1P2k
+    -dFYaNfbEmH59ZFag>
+X-ME-Received: <xmr:e1DIaBiJm3pLZHAqAOPrE873jJXVzF3sERGnA2In-W72bX0NU1sGgGz1bGW796_36UzcNkx-zJxn1h7pluPrCTL8PCgqblxVtRsywTI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefkeefvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
     udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhm
-    rghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
-    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:uUzIaF2aELqs4j7Yq9HLjk2Ae6lAR2DNRfdmMFbQi4iLHMTJ_V7zPw>
-    <xmx:uUzIaFCheRtahRLPMysdDY6p3mWjpe9CpitS2e3NGGXxpiYyKy2bMQ>
-    <xmx:uUzIaBfXsGUhet966HNNGPoXLssw-FqWR7GjV_dWwuCYZkwtqUmIgA>
-    <xmx:uUzIaC6AL2ASB9EKWANtmaa8jEsLimJe7_DJQDDLoxDlem428HLdfA>
-    <xmx:uUzIaBOSx_vrOYzZiqzRe_KOGVTAED8gmnidhSupVbmBUKqvvRDDTt9E>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    jhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfi
+    hoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohho
+    ugesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhm
+X-ME-Proxy: <xmx:e1DIaNZljTFVQnYrL6vY1nPGU-kfBbbMXsZmX-_UV-MgjYH9IcNZaQ>
+    <xmx:e1DIaGqkyJZpYCmtIx4wcmNmMyXg9jY1RORAGR0aVtfPD8HgNHoL4w>
+    <xmx:e1DIaCMZIeCWWoJHZwjhFOCf0JurcJ9XpfSl_gsktrvGX2wtGiJlAg>
+    <xmx:e1DIaBqUoD-NCLwvkVHtIpBl7g9xBRqmE60WHcTnvEH0juMnwlxOhA>
+    <xmx:e1DIaPRPbSuo_HpFqNeyNc4d8RSE1qhIel2JSc0-xeR33bJXcoQskce3>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Sep 2025 13:28:25 -0400 (EDT)
+ 15 Sep 2025 13:44:26 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>,  Kristoffer
- Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2 5/5] builtin/config: do not spawn pager when printing
- color codes
-In-Reply-To: <20250915-pks-config-color-v2-5-e4290bd8d13c@pks.im> (Patrick
-	Steinhardt's message of "Mon, 15 Sep 2025 14:52:52 +0200")
-References: <20250915-pks-config-color-v2-0-e4290bd8d13c@pks.im>
-	<20250915-pks-config-color-v2-5-e4290bd8d13c@pks.im>
-Date: Mon, 15 Sep 2025 10:28:23 -0700
-Message-ID: <xmqqikhjhbgo.fsf@gitster.g>
+To: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Justin Tobler <jltobler@gmail.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 1/2] add -p: mark split hunks as undecided
+In-Reply-To: <3e2ec7b37f1935c5b091fc4b47b6209beb384d3a.1757950144.git.gitgitgadget@gmail.com>
+	(Phillip Wood via GitGitGadget's message of "Mon, 15 Sep 2025 15:29:03
+	+0000")
+References: <pull.1863.git.1740149837.gitgitgadget@gmail.com>
+	<pull.1863.v2.git.1757950144.gitgitgadget@gmail.com>
+	<3e2ec7b37f1935c5b091fc4b47b6209beb384d3a.1757950144.git.gitgitgadget@gmail.com>
+Date: Mon, 15 Sep 2025 10:44:25 -0700
+Message-ID: <xmqqbjnbhapy.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,36 +92,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> With `git config get --type=color` the user asks us to parse a specific
-> configuration key and turn the value into an ANSI color escape sequence.
-> The printed string can then for example be used as part of shell scripts
-> to reuse the same colors as Git.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> Right now though we set up the auto-pager, which means that the string
-> may instead be written to the pager command. This is of course quite
-> nonsensical; there shouldn't be any use case where the color code should
-> end up in the pager instead of in the TTY.
+> When a hunk is split, each of the new hunks inherits whether it is
+> selected or not from the original hunk. If a selected hunk is split
+> all of the new hunks are marked as "selected" and the user is only
+> prompted with the first of the split hunks. The user is not asked
+> whether or not they wish to select the rest of the new hunks. This
+> means that if they wish to deselect any of the new hunks apart from
+> the first one they have to navigate back to the hunk they want to
+> deselect before they can deselect it. This is unfortunate as the user
+> is presumably splitting the original hunk because they only want to
+> select some sub-set of it.
 >
-> Fix this by disabling the pager in case the user is asking us to print
-> color sequences.
+> Instead mark all the new hunks as "undecided" so that the user is
+> prompted whether they wish to select each one in turn. In the case
+> where the user only wants to change the selection of the first of
+> the split hunks they will now have to do more work re-selecting the
+> remaining split hunks. However, changing the selection of any of the
+> other newly created hunks is now much simpler as the user no-longer has
+> to navigate back to them in order to change their selected state.
 
-I am of two minds.  Part of me obviously agrees that it is more
-straight forward with this change.  But it may 
+That is great, but ...
 
-An interactive user experimenting while writing their own script
-might say something like
+> Due
+> to concerns that users may be relying on the current behaviour [1]
+> this change is guarded by WITH_BREAKING_CHANGES.
 
- $ git config --type=color --default="reverse red" n.n
+... this does not really sound like a good candidate for "before
+version X we used to do this, but after X we no longer do so".
 
-If the command emitted directly to the terminal, then everything
-they type from then on will be bloody red, but the pager protects
-them from such an accident.  Instead, they are forced to say
+Unless it is a mere bugfix, in which case such a change does not
+deserve a huge-version-bump switchover like this.
 
- $ C=$(git config get --type=color --default="reverse red" n.n)
- $ R=$(git config get --type=color --default="reset" n.n)
- $ echo "So$C Bloody ${R}Red"
+On the other hand, assuming it is not a bugfix but introducing a
+different behaviour, where both the original and the new ones are
+useful depending on the situation, wouldn't it be better to give
+users choices at runtime instead, with a configuration variable at
+least, but possibly with a interactive command to choose which
+behaviour is used on demand?
 
-but these are likely what they would be writing in their script
-anyway, so...
