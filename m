@@ -1,214 +1,149 @@
-Received: from mail2-relais-roc.national.inria.fr (mail2-relais-roc.national.inria.fr [192.134.164.83])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF66C28727D
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 19:52:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.134.164.83
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247DE4A04
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 20:01:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757965951; cv=none; b=ct4PbktNe+pqp7tCXTC/SWXKX4U6nNWew2Qgu4sFMM6PG0SAyTwDtq6pF509ukRZ7fK1Y7ZksMf8X2+Sv0rlXDW84eZELgvAdBsGmHP/j9HZ1Obqgu+acNDGqW1+RRF1hO2Wm33YCkpjItjtmiFdDR6UmPHC7U88DVvhtqDfw2s=
+	t=1757966470; cv=none; b=EvNPgg+7grmV1CXDSJKWeeqft/3D887fbMyTPZ5mXDHGi3f/hsDRtHf9d6aWeDSz2AduIO5xAI3bYgHzI0isHZH/7RWGT8Ns745ykJ4/QteEK0nqPAXBSFTwNgAryHl4Gq4T/ZZQRiyMBJzxGSNUmNFoT2yfjoMRh8PwuwzATG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757965951; c=relaxed/simple;
-	bh=DRZxJ3ojqTKTYhl3bELa/PJ/D8P+ivkVI1oJfsO6Td0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ATLe2qkcgmS7PD0WCsFBKfz980uwY9iC2D3gaNDZxrr1xrha6DmVK1oaeKnDYdZ8B3vX344aQ9BmoOD/4+F3NYm3F/0BHPbT3Nyof5Bn6vGgQuTnu91A9AUMDEUzVx8Yucn9KHH2yyOc6t/T1k/2ew4nJLqMKSQpyg4ChJVaA4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=inria.fr; spf=pass smtp.mailfrom=inria.fr; dkim=pass (1024-bit key) header.d=inria.fr header.i=@inria.fr header.b=q9NCqiar; arc=none smtp.client-ip=192.134.164.83
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=inria.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=inria.fr
+	s=arc-20240116; t=1757966470; c=relaxed/simple;
+	bh=jEmsdt0sry9c24c1naPVkLWv/jrcn5tag09Hv9HICsQ=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=XQBMsGsAxU6D1ieN6xepApG17rNr3ytTbMq6cslZ/YDM+fdSwtwaUg/AdyMrb8pFslt+/gPX3ABYsk1cMnNp+4JpMz5u6g3/MijGEVK9HGymXQRIkKDhNqUK1SGK3FOMUtnDwOXKTRQwEkBQ1fzCIH0ldI2RThL3wGM2S+ySJZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=XXuP74Vk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QJZQiSu5; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=inria.fr header.i=@inria.fr header.b="q9NCqiar"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=inria.fr; s=dc;
-  h=message-id:date:mime-version:from:subject:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=LGKoGxX5pFYLBD9FkOTk1YU0s/rrl5DYdkGXdZeXixY=;
-  b=q9NCqiar1GQSfW+MRK1VkTtpCJg4PwkTBXGmul55zp7PuK7gxk/m3UvP
-   rl/BBckhoEgAQzBYo0J3LQ+oDfTSvBgF18RdY3cZluY/wMMRa2RkR4GaV
-   Wa5gtTzAgyGh/lU+z5ymA9svFPol5jz0ljKFjSabP8ndGAfy70Ugxs4hW
-   o=;
-X-CSE-ConnectionGUID: Y66dTiwDQzKaY0z1T0vsBA==
-X-CSE-MsgGUID: 0ZdF5JHyQA+oIvlLCcrtaw==
-Authentication-Results: mail2-relais-roc.national.inria.fr; dkim=none (message not signed) header.i=none; spf=SoftFail smtp.mailfrom=gabriel.scherer@inria.fr; dmarc=fail (p=none dis=none) d=inria.fr
-X-IronPort-AV: E=Sophos;i="6.18,267,1751234400"; 
-   d="scan'208";a="239198503"
-Received: from 91-168-152-151.subs.proxad.net (HELO [192.168.1.16]) ([91.168.152.151])
-  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Sep 2025 21:52:20 +0200
-Message-ID: <0dfe3e31-5486-446e-8af5-20669c06ea64@inria.fr>
-Date: Mon, 15 Sep 2025 21:52:19 +0200
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="XXuP74Vk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QJZQiSu5"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 570DBEC0218;
+	Mon, 15 Sep 2025 16:01:07 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-04.internal (MEProxy); Mon, 15 Sep 2025 16:01:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757966467;
+	 x=1758052867; bh=MS+vixxtnD/1h8lprplEZvWXoVkGVc7u7aDvC2Zyluc=; b=
+	XXuP74VkQie7VcGWHAVHiI6sW17rafMU5YdcCmDWVUMI69rboC63yQ8N/a3uhleJ
+	/WGlof1Phd3BjrzJEE7K2fiN0mhbSwVaxvWY6fR/QTclc1dtker8z2wbcqfBFO7j
+	59+Jp5AQx445vOgJTCfvN8+llBscDAnOpu+7gsN9ufKG/1VridQJ50J53R8xE2GJ
+	KH1PsvQkuIH0NONEkaEx2ce2gUowN5+2nW3hSF69MZqGIh+2HDz1mVc8SNbrGxU+
+	yL+dolR+elazXJ0FiSCs/bI5QaO15EPZ2LU+bDhlIjn47H18gdb8KTykv6XDk14A
+	0cLwCAu1fiPshhyzYqZ7og==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757966467; x=
+	1758052867; bh=MS+vixxtnD/1h8lprplEZvWXoVkGVc7u7aDvC2Zyluc=; b=Q
+	JZQiSu5/d2DXDazA5IJvMMAXBwRj1DXUGas3W4P2VETbcejOox0xSGDVh+7/B+5h
+	HNBcNU7X8N2wUhcEKFIqIefwS32MS1H7w1OBla//vlplXW7JslK0nTcK0fr0qCJw
+	zNc8uIOFNuI0TOyXhg5xDAXNwz76yMRCfV4Dv7lXC8Mx8iY7lnAq8/cCYCUy4sFa
+	uUm86zkLLveQ0K4vP3Gh5fj+rWmaD3gsXOfBdET1T1QLU1sZFKVRtsRNGM3V850T
+	zQkus0pvaPpgbWhyD/kq+5koC0tEwIQs/R/dhCBtO3lJwYqXN+IogGG0irH6DHqM
+	hw5GDy81ibzQCcVPlimGw==
+X-ME-Sender: <xms:g3DIaJQ5uc9pf0GX47Q60C7rl2K2xk59CUJxV9bf2vIAfMQDDINozg>
+    <xme:g3DIaCyY_o8AGyqTL_-DPb5qmTH5rY0M0pt2TctgiIU69OYm5a68B7vA3b_7E3iUP
+    sJJA5wTzUiCdlUA0Vc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefkeeitdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfluhhlihgr
+    ucfgvhgrnhhsfdcuoehjuhhlihgrsehjvhhnshdrtggrqeenucggtffrrghtthgvrhhnpe
+    fgveekudeviedvveeuhefhvdetgefgffdufeeguddtkeegtdeltdevhfdtuddttdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjuhhlihgrse
+    hjvhhnshdrtggrpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgt
+    phhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtg
+    homhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrgh
+X-ME-Proxy: <xmx:g3DIaJSHDigoX7usG_A2QXiz7B40avg11PnAzHNjNsrXKGQNeKiAAQ>
+    <xmx:g3DIaP5uhKU3HkItHU8mgeQYNCWItBJWsn4DpJ8DF8C_BYOIKxJ9xA>
+    <xmx:g3DIaN3PPw_SOFTizotAJbsMDJoQOxITaC3nuPRknw0OSqkeGrJk3g>
+    <xmx:g3DIaCBX4W4OheOtql9bMx_6wHIFzCs9YKvqHXIT2Vx4mC_k8XriRw>
+    <xmx:g3DIaMiqtifdm7boP9xtThwxP6KKk2Nd63OBFcjianoj-OqE7CgNsSPy>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 0238E780271; Mon, 15 Sep 2025 16:01:07 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Gabriel Scherer <gabriel.scherer@inria.fr>
-Subject: Re: [PATCH 1/3] checkout: provide hint when failing due to another
- worktree
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20250913141327.2775228-1-gabriel.scherer@inria.fr>
- <20250913141327.2775228-2-gabriel.scherer@inria.fr>
- <be510685-3be1-4f71-806a-6b580bb1cf21@app.fastmail.com>
- <d44109a1-0ff5-49f8-885b-9aae195ec492@inria.fr> <xmqqikhkhzbm.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqikhkhzbm.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+X-ThreadId: A2KDzlJCb01s
+Date: Mon, 15 Sep 2025 16:00:43 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Message-Id: <70034c35-8f08-4ee0-9017-7faf6f55ae14@app.fastmail.com>
+In-Reply-To: <xmqqjz23l7ci.fsf@gitster.g>
+References: <pull.1964.git.1756240823.gitgitgadget@gmail.com>
+ <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
+ <270edd2b00e63ef396ae69a9a7e9113a54f0df82.1757703309.git.gitgitgadget@gmail.com>
+ <xmqqjz23l7ci.fsf@gitster.g>
+Subject: Re: [PATCH v2 1/4] doc: git-push: clarify intro
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
-Thanks for the detailed comments!
+> Well, "this concept I do not understand" from many users is not
+> necessarily mean that the concept does not have to be taught.
 
-On 15/09/2025 10:53, Junio C Hamano wrote:
-> Gabriel Scherer <gabriel.scherer@inria.fr> writes:
-> 
->> In my in-progress version of the patch, the reworded advice is as follows:
+That's true. I'll try to explain in more detail why I think terms can be
+omitted (or why they can't!) in the future.
+Here we're talking about two terms: refs and objects.
+
+Re "refs": I think "refs" is pretty relevant to `git push`, which is why I left it in
+(as "or other references", to give readers a hint that a branch is a type
+of ref/reference).
+
+Re "objects": I can't think right now of a common reason why it would be useful
+to understand the details of how Git's object database works in the context of
+"git push", do you have an example? I think `git show` is a much better example
+of a command where the term "object" is relevant, because you can use `git show`
+to show blob objects.
+
+>> -Updates remote refs using local refs, while sending objects
+>> -necessary to complete the given refs.
 >>
->> fatal: 'foo' is already used by worktree at '/home/gasche/Prog/foo'
->> hint: If you want to proceed anyway, try again with
->> --ignore-other-worktrees.
->> hint: Changes to the branch will also impact the other worktrees.
->> hint:
->> hint: If you want to detach HEAD at that branch, try again with the
->> --detach option.
-> 
-> To those who _need_ these hint messages (in other words, those who
-> cannot choose the right way to do what they wanted to do without
-> getting hints), I suspect think "if you want to proceed anyway",
-> "impact" and "if you want to" are not concrete enough to help them
-> make the right choices.
-> 
-> "If you want to proceed anyway"---of course they all do, because
-> they do not know what risks they are taking, and this message does
-> not tell them about.  So that isn't very helpful message.
-> 
-> Changes to the branch would not change the index or any files in the
-> working tree of other worktree, leading these users to think that
-> they safely live in two separte isolated worlds in these two
-> separate worktrees.  Is it clear to them that the "impact" you are
-> talking about is exactly the fact that these changes are *NOT*
-> propagated to other worktree?
-> 
-> Then you have "if you want to" without telling the readers why they
-> should "want to" (or not) detach.  Which is not all that helpful.
-> Why should I go into the scary sounding "detached HEAD" mode?  For
-> what for?  If a user can answer that question themselves, they do
-> not even need that hint.
+>> +Updates one or more branches, tags, or other references in a remote
+>> +repository from your local repository.
+>
+> This is a very good rewrite of the first half of the sentence.
+> Complete loss of the latter is a bit disturbing.
+>
+>     Send data that records commits, directories, and files
+>     (collectively called "objects"), and update branches, tags and
+>     other references at the remote repository, to make newer part of
+>     the history available there.
+>
+> or something?
 
-To my defense, this is the hint wording that is already in the git codebase:
+Will try this:
 
-   $ git switch HEAD~3
-   fatal: a branch is expected, got commit 'HEAD~3'
-   hint: If you want to detach HEAD at the commit, try again with the 
---detach option.
+    Updates one or more branches, tags, or other references in a remote
+    repository from your local repository, and sends all necessary data in
+   those branches or tags that isn't already on the remote.
 
-I am happy to improve this wording as well if we can converge to 
-concrete recommendations.
+The goal there is to make sure the reader knows that git push may need to
+send a significant amount of data, depending on what's in the new commits
+you're pushing.
 
-> I think the message should help the readers eventually realize the
-> following things to make intelligent decisions.  Making them short
-> to fit in the "hint:" messages is left as an exercise ;-)
+>>  OPTIONS[[OPTIONS]]
+>>  ------------------
+>
+> Moving the description of the secondary effect down like this is a
+> welcome change.
+>
+> The original had two blank lines to separate the previous section
+> and the subsequent OPTIONS section, but now we have only one.
 
-Hints make advanced features self-discoverable -- otherwise we find them 
-out by reading the entire doc of a command when we are stuck After 
-reading the hint, users can read the documentation in a more targeted 
-way to understand the implications.
-
-Would referring the user to the documentation be acceptable?
-
-For 'detach' hints, there is a detailed section DETACHED HEAD in the 
-'checkout' documentation, which the hint could refer to. For example 
-(imaginary output):
-
-   $ git checkout HEAD~3fatal: a branch is expected, got commit 'HEAD~3'
-   hint: If you want to detach HEAD at the commit, try again with the 
---detach option.
-   hint: See the "DETACHED HEAD" section in the 'git checkout' 
-documentation.
-
-On the other hand for --ignore-other-worktrees there is no user-friendly 
-documentation of these questions currently (I looked at the 'worktree' 
-documentation, in particular for the --force option, and at the 
---ignore-other-worktrees documentation for 'checkout').
-
-If you agree in principle, I can update my patchset with a documentation 
-commit that explains the justification for the worktree restriction, 
-what happens if we ignore this restriction, and what is the recommended 
-way to respect it.
-
->   - 'foo' is already in use and in which worktree.  Your message
->     "fatal:" is very clear and is good.
-> 
->   - if you checkout 'foo' here and start growing or otherwise
->     updating the history of 'foo' in this worktree, the index and the
->     working tree files of other worktree(s) will go out of sync with
->     the tip of 'foo'.  if they 'git commit' from that state, for
->     example, it is very likely that they will record a change that
->     reverts your changes from the history of 'foo', and you do not
->     want that.
-
-(This gets me to wonder if a desirable behavior could be to 'detach' the 
-other worktrees that had the same branch checked out, instead of failing 
-on checkout. Users starting to use the other worktree again would 
-possibly notice more quickly that something is amiss.)
-
-For me this situation is not a big deal: if they commit the removal of 
-'foo', presumably they will notice that the diff/changes in their commit 
-is not what they expect, and they can come back to the previous state.
-
-I agree that this is surprising and I understand why the project decided 
-to discourage this by default ('fatal error' is plenty discouraging), 
-but there is no data loss or anything of the sort, only recoverable 
-surprises.
-
->   - if you want to grow history of 'foo' in potentially different
->     direction from what the other worktree with 'foo' is working on,
->     you are better off creating a separte branch 'foo2', with
->     anticipation that you'll eventually merge them together.
-
-Use-case examples:
-
-1. my colleague has a long-lived feature branch called 'super-feature'
-2. last year I did a lot of review work on their branch in a separate 
-worktree which is still somewhere on my filesystem, but which I am not 
-actively working on anymore (and maybe never will)
-3. I am in the middle of a bugfix session in another worktree, and 
-suddenly I want to check if the bug also occurs in 'super-feature'; I 
-stash my current stuff, checkout 'super-feature', and run 'git pull' to 
-update it to match my colleague's remote to get the most recent version 
-and test it against this bug.
-
-In this scenario, I don't want my current work in (3) to be interrupted 
-by the fact that an old worktree (2) exists that also tracks 
-super-feature, and in fact I do want to update my local 'super-feature' 
-branch to the most recent version.
-Maybe later on I will come back to my old super-feature worktree (but 
-maybe in another year), and I will start with a 'git pull' or some other 
-command, and I will quickly realize that its index is out of date and 
-fix it.
-
->   - if you only want to browse the files or build but have no
->     intention to change the files or make commits, then you can have
->     the HEAD of this working tree detached at the commit at the tip
->     of 'foo'.  An advantage of this approach is that it will keep you
->     honest, if you know that you are *not* on 'foo', but not on any
->     branch, it would discourage you from making commits and
->     disturbing the other working tree.  Another advantage is that
->     when you do need to make commits (perhaps while you are browsing
->     the files, you may find small typos you want to fix), you can at
->     that time run "git checkout -b foo-typofix" to create a new
->     branch and commit, without disturbing the other worktree that
->     have 'foo' checked out.
-
-I agree that detached-head is a reasonable point in the design space in 
-some cases, so I think that it is reasonable to hint about both options. 
-I am happy to put the detach advice first if this has your preference.
-
-(Note: In the earlier mailing-list thread I discarded detached HEAD 
-because its default rendering in the git bash prompt is unpleasant, it 
-shows the commit and does not mention the detached branch name anymore, 
-which is disorienting. I have since realized that there is a non-default 
-setting GIT_PS1_DESCRIBE_STYLE=branch that can be used to see say 
-"((trunk))" in that case (when we are detached on top of a "trunk" 
-branch, which makes it much more pleasant to use.)
-
+Will fix.
