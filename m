@@ -1,117 +1,109 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5DB1F5825
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 21:49:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09301DB95E
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 22:04:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757972943; cv=none; b=dCHZcnXIY4SMnqIBRu4kkOW8RmsZ/43Ga80xwatDb0C9J412l663eoHgoOKQOB863t0mkGR+hN1QNl68wXWB2GU62H0cjkIcGbw1UG33Gknzmu8kUikf5KSmiJrCxPO0bhMyq1jsYayjbsHp4wbFsl77rDGhjZZjq31YEUJMONk=
+	t=1757973843; cv=none; b=W9MZhtcM6Z5gPW3uBgqdSRbJkRvDSbJU6VyNwYjPDZLO5toRiTSnK57LfMMl8rwRDaY31vbx5+lGLpN4oSLzisDq802ha6T9fyvOZHYN9W3Ug1C+y5M+dXF6HbujmDubI2HF/8eCTG9ZsmP4ZrCT0pR3Dj740rR4b41C/Ia5ZLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757972943; c=relaxed/simple;
-	bh=M39Jn8RRKKkpdX5A7GybMzs3q6eFn03WB3U3TGoEoD0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Kf5xbw0kzPOe15zUkLYyF9RbTPLJvlFPe4VTAaEUG+Qm6IuNdzujAOHO7++bcjdEimlZyBTmvWxYJU4vHzcrqfDvaVQBxFwcfC2TilqUZaEIza9GXm+3wvJ6kRF/SJukH9cV7hiiE2DoyaqA4mcQrrGFl9d/MD6xb0elfmbLKRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YRp0YRQC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i2eFL4n3; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1757973843; c=relaxed/simple;
+	bh=/V0VgJreO7LUSq3o+zHEnBgM8upecXTW7Nfwj24X1TE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AwVVtjCYclEXiiFfEAeMdF80SjLP8/2ob+tLLvKivd9Jfy0yYx/bofjZiCLoDXUK4LkKO0bbpJGTiF0jRpF6ZO6rsrFu+ZcZ5FXAPBGR2UqKw6s+/JzoAEp/FSAHDE6rPDTC8n0pyCa0EB1dLsHkx9XF8t612xMrCVVQFM3Qf+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Iigls1SJ; arc=none smtp.client-ip=209.85.167.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YRp0YRQC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i2eFL4n3"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 124B51D002C5;
-	Mon, 15 Sep 2025 17:49:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 15 Sep 2025 17:49:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757972939; x=1758059339; bh=P6B+AUcOkM
-	9NFgAfGv7tzCEY6ibjBNI/8nquSbpSSuw=; b=YRp0YRQCfz6QTtWcOzTA1BTlUW
-	QzZcxnVmsht8QiLLVC7mY+xbHNjXcqBiSFZZsB2/8d6II3+gMwHJuw/iyIQ+Qtsl
-	WcFEKFkrefDW+g3Vh+WGMF4im8eoevyZNWMAeQ1c4dl2tXCxgSgLGbI3b5KUge7H
-	rz0g43Pc1gMJLgHeKkhMeR9EP2rr2/osMoxtevOo8+V3DlcYiEdbcR286zsIa4yD
-	CDp6hQFncBYj4Rc8IX1v+7fJ9E2RDzEdwJzbkwD+JglxCGKvv02uqhSpffsICP29
-	LqFy/5S5kgPDBO/WFkX4YLLBMTBNpnaGxpb5vXiVMZlIdYxpAvTc494Uxv/g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757972939; x=1758059339; bh=P6B+AUcOkM9NFgAfGv7tzCEY6ibjBNI/8nq
-	uSbpSSuw=; b=i2eFL4n3Iy7W+1tefFT0plmG4MJhQz26hyNgM3FskmXlA0NPrVJ
-	9CgIjcaqx8SA+eszoQlkzZQ/OidzpKah/GD5TfBg6lZGYvHUyr2gwkxASXue8f3N
-	UrQ8WnS2NhDcYXD1ds7eicrIDjLEA0ceMtHI4ETwqfkChwQXq1ZVJMYUcqom0iHC
-	/BgucU0LYf5zI10hKLXBPML1o8SZOt4WCg1+qyAyBxw+H1CQ3M0s3PyuKB2de4F2
-	G2mgdkpZjYXdx7o8cmur4CvIv524qYRewukEBlnHFKSatyfNZR4p/QzYQ9+Oca+u
-	iCNxxXl6KP+f1RQyNL2uIQZ+74Gp30Qvvmw==
-X-ME-Sender: <xms:y4nIaAqPVf0Tc4mLErjaoWNCE_Wy7h9Ll2NmAr3pDn4oyiCeXilFnw>
-    <xme:y4nIaPE97I0CgVOBrsw2ImD4UqHTeIvccO0xViSaFneLBZbgGLid6K5GBklqFFzrr
-    yvL0f3papuL7H-Nsg>
-X-ME-Received: <xmr:y4nIaFpVVqmAPg-w4AwRGdER5IEMK6JQwlWV6i2s6dPJoUWn9uzBVzz3cidg2ny0ScGN2HRlLywbylvqtHUI6VrBNVi55i_qLgo2ORc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefkeekudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepgh
-    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehf
-    rghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:y4nIaIYC38uThFBd4yrPF7_lHiA0jvuCR2wArA6FX-HsRrFwHlrdNg>
-    <xmx:y4nIaOWV8EAmq6RwRGJ3So6TgPFBC687igorUyoha7OiAN6njCbVhA>
-    <xmx:y4nIaB8HQKDFcmQaSl3KAHH38kKpQOY5M05HKM6IFP1iwvqgiSdMQA>
-    <xmx:y4nIaH_mCjMeOIvpkp_5Xx-MaaVTCOWRy7kRuHfp_kmqyHn9BKLWZw>
-    <xmx:y4nIaFP6yH2AfR1VZRdL2y_0yUbQihB5j-My2iqcmDytGoZnmoyIzotL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Sep 2025 17:48:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  "Kristoffer Haugsbakk"
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2 2/4] doc: add an UPSTREAM BRANCHES section to
- pull/push/fetch
-In-Reply-To: <fbde4659-6191-44ab-a713-7b47f989de96@app.fastmail.com> (Julia
-	Evans's message of "Mon, 15 Sep 2025 16:19:05 -0400")
-References: <pull.1964.git.1756240823.gitgitgadget@gmail.com>
-	<pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
-	<0ec629d4037bf5d1ccc248ca1bbd87ccc08119a3.1757703309.git.gitgitgadget@gmail.com>
-	<xmqqa52zl6ar.fsf@gitster.g>
-	<fbde4659-6191-44ab-a713-7b47f989de96@app.fastmail.com>
-Date: Mon, 15 Sep 2025 14:48:57 -0700
-Message-ID: <xmqqsegne69i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Iigls1SJ"
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-43d271944beso790462b6e.0
+        for <git@vger.kernel.org>; Mon, 15 Sep 2025 15:04:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757973841; x=1758578641; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=JUZz9HoBkufSOpTNfRuNkmSyWBilVtxZXeoDfEtyC7k=;
+        b=Iigls1SJz3WjUUcl09LhldOy129IeX6aWxpZuMPGZWcNpqBHI5A272qmmRNEAs9Vcv
+         itrxZ4QCMWaHkdyBjbyzAWGEaQIDkk40ZqLHRvW8Ln1fuIMegLnn2JMhkFYwl8q4Xppk
+         Pf/sG5hxCzad1+d0i8jV+cPqdYbyQvPkIY2AisKQuIAMEkq7/j4pghntwCxS44GdQIXN
+         ycb7lUnnKaeIrpSJpQpciwuXizU8ZkD35pXO6O8I//O9RczyUmBHPuPyv+FJPBqexfgQ
+         76mlxRmBG0M7QnkjrPxPWO1G4kL5O7Lgc2TteU0Aj5y4PDnA9EBqp33d8m9IrQcmkjM9
+         DYcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757973841; x=1758578641;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JUZz9HoBkufSOpTNfRuNkmSyWBilVtxZXeoDfEtyC7k=;
+        b=io3Ps1OP5GcBgVNIw2BVLiS9ld2mbo2CvsEYUa2oToe238BYqDE3e9o839MF9i3tms
+         aC7ZEX2oWiSqoiEwdyMAO2yBl8hjgF7QBjL6fFg/CiioJr0KXxgBoaCgv0dYhOulBjOG
+         9ryqamOq9Nk0tWUQTccrPArRqmq04EIrGz++Bo1ucuTh9Uj79Sijm0Dx89nlw03x+Log
+         XfeMh03fWtc8Wver9hl2JsmZE3uCv5vwCvgvm26LIiBJfypd4nq/FsHRBu/ptLL+fllt
+         2JS3asbneRRCJtXDHKinxvXHBca7ko45ADXkDe+FIUsmzwTw0zKzQjZ3YqL1C4/Z58fr
+         tovg==
+X-Gm-Message-State: AOJu0YwYrUjmqdnXoAuMbV4y8dKA/vMwJxOEoRilF8BKdR5zLcOzdLPC
+	Jj6Cn3lNl7qGhu2T7HK7B9ZSvBaTMrkFLxYcwQ9rM+T6BvrTxECW4MD6YfR7BA==
+X-Gm-Gg: ASbGnctRhg3IDdpQuYjiaKa5mSfw/OSnjxYRHD2L5i9Q4Gi34a4LYmgtzhSUiKm7X13
+	ushH1ZU772X5d4yDBEZiH0gCTgruNg6w8utkSjQ1TiN9+TNQUTxPL8ycd/XqLoLCMLsVfda/IJ/
+	LjIV/ychYE3PEJlD9yjM4DOih+ZUiEui6L/0vYS/BySCavvx+Ux3jO06kUbplo3vRJFfGuRueth
+	/IGHmu3L4wf5Cb+YGadYa27Ythiwn1zDGhg659fIoJnTCFoUDyouMWtY8FI2xm0mfY9Qq7dToBK
+	PdnRKQSl3YRCDQ7Ofm22UPCOisGOlbgvtSxaNVQeq9jniz2l0XBRt7Fd9EPAJ1LmTRwykDChQtE
+	KNebtbBv8/NmpjTCA
+X-Google-Smtp-Source: AGHT+IFL1j3fabj9MGdtJEru0v9hGcUut+D6XgOTzVdXdPj1/CVOKR51h7rjBnfP26rzkdv9XjYvOw==
+X-Received: by 2002:a05:6808:4f29:b0:43d:20fc:2c43 with SMTP id 5614622812f47-43d3f3a1871mr19935b6e.14.1757973840828;
+        Mon, 15 Sep 2025 15:04:00 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-43b82aff516sm2591670b6e.31.2025.09.15.15.03.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Sep 2025 15:04:00 -0700 (PDT)
+Date: Mon, 15 Sep 2025 17:03:59 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/6] builtin/update-index: end ODB transaction when
+ --verbose is specified
+Message-ID: <vtj334m5xckvve43nm332q5f5dfiy362wibygjh2ue5eu2g6hs@3o47ca5pha7u>
+References: <20250909191134.555689-1-jltobler@gmail.com>
+ <20250909191134.555689-3-jltobler@gmail.com>
+ <aMJu7vPKfnxt9UiC@pks.im>
+ <3cmqsfz5j2h36mw7yzwbrgfgchaettcnidvkiboqqktkm3dd5k@h6rmgjnqdmq2>
+ <aMetaZxCN8CDsr6g@pks.im>
+ <273dcsi6xmsdb356adxrlhh3renuimnl5wopfzkxxnryi5fmwd@xud2pvwdz57g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <273dcsi6xmsdb356adxrlhh3renuimnl5wopfzkxxnryi5fmwd@xud2pvwdz57g>
 
-"Julia Evans" <julia@jvns.ca> writes:
+On 25/09/15 12:08PM, Justin Tobler wrote:
+> Looking into this a bit further, I originally thought this was so you
+> could do something like:
+> 
+>   $ git update-index --remove foo --add bar
+> 
+> but this doesn't work because as soon as the --remove option is
+> encountered, all subsequent file arguments are treated as a removed.
+> This does mean though something like the following _does_ work:
+> 
+>   $ git update-index --add foo --remove bar
 
-> I'm not comfortable with calling this a "triangular workflow" since
+Whoops, in both of these examples I meant to use the --force-remove
+option instead of --remove. Once the --force-remove option is
+encountered, its codepath is used for all remaining filepaths. This
+leads to the behavior discrepancy between the above two examples.
 
-But it has been for a long time known as a "triangular workflow"
-already, so it is not like you are in your documentation update
-inventing the terminology.  You do not have to feel unconfortable.
+> This is probably unintentional though and rather awkward. Due to the
+> nature of argument parsing here, this interface has several other order
+> related quirks like this.
 
-And this "each developer may internally use many branches, but at
-the public meeting points they share small number of branches (or
-just one) that integrate their work" is the most basic form of
-triangular workflow.
+Grepping through the codebase shows that we also have existing test
+cases that rely on the existing git-update-index(1) option order based
+behavior in both `t1001-read-tree-m-2way.sh` and
+`t1002-read-tree-m-u-2way.sh`. Still not sure if it was intentional, but
+it does seem to be used.
 
-If you want to exclude all the advanced forms, without specifically
-singling out the triangular workflow, you can say "if you are not
-using the centralized workflow, and pushing to somewhere other than
-where you are fetching from, then do this..." and it would work
-fine, I guess.
-
-
+-Justin
