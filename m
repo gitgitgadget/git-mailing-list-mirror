@@ -1,142 +1,141 @@
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD892F3C29
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 09:27:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFFF189BB6
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 09:32:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757928467; cv=none; b=mLn2MA+thL0tdJ5HAQSgDpcRK7GiGHDnGct0gYRqp9S4B9MwpufeTSYnH9tqX7tYgH9iEm6q/W8LNYMXGBu1iawDn2JBGYbo4ipETF1buSOOqdm3ryRLviPguKC0ghRPB2JWlI6szUps/1HxT4lqW06oCBCP2dOfy8mvq35sydo=
+	t=1757928744; cv=none; b=oW7abJW5DZOZOIL0VEDuMSZ+LSbCAJY6k2ttkgzRKkj1tHfVSSAjqCHMX8Cs/TFZyCpZofwI3TUwEls5xPbsb02b4oyJMvyTNJ1KcbyYOGIr+Rq9kxb1MVG99/XCIh7+64+8KawxmgEZr/vWVh0oZLiU3k1VjTifblYjyo8WrbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757928467; c=relaxed/simple;
-	bh=02+BY/alpN+FaMz1iZVdzifyqDPp4L0FCLpj++k4fw8=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oDwTgJPwEH6dqsE9AW+OShfASDZuGmEd4OitwYm+iJYIDn7zFEawZgTNktSRpkOxS9xa25DtLw8htb9mqwum8hZ+6OBPAJWARUFgUGVAFdImz+41WfvT5N0e59kOzCyNRFNLSLjAHvpMOArT+fdcYLyn8fnxFQyrsstn6RStIso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IVB/crSZ; arc=none smtp.client-ip=209.85.221.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1757928744; c=relaxed/simple;
+	bh=aIYIB3ZTA9CHALGGCS+VRoOyfYUtYZDXwu5KjgEaTC8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mAVpQHDUAajlrDRHYvpATqZ0WhdGIkEoDjEnJMpZjkHL8pdvn7Ow4Q4yukLqnW8ijW4MXDE6zAQWRRXggUGg/xog73UppOsfTmlDwMNlPOJr4ZD2ABwLoHhyxoErxzigyIepZ1u0tWxfwzRUureoHFmWm7mjtHA2CBTGmKMO7TI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a1uaDAd5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eZRDriZ1; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IVB/crSZ"
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-54a2beaa29fso520725e0c.2
-        for <git@vger.kernel.org>; Mon, 15 Sep 2025 02:27:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757928464; x=1758533264; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mml0c5lgSfOjzLjKgFwGbblH+4zt104TJExT7EH0pUg=;
-        b=IVB/crSZJCrZiQ76vMUP+uAK9rb/lEYk2S4XIlgTExD28LU9GePgx+jdGgxehCH/sd
-         5PwRcBDYLugDJ2Ln61EpfjWE7Bu0BRT6PAwbo/crLIli20Nw/xqZB3mxvo0Gj7k1Gp9H
-         voZqU61lsdEdNW+CbdNPlZWLOVG2Eai1AKObFtAw2Z+oi7oLIuobXICWLiFtHSUyAWBZ
-         NOWjFHepgch1SEUMojGPiY+t0VBN7CBeLRzKDBrZfegs+ndaZTSJlMjuYkqgiQ/LoGta
-         c2aqW3Zf98IQYkqE/HGVqQciQcZWP03FQkClXx9aQl8jLyYcVoPxyo1TFAlLV7hPwNlD
-         U3mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757928465; x=1758533265;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mml0c5lgSfOjzLjKgFwGbblH+4zt104TJExT7EH0pUg=;
-        b=Kr4HCRd9jK6uT+Pxd+sp18WTUBoJ7W+DjtQD52aXiHRfoaPbApmj1ybv/0obJsZj8V
-         sSbdcnVIUTsLojMTFwAoT8b30QW1I53xBlcqveoPYEZP56+7/1HmdnGd5EzkhMwxloS7
-         JzIpqwbbjGwGkMgy/o2fTU6nrtHDNGJwwqI8CsS+J4eImL88EV029KdGnKOlsSGssbsf
-         6v6XXO859jm/E9Q4ZfHguNBrUY1LtvEC8LWP7MTvTPwq5weUKjpWlw/OsYzyKnDAYDA3
-         R1WbpwuX7f2qZE+GNHXDK0KRuMBjy1C4R57BoyhvULX5BCasPPVKQVa8L93Ou5t2BYI2
-         knaw==
-X-Gm-Message-State: AOJu0YwPo5hEW/0g4ObVejNFmohUWPFYRDPimyeYox35cVIpPnr5yCdx
-	3jttxc7Kbt+oOG86yiTljiqHnLH34OKxgkdicdKpIbFubMPfgFTIfTCWvMb99l043Nh0Zip3Dqi
-	LdCORbXb8EX932g/hToszHmzGsxehEiA=
-X-Gm-Gg: ASbGncsbon4SoaXOgqoF09ZCyJ5meeHy+k1tiB9EFW3Nt0a3K6dQ/o5oJUwQTKvoJFk
-	C7LDRiALhxUyn+0vhmyfAehwF3qfsNyG/mSI4czcyZh4UlYh42EAtyjmBprtBduRvIXJ18bO1iM
-	60FT27ejWCRx4jt3difMlKxDBQe616KU6VPgDB2R2XKU6ZIyCOdNtO8yG+i6nyYPJyQNtG4FoXA
-	FvDVxJF0Hjj5TEgFQyrXZ5D5gkYOBEW6owAQ4avyJXRqHvSehs3hiV4febPDUs=
-X-Google-Smtp-Source: AGHT+IFgh4AfKvG3YFBP9DTl25guyUfOomOcqp6DG+oa48NK3oYaW7HOiubnWdxz6zw1tnPHIhZ1iFT/LMSEMMnKhR4=
-X-Received: by 2002:a05:6122:3091:b0:539:3bb5:e4d6 with SMTP id
- 71dfb90a1353d-54a16b7e309mr3570106e0c.1.1757928464500; Mon, 15 Sep 2025
- 02:27:44 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 15 Sep 2025 02:27:43 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 15 Sep 2025 02:27:43 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aLf3NyodTZ38N8vY@pks.im>
-References: <20250902-228-reftable-introduce-consistency-checks-v2-0-4f96b3834779@gmail.com>
- <20250902-228-reftable-introduce-consistency-checks-v2-3-4f96b3834779@gmail.com>
- <aLf3NyodTZ38N8vY@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a1uaDAd5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eZRDriZ1"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8698514001C9;
+	Mon, 15 Sep 2025 05:32:21 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Mon, 15 Sep 2025 05:32:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757928741;
+	 x=1758015141; bh=u8yX2RFmaVSCOFc8NTw6xFpSvpT0v6GSTgRdPrh2kYw=; b=
+	a1uaDAd5uRC5d+kY68Ty2OZRu1d47qBP597mB5/MtttSDK3pAc/31uLuL7dAz0U8
+	fv8ivsN+aO09GU48OB9D5e0X80pqwKadWJYz0KCPIsuRWvktKthK4ecFeqfyJNUV
+	68OVzo3rlzR8h2lzpqzqb8KNgc1QT+Oteq9MEysVKtbwzXcM7uzUoNLbNjgr4nka
+	e5qGqsmd4lR/z+EmEfGKYfDL4Gb/ycjwbQKTgU3A2dQCxkYXIs12MtAENB1c92lL
+	NqNPS6IMaUI0OnKvzHIU/OQpRyhWaJTIMo9zY8u2gq6iZhtCQrKINnEOMZC39QTP
+	raYub7VERbdd/oMp467tDQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757928741; x=
+	1758015141; bh=u8yX2RFmaVSCOFc8NTw6xFpSvpT0v6GSTgRdPrh2kYw=; b=e
+	ZRDriZ1PubStS7LDCbJfsFF9++dMyRgrvh82b/LYI21Kb5DwpFVFy/8Yo+oeAwZP
+	oQwFo19j/MpEyc9DuHlcue5G9r/IUjGMY/L0XEAKnm21lQ/PtuIU99R/fHNKxGs8
+	nri+T3TX0FvBkLfzWklK/knnDwqmacPk8w5cqyHdiSLzlxKkzMy7jkgYwm+WQld0
+	rTzOmdfaFNqg6/cPDdE4P2SFWMa9Y+rs6gHsKDs/xAk2L2KTp/dJXKIZ0ZI5OUQY
+	bvcJ3Um5TvPWlLeolWsslSuxh4De7AO6D8BeuT3uhYfQIa+8PoCPW0PwvC1NbE5X
+	SDIqB32FzRb0y8BM5Gi7g==
+X-ME-Sender: <xms:Jd3HaHEX_YVbHZVnO_iWxWM7ZO1i8lVG772f7tG2TSOqRsq5Hr_AeQ>
+    <xme:Jd3HaB5dQvWZGNsS0-SIixEzaogwy7p26Q94uLNRGK-PfK6CPyKm1A8M8Qz0cJL4j
+    vYoj0Jc1ZAiUGiHoA>
+X-ME-Received: <xmr:Jd3HaPkHQncdPR5_IC1abeM0ot2dUJ6qhbOdyEUDyKGs5GJr41DFcQvPkitZQ38tLe8rXU4Xm7XnWZ4-PYh_oAbma2wAGC6Ong54ta_vAVm_lw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefjeefgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehmrghrthhinhhvoh
+    hniiesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
+    htmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepshhorhhgrghnohhvsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epjhhnrdgrvhhilhgrsehfrhgvvgdrfhhr
+X-ME-Proxy: <xmx:Jd3HaGrvh6kLPuCrojeV-YEmO61MShxqertHcQSnaaS3CYfIEztUpQ>
+    <xmx:Jd3HaOuL_0OgCDzeNPNNxZPjj4u-6KW-T3V5a3Hc_BmCShdzXh18EA>
+    <xmx:Jd3HaLEQAsY9ICqtQv4Q2SxlG-HTfP8do3BeioXikF4z0k_K9sfyMw>
+    <xmx:Jd3HaHYcdZlte8DDAV0gIQoEqGHhfCUN1JYp6z1pb9hhmd5Iufb-FA>
+    <xmx:Jd3HaPyWrGCVawb9cyQFmCUV-pX_s1_1xRcCOsIrNIUoUHaqi0bohdDH>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 15 Sep 2025 05:32:20 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 39ea78f5 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 15 Sep 2025 09:32:18 +0000 (UTC)
+Date: Mon, 15 Sep 2025 11:32:09 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sergey Organov <sorganov@gmail.com>,
+	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+	Martin von Zweigbergk <martinvonz@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH RFC v2 15/16] builtin/history: implement "split"
+ subcommand
+Message-ID: <aMfdGTQWT1ES1jbm@pks.im>
+References: <20250824-b4-pks-history-builtin-v2-0-964ac12f65bd@pks.im>
+ <20250824-b4-pks-history-builtin-v2-15-964ac12f65bd@pks.im>
+ <CALnO6CBRv-Jvm1FsUAkDSyaNNRXtMukReKzefvCw5-vj=-pnCA@mail.gmail.com>
+ <aLgygyUuQCmR25qU@pks.im>
+ <CALnO6CAjv0=99AcBLU=z71hGrk0fXp9pWm7wiBF-a1Xd_efrdA@mail.gmail.com>
+ <aLmMycWf-SMBw2bX@pks.im>
+ <CALnO6CCG=8JeRxgVfM9ayaQ6oY1iZQe3277sh=FG2YRkbbUj=g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 15 Sep 2025 02:27:43 -0700
-X-Gm-Features: AS18NWA4gZ2ffoCAv0KAsFM9tp6Z5NUPPMafZDaBQaX15gv3i9L6Vc6TqyrEQqo
-Message-ID: <CAOLa=ZR9nXkdXuMik2uq8+kpxQwmB72r7XZB0rnJSvKU7mKmkw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/5] refs/reftable: add fsck check for number of tables
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, jltobler@gmail.com, shejialuo@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000aaee0e063ed39d7d"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALnO6CCG=8JeRxgVfM9ayaQ6oY1iZQe3277sh=FG2YRkbbUj=g@mail.gmail.com>
 
---000000000000aaee0e063ed39d7d
-Content-Type: text/plain; charset="UTF-8"
+On Fri, Sep 12, 2025 at 02:26:04PM -0400, D. Ben Knoble wrote:
+> Hm. I've pulled down v3, built it, and pushed to the same branch. The
+> tip is e91e23546b (builtin/history: implement "reword" subcommand,
+> 2025-09-04).
+> 
+> Now, a heavier-handed recipe:
+> 
+>     GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null bin-wrappers/git
+> -c commit.verbose=true history split @~5
+>     <input y,q> # once I even used "e" and added new diffs to the patch
+> 
+> I see the usual instructions:
+> 
+> # Please enter the commit message for the split-out changes. Lines starting
+> # with '#' will be kept; you may remove them yourself if you want to.
+> # Modifications qui seront validées :
+> # modifié :         add-patch.c
+> #
+> 
+> And finally I might know what happened, ha… if the "modified files" is
+> the status information, then it has been there all along! Meanwhile, I
+> was expecting a _diff_.
+> 
+> I'm actually _still_ expecting a diff with v3 and commit.verbose set,
+> but I apologize if I've led you down a wild goose chase for the rest
+> :)
 
-Patrick Steinhardt <ps@pks.im> writes:
+Oh! I didn't even know this was a thing Git supports, I've never seen it
+before. For the sake of simplicity I'd propose to keep this as-is for
+now, but to amend that mode once the initial couple of patches have
+landed.
 
-> On Tue, Sep 02, 2025 at 09:05:23AM +0200, Karthik Nayak wrote:
->> Introduce a reftable fsck check to check that the number of files in the
->> reftable directory matches the number of files listed in 'tables.list'.
->> We do this by iterating over the files in the reftable directory and
->> counting all the files present excluding the 'tables.list'. This is also
->> exposed over Git's fsck checks as a 'badReftableStackCount' error.
->
-> This feels overly strict, as it can always be the case that a concurrent
-> process is currently updating the stack. Furthermore, it's expected that
-> on Windows systems deletion of an old table may not work because the
-> file is still kept open by another process. The reftable library is
-> prepared to handle this alright and will re-try deleting the table at a
-> later point in time.
->
+Would that be fine with you?
 
-Yeah that makes sense.
-
-> So maybe a better check would be to verify that there are no files with
-> unexpected names in the directory?
->
-
-I was hoping to add structured consistency check in a layered format
-
-- Stack
-  - For each `Table`
-    - For each `Block`
-      - For each `Ref`
-
-But this wouldn't belong to that, since it isn't part of the stack. So,
-I'll keep the above structure and also add this to the stack level. So
-we'll have
-
-- Stack
-  - For each `Table`
-    - For each `Block`
-      - For each `Ref`
-  - Other Stack level checks
-    - Check other files in the repo
-
-> Patrick
-
---000000000000aaee0e063ed39d7d
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: dbf4ae10d7fc9608_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1qSDNBNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1memd3Qy9vQ3JiNTg5MzJPWGNCcDBaM2tpSjVabnBqWApRU0NMa0RSaHlE
-NVBtVEwzdUQ3d0N6RkRRSXdqOE5RSVFJZXQxYllseXpuc1lqeU1PSFY0eVRaU2ZLS0QwWFZvCjc4
-Ykg1L2Z4K3lOZE00RHZLMjF1OE5nTDFjdE9ibklXZ09MVG1zeGhUb0NyelEyLzR0MkZoRW9uV2VF
-QzhZQjUKSFJTZGhYdDA5U2JLaVJRbE1HN3VIK2lvR1BEQ0N6TUJPS1JQN1F4MkZ2dHBMbXJldUlw
-QnhqamdZaHlydGx6YwpKZ1VqeE5LWUFDOGhJenFES2JOd2lWUEovWWZMVnYwNHVtVkxZZi9XaVdJ
-OWo3am5FM25UWVhNYU1oQ3QxNHg5CmpMdGRmbDRCOGJld1FXdGdWY1B1enNIWitPZTB2OHBVbWVw
-bTNORlE0czJLejJLRnBMVGVHYyt5WW50Y1drUnIKRjg1TWlBUnZGYWs0cS81cUtyWXVlNXdiclR6
-TTIvVEhCR3hWMXRoSndBRG5MVm01cTRYMHV3UGt0cmVva3NlUQoxczVsTG1Qa0doQWtFbzNFcXF3
-ODl0TE1aVkxsOTRvQVowOXpaNEpoalljZFQwKytyMVZHaUF0UllWTU1sUVlHCms1K0tVUWpuWWY0
-c2RKcjN0RTNpakFiRmNnNWt6eG9HY28xSVhHWT0KPU1uRmQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000aaee0e063ed39d7d--
+Patrick
