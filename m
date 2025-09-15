@@ -1,129 +1,142 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5DD2D77E4
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 10:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15311E50E
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 10:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757933645; cv=none; b=I9PB72LUi6c8cPujUdYzi19YwVm6hiGhe49ixjlipLSrs+8ZXpSMXaV9mfo0H5/C7LjYSYgBRiHaqSN7X9DjdxFZvCfzihvxsZOsm0Sx51eSRnUB/puk4TXka5OfjCFxhsVLwGoyNpNxuObGWwGA8/a4lpgZSS982vgqAVF3sQM=
+	t=1757933803; cv=none; b=jFqGpBtPlrg5i5KKBJx2aGHXFkptn017NgNmCjoj2I3jsj70kqWiW1cR715J44tnpEjRrCReDcoyrXXZ1BFqTjT/ebc/j2anT6xNp9OUwPLCnKmUJcGuAn5rkM14gdBOICfp6blC6genmwSSDmsQraQ3JQzjxYLLdZVdVyjjA/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757933645; c=relaxed/simple;
-	bh=pqbUEnidkWOl5FP0PFEhPmk15RLaw8OYde0vI/ko6xw=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P4fy6Ihy1RvtPLToLX9X3DyJTg1qPW+NM3dcGcAcgzScFd5jNrdhlet+H+PWrh4vYJMLMowsgfrIppvQlzpZWLS+MtzDVxcOQ05xKoTmO68bZryzifq2ZuuXhFHNN0/T9TYuJLhLks4sHBBbdYxqNlB0QEyYhqgWz4e9Hqzb2hA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TG9YUA2c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cEHuAkmN; arc=none smtp.client-ip=103.168.172.144
+	s=arc-20240116; t=1757933803; c=relaxed/simple;
+	bh=y14JXaAr2RQz1THV80PLL8DDe/7wqeHFaLxDDRmNdWw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QfmyElSOcHqeuBpm5Ma/ijgPJCdo6cxrckVsJtHerNjAtu5nN724v9v8CgAZwBjSSvs5pUZ+X6z0lC6vxfeU4j6U2DhCwvB14ZSAO/xaN8ejV7QPoG/+R2bjuYG035T8VM42oQGsDUAb6DKzA6hY2XQSwpmLIGesRpNR2/g6fCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mFFrW93o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RI2K1MpE; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TG9YUA2c";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cEHuAkmN"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 61230EC0283;
-	Mon, 15 Sep 2025 06:54:03 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 15 Sep 2025 06:54:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1757933643; x=1758020043; bh=UOKptnWt4n
-	XUX8BV/xga2eRNGeNaeHQe9mR0gmIm9i8=; b=TG9YUA2cSjMR48L2J8tWqZExyU
-	op6hAVBmUH93hf/4LyUgp0eHkv9Xg2SHmS2ajsYW7NJ+09ckESZKzxliw8Oji1mg
-	7eDQBe6uc2XNJaBCcQZTP2MunVobHfBoBcboMeoHMLQIBrfR3gnukofDzyTN0oSO
-	8tOU/0ahRL/3Bn4IkquKNn7iEqerW4Hy/KbcrUkbfug6TXwVGFFZmacTCrdg1I9H
-	5VDgQ/2LGacgPyTxlsb7jbSrCC3TsBjYrRGCnaNBk9cS8gnU+CbpoWoA2goYqYGC
-	YE3WSs3VAMgwxw2qX10+8M/DUo6yuh7nVgySkNMjyKGmaxmYJInb9UDjdqIg==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mFFrW93o";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RI2K1MpE"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id C2F57EC00A6;
+	Mon, 15 Sep 2025 06:56:40 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Mon, 15 Sep 2025 06:56:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1757933800;
+	 x=1758020200; bh=CGQxnpjh5yUQVx3dB/7nZHTNJ/L1JSsv6lD6S+992kk=; b=
+	mFFrW93o5cyP74mT2pCLUhIQPYgRp68P2Fr+AxDLlv6Qhc8DiPa5VULc4uOGSIxM
+	zjbQ0J1EV2kkiKIDvsdah0Cgy9HjccB7Ylnq3ImRqmCpLKaS2bqoVVdzAggQcRT2
+	dZ6gM15nw9gCs497tZqrdI0i7ftCPAXYAyn3/E3NTKj2MJNlZ6pk57DAWF+ghEiM
+	ib/MbiN6LY9EA1rD08d8a6+Cm35h344dEYbMjCRBL+2SomBgWmnvqxbO9FOdakcj
+	CqhoQtD3v/zR58k/kKOk8fIjkqpM+E3W7cwGV7LHt6xyuhPWpQP00+vkqAyJaPhz
+	H1PIj8ik1S+wfhtyDTB0jA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757933643; x=1758020043; bh=UOKptnWt4nXUX8BV/xga2eRNGeNaeHQe9mR
-	0gmIm9i8=; b=cEHuAkmNSoq9iIc8ZXqWSENa/PJ22tei8l+ysr7fUS1vnY5nWyk
-	KiOohhcmLgBeOEpX1Qtl6bwQCX33LBExdOUR5VFjgpzPADECYRUqPiDQg4aQ97I+
-	zM+KUaqYVvT3gVNKqUe/fzofOG4ISAYwmcsHrxQe+l/vfz1Ix6CEpD+TcgHXVnkP
-	02Pt86xlW7sYwBcGX943YuP1tIducTof0fj/GPnlztb0AZK742TUqp1yG90qzo6V
-	Gk4bVi1xeFNc3nxi7rMUoFw0SFT7QUM6s44zGPLpE30mRm3l3OQKkzp8GDr4AUdY
-	ZRJN/YvIMHRWB4etMaWcdkhMRAaikYJVwkg==
-X-ME-Sender: <xms:S_DHaNO8dK3xehmr25eyroBzSZB0nYq5PwBI3_ND5cnpBaLwzzWJZQ>
-    <xme:S_DHaAGJmQvuTNZDp8Ax1b3KxMNT_VTnsdL7PgCoJd9pf1t0nW8LJInsBHCY1XmLS
-    8z9TaJWwgk-Cus-Ew>
-X-ME-Received: <xmr:S_DHaDtQl5M1N-m2J1joRiHi55-PLdKTsWrZLNBNNbrGjqCC2JQL94a4qvPcPlTZSVDT6zkzspObHiWMf21dlHM3izbCfqS98ftB1NlZF5-x_Q>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757933800; x=
+	1758020200; bh=CGQxnpjh5yUQVx3dB/7nZHTNJ/L1JSsv6lD6S+992kk=; b=R
+	I2K1MpE4PIgSP19ifUHhBeQG3KbbKFPt/nzCOsy1K0j1LnKVu4Fa4R5G5Wnskib+
+	g3keD/2wIF3alEpecvsIjA5ya1V8g6bsOfbHfXxXfwK8wPl2De1AKy4ZuAiZwPCt
+	2yqFzLKoZZBCJGMOmrbc1h9EvbuyVXW2nnIQSSeY9W/ZyjbARKdSsRuHoz357rz6
+	fifGFzDbDI0WPP1xYRpBliziCuJfebFvX5LMp8dJ/3pCxdZ9bmF+0SMdQQk2xc16
+	khf8XG8YaCD3CLFk8PKaorjckdhXh09I71JS30iqwoQNx3bD/Z61EjbufmitgU3o
+	afNq8aGaRtSzUli2ntcew==
+X-ME-Sender: <xms:6PDHaD_POg8GFhO7cMcHnKIQ624X62coutgwftbNXDGLwUQYiRzBuw>
+    <xme:6PDHaMqV3ZVUtd9g4OVWFdap7kAonYa6BbGD61s_wi6XtRjba7vUanlgk7z7Q5vgF
+    wv8jBRc2vDRmQcUYA>
+X-ME-Received: <xmr:6PDHaMpgDZtoAGWb8wBdGyWEaCWSvu1bfQi-XyQWXVyIMJPD353W5Pw3ByxD7n20JYSa4hQeDqJ8QBnehT8JLl7JGO9yVQWVrbE7n3DzXX5NbQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefjeehtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcu
-    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhephe
-    ekfeefgeegvdegvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
-    himhdpnhgspghrtghpthhtohepudehpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopegvshgthhifrghrthiise
-    hgvghnthhoohdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtoheptgholhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgr
-    mhesghgvnhhtohhordhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homhdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:S_DHaATLrJbv8O2pP78-d3wzLfIsjT4VhBtIul9EmJVFzwGBVhWlxQ>
-    <xmx:S_DHaNMsDyEum0iR6FuCtWWrjP2JEd2hMH0e6gRImSTNX16Pz4Pl5A>
-    <xmx:S_DHaO6sapYmuJtE17QBTZgwebGCg3Fy3bokzBN9Kp2KAWHRU0SYhw>
-    <xmx:S_DHaIXo2-X8KcPnEvw4ZK9Qty7xdvbktg4pKKb5JfIoQfrohPq0ww>
-    <xmx:S_DHaFwfQECey3rF9lsz6YmovUSwXy4GJVf_ESaqAQHPjybgSvj0ZBjA>
+    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegthhhrihhstghooh
+    hlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhs
+    thihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstg
+    hhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
+    htthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphht
+    thhopehpvghffhesphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:6PDHaH1AHpju_xxBwaIB5Eyl7rfWaU7AbflpALw07DJmZDXxqTg2Ng>
+    <xmx:6PDHaCHBxaxMbeMpTumQU723UOlHlsd33npT508zmMufcf2WAG2XVA>
+    <xmx:6PDHaKEx5mbdajCRE51QeUolTOhls-LWKu4D4epTY7i0buFyOkrquQ>
+    <xmx:6PDHaN6nuTGV6Bg1DBSMpo-nQHWz-h0SzMGXDs0yAPaT4n9Kz2yYVA>
+    <xmx:6PDHaC_sRi7m4g3Mdt_T86ovp_D83rg5nhwY6cdFuz_oEj01W4hRSct5>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Sep 2025 06:54:01 -0400 (EDT)
+ 15 Sep 2025 06:56:39 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6ec1fdab (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 15 Sep 2025 10:54:00 +0000 (UTC)
-Date: Mon, 15 Sep 2025 12:53:56 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 2b8ebb2d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 15 Sep 2025 10:56:37 +0000 (UTC)
+Date: Mon, 15 Sep 2025 12:56:34 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Christian Brabandt <cb@256bit.org>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH RFC v4 0/9] Introduce Rust and announce that it will
- become mandatory
-Message-ID: <aMfwRP3AC-PHrljU@pks.im>
-References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
- <20250910-b4-pks-rust-breaking-change-v4-0-4a63fc69278d@pks.im>
- <aMNFao0yGZ6yzKKv@fruit.crustytoothpaste.net>
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 2/2] fast-import: add '--signed-commits=<mode>' option
+Message-ID: <aMfw4rboBOemzvr6@pks.im>
+References: <20250912124042.2523683-1-christian.couder@gmail.com>
+ <20250912124042.2523683-3-christian.couder@gmail.com>
+ <aMex06JNPVeHaw_d@pks.im>
+ <CAP8UFD3-3zjBBHP-Y9nLO-qEyhkWhD_pxFZhk6rzrC31LanDMQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aMNFao0yGZ6yzKKv@fruit.crustytoothpaste.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD3-3zjBBHP-Y9nLO-qEyhkWhD_pxFZhk6rzrC31LanDMQ@mail.gmail.com>
 
-On Thu, Sep 11, 2025 at 09:55:54PM +0000, brian m. carlson wrote:
-> I may end up sending in a patch or two for these if I have some time.
+On Mon, Sep 15, 2025 at 12:17:33PM +0200, Christian Couder wrote:
+> On Mon, Sep 15, 2025 at 8:27 AM Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> > On Fri, Sep 12, 2025 at 02:40:42PM +0200, Christian Couder wrote:
+> 
+> > >
+> > > -     /* Process signatures (up to 2: one "sha1" and one "sha256") */
+> > >       while (skip_prefix(command_buf.buf, "gpgsig ", &v)) {
+> > >               struct signature_data sig = { NULL, NULL, STRBUF_INIT };
+> > >
+> > > -             parse_one_signature(&sig, v);
+> > > +             if (signed_commit_mode == SIGN_ABORT)
+> > > +                     die(_("encountered signed commit; use "
+> > > +                           "--signed-commits=<mode> to handle it"));
+> > >
+> > > -             if (!strcmp(sig.hash_algo, "sha1"))
+> > > -                     store_signature(&sig_sha1, &sig, "SHA-1");
+> > > -             else if (!strcmp(sig.hash_algo, "sha256"))
+> > > -                     store_signature(&sig_sha256, &sig, "SHA-256");
+> > > -             else
+> > > -                     BUG("parse_one_signature() returned unknown hash algo");
+> > > +             parse_one_signature(&sig, v);
+> > >
+> > > +             switch (signed_commit_mode) {
+> > > +             case SIGN_ABORT:
+> > > +                     BUG("SIGN_ABORT should be handled before calling parse_one_signature()");
+> > > +                     break;
+> >
+> > Let's be defensive and convert this into a `default:` case so that any
+> > unhandled value will cause a BUG.
+> 
+> Ok, maybe something like BUG("invalid signed_commit_mode value %d",
+> signed_commit_mode) then?
 
-Sure! No pressure here, us being able to iterate is why I wanted to make
-things opt-in in the first release.
+Yeah, that should do the job.
 
-> I did note the discussion about what the LTS process looks like, which I
-> don't have strong opinions about but do want to make sure the project
-> (including folks on the security list) is willing to support.  Other
-> than that, this series looked reasonable to me.  I also confirmed that
-> it works with my existing sha256-interop-part-2 series, which I
-> appreciate.
-
-That's awesome, thanks for confirming.
-
-> I think once we have agreement on the LTS process, this should be good
-> to go.
-
-Yay! In any case, I would be okay to help out with the LTS process as
-long as it's still owned by the Git project.
+Thanks!
 
 Patrick
