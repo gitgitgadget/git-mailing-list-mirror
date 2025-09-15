@@ -1,145 +1,143 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF2E17C21E
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 06:28:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0CC2D542F
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 07:25:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757917688; cv=none; b=tjhF4xEsOjt85C/ikbcVf0S8N3pXk7m8+4X1zq7Gc2T0vEi4tWl3gZEohm7W+62mDFK8zIHuj2ZDXxlIBmER/FUpSxSeik4fSM7SSKgJKzJ14Mdq4HHYywFeSAOh4GDN2JVPw3Bu6+9EoMzXcZjn2eZjC3rDnvvnLp+2BgPgqj0=
+	t=1757921142; cv=none; b=nnI5nwAHmNM+h95fwHGFeuAd342eEJyt0ClzmntBRf6pCJXJaggdcoQ7hnPpKt+FEu3qBpmAUGioMCchQ1+GXcGf6ETlkY3by2E+BA+5eNRiFBditumjxpwDEyVWrroN1yNMCVabry8G0eZ7Bqr7Q0xXirzMEUnSORADaP1zYpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757917688; c=relaxed/simple;
-	bh=Yik/68zYErHFllAQD8xANIxA8GqxEHs51WhVrdHiZ2I=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=KOLBfLuSRm5pr06BQH7D5vDK8zbD8or7ZrHlBUozGhqvued2XHr2xlx/3wcbip2obL4bAzVfH5IsE1rHdxoYkGqQnOW0wQLp96kHVvvu++OvzaWHlhcQPqkxqD0qjom/0dWkO4XWrnwor/xfErCoF58nZWC0jiSQ/EQgn+M6ZkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=PNjwbFvy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eAc1W/4Z; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1757921142; c=relaxed/simple;
+	bh=2wfywCIT1/4Cjhs8IK0SRdfXz4Z/FGIXGoqtmo7nl1Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XeYdgQswyuY+bs8pj1RYo7e9x6ioIph3hpiHSt1f4B5GOwBmPQdJL57DAaBpK+YEeel+mbQQ2He4YzGbI3xkrp/MJi27/d+3zZr/jwWn1gT5Z4FTvEb+Ghh3CBa68HVKxBPpnS4kiZFqXW0dBSkf4Xfemk6plJUOEqKxfKxJPKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mP/bEzzG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T3EsL4Kf; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="PNjwbFvy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eAc1W/4Z"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 13F007A007A;
-	Mon, 15 Sep 2025 02:28:05 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Mon, 15 Sep 2025 02:28:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1757917684;
-	 x=1758004084; bh=/6PrJFu1BSfpDbFXJSiqEM3nT94e32rXDvCzM4ZZyo8=; b=
-	PNjwbFvyiai1VLwkGCu0iv79Nkn/+1jBRG2VEhqz0Y5YXKG5wHFsSha1uCw4eGqb
-	7a4QFHP1jmPkHaKIob0xSYDF7+Is6G5aGJDL+gJcSdAvNIVtdiakhkU6JSErb5Z6
-	YROAmmWuvB2PbgRaoWjg9WowrBQrRF4aMbfDT4P3mTq96toTJ1tTzH94J7WqCrYJ
-	/QBBqvvxvVwt1QBjT8SzCLZlRh+ibg6MwILyk8wKeelPDA471Lh+9pJ7+jBTokCk
-	9agedAHBxsnmn4lRtnUTW1RcfJSPpIWyR2KTT44E8u0PPjWLsaLg063CiPS+5J72
-	y3wGhBCzBUsO2eF+Ukxr3Q==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mP/bEzzG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T3EsL4Kf"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 98F51140019D;
+	Mon, 15 Sep 2025 03:25:39 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Mon, 15 Sep 2025 03:25:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1757921139; x=1758007539; bh=QZ4oX3kGn3
+	C3WGdja+YjLlb0csCnN7nK+ySPOmXFOiQ=; b=mP/bEzzGvZhfXzrX3qXxGvLwZ1
+	kBXHeFD6MA9uiX2gdVpIR5559dF+QTkxT6lp6U5V4SI3hDVEiLEQfbik5+qC4gO0
+	3PvA2BvCdWcgnZbns4wvKRBFf+y6bjUsbiuePjU9qERRSBRc8PHJ9o1we2wmNHi1
+	EfwvkC58C+g2vWRwcbjga/r2xUbJj+fSeBZJ7XJH9YIPmI7/oLhgDB/ZvyW5+QJx
+	FsmO0Mv5RP1f4lUuHAgFDXVUh8yFprbpOMLTS7hTKjg5VDc1rvxR/3Uh70qXbFDH
+	vZs4MmqaGjLVMLxKgAO/PoQn1mmoqjaiHOTVHyzUW6zU0/fMWlqMDWnJdFTw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757917684; x=
-	1758004084; bh=/6PrJFu1BSfpDbFXJSiqEM3nT94e32rXDvCzM4ZZyo8=; b=e
-	Ac1W/4ZIJQLn8mBjfuJbOek8jX3mrN+pbxdORhb2rsC3bKmFFYWM2BAYw9cUM484
-	gMAzIRXjPQ9UM/FF+/CATA+C3OXhbYzh9hE5FZL444O5TvsOgHNP7DhMWZ86J9v/
-	UQB0h+BeXrHBOZnIbIZnfwsjpHTeeWUGoYUi5mpKplUMmv/bhw/yl1xdG6eBckN2
-	7V/Nu0jUPJ22nr+4S7JKDaG2mOTJkmxJ5WSDQu6oVLXjDCOWtpL+cqsZveFcw/49
-	cPFhWpsN2jGpULkhoQSWwzdYsSwT6EXOMpYTWwE3cW7W9il832bCOvtr37ZNIw3c
-	4Mcu4xHDT+DLHNtaDdgTg==
-X-ME-Sender: <xms:9LHHaHJhVOrapJf4wCn3642CpMUKviyk18GfsQ44pEW33LAGv-_VKSU>
-    <xme:9LHHaLIFiI47V3kicn13KjQ2bj0Sypi8Q4ma1bz3Fga0U7OC6EaiCR0sk4yr89Y61
-    vXWGdR5VdQEYHymxQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefieeljecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757921139; x=1758007539; bh=QZ4oX3kGn3C3WGdja+YjLlb0csCnN7nK+yS
+	POmXFOiQ=; b=T3EsL4KfEbQjxPt7Qi7cZuDcDNLW6lyW99NcZioAmJgZeyy+cR2
+	saGjBnQJ+Rrf1ZYcxurcFfbKkFb12vLlWKyGdwkfBgq3Vlp/r8lHthUKLRadS1sX
+	Gsrf3FKSSIXnNp5rS7JGSN8AGhEyxxu+7XEgXficFQai4RvEglIj3ECYG35ErnIG
+	wPUd+dUcc7nyFB5aiSUAmCsedewSRTV5bny4pOCUQ90ffm/9u68OhdhuZpgAb0Ci
+	tyKgH63mwnh0X5Cu0ehAmtDakTvaaJinw3di9rl8f56LcTEw1Crdnj//GSuuxNjk
+	fjumm0hBD+cE9QcmdNDyXqE7mBU87iX5Axw==
+X-ME-Sender: <xms:c7_HaFRBjJE6UQ_xTnJH9f6-G_JF6pRTo0CZFhV8oErJ-4FdFJwjHg>
+    <xme:c7_HaKTb66_n94xKjQEIwERUSnAv4nBQ_mku39L6D5sr_Q8oyEsxmIiiWMzo-Fh-R
+    BhACBiy8HJkvEsBaA>
+X-ME-Received: <xmr:c7_HaBQHkwfsyJ3u9lj8pXm4bbdCK6aT_qNvFRdoWkEpobwPWtK2nozrNs0VfAvOJLL4S--Xa_R1_vEjPIT93ozDdURMZA7TW0paNUPpvikPuA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefjedtkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
-    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohephedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgr
-    mhgvpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehpshesph
-    hkshdrihhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:9LHHaKKs8vSgJ56sQCDrdKqGB2X8BGIEnLTn_Uz0DWt7SQQIQuGZig>
-    <xmx:9LHHaPTJ2igEUmN3FRvkrR_lHECZ__bUwBpHFMrAScnQqi2AUMbHhQ>
-    <xmx:9LHHaJuOhb8d8NhTygjiEg55uqBR_eR40E5n-CS3jhXs-ffRVxq_vQ>
-    <xmx:9LHHaAZCGsGVlzXEo71Dg8pZOJU_1yJ8vSAn3yafyzRX4x_zCUXyxw>
-    <xmx:9LHHaDQ7cXKWz0yrZmhZeSx9IUPhtegzRPnCWe1BRyDWukS9GC8Xua7V>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 7FA611EA0068; Mon, 15 Sep 2025 02:28:04 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    ejvedugefgffffieegtefhgfeikeevfeefheevvdegieetgeeujeeliefhiedtueenucff
+    ohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeekse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:c7_HaH64e2Xp1ZFrC_bvalvDVdCUDyQCvnXwAEKuw7qdYt0HK9hoSw>
+    <xmx:c7_HaF0bk7nXpHoNh4yzCv1XjSQnBcZ_CWPnCCEGq6Y6sAiJW4CxWg>
+    <xmx:c7_HaKB8LWT8zltOLiHAL-uWTAR0q8NA4oMR3Bk3_ipi92t4M3oNuA>
+    <xmx:c7_HaIMRRyAULgBjiwXX4iUlUzNx6MIo_zLs0O1A46obWTZvdRgBCg>
+    <xmx:c7_HaLHWpuy4J_hDqMcdm2bE6Q4cpsqJ2_6tkV9B_wLGSoLxXx0rxrkN>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 15 Sep 2025 03:25:38 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b715d9d1 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 15 Sep 2025 07:25:36 +0000 (UTC)
+Date: Mon, 15 Sep 2025 09:25:26 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 00/15] packfile: carve out a new packfile store
+Message-ID: <aMe_Zu1osrfDnSYL@pks.im>
+References: <20250819-b4-pks-packfiles-store-v1-0-1660842e125a@pks.im>
+ <20250909-b4-pks-packfiles-store-v4-0-151c4ba3619f@pks.im>
+ <aMNd0RkdaW4cWMtw@nand.local>
+ <aMNeWPD6spSMB1yh@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Ai977590-_NN
-Date: Mon, 15 Sep 2025 08:27:44 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Jeff King" <peff@peff.net>
-Cc: "Kristoffer Haugsbakk" <code@khaugsbakk.name>, git@vger.kernel.org,
- "Eric Sunshine" <sunshine@sunshineco.com>, "Patrick Steinhardt" <ps@pks.im>
-Message-Id: <7d63af22-3886-4dcf-863e-dec333601b3b@app.fastmail.com>
-In-Reply-To: <20250915014451.GA44900@coredump.intra.peff.net>
-References: <20250910051347.GA556174@coredump.intra.peff.net>
- <20250910154859.GB562601@coredump.intra.peff.net>
- <b39ba543-24ad-4bd6-be6e-dc1b8a416eb0@app.fastmail.com>
- <20250910183418.GA1157772@coredump.intra.peff.net>
- <eefc3524-9ecf-44e5-a6ba-1b4a0aff3158@app.fastmail.com>
- <20250911203256.GA1894340@coredump.intra.peff.net>
- <20250911204302.GA1907101@coredump.intra.peff.net>
- <98d206ca-3dc1-42cc-9f01-e3241d5a24af@app.fastmail.com>
- <20250913220609.GA435444@coredump.intra.peff.net>
- <eb7e569a-b297-41d2-82b0-956210292b64@app.fastmail.com>
- <20250915014451.GA44900@coredump.intra.peff.net>
-Subject: Re: [PATCH v4 2/7] git: allow alias-shadowing deprecated builtins
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aMNeWPD6spSMB1yh@nand.local>
 
-On Mon, Sep 15, 2025, at 03:44, Jeff King wrote:
-> On Sun, Sep 14, 2025 at 07:24:14PM +0200, Kristoffer Haugsbakk wrote:
->
->> > If you want to get rid of that last paragraph, I think it really is=
- as
->> > simple as checking the expanded alias new_argv[0] as soon as we see=
- it,
->> > like:
->>
->> I tried using both of these changes (the patches) but the `alias...`
->> test suite started failing.
->
-> Hmm, it still passes for me. If I do just this on top of your v5, it
-> likewise passes (except for your new test which expects the redundant
-> line).
->
->[snip diff]
+On Thu, Sep 11, 2025 at 07:42:16PM -0400, Taylor Blau wrote:
+> On Thu, Sep 11, 2025 at 07:40:01PM -0400, Taylor Blau wrote:
+> > On Tue, Sep 09, 2025 at 01:02:59PM +0200, Patrick Steinhardt wrote:
+> > > Changes in v4:
+> > >   - Small code style improvement as suggested by Junio.
+> > >   - Some commit message improvements as suggested by Karthik.
+> > >   - Link to v3: https://lore.kernel.org/r/20250902-b4-pks-packfiles-store-v3-0-6925278efeda@pks.im
+> >
+> > Thanks for these changes. I think that this series is getting closer,
+> > but I do not think that it is quite ready yet.
+> >
+> > The largest outstanding topic is that this round claims that
+> > get_all_packs() behaves identically to get_packed_git(), but this is not
+> > the case. I mentioned in a response to the patch that removes the latter
+> > function, but I think we should:
+> >
+> >  - Permit both get_all_packs() and get_packed_git() to coexist for now.
+> >
+> >  - In a follow-up series, transition get_packed_git() callers one-by-one
+> >    to use get_all_packs() instead. Each of these commits should include
+> >    IMHO a justification that the change is safe as-is, or include fixes
+> >    to make it safe. I think any "fixes" here are limited to "if
+> >    (p->multi_pack_index) continue;".
+> >
+> >  - Once there are no longer any callers of get_packed_git(), we can
+> >    remove it.
+> >
+> > If you want to pursue that in this series, I am happy to review and
+> > discuss it, but IMHO there is already enough going on here that I think
+> > it makes more sense to do that in a separate follow-up.
+> 
+> Oops, hit "send" too early.
+> 
+> The other outstanding topic that I want to raise is that I think
+> transitioning away from get_all_packs() to the new API in all callers is
+> premature. I would *much* rather see us do this call-by-call when it is
+> necessary to do so rather than forcing all callers onto the new API.
+> 
+> If there is a compelling reason that we must force callers to all use
+> the new API now, I'm happy to discuss that, but as-is I worry that we
+> are changing things too quickly here.
 
-That works for me.  Thanks!  I will send the next round this evening
-or tomorrow.
+Okay, that's fair. I'll rework this patch then to not drop that function
+and instead make it work on top of the packfile store, as well. I'll
+then have another look at this in the next patch series.
 
-It will be good to get rid of those footnotes.
+Thanks!
 
->> I ended up with not changing it for v5.  I missed the first time arou=
-nd
->> that this informational message is only =E2=80=9Clogged=E2=80=9D in t=
-he specific case of
->> `<git cmd> -h`.  In turn you only get one more line of output when you
->> are (1) chaining deprecated aliases, and (2) making a loop.
->
-> I don't think (1) is necessary. With your v5 I get:
->
->   $ ./git -c alias.one=3Dtwo -c alias.two=3Done one -h
->   'one' is aliased to 'two'
->   'two' is aliased to 'one'
->   'one' is aliased to 'two'
->   fatal: alias loop detected: expansion of 'one' does not terminate:
->     one <=3D=3D
->     two =3D=3D>
->
-> So the extra line is printed even without deprecated aliases.
-
-That=E2=80=99s right, that part=E2=80=99s in error.
+Patrick
