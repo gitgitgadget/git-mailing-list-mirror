@@ -1,123 +1,91 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCCC2135B8
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 13:04:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B775630DEDE
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 13:40:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757941466; cv=none; b=bxAJhLbnWHnXf5SM/Wy58zJZjHxrrz/sNARzh3s80DoXeUqRhMoeNtw07dHiqnj7Yt7WqPVMz1JR3PLcoKnQx1PRvoiCnSt8CrEc+kOLX3UUUv57YMKPie+lj3aXdvjUQSTSZmpHrzq4lmOjIs5vpqiJV06OJovRe+Gb821n3yk=
+	t=1757943640; cv=none; b=NJcwZmpqYnYlbg2u4cc6oZfQjr5IfUjcN7Am4OvofyXy/J/JmIqUu98/PpDsT8qWqR6l5HtLG8/736RFItL9kGN9eMTbHtAvAjXUl5GxGioKIqY6opLuwOiJbwrJPtwTGe+18Zo1m3ixXwskV0JcRDt5XPNkaKzt0VoBBRsAiL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757941466; c=relaxed/simple;
-	bh=8TZCSkP3WqualUz5Er/XmPE911CYjPtWeXIDIpaMUQQ=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=r7lB7EAx08Cg/oD1qG/tYIuuWNyEKRZHV6GfNm+P+YO/Tdx/HpALrV8vberHoRoWzEb5uw/AsJtWdCpzVpi4VAwrbiik3ZsVoIY9bNQQHBXm0uyhPKFylsQAqxGEBiWEavnN83H5MFnsegrCFpsp0LgYPb3ByYOaURCoFg/W3Bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GinItCx9; arc=none smtp.client-ip=209.85.128.177
+	s=arc-20240116; t=1757943640; c=relaxed/simple;
+	bh=IbWo318A00NFQQexc4dwPo1zOTIo9dTlHsrU9sZbLAo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oYQM9bX+L0yIVE4E6zT24cLVgjP91dtUjOPsQAjYzr9kpeW7Uea5KqRB+d3xnVyOkRoaROi/R1OxxvuTF52Ox4nWkucgxWWqixDzKZNO+6Unq1cXRm7iLsJYPS2fp4v86wiOCNdZCtwvtOBnJ5vVQ3Z1TEqMIMZz3nRHnP0eSQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A/udtB05; arc=none smtp.client-ip=209.85.128.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GinItCx9"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-71d601859f5so29859847b3.0
-        for <git@vger.kernel.org>; Mon, 15 Sep 2025 06:04:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A/udtB05"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-71d71bcab6fso36767527b3.0
+        for <git@vger.kernel.org>; Mon, 15 Sep 2025 06:40:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757941462; x=1758546262; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5le8SqYP1VuuW0eKPWts3mHTE4AXN6gxR9zYV5xq6k0=;
-        b=GinItCx96Otg08GNWeAaT3FGC4qIrszoMElIX1tn+N4HGHBs4q5OyhziOlYfOgyV+R
-         vK1ZND2OcDA1NR5N9YzqidqIApWRbqCJwVxnnsseAQr3xo2TwGw8vmfy9XysCRFxz8Pa
-         NnsZtlzbqXLtSVcOVKDY7Aljh+Wh57VRkdOTLjBNLKaA3S/cWzgClc70tTmVPmQhlDNQ
-         SrCYDyciluuogAWlKG79B1nZCUg68EWaEJCT0Jisx1j6FGdU0vNUHJ4mExpLja5YihKz
-         OgDyLqTvDJ4z3Mxi2IQR3z4yOl+GOoyFhrmPMUs6Y6Im/+/q89YT1C3O8ciJYkyvFRfP
-         QLNg==
+        d=gmail.com; s=20230601; t=1757943637; x=1758548437; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IbWo318A00NFQQexc4dwPo1zOTIo9dTlHsrU9sZbLAo=;
+        b=A/udtB05JCGQvVqQ2iPPXXTXTILD0gebLYFky3L2fEyVNX2Wuer3ayGWCtk5+GLIyu
+         zaBY5wenzZ97mnl2XPBaFgrIImXnTZmRiYUd78vsFWTAxHKa1gKbFsBrKS2jvHUpYryV
+         svBrhKpfu1Ru0/H0xtzad2bWo4AK8p0IJ8uN/79fICBWqrp+4Zi7PVHXe5TgzsM1WVBV
+         VQ7THFSxc87+/gEzQvVlNtqWEGzzQ/6Yn7r4kFykXkUzmOJQvznGm7daeVl2kMGy7VeX
+         RDcaFQF2nhUaWj1P06IcdHJ6pYCCy+axh8myAZ5nxcvFF6kt+IRDBu1O+GGWmHoOh+Eg
+         v1nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757941462; x=1758546262;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1757943637; x=1758548437;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5le8SqYP1VuuW0eKPWts3mHTE4AXN6gxR9zYV5xq6k0=;
-        b=HtLsox9tv/XWxoiQ8Qel9Ed2ubEPR28rTC9sLFOIq4GcwqlGwwNXBR2GUzWB3MSnjj
-         q6xg4aOkJpZZyShbW6wxr9M3qYZ72cM5hIJLM2QI45DI/jY+/InlijbS6AxeB+SmDXqr
-         d8FT6e7UufVVJ2d4bkbWqsDwfOZxr829VpEFoO+RGHTIny7WW7D43/eM430Z4q6BHXuF
-         UztPzPIApkg8wUp33TJItW9rvrTYYCEW+skY4mUjfl9zybZfuENc+Hy6f3mH8uY3QGr1
-         0Ma1dofrWVqoo7wUfYckImTGh8+10jGJWTA8fRYdXBvot0sWNPN2N9Q9Tx2Cup/VGp6Z
-         E9wg==
-X-Gm-Message-State: AOJu0Yzc2UwuwqocBfufQo1+Q4vSzHtwuLvaHVX6830fNSgzmTNcQ2WU
-	Sc1Bvd3LfETixHyAJXVl89ZMo60OT3aAHVUEt24+zkVydQ5D4RrU0btHOxjRRAc1
-X-Gm-Gg: ASbGncsYRaxPttuvd3j43DEafmF44vBIygocC1okhzXU7Iwp49bfYyr4IAkkGJL1xUi
-	xEqJbc0nDHlySeVq0dV42Uy83ZC9a1GR6+Wt9EC9Zs8s90MR0c0L+iqDIKfzW07oUU7Yeooj1uD
-	9Trj7huXqsh+iFbKSsEAOBiLnzvCDWZumD1j1mR75gBf5KgBgeU6h308jSYSW0we7GScb3MWycF
-	isuA6akF0PH5+uQ+wiVXUen1Mz0plZV9GYNHmrJ6h8iaZE7YBGweykpkMHidNOb3XyUf4wOAKx/
-	ZadKzj6W75IM18wivW7mXOsdG2sC0DXHX1h/emPMrRETqe6v7qqyWGi8VtzGTPalABM92yzu8Ls
-	ZJVIja7VPInD/RwinFihOHUOWPmhhIQ1L2CaI6EddfvuSQNWELryg9xsu3+Ob
-X-Google-Smtp-Source: AGHT+IF9S3VfrCJljePlhvLRAfXNzb7bUsWmY6wo4Rj26Wp8QX6zB5jaGTE2R/BbSR6PfmdGSUFHvw==
-X-Received: by 2002:a05:690c:6104:b0:72c:54a3:f051 with SMTP id 00721157ae682-730626d26c7mr115101347b3.1.1757941462173;
-        Mon, 15 Sep 2025 06:04:22 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:8cfd:9a71:b61e:9f6])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-72f791a4605sm31596907b3.45.2025.09.15.06.04.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Sep 2025 06:04:21 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        bh=IbWo318A00NFQQexc4dwPo1zOTIo9dTlHsrU9sZbLAo=;
+        b=g7SA/yuZRj2DOFBiPHE2Rx0fn3QvB6c2zvxBMvWNo+XH+/CZEUsYuN5KnfOe7yuLQs
+         za6HGLRybsGynyc1Plmnvw9mIjWEN0T0SsLvdVessFMWtU43WzovbMK5ycevmYBcJAjg
+         yqgM+GHckx9Wgk5Pv5G1q3NL08P1qM0HqDHdSYKk+SWuW9f0Z0XB6e0LREK3nFCwWYAl
+         v3ALx82YFo190aqvRYX0Jn2IlB2dC0cEh/T7ZaRBqfrR7UxlgDEEU0/mlHww2puFSQBc
+         qgbZVKNsFcbpMd/azAnWVGZu7HZaeZEaXG6crHtx2gCwjv3ILK0iuu+0BRPOlMDi7eWK
+         bohQ==
+X-Gm-Message-State: AOJu0YzvkptoCrfAWrSQ2k8EQueNZ7bSYFSH0Toi4JH5xcAV4rWajlqv
+	dVVpfira4uQUKUGtXTAlefvmEpM+CYbyVyX9G3isZU3efeM87CGNQd9wjOlfF2KN6/GImKRVzpp
+	t1cJ8Nxh25HMA9UUtRQ6w9XBx6cGkGZGa5JGASM8=
+X-Gm-Gg: ASbGncsFEfljXNZOfGf1tAPiM+tjEPyiOtMDuBL+vtMsZLfJ9RkZys6HggBh+2RELzp
+	QKoIBomBxjQW2HNwGw0a6afC1rnJgpoVq76WkkEdPdfGzWVzo9xnfThtsvQm1+gcH00DCMVIym1
+	Aed5Un5IVdUbuYr+4ns+3PWfme3J/fyVMxhir8Wkr7lFUpUtQHGx9P8K2yATx+aYDjBFoDyFHPQ
+	4C+rfpX
+X-Google-Smtp-Source: AGHT+IFq2OVqgEQxOrPqJfP6ESsHslSqdOpLN1wo8w58oYmpIFYzEGcsX86noxQ4PZqCuGDGxpd1BCXsuMaCkgngXok=
+X-Received: by 2002:a05:690e:201b:b0:624:1660:ba01 with SMTP id
+ 956f58d0204a3-627262e88f0mr8606105d50.37.1757943637198; Mon, 15 Sep 2025
+ 06:40:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH RFC v2 15/16] builtin/history: implement "split" subcommand
-Date: Mon, 15 Sep 2025 09:04:11 -0400
-Message-Id: <492931C5-AC12-4C5D-9321-340C2A4842CB@gmail.com>
-References: <aMfdGTQWT1ES1jbm@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
- Sergey Organov <sorganov@gmail.com>,
- =?utf-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>,
- Martin von Zweigbergk <martinvonz@gmail.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-In-Reply-To: <aMfdGTQWT1ES1jbm@pks.im>
-To: Patrick Steinhardt <ps@pks.im>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+References: <CAJKmQvf-sLxowLJLitvqDmyL1BXXDK+anDE2jaBSEabApMNVoQ@mail.gmail.com>
+ <62774477-81d2-4959-aa5f-fe0dca023a2a@app.fastmail.com>
+In-Reply-To: <62774477-81d2-4959-aa5f-fe0dca023a2a@app.fastmail.com>
+From: usharerose <ushareroses@gmail.com>
+Date: Mon, 15 Sep 2025 21:40:25 +0800
+X-Gm-Features: AS18NWAEwSZXgIoYNFx7HIEuT48oKUYnt2jdHg0huvoLg5-n9NYsh9JnMmZWVp4
+Message-ID: <CAJKmQvcUQnsgcWW5EgUEaDwZKdtWXnJ1aoVQTAdvG3+te5p1ug@mail.gmail.com>
+Subject: Re: [DISCUSS] validation on git config user.email
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Sun, Sep 14, 2025 at 7:58=E2=80=AFPM Kristoffer Haugsbakk
+<kristofferhaugsbakk@fastmail.com> wrote:
+> What=E2=80=99s the positive case for email validation?
 
-> Le 15 sept. 2025 =C3=A0 05:32, Patrick Steinhardt <ps@pks.im> a =C3=A9crit=
- :
->=20
-> =EF=BB=BFOn Fri, Sep 12, 2025 at 02:26:04PM -0400, D. Ben Knoble wrote:
->> Hm. I've pulled down v3, built it, and pushed to the same branch. The
->> tip is e91e23546b (builtin/history: implement "reword" subcommand,
->> 2025-09-04).
->>=20
->> Now, a heavier-handed recipe:
->>=20
->>    GIT_CONFIG_NOSYSTEM=3D1 GIT_CONFIG_GLOBAL=3D/dev/null bin-wrappers/git=
+Thanks for your reply, Kris. My intention behind the original question
+was not to suggest adding validation for email legitimacy, but rather
+to inquire about and understand the rationale behind the initial
+design decision to forgo strict validation when the user identity
+feature (user.email) was implemented.
 
->> -c commit.verbose=3Dtrue history split @~5
->>    <input y,q> # once I even used "e" and added new diffs to the patch
->>=20
->> I see the usual instructions:
->>=20
->> # Please enter the commit message for the split-out changes. Lines starti=
-ng
->> # with '#' will be kept; you may remove them yourself if you want to.
->> # Modifications qui seront valid=C3=A9es :
->> # modifi=C3=A9 :         add-patch.c
->> #
->>=20
->> And finally I might know what happened, ha=E2=80=A6 if the "modified file=
-s" is
->> the status information, then it has been there all along! Meanwhile, I
->> was expecting a _diff_.
->>=20
->> I'm actually _still_ expecting a diff with v3 and commit.verbose set,
->> but I apologize if I've led you down a wild goose chase for the rest
->> :)
->=20
-> Oh! I didn't even know this was a thing Git supports, I've never seen it
-> before. For the sake of simplicity I'd propose to keep this as-is for
-> now, but to amend that mode once the initial couple of patches have
-> landed.
->=20
-> Would that be fine with you?
+I've come across many explanations, but they mostly list the various
+application scenarios for `user.email` value. I haven't found an
+officially recognized answer regarding whether the above applications
+were explicitly considered during the initial design phase. Therefore,
+I would like to consult the official community here.
 
-Sure! My apologies again for the =C2=AB commit.verbose =C2=BB red herring.=20=
+Thank you again for your help.
