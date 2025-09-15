@@ -1,140 +1,119 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0A1A927
-	for <git@vger.kernel.org>; Mon, 15 Sep 2025 02:46:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A47221FAE
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 04:12:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757904394; cv=none; b=u/6Eu6F8a0MxNsNamnDcdojvP0PuuPkKD4PxlBIcctyAajboKGyhX1soMRPYkHMmL40ceP3+MYLmo5r5XQRPE2CqBnXNIRYt19w51hf6cux5daRwPxVk6PqisunKmH66h6tgsdtGuIePKA3naxcjwPYlPTkh+5vaqY3GcXRQOxE=
+	t=1757909529; cv=none; b=pY1E5EuKHgzgidZsjxnj5d53VL0m74XIjeoX0tu05gO4mS9QmjQD5qg+eXuXo9WBtP+8cHg4+JezzUM6AT284u3WjkiZ8UIuGyJGS6i77Le/JNlmJWi7b5KYrFjdWLZi1s+1FYjXwRCrz/lzSbXiWvdFU/tVJFaRlf16GXXPGbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757904394; c=relaxed/simple;
-	bh=ZXbz4vc6Ok1JAAKORmosP3LqXBNGi02L2iycsebyjGE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p2NlKSgXhgKZkAuSB3+9H/yB3em6NKe0nclHzmlPqfg0QlMusWIY6mFpwOY12rw+I3Asgg2Ngd106+Rj/MNXfCcWNb2fa9+T1u3RQm40B8suoqVKbk5+dArdKCn3VF93/AX3TUYNWpWzuyiMk6or304RHcR77BOGDuvAfgS10Oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Z9AU1cMt; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1757909529; c=relaxed/simple;
+	bh=BzBEae2ZYtWsT26cL7CS6Oq7y5Y5i0K4T82SRebC0yo=;
+	h=Content-Type:MIME-Version:From:To:Subject:Date:Message-id; b=sq71MtlSLwTnx1Cw76Fs5jVNqTYOgLonaqVl/iFF7I14uLzaN2V0wz/gaPPi/Kofs3E8Dl8MA+rwjaNEUween1JWYinyjtNfiGcrxSVbbt+umBj7nKs+bbcneggGdNLTO8uxE3CFdA0Buc8d2XE0/wDSU0MPJn2b0ICkcK9ABxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ownmail.net; spf=pass smtp.mailfrom=ownmail.net; dkim=pass (2048-bit key) header.d=ownmail.net header.i=@ownmail.net header.b=m4+Hmdnh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZGIOmWq8; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ownmail.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ownmail.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Z9AU1cMt"
-Received: (qmail 83877 invoked by uid 109); 15 Sep 2025 02:46:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ZXbz4vc6Ok1JAAKORmosP3LqXBNGi02L2iycsebyjGE=; b=Z9AU1cMtlLGdC+nuMXIkv5Uq4onraLyGN4LYCRUsJePdrZVX6dleuXK3YotlQYMZxF9gGJmnKjdcuMb13JajsMdogNtsGEghCteW5I6s1CR5A6fUIr9syy+Fe9tNK/kf7xyHqCDr3zVIjDRlUZuHqizvHBJqOvof3w8vxZzff+wwIG8H7wBuTpKSasCz90EXdSnv5haYnXA+OAw2iAqMrdVAAz6/kPovk+KM/+7oQDKrhio6+VbORPJ3fPPa4ncjfu0rR2aqhBWA5Zi8xXgw6XZpcs72o742rVC9fOU4vHRHWcFoesjIpsuvG4kkhEjRHmeBwkN4DTv0DpVLLqoePQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 15 Sep 2025 02:46:31 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 141093 invoked by uid 111); 15 Sep 2025 02:46:31 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 14 Sep 2025 22:46:31 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sun, 14 Sep 2025 22:46:30 -0400
-From: Jeff King <peff@peff.net>
-To: Marc-Jano Knopp <y--gitbugs@marc-jano.de>
-Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [SOLVED] Re: safe.directory does not work at all (git 2.39.5,
- 2.51.0)
-Message-ID: <20250915024630.GA595592@coredump.intra.peff.net>
-References: <duuus2ifgydpwpja6vccvxbcnxdgy6mc6h63okzv7xdqo23fpi@ermurkhms4j3>
- <lamzerhpp6kbgzbhztgaqvdcymaqvec232sen67t6wx4rmobih@lqqivgroonmp>
- <hbghuae56gm6ypox6q34mt4q6awoeb3itxsnmgpouycn7qodch@4pjsh24jhmqs>
- <20250915022301.GA593748@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=ownmail.net header.i=@ownmail.net header.b="m4+Hmdnh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZGIOmWq8"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 54F197A0096
+	for <git@vger.kernel.org>; Mon, 15 Sep 2025 00:12:05 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Mon, 15 Sep 2025 00:12:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ownmail.net; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:reply-to
+	:subject:subject:to:to; s=fm1; t=1757909525; x=1757995925; bh=LN
+	V94/1iuTbpmtYQhjoehPntb/KqT1OXf61/tQPAAn4=; b=m4+HmdnhEEZUUk1fin
+	ci3yE72JRFFoHBVnvfG1Dqlv0AFDfXtCkpeJjYCniO6N5PNclqvoZlyVghznSWqB
+	VjY5NhOdER35kEtQYUHUcn2kgFe0WPEf/sh+TsfZOsli7+51jMSsMle+D5DdmMb2
+	N3ISwtDnvNfXRtK2SQK7hiWC8/hvhxndmWgqRrcnonxYOubxhEGf029zBgwo2zR7
+	ovZA3ter0RwBLaXGa1wnrPauLPkOyWrWHBO0CMPM6TthFSXMb5kDaWjHDSYvZh9o
+	mMZqs/f/uOm7SWWNPSLJAmSKu8Xwn6pcxfI4fAnamJkASE8ahWnwZp6Fwg1hCUKs
+	aNyg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1757909525; x=1757995925; bh=LNV94/1iuTbpmtYQhjoehPntb/Kq
+	T1OXf61/tQPAAn4=; b=ZGIOmWq8nJcVtFv/y3/bmjpGC95lfJ8SZ44eDxyzq6Np
+	e9Gwoh44AkvrE1JcTo/OsB5ByRZ3f5XANfhRLWFTG0bHqposZwcz0Q/U3aSThRdH
+	zTko7ac6cWeXsZi5Pv/kOwz0m3ktnwpF+dSpSYPNoXQpZTpiqpE0Jx4BMLbmIR+n
+	xD1bbGXldEnldBgfzmQpFKCJ2Ey4tnApjiUqwEFf08EVvX+8taD5ClNNBZmOqduO
+	SsvoirSPgezna6S1L52WcUFNHqokv6JwFgY2JwrWRNPaMkdkV8qePcy1aCCoDdbL
+	hfdGBML7e/jK1Hf+rUzySTfDrP6y1p3n/BxYY95qhQ==
+X-ME-Sender: <xms:FZLHaDaOWgIqbELfpat-YMnvcEk5BUiBdIW5_-StmVU3KLWnr6m9wA>
+    <xme:FZLHaEZ8Pca3srnLl_vkDhxyF1f4xOFb11kFKrmLTrQwjV3R-A8RHgMgmh7hQAvaA
+    0_GpyEGO5EsOQ>
+X-ME-Received: <xmr:FZLHaPVO0lJUp0GNlmf0Nc2qXhPzfPyjvPsnnR1XGJGoBzrx-FZOU92SLMqS4xtUAfNWZYJozCw6Ia6EmzGZvoDU2nX4cXMgv1aBsmFR2S53>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefieejtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurheptgfgggfhvffufffkrhesthejredttddtje
+    enucfhrhhomheppfgvihhluehrohifnhcuoehnvghilhgssehofihnmhgrihhlrdhnvght
+    qeenucggtffrrghtthgvrhhnpedtgfdvveekgeejueefffdtueekgeehvdelfeeggeevve
+    eiudegvefgkeeuteehudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
+    ihhlfhhrohhmpehnvghilhgssehofihnmhgrihhlrdhnvghtpdhnsggprhgtphhtthhope
+    dupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhg
+X-ME-Proxy: <xmx:FZLHaL2xfBcOIkv9c0w0uTK0rHYar9VidjzKGgeRUhej0UDFYTzqWQ>
+    <xmx:FZLHaGZoronclnHn--b_32rccHGpiRBq18JW9A0cEemEqywCpQwJaw>
+    <xmx:FZLHaOogFRLGVSbmEsBdpU8u_aweAIZl07xlZSTRu3WD9qXee2eUgQ>
+    <xmx:FZLHaCrf3MqPuzpuMFgOjvPmxpDAfs_XzE1klhhzs4y8CNvR_vZN4g>
+    <xmx:FZLHaOy_2yufRtvVWad42Tk0bJJ8aEtTFrawmVGg3yeeD0Un221CkUgO>
+Feedback-ID: iab3e480c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Mon, 15 Sep 2025 00:12:04 -0400 (EDT)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250915022301.GA593748@coredump.intra.peff.net>
-
-On Sun, Sep 14, 2025 at 10:23:01PM -0400, Jeff King wrote:
-
->   - could upload-pack install a die() handler that prints the message in
->     an ERR packet? I worry a little that older versions of Git would not
->     handle this great, as I don't think they were always prepared to see
->     an ERR packet at any point. OTOH, it is probably better than sending
->     nothing, which is what we do now.
-
-Just for fun, I tried the patch below on v2.39.5:
-
-diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
-index f446ff04f6..ad40143beb 100644
---- a/builtin/upload-pack.c
-+++ b/builtin/upload-pack.c
-@@ -13,6 +13,21 @@ static const char * const upload_pack_usage[] = {
- 	NULL
- };
- 
-+NORETURN
-+static void send_err_pkt_on_die(const char *fmt, va_list ap)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	/* format into a buf since interfaces below do not handle va_list */
-+	strbuf_vaddf(&buf, fmt, ap);
-+
-+	/* write our ERR packet */
-+	packet_write_fmt_gently(1, "ERR %s", buf.buf);
-+
-+	/* and then do the usual die to stderr */
-+	exit(die_message("%s", buf.buf));
-+}
-+
- int cmd_upload_pack(int argc, const char **argv, const char *prefix)
- {
- 	const char *dir;
-@@ -38,6 +53,8 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
- 	/* TODO: This should use NO_LAZY_FETCH_ENVIRONMENT */
- 	xsetenv("GIT_NO_LAZY_FETCH", "1", 0);
- 
-+	set_die_routine(send_err_pkt_on_die);
-+
- 	argc = parse_options(argc, argv, prefix, options, upload_pack_usage, 0);
- 
- 	if (argc != 1)
+From: NeilBrown <neilb@ownmail.net>
+To: git@vger.kernel.org
+Subject: [PATCH] send-email: don't duplicate Reply-to:
+Date: Mon, 15 Sep 2025 14:12:01 +1000
+Message-id: <175790952167.1696783.4795702220839036460@noble.neil.brown.name>
+Reply-To: NeilBrown <neil@brown.name>
 
 
-The results are...not great. You get every message twice, of course,
-because we still print it to stderr. Though that could easily be fixed.
-But for the multi-line message in question, the "remote error" part is
-hard to see amidst the other lines:
+If I run
+  git send-email --compose --reply-to 'ME <my@address.net>' .....
 
-  Cloning into 'foo'...
-  fatal: detected dubious ownership in repository at '/tmp/foo.git'
-  To add an exception for this directory, call:
-  
-  	git config --global --add safe.directory /tmp/foo.git
-  fatal: remote error: detected dubious ownership in repository at '/tmp/foo.git'
-  To add an exception for this directory, call:
-  
-  	git config --global --add safe.directory /tmp/foo.git
+and edit the intro message, then the message will get two copies of the
+Reply-To field.  gmail.com rejects such messages.
 
-Probably it would help to look for newlines and prefix every line with
-"remote: or similar. But an even bigger problem is that we die
-immediately on seeing the remote ERR packet, so we miss out on any local
-error messages. An obvious one is trying to clone something that doesn't
-exist at all. We used to say:
+This happens because a Reply-To is inserted into the intro message
+template, and then the intro message headers are copied and another
+Reply-to is added.
 
-  Cloning into 'does-not-exist'...
-  fatal: '/tmp/does-not-exist.git' does not appear to be a git repository
-  fatal: Could not read from remote repository.
+This patch fixes the problem by noticing the Reply-To: header when the
+intro is parsed, and using it to assign $reply_to rather than blindly
+coping it into the new headers.
 
-  Please make sure you have the correct access rights
-  and the repository exists.
+Signed-off-by: NeilBrown <neil@brown.name>
+---
+ git-send-email.perl | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Noting that we saw an error from the remote side and giving some hints.
-And the stderr from the other side is enough to give us the more
-specific message (though again, over http the user would not get that
-stderr message; however, if we get a 404 we do show a useful message).
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 437f8ac46a85..e2248c223119 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1931,6 +1931,9 @@ sub pre_process_file {
+ 					$in_reply_to = $1;
+ 				}
+ 			}
++			elsif (/^Reply-To: (.*)/i) {
++				$reply_to = $1;
++			}
+ 			elsif (/^References: (.*)/i) {
+ 				if (!$initial_in_reply_to || $thread) {
+ 					$references = $1;
+-- 
+2.50.0.107.gf914562f5916.dirty
 
-But with the patch above we just relay what the other side says:
-
-  Cloning into 'does-not-exist'...
-  fatal: '/tmp/does-not-exist.git' does not appear to be a git repository
-  fatal: remote error: '/tmp/does-not-exist.git' does not appear to be a git repository
-
-which seems worse to me.
-
-So probably not a very productive direction. Oh well.
-
--Peff
