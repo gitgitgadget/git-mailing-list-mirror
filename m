@@ -1,123 +1,156 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9BE1B5EC8
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 17:10:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE9825F97C
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 17:19:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758042631; cv=none; b=Fxtc1PXzQ5c5org+NBfvaXjtfYcjASwjiWa6pJpGDdcVeLRTEISKrUvUFVqGiwik5tnp9QkUCTVUG429wNyts/0bsGORbrNBwTltmUn494U2kRua3tP81nYoxgo8bLcvRlXONd4cAcardRQNYCAffLQJWVlsz/QcVfTX7ImwYS8=
+	t=1758043153; cv=none; b=XrcRxGyxn/NTs7XwT3BtNSySf+7pXalP1tEIeYCQiyUdB/WjdvCubQ2fb0y7ifJEY3BSW5LQ8LmKRe8lGVSHE2BQnFclK6p9YT8HZ5w6KA6Q2I0Ca4aSjg0MWKaJs9RUCzuSB8k2oN+JRT7MiXG4Jpr2eU8pZgMkKItH+jBkCmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758042631; c=relaxed/simple;
-	bh=dwwp1PsrSgplWH1Pm5tRp/FyzWMgiwJMF9aIWhSITAM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OUjT9igIJDW1qqQZnHno0XBe8LZiMMbbXSkA6pBMgk7lX49qDOxSlh/QZkxGk7r+DNqI6SBG3BMz9LBddzZC+V/xTsGQvSmEib+aTdRihIJB8apoBeyMzi8jorSblghlLzU57fe7sRMcF8j9p3uCeMPnGzw2ISHSi5Y2rwZCNF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aWvnABaq; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758043153; c=relaxed/simple;
+	bh=u4NowZdUFITzcbKofaVZ/6GW7XswRDWX+dM6r/j4U/8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IPjBHXuzZqkOZYjyVebjh7jaMcu132SRC2qONDCMeHZKPUHAepuoQw7w379RvNbAfbdmDuTlvqi8jtnvmaCwNMbj5x+4Olru8/U5iw3MDv+trN54zN4tnouCG+8U94OY7+bdSqmMcfjzE9nRJb24XHAowbCqZsdekyH0LcSmU+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZuN3/fCo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XNmbr1i/; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aWvnABaq"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-b07883a5feeso989363466b.1
-        for <git@vger.kernel.org>; Tue, 16 Sep 2025 10:10:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758042627; x=1758647427; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dwwp1PsrSgplWH1Pm5tRp/FyzWMgiwJMF9aIWhSITAM=;
-        b=aWvnABaqMVEDyaeoIE9XmdNHAInbwuD6QL+sdlLNdSGNhxG9gznhNr7LV65NHj1zyW
-         8l89oZafLTvIIz9K+gOtMG4QvC7io5sHutbM7WbP6sf4j6kTEmjCY0odb3bGBY8EjpI0
-         /arllto/rJL93budQWa0P6VwDRz68I37HeHDgOrNgI3vjg/uqleTavKY23TwQJ/1tSol
-         QkvV/vdnUlVRZDxHYVSTPN25yzbK7wqWIyuvpeZBeHCApeGagQGE9lvHJ44zui75l/vG
-         3yAs6WX530JbmQoWnm02tySjseyJigATw4oAlfvDFMuOBmBvl/JpfmuC8lmSYbPv6ssx
-         kVuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758042628; x=1758647428;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dwwp1PsrSgplWH1Pm5tRp/FyzWMgiwJMF9aIWhSITAM=;
-        b=CVciV3Jh3iHR2uyIwkfFDcEgvya6Ul+fRac3W4SVhYOcZ/X8TrZi2jvuUroZ+88eB1
-         IEc83H4VEGWT++bNj+X2LydJG6AR0K/2JCfYKAgqFRyhdblgu8YQeV0WuP9v3FJ5nawn
-         KsrB/+NyoGONEf5+JkGErT2TZpAwvkr4usVFg4pZUIe6pZbkIgUqWvwAjwYGTlU8plDX
-         SheVvU59ul6mmBKWm69Hizv6T9Qg/ZTBzDp0TPu6FQDyW6O4+loioZkKPZ0zV8RjU+p+
-         RYHm2ZqzBxU3aapq9UX9PCJ0OfJu0BRBEDEoaA5D7XfWxiRCbVifOEti48CBLPHvkw6l
-         0XWg==
-X-Forwarded-Encrypted: i=1; AJvYcCVK4gRMeSV7AUV9fsqzsXqS/DDu7b8VSBaHds7LtXQCjyT2HdBsejpcQnbb2NXsJjAAD8M=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJWm02xx7br0UgLfxqezRJtWhS/AdW9u4Arwursxy0Bepo8ft7
-	qJrhaaSIucwr92MdR/Mun5IfKo6M46XA0TSkF7Dy9tqMW7vGeVecfH+FNCIWl7++BFgejjbaKvd
-	IJYgY8cC9UsIFdk/tdzYf9wJmZFKCOPU=
-X-Gm-Gg: ASbGnctKkGy0RnQYCbTIssChXJ6RAnNRFOVII5KixAFEFvLqPCjnMA5W8hH6Nj+CEeD
-	RK3o2ERWTximQDgjz+C4v7Li620ug+JjnyMEJVKEEYrA8DibBJ7PltBlT2jSCcDXLlEKD5y+OTf
-	EwxfAmzPvdabm7K8i9iCvdHqBGMqiJIyA1jFxYolqUK/ZKd/vjnpFYIcssakxQ+u/xlhcJsqqzn
-	NOsYwVOxLeugE+mQADmYBJWN34oIri+JCm4+XWT7MOClrK6QyWv
-X-Google-Smtp-Source: AGHT+IEYDW1rabxgShL3TbnfVrAeNtX4yf/DP8uc51HxDw0Ref6ARoHsMxB8ucTfQXybYfldTlhf2uClreacFO5/ykA=
-X-Received: by 2002:a17:907:930b:b0:b04:4975:e648 with SMTP id
- a640c23a62f3a-b07c37fd7cemr1794680666b.35.1758042627553; Tue, 16 Sep 2025
- 10:10:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZuN3/fCo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XNmbr1i/"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 609B9EC084F;
+	Tue, 16 Sep 2025 13:19:10 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 16 Sep 2025 13:19:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1758043150;
+	 x=1758129550; bh=WEN5MmRF/yUZz2nMopDco9M2xexjSUhfaSlV9a/tLHs=; b=
+	ZuN3/fCocxi35Zq8K8k6DOOj7wss64mzuYkcekQWuoJmJ+N68fz4JzRrXIG2ZZ+V
+	Qgu67euX+sWIbsqgR0sx3lOWfXMKAe9mymAuFMCsEukb0uJyDa49u6yuAoMTojrX
+	3KJNtWRfXajf1jBMenzO29PDNldLk9ERdOJHRQaRf6aw1JG1PfphwDTRow6VGdlv
+	25xrpTG00psozOvJfe9VfawJPAFWDvqS2UDlfpF0KC6Ll0p7nIJTjdlv1MK2eGiT
+	s58KmyTZfS0C7s2fQhxZgTzybgN/Jlc+QT3QszgwV1jDzeIa+HR4LNs/xnp7zfGI
+	R4juCF4TYmc41mpJjb6Eig==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758043150; x=
+	1758129550; bh=WEN5MmRF/yUZz2nMopDco9M2xexjSUhfaSlV9a/tLHs=; b=X
+	Nmbr1i/NZvweiQolZ6puSZO2FLvx0d8I6CjmveQtvrvQBWc4sCtf9bY7yPocT9W7
+	ANsgM3TxHWfVg1dcqI0NrJN/P13Ntvd0b6JDZ6ztyaY1Me1cy+acF92X/lijnfm6
+	05wwe6vjXB9z/JARTG15Q03bROTGsoY9w7ccqHWJ8B78CBWMSBV++VtQ2tDfETqS
+	ofRixwaXdycPgNse/+yJikdfBKAND1l0a8ib0KtpbBF/PfJQxAFSGnAOJ2rf5WII
+	ekv5Fb124ONWArc2YrKxzsWlD0BoyniKlQ/t/afXvu4JPFi1OjN38BNZ3v64YeqA
+	AXmdPYUUE6HyfPeQ+Vvug==
+X-ME-Sender: <xms:DpzJaMUdPLpIhoeTPmwRVWe5PRrd2KqVq41KqELKTj2AEt6m0uMclQ>
+    <xme:DpzJaME9BjmzuskYHv7i5SGl5CIwgI8ap5edKXS3KkoMq1C08iWUx3mJLkBNlIfuy
+    AMQC3eQfaotx1MjMw>
+X-ME-Received: <xmr:DpzJaG3bsLS0tdBA29Ai_f_liZyNo-76loyQ1y0befPzOw2Qed-8LlmxkwMKxFNHfK_xsgkvE3s1ChmfKICDT1bHGigv9oyIbOC2Wlg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegudduhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhephfetvdejheduheegleehfeeivedtgeelfedvffdtvedtudffieekieeijedv
+    lefhnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhushhtrghvohdrvhgvlhgrshgtoh
+    hhsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhushhtrghvohdrvhgvlhgrshgtohdq
+    hhgvrhhnrghnuggviiesnhgvthgrphhprdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:DpzJaGMYA9iAyK3ieRPwY-6UmLNVluR_TIv5Uz2hS7PJXptPpTAsYQ>
+    <xmx:DpzJaN6tehopDUSpgRLswQydxiruokTDNbT0jRvkE4YlKaxmi_Fg0Q>
+    <xmx:DpzJaI3DUqHI4LwE04WnSQDJMhKxCCUWlDvQdZ8owoHoStKwQuXuQg>
+    <xmx:DpzJaGwyW49rL5U2TGp8iqipoKpGedHaIG_Pds37gzn5EWRchyBxSQ>
+    <xmx:DpzJaFr_fq1edWqC2dpSPSMapZ0hD_HcW9d8-R7-DMMx2b4ETSymRv2J>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 16 Sep 2025 13:19:09 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Gustavo_Velasco-Hern=C3=A1ndez_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Gustavo =?utf-8?Q?Velasco-Hern=C3=A1ndez?=
+ <gustavo.velascoh@gmail.com>,  "Velasco-Hernandez, Gustavo"
+ <Gustavo.Velasco-Hernandez@netapp.com>
+Subject: Re: [PATCH v2] docs: update description for '--mirror' option for
+ 'git push'
+In-Reply-To: <pull.2028.v2.git.git.1758038628948.gitgitgadget@gmail.com>
+	("Gustavo =?utf-8?Q?Velasco-Hern=C3=A1ndez?= via GitGitGadget"'s message of
+ "Tue, 16
+	Sep 2025 16:03:48 +0000")
+References: <pull.2028.git.git.1754922884439.gitgitgadget@gmail.com>
+	<pull.2028.v2.git.git.1758038628948.gitgitgadget@gmail.com>
+Date: Tue, 16 Sep 2025 10:19:08 -0700
+Message-ID: <xmqqzfaumi2b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <89394e50-9077-4a7b-b30e-afd1be1a40e8@gmail.com>
- <18A45EC6-2D2C-45A2-8802-0E5060539398@gmail.com> <9f9e49c5-5612-4e6d-89af-839b353506f1@gmail.com>
- <CALnO6CCsFuYqo-q8D1g=vR9q22+Cy1MAgk1Ld0cD1wFNjr-eSw@mail.gmail.com> <4b689f92-5277-4e57-b4b7-8cc241ddd664@gmail.com>
-In-Reply-To: <4b689f92-5277-4e57-b4b7-8cc241ddd664@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 16 Sep 2025 13:10:16 -0400
-X-Gm-Features: AS18NWDSrFbj0gms5wB1_4FrRvrYIKUznI6RPj6qCMiU-3QILpli2WNgiCgXHg4
-Message-ID: <CALnO6CBprG+TSa3vtVjDOX5sF3MorvPv4Do7gA8mXXz26+3hUA@mail.gmail.com>
-Subject: Re: [FEATURE] Proposal: git stash --only-unstaged
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, "J. Dettweiler" <git.vger.kernel.org@dettweb.de>, 
-	git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Sep 16, 2025 at 7:03=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
+"Gustavo Velasco-Hernández via GitGitGadget"
+<gitgitgadget@gmail.com> writes:
+
+> From: "Velasco-Hernandez, Gustavo" <Gustavo.Velasco-Hernandez@netapp.com>
+> Signed-off-by: Gustavo Velasco-Hernandez <gustavo.velascoh@gmail.com>
+
+For this project to use a patch, these two must match.
+
+Please decide, under which name do you want to be known as to this
+community.  Once you decide, please use that chosen name to
+configure user.name and user.email for the repository you use to
+work on Git, amend the commit and update the sign-off using the same
+identity, and the force push to GitGitGadget to /submit (I am not
+sure about the last two steps as I am not a GGG user)?
+
+> The current description considers only created, updated or deleted refs
+> locally. However it does not address the case where new refs were created
+> on the remote end, in which case, are also deleted. The description has
+> been reworded to describe what is removed, updated or added. (Based on
+> Junio feedback)
+
+Drop "(Based on Junio feedback)" that is not even grammatical ;-)
+If you want to credit others, it is common to say
+
+    Helped-by: ...
+
+just before your own sign-off.  See an example like
+
+https://lore.kernel.org/git/2f78ab2e28c64f05d807cb9460fa62eb1011a57f.1757879060.git.code@khaugsbakk.name/
+
+(by the way, oh, gee, that's an unwieldy long message ID).
+
+>  Documentation/git-push.adoc | 11 +++++------
+>  1 file changed, 5 insertions(+), 6 deletions(-)
 >
-> Hi Ben
->
-> On 29/08/2025 14:30, D. Ben Knoble wrote:
-> > On Fri, Aug 29, 2025 at 9:06=E2=80=AFAM Phillip Wood <phillip.wood123@g=
-mail.com> wrote:
-> >>
-> >> I think the example works but may generate conflicts when the stash is
-> >> popped. One can argue that the conflicts are unnecessary because they
-> >> could be avoided by popping the unstaged changes but I don't think the
-> >> example is broken as such.
-> >
-> > Thanks, let me try to rephrase: the example makes no mention of
-> > conflicts appearing or having to adjust them. It seems to heavily
-> > imply to me that no such conflicts are expected, though as we
-> > discussed upthread it seems unlikely you _won't_ get conflicts if you
-> > do
->
-> Yes, I think if you edit any staged changes (that is the lines that
-> differed between the index and HEAD when "git stash" was run) you'll end
-> up with conflicts. If you edit a line where the index, HEAD and the
-> worktree matched when the stash was created then I don't think you will
-> see a conflict. Overall conflicts seem pretty likely, so maybe we should
-> mention them in the documentation.
+> diff --git a/Documentation/git-push.adoc b/Documentation/git-push.adoc
+> index 5f5408e2c0..77ce4a27c8 100644
+> --- a/Documentation/git-push.adoc
+> +++ b/Documentation/git-push.adoc
+> @@ -163,12 +163,11 @@ already exists on the remote side.
+>  	Instead of naming each ref to push, specifies that all
+>  	refs under `refs/` (which includes but is not
+>  	limited to `refs/heads/`, `refs/remotes/`, and `refs/tags/`)
+> -	be mirrored to the remote repository.  Newly created local
+> -	refs will be pushed to the remote end, locally updated refs
+> -	will be force updated on the remote end, and deleted refs
+> -	will be removed from the remote end.  This is the default
+> -	if the configuration option `remote.<remote>.mirror` is
+> -	set.
+> +	be mirrored to the remote repository. This overwrites the
+> +	refs at the remote by (1) removing what is only at the remote,
+> +	(2) force-updating what both ends of the connection have, and
+> +	(3) adding what only exists locally. This is the default if
+> +	the configuration option `remote.<remote>.mirror` is set.
 
-Thanks=E2=80=94I realize we were talking across each other, so I'm glad we
-were able to get on the same page.
-
-> > [...]
-> > I suppose my main complaint is nothing about the example makes it
-> > clear that's the intended use case to me? Hence
-> > - we could change the example to mention conflicts and/or use case
-> > (smaller patch, punts on the problem)
-> > - we could change the code to accommodate the example as written
-> > (using ideas from your script; harder but bigger win IMO?)
->
-> I was hoping that we'd hear back from J. Dettweiler as to whether the
-> ideas in the script were useful. It would certainly be better to update
-> the command to avoid conflicts if we can.
-
-Sounds like a good idea.
-
---=20
-D. Ben Knoble
+Reads very clearly.  Thanks.
