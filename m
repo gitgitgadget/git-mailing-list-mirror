@@ -1,82 +1,96 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C7B2868A1
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 08:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3446B28134C
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 08:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758009985; cv=none; b=PMlnD2Gq/AnSaTYFMsJ3yN8In9h/fdHuQjZuWhEt++rnDb/juwvi0kPhwUr32RS8iMs2t0xpnabtswUORQxU/8bJVEL8odoQcAecUHDI6OJ8NCP7MJmb2qbRR8kfJWY9CiiwvnMY0w/4DiyZhu2GW4aV+oBHm6YT4V7/KK3mMMQ=
+	t=1758010179; cv=none; b=gTYOCKCUOJurK9a9lRNGZ5UkHT4aTSNZj+SqH1pDt4IaQc0PzAmSkqlyKmKdZOALx3Qzo5j2ZSjCHmpEWHnFsbVSRvOZ1LOZ/l11WLfh+YJ32JJqrbTriGcJGI2ueoBC71uATNQDc1UB4GiGB9rzYgB/m3NXCbhQBg3N7bG0Xm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758009985; c=relaxed/simple;
-	bh=Kfku0S9S0qsVDKnplrw1FdYvIjyTARsqTLVu5TZgSvk=;
+	s=arc-20240116; t=1758010179; c=relaxed/simple;
+	bh=PfGIiOs6oGl4/RDi6ZLR12Jy3i6ZIKP5fUAXf8k/+jE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Awnhx1GcL+i4QsAjclHLg+q841cdOC5jqCMSBiyRuKzZNSWBUq3qVbUc84MAHIr2YazG2TrITaXOLr4aUWz7rocoed3DcVgHeFoCNQQSuVXpTyFtTJ4JjXR4sgeQ7OybLauTNHHTtKNr1+30ecdhMnl505BZOP7EnspRfbR7A0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a4ubQdbD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VC8M+f2c; arc=none smtp.client-ip=202.12.124.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=YV3Qf1vShKUxpKUGvE6R7+eGL3U/mswyo2tbTfi8XHpTyR8uIXbF1FwGCaNNpgjtfMRxzhfckJmEJ7noPq8mKaKOR1pfghTHUsZKplfkrvAz3RYEUONRu4jSn9VGpTCBh8eGQqhNKQIiy9tEIJa6z425qr2Oe3CqDdK3UPim+PI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DwwTkDw/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IWEIfLYE; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a4ubQdbD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VC8M+f2c"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3CF637A026A;
-	Tue, 16 Sep 2025 04:06:22 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Tue, 16 Sep 2025 04:06:22 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DwwTkDw/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IWEIfLYE"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2E6417A027E;
+	Tue, 16 Sep 2025 04:09:37 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Tue, 16 Sep 2025 04:09:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758009982; x=1758096382; bh=hj+ZLTkFiq
-	jGgnzHccgzcrYvAdipGYYo+bnoMzI8Jng=; b=a4ubQdbDyxJxE779bRiDwvUV03
-	IB6QlSkN/KewLVkOI5waw48fPHbGMLMabMZ3Kw13VEkcx+oD7dEaH8+GUe9trAX6
-	Z/ZgGc648soJcflZY3mk/JDO1GgNNnclVCcfP0fvxedNuUN9GgKVInBXLnRhasdO
-	WE2iwk8CrW7FFkOD19KTqi/iA3hVkKCI8OcRb9dUj01wRkGvU7Gne7nQnifDs/HD
-	UVSYvKPQ7UWuTDpYqnfbcIuSrrjnzkAlE7wU6O+p9U++qf+fOI2Rij1dV1xD5G4O
-	3gU1vXLE94lFkSb2rYtTJU1lDaRHvix2r2fSEENQc4oqrVPjXEc3b0ZGqXIw==
+	:subject:to:to; s=fm1; t=1758010177; x=1758096577; bh=8zSl3OHyIC
+	TrujpOaKV92bqM3oUOe5hhdq/JhHrce78=; b=DwwTkDw/CA/4wL5BgRx+UA58aj
+	gua6NxOBNhSF0Fu30+4eWbUKK1mX8vIldloLcW3SW/j1j/brKy97MjCdY2xvkAdn
+	Zq793kF/ItRaK+DIjJ0NPahlYQtwIrlwP0jGgJh6ck0WqqB5KyhYd4QY6VdBJRdu
+	pQlZqJ50jffe49EqwkkLgFdJQNSfIMjcABeRhxXisdTuSoHp9DxzyvP9M02xELLY
+	7Hloip0tjpWTKq7ZuwcCDSB97w3Ld3YPKATQuM9ldp5rzzinU2mA3OiqXtUVCHau
+	IELgJcwi0RXPC7kUfJNYXs1K97/ePf6l+4hu+b+H9mfYLTonNQcPaC67wXUg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758009982; x=1758096382; bh=hj+ZLTkFiqjGgnzHccgzcrYvAdipGYYo+bn
-	oMzI8Jng=; b=VC8M+f2ceQSTf5ldZ7nxVgwoo+WdZuI23I7mOssvlhEBLlZ8uzg
-	xAH3o9SfDnfO9WzKvYiVOxYdQZWe9ed+5FOJnmKXxvNVtR1PUcUlFVTXcQ0Pag4N
-	NewJWSNkfMWrIZOOO1AySOEqbS9Z9lu2tqtZ+glWq1FiOY8iqm/qKLQ05lzwrGbZ
-	0HqNt0Wa/KyQqZhw4n3VpOAbGKs3U3YelvfFTMMjhicaB+Nb5dcjkuxmhYzHkumJ
-	Qft4wmiwx3hemw03V7h/hhz7G9AnCWTC8/o6K2gdNEX8iL7lA5pGRfKIvyxFZOgP
-	ZvB2V8LKUC9jNLe/URNTLrxkZPyteywnpbA==
-X-ME-Sender: <xms:fRrJaNU2b7O8k6lxe1eMs-1XooXfPltBKetwATzAfXIij6_cJ92WhA>
-    <xme:fRrJaA2_d8gtLmophF1DHgMnLYvRGBT6mItm83ps0mWACqUfSF8DINYdeM9xrfm5X
-    YpQQf9OyumAQVo-HA>
-X-ME-Received: <xmr:fRrJaC2KaD9LfL8xu_hd7Ksm8JD-poEwlqhIbGlUO5WDrQ8WgYRPUx_vuReLGaB_DUTUtPvGf6zi0lLaLW9XAw7CSk2Gda3l3SOOfQSSzs0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegtddtgecutefuodetggdotefrod
+	1758010177; x=1758096577; bh=8zSl3OHyICTrujpOaKV92bqM3oUOe5hhdq/
+	JhHrce78=; b=IWEIfLYEJkxcz8OGIU5FbQoVNIBUzFERkO2MJGor/gjRd3tk3z3
+	SneDLtIvFO46qeyu2tQm0qGVtWjBxNZ3WKrWS9Hhgdypu/woLlNJCOi/2e7Lfmw2
+	XRJ3/5JUKjVED8okjD9uw1iaihPp5J3DdFSU7Ao5P95eZfgIs/lxO5mGPHiOFCWM
+	5+HSsei9hqjAm/pCsEXJMOwfWW4AVEJnYSwpE6iL0LIzJ5OQzHr5ifsh+gTUmA+L
+	4INf1PNsYJXtlyudnG1pLuQNa22mg5qZkq05r5sgw6r/hOgSDD1Jt218VzAJ3avJ
+	vAWRBVd86fOQGy807L6FRBLiIWRErPsbkcA==
+X-ME-Sender: <xms:QBvJaPBJZrhT1hvB8FQokEqyMWXrTkkrjPT79sHBOTWgZL8zmGz1IQ>
+    <xme:QBvJaBgZ85OzzzVklt814aPB2zHiCHc8OoKurlqwf8bqqjqMbK5ZotiqGu6ANjPKN
+    AxBD8ux82ewX0BCfw>
+X-ME-Received: <xmr:QBvJaMyP8NtdxlUU_AZO5slDee_OxMnSga3kIHp9_ItzgUhNNuQnHyiVpVPQzrrp81Xo4fZtmW1M_C9iIvlEuV1L7MwjFamq6womVqr3fCY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegtddtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehluhgtrghsshgvihhkihhoshhh
-    ihhrohesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:fRrJaL--hL2bKnK703Xnc65KdklAvi4I-Rd6xIYOIJc4z7EEBNN-cg>
-    <xmx:fRrJaH1SinkOximfCHoF0dxL24v8D0xDD2PYQCXs2CZSIMQovmJp3A>
-    <xmx:fRrJaA93EOUNqqKGa6e3TAjXzOyoLelF3nXW-_a7ps9oEz4f5vka6A>
-    <xmx:fRrJaPvr_HnT8XQMMHkt0Tc2cuzbjf7tY_RHTAIgns5F127rQn9fQw>
-    <xmx:fhrJaAxiV6n-WpNd9aax_zaUInQ_-XuoZiAyIiBcjiYkWPh9EEgj8aZD>
+    drihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
+    rhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprh
+    gtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdr
+    tghomhdprhgtphhtthhopehmrghrthhinhhvohhniiesghhmrghilhdrtghomhdprhgtph
+    htthhopehsohhrghgrnhhovhesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhk
+    nhhosghlvgesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:QBvJaC1iYnFfJS-tjW5tltricXWRf55aciL-fzruIoBGjWTZ6194YQ>
+    <xmx:QBvJaB8QsrkhqUzioOLFUOutM476lCZzw2PlUmN1j-juktUru3q0hw>
+    <xmx:QBvJaKpsbdegM8Lpc-t2HM79ecVf5DvK9wzxKWDhM2c8uteSqf_qCQ>
+    <xmx:QBvJaDQwcCMJb681jexm6Rrmtg6nTJg58FP96-foBIaElqzqvYysaQ>
+    <xmx:QRvJaGC0LFRa2Ev1KSxP-_vuLzMbbYj8Cj4IMtVuI1OAtnw3XQ3b-Iko>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Sep 2025 04:06:21 -0400 (EDT)
+ 16 Sep 2025 04:09:34 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f760d555 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 16 Sep 2025 08:06:19 +0000 (UTC)
-Date: Tue, 16 Sep 2025 10:06:16 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 96280a71 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 16 Sep 2025 08:09:33 +0000 (UTC)
+Date: Tue, 16 Sep 2025 10:09:30 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com
-Subject: Re: [PATCH] repo: add --all to git-repo-info
-Message-ID: <aMkaePi90Q6sXuO4@pks.im>
-References: <20250915223618.13093-1-lucasseikioshiro@gmail.com>
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sergey Organov <sorganov@gmail.com>,
+	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+	Martin von Zweigbergk <martinvonz@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH RFC v3 18/18] builtin/history: implement "reword"
+ subcommand
+Message-ID: <aMkbOgLlDDRlqt7a@pks.im>
+References: <20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im>
+ <20250904-b4-pks-history-builtin-v3-18-509053514755@pks.im>
+ <10696a16-3f2b-4844-9f9c-9815976b3e1e@gmail.com>
+ <aMfdMe72WB3DR4gW@pks.im>
+ <fe671dbf-5177-4e66-a89a-8f99b379ac75@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,138 +99,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250915223618.13093-1-lucasseikioshiro@gmail.com>
+In-Reply-To: <fe671dbf-5177-4e66-a89a-8f99b379ac75@gmail.com>
 
-On Mon, Sep 15, 2025 at 07:36:17PM -0300, Lucas Seiki Oshiro wrote:
-> Add a new flag `--all` to git-repo-info for requesting all the available
-> keys. By using this flag, the user can retrieve all the values instead
-> of searching what are the desired keys for what they wants.
+On Mon, Sep 15, 2025 at 03:10:56PM +0100, Phillip Wood wrote:
+> On 15/09/2025 10:32, Patrick Steinhardt wrote:
+> > On Wed, Sep 10, 2025 at 03:05:04PM +0100, Phillip Wood wrote:
+> > > On 04/09/2025 15:27, Patrick Steinhardt wrote:
+> > > > Implement a new "reword" subcommand for git-history(1). This subcommand
+> > > > is essentially the same as if a user performed an interactive rebase
+> > > > with a single commit changed to use the "reword" verb.
+> > > 
+> > > The sequencer already knows how to reword a commit, it would be much simpler
+> > > to reuse that code.
+> > 
+> > I'll drop the second half of this patch series for now to reduce the
+> > scope of this series a bit. But once I send the second half I'll have a
+> > look at whether this can be simplified.
+> 
+> If we passed a todo-list rather than just a list of commits to the sequencer
+> then it would be as simple as writing "reword $oid"[*] in the todo-list.
 
-One thing I wonder is whether we actually need the "--all" flag in the
-first place. Right now, when saying `git repo info` without any further
-arguments, then the user will be met with complete silence. I don't
-really think that this is useful as a default in any way, as it makes it
-very difficult for the user to figure out what kind of information
-exists in the first place.
+One downside though is that we'll now be in interactive-rebase mode
+instead of in history-editing mode. We could of course introduce
+history-editing mode as somewhat of an alias for interactive-rebases.
+But the required changes are non-trivial and all over the place in
+"sequencer.c", so I eventually stopped pursuing that route.
 
-So how about we don't introduce a separate flag, but instead detect the
-case where the user passed no arguments at all and then print all values
-by default? It changes the current behaviour, but on the other hand I
-would argue that the current behaviour is not useful in the first place.
-And the command is labelled as experimental anyway, so for now we still
-can change it.
-
-> diff --git a/builtin/repo.c b/builtin/repo.c
-> index bbb0966f2d..906d8a3e12 100644
-> --- a/builtin/repo.c
-> +++ b/builtin/repo.c
-> @@ -77,6 +77,24 @@ static get_value_fn *get_value_fn_for_key(const char *key)
->  	return found ? found->get_value : NULL;
->  }
->  
-> +static void print_field(enum output_format format, const char *key,
-> +			struct strbuf *valbuf, struct strbuf *quotbuf)
-> +{
-> +	strbuf_reset(quotbuf);
-> +
-> +	switch (format) {
-> +	case FORMAT_KEYVALUE:
-> +		quote_c_style(valbuf->buf, quotbuf, NULL, 0);
-> +		printf("%s=%s\n", key, quotbuf->buf);
-> +		break;
-> +	case FORMAT_NUL_TERMINATED:
-> +		printf("%s\n%s%c", key, valbuf->buf, '\0');
-> +		break;
-> +	default:
-> +		BUG("not a valid output format: %d", format);
-> +	}
-> +}
-> +
->  static int print_fields(int argc, const char **argv,
->  			struct repository *repo,
->  			enum output_format format)
-
-Changes like this which are preparatory refactorings can also be split
-out into separate commits. That makes it easier to see and review such a
-change standalone.
-
-> @@ -119,6 +124,26 @@ static int print_fields(int argc, const char **argv,
->  	return ret;
->  }
->  
-> +static void print_all_fields(struct repository *repo,
-> +			     enum output_format format)
-> +{
-> +	struct strbuf valbuf = STRBUF_INIT;
-> +	struct strbuf quotbuf = STRBUF_INIT;
-> +
-> +	for (unsigned long i = 0; i < ARRAY_SIZE(repo_info_fields); i++) {
-> +		struct field field = repo_info_fields[i];
-> +		get_value_fn *get_value = field.get_value;
-> +		const char *key = field.key;
-
-Nit: I don't really feel like the `get_value` or `key` variables help
-much. I'd just drop those.
-
-> @@ -140,6 +165,7 @@ static int repo_info(int argc, const char **argv, const char *prefix,
->  		     struct repository *repo)
->  {
->  	enum output_format format = FORMAT_KEYVALUE;
-> +	int all_keys = 0;
->  	struct option options[] = {
->  		OPT_CALLBACK_F(0, "format", &format, N_("format"),
->  			       N_("output format"),
-> @@ -148,11 +174,17 @@ static int repo_info(int argc, const char **argv, const char *prefix,
->  			       N_("synonym for --format=nul"),
->  			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
->  			       parse_format_cb),
-> +		OPT_BOOL(0, "all", &all_keys, N_("return all keys")),
->  		OPT_END()
->  	};
->  
->  	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
->  
-> +	if (all_keys) {
-> +		print_all_fields(repo, format);
-> +		return 0;
-> +	}
-
-Instead of checking for `all_keys` we could check for `if (!argc)` if
-you want to follow my suggestion.
-
->  	return print_fields(argc, argv, repo, format);
->  }
->  
-> diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
-> index 2beba67889..b1391a47b6 100755
-> --- a/t/t1900-repo.sh
-> +++ b/t/t1900-repo.sh
-> @@ -110,4 +110,10 @@ test_expect_success 'git repo info uses the last requested format' '
->  	test_cmp expected actual
->  '
->  
-> +test_expect_success 'git repo info --all returns all fields' '
-> +	git repo info layout.bare layout.shallow object.format references.format >expect &&
-> +	git repo info --all >actual &&
-> +	test_cmp expect actual
-> +'
-
-This test will obviously need to be adapted every time we add a new
-field, which I think is fine. But we should adapt it so that it's easily
-extensible without by just adding another line. E.g. like this:
-
-    test_expect_success 'git repo info --all returns all fields' '
-            git repo info \
-                layout.bare \
-                layout.shallow \
-                object.format \
-                references.format \
-                >expect &&
-            git repo info --all >actual &&
-            test_cmp expect actual
-    '
-
-This ensures that it's as simple as adding a new line when we add a
-specific field without having to rewrite the whole line.
+I still think it should be possible to at least separate out the actual
+operations and share them across the sequencer and git-history(1) so
+that we can avoid some of the duplication.
 
 Patrick
