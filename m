@@ -1,119 +1,144 @@
-Received: from mail.avm.de (mail.avm.de [212.42.244.119])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C2A343207
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 14:58:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.42.244.119
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50472340DBF
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 15:00:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758034695; cv=none; b=pR89kymjuvO/KN09t3VhTkvN47RKlJLvg3WvY13ylKX6edmbyAfxAHfglUVbMzLc4TVzexbKZwO7iSGREepGJ9ZILT6DkK9tHg282SiwAJdst6uYcmBd6blWK+N4Qq3egd3chTa5u1MKMXsZRmxRzyfN78VQfshPhzFFluZjD6M=
+	t=1758034849; cv=none; b=CIdP5GkgIr2MQuJf5LQVHgFkshnqoiYjnz/ZnH+8IvLliDRqp3/b6lEzZC2Mcsm+e3iMS+/cDpvnDXMHWQFVuQQSDnvfBZJv734aD1kWnUo4qWzxPQPZ6Oh94uV/0MlB8nXd+ChBIPgW36nBC1InPzrKqobWkNVXyHAGBIfPDxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758034695; c=relaxed/simple;
-	bh=cV6DnyFQ4Txo7EvGaRXyD+sIKz4yy/erjE59nBgbuzs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l4C2c1quyxmW+YIzeK7Futmv5Du8MD8nlUzEu8MVVqIUr2QPanCw2Yddy9T16jlayCE1MTwYhm5W022j6/6dXqd5Vv6kQMHm4upJHXn3MTibHzZUTQ3tuNnBFvnELvAGbV1aXynVmcLwg4ECZnVMp5kJcNWx97zraS6U4EQfpDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=avm.de; spf=pass smtp.mailfrom=avm.de; dkim=pass (1024-bit key) header.d=avm.de header.i=@avm.de header.b=OjLhpvzf; arc=none smtp.client-ip=212.42.244.119
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=avm.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=avm.de
+	s=arc-20240116; t=1758034849; c=relaxed/simple;
+	bh=5NU4CaKYaQgYWp6sFthK+IAkhVNPHJQaF0Yalvip63g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fiekfpEe2uFW30sL4I0vcgtaXqYhhcnAvbPMo88BnmDw2UrMqi99t01BPKe1w3s/qQiWBnJf6OK1mQxdde7DCHFc9GACuDINi2aYTzUNyttPg/gAHJzieiEW8N9SlQakwLy084gJZcS72tmO3cY+ciCmNTQUEaosgGO/hJiFQYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yn51Msfq; arc=none smtp.client-ip=209.85.210.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=avm.de header.i=@avm.de header.b="OjLhpvzf"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
-	t=1758034352; bh=cV6DnyFQ4Txo7EvGaRXyD+sIKz4yy/erjE59nBgbuzs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OjLhpvzfXRotQzeGITpNWncV66PxmBNUMZqBNfk4AegfkvQmmMlXUWuR4L7/wN4t0
-	 Rk7FXGjTjKNUkU2YtWewjKQxKPHpZ1tp66gPQeAsOU+E6Q0I1RkFLzBIj9OLheNL3P
-	 Q2WJJCLZjMZL+kS5qD4mP/exycT+Gk/cqq/G9cLA=
-Received: from [2001:bf0:244:244::71] (helo=mail.avm.de)
-	by mail.avm.de with ESMTP (eXpurgate 4.53.4)
-	(envelope-from <phahn-oss@avm.de>)
-	id 68c979b0-5361-7f0000032729-7f000001b600-1
-	for <multiple-recipients>; Tue, 16 Sep 2025 16:52:32 +0200
-Received: from mail-auth.avm.de (dovecot-mx-01.avm.de [IPv6:2001:bf0:244:244::71])
-	by mail.avm.de (Postfix) with ESMTPS;
-	Tue, 16 Sep 2025 16:52:32 +0200 (CEST)
-From: Philipp Hahn <phahn-oss@avm.de>
-To: newren@gmail.com
-Cc: bolide2005@163.com,
-	git@vger.kernel.org
-Subject: Re: --shallow-exclude=ref -> "ambiguous deepen-not" error
-Date: Tue, 16 Sep 2025 16:50:31 +0200
-Message-ID: <20250916145032.969133-1-phahn-oss@avm.de>
-In-Reply-To: <CABPp-BEzjk0PLEMjtk-0jQOAag-s_iJkKMbcU+o5vv8BzRVV2A@mail.gmail.com>
-References: <CABPp-BEzjk0PLEMjtk-0jQOAag-s_iJkKMbcU+o5vv8BzRVV2A@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yn51Msfq"
+Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-74526ca7d64so5527838a34.2
+        for <git@vger.kernel.org>; Tue, 16 Sep 2025 08:00:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758034846; x=1758639646; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=asmpLdBAfgmewOtQZl04+hP1XaNx64otJsKPWc+0D1E=;
+        b=Yn51MsfqwTlJP/wIzYmw9KyvwBc2vG8EnSlx+q5xLOAQp9lC5k7QrOptDtvhcnGNUe
+         yB12iW1fJRmRv39D5CaI0o/kxp2iAGEc6q8AW5avUTUONaJAVSUKW1YlACBtt/uqaYfG
+         pbj3QGYra2gm2jOjtUwxf6+D+3KjInLM85oyvjMbbEXCks9d2TYiDCE7gVESisCeockJ
+         ZXee4wNv+klzhwkqhR3E/JukGyWxTn+M1U5JoC8tYVYYEkTmA5UjUEac13tS/ohsHGsG
+         KaCrunW78R39K93XrZxV4Pu9ZMag0oBBwPPCMeAcbGSji9SI8W27RpIYblxDm9Zc/rsd
+         07Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758034846; x=1758639646;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=asmpLdBAfgmewOtQZl04+hP1XaNx64otJsKPWc+0D1E=;
+        b=d1i8//qQ7iBcWGtxUP+fqswmOhhziKh1QpLG8Kla6NGLMO4F/RgImxAHzYv9AXBh1G
+         xAafrM7NzoGke5DPbIdewNSn5B6yhrpe4D7pVnM7aM/hka7FBrXPwTi2brKYBU3pzFYu
+         e77aU2dXe2FL5HqPoiAbcyKoumvohav+N1yn6CWHN6xYbnaDdLbnCGhBnnblzhiVQlg/
+         4+cJeM0ArUAeYpywT2JtXd9nknbSOC61yBMu6jgHxVcbc/L/K/A6+773dH3jypZ9ofti
+         xY7zpZkMySgJjIk9LJyebUQ73IEO5+UfjrIIzrRYlMiIN53DeYYFZ+2CG8cnv85h2xAZ
+         8+5Q==
+X-Gm-Message-State: AOJu0YzZf3Gc19ODS2Oh8nTi7AAwpEQn1UZHq0KCSLv6I2oG7I2G8YIq
+	VYFPD4yLzEklVbG4YkuRoEYKqUbd//PTRXOsAzkGz5cnqw/OXSY9N0kW
+X-Gm-Gg: ASbGncvxs/7zkhxCVv1yxGTWZ6ePkvLVDPe6dupxzSIisZYbR0M1HM5fYT8/oUN+4u9
+	zn9jFSmhqGSRMFpXezdSU+cEJfXuSUFt4kqKIV4mJLkQpUUfkanlyU7hYK6fBHgT9VdtZcRPPNx
+	QWiCxbI/8BJ2Ai/sIWdvQif13Y0FVvebs0KBuOZhHIm746Wz//ypJq9m5aLdFv4pWl1HCc31wgf
+	mi95iR0OD5nkgRh10aQZYB5CBxx2VfbtLxTjq5bqdpCSASMESoLqbz2P6vxJrmThJPKWBYeE8AN
+	GA68IHwxX1FjkCTNpMm/2R+3PRjXxV3C2ncoiK0qObb6AqOvw4fbUdoWVLApP+oeTh2G6JwgqPK
+	BhSk6gLq5Jx2ciK7i
+X-Google-Smtp-Source: AGHT+IET/VMGvkMXA08+NICDfUOJl6FVlKOp6mVk9UeAub6TyQHcIBNs1LBKd9j49MjFb+Qoa2Eccw==
+X-Received: by 2002:a05:6808:6f91:b0:43b:5cee:14c with SMTP id 5614622812f47-43b8da6275cmr7082194b6e.43.1758034846035;
+        Tue, 16 Sep 2025 08:00:46 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-43b82af7ab1sm3317261b6e.30.2025.09.16.08.00.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Sep 2025 08:00:45 -0700 (PDT)
+Date: Tue, 16 Sep 2025 10:00:45 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH v2 1/6] bulk-checkin: remove ODB transaction nesting
+Message-ID: <h7yqajyyilmcjb4lfco2oooqwradmyrhx4aystush3klpbgl6d@3zrii36y6kk5>
+References: <20250909191134.555689-1-jltobler@gmail.com>
+ <20250915202956.3784935-1-jltobler@gmail.com>
+ <20250915202956.3784935-2-jltobler@gmail.com>
+ <CAOLa=ZThwF0LTd17Wxa3AJnpQuEkcSyp5kHm=D-cZ=Ay0pWa0A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-purgate-ID: 149429::1758034352-ABEA0ED6-C5600782/0/0
-X-purgate-type: clean
-X-purgate-size: 2929
-X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
-X-purgate: This mail is considered clean (visit https://www.eleven.de for further information)
-X-purgate: clean
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZThwF0LTd17Wxa3AJnpQuEkcSyp5kHm=D-cZ=Ay0pWa0A@mail.gmail.com>
 
-Hello Elijah,
+On 25/09/16 12:57AM, Karthik Nayak wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> 
+> > ODB transactions support being nested. Only the outermost
+> > {begin,end}_odb_transaction() start and finish a transaction. This is
+> > done so that certain object write codepaths that occur internally can be
+> > optimized via ODB transactions without having to worry if a transaction
+> > has already been started or not. This can make the interface a bit
+> > awkward to use, as calling {begin,end}_odb_transaction() does not
+> > guarantee that a transaction is actually started or ended. Thus, in
+> > situations where a transaction must be explicitly flushed,
+> > flush_odb_transaction() must be used.
+> >
+> > To better clarify ownership sematics around a transaction and further
+> 
+> s/smatics/semantics
+> 
+> > remove the need for flush_odb_transaction() as part of the transaction
+> > interface, instead be more explicit and require callers who use ODB
+> 
+> The first sentence doesn't flow into the second here. Perhaps s/instead//
 
-On Mon, 24 Feb 2025 at 07:27:55 -0800 Elijah Newren <newren@gmail.com> wrote:
-> On Thu, Feb 20, 2025 at 12:27 AM bolide2005@163.com <bolide2005@163.com> wrote:
-> > Case 2: git clone --shallow-exclude=<rev> <repo-url>
->
-> The documentation was fixed for case 2 in 00e10e07510 ("doc: correct
-> misleading descriptions for --shallow-exclude", 2024-11-04) to point
-> out that this usage is flawed.
+Thanks. I'll fix these in the next version.
 
-I have searched the archive and git repository, but found no explanation, why
-that usage - shallow-exclude by REV - is considered "flawed": I understand,
-that the current implementation does not support this, but is there any
-technical reason why that is not possible or undesirable?
+> > diff --git a/cache-tree.c b/cache-tree.c
+> > index d225554eed..f88555a773 100644
+> > --- a/cache-tree.c
+> > +++ b/cache-tree.c
+> > @@ -474,7 +474,7 @@ static int update_one(struct cache_tree *it,
+> >
+> >  int cache_tree_update(struct index_state *istate, int flags)
+> >  {
+> > -	struct odb_transaction *transaction;
+> > +	struct odb_transaction *transaction = NULL;
+> >  	int skip, i;
+> >
+> >  	i = verify_cache(istate, flags);
+> > @@ -490,10 +490,15 @@ int cache_tree_update(struct index_state *istate, int flags)
+> >
+> >  	trace_performance_enter();
+> >  	trace2_region_enter("cache_tree", "update", the_repository);
+> > -	transaction = begin_odb_transaction(the_repository->objects);
+> > +
+> > +	if (!the_repository->objects->transaction)
+> > +		transaction = begin_odb_transaction(the_repository->objects);
+> > +
+> >  	i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
+> >  		       "", 0, &skip, flags);
+> > +
+> >  	end_odb_transaction(transaction);
+> > +
+> >  	trace2_region_leave("cache_tree", "update", the_repository);
+> >  	trace_performance_leave("cache_tree_update");
+> >  	if (i < 0)
+> >
+> I wish the parent transaction would be passed through to make it easier
+> to understand, instead of deriving from a global variable. Nevertheless,
+> this is a great improvement.
 
-                     A---B---C topic
-                    /
-               D---E---F---G master
+This should be cleaned up a bit in the next version by making
+begin_odb_transaction() function as a noop that returns NULL when the
+ODB already has a pending transaction. This allow us to at least avoid
+checking the transaction state from the global here. We will still have
+to derive the ODB from the_repository global for now though.
 
-I have a use-case for this, where we use GitLab to run some linters on our
-merge requests (MRs): They examine the commits since the fork-point "E", for
-which they need access to the commits + trees + blobs. Some MRs are larger,
-some smaller, so there is no fixed maximum depth I can give to `--depth X` and
-be sure to have gotten all commits.
-Same for `--shallow-since=` as some are dormant for a year and many other MRs
-by-pass them.
-
-GitLab gives me the `CI_MERGE_REQUEST_DIFF_BASE_SHA`[1] (The base SHA of the
-merge request diff) for free, which I would like to use with
-`--shallow-exclude=`, but that does not work as `deepen-not` does not like
-REVs.
-
-For now I'm using `CI_MERGE_REQUEST_TARGET_BRANCH_NAME`[1] (The target branch
-name of the merge request.), but there is a different problem with this:
-
-GitLab supports a 2nd variant of "MR Pipelines", called "Merged Result
-Pipelines"[2]: Instead of running on "topic" GitLab does a temporary merge of
-"topic" into "master" (X) and runs the pipeline on that merge commit "X". As
-"master" is a parent of that commit "X", the trick of using
-`--shallow-exclude=master` fails as the linters then run only on the merge
-commit "X", but not on the individual commits A-B-C, which is what I need:
-
-                     A---B---C topic
-                    /         \
-               D---E---F---G---X master
-
-Sadly there is no "ref" on "E" any longer, so I only can specify "E" via its
-"rev", which GitLab provides as `CI_MERGE_REQUEST_DIFF_BASE_SHA`.
-
-Any idea on how to solve this?
-
-The GitLab runners do not have persistent storage, so they clone the git
-repository anew each time. That includes the Linux Kernel git, which sometimes
-takes 13m to clone the 1.4e6 commits, from which only the top 1-100 have to be
-checked.
-The build on the other hand only needs `--depth 1`. That makes the build way
-faster than running out linters.
-
-Philipp
-
-[1]: https://docs.gitlab.com/ci/variables/predefined_variables/#predefined-variables-for-merge-request-pipelines
-[2]: https://docs.gitlab.com/ci/pipelines/merged_results_pipelines/
-
+-Justin
