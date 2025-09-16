@@ -1,80 +1,90 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AEC1A8F84
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 01:14:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F64154425
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 01:44:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757985274; cv=none; b=QBeDvhAhlb2/TH0tY4MQdZT/+1xYYuMPy7i9ZV4O2I1ch4Hr6NzN0c8OB/2kiDQES2t+K80ZYHWnnw2GzaWz3GxBH4vjY47ltrgV97xFUJ/yE6TEPXjmr2fSMVWJjfhekYZJJ5NqUQPYydVs99EyD2HiS4X8hGURSJuP3MoFceU=
+	t=1757987073; cv=none; b=CZ8R1cfyCrTVsjvhpYT6uIWDnR5Pj/rHfU7dbzgdG0q+HYE6M2xLdueGGCyKZXSmBATvXoNkNX8ZWiAQrDm0sO/W6V9h9xB48YM3qyjq+8IFkJZmsu7dYmQz3O796oaQjDyYW64Arlnj9Afrn+bjp6fhGAD1Yzghw1QSOoVrA7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757985274; c=relaxed/simple;
-	bh=PvDxu6kUwYG6FMqF39looTi3ud61MT6T9B56VQItdFY=;
+	s=arc-20240116; t=1757987073; c=relaxed/simple;
+	bh=rlRSFkQAhW+P60lu4uOkpVXDYCLV+zsgOcPkqwdED6M=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZIK7LRiP0Fuue+Rvgq5JMG2TUIWLO6bzDL+9sO5GmEGKOtV7r6ayJZ/iVZUX+eb6RxlG0vRGEqqz9zzW/GBxCh/6e2msETeGdteg3J28PZO/jFxxsgkQ00BUYYaoPJ/HmmMIywqO8/o4Gtk/o7EKhiJ0iuK2mAyGdeisfD+f8q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=06AC+veP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YteDk0St; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=btQ7TITP8xr+nhWx5gz1iIbiCS5Ddfry1sjZrfaskTlE/mhpybbCWy96r26yoU0m7elRABRoATzOG3Li3Y62AyEd1XF7JeXxouMq1xSHPXLNdXjhY4AIIvrMJC48b2+qqgzcdPxyV1KSEIAohQPcNYHKw2QPsfKiGqHCNfl1pwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=00oH/4HL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NMNdhREP; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="06AC+veP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YteDk0St"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 225641D00232;
-	Mon, 15 Sep 2025 21:14:30 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Mon, 15 Sep 2025 21:14:30 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="00oH/4HL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NMNdhREP"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 632D67A01DB;
+	Mon, 15 Sep 2025 21:44:30 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 15 Sep 2025 21:44:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1757985269; x=1758071669; bh=VHlrCyjBeT
-	1GKPmn9uSPrnwDH6QKTx5RQ/FGtnpx4tw=; b=06AC+veP33l7KlmjSohmTLl9Po
-	5GK2/W85+nV/AQKQ8qUoLwdXM2zGXC1y5iMzuCurJfyimxjmV8oMBD8McMq4eHhP
-	u3CuRgDoa4KhhzKB1rdusVI4Eh5BD3KMcMKC1BRpOm+EjhP78rbixOkX66AAjOmk
-	41u3GTnb+iTjFPkXw2dC+qI3ro1bKSPpZdzMHpt17qc0GN+tVTxPiUebvFzvtLrI
-	ZS9zhuqzu75UbhqpzvVWYyXWZi2elUrDhP6LadJFMcQVbxuhpxhvfqIroS7/r6xk
-	rZmx7npWoMk0rimxz4302QhPRg6SN0S70Bm17fdmv/qj1OAr/TJ3dN17FwZQ==
+	:subject:to:to; s=fm3; t=1757987070; x=1758073470; bh=+N2cFZqolv
+	4WG/Q2cRIW0K0p/ETx4JTZRz8LrKTsDQ8=; b=00oH/4HL6zHlhps+mm7tcSZKH3
+	YPZNxuJ5FlDDUmLb9ECSfOzvOgq7UP2n1F0VTzcd8iVxT/vxJhUsdmoOnoFj7d/s
+	9XtmEgkqMIwqZHm0VhD6sNMv5zyFJu47855yjeRXSFDC9zwVzy64pgyoA3NAMOjl
+	XDNnC8WkDeBQSbbNmtFbVla3Qg/awcJKvNgNLNzDzZ+5oz1BsgF+jj6Zbi8HzVOA
+	wiDhaJTp8kY6cJ08Oab20YL//Cp4Q/4f18sA87rZ/7BPHqR1W6MYEcHnsvPnDNN2
+	maTSvY8Dae5P0kqmimoDVeDDTrm3fhwUlavtqVsuKIMJe5FuHqrSEWR/hETw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757985269; x=1758071669; bh=VHlrCyjBeT1GKPmn9uSPrnwDH6QKTx5RQ/F
-	Gtnpx4tw=; b=YteDk0StUZZeFn2NthRG6BQou3DLVEM8aXMYNfBRT+hUkmVJZvx
-	4sWnFDPtjdYIEH2CgOXHRXar2i/4dF96xmf8Ugk3cucAu1pfIVdRpWZXBhsvaG5c
-	I2u/IESHwjShMnyWMKbofXa46BCveMbrjeEvTsCWUERINV2G1LJ0dLyc+ZTRAySn
-	H3jxMPRuqUol7jGbDJdSH12N8nTQjuA4oxbkFXDMB3+TtbPTmUik0DzQlK/3NvZk
-	Ox2UV4Mt2cdr50rPKxdlmY5VBPxMNWRbv8C+WuXzH1ij5McSDXWhk8WIae/FmfTo
-	bATCT/if9stnSDA7pfuofgBL4fauP2i6tbw==
-X-ME-Sender: <xms:9bnIaGhpSWqmgHvf8kSQenyGPdDCRZkGX9PobbvMkZ-NG9-SDcocuw>
-    <xme:9bnIaKRZU8bHDSRnuiWTr1e13TS_h8CjEr9KrgfX8AjlzFjHmVXAxBeWXnkKuLOiJ
-    ztQ6l3a_1DjOuYULw>
-X-ME-Received: <xmr:9bnIaHgGARiXX2BFmfNrcz6Q5QFm9uuGF9BFITRPN4DoM41eabH-sDCEQyLzBhO3Zf1bCdq3UqWSOO1CznYsM5CXS9eFHmu9MlNtdfQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefledvfecutefuodetggdotefrod
+	1757987070; x=1758073470; bh=+N2cFZqolv4WG/Q2cRIW0K0p/ETx4JTZRz8
+	LrKTsDQ8=; b=NMNdhREPw1o4+zmUVDwVVY6Qi++H5UlT40Xy5kw9dtixm7jcTJC
+	Rf6VzIwhP6pGJxT+QbZ7qn/1YAGQpB/+ylYnsIWPx9WbkiLgqXvI9748rJmP6JS5
+	EMtvue+J/5m7oA/Zo3WsFawXuXyl2JGofBvyAnswjCt+L0OMYd4ENar48a0GCQRG
+	rhq8cw5aS03M0Oj7M6p6vo4AIJZ0jy/C+25YGoiFiTyCuCjCUxsRkxO8s52HtlOy
+	2Nh5DPju06hsWRB67Vnig2ZJ9cLXPK7Bit6N6PgiOLzWYGQgJvDuGYNQSLsHhyMZ
+	arPfObiIbL5wnt2C76Pnps8CJKh8Wxt4CjA==
+X-ME-Sender: <xms:_sDIaIxXeNaR_nUQHpaB30ay0k62nrLTLvuZg3FHDoSmZf4QksE8Hw>
+    <xme:_sDIaEtpuNUaIekAj0SzBq2Q0e2f0ndvHQuNeaF1lwCmwbB9hZN_5ziI1Ne0TTDnr
+    dRjAAPneGeF9yrNkA>
+X-ME-Received: <xmr:_sDIaKymL63rPcYMwNDPdoL8PcWZuUtxWevlrkTb6srGokzrdSOV4fq-UZucU7qJIb3VNeR29b60jjlZHLbflACxtGhfgCfB11kPT6g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefledvkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
-    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepnhgvihhlsges
-    ohifnhhmrghilhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:9bnIaK4MQZXxVfPgS_Mytf5hx0wmVANQcIpdOYN5raJVM_ZL3NSoKQ>
-    <xmx:9bnIaEA7EJ1Rl_Bkxg1m8uFfrbCzdpQQN1NM1Y905yLNjAD3tDSXgw>
-    <xmx:9bnIaBbE9wHTOCFnnpSdzjmPloZRindGb4ZREKa3Dkww_vY9MF31XA>
-    <xmx:9bnIaPYBIazWMoAkxNAgaO3u3_gT5hCN_nGMs5TcM0gqZPD4OrxI1Q>
-    <xmx:9bnIaJ3GudZwAvWoyylOdJUVA4SSYxP_lhfvkRNx7WkY5Gqib5-nTj64>
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepgh
+    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehf
+    rghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:_sDIaHBODsJyidKmimE1TSRWWNSsqgLwNHafeREqPIrYSpsjarKkUw>
+    <xmx:_sDIaIckAHmFGts2Lf_JiHk0mOzou4ySsyM7dhFDQDoPgYrwTAtgPQ>
+    <xmx:_sDIaBlOXXIFrftknXSAVL-cj9z1hjgxbCEarfIZVpz1Rc9jOX0uhw>
+    <xmx:_sDIaPG6vjGTjeuagYwj47qRnkNNS0_po299rpEwvdG2qfKnnIcd9Q>
+    <xmx:_sDIaHVnftdPodNqpCdYPgjnwKxAeKGFyQnV6pLA8I_JUVUPD3fQhT2C>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Sep 2025 21:14:29 -0400 (EDT)
+ 15 Sep 2025 21:44:29 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: NeilBrown <neilb@ownmail.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] send-email: don't duplicate Reply-to:
-In-Reply-To: <175790952167.1696783.4795702220839036460@noble.neil.brown.name>
-	(NeilBrown's message of "Mon, 15 Sep 2025 14:12:01 +1000")
-References: <175790952167.1696783.4795702220839036460@noble.neil.brown.name>
-Date: Mon, 15 Sep 2025 18:14:28 -0700
-Message-ID: <xmqqbjnbci6j.fsf@gitster.g>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "D. Ben
+ Knoble" <ben.knoble@gmail.com>,  "Kristoffer Haugsbakk"
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v2 1/4] doc: git-push: clarify intro
+In-Reply-To: <70034c35-8f08-4ee0-9017-7faf6f55ae14@app.fastmail.com> (Julia
+	Evans's message of "Mon, 15 Sep 2025 16:00:43 -0400")
+References: <pull.1964.git.1756240823.gitgitgadget@gmail.com>
+	<pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
+	<270edd2b00e63ef396ae69a9a7e9113a54f0df82.1757703309.git.gitgitgadget@gmail.com>
+	<xmqqjz23l7ci.fsf@gitster.g>
+	<70034c35-8f08-4ee0-9017-7faf6f55ae14@app.fastmail.com>
+Date: Mon, 15 Sep 2025 18:44:28 -0700
+Message-ID: <xmqq7bxzcgsj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,89 +94,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Thanks for sending a patch.  
+"Julia Evans" <julia@jvns.ca> writes:
 
-NeilBrown <neilb@ownmail.net> writes:
+> Re "refs": I think "refs" is pretty relevant to `git push`, which is why I left it in
+> (as "or other references", to give readers a hint that a branch is a type
+> of ref/reference).
 
-> If I run
->   git send-email --compose --reply-to 'ME <my@address.net>' .....
+I have (and I didn't have) no issues with "refs" -> "references".
+
+> Will try this:
 >
-> and edit the intro message, then the message will get two copies of the
-> Reply-To field.  gmail.com rejects such messages.
-
-A commit log message that begins with such a clearly written problem
-description is always welcome.
-
-> This happens because a Reply-To is inserted into the intro message
-> template, and then the intro message headers are copied and another
-> Reply-to is added.
-
-OK.
-
-It took me a few minutes to follow the code based on the above three
-lines to figure out exactly what is going on.  The key realization I
-needed was that the if/elsif/... chain being touched is sifting the
-e-mail headers that appear in the message being sent into two kinds,
-ones whose values are understood and parsed into individual variables
-that have their own meaning (like $reply_to), and others that are
-not understood by the code and thrown into @xh array to be blindly
-replayed into the resulting message later.
-
-By parsing the "Reply-To:" header into $reply_to, the code with your
-patch stops throwing it in @xh and that is how duplicate headers are
-prevented.
-
-> This patch fixes the problem by noticing the Reply-To: header when the
-> intro is parsed, and using it to assign $reply_to rather than blindly
-> coping it into the new headers.
-
-And what I thought missing is mentioned as part of the solution
-here.  I would have preferred to see some more described in the
-second paragraph that analyses how the breakage happens---it would
-have saved me a few minutes ;-).
-
-A few issues in the log message.
-
- * The commit, when prosessed by "git am", will record your name as
-   "NeilBrown <neilb@ownmail.net>" because that is the name and
-   address used on the "From:" header of the e-mail I am responding
-   to.  It does not match the name/address used for sign-off below,
-   which is not right.  If <neil@brown.name> is the address you want
-   to be known as to this project, you'd need to override the author
-   name by inserting a line "From: NeilBrown <neil@brown.name>" at
-   the very beginning of the e-mail body, plus a blank line to
-   separate it from the body of the message.
-
- * We prefer to see the solution described as if you are giving an
-   order to somebody sitting on the keyboard to "make the code look
-   like so", e.g.
-
-     Fix the problem by parsing Reply-To: header into $reply_to
-     variable, to be reproduced on a single header line later,
-     instead of getting passed unrecognised and left in @xh to be
-     copied into the outgoing message.
-
-   or something like that.
-
-> Signed-off-by: NeilBrown <neil@brown.name>
-> ---
->  git-send-email.perl | 3 +++
->  1 file changed, 3 insertions(+)
-
-Thanks.
-
+>     Updates one or more branches, tags, or other references in a remote
+>     repository from your local repository, and sends all necessary data in
+>     those branches or tags that isn't already on the remote.
 >
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 437f8ac46a85..e2248c223119 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -1931,6 +1931,9 @@ sub pre_process_file {
->  					$in_reply_to = $1;
->  				}
->  			}
-> +			elsif (/^Reply-To: (.*)/i) {
-> +				$reply_to = $1;
-> +			}
->  			elsif (/^References: (.*)/i) {
->  				if (!$initial_in_reply_to || $thread) {
->  					$references = $1;
+> The goal there is to make sure the reader knows that git push may need to
+> send a significant amount of data, depending on what's in the new commits
+> you're pushing.
+
+Yes.  I do not partculary see the point of deliberately trying to be
+vague by saying "data" (in "all necessary data") instead of "tags,
+commits, trees, and blobs (collectively known as objects), but I
+agree with the stated goal here.
