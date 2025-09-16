@@ -1,192 +1,128 @@
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AC6E571
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 02:55:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A44028A1D5
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 05:25:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757991319; cv=none; b=h8G0DvEJR0nBmO9iqVCmEhSfc2jcNmBeN6KaMc2uWUQBDXTPPwxGmFu6R730IMaluvfX7xxzr0I87TmRXZqF1GZzh99Y4n7IvWuoOxc1E8jkqMqsGXPijCmrNEuCRfVXNcn69xHe88SsqAE1I5qRpyGOutGCBRCte0gPBTvtUg8=
+	t=1758000357; cv=none; b=BMTtideaMfO5jLyDiSWOq80ND+TK24rCmnM7OiEKQVFio3kk6d19DqerMyqKny66zR3x/3zwlB1bVR44HpMmUEqC87lhPuhhm9/2ciKAoSDEUeIwb6UFo+jtIY1cWLieJgy4e7Dhz0wRsKCzxN7zlKG3T4uN1BWZuAgyhxxyz1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757991319; c=relaxed/simple;
-	bh=LofrMazJyvgK5N5Mkp4BEz7TEvLdAQDEzRD82XJ+P1Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=shehDVTZ6gT5INltJjp+WDQEWao7YRCOKtifmhaeIepA3U3Uvxdu8d/tT4kFaEYBiASzQzYAKAOPCeUDAwLW8HYlZf9zAOeWw9D4xySo/CFZcuNmS317gMs4jBoy8H8Odp57ZiQswvEfc0YfPHfp/UQUPUAW6WB0t1fWIs9ohDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kJxx9arC; arc=none smtp.client-ip=209.85.210.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758000357; c=relaxed/simple;
+	bh=clyJFokIT+9DYWElDYyjtR3Z73Q8ekvMNZC/fxV4NPA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SOOo5xC1Fmw2o86+mh+4ca/Fsj24NMMnHHYhigRitqTeSgcQ01dOU6gLvTWdu6cm2K3AgjiJnJ87u5dWa1QpzZx8t8hUPp+WC7PPGPa6T9AXO+kEyx8PhUc9sO2mxSiYBjfxQlIFfuB4fNsVWkkYMV+XMsk+WwDkFBEVdL9Se/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=raXlYDMi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oBLTrAZB; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kJxx9arC"
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-74a61973bedso4585106a34.0
-        for <git@vger.kernel.org>; Mon, 15 Sep 2025 19:55:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757991317; x=1758596117; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PgqOIMvNebDyetlizG6Hn7KGujfCVFY3iBLuL3yYJgU=;
-        b=kJxx9arCVFcuHfxzSq2vI2UlRjgEkKHYg96EOogJCQvSTd9bTuW835wWr0Ls89SmhN
-         Fd0UpZx9+QoN5CqjTV3Ddhw8ifkMYbNHYhx6ju+vag3mKuA0dewvgvK1rs/m0+IHU9RN
-         n9JAS+xtu+2Ca42RnV9zl//jowKh9KXiZ4m7X9Wcc7hJ0xgknxUH7lBY61nuU4xknsTT
-         wsC9D1pQxOYZv9wWUJ3zr3VDjI6uiORxzCXuWYmnrdcvxY9WJeWkzXhSy/d9aXUi19kH
-         qLj8kV3suciIS/IYPf7kg9EHEevDpZ9RAHIImZxYDZHwZ30j92AedlAOIla/6lfhH9n5
-         KJXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757991317; x=1758596117;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PgqOIMvNebDyetlizG6Hn7KGujfCVFY3iBLuL3yYJgU=;
-        b=bDS7pV8oeP5LpmzJdD468RpZCPDCwg9Im/Zc6RmrECIfGgzjl/05ZC4QvUaJrC5KRX
-         13iQ7lWTqgsX6bRJ5tq6ueiBioIZjFkFcN0DalxhBAXCZxbEicQKqUY7LyCSLLP5EEFH
-         /dvwK3rJy6L0L0mGywh2qBeLNXbo56rW0IBF76xsZ70hle1scC7bHIVFYW1Xxqqn/5Kt
-         ekoBvHAQfCNB7lYXa4E72sm0mTXGJM4nkwZKDTcxiupwiAxMkKoh0tK8qKOIugqCjDK9
-         aTz1qOWqygaWRKgu+MB1kIihy0AoTWi6OVLu4VRs7h1+bWKgQMXt3CMmL2XuRz2aU8jh
-         PdOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUdGWU/+wn7EH3pQfKVhZTsMUFdzmcgFAdFOkLZMKbNH0IAnR96IgmbTFM1geoy/rsJruw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxAY0VDjK1KMgtdCFFgE1J0YDtOAWs8kOqUXFbMcBdNr0IvTPaV
-	UBPNG379b/+E0jXXv44750p/QhooRyKbJKPJT3qw4+GCXmOmlXjkOWSCozXEtQ==
-X-Gm-Gg: ASbGnct2KqexpfNyE3b2jMq2wIgbNqG5GaLllWWdyExNf4CFKK5EYz7LCVcMfClRwKU
-	0WythTer+/cVisca/qJkD0enq5Iamw886xsNMpr/n/SWproMZkqPsvjOoBwzbteKynn54PwA3aT
-	S4c3HVnVRHk5AcaB1XOoApOLohuUD3L34e9cGweOe6YTMUKAslyqRxU3jceskTnKh13w3z3E7uo
-	f4Ge8+qUkCHbCmLv2XCoYMNLDd066p2Fxd2ElNVxpL0H8FfXYhzLhEl3U1p2izXTgRSezbCNlGa
-	Gb7INQ5eLhN5NdxwO7bUDf5DI+4j+cni5BS1pivZ2E3ddlPmR32RS5fEHOkYWC+s7Ge+leUDyL9
-	MtbfgHGaYUrjnokyG
-X-Google-Smtp-Source: AGHT+IFIss+7tDM2QLLVvjbgUVhNaNIJ/vh2ms2YZMoKYv6VP/QTni3ojSoX/MJjlvjXcj53GM0xtA==
-X-Received: by 2002:a05:6808:3447:b0:437:e1b0:e969 with SMTP id 5614622812f47-43b8da3a65fmr7080435b6e.40.1757991316858;
-        Mon, 15 Sep 2025 19:55:16 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-43b82a72657sm2675799b6e.15.2025.09.15.19.55.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Sep 2025 19:55:16 -0700 (PDT)
-Date: Mon, 15 Sep 2025 21:55:15 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 1/6] bulk-checkin: remove ODB transaction nesting
-Message-ID: <pk2cpihxk4j4ywgq3dtknybyzjeon7ajgmwq4yhknojjsfiqo2@q5dsygszdkar>
-References: <20250909191134.555689-1-jltobler@gmail.com>
- <20250909191134.555689-2-jltobler@gmail.com>
- <aMJu4yoO5-Xp52oJ@pks.im>
- <aMijGE2CveYcQaWc@nand.local>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="raXlYDMi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oBLTrAZB"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 419FC7A01C6;
+	Tue, 16 Sep 2025 01:25:53 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 16 Sep 2025 01:25:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758000353; x=1758086753; bh=nQw2BU4dXE
+	euw8Xhh0764xVU4psj0v/tPoAcLR04aIE=; b=raXlYDMimRfL/iiQQD1YTAYWcD
+	emm7TVEtaQ5s34id/vZo+c/0l7dz2zs85e6j1uTK0Gq3OSXJzcvUi21sWLxQOdPV
+	MSzqNOt9aFIBBN9g4t9r9WllQi2iWMNxuSwyAT7RNQ+TU5hC4FUBbXtFRCb50Eai
+	C2Wuc5WwTJ75ehdVN+tiiYnKdmsIXPQdPono2uuP76DonGfcT+Zr/UOCP8CytYEO
+	kTYJOCYykzT5tOrBl/4NXhBsFQiVwnUHs0sguTj8tmqGgNng5Zd49wLBNe82BR8k
+	d8WHhwhGBHIE2aFisGPfxNDMH8K/9J5WcZEAmz7z+Qm72vEpRvj+KDUi4F9A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758000353; x=1758086753; bh=nQw2BU4dXEeuw8Xhh0764xVU4psj0v/tPoA
+	cLR04aIE=; b=oBLTrAZBqFmTMc8itUlFYzLJpvjFkW+KuNnO3h94FwYpsBL1S08
+	Gf+yMmb3TcUH0zzin7GYZGlmUL6oO4sdespfLW4w91IjD7Y1cy21X5eSaYPSxo/1
+	rfVtRmO28CfBQe7pjVTCge0+SdTs1yV1Y9kBejsYBD2m7CyqKxa3LEGCyIapd4Gv
+	SbVAVth0vUC38coh2c1X9JMBrzgkcY4Aert8X3vR2GNKjO6j82dW6wRzBZoag82o
+	C19sFfeRS3s5CpxhZbkpN4YoynNGrvpCXgUA43R67MlgMKz9LgA4Z5la36UYheoG
+	KjVex7kcqxFdsZDFQeddnvL2rWv4Nnz9SRA==
+X-ME-Sender: <xms:4PTIaCIUb3UdG5kOJ6Vf-D_0LFnanHJMMvpH5DWJSF23z6XQbugoPg>
+    <xme:4PTIaCl5fSBnicUm2ijr_m-fBqiluxfcEQWm2g45pbNInC3QUJ073cIk8OSo7tMXY
+    01VRIm9Y5UGQlkvnA>
+X-ME-Received: <xmr:4PTIaDLcALQdXirL7xsGXdBMlCSYQQuljV4hQKKKzJZTMf4q2p2m1Z2FThKTzP4GD_EcsCONOq0KwwDN_YgaJiwgeNsmE9-WEytCDs8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefleejfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeffieetueejveefheduvdejudffieejgeefhfdtvdekfeejjeehtdegfefgieej
+    tdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilh
+    drtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghs
+    thhmrghilhdrtghomhdprhgtphhtthhopehjuhhlihgrsehjvhhnshdrtggrpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:4PTIaH58wCpKFqUfgDIYq9GuPHP-ZQNjWJKvH_x8MFUFKxPaERBjzg>
+    <xmx:4PTIaH1UJrvct9by9NNhQjLNHPeLTM25GXtgvRt1-zmhbqiDIKxkYA>
+    <xmx:4PTIaNe9fnaruhVVnzNG4_5SE1zpu8P6Agdc5k4r77WYqGTx60xErA>
+    <xmx:4PTIaNcCiMXxRHffABplCYciuU-vR-CZ78MQW6loWqk0h_mSduILXg>
+    <xmx:4fTIaOvmjZ8_iKvl3X_OBt-5hUVMftJI-Vqpi0jUhAJWerktBRnBa2si>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 16 Sep 2025 01:25:52 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Julia Evans
+ <julia@jvns.ca>
+Subject: Re: [PATCH v2 2/4] doc: add an UPSTREAM BRANCHES section to
+ pull/push/fetch
+In-Reply-To: <0ec629d4037bf5d1ccc248ca1bbd87ccc08119a3.1757703309.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Fri, 12 Sep 2025 18:55:07
+	+0000")
+References: <pull.1964.git.1756240823.gitgitgadget@gmail.com>
+	<pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
+	<0ec629d4037bf5d1ccc248ca1bbd87ccc08119a3.1757703309.git.gitgitgadget@gmail.com>
+Date: Mon, 15 Sep 2025 22:25:51 -0700
+Message-ID: <xmqqzfavarz4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aMijGE2CveYcQaWc@nand.local>
+Content-Type: text/plain
 
-On 25/09/15 07:36PM, Taylor Blau wrote:
-> On Thu, Sep 11, 2025 at 08:40:35AM +0200, Patrick Steinhardt wrote:
-> > On Tue, Sep 09, 2025 at 02:11:29PM -0500, Justin Tobler wrote:
-> > > ODB transactions support being nested. Only the outermost
-> > > {begin,end}_odb_transaction() start and finish a transaction. This is
-> > > done so that certain object write codepaths that occur internally can be
-> > > optimized via ODB transactions without having to worry if a transaction
-> > > has already been started or not. This can make the interface a bit
-> > > awkward to use, as calling {begin,end}_odb_transaction() does not
-> > > guarantee that a transaction is actually started or ended.
-> > >
-> > > Instead, be more explicit and require callers who use ODB transactions
-> > > internally to ensure there is not already a pending transaction before
-> > > beginning or ending a transaction.
-> >
-> > I think one bit missing in the commit message is to explain what this
-> > buys us. Does it for example enable subsequent changes? Or is this
-> > really only done to have clean ownership semantics for the transaction?
-> 
-> In addition, it would be useful to hear from the commit message *why*
-> this is safe to do. Justin's message suggests that nested transactions
-> are noops, so doing something like:
-> 
->   begin_odb_transaction();
->     begin_odb_transaction();
->       write_object();
->     end_odb_transaction(); <- object not yet added to the main ODB
->   end_odb_transaction();   <- now it is
-> 
-> only results in the object being added to the main ODB when the final
-> end_odb_transaction() is called.
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Yes, well said. {begin,end}_odbtransaction() operations on inner
-transactions are effectively a noop. They simple manage an internal
-counter to know when a new transaction should be started/finished.
+> diff --git a/Documentation/urls-remotes.adoc b/Documentation/urls-remotes-upstreams.adoc
+> similarity index 63%
+> rename from Documentation/urls-remotes.adoc
+> rename to Documentation/urls-remotes-upstreams.adoc
+> index 9b10151198..1e9c56dc5f 100644
+> --- a/Documentation/urls-remotes.adoc
+> +++ b/Documentation/urls-remotes-upstreams.adoc
+> @@ -91,6 +91,41 @@ git push uses:
+> ...
+> +The upstream is stored in `.git/config`, in the "remote" and "merge"
+> +fields. For example, if `main`'s upstream is `origin/main`:
+> +
+> +```
+> +[branch "main"]
+> +   remote = origin
+> +   merge = refs/heads/main
+> +```
 
-> Instead it looks like this patch pushes us towards having callers check
-> whether or not there is a transaction in progress before starting a new
-> one. So it seems like this is safe to do only for callers that check
-> whether or not there is an ongoing transaction before beginning a new
-> one.
+When running with AsciiDoc, this makes the build fail with
 
-Yes, this patch removes the logic that manages the internal nested
-transaction counter in favor of requiring callers to check if a
-transaction has already been started or not.
+        ASCIIDOC git-fetch.html
+    asciidoc: ERROR: urls-remotes-upstreams.adoc: line 111: illegal style name: branch "main"
+    gmake: *** [Makefile:356: git-fetch.html] Error 1
 
-> (I think this is what the second paragraph of the quoted part is trying
-> to say, but I think it may be clearer to say "To preserve the same
-> semantics, callers MUST ensure there is not [...]").
+The line #111 is the one that has [branch "main"] on it.
 
-Yes, you are correct. Apologies for the poor wording.
+Curiously, USE_ASCIIDOCTOR=YesPlease would not suffer from the
+issue.
 
-> That's more work for callers, and at first blush feels a little more
-> error-prone.
->
-> Specifically, if some new piece of code is written that does not first
-> check whether there is an ongoing transaction, it could result in a
-> BUG() either at the time it is written, or worse, later on when that
-> function is called in the context of an outer transaction.
-> 
-> So I am not sure whether this patch is making things simpler or safer.
-> Certainly the bulk-checkin API is a little simpler, since we no longer
-> have to keep track of the nesting level within an odb_transaction. But I
-> think it pushes more burden onto the callers in a way that I worry could
-> create the potential for BUG()s later on.
-
-I've revisted this patch and I agree there is probably a better/safer
-way to accoplish this.
-
-The ultimate goal of this patch is make it so invoking
-end_odb_transaction() on a transaction guarantees it is flushed. With
-this guarantee we would no longer need flush_odb_transaction() and the
-transaction interface eventually can be simplified to just
-{begin,end}_odb_transaction(). This also avoids a potential class of
-errors where a caller _thinks_ they have committed a transaction and
-that the objects should be visible, but they actually are not because it
-was a nested transaction.
-
-The nice thing about the current implementation though is that nested
-transactions are automatically treated as noops and the caller doesn't
-have to check if there is already a pending transaction. This is safer
-and less error-prone.
-
-Thinking about this some more though, we should be able to continue to
-have {begin,end}_odb_transaction() function as noops when there is
-already a pending transaction and also be able to drop the internal
-transaction nesting mechanism at the same time. To do this, instead of
-erroring out in begin_odb_transaction() when there is already a
-transaction, we can simply return NULL. If a caller wants to know if a
-new transaction was actually started, they can just check the return
-value afterwords. This removes the burden from the caller to explicitly
-check if there is a pending transaction beforehand. Furthermore, since
-an ODB only allows a single transaction at a time, it probably makes
-sense for operations at the ODB layer to guard against this anyway.
-
-This change would pair nicely with the change made to
-end_odb_transaction() in version 2 of this series. In this version, when
-end_odb_transaction() is provided a NULL transaction, it now functions
-as a noop as well. If a transaction _is_ provided though, it is
-guaranteed to be flushed with addresses the main goal on this patch.
-
-> I think that takes us back to Patrick's question: what do we gain by
-> simplifying the internals of the bulk-checkin API, and how does (or
-> doesn't) that justify the added burden on callers? Looking at the newer
-> version of this patch in [1], I see that you addressed what we gain, but
-> I am still curious about how we justify the added cost.
-
-Thanks Taylor for the thoughtful feedback. Much appreciated. :)
-
-I'll plan on sending a followup version tomorrow that hopefully
-addresses most of these concerns.
-
--Justin
+cf. https://github.com/git/git/actions/runs/17743739238/job/50423820029#step:4:1395
