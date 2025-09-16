@@ -1,92 +1,90 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C0B2EAE3
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 05:32:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAFD2EAE3
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 05:33:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758000740; cv=none; b=QOW+0W8On+Q4TnR7ZSbj4Tyh9qAriIFhKWfaKs0FDhkwLWQ0FCg37j/ir4+H3pPvdyv8AE3zWX9k6abwQDfr1g/n1qprvCDkxEQoTpvSat1MG+bzj/8N0FHosLJaZnX137C4svr2YbJnZhnrN/+zMilPB6LjaoOJZ8NKeDk6Njc=
+	t=1758000836; cv=none; b=NL4UZ4DG3B3LgLYTORsym/OhHLxb01lCDyrvgxZ0teeTgbLriN1dR/LQVG+TcuIfoMaTLrPSWd1IDdbauEjyISeLenmILVgzm6NMw11pPINmVazGfJM2Q28fPq+G0jbTv2RdYhO2GUJrL2x9bF5EabfZq8dksUjSP9k7F+8MeEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758000740; c=relaxed/simple;
-	bh=Ma7GAQ9wQYrRy/Hd11UgFzMyLim0EWt08Uo3MJOY274=;
+	s=arc-20240116; t=1758000836; c=relaxed/simple;
+	bh=2aJQ0CoGy3iQ9OUROKQPYD9nfyDx/YeT0S+KWSe5Jx8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=l2RPTAKIzdnvwtWZWfAwVyHVzsUk69+NaSaOv2Grvegocr6sJoRbR9OHEUYPtc5ZTPIkcplyIkq3Mn8dlzsg4dgOOUlzk8q324+JQdzgCt2QhDGg38tTHqz1btxViRYqFAW2+MAqJvjMeo9hAY+LR514nXc4fkqvlhkApMJDcZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cFpJBnQN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YwjaoAwR; arc=none smtp.client-ip=202.12.124.152
+	 MIME-Version:Content-Type; b=F9mtRSHxYHHhWmHS1W3ezvrq0ht2WRSWbmLRZUzAkB9p1QBPBtG01RGKLKKGgvi3T8AId1bWOotBfr+o/QkqbHDX4OJuHIGe+tFjeVby8B+pNaKqbIxrDg3snABhRo7vsrlTBFQXRHftOIwzc/C5zHusLW385lCmOpAEek/4gpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=viDZXlbj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bFUuC3S0; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cFpJBnQN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YwjaoAwR"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 02B477A019A;
-	Tue, 16 Sep 2025 01:32:16 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 16 Sep 2025 01:32:17 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="viDZXlbj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bFUuC3S0"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6DF9A7A01C6;
+	Tue, 16 Sep 2025 01:33:53 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Tue, 16 Sep 2025 01:33:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758000736; x=1758087136; bh=AbgnUR832w
-	i5wC2vcqiX1mxZT4SeDJ27tHRmZXs1XMM=; b=cFpJBnQNTpXp5YQAa0QV20fjQH
-	SFnB9cPH2QtBZ0XibfIjscQQmQtFa/vyvetvjjD3tpB217ttYVWqCt5YmTefMZyz
-	U3JwFTjl+0M6RC6XFJrj4TwBWbC4EMWePsijoggpPFuQoPAjOJhMkndzdkGXaZTA
-	T42Q4o7TgqukSnv1jSfiQh1R7F+Pc00Z2oCx8NeQbaYtdIAKNdnH4EY19srv0xne
-	yUSgbfDKMptr05l8Q8fjjKof5lrjWvqwoHAk9v/HVRv/+pGNUfoaaJb9Du2+7Zks
-	hvyP9UpcuK6S1Yt7gmVMiuq5nRXBdG2JBU7lB7Acz5cnnnHJVVmGetpxtJAw==
+	:subject:to:to; s=fm3; t=1758000833; x=1758087233; bh=BKRIM7dw2L
+	8Ko2Sfeoi2cavLl7ncAFpl+U8FJTxy3NI=; b=viDZXlbjHAieKNPKN7h/S6/ioz
+	EjTZowLvl/n/ndc9/0o5rfHUMlEEFq3OWgwgPVpb4KetBaYX4PgTVv5eCIbFFL5q
+	U7aHeW7gkd1i63UD5q+2z7UalZZOWk25wJA6Dw2jMTd9JUck46sQxF839vxiNpDw
+	ImViiJFSx9SJ+XGdXl7zE4PwCjp6y7SDTwTF7RpLBQR8jofMA4FhsCszfpbLNCqP
+	+0wwms6OETbq9A1xRBUgmufwBtnAHbmU+Fc5CUEUvETX8Bgd+QAsuMSgS1i7tQ7Q
+	RhJ5GocXkZV5+SYyV37IupOj5vyJn/tJojpVSRSDaiUOISc9kov5uOKWW9tA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758000736; x=1758087136; bh=AbgnUR832wi5wC2vcqiX1mxZT4SeDJ27tHR
-	mZXs1XMM=; b=YwjaoAwRN4hNtFXFUfj6kZF4gUx4BCz8mkZ9/1LdljErk8HF/QP
-	IURS1zbNREgdb9XXQVzSkBj3BEUCBHrf2GpIiD7G1MypjKwymHsvKFOoquVTXFzG
-	o6rtLROQ0lY2ZgdrqBTUFlF1khiVofPQDqrYBBHJyemH2Noczmtg/gPt5/eMFtpH
-	CZbjh1y2Q6CJW3oUPXsS808IAkNM78Yj63ezlqo/VzO/BQFCyqrb7H5V9Mzoe7vk
-	izfqaLyCoCNCbnDPL1C6krYmt6DBeJ3kfvZjO7Mn9va0Kp5sMo89GOC4Gfb6Pkje
-	YMuzNSqn1MGfK1EGaLSDe46YFr+Tgn/5cEA==
-X-ME-Sender: <xms:YPbIaMOiF6JBBQWLEzbhCxCOJO6ixOEv0sHOZu5X2wHt-FShCuenyQ>
-    <xme:YPbIaDtOhcy1Xzulm-J1u5xadfe3yjobYBkNz-qyWPJPN-mQ9h-8VOGYBfW48p6OV
-    hkDZIFVPN7wY-RP3w>
-X-ME-Received: <xmr:YPbIaPZvn7CamX0XDRULCiSSFpNTBT-mXEfhpUApT17a3VxIE3nqKsJ8ZQ7NPdqu4KB14VSDrh3SoZak0L4H9r1ADD6_wLiIDTGRbmQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefleejfecutefuodetggdotefrod
+	1758000833; x=1758087233; bh=BKRIM7dw2L8Ko2Sfeoi2cavLl7ncAFpl+U8
+	FJTxy3NI=; b=bFUuC3S0fCAzf6XkW6bjI5vi4mcH8lmfThWjVKntS7+j6qmxs31
+	nomj5kJY1ZKhXboiTaGhVFXoyObHOp6FUUsMQ87/jnQkZg9f+HLuJAuDU3noA0hE
+	VIBnRPsrSBSb5w6J6CnYtBH6w2lKwxFWJu8DpzNM2+fIk4hVbaOCk49/x4FZyWq7
+	fXANEwBuIv1mgaCkZsVZNyTM/Ph1QXaFubrNYcxr0dJv5XriYefeBkxzgCwz2SMJ
+	dqFhT0wbfO8e9NKayX3vRMLPQT/iUXyJf6QRGLOKWJDBDPjOfDruRfwwaoNYOZQc
+	s70nk64vjMpvMIKDccU64mTufYKzLPsHx+A==
+X-ME-Sender: <xms:wfbIaLKyfykVcArs5-9ofMNbs2aKqQIHL4l8CXBNnVah8R0TgQGL0g>
+    <xme:wfbIaHlcxsYrX2vQGfhcbawsSSb4m6lF7MuLeBkuWtBTtgdUAzRmd2ZHJ9la8VnEm
+    GswKQfuQ4teL89BGg>
+X-ME-Received: <xmr:wfbIaEKFA-se3ccNGabLdcOaC7Meky5AQ8VEZTNnB07LFx0BrlHU9qLmAV_BwJKdfAZVq8ow5GHGn9UGSiHYwuKt0CcUyOmJ0PLYf-o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefleejgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgrggsrhhivghlrdhstghhvghrvghrsehinhhrihgrrd
-    hfrhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    phhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:YPbIaFwmSgunvUGn6hu2ljGxKXzkkXb6cxXthClC1sTVHJ3qpY5ZMw>
-    <xmx:YPbIaHgBp5Ab2jElcCtJhD8KZ_3tV56jA_TlKZs6lW-vq7fiiFqJLg>
-    <xmx:YPbIaBlMUfgaTjTgh81XV17vNXwVb-_VnI4i3VgBFf2j1Ukb0RC7Jw>
-    <xmx:YPbIaNhKtyilxuHT-4ads8ZEzLcTs1PA-mTukELJDf84yChUIeDEeA>
-    <xmx:YPbIaIabi57xWhaJwCPN2eHyQgXbwisWIbOOU87QhbL6u1YAYYFYvDzx>
+    gvrhhnpeffieetueejveefheduvdejudffieejgeefhfdtvdekfeejjeehtdegfefgieej
+    tdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilh
+    drtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghs
+    thhmrghilhdrtghomhdprhgtphhtthhopehjuhhlihgrsehjvhhnshdrtggrpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:wfbIaE7YhrVbzRk7SbCN5MolQat9sZkaXQgUo42Z4dvYKoqvNKwFZA>
+    <xmx:wfbIaA1M2AvBCVsWPLEFTJAFqpH66Z-vSAcaNfVO8yqajz_i8eND2A>
+    <xmx:wfbIaCeGcM8CP6iiN09dxkWNDbB39Lw9GMm3yEI0QQTW-QXTZhUdTA>
+    <xmx:wfbIaOcsMujlvFCXRJ57vW4ypF0AokJnYpSunL18O8-h3RqY5A31XQ>
+    <xmx:wfbIaHvy-jMDY4IqP0wiLZsVsbwejqrrbcUjXsBn58iG6cYd9izCLilJ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Sep 2025 01:32:16 -0400 (EDT)
+ 16 Sep 2025 01:33:52 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Gabriel Scherer <gabriel.scherer@inria.fr>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-  git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Phillip
- Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 1/3] checkout: provide hint when failing due to another
- worktree
-In-Reply-To: <0dfe3e31-5486-446e-8af5-20669c06ea64@inria.fr> (Gabriel
-	Scherer's message of "Mon, 15 Sep 2025 21:52:19 +0200")
-References: <20250913141327.2775228-1-gabriel.scherer@inria.fr>
-	<20250913141327.2775228-2-gabriel.scherer@inria.fr>
-	<be510685-3be1-4f71-806a-6b580bb1cf21@app.fastmail.com>
-	<d44109a1-0ff5-49f8-885b-9aae195ec492@inria.fr>
-	<xmqqikhkhzbm.fsf@gitster.g>
-	<0dfe3e31-5486-446e-8af5-20669c06ea64@inria.fr>
-Date: Mon, 15 Sep 2025 22:32:15 -0700
-Message-ID: <xmqqv7ljarog.fsf@gitster.g>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Julia Evans
+ <julia@jvns.ca>
+Subject: Re: [PATCH v2 2/4] doc: add an UPSTREAM BRANCHES section to
+ pull/push/fetch
+In-Reply-To: <xmqqzfavarz4.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	15 Sep 2025 22:25:51 -0700")
+References: <pull.1964.git.1756240823.gitgitgadget@gmail.com>
+	<pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
+	<0ec629d4037bf5d1ccc248ca1bbd87ccc08119a3.1757703309.git.gitgitgadget@gmail.com>
+	<xmqqzfavarz4.fsf@gitster.g>
+Date: Mon, 15 Sep 2025 22:33:51 -0700
+Message-ID: <xmqqqzw7arls.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,106 +94,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Gabriel Scherer <gabriel.scherer@inria.fr> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On the other hand for --ignore-other-worktrees there is no
-> user-friendly documentation of these questions currently (I looked at
-> the 'worktree' documentation, in particular for the --force option,
-> and at the --ignore-other-worktrees documentation for 'checkout').
-
-Oh, that's bad and we should improve them, regardless of what we say
-in the hints.
-
-> restriction, what happens if we ignore this restriction, and what is
-> the recommended way to respect it.
-
-Sounds good.
-
->>   - 'foo' is already in use and in which worktree.  Your message
->>     "fatal:" is very clear and is good.
->>   - if you checkout 'foo' here and start growing or otherwise
->>     updating the history of 'foo' in this worktree, the index and the
->>     working tree files of other worktree(s) will go out of sync with
->>     the tip of 'foo'.  if they 'git commit' from that state, for
->>     example, it is very likely that they will record a change that
->>     reverts your changes from the history of 'foo', and you do not
->>     want that.
+>> +```
+>> +[branch "main"]
+>> +   remote = origin
+>> +   merge = refs/heads/main
+>> +```
 >
-> (This gets me to wonder if a desirable behavior could be to 'detach'
-> the other worktrees that had the same branch checked out, instead of
-> failing on checkout. Users starting to use the other worktree again
-> would possibly notice more quickly that something is amiss.)
-
-I generally advise against pulling the rug under somebody else's
-feet.  You do not know what that other worktree is used for, or if
-somebody is using it right now making changes and whatnot.  What
-happens in the worktree that the end-user has just issued the
-command you are executing is much more controllable.
-
-> For me this situation is not a big deal: if they commit the removal of
-> 'foo', presumably they will notice that the diff/changes in their
-> commit is not what they expect, and they can come back to the previous
-> state.
+> When running with AsciiDoc, this makes the build fail with
 >
-> I agree that this is surprising and I understand why the project
-> decided to discourage this by default ('fatal error' is plenty
-> discouraging), but there is no data loss or anything of the sort, only
-> recoverable surprises.
-
-The question is how would they, the person who worked on the other
-working tree that first checked out 'foo' and perhaps worked for
-some time with local modifications, and then left the worktree so
-long ago that they forgot that they have a checkout of it (and that
-is why they just got told by "git checkout" that there _is_ another
-worktree that checks out 'foo' already exists), _find_ where the
-previous state is in the first place, once they go back to the other
-worktree.  You may be nice and have advanced the branch by only one
-or two commits, and they may be able to find where they were by
-going back a few entries in "git log" output.  But you may rebase
-the branch and the place where they started from in the other
-worktree may no longer exist.  Then what?  It does not sounds like a
-recoverable surprise to me at all.
-
->>   - if you want to grow history of 'foo' in potentially different
->>     direction from what the other worktree with 'foo' is working on,
->>     you are better off creating a separte branch 'foo2', with
->>     anticipation that you'll eventually merge them together.
+>         ASCIIDOC git-fetch.html
+>     asciidoc: ERROR: urls-remotes-upstreams.adoc: line 111: illegal style name: branch "main"
+>     gmake: *** [Makefile:356: git-fetch.html] Error 1
 >
-> Use-case examples:
+> The line #111 is the one that has [branch "main"] on it.
 >
-> 1. my colleague has a long-lived feature branch called 'super-feature'
-> 2. last year I did a lot of review work on their branch in a separate
-> worktree which is still somewhere on my filesystem, but which I am not
-> actively working on anymore (and maybe never will)
-> 3. I am in the middle of a bugfix session in another worktree, and
-> suddenly I want to check if the bug also occurs in 'super-feature'; I
-> stash my current stuff, checkout 'super-feature', and run 'git pull'
-> to update it to match my colleague's remote to get the most recent
-> version and test it against this bug.
+> Curiously, USE_ASCIIDOCTOR=YesPlease would not suffer from the
+> issue.
 >
-> In this scenario, I don't want my current work in (3) to be
-> interrupted by the fact that an old worktree (2) exists that also
-> tracks super-feature, and in fact I do want to update my local
-> 'super-feature' branch to the most recent version.
-> Maybe later on I will come back to my old super-feature worktree (but
-> maybe in another year), and I will start with a 'git pull' or some
-> other command, and I will quickly realize that its index is out of
-> date and fix it.
+> cf. https://github.com/git/git/actions/runs/17743739238/job/50423820029#step:4:1395
 
-If #3 involved only "checkout" of super-feature to build and test,
-then detached HEAD is the perfect tool that was designed to be used
-in such a situation.  But if the goal is you want to have _his_ latest
-super-feature expanded in your filesystem so that you can build and
-debug, you do not want to checkout super-feature and pull, which WILL
-move your super-feature branch and make #1 worktree useless.  They
-may have made quite a lot of changes, and your previous state, the
-state you were reviewing (and perhaps you had a few of your own
-fixup patches there) may not even be reachable from their updated
-tip of the super-feature branch.
+For now I'd locally patch it with the attached, which does not seem
+to change the output at all when formatted with Asciidoctor, and
+does not break the build when AsciiDoctor is used.
 
-If I were in that situation in step #3, I'll probably do
+Thanks.
 
- $ git stash save -m 'in the middle of a bugfix session'
- $ git fetch his super-feature
- $ git checkout --detach his/super-feature
+diff --git a/Documentation/urls-remotes-upstreams.adoc b/Documentation/urls-remotes-upstreams.adoc
+index 1e9c56dc5f..f40db15b20 100644
+--- a/Documentation/urls-remotes-upstreams.adoc
++++ b/Documentation/urls-remotes-upstreams.adoc
+@@ -107,11 +107,9 @@ Git defaults to using the upstream branch for remote operations, for example:
+ The upstream is stored in `.git/config`, in the "remote" and "merge"
+ fields. For example, if `main`'s upstream is `origin/main`:
+ 
+-```
+-[branch "main"]
+-   remote = origin
+-   merge = refs/heads/main
+-```
++	[branch "main"]
++	   remote = origin
++	   merge = refs/heads/main
+ 
+ You can set an upstream branch explicitly with
+ `git push --set-upstream <remote> <branch>` or `git branch --track`,
+
 
