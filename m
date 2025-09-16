@@ -1,71 +1,71 @@
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1039831BCB6
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 21:13:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1338221FD2
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 21:31:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758057237; cv=none; b=E1aoCJopDeZhDnrhnsPFDzi7KdM1LLBl7N9b1+eLmsTVBPmoX0LOmdg9V2sQ12U0n2KjqfXwqWuyZTkkhXTPkmu0xxkx33MNzbxQw6mOVCENU9GweXQG+oaq3FC5crbUPmom3kW0nji3Xpciq0+gJJ8ewWvppJuxgWbfffzBmho=
+	t=1758058268; cv=none; b=fGMbMX5w3T3ySgoBP1KuXVEuqYGVcJKv4dATmfXMcFrXY8RLRrZgzB+pMRPbKX1pImahzWVRJy/cSi86uC0xqHpxnnNGvUhfLtRYnRmO4+Ycu/6+G/KsLbu7IOlSYzfG8lAIq01kx4XJh9AewJmUMxm3EouFeESS89Y6yP6oBM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758057237; c=relaxed/simple;
-	bh=Uye2SN528/LJY+HmzrYanGs7oKb4R5zdIIrC8msyFfQ=;
+	s=arc-20240116; t=1758058268; c=relaxed/simple;
+	bh=P9Kb+VHJyK7AvguPgxJeljSBoug90yMY9k2ET108pwU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e6QyNhxFZ+Ihbf2rB4GLsnmzxPdR7dQ8PNCZFHrt5jQ4ZoiD6yTXNg/95n8O/g9CS6A/fn9ShvlpwQLuU4A5TDx6Yq/BZiurlYbo+XIx2/VunPiG+8JAk4ee9u65Dh5K3p/XP5hd0YUVfhYWF9MXEDuSfk3YUcS9X0zBSYOkLvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l9YxKqKD; arc=none smtp.client-ip=209.85.160.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=XsmMjSBCEsP8FkwwpHUAapJkdlgxH//RbL9mp07rTW4PHEqF+eF9Dnu6nTqn1mOfFLdaJpNakirXJF750E+RXKrF12KVErOcNgt+i9kTGUFuv3HnhU2D5NhZmcujSgaaXWxT3W+aHcnbra1PjWbu/m7VyGwzUPB8q7IEK4NSkHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fumon/r1; arc=none smtp.client-ip=209.85.161.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l9YxKqKD"
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-31d6aa3e73fso193012fac.0
-        for <git@vger.kernel.org>; Tue, 16 Sep 2025 14:13:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fumon/r1"
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-62340cf6870so598815eaf.1
+        for <git@vger.kernel.org>; Tue, 16 Sep 2025 14:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758057234; x=1758662034; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758058265; x=1758663065; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3GxpdcLwNar+VRf+hz306LbHOSj5mHSP5c7iejx22xI=;
-        b=l9YxKqKD9xEmawG1x0agKsEGkcvfkDCi7QRkclnYmpxxiboNlJWJX7lW4+upSQYXc/
-         TPrQgeUeaNwZg/Er4KuTaIDrbEbij0k92PKbzHcsLbS53ktdQ4JOvZXoAZfTn/kXRLzu
-         ZyxMHEfDlWjQnLpfWOenSZ4d/367bcpcxMZQQiLRDaqBU5cJSbNDLDz/Uh5Lwi9gVPJb
-         Aa9K+Y7W7CXDPCVxh4fdpZlNmiH/WGSHHjRWibkzpcXxYAWstJQtQ5IM1cOb8T2LI3wB
-         GqznIqoBiL2WHFVdA24W499S5VIwjcbzGrtK/BkAyr6gi/4H1Ktt/ff1fLT+N/xPwG53
-         7eUA==
+        bh=hYcLcIaNIHpf70CSx0bKTYvL1yOa+OTWd7cWaMUXNjg=;
+        b=fumon/r1SQZJ0ZW5S0ZwEqEI+7OYb3qEdBzTQddFMaTa6gCp4tISS+PxJdunw0w6wz
+         qiLexwtNYExcU3DjsHs6Nn0bzrmevRds2EIPp6bX5Y2oSUh5tE2G+ldLONXtefA3yAOH
+         8bTFm32FpWDwSbuL0Mk3xJ+pyX7JzmxFg0AWA70LISqA9CmBTHTtzE0Q6VIWUb+Jd8pN
+         FavO2TjCY+QV5agyFdMIDt/09DZDLF/WwAEORUQ5D0v/RZo/7SWpJKi/Va8wxT33OlwO
+         q0N2LRIYhQiX8FqxGolSlhg28YwV7XqV4GTYkvBBaKd2ZMjld+vyK+HkRzwux+At4hv0
+         Z0ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758057234; x=1758662034;
+        d=1e100.net; s=20230601; t=1758058265; x=1758663065;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3GxpdcLwNar+VRf+hz306LbHOSj5mHSP5c7iejx22xI=;
-        b=HG4UymzsEtJ/yneyAOx9LqwRZmi8CIAS7L9MmvbNFsMNbQQ+BXN8BIMiy6imVy5c+Y
-         6kq2wFkVqBi9PjCPE1DZskIrxDrcVX/bEdTJwqRDUj0Nt1EWCdyoSUh8Vl33EHaCOutr
-         nL5NzaOE5L9d5C6wxKBFlJ9mvfLkE9t29jxZhIo1i+kAM4YAu1v3c1pEHwFhB0rXVFAS
-         p2HuEfOATVE6WjHQBpS8Z7NyrRHsDcC8lyCToYGCVfg2XmdTA0cu3GoaFbEHZLmUPXyI
-         7d/nybifSKfuvWerjGQdUJOJAc6nhOP1djiNTiimadu0UaheDE+oN0JF7O84T09sLr4w
-         4cmg==
-X-Gm-Message-State: AOJu0YxBuKnu1vpsIM7wNfh/rQ/VSmRZCC7yvkBQRjHVQGrN0lOs6ltK
-	KwH1ZuScxpuL0eDJd1ip5LSg1MGfDMizpF1ABGxCjLx1hn8GAUc8tiKb
-X-Gm-Gg: ASbGncvEI/Uwk9PgyFTuhld1Wtg41Zlj/Gjaz6VbVMExd7I4DeTdQKBhlQWIeeZlJLv
-	slUeP4vsHs4rNH458whp9H0WW4BlLlwYD9llHIQqBqA6hN3AavVFVdEiZcjhmEXOC77nP6k3BIa
-	fFVvbR2fswCx94M0UY4yCtf2Yhk+UfPqbCAPWWIXQpHXqO3WbfwW1/vAxrEZXF13Xu7ZVXDkqil
-	YO18WqEIZT7Av5EmJxENRxNGborQjmdj3N2m90itlOllubfPrPXsuhwKgX95jVl3weOrNKOYlHA
-	OYDJSUOSiPilTKhwvHNKSbTklzqOAMSSY7wsM2bDqBzoBF+HS6QLlJAMQm6job8lBxjtoql3/Pf
-	TMKneNcKNW/2MGi8T3AQUcZUQQ3c=
-X-Google-Smtp-Source: AGHT+IHgzpmZoVAYZwoxdZZtwVutnSTi3nxcdwvpV5pvCOaY2ip2a8BS5Pb6xh5dbCfE0MHOBdjc4g==
-X-Received: by 2002:a05:6870:289a:b0:315:8985:d81c with SMTP id 586e51a60fabf-334527da0d5mr1706948fac.11.1758057233931;
-        Tue, 16 Sep 2025 14:13:53 -0700 (PDT)
+        bh=hYcLcIaNIHpf70CSx0bKTYvL1yOa+OTWd7cWaMUXNjg=;
+        b=iZkh+NvpMghqcB6SOCMEFR5LKxtoqohZxqHmBnRqoCcTMnUSukPIo5K800MV5DYD3o
+         2RN92SyZvhtkxN2XPPXnpVvSAEoSMCHnGLm0AjG19fe6zun610/iw4+ezDUCm8o8gOHX
+         JYsXOJOcW1tnhw/n/DKsRqNFsIgADceuPANj6Of6sJyuP77dKnjYkuZsET+3mDlb+7fn
+         /AY0C8GwsxzCbaQS2meyprgWh9t6CHIxg8mCRa3sZlaG3ZIfQSdBC9aTZocBCV3+b4kU
+         IZpfZHcHYck7DDBh9QhlwSKDlAeDCbL8UyA3/OcO6zk5x1iM4swG1X9EeKOsXCnqMe4E
+         4OjA==
+X-Gm-Message-State: AOJu0YxNpNnns5jdm5DERc/BkUTmPW/EIDLEcgf4g2Hvj5h/xEqbVcuv
+	1shVzq4jocniSLB9Sf0xEpfoIeZkdo2ZzKJ8boseVt8ZgNQggxfsPXZIOlBi0Q==
+X-Gm-Gg: ASbGncuwG86SwpKmgTBijchD5IddymRFSjSKj4jiPfDhklBPctbRLa1HzWn2qcOxyej
+	8klm4uV4481XwtF5OnIUrn/23Qx7VqYmrjCyBOoIDqdrhWV5OSCh25QyU6QrETLSF/VAYsQaHjB
+	yeA/VE1Px/FWaaeg1nwA5lMNors8ybCJIZfUcchi+dZ+VygrkY+4e27rZXy2ofzEaWs8oHmsHIg
+	6JWJH78QTx8Rc7s3jCfuFGvdg2OSmSSf85nRgc1XKFf/EbFfTe8qED2AvAfuXI5JQNwZjKr5FMz
+	lQyXrVRRN4KDwuUXARVLv24Yu3LxDtFh7kSCkyCSJZT/seRxcxdOua+GLPyRWe8eHb3HS+6H+5A
+	ONgx29evm03WOymyE
+X-Google-Smtp-Source: AGHT+IGtAekYYiOxtWVLjbYtCjy+oqJBSX8uWzf7mg21QCcQzFKGlpliG7DSpdPVC3Z3EzEeqtSkbg==
+X-Received: by 2002:a05:6870:9a25:b0:31d:7326:c3a7 with SMTP id 586e51a60fabf-32e564d42f1mr9543575fac.41.1758058265282;
+        Tue, 16 Sep 2025 14:31:05 -0700 (PDT)
 Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-7524b8a399fsm4321439a34.24.2025.09.16.14.13.53
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-75249e44c95sm4400193a34.18.2025.09.16.14.31.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Sep 2025 14:13:53 -0700 (PDT)
-Date: Tue, 16 Sep 2025 16:13:52 -0500
+        Tue, 16 Sep 2025 14:31:05 -0700 (PDT)
+Date: Tue, 16 Sep 2025 16:31:04 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, joe.drew@indexexchange.com, peff@peff.net, 
 	ps@pks.im, gitster@pobox.com
-Subject: Re: [PATCH v3 1/4] refs/files: catch conflicts on case-insensitive
- file-systems
-Message-ID: <uv4ifkvxcujjjj3lsc4tf5b5dnc7pkaaw62t6ahagnskxn4kg6@oyxjgupdilrc>
+Subject: Re: [PATCH v3 2/4] refs/files: use correct error type when lock
+ exists
+Message-ID: <672jdldtxegx4y3gdtcyrnsz5nsy4sh6pk76eftqrukwug3f3c@xwso5f4vukn5>
 References: <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-0-195569740b57@gmail.com>
- <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-1-195569740b57@gmail.com>
+ <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-2-195569740b57@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,212 +74,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-1-195569740b57@gmail.com>
+In-Reply-To: <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-2-195569740b57@gmail.com>
 
 On 25/09/13 10:54PM, Karthik Nayak wrote:
-> During the 'prepare' phase of reference transaction in the files
-
-s/reference/a reference/
-
-> backend, we create the lock files for references to be created. When
-> using batched updates on case-insensitive filesystems, the entire
-> batched updates would be aborted if there are conflicting names such as:
+> When fetching references into a repository, if a lock for a particular
+> reference exists, then `lock_raw_ref()` throws:
 > 
->   refs/heads/Foo
->   refs/heads/foo
+>     - REF_TRANSACTION_ERROR_CASE_CONFLICT: when there is a conflict
+>     because transaction contains conflicting references while being on a
 
-Ok so this is only a problem now because the reference updates are
-performed in a single transaction and the resulting error causes the
-entire transaction to be aborted.
+s/transaction/the transaction/
 
-> This affects all commands which were migrated to use batched updates in
-> Git 2.51, including 'git-fetch(1)' and 'git-receive-pack(1)'. Before
-> that, reference updates would be applied serially with one transaction
-> used per update. When users fetched multiple references on
-> case-insensitive systems, subsequent references would simply overwrite
-> any earlier references. So when fetching:
+>     case-insensitive filesystem.
 > 
->   refs/heads/foo: 5f34ec0bfeac225b1c854340257a65b106f70ea6
->   refs/heads/Foo: ec3053b0977e83d9b67fc32c4527a117953994f3
->   refs/heads/sample: 2eefd1150e06d8fca1ddfa684dec016f36bf4e56
+>     - REF_TRANSACTION_ERROR_GENERIC: for all other errors.
 > 
-> The user would simply end up with:
-> 
->   refs/heads/foo: ec3053b0977e83d9b67fc32c4527a117953994f3
->   refs/heads/sample: 2eefd1150e06d8fca1ddfa684dec016f36bf4e56
+> The latter causes the entire set of batched updates to fail, even in
+> case sensitive filessystems.
 
-Makes sense.
+Ok so this issue isn't related to case-insensitive filesystems. The
+issue is that now we use batch updated, a single pre-existing lockfile
+causes the entire transaction to fail. Prior to batch updates, only the
+individual update would fail, but wouldn't stop others.
 
-> This is buggy behavior since the user is never informed about the
-> overrides performed and missing references. Nevertheless, the user is
-> left with a working repository with a subset of the references. Since
-> Git 2.51, in such situations fetches would simply fail without updating
-> any references. Which is also buggy behavior and worse off since the
-> user is left without any references.
-> 
-> The error is triggered in `lock_raw_ref()` where the files backend
-> attempts to create a lock file. When a lock file already exists the
-> function returns a 'REF_TRANSACTION_ERROR_GENERIC'. When this happens,
-> the entire batched updates, not individual operation, is aborted as if
-> it were in a transaction.
-> 
-> Change this to return 'REF_TRANSACTION_ERROR_CASE_CONFLICT' instead to
-> aid the batched update mechanism to simply reject such errors. 
+> Instead, return a 'REF_TRANSACTION_ERROR_CREATE_EXISTS' error. This
+> allows batched updates to reject the individual update which conflicts
+> with the existing file, while updating the rest of the references.
 
-So does this mean that we return `REF_TRANSACTION_ERROR_CASE_CONFLICT`
-in all cases where a a lockfile already exists for a reference? Or do we
-only actually care about scenarios where the lockfile already exists
-specific to case-insensitive filesystems?
+Make sense.
 
-> The
-> change only affects batched updates since batched updates will reject
-> individual updates with non-generic errors. So specifically this would
-> only affect:
-> 
->     1. git fetch
->     2. git receive-pack
->     3. git update-ref --batch-updates
-
-Just to clarify, is this saying that this new error is not ignored in a
-standard reference transaction? Only the above operations?
-
-> This bubbles the error type up to `files_transaction_prepare()` which
-> tries to lock each reference update. So if the locking fails, we check
-> if the rejection type can be ignored, which is done by calling
-> `ref_transaction_maybe_set_rejected()`.
-> 
-> As the error type is now 'REF_TRANSACTION_ERROR_CASE_CONFLICT',
-> the specific reference update would simply be rejected, while other
-> updates in the transaction would continue to be applied. This allows
-> partial application of references in case-insensitive filesystems when
-> fetching colliding references.
-> 
-> While the earlier implementation allowed the last reference to be
-> applied overriding the initial references, this change would allow the
-> first reference to be applied while rejecting consequent collisions.
-> This should be an okay compromise since with the files backend, there is
-> no scenario possible where we would retain all colliding references.
-> 
-> Let's also be more pro-active and notify users on case-insensitive
-
-s/pro-active/proactive/
-
-> filesystems about such problems by providing a brief about the issue
-> while also recommending using the reftable backend, which doesn't have
-> the same issue.
-> 
-> Reported-by: Joe Drew <joe.drew@indexexchange.com>
-> Helped-by: Patrick Steinhardt <ps@pks.im>
 > Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 > ---
->  builtin/fetch.c       | 21 +++++++++++++++++---
->  refs.c                |  2 ++
->  refs.h                |  2 ++
->  refs/files-backend.c  | 33 +++++++++++++++++++++++++++-----
->  t/t1400-update-ref.sh | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++
->  t/t5510-fetch.sh      | 22 ++++++++++++++++++++-
->  6 files changed, 124 insertions(+), 9 deletions(-)
+>  refs/files-backend.c | 20 +++++++++++++++++---
+>  t/t5510-fetch.sh     | 26 ++++++++++++++++++++++++++
+>  2 files changed, 43 insertions(+), 3 deletions(-)
 > 
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 24645c4653..c7ff3480fb 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -1643,7 +1643,8 @@ static int set_head(const struct ref *remote_refs, struct remote *remote)
->  
->  struct ref_rejection_data {
->  	int *retcode;
-> -	int conflict_msg_shown;
-> +	bool conflict_msg_shown;
-> +	bool case_sensitive_msg_shown;
->  	const char *remote_name;
->  };
->  
-> @@ -1657,11 +1658,25 @@ static void ref_transaction_rejection_handler(const char *refname,
->  {
->  	struct ref_rejection_data *data = cb_data;
->  
-> -	if (err == REF_TRANSACTION_ERROR_NAME_CONFLICT && !data->conflict_msg_shown) {
-> +	if (err == REF_TRANSACTION_ERROR_CASE_CONFLICT && ignore_case &&
-> +	    !data->case_sensitive_msg_shown) {
-> +		error(_("You're on a case-insensitive filesystem, and the remote you are\n"
-> +			"trying to fetch from has references that only differ in casing. It\n"
-> +			"is impossible to store such references with the 'files' backend. You\n"
-> +			"can either accept this as-is, in which case you won't be able to\n"
-> +			"store all remote references on disk. Or you can alternatively\n"
-> +			"migrate your repository to use the 'reftable' backend with the\n"
-> +			"following command:\n\n    git refs migrate --ref-format=reftable\n\n"
-> +			"Please keep in mind that not all implementations of Git support this\n"
-> +			"new format yet. So if you use tools other than Git to access this\n"
-> +			"repository it may not be an option to migrate to reftables.\n"));
-
-Nice error message.
-
-[snip]
-> +/*
-> + * Check if the transaction has another update with a case-insensitive refname
-> + * match.
-> + *
-> + * If the update is part of the transaction, we only check up to that index.
-> + * Further updates are expected to call this function to match previous indices.
-> + */
-> +static bool transaction_has_case_conflicting_update(struct ref_transaction *transaction,
-> +						    struct ref_update *update)
-> +{
-> +	for (size_t i = 0; i < transaction->nr; i++) {
-> +		if (transaction->updates[i] == update)
-> +			break;
-> +
-> +		if (!strcasecmp(transaction->updates[i]->refname, update->refname))
-> +			return true;
-> +	}
-> +	return false;
-> +}
-
-Ah ok, so we do validate that the pre-existing lockfile comes from this
-transaction. That is how we know it is related to case-insensitive
-filesystems.
-
-> +
->  /*
->   * Lock refname, without following symrefs, and set *lock_p to point
->   * at a newly-allocated lock object. Fill in lock->old_oid, referent,
-> @@ -677,16 +697,17 @@ static void unlock_ref(struct ref_lock *lock)
->   * - Generate informative error messages in the case of failure
->   */
->  static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
-> -					       struct ref_update *update,
-> +					       struct ref_transaction *transaction,
->  					       size_t update_idx,
->  					       int mustexist,
->  					       struct string_list *refnames_to_check,
-> -					       const struct string_list *extras,
->  					       struct ref_lock **lock_p,
->  					       struct strbuf *referent,
->  					       struct strbuf *err)
->  {
->  	enum ref_transaction_error ret = REF_TRANSACTION_ERROR_GENERIC;
-> +	struct ref_update *update = transaction->updates[update_idx];
-> +	const struct string_list *extras = &transaction->refnames;
->  	const char *refname = update->refname;
->  	unsigned int *type = &update->type;
->  	struct ref_lock *lock;
-> @@ -776,6 +797,9 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 01df32904b..69e50a16db 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -797,9 +797,23 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
 >  			goto retry;
 >  		} else {
 >  			unable_to_lock_message(ref_file.buf, myerr, err);
+> -			if (myerr == EEXIST && ignore_case &&
+> -			    transaction_has_case_conflicting_update(transaction, update))
+> -				ret = REF_TRANSACTION_ERROR_CASE_CONFLICT;
+> +			if (myerr == EEXIST) {
+> +				if (ignore_case &&
+> +				    transaction_has_case_conflicting_update(transaction, update))
+> +					/*
+> +					 * In case-insensitive filesystems, ensure that conflicts within a
+> +					 * given transaction are handled. Pre-existing refs on a
+> +					 * case-insensitive system will be overridden without any issue.
+> +					 */
+> +					ret = REF_TRANSACTION_ERROR_CASE_CONFLICT;
+> +				else
+> +					/*
+> +					 * Pre-existing case-conflicting reference locks should also be
+> +					 * specially categorized to avoid failing all batched updates.
+> +					 */
+> +					ret = REF_TRANSACTION_ERROR_CREATE_EXISTS;
 
-huh, so if if we have a lockfile error due to a case-insensitve
-filesystem, does this mean we print the error message from
-`unable_to_lock_message()` and the new message?
-
-If so, I wonder if we would be better off skipping the former since it
-could be a bit misleading.
-
-> +			if (myerr == EEXIST && ignore_case &&
-> +			    transaction_has_case_conflicting_update(transaction, update))
-> +				ret = REF_TRANSACTION_ERROR_CASE_CONFLICT;
->  			goto error_return;
->  		}
->  	}
+IIUC, by returning a non-generic error here the individual reference
+will be rejected during batch updates instead of aborting the
+transaction.
 
 -Justin
