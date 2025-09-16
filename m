@@ -1,202 +1,131 @@
-Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E6AD1F419A
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 20:41:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9243719C560
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 20:48:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758055302; cv=none; b=iY3xM70oT7+0AtDj0jlEyYo91bNVBZwFLfqeO6mTDm4b9ktRA+7Y11qrDfhH8mxeeQ0crOYhEmIrN0Cd7gWqR7DYLUtYB3bPePjMRoYNy8do5FA5k5/KiqFp/37RKB/mp9b5bX0aPGO0yM6/wT3orfXL6Do80HrqleNQgjQ0WrA=
+	t=1758055701; cv=none; b=gFJRyiVNrrkNYeBA7/c7UayGzWO3WEXgzoFD/LLRX2s3iyqyZxOI9r3So2B0HbBI8G4qKcuQUyfw5KIJXKrWHbGhL1+FGdfMkR3U+mctr++VBH1ecsHc79EhxqzsXkSEKCeX8aeSdI8P6US9T3Qgf2UKQaWMcXdMEJ/XdIjyBv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758055302; c=relaxed/simple;
-	bh=wX3gbG/Yc0DfDrlzTJvKgtitBrWiKSbPKc63NKGgza0=;
-	h=Message-ID:Date:MIME-Version:Subject:From:References:To:
-	 In-Reply-To:Content-Type; b=fFLqKyWvg3ZGByAG/nyir7IEOgw/ZugJJZsxZ3Q4f5LGMm5tZS3RmmdH+CfWA/cgdCuyzHjfsfCnAlbYR4NXhWWA+3wx5H4WcDIhUX4xa50XrgQvr/cqwDZUSN0j309PUCQ2SzEtKwbuhDKSc4Y/g26HdeLrRfdMIDBfrK6v/ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=online.fr; spf=pass smtp.mailfrom=online.fr; dkim=pass (2048-bit key) header.d=online.fr header.i=@online.fr header.b=AvFygiXG; arc=none smtp.client-ip=212.27.42.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=online.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=online.fr
+	s=arc-20240116; t=1758055701; c=relaxed/simple;
+	bh=9VvkOMSoPt7qoJbesqapyIhGGnJagbUCwRmAArf3cDU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=p6cx28kc62A7fwcB4KsTCxJ5fb+gL+ASG9uEeb3grSUXGZ1x5bqJbom0DQRftuBtDdVy7RlGoKHFVr4QWjycMjbqSojhnqkxl1ESq6pyRUi2gg6ZziBDlZEc0t/xg1ed8d2+XhfeU7ZU/4RJkccp2l6XnYPsx23vHM5P4cFHs8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZQXxIA2I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y+fGT0eM; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=online.fr header.i=@online.fr header.b="AvFygiXG"
-Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
-	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 63799DF82CC
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 22:32:38 +0200 (CEST)
-Received: from [IPV6:2a01:e0a:ecb:c5f0:99e8:65c1:1fb6:9b73] (unknown [IPv6:2a01:e0a:ecb:c5f0:99e8:65c1:1fb6:9b73])
-	(Authenticated sender: thomas.koutcher@online.fr)
-	by smtp5-g21.free.fr (Postfix) with ESMTPSA id 5825360134;
-	Tue, 16 Sep 2025 22:32:30 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=online.fr;
-	s=smtp-20201210; t=1758054751;
-	bh=wX3gbG/Yc0DfDrlzTJvKgtitBrWiKSbPKc63NKGgza0=;
-	h=Date:Subject:From:References:To:In-Reply-To:From;
-	b=AvFygiXG2hCC0ennPjpJcQTjlQcUhUcy7RKiutyP9jbRyWh4bc2EVAZoTY0A+Nliv
-	 bzfLAJCZXdwFrEHe5kqFS/a23/wx5wpm9LduETw5hz/IwrTGzzEiK/CY0PTo2dAvvm
-	 BWi8ih7NaACY4R6qtAwjSA/z7Lmr33rkS9EvsvtLrcyUexLIZg0WhpH93SfPytQ8Tz
-	 LgmPzEiOrRw+l2IaE4ZKn46kxG7RMWl7DBfS6ho+y/fcaQ9y6Sy+aGPtIAV0r3u87c
-	 YxQoHBUUO544mx40OIjo2o7WrS1bI6c4TvUmkeVwDaKQ7/kzzHKnVkamiwKR6iotgE
-	 gwTxkXEcnCHBw==
-Message-ID: <89836f92-980a-4a69-aa0a-34cca91f6663@online.fr>
-Date: Tue, 16 Sep 2025 22:32:30 +0200
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZQXxIA2I";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y+fGT0eM"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A1D3C1400176;
+	Tue, 16 Sep 2025 16:48:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Tue, 16 Sep 2025 16:48:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1758055696;
+	 x=1758142096; bh=CENJZov7ePvp8KZ9zIn6Kyt6oeKluTXBVBbO5Q0PlHs=; b=
+	ZQXxIA2IHIjXsBHkL6zl20t8iWW7oLKZSDQPiieQHpnfpoRxJlZ/NSFxUoObIqfk
+	xxkDg4ZzHYFUkPZPZ9VaVgY62lV6mSW6P4lKbHP85mxrZdluuDgM9f1HL1AIw80v
+	Cce/1PtRLf6eZVIgtMjS4E283caj/1JIvwLlC4KkuX87TfdbNrWXxRY/gkaaqzLm
+	2k9xdnEOXoCnV78Th+aigjvTfc0Z61co4i/w3KpHT1xJmK9uCnjSSaqJtLm1yl1H
+	kviJV3JYpS1O9BXNYDSFFUEoJdHP1Td6LPA1zltPcjZvXIa0wtLZlC1V3l82et/S
+	mpBK9UXZtwTOCXTT7vnX9w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758055696; x=
+	1758142096; bh=CENJZov7ePvp8KZ9zIn6Kyt6oeKluTXBVBbO5Q0PlHs=; b=Y
+	+fGT0eMoi8UpaPWf1WwG7HrEYQg9K/f2gPTzULfU+PNY3QT7FGrek96Gd9YyH9s9
+	g49jgWi7vtM7jyFa+a6gLue3scetID3dSgvnOBaUZ6wwfuRT/TtqWUz73odYCZQ1
+	yZ6lnbXYPZ1HJ1/nonIurHm+mylsFs9JgDu/as53xfY0Ah325+8B6Ao1OqprEIMs
+	knonqJxFhf/UmTfTslYAtwJLYkcVOj0bU0js1t70CtcBuPUyCTEkd9S1hgGwZKD9
+	PTK1cdQlzrC0M/cKNf45LKkiyeAgkrvK1arvHa9/fynVV0QzRn1tlT1cfk4t3ksY
+	NJsDIF1A+HuvzHPPMw58g==
+X-ME-Sender: <xms:EM3JaMBJ18bhWNXlkefJQeY1QD9LwZOLmyxp3ncsDlMwmZ-9BRhD9g>
+    <xme:EM3JaBzvasdy6vWNfEUq1oLNILuK4pGr2eajfisFcfKb6ByeFM2FMyJRbi2t9HNbk
+    vGyEyqAtQIiDc8DUQ>
+X-ME-Received: <xmr:EM3JaJB69Zm6cmi0H8ONxtrJGP6jHT5_OZoWOhtEICIbLb0aozn3kyVYesWV_fYMY65hrPpOKjrEeWs1hLv9puuXPzkmv4Lg1IY3YvU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegudehjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgfgsehtkeertd
+    dtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevle
+    fgkeefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrghilhes
+    rghnshgvlhhmshgthhhuvghlvghrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:EM3JaOYKxGDNqrWOYk2sNvtXKWgE-8GXMuaANGHJesIx9yOtYv4Tiw>
+    <xmx:EM3JaBjJ3N8Wzpyhp9Mlssz8YJ-GJFNQBAnskHwOeRLZ3o6eXLa5xQ>
+    <xmx:EM3JaA45oE1S0uwHpAEc721fwpt9lHjFTgm2H1CuUu67chG0avVjgg>
+    <xmx:EM3JaI6fkSC0450Opl6tTHaBKEhwvmZGQwLPRXqwlcv1hSTZXvmc-Q>
+    <xmx:EM3JaJCcTJtGv7oJsyHxNPLXzj9ZqdtpGdUgvowkDLT9Gig2C_O4SYx0>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 16 Sep 2025 16:48:16 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Anselm =?utf-8?Q?Sch=C3=BCler?= <mail@anselmschueler.com>
+Cc: git@vger.kernel.org
+Subject: Re: Why does git-status suggest different commands to unstage files
+ depending on whether there is a commit yet or not?
+In-Reply-To: <de49d686-73fa-4bb9-9ec6-b65d5432a30a@anselmschueler.com>
+	("Anselm =?utf-8?Q?Sch=C3=BCler=22's?= message of "Tue, 16 Sep 2025
+ 22:34:39 +0200")
+References: <5036f7d8-8ac9-4f50-99af-5a3a2d1a07fc@anselmschueler.com>
+	<de49d686-73fa-4bb9-9ec6-b65d5432a30a@anselmschueler.com>
+Date: Tue, 16 Sep 2025 13:48:15 -0700
+Message-ID: <xmqqldmem8ds.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [ANNOUNCE] tig-2.6.0
-From: Thomas Koutcher <thomas.koutcher@online.fr>
-References: <466060ab-ea6c-4c13-93f7-2de7a380429d@online.fr>
-Content-Language: en-GB, et, fr
-To: git@vger.kernel.org
-In-Reply-To: <466060ab-ea6c-4c13-93f7-2de7a380429d@online.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Hi,
+Anselm Schüler <mail@anselmschueler.com> writes:
 
-I am pleased to announce Tig version 2.6.0 which brings some improvements
-and bugfixes. See the release notes below for a detailed list of changes.
+> $ git status
+> [...]
+> No commits yet
+>
+> Changes to be committed:
+>    (use "git rm --cached <file>..." to unstage)
+> [...]
 
-What is Tig?
-------------
+As this is a very initial commit, any file you are including would
+only exist in the index and in the working tree files.  The index is
+where you prepare the contents of the commit you are going to
+create, and "git rm --cached <file>" is the way to remove <file>
+from there without losing or clobbering the <file> in the working
+tree.  As you do not have a commit yet, you wouldn't have anywhere
+to "restore" from, would you?
 
-Tig is an ncurses-based text-mode interface for git. It functions mainly
-as a Git repository browser, but can also assist in staging changes for
-commit at chunk level and act as a pager for output from various Git
-commands.
+> After a commit has been made, git-status suggests using git-restore instead:
+>
+> $ git status
+> [...]
+> Changes to be committed:
+>    (use "git restore --staged <file>..." to unstage)
+> [...]
 
-  - Homepage:    https://github.com/jonas/tig
-  - Manual: https://github.com/jonas/tig/blob/master/doc/manual.adoc
-  - Tarballs:    https://github.com/jonas/tig/releases
-  - Git URL:     https://github.com/jonas/tig.git
-  - Gitter:      https://gitter.im/jonas/tig
-  - Q&A:         https://stackoverflow.com/questions/tagged/tig
+Compared to the previous situation, you do have a commit, so you can
+restore to the version in that commit.  During the course of
+development that led you to this state, you may have added <file> in
+a commit way before the current commit, and you may have made
+changes to the <file> multiple times in different commits before the
+current commit.  "git rm --cached <file>" would not be how you would
+go back to the version in the current commit in such a situation, as
+it would take you to the state _before_ you originally added that
+file.  You would "restore" the contents in the index to that of the
+current commit (i.e. HEAD) to go back to the state.
 
-Release notes
--------------
-
-Bug fixes:
-
-  - Initialise %(head) from command line arguments. (#1366)
-  - Make `$GIT_EDITOR` value interpreted by the shell. (#1367)
-  - Use correct line from recursively blamed commit. (#1369, #1370)
-  - Use correct line when using `:parent` in blame view. (#1372)
-  - Fix the incorrect line shift after stage file. (#1371)
-  - Update display after setting column option. (#1384)
-  - Fix file mode diff header handling.
-  - Fix crash caused by too many diff cells. (#1389)
-  - Fix issue with blame when using absolute file paths. (#1391)
-
-Improvements:
-
-  - Add color for cursor in backgrounded view. (#1374)
-  - Blame view now works without a working tree.
-  - Open diff view from blame at the correct line. (#1375)
-  - Document how to get a `<` within TIG_SCRIPT. (#1357)
-  - Allow to hide +/- signs in the diff view. (#855, #901)
-  - Add toggle options to help. (#1381)
-  - Add expand/collapse all options to help. (#1382)
-  - Expand relevant sections only when opening the help view. (#782, #886)
-  - Introduce committer column.
-  - Open the blame and blob views from diffstat.
-  - Update utf8proc to v2.11.0, supporting Unicode 17.
-
-Note: Users should update the settings for the blame, main, reflog, and
-refs views in their ~/.tigrc file to include the committer column.
-
-Change summary
---------------
-
-The diffstat and log summary for changes made in this release.
-
-  .github/workflows/linux.yml                 |     2 +-
-  INSTALL.adoc                                |     4 +-
-  Makefile                                    |     2 +-
-  NEWS.adoc                                   |    32 +
-  README.adoc                                 |    19 +-
-  appveyor.yml                                |     1 +
-  compat/utf8proc.c                           |     6 +-
-  compat/utf8proc.h                           |    11 +-
-  compat/utf8proc_data.c                      | 14261 +++++++++---------
-  contrib/tig.spec.in                         |     2 +-
-  doc/manual.adoc                             |    10 +-
-  doc/tig.1.adoc                              |    14 +-
-  doc/tigrc.5.adoc                            |    40 +-
-  include/tig/argv.h                          |     1 +
-  include/tig/diff.h                          |     2 +
-  include/tig/help.h                          |     2 +
-  include/tig/keys.h                          |     1 +
-  include/tig/line.h                          |     9 +-
-  include/tig/main.h                          |     4 +-
-  include/tig/options.h                       |     6 +-
-  include/tig/parse.h                         |    10 +-
-  include/tig/types.h                         |     1 +
-  include/tig/view.h                          |     1 +
-  src/blame.c                                 |    34 +-
-  src/diff.c                                  |    45 +-
-  src/display.c                               |    21 +-
-  src/draw.c                                  |    21 +-
-  src/help.c                                  |   107 +-
-  src/keys.c                                  |    20 +-
-  src/main.c                                  |    32 +-
-  src/options.c                               |    12 +-
-  src/parse.c                                 |    29 +-
-  src/prompt.c                                |    56 +-
-  src/reflog.c                                |     4 +-
-  src/refs.c                                  |    42 +-
-  src/stage.c                                 |     9 +-
-  src/status.c                                |     2 +-
-  src/tig.c                                   |    37 +-
-  src/tree.c                                  |    27 +-
-  src/view.c                                  |    16 +
-  test/blame/blob-blame-test                  |    55 +
-  test/blame/default-test                     |    56 +-
-  test/blame/navigation-parent-test           |    58 +
-  test/diff/editor-test                       |     2 +
-  test/help/all-keybindings-test              |     7 +-
-  test/help/all-keybindings-test.expected     |    32 +-
-  test/help/default-test                      |    64 +-
-  test/help/user-command-test                 |     8 +-
-  test/main/escape-control-characters-test.in |   Bin 1725 -> 2201 bytes
-  test/main/filter-args-test                  |     2 +-
-  test/tigrc/env-vars-test                    |     5 +-
-  test/tigrc/parse-test                       |    18 +-
-  test/tigrc/source-test                      |    25 +-
-  test/tigrc/view-column-test                 |    39 +-
-  test/tigrc/width-test                       |     9 +-
-  test/tree/default-test                      |     2 +
-  tigrc                                       |    23 +-
-  57 files changed, 7932 insertions(+), 7428 deletions(-)
-
-Ilya Grigoriev (2):
-       Use correct line when using `:parent` in blame view  (#1372)
-       Open diff view from blame at the correct line (#1375)
-
-Johannes Altmanninger (1):
-       Use correct line from recursively blamed commit (#1370)
-
-Paul WK (3):
-       Add toggle options to help (#1381)
-       Add expand/collapse all options to help (#1382)
-       Update display after setting column option (#1384)
-
-Thomas Koutcher (19):
-       Update home page links
-       Initialise %(head) from command line arguments
-       Make $GIT_EDITOR value interpreted by the shell
-       Fix AppVeyor build
-       fix the incorrect line shift after stage file (#1371)
-       Add color for cursor in backgrounded view
-       Update Linux CI
-       Blame view now works without a working tree
-       Document how to get a `<` within TIG_SCRIPT
-       Allow to hide +/- signs in the diff view
-       Expand relevant sections only when opening the help view
-       Fix file mode diff header handling
-       Fix crash caused by too many diff cells
-       Introduce committer column
-       Fix issue with blame when using absolute file paths
-       Open the blame and blob views from diffstat
-       Update utf8proc to v2.11.0
-       Update NEWS
-       tig-2.6.0
-
---
-Thomas Koutcher
+So, isn't a short answer to the "why" question, "because that is
+what you need to do", I guess?
