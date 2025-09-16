@@ -1,83 +1,89 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9011F8723
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 21:56:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9791E7C2E
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 21:59:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758059793; cv=none; b=Kz2xx7mT8ocm/Vv/kc1JHfBWTNpIuHskxCW00vtwQKgo+VjHfpHA9OKO/tSSBLvo5yw9J3spIKmxFpdxEhuAwSBoFKKsw1HfPYnoV7A92BQOk7S9ltA8eA5uFs0SAqwLgrrIt1EVaaJuVp1AkKgmNuG8xBjjRRYA5u70lcyExys=
+	t=1758059995; cv=none; b=Vhf6BnBRQVM1zMkvKNEQYBDsf628c6fzU72Zavg0rR//3ZL1DgkbOnl2qNM0IuEWURTLsMuymlep6X6Ks8vk9rFIGLjqyokek3UAtDZdXrTDu25mK0QB6v1JN2DGC54Ngmt4n6/XH2MPenWzIPNNFGthEBAxQESo+nOYYunQ+jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758059793; c=relaxed/simple;
-	bh=Yj+dvHStkfFDxM0y9puk2wDxtwdfCGp0uFDr71u6uEE=;
+	s=arc-20240116; t=1758059995; c=relaxed/simple;
+	bh=9lTGzwbqKtW/6itDqcCQRz1FDYnpBoKzJ0BWcJKLN8I=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IFdSZhtdGT1qX7j/3S2in1xoHNlTsmm5nL9Kd8L2hUGawGPBRaJg3xsWczRN7C2GWvc9ZC741YuEJnwq/UklIU08n97Yu8XkUmqIO5JU4rZOel1ZJuKamHNhfojIQk7+eT7sC5bY/S7g3Z0j9B9LLxn/ZxoXIqNAsmQGE2hDmQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jK+iYCsF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oGFE/glY; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=O+oBS42/I9HHR2AGw5ksQCbW6gJdraEHbwTnBimL/oC/pGbKd0vCjYzraw9Ng/ge1Y7bnavBRdqNo5wyHA7nWXh/Loifd8W3ivZLJiJ5nU3bNwf1sAX5R5zLVlt4IsLnIbajmIY5uj07OZdRCLPO3lEYIArt11q+FQYXBYuEB7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mYFILPH9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DRMMZGCD; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jK+iYCsF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oGFE/glY"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EE82F140008B;
-	Tue, 16 Sep 2025 17:56:30 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Tue, 16 Sep 2025 17:56:30 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mYFILPH9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DRMMZGCD"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 19D8FEC0230;
+	Tue, 16 Sep 2025 17:59:52 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 16 Sep 2025 17:59:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758059790; x=1758146190; bh=ZO7PtGddo4
-	A7Q7zp5I4jCkoEJgSz3gmJHMeHXdoorCo=; b=jK+iYCsFR7wCcN2HTQe20axQnR
-	9qX17Y3ieH9oUFgxs88eFTDqNlmdTXOubTZepb2e+fI6/XkipU/qsHkxOtQnlqiT
-	zhPaKlVPZPb88PAKac1KelMRF8PB32l946bZ5d2iI66CLyNZDJ2Gv9AtJdCiZy1d
-	uTi+mGcz8SSC9mnt2E9C4ihleD2tOH7J2tXxfG/5+OJ2TPDuxa+6LWXoiqa53AWO
-	LMZdeCXQfYHf+ker83DHEJOs7beNAd1B1izpVMUfYgpQLJDLG6tsQqHAgFk1gkpP
-	55siLsXuKOJj+GdwVFpRSza4eM4K0ydKF7Un442oBB3x7HXW7h4l28y2f8zw==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1758059992;
+	 x=1758146392; bh=PJXrk8ssQswHBTv8eO8OmekY/0aj2Woxt2TZb0/r8B0=; b=
+	mYFILPH9/0iAASZz3BGOsrlhsaVcZSIFH1z3sw1c4CCPZTiyUiei84AaV5cfS5dX
+	m4oHrMSaL+FsXakMfqbDjtMzv9IQ8+Zii4SCW9g08EuTsJIbBcCmLYIf/yNb6tkc
+	Dvf4/8bFmnDihoc6N+3cUtKE4saAT55kN7E5qJuetaSvmd3PDPrCV8SQUwcTSAlf
+	wMaTIaeShe+rKkiMAdIciCra6XE9Kis4Jsc0N3yj4xmXtohiJKhfEvfO6HEGBBSM
+	vpyccuy5GGRE01eMsootqHEjO8PgAbtN0BS7r9svXYnYGoJ4yPf9iQA5IDik3Zb2
+	hKlXn9PpvAzJE2Y1F0lBDA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758059790; x=1758146190; bh=ZO7PtGddo4A7Q7zp5I4jCkoEJgSz3gmJHMe
-	HXdoorCo=; b=oGFE/glYaK/gw08ifF/zYpv0rX9l/3VpHMttcs03ktRhLEDPo74
-	hTTq+T9aQ73/SZbqGUsvOM0M2bHKdfLo3d/59Vn6WFLwWT2jRmdZH3ox/1e6uUQD
-	mBfkF7vZAGgRnXKKaDQd/eWZ82B+j+S0ubXg6LFX9i4mK1vXjjkSzk0h3gF8NfEz
-	RyUANtPoYhFApSsLpgbwds2hfQ+l7Xx3iIgNVeuJDbnHQ1NIZqCSSLPdrNiIPxaG
-	NEH3QZ6BzR+m936YN2wVpmZm8tSwybSV2PMJjbC/+dCUG14KZh+ugMZQI89IWCw4
-	aGKYIYdL6VxWlbHHpyKduyEK6SIw3MEjR7w==
-X-ME-Sender: <xms:Dt3JaCFjVKK--NNtC6dTPISGRelF-CjWJUMfGNdk_Rz4cupcKrcm9g>
-    <xme:Dt3JaN7oU10BH9ncRJ4LhvYklJnjr-YvMn86aj9BWNrXcU3Ns0WdL-dJM4uGeus7c
-    GQtG4CfoK0xiwBQig>
-X-ME-Received: <xmr:Dt3JaIuouSkH4-PXqSIKQwYq3qPRQlC-2E6e-AZU4gF1n8Zloly8BZ0ZY9PhKcBvpRUUBj6N7xlaD4M0qoQQYSNavxwWQuPvIoG78OQ>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758059992; x=
+	1758146392; bh=PJXrk8ssQswHBTv8eO8OmekY/0aj2Woxt2TZb0/r8B0=; b=D
+	RMMZGCDVZN+3ELfG6l2E/ja9hx8DNH5DS5bnaoUmcqjNaKs0k+9GJxH/koKdphWm
+	UTxvBHNm3ZG3vCrhFuSocC/vEINUy10fu0tlBGPkZS/HJkgMvp34xX3tiJceJObi
+	xoEfDLfmM0Ma3ESDfsm5P4wTA7x52+FEAdKvISYJ+VfaaFyMT5VGH1mpeZQSnghU
+	+kqJsg5tOaoUpL2j/pAt5ZL5eOvEoLmk6b25ArJmRpTwgzlIX9pAmYrQEBI6oqdb
+	THhsWHJwnHp7nD0cKX+EkJVA2nExA2mKiGnCjABO60C6FT6RQd+AIgCdqFT2ZPeG
+	RZd254zOrtKxYN7uG6/qA==
+X-ME-Sender: <xms:193JaFdJ0UaMDXFKr38EjVQwDfF09UwhZt3SrzWydrC8jFNGYZaO6Q>
+    <xme:193JaLq-94WtOdQSwyN1_5V8Zscm5Bdi899FOvhS0_BVSJfRPBq66Qd6VQGX-Il9I
+    ifkDSlkYjp1GuAfxg>
+X-ME-Received: <xmr:193JaO_APKP-dlid8kFSWwjSBO7paY_xQ33g3rHETfBeelrSyOjwtYvDGmNssbcjvC1So_KaKVwgyAdNDPXyhCzcqr7K8hM61ugilWU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegudejudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    vgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Dt3JaO7a3iii3ds8x5KOVuiwy1-J9nONI2StOGoHMGoWy_VPvPX9BQ>
-    <xmx:Dt3JaDVZkyUl2bxC0pjXzR-o63g8b1F8Vt3ABG1PVgLhNsVmzLXmnw>
-    <xmx:Dt3JaA-tqRyvidDR5Az-GD8gxQcAhdW39V2QAWMAuE7cIXZh1eZMZA>
-    <xmx:Dt3JaPkPu0x7hOAk02kTaigvJ5MgRtD92X1IuSrjA-_PpJcRLQaWbw>
-    <xmx:Dt3JaBXSETBzFukah803wRQXjnOshT3T7tEF3HysUxjvYufvvGTgTlDD>
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtghhithhg
+    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhes
+    fhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:193JaPeu_poDPAaLgJUYc89fwQpY3Y_tkl9VBtubT3_b4DCvZ1KXGA>
+    <xmx:193JaAKIhtwX5onj5h3k2DTQSXcDQBXIQ1-akYaU0yzvtOnGk7O3YA>
+    <xmx:193JaHgrWu_IROcExkNmTY02H64CGZhsv960SYu87xAzof82NF6cJA>
+    <xmx:193JaGRW4A2QzJ5zKAcYjHey5hT_yVeBp4ewYseLxWAdvsLh6DBVSg>
+    <xmx:2N3JaLDSOte8w4J4wmRWs1xW_KjQSJc2n1UKmXgzzTLwpw1jqR_Zoaz_>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Sep 2025 17:56:30 -0400 (EDT)
+ 16 Sep 2025 17:59:51 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH 00/17] Use rust types in xdiff.
-In-Reply-To: <pull.2048.git.git.1757274320.gitgitgadget@gmail.com> (Ezekiel
-	Newren via GitGitGadget's message of "Sun, 07 Sep 2025 19:45:03
-	+0000")
-References: <pull.2048.git.git.1757274320.gitgitgadget@gmail.com>
-Date: Tue, 16 Sep 2025 14:56:29 -0700
-Message-ID: <xmqqcy7qm582.fsf@gitster.g>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: Julia Evans <julia@jvns.ca>,  Julia Evans <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v2 1/4] doc: git-push: clarify intro
+In-Reply-To: <884CC5BE-5272-4422-B43F-4C0743ED7EFD@gmail.com> (Ben Knoble's
+	message of "Tue, 16 Sep 2025 16:38:50 -0400")
+References: <3f9f511f-7f9c-4179-85e1-87d76b748db3@app.fastmail.com>
+	<884CC5BE-5272-4422-B43F-4C0743ED7EFD@gmail.com>
+Date: Tue, 16 Sep 2025 14:59:50 -0700
+Message-ID: <xmqq8qiem52h.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,23 +91,29 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Ben Knoble <ben.knoble@gmail.com> writes:
 
-> This patch series has 2 parts:
+>> Le 16 sept. 2025 à 14:46, Julia Evans <julia@jvns.ca> a écrit :
+>> 
+>> I think "..., and sends all necessary commits or other objects that aren't
+>> already on the remote." might work if we want to add more detail, since it
+>> gives users a hint that maybe they can ignore the  "or other objects"  part if
+>> they're not sure what an "object" is.
 >
->  * Patches 1-9: Clean up xdiff, this can be merged without part 2.
->  * Patches 10-17: Define Rust types in compat/rust_types.h and then start
->    refactoring xdiff with Rust types. This depends on part 1.
->
-> The cleanup in this patch series makes the structs xrecord_t and xdfile_t
-> Rust FFI friendly. My opinion is that part 1 should be merged soon, while
-> part 2 can be discussed further.
+> Nit, without wading into the above discussion: shouldn’t that be « and other objects »?
 
-I think we saw that the earlier part were read carefully by Elijah
-(and others may have read without finding anything worth commenting
-on), so should we split this into two parts and start merging the
-early 9 down to 'next' and then to 'master'?
+You could push a tag that points at a blob, so it is possible that
+the push transfers only "other objects", but "necessary commits and
+other objects" would naturally cover the case where the number of
+necessary commits is zero ;-), so I tend to agree that *and* would
+read better in that sentence.
+
+But if we really want to do the progressive disclosure, I am OK with
+the idea that hiding the details behind a vague words like "transfer
+data necessary for updated branches" without saying what these data
+are would work OK.
 
 Thanks.
