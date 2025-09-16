@@ -1,85 +1,86 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1F0316905
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 16:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F3C31E8BC
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 16:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758039886; cv=none; b=Y2DazsZi28jAvYBBLG5Fmpkt1Ke9PPk7VSFCq3QRUQXXLuRiAgdIejUEnN/w6IMUmEtYDc4NPIBNW21JtLHqokudoFdBGOMRNS8rs+YIS46vOFRoeRrfoabQBo9DeT1LISJPp+Lprt8m3xm3e43WVzZP8a7w6bjlS+nODSS1X0w=
+	t=1758041066; cv=none; b=dwBs4iS7jzUhxQ77kS1kwtYstnRY4FujGXGoAzg0/OoP99zAWI8RTG9iQlT04Ah0WSQUnWPFe7Nbfjrg/lupkmeRS3X7F9WmcGGRuD9vD4lT36wUxo+GvYIRmD9rkzMQm/FvcKsQAiU0f6ysKrb6JPfze2jrebGxet9KnMevnus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758039886; c=relaxed/simple;
-	bh=Mnel2h2xlSaqsaQtXln1V43NrMshgszoSxmD6/mvZm0=;
+	s=arc-20240116; t=1758041066; c=relaxed/simple;
+	bh=w/S1VZcgHMcbO1SwkTnCMaDvyECGPmD73WfIuEBTDmk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hV+IZDG+hApWPSnj/b4t5ggb2qgZjTTs+cCjM2h9zA/zBIEIepyWvUtTf7eJurOsXCoiFo9WRV4mIFMoeTV4OklJfij2PIMRhT/CWDF0suw7jtazdeLXS9+Tgcs9g7W1Gqv/Vr8I4k7YzGtiK+S3iZXQHriFaRFha/WCcuS851o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DvQFzx6b; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YsZp+LA1; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=oQmkg3khwQ2vQw8UwK5vTPkYSLTMlSWaDb1yrtPujSxkvqdyrXsDHzBNF7iXPD/c8F6yK/P3XXvToRMmQLT3X03A+r+zqJhzqHVtrb9hcV5SJQVOaP8kuRJW+CI2/edFfQYu3ohLcpXO6G6SSZ5ZZsH/thwL5aDcHseE0PFiZgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=it6HWu/X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hyVjji1/; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DvQFzx6b";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YsZp+LA1"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6902CEC01EF;
-	Tue, 16 Sep 2025 12:24:43 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 16 Sep 2025 12:24:43 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="it6HWu/X";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hyVjji1/"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id BC24DEC0396;
+	Tue, 16 Sep 2025 12:44:22 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Tue, 16 Sep 2025 12:44:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758039883; x=1758126283; bh=ryhzDJ4J9L
-	OsgScxzWjWXCYlCA2LkTqlDRJJ1YJJUAQ=; b=DvQFzx6buZddZHFSRt5M4A70jV
-	RWmB4X6bgMCcdK9jRMXoVPaK4J0gCieq2td23HBz1yjg8BzhFYzY1hwCC2Q5l7sR
-	PuRz/JF08yNztVhop0+dEt8r7Xg78vquh5NQBncFgJzzOwCOFyRhxa8JyrIZDi5c
-	jhYU2Wl8q8SVM4FtHxhbB8WOvRDT6NuqPBVYxwKDgNkM9VH+nVrgW8EI9vGQCpAc
-	hpFR3dsRFd2/edxdIN7aAKZk0rseWer6IzlqFTdHqKpwIMejBzaBiSXH1WFtnFys
-	GF1UaUGZ1qcm0VoJ5hx4n+a7/uL1YxGkmoNWP2XnJy7QG/vNwDK4b6NBuelw==
+	:subject:to:to; s=fm3; t=1758041062; x=1758127462; bh=++nZzsL0uQ
+	kFzBFx3HPoaDDByBsaSUtRXx8AbGuLRhE=; b=it6HWu/X5aYXa/Qm8eE6DMFnrc
+	c9ZH2AqrOayOITcx+/pMpgSmgkxxCtNSNwZd3vfBC/SQvJ+MRxt4nRDe4W8sSaCX
+	ZJyYJA45xBSbOqr4At5dnRcsbGGgTPsOVc27BJDUD9Sti3BhM1M2RgebapqjtQAX
+	CiQKwnv3XpE41UgQdO66ed5WFBjPbIYywL0XGsK5ZxVLF6hhON9SwPFhiHi3cyDi
+	cdRoKKKqeFJM44eB0u5le40qPTqykWB956AVAhMqbevrVHz8t06DUcTsaL0xPvrc
+	f6U9BmPZifsIyv60fd41pts6WWc4q1GUxD5jPYnXjn62HK5awCCANoTRB6Ig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758039883; x=1758126283; bh=ryhzDJ4J9LOsgScxzWjWXCYlCA2LkTqlDRJ
-	J1YJJUAQ=; b=YsZp+LA1Tn9UfAMKfmhZCALQDhjdk0jTG7ZbcS2i924ThnzQIV3
-	aMdtvmP6M0RWVq07u5+3RWw9vOQwXVr+Qu0JWgJZY9O8l1xtxyyOPazo7B2ugiaV
-	O2KAspLt+vH/FUEZ5xBZBnIyEIUyrcyyxvE3SZhMOnmP3mJIQMstw8H7u91ZmRio
-	n+0c1D2b/zhJHTcygxek7EATmULnE6UlimZCS2PajoQFdohThfqMqupF/9ZO6T0v
-	7wQdv/lnOJhHASTK58GfiS187cTCj+mKR90vaUSILvQg7a0eVLOYvwCcGQhDp4J3
-	K9f6ZyYk4JEqWCeKHeLILKqCP11PscRTt5w==
-X-ME-Sender: <xms:S4_JaLRJp8HdpTteX1qNbwTfHe5MhWznSsb61WkCM4XI8IPFnCrW5w>
-    <xme:S4_JaHUnTDhOseTxy47RtDFXzA3FE2DVlmpSW-hyfFjIVuVxxKgVxnPCCSB8sVMr2
-    eljE7TjY5NyytPfMQ>
-X-ME-Received: <xmr:S4_JaNb42xIHr9w6DafphYKivpyH4eifHcU53UE5DIacVXpbsYOi4C4CHL-8E4RlTkfXFxnY_qp87Or8D-P_ib83AU9ll26RJOtY0vA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeguddtgecutefuodetggdotefrod
+	1758041062; x=1758127462; bh=++nZzsL0uQkFzBFx3HPoaDDByBsaSUtRXx8
+	AbGuLRhE=; b=hyVjji1/czvdB+S1ndnD1qH73iNlPy3Z5c0tZkRUSoe+8vOnKt2
+	JXwAWWHWNT0RWZfNbEtzNgKurI0P8DqwHnzSSwYO+YDwIBeGzqHrXUTRnDxxJq4d
+	GW97w4RfFX7gEHzDdPE2tRXRkq9R34xeCJKHlXEhuaFeHAGtEmxwL3weTgTx7ujA
+	K5rlPwkIKbkCm+nTU/UP5/UIwlXt5qFG3Jba8WucddeKxFeU5GZcOYEH+q5/Rwoz
+	Yee66Wi3l0+s8NsTpOmv57njwwccbvUfJxmb3lQmBlh0WaEW/E9b5ipZXN9+1saU
+	7nULKtgT/RqX7B1tyacqCD37ppcDOKJS9Mw==
+X-ME-Sender: <xms:5pPJaGig4M2VAz53CXSffwoqnyJU8b6waoiJrF3R0ylVAvlNuZlX_g>
+    <xme:5pPJaChPtCvMKg2-rDtME8iEglSVp4Qf475jQlOlAzd0DcNtaESotgkx42-SHGCU4
+    Bjch1pMRRRcn6hs6Q>
+X-ME-Received: <xmr:5pPJaEjOZMnnPUFFJcTcXrk0rVkYxlAcSfRK9neU5z3BPSDIpbKf2CzlMjAE6vymAw2MFkxK4w-t0cw1w9zv4CQ7gzahSkiXqWiXzhc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeguddtlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:S4_JaN1swk_tt-pAta_xvQcydsVNpwS8wqWjznF0LrK3s90B1BavNA>
-    <xmx:S4_JaPg16fMgstUwdKyf-01eFTYB4mIsagHabH_ausgRWiu2ADbJ5g>
-    <xmx:S4_JaBbeU7kjNf5dybtFu6A70NV6vvxgWRKTn_cTCR1qlpRz_hh26w>
-    <xmx:S4_JaPQ5si1b7KO8oDR4ceoHRSKGzeQhxiEM-oa_YE2VuccwbJkwrw>
-    <xmx:S4_JaHMJY0XFzC4syq-Z111BT8ivCzt3NOs75t1VseDhr3onWWJTxTvd>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhi
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:5pPJaKJBtiDxkxgHl__en6llmFWL_K34VJhg79tnnf9APrbrApzWGQ>
+    <xmx:5pPJaLHX5a0-dziU3Q6blBcERi7uCCc991QY1TKTQ7XKBsmDJorXkA>
+    <xmx:5pPJaGQkCzakEXhYhW5gzR8f41TCqbT-aqYgr1kKljofkjm5-TQoHw>
+    <xmx:5pPJaPeXEUFrvg1gFkQ9JZUbevgFzW1NSlYKKczd-x4Qrv4X87gLMg>
+    <xmx:5pPJaKE_Ba9NeH73Mx6utdosrzJqJzTgBIV4uiKU39PfDcBYPecQwK0q>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Sep 2025 12:24:42 -0400 (EDT)
+ 16 Sep 2025 12:44:22 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>
-Subject: Re: [PATCH 0/3] ci: don't compile whole project when testing docs
- with Meson
-In-Reply-To: <aMkGluKUBfq6VNOQ@pks.im> (Patrick Steinhardt's message of "Tue,
-	16 Sep 2025 08:41:26 +0200")
-References: <20250911-b4-pks-meson-docs-target-v1-0-a92c666ecef9@pks.im>
-	<xmqqwm64orc1.fsf@gitster.g> <aMeshpRtFWyE0ja4@pks.im>
-	<xmqqcy7re2df.fsf@gitster.g> <aMkGluKUBfq6VNOQ@pks.im>
-Date: Tue, 16 Sep 2025 09:24:41 -0700
-Message-ID: <xmqqqzw6nz5i.fsf@gitster.g>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: Taylor Blau <me@ttaylorr.com>,  Patrick Steinhardt <ps@pks.im>,
+  git@vger.kernel.org
+Subject: Re: [PATCH 1/6] bulk-checkin: remove ODB transaction nesting
+In-Reply-To: <pk2cpihxk4j4ywgq3dtknybyzjeon7ajgmwq4yhknojjsfiqo2@q5dsygszdkar>
+	(Justin Tobler's message of "Mon, 15 Sep 2025 21:55:15 -0500")
+References: <20250909191134.555689-1-jltobler@gmail.com>
+	<20250909191134.555689-2-jltobler@gmail.com> <aMJu4yoO5-Xp52oJ@pks.im>
+	<aMijGE2CveYcQaWc@nand.local>
+	<pk2cpihxk4j4ywgq3dtknybyzjeon7ajgmwq4yhknojjsfiqo2@q5dsygszdkar>
+Date: Tue, 16 Sep 2025 09:44:20 -0700
+Message-ID: <xmqqfrcmny8r.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,26 +90,80 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Justin Tobler <jltobler@gmail.com> writes:
 
-> I meant the Meson option `-Ddocs=man,html`. I feel it's more natural
-> there if the accompanying target is also called "docs" there.
+>> In addition, it would be useful to hear from the commit message *why*
+>> this is safe to do. Justin's message suggests that nested transactions
+>> are noops, so doing something like:
+>> 
+>>   begin_odb_transaction();
+>>     begin_odb_transaction();
+>>       write_object();
+>>     end_odb_transaction(); <- object not yet added to the main ODB
+>>   end_odb_transaction();   <- now it is
+>> 
+>> only results in the object being added to the main ODB when the final
+>> end_odb_transaction() is called.
+>
+> Yes, well said. {begin,end}_odbtransaction() operations on inner
+> transactions are effectively a noop. They simple manage an internal
+> counter to know when a new transaction should be started/finished.
 
-Ahh.  OK, so if I said "meson -Ddocs=" to choose neither format,
-that would essentially be the same as "do build the binaries but not
-the docs"?
+In other words, that part of the design is inherited from the old
+bulk-checkin infrastructure?  It was done for simplicity and I was
+always unsure if I made the right design decisions there, so it is
+nice to see that I found at least somebody who seems to agree with
+it well enough to inherit it into a newly reinvented subsystem ;-)
 
-I guess that is from the very beginning 904339ed (Introduce support
-for the Meson build system, 2024-12-06) that get_option('docs') is
-part of the build system, so it *is* way too late to fix it now.
+> Yes, this patch removes the logic that manages the internal nested
+> transaction counter in favor of requiring callers to check if a
+> transaction has already been started or not.
 
-> Another option is that we could also just have both. In that case users
-> of the Makefile could continue to use the "doc" target with Meson, as
-> they are used to. And users that are used to Meson can use the "docs"
-> target.
+OK.  Is that related to those "make it a silent no-op to pass a
+NULL, instead of forcing the caller to check" changes?
 
-Meaning you'd allow one to be an alias for the other?  I am not sure
-if it is worth it for something small like this.  Let's leave things
-as they are.
+Can all callers tell reliably if there is a transaction already
+going?  One transaction may start somewhere and end in a far away
+place, and these two places may not be ancestor-decendant in the
+call graph but merely a distant relative that shares a grand grand
+parent.
 
-Thanks.
+> The ultimate goal of this patch is make it so invoking
+> end_odb_transaction() on a transaction guarantees it is flushed.
+
+Either flushed or a noop, I guess?
+
+> With
+> this guarantee we would no longer need flush_odb_transaction() and the
+> transaction interface eventually can be simplified to just
+> {begin,end}_odb_transaction(). This also avoids a potential class of
+> errors where a caller _thinks_ they have committed a transaction and
+> that the objects should be visible, but they actually are not because it
+> was a nested transaction.
+>
+> The nice thing about the current implementation though is that nested
+> transactions are automatically treated as noops and the caller doesn't
+> have to check if there is already a pending transaction. This is safer
+> and less error-prone.
+
+True.
+
+> Thinking about this some more though, we should be able to continue to
+> have {begin,end}_odb_transaction() function as noops when there is
+> already a pending transaction and also be able to drop the internal
+> transaction nesting mechanism at the same time. To do this, instead of
+> erroring out in begin_odb_transaction() when there is already a
+> transaction, we can simply return NULL. If a caller wants to know if a
+> new transaction was actually started, they can just check the return
+> value afterwords. This removes the burden from the caller to explicitly
+> check if there is a pending transaction beforehand. Furthermore, since
+> an ODB only allows a single transaction at a time, it probably makes
+> sense for operations at the ODB layer to guard against this anyway.
+>
+> This change would pair nicely with the change made to
+> end_odb_transaction() in version 2 of this series. In this version, when
+> end_odb_transaction() is provided a NULL transaction, it now functions
+> as a noop as well. If a transaction _is_ provided though, it is
+> guaranteed to be flushed with addresses the main goal on this patch.
+
+OK.
