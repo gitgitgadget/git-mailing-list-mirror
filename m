@@ -1,71 +1,71 @@
 Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB7A1A0711
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 00:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4148D528
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 00:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757983077; cv=none; b=rsiTQFJXyXCugBXGHwQLcKnlGi2axi9aAYZYyXS+QRUK8LtyhhrduuavlSDfGw3hP3KlbkkQfOHwhYghgh+x8UN++qwQGcUejSEvM6VNavk+iw8JTBjZev8sMMLuwB2VIIKuIHiCp63D7IzpYRAdpLwTMwkiBexK+W7oJbjpD9w=
+	t=1757983078; cv=none; b=dUOC/vwxMqJVDWbmsJlkTDpuBAhUuunc5DAJdd322XSVR4hNuoT54zZSfEN6F36CYXgC3EZPqOgalU1ajKtusXTulfFdhiEn5BelKzvpGWPeQlCEB9SVEtOTbMFZILJWZKR+Y7OBM2Cn6lY0A8fnkRwuNZGbeg27zmhHuAHXB5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757983077; c=relaxed/simple;
-	bh=ZCjNGJhXmiqnzd2L1GKApvpyyBY995QQZS9WVHzVOOA=;
+	s=arc-20240116; t=1757983078; c=relaxed/simple;
+	bh=tjDm00X51D+soRcPSfusFfQ3kozU4ElPqn9bKZ9nIQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=INIGMslBPN5m8jRhe3/hz84Nfn7JHc8J1nhqBF71QmP9Acv6pbdLJmaOpzx/fiqvZjYlGeNEIPHak2unhCIaOu6QqUfoAG0pXDPlTPtyOlGyRw3fV6TAfduwvsKUYLo3JNjlhDlDAQu/je2Hybo1DCGplvzGOFeBhReb4/ONPUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KS7uBr5G; arc=none smtp.client-ip=209.85.219.170
+	 MIME-Version; b=kziMapo3zDMx8vLY1047em6ZkGSqH3ZnXmdjDdu7mCFyCNaNd/Rws/AJRX8MYiTNWZp3ZgXC2KybnhKWVj2dMtt6ELHGRab2ZSsa24Qd8v4SUM6AQm4+GEm0IK83ZVgnkHAPTjgNt18XgPH2hAggK101WqVXtzWczZVueKfSv1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UA+2A14J; arc=none smtp.client-ip=209.85.219.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KS7uBr5G"
-Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-ea3f49679ccso1692726276.3
-        for <git@vger.kernel.org>; Mon, 15 Sep 2025 17:37:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UA+2A14J"
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-ea4fceb260aso426351276.1
+        for <git@vger.kernel.org>; Mon, 15 Sep 2025 17:37:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757983074; x=1758587874; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757983075; x=1758587875; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=M7YRrTiQhTc7FEFlW0zxreJ510IqVyNe6b+yd+4WU5c=;
-        b=KS7uBr5GGP3U6j26H9ylBTlMp8lkifaxXCXPP9p+lOkrhCgC8mCidghNoAG8g+McCK
-         aNxrpXtksLkoU0m7bj2jhuRYLJQ4J+3zNsJHbh4C8Rv4wlXP6Yayd3h7x4p7dtgxlf6v
-         0xLLWRVre+CgGTxTCSECOj3JlgTH2JcLMvXEByeUEMoTliWrcRMDlH1cFjrtwQbTA25h
-         iKKOP0JYzE+xI72IB+LrRkKIgU5L1UCZZjAr3Pwa+MbdaGsdQTMN+AU9mqusgQQM8jJO
-         8auUdXsBy0Awce15oq8FElTzvgAzfs4Yv5VnAQy4PMI385LQp52HFBWekC3moooNazgF
-         m1gQ==
+        bh=Esk++tH1jEYsfXOsP1JttRh39Gshc8kyJov4m0nkA0o=;
+        b=UA+2A14JQ/8gKMk9a0wojkV33K401SVsqxFX1NKInI/rp8lqYkfeksqPmvrLSjOKEs
+         cV5Kn+FGU3yqCl+u8ENCB7VunHNEQXchyorh0GpEkiDWAmr3nc2T4X0EG0RgV/Oqfloz
+         VLl12JARJKuNYYdRtMjC3xElt291ayEzXGJBvNDNP240p6Oy73usp7NrKOZ1gkSKgyvx
+         GpDrMjbSO+R7/IbLdNf/DCsDdD/VFDeELEyJAouM7FCL1IgjSBSpqaVlyg61T1agcs4o
+         GcLFsERc5BCOmAak26yD63E9w1aaoms/GsQdgvMsw+RauAN/mrvi4Ixb/1b5KVxWds4H
+         zZUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757983074; x=1758587874;
+        d=1e100.net; s=20230601; t=1757983075; x=1758587875;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=M7YRrTiQhTc7FEFlW0zxreJ510IqVyNe6b+yd+4WU5c=;
-        b=i3t6FDPAs6n5gJ0vl5/3rEJI2AalqHvUMdHtWQ6YapxkN4cS9RRfIZ58CYotasmbly
-         68ZwZtzQB6sVtZUVH5j4blBIpspppzetk0jvCwFqfSW9QmSP9auyz0GuYco3XtUo7r6+
-         jm+KmrPjRG4L1EQA4MVSmWzUXN0SvwIWWECC5E/5viJQLgF7b+Se2msWJijiL5BL0BJE
-         OT0f5p3gDkOmvmTo572nyh0m4wzbrc3ZC+3kZG+wyWvLc3wf+JamHlXoHkKUbDigwr95
-         Xm48Kd7aG+OxH18A5mtBS0HXRMbVnynsVmIWvNJJfgnsHDFeLbB8dEvr24R1Lsws6AvS
-         2Dlw==
-X-Gm-Message-State: AOJu0YxQbcuuOvdU6CYIbrtDRRGZtNFTgp2RY04KTMJShh/oM47E7udS
-	c86rZ76eU3LAU10XecaMikM31BcOpthf0K3Pi4ygN2swPkQo5zswJXnP+pr57qLI
-X-Gm-Gg: ASbGncuZcqw0RGIMVEXnsGdNA2CQ0vtp4o/J25W/XQsq6m8P5Alr3cLg2+klNdCW5IC
-	lT0GM7REAbsnUepizRVljLs6dQZ891Eb7Jvz82rUzMUzlpynA2ltKBl6VbQ55zUenzwvxQf1ljp
-	d2DEhgHE44gUVybpAehOGbqMCqiwRmFAo/+wocC84hyx6LNFHHx3mftaCrLJbG1EWhhr7DYX2gi
-	LiDfB3bJjvZxjPc3yz1ysAA7X0NHzFzWO8bQbn8PyUH2qIMVD2+s9Ird8Qe+iWFlmrj/pcCZeN/
-	mVijbF6h7NNGv6QP1N2PkQQ3KOT02mHNhlgv5Ijmb8k5tUK3iYCDtwAkX7Cf+VYCyc3UMOzyp3P
-	M14V8jGeBJeUZsPrE26US1uZVN26l9cVx+9+eQjVs0Sr1LOHwP/diRXbfBDMVVveSnnMZq4wLPW
-	4N
-X-Google-Smtp-Source: AGHT+IFiJBEomQOVapxJ4PFrJvipjBSMUv+Z4VzFhZM0SBN8qUz0+8MMobuXaCe0ypsNsCy3EGkYsw==
-X-Received: by 2002:a05:6902:18d2:b0:ea5:a9c6:1d86 with SMTP id 3f1490d57ef6-ea5a9c62cadmr631726276.40.1757983074111;
-        Mon, 15 Sep 2025 17:37:54 -0700 (PDT)
+        bh=Esk++tH1jEYsfXOsP1JttRh39Gshc8kyJov4m0nkA0o=;
+        b=Q/J1aDgDnEEYhrlCNGMkbQM3vdXUFb3nlo3dA0lP8OnJlQs/jjNoOMD7nN0B4A7W7U
+         WDRdLSqMY5oQcH7Qdh5wGhmInetf62RSZinIurHSSHiSV/WQ/jdCX+qT7T8p34sUFOKj
+         Kd9Sd6KvlzuuJsaMIoZgDUXYIYNWZSE7oS41AHMh367/1YrwwE/SBFAiJ6DjPm7JopXB
+         qM5Mx6LBNc6IdieURRE7dYwXS9mQN0KM1+rCmwQw+JAT9UlnPsLjHFSpUCNtwV7nCpmX
+         oXTPBwc1OZ/hNKakxFkTxRYe+/RPbXHuHePP+t3QnyQ0bVaxlmnUht1gPd6npPm0A5xd
+         TGzQ==
+X-Gm-Message-State: AOJu0YzXLncPZmmfCLM4hpYb/nY6BqRFq+7xoFsEJxvzcp1B9MVRrXku
+	e+c8b7H2RLT8yPnaApVHWqz7hiU6CzVC/aQD0mBgMSsvkgPwY5vgWkqG4fvOgYWc
+X-Gm-Gg: ASbGnctUpWCjXJRAvPIPe+PRLU/U73Q52rPJ4abGcjCIpp2KajP7j65Nxq3aarShXjl
+	EWkoQcQsC4YpFl0dgM4CBiurjspDHtIhsOigGi/pEk/ayczcrr4hDQge9pygGPhSK+X/ZwuarxO
+	KBgfuM56kzolJXLbwq8K04sxwwUmKk5RJ7UT0dfEHF6HOa1Sq9cvspHgjN8VxqYmIcXa7d0hEOP
+	jdNsTP8wuMPw79FX0d7zs8gkbtPRhqjN9KEarfCt4SvK4fuLUhbzWznUnjM2/GwDkfn6NbX4KlQ
+	kKKwhYRTKxIvEcOge1ONtkybbsB+FqNdQCa0/rBPK1mnIF55AA/GDEs61+BHG2ngPFpFxXH58XC
+	isLszpJ/O5XqE90QVzh+7PhUsuxGdu/qez92OJP+IlWbZe6KcJtaXYpci3C9aQiYTrg==
+X-Google-Smtp-Source: AGHT+IGTjyx9Zem7jdpb5/Zz1Lb8G20KdIKgq1Y4bjurVVgknxwbCYlIrGe88mdh/4WOP9Fsd0Tltw==
+X-Received: by 2002:a05:6902:1006:b0:ea3:f1be:65bc with SMTP id 3f1490d57ef6-ea3f1be73edmr8786444276.16.1757983075215;
+        Mon, 15 Sep 2025 17:37:55 -0700 (PDT)
 Received: from localhost.localdomain ([2605:a601:90a8:8b00:6545:4857:11f:cd8a])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-ea3feaeeab8sm2333167276.5.2025.09.15.17.37.52
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-ea3feaeeab8sm2333167276.5.2025.09.15.17.37.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Sep 2025 17:37:52 -0700 (PDT)
+        Mon, 15 Sep 2025 17:37:54 -0700 (PDT)
 Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
 From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
 To: git@vger.kernel.org
 Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/4] t3903: reduce dependencies on previous tests
-Date: Mon, 15 Sep 2025 20:37:34 -0400
-Message-ID: <1328eb8eac65ec7bbf1f3cb257d7221a372c45c3.1757982870.git.ben.knoble+github@gmail.com>
+	Junio C Hamano <gitster@pobox.com>,
+	Denton Liu <liu.denton@gmail.com>
+Subject: [PATCH v2 2/4] t3905: remove unneeded blank line
+Date: Mon, 15 Sep 2025 20:37:35 -0400
+Message-ID: <8ac06ad62df581bb84ecdca0b0144c218daa0733.1757982870.git.ben.knoble+github@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1757982870.git.ben.knoble+github@gmail.com>
 References: <20250510183358.36806-1-ben.knoble+github@gmail.com> <cover.1757982870.git.ben.knoble+github@gmail.com>
@@ -77,45 +77,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Skipping previous tests to work through only failing tests with
-arguments like --run=4,122- causes some tests to fail because subdir
-doesn't exist yet (it is created by a previous test; typically
-"unstashing in a subdirectory"). Create it on demand for tests that need
-it, but don't fail (-p) if the directory already exists.
+This is leftover from 787513027a (stash: Add --include-untracked option
+to stash and remove all untracked files, 2011-06-24) when it was
+converted in bbaa45c3aa (t3905: move all commands into test cases,
+2021-02-08).
 
 Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
 ---
- t/t3903-stash.sh | 3 +++
- 1 file changed, 3 insertions(+)
+ t/t3905-stash-include-untracked.sh | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 74666ff3e4..b8936a653b 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -895,6 +895,7 @@ setup_stash()
+diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-untracked.sh
+index 1289ae3e07..7704709054 100755
+--- a/t/t3905-stash-include-untracked.sh
++++ b/t/t3905-stash-include-untracked.sh
+@@ -87,7 +87,6 @@
  
- test_expect_success 'apply: show same status as git status (relative to ./)' '
- 	git stash clear &&
-+	mkdir -p subdir &&
- 	echo 1 >subdir/subfile1 &&
- 	echo 2 >subdir/subfile2 &&
- 	git add subdir/subfile1 &&
-@@ -1327,6 +1328,7 @@ setup_stash()
+ test_expect_success 'clean up untracked/untracked file to prepare for next tests' '
+ 	git clean --force --quiet
+-
+ '
  
- test_expect_success 'stash -- <subdir> leaves untracked files in subdir intact' '
- 	git reset &&
-+	mkdir -p subdir &&
- 	>subdir/untracked &&
- 	>subdir/tracked1 &&
- 	>subdir/tracked2 &&
-@@ -1343,6 +1345,7 @@ setup_stash()
- 
- test_expect_success 'stash -- <subdir> works with binary files' '
- 	git reset &&
-+	mkdir -p subdir &&
- 	>subdir/untracked &&
- 	>subdir/tracked &&
- 	cp "$TEST_DIRECTORY"/test-binary-1.png subdir/tracked-binary &&
+ test_expect_success 'stash pop after save --include-untracked leaves files untracked again' '
 -- 
 2.48.1
 
