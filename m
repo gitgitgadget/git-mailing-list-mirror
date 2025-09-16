@@ -1,120 +1,115 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1436B2D7D3A
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 06:41:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CEBA2EAE3
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 06:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758004897; cv=none; b=ZQK389GwvAiLAdFT4LrS0LGFydDt+9H4JU58DxDKsnvwoon2vyag/KRp+5xLOegtNB9ceEFfc7IwqQ0ZvKbpKBHCDvY0LiBvNpZWT6wUXF7oLIdeKpA2qucNGrQSvN4BAlPUDS8eKhEcJIeb1GQKcb24zzBdfy/OyH4ogZ9xAm8=
+	t=1758004925; cv=none; b=FtnNUjlRvVb34QPMx0zFGipRddTNNyMjnbvCLGnncaDb/vC1vYVH44FMBGVZu+IUHXQyvmNLutB5uWjOUPNMPRVk1wJdNXWVa9mkPuldTTkE98Jz77Iq1vvWZXvzI5pEIVfcvsWWPXJGD4chr1c+DC1b5puwn9Ajx2IaYv4jVqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758004897; c=relaxed/simple;
-	bh=88WaWSYXvgQt8tsJSxSmxDiVYxh6pFI9dzv3OmJE2us=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XvUWrRgBDTHdMg3BvResKsdf9AmqYBiM7Ph0DJACMu4G2B6DnTU+XjkgDvgFDEPUAowS1zEW3QZq3kEnGwn9YXusS9MrK7LKuR1uo5ORZDOk45dYFim62T69+f69mn/JmVDCgYbKrzY7yVP/HcSpSblm28UEyRsq/l0I69TftPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dvBpbNKm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TdnU5eG3; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1758004925; c=relaxed/simple;
+	bh=V1WmXClJKZWLBpbQJW153Qrq854wfxzMQ/mmDdPma98=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=u9JEaB7tN+W7sCdAWOqBbtEOAq6IXUpcKKH/otBNv8V3ED7nKJ7lg9OKdbgFlaRIQUwnkg17oNuXZl9KtvkgacoCFvU0BcMBrCebiQm4cH9JvNrNUl1J3BaVJNNnh1ciplD6x9TKSZyysHyaqF+j/hazlLPfrHLI2Dx/JWBT/xM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Z7f7oFM9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C2vwwPNo; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dvBpbNKm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TdnU5eG3"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id C10CC1D000C4;
-	Tue, 16 Sep 2025 02:41:32 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Tue, 16 Sep 2025 02:41:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758004892; x=1758091292; bh=KpFOx+wcmY
-	yDvaZwSAdaM8XGbyI5T/o+yO6F7T4t7Ss=; b=dvBpbNKmBidpMxT+wWYF0EiHoe
-	w07EztK0aD4DibGqeTymTQI6wUVelXTNnN8RH3oozTktlmvq6ujZqSV0WHd87bNi
-	Zy0SEE3vA1sKEJzQ+MRUyH6IofeFPMFW1qXsgSe1n4MQEMnU6XEdoeKzY/gmvVU+
-	FWbB0iXlkGEfHDgOXP1KB2XVAHcegpi0Vl4L+xdxfKX6rDfakXITp5SEJVziuaXj
-	PhuKKBfWE3zXgsgXjZJuQahBcNCDcVbw1ReZapBubD18bsF9Duw6JaOKk3in1KFo
-	NnCbjgEc7eurFCWaEXTdlAy25nYE7sWpxqKk8us2Pf8+a5zK1ZJRhCE3O9TQ==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Z7f7oFM9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C2vwwPNo"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 05E671D000C4;
+	Tue, 16 Sep 2025 02:42:01 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Tue, 16 Sep 2025 02:42:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758004921;
+	 x=1758091321; bh=4xHTYgCJ5faDaxjestq+3HktB6yPo0x2Sb7wY3Gmq1E=; b=
+	Z7f7oFM9Uy4Bb4S0bHzVbFD2KdLpGo9PQOhlvSD2/FMxKLFO2rxuECUxppEw/v9c
+	SP7kRMUo8r1EgQoay4XMnwmhyj69WzV+/I8y9+M35n3FPviVIe+9GwPE9gL+YZJG
+	kA6lzs+p+l5RXBci1RmNbOTtKTAgjn2e01wlYEtJ1p/Dykf8XjYlBFVvqrxEA7Z3
+	ZKuKXL1CnVoZ/bHCC4M7/9kx7YNG8W7e2ge3Dwp+djCQdq8G7QVMqDx2klKpUY/n
+	wudKNbOhuYnZVgE6dR/WuwjuleY10VNABOfH9vLMZ6wooYPX8R5C6T4NzgmvlcPT
+	pUo20VGZhw/d+kUVxRoOkA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758004892; x=1758091292; bh=KpFOx+wcmYyDvaZwSAdaM8XGbyI5T/o+yO6
-	F7T4t7Ss=; b=TdnU5eG3hlQVNRembndXYx0XU2+e7VIIsNp475dxZ1Ikoe/VHZR
-	DiaoroKBrbdkDb2xiyoN0/M9dqrXYmBsIu73+p0mFEtyYWHDZ/2s0tdjdxI5D1Jy
-	lJXvuthq0R/JLtyu+VV4QCJ/1I4f4G2zzZvjjMOzvAJdvghnKHWqj77J30BjZQMU
-	4H0bxsgpymgk0a3DMnn/kDm4hImeVntFRjpu+hEHtZuTvH19mnZkT8rd9B+CDkzX
-	501kYttZyV/bZEDdsc+JSyGs/08xJtLh/Jkgwr7S7F2b1IRjMJ5BzvuC1H5OvM69
-	j5PmrJpEA6apHhA5hlXhKzvGC6Fkj+g0qcw==
-X-ME-Sender: <xms:nAbJaGOhkclpwaqzY1MuqaE8_ATUiKzmbVb02sVZDHGPiGwyOkQJtw>
-    <xme:nAbJaIOxwn8MDHQ5_CRmaIdNDV2BB0SSYd9V3RHBG-43YD4E67Gg7cuLsijOGL-86
-    k5YMeXdd3ACYMP1xg>
-X-ME-Received: <xmr:nAbJaGvK73jHCiUtpvg9PvUJkNJXWcAKbef5tqygivgR1qjVb3Etg_O6sV9o00fnT1oph2NrnfrpG5wi1CiGtfh2Lp-OYgSgptxFDGBzX4E>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758004921; x=
+	1758091321; bh=4xHTYgCJ5faDaxjestq+3HktB6yPo0x2Sb7wY3Gmq1E=; b=C
+	2vwwPNoc10P/EXl1h3MsmqE1lnsvaIssqos4PYsBVCXoZqI0LPahOthjurh+jERx
+	g9v4qs2HNOyTHiii3eBmoBFBRDzowx/3lE47hk2M8+UKjeRxF4GVppmkphhxZUjt
+	rnNsXbliUlWAPeZSVe80PCgNWdbK6pQdc40JKwwqd0AsBmP9nmgbLClPnUpRi3hH
+	ODPrb1dLD/HKmp7ZpupAttyrM15X/okkLYbv7kI0Jl3mezBghXvKxbWr/2MXTHac
+	sOEsoSzfYUoqNhfQOCw7eJ0HGqqjcBhr5tYwkMLeyKSrJHChPGYRzDHKkP9jDrOb
+	+SQ+npNXGnrJMRmdbPFbQ==
+X-ME-Sender: <xms:uQbJaO6ay_L0a1vVhQ3yJJa4ADxX_rROQS30bgyE-oqbVlpTAENGk3s>
+    <xme:uQbJaH7nQM2RDM0LB0MARkbiq2e_6pMQLODCVBGWI78eZYLtIsd6wZnO7Mmh4vret
+    wJAR6in4k0Y0437QQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefleekjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
-    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:nAbJaCXN-rxsY104xaBXKvJmXCXXJ-lU9xoPh7C0miLZt-wiFp12gQ>
-    <xmx:nAbJaOsXxgnmjGCWQgqnxv0Rzq-uU7p-wkkwn7JqWhkwSsk1pIDLXA>
-    <xmx:nAbJaOVaTGfSzl65yd2OXEffWlo1qEerG8eIadRJVcpVYA8RGzEoMA>
-    <xmx:nAbJaBkyd1nrcICxyrZULB8UF-J7SOCGrfZOpukDAPg5gxhcGdSJKA>
-    <xmx:nAbJaM0H0BKlmcZpHePu0MeWC65EuZHu4GYemZts-UUJJCOeuey21Qtd>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Sep 2025 02:41:31 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d86159fd (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 16 Sep 2025 06:41:29 +0000 (UTC)
-Date: Tue, 16 Sep 2025 08:41:26 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 0/3] ci: don't compile whole project when testing docs
- with Meson
-Message-ID: <aMkGluKUBfq6VNOQ@pks.im>
-References: <20250911-b4-pks-meson-docs-target-v1-0-a92c666ecef9@pks.im>
- <xmqqwm64orc1.fsf@gitster.g>
- <aMeshpRtFWyE0ja4@pks.im>
- <xmqqcy7re2df.fsf@gitster.g>
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeduueehtddutefh
+    gfdtgfeiheefveelieeltefgfedtieelueejteethfevkeekfeenucffohhmrghinhepgh
+    hithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
+    lhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
+    gtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhith
+    hgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehjuhhlihgrsehjvhhnshdr
+    tggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:uQbJaH42Zwbm1MSMZlY7B-gXuvp5jWHo07d8NqfFLTomG_lH-T31Cg>
+    <xmx:uQbJaKAkJSrVJ7ZyX60a_NzN6pUDdLCDrWWKuGktsqJ4SENikqCcNw>
+    <xmx:uQbJaNexNNhiZgO-6_WZzCe0MX4U3aG5Fsjvkwu4QWQuAmx-Zn2aNw>
+    <xmx:uQbJaJIqpCBMYPl862upbVYhNi5b8AJ2r5nW2qZZeujRaCagUHENZg>
+    <xmx:uQbJaDJi_ZTWfCj37Gt0I8uUsn3pS65QIZi2fBD8W-CGJvQzGNFTOvPO>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 8E2E21EA0068; Tue, 16 Sep 2025 02:42:01 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqcy7re2df.fsf@gitster.g>
+X-ThreadId: AA3O5JZkN_G7
+Date: Tue, 16 Sep 2025 08:41:40 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "Julia Evans" <julia@jvns.ca>, "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Message-Id: <b144874c-c4b4-4f77-a1d8-675314517bf5@app.fastmail.com>
+In-Reply-To: <xmqq4it3e1y7.fsf@gitster.g>
+References: <pull.1962.v4.git.1757531669.gitgitgadget@gmail.com>
+ <1629C205-700F-4A8A-84BE-302D172416F8@gmail.com>
+ <236a79f4-e9a2-4335-bbff-79ae0cc67e9b@app.fastmail.com>
+ <35faaf30-6326-4784-80ff-723c20ed6b13@app.fastmail.com>
+ <xmqq4it3e1y7.fsf@gitster.g>
+Subject: Re: [PATCH v4 0/7] doc: git-checkout: clarify DESCRIPTION section
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Mon, Sep 15, 2025 at 04:13:00PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> >> I wonder if we want to let people say "meson compile doc" to match
-> >> the other world?
-> >> 
-> >> Will queue.  Thanks.
-> >
-> > The reason why I picked 'docs' is that the accompanying user-facing
-> > option is also named the same way. It's thus a bit more consistent with
-> > itself to call the target 'docs' as well.
-> 
-> Sorry, but I am not sure what user-facing "docs" option you are
-> referring to; is this some earlier mistake we made that is way too
-> entrenched to fix?  I do know about the "make docs" that barfs with
-> "*** No rule to make target 'docs'.  Stop.", and I would call it
-> user-facing.  I would say it is a bit too old to "correct" without
-> disrupting existing users.
+On Tue, Sep 16, 2025, at 01:22, Junio C Hamano wrote:
+> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+>
+>> There should be a gitpathspecs(7).  Not just a glossary entry.
+>
+> This sounds like a good #leftoverbits topic for new-ish people to
+> work on, with help from old timers?  I do agree that the entry in
+> the glossary has grown to be way too big.  The pathspec magic itself
+> should be mentioned there in the glossary, but the details of it
+> feels a bit too much and the topic probably deserves its own manual
+> page, just like gitrevisions(7) has one.
 
-I meant the Meson option `-Ddocs=man,html`. I feel it's more natural
-there if the accompanying target is also called "docs" there.
+I added it to the unofficial tracker.
 
-Another option is that we could also just have both. In that case users
-of the Makefile could continue to use the "doc" target with Meson, as
-they are used to. And users that are used to Meson can use the "docs"
-target.
+https://github.com/gitgitgadget/git/issues/1971
 
-Patrick
+-- 
+Kristoffer Haugsbakk
