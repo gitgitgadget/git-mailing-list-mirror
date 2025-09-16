@@ -1,146 +1,166 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87AAE189F43
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 16:03:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E704A29C33C
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 16:03:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758038625; cv=none; b=QNfQ86s3c4bpsm+OThu7CRczf7RFjxEDmzxCkjcTyMoYUEHrg3rnKv8sKiqMdF2V1nl0DsYHwJpEvZ0GEwdhTfjcyXR+MmhrZd6/kwyOfJe2hfmVd+XLl8em5RDpz6xeMKj/zwb5gPLCeocDei8/U25Z7XduuSyUGC3D68qaupQ=
+	t=1758038633; cv=none; b=Mv0R6M2LdRD2hi2kM4Gx7pdggYOzSP+NTUZi1tBYl21k4Iy43Iz6bbfNrLBTYeI8IKRvHia6ndT6sm3ZkONkl/nq87GnYsZSQcXaNbR/w3wBfQryiWQxtwnV+IkknsMzLch1x6QYYZzYc9xnYeINkCNYL0T3dfUzguw0JyA1e8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758038625; c=relaxed/simple;
-	bh=L6cpEU9RoeK/t+TNLOZ1UlA3XMT4QRDa+dsACAciFBs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Wv4TzUNT7CZ5ZKYC/tNuVA83G5VZLM+VZd/3opTKMBHdRmljrFIeqGenHzqE2Yr80Ax4/WRZQf1oTJLw6AqCaZrBG1ysX9u8mbp3CkAFllg1l5AWDKHYBvkdE6q8DfuVb4i0PSrhv+S1Ag1fA8pkoUQEh7hSwSvZcBxk5abrpn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=M2QSqea6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CpJEjbjC; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758038633; c=relaxed/simple;
+	bh=Vn1CXOYu67X3q10UuxnXENzj6S0iEW4rMH2EMhrxMwg=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=LyhWdL7p5rXrxigVFdbm5DX629h3ISY3vO4kfByVe9B9+xWiCe7kG5TzwdvlTz6cWp1uWBr3Io4T6taChB16AeA5wyqC4mLhNCOySe3hWrZ4AcK48JudFoJuCGUYeG7UAiHiQ3KrtU3CjbOTi1L/lOm94b7R3Hd0KRlW19sfs6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j8yGMKDc; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="M2QSqea6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CpJEjbjC"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 96755EC0032;
-	Tue, 16 Sep 2025 12:03:41 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 16 Sep 2025 12:03:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758038621; x=1758125021; bh=lPXDYVM4kA
-	O4kR+7fOnSvmEXzlS+eYwIhT9k3m5C6qM=; b=M2QSqea6Lo1S6oBHEzCwBz2naf
-	saqCAf2Pqau2ymLVxjNAfto411bWSI+qlZ+EjbhxQTdmoUC0XiL9Vl34Adz7lkNs
-	kH7ZHq6LxdSZpTKq9TTtBzEuXnjpl34EmwW18JwogqcAv6srb1yTadFsUIEd+QWx
-	YWbmr/ECvBg5M/OOca2GwrAyWF1UxJjgzFg3yRpz0YApLVENFphCZs1epbIXFMhY
-	0tjO46BQGpfGU34ayooYYJGd+aVS+OnmxxoQ+hZCo7yrsnns9Eohyx8lzxlBYap9
-	GkCVEvHPbvW5wJb3O1ZJ+dvEFZYmqP8a05t+9xaL3g25m8lmdlKvF+ywdUSg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758038621; x=1758125021; bh=lPXDYVM4kAO4kR+7fOnSvmEXzlS+eYwIhT9
-	k3m5C6qM=; b=CpJEjbjC4ogRnmM/EaUnrrP4miHrZg8XkSZMhkxu+cqijxtFIwJ
-	YhnWfTzjmVszw/lFh4FvQxganZS+i4yuRsz4xKMjh+yVaXvNRyBq3YbXzDMOv1nK
-	jigAKS2XcoRMaFLm/mM0qDIGQMP50tI3w90jKaWxh79YYIRYVspgN1lGqc5mPIvo
-	vL2b/zC4CN7Vg37FkJd4NXSgxl5HiCEwO4EtTnx1yaw9pFUkqjt5gDxxsUdHeS3y
-	DBfUkLxBpgdMXTFXKdrQ+4kmTQRIOgyLAeZIBRra1BkktmNGUE9jrs1WPcIPf0Wp
-	cnyIvHIBtMcSPPLK7YQW9rhRFXvq/Lrc+pw==
-X-ME-Sender: <xms:XIrJaLQaA2CVnxQEzRDEGk6bJyO06evI_S5fbm2DNMetMq1lwEue2A>
-    <xme:XIrJaNjltcfodtk_IjywLt7E_mTmVFOGycZnJfR8VGq5mhpgd08Q08Bs-CZgvCinr
-    xZgSNA7phYNANLFSQ>
-X-ME-Received: <xmr:XIrJaM8LQzfyXkzRFdmP1fPSQOZqBqLv_7W72knAF69UE7QARPJ4OVE09h7sMoG6AHPv72oedkH8eXRbQB0fM2D5Oc2Ti8QsDMXoGvE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeguddttdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlh
-    htohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohho
-    ugesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhm
-X-ME-Proxy: <xmx:XIrJaMF3BDcXynQOk3qm6BJ0E4nSTHIcAJdtK9I4uAVM7uZtx_EY3w>
-    <xmx:XIrJaHlnODOFAbFASLWiOB4uvLkU_2fW_NxxCKqDJ9__SMFQk1wtBQ>
-    <xmx:XIrJaIagyrjIXObcpILAHKp0d2DWWhIPvNW_N991V-aXcsdicq6rYQ>
-    <xmx:XIrJaEErtnh27XUq6OtpSiF2QisgX9m3w7CQ32EInc4Z7KB1Ob8ejQ>
-    <xmx:XYrJaOMPKE6tBTr7rvajM3FxvmiTXxVZtgW1vsulsaTxbJj2inf_HY4l>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Sep 2025 12:03:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Justin Tobler <jltobler@gmail.com>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 1/2] add -p: mark split hunks as undecided
-In-Reply-To: <cc2a8fa7-be27-48a6-8699-c500d894404b@gmail.com> (Phillip Wood's
-	message of "Tue, 16 Sep 2025 10:36:10 +0100")
-References: <pull.1863.git.1740149837.gitgitgadget@gmail.com>
-	<pull.1863.v2.git.1757950144.gitgitgadget@gmail.com>
-	<3e2ec7b37f1935c5b091fc4b47b6209beb384d3a.1757950144.git.gitgitgadget@gmail.com>
-	<xmqqbjnbhapy.fsf@gitster.g>
-	<cc2a8fa7-be27-48a6-8699-c500d894404b@gmail.com>
-Date: Tue, 16 Sep 2025 09:03:39 -0700
-Message-ID: <xmqq4it2pep0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j8yGMKDc"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2570bf6058aso73469835ad.0
+        for <git@vger.kernel.org>; Tue, 16 Sep 2025 09:03:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758038631; x=1758643431; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kjRYkKDSWZ234FpoOA4OurthTdLl1h1v+LUENNFI0Zk=;
+        b=j8yGMKDcgbkwOor4YqVcPSxnXnpabTYLHuqODhyfkJ0HNWTQ7QRqcitfHc6y0+jCKd
+         QcLnXPoZKk7RyYsEjeo3YilZS0bcbL415zUE0t5rHXYL3qLst7F1rnNPvmGT03UiaYqY
+         6dk/qlkA4mpoG5Rwh3BBZGd4enwWm+IqdiCXMKQegwvJkCtKcf7AOIpk9PUNlegvJtNB
+         wyot8EHEvCPP4ApOJifGXgYESzXnhbSYTwbmhhaVgc9ofAMLKbEG1hLRvVbzfOER7T9V
+         hTKQyRED3zE1feIyDQzvrVuGmLy7lpQd3nM8z7shO1jh4qPlGqq9IH5OTVauzgYbbdfg
+         vrKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758038631; x=1758643431;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kjRYkKDSWZ234FpoOA4OurthTdLl1h1v+LUENNFI0Zk=;
+        b=tkqB7JL+snA6Q+kVf0qF27lu5fmW8KDutZqsHT5qV2nPv9gEyO9BGoSuOSqK7MHWp6
+         XruwIzkssZbkXqMNx2r9bF+zO/MurLYA1jRIUG6g1/5YNgUn+aMvPB2uyoEJU3ItxU7P
+         iIt14YMBD84kI88HfJm7AvMeHitMRXw0uS8ThXSlpDg6QPl3mnJpphAx16VrKsdgB5BF
+         xiYnrvUM0fXfDCIJtuC4pkRj659o9YJy4/AG8pjYODMXMsajn5nxYBxoEYTLTjf3shGw
+         t7nhT6WO9oC3LxaC84TOsZ1551CKM2yK/hl36C91Er4UMoJi5F12mHA75xZZmjzroP+e
+         8cVw==
+X-Gm-Message-State: AOJu0YxBkICfctPhUZXHfTXSz3KX+bPai15rCnG81/AnDA6hP6XVfVeA
+	rs3o4TquTrlOPjIdMhyMo4nsVXPdoHMG0lBjE25fWgtYHkdwriXfxy8lTuWlyw==
+X-Gm-Gg: ASbGncuMmF3uyNLIldZAm6NJ//5QVb/l7TPgVrvivOloGTxpJK87lRbe5c6RiFvxan5
+	+jHLxaJ4kgErX+UoZaj71rH5sR7/4OR4LGV6RStmGykampmI6Zc68kwGbdfqU8k+6QGR42LersE
+	y8d2R1OaJNv6GdNfCSs5keBRuJzJKDR8EFuvG35nflFNHveJgC6RwDywg2MoUxWGsNfEJ1ySrvS
+	rBsgIlx8lnte2PfmAB+2OgIBSZSoY8bUJz8amiJt8w/WqoeO9tZePRn6W/LdVx8ULIt23N840Sv
+	IKlEmjPZnAIeD3oJoCTjbqPie0IvW7ZEDNgS3Xt9ZaZJ/eOJRm1dYL2LG49mirLjfq/V2W9w8Hr
+	sK7YpaUKt2wh22ztqe1sP8IZ1XDuoSONLVns=
+X-Google-Smtp-Source: AGHT+IGnfpzQYWQl2L8iBt5Rb3dB+gujZDvwLSSPjXAL9FYOgoxtKI5C3YZjEZEveqY5VdPR7q6ReA==
+X-Received: by 2002:a17:902:e84d:b0:25c:e2c:6678 with SMTP id d9443c01a7336-25d241005a4mr246212535ad.5.1758038630521;
+        Tue, 16 Sep 2025 09:03:50 -0700 (PDT)
+Received: from [127.0.0.1] ([52.190.141.38])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-267fa950089sm2924345ad.100.2025.09.16.09.03.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Sep 2025 09:03:49 -0700 (PDT)
+Message-Id: <pull.2028.v2.git.git.1758038628948.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2028.git.git.1754922884439.gitgitgadget@gmail.com>
+References: <pull.2028.git.git.1754922884439.gitgitgadget@gmail.com>
+From: "Gustavo =?UTF-8?Q?Velasco-Hern=C3=A1ndez?= via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 16 Sep 2025 16:03:48 +0000
+Subject: [PATCH v2] docs: update description for '--mirror' option for 'git
+ push'
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Gustavo =?UTF-8?Q?Velasco-Hern=C3=A1ndez?= <gustavo.velascoh@gmail.com>,
+    "Velasco-Hernandez, Gustavo" <Gustavo.Velasco-Hernandez@netapp.com>
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+From: "Velasco-Hernandez, Gustavo" <Gustavo.Velasco-Hernandez@netapp.com>
 
-> To me, the current behavior is strange enough to be considered a bug
-> but when we discussed this before you were not so sure and said [1]
->
->     Given our user base has grown quite a bit over the years, it
->     almost is a given that any change to existing behaviour is a
->     regression to somebody.  Certainly a safe material for Git 3.0
->     but I do not know if it is safe enough for 2.50 for example.
->     The strategy to leave it longer in 'next' did not work well
->     to catch potential issues for another topic during this cycle,
->     but we could try it out again.
->
-> So I re-rolled using WITH_BREAKING_CHANGES. If you're happy just to
-> change the behavior unconditionally I can go back to V1
+The current description considers only created, updated or deleted refs
+locally. However it does not address the case where new refs were created
+on the remote end, in which case, are also deleted. The description has
+been reworded to describe what is removed, updated or added. (Based on
+Junio feedback)
 
-I am *NOT* happy with breaking changes.
+Signed-off-by: Gustavo Velasco-Hernandez <gustavo.velascoh@gmail.com>
+---
+    Docs: Update description for '--mirror' option for 'git push'
 
-Either you cut off those who you do not believe exist because the
-behaviour is so strange and useless (i.e. immediate "this is a
-bugfix, there is no mechanism to keep the broken behaviour even for
-a short period"), which is much better than that from my eyes if I
-were to be convinced that the old behaviour is nonsense, or you
-support them with configuration without any future deprecation,
-which is also fine by me.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2028%2Fgustavovelascoh%2Fgit-push-update-docs-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2028/gustavovelascoh/git-push-update-docs-v2
+Pull-Request: https://github.com/git/git/pull/2028
 
-The breaking changes mechanism is to be used only when we are
-convinced that the old way is nonsense, we are fairly sure that no
-sane user is using it, and we have concensus that the old way MUST
-be abandoned and any existing users MUST be retrained to use the new
-ways, and only to buy/give some time to these users that needs
-retraining.
+Range-diff vs v1:
 
-Have we got that firm sense in the community that the old behaviour
-qualifies for breaking change mechanism?  I don't, at least not yet.
+ 1:  2be0bf6e73 ! 1:  ab077544b6 docs: update description for '--mirror' option for 'git push'
+     @@ Commit message
+      
+          The current description considers only created, updated or deleted refs
+          locally. However it does not address the case where new refs were created
+     -    on the remote end, in which case, are also deleted.
+     +    on the remote end, in which case, are also deleted. The description has
+     +    been reworded to describe what is removed, updated or added. (Based on
+     +    Junio feedback)
+      
+          Signed-off-by: Gustavo Velasco-Hernandez <gustavo.velascoh@gmail.com>
+      
+       ## Documentation/git-push.adoc ##
+      @@ Documentation/git-push.adoc: already exists on the remote side.
+     - 	be mirrored to the remote repository.  Newly created local
+     - 	refs will be pushed to the remote end, locally updated refs
+     - 	will be force updated on the remote end, and deleted refs
+     + 	Instead of naming each ref to push, specifies that all
+     + 	refs under `refs/` (which includes but is not
+     + 	limited to `refs/heads/`, `refs/remotes/`, and `refs/tags/`)
+     +-	be mirrored to the remote repository.  Newly created local
+     +-	refs will be pushed to the remote end, locally updated refs
+     +-	will be force updated on the remote end, and deleted refs
+      -	will be removed from the remote end.  This is the default
+      -	if the configuration option `remote.<remote>.mirror` is
+      -	set.
+     -+	will be removed from the remote end. Any ref existing
+     -+	in the remote end, but not locally, will be removed too.
+     -+	This is the default if the configuration option
+     -+	`remote.<remote>.mirror` is set.
+     ++	be mirrored to the remote repository. This overwrites the
+     ++	refs at the remote by (1) removing what is only at the remote,
+     ++	(2) force-updating what both ends of the connection have, and
+     ++	(3) adding what only exists locally. This is the default if
+     ++	the configuration option `remote.<remote>.mirror` is set.
+       
+       -n::
+       --dry-run::
 
->> On the other hand, assuming it is not a bugfix but introducing a
->> different behaviour, where both the original and the new ones are
->> useful depending on the situation, wouldn't it be better to give
->> users choices at runtime instead, with a configuration variable at
->> least, but possibly with a interactive command to choose which
->> behaviour is used on demand?
->
-> I'm not really convinced the current behavior is that useful and it is
-> such an esoteric use of 'add -p' that I'm not sure it makes sense to
-> add a config setting for it.
 
-If so, let's break it first and see if anybody screams.  Touching
-the breaking changes mechanism is way too early before doing that, I
-think.
+ Documentation/git-push.adoc | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git-push.adoc b/Documentation/git-push.adoc
+index 5f5408e2c0..77ce4a27c8 100644
+--- a/Documentation/git-push.adoc
++++ b/Documentation/git-push.adoc
+@@ -163,12 +163,11 @@ already exists on the remote side.
+ 	Instead of naming each ref to push, specifies that all
+ 	refs under `refs/` (which includes but is not
+ 	limited to `refs/heads/`, `refs/remotes/`, and `refs/tags/`)
+-	be mirrored to the remote repository.  Newly created local
+-	refs will be pushed to the remote end, locally updated refs
+-	will be force updated on the remote end, and deleted refs
+-	will be removed from the remote end.  This is the default
+-	if the configuration option `remote.<remote>.mirror` is
+-	set.
++	be mirrored to the remote repository. This overwrites the
++	refs at the remote by (1) removing what is only at the remote,
++	(2) force-updating what both ends of the connection have, and
++	(3) adding what only exists locally. This is the default if
++	the configuration option `remote.<remote>.mirror` is set.
+ 
+ -n::
+ --dry-run::
+
+base-commit: a483264b01b977f3e65a4419103c21e6af7412a2
+-- 
+gitgitgadget
