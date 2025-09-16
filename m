@@ -1,112 +1,187 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B76A2DE704
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 06:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A15A2C2AA2
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 07:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758005817; cv=none; b=KsBwgcjqT0a1KBFFawhqmGMN5zFIS8ewjDDmXGMYFwFCcadvWtUZEcRbruxzt9PNVM8gkAQW+oG6g3KXVqXmX90o10ErzdCgHJeGtLeJhB2qxzZuplVk6GWQ5Mu6Zxyh/rWVNAwQQAHqFOIE36+n9c30x1xjHmTl5OJVB8F7g/Y=
+	t=1758006673; cv=none; b=nR13BgT5xa1QosOMyxP9jMPzPQKzWCOe4z7bsW7Gj/QQrYaZ6Yj3ccBt6HA6d3SXMxYJkUJ3oDPgkw+B1VAdJcRqtZgDkDUxzDVnMlUGaqQlRoRdtyC/hSSsMYSMbCGPyoljM5YIoUSzXkuYlVHKCgkI/RfgOBu1s0knVdIR7ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758005817; c=relaxed/simple;
-	bh=tRYS9CHELE76yX/nNlL3oyZeaYw5FoYLhUk4g/Qtnks=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=oEc//JIGyKQqdlCkU5paSceszWmLlWZ3D/5sSX4LxqoIG8goq4F6BsAgWkIN3ta3BINJmtLXLLs3IqUaTnUHLiDeMvm33+2WSHRpXUEQS7NSR1o6mjumxfgZO6NamWxwhgTyyGXzJIQzMt9pAk391oguOpOdTCbpZqRKLW0szgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=boeSRuyE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L/TTy229; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1758006673; c=relaxed/simple;
+	bh=FU2S/OMiFra06KWug66QpoCo6glrrNh/W9kPFFaD7Qw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EIs70thFqkp8v6kg9o5IUrvCh1TntbjI7/E6MMj1guff2fjtd0SSzxk5dM9uUl9JPXigstY+V+CVOZU9ZnWwf/PHOwTdBEjjhlbU1MatnPdhd8oW/O9QpPB16Xl8KNy/z0eUJcGkCrUjXTIk6Z5Kg7T6S9iXKZ5wdWW5gDOlTGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=C1uLSEtR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=advgHbX9; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="boeSRuyE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L/TTy229"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 625D71D0021F;
-	Tue, 16 Sep 2025 02:56:54 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Tue, 16 Sep 2025 02:56:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758005814;
-	 x=1758092214; bh=3mW95nqHTvXx2xNgqkj5docRbeHEx2YM5g3ulHIL3zI=; b=
-	boeSRuyER7b3DA3voQOnITAAI4ngCcX7e+lpmvUpS58Q+jLx4XG0JGx4HblLK+/r
-	WOzmz/MFADOOcN4z2qovHJojS+GO/XKBsRV/l9SFdam4/6X1fCZiWbjHQcI8Kitw
-	z56eMU1p6U1BMCj3F/wWVDecAQXoRiJChqHfnPqaml5ksefIZnVhYRjXOEsVT866
-	Okpm8dFr4o8BbkzBu76ciFWGwEmfLoqPvxFIzqwFFV2jsbXqg9MUjIaOsoUCl8h/
-	fOblbpoxc2v60kBbLtBpIjmkOmaLPHLh79QcjO6RkH2/bvcpMKCgh6oRYPdqQJMm
-	uPE+xClc9CUtG7Qfmenfeg==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="C1uLSEtR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="advgHbX9"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 807821D00153;
+	Tue, 16 Sep 2025 03:11:10 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Tue, 16 Sep 2025 03:11:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1758006670; x=1758093070; bh=jgNe1k8Ft+
+	pezpkiqkoK+tTDwLU2aZ94FkSJp4nzT64=; b=C1uLSEtRAPjC+r65Qm31ErgWAb
+	ycouqb6A3nH0dLK+6RHqjSOINEL1yOzDGVAdT6XHQLVkxKb8iX4nauX2C93ySM9L
+	Tu22XZ5+KB70cxX/QU5QFyJ74Hduq9/d564PQD9IiIzwjyjs0CkTPxk9CV6fzVI0
+	bklul4fLn+xiPtIDtk8ewjkc2iJro3aJSeDbP6+onB/UkWH7U4N2DOtiEt3LjLGQ
+	Bn1xCfUdgzSjB/fW4svOU2lCcA2p/oWeDcUmdSNZwLAdYAM5F5ToLXk8F3eU40Ak
+	DhbVAIexVcTpTJeubRNNfwKkEiMLt4YWkUL8LLAqrZ+CljolqATZUaOntpCg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758005814; x=
-	1758092214; bh=3mW95nqHTvXx2xNgqkj5docRbeHEx2YM5g3ulHIL3zI=; b=L
-	/TTy229vwCLXz56Oe6rpfhJWkWO9CdNAdrca2AhYTxvCnwGzrRrS+eaneQngs75e
-	Ds7LVMr5jDepyVjMoOjdKXa4ZLZlSz3p+3YRnRj2jNNUUCaJ5jd5toNZKLBzN3OE
-	6UAMnIyMNX/40dSSyFMQ0fFUfOadznIPWshRQL1CyE+Df2864o3L4c9RHh5rBXt3
-	m9r9eGRa+NPsoPHxz7W2QWuKieTYzYLQuHgQgksOcQSmawnw7yYqPpU4HGAutZaY
-	MN0GgvPlVVTYCEjBAnQMoHLgdkBZso7Wck3idoyvhy/1/L9Hqg3xdeZt2AlwkTkr
-	S9cE6Qi3T/h78YTOMyV5A==
-X-ME-Sender: <xms:NgrJaJM-2BadtF3dAqGds4VeIUhG8nLGPczWkhTC6rj0qQkmPeQHQUE>
-    <xme:NgrJaL_SxHPFi7GE2zAfcHk1iO4ekJ967Qagl-7oKrYALH0CaN_Qd3NIYqAUE6DH-
-    HICKxdhQRMIklD-Ww>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefleeltdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758006670; x=1758093070; bh=jgNe1k8Ft+pezpkiqkoK+tTDwLU2aZ94FkS
+	Jp4nzT64=; b=advgHbX9tOTMTvzQOHS+rgYAYGgVsTDAUvK26vx9Vu9c60muGuW
+	tx7KRrxZYd9gTSjm9lnL+I9vRSqt2GgmEBS7WITV2/OhV+UBMSBzbyITSf/HxAGT
+	bMi63Hakzd9KsMSzvmZiO7uhzSBTXj2hZFJ3y1ZuXnY/VgL+RgXeKA5pAIm95tNu
+	2tflsRrWMRgINsFnRUFOTt4RpIOGePHW01IDTYBSZIuLbrl7EUXWqDc+4YDw67qQ
+	/btRbcLOPvI+ZmiE+zETFCkuqOq7F/83iuGlelHcBzDJJv7iMgTbU6xOWxx8dqUU
+	YEfczJsq/wuF2hJcInGF3xWtJBmpM5nAHOg==
+X-ME-Sender: <xms:jQ3JaPLubKYPasUzMXV68Ij-7hvA38myALrfkzjJ_pT-kk75tah8LQ>
+    <xme:jQ3JaGYxpRI-0Gd5EvEXW3J9mrraSelxActOX1_LzyhP1icUPxuF2QyIRV3VbLnCu
+    ZAV5RAChc0iZmSKOw>
+X-ME-Received: <xmr:jQ3JaBIwikHyLkT2-8KVdNNyeO9l4CQJikYCxmsD533Y3-6W40R0MMHjUFxOxHK9ikFGhIYzMYA2NOnNOSOOjCRFi9JPn72h21hYkcwdgQk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdefleelfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeegtdejieetgefh
-    uedtuedttdeigfdvgeetkedtuedtudfgkeeluefgleetffejffenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    gh
-X-ME-Proxy: <xmx:NgrJaEXl8LPB66lvrgdM-paxnBIoDFmCjcpICWNF4_pH0ixpPdl0CQ>
-    <xmx:NgrJaCDSauqCP36VMH3ASEBvDopxkE6kHBvLZYh7k6a6be4WiJf0fw>
-    <xmx:NgrJaH-FWoySFIbLP6Ut2YFXK3Mw6PCMUNgpnIT0oCNsWcjFKgeK7w>
-    <xmx:NgrJaJEEetFiJsMbkpsLPP6Dl8tqnlQrk43bINitdFGkyCKVcjkBwQ>
-    <xmx:NgrJaHii-6IMM4fsYPgKBwimqFE9XVMEB3U5p8Q-XWkISKGTA3aYEfqC>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 0311D1EA0068; Tue, 16 Sep 2025 02:56:53 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidr
+    ohhrgh
+X-ME-Proxy: <xmx:jQ3JaEAfAGYgZTgnP7yI8BvEJTFBfgD-6TtLxyuFSB1T0IMDE37nrA>
+    <xmx:jQ3JaGpPsuMvZNUw4_c3jNNctNParvKV6ceDTZNLy2XNKrIxxyfbxA>
+    <xmx:jQ3JaPgV0LWPPNOHi7SqM0jAecCVo4HZOcz0WCTU206MnH7TrJd5lQ>
+    <xmx:jQ3JaDDrJBGTGCobTlSJHe8DUTCM1uiOw1I37dulms27V3uq9G46sg>
+    <xmx:jg3JaLrJDPS7tooNNeSxv3ao672FehWOsNYZqnc1sZmRF2rGygvtxElh>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 16 Sep 2025 03:11:09 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 708560e0 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 16 Sep 2025 07:11:07 +0000 (UTC)
+Date: Tue, 16 Sep 2025 09:11:04 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2] combine-diff: don't override recursive flag in
+ diff_tree_combined()
+Message-ID: <aMkNiC_s-Dt4iRPp@pks.im>
+References: <20250905-toon-fix-last-modified-v2-1-d859eeed408e@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A7Q1VxplDoy7
-Date: Tue, 16 Sep 2025 08:56:32 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Patrick Steinhardt" <ps@pks.im>
-Cc: git@vger.kernel.org, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Message-Id: <a8702bc6-154a-439c-b4c2-0de208838775@app.fastmail.com>
-In-Reply-To: <xmqqikhjhbgo.fsf@gitster.g>
-References: <20250915-pks-config-color-v2-0-e4290bd8d13c@pks.im>
- <20250915-pks-config-color-v2-5-e4290bd8d13c@pks.im>
- <xmqqikhjhbgo.fsf@gitster.g>
-Subject: Re: [PATCH v2 5/5] builtin/config: do not spawn pager when printing color
- codes
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250905-toon-fix-last-modified-v2-1-d859eeed408e@iotcl.com>
 
-On Mon, Sep 15, 2025, at 19:28, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->[snip]
->> Fix this by disabling the pager in case the user is asking us to print
->> color sequences.
->
-> I am of two minds.  Part of me obviously agrees that it is more
-> straight forward with this change.  But it may 
+On Fri, Sep 05, 2025 at 03:06:31PM +0200, Toon Claes wrote:
+> Function diff_tree_combined() copies the 'struct diff_options' from the
+> input 'struct rev_info' to override some flags. One flag was
+> 'recursive', which is set to 1. This has been the case since the
+> inception of this function in af3feefa1d (diff-tree -c: show a merge
+> commit a bit more sensibly., 2006-01-24). From that commit there's no
+> clear indication why recursive is overridden. But this breaks the
+> recently introduced subcommand git-last-modified(1) in some cases
+> (i.e. when criss-cross merges are involved). It then would exit with the
+> error:
+> 
+>     BUG: paths remaining beyond boundary in last-modified
+> 
+> The last-modified machinery uses a hashmap for all the files it wants to
+> get the last-modified commit for. Through log_tree_commit() the callback
+> mark_path() is called. Here the incoming path is looked up in the
+> hashmap, but because the diff-tree machinery internally switched to
+> recursive (even if the last-modified machinery wasn't) the entry for
+> 'dir' was never expelled from the hashmap, and the BUG() statement was
+> hit.
 
-Did you drop something here or is it covered by the next paragraph?
+Okay. So if I understand correctly, the issue here is that once we do a
+recursive diff we skip directory entries and only print blobs. And
+because of that we never manage to blame the directory to any specific
+commit.
 
->
-> An interactive user experimenting while writing their own script
-> might say something like
->
->  $ git config --type=color --default="reverse red" n.n
->
->[snip]
+What this doesn't explain though is how this is related to criss-cross
+merges. Why does the error not happen with "normal" merges?
+
+> Remove overriding 'diffopt.flags.recursive' in diff_tree_combined() and
+> move setting this flag to the callers which relied on the recursive
+> behavior.
+> 
+> Because internally diff-tree no longer runs recursive, this results in a
+> nice speedup when running `git last-modified` on git.git:
+
+I assume this is only the case for `git last-modified --no-recursive`,
+right? Do we know to set `diffopt.flags.recursive` in that case already,
+or do we handle recursion manually in that case?
+
+> diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
+> index 49dd4d00ebf1bcc644383ee99df3a9e05502b89b..6ef0438d36dd1091d2806b46306f2b5ee7274bc0 100644
+> --- a/builtin/diff-tree.c
+> +++ b/builtin/diff-tree.c
+> @@ -16,10 +16,21 @@ static struct rev_info log_tree_opt;
+>  
+>  static int diff_tree_commit_oid(const struct object_id *oid)
+>  {
+> +	struct rev_info rev_info = log_tree_opt;
+>  	struct commit *commit = lookup_commit_reference(the_repository, oid);
+> +
+>  	if (!commit)
+>  		return -1;
+> -	return log_tree_commit(&log_tree_opt, commit);
+> +
+> +	/*
+> +	 * log_tree_commit() calls into diff_tree_combined() which historically
+> +	 * used to enable diffopt.flags.recursive when option '-c' is given.
+> +	 * To not break backward compatibility, set 'resursive' here.
+> +	 */
+> +	if (rev_info.combine_merges)
+> +		rev_info.diffopt.flags.recursive = 1;
+> +
+> +	return log_tree_commit(&rev_info, commit);
+>  }
+>  
+>  /* Diff one or more commits. */
+
+Don't we have to do the same dance for `stdin_diff_commit()`? There's
+also callsites in git-am(1), git-log(1) and others. Why don't we have to
+adjust any of those?
+
+> diff --git a/combine-diff.c b/combine-diff.c
+> index 3878faabe7bb2f7c80cffbf3add6123f17960627..305414efdf436d53fee8d79aa4219f6a4dd3445e 100644
+> --- a/combine-diff.c
+> +++ b/combine-diff.c
+> @@ -1515,7 +1515,6 @@ void diff_tree_combined(const struct object_id *oid,
+>  
+>  	diffopts = *opt;
+>  	copy_pathspec(&diffopts.pathspec, &opt->pathspec);
+> -	diffopts.flags.recursive = 1;
+>  	diffopts.flags.allow_external = 0;
+>  
+>  	/* find set of paths that everybody touches
+
+With the above I'm a bit worried that we're changing behaviour for
+direct or indirect callers without noticing. Our tests may not detect
+any regressions, but that doesn't really prove that there is none.
+
+An alternative approach could be to introduce a new flag that causes us
+to not override the `recursive` flag. It's quite an ugly workaround and
+makes the infra even weirder. But at least we could be sure that we
+don't alter behaviour inadvertently.
+
+Other than that I don't really have much of a better idea.
+
+Patrick
