@@ -1,105 +1,192 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E231A256B
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 02:03:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AC6E571
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 02:55:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757988225; cv=none; b=A8aFtmaWqcde2LgIbZ4OjmyLNcgYQrUFEpCW6UGOHUirQSwusMI2RcNRgRJjmdhvjwHCDQTmDpgKv1xYdo1EG8tDEh5GkWXQ6/f1A+L8rKjrZLI5Pplb+pEcezsJvfzxokUZbahEAb19hGYVnwV29HzvH4mU7t1zr4AxKJCAJ+E=
+	t=1757991319; cv=none; b=h8G0DvEJR0nBmO9iqVCmEhSfc2jcNmBeN6KaMc2uWUQBDXTPPwxGmFu6R730IMaluvfX7xxzr0I87TmRXZqF1GZzh99Y4n7IvWuoOxc1E8jkqMqsGXPijCmrNEuCRfVXNcn69xHe88SsqAE1I5qRpyGOutGCBRCte0gPBTvtUg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757988225; c=relaxed/simple;
-	bh=PSefXvYzDOEtgtKYJGDWIkdToIHycr9bvWQlVH521B8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=makIVDcJq4rnCZ8Pm0LmI0AvcLzZmHgTuVOaLwKdxg4BFRpbbB7wzvw1h3kpqiKWFgWZfaAIwUHhV5eVwcpAcMUuv2Jo4VMpjUFHFs9Cs/WR6V5GQF2cihGCF0D/DrB3cHOSM0se0QHoi5P8qaIK8lU+vJCSvK8Z1WJ3D3mllkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KjqtaaVG; arc=none smtp.client-ip=209.85.208.170
+	s=arc-20240116; t=1757991319; c=relaxed/simple;
+	bh=LofrMazJyvgK5N5Mkp4BEz7TEvLdAQDEzRD82XJ+P1Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=shehDVTZ6gT5INltJjp+WDQEWao7YRCOKtifmhaeIepA3U3Uvxdu8d/tT4kFaEYBiASzQzYAKAOPCeUDAwLW8HYlZf9zAOeWw9D4xySo/CFZcuNmS317gMs4jBoy8H8Odp57ZiQswvEfc0YfPHfp/UQUPUAW6WB0t1fWIs9ohDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kJxx9arC; arc=none smtp.client-ip=209.85.210.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KjqtaaVG"
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-33ca74c62acso44682591fa.1
-        for <git@vger.kernel.org>; Mon, 15 Sep 2025 19:03:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kJxx9arC"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-74a61973bedso4585106a34.0
+        for <git@vger.kernel.org>; Mon, 15 Sep 2025 19:55:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757988221; x=1758593021; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bc2NOH2+04bQcEhzM+LY0Db0PFeZy3QKJ9OrGc0lneI=;
-        b=KjqtaaVGonS8rsExgSVo2SZM3ReTX44/CL39d4sBAPcBcv98pzkE81W7Zl4OHnSixd
-         nQO7WTWOuFO3ZxwFJpYokzs6Wyp5d2V0IoDAPzhUdFybkPSzX9VRbBGyo94PZYDAY7pa
-         h81MjP7ct4iOvPCGAaefFcudmCt2rGXE30AH7LjpVyd50tq/QWaKk5EHninqsJ55hUex
-         poPszJQJNb9hL3HMhn8qL7ZGYph10lEOP7lw8JOUiiCqgnp9XJi2UEavqlQA7BXFvcGr
-         r8ENVKfMnt3oD+jMNi9Ba3d2n/5wiPJjOZJCX5+eu92zQHqK03n7WPJGqiN4VgbJHVhg
-         Jn1w==
+        d=gmail.com; s=20230601; t=1757991317; x=1758596117; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PgqOIMvNebDyetlizG6Hn7KGujfCVFY3iBLuL3yYJgU=;
+        b=kJxx9arCVFcuHfxzSq2vI2UlRjgEkKHYg96EOogJCQvSTd9bTuW835wWr0Ls89SmhN
+         Fd0UpZx9+QoN5CqjTV3Ddhw8ifkMYbNHYhx6ju+vag3mKuA0dewvgvK1rs/m0+IHU9RN
+         n9JAS+xtu+2Ca42RnV9zl//jowKh9KXiZ4m7X9Wcc7hJ0xgknxUH7lBY61nuU4xknsTT
+         wsC9D1pQxOYZv9wWUJ3zr3VDjI6uiORxzCXuWYmnrdcvxY9WJeWkzXhSy/d9aXUi19kH
+         qLj8kV3suciIS/IYPf7kg9EHEevDpZ9RAHIImZxYDZHwZ30j92AedlAOIla/6lfhH9n5
+         KJXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757988221; x=1758593021;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bc2NOH2+04bQcEhzM+LY0Db0PFeZy3QKJ9OrGc0lneI=;
-        b=S94ZuHxArezJpUlW16g6eTclJ+h3xMG/tMqZvR8e7hyep9qp97aK84yoWhFw6aUZ+R
-         V6AVLMlAC0Xb8LGftoeADm+czGJrIyPh9Hm25oAnFWHrLfbkKXBc6T14cRlHml2isoBd
-         wI4UqJqrKQpprgPkHgx0ETHkm0GEiiTZu+lcboL3IVlgz8Azy5SA8JVgTGGGswcx9OCy
-         sEl3PQ2Vzms+um2cDZkofj7eCysCjiwrDi9LhuknhyzB3g1xJZL8Ky3WDsnbkFy57BGL
-         lOigo+CItGKpGQ3jyJs+1aI8q5KStt4OwtiMGHt5HE0scQuty5cZJ0JdIm/hoFFY2z91
-         EBKQ==
-X-Gm-Message-State: AOJu0YzFLYdI0bI+PQPWVvqukBxeEdfRRaFvHWp71Lz/g3nBvhXXuvSh
-	Lg/KAA4CDCFg1yeHOVd8T6eOJRDN5mpcCDSetjzlxznOBY0u8RA1VOdDvkhF+iqesmkFFaAPHrw
-	Y66BumkIdsbFfXCAnRR3NykWOfdHJVF8=
-X-Gm-Gg: ASbGnctdy6KRAHTQ4Kqm3BxV6KKmP74KHNM2msIxUqjpRsPN+FgoWXRLBCtLsmWKEgm
-	NAHrYH+ZegIs36WWOz6Atp+pB5daK/SJGDOYpedGXC//m1O+KP3RL68uEWYJRJI5IbHb0C/PBvC
-	UdRvhQtH6/dxZdba/LnNGdqF7BrMYDYPMs6A72M8+oMSo6FWJShrdmdC8pR6yX9esTBr0ExEj6Z
-	ztqlx5yASodEXoe2JU=
-X-Google-Smtp-Source: AGHT+IHpJSOIA3pHKWu0EZOC9eVb4PYPAWVwMjWgcFigUccBmxVTcSjfAm91DBXG4vhiuTL0MpPyC0TEJq63KB/Ch28=
-X-Received: by 2002:a05:651c:1501:b0:336:7121:525a with SMTP id
- 38308e7fff4ca-3513d5796afmr51010781fa.25.1757988220870; Mon, 15 Sep 2025
- 19:03:40 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1757991317; x=1758596117;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PgqOIMvNebDyetlizG6Hn7KGujfCVFY3iBLuL3yYJgU=;
+        b=bDS7pV8oeP5LpmzJdD468RpZCPDCwg9Im/Zc6RmrECIfGgzjl/05ZC4QvUaJrC5KRX
+         13iQ7lWTqgsX6bRJ5tq6ueiBioIZjFkFcN0DalxhBAXCZxbEicQKqUY7LyCSLLP5EEFH
+         /dvwK3rJy6L0L0mGywh2qBeLNXbo56rW0IBF76xsZ70hle1scC7bHIVFYW1Xxqqn/5Kt
+         ekoBvHAQfCNB7lYXa4E72sm0mTXGJM4nkwZKDTcxiupwiAxMkKoh0tK8qKOIugqCjDK9
+         aTz1qOWqygaWRKgu+MB1kIihy0AoTWi6OVLu4VRs7h1+bWKgQMXt3CMmL2XuRz2aU8jh
+         PdOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUdGWU/+wn7EH3pQfKVhZTsMUFdzmcgFAdFOkLZMKbNH0IAnR96IgmbTFM1geoy/rsJruw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxAY0VDjK1KMgtdCFFgE1J0YDtOAWs8kOqUXFbMcBdNr0IvTPaV
+	UBPNG379b/+E0jXXv44750p/QhooRyKbJKPJT3qw4+GCXmOmlXjkOWSCozXEtQ==
+X-Gm-Gg: ASbGnct2KqexpfNyE3b2jMq2wIgbNqG5GaLllWWdyExNf4CFKK5EYz7LCVcMfClRwKU
+	0WythTer+/cVisca/qJkD0enq5Iamw886xsNMpr/n/SWproMZkqPsvjOoBwzbteKynn54PwA3aT
+	S4c3HVnVRHk5AcaB1XOoApOLohuUD3L34e9cGweOe6YTMUKAslyqRxU3jceskTnKh13w3z3E7uo
+	f4Ge8+qUkCHbCmLv2XCoYMNLDd066p2Fxd2ElNVxpL0H8FfXYhzLhEl3U1p2izXTgRSezbCNlGa
+	Gb7INQ5eLhN5NdxwO7bUDf5DI+4j+cni5BS1pivZ2E3ddlPmR32RS5fEHOkYWC+s7Ge+leUDyL9
+	MtbfgHGaYUrjnokyG
+X-Google-Smtp-Source: AGHT+IFIss+7tDM2QLLVvjbgUVhNaNIJ/vh2ms2YZMoKYv6VP/QTni3ojSoX/MJjlvjXcj53GM0xtA==
+X-Received: by 2002:a05:6808:3447:b0:437:e1b0:e969 with SMTP id 5614622812f47-43b8da3a65fmr7080435b6e.40.1757991316858;
+        Mon, 15 Sep 2025 19:55:16 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-43b82a72657sm2675799b6e.15.2025.09.15.19.55.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Sep 2025 19:55:16 -0700 (PDT)
+Date: Mon, 15 Sep 2025 21:55:15 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH 1/6] bulk-checkin: remove ODB transaction nesting
+Message-ID: <pk2cpihxk4j4ywgq3dtknybyzjeon7ajgmwq4yhknojjsfiqo2@q5dsygszdkar>
+References: <20250909191134.555689-1-jltobler@gmail.com>
+ <20250909191134.555689-2-jltobler@gmail.com>
+ <aMJu4yoO5-Xp52oJ@pks.im>
+ <aMijGE2CveYcQaWc@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im> <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
-In-Reply-To: <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Mon, 15 Sep 2025 20:03:29 -0600
-X-Gm-Features: AS18NWA3nuV2ET873THeotMQF_zz-ZlQca6rd595VoN_xawuDNBFYUyo4Lux85s
-Message-ID: <CAH=ZcbB0Qv=b-hdB2EVW-D-dob4NnzyWDYGEThYZm94S0V7OGg@mail.gmail.com>
-Subject: Re: [PATCH v5 0/9] Introduce Rust and announce that it will become mandatory
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, Ben Knoble <ben.knoble@gmail.com>, 
-	Christian Brabandt <cb@256bit.org>, Collin Funk <collin.funk1@gmail.com>, 
-	Eli Schwartz <eschwartz@gentoo.org>, Elijah Newren <newren@gmail.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Junio C Hamano <gitster@pobox.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>, 
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, Sam James <sam@gentoo.org>, 
-	Taylor Blau <me@ttaylorr.com>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aMijGE2CveYcQaWc@nand.local>
 
-I am currently working on a patch series that makes Rust optional and
-addresses several concerns that this series does not:
-  * Rust calling C: Makefile has no way to build or run Rust so it
-would have to call cargo test, but that doesn't work unless build.rs
-tells cargo where libgit.a is (among other things).
-  * Build tooling alignment: My build_rust.sh is called by make and
-meson which eliminates defining how to build Rust in 2 places.
-  * Cargo vs Meson: Meson is adding support for Rust and it's getting
-better, but Cargo is the canonical build system for Rust. cargo is
-released in lockstep with rustc, and we _have_ to use cargo when
-building with make because Meson won't be available in that case.
-  * Crates: Patrick's series assumes the Git codebase is _the_ crate
-    * cbindgen: Cbindgen outputs a single header file for each crate,
-with only 1 we'll have an unmanageably large auto generated header
-file.
-    * Modularity: Using multiple crates makes Git more modular. Elijah
-told me that there was some desire to make Git more modular.
-    * Cargo Dependencies: Patrick wrote his series with Meson first in
-mind which doesn't address how we'll be able to use crates from
-crates.io
-  * CI:
-    * Sparse coverage: I think there's only one target that tests his changes.
-    * With vs Without Rust: I don't see anywhere that he covers
-building with vs without Rust in CI
-  * Build integration: Meson has to have every .rs file specified
-where as the default layout of a Rust project allows Cargo to just
-know where to look for .rs files
+On 25/09/15 07:36PM, Taylor Blau wrote:
+> On Thu, Sep 11, 2025 at 08:40:35AM +0200, Patrick Steinhardt wrote:
+> > On Tue, Sep 09, 2025 at 02:11:29PM -0500, Justin Tobler wrote:
+> > > ODB transactions support being nested. Only the outermost
+> > > {begin,end}_odb_transaction() start and finish a transaction. This is
+> > > done so that certain object write codepaths that occur internally can be
+> > > optimized via ODB transactions without having to worry if a transaction
+> > > has already been started or not. This can make the interface a bit
+> > > awkward to use, as calling {begin,end}_odb_transaction() does not
+> > > guarantee that a transaction is actually started or ended.
+> > >
+> > > Instead, be more explicit and require callers who use ODB transactions
+> > > internally to ensure there is not already a pending transaction before
+> > > beginning or ending a transaction.
+> >
+> > I think one bit missing in the commit message is to explain what this
+> > buys us. Does it for example enable subsequent changes? Or is this
+> > really only done to have clean ownership semantics for the transaction?
+> 
+> In addition, it would be useful to hear from the commit message *why*
+> this is safe to do. Justin's message suggests that nested transactions
+> are noops, so doing something like:
+> 
+>   begin_odb_transaction();
+>     begin_odb_transaction();
+>       write_object();
+>     end_odb_transaction(); <- object not yet added to the main ODB
+>   end_odb_transaction();   <- now it is
+> 
+> only results in the object being added to the main ODB when the final
+> end_odb_transaction() is called.
+
+Yes, well said. {begin,end}_odbtransaction() operations on inner
+transactions are effectively a noop. They simple manage an internal
+counter to know when a new transaction should be started/finished.
+
+> Instead it looks like this patch pushes us towards having callers check
+> whether or not there is a transaction in progress before starting a new
+> one. So it seems like this is safe to do only for callers that check
+> whether or not there is an ongoing transaction before beginning a new
+> one.
+
+Yes, this patch removes the logic that manages the internal nested
+transaction counter in favor of requiring callers to check if a
+transaction has already been started or not.
+
+> (I think this is what the second paragraph of the quoted part is trying
+> to say, but I think it may be clearer to say "To preserve the same
+> semantics, callers MUST ensure there is not [...]").
+
+Yes, you are correct. Apologies for the poor wording.
+
+> That's more work for callers, and at first blush feels a little more
+> error-prone.
+>
+> Specifically, if some new piece of code is written that does not first
+> check whether there is an ongoing transaction, it could result in a
+> BUG() either at the time it is written, or worse, later on when that
+> function is called in the context of an outer transaction.
+> 
+> So I am not sure whether this patch is making things simpler or safer.
+> Certainly the bulk-checkin API is a little simpler, since we no longer
+> have to keep track of the nesting level within an odb_transaction. But I
+> think it pushes more burden onto the callers in a way that I worry could
+> create the potential for BUG()s later on.
+
+I've revisted this patch and I agree there is probably a better/safer
+way to accoplish this.
+
+The ultimate goal of this patch is make it so invoking
+end_odb_transaction() on a transaction guarantees it is flushed. With
+this guarantee we would no longer need flush_odb_transaction() and the
+transaction interface eventually can be simplified to just
+{begin,end}_odb_transaction(). This also avoids a potential class of
+errors where a caller _thinks_ they have committed a transaction and
+that the objects should be visible, but they actually are not because it
+was a nested transaction.
+
+The nice thing about the current implementation though is that nested
+transactions are automatically treated as noops and the caller doesn't
+have to check if there is already a pending transaction. This is safer
+and less error-prone.
+
+Thinking about this some more though, we should be able to continue to
+have {begin,end}_odb_transaction() function as noops when there is
+already a pending transaction and also be able to drop the internal
+transaction nesting mechanism at the same time. To do this, instead of
+erroring out in begin_odb_transaction() when there is already a
+transaction, we can simply return NULL. If a caller wants to know if a
+new transaction was actually started, they can just check the return
+value afterwords. This removes the burden from the caller to explicitly
+check if there is a pending transaction beforehand. Furthermore, since
+an ODB only allows a single transaction at a time, it probably makes
+sense for operations at the ODB layer to guard against this anyway.
+
+This change would pair nicely with the change made to
+end_odb_transaction() in version 2 of this series. In this version, when
+end_odb_transaction() is provided a NULL transaction, it now functions
+as a noop as well. If a transaction _is_ provided though, it is
+guaranteed to be flushed with addresses the main goal on this patch.
+
+> I think that takes us back to Patrick's question: what do we gain by
+> simplifying the internals of the bulk-checkin API, and how does (or
+> doesn't) that justify the added burden on callers? Looking at the newer
+> version of this patch in [1], I see that you addressed what we gain, but
+> I am still curious about how we justify the added cost.
+
+Thanks Taylor for the thoughtful feedback. Much appreciated. :)
+
+I'll plan on sending a followup version tomorrow that hopefully
+addresses most of these concerns.
+
+-Justin
