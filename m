@@ -1,111 +1,105 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890152DC765
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 02:00:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E231A256B
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 02:03:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757988049; cv=none; b=T9x53lSty+LFFJTaxtm3vELDYlf6TXPfUEpnQx2hWxoR54OBTzqb7S3GubhumRuRzJ5JvJ8q5KLC+UdI33zOpwvyOeqUwCYQg2UxK4KFyjg4trI2Ndraeys/kuiy6Y8W3zF9D9KQa/X5eb2ntNuAwiku4hjtrAR3hcLJrGOsHPo=
+	t=1757988225; cv=none; b=A8aFtmaWqcde2LgIbZ4OjmyLNcgYQrUFEpCW6UGOHUirQSwusMI2RcNRgRJjmdhvjwHCDQTmDpgKv1xYdo1EG8tDEh5GkWXQ6/f1A+L8rKjrZLI5Pplb+pEcezsJvfzxokUZbahEAb19hGYVnwV29HzvH4mU7t1zr4AxKJCAJ+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757988049; c=relaxed/simple;
-	bh=JeXyqVWCnDhtNZislDLN+SlA+67BAvNo8/Pbb373Fpk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DgHRoidcOaMR8C+XnJL5YHSd/RM5PkNkB2ojVBqCtpPAtwG6hfHoW1yKd9ZkvOEFuZD6S/HxPdvQ7zGB73oL5cZU8mqi+Ur1Yh3RnEfCXMWzXTx/QRbe9LvjtRPs99jStJqkunjgbEmweNRyJ4omXrVJonjVyTvHM384HgFK5cU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PQyu9kjT; arc=none smtp.client-ip=209.85.219.50
+	s=arc-20240116; t=1757988225; c=relaxed/simple;
+	bh=PSefXvYzDOEtgtKYJGDWIkdToIHycr9bvWQlVH521B8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=makIVDcJq4rnCZ8Pm0LmI0AvcLzZmHgTuVOaLwKdxg4BFRpbbB7wzvw1h3kpqiKWFgWZfaAIwUHhV5eVwcpAcMUuv2Jo4VMpjUFHFs9Cs/WR6V5GQF2cihGCF0D/DrB3cHOSM0se0QHoi5P8qaIK8lU+vJCSvK8Z1WJ3D3mllkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KjqtaaVG; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PQyu9kjT"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-70ba7aa131fso42742916d6.2
-        for <git@vger.kernel.org>; Mon, 15 Sep 2025 19:00:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KjqtaaVG"
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-33ca74c62acso44682591fa.1
+        for <git@vger.kernel.org>; Mon, 15 Sep 2025 19:03:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757988046; x=1758592846; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Q+8yIImkmep3U0jsr7E3K+2ihQH28BHwlinqsp7GfZ8=;
-        b=PQyu9kjT02sdD6/CXf6FQz1L2dpUtFIsUJU+x0vU53lcjwwoDbA6OhWbKKZ99lMGTx
-         HurFzRYpx7q72Bf8dVnjMc3U1SrJu4V87CFhFr3knnyZt9uZ0XmrHAfda/ldugdiJH94
-         j1kaQNClwx0SjpWQxBOr5P+hL0uoMpYLRe2u8LJ66Dbx7qkPT03HLujE1MZ/4/lUcW0D
-         SfmdpTf36tQFlK3Ta0RLxe1XaoUyq+KzWxxOkrZmMdhY282Dgo/bSfoxpeN9E/eXHVtu
-         GTiClwyWHhNT4OEqZHUqo11eiOFIhFSp0uxLn7wdLZdgW2ubSR8t8J/86bXS7z/NTgY0
-         Z6ag==
+        d=gmail.com; s=20230601; t=1757988221; x=1758593021; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=bc2NOH2+04bQcEhzM+LY0Db0PFeZy3QKJ9OrGc0lneI=;
+        b=KjqtaaVGonS8rsExgSVo2SZM3ReTX44/CL39d4sBAPcBcv98pzkE81W7Zl4OHnSixd
+         nQO7WTWOuFO3ZxwFJpYokzs6Wyp5d2V0IoDAPzhUdFybkPSzX9VRbBGyo94PZYDAY7pa
+         h81MjP7ct4iOvPCGAaefFcudmCt2rGXE30AH7LjpVyd50tq/QWaKk5EHninqsJ55hUex
+         poPszJQJNb9hL3HMhn8qL7ZGYph10lEOP7lw8JOUiiCqgnp9XJi2UEavqlQA7BXFvcGr
+         r8ENVKfMnt3oD+jMNi9Ba3d2n/5wiPJjOZJCX5+eu92zQHqK03n7WPJGqiN4VgbJHVhg
+         Jn1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757988046; x=1758592846;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q+8yIImkmep3U0jsr7E3K+2ihQH28BHwlinqsp7GfZ8=;
-        b=Spd/IYZepsjonpVmnQ+HkXwCsJ4Nuu3H9bZf899w2CNzWluhEUPUivxJH2eTbm4huS
-         wu5uefUBO64bF+VX6wnU3LSximRAUyc7xlM/lflJ4vnVpcjNxImwGM2nOe6Si8w/6zBa
-         gRgX5Pq/6cqD5GntoI9MzhZlVjvXmviMSkdbgDoUmXYIsBAsRtrAox2wmEn1+8o5ltsi
-         Q7aHi0MJXBJjhcx/efZWg4Z6uXASFvBVDq1Gebgi+qgPbNy0/p8bM73Vd8IAI4iUi2ys
-         onUfsc/HFG3rtdn81JPAx1URwrLS8vWxVcpo+HEpkaOAFrwePLa/XvJFRe6KtDw6usOQ
-         4KPg==
-X-Forwarded-Encrypted: i=1; AJvYcCVsN77f1JQ6M3sRLxKnR4zDT/40zry6tVzLhzuQ4R3zjdrv6Q/ub7vveMYDNlRPs79i7MY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyZ9XSLRLUUligiL63Ir4wOIzInbjjboFlxljDTi2jeDo5VFdzm
-	IHWX8jskWZjR8/4D8UPf33RxVbuh8AHPC3K61gLI83odKfBue+4XMbNI
-X-Gm-Gg: ASbGncscktZgELhrzyMHeAfn9u7zVlFBKnNejytopG1oSsAPYP8nNpC0YNscQ/FvQrz
-	xgt9ZCrbv/72fW0+M30T41u1pKf/hTVAdU7EqnPp38Eai+cKLwe/XzRQV44HmwQaVFkuyHTcMaC
-	D7635uwartBlGixCFCY0RHawwj9L9dl3ZTzSgSgxLTwqrmtzH+/qHjWXB7ViI2C0q76oO6NSDH7
-	pRN/o+Y77goQVq/t04Z4Lgyguaymtj8QckVNVyWsOB7t0wsAxHfYJwQ3vT7/cSHxf8QOqBDP/cn
-	RCjFg/vQWxXmN4WEZH0iiSEVKbGCblkHihQUSHlnJfcttatTzMKD81q0TbGYifulCdFBKoJ2idq
-	uIH9S5V1Fq9wcKvMkBr8awFMIxsOR6v1O9oD+BS4DR31MZiSrCuZQRHbp0f38qhW27bLIDwNwwg
-	==
-X-Google-Smtp-Source: AGHT+IH3DZFsDCb0ssv8AKI/WsOjbL/3LH2cGlqUe0QaRtk3W+pCptMAWwqr1U8Bx3sV1V2+pvIRXg==
-X-Received: by 2002:a05:6214:3f8f:b0:787:907:d26a with SMTP id 6a1803df08f44-7870907e19fmr47252496d6.29.1757988046385;
-        Mon, 15 Sep 2025 19:00:46 -0700 (PDT)
-Received: from ?IPV6:2605:a601:a6de:d300:1dc9:62ab:6ea6:19cd? ([2605:a601:a6de:d300:1dc9:62ab:6ea6:19cd])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-763bee7c80dsm85453416d6.52.2025.09.15.19.00.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Sep 2025 19:00:45 -0700 (PDT)
-Message-ID: <9b001093-0d9d-47b2-be10-333534a748e2@gmail.com>
-Date: Mon, 15 Sep 2025 22:00:45 -0400
+        d=1e100.net; s=20230601; t=1757988221; x=1758593021;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bc2NOH2+04bQcEhzM+LY0Db0PFeZy3QKJ9OrGc0lneI=;
+        b=S94ZuHxArezJpUlW16g6eTclJ+h3xMG/tMqZvR8e7hyep9qp97aK84yoWhFw6aUZ+R
+         V6AVLMlAC0Xb8LGftoeADm+czGJrIyPh9Hm25oAnFWHrLfbkKXBc6T14cRlHml2isoBd
+         wI4UqJqrKQpprgPkHgx0ETHkm0GEiiTZu+lcboL3IVlgz8Azy5SA8JVgTGGGswcx9OCy
+         sEl3PQ2Vzms+um2cDZkofj7eCysCjiwrDi9LhuknhyzB3g1xJZL8Ky3WDsnbkFy57BGL
+         lOigo+CItGKpGQ3jyJs+1aI8q5KStt4OwtiMGHt5HE0scQuty5cZJ0JdIm/hoFFY2z91
+         EBKQ==
+X-Gm-Message-State: AOJu0YzFLYdI0bI+PQPWVvqukBxeEdfRRaFvHWp71Lz/g3nBvhXXuvSh
+	Lg/KAA4CDCFg1yeHOVd8T6eOJRDN5mpcCDSetjzlxznOBY0u8RA1VOdDvkhF+iqesmkFFaAPHrw
+	Y66BumkIdsbFfXCAnRR3NykWOfdHJVF8=
+X-Gm-Gg: ASbGnctdy6KRAHTQ4Kqm3BxV6KKmP74KHNM2msIxUqjpRsPN+FgoWXRLBCtLsmWKEgm
+	NAHrYH+ZegIs36WWOz6Atp+pB5daK/SJGDOYpedGXC//m1O+KP3RL68uEWYJRJI5IbHb0C/PBvC
+	UdRvhQtH6/dxZdba/LnNGdqF7BrMYDYPMs6A72M8+oMSo6FWJShrdmdC8pR6yX9esTBr0ExEj6Z
+	ztqlx5yASodEXoe2JU=
+X-Google-Smtp-Source: AGHT+IHpJSOIA3pHKWu0EZOC9eVb4PYPAWVwMjWgcFigUccBmxVTcSjfAm91DBXG4vhiuTL0MpPyC0TEJq63KB/Ch28=
+X-Received: by 2002:a05:651c:1501:b0:336:7121:525a with SMTP id
+ 38308e7fff4ca-3513d5796afmr51010781fa.25.1757988220870; Mon, 15 Sep 2025
+ 19:03:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/7] sparse-checkout: add --verbose option to 'clean'
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, newren@gmail.com, Patrick Steinhardt <ps@pks.im>
-References: <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
- <pull.1941.v3.git.1757673011.gitgitgadget@gmail.com>
- <2cde464fd4c225144489c222537e5d7549f81849.1757673011.git.gitgitgadget@gmail.com>
- <373d3441-6489-4b46-bd80-bc1ad68f0e9a@gmail.com> <xmqq348nh6mj.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqq348nh6mj.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im> <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
+In-Reply-To: <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Mon, 15 Sep 2025 20:03:29 -0600
+X-Gm-Features: AS18NWA3nuV2ET873THeotMQF_zz-ZlQca6rd595VoN_xawuDNBFYUyo4Lux85s
+Message-ID: <CAH=ZcbB0Qv=b-hdB2EVW-D-dob4NnzyWDYGEThYZm94S0V7OGg@mail.gmail.com>
+Subject: Re: [PATCH v5 0/9] Introduce Rust and announce that it will become mandatory
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, Ben Knoble <ben.knoble@gmail.com>, 
+	Christian Brabandt <cb@256bit.org>, Collin Funk <collin.funk1@gmail.com>, 
+	Eli Schwartz <eschwartz@gentoo.org>, Elijah Newren <newren@gmail.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Junio C Hamano <gitster@pobox.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>, 
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, Sam James <sam@gentoo.org>, 
+	Taylor Blau <me@ttaylorr.com>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 9/15/2025 3:12 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-> 
->> On 9/12/2025 6:30 AM, Derrick Stolee via GitGitGadget wrote:
->>> From: Derrick Stolee <stolee@gmail.com>
->>
->>> +static void list_every_file_in_dir(const char *msg,
->>> +				   const char *directory)
->>> +{
->>> +	struct strbuf path = STRBUF_INIT;
->>> +
->>> +	strbuf_addstr(&path, directory);
->>> +	fprintf(stderr, "list every file in %s\n", directory);
->>
->> I don't know how I missed that this debugging output line snuck
->> in and stayed through my testing. This line should be removed.
->>
->>> +	for_each_file_in_dir(&path, list_file_iterator, msg);
->>> +	strbuf_release(&path);
->>> +}
-> 
-> ;-)  Don't feel bad.  Nobody among other people caught it either.
-> 
-> Locally amended so no need to resubmit only to fix this.
-
-Thanks!
--Stolee
+I am currently working on a patch series that makes Rust optional and
+addresses several concerns that this series does not:
+  * Rust calling C: Makefile has no way to build or run Rust so it
+would have to call cargo test, but that doesn't work unless build.rs
+tells cargo where libgit.a is (among other things).
+  * Build tooling alignment: My build_rust.sh is called by make and
+meson which eliminates defining how to build Rust in 2 places.
+  * Cargo vs Meson: Meson is adding support for Rust and it's getting
+better, but Cargo is the canonical build system for Rust. cargo is
+released in lockstep with rustc, and we _have_ to use cargo when
+building with make because Meson won't be available in that case.
+  * Crates: Patrick's series assumes the Git codebase is _the_ crate
+    * cbindgen: Cbindgen outputs a single header file for each crate,
+with only 1 we'll have an unmanageably large auto generated header
+file.
+    * Modularity: Using multiple crates makes Git more modular. Elijah
+told me that there was some desire to make Git more modular.
+    * Cargo Dependencies: Patrick wrote his series with Meson first in
+mind which doesn't address how we'll be able to use crates from
+crates.io
+  * CI:
+    * Sparse coverage: I think there's only one target that tests his changes.
+    * With vs Without Rust: I don't see anywhere that he covers
+building with vs without Rust in CI
+  * Build integration: Meson has to have every .rs file specified
+where as the default layout of a Rust project allows Cargo to just
+know where to look for .rs files
