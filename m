@@ -1,245 +1,497 @@
-Received: from BEUP281CU002.outbound.protection.outlook.com (mail-germanynorthazon11010002.outbound.protection.outlook.com [52.101.169.2])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58EF2DE1E3
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 20:12:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.169.2
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758053560; cv=fail; b=V9OiiXk9tGAohwYcmvG4wq3PCy+WOdwiWjjUXGUGY/AIFpNQ/irNgdzGd/qtodXgQMxzHCegv+zNCInDljwnbho9AvGJLUvSrv65N3LO+6h2VpaN+dkWBhj9L/np92s4xgaIxxUxZNsl9G1lmQx4iDuiO2Xy2cEILcVA9/XsvTE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758053560; c=relaxed/simple;
-	bh=yhnoweluQphtuQg0A87Q+YXLUVl7S5uQmyD/XoRd2Gk=;
-	h=Message-ID:Date:From:Subject:To:Content-Type:MIME-Version; b=U1Jh/mEs/ZGhvm1bCy3YHkQDmojTDLstw3sF06ahGHQ3RwVnu3gXPoxEjA3ThhRvKzRlmPww8WAf+Hu+0sfD/JF7CB6np+OdAoYraZ3PfcJyUzPR9Gy4m7rrukSK0Xa48L2aFbhaPgWzl95/g2k/NzFpJBUCckJ0tL0zk6iPpyQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=innomotics.com; spf=pass smtp.mailfrom=innomotics.com; dkim=pass (2048-bit key) header.d=innomotics.com header.i=@innomotics.com header.b=C5Jsm199; arc=fail smtp.client-ip=52.101.169.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=innomotics.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=innomotics.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BAB2C2353
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 20:13:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758053612; cv=none; b=nM4+h8zeATLaadb31oyVCO0oOdf/lP1/cidke9Y4EN70w1SHOlVN2wphKUwruyhIXuMXnxRWprF4fYFSe6SJWo7XWQX03fXxwai+uuYs2JaHQLv+eYxn2RwMBb5bnRAXeScv+mScZvWsXq5To7hGIDM0cCdg9WQHZZtYMMVw/pM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758053612; c=relaxed/simple;
+	bh=5/OIGLFikf4rYlME3V8Jx/t4JIdds+g3N/a51eNvaEE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mS90B8T+Kkz2YoCZ1yn0FQNgIblK9y1Qk9MLucs0eZB0nyPW4g+h/2jjTSnxkJFY0myXz7k5+2CEcfFrtVc9DHxf8E455yOnnLL4nuK2k5skvGrsWDkfYPV+7JBjcPD06+eDcwZrVU6U+Mc93Rnk5waXpiqnjXeBjTF59jrW2BM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=a8UZEIf6; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=innomotics.com header.i=@innomotics.com header.b="C5Jsm199"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VX8xr0fgexLNYgCv7LpusAxy0rYY+mu1xlSDIkCSTdL4Q4cSIQaRyk/A+mw9UnnJTFZb6IgTUlPHE8NcKafwz400qUUJEQxHC3yKpxmzhrS1hySJrzky9VRn+JZ5oUwCqZdhIJkkK4aOmbGqWED5K/c1IwHIDQ6JUmsy+wJaYSqTKOAtgxKoCdKAen7pjLiNOGx4J/ugUpP4SCDCpFGq9UirIXSnui5JVWZZ+cGMa7oCt6t8PkOLm1TqDpekTwV9hGbl1P2S1M/k69LI10v08LyqpNOIVgtMqlvovGZPXbcW3oR877ZZzql6+590hOZaKWEqYpsPtDHCuqTmOc0E2w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xKeKX7dcnqy3XZPVMXqUfCg+6JDCyuR3NNT00mLxH84=;
- b=IztgCdbKDJDhpt81GztSXRk1Y8sVkGchbMqvOu+LiRmhhipFEzYhy2iKQ/y0xI/kiTu7yAOrVgnzFDIECqy+c3SRAC8lNVGgWWIF1Sab2nq5u0p3/1fdjZxfONyjpTAB4Lcp7fkk1avAUkm9a9ccid+qXcqk4NAn0GNVvfB9esDYnUIeDEUGvun9ZWhDEBRZ6qXrGn1uvL3VzOLE8X9LthNpcXdWRR8LTpC1q5nESl1fN0SJpGKforwX4Vkvd4xM/UCWl/HhdjaynIb+RO3zIWpa/aeRPhW0MdGavi7mYIlH/iNrLc8HFQ4TynskNVYVuzqRypBTI+ktPqCNaXcy/g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=innomotics.com; dmarc=pass action=none
- header.from=innomotics.com; dkim=pass header.d=innomotics.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=innomotics.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xKeKX7dcnqy3XZPVMXqUfCg+6JDCyuR3NNT00mLxH84=;
- b=C5Jsm199IgeiHyc2Sv0utN4Ac1rXktfh142u3tEBx9mTSd/Jag8+jIvd6M7tElcwpSrIQ1mIZVONgyQbmd/sZX8PLSKKwwvS8eOdejva0NuctRFWaTwODYACpPxxNxWFQFMHYZEnF1fhxl/vIw4HxwmmIhDo4l8RWrxJ3b7bv5jHw53qHQ0disAjMBF0PHqxmLYgPnOE+COcAKPMVl3rmEn2xTQlT647KQ+vhHLJDfsWoTOq7KQb3Oad2h4raYqTFa+66TMUrKTW6DyToxdqCDkvU36EL6McIXBBPzuRksMiFSf7ed7mED4MIZzlMKgF14BLY56y9zqZLqnwc6ds6Q==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=innomotics.com;
-Received: from FR3PPFFBD1D31FB.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d18:2::1af)
- by FR2P281MB2686.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10:65::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9115.22; Tue, 16 Sep
- 2025 20:12:33 +0000
-Received: from FR3PPFFBD1D31FB.DEUP281.PROD.OUTLOOK.COM
- ([fe80::402e:ac99:8b73:e8b5]) by FR3PPFFBD1D31FB.DEUP281.PROD.OUTLOOK.COM
- ([fe80::402e:ac99:8b73:e8b5%4]) with mapi id 15.20.9115.020; Tue, 16 Sep 2025
- 20:12:33 +0000
-Message-ID: <93cee8d0-0c1d-4329-ae93-7f900601995e@innomotics.com>
-Date: Tue, 16 Sep 2025 22:12:33 +0200
-User-Agent: Thunderbird Daily
-Content-Language: en-US
-From: "Osipov, Michael (IN IT IN)" <michael.osipov@innomotics.com>
-Subject: [Bug] Unrealiable threading support detection (on HP-UX)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="a8UZEIf6"
+Received: (qmail 102260 invoked by uid 109); 16 Sep 2025 20:13:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=5/OIGLFikf4rYlME3V8Jx/t4JIdds+g3N/a51eNvaEE=; b=a8UZEIf6LAqBaQHv4+g8eMMJlQCm76l7pp5auHQIyyWxar9kLbnqy0xoULuVc9Rfo5Z3chyDbO+t8lNYRmEmXMPmkBEOBSflr65tvfJZz/SSSCd+QYhVmtfe52Nmn1PORor94/U6c3B/z/kVL9Jzt6cJ4stuzEAsPGu6bE2lUipbZ+ViTcnqvIi7wSrCTBh1QFjDu3FNuQ6+OZVc81887OsxAnEMnqhiif6dQ0hcKNpIzbuEWw90rSJbEi8Soso4yr9YMJ3/eM7te4T1BVRGEcW2TQS3j6Gdtux19IxTeVLb+lBXVgUPOF5qPZ1z/RHfY7RZIUM8iy+k/821Pp3o1A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Sep 2025 20:13:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 166083 invoked by uid 111); 16 Sep 2025 20:13:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Sep 2025 16:13:28 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 16 Sep 2025 16:13:28 -0400
+From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BE1P281CA0248.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:b10:8b::10) To FR3PPFFBD1D31FB.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d18:2::1af)
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 01/13] color: use GIT_COLOR_* instead of numeric constants
+Message-ID: <20250916201328.GA612873@coredump.intra.peff.net>
+References: <20250916201036.GA612463@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: FR3PPFFBD1D31FB:EE_|FR2P281MB2686:EE_
-X-MS-Office365-Filtering-Correlation-Id: 80ae385c-37e1-4090-27aa-08ddf55d5f22
-X-MS-Exchange-AtpMessageProperties: SA
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?ZTNMeWtoeW1LTE96TXQvc3p6ZDJ3YVB2QzkxeTlxVTZCbStZQUNYN1Qydm0w?=
- =?utf-8?B?RWN4cTJZU3BUVSs5dTNmZTBSMkdZRWI4b242cmVZN0FSZ1RQcWIya0dEd3hB?=
- =?utf-8?B?eDk0THNmdE9oVXhZZ0YxTVd3bXhsMDFaejFjZGhvWVh5dEV5alNITHFSOGFS?=
- =?utf-8?B?YWFHMlg2MUdQRXhDUERyczQ0TmpkaTUzNGJBZ2NWcDRTcUZGZXBTV0dMNkVx?=
- =?utf-8?B?SjZKVzlpa3I0bmlHRVBpckMvRU8vc1lNOW10Z0Frbk9XUUExMi9KYzlnWTZY?=
- =?utf-8?B?RGg3bDdpRG5UZ2YvMkNCOUlUdWpMRzQrcXYrZ2ppOFk4cjRrMkQram52OXRp?=
- =?utf-8?B?eXFpSDk1ZXBBaXVtZzJyWURVYnlMNVRoYzg5aGVrU1lJQytwT2pOeWp1R21X?=
- =?utf-8?B?bm1mV0dMdmdLeVQxbmZieXNScnplNXpjOHZ5akR0d3d5NE1qTjluZDlPQ25W?=
- =?utf-8?B?bVVKeUt4bnNHUVdQck92blVzV2tSMUJSSzB0SHFmNTdOdS9GSUhXeVQyN2tG?=
- =?utf-8?B?VnBUOEM3clFJdDdHM2VCNWZHS1pkam9wRDhqazlPZHcvN3ZXT3JlUUZ1eE9R?=
- =?utf-8?B?MHU1OFZGZ1Nta0lKdS9zYjVUR3hobkNCUzB5cVpxLzhkdGhRbHpGUXhGbkQv?=
- =?utf-8?B?eTVNTnlhMlVZOG5hWWg0MzYwRWNJYVdYT2JRWWk2cVhCaFF3YUlrRnN4Qkls?=
- =?utf-8?B?N2crc2U3cGppODhRUnRpYVFNS0l3ZkNXZmNEUXVKRmFtREozUk9nMjhpTEpa?=
- =?utf-8?B?RjBna0VWOExMZXZ3NzVTUHpmUFZYM2JlNktPY0xKc3M1SWI4UmF1WW0wUC9h?=
- =?utf-8?B?ZkhTNXVaMm5JMjRqbWIzVWRGTmhyeHdxN0Y0WXlETVMvdkJsaGdTcWJNQXNH?=
- =?utf-8?B?TVRYRCtuRUp4N3h1ODZBRGZwZmlZcjgrZVI2WmJRTDVQbU9vVUhXamNZQWFJ?=
- =?utf-8?B?WjJHNkU1ZFgvQUFvWlJxbDlRdHFqRTkvK1QrRHg0TUc3L1Vnb0tJSXBGSXRh?=
- =?utf-8?B?WFdZdnRuOHNJWUJrNFVoVHhVdGk2b0ovc081RlAwcSttSlRza1pJT1kvUDdE?=
- =?utf-8?B?UEk5Ly9JNWllVmIyWlVzYStoa09nOWdiUHJZZVZqL082bk1IL3pEcHZmSHR2?=
- =?utf-8?B?Q1JrRTVNYXpVNHl1VUw3QmVObnRnQUx4L1dJbHJBSFhmRVlwVjU2S3owVG1z?=
- =?utf-8?B?cS9FUENwODFaNFB2Ni96Njh2REpWZmVJSjhVUzAzYit4bzA2Y1ZhbTN6a2Nm?=
- =?utf-8?B?UjRWMXV0UnU2TDZIdEhtWW5kc1cySk15MHQxMndsWE9HZlE3elRiME5XaU1v?=
- =?utf-8?B?Y0c5Nno1YzJXWU1CK1lvSFlyVWVnVGNsUjVLanFwdmg4aUoxRGdsVUFVK3FV?=
- =?utf-8?B?TlJocmFzbkpMZEFtVytrQjBJMUFqblBTT3ZROTZDL0dCQWNGMnlGS0NxYUc1?=
- =?utf-8?B?NWdPTkRVZ3ZVcUxmbTBnYWM4b0N6VHR0MnVjMzF1T3JvcDhlWHYzT2RsbnNW?=
- =?utf-8?B?Ymlnc0s1WHVEbTY0YnJrZTNKQ3hxdHVOYThwSEloQjF6aFBMbFNFRHdUeHhW?=
- =?utf-8?B?dGxXNjFzNHJ5ZmN2cFJEVDBDbzloQUZmMzQxUGdqTW45VGZ6VHZ3THZkZW5m?=
- =?utf-8?B?cXg2M2Y3QWh4OUFLcnR0Zy9UaXFqQm94NE9lVkxMczZ1SFhubWYwci9TOVdI?=
- =?utf-8?B?L0N4OVUrOG94UHJQSWZCTStMem5ONU9odEhEcS84UDhBU3NBanJ6dk5DUEdG?=
- =?utf-8?B?eVJWK3QvQWROdEQ3cGZ1bEtOTHNQVjQ2ZU9oRERrWGp1VFlHT2VEdzRNc0NO?=
- =?utf-8?B?dFJQcmNwT2dzZUVmcGhQNFZjOGZMcXd6SzBvVTB5c1lBNmhrS0dCVXZ3RFJE?=
- =?utf-8?B?VFhxQ0FRTTAvSnVtZ3gveUJVZXJ5RmUzc0Vpd21mTmcvNUwrSk9pK3g2ZmRh?=
- =?utf-8?Q?5da0h5tfO8A=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:FR3PPFFBD1D31FB.DEUP281.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?cUNaR0JvcE5PUThjVkZiQ25sZXY0U3ZOcE11MGxJS0tCR2pNMDErQUc0UUto?=
- =?utf-8?B?S21rOWtlZ25mdE9ZemxZcnUzR0RHeE1JL0M5Y2M2TWJ2OEx0USs4b1VzMHlR?=
- =?utf-8?B?RzNzSXJYY3RkamhVQkhuUmJTN2dJV0JpZjBncDdma0JFV1RCeVMzQm5EcGl0?=
- =?utf-8?B?blp5ZFJwd2FBb0tta05RUDZyZE1NMkQwdGE2VjF4b09iMzU4dkhJUEdLRU5G?=
- =?utf-8?B?U1BaMTRtVU1Hb2lRbWErSS9wZitwR1U2SGNQTkptQllJM0tQMjBvc013ZlRu?=
- =?utf-8?B?enJ2WVd2ZmNkcktjblJrSzFWNHNycWRHSkVqNFpXUnl2SWlyTUVqWlZQSWlX?=
- =?utf-8?B?MUV1MHJsSWRKTHRlM2FjQ2NWd2x6Wk8vYVpMUjFjUnZJS0czRE1CMU5sUU8y?=
- =?utf-8?B?R1dKam1DNUw4bUNsbEJBbGpvemtLZG8rbEtvTzJGamQySU9KVzcwU0FKR2Vl?=
- =?utf-8?B?Kys5YUF3QnNTcm44V216UllLa25vbnhOa0h2bEs1cWJ3SWZYYm9GRmJzY0l1?=
- =?utf-8?B?b2pDdUQ1Yk0vMUJLaEZRbytjT1hHU29ycDZocGRLS2ZoVzRWT1A4dnlxZmE4?=
- =?utf-8?B?V2pEVzNacWFYNnRMY2hWSFN0M1FSODNOWlRNZGtYandrNWgwTkR2TDBuTVZn?=
- =?utf-8?B?aDN2TnlmQ2xqZHpFV2RuZFhUektQOXpCOE9tOE1NSU1yU2NlRUFuTnNoMW9D?=
- =?utf-8?B?TTZLc05JWG9VMHRQUWxtbWhpcEdhM05qaHRVVkYvMDVrQStxc0dSRWtIOThQ?=
- =?utf-8?B?VzREbm5NRlpCTEsrNWVtcXFGWFdEdzNOL05nUG5sajNsdzBWVjRhc2dRZStm?=
- =?utf-8?B?K1FmNHJ0VHJRM0JjZVJSbE9jUXh4QVhhNXQ3K1o2T1JybjdXYjhLQ2ozWW8r?=
- =?utf-8?B?bEcwVlpQNlhhUiszUngrVXJkREMzTHlHdXZ2eXpCa00wV09iRHFtTVFSRGcy?=
- =?utf-8?B?M3pGakVtcmNVdEpKQWplbGtmY0JpVjBEb0JTZmljRWRGbzN2ZExWQzZIeHRI?=
- =?utf-8?B?WUVkdWY0enl6SzFyNFoySmdSTE1QUnNzZnQ0eGgyaGM5eDJmYlEvdjJTaFIr?=
- =?utf-8?B?QmpSZnptVkJZenBGdldIMU1xKysxb21vNUhzMUxyM0s3UXEwajFFdGl0b1Vv?=
- =?utf-8?B?SFFIcjNlY3A0b2NYYUU0WGN6OUlTQUdUU1QyQWhWNTJCUTR6eStsZFgwMzdB?=
- =?utf-8?B?YUhLQy9TMStwT1RBOExzeXhxN3NKVEt5Wm1qSlFXS3hRQXV3djZxcEhFbGI1?=
- =?utf-8?B?amVrMkIxelJrci85WStud2FjZnlicHRTZ2VhS096NTlsTnRXaFVmdTUwc1dO?=
- =?utf-8?B?ZWswMGtDM05OSTZ4OGhHZUttOFFMcDJUTEUvdFRkM05uQWpTZVR0WXppUTcy?=
- =?utf-8?B?TWJRZ05McDRzd1JlMmt4RGUwcVlOVUo3L24vK29VT2RMdklZYnNxcWFvcU56?=
- =?utf-8?B?R1VEVjU1RVIrQ2NvYlI1Zk01U2JxZ29wdEcrTk1kUnB0L0VmZ21ZM1hJd3BF?=
- =?utf-8?B?NEg2QWtIckhjQ293dklaaU4zWjRkR0IxeUgyYThUM2VhRWR4c1pNbzg3bURt?=
- =?utf-8?B?cUFvWU5tOVJkdDh0alA2NDhOTVdNQ0FCWjhtWGhZTXNCdHEzbkxTYUxEckh2?=
- =?utf-8?B?TGlFTlRaY0lPdVgyMjMwRzBzY0VtOHh5aWpjNVZnUklRamV5SW8xK1lqbEdD?=
- =?utf-8?B?ZVI2Szl4TjJIQWFPcEEyTm85b0U2eXNHZ3FwNVJqd0dqa21vOVdNV3A3RWg0?=
- =?utf-8?B?ZG5yRUFEcDJpUG9CUDdiNi9uNmtNU2FqbE9JcmFKdHYxaXA1UDBCbTc0S3dH?=
- =?utf-8?B?S0NwUUY4MndSTGwrbkdCTEFiNXluSDY2eEZHOEt1eXRXQXpMRmo1dm1idHc0?=
- =?utf-8?B?cTROcmhrTE1JaHN1ZDRIOTB4dmxaalVFdXhJSWxtc0RBMDB6NG16M3piNUw4?=
- =?utf-8?B?MThZV2pvSDE1djBHVFhCTDZpWGJBQjlIV0Y2SEIyYlJDNTNnMjRJckYwaDhS?=
- =?utf-8?B?cHNMKzd5ZFhITjVaaDFmNi80eW83Q2MrRUMxSlpOZE05S2NhUjM0bXlGdnhk?=
- =?utf-8?B?UjhWMW9rZmZzWWR2MDU5L3VoK3VEbDNDL1NWL2RBaDB1cjZnKzUzZlhRNmFv?=
- =?utf-8?B?UThOZkFRT2NQaDArcHI4eldWcTJUbUpLY1V1Uml3b0NjOW1rdnRLSVZYb0lP?=
- =?utf-8?B?ZGc9PQ==?=
-X-OriginatorOrg: innomotics.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 80ae385c-37e1-4090-27aa-08ddf55d5f22
-X-MS-Exchange-CrossTenant-AuthSource: FR3PPFFBD1D31FB.DEUP281.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2025 20:12:33.5033
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 698c6ffb-74e3-4a84-be68-f22d8d3201a3
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: shXDsrWPCqssFDmsItyv/Wt3rnVjbRO/7EShrJrRijpxJiEJcFWQQiQtMfJ/LMmx7imb29sCe53qs2LMN0gJHWKsYhz0iri7MtQAlDeUI8o=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: FR2P281MB2686
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250916201036.GA612463@coredump.intra.peff.net>
 
-Hi folks,
+Long ago Git's decision to show color for a subsytem was stored in a
+tri-state variable: it could be true (1), false (0), or unknown (-1).
+But since daa0c3d971 (color: delay auto-color decision until point of
+use, 2011-08-17) we want to carry around a new state, "auto", which
+bases the decision on the tty-ness of stdout (rather than collapsing
+that "auto" state to a true/false immediately).
 
-I have stumbled upon an issue on HP-UX where the detection of threading 
-(pthreads) is incorrect or unreliable. There are actually two issues: 
-incorrect display and incorrect detection.
+That commit introduced a set of GIT_COLOR_* defines to represent each
+state: UNKNOWN, ALWAYS, NEVER, and AUTO. But it only used the AUTO
+value, and left alone code using bare 0/1/-1 values. And of course since
+then we've grown many new spots that use those bare values.
 
-Consider:
-> root@deblndw001x:/var/tmp/ports/work/git-2.51.0
-> # CPPFLAGS="$CPPFLAGS -D_XOPEN_SOURCE=600" $CONFIGURE --with-editor=vim --with-zlib=$PREFIX   --with-perl=/usr/bin/perl --with-iconv=$PREFIX --with-libpcre2=$PREFIX   --with-gitconfig=$SYSCONFDIR/gitconfig --with-gitattributes=$SYSCONFDIR/gitattributes --without-tcltk --with-lib=lib/hpux32
-> configure: Setting lib to 'lib/hpux32'
-> configure: Will try -pthread then -lpthread to enable POSIX Threads.
-> ...
-> checking for POSIX Threads with ''... yes
-> configure: creating ./config.status
-> config.status: creating config.mak.autogen
-> config.status: executing config.mak.autogen commands
+Let's switch all of these to use the named constants. That should make
+the code a bit easier to read, as it is more obvious that we're
+representing a color decision.
 
-Looking at configure.ac the message "Will try..." is not correct because 
-much more is tried:
-> for opt in -mt -pthread -lpthread; do
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ add-interactive.c     |  9 +++++----
+ advice.c              |  2 +-
+ builtin/add.c         |  2 +-
+ builtin/am.c          |  4 ++--
+ builtin/branch.c      |  2 +-
+ builtin/clean.c       |  2 +-
+ builtin/commit.c      |  2 +-
+ builtin/config.c      | 12 ++++++------
+ builtin/grep.c        |  2 +-
+ builtin/push.c        |  2 +-
+ builtin/range-diff.c  |  3 ++-
+ builtin/show-branch.c |  2 +-
+ color.c               | 12 ++++++------
+ diff.c                |  6 +++---
+ grep.h                |  2 +-
+ parse-options-cb.c    |  2 +-
+ pretty.c              |  2 +-
+ ref-filter.h          |  2 +-
+ sideband.c            |  4 ++--
+ transport.c           |  2 +-
+ wt-status.c           |  6 +++---
+ 21 files changed, 42 insertions(+), 40 deletions(-)
 
-So either the message needs to be extended *or* the values removed from 
-the message to avoid updating both.
+diff --git a/add-interactive.c b/add-interactive.c
+index 4604c69140..34c020673e 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -42,7 +42,7 @@ static int check_color_config(struct repository *r, const char *var)
+ 	int ret;
+ 
+ 	if (repo_config_get_value(r, var, &value))
+-		ret = -1;
++		ret = GIT_COLOR_UNKNOWN;
+ 	else
+ 		ret = git_config_colorbool(var, value);
+ 
+@@ -51,7 +51,8 @@ static int check_color_config(struct repository *r, const char *var)
+ 	 * the value parsed by git_color_config(), which may not have been
+ 	 * called by the main command.
+ 	 */
+-	if (ret < 0 && !repo_config_get_value(r, "color.ui", &value))
++	if (ret == GIT_COLOR_UNKNOWN &&
++	    !repo_config_get_value(r, "color.ui", &value))
+ 		ret = git_config_colorbool("color.ui", value);
+ 
+ 	return want_color(ret);
+@@ -130,8 +131,8 @@ void clear_add_i_state(struct add_i_state *s)
+ 	FREE_AND_NULL(s->interactive_diff_filter);
+ 	FREE_AND_NULL(s->interactive_diff_algorithm);
+ 	memset(s, 0, sizeof(*s));
+-	s->use_color_interactive = -1;
+-	s->use_color_diff = -1;
++	s->use_color_interactive = GIT_COLOR_UNKNOWN;
++	s->use_color_diff = GIT_COLOR_UNKNOWN;
+ }
+ 
+ /*
+diff --git a/advice.c b/advice.c
+index e5f0ff8449..a00aaad9de 100644
+--- a/advice.c
++++ b/advice.c
+@@ -7,7 +7,7 @@
+ #include "help.h"
+ #include "string-list.h"
+ 
+-static int advice_use_color = -1;
++static int advice_use_color = GIT_COLOR_UNKNOWN;
+ static char advice_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_RESET,
+ 	GIT_COLOR_YELLOW,	/* HINT */
+diff --git a/builtin/add.c b/builtin/add.c
+index 740c7c4581..4cd3d183f9 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -200,7 +200,7 @@ static int edit_patch(struct repository *repo,
+ 
+ 	argc = setup_revisions(argc, argv, &rev, NULL);
+ 	rev.diffopt.output_format = DIFF_FORMAT_PATCH;
+-	rev.diffopt.use_color = 0;
++	rev.diffopt.use_color = GIT_COLOR_NEVER;
+ 	rev.diffopt.flags.ignore_dirty_submodules = 1;
+ 	out = xopen(file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+ 	rev.diffopt.file = xfdopen(out, "w");
+diff --git a/builtin/am.c b/builtin/am.c
+index 6073d64ae9..277c2e7937 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1408,7 +1408,7 @@ static void write_commit_patch(const struct am_state *state, struct commit *comm
+ 	rev_info.no_commit_id = 1;
+ 	rev_info.diffopt.flags.binary = 1;
+ 	rev_info.diffopt.flags.full_index = 1;
+-	rev_info.diffopt.use_color = 0;
++	rev_info.diffopt.use_color = GIT_COLOR_NEVER;
+ 	rev_info.diffopt.file = fp;
+ 	rev_info.diffopt.close_file = 1;
+ 	add_pending_object(&rev_info, &commit->object, "");
+@@ -1441,7 +1441,7 @@ static void write_index_patch(const struct am_state *state)
+ 	rev_info.disable_stdin = 1;
+ 	rev_info.no_commit_id = 1;
+ 	rev_info.diffopt.output_format = DIFF_FORMAT_PATCH;
+-	rev_info.diffopt.use_color = 0;
++	rev_info.diffopt.use_color = GIT_COLOR_NEVER;
+ 	rev_info.diffopt.file = fp;
+ 	rev_info.diffopt.close_file = 1;
+ 	add_pending_object(&rev_info, &tree->object, "");
+diff --git a/builtin/branch.c b/builtin/branch.c
+index fa5ced452e..029223df7b 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -46,7 +46,7 @@ static struct object_id head_oid;
+ static int recurse_submodules = 0;
+ static int submodule_propagate_branches = 0;
+ 
+-static int branch_use_color = -1;
++static int branch_use_color = GIT_COLOR_UNKNOWN;
+ static char branch_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_RESET,
+ 	GIT_COLOR_NORMAL,       /* PLAIN */
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 38b67923a6..0ac90a3feb 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -64,7 +64,7 @@ static const char *color_interactive_slots[] = {
+ 	[CLEAN_COLOR_RESET]  = "reset",
+ };
+ 
+-static int clean_use_color = -1;
++static int clean_use_color = GIT_COLOR_UNKNOWN;
+ static char clean_colors[][COLOR_MAXLEN] = {
+ 	[CLEAN_COLOR_ERROR] = GIT_COLOR_BOLD_RED,
+ 	[CLEAN_COLOR_HEADER] = GIT_COLOR_BOLD,
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 8a5dee384d..544603a9c7 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1016,7 +1016,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		status_printf_ln(s, GIT_COLOR_NORMAL, "%s", ""); /* Add new line for clarity */
+ 
+ 		saved_color_setting = s->use_color;
+-		s->use_color = 0;
++		s->use_color = GIT_COLOR_NEVER;
+ 		committable = run_status(s->fp, index_file, prefix, 1, s);
+ 		s->use_color = saved_color_setting;
+ 		string_list_clear_func(&s->change, change_data_free);
+diff --git a/builtin/config.c b/builtin/config.c
+index 59fb113b07..c3da3ae210 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -594,23 +594,23 @@ static int get_colorbool(const struct config_location_options *opts,
+ {
+ 	struct get_colorbool_config_data data = {
+ 		.get_colorbool_slot = var,
+-		.get_colorbool_found = -1,
+-		.get_diff_color_found = -1,
+-		.get_color_ui_found = -1,
++		.get_colorbool_found = GIT_COLOR_UNKNOWN,
++		.get_diff_color_found = GIT_COLOR_UNKNOWN,
++		.get_color_ui_found = GIT_COLOR_UNKNOWN,
+ 	};
+ 
+ 	config_with_options(git_get_colorbool_config, &data,
+ 			    &opts->source, the_repository,
+ 			    &opts->options);
+ 
+-	if (data.get_colorbool_found < 0) {
++	if (data.get_colorbool_found == GIT_COLOR_UNKNOWN) {
+ 		if (!strcmp(data.get_colorbool_slot, "color.diff"))
+ 			data.get_colorbool_found = data.get_diff_color_found;
+-		if (data.get_colorbool_found < 0)
++		if (data.get_colorbool_found == GIT_COLOR_UNKNOWN)
+ 			data.get_colorbool_found = data.get_color_ui_found;
+ 	}
+ 
+-	if (data.get_colorbool_found < 0)
++	if (data.get_colorbool_found == GIT_COLOR_UNKNOWN)
+ 		/* default value if none found in config */
+ 		data.get_colorbool_found = GIT_COLOR_AUTO;
+ 
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 5df6537333..1d97eb2a2a 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -1091,7 +1091,7 @@ int cmd_grep(int argc,
+ 	if (show_in_pager == default_pager)
+ 		show_in_pager = git_pager(the_repository, 1);
+ 	if (show_in_pager) {
+-		opt.color = 0;
++		opt.color = GIT_COLOR_NEVER;
+ 		opt.name_only = 1;
+ 		opt.null_following_name = 1;
+ 		opt.output_priv = &path_list;
+diff --git a/builtin/push.c b/builtin/push.c
+index d0794b7b30..0962b122c7 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -27,7 +27,7 @@ static const char * const push_usage[] = {
+ 	NULL,
+ };
+ 
+-static int push_use_color = -1;
++static int push_use_color = GIT_COLOR_UNKNOWN;
+ static char push_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_RESET,
+ 	GIT_COLOR_RED,	/* ERROR */
+diff --git a/builtin/range-diff.c b/builtin/range-diff.c
+index a563abff5f..0d51ddd623 100644
+--- a/builtin/range-diff.c
++++ b/builtin/range-diff.c
+@@ -6,6 +6,7 @@
+ #include "parse-options.h"
+ #include "range-diff.h"
+ #include "config.h"
++#include "color.h"
+ 
+ 
+ static const char * const builtin_range_diff_usage[] = {
+@@ -66,7 +67,7 @@ int cmd_range_diff(int argc,
+ 
+ 	/* force color when --dual-color was used */
+ 	if (!simple_color)
+-		diffopt.use_color = 1;
++		diffopt.use_color = GIT_COLOR_ALWAYS;
+ 
+ 	/* If `--diff-merges` was specified, imply `--merges` */
+ 	if (diff_merges_arg.nr) {
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 1ab7db9d2c..970e78bc2d 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -29,7 +29,7 @@ static const char*const show_branch_usage[] = {
+     NULL
+ };
+ 
+-static int showbranch_use_color = -1;
++static int showbranch_use_color = GIT_COLOR_UNKNOWN;
+ 
+ static struct strvec default_args = STRVEC_INIT;
+ 
+diff --git a/color.c b/color.c
+index 7df8862c71..22aa453fef 100644
+--- a/color.c
++++ b/color.c
+@@ -373,19 +373,19 @@ int git_config_colorbool(const char *var, const char *value)
+ {
+ 	if (value) {
+ 		if (!strcasecmp(value, "never"))
+-			return 0;
++			return GIT_COLOR_NEVER;
+ 		if (!strcasecmp(value, "always"))
+-			return 1;
++			return GIT_COLOR_ALWAYS;
+ 		if (!strcasecmp(value, "auto"))
+ 			return GIT_COLOR_AUTO;
+ 	}
+ 
+ 	if (!var)
+-		return -1;
++		return GIT_COLOR_UNKNOWN;
+ 
+ 	/* Missing or explicit false to turn off colorization */
+ 	if (!git_config_bool(var, value))
+-		return 0;
++		return GIT_COLOR_NEVER;
+ 
+ 	/* any normal truth value defaults to 'auto' */
+ 	return GIT_COLOR_AUTO;
+@@ -418,15 +418,15 @@ int want_color_fd(int fd, int var)
+ 	if (fd < 1 || fd >= ARRAY_SIZE(want_auto))
+ 		BUG("file descriptor out of range: %d", fd);
+ 
+-	if (var < 0)
++	if (var == GIT_COLOR_UNKNOWN)
+ 		var = git_use_color_default;
+ 
+ 	if (var == GIT_COLOR_AUTO) {
+ 		if (want_auto[fd] < 0)
+ 			want_auto[fd] = check_auto_color(fd);
+ 		return want_auto[fd];
+ 	}
+-	return var;
++	return var == GIT_COLOR_ALWAYS;
+ }
+ 
+ int git_color_config(const char *var, const char *value, void *cb UNUSED)
+diff --git a/diff.c b/diff.c
+index 51603117a9..64a4bd23ea 100644
+--- a/diff.c
++++ b/diff.c
+@@ -57,7 +57,7 @@ static int diff_detect_rename_default;
+ static int diff_indent_heuristic = 1;
+ static int diff_rename_limit_default = 1000;
+ static int diff_suppress_blank_empty;
+-static int diff_use_color_default = -1;
++static int diff_use_color_default = GIT_COLOR_UNKNOWN;
+ static int diff_color_moved_default;
+ static int diff_color_moved_ws_default;
+ static int diff_context_default = 3;
+@@ -5278,7 +5278,7 @@ static int diff_opt_color_words(const struct option *opt,
+ 	struct diff_options *options = opt->value;
+ 
+ 	BUG_ON_OPT_NEG(unset);
+-	options->use_color = 1;
++	options->use_color = GIT_COLOR_ALWAYS;
+ 	options->word_diff = DIFF_WORDS_COLOR;
+ 	options->word_regex = arg;
+ 	return 0;
+@@ -5600,7 +5600,7 @@ static int diff_opt_word_diff(const struct option *opt,
+ 		if (!strcmp(arg, "plain"))
+ 			options->word_diff = DIFF_WORDS_PLAIN;
+ 		else if (!strcmp(arg, "color")) {
+-			options->use_color = 1;
++			options->use_color = GIT_COLOR_ALWAYS;
+ 			options->word_diff = DIFF_WORDS_COLOR;
+ 		}
+ 		else if (!strcmp(arg, "porcelain"))
+diff --git a/grep.h b/grep.h
+index 926c0875c4..43195baab3 100644
+--- a/grep.h
++++ b/grep.h
+@@ -198,7 +198,7 @@ struct grep_opt {
+ 		[GREP_COLOR_SEP] = GIT_COLOR_CYAN, \
+ 	}, \
+ 	.only_matching = 0, \
+-	.color = -1, \
++	.color = GIT_COLOR_UNKNOWN, \
+ 	.output = std_output, \
+ }
+ 
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index 50c8afe412..e13e0a9e33 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -55,7 +55,7 @@ int parse_opt_color_flag_cb(const struct option *opt, const char *arg,
+ 	if (!arg)
+ 		arg = unset ? "never" : (const char *)opt->defval;
+ 	value = git_config_colorbool(NULL, arg);
+-	if (value < 0)
++	if (value == GIT_COLOR_UNKNOWN)
+ 		return error(_("option `%s' expects \"always\", \"auto\", or \"never\""),
+ 			     opt->long_name);
+ 	*(int *)opt->value = value;
+diff --git a/pretty.c b/pretty.c
+index cee96b9d94..0521deadc0 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1462,7 +1462,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 		} else {
+ 			int ret = parse_color(sb, placeholder, c);
+ 			if (ret)
+-				c->auto_color = 0;
++				c->auto_color = GIT_COLOR_NEVER;
+ 			/*
+ 			 * Otherwise, we decided to treat %C<unknown>
+ 			 * as a literal string, and the previous
+diff --git a/ref-filter.h b/ref-filter.h
+index f22ca94b49..644f5c567c 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -111,7 +111,7 @@ struct ref_format {
+ 	.exclude = STRVEC_INIT, \
+ }
+ #define REF_FORMAT_INIT {             \
+-	.use_color = -1,              \
++	.use_color = GIT_COLOR_UNKNOWN, \
+ }
+ 
+ /*  Macros for checking --merged and --no-merged options */
+diff --git a/sideband.c b/sideband.c
+index 8f15b98a65..3ac87148b9 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -29,14 +29,14 @@ static struct keyword_entry keywords[] = {
+ /* Returns a color setting (GIT_COLOR_NEVER, etc). */
+ static int use_sideband_colors(void)
+ {
+-	static int use_sideband_colors_cached = -1;
++	static int use_sideband_colors_cached = GIT_COLOR_UNKNOWN;
+ 
+ 	const char *key = "color.remote";
+ 	struct strbuf sb = STRBUF_INIT;
+ 	const char *value;
+ 	int i;
+ 
+-	if (use_sideband_colors_cached >= 0)
++	if (use_sideband_colors_cached != GIT_COLOR_UNKNOWN)
+ 		return use_sideband_colors_cached;
+ 
+ 	if (!repo_config_get_string_tmp(the_repository, key, &value))
+diff --git a/transport.c b/transport.c
+index 6ac8aa402b..ea0be4503c 100644
+--- a/transport.c
++++ b/transport.c
+@@ -30,7 +30,7 @@
+ #include "color.h"
+ #include "bundle-uri.h"
+ 
+-static int transport_use_color = -1;
++static int transport_use_color = GIT_COLOR_UNKNOWN;
+ static char transport_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_RESET,
+ 	GIT_COLOR_RED		/* REJECTED */
+diff --git a/wt-status.c b/wt-status.c
+index 21dabab77d..8ffe6d3988 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -148,7 +148,7 @@ void wt_status_prepare(struct repository *r, struct wt_status *s)
+ 	memcpy(s->color_palette, default_wt_status_colors,
+ 	       sizeof(default_wt_status_colors));
+ 	s->show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
+-	s->use_color = -1;
++	s->use_color = GIT_COLOR_UNKNOWN;
+ 	s->relative_paths = 1;
+ 	s->branch = refs_resolve_refdup(get_main_ref_store(the_repository),
+ 					"HEAD", 0, NULL, NULL);
+@@ -1165,7 +1165,7 @@ static void wt_longstatus_print_verbose(struct wt_status *s)
+ 	 * before.
+ 	 */
+ 	if (s->fp != stdout) {
+-		rev.diffopt.use_color = 0;
++		rev.diffopt.use_color = GIT_COLOR_NEVER;
+ 		wt_status_add_cut_line(s);
+ 	}
+ 	if (s->verbose > 1 && s->committable) {
+@@ -2155,7 +2155,7 @@ static void wt_shortstatus_print(struct wt_status *s)
+ 
+ static void wt_porcelain_print(struct wt_status *s)
+ {
+-	s->use_color = 0;
++	s->use_color = GIT_COLOR_NEVER;
+ 	s->relative_paths = 0;
+ 	s->prefix = NULL;
+ 	s->no_gettext = 1;
+-- 
+2.51.0.527.g34bc42dacd
 
-The output tells us that pthread support is in libc since no library is 
-required. Let's try:
-> # git clone https://github.com/freebsd/freebsd-src.git
-> Cloning into 'freebsd-src'...
-> error: cannot create async thread: Function is not available
-> fatal: fetch-pack: unable to fork off sideband demultiplexer
-
-Doesn't work. HP-UX requires either -lphtread or better -mt.
-
-> # diff configure.ac.orig configure.ac
-> --- configure.ac.orig   2025-09-16 18:05:44 +0200
-> +++ configure.ac        2025-09-16 18:05:55 +0200
-> @@ -1272,7 +1272,7 @@
->    # trigger a warning about an unused flag). Hence if we checked for
->    # "-mt" before "" we would end up picking it. But unfortunately this
->    # would then trigger compiler warnings on every single file we compile.
-> -  for opt in "" -mt -pthread -lpthread; do
-> +  for opt in -mt -pthread -lpthread; do
->       old_CFLAGS="$CFLAGS"
->       old_LIBS="$LIBS"
->       case "$opt" in
-
-does the trick. But why did it apparently work during configuration?.. 
-and here is now the bug:
-> configure:8609: checking for POSIX Threads with ''
-> configure:8639: /opt/aCC/bin/aCC -AC99 -AC99 -o conftest  +We901 -I/opt/ports/include -D_XOPEN_SOURCE=600 -L/opt/ports/lib/hpux32 conftest.c  -lintl >&5
-> "conftest.c", line 45: warning #2111-D: statement is unreachable
->     return 0;
->     ^
-> 
-> configure:8639: $? = 0
-> configure:8641: result: yes
-
-$LIBS is passed and libs contain -lintl. GNU gettext nowaways (since 
-0.23) links by default against libpthread, so it is a transitive 
-dependency and goes unnoticed. The manpage for pthread says the following:
->       A multithreaded application must define the appropriate POSIX revision
->       level (199506) at compile time and link against the pthread library
->       with -lpthread.  For example:
-> 
->            cc -D_POSIX_C_SOURCE=199506L -o myapp myapp.c -lpthread
-> 
->       All program sources must also include the header file <pthread.h>.
-> 
->       Note: If -lc is explicitly specified in the link line, then it must be
->       after the -lpthread.  Refer to pthread_stubs(5) for more details.
-
-So, git and everything in libexec *must* be linked with -mt otherwise it 
-will fail at runtime.
-
-To sum up, we have two bugs:
-* Incorrect display of the values to tried (./configure --help is 
-incorrect as well)
-* Incorrect detection during configuration
-
-As a workaround I can pass "--enable-pthreads=-mt", but I'd rather 
-either have no threading or correct threading by default, but not 
-something broken at runtime.
-
-Let me know what you think!
-
-Michael
-
-PS: FWIW, I have reported a similar issue for MIT Kerberos with GNU 
-gettext and Cyrus SASL today: 
-https://mailman.mit.edu/pipermail/kerberos/2025-September/023286.html
