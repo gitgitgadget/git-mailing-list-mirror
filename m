@@ -1,106 +1,80 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FC93016E6
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 16:49:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40579125A0
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 16:49:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758041358; cv=none; b=L3BxSlgyCxjKuZRZCh3vXpYWTDv90uDx2CcZNuTZvqGD+ukOk+GsrkElTqXR9zVyYwtogqc09fwhlVJfZA5lVFB7mqQWPf+FC6J6ncHszS4PvVczBLYB3Mf5n6EIoL+JBUc5+IhyxYy3ZlbaApRn8ALp1vFNftzcL6Ai2f4XzqI=
+	t=1758041365; cv=none; b=aoT1R3Htz16Zbri6RBrfJ9HYyepoGSZY97GLf5guB8rBzUzSKcom9LJ383Dr7IzJK909RniuqQabwmqKY7DS27AJiZ6/QXJk5tRudMhA7Ply2/krAcm5FOU4ZSsYGao5IVDct7qys+xStPv3tJUN4RYlKPnjpJxwD8zVFDObBoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758041358; c=relaxed/simple;
-	bh=2m46dIVIgbbrN8fjb+ww1F031l7NzlGTl2cTRAwhhig=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IsdwiQnjE0Z5NHVW7A5bcHBtNwiyAmcc+nGLmGqTLfDGs/P/abG4lVsjgjoRYAgL63JdbnqX1Bjqnlg2XWFNNUMkdq4A2hTxtOivYTw2z9bbA+mR2YoNrdYEygEyyg1cH3refKKu86VlvT1+tLKgsph6CEayDmT1WOAncPKREH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XGhluWTi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CFB8yHKA; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758041365; c=relaxed/simple;
+	bh=zsbvwTp9TOK8t7oNhe+7coTSX6i1r0qnZTR1grRqwFQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nf/CCht1u+FgeNXWWOJkl+GfY09kRRztzd5IdEMRiY6hfy7Sa3vV2K8X3dqWAy3eemEPHmdYnhiBZS/HCARFGyKfnqMmx/s14CUdfBQ3rufMOLzcUaz+SWSZyVbojnoQICVDahW4kUpa0oknWdFdmMNcJYS6i33bWPaAS52tbfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Rk6Z+xf+; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XGhluWTi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CFB8yHKA"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5347014001B5;
-	Tue, 16 Sep 2025 12:49:13 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 16 Sep 2025 12:49:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758041353; x=1758127753; bh=6vlc+U1iea
-	IUuae/4yzV+3UXLyehAFa0MdDM7pYES+g=; b=XGhluWTiflm/Ufyhtp56IqsgwV
-	bYnJUtrbbLtJhaypuDCazxxN/4Gb97ygVokzEvxyuZGX4VioEVByrdQ+bDouwSxY
-	F2fbI6mVwu6hkZf6fg7ZsoTb2OCYeL+VEYMDvlwmbjHx/XR0MwYaxAvLKRWRQ8e9
-	yfY6O1mU4ALKZUIEQoQ+QaOTJ7xt+ZytMv6Vi4eqP0vhpUrcEdws568BZ8VvSn/w
-	sJ5C2wqV7xdBV1K4ujzE4bbZvMFSNTGFoTCgUr7NpziUVWjq3PyOGLT2fUHEmMq0
-	10E6hY+/6THfkNMNurVf0siDT/7byL7OY7g1PO2aIqYVj5iCgjHZxuXCow4A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758041353; x=1758127753; bh=6vlc+U1ieaIUuae/4yzV+3UXLyehAFa0MdD
-	M7pYES+g=; b=CFB8yHKAx/3jhoPe36bGUfi79wqE+ujq7lzjlvptCWXDhydxPCp
-	qpavfR1esnjsg3G2lprMrpcejhRQQmtpJ7eY+UiqlSgoiaKBADgW3kcBGI1wzg5d
-	Z2KFI7pDYs2Rg3MtdUK48p66udpaw4JI2WpLbS6KKCNvoKKQa/GBqWirIuepZ/wV
-	tgnzUXmyX3aQ24bsAMdp8dWyO/wGIrupsenftMXxYJ7yecM4bGhiFV1eduyIKQsd
-	ttNlTSaN6smK96cAYgbgjJviOtijdFLGONl1GLq8OA6Me4aC4hCyA+cLQreUCBjF
-	XljQumHO/KSi25hynBcrFJzek4pNmHoGWrA==
-X-ME-Sender: <xms:CZXJaD87aeSpcRcsmUVVVcklvlV8QMFuvW3d4CX5T5WnsmUs_Khyfw>
-    <xme:CZXJaC_cmkCgdfQHTS3GauVk2WwF9ZHTRDfV8GDs0bHkUOZQKymET5BqniWDZNtRG
-    Z0iwx42fhw3I8EaRQ>
-X-ME-Received: <xmr:CZXJaKd94ElVMS8a1eYW-OgPlU8bFYqth2n-rZ52guvWMgyI0catyyodqPDS3gIBxhrFcu0Cf3eP9n3vcWl7SdIvcCsB6a3sYxZ1vAw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeguddtlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
-    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhn
-    ohgslhgvodhgihhthhhusgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:CZXJaLEFzzdpwNnwhrbSJBFXrjjTzHWGW-e-f6pYxDUytgrdTNRGUw>
-    <xmx:CZXJaIfz_4lGtNLXgZmtKijrA6pKpKPfZXgTZkyZEF_XhxN56JrPtQ>
-    <xmx:CZXJaFEEDbf6a_cJnIoKQfilzFAAy-opBffyvUCibzT3zI-SkAm-7Q>
-    <xmx:CZXJaBVdRj65ULYIHAs14gCs6JgXp5lzWezCgLcK7O31GUztHLsgMQ>
-    <xmx:CZXJaAZ2IwURMigmg07NiIIrf1LX7aq1DyGSDepAY6rJo27bE53Msjia>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Sep 2025 12:49:12 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 0/4] Teach git-stash to use --index from config
-In-Reply-To: <cover.1757982870.git.ben.knoble+github@gmail.com> (D. Ben
-	Knoble's message of "Mon, 15 Sep 2025 20:37:33 -0400")
-References: <20250510183358.36806-1-ben.knoble+github@gmail.com>
-	<cover.1757982870.git.ben.knoble+github@gmail.com>
-Date: Tue, 16 Sep 2025 09:49:11 -0700
-Message-ID: <xmqq8qieny0o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Rk6Z+xf+"
+Received: (qmail 100473 invoked by uid 109); 16 Sep 2025 16:49:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=zsbvwTp9TOK8t7oNhe+7coTSX6i1r0qnZTR1grRqwFQ=; b=Rk6Z+xf+k6zC3GJNBinCZiwcaAF1dBz15xjUopC4pJVeDIMJ5+eAL+XjQnuj7m1qjWoK8qkVdEoOo6Bqma9ogZR/EBREFr8qG2/6c2P7h0jdbXr7ywZRaHifh8PY5LpFFtJDm/UA0VFyq61wBLCVHFxoUMUkghUHjEqq6vi9ocr/K1gLznH1XfRmz6R5gnTsbCcbf8owphKfmzpPFynzqKW9ltJ3Y5WAN13vQUqEalYsv1Xh9IoSNh7bZ+7Rvl8W7eXsa+FeeNDfPpPRYO7+3mXC/Av5/n0dP0jos1SInf6n9Z4+lFPaXrSFlLEwk6vEzqqRLS3Tj8ldnP4dCKWt2g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Sep 2025 16:49:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 164029 invoked by uid 111); 16 Sep 2025 16:49:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Sep 2025 12:49:12 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 16 Sep 2025 12:49:12 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Sep 2025, #06; Mon, 15)
+Message-ID: <20250916164912.GA15474@coredump.intra.peff.net>
+References: <xmqqtt13frqm.fsf@gitster.g>
+ <aMkJVMbSmeA4cIAy@pks.im>
+ <xmqqzfaunzjo.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzfaunzjo.fsf@gitster.g>
 
-"D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
+On Tue, Sep 16, 2025 at 09:16:11AM -0700, Junio C Hamano wrote:
 
-> With stash.index=true, git-stash(1) command now tries to reinstate the
-> index by default in the "apply" and "pop" modes. Not doing so creates a
-> common trap: "git stash apply" is not the reverse of "git stash push"
-> because carefully staged indices are lost and have to be manually
-> recreated. OTOH, this mode is not always desirable and may create more
-> conflicts when applying stashes. Use "--no-index" to disable this behavior.
+> As this makes it necessary for that file to eventually include an
+> extra header, it sort of makes sense.  I am more wondering if it
+> should be a separate commit (i.e. give it a proper log message
+> instead of fixup!).  If we were to squash, we would need to mention
+> why a seemingly unnecessary change is included.  "In anticipation of
+> another topic that adds a call to function Y, whose definition this
+> topic shuffles around and makes it necessary for its callers to
+> include header X, we pre-emptively include header X that will become
+> needed for the other topic to use function Y when merged with this
+> topic".  I agree that is certainly awkward.
+> 
+> Adding the extra include to the other topic is not any cleaner.  It
+> didn't have to include that header to make calls to some functions,
+> and it is only because another topic shuffled things around that
+> made it necessary.  "In anticipation of another topic shuffling
+> headers around, we pre-emptively include header X that will become
+> needed to use function Y when merged with the other topic" would be
+> such an extra commit would say.  That may be slightly less awkward
+> but it still is so.
 
-I've read the patches and I think I can agree with all the changes
-proposed.  We might eventually flip the default, but we do not truly
-know until we unleash the version with choices to end users.
+I think adding the fix to ps/packfile-store is reasonably clean. It is
+subtly depending on a header file having included repository.h, and that
+assumption is broken by the other topic. But it was always a slightly
+dubious assumption.
 
-I agree with Phillip's comment on minimum tests to ensure that the
-interaction between configuration variables and the command option
-is sane.
+That said, it is not really that big an issue and I am fine with any
+fix. If you want to document how the history unfolded, then I think an
+evil merge shows that (neither topic had a problem on its own, but when
+merged we needed to adjust the result). And it is probably the least
+amount of work. ;)
 
-Thanks.
+-Peff
