@@ -1,93 +1,202 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D15431BC80
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 20:39:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E6AD1F419A
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 20:41:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758055143; cv=none; b=EvjfHNEuWVEbzsRlvpYti8j6YjQiUCj3B3qbIXJhqJUsAjGmDvEsdTLfBVzTy94HCbpREuQ+C2Em+ni6uQAgUhXiC1tZDFW0aa50GT/spLIY7SL2HuAv0xQN3YlLlpQ6BmEssYhpk4r/rSLznGnRvxdWNjw5yKjKnB6fOi4fbFI=
+	t=1758055302; cv=none; b=iY3xM70oT7+0AtDj0jlEyYo91bNVBZwFLfqeO6mTDm4b9ktRA+7Y11qrDfhH8mxeeQ0crOYhEmIrN0Cd7gWqR7DYLUtYB3bPePjMRoYNy8do5FA5k5/KiqFp/37RKB/mp9b5bX0aPGO0yM6/wT3orfXL6Do80HrqleNQgjQ0WrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758055143; c=relaxed/simple;
-	bh=b0VaKVrAh/5ayYrGE1BzFNqLic6AHINJyO7wMECwVAo=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=hNdV4BZIAnxijZPX3yKiLvss2p6zwoX8BKS02s98FoIFTlI3XlFwXggsJE+cRWY1RHh2jPVVbE4ogUmOYNCvhRF/HVQ0LMUNhd+CRXdFL6my6Fv1Ltd9Rr3OqvvKvwyOQZj2pIf/o+7Gb//qeIqNF5uBRXf9vVhXcXwGCHdxCnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EoWtFdYK; arc=none smtp.client-ip=209.85.128.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758055302; c=relaxed/simple;
+	bh=wX3gbG/Yc0DfDrlzTJvKgtitBrWiKSbPKc63NKGgza0=;
+	h=Message-ID:Date:MIME-Version:Subject:From:References:To:
+	 In-Reply-To:Content-Type; b=fFLqKyWvg3ZGByAG/nyir7IEOgw/ZugJJZsxZ3Q4f5LGMm5tZS3RmmdH+CfWA/cgdCuyzHjfsfCnAlbYR4NXhWWA+3wx5H4WcDIhUX4xa50XrgQvr/cqwDZUSN0j309PUCQ2SzEtKwbuhDKSc4Y/g26HdeLrRfdMIDBfrK6v/ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=online.fr; spf=pass smtp.mailfrom=online.fr; dkim=pass (2048-bit key) header.d=online.fr header.i=@online.fr header.b=AvFygiXG; arc=none smtp.client-ip=212.27.42.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=online.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=online.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EoWtFdYK"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-71d6083cc69so56958777b3.2
-        for <git@vger.kernel.org>; Tue, 16 Sep 2025 13:39:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758055141; x=1758659941; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pWhgdy6OHs8LwjhNOwGE76s5DyrP7smrIq4Fgh6CWUs=;
-        b=EoWtFdYKGml4YQiwh4YU4C/wgQdc1brVmKxtVtQnHd8xZ7TwGeDj9FeKuGRCR1ip62
-         WaEtqOeYDjnr6xPb7Kz7HyLaBATeK6mdoFoZeLyITVdxQdpln+0nIjCpKTsAeProIhXr
-         8tNOAaE89t/7JMkvDSrt8w61SeslBMR/q9XksmjOakCu0jVpdk9ccJB08A9l9k0GLQ2M
-         FypXBjIBaToOf0HQQonPbyeayWyV6B2XjfzdbsYiTOIxQIw+m3yeFKSV78xsMIqUEFIx
-         +ybkBDvo1CTsT9iqmYLpyJHsj0ePyF3YWwiFKJTndcz8g9XvamQCrpGNLU3iGVCP38LY
-         sCeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758055141; x=1758659941;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pWhgdy6OHs8LwjhNOwGE76s5DyrP7smrIq4Fgh6CWUs=;
-        b=eDdKotaFzl7OlFVTF8TIpzaYH8pAEFsnhIsyl1BkKMI18bD7dOarKhS5j4DazFCvvh
-         THksa4XF5n3dJ7wUWZcJcYPDgRMrmD3hmpwO/SUYaU0Lyrl34pTyiyfhjUWFuOcbq++p
-         szVdhTnti2oLoUmtlmz5dSlczfz+V7frsPkUVJGFE9SlixAZlD2w8MBlQPqrIobXEczE
-         jLAu984Oc2l+LffG+49z2zsYpSn8WRx0Jt/IK5z9tWXO4fEtkK9YPlzhCxRMfNTzG+Fu
-         5LssvkR96uyt2TdQqF2JDMxa/NT0NI4BflblybuE+s0/tNQo9we90JW9OBFGe+vn+zAN
-         ZV+w==
-X-Forwarded-Encrypted: i=1; AJvYcCURp546T4LQWHxqTj6KVDg9sLcXifeuj2FN2ZtlgKhUoY50DA1SywAxXYCC/bYx4HNcYSc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyvHauzr5k9W3usJ7QJP0r9AL0UJTXF4qoqgFVYXjuLM6DQzwJV
-	W/HIMBm/x2XwqBqn6Wl9kVoqKKFkfCWq+ZlF7CI8PqdZKWMEPqRtC//m
-X-Gm-Gg: ASbGncuPJTX/sJ5hw/w7Ka/ZjK3Ewev9rWRbulNYBXOI0NKtXvJnP0YqFsAbF5gHaNh
-	cOZyP930P+tduaeghZnphTnTqKmbuPtBYDDRRtAlWGHGoH7+XtdhOzCvYY5OW+KJwjEUOvAfhJR
-	/wOhNnO1l13gCjy8sEI1U2zyBQ/nqMhTezlmlzvCDSLSRFlQ9IyFI+Swtwb8/wdw3+/9v+t/KFa
-	9+5Fv4ToSaZ/wVquzLBvuVi4zIHiMioAuoeSjEPIEqqjIs4krMOJ7IP6GLryOEf6XaUP7NEZx0m
-	xjc+PCd3Ro3YvLV6nx9y1ofW5WFFSBnqRAg2mDl4urJ5SyBU42dhHqWVxRMqeIy4+5g3VURFwY5
-	2Hj062WBGfO7c3kJ5ly/4Fw/ixYih+HwkxNHB+bBVOI1Ht6c8pc4=
-X-Google-Smtp-Source: AGHT+IG8LTpipm6J/x1usxJ7/FCGG5PxEMdNx8cg18a/bzcSoBP4Jki26TruEwz/cKtBnT1ytEZv8A==
-X-Received: by 2002:a05:690c:a91:b0:722:6ab7:f645 with SMTP id 00721157ae682-730658c30ddmr171280047b3.49.1758055141011;
-        Tue, 16 Sep 2025 13:39:01 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:d947:8947:893e:f495])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-72f7683148dsm43443757b3.23.2025.09.16.13.39.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Sep 2025 13:39:00 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=online.fr header.i=@online.fr header.b="AvFygiXG"
+Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
+	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 63799DF82CC
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 22:32:38 +0200 (CEST)
+Received: from [IPV6:2a01:e0a:ecb:c5f0:99e8:65c1:1fb6:9b73] (unknown [IPv6:2a01:e0a:ecb:c5f0:99e8:65c1:1fb6:9b73])
+	(Authenticated sender: thomas.koutcher@online.fr)
+	by smtp5-g21.free.fr (Postfix) with ESMTPSA id 5825360134;
+	Tue, 16 Sep 2025 22:32:30 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=online.fr;
+	s=smtp-20201210; t=1758054751;
+	bh=wX3gbG/Yc0DfDrlzTJvKgtitBrWiKSbPKc63NKGgza0=;
+	h=Date:Subject:From:References:To:In-Reply-To:From;
+	b=AvFygiXG2hCC0ennPjpJcQTjlQcUhUcy7RKiutyP9jbRyWh4bc2EVAZoTY0A+Nliv
+	 bzfLAJCZXdwFrEHe5kqFS/a23/wx5wpm9LduETw5hz/IwrTGzzEiK/CY0PTo2dAvvm
+	 BWi8ih7NaACY4R6qtAwjSA/z7Lmr33rkS9EvsvtLrcyUexLIZg0WhpH93SfPytQ8Tz
+	 LgmPzEiOrRw+l2IaE4ZKn46kxG7RMWl7DBfS6ho+y/fcaQ9y6Sy+aGPtIAV0r3u87c
+	 YxQoHBUUO544mx40OIjo2o7WrS1bI6c4TvUmkeVwDaKQ7/kzzHKnVkamiwKR6iotgE
+	 gwTxkXEcnCHBw==
+Message-ID: <89836f92-980a-4a69-aa0a-34cca91f6663@online.fr>
+Date: Tue, 16 Sep 2025 22:32:30 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v2 1/4] doc: git-push: clarify intro
-Date: Tue, 16 Sep 2025 16:38:50 -0400
-Message-Id: <884CC5BE-5272-4422-B43F-4C0743ED7EFD@gmail.com>
-References: <3f9f511f-7f9c-4179-85e1-87d76b748db3@app.fastmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
- Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-In-Reply-To: <3f9f511f-7f9c-4179-85e1-87d76b748db3@app.fastmail.com>
-To: Julia Evans <julia@jvns.ca>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: [ANNOUNCE] tig-2.6.0
+From: Thomas Koutcher <thomas.koutcher@online.fr>
+References: <466060ab-ea6c-4c13-93f7-2de7a380429d@online.fr>
+Content-Language: en-GB, et, fr
+To: git@vger.kernel.org
+In-Reply-To: <466060ab-ea6c-4c13-93f7-2de7a380429d@online.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+Hi,
 
-> Le 16 sept. 2025 =C3=A0 14:46, Julia Evans <julia@jvns.ca> a =C3=A9crit :
->=20
-> I think "..., and sends all necessary commits or other objects that aren't=
+I am pleased to announce Tig version 2.6.0 which brings some improvements
+and bugfixes. See the release notes below for a detailed list of changes.
 
-> already on the remote." might work if we want to add more detail, since it=
+What is Tig?
+------------
 
-> gives users a hint that maybe they can ignore the  "or other objects"  par=
-t if
-> they're not sure what an "object" is.
+Tig is an ncurses-based text-mode interface for git. It functions mainly
+as a Git repository browser, but can also assist in staging changes for
+commit at chunk level and act as a pager for output from various Git
+commands.
 
-Nit, without wading into the above discussion: shouldn=E2=80=99t that be =C2=
-=AB and other objects =C2=BB?=
+  - Homepage:    https://github.com/jonas/tig
+  - Manual: https://github.com/jonas/tig/blob/master/doc/manual.adoc
+  - Tarballs:    https://github.com/jonas/tig/releases
+  - Git URL:     https://github.com/jonas/tig.git
+  - Gitter:      https://gitter.im/jonas/tig
+  - Q&A:         https://stackoverflow.com/questions/tagged/tig
+
+Release notes
+-------------
+
+Bug fixes:
+
+  - Initialise %(head) from command line arguments. (#1366)
+  - Make `$GIT_EDITOR` value interpreted by the shell. (#1367)
+  - Use correct line from recursively blamed commit. (#1369, #1370)
+  - Use correct line when using `:parent` in blame view. (#1372)
+  - Fix the incorrect line shift after stage file. (#1371)
+  - Update display after setting column option. (#1384)
+  - Fix file mode diff header handling.
+  - Fix crash caused by too many diff cells. (#1389)
+  - Fix issue with blame when using absolute file paths. (#1391)
+
+Improvements:
+
+  - Add color for cursor in backgrounded view. (#1374)
+  - Blame view now works without a working tree.
+  - Open diff view from blame at the correct line. (#1375)
+  - Document how to get a `<` within TIG_SCRIPT. (#1357)
+  - Allow to hide +/- signs in the diff view. (#855, #901)
+  - Add toggle options to help. (#1381)
+  - Add expand/collapse all options to help. (#1382)
+  - Expand relevant sections only when opening the help view. (#782, #886)
+  - Introduce committer column.
+  - Open the blame and blob views from diffstat.
+  - Update utf8proc to v2.11.0, supporting Unicode 17.
+
+Note: Users should update the settings for the blame, main, reflog, and
+refs views in their ~/.tigrc file to include the committer column.
+
+Change summary
+--------------
+
+The diffstat and log summary for changes made in this release.
+
+  .github/workflows/linux.yml                 |     2 +-
+  INSTALL.adoc                                |     4 +-
+  Makefile                                    |     2 +-
+  NEWS.adoc                                   |    32 +
+  README.adoc                                 |    19 +-
+  appveyor.yml                                |     1 +
+  compat/utf8proc.c                           |     6 +-
+  compat/utf8proc.h                           |    11 +-
+  compat/utf8proc_data.c                      | 14261 +++++++++---------
+  contrib/tig.spec.in                         |     2 +-
+  doc/manual.adoc                             |    10 +-
+  doc/tig.1.adoc                              |    14 +-
+  doc/tigrc.5.adoc                            |    40 +-
+  include/tig/argv.h                          |     1 +
+  include/tig/diff.h                          |     2 +
+  include/tig/help.h                          |     2 +
+  include/tig/keys.h                          |     1 +
+  include/tig/line.h                          |     9 +-
+  include/tig/main.h                          |     4 +-
+  include/tig/options.h                       |     6 +-
+  include/tig/parse.h                         |    10 +-
+  include/tig/types.h                         |     1 +
+  include/tig/view.h                          |     1 +
+  src/blame.c                                 |    34 +-
+  src/diff.c                                  |    45 +-
+  src/display.c                               |    21 +-
+  src/draw.c                                  |    21 +-
+  src/help.c                                  |   107 +-
+  src/keys.c                                  |    20 +-
+  src/main.c                                  |    32 +-
+  src/options.c                               |    12 +-
+  src/parse.c                                 |    29 +-
+  src/prompt.c                                |    56 +-
+  src/reflog.c                                |     4 +-
+  src/refs.c                                  |    42 +-
+  src/stage.c                                 |     9 +-
+  src/status.c                                |     2 +-
+  src/tig.c                                   |    37 +-
+  src/tree.c                                  |    27 +-
+  src/view.c                                  |    16 +
+  test/blame/blob-blame-test                  |    55 +
+  test/blame/default-test                     |    56 +-
+  test/blame/navigation-parent-test           |    58 +
+  test/diff/editor-test                       |     2 +
+  test/help/all-keybindings-test              |     7 +-
+  test/help/all-keybindings-test.expected     |    32 +-
+  test/help/default-test                      |    64 +-
+  test/help/user-command-test                 |     8 +-
+  test/main/escape-control-characters-test.in |   Bin 1725 -> 2201 bytes
+  test/main/filter-args-test                  |     2 +-
+  test/tigrc/env-vars-test                    |     5 +-
+  test/tigrc/parse-test                       |    18 +-
+  test/tigrc/source-test                      |    25 +-
+  test/tigrc/view-column-test                 |    39 +-
+  test/tigrc/width-test                       |     9 +-
+  test/tree/default-test                      |     2 +
+  tigrc                                       |    23 +-
+  57 files changed, 7932 insertions(+), 7428 deletions(-)
+
+Ilya Grigoriev (2):
+       Use correct line when using `:parent` in blame view  (#1372)
+       Open diff view from blame at the correct line (#1375)
+
+Johannes Altmanninger (1):
+       Use correct line from recursively blamed commit (#1370)
+
+Paul WK (3):
+       Add toggle options to help (#1381)
+       Add expand/collapse all options to help (#1382)
+       Update display after setting column option (#1384)
+
+Thomas Koutcher (19):
+       Update home page links
+       Initialise %(head) from command line arguments
+       Make $GIT_EDITOR value interpreted by the shell
+       Fix AppVeyor build
+       fix the incorrect line shift after stage file (#1371)
+       Add color for cursor in backgrounded view
+       Update Linux CI
+       Blame view now works without a working tree
+       Document how to get a `<` within TIG_SCRIPT
+       Allow to hide +/- signs in the diff view
+       Expand relevant sections only when opening the help view
+       Fix file mode diff header handling
+       Fix crash caused by too many diff cells
+       Introduce committer column
+       Fix issue with blame when using absolute file paths
+       Open the blame and blob views from diffstat
+       Update utf8proc to v2.11.0
+       Update NEWS
+       tig-2.6.0
+
+--
+Thomas Koutcher
