@@ -1,145 +1,157 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195B729A33E
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 21:51:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DEA8287515
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 21:52:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758059510; cv=none; b=bJuZbiiebo+Z5i8rNUAKA4QcPFXpDTmHB2ZHQ2YRP6plk0+RxCaugpTaFpBgE7nQOo0A2E2xuZKLyeCRJbA8Q/GcTZTuJhQJShx8Ur1JZjbIzeRxe2gOjW8MRJvPwFyAm2bZuG/cFmiG8Fp7XY4j2WONjq4tcOadEOBz/Y06uOY=
+	t=1758059573; cv=none; b=iM0m+0HcJPAS1pu1LOY4Zd6esbU9c5bjD0xEp3AYagW9myTb2RCmnZQ4PMocTimtXS2cDbsSo5E47vOF59d6ZdeUhrbN9/8VzhFp/0jy1l3ND91C7RlRhpAVqrB2JMqXU2ia8YRLbW1oEbAamTS6VFphxWLvsRz98YvaEwZY5x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758059510; c=relaxed/simple;
-	bh=ToCByRltUkVhj3CDiKKrO9p4aMPxBgRsP1TPWcFnARU=;
-	h=Message-ID:Date:MIME-Version:Subject:References:To:From:
-	 In-Reply-To:Content-Type; b=WoUp3A8GH/ZKIHs5lZjvN5ulJYBH4D5cek5okmlOlYCZhSSnSFv3kHEPD1pd1QMs7naJVwf7mTyM4+CG2K2ms/dqf65yhAetWBcXmYbvrPsS0BPmmnYlhOnJ/YEQf+CKKI/T15rEmjm70UOT/Gk+kPJLVwKaNZMIPdHIwujFXcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=anselmschueler.com; spf=pass smtp.mailfrom=anselmschueler.com; arc=none smtp.client-ip=217.72.192.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=anselmschueler.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=anselmschueler.com
-Received: from [192.168.178.32] ([94.139.29.72]) by mrelayeu.kundenserver.de
- (mreue109 [213.165.67.113]) with ESMTPSA (Nemesis) id
- 1MfHIb-1uRkPS3WDD-00pwg2 for <git@vger.kernel.org>; Tue, 16 Sep 2025 23:51:45
- +0200
-Message-ID: <c28bff47-04ef-4568-8dc3-add99f52209a@anselmschueler.com>
-Date: Tue, 16 Sep 2025 23:51:45 +0200
+	s=arc-20240116; t=1758059573; c=relaxed/simple;
+	bh=0kADzIa063whXCndYuy5tnedUB2xZeKCWZTpQHf/GqY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aUHXOZ9jOqPpWzhmi0J0h9myKdDkRroAxZjKWwPOnlmvw0TIGEj+g/Z6QtokljKiyQpGQIFHwNF29pJm/SPMNRY2byft4fwxOHIgxE7/z7g3YxrqCre5Mhyl3XfqMbyBUJig43i6h4mMvfLYv6RUFMWL190IKvMbD9vsnqOEof8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ODdH1o5d; arc=none smtp.client-ip=209.85.160.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ODdH1o5d"
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-32a9c1d2b95so3479266fac.0
+        for <git@vger.kernel.org>; Tue, 16 Sep 2025 14:52:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758059571; x=1758664371; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ylhqEc+ETu2NyvyrP43X1lX4RVQXZJ0+aXF1thLy0aE=;
+        b=ODdH1o5doDkxA+XwpThCgcERgm6XcICaaqxsArqjX8wwvf0NBtKHqMAOeiOTV5KMin
+         wvb27E75pvfImm1u4byIV7CYTEoGxH8bFVvffsR62apu+q/hH3hZqYzAHH8I5TkgK3qO
+         /BjGIZUHseLIh9mWH0dCOFMpD4vs/7kjwpOIbrKOTY34AazcSJtBknV7ubbMLhaY8jz+
+         mnzJWERdAeiJEOVZDYxIhGNTciVYSwwVGVN1bIMLazySfRlVmIsfd8BTL+BXcyaQOsuu
+         Ticj7BDVtMD6daje9ByXR4T5+zlUdE5rNnoGtDe/0cW8QYYFFHHIwDWFU+UZkU48Te+I
+         nC/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758059571; x=1758664371;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ylhqEc+ETu2NyvyrP43X1lX4RVQXZJ0+aXF1thLy0aE=;
+        b=vyuXxKj9puMRJPFDfxgwxQPsOES9ZtQcfaj7ngp2saTmPnaozgJEFphDKFZ6FasuXm
+         eg183+LmrbUuTIojhCZWS5y+1lGgt3W/Ojgr8cc+vxCegg81e+HOQLba+2HM7BE2ikzO
+         Fe3VD2VywVcgZM60szkerJzvlkHafc4TUaiQE+3VZ/AQ/zRLBzTpJ2Gw7kjYFMYnqVfP
+         0KibFjv6AAAC1IkNF6YXh1FkFIbODNTnyCGrAHyI+Vkhb141nR79fi+1C/ConxiFlW1h
+         MtQQBTcxGqZuPxmC5f2nSOlLX+uapuUxzHFIbohvfDvs+Tddit5p4L2uO1a+hbZ5l811
+         2OBg==
+X-Gm-Message-State: AOJu0YzV2EZ07y645f6BQ/l34w+Fw5kDQwlxlwrZFwGqbJ0zU/HxGArO
+	RjJDO2moG6MN3BCqMU92In6q2ZJmssAfEZMZ3hjZFu7mLH9wm05KKAPg
+X-Gm-Gg: ASbGncsvTqT+QeRPxoHIVOrSYMKmNL0DXyZWAYJDe9S1lw5aPwiGJm7wZ3clXXImOF2
+	i2oG6odkC3LBeENeEuGYNPzaC2VlIrg/9/zWVOVKlkVXCnYISeKtSL0dUdU+oIkB4W5XYvjDVYw
+	m8iDYuKs6MCjLOWp26/xxuyLpv1b8HlemuZsrqJ9lKJ4fNQI3nBY4cDFHetrznqs1YmIRq0WYfh
+	dPwxHjE0sNpu+sFSE6pTfVvXuxbSw/OYvMqIA+jdnqhvkX1Wkb93O+2WslbsWV1IrfyBljAaJQC
+	yAII8hsQIqfPnMqehoI9T79Npv7eASXzikLBUPDdGHB59gGKfgT/gNtwrLxoF7vB2j+Pnoo5wdt
+	6IwLwB0bIMKNZLwWT
+X-Google-Smtp-Source: AGHT+IERIHzBpirSdC2cQ9XjBk6MwIiLrzvfxKUx7OJMmBvgP88VXKiKXdPlnQQMv0gX2DwFGwZAhQ==
+X-Received: by 2002:a05:6871:e7c3:b0:332:b1d9:7689 with SMTP id 586e51a60fabf-335c004474dmr1817fac.41.1758059571152;
+        Tue, 16 Sep 2025 14:52:51 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-32d32d5653fsm5221676fac.7.2025.09.16.14.52.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Sep 2025 14:52:50 -0700 (PDT)
+Date: Tue, 16 Sep 2025 16:52:50 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, joe.drew@indexexchange.com, peff@peff.net, 
+	ps@pks.im, gitster@pobox.com
+Subject: Re: [PATCH v3 3/4] refs/files: handle F/D conflicts in
+ case-insensitive FS
+Message-ID: <bp4vpyje3ehlq2uezjmkuk5qdigi6fo73sh7eyoofvxxbau7go@oksetdbbtqz7>
+References: <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-0-195569740b57@gmail.com>
+ <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-3-195569740b57@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Fwd: Why does git-status suggest different commands to unstage files
- depending on whether there is a commit yet or not?
-Content-Language: en-US, de-DE
-References: <8e1905c7-7744-444f-9a39-ca809edb6896@anselmschueler.com>
-To: git@vger.kernel.org
-From: =?UTF-8?Q?Anselm_Sch=C3=BCler?= <mail@anselmschueler.com>
-Autocrypt: addr=mail@anselmschueler.com; keydata=
- xjMEZMK/6hYJKwYBBAHaRw8BAQdANvIiy7BrQ5bJ2txC1J4PpfkLnOrEhmG9DzItTcFrd2XN
- KUFuc2VsbSBTY2jDvGxlciA8bWFpbEBhbnNlbG1zY2h1ZWxlci5jb20+wo4EExYKADYWIQTN
- v+yoNv7jQBzrWP+6NO4aujoJVQUCZMK/6gIbAwQLCQgHBBUKCQgFFgIDAQACHgUCF4AACgkQ
- ujTuGro6CVWjHwEAugikc3PIHCDCaZPrdSiXqV3mSabICGPMje+Kp73oxkoBAJYeHUdoZcyw
- BkmGIh1mWY738FN+SPHwSWIS9jtJ2+4CzjgEZMK/6hIKKwYBBAGXVQEFAQEHQE6vKA4qvkMc
- 6kslzFWzHQ+h9Qk89ggfrexKhse5F6NjAwEIB8J4BBgWCgAgFiEEzb/sqDb+40Ac61j/ujTu
- Gro6CVUFAmTCv+oCGwwACgkQujTuGro6CVUKawD/SDvfSz7vUSUkNiJJsK59U+D7rBkdRHoq
- sNsLc3EVYiEA/3kNw77KZvEG2Jb3ktvv5qoWKnW+xrEHh0FZLFzb50sM
-In-Reply-To: <8e1905c7-7744-444f-9a39-ca809edb6896@anselmschueler.com>
-X-Forwarded-Message-Id: <8e1905c7-7744-444f-9a39-ca809edb6896@anselmschueler.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:dEhEQW70/BOaacX1rNZqCzOV5p2Ie5wx3VOcpzi92aJk29cm0BZ
- t3SnoBBGKTSsmVYGvIJpNlPYLUy5uT1kaXtExn3YxtMzMUWzrEu7RZCwQa6QOHLIbY7Pzh8
- QfuET0YBDZZ5Lo37C2P5VkTny+OW6zwZ7sfwDMY0QmBILQxDqN4BHINvrnqWkykuEJYImTf
- EMln3sc7hRfsPufwyveAQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:BVTPwF1EJxU=;QVkDm1W8KZ09ffZMzZBF6z+KbBD
- 0MFUyatlK8itxjnZxxYKTClRd8syYbP4gB3ajqOu6SIWamUdK2owlK33o2ehUCBNIE1BBuyjv
- 7XuFoTj9nFqd4QtTw6bBSYX1d0VEudpbsA++Os7SV12PJN9jZbViRVmPVEAv9EBk7vc/dW1HO
- D9KMLwuY1/KsM77QGfhTsPoF3q4bwqBY/7R9Sgp+9X7BglBJ8tsFQxaHvUMEGmk8ZhnDm90p7
- FxT8EpiAX3K9dXop2zdGlhvaipYB69OUHSyLBQtI3BGRxfbpWlv/Rbwpw+IXZhQBYVkG+33T1
- bDf4ZENaY2tfMUF5qCvVtoMLFAbv9mBtjJfunqZ4NJLj2cABgqQi3qXOQIDrjaW4CDNFigZus
- aFTa3BAsvl7gea4a1snMD4bM5CvE3mGwBF/qro0mnYFKbgKJh7NujfFGaGp2m8rh3p33pzATz
- PU4RvA9tG3HAkxAaYqqD+iq+FPmog3BGJiECLwo8SioBOLkjLpVAl6wmR08rVXbos4LYHhUDj
- oqh+AEaD/Pguob+y92SUP1F9GRZSJmddIfmGS66hQA19TheE0sLh07E9T13JdkDKTHtxvmFoh
- 5Rzf291r7p2PzuY04zuyVPTb9KwfroQsvQUX4leJl6tjRsXM8g2tdXlsGocMq4guoNaCI4S/d
- X43Z2F6fAdI97N8VC8NhJhipo2HhBfM8vGNV/xPIMY8zqfxgSZgW1pFWwYR6oy2pEsVUXJbxY
- qM2v4ijtJtJb9ordga52dNAPkD1nuc468ZgBFQU4uFaG8L3mIGX+SYeuoIPs2EE2RjwOqk/Vw
- 9OgE3zHqzPzl1s5XbFOGg6A/9Ouy00d3hsI+K6r8b+y6BryzvZWHBZnRF1Vm5sJ14n57N+8jF
- MqJTOuAtLZLKPIsejF5ywFLh5yutceNy238HZM9pZr+0yhpUMAyu9EP4RXc4ppe4UegQ8lBXp
- 9YMsXK7jghRf/xzbhFVHmdmFRoKV3YSvdz7jcdtTFna/mNjqEeHrzWYv8Zle9EZj3iNc/mSvb
- QsqcuJorns1v5g0NKLRqb/nhytW3oEoJwS7J+WDPSSc4ocmQrekVAWOQhbWtfIqbVTKigmoCF
- 69KK7k5tgV/G+d3babm7xqmRQALW4KqmUtVYb1vANBT4E0thxIJ9LbLxMbuU6QLMZ5cRELq/Z
- 08f/br0spDD8Q8Wkr2vIjNmQDeQaOFGHx41hIkeStUludx4wvFxEc4oFfTplc+wn3EpO7Ee/K
- UJK3chD/YGXpSDY+E03s+cNRBXlbbbq2jW9D7mcSw7ZdlzD5u9t4CEtXVKZGoTNxoPz4Sn/yW
- W1Mga+iXMM/GQYJl2KpCagzq8DGq0Pc+kr74XIeIHtR6vyzsmtJ7ch+xk6+hkQW9c7NleYpfG
- w9O5HgrCH+OAhNx1zOI/qau8RWCtjBxx2mO7c7R4vuFf4iKj0g73nB4JIXqx16Myt7XOMX51M
- MVD8UJ/fXkyfM78ff2dnr8melQ2QIZbBe6SGWYNtvKMlhhl73++HUXbsXa37mzH5aFT8dVQjF
- Le0My4/VQ5jGK0Myb9ceBzQqYD46FkOfvr/F0ljYgcrSn/kmlIMXKOMQVpQ+yHJZm07Qdgo3v
- 23PcnnXsXQ56pOqO0ElifH0q4qvvoFnynhSyPN/iryTD3ReTKvpZv8nwF2ZxurEsPdjPXMEvD
- VnP8efQuC1v9HzZls/tiClharNMtpU7/7OcOlikNbszatgclFZwEc2HRoQP+PWqgEsxA+kiYG
- OSIHZjqmhyKcC
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-3-195569740b57@gmail.com>
 
-forgot to Reply All 💀
+On 25/09/13 10:54PM, Karthik Nayak wrote:
+> When using the files-backend on case-insensitive filesystems, there is
+> possibility of hitting F/D conflicts when creating references within a
+> single transaction, such as:
+> 
+>   - 'refs/heads/foo'
+>   - 'refs/heads/Foo/bar'
+> 
+> Ideally such conflicts are caught in `refs_verify_refnames_available()`
+> which is responsible for checking F/D conflicts within a given
+> transaction. This utility function is shared across the reference
+> backends. As such, it doesn't consider the issues of using a
+> case-insensitive file system, which only affects the files-backend.
+> 
+> While one solution would be to make the function aware of such issues,
+> this feels like leaking implementation details of file-backend specific
+> issues into the utility function. So opt for the more simpler option, of
+> lowercasing all references sent to this function when on a
+> case-insensitive filesystem and operating on the files-backend.
+> 
+> To do this, simply use a `struct strbuf` to convert the refname to a
+> lower case and append it to the list of refnames to be checked. Since we
 
+s/a lower case/lowercase/
 
+> use a `struct strbuf` and the memory is cleared right after, make sure
+> that the string list duplicates all provided string.
+> 
+> Without this change, the user would simply be left with a repository
+> with '.lock' files which were created in the 'prepare' phase of the
+> transaction, as the 'commit' phase would simply abort and not do the
+> necessary cleanup.
 
--------- Forwarded Message --------
-Subject: 	Re: Why does git-status suggest different commands to unstage 
-files depending on whether there is a commit yet or not?
-Date: 	Tue, 16 Sep 2025 22:56:52 +0200
-From: 	Anselm Schüler <mail@anselmschueler.com>
-To: 	Junio C Hamano <gitster@pobox.com>
+So IIUC, this also isn't related to the batched updates change and is
+just an existing issue caused by case-insensitive filesystems and F/D
+conflicts. With this change, we now properly detect F/D conflicts in
+these situations and thus are able to cleanup lockfiles that would
+previously be left behind.
 
+> Reported-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  refs/files-backend.c | 19 +++++++++++++++++--
+>  t/t5510-fetch.sh     | 20 ++++++++++++++++++++
+>  2 files changed, 37 insertions(+), 2 deletions(-)
+> 
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 69e50a16db..817b56f4ce 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -905,8 +905,23 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
+>  		 * If the ref did not exist and we are creating it, we have to
+>  		 * make sure there is no existing packed ref that conflicts
+>  		 * with refname. This check is deferred so that we can batch it.
+> +		 *
+> +		 * For case-insensitive filesystems, we should also check for F/D
+> +		 * conflicts between 'foo' and 'Foo/bar'. So let's lowercase
+> +		 * the refname.
+>  		 */
+> -		item = string_list_append(refnames_to_check, refname);
+> +		if (ignore_case) {
+> +			struct strbuf lower = STRBUF_INIT;
+> +
+> +			strbuf_addstr(&lower, refname);
+> +			strbuf_tolower(&lower);
+> +
+> +			item = string_list_append_nodup(refnames_to_check,
+> +							strbuf_detach(&lower, NULL));
 
+For case-insensitive file-systems, we instead append a lowercased
+version of the reference name which gets used to check for F/D
+conflicts. Makes sense.
 
-That makes sense, thank you.
+> +		} else {
+> +			item = string_list_append(refnames_to_check, refname);
+> +		}
+> +
 
-I suppose this isn’t that interesting, but I find this unintuitive. If 
-it were not for the suggestion in git-status on an empty repository, I 
-would’ve assumed git-rm simply removes the file and “writes” that 
-removal to the staged changes. This seems to be what y’all are 
-describing. But with that suggestion, I was confused, because I assumed 
-git-rm there would be equivalent in some sense to git-restore in a 
-repository with commits.
-
-Could git-restore be made to work anyway, by “imagining” a 
-pre-initial-commit commit that has absolutely nothing in it?
-
-On 16/09/2025 22:48, Junio C Hamano wrote:
-> Anselm Schüler <mail@anselmschueler.com> writes:
->
->> $ git status
->> [...]
->> No commits yet
->>
->> Changes to be committed:
->> (use "git rm --cached <file>..." to unstage)
->> [...]
-> As this is a very initial commit, any file you are including would
-> only exist in the index and in the working tree files. The index is
-> where you prepare the contents of the commit you are going to
-> create, and "git rm --cached <file>" is the way to remove <file>
-> from there without losing or clobbering the <file> in the working
-> tree. As you do not have a commit yet, you wouldn't have anywhere
-> to "restore" from, would you?
->
->> After a commit has been made, git-status suggests using git-restore 
->> instead:
->>
->> $ git status
->> [...]
->> Changes to be committed:
->> (use "git restore --staged <file>..." to unstage)
->> [...]
-> Compared to the previous situation, you do have a commit, so you can
-> restore to the version in that commit. During the course of
-> development that led you to this state, you may have added <file> in
-> a commit way before the current commit, and you may have made
-> changes to the <file> multiple times in different commits before the
-> current commit. "git rm --cached <file>" would not be how you would
-> go back to the version in the current commit in such a situation, as
-> it would take you to the state _before_ you originally added that
-> file. You would "restore" the contents in the index to that of the
-> current commit (i.e. HEAD) to go back to the state.
->
-> So, isn't a short answer to the "why" question, "because that is
-> what you need to do", I guess?
+-Justin
