@@ -1,129 +1,166 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEA618FDBE
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 07:51:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D773928137A
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 07:57:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758009089; cv=none; b=KVLin5yg+cRLm03aqFvuzq4Y1akHxb2jLVjQr5CrdIkk3CYzHCrv3iTzbXz2iE5vmiV3ZDZ0wRvuI17ErXZBJmeiL6ulnqob8ZsyukS0d7d14n00efjMlcBHhVstJWeylJeobEDf3seakasD6bAuC8qblJ1aWtLD0XIKoyglx1c=
+	t=1758009427; cv=none; b=JMXlEe3iNUSL1q6EhNfFNIaz8CJ3G5F+7fujQb6yp/JYbw1Idn5OfLMUlh6VbsjMGdtkSZlicKwXQY95HX9lrFL2/A4kM8sPQSdL06YLoqCyScyFsvbalyWT9S2B5nWVBIdffg2khcg8Qt6dPmmb1G5OCZJ5eK1p4uPD6+IPgDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758009089; c=relaxed/simple;
-	bh=ukMqGgy5E6xuqDtzvTvshzTOFw3T0bGS2ek1veKRQvM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YJ8A4Ll1EBtHUp6+5DlMN0N+WfhcSlQ3H2p+0YO8Md2kUbHLkMCaC7x++mGJ+utDXVvUmFYMXBVMpgVR4/rsYA1jgqzxe5ehrBAobZIoJTJl6r/RrEwWvIYSY3RguzX7hfLLWsIRRbMefGP1P3l/HyS1VYwO7nXQ7+syyNAIpV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aUd7cXvl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NHVtRhd9; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1758009427; c=relaxed/simple;
+	bh=NH6ynVHn5G5kKJSinLkfP4UDwo/Cd7ITtjOx/Bf7dRE=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PbIPxP7XhtCBL0djHpRoP2HGaie4dBLbbh9OGbGF65OeXcS+aeWga6hfuHbEZxSJ0kJlBTvabnHOLbPBJb4N5HBmp5tg4bqw7o9n0QBTr8KYptNtuGBQ9XkNOkXGSULlQKmW8gBtopYJ3ytjANt6pLOKEuJFmcELKs/e/mKvPpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jBYlr1KN; arc=none smtp.client-ip=209.85.222.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aUd7cXvl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NHVtRhd9"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6CF5F7A00E6;
-	Tue, 16 Sep 2025 03:51:26 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 16 Sep 2025 03:51:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758009086; x=1758095486; bh=i9iSjEfcL2
-	ixC0F63CVri+GaLd/Tgx1djjP8uh4r7zA=; b=aUd7cXvlU85qk9z4T9gJRjj3+7
-	kGEg0E4L0n3EznOSHPnBoCfvqa1RUa4/AMeF00cVTFLzyDIZmbk1oXu7GPCkwRWG
-	eHZyUFMZQufbPPAF7SHIk4RvfO4kIQt9+TV1cjQg/CZMjy5QtC1iUwK0iOYYXjj2
-	8OXzhWMKpinLnQeZ1a8xwKJuG4ElUmTnXCJOOQEZEPce1L2y0E4H6/RFDvmgsxjs
-	0fOQKyuz919aRxSjNO1p8sLF/nVsU6WgKjD9bblTqidteRfajxl+ym6K3QZe2Qwa
-	I9qXZKJGsfaJ5vuW/myXg2kNdq9cJhNaNCAoRtcKOeiLzsyiPc3EfQTRmFTg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758009086; x=1758095486; bh=i9iSjEfcL2ixC0F63CVri+GaLd/Tgx1djjP
-	8uh4r7zA=; b=NHVtRhd9fMNsJtJm1kpZQM/ksdNKG6SffdRp9MAjVDZ7jBmnmc+
-	8SZuVMttLKLRFQgxJ+WoKU9EkwK6SBj2BpKUgXrs5U2HH2BCaBfcThTed0m0qlIW
-	3r6XKrLtqCdNFFB1Zh8LuushravbH/aAb4c16qPovAAfN5ipv6IIjEWc0NB76nbL
-	aPXgmD+nqs8VG/iWcbj3/5JSBgvWlRKkpXoAF5Brdz5bqL1kvfGqZxlAC0FGuXq9
-	4P1PXrRW19VRoDHf6MAG1h0ebruZo/NHNC52ibd781H59EgvJQ/j6Ot7E4AuzLXI
-	wXoaxD2wO+/WGDWIKG9CUfOK1rlMxPPj6TQ==
-X-ME-Sender: <xms:_RbJaBNPAWmexjd5RkcHUcZwGoNhzp7xICkJ5NFMWg6htFzjWcDCTg>
-    <xme:_RbJaPdPMOXtJ2AiqW6buTEwPpdInff_XqS5IGN38WgHCYt9jfsz3uXdhG7zlqBXj
-    upE3S-n3HPE8mDQUg>
-X-ME-Received: <xmr:_RbJaGsgv2xeOwXbA9K0sUSlWI3117uQGK_lCr8qOyrDbMlIV1jMpztYSX1WL3Pyg-g3UN5Onx4Lo_IxAkgKly8DK1gYbdSZf7ERbU1Z_x4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegtddtvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffh
-    drnhgvthdprhgtphhtthhopehjohgvrdgurhgvfiesihhnuggvgigvgigthhgrnhhgvgdr
-    tghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:_hbJaImsOuZt-0OuiezwR7EfOwlk_mEbcSuLJFQe-v9i-2YkS9gdiw>
-    <xmx:_hbJaAzmRp7uDf5AYFIdLb2wa76p-fxu_HYksUrFz8AEN6_BU0pZsg>
-    <xmx:_hbJaCMDKOiy_8OOJYFNokX6ElYEBS1u0MElgfv4kc12cM1ha_D7Sw>
-    <xmx:_hbJaEoJkAFtU0PUpU1tCgSD6-nsgDfajytjwj8Dg-DTLocccrmNlw>
-    <xmx:_hbJaDQ_4fEu1K9k0p7OzwbjT1wOi1VgfLSEG20VEuX56PJS1nmVWcfA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Sep 2025 03:51:25 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d1705109 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 16 Sep 2025 07:51:23 +0000 (UTC)
-Date: Tue, 16 Sep 2025 09:51:20 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, joe.drew@indexexchange.com, peff@peff.net,
-	gitster@pobox.com
-Subject: Re: [PATCH v3 2/4] refs/files: use correct error type when lock
- exists
-Message-ID: <aMkW-HOAsU8YZ8Lp@pks.im>
-References: <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-0-195569740b57@gmail.com>
- <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-2-195569740b57@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jBYlr1KN"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-8d74e29eae5so1253755241.3
+        for <git@vger.kernel.org>; Tue, 16 Sep 2025 00:57:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758009425; x=1758614225; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y3lfUnAM1UpUMZYXHyE3Z0ITLoUcA2V2eTJ2nLIVGHo=;
+        b=jBYlr1KNnYl66pTy88Lia5GThpNJvEF5A9fN6pyCh2+yQjCen8q6bnsWCafkc6xRg6
+         W4JdtB/EahkdKwutvkS0iEU+aaAk9J+cqmnRRLiTG1GwioUR041jk0D4RMuo2eD+xQ5d
+         di/z090AJgyir7pfSktJDKuLhfXmwv7pk96jD/2DRCv6l5bzFvUA14yJ5Oi5eLDkvEev
+         A/ipyP7dHPA6Ee7z+n8WNJFgYOtqY0wsZSUsZ6m6FuWANv0ZzxKIfM0tARw8tLiYggTj
+         rghxwyi0mODZ94GtWvuapgJJPybc3hV/n4skOUL8q/EynUSBZfe3FsK8ddHethpOGkdT
+         vZ5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758009425; x=1758614225;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y3lfUnAM1UpUMZYXHyE3Z0ITLoUcA2V2eTJ2nLIVGHo=;
+        b=UpipBxYtx5DwmJZPsm0r/FRP6kTXk/BhfrRa+nirKcErk/8LZMQrdITsXLEUE60WNZ
+         d632NCIYMipOK1SM1axcd/4JhRW6UWu1zse8YeEVCYZTPeImoauRAPwnJm+hf0wVqJSW
+         jUm72K333yLfRBSEBw2TvRkGMxRWUqQHGAYcpDqcD07StnKYUk2PnLZ2v+PQkJ8ZVWvL
+         cJ8mv9XL+sa5GZijSuODFis7mYCjAkwlDA+xwAX5mSeKQiQXtAXzURfA+Up6elMtHLNY
+         A5kI0ZqCCgC0isJsMHLfVTpwSFK7E+jx4xlVr+s5RaIOcvGTeQFslotexMpKe0moOPOZ
+         QNXA==
+X-Forwarded-Encrypted: i=1; AJvYcCU4W0ux9V9UnTKvRLOHteymN+83oaT/BE0oOKY5FuV296Pb7V8VKtDs68RoZgZNez0mBxY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzt3x0c5LUSgAjtaaCXFdFJpLlulqYxeHamsrNB10hvd/M0Te68
+	8M1FNI7izC+6Yd/m8Y0oVKUhn9aHUjYjuKUgX/ceeZwPER/faR30N/KtHN1L0+zTwU4nNXhtpYN
+	HihAugBUPPBcQCKQCv67Isub1mVoeBkDyVB/e
+X-Gm-Gg: ASbGncvQ8dImxkJU8UdE2rWdwI0ZSQp2VYyYWBZqnvOkbTxaRuqOEOcszZc2I2XnfTo
+	Sg3x97pq0fVNF5zjbE7GOY9JRcwcFp5PUgLUW4PIOEul/XcRKObSQiVsVYon/tD4QbnXHe/0c3s
+	stHr5ePnQYKc1V51wc8xPlIzyY+N617+igpiMWZIbdXz3oz/3OtCqP8W09IYR2KLEgoSmLJKETz
+	NwEqZTjUXfKBdBJitY4TALBIp4gWVvblNtli5VpUA==
+X-Google-Smtp-Source: AGHT+IEv2hBMC178VrMMZOsnJAZc2JJI9Tx+tHMNekTWUWvUy46JnlkmHUqS+hIUfcGfY6HwQxSIgDWKlF9u8YVQ3AU=
+X-Received: by 2002:a05:6102:510d:b0:528:ec33:3675 with SMTP id
+ ada2fe7eead31-55610115045mr7166085137.17.1758009424483; Tue, 16 Sep 2025
+ 00:57:04 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 16 Sep 2025 00:57:03 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 16 Sep 2025 00:57:03 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250915202956.3784935-2-jltobler@gmail.com>
+References: <20250909191134.555689-1-jltobler@gmail.com> <20250915202956.3784935-1-jltobler@gmail.com>
+ <20250915202956.3784935-2-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-2-195569740b57@gmail.com>
+Date: Tue, 16 Sep 2025 00:57:03 -0700
+X-Gm-Features: AS18NWBy2lA9qnnNb6-f0GgBv0iukYu7ba8EjFPi4HbIwVY9bNmSsUoPYS1Yj0E
+Message-ID: <CAOLa=ZThwF0LTd17Wxa3AJnpQuEkcSyp5kHm=D-cZ=Ay0pWa0A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] bulk-checkin: remove ODB transaction nesting
+To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+Cc: ps@pks.im
+Content-Type: multipart/mixed; boundary="000000000000423dfe063ee67733"
 
-On Sat, Sep 13, 2025 at 10:54:30PM +0200, Karthik Nayak wrote:
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 01df32904b..69e50a16db 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -797,9 +797,23 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
->  			goto retry;
->  		} else {
->  			unable_to_lock_message(ref_file.buf, myerr, err);
-> -			if (myerr == EEXIST && ignore_case &&
-> -			    transaction_has_case_conflicting_update(transaction, update))
-> -				ret = REF_TRANSACTION_ERROR_CASE_CONFLICT;
-> +			if (myerr == EEXIST) {
-> +				if (ignore_case &&
-> +				    transaction_has_case_conflicting_update(transaction, update))
-> +					/*
-> +					 * In case-insensitive filesystems, ensure that conflicts within a
-> +					 * given transaction are handled. Pre-existing refs on a
-> +					 * case-insensitive system will be overridden without any issue.
-> +					 */
-> +					ret = REF_TRANSACTION_ERROR_CASE_CONFLICT;
-> +				else
-> +					/*
-> +					 * Pre-existing case-conflicting reference locks should also be
-> +					 * specially categorized to avoid failing all batched updates.
-> +					 */
-> +					ret = REF_TRANSACTION_ERROR_CREATE_EXISTS;
-> +			}
+--000000000000423dfe063ee67733
+Content-Type: text/plain; charset="UTF-8"
 
-Tiniest nit: I think it would be preferable to use curly braces for such
-multi-line comments. This nit isn't worth a reroll though.
+Justin Tobler <jltobler@gmail.com> writes:
 
-Other than that my feedback got addressed, so this looks good to me.
-Thanks!
+> ODB transactions support being nested. Only the outermost
+> {begin,end}_odb_transaction() start and finish a transaction. This is
+> done so that certain object write codepaths that occur internally can be
+> optimized via ODB transactions without having to worry if a transaction
+> has already been started or not. This can make the interface a bit
+> awkward to use, as calling {begin,end}_odb_transaction() does not
+> guarantee that a transaction is actually started or ended. Thus, in
+> situations where a transaction must be explicitly flushed,
+> flush_odb_transaction() must be used.
+>
+> To better clarify ownership sematics around a transaction and further
 
-Patrick
+s/smatics/semantics
+
+> remove the need for flush_odb_transaction() as part of the transaction
+> interface, instead be more explicit and require callers who use ODB
+
+The first sentence doesn't flow into the second here. Perhaps s/instead//
+
+> transactions internally to ensure there is not already a pending
+> transaction before beginning or ending a transaction.
+
+[snip]
+
+> diff --git a/cache-tree.c b/cache-tree.c
+> index d225554eed..f88555a773 100644
+> --- a/cache-tree.c
+> +++ b/cache-tree.c
+> @@ -474,7 +474,7 @@ static int update_one(struct cache_tree *it,
+>
+>  int cache_tree_update(struct index_state *istate, int flags)
+>  {
+> -	struct odb_transaction *transaction;
+> +	struct odb_transaction *transaction = NULL;
+>  	int skip, i;
+>
+>  	i = verify_cache(istate, flags);
+> @@ -490,10 +490,15 @@ int cache_tree_update(struct index_state *istate, int flags)
+>
+>  	trace_performance_enter();
+>  	trace2_region_enter("cache_tree", "update", the_repository);
+> -	transaction = begin_odb_transaction(the_repository->objects);
+> +
+> +	if (!the_repository->objects->transaction)
+> +		transaction = begin_odb_transaction(the_repository->objects);
+> +
+>  	i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
+>  		       "", 0, &skip, flags);
+> +
+>  	end_odb_transaction(transaction);
+> +
+>  	trace2_region_leave("cache_tree", "update", the_repository);
+>  	trace_performance_leave("cache_tree_update");
+>  	if (i < 0)
+>
+
+If there is an ongoing transaction, we don't create a new one. If we
+create a new transaction, we ensure we also close it. Makes sense.
+
+I wish the parent transaction would be passed through to make it easier
+to understand, instead of deriving from a global variable. Nevertheless,
+this is a great improvement.
+
+[snip]
+
+--000000000000423dfe063ee67733
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 884972065e239304_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qSkdFd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMEF5Qy85OEJKNmUrZk5pdWNFZ2QzQ2oxRmQ0VGtsZQpuSXEzd3BqU0p1
+d3pPQWhzb3J6K0xDbUxad2FSeDlwUkNpVTlxc2REWHJya3V3azFLVmJaeUloWW1tRXU5ZktRCmx2
+djBFdU4vSXN1bUg0dlA5MTRyTS9GUTU3WmE4SXMyY2JXVFZ1K2h1bjloNUx1Q1pubTl0WHRWakk2
+N0Q4N3oKUTZ5aU5QcERBRGlDODNqNkdmdHgyNTlST3NaVWN6ckpNYnYydm5vVW5jVXc0Q2tsb2ZR
+WTRNaVZTRzYxQXZhTQptVXZpbitvOUNGUzlaZlFBc2lkWnc0NlU2TmZGOGs5WlJDVUpPZ0xRQjdu
+Tjk2VDA4S1ZvR2ZpNEFrUlI4ckhYCko1N3ZlejhxKzR4b0Vmc0R3V00xTFhhWnc0NVRPOE1ZYWxL
+KzA1S2dlczkrYlYwNmdob3hoODVudy9ETTRCd1oKZllsUHM2QVdwWTRnTG0xYVE2MUxPeFo3a2c2
+U2luYzNiQTVrNGZuUVdOWURHV001NXY1MVVPTnVVU3RxdVc3ZgorTEgza2JlNENEbGtoVGlUaldH
+K09CMmZuYURKU1pUWTkxeUsvbi9YYmJQcENGZEJKbDgzUS9zN3JFWWtXamJYCnlpc2FBeW1aVWN3
+b2lzcE1panB0TXZ5NDNWYjlOMXFxbmluS3BERT0KPW5NSngKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000423dfe063ee67733--
