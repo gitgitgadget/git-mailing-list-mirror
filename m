@@ -1,71 +1,72 @@
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50472340DBF
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 15:00:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58ED625
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 15:17:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758034849; cv=none; b=CIdP5GkgIr2MQuJf5LQVHgFkshnqoiYjnz/ZnH+8IvLliDRqp3/b6lEzZC2Mcsm+e3iMS+/cDpvnDXMHWQFVuQQSDnvfBZJv734aD1kWnUo4qWzxPQPZ6Oh94uV/0MlB8nXd+ChBIPgW36nBC1InPzrKqobWkNVXyHAGBIfPDxc=
+	t=1758035864; cv=none; b=kWouBMJWC1Cm+iqWSjx4c6y7PVSTdxQq1CFoRmdGsD0PFDlbEFPk60Zk12ZHE8jqy6nUphTsirGMA1e7L6lS23I3OS8KvgwBqPqxSIUiWJ9S7s3fYSlHuv+LVDUn8b1A/r7wYKf7/IlzbEJ6juuuFbnQRW5lp/UyStl/IKvFAhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758034849; c=relaxed/simple;
-	bh=5NU4CaKYaQgYWp6sFthK+IAkhVNPHJQaF0Yalvip63g=;
+	s=arc-20240116; t=1758035864; c=relaxed/simple;
+	bh=NCjQ8bG2N3S7sknT7FeKOOJkuZGBir0iSFBR9xYxHQE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fiekfpEe2uFW30sL4I0vcgtaXqYhhcnAvbPMo88BnmDw2UrMqi99t01BPKe1w3s/qQiWBnJf6OK1mQxdde7DCHFc9GACuDINi2aYTzUNyttPg/gAHJzieiEW8N9SlQakwLy084gJZcS72tmO3cY+ciCmNTQUEaosgGO/hJiFQYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yn51Msfq; arc=none smtp.client-ip=209.85.210.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=u4ygXF1ML6nd99Ur5KXg2SLB/YLGZHOc3+9W5B0DdzmmVlF1ak7rGMD7sxCwIUUq+mr7PGt5wlAuZrxUXHmjEXY40vqhT7Zun4aN0LU+7MWTkvW42LfbQEiodNeFisbRZD8TpQ5MNAsV7z1ZoQn8EyFhJk1u7X1mW3j4UPefBIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ke1wtBsB; arc=none smtp.client-ip=209.85.160.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yn51Msfq"
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-74526ca7d64so5527838a34.2
-        for <git@vger.kernel.org>; Tue, 16 Sep 2025 08:00:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ke1wtBsB"
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-31d6aa3e73fso3803054fac.0
+        for <git@vger.kernel.org>; Tue, 16 Sep 2025 08:17:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758034846; x=1758639646; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758035862; x=1758640662; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=asmpLdBAfgmewOtQZl04+hP1XaNx64otJsKPWc+0D1E=;
-        b=Yn51MsfqwTlJP/wIzYmw9KyvwBc2vG8EnSlx+q5xLOAQp9lC5k7QrOptDtvhcnGNUe
-         yB12iW1fJRmRv39D5CaI0o/kxp2iAGEc6q8AW5avUTUONaJAVSUKW1YlACBtt/uqaYfG
-         pbj3QGYra2gm2jOjtUwxf6+D+3KjInLM85oyvjMbbEXCks9d2TYiDCE7gVESisCeockJ
-         ZXee4wNv+klzhwkqhR3E/JukGyWxTn+M1U5JoC8tYVYYEkTmA5UjUEac13tS/ohsHGsG
-         KaCrunW78R39K93XrZxV4Pu9ZMag0oBBwPPCMeAcbGSji9SI8W27RpIYblxDm9Zc/rsd
-         07Iw==
+        bh=j/zkfaSi1/Gnn0IZWRrSkq/jh1yHroM7wm6yOsF+3Oc=;
+        b=Ke1wtBsBYHh/K532WaL+89AlNdHsumqUc8NTOcsD0aVYu2InY5QU+9ehV5cCuxNVf+
+         pVRGLJQxCiN8KcX9hysqoFdb1UFiTaU9ZaOHBy26ZcEnrEvUe46uyLxiHM7OIAfdRju5
+         IxLSwQtAR2ucyn5RVUYy68qNC0dra32YviC+oLz0uWCPkhFrszKmeJ2aw5l52Tis6xk6
+         1SzKiBBhnIkG0NG7uTfFBXgoz01die47S4i60Uoci9mVIiDYWv7PIHAjHx7bhEETn4Lh
+         2kD1UUhqCR0kCzWcgs2dulhLwjr3Z1UjZCGk3+QfJp0ZqossNSloBqGvFhD95VYCy1oW
+         qX2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758034846; x=1758639646;
+        d=1e100.net; s=20230601; t=1758035862; x=1758640662;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=asmpLdBAfgmewOtQZl04+hP1XaNx64otJsKPWc+0D1E=;
-        b=d1i8//qQ7iBcWGtxUP+fqswmOhhziKh1QpLG8Kla6NGLMO4F/RgImxAHzYv9AXBh1G
-         xAafrM7NzoGke5DPbIdewNSn5B6yhrpe4D7pVnM7aM/hka7FBrXPwTi2brKYBU3pzFYu
-         e77aU2dXe2FL5HqPoiAbcyKoumvohav+N1yn6CWHN6xYbnaDdLbnCGhBnnblzhiVQlg/
-         4+cJeM0ArUAeYpywT2JtXd9nknbSOC61yBMu6jgHxVcbc/L/K/A6+773dH3jypZ9ofti
-         xY7zpZkMySgJjIk9LJyebUQ73IEO5+UfjrIIzrRYlMiIN53DeYYFZ+2CG8cnv85h2xAZ
-         8+5Q==
-X-Gm-Message-State: AOJu0YzZf3Gc19ODS2Oh8nTi7AAwpEQn1UZHq0KCSLv6I2oG7I2G8YIq
-	VYFPD4yLzEklVbG4YkuRoEYKqUbd//PTRXOsAzkGz5cnqw/OXSY9N0kW
-X-Gm-Gg: ASbGncvxs/7zkhxCVv1yxGTWZ6ePkvLVDPe6dupxzSIisZYbR0M1HM5fYT8/oUN+4u9
-	zn9jFSmhqGSRMFpXezdSU+cEJfXuSUFt4kqKIV4mJLkQpUUfkanlyU7hYK6fBHgT9VdtZcRPPNx
-	QWiCxbI/8BJ2Ai/sIWdvQif13Y0FVvebs0KBuOZhHIm746Wz//ypJq9m5aLdFv4pWl1HCc31wgf
-	mi95iR0OD5nkgRh10aQZYB5CBxx2VfbtLxTjq5bqdpCSASMESoLqbz2P6vxJrmThJPKWBYeE8AN
-	GA68IHwxX1FjkCTNpMm/2R+3PRjXxV3C2ncoiK0qObb6AqOvw4fbUdoWVLApP+oeTh2G6JwgqPK
-	BhSk6gLq5Jx2ciK7i
-X-Google-Smtp-Source: AGHT+IET/VMGvkMXA08+NICDfUOJl6FVlKOp6mVk9UeAub6TyQHcIBNs1LBKd9j49MjFb+Qoa2Eccw==
-X-Received: by 2002:a05:6808:6f91:b0:43b:5cee:14c with SMTP id 5614622812f47-43b8da6275cmr7082194b6e.43.1758034846035;
-        Tue, 16 Sep 2025 08:00:46 -0700 (PDT)
+        bh=j/zkfaSi1/Gnn0IZWRrSkq/jh1yHroM7wm6yOsF+3Oc=;
+        b=CPc6BLbMc12b7Q4qSsELfzpmVG+rRLWj+ylXMGIbRA0A2dp2YKo83wxrI76RPPkw+K
+         EjN21+RmweUrN3M8jz2pT9AMNeXlgtMhiq1h3aWrVgNkYPJrol+p8znkAEQdMgjQ9lrY
+         w6M9/dwSItaM5CgPqF9FJYbYXJmtJ5dFLy7VzMkzKBdcvQv7hGp8utMFQ43sGqjUPu9V
+         wzvxRB4NZSJ/06HY7Mfrt2w9JyYvaDX/fjFMayorD7IUIoXSqnHvogJpNZkN91jHuU9Q
+         LmL40p3/aij5TE+jmw48xCJ7LMwDBmpnQabJbRJ4KDXfKpWrYWme7M4dTA4lSLgXD7Pm
+         ZEQg==
+X-Gm-Message-State: AOJu0YxBdu58uLvm+9nsTBIgxvnXeavapE6qvf6Jtq9NKYIFRGPbFo/D
+	rYVLqaCwnZTEkBTwMBgCs9pRNCKPryGQ3CpOFzJqd5J0QElh1Yl1rmDh
+X-Gm-Gg: ASbGncvH/CNb4NB5VVDMYqLfMn+MH6qrid6LhWtZsLNOjfrzMxoheJ1Gc2ZP65VJbCQ
+	vPfPctSOQj0rsE9YUk0/HVyTMZP9oE4ZJXFYbg+xOoS8lqqMNac4D9a//YASOM0rdlEZ7jYUBqt
+	lNMdvXWes682SOtg6Mu/BL0a5K7zY3jqyf5cZAGaC3fwvA7y2wuSs+txSdM3B52HbYBL3tddmN8
+	aYmK0i3w7XcSJKsxQWHEbWJHtQGbWbbmMspNkV6I1nXY1aSNFiKBQUKDZXPIWwqwleH9YX88x2w
+	UM9/ptHr9mq9QNNrIOmKyQXuzQ3UaJL2JQqU+BXwoigbWGkOgnpvWk2xtZpJ+ZJwETBDe2IO/oF
+	wGgY/pBOxwM9LjM6M
+X-Google-Smtp-Source: AGHT+IEP5IBhio9JzBQSSsSfl6jhShzNkxNf202LZ3PRv2jjozz3cpzll4bGbWBJhE+qsJNQkYQ8zQ==
+X-Received: by 2002:a05:6871:588d:b0:32b:d4f0:46fd with SMTP id 586e51a60fabf-3345207a3cfmr1322328fac.7.1758035861564;
+        Tue, 16 Sep 2025 08:17:41 -0700 (PDT)
 Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-43b82af7ab1sm3317261b6e.30.2025.09.16.08.00.45
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-32d35382f8asm4802099fac.19.2025.09.16.08.17.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Sep 2025 08:00:45 -0700 (PDT)
-Date: Tue, 16 Sep 2025 10:00:45 -0500
+        Tue, 16 Sep 2025 08:17:41 -0700 (PDT)
+Date: Tue, 16 Sep 2025 10:17:40 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH v2 1/6] bulk-checkin: remove ODB transaction nesting
-Message-ID: <h7yqajyyilmcjb4lfco2oooqwradmyrhx4aystush3klpbgl6d@3zrii36y6kk5>
+Subject: Re: [PATCH v2 2/6] builtin/update-index: end ODB transaction when
+ --verbose is specified
+Message-ID: <xvrq3xrmxnotzwyurnrxmxxq6aoclns3ywykoguenlw4a7euyl@7xys5dgoxpbv>
 References: <20250909191134.555689-1-jltobler@gmail.com>
  <20250915202956.3784935-1-jltobler@gmail.com>
- <20250915202956.3784935-2-jltobler@gmail.com>
- <CAOLa=ZThwF0LTd17Wxa3AJnpQuEkcSyp5kHm=D-cZ=Ay0pWa0A@mail.gmail.com>
+ <20250915202956.3784935-3-jltobler@gmail.com>
+ <CAOLa=ZS_H2CKvYy09Xd1GPqS9Bd5v_dZYiOLjZRbKN4fbYRbVA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,71 +75,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZThwF0LTd17Wxa3AJnpQuEkcSyp5kHm=D-cZ=Ay0pWa0A@mail.gmail.com>
+In-Reply-To: <CAOLa=ZS_H2CKvYy09Xd1GPqS9Bd5v_dZYiOLjZRbKN4fbYRbVA@mail.gmail.com>
 
-On 25/09/16 12:57AM, Karthik Nayak wrote:
+On 25/09/16 02:07AM, Karthik Nayak wrote:
 > Justin Tobler <jltobler@gmail.com> writes:
+> > +			/*
+> > +			 * It is possible, though unlikely, that a caller could
+> > +			 * use the verbose output to synchronize with addition
+> > +			 * of objects to the object database. The current
+> > +			 * implementation of ODB transactions leaves objects
+> > +			 * invisible while a transaction is active, so end the
+> > +			 * transaction here early before processing the next
+> > +			 * update. All further updates are performed outside of
+> > +			 * a transaction.
+> > +			 */
+> > +			if (transaction && verbose) {
+> > +				end_odb_transaction(transaction);
+> > +				transaction = NULL;
+> > +			}
+> > +
 > 
-> > ODB transactions support being nested. Only the outermost
-> > {begin,end}_odb_transaction() start and finish a transaction. This is
-> > done so that certain object write codepaths that occur internally can be
-> > optimized via ODB transactions without having to worry if a transaction
-> > has already been started or not. This can make the interface a bit
-> > awkward to use, as calling {begin,end}_odb_transaction() does not
-> > guarantee that a transaction is actually started or ended. Thus, in
-> > situations where a transaction must be explicitly flushed,
-> > flush_odb_transaction() must be used.
-> >
-> > To better clarify ownership sematics around a transaction and further
+> So with this change, we now have all objects updated before the
+> `--verbose` flag updated via a single transaction. Updates after the
+> `--verbose` flag will no longer use a transaction.
 > 
-> s/smatics/semantics
-> 
-> > remove the need for flush_odb_transaction() as part of the transaction
-> > interface, instead be more explicit and require callers who use ODB
-> 
-> The first sentence doesn't flow into the second here. Perhaps s/instead//
+> The older version would flush the transaction on every report, is there
+> is any benefits to the new flow with regards to performance?
 
-Thanks. I'll fix these in the next version.
+The older version would only flush transaction during a report if the
+--verbose option is enabled. Object written without --verbose would not
+be immediately flushed on report.
 
-> > diff --git a/cache-tree.c b/cache-tree.c
-> > index d225554eed..f88555a773 100644
-> > --- a/cache-tree.c
-> > +++ b/cache-tree.c
-> > @@ -474,7 +474,7 @@ static int update_one(struct cache_tree *it,
-> >
-> >  int cache_tree_update(struct index_state *istate, int flags)
-> >  {
-> > -	struct odb_transaction *transaction;
-> > +	struct odb_transaction *transaction = NULL;
-> >  	int skip, i;
-> >
-> >  	i = verify_cache(istate, flags);
-> > @@ -490,10 +490,15 @@ int cache_tree_update(struct index_state *istate, int flags)
-> >
-> >  	trace_performance_enter();
-> >  	trace2_region_enter("cache_tree", "update", the_repository);
-> > -	transaction = begin_odb_transaction(the_repository->objects);
-> > +
-> > +	if (!the_repository->objects->transaction)
-> > +		transaction = begin_odb_transaction(the_repository->objects);
-> > +
-> >  	i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
-> >  		       "", 0, &skip, flags);
-> > +
-> >  	end_odb_transaction(transaction);
-> > +
-> >  	trace2_region_leave("cache_tree", "update", the_repository);
-> >  	trace_performance_leave("cache_tree_update");
-> >  	if (i < 0)
-> >
-> I wish the parent transaction would be passed through to make it easier
-> to understand, instead of deriving from a global variable. Nevertheless,
-> this is a great improvement.
+In this version we have functionally the same thing, but instead of
+flushing the transaction every report, the transaction is ended and
+subsequent object writes are written outside of a transaction instead.
 
-This should be cleaned up a bit in the next version by making
-begin_odb_transaction() function as a noop that returns NULL when the
-ODB already has a pending transaction. This allow us to at least avoid
-checking the transaction state from the global here. We will still have
-to derive the ODB from the_repository global for now though.
+I'll try to clarify this in the commit message.
 
 -Justin
