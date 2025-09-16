@@ -1,122 +1,108 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CBB22E3F0
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 20:04:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA42D306B13
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 20:10:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758053098; cv=none; b=KKGT/OtNcG+FO1Rh2C+/NhALjfINrXbc5iVdWakRPAqc5VTX+T+0iujmz94CQ4rcyv3EowBFG/IOZvVkiMtol4o5npAUpUqUimFYGgxuKvSUZSigcqIWatp0zr5KnWY5xVrJNjlBa2M+YKjCL4XJCbwB1gD8PY5Mf8tfh0Bs0s8=
+	t=1758053440; cv=none; b=ATBykP7Y5AHrGdn0/NYuxtIsYJVxU+iv31H7/OkyrhXlBQ3T02wQFvMI/EYSv6/51PislWUdfOTV2vseSvV3XF1oD/dtmC9940B2zzITok2pfwLR4K0X29q5HFJTPp8QaNbFE3jfIAA94gOJWGibKqtPabemKg6oCE3RRu9UCcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758053098; c=relaxed/simple;
-	bh=heeCBCs8E3p3odb/Er05n6oIF0WgNN1HRHdRC12Yovs=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=fLkXtZHHqyiXvT8lXadlz5YPeHFC0PSSRvLYZZsULA58IpNFVB3OoXYg560G3vf/zRbhL6xglXXqzB6cincipz2iQDeMq92LKEMx7NUuOglLGcPctLxocJWXKrXLG+L1u6Uzw8+k9TvTrPpxmjdLU8aOm6arHJMWFpN6xl+wznU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=O/Jf7foa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nfx9FoE3; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1758053440; c=relaxed/simple;
+	bh=koPIrU10w+piXG6pk7n+x4ffHCQpitBOg1xjVjJ8IP4=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=t40yC0WDsl53oIM6HTM72UdAnjQ4nxyebk7tPRbs+1KCcj6IW8hnB/PRgm2GqMHg7HfoQKH9YV/JyHs15QS0LSYvBUjIMy4j99eIgq+5+xbt2sWVGfvRBOdpIfgsxChal47gjXZlCYS/vxNNQvAhshVYnGAXlHnArVwsvfDTRw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=F1x1xs3t; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="O/Jf7foa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nfx9FoE3"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 17E5CEC0235;
-	Tue, 16 Sep 2025 16:04:55 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Tue, 16 Sep 2025 16:04:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758053095;
-	 x=1758139495; bh=eXah5CAZPaFKbEOVUlbDtHKjxBWTxwUgsahZZ6MMnIA=; b=
-	O/Jf7foa1YbdPFGnBYdSOAbZVtrD47Q02TWaxUYa3c3ya+vFt6u7zxw9OliPe+iU
-	WVGl/aTpcLNRv0x/cNhGllaWK9CopvM9A/fzr2Z5A9RHjhPUkgditu9CeheQJLap
-	wzYQweRNa/g6rNNo2I7jFZm3eOH37lQmDcqlpVVuJmgeTIddZ6OwMqHwogVEHpRr
-	uMHV02c98xEXlWCNG6teQhy20XP6vFTq9moM563IGZviDUPmkaCFVdpmfodaB6ZJ
-	A2bz6/VssOWI02Z2YUHAbg4kUzSa72ypccpEs2pdPAV4efeVMMRE9E7GOqYEGVGU
-	s6Tfd4s9/TfXF4lYtAi9CA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758053095; x=
-	1758139495; bh=eXah5CAZPaFKbEOVUlbDtHKjxBWTxwUgsahZZ6MMnIA=; b=N
-	fx9FoE3MJuxPSIdsV/92coeMyo5s37+pU4pFmxtNCnL7ldY6VjqKSTKrysRN2Yga
-	99OYwOcx/QX2P5ufD2UrN596Pvex92MxdHwTwrfM2L5xvTZJTUVxtg0kQNE0Q/os
-	hXNRy71VC0OwLheZQFUC557AjzAdZ3ODIc9KYUHo0p6xX6/f5kAip250BrBo3MuK
-	O4IeNdOtZdn6cho9KyTTsYhmvAZygaV3OBB5NIef45ECvL95Ndp6r3xQs78p6wC7
-	Og9oNnKhT65xePOQeav5ftASge+hbA0F4Ny9Zgp4H69DknL7vSDijgz/8mEnrtpN
-	lsHcVu3VwkklU5u5yuSIQ==
-X-ME-Sender: <xms:5sLJaMocIn28N4BedHTtyfBUkbdkQJ-fxvNk_5nQl2U_U7Y0FPkmnJU>
-    <xme:5sLJaCrakesPKgZ8ozHtqyhiww2XpjTmy8r0SjXclmKQ2E-ZvLMaHKCd0H3Bqt4sF
-    RL-N_Y1JektidZtUw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegudegkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeehudfgvefgfefg
-    ffdvhfffvdevveegheehudetvdfgueffjeevjedugeevfedvfeenucffohhmrghinhepkh
-    gvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
-    gtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehguhhsth
-    grvhhordhvvghlrghstghohhesghhmrghilhdrtghomhdprhgtphhtthhopehguhhsthgr
-    vhhordhvvghlrghstghoqdhhvghrnhgrnhguvgiisehnvghtrghpphdrtghomhdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:5sLJaLpfD3LygHrmx2QRyKOVj7lV5dICOTt7cPYXv_aaZB20W1suOQ>
-    <xmx:5sLJaCybGiG0-IyqeWbf9n2sVQRMR1iapKd9ttp4Y7maLdnyJX-exg>
-    <xmx:5sLJaHPzSThWNVlmEkuhFqvLh9vu2oWF9UjV3tkqI_1T8ZPUiA0aiA>
-    <xmx:5sLJaP5Bc-ZzuJjtHWOuBEENVOyqz0nYDt7ydmsWRTW0VBOAN07nUQ>
-    <xmx:58LJaCD5pzObYg2f85J5_jJhrrU_K9m07fONRXVXFX43XadrxPcPLFTX>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id BB2801EA0068; Tue, 16 Sep 2025 16:04:54 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="F1x1xs3t"
+Received: (qmail 102229 invoked by uid 109); 16 Sep 2025 20:10:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:mime-version:content-type; s=20240930; bh=koPIrU10w+piXG6pk7n+x4ffHCQpitBOg1xjVjJ8IP4=; b=F1x1xs3tX8SMVotMeuUEkYxxVK80VoHGSzA4TrdZcwBI4XLMcVYQjUerUgl61+ew2LDso2lu45tzLe5qsjs/PrqeXq4l1h0F8A5byy7PZKU+FS0ExxBdcyUhcBdlsZO/41A932lGSQNptTqnQEwZVkQGcYHVjNIVA2smj88xLe1ZfGVgl7p3ha8QvsY+T4j9yEtQlfDViZaJJuqFpCm3F6qOILyMBcxq23XQlAYxoTsqp816yzSSwGLujnxLuYKWn1xAmOZYjwYd0YT9Py1nZ2dNll57Nn5fu7rQYvmXNu8EQ0B2a5KOvPwEwsREz0CaGKikmdfW+yTP0w2Sq1xZkw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Sep 2025 20:10:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 166041 invoked by uid 111); 16 Sep 2025 20:10:37 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Sep 2025 16:10:37 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 16 Sep 2025 16:10:36 -0400
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/13] unraveling the mysteries of color variables
+Message-ID: <20250916201036.GA612463@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A4llZu9Ahe03
-Date: Tue, 16 Sep 2025 22:04:34 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Josh Soref" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
- =?UTF-8?Q?Gustavo_Velasco-Hern=C3=A1ndez?= <gustavo.velascoh@gmail.com>,
- "Velasco-Hernandez, Gustavo" <Gustavo.Velasco-Hernandez@netapp.com>
-Message-Id: <97770221-63b8-4375-9787-991717594938@app.fastmail.com>
-In-Reply-To: <xmqqzfaumi2b.fsf@gitster.g>
-References: <pull.2028.git.git.1754922884439.gitgitgadget@gmail.com>
- <pull.2028.v2.git.git.1758038628948.gitgitgadget@gmail.com>
- <xmqqzfaumi2b.fsf@gitster.g>
-Subject: Re: [PATCH v2] docs: update description for '--mirror' option for 'git push'
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-On Tue, Sep 16, 2025, at 19:19, Junio C Hamano wrote:
->> The current description considers only created, updated or deleted re=
-fs
->> locally. However it does not address the case where new refs were cre=
-ated
->> on the remote end, in which case, are also deleted. The description h=
-as
->> been reworded to describe what is removed, updated or added. (Based on
->> Junio feedback)
->
-> Drop "(Based on Junio feedback)" that is not even grammatical ;-)
-> If you want to credit others, it is common to say
->
->     Helped-by: ...
->
-> just before your own sign-off.  See an example like
->
-> https://lore.kernel.org/git/2f78ab2e28c64f05d807cb9460fa62eb1011a57f.1=
-757879060.git.code@khaugsbakk.name/
->
-> (by the way, oh, gee, that's an unwieldy long message ID).
+While reviewing the patches that were applied as jk/add-i-patch, Patrick
+noted that we could be using GIT_COLOR_UNKNOWN in more places. I punted
+there because I knew it would be a bit of a rabbit hole, and I think the
+patch count here perhaps justifies that view. ;)
 
-It is.  Considering I only send out (git send-)emails at most
-every 15 seconds. ;=E2=80=93(
+The good news is that my digging did uncover two minor bugs, which are
+fixed here in patches 2 and 3. And the series should improve the
+readability of the code by using named constants and appropriate types
+more consistently.
+
+The latter part of the series untangles some of the oddities related to
+color variables. I think the results are more readable, but they aren't
+strictly necessary because of C's weak type system (and because we
+define our constants in a favorable way). The final patch is gross and
+should not be applied, but I included it here as it explains how I was
+able to find all of the oddities.
+
+  [01/13]: color: use GIT_COLOR_* instead of numeric constants
+  [02/13]: color: return enum from git_config_colorbool()
+  [03/13]: grep: don't treat grep_opt.color as a strict bool
+  [04/13]: diff: simplify color_moved check when flushing
+  [05/13]: diff: don't use diff_options.use_color as a strict bool
+  [06/13]: diff: pass o->use_color directly to fill_metainfo()
+  [07/13]: diff: stop passing ecbdata->use_color as boolean
+  [08/13]: pretty: use format_commit_context.auto_color as colorbool
+  [09/13]: color: use git_colorbool enum to type to store colorbools
+  [10/13]: color: return bool from want_color()
+  [11/13]: add-interactive: retain colorbool values longer
+  [12/13]: config: store want_color() result in a separate bool
+  [13/13]: color: convert git_colorbool into a struct
+
+ add-interactive.c     | 25 ++++++++++----------
+ add-interactive.h     |  4 ++--
+ advice.c              |  2 +-
+ builtin/add.c         |  2 +-
+ builtin/am.c          |  4 ++--
+ builtin/branch.c      |  2 +-
+ builtin/clean.c       |  2 +-
+ builtin/commit.c      |  4 ++--
+ builtin/config.c      | 27 +++++++++++-----------
+ builtin/grep.c        |  2 +-
+ builtin/log.c         |  4 ++--
+ builtin/push.c        |  2 +-
+ builtin/range-diff.c  |  3 ++-
+ builtin/show-branch.c |  2 +-
+ color.c               | 30 ++++++++++++------------
+ color.h               | 15 +++++++-----
+ combine-diff.c        |  2 +-
+ diff.c                | 54 ++++++++++++++++++++-----------------------
+ diff.h                |  5 ++--
+ grep.c                |  4 ++--
+ grep.h                |  4 ++--
+ log-tree.c            |  4 ++--
+ log-tree.h            |  2 +-
+ parse-options-cb.c    |  6 ++---
+ pretty.c              | 12 +++++-----
+ pretty.h              |  3 ++-
+ ref-filter.h          |  4 ++--
+ sequencer.c           |  2 +-
+ sideband.c            |  8 +++----
+ transport.c           |  2 +-
+ wt-status.c           |  6 ++---
+ wt-status.h           |  2 +-
+ 32 files changed, 127 insertions(+), 123 deletions(-)
+
+-Peff
