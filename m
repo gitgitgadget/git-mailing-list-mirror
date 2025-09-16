@@ -1,62 +1,62 @@
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966562DCC08
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A06E2DE6F8
 	for <git@vger.kernel.org>; Tue, 16 Sep 2025 18:29:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758047391; cv=none; b=i1Y0Uq8LMUXBnehFTqb2f8Wg5lzfhGKaV5WJx78AqZWk5Hu/3R8ei6wrvtqMxrcIpYjQr6kZa9Ax3MKfKW+0c7VIXkDvgtrDeCQV57CDWdNLkZqCkPwv+FaQ4DMbpbl4aszE74dQAVr/xUKpblQ8MO5l89msLWx2aWPp8LHI1GQ=
+	t=1758047391; cv=none; b=kHELv2j/dw/oKCQ/LFVllB7bJ2+LXFgrzHQXxhLU6LSQvbUK6S8RZjosssBGbQyQT9yAYFbKRbw8J4NoJCOdRkC0IMAN5W8Usz/jfQWJijsvJeB17fRL79PdHvFfWjPc+8dkUz1YK/pdAIKKw74R1oqm+hKlMlL6QmJrJx8/znQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1758047391; c=relaxed/simple;
-	bh=/ifnclESHl7ehpIOHYZvCMQ51uKpXi12wdGiqU+iKx8=;
+	bh=LrAlNKg/Gq+g9J7EdpLTo9D37e7x1huU4IJB1s0RVhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GFn+3Efg96q+gY8xDKsyXnee4bn/LbGay8ERIqTtdQVD3mQuTVoMga8Rib+ZUyG7ac316pDWnwDOl5oYDZUBqdTG1CTkZi+xGrd/L812v0yBNqMdQJ23pspT0rRRYF3ZfKiEGDxm7q3cQYP0H1gZlPORNIsoFYBW6qv+PqydhOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b5aCPMsV; arc=none smtp.client-ip=209.85.160.41
+	 MIME-Version; b=OgA3ZG50vEsv/op4QAG2o10VDrUjoqWoYLVa9k7/ho2TJ0jVTyhNtdw2fxhtrVFZJGJcKvDoQHAd2YAdKwUVF0YfupFlTPgxsI7eBpw2aqANqWubxiJoSRB2wYGT1QJyTSMkTC4B01bzFTwn0AasS0fAMNUhhLaoonVh2wg5YJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mF1PYWsv; arc=none smtp.client-ip=209.85.160.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b5aCPMsV"
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-3326d9ee5edso1985484fac.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mF1PYWsv"
+Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-3197f534179so4103241fac.2
         for <git@vger.kernel.org>; Tue, 16 Sep 2025 11:29:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758047388; x=1758652188; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758047389; x=1758652189; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bdxhqr8hqFJSrhTHYW0j3V6S9GD1EomirDlaRyx/ZBs=;
-        b=b5aCPMsVE1elLU1rRDndQdL+z2n1+OOiAUE1LnYxWit5BEb2i04vJMt1ms6/GjqcU8
-         tAYqNPdZSkJRr7KytTVwrnYBo+VfK6guLkrW76WFKSMfnKHvbxK9FuYBUAypZR2c19II
-         DcyOqtOtxM70KM+VLIzihmObEYtC2GStHiR4rOOMsABnx5gaj3rm1EkRqS1tHuNGu1fo
-         JPxFMF2xKS0DEqAzUvllG6qaJQop3GfroIBRNcj03CgFp1CTgUNgiVWA4vlO2aT2sf2w
-         8S+CxJhFcHGOfOeWK9O3TL17gK85jwTJEmEzBa7lvtolzNiWAAD2tUkrmeu9wETsMKIY
-         CwZA==
+        bh=67WKgHayTWBy3NmPWikb62L5Bb+DGAAX/0MvpXLDrKk=;
+        b=mF1PYWsvvXlPmrsjHMTJTW6Zib4W9VPYKkos0VMxpbXa4MEKlAXD8Nt7m8O/2D+tyr
+         7UqrW0E06wkT4qjE9xHbFW/bKVpCjOcqe7woJr2cNdV3rgGkAaGlsMGPmKSrw3nh7v8z
+         fmMhZY3ZU1jdbctoNYmDev5a4S/Ie0XfRpmMpij6vQt5dmMAkXhxHP32Hbtt6K36vEjT
+         81OyRa8dFP4PFhdNT3V+00Ga4MD5uJRrlXJWEfB4FRmm3SOanZflSiBiny+xJOg1Xs4Q
+         hB8bf1xW8IsWPZraewdmBa/kYEWcO7nat0BQLHRFTdJenJ2dGRyM0sFqOXqhAGwIzYF6
+         6a5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758047388; x=1758652188;
+        d=1e100.net; s=20230601; t=1758047389; x=1758652189;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bdxhqr8hqFJSrhTHYW0j3V6S9GD1EomirDlaRyx/ZBs=;
-        b=fpZ4+CtTUhILh4mkGOlmVt99rILzUXc/A5b/kw1sOjcTiWdVaAw3q6yUprye4rhTK+
-         Hlp6J7EJ2UiO+7yIxk6fO25ubW09tV6O1HbLLmyX1p2RmBzemkbLlWUMqJqtaPoCMDVc
-         VP5lpjqMKrKxxxd60/1Mr0U8syfHGcyFofC8ffKM2Z+wQU8k94q8fHkdSRkigiAFs1ym
-         +z3uR7IVaoh68OFzP+BX3ev2N2sv7a+wLo6eqLHZsC7/64b51sqS7vhGTdq1e7bEdPdi
-         zCxZ9V79UTteY/idVPdcuM245+i0DT6F+9AsUThzxWOup+XLG5cDqCKr7scdIX1SYsjN
-         S7Xg==
-X-Gm-Message-State: AOJu0YzvNFids5mmTJD7msuwfifjqyTQyZo838OWvHLuIF/xAX0uQJ8a
-	L3LyFPJC/AdSl95adEH+6UfDjR/BgiRVpE+mTVTSJmQ8J6I2LsuqYI6muj9e/g==
-X-Gm-Gg: ASbGncuCTbvwVgumQCNgDamQekv0Md6lnlF5pmiPnzEH6J4d8Ubqf3tOyie5KEPz/Nm
-	yRYRLa1fw3XExz2dImRhKE8q81aZGG0Uol8Qv4YXD9p4TSUxfjiPBbEFztrDN5Ug40cXt5eTZQe
-	k5HIQiRDptncIzB8QLzfskZK5zwAV/7oOgpnkZSVMAIUKupano2F7yU/NYBtS/u8jqUFCTrqSpC
-	9UXg39nrgKdwoyeYBgymdMJaVN9r2yT7nqkvk11zURQC5Tp3UMFi5TVYA9u8biPHP0DvhrxyIs8
-	6ezu0nanZTkYG1CGcS6I1kLOYLJ/s4Bimx1EptuLiZiD9Zf9Q9Ia5JJIAw1c1R7iXxhSeIoxNio
-	6WUMZVt9St73zGmytQrhZKdE3iN5+Q2Y=
-X-Google-Smtp-Source: AGHT+IEGhurGsWy+z7PDuf2BmmDyA2JKxLvDu6BIR/HBrjnmJeaD6JCYsgRUVqcbZx0fc5vHUNGzpA==
-X-Received: by 2002:a05:6871:2c20:b0:331:8dc2:914f with SMTP id 586e51a60fabf-3318dc2ab14mr6111254fac.44.1758047388097;
+        bh=67WKgHayTWBy3NmPWikb62L5Bb+DGAAX/0MvpXLDrKk=;
+        b=W6Cvd6wQQGwxuKsQwE5onRBHU+doU1F6Q2ShsGF3VdvRJgXGHjfC3J+Lr5DCGHt2Ti
+         40y7zOMuWeWYb27vSx9QPctFeXVVYmbJtsWw6QzEZlC/hJkZmMs1ShDVuWvlmq7CZTk8
+         BPfVkZze3tEd7l4yYBVWAosC5x9FKs4cmvUtIArYcNrCQAtDMrylO8Y+ekPZVPEhwi3h
+         R1e3/Me1E9pXJnXS0RNYLsKVgz8xATZQxy8r2C2nUkiDz75sAFRpgbPuUfss1uaGT1jr
+         gONt/rWcqWj6gZmhov8+hQaBDR0IsdaAcS8mgvlD/bQtM4FHDU1/KZiO4PIay4vGGPXa
+         Ov9A==
+X-Gm-Message-State: AOJu0Ywcrl6+DPHG91U3NfIFYu/H12LR5R156MFh1qEQGL5BxHf+Qb4w
+	KnZFOUbs7hZt+/moV/neUVw/1IWmYi7MZUacw0cLYoEaMi9SYTnCO/BQ/wE42Q==
+X-Gm-Gg: ASbGncvbi1SeT2BdNVekI2QsSYLbw90l02j2fPEQIjhGPf7DQXuQ1nZEFMT0fP2+pkd
+	BlCvaVncGL0KxWZEhwTItmMUq27OeFI/v/+gdYppcDev6w/kCnaQj09ucNkGY/aeXW4yPGDm1Av
+	SFo81MxEqRjZ9WKLK+MHNQDLlYsrSzOkm+I8YRQb4lxFafmPfo3NU7YNGVTwBDonYCQHJQagqJl
+	UTtMgJAtgKbN5N9yB5GSjKVDEu22iSC5M+E1kIefW8cF9D8WAspyawi0x45FgItUFmLjZvklVWJ
+	YCh7h45IAFEHwQgW62Ba9Eh4xwHk1zGz2mnyPVZp6fY9yna5kRqxYBj/hLwfugLdq0e8r6F+uh/
+	inx/y9lEAvUui1aeg6E6gDnuCvq7L3dU=
+X-Google-Smtp-Source: AGHT+IHueqCHdUu/jLduD7mZneohQIY+xb6xOye8KAHtZiBGCEV0Xk9KaKtq9GDQCDUOSCqa2rqWXQ==
+X-Received: by 2002:a05:6871:738e:b0:315:9347:9260 with SMTP id 586e51a60fabf-32e58144acdmr7900896fac.32.1758047388731;
         Tue, 16 Sep 2025 11:29:48 -0700 (PDT)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-32d32d5653fsm5003058fac.7.2025.09.16.11.29.47
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-32d32d5653fsm5003058fac.7.2025.09.16.11.29.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Sep 2025 11:29:47 -0700 (PDT)
+        Tue, 16 Sep 2025 11:29:48 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -64,9 +64,9 @@ Cc: ps@pks.im,
 	me@ttaylorr.com,
 	karthik.188@gmail.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 5/6] object-file: update naming from bulk-checkin
-Date: Tue, 16 Sep 2025 13:29:37 -0500
-Message-ID: <20250916182938.2193476-6-jltobler@gmail.com>
+Subject: [PATCH v3 6/6] odb: add transaction interface
+Date: Tue, 16 Sep 2025 13:29:38 -0500
+Message-ID: <20250916182938.2193476-7-jltobler@gmail.com>
 X-Mailer: git-send-email 2.51.0.193.g4975ec3473b
 In-Reply-To: <20250916182938.2193476-1-jltobler@gmail.com>
 References: <20250915202956.3784935-1-jltobler@gmail.com>
@@ -79,237 +79,266 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update the names of several functions and types relocated from the
-bulk-checkin subsystem for better clarity. Also drop
-finish_tmp_packfile() as a standalone function in favor of embedding it
-in flush_packfile_transaction() directly.
+Transactions are managed via the {begin,end}_odb_transaction() function
+in the object-file subsystem and its implementation is specific to the
+files object source. Introduce odb_transaction_{begin,commit}() in the
+odb subsystem to provide an eventual object source agnostic means to
+manage transactions.
+
+Update call sites to instead manage transactions through the odb
+subsystem. Also rename {begin,end}_odb_transaction() functions to
+object_file_transaction_{begin,commit}() to clarify the object source it
+supports.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- object-file.c | 80 +++++++++++++++++++++++----------------------------
- 1 file changed, 36 insertions(+), 44 deletions(-)
+ builtin/add.c            |  5 +++--
+ builtin/unpack-objects.c |  4 ++--
+ builtin/update-index.c   |  7 ++++---
+ cache-tree.c             |  4 ++--
+ object-file.c            | 12 +++++++-----
+ object-file.h            |  6 +++---
+ odb.c                    | 10 ++++++++++
+ odb.h                    | 13 +++++++++++++
+ read-cache.c             |  4 ++--
+ 9 files changed, 46 insertions(+), 19 deletions(-)
 
+diff --git a/builtin/add.c b/builtin/add.c
+index 8294366d68..bf312c40be 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -15,6 +15,7 @@
+ #include "pathspec.h"
+ #include "run-command.h"
+ #include "object-file.h"
++#include "odb.h"
+ #include "parse-options.h"
+ #include "path.h"
+ #include "preload-index.h"
+@@ -575,7 +576,7 @@ int cmd_add(int argc,
+ 		string_list_clear(&only_match_skip_worktree, 0);
+ 	}
+ 
+-	transaction = begin_odb_transaction(repo->objects);
++	transaction = odb_transaction_begin(repo->objects);
+ 
+ 	ps_matched = xcalloc(pathspec.nr, 1);
+ 	if (add_renormalize)
+@@ -594,7 +595,7 @@ int cmd_add(int argc,
+ 
+ 	if (chmod_arg && pathspec.nr)
+ 		exit_status |= chmod_pathspec(repo, &pathspec, chmod_arg[0], show_only);
+-	end_odb_transaction(transaction);
++	odb_transaction_commit(transaction);
+ 
+ finish:
+ 	if (write_locked_index(repo->index, &lock_file,
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 4596fff0da..ef79e43715 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -599,12 +599,12 @@ static void unpack_all(void)
+ 		progress = start_progress(the_repository,
+ 					  _("Unpacking objects"), nr_objects);
+ 	CALLOC_ARRAY(obj_list, nr_objects);
+-	transaction = begin_odb_transaction(the_repository->objects);
++	transaction = odb_transaction_begin(the_repository->objects);
+ 	for (i = 0; i < nr_objects; i++) {
+ 		unpack_one(i);
+ 		display_progress(progress, i + 1);
+ 	}
+-	end_odb_transaction(transaction);
++	odb_transaction_commit(transaction);
+ 	stop_progress(&progress);
+ 
+ 	if (delta_list)
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index ee01c4e423..8a5907767b 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -18,6 +18,7 @@
+ #include "cache-tree.h"
+ #include "tree-walk.h"
+ #include "object-file.h"
++#include "odb.h"
+ #include "refs.h"
+ #include "resolve-undo.h"
+ #include "parse-options.h"
+@@ -1122,7 +1123,7 @@ int cmd_update_index(int argc,
+ 	 * Allow the object layer to optimize adding multiple objects in
+ 	 * a batch.
+ 	 */
+-	transaction = begin_odb_transaction(the_repository->objects);
++	transaction = odb_transaction_begin(the_repository->objects);
+ 	while (ctx.argc) {
+ 		if (parseopt_state != PARSE_OPT_DONE)
+ 			parseopt_state = parse_options_step(&ctx, options,
+@@ -1152,7 +1153,7 @@ int cmd_update_index(int argc,
+ 			 * a transaction.
+ 			 */
+ 			if (transaction && verbose) {
+-				end_odb_transaction(transaction);
++				odb_transaction_commit(transaction);
+ 				transaction = NULL;
+ 			}
+ 
+@@ -1220,7 +1221,7 @@ int cmd_update_index(int argc,
+ 	/*
+ 	 * By now we have added all of the new objects
+ 	 */
+-	end_odb_transaction(transaction);
++	odb_transaction_commit(transaction);
+ 
+ 	if (split_index > 0) {
+ 		if (repo_config_get_split_index(the_repository) == 0)
+diff --git a/cache-tree.c b/cache-tree.c
+index 79ddf6b727..2aba47060e 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -489,10 +489,10 @@ int cache_tree_update(struct index_state *istate, int flags)
+ 
+ 	trace_performance_enter();
+ 	trace2_region_enter("cache_tree", "update", the_repository);
+-	transaction = begin_odb_transaction(the_repository->objects);
++	transaction = odb_transaction_begin(the_repository->objects);
+ 	i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
+ 		       "", 0, &skip, flags);
+-	end_odb_transaction(transaction);
++	odb_transaction_commit(transaction);
+ 	trace2_region_leave("cache_tree", "update", the_repository);
+ 	trace_performance_leave("cache_tree_update");
+ 	if (i < 0)
 diff --git a/object-file.c b/object-file.c
-index 03f9931b83..8103a2bf41 100644
+index 8103a2bf41..17a236d2fe 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -667,7 +667,7 @@ void hash_object_file(const struct git_hash_algo *algo, const void *buf,
- 	write_object_file_prepare(algo, buf, len, type, oid, hdr, &hdrlen);
- }
- 
--struct bulk_checkin_packfile {
-+struct transaction_packfile {
- 	char *pack_tmp_name;
- 	struct hashfile *f;
- 	off_t offset;
-@@ -682,10 +682,10 @@ struct odb_transaction {
- 	struct object_database *odb;
- 
- 	struct tmp_objdir *objdir;
--	struct bulk_checkin_packfile packfile;
-+	struct transaction_packfile packfile;
- };
- 
--static void prepare_loose_object_bulk_checkin(struct odb_transaction *transaction)
-+static void prepare_loose_object_transaction(struct odb_transaction *transaction)
- {
- 	/*
+@@ -691,7 +691,7 @@ static void prepare_loose_object_transaction(struct odb_transaction *transaction
  	 * We lazily create the temporary object directory
-@@ -701,7 +701,7 @@ static void prepare_loose_object_bulk_checkin(struct odb_transaction *transactio
- 		tmp_objdir_replace_primary_odb(transaction->objdir, 0);
- }
- 
--static void fsync_loose_object_bulk_checkin(struct odb_transaction *transaction,
-+static void fsync_loose_object_transaction(struct odb_transaction *transaction,
- 					   int fd, const char *filename)
- {
- 	/*
-@@ -722,7 +722,7 @@ static void fsync_loose_object_bulk_checkin(struct odb_transaction *transaction,
- /*
-  * Cleanup after batch-mode fsync_object_files.
-  */
--static void flush_batch_fsync(struct odb_transaction *transaction)
-+static void flush_loose_object_transaction(struct odb_transaction *transaction)
- {
- 	struct strbuf temp_path = STRBUF_INIT;
- 	struct tempfile *temp;
-@@ -733,7 +733,7 @@ static void flush_batch_fsync(struct odb_transaction *transaction)
- 	/*
- 	 * Issue a full hardware flush against a temporary file to ensure
- 	 * that all objects are durable before any renames occur. The code in
--	 * fsync_loose_object_bulk_checkin has already issued a writeout
-+	 * fsync_loose_object_transaction has already issued a writeout
- 	 * request, but it has not flushed any writeback cache in the storage
- 	 * hardware or any filesystem logs. This fsync call acts as a barrier
- 	 * to ensure that the data in each new object file is durable before
-@@ -762,7 +762,7 @@ static void close_loose_object(struct odb_source *source,
- 		goto out;
- 
- 	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
--		fsync_loose_object_bulk_checkin(source->odb->transaction, fd, filename);
-+		fsync_loose_object_transaction(source->odb->transaction, fd, filename);
- 	else if (fsync_object_files > 0)
- 		fsync_or_die(fd, filename);
- 	else
-@@ -940,7 +940,7 @@ static int write_loose_object(struct odb_source *source,
- 	static struct strbuf filename = STRBUF_INIT;
- 
- 	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
--		prepare_loose_object_bulk_checkin(source->odb->transaction);
-+		prepare_loose_object_transaction(source->odb->transaction);
- 
- 	odb_loose_path(source, &filename, oid);
- 
-@@ -1029,7 +1029,7 @@ int stream_loose_object(struct odb_source *source,
- 	int hdrlen;
- 
- 	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
--		prepare_loose_object_bulk_checkin(source->odb->transaction);
-+		prepare_loose_object_transaction(source->odb->transaction);
- 
- 	/* Since oid is not determined, save tmp file to odb path. */
- 	strbuf_addf(&filename, "%s/", source->path);
-@@ -1349,10 +1349,10 @@ static int already_written(struct odb_transaction *transaction,
- }
- 
- /* Lazily create backing packfile for the state */
--static void prepare_to_stream(struct odb_transaction *transaction,
--			      unsigned flags)
-+static void prepare_packfile_transaction(struct odb_transaction *transaction,
-+					 unsigned flags)
- {
--	struct bulk_checkin_packfile *state = &transaction->packfile;
-+	struct transaction_packfile *state = &transaction->packfile;
- 	if (!(flags & INDEX_WRITE_OBJECT) || state->f)
+ 	 * the first time an object might be added, since
+ 	 * callers may not know whether any objects will be
+-	 * added at the time they call begin_odb_transaction.
++	 * added at the time they call object_file_transaction_begin.
+ 	 */
+ 	if (!transaction || transaction->objdir)
  		return;
- 
-@@ -1381,7 +1381,7 @@ static void prepare_to_stream(struct odb_transaction *transaction,
-  * status before calling us just in case we ask it to call us again
-  * with a new pack.
-  */
--static int stream_blob_to_pack(struct bulk_checkin_packfile *state,
-+static int stream_blob_to_pack(struct transaction_packfile *state,
- 			       struct git_hash_ctx *ctx, off_t *already_hashed_to,
- 			       int fd, size_t size, const char *path,
- 			       unsigned flags)
-@@ -1457,28 +1457,13 @@ static int stream_blob_to_pack(struct bulk_checkin_packfile *state,
- 	return 0;
- }
- 
--static void finish_tmp_packfile(struct odb_transaction *transaction,
--				struct strbuf *basename,
--				unsigned char hash[])
-+static void flush_packfile_transaction(struct odb_transaction *transaction)
- {
--	struct bulk_checkin_packfile *state = &transaction->packfile;
--	struct repository *repo = transaction->odb->repo;
--	char *idx_tmp_name = NULL;
--
--	stage_tmp_packfiles(repo, basename, state->pack_tmp_name,
--			    state->written, state->nr_written, NULL,
--			    &state->pack_idx_opts, hash, &idx_tmp_name);
--	rename_tmp_packfile_idx(repo, basename, &idx_tmp_name);
--
--	free(idx_tmp_name);
--}
--
--static void flush_bulk_checkin_packfile(struct odb_transaction *transaction)
--{
--	struct bulk_checkin_packfile *state = &transaction->packfile;
-+	struct transaction_packfile *state = &transaction->packfile;
- 	struct repository *repo = transaction->odb->repo;
- 	unsigned char hash[GIT_MAX_RAWSZ];
- 	struct strbuf packname = STRBUF_INIT;
-+	char *idx_tmp_name = NULL;
- 
- 	if (!state->f)
- 		return;
-@@ -1503,11 +1488,16 @@ static void flush_bulk_checkin_packfile(struct odb_transaction *transaction)
- 		    repo_get_object_directory(transaction->odb->repo),
- 		    hash_to_hex_algop(hash, repo->hash_algo));
- 
--	finish_tmp_packfile(transaction, &packname, hash);
-+	stage_tmp_packfiles(repo, &packname, state->pack_tmp_name,
-+			    state->written, state->nr_written, NULL,
-+			    &state->pack_idx_opts, hash, &idx_tmp_name);
-+	rename_tmp_packfile_idx(repo, &packname, &idx_tmp_name);
-+
- 	for (uint32_t i = 0; i < state->nr_written; i++)
- 		free(state->written[i]);
- 
- clear_exit:
-+	free(idx_tmp_name);
- 	free(state->pack_tmp_name);
- 	free(state->written);
- 	memset(state, 0, sizeof(*state));
-@@ -1535,11 +1525,12 @@ static void flush_bulk_checkin_packfile(struct odb_transaction *transaction)
-  * binary blobs, they generally do not want to get any conversion, and
-  * callers should avoid this code path when filters are requested.
-  */
--static int index_blob_bulk_checkin(struct odb_transaction *transaction,
--			    struct object_id *result_oid, int fd, size_t size,
--			    const char *path, unsigned flags)
-+static int index_blob_packfile_transaction(struct odb_transaction *transaction,
-+					   struct object_id *result_oid, int fd,
-+					   size_t size, const char *path,
-+					   unsigned flags)
- {
--	struct bulk_checkin_packfile *state = &transaction->packfile;
-+	struct transaction_packfile *state = &transaction->packfile;
- 	off_t seekback, already_hashed_to;
- 	struct git_hash_ctx ctx;
- 	unsigned char obuf[16384];
-@@ -1560,14 +1551,14 @@ static int index_blob_bulk_checkin(struct odb_transaction *transaction,
- 	if ((flags & INDEX_WRITE_OBJECT) != 0) {
- 		CALLOC_ARRAY(idx, 1);
- 
--		prepare_to_stream(transaction, flags);
-+		prepare_packfile_transaction(transaction, flags);
- 		hashfile_checkpoint_init(state->f, &checkpoint);
- 	}
- 
- 	already_hashed_to = 0;
- 
- 	while (1) {
--		prepare_to_stream(transaction, flags);
-+		prepare_packfile_transaction(transaction, flags);
- 		if (idx) {
- 			hashfile_checkpoint(state->f, &checkpoint);
- 			idx->offset = state->offset;
-@@ -1585,7 +1576,7 @@ static int index_blob_bulk_checkin(struct odb_transaction *transaction,
- 			BUG("should not happen");
- 		hashfile_truncate(state->f, &checkpoint);
- 		state->offset = checkpoint.offset;
--		flush_bulk_checkin_packfile(transaction);
-+		flush_packfile_transaction(transaction);
- 		if (lseek(fd, seekback, SEEK_SET) == (off_t)-1)
- 			return error("cannot seek back");
- 	}
-@@ -1632,9 +1623,10 @@ int index_fd(struct index_state *istate, struct object_id *oid,
+@@ -1622,12 +1622,12 @@ int index_fd(struct index_state *istate, struct object_id *oid,
+ 	} else {
  		struct odb_transaction *transaction;
  
- 		transaction = begin_odb_transaction(the_repository->objects);
--		ret = index_blob_bulk_checkin(the_repository->objects->transaction,
--					      oid, fd, xsize_t(st->st_size),
--					      path, flags);
-+		ret = index_blob_packfile_transaction(the_repository->objects->transaction,
-+						      oid, fd,
-+						      xsize_t(st->st_size),
-+						      path, flags);
- 		end_odb_transaction(transaction);
+-		transaction = begin_odb_transaction(the_repository->objects);
++		transaction = odb_transaction_begin(the_repository->objects);
+ 		ret = index_blob_packfile_transaction(the_repository->objects->transaction,
+ 						      oid, fd,
+ 						      xsize_t(st->st_size),
+ 						      path, flags);
+-		end_odb_transaction(transaction);
++		odb_transaction_commit(transaction);
  	}
  
-@@ -1996,8 +1988,8 @@ void end_odb_transaction(struct odb_transaction *transaction)
- 	 */
- 	ASSERT(transaction == transaction->odb->transaction);
- 
--	flush_batch_fsync(transaction);
--	flush_bulk_checkin_packfile(transaction);
-+	flush_loose_object_transaction(transaction);
-+	flush_packfile_transaction(transaction);
- 	transaction->odb->transaction = NULL;
- 	free(transaction);
+ 	close(fd);
+@@ -1967,8 +1967,10 @@ int read_loose_object(struct repository *repo,
+ 	return ret;
  }
+ 
+-struct odb_transaction *begin_odb_transaction(struct object_database *odb)
++struct odb_transaction *object_file_transaction_begin(struct odb_source *source)
+ {
++	struct object_database *odb = source->odb;
++
+ 	if (odb->transaction)
+ 		return NULL;
+ 
+@@ -1978,7 +1980,7 @@ struct odb_transaction *begin_odb_transaction(struct object_database *odb)
+ 	return odb->transaction;
+ }
+ 
+-void end_odb_transaction(struct odb_transaction *transaction)
++void object_file_transaction_commit(struct odb_transaction *transaction)
+ {
+ 	if (!transaction)
+ 		return;
+diff --git a/object-file.h b/object-file.h
+index 6323d2e63c..3fd48dcafb 100644
+--- a/object-file.h
++++ b/object-file.h
+@@ -222,16 +222,16 @@ struct odb_transaction;
+ 
+ /*
+  * Tell the object database to optimize for adding
+- * multiple objects. end_odb_transaction must be called
++ * multiple objects. object_file_transaction_commit must be called
+  * to make new objects visible. If a transaction is already
+  * pending, NULL is returned.
+  */
+-struct odb_transaction *begin_odb_transaction(struct object_database *odb);
++struct odb_transaction *object_file_transaction_begin(struct odb_source *source);
+ 
+ /*
+  * Tell the object database to make any objects from the
+  * current transaction visible.
+  */
+-void end_odb_transaction(struct odb_transaction *transaction);
++void object_file_transaction_commit(struct odb_transaction *transaction);
+ 
+ #endif /* OBJECT_FILE_H */
+diff --git a/odb.c b/odb.c
+index 2a92a018c4..af9534bfe1 100644
+--- a/odb.c
++++ b/odb.c
+@@ -1051,3 +1051,13 @@ void odb_clear(struct object_database *o)
+ 	hashmap_clear(&o->pack_map);
+ 	string_list_clear(&o->submodule_source_paths, 0);
+ }
++
++struct odb_transaction *odb_transaction_begin(struct object_database *odb)
++{
++	return object_file_transaction_begin(odb->sources);
++}
++
++void odb_transaction_commit(struct odb_transaction *transaction)
++{
++	object_file_transaction_commit(transaction);
++}
+diff --git a/odb.h b/odb.h
+index a89b214390..82093753c8 100644
+--- a/odb.h
++++ b/odb.h
+@@ -185,6 +185,19 @@ struct object_database {
+ struct object_database *odb_new(struct repository *repo);
+ void odb_clear(struct object_database *o);
+ 
++/*
++ * Starts an ODB transaction. Subsequent objects are written to the transaction
++ * and not committed until odb_transaction_commit() is invoked on the
++ * transaction. If the ODB already has a pending transaction, NULL is returned.
++ */
++struct odb_transaction *odb_transaction_begin(struct object_database *odb);
++
++/*
++ * Commits an ODB transaction making the written objects visible. If the
++ * specified transaction is NULL, the function is a no-op.
++ */
++void odb_transaction_commit(struct odb_transaction *transaction);
++
+ /*
+  * Find source by its object directory path. Dies in case the source couldn't
+  * be found.
+diff --git a/read-cache.c b/read-cache.c
+index 80591eeced..94098a3861 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3972,9 +3972,9 @@ int add_files_to_cache(struct repository *repo, const char *prefix,
+ 	 * This function is invoked from commands other than 'add', which
+ 	 * may not have their own transaction active.
+ 	 */
+-	transaction = begin_odb_transaction(repo->objects);
++	transaction = odb_transaction_begin(repo->objects);
+ 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
+-	end_odb_transaction(transaction);
++	odb_transaction_commit(transaction);
+ 
+ 	release_revisions(&rev);
+ 	return !!data.add_errors;
 -- 
 2.51.0.193.g4975ec3473b
 
