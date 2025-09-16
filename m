@@ -1,36 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1461F1A2389
-	for <git@vger.kernel.org>; Tue, 16 Sep 2025 20:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19B82DD60F
+	for <git@vger.kernel.org>; Tue, 16 Sep 2025 20:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758053976; cv=none; b=afz4S2tkEf7nfsWWCIE/FC2Mie0eYDjArPpgRm2gTNJPXmZgoLndsZjHkrZvnyf7/06mOBpPSZiq8f1lQCyMkoqfexSHjGqjVD2wgdsQGanq9NRKV9ExbAJSYIBd5D+Q8YgRYhj+bweI6NJPiAEt3Lak0os0A414Xlm0kqkcfJI=
+	t=1758054029; cv=none; b=OnQZpZDK1l/QSxKLHT9y9v4f4e6LrrCtwYhZQTV9ZIMvYkqM7tKZwfecCvkoSt2vuoKcESpNfr0vYJrY0fcDXaAL370Ug8o4PSR9xoHheePpashSf50bdwMdJ7N6Vajm6kQWGDfAS3Kwp8R6tVFuCj7RckQTMYL3mUkDODxB+K4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758053976; c=relaxed/simple;
-	bh=M5RVVTWTK5jVvL/QxUJp24SWWf5TCH5jsil37ME7MHA=;
+	s=arc-20240116; t=1758054029; c=relaxed/simple;
+	bh=8r14qc4tJL+9ZpXJQ1bTQOPQWSC5RqQB9qjZ+6HIyIc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C+AZ7qiy8Af5rxs5NiJ0tlmVYyk2AeN4C2E8948mQXNmfWJFUD2vVfmvG5aYB5qGMNmNVkQ9qMwuKiPcfBTILpWWS2cTrNV9r6FHV/26zncJ2YaR9rF2WgcQHy1MoDi7JAArCuBy5Wzg6+fZvd75FsFI1wPUusL36N7HmDuo6fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=gE3SEtQU; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=hJwx97TUtoz+0cvshmTZOmBGFrmk26NK5I55gRHVfqdGnDX4Cb2mkYoKi7CBCUNbxZk6TQkffTKYqaIqiIq7PgtfFuV32hGGo6b8CXzn56V1bSMYogvqWCYyeKX06J8nA2UOmMIuQg7f78DP4hcSgeFY7zlatjAIFcVozDYOg1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=FSswFrRs; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="gE3SEtQU"
-Received: (qmail 102366 invoked by uid 109); 16 Sep 2025 20:19:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=M5RVVTWTK5jVvL/QxUJp24SWWf5TCH5jsil37ME7MHA=; b=gE3SEtQUj774QxNKvSrjuhD+YWMacLcHJO7iMqBS9eQWpqf4mbWVM6XVkvUKB9Fkv6iYu9+aSFKuZEHwTwmzKxM0p3UmyO3w9O1En5aSMDT/X4owyujnazQEScewDG4Z+w2o/ytps01j80cdxvfCAca6/aFaIZQg3kOHmGkOpCCATKPhGltxPHp9lFHIachVjYncimi7QE0k/dkM7LfwJfv2YIE3ZQf7aB3nDe0nE0oRn9TkqRglpQVPaeBwvbVYvwBMPu18MjlZrnOy4G0a5M6T8OTCmQAwA72mbiq8osAacLCnwQmaGNgCxwDpuZ83oYa7p5Dmk5ZgOP6DaPxOpg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="FSswFrRs"
+Received: (qmail 102384 invoked by uid 109); 16 Sep 2025 20:20:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=8r14qc4tJL+9ZpXJQ1bTQOPQWSC5RqQB9qjZ+6HIyIc=; b=FSswFrRsH2l8legp4pr+KRhkgcOD+cUS0At2R+/GrCekHD+z5RNyj8AJisH6D2RcjL6b9FqOM697iCHK3NI423f5hjGSMAZImI+Gp/hqBwYDVNSbEzBHKGmvKyqs7Zkox81crAEcgbUlpHOqELqQbdbn4QDWLkXUPJNkP64YI2BjKHp92fMIQ5B/9vFjS4Jsl31Vj9+/T7WbgZwtIls1a8usUA2tTO3fsqTk26dwT14p+PGNjSHv3KL5w+7XQySFAVyJrRFJT9V/GwrRWdTYC4EeZq364gRtNd9anW9yqKORxnml4ThTaGkgL+kJo5/0L9KZRPv1uv3M+qksCnRKiQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Sep 2025 20:19:34 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Sep 2025 20:20:27 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 166186 invoked by uid 111); 16 Sep 2025 20:19:33 -0000
+Received: (qmail 166235 invoked by uid 111); 16 Sep 2025 20:20:26 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Sep 2025 16:19:33 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Sep 2025 16:20:26 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 16 Sep 2025 16:19:33 -0400
+Date: Tue, 16 Sep 2025 16:20:26 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 05/13] diff: don't use diff_options.use_color as a strict bool
-Message-ID: <20250916201933.GE612873@coredump.intra.peff.net>
+Subject: [PATCH 06/13] diff: pass o->use_color directly to fill_metainfo()
+Message-ID: <20250916202026.GF612873@coredump.intra.peff.net>
 References: <20250916201036.GA612463@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -40,80 +40,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <20250916201036.GA612463@coredump.intra.peff.net>
 
-We disable --color-moved if color is not in use at all. This happens in
-diff_setup_done(), where we set options->color_moved to 0 if
-options->use_color is not true. But a strict boolean check here is not
-correct; use_color could be GIT_COLOR_UNKNOWN or GIT_COLOR_AUTO, both of
-which evaluate to true, even though we may later decide not to show
-colors.
+We pass the use_color parameter of fill_metainfo() as a strict boolean,
+using:
 
-We should be using want_color() to convert that git_colorbool into a
-true boolean. As it turns out, this does not produce wrong output. Even
-though we go to the trouble to detect the moved lines, ultimately we get
-the color values from diff_get_color(), which does check want_color().
-And so it returns the empty string for each color, and we "color" the
-result with nothing.
+  want_color(o->use_color) && !pgm
 
-So the output is correct, but there is a small but measurable
-performance cost to doing the line detection. E.g., in git.git before
-and after this patch (there are no colors shown because hyperfine
-redirects output to /dev/null):
+to derive its value. But then inside the function, we pass it to
+diff_get_color(), which expects one of the git_colorbool enum values,
+and so feeds it to want_color() again.
 
-  Benchmark 1: ./git.old log --no-merges -p --color-moved -1000
-    Time (mean ± σ):      1.019 s ±  0.013 s    [User: 0.955 s, System: 0.064 s]
-    Range (min … max):    1.005 s …  1.045 s    10 runs
+Even though want_color() produces a strict 0/1 boolean, this doesn't
+produce wrong results because want_color() is idempotent. Since
+GIT_COLOR_ALWAYS and NEVER are defined as 1 and 0, and because
+want_color() passes through those values, evaluating "want_color(foo)"
+and "want_color(want_color(foo))" will return the same result.
 
-  Benchmark 2: ./git.new log --no-merges -p --color-moved -1000
-    Time (mean ± σ):     982.9 ms ±  14.5 ms    [User: 925.8 ms, System: 57.1 ms]
-    Range (min … max):   965.1 ms … 1003.2 ms    10 runs
-
-  Summary
-    ./git.new log --no-merges -p --color-moved -1000 ran
-      1.04 ± 0.02 times faster than ./git.old log --no-merges -p --color-moved -1000
-
-Note that the fix is not quite as simple as just calling want_color()
-from diff_setup_done(). There's a subtle timing issue that goes back to
-daa0c3d971 (color: delay auto-color decision until point of use,
-2011-08-17), the commit that adds want_color() in the first place.  As
-discussed there, we must delay evaluating the colorbool value until all
-pager setup is complete.
-
-So instead, we'll leave the "color_moved" field intact in diff_setup_done(),
-and modify the point where it is evaluated. Fortunately there is only
-one such spot that controls whether we run any of the color-moved code
-at all.
+But as part of a longer strategy to align the types we use for storing
+these values, let's pass through the colorbool directly. To handle the
+"&&" case here, we'll convert the presence of "pgm" into "NEVER", which
+arguably makes the intent of the code more clear anyway.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- diff.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ diff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/diff.c b/diff.c
-index e6c85c8491..cc3542e7f4 100644
+index cc3542e7f4..6b12596642 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -4995,8 +4995,7 @@ void diff_setup_done(struct diff_options *options)
- 	if (options->flags.follow_renames)
- 		diff_check_follow_pathspec(&options->pathspec, 1);
+@@ -4596,7 +4596,7 @@ static void run_diff_cmd(const struct external_diff *pgm,
+ 		 */
+ 		fill_metainfo(msg, name, other, one, two, o, p,
+ 			      &must_show_header,
+-			      want_color(o->use_color) && !pgm);
++			      pgm ? GIT_COLOR_NEVER : o->use_color);
+ 		xfrm_msg = msg->len ? msg->buf : NULL;
+ 	}
  
--	if (!options->use_color ||
--	    (options->flags.allow_external && external_diff()))
-+	if (options->flags.allow_external && external_diff())
- 		options->color_moved = 0;
- 
- 	if (options->filter_not) {
-@@ -6733,7 +6732,7 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
- 	if (WSEH_NEW & WS_RULE_MASK)
- 		BUG("WS rules bit mask overlaps with diff symbol flags");
- 
--	if (o->color_moved)
-+	if (o->color_moved && want_color(o->use_color))
- 		o->emitted_symbols = &esm;
- 
- 	if (o->additional_path_headers)
 -- 
 2.51.0.527.g34bc42dacd
 
