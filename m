@@ -1,134 +1,94 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15392F7441
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 17:07:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914CA2FB99F
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 17:31:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758128859; cv=none; b=msavYuUKWn/R1cI4ymAz7ShnH0Sy205lqDpZ2jmIgEHISMQo7JhVvgfqJl4Lztv/HBf8/u07qYwfUAKuX0CrlrcFeTvBPOGDyEA1S/eWp3IJg+tIXacI8Uo6f7TMytsROm+PJfVLU6fDdxNMb7GpzfB4OpanPIaMSr3CqH8FHLg=
+	t=1758130269; cv=none; b=iEPA02JfholRSJg33s/OQSS+zsaOap9FYIimFShv37pF5t/7HWkUfPBqo8sKKD4F4Zbkjm/UTRqaYG4/7dX6/JdtOFI5hVCXNSEcJVAOS5d8Zn6Iwh9vGacHD4E6PhIWcO5wCgJWj46/Pd2GBXR1ZLQEv8JvCqG5KlDlhxJcfHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758128859; c=relaxed/simple;
-	bh=Lcp2sXxLBQ78bGYhCgZ/mT9NMYA+rT+SwHPSrB80CjA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WW6ATOsMWC798Cpx9czc30C9lQR5pezLa9Htfz47CM8gmAeg6u+WtsJ2i4IxHudYVP+Ywq/ggDpQssnQGRaTVvdolNwb8NiYeWGtCpcsDU/T0fBFr4BNogAl/yIBKGr2oDW4rK+8bTYWOukXhmahfmq2bz64eKEFZD6lTUIXjCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xhL+Mxqv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DUI2w0QC; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758130269; c=relaxed/simple;
+	bh=LHtO6xMCxa67YNO0Hrx+5hnDVyNr8g9xQj/nb0XhzYo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iFJthtC5sGRq8dEkC7XZmXIUc/GAX1OvdWw3PzHlP2+LipWAKMl1oLqPbqHeW7wwMdlG9PLIW8dWOzpAWzm1bUtjdr4Q5yOIaiCsWopwxBBEJirkKhz72Sr0esct/yjNYtTc4Xr9L4itXHY+SVQ0uQ40k9ge6rnOol6dSy6ZzOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PDYKvKz2; arc=none smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xhL+Mxqv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DUI2w0QC"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id C62A6EC021D;
-	Wed, 17 Sep 2025 13:07:36 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Wed, 17 Sep 2025 13:07:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758128856; x=1758215256; bh=DDVgyo4nde
-	uigK9mYMcYlZbX8V9q4NM3MlQC++TgI/g=; b=xhL+MxqvP573RxY57Tfl8osqpA
-	uZ4ncmDAMUdwkgdKUercZEudNeSMXltkRoo5/IfX+gKYVyG/QOdsI3jgyKiWqahU
-	Clo5hvbFjE5xmcMqZHyncuBXlAkD7c8fzxTT950psTBDCehU1QmqgxgaHhgJP0UD
-	4KB0wpiPzSv4dR0IlvT/hpN3ZFEX3+GJMtvw5OaKFkYewP5Icg4YZo4ug1amVSwY
-	P89rKnzG6WIEWuUNyDbxfRoQSlhi76sIDEtr9r56Df5pqVKh9hPykSz5cR7CVbjj
-	Iloc4hJkNM8vh4xOOLVex4cfj0fRypWQexlQBW6l6UV5+D0fOOlXcc2Vs4tw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758128856; x=1758215256; bh=DDVgyo4ndeuigK9mYMcYlZbX8V9q4NM3MlQ
-	C++TgI/g=; b=DUI2w0QC3nTDh96tmI1uNc8JsT5PkHPP8rrq50gIUnJYLC21uJz
-	DC5lLehazIFsgfaCT6sLJHF1glCC/wlQSoHRq987sXYoBnwWLUDLEDRlchNera56
-	JaQ9QtAH+hgW/gHHMPj2rklcv/33pzkuVffex5tGtEngXfpU5rKgkx+kraBHWLc0
-	gNEHXkHUgCEr63a/N5oChs3RBCNBodr/tYofuC/j0tRzWh1gGztduES4Pr9+vv+R
-	zPUGQYqMcnGnMLThDXVBNZfQz+z1Epp3kIWnRVYqnlCgcq2CpxfyVc4d+PUvB7ab
-	YmjS9qzJSUddwXruVh8fLPwkJusHsveyDgA==
-X-ME-Sender: <xms:2OrKaJsHGE7vhzJRzRj-FHNzg7PZOY7ucM7gbAflGIdabq8unp-jkw>
-    <xme:2OrKaNCM3rEsqNQMb8RWO8LoJCNw5A2PFnG-1xYnLkIelP0v7tnCJAEg77JEaBHXe
-    rcYoOfhoKtG0xao8w>
-X-ME-Received: <xmr:2OrKaJXiJLcX3_v3jkdQ5fKfR4nD98brCtCNftk_SeAvfyqbkZO6GZ-g0-y6cgJWD90dc7Om-9Ckeb80X-HjJaSHX1L2bZm8UhcsVww>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeggedttdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
-    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
-    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:2OrKaDCN4-K8iHNJU8Sn3Bsk-eEaEFRnyUZNQGQDvpf0NOEGBN54bw>
-    <xmx:2OrKaE-LkiJFxXZG2VrG0Jm6wjEL7e2Chqkxi05ekAZs91FlE6gRbQ>
-    <xmx:2OrKaCFeTdjKbGHfu9TmGq5e7kDwOj7MwOZ1xagAFJWLyAWfaTHWvw>
-    <xmx:2OrKaKOgGxuplCbJJ7NPH9uw373ge34hnM2tRV9P4iPzVO4z3FOPhw>
-    <xmx:2OrKaJ88vCl-WvQdlO11hAmvVASchl4QNIUWW2PtsnmXolOhuS-G7PL7>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Sep 2025 13:07:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v2 00/18] Introduce rust: In xdiff
-In-Reply-To: <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com> (Ezekiel
-	Newren via GitGitGadget's message of "Wed, 17 Sep 2025 01:16:20
-	+0000")
-References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
-	<pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
-Date: Wed, 17 Sep 2025 10:07:34 -0700
-Message-ID: <xmqqcy7pc8ix.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PDYKvKz2"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-336d84b58edso123201fa.0
+        for <git@vger.kernel.org>; Wed, 17 Sep 2025 10:31:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758130266; x=1758735066; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LHtO6xMCxa67YNO0Hrx+5hnDVyNr8g9xQj/nb0XhzYo=;
+        b=PDYKvKz2RHVEzbNnGLylsYVBSLS9ye+kXsJm4B01P2UpKYjBTEgPOHAbYJgXXN5dQn
+         wuk3l8fADmKO3IxsFBfPty3URd5vaq3XqegvLVSJJJ0REp4ra7GPSJYG7ybsDOWef4Hw
+         qd/Wlf/04yCwvo8IHAPNJVaortkjRqBPav54r/GioFFkYd+keDolcwibMe3KGb8b0y02
+         s4JvpobSSe8A+PFjahFZEAQ/sCOoNoe2fMxVazORUXBTNUeCbAzQ8xd+L0gDo82Yzz7r
+         26o8Q/ODCcPEOoB7lAjgYBPSCGuTOs4muIxxc3V7kYyxlaUbk6RNZI611w0KwgBb4dlA
+         IdHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758130266; x=1758735066;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LHtO6xMCxa67YNO0Hrx+5hnDVyNr8g9xQj/nb0XhzYo=;
+        b=AlpSNUa6hAwkDH6F++HR0UY0XCW01xMRjF3QNTPl1Oo5t0UhOKdkof/gg6VGp+HHCW
+         G48ABhX5zM36cl/5dUJajs86txmtYMDF2M0kDuGcPPxSlfU9smBRpd86ZaWAIRUtl6j+
+         uaB8cKLFHe/yko09BvAkIJb5/v4esWhHnTglL27QgyFE4LyittHc4breJIOvJfWXsa/y
+         WvgfhaS0ozxj6rVjggfKB5aBWH3ShQerMWadyAdW4cUQMG0wCbikj7R5CCG+0gdGgXPG
+         7P0Kzl8TtGhiYHwm3/9Ldi5QQo7Lqf1+tH1Ia1X0BtsldXjeP1Gehg4XyLI81gZ5sSxI
+         DAeQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUqtb8SlUKL4bzI00/OPrGYQWOqbYQGcScKUWDbgv50jFKqD4V6mqmyJDKcimADIpQqIdk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw9YVNZILjIUH6ZJAvN5Pwe1y2E85F7yH79ACA4fGHedPxm3t0/
+	w/bY9Jq+3LFgNtPyIbYEOCJjLLUzk4bNEcGxa4SBgRHzqEumJx/XpIxR0548nME4IBIzC2IsKPS
+	kX6iZTkGpuJznkUTyjBAiuCKrs/IZoDY=
+X-Gm-Gg: ASbGnctaCjp/QpQe+6E1SeX33tmj0raTYrty6s/Ix+bH5TNiTFtNK8hX0btHGmyEdzp
+	fCYgMxF+jsi1lPSWeQdMDIndu10p7KHadV0ENvUKfEfjSjnpWwEfFh7DJ27s8x2HiwbD2R3fGqU
+	QUkdJ1i1gGQwwQJkbbEGbGYJ5MyAY6reOodyMvmWp7drQ3OUKwuRZ8nqQi8yuGlrvmyXVz4rAGc
+	oYjRvCU
+X-Google-Smtp-Source: AGHT+IHyvPFGYhj2XNTszdpvG58DDJuKYc7c4e6vd19/zgPCqevnlVeK9w/y7Da5d1eV4S9QS+An9bWNphDNhYBKEB4=
+X-Received: by 2002:a2e:b891:0:b0:336:e357:882c with SMTP id
+ 38308e7fff4ca-35f65a8fdcemr10349751fa.40.1758130265336; Wed, 17 Sep 2025
+ 10:31:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
+ <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
+ <CAH=ZcbB0Qv=b-hdB2EVW-D-dob4NnzyWDYGEThYZm94S0V7OGg@mail.gmail.com>
+ <aMk2mo5OHPNQi0PW@pks.im> <87plbpffk1.fsf@gentoo.org>
+In-Reply-To: <87plbpffk1.fsf@gentoo.org>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Wed, 17 Sep 2025 11:30:53 -0600
+X-Gm-Features: AS18NWAaFwluiStzIiMt7jVd9ouVXGWxcdZPIt3TXl_fSTDHkfFaA7Cz8tOzSH0
+Message-ID: <CAH=ZcbC51LbvubZuLQvajJqUJHARCjF5_ZBXWDS+DAcBvUMwfA@mail.gmail.com>
+Subject: Re: [PATCH v5 0/9] Introduce Rust and announce that it will become mandatory
+To: Sam James <sam@gentoo.org>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Ben Knoble <ben.knoble@gmail.com>, Christian Brabandt <cb@256bit.org>, 
+	Collin Funk <collin.funk1@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>, 
+	Elijah Newren <newren@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, Taylor Blau <me@ttaylorr.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, Sep 17, 2025 at 6:07=E2=80=AFAM Sam James <sam@gentoo.org> wrote:
+> I think adding external crates especially will need discussion given the
+> licencing and "offline" issues (which are solvable but they should be
+> examined).
 
-> This is a continuation of
-> https://lore.kernel.org/git/pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com/,
-> but I am removing the RFC label.
-
-Continuation meaning that these patches build on top of that earlier
-15-patch series?
-
-> Suggestions on changes that I could make to this series is appreciated.
->
-> Changes in v2: High level overview:
->
->  * patch 1: cleanup: rename variables that collide with Rust primitive type
->    names
->  * patches 2-4: Makefile now produces libgit.a correctly
->  * patches 5,6: Documentation from Brian and Patrick
->  * patches 7,8: Introduce Rust
->  * patches 9-11: github workflows
->  * patches 12-14: introduce crates build-helper, and cbindgen
->  * patches 15-18: varint test balloon
->
-> I would like feed back in two categories: big changes, and little changes.
-
-This seems to also mix in some patches from Patrick's series that
-are already in flight.  What's the intention of the inclusion?  Do
-you expect us to discard Patrick's series and replace with this,
-which would lose some from them and then add more from here?  Your
-"pull request" may target my "master/main" branch, but it needs to
-play well together with other topics in flight that are cooking in
-'next' and also with other topics that are aspiring to be in 'next'.
-
-So I can figure out that these patches are designed to apply cleanly
-on top of Git v2.51.0, I am somewhat lost what you want to do with
-the resulting branch.  Having duplicate commits that happen to do
-the same thing in multiple branches "git" the tool can handle just
-fine, but that certainly is a bad communication among developers
-that we do not want to particularly encourage.
-
-Before talking about "big" and "little" changes, do we need to talk
-about the series organization and working well among multiple
-developers?
-
-Thanks.
+I agree. My opinion is that creating a new crate in Git should be its
+own commit. Same with adding a dependency to an existing crate in Git.
+Just because it'll be easy to add depdendencies doesn't mean we should
+add them willy nilly. But making them easy to add encourages trying
+out tools to see if it's a good idea or not.
