@@ -1,91 +1,88 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0EF34BA20
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 16:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D2E2F3C05
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 16:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758125789; cv=none; b=Nty5odr0SVk5yyNr3XsKm1bDKVOouwPCy2RNblnYQD3f0wmCVMcrijUeIwn3jZ2aLB/yJl+FqpymfniXTwxE+9GAy4rl2RhI6dY4d6I4PszMVa6QvT7nft0vBFKyM3fp9OyJ93+xZSLDOcagMVe6vz64v8NfJ2ZMjEc9iw0MH/U=
+	t=1758125913; cv=none; b=XXh03Yn6RE3BeZiXdpAknL9mpqFgE0AvqHySXtjoZFzdHefZYiAje10dpNGqeI+xISwI2p6VnkMZXGkSvKxPdDKv4j0BqNFOlXONqY7RsYxUdvEceZhEDyuClzxvvqG9Yg7WA3Lwqd3XjXDRt0RNOm8+cfDf77IP6nwJVwOWQzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758125789; c=relaxed/simple;
-	bh=7wH8+e93+Av+/ACnf3r635Ac7OjX1StWY2BUTfqbP8c=;
+	s=arc-20240116; t=1758125913; c=relaxed/simple;
+	bh=WuXB5hPIACenAaQoRZ+BOE4FkU2Ppzikb8+NeiAiovw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uXcKY5X9KYwuu2v4CtTA/tPNfYoHsnvrOJILb9YRBZACd5hzeECuQCpunwVW6uXv19wd8RSkaz4h1H+tDyczXKVkcxBlw+zYhzhx+JI37O+7Hr08gZ3Nq7WR0daQgU8P9hjQS29s+nhSj8q23MtYcmG9bKKI1UPYYlKrKC/y55k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=j8uN5xS0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BTzRd1C2; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=mER+grSbLiW12u0RmDYWXQBdBFW4pDM6oqPinHHXPjaXrptTHcVSip9UCGQND58NFy2VSgD7hHTkibH2ssxUPFJkfvWWOMS641QOY1kdg+FiLMXIDxTTGX1OtHJv2wl4EWnooaGmKrRdxLdRNbW6h5Uq45eiTvcTnfpVrnlZaAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hLvQzgem; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hbRZQCHg; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="j8uN5xS0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BTzRd1C2"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E2F5B14000FE;
-	Wed, 17 Sep 2025 12:16:25 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hLvQzgem";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hbRZQCHg"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7988514001CA;
+	Wed, 17 Sep 2025 12:18:30 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Wed, 17 Sep 2025 12:16:25 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 17 Sep 2025 12:18:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758125785; x=1758212185; bh=ESuureFIrJ
-	8d907awRCs4KJcWV/FlXCG3BK2f+kk5lo=; b=j8uN5xS0u9tTjDm6um+RVdWU2U
-	vSgtyUT+k2iA9QHdp+uLEbD04QY3VX3T2x7gS03lEPqGwWJsk4WuApMRYXPEpZai
-	70ixbFYmt2Jbh/ejWEaVkk8nx/ZhTbl4e+D09VDvToLn1oVnYdHtLfJs2mfZOg+5
-	4TgE5aTkJs+QxDfLONu3XWOiI2M/4PbqtypsfuzoFly6yh0hjqprHTwWV6O7RRfn
-	jzpDUca6obkaP7juNWPOiN6OndYe69/np16t2nFRSaf5l4fT2uV0vAPlN9Z+A+/W
-	8LwSQgjKnrmS8d9Oub+TxZC+QqITcNilCzl3GH0PcEa43dXdx0bnhAgvzrYA==
+	:subject:to:to; s=fm3; t=1758125910; x=1758212310; bh=Y2HcaVK/7b
+	69SeuEMmgsfpFAj0A4VBTouHX7YpCFUvM=; b=hLvQzgem6tpGyLcwGx/hu0Z+yO
+	Oac29ZRA4jJnkNQSKB0f7r9JWxNyHOzH8biebECDl0FU5c2gZWzT+3DGGVSE5RYV
+	28M30JUpGnmAJYoYZmrycnMV/+IDq3T9XtfyjCo2VP5pvEL8M7Vv7SCJMoz1kv5E
+	SWhITGqX02KFZdvaaWFkRJ0kEHbB+M47/HKE0A8KVFJPPucgSpTrME1LvSfgSHvH
+	/8Z8tCwdaO5BQ7P8UaRXYRaQF300jG56zKQUVf/H1G7d2gCoCT3jqUXw0lFSudBd
+	vf4EINaNIdBPjVUN2oKipNJLOVJTHbCEL/hzD49hlRkphBWAzeCFcJI1i4vQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758125785; x=1758212185; bh=ESuureFIrJ8d907awRCs4KJcWV/FlXCG3BK
-	2f+kk5lo=; b=BTzRd1C2Xxc68iSRces4RguOZe01ZKGxt5+5VL4cwbTS+3KtktB
-	d3M4xaT/ocGlW4CAbtrdjb1zZQb7uxk2BGat9bi46552j+WvHbCOzpBJ5YOabgJ0
-	KlwXadnqv1ylRDdKZQHcD4aLno6phubo3HhEKycSoul+KKbPPNjo75otWTnzN9vR
-	FDlhm/im7Fp7uSxc9VKb0djkeb/GK0lUeelNU1VTLCpYrEk0UG/1ZgxADCf7tP7I
-	pnT5JpdFiFec6TNJEkH9mPSOtZXY3grWTMGSIeGsk3iLW7Oqrythd6lN0piPd0pQ
-	di3o3iwiBC1b0+fLYHngCuAAic0bO8cbtJg==
-X-ME-Sender: <xms:2d7KaHYIwmORgsuxhZSTPFRjctXumORwJ0Ff-eVzP6_PcIyO_9gM0Q>
-    <xme:2d7KaD96Q9k43oQYZ0_TUDWQgJKWNAVtcR248kx5FqCTlKkC2SrHPxukRvFVL18DI
-    TF8XUwqc5lWpEjRTA>
-X-ME-Received: <xmr:2d7KaAYVUwSWn6vBOQCnK3aZg8xpeZPda6GRCz0bc3OVcrFpnNBHeniD8WJc1-jexMbTQ0-WMl7YA-nIMH-k8kjE1Qg826EuWdAfELM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegfeeltdcutefuodetggdotefrod
+	1758125910; x=1758212310; bh=Y2HcaVK/7b69SeuEMmgsfpFAj0A4VBTouHX
+	7YpCFUvM=; b=hbRZQCHgg6qAmje0oXo0DRmEjfVULFSkVRsXP3d9LOQmjJMuIQA
+	l7qjpvQCeUfDf7ruTD2yl1RCrErzJhFnyA9RyGfaOy57ZnOezuHDF8ai6NmoSo/3
+	vnOgjZjBVnaNvSMQmC/q57ucCPll0a/EGvyKgtHEP2kY7bkBHrtVHy6NULxmk3x3
+	b5lVhqX2noxZFJxr0lXSYMSPj7cP1fspxE0uvutyKXzxctZOSM67UCEAapbMJRaU
+	e4IC6WbMp7qkONjpMzvTmXn2CKD2CC0Fv6OehJH0VJeEwCSU6bBRF3j/tRPjNGaK
+	f+JBl5p8k0gCVO8rYjqecKf5aDZ0pSkxyog==
+X-ME-Sender: <xms:Vt_KaL8CGC2J-sLBQsMjHVKu89hEuaxAHW1vc1PObXD1UTj3YGgBdg>
+    <xme:Vt_KaAIgiDjfLaz8aUQyu3IGD6YmMcaWugmM3T9tB9OI87vMpjatlgL4iYbZSvcZY
+    yCxDIbFX5_V-ieAkQ>
+X-ME-Received: <xmr:Vt_KaJfcfIC9wJUQ0bt554FTIz9jY6UhfUiyNErJDG6n8R0ylyPGiDfCS9RNGzxX2QBNeq7F_cjJxuc21XWJEEdfG1yZeITOe8nTzdc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegfeeludcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphht
     thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtth
     hopehhuhgrnhhgshgvnhefieehsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehp
-    khhsrdhimhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:2d7KaPMrgFlyX8yQjL-f_T49-oYZk7aTOcO-TPg5dUJ6sxwwgGvRTA>
-    <xmx:2d7KaEBoYNMU5K1aljZhbHPCa05hkbNWsELR3fSQmpnWulfbBAzyxQ>
-    <xmx:2d7KaOI-kKwakBRBa03maFIdJlHYmwF4GgxAVY_-kbRVlDhViShyPw>
-    <xmx:2d7KaFPNqpQf7Hp8YK1sdHCq1nS7ztgsMviCLaa7wnRMVAge_kg75A>
-    <xmx:2d7KaNAAJruihBhcqUBOtRHNtwUgjItTffGRL-Mj7jxbZjmPX6yYm4zf>
+    khhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Vt_KaH9lA5cjQe9GLyKADkAJv4VyBKbVdY3nee513R8d60oFTFUSuQ>
+    <xmx:Vt_KaOpv5psgSD-ETLuCIiTNfFEIeoXhon2SskfJAo0lu2oJfoS13Q>
+    <xmx:Vt_KaEBZao91kOS97VhC7lDSP8JSIEBICFyPsJBY5ae9V6sDPlxjPA>
+    <xmx:Vt_KaIyERWJQH89YS1FmqUw2B96jzvTmQLTpqn6o8SrShX2Ba0tLiA>
+    <xmx:Vt_KaEeTQbWNIz20Wu_NclPesgWl7A-JFq44mYJJYOrKfL4atL_yTdpo>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Sep 2025 12:16:25 -0400 (EDT)
+ 17 Sep 2025 12:18:29 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Wing Huang <huangsen365@gmail.com>,  Patrick Steinhardt <ps@pks.im>,
-  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v3 0/4] breaking changes: switch default initial branch
- name to "main"
-In-Reply-To: <xmqq7bxxf6kk.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	17 Sep 2025 08:21:31 -0700")
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+  Wing Huang <huangsen365@gmail.com>,
+  Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 5/4] initial branch: give hints after switching the
+ default name
+In-Reply-To: <cover.1757518141.git.phillip.wood@dunelm.org.uk> (Phillip Wood's
+	message of "Wed, 10 Sep 2025 16:28:59 +0100")
 References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
 	<cover.1757518141.git.phillip.wood@dunelm.org.uk>
-	<xmqq4itarqfd.fsf@gitster.g> <xmqqv7lhigb7.fsf@gitster.g>
-	<70fa7537-3b89-4c3b-9dea-5a7ea0174a9d@gmail.com>
-	<xmqq7bxxf6kk.fsf@gitster.g>
-Date: Wed, 17 Sep 2025 09:16:23 -0700
-Message-ID: <xmqqsegldpgo.fsf@gitster.g>
+Date: Wed, 17 Sep 2025 09:18:28 -0700
+Message-ID: <xmqqikhhdpd7.fsf_-_@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,44 +92,139 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+It is likely that those who came to Git after 3.0 switched the
+default initial branch name to 'main' would still try to follow
+tutorials that were written before 3.0 happened and with the
+assumption that the tool would call the initial branch 'master'.
 
-> That does make it more in line in spirit with what your
-> "breaking-changes: switch default branch to main" does here.
-> Instead of assuming that we won't have "no default set" hint after
-> 3.0, we do assume the "no default set" hint will be there and
-> squelch for a bit longer.
+To help these new users after 3.0 boundary, let's retain one part of
+the hint we will be giving before the default changes, namely, how
+to rename the branch an unconfigured Git has created just once.
 
-I'll do only this one, and revert the other test changes that are
-now mostly stylistic clean-ups.
+We do this without telling them how to permanently configure the
+default name of the initial branch, and that design choice is very
+much deliberate.  The whole point of switching the default name was
+because we did not want to force individual users to configure their
+default branch name but while the hard wired default was 'master',
+they _had_ to configure it away from 'master' in order to conform to
+the recent norm, and a hint that tells them how to do so is useful.
 
-One thing that may be worth commenting on is this part (which also I
-reverted as irrelevant to get the 3.0 change going).
+But once the default is renamed to 'main', that no longer is true.
+A narrower audience who are new users that follow an instruction
+that assumes the initial branch name is 'master' would only need to
+learn "here is how to change the branch name to match the tutorial
+you are following in the repository you created for practice", and
+"here is how you keep creating repositories with the first branch
+with a name everybody hates" is unnecessary.
 
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index df0040b9ac..c7f39248e0 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -562,9 +562,9 @@ test_expect_success 'init warns about invalid init.defaultObjectFormat' '
- 	test_when_finished "rm -rf repo" &&
- 	test_config_global init.defaultObjectFormat garbage &&
+It also needs to be noted that the advise token to squelch the
+message is the same advice.defaultBranchName as before, which is
+also very much deliberate.  The users who do have that configured
+are those who _have_ been using Git since before 3.0, and they are
+not the target audience for the new advice message.  Reusing the
+same advise token ensures that they do not have to turn the message
+off.
+
+Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * With simplified tests, thanks to Phillip's help.
+
+ advice.c      |  2 --
+ advice.h      |  4 +---
+ refs.c        | 12 ++++++++++--
+ t/test-lib.sh | 10 +++++++---
+ 4 files changed, 18 insertions(+), 10 deletions(-)
+
+diff --git a/advice.c b/advice.c
+index 48c49ee414..e5f0ff8449 100644
+--- a/advice.c
++++ b/advice.c
+@@ -51,9 +51,7 @@ static struct {
+ 	[ADVICE_AM_WORK_DIR] 				= { "amWorkDir" },
+ 	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName" },
+ 	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge" },
+-#ifndef WITH_BREAKING_CHANGES
+ 	[ADVICE_DEFAULT_BRANCH_NAME]			= { "defaultBranchName" },
+-#endif /* WITH_BREAKING_CHANGES */
+ 	[ADVICE_DETACHED_HEAD]				= { "detachedHead" },
+ 	[ADVICE_DIVERGING]				= { "diverging" },
+ 	[ADVICE_FETCH_SET_HEAD_WARN]			= { "fetchRemoteHEADWarn" },
+diff --git a/advice.h b/advice.h
+index fc1dc87204..8def280688 100644
+--- a/advice.h
++++ b/advice.h
+@@ -18,9 +18,7 @@ enum advice_type {
+ 	ADVICE_AM_WORK_DIR,
+ 	ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
+ 	ADVICE_COMMIT_BEFORE_MERGE,
+-#ifndef WITH_BREAKING_CHANGES
+-	ADVICE_DEFAULT_BRANCH_NAME,
+-#endif /* WITH_BREAKING_CHANGES */
++	ADVICE_DEFAULT_BRANCH_NAME, /* To be retired sometime after Git 3.0 */
+ 	ADVICE_DETACHED_HEAD,
+ 	ADVICE_DIVERGING,
+ 	ADVICE_FETCH_SET_HEAD_WARN,
+diff --git a/refs.c b/refs.c
+index 149a8d1cec..f15366bfce 100644
+--- a/refs.c
++++ b/refs.c
+@@ -641,9 +641,17 @@ static const char default_branch_name_advice[] = N_(
+ "\n"
+ "\tgit branch -m <name>\n"
+ );
++#else
++static const char default_branch_name_advice[] = N_(
++"Using '%s' as the name for the initial branch since Git 3.0.\n"
++"If you expected Git to create 'master', the just-created\n"
++"branch can be renamed via this command:\n"
++"\n"
++"\tgit branch -m master\n"
++);
+ #endif /* WITH_BREAKING_CHANGES */
  
--	echo "warning: unknown hash algorithm ${SQ}garbage${SQ}" >expect &&
-+	expect="warning: unknown hash algorithm ${SQ}garbage${SQ}" &&
- 	git init repo 2>err &&
--	test_cmp expect err &&
-+	test_grep "$expect" err &&
+-char *repo_default_branch_name(struct repository *r, MAYBE_UNUSED int quiet)
++char *repo_default_branch_name(struct repository *r, int quiet)
+ {
+ 	const char *config_key = "init.defaultbranch";
+ 	const char *config_display_key = "init.defaultBranch";
+@@ -660,10 +668,10 @@ char *repo_default_branch_name(struct repository *r, MAYBE_UNUSED int quiet)
+ 		ret = xstrdup("main");
+ #else
+ 		ret = xstrdup("master");
++#endif /* WITH_BREAKING_CHANGES */
+ 		if (!quiet)
+ 			advise_if_enabled(ADVICE_DEFAULT_BRANCH_NAME,
+ 					  _(default_branch_name_advice), ret);
+-#endif /* WITH_BREAKING_CHANGES */
+ 	}
  
- 	git -C repo rev-parse --show-object-format >actual &&
- 	echo $GIT_DEFAULT_HASH >expected &&
-
-I think in the longer run, a change like this that makes us check
-only what we care about (i.e., "do we warn about unknown hash
-algo?"), without assuming more than necessary (i.e., "we shouldn't
-get any other warnings or hints, or this check with test_cmp that
-expects an exact match will fail), is a good thing.  
-
-Perhaps a #leftoverbit material.
-
-Thanks.
+ 	full_ref = xstrfmt("refs/heads/%s", ret);
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index b191954c3c..562f950fb0 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -127,13 +127,17 @@ then
+ 	export GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS
+ fi
+ 
++# Explicitly set the default branch name for testing, to squelch hints
++# from "git init" during the transition period.  Should be removed
++# after we decide to remove ADVICE_DEFAULT_BRANCH_NAME
+ if test -z "$WITH_BREAKING_CHANGES"
+ then
+-	# Explicitly set the default branch name for testing, to avoid the
+-	# transitory "git init" warning under --verbose.
+ 	: ${GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME:=master}
+-	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++else
++	: ${GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME:=main}
+ fi
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
+ 
+ ################################################################
+ # It appears that people try to run tests without building...
+-- 
+2.51.0-382-g6e76cf14a4
 
