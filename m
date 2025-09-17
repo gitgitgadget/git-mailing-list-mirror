@@ -1,138 +1,235 @@
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277F93019C0
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 22:32:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A026621CA00
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 22:35:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758148366; cv=none; b=UU15HMpPPb+MePtLjO3W+UL3p8BvyqSiMlHKdVPtPNKTbVCNPKvznZD6qrFgmOt47KbAavmCuN5LZnMVQEXG/nKXTgdThCWubuuxtFrka4ciHYjRz0i+a5zwkCyxdXrkB+beiRjK03cA90VHv65UOIbeWfTPzTgDuzN4sEBh++U=
+	t=1758148550; cv=none; b=q+NKy6hzww0mSC4OS2vVnxzj/bCgSYnHafOgCkd+NXqzIdwQ7Ksv0nu2wWDXN2yrpeXIcEc6JrWpFy5CjmzpT7nsHaLfGt7DjPkTuElQbT/kp+/7/5d1LrJIfgoHAziQGuYJnYMwoy7DUd4zgpHrQDWbJhRWPbnuRg93lb8EkD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758148366; c=relaxed/simple;
-	bh=gyvxYPl//ZdrT1W8NQZznMTYKFGfCuVLUISdmQIVMbM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GSG4rkQecNWN0pq9QK4T0qly1MwAJBIYmP4rJCOWqIqcpLs7aWekbIfC1cI+HVnvkTbR4H2rSIEzOCwvX5r8ODA3HNstHwg1I8YObrLVIG+6PcQfxZQSYWKH/dm+yiVi4BZbbAfNoC0a4hxGgBugeCQxuHpUVI7NEJ5uM9+RQ10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CCLMqIC1; arc=none smtp.client-ip=209.85.160.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758148550; c=relaxed/simple;
+	bh=hbe4lJF/9T3V7lBi+HqHsFb7+5UbMEgonKf729QD+VI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=POSqXV1MejR7unZtQ3ic3lxzbJwoTKrEGHvvoXST1zfpcK3mKmRQFtTl0UZ1Z6D1csbZOXvi3TyaOd3xcozRDKd6u3eMenLIz3jF8985Hbe1BfJWoopYlopKK6ufQzvoOhD4MQ4wiMwTNpZLngbJSJ9NO0yu8OfOrqOkFIn6VeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ilK4LJhk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=We0k/2RX; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CCLMqIC1"
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-30ccea8a199so193648fac.2
-        for <git@vger.kernel.org>; Wed, 17 Sep 2025 15:32:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758148364; x=1758753164; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fZdFsNGXPImn1w7SE/Uw3N9Ip5YMN8TeScxydwisa20=;
-        b=CCLMqIC1pPUmmbC2Ua29p/WwqYITkSjhI4m7ns+8gskuIbyXBIaASbfEaasBGsCLUg
-         3kFPl9c89Lh8MWSXCzblzDo4pOB3LKnrV1HM7R2jXeRhkw+4bBOtu+8hcLMQfZfb2kHz
-         w8p+rKog6YAXX6iOre13MQQWPH/1mZ67FxcICb+/iW/gO3viGuTG6Avc3zObsUO5Pt5/
-         I65V059HJzDO2aHR8rWBXnHdtwaAsM1NdJ1O8vghcSfs2EdEjGfbU42NCWVl+7dMlCtJ
-         XudIiVPregLaFrFKE9pv4GpEMfBFI4FmQQWH9My3rGrexNvbrczoyaKU7GbOIoOcvnUX
-         xGQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758148364; x=1758753164;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fZdFsNGXPImn1w7SE/Uw3N9Ip5YMN8TeScxydwisa20=;
-        b=cddYSGwDcx/hj1qlfvbal/5SGAYXLuOiBpNn6Hf7aNpO4gzEMWGdVl1KaUnaD2Y7ua
-         bwhZgTy0WXOgbZ7nGM63/Uux3lgFO3lfnIro70wfE1bjLRG6yhiAvTmfriQzEciOl7Wl
-         IcSr38W6942j+LJxgSujZMWLGA12dmB/xTdnRVI6DEH52eT9LmXYqmJToDLoW5WAzL7t
-         ahdfNit3G7tO+vYWEmSTPf86y7gVMf5G/5JEpBobo8SWsPQiFE4rPGxOJXRCfU/a0HCM
-         U1ydljvjzNh6tur2PYHTg/XiJkiCgPcT7sj6Gh/eXPIT9LyTBohcY7LYyV4dh203UG2M
-         EaRw==
-X-Gm-Message-State: AOJu0YwlyeK218AyDN8d4ZGiLz0fn8tPAQb78xEHRZ9yhOuogR9akDrU
-	/IjIk7CShHelAD6CY3fh1KyzX1KoYW3V7Eu6e7JkSLpBq682gxfDrkil
-X-Gm-Gg: ASbGncu110AtkyAaaXpJw4SPg7XOMm3aRfoJMLJISvfPtv8o+AUHtc4KEiyLgJhc888
-	4FApspFQ4VWIyqTx8gFcTyFsmZoW20WHwn7Lkj1KzmrESntd6uBVYhRCFOuPLug+6smKIdJfqyi
-	OmN58ey3954+o57LdbhyRUM4vjltDWjDIE4wSIehBAP4/nCts52/lUbXhm6G33EG3szYFVgvUJY
-	3fpbxG/HavpyeVhYM2PWCotF8vzYpHoHFJ8W+lrdf/lE2Dz9kkPXqpAmG5M9UvazztwUnLbZRmp
-	379qGW1QcQ6L716mntPUmR+9EZ8HWWu5gIosklWbmOan+WGQRarSU/QfZIo0wtbZMADlJAQta/b
-	Kw/ocOO6X0A0D0qVbsur2DpOBe6avUCciuQE=
-X-Google-Smtp-Source: AGHT+IE+HaNifl4PxSs5gNikoiD6F/slf4QnRCsyp48ScwMJ0KSfH9aimklxviTtACGQRiggVtJVvw==
-X-Received: by 2002:a05:6871:4b11:b0:31d:8ceb:20f2 with SMTP id 586e51a60fabf-335bfb357dbmr2259221fac.41.1758148364115;
-        Wed, 17 Sep 2025 15:32:44 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-336e41275b7sm384187fac.13.2025.09.17.15.32.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Sep 2025 15:32:43 -0700 (PDT)
-Date: Wed, 17 Sep 2025 17:32:43 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
-	Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 09/15] packfile: split up responsibilities of
- `reprepare_packed_git()`
-Message-ID: <p6f3xtitrepajnaho4eqwoh7o2qweim6adr3x726dbwg63kmny@cx5n43myawue>
-References: <20250915-b4-pks-packfiles-store-v5-0-d6340350934f@pks.im>
- <20250915-b4-pks-packfiles-store-v5-9-d6340350934f@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ilK4LJhk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="We0k/2RX"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id C439AEC0176;
+	Wed, 17 Sep 2025 18:35:46 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Wed, 17 Sep 2025 18:35:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758148546; x=1758234946; bh=SqVpPeEy2H
+	dFCv+HQsmJQhr/TpdrhpjudMDl0Svw5Tg=; b=ilK4LJhkZUenbYg9cqJypubwzT
+	Q2kqrgz5C6e0dArK7lXoC3RvWPWUmgA+0HMJyF9uyQLH3INcYnE67Is7EkkXJjGv
+	kivnu6ItihJvbFvRIYBLQuAoNuVL2rU0kNJBJsutvPkLTEuLEXJHQU6+FSeYc7nQ
+	vzJfoKoFP8oTu1Ag22pSGjrDna0JtGU7dkaLsHiKH6hy/Es8a/Zlzt9J29GonA8h
+	Z/GRGgu30rqOKvkk2wqKC3xWIimpaVuixuPeg9C4JpxyTlCXAvhPvEeMwC3CiyXR
+	EdThCZEicbAkXxpCkdczurmp/poV91EYaXEp+M/KLG0RM3Xi2sEGNL245XBw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758148546; x=1758234946; bh=SqVpPeEy2HdFCv+HQsmJQhr/TpdrhpjudMD
+	l0Svw5Tg=; b=We0k/2RX4JSHOqjgxwmaWa5Nr+CrDlXU6fKabM+ax7Zpfh2IiaX
+	azmc58JbkxyuBxkDtX4Ee55EyRDtS/FbvrFhoavqys36Y1GM0RHiNHsWw4EgakUP
+	z/ZY1nrHBdYYRFuaDJWQWwkt0GuT6L2/cYgRJOwDfOnWMuzfMtJZ3eS0supJ2/0R
+	ou8hC79iZY15FT+E7aUHY8tp6XSkkwvC3C2gFJWtcxsWzEPxeqbwgUOaSku5aLp3
+	CFR5hmj73fObnLHXpGZ/nlQdYW+LI3LrBAz0ZEkYzpiWlA+72T3WEYM8E1zeYWT6
+	rUUoMkdhu19TgSD4lbSh93iAA69JbBmnGkw==
+X-ME-Sender: <xms:wjfLaAWcABPduxkAcHhdf_-DgxiiFMoKujE83cxMiUR2ns_UfaBqaw>
+    <xme:wjfLaPL59DtLc_3NusCDOu7PKCk5ykblKqwpQpAELvshcQ0xr226ogJpXdxU2iQkl
+    -KtjAfVV1Z1ixpN1w>
+X-ME-Received: <xmr:wjfLaA_mFcBfJZ4BjXg-Uj4nTEwD_jNu0CBR86_QN1lp3mNGk-hGWMRQPaZoMiRgb8Bkgyqp1-baeQcVtgfhhhkCIBnDtelRN0CcJKc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeggeeiiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    jhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhm
+X-ME-Proxy: <xmx:wjfLaCKkGTupvuq1aitGiJb7zfCv8E3Zke-KIHGDfUsEa7jeICukrg>
+    <xmx:wjfLaFm8T01MyCHjdgdDfGb3ne4yRWp1KRjepQIoPdnQeLEqF0FgKQ>
+    <xmx:wjfLaGM7IuZq9bFgXAMukmM9LRjou3ynGB8B4OYgXHuMu1NuvoFZRA>
+    <xmx:wjfLaL0hX3LTLuDWj1R0E6fmgH9FPWZRul1n7lkl1H0g4tfk3l9YCw>
+    <xmx:wjfLaJmcDIWcmlijZ7F2grb7zX9EDuWTs9r_XKl76K_d9_4RzhYizfA4>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 17 Sep 2025 18:35:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH 1/2] doc: git-push: create PUSH RULES section
+In-Reply-To: <2f2dc22c47530445bce50f1bdef9630b046677bd.1758144815.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Wed, 17 Sep 2025 21:33:34
+	+0000")
+References: <pull.1973.git.1758144815.gitgitgadget@gmail.com>
+	<2f2dc22c47530445bce50f1bdef9630b046677bd.1758144815.git.gitgitgadget@gmail.com>
+Date: Wed, 17 Sep 2025 15:35:44 -0700
+Message-ID: <xmqq348kbtbz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250915-b4-pks-packfiles-store-v5-9-d6340350934f@pks.im>
+Content-Type: text/plain
 
-On 25/09/15 10:54AM, Patrick Steinhardt wrote:
-> In `reprepare_packed_git()` we perform a couple of operations:
-> 
->   - We reload alternate object directories.
-> 
->   - We clear the loose object cache.
-> 
->   - We reprepare packfiles.
-> 
-> While the logic is hosted in "packfile.c", it clearly reaches into other
-> subsystems that aren't related to packfiles.
-> 
-> Split up the responsibility and introduce `odb_reprepare()` which now
-> becomes responsible for repreparing the whole object database. The
-> existing `reprepare_packed_git()` function is refactored accordingly and
-> only cares about reloading the packfile store now.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-[snip]
-> diff --git a/odb.h b/odb.h
-> index 1c998a2478..ef34132c58 100644
-> --- a/odb.h
-> +++ b/odb.h
-> @@ -163,6 +163,12 @@ struct object_database {
->  struct object_database *odb_new(struct repository *repo);
->  void odb_clear(struct object_database *o);
->  
-> +/*
-> + * Clear caches, reload alternates and then reload object sources so that new
-> + * objects may become accessible.
-> + */
-> +void odb_reprepare(struct object_database *o);
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-nit: IMO, something like `odb_reload()` sounds a bit better, but it's
-not a big deal either way.
+>  --force::
+> -	Usually, the command refuses to update a remote ref that is
+> -	not an ancestor of the local ref used to overwrite it.
+> -	Also, when `--force-with-lease` option is used, the command refuses
+> -	to update a remote ref whose current value does not match
+> -	what is expected.
+> +	Usually, `git push` will refuse to update a branch that is not an
+> +	ancestor of the local branch or commit being pushed.
 
-[snip]
-> diff --git a/packfile.h b/packfile.h
-> index bf66211986..a85ff607fe 100644
-> --- a/packfile.h
-> +++ b/packfile.h
-> @@ -112,6 +112,14 @@ void packfile_store_free(struct packfile_store *store);
->   */
->  void packfile_store_close(struct packfile_store *store);
->  
-> +/*
-> + * Clear the packfile caches and try to look up any new packfiles that have
-> + * appeared since last preparing the packfiles store.
-> + *
-> + * This function must be called under the `odb_read_lock()`.
-> + */
-> +void packfile_store_reprepare(struct packfile_store *store);
+I read this as "there are two conditions, and satisifying only one of
+them is sufficient for the push to be allowed.  (1) the local branch
+is a decendant of the remote branch being updated, or (2) the commit
+we push to update the remote branch is a descendant of the remote
+branch being updated".
 
-nit: I also think `packfile_store_reload()` sounds a bit nicer here.
+But of course that is not what you wanted to say.  (1) would mean
 
-Overall this patch looks good. :)
+    $ git reset origin/foo && git push origin anything:foo
 
--Justin
+would allow us to push literally anything to overwrite origin's foo
+branch.
+
+I think
+
+    "... not an ancestor of the commit being pushed to update it."
+
+would be a way to avoid such confusion.
+
+The problem the original description has is the phrase "the local
+ref used to overwrite it".  It wasn't as commonly done to push a
+specific commit that may not necessarily at the tip of the branch
+back when this paragraph was written.
+
+> -This flag disables these checks, and can cause the remote repository
+> -to lose commits; use it with care.
+> +This flag disables that check, the other safety checks in PUSH RULES
+> +below, and the checks in --force-with-lease. It can cause the remote
+> +repository to lose commits; use it with care.
+
+OK.
+
+> +PUSH RULES
+> +----------
+> +
+> +As a safety feature, the `git push` command only allows certain kinds of
+> +updates to prevent you from accidentally losing data on the remote.
+> +
+> +Because branches and tags are intended to be used differently, the
+> +safety rules for pushing to a branch are different from the rules
+> +for pushing to a tag. In the following rules "update" means any
+> +modifications except deletes. Deletions are always allowed, except when
+> +forbidden by configuration or hooks.
+
+One important operation is omitted.  "update" does not include
+"create" in the following, no?  Obviously since refs/tags/ would
+never take any "update" (unless forced), if "create" were thrown
+into the same category as "update", you cannot push a new tag out.
+
+So, next to "Deletions are always allowed", shouldn't we describe
+what rules apply to creations?  I presume that they are also always
+allowed?
+
+> +1. If the push destination is a **branch** (`refs/heads/*`): only
+> +   fast-forward updates are allowed: the destination must be an ancestor
+> +   of the source commit. The source must be a commit.
+
+Reads very well and also correct.
+
+The first colon might be acceptable (I find it a bit odd, though).
+The second colon is very weird.  ": only" -> ", only" & "allowed:
+the" -> "allowed. The", perhaps?
+
+> +2. If the push destination is a **tag** (`refs/tags/*`): all updates will
+> +   be rejected. The source can be any object
+> +   (since commits, trees and blobs can be tagged).
+
+Again, I might prefer ":" -> ",".  I cannot decide which I prefer
+between "all updates will be rejected" and "by default no updates
+are allowed".  Either should be OK, so let's take what has already
+been written.
+
+The second sentence is not wrong per-se, and I can see that this was
+inherited from the original, but gives me a strange aftertaste. When
+you list object types in the context of "tag" and have only commit,
+tree, and blob, a little voice in the back of my head asks "oh, what
+happend to tags?".  It is made a bit worse with the phrase "can be
+tagged", as it typically means either (1) to create an annotated or
+signed tag object, or (2) to create a ref in refs/tags/ hierarchy
+locally, but usually you do not think of pushing to refs/tags/
+hierarchy as "tagging that object remotely".
+
+I think the untold assumption here is that refs/tags/foo at the
+remote is being updated most of the time from refs/tags/foo we have
+locally, and "any kind of object can be tagged" is trying to say
+that refs/tags/foo we have locally can be an object of any type, as
+the act of creating a ref "refs/tags/foo" and pointing it directly
+at an object is "to create a light-weight tag" for the object.
+Since we can have not just tags but any kind of object locally
+(because any object "can be tagged"), a push can ask object of any
+kind to be pushed to refs/tags/* hierarchy.  But it is an awkward
+concept to explain.
+
+Would side-stepping what exactly "tagging a thing" means, and
+phrasing it like this
+
+    The source is not limited to an annotated or signed tag object,
+    but can be a commit, a tree or even a blob.
+
+work better, I wonder?
+
+> +3. If the push destination is not a branch or tag:
+
+Here, I do understand and support the colon, so I'd equally support
+the first colon of the previous 2 sections for consistency.
+
+> +   * If the source is a tree or blob object, any updates will be rejected
+
+OK, so this is the same rule as the refs/tags/ hierarchy.
+
+> +   * If the source is a tag or commit object, any fast-forward update
+> +     is allowed, even in cases where what's being fast-forwarded is not a
+> +     commit, but a tag object which happens to point to a new commit which
+> +     is a fast-forward of the commit the last tag (or commit) it's
+> +     replacing. Replacing a tag with an entirely different tag is also
+> +     allowed, if it points to the same commit, as well as pushing a peeled
+> +     tag, i.e. pushing the commit that existing tag object points to, or a
+> +     new tag object which an existing commit points to.
+> +
+> +You can override these rules by passing `--force` or by adding the
+> +optional leading `+` to a refspec. The only exception to this is that no
+> +amount of forcing will make a branch accept a non-commit object.
+> +
+> +Hooks and configuration can also override or amend these rules,
+> +see e.g. `receive.denyNonFastForwards` and `receive.denyDeletes`
+> +in linkgit:git-config[1] and `pre-receive` and `update` in
+> +linkgit:githooks[5].
+
+Very well written.  refs/heads/ not taking any non-commit, and
+receiver side hooks that may reject a push, are not something
+"--force" can override.  The mention to "the only exception" above
+sounded as if it forgot to mention the latter.
+
+Looking mostly good.  Thanks.
