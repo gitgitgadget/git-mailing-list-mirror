@@ -1,143 +1,110 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC3C2EFDBA
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 12:02:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6BE4086A
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 12:07:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758110577; cv=none; b=hVlJiwJGThafJNbOfZZrKfp1QYVurW9v0aOoaTcks+6/uVz1bRvw/TPJlgwR5sYiw5XIZu7Z0QbT1pN2rguIDCn3ZueIU3VR6fX4AFvcnbArCdZpmyMk7K+Qqfw45tYA1zz/9/MNDCzd7jA2RJoT9LTdUTCeMRfsuj3WE6oDgjQ=
+	t=1758110856; cv=none; b=J7cyCRXsbPwkoSGjI9Qxfx/765RA8a59CIRPC0zYptS7CtknpLaJRqrLb/o48pqKvBYiYkj6vc55i0baQZbakLvUVJo9C8gn/yB1oHhtFqRXK4bMURLlKkf6vULqS3klmqeJvSK73bsrcA7P2GHJN03OZ4OU86VRr4B747IfZTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758110577; c=relaxed/simple;
-	bh=uBix7NvxdMe6Z0L6g9MojcHwf4Uhirddr4nYJryR3Xs=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=BowgnGW8x7bGuqL0RnSZrZU343GplVU0x1GnpO7Oi7bXKriBuUZ82aCMAe6p4hN8Moi4iXN90Mq88d5TXBo1DGZQAYqaKXgfE/iSn5qRsEhbcFGhY6H8LbSOyc/dBSTxz9Lu57V7tfVEuIl26JHoVExXLDwWryoDxlXKgjE611c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Q1mKLJ6V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eRg7UspF; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Q1mKLJ6V";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eRg7UspF"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 72D09EC02AB;
-	Wed, 17 Sep 2025 08:02:53 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Wed, 17 Sep 2025 08:02:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758110573;
-	 x=1758196973; bh=LAuvW0RTKPAO33+t6ZeeKtFMn7V+IrDAta2IPv9bJlY=; b=
-	Q1mKLJ6VG9LPzUrlkucbOcKXxPox+btlpC2cxkTE97659+xqP8BvCB57CvESldK7
-	3bNBp7aGcDigm9jt2/FEZDZq4OyWFjpqGOi5OjV/BlWHP3ZLELGlQIlFzRSfWAK+
-	KWH+kSi8OnMAmVJAD3LCGuq0xZ+wsFdCTtjElzDE5T0FFyTMV8QnFsawLSqkiwji
-	B5DOfISDt7ISsLvxJDAbdTWcgOEmlmD3yv36W11vBwkBuF+WOT0dhfs4Z9jG33iI
-	tgidvUNAk+2js+dnLZVMCbc8rX2T2KIeDvpZlkRwIX2E4eY2YojHlCbYgfwtYj9l
-	VW4Eaf+TOS27DfhuPSPeyQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758110573; x=
-	1758196973; bh=LAuvW0RTKPAO33+t6ZeeKtFMn7V+IrDAta2IPv9bJlY=; b=e
-	Rg7UspFdGPdmaRgmwMIlvP1uBXRBIrsJg15tsKAyggHaIerDQ3kPseRaCQOohwTx
-	1TOHxMbIqZ9BhenEwJSqHyhC1lm9krQiuP8hJfI5OHxe/13u+pwqGhlFbkQ50329
-	ilLVfDXdr4//IY4g2TMyoKv7QY8QdCPly8jdeR0kvqTK7avHJoE7Ofm5aH9jW0dd
-	XTfO9m7Tfr94N1GbWadan/3tZz52CxDbkEVRT4LSIwf5v8nqSdwYvwMae3AMSEaw
-	G/C8GUWgarhXhR+4ZBMekzayLIC7XO00eKAC0SmNCW3kwzltA5Tc8YsUeusLIJ3r
-	duIjwaOJq594LrAxLAN7w==
-X-ME-Sender: <xms:baPKaLI-NtN9Sf3hLmvDxHzi2mqN3S5tPKB_8t_x_WeGCssgUhpxj1g>
-    <xme:baPKaPK5ehpWc2jhm5ter6QPMTQCcd-nyjU5zb9ZlBy3MVVb0s6gygzFW4NpMlhLD
-    Ektf2VhwkrtW3z2ZQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegfeegtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtvdekjedvjeev
-    teduiefhueevieduueelvdekteevtdelkefgudfguddugefhfeenucffohhmrghinheprh
-    gvfhhsrdgtfienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
-    ohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
-    dpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohephhhu
-    rghnghhsvghnfeeiheesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprd
-    ifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhs
-    tghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepphhssehpkhhsrdhimhdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:baPKaFkh95roMBZMqTvM3i8nHbA7cQ0q3F5_n3hVU3ZwY0TX0m4xyQ>
-    <xmx:baPKaBn4sFVBrbJcjhu0wiC3lsHm22Nt82GankTqHKfn-37uQ7akPQ>
-    <xmx:baPKaHw3fG9mUuTXAu5fB7Mcq7idHSuU8DXCIron00Z4rKisPIasqA>
-    <xmx:baPKaGp-Fc5975f7XuESgRxH8Sg2PqFCAmzE1uW4dbOFgkU-SCUahg>
-    <xmx:baPKaI3M820DtG18gO1KTe_DYSQ-ExUVt36ZEt2TfNfiD_cC4cGSDzuG>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 005391EA0068; Wed, 17 Sep 2025 08:02:52 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=arc-20240116; t=1758110856; c=relaxed/simple;
+	bh=XFGqed9xt5nRnCGDAl5qxgPu8wCSt/RwcQeaTr989aI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ow3Hl5ISqIIfR7S4ZZt11d+D+qn3fnQjP9AWQsH8tqo3glLADHFXlhruc6/PYq73I8EjiAccMZM6YY8cNo3VnW75U+pGOcEX/ir+1HYnWYXVDWLq4ROYU6kzoHNkPdnoM0xrfXwAoxtymwDrM9cG5GcSh1+cxaGVTWbRksNIh9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from mop.sam.mop (2.8.3.0.0.0.0.0.0.0.0.0.0.0.0.0.a.5.c.d.c.d.9.1.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:19dc:dc5a::382])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: sam)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id E5B4D340EAF;
+	Wed, 17 Sep 2025 12:07:29 +0000 (UTC)
+From: Sam James <sam@gentoo.org>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Ezekiel Newren <ezekielnewren@gmail.com>,  git@vger.kernel.org,
+  "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Ben Knoble <ben.knoble@gmail.com>,
+  Christian Brabandt <cb@256bit.org>,  Collin Funk
+ <collin.funk1@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,  Elijah
+ Newren <newren@gmail.com>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Junio C Hamano <gitster@pobox.com>,
+  Phillip Wood <phillip.wood123@gmail.com>,  Pierre-Emmanuel Patry
+ <pierre-emmanuel.patry@embecosm.com>,  Taylor Blau <me@ttaylorr.com>,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v5 0/9] Introduce Rust and announce that it will become
+ mandatory
+In-Reply-To: <aMk2mo5OHPNQi0PW@pks.im>
+Organization: Gentoo
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
+	<20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
+	<CAH=ZcbB0Qv=b-hdB2EVW-D-dob4NnzyWDYGEThYZm94S0V7OGg@mail.gmail.com>
+	<aMk2mo5OHPNQi0PW@pks.im>
+User-Agent: mu4e 1.12.12; emacs 31.0.50
+Date: Wed, 17 Sep 2025 13:07:26 +0100
+Message-ID: <87plbpffk1.fsf@gentoo.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AvC9u0wtbNw3
-Date: Wed, 17 Sep 2025 14:02:29 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Phillip Wood" <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org, "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
- "Wing Huang" <huangsen365@gmail.com>, "Patrick Steinhardt" <ps@pks.im>
-Message-Id: <145305ac-dbfb-4162-a603-b6b60df2bc5e@app.fastmail.com>
-In-Reply-To: <xmqqv7lhigb7.fsf@gitster.g>
-References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
- <cover.1757518141.git.phillip.wood@dunelm.org.uk>
- <xmqq4itarqfd.fsf@gitster.g> <xmqqv7lhigb7.fsf@gitster.g>
-Subject: Re: [PATCH v3 0/4] breaking changes: switch default initial branch name to
- "main"
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Sep 17, 2025, at 11:22, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->[snip intro]
+Patrick Steinhardt <ps@pks.im> writes:
+
+> On Mon, Sep 15, 2025 at 08:03:29PM -0600, Ezekiel Newren wrote:
+>> I am currently working on a patch series that makes Rust optional and
+>> addresses several concerns that this series does not:
+>>   * Rust calling C: Makefile has no way to build or run Rust so it
+>> would have to call cargo test, but that doesn't work unless build.rs
+>> tells cargo where libgit.a is (among other things).
+>>   * Build tooling alignment: My build_rust.sh is called by make and
+>> meson which eliminates defining how to build Rust in 2 places.
+>>   * Cargo vs Meson: Meson is adding support for Rust and it's getting
+>> better, but Cargo is the canonical build system for Rust. cargo is
+>> released in lockstep with rustc, and we _have_ to use cargo when
+>> building with make because Meson won't be available in that case.
+>>   * Crates: Patrick's series assumes the Git codebase is _the_ crate
+>>     * cbindgen: Cbindgen outputs a single header file for each crate,
+>> with only 1 we'll have an unmanageably large auto generated header
+>> file.
+>>     * Modularity: Using multiple crates makes Git more modular. Elijah
+>> told me that there was some desire to make Git more modular.
+>>     * Cargo Dependencies: Patrick wrote his series with Meson first in
+>> mind which doesn't address how we'll be able to use crates from
+>> crates.io
+>>   * CI:
+>>     * Sparse coverage: I think there's only one target that tests his changes.
+>>     * With vs Without Rust: I don't see anywhere that he covers
+>> building with vs without Rust in CI
+>>   * Build integration: Meson has to have every .rs file specified
+>> where as the default layout of a Rust project allows Cargo to just
+>> know where to look for .rs files
 >
-> --- >8 ---
-> Subject: [PATCH 5/4] initial branch: give hints after switching the de=
-fault name
+> Yeah, as I mentioned my patch series here really aims at getting an
+> minimum viable user of Rust into the Git codebase so that we can focus
+> the discussion more on the roadmap towards Rust rather than the actual
+> Rust infrastructure. The whole infra is very simplistic because of that,
+> but that is intentional for now.
 >
->[snip]
+> Once we have agreed on the roadmap I very much expect that we will
+> iterate on it to allow for more complex use cases. My next step would
+> have been to pick patches from your series that make all of this work
+> on Windows. But of course I don't have to be the (only) one to iterate
+> on the initial simple infrasturcture, this should ideally be an effort
+> by the whole community.
 >
-> But once the default is renamed to 'main', that no longer is true.
-> A narrower audience who are new users that follow an instruction
-> that assumes the initial branch name is 'master' would only need to
-> learn "here is how to change the branch name to match the tutorial
-> you are following in the repository you created for practice", and
-> "here is how you keep creating repositories with the first branch
-> with a name everybody hates" is unnecessary.
+> And yes, many of the points you mention above are things we'll have to
+> address over time to make Rust a viable alternative to implement
+> anything more complex than the trivial "varint.c" thing. I think that
+> iteration is key here: let's start simple and then gradually build out
+> the infrastructure.
+
+I think adding external crates especially will need discussion given the
+licencing and "offline" issues (which are solvable but they should be
+examined).
+
 >
-> It also needs to be noted thta the advise token to squelch the
-
-s/thta/
-
-Which I only mention because
-
->[snip]
-> diff --git c/refs.c w/refs.c
-> index 149a8d1cec..5e5a41ec01 100644
-> --- c/refs.c
-> +++ w/refs.c
-> @@ -641,9 +641,17 @@ static const char default_branch_name_advice[] =3D
-> N_(
->  "\n"
->  "\tgit branch -m <name>\n"
->  );
-> +#else
-> +static const char default_branch_name_advice[] =3D N_(
-> +"Using '%s' as the name for the initial branch since Git 3.0.\n"
-> +"If you expected Git to create 'master', you can rename the just-crea=
-ted\n"
-> +"branch can be renamed via this command:\n"
-> +"\n"
-> +"\tgit branch -m master\n"
-> +);
-
-Repetition: =E2=80=9Ccan rename ... can be renamed=E2=80=9D
+> Patrick
