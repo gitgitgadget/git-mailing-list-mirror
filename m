@@ -1,69 +1,69 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F261CDFD5
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 01:16:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E741218827
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 01:16:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758071806; cv=none; b=FbvHz4kfZ5tZ0LtRDz2LVJHQKJdLQEIS38o+XAS0MozUJzjp0Vj/tcyG9hwqBBaiMjImMGXUKlVyJGsvXi5VuQEw8D5bYLyCROrhqZ96s58xfUEplMSKrgsE3zoqPQJXw7RXLcIDWqAqegKZTcchf+sQuZZL4KihFO3sJOb06nU=
+	t=1758071807; cv=none; b=JtRCVoxJCCP+x66Gncl6DaOVJDEytsQFHI6gi8yiywdK/RefKhe1bhHVV7NSZjBRJ8IC+/PRneDE3OQnPcQbdTYuizMDk+TdOKlvmOzN6+5lPKadqroXaYsWFbdsA0vRV1ziTwOuqrLMzUHEc1NT/yga4Li59RqiM3tpUnTWzlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758071806; c=relaxed/simple;
-	bh=/pL981Ia+gPoCZfwcCN9JciuT21aNJPABcv0XxgS55Q=;
+	s=arc-20240116; t=1758071807; c=relaxed/simple;
+	bh=KSpB1brVz09iY/oIcOT27KY7q/SX3bWAoowkcxxHJOQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=U9+0Sto9/810SVWLxkAr3qC53hgx7xRk0kxztPzonDV1td6ZsTRLpwl1J8LD/wEePuvKWEhWVOJ6xdG1F+/9vXDhb8gI3Dgcd/JLCG+Y3kRt/WwStSQ98Zcg/gpLI1ymBfzRUFUOmLGouwQBbkN3z1OGlqKOrSlE0SFQkagyzHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iUMHvvFw; arc=none smtp.client-ip=209.85.215.171
+	 MIME-Version:To:Cc; b=pNdvijiK8WgTh6GmGjpyHAVGJJfQZTDAcF5PYdhunbnR2RIpUlD3Q0+t32YZWnIw6Zhz9hgwFBweMt3unzibuYzmT5p0DfaaYkMxVQiqLeYTOZ3Xg40OwljWTR9/ung4ENsCAyAGsqYdEUJxYiYEBAOafPTqv4jq0mOjxiR3EuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kVNkIlF/; arc=none smtp.client-ip=209.85.215.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iUMHvvFw"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-b4ee87cc81eso5421142a12.1
-        for <git@vger.kernel.org>; Tue, 16 Sep 2025 18:16:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kVNkIlF/"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-b5229007f31so4153707a12.2
+        for <git@vger.kernel.org>; Tue, 16 Sep 2025 18:16:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758071804; x=1758676604; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758071805; x=1758676605; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XOc0kRsx9K3N4d0EoZcEkO+y4X86meszS9gIKKhxzNw=;
-        b=iUMHvvFwOe+NU9zR6pM4iArlgbVkWePrmROt8yh5LbkI3WaP9GL/aGpuzHO2zS/9RX
-         ajfYwhiCwvXXCZ9scHC/ZvH/w0bbRzwHzRzYZGiYER3J5aI93dAaBR2q0IVMLl+A/DGa
-         EwoC1y2KfOjMtDWvb5UCHzIc+YrNVZ7UcdRSO/KtlApQQ24Xg3Bv+b4PV4qpn0AJnv5V
-         n5gVhFSRA4blJDVUZ2GVHxiVBfm2lIAg3JDn94CNTfSL5kunqTaPSo6RRnVfOEXsvKla
-         zV7EShYYEl8DdH8hYdqdhq2wZx8JNIl44HqFlYaJiod+TLF4xHwhDmnMIKR881o0WXd/
-         M1pA==
+        bh=XkQqqFfutHhVUhM/eEAr3+JMSI9CgHhnY6pvCsgr8gs=;
+        b=kVNkIlF/H9tQm3dfSroLUDvpyOm5I8cExlFvNHoapS1Lic6iVluHukUHIPf1ssfd1l
+         JNB0HFNT56kvryZlipFH/n3v6G6vEMNyJXmcxD/bRwQuwLesIKO1bscudpwwp3YcjYXF
+         7X6DYab9QlvBAusm1Yotcp/5u+gJ4qE78XVF+34vpm5h/KhO9kRUoSyjK0ds4yg6H22n
+         wfmVA2wEPKFl3RwWVd5UuP8jpHdTmn6AMjGFL1KDU0SfdPLCCzY2OZMVtbJisiER+jDR
+         FzuK12CrDUWtlVP8xVRFwY+XWMX82fLYFw4k/hfnaJqk4c5YsEOBbBgBiUaSl82cv9EK
+         vulQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758071804; x=1758676604;
+        d=1e100.net; s=20230601; t=1758071805; x=1758676605;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XOc0kRsx9K3N4d0EoZcEkO+y4X86meszS9gIKKhxzNw=;
-        b=jcIgoAhheGEarRqKoTHRJhMb4/2hGsCqpwyao1RKtq3+URNdT6IsklsYuHw4yC7e9n
-         NyKngk1HkfOgKTC2awGKPmdmTQNnKg69P60/H3GOZetHVIQ0lRMTe+GfFWH/LlPBlDP1
-         vON832roRVad5B3u4Ow4aLtvT2RTiOP9yQIUmlLAKuWiuQnSCjoEEMagvo9wheIhB7Xb
-         gmwzk2ufHh1/sTiTxTXQytw06pHeCEgtmWzN6Qzh789ZQwCQFJHe8AGByi2Iq5J7Dpqp
-         bLVhltYVCPIrq+C1vsaqGPTElJt8M0lCiaOo9ULzODEx+M8R+jy5LN7/TJuqe9M1roX3
-         f0Zw==
-X-Gm-Message-State: AOJu0Ywp6xfsPUwSZRME171NdrJxRCe2jT/Q05+2iSpvuq/aO1quS6mU
-	US3U7czri53OPL89QfNeujYlb/VGYnPQYDq4Bg3GPOhdIHEODsvv8PoFos+caQ==
-X-Gm-Gg: ASbGnctGiK+3VevzPkZ/RORT+dUSIqyVCmMr3Cg+uFbgPwUBDq27Tf73rby9Nfgr3ka
-	qm45a+RkYLwDsai6IvYmW3Ug0rZAIOYYit2h99xrCajlmlsOSDScaX+71a0AU0rmbfzGrflrQu4
-	PTm9QA8lsiiTWxvxmzidgtzMfZSMnMPSXWR/jyWgDnmemWkh+Te4nI+nKyT8Pv3bFGpTZHEmwDx
-	VsQadIX7lzOfj4lTIRpyUQBR3RmbxR00/MO35sLSyc7T7HpwldXkf9E1QqSnMCsqW38vlpOWFPi
-	88uaUw0MWRfFKRs7ysliqbHofawvL5+XEi0/QjePJw5wpRFwwOSZWPLPl+//dpKw5cO2n2m4vcI
-	NSJpHteoEd3vyM99sYUTnmr8DQT3VJKvsX2yG/Q==
-X-Google-Smtp-Source: AGHT+IGAAoBK27fPXEspNrQJbLV0r5bWUNM2hrbh2jDP+yamVqvtKdvzttwnUg6DqtRKk58Lljyl0Q==
-X-Received: by 2002:a17:903:2984:b0:24c:7f2f:d9e6 with SMTP id d9443c01a7336-268118b3f7bmr4593225ad.10.1758071803585;
-        Tue, 16 Sep 2025 18:16:43 -0700 (PDT)
+        bh=XkQqqFfutHhVUhM/eEAr3+JMSI9CgHhnY6pvCsgr8gs=;
+        b=qClIj24cnXkfzail6I4XuE80v0dwEB3kT6KKByipd6r1sH8lbJyD7Szfmhmt0GytzY
+         T/ZTT+R4m5erpCB5kvrGNbtJrCO74BQxtkzjYx+pfrAg1KGsqQDmjZrYf/O+ZyHsCGlx
+         Wb5UFJqss45N+bb9B0Lwizp8f1S7TAi969Z9wVWlHxtQTPP8L7ym5DP+ESBQSrPPZaDt
+         v3NFScYf8oblaQlVD3nGcHm+gYBXDolJ6M6VusqOj3XUkeZRkZwrvLVVm5sHHoWlDCVN
+         XFslKtbBwRZ+TD5cIDM8findN5gx2PxyI2oFDDGtEkLr+swZLZrQrVt2ozZWqFT599QO
+         mfXA==
+X-Gm-Message-State: AOJu0Yx67TJDdjrNlYcpFY4u/gulr5u7VygmdZ45syYNprxdS4agPJ5N
+	P54xFERG1Ki/q3D7rOr7xwir7zGWUqn/iOf6FATNox7/i/nkcYhTjWoTHko5qA==
+X-Gm-Gg: ASbGncuEybXR1TYAOmfDGil376Yt/EL0/D9wg6uMKnSh8jJQxMmY56rP1hwTyiouWFi
+	5Ipy9qqUewvhwi9AIEGTs8hES6cQP4ogQFh9Uzhw9VGiPrODmui6ODZyzaSEiCj0wP6G/hb0gXR
+	EkRXNanWjPYOIc4bOOo5e5OGW5ebekIxMR73/RzQ/RuMMpH7dev83ZyWiwH7pXXQe7vKbrcU8GT
+	HWXKfL/aIeRYZb8gVhFMBaOCeBf5AnozdIk+T7LiEX1DMlQz4zLwl6TD07gweCzuqkCKHH225bd
+	rEnNCC+26NvxPymmhHSBr5SVuV2wvq5GWdA1JOg5qLlNEvpq+FvG5ja8P1KunujctDGU+Tqwj6E
+	XxGMq34Fdg/NqP6GWHd6fWTLliQc=
+X-Google-Smtp-Source: AGHT+IENJjazJiAKimmzVnnlFykE614ZfVGs2enZYhbGzpnlNaw/wocwvlvTA+NybrToo20sv7Cw4g==
+X-Received: by 2002:a17:902:d2ca:b0:266:2e6b:f592 with SMTP id d9443c01a7336-2681217ae3emr4181295ad.25.1758071804741;
+        Tue, 16 Sep 2025 18:16:44 -0700 (PDT)
 Received: from [127.0.0.1] ([172.184.209.164])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-25e2fb546f9sm137569605ad.127.2025.09.16.18.16.42
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-26418a14e08sm91974945ad.146.2025.09.16.18.16.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Sep 2025 18:16:43 -0700 (PDT)
-Message-Id: <7fe85f0eaca88fd3084bccff6754c57a919e7d4f.1758071798.git.gitgitgadget@gmail.com>
+        Tue, 16 Sep 2025 18:16:44 -0700 (PDT)
+Message-Id: <3061cc46c1910bdc4f66855db7a07d313b37fb27.1758071798.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
 References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
 	<pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
 From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 17 Sep 2025 01:16:23 +0000
-Subject: [PATCH v2 03/18] make: merge xdiff lib into libgit.a
+Date: Wed, 17 Sep 2025 01:16:24 +0000
+Subject: [PATCH v2 04/18] make: merge reftable lib into libgit.a
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,103 +81,105 @@ From: Ezekiel Newren <ezekielnewren@gmail.com>
 
 Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- Makefile | 30 ++++++++++--------------------
- 1 file changed, 10 insertions(+), 20 deletions(-)
+ Makefile | 39 ++++++++++++++++-----------------------
+ 1 file changed, 16 insertions(+), 23 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index d3e034f3be..94f38eb4c9 100644
+index 94f38eb4c9..ffb898b611 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -670,7 +670,6 @@ BUILTIN_OBJS =
- BUILT_INS =
- COMPAT_CFLAGS =
- COMPAT_OBJS =
--XDIFF_OBJS =
- GENERATED_H =
- EXTRA_CPPFLAGS =
- FUZZ_OBJS =
-@@ -916,7 +915,6 @@ export PYTHON_PATH
+@@ -915,7 +915,6 @@ export PYTHON_PATH
  TEST_SHELL_PATH = $(SHELL_PATH)
  
  LIB_FILE = libgit.a
--XDIFF_LIB = xdiff/lib.a
- REFTABLE_LIB = reftable/libreftable.a
+-REFTABLE_LIB = reftable/libreftable.a
  
  GENERATED_H += command-list.h
-@@ -1207,6 +1205,13 @@ LIB_OBJS += write-or-die.o
- LIB_OBJS += ws.o
- LIB_OBJS += wt-status.o
- LIB_OBJS += xdiff-interface.o
-+LIB_OBJS += xdiff/xdiffi.o
-+LIB_OBJS += xdiff/xemit.o
-+LIB_OBJS += xdiff/xhistogram.o
-+LIB_OBJS += xdiff/xmerge.o
-+LIB_OBJS += xdiff/xpatience.o
-+LIB_OBJS += xdiff/xprepare.o
-+LIB_OBJS += xdiff/xutils.o
- 
- BUILTIN_OBJS += builtin/add.o
- BUILTIN_OBJS += builtin/am.o
-@@ -1385,8 +1390,8 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
+ GENERATED_H += config-list.h
+@@ -1125,6 +1124,19 @@ LIB_OBJS += rebase.o
+ LIB_OBJS += ref-filter.o
+ LIB_OBJS += reflog-walk.o
+ LIB_OBJS += reflog.o
++LIB_OBJS += reftable/basics.o
++LIB_OBJS += reftable/error.o
++LIB_OBJS += reftable/block.o
++LIB_OBJS += reftable/blocksource.o
++LIB_OBJS += reftable/iter.o
++LIB_OBJS += reftable/merged.o
++LIB_OBJS += reftable/pq.o
++LIB_OBJS += reftable/record.o
++LIB_OBJS += reftable/stack.o
++LIB_OBJS += reftable/system.o
++LIB_OBJS += reftable/table.o
++LIB_OBJS += reftable/tree.o
++LIB_OBJS += reftable/writer.o
+ LIB_OBJS += refs.o
+ LIB_OBJS += refs/debug.o
+ LIB_OBJS += refs/files-backend.o
+@@ -1390,8 +1402,7 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
  
  UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
  
--# xdiff and reftable libs may in turn depend on what is in libgit.a
--GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
-+# reftable lib may depend on what is in libgit.a
-+GITLIBS = common-main.o $(LIB_FILE) $(REFTABLE_LIB) $(LIB_FILE)
+-# reftable lib may depend on what is in libgit.a
+-GITLIBS = common-main.o $(LIB_FILE) $(REFTABLE_LIB) $(LIB_FILE)
++GITLIBS = common-main.o $(LIB_FILE)
  EXTLIBS =
  
  GIT_USER_AGENT = git/$(GIT_VERSION)
-@@ -2718,16 +2723,6 @@ reconfigure config.mak.autogen: config.status
+@@ -2723,20 +2734,6 @@ reconfigure config.mak.autogen: config.status
  .PHONY: reconfigure # This is a convenience target.
  endif
  
--XDIFF_OBJS += xdiff/xdiffi.o
--XDIFF_OBJS += xdiff/xemit.o
--XDIFF_OBJS += xdiff/xhistogram.o
--XDIFF_OBJS += xdiff/xmerge.o
--XDIFF_OBJS += xdiff/xpatience.o
--XDIFF_OBJS += xdiff/xprepare.o
--XDIFF_OBJS += xdiff/xutils.o
--.PHONY: xdiff-objs
--xdiff-objs: $(XDIFF_OBJS)
+-REFTABLE_OBJS += reftable/basics.o
+-REFTABLE_OBJS += reftable/error.o
+-REFTABLE_OBJS += reftable/block.o
+-REFTABLE_OBJS += reftable/blocksource.o
+-REFTABLE_OBJS += reftable/iter.o
+-REFTABLE_OBJS += reftable/merged.o
+-REFTABLE_OBJS += reftable/pq.o
+-REFTABLE_OBJS += reftable/record.o
+-REFTABLE_OBJS += reftable/stack.o
+-REFTABLE_OBJS += reftable/system.o
+-REFTABLE_OBJS += reftable/table.o
+-REFTABLE_OBJS += reftable/tree.o
+-REFTABLE_OBJS += reftable/writer.o
 -
- REFTABLE_OBJS += reftable/basics.o
- REFTABLE_OBJS += reftable/error.o
- REFTABLE_OBJS += reftable/block.o
-@@ -2762,7 +2757,6 @@ OBJECTS += $(GIT_OBJS)
- OBJECTS += $(SCALAR_OBJS)
+ TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
+ 
+ .PHONY: test-objs
+@@ -2758,7 +2755,7 @@ OBJECTS += $(SCALAR_OBJS)
  OBJECTS += $(PROGRAM_OBJS)
  OBJECTS += $(TEST_OBJS)
--OBJECTS += $(XDIFF_OBJS)
  OBJECTS += $(FUZZ_OBJS)
- OBJECTS += $(REFTABLE_OBJS) $(REFTABLE_TEST_OBJS)
+-OBJECTS += $(REFTABLE_OBJS) $(REFTABLE_TEST_OBJS)
++OBJECTS += $(REFTABLE_TEST_OBJS)
  OBJECTS += $(UNIT_TEST_OBJS)
-@@ -2916,9 +2910,6 @@ scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
+ OBJECTS += $(CLAR_TEST_OBJS)
+ OBJECTS += $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS))
+@@ -2910,9 +2907,6 @@ scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
  $(LIB_FILE): $(LIB_OBJS)
  	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
  
--$(XDIFF_LIB): $(XDIFF_OBJS)
+-$(REFTABLE_LIB): $(REFTABLE_OBJS)
 -	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
 -
- $(REFTABLE_LIB): $(REFTABLE_OBJS)
- 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+ export DEFAULT_EDITOR DEFAULT_PAGER
  
-@@ -3760,7 +3751,7 @@ clean: profile-clean coverage-clean cocciclean
+ Documentation/GIT-EXCLUDED-PROGRAMS: FORCE
+@@ -3751,7 +3745,7 @@ clean: profile-clean coverage-clean cocciclean
  	$(RM) git.rc git.res
  	$(RM) $(OBJECTS)
  	$(RM) headless-git.o
--	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB)
-+	$(RM) $(LIB_FILE) $(REFTABLE_LIB)
+-	$(RM) $(LIB_FILE) $(REFTABLE_LIB)
++	$(RM) $(LIB_FILE)
  	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS)
  	$(RM) $(TEST_PROGRAMS)
  	$(RM) $(FUZZ_PROGRAMS)
-@@ -3955,7 +3946,6 @@ endif
+@@ -3945,7 +3939,6 @@ endif
+ 
  LIBGIT_PUB_OBJS += contrib/libgit-sys/public_symbol_export.o
  LIBGIT_PUB_OBJS += libgit.a
- LIBGIT_PUB_OBJS += reftable/libreftable.a
--LIBGIT_PUB_OBJS += xdiff/lib.a
+-LIBGIT_PUB_OBJS += reftable/libreftable.a
  
  LIBGIT_PARTIAL_EXPORT = contrib/libgit-sys/partial_symbol_export.o
  
