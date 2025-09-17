@@ -1,110 +1,117 @@
-Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA35221FA0
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 02:54:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55336BA42
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 05:34:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758077672; cv=none; b=Mrxpyhr0+Su4DRUEeSt1xcbgj/zShIFFy9ZmsrQKgBd8ZBZ7vptmgsB4C+1DAB4e/s8jp2HpTDsQigeayMoEkfFvYnt532CVKIOxU+gJovft46l3vI3jNJCCkXwCcY+DEpkEsbxJCsnjdmQBZMianmEhVhMWJhcm8AYBc4p1PU0=
+	t=1758087284; cv=none; b=ONY8kJl+dxXddi8hFbCc/xz4wM24x79zpFHfcHvB5efrNuu96hGJkl2H2OlC2sqGyEvk/CIg0NEMd9fCVS/jTXeHmPdeYQDvWxzrBnJ1UbV1eusyYBSP40K0yW4bL0EvAU3e1RWETpmggaIBQWOcFxDgGjKR8OeUFy+56uJRGDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758077672; c=relaxed/simple;
-	bh=VbpAsgQINljBFHnB/zyHMInxl5q4F9XEUlfkwJtND14=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JVBSGvdCpeoaSxdCLqHH+/2tKMUqN4vLMUAXX4VKoWO/JMj8njLYnwdgafcXC9UiUCpXr+KGFVSnpGC6PGycCEyEPeJXnkjerxXE0LvmbgdyJLoX6sWcJulgepMDckhR/KMklNZB5FNM3lOoTcK+aRVSfUPVj7U/W0Y0GogKvSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aeVAmMZK; arc=none smtp.client-ip=209.85.166.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758087284; c=relaxed/simple;
+	bh=UC8o0IlqeS3ndCU+QrPYZEqm4uGs/IUUFTcGXRX14NE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=O5d/PlXjrHu+dCzZ8vINCudBaPxbtl/U+C8wbvOYiOauXy3IAHL92ldpPC+6AAWkLKYdVJMupp+/413rHp+Uqs9nObD9Q74bm0Aq0+iI0dE0gs5tShpJ1lY0VR4cDJ1y90j8rK5EjKIPnXRAuEGzJK1E/79kB9FovFGT3DoP2ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GXz29Vju; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jsl8NT3f; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aeVAmMZK"
-Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-423fe622487so46014325ab.0
-        for <git@vger.kernel.org>; Tue, 16 Sep 2025 19:54:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758077669; x=1758682469; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=flEG4uehFi7GqyLzGvohKFuWOoKanxZZMelOcKnuBrE=;
-        b=aeVAmMZKnxjHlRcoG7WDgqYoBiYOooar8hXsVgHq1Gt38zSu9pV0HOFydm0jtO84nx
-         vVSTQbCPgy9OiNocGSbAjVSM+odvqM5ce+hENTHpnrj90Q97cjWsTxtS7RzlGotVZP5Z
-         RdIBipLWL2EOVg1Arlgdy98NbBxPZWaDHsMbhX4A5BwXGhj4k0r9o+CouHy1QZKbrkkN
-         FySvxHqpFchF3ZOwS3uE53OcZII83nc70k8OBbQIhIL9PFFyqmCFteGqOp8r05LydJvE
-         ILvg5soc2PVTr2toP5FtQUnfqaXgKFLUAsA2zHLmP7XX0lieNnvLEBWZZaTCe14Cu/Rj
-         VFBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758077669; x=1758682469;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=flEG4uehFi7GqyLzGvohKFuWOoKanxZZMelOcKnuBrE=;
-        b=fBhEumQtXGQeFWzLaqgseDQoJ+L1WvkG4lGbuKIVr6oeF9NGiazXYn8WmjhvlXm1HI
-         yK2QIpIshvnj76Gp7ADW6bSfN1DSj0ryW1SoIWRutvW+ZcY1CZrbzHPD+IhnBktjvant
-         jbuUGdDssUenNoYfiN28eaZ9RKB1PNL4z753zhj/F9dV0QbQgnUj4Xmphdu/Opka+04G
-         ZzI+xhGjSHrBoTeT5OeMwpyfXBaOGctUVaL0mywDCEITY+wvvgpoJPxNqZz1kULpzvSR
-         WSmxdNKHB8g27cgmSWv231f+KD4xvl9L3X5OMsMq2BCDz6IhgGbYa2hMeydgSONjvxOA
-         9LhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUMX3FREpIolSVKcSQEQT01vkJSEXU48gefdy5LReyxDi96lWfjcV8hOQaghVikOkNl/Mg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx0eeCG07MdLySpHi3fLxkvlDdOX864+e8BFzbp10qKCpxTNAOR
-	vKV5CRZPGPmWb6YQIPhuTSvoyWRc3VoahMR4hGHqio+v97LwhWNtxp0yX2WKDpxfi/m3O9PblZ1
-	n8rTnsXuz9Ai5BipNv4l4cbuVZBLYYBo=
-X-Gm-Gg: ASbGncuXR/CMOqCjNZqb+IAUYILWINj67QGZcPcw4qDUMq1sADscIqBNDGivBU6tedY
-	hLl5uLS/T+/+q8v31GF5IdyBNz7Th9l8ZDZBJNfDVXbnq9dq678pyZHkMsaLGqwtef1OuoWBVQt
-	RdQdAh+1FQnXDAZPYVwl1f3dCr8we2BHzIPcReYxHQ2uOMHPoyy4IFD3mshBzSkJfgF3ePMi8rt
-	JPxIJ9HQ1nC3GOHenxjN56/LpGLgsS/lI1CJivpHv92Agb44FE=
-X-Google-Smtp-Source: AGHT+IEEetYX2ps7ZrELwuhKt4/XTfCFlLE0bDWg3H86T2fvi41T9AL0QOxrEr+XasdL8SkW1BnesHONevaRghLkHcU=
-X-Received: by 2002:a05:6e02:1a07:b0:424:71:32e5 with SMTP id
- e9e14a558f8ab-4241a55da8bmr8027485ab.31.1758077669365; Tue, 16 Sep 2025
- 19:54:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GXz29Vju";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jsl8NT3f"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 60A84EC00D4;
+	Wed, 17 Sep 2025 01:34:40 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Wed, 17 Sep 2025 01:34:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1758087280; x=1758173680; bh=J3GjP6kipt
+	E36yQdcwyGc6dxR90XfErW8NHG05Vhgho=; b=GXz29VjueFf43CAQa9gqkeXS1T
+	LZmS6U6wQfSgudBUAkFUz+zMjM6bgzX+3bS8p9jIzc1dqpiNuiCZNNG/70g/nroJ
+	mqnMMnoOH820GQFF0fvPnJr07ap/T8WzVYObL6sbPR4bT/kYNG7yp0Gk6Oa7Ueez
+	L1JIRYLS8mEJY3hmvIPEr3O2dacnmDawIZyqAklafCFS6EGzdFwIi63bntVzzG66
+	Q2H54Rt4G7jxHfK8DXdPkmjvbP7jzoGsLlLwRY5X/ILlRrdFwcf0j/GeR8dT68vT
+	rWszCSHDQV8ShMf7a/XgGS/54rZRUj0j2fnZ1ZkG+8fuOceQbGl28J2SVdlg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758087280; x=1758173680; bh=J3GjP6kiptE36yQdcwyGc6dxR90XfErW8NH
+	G05Vhgho=; b=jsl8NT3fkPk+7xWbau6dlwnUrlSIpKOAt9COhmmiRi7nLG7tEjT
+	wAjUkUiFb6v160XH0s42LL7dD5EurrO/wuikE0ZC/dADT/BGLr5mCGDTO0CWoTkD
+	8LlnrX+i7XX7JfjIhBG9r3g8f4rCQKR8lq+eKpxsCNPWNOoCW83ePaV2rOH1TzSH
+	gtev0HBaq3nee76lQbl1dWNxIi5BLqecPDv7mDumxFGhdi+ynAWoe54Oobl4zB53
+	iaslXB7tqNv2HC4iPVOEB4r6heBG+yK/8tbagY6DMPCVay5buYDTl9h+OuqA3Nvo
+	IseQQj3jQrrD8YqTmJi3YB6jJi+8KaGmD2g==
+X-ME-Sender: <xms:cEjKaB4SV0XYgiAVI-RMwYJwHh_sYzyQI-VtKKkNCI2KMPSm5eTNlg>
+    <xme:cEjKaJe46-W2FNVcbRCvQYaWr2HnwD54eRxfe9a62oq-dA25bU8gRmr7WJ78511hk
+    XVUrbfhMrQ_khKGaA>
+X-ME-Received: <xmr:cEjKaFBQiaP5prVBWGM8gtJGMG8qGcopW9JhL6ImvhDaTXkz8-Qs8q-UVAWsgye9xdnVWNx9msil0NkzrBMw8BhgH6hcVV2orlN3DHKRfbI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegvdeivdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    ejtddtgeffkedujeejgeduhefghedtgfdtieduleeulefgueetheeludegueeuveenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudek
+    keesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhg
+X-ME-Proxy: <xmx:cEjKaM9HoBYod-eMCpsJ2lNR42GgkIEXyFjqIo7JZNwKeyFANZLCUQ>
+    <xmx:cEjKaALbLKZRp856qbkJjO8gwsZOl_UMO78j5rGHBxJinjDUTNOw-Q>
+    <xmx:cEjKaFgfoDcd7cYG8t7UAe14J7eut8a_tnOiH14xcqn-vwNPicqBfw>
+    <xmx:cEjKaA5Po9vApDbbdYXbPbt7ldc9RHcbDtIyfdJrFC9qF8mYcV4SYA>
+    <xmx:cEjKaBoCMj6OJseIy5BIdo5gJ_YqtJSG_oc4F_A_6CpOaSnHdIX90Dof>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 17 Sep 2025 01:34:39 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 30cd03ee (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 17 Sep 2025 05:34:37 +0000 (UTC)
+Date: Wed, 17 Sep 2025 07:34:33 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org,
+	karthik.188@gmail.com
+Subject: Re: [PATCH] repo: add --all to git-repo-info
+Message-ID: <aMpIaVPdgnbhBvlG@pks.im>
+References: <20250915223618.13093-1-lucasseikioshiro@gmail.com>
+ <aMkaePi90Q6sXuO4@pks.im>
+ <xmqqv7linzex.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CABPp-BEzjk0PLEMjtk-0jQOAag-s_iJkKMbcU+o5vv8BzRVV2A@mail.gmail.com>
- <20250916145032.969133-1-phahn-oss@avm.de>
-In-Reply-To: <20250916145032.969133-1-phahn-oss@avm.de>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 16 Sep 2025 19:54:16 -0700
-X-Gm-Features: AS18NWCtIuzefaW7_N3HuGO9dO2Y7O-MZjqTcxxSg02QsmatFJN4Y-MmWbH08G0
-Message-ID: <CABPp-BFxqJt+2HbY+d_qdZ0w=UDaL_u4MzO_3cpPpArQHREBJA@mail.gmail.com>
-Subject: Re: --shallow-exclude=ref -> "ambiguous deepen-not" error
-To: Philipp Hahn <phahn-oss@avm.de>
-Cc: bolide2005@163.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqv7linzex.fsf@gitster.g>
 
-On Tue, Sep 16, 2025 at 7:52=E2=80=AFAM Philipp Hahn <phahn-oss@avm.de> wro=
-te:
->
-> Hello Elijah,
->
-> On Mon, 24 Feb 2025 at 07:27:55 -0800 Elijah Newren <newren@gmail.com> wr=
-ote:
-> > On Thu, Feb 20, 2025 at 12:27=E2=80=AFAM bolide2005@163.com <bolide2005=
-@163.com> wrote:
-> > > Case 2: git clone --shallow-exclude=3D<rev> <repo-url>
-> >
-> > The documentation was fixed for case 2 in 00e10e07510 ("doc: correct
-> > misleading descriptions for --shallow-exclude", 2024-11-04) to point
-> > out that this usage is flawed.
->
-> I have searched the archive and git repository, but found no explanation,=
- why
-> that usage - shallow-exclude by REV - is considered "flawed": I understan=
-d,
-> that the current implementation does not support this, but is there any
-> technical reason why that is not possible or undesirable?
+On Tue, Sep 16, 2025 at 09:19:02AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > One thing I wonder is whether we actually need the "--all" flag in the
+> > first place. Right now, when saying `git repo info` without any further
+> > arguments, then the user will be met with complete silence. I don't
+> > really think that this is useful as a default in any way, as it makes it
+> > very difficult for the user to figure out what kind of information
+> > exists in the first place.
+> 
+> If we were talking about interactive tool, I might agree, but for a
+> tool for scriptors,
+> 
+>     tool "$@"
+> 
+> should not silently turn into
+> 
+>     tool --all
+> 
+> when $# == 0.  That is asking for surprises.
 
-I'd honestly rather not touch shallow clones, I only did so because of
-user reports and their obvious confusion from the misleading
-documentation and error message that existed at the time.
+That's fair. Let's stick with a flag then.
 
-Anyway, I wasn't making any judgement call on what might be a
-desirable implementation.  I was just noting that the current
-implementation is guaranteed to do nothing useful with such a flag,
-and thus that passing such a flag with the current code is flawed, and
-sadly that our documentation misled users and our code gave a less
-than helpful error message in such cases.  I fixed up the
-documentation and error messages to fit the current implementation.
-
-Hope that helps clarify my intent and focus at the time.
+Patrick
