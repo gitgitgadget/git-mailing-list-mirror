@@ -1,72 +1,72 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DACDA945
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 22:15:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277F93019C0
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 22:32:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758147347; cv=none; b=VKjxV6eHm/9ECa28eRfy2JWof+ClNsIxb+Pa4/GzYsUGs+jB6ys+qucn/LIFfPBeC5ON1ONUStYNoGjmm7L/pGy5R5esoSpbV1Aj8nOVQnuXz/HfXIJ6RnhSIVOpV/fcIPxOm2rps4bcH4r2Smyi7uIGs4mPJ39xUhlaOZVPZa0=
+	t=1758148366; cv=none; b=UU15HMpPPb+MePtLjO3W+UL3p8BvyqSiMlHKdVPtPNKTbVCNPKvznZD6qrFgmOt47KbAavmCuN5LZnMVQEXG/nKXTgdThCWubuuxtFrka4ciHYjRz0i+a5zwkCyxdXrkB+beiRjK03cA90VHv65UOIbeWfTPzTgDuzN4sEBh++U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758147347; c=relaxed/simple;
-	bh=sBL366kQkdadCk6jazgfbFBY02zPiABySbKpS61qGhc=;
+	s=arc-20240116; t=1758148366; c=relaxed/simple;
+	bh=gyvxYPl//ZdrT1W8NQZznMTYKFGfCuVLUISdmQIVMbM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jg7kSxddXP7hZKpziVXhiAh/CC6uASCdYoudQ05UFCCPji3wy1UtsIBxjh8DWud+ltOSl97H46fEwKCqqklVzQKui+cLQOlsxkHJJGFn+Aa1NTAbbr/p4qv0t1tpOAELRVdZRc51MQWpYUP1wYkGUtlJEu19Vo8tuMX2xBPUGlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dsdz3Tuq; arc=none smtp.client-ip=209.85.210.50
+	 Content-Type:Content-Disposition:In-Reply-To; b=GSG4rkQecNWN0pq9QK4T0qly1MwAJBIYmP4rJCOWqIqcpLs7aWekbIfC1cI+HVnvkTbR4H2rSIEzOCwvX5r8ODA3HNstHwg1I8YObrLVIG+6PcQfxZQSYWKH/dm+yiVi4BZbbAfNoC0a4hxGgBugeCQxuHpUVI7NEJ5uM9+RQ10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CCLMqIC1; arc=none smtp.client-ip=209.85.160.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dsdz3Tuq"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-757fda06b0cso233930a34.0
-        for <git@vger.kernel.org>; Wed, 17 Sep 2025 15:15:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CCLMqIC1"
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-30ccea8a199so193648fac.2
+        for <git@vger.kernel.org>; Wed, 17 Sep 2025 15:32:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758147345; x=1758752145; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758148364; x=1758753164; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=y+1IRJZK2Net7JF71HtPGoQwtaZ6qbSVgKCq/EOjXzg=;
-        b=Dsdz3TuqAHk7N3MWHCQeTkUfWuSeeTyOVF7YeO4QgpCur+gCFk2+qTOO/7+FcmMDGZ
-         pxBM+7Hcy5wK3vWBZv+mi/wh99Yo+B9Wm4OyjP7ZkUuPBT3tnPleocLHVEyBT13PAEWY
-         DGVyPWIZ+LmKi/tRJ5rDdD8BYo7kdUXDthBGCLdVloKq8NTRmOBYb3cTKnhLQGIhmqkQ
-         JUA6T0elLn+EJqm9S8Go9OVupg8d6lGFW/4hgHev5E0KXfA3yfzFcfhxtxtck2eKszgL
-         KkHRMffA9i06T97MnrVxDnvvJYKuDjHqjtmdX9dCurocioLamyeMmlNGL6ngpxrTaa39
-         8PvQ==
+        bh=fZdFsNGXPImn1w7SE/Uw3N9Ip5YMN8TeScxydwisa20=;
+        b=CCLMqIC1pPUmmbC2Ua29p/WwqYITkSjhI4m7ns+8gskuIbyXBIaASbfEaasBGsCLUg
+         3kFPl9c89Lh8MWSXCzblzDo4pOB3LKnrV1HM7R2jXeRhkw+4bBOtu+8hcLMQfZfb2kHz
+         w8p+rKog6YAXX6iOre13MQQWPH/1mZ67FxcICb+/iW/gO3viGuTG6Avc3zObsUO5Pt5/
+         I65V059HJzDO2aHR8rWBXnHdtwaAsM1NdJ1O8vghcSfs2EdEjGfbU42NCWVl+7dMlCtJ
+         XudIiVPregLaFrFKE9pv4GpEMfBFI4FmQQWH9My3rGrexNvbrczoyaKU7GbOIoOcvnUX
+         xGQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758147345; x=1758752145;
+        d=1e100.net; s=20230601; t=1758148364; x=1758753164;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=y+1IRJZK2Net7JF71HtPGoQwtaZ6qbSVgKCq/EOjXzg=;
-        b=PteraVrPWDJ2CYPiULReA5OkMDJWaafK+vHCDORX30jhU6e93MSnYAtWoaIVprVzpe
-         mrPOrcuLqeV3SKN5+pLE5fXsQn9eJMgFD6fXUQFHjJ5l5hX0djupyv8BTtmv2y0mJ+BO
-         7o6cclycxdHx8n5PiH3j6eEJpufQf1VYBaOJFz6I+BgMj6K1TBejsXNCb0sEnd5M2iAE
-         C63yPDWum82r2luBxwmRS8v0yyOk4nyr8ZjAKD7BUp5BcoMqVKaZg/lpCghB4+KxQxcm
-         XpkbiDrmR5dO6/NmFvWwX69Kz5yI1P4vIqo66Xej6PjqbEUf0/xEc3y12+OI0pSec3IH
-         6sqQ==
-X-Gm-Message-State: AOJu0Yx7lnDa3bZeIBpaW5LEQBeZcpfqkFTOIK2KGMlW4LMgTllkE5xk
-	Ox9gebjCOfajxbD5iWmjZ7+3wlSdc1os0sl6fw/cnvw+l3v289NbiPRy
-X-Gm-Gg: ASbGncs8GzSKpE9LBbQGD6FNcD+4bvTVbGP1sxgIvkc+PdWZ07cFtIAd2uXzaMT6l19
-	/EIFNCzh/sySYaYmgfgMC4+E35l7zn6E+K7gPO2ATMvop2E+igpFujLzZG/sBl9kLrX4/0gR4mT
-	YcUL2aucMJA2VGIYT41vAzPqCyX+3zNPf5Mup3qEm+qwu8HeFHiJxOsh1ONFttOQniw2FOSCdw4
-	g0JDu9KgRajG6h8O3Y6Z/kpRHAZAAnpoSwFj0cg0I+KO2YPNGhHdZLuyV/+ihz2pYxT8S2oWtIv
-	aDjKTTez5RSO5Jya6kP5Tdf5pFveoByY1BWhvxCLvsi6MT1IKQSRspDEqMCMwV3crVVhS0VslEE
-	XSQsJntSAU0Mmfj+vA/1pbtILzD1O7WPZ8yw=
-X-Google-Smtp-Source: AGHT+IFBPm+B16qVANv1DoxC6vOtKA5hFXH/9/z18laWz+BpnD3q+GRR0AVQzsDlO76YQvXPR8XguQ==
-X-Received: by 2002:a05:6830:914:b0:74e:e67b:8bfd with SMTP id 46e09a7af769-76326b02a89mr2557722a34.27.1758147345344;
-        Wed, 17 Sep 2025 15:15:45 -0700 (PDT)
+        bh=fZdFsNGXPImn1w7SE/Uw3N9Ip5YMN8TeScxydwisa20=;
+        b=cddYSGwDcx/hj1qlfvbal/5SGAYXLuOiBpNn6Hf7aNpO4gzEMWGdVl1KaUnaD2Y7ua
+         bwhZgTy0WXOgbZ7nGM63/Uux3lgFO3lfnIro70wfE1bjLRG6yhiAvTmfriQzEciOl7Wl
+         IcSr38W6942j+LJxgSujZMWLGA12dmB/xTdnRVI6DEH52eT9LmXYqmJToDLoW5WAzL7t
+         ahdfNit3G7tO+vYWEmSTPf86y7gVMf5G/5JEpBobo8SWsPQiFE4rPGxOJXRCfU/a0HCM
+         U1ydljvjzNh6tur2PYHTg/XiJkiCgPcT7sj6Gh/eXPIT9LyTBohcY7LYyV4dh203UG2M
+         EaRw==
+X-Gm-Message-State: AOJu0YwlyeK218AyDN8d4ZGiLz0fn8tPAQb78xEHRZ9yhOuogR9akDrU
+	/IjIk7CShHelAD6CY3fh1KyzX1KoYW3V7Eu6e7JkSLpBq682gxfDrkil
+X-Gm-Gg: ASbGncu110AtkyAaaXpJw4SPg7XOMm3aRfoJMLJISvfPtv8o+AUHtc4KEiyLgJhc888
+	4FApspFQ4VWIyqTx8gFcTyFsmZoW20WHwn7Lkj1KzmrESntd6uBVYhRCFOuPLug+6smKIdJfqyi
+	OmN58ey3954+o57LdbhyRUM4vjltDWjDIE4wSIehBAP4/nCts52/lUbXhm6G33EG3szYFVgvUJY
+	3fpbxG/HavpyeVhYM2PWCotF8vzYpHoHFJ8W+lrdf/lE2Dz9kkPXqpAmG5M9UvazztwUnLbZRmp
+	379qGW1QcQ6L716mntPUmR+9EZ8HWWu5gIosklWbmOan+WGQRarSU/QfZIo0wtbZMADlJAQta/b
+	Kw/ocOO6X0A0D0qVbsur2DpOBe6avUCciuQE=
+X-Google-Smtp-Source: AGHT+IE+HaNifl4PxSs5gNikoiD6F/slf4QnRCsyp48ScwMJ0KSfH9aimklxviTtACGQRiggVtJVvw==
+X-Received: by 2002:a05:6871:4b11:b0:31d:8ceb:20f2 with SMTP id 586e51a60fabf-335bfb357dbmr2259221fac.41.1758148364115;
+        Wed, 17 Sep 2025 15:32:44 -0700 (PDT)
 Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-7692c725368sm313928a34.41.2025.09.17.15.15.44
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-336e41275b7sm384187fac.13.2025.09.17.15.32.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Sep 2025 15:15:45 -0700 (PDT)
-Date: Wed, 17 Sep 2025 17:15:44 -0500
+        Wed, 17 Sep 2025 15:32:43 -0700 (PDT)
+Date: Wed, 17 Sep 2025 17:32:43 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
 	Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>, 
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 04/15] odb: move packfile map into `struct
- packfile_store`
-Message-ID: <54aadwxqaxm5sewgxg6aegfrvtqrdla6mxbhkrdbbufgqpb3sd@ymwtrihoj4kb>
+Subject: Re: [PATCH v5 09/15] packfile: split up responsibilities of
+ `reprepare_packed_git()`
+Message-ID: <p6f3xtitrepajnaho4eqwoh7o2qweim6adr3x726dbwg63kmny@cx5n43myawue>
 References: <20250915-b4-pks-packfiles-store-v5-0-d6340350934f@pks.im>
- <20250915-b4-pks-packfiles-store-v5-4-d6340350934f@pks.im>
+ <20250915-b4-pks-packfiles-store-v5-9-d6340350934f@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,44 +75,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250915-b4-pks-packfiles-store-v5-4-d6340350934f@pks.im>
+In-Reply-To: <20250915-b4-pks-packfiles-store-v5-9-d6340350934f@pks.im>
 
 On 25/09/15 10:54AM, Patrick Steinhardt wrote:
-> The object database tracks a map of packfiles by their respective paths,
-> which is used to figure out whether a given packfile has already been
-> loaded. With the introduction of the `struct packfile_store` we have a
-> better place to host this list though.
-
-Makes sense.
-
-> Move the map accordingly.
+> In `reprepare_packed_git()` we perform a couple of operations:
 > 
-> `pack_map_entry_cmp()` isn't used anywhere but in "packfile.c" anymore
-> after this change, so we convert it to a static function, as well. Note
-> that we also drop the `inline` hint: the function is used as a callback
-> function exclusively, and callbacks cannot be inlined.
+>   - We reload alternate object directories.
+> 
+>   - We clear the loose object cache.
+> 
+>   - We reprepare packfiles.
+> 
+> While the logic is hosted in "packfile.c", it clearly reaches into other
+> subsystems that aren't related to packfiles.
+> 
+> Split up the responsibility and introduce `odb_reprepare()` which now
+> becomes responsible for repreparing the whole object database. The
+> existing `reprepare_packed_git()` function is refactored accordingly and
+> only cares about reloading the packfile store now.
 > 
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
 [snip]
-> diff --git a/midx.c b/midx.c
-> index 7726c13d7e..e96970efbf 100644
-> --- a/midx.c
-> +++ b/midx.c
-> @@ -460,7 +460,7 @@ int prepare_midx_pack(struct multi_pack_index *m,
->  	strbuf_addbuf(&key, &pack_name);
->  	strbuf_strip_suffix(&key, ".idx");
->  	strbuf_addstr(&key, ".pack");
-> -	p = hashmap_get_entry_from_hash(&r->objects->pack_map,
-> +	p = hashmap_get_entry_from_hash(&r->objects->packfiles->map,
->  					strhash(key.buf), key.buf,
->  					struct packed_git, packmap_ent);
+> diff --git a/odb.h b/odb.h
+> index 1c998a2478..ef34132c58 100644
+> --- a/odb.h
+> +++ b/odb.h
+> @@ -163,6 +163,12 @@ struct object_database {
+>  struct object_database *odb_new(struct repository *repo);
+>  void odb_clear(struct object_database *o);
+>  
+> +/*
+> + * Clear caches, reload alternates and then reload object sources so that new
+> + * objects may become accessible.
+> + */
+> +void odb_reprepare(struct object_database *o);
 
-In `struct object_database`, the comment above the defined `struct
-packfile_store *packfiles` says it "should only be accessed directly by
-packfile.c". Now that the packfile map has been moved into `struct
-packfile_store`, it looks like "midx.c" now reaches into this structure.
+nit: IMO, something like `odb_reload()` sounds a bit better, but it's
+not a big deal either way.
 
-Is this something we should consider?
+[snip]
+> diff --git a/packfile.h b/packfile.h
+> index bf66211986..a85ff607fe 100644
+> --- a/packfile.h
+> +++ b/packfile.h
+> @@ -112,6 +112,14 @@ void packfile_store_free(struct packfile_store *store);
+>   */
+>  void packfile_store_close(struct packfile_store *store);
+>  
+> +/*
+> + * Clear the packfile caches and try to look up any new packfiles that have
+> + * appeared since last preparing the packfiles store.
+> + *
+> + * This function must be called under the `odb_read_lock()`.
+> + */
+> +void packfile_store_reprepare(struct packfile_store *store);
+
+nit: I also think `packfile_store_reload()` sounds a bit nicer here.
+
+Overall this patch looks good. :)
 
 -Justin
