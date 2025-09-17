@@ -1,97 +1,110 @@
-Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BC92E63C
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 02:16:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA35221FA0
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 02:54:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758075401; cv=none; b=Z7uMsokLTIxtkESe5OarLEPpRYUDACvS6vhsGXNqlKyfUNEg5ZP6hHbHO/HSIuq8XMIBv2u7clNnG7mMZ0PIDKRLhYTZMd72lDWCiUJgMEbIZzD9GwTebt1WTp+iVp3N+G8hGsGWu83k6+Jd+zL9GMmj+xEG7ErO74SCvPAxVRU=
+	t=1758077672; cv=none; b=Mrxpyhr0+Su4DRUEeSt1xcbgj/zShIFFy9ZmsrQKgBd8ZBZ7vptmgsB4C+1DAB4e/s8jp2HpTDsQigeayMoEkfFvYnt532CVKIOxU+gJovft46l3vI3jNJCCkXwCcY+DEpkEsbxJCsnjdmQBZMianmEhVhMWJhcm8AYBc4p1PU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758075401; c=relaxed/simple;
-	bh=TIVN00oZAEOcbxmZMqkhzGiu7oJSY4veaM8tjKcg1UY=;
+	s=arc-20240116; t=1758077672; c=relaxed/simple;
+	bh=VbpAsgQINljBFHnB/zyHMInxl5q4F9XEUlfkwJtND14=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Gy3L9d52rAq8aLByjBP3PrqMmdD/RQ66rXhKkujiQJDHZUpIEVV5KqnA89nvenYo0cS4tOuzLOSaiVCfDv0tWkS9pta3+2UgfMyuthWHhBOQJ+FVDouCNWW14Mj7tTSf+VwXIjysiCbvBnkRjZsNTnvrFlRQ41XzaH5OtmWOlHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hoGBw/6F; arc=none smtp.client-ip=209.85.166.169
+	 To:Cc:Content-Type; b=JVBSGvdCpeoaSxdCLqHH+/2tKMUqN4vLMUAXX4VKoWO/JMj8njLYnwdgafcXC9UiUCpXr+KGFVSnpGC6PGycCEyEPeJXnkjerxXE0LvmbgdyJLoX6sWcJulgepMDckhR/KMklNZB5FNM3lOoTcK+aRVSfUPVj7U/W0Y0GogKvSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aeVAmMZK; arc=none smtp.client-ip=209.85.166.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hoGBw/6F"
-Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-3fe48646d40so2716335ab.0
-        for <git@vger.kernel.org>; Tue, 16 Sep 2025 19:16:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aeVAmMZK"
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-423fe622487so46014325ab.0
+        for <git@vger.kernel.org>; Tue, 16 Sep 2025 19:54:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758075399; x=1758680199; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758077669; x=1758682469; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MdIffloiKkG4hmoETS8NhKgayMGCq2X3c+WqnJcKdJA=;
-        b=hoGBw/6F3YI5lMjFOpWxEu2bXckL5rMoVypMFTnPlNaT4FFTigO5/vS79Me69KxNy3
-         NA+vFk3Mm+xOs3bRCmqtcYQlqvYGQFPFbLmdlU8exYbheUqzAxNeHqOIJJTkYdXlc1dk
-         TAGEnbQvwqrajNM7pa16fDlOeozDzsJ9I6StsdCtrUPyjwf6aGW2ahty5kpgaaMdRVtD
-         YAqqLlG8M9z9UFf3SGwLen03sfxTzpyOCyI12tec2sprFRF6gheA3E/sTUdMbw8LKsw7
-         5g6NFBCMns/nYIOd9O69XCxmf605dOKHeG8JuKPR1WVmrLjrFN92rY81WHg1slrNGxD3
-         04Sw==
+        bh=flEG4uehFi7GqyLzGvohKFuWOoKanxZZMelOcKnuBrE=;
+        b=aeVAmMZKnxjHlRcoG7WDgqYoBiYOooar8hXsVgHq1Gt38zSu9pV0HOFydm0jtO84nx
+         vVSTQbCPgy9OiNocGSbAjVSM+odvqM5ce+hENTHpnrj90Q97cjWsTxtS7RzlGotVZP5Z
+         RdIBipLWL2EOVg1Arlgdy98NbBxPZWaDHsMbhX4A5BwXGhj4k0r9o+CouHy1QZKbrkkN
+         FySvxHqpFchF3ZOwS3uE53OcZII83nc70k8OBbQIhIL9PFFyqmCFteGqOp8r05LydJvE
+         ILvg5soc2PVTr2toP5FtQUnfqaXgKFLUAsA2zHLmP7XX0lieNnvLEBWZZaTCe14Cu/Rj
+         VFBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758075399; x=1758680199;
+        d=1e100.net; s=20230601; t=1758077669; x=1758682469;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MdIffloiKkG4hmoETS8NhKgayMGCq2X3c+WqnJcKdJA=;
-        b=rQXPYDjOcSI2hvDEhi1P7rtgDHDJpUFweufNJKiQaeYEvelQ53ulMEdMtv6fhEYK6J
-         Msz0Dhwmih1oPgDlAuCf87Sd/OnXnQZzSCrkv7ilNm/uv7R/++ywxZWqKB3CquDcfxmc
-         y63eCjOoj0B+izV7azfEpqV2x5gxavWr3f3VebN84/r4OcYaR0Vn19LFaAgcZCiVzwgm
-         tHyKuL4FWGMLvecXLTOex1vvhcEikKDlr2szjlHvVIBjAmYmyEAB/LTy1D2kEQpQTJhF
-         ArwOOU4U7V2SjtXR9CPsKVTacWeYVa7QaQcfSP+Kyuis3F31QVug5XHmkrFWgKFNa6hO
-         tZkw==
-X-Forwarded-Encrypted: i=1; AJvYcCW0/sQPOlxVn3GRaa4ADoGXySPI6d21mJgkRYT1ELCmydoW4/Q6jnaHgDJiBQpLFUvmiA8=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywmms0z0ST8ToMSaY41IgS/Wkok0ytnSqwEXBbxy24edEEBJA5+
-	qhUH/Jk++s/7Yiv0O+lhyUG2gxY/mr3B1OwmUyeSLALhO0VN9+rNmSqrRB+f8slblLrdZB5iTBI
-	tHYWgQnYWquA4TUGwRKjA0QonHKB3eC+giA==
-X-Gm-Gg: ASbGncuiqbxLVP4RoXpsdusxiF7xvWCzTApGmx9mTiefEi2ezXh+T41tSg79r1LGNux
-	80ViLgR1X8+KJDts5PnPoGZVpa+q1nEAQL2ftqgnYcYTXcys/xEfNCa4NTp1a/GN91w+TG9++/p
-	jT9ncHC2xz31CITk2kAHbOzGV30ZPkSrPlVop0Z8sPqcKiE3SZGGwKoKHisj3z1TzX7HBUhuueY
-	odt8HmKtjyV2B2rHz1z7qUxveiPY9UAZ/6HB9tVEEt36ZIauoE=
-X-Google-Smtp-Source: AGHT+IF3zi9HsVxtZK4gu0FhG/ZD0vTnfowHXN0sp+IMc4E1d5Zl8z27qvZQiZCUIWlZWLTbc07Zf8xT54m7ROJZ4Fc=
-X-Received: by 2002:a05:6e02:1283:b0:423:7873:262f with SMTP id
- e9e14a558f8ab-424114c4984mr31461345ab.11.1758075399550; Tue, 16 Sep 2025
- 19:16:39 -0700 (PDT)
+        bh=flEG4uehFi7GqyLzGvohKFuWOoKanxZZMelOcKnuBrE=;
+        b=fBhEumQtXGQeFWzLaqgseDQoJ+L1WvkG4lGbuKIVr6oeF9NGiazXYn8WmjhvlXm1HI
+         yK2QIpIshvnj76Gp7ADW6bSfN1DSj0ryW1SoIWRutvW+ZcY1CZrbzHPD+IhnBktjvant
+         jbuUGdDssUenNoYfiN28eaZ9RKB1PNL4z753zhj/F9dV0QbQgnUj4Xmphdu/Opka+04G
+         ZzI+xhGjSHrBoTeT5OeMwpyfXBaOGctUVaL0mywDCEITY+wvvgpoJPxNqZz1kULpzvSR
+         WSmxdNKHB8g27cgmSWv231f+KD4xvl9L3X5OMsMq2BCDz6IhgGbYa2hMeydgSONjvxOA
+         9LhQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUMX3FREpIolSVKcSQEQT01vkJSEXU48gefdy5LReyxDi96lWfjcV8hOQaghVikOkNl/Mg=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx0eeCG07MdLySpHi3fLxkvlDdOX864+e8BFzbp10qKCpxTNAOR
+	vKV5CRZPGPmWb6YQIPhuTSvoyWRc3VoahMR4hGHqio+v97LwhWNtxp0yX2WKDpxfi/m3O9PblZ1
+	n8rTnsXuz9Ai5BipNv4l4cbuVZBLYYBo=
+X-Gm-Gg: ASbGncuXR/CMOqCjNZqb+IAUYILWINj67QGZcPcw4qDUMq1sADscIqBNDGivBU6tedY
+	hLl5uLS/T+/+q8v31GF5IdyBNz7Th9l8ZDZBJNfDVXbnq9dq678pyZHkMsaLGqwtef1OuoWBVQt
+	RdQdAh+1FQnXDAZPYVwl1f3dCr8we2BHzIPcReYxHQ2uOMHPoyy4IFD3mshBzSkJfgF3ePMi8rt
+	JPxIJ9HQ1nC3GOHenxjN56/LpGLgsS/lI1CJivpHv92Agb44FE=
+X-Google-Smtp-Source: AGHT+IEEetYX2ps7ZrELwuhKt4/XTfCFlLE0bDWg3H86T2fvi41T9AL0QOxrEr+XasdL8SkW1BnesHONevaRghLkHcU=
+X-Received: by 2002:a05:6e02:1a07:b0:424:71:32e5 with SMTP id
+ e9e14a558f8ab-4241a55da8bmr8027485ab.31.1758077669365; Tue, 16 Sep 2025
+ 19:54:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2048.git.git.1757274320.gitgitgadget@gmail.com>
- <xmqqcy7qm582.fsf@gitster.g> <CAH=ZcbCra35t7sxnwTvaw2oQeh6VL719v4Hx1fjDTGiU5Gmh-w@mail.gmail.com>
-In-Reply-To: <CAH=ZcbCra35t7sxnwTvaw2oQeh6VL719v4Hx1fjDTGiU5Gmh-w@mail.gmail.com>
+References: <CABPp-BEzjk0PLEMjtk-0jQOAag-s_iJkKMbcU+o5vv8BzRVV2A@mail.gmail.com>
+ <20250916145032.969133-1-phahn-oss@avm.de>
+In-Reply-To: <20250916145032.969133-1-phahn-oss@avm.de>
 From: Elijah Newren <newren@gmail.com>
-Date: Tue, 16 Sep 2025 19:16:28 -0700
-X-Gm-Features: AS18NWDvt8oAyb9wq0GGNymVKcmk2z08SkPLqKpukqrVQzZhC4EE_SGcbeoHlz0
-Message-ID: <CABPp-BH-oaV+fJ4u50oofy54ycE5oKoYJ6O1XgEt_JfDSgXvxg@mail.gmail.com>
-Subject: Re: [PATCH 00/17] Use rust types in xdiff.
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, 
-	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Date: Tue, 16 Sep 2025 19:54:16 -0700
+X-Gm-Features: AS18NWCtIuzefaW7_N3HuGO9dO2Y7O-MZjqTcxxSg02QsmatFJN4Y-MmWbH08G0
+Message-ID: <CABPp-BFxqJt+2HbY+d_qdZ0w=UDaL_u4MzO_3cpPpArQHREBJA@mail.gmail.com>
+Subject: Re: --shallow-exclude=ref -> "ambiguous deepen-not" error
+To: Philipp Hahn <phahn-oss@avm.de>
+Cc: bolide2005@163.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 16, 2025 at 3:01=E2=80=AFPM Ezekiel Newren <ezekielnewren@gmail=
-.com> wrote:
+On Tue, Sep 16, 2025 at 7:52=E2=80=AFAM Philipp Hahn <phahn-oss@avm.de> wro=
+te:
 >
-> On Tue, Sep 16, 2025 at 3:56=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
-> > I think we saw that the earlier part were read carefully by Elijah
-> > (and others may have read without finding anything worth commenting
-> > on), so should we split this into two parts and start merging the
-> > early 9 down to 'next' and then to 'master'?
+> Hello Elijah,
 >
-> I agree. 1-9 are ready to go. Do I need to create a new version of
-> this patch series? let it stand as is until it's been merged into
-> master, or something else?
+> On Mon, 24 Feb 2025 at 07:27:55 -0800 Elijah Newren <newren@gmail.com> wr=
+ote:
+> > On Thu, Feb 20, 2025 at 12:27=E2=80=AFAM bolide2005@163.com <bolide2005=
+@163.com> wrote:
+> > > Case 2: git clone --shallow-exclude=3D<rev> <repo-url>
+> >
+> > The documentation was fixed for case 2 in 00e10e07510 ("doc: correct
+> > misleading descriptions for --shallow-exclude", 2024-11-04) to point
+> > out that this usage is flawed.
+>
+> I have searched the archive and git repository, but found no explanation,=
+ why
+> that usage - shallow-exclude by REV - is considered "flawed": I understan=
+d,
+> that the current implementation does not support this, but is there any
+> technical reason why that is not possible or undesirable?
 
-I think 1-9 are close to ready to go, but there's several small
-cleanups that would be nice to have in a v2 on patches 2, 4, 7, 8, 9.
-See my comments on the patches, but it's things like adding detail to
-commit messages or otherwise touching those up, removing orthogonal
-style cleanups (or making them a separate patch), and removing extra
-blank lines.  Could we get a re-roll of just the first 9 patches with
-these addressed?  Then I think it'd be ready to merge down to 'next'.
+I'd honestly rather not touch shallow clones, I only did so because of
+user reports and their obvious confusion from the misleading
+documentation and error message that existed at the time.
+
+Anyway, I wasn't making any judgement call on what might be a
+desirable implementation.  I was just noting that the current
+implementation is guaranteed to do nothing useful with such a flag,
+and thus that passing such a flag with the current code is flawed, and
+sadly that our documentation misled users and our code gave a less
+than helpful error message in such cases.  I fixed up the
+documentation and error messages to fit the current implementation.
+
+Hope that helps clarify my intent and focus at the time.
