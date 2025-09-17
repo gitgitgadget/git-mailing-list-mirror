@@ -1,140 +1,83 @@
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail3-relais-sop.national.inria.fr (mail3-relais-sop.national.inria.fr [192.134.164.104])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF43E33AE99
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 15:25:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4759C33AEB7
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 15:26:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.134.164.104
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758122757; cv=none; b=MBkpT8rQXkLHxmpJrBEMZeCACGpEAe4YNeduarih62wWNNwh+iveom/zVI3h0IaI7EehR8i+yRoxQhuqwXY04anQC2dKmTtq44SxCPLaYudl5CZbNQKbabyDFE2jS7p0EiupYR+LWjM8xd44NjdpaW2qrKoCWQvu1oXW68Mrjxo=
+	t=1758122769; cv=none; b=NXmPBH6a0I52hPOGdmI7yw3qgtYvBR3qwugX5Py5GvlurZOCJJ8HarhCxArV0nV8yjE7vy4iyF8krY25dmZxAkqSv+vrHiUrA+oE0pDXE/pKD46K0bG4AEuJFw5f70hnUpg2cEun4QHZwojkt1PUelqsR2nRuibqn2/3qEM9aRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758122757; c=relaxed/simple;
-	bh=3tf991vqpaic1iiW1Z6zNy7k8lk4s7AcuWUMsrCTUPc=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tM3VCg2syFUMho7ZOahI33MYXwiJ40mrty6D9iCX8nNEvzENLi6pR/kDeyYsuV61Mdqe5wBLMQHf9ZgzTJTjXa0XrBvD9mlg6SD71yRmg/T+xQua0G3zL74xd8Q9fuvcypmXbFnh7W1/5fsdHwMR2Wydv05JivKXd6fsZQs1O7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cv2V5jtS; arc=none smtp.client-ip=209.85.217.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758122769; c=relaxed/simple;
+	bh=KHRbsZRlhS5TATenMIrcavfCLtq0MFKZMnUo6f09q54=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=IxAVwsfKQOLhdq9VTr19RdbkSgTN/Nkd0ptKPQkOIYuwQLB7oaMuQUwji+o581jj+5RUtuH/F+IafuZ+N9DMlIFcBE04Vd0gW0bglp2+6pT+rkq6LCyDmy+b6j0F4WUiaI3BLlNNEP5gapUVuvIn33OX2gJjv+wJQQVU29xHzOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=inria.fr; spf=pass smtp.mailfrom=inria.fr; dkim=pass (1024-bit key) header.d=inria.fr header.i=@inria.fr header.b=vkVAuW24; arc=none smtp.client-ip=192.134.164.104
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=inria.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=inria.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cv2V5jtS"
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-5570a77eabcso4119472137.1
-        for <git@vger.kernel.org>; Wed, 17 Sep 2025 08:25:54 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=inria.fr header.i=@inria.fr header.b="vkVAuW24"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758122753; x=1758727553; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=JFLiyn3dJriEKbuGIA99F3ranKv3ny6sE19PoG8ey1w=;
-        b=cv2V5jtSx5lKKVjSlVgQmrKuUR3Q6iUhV+i8Pkg5Lt9+V5BqL4fNaKy88URhQopt+O
-         aGs81/X+asNnGCes4K3loxd1FvG2pW9IZiavdwr6rQNtoeTIFSXpujR6sciqs6r43Fwj
-         06ut9iTtInGq3R41fsiqlIk6BhfyjGyrsc+fJSvab6/3vrR9Jlt1t8v2c1LCoS6ohqp5
-         Cu1MB63xWIlbtyGFFJADZcLMSWxWi4D5FOoVux+K/Xq+lAGh0a7LTfKJR1Nf61YXf7pX
-         KosG/Q6+yoXp2uHsjNzzT8xIUicsYqvjtouCoOhbScnIAmukRwfMqr1R91Ft4EUzkDgn
-         ccFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758122753; x=1758727553;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JFLiyn3dJriEKbuGIA99F3ranKv3ny6sE19PoG8ey1w=;
-        b=TmoILNA6pmteXE79CZrTewhmB4Z/qtzlXSqixuUBeeS6q6jvrHJv4vQqx7NM9IMGJM
-         /IHaHA8ruMqR9YeBtk+meG4ccAl56r5ajQn3+Uxvzvn09joQH49b8pfVojXtTcxxA10A
-         3dK8B0+qX7rfu6S6C45YzLDs4eM/jIjE40fKahdegNlPkMVWEUq7dG1cPf9mroJcUJE0
-         xLPJxdfT7J7CstX+oFQREMZQKIZNgcWXPkm9hEHE+Ls3VFXHiQE5BSkndOms6QEh1ung
-         X583ubfonEYRgZ91ykuCRUfppG9CmTrxCTqueeHU43TH569zLEJL4qRsN7TItOI/uftt
-         hJow==
-X-Gm-Message-State: AOJu0Ywouv6spny7BFdZ9b2F3l8Y771nEDTwwtUski33OeCXk6S1TuVv
-	CVIwxsa0JVzBNChy5xB1jTM7bVYy9qxVYdjYEdDEpkqldEXrCD40pDREei1sTQmF1c32xigR7C3
-	kYQGDmDNMrLxLKbi4OiTO22EDmXTIKqw=
-X-Gm-Gg: ASbGnctCq2axrgic9HWz9/BR5viuYMlcYRdrL91RazMGf6Pp/HRiQW+googaMs//j9Z
-	xHegF0XAjy9fFQEL5LPVB8AzUt2eY0p4haZAvRsX4Y5ibZJyTpSKKHhWyu3WZkAIQPJdD4p6qIP
-	lyIxH7GpNehvYU52eubtOqRPVKGHMnGzre3KOXtLuz2LdBlQOXHEsSd3y6x0Lhwp06pckpKtfK6
-	RfrtadV3Re/TwPjuoRxE3rnvTfT5ND2djN/ifl2mQ==
-X-Google-Smtp-Source: AGHT+IEBTe8szGohNc6ZQ9KBm/9ZKDwkNhxl/MxflZrra+rmxMvbrIoWOh8Nfhe5sjxrlsh1C8cRWcyxCqV5ZsmNDZk=
-X-Received: by 2002:a05:6102:3f49:b0:52d:110:a920 with SMTP id
- ada2fe7eead31-56d6ec71148mr892281137.33.1758122753171; Wed, 17 Sep 2025
- 08:25:53 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 17 Sep 2025 08:25:52 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 17 Sep 2025 08:25:52 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq5xdhgnbk.fsf@gitster.g>
-References: <20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-0-35e69bbb507d@gmail.com>
- <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-0-195569740b57@gmail.com>
- <xmqqh5x2m5d3.fsf@gitster.g> <CAOLa=ZRvAMq7MNm6=dBneAXdDe6OjQ=NqYA9-Vd7E+nvDWGH0w@mail.gmail.com>
- <xmqq5xdhgnbk.fsf@gitster.g>
+  d=inria.fr; s=dc;
+  h=message-id:date:mime-version:subject:from:to:cc:
+   references:in-reply-to:content-transfer-encoding;
+  bh=KesOoo0eFs/1V7xPi1B/ik0c1EnAR0H1ZQaSQkhPfXk=;
+  b=vkVAuW24V6XCLBmVBybi77uZMvgv/OFqtiF8e+1Lhed5nDL+BsKdx6rf
+   2ECH7339wmXd3bhRSx4cJYp5iiu8XoTJN91hNsOENOJ0Z4t3eYoxFVzMG
+   y/HhaV0jZxlgPxYxuq6CEIZSuHV5XFFs2BqidkoTpf2/VoybAkvUwvbOF
+   o=;
+X-CSE-ConnectionGUID: VpE0AiRsRoGeaOaig7k8UA==
+X-CSE-MsgGUID: 0wNdHGCpRRWBhg/SqHdiqQ==
+Authentication-Results: mail3-relais-sop.national.inria.fr; dkim=none (message not signed) header.i=none; spf=SoftFail smtp.mailfrom=gabriel.scherer@inria.fr; dmarc=fail (p=none dis=none) d=inria.fr
+X-IronPort-AV: E=Sophos;i="6.18,272,1751234400"; 
+   d="scan'208";a="125804980"
+Received: from nv852.math.univ-paris-diderot.fr (HELO [10.0.1.102]) ([81.194.30.237])
+  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2025 17:25:55 +0200
+Message-ID: <a27a8191-55d7-4b60-ad90-59ab946340bd@inria.fr>
+Date: Wed, 17 Sep 2025 17:25:54 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 17 Sep 2025 08:25:52 -0700
-X-Gm-Features: AS18NWDya6p3uyEkNjT_FPhLbjj124jCWGq6HxyHaLNCyClErS5dIOs5MmMw4N0
-Message-ID: <CAOLa=ZSaOhUnXqPsWP8MW3AH1EC-rQu7cGtU0W35APZQUhKiBQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/4] refs/files: fix issues with git-fetch on
- case-insensitive FS
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] checkout: provide hint when failing due to another
+ worktree
+From: Gabriel Scherer <gabriel.scherer@inria.fr>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, joe.drew@indexexchange.com, peff@peff.net, ps@pks.im
-Content-Type: multipart/mixed; boundary="0000000000002cc000063f00da33"
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20250913141327.2775228-1-gabriel.scherer@inria.fr>
+ <20250913141327.2775228-2-gabriel.scherer@inria.fr>
+ <be510685-3be1-4f71-806a-6b580bb1cf21@app.fastmail.com>
+ <d44109a1-0ff5-49f8-885b-9aae195ec492@inria.fr> <xmqqikhkhzbm.fsf@gitster.g>
+ <0dfe3e31-5486-446e-8af5-20669c06ea64@inria.fr>
+Content-Language: en-US
+In-Reply-To: <0dfe3e31-5486-446e-8af5-20669c06ea64@inria.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---0000000000002cc000063f00da33
-Content-Type: text/plain; charset="UTF-8"
+Dear git developers,
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 15/09/2025 21:52, Gabriel Scherer wrote:
+> (This gets me to wonder if a desirable behavior could be to 'detach' the other worktrees that had the same branch checked out, instead of failing on checkout. Users starting to use the other worktree again would possibly notice more quickly that something is amiss.)
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Karthik Nayak <karthik.188@gmail.com> writes:
->>>
->>>> Changes in v3:
->>>> - Rename duplicate_reference_case_cmp() to
->>>>   transaction_has_case_conflicting_update() and add comments.
->>>> - Improve commit messages.
->>>> - Add an additional test in the 4th commit to showcase D/F conflicts in
->>>>   case-sensistive file systems.
->>>> - Link to v2: https://lore.kernel.org/r/20250908-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v2-0-b2eb2459befb@gmail.com
->>>
->>> I think I like this "latest first and then historical" order in the
->>> cover letter much better than the other way around.
->>>
->>> I see that this topic is pretty much done?  There still are a few
->>> questions from Justin's reply that may want to be answered, but I
->>> have a feeling that the answer to them would not require a new
->>> iteration.
->>>
->>> Looking good.  Thanks.
->>
->> I did respond to Justin, I think there were a few small nits around
->> grammar in the commit messages and a question around error reporting.
->
-> Well, if it is already locally ready, let's have a quick "small and
-> final" update before merging it to 'next'.
->
-> Thanks.
+After the new feedback from Junio, I wonder if I should explore this 
+suggestion more actively.
 
-Surely, I've sent in v4.
+For now my goal has been to make --ignore-other-worktrees more 
+discoverable, for people who are willing to take the risk. (I am 
+comfortable doing this as I have used this workflow for years without 
+much trouble with the 'workdir' script, but clearly you want to be very 
+careful in how exactly we suggest that it is a possibility.)
 
-Thanks,
-Karthik
+Would you prefer a different option to detach the branch at the other 
+worktrees? This could be
+   git checkout --detach-other-worktrees <branch>
+for example.
 
---0000000000002cc000063f00da33
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: d9b57fc3467c177b_0.1
+I did not originally consider this as it requires more expertise in git 
+internal data structures, but it may be easier than finding a way to 
+advertise --ignore-other-worktrees that you are really comfortable with.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1qSzB2OFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOWl3Qy85OHFrbEw4UFNOK2tpanhkV0VGSmFSOTN0UwpYNnpPZXkxUGVP
-aSs1WGRsMVByU2drUlM2TWtmcEtQQlpucy96SllWS1VLQU13c1pTYzdQMk5nYWZyMWxFSld2CnEr
-VnJHSGRPVmtFVmhHUk1WWFNuNTk4TUZsa3d4R1NZM3BWajRESFNTbGlYQW8xdURzc1pBUHBURmVK
-c1JtRzgKeG5LZ1VERlp6RURNRW9TNGF1MThzZFYyamVybjY4dWIzMzhBL1U5cDNTZEplSXB3L2Fz
-clRRWC8zK0VhRVlMZAp2eW0rVXN4bFRXb2pvTzRNMUNjdTNjVnFRaWkvUzRoc1Z6ZEdlaDZueS9T
-ckYwUS9ESnVaajFUUjl0RG9lai9aCnJFZWdFOEc5aFVtT081cGhwaFRUditLalM2TEVMc3RNazNs
-TDRIZGhseXVscFJwbEF5WE5mQXcxaytHWHU4ZkEKNUF5dndvaE1ZRjZWaTN1dGJRK0NqdVp4cTJo
-NFZxVlcwS1lpdFpOR1p3SzJ2Q3M2OHR4ODdvZnhUN1VMQVJsbgpuck45cStzRktXekh3MmlEcVlR
-QlZvdmcxU0VlTklhVVlsTHgrcWtHKzdYQ0dNNFFoNTZXNUREVFdUMTBxUVQ2CnQ0VkVWRFJzcmZw
-QzlWU2FZdDBXanJjSkp4ditvSEtTVUpib1Baaz0KPXVra0oKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000002cc000063f00da33--
