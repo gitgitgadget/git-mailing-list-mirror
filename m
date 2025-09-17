@@ -1,140 +1,104 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D18A945
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 08:01:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849A7305956
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 08:04:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758096119; cv=none; b=M+t48w0R0xT1uAio1lLzgX6A2ZSAUL2XJ3SEt5ePzfYfv57iI8RPp4iz0OqKrU3eQuvjruy/Ac+0xj8VDkUkrSBEnDsuesWjSyEPNJTV5REpfBiEai5Nm164/8iDaA3cfvmUFtb+ja1fnQ8BNjLM8O4lCq6V0D8M5w/MN7kHALA=
+	t=1758096244; cv=none; b=cenpfFJJWB9QWkhC1wCO2sq5peelFblO5O8V04K1BcSDUySb4F7KakPn7EDl0QjD+Yfg7GsGMEay+s9H8Wom7jprVnD4q9YkyJwskusj+UwxZ4c/Xsg1F8/4GUTkWfQwi5wbPTGe2bTJfFkO0AsxZU9lyrIfTnArQ4I5S0WfOGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758096119; c=relaxed/simple;
-	bh=j9hIKV4HRA8Hl8M19LrGSFZ9mOGkXd90627ouJ3sxC0=;
+	s=arc-20240116; t=1758096244; c=relaxed/simple;
+	bh=IlUXuTQ3XSd187SKyHtxJFHoEs2DPinzLYXc0qtvUdE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=T1NnCYlGqyP9shdnTY/6yAM2oAAwxHHXV8xZTup0z5qIJBA3NikY6Dm3B//Z8V/qq6tqBk+ePU6w9HrjTGVY5+3NSzBngS4xaF0XtYmpbva+e17v0Upa0UsEBUe2UV4iKkz+ThvzSGxsOYAYYBT0mbM1px1zZHCB9cbRSYViYIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+	 To:Cc:Content-Type; b=eTLC1ZXfBNtNuTVArXD/nJS2vaaNli4w2+lFY8o7qFnh0+IRANlnkwkc0mcDMTj//ICld7pQwOxoAwQQHRAC6OjRXaQ294+UIfJlNFY98ZwYCBQ7RfS5zq0U9BIUXxBiwDu3QcSHO4D9xe2hDsIWAD+vdgc9SePdCjwb4XQtrSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y8FYMX/z; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-78dfaf6a9b5so436036d6.1
-        for <git@vger.kernel.org>; Wed, 17 Sep 2025 01:01:57 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y8FYMX/z"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-577dd4c1e84so280991e87.0
+        for <git@vger.kernel.org>; Wed, 17 Sep 2025 01:04:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758096240; x=1758701040; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IlUXuTQ3XSd187SKyHtxJFHoEs2DPinzLYXc0qtvUdE=;
+        b=Y8FYMX/zdN6/X6anLnLm4AE2HYVFYUK/AGoYSgN5SnnvT9jB0DAYE+rkNgz55yLCuJ
+         YH9ZBjbzJQc603G28hP1yVubf2J5BXoMReLZBkaWmUzJf9pTBMaDfiWIA4oen/Ejr+1h
+         leXFkOoKvtQNcSA8Zzxpc3VE7O0W//dScNeYVtXuqlxajVsApwDNZf8TPqCPkDiRU11l
+         xY1gMMZjykywu4hNw7FE3K0YlMg3bXh2128FznhE95riNtB89BkQ36VzIg2TRVxmbn9z
+         OjvLY5I7t66XTcnLvWVlP9V/X5BWttJ2Af0DOLAvaciGYuRYhDRzj+aWT+IITe9CIy6o
+         GlsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758096117; x=1758700917;
+        d=1e100.net; s=20230601; t=1758096240; x=1758701040;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MPSIUlwktBBZ73X6cnHOmo2JKVmdE4csdIkTnXLb6/I=;
-        b=TlY1U9urB4khXes6iYCdC0DAmLQcZFJVC2eM4fguT0oOzinhk4nwOXzpcZl3gPhkc9
-         iGFnNrzuuLRk52LeIlZTx7gYgDz+DYciDyl0tfdnquoefOAUQ46Iy8XzhS3iTIicsrHT
-         K8Uoe5QewVcNBp5ImWzV3x68HYtBFmk5fkLvVNjfeHZxw2gNpMdmLlkGqXXxDjChQrmu
-         69u/NQu8O0ODCQxGoGae1M6JIFQD8hkLEOR0CmlrbQBNnZsRHov/Q/ENkUCglyRUT1Qi
-         WffVvsdIVsc3auv/koCA8v3/pCOezZpIMU+JUMjQixRzJ+YfrMKzYlBGlKj2F0doVEwT
-         K26A==
-X-Gm-Message-State: AOJu0Yyz/z+RTmmD5zfmwMuJoEYif5XMPbcwr9wqtg2hkqBQxLxjeRaz
-	2d9ZH2RnngRq7aWz/SeWHJefnF5hstNrkbDM1yATuqmzT44WjzNTHSu1AfM22UZxIKeR9HUXLQH
-	opA5G4F+fKsuhQf+6YETphU7A/qg994U=
-X-Gm-Gg: ASbGncstn2TizVzAwQmPQzoK/iLFygmidVFchiF0G45pbVd41Sw/ZseHFpecKWc64Np
-	RdA4dgGmct81egIX2sC2VeCRAoqZmfbnSU8SkUsoMJISbomT73s1aGIZ9lEgtt4Q5grcSK7S+GG
-	xE9qkabLFQTqhUXXQ0rCYMSu+T8SZK8ZsWblIFnvMSKsCYcMjv/yhtyWbtW2PtXrioEpR82BybQ
-	kkzXE5rRzwYhDntYDpKwtBKh8Jz/FkIZTvlDzCE
-X-Google-Smtp-Source: AGHT+IFiA/BWXLXfvhjfjnCNsBOqvt8UCBQFtiHJUY7jZJSqqQ7bO5aysAUGA+NXAJv3S4q2mlCMxWgRBX/XBQ0B078=
-X-Received: by 2002:a05:6214:262b:b0:78b:684e:88ab with SMTP id
- 6a1803df08f44-78ecc72a478mr6584826d6.2.1758096116733; Wed, 17 Sep 2025
- 01:01:56 -0700 (PDT)
+        bh=IlUXuTQ3XSd187SKyHtxJFHoEs2DPinzLYXc0qtvUdE=;
+        b=An9cZE5grJqv9giEkckWX1gFEZEzuG8anHl00blt80YWzMslUfDivHNeuYimcP6IGt
+         kgSnkxjsY2Q2rzwGx80QXIiv9BvnIieSjps0g7GZCl9dnDepzLs8tXdjjsYEmV9OBlui
+         YE6j+ZZrXBuUTgNXJsFdCxvbrMMTJCKXPF5qy3IMmZ5/0BJSnUHZ3WCTqHE/lcX+5oQT
+         5f6bE4L7BRe3Nn5gKFvTdibIznqOVjUkY1pNOdxJ1AcP9Paycd0a9gzuvHMGG4t0h3gD
+         kTvc5qJvYyG8JcKAbI7Lyp67+Zyd4AT86VBUgTvHwp5OGdApOKFlX/abli7aMc33FBhA
+         T+1g==
+X-Gm-Message-State: AOJu0Yy02vf+TtgqwbLE0x4JbzqY1Df+MjNUmzcuSVRTLMun07rPeM0/
+	nC1GBQzscYtXgMvGU1Hb9C4W44SbXyC2Ibrix9n57njSUr1zoWduO3CBk/qPE3ktoUjFj3lDfV5
+	NKR/FKAUUi49ne0o2j5QXC+OoNtXxLD8bFpJf
+X-Gm-Gg: ASbGnctii28ARRL0TTBD7hjfg5bGlMuHkZWS9FaVIRQYLCkreuCQOzLt05A/AxlqfvQ
+	kElnnFdRzZjYEo4a1aGRK2wb4n835RfGCW4Ae6hTxTInGbNDSja48vOatPgB88Mvw64kWsdBTe7
+	mitKQfGkd8kQomyo3f06ki6Im9QbMwTevH3ESTvg8P8LWpJ4tK83tCqbknWTM607CmXg8poohm1
+	GXwoCJz
+X-Google-Smtp-Source: AGHT+IHRDpKgUngbLOegvMnImMKUHNS6CEFQnx9BRyWj4jJ7ia/WF1vyUHIy1t2otMnDBXMf2SDWo5anmNP+rjaF180=
+X-Received: by 2002:ac2:4e04:0:b0:56a:4f7:6756 with SMTP id
+ 2adb3069b0e04-577996f1529mr396505e87.9.1758096239350; Wed, 17 Sep 2025
+ 01:03:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
- <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com> <fcdfc55fb7d7da7d65405486f5eec10e5892a028.1758071798.git.gitgitgadget@gmail.com>
-In-Reply-To: <fcdfc55fb7d7da7d65405486f5eec10e5892a028.1758071798.git.gitgitgadget@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 17 Sep 2025 04:01:45 -0400
-X-Gm-Features: AS18NWD52xS5GAQWJhjvXn5MbSuIFa5ZuqT5l0vRL_ieHVvDRXqPQC33Xc7HgHo
-Message-ID: <CAPig+cT-2-s-TcZ-2TQujLkn8Eh-EmYa9QWHWpw3iczDuX5mUQ@mail.gmail.com>
-Subject: Re: [PATCH v2 09/18] github workflows: install rust
-To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>
+References: <8e1905c7-7744-444f-9a39-ca809edb6896@anselmschueler.com> <c28bff47-04ef-4568-8dc3-add99f52209a@anselmschueler.com>
+In-Reply-To: <c28bff47-04ef-4568-8dc3-add99f52209a@anselmschueler.com>
+From: Chris Torek <chris.torek@gmail.com>
+Date: Wed, 17 Sep 2025 01:03:47 -0700
+X-Gm-Features: AS18NWDR7Xc_Ouj083_EZac8Qg_a6MVC-jA1I6KOPJ3it6mf0ssmovzebtVIfrU
+Message-ID: <CAPx1Gvdnz=PjF7viakFmYUSL72aQS83O9c8NWBCz_1Nt7z2V-Q@mail.gmail.com>
+Subject: Re: Why does git-status suggest different commands to unstage files
+ depending on whether there is a commit yet or not?
+To: =?UTF-8?Q?Anselm_Sch=C3=BCler?= <mail@anselmschueler.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 16, 2025 at 9:17=E2=80=AFPM Ezekiel Newren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> Prefer using actions-rs/toolchain@v1 where possible to install rustup,
-> but for docker targets use a script to install rustup. Consolidate the
-> Rust toolchain definitions in main.yaml. Use install-rust-toolchain.sh
-> to ensure the correct toolchain is used. Five overrides are used in
-> main.yaml:
+[resend as plain text]
+
+On Tue, Sep 16, 2025 at 2:53=E2=80=AFPM Anselm Sch=C3=BCler <mail@anselmsch=
+ueler.com> wrote:
+> ... I would=E2=80=99ve assumed git-rm simply removes the file
+> and =E2=80=9Cwrites=E2=80=9D that removal to the staged changes.
+
+More precisely, it removes the file from the working tree
+and removes the index entry that would cause the index
+copy of the file to be in the next commit.
+
+> This seems to be what y=E2=80=99all are
+> describing. But with that suggestion, I was confused, because I assumed
+> git-rm there would be equivalent in some sense to git-restore in a
+> repository with commits.
 >
->   * On Windows: Rust didn't resolve the bcrypt library on Windows
->     correctly until version 1.78.0. Also since rustup mis-identifies
->     the Rust toolchain, the Rust target triple must be set to
->     x86_64-pc-windows-gnu for make (win build), and
->     x86_64-pc-windows-msvc for meson (win+Meson build).
->   * MSVC builds: Rearrange PATH to look in /mingw64/bin and /usr/bin
->     last.
+> Could git-restore be made to work anyway, by =E2=80=9Cimagining=E2=80=9D =
+a
+> pre-initial-commit commit that has absolutely nothing in it?
 
-Please add an explanation as to why it is necessary to rearrange PATH.
-I saw in patch [7/18] that your "build_rust.sh" does the same but the
-reason is never spelled out (and it's still a mystery to me).
+Yes, and in fact a number of Git internal operations work this
+way, by pretending the commit before the first commit has as
+its tree the empty tree. If `git restore` did that here it would
+Just Work. (This is part of why the empty tree always seems
+to exist.)
 
-Also, this patch, [9/18], doesn't seem to touch PATH in the way
-described here (unless I somehow overlooked it).
+Whether this is a Good Idea, I leave to others to judge, as
+I'm too well steeped in Git internals to tell any more. :-)
 
->   * On musl: libc differences, such as ftruncate64 vs ftruncate, were
->     not accounted for until Rust version 1.72.0. No older version of
->     Rust will work on musl for our needs.
->   * In a 32-bit docker container running on a 64-bit host, we need to
->     override the Rust target triple. This is because rustup asks the
->     kernel for the bitness of the system and it says 64, even though
->     the container is 32-bit. This also allows us to remove the
->     BITNESS environment variable in ci/lib.sh.
->
-> The logic for selecting library names was initially provided in a patch
-> from Johannes, but was reworked and squashed into this commit.
->
-> Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
-> ---
-> diff --git a/ci/install-rust-toolchain.sh b/ci/install-rust-toolchain.sh
-> @@ -0,0 +1,30 @@
-> +#!/bin/sh
-> +
-> +if [ "$CARGO_HOME" =3D "" ]; then
-> +  echo >&2 "::error:: CARGO_HOME is not set"
-> +  exit 2
-> +fi
-
-Let's follow project coding guidelines for shell scripts:
-
-    if test "$CARGO_HOME" =3D ""
-    then
-        ..
-    fi
-
-or even:
-
-    if test -z "$CARGO_HOME"
-    then
-        ...
-    fi
-
-Same comment applies to the remainder of this script and other scripts
-in this patch.
-
-> diff --git a/ci/install-rustup.sh b/ci/install-rustup.sh
-> @@ -0,0 +1,25 @@
-> +if [ ! -f $CARGO_HOME/env ]; then
-> +  echo "PATH=3D$CARGO_HOME/bin:\$PATH" > $CARGO_HOME/env
-> +fi
-
-Style: drop space after '>' operator
-
-> diff --git a/ci/lib.sh b/ci/lib.sh
-> @@ -1,5 +1,6 @@
->  # Library of functions shared by all CI scripts
->
-> +
->  if test true =3D "$GITHUB_ACTIONS"
-
-Do we need the extra blank line introduced above the `if`?
+Chris
