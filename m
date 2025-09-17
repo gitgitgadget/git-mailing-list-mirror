@@ -1,104 +1,209 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849A7305956
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 08:04:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922743093AD
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 08:26:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758096244; cv=none; b=cenpfFJJWB9QWkhC1wCO2sq5peelFblO5O8V04K1BcSDUySb4F7KakPn7EDl0QjD+Yfg7GsGMEay+s9H8Wom7jprVnD4q9YkyJwskusj+UwxZ4c/Xsg1F8/4GUTkWfQwi5wbPTGe2bTJfFkO0AsxZU9lyrIfTnArQ4I5S0WfOGQ=
+	t=1758097590; cv=none; b=uXzAQ7a4S0qbeZFrCzgGPO/t4lktr0Gl9RzwyGY0d811LnIK2uVdWSA1egfryV0HQ3jwwHIbVJanw4ll/MKnn/fhNAf8fzITqm5Nr0ap3VF7RsJxcb/qtYOaollOT3v6XEnLhmIvy+/Ti7GFcMEvhDgy4R7zVHaUaDHvfCx+xCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758096244; c=relaxed/simple;
-	bh=IlUXuTQ3XSd187SKyHtxJFHoEs2DPinzLYXc0qtvUdE=;
+	s=arc-20240116; t=1758097590; c=relaxed/simple;
+	bh=EM7T3U6/eta7rHzjnCHDVY5+0lEZxaUvfvAUrzacTlg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eTLC1ZXfBNtNuTVArXD/nJS2vaaNli4w2+lFY8o7qFnh0+IRANlnkwkc0mcDMTj//ICld7pQwOxoAwQQHRAC6OjRXaQ294+UIfJlNFY98ZwYCBQ7RfS5zq0U9BIUXxBiwDu3QcSHO4D9xe2hDsIWAD+vdgc9SePdCjwb4XQtrSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y8FYMX/z; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	 To:Cc:Content-Type; b=lMXJcnbuIr82t0H6uXYGdEAAUpXWqeVgeLRgHtd8ZZmuuuoNeut1eCoUqHXu80QeklILH+CtZNexSDh7aUEp7OGdTXOTzhG+GtbH2BwWpG3w730Gylta+nH9wywqbkN1xPtbiVxjdJCwLD6/qnIfQg/C73/buRLCwLgTd+J4P2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y8FYMX/z"
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-577dd4c1e84so280991e87.0
-        for <git@vger.kernel.org>; Wed, 17 Sep 2025 01:04:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758096240; x=1758701040; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IlUXuTQ3XSd187SKyHtxJFHoEs2DPinzLYXc0qtvUdE=;
-        b=Y8FYMX/zdN6/X6anLnLm4AE2HYVFYUK/AGoYSgN5SnnvT9jB0DAYE+rkNgz55yLCuJ
-         YH9ZBjbzJQc603G28hP1yVubf2J5BXoMReLZBkaWmUzJf9pTBMaDfiWIA4oen/Ejr+1h
-         leXFkOoKvtQNcSA8Zzxpc3VE7O0W//dScNeYVtXuqlxajVsApwDNZf8TPqCPkDiRU11l
-         xY1gMMZjykywu4hNw7FE3K0YlMg3bXh2128FznhE95riNtB89BkQ36VzIg2TRVxmbn9z
-         OjvLY5I7t66XTcnLvWVlP9V/X5BWttJ2Af0DOLAvaciGYuRYhDRzj+aWT+IITe9CIy6o
-         GlsQ==
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-78def53f3abso1183116d6.3
+        for <git@vger.kernel.org>; Wed, 17 Sep 2025 01:26:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758096240; x=1758701040;
+        d=1e100.net; s=20230601; t=1758097587; x=1758702387;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IlUXuTQ3XSd187SKyHtxJFHoEs2DPinzLYXc0qtvUdE=;
-        b=An9cZE5grJqv9giEkckWX1gFEZEzuG8anHl00blt80YWzMslUfDivHNeuYimcP6IGt
-         kgSnkxjsY2Q2rzwGx80QXIiv9BvnIieSjps0g7GZCl9dnDepzLs8tXdjjsYEmV9OBlui
-         YE6j+ZZrXBuUTgNXJsFdCxvbrMMTJCKXPF5qy3IMmZ5/0BJSnUHZ3WCTqHE/lcX+5oQT
-         5f6bE4L7BRe3Nn5gKFvTdibIznqOVjUkY1pNOdxJ1AcP9Paycd0a9gzuvHMGG4t0h3gD
-         kTvc5qJvYyG8JcKAbI7Lyp67+Zyd4AT86VBUgTvHwp5OGdApOKFlX/abli7aMc33FBhA
-         T+1g==
-X-Gm-Message-State: AOJu0Yy02vf+TtgqwbLE0x4JbzqY1Df+MjNUmzcuSVRTLMun07rPeM0/
-	nC1GBQzscYtXgMvGU1Hb9C4W44SbXyC2Ibrix9n57njSUr1zoWduO3CBk/qPE3ktoUjFj3lDfV5
-	NKR/FKAUUi49ne0o2j5QXC+OoNtXxLD8bFpJf
-X-Gm-Gg: ASbGnctii28ARRL0TTBD7hjfg5bGlMuHkZWS9FaVIRQYLCkreuCQOzLt05A/AxlqfvQ
-	kElnnFdRzZjYEo4a1aGRK2wb4n835RfGCW4Ae6hTxTInGbNDSja48vOatPgB88Mvw64kWsdBTe7
-	mitKQfGkd8kQomyo3f06ki6Im9QbMwTevH3ESTvg8P8LWpJ4tK83tCqbknWTM607CmXg8poohm1
-	GXwoCJz
-X-Google-Smtp-Source: AGHT+IHRDpKgUngbLOegvMnImMKUHNS6CEFQnx9BRyWj4jJ7ia/WF1vyUHIy1t2otMnDBXMf2SDWo5anmNP+rjaF180=
-X-Received: by 2002:ac2:4e04:0:b0:56a:4f7:6756 with SMTP id
- 2adb3069b0e04-577996f1529mr396505e87.9.1758096239350; Wed, 17 Sep 2025
- 01:03:59 -0700 (PDT)
+        bh=8fi6s2wOfZvPN3ZcpEhyxIYh5DUN/c7/6KcOR0cxxms=;
+        b=U2Xhbhn7SGH2pz+sx8HPN02Jl8+yL1Lxd6oPjw3IKr/Udwhrbnrh4yBMgbtHxVJF9K
+         UpmGGrUIM+o7/0WjXfn4XCUsUcV7Y4w3zHR2ARdMvLLaZL//9O9WGts1kdidNfnG7dTU
+         ix4M1zGm25XKgt2quUjBMGuxy9IDq82DNb6Cm17z0IzzS8JGGL2WEaO+PovyQOVuZLD8
+         YPXS6nWNfs/fJa90qyEn0y2vi5ulpm+NAnrewrboSo8WpBGuUUzvT9CHBH18o0Gb3lyR
+         sFgFF3LiSA11KMiUmejSNXAPjia79F4BIaqwUhUbmX2EPaK/GdDNpbtSfMt9vIdRszjZ
+         Wftg==
+X-Gm-Message-State: AOJu0YwFGl1yqnoxfO4JXoH0bGnlPGlrXp7TXzyzDDRdWLH88kCzQD3z
+	VPF6GClhRX6Wtj64TNd6Fzufg7jRyuWoooPZpVO8Nskv8r8RUhl8F0KlHMPezSJaHfbI+dATJ5S
+	fgVHqCK3TK1Ul54B/Ov+eCfGfPMf2apo=
+X-Gm-Gg: ASbGnct9fwFnPXTcoPL24V3SXl4d77WUAZjuVH4bgq8qGArf6YJUk5jwHseiQt/0QVs
+	pNjZi27/eG4GvUy5liN8qpWkTcSmyfH/0P+HF4x43E3CW2/Riy8JcVyPGRm7us+VgAGlGDAcjKr
+	VOn7kR+msh+oHN+oMY0ynUDwxqwW/Cv4SKWKa3E9DLr7TbnL5+2pdXWxJUbzBhrrzTA2XLO4vu9
+	9hIcHaDDv8wz1TthNq119QQ3aelBkQRs43sgnSQ
+X-Google-Smtp-Source: AGHT+IGzooqRkpc+4KsLvNFT9JrsxBmHfMY6FlhEI5g3LtSZvVM4jWibENFvwmtmyNBSNCYpd68ER2LTKCtd0apbZnM=
+X-Received: by 2002:a05:6214:2526:b0:78d:8414:e4b8 with SMTP id
+ 6a1803df08f44-78ec981826bmr7407416d6.0.1758097587255; Wed, 17 Sep 2025
+ 01:26:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <8e1905c7-7744-444f-9a39-ca809edb6896@anselmschueler.com> <c28bff47-04ef-4568-8dc3-add99f52209a@anselmschueler.com>
-In-Reply-To: <c28bff47-04ef-4568-8dc3-add99f52209a@anselmschueler.com>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Wed, 17 Sep 2025 01:03:47 -0700
-X-Gm-Features: AS18NWDR7Xc_Ouj083_EZac8Qg_a6MVC-jA1I6KOPJ3it6mf0ssmovzebtVIfrU
-Message-ID: <CAPx1Gvdnz=PjF7viakFmYUSL72aQS83O9c8NWBCz_1Nt7z2V-Q@mail.gmail.com>
-Subject: Re: Why does git-status suggest different commands to unstage files
- depending on whether there is a commit yet or not?
-To: =?UTF-8?Q?Anselm_Sch=C3=BCler?= <mail@anselmschueler.com>
-Cc: git@vger.kernel.org
+References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
+ <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com> <6032a8740c0ba72420f42c3d8d801e1bdeec12d0.1758071798.git.gitgitgadget@gmail.com>
+In-Reply-To: <6032a8740c0ba72420f42c3d8d801e1bdeec12d0.1758071798.git.gitgitgadget@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 17 Sep 2025 04:26:16 -0400
+X-Gm-Features: AS18NWAwGhUsyYzG0u3orTrIzefSrrjOHlrQ1_9r1r4xqogoh2gXjYYT0ZufkZ4
+Message-ID: <CAPig+cS_=YTBaCjn8-Th3yn3_k+a8_pMOmdv_Dq4S0tfp8BRCg@mail.gmail.com>
+Subject: Re: [PATCH v2 07/18] build: introduce rust
+To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-[resend as plain text]
-
-On Tue, Sep 16, 2025 at 2:53=E2=80=AFPM Anselm Sch=C3=BCler <mail@anselmsch=
-ueler.com> wrote:
-> ... I would=E2=80=99ve assumed git-rm simply removes the file
-> and =E2=80=9Cwrites=E2=80=9D that removal to the staged changes.
-
-More precisely, it removes the file from the working tree
-and removes the index entry that would cause the index
-copy of the file to be in the next commit.
-
-> This seems to be what y=E2=80=99all are
-> describing. But with that suggestion, I was confused, because I assumed
-> git-rm there would be equivalent in some sense to git-restore in a
-> repository with commits.
+On Tue, Sep 16, 2025 at 9:17=E2=80=AFPM Ezekiel Newren via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> Upcoming patches will simplify xdiff, while also porting parts of it to
+> Rust. In preparation, add some stubs and setup the Rust build. For now,
+> it is easier to let cargo build rust and have make or meson merely link
+> against the static library that cargo builds. In line with ongoing
+> libification efforts, use multiple crates to allow more modularity on
+> the Rust side. The xdiff and ivec crates are the focal point for this
+> series.
 >
-> Could git-restore be made to work anyway, by =E2=80=9Cimagining=E2=80=9D =
-a
-> pre-initial-commit commit that has absolutely nothing in it?
+> cbindgen will be used to generate header files for each Rust crate for
+> C interoperability.
+>
+> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+> ---
+> diff --git a/.gitignore b/.gitignore
+> @@ -254,3 +254,6 @@ Release/
+>  /contrib/buildsystems/out
+>  /contrib/libgit-rs/target
+>  /contrib/libgit-sys/target
+> +.idea/
+> +/rust/target/
+> +/rust/Cargo.lock
 
-Yes, and in fact a number of Git internal operations work this
-way, by pretending the commit before the first commit has as
-its tree the empty tree. If `git restore` did that here it would
-Just Work. (This is part of why the empty tree always seems
-to exist.)
+Is ".idea" directory detritus from your chosen editor? If so, it
+probably ought not be added to this list since we don't otherwise
+ignore detritus from foreign tools such as that.
 
-Whether this is a Good Idea, I leave to others to judge, as
-I'm too well steeped in Git internals to tell any more. :-)
+> diff --git a/Makefile b/Makefile
+> @@ -916,6 +924,51 @@ TEST_SHELL_PATH =3D $(SHELL_PATH)
+> +RUST_CRATES :=3D
+> +.PHONY: compile_rust rustclean
 
-Chris
+This is an extremely tiny nit, but multi-word target names in the Git
+Makefile are almost universally spelled with a hyphen rather than an
+underscore, so "compile-rust" would be more consistent and
+appropriate.
+
+> +$(GIT_BUILD_DIR)/lib%.a:
+> +       ./build_rust.sh $(GIT_BUILD_DIR) $(RUST_BUILD_MODE) $*
+
+I wonder if this should follow the convention of most (but not quite
+all) other local shell script invocations in the Makefile of
+referencing SHELL_PATH; for instance:
+
+    $(QUIET_GEN)$(SHELL_PATH) ./build_rust.sh ...etc...
+
+with or without the $(QUIET_GEN) bit.
+
+> diff --git a/build_rust.sh b/build_rust.sh
+> @@ -0,0 +1,60 @@
+> +if [ "$dir_git_root" =3D "" ]; then
+> +  echo "did not specify the directory for the root of git"
+> +  exit 1
+> +fi
+
+Let's follow project style conventions for shell scripts:
+
+    if test "$dir_git_root" =3D ""
+    then
+        ...
+    fi
+
+or even:
+
+    if test -z "$dir_git_root"
+    then
+        ...
+    fi
+
+Same comment applies to the rest of the script.
+
+Also, should the above error message be sent to stderr rather than
+stdout? (Genuine question since I'm not sure if other scripts are
+necessarily consistent in that regard.)
+
+> +if [ "$rust_build_profile" =3D "release" ]; then
+> +  rust_args=3D"--release"
+> +  export RUSTFLAGS=3D''
+> +elif [ "$rust_build_profile" =3D "debug" ]; then
+> +  rust_args=3D""
+> +  export RUSTFLAGS=3D'-C debuginfo=3D2 -C opt-level=3D1 -C force-frame-p=
+ointers=3Dyes'
+> +else
+> +  echo "illegal rust_build_profile value $rust_build_profile"
+> +  exit 1
+> +fi
+
+For maximum portability, we don't use the:
+
+    export FOO=3Dbar
+
+idiom in this project. Instead, do this:
+
+    FOO=3Dbar
+    export FOO
+
+The same comment applies to the remainder of the patch, as well.
+
+Also, the empty-string assignments to RUSTFLAGS and rust_args above
+inconsistently use a mix of single and double quotes. However, we also
+usually just assign nothingness in such cases rather than an empty
+string:
+
+    RUSTFLAGS=3D
+    export RUSTFLAGS
+    ...
+    rust_args=3D
+
+> +if rustup show active-toolchain | grep windows-msvc; then
+> +  libfile=3D"${crate}.lib"
+> +  PATH=3D"$(echo $PATH | tr ':' '\n' | grep -Ev "^(/mingw64/bin|/usr/bin=
+)$" | paste -sd: -):/mingw64/bin:/usr/bin"
+> +fi
+
+Please add either an in-code comment or a sentence/paragraph to the
+commit message explaining why this PATH munging is needed.
+
+> +cd $dir_rust && cargo clean && pwd && USE_LINKING=3D"false" cargo build =
+-p $crate $rust_args; cd $dir_git_root
+
+When formatted like this, it is very easy to overlook the fact that
+the final `cd` is (correctly) not &&-chained with the preceding
+commands. Reformatting it like this would help:
+
+    cd $dir_rust &&
+        cargo clean &&
+        pwd &&
+        USE_LINKING=3D"false" cargo build -p $crate $rust_args
+    cd $dir_git_root
+
+Alternatively, use a subshell and drop the final `cd`:
+
+    (
+        cd $dir_rust &&
+        cargo clean &&
+        pwd &&
+        USE_LINKING=3D"false" cargo build -p $crate $rust_args
+    )
+
+By the way, is the `pwd` command needed? What is its purpose?
+
+> +rm $dst 2>/dev/null
+
+I think we typically use `rm -f` without redirect to /dev/null to do
+the "right thing".
+
+> +echo mv $src $dst
+> +mv $src $dst
