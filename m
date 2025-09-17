@@ -1,68 +1,68 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F0B248F40
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 09:19:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55232DE6E9
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 09:19:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758100789; cv=none; b=QiBvCFa8xEAhrpdhpwNXrJP1qnxxQmQ9yI0JcHwXwMghJVP58EAweJHUzI2IBYDHCB9d+Y2STSxfA9owjaashb3dli+1dtv5YF/K6HKhoIDTHnHjOExoaEvd5yTzSbaKl3p5Ur3rA/2FkHj8y1mQHtIOhOd3+RdqdiwUB1zc930=
+	t=1758100798; cv=none; b=baqBMD5UuFzvcRVjpWxNFN1ZF0mXiUXWZ31EjQyiOeEyYZphNCj6sbmGygYnz/2p8ZwT8kMlerDk/P6oEBN5cSRL3ETqVpOmBrAXDvS70ZjgAVQomTwGAUIZuKO560xo0wDzNzlyxSciEI5334SDTt3Zizz/6y+e4aRbXzyEmOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758100789; c=relaxed/simple;
-	bh=4AQsmL+ylsUobpI3Ja8tk668mt4ge3oh2dTMN2k8iwI=;
+	s=arc-20240116; t=1758100798; c=relaxed/simple;
+	bh=8aA+EBL3OwfsC9bYddeFl+H+nqFLszdI3uU7NmVKEdE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H+XTAEmIyGtQnjRHbfdG2lFIAIOZA8Oxf62Z6kZJwh3NXJ02dgpZE3qycJWQFGBrub8NYr9VvAUXrpP7gVMJ72bKdt0AD5RG3Llnf6n+qnjI6n2ZdSxL7BM2Wl7PtvBkpbUspkEc6NPIhMogiYaKxS497XJlNr7iwzMCHc49JiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HDwfLheF; arc=none smtp.client-ip=209.85.216.49
+	 Content-Type:Content-Disposition:In-Reply-To; b=J4CWsGbO6uvcBZ4f00bUq02hnRIA4d5Oyh0en/RLA3UXo2AM10jQlsaWJXfW1VFvdDOxH9TbjvH7W3ttdZotFts9tpRDYSPghpb0yqvZILEK2DXJeulp2vFSAi291x2QzZzRPeFE/Tz+hfF98KAhRs8zf+mZD9tIQcj+t5sUw2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UWUx8jIt; arc=none smtp.client-ip=209.85.216.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HDwfLheF"
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-32eb76b9039so1791580a91.1
-        for <git@vger.kernel.org>; Wed, 17 Sep 2025 02:19:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UWUx8jIt"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-32eb76b9039so1791723a91.1
+        for <git@vger.kernel.org>; Wed, 17 Sep 2025 02:19:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758100787; x=1758705587; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758100795; x=1758705595; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/tDfpOGU7EbXTREUpDkEDcbkpNHlKMiceZy04cSOrg0=;
-        b=HDwfLheFJMEo96UsNYFZtB3ygA9t6Ji005PfBZOIPewDwEbxxK+I4wJ37M+69JV/CH
-         WmKEh8FBbgOkmP2q/4UVKVLnYB+EUEjIEGzkZ7CXG2GywuOHSZpOvL4LkTAAmJ9uSkt/
-         z9uIiavwsEMLXLLOaXyXqKFRltUFTLLDKJ5flnjZyqtNMhzQJSR1BQYNSuV6WhvVmdtc
-         crDp4YXa8QIWJouGZhL7ftiErlsfwAmhtMEthDdBv7oT1MSUqjWm/egXW9jxmAmFGzgW
-         jAiELtRhQlKM/LNQ/msl8YGGVPE+3w+knSYZCqFSJHunUCXMKFaX/X/GsmerZ9P475Xj
-         ozPw==
+        bh=6uvsxS+JRPtLGpObJELeexCdHN87FTVnv1gdxrnLpDE=;
+        b=UWUx8jItgVrTB5YrsvJPKvvXWPSJXQKMwzfLxHbS1h5kne+aJD3miHUIujncKGeNev
+         Va5iG5Q/XWxKUhFl2KLJsxIF8sP2WajH1x4F/+IuPHZOhPPQdOs5Gs4E9p7+TOr6I1g/
+         6Xw0TD4OuiyvoFcoenA+xeFXkxMQGkCIJvtYZwzWSxW5Mq6FfqrOLgYVdG3lKN/Jucmk
+         5jDfNo2ER6wN8W4jHbsW1PapqAY7Rsf7jNawyUVRv6nsdFS8Ah7dRTU8V596tXYtTxMt
+         D8k8TCCBl7bfdzhW5ziL4nVrsZbjoQDqStYZ5EhaW5+5lY2u+5wA2sixlDHjJ609zvE2
+         ZCzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758100787; x=1758705587;
+        d=1e100.net; s=20230601; t=1758100795; x=1758705595;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/tDfpOGU7EbXTREUpDkEDcbkpNHlKMiceZy04cSOrg0=;
-        b=JEOPouOoX5hGcpdiT8dFzAEBeW5UlG7xxQPHajI3UzHWuKV1k+5GaHS3e0ecDtMNzL
-         G6+txzxpSI8CJYVGUEpGzRU4jsOpel6/e7G+OGw+e9iZlfIluDaRi/WOqdnP7DtKwWC5
-         HYeL5/Fc/8OTm91kUU+x+ZZwevXZBELk68yuqHThEoaKyAz2syCo+nd0H9HeRVx4vYwM
-         rO8xNBz4srnmDL2xbaidmP0cNp7EQNFB8FJFvE+gS5jaFj6fyMi6Htz5EX5WxzOG69SH
-         67tFcTMpQ1a4/vhLAdw1LMeBElsxCprRzM+CTtVJgqzaVbkboTbxvq1Q11qQM9uTS137
-         61IA==
-X-Gm-Message-State: AOJu0YyNwzScIp+RPTGLc/cYONwHhIGATWhnE/PJz4XnBftEyc9AMt89
-	ePD1BmVcaxDa3S231DWnSAFClnpObzUqeYrIg/JDF+kA7hEwVSK7KeZHb4rHCg==
-X-Gm-Gg: ASbGncuY8Qi+ZOOPiMdgpvUgPSQJ8e9tNmSSMwXgo4U2oHV00VRhVVsJqO5mUTgPFBl
-	SJ1ig2Pd63kIq1vqrq89s5wt3A06607xuGFH0YX9QpsguCvRYOYm38WwstVwB93bNBtnG3ORoa3
-	oNVSut2/SSC2aZCIWppw+67K4Yt4wJnKuf0x1Iz4Yg4ezmd7OvnwJPNd4lZcZ776rnBS4Vfzox2
-	wgAwCT7H84o9xtLrBgH7t6MAsVw6NjIUERMlIJnt0H2J5xsizP4YeSkHV5bRtpYnuBQYJf1NxEi
-	4xx6yxou54QxIg2gyGZhLxz711BHttlD1Y7eaXbFaC+BQnveFMH6dUUZXwSURqXb2/ta/SGqS4J
-	p2+3SS/JEQ5fW0YkWZw==
-X-Google-Smtp-Source: AGHT+IEf8+Ywleh0G/SPpwmDs4ZvEp/Xu8EL/XgS2VFdvlezW3P/ExwQEdKqA0NTWy9EaJ324pAT6g==
-X-Received: by 2002:a17:90b:5788:b0:32e:e150:8937 with SMTP id 98e67ed59e1d1-32ee3ebaf19mr1710891a91.6.1758100787046;
-        Wed, 17 Sep 2025 02:19:47 -0700 (PDT)
+        bh=6uvsxS+JRPtLGpObJELeexCdHN87FTVnv1gdxrnLpDE=;
+        b=O2VkkuykkKdO7GIi++I52fIjrq4knvLPBiKCQPOVqhc7f1QI9Nr0a7xx3xYdscqxkM
+         JaRmkQYngX8l919ohrY7smzbiYenNHFxs9+NOj0MyW9tw4CbZvQInVsb6lxTG+CRsO4e
+         ml6plfthE3VdKCXvw70WF9WbTApStytvX36AI5GAlgRHVNMBQtKwBlDaYPGHVQj1lH07
+         aC5qMHccDYZM641KWsJeWsZC/5jyRyB5XnE3AiL6N2nwR7GE+9avgrI6bVDv7zvY0Dcu
+         dcwlt8mrLq8jen5uIahXvmgFNWWwQcKMs4FDEhP8es44SFJsTDB/u7jJcCl9b8CjOTWY
+         4A5g==
+X-Gm-Message-State: AOJu0YxeXO7GK0zxPcqXtXxIJf+rp/AyaUXjyqFV9PwiotQplrACbVdJ
+	NRX0CvlGeQB3XIyxdSTz7vQTKD9/Gv63zmlVJVbA7LTvVBPDvq3X1UBlOec5ZQ==
+X-Gm-Gg: ASbGnctcm6ZsNF6R6PP507eDiGwq+31FQCi3EBtrqXwboKob0Z4HS6FDxLcEsMSzO4H
+	k3wQ4+9ukv/r2LQgaR397bV/FDEMeAcwyEZLXgX2WOIZDDHZRLZp9DELoj53y3MyCtOAZix0r7C
+	22/Hj50n9b3Fkogi7Heh98z99AV/+XONxSfJ9a6muH9jeJJ6YblIyQhaaaZJ/gdy2ETfsqCR10z
+	cLpPrF/vmZda4EywiXHIvHs4HzMTZ4BXUkincl1UiV9UlUp4h1pZHnIJHRGB0uaaovS3bAtgRQi
+	QoE9Hpe8akEQ1TGzGtH3LEXFg4NH0p3WxV1O1n8xNA1iogp62PJUWwY2gn4gP/JVG/IiuJfrFlg
+	VC2iNhk2VXV0guHwoeQ==
+X-Google-Smtp-Source: AGHT+IHBRSVzZ0B4Ue/Gv+7ZbLVcBg/5p8PF7sw4pMzwgGyuczcgUuKuCYrk91QwjgfKnPCwnzi47g==
+X-Received: by 2002:a17:90b:33d0:b0:32e:a5ae:d00 with SMTP id 98e67ed59e1d1-32ee3ed39femr1690535a91.13.1758100795295;
+        Wed, 17 Sep 2025 02:19:55 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-32ed257bbf8sm1882584a91.0.2025.09.17.02.19.45
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-32ea0fb679asm2397759a91.2.2025.09.17.02.19.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Sep 2025 02:19:46 -0700 (PDT)
-Date: Wed, 17 Sep 2025 17:19:54 +0800
+        Wed, 17 Sep 2025 02:19:54 -0700 (PDT)
+Date: Wed, 17 Sep 2025 17:20:02 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 2/4] string-list: replace negative index encoding with
- "exact_match" parameter
-Message-ID: <aMp9OtXLfRw7dEwA@ArchLinux>
+Subject: [PATCH v2 3/4] string-list: change "string_list_find_insert_index"
+ return type to "size_t"
+Message-ID: <aMp9Qs2AHBax62LL@ArchLinux>
 References: <aMp8yNFiXDyk2hP4@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -74,140 +74,116 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <aMp8yNFiXDyk2hP4@ArchLinux>
 
-We would return negative index to indicate exact match by converting the
-original positive index to be "-1 - index" in
-"string_list_find_insert_index", which requires callers to decode this
-information. This approach has several limitations:
+As "string_list_find_insert_index" is a simple wrapper of
+"get_entry_index" and the return type of "get_entry_index" is already
+"size_t", we could simply change its return type to "size_t".
 
-1. It prevents us from using the full range of size_t, which is
-   necessary for large string list.
-2. Using int for indices while other parts of the codebase use size_t
-   creates signed comparison warnings when these values are compared.
+Update all callers to use size_t variables for storing the return value.
+The tricky fix is the loop condition in "mailmap.c" to properly handle
+"size_t" underflow by changing from `0 <= --i` to `i--`.
 
-To address these limitations, change the function to return size_t for
-the index value and use a separate bool parameter to indicate whether
-the index refers to an existing entry or an insertion point.
-
-In some cases, the callers of "string_list_find_insert_index" only need
-the index position and don't care whether an exact match is found.
-However, "get_entry_index" currently requires a non-NULL "exact_match"
-parameter, forcing these callers to declare unnecessary variables.
-Let's allow callers to pass NULL for the "exact_match" parameter when
-they don't need this information, reducing unnecessary variable
-declarations in calling code.
+Remove "DISABLE_SIGN_COMPARE_WARNINGS" from "mailmap.c" as it's no
+longer needed with the proper unsigned types.
 
 Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- add-interactive.c |  7 ++++---
- mailmap.c         |  7 +++----
- refs.c            |  2 +-
- string-list.c     | 14 ++++++--------
- string-list.h     |  2 +-
- 5 files changed, 15 insertions(+), 17 deletions(-)
+ add-interactive.c | 2 +-
+ mailmap.c         | 5 ++---
+ refs.c            | 4 +---
+ string-list.c     | 4 ++--
+ string-list.h     | 4 ++--
+ 5 files changed, 8 insertions(+), 11 deletions(-)
 
 diff --git a/add-interactive.c b/add-interactive.c
-index 3e692b47ec..7c0fd3d218 100644
+index 7c0fd3d218..19def3168a 100644
 --- a/add-interactive.c
 +++ b/add-interactive.c
-@@ -221,7 +221,8 @@ static void find_unique_prefixes(struct prefix_item_list *list)
- 
+@@ -222,7 +222,7 @@ static void find_unique_prefixes(struct prefix_item_list *list)
  static ssize_t find_unique(const char *string, struct prefix_item_list *list)
  {
--	int index = string_list_find_insert_index(&list->sorted, string, 1);
-+	bool exact_match;
-+	int index = string_list_find_insert_index(&list->sorted, string, &exact_match);
+ 	bool exact_match;
+-	int index = string_list_find_insert_index(&list->sorted, string, &exact_match);
++	size_t index = string_list_find_insert_index(&list->sorted, string, &exact_match);
  	struct string_list_item *item;
  
  	if (list->items.nr != list->sorted.nr)
-@@ -229,8 +230,8 @@ static ssize_t find_unique(const char *string, struct prefix_item_list *list)
- 		    " vs %"PRIuMAX")",
- 		    (uintmax_t)list->items.nr, (uintmax_t)list->sorted.nr);
- 
--	if (index < 0)
--		item = list->sorted.items[-1 - index].util;
-+	if (exact_match)
-+		item = list->sorted.items[index].util;
- 	else if (index > 0 &&
- 		 starts_with(list->sorted.items[index - 1].string, string))
- 		return -1;
 diff --git a/mailmap.c b/mailmap.c
-index 56c72102d9..58a4484963 100644
+index 58a4484963..37fd158a51 100644
 --- a/mailmap.c
 +++ b/mailmap.c
-@@ -243,10 +243,9 @@ void clear_mailmap(struct string_list *map)
- static struct string_list_item *lookup_prefix(struct string_list *map,
+@@ -1,5 +1,4 @@
+ #define USE_THE_REPOSITORY_VARIABLE
+-#define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "git-compat-util.h"
+ #include "environment.h"
+@@ -244,7 +243,7 @@ static struct string_list_item *lookup_prefix(struct string_list *map,
  					      const char *string, size_t len)
  {
--	int i = string_list_find_insert_index(map, string, 1);
--	if (i < 0) {
--		/* exact match */
--		i = -1 - i;
-+	bool exact_match;
-+	int i = string_list_find_insert_index(map, string, &exact_match);
-+	if (exact_match) {
+ 	bool exact_match;
+-	int i = string_list_find_insert_index(map, string, &exact_match);
++	size_t i = string_list_find_insert_index(map, string, &exact_match);
+ 	if (exact_match) {
  		if (!string[len])
  			return &map->items[i];
- 		/*
+@@ -266,7 +265,7 @@ static struct string_list_item *lookup_prefix(struct string_list *map,
+ 	 * overlong key would be inserted, which must come after the
+ 	 * real location of the key if one exists.
+ 	 */
+-	while (0 <= --i && i < map->nr) {
++	while (i-- && i < map->nr) {
+ 		int cmp = strncasecmp(map->items[i].string, string, len);
+ 		if (cmp < 0)
+ 			/*
 diff --git a/refs.c b/refs.c
-index 4ff55cf24f..f1ff5bf846 100644
+index f1ff5bf846..a8f06b9a0a 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1699,7 +1699,7 @@ const char *find_descendant_ref(const char *dirname,
+@@ -1688,8 +1688,6 @@ const char *find_descendant_ref(const char *dirname,
+ 				const struct string_list *extras,
+ 				const struct string_list *skip)
+ {
+-	int pos;
+-
+ 	if (!extras)
+ 		return NULL;
+ 
+@@ -1699,7 +1697,7 @@ const char *find_descendant_ref(const char *dirname,
  	 * with dirname (remember, dirname includes the trailing
  	 * slash) and is not in skip, then we have a conflict.
  	 */
--	for (pos = string_list_find_insert_index(extras, dirname, 0);
-+	for (pos = string_list_find_insert_index(extras, dirname, NULL);
+-	for (pos = string_list_find_insert_index(extras, dirname, NULL);
++	for (size_t pos = string_list_find_insert_index(extras, dirname, NULL);
  	     pos < extras->nr; pos++) {
  		const char *extra_refname = extras->items[pos].string;
  
 diff --git a/string-list.c b/string-list.c
-index d8da3dd414..c589ab5a2c 100644
+index c589ab5a2c..08dc00984c 100644
 --- a/string-list.c
 +++ b/string-list.c
-@@ -29,12 +29,14 @@ static size_t get_entry_index(const struct string_list *list, const char *string
- 		else if (compare > 0)
- 			left = middle + 1;
- 		else {
--			*exact_match = true;
-+			if (exact_match)
-+				*exact_match = true;
- 			return middle;
- 		}
- 	}
- 
--	*exact_match = false;
-+	if (exact_match)
-+		*exact_match = false;
- 	return right;
+@@ -91,8 +91,8 @@ bool string_list_has_string(const struct string_list *list, const char *string)
+ 	return exact_match;
  }
  
-@@ -90,13 +92,9 @@ bool string_list_has_string(const struct string_list *list, const char *string)
- }
- 
- int string_list_find_insert_index(const struct string_list *list, const char *string,
--				  int negative_existing_index)
-+				  bool *exact_match)
+-int string_list_find_insert_index(const struct string_list *list, const char *string,
+-				  bool *exact_match)
++size_t string_list_find_insert_index(const struct string_list *list, const char *string,
++				     bool *exact_match)
  {
--	bool exact_match;
--	int index = get_entry_index(list, string, &exact_match);
--	if (exact_match)
--		index = -1 - (negative_existing_index ? index : 0);
--	return index;
-+	return get_entry_index(list, string, exact_match);
+ 	return get_entry_index(list, string, exact_match);
  }
- 
- struct string_list_item *string_list_lookup(struct string_list *list, const char *string)
 diff --git a/string-list.h b/string-list.h
-index bc7f38022e..8830ce671d 100644
+index 8830ce671d..6b0a2f4752 100644
 --- a/string-list.h
 +++ b/string-list.h
-@@ -174,7 +174,7 @@ void string_list_remove_empty_items(struct string_list *list, int free_util);
+@@ -173,8 +173,8 @@ void string_list_remove_empty_items(struct string_list *list, int free_util);
+ 
  /** Determine if the string_list has a given string or not. */
  bool string_list_has_string(const struct string_list *list, const char *string);
- int string_list_find_insert_index(const struct string_list *list, const char *string,
--				  int negative_existing_index);
-+				  bool *exact_match);
+-int string_list_find_insert_index(const struct string_list *list, const char *string,
+-				  bool *exact_match);
++size_t string_list_find_insert_index(const struct string_list *list, const char *string,
++				     bool *exact_match);
  
  /**
   * Insert a new element to the string_list. The returned pointer can
