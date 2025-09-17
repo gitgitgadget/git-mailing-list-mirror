@@ -1,94 +1,91 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A594834BA42
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 16:25:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6792D7DF5
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 17:04:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758126335; cv=none; b=OL9VQ9P9at1X8IB9vOUUvKpsjlc22+WJxELTJy/hiR6ArVEOPqd5C2TuYg8O8AlISQFNiY7DXmKUIzVr+T36qSF+asriXUKDXAmm40y6/AbOWfz5tp7rQemUY8K5lXj3DNJ8H5hH9ZO/qr1ZSK4U8Wd+gOywhGouKdymLUadlQg=
+	t=1758128691; cv=none; b=Vd8p4i3nn1oG6wrjez3x56TQUkQxUXSV7suCK9/HE/fmRUJg4N8B+R6ur5JfARD9ESLX/kIYqNL26K6l4sZRZajry0PIIjGPtax8hxSGp+n+vc8N6n2uwlqDrNDWWQG0MORS7WqVkaI+dOQOhb9vzS3CUDDVMi7u1EO2AJuYKnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758126335; c=relaxed/simple;
-	bh=XVBZ+OPFlLGRd5H98xwv9Z1zhT8KdnI+hBY8wQkw9X4=;
+	s=arc-20240116; t=1758128691; c=relaxed/simple;
+	bh=r5WVLQDcPC30raG9hMux6oVE4u6oqAPO3goMOUY3iqs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fRD14JYaj/aTDTISSeQOiSSHvGPtAZ9/dRE5iSdNpyRloMn3ZVTis9cGrWTWjzZdFiLU1e5+fmP3mN82gLTaLFBHTBqO1fW5EXqhB+cIVWiA8HjLDIRnPPcvyZC57iwyWgFIZBchbHtrLJt+nwvWnil7GJAFqc1NdvSb2g5jwNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=no0er2IQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KKOzyhqA; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=VGXIoZGku+YlPEzrSsCm5itipfWRhe3IO62a6B4E1+lwWcIVK8GMSJauZBZXWlBxShjQkLSLq4fsEgxBdBVN/5kcCSK9CXXSng6uld3U1uYBpeHkybkawfpNURm+M6e5YEwDzDrElNf8o0V7j6pO8zZ2RANDChSBYmj/IMdXqv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lDFvufuZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YYBdq0bz; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="no0er2IQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KKOzyhqA"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BB51E140013D;
-	Wed, 17 Sep 2025 12:25:32 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lDFvufuZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YYBdq0bz"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id CDA0EEC021D;
+	Wed, 17 Sep 2025 13:04:47 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 17 Sep 2025 12:25:32 -0400
+  by phl-compute-05.internal (MEProxy); Wed, 17 Sep 2025 13:04:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1758126332;
-	 x=1758212732; bh=2TnRFXHWOG4N6UjHoJSw4KgfIHTTeAUWzqqOnq2LCkA=; b=
-	no0er2IQmXbDWx2URroLKu1dUxytQbAE93Qoa207f1kaFFIIFD49mZnXuGpjE2vV
-	LL1MiNJeUlyGZPx1D2Cbh0dC6ekA4UqWWpx7gQfWmd1p34eYBIM9ZKFG/8oEMtku
-	+z/qH+tu05V+EMfNHXEboDHAmFCPjBT7EeYx4chT4Pw5BBDxad2Iz7J/o7kBumrz
-	SfabfbbXgEm3uC5UKlqVMv9LAQlCjRRcPhViv7eaxuVy9dhXP4YX27aMY6GzkG1A
-	Tj4HFgOjGkcxCu2DAjXuKejKB6H1+slAsoOJp2DZQQPFzM18YBb7/CFbS1NbK7QH
-	Kbe/EcL1mZmBCslFUztcqA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758128687; x=1758215087; bh=cl84CMiLrY
+	y4jpAPpAbVRwxyXILKP+lMUzsyTDisOjY=; b=lDFvufuZsylxiD0jAlxaSP4EHy
+	XLb6NJYQiObx5Mf5+xgc9a6AeTK+/CxlxnOd5wDuHWBKjnrP/cHiIbK9NUW6ta7U
+	4FKC/oRjb3QDEi4Tjil2LUi0GadLS42geGBfvUCYIbjz8nbUtKvHvPX9bxmktDUx
+	HaF+tKYlXOme8wVjpQ05K8zcRpVot1aiuIAUDNcZ56c1zF6gaCxJF3B+KezO2Dmo
+	gjo59S+4Fv49UN3rd+apq95avIoy4ChYiOZJTp8gJ1kUUJOjxna4tfcjwUGrMk5f
+	a70veeskhG/AGorN48NMdSYdoDuo1R+0zSYlx3vf8rywt+cr3AZIY2gGQKug==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758126332; x=
-	1758212732; bh=2TnRFXHWOG4N6UjHoJSw4KgfIHTTeAUWzqqOnq2LCkA=; b=K
-	KOzyhqAJycK0wh2siNE3/Io2IUUK2AB5guML+wltk9aJ20F8PTkphtPkaIVMuCpS
-	TwZNcraYsB4knxrNvdgTIqSIz3ed+nFlpEnfKgRK4v2Y4mSPG3bTPFPClO+Dzfre
-	KMFzEr2XqNVjjThveXd36a5kCgbVvZKb7HLdWE3SmZx8WOMTP9e+z2dqjX06qfmC
-	iMfmX4JuafiGIOC9nfIFsgQRasZTj3t5+duSzobZpFG6f03bj21zhqLU07O4n1jk
-	l308zlPQOT9UX6TOnQBODVJdOzVUIn97UfgNxUgWcdEgyw9ZYEa/blfyeywOLbPA
-	H9UE35goncxobURstztAw==
-X-ME-Sender: <xms:_ODKaGg1HkBF9Dzr9qY0KHhpkuAwwks82tmihGqF4E9Pkz2Dd9Sadg>
-    <xme:_ODKaEkJ_MchHbm1s-ed52t0_v5CzzPWfK32_vNLVk5dwJtoFSONXk2xLNZ2uzK0s
-    58gCmHfO7o7Wp6aFg>
-X-ME-Received: <xmr:_ODKaEj4ogK1A0h4oeEAxRmxqurdWYybN7PaLcFYdpwXInICGAbieD1F0Oq3B0WAY8zTk9rpmnrBqQtdRnP_VjMr0jfzWmbAf8x_7Qg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegfeelvdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758128687; x=1758215087; bh=cl84CMiLrYy4jpAPpAbVRwxyXILKP+lMUzs
+	yTDisOjY=; b=YYBdq0bzfhxRlF9L7dIaAFhNTNOdkax7M/+fyTSiistIMXUu8/T
+	AUgJBlf4QWSysFcHsVpJoAqg/JvvRFQ6gTKbH/a5C8EiQlvGDwmqOzH+vpovMx7O
+	mJj/NvVdCYRCt3m8HUpFdF7K0QQHO2x6jZWMAvzJA1HO8cFnWJDFCz3i01QVz9DY
+	QpJ6liLRIO70UGV8AFxWdtCE4sfi/20XBLedB+FV2LzsHen7hz70/Rm8J3RlAeda
+	CWxACnT9n6Tb/G3GASu6Hg/SxWtVjyw97xQALezeyXZRb2i+PcojFcPLIdI1+AS6
+	8L91JOxH2My9VQjUNmBURBJiqBuPZS2W3Mg==
+X-ME-Sender: <xms:L-rKaB3axUYlwTTL_CreCD-Un1H6bVD-_yezj96YAnoYGCRyp41wWA>
+    <xme:L-rKaFrIMwiH2QaumkiUB7LtY7L5PADEETwqBcMDZpW9o4ZYesokzXWNk7jAWFf86
+    swK_lrvndfPeRXiVA>
+X-ME-Received: <xmr:L-rKaIWYtFHK3R92aRCikL5pscboi66Yi_S7rlobLFHDo-dAub5KESDM0tUxnrgp3t8Ua6jzlgbqtgFy8AIh_NhGqFyjxP6l8HlpWsw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeggedttdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpd
-    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehkrhhishhtohhf
-    fhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehs
-    uhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:_ODKaA07iSQxDhZohqGXU24I-6CAZSRCs5ZoujdSeuVza-YP38Dd9w>
-    <xmx:_ODKaFIyxeFUEA5FrQv0mc-4o-5GKHpTbXZEiBfPGlxWgTJ43QKTSw>
-    <xmx:_ODKaIx0nj85EtwY72ROadLIH5YufYs-pbwiB6osw6xb6MEnueJULQ>
-    <xmx:_ODKaLViptqOZ_HjH5RK5ZE5nSDJ2mzmoJJDJiwNdNbhmLGQ2O9G8g>
-    <xmx:_ODKaPyF1kBT5y1W6Ece52nAcNCk-Z50ZU4uBG0KqYY0AjNUUfJnCAeE>
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohgvrdgurhgvfiesihhnuggvgi
+    gvgigthhgrnhhgvgdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhr
+    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhm
+X-ME-Proxy: <xmx:L-rKaAZDPUOVzJCpU3FusL9uofpoqWglzy58_EVhe0W0h6a2uq2K8Q>
+    <xmx:L-rKaFdNIvv52KYcNg63hNdmZ_34lL1uU-7YT-Jqmt_nqpPIkDc3FQ>
+    <xmx:L-rKaK1zJfEPlzTwXjZPS8ZzTb_xY8nDYIiOTgfhqmCnpVA51-XWBQ>
+    <xmx:L-rKaMKpxIrGblM0HOrv3h3KV4OeZQKTBrWMs_cYkzfWKBonhRGolg>
+    <xmx:L-rKaDucV6wg2CXQcKFCxnC06rWLQNjfmNk9u-TOrffBYfwZyM3on1dB>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Sep 2025 12:25:32 -0400 (EDT)
+ 17 Sep 2025 13:04:46 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-Cc: "Jeff King" <peff@peff.net>,  "Kristoffer Haugsbakk"
- <kristofferhaugsbakk@fastmail.com>,  git@vger.kernel.org,  "Eric Sunshine"
- <sunshine@sunshineco.com>,  "Patrick Steinhardt" <ps@pks.im>
-Subject: Re: [PATCH v5 0/8] you-still-use-that??: improve breaking changes
- troubleshooting
-In-Reply-To: <8673bb92-6bc5-47b8-bef8-bd59669f095f@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Wed, 17 Sep 2025 17:41:18 +0200")
-References: <cover.1757446619.git.code@khaugsbakk.name>
-	<cover.1757879060.git.code@khaugsbakk.name>
-	<xmqqy0qffrri.fsf@gitster.g>
-	<e4fc3b83-15ca-4844-92c6-1f41169161ed@app.fastmail.com>
-	<20250916232446.GA1189675@coredump.intra.peff.net>
-	<8673bb92-6bc5-47b8-bef8-bd59669f095f@app.fastmail.com>
-Date: Wed, 17 Sep 2025 09:25:31 -0700
-Message-ID: <xmqqa52tdp1g.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org,
+  joe.drew@indexexchange.com,  peff@peff.net,  ps@pks.im
+Subject: Re: [PATCH v3 0/4] refs/files: fix issues with git-fetch on
+ case-insensitive FS
+In-Reply-To: <CAOLa=ZSBpSyU0V08OBrr-QPrZPsYnO1bTZewESY=C7Jy4NTcWQ@mail.gmail.com>
+	(Karthik Nayak's message of "Wed, 17 Sep 2025 11:24:40 -0400")
+References: <20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-0-35e69bbb507d@gmail.com>
+	<20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-0-195569740b57@gmail.com>
+	<xmqqh5x2m5d3.fsf@gitster.g>
+	<CAOLa=ZRvAMq7MNm6=dBneAXdDe6OjQ=NqYA9-Vd7E+nvDWGH0w@mail.gmail.com>
+	<874it1noh2.fsf@iotcl.com>
+	<CAOLa=ZSBpSyU0V08OBrr-QPrZPsYnO1bTZewESY=C7Jy4NTcWQ@mail.gmail.com>
+Date: Wed, 17 Sep 2025 10:04:45 -0700
+Message-ID: <xmqqjz1xc8nm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,32 +93,35 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> Draft of the commit message:
+>> I've noticed another issue though, at the moment it's possible to create
+>> a ref like `refs/heads/foo.Lock`. I can image this gives issue when the
+>> remote has `refs/heads/foo` and `refs/heads/foo.Lock` and you pull those
+>> in on a case-insensitive FS. Unfortunately I wasn't able to verify this.
+>> But anyhow, I don't think that any reason to hold back on this current
+>> patch series. I approve.
 >
-> -----
->
-> Makefile: don’t add whatchanged after it has been removed
->
-> 07572f220a8 (whatchanged: remove when built with WITH_BREAKING_CHANGES,
-> 2025-05-12) set up the removal of git-whatchanged(1) when
-> `WITH_BREAKING_CHANGES` is active.  Part of that work was removing it
-> from `commands` in `git.c`.  But the the Makefile still lists it as a
-> builtin .  That leaves it in the limbo of being linked but not being
-> callable; you get the generic error about not being able to call it as
-> a *builtin*:
->
->     $ git whatchanged
->     fatal: cannot handle whatchanged as a builtin
->
-> instead of the expected:
->
->     $ git whatchanged
->     git: 'whatchanged' is not a git command. See 'git --help'.
+> We don't fetch locks from remote. The locking mechanism is simply a
+> construct used to update files locally in race-free manner. Locking a
+> file ensures no other concurrent writes can happen.
 
-A change very well thought out.  Thanks for fixing my earlier
-breakage.
+I am not Toon, but I think Toon meant "foo.Lock" to be a funnily
+named but a valid branch the remote has.
+
+Doesn't the remote advertise refs/heads/foo and refs/heads/foo.Lock
+in such a case?  And we can ask for both of them.  When updating
+foo, we would locally create "refs/heads/foo.lock" and then rename
+it to refs/heads/foo", right?  I think Toon's point was what happens
+when the fetch of "foo.Lock" from there somehow has completed first.
+Or we can simply fetch foo.Lock branch and then foo branch in a
+separate invocation of "git fetch"---now wouldn't the second
+invocation have trouble creating the lock file foo.lock for foo on
+certain filesystems?
+
+> In-short when you fetch references, the prepare stage of the reference
+> transaction will create the necessary lock files. This locks in the
+> updates with guarantee that no other process can update/create the refs.
+> The commit phase simply removes the lock files post updating the refs.
