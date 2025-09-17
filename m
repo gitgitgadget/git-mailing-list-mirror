@@ -1,183 +1,139 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF112253E4
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 15:33:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F47830C0EF
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 15:34:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758123204; cv=none; b=JtFEKhHD/rWEqe6yHTpvkcl2ItKciW5yEUSzGTO5lnDPdq1pEAjlH43EgNAmIGjKusFtmd8CYUAH30sZBDu2Xcdz8TVcESU0JKQKRX/lo6VhF+ic45UzK3EErZbYEBd8ZQbA0hYIUsWJMh0/b03sKi7JHUneK7+WLjgQzu1P2sQ=
+	t=1758123285; cv=none; b=WEM8fOTt/gvWUR7fBYdEw1LEQpLcl5BwI43yHGtlFASNP57LyxE+oZToiKPECkNpxzp6zuthotp0EzJGmHYFKTefXSx+2/XstBGSEBTENplQtHgsNM8R5O2+kMxbMExbPJsCxk/GgAPGmIPqg05C75Zo6759b4dwzDCLXvYFll8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758123204; c=relaxed/simple;
-	bh=BiXDR2gbnBlCC2BnVOPpeI8sn0GPwoeM15An7SAY9Xc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mZ+xJGKzDOBIA64Sa4nR2VnzM0lkFH9j1vMzIa0BCCt6ol3pdOz8fqaj4W4ftXGB2UQUVCU5KHhDODSWo3itbOMZnN67ULKC16bKLb1Z9UrZwH7GTAy51GjSvdQGDnnY9+tIAVDNQr5eAadehWbN3beIXDN3E+m5iMJsfI67xnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C04VK7Jp; arc=none smtp.client-ip=209.85.218.47
+	s=arc-20240116; t=1758123285; c=relaxed/simple;
+	bh=K5ZIMj/npaCcStzpCYHeKvQHavj5wD9wUPwCn1z9diA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IDFnIcpMogW7Lcx/9OET7lf5YCflUTD3ir+3GCh9vizQ8cKxWB51ZOsdJ+eTuPDgp+8iytwVgPgOEPziwk50T13FXkb0pVDGriZriiVmX+eqerqMJHmkhiOfN6V0kqWg0n60mYPXvbcak2rpFVpqUqf80WifP8x4MmG2Zn4mMdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XS8dBc19; arc=none smtp.client-ip=209.85.160.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C04VK7Jp"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b07ba1c3df4so1081219666b.3
-        for <git@vger.kernel.org>; Wed, 17 Sep 2025 08:33:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XS8dBc19"
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-3357b8aeddaso1387841fac.0
+        for <git@vger.kernel.org>; Wed, 17 Sep 2025 08:34:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758123201; x=1758728001; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+RmjkkEoXb0ZfiE9Twrb0qVGWcJgI6k7WdQj6w9r+Vg=;
-        b=C04VK7Jp+ndwJUklWRduT5RxFHSmzO15yIhxhEEj1ehnS2QIWCNRPK2A/WhV3XhHDN
-         /DAV5Hj2T/xfoj8T4/uubaJljP9T00jTKRiO2fyG2Yy3/sTKN1MeRp6BWG+UYK9xlbzF
-         Gxp3gcsFZA8WxeQ21Ak4noo6tejdn5Bs2Sa1dqJwQU0e34d3RVitNvItpWuWj2cJZKFj
-         AXp59Sxnbq+ujpzS2VaHgQ3VyjX9d7qZBww7gTIRaw56y4bMfIqXTd62ypVed1TLtmcC
-         +VaVVxLXPf8O2qAKWbBb+vsvnZZYb3C/ePC0dUb+V+xNzL9K/mGu7285Vbctnw1v5Juo
-         v8dQ==
+        d=gmail.com; s=20230601; t=1758123282; x=1758728082; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BocGujmq7CUwGwcP5zxjAEGAPEvN0+X8urkcSnAzsrE=;
+        b=XS8dBc19IyV9hJE0xm4Fa2BAblHtnu7D49+VWs1L6ryP2BeqICTXoCtni9H71aBz06
+         aK8JU8y7iMBDeMax4bA4gei+RFYxttNs7yXK9Es86JHfTFbnTp+QaMVniWLZ4TvqSe3U
+         pK6N9uWle0cF+4ThtJepuhUhy77wIfXxgBEOvqmVjucy9reWD74WEKtbv0Uleye/1Ulj
+         YaJSodnhRPRbGuTe1TSCGmCfy3xPDE/SdNC0dQ1xTov43KZED5+kXtpIe2exL5wyaMIR
+         yKhvcVKM+kPgSHbfYBy1K5c402ozxZlU6qGl6fUpSWo/owrYO+XYbrzhHHrxvJ+J9IJh
+         +AcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758123201; x=1758728001;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+RmjkkEoXb0ZfiE9Twrb0qVGWcJgI6k7WdQj6w9r+Vg=;
-        b=YikpFfALT9SGPN7Vpn71KPTfBqv/WxR84watUNEWo4zNKyNuKxQgKLR5tnH3bMDZBu
-         3CNtB1y85YR5LKpmlumZacfjguDh37sukxFpZ3PKlratYdus1NNejPCs6bI63R7IKKgx
-         v++7Cn6tiChkR5vyMAxzsWRldLZHOibMyCA3OKI9BntM8NZ7OmKsJnHPu9T3m1E/hafa
-         Vi5pMFKdWZuR/v+VxuYKaFH8TnOk39RNSs8bOAc66clVsYqxTQtcNsRr4QIZAH8wMW+M
-         v8BUIh1O8ikh86u8+yiaptVmzSuF+Kw/VfBZbdQ5SdIc2mFrhpnbj0yyQSk5YCVNzUF0
-         wXGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUL8y4ddK29cxNWVcnk7AEPdI84gJKjzDiXIYbuV+NlbmHMN0WhYOkt5F7nHdUWNxuKsfc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YylUAt7EGd9eodEckg7FaEbXAnvHtyUcZmyL83vJ9cpo+BMqqL4
-	rsf+/zW5N8VKexyRZU17lA0Y/Bkh9JJKUGpQewdPgZAuCkEmZCohDdRPubaOs19PCtg6s9PMzcj
-	7hvGsxNWHdeNpG2quXmH3W+Udny8ZeFS0CgKZAfY=
-X-Gm-Gg: ASbGncsj4eJYCKN03Q+G8MlOpJ7hoWfbs+Lx63HyzUwLB44Y9Xmp9HPtxY/kn2A+35A
-	vetGp6+9JHO1mZeTOu/f+Se1H8PRn1IbKUS3FPlEILDLY8j9GVaTkwUZ5DnCZI8u0O9Zpao5Aqy
-	qVRi5vOsbWg8QU57UhVCVTP9PbN3SDiB7dcJkISMl74yo/iUOPTFHOwh2jK9W/i0AvF1vb0yJ7T
-	Ed3MhsoVrN8DZpaNark/8cYHF76nL4Y8iwdVC9ApA==
-X-Google-Smtp-Source: AGHT+IHRFM2NZSmgmftfUM+xSLJtixzaPS9Bw0Ut73PZdbLwGNzqTdt1HKj/yRFm+tuAhNgW7zBm1D4xaw+j4ordEKs=
-X-Received: by 2002:a17:907:3c87:b0:b04:7705:70d6 with SMTP id
- a640c23a62f3a-b1bbfa2c996mr279468166b.36.1758123200645; Wed, 17 Sep 2025
- 08:33:20 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1758123282; x=1758728082;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BocGujmq7CUwGwcP5zxjAEGAPEvN0+X8urkcSnAzsrE=;
+        b=sPxQaEu5orAi8y7Un3sBvH6i4HlW43o3hOyGWbTtcGVP3uvsVspOeW4h985U65QagR
+         mRg61KCYOpbEyiyN80YUFXZEWytphVXyt9YX/JRcLSjL4N474627wuYzFapwv7V/yaqB
+         5tNXtrEoeKarmvNwueSduN1GpviHp7o+gRcAAsMZ3oVrAE5EuzEgycQH9Oarb5IPAUiD
+         +4RGe7gnTwztGtNXTOFoPUaiLCxdAksUoAg4Fu52QtIJVw9LNPHN8g4BaJaU/BYbbLj/
+         ++rwkvO0R6X0+8C+hih2h6qWbv9i6bid/hiG9mwGKZYSoLIeLLZzDSdmiTDwifB7Kqcc
+         5qMQ==
+X-Gm-Message-State: AOJu0YyoCPgssJqvSwFQKyo0lyMmgpE6EMOx+U+48T8WopH6W93IlWSm
+	RWHmBHnUnaHpN8JgOtbEJbRRvC016Vtk/7vngNrdlsTa3W5Kq+gE1mmm
+X-Gm-Gg: ASbGncs2IICnhuNPG1/G1HgYP1pnozcDbEEBry0+84f/sI03UAp18GamZrIOcatRorx
+	ALACuezaStZTSisOc6diiqfiJQIlCI7RD1s0uHQlz+a4v3UgH198JEzVxVuYrRB68C1hp6I8NMv
+	wvG3Zb79u0zvDAi36ZMafmnjSbzYPfiwwcVjURnH7mgThcweodNIyOteN06WJsm96fV3fb+0ECy
+	v/Ptj1axiSJoorH05oKyp48PyfXdVBrqpw4tZqZwXpFfh2mV6M2gCiblzq2VGxtX33v4ahE8Exx
+	fLH6/syQki/uebqKmHc8NClSVkLM6kNUliGYUQ1xNog/wGJlsdpLcsCToAL1I3mH9ddfHPtlmn9
+	S4mdKmp1iQ5QZZNqj
+X-Google-Smtp-Source: AGHT+IFXFB6/sKCbyb/UQozQpAGfrrtCs1JILY0svOa7FfcyD5IUIAXLep/D1KewpOkNbHD6j+V4ng==
+X-Received: by 2002:a05:6871:14e:b0:333:295e:96f6 with SMTP id 586e51a60fabf-335c0d7bf03mr1371256fac.37.1758123282480;
+        Wed, 17 Sep 2025 08:34:42 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-330c51caddesm4547659fac.29.2025.09.17.08.34.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Sep 2025 08:34:42 -0700 (PDT)
+Date: Wed, 17 Sep 2025 10:34:41 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, joe.drew@indexexchange.com, peff@peff.net, 
+	ps@pks.im, gitster@pobox.com
+Subject: Re: [PATCH v3 1/4] refs/files: catch conflicts on case-insensitive
+ file-systems
+Message-ID: <eiu2y4r3nncfnmsg3ar3jhzya6ge4dnmwqyrkhsinhcjaxd4qn@ehu6l7xngtrg>
+References: <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-0-195569740b57@gmail.com>
+ <20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-1-195569740b57@gmail.com>
+ <uv4ifkvxcujjjj3lsc4tf5b5dnc7pkaaw62t6ahagnskxn4kg6@oyxjgupdilrc>
+ <CAOLa=ZR1LNs0i5TDPFG_QvUYS3=CMx3ov-68ph6QKNM273JUHQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <5036f7d8-8ac9-4f50-99af-5a3a2d1a07fc@anselmschueler.com>
- <CALnO6CCz6dFX1Est0hhCbvaepBvG4+rpYQRQ2bP5vAQVmaY=OA@mail.gmail.com> <xmqqqzw5i8fv.fsf@gitster.g>
-In-Reply-To: <xmqqqzw5i8fv.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Wed, 17 Sep 2025 11:33:08 -0400
-X-Gm-Features: AS18NWBWFJKIFqeDe_puZEXspBkOHUQRCMa1q-5GUSiJ1y9Sl49Vq6Oa5_8dnBA
-Message-ID: <CALnO6CAZHy58X_6T5KR9zUa0TrJvbM8BLZj+is8pB9=fogvr3Q@mail.gmail.com>
-Subject: Re: Why does git-status suggest different commands to unstage files
- depending on whether there is a commit yet or not?
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?UTF-8?Q?Anselm_Sch=C3=BCler?= <mail@anselmschueler.com>, 
-	git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZR1LNs0i5TDPFG_QvUYS3=CMx3ov-68ph6QKNM273JUHQ@mail.gmail.com>
 
-On Wed, Sep 17, 2025 at 8:12=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
->
-> > ... " the following
-> > does work in a non-unborn repo to move "newfile" from "untracked" to
-> > "staged" and back again:
+On 25/09/17 12:33AM, Karthik Nayak wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> > On 25/09/13 10:54PM, Karthik Nayak wrote:
+> >> +
+> >>  /*
+> >>   * Lock refname, without following symrefs, and set *lock_p to point
+> >>   * at a newly-allocated lock object. Fill in lock->old_oid, referent,
+> >> @@ -677,16 +697,17 @@ static void unlock_ref(struct ref_lock *lock)
+> >>   * - Generate informative error messages in the case of failure
+> >>   */
+> >>  static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
+> >> -					       struct ref_update *update,
+> >> +					       struct ref_transaction *transaction,
+> >>  					       size_t update_idx,
+> >>  					       int mustexist,
+> >>  					       struct string_list *refnames_to_check,
+> >> -					       const struct string_list *extras,
+> >>  					       struct ref_lock **lock_p,
+> >>  					       struct strbuf *referent,
+> >>  					       struct strbuf *err)
+> >>  {
+> >>  	enum ref_transaction_error ret = REF_TRANSACTION_ERROR_GENERIC;
+> >> +	struct ref_update *update = transaction->updates[update_idx];
+> >> +	const struct string_list *extras = &transaction->refnames;
+> >>  	const char *refname = update->refname;
+> >>  	unsigned int *type = &update->type;
+> >>  	struct ref_lock *lock;
+> >> @@ -776,6 +797,9 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
+> >>  			goto retry;
+> >>  		} else {
+> >>  			unable_to_lock_message(ref_file.buf, myerr, err);
 > >
-> >     echo >newfile && git add newfile
-> >     git restore --staged newfile
+> > huh, so if if we have a lockfile error due to a case-insensitve
+> > filesystem, does this mean we print the error message from
+> > `unable_to_lock_message()` and the new message?
 > >
-> > So we don't need "rm --cached" to
+> > If so, I wonder if we would be better off skipping the former since it
+> > could be a bit misleading.
 > >
-> >> remove <file>
-> >> from there [the index] without losing or clobbering the <file> in the =
-working
-> >> tree
->
-> Now I think about it more, I wonder if "restore --staged" is
-> misleading and confusing to new users?
->
-> When you teach "git restore" what would you tell them?
->
-> NAME
->        git-restore - Restore working tree files
->
-> is how "git restore --help" starts.  It is primarily a tool to let
-> you repair messed up files in your working tree by copying out of a
-> known good version from somewhere, be it from the index or from an
-> existing commit.
->
-> But the instruction used to recover from unwanted "git add" to
-> update the index with modified contents does NOT want to destroy
-> your files in the working tree.  You want to repair only the index
-> without touching your working tree files, because you added modified
-> contents that were not ready to be "staged".  Hence "git restore" is
-> used with "--staged" option to tell it to do what it was *not*
-> primarily designed to do, i.e. only touch the index without doing
-> its usual "Restore working tree files" job.
->
-> But there is a lot more appropriate command whose primary focus is
-> about the index.  "git reset <file>" would grab the contents for the
-> <file> in HEAD and replace the index entry for <file> with it, which
-> is exactly how you would move the "Changes to be committed" files to
-> "Changes not staged for commit" status.
->
-> So I think use of "git restore --staged" in the instruction is
-> wrong, and it should be replaced with "git reset" instead.
+> 
+> I would say both are necessary. The errors added here are more technical
+> and really talk about why we faced an issue. The error in
+> 'builtin/fetch.c' is more about guidance to how to overcome that issue.
+> 
+> Also this error is client agnostic, so we'd add the error here for users
+> of both regular transactions and batched updates. The error in
+> 'builtin/fetch.c' is very specific to users of 'git-fetch(1)'. So I
+> think both hold value.
 
-As we have in git(1)
+Ah ok, I was orginally concerned that both error messages would be
+printed when a reference update is rejected due to the case conflict
+error. I see now that the "Unable to create '%s.lock': %s." message only
+gets printed if the transaction actually fails. With this change, a case
+conflict error on an individual references in batched updates doesn't
+result in the entire transaction failing. Thus, only the new message is
+printed. Makes sense.
 
-   Reset, restore and revert
-       There are three commands with similar names: git reset, git restore =
-and
-       git revert.
-
-       =E2=80=A2   git-revert(1) is about making a new commit that reverts =
-the changes
-           made by other commits.
-
-       =E2=80=A2   git-restore(1) is about restoring files in the working t=
-ree from
-           either the index or another commit. This command does not update=
- your
-           branch. The command can also be used to restore files in the ind=
-ex
-           from another commit.
-
-       =E2=80=A2   git-reset(1) is about updating your branch, moving the t=
-ip in order
-           to add or remove commits from the branch. This operation changes=
- the
-           commit history.
-
-           git reset can also be used to restore the index, overlapping wit=
-h git
-           restore.
-
-that already mentions the overlap, I'm inclined to keep "restore
---staged" as a simpler "I'm _restoring_ this file in the index to a
-different version." (But my personal "unstage" alias has been "reset
-HEAD --" for a long time=E2=80=A6) The Examples in git-restore(1) also ment=
-ion
-the reset connection.
-
-> > (But the point about having nowhere to restore from stands!)
->
-> Yes, and the point about having nowhere to reset from stands for the
-> state on an unborn branch.  That one needs "rm --cached".
-
-Perhaps more germane to Anselm=E2=80=94I'm still confused that "restore
---staged" can't cope with unborn branches. Sure, there's no "place to
-restore from." But the user experience of having 2 different commands
-depending on this one state is a bit messy, I think. Wouldn't it be
-nice if one command did the right thing (kicking a newly-added file
-out of the staging area back to being untracked) in all situations?
-
-IOW, I think "rm --cached" works whether unborn or not=E2=80=94so shouldn't
-"restore --staged", too? As I think I saw in a separate reply, plenty
-of commands treat the unborn branch as having an empty tree as the
-parent. It seems that if "restore --staged" did so, we could unify the
-help here and simplify things for the user.
-
---=20
-D. Ben Knoble
+Thanks,
+-Justin
