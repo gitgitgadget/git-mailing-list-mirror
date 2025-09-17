@@ -1,91 +1,84 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6792D7DF5
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 17:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15392F7441
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 17:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758128691; cv=none; b=Vd8p4i3nn1oG6wrjez3x56TQUkQxUXSV7suCK9/HE/fmRUJg4N8B+R6ur5JfARD9ESLX/kIYqNL26K6l4sZRZajry0PIIjGPtax8hxSGp+n+vc8N6n2uwlqDrNDWWQG0MORS7WqVkaI+dOQOhb9vzS3CUDDVMi7u1EO2AJuYKnI=
+	t=1758128859; cv=none; b=msavYuUKWn/R1cI4ymAz7ShnH0Sy205lqDpZ2jmIgEHISMQo7JhVvgfqJl4Lztv/HBf8/u07qYwfUAKuX0CrlrcFeTvBPOGDyEA1S/eWp3IJg+tIXacI8Uo6f7TMytsROm+PJfVLU6fDdxNMb7GpzfB4OpanPIaMSr3CqH8FHLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758128691; c=relaxed/simple;
-	bh=r5WVLQDcPC30raG9hMux6oVE4u6oqAPO3goMOUY3iqs=;
+	s=arc-20240116; t=1758128859; c=relaxed/simple;
+	bh=Lcp2sXxLBQ78bGYhCgZ/mT9NMYA+rT+SwHPSrB80CjA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VGXIoZGku+YlPEzrSsCm5itipfWRhe3IO62a6B4E1+lwWcIVK8GMSJauZBZXWlBxShjQkLSLq4fsEgxBdBVN/5kcCSK9CXXSng6uld3U1uYBpeHkybkawfpNURm+M6e5YEwDzDrElNf8o0V7j6pO8zZ2RANDChSBYmj/IMdXqv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lDFvufuZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YYBdq0bz; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=WW6ATOsMWC798Cpx9czc30C9lQR5pezLa9Htfz47CM8gmAeg6u+WtsJ2i4IxHudYVP+Ywq/ggDpQssnQGRaTVvdolNwb8NiYeWGtCpcsDU/T0fBFr4BNogAl/yIBKGr2oDW4rK+8bTYWOukXhmahfmq2bz64eKEFZD6lTUIXjCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xhL+Mxqv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DUI2w0QC; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lDFvufuZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YYBdq0bz"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id CDA0EEC021D;
-	Wed, 17 Sep 2025 13:04:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xhL+Mxqv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DUI2w0QC"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id C62A6EC021D;
+	Wed, 17 Sep 2025 13:07:36 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 17 Sep 2025 13:04:47 -0400
+  by phl-compute-09.internal (MEProxy); Wed, 17 Sep 2025 13:07:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758128687; x=1758215087; bh=cl84CMiLrY
-	y4jpAPpAbVRwxyXILKP+lMUzsyTDisOjY=; b=lDFvufuZsylxiD0jAlxaSP4EHy
-	XLb6NJYQiObx5Mf5+xgc9a6AeTK+/CxlxnOd5wDuHWBKjnrP/cHiIbK9NUW6ta7U
-	4FKC/oRjb3QDEi4Tjil2LUi0GadLS42geGBfvUCYIbjz8nbUtKvHvPX9bxmktDUx
-	HaF+tKYlXOme8wVjpQ05K8zcRpVot1aiuIAUDNcZ56c1zF6gaCxJF3B+KezO2Dmo
-	gjo59S+4Fv49UN3rd+apq95avIoy4ChYiOZJTp8gJ1kUUJOjxna4tfcjwUGrMk5f
-	a70veeskhG/AGorN48NMdSYdoDuo1R+0zSYlx3vf8rywt+cr3AZIY2gGQKug==
+	:subject:to:to; s=fm3; t=1758128856; x=1758215256; bh=DDVgyo4nde
+	uigK9mYMcYlZbX8V9q4NM3MlQC++TgI/g=; b=xhL+MxqvP573RxY57Tfl8osqpA
+	uZ4ncmDAMUdwkgdKUercZEudNeSMXltkRoo5/IfX+gKYVyG/QOdsI3jgyKiWqahU
+	Clo5hvbFjE5xmcMqZHyncuBXlAkD7c8fzxTT950psTBDCehU1QmqgxgaHhgJP0UD
+	4KB0wpiPzSv4dR0IlvT/hpN3ZFEX3+GJMtvw5OaKFkYewP5Icg4YZo4ug1amVSwY
+	P89rKnzG6WIEWuUNyDbxfRoQSlhi76sIDEtr9r56Df5pqVKh9hPykSz5cR7CVbjj
+	Iloc4hJkNM8vh4xOOLVex4cfj0fRypWQexlQBW6l6UV5+D0fOOlXcc2Vs4tw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758128687; x=1758215087; bh=cl84CMiLrYy4jpAPpAbVRwxyXILKP+lMUzs
-	yTDisOjY=; b=YYBdq0bzfhxRlF9L7dIaAFhNTNOdkax7M/+fyTSiistIMXUu8/T
-	AUgJBlf4QWSysFcHsVpJoAqg/JvvRFQ6gTKbH/a5C8EiQlvGDwmqOzH+vpovMx7O
-	mJj/NvVdCYRCt3m8HUpFdF7K0QQHO2x6jZWMAvzJA1HO8cFnWJDFCz3i01QVz9DY
-	QpJ6liLRIO70UGV8AFxWdtCE4sfi/20XBLedB+FV2LzsHen7hz70/Rm8J3RlAeda
-	CWxACnT9n6Tb/G3GASu6Hg/SxWtVjyw97xQALezeyXZRb2i+PcojFcPLIdI1+AS6
-	8L91JOxH2My9VQjUNmBURBJiqBuPZS2W3Mg==
-X-ME-Sender: <xms:L-rKaB3axUYlwTTL_CreCD-Un1H6bVD-_yezj96YAnoYGCRyp41wWA>
-    <xme:L-rKaFrIMwiH2QaumkiUB7LtY7L5PADEETwqBcMDZpW9o4ZYesokzXWNk7jAWFf86
-    swK_lrvndfPeRXiVA>
-X-ME-Received: <xmr:L-rKaIWYtFHK3R92aRCikL5pscboi66Yi_S7rlobLFHDo-dAub5KESDM0tUxnrgp3t8Ua6jzlgbqtgFy8AIh_NhGqFyjxP6l8HlpWsw>
+	1758128856; x=1758215256; bh=DDVgyo4ndeuigK9mYMcYlZbX8V9q4NM3MlQ
+	C++TgI/g=; b=DUI2w0QC3nTDh96tmI1uNc8JsT5PkHPP8rrq50gIUnJYLC21uJz
+	DC5lLehazIFsgfaCT6sLJHF1glCC/wlQSoHRq987sXYoBnwWLUDLEDRlchNera56
+	JaQ9QtAH+hgW/gHHMPj2rklcv/33pzkuVffex5tGtEngXfpU5rKgkx+kraBHWLc0
+	gNEHXkHUgCEr63a/N5oChs3RBCNBodr/tYofuC/j0tRzWh1gGztduES4Pr9+vv+R
+	zPUGQYqMcnGnMLThDXVBNZfQz+z1Epp3kIWnRVYqnlCgcq2CpxfyVc4d+PUvB7ab
+	YmjS9qzJSUddwXruVh8fLPwkJusHsveyDgA==
+X-ME-Sender: <xms:2OrKaJsHGE7vhzJRzRj-FHNzg7PZOY7ucM7gbAflGIdabq8unp-jkw>
+    <xme:2OrKaNCM3rEsqNQMb8RWO8LoJCNw5A2PFnG-1xYnLkIelP0v7tnCJAEg77JEaBHXe
+    rcYoOfhoKtG0xao8w>
+X-ME-Received: <xmr:2OrKaJXiJLcX3_v3jkdQ5fKfR4nD98brCtCNftk_SeAvfyqbkZO6GZ-g0-y6cgJWD90dc7Om-9Ckeb80X-HjJaSHX1L2bZm8UhcsVww>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeggedttdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohgvrdgurhgvfiesihhnuggvgi
-    gvgigthhgrnhhgvgdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhr
-    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhm
-X-ME-Proxy: <xmx:L-rKaAZDPUOVzJCpU3FusL9uofpoqWglzy58_EVhe0W0h6a2uq2K8Q>
-    <xmx:L-rKaFdNIvv52KYcNg63hNdmZ_34lL1uU-7YT-Jqmt_nqpPIkDc3FQ>
-    <xmx:L-rKaK1zJfEPlzTwXjZPS8ZzTb_xY8nDYIiOTgfhqmCnpVA51-XWBQ>
-    <xmx:L-rKaMKpxIrGblM0HOrv3h3KV4OeZQKTBrWMs_cYkzfWKBonhRGolg>
-    <xmx:L-rKaDucV6wg2CXQcKFCxnC06rWLQNjfmNk9u-TOrffBYfwZyM3on1dB>
+    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
+    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:2OrKaDCN4-K8iHNJU8Sn3Bsk-eEaEFRnyUZNQGQDvpf0NOEGBN54bw>
+    <xmx:2OrKaE-LkiJFxXZG2VrG0Jm6wjEL7e2Chqkxi05ekAZs91FlE6gRbQ>
+    <xmx:2OrKaCFeTdjKbGHfu9TmGq5e7kDwOj7MwOZ1xagAFJWLyAWfaTHWvw>
+    <xmx:2OrKaKOgGxuplCbJJ7NPH9uw373ge34hnM2tRV9P4iPzVO4z3FOPhw>
+    <xmx:2OrKaJ88vCl-WvQdlO11hAmvVASchl4QNIUWW2PtsnmXolOhuS-G7PL7>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Sep 2025 13:04:46 -0400 (EDT)
+ 17 Sep 2025 13:07:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org,
-  joe.drew@indexexchange.com,  peff@peff.net,  ps@pks.im
-Subject: Re: [PATCH v3 0/4] refs/files: fix issues with git-fetch on
- case-insensitive FS
-In-Reply-To: <CAOLa=ZSBpSyU0V08OBrr-QPrZPsYnO1bTZewESY=C7Jy4NTcWQ@mail.gmail.com>
-	(Karthik Nayak's message of "Wed, 17 Sep 2025 11:24:40 -0400")
-References: <20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-0-35e69bbb507d@gmail.com>
-	<20250913-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v3-0-195569740b57@gmail.com>
-	<xmqqh5x2m5d3.fsf@gitster.g>
-	<CAOLa=ZRvAMq7MNm6=dBneAXdDe6OjQ=NqYA9-Vd7E+nvDWGH0w@mail.gmail.com>
-	<874it1noh2.fsf@iotcl.com>
-	<CAOLa=ZSBpSyU0V08OBrr-QPrZPsYnO1bTZewESY=C7Jy4NTcWQ@mail.gmail.com>
-Date: Wed, 17 Sep 2025 10:04:45 -0700
-Message-ID: <xmqqjz1xc8nm.fsf@gitster.g>
+To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v2 00/18] Introduce rust: In xdiff
+In-Reply-To: <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com> (Ezekiel
+	Newren via GitGitGadget's message of "Wed, 17 Sep 2025 01:16:20
+	+0000")
+References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
+	<pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
+Date: Wed, 17 Sep 2025 10:07:34 -0700
+Message-ID: <xmqqcy7pc8ix.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,33 +88,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->> I've noticed another issue though, at the moment it's possible to create
->> a ref like `refs/heads/foo.Lock`. I can image this gives issue when the
->> remote has `refs/heads/foo` and `refs/heads/foo.Lock` and you pull those
->> in on a case-insensitive FS. Unfortunately I wasn't able to verify this.
->> But anyhow, I don't think that any reason to hold back on this current
->> patch series. I approve.
+> This is a continuation of
+> https://lore.kernel.org/git/pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com/,
+> but I am removing the RFC label.
+
+Continuation meaning that these patches build on top of that earlier
+15-patch series?
+
+> Suggestions on changes that I could make to this series is appreciated.
 >
-> We don't fetch locks from remote. The locking mechanism is simply a
-> construct used to update files locally in race-free manner. Locking a
-> file ensures no other concurrent writes can happen.
+> Changes in v2: High level overview:
+>
+>  * patch 1: cleanup: rename variables that collide with Rust primitive type
+>    names
+>  * patches 2-4: Makefile now produces libgit.a correctly
+>  * patches 5,6: Documentation from Brian and Patrick
+>  * patches 7,8: Introduce Rust
+>  * patches 9-11: github workflows
+>  * patches 12-14: introduce crates build-helper, and cbindgen
+>  * patches 15-18: varint test balloon
+>
+> I would like feed back in two categories: big changes, and little changes.
 
-I am not Toon, but I think Toon meant "foo.Lock" to be a funnily
-named but a valid branch the remote has.
+This seems to also mix in some patches from Patrick's series that
+are already in flight.  What's the intention of the inclusion?  Do
+you expect us to discard Patrick's series and replace with this,
+which would lose some from them and then add more from here?  Your
+"pull request" may target my "master/main" branch, but it needs to
+play well together with other topics in flight that are cooking in
+'next' and also with other topics that are aspiring to be in 'next'.
 
-Doesn't the remote advertise refs/heads/foo and refs/heads/foo.Lock
-in such a case?  And we can ask for both of them.  When updating
-foo, we would locally create "refs/heads/foo.lock" and then rename
-it to refs/heads/foo", right?  I think Toon's point was what happens
-when the fetch of "foo.Lock" from there somehow has completed first.
-Or we can simply fetch foo.Lock branch and then foo branch in a
-separate invocation of "git fetch"---now wouldn't the second
-invocation have trouble creating the lock file foo.lock for foo on
-certain filesystems?
+So I can figure out that these patches are designed to apply cleanly
+on top of Git v2.51.0, I am somewhat lost what you want to do with
+the resulting branch.  Having duplicate commits that happen to do
+the same thing in multiple branches "git" the tool can handle just
+fine, but that certainly is a bad communication among developers
+that we do not want to particularly encourage.
 
-> In-short when you fetch references, the prepare stage of the reference
-> transaction will create the necessary lock files. This locks in the
-> updates with guarantee that no other process can update/create the refs.
-> The commit phase simply removes the lock files post updating the refs.
+Before talking about "big" and "little" changes, do we need to talk
+about the series organization and working well among multiple
+developers?
+
+Thanks.
