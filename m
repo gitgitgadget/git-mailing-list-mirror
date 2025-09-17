@@ -1,193 +1,170 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7756B34BA42
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 22:09:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BDA1A9FBE
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 22:15:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758146956; cv=none; b=JdQrwCGCquHFyqhlaInHGKqy9r8MWyMPS/LmPFrC4sgOUccd1mVgksI2Gg4qCtgoTuSfQi7okmT11Hkh+iT4l8ufEo3Nz0MGDDSbw+web1RoLAeZZtNKIuBlB2FKPdBIYnXD2JqtSB/PpR4to0bTFe6YIjj02dm97ugjmdsfM/c=
+	t=1758147306; cv=none; b=eq2snTVJI/pAg8b3V71HJxF6asP93Ww4lEjoyMTV9SRrCAlc5ga/zmXjT2dknxng1xzjLHyKRcRbI46NU0X9Yw9UQfvFWloXYOj05378QOGHQjj/elvqFeajOEzGDbkSCYWdUzg5uFQXW9WDTvBnThMJBDDv0aGQ5qKkc3fQ2hA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758146956; c=relaxed/simple;
-	bh=FBUyJiy0jp9OmLIWdrrAKaWtmMRbV7WkR8wIP0x+K4Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HZrVyZDQNs5GGC3xqrZFs+7d9WlsBDB06pg06N0hNC4sR/NKw9wLLFENskbtbUOp2A8fEY3+80lPSAGKiZlFIY8CxrIJdjGxqrZRTctoecEBiQPhEflpXg61aVuzak4E3kL35GUkn1xd3lAOaO5pI3N7y6u/is/3Guw//VOX5cI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yf1tnSI0; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758147306; c=relaxed/simple;
+	bh=zoqHT9kz5oBoHw9gt9/lYQlUtizDgx/h52NRRU/01oM=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=dKAteHr+ATAFBdZEcEJJlocj6CEl0+dWE1L3MfR70VdWLgUADuZs1w+AJiWinS1Q5L3lyY34pDYCnPuCscJqZijAz1mQ7hjqFUpWsP7OeSW8+inaA/yWaZYY/zKcGX2YsYbgbkyU68ByASag2k9LjLTBdgSRKRBUsJpy0IjfEI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=nr402AK+; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yf1tnSI0"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-45ddc7d5731so1773375e9.1
-        for <git@vger.kernel.org>; Wed, 17 Sep 2025 15:09:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758146953; x=1758751753; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=u0WKv9eDPIpyBD6HTtQxgon9/pmggG6/zfZrakqfEy0=;
-        b=Yf1tnSI0c5JTqlobiq6xKkythhV3Vm2HGQT4ObIzkepSZkeBdKXRCQUPclo7r08Vuk
-         rCyo4O2IFHfPh7KrzfJSP0qyz5EztB4nCdg9Zc81tFONsYiOLFI4IrwpO7QSOnwHWapg
-         83RU3Mc1j/eYkaTAitxbCtp15KF5cEzL7Exy7xY+Zbxe+xc/JTa21fBo2h4nskKrGclY
-         Lxh6+GBKd07bSyPpE1S+pw8wqK5gciS/c6a2Jn30yme2i78HrADuRA92rZdrhw+Bc0xe
-         cKppsIs6yDkCmmkRiHwTBwko7hiPXTy9anluuHdgaCy2hvOtMItcJFSWtT8rt+0KiQ5m
-         68lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758146953; x=1758751753;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u0WKv9eDPIpyBD6HTtQxgon9/pmggG6/zfZrakqfEy0=;
-        b=bdyFiGrDw9Z020lemnWZsLeqFxGmdyMxH6a56I6XCxgo0pI0p1NkEXcm0BHL7l2Mf6
-         H3+6WLIytY80dKoZmsijCn2j2bEqnkRUBCgLKUEbmVp9aCFNZPu2YJ57TUxRfbLYHWHH
-         go8qiyNdENz94kRtd/DD0pVWI9vIFTTQswqfrmlYeIUvGUJFOI4iPyRU2dfO2HpnbRaG
-         12/Py8EidOWbP85m1978kPF5K31z0s02/31DXQH/HaT2QfIdfkLP1QFTn3byXCu26pjH
-         AwXCi8EpINyjFL+GBz8+LkpSlIPaFQ9vgvlgH8GK/+nrwx15eoXp60YOCbXvyvVGMg3p
-         xErg==
-X-Gm-Message-State: AOJu0Ywzd7zQDcHkGODErMho2eVaMNczV2Q/W6CC92d84E61+e2WzJlw
-	PhCDZ+ZFQ73AXCYlS53Ig3ICKF2e8ZfI+S0GI+744i5rZSwoICnERVop
-X-Gm-Gg: ASbGncvPpmo2YCV8fMUTp/zEbySd4LZFY4j/K0WMVpEzxvqbK07Lr6mjyAVUvZtISu2
-	qvRYmdxJX920Qze1cnidbwX3O3K9VYbbpAQgFT5qJYxXNN3FbWX8iB9Qpu0Gg+pYaxD94rVuKcX
-	qEl42cykgCri8k9QDd8xzGgez5uToNiH3D13SoSCEJLcIH63Rk0kbMUIi/RRHqY7ksErR13b0ZF
-	sv/IoxBg4pDjDMclnT3up7cdfK1Iy45rsFCuZV/itNtKEZTWS12F2cRC4lfe93eJxuW79f+XBpE
-	yYf8/ZlM/2cPnE8JBFKSxLnh47g/ctXTAYYPxrSadsWmQEOb8ItF5EP2loiz/FhuE6wmhxvk6c8
-	Q2vqsQM7yrXh7s54rXVPK5ASJlQVExV7fJ4knUvVoTTBW5AlI+a/hbcc6ooH87Mwav/347mw=
-X-Google-Smtp-Source: AGHT+IEdu6k8nqTnM0LNBYgpROwpriF2NRlAHNKGK4JICzVfvWwByuI3MxQju1EbA0zG0TSr+EcCAg==
-X-Received: by 2002:a05:600c:4451:b0:453:66f:b96e with SMTP id 5b1f17b1804b1-46202a0ed52mr34389285e9.11.1758146952415;
-        Wed, 17 Sep 2025 15:09:12 -0700 (PDT)
-Received: from localhost (84-236-78-104.pool.digikabel.hu. [84.236.78.104])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-464f4f9f345sm13263595e9.11.2025.09.17.15.09.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Sep 2025 15:09:11 -0700 (PDT)
-Date: Thu, 18 Sep 2025 00:09:10 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Christian Brabandt <cb@256bit.org>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v5 7/9] BreakingChanges: announce Rust becoming mandatory
-Message-ID: <aMsxhp6ZO2Cdz7+k@szeder.dev>
-References: <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
- <20250915-b4-pks-rust-breaking-change-v5-7-dc3a32fbb216@pks.im>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="nr402AK+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1758147297; x=1758752097;
+	i=johannes.schindelin@gmx.de;
+	bh=YMiOhkZhxiQFs0HRYgf0kfgX/PoF1qAK6OHJrjU5kqY=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=nr402AK+W/MmgXuXvLEjKKNYYgNgAeKk9WH+SXGPIYRBGwfIMA6YYLLQAgkn5BFa
+	 BIhkFChI/G7Bf/AA4X6kmnEY6resHqsQJV9iVGW5zyPf0VGR00yQLCIVcDh/QbjHY
+	 OBtayh0LSgqH/tjm3DFVw9OCHhIN/zOlqgqtIXHytX6dQwENAKpOIk8+KuesBkHji
+	 /JTRbNb4fFzv/129vH1CcmGAf8F2bOQRGE9mizfps7xL06C3P6TrTZ0giGVeZpHvO
+	 P5dErreHhkZeiPuNd/xo5NusZicBZNRvUDl+O4o2oKLBne8KkoIT8NQ5DHkiK3Lm5
+	 kD/bqCFW2fZ/1WtqnA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.213.210]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MHXBp-1vBsae2KOX-00E5AZ; Thu, 18
+ Sep 2025 00:14:57 +0200
+Date: Thu, 18 Sep 2025 00:14:57 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: Greg Hurrell via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org, Greg Hurrell <greg.hurrell@datadoghq.com>
+Subject: Re: [PATCH] mailmap: consolidate multiple addresses into one
+In-Reply-To: <xmqqldmubtnu.fsf@gitster.g>
+Message-ID: <4d47677c-787e-59ca-84f8-5ebf59947b0c@gmx.de>
+References: <pull.1966.git.1756816258606.gitgitgadget@gmail.com> <xmqqldmubtnu.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250915-b4-pks-rust-breaking-change-v5-7-dc3a32fbb216@pks.im>
+Content-Type: multipart/mixed; boundary="8323328-752272834-1758147297=:25409"
+X-Provags-ID: V03:K1:G415Fq7Vmag7wGv6nJEJ+vuKu3GWSqINbiZurqSvrAheJ/sONug
+ nyW+eQbcWPE/rw1PVvSbE7C4ZVp2gTMaeNjTvKb8/VoNHIoEolYNAFN3EBzZ+NpM6Q1N54a
+ K6WhqGJPISx6DW84H0AQK91Y2AUlSfi8pjGK3yEk4OSHck6LOK4NeEvJvJZE4iMNu5N2Flk
+ E5a6ftyLlF+MBkrQOpmng==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:s90y3pzUPVY=;s2W8gzKZS/dBBktHXOaI0Bd40Aj
+ 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
 
-On Mon, Sep 15, 2025 at 01:22:54PM +0200, Patrick Steinhardt wrote:
-> Over the last couple of years the appetite for bringing Rust into the
-> codebase has grown significantly across the developer base. Introducing
-> Rust is a major change though and has ramifications for the whole
-> ecosystem:
-> 
->   - Some platforms have a Rust toolchain available, but have not yet
->     integrated it into their build infrastructure.
-> 
->   - Some platforms don't have any support for Rust at all.
-> 
->   - Some platforms may have to figure out how to fit Rust into their
->     bootstrapping sequence.
-> 
-> Due to this, and given that Git is a critical piece of infrastructure
-> for the whole industry, we cannot just introduce such a heavyweight
-> dependency without doing our due diligence.
-> 
-> Instead, preceding commits have introduced a test balloon into our build
-> infrastructure that convert one tiny subsystem to use Rust. For now,
-> using Rust to build that subsystem is entirely optional -- if no Rust
-> support is available, we continue to use the C implementation. This test
-> balloon has the intention to give distributions time and let them ease
-> into our adoption of Rust.
-> 
-> Having multiple implementations of the same subsystem is not sustainable
-> though, and the plan is to eventually be able to use Rust freely all
-> across our codebase. As such, there is the intent to make Rust become a
-> mandatory part of our build process.
-> 
-> Add an announcement to our breaking changes that Rust will become
-> mandatory in Git 3.0. A (very careful and non-binding) estimate might be
-> that this major release might be released in the second half of next
-> year, which should give distributors enough time to prepare for the
-> change.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  Documentation/BreakingChanges.adoc | 38 ++++++++++++++++++++++++++++++++++++++
->  1 file changed, 38 insertions(+)
-> 
-> diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
-> index f8d2eba061..0512411030 100644
-> --- a/Documentation/BreakingChanges.adoc
-> +++ b/Documentation/BreakingChanges.adoc
-> @@ -165,6 +165,44 @@ A prerequisite for this change is that the ecosystem is ready to support the
->  "reftable" format. Most importantly, alternative implementations of Git like
->  JGit, libgit2 and Gitoxide need to support it.
->  
-> +* Git will require Rust as a mandatory part of the build process. While Git
-> +  already started to adopt Rust in Git 2.52, all parts written in Rust are
-> +  optional for the time being. This includes:
-> ++
-> +  ** Subsystems that have an alternative implementation in Rust to test
-> +     interoperability between our C and Rust codebase.
-> +  ** Newly written features that are not mission critical for a fully functional
-> +     Git client.
-> ++
-> +These changes are meant as test balloons to allow distributors of Git to prepare
-> +for Rust becoming a mandatory part of the build process. There will be multiple
-> +milestones for the introduction of Rust:
-> ++
-> +--
-> +1. Initially, with Git 2.52, support for Rust will be auto-detected by Meson and
-> +   disabled in our Makefile so that the project can sort out the initial
-> +   infrastructure.
-> +2. In Git 2.53, both build systems will default-enable support for Rust.
-> +   Consequently, builds will break by default if Rust is not available on the
-> +   build host. The use of Rust can still be explicitly disabled via build
-> +   flags.
-> +3. In Git 3.0, the build options will be removed and support for Rust is
-> +   mandatory.
-> +--
-> ++
-> +You can explicitly ask both Meson and our Makefile-based system to enable Rust
-> +by saying `meson configure -Drust=enabled` and `make WITH_RUST=YesPlease`,
-> +respectively.
-> ++
-> +The Git project will declare the last version before Git 3.0 to be a long-term
-> +support release. This long-term release will receive important bug fixes for at
-> +least four release cycles and security fixes for six release cycles. The Git
-> +project will hand over maintainership of the long-term release to distributors
-> +in case they need to extend the life of that long-term release even further. In
-> +that case, the backporting process will be handled by these distributors, but
-> +the backported patches will be reviewed on the mailing list and pulled in by the
-> +Git maintainer.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Providing an LTS release for those platforms that can't jump on the
-Rust bandwagon is great, but...
+--8323328-752272834-1758147297=:25409
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Git 3.0 will switch the default hash algorithm for newly initialized
-repositories to SHA-256, which, presumably, will also encourage SHA-1
--> SHA-256 migrations in existing repositories.  Alas, it appears that
-the SHA-1/SHA-256 interop feature will only be available in Rust.
+Hi,
 
-How will this affect those platforms without Rust?  What will and
-won't work on such platforms?
+On Wed, 3 Sep 2025, Junio C Hamano wrote:
 
-I think it should be called out explicitly in the justification that
-whatever limitations this imposes on those platforms with respect to
-hash function transition, the project has duly considered that and is
-OK with it.
+> "Greg Hurrell via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>=20
+> > From: Greg Hurrell <greg.hurrell@datadoghq.com>
+> >
+> > Merges contributions made from three different addresses:
+> >
+> > - win@wincent.com (old address, initial contributions in 2007=E2=80=93=
+2009)
+> > - greg@hurrell.net (personal address matching full name, so this one i=
+s
+> >   the "forever" address; contributions made starting in 2018)
+> > - greg.hurrell@datadoghq.com (current work address, used for recent
+> >   contributions)
+>=20
+> Consolidating to a single "forever" address is good.
+>=20
+> It is a bit hard for us to convince ourselves that Wincent Colaiuta
+> and Greg Hurrel are the same person, though.  The only way I can
+> think of offhand is to leave this message in the mailing list
+> briefly and see if a different Wincent comes and complains ;-)
 
+I can vouch for Greg, having worked with him during our mutual time at
+GitHub that I greatly enjoyed, and can say with conviction that his GitHub
+handle @wincent corresponds to the name Wincent Colaiuta.
+
+I can also guarantee that you will enjoy hearing the story behind it,
+although it might require you to buy Greg/Wincent a beer or two (which I
+guarantee you won't regret, either).
+
+Ciao,
+Johannes
+
+--8323328-752272834-1758147297=:25409--
