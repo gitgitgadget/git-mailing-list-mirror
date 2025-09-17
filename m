@@ -1,157 +1,154 @@
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48072EB5C4
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 14:30:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D627C284888
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 14:32:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758119425; cv=none; b=iBeTWnkXenQpFNdOp86C8YT21OyF4kX60SmLAa+zgLhC9NgSta99OnfBb4mKApW6qqwa0ngv07JRjVrqzAaPhmqqm0szKnfyFcQVfx7DYxQY5TO0RrXcKYeezwItQegh9YhNYdmDDEYIu51XNeoLabVBsXzSP672n1vG+Tth6a8=
+	t=1758119578; cv=none; b=Spg850gSP/k/O3pUXOuZJpsrZcVIL8zlumnELRniIzXP6osTJ2FEDqCcaVkTYUysv+BFjKe+5XST9vdK6U3b9JaX6CcMSlzxW0GPAVv349RRBChMMQVv6Qctd32g71BWEEFyoUN6Kz7dNaaKloRw2zFF/NRETLwg16dEoXuA5PE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758119425; c=relaxed/simple;
-	bh=4dQI173DCVWUIcx4xyserPhSqqSO1jOGmlaODG7I9uQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d+LiCaVrx9SlZq5Rnk96A6Efv0BWGTfKetmKRUZhRw2ux98MBL0NrIw0s+dZC2+louiDdC7DLK2Y+4vCFFYws8af3TiXU++yOVlTVxbbhrH2kzsidqTWfFt58DEjPKko55QYmH+JfdzvuCo5pntpse04lb+lKEM/HxXy88q9fGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ilbE25tT; arc=none smtp.client-ip=209.85.161.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758119578; c=relaxed/simple;
+	bh=ruXaHskWwQ0nPMcP+/IBSPFDDEt/ZsiOoW5e07xHCEY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Q7Ij9ATIqF62w9tl4hakjHSRxGipIh2yY9oiLv95uDqfNgd9l6CqybOVKNKZaoWo4NBlHCkzgVLP9RSp8/RnBHZyG8t8w7J/6t1b/vdz+F+kLvoqQYonFfXzR8TsnXUyDw47jN5HBobAW91lI50EFsWEYqeTLJIjmChe80t+YxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=0saAiA/E; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zlh2y1EV; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ilbE25tT"
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-61bf9ef4cc0so4524595eaf.0
-        for <git@vger.kernel.org>; Wed, 17 Sep 2025 07:30:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758119423; x=1758724223; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HZmF603WBcft1kvmgdi8cWB07f68iinYmvj2J72RFFA=;
-        b=ilbE25tTrkmiCz18xX+G3s7Ac4tuXec/WxSI85tMuKv4xcsjwMCbA7J2j2AuscQwtQ
-         gQrd5xMm5hnrf5vXIZO5aX9hlE1bJXE7TU+CRzSL+MQVH0ca7vhR2CIrpx8lTlREhW+2
-         G6xpTQHaOG/zL3rLTvfQvIEtkHbCbPngxuXQABBqpMpev+EomqL4Xx7ElfmrupPgCjUj
-         6kkWSlapPmo13En1rmF0u3Fq8rBA25MAVC2R3OdmP3Vqo4oLapIyyd1ra4E4otIgrfnX
-         XSG5KIS01XMg1o6huIL5P8ndbINw6mXwqQqeO5rBokKJbRZTpu4CGKki9fE8SLv67TER
-         HETA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758119423; x=1758724223;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HZmF603WBcft1kvmgdi8cWB07f68iinYmvj2J72RFFA=;
-        b=n+EDidB4T70Tm4qX0vqOnO0ZAeNvaW/j4fWFXbC3J1EHPdKRAvpgxBcFOXFf1ppJ3d
-         Q25xdirjC7eDu0J4T8/kfvUC3KCxgEkpMuCAA4rJfFwksPBztTNiwKMsrt+UUYR/97p0
-         cnqGdjYP+u+/eSycdNfREiaaKv1HCP6bn5N0k8Gn231sGYHhZ9skVCg/4VeTO0rfQBA/
-         QyZ2+Cw70IrWaCZWjEgoc/oMcocjtGCt/UGok5rWYsJX7DQDvC7ZfQa8wrIY8fEuH8qQ
-         log7NFSo4NlO0zO23NucxeSeZtRtb6OwZvTVLndA/TBhI2XZoGCDXl7iWj1Ilfsa9hZs
-         o/nQ==
-X-Gm-Message-State: AOJu0Yzn7FUkY5rPEk8ZSZ0BwYjEdpFUd5XxorV+89UqickVfM+f+o7r
-	ba7VpNFUUVdHmNvEuemOMhOK9OXKOmhWgj0LUjRQxy+W4eJ/yvzfLIwk/pg6KA==
-X-Gm-Gg: ASbGncvFYbdRqe6X+ceyOAaUoM+XvHn5mJmBsGEWZE/lfOgnid1QxTlb+kXm2oJrrPY
-	CJQRNVriAI1oTyABBIVF5T3ozxS2SM7EgNeS0MJSRS1ecJ1G/qKkMF2mD+AE/B9z6+Rs0L9E84R
-	nSOoCls4wEb+zCJA/ddDdlBSCRFaF5Lz01MgYZygyJicz/2VzmDnNb3JGTJ7MJDTLiqqjBHzCyK
-	11RNuXhXDPEv6Jdl3t2Gas6INDo9rpYzOAdo2ixbXP7nY3WzinRKAGgnOGvLEbmU5Pxrn9Vtwim
-	7nNWcn0cK1Nx2mD1G2YHuO5anjf6MdAu2rnHh2oyoiKzwiuSyXmUIs73f8qRSWxtvCXLS7PCtZn
-	pU9kTbLAnTKbvK0t0
-X-Google-Smtp-Source: AGHT+IFlPXea9dw5MLUyD1GbSOfO7BvVX9rW7M6pH4Yo31iPXb8KujXaNKL8kDlnfwySksKumst4yg==
-X-Received: by 2002:a05:6820:1607:b0:621:b76e:66b9 with SMTP id 006d021491bc7-624a5698d34mr1267500eaf.3.1758119422716;
-        Wed, 17 Sep 2025 07:30:22 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-621b7bf6142sm2432258eaf.9.2025.09.17.07.30.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Sep 2025 07:30:22 -0700 (PDT)
-Date: Wed, 17 Sep 2025 09:30:21 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] bundle-uri: do not abort on invalid packet line
-Message-ID: <6q43ph3zhkbdrumr3zmamv3stknuteik56uds2523dih26hrgs@7de2agm7as3a>
-References: <20250912-b4-toon-bundle-uri-no-uri-v1-0-f4525a406df8@iotcl.com>
- <20250912-b4-toon-bundle-uri-no-uri-v1-2-f4525a406df8@iotcl.com>
- <yqyn5w6oq47lhrcbuziip5tajzrpylirswr5kyfyu35n3k7vgj@jn4rc7cwqwow>
- <878qido4is.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="0saAiA/E";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zlh2y1EV"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id F05EFEC01D4;
+	Wed, 17 Sep 2025 10:32:54 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 17 Sep 2025 10:32:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758119574; x=1758205974; bh=pkYWilPLLL
+	bKCTiT5PASjXa1+2rdKNE906OuAAvnf1c=; b=0saAiA/E5mKENPwDDm7/BbkqFD
+	9grWVw3LV4B2xKYh/+U364vaJaSMuyVNkaubUyfkRqB8827+fvS/m7KsEY6ItMee
+	1UEWwy/8Y06b5SF8HuNljhgof0UR3tAEOsHV/rr2l80PzQbEWZFBKIUy6EZl6oAh
+	YPtsF4XufgYO0Idu480WlQ23ayFnC2p4yVz4wkhavEZe79nrGg3oPN5D0RDJQLJi
+	KJHfC0+/GlApRAcxbPZIibipdJr0HCg4bPhHcrgnff8hy+DOnxz/SlyMwbkT1d2L
+	1yoYF3ovo7x706QeobV5WOc/36N1z1R6wy5b2XK1VLd4TKykT3re25BtoBFw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758119574; x=1758205974; bh=pkYWilPLLLbKCTiT5PASjXa1+2rdKNE906O
+	uAAvnf1c=; b=Zlh2y1EV1nCWtT+nT+jHFXs4t+qUyArbeqFi6hAuMqnGATYyVRV
+	iY5gzVxbW728dy0srUVyXIEZqGarQ37rLMfWxTlNckjTGWrcBYy9kg1l4fFjus8q
+	5r6u2axy5lLgdI5NIAjow/ONmc173e93qU2MF5zkgAmHEHDVNwz99IETEftpGQBw
+	H9BuPQ6LMp9nMXbebyS74tkuwPUN2RsYAqk6GWUF83FrnBkslpEUus6YW97oTU/W
+	H4ur/ukad0gkT578RmTxnKq3xSwu0BsX2nmAElGqBp2iNXrrueTOmP9E1TCdWIGt
+	2kJglYZbQS5K96OJxZmbMfWXbflqpBsSXeg==
+X-ME-Sender: <xms:lsbKaFPbgp9xVVAwzp7Oz7w2GKG962ktu5_SCouNLqo2lSYNmL2bdg>
+    <xme:lsbKaDeHWkl0_mcdNNw3r5eluisumlTk3dqwYlWeGftGuJMDEKxPhTAVQnXyHUTLk
+    IJ82fPNNpCwtemSfQ>
+X-ME-Received: <xmr:lsbKaKsmXG_9AvFRkGoAc11W1w9IPwD-eVHC1fb-xDVjK0CNQhlvfcQt7NWwrwwnJYR2Bd_fzSxOL7maeC0b6iidVX1_q9lyXMus3F0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegfeejtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtoh
+    hmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegviigvkh
+    hivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:lsbKaMnVs1lT-sRXDcCLpD4ZwO2fdinQjS-6fOH5Gz6EkM0NHXJJZg>
+    <xmx:lsbKaEz27Cod7tDzRVPUkXwJwvw2vgyczhIkYTPfIR5H5eqcsXRhFQ>
+    <xmx:lsbKaGNudnhWSKuHshxb6nrxuopbHx0yTY431WnebKxxqwNXq8VizA>
+    <xmx:lsbKaIozT0a6D9OmUVSM1hOyvOAn2jnAYHj4C_qa_zXmaehWu-_v5A>
+    <xmx:lsbKaA7nxMf-rb8sH4K6ETRum3_43EjIWNeamUQ22R7Ji8d-JpBqp2I9>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 17 Sep 2025 10:32:54 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v2 01/18] cleanup: rename variables that collide with
+ Rust primitive type names
+In-Reply-To: <CAPig+cQqKCbGpfp=ppmjKEOe+sDRu6BocDfenzqvQJHSMiKDHQ@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 17 Sep 2025 03:42:56 -0400")
+References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
+	<pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
+	<5f77f1bd5d986dc1f8d123919af24dd219e323e8.1758071798.git.gitgitgadget@gmail.com>
+	<CAPig+cQqKCbGpfp=ppmjKEOe+sDRu6BocDfenzqvQJHSMiKDHQ@mail.gmail.com>
+Date: Wed, 17 Sep 2025 07:32:53 -0700
+Message-ID: <xmqqa52tgne2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <878qido4is.fsf@iotcl.com>
+Content-Type: text/plain
 
-On 25/09/17 10:40AM, Toon Claes wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
-> 
-> > If the server is misconfigured, I wonder if it should
-> > instead handle this issue by not sending the invalid bundle-uri in the
-> > first place and printing a warning message on the server-side. From
-> > client perspective, if it's a server-side issue there may not be much
-> > they can do about the error and it could cause some confusion.
-> 
-> I can include a server-side fix in this series as well, but that doesn't
-> hold back there might be servers out there in the field that don't have
-> that fix and still serve invalid data. I think ideally we should fix it
-> on both sides.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-From my perspective, a server-side fix is the most important as it
-addresses the root of the problem. That is, a remote Git server with
-misconfigured bundle-uri is communicating with a client in an invalid
-manner.
+> Same comment applies to the other renamed variables...
+>
+>> -               OPT_UNSIGNED(0, "u16", &u16, "get a 16 bit unsigned integer"),
+>> +               OPT_UNSIGNED(0, "u16", &u16_, "get a 16 bit unsigned integer"),
+>
+> ... though with some of them, such as this one, it is admittedly more
+> difficult to come up with a better name since the original name is
+> already meaningful.
 
-We could address this by updating the client to simply ignore the
-miscommunicating server. I'm hesitant though because this feels like a
-slightly different class of issue here being that, from my
-understanding, the server is not correctly negotiating the capability
-with the client. Maybe it is fine though for clients to ignore errors in
-this process?
+On top of that, just like a name that begins with an underscore is
+reserved by C standard, a name taht ends with an underscore is used
+for specific purposes by convention in this project.
 
-I think I would be more inclined to agree with a client-side fix if the
-issue was more pronounced in practice. From my understanding, for this
-to occur:
+Typically 'foo_' appears as a parameter to a function, whose type is
+specified with our interhal API, and when that type is cumbersome to
+work with, we have a local equivalent 'foo' of a more appropriate
+type whose value is populated from 'foo_' before being used, and use
+of 'foo' thanks to its better type is more ergonomic.
 
-  1. A remote Git server must be advertising bundle-uri.
-  2. The bundle-uri must be misconfigured on the server-side.
-  3. The client must request the bundle-uri from the server via
-  transfer.bundleURI.
+    static int compare_pt(const void *a_, const void *b_)
+    {
+            struct possible_tag *a = (struct possible_tag *)a_;
+            struct possible_tag *b = (struct possible_tag *)b_;
+            if (a->depth != b->depth)
+                    return a->depth - b->depth;
+            if (a->found_order != b->found_order)
+                    return a->found_order - b->found_order;
+            return 0;
+    }
 
-A user can workaround this problem simply by disabling bundle-uri.
-I suspect there are not many users in this situation though.
+    static int path_is_beyond_symlink(struct apply_state *state, const char *name_)
+    {
+            int ret;
+            struct strbuf name = STRBUF_INIT;
 
-> >> Signed-off-by: Toon Claes <toon@iotcl.com>
-> >> ---
-> >>  connect.c                   |  4 ++--
-> >>  t/t5558-clone-bundle-uri.sh | 25 +++++++++++++++++++++++++
-> >>  2 files changed, 27 insertions(+), 2 deletions(-)
-> >> 
-> >> diff --git a/connect.c b/connect.c
-> >> index 8352b71faf..d2e2bd8cce 100644
-> >> --- a/connect.c
-> >> +++ b/connect.c
-> >> @@ -536,8 +536,8 @@ int get_remote_bundle_uri(int fd_out, struct packet_reader *reader,
-> >>  		if (!bundle_uri_parse_line(bundles, line))
-> >>  			continue;
-> >>  
-> >> -		return error(_("error on bundle-uri response line %d: %s"),
-> >> -			     line_nr, line);
-> >> +		warning(_("ignore invalid bundle-uri response line %d: %s"),
-> >> +			    line_nr, line);
-> >
-> > If I'm understanding correctly, an error here indicates some sort of
-> > issue between the client and remote Git server while figuring out the
-> > bundle-uri capability.
-> 
-> 
-> > I think it is reasonable for the client to always
-> > expect the server to communicate in a way it understands and IMO should
-> > probably be handled by fixing the server-side instead.
-> 
-> Ideally yes, but broken servers exist now. Having clients deal with it
-> properly is anyway advised in my opinion.
+            assert(*name_ != '\0');
+            strbuf_addstr(&name, name_);
+            ret = path_is_beyond_symlink_1(state, &name);
+            strbuf_release(&name);
 
-Another benefit of addressing this on the server-side is that it should
-transparently fix the issue for clients. I would like to think server
-providers using the bundle-uri feature would be more inclined than
-clients to update quickly and address the problem. Regardless, I still
-think the issue is niche enough not to be a huge problem for clients.
+            return ret;
+    }
 
-IMO, I think a server-side fix should come first. If this step isn't
-enough, then it may make sense to also address it on the client side.
+are examples.
 
--Justin
+There are existing crappy code that uses foo_ without corresponding foo;
+we should clean them up, not emulating or spreading the pattern.
+
+By the way, in this partcular case, why not use "uint16_t u16"?
+
+Isn't the true cause of the trouble the (I might say "misguided")
+desire to use "u16" as a type in C code?  As long as we all agree
+that the data that can be passed across the ffi barrier should be of
+the types of known size, and let C side use uint(8|16|32|64)_t and
+Rust side use u(8|16|32|64) consistently, we do not need to have
+this "cleanup", do we?
+
+Thanks.
