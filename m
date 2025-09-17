@@ -1,131 +1,120 @@
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB222868AF
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 21:26:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2402AEFD
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 21:33:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758144416; cv=none; b=N0SSB/JbtK9DSgI+++ZAXrezrrI9REKGfPJGsiFFsJTF4YZfWh1Uf1ZU5TWQ5LxHqC3EC8vy8qITv9D0yzqFraie8heUlmOj0RjKD0uFzK4tHSvkflKhCGNtZ9fMixs4N/KUitTjlIouij5P/2obsf6FyKQgi1A+kCMQKH/JQIM=
+	t=1758144820; cv=none; b=Qf9pcfo2uJ+NEF9LzK8w9oXYm6dz0K3ZuMxwiYl6+CdWxj4G5sBOfvB9DgvuDEqqke3jBwvWjSpZ6FRe4Dgh4eLye2Kt8b45dS8cBCfKN9RhTemOwC6mrVpywpbzDYPwn49CrE9f4VzFE+8URZZsEoYShPefi0gJFkbbfVnWLhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758144416; c=relaxed/simple;
-	bh=svmoOhqdqzPiZ5/I8/Kk5nGEikrdHkBBPGf3gEVvORI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X1/ArZzry16cJcCqQfuAWBDQPfxi694oTkXMnRAFS/KZG47vEAaTSHIC003SStnKF2tNVD8YJqM4NAWoQhlWTQwhaLNGlJl1z+DYom9cnNiSC7RJndd/HJIQUoYIj8MHKDx4icGN0DJ+hDbIADsesZSbqqtmz16nmQPEl72HXpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FkUiBNrc; arc=none smtp.client-ip=209.85.160.54
+	s=arc-20240116; t=1758144820; c=relaxed/simple;
+	bh=yxat3McZH8Ur1eYvU2MIY2E5wYsD1Gnr+Wvu8FTVAdo=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ixl5/6TKcUyhQKbVID0osQJ1W0p/+xzifrK+uqvxpoE3oh1VM2kTcZYNANEY8kPoHclkU1ObZHVwUxr/ixN/u+QrxvA0xqHrwU+gC0TA4DrJj4ijZCIN+0ePamUaxRK6F1IBZm5tDhOtMI8kGfG4gi0beaBbesozNeTKnRSINXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MQeq0HL9; arc=none smtp.client-ip=209.85.166.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FkUiBNrc"
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-30ccec59b4bso172541fac.3
-        for <git@vger.kernel.org>; Wed, 17 Sep 2025 14:26:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MQeq0HL9"
+Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-4234e6c0762so1087685ab.3
+        for <git@vger.kernel.org>; Wed, 17 Sep 2025 14:33:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758144414; x=1758749214; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=J0Z4+yyKe/6SXVGFGXZlUp+j3F1XZnomEz87S5lr5sE=;
-        b=FkUiBNrcpYhMAQLlOXeegnhh1UUFPNvDqXox8yXg6j09BN55ffpEbORaOWvzLgY9ss
-         FLPiesRVyfkSeIWP909PLmSJ21Yc+uC48nRfd2fVaF4TCkkixOBEx2MSVjzKeVbqVb1r
-         XOnB66S8C2vOjHlxVgjWgQnX3wulYzS6DNnTlK4bP/Mp65hHZql6vYFoJGf5rJdWgyB2
-         wzJsWtuw3APGt5t3iZpb6xnyerR53gnuSvrDVfvcUaiTgy94nQBW0YuzjEXNlH19a3ZO
-         nH4bYtnKBqHhaxfrYRiDOWYY0NbFWYTQe6slcfHIMbBlEZ87Syk2bgj4lCPEAlUnIn2R
-         ZF8g==
+        d=gmail.com; s=20230601; t=1758144817; x=1758749617; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=5/aAJxcnclp+efder/xzrCXlNg7MIGRy4qOgD9Ff+jI=;
+        b=MQeq0HL9ONg+zx5GOyH62yaDhw7hHJnOAsyvgB4P0Lzkl02OQMvZV20so14l00CD/j
+         zzOa4QcVB51E5InV8gQtoBMA3Ctkj272zEBvi0E33cmoZuFGhGaQaBFG4/FCc6ZKLq/8
+         9zq0+HlG7Anz3QsveRS3WWu92Wf0VYwXYHMDcO10kkBAKLbNhsQWmGEWSKFUASdhi9vT
+         NS0sUlpq4A+rC0flWDsy2GjIdzyz1VtS7kmepzcjzHeCOANdrQYpqQuf7rV7KZMIEtT/
+         dXPLn+vavx1NClEp0KYmJzbIMr5/YYK7z7UAtageN6bZSPGefGONoq5xhyMc1ZDOLqqC
+         r2rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758144414; x=1758749214;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=J0Z4+yyKe/6SXVGFGXZlUp+j3F1XZnomEz87S5lr5sE=;
-        b=wbTdNDE/8VW7OGlh2j2DIz4+TGyxIyg/OHOVwU0pCNgnsD/6pZMDblrH0W9swZ31sD
-         bqQ+G/fu6EXDmyfpYRnODtqkdeMDTFYsqCeoNT0CHNa3o0yAM24bN5D6UE+sXx6V/iL2
-         tzx48TCgrtbwX/x8sjasytD/lBwT3FvKXIYyUC2XWmYYtVLhHxdPmvWJmxL9Fd/PPX97
-         r9D1n7iAG5+43pkDMukezxINdynqQqoiKAVPDr8EEG5mwGgPS9HYZU0NfwAM5yXawVdL
-         /syWr8FaAyllAbVgcbeSwtnJCyjiDv5+DrIgcOJsaY++QqLxvRTwKSXRMz8vfnWMp3U4
-         WwGg==
-X-Gm-Message-State: AOJu0YwjwtCJ6Ozf6DnBhvaXQ00cEs6ByRMtqmVtHOazfRcxowHwhXyl
-	LTtjfHp9B86yKctvXymCIh6TgFD+yAY7MrcTaefAznYQB45PdKmsXE+d
-X-Gm-Gg: ASbGncuP34adPMg7wd62CUld+z5rvyArKGh5vuR+u6cygb4MLPfHIZnqOpgieUlJu1r
-	OEvTWesN4Ws12S9HuSCxRTXYTKtkgoVPKTCw5N02KizFLWGFPvR9MPjYROC4IOSrhVOEyRruxZd
-	UjsKK+QjqWseXEoPFSB5L+/VZCvejwmhhl7u8YhoZldzIy1V18t6Pfd9SXX3i48D05VOjFim0ud
-	N79YXMZAzoPBkZDj5QGFzmQ3VB86BeowN3mPpSOAePDAHVFWPmvsyfaMDmI2abp5sMfnDFThaSF
-	mUnIIrcVm85SSfRh1w6ioQL1rWNi7nu4tP5vh16u1tg1N7Qb94AlRtEy+/5FhRcew0LKqUTkdLt
-	vPQZegGUqzkx0uYgFbsiLSC7kw1Brlqo5t2U=
-X-Google-Smtp-Source: AGHT+IHxT8QZXPaXjBaNoQQoMslp9o2mpvX19bTrRZ1d6dzP5SKSNQOBi0E7aJuOFpfZD3PzmrjYyw==
-X-Received: by 2002:a05:6870:55d3:b0:321:7bd4:963d with SMTP id 586e51a60fabf-335beedc46amr2200976fac.14.1758144413695;
-        Wed, 17 Sep 2025 14:26:53 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-7691946549esm272834a34.8.2025.09.17.14.26.52
+        d=1e100.net; s=20230601; t=1758144817; x=1758749617;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5/aAJxcnclp+efder/xzrCXlNg7MIGRy4qOgD9Ff+jI=;
+        b=c2DqNG1wah1JQZLQIJmAY8CYxKzO/p56L2kRVoEZBuQ2mKOP9pBbypcPCVIVFoU7h8
+         Uv/FJw5z91mqs9Rnogo4NiG+F45BNG5J3J81IGxUTUHdkohVAo9/3uIW628pdZc6LkkL
+         cWfVTdthheqxcYvYSzvuDK08ZaRzVL5JX/4uw9u/FXHPW8HpMhFefjUpFd9Vsv8MhD8o
+         E747DR9JSIQdIJ/QxKyFZhrPnn7XsO+R/YQg21wc5vkPp2INgjyHfC2n6y1auZ0L/ht4
+         Ixjw1caM2Ggq5lNuQ2Yfyt6D7J1FEZ5FCWdpxznBYs9YdkKPa96xLwAtSkEKQvbxrJWz
+         E3tA==
+X-Gm-Message-State: AOJu0YwMHcT/0yuUaUiylugiCj/jcyf1ptTUZ+MS/7nHDOEcRlWaO7nP
+	oeivS6yicVtZe+//rQFNzAZH56PsddQOjkK3nVC+NVDyvnKye9Lnej42aet1nA==
+X-Gm-Gg: ASbGncsiXrI+CUNYOjs6fQubkTSEYPW94AAn5/N4gcrXW9ltPfIP5QhDBv0ayrUUeVd
+	ZmdHvhmq7m8hBHFUDnfVV6toQB5obArdjMAbHIB61bZYKxtR9tt/iWQWLQUj0zjiqYCRAyA5gCd
+	X99dH9Sp/Qku9xh9fjwzu2Q8B2Ht3gJPspg+aJE2dkN7+EfH2l9+bbojYE9k2P+0f4IXNiyOlrw
+	uOlMD9ePajLM/zQ8PQ1YldCyQ5k5gaOZm38NPnCQcDja7LAMOUBgWm1w6Ji/rfWJnEKqLYk6iyC
+	D0sebEstOoH0zZWuQFiSDEYnsvDDmmstwr6kAV9B3qEdDqMrIMM2SijfG+AJpEHyxn0R3XGulZW
+	jJHH0D+b9sYIrfQXUObvkJvEOimx+fDrABIeRkM62aLLSIlIaDwtYfqI=
+X-Google-Smtp-Source: AGHT+IFk3ZGidTD0qN4svEoiBMWJe3eZ6GDUI0do+CyHNG4y+D0ZEr2tya6FJUQ2F+PnUqKxWhvIaA==
+X-Received: by 2002:a05:6e02:b44:b0:412:fa25:dd54 with SMTP id e9e14a558f8ab-4241a4f028cmr57152985ab.14.1758144817262;
+        Wed, 17 Sep 2025 14:33:37 -0700 (PDT)
+Received: from [127.0.0.1] ([64.236.133.184])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-53d50aa6538sm193916173.51.2025.09.17.14.33.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Sep 2025 14:26:53 -0700 (PDT)
-Date: Wed, 17 Sep 2025 16:26:52 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
-	Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 01/15] packfile: introduce a new `struct
- packfile_store`
-Message-ID: <hez25mocjub4zswsptv4j5etgygavllfai6zb6h2tdln2xhmo6@kjvvzrbjmilc>
-References: <20250915-b4-pks-packfiles-store-v5-0-d6340350934f@pks.im>
- <20250915-b4-pks-packfiles-store-v5-1-d6340350934f@pks.im>
+        Wed, 17 Sep 2025 14:33:36 -0700 (PDT)
+Message-Id: <pull.1973.git.1758144815.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 17 Sep 2025 21:33:33 +0000
+Subject: [PATCH 0/2] doc: git-push: clarify section
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250915-b4-pks-packfiles-store-v5-1-d6340350934f@pks.im>
+To: git@vger.kernel.org
+Cc: Julia Evans <julia@jvns.ca>
 
-On 25/09/15 10:54AM, Patrick Steinhardt wrote:
-> Information about a object database's packfiles is currently distributed
+This is a continuation of the changes to git push, from
+https://lore.kernel.org/git/pull.1964.git.1756240823.gitgitgadget@gmail.com/
+. These changes to the refspec section got kind of big so I'm moving them
+into a separate topic.
 
-s/a object/an object/
+Since the last review, the main change is to move the rules for pushing out
+of the section and into their own section ("PUSH RULES") so that it can be
+easily referenced from other places in the man page.
 
-> across two different structures:
-> 
->   - `struct packed_git` contains the `next` pointer as well as the
->     `mru_head`, both of which serve to store the list of packfiles.
-> 
->   - `struct object_database` contains several fields that relate to the
->     packfiles.
-> 
-> So we don't really have a central data structure that tracks our
-> packfiles, and consequently responsibilities aren't always clear cut.
-> A consequence for the upcoming pluggable object databases is that this
-> makes it very hard to move management of packfiles from the object
-> database level down into the object database source.
-> 
-> Introduce a new `struct packfile_store` which is about to become the
-> single source of truth for managing packfiles. Right now this data
-> structure doesn't yet contain anything, but in subsequent patches we
-> will move all data structures that relate to packfiles and that are
-> currently contained in `struct object_database` into this new home.
-> 
-> Note that this is only a first step: most importantly, we won't (yet)
-> move the `struct packed_git::next` pointer around. This will happen in a
-> subsequent patch series though so that `struct packed_git` will really
-> only host information about the specific packfile it represents.
-> 
-> Further note that the new structure still sits at the wrong level at the
-> end of this patch series: as mentioned, it should eventually sit at the
-> level of the object database source, not at the object database level.
-> But introducing the packfile store now already makes it way easier to
-> eventually push down the now-selfcontained data structure by one level.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-[snip]
-> @@ -91,6 +91,7 @@ struct odb_source {
->  };
->  
->  struct packed_git;
-> +struct packfile_store;
+I don't love the nested list in PUSH RULES but the sentence starting with
+"If the source is a tag or commit object..." is really a tough one to read,
+it's not going to be relevant to the vast majority of people, and I think
+keeping it contained inside a bullet point will make it much easier to skip
+over to get to later information which is more likely to be relevant to
+folks.
 
-I find it a bit suprising that we already add a `struct packfile_store`
-to `struct odb_source` since it doesn't get wired up yet. I suppose it's
-just acting as a placeholder for what's to come though.
+Other changes:
 
->  struct cached_object_entry;
+ * removed "+:<dst> is optional.", from Junio's review
+ * kept "+ is optional and does the same thing as --force", since now the
+   push rules are in their own section.
+ * fixed the fully expanded refspec form (main:refs/heads/main =>
+   refs/heads/main:refs/heads/main)
+ * switched from a numbered list to an unordered list, from Junio's review.
+   I think the numbered list looks a lot nicer in the terminal output, but
+   it's true that there isn't any order. I briefly attempted to understand
+   how AsciiDoc's nroff (?) generation works to see if it's possible to make
+   unordered lists indent with fewer spaces (2 instead of 4) but I was left
+   feeling that nroff/troff/etc are not for mere mortals like me to
+   understand.
+ * made it clear that "tag v1.0" is not really a refspec, from Junio's
+   review
 
--Justin
+Julia Evans (2):
+  doc: git-push: create PUSH RULES section
+  doc: git-push: rewrite refspec specification
+
+ Documentation/git-push.adoc | 198 +++++++++++++++++++-----------------
+ 1 file changed, 102 insertions(+), 96 deletions(-)
+
+
+base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1973%2Fjvns%2Fclarify-refspec-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1973/jvns/clarify-refspec-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1973
+-- 
+gitgitgadget
