@@ -1,140 +1,183 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD3026A0C6
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 05:58:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C2B25A343
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 06:21:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758088726; cv=none; b=jtkt+2SXZPTOOZWIQ8AkYD9aKhMIxtXrh0H0JbyESq4ZhPINeL0cdcdmL3cgjtdx7q9L9SRnZ4HtRWJ0ktlN7O1lBgWqg20TYUoSfMj7LHKRFex3Pn4Nm8WQWwjwj6ZmCymIv84MVw6Xnn9db+lSwU50eEuWy7UNCuL6qrU+Ifs=
+	t=1758090073; cv=none; b=ZpsIYabCTYHZ74SH4gKS454CODItcfNWbdmK9s5DzhlhL7HQmX/nDA0zTgoRduHCSDbE+4eaZULm1CQwbn9cnIYvUSJno+EIpoHTANgFak7Mjm8h+NO32yHOVV+heiHXvJ9lViaMy0+D3yF8mnQxXBLOP3kGaUNmCsU6Vw903FI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758088726; c=relaxed/simple;
-	bh=eatTuSiSldaJTUikxDb07TKhDRTcCjCPg4IiDsP00Zs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n1oLvGH9OZwG8HNxrttHzg7/TYnQF8Fhz1F3bpfpVN/QS9lER/vJwJwzb77m+iY5i0/9bb5cwZBcoXHH9ffYZ4pfhmlMj/b0e4XUhtOztYoaW6YgPB3NplBOZgl+iSh4pXSaculdAbqY5RwtuwN02pSQEEnnZK84xN9g4BGIZvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XRG0pYRw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SLcL67U7; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1758090073; c=relaxed/simple;
+	bh=I0TjbuJINY61ZRydjKmO6n9xAkgrGlpepQCfAoUVkcM=;
+	h=Content-Type:MIME-Version:From:To:Cc:Subject:In-reply-to:
+	 References:Date:Message-id; b=cQ+SejWJ4SiAwK1T21GRe0kOQl43Wd/HFmULyXRGUgDKvoRQ/N+gfJ2rsHQorUrJXdkAMAChEzadXxKf2s2GZt1ack0lKlM+gNVEUoqoFRTgNq6IQWGswl9rctGtOFHX7TR1oQw0EUaN7RAvb6rb3j4wXa8OiD8ljd67STGyeqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ownmail.net; spf=pass smtp.mailfrom=ownmail.net; dkim=pass (2048-bit key) header.d=ownmail.net header.i=@ownmail.net header.b=ZWSf4Yz+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TsLthIth; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ownmail.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ownmail.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XRG0pYRw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SLcL67U7"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BBDA814000D5;
-	Wed, 17 Sep 2025 01:58:42 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 17 Sep 2025 01:58:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758088722; x=1758175122; bh=lhLPrMloDa
-	YDItWJIRnmWvhaZfIA84FG92NaSVIzIaY=; b=XRG0pYRwBwl5W3kpDt2D34CWAl
-	4JZNZ6WG7+StVuvtsEHN3ap3nSELHWS8wRJ1oEQMWY3Vz5mKw54Y39qg4L4rsOKp
-	Mu8h8+lSPVhoWNavZgS6VW0uZ8ibRDU6Fm91Hk2vr3e5PIPOZpsAFGw1ususOPdl
-	vXvaWGk9HUxaUUSNQR5rLxzS9iHI6tpP7AeiZk0HfFhqM2NiWQJtHpPpW0IL/ffd
-	Ibj+YeuNNK1t+UPXGIEHclUVy5M64TKFxGmOsn7rGIhG3gVWY2ayRgwW7ks8m0Tv
-	EcOB6X6volEqOZYmDpN1RXxmdjDjvq7AYU0lQw7yJ/cvNCW8qcpmn5rLv0jg==
+	dkim=pass (2048-bit key) header.d=ownmail.net header.i=@ownmail.net header.b="ZWSf4Yz+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TsLthIth"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8855AEC018B;
+	Wed, 17 Sep 2025 02:21:07 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Wed, 17 Sep 2025 02:21:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ownmail.net; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758090067;
+	 x=1758176467; bh=Bif2A3a8eDjs6NSDIdF4mwE0vpU5Ea6sLbIR7ZF4j6c=; b=
+	ZWSf4Yz+9A4JfvOg++Rtw8QyjzDq29kvgIqCgg934AqGJdu/mkfYg+/f8oOCvI8E
+	fTSRycUO9ox1B2ey2H6kBesuigSk0Sy5B8WFLcQ+u91sbd0HIWq0Mpfn75YPcDB7
+	DvBI3yvuWppDx8+6ALcF7BoB4rsex9QQd5Wzk46WwNEC2UNcMapPtKCj3C5XB0i1
+	cMraaORVGgKNBhDAMGjsXYXx4eb0msKXKHrjyzEiWPKlnZaVGHopEzoAE90QMp5x
+	1/U3uuXchW7EPSa4sNqgK583WwGFyO+w3PtbXyQgk/xD53ZwoK2OqKOTCighBkSf
+	/YzIBegtWJHMgOQ89WOlxA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758088722; x=1758175122; bh=lhLPrMloDaYDItWJIRnmWvhaZfIA84FG92N
-	aSVIzIaY=; b=SLcL67U7vG5YirtIAxRzLvo4zOTWcXivVW/TunIPcwcXU4xpby3
-	h2CL/sCxPu//Y/RScoS8Nu/oN5Pu/+qvxHPhPe3kql0/jR9kqGT2c0K0w6+0T0zh
-	R62aF5yDB4ZaL4yK5Qg2p6TnGMiJXEoQQUY1nnpe7R2v7P7BSj2cYuaMHyAVtbHQ
-	XlRDYzebXGBeR45qv6DeT6rggrq4xu1APyszXvbM1bD3EWCJZFLvfY1NwuyvZeUJ
-	Y9kTP5wR6y+Cu6u9IMZwn/g265D9re9Ez8c/QDlA63ni8AcpyYFZQoEvQO4sVFdh
-	zOKTMKg6/HV8HnKR+n4IQZ8W9QrvZFT2Qhw==
-X-ME-Sender: <xms:Ek7KaGol4nPkQ99n_4QMWwarqbjaaOcuGJx7e_5qVv1Cc1tPSeX6qA>
-    <xme:Ek7KaH4yHSPSfALCCSo2nOL2uishaYZAmkZnOD_ARDaAHCrqr7uV9z7PkkrHwiTx6
-    ZpyIhaBHap76xNxJA>
-X-ME-Received: <xmr:Ek7KaEo3vucsSpUzbJHGD015RpUpBr5dBJBFee2t7AdFkc7Q-IdVr799SSpzRIJJ3fTFyNUI14dXcG2VRVSl2NZYmmKc7prZ-qDVQHVydoA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegvdeijecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758090067; x=
+	1758176467; bh=Bif2A3a8eDjs6NSDIdF4mwE0vpU5Ea6sLbIR7ZF4j6c=; b=T
+	sLthIthnQElxwtHlbIqP43yaCyUlmlU27g3Jf31e0rGSxyMHxrIyP+4lKzdMsB+S
+	e6CzKXrqpfElbBt73FGjh8lMpm1wdZtqMoANquPIblWdI/Zge123phc0rl8JZ8u9
+	32i11rynFblbkm9Up6Y7v5deJ1sEUJQBE8VhPQisFQOQl+xt0bLdX+zqG++2utB1
+	tcpXuGLG3SEVyWHJazGX9I1l2QjyWCw/wpSHJ3eafWZIfH4TfgZfHj8bpfbC6H3u
+	UDJG0bSrnM+I4SYOuCXVEOBhCKMu3jiM+ui9V3HZrLlemh5BWiMtWBub4mXNzwdS
+	0pZacbPOhIIamQmEXs9DQ==
+X-ME-Sender: <xms:U1PKaK9Dw_65K4zDJAMHnXGGosRjv1MytnFjyIgeqwnobzQDJmV5hg>
+    <xme:U1PKaK4BkEMl7icTd79cLlZBP_k8UV0MvwcFuSerBK1YDhm0G2GvyIuhl-oVQhaq6
+    YQS_SlCImKspQ>
+X-ME-Received: <xmr:U1PKaB1UFb6sYtHJO7wHodYfN6ROSjOZNPwPtyDH48Kj437k-4wUDytKBJWMLtOOl78NNxQaCYRTETHm4FGNS6wmSr6Yvjlzk_USyVJCtLjp>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegvdejudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    eivdehleehuefhleevgedvkeegtdeufefhgfehveelgffhudeugeduhffghefhieenucff
-    ohhmrghinhepkhgvrhhnvghlrdhorhhgpdhgihhthhhusgdrtghomhenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhn
-    sggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtgh
-    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopegviigvkhhivghlnhgv
-    fihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrgh
-X-ME-Proxy: <xmx:Ek7KaBiCQyA6m3ruxG_tke3T6nF0NE7Q-odujr0rWip-3TGfVExB-g>
-    <xmx:Ek7KaGJ1USyPdqN3YA2-Wg5gw70qQO5VyZtvumVpbxdSIIYSOIvNTw>
-    <xmx:Ek7KaJAQUK4NsSXU2ERmX9bHiJNW6ogl7Sa2H7jcaKHHwRC6JWLxSQ>
-    <xmx:Ek7KaOgt565bFUpvLLwHE1VCMDaCYrMTZQP5HT_cgEEnIa-mHLia1g>
-    <xmx:Ek7KaI3kCqLFujCU_8_4ZC5tJwjxh9v73q1IEjbSkqVHbQbM4DLg7oap>
-Feedback-ID: i197146af:Fastmail
+    ihhlohhuthemuceftddtnecunecujfgurheptgfgggfhvfevufgjfhffkfesthejredttd
+    dtjeenucfhrhhomhepfdfpvghilheurhhofihnfdcuoehnvghilhgssehofihnmhgrihhl
+    rdhnvghtqeenucggtffrrghtthgvrhhnpefffeehheeuveejgfeivdeutdejfefgffegue
+    ffgeegkefgjedtieeftefgtdehgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehnvghilhgssehofihnmhgrihhlrdhnvghtpdhnsggprhgtph
+    htthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:U1PKaBBcKbO3ynV1sW_iXFBqwtSBfW9hAB5pTu1dfHO9aZNeA2KjNg>
+    <xmx:U1PKaD1-qs3LUYe_79e4IoA8EUTn_rqToo_prkgVB-SR_RoZnQo9yA>
+    <xmx:U1PKaLtA0-C_oYTWL8kZlmUK_R3PVRiQXtO79hzmlAmE_U-lZycVXA>
+    <xmx:U1PKaD6JUA6NPWnTM1Ses4OsdDUX3j35Ik8EjpAq7WHyporCoVHkgg>
+    <xmx:U1PKaNjCYm7n9KR7FHBwOj__P94iHPvLr6jOvzOrMvApgkisG3Oe0G_J>
+Feedback-ID: iab3e480c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Sep 2025 01:58:41 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5a721cef (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 17 Sep 2025 05:58:39 +0000 (UTC)
-Date: Wed, 17 Sep 2025 07:58:36 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v2 00/18] Introduce rust: In xdiff
-Message-ID: <aMpODEpyaaVhFMO0@pks.im>
-References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
- <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
+ 17 Sep 2025 02:21:06 -0400 (EDT)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
+From: "NeilBrown" <neilb@ownmail.net>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] send-email: don't duplicate Reply-to:
+In-reply-to: <xmqqbjnbci6j.fsf@gitster.g>
+References: <175790952167.1696783.4795702220839036460@noble.neil.brown.name>,
+ <xmqqbjnbci6j.fsf@gitster.g>
+Date: Wed, 17 Sep 2025 16:21:01 +1000
+Message-id: <175809006105.1696783.12105140613644905214@noble.neil.brown.name>
 
-On Wed, Sep 17, 2025 at 01:16:20AM +0000, Ezekiel Newren via GitGitGadget wrote:
-> This is a continuation of
-> https://lore.kernel.org/git/pull.1980.v3.git.git.1755921356.gitgitgadget@gmail.com/,
-> but I am removing the RFC label.
+On Tue, 16 Sep 2025, Junio C Hamano wrote:
+> Thanks for sending a patch.  
+
+and thanks for the review.
+It all makes - I've made some changes and will resend.
+
+NeilBrown
+
+
 > 
-> Suggestions on changes that I could make to this series is appreciated.
+> NeilBrown <neilb@ownmail.net> writes:
 > 
-> Changes in v2: High level overview:
+> > If I run
+> >   git send-email --compose --reply-to 'ME <my@address.net>' .....
+> >
+> > and edit the intro message, then the message will get two copies of the
+> > Reply-To field.  gmail.com rejects such messages.
 > 
->  * patch 1: cleanup: rename variables that collide with Rust primitive type
->    names
->  * patches 2-4: Makefile now produces libgit.a correctly
->  * patches 5,6: Documentation from Brian and Patrick
->  * patches 7,8: Introduce Rust
->  * patches 9-11: github workflows
->  * patches 12-14: introduce crates build-helper, and cbindgen
->  * patches 15-18: varint test balloon
+> A commit log message that begins with such a clearly written problem
+> description is always welcome.
 > 
-> I would like feed back in two categories: big changes, and little changes.
-> Is my patch series even going in the right direction, and what are the
-> little details that I've missed? I know Brian asked for cbindgen and it made
-> the series several commits longer, but I think it's a great idea to have. I
-> am not happy with every choice that I made, but I currently don't see a
-> better way or at least an easier alternative to my approach in bringing Rust
-> to Git.
+> > This happens because a Reply-To is inserted into the intro message
+> > template, and then the intro message headers are copied and another
+> > Reply-to is added.
 > 
-> Build results for these changes:
-> https://github.com/git/git/actions/runs/17783386212?pr=2043. Some of these
-> are failing.
+> OK.
+> 
+> It took me a few minutes to follow the code based on the above three
+> lines to figure out exactly what is going on.  The key realization I
+> needed was that the if/elsif/... chain being touched is sifting the
+> e-mail headers that appear in the message being sent into two kinds,
+> ones whose values are understood and parsed into individual variables
+> that have their own meaning (like $reply_to), and others that are
+> not understood by the code and thrown into @xh array to be blindly
+> replayed into the resulting message later.
+> 
+> By parsing the "Reply-To:" header into $reply_to, the code with your
+> patch stops throwing it in @xh and that is how duplicate headers are
+> prevented.
+> 
+> > This patch fixes the problem by noticing the Reply-To: header when the
+> > intro is parsed, and using it to assign $reply_to rather than blindly
+> > coping it into the new headers.
+> 
+> And what I thought missing is mentioned as part of the solution
+> here.  I would have preferred to see some more described in the
+> second paragraph that analyses how the breakage happens---it would
+> have saved me a few minutes ;-).
+> 
+> A few issues in the log message.
+> 
+>  * The commit, when prosessed by "git am", will record your name as
+>    "NeilBrown <neilb@ownmail.net>" because that is the name and
+>    address used on the "From:" header of the e-mail I am responding
+>    to.  It does not match the name/address used for sign-off below,
+>    which is not right.  If <neil@brown.name> is the address you want
+>    to be known as to this project, you'd need to override the author
+>    name by inserting a line "From: NeilBrown <neil@brown.name>" at
+>    the very beginning of the e-mail body, plus a blank line to
+>    separate it from the body of the message.
+> 
+>  * We prefer to see the solution described as if you are giving an
+>    order to somebody sitting on the keyboard to "make the code look
+>    like so", e.g.
+> 
+>      Fix the problem by parsing Reply-To: header into $reply_to
+>      variable, to be reproduced on a single header line later,
+>      instead of getting passed unrecognised and left in @xh to be
+>      copied into the outgoing message.
+> 
+>    or something like that.
+> 
+> > Signed-off-by: NeilBrown <neil@brown.name>
+> > ---
+> >  git-send-email.perl | 3 +++
+> >  1 file changed, 3 insertions(+)
+> 
+> Thanks.
+> 
+> >
+> > diff --git a/git-send-email.perl b/git-send-email.perl
+> > index 437f8ac46a85..e2248c223119 100755
+> > --- a/git-send-email.perl
+> > +++ b/git-send-email.perl
+> > @@ -1931,6 +1931,9 @@ sub pre_process_file {
+> >  					$in_reply_to = $1;
+> >  				}
+> >  			}
+> > +			elsif (/^Reply-To: (.*)/i) {
+> > +				$reply_to = $1;
+> > +			}
+> >  			elsif (/^References: (.*)/i) {
+> >  				if (!$initial_in_reply_to || $thread) {
+> >  					$references = $1;
+> 
 
-Given that this isn't yet ready and given that this patch series is way
-bigger than the one I have in flight that focusses on introducing the
-policy [1]: how about we first merge that one down and then rebase your
-patches on top of it to iterate? It would reduce the scope of your patch
-series and allow us to make smaller steps towards our goal.
-
-To be clear: I very much think that most of the steps here are quite
-sensible. We definitely want to introduce cbindgen, we obviously need to
-introduce support on Windows, and I guess having multiple different
-workspaces is also something that could provide benefit.
-
-But there is no reason to have that all at once, so hence my suggestion
-to build out the infra one step at a time.
-
-What do you think?
-
-Patrick
-
-[1]: https://lore.kernel.org/git/20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im/
