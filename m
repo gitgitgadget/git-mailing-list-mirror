@@ -1,70 +1,69 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2D8227E82
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 01:16:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A52E22ACEF
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 01:16:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758071821; cv=none; b=mhE9wD8frGGLkHEZkE42iDvPgMe+guQuavAHGLFpQCJzkpkAyT3VACpiWhUOEdXUMGxqRXL1tTji7hAvpI8eVWkV1ftX9ncBKPgr0svRxz56sCrxZblv8Z2q5xpuf7j7QLjMeveOcVTf35D2y702oq/0bX4NJXIccT3JMbnsy0k=
+	t=1758071821; cv=none; b=qDvXaktfcfdT7CjvuyJbiqfCBE1XoFWYsTGglXqLodr4y+SCMpw4wW5a8z64WRK/IOiNEltOYWo6qicf4+VFWsta97LQ8j+iN1yO2tNSEcB8h1NUTkfWmpwz25NsQbrjMoba8p3ICIW6XTBdkYmfkI8oeNG4pISff6c/5RbyDB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1758071821; c=relaxed/simple;
-	bh=bk66ckkJnactczDTXp042WrWXXQFiPWab9Y/tDc6AFs=;
+	bh=G9CF8riXs1GyckWT3w7xvdCd+ZFALJ/YzkgN72hPHqs=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=WiUmqY+gFWYbhCmu9Oft5s7OoX53F4vefzCif4cwSZyVv0j+kVFibP7IoDFaJjIPxsc29enEy1Gouv23onAOBhT0yJUiVZSWwBRrUsShwLW2r90P3DhZd7fJN6HFRaPCcMRT5RZ6QGvzjXZsNlGvxr3oQDxazWo+nAd+IS7Dl0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ek8ctkU+; arc=none smtp.client-ip=209.85.216.45
+	 MIME-Version:To:Cc; b=rqsIQ2RzX4kHwgVm5mCzNSA68s1TnU8pqfi1qbx8Ga1zeV9Jp+cxNOkWKQiFKatBWyJ0PNa6ZvEaUWnBmbr0iph8sFZF6aXDjg9OmXN9Fow5XXSKmPJaUyjU3BA6a9FIvIa5cSrnZq9LAgHyRYThpvQ3rq6yiuh2IYQRKKhRprA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dOnjASF0; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ek8ctkU+"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-32eb45ab7a0so1186582a91.0
-        for <git@vger.kernel.org>; Tue, 16 Sep 2025 18:16:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dOnjASF0"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2680cf68265so1167155ad.2
+        for <git@vger.kernel.org>; Tue, 16 Sep 2025 18:16:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758071818; x=1758676618; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758071819; x=1758676619; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=y97JB+bcwwktcDOnhtlCLrdCt7DEuwLCcQQaBr9uE3A=;
-        b=Ek8ctkU+U/zmeJjHrof4QfocOmYCD81cUz36GMTJgeTWGjQFzRnwzX330Vl4G98WKF
-         6uv/RfdXd2StZfZfmOkn7XEBMg7pGezJRI6rWGVp5LIY4crhWOzrQfoM7UI0rzj8UyU3
-         CRHq7D0U3dBIueOp2WJ3D27/CEQGNHtfpxtzfnnT3+d1oca8ePSj6IO1yOgAaO4OIYti
-         ikW11RS4QF+WtqYg/4QCjqBPaym6k0XV9NEWTDDs5nRFCYtWjZU1/WALO1SNqgF4UDZF
-         PLiHXpP2NMHfyS4gLl4LP/GVPWDs2gdXB3uJ8ASI/L+CPyJcpHRk9g+JeDqAr+ZPwSLa
-         rc+A==
+        bh=XwxQg85ZOuUnac/s/nD5tFFV2DasBpK/0KRo7jXprP8=;
+        b=dOnjASF00htQ990w1Rf3qf4L7K7UThPOGueVy9SZwjDPmrwyyBJ5IGjCOH5ftS7ZeJ
+         wXQAnUsW4kqH+/vxfy8iU5Bg2QQj1cDDIu/Bi8YhpMATYWoSSUkd99QFhGnSf+LAxrsK
+         Ym2tV5tAYjFUg1Sc4hQlNbUIW7d1v6cv5CZfT8aK4XR+izHPZs7lQv+VdqBRr8NgzWJ2
+         ApZaBQzDhmX4SMPx/dXAO3dbnzbfQ0DhtVhSXk3xwK8DNyTKXMdMiO/i/9DZ+Z0K47Gp
+         5Bmuj83ksztpwA5iYe9OdOe9eIjzCG73TOImBnMzVSb0mKumefzJn2DhpuviJlgUy19E
+         nLgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758071818; x=1758676618;
+        d=1e100.net; s=20230601; t=1758071819; x=1758676619;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=y97JB+bcwwktcDOnhtlCLrdCt7DEuwLCcQQaBr9uE3A=;
-        b=FWfooyP8cM7rc9GiXAt98Zgnyq9tXDQTLrGUhX/vCkJwcZ1b2DMcW4qfQwLyT8HihX
-         sYnzxamtX0O1fhaX/MgD+aeUmgSbbK1supbOdH5YZoZf4c2+cmkZ2Q5bt21mOAG0ARvp
-         Awc3MKi1mQRF0++2ZI2y2XZFy0+7uRH1Vs/JNcYO5Ejjp3IWw6NaXw9XlxuYuqajRWLe
-         J91viYqaAE4T2KtPYiFG0r0kw6COuvo5TvNoAMoFhQ2OWV88EUmNpsOt6SSmInQ1B1V8
-         Pw2ovfnCiCaocRtgRM4RcYaTTZsrdmJRS/KUuaSP6DYt/jwrmzRzhODhWGeALBvOfVv+
-         5zbQ==
-X-Gm-Message-State: AOJu0YxOcqq04e58QODq7WF5v5hsRRupYJAIBxF1mRLPdlpDkWIVb/WY
-	OidBDsSomv98hsmHH5XW0PGShskVkw8bIMTLsPeFGI/Tbr0syXvQF5Oruscs3g==
-X-Gm-Gg: ASbGncs2BJHZ+7qpNAcL6q1zAxPjoNROhKHTboHI+8PMqrTSJTnj/d4yk0HEtrRLaEo
-	a8hd7g33IGWvxOfRAztpa2c+nKKUAD28f/22O89LLenywYtUp9h3IvavFQ7zE38H2FVc95vb3Iv
-	xjzBMdfQ3AxWsyCTrYfianyQwzV6o/YZSkE/V/vdSsLy2YqamjuMGYcHqmm0hGNU8WmJdNfp7iD
-	HIy8Gokpmw0BkopPrlmv19Zj690AQcwc1yPFoaSHxNmBmg43dfrVMFx/vfNVNfgSg3ZbItZllZW
-	ZDH4W7hrwj1vRXu6DRsbiKDJvwK1bbHZ2neE+PG/VYUVUiM//clQ+R7ChbJVdwbn2GytegGFh1j
-	jEFvSR7yuAmTF3VQcEqvhTOPYvuI=
-X-Google-Smtp-Source: AGHT+IHRLq+u8t3FMTSZmoryqMFUfVryo/SfZvvtNH60gWuWWKjCEleMlIxWIvDcVZxdNCB6IYRFdg==
-X-Received: by 2002:a17:90b:3b43:b0:32e:2798:9064 with SMTP id 98e67ed59e1d1-32ee3f53712mr418599a91.35.1758071817617;
-        Tue, 16 Sep 2025 18:16:57 -0700 (PDT)
+        bh=XwxQg85ZOuUnac/s/nD5tFFV2DasBpK/0KRo7jXprP8=;
+        b=K1eL3R6wxIW/b8nQd9KIqxRAz3wRZ9LjyNi5/GaCu/Xp1QACfcsbsSYgk/8hSAa5QA
+         b90oLvYSpnrGnNvGg0QQegJYVWgTYGaQCzTWymJ9n6kbYuVhT211aWsxIKV/8UQZE6eZ
+         C1H2+kcuhFrsqgiasoyFNDIJX79roboG0FWpifqIWnou5AykFwr9WyaaD+TwrF+Eloki
+         dUgBWtUC82zwpXB1IksGmJvqZPTME16JtuoFxmOKiom02xhJyrbsKqTHEKS5Y/kQEpG3
+         S/1ERagmTS9ia6Tm2bNfeFQFM4pdtAYz6xwCz3ugpVP/AhztoVro1G4KR70pw6yB2tv+
+         9llg==
+X-Gm-Message-State: AOJu0Yx7uGpMEPAQSC9/3/tVUyLECla0eGbPSqC2wbLBMhp+gJACGtBe
+	wihTBxmWya8jT/lSpFKDLldn0n/DgEva8eCgZD8HaKKLFB/Eku3MkjhnJzcLoA==
+X-Gm-Gg: ASbGncsyVxT829aJb0s6fFDPJE3T/+vdVLLW+tOzSiegbqMK+dXzTFhxWHBj5qdZAK2
+	TwIIcwGlnkcZntvdAeUdJgMYsZM3IK5vJ5tWSJv25v5FBi5e2BhGEFnu8sWgVnuC4EmeK4Rj6jY
+	ykuzflGqFIL8Bdo4hGleBv/0Wau3kgo5eIj2wL8O+qL8IbszzJIj78wRPbtve9aAbbc0VrXZ1Jj
+	H7fM2fF/mZFE50BD0AUBTMNn5k7rfuo1/Urd+Wg282C5bpAm3twGjq6cXFWhrEVU78m0zLKTYrq
+	g4LR3RFj0zFp8R63GllAQszwbLEVci4NYzbPQfy7o3+ig0gwBumUbj8Vs4gRsPMGsVAMxdC6pXi
+	xfWdP6wIaz1hAgDMn21ZRpdRcLdg=
+X-Google-Smtp-Source: AGHT+IGvNNmAquaejB05gzfESsotNSsOj+tnTIg2uW6jCV+MFd1zbqnib3rWdNPH51nZUCEfuIS9bQ==
+X-Received: by 2002:a17:903:3d06:b0:24c:be1f:c204 with SMTP id d9443c01a7336-26812191442mr3675625ad.22.1758071818899;
+        Tue, 16 Sep 2025 18:16:58 -0700 (PDT)
 Received: from [127.0.0.1] ([172.184.209.164])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7760793be05sm17055966b3a.1.2025.09.16.18.16.56
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-25d9c7e5b16sm141910815ad.87.2025.09.16.18.16.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Sep 2025 18:16:57 -0700 (PDT)
-Message-Id: <fa334405686a329dd1508bf8d8cbfa12dc5dc7bb.1758071798.git.gitgitgadget@gmail.com>
+        Tue, 16 Sep 2025 18:16:58 -0700 (PDT)
+Message-Id: <df837fdb4d399be1218a9a39eab47a85fa44e8d3.1758071798.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
 References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
 	<pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
-From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 17 Sep 2025 01:16:34 +0000
-Subject: [PATCH v2 14/18] build-helper: cbindgen, let crates generate a header
- file
+From: "Patrick Steinhardt via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 17 Sep 2025 01:16:35 +0000
+Subject: [PATCH v2 15/18] varint: use explicit width for integers
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,140 +75,163 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Ezekiel Newren <ezekielnewren@gmail.com>,
-    Ezekiel Newren <ezekielnewren@gmail.com>
+    Patrick Steinhardt <ps@pks.im>
 
-From: Ezekiel Newren <ezekielnewren@gmail.com>
+From: Patrick Steinhardt <ps@pks.im>
 
+The varint subsystem currently uses implcit widths for integers. On the
+one hand we use `uintmax_t` for the actual value. On the other hand, we
+use `int` for the length of the encoded varint.
+
+Both of these have known maximum vaules, as we only support at most 16
+bytes when encoding varints. Thus, we know that we won't ever exceed
+`uint64_t` for the actual value and `uint8_t` for the prefix length.
+
+Refactor the code to use explicit widths. Besides making the logic
+platform-independent, it also makes our life a bit easier in the next
+commit, where we reimplement "varint.c" in Rust.
+
+Suggested-by: Ezekiel Newren <ezekielnewren@gmail.com>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- rust/build-helper/Cargo.toml |  5 ++++
- rust/build-helper/src/lib.rs | 44 +++++++++++++++++++++++++++++++++++-
- rust/cbindgen-template.toml  | 16 +++++++++++++
- 3 files changed, 64 insertions(+), 1 deletion(-)
- create mode 100644 rust/cbindgen-template.toml
+ dir.c        | 18 ++++++++++--------
+ read-cache.c |  6 ++++--
+ varint.c     |  6 +++---
+ varint.h     |  4 ++--
+ 4 files changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/rust/build-helper/Cargo.toml b/rust/build-helper/Cargo.toml
-index 8939b4b876..2e42bb5405 100644
---- a/rust/build-helper/Cargo.toml
-+++ b/rust/build-helper/Cargo.toml
-@@ -4,3 +4,8 @@ version = "0.1.0"
- edition = "2021"
+diff --git a/dir.c b/dir.c
+index dfb4d40103..b92a5d750e 100644
+--- a/dir.c
++++ b/dir.c
+@@ -3579,7 +3579,8 @@ static void write_one_dir(struct untracked_cache_dir *untracked,
+ 	struct stat_data stat_data;
+ 	struct strbuf *out = &wd->out;
+ 	unsigned char intbuf[16];
+-	unsigned int intlen, value;
++	unsigned int value;
++	uint8_t intlen;
+ 	int i = wd->index++;
  
- [dependencies]
-+cbindgen = "0.24.0"
-+textwrap = "=0.16.1"
-+once_cell = "=1.20.3"
-+unicode-width = "=0.1.13"
+ 	/*
+@@ -3632,7 +3633,7 @@ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untra
+ 	struct ondisk_untracked_cache *ouc;
+ 	struct write_data wd;
+ 	unsigned char varbuf[16];
+-	int varint_len;
++	uint8_t varint_len;
+ 	const unsigned hashsz = the_hash_algo->rawsz;
+ 
+ 	CALLOC_ARRAY(ouc, 1);
+@@ -3738,7 +3739,7 @@ static int read_one_dir(struct untracked_cache_dir **untracked_,
+ 	struct untracked_cache_dir ud, *untracked;
+ 	const unsigned char *data = rd->data, *end = rd->end;
+ 	const unsigned char *eos;
+-	unsigned int value;
++	uint64_t value;
+ 	int i;
+ 
+ 	memset(&ud, 0, sizeof(ud));
+@@ -3830,7 +3831,8 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
+ 	struct read_data rd;
+ 	const unsigned char *next = data, *end = (const unsigned char *)data + sz;
+ 	const char *ident;
+-	int ident_len;
++	uint64_t ident_len;
++	uint64_t varint_len;
+ 	ssize_t len;
+ 	const char *exclude_per_dir;
+ 	const unsigned hashsz = the_hash_algo->rawsz;
+@@ -3867,8 +3869,8 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
+ 	if (next >= end)
+ 		goto done2;
+ 
+-	len = decode_varint(&next);
+-	if (next > end || len == 0)
++	varint_len = decode_varint(&next);
++	if (next > end || varint_len == 0)
+ 		goto done2;
+ 
+ 	rd.valid      = ewah_new();
+@@ -3877,9 +3879,9 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
+ 	rd.data	      = next;
+ 	rd.end	      = end;
+ 	rd.index      = 0;
+-	ALLOC_ARRAY(rd.ucd, len);
++	ALLOC_ARRAY(rd.ucd, varint_len);
+ 
+-	if (read_one_dir(&uc->root, &rd) || rd.index != len)
++	if (read_one_dir(&uc->root, &rd) || rd.index != varint_len)
+ 		goto done;
+ 
+ 	next = rd.data;
+diff --git a/read-cache.c b/read-cache.c
+index 06ad74db22..41b44148b1 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1807,7 +1807,7 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
+ 
+ 	if (expand_name_field) {
+ 		const unsigned char *cp = (const unsigned char *)name;
+-		size_t strip_len, previous_len;
++		uint64_t strip_len, previous_len;
+ 
+ 		/* If we're at the beginning of a block, ignore the previous name */
+ 		strip_len = decode_varint(&cp);
+@@ -2655,8 +2655,10 @@ static int ce_write_entry(struct hashfile *f, struct cache_entry *ce,
+ 		hashwrite(f, ce->name, len);
+ 		hashwrite(f, padding, align_padding_size(size, len));
+ 	} else {
+-		int common, to_remove, prefix_size;
++		int common, to_remove;
++		uint8_t prefix_size;
+ 		unsigned char to_remove_vi[16];
 +
-diff --git a/rust/build-helper/src/lib.rs b/rust/build-helper/src/lib.rs
-index 70e95d16f5..640bc19734 100644
---- a/rust/build-helper/src/lib.rs
-+++ b/rust/build-helper/src/lib.rs
-@@ -1,5 +1,7 @@
- use std::collections::HashMap;
-+use std::io::Write;
- use std::path::PathBuf;
-+use cbindgen::Config;
+ 		for (common = 0;
+ 		     (common < previous_name->len &&
+ 		      ce->name[common] &&
+diff --git a/varint.c b/varint.c
+index 409c4977a1..03cd54416b 100644
+--- a/varint.c
++++ b/varint.c
+@@ -1,11 +1,11 @@
+ #include "git-compat-util.h"
+ #include "varint.h"
  
- 
- fn parse_bool_from_str(value: &str) -> bool {
-@@ -23,12 +25,20 @@ fn parse_bool_from_option(value: Option<&String>, default: bool) -> bool {
- /// To run tests set GIT_BUILD_DIR and run `USE_LINKING=true cargo test`
- pub struct BuildHelper {
-     crate_env: HashMap<String, String>,
-+    generate_header: bool,
-+    file_out: PathBuf,
-+    config: Config,
+-uintmax_t decode_varint(const unsigned char **bufp)
++uint64_t decode_varint(const unsigned char **bufp)
+ {
+ 	const unsigned char *buf = *bufp;
+ 	unsigned char c = *buf++;
+-	uintmax_t val = c & 127;
++	uint64_t val = c & 127;
+ 	while (c & 128) {
+ 		val += 1;
+ 		if (!val || MSB(val, 7))
+@@ -17,7 +17,7 @@ uintmax_t decode_varint(const unsigned char **bufp)
+ 	return val;
  }
  
+-int encode_varint(uintmax_t value, unsigned char *buf)
++uint8_t encode_varint(uint64_t value, unsigned char *buf)
+ {
+ 	unsigned char varint[16];
+ 	unsigned pos = sizeof(varint) - 1;
+diff --git a/varint.h b/varint.h
+index f78bb0ca52..eb401935bd 100644
+--- a/varint.h
++++ b/varint.h
+@@ -1,7 +1,7 @@
+ #ifndef VARINT_H
+ #define VARINT_H
  
- impl BuildHelper {
-     pub fn new(crate_env: HashMap<String, String>) -> Self {
--        let it = Self {crate_env};
-+        let mut it = Self {
-+            crate_env,
-+            generate_header: false,
-+            file_out: PathBuf::default(),
-+            config: Config::default(),
-+        };
+-int encode_varint(uintmax_t, unsigned char *);
+-uintmax_t decode_varint(const unsigned char **);
++uint8_t encode_varint(uint64_t, unsigned char *);
++uint64_t decode_varint(const unsigned char **);
  
-         let dir_crate = it.dir_crate();
-         let dir_workspace = dir_crate.parent().unwrap();
-@@ -38,6 +48,12 @@ impl BuildHelper {
-             std::fs::create_dir(dir_interop.clone()).unwrap();
-         }
- 
-+        let file_cbindgen = dir_workspace.join("cbindgen-template.toml");
-+        it.file_out = dir_interop.join(format!("{}.h", it.crate_name()));
-+
-+        it.config = Config::from_file(file_cbindgen.display().to_string().as_str()).unwrap();
-+        it.config.include_guard = Some(format!("{}_H", it.crate_name().to_uppercase()));
-+
-         it
-     }
- 
-@@ -49,6 +65,16 @@ impl BuildHelper {
-         PathBuf::from(self.crate_env["CARGO_MANIFEST_DIR"].clone())
-     }
- 
-+    pub fn generate_header<F>(mut self, editor: F) -> Self
-+    where
-+        F: Fn(&mut Config)
-+    {
-+        self.generate_header = true;
-+        editor(&mut self.config);
-+
-+        self
-+    }
-+
-     pub fn build(self) {
-         let use_linking = parse_bool_from_option(self.crate_env.get("USE_LINKING"), self.crate_env.get("CARGO_TARGET_DIR").is_none());
-         let dir_crate = self.dir_crate();
-@@ -78,6 +104,22 @@ impl BuildHelper {
-         } else {
-             println!("cargo:warning={} is not linking against C objects, `USE_LINKING=true cargo test`", self.crate_env["CARGO_PKG_NAME"]);
-         }
-+
-+        if self.generate_header {
-+            let mut buffer = Vec::<u8>::new();
-+            cbindgen::Builder::new()
-+                .with_crate(dir_crate.clone())
-+                .with_config(self.config)
-+                .with_std_types(true)
-+                .generate()
-+                .expect("Unable to generate bindings")
-+                .write(&mut buffer);
-+
-+            let mut fd = std::fs::File::create(self.file_out).unwrap();
-+            fd.write(buffer.as_slice()).unwrap();
-+        } else {
-+            let _ = std::fs::remove_file(self.file_out);
-+        }
-     }
- }
- 
-diff --git a/rust/cbindgen-template.toml b/rust/cbindgen-template.toml
-new file mode 100644
-index 0000000000..cab83218d0
---- /dev/null
-+++ b/rust/cbindgen-template.toml
-@@ -0,0 +1,16 @@
-+## compat/posix.h includes stdbool.h where git-compat-util.h does not
-+## this is mandatory for correct bool C <-> Rust interop. Though the
-+## 'includes' (and all other variables in this file) can be
-+## overridden in build.rs.
-+sys_includes = ["compat/posix.h"]
-+
-+autogen_warning = "/* Warning, this file is autogenerated by cbindgen. Don't modify this manually. */"
-+
-+language = "C"
-+no_includes = true
-+usize_is_size_t = true
-+style = "tag"
-+tab_width = 4
-+
-+[parse]
-+parse_deps = false
+ #endif /* VARINT_H */
 -- 
 gitgitgadget
 
