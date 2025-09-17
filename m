@@ -1,106 +1,165 @@
-Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D4E30B506
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 08:41:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8602D1F6B
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 08:51:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758098483; cv=none; b=T8tpSAI4guEGqII2II9254fIDzvm5XS2yrLt46Wpj2Vtn5X1rq+GiKBdKejySRBL/GS299G1hSoEJ9I8BxzFP3GvgbEyY3cuLdB+sh1CC0c6H3xfS3HvXqSES+mDzWwM+uJCjoZXYu7BX0NaUAKpYv3q5qY2l/8bfOjXLGnr9UA=
+	t=1758099103; cv=none; b=E3aLsVNvXA9noZakiW3pz5v3Ji5amJ8O4gsYnPL3CUN3u6orjsoJGjgEJck8oivLwziYnxaDNSxe9vUT0+WKDPpGK8D5n8TRMvSuiKFsAb4/hTp0BP1x6h6BkyYxRlC1pf71uszmqO+7giSeqJal+omqNaqPbTflOuYn5C6cYYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758098483; c=relaxed/simple;
-	bh=UMG9vC47cXlNbtSo4yraDdis5dAcGb8SpI2w579vLHU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LJ4OZ7DZgXbGqsF1ho87z3tqYhv9aGL/nddnOTJHG/TWDHeyxLOfw5mL53Oph6XVGkvap/Dkyo3v7nZaOTwsjP5nMLEFlKbCACIerTN6OGzsFsVW5e18bSZ8ktXjPKuEnCKBSAvVEL7VZut0SXHj/q/QlKXn+Y0qjr7SpPZ18PM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=qGP8/AJL; arc=none smtp.client-ip=91.218.175.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="qGP8/AJL"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1758098475;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=S0mvPJgoVfeBFOPPVt7OddPLDrl7VJkz1kKrN/JRwbY=;
-	b=qGP8/AJLZcpzM7U0ZVQWWLZB1why9b8RgEUq9nXwQzkRMjrGAh28eCfvUupeZrXcVRqcbX
-	tEntG57lKOZTgPE5EVZPLsfB01KgicJF8UI5lWa+jg/Wa4pBNaHPB9pmiwjrZTiPuwPBzP
-	aFvSvb1lH/7orTmnOYT65lRBZEt/AiE=
-From: Toon Claes <toon@iotcl.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] bundle-uri: do not abort on invalid packet line
-In-Reply-To: <yqyn5w6oq47lhrcbuziip5tajzrpylirswr5kyfyu35n3k7vgj@jn4rc7cwqwow>
-References: <20250912-b4-toon-bundle-uri-no-uri-v1-0-f4525a406df8@iotcl.com>
- <20250912-b4-toon-bundle-uri-no-uri-v1-2-f4525a406df8@iotcl.com>
- <yqyn5w6oq47lhrcbuziip5tajzrpylirswr5kyfyu35n3k7vgj@jn4rc7cwqwow>
-Date: Wed, 17 Sep 2025 10:40:59 +0200
-Message-ID: <878qido4is.fsf@iotcl.com>
+	s=arc-20240116; t=1758099103; c=relaxed/simple;
+	bh=x9K4AR/b8UE+zuoOk+f22fvPIqzc88n+h4uEdzgwgrI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ngagEg4wlGuU7sBJ/kjmYSEeMB4D8ZaC5ufQRgzm5EeK/8kCw0hGyQ2h+/6KfrTekqFP33mc1SqM+5j8y7CehX6BpwKd8YF4se39kAD0tQhTmxIlGCCmivmx7NeXUkutpZLEO69zXxSeaH3hjQY8APshCqu4bL7aLV6gbz8JKM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-4b78f4aa547so11637071cf.3
+        for <git@vger.kernel.org>; Wed, 17 Sep 2025 01:51:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758099100; x=1758703900;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KaHHufFDlm0LCThFTU8LLf7magUbENCnILPQnwTMRMM=;
+        b=QeoRZQlxasdXs7iYUDxCNHsJEyQmsgVU91WfQl3hSgR4JmeJPW0ru6OtN9GmzEwiPZ
+         7uSrlLWh/sL1j2KOji+RD1tR+ObtB9TRrr7uIuj+zj/dTF9jiCtEkSZtRc9O5+T1SuXQ
+         m503VEJHzAN2qHYjY55TYVnDMF/R2LdgArpqSUmlZoIZUo9eU/fS/aB+kXULl2XKQok3
+         nnd44EYlInB6sImcnOBKIosrWYkN6m4+JoEXHGQnxturdalyixw6PgxJoKli0lOzwzOM
+         ZCd/3aCgXN+XohzbXphAdscsRv/2N1AvjK6/mVxGqogEPK2YyYWgmAk63/aavNtY37Jq
+         jwCg==
+X-Gm-Message-State: AOJu0Yw0MrUFhyGV6uprAym9H1whInhA5CUJwsDnV10zdN1BEh14H3Lt
+	AretpWKjsOV54rX0HXz1pePCAkAe6FmTNl+vGLyObD9GT29uJIjVJGmUnNzC8Uuy2j0sFen+5yS
+	9GXOEbdkcv8psd8/Z3mwMCnhwWU35zh5FUpYm
+X-Gm-Gg: ASbGncvCXJu6f5Lr0zI+gOIHMIPGYoYPaZvCJd7LYLC09zRj0gwGCmoY8PttSr6Eruj
+	agb252Rq0RjMfAh8w+5fRHPHEPXuRPWqrX2LsSmeb0cc+4puDJcgjHRkYZc2ckuKo/gfhtxYFQf
+	ZjV7rVjYjzMeigOqri8kKzbPztNrfcOjRbP/Pv53F0hTqjPh3LGZw0fhvw5cn9ZdM6DcIuuu/eI
+	9X+lzJIpWRInt8z5RVMx5QoHMlbzfhC2Gc2YgCB
+X-Google-Smtp-Source: AGHT+IHtqjeiYKIJwkGfPsKDiYl6cmo/tQUbUchXpkoMhuvDeM/W8X7ZBH6m9O3o9fHK0jtVjtCneeGga1ZC6yAHpVQ=
+X-Received: by 2002:ac8:5f50:0:b0:4ab:63f8:ef30 with SMTP id
+ d75a77b69052e-4ba66d15859mr11701341cf.3.1758099100148; Wed, 17 Sep 2025
+ 01:51:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
+ <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com> <6a27e07e6310b6cad0e3feae817269b9b8eaed69.1758071798.git.gitgitgadget@gmail.com>
+In-Reply-To: <6a27e07e6310b6cad0e3feae817269b9b8eaed69.1758071798.git.gitgitgadget@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 17 Sep 2025 04:51:28 -0400
+X-Gm-Features: AS18NWD4qK-fZrJ5P6IAr1YwbpoVkm_NtdSZ-o9ofHDRLS7DP2US5FQ4MPAFeTk
+Message-ID: <CAPig+cTZch_pvfurtjBTNphMeRQL6jSBSjNY-4mffjoXZ4eqcw@mail.gmail.com>
+Subject: Re: [PATCH v2 13/18] build-helper: link against libgit.a and any
+ other required C libraries
+To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Justin Tobler <jltobler@gmail.com> writes:
-
-> Is there any reason that the server should be expected to invalid data
-> to the client?
-
-You mean "should be sending"? Well, at $DAYJOB we've had some
-unintentional misconfiguration that led to a similar failure[1]. I
-wasn't able to reproduce the exact same failure in test, because it
-requires to pass different configuration to the `GET info/refs` and
-`POST upload-pack` handlers, but the effect is the same.
-
-[1]: https://gitlab.com/gitlab-org/git/-/issues/564
-
-> If the server is misconfigured, I wonder if it should
-> instead handle this issue by not sending the invalid bundle-uri in the
-> first place and printing a warning message on the server-side. From
-> client perspective, if it's a server-side issue there may not be much
-> they can do about the error and it could cause some confusion.
-
-I can include a server-side fix in this series as well, but that doesn't
-hold back there might be servers out there in the field that don't have
-that fix and still serve invalid data. I think ideally we should fix it
-on both sides.
-
-
->> Signed-off-by: Toon Claes <toon@iotcl.com>
->> ---
->>  connect.c                   |  4 ++--
->>  t/t5558-clone-bundle-uri.sh | 25 +++++++++++++++++++++++++
->>  2 files changed, 27 insertions(+), 2 deletions(-)
->> 
->> diff --git a/connect.c b/connect.c
->> index 8352b71faf..d2e2bd8cce 100644
->> --- a/connect.c
->> +++ b/connect.c
->> @@ -536,8 +536,8 @@ int get_remote_bundle_uri(int fd_out, struct packet_reader *reader,
->>  		if (!bundle_uri_parse_line(bundles, line))
->>  			continue;
->>  
->> -		return error(_("error on bundle-uri response line %d: %s"),
->> -			     line_nr, line);
->> +		warning(_("ignore invalid bundle-uri response line %d: %s"),
->> +			    line_nr, line);
+On Tue, Sep 16, 2025 at 9:18=E2=80=AFPM Ezekiel Newren via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> build-helper: link against libgit.a and any other required C libraries
 >
-> If I'm understanding correctly, an error here indicates some sort of
-> issue between the client and remote Git server while figuring out the
-> bundle-uri capability.
+> Don't link against the C libraries when building with Make or Meson.
+> Run cargo tests like this:
+> cd rust && cargo clean && USE_LINKING=3Dtrue cargo test
+>
+> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+> ---
 
+Perhaps it's because I haven't been following the discussion closely
+enough, but the above commit message leaves me entirely in the dark.
+After reading and rereading it several times, I suppose it is trying
+to address some difference between building with `cargo` vs. building
+with Make or Meson, but it gives no explanation of what the
+differences are or what problem it is trying to solve. So, please
+enhance the commit message to begin with the "why" and then proceed to
+the "what" or "how".
 
-> I think it is reasonable for the client to always
-> expect the server to communicate in a way it understands and IMO should
-> probably be handled by fixing the server-side instead.
+> diff --git a/rust/build-helper/Cargo.toml b/rust/build-helper/Cargo.toml
+> @@ -4,4 +4,3 @@ version =3D "0.1.0"
+>  edition =3D "2021"
+>
+>  [dependencies]
+> -
 
-Ideally yes, but broken servers exist now. Having clients deal with it
-properly is anyway advised in my opinion.
+This seems merely to be deleting a blank line which probably shouldn't
+have been present in the first place. Rather than fixing the "problem"
+here, it would make more sense to eliminate the blank line in the
+patch which introduced it in the first place.
 
--- 
-Cheers,
-Toon
+> diff --git a/rust/build-helper/src/lib.rs b/rust/build-helper/src/lib.rs
+> @@ -0,0 +1,84 @@
+> +use std::collections::HashMap;
+> +use std::path::PathBuf;
+> +
+> +
+
+If I'm not mistaken, it is uncommon to have two blank lines like this
+in Rust code.
+
+> +fn parse_bool_from_str(value: &str) -> bool {
+> +    match value {
+> +        "1" | "true"  | "yes" | "on"  =3D> true,
+> +        "0" | "false" | "no"  | "off" =3D> false,
+> +        _ =3D> false
+> +    }
+> +}
+
+Or, more simply:
+
+    fn parse_bool_from_str(value: &str) -> bool {
+        match value {
+            "1" | "true"  | "yes" | "on"  =3D> true,
+            _ =3D> false
+        }
+    }
+
+(Though, admittedly, I'd probably lean toward writing the function the
+same way you did.)
+
+> +/// To build without linking against C libraries run `USE_LINKING=3Dfals=
+e cargo build`
+> +/// To run tests set GIT_BUILD_DIR and run `USE_LINKING=3Dtrue cargo tes=
+t`
+> +pub struct BuildHelper {
+> +    crate_env: HashMap<String, String>,
+> +}
+> +
+> +
+
+Nit: unnecessary extra blank line
+
+> +impl BuildHelper {
+> +    pub fn build(self) {
+> +        let use_linking =3D parse_bool_from_option(self.crate_env.get("U=
+SE_LINKING"), self.crate_env.get("CARGO_TARGET_DIR").is_none());
+> +        ...
+> +            println!("cargo:warning=3D{} is not linking against C object=
+s, `USE_LINKING=3Dtrue cargo test`", self.crate_env["CARGO_PKG_NAME"]);
+
+There are more than a few developers on this project (including
+myself) who still use 80-column editors and terminals. As a general
+style guideline, this project does recommend wrapping code to fit
+within 80 columns (except in cases when doing so would severely hurt
+readability). I imagine that the same sort of guideline would be
+appreciated in Rust code, as well, by those who still stick with 80
+columns.
+
+I bring this up because, although it hasn't been such a big deal with
+the existing C code, assuming that developers run `rustfmt` on the
+code before sending a patch series, then this may become an issue if
+different developers have `rustfmt` configured to enforce different
+maximum column width, especially since `rustfmt` is likely to reformat
+the entire file rather than just the region that has just been edited.
+So, if this code gets checked in as-is with these very wide lines, and
+then someone else, who has `rustfmt` configured for 80-columns edits
+the file, then it becomes a problem.
+
+As such, can we also add a project-wide `rustfmt.toml` which, at
+minimum, sets the maximum line width to 80? For instance:
+
+    max_width =3D 80
