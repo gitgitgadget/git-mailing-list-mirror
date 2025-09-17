@@ -1,64 +1,68 @@
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2402AEFD
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 21:33:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D24230B50C
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 21:33:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758144820; cv=none; b=Qf9pcfo2uJ+NEF9LzK8w9oXYm6dz0K3ZuMxwiYl6+CdWxj4G5sBOfvB9DgvuDEqqke3jBwvWjSpZ6FRe4Dgh4eLye2Kt8b45dS8cBCfKN9RhTemOwC6mrVpywpbzDYPwn49CrE9f4VzFE+8URZZsEoYShPefi0gJFkbbfVnWLhk=
+	t=1758144823; cv=none; b=S4gWEF+zI6yS+J6fciSZ2c9h3O48MrDfBW5sD+TMw1FMYyV6H7QoL1nrRQsa0IE6QRWMZ9exwWH7QH9KJZsUxguAY9W1OAwoLrSqo3fedW01FpR47NtLKIuDPAkyB66TTTSEH9vZIwZrPIkSJp60njbRj9M3MULeCMS/U38NkYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758144820; c=relaxed/simple;
-	bh=yxat3McZH8Ur1eYvU2MIY2E5wYsD1Gnr+Wvu8FTVAdo=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ixl5/6TKcUyhQKbVID0osQJ1W0p/+xzifrK+uqvxpoE3oh1VM2kTcZYNANEY8kPoHclkU1ObZHVwUxr/ixN/u+QrxvA0xqHrwU+gC0TA4DrJj4ijZCIN+0ePamUaxRK6F1IBZm5tDhOtMI8kGfG4gi0beaBbesozNeTKnRSINXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MQeq0HL9; arc=none smtp.client-ip=209.85.166.179
+	s=arc-20240116; t=1758144823; c=relaxed/simple;
+	bh=1bL8sCF1/lN0Mq63XOdT+ydNwlC8BVXuUMNBg8ylj1s=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=VDWuVFrIIMWLv5Yp3j6mhel42uZqeeLEpFupaOsLCiEoiue+k72ne0XqOltytBQt0VexVAkHDlafQbVMGokZa5XfrYfF8KrfzlSfTxU94g4FHN5sK3/55smyrzxFn84spnMMI+0jvNK/JaRQkqtEFdOyfF5bKuLbacrn+E0Ht7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XVhYGbIR; arc=none smtp.client-ip=209.85.166.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MQeq0HL9"
-Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-4234e6c0762so1087685ab.3
-        for <git@vger.kernel.org>; Wed, 17 Sep 2025 14:33:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XVhYGbIR"
+Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-88432e29adcso10818539f.2
+        for <git@vger.kernel.org>; Wed, 17 Sep 2025 14:33:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758144817; x=1758749617; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758144820; x=1758749620; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=5/aAJxcnclp+efder/xzrCXlNg7MIGRy4qOgD9Ff+jI=;
-        b=MQeq0HL9ONg+zx5GOyH62yaDhw7hHJnOAsyvgB4P0Lzkl02OQMvZV20so14l00CD/j
-         zzOa4QcVB51E5InV8gQtoBMA3Ctkj272zEBvi0E33cmoZuFGhGaQaBFG4/FCc6ZKLq/8
-         9zq0+HlG7Anz3QsveRS3WWu92Wf0VYwXYHMDcO10kkBAKLbNhsQWmGEWSKFUASdhi9vT
-         NS0sUlpq4A+rC0flWDsy2GjIdzyz1VtS7kmepzcjzHeCOANdrQYpqQuf7rV7KZMIEtT/
-         dXPLn+vavx1NClEp0KYmJzbIMr5/YYK7z7UAtageN6bZSPGefGONoq5xhyMc1ZDOLqqC
-         r2rw==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2sLMgSAWD7UJq0/pueGygONMWzPMsUGfcTP1e+jckQw=;
+        b=XVhYGbIRkfMVLZftQwQn4oYwLiIwBov085aRNCSp3uLfqERG4njm3UMBQrxN7+qne+
+         sxgEnjv6FgGC9ui9ctAA1by081nPuUCncWGHBD96znSsb8aGg+j4RNYmtjidgnnIxG5O
+         0dSEmw1kDQoJ+TbQ/ELyOLF8UZta9lQlH95udlJRZ1ZWMXyAGaIqPx1TeFftMDdmp5Gq
+         oPeDLPdg2UltRzzcwRRdafJiXHM4qRzlEMAVq+8nHJycz2B7ZDGbnKHZnaGx5BP/7l4p
+         Iae09wNyR+/KjxDyKB+dEZPRvSxnv0RUFQjxNacAjDbP8QI7t3wJrgF4GSYujyEE+8m1
+         5e4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758144817; x=1758749617;
+        d=1e100.net; s=20230601; t=1758144820; x=1758749620;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5/aAJxcnclp+efder/xzrCXlNg7MIGRy4qOgD9Ff+jI=;
-        b=c2DqNG1wah1JQZLQIJmAY8CYxKzO/p56L2kRVoEZBuQ2mKOP9pBbypcPCVIVFoU7h8
-         Uv/FJw5z91mqs9Rnogo4NiG+F45BNG5J3J81IGxUTUHdkohVAo9/3uIW628pdZc6LkkL
-         cWfVTdthheqxcYvYSzvuDK08ZaRzVL5JX/4uw9u/FXHPW8HpMhFefjUpFd9Vsv8MhD8o
-         E747DR9JSIQdIJ/QxKyFZhrPnn7XsO+R/YQg21wc5vkPp2INgjyHfC2n6y1auZ0L/ht4
-         Ixjw1caM2Ggq5lNuQ2Yfyt6D7J1FEZ5FCWdpxznBYs9YdkKPa96xLwAtSkEKQvbxrJWz
-         E3tA==
-X-Gm-Message-State: AOJu0YwMHcT/0yuUaUiylugiCj/jcyf1ptTUZ+MS/7nHDOEcRlWaO7nP
-	oeivS6yicVtZe+//rQFNzAZH56PsddQOjkK3nVC+NVDyvnKye9Lnej42aet1nA==
-X-Gm-Gg: ASbGncsiXrI+CUNYOjs6fQubkTSEYPW94AAn5/N4gcrXW9ltPfIP5QhDBv0ayrUUeVd
-	ZmdHvhmq7m8hBHFUDnfVV6toQB5obArdjMAbHIB61bZYKxtR9tt/iWQWLQUj0zjiqYCRAyA5gCd
-	X99dH9Sp/Qku9xh9fjwzu2Q8B2Ht3gJPspg+aJE2dkN7+EfH2l9+bbojYE9k2P+0f4IXNiyOlrw
-	uOlMD9ePajLM/zQ8PQ1YldCyQ5k5gaOZm38NPnCQcDja7LAMOUBgWm1w6Ji/rfWJnEKqLYk6iyC
-	D0sebEstOoH0zZWuQFiSDEYnsvDDmmstwr6kAV9B3qEdDqMrIMM2SijfG+AJpEHyxn0R3XGulZW
-	jJHH0D+b9sYIrfQXUObvkJvEOimx+fDrABIeRkM62aLLSIlIaDwtYfqI=
-X-Google-Smtp-Source: AGHT+IFk3ZGidTD0qN4svEoiBMWJe3eZ6GDUI0do+CyHNG4y+D0ZEr2tya6FJUQ2F+PnUqKxWhvIaA==
-X-Received: by 2002:a05:6e02:b44:b0:412:fa25:dd54 with SMTP id e9e14a558f8ab-4241a4f028cmr57152985ab.14.1758144817262;
-        Wed, 17 Sep 2025 14:33:37 -0700 (PDT)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2sLMgSAWD7UJq0/pueGygONMWzPMsUGfcTP1e+jckQw=;
+        b=eo1LbEf7C1kvDwVxo01+zJLqtBIR0mf/xpqWWgYoKER7eiEvbPEAZ1KumvYylatVK1
+         kJVFVAGCO/eRNMzQG/lXnUWwLR5kCGU4KLM3aDkamjr0/pvnWChK1bALcXfY4if3ZLSF
+         Yh28IgBDJob2OUJfNSjTeEUybfn1cZEBmhF+ZBci4EKmGfji6HZXpfw9BCe5Hm406Wv1
+         MdykyRRwvBGv4Iig0krurOzP6fn+bdZlMzKyJvoZPSA412iOp3qbQP/11Y9fE1iRs4+r
+         sWjcYXhs77BytjR2pTL53iphWz1sHyMok/DneN8ZtzIqAWFyuvodRcMDOwo2FuKEZAHo
+         o7NQ==
+X-Gm-Message-State: AOJu0YyyDeratnuMfLnUUVClzej8IB1fy6kctUKWmcoKbeT/ssMZ8Qfz
+	6O5x/Xg72ZQx3HsL6YcP1GQB+Dk4jSg5Feju50Zcz8ZdEmbRsAejlyYZNa/Csvj/
+X-Gm-Gg: ASbGncvWsY0n5UiH/x3SPydurMZaiw6+B+lXY7rni9tmTKt4LDPALH66ACPS5nAJjQo
+	T8aeBC+qAGs/5EQSGYPcl6XdKh/krAy59WNuXPhCJStM/7QdGHUEqcjyEVlEAPab+E5dLZeDT6k
+	CSQxGfoDHcmqPauujC6uBsbALTH5PjRVjH9JznZ6xjzjUEBt+CpldQPohBPrKvNK4nPxPB2eis5
+	h+RY36F7SQOvX9yZL04Sw1ul8mnuAUj1F/9yQW0+q7kurdHvg7Jnk2FyEYdcu55yarbsd5htZtP
+	tWNUaFfMs5VjAKvOJ7CMegqN+trnsBdaGUWvcz6XjOsIHsq0/YZL6Oj3qQWOPg7xXkH8aVeOdKb
+	0DwoQCV3b/YzF+Eu2U/c87rShtqg2kduxcaxsoGgNc8armTpZgM1lW/k=
+X-Google-Smtp-Source: AGHT+IH86yJtCw/koBarxDUUYmWiSQw4As5vLx1CJuhlbMJ+h7cRS8umyD66m7YbQSWXUedO9CrVGA==
+X-Received: by 2002:a6b:7f43:0:b0:887:7723:3c72 with SMTP id ca18e2360f4ac-89d1e4f5efbmr503912239f.8.1758144820086;
+        Wed, 17 Sep 2025 14:33:40 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.133.184])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-53d50aa6538sm193916173.51.2025.09.17.14.33.36
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-8a46b2f315asm23219939f.3.2025.09.17.14.33.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Sep 2025 14:33:36 -0700 (PDT)
-Message-Id: <pull.1973.git.1758144815.gitgitgadget@gmail.com>
+        Wed, 17 Sep 2025 14:33:38 -0700 (PDT)
+Message-Id: <2f2dc22c47530445bce50f1bdef9630b046677bd.1758144815.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1973.git.1758144815.gitgitgadget@gmail.com>
+References: <pull.1973.git.1758144815.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 17 Sep 2025 21:33:33 +0000
-Subject: [PATCH 0/2] doc: git-push: clarify section
+Date: Wed, 17 Sep 2025 21:33:34 +0000
+Subject: [PATCH 1/2] doc: git-push: create PUSH RULES section
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,52 +73,153 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Julia Evans <julia@jvns.ca>
+Cc: Julia Evans <julia@jvns.ca>,
+    Julia Evans <julia@jvns.ca>
 
-This is a continuation of the changes to git push, from
-https://lore.kernel.org/git/pull.1964.git.1756240823.gitgitgadget@gmail.com/
-. These changes to the refspec section got kind of big so I'm moving them
-into a separate topic.
+From: Julia Evans <julia@jvns.ca>
 
-Since the last review, the main change is to move the rules for pushing out
-of the section and into their own section ("PUSH RULES") so that it can be
-easily referenced from other places in the man page.
+Right now the rules for when a `git push` is allowed are buried at the
+bottom of the description of `<refspec>`. Put them in their own section
+so that we can reference them from `--force` and give some context for
+why they exist.
 
-I don't love the nested list in PUSH RULES but the sentence starting with
-"If the source is a tag or commit object..." is really a tough one to read,
-it's not going to be relevant to the vast majority of people, and I think
-keeping it contained inside a bullet point will make it much easier to skip
-over to get to later information which is more likely to be relevant to
-folks.
+Having the "PUSH RULES" section also lets us be a little bit more
+specific with the rule in `--force`: we can just focus on the rule
+for pushing for a branch (which is likely the one that's most relevant)
+and leave the details about what happens when you push to a tag or a ref
+that isn't a branch to the later section.
 
-Other changes:
+Signed-off-by: Julia Evans <julia@jvns.ca>
+---
+ Documentation/git-push.adoc | 93 ++++++++++++++++++-------------------
+ 1 file changed, 44 insertions(+), 49 deletions(-)
 
- * removed "+:<dst> is optional.", from Junio's review
- * kept "+ is optional and does the same thing as --force", since now the
-   push rules are in their own section.
- * fixed the fully expanded refspec form (main:refs/heads/main =>
-   refs/heads/main:refs/heads/main)
- * switched from a numbered list to an unordered list, from Junio's review.
-   I think the numbered list looks a lot nicer in the terminal output, but
-   it's true that there isn't any order. I briefly attempted to understand
-   how AsciiDoc's nroff (?) generation works to see if it's possible to make
-   unordered lists indent with fewer spaces (2 instead of 4) but I was left
-   feeling that nroff/troff/etc are not for mere mortals like me to
-   understand.
- * made it clear that "tag v1.0" is not really a refspec, from Junio's
-   review
-
-Julia Evans (2):
-  doc: git-push: create PUSH RULES section
-  doc: git-push: rewrite refspec specification
-
- Documentation/git-push.adoc | 198 +++++++++++++++++++-----------------
- 1 file changed, 102 insertions(+), 96 deletions(-)
-
-
-base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1973%2Fjvns%2Fclarify-refspec-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1973/jvns/clarify-refspec-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1973
+diff --git a/Documentation/git-push.adoc b/Documentation/git-push.adoc
+index d1978650d6..193016e291 100644
+--- a/Documentation/git-push.adoc
++++ b/Documentation/git-push.adoc
+@@ -91,48 +91,6 @@ is ambiguous.
+   configuration (see linkgit:git-config[1]) suggest what refs/
+   namespace you may have wanted to push to.
+ 
+---
+-+
+-The object referenced by <src> is used to update the <dst> reference
+-on the remote side. Whether this is allowed depends on where in
+-`refs/*` the <dst> reference lives as described in detail below, in
+-those sections "update" means any modifications except deletes, which
+-as noted after the next few sections are treated differently.
+-+
+-The `refs/heads/*` namespace will only accept commit objects, and
+-updates only if they can be fast-forwarded.
+-+
+-The `refs/tags/*` namespace will accept any kind of object (as
+-commits, trees and blobs can be tagged), and any updates to them will
+-be rejected.
+-+
+-It's possible to push any type of object to any namespace outside of
+-`refs/{tags,heads}/*`. In the case of tags and commits, these will be
+-treated as if they were the commits inside `refs/heads/*` for the
+-purposes of whether the update is allowed.
+-+
+-I.e. a fast-forward of commits and tags outside `refs/{tags,heads}/*`
+-is allowed, even in cases where what's being fast-forwarded is not a
+-commit, but a tag object which happens to point to a new commit which
+-is a fast-forward of the commit the last tag (or commit) it's
+-replacing. Replacing a tag with an entirely different tag is also
+-allowed, if it points to the same commit, as well as pushing a peeled
+-tag, i.e. pushing the commit that existing tag object points to, or a
+-new tag object which an existing commit points to.
+-+
+-Tree and blob objects outside of `refs/{tags,heads}/*` will be treated
+-the same way as if they were inside `refs/tags/*`, any update of them
+-will be rejected.
+-+
+-All of the rules described above about what's not allowed as an update
+-can be overridden by adding an the optional leading `+` to a refspec
+-(or using `--force` command line option). The only exception to this
+-is that no amount of forcing will make the `refs/heads/*` namespace
+-accept a non-commit object. Hooks and configuration can also override
+-or amend these rules, see e.g. `receive.denyNonFastForwards` in
+-linkgit:git-config[1] and `pre-receive` and `update` in
+-linkgit:githooks[5].
+-+
+ Pushing an empty <src> allows you to delete the <dst> ref from the
+ remote repository. Deletions are always accepted without a leading `+`
+ in the refspec (or `--force`), except when forbidden by configuration
+@@ -145,6 +103,7 @@ the local side, the remote side is updated if a branch of the same name
+ already exists on the remote side.
+ +
+ `tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`.
++Not all updates are allowed: see PUSH RULES below for the details.
+ 
+ --all::
+ --branches::
+@@ -332,14 +291,12 @@ allowing a forced update.
+ 
+ -f::
+ --force::
+-	Usually, the command refuses to update a remote ref that is
+-	not an ancestor of the local ref used to overwrite it.
+-	Also, when `--force-with-lease` option is used, the command refuses
+-	to update a remote ref whose current value does not match
+-	what is expected.
++	Usually, `git push` will refuse to update a branch that is not an
++	ancestor of the local branch or commit being pushed.
+ +
+-This flag disables these checks, and can cause the remote repository
+-to lose commits; use it with care.
++This flag disables that check, the other safety checks in PUSH RULES
++below, and the checks in --force-with-lease. It can cause the remote
++repository to lose commits; use it with care.
+ +
+ Note that `--force` applies to all the refs that are pushed, hence
+ using it with `push.default` set to `matching` or with multiple push
+@@ -508,6 +465,44 @@ reason::
+ 	refs, no explanation is needed. For a failed ref, the reason for
+ 	failure is described.
+ 
++PUSH RULES
++----------
++
++As a safety feature, the `git push` command only allows certain kinds of
++updates to prevent you from accidentally losing data on the remote.
++
++Because branches and tags are intended to be used differently, the
++safety rules for pushing to a branch are different from the rules
++for pushing to a tag. In the following rules "update" means any
++modifications except deletes. Deletions are always allowed, except when
++forbidden by configuration or hooks.
++
++1. If the push destination is a **branch** (`refs/heads/*`): only
++   fast-forward updates are allowed: the destination must be an ancestor
++   of the source commit. The source must be a commit.
++2. If the push destination is a **tag** (`refs/tags/*`): all updates will
++   be rejected. The source can be any object
++   (since commits, trees and blobs can be tagged).
++3. If the push destination is not a branch or tag:
++   * If the source is a tree or blob object, any updates will be rejected
++   * If the source is a tag or commit object, any fast-forward update
++     is allowed, even in cases where what's being fast-forwarded is not a
++     commit, but a tag object which happens to point to a new commit which
++     is a fast-forward of the commit the last tag (or commit) it's
++     replacing. Replacing a tag with an entirely different tag is also
++     allowed, if it points to the same commit, as well as pushing a peeled
++     tag, i.e. pushing the commit that existing tag object points to, or a
++     new tag object which an existing commit points to.
++
++You can override these rules by passing `--force` or by adding the
++optional leading `+` to a refspec. The only exception to this is that no
++amount of forcing will make a branch accept a non-commit object.
++
++Hooks and configuration can also override or amend these rules,
++see e.g. `receive.denyNonFastForwards` and `receive.denyDeletes`
++in linkgit:git-config[1] and `pre-receive` and `update` in
++linkgit:githooks[5].
++
+ NOTE ABOUT FAST-FORWARDS
+ ------------------------
+ 
 -- 
 gitgitgadget
+
