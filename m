@@ -1,217 +1,177 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDCF5332A45
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 14:53:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A354333AB9
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 14:54:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758120827; cv=none; b=d6K4Nci7XtwcK1xay9Hvngmtkw5PNh6zrecdunhebQDj3YkHQQ4n5lJiUw7eA/errRGwnMmLCc6/y4q3YpqX7AAkcDT3gHqSP5xcD4eaHkjPsYRqsPVUKjamTsVJM3uLV7RQIljs6qCnrPsQz3s8DYwHQixYpCc1cTJ7jNigoZk=
+	t=1758120865; cv=none; b=P7Msqk0O2ry1pnGWs08wMB5uiuG0t7S6fNchKMEEpfDOo4weIVM9TSwC+r0ZhVCmuMV3berR4o6QCLYI088N1YfQI2PLmLpQGGbAORiKEZsmbeMybRtUpLhA5xBUPJ03EwiKfShWtwohQFBUjJhE2zXUWR8wX9PZDro2PJuJ4PY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758120827; c=relaxed/simple;
-	bh=G+q/PaWwAViLI/YWHlTAAHdP+ucGdLR2kqvQP57/3Ak=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=JYKraLnW1lVisDMT/roMBt8cAJOZ/EccNwFjhT0nvsZWEeZLm1I3wN3hhkIt8unakzRVCj/n7kb3QUHIJI3c/rRGVAuUJQnPs3Lbz7o6ahlIgUyhXZ/k9emAKCHoFf0E4zyz3pzJt2aN1Z2WJ2V8AfOB6sWfoF4whh8oAkLHT0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FEOjtDZl; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758120865; c=relaxed/simple;
+	bh=xXBMVnQLDsAeeWSAJhtNtYkT7YIeAO6Yr1wf5Got0tI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=poxftGe7yBJCizDpSZ9L9YhNWanpuuWA+F62GLNMyZa/FESy3ygvEMc1Ig4cpu2fzwGWbBj63PQckBAA77gnqQ0nT7ICOnjfiNkpLw896YRo51HxD3DSS706pzm6tjlROW8pVoG6J0YCVT4O1jRuPEa6vCq72RwtUeylp8RYTek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LLei1LyO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IjQ/DDFt; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FEOjtDZl"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-45f2b062b86so25900855e9.1
-        for <git@vger.kernel.org>; Wed, 17 Sep 2025 07:53:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758120824; x=1758725624; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TmRKUYLfzeD/i2q0Rd0Yx2X3XTlznnl7mqmjPHCGP28=;
-        b=FEOjtDZlrbGIvY5JjrKLrB2xJZ3Bd9585qKkHktzcVO+EU4EA9+VjLLrDBNSHDE25w
-         kUVrBkpZ7gkAIfKWEHYCdP8zNVR+6jhj7VDsumOXYM4PggIQ0YzUyVfkq8UVF9IjrU1o
-         SZVztLmrNi/FoLt7mMsy7Qwdy7Jay/rQ59H97svtUhw9X1dx4JKmSYko/+vkgQT3tOSd
-         aTEu/ciUR40H9xN1WtbTBhriucB2EBC5OpDMbnfMlbHC1qhSEHxAjVo38cu1nsL8d2oG
-         MthUg5qX4rODMbx1hB1wmYdAvai7im4Hpud+LhasC9Z00BDh/aYEplhA3/PDV4Hp147g
-         E9dQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758120824; x=1758725624;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TmRKUYLfzeD/i2q0Rd0Yx2X3XTlznnl7mqmjPHCGP28=;
-        b=WaP9OYya+UG3mFVv/Ua00FykV+9QyGpL3dZYIg3RmfJ4OU+RdAe5K0m7CvmKzWZpqy
-         R13ZArFJ8undCfDMfruyt/0KdXdxjDQr3KwPoaRbli0sv2Za2DrhTexmafOeansyFDa4
-         lxpfjZiH5X19fBbaUjmIr10HhjMCxSnU6gozlDklx7A09eINrn++fD1qd+5z40+FFvTf
-         q+VmyypbrdCI2OmG9uoTgqbqEInvBTGPxLfTQseQ740fDfW+26Hsa1zhB8kMN4UCYc1y
-         mRdC3uNIm34bymJctyYn/Rr8gnEPF4MpYR40LeBrGYJX3/YDo5jnF/sqGhnKznft7kC6
-         49NA==
-X-Gm-Message-State: AOJu0YzLk6KIOqLiBcI7DYwZMYot9r4YBHFBLi0kgENWeAPlK+TnNbym
-	4id5V+XPGb9kC9bOcbsCMtbbvU/Hur1LiZ8PoJ16E9zUmatrUhFWwX8U
-X-Gm-Gg: ASbGnctq0iBudxX+i4H2qApf6FaLjqWGxAkZuKIGxiAX7q35t1Tw2m2pmCwTMljCET4
-	A/vtcn4yVkdjMXjzeggJzPlJhmL14U7DxwhE/CZ8PDtsya9giUzfmjiPXSrzI0I3HSOf6kTRbhc
-	v9ZAPVTVgth118jpmIdQuNRBGGlS/pfPq40Ya18/aGhyYfz2GyNmZZH/Y3mF7Evze3OVDm58eCn
-	og8AWIEdYABVvjRFHaNMaP9gAdubA4xOfiQGgAGh6jm5naz2EYxDVP0hVuM47znGmav9WbQwt/A
-	mfbiwqdRhizsaZYSKBhuOsVCGswdaw43vNsN0vIP/Eb1q1TVZz1an/TAHfHtVGxHVNje7wUR9hs
-	kxBDZjP/10XZgEfXxzsMoeR8G/pPOJz4cysPYWAfo1vYziSowOI7DnIswjWX/SHjT0BN7izH94d
-	o=
-X-Google-Smtp-Source: AGHT+IESoWpewKQVVxwUOSAYtA/4fXY4Toq+EgnATaYnND5n70idYCoDemE4XXkV+3Mwbvad8e2vQw==
-X-Received: by 2002:a05:600c:5295:b0:45d:d353:a491 with SMTP id 5b1f17b1804b1-462ae1c2be2mr18700565e9.1.1758120822857;
-        Wed, 17 Sep 2025 07:53:42 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45f325c3c29sm42154095e9.3.2025.09.17.07.53.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Sep 2025 07:53:42 -0700 (PDT)
-Message-ID: <70fa7537-3b89-4c3b-9dea-5a7ea0174a9d@gmail.com>
-Date: Wed, 17 Sep 2025 15:53:34 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LLei1LyO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IjQ/DDFt"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F235B140020B;
+	Wed, 17 Sep 2025 10:54:17 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 17 Sep 2025 10:54:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758120857; x=1758207257; bh=Ew9zrdZLzK
+	1+0iFBaaO91sSdWD5ywbJvchZ7i5Y6VZ0=; b=LLei1LyOXvotkJCjZQuJdfbvmc
+	UinoYYfdU/soeGbOdsu3Kqb0KNAekZyhKUVwxjqXYpsAtb++dXlLJ+KZRaQ9eEpC
+	Wb761j7CpLangEE9ZVC0xPccnJHA0lS6tARUO6EaLPs54xviMwRyIm82TW7Jw/WT
+	qGHUnjZya4dfQ71rBMsrqSJSiKppX0bpoAP9/TUNxkzqB0aEtARUyBU2kx2os0H+
+	T3XVKJw4W9H3MnqN92HDLyDjCdy9YeGLvkfS05I8SOv7JruHX1LtImNgAJlcqgWj
+	ZPChASBQfTASF0SyouQ/Jw1nuTcyjUxxBjr+/A1t87mmR41WRsHS4bWKbpsA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758120857; x=1758207257; bh=Ew9zrdZLzK1+0iFBaaO91sSdWD5ywbJvchZ
+	7i5Y6VZ0=; b=IjQ/DDFtiNJXqdu2yLM2WxsYhx5cmb/D2DsLsSk6GKm+OQd0cBy
+	uVXDdmdXsKXUDMCtqxLz/X4hVeL5zzGJCcNUXinEhlzJQzcLiwODs8wcdgPYSP37
+	l3RAZ6ZwIHkrAZswZsV0lWR0QuI3BP0VQ0HN4uH1biyfFPGUWRyOZ9+xoN2XHagl
+	/kqkaq+XvgKXqiCBy1as3NJ4kAcFzUv0yV1dtWMrmfEQyRYAQ0D/X211qEKkeyIE
+	bqS6saaHmz/1bD0iX2F5tzb595ti9ypAGbNugotRRbGIM8vLUiMZ7jSOkt+FzpUB
+	pMjUzTgKtT5BY5nZUaMt7HkDMIeCbmqrUiQ==
+X-ME-Sender: <xms:mcvKaCvxxNp3NfXJ6Xi5_5afyc3B1FIBqHDAMW_3X8ti0g7ANUkeJQ>
+    <xme:mcvKaC_kPVdvREqh7rQIgHwUAxrPycRlB4GBkcT08D0ZE9DsR_F2EMZCXjqF4IRgN
+    1fYQASjwZaSjm4X7Q>
+X-ME-Received: <xmr:mcvKaEOMUWOP-QqNFlEOy2JGhF-oQgbLwzxdJYBVkWnriQx-DcizYzeI-DPcySu5lP3-hIES4FohksDVjpqAfNemWPxHC3DluD5uBsM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegfeejgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtoh
+    hmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegviigvkh
+    hivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:mcvKaIGnlioXXdzNTMM4ygurYsWUgiigh2Jh_VFKu4GF7W-hbMi0og>
+    <xmx:mcvKaKSRi8mjKJ3RXZcZWlzKxf4FTtKZqgBxiCR8U13jgCMbMCDClw>
+    <xmx:mcvKaNuirwY9jE0tdnLKCrhX3RKC3Vvh0pESD7JTDzbqpjOK2ZtMSQ>
+    <xmx:mcvKaKJabqgHJXBD1pppvzHLIXzwguvhFvO20rzxbUH271OReReP6g>
+    <xmx:mcvKaEYB_8i6okg8zk7pll_qeNnCrQd92DY00lbkOCgsU1F-mfeT6bkY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 17 Sep 2025 10:54:17 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v2 07/18] build: introduce rust
+In-Reply-To: <CAPig+cS_=YTBaCjn8-Th3yn3_k+a8_pMOmdv_Dq4S0tfp8BRCg@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 17 Sep 2025 04:26:16 -0400")
+References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
+	<pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
+	<6032a8740c0ba72420f42c3d8d801e1bdeec12d0.1758071798.git.gitgitgadget@gmail.com>
+	<CAPig+cS_=YTBaCjn8-Th3yn3_k+a8_pMOmdv_Dq4S0tfp8BRCg@mail.gmail.com>
+Date: Wed, 17 Sep 2025 07:54:16 -0700
+Message-ID: <xmqqh5x1f7tz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 0/4] breaking changes: switch default initial branch
- name to "main"
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Wing Huang <huangsen365@gmail.com>, Patrick Steinhardt <ps@pks.im>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
- <cover.1757518141.git.phillip.wood@dunelm.org.uk>
- <xmqq4itarqfd.fsf@gitster.g> <xmqqv7lhigb7.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqv7lhigb7.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
+>> diff --git a/.gitignore b/.gitignore
+>> @@ -254,3 +254,6 @@ Release/
+>>  /contrib/buildsystems/out
+>>  /contrib/libgit-rs/target
+>>  /contrib/libgit-sys/target
+>> +.idea/
+>> +/rust/target/
+>> +/rust/Cargo.lock
+>
+> Is ".idea" directory detritus from your chosen editor? If so, it
+> probably ought not be added to this list since we don't otherwise
+> ignore detritus from foreign tools such as that.
 
-On 17/09/2025 10:22, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> We do this without telling them how to permanently configure the
-> default name of the initial branch, and that design choice is very
-> much deliberate.
+I knew that the above was our official stance but somehow thought
+that we loosened at some point to add common ones like *~ and
+*.sw[op] to make life simpler for majority of developers.  But I was
+wrong.  We do not even have *~, which means we haven't officially
+loosened.
 
-That makes sense
-> It also needs to be noted thta the advise token to squelch the
-> message is the same advice.defaultBranchName as before, which is
-> also very much deliberate.  The users who do have that configured
-> are those who _have_ been using Git since before 3.0, and they are
-> not the target audience for the new advice message.  Reusing the
-> same advise token ensures that they do not have to turn the message
-> off.
+But there are oddballs that violate this policy like ".cache"
+introduced by a5c01603 (gitignore: ignore clangd .cache directory,
+2023-08-04).  Three are many other that are *not* our droppings,
+between /.vscode/ to /contrib/buildsystems/out in .gitignore file.
 
-That's good
+    /.vscode/
+    /tags
+    /TAGS
+    /cscope*
+    /compile_commands.json
+    /.cache/
+    *.hcc
+    *.obj
+    *.lib
+    *.sln
+    *.sp
+    *.suo
+    *.ncb
+    *.vcproj
+    *.user
+    *.idb
+    *.pdb
+    *.ilk
+    *.iobj
+    *.ipdb
+    *.dll
+    .vs/
+    Debug/
+    Release/
+    /UpgradeLog*.htm
+    /git.VC.VC.opendb
+    /git.VC.db
+    *.dSYM
 
-Thanks for following up on this. The code changes look good modulo
-the typo pointed out by Kristoffer. I've left a few thoughts on the
-test changes below.
+Some (like TAGS and *.hcc) are our droppings (in other words, what
+"make" with some build targets may produce), but most of these are
+tool specific and according to our original official stance, they
+should never have been added, but there they are.
 
-> diff --git c/t/t0000-basic.sh w/t/t0000-basic.sh
-> index 2b63e1c86c..54ed80ebd4 100755
-> --- c/t/t0000-basic.sh
-> +++ w/t/t0000-basic.sh
-> @@ -220,7 +220,8 @@ test_expect_success 'subtest: --verbose option' '
->   	test_done
->   	EOF
->   	mv t1234-verbose/err t1234-verbose/err+ &&
-> -	grep -v "^Initialized empty" t1234-verbose/err+ >t1234-verbose/err &&
-> +	grep -v -e "^Initialized empty" -e "^hint:" t1234-verbose/err+ \
-> +		>t1234-verbose/err &&
->   	check_sub_test_lib_test_err t1234-verbose \
->   		<<-\EOF_OUT 3<<-\EOF_ERR
->   	> ok 1 - passing test
-> diff --git c/t/t0001-init.sh w/t/t0001-init.sh
-> index df0040b9ac..5fe7b8c674 100755
-> --- c/t/t0001-init.sh
-> +++ w/t/t0001-init.sh
-> @@ -562,9 +562,9 @@ test_expect_success 'init warns about invalid init.defaultObjectFormat' '
->   	test_when_finished "rm -rf repo" &&
->   	test_config_global init.defaultObjectFormat garbage &&
->   
-> -	echo "warning: unknown hash algorithm ${SQ}garbage${SQ}" >expect &&
-> +	expect="warning: unknown hash algorithm ${SQ}garbage${SQ}" &&
->   	git init repo 2>err &&
-> -	test_cmp expect err &&
-> +	test_grep "$expect" err &&
->   
->   	git -C repo rev-parse --show-object-format >actual &&
->   	echo $GIT_DEFAULT_HASH >expected &&
-> @@ -649,9 +649,9 @@ test_expect_success 'init warns about invalid init.defaultRefFormat' '
->   	test_when_finished "rm -rf repo" &&
->   	test_config_global init.defaultRefFormat garbage &&
->   
-> -	echo "warning: unknown ref storage format ${SQ}garbage${SQ}" >expect &&
-> +	expect="warning: unknown ref storage format ${SQ}garbage${SQ}" &&
->   	git init repo 2>err &&
-> -	test_cmp expect err &&
-> +	test_grep "$expect" err &&
+I actually do not mind having common ones to the project .gitignore
+as long as it does not get bloated too much with droppings from
+esoteric tools that majority of us have never heard of.  It seems
+that we have been punishing needlessly Emacs and vim users while
+being sloppy about others' droppings.  A #leftoverbit may be to
+have a brief discussion to gain consensus and add a few common ones
+and/or remove too esoteric ones?  I dunno. 
 
-The test changes up to this point strike me as somewhat unfortunate as
-these tests are perfectly content with the existing advice. I assume
-this stems from us not setting GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-anymore when WITH_BREAKING_CHANGES is enabled. I think we should do
-something like
+>> +$(GIT_BUILD_DIR)/lib%.a:
+>> +       ./build_rust.sh $(GIT_BUILD_DIR) $(RUST_BUILD_MODE) $*
+>
+> I wonder if this should follow the convention of most (but not quite
+> all) other local shell script invocations in the Makefile of
+> referencing SHELL_PATH; for instance:
+>
+>     $(QUIET_GEN)$(SHELL_PATH) ./build_rust.sh ...etc...
+>
+> with or without the $(QUIET_GEN) bit.
 
-diff --git b/t/test-lib.sh b/t/test-lib.sh
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -127,13 +127,15 @@ then
-  	export GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS
-  fi
-  
-+# Explicitly set the default branch name for testing, to avoid the
-+# transitory "git init" warning under --verbose.
-  if test -z "$WITH_BREAKING_CHANGES"
-  then
--	# Explicitly set the default branch name for testing, to avoid the
--	# transitory "git init" warning under --verbose.
-  	: ${GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME:=master}
--	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+else
-+	: ${GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME:=main}
-  fi
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-  
-  ################################################################
-  # It appears that people try to run tests without building...
+Good suggestion.  This reminds me of my favorite gripe, which is
+that "make clean" makes no effort to be quiet by default; perhaps
+leaving a #leftover bit marker here would help?
 
-To address that which will also stop the advice appearing when the
-tests are run with --verbose as well.
-
->   	git -C repo rev-parse --show-ref-format >actual &&
->   	echo $GIT_DEFAULT_REF_FORMAT >expected &&
-> @@ -868,18 +868,18 @@ test_expect_success 'overridden default initial branch name (config)' '
->   	grep nmb actual
->   '
->   
-> -test_expect_success !WITH_BREAKING_CHANGES 'advice on unconfigured init.defaultBranch' '
-> +test_expect_success 'advice on unconfigured init.defaultBranch' '
->   	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= git -c color.advice=always \
->   		init unconfigured-default-branch-name 2>err &&
->   	test_decode_color <err >decoded &&
->   	test_grep "<YELLOW>hint: " decoded
->   '
->   
-> -test_expect_success 'advice on unconfigured init.defaultBranch disabled' '
-> +test_expect_success 'advice on unconfigured init.defaultBranch can be disabled' '
->   	test_when_finished "rm -rf no-advice" &&
->   
->   	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
-> -		git -c advice.defaultBranchName=false init no-advice 2>err &&
-> +	git -c advice.defaultBranchName=false init no-advice 2>err &&
-
-The indentation is changed here but not above. I'd be happy to leave
-this alone, but if we're going to remove the indentation here shouldn't
-we do the same above?
-
-
->   	test_grep ! "hint: " err
-
-Do we want to check the advice that is printed now that we have two
-different messages?
-
-Thanks
-
-Phillip
-
+Thanks.
