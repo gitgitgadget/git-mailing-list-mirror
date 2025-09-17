@@ -1,49 +1,86 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6BE4086A
-	for <git@vger.kernel.org>; Wed, 17 Sep 2025 12:07:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A34132BBE0
+	for <git@vger.kernel.org>; Wed, 17 Sep 2025 12:12:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758110856; cv=none; b=J7cyCRXsbPwkoSGjI9Qxfx/765RA8a59CIRPC0zYptS7CtknpLaJRqrLb/o48pqKvBYiYkj6vc55i0baQZbakLvUVJo9C8gn/yB1oHhtFqRXK4bMURLlKkf6vULqS3klmqeJvSK73bsrcA7P2GHJN03OZ4OU86VRr4B747IfZTc=
+	t=1758111177; cv=none; b=dTTUbQHRh5oTfLrKhhN/SlT97vWL45hrJdsP8NtnXO8cFoh1nKTOupna1AvG+B4kElCADUocu+CRgp/g1dvFCtvdBmVqOT4T+xqQRPg3xMTYhbfyhNVEihqp52B4xX5vKNmGOLvfSxv/SSBsaSiLg4t3FH2OLmOp3d26RuXkg60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758110856; c=relaxed/simple;
-	bh=XFGqed9xt5nRnCGDAl5qxgPu8wCSt/RwcQeaTr989aI=;
+	s=arc-20240116; t=1758111177; c=relaxed/simple;
+	bh=bYyT/GscwWeWlw3zgOok431Oh7cw6fqepK4FRRZUQSU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ow3Hl5ISqIIfR7S4ZZt11d+D+qn3fnQjP9AWQsH8tqo3glLADHFXlhruc6/PYq73I8EjiAccMZM6YY8cNo3VnW75U+pGOcEX/ir+1HYnWYXVDWLq4ROYU6kzoHNkPdnoM0xrfXwAoxtymwDrM9cG5GcSh1+cxaGVTWbRksNIh9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from mop.sam.mop (2.8.3.0.0.0.0.0.0.0.0.0.0.0.0.0.a.5.c.d.c.d.9.1.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:19dc:dc5a::382])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: sam)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id E5B4D340EAF;
-	Wed, 17 Sep 2025 12:07:29 +0000 (UTC)
-From: Sam James <sam@gentoo.org>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Ezekiel Newren <ezekielnewren@gmail.com>,  git@vger.kernel.org,
-  "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  Ben Knoble <ben.knoble@gmail.com>,
-  Christian Brabandt <cb@256bit.org>,  Collin Funk
- <collin.funk1@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,  Elijah
- Newren <newren@gmail.com>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Junio C Hamano <gitster@pobox.com>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Pierre-Emmanuel Patry
- <pierre-emmanuel.patry@embecosm.com>,  Taylor Blau <me@ttaylorr.com>,
-  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v5 0/9] Introduce Rust and announce that it will become
- mandatory
-In-Reply-To: <aMk2mo5OHPNQi0PW@pks.im>
-Organization: Gentoo
-References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
-	<20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
-	<CAH=ZcbB0Qv=b-hdB2EVW-D-dob4NnzyWDYGEThYZm94S0V7OGg@mail.gmail.com>
-	<aMk2mo5OHPNQi0PW@pks.im>
-User-Agent: mu4e 1.12.12; emacs 31.0.50
-Date: Wed, 17 Sep 2025 13:07:26 +0100
-Message-ID: <87plbpffk1.fsf@gentoo.org>
+	 MIME-Version:Content-Type; b=gLtcZAYtxwNnzJn+b6s0QbeFVboADtNNeDEKMrc2NaM7ib/SNuWnn253whRqR/iMnViUUj4kHUGTJHzoFmtf7iGC09MExwdBprxz4GK4E2xrtywE9lCvs1Sts/gNQEdYok8ZoiTmddpRNS3wlhRJq55lTe12TfCPwjoGHAor2QY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cMAcMt4y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A2GS5Fx1; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cMAcMt4y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A2GS5Fx1"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id A7022EC022C;
+	Wed, 17 Sep 2025 08:12:54 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 17 Sep 2025 08:12:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758111174; x=1758197574; bh=G1hjj6xNK0
+	oMbTIgMMHBEOv71+dlmBmTbhEVp1ywHpQ=; b=cMAcMt4yR8n7qZw7728O1ARtAs
+	VdI3cqka0xonlEt1gADG9Yo48TSVFKFz8Z8ppb6/MSbzhQZ2SXZXUhO6me1xx76p
+	gSsZ0NN/NtRdfKtYDx+pLKL8f88f6MUYUROlU4DZS+aiwbni3wVdcyTfxNJpFDp/
+	yPLjUARou6lQm5frHPh8HXI9WdLeW8xAiBoVt558e+MsQtrfszgCD8dgZM1Aoi2c
+	JBbJR2K/DE3SyN/KY6MjcCuGwQpOBxmCYbIPEm/g6LKHv4qCJdP5Rj0gCyzYXcH8
+	YzYlnsCJrncpvmgABoBRR6Ofhaj+p1fW95C/DqNjbbXpN5GOXoQI7yVlnwfQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758111174; x=1758197574; bh=G1hjj6xNK0oMbTIgMMHBEOv71+dlmBmTbhE
+	Vp1ywHpQ=; b=A2GS5Fx1KZ3squxVf9o/MdURyAh3rYhZprAygXf9v9fTxSqK0rH
+	zNyBS9iGUgNOcYcMkcOZFKQ1afQjwm4kSwgIPXcfsQ0wdTTeGnfYoVIiC5PDuhVK
+	+kzszhE3JW9PTS7UMdhEOna6jkwGoSDw4z0hVMOmkd++K8A7N4cG/eIfQ+Fo/OvD
+	JCcu+ppCY+sWc2lHnmapz56RjqC5aBy4F7wZFpX7NMQh/gHtLtHyQIFTC69737MT
+	o5ViRZOglAyPXKvidJ0iXH2h5nqoaJv06js+/+AJoI5FaTy4KkdS8y2JRiSkaQ/X
+	bEZCTzuh+WOixrdUdR0ckiQd0fOR0o1w3cg==
+X-ME-Sender: <xms:xqXKaPfyxnqWL2eiifviT7vR_R4JK2ldvgYBhX6eSdOvxB7oMOsByw>
+    <xme:xqXKaPxqnaB58Aks06pMAkyYt7PzzVdVWrlAAYH3zpsXeEw4UM8kjGORVF54TUM-N
+    szxflNIXM3KhnLGAw>
+X-ME-Received: <xmr:xqXKaFEDldKwuNs5NG0URAUX5GIs11vneK81gehmegcKVOo_rM_AS-oKlZwpcHX8WsaJVVGZYiasDCCkhuO4IDxVtkRhyOGpvHWFloo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegfeegvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprh
+    gtphhtthhopehmrghilhesrghnshgvlhhmshgthhhuvghlvghrrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:xqXKaDxlWoSeF2u9o1ZWxvijLrablxZ9F2aI2txoJ5gIKTt0P4pNVw>
+    <xmx:xqXKaGtQVzsHFv6_2JxdOKxfk0StWN50tPQuiNm1YBeQz3ftZ1NdbQ>
+    <xmx:xqXKaA1z_CpYo3V9BwCBdnhsejg_PWMdhNf-LDe8Gm1ZxZ_zafHzwg>
+    <xmx:xqXKaB-RA475gfssr2MAuNjTwBV3HnqvyS99puS7UDsRLz7iWOFjlg>
+    <xmx:xqXKaPNQbcmCKIUJtyzr5Fxi9Tn_TgS5ToOtp04qlWTcbhw7T745bFgc>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 17 Sep 2025 08:12:54 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Anselm =?utf-8?Q?Sch=C3=BCler?= <mail@anselmschueler.com>,
+  git@vger.kernel.org
+Subject: Re: Why does git-status suggest different commands to unstage files
+ depending on whether there is a commit yet or not?
+In-Reply-To: <CALnO6CCz6dFX1Est0hhCbvaepBvG4+rpYQRQ2bP5vAQVmaY=OA@mail.gmail.com>
+	(D. Ben Knoble's message of "Tue, 16 Sep 2025 16:52:17 -0400")
+References: <5036f7d8-8ac9-4f50-99af-5a3a2d1a07fc@anselmschueler.com>
+	<CALnO6CCz6dFX1Est0hhCbvaepBvG4+rpYQRQ2bP5vAQVmaY=OA@mail.gmail.com>
+Date: Wed, 17 Sep 2025 05:12:52 -0700
+Message-ID: <xmqqqzw5i8fv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -52,59 +89,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-> On Mon, Sep 15, 2025 at 08:03:29PM -0600, Ezekiel Newren wrote:
->> I am currently working on a patch series that makes Rust optional and
->> addresses several concerns that this series does not:
->>   * Rust calling C: Makefile has no way to build or run Rust so it
->> would have to call cargo test, but that doesn't work unless build.rs
->> tells cargo where libgit.a is (among other things).
->>   * Build tooling alignment: My build_rust.sh is called by make and
->> meson which eliminates defining how to build Rust in 2 places.
->>   * Cargo vs Meson: Meson is adding support for Rust and it's getting
->> better, but Cargo is the canonical build system for Rust. cargo is
->> released in lockstep with rustc, and we _have_ to use cargo when
->> building with make because Meson won't be available in that case.
->>   * Crates: Patrick's series assumes the Git codebase is _the_ crate
->>     * cbindgen: Cbindgen outputs a single header file for each crate,
->> with only 1 we'll have an unmanageably large auto generated header
->> file.
->>     * Modularity: Using multiple crates makes Git more modular. Elijah
->> told me that there was some desire to make Git more modular.
->>     * Cargo Dependencies: Patrick wrote his series with Meson first in
->> mind which doesn't address how we'll be able to use crates from
->> crates.io
->>   * CI:
->>     * Sparse coverage: I think there's only one target that tests his changes.
->>     * With vs Without Rust: I don't see anywhere that he covers
->> building with vs without Rust in CI
->>   * Build integration: Meson has to have every .rs file specified
->> where as the default layout of a Rust project allows Cargo to just
->> know where to look for .rs files
+> ... " the following
+> does work in a non-unborn repo to move "newfile" from "untracked" to
+> "staged" and back again:
 >
-> Yeah, as I mentioned my patch series here really aims at getting an
-> minimum viable user of Rust into the Git codebase so that we can focus
-> the discussion more on the roadmap towards Rust rather than the actual
-> Rust infrastructure. The whole infra is very simplistic because of that,
-> but that is intentional for now.
+>     echo >newfile && git add newfile
+>     git restore --staged newfile
 >
-> Once we have agreed on the roadmap I very much expect that we will
-> iterate on it to allow for more complex use cases. My next step would
-> have been to pick patches from your series that make all of this work
-> on Windows. But of course I don't have to be the (only) one to iterate
-> on the initial simple infrasturcture, this should ideally be an effort
-> by the whole community.
+> So we don't need "rm --cached" to
 >
-> And yes, many of the points you mention above are things we'll have to
-> address over time to make Rust a viable alternative to implement
-> anything more complex than the trivial "varint.c" thing. I think that
-> iteration is key here: let's start simple and then gradually build out
-> the infrastructure.
+>> remove <file>
+>> from there [the index] without losing or clobbering the <file> in the working
+>> tree
 
-I think adding external crates especially will need discussion given the
-licencing and "offline" issues (which are solvable but they should be
-examined).
+Now I think about it more, I wonder if "restore --staged" is
+misleading and confusing to new users?
 
->
-> Patrick
+When you teach "git restore" what would you tell them?
+
+NAME
+       git-restore - Restore working tree files
+
+is how "git restore --help" starts.  It is primarily a tool to let
+you repair messed up files in your working tree by copying out of a
+known good version from somewhere, be it from the index or from an
+existing commit.
+
+But the instruction used to recover from unwanted "git add" to
+update the index with modified contents does NOT want to destroy
+your files in the working tree.  You want to repair only the index
+without touching your working tree files, because you added modified
+contents that were not ready to be "staged".  Hence "git restore" is
+used with "--staged" option to tell it to do what it was *not*
+primarily designed to do, i.e. only touch the index without doing
+its usual "Restore working tree files" job.
+
+But there is a lot more appropriate command whose primary focus is
+about the index.  "git reset <file>" would grab the contents for the
+<file> in HEAD and replace the index entry for <file> with it, which
+is exactly how you would move the "Changes to be committed" files to
+"Changes not staged for commit" status.
+
+So I think use of "git restore --staged" in the instruction is
+wrong, and it should be replaced with "git reset" instead.
+
+> (But the point about having nowhere to restore from stands!)
+
+Yes, and the point about having nowhere to reset from stands for the
+state on an unborn branch.  That one needs "rm --cached".
+
