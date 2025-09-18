@@ -1,97 +1,107 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357312BE7D2
-	for <git@vger.kernel.org>; Thu, 18 Sep 2025 19:32:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4947D2FBDF8
+	for <git@vger.kernel.org>; Thu, 18 Sep 2025 20:19:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758223964; cv=none; b=RXzpJFgD2L6wAplmahcStttvBwnKEs7/Xw6JXNbp3PYAOF028llZwbGWlEl4yHuEvhi7LZ9vQq6+KlBKHPrG5+dpcR4xLF2/PnX+4uHuejggzFanOI350zjy91Udupu404cyQ7Yq08K3plr/DWWkSRn25pmWDQBeloFQJGloiNs=
+	t=1758226786; cv=none; b=U0cZSEV1CMGkg7Vk6eNJx+rLYLgflPV3mE1JjiDKAbFKqnBJAucdNpEwfWMebDZyk5qrq1CzaZi1zrsCkYYbfzwsudaOEFKm5Gqmxz/+fl2iJerLKZx5spc+S6I+lDaUXVD0b8mExSVM3lHUCugCpiTk8JpT0QnvFqDHeVSorAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758223964; c=relaxed/simple;
-	bh=utPOrf4gjhS1YQSY/Gf652viVjylpSuuYRzl4hTd9HA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HZEk8A+9R/ONYN6G6lwrQ64puKNITAyaP4pm6CDg0CJxsmtPxROTWIaZe1RhDUpDzt1KexoF9DcML1b/F1LXSz6GBSP5DtrThbkuZZg88qJDVD4DiZxVpo7s65tgOVWeRRZ+8h7n4Fhb1Zpprmj+FifNFKP0wAdIVMbJ4ha5N4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TOYgmg8G; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758226786; c=relaxed/simple;
+	bh=sMqJl5opL8vwMKsnDlX5Pk4R176yZbv3ogY1qrIAH0E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KRLBhNj7r1cRMySEeZA79O9BCqQOTYw24HhT1qj0QkzsoGmZov6SZNMXqT/qJATddWeIfNoOtmAVzzHpFu0Vwaeu6qOUEWBaiXcoEZGQ7JS9ShdpPVRgE7AzTVFTXPK4+F8Fmrugq2nNThH3EMNPf/cDz0Rnzx9O6jUnoDsLBBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fEtyig6O; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=USO5WdUg; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TOYgmg8G"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-45a1b0ce15fso2629825e9.3
-        for <git@vger.kernel.org>; Thu, 18 Sep 2025 12:32:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758223961; x=1758828761; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=utPOrf4gjhS1YQSY/Gf652viVjylpSuuYRzl4hTd9HA=;
-        b=TOYgmg8GW7LySZlSKNt6soB6hHGuaDuJyCA9cl5L5Yfc48eJV7jFOv2AAuP0lKsgBE
-         OQHmFE+Kfq3TK7QIHvWvmOEVA7oFGMUEMY4Ug2/c2O4byP7EYl+Z30EBG8vw9ZIKoe+p
-         u88QAz1D9pdV4Mw0La/wGkXmxVdP0sqy3sO8eJx7X2dcTmTdRMqpobo4OMA+bBcZYgyZ
-         c06SsLJwwqGLRnqmMWZbwcXgyB0UlPssGDlWQnHpJc3AJVvuwq4ZDrIaKuqffJYNdkmq
-         XecS4puDFkRebZX5ODXAOcAyFkIw78DHjfr0/oHN6/oQhQcQaij5ZKMJPyqd6saKFaN5
-         3Xeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758223961; x=1758828761;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=utPOrf4gjhS1YQSY/Gf652viVjylpSuuYRzl4hTd9HA=;
-        b=Vu8VGoNvav3bEqidWf4OmaIKAHqavQnIVoqEGTxReb5txkmKLpXdMQLtjtCEUOk7a+
-         FBGojRz47d91Ie798WLUqItYe/TSciI9YWTLycCHLsHQcUx55Wzew4xkIIvRl3l207iC
-         ChYA87XK6YiYW85OO9Qme+OwBvOzaAk3ZYddR69OyxIapxiG4q7DnMdq8taQdhvnwqo5
-         8r4oTPRCUFLju+HneEIlGkzS9tquQg62nXdrkkXiWjby23C3XmTOEViKXZhxwfsR2Mf6
-         /u6bxZfLWircleZbney2feMo7m2WuTlDSL3Cgr7Faq1K/bns4zViASvJE+907gOHj+qc
-         +g7A==
-X-Gm-Message-State: AOJu0YzkyWSWM7P+Q2x/cmBqL8vq5zTahiBc+NOsDxxxNAJqVj/SRlar
-	PeirFxULVcXIjR94LqgPq6sNtmNiN5l8gDGp+su2TNZpqZZ95ETdOrCO
-X-Gm-Gg: ASbGncsTR8RzMhoQ2IpNyeGPpn7m+q12QZbHp3Es7M7ool8SyElK2ocyz3/e+xDTBeJ
-	K13m6sDarWYPrGVG3rtBtC1uVNxluf+DghmmrBoHoxTDa8rncgaeJntyiyn+CRYjDvhTnomUUg+
-	seMTIVfSUemiSXPSCzbns0DeKSskdvR00FYGgk1CC+jl0p2Zp+MGS/lVHZeo/NrAjBRkkPyI4eM
-	K55J3XP6e1OCIqg7aa5VN3JfTbjXohYBjuC/V6IgqFXG5Daxycum+fErutTWNUw68gZ3KVD6k4l
-	ZxmYsdTbtO+31iTJ1ybWfqRv3jR1SoB+0ElCt3XV0Otai2fb9M0CViiWU/NdGIpimRz1AvCd+xz
-	AdiXV12IqEMGnx3tRHcZ8Dlb6zmrQqpprIFMz6yeNEqhrCD6IJlyzpcVz+aElktM1GkY=
-X-Google-Smtp-Source: AGHT+IFebgGbOTc5iyADFXrqZK1utVKCiHnVuezPnF8x2DlIDNMDtdBd4UtjY+3T21hNuaBDlh7I2A==
-X-Received: by 2002:a05:6000:4008:b0:3e7:41bf:e631 with SMTP id ffacd0b85a97d-3ee84ce6a37mr162020f8f.6.1758223960966;
-        Thu, 18 Sep 2025 12:32:40 -0700 (PDT)
-Received: from desktop (s176125235115.blix.com. [176.125.235.115])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3ee073f53c4sm5096513f8f.3.2025.09.18.12.32.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Sep 2025 12:32:39 -0700 (PDT)
-Date: Thu, 18 Sep 2025 20:32:37 +0100
-From: Matthew Hughes <matthewhughes934@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [QUESTION] how to find options set by scalar?
-Message-ID: <evxbvwwyo4p4iboc4k6r2cd2cvlnm2upgxumqopdijwmvhxhxs@7xvg42heibp3>
-References: <vppjutjcdglp44qvsk4qozphycyg663yrq5775zztim2oe7ty5@uttjrshb52bd>
- <aMkVqNbdgxqBJ9K4@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fEtyig6O";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="USO5WdUg"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 57EE8EC0339;
+	Thu, 18 Sep 2025 16:19:43 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Thu, 18 Sep 2025 16:19:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758226783; x=1758313183; bh=sMqJl5opL8
+	vwMKsnDlX5Pk4R176yZbv3ogY1qrIAH0E=; b=fEtyig6Oeip75Np+qRxjPcHJ/2
+	O5UGFwVJP54ZkaFZCmKOiAwBAyC9V27Gd+0VMYc3YHF2217Sr0Cur/rIDdvGyBbl
+	Nxqd5CMzhgD6o0DvVA59bPBOzrpoX7zFt4S8TYrytqWbKAkF8Ib+QiW6AbH0BYB6
+	B7oLXVU2vb4LdIjRUuGnkTcFAzbxh2DkTTf8cqvT876x+kwcjA4mLW8vEVlRYsWe
+	+4124dwCoVvjewQ/JxQW16t2y5POgwqrNYpZgl7SiVvAJ/GAaEIDbZdNewOhxT7k
+	W886ICuTa5iRhhO8Tehnu0StE6Llyk+PlTyTdx9vWMcVd/ndvYpabspHj1Jg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758226783; x=1758313183; bh=sMqJl5opL8vwMKsnDlX5Pk4R176yZbv3ogY
+	1qrIAH0E=; b=USO5WdUgK22UmJ/elCMBGK+iUSrOZ0yLQN57pUCEEPfXxTDx9Ag
+	FezSqtcTUURQYJzbk/LRkE7LMq3qNVid0ZOG13+Mmz6IDS61+e06Ju1nRHLKJ6FD
+	7L2nkmMnrtrDJ/Oi4pzaIFERF81xQDgGVKSHclGcCJN1u7BH9sEB1bTaJjaoCW+s
+	qbmVTJLKiLMqCNyYhxY/ejRnWbHwM9pQ0R5u4kj7hPqYS3omIdUNYkjQF/u485uq
+	1fCM3xjJZEV2JyX0izC0e84RMk+3yyzJZynXn22PLjyPxDg1fJzLDfoiPPSAtUP4
+	3YAA/BB4zLSwBK/rSHHuLMJUmkQvKX+vrbw==
+X-ME-Sender: <xms:X2nMaOixZA_b6Hfn5EEtMvKwUkBO5rmHKP8sDeocTwEhRM-XYk6qnQ>
+    <xme:X2nMaJk9gKWfzAPX0Mi-GPYR1Jqc7wD9kQFYG9xEIeqE9Hi9eksiX1bkv4udsSgZR
+    jn7xjQMggAKzoBEKg>
+X-ME-Received: <xmr:X2nMaCq-Hf-2BD4EOhHDLKGtY0BxoJEHq_DQdUeMOBkVgKUfFT_FasRF-gWcpOVabSv1HqzMSC2pr4VtzXTDKe0IXjG200CAprhVYxo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegjedvjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepug
+    hgohhlughsthgvihhntdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:X2nMaKHpfMAoVWI0NhfmlGObynIr4Shf14VINQ8IIy8DAkJKpONO7w>
+    <xmx:X2nMaGxtGHwGt4tl6E4J27b0HLl7o8gAfnRkr9kBiGyg0DqWEe9jlQ>
+    <xmx:X2nMaHqyMNgfb_o1WazXAiveeM5YfW4W79KEZmm8fT-y7kVJd88Shw>
+    <xmx:X2nMaIiAujyR-FpAq5i-XqUE9Pk_bQxHltQI7M4t-aCN6n3hgpyNtQ>
+    <xmx:X2nMaBwK9xvObkV5MkUuW_nY7N3dfECS284QGvjps-hp9HvpRZWh4aK4>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 18 Sep 2025 16:19:42 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: David Goldstein <dgoldstein0@gmail.com>,  git@vger.kernel.org
+Subject: Re: [bug] git check-ignore returns the wrong exit code with -v when
+ only a negative pattern matches
+In-Reply-To: <20250918182545.GA1184978@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 18 Sep 2025 14:25:45 -0400")
+References: <CANavNqpHqVgHshUaToS51OGVuvx5FqxROP2PssHW9OELMLeBQQ@mail.gmail.com>
+	<20250918182545.GA1184978@coredump.intra.peff.net>
+Date: Thu, 18 Sep 2025 13:19:41 -0700
+Message-ID: <xmqqwm5v7btu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aMkVqNbdgxqBJ9K4@pks.im>
+Content-Type: text/plain
 
-> But doing this via comments may be viable indeed. A start for such a
-> change could be the following patch, which causes us to write a comment
-> "# set by scalar" after every config that we set in the repository:
+Jeff King <peff@peff.net> writes:
 
-Agreed, I think this would be very helpful to have! I'd be happy to submit a
-patch.
+> AFAICT it has been this way since the inception of the code. I haven't
+> ever used the exit code of check-ignore. I wonder if the current
+> behavior is actually useful, along the lines of "exit 0 if any output
+> was shown, and 1 otherwise". That would justify a difference in behavior
+> between running with "-v" and without. But again, I've never used the
+> exit code so I'm not sure in what circumstances it would be useful.
 
-I was also looking through the list of config options (within
-`set_recommended_config`) and thought it might also be useful to comment why
-each those settings are recommended in the context of working within a large
-repository. These comments would just be in-line in the code for those curious
-enough (I think it would be a bit noisy for general use as comments within the
-config itself) I might dig a bit into the history here, from what I understand
-it started as a separated project[1] before being added to `git-for-windows`[2]
-before being merged into `git/git`, are there any other bits I missed?
+I very much agree with your assessment, as my understanding is that
+the command is primarily for debugging your .gitignore pattern by
+eyeballing the output from it (as opposed to a serious tool to see
+if a particular path is or is not ignored), so I am not surprised if
+its exit code handling is buggy, and I am not suprirsed at all if
+nobody has even noticed it is buggy ;-).
 
-I see there may be some relics from the history that may not be generally
-applicable, e.g. setting `credential.https://dev.azure.com.useHttpPath`.
 
-Link: https://github.com/microsoft/scalar [1]
-Link: https://github.com/git-for-windows/git [2]
