@@ -1,117 +1,151 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581572D3756
-	for <git@vger.kernel.org>; Thu, 18 Sep 2025 20:28:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6736B2D3756
+	for <git@vger.kernel.org>; Thu, 18 Sep 2025 20:28:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758227313; cv=none; b=EviNmEWkWL8+aH8Mbagdx6fDg8pwJlj9Ar8auaMJAhkD+Zb/b3tBe/fd64L7ZKa4dhPVY2fVWjj8L6VI3ty+ERaiCSyOG9uTlG6Cw12sd5oIhhVYYTtIFXVR76byfsqgFq+0m6NLiJ1uRPa3RNvy/iRo/Pjt0axT4j69FER734U=
+	t=1758227337; cv=none; b=oxvAAMDlHAhDhF9X75KCaWn21hkoptKkBNWn0PRaZ1VaZN0Ow2rkC4Jgtfr0A+qmVloMuTQIkVzLsC0FhVn+qLdp5wpMTEDHNOk40yFvNB1TNnfBqijQCq5MSvk0KsE/czsIXpMBbwPcl2xqXJKClFqw+Xni7AScF6jxS+gV/no=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758227313; c=relaxed/simple;
-	bh=rnDX72zTZx6VD1vItFiDmm0+fO8/gvclIUoefYsi/pw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fSE5cYDRG6YGJAiBv7Xovv6FfiNqsehPtSASvskvMybmmcOirUNnFMm0gl4uyOREzLaFTU88XJvoyfjNPuIHUO6Ldmcol++uQ/gFZux3U8hd4sHYr7rmrOMZAQyzBUEHit4oOufafK8cvPToSeg9T9Ql9eM3e6PerTaRrl9eeQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UUuhfO1V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L7TF38dH; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758227337; c=relaxed/simple;
+	bh=yGmmmg0L7O4amZCaN/6ACq/cOLtB+ze+3Nxfr8bSVVY=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=TkChYJgUNji25Q98en1q6GcuxKeXnFg4PBO2BqmCz8IKFszOzv0Fy+3p0gMl8EAFaP1pwlQwSkWoekd4vO9eX4Vc4HxSUge/+Z0n7IyRWeFINIbZlkdWBjkynNC4eda3b00HrQJPTVJcWFox7c5p8dzlhxWrcCROjwaaLrc6jvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=EKexFMg/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XiZwvCNt; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UUuhfO1V";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L7TF38dH"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5380AEC019E;
-	Thu, 18 Sep 2025 16:28:30 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Thu, 18 Sep 2025 16:28:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758227310; x=1758313710; bh=QzQHByY4mH
-	A5gqR3ELkQEI5sTdBDOcKxZDLQcRYzccI=; b=UUuhfO1Vi8IHaDVP1OpmHiqo3C
-	0QhexXwqFSyurUAgAYd8rn6JBmBOKqH+u65oIY8kRC1JYeruvgVzQB6FSfhkt71o
-	wSXeOGi+fumZkQrgVNvjdIwKSMt3bI0gC1RgQfndAJypXgo+hdVjIMltIvtfC1eG
-	Ia3M3FgUsv+4NfRJIRe21VHdwUEDinvSFPyE4vRKhpXBtHGAeIswj2fJ8nHIXqIX
-	ZzWFbXLIUhPlBd+AWMN4gNBaEObtIwucrdeEPjW0YQTvGOQ62n1uRJDcH9hC8wb/
-	23Hnb+/xoSOB4+vxyZn6KdPNWsX/Fz62+pBOVAr6qpB/hi0suY8plqdwy9xQ==
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="EKexFMg/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XiZwvCNt"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 474FB1D002E5;
+	Thu, 18 Sep 2025 16:28:53 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Thu, 18 Sep 2025 16:28:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+	 t=1758227333; x=1758313733; bh=luIEry6HpbLpGhQat6uvRNxqyJNhsuKT
+	J78Cjys5EgE=; b=EKexFMg/rCDrm8V8YMnHpwdwc2JKuQ0N2Isrc+aoMQFtddFw
+	bC7NGBBHi+ktQUcetSDtx5PKaJ6C77QzvUF08fkVWv/gFgvXG/cfHgqXaQCzpBzx
+	PStPmNzMPVDKgZ/Z7eDj6bxOdr5jRUn5ACzAiEZx2P/EFXd1wGZHIsVmevIxEhaN
+	rBLav3tprcm2/6E0g+/2N2wNrnf41J9b90vLVrccEqK1e/XEUj+GPisWh23gPTSj
+	k0Fjki4qv+rVFN+FdqcaY0WD65vqMlowfqWBHZnJdftU46zqBEbSYLdqt0TmqO0D
+	I+NdauqLoTrlhKAOUspRjAMCZ1U9Cd/KzV2AuA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758227310; x=1758313710; bh=QzQHByY4mHA5gqR3ELkQEI5sTdBDOcKxZDL
-	QcRYzccI=; b=L7TF38dHDVllGZVC5hMcmPGAW6Hu7m/f55pmEP/1HZptgwj6QXS
-	6s6ApI20ZMOIJ56KCuSlnBbc6BJpqgRXeKxbi9ozo96y1povNupPVKmlpxbqEZRR
-	JXoitv2NCE2Rptl8mKJlFbqh+9SYaszOt+VZ8ybJot9PI8CC1dbMlxr3E5WUGBKa
-	oS1h3imZaby1dxK0buSFCLRE4tI60B+/566AeBWbWUDK0GlP4MTTGuTnE8W1r9IG
-	HNQnT3hWgbA3NMKox/rbCP2q/La8pgjy1vmV84ZqIP5uM/vOUVnsdzNQ86Lq4cWI
-	bV8JH7Mgd2gaNake7VKkIvWwdL3sRNJJEaQ==
-X-ME-Sender: <xms:bmvMaAUHZA1qaifLxbCcjXmWaOt4xDasQX8A-zltzbmdR_jvkg3seA>
-    <xme:bmvMaAEOlANQXptZ_E_ZN6Z7QqwmX9c5oqun4i8a_cgSJRVgkaOlHk1zOrkXzbcGD
-    8dmPJdu9uOBRmv3gQ>
-X-ME-Received: <xmr:bmvMaK0GLNcI2VvMjtEbPKoeJkrHKTmwASCsvdK_LLqpoS0FZGJtGNe143Kc2dAVR_MsvezqcEY5vXAPR6ESefZexBZAqS2Y1ynE7Q4>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758227333; x=
+	1758313733; bh=luIEry6HpbLpGhQat6uvRNxqyJNhsuKTJ78Cjys5EgE=; b=X
+	iZwvCNtGZvHgPvgTvwtSW+r/TiVEudYzBs0PGPQPmCcxT6VoYZgtLoNignTyhYAt
+	IUObcqyQu3hlo6N5UxQmEs/BOZuFAaOlpnROO5PA7TKUd7eskvgi+o4QvOgP3SCx
+	XABxGJpP4aijRjtPLVh1tMj2rG25QU9TM69EETji6C+M4exAJBq6Rv/3mQjf1q23
+	B168TwkJATfxaTFZEyCWsbTJLh9Yb+xvcNmSi70RHObfnubQV/Wb4KqbpFfDZl2r
+	fMNx+UwgNl+HSJOanfKqRfHtuVfZ3SE2wNxjEfyOOPQgcjSxaah45zy6ucIdbvyE
+	A2qwt1XSyTJhfnsUGDHOw==
+X-ME-Sender: <xms:hGvMaJddFNK2ngIf42gmPz7QCWbmuFt4IcxbMPyltX_zIKR51Mde1JU>
+    <xme:hGvMaHOf6z9HrG5ztcZ7xdu5yL9JuOZDghn8zCKeFa4rqx18Xrk_eLA887QEbYr6b
+    u0XMK00Jge6NfsAcg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegjedvlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepph
-    huvghtiihkvghvihhnrgesjhhohhhnuggvvghrvgdrtghomhdprhgtphhtthhopehsrghn
-    uggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomh
-X-ME-Proxy: <xmx:bmvMaKMCUI6BAupE5cNY-oka6KTdVwE5ijXqOpmPnsYoOzO7BhxpnQ>
-    <xmx:bmvMaB7rr0Y4KT3V8PEW6PfdBzqClSZw2piSI4EPRCxKDS6pz0F1aw>
-    <xmx:bmvMaM1XBUBwciaCUuC28wepjKVE92EhtipThtNffT75InINhppM1g>
-    <xmx:bmvMaKzRlb3yByG5-xmh-Nv9R3G0p_BC8MGBoChpHgjZQ-ME8k7NZw>
-    <xmx:bmvMaFHwq_DvTJmKUwMUyUUUlvT-W0XagHqgnFK9UfWQNb-07Zji65NK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Sep 2025 16:28:29 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Kevin Puetz <PuetzKevinA@johndeere.com>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  "git@vger.kernel.org"
- <git@vger.kernel.org>
-Subject: Re: [Bug] git fetch --dry-run --filter makes changes to .git/config
-In-Reply-To: <20250918192045.GA1187769@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 18 Sep 2025 15:20:45 -0400")
-References: <CY8PR05MB100119985C7C25A72E530556DB517A@CY8PR05MB10011.namprd05.prod.outlook.com>
-	<aMsmbU_Cg0L6kOlm@fruit.crustytoothpaste.net>
-	<DS0PR05MB100132C058A3D9D5AA735D905B517A@DS0PR05MB10013.namprd05.prod.outlook.com>
-	<20250918192045.GA1187769@coredump.intra.peff.net>
-Date: Thu, 18 Sep 2025 13:28:28 -0700
-Message-ID: <xmqqms6r7bf7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnh
+    grmhgvqeenucggtffrrghtthgvrhhnpeefteeghfegfeevleeguddvkeetheeiveffudej
+    lefgudffffejleffffeludekjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofh
+    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphgv
+    fhhfsehpvghffhdrnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsuhhnshhhihhnvges
+    shhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrgh
+X-ME-Proxy: <xmx:hGvMaF7-4N1_SrquzYeui0-GZBihNrFHeogI_I1hVRsaLBWNMqcT4w>
+    <xmx:hGvMaDqRcgaL18Bu1c6Z3-EF3VNlf7A7byOYnLgVr0mv3fMVXyo2Ag>
+    <xmx:hGvMaIkQ6mnUeh4G81BUqTEjCFJbCoqU-lQi2jOOi4vNINHKzrgQPw>
+    <xmx:hGvMaPOW2H2zrBCv7sggN8a8MlAFcZ0LsIGO_El32okEEXkYPUwaRw>
+    <xmx:hWvMaH4CrJUy8GFmpu_ScjxBVVW2LoB8AvEqI5Hc-O1J1fa8uAPSgGIb>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id AFDFF1EA0068; Thu, 18 Sep 2025 16:28:52 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: AlY6N3eOzH-Z
+Date: Thu, 18 Sep 2025 22:28:32 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Jeff King" <peff@peff.net>,
+ "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+ "Eric Sunshine" <sunshine@sunshineco.com>, "Patrick Steinhardt" <ps@pks.im>
+Message-Id: <c1392238-4869-4fcf-9d3d-5c7882167024@app.fastmail.com>
+In-Reply-To: <20250918183117.GB1184978@coredump.intra.peff.net>
+References: <cover.1757879060.git.code@khaugsbakk.name>
+ <cover.1758139856.short.code@khaugsbakk.name>
+ <20250918183117.GB1184978@coredump.intra.peff.net>
+Subject: Re: [PATCH v6 0/9] you-still-use-that??: improve breaking changes
+ troubleshooting
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
+On Thu, Sep 18, 2025, at 20:31, Jeff King wrote:
+> On Wed, Sep 17, 2025 at 10:24:10PM +0200,
+> kristofferhaugsbakk@fastmail.com wrote:
+>
+>> =C2=A7 Changes in v6
+>>
+>> Use Peff=E2=80=99s patch to get rid of =E2=80=9Cthe extra output=E2=80=
+=9D.[1]  Update commit
+>> messages to not mention that.
+>>
+>> Also use another fix from Peff (patch 1); don=E2=80=99t list git-what=
+changed(1)
+>> as a builtin when `WITH_BREAKING_CHANGES`.
+>
+> Thanks, I looked over the patches that touch the things we've been
+> discussing, and it all looks good to me.
 
-> It would probably be better if it established a separate tmp-objdir area
-> (like we do for pushes before we commit to storing them), fetched the
-> objects into that, and then threw away the result. That technique did
-> not exist back when "fetch --dry-run" was added, but it probably
-> wouldn't be too hard to do now.
+Thanks for the review!
 
-It is true that the quarantine mechanism did not exist.  But I am
-not sure if a true dryness is actually better.  We do verify that
-the incoming objects thrown at us by the other side are healthy, so
-the only difference is that our object database will have extra
-unreachable objects that are known to be healthy between the time
-you run a dry fetch and the time you then run a real one.  And these
-extra objects that are healthy will help your real fetch go faster
-if the dry fetch and real fetch are run back to back thanks to "do
-we have all the necessary objects already, just that they may not be
-connected to the refs yet?" check.
+> I am a little troubled that even after your patch 1, the test suite wi=
+ll
+> get confused by a stray git-whatchanged binary left over from an earli=
+er
+> build. That may become an irritation later, when the breaking change
+> becomes the norm. But maybe it won't be too bad. At that point the
+> matching entry in .gitignore should be dropped, so at least "git clean"
+> will find it.
 
-So it may not be hard with the building blocks, but I am not sure if
-it is a good idea to do so in the first place.
+Yeah this seems tricky.  And this in-between space seems difficult to
+deal with even with all the tools like gitignore and whatnot.
 
-Thanks.
+> In the meantime, building with and without the breaking-changes flag
+> can cause confusion, but presumably people aren't swapping between
+> them too often?
+
+I for one (and honestly) only did it now when I was informed that it
+failed the test.  I=E2=80=99ll keep it confined in its own worktree wher=
+e I have
+no qualms doing git-clean(1) every run.
+
+> And I don't have a clever idea of how
+> to do better, short of having the breaking-changes flag explicitly
+> delete git-whatchanged from the build directory. Which feels a little
+> gross.
+
+Not that I know anything about build systems but that doesn=E2=80=99t so=
+und like
+a bad or unprincipled solution.
+
+> So I'd say to call it good for now, and if it comes back to bite us
+> later, it is not harder to address then than it would be now.
+
+--=20
+Kristoffer
