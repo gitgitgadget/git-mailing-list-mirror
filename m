@@ -1,85 +1,85 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102872749DC
-	for <git@vger.kernel.org>; Thu, 18 Sep 2025 05:49:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14C2214A93
+	for <git@vger.kernel.org>; Thu, 18 Sep 2025 05:52:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758174582; cv=none; b=Lr/F5NrZCw3H6h9sZtSAwPFQ9QKxlHWN8GgIbotNhBiaVUUBrEoVETy/j+V7WDpti7VdlgjCRFrDJyAWfXsaMBSsRoSCNpeV0EZH/qHkvz2B6RwHzX0wqev3nAeonxkcKwHpJJ8AwyKFQSfBrzRmmeKJcNMp9tuBgh8wHnjlZG0=
+	t=1758174739; cv=none; b=P+gw62WMiaW14roi4TM629c59TjOuyMJHcDM8R2hK2JD+M1JUfT9IDk1+kJqlbxndPwIku1MUauYL0k/B1QR2FLZpyzUU7f0YmzCpE4rmtNHfqM0cmSBf+SzsIeGSlny1iqvZHJT8nYC/dwIrf4Hef43UDPAReiJ8brtcPcIlQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758174582; c=relaxed/simple;
-	bh=BwpRBZkm/NdY/PGW2F48Wf+5iZTI1gRUg+Z6bUGkZaM=;
+	s=arc-20240116; t=1758174739; c=relaxed/simple;
+	bh=fskVEYQyRV6VgwHW45fQETC6ij3/k+90cAmYyEVcpg4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Iihgfi+CxHx7buRFuOzRbWjQdo5lRGN1i2mbAy/kJasKIC8V6RG7yMLTWxX8uRRtO1v6/fj7yqCARro0DR7io1jbAHrwICnrkdq9isuKJU0xLmgkkl+g8ntdN2a35RJZ1VnWKL62nLggesNtvqzCfowL6S9gQJMWgYmWSahBvk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IwLSlq5R; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xgcgsn2z; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=YfscXxW9noHf1BBEEu2U1Py8DvYmGHnHBDJZp4IzZ9IQxdDS9N7+3bLVGELUYDZ+f6wwx3nRy8wB9MHDlLmuaFkY+PVc2iQ2z0vfoFmguwqVQKgc5D0yd+skPhL8qMyhCBCr2o0V56Q3DcUBOm20HYYBasxIUjSUNsNzwQfCWaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VCDuCoEz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hfv26Sv7; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IwLSlq5R";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xgcgsn2z"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id B9F2BEC0376;
-	Thu, 18 Sep 2025 01:49:38 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VCDuCoEz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hfv26Sv7"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 91F311400276;
+	Thu, 18 Sep 2025 01:52:16 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Thu, 18 Sep 2025 01:49:38 -0400
+  by phl-compute-12.internal (MEProxy); Thu, 18 Sep 2025 01:52:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758174578; x=1758260978; bh=y4zsP+pBqq
-	X1vy/qQ35wu8hCJszEXp6JDTtNLh53HVk=; b=IwLSlq5RVQ7f5dL4ZhrL42Iiv+
-	I6HzZbSkaUPQVQmZRVdnWD0dCPdqNLKuCkaqsCqwEtAqoc1hXTxgVjwiGfXob4iq
-	ZnRP/uzspycIVZZsR84qRR8PgVYBGdb/cdAOEThRqy8CHuQ/5m+Z+DQ+bMn4ZEa/
-	diWU3gE1DEWROv/UJFUOG0DrqUJYxG7Y9xHQFfzkFdZIDcoibSMEnYg5z0Sq3DQk
-	9ky4sCPpmuFGk4ynO51/iYti5vUQPpxV8kVFVjmcMgymCCyNtBDvxFGLg/IjMEn8
-	vQ2atxI1+iUl/EO+8sl++N6vBrRar50GDCfbuym3S6hx3LYyUJqhVWCuDkdQ==
+	:subject:to:to; s=fm1; t=1758174736; x=1758261136; bh=+Y4QgRQJcM
+	a51JHapOlyRVrfjlt7bSsyIjAGf3OqXgw=; b=VCDuCoEz/BO8vYaqPzruOuFkWL
+	TfRpfIbra0RTxwd3ZgmSdnljH5kH/DnzahTvQfSWKPmJrW+DvsxRih0T01oOYaqx
+	2gKM8uyNz3AtBbVrMGfzefYmSW/JXO3xaX5Ii3j1bYmQcj/0vldvHKZzw+LOEEC+
+	YRnHXoyuzL+WxtujyBWQS8jOinrvOKzlENdaF9Ut8QawjQSg9xZLzVsE03bH6amZ
+	Hn4i8oG+4F0ff+bOQzBDTAEo0Th5cS+/qgZIx3hi+bvz8BmGcE4KXiBUuU2fxYQl
+	A7z5ubvpLBSRcok08OaM9XMARp7v9JyCiFkrqfXiuQXOmU3GVY8FRWzFwn5g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758174578; x=1758260978; bh=y4zsP+pBqqX1vy/qQ35wu8hCJszEXp6JDTt
-	NLh53HVk=; b=Xgcgsn2zHdfLsjSQC/4O89DQzbL9pZAzm5R1pYPvKYVp+NXxJ64
-	DZEep4nkrjlJmpAxxj6+PfNI4oidZT04uzjmi6dGtDUSpHRXtXbul9Ta3zQMrlya
-	ja7NmnOMb+MVSbQAByCma6rRQ/5Oq1VWaW3+7At28i7G6fE0mAugY6hgTpo0AoVy
-	zhn7xLrEcsnb+wcxcPeR8lYyR/gaif19SCokSKS3a/KiEgjTlzThQ6WuKy0AsXNA
-	ktQ27TY1zt8keJ9iYRtMh7zdK4ANTLDSZTZT0fN8QZLOS4fXwnIs0q/3KfeJCch4
-	OlUca1DRFmq4Ha6VHsax2JTCgTg56+TkXZw==
-X-ME-Sender: <xms:cZ3LaJCcmqSWCkJSaLD1if-8nRBpQEmGuZf1Tfek0D9xiV7UyBqLCA>
-    <xme:cZ3LaKwRvGd-CQ3z7vwgs9L1iRTJixzon1HUwGAq9MEQTGY6_Yuwark2KeKTgedyC
-    d709PUcTOPInrgQcg>
-X-ME-Received: <xmr:cZ3LaOCRTn7qgqTvPfXHzYISsDGzZnMvckCu6vKC7TNwgtQu40cSgJgFwgERD34-elfWxu8U_v6_IDwwRI9Of-C1cpZVTG2RXynOPRxDDw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegheehfecutefuodetggdotefrod
+	1758174736; x=1758261136; bh=+Y4QgRQJcMa51JHapOlyRVrfjlt7bSsyIjA
+	Gf3OqXgw=; b=hfv26Sv7TeJcsaX6a7Psi6uYObyAonqqmiFy7t1bquCMAwWsrzA
+	eMf3xW8gA/h0yK+O9URtl/K4SFVKXdcWYH9M4np85zYXHr6qR3aDBx/q0FQap2Cu
+	k+5hV68tPynjNVJtS/KT7chKu55lJplJaI8xc+k7jbZwD7LVWcpdYNPD/OPyb3H5
+	hltpXxFrhkXwm3TmBObqh5b50LSc6tA/B4b1DCwmIVjdOwymqHOYA9B0HddzQQoa
+	3vUJGEnW1FaXHClYG76kOnH8if9OoC4eNo7m0rOcVwNLXjWmJkAwKpnzL3IiwG1q
+	JoobFBKblkvJ0zC9Ykg7wOUVpO3MqPmgDlg==
+X-ME-Sender: <xms:EJ7LaHhgM8xrFKJfQGA98rTdO9xOG9JtzfNC0XN611Y_GrlVzyJ5Rw>
+    <xme:EJ7LaHTrqU22LEFu3D0fXRD0w2B6eZDb-cRQRFNcJenGoRDOZX-qIrkXEYf8SKjnB
+    NEXgv2nYs-L21jBsw>
+X-ME-Received: <xmr:EJ7LaAj8nUpzLGc_35dvEQcblxdv993CbkhTeHd3dx5ynY-xzsVW4AlQwGJxN3KjLGeY5r-GbtVEF00QtOsZfO1lOjsar3PfX9UIvllTJw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegheehgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    ejvedugefgffffieegtefhgfeikeevfeefheevvdegieetgeeujeeliefhiedtueenucff
-    ohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedp
-    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpd
-    hrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:cZ3LaPbXZIPNl_SxxizqS5iiaRFzEUuXM4HfWzYKHNtPesHYc1_Epg>
-    <xmx:cp3LaOh4UAH-_458ZufoK8tuiKCAieRvQtPfif9kgnhDgYUpaQw2Tw>
-    <xmx:cp3LaJ70lu8AKEybuOdgtmHe-BVE2FC8T7oV-ky_kphxBhROYwWl0w>
-    <xmx:cp3LaN7b4ovLhva6UZbXqlTJYe9KOKJO6x65vinCQPUJfrFt0SHs1w>
-    <xmx:cp3LaCBCV4-UEDoyWNt0BGeCGHykEp7H97X4AQbL9ZpwtTGPm9Df9O68>
+    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
+    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepph
+    gvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:EJ7LaP76dGe8ETakk21T2_jwFB2xpv3BRfrR7P33soAkSsQacFLO8w>
+    <xmx:EJ7LaFCTCNfL58Zzxh-6PEtwxMNb8Y9bZmpH0yrr8HRX8slmc7Ipbg>
+    <xmx:EJ7LaOaik95G5wtJmIEyPmTyWR5WMd0GCpV9-2sb4AGa1nYRjDNGAg>
+    <xmx:EJ7LaIbAbWzo6zOu8hbBawmHqQEfccxXQ_jbd5plDiP3m3F7QikuFQ>
+    <xmx:EJ7LaLU-AGUOhK6J1VaB6eXIXyeeCGVdg3J4KS4CmFc9Nzrc1bcQrXkY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Sep 2025 01:49:37 -0400 (EDT)
+ 18 Sep 2025 01:52:15 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4b1eaf17 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 18 Sep 2025 05:49:35 +0000 (UTC)
-Date: Thu, 18 Sep 2025 07:49:31 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 0732d02d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 18 Sep 2025 05:52:14 +0000 (UTC)
+Date: Thu, 18 Sep 2025 07:52:11 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2] combine-diff: don't override recursive flag in
- diff_tree_combined()
-Message-ID: <aMuda6sqEiwxxAgp@pks.im>
-References: <20250905-toon-fix-last-modified-v2-1-d859eeed408e@iotcl.com>
- <aMkNiC_s-Dt4iRPp@pks.im>
- <87ecs6o21e.fsf@iotcl.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Sep 2025, #06; Mon, 15)
+Message-ID: <aMueCwl6hfZRJ_qN@pks.im>
+References: <xmqqtt13frqm.fsf@gitster.g>
+ <aMkJVMbSmeA4cIAy@pks.im>
+ <xmqqzfaunzjo.fsf@gitster.g>
+ <20250916164912.GA15474@coredump.intra.peff.net>
+ <xmqqv7limi1b.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,56 +88,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87ecs6o21e.fsf@iotcl.com>
+In-Reply-To: <xmqqv7limi1b.fsf@gitster.g>
 
-On Tue, Sep 16, 2025 at 05:22:21PM +0200, Toon Claes wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > Do we know to set `diffopt.flags.recursive` in that case already,
-> > or do we handle recursion manually in that case?
+On Tue, Sep 16, 2025 at 10:19:44AM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 > 
-> git-last-modified sets that flag when `-r` or `--recursive` is given.
-> That flag is passed down to diff_tree_combined(), which reuses that
-> value (and no longer overrided it). Does that answer your question?
+> > That said, it is not really that big an issue and I am fine with any
+> > fix. If you want to document how the history unfolded, then I think an
+> > evil merge shows that (neither topic had a problem on its own, but when
+> > merged we needed to adjust the result). And it is probably the least
+> > amount of work. ;)
+> 
+> That's also fine, too.  Let me try that ;-)
 
-Yup, it does.
-
-> >> diff --git a/combine-diff.c b/combine-diff.c
-> >> index 3878faabe7bb2f7c80cffbf3add6123f17960627..305414efdf436d53fee8d79aa4219f6a4dd3445e 100644
-> >> --- a/combine-diff.c
-> >> +++ b/combine-diff.c
-> >> @@ -1515,7 +1515,6 @@ void diff_tree_combined(const struct object_id *oid,
-> >>  
-> >>  	diffopts = *opt;
-> >>  	copy_pathspec(&diffopts.pathspec, &opt->pathspec);
-> >> -	diffopts.flags.recursive = 1;
-> >>  	diffopts.flags.allow_external = 0;
-> >>  
-> >>  	/* find set of paths that everybody touches
-> >
-> > With the above I'm a bit worried that we're changing behaviour for
-> > direct or indirect callers without noticing. Our tests may not detect
-> > any regressions, but that doesn't really prove that there is none.
-> 
-> As I've been trying to explain in the first version[1] of my patch, I
-> would say my change fixes a bug. Agreed, it's an ancient old bug, I
-> still consider it a bug. I think in practice no one will notice this
-> change in behaviour, because otherwise they would have complained about
-> the buggy behaviour.
-> 
-> For the callsites we didn't address, I'm doubtful anyone will notice a
-> change. Also, as I'm laying out above, we only see a bug in rare edge
-> cases. That's also why we don't see any test failures.
-> 
-> So yes, there might be a change in behaviour, but it will be correct and
-> barely anyone will notice.
-> 
-> Unfortunately I don't have any data to prove this.
-
-The old code certainly feels fishy, that much I can say. Other than that
-I'm not knowledgeable enough in this code area to have an informed
-opinion. The old mailing list thread [1] doesn't surface any useful
-info, either.
+Yeah, an evil merge probably is the easiest way, and I see that's what
+you did in b501ac6a85 (Merge branch 'ps/odb-clean-stale-wrappers' into
+seen, 2025-09-17) now. Thanks!
 
 Patrick
-
-[1]: https://lore.kernel.org/git/7vwtgqas0y.fsf@assigned-by-dhcp.cox.net/
