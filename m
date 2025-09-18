@@ -1,144 +1,101 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D458221F13
-	for <git@vger.kernel.org>; Thu, 18 Sep 2025 09:00:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 172452727EB
+	for <git@vger.kernel.org>; Thu, 18 Sep 2025 10:43:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758186052; cv=none; b=pkpNCAZmRoeBasyYv/TY1UGo7CCYARWS1cWwQftNnhv9NpSBXLKWKITcGnWHUy0XMaAJjpeNtCg1gGgHDVN6Fmfcht71dIeEFKW3JOpz4/T7AaFMPYvhPrFacwHLQtYPscawW8Zy8tT0LThJn35OKF31SGRW7L+HhXf+MJe894w=
+	t=1758192224; cv=none; b=mM5px/CIfzBn47rBBT/uKXIBdpwNNMwnq2W6Huac2yFGuxCl7t1TP+OjHLrGy8kroOpRW2uy6KYgE374XRxRO9741tbWyaEIAsx7lxSCFT59vaiJuMW8q7ZZXdnFmJbOv8++euBpqYp1VjAQp/F4Ls9o78QuzTndhyvs0KpIOmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758186052; c=relaxed/simple;
-	bh=V2oZkY0AS7qi62E4u6F0UKRxFAa4Mh1yw3hwk4Ge2z4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YVv3alNXaks6S0RM+ftn/zwZ2IMS7xjIUpNkn4LMy/CeMQ3K5i8yEgH8LdMGa1PN9w5E/twF25bESNr+QYfb+KBiGwGrXKUXzZdT0nwdZk2qQRtrAUB2nEAxd7UKv1TMmVk+SO2DJivVtGpBoMOKA/68let20ZrVrwL0a6KdAnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CklpURsX; arc=none smtp.client-ip=209.85.221.49
+	s=arc-20240116; t=1758192224; c=relaxed/simple;
+	bh=vQbbiJG5sos9HiNJXGc2BHGzATn+bStSI589gI9JzKo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iS58BEuKdkVptYG87m3xJlIobMZTEW/SWg/mCNiCFlIOTJ6GDDZdFi8P8Vu+LD0Oqnqsw7BfBEnnqK+J9hOx5ZT9gumSZbNmcXhyqi7Q+tbfqyadZ1qff/5y1xXHXfbifp6zP68KD4oLl2JR7OJS8IwNgDYnITRCgxfaGdRPbOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lk9Xq08R; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CklpURsX"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3ece1102998so349143f8f.2
-        for <git@vger.kernel.org>; Thu, 18 Sep 2025 02:00:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lk9Xq08R"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-32e372c413aso839408a91.0
+        for <git@vger.kernel.org>; Thu, 18 Sep 2025 03:43:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758186049; x=1758790849; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=y6lo6guKcu3gOT2WDQkofh19QFH/xNeJtVfJl0da8aI=;
-        b=CklpURsXjUzh+9Ct8+PHUEKtUKIzrUVddnw+oYMbCNcLdKbH1/MQVrlP5+vBhj61Dr
-         3AXADdEcb6JuRvqRbLprNVJkm8EdvJntZYnWv6+Q6j55Q55WOoR7ueQe0hQOrfOuc5zK
-         6TqyMp5DNC+pNQKFM6LzOM4am4fwPzMDCNlargXy2fDiCkEXUYs8j/uVjxiYHivRyNlz
-         D5WijdgN/JgFGjaMeU16QSFU809wESkY0Mp3AyKfl+/P6mybvdGuRvSAGHGEdW2iUogX
-         puxce8AGVE9sqrGdD8tSsMz2kgy2KBVWhpjTjegiPdBd4aWxqX/IGwBwqlsBSzW7p0Vq
-         /Kug==
+        d=gmail.com; s=20230601; t=1758192222; x=1758797022; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=baCPS2deFPkgEABcwv0IKXNspsoBMzR3ruATFSrqBOY=;
+        b=lk9Xq08RbUi11RUhL4AA3A21fLIHA8WMjI0vAfWXO/p+f7A1l7B/ux3STxS03KTydZ
+         unBQ1SZJYGMw3rx7NhLCLJs+z8+R2p8xLNarnIhV1enaju5FsYOJBrMUTxu2Td27W5vw
+         hpTxSDJoKqtszgMe3jrZAJ/g23r8jbmAU7EzbDRMNIw/jOS6EH/kvHxXQ4Q/b5H6eTG8
+         ms7+ztZAbegiVHoEvfdZYq9E8gcgijr0h8YlwrAYPgitsqvUUD6WqCjDZO1D4MPhTmBo
+         TlzY7s5tASNlNyagbcOQrZh8DWwJyjVLcIhmyskSzK8rywJb5nFutExcPi/TLT31c+eX
+         9e0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758186049; x=1758790849;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=y6lo6guKcu3gOT2WDQkofh19QFH/xNeJtVfJl0da8aI=;
-        b=ciG+mvwcdfs5x5XMIVrsYgUdPuyhcf2DZpsoxO619IFR1m0nobgJ7/cm6dZAOFW98o
-         v2FOBukxRjt2QVFdMh1VpjQ9gONuyyRZuai2L3+FunDPmAbqtRyky9J8MnvDd+PFS46G
-         jPkBGE0svNjwQ5XQfpupGp6ruX0zkl+MU4NwFue2er6o4szntUR5a9iCHmEqnxVIGnCR
-         bgrvoRZMpux7eNOWCjZXwRSXG5OpGAE5UpAnZ/7N4Fe2f1Uxxh9EJeA0HR3nvVsgY3+h
-         TmyVSk4niQUcXB7JfxddoI4alWFGuZVIZhEn8VcGmnWocmIJjbbQk3VYNfKuxmP7ppPi
-         uY+Q==
-X-Gm-Message-State: AOJu0YxREirfmad+WM9DpPLCn1y0nm0LQN57aJl2o9FqkcH2ib2DlWL6
-	6c455z5+K43CGs0ZshN9N+E6dnjJ7/FDMBpwCFWtJv7GazNeHLKUTISlkN3vug==
-X-Gm-Gg: ASbGncvmyl7Fxe1Svv9diVOPxPWXjdFotZtSo/xSullIZwN0MX16Qzc+Tr8kH/ufXB7
-	XMr30CY4Qh2cvGOFsD4DCuvkDxOivRH0Ib3jgiGg5BllQQwhaTD+sN4q95ppy1E4gyFmewt/t+6
-	pWoapoA0pRDd3bx2J5Or++Pri92p/coCG68jj6XmkCV+lkmgCe8u3Ni34ahBtvSa6S41bQoAsjp
-	JQtCuFobFG06vWNWvV8V7ankzbTXCLJGlLKcZw0kbeqFVTgviVo/+tQe9vVZkLvEzwM3KmXsW7s
-	kuk3gvaGUIXJQwrFc4pXGoAeWHRVXfjD8VWaUVy8O0dxTWx5yHe62fjUZPk1l6XIQT8yDLiMA1v
-	SNmRTNFzAOCc+oa0YxKdlNaYlLmYFS4CjTz64+KC/DlFiKG32c/V6BWw=
-X-Google-Smtp-Source: AGHT+IEz4xlSY2hjT9cLiewe/UVoZn1q+YOWMvoO1/SxbJWKwbHtiATo4UkoYktVIRS2ngvKXrgplQ==
-X-Received: by 2002:a05:6000:2283:b0:3ea:6680:8f97 with SMTP id ffacd0b85a97d-3ecdf9b19e8mr4592651f8f.2.1758186049357;
-        Thu, 18 Sep 2025 02:00:49 -0700 (PDT)
-Received: from berwick ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3ee0fbc7284sm2703082f8f.33.2025.09.18.02.00.48
+        d=1e100.net; s=20230601; t=1758192222; x=1758797022;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=baCPS2deFPkgEABcwv0IKXNspsoBMzR3ruATFSrqBOY=;
+        b=T53OS7UXW8uM89Mm24NTmMFjxa6IZ9wGbuWRbYe5q++X8V0V5HXcItDtjs1ZJ/31k6
+         n+qHxoA6pzLxGfGEb0N93UBkjWSng0YSyHdKdzbvolLEZH0Y8iajKXXOmu/M/iKmi1uu
+         dMgKou+TE8Ir1PVOkWf1akdJNuAV2UqWXbA1hpfC3qnikCaxLYn4fKSjEQYPQcP9xrlL
+         hYs1e01n/ZefeAjq7eLfEyK17OyxSnKHWazhNzNm/0j9MjLutvb7wae57ZFQE6Dlu5Bz
+         J4KxzeBy5IFqHwQEn3y2cCkjZGHB5aQLPoqtEKzggY/uacsPn0WlgPQIt7ccCrRWualt
+         5nKg==
+X-Gm-Message-State: AOJu0Yw5FMbDUY3dFlcxqbn9fri6iZpMn2Iy0SJLMFjpfRFQp6rFliXd
+	7yGdmWHxtDqDPytpAy1mRDiNgBFUs7B3NSsgBCxO+nibsEMgrlDAjV0+
+X-Gm-Gg: ASbGncsrer4LmDKiR8A6rPFCwDAyWuJoZyem+A69fBOWzdyGKeEOw/OoZ8f9KJIHWB0
+	pyhw6e7QfhOCaT55hPggc2/m1+nHDa6fAx5MnZnroIIG7Ym0bPCGIuyPD6bzN9x+NQ0fyyi7WQe
+	jpr0IMroolubAOWbgaxuem7TBEKIkfCRBHBAsjmWxB5egth9KQjKh/UsxmdNkwKZSrT7g9t7lWQ
+	itoVvd5Vc8+B4f+Ji2B8OR3MlMkEOvBjKLkUHIzrOrhVYpdUqRLl0WwDAk4vzkfOeG9HggTzhc0
+	ZAGS4vCdE3TCAKsMhZ9r1iJhyHlmeZWD3duXYblv4LeJaKBdi3n1aDjeAW5IC7tT/uKO6ugL6t+
+	FacabJ9y6gcIt4BF1ifwXsGH8PUVOQ87tCHaz
+X-Google-Smtp-Source: AGHT+IHE4sv6N7ePppVf17SECVAxtmyZc6X7zaGuXaoshipDAHVXiWAgXEdLQCvnsFl055vbgVwZeQ==
+X-Received: by 2002:a17:90b:3c46:b0:330:6c04:a72b with SMTP id 98e67ed59e1d1-3306c04ab11mr2264611a91.3.1758192222491;
+        Thu, 18 Sep 2025 03:43:42 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-3303ffa1531sm2054413a91.4.2025.09.18.03.43.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Sep 2025 02:00:48 -0700 (PDT)
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Simon Cheng <cyqsimon@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH 2/2] sequencer: remove VERBATIM_MSG flag
-Date: Thu, 18 Sep 2025 10:00:39 +0100
-Message-ID: <9c7f4e39c93a4ae09c291296cdc37d2d235b1ac3.1758186038.git.phillip.wood@dunelm.org.uk>
-X-Mailer: git-send-email 2.51.0.595.g259a2096d9c
-In-Reply-To: <cover.1758186038.git.phillip.wood@dunelm.org.uk>
-References: <cover.1758186038.git.phillip.wood@dunelm.org.uk>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+        Thu, 18 Sep 2025 03:43:41 -0700 (PDT)
+Date: Thu, 18 Sep 2025 18:43:50 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Meet Soni <meetsoni3017@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com
+Subject: Re: [GSoC][PATCH v3 4/9] builtin/pack-refs: convert to use the
+ generic refs_optimize() API
+Message-ID: <aMviZmilaxXb2a35@ArchLinux>
+References: <20250906075147.1076656-1-meetsoni3017@gmail.com>
+ <20250918054704.544254-1-meetsoni3017@gmail.com>
+ <20250918054704.544254-5-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250918054704.544254-5-meetsoni3017@gmail.com>
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Thu, Sep 18, 2025 at 11:16:59AM +0530, Meet Soni wrote:
+> The `git pack-refs` command is tied to the 'files' reference backend. In
+> a repository that uses a different backend (like 'reftable'), the
+> command is a no-op.
+> 
 
-As the last commit deleted the only user of VERBATIM_MSG remove
-it. This reverts remaining parts of commit f7d42ceec52 (rebase -i:
-do leave commit message intact in fixup! chains, 2021-01-28) that
-were not deleted by the last commit.
+I think `git pack-refs` would work for reftable backend. It would
+eventually call `reftable_be_pack_refs`. And from my intuitive
+understanding, it would compact the reftable to reduce the size of the
+table.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- sequencer.c | 11 -----------
- 1 file changed, 11 deletions(-)
+> To make `git pack-refs` a truly generic frontend for reference
+> optimization, refactor it to use the new generic `refs_optimize()` API.
+> This will allow the command to automatically work with any backend
+> that implements the `optimize` action in the future.
+> 
 
-diff --git a/sequencer.c b/sequencer.c
-index 47c57c2ea3c..6d29a938aa5 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1087,7 +1087,6 @@ N_("you have staged changes in your working tree\n"
- #define CLEANUP_MSG (1<<3)
- #define VERIFY_MSG  (1<<4)
- #define CREATE_ROOT_COMMIT (1<<5)
--#define VERBATIM_MSG (1<<6)
- 
- static int run_command_silent_on_success(struct child_process *cmd)
- {
-@@ -1125,9 +1124,6 @@ static int run_git_commit(const char *defmsg,
- {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
- 
--	if ((flags & CLEANUP_MSG) && (flags & VERBATIM_MSG))
--		BUG("CLEANUP_MSG and VERBATIM_MSG are mutually exclusive");
--
- 	cmd.git_cmd = 1;
- 
- 	if (is_rebase_i(opts) &&
-@@ -1166,8 +1162,6 @@ static int run_git_commit(const char *defmsg,
- 		strvec_pushl(&cmd.args, "-C", "HEAD", NULL);
- 	if ((flags & CLEANUP_MSG))
- 		strvec_push(&cmd.args, "--cleanup=strip");
--	if ((flags & VERBATIM_MSG))
--		strvec_push(&cmd.args, "--cleanup=verbatim");
- 	if ((flags & EDIT_MSG))
- 		strvec_push(&cmd.args, "-e");
- 	else if (!(flags & CLEANUP_MSG) &&
-@@ -1540,9 +1534,6 @@ static int try_to_commit(struct repository *r,
- 	enum commit_msg_cleanup_mode cleanup;
- 	int res = 0;
- 
--	if ((flags & CLEANUP_MSG) && (flags & VERBATIM_MSG))
--		BUG("CLEANUP_MSG and VERBATIM_MSG are mutually exclusive");
--
- 	if (parse_head(r, &current_head))
- 		return -1;
- 
-@@ -1618,8 +1609,6 @@ static int try_to_commit(struct repository *r,
- 
- 	if (flags & CLEANUP_MSG)
- 		cleanup = COMMIT_MSG_CLEANUP_ALL;
--	else if (flags & VERBATIM_MSG)
--		cleanup = COMMIT_MSG_CLEANUP_NONE;
- 	else if ((opts->signoff || opts->record_origin) &&
- 		 !opts->explicit_cleanup)
- 		cleanup = COMMIT_MSG_CLEANUP_SPACE;
--- 
-2.51.0.595.g259a2096d9c
+If my above understanding is correct, "git pack-refs" has already worked
+with all the backends. But for reftable backend, the semantic of
+"pack-refs" is not clear, optimize is a much better semantic word.
 
+Thanks,
+Jialuo
