@@ -1,53 +1,53 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4947D2FBDF8
-	for <git@vger.kernel.org>; Thu, 18 Sep 2025 20:19:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F003081D4
+	for <git@vger.kernel.org>; Thu, 18 Sep 2025 20:21:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758226786; cv=none; b=U0cZSEV1CMGkg7Vk6eNJx+rLYLgflPV3mE1JjiDKAbFKqnBJAucdNpEwfWMebDZyk5qrq1CzaZi1zrsCkYYbfzwsudaOEFKm5Gqmxz/+fl2iJerLKZx5spc+S6I+lDaUXVD0b8mExSVM3lHUCugCpiTk8JpT0QnvFqDHeVSorAw=
+	t=1758226908; cv=none; b=nfwHpOTJVK/sw3tqTlIbpD6jW6GkC+zhKmq6dSYLKYX9xGqJrC3eY4DW/oqUvVsS+uDOoKiP7EN+dcDdy4bmDSS5juDfffrYU1muOOQwXNhontValuSCHswp5EGN4jzAUlFaqFkC58nxPOgFX5XyQfuxGShnZg+ZMZqLyQ+9V8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758226786; c=relaxed/simple;
-	bh=sMqJl5opL8vwMKsnDlX5Pk4R176yZbv3ogY1qrIAH0E=;
+	s=arc-20240116; t=1758226908; c=relaxed/simple;
+	bh=sNzIGYxwadTFgKnF/SsJg2PYzXFHg6/WB0PaWyEB9rs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KRLBhNj7r1cRMySEeZA79O9BCqQOTYw24HhT1qj0QkzsoGmZov6SZNMXqT/qJATddWeIfNoOtmAVzzHpFu0Vwaeu6qOUEWBaiXcoEZGQ7JS9ShdpPVRgE7AzTVFTXPK4+F8Fmrugq2nNThH3EMNPf/cDz0Rnzx9O6jUnoDsLBBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fEtyig6O; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=USO5WdUg; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=Fu8n4z1jbOnuZw7Uyu/MVPMMtNmQxE0aZadp7pQHxA6KLb4xkMKxBkyjmMeQYAs+Qrq3UvwFlToVeQ91ZU1OWdEYgNAhJ0iINk6NtKDQ0RnODGL6O2RQagbFInU7m3t3G6JRX1TvDZvJCjz9DrY3wYf6P2N+25HPJjmBO7xohfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e6DM7TtS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KZHgrq8g; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fEtyig6O";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="USO5WdUg"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 57EE8EC0339;
-	Thu, 18 Sep 2025 16:19:43 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e6DM7TtS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KZHgrq8g"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 804741400128;
+	Thu, 18 Sep 2025 16:21:45 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Thu, 18 Sep 2025 16:19:43 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 18 Sep 2025 16:21:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758226783; x=1758313183; bh=sMqJl5opL8
-	vwMKsnDlX5Pk4R176yZbv3ogY1qrIAH0E=; b=fEtyig6Oeip75Np+qRxjPcHJ/2
-	O5UGFwVJP54ZkaFZCmKOiAwBAyC9V27Gd+0VMYc3YHF2217Sr0Cur/rIDdvGyBbl
-	Nxqd5CMzhgD6o0DvVA59bPBOzrpoX7zFt4S8TYrytqWbKAkF8Ib+QiW6AbH0BYB6
-	B7oLXVU2vb4LdIjRUuGnkTcFAzbxh2DkTTf8cqvT876x+kwcjA4mLW8vEVlRYsWe
-	+4124dwCoVvjewQ/JxQW16t2y5POgwqrNYpZgl7SiVvAJ/GAaEIDbZdNewOhxT7k
-	W886ICuTa5iRhhO8Tehnu0StE6Llyk+PlTyTdx9vWMcVd/ndvYpabspHj1Jg==
+	:subject:to:to; s=fm3; t=1758226905; x=1758313305; bh=sNzIGYxwad
+	TFgKnF/SsJg2PYzXFHg6/WB0PaWyEB9rs=; b=e6DM7TtSIhgQAXLCmJBLMloFoX
+	odd5mxPaPy0I+AlURgvVXXtl/xdo20OByAwJDl7aKY/QWGg3ddmq1I0AaDu1WcKu
+	6u7kdKl26wQDE3I09NLCMblTOjtddrTMKD+wQgnTVzeI7C4uFsP93ueUyY7niTYF
+	TvvVmHgZ3YbZKCaf+k3jDPAfJvjwZGqJuqgMdSUIXQNZp3Jnb/Vw1gaPgLWWljVD
+	4FzCWAIVthBgi4pZUw5yTWmByq7m4EJtD/ZWF4WU4bfCNQbMp8UryktOR1euGLHj
+	Ta08fGfaTWkv291iT6eIjmcSasYzqGXJs72SLi2Vs1ZykLgh0SB4cT69qoGA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758226783; x=1758313183; bh=sMqJl5opL8vwMKsnDlX5Pk4R176yZbv3ogY
-	1qrIAH0E=; b=USO5WdUgK22UmJ/elCMBGK+iUSrOZ0yLQN57pUCEEPfXxTDx9Ag
-	FezSqtcTUURQYJzbk/LRkE7LMq3qNVid0ZOG13+Mmz6IDS61+e06Ju1nRHLKJ6FD
-	7L2nkmMnrtrDJ/Oi4pzaIFERF81xQDgGVKSHclGcCJN1u7BH9sEB1bTaJjaoCW+s
-	qbmVTJLKiLMqCNyYhxY/ejRnWbHwM9pQ0R5u4kj7hPqYS3omIdUNYkjQF/u485uq
-	1fCM3xjJZEV2JyX0izC0e84RMk+3yyzJZynXn22PLjyPxDg1fJzLDfoiPPSAtUP4
-	3YAA/BB4zLSwBK/rSHHuLMJUmkQvKX+vrbw==
-X-ME-Sender: <xms:X2nMaOixZA_b6Hfn5EEtMvKwUkBO5rmHKP8sDeocTwEhRM-XYk6qnQ>
-    <xme:X2nMaJk9gKWfzAPX0Mi-GPYR1Jqc7wD9kQFYG9xEIeqE9Hi9eksiX1bkv4udsSgZR
-    jn7xjQMggAKzoBEKg>
-X-ME-Received: <xmr:X2nMaCq-Hf-2BD4EOhHDLKGtY0BxoJEHq_DQdUeMOBkVgKUfFT_FasRF-gWcpOVabSv1HqzMSC2pr4VtzXTDKe0IXjG200CAprhVYxo>
+	1758226905; x=1758313305; bh=sNzIGYxwadTFgKnF/SsJg2PYzXFHg6/WB0P
+	aWyEB9rs=; b=KZHgrq8gTU4CSCZPvI74oFuuGNQllvVzoCw0tStz9BnpjRZ60GS
+	Bvc6ok7j4sKExP26suLYGNO6dkhQR4shK77tzm2uqEewVYUgAebgxH9dYAOGp0kz
+	xD1yKWn+3tXuiDJgOw7TDwUAFc/aDcWi1x5uqVpSt0L1fp+0+FM5FkvtZKiVoRsG
+	KHjDBiM/LtBDNERUJd8nltda8DvwkgukVQmcNJ0Etsvi0wBApZOiYPNwBde4Fy+Z
+	SC1O2pGqfBGTnbKbdeHMc/3vf9vD7eXrmIjb5Z3M9ERDeqb4mBjqY+6gdDT5Zayr
+	TSqAiwlfOGnmPBQl+EYkf5UO3Cg/uH1AUAg==
+X-ME-Sender: <xms:2WnMaNmrcC3L0BBTssQSXof3lVdxYdDc7gAdQ4EyrL1z2rCsvSF7KA>
+    <xme:2WnMaGb9rRjtQdOTOIUijX5uq33YsPR6Sjlg0ZgBk0PEJmwYnDzill4v9GBp4O3cZ
+    AVw4s0tJcQgmcbfFg>
+X-ME-Received: <xmr:2WnMaKH2dXAtKZve3nMKJ_G3HC8hvYM4Lqcg1kzprDqvD5ixdiqGmDakLrtITe2ttdaOQ8TskIY-rsWNJfZbQaZiJloV819feHmUwyg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegjedvjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -55,30 +55,35 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegjedvjecutefuodetgg
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepug
-    hgohhlughsthgvihhntdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:X2nMaKHpfMAoVWI0NhfmlGObynIr4Shf14VINQ8IIy8DAkJKpONO7w>
-    <xmx:X2nMaGxtGHwGt4tl6E4J27b0HLl7o8gAfnRkr9kBiGyg0DqWEe9jlQ>
-    <xmx:X2nMaHqyMNgfb_o1WazXAiveeM5YfW4W79KEZmm8fT-y7kVJd88Shw>
-    <xmx:X2nMaIiAujyR-FpAq5i-XqUE9Pk_bQxHltQI7M4t-aCN6n3hgpyNtQ>
-    <xmx:X2nMaBwK9xvObkV5MkUuW_nY7N3dfECS284QGvjps-hp9HvpRZWh4aK4>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkh
+    hrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghp
+    thhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhu
+    nhhshhhinhgvtghordgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:2WnMaPJ87x8FDhSJElLrV0j3IQUo5UG0gj80mQ9JxLd5tm84k-__xA>
+    <xmx:2WnMaNP-niBxVBX1Za5-DS_ZD3z7r8DXBXCOY1sQjeaLdt3F0opf4w>
+    <xmx:2WnMaHltAhVuYL6m2vl7cULFBy7fX2CCytpAC89CaY0eK_DTLMkkPg>
+    <xmx:2WnMaJ5NWIhiTg2OAtdaqSDCSFYNEPyBM3tn53fyVbPg1YZLGxta1w>
+    <xmx:2WnMaHns6A2IGEjOlkSVVv9NDnZnr4bdfBt7Rpy8Bpx0mChBk2rIDFP4>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Sep 2025 16:19:42 -0400 (EDT)
+ 18 Sep 2025 16:21:44 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: David Goldstein <dgoldstein0@gmail.com>,  git@vger.kernel.org
-Subject: Re: [bug] git check-ignore returns the wrong exit code with -v when
- only a negative pattern matches
-In-Reply-To: <20250918182545.GA1184978@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 18 Sep 2025 14:25:45 -0400")
-References: <CANavNqpHqVgHshUaToS51OGVuvx5FqxROP2PssHW9OELMLeBQQ@mail.gmail.com>
-	<20250918182545.GA1184978@coredump.intra.peff.net>
-Date: Thu, 18 Sep 2025 13:19:41 -0700
-Message-ID: <xmqqwm5v7btu.fsf@gitster.g>
+Cc: kristofferhaugsbakk@fastmail.com,  Kristoffer Haugsbakk
+ <code@khaugsbakk.name>,  git@vger.kernel.org,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v6 0/9] you-still-use-that??: improve breaking changes
+ troubleshooting
+In-Reply-To: <20250918183117.GB1184978@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 18 Sep 2025 14:31:17 -0400")
+References: <cover.1757879060.git.code@khaugsbakk.name>
+	<cover.1758139856.short.code@khaugsbakk.name>
+	<20250918183117.GB1184978@coredump.intra.peff.net>
+Date: Thu, 18 Sep 2025 13:21:43 -0700
+Message-ID: <xmqqsegj7bqg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,18 +95,24 @@ Content-Type: text/plain
 
 Jeff King <peff@peff.net> writes:
 
-> AFAICT it has been this way since the inception of the code. I haven't
-> ever used the exit code of check-ignore. I wonder if the current
-> behavior is actually useful, along the lines of "exit 0 if any output
-> was shown, and 1 otherwise". That would justify a difference in behavior
-> between running with "-v" and without. But again, I've never used the
-> exit code so I'm not sure in what circumstances it would be useful.
+> I am a little troubled that even after your patch 1, the test suite will
+> get confused by a stray git-whatchanged binary left over from an earlier
+> build. That may become an irritation later, when the breaking change
+> becomes the norm. But maybe it won't be too bad. At that point the
+> matching entry in .gitignore should be dropped, so at least "git clean"
+> will find it. In the meantime, building with and without the
+> breaking-changes flag can cause confusion, but presumably people aren't
+> swapping between them too often? And I don't have a clever idea of how
+> to do better, short of having the breaking-changes flag explicitly
+> delete git-whatchanged from the build directory. Which feels a little
+> gross.
+>
+> So I'd say to call it good for now, and if it comes back to bite us
+> later, it is not harder to address then than it would be now.
 
-I very much agree with your assessment, as my understanding is that
-the command is primarily for debugging your .gitignore pattern by
-eyeballing the output from it (as opposed to a serious tool to see
-if a particular path is or is not ignored), so I am not surprised if
-its exit code handling is buggy, and I am not suprirsed at all if
-nobody has even noticed it is buggy ;-).
+Yup, my "before pushout" local builds almost always hit a snag from
+leftover git-whatchanged, until I tweaked the procedure to begin
+with "make distclean" before doing anything else X-<, but this may
+be good enough for now.
 
-
+Thanks, both of you.
