@@ -1,116 +1,171 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6002D3EE1
-	for <git@vger.kernel.org>; Thu, 18 Sep 2025 18:42:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6329A221F29
+	for <git@vger.kernel.org>; Thu, 18 Sep 2025 19:20:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758220939; cv=none; b=NL/ZwwhhG44rcT+yjOrXEpi7ku6CU1v5ceG4E4eFCXnThmaW5y7Pk9fDLSHLdzFhTazQQjvdjH/RkPJvosM7axcB4ziDlLtT73gzLZNIkp2GDSzFu66pvkD548Gq1z0L3w54sekeVgfjOqGBes+mhZ0EdGo5N7GE4L8pFyhVhjg=
+	t=1758223250; cv=none; b=awZQbKMNpH3YRLgWTYWIO3WFIWZ0SneuaDJThs98HQoCvG5JPqoAoTblCatlcC+qLhDW3HRdzXzBLhE3rfz5x3gsbSf36AjR9f2OsLhjuD1ld/RbtmaxMGTLuZGJUJbUswXSGbSQvNGWA4r0RZ1bdsSJKqSa2d/fmAmjXB8CCC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758220939; c=relaxed/simple;
-	bh=3jY3SAuUtea7oF6p5/RsZm6O6dP5+3EfpVyXFRJRGUo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DOl3FcfvetkQbI6AHKZ2uuyfq7XNKuOFEY9utsrmDn7P9Qqd0FQfcvhyix3NaOtRwCrBAnpJDg+eu/o5BLhnPtoCMb7+JJRstu8BHvStgf4aBMTjkxxQYhN1rvBlz/paGXPKTur2TPj+qxDutGLy2uR7e2yM//yQlpH/LVf3dTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rFMf2TeE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SBV3/A4n; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758223250; c=relaxed/simple;
+	bh=WuEn0sWD8wWJ4PUlg/tozGH0PqdJt4klUprMgA6bOUY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AOqtc5MgYNdcqlNA8PKv0P54dK9ppCvqRE3lKN7/vtlA9vNWSd4NwEfW+DTz/BLXZdIv2P8nJ+AAsFT4sSB8M0CwnewPwm4ontC4pPAPRW50QE+/zm6fRcLMsOJbyoZseDeVc2Z5+bwwMfaFXfRpic2y2uE1hRF6tYwKAz4EQUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=IXH7Zz16; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rFMf2TeE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SBV3/A4n"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 96C26EC0022;
-	Thu, 18 Sep 2025 14:42:15 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Thu, 18 Sep 2025 14:42:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758220935; x=1758307335; bh=gqBWQW/xXv
-	LEzjd+MVpsbsuQvUOZrril0EvIV02oyeQ=; b=rFMf2TeE/QNZWD05YidHdpeXrc
-	lShIq6ir/1hkMs5/nZKvBRDVQjFxIO/j4tUG8ElyxjYdk5U4Dpv6jWd5ADcuQpkL
-	0+1S1yGU3kzI0iUK5q51BQhRz4HQUbTD1Mb7XapP63IPOWXxSgOEF9zPklaoq7km
-	G7kpqNH0TPKzyRngxpIDh7bxykMt1CD/buDcLqox+8IO1VapwVNojAks6Rl8wpbl
-	ms1hNvZ0/5YrjdqUNVTqa7P/dHagkkDDYY4HkT8s0mIFlvlFCxb9tcYBough0dFh
-	7MNDApson8fl7pNUktlz2OF//q4agn3dD8Oz3VSSQJ371AQspcupJik5FaHg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758220935; x=1758307335; bh=gqBWQW/xXvLEzjd+MVpsbsuQvUOZrril0Ev
-	IV02oyeQ=; b=SBV3/A4nihkvflsfw6ecnMHYx90Stw2Vu0EQAvRDFCt1fcHgrJ1
-	Y37D59AQTF373ko5RjNlZF/6+JhBYhSed57ql1o/wLZy9v4xw8kKf2t2jVzK8TXP
-	gLARZDnnQoR+vqcY9w6sGwyIwwOe5kN++VnoDc81Ci4nxDq4dwEttmbgZ8Dfpcow
-	CJo7i4yYcXIVm1JFdjub7wkDZm8k7cF9NrAPmaI1U1uH8qVMcMHLCTl9we79v/F6
-	S5R1JAoRIgow2jMc57oGsMV6uc4qA+5UJOnIcUJBGqlUttJw2DTsDANc9p/KuXVO
-	37tKNn1zFyDRWVWeXKkxJtkYefa10SU0Qvw==
-X-ME-Sender: <xms:h1LMaFAYdUNVyuFLlUP2iE-Zftf9yYI9HFWZbdYK-ydQgeOsOzccJg>
-    <xme:h1LMaL-UNv-DwvPq2FdpUkhC8lyZ3OmFY0f-vWqB3u3IgrPpAdUJ1YHHFnuXM0ssv
-    ayUpulVJhamOXGq4g>
-X-ME-Received: <xmr:h1LMaBBf4lkak3akl4uILv73JkKWfcStjimuF-31W-IX9kkNKUrp9f6Dk0A0yi23u5cqlB5faUaI2r5r7J44QPXCtLFT6YMCu-p6c3s>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegjedtjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtth
-    hopehhuhgrnhhgshgvnhefieehsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehp
-    khhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:h1LMaASpAJA25WOsyJuohaK6-MgBt_MtwloDshkE5VpxqNGlSa-nHw>
-    <xmx:h1LMaIutAb-qcmuMrqAkyX4PLfAGx6VD5bxIFoJknOLZrHpb0ySYrA>
-    <xmx:h1LMaM08zmnXZWCkI1s4a2QVEnqS9QWoNi2c3nt6rV9VQLMdyzOKuQ>
-    <xmx:h1LMaJUVOikb4jHm4obbkh0K5MvsPmPPD0Zt9j4w5nx_oCIf_EZeBQ>
-    <xmx:h1LMaGi-lqhuen9VePPKGBF3d4zcfj-umVmOoV4mEvBjLTdazwjsDK_e>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Sep 2025 14:42:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Wing Huang <huangsen365@gmail.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 5/4] initial branch: give hints after switching the
- default name
-In-Reply-To: <5629352c-2505-4254-8d47-d63f3430ceff@gmail.com> (Phillip Wood's
-	message of "Thu, 18 Sep 2025 16:06:28 +0100")
-References: <cover.1756308283.git.phillip.wood@dunelm.org.uk>
-	<cover.1757518141.git.phillip.wood@dunelm.org.uk>
-	<xmqqikhhdpd7.fsf_-_@gitster.g>
-	<5629352c-2505-4254-8d47-d63f3430ceff@gmail.com>
-X-Gnus-Delayed: Thu, 18 Sep 2025 12:23:32 -0700
-Date: Thu, 18 Sep 2025 11:42:13 -0700
-Message-ID: <xmqq1po38uwq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="IXH7Zz16"
+Received: (qmail 121951 invoked by uid 109); 18 Sep 2025 19:20:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=WuEn0sWD8wWJ4PUlg/tozGH0PqdJt4klUprMgA6bOUY=; b=IXH7Zz16KL+QiqJNHeC4VNjwCnvRE2a42LFHrpcvDmCj8sRGeVRz6htzEVMEZ1E6D0PBt3bLaUDcC8gAcOw0UjqJCfEZ5W4D2yoG1SrPQiDa7zdDLNSey3RE0hbb/iwKwjpkKohgIDvU8Uv/yyLNOItm/sSGW2A8VEpw8qwpX3rNa/H2RFf8neDLBM6iCy8G9mWV2UCWiakkN5GohKnrpmpBjPPwyidFFfT6VvA6RSn+HecTx7EFPHzBp602Qy4NA7GTx4tUdcZocxhHHzqMJ9oSVwli5EbPmWOm1eH7FQqp49To8D/3dInru0AsfdBu5tb6CCGQsFWeOc9KNl/H+g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 18 Sep 2025 19:20:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 195205 invoked by uid 111); 18 Sep 2025 19:20:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 18 Sep 2025 15:20:46 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 18 Sep 2025 15:20:45 -0400
+From: Jeff King <peff@peff.net>
+To: Kevin Puetz <PuetzKevinA@johndeere.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [Bug] git fetch --dry-run --filter makes changes to .git/config
+Message-ID: <20250918192045.GA1187769@coredump.intra.peff.net>
+References: <CY8PR05MB100119985C7C25A72E530556DB517A@CY8PR05MB10011.namprd05.prod.outlook.com>
+ <aMsmbU_Cg0L6kOlm@fruit.crustytoothpaste.net>
+ <DS0PR05MB100132C058A3D9D5AA735D905B517A@DS0PR05MB10013.namprd05.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <DS0PR05MB100132C058A3D9D5AA735D905B517A@DS0PR05MB10013.namprd05.prod.outlook.com>
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On Wed, Sep 17, 2025 at 11:23:21PM +0000, Kevin Puetz wrote:
 
->>   * With simplified tests, thanks to Phillip's help.
->
-> This looks good. The only thing I wondered about was whether we should
-> keep
->
-> -test_expect_success !WITH_BREAKING_CHANGES 'advice on unconfigured init.defaultBranch' '
-> +test_expect_success 'advice on unconfigured init.defaultBranch' '
->  	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= git -c color.advice=always \
->  		init unconfigured-default-branch-name 2>err &&
->
-> in t0001-init.sh from the previous version as we're still printing some
-> advice.
+> On 2025-09-17 at 14:44:00, Kevin Puetz wrote:
+> 
+> > >     the .git/config file was modified, adding
+> > >
+> > >     [remote "origin"]
+> > >         promisor = true
+> > >         partialclonefilter = tree:0
+> 
+> > I will note that if this command actually downloads any data, this is
+> > required.  That's because your repository is incomplete: you want to
+> > download exactly one commit and without marking the promisor remote, you
+> > will lack the ability to acquire trees or blobs and your repository will
+> > then be corrupt.
+> 
+> I agree - had I actually stored the fetch, this would be correct behavior.
+> It was surprising/wrong *only* because --dry-run threw away the resulting objects
 
-I was a bit over-eager to revert the changes to the tests.  I agree
-that we should make sure that we have the hint message even after
-3.0, so we should drop the prerequisite there.
+Unfortunately it does not throw them away. They're still in your object
+database! The dry-run mode of git-fetch is not very dry. It just skips
+the final ref update.
 
-Thanks for spotting.
+It would probably be better if it established a separate tmp-objdir area
+(like we do for pushes before we commit to storing them), fetched the
+objects into that, and then threw away the result. That technique did
+not exist back when "fetch --dry-run" was added, but it probably
+wouldn't be too hard to do now.
 
+> I certainly agree that the `fetch --refetch` conan 2.0 is currently doing is a very inefficient
+> way to check if a remote has a certain commit or not - which is why I was
+> experimenting with blobless/treeless to minimize the useless transfer.
+> 
+> Today I also found `git fetch $REMOTE --negotiate-only --negotiation-tip=$COMMIT`.
+> That supposedly (and seemingly in practice) replies with the list of ancestors,
+> we have in common, i.e. it will print the same $COMMIT if the server has it,
+> or some list of ancestor(s) we share if it does not. That seems like a much more
+> sensible command to check whether the remote has a commit,
+> so I'd also appreciate any feedback if I'm there's something wrong with using it this way.
+> 
+> I did find one odd quirk. When the remote and the requested commit are unrelated
+> e.g. I'm taking to the wrong remote, or have done `git checkout --orphan`), I get
+> 
+> $ git fetch https://github.com/git/git --negotiate-only --negotiation-tip=$COMMIT
+> fatal: expected 'acknowledgments', received 'packfile'
+> 
+> This still works for conan's purpose (exiting with an error means it didn't print a matching commit hash),
+> but I expected something more like the "fatal: remote error: upload-pack: not our ref: ..."
+> error that you get from git fetch {remote} --refetch $COMMIT. Of course, unexpectly sending a packfile
+> could be a problem with github's server implementation, rather than the git client.
+
+I had never used --negotiate-only before, and did a simple test which
+ended up with the exact same problem. I agree it's probably a bug, but
+it's present in git.git itself (my fetch was to a local test repo).
+
+I'm not sure if the bug is in the server or client, though. If I
+understand correctly, the server does not know anything about this
+"negotiate-only" mode, but is just responding to the client. The client
+is supposed to say "done" to tell the server that it is not sending any
+more "have" negotiation, at which point the server sends the packfile.
+But in this case the packfile comes anyway. Running with GIT_TRACE_PACKET
+in the environment shows the client making an extra request with no
+"have" lines at all, which the server then takes as an indication it can
+send the packfile.
+
+So I think there is at least one client bug, which is making that extra
+request. There might _also_ be a server bug, because it is sending the
+packfile without a "done" line, even though it was told the client wants
+the wait-for-done option (and the client does not even send a "want"
+line at all, so what does it think it is sending?).
+
+I can't comment beyond that on the wisdom of using --negotiate-only.
+
+One other option is to use the "object-info" protocol extension which I
+think would do exactly what you want. But the server has to enable it
+explicitly.  And I'm not sure where client support is (I think there
+were patches for a "remote-object-info" directive in git-cat-file a few
+months ago, but it looks like it is in limbo now?). So probably a
+non-starter.
+
+My other instinct would be to try to fetch the single object, which is
+what you're trying to do with the --dry-run invocation. I wondered if we
+might find some wisdom in how partial clones do one-off fetches to
+lazy-load objects we are missing. It looks like they do (this is from
+promisor-remote.c's fetch_objects() function):
+
+  git -c fetch.negotiationAlgorithm=noop fetch --no-tags \
+    --no-write-fetch-head --recurse-submodules=no --filter=blob:none
+
+which is not so far off of what you're doing (and actually I wonder if
+it even does the right thing when doing a fill-in fetch of a non-blob;
+shouldn't we be using the same filter that we originally cloned with?
+And possibly --depth=1?).
+
+But I don't think it helps your problem. It still writes the promisor
+config (which, in a real partial clone, would already exist anyway).
+
+We could sneak around the odb issue by setting up our own tmp-objdir,
+like:
+
+  mkdir tmp-objdir
+  GIT_ALTERNATE_OBJECT_DIRECTORIES=$PWD/.git/objects \
+  GIT_OBJECT_DIRECTORY=$PWD/tmp-objdir \
+  git fetch --dry-run ...
+
+but that would still modify the config. So I think you'd really have to
+set up your own fake little repo, like:
+
+  mkdir fake-repo
+  (
+	cd fake-repo
+	# this alternate might even be optional; do we even care about
+	# seeing our own objects here, since we are just trying to grab
+	# the one from the server? I guess if we have the object in
+	# question it prevents the server from sending it to us.
+	GIT_ALTERNATE_OBJECT_DIRECTORIES=$PWD/../.git/objects \
+	git fetch --dry-run ...
+  )
+  rm -rf fake-repo
+
+I dunno. That is pretty ugly, but I couldn't come up with anything
+better.
+
+-Peff
