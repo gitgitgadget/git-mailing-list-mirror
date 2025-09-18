@@ -1,140 +1,114 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A085306B3E
-	for <git@vger.kernel.org>; Thu, 18 Sep 2025 13:00:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFA830C627
+	for <git@vger.kernel.org>; Thu, 18 Sep 2025 14:20:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758200451; cv=none; b=HLFI2tNT+z3o54bFR+GEXyNzVj1X2iys5VYAVgeqnuchmqfQJMOCzva+oABgnIgY76ra1ZvT/5BnAtbOva/ts9LVRwyuhbb4iu6DSJZpgKjQNlbFCrNzmDRKlH8GLR3LEuQ04kzWqdlb9wqLeGsW9XvRm9768sDxzz2nbZo6tic=
+	t=1758205228; cv=none; b=EDdPoPlv+f5VdUQwiGuGWY4VYexXbDLaIePTRrW8ptFUSZbmxbJ57iBdbSKQK6+2E4iLApXLsSfLhsxaqZ9Exv4SFJgvzvd0ORJqGT8P3QbCPoutWGOfY0HBxTWtdEVnI1khP3FhZxrRXTfxjnLCKUgrWvBd+6egPaaEmjh/IYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758200451; c=relaxed/simple;
-	bh=oOoOQ17JlLSiivZk0bRP/sJsxpevgf3/Dwqf7QI5BGI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e0iiSBCwgF9xm+9nmMDnX8MDML7SN7ge9ReAAd1OR4LwBaEBDyrjbbMO4F9wlHe7gL6JILMeghIZ/JWcKyS0OXsK6Zx5+RyCS5YxeC9QefqtG4kmc6+mmaFDe9Lb24LuBMEFzOZTSeCr/vImynPY5mF4DC66XoI6AFrWsXInYkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PttQSqln; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P4Zqvk/7; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1758205228; c=relaxed/simple;
+	bh=etyE8ujbWC5fRP5m15SwPrKYDQ4TYYu+ShgjOLG8dBA=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=iBLdfRHX52eATQaKjGjClSV44P2b1w8QX01xvils/TnpHzdbCHaprVA4tsqONRqglnvVbMR7BSDnzQEwJahKkDtBLPP6++lImfqFjWeA0jemnDEyOtbkBIPZ8YJOC7xblLFgejsxeylvYyRKLwuPbnZq60r3R2ic5ayHzx8HG90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=UL1E3C+G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lZhhhsQI; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PttQSqln";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P4Zqvk/7"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 37BE1EC0362;
-	Thu, 18 Sep 2025 09:00:47 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Thu, 18 Sep 2025 09:00:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758200447; x=1758286847; bh=eLYJ8kVTHC
-	aOHgGs63sp4EfG0qnd4ArACJhbKKDPEjM=; b=PttQSqlnvvpxDOVRfHOphc29gN
-	VA5IqPmEPk67nF1up3n0fTF5JiP6VmKPBU8yVGjmA9iX7XFYX+Pg418oVznkxW4r
-	YeQ7ItXD7AZPq1VwT5NBEg5oCySpG2HxDce0W5fHee4HPgCFO3AZtyC7ZeJEEflC
-	mrB7QP6YLNBBPLaJzFPkEdu+dFENt0l9rJn2EYVRVBPCG240WuhBaGk5GJPXBaiJ
-	o5WgfAgpPpQ+UGtH9PWgoHt5RRKqJLl7rPuzCpFfrl2zow0o4rL4icvnnh6jHbHl
-	2SxERIWYBw2lk4hUKo4HiDI1yec2MnJwBlPURXraLEY8jSBEbdKZ5z6MHtnA==
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="UL1E3C+G";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lZhhhsQI"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2DD381D00352;
+	Thu, 18 Sep 2025 10:20:25 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-04.internal (MEProxy); Thu, 18 Sep 2025 10:20:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758205225;
+	 x=1758291625; bh=hannvoAbHUkQ7lCU/nnwzLV8USP53o4Oeko35ydgwV8=; b=
+	UL1E3C+GFAE81S4N/2F7VIWTWUH4yd5MZWT4owopixOC6aEBa5XzhV9nDGfJGphR
+	ogV7Rlvv53Kk4NRg+rJRTOTHi2Q7539YkVyUBuEH7qgRina/HpckQhF+fHIRZ5fv
+	FeUoVRxhCorndiDOAnlyHtjFpqnPRJBjC+53x5ZYMtmZGmONWX4sSXc03TihHuiO
+	U8BXyQ0HM9nJnwOQnyTF8r7y4CotKtdPncd+ux8trcNXjIGSD1w3ONOj3PzeDdkD
+	4nHlhLoMU92tg9eDuuENhe/X/dcO5rb0+2YT+U3D9FJ71cqd7k/4sTy4mrX9hrC2
+	YxAPknfaNlpmQ2MoKYPbOw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758200447; x=1758286847; bh=eLYJ8kVTHCaOHgGs63sp4EfG0qnd4ArACJh
-	bKKDPEjM=; b=P4Zqvk/7jvh6l+EqJKCBHT141FV/RvAli5aTecoNtMhGuh94htB
-	jRdURYdhAWhNPK4WrhlvFdhm0b9iKNHTHPexJtsrfz/j3cf+whxVOc/xT+d4KPvV
-	fO5B/AkM7Y5cgGuhgCdAk7bkYiEHxZWEY7O++2uIRkV08h4PqqnT8VDuXjrdHf3W
-	p9kJ/KWpSQUa947oPiAQDafld9CYwHwedNp7yvRViBrv4LULXihYMeEKvrFHLsN6
-	2Zt5D7OunhgW4E8S8vfzy02PrKyCg7Iwo8AuGi7lTlc37GaEPjNsZC7wc4IcbRO2
-	H4JSHLel51APVwHINSo95vPS9mm8BJmrhTA==
-X-ME-Sender: <xms:fgLMaMPznAriYQqsJWCmPcmrggqxKd3PY0e_jm3xXGRe3339BiVUFA>
-    <xme:fgLMaGMEF47_tAc4yDiTq1Y1klqZadvXh4wO9Cz6I2UnltUFi28uTP_r5c0yGcvR0
-    OWHFno8jp626ewhJQ>
-X-ME-Received: <xmr:fgLMaMtTzPsiF2onhIK5SDOzQI52SS8ZMDNf8QV82-ZZ8fPwlavvt7hdLhs6KqyIVhmXoyC-npkWwryj1DFr4uR9gIvenvJvM9l2gVuUGQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegieeflecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758205225; x=
+	1758291625; bh=hannvoAbHUkQ7lCU/nnwzLV8USP53o4Oeko35ydgwV8=; b=l
+	ZhhhsQI9ZORG2v+GNOSZKrNbt+F9LLjuljAE/J1CUiSDphJw2RZn/Smm/Lvdaa7Z
+	b430h/+rVNdkuIwdj10zOOvwsQ3P9DqM6RO62VP6WvTQ/Ve2e3/Cyk35pubpHVdy
+	X6GJ9xbhx54wQmYZ1F2MifC7NGq9nMPDjalgL0AhpfKP6ikBR+DOwXp+VhEjzAtj
+	l6Y48CzkEGX/uYNo+O2WWQo7S90bykBzvWZ7bDMy3vwrOgP2TKDY5R3naPo7e3jJ
+	hvO+NTtPITZKYT1gXGpSIh4SaVTePK9tkhtPNGwVOg5xhqYy0Cq5QgUO19pkcJ5y
+	dl167qFg6Ikx0mbQNmASA==
+X-ME-Sender: <xms:KBXMaIDSrma_8UggcjL0YOp0m6ISgVZ3OuKbJnuDpcmldDkxqK8pOQ>
+    <xme:KBXMaKi8hB9x5aZondnGVN5U8Je_X4VPbnHO5DhGlrm0hc-pGTt634v4eu6dpfn_I
+    OzAGI4DubZoDhEyAgU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegieehhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhephfeigfdvffdvtdeuhfelgfelhefgfeevueetff
-    dugfehtefgveelhfeuueevuedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvg
-    hffhdrnhgvthdprhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtgho
-    mh
-X-ME-Proxy: <xmx:fgLMaAWLzXybB7h-zG9VmL2_TBMA1cc3wbw2D0MLLujVafmbWlreIA>
-    <xmx:fgLMaEswmFe_sQGQLeH7rvg5xZMB7MNQZWrKDH0uM0ey33EzlcP8Sg>
-    <xmx:fgLMaMX7JgS3hhvsNYxSCV0yARjAW52Y9BmIJASb-dXkTQYR1i30uQ>
-    <xmx:fgLMaHnxlh0Qcam_vZEaUnW3zYV9nHRrZZabjflsG5f-cjV4HbUjNg>
-    <xmx:fwLMaJjqIjhEX3nC0cfp6aonE8HK0_nA5xj-rwehzcHop35FNzrwF5fE>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Sep 2025 09:00:45 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 26ec6de8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 18 Sep 2025 13:00:44 +0000 (UTC)
-Date: Thu, 18 Sep 2025 15:00:35 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: rsbecker@nexbridge.com, git@vger.kernel.org
-Subject: Re: [Change] Git build issue on NonStop
-Message-ID: <aMwCcw-6l1x85Wz-@pks.im>
-References: <01c101dc2842$38903640$a9b0a2c0$@nexbridge.com>
- <20250918022912.GA1135133@coredump.intra.peff.net>
- <01c601dc284b$24496400$6cdc2c00$@nexbridge.com>
- <aMuankGhjxXNKErO@pks.im>
- <20250918063152.GA1168297@coredump.intra.peff.net>
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfluhhlihgr
+    ucfgvhgrnhhsfdcuoehjuhhlihgrsehjvhhnshdrtggrqeenucggtffrrghtthgvrhhnpe
+    fgveekudeviedvveeuhefhvdetgefgffdufeeguddtkeegtdeltdevhfdtuddttdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjuhhlihgrse
+    hjvhhnshdrtggrpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgt
+    phhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtg
+    homhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrgh
+X-ME-Proxy: <xmx:KBXMaGDOZ5UTWOIAGZ5rRhES5MNwDL8EXSAI_0PG6OXGtsHwcdtx_Q>
+    <xmx:KBXMaNrbMpY6J2o5bqcf5ItB0U96rRRNj3jVb9PuKtJIdhJPye1WBA>
+    <xmx:KBXMaInRIWI47mqNytFZEsKcDRN39qZpAxNdkhEB-_TeEgIrTD8B6w>
+    <xmx:KBXMaFyVLHlMqXsV6pdUAGyJ4UXbkOPFb4m5IxgJV7D7IUzCapE9uQ>
+    <xmx:KRXMaJTok6ib225B5pAdGflSrmS4cX4zPRT8eXI0KJircn88JG84DoGE>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id B78D678026F; Thu, 18 Sep 2025 10:20:24 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250918063152.GA1168297@coredump.intra.peff.net>
+X-ThreadId: A2KDzlJCb01s
+Date: Thu, 18 Sep 2025 10:20:04 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Message-Id: <1af0f455-1ee0-47a8-94c9-5a3dae636781@app.fastmail.com>
+In-Reply-To: <xmqq348kdipd.fsf@gitster.g>
+References: <pull.1964.git.1756240823.gitgitgadget@gmail.com>
+ <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
+ <270edd2b00e63ef396ae69a9a7e9113a54f0df82.1757703309.git.gitgitgadget@gmail.com>
+ <xmqqjz23l7ci.fsf@gitster.g>
+ <70034c35-8f08-4ee0-9017-7faf6f55ae14@app.fastmail.com>
+ <xmqq7bxzcgsj.fsf@gitster.g> <xmqq348kdipd.fsf@gitster.g>
+Subject: Re: [PATCH v2 1/4] doc: git-push: clarify intro
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Thu, Sep 18, 2025 at 02:31:52AM -0400, Jeff King wrote:
-> On Thu, Sep 18, 2025 at 07:37:34AM +0200, Patrick Steinhardt wrote:
-> 
-> > > >diff --git a/t/unit-tests/clar/clar.c b/t/unit-tests/clar/clar.c index
-> > > >80c5359425..f408af850f 100644
-> > > >--- a/t/unit-tests/clar/clar.c
-> > > >+++ b/t/unit-tests/clar/clar.c
-> > > >@@ -875,8 +875,8 @@ void clar__assert_equal(
-> > > > 		void *p1 = va_arg(args, void *), *p2 = va_arg(args, void *);
-> > > > 		is_equal = (p1 == p2);
-> > > > 		if (!is_equal)
-> > > >-			p_snprintf(buf, sizeof(buf), "0x%"PRIxPTR" !=
-> > > >0x%"PRIxPTR,
-> > > >-				   (uintptr_t)p1, (uintptr_t)p2);
-> > > >+			p_snprintf(buf, sizeof(buf), "0x%"PRIuMAX" !=
-> > > >0x%"PRIuMAX,
-> > > >+				   (uintmax_t)p1, (uintmax_t)p2);
-> > > > 	}
-> > > > 	else {
-> > > > 		int i1 = va_arg(args, int), i2 = va_arg(args, int);
-> > > >
-> > > >would be sufficient.
-> > > 
-> > > Yes, it would work. uintmax_t is part of the standard set while uintptr_t is
-> > > considered an extension. Not my decision on this grouping. I'm setting
-> > > the -D in CFLAGS to see if that works, I would be fine going that way, 
-> > > although better would be adding it into config.uname.mak in the NONSTOP
-> > > section.
-> > 
-> > That should work alright, yeah. Peff, do you want to create a PR in
-> > https://github.com/clar-test/clar to fix this? Otherwise I can handle
-> > this.
-> 
-> I'd be happy if you take it from here. Note in what I posted above it
-> should probably be PRIxMAX to show hex (not "u").
+> Let me change my mind here.
+>
+> If you are trying to avoid overwhelming the readers by carefully
+> trying not to write things that do not have to be said at each point
+> in the teaching, I do agree that the deliberate vagueness I
+> mentioned above is a good idea.  You seem to have better "taste" of
+> knowing what the right amount of detail to give, a lot better than I
+> do.
+>
+> Please keep these goodness coming.
 
-One thing I missed: `uintmax_t` doesn't work on 32 bit systems:
+Thanks so much for the encouragement, it really helps a lot. I've
+appreciated your detailed reviews.
 
-    ::error file=clar.c,line=879::clar.c:879:8: cast from pointer to integer of different size [-Werror=pointer-to-int-cast]
-      879 |        (uintmax_t)p1, (uintmax_t)p2);
-          |        ^
-
-I'm inclined to just use "%p" instead and accept that this has
-platform-dependent behaviour. Means we'll have to drop the test for
-this, but that's the lesser evil from my point of view.
-
-Patrick
+let's keep going!
+- Julia
