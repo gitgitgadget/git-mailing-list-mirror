@@ -1,107 +1,176 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15A449620
-	for <git@vger.kernel.org>; Thu, 18 Sep 2025 00:32:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEF7E573
+	for <git@vger.kernel.org>; Thu, 18 Sep 2025 01:19:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758155577; cv=none; b=b73HMxqu8WZVpkLcdKqwh3hVjs5vHaO8uobZF6zIYhkrGB+tBSgt8gqaF0gksQo2uNXPoOwb0sXAXBJbqnlHIbGqZX79VN9ihEXoZ77eJKGPyhxP99P7js6IoOR3McpgI4PCAVYDZJ/7oJgZPbjIB//ikXH55AMlGnLW+yr8PGM=
+	t=1758158371; cv=none; b=o1MFKICqjyg43xd4I8DKUEUGy6POqxYVdMUAkzAezAUf1gdQTb6mZjI8RYrqnGyugSMnu2VAgdFl1JhnJ8Kn7TUsdSKtfFa/KfNqkHV5fyi6wPyS5PkfbL04dPnkJMdwqE73tkt3ba9F58k2Y5mmGH0etscOwvCdE5aJO+3kypc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758155577; c=relaxed/simple;
-	bh=Ld5OeEPJKQ5qLcfHtnY5wQeR6NnbiMSIu2VHiBAwK48=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TyL8rjI+GZ2nTcJyTslKxqeioIkLfUkLnTFVdjkkugVcLw7kjJqWlK5lNX2C/f0OH6LEPxZNub1xv1ZgGo1G1iW8fi8V/WF+wKrqPcERUKugYP7BYTfDVtzBQoEQj0K95GYq5zhoXBqQzoUolz1t/Lqzl/ZirtbfR0vDzRw99f8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=k4GIDfnt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jL4yNZ5B; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758158371; c=relaxed/simple;
+	bh=iIGiMUfa8bPI6N22uYp0DyhDEYN1jNBveu83ZFvce2Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mz//6duRP8cXpnjUDG8+Lc/mrEJHUjiIw7OqQc17M3cd06jNABnKvDvLS5GbiJMabAOpE9l9bwpYpqkLWHXO9CT1PDfKA6st9poHGDkhjChZCKYzs9xVSeypwpmHpmYag4WY98aIxKhs/jinDP4McfwqtZ3+fCxijUR8xoDCye4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=K1OAXug+; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="k4GIDfnt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jL4yNZ5B"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id A996A1D0005E;
-	Wed, 17 Sep 2025 20:32:54 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 17 Sep 2025 20:32:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758155574; x=1758241974; bh=Ld5OeEPJKQ
-	5qLcfHtnY5wQeR6NnbiMSIu2VHiBAwK48=; b=k4GIDfntYz3TrUHmOjkwycjg/Z
-	QkMXzhZvfMvwhM0OtRjNyU+rNcReSz4TblA8KG4W/Yixb7PCy2jtgnCMlPHiVwQc
-	3zFXirgx+bSGqOXQZ4u724QppznUwz46dozF44KaGJ3kOvRx0bk0ciOR8v70mz3L
-	DEgfq8opUQATC3M3RESa2MQSRf8/O0eoWHBOJK/ovfHpJGMF5mUPND8fRRQmYWpY
-	w/f32l+rqWl0kC+nKMf2TZxJNSF0mWYE4M+tn4QjXVPiiHnSLLVMCj+y89RKcVkz
-	/gVTDS8SqDKveVm7R9ya/KKlK/+qcrvKU4pnDzJGZGZJgmFl9hEwZQSsFZEw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758155574; x=1758241974; bh=Ld5OeEPJKQ5qLcfHtnY5wQeR6NnbiMSIu2V
-	HiBAwK48=; b=jL4yNZ5B0XL8p8iQYtNYLPHg7X/vv+bzwcIHzMQQ6PUg7j7Vhiz
-	5TqTNCuudxW5MwHM85xBdQAO5Qd4RTHTsQDoykmoU5ZRL7t+/mUC805GKh/3g0L/
-	sU65RUOTRVMLvjf+WFuJhl3JVeYMqcPJfBLj2JBhnNpbL4MhU1VxD/DCyB3xVKW1
-	DAUNIcpNND7TGQI4H+WaUkchKxCXck7U0eNCW7wlSr9juRxMKgjXD8lNGVlOT10H
-	4c24pLBPuv59LXLvglKqFTdP4D9PFaXrCvq23tFBfBfYVOeYlmWBfjW4WjaFx4Yx
-	Gkm5Jj+px8Pt0aqeZNNVteiOHZWqxJ8PJ5g==
-X-ME-Sender: <xms:NlPLaFecdXHDYegaKUStVLgmgNpBx5OIvP2PiFZD9BwwhTzwDL-IHQ>
-    <xme:NlPLaNzIp_lBlL2zi18WJJfAZ9v91CSa-KOhJ4w0vMX7kMQHJ5XqAIgVhLt87yzVr
-    TzCg6_xJAAbmnWreQ>
-X-ME-Received: <xmr:NlPLaLE71ta8-glGSyOV1CqgEyY87_83WW_LySeB3n-mj5BqFWKx5PSZN94tAvB5wWoITHVkvMUGBMbAlTrOQCkDAdzkF3j7vyiLxHQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeggeeltdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
-    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesjhhj
-    vghrphhhrghnrdighiiipdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:NlPLaBymRSUaJ3NzTeABjeOerT07VVPHCN7dKVpyFRfT4Af1Y-qdOw>
-    <xmx:NlPLaMsvSyo4kQZVrBom91Z6kZhrHHAvQdQUz6bZDu9uXR1uFuSn-A>
-    <xmx:NlPLaO3OAjDRh9j3bi-p2bVECa3bwUGgV4UjOLfOq6PWOEOXZ0yQcA>
-    <xmx:NlPLaH_vw1pSZ2VGltAxO3wZcHIwPWzcVycggapV_iEcqd1_eI5xpw>
-    <xmx:NlPLaOiVq2BfnaVilQ2T_eOgslEPT8SP69RUVhV6GNJjReirM4EBZxIC>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Sep 2025 20:32:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Julien Jerphanion <git@jjerphan.xyz>
-Cc: "gitgitgadget@gmail.com" <gitgitgadget@gmail.com>,
-  "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] Add `-u` short option for `git pull`
-In-Reply-To: <VVHyXy0fQW1fnBgiAFswUMEMMX4wnc3YIZWSRtSJzZbHOt0dfY0wCJt69MDxfue54cN2gPd8StlVtW2ERYKZcEs8Hpm7X5TaXrygCN2rK-A=@jjerphan.xyz>
-	(Julien Jerphanion's message of "Wed, 17 Sep 2025 16:21:12 +0000")
-References: <pull.2037.git.git.1756147789443.gitgitgadget@gmail.com>
-	<xmqqikiam90b.fsf@gitster.g>
-	<VVHyXy0fQW1fnBgiAFswUMEMMX4wnc3YIZWSRtSJzZbHOt0dfY0wCJt69MDxfue54cN2gPd8StlVtW2ERYKZcEs8Hpm7X5TaXrygCN2rK-A=@jjerphan.xyz>
-Date: Wed, 17 Sep 2025 17:32:52 -0700
-Message-ID: <xmqqplboa9cb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="K1OAXug+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1758158361;
+	bh=iIGiMUfa8bPI6N22uYp0DyhDEYN1jNBveu83ZFvce2Y=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=K1OAXug+9hLWeac5BV7jFGZxx3GW9NOb6nkgmLij+j6OXDWKZ6UnS3BpfIXWtgE2d
+	 qmr00UYV7sXFWCBZCf8htISRCg6xQdjj1JL+nGPNv5TF7ET8mkHnM8gQaqoiYXs5NH
+	 Uv4AgDd+Gq02L/N9F2h9V84hhbfW2n/d8LmHFo6sUmOuC2cYgw8iuwH0hL/WGs58HH
+	 ZYdqGlDErrNwp/g1iwt9XqsVsShbL/cwpIeK9KcPodlZvr+JXAqwYw1ZgOIPbV6jNO
+	 hILZHXViy25aw026EWSSaG6HEawAmADjc5KgNrVpNM/VYw80DrXN+O0TEeR2CYl71v
+	 LM9nc45m8nQfYejJpa5l9VgO2M2jTAn3jUtUEtyCDlBJUZ3MwTsC3gHeesUMj/HKV+
+	 avwWF1WhQh7MNJYd4JEgMx84sLHaDcZ+L0CbJoJzmYJzIH03dYCYphMv0GmANeA5yM
+	 nXaSeb+FZDJXwLI+fTSllGa9GxkbJF6Pc+6ZydzfQWMqa31PPQu
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:cc20:46b1:6e9f:44d1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 4A10120105;
+	Thu, 18 Sep 2025 01:19:21 +0000 (UTC)
+Date: Thu, 18 Sep 2025 01:19:19 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v5 7/9] BreakingChanges: announce Rust becoming mandatory
+Message-ID: <aMteF4VTq2C5sAhK@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+References: <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
+ <20250915-b4-pks-rust-breaking-change-v5-7-dc3a32fbb216@pks.im>
+ <aMsxhp6ZO2Cdz7+k@szeder.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="6WwLnipjlyfiqa5E"
+Content-Disposition: inline
+In-Reply-To: <aMsxhp6ZO2Cdz7+k@szeder.dev>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Julien Jerphanion <git@jjerphan.xyz> writes:
 
-[jc: line-wrapped an overly long single line]
+--6WwLnipjlyfiqa5E
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Having this shortcut would be really useful for some use cases
-> where one needs to pull locally branches from forks before
-> updating them and pushing them again on the fork instead than on
-> the upstream project (typical use case for conda-forge's
-> feedstocks).
+On 2025-09-17 at 22:09:10, SZEDER G=C3=A1bor wrote:
+> Providing an LTS release for those platforms that can't jump on the
+> Rust bandwagon is great, but...
+>=20
+> Git 3.0 will switch the default hash algorithm for newly initialized
+> repositories to SHA-256, which, presumably, will also encourage SHA-1
+> -> SHA-256 migrations in existing repositories.  Alas, it appears that
+> the SHA-1/SHA-256 interop feature will only be available in Rust.
+>=20
+> How will this affect those platforms without Rust?  What will and
+> won't work on such platforms?
 
-Sorry, do you mean that you stay on a single branch, and then you
-would pull from one place with "git pull -u" followed by "git push"
-to push back there, and repeat that for other places, practically
-redefining the meaning of the "upstream" to "the last remote
-repository I pulled from and I am supposed to push to that remote
-and nowhere else in my workflow"?
+On Git 3.0, nothing will work without Rust because it will be mandatory.
+However, people who want to perform the conversion can do that by
+booting a Linux VM[0] and converting the repository there, then pushing
+it somewhere.  The only inconvenience is that you'll have to have a flag
+day for working with the repository on older Git: you won't be able to
+dynamically pull from or push to a repository with a different main
+algorithm than you.
 
+One of my first patches is that setting extensions.compatObjectFormat
+without Rust will simply die and say that's not supported.  If that
+config value is unset, then Git up to 3.0 will simply function as
+normal, so full single-hash compatibility is assured.  We already have
+that: SHA-256 repositories work just fine with SHA-256 remotes and SHA-1
+repositories work just fine with SHA-1 remotes, but they're currently
+not interoperable.
+
+> I think it should be called out explicitly in the justification that
+> whatever limitations this imposes on those platforms with respect to
+> hash function transition, the project has duly considered that and is
+> OK with it.
+
+I am fine with this and I don't think this is a problem.
+
+I will mention that I have also already written the code in Rust and it
+is elegant and tidy and more efficient, better tested, and shorter than
+the equivalent C code.  Writing the code also took much less time than
+the equivalent C code would have.  I am not planning to rewrite it in C,
+since I already have a substantial amount of other interoperability work
+to do, so unless someone else is planning on doing so, the project has
+two choices: use the Rust code and accept that, or decide that they
+don't want the interoperability work for Git 3.0.
+
+I want to point out that so far, all of the SHA-256 work, including the
+interoperability work, has been on my own time.  I understand that my
+contributions to the project have to be acceptable to the project, but I
+also am not willing to rewrite a bunch of work because we already
+decided that we were going to do something and then changed our mind.
+If the project wants to be fickle on this matter, then other
+contributors can do the interoperability work on those terms.
+
+I realize the decision to incorporate Rust was made recently, but the
+binary loose object maps are a blocker for some of the protocol work I'm
+doing, and if we want the interoperability functionality in Git 3.0 in a
+year, then I can't afford to wait here, since this kind of discussion
+tends to drag on extensively.
+
+[0] Debian actually offers multiarch support, so as long as Debian has
+support for the architecture you're running on, you can boot a Debian VM
+of your native architecture, install amd64 or arm64 packages and QEMU,
+and then run those binaries in emulation.  It will be slow, but it works
+for virtually all architectures.  I've done something similar with
+risc64 containers on my amd64 laptop.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--6WwLnipjlyfiqa5E
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaMteFwAKCRB8DEliiIei
+geqKAP9QLJLRU1BGJmhhefJBppggLOPJDATJP+7taEilmR5IEAEA+M49R/HtTXQf
+duq3Ly8C/0DXLzW5ZdGD5x15NVguJA4=
+=kKpm
+-----END PGP SIGNATURE-----
+
+--6WwLnipjlyfiqa5E--
