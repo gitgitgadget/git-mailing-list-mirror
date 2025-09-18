@@ -1,71 +1,71 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6286D2D6412
-	for <git@vger.kernel.org>; Thu, 18 Sep 2025 05:47:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F6222D792
+	for <git@vger.kernel.org>; Thu, 18 Sep 2025 05:47:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758174441; cv=none; b=MCrXirCylpYruBYwytN7MJkHJxLSkc8qXmmDelxVSpwSAWLfVoLA2ll1O32iuboSz/qJZfEXldXNHPl98t60fxXJSYiH2VWDIeLLImm0byYmjSolbB7utO/yTJDizOs3XuGMs0ZEANBSyKqQHHeBXcQFPNjQrx0RfBeq376xK4c=
+	t=1758174444; cv=none; b=U4fHsiaRzW6BzRjU8DmdtEWSa8P1oK9e+Vvo5g//Yn3DUhtQlpSuViejN1wgqOC5pDnjbDe2DeX+oNelkuq7IhAAWb9H6oSP3ZacyP/jAp71hvuXq1dlQaQulwoomklRRIBVTQd9iQHPpDI5j4ZPHuxgZtifvExRteRxhPghQ6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758174441; c=relaxed/simple;
-	bh=QHetPRGrcuM5V+ERnqbQCLSo9TXriaJ2rguGGCQNy74=;
+	s=arc-20240116; t=1758174444; c=relaxed/simple;
+	bh=dgt9tAC11TEuxeZaUdpur3TP7YOncEtLo4BR3dNoYz8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Vtkvh5Qo248KdFSlXkzNNyK71SJkeKWqOSjuKGH5kxf/xwJDBUgHuvRUEZLuAbSyxcQxo+gRJiYPDqooGvldrslVJMTQP42ieJHmUckRE2UoXiAPQE29e+VynDDdWbg2f4IMpXxIzEW//LZQbybffRjRGI1ZiSbM03iVgBJ8uDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BkafjG5k; arc=none smtp.client-ip=209.85.214.181
+	 MIME-Version; b=ilT2gg/0APWacBNEtAyTHzH1yHDfE1UOVNh+HwVhjJk7CktpO4whRBKvTfXvMzflR1sEMfOD93MGRDlSTJ6hdT8H+K7hH5HgKBgjCEWA/6k2D5E2hUrHiOjHAwNyPY3eOe5bqVrVuj+9nEJQumNusy9w/01DI5GjnSpgsSDyjxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KUSAseDD; arc=none smtp.client-ip=209.85.215.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BkafjG5k"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-251fc032d1fso6373725ad.3
-        for <git@vger.kernel.org>; Wed, 17 Sep 2025 22:47:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KUSAseDD"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-b54a2ab01ffso373836a12.2
+        for <git@vger.kernel.org>; Wed, 17 Sep 2025 22:47:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758174439; x=1758779239; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758174442; x=1758779242; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2uoJq2Dr96DiMOIogUmqb9IQjGPTBbK3UF+1Bo/aC08=;
-        b=BkafjG5kzYgNFnRNjafyRkfoaq5k3pKW9oiFyTqtoTX3rAb0Kwe1h9AdqDkd0q6IXO
-         n9Y8iLcWyCUUrkjyPBIBi9SOFnkyqg7C9gyA3kO8iO6sVV7ToOPYqXHIAZnt7ck5gMDI
-         1JNkgVzkRfNl9Y5VSxv5dVlLQorHb16bHaJ9PBsakSBC1SNC+iE1NKmK68FBouW6NZta
-         u0HZbljFST9qcRcfcgVny73bIGwZCD0J5L4YK+OkcO9vilRYWH8biz/kWSYUgS6Rdxd3
-         +hFGuhtfXWrxH8kBDWiZP0u1jfS7LeCq3xnhc7IfK6gPddJi8UxIgJi8OpgO62TGzY4E
-         7tuw==
+        bh=HmerwYIe0PaD2lGT4RrFQR+HS5DZnIgZFNArxdiBHkg=;
+        b=KUSAseDDf31kvECv86P0O7I7HHlMoPnI+5OyiOPu+OVXWb8yRybuyFILuKb6n2S2+a
+         7BqnC77jhUlqdpfw4EDhJM1OLFMrhR+2pTd638ThQZATgri8w7H9M22IY9NJBQ+TZEFq
+         aqKALbSD2ELJbchFAi41FD2+bA1uip/TD8VXVUJGRbU5McLUKvFSNf5cz43Z+yK9nhj3
+         Uny5Pk0H1HrFIkxs34Y5Vmo28b01XPBkgGy7UYtJzoEDlDp/b0mA58aXWMyiQnvd9KKD
+         WEHGxn1fS+BIqLJJyn4GrWec1/yVTpNcvkwGG8k6jXy9OhHMEooqjR/g5ZLhwdVjDTIo
+         rIQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758174439; x=1758779239;
+        d=1e100.net; s=20230601; t=1758174442; x=1758779242;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2uoJq2Dr96DiMOIogUmqb9IQjGPTBbK3UF+1Bo/aC08=;
-        b=mgO8LXHJJTbHwbkARtpCYXjfZ3qa+xC0JxDZTJaL8d33nGWocgZF5x4Ru015mTsgpR
-         ZGP3BD0syVS6MUISQmNVV+VUtny6lhG3/R/kH6UtrozIOqvrfoESH7KgWBbwrxiBGNnR
-         50dx/bYDbRN2DrdRe9ANHyyxCfvGu49b+PVEZsoopRe+xBGfNQdHRceRWeIsFK5Medl2
-         EBgIoA082yxBstyYNuEp/0sH13LWuPH2cPJwSYPIr1IZIfRHD1xQzYRz5fehlvdrCsF8
-         GwLmDIl6mbXLdOq6LvnWgxxg6FrZmzwWB9lG8slDWkvrCFn1ACxmPVlrJUfa3AeHbkaq
-         aScg==
-X-Gm-Message-State: AOJu0Yyoa/hrMLdtj5sSzYEytBBsGIq7ksbOT2S4tmRPy9r+3f4Sdgz1
-	yPAX++/OuYmADc+3HJvcHd6vOvuvESfc/geNCLeul8X+ylZI2LzEP163zFvB9w==
-X-Gm-Gg: ASbGncsWXEP/FEYXlN5+cNeW4r/6kKrFwCuUzt5jzZqGSv2pdc70iIIVaRYBfyez3IU
-	oQR2XpkIooSYdmvNmpeHTZ8Oi9izBDWBr22C6vTIeNSf/zxHqTG6xhJ6IqSD20znNmEn7c049ZN
-	FBKucvsbUInAxP/vIU5T4uC8OUB5AEtxEPu7txa1xxriVUodORGnPYenz7S/TILOKYErkRD09j8
-	UxSq5XVw73m0iCoUYhDaXeYfufuKyjRFYer37wITvdLMktReOQITwy6rcPfgULwSLfIWAzUAdGR
-	ZvnF157vFgpfMIBR/BVJJXT43PAQge9tF8bXiV/rElxA9fVYKX4J2gdiWyVR7fPQPa3rhU0W4Zx
-	VhXVydfRStmTrgRJJx/jk9qMZvzTApqk+TFhfqg==
-X-Google-Smtp-Source: AGHT+IHEAta58mmBapPwwrXs/gyBrJxdjO6m2kfpk0lMvmngfM8CRGrobdU/Z+96KPhkQlQGHZ88VA==
-X-Received: by 2002:a17:902:da83:b0:251:2d4d:bdfa with SMTP id d9443c01a7336-26812169003mr59848685ad.20.1758174439455;
-        Wed, 17 Sep 2025 22:47:19 -0700 (PDT)
+        bh=HmerwYIe0PaD2lGT4RrFQR+HS5DZnIgZFNArxdiBHkg=;
+        b=IqP8riKgkLNmzjjF4KYMudZSRScKpwwTsaoO1C9Igr73wTMW5BgqvkmEJxEqVFIWLm
+         gYWpVCA1EcpmlPiYeq6817sg4GR2IiR+XLOunyIN4tPRXwgawvQSGf4P3GfYBJrW8nDV
+         siG/ZhosNWG+99IOmybctVozQ7AHydzZ+U4Yrd+V/9E/8QfLMxXklhFbBlCEDG835o6Y
+         yuEYBb6vZVi7kKczj6ZiKeGZwvuvDxOOI04qkg5hrK+nQyV4mkOgZAGbr9e92dH6EhQZ
+         RQlG8dZqR2ycOtLFqrZ1i/6GH6oiSEB/stzVg597uNb1f/XiMTjT04Ha3CZWT7yFQDt0
+         0vCw==
+X-Gm-Message-State: AOJu0YzE/Xkz54slui1SpwW6k6+7xr8bvvzmOTwxyyIUcG+xD7fGTjoA
+	quCxZJpUHdK1L7Y/W5txAu284ijo5ipyXLBrtL/ViaeId1f+E6s+eiP82ZlVbg==
+X-Gm-Gg: ASbGncvG+23Q3tFJbCSedky0ZijhQIX4sVDPhf8qW7hEESV63K0ApsknMaEGWswD0qF
+	9DuvHWVUTKlPZn5SQyVwsGlvYs/semQ0fRuXG2zINSOWC2QzpaqZ9zhNeBjtjxz9v+Dvbh/N+qC
+	uzlbHmtfi2xwKMwYArjGAKUpUITVqpim1JYQzHj3GN/2PaQ6V+5I0tJBNDY3nYzgciPrqLUOHGD
+	Jtl62OO2ficL+WYRWM2o6tfGbESWooaEpHnfnG8xeOpHrWj8DNsB+JSTHY94nY8aXJ5uN6mHkww
+	wsCSz4hQpsXj8fjgPI9Lr5PrAOu5qylnOIq21RHfxEa8JER0hS8J+oDVFJXQvXMbsaivt79ryfS
+	Zye5ZVNYeihHGnx0XOdLn6c4gKDfjNDNMshl63A==
+X-Google-Smtp-Source: AGHT+IF0JeEt9sC9qy3IF1j4VVQu4Q/CHDFkgvn1z+eBvzu1CmHVihR5KuQSC06a0RArhbaoH3yH3w==
+X-Received: by 2002:a17:903:1983:b0:24c:cca1:7cfc with SMTP id d9443c01a7336-26813f01439mr61857665ad.59.1758174442088;
+        Wed, 17 Sep 2025 22:47:22 -0700 (PDT)
 Received: from meet.. ([103.176.11.198])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-269802debfcsm13621535ad.86.2025.09.17.22.47.17
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-269802debfcsm13621535ad.86.2025.09.17.22.47.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Sep 2025 22:47:18 -0700 (PDT)
+        Wed, 17 Sep 2025 22:47:21 -0700 (PDT)
 From: Meet Soni <meetsoni3017@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	shejialuo@gmail.com,
 	gitster@pobox.com,
 	Meet Soni <meetsoni3017@gmail.com>
-Subject: [GSoC][PATCH v3 3/9] reftable-backend: implement 'optimize' action
-Date: Thu, 18 Sep 2025 11:16:58 +0530
-Message-Id: <20250918054704.544254-4-meetsoni3017@gmail.com>
+Subject: [GSoC][PATCH v3 4/9] builtin/pack-refs: convert to use the generic refs_optimize() API
+Date: Thu, 18 Sep 2025 11:16:59 +0530
+Message-Id: <20250918054704.544254-5-meetsoni3017@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250918054704.544254-1-meetsoni3017@gmail.com>
 References: <20250906075147.1076656-1-meetsoni3017@gmail.com>
@@ -78,49 +78,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-To make the new generic `optimize` API fully functional, provide an
-implementation for the 'reftable' reference backend.
+The `git pack-refs` command is tied to the 'files' reference backend. In
+a repository that uses a different backend (like 'reftable'), the
+command is a no-op.
 
-For the reftable backend, the 'optimize' action is to compact its
-tables. The existing `reftable_be_pack_refs()` function already provides
-this logic, so the new `reftable_be_optimize()` function simply calls
-it.
+To make `git pack-refs` a truly generic frontend for reference
+optimization, refactor it to use the new generic `refs_optimize()` API.
+This will allow the command to automatically work with any backend
+that implements the `optimize` action in the future.
 
-Wire up the new function to the `optimize` slot in the reftable
-backend's virtual table.
+The command continues to handle parsing its own command-line options,
+but now calls the generic API to perform the action instead of a
+backend-specific function.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: shejialuo <shejialuo@gmail.com>
 Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
 ---
- refs/reftable-backend.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ builtin/pack-refs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 570463da41..5dff1e08e5 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1721,6 +1721,12 @@ static int reftable_be_pack_refs(struct ref_store *ref_store,
- 	return ret;
- }
+diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
+index 5e28d0f9e8..dfcf664524 100644
+--- a/builtin/pack-refs.c
++++ b/builtin/pack-refs.c
+@@ -51,7 +51,7 @@ int cmd_pack_refs(int argc,
+ 	if (!pack_refs_opts.includes->nr)
+ 		string_list_append(pack_refs_opts.includes, "refs/tags/*");
  
-+static int reftable_be_optimize(struct ref_store *ref_store,
-+				struct pack_refs_opts *opts)
-+{
-+	return reftable_be_pack_refs(ref_store, opts);
-+}
-+
- struct write_create_symref_arg {
- 	struct reftable_ref_store *refs;
- 	struct reftable_stack *stack;
-@@ -2702,6 +2708,7 @@ struct ref_storage_be refs_be_reftable = {
- 	.transaction_abort = reftable_be_transaction_abort,
+-	ret = refs_pack_refs(get_main_ref_store(repo), &pack_refs_opts);
++	ret = refs_optimize(get_main_ref_store(repo), &pack_refs_opts);
  
- 	.pack_refs = reftable_be_pack_refs,
-+	.optimize = reftable_be_optimize,
- 	.rename_ref = reftable_be_rename_ref,
- 	.copy_ref = reftable_be_copy_ref,
- 
+ 	clear_ref_exclusions(&excludes);
+ 	string_list_clear(&included_refs, 0);
 -- 
 2.34.1
 
