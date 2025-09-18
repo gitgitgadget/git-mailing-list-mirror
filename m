@@ -1,116 +1,98 @@
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005462820B7
-	for <git@vger.kernel.org>; Thu, 18 Sep 2025 17:58:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F45288C39
+	for <git@vger.kernel.org>; Thu, 18 Sep 2025 18:25:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758218290; cv=none; b=LbKFJnrD+2+/KqmCP+tgdV+I/fEVfWcXWK6iXlffe2Q+DUv/odWYo2iiMSbDkd2Q3rAvFzyvib6RD4T7AEwamNqMuMh3vzPT1dCG81z7IIwp9181Lpo1jRXOB1wlEbeieQisC7d7z8SXfCS8ZZUqOWGGPkgaDWmQzyNzI9zshRs=
+	t=1758219950; cv=none; b=DEPbO9F2HmNZylm4VNtGF4kf+FtFo9tvH8DtzBHZ8uag/CAJen7AasKNpjbigCHHDYFX2C2qQTWIuYnkGi8o0xIOmNa0cCB6US1jRktVZJQ7y6jWwUGjSz60Rii6qJQLeSPK3lWZlKckwPfLa3geM+ak4SUwY8TSsQG6D6mTqpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758218290; c=relaxed/simple;
-	bh=tXm+g+b16h6ZKBmT9iLKQzOvmniu4HxQ1+ZQPMlgHW4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=YbwRRJzmKfBgx2VBRkJKxpXYiHpfDpI7nfgrOTolJzti5vptpCav7GV3YHzcMbHnd+L7sVJu9cP0BgBlCek3H2b0qlK4JHNvxu9cVHfxsqDyYUPPI3W9pcABj60GV5nIWnogp1z+A3nNYi9UD73ZLZ5lnezt+gHWyHMwQUXsVB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.104] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4cSNdz1PVwzRnmN;
-	Thu, 18 Sep 2025 19:57:59 +0200 (CEST)
-Message-ID: <3fd3f64f-6ab7-4b4a-a834-a9c5c1e89d5b@kdbg.org>
-Date: Thu, 18 Sep 2025 19:57:58 +0200
+	s=arc-20240116; t=1758219950; c=relaxed/simple;
+	bh=PndyDejQi/9uUiYa4ZITPFvtOipKmMpNQswSU5N9F4w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eku8/GE+FAuNTnXbv6TyKlbR/yh5BVPaLl5OhRl/rGcXMtPlgzmSB/WAFUuuznNBpZ4aGcjWGo0P6/b81ku9GMZ7WxscO7FUVNJWwCiouIVwA1WhunAxDhx4D0xwcdocCENmp6If+5PTB697JizERFP4OzjbfoCDebL/O1OOndU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Ls1ZBbv7; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Ls1ZBbv7"
+Received: (qmail 121592 invoked by uid 109); 18 Sep 2025 18:25:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=PndyDejQi/9uUiYa4ZITPFvtOipKmMpNQswSU5N9F4w=; b=Ls1ZBbv75X3UIUsJ7VvHZMY5fkIMa3mCnSRR4q67rfAJAg+/cFTsQ9nn23QThr0Q5ibMQWuLXUrqmkdkjWy0RAAvunhm2yAMmkzaOYJjUk2DbW58r9IpoUZ4xh1RshPLDBbSYT85FLbMqN42XQ8UxD+Odsag6EN4oLPV3eJOW+GdQdpQuZWRyCZgq/zqr2jQG+fqOoUNeGmF/uNYeYSAhoIlijARvyk5qbUXKV6k85e5kvMlZeBPto/Y0YbuWEvQb1EQRz7dyIvmx8EbZ8wtReqpST/7mLVU4s5aFhKlS2blcRDG7ZIB8l/3QTUuCmZmF75z1uHtMYzPX3Hx8Prq7A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 18 Sep 2025 18:25:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 194601 invoked by uid 111); 18 Sep 2025 18:25:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 18 Sep 2025 14:25:46 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 18 Sep 2025 14:25:45 -0400
+From: Jeff King <peff@peff.net>
+To: David Goldstein <dgoldstein0@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [bug] git check-ignore returns the wrong exit code with -v when
+ only a negative pattern matches
+Message-ID: <20250918182545.GA1184978@coredump.intra.peff.net>
+References: <CANavNqpHqVgHshUaToS51OGVuvx5FqxROP2PssHW9OELMLeBQQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitk: make the 'Tags and Heads' window geometry sticky
-To: Michael Rappazzo <rappazzo@gmail.com>, git@vger.kernel.org
-References: <20250913181153.46575-1-rappazzo@gmail.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <20250913181153.46575-1-rappazzo@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CANavNqpHqVgHshUaToS51OGVuvx5FqxROP2PssHW9OELMLeBQQ@mail.gmail.com>
 
-Am 13.09.25 um 20:10 schrieb Michael Rappazzo:
-> Currently, the Tags and Heads window always opens at a default position
-> and size, requiring users to reposition it each time. 
+On Thu, Sep 18, 2025 at 10:28:05AM -0700, David Goldstein wrote:
+
+> Hey folks, I think I found a git check-ignore bug.  According to the
+> docs, git check-ignore should only exit 0 if a file is ignored, but if
+> an untracked file matches a negative pattern in .gitignore (or the
+> file can be tracked if --no-index is also used), then git check-ignore
+> -v <file> exits 0 when it should exit 1; without -v the exit code is
+> correct (0).
 > 
-> This change saves and restores the Tags and Heads window size and position
-> relative to the main gitk window. The geometry is stored in the config file
-> as `geometry(showrefs)` and persists between gitk sessions. The window
-> position is stored relative to the main window, so it maintains the same
-> spatial relationship when the main window is moved or when gitk is restarted
-> on different monitors.
-
-Thank you for this patch. In general, I like the direction this is
-going. I am baffled, though, by the sheer number of lines that must be
-added to achieve the goal.
-
-I tested the patch Windows and Linux (KDE), and found some deficiencies
-on both.
-
-During a session, on Windows, size and position are retained and on
-Linux, only the size is retained (the position is always the default).
-In both environments, persistence across session happens only when Gitk
-is closed while the Tags and Heads window is open, but not when it is
-closed via any of the means available.
-
-To reduce the code a bit, would it be possible to set the global
-geometry(showrefs) from a handler of the Configure event? Then it does
-not have to be set on any other occasion.
-
+> https://github.com/dgoldstein0/git_bug_repro has a self-contained
+> reproduction + repeated explanation.
 > 
-> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
-> ---
->  gitk | 75 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
->  1 file changed, 73 insertions(+), 2 deletions(-)
+> This exists in all git versions I've tested, but I haven't tried to
+> get the latest dev version to check if it's still a problem in the
+> latest version.
 
-> +proc parse_geometry {geom_string} {
-> +    if {[regexp {^(\d+)x(\d+)\+(-?\d+)\+(-?\d+)$} $geom_string -> w h x y]} {
-> +        return [list $w $h $x $y]
-> +    }
-> +    return {}
-> +}
+I can reproduce it here with the latest version. I've never looked at
+the check-ignore code before, but it looks like the issue is something
+like:
 
-Are there any occasions where it is expected that the regular expression
-does not match? If not, let's fail with an error. Then we don't have to
-verify the return value at the call sites.
+  1. We "count" ignored files by seeing if the matched "pattern"
+     variable is left non-NULL.
 
-> +proc restore_showrefs_geometry {top} {
-> +    global geometry
-> +
-> +    if {![info exists geometry(showrefs)] || ![winfo exists $top] || ![winfo exists .]} return
-> +
-> +    set saved_geom [parse_geometry $geometry(showrefs)]
-> +    set main_geom [parse_geometry [wm geometry .]]
-> +    if {[llength $saved_geom] == 4 && [llength $main_geom] == 4} {
-> +        lassign $saved_geom w h rel_x rel_y
-> +        lassign $main_geom mw mh mx my
-> +
-> +        set abs_x [expr {$mx + $rel_x}]
-> +        set abs_y [expr {$my + $rel_y}]
-> +
-> +        # Ensure window stays on screen
-> +        set screen_w [winfo screenwidth .]
-> +        set screen_h [winfo screenheight .]
-> +        if {$abs_x < 0} { set abs_x 0 }
-> +        if {$abs_y < 0} { set abs_y 0 }
-> +        if {$abs_x + $w > $screen_w} { set abs_x [expr {$screen_w - $w}] }
-> +        if {$abs_y + $h > $screen_h} { set abs_y [expr {$screen_h - $h}] }
+  2. In non-verbose mode, we set the pattern to NULL when it is a
+     negative pattern. Makes sense.
 
-Consider the case where the stored height exceeds $screen_h. The title
-bar is moved out of the screen due to the order of these corrections.
-Let's correct the lower and right bounds first, and the upper and left
-bounds second. Then the title bar stays on the screen.
+  3. In verbose mode, we don't do that because we need to show the
+     pattern. So we accidentally count the entry as ignored.
 
-> +
-> +        wm geometry $top "${w}x${h}+${abs_x}+${abs_y}"
-> +    }
-> +    bind $top <Map> {}
-> +}
--- Hannes
+So something like this makes your repo behave as you expected:
 
+diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
+index 644c9a414f..808c0e5ff4 100644
+--- a/builtin/check-ignore.c
++++ b/builtin/check-ignore.c
+@@ -117,7 +117,7 @@ static int check_ignore(struct dir_struct *dir,
+ 		}
+ 		if (!quiet && (pattern || show_non_matching))
+ 			output_pattern(pathspec.items[i].original, pattern);
+-		if (pattern)
++		if (pattern && !(pattern->flags & PATTERN_FLAG_NEGATIVE))
+ 			num_ignored++;
+ 	}
+ 	free(seen);
+
+AFAICT it has been this way since the inception of the code. I haven't
+ever used the exit code of check-ignore. I wonder if the current
+behavior is actually useful, along the lines of "exit 0 if any output
+was shown, and 1 otherwise". That would justify a difference in behavior
+between running with "-v" and without. But again, I've never used the
+exit code so I'm not sure in what circumstances it would be useful.
+
+-Peff
