@@ -1,192 +1,80 @@
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2F2242D97
-	for <git@vger.kernel.org>; Thu, 18 Sep 2025 17:03:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FF025A651
+	for <git@vger.kernel.org>; Thu, 18 Sep 2025 17:28:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758215020; cv=none; b=D1DEcYSgEwUZDKrJhMEd7reiNV89pbDGokKt+xLkRsgX0hTlh71415c0ZCY4cSNuMK4jBjMYH3J0mrr1SYkWUFrSiEhWoW16WNBHECEt+0xaIiCemlRMdJ4ZgfSkPur7zbKuci5kuKuyhZltarch8Ry4FmNlxofwHzTTWNufrlg=
+	t=1758216504; cv=none; b=m5PL6gi4lhSd7ejUmryYbDnqjrCSM6TAYSYswb1wvGFQ+zRLH3jCUcRj4XKjCxN4YKCSfgG+rAxc+RkeMnkzsVKNO27kZBJSzn3PQKIpGITj51UJK/DTNdnG7sEbSaD4bY+DFNruzduHUA7VvrYPFF+F8NMtId95DgcWp23Qke4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758215020; c=relaxed/simple;
-	bh=gyYI7AU2xiptoF+89qDsWbpj6KHHqeRLiubtJPWF5Kk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X+UducZTRCeOrM2Ypwu8uRAMa41c4eD6EVBVxDBXgjmjrX8NpyweRg8DCgwnOPnIe0j36gDUhbrlufbqZ4iDhZZ8XW+t6uwR9QVoXH5qnw+7EnUPTUmaiYgVim2mo5U/kZ9JxCS5lTeFdsGEdSYaAFEBWkNmG1rrXz1IizIxaGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ll/JJcom; arc=none smtp.client-ip=209.85.208.180
+	s=arc-20240116; t=1758216504; c=relaxed/simple;
+	bh=FOfEcN+1fA86JQK+zgcq+4ybbaEe+SNxwGn/9eKVWuA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=bdQxbda/1NZbuQQjUF8Ywq8I/VhHqy6VFCGjk+ehrwe3rO+dVM7H6r2Zg3I8KBTgEkFYXdEMaC6uLPnAbUWcXdFIIrLbpla40U92PunEN9VPaFpUvdqUieuXcm1hfDVDXtAg8z9Fvflw2FOdnwPYKFPKISJkQEd4SYhID1sWDIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kaWaPh8v; arc=none smtp.client-ip=209.85.161.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ll/JJcom"
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-3601f884888so9891551fa.2
-        for <git@vger.kernel.org>; Thu, 18 Sep 2025 10:03:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kaWaPh8v"
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-62355a687e6so891592eaf.1
+        for <git@vger.kernel.org>; Thu, 18 Sep 2025 10:28:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758215016; x=1758819816; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eu2NmWCVMZsnCfdtYxUV6iBG3lzfbxOobxHGMYT6ON0=;
-        b=Ll/JJcom0OeXLTWS0c8aHDVRw31ii9rwcYCq/P4SR9fFrXLHNt+n55O9GqXXRlZ4pA
-         a2BZeG2fsVL3ukm7cOeH4dUdIHBUv1gyODL4ygsh2NoSsauY0iB+YYFWH8V0Zz8fh05H
-         tZKyOArWWo1jBCdrfJH/vPl4seCWH8gK+5Evq8r3wB4jrTwf9MUEbn8LmOqZWWjuijgh
-         7qS4yd0d0dpidHaPiLenzVPUWAnZRQHTUyD8SfZ1BPZXsRy4IPHQtiLGc8k+OhUvxYJZ
-         toN8DVE9VMUZJ7LXnsFPgvDJn9zNATG6RVCW6sfqEt92obakRUtgfvSubvf9iPZB5Xup
-         XGsQ==
+        d=gmail.com; s=20230601; t=1758216501; x=1758821301; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=t2Zn6op1JEZNACOLEk1qgMIqFB0fOl9edBa095ph85A=;
+        b=kaWaPh8vMB3mq3KYKqjT9CrmvB7IXgwZKNkm6l0ubqPLfU5pK9ZNWvIDqPtOR2b/Dq
+         dLcOwRdOFsMWi19lSplSd/Jne3rqGPNtm4emFmP6mQUaSiH7NCNzt+2Og/vBqNtp2Ds5
+         UH0a6qDoh1R5Z5BxO7ypMRNaOgp5DW9SebVjyxINFXG0mW1k8wEa+i8VZLWHbJsgtKij
+         S01nLWYUx+FQSHvburch+D6aJXfcgLEw2l/0jWitEYb2m0HZ5FAcJfh76NdwFBe7hHTq
+         qvt/U7AIbdbxNWDjO6VEH20e9mOb4gB7AlVIEYd6kI+m/wi3GF51HIlFX6jGMw/fC98c
+         pvUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758215016; x=1758819816;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eu2NmWCVMZsnCfdtYxUV6iBG3lzfbxOobxHGMYT6ON0=;
-        b=PvcjidgCroeSyXKh5pFURp7XjASyIyE2fSKzgm/3++riUOxandv5zWf6sVZUZy7mFb
-         fl8O6uOMa25wzuogjMBds78y/DlyV1KwWnI4/cbTWVbCCmx/HIHNiNyrH1NeQ+pPYeQg
-         RdWtioLSxasYZg7suwZ4W5+5+m13UMO/ItCVasm5WzuKq5PwQ1c+QMMeHhFpQS539Tes
-         tm9WWDEAH2vCYucdrc9oK3RnvgLzFuOKjeS+Hjf2fpSLmYGPq/IiCAQ9OVg59qJWWJyF
-         0sEEMUvrpsu5aTsoFbiinVcYGdB9c+6PymejJI6WJMmfgFgV5UUPww0D80ogeAiuR2un
-         rS0A==
-X-Gm-Message-State: AOJu0YyJhwXk0k5ufs/U/mpyIa5dGZecgayOk1HNnvV/IuDEg8AqVwHg
-	0nuCi+oISzvyY29k8t8BDSsb5Y2goZxvq6tOIXNjBEfaysSSxz972vojWBCoaUHgXe3jUfZj2cq
-	0is4r5J8iPld13zzVZ/KJ6mCkfvYQoqVVZZgh
-X-Gm-Gg: ASbGncvXZ3fxBEfgjD3VQTTY7bDFwJKwi2LJZJ4ZUU7IkUmHoZD3Uf34IsMsUIWjdRG
-	iM5RQqVtuKhgKLjmpydWBaZu2NqDdeKyAfSK4Ki+AK/fpIrd2w1MJr3LPASxR0ugm3HSxrM1tpy
-	9HUg5ObIe/XUWEjskMC+JWSLGhlaZIwpMbhraaZKp0wrYfbxoDqw99IJo0bzAqBHeHffRmYXF7V
-	brGdu1wagYCa3Oq13wjYfaeDj744EAVtGI=
-X-Google-Smtp-Source: AGHT+IFAQJABcs4QXvYX+Jbix3GY6OYX2X+csv0FH7D9wNkbZ13hHjH2iEIkPI9ItReMjXwGS3LFu7uIRz+ET+/ch6U=
-X-Received: by 2002:a05:651c:1a0a:b0:338:53d:3518 with SMTP id
- 38308e7fff4ca-3641a7f5205mr851961fa.39.1758215015908; Thu, 18 Sep 2025
- 10:03:35 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1758216501; x=1758821301;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=t2Zn6op1JEZNACOLEk1qgMIqFB0fOl9edBa095ph85A=;
+        b=DhrqFoPbQY49SWYDzV5cSTq6w//q1a86VyqLJ7TsQ6u7aElhlsoy/ZphVLAxuf7wdY
+         Tiu7c/RpGzCBRGyJjeP+q+W/Wjg5YC9Z1n9eVqHABT0wbfQtCJMairVBXbrUBbjh8jN6
+         HFtGSy53/LZ4DG9fJQ7nsbKfPGz/ECOY1WdrmW6vx6O9Vd2zWD/hmAHf4vZORK+6M6c+
+         OdZv1u7BetBoLtDFO6IK7sJXBtfizK4pWkS9IK1nV/TUYnYa3dKmLs1SbJPG83eq7w6q
+         bSOLa0ROhE92FcTVEjHdj41+iiJbYDsFqwIlkcz9bFD4vajePybJg5k3UjGJiryY0kJ+
+         lvKA==
+X-Gm-Message-State: AOJu0YwCAE4XFTObiU/vmOMMg99VwoaQjJCJmmdp9blxs6ojJ/nDW35R
+	aWNYdmg9IS5pVlo1g3k35QEiDblcV2A9gkgOfahBd0tkoPS3p5zOorQGhwowWeL2InFx7M9NMro
+	bY+K0xyHjBBUxiutSJ5+ukFpaY0gbnohPHWn1
+X-Gm-Gg: ASbGncsy4CpydEnwDWNoxRHHKRUmDtflYEeketn4nyCd2+iKV3zMKmET4JHW17vhIW5
+	e8LfaBw4FlKknrf42sOapfwSEeGeyCY0523mfi5a/n3NBKtKidItGn9ejBZ4JuKczMZBRvkKAy2
+	50pDxGEag3rMY42W5DhDMH+aW4XzI9tkFHHruz5NmdQ8sTc4R3NH0GLPWrN9l/GknM/X8Ac9TR9
+	JTSpOs8eZJXc7Msb3oJDXp0hG0=
+X-Google-Smtp-Source: AGHT+IGQt3PqLcMPXIyKXTAdjL1h0phdsRkUtbpO2YG4pSHJNPVyuc1pPak3H4+L3CBi2X6N4n+nWrVz4fPKTcwd16Q=
+X-Received: by 2002:a05:6808:7003:b0:439:aeb9:88fb with SMTP id
+ 5614622812f47-43d6c18d966mr147651b6e.17.1758216501513; Thu, 18 Sep 2025
+ 10:28:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CACEPZDXGGn0S_8PpEc=BVHhvyuZhWfiDmbxNOK7iPWJOj1jrXg@mail.gmail.com>
- <aMnhSm5QSdRwiJds@fruit.crustytoothpaste.net>
-In-Reply-To: <aMnhSm5QSdRwiJds@fruit.crustytoothpaste.net>
-From: Antonio Mennillo <antoniomennillo87@gmail.com>
-Date: Thu, 18 Sep 2025 19:02:59 +0200
-X-Gm-Features: AS18NWDwaBsL_wDUOs150FfjY0JfhWqDGXokHu71Gxgg_RooaKs5-Nmqrlz_e0I
-Message-ID: <CACEPZDU2Bu2c9RFBwD499-UUNyQGuRRXNbMx0aBrqwGoc=4EhQ@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BRFC=5D_git=2Drebase=2Dclean=3A_mitigating_a_=E2=80=9Csemantic?=
-	=?UTF-8?Q?_conflict_cascade=E2=80=9D_during_rebase?=
+From: David Goldstein <dgoldstein0@gmail.com>
+Date: Thu, 18 Sep 2025 10:28:05 -0700
+X-Gm-Features: AS18NWDf4QrgXGZIPCKYDbcTePZLeGDJHygc3RgKvxuqEkLy-L05I8F3_cqI7kE
+Message-ID: <CANavNqpHqVgHshUaToS51OGVuvx5FqxROP2PssHW9OELMLeBQQ@mail.gmail.com>
+Subject: [bug] git check-ignore returns the wrong exit code with -v when only
+ a negative pattern matches
 To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Brian,
+Hey folks, I think I found a git check-ignore bug.  According to the
+docs, git check-ignore should only exit 0 if a file is ignored, but if
+an untracked file matches a negative pattern in .gitignore (or the
+file can be tracked if --no-index is also used), then git check-ignore
+-v <file> exits 0 when it should exit 1; without -v the exit code is
+correct (0).
 
-Thank you for the thoughtful response, and please excuse me if I am a
-bit clumsy =E2=80=94
-this is my first interaction with the Git community.
+https://github.com/dgoldstein0/git_bug_repro has a self-contained
+reproduction + repeated explanation.
 
-> Usually we would recommend that each commit be atomic...
-
-I perfectly understand this best practice. In my context, working with
-many junior developers,
-it is not always possible to enforce atomic commits. In some
-=E2=80=9Cemergency=E2=80=9D situations we
-squashed just to make progress, even if that meant losing granularity.
-
-Your explanation really helped me see things more clearly, and I appreciate=
-d
-the constructive (non-toxic) way you put it.
-
-> Are you familiar with `git rerere`?...
-
-Yes, rerere helps with repeated textual conflicts, but the scenario I
-worry about
-is semantic: if commit M changes an interface and commit N implements it, t=
-hen
-changing M during rebase can make N semantically invalid. rerere
-cannot solve that
-=E2=80=94 it remembers markers, but cannot understand that =E2=80=9Cthis
-implementation no longer
-matches the interface.=E2=80=9D
-
-> I think most people on this list will consider losing the history unaccep=
-table...
-
-That feedback inspired me to improve the tool. Version 2.0.0
-(literally born today,
-thanks to your comment) now works differently:
-
-1. Temporarily squash the feature branch (so the rebase is effectively `1/1=
-`)
-2. Resolve conflicts once, with the full final context
-3. Automatically re-expand the squash by replaying saved diffs, restoring
-   the original commits (with new hashes, as expected in any rebase)
-
-In integration tests this preserves detailed history while avoiding cascadi=
-ng
-conflicts. All 23 tests currently pass (including empty commits, binary fil=
-es,
-special characters, conflict abort/continue). Of course, real-world
-usage is still pending.
-
-This workflow essentially resolves conflicts with full context, then
-reconstructs
-granular history =E2=80=94 a kind of =E2=80=9Cbest of both worlds.=E2=80=9D
-
-I would be very interested in whether the community sees this worth explori=
-ng
-as an **experimental rebase strategy** (something like `git rebase
---squash-restore`),
-or if it overlaps with existing mechanisms I am not aware of.
-
-Code: https://github.com/anthem87/clean-rebase/tree/v2.0.0
-
-Best regards,
-Antonio
-Antonio
-
-Il giorno mer 17 set 2025 alle ore 00:14 brian m. carlson
-<sandals@crustytoothpaste.net> ha scritto:
->
-> On 2025-09-16 at 21:39:46, Antonio Mennillo wrote:
-> > Hi Git community,
->
-> Hi,
->
-> > Problem (observation, possibly a known limitation rather than a bug):
-> > When rebasing feature branches whose commits are semantically interdepe=
-ndent,
-> > Git replays commits one by one. In practice this can trigger a
-> > cascading conflict, similar to a loop. Example:
-> >
-> >  - Commit 1: add interface IUserService
-> >  - Commit 6: add UserServiceImpl (depends on 1)
-> >  - Commit 11: change IUserService signature
-> >  - Commits 12=E2=80=9315: update implementation/tests to match
->
-> Usually we would recommend that each commit be atomic.  That is, each
-> commit should compile and pass all of the tests, so commits 12=E2=80=9315=
- would
-> be part of commit 11.
->
-> > During rebase, conflicts may appear at 1 and again at 6/11, forcing the=
- user to
-> > remember prior resolutions and reconstruct intent across commits. If I=
-=E2=80=99m
-> > mischaracterizing the model, I=E2=80=99d appreciate a correction. I=E2=
-=80=99m sharing this
-> > humbly to verify whether this is expected behavior or if there is prior=
- art I
-> > should be aware of.
->
-> Are you familiar with `git rerere`?  I have just done a complicated
-> rebase of this sort and it remembers resolutions for you so you don't
-> have to.
->
-> > Mitigation (userland workflow): I built `git-rebase-clean`, which
-> > squashes the feature branch first and then rebases. This concentrates
-> > conflict resolution into a single atomic step with the full final
-> > context visible. The obvious trade-off is commit history granularity:
-> > you lose individual commits but gain atomic conflict resolution. In my
-> > experience this reduces repeated/conflicting resolutions across
-> > dependent commits.
->
-> I think most people on this list will consider losing the history
-> unacceptable, so I don't think this is a thing we'll want to encourage.
-> --
-> brian m. carlson (they/them)
-> Toronto, Ontario, CA
+This exists in all git versions I've tested, but I haven't tried to
+get the latest dev version to check if it's still a problem in the
+latest version.
