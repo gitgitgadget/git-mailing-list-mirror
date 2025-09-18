@@ -1,136 +1,192 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699FE30CB41
-	for <git@vger.kernel.org>; Thu, 18 Sep 2025 16:06:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2F2242D97
+	for <git@vger.kernel.org>; Thu, 18 Sep 2025 17:03:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758211622; cv=none; b=iJ3DXjKbLd1hQMAb6IM9DHRj9pYMkAwCoBQpO7Bg0DVoxf4WmDDOSVrbVpTp44PTyTAsy+CtDyoUsorlSt9lzfzl5AmNNN8tdFHwjWD7AhUzAiVYjKZqIWMiw+cRFoR+CC7t/4Y5+hq07cjOB0qC3Ev3Bpt1WjLH7vCBQ1mHjD0=
+	t=1758215020; cv=none; b=D1DEcYSgEwUZDKrJhMEd7reiNV89pbDGokKt+xLkRsgX0hTlh71415c0ZCY4cSNuMK4jBjMYH3J0mrr1SYkWUFrSiEhWoW16WNBHECEt+0xaIiCemlRMdJ4ZgfSkPur7zbKuci5kuKuyhZltarch8Ry4FmNlxofwHzTTWNufrlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758211622; c=relaxed/simple;
-	bh=h8u/BX7B+alFZ+4B9HfsW8DN6EFikqHrCk20R8jMHu8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EVUr82G26cKdndiu50PIxrXKCNwPFHafeOfe+/qg1hoE14E0/n13xDr6+dwdTEhnd67kVo7GJn1vaLtRwD+gzgSbpM6kolo5w4l6b8SZrBHx7t/+B+rr5daGMsj15DQj71+PseHOVR+T39l34lBO7awGg/tjLhdKis3MNHaacig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uxAl6UXe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bu6Lrn1d; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758215020; c=relaxed/simple;
+	bh=gyYI7AU2xiptoF+89qDsWbpj6KHHqeRLiubtJPWF5Kk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=X+UducZTRCeOrM2Ypwu8uRAMa41c4eD6EVBVxDBXgjmjrX8NpyweRg8DCgwnOPnIe0j36gDUhbrlufbqZ4iDhZZ8XW+t6uwR9QVoXH5qnw+7EnUPTUmaiYgVim2mo5U/kZ9JxCS5lTeFdsGEdSYaAFEBWkNmG1rrXz1IizIxaGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ll/JJcom; arc=none smtp.client-ip=209.85.208.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uxAl6UXe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bu6Lrn1d"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 87D0E14001D0;
-	Thu, 18 Sep 2025 12:06:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 18 Sep 2025 12:06:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758211618; x=1758298018; bh=iz8LC3B83M
-	NglqBHglor1PSrSSbuIXAbovwgEdUaZc8=; b=uxAl6UXeb8B5hZYLsMlVlXC0Fz
-	QWXZGQ0YUSho4aROaI6U9D5P84W2+sDi52DjknKpP7Thg3RL9epc8ugwWalHvMSL
-	gN7JGtLGQ5Des5TgXADQJZ+OliWWG7o1rOWvw8y49o4aKk/utLtx+sZ3cN4fxH/L
-	4NsT2SanAiRLBgmDttbSnS3LbyZPXjsd/AulKyPXwwmc1b9SZj0dyZLLesbmhl6N
-	ZGndfKuNo7lkFp8ubKTWDjmLLNMNjp8FwMfTHfxuYw5NubJGYgpYbk99RFh9lUN3
-	LDtsAP07rtjPToW9Agk6MHdbtOdA8Cl8mckLcGvjjgJyA6I12LOTK/UNJPtg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758211618; x=1758298018; bh=iz8LC3B83MNglqBHglor1PSrSSbuIXAbovw
-	gEdUaZc8=; b=Bu6Lrn1dLfy0OLReIw2+DSo8xiGtVvSzt5XwsFgFLyA7leilZcz
-	weo/ZYq/F6etmhbuVMfJDnVl8eh3fSuMYpYfSuvRQ0yufVyjR2ncqYgtlQJbXN88
-	0oCEKlTqhI+svHIA/SGf0bCRhcksccLCY8IRQDUvdYYL3n/J8dpiShcVLqj7IB2K
-	mkAwoysBHv4vuOLK9+snLFAvJ3efQkUBpu47SR4qDbOh6hKpusoudkdTEmfXke4Q
-	hT82dFwuSYFe4+BVcZfnRlKx7iax4FYJ5y4DKsYInC9uvRGPrjbGxxrxBR80NAXU
-	4x+oxKsUwKngqnmtYvP3+ekbMby4OxbrMZA==
-X-ME-Sender: <xms:IS7MaFK48ZyZjY7elUlUpBWttpiWhy7jjwmKVIVjVOCTAMKT2Cbmew>
-    <xme:IS7MaMq5L6nTfJotvSN4WtNjywJW34KCJ14Fr0w2wLrbSjBZ6rXGpvfoxbbor0AI2
-    YNi6VcVTanV62QvQg>
-X-ME-Received: <xmr:IS7MaELBFuKk_pkvSWz4XJTCMsghmCaijOin1oDghwJo8zClbjJY1f6HiaEpP9XGm2Q6oOATtBWFjFpWAXJ0XhpiCvJGeeZ-j_d5ecM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegieejjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehmvggvthhsohhniheftddujeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    phhssehpkhhsrdhimhdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Ii7MaBRSP0-Tp3fw_-dwlew3uK_JdCG6sQSbTqfnwoY8zp7cetlTLg>
-    <xmx:Ii7MaDtEIKikNlKiwnnLZzhdmCqia6puNTTZTurjiG_LezvE_wGF5g>
-    <xmx:Ii7MaCZXp_mOhPWvDVY9Tvvh0iwMt8SbztkEEEFsOj_DZVJ5_gcFeg>
-    <xmx:Ii7MaJGABeepZ-OKZV49vsDm7TM0amxChxGywGnWQTR0BCnMix8RwA>
-    <xmx:Ii7MaIp0jcE6fS2FG7uCbXTmlgd2rwiuyUjINmTTd2h2T2O0DSWb9Mdd>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Sep 2025 12:06:57 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  shejialuo@gmail.com
-Subject: Re: [GSoC][PATCH v3 7/9] builtin/refs: add optimize subcommand
-In-Reply-To: <20250918054704.544254-8-meetsoni3017@gmail.com> (Meet Soni's
-	message of "Thu, 18 Sep 2025 11:17:02 +0530")
-References: <20250906075147.1076656-1-meetsoni3017@gmail.com>
-	<20250918054704.544254-1-meetsoni3017@gmail.com>
-	<20250918054704.544254-8-meetsoni3017@gmail.com>
-Date: Thu, 18 Sep 2025 09:06:56 -0700
-Message-ID: <xmqqecs3923j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ll/JJcom"
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-3601f884888so9891551fa.2
+        for <git@vger.kernel.org>; Thu, 18 Sep 2025 10:03:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758215016; x=1758819816; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eu2NmWCVMZsnCfdtYxUV6iBG3lzfbxOobxHGMYT6ON0=;
+        b=Ll/JJcom0OeXLTWS0c8aHDVRw31ii9rwcYCq/P4SR9fFrXLHNt+n55O9GqXXRlZ4pA
+         a2BZeG2fsVL3ukm7cOeH4dUdIHBUv1gyODL4ygsh2NoSsauY0iB+YYFWH8V0Zz8fh05H
+         tZKyOArWWo1jBCdrfJH/vPl4seCWH8gK+5Evq8r3wB4jrTwf9MUEbn8LmOqZWWjuijgh
+         7qS4yd0d0dpidHaPiLenzVPUWAnZRQHTUyD8SfZ1BPZXsRy4IPHQtiLGc8k+OhUvxYJZ
+         toN8DVE9VMUZJ7LXnsFPgvDJn9zNATG6RVCW6sfqEt92obakRUtgfvSubvf9iPZB5Xup
+         XGsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758215016; x=1758819816;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eu2NmWCVMZsnCfdtYxUV6iBG3lzfbxOobxHGMYT6ON0=;
+        b=PvcjidgCroeSyXKh5pFURp7XjASyIyE2fSKzgm/3++riUOxandv5zWf6sVZUZy7mFb
+         fl8O6uOMa25wzuogjMBds78y/DlyV1KwWnI4/cbTWVbCCmx/HIHNiNyrH1NeQ+pPYeQg
+         RdWtioLSxasYZg7suwZ4W5+5+m13UMO/ItCVasm5WzuKq5PwQ1c+QMMeHhFpQS539Tes
+         tm9WWDEAH2vCYucdrc9oK3RnvgLzFuOKjeS+Hjf2fpSLmYGPq/IiCAQ9OVg59qJWWJyF
+         0sEEMUvrpsu5aTsoFbiinVcYGdB9c+6PymejJI6WJMmfgFgV5UUPww0D80ogeAiuR2un
+         rS0A==
+X-Gm-Message-State: AOJu0YyJhwXk0k5ufs/U/mpyIa5dGZecgayOk1HNnvV/IuDEg8AqVwHg
+	0nuCi+oISzvyY29k8t8BDSsb5Y2goZxvq6tOIXNjBEfaysSSxz972vojWBCoaUHgXe3jUfZj2cq
+	0is4r5J8iPld13zzVZ/KJ6mCkfvYQoqVVZZgh
+X-Gm-Gg: ASbGncvXZ3fxBEfgjD3VQTTY7bDFwJKwi2LJZJ4ZUU7IkUmHoZD3Uf34IsMsUIWjdRG
+	iM5RQqVtuKhgKLjmpydWBaZu2NqDdeKyAfSK4Ki+AK/fpIrd2w1MJr3LPASxR0ugm3HSxrM1tpy
+	9HUg5ObIe/XUWEjskMC+JWSLGhlaZIwpMbhraaZKp0wrYfbxoDqw99IJo0bzAqBHeHffRmYXF7V
+	brGdu1wagYCa3Oq13wjYfaeDj744EAVtGI=
+X-Google-Smtp-Source: AGHT+IFAQJABcs4QXvYX+Jbix3GY6OYX2X+csv0FH7D9wNkbZ13hHjH2iEIkPI9ItReMjXwGS3LFu7uIRz+ET+/ch6U=
+X-Received: by 2002:a05:651c:1a0a:b0:338:53d:3518 with SMTP id
+ 38308e7fff4ca-3641a7f5205mr851961fa.39.1758215015908; Thu, 18 Sep 2025
+ 10:03:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CACEPZDXGGn0S_8PpEc=BVHhvyuZhWfiDmbxNOK7iPWJOj1jrXg@mail.gmail.com>
+ <aMnhSm5QSdRwiJds@fruit.crustytoothpaste.net>
+In-Reply-To: <aMnhSm5QSdRwiJds@fruit.crustytoothpaste.net>
+From: Antonio Mennillo <antoniomennillo87@gmail.com>
+Date: Thu, 18 Sep 2025 19:02:59 +0200
+X-Gm-Features: AS18NWDwaBsL_wDUOs150FfjY0JfhWqDGXokHu71Gxgg_RooaKs5-Nmqrlz_e0I
+Message-ID: <CACEPZDU2Bu2c9RFBwD499-UUNyQGuRRXNbMx0aBrqwGoc=4EhQ@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_=5BRFC=5D_git=2Drebase=2Dclean=3A_mitigating_a_=E2=80=9Csemantic?=
+	=?UTF-8?Q?_conflict_cascade=E2=80=9D_during_rebase?=
+To: git@vger.kernel.org
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Meet Soni <meetsoni3017@gmail.com> writes:
+Hi Brian,
 
-> diff --git a/builtin/refs.c b/builtin/refs.c
-> index 76224feba4..ae395759bd 100644
-> --- a/builtin/refs.c
-> +++ b/builtin/refs.c
-> ...
-> +#define REFS_OPTIMIZE_USAGE \
-> +	N_("git refs optimize " PACK_REFS_OPTS)
-> +
->  static int cmd_refs_migrate(int argc, const char **argv, const char *prefix,
->  			    struct repository *repo UNUSED)
->  {
-> @@ -113,6 +117,17 @@ static int cmd_refs_list(int argc, const char **argv, const char *prefix,
->  	return for_each_ref_core(argc, argv, prefix, repo, refs_list_usage);
->  }
->  
-> +static int cmd_refs_optimize(int argc, const char **argv, const char *prefix,
-> +			   struct repository *repo)
+Thank you for the thoughtful response, and please excuse me if I am a
+bit clumsy =E2=80=94
+this is my first interaction with the Git community.
 
-This line does not align; will locally fix (no need to resend only
-to fix this).
+> Usually we would recommend that each commit be atomic...
 
-> +{
-> +	static char const * const refs_optimize_usage[] = {
-> +		REFS_OPTIMIZE_USAGE,
-> +		NULL
-> +	};
-> +
-> +	return pack_refs_core(argc, argv, prefix, repo, refs_optimize_usage);
-> +}
-> +
->  int cmd_refs(int argc,
->  	     const char **argv,
->  	     const char *prefix,
-> @@ -122,6 +137,7 @@ int cmd_refs(int argc,
->  		REFS_MIGRATE_USAGE,
->  		REFS_VERIFY_USAGE,
->  		"git refs list " COMMON_USAGE_FOR_EACH_REF,
-> +		REFS_OPTIMIZE_USAGE,
->  		NULL,
->  	};
+I perfectly understand this best practice. In my context, working with
+many junior developers,
+it is not always possible to enforce atomic commits. In some
+=E2=80=9Cemergency=E2=80=9D situations we
+squashed just to make progress, even if that meant losing granularity.
 
-We may want to clean this up outside this topic, perhaps a clean-up
-patch after all the dust settles.  Lack of REFS_LIST_USAGE stands
-out like a sore thumb.
+Your explanation really helped me see things more clearly, and I appreciate=
+d
+the constructive (non-toxic) way you put it.
+
+> Are you familiar with `git rerere`?...
+
+Yes, rerere helps with repeated textual conflicts, but the scenario I
+worry about
+is semantic: if commit M changes an interface and commit N implements it, t=
+hen
+changing M during rebase can make N semantically invalid. rerere
+cannot solve that
+=E2=80=94 it remembers markers, but cannot understand that =E2=80=9Cthis
+implementation no longer
+matches the interface.=E2=80=9D
+
+> I think most people on this list will consider losing the history unaccep=
+table...
+
+That feedback inspired me to improve the tool. Version 2.0.0
+(literally born today,
+thanks to your comment) now works differently:
+
+1. Temporarily squash the feature branch (so the rebase is effectively `1/1=
+`)
+2. Resolve conflicts once, with the full final context
+3. Automatically re-expand the squash by replaying saved diffs, restoring
+   the original commits (with new hashes, as expected in any rebase)
+
+In integration tests this preserves detailed history while avoiding cascadi=
+ng
+conflicts. All 23 tests currently pass (including empty commits, binary fil=
+es,
+special characters, conflict abort/continue). Of course, real-world
+usage is still pending.
+
+This workflow essentially resolves conflicts with full context, then
+reconstructs
+granular history =E2=80=94 a kind of =E2=80=9Cbest of both worlds.=E2=80=9D
+
+I would be very interested in whether the community sees this worth explori=
+ng
+as an **experimental rebase strategy** (something like `git rebase
+--squash-restore`),
+or if it overlaps with existing mechanisms I am not aware of.
+
+Code: https://github.com/anthem87/clean-rebase/tree/v2.0.0
+
+Best regards,
+Antonio
+Antonio
+
+Il giorno mer 17 set 2025 alle ore 00:14 brian m. carlson
+<sandals@crustytoothpaste.net> ha scritto:
+>
+> On 2025-09-16 at 21:39:46, Antonio Mennillo wrote:
+> > Hi Git community,
+>
+> Hi,
+>
+> > Problem (observation, possibly a known limitation rather than a bug):
+> > When rebasing feature branches whose commits are semantically interdepe=
+ndent,
+> > Git replays commits one by one. In practice this can trigger a
+> > cascading conflict, similar to a loop. Example:
+> >
+> >  - Commit 1: add interface IUserService
+> >  - Commit 6: add UserServiceImpl (depends on 1)
+> >  - Commit 11: change IUserService signature
+> >  - Commits 12=E2=80=9315: update implementation/tests to match
+>
+> Usually we would recommend that each commit be atomic.  That is, each
+> commit should compile and pass all of the tests, so commits 12=E2=80=9315=
+ would
+> be part of commit 11.
+>
+> > During rebase, conflicts may appear at 1 and again at 6/11, forcing the=
+ user to
+> > remember prior resolutions and reconstruct intent across commits. If I=
+=E2=80=99m
+> > mischaracterizing the model, I=E2=80=99d appreciate a correction. I=E2=
+=80=99m sharing this
+> > humbly to verify whether this is expected behavior or if there is prior=
+ art I
+> > should be aware of.
+>
+> Are you familiar with `git rerere`?  I have just done a complicated
+> rebase of this sort and it remembers resolutions for you so you don't
+> have to.
+>
+> > Mitigation (userland workflow): I built `git-rebase-clean`, which
+> > squashes the feature branch first and then rebases. This concentrates
+> > conflict resolution into a single atomic step with the full final
+> > context visible. The obvious trade-off is commit history granularity:
+> > you lose individual commits but gain atomic conflict resolution. In my
+> > experience this reduces repeated/conflicting resolutions across
+> > dependent commits.
+>
+> I think most people on this list will consider losing the history
+> unacceptable, so I don't think this is a thing we'll want to encourage.
+> --
+> brian m. carlson (they/them)
+> Toronto, Ontario, CA
