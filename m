@@ -1,158 +1,101 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964DB2749EA
-	for <git@vger.kernel.org>; Thu, 18 Sep 2025 05:37:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1C72D77ED
+	for <git@vger.kernel.org>; Thu, 18 Sep 2025 05:37:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758173864; cv=none; b=q9COG24uKS++E2X+JkO/7p6dX1c67GsQk4kljJessye6IYhlejW8WMD4ONN5YVEX0XHakTRvI6yB+3pa/bbcd0ckKI7YHrMTjHZc0SOXkJfczqr7OxFnvZxKj9NWD1GfeAId6F94b9Q/Q0VVyh2eNoxCo83RhHYfq9OsoUK2IYU=
+	t=1758173873; cv=none; b=kACDfEalyk2itQS3j0Hs6a1ZbuXLTyu1P3laXzq1sQeB5YpAgsO6pg39gljLJN/QywI/TTTKqsD5cAGzEaskRqzq4nwFaA7yQycTd+inANDlau9Lsc2lkSO4pO7q/M0ia2/BU6UkBdRwYCLJdc/lIVwUrocvpZnVqxMRT6rk4yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758173864; c=relaxed/simple;
-	bh=4hK8+GuMgcIVj0kxektmO+qk135+y9uy49wK8/Jw64Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W+aDtZDqVH7ADx/ss7KRBoeWGSYVHEwad1W6YRUapdeLgA3pNcUmY2mcAnJgFTFEMXlboXrKQIY22U9g1mFR6rKc4vpK/bjT7ezaJ4x5gkDyxtw8UNe2JzZz5S1IQSZSgolALJEg2viC5ZpsrZ62orGlC2STINYv+5FhSQOjR/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kcbxaVB4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dlra+flm; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1758173873; c=relaxed/simple;
+	bh=JuHc73BlaWu7PDeybivWQIlhpsf6MDyFJNgBwp5D9X4=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=hS3vFsHUtEHBCLhba5esRucdgszGZJNIZy5xqPOXd42g+bPxHIh9SKgGq5jqlp0st2Co/e7XJ2sFMFZwGOyGZGqsO3dZ0N3XJqxKCptDNURIYxFNTtI7yXyJwEMMWA8jD+NW2VS7nvgK0I4rcHrNNuirC1E0JpE0xHRO49y5sBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=kGQ4/VIE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RioBdI3G; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kcbxaVB4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dlra+flm"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9882A1400246;
-	Thu, 18 Sep 2025 01:37:40 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 18 Sep 2025 01:37:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758173860; x=1758260260; bh=tFApiTKPWv
-	HU6Yj2/EI7P1LplBjSLvAkMlDpXE/ZHmE=; b=kcbxaVB4xGrtMmw8sX7/Hcj0/K
-	boFNYF0oLaqg3ykOOgEASPMsqzelccxynhD3GYFHnQlsTDSpWawcuIYZMC4NaHJQ
-	MI7ymTu3GEK/q5JABr09K21idAt+n+A7Wgywdb5CaBviyF6SY84CnIDpoLl1vleh
-	mYwbg3/8UcH/BO20F/msqimGHHCgR1ouuBxDg/s17Rd88S9cTsl/MB9eBUzPO3g0
-	1/ShwWnLhSMMaq9ZegSdjckv5tmbcKylcyTIUIJm5zjFs9pewIkSlNzax8x+aoA/
-	XRHh6jPnr3tRn4DRp+JDUkOMygalmq5/fzOGmPzKHgMYXtIRHeZtW70S9vUw==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="kGQ4/VIE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RioBdI3G"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7243E1D00237;
+	Thu, 18 Sep 2025 01:37:49 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Thu, 18 Sep 2025 01:37:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758173869;
+	 x=1758260269; bh=jg/zjxUMwB67LVQ1x/bOTDOjdSSiOuIdRGsYWqW6Bh8=; b=
+	kGQ4/VIExooIyEEnjKYqVSC7yO4/yH7Hg7/YqA7CiBPveDgeBOk2NYRnC/bGsBNI
+	flByuUH2fY8p9rhtz7B5jHMYWbP+sOG7KfGgLb8QcOWXAz/LTAiAur95T3KeAML8
+	2wEl+mSG3lkVLfVCJ+hJIDBgNdM+EP6pKGAU5ILIOMehL62O/pGlFKwzfzexJQE3
+	YzENO8fecWSpIaLn9/iXmHrl66G1WiNg98ZZ/sr3xsP0vNqIgCSZ4gg8aQBF05Zr
+	bR4Ne4HY5hcUmAW9TMI/5dUwwYYTscDEVMb8GtxL7h2VAnpcGMtiIXZahtRPn/lD
+	vwC2NPWXu8miMKa6XIGDlw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758173860; x=1758260260; bh=tFApiTKPWvHU6Yj2/EI7P1LplBjSLvAkMlD
-	pXE/ZHmE=; b=Dlra+flmXHhO28GdkakBs9DwxJH+BOBQI58LbgGTopakZuQV5+M
-	wY98nA7PVB6XU/oNmNkjFzHB6po68nom/nEnYhpCoWuqCENCPu9S/Sk3NGM7BnK6
-	60p4eiSva3Y1KEj8uaLOWPTfnbYeBnDwXgT9dAeXWxmvdSsCKDDU+MrYRygjkii4
-	dfqRdfMPD2H2zGlqMOaKPuWmzOzyPGXlOb5OOj6devT72mK1KgKHTphFzW/siFK8
-	xgQqwxY95xBN1krsbyqCOthfRugAj4IhMfuJ71z3cDRaRPlz15UO7UqLB6z78VXS
-	FZ2HVjU7qlQi8kgbxxoRv+YnFEiYzbfl/7g==
-X-ME-Sender: <xms:pJrLaEaz1hq9zydQXHswEi2LYt7Ei4xtiVruJ6AbJnvCcPq9CeI3nQ>
-    <xme:pJrLaCpBgX-ClxOkOCGInE7OtIMhDLj3HWU_GRHzQQfFjbMtHfqJm2oLT0j_BgTKf
-    dfbZqaaLuZuKphUUQ>
-X-ME-Received: <xmr:pJrLaIb-FtIIejKPYHLNee0GU8YRPeCn0wmw3yQXJEdIi7agYKza1NtCRJVI3_jTfgWqp4KZSNKuGFTNZ5WcAYv3-vaKNlPbsveU7KAbqw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegheehudcutefuodetggdotefrod
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1758173869; x=1758260269; bh=j
+	g/zjxUMwB67LVQ1x/bOTDOjdSSiOuIdRGsYWqW6Bh8=; b=RioBdI3GNvaiwJwOG
+	CVVvJows8j5qlWDx42kGyVG4Y6k95Yr4dq0SdlK5g0SUvyjcJ7Vpan6uo/Jm9Ewl
+	fyCwJE7KAQPcWqrnxp7V+Fw+XC4gB08WqkASpyssvqREdr2ZsQt9EImYB5n/DQMk
+	mWNqEZZdD5/OcTFCAsyI0CdvqrI//wH3A/RTMOxS2rGkESgohyRglC7J9zoLhSGL
+	PvG1vEWNLDawA40x9PYhwuCLDZmRR6PqdPbH9HHawOpMyfzwFdIqMNBg8o53kt6g
+	qa5RZILJ8JvXO1bZSnmJo7bhVzlbbYqEE/1pZBCtX7I8VRTp7B6WVlCGekYeUH/t
+	ACnUQ==
+X-ME-Sender: <xms:rZrLaPU5vR_BLOfHyMqUBSzjy-lWYPoIECM7OwzkiQpGLI0KKR0Alv0>
+    <xme:rZrLaHnndbFU60GsCShoRHn4nib_oBDUU253ygM_282y6KX34M4ZWY0jUNZrm2Rtk
+    1ANbZzWc2ce9U8pVw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegheehtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtrodttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepjeefhfefleekueetudffkeelffdtueffuefhie
-    dufeettdeugfevkeffkedvtdefnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtgho
-    mh
-X-ME-Proxy: <xmx:pJrLaKQ-YF5eLujWAn5DUJLPNp8ZazKz_afDi9jcGFyM8hoRWEMuLQ>
-    <xmx:pJrLaP6EA6n1e1VoYCeGK1Y20DnW0tIcSBx9HWD71LfgPgUmymLBEA>
-    <xmx:pJrLaPzd9muepS5Y3XJNokhKL121VWa-nv4e0360bgBeFtAD-2el4Q>
-    <xmx:pJrLaOSsC1NwWOmh_HzOH2oceGyc8f6kbKG19Rl6LcW9VFcSa4KGkg>
-    <xmx:pJrLaLfZShnuTkuEo_OAGA3mAfQvL_6MgtzzPEzBMC8tcYao4DC9cema>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Sep 2025 01:37:39 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 20d0bb40 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 18 Sep 2025 05:37:37 +0000 (UTC)
-Date: Thu, 18 Sep 2025 07:37:34 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: rsbecker@nexbridge.com
-Cc: 'Jeff King' <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [Change] Git build issue on NonStop
-Message-ID: <aMuankGhjxXNKErO@pks.im>
-References: <01c101dc2842$38903640$a9b0a2c0$@nexbridge.com>
- <20250918022912.GA1135133@coredump.intra.peff.net>
- <01c601dc284b$24496400$6cdc2c00$@nexbridge.com>
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhsthho
+    fhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkh
+    hksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepvdeigedtgfetgefh
+    ffetteeludevheetfeekffehheefieehudekveelveffhfejnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
+    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvg
+    epshhmthhpohhuthdprhgtphhtthhopehhrghmihgusehhrghmihgurdgttgdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:rZrLaHYG8VcUAiOgpimx3x9Usankd-Loz1bCbK5QvIkVpoiesbKciA>
+    <xmx:rZrLaPVB_C8eeyJ9ONWcUMQMxpKbXc3t_m0gjlIADPo65rslbMnY1w>
+    <xmx:rZrLaL4eHvOn9vcNzj7aTEViF_d69Ixba0loWdqEgujGFPM2NU9yJg>
+    <xmx:rZrLaKh9LorLqmdTuUmrRL3DougNXbKEcE0opV2QppULV6EGdAX0hA>
+    <xmx:rZrLaHwvD9Pi6LkAKml7unnWs1bG9j-8R4RaTrJxawwFknaHYQv7s1m2>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 094C41EA006B; Thu, 18 Sep 2025 01:37:49 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <01c601dc284b$24496400$6cdc2c00$@nexbridge.com>
+X-ThreadId: ATjmsVr6bc1s
+Date: Thu, 18 Sep 2025 07:37:28 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Hamid Ghadyani" <hamid@hamid.cc>, git@vger.kernel.org
+Message-Id: <74d75807-3e33-40e6-bbeb-d713302aa173@app.fastmail.com>
+In-Reply-To: <C86F5767-CA24-4E19-BBDB-D7B4B8FF4295@hamid.cc>
+References: <C86F5767-CA24-4E19-BBDB-D7B4B8FF4295@hamid.cc>
+Subject: Re: I still use it
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Wed, Sep 17, 2025 at 11:20:05PM -0400, rsbecker@nexbridge.com wrote:
-> On September 17, 2025 10:29 PM, Jeff King wrote:
-> >On Wed, Sep 17, 2025 at 10:16:13PM -0400, rsbecker@nexbridge.com wrote:
-> >
-> >> Just a quick FYI. The addition of uintptr_t in clar tests has broken
-> >> my CI build on NonStop x86. I will be fixing this locally. It may take
-> >> a patch series unless a quick workaround is possible, which I am
-> >> hoping.
-> >>
-> >> For those on the list from my platform who are monitoring, this looks
-> >> like -D__NSK_OPTIONAL_TYPES__ is now required for the build. I am
-> >> unsure what else may be needed.
-> >
-> >We use uintptr_t in lots of places in the regular code. I guess this bit in
-> >compat/posix.h is what makes it work:
-> >
-> >  #ifdef NO_INTPTR_T
-> >  /*
-> >   * On I16LP32, ILP32 and LP64 "long" is the safe bet, however
-> >   * on LLP86, IL33LLP64 and P64 it needs to be "long long",
-> >   * while on IP16 and IP16L32 it is "int" (resp. "short")
-> >   * Size needs to match (or exceed) 'sizeof(void *)'.
-> >   * We can't take "long long" here as not everybody has it.
-> >   */
-> >  typedef long intptr_t;
-> >  typedef unsigned long uintptr_t;
-> >  #endif
-> >
-> >But clar has its own compatibility layer. So it would need to do something similar. I
-> >see the clar line in question also uses PRIxPTR, which I can imagine might not be
-> >available everywhere either. We don't use that ourselves at all.
-> >
-> >I kind of wonder if just:
-> >
-> >diff --git a/t/unit-tests/clar/clar.c b/t/unit-tests/clar/clar.c index
-> >80c5359425..f408af850f 100644
-> >--- a/t/unit-tests/clar/clar.c
-> >+++ b/t/unit-tests/clar/clar.c
-> >@@ -875,8 +875,8 @@ void clar__assert_equal(
-> > 		void *p1 = va_arg(args, void *), *p2 = va_arg(args, void *);
-> > 		is_equal = (p1 == p2);
-> > 		if (!is_equal)
-> >-			p_snprintf(buf, sizeof(buf), "0x%"PRIxPTR" !=
-> >0x%"PRIxPTR,
-> >-				   (uintptr_t)p1, (uintptr_t)p2);
-> >+			p_snprintf(buf, sizeof(buf), "0x%"PRIuMAX" !=
-> >0x%"PRIuMAX,
-> >+				   (uintmax_t)p1, (uintmax_t)p2);
-> > 	}
-> > 	else {
-> > 		int i1 = va_arg(args, int), i2 = va_arg(args, int);
-> >
-> >would be sufficient.
-> 
-> Yes, it would work. uintmax_t is part of the standard set while uintptr_t is
-> considered an extension. Not my decision on this grouping. I'm setting
-> the -D in CFLAGS to see if that works, I would be fine going that way, 
-> although better would be adding it into config.uname.mak in the NONSTOP
-> section.
+Hi
 
-That should work alright, yeah. Peff, do you want to create a PR in
-https://github.com/clar-test/clar to fix this? Otherwise I can handle
-this.
+On Thu, Sep 18, 2025, at 07:15, Hamid Ghadyani wrote:
+> Please keep 'git whatchanged'
 
-Thanks, both!
+You can replace it with
 
-Patrick
+    git log --raw --no-merges
+
+Which works the same way.
+
+-- 
+sent from mobile
