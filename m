@@ -1,148 +1,179 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E232926AE4
-	for <git@vger.kernel.org>; Thu, 18 Sep 2025 06:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D50284899
+	for <git@vger.kernel.org>; Thu, 18 Sep 2025 06:14:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758175390; cv=none; b=OHOEI37FOmdJZx5YFFyo9gICFxufA0m6H7QnbGkVQwIfFbOgEXDaS/f0iyZiiGCJO57Qu5tJJHQE0xwz13JvRevP2w60GYYehmn5N2JLtIv+q/5WJlBWXn11lPSTp9Ba8C6lpwlEkATO3yKgjk3kKP7a81vqZEIiRlGLCJ41Hwc=
+	t=1758176069; cv=none; b=bxsZ+2bwVWRRp81sn+lp14bl0HH+++g5hE9c596WLdQA6ZshqiaYCIhNJOZpb0V3ykbFys970L0RURboxwbwPh2Drohn8lM99xEFYSOX/n6yxJyOuLnTkq2qNRZwbwXX3OGO8ayox6PNYKK+DTqTmitXEhyUj5RHdknazG2eruY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758175390; c=relaxed/simple;
-	bh=Xb3XSRAHCbw0B0s23BqEjDTZWS6pR6uIGiL5Z+U7XCU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ieKqlCr1LrAJXz1eXY0ZP9rxnWEsnUQMvHjK11ButRC9ECxkZhsa8Stof2M4IIbnzoiBlrS5fjrRD4twhWDQ/rT6m4Pm7KjwLfWbW4J4wSXXyUqgshS8xFtTo2UqORxQGwp9a7UBO59mHBVcU+7yrShU32FnL6Lc49DNEJcfBAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fIYBPFyr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XrT4ODkd; arc=none smtp.client-ip=103.168.172.146
+	s=arc-20240116; t=1758176069; c=relaxed/simple;
+	bh=nUMTZDCnY7D8A/R/0ZXyvjZOqnb3hGCxYyXjnxtavAg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=MVe7FNIg0WM8v7H8b5nJdHqePsR5C9nXHNE7r+JzQoIqj4ChsFRA/X06CEBm5cKHRpU1N7nFq4xoO3VUpI11hXsj0rHOKQcqKS7gFfQe6mgGCqg+8xwuKgFSuINKosaTbMRm1gLycCeE/EiBYq1vwtsLabg0Mmp9X19fVu4vMS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IzdJ1uIl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eYjaGYIQ; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fIYBPFyr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XrT4ODkd"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id EDA31EC0351;
-	Thu, 18 Sep 2025 02:03:07 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 18 Sep 2025 02:03:07 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IzdJ1uIl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eYjaGYIQ"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9ECA9EC02AE;
+	Thu, 18 Sep 2025 02:14:26 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Thu, 18 Sep 2025 02:14:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758175387; x=1758261787; bh=+HVEVYR8CR
-	iLgopBJoOr+9k0zLFoBlU5gePPcF9giiY=; b=fIYBPFyrG0NkkuKIszxcdTDtW/
-	4ppyGFm+rtaBbllrEFHDcbtv50GoSJdBoQq+E3XPie64yHDTI6pvqUlgs6wjjdiJ
-	f3FRmQ8NcK2nWDwguyv5dmjGaf/6+syS0b0vSzqDqUUZTaztt4WQHlxugBdYNtjV
-	qHx1mYAJsUVl1C6ZEfR0LEwO5KoeqdKOZ1iabU9Dj98gi/rEGLNvOODMHC9Z0I7n
-	OP10CBI9edaIjg8dpnSeizaSvZhXu9XHegvTHf2miXk9WXt/IlZsgWDFY+NilscT
-	rWZqtOod/Ll0RU0S9OiCJlDLTcsTmhlEMsqJXWyY2sQobzJUjL5LkQZ5WX/Q==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758176066;
+	 x=1758262466; bh=EgQMrWCAPMDZmJelhftxq8G/p/UQPVZAzREKEsEPWTk=; b=
+	IzdJ1uIlj/iNCdEhLKShj+uKt75afGwine9QX/efkng8BN9RqGONV2BcievIRI1s
+	6VQ5DgwKn1hwf43i49LM/Uo+LfEgjTAurTIQQ1MNZ0tRpBQ4aS3HJrg6LNW+6Q8f
+	D2ASsRlrYvnk2XobgLGz1oSZKngknsnxMF0rx5raXUp3cD98vodHL2Gdk2K6QrB4
+	p76IrtueyV7nejQtbRdk2Pw3EWNhQZlOvG85jFx9PtNNXfvgzgoLOMAtmzW0M7Z8
+	wIllE/evYP758nZuVxRggmlu8GVM8TVVQhkCEh4pHLjYWVIhq83maNyLYj9mAO+R
+	joUAfMQ5Qv6rktORqPp/ug==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758175387; x=1758261787; bh=+HVEVYR8CRiLgopBJoOr+9k0zLFoBlU5geP
-	PcF9giiY=; b=XrT4ODkdXdyzdOGc9N14daibEQu9enyKS1Tj+tN2Cdx7BpguwcS
-	ecSqU9zpOWSZSzp+Q+Y3SuRlM9Q2EdORrE/cmWS7F/tBHRFY3XgWP38XvRd8YmWT
-	+R0VtvsMj7ueFJYQIEPtecALcpPFjmL5uePWkCmKz/x7LePHwaFHBOoPXqQHSpwu
-	ag2vKVKRf0v6o/eYwOkCkxxZEIORqLphboTRdbQIAydMlN2iKLMimnjkAvDgfRDx
-	EdU+nWJF0h8I3VfEqRv86yM/GEMI8gZOvjLOalvS/OCHPjUSJeyst0BVufYmLlY2
-	kAENdRni6Rrrl4nt8N6eMaQbeLnINOkRqew==
-X-ME-Sender: <xms:m6DLaKcE-2fvlfC0SaYIpXXYrrKi7vsvKmRlHmjW2xKPl4nAeHzhVw>
-    <xme:m6DLaOwS7VXQuW9mWaOEjLlN-VCH6M-sR_jwBGD4bG0t7Jh1O6jaKlM8rriwDbzYg
-    8PhTVuq1NPgQ9fCEw>
-X-ME-Received: <xmr:m6DLaIEkoYfSbS_1_ajsy134hNhmnd1QtMv7cqJAtmC0J6yC8esbwz9wjLm874EgxDSeyY-yAO24UQM07Rf2baS21jx5V5wk1tlH5KS1HA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegheehiecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758176066; x=
+	1758262466; bh=EgQMrWCAPMDZmJelhftxq8G/p/UQPVZAzREKEsEPWTk=; b=e
+	YjaGYIQGp1PPaOfkNTGOkfVRtPeZfRNZx6QeESyVZSSNCm9Hh5Fx/qNCQPdbhjK0
+	CAbraXRBDUY8bEemiVOXFrOt0NzrkNOHGtKcQOkJBWoHqpPDnMXI32tL/CloUU3o
+	IXALu4RhOl3kJfQ+E0FbHqlfmvFOkb6Pb09MSOMX7ZNXNjsl/7WmdSuj3XV80CVk
+	ETXR90iztOzZPj7hhn4YHajeMqqG7xrVdkWHYNE2+KLIgrxjHCNRjVYRjWXsR0g0
+	WxkqejqUsU76Sb6ztoAr+8ocfKsrwqIR1EGQZbS5rrtrRq0P+pouWxehkT/hWWvk
+	wtOSaKs25MD8zoyg9l3RA==
+X-ME-Sender: <xms:QqPLaB7AZKBASdhiFSvqKAzSmdv3Om-MAOxxXSt55aBoMhC9D7h5hA>
+    <xme:QqPLaMvOSMi6vIETJ-ntmMl7PGa9Om_Vzlfjekw59JSFSvtOzzClD3iE-tH3Rqqij
+    ZoRMm78KtOVZ3q9Lg>
+X-ME-Received: <xmr:QqPLaC6kLwsLQEWygyJoMqMmVMTRkRollLYv67ruM04HAv2wLnbQZ6S7_9uogV8nh9b48WDPj3snUGxq8xlLFKtoIoF1mXnHW0ZO65TJIg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegheehkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
-    gtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:m6DLaKymlbhgypTwdLUTBBAcRgtlbYxG8kNm7FoIhLMJc4xqYjoEWg>
-    <xmx:m6DLaBvNnCgMhEynRHkKe22YH2MPCMYQypDj1ibiO7CwtIe0v6PseA>
-    <xmx:m6DLaP2p2DFY316RkwF2MR-RBJMejQ7VMO9nCiLexu-B_6fO0lyZDw>
-    <xmx:m6DLaE-VYhilcFrMU7plCV70OtHif9m5JWoysKtWYWFyQCCCgAkQuw>
-    <xmx:m6DLaIud-QntFDcSVVG72o-JvIWi-emGHYU_GeDzNukX3uqo02CrAv2W>
+    hrpefhufffkfggtgfgjghfvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epteeuueehhffhiedtueehtddtieekfedtudehtdehfefhgeffveeggedthfehuedvnecu
+    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeg
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
+X-ME-Proxy: <xmx:QqPLaHWJyB0GZAMCPwJnY6E7jnU0ZFeqkmVRn6P4ydj3JgKBNRGNtw>
+    <xmx:QqPLaE-4qI_mlT4zeEobhmEWB-nn1Iv2CEdT51DJwATcFKcceFKA6A>
+    <xmx:QqPLaDlabkZrpwieJ3l_vioLI2l33ywgRCdDbOZI--YXif0znhew0g>
+    <xmx:QqPLaCUzql-xnbyDwpXVuphwQl3iOEdnpIS7kwbB40MinYVvHWw4kg>
+    <xmx:QqPLaAQwz8wwtgWqokmI6-6MWcPWbb3rW6C1Kq2YdadWmlubd7Ff4RW3>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Sep 2025 02:03:06 -0400 (EDT)
+ 18 Sep 2025 02:14:25 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ff27742d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 18 Sep 2025 06:03:05 +0000 (UTC)
-Date: Thu, 18 Sep 2025 08:03:02 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 029300b6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 18 Sep 2025 06:14:23 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2 5/5] builtin/config: do not spawn pager when printing
- color codes
-Message-ID: <aMuglu_TtQPht1xP@pks.im>
-References: <20250915-pks-config-color-v2-0-e4290bd8d13c@pks.im>
- <20250915-pks-config-color-v2-5-e4290bd8d13c@pks.im>
- <xmqqikhjhbgo.fsf@gitster.g>
+Subject: [PATCH v3 0/5] builtin/config: bug fixes for "get" subcommand with
+ "--type=color"
+Date: Thu, 18 Sep 2025 08:14:18 +0200
+Message-Id: <20250918-pks-config-color-v3-0-08ea618cae26@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqikhjhbgo.fsf@gitster.g>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADujy2gC/32NSw6CMBBAr0JmbU0/Vigr72FcQDvARKWkNY2Gc
+ HcLC+PCuJq8ybw3M0QMhBHqYoaAiSL5MYPaFWCHZuyRkcsMkkvNjRBsukZm/dhRn8fNB4a6rRo
+ pFFZGQ9amgB09t+T5knmg+PDhtX1IYt3+iSXBOFNNaUvjuqNuxSmf7OkOaynJb1v/sGW28SANb
+ 13lhLIfe1mWN4GGHfnrAAAA
+X-Change-ID: 20250911-pks-config-color-e5b8a213e895
+In-Reply-To: <20250911-pks-config-color-v1-0-3a7c79df65b1@pks.im>
+References: <20250911-pks-config-color-v1-0-3a7c79df65b1@pks.im>
+To: git@vger.kernel.org
+Cc: =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
+ Junio C Hamano <gitster@pobox.com>, 
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+X-Mailer: b4 0.14.2
 
-On Mon, Sep 15, 2025 at 10:28:23AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > With `git config get --type=color` the user asks us to parse a specific
-> > configuration key and turn the value into an ANSI color escape sequence.
-> > The printed string can then for example be used as part of shell scripts
-> > to reuse the same colors as Git.
-> >
-> > Right now though we set up the auto-pager, which means that the string
-> > may instead be written to the pager command. This is of course quite
-> > nonsensical; there shouldn't be any use case where the color code should
-> > end up in the pager instead of in the TTY.
-> >
-> > Fix this by disabling the pager in case the user is asking us to print
-> > color sequences.
-> 
-> I am of two minds.  Part of me obviously agrees that it is more
-> straight forward with this change.  But it may 
-> 
-> An interactive user experimenting while writing their own script
-> might say something like
-> 
->  $ git config --type=color --default="reverse red" n.n
-> 
-> If the command emitted directly to the terminal, then everything
-> they type from then on will be bloody red, but the pager protects
-> them from such an accident.  Instead, they are forced to say
-> 
->  $ C=$(git config get --type=color --default="reverse red" n.n)
->  $ R=$(git config get --type=color --default="reset" n.n)
->  $ echo "So$C Bloody ${R}Red"
-> 
-> but these are likely what they would be writing in their script
-> anyway, so...
+Hi,
 
-True. That being said, I'm mostly trying to emulate the old behaviour
-that we had in `git config --get-color`. We have the following condition
-there:
+this small patch series contains two bug fixes for `git config get
+--type=color`:
 
-	/*
-	 * The following actions may produce more than one line of output and
-	 * should therefore be paged.
-	 */
-	if (actions & (ACTION_LIST | ACTION_GET_ALL | ACTION_GET_REGEXP | ACTION_GET_URLMATCH))
-		setup_auto_pager("config", 1);
+  - We restore the behaviour where we can now parse colors without a
+    config key.
 
-`ACTION_GET_COLOR` is not part of this condition, so we wouldn't set up
-the auto pager there, either. So I think it's sensible to match that
-behaviour so that the new command really is a drop-in replacement for
-the old one.
+  - We stop spawning the pager when the user requests to print ANSI
+    color escape sequences.
 
-I should probably clarify the commit message.
+Furthermore, the patch series does some lighter refactorings of t1300.
+That test file still has its fair share of issues, but at least it looks
+a bit less dirty now.
+
+Changes in v2:
+  - Improve commit messages.
+  - Use "\EOF" and "-EOF" in more cases.
+  - Move a style fixup from the first commit into the second commit.
+  - Link to v1: https://lore.kernel.org/r/20250911-pks-config-color-v1-0-3a7c79df65b1@pks.im
+
+Changes in v3:
+  - Provide additional context as part of the commit message for the
+    commit that stops setting up the pager with `--type=color`.
+  - Link to v2: https://lore.kernel.org/r/20250915-pks-config-color-v2-0-e4290bd8d13c@pks.im
+
+Thanks!
 
 Patrick
+
+---
+Patrick Steinhardt (5):
+      t1300: write test expectations in the test's body
+      t1300: small style fixups
+      builtin/config: do not die in `get_color()`
+      builtin/config: special-case retrieving colors without a key
+      builtin/config: do not spawn pager when printing color codes
+
+ builtin/config.c  |  20 +++-
+ t/t1300-config.sh | 349 +++++++++++++++++++++++++++---------------------------
+ 2 files changed, 187 insertions(+), 182 deletions(-)
+
+Range-diff versus v2:
+
+1:  e61278d7c5 = 1:  fdd1711881 t1300: write test expectations in the test's body
+2:  e6f1ea5283 = 2:  8e1e05d9e1 t1300: small style fixups
+3:  6f8257aeb4 = 3:  1ef6272e64 builtin/config: do not die in `get_color()`
+4:  27a8ab34b0 = 4:  5dcf8c6656 builtin/config: special-case retrieving colors without a key
+5:  259600c32a ! 5:  05d5022c1b builtin/config: do not spawn pager when printing color codes
+    @@ Commit message
+         to reuse the same colors as Git.
+     
+         Right now though we set up the auto-pager, which means that the string
+    -    may instead be written to the pager command. This is of course quite
+    -    nonsensical; there shouldn't be any use case where the color code should
+    -    end up in the pager instead of in the TTY.
+    +    may be written to the pager instead of directly to the terminal. This
+    +    behaviour is problematic for two reasons:
+     
+    -    Fix this by disabling the pager in case the user is asking us to print
+    -    color sequences.
+    +      - Color codes are meant for direct terminal output; writing them into
+    +        a pager does not seem like a sensible thing to do without additional
+    +        text.
+    +
+    +      - It is inconsistent with `git config --get-color`, which never uses a
+    +        pager, despite the fact that we claim `git config get --type=color`
+    +        to be a drop-in replacement in git-config(1).
+    +
+    +    Fix this by disabling the pager when outputting color sequences.
+     
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+
+---
+base-commit: ab427cd991100e94792fce124b0934135abdea4b
+change-id: 20250911-pks-config-color-e5b8a213e895
+
