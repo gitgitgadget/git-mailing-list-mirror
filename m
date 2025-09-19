@@ -1,49 +1,49 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82B421FF26
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7E822D4DD
 	for <git@vger.kernel.org>; Fri, 19 Sep 2025 01:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758244186; cv=none; b=YpEEQ3V5T0JJIWT7UChTo0W89xUVdkhL0pCJH60CVDA2RMtphY4nLDWQdE64RLum++tU21U7X34aRugA2+pGnz/awP3jLlx3XpbUdG7rBFeZE005wAkdubZTDgudcw5WIQGeyQALR1loUv5mSmtiw3GIxA++MgjIPvVKo3BYhcw=
+	t=1758244186; cv=none; b=Q3cHzIR2P39TeSOYefWVqKd3GOqf0E5O6eFJ9RZn4YsMg4sIH1bNJvX7WGwlNYQujmBLU60zbEMCDg69pzqLOyIBqXdByaVxryKutihDRIjO10op4J2Wd6bhuk+dAbtomZgU6B+HVdrnBnk03v/ys/SgHf5oLX2PVSJbHLWhMPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1758244186; c=relaxed/simple;
-	bh=9wfzhVwzeNxzil8GcjBUA7/k3aXyPq7SI7ajVqzOZWw=;
+	bh=c/fKQsp8CVjmzOXqc75yH30/0X0s5pIFozMal0+I37A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SbL3aREzWBuTbcy1bDOwvycbwv8sYOhBPVPhhxqQ+NpM73tiIl17CG3rQVJTL+yBHc2X2kLj4HDo4zJujYeOVr40/qTBKLSIX5j4V1bsThjnt7/l9SP3XAiZixs3XXldl9LLiCGTw9aaGLwoOWuE74wJ2cLHNNqZqjSWpZ5ojVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Xnyn1j7D; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=qQT9zDs61QfMUZodxJsCfr/WI/+OWLc2S51P895BpENKPg/TbRewaS1cfgcITl1UwDiOJ7FSHn6YD/OzA5gOpqMrz/qXPoPi4mkqr8nTP1EH/kq5GwSywp1y367QvA/p+22bMTZ+N8qW5pwE9hjySuQXR+JHqoBNMAFx8lAQfGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=PK8/gYRg; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Xnyn1j7D"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="PK8/gYRg"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1758244181;
-	bh=9wfzhVwzeNxzil8GcjBUA7/k3aXyPq7SI7ajVqzOZWw=;
+	bh=c/fKQsp8CVjmzOXqc75yH30/0X0s5pIFozMal0+I37A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=Xnyn1j7DN/AMdEaNlwW3RFcTMUduIM7wgGEEJwRjQAkNvTh4sBm7dbjqWwMLB7q6g
-	 6q/V68SdxdxOUZa9Vtd4OiHT0vxsGHbBsqvcubsxuTJPchgqhfqpn0c8xomnuiZOXx
-	 TYqk3J3Ny6E5J4Nv9iJ2l8gsUTUJebuhqilNaoSibKSf9YDw1fZtojdPpTAOEvaaTC
-	 IVGm9zdAVNm7AVcnGhUTa0QTPW9at8ffBR5+UlRJulTdeU7mC14wM3JIXcUGxVbQ1W
-	 AwXWYViAWHczX25DDFhdo6glBdevqDqNnsIpBnUnXvYG/OBIkRYxJpQpK0ctJ0gW2D
-	 GrX3jkzeyyNV2yr+bAPOIyhyCesEIVv32IdvpLRR0MAmZejDAsmBNYTfqgHdSLfcta
-	 jn3qXaahWnYFQIe+KVoAZU/vyXjRAdZ0/n01NfJE3f+L2yxMMDt2zNRjzY9TMjsIJY
-	 6+CYp2RvjxAEHxcn9rAnCm5zg6hoEMwJ48aKk888j0hEUjrNCEL
+	b=PK8/gYRgI5YtkplAKRHEzNbKh7JYHZ8QOmk6Oz8msx0pxQJRC55cw37mdgZgm5jgc
+	 WFOGbrHB4UkE68os5FpJgir30zJwB3OY+/rBaN7DTu/PGMRoI0xhtSJExpaDN+11av
+	 1fdWbkekfTPcD+SKU4Dusu4/bu1ee2DOnyzKjdq2LXtx879NiBxxhnOYRLJiMPyVHK
+	 +PMwTcHXU9Ck6m/BzqYNt0wKbMXv+Pfw/3IwShjYpF82Ou1IjoX3QwZPHU/BW8hoZ5
+	 8eRdfcAFFVlYXaUoVPF20ymev4/O9Xi6XVkvy3k8zEE5iwTIutiVZfjhDSEyOCb0zg
+	 yVruaxCvfT0EOu5AnsvNP5Z0mjxMXY4+/YDArfKcADFMWexEwMq4+HUXVoeeqTXSIh
+	 PlPtpNx2sPO94j7Mmdl8FngTFpwSKV2aepVItz5FWmyH6cbb41KdOEJGctlaDJp/g0
+	 qatuPRWrjH0IpftBijrKN+wL3/7DC4a8HyaV7JKFsWx0aOqaVTq
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ada0:faf8:3cb8:a81f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 4D97120158;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 569D020159;
 	Fri, 19 Sep 2025 01:09:41 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 6/9] rev-parse: allow printing compatibility hash
-Date: Fri, 19 Sep 2025 01:09:08 +0000
-Message-ID: <20250919010911.649831-7-sandals@crustytoothpaste.net>
+Subject: [PATCH 7/9] fsck: consider gpgsig headers expected in tags
+Date: Fri, 19 Sep 2025 01:09:09 +0000
+Message-ID: <20250919010911.649831-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
 In-Reply-To: <20250919010911.649831-1-sandals@crustytoothpaste.net>
 References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
@@ -55,111 +55,145 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Right now, we have a way to print the storage hash, the input hash, and
-the output hash, but we lack a way to print the compatibility hash.  Add
-a new type to --show-object-format, compat, which prints this value.
-
-If no compatibility hash exists, simply print a newline.  This is
-important to allow users to use multiple options at once while still
-getting unambiguous output.
+When we're creating a tag, we want to make sure that gpgsig and
+gpgsig-sha256 headers are allowed for the commit.  The default fsck
+behavior is to ignore the fact that they're left over, but some of our
+tests enable strict checking which flags them nonetheless.  Add
+improved checking for these headers as well as documentation and several
+tests.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/git-rev-parse.adoc | 11 ++++++-----
- builtin/rev-parse.c              | 11 ++++++++++-
- t/t1500-rev-parse.sh             | 34 ++++++++++++++++++++++++++++++++
- 3 files changed, 50 insertions(+), 6 deletions(-)
+ Documentation/fsck-msgids.adoc |  6 ++++
+ fsck.c                         | 18 ++++++++++++
+ fsck.h                         |  2 ++
+ t/t1450-fsck.sh                | 54 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 80 insertions(+)
 
-diff --git a/Documentation/git-rev-parse.adoc b/Documentation/git-rev-parse.adoc
-index cc32b4b4f0..465ae3e29d 100644
---- a/Documentation/git-rev-parse.adoc
-+++ b/Documentation/git-rev-parse.adoc
-@@ -324,11 +324,12 @@ The following options are unaffected by `--path-format`:
- 	path of the current directory relative to the top-level
- 	directory.
+diff --git a/Documentation/fsck-msgids.adoc b/Documentation/fsck-msgids.adoc
+index 0ba4f9a27e..52d9a8a811 100644
+--- a/Documentation/fsck-msgids.adoc
++++ b/Documentation/fsck-msgids.adoc
+@@ -10,6 +10,12 @@
+ `badFilemode`::
+ 	(INFO) A tree contains a bad filemode entry.
  
----show-object-format[=(storage|input|output)]::
--	Show the object format (hash algorithm) used for the repository
--	for storage inside the `.git` directory, input, or output. For
--	input, multiple algorithms may be printed, space-separated.
--	If not specified, the default is "storage".
-+--show-object-format[=(storage|input|output|compat)]::
-+	Show the object format (hash algorithm) used for the repository for storage
-+	inside the `.git` directory, input, output, or compatibility. For input,
-+	multiple algorithms may be printed, space-separated. If `compat` is
-+	requested and no compatibility algorithm is enabled, prints an empty line. If
-+	not specified, the default is "storage".
- 
- --show-ref-format::
- 	Show the reference storage format used for the repository.
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 44ff1b8342..187b7e8be9 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -1108,11 +1108,20 @@ int cmd_rev_parse(int argc,
- 				const char *val = arg ? arg : "storage";
- 
- 				if (strcmp(val, "storage") &&
-+				    strcmp(val, "compat") &&
- 				    strcmp(val, "input") &&
- 				    strcmp(val, "output"))
- 					die(_("unknown mode for --show-object-format: %s"),
- 					    arg);
--				puts(the_hash_algo->name);
++`badGpgsig`::
++	(ERROR) A tag contains a bad (truncated) signature (e.g., `gpgsig`) header.
 +
-+				if (!strcmp(val, "compat")) {
-+					if (the_repository->compat_hash_algo)
-+						puts(the_repository->compat_hash_algo->name);
-+					else
-+						putchar('\n');
-+				} else {
-+					puts(the_hash_algo->name);
-+				}
- 				continue;
- 			}
- 			if (!strcmp(arg, "--show-ref-format")) {
-diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-index 58a4583088..98c5a772bd 100755
---- a/t/t1500-rev-parse.sh
-+++ b/t/t1500-rev-parse.sh
-@@ -207,6 +207,40 @@ test_expect_success 'rev-parse --show-object-format in repo' '
- 	grep "unknown mode for --show-object-format: squeamish-ossifrage" err
++`badHeaderContinuation`::
++	(ERROR) A continuation header (such as for `gpgsig`) is unexpectedly truncated.
++
+ `badName`::
+ 	(ERROR) An author/committer name is empty.
+ 
+diff --git a/fsck.c b/fsck.c
+index 171b424dd5..341e100d24 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -1067,6 +1067,24 @@ int fsck_tag_standalone(const struct object_id *oid, const char *buffer,
+ 	else
+ 		ret = fsck_ident(&buffer, oid, OBJ_TAG, options);
+ 
++	if (buffer < buffer_end && (skip_prefix(buffer, "gpgsig ", &buffer) || skip_prefix(buffer, "gpgsig-sha256 ", &buffer))) {
++		eol = memchr(buffer, '\n', buffer_end - buffer);
++		if (!eol) {
++			ret = report(options, oid, OBJ_TAG, FSCK_MSG_BAD_GPGSIG, "invalid format - unexpected end after 'gpgsig' or 'gpgsig-sha256' line");
++			goto done;
++		}
++		buffer = eol + 1;
++
++		while (buffer < buffer_end && starts_with(buffer, " ")) {
++			eol = memchr(buffer, '\n', buffer_end - buffer);
++			if (!eol) {
++				ret = report(options, oid, OBJ_TAG, FSCK_MSG_BAD_HEADER_CONTINUATION, "invalid format - unexpected end in 'gpgsig' or 'gpgsig-sha256' continuation line");
++				goto done;
++			}
++			buffer = eol + 1;
++		}
++	}
++
+ 	if (buffer < buffer_end && !starts_with(buffer, "\n")) {
+ 		/*
+ 		 * The verify_headers() check will allow
+diff --git a/fsck.h b/fsck.h
+index dd7df3d5b3..c26616d7eb 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -25,9 +25,11 @@ enum fsck_msg_type {
+ 	FUNC(NUL_IN_HEADER, FATAL) \
+ 	FUNC(UNTERMINATED_HEADER, FATAL) \
+ 	/* errors */ \
++	FUNC(BAD_HEADER_CONTINUATION, ERROR) \
+ 	FUNC(BAD_DATE, ERROR) \
+ 	FUNC(BAD_DATE_OVERFLOW, ERROR) \
+ 	FUNC(BAD_EMAIL, ERROR) \
++	FUNC(BAD_GPGSIG, ERROR) \
+ 	FUNC(BAD_NAME, ERROR) \
+ 	FUNC(BAD_OBJECT_SHA1, ERROR) \
+ 	FUNC(BAD_PACKED_REF_ENTRY, ERROR) \
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 5ae86c42be..c4b651c2dc 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -454,6 +454,60 @@ test_expect_success 'tag with NUL in header' '
+ 	test_grep "error in tag $tag.*unterminated header: NUL at offset" out
  '
  
++test_expect_success 'tag accepts gpgsig header even if not validly signed' '
++	test_oid_cache <<-\EOF &&
++	header sha1:gpgsig-sha256
++	header sha256:gpgsig
++	EOF
++	header=$(test_oid header) &&
++	sha=$(git rev-parse HEAD) &&
++	cat >good-tag <<-EOF &&
++	object $sha
++	type commit
++	tag good
++	tagger T A Gger <tagger@example.com> 1234567890 -0000
++	$header -----BEGIN PGP SIGNATURE-----
++	 Not a valid signature
++	 -----END PGP SIGNATURE-----
 +
-+test_expect_success RUST 'rev-parse --show-object-format in repo with compat mode' '
-+	mkdir repo &&
-+	(
-+		sane_unset GIT_DEFAULT_HASH &&
-+		cd repo &&
-+		git init --object-format=sha256 &&
-+		git config extensions.compatobjectformat sha1 &&
-+		echo sha256 >expect &&
-+		git rev-parse --show-object-format >actual &&
-+		test_cmp expect actual &&
-+		git rev-parse --show-object-format=storage >actual &&
-+		test_cmp expect actual &&
-+		git rev-parse --show-object-format=input >actual &&
-+		test_cmp expect actual &&
-+		git rev-parse --show-object-format=output >actual &&
-+		test_cmp expect actual &&
-+		echo sha1 >expect &&
-+		git rev-parse --show-object-format=compat >actual &&
-+		test_cmp expect actual &&
-+		test_must_fail git rev-parse --show-object-format=squeamish-ossifrage 2>err &&
-+		grep "unknown mode for --show-object-format: squeamish-ossifrage" err
-+	) &&
-+	mkdir repo2 &&
-+	(
-+		sane_unset GIT_DEFAULT_HASH &&
-+		cd repo2 &&
-+		git init --object-format=sha256 &&
-+		echo >expect &&
-+		git rev-parse --show-object-format=compat >actual &&
-+		test_cmp expect actual
-+	)
++	This is a good tag.
++	EOF
++
++	tag=$(git hash-object --literally -t tag -w --stdin <good-tag) &&
++	test_when_finished "remove_object $tag" &&
++	git update-ref refs/tags/good $tag &&
++	test_when_finished "git update-ref -d refs/tags/good" &&
++	git -c fsck.extraHeaderEntry=error fsck --tags
 +'
 +
- test_expect_success 'rev-parse --show-ref-format' '
- 	test_detect_ref_format >expect &&
- 	git rev-parse --show-ref-format >actual &&
++test_expect_success 'tag rejects invalid headers' '
++	test_oid_cache <<-\EOF &&
++	header sha1:gpgsig-sha256
++	header sha256:gpgsig
++	EOF
++	header=$(test_oid header) &&
++	sha=$(git rev-parse HEAD) &&
++	cat >bad-tag <<-EOF &&
++	object $sha
++	type commit
++	tag good
++	tagger T A Gger <tagger@example.com> 1234567890 -0000
++	$header -----BEGIN PGP SIGNATURE-----
++	 Not a valid signature
++	 -----END PGP SIGNATURE-----
++	junk
++
++	This is a bad tag with junk at the end of the headers.
++	EOF
++
++	tag=$(git hash-object --literally -t tag -w --stdin <bad-tag) &&
++	test_when_finished "remove_object $tag" &&
++	git update-ref refs/tags/bad $tag &&
++	test_when_finished "git update-ref -d refs/tags/bad" &&
++	test_must_fail git -c fsck.extraHeaderEntry=error fsck --tags 2>out &&
++	test_grep "error in tag $tag.*invalid format - extra header" out
++'
++
+ test_expect_success 'cleaned up' '
+ 	git fsck >actual 2>&1 &&
+ 	test_must_be_empty actual
