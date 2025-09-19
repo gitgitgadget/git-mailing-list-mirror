@@ -1,111 +1,102 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from mx1.catap.net (mx1.catap.net [162.55.82.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3E02253B0
-	for <git@vger.kernel.org>; Fri, 19 Sep 2025 17:20:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758302412; cv=none; b=WPC1eAnr8wF4/qC+vv4CtEW23TGfN+q49KPzRrXDBABrSioWYA/SKwZqyMvkcbYnJZCrZeLEesyoTGUQr4tIZby4kRZQpkO/1g4wtCuF3Aq8Vv5/cOCTMPOqhltlczIfvqdBiBXo+xATtYU6cPKobAmWgGlgEQycjuHE+gQaQ0U=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758302412; c=relaxed/simple;
-	bh=2xDXllPfr4tRHvQnU8TK8F9kfVMgze2Xf27YsYLCh3s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HBWiedGpcD5YDNhpinA+K1ituFDVnY9JFvGRbGhRxViV8hO3S1KvavwR8+SKELaPm9KL2zSRBd6KJM9GEhADAyUhxIeNyLsPDKwQ5aYZkqWT2cWYzh0s645vk6IkE2jQK2Np+selMQQ1rUZAlIZ5NP3vqAMArZSumH0h5Etv1L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Ez8z/S1X; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515CB1DD543
+	for <git@vger.kernel.org>; Fri, 19 Sep 2025 17:43:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=162.55.82.72
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758303792; cv=fail; b=C2ACoBhgpS2V7RjJys5b99WfdHSeHI8IQ7D5M27Gk/inY+dQk/QOQlpmwm+W2Dq5Zq4VpGOB4hoXA9ectYw/WFOd3/1Nr+UYVCfH5FPAcjZnczJhuU/ZQkbGontm9Ej7nvFif4kGTt90ObRt+l3sIjSjmK1hqglke42pTxQl3Yg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758303792; c=relaxed/simple;
+	bh=ISJcCjoPOJx+FK+w3pVGwvNlW1yj96ps9y7MYNY4fx0=;
+	h=From:Content-Type:Mime-Version:Subject:Date:Message-Id:Cc:To; b=EGruIZlOuJ6evwPXwckGgjj3GnSvX9OHwwXd6NARLzVa7gNnruw9ZYLYtxgiXH7lIvzcHxK30vmUCrRhZypq0HQlSPInqbdpdmFjmPFacwQDPPPs+XkER3ASgGDQCixvkrrrtc4692GUmKaix5YO6Rv8MroSi9sDjArW59+QIMI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=macos-powerpc.org; spf=pass smtp.mailfrom=macos-powerpc.org; dkim=pass (2048-bit key) header.d=macos-powerpc.org header.i=@macos-powerpc.org header.b=eAVMxvv/; dkim=permerror (0-bit key) header.d=macos-powerpc.org header.i=@macos-powerpc.org header.b=j8g3oTsv; arc=fail smtp.client-ip=162.55.82.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=macos-powerpc.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=macos-powerpc.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Ez8z/S1X"
-Received: (qmail 131687 invoked by uid 109); 19 Sep 2025 17:20:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=2xDXllPfr4tRHvQnU8TK8F9kfVMgze2Xf27YsYLCh3s=; b=Ez8z/S1XJ83RFYcdSGs4IQ0GyizFiQ7urAyrQQUZbS+IwC1oXS6FAm3Gd4Pte9ZZW0d6NcAkcAS8Ku+wxek6SKzcZltMvRqqUz89ysUjsM+IBVGe45VWglGNxhwL8C8X39U3GnnKhCcfCcYbPZ00VIEznInpvG0mDi/YiNBzmmymYuwbLr3rzvaMqKeq2AQD8Gpavt5ouq3iPxUX0F/jD/cbRKjVa6ZC1UYbJfnrgtpxqhVeJIyOyOHOR2AXm42jFrEqREr287tbE5L2stS/HUp7fRUBEltJ+lEXbsCLq22JmZ3GLiBydcpMSoxJfB1xl5MT8A0oanAXllezJ/OyVg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 19 Sep 2025 17:20:08 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 208058 invoked by uid 111); 19 Sep 2025 17:20:08 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Sep 2025 13:20:08 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 19 Sep 2025 13:20:07 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Lauri Niskanen <ape@ape3000.com>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [BUG] git stash show -p with invalid option aborts with
- double-free in show_stash() (strvec_clear)
-Message-ID: <20250919172007.GA59895@coredump.intra.peff.net>
-References: <CAMCKZdV+ASXAhYXaTdtB=7YZprCxFUjwEsqQP7i_ccOwx8Lo6Q@mail.gmail.com>
- <1321ff39-6f09-426a-aa75-939ef4e1ad93@app.fastmail.com>
- <xmqq4isy77qr.fsf@gitster.g>
- <xmqqldma5qha.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=macos-powerpc.org header.i=@macos-powerpc.org header.b="eAVMxvv/";
+	dkim=permerror (0-bit key) header.d=macos-powerpc.org header.i=@macos-powerpc.org header.b="j8g3oTsv"
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=EIoMNxA
+	q7br6TNAMs2svR/gduYQi8A09+C2FR575xlpr2X2ahxDxMIAKEGyQVPZ+R4IZRJ9IrCR5v
+	mmdujGjknZfRv2TmsQXSqvNBX1D6fr77evJ6fJSkPgf9+mGjhMU9MUWsbTwfm+JqSeHP9V
+	m5qOR8vRpZCpTnaT5GI4vrP5JE3FyV6hF58mE59MSGVbfHgngLzBguYD2qqGw+Fw/4BGlk
+	hdzN2pPVXxrZBiO3k6oTdonoul+LexzIENi94bmJhQjGaV2LHUFNhRGVzIB9qgrFL28Oek
+	lF2W+WVAZfMcdwEC+VaWLRi17I+UzJtW/qqWnysQM1WKFopvJN7g2bw==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=I
+	SJcCjoPOJx+FK+w3pVGwvNlW1yj96ps9y7MYNY4fx0=; h=to:cc:date:subject:
+	reply-to:from:dkim-signature:dkim-signature; d=mx.catap.net; b=v4hdGlx
+	yIQMNAQYlNv4A36HamtgvNCYp5HATejfwcb2SnLfUuiRoSjvFKfm/sBmRXvaiskENtWgbp
+	anjgLwPWM1wS9JZclyDx+8xFnMwNyHDcM58LVC93kkEfp7Gum0URIkpjTumumkbPL8yO3m
+	wgSDwkAN4IaI61ss40zAAjh9lXQP1NsDLEsF80S1a+iF0rVL4e5YoK/jxj6xmw7UAfk70e
+	k6XTQWKKkyuU5z0HePf/iQ6EFydIDsxac8ZRq1ibUusaC1/Ugf4LL2zbvSDO6lBhnSS6L1
+	SG9KQn/lUJHiwOb470b/Mjb7Usl1nB/A8y4Bupdxvh/Zyi3zeb/rlfg==
+ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
+	header.s=20240125rsa header.d=macos-powerpc.org header.a=rsa-sha256 
+	header.b=eAVMxvv/; dkim=pass header.s=20240125ed25519 
+	header.d=macos-powerpc.org header.a=ed25519-sha256 header.b=j8g3oTsv;
+	arc=none; iprev=pass; spf=none smtp.helo=postmaster@smtpclient.apple;
+	spf=softfail smtp.mailfrom=barracuda@macos-powerpc.org
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=ISJcCjoP
+	OJx+FK+w3pVGwvNlW1yj96ps9y7MYNY4fx0=; h=to:cc:date:subject:reply-to:
+	from; d=macos-powerpc.org; b=eAVMxvv/hxREGpYpZywOgHYkYclYSEKRvNdVzAlbK
+	HiW8OWfJIPMZCg53uK56iXgt07iXX3VU+b6gDOtmygIY7jmynuRrYXc1JABWrVFioLGChW
+	Ayg+O/MM105x++L3bDK6NdAQVTedQk8WXmidMAsEdcxUmPUl1XOf2j5PA4Ruw1O1C8olt6
+	GPV/Bl35KoeQ84c9d7XG47FeSVuqdODa9kBSsBu/C8e7vZ9+TVFTHv8NazQ0mLa5fEqlzY
+	ruzM1Dtbr7348MDymIelEM6i7xHqZZ0FSTz+JSS7LnS2Qyf0XNNCIjSkGvG6B+Cftyi0A+
+	OqFsBKy2bBFvUh5099g5g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
+	bh=ISJcCjoPOJx+FK+w3pVGwvNlW1yj96ps9y7MYNY4fx0=; h=to:cc:date:subject:
+	reply-to:from; d=macos-powerpc.org; b=j8g3oTsvZPHSiQQ2nRaTIU1ZlLPQ1Ogj
+	btFPzQnggAINweUiIhCQa4gfQj+MbJD+SlHZ2kiGnfZsSNg+FBU1Dg==
+Received: 
+	by mx1.catap.net (OpenSMTPD) with ESMTPSA id 048da4b1 (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO);
+	Fri, 19 Sep 2025 19:36:29 +0200 (CEST)
+From: Sergey Fedorov <barracuda@macos-powerpc.org>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Reply-To: 20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqldma5qha.fsf@gitster.g>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.1\))
+Subject: Re: [PATCH RFC 0/3] Introduce Rust and announce that it will become
+ mandatorty
+Date: Sat, 20 Sep 2025 01:36:08 +0800
+Message-Id: <4C760AB2-C102-43A3-B0B9-11E248F3FCE0@macos-powerpc.org>
+Cc: Johannes.Schindelin@gmx.de,
+ ben.knoble@gmail.com,
+ cb@256bit.org,
+ collin.funk1@gmail.com,
+ contact@hacktivis.me,
+ eschwartz@gentoo.org,
+ ezekielnewren@gmail.com,
+ git@vger.kernel.org,
+ gitster@pobox.com,
+ me@ttaylorr.com,
+ newren@gmail.com,
+ phillip.wood123@gmail.com,
+ pierre-emmanuel.patry@embecosm.com,
+ sam@gentoo.org,
+ sandals@crustytoothpaste.net
+To: ps@pks.im
+X-Mailer: Apple Mail (2.3776.700.51.11.1)
 
-On Fri, Sep 19, 2025 at 09:58:25AM -0700, Junio C Hamano wrote:
 
-> For completeness, here is how the other approach may look like, but
-> I have made my share of off-by-one mistakes all over the place over
-> the ears, so somebody else needs to lend an eyeball and check it for
-> sanity.
+This will be a disaster, please consider not making rust mandatory.
+It will break git for all systems without rust, in effect killing not =
+only possibility to use GitHub and other git-based services, but also =
+breaking build systems, since many ports =E2=80=93 and package managers =
+=E2=80=93 rely on git to fetch sources.
+As for local version control, git could be replaced with some =
+alternative (likely inferior, but at least that is not the end).
+There is no replacement, AFAIK, for build systems and for git-based =
+online services.
 
-I _thought_ there was an off-by-one at first, but I think what you have
-is correct:
+P. S. In case anyone wonders, this is personally relevant for me: I =
+won=E2=80=99t be able to continue contributing to open-source anymore =
+(at least certainly not like in past years) with git being unusable due =
+to broken rust.
 
-> +	/*
-> +	 * NULL out the leftover args we did not understand, which has
-> +	 * shallow copies in earlier slots in the array.
-> +	 */
-> +	while (left < argc--)
-> +		argv[argc] = NULL;
->  	return left;
-
-We definitely want argv[left] to be NULL, which I thought at first did
-not happen because of the "<". But because it is post-increment that
-happens in the loop condition, it works.
-
-I probably would have written:
-
-  while (left <= argc)
-	argv[argc--] = NULL;
-
-which I think is the same (but I didn't test it, so it probably does
-have an off-by-one!).
-
-But really, I do not know that we need to NULL the whole thing. We have
-given the caller the reduced argc. The only argv invariant we are
-violating is that argv[argc] should be NULL (or in this case,
-argv[left]). Anything after argv+left should be considered
-uninitialized. So just:
-
-  argv[left] = NULL;
-
-would be enough, I'd think.
-
-> diff --git c/t/t3903-stash.sh w/t/t3903-stash.sh
-> index 0bb4648e36..dd70deb3b3 100755
-> --- c/t/t3903-stash.sh
-> +++ w/t/t3903-stash.sh
-> @@ -69,6 +69,11 @@ test_expect_success 'stash some dirty working directory' '
->  	setup_stash
->  '
->  
-> +test_expect_success 'controlled error return on unrecognized option' '
-> +	test_expect_code 129 git stash show -p --no-such 2>usage &&
-> +	grep -e "^usage: git stash show" usage
-> +'
-
-This passes now, but fails with SANITIZE=leak. Along with a bunch of
-other tests, as we are now overwriting entries in strvecs with NULL, so
-it has no opportunity to free them. We need to respect the
-setup_revision_opt to free.
-
-I'm working up a few alternative patches.
-
--Peff
