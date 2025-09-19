@@ -1,59 +1,59 @@
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3549623FC54
-	for <git@vger.kernel.org>; Fri, 19 Sep 2025 21:53:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91BD23FC54
+	for <git@vger.kernel.org>; Fri, 19 Sep 2025 21:54:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758318789; cv=none; b=hX1+MBiLnjC0MCY+2yANGOdEROsfV5LfD2sy2lZdCx58Fq+stTkSBRazgogA/OXQp+84VQscDcBbs+jnixTqMRO975kpHWhymzMPE9lEx74l3orFhO1aRBh4IeSyiyE7Wf8grFQUCB8XZ7evAjeS+JB0F5eafJN+BBcyd6AGt6o=
+	t=1758318887; cv=none; b=lZlDbGzpPxkRLiIhJwEBFn2pYLPjhxvZfZBNG4NTifDHjfewQ3uEznb1ts1L2E4oc53O7xZy14Zbsl4pxszo8dfNandW45PguSQJ94+6BJyW0XPeNTZe++5dnziR2NCD7E1ivAiXpvDb70jZ/oovrFKekpt7FRADy4gi+ej87xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758318789; c=relaxed/simple;
-	bh=bHqBx6x6Qdkfo3yn84KnBeS7jAKOeFrY+WdbakIDdFI=;
+	s=arc-20240116; t=1758318887; c=relaxed/simple;
+	bh=hdqPUFZ0sCq1sE5SJSdBjNRTSCd8l/8sSsfFslL+egk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mk9iEGSVXump1mkM9Qef+6Wc9YgYJ9J9ZGXMrOCz3qrQvHPIh0IcU0cUOyhoTDX8cOjd1o7Kzvvfrs9d4I8rF1FGUEGjPsHYS2JRa+ukRN5nh/MGGRvFx/HCvo9mcmkuDabnRGl2m3EFBrjWsNlIqdZYqvVZuGsee1fpSfig6ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cdNtrZZ7; arc=none smtp.client-ip=209.85.208.177
+	 To:Cc:Content-Type; b=lFTylsdexOshVEFgI7/TZQT9ceAwLeOyzEpYIs6hxDHuIIC0oa7Yb3+BkXuJVoAJIysGiO5A/YTIoJ6rQNA4j5DrEZx2aFW0lgHZRyvloLxCnBhlmAFcIHRqXluLTcM5+8slL4lx3dhMH9/z/CEV1qfc7Mbi/CmuLEVD+bd2HHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CJlzX01g; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cdNtrZZ7"
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-366ce79fbeeso2242141fa.0
-        for <git@vger.kernel.org>; Fri, 19 Sep 2025 14:53:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CJlzX01g"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5797c8612b4so2189899e87.2
+        for <git@vger.kernel.org>; Fri, 19 Sep 2025 14:54:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758318786; x=1758923586; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758318884; x=1758923684; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bTH+LIa5ohmrZV0JV+9YOIwkSySwT5oksR6t64hdJlg=;
-        b=cdNtrZZ7cl6IMaF9JgvJcIxJ0oLIJhIWqEh+UbBH2xNyV65CU9Or1Ktyf528fmSu38
-         RBEEdwQbfgoP3eEth5KasyMbcqAOpWALFAoy00Ud9XYPMUihc4NnB6E5PIQzZifgFYJ8
-         7pwflOC9cp9agwJLepvpjNB+AqaLDnVYGV6OqMBO0OSqw/kTdMjeWLrlW+cDSXI8LLS6
-         wrLd6Por0YCYnRK+D4ATMVji0ln2QniDM+rWHGVljo3HXUhlWupFM0nEUbslAe6YvO4G
-         N9jrpMxFpFb1oev1xVzMbbsGklGFuwXxIe6lsUzjBbGqa8jAPpMn7JQyomMEdnkXolXN
-         8MxA==
+        bh=hdqPUFZ0sCq1sE5SJSdBjNRTSCd8l/8sSsfFslL+egk=;
+        b=CJlzX01gS4yL6jorhQbftZVew7xolyBmyV3RkeMbWpddP384nC0RziR3937hzrmKWM
+         LBy8Mg9HvDlTTCtMFLc+WVMojLt/68ZjD+0eRad/L3jY4n7ZgutQ1LznelV1KWDNPlA1
+         dldKO6cNxLnH959UjzHWjRaNFBqiNYE5MUzMtYCw8x1Ggu1TdsAD0e76SZlOmlj+j7wG
+         Q8C+hQFA8OqdJUUUGK0sEYTQgam5uxagOFawXUxJUkxMJH/Rl5XuoGZo3yFEx4wlkaxq
+         d91Zj8ZkRMiZt8OGC+ZeV2CiEwSxdpZ9rrixUSKqEX6LjSIuOyTLhyCdU9kmrpG0UoyF
+         Mm/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758318786; x=1758923586;
+        d=1e100.net; s=20230601; t=1758318884; x=1758923684;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bTH+LIa5ohmrZV0JV+9YOIwkSySwT5oksR6t64hdJlg=;
-        b=ArRKz3L2qgHFEvsnulEe6nsg+xpX6kQxqbdt9Mmi9LAtwKooUo4tOnjHrmhwqhMuF2
-         Njw+w2LSGN/OTcCQwvRxDxARo+a2Lcr5XXpEHfO14e4x9XttMNd44DSsf3BpEw44pE/4
-         Jj983/cqPFWH/ZE6o7zgF/kM890NYlJckX8L+mNlobCKcmwV7VN/gkJ8mYdt5ZN21V8w
-         v3i2s13iToyG6wKmUzxG8HnpeVSdoOXV62VxD/nn6ZJAINxosjGAUdHwZNNnOUqA3+3Y
-         F85BmXNGwPGocLOD8Es6O1YEaXWJJnxi/AE/YdFLaH6+ZxgPaZumcQDUlN4gVjjKtaAp
-         fWpw==
-X-Forwarded-Encrypted: i=1; AJvYcCWBYH+NHNEH0RnsFL63FhnbhfXXFaIoMIQddGM+aguJe/F2BvxaiqDuJ47JpNFn0p0PJno=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzRoh/eaqY6hyOyYxCQP79nibo9pgAQ/rNz1Y5OcrRnswvJYYhl
-	Kz3mEjsoaj+y3sGMuOiG7jc9S68NFRn5RnDH6GqWCwYsX70J/cO96nlOrZjnnvuw6xImukNViEr
-	NPbwFdESTJUpqVhIzFqyFzIN9Lebi66A=
-X-Gm-Gg: ASbGnctXGCv5Duq9cIa02fYh+1JzHpBT9CwI2g+movCqqqpCyfBxF2aXNs/NsSIueef
-	/onkGcM3hEeUo0qpCg90jNORgMEJRloUei8uG4kc0qfFArv83YCl93yc5brOz0Rzel4/amBhT97
-	vg/hfU09kI2UahZpNZkm8P8rrZ1O/JX1EdmBWwYTUdy9Y0r+uXCYwaxfDqoOFNYk/rAUwxDLKN9
-	HrCCFpl/haYm5SpEnY=
-X-Google-Smtp-Source: AGHT+IHaUBy7Lazqp2n3I/nXVd4GDZ9IFVcDjxjZhvkMPjQqy+rfha3zRcj3/w0KBYVNtQni1FU4hRSKTQ72d3ZZimQ=
-X-Received: by 2002:a05:651c:4112:20b0:336:e199:6d73 with SMTP id
- 38308e7fff4ca-3641c91f659mr15567721fa.43.1758318786027; Fri, 19 Sep 2025
- 14:53:06 -0700 (PDT)
+        bh=hdqPUFZ0sCq1sE5SJSdBjNRTSCd8l/8sSsfFslL+egk=;
+        b=L7kNSlsY/a4jBDMLED/FOQP3wmyM7WJPFxCba6erbX/tUVgjuKM8jiN9jIIuLEU9d9
+         wIQLK/agqmr7iQKVFWLvWSgRBqpR91YTIMuizM8bN9LWfq5c6H0iblCNTUNRn5s0hfKT
+         JJHJQtJ6DcsJbVTIDLRzezB+kRKKjkR4nGSXOK2ysVf5M7xqlnxzrUDZvytWXR1sbWKj
+         UVM6rRlIE92cLV9ABCTWAPK8a9V5DQJKwbTtxTC2FYpPAqxc80SlTVeYKSTER6Qve1he
+         c5po/LQ14sNgVq3gqLNEgDj52NRDP/P3lqXlFPdpldBX80mFn6IvDF5KXWgEOsp5KN75
+         /8hQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUb9RZjth2IBb2OiKvea67LDQhVPQJ7Ayf1wl4Kcy60J9QYb4KDLPFW4o+Jz/JEa5bV6IY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxtlg738uiulHSaqcgenS44GKyxibNOk9MZTEIox6ssSuhPvKGb
+	QTtsWRYDMFSIUnkbBwF1tcRGheo3tApS86DTMYgrIYWr+STC8lv1xe204/X92VlJgkeMN4Lzjbc
+	hSkafn3SSzvPbhL0wSwOxJlIOIAOFdYyP+w6h
+X-Gm-Gg: ASbGncsCRsA3pfW7U8hiAsjNlQDOs3W4oAes8I32gGkCwI9iuEMveaNtK0QNSIzU0LK
+	UQ4DAyFlKig7+jsGdrno1lu2+lBu6MFStoySc5QQrdDF2vTWMShrsWOwrFPBhnkIjwEAHe1yE9M
+	i1b6McZ5m1iG0Uigok6o2X31ZkqNMe8cApNlr18stCZEZZ9K9p6hS1cC3akmccALko+GxMEdt0+
+	o/4zMpn
+X-Google-Smtp-Source: AGHT+IElAAhD25F8TIbgj0mLQo84A9T6TgBPnMPJRT0UMUZvmCoZZryh95I3t+RJjOytSpxL7FoHr32qgg/6IqsEfgg=
+X-Received: by 2002:ac2:5689:0:b0:55f:391b:54df with SMTP id
+ 2adb3069b0e04-579e356df49mr1800731e87.47.1758318883716; Fri, 19 Sep 2025
+ 14:54:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,39 +61,22 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
- <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com> <7082e32c5975d2aaa277eddae7497eba0f2131e0.1758071798.git.gitgitgadget@gmail.com>
- <CAPig+cRGtMX9bQhb+7g5aXRVjpLKY-qDdQP95f9TmbY8j_BweQ@mail.gmail.com>
- <CAH=ZcbAOBnEVfyNy_4hdpe_dvsqDxsKVTcvurJz_iUWiqOzG3g@mail.gmail.com> <xmqq5xde435i.fsf@gitster.g>
-In-Reply-To: <xmqq5xde435i.fsf@gitster.g>
+ <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com> <17143ced6feea5927b66c0578f1c2fbb07378504.1758071798.git.gitgitgadget@gmail.com>
+ <CAH=ZcbBf65E6aNN-cCp_0Nupk9GD3apjKRWrfi_JfJcwWi_mCg@mail.gmail.com> <CAPig+cR19fUmzCyH2yaHjom4ifGNi8tBz8eDJwe8dfpJVQXyCg@mail.gmail.com>
+In-Reply-To: <CAPig+cR19fUmzCyH2yaHjom4ifGNi8tBz8eDJwe8dfpJVQXyCg@mail.gmail.com>
 From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Fri, 19 Sep 2025 15:52:53 -0600
-X-Gm-Features: AS18NWDeRFd9svJBdT3K7gDyPPdWpHc5GPVr9aa9MlrjJ8K_XD36a-UkWUBRfxc
-Message-ID: <CAH=ZcbDvwbCdnpeNv6vp=+Zy1h8RpG125ZCQNUzNOc5qLi8gNg@mail.gmail.com>
-Subject: Re: [PATCH v2 02/18] make: add -fPIE flag
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>, 
-	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Date: Fri, 19 Sep 2025 15:54:31 -0600
+X-Gm-Features: AS18NWABQ5Z95rYaP7E1gt9nfphCOsIopYQAtl9USRKueepITpMEJywCmUq7Uo8
+Message-ID: <CAH=ZcbCpX-QZ8mEWE8RaNwF-vOuw0o8V128otknNdLp=XmQrjA@mail.gmail.com>
+Subject: Re: [PATCH v2 16/18] build: new crate, misc
+To: Eric Sunshine <ericsunshine@gmail.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 19, 2025 at 2:07=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Ezekiel Newren <ezekielnewren@gmail.com> writes:
->
-> > I was trying to get the rust compiler to link against libgit.a. Both
-> > Meson and Makefile produce libgit.a. No changes were to meson.build
-> > were necessary for that to work, but but with Makefile I would get
-> > errors like:
-> > relocation R_X86_64_32 against `.rodata' can not be used when making a
-> > PIE object; recompile with -fPIE
->
-> This sounds like a workaround that is somewhat platform and compiler
-> specific limitation, at least to me.  Does this need to be conditional
-> and if so on what?
+On Fri, Sep 19, 2025 at 2:50=E2=80=AFPM Eric Sunshine <ericsunshine@gmail.c=
+om> wrote:
+> Would the name `gitcore` or `git-core` be suitable?
 
-I don't know, but I have another question to add to yours. Why does
-Make need -fPIE in order for the Rust compiler to link against
-libgit.a created by Make, when Meson doesn't seem to specify PIE
-anywhere and yet the Rust compiler can work with Meson's libgit.a
-output?
+The only other name I could think of was `util`, but I think I prefer
+`gitcore`. Does anybody else have any name suggestions?
