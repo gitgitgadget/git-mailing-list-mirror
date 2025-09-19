@@ -1,49 +1,49 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380305CDF1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB4A1E32D6
 	for <git@vger.kernel.org>; Fri, 19 Sep 2025 01:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758244184; cv=none; b=tskskEzdqcGrPwJoRzP5CRiGvtkFlLAEk1vFxrp0FGltR9YfsNkczguYk05rzwUux7DHiSpA0jH+pZ6SuEohM5bFSIyt0olLQ1iZ9ibXW47T5fMINzf0xY4HaCi7v9RfD2lXPXf9Zj97/rAlJHMdNvHfrhCeqaUmneakaLYKfO0=
+	t=1758244184; cv=none; b=iPCfkWDT7gTC3QhwiYC5iiIiCVo7mClUJ7np2lX3phAqor/8D9TjoAuGeXMFVHGlpXOcIT163IJsJWLxpth4qsb5TxjHgg1ZUrfmNh/3I4U6iZpz0faICag6SpjzyZws3mhdlX0X5KXBJlpqPrdYI4KExQxoP3oXP6XIxbEYi2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1758244184; c=relaxed/simple;
-	bh=udObIcahCGy2e9diTA4J7zCdgjfsjre6FOuDjoT0Wk4=;
+	bh=8T2BoRcQ1PMZp0OrV3naLWRrJ+HXEppBMbrCvph8Wus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sBZYDnnfwrOiqnAZYeUKTlMArmtlk6OTxdQ3T1bSO1NOxXPn3Rr4V/JoN2rWYzJS0NO+cuknhm/pGmRleA+AN8SV9h6Qsnb7ah9bOorPxLJvcKjElWpl7CXmCfIdL0w9ElB1JaZdX+ZKwMNgPXkVUxE3RxWFyRDLVkb3bGRzeUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=VT1V5LqS; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=LqDBcAT2lwn23ITOZcP8WhpW41tst2AjY5RJu51NWbreJGQh005g4ZA5+IKxXjOoDOaHqKsYF9hZvX71NtTjPLT9Sbm07h3yHGcjl6MKQZGXKKGUNjG5GSuvWAxsCqq1KwHbUUSaBl1MuPT6B6K7TdSFj5k83N7jPWKGjIV7UFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=A8Duw1Sq; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="VT1V5LqS"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="A8Duw1Sq"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1758244181;
-	bh=udObIcahCGy2e9diTA4J7zCdgjfsjre6FOuDjoT0Wk4=;
+	bh=8T2BoRcQ1PMZp0OrV3naLWRrJ+HXEppBMbrCvph8Wus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=VT1V5LqS/DpWjBYuAaRgiMbXz+PnB9ATxCQ693wCEyQfOaIGrxKwFTbj365XawFGm
-	 MPLVw/yiIRlRKdH1yaoXpu9+trmiN5dJTzEmVHjPibiZxGbx/tkaTyhXzJIyG4vTJf
-	 rp2E28eWapUnpDJ761SLU8b7TjI31IeDFLGUMaHAehMfubhsK9WaZwPtZ3oEdaPNH2
-	 Erxa/J2hXJ2Oz7fgYtjqKNnWk0YYSthz5kuxhy1Cn6wtzDs27CNdLvIXEZ9SuH5gYH
-	 +n3tI+sPPLEauSH/fsOPrIE7OoZFolLMG31+eOmjiQ1qMbBjmAdMNcg14RbY+IhEKz
-	 kYoGETnhUl/g1BO6iiFEGL5eWwavNCCBwzSmESSMipE0i1BD4HinHNmxC70BOCvR0H
-	 cOPga5ibbHjwtzdDPF+aCIdMriC5zzbegEvj/o5imlfOHbpMPlSc808ayD4j+qlMyV
-	 RmSh22bAIL0lTHtZpxozXbl3j39Llon5KixiQKYEwB8aWpBaRjH
+	b=A8Duw1SqZpJoqsGdpSVANlRXaeB7IX6pKR5dsJUGgJ8lz1JieHaY8pQVWujPz3Vet
+	 fuyT655AK09cGM+lG2vE7Lql5PpzObbcbCdt5Y1kurLMojaOxyWWZpVX/Ksk/yFM3S
+	 8yZ7b0XlVSAOP3s29VEpe2tVl9ABS7yJmuZ7DrVik9mK5Y+bKCspF09tZrBAJmOAz6
+	 FPhWRuV/RbdzvDbK2rCbh2sYw/QUeLnjJ65lm7Bl0xWVELCVD2CVCagF2iHOIx7Yh/
+	 Md4895kfn5di/rh8l99u1/GzUKQHjeH9HtesgpNDcLh6A+ayBt69DIrl88Uw2cBgCv
+	 q//CW33HqAK+jHm9ZBxj76p8cP128bepDn6eNDRqctLX0W5yYUn0ct4Iw9tdO2mX2s
+	 t25wAcMGaqg3otAqzEVIvNXxy6XCCHBaRzRFl0s+C0dA6QS3leJPhrysRR8px2it21
+	 NgHpQhOjwg5vdSbPLwOkXLeNoCNK6mVHXGPD810wuftHf7cGp/7
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ada0:faf8:3cb8:a81f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2147520115;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 29B8E20144;
 	Fri, 19 Sep 2025 01:09:41 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 1/9] docs: update pack index v3 format
-Date: Fri, 19 Sep 2025 01:09:03 +0000
-Message-ID: <20250919010911.649831-2-sandals@crustytoothpaste.net>
+Subject: [PATCH 2/9] docs: update offset order for pack index v3
+Date: Fri, 19 Sep 2025 01:09:04 +0000
+Message-ID: <20250919010911.649831-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
 In-Reply-To: <20250919010911.649831-1-sandals@crustytoothpaste.net>
 References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
@@ -55,65 +55,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Our current pack index v3 format uses 4-byte integers to find the
-trailer of the file.  This effectively means that the file cannot be
-much larger than 2^32.  While this might at first seem to be okay, we
-expect that each object will have at least 64 bytes worth of data, which
-means that no more than about 67 million objects can be stored.
+The current design of pack index v3 has items in two different orders:
+sorted shortened object ID order and pack order.  The shortened object
+IDs and the pack index offset values are in the former order and
+everything else is in the latter.
 
-Again, this might seem fine, but unfortunately, we know of many users
-who attempt to create repos with extremely large numbers of commits to
-get a "high score," and we've already seen repositories with at least 55
-million commits.  In the interests of gracefully handling repositories
-even for these well-intentioned but ultimately misguided users, let's
-change these lengths to 8 bytes.
+This, however, poses some problems.  We have many parts of the packfile
+code that expect to find out data about an object knowing only its index
+in pack order.  With the current design, to find the pack offset after
+having looked up the index in pack order, we must then look up the full
+object ID and use that to look up the shortened object ID to find the
+pack offset, which is inconvenient, inefficient, and leads to poor cache
+usage.
 
-For the checksums at the end of the file, we're producing 32-byte
-SHA-256 checksums because that's what we already do with pack index v2
-and SHA-256.  Truncating SHA-256 doesn't pose any actual security
-problems other than those related to the reduced size, but our pack
-checksum must already be 32 bytes (since SHA-256 packs have 32-byte
-checksums) and it simplifies the code to use the existing hashfile logic
-for these cases for the index checksum as well.
-
-In addition, even though we may not need cryptographic security for the
-index checksum, we'd like to avoid arguments from auditors and such for
-organizations that may have compliance or security requirements.  Using
-the simple, boring choice of the full SHA-256 hash avoids all possible
-discussion related to hash truncation and removes impediments for these
-organizations.
+Instead, let's change the offset values to be looked up by pack order.
+This works better because once we know the pack order offset, we can
+find the full object name and its location in the pack with a simple
+index into their respective tables.  This makes many operations much
+more efficient, especially with the functions we already have, and it
+avoids the need for the revindex with pack index v3.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/technical/hash-function-transition.adoc | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/technical/hash-function-transition.adoc | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/technical/hash-function-transition.adoc b/Documentation/technical/hash-function-transition.adoc
-index f047fd80ca..f2df1d618d 100644
+index f2df1d618d..11c4f2950a 100644
 --- a/Documentation/technical/hash-function-transition.adoc
 +++ b/Documentation/technical/hash-function-transition.adoc
-@@ -227,9 +227,9 @@ network byte order):
-     ** 4-byte length in bytes of shortened object names. This is the
-       shortest possible length needed to make names in the shortened
-       object name table unambiguous.
--    ** 4-byte integer, recording where tables relating to this format
-+    ** 8-byte integer, recording where tables relating to this format
-       are stored in this index file, as an offset from the beginning.
--  * 4-byte offset to the trailer from the beginning of this file.
-+  * 8-byte offset to the trailer from the beginning of this file.
-   * Zero or more additional key/value pairs (4-byte key, 4-byte
-     value). Only one key is supported: 'PSRC'. See the "Loose objects
-     and unreachable objects" section for supported values and how this
-@@ -276,10 +276,10 @@ network byte order):
-   up to and not including the table of CRC32 values.
- - Zero or more NUL bytes.
- - The trailer consists of the following:
--  * A copy of the 20-byte SHA-256 checksum at the end of the
-+  * A copy of the 32-byte SHA-256 checksum at the end of the
-     corresponding packfile.
+@@ -260,12 +260,10 @@ network byte order):
+     compressed data to be copied directly from pack to pack during
+     repacking without undetected data corruption.
  
--  * 20-byte SHA-256 checksum of all of the above.
-+  * 32-byte SHA-256 checksum of all of the above.
+-  * A table of 4-byte offset values. For an object in the table of
+-    sorted shortened object names, the value at the corresponding
+-    index in this table indicates where that object can be found in
+-    the pack file. These are usually 31-bit pack file offsets, but
+-    large offsets are encoded as an index into the next table with the
+-    most significant bit set.
++  * A table of 4-byte offset values. The index of this table in pack order
++    indicates where that object can be found in the pack file. These are
++    usually 31-bit pack file offsets, but large offsets are encoded as
++    an index into the next table with the most significant bit set.
  
- Loose object index
- ~~~~~~~~~~~~~~~~~~
+   * A table of 8-byte offset entries (empty for pack files less than
+     2 GiB). Pack files are organized with heavily used objects toward
