@@ -1,84 +1,84 @@
 Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FFC29CB4D
-	for <git@vger.kernel.org>; Fri, 19 Sep 2025 23:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425A5523A
+	for <git@vger.kernel.org>; Fri, 19 Sep 2025 23:31:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758324296; cv=none; b=F8LUyZMLdIiyckZX8o8c794LxlYsrQ0GNZ+QsVoDRbuVb+6XhavlsnSEcDl3NbEryb1IousxlqVioqtSAwlkWW5+n0VgzSuqg/QFVqCcjbiBp+6fPyvMtO0/ztQ0Nd4ANN/eYckp6KW09IGuao0cOOel4ZsgjBpfQHHUoMuCrmU=
+	t=1758324673; cv=none; b=Xi3zKu41JQkpmyGJdTtoOw/1ep0Nh+A9KxkVEGcm9j6gYrpEdvkcuQqtSQ26ULnhmWZufGbCBoFz3qSpd4mh8wDltlNPWPWsT8ILt4Wj/ORHuvMhQSj+imId1kNH+JWy9p60aTRZS8AFKcoXQJQ2enCTL7FX1i3ioMP7Q7wBtI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758324296; c=relaxed/simple;
-	bh=rWISnYdzcwXkY0IYi2x3pdLdkv1KI5nkVcmZGgKnWg4=;
+	s=arc-20240116; t=1758324673; c=relaxed/simple;
+	bh=ePcB489usJ5TACEIJE41EJCKOAIc/jp+k++pvE5L5WM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ochFu4pKbIhF/tN7mWQ3hswA1cWaA94LnPxz/FPdx0jAp7cbRnWF95ojSReW/Ja+Uen1H8S1fSo9aUebUjU/VLxcRKhz8aEo71PUiGBpefXP29CEWEUh8dczhWvEHSBWoJR9Jk/7JssNjiceUyxwKA+7ayj3l1gcEdj6XE8sruE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fy3XIZO2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DfIgCHH5; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=KxGVIneVtLEHgfzyp+U2BzVNTmPacUjr4WQfyifNtIUeJd/hiySt27raHevHz/XaR0T3Q9ljPGDKHyTgv4hnSvNBpm0S2bmFFIEqHHovR7JnF2MmBGAkruHBTKQsTO76UOLuabRVR1/5YEe05AXRzfxhM8NaGn/jMQy3ILUuWeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nEL/PFNp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fxvZhI0X; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fy3XIZO2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DfIgCHH5"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 995EB1D0007D;
-	Fri, 19 Sep 2025 19:24:52 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 19 Sep 2025 19:24:52 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nEL/PFNp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fxvZhI0X"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 378F11D0002D;
+	Fri, 19 Sep 2025 19:31:10 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Fri, 19 Sep 2025 19:31:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758324292; x=1758410692; bh=SfqybHjVPE
-	UqW9fulCRMD4fCidtf8cjZskZ/H6YtK20=; b=fy3XIZO2nvxIIzNTHiNNq5wfWz
-	UNUm2fPZZd0hhdxR3KcqkSyv9LGn7ktB2DYV1P7SSrIl1D3ObQBh6AGc57cc7+6p
-	U8awxQQLWWVA89E6fLz3T2aQuZmkuGJlKDrUIp3g7uJ3hNDg8jrWAQapokl+Hojp
-	u5ULf3r/JyvYjTD86fHFJGN/nnBiSuqLDf4IiTVrOS9jsWuOLnmcd6Mmr+8finvc
-	RF80u3NZ+tZBZfZ5nH606o/HIit8ax1kOGVk77XjHkw4E2G7fHE7QS6Qfncix4l2
-	XEImsGRjjOlvR5MEOq4I9it+4MtIuoDlKQXv68EBaq+loaxzpnEEGLTHXveA==
+	:subject:to:to; s=fm3; t=1758324670; x=1758411070; bh=HeQagM7iwA
+	DHiTf9iQEWkr7QSpykJ62MQINmm5V3oEQ=; b=nEL/PFNp+uPBoXx0kRfAFWuP+5
+	SBYpsvHLafqH0XE3hmkD8l2uGH5LU/a14G4+JlkirsKGU0dKLRStqj5YqUVeIl3r
+	pezWFf9NPd+6+8VaFcWY8oiG/cOq0Kp2/ZlbFcHtOckO8FwtDbsClj7M6X0ZIYGC
+	gvvFIpzNFOycp/RPgoIb8Jgo2saGFYvEDYP9HTxe2OKnI8qnMowbB06Ord+ZSHrF
+	zg1+C7ZTCX0sHHr/dtVqymKqgmceops1ij4KBdldGvXb+0T+bGVLr8Vl1TTdasGz
+	5vhmBEz5mT/LV9hG7N1bhzLXo/qf/O6Jpe1jlR1R+iNvZLWHVDb/4cVBsmwA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758324292; x=1758410692; bh=SfqybHjVPEUqW9fulCRMD4fCidtf8cjZskZ
-	/H6YtK20=; b=DfIgCHH5HyChPnHoapo44DLNz1Na4QaH0Zm6wJJIz5k0PQqrA79
-	kgeX6UApiClsUrcdugg2AHTiW0SeA2X7v5N2JZiuo6bpvA74FCPyQcUVs46+nL3a
-	T0HtEW+cDcj+aK3iH+JlPDmUWclCb4HM10wLkFYZeKEZ9f8/5z+MWi4LDHXuUWee
-	6+L0NmE/ByIl05jIYezb+n59jY3GNbwZeM79EqVIwiVgcc/BmQRvwVFGt8Jjz91J
-	kftONMoRNGPnhRqOowi41XVV/o7xUf6UVl2OFIH7nME4+vwPoqrRRqviwBw+5O2a
-	qDjznhPzX0+qcjNgPIBcrmRyomCVrZp97dw==
-X-ME-Sender: <xms:RObNaHkVzpso0rP_-Em1hopcIPGdnxT3OIdTSqytwllU3LL1ORSBNw>
-    <xme:RObNaGVtqNo00CyEOJok29-HCXT4R0L8_xZ7CxSDFvHc5Gp5Khu8bc0vWXP2NJjjF
-    6fo_EHc1Ar7MLSqLg>
-X-ME-Received: <xmr:RObNaEF8vGApRF1HvT--p7JIqfc-IYGScqxIuBfTPYPxq2UvOz9oN-78G_uHfVQhgf_KVRGv7q-EtHC5UpCNOpxA-N09A9AzZTyF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehtdehvdcutefuodetggdotefrod
+	1758324670; x=1758411070; bh=HeQagM7iwADHiTf9iQEWkr7QSpykJ62MQIN
+	mm5V3oEQ=; b=fxvZhI0XMEhQm8nGRknD2i3HFyb2aKrI52wsXJyGgDQoQNREqwI
+	MNxSwGrHvo1o9OrgwSBq6zxDeem3RDWg9MJYDEIJV4IfMZ549Aq1c/zHitY4L0fr
+	ssfx4ezfpk7ahqAlpGiNgHVKyGHCyyoh42mpKV1D9AlVgUqPapqwgkgOTiEiYVaT
+	4gz4ds1K0RKXicNDBUUkMr4AZvpBesXa7b7C3Rmyq3Bko2Uzfv3JvApLPE7Jj+7W
+	/4PlgtqTqJ9Fgs6nhFHB6oSvZ0+7M/+Nl1B2i/xdPkyCkM6Fzn+SfUtR253HTcN/
+	XcjktvQmVZX1IbwfrvZ0OJvd1t14tCRlJ4w==
+X-ME-Sender: <xms:vefNaHSb1ymPiJvb1KFBN_JDv8C20F0UMcoftG5_VxIp3-umTvebfQ>
+    <xme:vefNaET7eRB19yHb6h7lJ5BBl_U9dQDLXI5MOGhbGuQlWIS8ZnUc85qEoMg2cnyld
+    agAK3mziJpmRZxbAQ>
+X-ME-Received: <xmr:vefNaDQ-ALxS1k3U532xhvmTawnswjH8f8jfPOjbmUdEAr9r4uqMhBsvx_X4Ee9u59jL7mTCgEaOYVQpZMYOr5Fgv0fCtMYJ0dpE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehtdehfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
     htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
     thhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
     htvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
     tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehsthholhgvvgesghhmrghilh
     drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:RObNaKcK5aYoIha3RrqxTFczcfbdhU4jCL7CUqt3IMfMRgSVjrSn7Q>
-    <xmx:RObNaNLsB3--3XFvPZbkm4eDfTpNOp_Hgfph3VFdxuHiVg_TZivp5w>
-    <xmx:RObNaHHJ9fie1w9S9zkjGUNNGyqCxXnSYeYUMPlX7ejTCWy8mg2kLA>
-    <xmx:RObNaICMP32zJb99I5rghr7sQW-k-OBUvPdsTztQnkfa1fQV-a1oKA>
-    <xmx:RObNaBrsO64DDTWyJ9py4aIO_ZFBXrYwFoNVvYRb8zNYgE94Aowo8wUK>
+X-ME-Proxy: <xmx:vefNaB7xAun4r7-5lRSPAlMFkCsxlpIXgT8n7D6yKMsMtOCC59mgUA>
+    <xmx:vefNaH33hSqNwndTJwDz9gy1RM8uUGd3aA95V9q6mi1NNKlRyfOmlw>
+    <xmx:vefNaED22VoYLGWxHELnM9chs9uNqxIveMc8CiKHSXAKpJud9vHL1g>
+    <xmx:vefNaKOafPz6_BEgtiyAGwAIuF4XtFDWXf-pKnyzavXIQYs3rYd8Yw>
+    <xmx:vufNaJn7GQQizr2yv98vlMhmG2Oqpzbjvr-Kkcgnm4owSQ8j9g3xmAUM>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Sep 2025 19:24:51 -0400 (EDT)
+ 19 Sep 2025 19:31:09 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc: <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,  Derrick Stolee
  <stolee@gmail.com>
-Subject: Re: [PATCH 6/9] rev-parse: allow printing compatibility hash
-In-Reply-To: <20250919010911.649831-7-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Fri, 19 Sep 2025 01:09:08 +0000")
+Subject: Re: [PATCH 7/9] fsck: consider gpgsig headers expected in tags
+In-Reply-To: <20250919010911.649831-8-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Fri, 19 Sep 2025 01:09:09 +0000")
 References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
-	<20250919010911.649831-7-sandals@crustytoothpaste.net>
-Date: Fri, 19 Sep 2025 16:24:50 -0700
-Message-ID: <xmqqikheyqil.fsf@gitster.g>
+	<20250919010911.649831-8-sandals@crustytoothpaste.net>
+Date: Fri, 19 Sep 2025 16:31:08 -0700
+Message-ID: <xmqqecs2yq83.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,48 +90,46 @@ Content-Type: text/plain
 
 "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> Right now, we have a way to print the storage hash, the input hash, and
-> the output hash, but we lack a way to print the compatibility hash.  Add
-> a new type to --show-object-format, compat, which prints this value.
->
-> If no compatibility hash exists, simply print a newline.  This is
-> important to allow users to use multiple options at once while still
-> getting unambiguous output.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
-
-Nice.
-
-At first I somehow thought 
-
-    $ git rev-parse --show-object-format=compat HEAD
-
-in a SHA-1 primary repository would give the equivalent object name
-for the commit at HEAD in SHA-256 world, but that is expecting too
-much out of a simple 50-line patch ;-).
-
+> diff --git a/fsck.c b/fsck.c
+> index 171b424dd5..341e100d24 100644
+> --- a/fsck.c
+> +++ b/fsck.c
+> @@ -1067,6 +1067,24 @@ int fsck_tag_standalone(const struct object_id *oid, const char *buffer,
+>  	else
+>  		ret = fsck_ident(&buffer, oid, OBJ_TAG, options);
 >  
->  				if (strcmp(val, "storage") &&
-> +				    strcmp(val, "compat") &&
->  				    strcmp(val, "input") &&
->  				    strcmp(val, "output"))
->  					die(_("unknown mode for --show-object-format: %s"),
->  					    arg);
-> -				puts(the_hash_algo->name);
+> +	if (buffer < buffer_end && (skip_prefix(buffer, "gpgsig ", &buffer) || skip_prefix(buffer, "gpgsig-sha256 ", &buffer))) {
+
+Could you wrap this overly long line?
+
+	if (buffer < buffer_end && 
+	    (skip_prefix(buffer, "gpgsig ", &buffer) ||
+	     skip_prefix(buffer, "gpgsig-sha256 ", &buffer))) {
+
+> +		eol = memchr(buffer, '\n', buffer_end - buffer);
+> +		if (!eol) {
+> +			ret = report(options, oid, OBJ_TAG, FSCK_MSG_BAD_GPGSIG, "invalid format - unexpected end after 'gpgsig' or 'gpgsig-sha256' line");
+> +			goto done;
+> +		}
+> +		buffer = eol + 1;
 > +
-> +				if (!strcmp(val, "compat")) {
-> +					if (the_repository->compat_hash_algo)
-> +						puts(the_repository->compat_hash_algo->name);
-> +					else
-> +						putchar('\n');
-> +				} else {
-> +					puts(the_hash_algo->name);
-> +				}
->  				continue;
->  			}
->  			if (!strcmp(arg, "--show-ref-format")) {
+> +		while (buffer < buffer_end && starts_with(buffer, " ")) {
+> +			eol = memchr(buffer, '\n', buffer_end - buffer);
+> +			if (!eol) {
+> +				ret = report(options, oid, OBJ_TAG, FSCK_MSG_BAD_HEADER_CONTINUATION, "invalid format - unexpected end in 'gpgsig' or 'gpgsig-sha256' continuation line");
+> +				goto done;
+> +			}
+> +			buffer = eol + 1;
+> +		}
+> +	}
+> +
 
-Pretty straight-forward.
-
-Thanks.
+Do we allow a tag object with both "gpgsig" and "gpgsig-sha256" or
+detect as an error?  I think the most natural way to extend this
+system in the future with a third hash function would be to still
+have the primary hash in the payload and signatures created with
+other compatibility hash functions on the header, so if we were to
+detect, the rule may be "gpgsig* in the headers ought to be unique
+and should not include the primary hash algorithm" plus "if you have
+gpgsig* in the header, the body must also have inline signature, and
+if you don't, the body must not", perhaps?
