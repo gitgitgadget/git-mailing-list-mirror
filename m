@@ -1,66 +1,67 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4F72566D2
-	for <git@vger.kernel.org>; Fri, 19 Sep 2025 14:04:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B4931355D
+	for <git@vger.kernel.org>; Fri, 19 Sep 2025 14:13:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758290663; cv=none; b=hN4ZIHbU9jkEqLMr7gM+2m+8y8zHy/GvOmYtWGBoL8Qj9+3L9XjuEPFsGepngAUzvNj2Gf4gyVUPy83vu34CC1rM6EfW13mD0TpVoOCUZUdQcljbDHDdJgKulCz6LLZ6OiLEc/mL0dDOjFDLBJmLjr/WJjVKcJqMmvG16mrpcl0=
+	t=1758291211; cv=none; b=HcHSDFCpI13CkDQjx/zuXpZO5BP8jQ4AjvVBBzJLy0hH7D7+E1F7mjDIYC8wr7TEN7eLGbW1MjqAWnvHn/Zt3mugQSNMom6x2eYvHv8Oyu7s2pCyrHRC9xG6uGbsQOyWmbCg1Kmffwn33Hhou+od+jOSqyrkitSG61TLpGRPmRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758290663; c=relaxed/simple;
-	bh=e2S6tovS+hkYjzEwjGKLAJ4hCXGfLaioAwqxo8KmcKE=;
+	s=arc-20240116; t=1758291211; c=relaxed/simple;
+	bh=WM1R8/0SwGqDRncEggPvQtdKtgU8TIdZVCusKy/hS4g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RPqhmBAqobWq7XsqalK46oP7f1a1a9MGt2RyvHtWKljniTFZcMSbuqqFUbTUruyHM9GZ+RejlBJEdqqwuRkH9rpLwH9ka2dPVEM2BkCLFKz2I8Y47cQmAoh9R/eAZeQCUI9eKBWIfyhdSXK+7JStuLgmF3F3PwkhfLjyq0Pp9mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SmzyELWW; arc=none smtp.client-ip=209.85.128.41
+	 In-Reply-To:Content-Type; b=T6HHS8AUz5CiZoKE0pcl+4jJbteAu8Yd2fRdz6zoTxb+ciN8Y64bn9RSoe42S+SEg2Dfo1DgMhv2WJe32gCP0Eyqkm8KcXxwD+Mv0r+SYltMmFy2QOIHsh2tcB16M2OLahjhyVKbh0l5RqdhGH3NCdB39M7II7QppDzkJ7USpms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HEyzZAj1; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SmzyELWW"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-46897c60e38so4648755e9.0
-        for <git@vger.kernel.org>; Fri, 19 Sep 2025 07:04:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HEyzZAj1"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3d118d8fa91so915961f8f.1
+        for <git@vger.kernel.org>; Fri, 19 Sep 2025 07:13:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758290660; x=1758895460; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758291207; x=1758896007; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=zCapCiGNCnawPdbhFhIo9aSzp0+GD8kPDIV0iuJ0VEM=;
-        b=SmzyELWW+rRopSBWXfXKYuLEYs+z4n6BLuiuNPuOfXKXmYh5xl8FAaOJOMbwmLJ+LR
-         Kgk0BBLL8dOUOKC4Uar+mp0BPy27+SG3udBMsUObkLU6yBqPolUC3bsEJOusecmt0dSQ
-         lesh+cEfn9I7sJRxAYr1n4VI5GwebX6I1CSKbBJOCFhbYfPAWzf8C+tfbxLCTNYl/fdD
-         wAnEx/CdBOaSln/T0oeR2JYgV+Ga4bMWsGi+QgF+Xu+Q3c5BeTOi5AzHSgcOnhIU0hkz
-         XL4qm7nD/Szdr2sgWD50cgx7/q1oAzAmKUO/Td+R854Cos0RyzzuhN34g02QLdkUhZ4a
-         FZkg==
+        bh=sBz37VJ1iQj2cmm2/I+K9ZG0mUmC4FsHJ2Z0mxHt+pw=;
+        b=HEyzZAj1NLo/WbuHiPzOJm5BjNzDMuu0wg/4oF+dUXBaiZG1UaGISrFdK5kmnsM7H4
+         KnFRfgRuOBrmwdn1L9zu1T+NorqTjlS632cqBhS4ewEc0qAM42I8T01T4i1WK7fVF+Ea
+         iI+ni82ACR+WWfqxTZ2DHg9lRAs3IdT/Z7zOnUxoiPcrijdbGwHBap4EiNei/2rk2ss3
+         y6jbMAUxUf6yoFPaGWNCmbotVD9cMRB128J4C7DkohPVGIhAEQqI6ZH48OwdolpJPquU
+         rjaUxRlJTyq1V9FQ2reeksppTTGhQWqYMyKjVe7BsIQB44R0o3C+X3NfCOMIFgXc296Y
+         rcZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758290660; x=1758895460;
+        d=1e100.net; s=20230601; t=1758291207; x=1758896007;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=zCapCiGNCnawPdbhFhIo9aSzp0+GD8kPDIV0iuJ0VEM=;
-        b=rAwr8QXjnBayfoFSaTPNLVjxlgQ0+BSySnHhbPj9hO+loxCse30oj9GO1V+awLhbl8
-         eNfWrIVVMwipTqxcZIiTcRYECWKAlW6LZk2r/jtx9Vxsi22qLfMTaw8EH53eTB3RXceG
-         FKnxbVDLkL8mekYT9gUUtA9LSkWdpQHMbrjl1PC2UhnZvnKUe+UnJZQDwMxJs9y7eg9a
-         yOzDi3K/i53Cksu8Cxbfo3GeZup7xdFvujWcVonlIgU/uIjX7mqysAfwVQnvC7V2heUh
-         P7AXuDzLUGSrfGVA0fo5vdFas35EzBci8Trj3xILA2GvreDyrUIFAjSZLPRzzSSHH9mz
-         XJHg==
-X-Gm-Message-State: AOJu0YymeW7YUZg3clVIdur7R3NHYspsC2Tzx26oAH457THFnOyi+oGi
-	XaHwjeXf4DfN5qWhxbRV5y5tUo/x4r0mLQebRUK1TbJeSwKMMRUg3Iew
-X-Gm-Gg: ASbGncsQCv6fP9WefjehYrxbAIhR1td5geqq4HBcMro5D7wRFpMQuxq6Lv6WZsAZkaH
-	utGcF0jev6bkuIXmK5gDWa9fNqeBFIT+SqqRWhg8NYCpzLbvGfkYvTcsjr98/hURxNBjBaNqSv8
-	Lw1li23pjgCX1v7ycwWHwST4rBkxR665E2DFWmyeMCNDj9fu3u4xiSQ8g804b42gWQjtRgXHnV4
-	YnGuY1UcmGYV+75ZAh9XvD9skYYrDnFTnQTlIdJ5QEydd2tgaArxZbb26twr1jVxZ+RobnXvksV
-	hXTKwUaJ/joiU1UickCYeQdxNFVrS7f0aJCngpU+hFTVjyfguagJ3+hPa1AWHJtxuucX9LVD3Zs
-	w1DzPDGb9hcRDuF3UjJ/VfxE8nEahDsNQ3jOLIvCAMBybdN/6sAqB0msBa8Zq0GVxFAsgHZnqrw
-	A=
-X-Google-Smtp-Source: AGHT+IFA3gyWqfXa8clpD/IIz6wRFgDVrDA2UtOga4p6XgviwbuNVUEAg0K05tP4vBBilCzl64y7LQ==
-X-Received: by 2002:a05:600c:1912:b0:45f:28ed:6e28 with SMTP id 5b1f17b1804b1-467ee305892mr28196355e9.2.1758290659741;
-        Fri, 19 Sep 2025 07:04:19 -0700 (PDT)
+        bh=sBz37VJ1iQj2cmm2/I+K9ZG0mUmC4FsHJ2Z0mxHt+pw=;
+        b=HjuiTf3hSRW4nQ6Jwk6CxDNlC2kCwwGYL87JylelA3L5I5DgKlckVoLrS5N2SppnIn
+         FjwlBnVZeqnSXmiitncGFzqbrz2b8JHw2oP9PsblY0BiVE1ZexAPtuPfWg8P/x+R7snx
+         1wvqKep3pQZbZuNiXmgHoUJdzj/l0T6ErBW9nJtilSi8iYgUh3h2ZxaJI2TX3o0FbPXr
+         FV9dhM2MGs6BfXHgMnbqCj1Ls5GpiVQGSh6JhzC5EiTQiuC8guGBJL5CtXFiOlhzAo2x
+         2Xwxoge274eVeh2irnjYnYKfK0D4nGXoHy0ASxCKp6fKMdtQ+CppsOuZaq9z6+aNPX3n
+         9haA==
+X-Forwarded-Encrypted: i=1; AJvYcCUTf28MK98/ewQf4d13DTnhyi4crt1ccJhBbH/03JNza9cXnQ2tGH8nDsUDlhFuTorZUUU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwldoRal6j1MYU7nK5C6oypYYbNo6MvV3AVSqfbCtH3VlFGfH/8
+	V41VqKmzu16x3kewZHS9rY4vUGicDTr/1Nqe8lhODTP/MzwEaQQ4ldnZ
+X-Gm-Gg: ASbGncvJRJ4pLlzK9LgrNC2wV/ED0kipIDSIuK7wIdS5Ov52hmVQcdkns/puAQoUpg9
+	Rqk49QOxNKWmjOwes2BaQIiWcmcouJOaYZPOEkM2m9hhH7oJRqwNxaRMpxoJ5fI/LmY5MQf+SoV
+	IKP/BwiTT+9X9E2UD1xBlidm17c9LBLcK4OeFSKqPuXYU5KvT/aR5Vgf8nD8q4zFE8LKOP9u95D
+	HFDXgDYapver+Wh/x8x5HcwKX30aTSAJi1yDQV/01h9bmySs16wDmok5kpF9BvpG0hR8wX7OWuC
+	xQ3T6jLWPjUVF3S3ZQxbzDRgVevuBspF5dl63ePgnPtY+oiFHl48Dx8J4PYpDOoIsAYLfrHspLt
+	hQPZrKLH0UlGT37oGvoK3dMbtCvMzLa52MMJMKLRnpdqaKGQOZriMRvnyCQdXOgIcAQAfcJEfsD
+	WxT6fa3qBpPg==
+X-Google-Smtp-Source: AGHT+IGKDOG/htkg88QurgEqahiheGSgbLgkX72OZRCdDB7aWwdm+ljZ0o8LrdaoJpmZBShwLpIL0w==
+X-Received: by 2002:a05:6000:2501:b0:3ed:8e48:640f with SMTP id ffacd0b85a97d-3edd43b5ffbmr6074067f8f.8.1758291207306;
+        Fri, 19 Sep 2025 07:13:27 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3ee07408258sm8150410f8f.19.2025.09.19.07.04.18
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-464f0aac3fdsm84247105e9.1.2025.09.19.07.13.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Sep 2025 07:04:19 -0700 (PDT)
-Message-ID: <adad093d-5129-472c-b054-fb569de9f893@gmail.com>
-Date: Fri, 19 Sep 2025 15:04:15 +0100
+        Fri, 19 Sep 2025 07:13:26 -0700 (PDT)
+Message-ID: <19aebe91-a266-430e-a9ac-881cd782f3f4@gmail.com>
+Date: Fri, 19 Sep 2025 15:13:23 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,180 +70,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Git Stash Synchronization - Best Workflow?
-To: Brooke Kuhlmann <brooke@alchemists.io>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, "brian m . carlson" <sandals@crustytoothpaste.net>
-References: <7B1CCA36-23F1-410D-84ED-6E965989EA8B@alchemists.io>
- <5dee5f49-eeb6-49e2-8bca-6ae6a1d6be5d@gmail.com>
- <CE34C4BA-1ED4-458C-A31F-3DDB61ECCAAF@alchemists.io>
- <7a206ee3-d68b-40fd-8133-79e4c2be7174@gmail.com>
- <FEB150D4-2B5E-41CF-ADCE-93DD0B48D364@alchemists.io>
- <94d614fb-63b8-4733-b78d-b55c482fbed8@gmail.com>
- <E308F060-D39C-4C7A-9F38-2CA33BCE4AB2@alchemists.io>
+Subject: Re: [PATCH 1/3] checkout: provide hint when failing due to another
+ worktree
+To: Gabriel Scherer <gabriel.scherer@inria.fr>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20250913141327.2775228-1-gabriel.scherer@inria.fr>
+ <20250913141327.2775228-2-gabriel.scherer@inria.fr>
+ <be510685-3be1-4f71-806a-6b580bb1cf21@app.fastmail.com>
+ <d44109a1-0ff5-49f8-885b-9aae195ec492@inria.fr> <xmqqikhkhzbm.fsf@gitster.g>
+ <0dfe3e31-5486-446e-8af5-20669c06ea64@inria.fr>
+ <a27a8191-55d7-4b60-ad90-59ab946340bd@inria.fr>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <E308F060-D39C-4C7A-9F38-2CA33BCE4AB2@alchemists.io>
+In-Reply-To: <a27a8191-55d7-4b60-ad90-59ab946340bd@inria.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Brooke
+Hi Gabriel
 
-On 11/09/2025 03:22, Brooke Kuhlmann wrote:
+On 17/09/2025 16:25, Gabriel Scherer wrote:
+> Dear git developers,
 > 
->> I'm unable to reproduce this. In the script below the final push succeeds.
+> On 15/09/2025 21:52, Gabriel Scherer wrote:
+>> (This gets me to wonder if a desirable behavior could be to 'detach' 
+>> the other worktrees that had the same branch checked out, instead of 
+>> failing on checkout. Users starting to use the other worktree again 
+>> would possibly notice more quickly that something is amiss.)
 > 
-> That's because you need to export every time before you push. Like this:
+> After the new feedback from Junio, I wonder if I should explore this 
+> suggestion more actively.
 > 
-> touch one.txt
-> git stash push --include-untracked --message "One"
+> For now my goal has been to make --ignore-other-worktrees more 
+> discoverable, for people who are willing to take the risk. (I am 
+> comfortable doing this as I have used this workflow for years without 
+> much trouble with the 'workdir' script, but clearly you want to be very 
+> careful in how exactly we suggest that it is a possibility.)
 > 
-> git stash export --to-ref "refs/stashes/$USER"
-> git push --no-verify --force-with-lease --force-if-includes origin "refs/stashes/$USER"
-> 
-> git stash pop
-> git stash push --include-untracked --message "One II"
-> 
-> git stash export --to-ref "refs/stashes/$USER"
-> git push --no-verify --force-with-lease --force-if-includes origin "refs/stashes/$USER"
-> 
-> The above will yield the following error:
-> 
->   ! [rejected]                  refs/stashes/bkuhlmann -> refs/stashes/bkuhlmann (remote ref updated since checkout)
-> error: failed to push some refs to 'https://github.com/bkuhlmann/test'
-> hint: Updates were rejected because the tip of the remote-tracking branch has
-> hint: been updated since the last checkout. If you want to integrate the
-> hint: remote changes, use 'git pull' before pushing again.
-> hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-> 
-> However, if you perform the above with only the single "git stash export" then you won't get the error as you discovered in your workflow.
+> Would you prefer a different option to detach the branch at the other 
+> worktrees? This could be
+>    git checkout --detach-other-worktrees <branch>
+> for example.
 
-I'm confused by this, here is the relevant part of my script again
+In general we try to avoid having commands run in one worktree affect a 
+checkout in another worktree so I'm not sure we'd really want to go that 
+route.
 
- >>     git stash push
- >>     git stash export --to-ref refs/stashes/test
+> I did not originally consider this as it requires more expertise in git 
+> internal data structures, but it may be easier than finding a way to 
+> advertise --ignore-other-worktrees that you are really comfortable with.
 
-This is the first export before pushing
-
- >>     git push origin refs/stashes/test
- >>     git stash pop
- >>     git stash push -m message
- >>     git stash export --to-ref refs/stashes/test
-
-This is the second export before pushing
-
- >>     git push --force-with-lease --force-if-includes  origin 
-refs/stashes/test
-
-I'm afraid I'm struggling to see what the difference is.
+I think it comes down to the same problem that we're not that 
+comfortable with the idea of having the same branch checked out in 
+multiple worktrees. I'd have though having some advice that suggests 
+using --detach should be relatively uncontroversial. Suggesting 
+"--ignore-other-worktrees" would certainly require some kind of warning. 
+If it is hard to come up with a concise hint maybe we could have an 
+expanded discussion in the documentation and have the hint refer to that?
 
 Thanks
 
 Phillip
-
-> The only way I've been able to make this work is to do this:
-> 
-> touch one.txt
-> git stash push --include-untracked --message "One"
-> 
-> git stash export --to-ref "refs/stashes/$USER"
-> git push --no-verify --force origin "refs/stashes/$USER"
-> 
-> git stash pop
-> git stash push --include-untracked --message "One II"
-> 
-> git stash export --to-ref "refs/stashes/$USER"
-> git push --no-verify --force origin "refs/stashes/$USER"
-> 
-> Notice that I always export before the push AND that I'm using `--force` each time. That's the only way to ensure your local stash is in sync with the remote stash.
-> 
-> You can always verify that the remote stash is being updated by always clearing your local stash and then immediately importing to check if your stash message was updated properly. Example:
-> 
-> git stash clear
-> git stash import "refs/stashes/$USER"
-> git stash list
-> 
-> Once you perform the import, and immediately list what's in your stash, you should see something similar to the following:
-> 
-> stash@{0} 6ba4eaea3751 On main: One II
-> 
-> When your remote stash isn't updated, you'll see this:
-> 
-> stash@{0} 6ba4eaea3751 On main: One
-> 
-> (Notice the difference between the message of "One" versus "One II")
-> 
->> You can force the creation of a reflog
-> 
-> I tried that too which makes the error go away but doesn't update the remote stash at all. Example:
-> 
-> touch one.txt
-> git stash push --include-untracked --message "One"
-> 
-> git stash export --to-ref "refs/stashes/$USER"
-> git push --no-verify --force-with-lease --force-if-includes origin "refs/stashes/$USER"
-> 
-> git stash pop
-> git stash push --include-untracked --message "One II"
-> 
-> oid=$(git rev-parse --verify refs/stashes/$USER) &&
->    git update-ref -d refs/stashes/$USER &&
->    git update-ref --create-reflog -m 'export stashes' refs/stashes/$USER $oid
-> 
-> git push --no-verify --force-with-lease --force-if-includes origin "refs/stashes/$USER"
-> 
-> The above works but if I run `git stash clear && git stash import "refs/stashes/$USER"`, I find that my local stash doesn't have the message change (still using "One" instead of "One II" which means the remote stash never got updated).
-> 
-> Sadly, I can only seem to make this work when using a force push but would definitely be nice to not have to use a force push.
-> 
->>
->>     set -ex
->>     dir="$(mktemp -d)"
->>     cd "$dir"
->>     git init --bare origin
->>     git init repo
->>     cd repo
->>     git remote add origin "file://${PWD%/*}/origin"
->>     git config core.logAllRefUpdates always
->>     git config remote.origin.fetch refs/stashes/*:refs/remote/origin/stashes/*
->>     echo a >a
->>     git add a
->>     git commit -m a
->>     echo b >a
->>     git stash push
->>     echo c >a
->>     git stash push
->>     git stash export --to-ref refs/stashes/test
->>     git push origin refs/stashes/test
->>     git stash pop
->>     git stash push -m message
->>     git stash export --to-ref refs/stashes/test
->>     git push --force-with-lease --force-if-includes  origin refs/stashes/test
->>
->>>> You need to pass the name of the ref whose reflog you want to look at,
->>>> otherwise it defaults to showing the reflog for HEAD. You should be
->>>> able to see the reflog for you exported stashes.>
->>> I gave this a try and every time I use `git reflog refs/stashes/$USER`,
->>> I always get a blank response. No errors and no output.
->> Ah, I wonder if core.logAllRefUpdates only affects the creation of new
->> refs. You can force the creation of a reflog by running
->>
->> 	oid=$(git rev-parse --verify refs/stashes/$USER) &&
->> 	git update-ref -d refs/stashes/$USER &&
->> 	git update-ref --create-reflog -m 'export stashes' refs/stashes/$USER $oid
->>
->> the same applies to refs/remote/stashes/origin/$USER
->>
->>>> Let's try and find why the remote update say's it rejected when it isn't
->>>> and then we can think about the best way to document pushing and
->>>> pulling exported stashes.
->> I haven't thought much about the pulling side of this. "git stash import"
->> appends to the existing stashes so I'm not sure how we'd cope with forced
->> updates - have got got any experience of handling this from your
->> experiments?
->>
->> Thanks
->>
->> Phillip
-> 
-> 
-
