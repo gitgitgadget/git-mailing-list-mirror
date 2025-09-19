@@ -1,141 +1,91 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFE434BA2F
-	for <git@vger.kernel.org>; Fri, 19 Sep 2025 00:39:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC401DF24F
+	for <git@vger.kernel.org>; Fri, 19 Sep 2025 00:42:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758242359; cv=none; b=Q3EUVZWikU+FnPmCMY7nFiICZxVGgm9V/Mc1xQw329rFNdypuGAwJtw2bsXGQkyT5WwqIfkCB102JFNavIM2qUbHDoesKFlLA8zuCnG1Udhr1yf5qwTd3BnGv1tCS0xveRUdOMKHuZhdmtcrX72Qvwe1pN6cl1g1bP96f7n7RNo=
+	t=1758242532; cv=none; b=VsBFpscmATqJXjP/KZrhmTLOa4BskIQ0GNeddX1LBX/w53oBYI7JITdbg+zoDXaE0bqJHFuQOEUpvy/23YRXGY/yJbVbEsCiFSZdVQ9lRxicDD7zoloZpaCpdQLhHiZh54wKOGwNLFh7Ky9dJZoorahJShNYqjQqkD63qeoUF6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758242359; c=relaxed/simple;
-	bh=ZtD9zl4DENeCcp0z/VMxQ0Rd+BXzfSA9wkKb1amMBj8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Owfz0Xe2bBOi/znrTr8rtC3aTs177f5LIpyv/481oaGjmnG8hYRdl4zomd4bNyrJrn1oXzB/SnNuqWPjCQPq5yBqHDwvjRG3qX/NMgM36jqTfGU5XQmsjAvgR53VSqMgwrLEkoQejw7rx4JFOx9TEdGi6Xivwydb07+oESE6I0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=pcJ2rvPu; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1758242532; c=relaxed/simple;
+	bh=HhtkG3uBI8SzDJdxwI4PZTa7Pua+7mEMYncEDUYzNlU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Z+cgxCSb7WeetLplGhFpvgJzVsqH12GmkHDQoz4GnsbhVr8QWSVf2mUOEVRNcu01cWanK00XeJz5W5j8NdM1CBVHTnHdphJksHNQYNym2c8san3p6rZkJA6FyuFPRvY90rQdCkI5wUqhK3aBgZKIBinRCGV6ymgkYB9MaGd5FGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ERlSMWXd; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="pcJ2rvPu"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1758242353;
-	bh=ZtD9zl4DENeCcp0z/VMxQ0Rd+BXzfSA9wkKb1amMBj8=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=pcJ2rvPumNBsDWT6JKMB/TwzBVdvwO7LWu4OBkyceYcZ1G0Bjtu6qfUFtmNXARADP
-	 870JXXUD0v8vAdK15FqdT2ziC8+zzRIH/s9gufEswbxjBd4lhcT50I/hWgdR+Q6Z7N
-	 LaJO02rh5KYiTlb153sDeOmt4Il32xvsXexQcodOE5wDPqx+YlaIP5Qcc5qNNBvw8H
-	 xKlPzZRw1tOCGK3FTXYuot788LbmmznGCZISshVgI7saLiv2ZPRQCzil5Lera9ltFF
-	 VT4d/0maGAS6411Rj9spl7OqjL8ITcLFLDsqodxLqvpIJTMyNpdSm4ZEvSo1tbqssJ
-	 SDBR1WTLEayaDJmkNFQ0Mik8wlpUdmz6gJptYrogxfLcX7hpmMPdnBLuwT+lI7fyph
-	 RrV2xemeND0XCCk3t+Nhz90qMIskD3SifUNSsg23RDsqn9gJpK2cUvsY7FB52SbwJx
-	 NVRVAWuX2syCRAeofm2rr/d9FIhwst9gHb1MCRroTc0tQsGX8GZ
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ada0:faf8:3cb8:a81f])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A45BF20105;
-	Fri, 19 Sep 2025 00:39:13 +0000 (UTC)
-Date: Fri, 19 Sep 2025 00:39:12 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH 0/2] doc: git-push: clarify section
-Message-ID: <aMymMLkJg7PkmxL7@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Julia Evans <julia@jvns.ca>
-References: <pull.1973.git.1758144815.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ERlSMWXd"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-3515a0bca13so29298931fa.1
+        for <git@vger.kernel.org>; Thu, 18 Sep 2025 17:42:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758242528; x=1758847328; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vdLLhSg574CrKxVKAG2iUeajP656yF+ZO/PxO7o/f4E=;
+        b=ERlSMWXdWphkp0dd0GGTvca2tCAG1hQ+mtan7H3G96bRUEHqhZLaeTfL59JVXFpxRF
+         caL2jFWy7xV8wPWMeTWGQ3tNVCyKGSvSdNXP7z/JwJRaasfx0V+0pfRnc1wE1j8qVUBS
+         eQmDNF68zo177gQ+RvGoXA9Uh5VPUCBFfv0grfFfw7zq8prkki1KC0Ika52IVXbaJkhN
+         nQSqkTkYRF2OHmLfGg02Ls/xaEzL6Pean2iGUYAf9Ttu21ZmDb+L+xyqeCCPtPrwQPRK
+         E8hrvA5gTv0gDV4FOV4X8UxYdPzwTjNrNrb1w7MT4z+8tq5zN576BGQZSnbBQaYtVa3y
+         Dv/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758242528; x=1758847328;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vdLLhSg574CrKxVKAG2iUeajP656yF+ZO/PxO7o/f4E=;
+        b=ctBDFmg0JyAf85dONCR8l9KRpILn2FLcJCF9UPofa81JAvxbVEK909RMOUGSZCVvIc
+         3tW9kmFYz2xnlkuid5Hus4q3DBTY6ZbSZvXR0KUtLlB1z0PhaJHIFdcUOlYwmTh/W3Uu
+         A3MSILEELqIzvigI+Fvo5InMxOBN6J5eKberOMOD6Kb0eYfeekzuNe3Ec1N02t2/UHI8
+         p71pCSZ9A8bjW2iSccxm7kBcH4CE9LYcMNcDdQRj6mJBK7nGdHDcQIxRZG+GZr0EzNB7
+         zXbK+TDCXr47AhiRu422/QmOUPARbmfL0Iq8l6KKC8EfstZR+YNXZ1nNIj7cfuA6OD9O
+         O4IQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUgNjzcfsPjheyWt7j06oClKUKHGpxiSzUp7sFcC0V/LMkw8cwdqstlVgA+6yYOOj3h7to=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzQf1YPoqx/6+fcHhxAdXpeds8NdYV3FuncOnarTeojyrFYt2wS
+	2bC0Z9sbkhzVurdRPN3s3CrY2zJExlPpDw6PaEh6ztfRwFVO7UC6ZnAJ2VAe4NG2jhrc5cfZnMz
+	udluDxn14DUoq/Q5PRY8jxX4vk7RmVe4=
+X-Gm-Gg: ASbGncsyvOnEB/GZleNzokoIX0m6ix3HH7yPo2AiFdr+rO+pKSaool8NPp6j9FZieUd
+	CI4uXKl1/rPL+F3LSHI+Rv3u0bbaL+cvM4kQBK++R7NlD13hgs/HnVx9YWgKMKp4rKHEFrg+IF/
+	uE1zENK9/WjOMhUi815zZd1YRWGLABAszF75mXlVxB+ghFNWrmou0RvS1qDkrCKnAeo40BtbzNL
+	B16BVzm8zqGKK70YIIUGjqoHjw=
+X-Google-Smtp-Source: AGHT+IGZ/XJgKj11Cll194+3GJSyMh2p/B0wmVkf0Ixb0OK1dZt2wg55jeANj75l47s7AcXe1UXIgBxHWMm2yANYsVY=
+X-Received: by 2002:a05:651c:254c:20b0:337:e5fc:d27 with SMTP id
+ 38308e7fff4ca-3640783dae7mr4480721fa.4.1758242527586; Thu, 18 Sep 2025
+ 17:42:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="MC7LUd1CJch5QtNU"
-Content-Disposition: inline
-In-Reply-To: <pull.1973.git.1758144815.gitgitgadget@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---MC7LUd1CJch5QtNU
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <pull.2048.git.git.1757274320.gitgitgadget@gmail.com>
+ <pull.2048.v2.git.git.1758239789.gitgitgadget@gmail.com> <xmqqa52r702e.fsf@gitster.g>
+In-Reply-To: <xmqqa52r702e.fsf@gitster.g>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Thu, 18 Sep 2025 18:41:56 -0600
+X-Gm-Features: AS18NWA1imd_gZKGOS6jWpaKJUDWbqb3K2S1lSyH4CjCFcAvYCSe7T1Z4MrzH9U
+Message-ID: <CAH=ZcbBfzcd33SD2f2GLmwSN2MHic7zG0cVBqO_9kfPsBRR=BA@mail.gmail.com>
+Subject: Re: [PATCH v2 00/10] Use rust types in xdiff.
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Elijah Newren <newren@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Ben Knoble <ben.knoble@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2025-09-17 at 21:33:33, Julia Evans via GitGitGadget wrote:
-> This is a continuation of the changes to git push, from
-> https://lore.kernel.org/git/pull.1964.git.1756240823.gitgitgadget@gmail.c=
-om/
-> . These changes to the refspec section got kind of big so I'm moving them
-> into a separate topic.
->=20
-> Since the last review, the main change is to move the rules for pushing o=
-ut
-> of the section and into their own section ("PUSH RULES") so that it can be
-> easily referenced from other places in the man page.
->=20
-> I don't love the nested list in PUSH RULES but the sentence starting with
-> "If the source is a tag or commit object..." is really a tough one to rea=
-d,
-> it's not going to be relevant to the vast majority of people, and I think
-> keeping it contained inside a bullet point will make it much easier to sk=
-ip
-> over to get to later information which is more likely to be relevant to
-> folks.
->=20
-> Other changes:
->=20
->  * removed "+:<dst> is optional.", from Junio's review
->  * kept "+ is optional and does the same thing as --force", since now the
->    push rules are in their own section.
->  * fixed the fully expanded refspec form (main:refs/heads/main =3D>
->    refs/heads/main:refs/heads/main)
->  * switched from a numbered list to an unordered list, from Junio's revie=
-w.
->    I think the numbered list looks a lot nicer in the terminal output, but
->    it's true that there isn't any order. I briefly attempted to understand
->    how AsciiDoc's nroff (?) generation works to see if it's possible to m=
-ake
->    unordered lists indent with fewer spaces (2 instead of 4) but I was le=
-ft
->    feeling that nroff/troff/etc are not for mere mortals like me to
->    understand.
+On Thu, Sep 18, 2025 at 6:33=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> This is probably stale.  If the patch numbering is to be trusted, we
+> are missing [09/10] (at least we haven't seen it in the list archive
+> 30 minutes after the other messages in the series landed there), so
+> the "clean up xdiff" stage consists of 10 patches, and this cover
+> letter does not need to talk about "Patches 10-17" (yet).
+>
+> Will see if lore.kernel.org catches up in the morning and process
+> them.  Thanks for working on the topic.
 
-I have used groff for many years to write letters and address envelopes
-(as well as write a few manual pages and design some awards) and I still
-don't understand much of it, so I understand how you feel.
-
-In this case we have two possible implementations, AsciiDoc and
-Asciidoctor, but both use the man macros.  I think if there were some
-way to control the value generated as the argument to the `.RS` macro,
-then that would be what you want, but I have no idea how to adjust that
-in either one.  Personally, I would just leave it as it is, since I
-believe 4 is the traditional value used with the man macros, even if
-typographically or aesthetically it might be suboptimal.
-
-Having said all that, I think this documentation is much improved and
-easier to understand, so thank you for that.  I don't have specific
-comments on the patches (although I see that Junio has suggested some
-clarifying comments), but I do deeply appreciate your efforts to improve
-the documentation (and, outside of the list, to clarify difficult
-technical topics in general).
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---MC7LUd1CJch5QtNU
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaMymMAAKCRB8DEliiIei
-gcsiAP9r3Nnbbu8OnaUW3zwq+OqQMKwNxcKxXaYRuDPJCBd5fQEA1kuAeFQQk9ZB
-fCyEtN+UXbO7owfYCeiz1CHViEmZQwA=
-=zvTr
------END PGP SIGNATURE-----
-
---MC7LUd1CJch5QtNU--
+You're welcome. There are exactly 10 patches. Once this gets merged
+into 'next' I can post part 2 under a different patch series. Part 2
+uses [ui]int(8|16|32|64)_t and s?size_t everywhere.
