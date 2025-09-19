@@ -1,146 +1,125 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6992AD24
-	for <git@vger.kernel.org>; Fri, 19 Sep 2025 23:04:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC72A2AD24
+	for <git@vger.kernel.org>; Fri, 19 Sep 2025 23:07:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758323070; cv=none; b=EeAapgi61+tIlKtsR8+5BqjNs771qKRgzEZL12P8GzEw+Sh+cxOuRVEh/SuuDRQMwyZs/E68N1P0ujjTPOhR6AtYon7+r9Eo2+wPxjhVzchN+zeAIGnA46mzLEfASiH0PLMKRU2cZWaG8kkMn1fqa8hAHmPz2HvQWw1Wma4ms+Q=
+	t=1758323245; cv=none; b=qLKa1qZnihZ5fEQhu7v+/fOSqEkvQieKxDRXtNCNOKFqVMAaSsrk0h8gmS5S1ujik1sZeOycSgsvkAk9bUmqUr/YoaoDPPfOsILbdVg64VPjlda4V0gN3B+mEadzZXkboNDVj2PnX/6t0OsRLvBpGv2AI7qT/1RSBSXIp+txuh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758323070; c=relaxed/simple;
-	bh=hE0XggUGvYmtU7pdtAbD8/ir6N4NKlcpwBhOdIcI9kQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hyFmtWT1z0gsVfneyyHUA1p55u28SXR7zY4xPTrUwBl3SIuIIuSw6wT4wz5rQzXDP7VyGxohhR12QZGu3QDEVhuJeI3Z3SrJWZ+BNKz1/2SsNs9tV21R8lZDwJb2EgA0cQa8spknnhuDQnkemKWPfKNeb1kIZWPk3fLOueRSqa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uLL+VBDw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=By5wqvJU; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758323245; c=relaxed/simple;
+	bh=Yp6Y1bEwkeAToEzbamdfLOeENLZYCwxSL5NyM24oS+A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Hw9tOwGXcYZ2Xd1n53d2Jkt6P6lWk7S9ceFzARLZscAFMCsk5QXEsHWN0g9qumElL3UtDssdLnoZEHWqDShEVGmY8G+3MpVLkMRW+uglfwLIPJ52LhgydU4SFR3GUVWpDT7WIqJVE09Q9tQE71SNtJ3V1DkhMf+7fbtm/Ieneuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=cPTvZ+4f; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uLL+VBDw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="By5wqvJU"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 24D0D1D00128;
-	Fri, 19 Sep 2025 19:04:27 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Fri, 19 Sep 2025 19:04:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758323066; x=1758409466; bh=0rUd/XlDlN
-	50CMWxgomnFbsUjLYo2SK98e2t6ubCCjg=; b=uLL+VBDw/8sSab84+QSftLX3Cc
-	FFdWaPfvxFgxL0CifcnMlCmzO45BAW34meerNN2LnLzB/Z7tdHHY90r6fcXV2KNO
-	ytDYCCs8ft+RLUjT8pkTvbX2cf7hmMaoZaY1fv09WO8oFreuul0dEW5pGNhN/b20
-	Du6hxLvSvmQlmYIE3JuVipAvas2jjDomTFWyTEzEePp5SeKuOnKnxh32upbzC3mQ
-	ENzschEfYeDhj9Khs1l/UVmLqq4AB2x5amNDVEOVSME+mOV/t32z2E3wYnokN4n9
-	41pO7cruGcDcutf+FoSw3IRzJS/ZNEyHGMa9p073surNYevqkjZwxxUPZS1Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758323066; x=1758409466; bh=0rUd/XlDlN50CMWxgomnFbsUjLYo2SK98e2
-	t6ubCCjg=; b=By5wqvJUhkTln8u9KyNZygbUEhqNW6lgop3DIRejyYNQwx46iaW
-	Y0M1qWWymMzU8mrvQrjDIBfjkjBNiW4WNcpNBEzt8O69NsmKh+QP1HEqzfmEGAAg
-	sFOizdoY8iKS5eTC2bkvAFBNFOeS6JXTeSe1bmQrywI1ROyEwzGeGo6c5BP3RLF8
-	/A8XfvZDZrea/rretSYW3Zej5X6E4YnwplzTPzSVICiD9nR1aCpHkDBtKUggw9ea
-	Zvz54lgKFFTdrBAYS9JU3KSo7aUCwINaoFtiUXaoBH/miG6ZFc5mdCrQZrARQLOO
-	8AnZ6EpQHzlOvlsg9L08jcMYxN764cOnMbg==
-X-ME-Sender: <xms:euHNaGz_pDu5MDdIoY1XkWAlRVs5E6hHPXdY8KTfwRsijLYCrGSXlg>
-    <xme:euHNaNxbXmV1FsspHT3SiBPQfZavBrTrvyNWQJNI4F5B1x896ug845hLkfnNjZMlu
-    gHi5KBxYKdy7kUDlQ>
-X-ME-Received: <xmr:euHNaOzuJezUO7OTc01-98QLe7uKf6wGvRwrn5hJhNbSDLuwe18NtMJQVtB_S-3pP1UfHYPfVM_VW8dotqeD1aM7RPTv2HBnE0ip>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehtdegkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
-    htvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehsthholhgvvgesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:euHNaHZ_dL-INQTzWsdUYYdlyNArjXOLgiAkQS2pUQyCV7W4X8QUMg>
-    <xmx:euHNaPWi4gemDBB0ZwmdIJDYRnQPXCr1iJ5BbC_roFBp_OUhK5nS_Q>
-    <xmx:euHNaFjI_P9x0pgxtDqzacNshGCVxNGsHXgLw5gbGONY_tE67ss4hA>
-    <xmx:euHNaNueMRPJNhHNU7mOuqPBvUvh3_5HmkAZe_vWxqi8QL6Cmy1K0w>
-    <xmx:euHNaDFFtpPHVgk2xd2YDfqtH-39NI-kuT9X-RkqUyI_lPlVjIBgSe1m>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Sep 2025 19:04:26 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,  Derrick Stolee
- <stolee@gmail.com>
-Subject: Re: [PATCH 4/9] docs: improve ambiguous areas of pack format
- documentation
-In-Reply-To: <20250919010911.649831-5-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Fri, 19 Sep 2025 01:09:06 +0000")
-References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
-	<20250919010911.649831-5-sandals@crustytoothpaste.net>
-Date: Fri, 19 Sep 2025 16:04:24 -0700
-Message-ID: <xmqqtt0yyrgn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="cPTvZ+4f"
+Received: (qmail 134870 invoked by uid 109); 19 Sep 2025 23:07:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Yp6Y1bEwkeAToEzbamdfLOeENLZYCwxSL5NyM24oS+A=; b=cPTvZ+4fI6NQW57sI5THzfojX2wmxZYxTrzMr26LbaIiZWGD3wUltzOi6X8eiwbjOD+Rl3JBbfd1kW423DcKIo0PLQj5n3IRxomVq2RTrJiWJbTSXkDjCj9MfglzR9hKak3mnJ6J8eMQxxX+BI9eXjWYk0mtQ8q3s4K/dRPvXwC82YlUoFY+Onk5bF+PY2VhVDkDQS8PMPjUkc5Hsjv7/hlGkvJLccWmtAvVZm6gVWORpnEYuYyjp7cnZuhpEqxAVYK854VMO+WE8tKPboOD4MH4M7twRKzld8aF5xK4CeztGIJsxUMu7PTuBTtBEoelAw8xnuWFmIuVQ+Fv8xfMwQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 19 Sep 2025 23:07:22 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 211688 invoked by uid 111); 19 Sep 2025 23:07:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Sep 2025 19:07:21 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 19 Sep 2025 19:07:21 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Lauri Niskanen <ape@ape3000.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 6/6] revision: retain argv NULL invariant in
+ setup_revisions()
+Message-ID: <20250919230721.GA936044@coredump.intra.peff.net>
+References: <20250919223351.GA3906184@coredump.intra.peff.net>
+ <20250919225146.GF594545@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250919225146.GF594545@coredump.intra.peff.net>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Fri, Sep 19, 2025 at 06:51:46PM -0400, Jeff King wrote:
 
-> +=== Object encoding
-> +
-> +Unlike loose objects, packed objects do not have a prefix containing the type,
-> +size, and a NUL byte. These are not necessary because they can be determined by
-> +the n-byte type and length that prefixes the data and so they are omitted from
-> +the compressed and deltified data.
-> +
-> +The computation of the object ID still uses this prefix, however.
+> It is tempting to do likewise for all of the entries afterwards, too, as
+> some of them may also need to be freed (e.g., if coming from a strvec).
+> But doing so isn't entirely trivial, as we munge argc in the function
+> (e.g., when we find "--" and move all of the entries after it into the
+> prune_data list). It would be possible with some light refactoring, but
+> it's probably not worth it. Nobody should ever look at them (they are
+> beyond the revised argc and past the NULL argv entry) outside of strvec
+> cleanup, and setup_revisions_from_strvec() already handles this case.
 
-Not wrong per-se, but I've always viewd that the in-pack object
-header with n-byte type and length was an optimized representation
-that stands in for the textual type+size+NUL, just like the payload
-part also uses object representation different from that is used for
-loose objects for performance.
+I _think_ that would probably look like this on top (with obvious
+inspiration from your earlier patch), but I don't know if it is
+worthwhile or not:
 
-And when you view the in-pack object header that way, "are not
-necessary" and everything follows in the above appear to somewhat
-miss the point.  It is not just "type size<NUL>" that is recreated
-on the fly for computation of the same object name as in the loose
-object form, but the payload also is recreated on the fly to match
-what loose object would have had, e.g., a deltified representation
-would be reconstituted into non-deltified form, etc.
-
-IOW, I would have exprected the description to go more along this
-line intead.
-
-    Packed objects use the n-byte type and length in-pack object
-    header, with in-pack specific representation of the object data.
-    In order to compute the same object name as if the object were
-    loose, the object representation used in the loose object is
-    virtually recreated by translating n-byte type and length to the
-    textual type + size + NUL, concatenated with the undeltified and
-    inflated object data and hashing the result.
-
->  === Size encoding
->  
->  This document uses the following "size encoding" of non-negative
-> @@ -92,6 +105,11 @@ values are more significant.
->  This size encoding should not be confused with the "offset encoding",
->  which is also used in this document.
->  
-> +When encoding the size of an undeltified object in a pack, the size is that of
-> +the uncompressed raw object. For deltified objects, it is the size of the
-> +uncompressed delta.  The base object name or offset is not included in the size
-> +computation.
-
-This is an important point worth describing.  Very nice.
-
-If we wanted to help the curious, we can say that these are used to
-both help us know beforehand how much memory to allocate, before we
-inflate and/or to run patch-delta on the payload.
-
-Thanks.
+diff --git a/revision.c b/revision.c
+index 806a1c4c24..96188ab4ad 100644
+--- a/revision.c
++++ b/revision.c
+@@ -3003,14 +3003,17 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 		seen_dashdash = 0;
+ 		for (i = 1; i < argc; i++) {
+ 			const char *arg = argv[i];
++			int j;
+ 			if (strcmp(arg, "--"))
+ 				continue;
+-			if (opt && opt->free_removed_argv_elements)
+-				free((char *)argv[i]);
+-			argv[i] = NULL;
++			for (j = i; j < argc; j++) {
++				if (i != j)
++					strvec_push(&prune_data, argv[j]);
++				if (opt && opt->free_removed_argv_elements)
++					free((char *)argv[j]);
++				argv[j] = NULL;
++			}
+ 			argc = i;
+-			if (argv[i + 1])
+-				strvec_pushv(&prune_data, argv + i + 1);
+ 			seen_dashdash = 1;
+ 			break;
+ 		}
+@@ -3192,10 +3195,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 		revs->show_notes_given = 1;
+ 	}
+ 
+-	if (argv) {
++	while (left < argc--) {
+ 		if (opt && opt->free_removed_argv_elements)
+-			free((char *)argv[left]);
+-		argv[left] = NULL;
++			free((char *)argv[argc]);
++		argv[argc] = NULL;
+ 	}
+ 
+ 	return left;
+@@ -3205,19 +3208,14 @@ void setup_revisions_from_strvec(struct strvec *argv, struct rev_info *revs,
+ 				 struct setup_revision_opt *opt)
+ {
+ 	struct setup_revision_opt fallback_opt;
+-	int ret;
+ 
+ 	if (!opt) {
+ 		memset(&fallback_opt, 0, sizeof(fallback_opt));
+ 		opt = &fallback_opt;
+ 	}
+ 	opt->free_removed_argv_elements = 1;
+ 
+-	ret = setup_revisions(argv->nr, argv->v, revs, opt);
+-
+-	for (size_t i = ret; i < argv->nr; i++)
+-		free((char *)argv->v[i]);
+-	argv->nr = ret;
++	argv->nr = setup_revisions(argv->nr, argv->v, revs, opt);
+ }
+ 
+ static void release_revisions_cmdline(struct rev_cmdline_info *cmdline)
