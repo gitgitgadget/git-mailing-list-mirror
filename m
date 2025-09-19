@@ -1,132 +1,111 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96ED63164D0
-	for <git@vger.kernel.org>; Fri, 19 Sep 2025 17:13:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3E02253B0
+	for <git@vger.kernel.org>; Fri, 19 Sep 2025 17:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758302030; cv=none; b=cc0F7VK8YOYGNsrCv7bs3YWNNOutlEq52YqwoJqbEzTApv1XqZHFsMYB5ww99AOGVJbOnosJGs0QLU5iEHJkBS8ouoc3jV994QZwdiT8CbXbbBGCzxCclfZpqotUZ1ulfUP4FxaetniCQEbnDRUShb+0NZzfOiPXcemS4mzaSTI=
+	t=1758302412; cv=none; b=WPC1eAnr8wF4/qC+vv4CtEW23TGfN+q49KPzRrXDBABrSioWYA/SKwZqyMvkcbYnJZCrZeLEesyoTGUQr4tIZby4kRZQpkO/1g4wtCuF3Aq8Vv5/cOCTMPOqhltlczIfvqdBiBXo+xATtYU6cPKobAmWgGlgEQycjuHE+gQaQ0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758302030; c=relaxed/simple;
-	bh=XWtgdZkonw0zCjLvtMf7XDZoBVbvUEgAcfJQEWvnxuM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tlKwi4Ud3aW+7EoEsOtLgUcfb3ypuRme6XLHILtzodmOs26butrQJlmA0xbSYyq85KYHXjbIvy0Orhdj6mcQaTAKeX5n1i7f5B6Osourr7L6wsdryiO8z0Ra/bDkPSlp2ZUl6ZI0j28Px9RhPdJIMahr68G0oF4j/UbD81wjITk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Fh0e4cTD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GJd1CTFN; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758302412; c=relaxed/simple;
+	bh=2xDXllPfr4tRHvQnU8TK8F9kfVMgze2Xf27YsYLCh3s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HBWiedGpcD5YDNhpinA+K1ituFDVnY9JFvGRbGhRxViV8hO3S1KvavwR8+SKELaPm9KL2zSRBd6KJM9GEhADAyUhxIeNyLsPDKwQ5aYZkqWT2cWYzh0s645vk6IkE2jQK2Np+selMQQ1rUZAlIZ5NP3vqAMArZSumH0h5Etv1L8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Ez8z/S1X; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fh0e4cTD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GJd1CTFN"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9F445EC01DE;
-	Fri, 19 Sep 2025 13:13:47 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 19 Sep 2025 13:13:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758302027; x=1758388427; bh=T86Wa8qIbA
-	SY5M3B8BYFSnAoYC34GXhDZGt9ec6kW0k=; b=Fh0e4cTDK5zdSUKTBgKPsJSipS
-	lTwGT5Gs/vkilQBgx+EQ2XqeKK4e/d7Y2V2ruxF/E9K0+hHBz+YBuECZBC931Oee
-	4kp9QCl+udiSMTtOp0Sxxpw/adp+t37puaXAAq7qybFijPgM/dZr1v8CKep2SHLS
-	jix/Cv/fq+JDUv36ZWhwLghtfksTX98APlfKIaJznptYTwuPl45gBuu1sC19q5yT
-	f3xOlL+hhRClQO5I2kTJWmH7H1OW+YJ3BmX2y2TkQsJz7VF9QZIFgSO4QuawLNNP
-	CaWQXeVyUqwtiQ0invAfDy1M92niiz7uMxIIbDw76rjiiKxmOMcyXAY4xR3w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758302027; x=1758388427; bh=T86Wa8qIbASY5M3B8BYFSnAoYC34GXhDZGt
-	9ec6kW0k=; b=GJd1CTFNyjk/snykgJ5qGIPRfk8iEBTcEYdIcOpBGZRCA92ttQt
-	N2NCWTGVrBrpsYTT7nKDSwNifh0WGZdGKXKEnMNHAdn9aZ0EjD6GvzFVm2NCr9Ch
-	G5eQV8/YX+z9dKEOr8//dMVWzPx+Q27f5gmqC/Jc7QzqGd9HV0bBWdX8oyHYR/xE
-	/O1mU7ha4ciTfMTRrlP7ncZgcBExi7oZqK1/AjpKwZyONtPdj7/hRw2CHOSoUvKb
-	PQUXOLqHZF+PUfgaJ1RLkxI/fdTMzVVJqFaaFuOSqazwGUZNh9SOCO9C6taUPOfD
-	VHoFk6/9axthO+GDmqvvM0Jz54r+x4cRNkw==
-X-ME-Sender: <xms:S4_NaHbRcJBQUOg09QGu--XWyMNCiTCUvAZNkTx6BcW9ERG0TPQT6Q>
-    <xme:S4_NaO2NxJFRmSyoH3xO9QZsyhela86UTlR_cqY7jWCMmhe9pEtQmYeFoQE1Kb3U6
-    6HZNriba6BvENWO1A>
-X-ME-Received: <xmr:S4_NaKbLnOi7v7JDT8IF2gXzv_YNuClq0XBHFdF_YhcVjTwQ0hR1B7BeAbyM4QCJ9U0W43vgUw4JWaYFCHZFM64Dq7dDJEmFP0F7UOg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegleejkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkh
-    hrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghp
-    thhtoheprghpvgesrghpvgeftddttddrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:S4_NaOKoNwEtlSnvkEHEP72zK9CBiA1GJu6OuZNpL6SD6cJJmb5ohw>
-    <xmx:S4_NaBET9sG83VLrrJ7g8MQ24U0bBBbUe0vbkoLJyPiGNGNEwLNGoA>
-    <xmx:S4_NaNvamwozXWNUriNynpAWIcxpqysVtW0dSp-L1sg_oFdXEKZrsg>
-    <xmx:S4_NaIv1rjX43lz2OYmOwefX75B8FQFCjpIqR29DLou3kJ-TnatNQA>
-    <xmx:S4_NaPj1fls41L2IuAp5eEzlvczoEVexfd95SJ6Y4PeTRFKHqGjZJtcU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Sep 2025 13:13:46 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Lauri Niskanen
- <ape@ape3000.com>,  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Ez8z/S1X"
+Received: (qmail 131687 invoked by uid 109); 19 Sep 2025 17:20:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=2xDXllPfr4tRHvQnU8TK8F9kfVMgze2Xf27YsYLCh3s=; b=Ez8z/S1XJ83RFYcdSGs4IQ0GyizFiQ7urAyrQQUZbS+IwC1oXS6FAm3Gd4Pte9ZZW0d6NcAkcAS8Ku+wxek6SKzcZltMvRqqUz89ysUjsM+IBVGe45VWglGNxhwL8C8X39U3GnnKhCcfCcYbPZ00VIEznInpvG0mDi/YiNBzmmymYuwbLr3rzvaMqKeq2AQD8Gpavt5ouq3iPxUX0F/jD/cbRKjVa6ZC1UYbJfnrgtpxqhVeJIyOyOHOR2AXm42jFrEqREr287tbE5L2stS/HUp7fRUBEltJ+lEXbsCLq22JmZ3GLiBydcpMSoxJfB1xl5MT8A0oanAXllezJ/OyVg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 19 Sep 2025 17:20:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 208058 invoked by uid 111); 19 Sep 2025 17:20:08 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Sep 2025 13:20:08 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 19 Sep 2025 13:20:07 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Lauri Niskanen <ape@ape3000.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
 Subject: Re: [BUG] git stash show -p with invalid option aborts with
  double-free in show_stash() (strvec_clear)
-In-Reply-To: <20250919164820.GA24939@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 19 Sep 2025 12:48:20 -0400")
+Message-ID: <20250919172007.GA59895@coredump.intra.peff.net>
 References: <CAMCKZdV+ASXAhYXaTdtB=7YZprCxFUjwEsqQP7i_ccOwx8Lo6Q@mail.gmail.com>
-	<1321ff39-6f09-426a-aa75-939ef4e1ad93@app.fastmail.com>
-	<xmqq4isy77qr.fsf@gitster.g>
-	<20250919164820.GA24939@coredump.intra.peff.net>
-Date: Fri, 19 Sep 2025 10:13:45 -0700
-Message-ID: <xmqqfrci5prq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <1321ff39-6f09-426a-aa75-939ef4e1ad93@app.fastmail.com>
+ <xmqq4isy77qr.fsf@gitster.g>
+ <xmqqldma5qha.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqldma5qha.fsf@gitster.g>
 
-Jeff King <peff@peff.net> writes:
+On Fri, Sep 19, 2025 at 09:58:25AM -0700, Junio C Hamano wrote:
 
-> I think we'll have leaked the string holding "-p" in this instance,
-> though. We probably need to pass in a setup_revision_opt struct with its
-> free_removed_argv_elements flag set.
->
-> That's true even without your patch, too, of course.
+> For completeness, here is how the other approach may look like, but
+> I have made my share of off-by-one mistakes all over the place over
+> the ears, so somebody else needs to lend an eyeball and check it for
+> sanity.
 
-Yeah, while I was preparing the "alternative", I noticed that option
-being paid attention to by the code, but you are right.  Anybody who
-passes strvec (which owns its contents, unlike the traditional "we
-got this argv[] from the operating system" callers) needs to flip
-that bit set, or they would leak.
+I _thought_ there was an off-by-one at first, but I think what you have
+is correct:
 
-> I'm mildly
-> surprised that the test suite doesn't hit this in leak-checking mode,
-> since it is a problem any time we rearrange argv. E.g., I think:
->
->   git stash show -p --
->
-> leaks (I was surprised that "stash show -p --stat" didn't leak, but it
-> doesn't seem to rearrange?).
+> +	/*
+> +	 * NULL out the leftover args we did not understand, which has
+> +	 * shallow copies in earlier slots in the array.
+> +	 */
+> +	while (left < argc--)
+> +		argv[argc] = NULL;
+>  	return left;
 
-Yeah.
+We definitely want argv[left] to be NULL, which I thought at first did
+not happen because of the "<". But because it is post-increment that
+happens in the loop condition, it works.
 
-> I wonder if the best solution is a setup_revisions() wrapper for strvecs
-> that will:
->
->   - turn on the free_removed_argv_elements option automatically
->
->   - collect the return value of setup_revisions() and use it to fix
->     the .nr field of the strvec
->
->   - restore the NULL invariant at the end of the array (though I would
->     also be happy if setup_revisions() just did this itself)
+I probably would have written:
 
-That would be nice.  I only did the third one in my "alternative"
-patch I sent earlier.
+  while (left <= argc)
+	argv[argc--] = NULL;
+
+which I think is the same (but I didn't test it, so it probably does
+have an off-by-one!).
+
+But really, I do not know that we need to NULL the whole thing. We have
+given the caller the reduced argc. The only argv invariant we are
+violating is that argv[argc] should be NULL (or in this case,
+argv[left]). Anything after argv+left should be considered
+uninitialized. So just:
+
+  argv[left] = NULL;
+
+would be enough, I'd think.
+
+> diff --git c/t/t3903-stash.sh w/t/t3903-stash.sh
+> index 0bb4648e36..dd70deb3b3 100755
+> --- c/t/t3903-stash.sh
+> +++ w/t/t3903-stash.sh
+> @@ -69,6 +69,11 @@ test_expect_success 'stash some dirty working directory' '
+>  	setup_stash
+>  '
+>  
+> +test_expect_success 'controlled error return on unrecognized option' '
+> +	test_expect_code 129 git stash show -p --no-such 2>usage &&
+> +	grep -e "^usage: git stash show" usage
+> +'
+
+This passes now, but fails with SANITIZE=leak. Along with a bunch of
+other tests, as we are now overwriting entries in strvecs with NULL, so
+it has no opportunity to free them. We need to respect the
+setup_revision_opt to free.
+
+I'm working up a few alternative patches.
+
+-Peff
