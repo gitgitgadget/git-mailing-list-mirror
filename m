@@ -1,146 +1,221 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A72307487
-	for <git@vger.kernel.org>; Fri, 19 Sep 2025 08:27:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B288D2D24BA
+	for <git@vger.kernel.org>; Fri, 19 Sep 2025 10:18:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758270440; cv=none; b=M9+tPZRQTE9jZX8VBk/2+LBLDLUp5xWxRiuy6YzahpLYeVRIpCtNEuk+gE+d4gpyYw1TBM/Yd+t82a1S1pZ1sMNAzHiUzsteQSHMPaYYOJbMO+Lghl6ggu2DnH5mbV0kCdwlcIx4mlKoQiqeszmQNEgJuGbF3UZJnKJFIveFaZ4=
+	t=1758277110; cv=none; b=YHWIme0xCugYpf/8SjMu9IAfvpOa0eeqUzQJ9V9eB2z2U1IyWXnDK/fEb02lIb+p+aI/txXj+X1gezJnSCNlogdceQ1KiB6DL4O8evXYv1IK9Ll/nb6kM2sy1R9J3COQKJ4HpDmNsF35XYhL2EfRY8Bx6RDPrtw6EVXVP/oYg1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758270440; c=relaxed/simple;
-	bh=9vfIQPZzS78R0N70xVPUGUpgztpONvTVbUXAaTDFigk=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=lNU2YVqckBjPcOHI8MtCr7DgTgbCDNbNImLxjU8sxGS4YX3V38Ra8pu76S0trQ6QoV4IjuvoRNWChvG4qMVwyCxXPtza9Q46Tg/BDe1q4y4pXbfsbrmISZ3XkJl3AMxFItWz+YwRkR2PcbiaJgSHoIyVYsmLnZboK6s1vgrtetY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kYb1WVio; arc=none smtp.client-ip=209.85.216.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1758277110; c=relaxed/simple;
+	bh=MlTRjcCPvwI2p7k4xigHuycCwmBV0PCvvD9INGJQlJc=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=VmUx3lLcVRsVAVt30b6jLxeyoW25+fnrdKJ6INFZfOK+0qLtqjfOHfEs770XgYQqQycO7g3IIasQsvURZCSoqCiTO0Q43VA4IGQFJmHV8tW6Pmye7CUUqAIjk4mOtbdW4kqHZjxAM5SkaB8IcC4znOw8VHoz3BIbDenrqpVSoiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ape3000.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=ape3000-com.20230601.gappssmtp.com header.i=@ape3000-com.20230601.gappssmtp.com header.b=py2ISpvf; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ape3000.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kYb1WVio"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-3306d3ab2e4so1373840a91.3
-        for <git@vger.kernel.org>; Fri, 19 Sep 2025 01:27:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ape3000-com.20230601.gappssmtp.com header.i=@ape3000-com.20230601.gappssmtp.com header.b="py2ISpvf"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-62fc89cd68bso890058a12.0
+        for <git@vger.kernel.org>; Fri, 19 Sep 2025 03:18:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758270436; x=1758875236; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HaByfOwz7Tm410PgESFS3mI3VL6dVObAgvO37yeKDss=;
-        b=kYb1WViozkZP0E95Ij5mCwAikMTKqGQ01ZOOGGkVyf2j02golaEohYK2OVvPbtLiZX
-         /FH7/s1LKoulBluevgUlhvq/BVfclc7Ml3f9APFbg8xL4EP23MsqnV3+7ckcY6e5CiTv
-         6lt4YTkddL3seRpuZ5nqiJyENW/RpuDjXaOjRULtH0lA+V/Uz2Y+aJfG6ZfSILYmiZjZ
-         7HDttHIssc5Xj6lVMHLx12KKioaW+PcXdnZOVAWrtzOgUmkH4UghYzrdPWCtRRgXd8bg
-         QhOJymSOcgFJKkWPhvXZxbYcu9iKXduQKEAmXF875VFhIoKsbylMuo9FluwgrwnnyhfJ
-         JUlA==
+        d=ape3000-com.20230601.gappssmtp.com; s=20230601; t=1758277107; x=1758881907; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=zvXVOmK03bncqhW09JF6T8HZzCJBXodlUAl6AncejaE=;
+        b=py2ISpvfpdKhLitAwL0C8+KzhA7LS+QuMlAa2jgxX/+91hj+C/WwNEqtumi2XS9n82
+         bK3SGIDDxbNRuoQSVYcl+aFflaSWIhgHGMr6v+NDanSs8dO7+YKLDCWBz9jw9eX5MDPD
+         nmkrMbVClmY+FmpI+leBojN2z7ZLW5zWw8R9zZ/7iccbpywo1EC64BCKntMJLELLPj0B
+         zrJeGtWF7czDGpG6xOOQOi3mA1TAXBYgvgDPWE4GpNiruD+wXoKhNKUNHWQ24pX+zYCt
+         9N52bu8XWEwz1Jtyb8/u/KEDjq+RtUBhC6sV5J98qB8hz2GX0C9PCktrmhMvqRed/e+1
+         fkFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758270436; x=1758875236;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HaByfOwz7Tm410PgESFS3mI3VL6dVObAgvO37yeKDss=;
-        b=Xc+msS7it4ynz0RVSU6mlCzsojIs1i2AEzdJTx9kK+FcMKXbl3s1rnNJOlg6BJcAQy
-         4d8IOh16Gdo43LLzZri4M9ak6whHShZoyWvlGD1E1xsx5pMLv8boAvujV88nutPvQiR0
-         asuJ3HvwUiPkvGFC+HvL9Q1fNqxbEwlv+cM1eC6xi4mILWLIjn/RyzZjMQsHZdxrKyuX
-         p+n0rRh79sechr5Jue7yPsIUDWBLxR7ehIidvbbpEOH9fqQB4R+987Rq7VgY5gORLHPs
-         SPmjOT9fnGqbejU4mF5iTj918K7tqrB4c8MEMeoFm2jwXsT52Z7RK4pOrHhqiBPPrILn
-         f7aw==
-X-Gm-Message-State: AOJu0YyLPCyj198n0lwdZc6QIbXDDEpM/X8U5Lw6DUFRAWujAoXPij23
-	mj32j8erYv1DpQfhe4jHgFTxgI8MCXbO9L2XdO+x2SyIAFHeCxokmiHuTcPqjw==
-X-Gm-Gg: ASbGnctj7vB9JiJz5w/oLQu0z7iUmhTaKythQsGpw4vo6eKzbUKSf41hazyRaOJ1LKv
-	UR6Dw4Oaar09CXmpva0jqjXxugsOejVkH7cGET2YDqW8Zw8jt7uwHHCK8Mdc+HMPHb4MUz7AtQN
-	DS9GBlXqCxLnSpz4eQtiNchXXt/gwBhUzKZ6iu8gzNAatobhqGCsQPdM1zqz09V5tJzzGFr4eDK
-	f0/DxmjpN9pPU+bqoVb+YCdkicPsL4d/02ZvNfwOh1Px51agyLteuYOsX2RnqsBTG6ccSRBR1R9
-	GVrn8z5Xh5ioQ15TtY6JiukdrdGH5/qBdWzv/flmPPAr6dRFca90MPWbySDt5j3UPeWAwrjH2WZ
-	RRG2PaHLKAwCWVceoEGs=
-X-Google-Smtp-Source: AGHT+IE+O79bMbZLamqeB72IjoM9cRWRKNGXsSkSkKwlSKms3HiqnwYYBHBz2tPf8Hn9wRKPcCKTlQ==
-X-Received: by 2002:a17:90b:3f90:b0:32b:6820:6509 with SMTP id 98e67ed59e1d1-33097fefdecmr3016786a91.9.1758270436563;
-        Fri, 19 Sep 2025 01:27:16 -0700 (PDT)
-Received: from meet.. ([103.176.11.198])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33060803335sm4774254a91.24.2025.09.19.01.27.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Sep 2025 01:27:16 -0700 (PDT)
-From: Meet Soni <meetsoni3017@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	shejialuo@gmail.com,
-	gitster@pobox.com,
-	Meet Soni <meetsoni3017@gmail.com>
-Subject: [GSoC][PATCH v4 9/9] t: add test for git refs optimize subcommand
-Date: Fri, 19 Sep 2025 13:56:47 +0530
-Message-Id: <20250919082647.535213-10-meetsoni3017@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250919082647.535213-1-meetsoni3017@gmail.com>
-References: <20250918054704.544254-1-meetsoni3017@gmail.com>
- <20250919082647.535213-1-meetsoni3017@gmail.com>
+        d=1e100.net; s=20230601; t=1758277107; x=1758881907;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zvXVOmK03bncqhW09JF6T8HZzCJBXodlUAl6AncejaE=;
+        b=b2UaWuR8RhYmPz1VIuRQkfIvHVZCWrspZP7V2904fshWksvybK34Cp1odVnvbUpWP/
+         4AegsQBXrr4tvGou9PZAEEfhfaJumcuw+2ifEJ2MKM9vnS8clqMgHSeNj5a2OwpLP1SK
+         RELM+DhOw5ZeYfvByJXtG3nMnAHUB8s7gtvQzQEYos3DzcquOBXsRYtkMC7gF3+vWhhm
+         ST1GXmLFv2gevWRowDPNLcMul+Aplfa34cxzGWhvZFuXJRcObK6qgKpuuPiz049UTe7i
+         oYWz28/SV3uszFbYtm1bJijaJMiY6BQTD5MJmrXRyH2O4HOiSgY0XLs7yXXDDtLaZvoM
+         SaQw==
+X-Gm-Message-State: AOJu0YzLz8mAiDCU6p2Rlj7MRPE9OtXlCfA78NriOjpmwGGJyEpscU/t
+	sJVGbZ4Px0VDo2PnsOv0T70jIdF+m+VADs9PSaxs/PdytmycPpFfWO53Hr80kOlW8DzCYlFTgUY
+	XAU6zxpaUlBSmTwVoik6eKYCCRQaBSlTbzQWNxGGBQw==
+X-Gm-Gg: ASbGncuE+wUps7Zqo7UdK7B70eqs4lkKSUVixQBHnq2K8eC/6CCyDFOyI1gbO6gvTik
+	nA+PZ91QQ3PiA7TPaDZjdvPnbnZrJp2YwOAPkRr/tBZtaclFS9X+qy3XySU6meUOIIkeRL/Yany
+	vH8km8UX/lktcxA2tagLDUgX3osl2Kg9S7Y3tAL6UKUeTRzVxrz/WNsvzsYQH5iOz9Y4VarWN04
+	9wLfAKwEVcBUT/JoBk=
+X-Google-Smtp-Source: AGHT+IFQU4ykJhpdsCtwScbVa8UDcD3wAzpYEPd8ii8odPknkEcZwLOhbWdSh0IpfzpHBuMsqTdt+l+XuM5iNh+sKeg=
+X-Received: by 2002:a05:6402:5107:b0:62f:1e7a:f842 with SMTP id
+ 4fb4d7f45d1cf-62fc0abc18amr2696475a12.27.1758277106414; Fri, 19 Sep 2025
+ 03:18:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Lauri Niskanen <ape@ape3000.com>
+Date: Fri, 19 Sep 2025 13:18:15 +0300
+X-Gm-Features: AS18NWDAcWuwb8rhCvA4cbMPc6an_miBfgPbRUjBB2iNZzzupx9drGz__dOtPB0
+Message-ID: <CAMCKZdV+ASXAhYXaTdtB=7YZprCxFUjwEsqQP7i_ccOwx8Lo6Q@mail.gmail.com>
+Subject: [BUG] git stash show -p with invalid option aborts with double-free
+ in show_stash() (strvec_clear)
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Add a test script, `t/t1463-refs-optimize.sh`, for the new `git refs
-optimize` command.
+What did you do before the bug happened?
 
-This script acts as a simple driver, leveraging the shared test library
-created in the preceding commit. It works by overriding the
-`$pack_refs` variable to "refs optimize" and then sourcing the
-shared library (`t/pack-refs-tests.sh`).
+Create a repo and a stash entry, then invoke `git stash show -p` with
+an invalid option:
 
-This approach ensures that `git refs optimize` is tested against the
-entire comprehensive test suite of `git pack-refs`, verifying
-that it acts as a compatible drop-in replacement.
+git init repro
+cd repro
+touch a
+git add a
+git commit -m init
+echo x >> a
+git stash
+git stash show -p --invalid
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: shejialuo <shejialuo@gmail.com>
-Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
----
- t/meson.build            |  3 ++-
- t/t1463-refs-optimize.sh | 17 +++++++++++++++++
- 2 files changed, 19 insertions(+), 1 deletion(-)
- create mode 100755 t/t1463-refs-optimize.sh
 
-diff --git a/t/meson.build b/t/meson.build
-index baeeba2ce6..92327aabdf 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -211,6 +211,7 @@ integration_tests = [
-   't1451-fsck-buffer.sh',
-   't1460-refs-migrate.sh',
-   't1461-refs-list.sh',
-+  't1463-refs-optimize.sh',
-   't1500-rev-parse.sh',
-   't1501-work-tree.sh',
-   't1502-rev-parse-parseopt.sh',
-@@ -1219,4 +1220,4 @@ if perl.found() and time.found()
-       timeout: 0,
-     )
-   endforeach
--endif
-\ No newline at end of file
-+endif
-diff --git a/t/t1463-refs-optimize.sh b/t/t1463-refs-optimize.sh
-new file mode 100755
-index 0000000000..c11c905d79
---- /dev/null
-+++ b/t/t1463-refs-optimize.sh
-@@ -0,0 +1,17 @@
-+#!/bin/sh
-+
-+test_description='git refs optimize should not change the branch semantic
-+
-+This test runs git refs optimize and git show-ref and checks that the branch
-+semantic is still the same.
-+'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+GIT_TEST_DEFAULT_REF_FORMAT=files
-+export GIT_TEST_DEFAULT_REF_FORMAT
-+
-+. ./test-lib.sh
-+
-+pack_refs='refs optimize'
-+. "$TEST_DIRECTORY"/pack-refs-tests.sh
--- 
-2.34.1
+What did you expect to happen?
 
+Git should print a usage / option error and exit cleanly without crashing.
+
+
+What happened instead?
+
+free(): double free detected in tcache 2
+
+
+GDB backtrace:
+#0  __pthread_kill_implementation (threadid=<optimized out>,
+signo=signo@entry=6, no_tid=no_tid@entry=0) at pthread_kill.c:44
+#1  0x00007ffff7c98a13 in __pthread_kill_internal (threadid=<optimized
+out>, signo=6) at pthread_kill.c:89
+#2  0x00007ffff7c3e410 in __GI_raise (sig=sig@entry=6) at
+../sysdeps/posix/raise.c:26
+#3  0x00007ffff7c2557a in __GI_abort () at abort.c:77
+#4  0x00007ffff7c26613 in __libc_message_impl
+(fmt=fmt@entry=0x7ffff7db4355 "%s\n") at
+../sysdeps/posix/libc_fatal.c:138
+#5  0x00007ffff7ca2d65 in malloc_printerr
+(str=str@entry=0x7ffff7db7d78 "free(): double free detected in tcache
+2") at malloc.c:5892
+#6  0x00007ffff7ca82e8 in tcache_double_free_verify (e=<optimized
+out>) at malloc.c:3350
+#7  0x00007ffff7ca80a5 in __GI___libc_free (mem=<optimized out>) at
+malloc.c:3547
+#8  0x00005555558570ce in strvec_clear (array=0x7fffffffc580) at
+/usr/src/debug/git/git/strvec.c:134
+#9  0x000055555567d9f9 in show_stash (argc=<optimized out>,
+argv=<optimized out>, prefix=<optimized out>, repo=<optimized out>) at
+builtin/stash.c:1047
+#10 0x0000555555686f25 in cmd_stash (argc=3, argv=0x5555559bd260,
+prefix=0x0, repo=0x555555992ae0 <the_repo.lto_priv>) at
+builtin/stash.c:2410
+#11 0x000055555555fd43 in run_builtin (p=0x555555984698
+<commands.lto_priv+2904>, argc=<optimized out>, argv=<optimized out>,
+repo=0x555555992ae0 <the_repo.lto_priv>) at
+/usr/src/debug/git/git/git.c:480
+#12 handle_builtin (args=args@entry=0x7fffffffe1d0) at
+/usr/src/debug/git/git/git.c:746
+#13 0x00005555555608a2 in run_argv (args=0x7fffffffe1d0) at
+/usr/src/debug/git/git/git.c:813
+#14 cmd_main (argc=<optimized out>, argv=<optimized out>) at
+/usr/src/debug/git/git/git.c:953
+#15 0x000055555555d784 in main (argc=5, argv=0x7fffffffe518) at
+/usr/src/debug/git/git/common-main.c:9
+
+Valgrind:
+==2507916== Memcheck, a memory error detector
+==2507916== Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.
+==2507916== Using Valgrind-3.25.1 and LibVEX; rerun with -h for copyright info
+==2507916== Command: git stash show -p --invalid
+==2507916==
+==2507916== Invalid free() / delete / delete[] / realloc()
+==2507916==    at 0x4CB18EF: free (vg_replace_malloc.c:989)
+==2507916==    by 0x43030CD: strvec_clear (strvec.c:134)
+==2507916==    by 0x41299F8: show_stash.lto_priv.0 (stash.c:1047)
+==2507916==    by 0x4132F24: cmd_stash (stash.c:2410)
+==2507916==    by 0x400BD42: UnknownInlinedFun (git.c:480)
+==2507916==    by 0x400BD42: handle_builtin (git.c:746)
+==2507916==    by 0x400C8A1: UnknownInlinedFun (git.c:813)
+==2507916==    by 0x400C8A1: cmd_main (git.c:953)
+==2507916==    by 0x4009783: main (common-main.c:9)
+==2507916==  Address 0x4ff4540 is 0 bytes inside a block of size 8 free'd
+==2507916==    at 0x4CB18EF: free (vg_replace_malloc.c:989)
+==2507916==    by 0x43030CD: strvec_clear (strvec.c:134)
+==2507916==    by 0x41299F8: show_stash.lto_priv.0 (stash.c:1047)
+==2507916==    by 0x4132F24: cmd_stash (stash.c:2410)
+==2507916==    by 0x400BD42: UnknownInlinedFun (git.c:480)
+==2507916==    by 0x400BD42: handle_builtin (git.c:746)
+==2507916==    by 0x400C8A1: UnknownInlinedFun (git.c:813)
+==2507916==    by 0x400C8A1: cmd_main (git.c:953)
+==2507916==    by 0x4009783: main (common-main.c:9)
+==2507916==  Block was alloc'd at
+==2507916==    at 0x4CAE7A8: malloc (vg_replace_malloc.c:446)
+==2507916==    by 0x4E6E2AF: strdup (strdup.c:42)
+==2507916==    by 0x4129624: UnknownInlinedFun (wrapper.c:43)
+==2507916==    by 0x4129624: UnknownInlinedFun (strvec.c:25)
+==2507916==    by 0x4129624: show_stash.lto_priv.0 (stash.c:994)
+==2507916==    by 0x4132F24: cmd_stash (stash.c:2410)
+==2507916==    by 0x400BD42: UnknownInlinedFun (git.c:480)
+==2507916==    by 0x400BD42: handle_builtin (git.c:746)
+==2507916==    by 0x400C8A1: UnknownInlinedFun (git.c:813)
+==2507916==    by 0x400C8A1: cmd_main (git.c:953)
+==2507916==    by 0x4009783: main (common-main.c:9)
+==2507916==
+usage: git stash show [-u | --include-untracked | --only-untracked]
+[<diff-options>] [<stash>]
+
+    -u, --[no-]include-untracked
+                          include untracked files in the stash
+    --only-untracked      only show untracked files in the stash
+
+==2507916==
+==2507916== HEAP SUMMARY:
+==2507916==     in use at exit: 696,349 bytes in 371 blocks
+==2507916==   total heap usage: 750 allocs, 380 frees, 1,221,944 bytes allocated
+==2507916==
+==2507916== LEAK SUMMARY:
+==2507916==    definitely lost: 3 bytes in 1 blocks
+==2507916==    indirectly lost: 0 bytes in 0 blocks
+==2507916==      possibly lost: 120 bytes in 3 blocks
+==2507916==    still reachable: 696,226 bytes in 367 blocks
+==2507916==         suppressed: 0 bytes in 0 blocks
+==2507916== Rerun with --leak-check=full to see details of leaked memory
+==2507916==
+==2507916== For lists of detected and suppressed errors, rerun with: -s
+==2507916== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+
+
+[System Info]
+git version:
+git version 2.51.0
+cpu: x86_64
+built from commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 8.15.0
+OpenSSL: OpenSSL 3.5.2 5 Aug 2025
+zlib-ng: 2.2.5
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-format: files
+default-hash: sha1
+uname: Linux 6.16.7-arch1-1 #1 SMP PREEMPT_DYNAMIC Thu, 11 Sep 2025
+17:42:36 +0000 x86_64
+compiler info: gnuc: 15.2
+libc info: glibc: 2.42
+$SHELL (typically, interactive shell): /usr/bin/zsh
+
+
+[Enabled Hooks]
+
+
+--
+Lauri Niskanen
