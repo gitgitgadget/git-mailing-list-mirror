@@ -1,49 +1,49 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7E822D4DD
-	for <git@vger.kernel.org>; Fri, 19 Sep 2025 01:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EEE023D7F0
+	for <git@vger.kernel.org>; Fri, 19 Sep 2025 01:09:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758244186; cv=none; b=Q3cHzIR2P39TeSOYefWVqKd3GOqf0E5O6eFJ9RZn4YsMg4sIH1bNJvX7WGwlNYQujmBLU60zbEMCDg69pzqLOyIBqXdByaVxryKutihDRIjO10op4J2Wd6bhuk+dAbtomZgU6B+HVdrnBnk03v/ys/SgHf5oLX2PVSJbHLWhMPM=
+	t=1758244187; cv=none; b=XWW/zYteYq+k8zX7TWR7UGMGmI7CeoYuLt4BL7NQTt0wwqiEbJ9GwYO6qkjvXcyBiPcUApRsOU3SdQVs/4RMUfQ20+9IcTQycfGxqwlglL4+TYyiHBWGr8zHgzo5XzfZqe4pgF8WgyB0/GiAiti97jHVOBu7wauzZonnxcNV4DA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758244186; c=relaxed/simple;
-	bh=c/fKQsp8CVjmzOXqc75yH30/0X0s5pIFozMal0+I37A=;
+	s=arc-20240116; t=1758244187; c=relaxed/simple;
+	bh=fbRcbaApBAly3c6y2oaxuf1zNfU0uTtsTJu9iXEO9bs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qQT9zDs61QfMUZodxJsCfr/WI/+OWLc2S51P895BpENKPg/TbRewaS1cfgcITl1UwDiOJ7FSHn6YD/OzA5gOpqMrz/qXPoPi4mkqr8nTP1EH/kq5GwSywp1y367QvA/p+22bMTZ+N8qW5pwE9hjySuQXR+JHqoBNMAFx8lAQfGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=PK8/gYRg; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=UYTRu2AXLFlnOSEhCFzwRMAIU/y4TVT4MuNb6tW++ngOD4QVQyfCtYIrmw2TG5rMER2Ejt0jJ/SCwimTpvvjeG3MppSDo5yyif5FbF/R5wGU2aM9vbax0Uuwa3RD66aslCzV6uh+ECWbal8kzP4EUNNGH1mBmc3wLurpqiPhif0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=e5JiaCU9; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="PK8/gYRg"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="e5JiaCU9"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1758244181;
-	bh=c/fKQsp8CVjmzOXqc75yH30/0X0s5pIFozMal0+I37A=;
+	bh=fbRcbaApBAly3c6y2oaxuf1zNfU0uTtsTJu9iXEO9bs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=PK8/gYRgI5YtkplAKRHEzNbKh7JYHZ8QOmk6Oz8msx0pxQJRC55cw37mdgZgm5jgc
-	 WFOGbrHB4UkE68os5FpJgir30zJwB3OY+/rBaN7DTu/PGMRoI0xhtSJExpaDN+11av
-	 1fdWbkekfTPcD+SKU4Dusu4/bu1ee2DOnyzKjdq2LXtx879NiBxxhnOYRLJiMPyVHK
-	 +PMwTcHXU9Ck6m/BzqYNt0wKbMXv+Pfw/3IwShjYpF82Ou1IjoX3QwZPHU/BW8hoZ5
-	 8eRdfcAFFVlYXaUoVPF20ymev4/O9Xi6XVkvy3k8zEE5iwTIutiVZfjhDSEyOCb0zg
-	 yVruaxCvfT0EOu5AnsvNP5Z0mjxMXY4+/YDArfKcADFMWexEwMq4+HUXVoeeqTXSIh
-	 PlPtpNx2sPO94j7Mmdl8FngTFpwSKV2aepVItz5FWmyH6cbb41KdOEJGctlaDJp/g0
-	 qatuPRWrjH0IpftBijrKN+wL3/7DC4a8HyaV7JKFsWx0aOqaVTq
+	b=e5JiaCU9+q/VSXabCtuLRWILec14peSrmxvH9A0a2AomN9AzdcGIQHWKdYCnrDkh9
+	 Ju/Tu8ZhUIWZHtSn+wIDt52GEh+9HeDULpvcm4VD36t0Pq1YEXT+YMZbRMykc69zGb
+	 A9iCao/Z/uvAUxpq2za/GhSYCNGb04vePjcPtR27qOGk3yACFwKxTpNjYOiDrtnoEx
+	 Qu9POZIxk6w1z7mkF055q3YstPu3FnWNPDFkfOaZiSsNf9BC8m01Qn8VcAvOnbpIkW
+	 FTrJMiAvJeaVaXQtCTn7nCRYUrUSBYOqVkcrvGxvfdFvZh4pEfay5LQI6tEN8wSxjt
+	 CIIq/9Ee1+e+rwEK6ZJhzYNFcqesk+s1fMujZxpDdN/mWEvyR1VIHn3G1fBYtxss4T
+	 YEsYNcXJ5lsDtlEnJB20qo6sEqok630/Lnjzk7dfyFbvsQ6/mUCVX980+3elRQbMxn
+	 xm+IAOM4NRg4lk3V3FEak5n0lR/DmpabTXQDbb0u3VNsIa/S1UL
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ada0:faf8:3cb8:a81f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 569D020159;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 66C9B2019E;
 	Fri, 19 Sep 2025 01:09:41 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 7/9] fsck: consider gpgsig headers expected in tags
-Date: Fri, 19 Sep 2025 01:09:09 +0000
-Message-ID: <20250919010911.649831-8-sandals@crustytoothpaste.net>
+Subject: [PATCH 9/9] t: add a prerequisite for a compatibility hash
+Date: Fri, 19 Sep 2025 01:09:11 +0000
+Message-ID: <20250919010911.649831-10-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
 In-Reply-To: <20250919010911.649831-1-sandals@crustytoothpaste.net>
 References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
@@ -55,145 +55,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When we're creating a tag, we want to make sure that gpgsig and
-gpgsig-sha256 headers are allowed for the commit.  The default fsck
-behavior is to ignore the fact that they're left over, but some of our
-tests enable strict checking which flags them nonetheless.  Add
-improved checking for these headers as well as documentation and several
-tests.
+In some cases, we'll need to adjust our test suite to work in a proper
+way with a compatibility hash.  For example, in such a case, we'll only
+use pack index v3, since v1 and v2 lack support for multiple algorithms.
+Since we won't want to write those older formats, we'll need to skip
+tests that do so.
+
+Let's add a COMPAT_HASH prerequisite and define the BROKEN_OBJECTS
+prerequisite in terms of it.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/fsck-msgids.adoc |  6 ++++
- fsck.c                         | 18 ++++++++++++
- fsck.h                         |  2 ++
- t/t1450-fsck.sh                | 54 ++++++++++++++++++++++++++++++++++
- 4 files changed, 80 insertions(+)
+ t/test-lib.sh | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/fsck-msgids.adoc b/Documentation/fsck-msgids.adoc
-index 0ba4f9a27e..52d9a8a811 100644
---- a/Documentation/fsck-msgids.adoc
-+++ b/Documentation/fsck-msgids.adoc
-@@ -10,6 +10,12 @@
- `badFilemode`::
- 	(INFO) A tree contains a bad filemode entry.
- 
-+`badGpgsig`::
-+	(ERROR) A tag contains a bad (truncated) signature (e.g., `gpgsig`) header.
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 14c777e4e2..a4bb9ab2d8 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1922,7 +1922,13 @@ test_lazy_prereq DEFAULT_REPO_FORMAT '
+ # compatibility, we cannot write such objects because there's no SHA-1
+ # compatibility value for a nonexistent object.
+ test_lazy_prereq BROKEN_OBJECTS '
+-	test -z "$test_repo_compat_hash_algo"
++	! test_have_prereq COMPAT_HASH
++'
 +
-+`badHeaderContinuation`::
-+	(ERROR) A continuation header (such as for `gpgsig`) is unexpectedly truncated.
-+
- `badName`::
- 	(ERROR) An author/committer name is empty.
- 
-diff --git a/fsck.c b/fsck.c
-index 171b424dd5..341e100d24 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -1067,6 +1067,24 @@ int fsck_tag_standalone(const struct object_id *oid, const char *buffer,
- 	else
- 		ret = fsck_ident(&buffer, oid, OBJ_TAG, options);
- 
-+	if (buffer < buffer_end && (skip_prefix(buffer, "gpgsig ", &buffer) || skip_prefix(buffer, "gpgsig-sha256 ", &buffer))) {
-+		eol = memchr(buffer, '\n', buffer_end - buffer);
-+		if (!eol) {
-+			ret = report(options, oid, OBJ_TAG, FSCK_MSG_BAD_GPGSIG, "invalid format - unexpected end after 'gpgsig' or 'gpgsig-sha256' line");
-+			goto done;
-+		}
-+		buffer = eol + 1;
-+
-+		while (buffer < buffer_end && starts_with(buffer, " ")) {
-+			eol = memchr(buffer, '\n', buffer_end - buffer);
-+			if (!eol) {
-+				ret = report(options, oid, OBJ_TAG, FSCK_MSG_BAD_HEADER_CONTINUATION, "invalid format - unexpected end in 'gpgsig' or 'gpgsig-sha256' continuation line");
-+				goto done;
-+			}
-+			buffer = eol + 1;
-+		}
-+	}
-+
- 	if (buffer < buffer_end && !starts_with(buffer, "\n")) {
- 		/*
- 		 * The verify_headers() check will allow
-diff --git a/fsck.h b/fsck.h
-index dd7df3d5b3..c26616d7eb 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -25,9 +25,11 @@ enum fsck_msg_type {
- 	FUNC(NUL_IN_HEADER, FATAL) \
- 	FUNC(UNTERMINATED_HEADER, FATAL) \
- 	/* errors */ \
-+	FUNC(BAD_HEADER_CONTINUATION, ERROR) \
- 	FUNC(BAD_DATE, ERROR) \
- 	FUNC(BAD_DATE_OVERFLOW, ERROR) \
- 	FUNC(BAD_EMAIL, ERROR) \
-+	FUNC(BAD_GPGSIG, ERROR) \
- 	FUNC(BAD_NAME, ERROR) \
- 	FUNC(BAD_OBJECT_SHA1, ERROR) \
- 	FUNC(BAD_PACKED_REF_ENTRY, ERROR) \
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 5ae86c42be..c4b651c2dc 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -454,6 +454,60 @@ test_expect_success 'tag with NUL in header' '
- 	test_grep "error in tag $tag.*unterminated header: NUL at offset" out
++# COMPAT_HASH is a test if we're operating in a repository with SHA-256 with
++# SHA-1 compatibility.
++test_lazy_prereq COMPAT_HASH '
++	test -n "$test_repo_compat_hash_algo"
  '
  
-+test_expect_success 'tag accepts gpgsig header even if not validly signed' '
-+	test_oid_cache <<-\EOF &&
-+	header sha1:gpgsig-sha256
-+	header sha256:gpgsig
-+	EOF
-+	header=$(test_oid header) &&
-+	sha=$(git rev-parse HEAD) &&
-+	cat >good-tag <<-EOF &&
-+	object $sha
-+	type commit
-+	tag good
-+	tagger T A Gger <tagger@example.com> 1234567890 -0000
-+	$header -----BEGIN PGP SIGNATURE-----
-+	 Not a valid signature
-+	 -----END PGP SIGNATURE-----
-+
-+	This is a good tag.
-+	EOF
-+
-+	tag=$(git hash-object --literally -t tag -w --stdin <good-tag) &&
-+	test_when_finished "remove_object $tag" &&
-+	git update-ref refs/tags/good $tag &&
-+	test_when_finished "git update-ref -d refs/tags/good" &&
-+	git -c fsck.extraHeaderEntry=error fsck --tags
-+'
-+
-+test_expect_success 'tag rejects invalid headers' '
-+	test_oid_cache <<-\EOF &&
-+	header sha1:gpgsig-sha256
-+	header sha256:gpgsig
-+	EOF
-+	header=$(test_oid header) &&
-+	sha=$(git rev-parse HEAD) &&
-+	cat >bad-tag <<-EOF &&
-+	object $sha
-+	type commit
-+	tag good
-+	tagger T A Gger <tagger@example.com> 1234567890 -0000
-+	$header -----BEGIN PGP SIGNATURE-----
-+	 Not a valid signature
-+	 -----END PGP SIGNATURE-----
-+	junk
-+
-+	This is a bad tag with junk at the end of the headers.
-+	EOF
-+
-+	tag=$(git hash-object --literally -t tag -w --stdin <bad-tag) &&
-+	test_when_finished "remove_object $tag" &&
-+	git update-ref refs/tags/bad $tag &&
-+	test_when_finished "git update-ref -d refs/tags/bad" &&
-+	test_must_fail git -c fsck.extraHeaderEntry=error fsck --tags 2>out &&
-+	test_grep "error in tag $tag.*invalid format - extra header" out
-+'
-+
- test_expect_success 'cleaned up' '
- 	git fsck >actual 2>&1 &&
- 	test_must_be_empty actual
+ # Ensure that no test accidentally triggers a Git command
