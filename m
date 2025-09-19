@@ -1,59 +1,59 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D6E1DEFE8
-	for <git@vger.kernel.org>; Fri, 19 Sep 2025 20:24:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CDA25DAF0
+	for <git@vger.kernel.org>; Fri, 19 Sep 2025 20:26:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758313488; cv=none; b=iGXyyCpcf24j9eIZ+tQcoGkYbiAE6ZVpE4QgCbtIj5rNchH8vZ/EaWUdt4L+Azlvp3NPpYBd3sdm+dRKESa/N+tbLQqn+MtFRrOtdqwr7cNVBwiFv51YgFx4lWUTEBd1YpoZa9PZQfdMIUdVfd549aA/oLvv8RpSUIRZKpQOihg=
+	t=1758313564; cv=none; b=h6OJ96E3VcCyAx3BYO2ue2KFzV4t1e7nNDo9ETlid2sHIJypgnIQx8NIPbAIQpt8beXSc9Bz3jyUKrHGtNhtNNDNOlYPXH1lrat/dBZ5XJNmk+CbbBQIgHnBA+a1/649jxq92v3p49wT/F1z09F+9cB8ASkijhMwiEbCT1QKz/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758313488; c=relaxed/simple;
-	bh=OPBSRRF5fpsJ9tlB2/XejnaMW4XiE7ExPa+somEI7v8=;
+	s=arc-20240116; t=1758313564; c=relaxed/simple;
+	bh=zZyWMj345JMK6t6kCUqIwRN4Hnmqthcj+sM0JwqTn0w=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=as9It5gHgbgI5ss7VfnZK+ywK5zIuARIzo2HhCj9UYGzWU6ujXDC6aJnePOcrs2mwlWvhXioXInpzCs76dT3r1UwPsArLdb5AxavlIRLdO5M5N63TiW5fFQsqIyr8128Jf3b/GTlHU5AfSMOU/Pdkf+8VHpTuQI+OzZcGBC+TsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h+tJKPM+; arc=none smtp.client-ip=209.85.219.53
+	 To:Cc:Content-Type; b=jr4xlY/nbHH/4n033esPPkuajcyT+NYkf12CvTviJZxueJw5Tvbq/DKCpG77QLhQZRhrwUamf53GrNUBIKKBBFjA3zMAsEvW3igq3iUAykQfFT3fbNDpm4raJUJ7RrPWgmTCHWycGm1TsADdGy83+HRUE/dpoL84/KBH5Wd2Rj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T9OKhSBs; arc=none smtp.client-ip=209.85.208.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h+tJKPM+"
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-745ade243edso2511876d6.0
-        for <git@vger.kernel.org>; Fri, 19 Sep 2025 13:24:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T9OKhSBs"
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-3612c38b902so24711601fa.2
+        for <git@vger.kernel.org>; Fri, 19 Sep 2025 13:26:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758313485; x=1758918285; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758313560; x=1758918360; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OqHyP3mugcJt7T9Kocp7IYJZ0N/g27l1cUHYoghhCoE=;
-        b=h+tJKPM+CYG8Vqje3U3u/KksomMsFfmOcJbQADgk7Q+sM1dVkiNmUSY/qN4/6wxu0s
-         sHbvtg6czUtUP8MFb2GBe37pwpHUGcFVqWHIO2rzy0pU3jJ406fnB1ACxIh/ga2DIq62
-         lNsezDTDpYttQMYPKrKwviqsV+EK4+XlIyQE7TiKWjDR2Mc6RC9lIpCQQiR6yn8lUKBf
-         KDGsuMXQPARtg+NNm0bQp6Q7JsALbHjMwy9FlWK3ubvLlJlU5CUt20p1xoFtR68Jchpm
-         ljG1sc+hTJU5G+0UHZ1JO0h6G2Drp0ZlsqxAbwEm7IkTKjQRiPBxYOXs/nuv2SSnDHXF
-         hbeg==
+        bh=zZyWMj345JMK6t6kCUqIwRN4Hnmqthcj+sM0JwqTn0w=;
+        b=T9OKhSBsDrot9mXWMATv6xrIKA2GMbmbikeXg/X1363HlJhoEA3THWbM0149UjRUmQ
+         D4YEot5uDfWVJUBTGYjyLe/CKGWg+aAu5nfqubKZAn/jnXaOOq0kI5RjGJPExRjJrrGk
+         ZGcfHSCwjtXOuzT4xAAjMESlTv2w8FaMcgedbrsSquKRyXK8ws6Zmo+ppUnhl805NXTx
+         JgtsjPMxltk5I6r3BELNcYfYoALui9SqCfZMep2Jf0nmpwfiWDHbTRDmLXcqP2W2e/IW
+         4WhXSU4E0cvnlldPCUwmBZ6p5q4GL13sxqCmD+/PZtMoux5g6awYA6MfGchRXsvS2x0O
+         ioGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758313485; x=1758918285;
+        d=1e100.net; s=20230601; t=1758313560; x=1758918360;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OqHyP3mugcJt7T9Kocp7IYJZ0N/g27l1cUHYoghhCoE=;
-        b=XbzGty7WtFyvjdM5o+Php1qKOcAjxzPHs/Z4OuHVgQarOg7qYKCDtrHjgL8vJuIGWp
-         uw8iXSmdrSngnwkcRLWiSWzMiZstCpZwvNqIJ9JPj02CZX0GmmUEYy2RjPcfCJAQQMDf
-         +oQqdsVnAp0Kw1paMkVqw7We5HGu+N6eDK4RK9l5fvXE3EwlmLvGF7QsM//D9KFnTSvX
-         xiNRAQzwYfeOBaxhJYr8rTA2vgsI5t8XhH3WTeU2+gtmMDqraQkbL9AMcsDXp2C4eXZu
-         pkB2LqjLtIKuVstMLVW3tw/mkl7QvSmytoQLYtDOLRDlunysFWjdOfrglmYguDdHUOWG
-         84mg==
-X-Forwarded-Encrypted: i=1; AJvYcCWcgdJEnyLJiL+TpzarvjsTAvdCg5r88gYFLjXd5JMl08+nkRXmnx43MRUOSIYnBzED5sw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxdXN+Av95dk6RkG/cWWMABhgK07RZyl7T1qapQQXf0NLFM+F+p
-	VGWs6egTtCyxg+uE//G+4zEuSnqYom6HAP9iu6qDlxfiy769O3woMvJznEowRXW0kpiPNyoTtM7
-	05GVWDS0eOuGnrRsCoyvqw3U4oWukY5Us495P
-X-Gm-Gg: ASbGncuzlKpG29l0NZakABOTsBwdwTjRBeWhmRTwu95ky8Zam1SuClvEgVsunVUkpRw
-	DhP0luhnQABhifH4UWTozy102a0era2u+2EI5x+gGgXyQ4tp24b/7w3I2bKrQIud4u131zKoMGL
-	lBv/T9a3lc+weWTomNizPNSNYXt0NiJY8iT+yLbKVBCpt6I0Ohyz9B/1h65yxSRGUUYX3/j7txJ
-	FgeAeErDpTEGvoixCbsGvdMKczL+/182gGfWsA=
-X-Google-Smtp-Source: AGHT+IHDWWZt1Ruau+i0qxNdVgb1EAw4dlbBEaulPduU3fpD8EiR3inS/6lnCsWP5uPz9mpEB1ywDVNsnzi2MgAanrQ=
-X-Received: by 2002:a05:6214:518b:b0:70d:e7e1:840f with SMTP id
- 6a1803df08f44-79919416e71mr34460126d6.3.1758313485298; Fri, 19 Sep 2025
- 13:24:45 -0700 (PDT)
+        bh=zZyWMj345JMK6t6kCUqIwRN4Hnmqthcj+sM0JwqTn0w=;
+        b=vSdg4tJKYgG4myBhwd0paGEhzv42PfRqFVygQSHh4nyGf/5+hhZxtsisCji2CnJVod
+         L2CaYrsWdw3BBo5KcHK79B1MJB5kZTSxg75p2Rjw9EivzHcBYeVEEBN+P0n/slIxncs5
+         bHBQscK1ngFYiB793O0exHpsZTLBnuoK8ADOqPcxhMKwZ4ya0/23slxoAj0GUxJbj2CP
+         z+nlTiVAvM62ORQ1eWwHmrB+fxfE8+giOwB81Yt2y2cclPrvyeJ6NTlIQ6PrDazSlS9N
+         DjLkqdTyAy/tZFPyhkDyfaVCDczOz4Us0oNAsxpP5hGhhZPKJ+St5bCDJUFS2CR8pxXn
+         MxBQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWXL/k3SZfedlsMzSq9K/NYdeo6BZpmwK51J/r0zU3hjSyWmg8CcNHVttREtEOMK0PSII8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzDjwb1QbTameMq0X1g1pGL8kb1OYs3tFF6CAg9+urU4yDnnYSI
+	PfKdi4EcGMuAQEdOgje1qSOS2e+oOHbXi7N3Tq7c3TSOqAPun3qRBsASmVeucyUsCucpDJpcL8R
+	QfOSmmbR8sdio+5WoWfGAlnRIB5Jjh9g=
+X-Gm-Gg: ASbGncu1iyp5PydEQlZEr+SMk0IzfJ+x49ReAk3bk1ZSjlcxDJEy5d8K4qGtodqqnxQ
+	1FzZxUgZir6hQ1n+N6vdTaVYZWjZzhDB12VPVLqIAkMFTUFTUAYMhmq2kBiWlPIsJdkQM/4qRO4
+	a6D31RN1rH61CeqDcFJqf+ZC8I9NsvW6Q6KIUINNAKPfUyoqClHSqHHte7Q43xNvNx8kWdpJcVv
+	zhHySt+
+X-Google-Smtp-Source: AGHT+IHSqE0Gn6QZxAOX5rY/cLvcPvC3iJQScrBuoX3diEUkIkQIK1hCuv2CFmfU/MmU8JkHUVSV9Zf2kGE+MPIDfDg=
+X-Received: by 2002:a05:651c:144:b0:363:60ae:f777 with SMTP id
+ 38308e7fff4ca-36416fa7829mr15852431fa.25.1758313560240; Fri, 19 Sep 2025
+ 13:26:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,65 +61,56 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
- <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com> <6032a8740c0ba72420f42c3d8d801e1bdeec12d0.1758071798.git.gitgitgadget@gmail.com>
- <CAPig+cS_=YTBaCjn8-Th3yn3_k+a8_pMOmdv_Dq4S0tfp8BRCg@mail.gmail.com> <CAH=ZcbBBkk2B3PxKf54MRnAmURMK8W7ofFZBRS=ZzkuDNWsY9w@mail.gmail.com>
-In-Reply-To: <CAH=ZcbBBkk2B3PxKf54MRnAmURMK8W7ofFZBRS=ZzkuDNWsY9w@mail.gmail.com>
-From: Eric Sunshine <ericsunshine@gmail.com>
-Date: Fri, 19 Sep 2025 16:24:34 -0400
-X-Gm-Features: AS18NWCUtIq5lJ-j1HnNb1lmF0PjwUuAQKh75zXA4-W5PRGqt60a5YzjXqnk2Xg
-Message-ID: <CAPig+cSBEX5QGnzpBnVs_hKM2iUqcmA4-DzKDgkwpG9ZzWZ__w@mail.gmail.com>
-Subject: Re: [PATCH v2 07/18] build: introduce rust
-To: Ezekiel Newren <ezekielnewren@gmail.com>
+ <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com> <6a27e07e6310b6cad0e3feae817269b9b8eaed69.1758071798.git.gitgitgadget@gmail.com>
+ <CAPig+cTZch_pvfurtjBTNphMeRQL6jSBSjNY-4mffjoXZ4eqcw@mail.gmail.com>
+In-Reply-To: <CAPig+cTZch_pvfurtjBTNphMeRQL6jSBSjNY-4mffjoXZ4eqcw@mail.gmail.com>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Fri, 19 Sep 2025 14:25:48 -0600
+X-Gm-Features: AS18NWCw_utff3JamS8dn6B5gsApDrfetwolWqG2Jvl4STCUPkJh0U7iG2JRsTs
+Message-ID: <CAH=ZcbAO8143RLqhriPY-W6=TzOFa5_CBfbJmM1-WWFhjAJrxw@mail.gmail.com>
+Subject: Re: [PATCH v2 13/18] build-helper: link against libgit.a and any
+ other required C libraries
+To: Eric Sunshine <sunshine@sunshineco.com>
 Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 19, 2025 at 4:11=E2=80=AFPM Ezekiel Newren <ezekielnewren@gmail=
-.com> wrote:
-> On Wed, Sep 17, 2025 at 2:26=E2=80=AFAM Eric Sunshine <sunshine@sunshinec=
-o.com> wrote:
-> > Is ".idea" directory detritus from your chosen editor? If so, it
-> > probably ought not be added to this list since we don't otherwise
-> > ignore detritus from foreign tools such as that.
+On Wed, Sep 17, 2025 at 2:51=E2=80=AFAM Eric Sunshine <sunshine@sunshineco.=
+com> wrote:
 >
-> Yes. I use the Jetbrains IDE's CLion and RustRover for C and Rust
-> respectively. Jetbrains has an IDE for MANY languages and all of them
-> use .idea/ as the folder for IDE specific configuration. I'm fine with
-> keeping it out of .gitignore, but I wanted to know what the community
-> thought. [...]
-
-There is a bit of discussion about this later in this same email
-thread. If the project does ultimately decide to accept these
-.gitignore entries, adding them would be done via a patch or series of
-patches specifically aimed at that goal. Hence, I'd recommend omitting
-the ".idea" entry from this particular patch series.
-
-> > > +if rustup show active-toolchain | grep windows-msvc; then
-> > > +  libfile=3D"${crate}.lib"
-> > > +  PATH=3D"$(echo $PATH | tr ':' '\n' | grep -Ev "^(/mingw64/bin|/usr=
-/bin)$" | paste -sd: -):/mingw64/bin:/usr/bin"
-> > > +fi
+> On Tue, Sep 16, 2025 at 9:18=E2=80=AFPM Ezekiel Newren via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> > build-helper: link against libgit.a and any other required C libraries
 > >
-> > Please add either an in-code comment or a sentence/paragraph to the
-> > commit message explaining why this PATH munging is needed.
+> > Don't link against the C libraries when building with Make or Meson.
+> > Run cargo tests like this:
+> > cd rust && cargo clean && USE_LINKING=3Dtrue cargo test
+> >
+> > Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+> > ---
 >
-> I will amend the commit with something like:
-> On windows when building with msvc using shell scripts it looks for
-> link in /mingw64/bin|/usr/bin when it actually needs to look somewhere
-> else for the msvc linker program. Since removing these from PATH would
-> break everything else in the shell; move them to be at the end of
-> PATH.
+> Perhaps it's because I haven't been following the discussion closely
+> enough, but the above commit message leaves me entirely in the dark.
+> After reading and rereading it several times, I suppose it is trying
+> to address some difference between building with `cargo` vs. building
+> with Make or Meson, but it gives no explanation of what the
+> differences are or what problem it is trying to solve. So, please
+> enhance the commit message to begin with the "why" and then proceed to
+> the "what" or "how".
 
-I had to read and reread this several times but I think I get what it
-is saying. To paraphrase your explanation...
+As I partially explained in previous comments about my commits. I was
+trying to get the Rust compiler to link against libgit.a so that any
+Rust code that references C code in Git would work in Rust unit tests.
+The way that Cargo invokes rustc and links to libraries can be
+controlled through build.rs. To use an example; When build.rs prints
+the following lines to stdout:
+cargo:rustc-link-search=3Dnative=3D/path/to/git/build/dir
+cargo:rustc-link-lib=3Dstatic=3Dgit
+The first line tells cargo to tell the Rust compiler to look in
+'/path/to/git/build/dir' for objects. The second line tells Cargo to
+tell the Rust compiler to link against libgit.a. Telling Rust how to
+link against libgit.a is only needed for Rust unit tests that
+reference Git defined C code.
 
-When building with `cargo` (I presume), and it comes time to link the
-program, the build process is looking for the Microsoft linker named
-LINK.exe but, due to PATH order, is instead finding the Unix command
-`link` (which is a specialized invocation of the more common `ln`
-command). As such, the build process incorrectly invokes the Unix
-`link` rather than the Microsoft LINK.exe and fails. To work around
-this problem, you move the standard Unix command-containing paths to
-the end of PATH so that the Microsoft LINK.exe is found first.
-
-...does that sound correct?
+I'll drop build-helper for this series, since it only helps with
+linking against libgit.a for Rust unit tests.
