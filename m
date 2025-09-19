@@ -1,89 +1,131 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DEA1274FEF
-	for <git@vger.kernel.org>; Fri, 19 Sep 2025 21:29:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0691A2C25
+	for <git@vger.kernel.org>; Fri, 19 Sep 2025 21:33:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758317347; cv=none; b=AZxz4I6O0OrxXNDiMLaS7U8CLv0sMV5NtbVgq4FEhXqdqxO5kME1jqhVX6dgMIGnA6c9ipUM5LQpn9NzMW2t5IjhFS9clCu9hO4hgfnRQjMGoZMThtY5A5oUDbDkEictXApPMitLtvy8tuWRr1AXd9flwuX7BVd2YWd4RwBGf14=
+	t=1758317618; cv=none; b=bXTfmq/WDzdmN+ufO8PRu/Eg0i7SKmCU3LmQZcfBkuEHu0/0nulLZ0L6KGl08NXnWKtivVX1M6CQqniAoJrAg+mw5dRJCifowhmGy/+joTgsLEhCHNmBzCZvrB2AyhICyTfWz+Njw+BLp2Ka84HwUOC1q+2cDho4YyjiO3FkBCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758317347; c=relaxed/simple;
-	bh=DLVirt78A56LDLzdQL3zC1OJYWel6iafTq04/38A0AI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=D1H7ku2ZZEYddsnCVjklhm3D0KdtkNC0C5Z1Bz/BIXMYMag0Up96BleApktdI7uBxwL97e0hKWan7kVLCnGFe5rIpVAUd/I4SwXHY4a7B/o5/IHhuN1vT1fIOS3ShXGHgkLuxWjOV6qAuXIzOsdMHLV9K2aPgfYFS9gspI32DLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XlGB5o/c; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758317618; c=relaxed/simple;
+	bh=kR7qgZH9DoKcQbR0xEVGBdXvIZ6m0uDSjIqeq+3oc7g=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ibgTJdEzquCGtv0y9yu1ELIyyFjtHYRjPtCOT7WvFhBQwBhxOMON9mjkp5nNpLk+zna8Gx0xnUOyFOj7fhpUZJmtuUI0ks8aDF8aMsB0U5jrkpGIbHoGhz7EAV1NG/fKqau/G7ek0k0QgDlzJIIcJaEv/6WNOE7Xr/TGlsqhHpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=az93Fhuk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=msU7pjsw; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XlGB5o/c"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-579c95a2be2so1941552e87.1
-        for <git@vger.kernel.org>; Fri, 19 Sep 2025 14:29:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758317343; x=1758922143; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DLVirt78A56LDLzdQL3zC1OJYWel6iafTq04/38A0AI=;
-        b=XlGB5o/ckITxnAf4jcpkfx07uYsciCP82v4gAg0LLm/c0LKTVMX/67Dt4opYxlfN5B
-         kUKs1t48ShOOuOxLLvhj5OUlXGAE83jhQmnTPxnwwd8CTrJuyP551C6GZXcKXJU27q7a
-         gtqsQvGkrxS2LAqHGXtarbXkZp1rg12YktHY+NINabDhycWvYJ6BSYrtB8rFTqRBD/Re
-         aIEjJs9hW8PrYpalE1srNT39cpFYvnSBNnWXZVtfgE4sNCOlI3TD5nrXLVAchVXzeR6O
-         XffheZff7Xdnv2yRlvRAGANGIG2NLfNuIfD4lLIHnRZnKwGEJLWy4hjrp2A6immWvjL5
-         7+aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758317343; x=1758922143;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DLVirt78A56LDLzdQL3zC1OJYWel6iafTq04/38A0AI=;
-        b=UnOm3PL7bT2i13HeCCpNDa2MgR9PREj2o590JM+rSJ40la2CdeP7To/3vTHeYo8SEm
-         UZIjBKjgpezqiSfKdYAljYVk5MfXdWurv+k+0oanoiQvI2Vl2FHgOIFPLDXGsyHAe4ue
-         yWoce/O3ehtZK5omVpbYsAHlliFZyNFcwAPT+qEOiR6T3t25APO2PfB9mK4WP5EhrWeN
-         /Gq8TQSExOwxGan9bXNmnRqyt7AcLCqht0XoSMTtCMXHbom+WEn8cu9ZvfFYfiZD+mto
-         pnq2Ip50Iz2u9JW1IDFVcsPU+nwcmz+sMqNMtIilfCs1tr9fqDgTXjPUthliGretRFZz
-         8HaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXzAVsO/JdNq05cTJ1yZsYR1u26QuTnCpVF9WXEvKvMpzGjganSRTnTdTFooeAnGVfvRr4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwnY8aUII6CSpXrnoHqQKCdfQtKReO/Zj7gMT/72cJWGdv+8tok
-	+uj9OgiP1igzB0kg8mMPBS4yZjqkC63PhKbNrntj+ry42/p+v0hGSAY7EnAG7O42RoCwshRG5sJ
-	jOlDHtqglu+SS0yNlhx6HwETXEqQNAdA=
-X-Gm-Gg: ASbGncsnvdUKTiLLBnBABje1j9cG6Tdjy6fS8H0FBxwxfP7z2Ov5qW/lmfzD85EGXKO
-	WoIx83ea7CwE9WN6HwOnUgJxiQ0sZ16eSbP2GnMMiHtX30tv4Lbj6Q1nAs9C6coTOTYdtrintGB
-	fCFSnqHxD6qDCXGS9OhdsgtTWgsjJeA1eQ0TUS/TRzSBuPy/h6MXUC2GTYRYgkdMef7/xKR9rqj
-	+AXzVAZ
-X-Google-Smtp-Source: AGHT+IFyfSrd9/q39EDicCB6vh9FljGrJVOXckHTvtg9YFuqPQvSRdRtHNezfG14+RvhbQBv/zHmnFadDiKKEdB1s74=
-X-Received: by 2002:a05:6512:12d0:b0:55f:4746:6202 with SMTP id
- 2adb3069b0e04-579e0ca90edmr1879078e87.11.1758317343257; Fri, 19 Sep 2025
- 14:29:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="az93Fhuk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="msU7pjsw"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 104881D000DC;
+	Fri, 19 Sep 2025 17:33:35 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Fri, 19 Sep 2025 17:33:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1758317614; x=1758404014; bh=rzLNcNAgY093EJgA900hdMmZZy5Lc6FL
+	M56HTuancEU=; b=az93Fhukd9qzzKzYsmz5UsedKGzZvIdLZSvHZ6GI4JFCYWXC
+	oFdsoq8aGi6yLweyBTL8my/oXapcKvlm8nvrIO0lfD8NuGLSu/37PgWnTMaHMi21
+	qwtRHRcoLOIXGuZ0Eg7uftg9seXV4tJIoVjwCX6dz0ga+9fffJQteT6tyazsWwL2
+	FO3qozFAYRm75Zf039zDln6Ju4ydvHi1W6/yv4Aa21eiYxTsLnzInSnQ0Qb0aVKm
+	P5iiZVB++/8IHIQJy+5rf1ZTcM6WP4tdxCX2TKLhp2HhZks1UFnp3qT0jendpt8F
+	nuG9bNm5Z8f3fpIKznW3VPrCYtBzoUw7xNa5lQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758317614; x=
+	1758404014; bh=rzLNcNAgY093EJgA900hdMmZZy5Lc6FLM56HTuancEU=; b=m
+	sU7pjswgjZ53PQuntnqScxSKm3STLZdyg1rWqmyexJf6cBIiguj9uiSGnXnvm1X2
+	wPqN9o/1raqid6yL/MAKncHHMpepU2D+ghzXFLtZv6erygXHZqVMN/JRedU1rvkR
+	6R8MZqfyKRwNSwO/twVPmOWa+ubPhMCjg/RUDydoh2Y5mRQSC/F9akRupRWyoViR
+	P++COJXfSkspi9IcJ9WxTlFtvVKw0ZVO0BQ/3D1NcSxA6hDfCy/ZjKEYPIK4LYzS
+	EuVyrl70KH9Se5o9bfKN82A5rH5tOI5LA3TRS4T9A8HG+d+gBRkhbF9GrjrqdQ4B
+	BzIj6h5Ekfm9/BnqSTFnA==
+X-ME-Sender: <xms:LszNaFRsCpYRRpa05KeDrlw1YC4IY7WSC5iY8S2uCPJfcdGf9c8dhQ>
+    <xme:LszNaO-NfCm8hHUzBCLF95UhdUu51x6twq_odWIL3hT_icL8fCgLrc39vy9LZpX-J
+    dtD0QeZtGK7vDf1ow>
+X-ME-Received: <xmr:LszNaMpxu9MUSBQlkucBtcy278_yUFQm-FOhcBHHawicY8EKSvFWN8enPy4YFi1bShQQFOZgA85-5HtTxh1yWDFtaOu08YQ3BDbU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehtddvlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvufffkfgfgggtsehttdertddtredtne
+    cuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohig
+    rdgtohhmqeenucggtffrrghtthgvrhhnpeelvdeftdeftdekfeeuveelgfelteeiueffff
+    ekhffgkeevheekhffgteejhfffgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtph
+    htthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:LszNaLlsCYtq2jCFQa3s8VvflXxCsp_vs8Gd4xTxXUS1AbPKbY0C9Q>
+    <xmx:LszNaDJs1fD9DOud8bsGth4VSURmrFPkXOqdbIuKod2oR1VH0g-DAA>
+    <xmx:LszNaAywwD9jKZva8T-RxLYb0wic5BA3vNA2miCUMoItvWw42T-QbA>
+    <xmx:LszNaLu0F6gaeb4EPtxuPIBerywEg4KdLBX_SaYpF1eBfbDlT0mxQQ>
+    <xmx:LszNaP0hLAt8Cyp1Aju7ugSIUyA0WwdHwgxiuMGUlzrpQ80LGhTORlJZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 19 Sep 2025 17:33:34 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [RFC] doc: check-docs and WITH_BREAKING_CHANGES
+Date: Fri, 19 Sep 2025 14:33:33 -0700
+Message-ID: <xmqqjz1u161e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
- <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com> <6032a8740c0ba72420f42c3d8d801e1bdeec12d0.1758071798.git.gitgitgadget@gmail.com>
- <CAPig+cS_=YTBaCjn8-Th3yn3_k+a8_pMOmdv_Dq4S0tfp8BRCg@mail.gmail.com>
- <CAH=ZcbBBkk2B3PxKf54MRnAmURMK8W7ofFZBRS=ZzkuDNWsY9w@mail.gmail.com> <CAPig+cSBEX5QGnzpBnVs_hKM2iUqcmA4-DzKDgkwpG9ZzWZ__w@mail.gmail.com>
-In-Reply-To: <CAPig+cSBEX5QGnzpBnVs_hKM2iUqcmA4-DzKDgkwpG9ZzWZ__w@mail.gmail.com>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Fri, 19 Sep 2025 15:28:52 -0600
-X-Gm-Features: AS18NWAOb1xhVw1gf4KTFgSXeYstHYke3MsRjMZ3EE6ugrOzOmPgE3d34lcOzA0
-Message-ID: <CAH=ZcbC9sgZg+Ghv=rRbq8aMbpgo+6ZvRPBs7+4876EL0w4NJg@mail.gmail.com>
-Subject: Re: [PATCH v2 07/18] build: introduce rust
-To: Eric Sunshine <ericsunshine@gmail.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Sep 19, 2025 at 2:24=E2=80=AFPM Eric Sunshine <ericsunshine@gmail.c=
-om> wrote:
-> When building with `cargo` (I presume), and it comes time to link the
-> program, the build process is looking for the Microsoft linker named
-> LINK.exe but, due to PATH order, is instead finding the Unix command
-> `link` (which is a specialized invocation of the more common `ln`
-> command). As such, the build process incorrectly invokes the Unix
-> `link` rather than the Microsoft LINK.exe and fails. To work around
-> this problem, you move the standard Unix command-containing paths to
-> the end of PATH so that the Microsoft LINK.exe is found first.
+Shouldn't we do something like this for breaking builds?
 
-Your understanding is correct.
+Documentation/Makefile pays attention to EXCLUDED_PROGRAMS to
+pretend that the git-$deprecated.adoc files do not exist
+
+    -include GIT-EXCLUDED-PROGRAMS
+
+    MAN1_TXT += $(filter-out \
+                    $(patsubst %,%.adoc,$(EXCLUDED_PROGRAMS)) \
+                    $(addsuffix .adoc, $(ARTICLES) $(SP_ARTICLES)), \
+                    $(wildcard git-*.adoc))
+
+but nobody seems to put the removed programs on the list.  
+
+The dependencies around Documentation/GIT-EXCLUDED-PROGRAMS is still
+screwed up, I think, but this may be a good first step to straighten
+it out.  If "make -C Documentation" runs lint-docs by default, for
+example, we may want to tweak the Makefile down there to make
+link-docs target depend on the GIT-EXCLUDED-PROGRAMS perhaps.
+
+diff --git i/Makefile w/Makefile
+index 893070be76..711cade8fd 100644
+--- i/Makefile
++++ w/Makefile
+@@ -892,6 +892,8 @@ BUILT_INS += git-switch$X
+ BUILT_INS += git-version$X
+ ifndef WITH_BREAKING_CHANGES
+ BUILT_INS += git-whatchanged$X
++else
++EXCLUDED_PROGRAMS += git-whatchanged
+ endif
+ 
+ # what 'all' will build but not install in gitexecdir
+@@ -1363,6 +1365,8 @@ BUILTIN_OBJS += builtin/notes.o
+ BUILTIN_OBJS += builtin/pack-objects.o
+ ifndef WITH_BREAKING_CHANGES
+ BUILTIN_OBJS += builtin/pack-redundant.o
++else
++EXCLUDED_PROGRAMS += git-pack-redundant
+ endif
+ BUILTIN_OBJS += builtin/pack-refs.o
+ BUILTIN_OBJS += builtin/patch-id.o
+@@ -3875,7 +3879,7 @@ ALL_COMMANDS += gitweb
+ ALL_COMMANDS += scalar
+ 
+ .PHONY: check-docs
+-check-docs::
++check-docs:: Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(MAKE) -C Documentation lint-docs
+ 
+ ### Make sure built-ins do not have dups and listed in git.c
