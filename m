@@ -1,71 +1,71 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A06F306B27
-	for <git@vger.kernel.org>; Fri, 19 Sep 2025 08:27:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3816F307486
+	for <git@vger.kernel.org>; Fri, 19 Sep 2025 08:27:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758270433; cv=none; b=QhdwCOTJLmBPARgiw6cvH9Uu2dcFw7sgcOxw2jgrlVQ3VR44mJbMmrhYbWL9jK0Omuyfbh/qXy9o9sfW5d0O0nwndWdShKRUgeK44FmcyV6D92vQC1VeRMLRbBxWBCuFvkwhekcKZzOQlr+20cbGH2l7X1yTFKRprUAKvidWrEI=
+	t=1758270437; cv=none; b=LqNHcPCrEqLfOnG8s9e5JqgvOwHRJ72YR+ajs4E5ML3ET96XjsV3l6BtEBt+NuOEmUWGXmJ0khYxTcnRHNbLE25fFumM0+EFK+fBLz2W3wAWygTJxv5ujeIs7ixZen4ycUlA2551EL7xAtC8kFgg0ic3SB8FfrNQF4fKESM7leA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758270433; c=relaxed/simple;
-	bh=hnmgJ6eA0l6t2gPWUCQOy6kLDlFgFmFQr12mTI0sjIE=;
+	s=arc-20240116; t=1758270437; c=relaxed/simple;
+	bh=6rI1xu+KE4QzmLKZiPadQ3QpL6XU0oSrxNdl6oj2nyM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=bHl6DPVpSnPl5R+xqjTR4qZplCbdW6bDGXwNYWJKCjckThdK2IchWxB3/PHNObiWsddBz7sMyiPTDVSzjiyYGX9yi9ovM3xx75QQnA8rZQODaw9UskxXkQ+Sk7wBCMnaR91xzMa7c/3iP2XhrwIjPRbmJGZli+ThqqQZlVONAhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WKmZMLbt; arc=none smtp.client-ip=209.85.215.169
+	 MIME-Version; b=bLGwCJwSSpJuseMQ1dN8weWXLM3qNdYGFLGq0aAu4YMrih6OOFmW2Fs55SnkYG9KwYCjvQqG63RYPkG4vhmPp1G/WndBKoMbNgUC48AqI+Uy7wNqr7Wzcz+0LX1+fTox6AGrBmbL7/AF49bBJrKogj99QKusagcMSMTSquXNiIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jd+ZQOYE; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WKmZMLbt"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-b5506b28c98so925228a12.1
-        for <git@vger.kernel.org>; Fri, 19 Sep 2025 01:27:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jd+ZQOYE"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2698e4795ebso16065435ad.0
+        for <git@vger.kernel.org>; Fri, 19 Sep 2025 01:27:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758270431; x=1758875231; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758270434; x=1758875234; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=znfMJRKEPSBLVf6WmT6aa6CarCOQYozqB9kvFeygjbk=;
-        b=WKmZMLbtj//OUf4quBZRRoA6Kc4Qg5C+6Ui1BeiwzoPYEOOzlQPEG5KjqTFxbHrC1t
-         DACSLEe/riKEgn6p+jqB0/wFWlDURyWYEG5UtvDm47AjkkO9bOOW/Dy+E749myO8uNhl
-         55s6e1l76jsE0n6RFj+zTwNDHe5YjS6lAQ8kQJl1t32a7+z20mAzmtjZsTOEdlayOA/d
-         w50GFWvrBYsQRH71DDEq33QgWtc2fimwqSDA8NsfM3pnuhD9Du1G7SbwB7ZNcy4rOqHt
-         vtW3BzxWDW18at7zedzGBXDoDhbHF4XKlLwyuLLh5ccVG/v6lCFtduPyG3aQWn5mtpWY
-         0kLw==
+        bh=xAaYdoeigVV5YafQTpQnQzOdS4f8iA5KFe6h35Sa9j8=;
+        b=jd+ZQOYEpZ5Mm3iCVe4Lup5bYBStaLbvhTGt2XotW0FD0SBLmoDl59rxefMoO4lR+V
+         ztKwbsK444undxrsZOQ8wQescTPG8Q7jRWyY3xED58pVUJnyt1dU5Oo+qfCMcwvFXIaz
+         zqRs9pC1EYakdZtasha70EVNpFiQc4mLI2ddAYdyrmXm3Og0XauCauyPr39Y11SGmLLB
+         Ly4qmHlMx6KMIKn1k9gPDE3s21vY990CUEp1JrnXGgY9XZ3tn5b4ELZ3HWsIwI2WD80d
+         UrYfEPdr5LhTcH8dKai/x7ccGDlmSJhZRjl7lNg3TVJ/sYoVbzUnNSD4mkqX1bw4uVJW
+         vh2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758270431; x=1758875231;
+        d=1e100.net; s=20230601; t=1758270434; x=1758875234;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=znfMJRKEPSBLVf6WmT6aa6CarCOQYozqB9kvFeygjbk=;
-        b=USyK03SqRSClhAT8HksQAJGyVPnNmbPWK7tL2wr19HDRKbSfUA6Z523YAoErzixowU
-         NBX/EbF2hN0OGUY/7PD0iD4TKPdi+LpmaX3f8CVvH3CKtJ1nOdNoiHej+eWaXMVg1zLs
-         GXrdB1AzPPpRM1571QFoay1yJWbJChFq5QPUz0YI2m+pYnYNT24s05xrBBMvy++NO+Jx
-         s2nn7TEe/cczM8W89XyZ1QXTAyiqfhRatl5syW9wqO/QX+6v9+33CZc9ttuKaPMLaGTc
-         YfTkusquDorq+1jIfcrvBsJxYg7aNJLMN08S/dNBIvBjzv3NLYgWgIYMh23yTHmeo6w9
-         EGgA==
-X-Gm-Message-State: AOJu0YyJSetq+CpPgqBqtS749vkhpg3w1TOVcpjadY/Oj8Y2RfGFSQGC
-	RnMS6ZXm+NIsBOIU5WMtJKUH1QqqdNwcQxgB3LQON/U8OgNhB2CTBK0RnRHIEQ==
-X-Gm-Gg: ASbGncviMEKH02a1MMaJ5thAsd7nIkMmgfHL4CFAZ3hnjZdBoFKUqXiIQlJiGvm1AM3
-	P3a6OvwjfTB8E1wdRLyBEMXH3Rc7Qi2rTbiGcaALqencGYvuUnbXV94HdUpkPjQegVCz23tdcZw
-	c6LhsEeWGKc7bNSCcN6XAbjAUDwVNiOiqZsvsv/dpOz4tf3eFJXRAE6GuiVp8wR+UJgB59G1xeI
-	tV28VNGV5iG5gMkL6f939d09tqprsB5MQ8ipCyfNIj8kp8RgenVuT4zqDMsj+OJ/BbHly9mYdG2
-	4FiBTn2w5wdMUVbtujmcoYfXI7qMC8J+GReN8skmqb0zSU9BCZy21ezWqRuiS4y/Nd87TcB29/m
-	dgGpODZmjU5aLEwJ+2Bw=
-X-Google-Smtp-Source: AGHT+IGc1yeVxDVwcor3GVDKGp7cdnQ6iM+iUVE59VhCOsSsuVJlelgau8uxGlZWSixQ8quk1Vaivg==
-X-Received: by 2002:a17:90b:53c7:b0:32e:a60d:93e2 with SMTP id 98e67ed59e1d1-33097ff6462mr2862808a91.11.1758270431338;
-        Fri, 19 Sep 2025 01:27:11 -0700 (PDT)
+        bh=xAaYdoeigVV5YafQTpQnQzOdS4f8iA5KFe6h35Sa9j8=;
+        b=Cze2elfOB9SRTyz1xc8Az9SBsCHh8v0hNHdDgZimwF0vpWQMDhh6afQ2yXHH1ElZ6n
+         8sCMgDsM5j8abHtHi6doxAaj+IWuGF1lJMKzzIrocivmuSbZFLIHPPjra7yWfKp7+lvp
+         b6IyGeML8brsqduer7waX9VPHa2D7DPUNt38PIGraMK7Y7txbmsVcY6Xc2Y6h8RTnIEl
+         SdZLSgdMnFG9JV1HFQxWC2jxNy4Ny48vQi+ivTyt7sYUAqs4ipaQ3f0frhwmZry6Rvio
+         +GUC8lCk3aorPKAMDFzaUtAuynjA/m+PT4Uw5zBBH2mjD+ym/W2I0jLQP7DSfn0U3u/g
+         FGFQ==
+X-Gm-Message-State: AOJu0YzwNcdsG2/UVoUVKrIME4sy9V67zOZGw25AG6QiE/WqbbrQ0L66
+	T0x9HL2kqevCoZxQVRHopkM/7WzfljqoKATypgWW8FGbSYC7c5dxdDkVGffaxQ==
+X-Gm-Gg: ASbGncsZapuFdagi+9llGSJVnYDVkF87UN6tte0Oz9GMk0S2tbE35gYY8nCa6AQmHgg
+	IJsXSVKcBB0uzlVPEdvilFAqv5TaNo7ucTD40d1CWx+2ZmjafGPUTPN44C3CDZ4EICDNjvNDehR
+	i/zEPV0EyM7DjhfO7YhPBSK8FjTfyPieOy7NH5k4n+o0YHdbsPDIvU4QpZa+6IKl/pDhXV3z7X4
+	CUiTagSiU0UAWi0BMPPvS4uw41jogMKWMT7YigWj7/HwvVcofKhMJr/edm9J9gasQIXWJ5vatha
+	T9SdE+/0e5R4FymFl1esAJiRGC+e36uZv4Dmi/539JgexyHHweW/PNLenTFMh8AU9NEI+t37Qhj
+	suUvAYyLmW7shKSIfwnM=
+X-Google-Smtp-Source: AGHT+IF2nvH7VNIu4Oi0ToC6u8ks+xnExV21KK0QtDZCWm/ZQcDU3FGviAoDCuKL7qP3rROYOZPczQ==
+X-Received: by 2002:a17:902:c952:b0:269:a8a8:4021 with SMTP id d9443c01a7336-269ba50001dmr36057745ad.38.1758270434003;
+        Fri, 19 Sep 2025 01:27:14 -0700 (PDT)
 Received: from meet.. ([103.176.11.198])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33060803335sm4774254a91.24.2025.09.19.01.27.09
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33060803335sm4774254a91.24.2025.09.19.01.27.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Sep 2025 01:27:10 -0700 (PDT)
+        Fri, 19 Sep 2025 01:27:13 -0700 (PDT)
 From: Meet Soni <meetsoni3017@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	shejialuo@gmail.com,
 	gitster@pobox.com,
 	Meet Soni <meetsoni3017@gmail.com>
-Subject: [GSoC][PATCH v4 7/9] builtin/refs: add optimize subcommand
-Date: Fri, 19 Sep 2025 13:56:45 +0530
-Message-Id: <20250919082647.535213-8-meetsoni3017@gmail.com>
+Subject: [GSoC][PATCH v4 8/9] t0601: refactor tests to be shareable
+Date: Fri, 19 Sep 2025 13:56:46 +0530
+Message-Id: <20250919082647.535213-9-meetsoni3017@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250919082647.535213-1-meetsoni3017@gmail.com>
 References: <20250918054704.544254-1-meetsoni3017@gmail.com>
@@ -78,119 +78,906 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-As part of the ongoing effort to consolidate reference handling,
-introduce a new `optimize` subcommand. This command provides the same
-functionality and exit-code behavior as `git pack-refs`, serving as its
-modern replacement.
+In preparation for adding tests for the new `git refs optimize` command,
+refactor the existing t0601 test suite to make its logic shareable.
 
-Implement `cmd_refs_optimize` by having it call the `pack_refs_core()`
-helper function. This helper was factored out of the original
-`cmd_pack_refs` in a preceding commit, allowing both commands to share
-the same core logic as independent peers.
+Move the core test logic from `t0601-reffiles-pack-refs.sh` into a new
+`pack-refs-tests.sh` file. Inside this new script, replace hardcoded
+calls to "pack-refs" with the `$pack_refs` variable.
 
-Add documentation for the new command. The man page leverages the shared
-options file, created in a previous commit, by using the AsciiDoc
-`include::` macro to ensure consistency with git-pack-refs(1).
+The original `t0601-reffiles-pack-refs.sh` script now becomes a simple
+"driver". It is responsible for setting the default value of the
+variable and then sourcing the test library.
+
+This new structure follows the established pattern used for sharing
+tests between `git-for-each-ref` and `git-refs list` and prepares the
+test suite for the `refs optimize` tests to be added in a subsequent
+commit.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: shejialuo <shejialuo@gmail.com>
 Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
 ---
- Documentation/git-refs.adoc | 10 ++++++++++
- builtin/refs.c              | 17 +++++++++++++++++
- 2 files changed, 27 insertions(+)
+ t/pack-refs-tests.sh          | 431 ++++++++++++++++++++++++++++++++++
+ t/t0601-reffiles-pack-refs.sh | 430 +--------------------------------
+ 2 files changed, 432 insertions(+), 429 deletions(-)
+ create mode 100644 t/pack-refs-tests.sh
 
-diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
-index d462953fb5..e233f21eeb 100644
---- a/Documentation/git-refs.adoc
-+++ b/Documentation/git-refs.adoc
-@@ -18,6 +18,7 @@ git refs list [--count=<count>] [--shell|--perl|--python|--tcl]
- 		   [--contains[=<object>]] [--no-contains[=<object>]]
- 		   [(--exclude=<pattern>)...] [--start-after=<marker>]
- 		   [ --stdin | (<pattern>...)]
-+git refs optimize [--all] [--no-prune] [--auto] [--include <pattern>] [--exclude <pattern>]
- 
- DESCRIPTION
- -----------
-@@ -38,6 +39,11 @@ list::
- 	formatting, and sorting. This subcommand is an alias for
- 	linkgit:git-for-each-ref[1] and offers identical functionality.
- 
-+optimize::
-+	Optimizes references to improve repository performance and reduce disk
-+	usage. This subcommand is an alias for linkgit:git-pack-refs[1] and
-+	offers identical functionality.
+diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
+new file mode 100644
+index 0000000000..3dbcc01718
+--- /dev/null
++++ b/t/pack-refs-tests.sh
+@@ -0,0 +1,431 @@
++pack_refs=${pack_refs:-pack-refs}
 +
- OPTIONS
- -------
- 
-@@ -73,6 +79,10 @@ The following options are specific to 'git refs list':
- 
- include::for-each-ref-options.adoc[]
- 
-+The following options are specific to 'git refs optimize':
++test_expect_success 'enable reflogs' '
++	git config core.logallrefupdates true
++'
 +
-+include::pack-refs-options.adoc[]
++test_expect_success 'prepare a trivial repository' '
++	echo Hello > A &&
++	git update-index --add A &&
++	git commit -m "Initial commit." &&
++	HEAD=$(git rev-parse --verify HEAD)
++'
 +
- KNOWN LIMITATIONS
- -----------------
- 
-diff --git a/builtin/refs.c b/builtin/refs.c
-index 76224feba4..785f476e4b 100644
---- a/builtin/refs.c
-+++ b/builtin/refs.c
-@@ -2,6 +2,7 @@
- #include "builtin.h"
- #include "config.h"
- #include "fsck.h"
-+#include "pack-refs.h"
- #include "parse-options.h"
- #include "refs.h"
- #include "strbuf.h"
-@@ -14,6 +15,9 @@
- #define REFS_VERIFY_USAGE \
- 	N_("git refs verify [--strict] [--verbose]")
- 
-+#define REFS_OPTIMIZE_USAGE \
-+	N_("git refs optimize " PACK_REFS_OPTS)
++test_expect_success '${pack_refs} --prune --all' '
++	test_path_is_missing .git/packed-refs &&
++	git ${pack_refs} --no-prune --all &&
++	test_path_is_file .git/packed-refs &&
++	N=$(find .git/refs -type f | wc -l) &&
++	test "$N" != 0 &&
 +
- static int cmd_refs_migrate(int argc, const char **argv, const char *prefix,
- 			    struct repository *repo UNUSED)
- {
-@@ -113,6 +117,17 @@ static int cmd_refs_list(int argc, const char **argv, const char *prefix,
- 	return for_each_ref_core(argc, argv, prefix, repo, refs_list_usage);
- }
- 
-+static int cmd_refs_optimize(int argc, const char **argv, const char *prefix,
-+			     struct repository *repo)
-+{
-+	static char const * const refs_optimize_usage[] = {
-+		REFS_OPTIMIZE_USAGE,
-+		NULL
-+	};
++	git ${pack_refs} --prune --all &&
++	test_path_is_file .git/packed-refs &&
++	N=$(find .git/refs -type f) &&
++	test -z "$N"
++'
 +
-+	return pack_refs_core(argc, argv, prefix, repo, refs_optimize_usage);
-+}
++SHA1=
 +
- int cmd_refs(int argc,
- 	     const char **argv,
- 	     const char *prefix,
-@@ -122,6 +137,7 @@ int cmd_refs(int argc,
- 		REFS_MIGRATE_USAGE,
- 		REFS_VERIFY_USAGE,
- 		"git refs list " COMMON_USAGE_FOR_EACH_REF,
-+		REFS_OPTIMIZE_USAGE,
- 		NULL,
- 	};
- 	parse_opt_subcommand_fn *fn = NULL;
-@@ -129,6 +145,7 @@ int cmd_refs(int argc,
- 		OPT_SUBCOMMAND("migrate", &fn, cmd_refs_migrate),
- 		OPT_SUBCOMMAND("verify", &fn, cmd_refs_verify),
- 		OPT_SUBCOMMAND("list", &fn, cmd_refs_list),
-+		OPT_SUBCOMMAND("optimize", &fn, cmd_refs_optimize),
- 		OPT_END(),
- 	};
++test_expect_success 'see if git show-ref works as expected' '
++	git branch a &&
++	SHA1=$(cat .git/refs/heads/a) &&
++	echo "$SHA1 refs/heads/a" >expect &&
++	git show-ref a >result &&
++	test_cmp expect result
++'
++
++test_expect_success 'see if a branch still exists when packed' '
++	git branch b &&
++	git ${pack_refs} --all &&
++	rm -f .git/refs/heads/b &&
++	echo "$SHA1 refs/heads/b" >expect &&
++	git show-ref b >result &&
++	test_cmp expect result
++'
++
++test_expect_success 'git branch c/d should barf if branch c exists' '
++	git branch c &&
++	git ${pack_refs} --all &&
++	rm -f .git/refs/heads/c &&
++	test_must_fail git branch c/d
++'
++
++test_expect_success 'see if a branch still exists after git ${pack_refs} --prune' '
++	git branch e &&
++	git ${pack_refs} --all --prune &&
++	echo "$SHA1 refs/heads/e" >expect &&
++	git show-ref e >result &&
++	test_cmp expect result
++'
++
++test_expect_success 'see if git ${pack_refs} --prune remove ref files' '
++	git branch f &&
++	git ${pack_refs} --all --prune &&
++	! test -f .git/refs/heads/f
++'
++
++test_expect_success 'see if git ${pack_refs} --prune removes empty dirs' '
++	git branch r/s/t &&
++	git ${pack_refs} --all --prune &&
++	! test -e .git/refs/heads/r
++'
++
++test_expect_success 'git branch g should work when git branch g/h has been deleted' '
++	git branch g/h &&
++	git ${pack_refs} --all --prune &&
++	git branch -d g/h &&
++	git branch g &&
++	git ${pack_refs} --all &&
++	git branch -d g
++'
++
++test_expect_success 'git branch i/j/k should barf if branch i exists' '
++	git branch i &&
++	git ${pack_refs} --all --prune &&
++	test_must_fail git branch i/j/k
++'
++
++test_expect_success 'test git branch k after branch k/l/m and k/lm have been deleted' '
++	git branch k/l &&
++	git branch k/lm &&
++	git branch -d k/l &&
++	git branch k/l/m &&
++	git branch -d k/l/m &&
++	git branch -d k/lm &&
++	git branch k
++'
++
++test_expect_success 'test git branch n after some branch deletion and pruning' '
++	git branch n/o &&
++	git branch n/op &&
++	git branch -d n/o &&
++	git branch n/o/p &&
++	git branch -d n/op &&
++	git ${pack_refs} --all --prune &&
++	git branch -d n/o/p &&
++	git branch n
++'
++
++test_expect_success 'test excluded refs are not packed' '
++	git branch dont_pack1 &&
++	git branch dont_pack2 &&
++	git branch pack_this &&
++	git ${pack_refs} --all --exclude "refs/heads/dont_pack*" &&
++	test -f .git/refs/heads/dont_pack1 &&
++	test -f .git/refs/heads/dont_pack2 &&
++	! test -f .git/refs/heads/pack_this'
++
++test_expect_success 'test --no-exclude refs clears excluded refs' '
++	git branch dont_pack3 &&
++	git branch dont_pack4 &&
++	git ${pack_refs} --all --exclude "refs/heads/dont_pack*" --no-exclude &&
++	! test -f .git/refs/heads/dont_pack3 &&
++	! test -f .git/refs/heads/dont_pack4'
++
++test_expect_success 'test only included refs are packed' '
++	git branch pack_this1 &&
++	git branch pack_this2 &&
++	git tag dont_pack5 &&
++	git ${pack_refs} --include "refs/heads/pack_this*" &&
++	test -f .git/refs/tags/dont_pack5 &&
++	! test -f .git/refs/heads/pack_this1 &&
++	! test -f .git/refs/heads/pack_this2'
++
++test_expect_success 'test --no-include refs clears included refs' '
++	git branch pack1 &&
++	git branch pack2 &&
++	git ${pack_refs} --include "refs/heads/pack*" --no-include &&
++	test -f .git/refs/heads/pack1 &&
++	test -f .git/refs/heads/pack2'
++
++test_expect_success 'test --exclude takes precedence over --include' '
++	git branch dont_pack5 &&
++	git ${pack_refs} --include "refs/heads/pack*" --exclude "refs/heads/pack*" &&
++	test -f .git/refs/heads/dont_pack5'
++
++test_expect_success 'see if up-to-date packed refs are preserved' '
++	git branch q &&
++	git ${pack_refs} --all --prune &&
++	git update-ref refs/heads/q refs/heads/q &&
++	! test -f .git/refs/heads/q
++'
++
++test_expect_success 'pack, prune and repack' '
++	git tag foo &&
++	git ${pack_refs} --all --prune &&
++	git show-ref >all-of-them &&
++	git ${pack_refs} &&
++	git show-ref >again &&
++	test_cmp all-of-them again
++'
++
++test_expect_success 'explicit ${pack_refs} with dangling packed reference' '
++	git commit --allow-empty -m "soon to be garbage-collected" &&
++	git ${pack_refs} --all &&
++	git reset --hard HEAD^ &&
++	git reflog expire --expire=all --all &&
++	git prune --expire=all &&
++	git ${pack_refs} --all 2>result &&
++	test_must_be_empty result
++'
++
++test_expect_success 'delete ref with dangling packed version' '
++	git checkout -b lamb &&
++	git commit --allow-empty -m "future garbage" &&
++	git ${pack_refs} --all &&
++	git reset --hard HEAD^ &&
++	git checkout main &&
++	git reflog expire --expire=all --all &&
++	git prune --expire=all &&
++	git branch -d lamb 2>result &&
++	test_must_be_empty result
++'
++
++test_expect_success 'delete ref while another dangling packed ref' '
++	git branch lamb &&
++	git commit --allow-empty -m "future garbage" &&
++	git ${pack_refs} --all &&
++	git reset --hard HEAD^ &&
++	git reflog expire --expire=all --all &&
++	git prune --expire=all &&
++	git branch -d lamb 2>result &&
++	test_must_be_empty result
++'
++
++test_expect_success 'pack ref directly below refs/' '
++	git update-ref refs/top HEAD &&
++	git ${pack_refs} --all --prune &&
++	grep refs/top .git/packed-refs &&
++	test_path_is_missing .git/refs/top
++'
++
++test_expect_success 'do not pack ref in refs/bisect' '
++	git update-ref refs/bisect/local HEAD &&
++	git ${pack_refs} --all --prune &&
++	! grep refs/bisect/local .git/packed-refs >/dev/null &&
++	test_path_is_file .git/refs/bisect/local
++'
++
++test_expect_success 'disable reflogs' '
++	git config core.logallrefupdates false &&
++	rm -rf .git/logs
++'
++
++test_expect_success 'create packed foo/bar/baz branch' '
++	git branch foo/bar/baz &&
++	git ${pack_refs} --all --prune &&
++	test_path_is_missing .git/refs/heads/foo/bar/baz &&
++	test_must_fail git reflog exists refs/heads/foo/bar/baz
++'
++
++test_expect_success 'notice d/f conflict with existing directory' '
++	test_must_fail git branch foo &&
++	test_must_fail git branch foo/bar
++'
++
++test_expect_success 'existing directory reports concrete ref' '
++	test_must_fail git branch foo 2>stderr &&
++	test_grep refs/heads/foo/bar/baz stderr
++'
++
++test_expect_success 'notice d/f conflict with existing ref' '
++	test_must_fail git branch foo/bar/baz/extra &&
++	test_must_fail git branch foo/bar/baz/lots/of/extra/components
++'
++
++test_expect_success 'reject packed-refs with unterminated line' '
++	cp .git/packed-refs .git/packed-refs.bak &&
++	test_when_finished "mv .git/packed-refs.bak .git/packed-refs" &&
++	printf "%s" "$HEAD refs/zzzzz" >>.git/packed-refs &&
++	echo "fatal: unterminated line in .git/packed-refs: $HEAD refs/zzzzz" >expected_err &&
++	test_must_fail git for-each-ref >out 2>err &&
++	test_cmp expected_err err
++'
++
++test_expect_success 'reject packed-refs containing junk' '
++	cp .git/packed-refs .git/packed-refs.bak &&
++	test_when_finished "mv .git/packed-refs.bak .git/packed-refs" &&
++	printf "%s\n" "bogus content" >>.git/packed-refs &&
++	echo "fatal: unexpected line in .git/packed-refs: bogus content" >expected_err &&
++	test_must_fail git for-each-ref >out 2>err &&
++	test_cmp expected_err err
++'
++
++test_expect_success 'reject packed-refs with a short SHA-1' '
++	cp .git/packed-refs .git/packed-refs.bak &&
++	test_when_finished "mv .git/packed-refs.bak .git/packed-refs" &&
++	printf "%.7s %s\n" $HEAD refs/zzzzz >>.git/packed-refs &&
++	printf "fatal: unexpected line in .git/packed-refs: %.7s %s\n" $HEAD refs/zzzzz >expected_err &&
++	test_must_fail git for-each-ref >out 2>err &&
++	test_cmp expected_err err
++'
++
++test_expect_success 'timeout if packed-refs.lock exists' '
++	LOCK=.git/packed-refs.lock &&
++	>"$LOCK" &&
++	test_when_finished "rm -f $LOCK" &&
++	test_must_fail git ${pack_refs} --all --prune
++'
++
++test_expect_success 'retry acquiring packed-refs.lock' '
++	LOCK=.git/packed-refs.lock &&
++	>"$LOCK" &&
++	test_when_finished "wait && rm -f $LOCK" &&
++	{
++		( sleep 1 && rm -f $LOCK ) &
++	} &&
++	git -c core.packedrefstimeout=3000 ${pack_refs} --all --prune
++'
++
++test_expect_success SYMLINKS 'pack symlinked packed-refs' '
++	# First make sure that symlinking works when reading:
++	git update-ref refs/heads/lossy refs/heads/main &&
++	git for-each-ref >all-refs-before &&
++	mv .git/packed-refs .git/my-deviant-packed-refs &&
++	ln -s my-deviant-packed-refs .git/packed-refs &&
++	git for-each-ref >all-refs-linked &&
++	test_cmp all-refs-before all-refs-linked &&
++	git ${pack_refs} --all --prune &&
++	git for-each-ref >all-refs-packed &&
++	test_cmp all-refs-before all-refs-packed &&
++	test -h .git/packed-refs &&
++	test "$(test_readlink .git/packed-refs)" = "my-deviant-packed-refs"
++'
++
++# The 'packed-refs' file is stored directly in .git/. This means it is global
++# to the repository, and can only contain refs that are shared across all
++# worktrees.
++test_expect_success 'refs/worktree must not be packed' '
++	test_commit initial &&
++	test_commit wt1 &&
++	test_commit wt2 &&
++	git worktree add wt1 wt1 &&
++	git worktree add wt2 wt2 &&
++	git checkout initial &&
++	git update-ref refs/worktree/foo HEAD &&
++	git -C wt1 update-ref refs/worktree/foo HEAD &&
++	git -C wt2 update-ref refs/worktree/foo HEAD &&
++	git ${pack_refs} --all &&
++	test_path_is_missing .git/refs/tags/wt1 &&
++	test_path_is_file .git/refs/worktree/foo &&
++	test_path_is_file .git/worktrees/wt1/refs/worktree/foo &&
++	test_path_is_file .git/worktrees/wt2/refs/worktree/foo
++'
++
++# we do not want to count on running ${pack_refs} to
++# actually pack it, as it is perfectly reasonable to
++# skip processing a broken ref
++test_expect_success 'create packed-refs file with broken ref' '
++	test_tick && git commit --allow-empty -m one &&
++	recoverable=$(git rev-parse HEAD) &&
++	test_tick && git commit --allow-empty -m two &&
++	missing=$(git rev-parse HEAD) &&
++	rm -f .git/refs/heads/main &&
++	cat >.git/packed-refs <<-EOF &&
++	$missing refs/heads/main
++	$recoverable refs/heads/other
++	EOF
++	echo $missing >expect &&
++	git rev-parse refs/heads/main >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '${pack_refs} does not silently delete broken packed ref' '
++	git ${pack_refs} --all --prune &&
++	git rev-parse refs/heads/main >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '${pack_refs} does not drop broken refs during deletion' '
++	git update-ref -d refs/heads/other &&
++	git rev-parse refs/heads/main >actual &&
++	test_cmp expect actual
++'
++
++for command in "git ${pack_refs} --all --auto" "git maintenance run --task=${pack_refs} --auto"
++do
++	test_expect_success "$command does not repack below 16 refs without packed-refs" '
++		test_when_finished "rm -rf repo" &&
++		git init repo &&
++		(
++			cd repo &&
++			git config set maintenance.auto false &&
++			git commit --allow-empty --message "initial" &&
++
++			# Create 14 additional references, which brings us to
++			# 15 together with the default branch.
++			printf "create refs/heads/loose-%d HEAD\n" $(test_seq 14) >stdin &&
++			git update-ref --stdin <stdin &&
++			test_path_is_missing .git/packed-refs &&
++			git ${pack_refs} --auto --all &&
++			test_path_is_missing .git/packed-refs &&
++
++			# Create the 16th reference, which should cause us to repack.
++			git update-ref refs/heads/loose-15 HEAD &&
++			git ${pack_refs} --auto --all &&
++			test_path_is_file .git/packed-refs
++		)
++	'
++
++	test_expect_success "$command does not repack below 16 refs with small packed-refs" '
++		test_when_finished "rm -rf repo" &&
++		git init repo &&
++		(
++			cd repo &&
++			git config set maintenance.auto false &&
++			git commit --allow-empty --message "initial" &&
++
++			git ${pack_refs} --all &&
++			test_line_count = 2 .git/packed-refs &&
++
++			# Create 15 loose references.
++			printf "create refs/heads/loose-%d HEAD\n" $(test_seq 15) >stdin &&
++			git update-ref --stdin <stdin &&
++			git ${pack_refs} --auto --all &&
++			test_line_count = 2 .git/packed-refs &&
++
++			# Create the 16th loose reference, which should cause us to repack.
++			git update-ref refs/heads/loose-17 HEAD &&
++			git ${pack_refs} --auto --all &&
++			test_line_count = 18 .git/packed-refs
++		)
++	'
++
++	test_expect_success "$command scales with size of packed-refs" '
++		test_when_finished "rm -rf repo" &&
++		git init repo &&
++		(
++			cd repo &&
++			git config set maintenance.auto false &&
++			git commit --allow-empty --message "initial" &&
++
++			# Create 99 packed refs. This should cause the heuristic
++			# to require more than the minimum amount of loose refs.
++			test_seq 99 |
++			while read i
++			do
++				printf "create refs/heads/packed-%d HEAD\n" $i || return 1
++			done >stdin &&
++			git update-ref --stdin <stdin &&
++			git ${pack_refs} --all &&
++			test_line_count = 101 .git/packed-refs &&
++
++			# Create 24 loose refs, which should not yet cause us to repack.
++			printf "create refs/heads/loose-%d HEAD\n" $(test_seq 24) >stdin &&
++			git update-ref --stdin <stdin &&
++			git ${pack_refs} --auto --all &&
++			test_line_count = 101 .git/packed-refs &&
++
++			# Create another handful of refs to cross the border.
++			# Note that we explicitly do not check for strict
++			# boundaries here, as this also depends on the size of
++			# the object hash.
++			printf "create refs/heads/addn-%d HEAD\n" $(test_seq 10) >stdin &&
++			git update-ref --stdin <stdin &&
++			git ${pack_refs} --auto --all &&
++			test_line_count = 135 .git/packed-refs
++		)
++	'
++done
++
++test_done
+diff --git a/t/t0601-reffiles-pack-refs.sh b/t/t0601-reffiles-pack-refs.sh
+index aa7f6ecd81..12cf5d1dcb 100755
+--- a/t/t0601-reffiles-pack-refs.sh
++++ b/t/t0601-reffiles-pack-refs.sh
+@@ -17,432 +17,4 @@ export GIT_TEST_DEFAULT_REF_FORMAT
  
+ . ./test-lib.sh
+ 
+-test_expect_success 'enable reflogs' '
+-	git config core.logallrefupdates true
+-'
+-
+-test_expect_success 'prepare a trivial repository' '
+-	echo Hello > A &&
+-	git update-index --add A &&
+-	git commit -m "Initial commit." &&
+-	HEAD=$(git rev-parse --verify HEAD)
+-'
+-
+-test_expect_success 'pack-refs --prune --all' '
+-	test_path_is_missing .git/packed-refs &&
+-	git pack-refs --no-prune --all &&
+-	test_path_is_file .git/packed-refs &&
+-	N=$(find .git/refs -type f | wc -l) &&
+-	test "$N" != 0 &&
+-
+-	git pack-refs --prune --all &&
+-	test_path_is_file .git/packed-refs &&
+-	N=$(find .git/refs -type f) &&
+-	test -z "$N"
+-'
+-
+-SHA1=
+-
+-test_expect_success 'see if git show-ref works as expected' '
+-	git branch a &&
+-	SHA1=$(cat .git/refs/heads/a) &&
+-	echo "$SHA1 refs/heads/a" >expect &&
+-	git show-ref a >result &&
+-	test_cmp expect result
+-'
+-
+-test_expect_success 'see if a branch still exists when packed' '
+-	git branch b &&
+-	git pack-refs --all &&
+-	rm -f .git/refs/heads/b &&
+-	echo "$SHA1 refs/heads/b" >expect &&
+-	git show-ref b >result &&
+-	test_cmp expect result
+-'
+-
+-test_expect_success 'git branch c/d should barf if branch c exists' '
+-	git branch c &&
+-	git pack-refs --all &&
+-	rm -f .git/refs/heads/c &&
+-	test_must_fail git branch c/d
+-'
+-
+-test_expect_success 'see if a branch still exists after git pack-refs --prune' '
+-	git branch e &&
+-	git pack-refs --all --prune &&
+-	echo "$SHA1 refs/heads/e" >expect &&
+-	git show-ref e >result &&
+-	test_cmp expect result
+-'
+-
+-test_expect_success 'see if git pack-refs --prune remove ref files' '
+-	git branch f &&
+-	git pack-refs --all --prune &&
+-	! test -f .git/refs/heads/f
+-'
+-
+-test_expect_success 'see if git pack-refs --prune removes empty dirs' '
+-	git branch r/s/t &&
+-	git pack-refs --all --prune &&
+-	! test -e .git/refs/heads/r
+-'
+-
+-test_expect_success 'git branch g should work when git branch g/h has been deleted' '
+-	git branch g/h &&
+-	git pack-refs --all --prune &&
+-	git branch -d g/h &&
+-	git branch g &&
+-	git pack-refs --all &&
+-	git branch -d g
+-'
+-
+-test_expect_success 'git branch i/j/k should barf if branch i exists' '
+-	git branch i &&
+-	git pack-refs --all --prune &&
+-	test_must_fail git branch i/j/k
+-'
+-
+-test_expect_success 'test git branch k after branch k/l/m and k/lm have been deleted' '
+-	git branch k/l &&
+-	git branch k/lm &&
+-	git branch -d k/l &&
+-	git branch k/l/m &&
+-	git branch -d k/l/m &&
+-	git branch -d k/lm &&
+-	git branch k
+-'
+-
+-test_expect_success 'test git branch n after some branch deletion and pruning' '
+-	git branch n/o &&
+-	git branch n/op &&
+-	git branch -d n/o &&
+-	git branch n/o/p &&
+-	git branch -d n/op &&
+-	git pack-refs --all --prune &&
+-	git branch -d n/o/p &&
+-	git branch n
+-'
+-
+-test_expect_success 'test excluded refs are not packed' '
+-	git branch dont_pack1 &&
+-	git branch dont_pack2 &&
+-	git branch pack_this &&
+-	git pack-refs --all --exclude "refs/heads/dont_pack*" &&
+-	test -f .git/refs/heads/dont_pack1 &&
+-	test -f .git/refs/heads/dont_pack2 &&
+-	! test -f .git/refs/heads/pack_this'
+-
+-test_expect_success 'test --no-exclude refs clears excluded refs' '
+-	git branch dont_pack3 &&
+-	git branch dont_pack4 &&
+-	git pack-refs --all --exclude "refs/heads/dont_pack*" --no-exclude &&
+-	! test -f .git/refs/heads/dont_pack3 &&
+-	! test -f .git/refs/heads/dont_pack4'
+-
+-test_expect_success 'test only included refs are packed' '
+-	git branch pack_this1 &&
+-	git branch pack_this2 &&
+-	git tag dont_pack5 &&
+-	git pack-refs --include "refs/heads/pack_this*" &&
+-	test -f .git/refs/tags/dont_pack5 &&
+-	! test -f .git/refs/heads/pack_this1 &&
+-	! test -f .git/refs/heads/pack_this2'
+-
+-test_expect_success 'test --no-include refs clears included refs' '
+-	git branch pack1 &&
+-	git branch pack2 &&
+-	git pack-refs --include "refs/heads/pack*" --no-include &&
+-	test -f .git/refs/heads/pack1 &&
+-	test -f .git/refs/heads/pack2'
+-
+-test_expect_success 'test --exclude takes precedence over --include' '
+-	git branch dont_pack5 &&
+-	git pack-refs --include "refs/heads/pack*" --exclude "refs/heads/pack*" &&
+-	test -f .git/refs/heads/dont_pack5'
+-
+-test_expect_success 'see if up-to-date packed refs are preserved' '
+-	git branch q &&
+-	git pack-refs --all --prune &&
+-	git update-ref refs/heads/q refs/heads/q &&
+-	! test -f .git/refs/heads/q
+-'
+-
+-test_expect_success 'pack, prune and repack' '
+-	git tag foo &&
+-	git pack-refs --all --prune &&
+-	git show-ref >all-of-them &&
+-	git pack-refs &&
+-	git show-ref >again &&
+-	test_cmp all-of-them again
+-'
+-
+-test_expect_success 'explicit pack-refs with dangling packed reference' '
+-	git commit --allow-empty -m "soon to be garbage-collected" &&
+-	git pack-refs --all &&
+-	git reset --hard HEAD^ &&
+-	git reflog expire --expire=all --all &&
+-	git prune --expire=all &&
+-	git pack-refs --all 2>result &&
+-	test_must_be_empty result
+-'
+-
+-test_expect_success 'delete ref with dangling packed version' '
+-	git checkout -b lamb &&
+-	git commit --allow-empty -m "future garbage" &&
+-	git pack-refs --all &&
+-	git reset --hard HEAD^ &&
+-	git checkout main &&
+-	git reflog expire --expire=all --all &&
+-	git prune --expire=all &&
+-	git branch -d lamb 2>result &&
+-	test_must_be_empty result
+-'
+-
+-test_expect_success 'delete ref while another dangling packed ref' '
+-	git branch lamb &&
+-	git commit --allow-empty -m "future garbage" &&
+-	git pack-refs --all &&
+-	git reset --hard HEAD^ &&
+-	git reflog expire --expire=all --all &&
+-	git prune --expire=all &&
+-	git branch -d lamb 2>result &&
+-	test_must_be_empty result
+-'
+-
+-test_expect_success 'pack ref directly below refs/' '
+-	git update-ref refs/top HEAD &&
+-	git pack-refs --all --prune &&
+-	grep refs/top .git/packed-refs &&
+-	test_path_is_missing .git/refs/top
+-'
+-
+-test_expect_success 'do not pack ref in refs/bisect' '
+-	git update-ref refs/bisect/local HEAD &&
+-	git pack-refs --all --prune &&
+-	! grep refs/bisect/local .git/packed-refs >/dev/null &&
+-	test_path_is_file .git/refs/bisect/local
+-'
+-
+-test_expect_success 'disable reflogs' '
+-	git config core.logallrefupdates false &&
+-	rm -rf .git/logs
+-'
+-
+-test_expect_success 'create packed foo/bar/baz branch' '
+-	git branch foo/bar/baz &&
+-	git pack-refs --all --prune &&
+-	test_path_is_missing .git/refs/heads/foo/bar/baz &&
+-	test_must_fail git reflog exists refs/heads/foo/bar/baz
+-'
+-
+-test_expect_success 'notice d/f conflict with existing directory' '
+-	test_must_fail git branch foo &&
+-	test_must_fail git branch foo/bar
+-'
+-
+-test_expect_success 'existing directory reports concrete ref' '
+-	test_must_fail git branch foo 2>stderr &&
+-	test_grep refs/heads/foo/bar/baz stderr
+-'
+-
+-test_expect_success 'notice d/f conflict with existing ref' '
+-	test_must_fail git branch foo/bar/baz/extra &&
+-	test_must_fail git branch foo/bar/baz/lots/of/extra/components
+-'
+-
+-test_expect_success 'reject packed-refs with unterminated line' '
+-	cp .git/packed-refs .git/packed-refs.bak &&
+-	test_when_finished "mv .git/packed-refs.bak .git/packed-refs" &&
+-	printf "%s" "$HEAD refs/zzzzz" >>.git/packed-refs &&
+-	echo "fatal: unterminated line in .git/packed-refs: $HEAD refs/zzzzz" >expected_err &&
+-	test_must_fail git for-each-ref >out 2>err &&
+-	test_cmp expected_err err
+-'
+-
+-test_expect_success 'reject packed-refs containing junk' '
+-	cp .git/packed-refs .git/packed-refs.bak &&
+-	test_when_finished "mv .git/packed-refs.bak .git/packed-refs" &&
+-	printf "%s\n" "bogus content" >>.git/packed-refs &&
+-	echo "fatal: unexpected line in .git/packed-refs: bogus content" >expected_err &&
+-	test_must_fail git for-each-ref >out 2>err &&
+-	test_cmp expected_err err
+-'
+-
+-test_expect_success 'reject packed-refs with a short SHA-1' '
+-	cp .git/packed-refs .git/packed-refs.bak &&
+-	test_when_finished "mv .git/packed-refs.bak .git/packed-refs" &&
+-	printf "%.7s %s\n" $HEAD refs/zzzzz >>.git/packed-refs &&
+-	printf "fatal: unexpected line in .git/packed-refs: %.7s %s\n" $HEAD refs/zzzzz >expected_err &&
+-	test_must_fail git for-each-ref >out 2>err &&
+-	test_cmp expected_err err
+-'
+-
+-test_expect_success 'timeout if packed-refs.lock exists' '
+-	LOCK=.git/packed-refs.lock &&
+-	>"$LOCK" &&
+-	test_when_finished "rm -f $LOCK" &&
+-	test_must_fail git pack-refs --all --prune
+-'
+-
+-test_expect_success 'retry acquiring packed-refs.lock' '
+-	LOCK=.git/packed-refs.lock &&
+-	>"$LOCK" &&
+-	test_when_finished "wait && rm -f $LOCK" &&
+-	{
+-		( sleep 1 && rm -f $LOCK ) &
+-	} &&
+-	git -c core.packedrefstimeout=3000 pack-refs --all --prune
+-'
+-
+-test_expect_success SYMLINKS 'pack symlinked packed-refs' '
+-	# First make sure that symlinking works when reading:
+-	git update-ref refs/heads/lossy refs/heads/main &&
+-	git for-each-ref >all-refs-before &&
+-	mv .git/packed-refs .git/my-deviant-packed-refs &&
+-	ln -s my-deviant-packed-refs .git/packed-refs &&
+-	git for-each-ref >all-refs-linked &&
+-	test_cmp all-refs-before all-refs-linked &&
+-	git pack-refs --all --prune &&
+-	git for-each-ref >all-refs-packed &&
+-	test_cmp all-refs-before all-refs-packed &&
+-	test -h .git/packed-refs &&
+-	test "$(test_readlink .git/packed-refs)" = "my-deviant-packed-refs"
+-'
+-
+-# The 'packed-refs' file is stored directly in .git/. This means it is global
+-# to the repository, and can only contain refs that are shared across all
+-# worktrees.
+-test_expect_success 'refs/worktree must not be packed' '
+-	test_commit initial &&
+-	test_commit wt1 &&
+-	test_commit wt2 &&
+-	git worktree add wt1 wt1 &&
+-	git worktree add wt2 wt2 &&
+-	git checkout initial &&
+-	git update-ref refs/worktree/foo HEAD &&
+-	git -C wt1 update-ref refs/worktree/foo HEAD &&
+-	git -C wt2 update-ref refs/worktree/foo HEAD &&
+-	git pack-refs --all &&
+-	test_path_is_missing .git/refs/tags/wt1 &&
+-	test_path_is_file .git/refs/worktree/foo &&
+-	test_path_is_file .git/worktrees/wt1/refs/worktree/foo &&
+-	test_path_is_file .git/worktrees/wt2/refs/worktree/foo
+-'
+-
+-# we do not want to count on running pack-refs to
+-# actually pack it, as it is perfectly reasonable to
+-# skip processing a broken ref
+-test_expect_success 'create packed-refs file with broken ref' '
+-	test_tick && git commit --allow-empty -m one &&
+-	recoverable=$(git rev-parse HEAD) &&
+-	test_tick && git commit --allow-empty -m two &&
+-	missing=$(git rev-parse HEAD) &&
+-	rm -f .git/refs/heads/main &&
+-	cat >.git/packed-refs <<-EOF &&
+-	$missing refs/heads/main
+-	$recoverable refs/heads/other
+-	EOF
+-	echo $missing >expect &&
+-	git rev-parse refs/heads/main >actual &&
+-	test_cmp expect actual
+-'
+-
+-test_expect_success 'pack-refs does not silently delete broken packed ref' '
+-	git pack-refs --all --prune &&
+-	git rev-parse refs/heads/main >actual &&
+-	test_cmp expect actual
+-'
+-
+-test_expect_success 'pack-refs does not drop broken refs during deletion' '
+-	git update-ref -d refs/heads/other &&
+-	git rev-parse refs/heads/main >actual &&
+-	test_cmp expect actual
+-'
+-
+-for command in "git pack-refs --all --auto" "git maintenance run --task=pack-refs --auto"
+-do
+-	test_expect_success "$command does not repack below 16 refs without packed-refs" '
+-		test_when_finished "rm -rf repo" &&
+-		git init repo &&
+-		(
+-			cd repo &&
+-			git config set maintenance.auto false &&
+-			git commit --allow-empty --message "initial" &&
+-
+-			# Create 14 additional references, which brings us to
+-			# 15 together with the default branch.
+-			printf "create refs/heads/loose-%d HEAD\n" $(test_seq 14) >stdin &&
+-			git update-ref --stdin <stdin &&
+-			test_path_is_missing .git/packed-refs &&
+-			git pack-refs --auto --all &&
+-			test_path_is_missing .git/packed-refs &&
+-
+-			# Create the 16th reference, which should cause us to repack.
+-			git update-ref refs/heads/loose-15 HEAD &&
+-			git pack-refs --auto --all &&
+-			test_path_is_file .git/packed-refs
+-		)
+-	'
+-
+-	test_expect_success "$command does not repack below 16 refs with small packed-refs" '
+-		test_when_finished "rm -rf repo" &&
+-		git init repo &&
+-		(
+-			cd repo &&
+-			git config set maintenance.auto false &&
+-			git commit --allow-empty --message "initial" &&
+-
+-			git pack-refs --all &&
+-			test_line_count = 2 .git/packed-refs &&
+-
+-			# Create 15 loose references.
+-			printf "create refs/heads/loose-%d HEAD\n" $(test_seq 15) >stdin &&
+-			git update-ref --stdin <stdin &&
+-			git pack-refs --auto --all &&
+-			test_line_count = 2 .git/packed-refs &&
+-
+-			# Create the 16th loose reference, which should cause us to repack.
+-			git update-ref refs/heads/loose-17 HEAD &&
+-			git pack-refs --auto --all &&
+-			test_line_count = 18 .git/packed-refs
+-		)
+-	'
+-
+-	test_expect_success "$command scales with size of packed-refs" '
+-		test_when_finished "rm -rf repo" &&
+-		git init repo &&
+-		(
+-			cd repo &&
+-			git config set maintenance.auto false &&
+-			git commit --allow-empty --message "initial" &&
+-
+-			# Create 99 packed refs. This should cause the heuristic
+-			# to require more than the minimum amount of loose refs.
+-			test_seq 99 |
+-			while read i
+-			do
+-				printf "create refs/heads/packed-%d HEAD\n" $i || return 1
+-			done >stdin &&
+-			git update-ref --stdin <stdin &&
+-			git pack-refs --all &&
+-			test_line_count = 101 .git/packed-refs &&
+-
+-			# Create 24 loose refs, which should not yet cause us to repack.
+-			printf "create refs/heads/loose-%d HEAD\n" $(test_seq 24) >stdin &&
+-			git update-ref --stdin <stdin &&
+-			git pack-refs --auto --all &&
+-			test_line_count = 101 .git/packed-refs &&
+-
+-			# Create another handful of refs to cross the border.
+-			# Note that we explicitly do not check for strict
+-			# boundaries here, as this also depends on the size of
+-			# the object hash.
+-			printf "create refs/heads/addn-%d HEAD\n" $(test_seq 10) >stdin &&
+-			git update-ref --stdin <stdin &&
+-			git pack-refs --auto --all &&
+-			test_line_count = 135 .git/packed-refs
+-		)
+-	'
+-done
+-
+-test_done
++. "$TEST_DIRECTORY"/pack-refs-tests.sh
 -- 
 2.34.1
 
