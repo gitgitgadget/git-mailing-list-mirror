@@ -1,49 +1,49 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83CC225397
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9ADE22069A
 	for <git@vger.kernel.org>; Fri, 19 Sep 2025 01:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758244186; cv=none; b=qfgU6SuElkAB03E5VFbPSkv6tby3z2TOHMIBRsCjCbtQsJQDc3r0rdhMwLKGeiTgFQyYoUQOKVybusWFG6FzsvWlKrepO9WOPzLyRwnFBzVVbxnI49Vj+OTMiQrg3cmnURqWwUB8RQdkoZP0KhLTUOBTcOjH7dyiozseykQkF+I=
+	t=1758244186; cv=none; b=TkCicGOwaBNpbN1aa2Nhg6+fqqljDkEs4QKA46md8DvZy9WuscvjDONwhqTrBhzR3r7Vz46X1OML3w07qJT3Ef9qNGXE6TzDhtfxo04XCWpKIKykqiAsha7kAEKn+vQpS3w6fmDWm+AngpemybaZwcBWaYLWYOEojCah0BlTUKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1758244186; c=relaxed/simple;
-	bh=wFkgWXhtxBwQ7a8rSgfBfMmfp9jHkAADUfXnLLChS+o=;
+	bh=w4TjYqQkYzw1PRvm9FGD1p5t+VYo7gjmbxOLiWatgfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E8zB1DEPXZPmMkxoyLzeC+klfEI73+hhdYiI7UW+9Rupz6uIh6lRS+3gHg+9HTWXzX93wDYalPRPlbcbk2jklwCax3yU0Nxe/aToKBYatrT/760RndHLLzxE1bjpeiqQw4jVIQZjlP0JjjAWhFAwaBzPaFDCwjAput2qsJKaz1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ulARYH9z; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=AGtdTyzcdtZkKl741QKDeD2G+01r0OD+TuhqUYWO1hBCWxRbimSdedrun6qxhtGp5QVk+efGH5fgUjN4Y444W1VQJRBblvxL6CLyrw8RJExM0K7Mo2uOba8N+qcC2bsSdJuu/wLrcnc73dPKrfLzWQzU3jKVfFfm6ODR8yu1coE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=H9VyS7Yp; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ulARYH9z"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="H9VyS7Yp"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1758244181;
-	bh=wFkgWXhtxBwQ7a8rSgfBfMmfp9jHkAADUfXnLLChS+o=;
+	bh=w4TjYqQkYzw1PRvm9FGD1p5t+VYo7gjmbxOLiWatgfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=ulARYH9zhJS2ve+gQ8A69hNlqJmfuZSV1BMkOPI5HbosA2kQ6iLDRMnAoq3Q4W0i9
-	 Nc4cbyi4G/KsogLD596TEFFHVTvFw5/kjdkx+JcJ2lbCWAyte+CDPQeS8u+eIvW6i7
-	 n1Kn0djfbw5/UVqY30yQoy08CjD9cehKIC/5FQwspu/xJZfjt9j/qaocNWARTXJqRZ
-	 yJMn2fGpd9UyTmdOrptETZpkMgOiIbzPeiMFSau83rRAfzMp71k77ENkfmFPY+SPyc
-	 SDSaH4glSg/O6ofllWD3k1kUhf+0xgKRfvF5QVr8llZudnNYIwQ+7qK9CYQVvsY39J
-	 OgtVxuchVdSepm7Ax/eJjLNHJSB6ibNcXpuCT7GKqcN/17oclbMw5z1ERIMgOPN2Tx
-	 gmYuhrKtyfXLMFhVnqd/oEhRx8pafueeiXq5Om75EG1cLVzJP/Pey7obY0C7r2KFeO
-	 /NAu7QTTsabs3oQ+sC5v961nI2WUC1z9B+8z4ppsyDGjjPb4UrG
+	b=H9VyS7YpI6I5xJFb3xtXEfmo2ncnhODMhrLhChFhw5x5ujc9sz2sbN7VmQ7Wh87KH
+	 ZjfejQBKjXdBfGMD8I9GORGMljcLbRNbPgwjfXOzeVAut23mDS3ZJZ8mFqgKoGdYKs
+	 E5mjOrOf9syjiBdk9zyKhM1bEbl6uwF9sUnkUwVpFbjLM5ExMEmVPMfKscdCXgMesy
+	 96Cvamk7bnXnOynZf/+h3yjZm7zz/aX2YjAEvjACDkUpp1QGYMt8g1lrqJFn7hi0In
+	 jg7cbP8cm8IBs+aYv13jZLtV9b/5y4WUTbxD6EOyWIvGQSkndXyFsXh3DcE8LLiqeq
+	 s+j8MIyT5PxYLvGoXkhiNmtlm+m/Wk0poZ8g3JmKG+/OZY82sMxMIHeYEk1XSXvpqI
+	 slIP/nYNpQ63n+a83aZNVlAt/BsHAoQrhRjVzdIh6Dn6cmhvn6YERa2geyNaFJoyVq
+	 kCUo7bJoa9CzNpQxs6vUfCH+Gv1GdC0ieveH+HwPQgo4XHKzLYK
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ada0:faf8:3cb8:a81f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5E5182019A;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 442FF20157;
 	Fri, 19 Sep 2025 01:09:41 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 8/9] Allow specifying compatibility hash
-Date: Fri, 19 Sep 2025 01:09:10 +0000
-Message-ID: <20250919010911.649831-9-sandals@crustytoothpaste.net>
+Subject: [PATCH 5/9] docs: add documentation for loose objects
+Date: Fri, 19 Sep 2025 01:09:07 +0000
+Message-ID: <20250919010911.649831-6-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
 In-Reply-To: <20250919010911.649831-1-sandals@crustytoothpaste.net>
 References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
@@ -55,74 +55,68 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-We want to specify a compatibility hash for testing interactions for
-SHA-256 repositories where we have SHA-1 compatibility enabled.  Allow
-the user to specify this scenario in the test suite by setting
-GIT_TEST_DEFAULT_HASH to "sha256:sha1".
-
-Note that this will get passed into GIT_DEFAULT_HASH, which Git itself
-does not presently support.  However, we will support this in a future
-commit.
-
-Since we'll now want to know the value for a specific version, let's add
-the ability to specify either the storage hash (in this case, SHA-256)
-or the compatibility hash (SHA-1).  We use a different value for the
-compatibility hash that will be enabled for all repositories
-(test_repo_compat_hash_algo) versus the one that is used individually in
-some tests (test_compat_hash_algo), since we want to still run those
-individual tests without requiring that the testsuite be run fully in a
-compatibility mode.
-
-Finally, in this scenario, we can no longer rely on having broken
-objects work since we lack compatibility mappings to rewrite objects in
-the repository.  Add a prerequisite, BROKEN_OBJECTS, that checks to see
-if creating deliberately broken objects is possible, so that we can
-disable these tests if not.
+We currently have no documentation for how loose objects are stored.
+Let's add some here so its easy for people to understand how they
+work.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/test-lib-functions.sh | 9 +++++++--
- t/test-lib.sh           | 7 +++++++
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ Documentation/gitformat-loose.adoc | 49 ++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
+ create mode 100644 Documentation/gitformat-loose.adoc
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index a28de7b19b..52d7759bf5 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1708,11 +1708,16 @@ test_set_hash () {
- # Detect the hash algorithm in use.
- test_detect_hash () {
- 	case "${GIT_TEST_DEFAULT_HASH:-$GIT_TEST_BUILTIN_HASH}" in
--	"sha256")
-+	*:*)
-+	    test_hash_algo="${GIT_TEST_DEFAULT_HASH%%:*}"
-+	    test_compat_hash_algo="${GIT_TEST_DEFAULT_HASH##*:}"
-+	    test_repo_compat_hash_algo="$test_compat_hash_algo"
-+	    ;;
-+	sha256)
- 	    test_hash_algo=sha256
- 	    test_compat_hash_algo=sha1
- 	    ;;
--	*)
-+	sha1)
- 	    test_hash_algo=sha1
- 	    test_compat_hash_algo=sha256
- 	    ;;
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 621cd31ae1..14c777e4e2 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1917,6 +1917,13 @@ test_lazy_prereq DEFAULT_HASH_ALGORITHM '
- test_lazy_prereq DEFAULT_REPO_FORMAT '
- 	test_have_prereq SHA1,REFFILES
- '
-+# BROKEN_OBJECTS is a test if we can write deliberately broken objects and
-+# expect them to work.  When running using SHA-256 mode with SHA-1
-+# compatibility, we cannot write such objects because there's no SHA-1
-+# compatibility value for a nonexistent object.
-+test_lazy_prereq BROKEN_OBJECTS '
-+	test -z "$test_repo_compat_hash_algo"
-+'
- 
- # Ensure that no test accidentally triggers a Git command
- # that runs the actual maintenance scheduler, affecting a user's
+diff --git a/Documentation/gitformat-loose.adoc b/Documentation/gitformat-loose.adoc
+new file mode 100644
+index 0000000000..c8bef606fb
+--- /dev/null
++++ b/Documentation/gitformat-loose.adoc
+@@ -0,0 +1,49 @@
++gitformat-loose(5)
++==================
++
++NAME
++----
++gitformat-loose - Git loose object format
++
++
++SYNOPSIS
++--------
++[verse]
++$GIT_DIR/objects/[0-9a-f][0-9a-f]/*
++$GIT_DIR/objects/loose-object-idx
++$GIT_DIR/objects/loose-map/map-*.map
++
++DESCRIPTION
++-----------
++
++Loose objects are how Git initially stores most of its primary repository data.
++Over the lifetime of a repository, objects are usually written as loose objects
++initially and then converted into packs.
++
++== Loose objects
++
++Each loose object contains a prefix, followed immediately by the data of the
++object.  The prefix contains `<type> <size>\0`.  `<type>` is one of `blob`,
++`tree`, `commit`, or `tag` and `size` is the size of the data (without the
++prefix) as a decimal integer expressed in ASCII.
++
++The entire contents, prefix and data concatenated, is then compressed with zlib
++and the compressed data is stored in the file.  The object ID of the object is
++the SHA-1 or SHA-256 (as appropriate) hash of the uncompressed data.
++
++The file for the loose object is stored under the `objects` directory, with the
++first two hex characters of the object ID being the directory and the remaining
++characters being the file name.
++
++As an example, the empty tree contains the data (when uncompressed) `tree 0\0`
++and, in a SHA-256 repository, would have the object ID
++`6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321` and would be
++stored under
++`$GIT_DIR/objects/6e/f19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321`.
++
++Similarly, a blob containing the contents `abc` would have the uncompressed
++data of `blob 3\0abc`.
++
++GIT
++---
++Part of the linkgit:git[1] suite
