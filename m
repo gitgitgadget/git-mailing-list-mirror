@@ -1,49 +1,49 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB4A1E32D6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1D91E47A5
 	for <git@vger.kernel.org>; Fri, 19 Sep 2025 01:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758244184; cv=none; b=iPCfkWDT7gTC3QhwiYC5iiIiCVo7mClUJ7np2lX3phAqor/8D9TjoAuGeXMFVHGlpXOcIT163IJsJWLxpth4qsb5TxjHgg1ZUrfmNh/3I4U6iZpz0faICag6SpjzyZws3mhdlX0X5KXBJlpqPrdYI4KExQxoP3oXP6XIxbEYi2A=
+	t=1758244184; cv=none; b=M66BnfpIGWkVWgg+6BMQWHgKigbiNxyNP9/S9SzChqKVaTJpi8OXAkweY8FuHpdp0Ete/j2TaHrdti8Q9owJhc2FCNdf0uWUUddemkJjGXrL5hMZfzs6HpWW+qNekPWRngpTXFuyzzD8ZKk0ly/h5dYZiikue+VX8dCmHYkZyJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1758244184; c=relaxed/simple;
-	bh=8T2BoRcQ1PMZp0OrV3naLWRrJ+HXEppBMbrCvph8Wus=;
+	bh=KTB6yX3WfOYLpAKs3QhqvOGz6nAMaHsvHGVaj+Ps2B4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LqDBcAT2lwn23ITOZcP8WhpW41tst2AjY5RJu51NWbreJGQh005g4ZA5+IKxXjOoDOaHqKsYF9hZvX71NtTjPLT9Sbm07h3yHGcjl6MKQZGXKKGUNjG5GSuvWAxsCqq1KwHbUUSaBl1MuPT6B6K7TdSFj5k83N7jPWKGjIV7UFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=A8Duw1Sq; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=HisampiSK8gGhA9z+TI4WSgLEwZMugQrbf7U29D3EBAWNx3hADEpDZDBdCzny4/OkJTCE94R1oJ/l0L4Cr6Gr9ti2JuYUBDYgAoHBMLatbBIPJ4rwIfOXAb4MR0cPWUzTYTPNknuzHdLU6+kBcZBFnCXv4DDqNo/TA6hdOXg390=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ktD3uMe+; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="A8Duw1Sq"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ktD3uMe+"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1758244181;
-	bh=8T2BoRcQ1PMZp0OrV3naLWRrJ+HXEppBMbrCvph8Wus=;
+	bh=KTB6yX3WfOYLpAKs3QhqvOGz6nAMaHsvHGVaj+Ps2B4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=A8Duw1SqZpJoqsGdpSVANlRXaeB7IX6pKR5dsJUGgJ8lz1JieHaY8pQVWujPz3Vet
-	 fuyT655AK09cGM+lG2vE7Lql5PpzObbcbCdt5Y1kurLMojaOxyWWZpVX/Ksk/yFM3S
-	 8yZ7b0XlVSAOP3s29VEpe2tVl9ABS7yJmuZ7DrVik9mK5Y+bKCspF09tZrBAJmOAz6
-	 FPhWRuV/RbdzvDbK2rCbh2sYw/QUeLnjJ65lm7Bl0xWVELCVD2CVCagF2iHOIx7Yh/
-	 Md4895kfn5di/rh8l99u1/GzUKQHjeH9HtesgpNDcLh6A+ayBt69DIrl88Uw2cBgCv
-	 q//CW33HqAK+jHm9ZBxj76p8cP128bepDn6eNDRqctLX0W5yYUn0ct4Iw9tdO2mX2s
-	 t25wAcMGaqg3otAqzEVIvNXxy6XCCHBaRzRFl0s+C0dA6QS3leJPhrysRR8px2it21
-	 NgHpQhOjwg5vdSbPLwOkXLeNoCNK6mVHXGPD810wuftHf7cGp/7
+	b=ktD3uMe+i/V0LRVfuGJSh1y4m1TExyabcRMw+UzIwoKKAHeE/IRSpD+OsZ6yTh0Rq
+	 W1GBiNqYolXEJLTZ4f3TBoWH8J/fksgqG0rwqMgsiZXLSRhv2SaRKUFOgWBZZ4PSGQ
+	 wVKjChU/j1qQDgh+3zn3OrQ4zNnZK74zpZdOety2WiTC6L5u/4WadZlDA8BUgUfniT
+	 VniZPCJtkwLwLXHXog0zbCwOI7gy0eJTGel/d2QULvx1BPZtwEzPkaq3jqIuzWCPdo
+	 e0cD5WJ3twHy718ysa7MScS7VECDJI8i6kScLkNdIfYrbhtz3gmLrKP6KM+VsS3bYG
+	 Redjqpq7GiJSmzIERiOBRAL47eMHq8Ri9/W7LolsKIS3D8eVkRwZRZKOI3BD97MVMl
+	 eGZM8Q+v4cWFS/0LJbtc1/ggFR61O5XyyJRbD9ObPNIc1J1rEzmumuDJ0Sij4Q4zKP
+	 j7ZxiEfnb4i676xM31M6l0ASDENr3MhZBEea33n5AZ9ixqVQWKP
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ada0:faf8:3cb8:a81f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 29B8E20144;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3B28720156;
 	Fri, 19 Sep 2025 01:09:41 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 2/9] docs: update offset order for pack index v3
-Date: Fri, 19 Sep 2025 01:09:04 +0000
-Message-ID: <20250919010911.649831-3-sandals@crustytoothpaste.net>
+Subject: [PATCH 4/9] docs: improve ambiguous areas of pack format documentation
+Date: Fri, 19 Sep 2025 01:09:06 +0000
+Message-ID: <20250919010911.649831-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
 In-Reply-To: <20250919010911.649831-1-sandals@crustytoothpaste.net>
 References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
@@ -55,49 +55,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The current design of pack index v3 has items in two different orders:
-sorted shortened object ID order and pack order.  The shortened object
-IDs and the pack index offset values are in the former order and
-everything else is in the latter.
+It is fair to say that our pack and indexing code is quite complex.
+Contributors who wish to work on this code or implementors of other
+implementations would benefit from clear, unambiguous documentation
+about how our data formats are structured and encoded and what data is
+used in the computation of certain values.  Unfortunately, some of this
+data is missing, which leads to confusion and frustration.
 
-This, however, poses some problems.  We have many parts of the packfile
-code that expect to find out data about an object knowing only its index
-in pack order.  With the current design, to find the pack offset after
-having looked up the index in pack order, we must then look up the full
-object ID and use that to look up the shortened object ID to find the
-pack offset, which is inconvenient, inefficient, and leads to poor cache
-usage.
+Let's document some of this data to help clarify things.  Specify over
+what data CRC32 values are computed and also note which CRC32 algorithm
+is used, since Wikipedia mentions at least four 32-bit CRC algorithms
+and notes that it's possible to use different bit orderings.
 
-Instead, let's change the offset values to be looked up by pack order.
-This works better because once we know the pack order offset, we can
-find the full object name and its location in the pack with a simple
-index into their respective tables.  This makes many operations much
-more efficient, especially with the functions we already have, and it
-avoids the need for the revindex with pack index v3.
+In addition, note how we encode objects in the pack.  One might be led
+to believe that packed objects are always stored with the "<type>
+<size>\0" prefix of loose objects, but that is not the case, although
+for obvious reasons this data is included in the computation of the
+object ID.  Explain why this is for the curious reader.
+
+Finally, indicate what the size field of the packed object represents.
+Otherwise, a reader might think that the size of a delta is the size of
+the full object or that it might contain the offset or object ID,
+neither of which are the case.  Explain clearly, however, that the
+values represent uncompressed sizes to avoid confusion.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/technical/hash-function-transition.adoc | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ Documentation/gitformat-pack.adoc | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/Documentation/technical/hash-function-transition.adoc b/Documentation/technical/hash-function-transition.adoc
-index f2df1d618d..11c4f2950a 100644
---- a/Documentation/technical/hash-function-transition.adoc
-+++ b/Documentation/technical/hash-function-transition.adoc
-@@ -260,12 +260,10 @@ network byte order):
-     compressed data to be copied directly from pack to pack during
-     repacking without undetected data corruption.
+diff --git a/Documentation/gitformat-pack.adoc b/Documentation/gitformat-pack.adoc
+index d6ae229be5..9b7af5c184 100644
+--- a/Documentation/gitformat-pack.adoc
++++ b/Documentation/gitformat-pack.adoc
+@@ -32,6 +32,10 @@ In a repository using the traditional SHA-1, pack checksums, index checksums,
+ and object IDs (object names) mentioned below are all computed using SHA-1.
+ Similarly, in SHA-256 repositories, these values are computed using SHA-256.
  
--  * A table of 4-byte offset values. For an object in the table of
--    sorted shortened object names, the value at the corresponding
--    index in this table indicates where that object can be found in
--    the pack file. These are usually 31-bit pack file offsets, but
--    large offsets are encoded as an index into the next table with the
--    most significant bit set.
-+  * A table of 4-byte offset values. The index of this table in pack order
-+    indicates where that object can be found in the pack file. These are
-+    usually 31-bit pack file offsets, but large offsets are encoded as
-+    an index into the next table with the most significant bit set.
++CRC32 checksums are always computed over the entire packed object, including
++the header (n-byte type and length); the base object name or offset, if any;
++and the entire compressed object.  The CRC32 algorithm used is that of zlib.
++
+ == pack-*.pack files have the following format:
  
-   * A table of 8-byte offset entries (empty for pack files less than
-     2 GiB). Pack files are organized with heavily used objects toward
+    - A header appears at the beginning and consists of the following:
+@@ -80,6 +84,15 @@ Valid object types are:
+ 
+ Type 5 is reserved for future expansion. Type 0 is invalid.
+ 
++=== Object encoding
++
++Unlike loose objects, packed objects do not have a prefix containing the type,
++size, and a NUL byte. These are not necessary because they can be determined by
++the n-byte type and length that prefixes the data and so they are omitted from
++the compressed and deltified data.
++
++The computation of the object ID still uses this prefix, however.
++
+ === Size encoding
+ 
+ This document uses the following "size encoding" of non-negative
+@@ -92,6 +105,11 @@ values are more significant.
+ This size encoding should not be confused with the "offset encoding",
+ which is also used in this document.
+ 
++When encoding the size of an undeltified object in a pack, the size is that of
++the uncompressed raw object. For deltified objects, it is the size of the
++uncompressed delta.  The base object name or offset is not included in the size
++computation.
++
+ === Deltified representation
+ 
+ Conceptually there are only four object types: commit, tree, tag and
