@@ -1,137 +1,138 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4413016E2
-	for <git@vger.kernel.org>; Fri, 19 Sep 2025 22:34:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B652D8381
+	for <git@vger.kernel.org>; Fri, 19 Sep 2025 22:40:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758321248; cv=none; b=pLtPH5kFZjV7jIGdTh7DjDZztySKerQVUfA6YMtAZFl8jDwT7d5fmd4JmyV5wsYV4m2msP1De1s5OHZID1UXnMVmbX+J9mA9DLMCo4x5+ON0wvxZLQH846zKMF0R7zaWGxHldWHFgn5FXBtm8gpb4l3ZOmu9ZEFFo9AphMaONes=
+	t=1758321631; cv=none; b=QimSwPRw/2YQtilwN+O0+BniNSzcolhPzpNQFPmp2XLMDkSh4ut+5lECYbgWutoITQ9M6cIZGBPTuSdoT+ONwb1evxPElO96eALCgJ0FdJ4E1tHX+3BbcjEQBw/iTkP5CYO8mSNMVaWCW+sE0cLIv+kZrdAOVuqqauA0rlbDcow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758321248; c=relaxed/simple;
-	bh=Bt7LVHm4jDdsV81WMGd2Ja4IlB8A+LG355QOtHoyIDA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eCHRvIWaPCPG+ItmcTlpmY2/jXCk+U4RFnQJfgqwPN0BoD57GegesAjDoJPMj7y5CukQeV5UcTRl+38rfD142aal43q9rOLoJZRe+QorimngrHBqnbWXDFSEd+juU3tHofaHejM0+3LBmvUx7uCchgPoSOUYmh/0JqIDAQ+u9JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=3N5Fyq4X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jZ4lVguX; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758321631; c=relaxed/simple;
+	bh=ZteoDuLj+/h0htv15mDvAUyDIsYKpVaufsNFKz54uq8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WrJcAqiVSENujDuv/6nD/EmBd2Ix7xJWPRD4IhhNYEGdKIKHtI1IcGBbLTeQHonkzjaM8n3tQiUk/d5EdIOgSmxFs3NCzD7d5cTfWkSHvLt9YAHtZNjl62C03LCqbaUmG+jDXjNt3prhE20ltL4MdIMZKGHjyEGCHlaD2omdeo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=fpV0Ei8p; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="3N5Fyq4X";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jZ4lVguX"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id D50041D0003E;
-	Fri, 19 Sep 2025 18:34:03 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 19 Sep 2025 18:34:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758321243; x=1758407643; bh=XtpEGbVBIK
-	4/DsfxZWpkJcos17EyiqEPZ/XkeodNIUk=; b=3N5Fyq4X5VHixmQK8eKzwGdBrX
-	KblPnfupIA4bqVbkH/1o4TV2lbD+veO6gwIha81OhS0edy2oOyvlGpKfs9faM93z
-	487P9cmsh8LXViN/Kc2gYwc19lOUwZMI6Bp47K53q9BwQJ8wayR3x0nJE6++tWa6
-	YeDkDKRBa0VzLVkE2PrGzDZH78MxmkNcceTo/t9lVXbMW0R4qrBFU6c7QNwcAqEq
-	K2D2MhZbEDLmZvds4xB1BuoZ19w64Ffq0Gd2QiqoRYgI+Av27Sza7S0hEh3j5Rpj
-	Y+olpPiTW+Jhm9f5AEAIISSv0bRTrOJImsIeRx2pMzAYT5ve4gWq19Ta7jwg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758321243; x=1758407643; bh=XtpEGbVBIK4/DsfxZWpkJcos17EyiqEPZ/X
-	keodNIUk=; b=jZ4lVguX5JTF2vUX0S6bTlrDfIA9pSLdrpOvdlg7Zc0aHaH9xEZ
-	xuh255Mn2DNOtn2eLahb1WlaISZj4kqeMcW5ZvJxPeS7rbARp2ZlveT3xDOot06p
-	hvpx4qlBjpsToSvPRQqKugXvCVFi2s6LJfcCU2m5FeL/bUBWADVNGckA1snLTPkm
-	5wiuRxObboBYwozJT+FTPtKzNkaIBe35ob/hq4uVH8yP8XWiMv64jvwaLNvbMBeC
-	hc1owO8HkO6AiBfbYZF1XjSvV7ZOLZ8rd2tCmo4IE3GSZU7L5/JhAeaYMv+4z/N7
-	xXGQNAIdyepde+LI30SOuC1djt75PgzzTZA==
-X-ME-Sender: <xms:W9rNaP8oBuJOJgRqDJHvklPPEYC2_XUaqrvrzVdch9AGqvnzhUMX2A>
-    <xme:W9rNaHMhm1VJLg7pJlfKrOuTD9meronrkbvTlSpPTzHrh6YjE9zkbFFuWLGGCGsiC
-    XczklkLsdhhYeCWgw>
-X-ME-Received: <xmr:W9rNaDe6v-gn_pyMrRAT2ZNH76lhMzWtnl7H3GvtTKcjXtiuGy6YUnM6tyXsxxy-xhmT7Cuf2oiNjyTeYJYnh6HUdiKXc6-4zba0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehtdegvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
-    htvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehsthholhgvvgesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:W9rNaGVwueyakwdPWVzX_rs73jbuoEXUuv6axhMaCzApmU1dg7iDYA>
-    <xmx:W9rNaLjyB50fNiITEEa9gi_xSM6PuvIBF9MNmufROL1dGhh-MDUQHg>
-    <xmx:W9rNaF_wTKgk3fpDhNsfDgiqv7ZDwZVwlB5D0KQVamxIpAWBwrz2Fg>
-    <xmx:W9rNaNbzvLk-QVlVY7j1xkGVrebuiubJGIIfy9tBtHXIG9nh_HUqaQ>
-    <xmx:W9rNaGhh1DUimrNTCd_sc132EEtpMzPMFg_gCkm8xxBmZFSwczouPJdx>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Sep 2025 18:34:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,  Derrick Stolee
- <stolee@gmail.com>
-Subject: Re: [PATCH 3/9] docs: reflect actual double signature for tags
-In-Reply-To: <20250919010911.649831-4-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Fri, 19 Sep 2025 01:09:05 +0000")
-References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
-	<20250919010911.649831-4-sandals@crustytoothpaste.net>
-Date: Fri, 19 Sep 2025 15:34:02 -0700
-Message-ID: <xmqq348i138l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="fpV0Ei8p"
+Received: (qmail 134733 invoked by uid 109); 19 Sep 2025 22:40:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ZteoDuLj+/h0htv15mDvAUyDIsYKpVaufsNFKz54uq8=; b=fpV0Ei8pT3q0FNNgvPpyuHzrjnehK24Wovyo/ShD8cRHuTrzqP1tklb9aTQ6v4dwOBeAKZTpPJeXnWL1f3kJEMAzucIIV9rdN+TDAr5HocPZWcv/GQvt5rcoIKASb6eYYgBhvBer0BzR3jAVYR0T+2WxM/EO9Gf14kLVQQ5K1CLk9ZxaRHe14/RA7p1IjOeWCIgyT3ZQpDpTVuLb7Y8njw+FdKHuf03u/nuotfzJoVg+GnlyACjDo/RGBzs3ScAlQTmUfUt6CFbsHliS2LvzI2+fJ1Wuu1Ijb/kv8vtscGoAlNhpBRc9kIluoeBDpFhNLFeRk67rVlDG4/NMCPcoaQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 19 Sep 2025 22:40:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 211342 invoked by uid 111); 19 Sep 2025 22:40:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Sep 2025 18:40:28 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 19 Sep 2025 18:40:27 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Lauri Niskanen <ape@ape3000.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 1/6] stash: tell setup_revisions() to free our allocated
+ strings
+Message-ID: <20250919224027.GA594545@coredump.intra.peff.net>
+References: <20250919223351.GA3906184@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250919223351.GA3906184@coredump.intra.peff.net>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+In "git stash show", we do a first pass of parsing our command line
+options by splitting them into revision args and stash args. These are
+stored in strvecs, and we pass the revision args to setup_revisions().
 
->  Signed Tags
->  ~~~~~~~~~~~
-> +We add new fields "gpgsig" and "gpgsig-sha256" to the tag object format to
-> +allow signing tags in both formats.  The in-body signature is used for the
-> +signature in the current hash algorithm and the header is used for the
-> +signature in the other algorithm.  Thus, a dual-signature tag will contain both
+But setup_revisions() may modify the argv we pass it, causing us to leak
+some of the entries. In particular, if it sees a "--" string, that will
+be dropped from argv. This is the same as other cases addressed by
+f92dbdbc6a (revisions API: don't leak memory on argv elements that need
+free()-ing, 2022-08-02), and we should fix it the same way: by passing
+the free_removed_argv_elements option to setup_revisions().
 
-Not suggesting a change in the text, but to make sure I am reading
-the new text correctly.  Does "the other algorithm" refer to the
-compatibility hash algorithm specified by the compatObjectFormat
-extension and the "current" algorithm refers to the objectFormat
-extension?
+I've added a test here which fails when built with SANITIZE=leak because
+it calls "git stash show --". This by itself is not a very
+interesting invocation, because there is nothing after the "--", and
+thus the "--" is not really doing anything.
 
-> +an in-body signature and a gpgsig-sha256 header for the SHA-1 format of an
-> +object or both an in-body signature and a gpgsig header for the SHA-256 format
-> +of and object.
->  
-> -This means tags can be signed
-> +The signed payload of the tag is the content of the tag in the current
-> +algorithm with both its gpgsig and gpgsig-sha256 fields and
+But I think the current parsing in show_stash() is a little
+questionable. It splits the arguments into revision options and stash
+options solely based on the presence of a leading dash, with no regard
+to "--" at all. So:
 
-My reading of the previous paragraph is that we cannot have gpgsig
-and gpgsig-sha256 fields on a single object at the same time.
+  git stash show -- foo
 
-Should we say "gpgsig or gpgsig-sha256" (instead of "and"), to get
-the resulting text parsable as:
+will take "foo" as a stash option before we even pass anything to
+setup_revisions(). And something like:
 
-	both 
-		its gpgsig or gpgsig-sha256 fields
-	and
-		"-----BEGIN PGP SIGNATURE-----" delimited in-body signature
-	removed.
+  git stash show -- 1
 
-instead?
+will show stash@{1}. But I would expect anything after the "--" to be a
+pathspec. So in this example it would show only the part of the diff
+that touched "foo". And something like:
 
-> +"-----BEGIN PGP SIGNATURE-----" delimited in-body signature removed.
->  
-> -1. using SHA-1 only, as in existing signed tag objects
-> -2. using both SHA-1 and SHA-256, by using gpgsig-sha256 and an in-body
-> -   signature.
-> -3. using only SHA-256, by only using the gpgsig-sha256 field.
-> +This means tags can be signed using one or both algorithms.
->  
->  Mergetag embedding
->  ~~~~~~~~~~~~~~~~~~
+  git stash show -p 1 -- foo
+
+would treat "1" as a stash and "foo" as a pathspec.
+
+That may be something we want to fix, but I want to focus here on the
+leak-fixing without changing behavior. So this test is a little odd, but
+does what we want without locking us in to any particular behavior (we
+only care that "--" by itself does not change the output nor leak).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I wonder if anybody actually cares that "git stash show -- foo" will
+treat "foo" as a stash. If not, then it would probably be a fairly easy
+#leftoverbits project to teach it to stop there and retain everything
+after as a rev argument (which would then treat it like a pathspec).
+
+ builtin/stash.c  | 3 ++-
+ t/t3903-stash.sh | 6 ++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/stash.c b/builtin/stash.c
+index f5ddee5c7f..e5ab3c4cf5 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -957,6 +957,7 @@ static void diff_include_untracked(const struct stash_info *info, struct diff_op
+ static int show_stash(int argc, const char **argv, const char *prefix,
+ 		      struct repository *repo UNUSED)
+ {
++	struct setup_revision_opt opt = { .free_removed_argv_elements = 1 };
+ 	int i;
+ 	int ret = -1;
+ 	struct stash_info info = STASH_INFO_INIT;
+@@ -1015,7 +1016,7 @@ static int show_stash(int argc, const char **argv, const char *prefix,
+ 		}
+ 	}
+ 
+-	argc = setup_revisions(revision_args.nr, revision_args.v, &rev, NULL);
++	argc = setup_revisions(revision_args.nr, revision_args.v, &rev, &opt);
+ 	if (argc > 1)
+ 		goto usage;
+ 	if (!rev.diffopt.output_format) {
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 0bb4648e36..1c9e589bbe 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -1741,4 +1741,10 @@ test_expect_success 'submodules does not affect the branch recorded in stash mes
+ 	)
+ '
+ 
++test_expect_success 'stash show handles --' '
++	git stash show >expect &&
++	git stash show -- >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.51.0.568.g6b54b97edf
+
