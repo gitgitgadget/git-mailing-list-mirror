@@ -1,73 +1,123 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.164])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4431F12E0
-	for <git@vger.kernel.org>; Sat, 20 Sep 2025 05:48:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758347319; cv=none; b=XlRsm3ZT5x6XMGajbC4e59osmUemDU9rvmVxxWJz0VNf5xMA7C/XnlsjybCE/ka4CAOgwDY4t/qoofBripEksebuya3kR8bQNMdJ7nR6KSkziNXQJicEPulMZVpoQg0m4lT8IdU1tnjG6Rdh7dKed83V5D4KR1dJ5zfEYAPO2Gc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758347319; c=relaxed/simple;
-	bh=EMHFE4TcIYZZt6L0wPQLbmP6W+rY05rH844Z0WLOZF8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kMY41S8yadYE+mVqtBe+5cP4X6TtWXe755VSt+1y07a26Yr2KVeOQBXHuTslRhii1TceN1zep7wS/srNlBOUnU0c4e4g/qrfy7oomu/otyGlGI4dsNZfD2wZMKQY1BxW15sePp7B57z2vUbXY1mGQAAV6wAQAKd9HBjosQQC70g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=TEQ7lM/C; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8162F34BA47
+	for <git@vger.kernel.org>; Sat, 20 Sep 2025 08:25:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.164
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758356707; cv=pass; b=NT4XrSzNlu9+2HPFbQ7+UVOzhM5hfLjfhgF4bVZonWgNbD00UjrVZhnNj1WI0cewaIdFvJsODR8B5ch0Ep4c9v8oaZvrdFQliCNx96IIJaSizDKPvoWZo61VPwBxVsUTEYFG7nZDS2THdMVH8PG0TXNotj3659kY52hKewDimLo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758356707; c=relaxed/simple;
+	bh=zOyGO40Egsow13jajKEErhXSsAeZHutnE0dlaxlmoV0=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=h3wkhOttM61zUVle8+0yF2dihirx+Re4koEJXhOx2xOAqKOb7LlmcYEn7G2d1ob06Pz0DZZiVIDyen04NvSX+vV0x6y6bORU8BAj7oZ0jGJnfvx9T750Pc0qTqOOQTM56APEdECNyX1t6tH2Jl77fjOT+/C9sKNIjAZebDZ7fwU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=florianmaerkl.de; spf=none smtp.mailfrom=florianmaerkl.de; dkim=pass (2048-bit key) header.d=florianmaerkl.de header.i=@florianmaerkl.de header.b=IqS8nnso; arc=pass smtp.client-ip=81.169.146.164
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=florianmaerkl.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=florianmaerkl.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="TEQ7lM/C"
-Received: (qmail 137640 invoked by uid 109); 20 Sep 2025 05:48:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=EMHFE4TcIYZZt6L0wPQLbmP6W+rY05rH844Z0WLOZF8=; b=TEQ7lM/CfRQRhlvWzO1PDhVjNE9B5R2E5OSEm6yHW5rmIsP2MVhE9PwPcPtRYXGIVj+/57Pzyzbyl9Es88Pp3tkPpn/8hUYzEw90F0IytJ4HSULv3voBP0mONcvsVoSgXmoA0xtolc7dqXGH+a7VIWB67hoqZksjAyjNdhpGjrK4FcLW9VLaV8UUGC5QRU04X5WJrTcNVbSf2UelbqBzv3NJZdY9YScAdKTFcTXzZR14G83JATgJn5GREU18NCqYzj1N9GcUUTEhUzZLqv1Oyby6ylkI3sPuGpTV+xMhsC+cPvXpwqr4LktNIJJR+NYF59c8CWKAAw5rCaxs5ChgdA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 20 Sep 2025 05:48:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 215563 invoked by uid 111); 20 Sep 2025 05:48:29 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 20 Sep 2025 01:48:29 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 20 Sep 2025 01:48:28 -0400
-From: Jeff King <peff@peff.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Lauri Niskanen <ape@ape3000.com>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 3/6] revision: add wrapper to setup_revisions() from a
- strvec
-Message-ID: <20250920054828.GA996396@coredump.intra.peff.net>
-References: <20250919223351.GA3906184@coredump.intra.peff.net>
- <20250919224847.GC594545@coredump.intra.peff.net>
- <CAPig+cRSQAs79oVmNqvfqhEr6K3T1FR13NwbE50A5CCMJ8RqSA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=florianmaerkl.de header.i=@florianmaerkl.de header.b="IqS8nnso"
+ARC-Seal: i=1; a=rsa-sha256; t=1758356683; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=gPHjAoTQ1dd7GCeNmI0nd8o6udvGG0Eqzli9QM9b/olc/6l8IrOV6YbTzQybgjvYAZ
+    +FTHUHsscilscxEpC5GvQRNu6UgIYZ+8v4G4odS5Qj7g+90iIhMBjm3hH7/O+U3l2V07
+    WFDed9pJEYhlmMSSYp6KwLCJJiaEhfJbkVscvMnzxZKHpAouY5VN2cgI7gOT2kPfefWH
+    plvCeLvnCgRtmo2SbW4pPqbnYk/xmtDXaTksHmYarw0goP2VtGTKnJsqe7PbBGCcPCXq
+    8YREkjoOLOqsutTPwNx7qMSJTC8hg5VIU6OphMMxj5Ye/l0GVm1DXiam5Fm/F6MSspTl
+    FN4A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1758356683;
+    s=strato-dkim-0002; d=strato.com;
+    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
+    From:Subject:Sender;
+    bh=zOyGO40Egsow13jajKEErhXSsAeZHutnE0dlaxlmoV0=;
+    b=DB2FYIjdQQ8qSRGskTcybbMJRZLPhstbw5yVKKmMk0nayKSQGQPzRn6Hvoh1eMWAw2
+    22pqYPO+dYiawwD3vgIDgsMdrZbPT9lK9zhnzWLWijhGnuUnSMtM1PFskE2wMUnz6nNl
+    0/1R8dtCBnLvjNHct42fd+4fJYZX1ikyO91kwKFsqyhdC7PQwGY19ThniZaUoc8FDhmF
+    A17QS0nquNJdXWIBi1AP8J03OaGxWJivOHL/mxGicKOFvyyWQ3AWcTl2uoKJYOTeysGn
+    xfdD+J3+jaaoNMz9TJ2VW/C1j+4m0QTEi2lOfQPD8y4WOiX1djVKPgAziYSh38NHiIyG
+    IDMA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1758356683;
+    s=strato-dkim-0002; d=florianmaerkl.de;
+    h=To:References:Message-Id:Cc:Date:In-Reply-To:From:Subject:Cc:Date:
+    From:Subject:Sender;
+    bh=zOyGO40Egsow13jajKEErhXSsAeZHutnE0dlaxlmoV0=;
+    b=IqS8nnsoA89KBuDA4FPjf9Nn33wuN7LU6WjxmTdTgUxR/oy6gYSccWVmx67tQzrrE3
+    dJW0LnboPsspLuVClHL5sOrfNj+VhEHokl7FqlOkDDwxuQSM7WOUBGtjxgpnqmRVxUUD
+    zFdN78EtvJmggbWoQtWp+fkC/rs5UaltTEVDPiqT1cb2azTlnCEPMBuv/7m8tMQztIxt
+    ddbw6aUl4K6BMsRfK7+W93bptyUy+hDist0kLxmlaf2vZQkGzrpnBis7mZ+aLO2uAMrW
+    xmGOUXZyWIQzEaHCQlQvOVt6/SJKRe2zldwP+W/aLimLSdrI2nwLgaGE7UsnyxXfnue/
+    /y7Q==
+X-RZG-AUTH: ":JWICemCud/DxHoRx2yg49oX0O/FjOgMCY83ji5SkI9B9AAtJgnUUXiwnUKWxDhLInxJKiw=="
+Received: from smtpclient.apple
+    by smtp.strato.de (RZmta 52.1.2 DYNA|AUTH)
+    with ESMTPSA id h2873618K8OgpGu
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve X9_62_prime256v1 with 256 ECDH bits, eq. 3072 bits RSA))
+	(Client did not present a certificate);
+    Sat, 20 Sep 2025 10:24:42 +0200 (CEST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cRSQAs79oVmNqvfqhEr6K3T1FR13NwbE50A5CCMJ8RqSA@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.100.1.1.5\))
+Subject: Re: [PATCH RFC 0/3] Introduce Rust and announce that it will become
+ mandatorty
+From: =?utf-8?Q?Florian_M=C3=A4rkl?= <info@florianmaerkl.de>
+In-Reply-To: <CAH=ZcbCUL-rWw5E6p26T0039gs9q-P8iK5fp73-RzTzKiZ0zMQ@mail.gmail.com>
+Date: Sat, 20 Sep 2025 10:24:32 +0200
+Cc: 20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im,
+ ps@pks.im,
+ Johannes.Schindelin@gmx.de,
+ ben.knoble@gmail.com,
+ cb@256bit.org,
+ collin.funk1@gmail.com,
+ contact@hacktivis.me,
+ eschwartz@gentoo.org,
+ git@vger.kernel.org,
+ gitster@pobox.com,
+ me@ttaylorr.com,
+ newren@gmail.com,
+ phillip.wood123@gmail.com,
+ pierre-emmanuel.patry@embecosm.com,
+ sam@gentoo.org,
+ sandals@crustytoothpaste.net
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E2D395CF-ED37-4D96-8C0A-683638FF2058@florianmaerkl.de>
+References: <4C760AB2-C102-43A3-B0B9-11E248F3FCE0@macos-powerpc.org>
+ <CAH=ZcbCUL-rWw5E6p26T0039gs9q-P8iK5fp73-RzTzKiZ0zMQ@mail.gmail.com>
+To: Ezekiel Newren <ezekielnewren@gmail.com>
+X-Mailer: Apple Mail (2.3864.100.1.1.5)
 
-On Sat, Sep 20, 2025 at 01:10:50AM -0400, Eric Sunshine wrote:
 
-> On Fri, Sep 19, 2025 at 6:51 PM Jeff King <peff@peff.net> wrote:
-> > The setup_revisions() function was designed to take the argc/argv pair
-> > from the operating system. But we sometimes construct our own argv using
-> > a strvec and pass that in. There are a few gotchas that callers need to
-> > deal with here:
-> > [...]
-> > We'll start by converting all of the call-sites which the
-> > free_removed_argv_elements option. There should be no behavior change
-> > for them, except that their "shrunken" entries are cleaned up
-> > immediately, rather than waiting for a strvec_clear() call.
-> 
-> There is some grammatical problem with the first sentence of this
-> paragraph which makes it difficult to decipher.
+> Ezekiel Newren <ezekielnewren@gmail.com> wrote:
+>=20
+> I'd like to hear what OSes
+> and Architectures you use personally and professionally and why adding
+> Rust would be a bad idea.
 
-Urgh, sorry. Should be:
+To add some specific cases from my side as well, problematic platforms =
+include
+Mac OS X on ppc as well as OpenBSD/macppc (32-bit). Both of these are =
+still
+relevant, as OpenBSD is actively maintained on this architecture and Mac =
+OS X
+10.5 is supported by MacPorts, resulting in a system with modern tools =
+that is
+still able to run and debug certain legacy software.
 
-   We'll start by converting all of the call-sites which use the
-   free_removed_argv_elements option.
+In particular, in the Rizin project, we use both platforms regularly to =
+test
+our code for architecture and OS-specific bugs, and we also support them =
+to run
+Rizin itself for debugging and analyzing software there.
 
--Peff
+I do not advocate not adopting Rust because of the language itself, but =
+I think
+it is important to compare the maturity of the compiler and ecosystem to =
+the
+project that will strictly depend on it.=
