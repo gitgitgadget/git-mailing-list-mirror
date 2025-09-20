@@ -1,176 +1,73 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04E1313281
-	for <git@vger.kernel.org>; Sat, 20 Sep 2025 18:40:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D118299A8A
+	for <git@vger.kernel.org>; Sat, 20 Sep 2025 18:46:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758393642; cv=none; b=gNNSOO212tFf9Tr7QBlg12rHMCTn3xPy7Os64VpSBvFqIwXXrLWWQ+5fOCuoMCMirvYkY55rV11puN45u01lcW8VsTTc26Yt4PLAp6pSafSICXtBidrZZ9SAsGTYVynH4LTG/XwVBznS2KbogNrD8oSRWmzsCLjJ5mA7DVxoM1g=
+	t=1758394004; cv=none; b=PYbV864vI67w9M6fmJMiUat3Z/04ECxBMcnNczVXYxsUveguyG2avsk/S9GsIhMd2JboUJR7lu1YjwQwtBnG2ncpyxhWBTdSe/eI1URFbrB7WQa6Iu1czqKn3W78MH5oA7n2RToHyS6J5MWLCPt9bEgC9XbzPZngxewjHwK9Grs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758393642; c=relaxed/simple;
-	bh=2iDkQftGxHAY0NWWvQbXjrfqYlZ0WEBZyKWNLQhyL5o=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kZSI7omY7kztDMBu81zKQEpdeqUD6YIQAAt7JO2EKJeebFJLcfSUPbzVoLEKrYac/+0kzYCS0C0gMC0dp1UoMMCV8US5IUFfz5naGevWAXcyjYG0N4A3Ysg6mYb02gbk6ub+iZNDiK0XeDH7jmpfOfVPFC7ajT/Lbjaauoq4/0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K7AefFUV; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758394004; c=relaxed/simple;
+	bh=c/aBzP9XF95BdwxGHjWQ+PkEsw2UrStPaqJHRb6/67I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ff0Xq0FeRpns9gmJKdBOEHLuYio4APBLVuAjAIsJLIQWWjnYcTGY+p7Z3aNdAJK1OVkJBoLJwLLM7eS+v5gPdQGPRIZki40tJygmG3zK/Jv1FhabvPrfFyzQtiIqIC7sxndCtxqN2OWJo36e6iRR48khUvxF7cs4QgadNqOMvxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=cQpqmnlb; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K7AefFUV"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-71d5fb5e34cso31137427b3.0
-        for <git@vger.kernel.org>; Sat, 20 Sep 2025 11:40:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758393639; x=1758998439; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EYaHYCeR0FFwV/GA/s+VzOXohyHaUgGoCmiYTb9Bms4=;
-        b=K7AefFUVo4cjJlVs1PzWHb2dNhUS875p7txjFzozobjiAYFfMIgF3EjzQNxOflOJu7
-         3fc25DN3T2rq1QY9KOsaStDyq3vink5yWB8jU+hCiHmLRStNQLByAed5yLVFtnjq6YW+
-         gLjRhCFZRzmRuhXCMcKSczcwqduD958013JRvEwVDl6AjneMUScP0/XO4y38u1Zl4pK9
-         9p0AGklCu7Dsnz6O7klohfZPwjriAHP4brH6ZbkuFZ6UoLnJZP89BGLfNV0x9feAPRnK
-         Gj9uZ1tDj0Xkgz9X2+OLJgAWiZZhq0fQhmw+GNrs5t0cQq5rBBNccHBxCRNm2kZQTRKJ
-         /k7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758393639; x=1758998439;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EYaHYCeR0FFwV/GA/s+VzOXohyHaUgGoCmiYTb9Bms4=;
-        b=ncr1Cgk26Sfz753rTu5OHKM+fTry1h9wgI5dZTKf1qZrNvh7daiAtwIYu3EdOjbA7g
-         FkGKL9nP1bInh0Q/x1qhs+bkv8SV2tctU1mqbAqMf+Y0PNBTHzXUU8SVkn0E4s8bApxn
-         S5RAefRFRrGKM/uU5z/J7Dh9JjKCw9br7GerRwYP2FLSLi5Q0zqqpVKXnUwaSHmNSAHK
-         M5MtcXX9d+EnAeC4984elx3SphpHjThpOZjPWAHONOFNe5XXnmoeGyk8sYb4IuIG5dFh
-         OAQRYM6S8zX+Pca+LdEm+GoJ1Sh0WVIv/EGKXFKOP/5oAN1Mf+hssEft0IwGt/9OdafP
-         DbOg==
-X-Gm-Message-State: AOJu0Yw9pcbfBvLgIWkbGzoBB4ukZYODRDw0mDWTIk3yXZ1hG1DI4zkE
-	g/lsaKlU25Pca9U4RSQnCkXYZ8kygfUQ19h0pYyZbV4BDNefULdmQdD+mPn0UCQZ
-X-Gm-Gg: ASbGncvg4EbsU1ZnUGJaj+bXrw8YNk1jn4FGEDeCL/G+UlhrmDioxxL4LeI6rGUAGCV
-	eYQRLT26FIoYnbff9zfR0etHkdMVVjRrP2yUZh/j8PJfsv5a/0XJl0JLexNjobl169YcNe//N/x
-	a8r0zEY0wXUkPAGJ9zj59wvKzhl1qSkjFt3ZbHGJd4zTUYk020AemHABLYvzOfmBtJPgHfe2SjL
-	mJ/ncL/BCAz+329MaDRw/QFORwvYv1CCbIrj80YJvKutDjRkMFbWpHbYaNiQjkYabpsIcoo62af
-	VEjRI14DvhnbO5r+bcgOtoTUByKqfGaC6/Gn4BxmR08yNvxZ0OlVDDuF/UjAiekEFdYsYaMe0Pf
-	OrPgD5TuchBC3JMfNRn3+qz1XoOq2otTvJeojD1c3SHfXu7aqVq3dyEqngiS5GDjfzSB2wphxuW
-	NI96bQqoJxPaNIXrxyhlrC
-X-Google-Smtp-Source: AGHT+IGEED6SbG7XzZaNv3ptpHvY39DEto96PDjpa6GWAK4Zz44L1ZiwL8J1aKZGnPNDZ9JhFnY9cw==
-X-Received: by 2002:a05:690c:6302:b0:731:1bc7:782d with SMTP id 00721157ae682-73ccdc8d15bmr64949327b3.18.1758393639274;
-        Sat, 20 Sep 2025 11:40:39 -0700 (PDT)
-Received: from USROMMRAPPAZZ01.infor.com (pool-74-105-50-139.nwrknj.fios.verizon.net. [74.105.50.139])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7397188c02asm22814067b3.49.2025.09.20.11.40.38
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 20 Sep 2025 11:40:38 -0700 (PDT)
-From: Michael Rappazzo <rappazzo@gmail.com>
-To: git@vger.kernel.org
-Cc: j6t@kdbg.org,
-	Michael Rappazzo <rappazzo@gmail.com>
-Subject: [PATCH v2 2/2] gitk: make Tags and Heads window geometry sticky
-Date: Sat, 20 Sep 2025 14:40:07 -0400
-Message-ID: <20250920184007.26183-3-rappazzo@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250920184007.26183-1-rappazzo@gmail.com>
-References: <20250920184007.26183-1-rappazzo@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="cQpqmnlb"
+Received: (qmail 142263 invoked by uid 109); 20 Sep 2025 18:46:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=c/aBzP9XF95BdwxGHjWQ+PkEsw2UrStPaqJHRb6/67I=; b=cQpqmnlbfnmx0dvxE9GjUw7DWXpouqPhONyM+B+h4nLZqsbgwHabAe27L2OHgUXqpn5vHstJRVy4YGOoGiR9Cvlc/t1vkjKpcVEl+G4+cX/q85EIFm7uC0BSk+pJdecfNbTB/dQPyPEe5ZyA1Hk7pyQiSulvzdPF+4bdGvR5oAW9+Jla45GfrH7hZoPWaooAlPJwhp2vgLhvhv4tgWrEQQ9Lcv6sK5VJN9v5vI29HSd2bw9KsilzTM9b0ML7QBB8DbdbvVb9yb/1Qs8mRWJE+Kcwml8gaFm6DarKmKtatKLQBDIGaLzSQuTVvtzRkvQJadlqa3ssaT8vkwlHsjQv/g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 20 Sep 2025 18:46:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 222948 invoked by uid 111); 20 Sep 2025 18:46:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 20 Sep 2025 14:46:38 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 20 Sep 2025 14:46:38 -0400
+From: Jeff King <peff@peff.net>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v3 01/10] xdiff: delete static forward declarations in
+ xprepare
+Message-ID: <20250920184638.GA1010995@coredump.intra.peff.net>
+References: <xmqqh5wxxcwq.fsf@gitster.g>
+ <83F61517-06DB-402E-911A-E33EE07D54AE@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <83F61517-06DB-402E-911A-E33EE07D54AE@gmail.com>
 
-Currently, the Tags and Heads window always opens at a default position
-and size, requiring users to reposition it each time. This patch makes
-the window remember its geometry between sessions.
+On Sat, Sep 20, 2025 at 01:46:19PM -0400, Ben Knoble wrote:
 
-This change saves and restores the Tags and Heads window size and position
-relative to the main gitk window. The geometry is stored in the config file
-as `geometry(showrefs)` and persists between gitk sessions. The window
-position is stored relative to the main window, so it maintains the same
-spatial relationship when the main window is moved or when gitk is restarted
-on different monitors.
+> >> Best-viewed-with: --color-moved
+> > 
+> > Two comments.
+> > 
+> > - This is a bit unusual to see in the trailer.
+> 
+> This was (loosely!) my suggestion, and I think Peff has once or twice
+> done something similar.
 
-Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
----
- gitk | 35 +++++++++++++++++++++++++++++++++--
- 1 file changed, 33 insertions(+), 2 deletions(-)
+I don't think I've ever used a trailer like that, but I do sometimes
+mention it in prose. I'll sometimes put it in comments below the "---"
+line, though.
 
-diff --git a/gitk b/gitk
-index 95469a8fae..0393241c85 100755
---- a/gitk
-+++ b/gitk
-@@ -3116,6 +3116,11 @@ proc savestuff {w} {
-         puts $f "set geometry(pwsash1) \"[.tf.histframe.pwclist sashpos 1] 1\""
-         puts $f "set geometry(botwidth) [winfo width .bleft]"
-         puts $f "set geometry(botheight) [winfo height .bleft]"
-+        if {[winfo exists .showrefs]} {
-+            puts $f "set geometry(showrefs) \"[wm geometry .showrefs]\""
-+        } elseif {[info exists geometry(showrefs)]} {
-+            puts $f "set geometry(showrefs) \"$geometry(showrefs)\""
-+        }
- 
-         array set view_save {}
-         array set views {}
-@@ -10209,11 +10214,13 @@ proc showrefs {} {
-     if {[winfo exists $top]} {
-         raise $top
-         refill_reflist
-+        wm protocol $top WM_DELETE_WINDOW [list destroy_showrefs $top]
-         return
-     }
-     ttk_toplevel $top
-     wm title $top [mc "Tags and heads: %s" [file tail [pwd]]]
-     make_transient $top .
-+    wm protocol $top WM_DELETE_WINDOW [list destroy_showrefs $top]
-     text $top.list -background $bgcolor -foreground $fgcolor \
-         -selectbackground $selectbgcolor -font mainfont \
-         -xscrollcommand "$top.xsb set" -yscrollcommand "$top.ysb set" \
-@@ -10239,8 +10246,8 @@ proc showrefs {} {
-     ttk::checkbutton $top.sort -text [mc "Sort refs by type"] \
-         -variable sortrefsbytype -command {refill_reflist}
-     grid $top.sort - -sticky w -pady 2
--    ttk::button $top.close -command [list destroy $top] -text [mc "Close"]
--    bind $top <Key-Escape> [list destroy $top]
-+    ttk::button $top.close -command [list destroy_showrefs $top] -text [mc "Close"]
-+    bind $top <Key-Escape> [list destroy_showrefs $top]
-     grid $top.close -
-     grid columnconfigure $top 0 -weight 1
-     grid rowconfigure $top 0 -weight 1
-@@ -10249,6 +10256,8 @@ proc showrefs {} {
-     bind $top.list <ButtonRelease-1> {sel_reflist %W %x %y; break}
-     set reflist {}
-     refill_reflist
-+    after idle [list manage_showrefs_geometry $top restore]
-+    bind $top <Configure> [list manage_showrefs_geometry $top save]
- }
- 
- proc sel_reflist {w x y} {
-@@ -10281,6 +10290,28 @@ proc reflistfilter_change {n1 n2 op} {
-     after 200 refill_reflist
- }
- 
-+proc manage_showrefs_geometry {top action} {
-+    global geometry
-+    switch $action {
-+        save {
-+            if {[winfo exists $top]} {
-+                set geometry(showrefs) [wm geometry $top]
-+            }
-+        }
-+        restore {
-+            if {[info exists geometry(showrefs)] && [winfo exists $top]} {
-+                after 1 [list wm geometry $top $geometry(showrefs)]
-+            }
-+        }
-+    }
-+}
-+
-+proc destroy_showrefs {top} {
-+    manage_showrefs_geometry $top save
-+    savestuff .
-+    destroy $top
-+}
-+
- proc refill_reflist {} {
-     global reflist reflistfilter showrefstop headids tagids otherrefids sortrefsbytype
-     global curview upstreamofref
--- 
-2.51.0
+-Peff
 
+PS I sometimes find:
+
+     git log --format='%(trailers:only,keyonly)' |
+     sort | uniq -c | sort -rn
+
+   amusing to look through for this sort of thing.
