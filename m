@@ -1,142 +1,146 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D772B2FB601
-	for <git@vger.kernel.org>; Sat, 20 Sep 2025 15:29:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4351E5B9A
+	for <git@vger.kernel.org>; Sat, 20 Sep 2025 16:44:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758382151; cv=none; b=lxfg76N2KVMP4YAFROKb8g7CgIAHjET+5DnUPaggIOGB9W4xMKRbnIGgJnxhrnesZeJhfU2B9MmM5M9Oq7tgVbdAsh1aKM+W3x5+JZucnHic3igRBKgoitIl8NX+jBbRqMyll5k5WieMXThLDZdho/m7nD7OwUsYM6sJn7NbSdQ=
+	t=1758386701; cv=none; b=dC2Jj3FssyJwT0P6qEJMPzwQLn97FekdySUSVCxEL6fVop7wKLgoYSlYiLqDIkFwj4vQaYYcN3rkf1j69xT4u9aa/0ClLtyhXEnR7PbOgXD221UcEgYKm+eiWYrg5sHnUMz/o0Hq0rQtz7fHCU7LFpMZb2ROUwOgZ+13UpNhv+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758382151; c=relaxed/simple;
-	bh=5bi2EPiYNPta2QPYE615guiO+OCjx2fRK7BQ9B0l4R0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bDa8bd3BIYGkt8kDAZBtE73+Ka6aEkcSTZGS3lnjufygoaE+2N3AHnTNW6W1Nv32UE3vSA8TDCGhcNSGqSjyc0UawuVVQKGgjcl0K/woenV1wdjJomv835+2JxRqqpVzH5j9n7Vtdr2pTWtYmWSWCnr7XWTv0qcdZFDhCOrq9QM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=bxX07tzI; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1758386701; c=relaxed/simple;
+	bh=wVdFz2LgGb+LD4sP8kUQclgMDXq6tRkhOfZuMo4i0AA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dRPn/dgg/TAA8Vhpn/BIfWQBoXWFbMxoADD47YpKqhqv9kxLRY/TyOKyO1X7nmaRSBGdCa7WGisrQFK+oWUZS1qN9cKMFdJ4e7EoYDWB2IGpoIkXt9LXpxsC/NY1IBGNu0+/Xvx4sMnltn2nQw2ZsHADkRceiHm99uBRSc2G+t8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=R0ZXW0jB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=En4hKtsZ; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="bxX07tzI"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1758382147;
-	bh=5bi2EPiYNPta2QPYE615guiO+OCjx2fRK7BQ9B0l4R0=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=bxX07tzI90uBgNbP1eaxgES7nxMStdat7Az+mSQhdyZG4Yh1n2ltHiu02Y4DY4i4w
-	 haH+tuoSHmj3I6pJXoKn+gV+jcEw3xJC1iiPZOCpmELPAIMhW5/CZdlfqFHSjW9svZ
-	 k86v96nCj+nFvcgwOVhJvpgwZx92Qj9upzNEKT7ZpOBzdLYwUNGJYcRV8kbe4uGBFQ
-	 gZriHH69YKsIqpFP3JGoKWs0urOvUSw/x+uOXAufAEHVceG4BJv6udB1AQkA6f/r4l
-	 OjUlYocrOVvcbrjsv7InRsz6qg8XXnOwhWlVzl6eEqVJOG9pYB9aUuBPrXXAd5Nn50
-	 RhE5PecaUBBVx3bMzWyOh3iaeLYKPE7ICPm5SOWB47iTbLLGLN4LD4RzM+gm368Bqo
-	 LGSqyKumt1p0OEs2cMdZ5DYBbQaVGZdBaU97VPkQBtWjt1D9GB33hxrUad3bi62and
-	 e/72nXG+n/vtWMZC78tACebFYkikrH+gsH4pwcQ19CHVTt5gTdV
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:69d9:2a04:7f4c:de5])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9617A20112;
-	Sat, 20 Sep 2025 15:29:07 +0000 (UTC)
-Date: Sat, 20 Sep 2025 15:29:06 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 3/9] docs: reflect actual double signature for tags
-Message-ID: <aM7IQibwwKFJZcYE@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>, Derrick Stolee <stolee@gmail.com>
-References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
- <20250919010911.649831-4-sandals@crustytoothpaste.net>
- <xmqq348i138l.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="R0ZXW0jB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="En4hKtsZ"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 12D1914000BC;
+	Sat, 20 Sep 2025 12:44:58 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Sat, 20 Sep 2025 12:44:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758386698; x=1758473098; bh=cRd9IORNOd
+	ehBgJ2gJL/mkhRhfs0fxmDaX5juDXw2Fw=; b=R0ZXW0jB6U7HPEQwHeGdEL1rNP
+	ishakytOrp2IFh4Ehs7zeu0+P6htMa++Pu03Mm0mjyzLNmCfpRFUm4jpQ6QBkD/G
+	VQKA2fLXMm5bxBcsukMKIPUxJC109IoLudRJtDqupcdGu6GLop9F2mdmSSxqppOt
+	EYHr94KMtqif2RaNN31VxlimWszrBV6ZfG8x1D8jtPrG7d2HaRCsX527wptWXtny
+	+xJXpo1ck5KVXzTI5NRTe9O3bZPKt+CNoFX25PgLj1yNEW84MCKpuIXsKfJY+lZS
+	1ozXA+iqX9VIR3oLvu1m/wCkUt6GKZuH1T0LLg3oadXsOe2zsvsMMhSyoBVA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758386698; x=1758473098; bh=cRd9IORNOdehBgJ2gJL/mkhRhfs0fxmDaX5
+	juDXw2Fw=; b=En4hKtsZ/tvOtBOYFAr1o/eWWK+Sh+WwGFibjdvVxRm+4QLbYUq
+	OwW70B7lQSZMyqgDTYv4MKdHGLfp/7NGEZF0lUZVrOAuDH1fIDq2Gq4TVJCsoVrE
+	qF5djYPiD8QGc5SuctcAPcJvF7tZwG3Ishy1QKfKKLOLc3hzEdWIZ1SMxVpC1NID
+	8OBoJxykR0NUHN2zWbjamIrCLGD7eCdhOjbknbLi+95jA0cay79lLrOiMO15SlN6
+	DW6NWfuNT8Ll/N7x+/xSN3c7B2VfVotVgYlRBOymGLlVvn4SpGqOYoPiMijLF56j
+	qJbUp64SHi3773sSEnf/F2UI1mxdaj3ZeDw==
+X-ME-Sender: <xms:CdrOaK0cHlYxh5xtEgT5x32df7ZzTKeLaxE-2wFUxCNgMFK8lY521w>
+    <xme:CdrOaKp_VRlMGPQfmXZqVPxvBE4HXAhoxGBwnj6qv7MyyNlY_V37WfH8lasRx4LYm
+    mxGSHPDzxHn74EfRw>
+X-ME-Received: <xmr:CdrOaJWFgUWE60Fql0W7GqYJBjp9HC4bYiKMmf7094CDUJtI-b1BnmDyEmFoL9vc0llH9bRPG2UAGsmefTJ0LILLrF4UTRcvxZjb>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehvdeitdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpefgtedugfdtkeeivdevleehueeuteduleejtdfggfefudekvdeihfefjeevvdel
+    veenucffohhmrghinheprhhushhtqdhlrghnghdrohhrghenucevlhhushhtvghrufhiii
+    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgt
+    ohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    gtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtthhopegviigvkhhi
+    vghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvse
+    hsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
+    thhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:CdrOaNaSOpntqPuPKhnFwk_8j3YD5cmEnHIS5j0vvUGk9-7N8C2S7g>
+    <xmx:CdrOaOcociEXni6zlNyLF422tYV3ixPLIsDf_PC-Fk4iWWdIcYmbwg>
+    <xmx:CdrOaP1PKUm28PsuL5ZwtdV57T4fNi0c6cp3FGrmoGzp7X5KZ3wwmw>
+    <xmx:CdrOaNJXGfZqbvi94DT_7vDWlAF27aNU721JFeZ2SlVLHguwRl-QOA>
+    <xmx:CtrOaIhb2XS1nP0oq1K5njzEDurjHnyvp7HqYKTO7m9qrsmglCkATxdD>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 20 Sep 2025 12:44:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: Ezekiel Newren <ezekielnewren@gmail.com>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Patrick Steinhardt <ps@pks.im>,  Ezekiel
+ Newren via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v2 02/18] make: add -fPIE flag
+In-Reply-To: <87plbmyox4.fsf@gmail.com> (Collin Funk's message of "Fri, 19 Sep
+	2025 16:59:19 -0700")
+References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
+	<pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
+	<7082e32c5975d2aaa277eddae7497eba0f2131e0.1758071798.git.gitgitgadget@gmail.com>
+	<CAPig+cRGtMX9bQhb+7g5aXRVjpLKY-qDdQP95f9TmbY8j_BweQ@mail.gmail.com>
+	<CAH=ZcbAOBnEVfyNy_4hdpe_dvsqDxsKVTcvurJz_iUWiqOzG3g@mail.gmail.com>
+	<xmqq5xde435i.fsf@gitster.g>
+	<CAH=ZcbDvwbCdnpeNv6vp=+Zy1h8RpG125ZCQNUzNOc5qLi8gNg@mail.gmail.com>
+	<xmqqa52qypo8.fsf@gitster.g> <87plbmyox4.fsf@gmail.com>
+Date: Sat, 20 Sep 2025 09:44:55 -0700
+Message-ID: <xmqq1po1ysxk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ubRMxMhyIwvmaWEw"
-Content-Disposition: inline
-In-Reply-To: <xmqq348i138l.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Collin Funk <collin.funk1@gmail.com> writes:
 
---ubRMxMhyIwvmaWEw
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Ezekiel Newren <ezekielnewren@gmail.com> writes:
+>>
+>>> I don't know, but I have another question to add to yours. Why does
+>>> Make need -fPIE in order for the Rust compiler to link against
+>>> libgit.a created by Make, when Meson doesn't seem to specify PIE
+>>> anywhere and yet the Rust compiler can work with Meson's libgit.a
+>>> output?
+>>
+>> I do not know what the build procedure using meson exactly does to
+>> create a library archive.  On the Make side, we do not compile for
+>> position independence, and don't do anything other than bog standard
+>> "ar rcs".  Patrick, any hint?
+>
+> Not too familiar with Rust, but looks like the answer is here [1].
+> Specificially, this part:
+>
+>     pic - fully relocatable position independent code, machine
+>     instructions need to use relative addressing modes. Equivalent to
+>     the "uppercase" -fPIC or -fPIE options in other compilers, depending
+>     on the produced crate types. This is the default model for majority
+>     of supported targets.
+>
+> Collin
+>
+> [1] https://doc.rust-lang.org/rustc/codegen-options/index.html#relocation-model
 
-On 2025-09-19 at 22:34:02, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> >  Signed Tags
-> >  ~~~~~~~~~~~
-> > +We add new fields "gpgsig" and "gpgsig-sha256" to the tag object forma=
-t to
-> > +allow signing tags in both formats.  The in-body signature is used for=
- the
-> > +signature in the current hash algorithm and the header is used for the
-> > +signature in the other algorithm.  Thus, a dual-signature tag will con=
-tain both
->=20
-> Not suggesting a change in the text, but to make sure I am reading
-> the new text correctly.  Does "the other algorithm" refer to the
-> compatibility hash algorithm specified by the compatObjectFormat
-> extension and the "current" algorithm refers to the objectFormat
-> extension?
+Well, thanks for joining the conversation, but that much I think is
+already shared by those who are involved in this thread.
 
-The "current algorithm" is usually the main algorithm (that is, SHA-256
-where `extensions.objectformat` is `sha256`) and the "other algorithm"
-is the compatibility algorithm (SHA-1 in that case).  However, when you
-convert that object to SHA-1 to hash it in SHA-1, the "current
-algorithm" becomes SHA-1 and the "other algorithm" is SHA-256.
+The background was that Ezekiel did not have to do anything special
+as far as he knows to get things compiled in a relocatable way with
+meson based build, and with make based build, (which I know has
+never used nor required any PIE-ness) he of course needs to add it
+in a way that is portable across platforms and compilers we care
+about if we wanted to have PIE objects.
 
-Does that make sense?
+And the question was what, if anything, does meson do specially to
+do so in a portable way to enable PIE.  We'd want to see if it meets
+our needs (it could be that Ezekiel is getting lucky and meson based
+build covered the platform+compiler combinations that he happened to
+be working with) and if so mimick that on the Makefile side.
 
-> > +an in-body signature and a gpgsig-sha256 header for the SHA-1 format o=
-f an
-> > +object or both an in-body signature and a gpgsig header for the SHA-25=
-6 format
-> > +of and object.
-> > =20
-> > -This means tags can be signed
-> > +The signed payload of the tag is the content of the tag in the current
-> > +algorithm with both its gpgsig and gpgsig-sha256 fields and
->=20
-> My reading of the previous paragraph is that we cannot have gpgsig
-> and gpgsig-sha256 fields on a single object at the same time.
-
-Correct, unless we come up with a third hash algorithm.  Hopefully that
-is a long way away, and we are not considering that case here.
-
-> Should we say "gpgsig or gpgsig-sha256" (instead of "and"), to get
-> the resulting text parsable as:
->=20
-> 	both=20
-> 		its gpgsig or gpgsig-sha256 fields
-> 	and
-> 		"-----BEGIN PGP SIGNATURE-----" delimited in-body signature
-> 	removed.
->=20
-> instead?
-
-Sure, I'll include that in a reroll.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---ubRMxMhyIwvmaWEw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaM7IQgAKCRB8DEliiIei
-gbPsAPwK0YgQp+Ll5oOCyVKVsN5q9CDLurXNouXyd1kQwEjHXgEAwmGvKov97Nlw
-rDtgg/qPPgtQwawTY5vWtdSUZEWSXAY=
-=5sDO
------END PGP SIGNATURE-----
-
---ubRMxMhyIwvmaWEw--
