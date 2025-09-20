@@ -1,54 +1,54 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8FB246763
-	for <git@vger.kernel.org>; Sat, 20 Sep 2025 17:16:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D33311C37
+	for <git@vger.kernel.org>; Sat, 20 Sep 2025 17:36:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758388586; cv=none; b=Tb59qNFKk3b0ExrL69++xhtpRrqTOGR13/HEwygZos8+cvqyTS8tvAzSbZmPMHQAY7fMWw+xTsKXl3zDZ1FuTYUXxjYeLM0JdSTFskxuY7OQM1gNQ8KX2z4ZFMl6KAKTZwBXIdWhICOurDV4mEMGNuqfhrvV0Pgs0a6WU4qCZrc=
+	t=1758389801; cv=none; b=p1vGrjtVOK0J2AmJGZFeVr/1oKRTApft/C5LO86xiWc3N1Xm8o8xIezVsswzJ8LzcwfqOdD6zBEYbewd1Qlo9z0biAtoPe1UmnnX+iz9FJfl8E2BHxXMFsAIEMxyboaU1TV7ImU0qyEZhRTymB9L0vxhfwtOqoTvtAaFwPr5xb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758388586; c=relaxed/simple;
-	bh=/EW8i1MZjrnNZTEgpa5O2D+xPJceOPD+L8Xh9lJv6oE=;
+	s=arc-20240116; t=1758389801; c=relaxed/simple;
+	bh=4sdCeETrhG/ffjZkIIUbfq+YcYIMcfU0igJuRstPAfc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tmIgasN8/u0Ov+FJ8apIU37a+IhFO3mKyItAg/3db7ngn/oPh9lwudo6+g9HSERw08v0HIWkpB8dOjbeV13jxnMYEGximf5JE4Hp2q+GK9dzvDY6VNeYB+PweXPKkKA+upS4kO1zOSfDn5qneOTrddvsmqoLWiUcCi5Y0jizNy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y8U+AIBO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hiOnHspv; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=bVgHB/p433NFGxRLwo0abbaTHxBQsSG8V8Pm4npqF/iSW8qf8+tQJu29O6uUzv4rY0FH9qVddH/PzwE5Xmo2LISo8XVVbM/5JaLUrRQqcEy4R1HfRgsuBxmmBk7OQSF2AnWbBq/fBHaI5wkCIMwv1HMz9+Y6kBDTvxJbI/YoZU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Jfve5PuC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QApQ+qbR; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y8U+AIBO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hiOnHspv"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8889FEC000B;
-	Sat, 20 Sep 2025 13:16:23 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jfve5PuC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QApQ+qbR"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4C92414000B6;
+	Sat, 20 Sep 2025 13:36:38 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Sat, 20 Sep 2025 13:16:23 -0400
+  by phl-compute-10.internal (MEProxy); Sat, 20 Sep 2025 13:36:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758388583; x=1758474983; bh=sAaJa9N5e4
-	b07i6/nL5t4T8TGWUvaajDsWDLQh9d9gA=; b=Y8U+AIBOlINvlagI0Lh5L1XOMU
-	M+brbcNvw1kN6Hw5NaXBZReSjhsiRJWznE/Sf5q2PBxEqcbc6j2EYRQ3ahmx5VqS
-	Wbr2opnWtgEYqcn91350CDXIbgm35PgboMm71SFjk/daXEHsugeYZM3tb3RjReBV
-	kt20R0LW1AlGmAsma2q60oNMbyrHLr7qC+AJOxcxgaHnI/Thj2j9RsI6OQSMEnyl
-	aKofOibau9/csc1/N9EsCdMjkSyBgRiAzI38WthzmSOfFRgZ9Rae5BrzB+FGx2lF
-	QatjlxpDT0n9X0fo617F9PM02LJjD0649bwtdvmlpAINTp2Rv6Ts2LgUXHNQ==
+	:subject:to:to; s=fm3; t=1758389798; x=1758476198; bh=/M9WO8eicY
+	tS4lkk2ega9tA3QnzJDECvANhpx5dqds8=; b=Jfve5PuC/be+Isq6hyOz5xmwUV
+	6nA5032j6Y2Jh65oPT3ucJRmu3nQX5+ZZfAnnS+rzwNhXiVuklGDzqh3YEyScOPs
+	no3FH5Hgr4mGje2UcYXysZJpRZYrkzbXzoj0hbjRgVPWVs6JuuR3xTSi5B0lDTNl
+	Ep4UW/BIhxBec8SYz6yiUOjXWXdcsREP3fJ/KroU+71Mk0VPFvlLcl+NZwu0665I
+	TzRTU3QwL02E2vq6Va6UpUge/skDgjXn7Q54h49N6SPwYWm2RxKo+Mzepx+LS1/w
+	EtDmuMouaxJ5u2pNtk8VngF3ki1E/PHvFCbwuM2R8nM2cwQw2kRwltFRxiIg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758388583; x=1758474983; bh=sAaJa9N5e4b07i6/nL5t4T8TGWUvaajDsWD
-	LQh9d9gA=; b=hiOnHspvshJPrFvV6W8D9uXK47I5uzDtLSledZbNKTZpI+E+Hlb
-	9WsMpefRoDruUA3CiW3X7XR2pb/NdjOXkDtKgI/Qpo1RLOmKqPxUeDIlaIM025V2
-	h0qICk9dl8ZrsPYFRUshZn7TdLFvwxkxl84s0ZIIrKn9MA5RFR7mCEpdkt15fB4O
-	LdKkRqfmFAIawrHgNyb230UxXYHZn8tPij6ox1oh8A8xU52paG5Jk0MJMYGmq+3u
-	rVwgWocUKiIs7aMOeeQNl+p4AuT3bLIVaJh6QltcsynLT/qmvx89a/GeDYdFqpHD
-	2iV4+LwX0abJpZqubNtY1MGuMpyS6fSDT6A==
-X-ME-Sender: <xms:Z-HOaIt4thDas0T-xXyKFrXisF5G-fNy_0H0g95zDX6Ro5QH9qOtJQ>
-    <xme:Z-HOaDARZqNTq5YaXOZdTD-jzmuCSWtI1AjeN1XWS7h-DnjbJyOZfJeXkFxjo2TKm
-    N7Ky0bBRmnUdk0rFQ>
-X-ME-Received: <xmr:Z-HOaKPf1UyJ6g4FMyfF8M_j0K4uBSJTSJyWHvRNlJf_Alru3sXvKodhC3GDOzwhoMc7Fi1HXHK-XrCvu0q9TiGO-13SIBHjBZLT>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehvdeiiecutefuodetggdotefrod
+	1758389798; x=1758476198; bh=/M9WO8eicYtS4lkk2ega9tA3QnzJDECvANh
+	px5dqds8=; b=QApQ+qbRSx5XPvxhjvdYm4yPEYnTiCIRxdRUIHqQjpuzYkjx4eF
+	u0aAM1USGEuxP4GD7QOiFe3cxGE19Jihq+UlIKULsAfSPKFdgzl2gOSvQwMc+rzC
+	TmqOitKaEyQSNGHarwBjOpj9Dy1pAfUxn7wg4ME+3BtEt3xEctaxagaTYcbiRzxE
+	SBxzcEPOGQUDJK3besoVxzLdjTGpau8roBXRb6zNCFu5PwjnPWktfiHXBostaRG0
+	5yagtRCSjHmJ8WgPh2bB+zB+cv7jmn2U/Cy3nz1SvuXgH+fW73IsLI0fv0jacZC/
+	JM6h4QzhVtTdnd5QtNRSVs3XhK6AwgWJJbA==
+X-ME-Sender: <xms:JubOaOmVjljWsIEV5_YFYOu2lZj8K4v_NICMe8DXrbFt2U6alVooCg>
+    <xme:JubOaDYGdfvOZRQ_OQZHup3SmL2BKwuTrR3SvdBq_Gjd15Ox9Zuak2yBF7Oxp6m53
+    nNplGUvuE3PGapLAw>
+X-ME-Received: <xmr:JubOaDGX31B8L90lHGLdOstOcIjWJK1vsG9BUoRMX1TnfH17LLlbMsxEMcEQk1CeW_4hA5SljbOd33xp-DfKLY9ZMBNBWBeGk0_L>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehvdejtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
@@ -62,29 +62,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehvdeiiecutefuodetgg
     guuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhm
     rghilhdrtghomhdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrd
     gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Z-HOaMx-9ak1reX058xUm55kDvDhEc4-0iV3zemrAthRZV4VwAoTrg>
-    <xmx:Z-HOaKWkzwvDecPHcPKCOhLflAMS1sSQ1AUC4SA0HFz08Y913T1NPg>
-    <xmx:Z-HOaOOzS-cIxIDe2vt4dsxOrhiseMqk2ip7Nj9D8Nimvm21t9y1hg>
-    <xmx:Z-HOaMCEhrxzfRYhoC0VALk1mTpCA3BV1bo7-GF1YzpNQ11R7b9H3g>
-    <xmx:Z-HOaAutM8Wg3cPT-UqVmHkoie768ZnTfxyU8OIt59Npg1eL6UWTzsqD>
+X-ME-Proxy: <xmx:JubOaEI66ncRdwEWBXrTK7TQj-VGiKf2gcQkQZRRnrphjI9gS40H1A>
+    <xmx:JubOaON5N8KS799oCSR0_ToYgR1w_uWylt9fIMrdfhelh8laHU12Lw>
+    <xmx:JubOaEkzPzQR1t7IEprkDCuP9iO6eQOfqtIEci25xTsFQLp81xl_GQ>
+    <xmx:JubOaC5nsSrmWY1jJdjlfhyHc5JLwzZOQ_afFKH2c02L9tESBuH_2w>
+    <xmx:JubOaPEnlErGc5qsc_pfYs1H45RwHIILFs32xdvqrOe7Tp-mprd6A5WO>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 20 Sep 2025 13:16:22 -0400 (EDT)
+ 20 Sep 2025 13:36:37 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Phillip Wood
  <phillip.wood123@gmail.com>,  Ben Knoble <ben.knoble@gmail.com>,  Ezekiel
  Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v3 01/10] xdiff: delete static forward declarations in
- xprepare
-In-Reply-To: <784cffcef564b31a32c401b35f33610b85126f7b.1758294992.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v3 02/10] xdiff: delete local variables and
+ initialize/free xdfile_t directly
+In-Reply-To: <b79157e64f0950d25a23c50a8ea83cfddf67ddf5.1758294992.git.gitgitgadget@gmail.com>
 	(Ezekiel Newren via GitGitGadget's message of "Fri, 19 Sep 2025
-	15:16:23 +0000")
+	15:16:24 +0000")
 References: <pull.2048.v2.git.git.1758239789.gitgitgadget@gmail.com>
 	<pull.2048.v3.git.git.1758294992.gitgitgadget@gmail.com>
-	<784cffcef564b31a32c401b35f33610b85126f7b.1758294992.git.gitgitgadget@gmail.com>
-Date: Sat, 20 Sep 2025 10:16:21 -0700
-Message-ID: <xmqqh5wxxcwq.fsf@gitster.g>
+	<b79157e64f0950d25a23c50a8ea83cfddf67ddf5.1758294992.git.gitgitgadget@gmail.com>
+Date: Sat, 20 Sep 2025 10:36:36 -0700
+Message-ID: <xmqqcy7lxbyz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -98,65 +98,80 @@ Content-Type: text/plain
 
 > From: Ezekiel Newren <ezekielnewren@gmail.com>
 >
-> Move xdl_prepare_env() later in the file to avoid the need
-> for static forward declarations.
->
-> Best-viewed-with: --color-moved
+> These local variables are essentially a hand-rolled additional
+> implementation of xdl_free_ctx() inlined into xdl_prepare_ctx(). Modify
+> the code to use the existing xdl_free_ctx() function so there aren't
+> two ways to free such variables.
 
-Two comments.
+Sensible.
 
- - This is a bit unusual to see in the trailer.
-
- - It turned out that it was a very effective way to spot a typo for
-   me.  You should try it yourself before you send out your patches
-   ;-).
-
-> -int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
-> -		    xdfenv_t *xe) {
-> -	long enl1, enl2, sample;
-> -	xdlclassifier_t cf;
-> -
-> -	memset(&cf, 0, sizeof(cf));
-> ...
-> -		xdl_free_ctx(&xe->xdf1);
-> -		xdl_free_classifier(&cf);
-> -		return -1;
-> -	}
-
-The "--color-moved" painted the line above, with a single closing
-brace, as removed, which stood out.  It turns out that ...
-
-> @@ -460,3 +394,53 @@ static int xdl_optimize_ctxs(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xdf2
->  
->  	return 0;
->  }
-> +
-> +int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
-> +		    xdfenv_t *xe) {
-> +	long enl1, enl2, sample;
-> +	xdlclassifier_t cf;
-> +
-> +	memset(&cf, 0, sizeof(cf));
-> ...
-> +		xdl_free_ctx(&xe->xdf2);
-> +		xdl_free_ctx(&xe->xdf1);
-> +		xdl_free_classifier(&cf);
-> +		return -1;
-> +	    }
-
-... the corresponding line in the postimage was shown as newly
-added.  That was because it was indented incorrectly.
-
-> +	xdl_free_classifier(&cf);
-> +
-> +	return 0;
+> +static void xdl_free_ctx(xdfile_t *xdf)
+> +{
+> +	xdl_free(xdf->rhash);
+> +	xdl_free(xdf->rindex);
+> +	xdl_free(xdf->rchg - 1);
+> +	xdl_free(xdf->ha);
+> +	xdl_free(xdf->recs);
+> +	xdl_cha_free(&xdf->rcha);
 > +}
 
-If I do not spot any other issues in the series, I may just "rebase
--i" to correct this single line to reduce the risk of mistakes,
-instead of asking you to send an update.  We'll see.
+And I like the attention to the detail of where the opening brace is
+in the "moved" existing function ;-).
 
-The change is sensible, and the proposed log message does a good
-job, too.
+>  abort:
+> -	xdl_free(ha);
+> -	xdl_free(rindex);
+> -	xdl_free(rchg);
+> -	xdl_free(rhash);
+> -	xdl_free(recs);
+> -	xdl_cha_free(&xdf->rcha);
 
-Thanks.
+Upon an error, the original and the updated would behave a bit
+differently here, as the original would not have touched xdf, other
+than its rcha member, so the caller _could_ make use of the original
+contents in the structure after seeing an error return.  With the
+new code, that is no longer possible.
+
+Its only caller is xdl_prepare_env(), and its caller is
+xdl_do_diff(), both of which passes the xdfenv_t *xe given by their
+callers.  There are four callers of xdl_do_diff():
+
+ xdl_fall_back_diff() in xdiff/xutils.c
+ xdl_merge() and xdl_refine_conflicts() in xdiff/xmerge.c
+ xdl_diff() in xdiff/xdiffi.c
+
+and all of them seem to pass an uninitialized piece of memory as
+xdfenv_t *xe down the callchain, so this behaviour change does not
+make any difference.
+
+> +	xdl_free_ctx(xdf);
+
+And the code certainly is safer as we know we have one place to look
+at when we added a member that holds resources to xdfile_t.
+
+> -static void xdl_free_ctx(xdfile_t *xdf) {
+
+We know clearing/freeing side is fine, but what about initializing
+side?
+
+>  static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_t const *xpp,
+>  			   xdlclassifier_t *cf, xdfile_t *xdf) {
+> +	long bsize;
+>  	unsigned long hav;
+>  	char const *blk, *cur, *top, *prev;
+>  	xrecord_t *crec;
+>  
+> +	xdf->ha = NULL;
+> +	xdf->rindex = NULL;
+> +	xdf->rchg = NULL;
+> +	xdf->rhash = NULL;
+> +	xdf->recs = NULL;
+
+It turns out that this is the only place that initializes xdfile_t
+in xdiff/ API, so we are covered on both ends.  xdiff/xprepare.c is
+the only place we need to look at if we ever want to futz with
+xdfile_t members, and with this change, we know there aren't two
+ways to free things in it (there weren't two ways to initialize,
+either, even before this patch).
+
+Nice.
