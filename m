@@ -1,86 +1,86 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E471CD15
-	for <git@vger.kernel.org>; Sat, 20 Sep 2025 17:01:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA851CD15
+	for <git@vger.kernel.org>; Sat, 20 Sep 2025 17:04:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758387691; cv=none; b=uLw6FSlYI3vapKXz8dOfRdn3HPWDX1Bg3p0tAfdjt1zOWWvjsomUxbHBsguR5kvlKPVH1zco2ppa2wEnmPqeNjd9pfkRk94+YcISZYVfIdURWzM6rVBvyGg6ZTjhIJkATwUDIEgJlRA78XrxP0W7vvWEseYWmInzou7RpxaTzLk=
+	t=1758387888; cv=none; b=Iy8PrPa8iXuGCM3T16dO5tMhh2Sprqwf5DWzkzoIMrus/KSvGGiAGud9+zeFq5uF+QHlrWkSpNLNMXGwfveZRKtRJruxVvYGltOnj8rLWdE0vtTcxh0HXF4/pj/sD09pW+ou58kJ5cxlhjd5zcQg2/d6ltEFZ/BB2njhQNQsUdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758387691; c=relaxed/simple;
-	bh=rLR/9n9fHpII+DnvmYz0huTDGnl9+bK4GsQ9moE9x6k=;
+	s=arc-20240116; t=1758387888; c=relaxed/simple;
+	bh=vGFizS0ie/xEmcIEee5GjwTxyJP0Vzu7RBLQNeTlS5U=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=s7VOgRdDPK9d+ddhbRtL2IoRW/QBoW6sVwPOMplx2Yg8fb39L8CC+/Vc0h6PXtfouIj8oc1xsyeAxmqh/FoqaUttNXqXEJBjco8CzuAy/s5uIJK62YMJ7CDKltBxAr9fkKoKSchK4BrQqsT5vLg6boqKWEUOBhhPt4nB2AhIEhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pmVTI9cG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lKS8IQxO; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=G+Icy6YIvnu35xSfF9qe7b8kiV6wOd+39YWh8w/+5KUBwq3Stcup7rmQlzd25/pmNupwdW+z2gFlYjcQXuGSGkx3l3etWuX+vwXvylvz/WiqpL37PdIHUPjVn9mts9ncpAOT+mJnOHIAvEYTX52prVCqzitS8seN0rMvNXHg7WI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qgb7tP0q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C+GIn6zn; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pmVTI9cG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lKS8IQxO"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E6E0814000DD;
-	Sat, 20 Sep 2025 13:01:27 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qgb7tP0q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C+GIn6zn"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2B524EC012B;
+	Sat, 20 Sep 2025 13:04:45 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Sat, 20 Sep 2025 13:01:27 -0400
+  by phl-compute-10.internal (MEProxy); Sat, 20 Sep 2025 13:04:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758387687; x=1758474087; bh=epWKhHnUNw
-	ceUfiBqzAgfk0YJkH3Hi0UrrxQo2ghLPg=; b=pmVTI9cGkZQhOeC3uyixWz+bDJ
-	POfEPexTxOJSFTE1wdf80ck1/q0j3G4nWBGxdGmBi/6NwQuFb6LPaLTLtXn0MguC
-	nVAP9MePJMXUJgrCdfJcPgfNzPvPClNWgu+UmZSY9kYzVu3M2OxSiTJ+PkVfrhkl
-	kq9Le4qc7txT/oODGyn6uQS3omS34GiXfM50KCySLMSY3aNUQlvy5flLKoefMLhf
-	dzTAKrudKNdPB4m1AeRIj2y2GM1ZCaRabyqWloF+2lWYxsxiTh53l31SgKQ+tX+6
-	k/0YKAWyhCCuQ+9KbDZaeiCigH5vRwUK2M3wgjV4PKcgh2VKye1Hbl7oZ2cA==
+	:subject:to:to; s=fm3; t=1758387885; x=1758474285; bh=A/Ko/7pfHI
+	7XW+cKtwig64cueywvh4kkGVjutdT9/MM=; b=qgb7tP0qZ/iv5XfyyJkAEB3TNv
+	sKkE2OvpOzzUsjEH1xIAb8dzZd3+Gt9yT3Lc9u0yeuvHr7EnulX8bIe7BxIOoJ5x
+	egUo8pQYGp7TdAM06ElrpmCdL8KyDvvsY7y16d7WE1fperEDahsndLth0RyNEjV3
+	QisKcVTOFEDJTUIuLqlX158DaQgq/XpBt1qNS/tq0EosLeJ7xfUxo6GWb/SF0FPP
+	+72bLZuhIijggTmZ9LqdNkovb2ZYZOITd49nc/vo5Ye7TeXzW+/IZVAGIDz/QMuv
+	ulaMyURBh6pD6swFhZNmBdekmhFmrEsRCBSyoKxp2wwN0qcbFByWin6LmjiQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758387687; x=1758474087; bh=epWKhHnUNwceUfiBqzAgfk0YJkH3Hi0Urrx
-	Qo2ghLPg=; b=lKS8IQxOlcEasNxCulaLXtMzBqtmk/TPV52pApXdo6ozbmDnOE0
-	1JCXQZz1xLEfVl8svbSFSs2WZNn1lvYIUg+V1Q4TFYYv+RXEn6jC20E4wVH07IdV
-	V6XaOaPJdlRyfg/7bFziFT1jS/PGVFX+5rKcDDmo3szpdokqMHuzwPi7TZk3BUdb
-	8mJ/hTyv+NQLyBofRL6//rvooSBgZlxYq9hK/FPzJoHhnOp+m5X609kcNANuec35
-	UBEsI/ZMiBkkIjvKXR/XHYfhQKiLQiOOLg8mQ7SSYIOQ/PhP6mq6FDRfEKoTmeii
-	3L3LoWm59xKR24rUdKQOsmJZS45vQyoFdHw==
-X-ME-Sender: <xms:593OaOUkrHFG3-kBp7t9JBxb4nRzE5Ywwj1-kTXTVOUZTtqpb4gIwg>
-    <xme:593OaGEGoEtR34Oy99TnUR5WzKSLM5sG3TxUqje73BlZ5wDRspnyoCjYnzAVqJ9mR
-    WOBjyQ9wxGGHbmntw>
-X-ME-Received: <xmr:593OaI0H633uZQ1NT5HaCbn6QA-D0ageVztVEc7AVYAJxo1BSfh7bI2inPkRTB8L-5jqkceW_4OpNUStpew-agmRbTko8CgeISU_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehvdeifecutefuodetggdotefrod
+	1758387885; x=1758474285; bh=A/Ko/7pfHI7XW+cKtwig64cueywvh4kkGVj
+	utdT9/MM=; b=C+GIn6znFVTcc53f7XodWEeCjoQYiugRCSgFD5qHUQjZdmu2UbY
+	LML+YmBtmKhe0ZRquXMw7JbV69rAcUPBHo9orDVYrfnoTb+hsIJJTPWpHKSLBgit
+	aMOehfRd7XXw9LfhKsIvzMsmnz9Cf3haqjT+auD9fBu8E31szbrJMBUcwRY94ABH
+	izNk6U2JfL2MtPAo8ZQ3WdDK2IpEUYt8vo9CpBLBeK670oz2NuKDQYMhhmYRbAuw
+	EBvx8dQukM0b/ISWV7093JTHwpYEbERuymNPo5ic8YhrBSCyU2BavWZBzkOBISte
+	v3Xd0dN+f+MufUS7cptUXRjFsp5nVQRi5xA==
+X-ME-Sender: <xms:rN7OaLTSgAT4AtSvYmAiN5ZkNHYbsbmaMmXqN2OunQxCXn7-2Ie8-g>
+    <xme:rN7OaIQBKqFpM_kvVGC60nPk8OPa8jk8mj59JEAxfw-n5ussGVdhzvqKDhLOh0NYY
+    G_wXwYuq8ieKFjiWw>
+X-ME-Received: <xmr:rN7OaHRnkL9wm7feOTc9hvHL13Nbh-HgDZNijAUGMFI8hSSVEM4NjQKDhwmt8XqdxJGZPRrDI1n_jiK36BCU7TsdPDWij5ED0tN0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehvdeihecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
     htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
     thhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
     htvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
     tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehsthholhgvvgesghhmrghilh
     drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:593OaAOi7Dah0YfTw4vyvRAP90Q2IBYCP0nXsEzNl7fu7SGl7_6Eww>
-    <xmx:593OaP4GEPUVdf7fjs_8YOAqcHr7jpXhS9gbdbx4RyfFhH74QJlnbw>
-    <xmx:593OaC12fMqlzP8EboJ745vA7BYrSvV5apQnMgRs8TuR72Mh-eqxLw>
-    <xmx:593OaIwAGPgA0r_iT94zDAsio5ZQluJ6lAX8jEEKOsNqEnnNNiF7Yw>
-    <xmx:593OaJYbVfDlI1WIBJtvzmylLrC7_D1sJPfzzrtn3GS7lDnZ0Up9Rsco>
+X-ME-Proxy: <xmx:rN7OaF4BdHkO5Ilt8XqC2707CYsTNKwAZAprXV7H8_VfpHQyP276Xw>
+    <xmx:rN7OaL1iQ7rpbCQRYGflRleiGe7jd4b9B1KVoKBZztPLSVKj9jq_pw>
+    <xmx:rN7OaIAg3BveeGwLQQ9QHH2hfHxAZ-tsx2ZxKUfjuDs5jLNzxz_Fyw>
+    <xmx:rN7OaOMXXo_xUO0JNLZO11hyMO3TCHUZK94vMEks5SxZpsgWxT0ytg>
+    <xmx:rd7OaPwUifqtEU70KeFsPfp76_94ebsnp9lvS1jLhoOiaibrPz1U2Ceh>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 20 Sep 2025 13:01:27 -0400 (EDT)
+ 20 Sep 2025 13:04:44 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Derrick Stolee
  <stolee@gmail.com>
-Subject: Re: [PATCH 1/9] docs: update pack index v3 format
-In-Reply-To: <aM7G22LJ47nx8Wqk@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Sat, 20 Sep 2025 15:23:07 +0000")
+Subject: Re: [PATCH 3/9] docs: reflect actual double signature for tags
+In-Reply-To: <aM7IQibwwKFJZcYE@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Sat, 20 Sep 2025 15:29:06 +0000")
 References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
-	<20250919010911.649831-2-sandals@crustytoothpaste.net>
-	<xmqq7bxu14fw.fsf@gitster.g>
-	<aM7G22LJ47nx8Wqk@fruit.crustytoothpaste.net>
-Date: Sat, 20 Sep 2025 10:01:25 -0700
-Message-ID: <xmqqseghxdlm.fsf@gitster.g>
+	<20250919010911.649831-4-sandals@crustytoothpaste.net>
+	<xmqq348i138l.fsf@gitster.g>
+	<aM7IQibwwKFJZcYE@fruit.crustytoothpaste.net>
+Date: Sat, 20 Sep 2025 10:04:43 -0700
+Message-ID: <xmqqms6pxdg4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,35 +92,38 @@ Content-Type: text/plain
 
 "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
->> I do also agree that 32-byte is the natural size for the trailing
->> hash, but I found that the two paragraphs below was far more than
->> necessary.  As they argue, we use a truncated hash anywhere in our
->> file formats, so I would have understood if the explanation were
+> On 2025-09-19 at 22:34:02, Junio C Hamano wrote:
+>> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 >> 
->>     "20" in "A copy of the 20-byte SHA-256 checksum" is an obvious
->>     typo, as SHA-256 is longer than that.  Fix it to "32".
+>> >  Signed Tags
+>> >  ~~~~~~~~~~~
+>> > +We add new fields "gpgsig" and "gpgsig-sha256" to the tag object format to
+>> > +allow signing tags in both formats.  The in-body signature is used for the
+>> > +signature in the current hash algorithm and the header is used for the
+>> > +signature in the other algorithm.  Thus, a dual-signature tag will contain both
 >> 
->> instead of these two paragraphs.
->> 
->> Or did we mean to use a truncated hash back when this transition
->> design was proposed originally?
+>> Not suggesting a change in the text, but to make sure I am reading
+>> the new text correctly.  Does "the other algorithm" refer to the
+>> compatibility hash algorithm specified by the compatObjectFormat
+>> extension and the "current" algorithm refers to the objectFormat
+>> extension?
 >
-> I think we intended to use a 20-byte value originally because we felt we
-> didn't need the full 32 bytes for an index or pack checksum.  However,
-> as I mentioned, we use the 32-byte checksum for SHA-256 already, so all
-> it does is add complexity to try to mandate a 20-byte value.
+> The "current algorithm" is usually the main algorithm (that is, SHA-256
+> where `extensions.objectformat` is `sha256`) and the "other algorithm"
+> is the compatibility algorithm (SHA-1 in that case).  However, when you
+> convert that object to SHA-1 to hash it in SHA-1, the "current
+> algorithm" becomes SHA-1 and the "other algorithm" is SHA-256.
+>
+> Does that make sense?
 
-I think we are saying the same thing but from different sides of the
-same mirror.
+Let me see if I got it right by trying to paraphrase the above.
 
-SHA-256 packs and any csum-file based file would be using 32-byte
-checksum because with CSUM_HASH_IN_STREAM, finalize_hashfile() does
-not know any way to produce the trailing hash other than writing the
-full hash value, and that would be 32 bytes for SHA-256.  This was
-exactly where my "20 certainly is a typo" impression came from.
+For any object that is suitable to be stored in a repository with
+objectFormat and compatObjectFormat set, "current" is the former,
+and "the other" is the latter.
 
-Be it a typo or misdesign, picking 32 instead of 20 is a good thing
-to do now for a subsystem and fileformat that is not used anywhere
-in producation yet.
+Your goal is not educating me, though.  I wanted to make sure that
+the text would be understood by the target audience of this document
+in a way you intended it to be.
 
 Thanks.
