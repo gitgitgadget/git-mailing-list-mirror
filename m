@@ -1,86 +1,90 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA851CD15
-	for <git@vger.kernel.org>; Sat, 20 Sep 2025 17:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8FB246763
+	for <git@vger.kernel.org>; Sat, 20 Sep 2025 17:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758387888; cv=none; b=Iy8PrPa8iXuGCM3T16dO5tMhh2Sprqwf5DWzkzoIMrus/KSvGGiAGud9+zeFq5uF+QHlrWkSpNLNMXGwfveZRKtRJruxVvYGltOnj8rLWdE0vtTcxh0HXF4/pj/sD09pW+ou58kJ5cxlhjd5zcQg2/d6ltEFZ/BB2njhQNQsUdY=
+	t=1758388586; cv=none; b=Tb59qNFKk3b0ExrL69++xhtpRrqTOGR13/HEwygZos8+cvqyTS8tvAzSbZmPMHQAY7fMWw+xTsKXl3zDZ1FuTYUXxjYeLM0JdSTFskxuY7OQM1gNQ8KX2z4ZFMl6KAKTZwBXIdWhICOurDV4mEMGNuqfhrvV0Pgs0a6WU4qCZrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758387888; c=relaxed/simple;
-	bh=vGFizS0ie/xEmcIEee5GjwTxyJP0Vzu7RBLQNeTlS5U=;
+	s=arc-20240116; t=1758388586; c=relaxed/simple;
+	bh=/EW8i1MZjrnNZTEgpa5O2D+xPJceOPD+L8Xh9lJv6oE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=G+Icy6YIvnu35xSfF9qe7b8kiV6wOd+39YWh8w/+5KUBwq3Stcup7rmQlzd25/pmNupwdW+z2gFlYjcQXuGSGkx3l3etWuX+vwXvylvz/WiqpL37PdIHUPjVn9mts9ncpAOT+mJnOHIAvEYTX52prVCqzitS8seN0rMvNXHg7WI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qgb7tP0q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C+GIn6zn; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=tmIgasN8/u0Ov+FJ8apIU37a+IhFO3mKyItAg/3db7ngn/oPh9lwudo6+g9HSERw08v0HIWkpB8dOjbeV13jxnMYEGximf5JE4Hp2q+GK9dzvDY6VNeYB+PweXPKkKA+upS4kO1zOSfDn5qneOTrddvsmqoLWiUcCi5Y0jizNy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y8U+AIBO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hiOnHspv; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qgb7tP0q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C+GIn6zn"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2B524EC012B;
-	Sat, 20 Sep 2025 13:04:45 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Sat, 20 Sep 2025 13:04:45 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y8U+AIBO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hiOnHspv"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8889FEC000B;
+	Sat, 20 Sep 2025 13:16:23 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Sat, 20 Sep 2025 13:16:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758387885; x=1758474285; bh=A/Ko/7pfHI
-	7XW+cKtwig64cueywvh4kkGVjutdT9/MM=; b=qgb7tP0qZ/iv5XfyyJkAEB3TNv
-	sKkE2OvpOzzUsjEH1xIAb8dzZd3+Gt9yT3Lc9u0yeuvHr7EnulX8bIe7BxIOoJ5x
-	egUo8pQYGp7TdAM06ElrpmCdL8KyDvvsY7y16d7WE1fperEDahsndLth0RyNEjV3
-	QisKcVTOFEDJTUIuLqlX158DaQgq/XpBt1qNS/tq0EosLeJ7xfUxo6GWb/SF0FPP
-	+72bLZuhIijggTmZ9LqdNkovb2ZYZOITd49nc/vo5Ye7TeXzW+/IZVAGIDz/QMuv
-	ulaMyURBh6pD6swFhZNmBdekmhFmrEsRCBSyoKxp2wwN0qcbFByWin6LmjiQ==
+	:subject:to:to; s=fm3; t=1758388583; x=1758474983; bh=sAaJa9N5e4
+	b07i6/nL5t4T8TGWUvaajDsWDLQh9d9gA=; b=Y8U+AIBOlINvlagI0Lh5L1XOMU
+	M+brbcNvw1kN6Hw5NaXBZReSjhsiRJWznE/Sf5q2PBxEqcbc6j2EYRQ3ahmx5VqS
+	Wbr2opnWtgEYqcn91350CDXIbgm35PgboMm71SFjk/daXEHsugeYZM3tb3RjReBV
+	kt20R0LW1AlGmAsma2q60oNMbyrHLr7qC+AJOxcxgaHnI/Thj2j9RsI6OQSMEnyl
+	aKofOibau9/csc1/N9EsCdMjkSyBgRiAzI38WthzmSOfFRgZ9Rae5BrzB+FGx2lF
+	QatjlxpDT0n9X0fo617F9PM02LJjD0649bwtdvmlpAINTp2Rv6Ts2LgUXHNQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758387885; x=1758474285; bh=A/Ko/7pfHI7XW+cKtwig64cueywvh4kkGVj
-	utdT9/MM=; b=C+GIn6znFVTcc53f7XodWEeCjoQYiugRCSgFD5qHUQjZdmu2UbY
-	LML+YmBtmKhe0ZRquXMw7JbV69rAcUPBHo9orDVYrfnoTb+hsIJJTPWpHKSLBgit
-	aMOehfRd7XXw9LfhKsIvzMsmnz9Cf3haqjT+auD9fBu8E31szbrJMBUcwRY94ABH
-	izNk6U2JfL2MtPAo8ZQ3WdDK2IpEUYt8vo9CpBLBeK670oz2NuKDQYMhhmYRbAuw
-	EBvx8dQukM0b/ISWV7093JTHwpYEbERuymNPo5ic8YhrBSCyU2BavWZBzkOBISte
-	v3Xd0dN+f+MufUS7cptUXRjFsp5nVQRi5xA==
-X-ME-Sender: <xms:rN7OaLTSgAT4AtSvYmAiN5ZkNHYbsbmaMmXqN2OunQxCXn7-2Ie8-g>
-    <xme:rN7OaIQBKqFpM_kvVGC60nPk8OPa8jk8mj59JEAxfw-n5ussGVdhzvqKDhLOh0NYY
-    G_wXwYuq8ieKFjiWw>
-X-ME-Received: <xmr:rN7OaHRnkL9wm7feOTc9hvHL13Nbh-HgDZNijAUGMFI8hSSVEM4NjQKDhwmt8XqdxJGZPRrDI1n_jiK36BCU7TsdPDWij5ED0tN0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehvdeihecutefuodetggdotefrod
+	1758388583; x=1758474983; bh=sAaJa9N5e4b07i6/nL5t4T8TGWUvaajDsWD
+	LQh9d9gA=; b=hiOnHspvshJPrFvV6W8D9uXK47I5uzDtLSledZbNKTZpI+E+Hlb
+	9WsMpefRoDruUA3CiW3X7XR2pb/NdjOXkDtKgI/Qpo1RLOmKqPxUeDIlaIM025V2
+	h0qICk9dl8ZrsPYFRUshZn7TdLFvwxkxl84s0ZIIrKn9MA5RFR7mCEpdkt15fB4O
+	LdKkRqfmFAIawrHgNyb230UxXYHZn8tPij6ox1oh8A8xU52paG5Jk0MJMYGmq+3u
+	rVwgWocUKiIs7aMOeeQNl+p4AuT3bLIVaJh6QltcsynLT/qmvx89a/GeDYdFqpHD
+	2iV4+LwX0abJpZqubNtY1MGuMpyS6fSDT6A==
+X-ME-Sender: <xms:Z-HOaIt4thDas0T-xXyKFrXisF5G-fNy_0H0g95zDX6Ro5QH9qOtJQ>
+    <xme:Z-HOaDARZqNTq5YaXOZdTD-jzmuCSWtI1AjeN1XWS7h-DnjbJyOZfJeXkFxjo2TKm
+    N7Ky0bBRmnUdk0rFQ>
+X-ME-Received: <xmr:Z-HOaKPf1UyJ6g4FMyfF8M_j0K4uBSJTSJyWHvRNlJf_Alru3sXvKodhC3GDOzwhoMc7Fi1HXHK-XrCvu0q9TiGO-13SIBHjBZLT>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehvdeiiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
-    htvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehsthholhgvvgesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:rN7OaF4BdHkO5Ilt8XqC2707CYsTNKwAZAprXV7H8_VfpHQyP276Xw>
-    <xmx:rN7OaL1iQ7rpbCQRYGflRleiGe7jd4b9B1KVoKBZztPLSVKj9jq_pw>
-    <xmx:rN7OaIAg3BveeGwLQQ9QHH2hfHxAZ-tsx2ZxKUfjuDs5jLNzxz_Fyw>
-    <xmx:rN7OaOMXXo_xUO0JNLZO11hyMO3TCHUZK94vMEks5SxZpsgWxT0ytg>
-    <xmx:rd7OaPwUifqtEU70KeFsPfp76_94ebsnp9lvS1jLhoOiaibrPz1U2Ceh>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihooh
+    guuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhm
+    rghilhdrtghomhdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Z-HOaMx-9ak1reX058xUm55kDvDhEc4-0iV3zemrAthRZV4VwAoTrg>
+    <xmx:Z-HOaKWkzwvDecPHcPKCOhLflAMS1sSQ1AUC4SA0HFz08Y913T1NPg>
+    <xmx:Z-HOaOOzS-cIxIDe2vt4dsxOrhiseMqk2ip7Nj9D8Nimvm21t9y1hg>
+    <xmx:Z-HOaMCEhrxzfRYhoC0VALk1mTpCA3BV1bo7-GF1YzpNQ11R7b9H3g>
+    <xmx:Z-HOaAutM8Wg3cPT-UqVmHkoie768ZnTfxyU8OIt59Npg1eL6UWTzsqD>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 20 Sep 2025 13:04:44 -0400 (EDT)
+ 20 Sep 2025 13:16:22 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Derrick Stolee
- <stolee@gmail.com>
-Subject: Re: [PATCH 3/9] docs: reflect actual double signature for tags
-In-Reply-To: <aM7IQibwwKFJZcYE@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Sat, 20 Sep 2025 15:29:06 +0000")
-References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
-	<20250919010911.649831-4-sandals@crustytoothpaste.net>
-	<xmqq348i138l.fsf@gitster.g>
-	<aM7IQibwwKFJZcYE@fruit.crustytoothpaste.net>
-Date: Sat, 20 Sep 2025 10:04:43 -0700
-Message-ID: <xmqqms6pxdg4.fsf@gitster.g>
+To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Ben Knoble <ben.knoble@gmail.com>,  Ezekiel
+ Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v3 01/10] xdiff: delete static forward declarations in
+ xprepare
+In-Reply-To: <784cffcef564b31a32c401b35f33610b85126f7b.1758294992.git.gitgitgadget@gmail.com>
+	(Ezekiel Newren via GitGitGadget's message of "Fri, 19 Sep 2025
+	15:16:23 +0000")
+References: <pull.2048.v2.git.git.1758239789.gitgitgadget@gmail.com>
+	<pull.2048.v3.git.git.1758294992.gitgitgadget@gmail.com>
+	<784cffcef564b31a32c401b35f33610b85126f7b.1758294992.git.gitgitgadget@gmail.com>
+Date: Sat, 20 Sep 2025 10:16:21 -0700
+Message-ID: <xmqqh5wxxcwq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,40 +94,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On 2025-09-19 at 22:34:02, Junio C Hamano wrote:
->> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->> 
->> >  Signed Tags
->> >  ~~~~~~~~~~~
->> > +We add new fields "gpgsig" and "gpgsig-sha256" to the tag object format to
->> > +allow signing tags in both formats.  The in-body signature is used for the
->> > +signature in the current hash algorithm and the header is used for the
->> > +signature in the other algorithm.  Thus, a dual-signature tag will contain both
->> 
->> Not suggesting a change in the text, but to make sure I am reading
->> the new text correctly.  Does "the other algorithm" refer to the
->> compatibility hash algorithm specified by the compatObjectFormat
->> extension and the "current" algorithm refers to the objectFormat
->> extension?
+> From: Ezekiel Newren <ezekielnewren@gmail.com>
 >
-> The "current algorithm" is usually the main algorithm (that is, SHA-256
-> where `extensions.objectformat` is `sha256`) and the "other algorithm"
-> is the compatibility algorithm (SHA-1 in that case).  However, when you
-> convert that object to SHA-1 to hash it in SHA-1, the "current
-> algorithm" becomes SHA-1 and the "other algorithm" is SHA-256.
+> Move xdl_prepare_env() later in the file to avoid the need
+> for static forward declarations.
 >
-> Does that make sense?
+> Best-viewed-with: --color-moved
 
-Let me see if I got it right by trying to paraphrase the above.
+Two comments.
 
-For any object that is suitable to be stored in a repository with
-objectFormat and compatObjectFormat set, "current" is the former,
-and "the other" is the latter.
+ - This is a bit unusual to see in the trailer.
 
-Your goal is not educating me, though.  I wanted to make sure that
-the text would be understood by the target audience of this document
-in a way you intended it to be.
+ - It turned out that it was a very effective way to spot a typo for
+   me.  You should try it yourself before you send out your patches
+   ;-).
+
+> -int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
+> -		    xdfenv_t *xe) {
+> -	long enl1, enl2, sample;
+> -	xdlclassifier_t cf;
+> -
+> -	memset(&cf, 0, sizeof(cf));
+> ...
+> -		xdl_free_ctx(&xe->xdf1);
+> -		xdl_free_classifier(&cf);
+> -		return -1;
+> -	}
+
+The "--color-moved" painted the line above, with a single closing
+brace, as removed, which stood out.  It turns out that ...
+
+> @@ -460,3 +394,53 @@ static int xdl_optimize_ctxs(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xdf2
+>  
+>  	return 0;
+>  }
+> +
+> +int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
+> +		    xdfenv_t *xe) {
+> +	long enl1, enl2, sample;
+> +	xdlclassifier_t cf;
+> +
+> +	memset(&cf, 0, sizeof(cf));
+> ...
+> +		xdl_free_ctx(&xe->xdf2);
+> +		xdl_free_ctx(&xe->xdf1);
+> +		xdl_free_classifier(&cf);
+> +		return -1;
+> +	    }
+
+... the corresponding line in the postimage was shown as newly
+added.  That was because it was indented incorrectly.
+
+> +	xdl_free_classifier(&cf);
+> +
+> +	return 0;
+> +}
+
+If I do not spot any other issues in the series, I may just "rebase
+-i" to correct this single line to reduce the risk of mistakes,
+instead of asking you to send an update.  We'll see.
+
+The change is sensible, and the proposed log message does a good
+job, too.
 
 Thanks.
