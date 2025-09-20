@@ -1,122 +1,91 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FCE223DD0
-	for <git@vger.kernel.org>; Sat, 20 Sep 2025 18:40:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCB823AB9C
+	for <git@vger.kernel.org>; Sat, 20 Sep 2025 18:40:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758393618; cv=none; b=ugATh38uIwO1vmMb873h5d68vNJg+T4n21IkkZCoT5jQWW1muFY1tE8TqY1/jKaJJPplzjRvAG3+Oa2ubMUgqjci/NA1nKtBHolMMtq3IMJQQIxWDZsXhM7kv30fjo8ZRt9wVToCSEw34yd5H0Fc/5ODleeMl5P7EbbOEz5NTcY=
+	t=1758393617; cv=none; b=qMJW6rlneU7aPCws/WNQl1UMOklndcLxIUgLlnaUh5j5vhzXnl+6OJEJsw30gHF7JoJ7QTXrsu2XM9i/s5jVlISYmAQM+1N6rwLg7b+GB6MDZyYiqJp+DRVLENrsMlaleU4WzUo8IPQri3kZyliATNZ5om0uA3n7K64vnRe+p0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758393618; c=relaxed/simple;
-	bh=grxzvNBv7Ag2g2lJVSc3AJDY52yJj5dtIkHTVaoZkzs=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kOtWl3Dyj9GF94V99dyqEDeXFm5Ui/9gwFb5TNCSSSeWl5wDXKmZ1yi31iG1AkQgQ4q+yFEEXVa8kFW5yuX1LqKsHMJzGP3mDI4GZB7hn19oncw+BLFeKWebE5nAroIItnmzKWTPL2hb4VZgQfJaDsgl8fOM3FDBUdr85evyVMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 58KIdXuH1550901
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 20 Sep 2025 18:39:34 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: <CAH=ZcbCUL-rWw5E6p26T0039gs9q-P8iK5fp73-RzTzKiZ0zMQ@mail.gmail.com>,
-        <ezekielnewren@gmail.com>
-Cc: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>,
-        <Johannes.Schindelin@gmx.de>, <ben.knoble@gmail.com>, <cb@256bit.org>,
-        <collin.funk1@gmail.com>, <contact@hacktivis.me>,
-        <eschwartz@gentoo.org>, <git@vger.kernel.org>, <gitster@pobox.com>,
-        <me@ttaylorr.com>, <newren@gmail.com>, <phillip.wood123@gmail.com>,
-        <pierre-emmanuel.patry@embecosm.com>, <ps@pks.im>, <sam@gentoo.org>,
-        <sandals@crustytoothpaste.net>
-References: <8799E6DB-FC85-4F71-A6C1-363D1AC8ED06@macos-powerpc.org>
-In-Reply-To: <8799E6DB-FC85-4F71-A6C1-363D1AC8ED06@macos-powerpc.org>
-Subject: RE: [PATCH RFC 0/3] Introduce Rust and announce that it will become mandatorty
-Date: Sat, 20 Sep 2025 14:39:28 -0400
-Organization: Nexbridge Inc.
-Message-ID: <000001dc2a5d$ea10ffe0$be32ffa0$@nexbridge.com>
+	s=arc-20240116; t=1758393617; c=relaxed/simple;
+	bh=dyRxNwE/YUEjnNz91PvYohwqANxCF35nGqW4TbQcoIA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ptVvXLx8VcZBb7GCZvOOLME9C2cC/aOqSz/8/KEQsCwIyRabyKWBAgFvj2qaAfykl6NYKwnk5byZvskK/psWi7qPXIdRY7F8+R1s/ARTUueIXeerDjsxN1HGcjtPZiwz59woK/LsxtST98wYG9HbCPiUcUgQD1vex8xx1EUuYzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mRK0l/Yb; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mRK0l/Yb"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-723ad237d1eso29360327b3.1
+        for <git@vger.kernel.org>; Sat, 20 Sep 2025 11:40:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758393615; x=1758998415; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Kvdy2f6pARQiW3kHtwBrv/laSMDyLMgmXmGgoCMW4OM=;
+        b=mRK0l/YbAYZhPXmVikx+Fb4bjF197XP5o9pSpTGsOG/v1HU31yzr6GWvNOVH0m9irf
+         mXj8jo2T6YYqFaIrGu3onJlWJ73GMYEbNExA5hbxMu80vYGLXYkvE+ADE7QujZNCVQXd
+         E3rZRPONOlU2SYppQ6q9//E77V2ldZXsm95ONuX9xBkk2e9Vu157cBSL88XOjka7Fxm0
+         Q8TUPFC3hCWhx+N0bFyAwKIaj3zP3Hnl8DU/x8XCU2vyVDcTKwqbsHGZ+vuZzvQxi5eh
+         +GUpWHViKxN1t1M+N4Sv99FwpPTZD4q21qtPMKUi5LC8RvtHGSrGrMJqSo5Xzf0QfxFg
+         gwBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758393615; x=1758998415;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Kvdy2f6pARQiW3kHtwBrv/laSMDyLMgmXmGgoCMW4OM=;
+        b=wyf1k6b625aSAiFBT8fLQjl00dQp5m6LlnmgSos5vCXvF+SyFIX23kDeVYJMwkfqeF
+         ZRm/nvbY72q30VepkWsvfoZ+ZYq6DbIeaSSPAioG+/hi40DaBeFfAmDKCcDOi77Nn7lp
+         ACqDDjwFLkGDN93L/7vueQDDxppMgk3D2C/rawrbGxSdRghcPNjaXzbfh7VmnbnJ9K/g
+         fKGg6iM5KttJK/0PMm7Efuf/vw/ytm9WmC8MEBbu+fe7JEN8pqVCFU0nteKnC/xxyfyE
+         EEBYeN7LUALkrarjgFFkKj5Ss7DokXxrRNZ72O8AV6w3cJqowgg875xSMbTJn8VN7+D/
+         izmQ==
+X-Gm-Message-State: AOJu0YzzEdhKhMh6T+SMz/egNjPLSigLnAQ0rLPE1wPoKJS4/jGS+9md
+	IW0lVqEnVYjKGM+a2DhOfU40A75lnxyi8F/YCwc4rmHI0YTvOMF2aqYyalmK6xYR
+X-Gm-Gg: ASbGncvAJOU2vXl73pkpbWhmqC4Q+ELUtMfSrUWOkpO+4Xwd+1YwPlMDL18zULSuFg0
+	w9X/1RaT3comAy9KPt345mSzaL4BEd9ZqDWQwvBobI2OJEh5uJDljtPlqJyR/oQw0GP+GGJyOgS
+	cn9NCTgb2TwMyQzvTtCsVal/5eXCey3YGnmJ+yXg3Vn+v5gBwz5pxMe+2fqLS3heudkekfrceSK
+	l8Ian2IvJsNtpK9fYCv/TAm7NSp6phuTzryVMO9foquMyw0U2YfRAA8uiBlxHcxAbhGYWoEelnW
+	iiPnea+gELinLgVdPtW+Sk7CpKm8KWmq9b5KpfSWZJPJ53QVB4WQmS8lZ4TWUj2bEN/fzANCyOk
+	Z24tF25eJKX8WSeweRAKaaz4mni+G8q2UgmDyKPZ0764sqbmtDxLUlks7ncXtfROwjLMWClZv8C
+	9uiUOuR438RDWcl0w+xjbvJ65+aGgMTpY=
+X-Google-Smtp-Source: AGHT+IEWoeS+Yk8fRQchIDaQVNz7nsHLREuzl3JfbALO2F0W80M+SE6/amAsXVlIlK2VuyD2HyNKwg==
+X-Received: by 2002:a05:690c:a003:b0:735:2003:dc1a with SMTP id 00721157ae682-73d30e5774cmr48660247b3.3.1758393614510;
+        Sat, 20 Sep 2025 11:40:14 -0700 (PDT)
+Received: from USROMMRAPPAZZ01.infor.com (pool-74-105-50-139.nwrknj.fios.verizon.net. [74.105.50.139])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7397188c02asm22814067b3.49.2025.09.20.11.40.13
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 20 Sep 2025 11:40:13 -0700 (PDT)
+From: Michael Rappazzo <rappazzo@gmail.com>
+To: git@vger.kernel.org
+Cc: j6t@kdbg.org,
+	Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH v2 0/2] gitk: make the 'Tags and Heads' window geometry sticky
+Date: Sat, 20 Sep 2025 14:40:05 -0400
+Message-ID: <20250920184007.26183-1-rappazzo@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQLgmUmHR/cGrsIL/oCQ2NDpPqhQsLKTiAvg
-Content-Language: en-ca
-X-Antivirus: Norton (VPS 250920-4, 9/20/2025), Outbound message
-X-Antivirus-Status: Clean
+Content-Transfer-Encoding: 8bit
 
-On September 20, 2025 4:30 Am, Sergey Fedorov wrote:
->> but I'd like to hear what OSes and Architectures you use personally and
->professionally and why adding Rust would be a bad idea.
->
->I am the maintainer of ports for Darwin on PowerPC systems (few past years
-in
->MacPorts and now in https://github.com/macos-powerpc/powerpc-ports fork)
->and contributor to GCC (gfortran). I have added the whole of current R
-ecosystem
->into MacPorts and a decent support for modern Fortran via FPM.
->
->Those systems are still actively used, and thanks to GCC upstream support
-of
->powerpc-apple-darwin I have been able to keep our ports pretty much on par
->(occasionally ahead of) what modern macOS has at the moment. A lot of work
-has
->been done in past two-three years, including fixing/restoring support for
-ppc for
->several major langs/compilers (gfortran, MLton, SBCL, Ruby, OCaml, Idris2
-etc.),
->build systems etc.
->
->Git is essential for the version control, but also for the build systems of
-MacPorts
->and CMake. Since my powerpc ports rely on MacPorts infrastructure (there
-are
->40k+ ports), I need a working Git for my workflow.
->
->To be clear, I do not object to adding Rust optionally (as I would not
-against adding
->optional modules for any language), but making it mandatory, while Rust is
-still
->broken on a few, admittedly edge case, systems, hurts the open-source.
->
->I agree with John Paul Adrian that once gccrs becomes properly usable, or
-otherwise
->gcc codegen in Rust acquires support for currently unsupported platforms,
-things
->will change.
->
->P. S. I have contributed to mrustc, so it is not ideological. Though I do
-think that
->ability to bootstrap from source is strictly required for a compiler to be
-safe, and at
->the moment bootstrapping of Rust may not yet work for all supported
-platforms (at
->least it is not well-tested).
->
->References:
->https://github.com/rust-lang/rfcs/issues/1312
->https://github.com/thepowersgang/mrustc/issues/300
+Differences from v1:
+ - Add a fix to adjust the position of the main window on open.
+   Previously, the size was preserved, but not the position.
+ - Simplified the mechanism for storing the size and position of the
+   tags and head view to use absolute positioning instead of being
+   relative to the parent window.
 
-To clarify, gcc is not available on all platforms. The overlap where gcc is
-supported
-and Rust is support is likely high, but more, where gcc is not supported
-then it is
-highly unlikely that Rust is supported. mrustc is a difficult more that
-requires gcc
-even if that is not clearly stated - it does not build with c17, for
-example. This
-double requirement is making the probability of being able to continue to
-support
-git even less for me on NonStop. My team is working hard to push Rust
-availability
-and we realize that gccrs is an easier path, but those two are currently
-outside
-of our control because of complexities in the loader on NonStop.
+Michael Rappazzo (2):
+  gitk: fix the position of the main main window on initialize
+  gitk: make Tags and Heads window geometry sticky
+
+ gitk | 37 +++++++++++++++++++++++++++++++++++--
+ 1 file changed, 35 insertions(+), 2 deletions(-)
+
+-- 
+2.51.0
 
