@@ -1,104 +1,140 @@
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718AC2F8BE7
-	for <git@vger.kernel.org>; Sat, 20 Sep 2025 17:46:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0846E179A3
+	for <git@vger.kernel.org>; Sat, 20 Sep 2025 17:48:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758390393; cv=none; b=ikiCvxHTZEa5HWIxZOsNrX8FOw68csxide6GLGExUH3h1UeL3OQfyta7Dc54Wcfjin/zn7f5OhKzezaw40bd+PLYip4I8oarmL3k1r3uj/fPRUHolz41DxIhTsVfeBnjUrkifqwS2xS+jet/5fiE4Pjk6PjAEWjNqkNO+YxgV2M=
+	t=1758390520; cv=none; b=jCj6jDIUVxAhnNyVENYcWdgAMjBNECxOrYf9o9sMP7hs3W73v4ddeK9srWzx6QUf2CXbrY5Om1uE9zj7LYNbBKcTitasGdNyQaSQgUnyczsdP/jR0tI+loplU7iH94Hh598XLSFDOnPe9wX8nKEucrjwZcb/XKUBVgbS94p5aqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758390393; c=relaxed/simple;
-	bh=njzcmqEtRCSRKFfl5rOGOzSShvPGlbN31uXLzHttBow=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=dXnbXOUF44EnO9IgMbHg8WUuZclOa18uBwYjb1PGj9UkLh76EPNzDSdCMLukBJEjvXpCLyL3qspcPFW4uvNyX4Kr02LZgyS8d43ee/E+bGhpNlAZGgUs3zCEc2RL0clWI/smcVVzzT92xeILHMdyubmKIMLTy/tJgI02E/PujMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qdhb8O7R; arc=none smtp.client-ip=209.85.219.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758390520; c=relaxed/simple;
+	bh=NBrHJx0AdhOwAFuJQB2GU8FPvMnVcqW0HNhFxqQrkZA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Yq6byc1wqMQk2rJBB55na2yHUzmx23TxE83teBWTLZp/d+iFXGzq1YI0def5BfQDpEgohNa8opOzyvq+uZMN01euXMaMioSkYG1D928IdcXPkKI1Vkzn3K6TJxG6gLBlFjMyxDPagU+PkhWgn7UEo3JkCRal2TCuOULAb+mdLZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JVL5p5tV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PH2kYJ98; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qdhb8O7R"
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e970acf352fso2163242276.2
-        for <git@vger.kernel.org>; Sat, 20 Sep 2025 10:46:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758390391; x=1758995191; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=njzcmqEtRCSRKFfl5rOGOzSShvPGlbN31uXLzHttBow=;
-        b=Qdhb8O7RfdRa7ac55pyczjKlmbLm4DC3jwph5te1tIwkUoa7vFGy5VEpxi0HowX5dA
-         HBXZcG118XDSOlTNOUbpI9Omw9WwbhAxh4kLwQgsGuSxxIjAbxCQiZTBYFUjuXWIG29l
-         1xPEVTrCeo72nJkH3VFL6BZNw1iYsgKl1J+pykaNJzT4SK5lkENnQCMSI7r80wZwjGC9
-         ede1jiwbJntJCdyRzsUlt5Eu3WzBSZpOWOVJwEKgGxFQ8/eUWfwopEEoOs6DH8JXL71S
-         Ca2s4CWErasluV0kSqHg/+5WV5o/5okTNmPkpSqBdnDP6vfqlC1BP6XM09MZav+Cbe9G
-         Mdow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758390391; x=1758995191;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=njzcmqEtRCSRKFfl5rOGOzSShvPGlbN31uXLzHttBow=;
-        b=wrZMbS2pe6xAF8GL9BUyVsjYQ9oqwnAZBT0S+nxVC2pms6Q3SrbWzms4UFcH7US3MZ
-         fbeudkJSeih/ZrxdaK1wKB0sspG6MXCROmoE6IJyvzLXuvz3QCnOgC35iMernJyWDYM/
-         ulu7evVf0YxD0ykqBKgQircBKvoePO+DyLkESEjUfRuT7CRaB/Wa7kaoAxFQyyNM2NLk
-         vCLnlfDEb1ETdAastqZ8NZvGwbeA/bZswgXwNJybPH7+bJQWrGhD0zaYGa7IUsW1LNmw
-         MPs5rR4MFtDoir+gzcsj+KHnW1D4V2tUd7hhHEwOr3fH6R/c47Y1pEMDfZO2otNy4y7o
-         IhcQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUnz58ppmssMTdEz0gXbdQH3RXDojQGq8qLdooOaXKcp5G++Ess6CXe3oxb+D5YdV5ca6I=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyfHZbkvto2uilDx3isfY8jDRZmgtOWCy86lqxHMNqGAabeg5rX
-	yZtiMVMd8kdJTavfSMhHNEjmysOqIH5AiChR/q1OfOvSUql6PJ4tBE/E
-X-Gm-Gg: ASbGncuU4/K/XejocriAwD7r2Xo17sMPNy6MbSZK+Pq+XbIbRDCLWBXH1v6t4rpjTZz
-	XN94LRTLO97LzW2z9wfIR0HNRh9jiBNmWZAKiD+qyTpeOOG/EnX1c+T6AOfdvtxN2gMM0lYenVK
-	+8o4koRvIgSQW4QbIQF42h4QxqoL+tiCD2hEchtnLjGuQjgVJ4oA37UQoOkbfJQL2uJ1gYUK7uA
-	m7cB9u8tlFfBy+tB8XqRWwFNV/QkQAuJ0qrNhYdRYGfwP6bUPNnJEpYS6BoXoGwhf4qfKM7lpDt
-	0l68XBMRTEwJ/5iA9Yb1plQ1bJAyJx84Lj++Up/mnb96XAtXZV/RYd3PGzprCZTdygNqnXiW0ay
-	mnxA6hftcQLmWx5AeHROtVPDJ0a+ubfptwRlZmw0ZYa5odpXF+nbayTC1Mw2hDh8TLlsIC+sQ
-X-Google-Smtp-Source: AGHT+IGWzN26MYDyQwiCwL18FhFmJYgVd+qZPehxXggiMLyP1pBjQJ4wvEtXVFWpCTpjHghrru8NqA==
-X-Received: by 2002:a05:6902:124c:b0:e9b:afa3:5190 with SMTP id 3f1490d57ef6-ea89d7acee9mr5155027276.31.1758390391380;
-        Sat, 20 Sep 2025 10:46:31 -0700 (PDT)
-Received: from smtpclient.apple (69-77-149-20.skybest.com. [69.77.149.20])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-ea5ce8544b5sm2688097276.17.2025.09.20.10.46.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 20 Sep 2025 10:46:30 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JVL5p5tV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PH2kYJ98"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2D0FE1400095;
+	Sat, 20 Sep 2025 13:48:36 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Sat, 20 Sep 2025 13:48:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758390516; x=1758476916; bh=iEv94WK7DS
+	zkzYurf9a5Pboeh5OsmUsGE4nbU+c1pIg=; b=JVL5p5tV3V3aD5aLmGovXVvGD8
+	BxznTN4wiYaZpgVwMtDjKOemO56WzVDwkyVe4MP6q/50pYbHoWoBRK1vNm1VAFDD
+	m/0OrBVuTJQNxpvfM90mq6Va9LCdB52Usnh/+/j4pkOxg62D6Tcn/d61To1LZtT/
+	a7PuXqCuNLk1uTEtpC5bFlIJT3bHPNWY8Uq7QWoK8SqckrKLuXaXj/qurTea8eGO
+	UHMNDRVvSoajRVOqdJ8yEVe5TEcR37e9EsUhRjF6pcGlX4tUvTzbGt21TP8xL5Ki
+	AfbKPsOddvX9t5f4i39zwoJU1CbQB+lNNRiPHi6gsXgYwCZ3+ncREWFPHfIw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758390516; x=1758476916; bh=iEv94WK7DSzkzYurf9a5Pboeh5OsmUsGE4n
+	bU+c1pIg=; b=PH2kYJ98ojXH6xeY7wfqb1OvnfCYtjlFG8WToYEdn3v8rgpnHis
+	d48/0Y/UQmP7fTktbHduVInHBDIOwjJBTZSzJZAKR5o6olbbh7Fwo16F5OgwPQwy
+	iLvcfyvIJ990ORzEZY+5A7aNXYhDRSUehnW2or6AaDAVJxzntxtz13hxirTc/19Y
+	IEdvwpFCN0JaI2sr60OsRHvMPfLOPM264fXOtnZW5WxE2+WJffyO/UB11ekKiSNI
+	OzXpJ8DFUhkdSx6/Bh6CO7ffot2xm7/y7ReerzpfkIAMMNdeRT5h2jOGQAYQNvnZ
+	kqTYMQAoT0CKCb+wf4jmb3cdfPQFibvW6iQ==
+X-ME-Sender: <xms:9OjOaOqjJK_noUBpol9u9D7yBOSSkFGobRYbS_movyfx_121CMw2rA>
+    <xme:9OjOaKPi2XCMqYjZ1fFfMkZxoGaCRIcO38OvgNi7KWJMO2ejRSLMmdzksgYR1D3Cs
+    niwga7KuhAsSqUKOA>
+X-ME-Received: <xmr:9OjOaJpfV6XxANDrkDYK41i64tIyhNW2AggL2Sv4Ow8Z_uyAhWhNaeWkYW9mQKZ6lNlRWrk2ghz5UCOGI7oVrgOXaFsG5kXEoSKn>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehvdejfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihooh
+    guuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhm
+    rghilhdrtghomhdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:9OjOaPfkxNtDeJYTzyYF3ly1DPR7k2OaYaNE8MmB1qx3XAV2vYH-0Q>
+    <xmx:9OjOaPTGjBBXaaPjAggRSNUTh16_u3CF6o6T1bkh5g3iiutU2hR2Eg>
+    <xmx:9OjOaIZJevsBCgj3XXefllLcL_97uAuLEA6cr78pcJx_237bin_Pvg>
+    <xmx:9OjOaCetEHs2YMsIP17gNmOjPEF9-_fksI_Jks9-NG7XgZpjUCN8AA>
+    <xmx:9OjOaG6M1et2y95oNrRDIuTHrz1JAHEwo6diEQAHpcrU-UXC2J7uw-0p>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 20 Sep 2025 13:48:35 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Ben Knoble <ben.knoble@gmail.com>,  Ezekiel
+ Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v3 04/10] xdiff: delete xdl_get_rec() in xemit
+In-Reply-To: <ddfee67e06bb56cfa8f11187dc27135bfce63647.1758294992.git.gitgitgadget@gmail.com>
+	(Ezekiel Newren via GitGitGadget's message of "Fri, 19 Sep 2025
+	15:16:26 +0000")
+References: <pull.2048.v2.git.git.1758239789.gitgitgadget@gmail.com>
+	<pull.2048.v3.git.git.1758294992.gitgitgadget@gmail.com>
+	<ddfee67e06bb56cfa8f11187dc27135bfce63647.1758294992.git.gitgitgadget@gmail.com>
+Date: Sat, 20 Sep 2025 10:48:34 -0700
+Message-ID: <xmqq8qi9xbf1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v3 01/10] xdiff: delete static forward declarations in xprepare
-Date: Sat, 20 Sep 2025 13:46:19 -0400
-Message-Id: <83F61517-06DB-402E-911A-E33EE07D54AE@gmail.com>
-References: <xmqqh5wxxcwq.fsf@gitster.g>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
- Phillip Wood <phillip.wood123@gmail.com>,
- Ezekiel Newren <ezekielnewren@gmail.com>
-In-Reply-To: <xmqqh5wxxcwq.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Le 20 sept. 2025 =C3=A0 13:16, Junio C Hamano <gitster@pobox.com> a =C3=A9=
-crit :
->=20
-> =EF=BB=BF"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes=
-:
->=20
->> From: Ezekiel Newren <ezekielnewren@gmail.com>
->>=20
->> Move xdl_prepare_env() later in the file to avoid the need
->> for static forward declarations.
->>=20
->> Best-viewed-with: --color-moved
->=20
-> Two comments.
->=20
-> - This is a bit unusual to see in the trailer.
+> From: Ezekiel Newren <ezekielnewren@gmail.com>
+>
+> This function aliases the fields of xrecord_t, which makes it harder
+> to track the usages of those fields. Delete it.
 
-This was (loosely!) my suggestion, and I think Peff has once or twice done s=
-omething similar.
+Can we phrase it in a way that is a bit more friendly to casual
+readers?  It is hard to tell if the function is serving any useful
+purpose from the above.  If it is doing something useful, but is
+hard to read the surrounding code, that wouldn't be a good reason to
+remove it.
 
-No harm in working it into the prose instead, and I have no stake either way=
- beyond a mild personal preference for the trailer.=20=
+It seems that this patch does what people often call "inlining a
+function call".  I am not sure your comment about aliasing or if
+that is why the code is harder than necessary to read.
+
+> -static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *ecb) {
+> -	long size, psize = strlen(pre);
+> -	char const *rec;
+> -
+> -	size = xdl_get_rec(xdf, ri, &rec);
+> -	if (xdl_emit_diffrec(rec, size, pre, psize, ecb) < 0) {
+
+So we used to get "rec" and "size" separately because xdl_get_rec()
+made xrecord_t inaccessible to its callers.  To call a helper
+function that takes a <ptr, len> pair, xdl_get_rec() is the way to
+grab that <ptr, len> pair out of the record index.
+
+> +static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *ecb)
+> +{
+> +	xrecord_t *rec = xdf->recs[ri];
+>  
+> +	if (xdl_emit_diffrec(rec->ptr, rec->size, pre, strlen(pre), ecb) < 0) {
+>  		return -1;
+>  	}
+
+But by directly peeking into the xdf->recs[] array, we do not have
+to.  Each element of the array is the <ptr, len> pair we want.
+
+The updated code is certainly easier to read.  That applies to all
+the other callers touched by this patch.
+
+Thanks.
+
