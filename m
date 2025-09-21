@@ -1,285 +1,140 @@
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBC62BE7A1
-	for <git@vger.kernel.org>; Sun, 21 Sep 2025 14:06:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2B4199FAC
+	for <git@vger.kernel.org>; Sun, 21 Sep 2025 14:52:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758463614; cv=none; b=GzyPSY8KXjxogK092VteUhiqxJgyz6Vqlma0QApXM7FbjQK3cUtOG7aRxfiUONDrTU1MtssQCokkMLL2PPhND1TEws21CbxKJ+zCobwzOB3Q1nRAqTkd10bXIzukp5cXEhHF18eXh4bESePwk9nuH+1HdM0ul9C3F92M/uYZooo=
+	t=1758466380; cv=none; b=DHD6bJtWbs5pX19LlUPtL9ZEQYr0RYZcUHHtMJIyrA06BKrrfGpWAG/WoN+zKTL26u34dUdyHQPo7nOWUQhK+44expoqOqojWW7z03qmI0nSHa7obNP6bgmsv/r61ESETNAnmBKH9VMlYaohAmeEcguihhP1DAw6YiOV839m2mE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758463614; c=relaxed/simple;
-	bh=7ZvrxewKSoCxWOPeYx3I0zQq37djJAAU9WchlvGK1vg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Z2PC7824ImsRKOize4cFP1lULT4AJaEFGyav2zi9yXY9Ux3Y/fybCej39zfQzdoAJHb8+C+KyhPEgA8hQc8fUoHkMxgOZCh1FVfHqqGYF/zeILcbbTzh49kU09+tetm93P62MQi1HOsilyjFFCInWP6zv6dwpd0uSPpMAKXLLZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eeQQ068O; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758466380; c=relaxed/simple;
+	bh=KwNk+by8UvO9ZD9UqPGHDoTiYSe/oRJGbmxbN0YWAqY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UdYvNUndXjoS3yARY62FChE82TK9WPXvashDYOg1V337hP7KwR9J52Ijp6QJdjRM0slQd9KtmHwak9nPDoHiSto/fjXbDDWfNiYfTSWdnWoXqlzvruyr/VQDZX4vhC+/QMMmlituqbhUPfts0Q2w7yIHMkk2bjFWZ36ZCtuYpOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nyG3sVtm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G4vuY3Zi; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eeQQ068O"
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-367444a3e2aso11703371fa.2
-        for <git@vger.kernel.org>; Sun, 21 Sep 2025 07:06:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758463610; x=1759068410; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9mVk/tD9PcwCbcCb225UE74b0Mniy6/B3D64xvN6eNw=;
-        b=eeQQ068OOL7ECvWAF9UYgtPvTY40uvss0yv+zzsWtvryrMSvPG3Lz/Df5/FU5yHm6h
-         fClccFMYOcxcBvL+qHPdRMWRBRbXPRaXwCYtxJXSs26hGKdm5/5Ou8i/74q4bndOIKnN
-         g/WqUHGjyZISH+ZuHv5E+7N4gqhsBmqfFRk1F6fkQElPbrfZJvhpGhyLE1PolVmd9xT7
-         Ha6s31z4XlxFd5o7DjWM6VcP/58gWvbvFTcuZyiU+wA518CVVJQ3217/RRopUhOiXTxB
-         3eGGgq2uTwrYno4axL0atXFIkxCpcwE9btExC6gTkO3bvXr1SN33W+APJ+nOkPvtSs39
-         OR6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758463610; x=1759068410;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9mVk/tD9PcwCbcCb225UE74b0Mniy6/B3D64xvN6eNw=;
-        b=TE49vWUQXGZW4NB7kRQjeWH2QVqljHLIR+3BQ+/OMIHdpk7+Am09Qr9r6TX73ba4Bp
-         zdXl51T3Lcy7m07flr2oNI6UAeygGDDVIYAZOiLxVboWKAe/OkyeUjwrbzWTOlJItqC0
-         IDEEro6wYerLx8EGqIpn0yTl62kAicrEMN9B9JJed6NHBrOhKeOLs/0L92JbTHYG781J
-         f/6dAk3sCIwYmW5pzRlpKxvL+lfIgQ+NK0ds8oP5TWATVZsV3R+xkLAd3ukCuqFEUjqY
-         //6HqptH5+tfQgPH/Q+11n6rhXE6+XYPsmWxGqGi3x2HEy1VPLeIEs4oJLPYxdpNRvo6
-         M7eQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVH9rv3XDSFDxY+NwBChNtoW2gB0Z59Dstr50F5p+H4jT+XgP8Z57wNxnWQQF5lwZ1QG+E=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzEfsoBfob1OTvwa7nKMDbk8MofGGvcwfXBrWhPRO1ngvxRvpcB
-	qCkmUO4GQyANhjZLCicUzl6Y14J5wCsRzw3PDw3ZmcrrXQQc+FB8woSyYBEim7DiQ7nkzFaGwK6
-	XHILA3jHC9dcfMTzvdL9aO4J1q1nnIiVawDvx
-X-Gm-Gg: ASbGnctBQLiUQUWugi4CEkwDZlcC2Hyxio03noORTjOq7Jlt4AvydQZMZnubv7js+25
-	rzSAGV++FWkGIG99SPkiviXnUaJbOR4vi+4hAwQ33AYxHvfQca2t8Vdq0KFTudwQChMcgI+Ok7A
-	T7ztBQF8f3yqwONRsB81ff6fV8bgier9Oe/lzudGxvFd3Z6Slg0swi3RqWnMADofcLiqv7gDK3t
-	Dv5
-X-Google-Smtp-Source: AGHT+IGTVj1IsgOqcYf/eDe2XPTsUndxiI33MyVxdtWnSFUA5Clvcbg/CyaQQkRWEozZCzV4kxeomIN68bYJ01GqWI4=
-X-Received: by 2002:a05:651c:3051:b0:361:3594:2b2c with SMTP id
- 38308e7fff4ca-3641a214c62mr22049211fa.21.1758463609890; Sun, 21 Sep 2025
- 07:06:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nyG3sVtm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G4vuY3Zi"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6973A1D0007D;
+	Sun, 21 Sep 2025 10:52:56 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Sun, 21 Sep 2025 10:52:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758466376; x=1758552776; bh=6DbqhZ2kQ9
+	UR7jvOPjZ33KN95MLjzTJtFh+4n2PDU1s=; b=nyG3sVtmPZSRoOtFLiREnvGmGm
+	4WSJ0P9PhwXE8Ru7Qgxn1ciKw0I49QGRbW0oDlBX85tpkjegwwK6yXbCTxmlBB/B
+	vG0UaCVvUTjSJbA5pDZpTk3LmluS3JDjAW7YfBPGIQLTYS9rFs6hGjWeasKK2HjZ
+	wtX4mNP0CuvcYMjt7Y32AlD6mFw+vBL1SJuc2ExgD8CY9PVPswvFeFfzabRJOeDb
+	f3U2wG32VOUStBPekwGB+827fTFGpjddKIxgq2j5jWIPHYFpDPAlPgn5cOly/VOo
+	agtTblA4w9eyO5cxhEojTpDxgyQsVXU6RUfM2TSRgvW/+TLq9wXIh8OQ/TRg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758466376; x=1758552776; bh=6DbqhZ2kQ9UR7jvOPjZ33KN95MLjzTJtFh+
+	4n2PDU1s=; b=G4vuY3ZiIv9G/0N6sJpE5vMkwDagBg1zxYtcqVwZsHyD/G5Cva2
+	HaNnEadxMa1fyHOii76y9WVwgC2HBnaHSHgLyRBLIvV/CeqEli2uzNCKg68Hr+O1
+	i02AsONB3ZYz6Coao/TG9vMGbNvUyOtokxk/bNKaTyg4U5E/AGpuZC3x5JUfBaBT
+	eCv9+0wCAZJXl5ZGVjhzvv5UsyQQbUpTsj9EEOZBz6Ap6HfeFy1LNs5+JghwtGL8
+	9wm31KU8qM122K2IeV3E7RuPM5NncoEbStvfrRfsFpNm6gUp2v7ESTX0JJQ/WCFD
+	GfbQQWROEi5huQFW2YfgtDl1lGYW7JS+EpA==
+X-ME-Sender: <xms:SBHQaCR_LhQkZ5w1uoibEEPZzp0LznbI1_e0Kcxv1lbhetfsJFw5iA>
+    <xme:SBHQaCWIIDltb1xFopuBgXPBKmYFjsUej2nxUwKYtmdX0Zp8v3edzV-KQPDOAc6xt
+    qaSDcEqo_hhyssSnw>
+X-ME-Received: <xmr:SBHQaMZDZ_5dbQeo0hnSSVjG5nfhI4ZT39uNCYCFHpc3X_YZeQLS_YDMOQjTsZS9VODgBPvJ6gqa8vvHvjebLo-6AO1V2LPujNxy>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehhedviecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    jhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:SBHQaA31pPTahNO8wse_gZmhGCzs6DZVormtlgS-lKf4Vs7d9uJNFg>
+    <xmx:SBHQaGhS-NovRUUNT4BTXsD2NV4wJSIS3NP1kvBj97dmWHPTVMurjQ>
+    <xmx:SBHQaMaZjwVnVLrYheuO3EUSFSTm4xfIJ7qXK0RDinZiGF6YPdh9kg>
+    <xmx:SBHQaORDAfT8hP2CHiR7MWGeqL2TC1sWxAIeFfDwtst6M9IcUwi9Bw>
+    <xmx:SBHQaHuQpecSxznA_7nnk_fjoIJSHA6X8ADAl9pLVwTz3-N5i3FFvUOv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 21 Sep 2025 10:52:55 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] http: offer to cast `size_t` to `curl_off_t` safely
+In-Reply-To: <7caaec91020687f09764bbd50477c3fe889fcfed.1758457356.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Sun, 21 Sep 2025
+	12:22:34 +0000")
+References: <pull.1974.git.1758457356.gitgitgadget@gmail.com>
+	<7caaec91020687f09764bbd50477c3fe889fcfed.1758457356.git.gitgitgadget@gmail.com>
+Date: Sun, 21 Sep 2025 07:52:54 -0700
+Message-ID: <xmqqfrcfx3g9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CACEPZDXGGn0S_8PpEc=BVHhvyuZhWfiDmbxNOK7iPWJOj1jrXg@mail.gmail.com>
- <aMnhSm5QSdRwiJds@fruit.crustytoothpaste.net> <CACEPZDU2Bu2c9RFBwD499-UUNyQGuRRXNbMx0aBrqwGoc=4EhQ@mail.gmail.com>
- <aMyGHriNpmekoqD5@fruit.crustytoothpaste.net> <CACEPZDWgoa18LAhzOzu__jy8ssgR8-PmZb6gmDzCS=q6f25=wA@mail.gmail.com>
- <CABPp-BEU-DzNtyeC0j9OKJhqnmOw18TXvCwmmPjZL33Hp=gSUQ@mail.gmail.com>
-In-Reply-To: <CABPp-BEU-DzNtyeC0j9OKJhqnmOw18TXvCwmmPjZL33Hp=gSUQ@mail.gmail.com>
-From: Antonio Mennillo <antoniomennillo87@gmail.com>
-Date: Sun, 21 Sep 2025 16:06:12 +0200
-X-Gm-Features: AS18NWDM7LwgC1fliKiBjRQh9i0g0GzdLcPUjQVNEe4Eh6aWr3QM0lhN0464ZmY
-Message-ID: <CACEPZDUYKhRBB9Te+dn8fdgDtuo_gHdmxqGBMvp+xG+GEiYc3g@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BRFC=5D_git=2Drebase=2Dclean=3A_mitigating_a_=E2=80=9Csemantic?=
-	=?UTF-8?Q?_conflict_cascade=E2=80=9D_during_rebase?=
-To: Elijah Newren <newren@gmail.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi,
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Sorry for the duplicate earlier, I realized my email was rejected by
-the mailing list for being HTML, I have no pc available now. Resending
-in plain text
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> This commit moves the `xcurl_off_t()` function, which validates that a
+> given value fits within the `curl_off_t` data type and then casts it, to
+> a more central place so that it can be used outside of `remote-curl.c`,
+> too.
+>
+> At the same time, this function is renamed to conform better with the
+> naming convention of the helper functions that safely cast from one data
+> type to another which has been well established in `git-compat-util.h`.
 
-Thank you again for your detailed and thoughtful response. I apologize
-for my delayed reply. I'm currently traveling and away from my
-development environment, which is making it difficult to properly
-address all the important technical points you've raised.
+OK.  The code inside the renamed function is the same with an
+updated message to show the value.
 
-I don't find your emails as negative, quite the opposite, I repeat:
-it's precious insight and experience sharing.
+> With this move, the error message can unfortunately no longer be renamed
+> because the `_(...)` function is not available at the time of
+> definition.
 
-Please expect my detailed response by Wednesday at the latest. I
-appreciate your patience and the time you've taken to engage so deeply
-with this proposal.
+It is not clear to me what change (or lack thereof?) in this patch
+this paragraph refers to.  Who wants to rename what error message
+and why?
 
-Best regards,
-Antonio
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  http.h        | 10 ++++++++++
+>  remote-curl.c | 14 +++-----------
+>  2 files changed, 13 insertions(+), 11 deletions(-)
 
+Thanks; will queue.
 
-Il giorno sab 20 set 2025 alle ore 21:14 Elijah Newren
-<newren@gmail.com> ha scritto:
->
-> Hi,
->
-> On Fri, Sep 19, 2025 at 2:17=E2=80=AFPM Antonio Mennillo
-> <antoniomennillo87@gmail.com> wrote:
-> >
-> > Hi Brian,
-> >
-> > Thank you again for the feedback, it gave me a fundamental piece of
-> > puzzle about Git's design constraints that I hadn't fully considered.
-> >
-> > You're right about tree-sitter being inappropriate for Git core. That
-> > approach is too narrow, covering only specific languages. My v2.0.0
-> > already prioritizes Git's existing plumbing to track content changes
-> > universally, with tree-sitter as an optional enhancement. This stays
-> > content-agnostic and removes that which I can define as a source of
-> > nondeterminism and heuristic complexity that it's elegant to avoid.
-> >
-> > To summarize the mechanism:
-> >
-> > 1) Squash the feature branch into a single commit: temporarily
-> > compressing the branch makes all internal semantic dependencies
-> > visible at once, avoiding cascade conflicts during step-by-step rebase
-> > with non-atomic commits.
-> >
-> > 2) Resolve conflicts once with full context: the semantic issues are
-> > "suspended" in this unified state where everything is coherent.
-> >
-> > 3) Restore original commits by replaying saved diffs: using a
-> > hash-based approach with git's native diff/apply machinery, the tool
-> > remains file-type agnostic. The restored commits may still break
-> > individually (e.g., won't compile in isolation), but the branch is now
-> > rebased with granular history preserved.
->
-> I don't understand how this is possible, other than in trivial cases.
-> Lots of questions:
->
-> How exactly is replaying the saved diffs supposed to work?  Replaying
-> those diffs would run into conflicts, otherwise you wouldn't have been
-> trying to search for a modified strategy in the first place.  How do
-> you resolve those?  Are you assuming all conflicts are orthogonal,
-> i.e. that the conflicts from patches A and B are never on overlapping
-> or even nearby lines to each other?  In such a case, there wouldn't be
-> any "cascade of conflicts" to resolve anyway, so the approach would be
-> unnecessary.  And if this isn't true, then I don't see how you can
-> resolve all the conflicts at once and magically split them out into
-> separate commits and replay things in a way that doesn't have
-> conflicts -- at least not without further human intervention.
->
-> And that was focusing on content conflicts.  What do you do with
-> non-content conflicts, such as file mode differences, file/directory
-> conflicts, symlink/submodule conflicts, rename conflict, directory
-> rename conflict, etc.?
->
-> But going back to content conflicts, are you somehow sidestepping the
-> need to assume orthogonality?  Perhaps when you attempt to replay and
-> hit a conflict, you just take the end-result for that hunk range for
-> the first patch that touches it, and for any other patch that touches
-> that hunk range you simply discard the changes for those since they've
-> been squashed into the first patch?  Or something similar?
->
-> As another way to look at this problem, what about cases where
-> individual commits being replayed will conflict, but merging the end
-> result has no conflicts?  (In other words, only the intermediate
-> states had a conflict of some type -- a simple example of this is
-> someone making a change and then shortly later reverting it.)  In such
-> a case, by resolving conflicts only at the end, there was no
-> resolution of the conflicts experienced by those intermediate states.
-> What do you do there?
->
-> What about cases like
-> https://git-scm.com/docs/gitfaq#Documentation/gitfaq.txt-IfImakeachangeon=
-twobranchesbutrevertitononewhydoesthemergeofthosebranchesincludethechange
-> (both sides of history make a change, and one side also reverts that
-> change) -- by merging the squashed result, you'd end up with the
-> change being applied, but when you try to split it out into separate
-> commits, you have "apply the change" followed by "revert the change"
-> -- how does that result in the change being applied in the end result?
->
-> Are there cases where your algorithm feels indistinguishable from
-> squashing all the commits, having the user resolve conflicts, and then
-> randomly assigning the hunks to a completely new set of commits
-> (beyond the obvious differences in commit messages and perhaps number
-> of commits)?  Every algorithm I can think of for automatically playing
-> existing commits while only resolving conflicts at the end would seem
-> to sometimes suffer from this kind of downside, but it's entirely
-> possible I'm only thinking of a few brute force algorithms and I'm
-> missing something clever that you might be doing.
->
-> > To address your header file example specifically: when common.h no
-> > longer includes stdlib.h after rebasing onto main, you would indeed
-> > need to add #include <stdlib.h> during conflict resolution. With my
-> > tool, you'd add this include once while resolving the squashed
-> > commit's conflicts. The fix then persists through all restored commits
-> > - so instead of potentially fixing the same missing header multiple
-> > times across commits during a normal rebase, you handle it once.
-> > You're correct that the tool cannot determine which specific commit
-> > should ideally contain this fix (that would require compilation
-> > testing), but it prevents the cascading resolution burden while
-> > preserving the granular history.
->
-> I think there may have been a misunderstanding here.  The purpose
-> wasn't granular history, it was meaningful logical commits; those tend
-> to come in granular sizes, but granularity was more of a side-effect
-> rather than the purpose. Having a disfigured granular history is quite
-> different than meaningful logical commits.
->
-> > The key point: this doesn't fix non-atomic commits. The semantic
-> > problems remain if you examine individual commits. But it prevents
-> > these issues from causing redundant conflict resolution during rebase
-> > by compressing the timeline of the branch in a single instant "t"
-> > where the semantic non-atomic misalignment appears simultaneously.
-> >
-> > The tool trades ideal per-commit correctness for efficiency in
-> > real-world scenarios where atomic commits aren't always achievable
-> > (junior developers, emergency fixes, legacy codebases).
->
-> I'm pretty biased here, but let me take exception with your wording
-> that these are not achievable cases.  I'm going to push back on that,
-> rather strongly.  In fact, I'd go further and say that legacy
-> codebases are where logical small commits make the *most* sense
-> (sometimes with small new projects the "why" and the "what" you're
-> doing is obvious and so there's not much to write in a commit message,
-> and anyone can follow along, whereas in a legacy codebase you need to
-> carefully document why you are making changes and ensure each change
-> in isolation makes sense so others can figure out why each line of
-> code does what it does).  In regards to junio developers, letting
-> junior developers develop bad habits (and even facilitating such) just
-> leads to them later being senior developers with bad habits; I think
-> it'd be better to take the time to coach them on proper practices
-> instead.  And in the remaining case, what you describe sounds to me
-> like a rushed emergency fix, and I feel like rushed emergency fixes
-> result in more emergencies later.
->
-> I understand that many are reluctant to put in the effort to make
-> clear, logical commits, but I feel that each of your cases are
-> examples of unwillingness or lack of training, not an actual
-> inability.
->
-> As noted above, I'm quite biased here, and would rather encourage
-> people to make clear, logical, easy-to-follow-and-review-years-later
-> steps that are documented as commits.  I think tools which encourage
-> or facilitate doing the opposite are things that should be shunned.
-> (I hate squash-merging in GitHub for this reason, and GitHub's lack of
-> focus on treating commit messages as important first-class material
-> for review has long bothered me deeply, as I've commented elsewhere.)
-> Others are free to disagree with me and pursue their own path, but
-> that's my position.
->
-> > Regarding expectations: documentation will be clear that this only
-> > reduces redundant conflict resolution. It doesn't make commits atomic
-> > or understand semantics. It manages semantic inconsistency by
-> > compression, intended as reduced dimensionality. The defects remain in
-> > history but no longer interfere with rebasing.
-> >
-> > I apologize if the code evolution seems rushed - v2.0.0 was developed
-> > quickly to establish a working implementation of the core concept. For
-> > v3.0.0, I plan to remove tree-sitter entirely to achieve complete
-> > language-agnosticism. I'll also need to properly evaluate edge cases
-> > like submodules and merge commits through integration testing, though
-> > the squash operation should hopefully be quite independent from these
-> > structures. My testing focus will be on ensuring determinism, proper
-> > rollback capabilities, and full idempotency across all supported
-> > scenarios.
-> >
-> > The current implementation is available at
-> > https://github.com/anthem87/clean-rebase/tree/v2.0.0 if you'd like to
-> > explore the approach.
-> >
-> > Thanks again for the patience and the attention.
->
-> I hope my email doesn't come across as too negative.  I'm a big fan of
-> exploring and attempting new things.  While I am biased against tools
-> that work against logical & bisectable changes, and I'm worried your
-> tool is going to face an awful lot of problematic cases if you
-> continue with it, hopefully my email provides more context for you and
-> alerts you to some cases you might need to investigate if you want to
-> push the tool further.
->
-> Even if I am not in the camp that'd be interested in using your tool,
-> I am very curious if you have clever ideas for any of the special
-> cases I listed above and how to handle them; sometimes any such ideas
-> might have ways of being wielded elsewhere.
+> +static inline curl_off_t cast_size_t_to_curl_off_t(size_t a)
+> +{
+> +	uintmax_t size = a;
+> +	if (size > maximum_signed_value_of_type(curl_off_t))
+> +		die(_("number too large to represent as curl_off_t "
+> +		      "on this platform: %"PRIuMAX), (uintmax_t)a);
+> +	return (curl_off_t)a;
+> +}
+> +
+> -static curl_off_t xcurl_off_t(size_t len)
+> -{
+> -	uintmax_t size = len;
+> -	if (size > maximum_signed_value_of_type(curl_off_t))
+> -		die(_("cannot handle pushes this big"));
+> -	return (curl_off_t)size;
+> -}
+
