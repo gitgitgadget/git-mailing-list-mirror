@@ -1,57 +1,117 @@
-Received: from outbound.pv.icloud.com (p-west1-cluster3-host12-snip4-2.eps.apple.com [57.103.66.35])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A3427281D
-	for <git@vger.kernel.org>; Sun, 21 Sep 2025 21:27:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.66.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE50D7B3E1
+	for <git@vger.kernel.org>; Sun, 21 Sep 2025 23:08:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758490030; cv=none; b=U9bbfnBrpqiGEuCyEAUqmx4oFv5XJw5MxKuKNRzZwSVz459EQMTnyj038b1OOK+AwrHuLKxHLsXMYDTNjB7ULhCAtaAZK0lPx0v5aclkkdZRGcOjBM1kp9bwtIlWyRKh5Ko1BTFLe0fCeFnRBgGu/4JQr1mjIlUPY+NxmpsvzAs=
+	t=1758496094; cv=none; b=l8w8HdIxM7ytA1P08xnWDIQEKRKXWW1b/TBJO3x7pa3B+pydJmuWxOaYu0d2Acwf/j51A3+iZHeAvkaVWCg1FHPseLfpE+JutX3JN8qaEqQEqt2p/Gw/b0y6XZME0j36NkGZQwQFh+UvUb78hblyjVb/+8AclOrEBwwZHG3ZOAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758490030; c=relaxed/simple;
-	bh=K2wAdUGfJ3PzeS9Q/+XdvHFxE4s1RIisrPYYshm2fz0=;
-	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=sr7SPwlQSbUt6b6kSNoRqe4UmipT4GaYPG746OwRwdB2fuSwUzkjn0ne2f96gzAMwx6n2ADS+nTiRGc8ZdEqpPH9Z+uiSN3LL/cSwYX2PIbte7nyOcbTXogznG0tp04e47GL3pWSANyF8U/+6mWwzZA7DGJqzF/f2y8t8pPW1Hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=foi0zYL8; arc=none smtp.client-ip=57.103.66.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="foi0zYL8"
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
-	by p00-icloudmta-asmtp-us-west-1a-60-percent-4 (Postfix) with ESMTPS id 9E9E51800157
-	for <git@vger.kernel.org>; Sun, 21 Sep 2025 21:27:05 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; bh=K2wAdUGfJ3PzeS9Q/+XdvHFxE4s1RIisrPYYshm2fz0=; h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To:x-icloud-hme; b=foi0zYL8VSBHqSwxRYvQ0Fnauh23PiNxKwLCvcAZsMqmBlDF2YBYPh+tLm5xjTfjimuQ8O3jwOaEsfh0pBZYiRG+Q2yB/3SenD5+OZJldOlYx60QUasHcZlzHXt1xDi51VNdec4Uj7hEYvGoV0twT24VOINawMDmuZs2QW5M0diU4MDFQIf5wpXd6GOCXc8er+Y23AacC9dgeTRBpWotxCL6ykw7vyilC4osjeknSTxJ49TWq5TyMttguI3UFAKWM2AJkAOE8VrN2HJhwGyxMRBT3VboXfrF2aO98+V5Bd1EWQqsDDTL9Qk3A2c1EPwu3U9YOcbyroE3+C4pZQCVLw==
-Received: from smtpclient.apple (pv-asmtp-me-k8s.p00.prod.me.com [17.56.9.36])
-	by p00-icloudmta-asmtp-us-west-1a-60-percent-4 (Postfix) with ESMTPSA id 882DB18000BE
-	for <git@vger.kernel.org>; Sun, 21 Sep 2025 21:27:04 +0000 (UTC)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Shen Nguyen <shenmatrix1998@icloud.com>
+	s=arc-20240116; t=1758496094; c=relaxed/simple;
+	bh=ibko1/J+ojWR/DymCg1hNbPeLwvBQZEob7ULNJLunZE=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pW/dRqsO+DHgQQo/WB+KNBEN4x2mwgI7bTw+vYxlzo7vo4H7hb4+k2LororSXSorUYIOMO7pDhHqAseXFnzI78p3vP7IoBKMI/Qsag02KQ6mHTTeo5gnx1fKkMqtV/tFGtpR+DXCNINMZoqp2bKR0e/YZplhAckgjH8HhNSW/KA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 58LN7L7H1804468
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 21 Sep 2025 23:07:23 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Ezekiel Newren'" <ezekielnewren@gmail.com>
+Cc: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>,
+        <Johannes.Schindelin@gmx.de>, <ben.knoble@gmail.com>, <cb@256bit.org>,
+        <collin.funk1@gmail.com>, <contact@hacktivis.me>,
+        <eschwartz@gentoo.org>, <git@vger.kernel.org>, <gitster@pobox.com>,
+        <me@ttaylorr.com>, <newren@gmail.com>, <phillip.wood123@gmail.com>,
+        <pierre-emmanuel.patry@embecosm.com>, <ps@pks.im>, <sam@gentoo.org>,
+        <sandals@crustytoothpaste.net>
+References: <8799E6DB-FC85-4F71-A6C1-363D1AC8ED06@macos-powerpc.org> <000001dc2a5d$ea10ffe0$be32ffa0$@nexbridge.com> <CAH=ZcbDJR7gJ0tyQ-bk-n+Zid_csED74+X5OkTfbEiy5-_2R-w@mail.gmail.com> <002001dc2a84$cda40380$68ec0a80$@nexbridge.com> <CAH=ZcbCf4sWKhOcCe4UkX3Y9VXZ-iHeh4QZ3ExrX1hbn5GE3vA@mail.gmail.com> <002c01dc2a95$400315f0$c00941d0$@nexbridge.com> <CAH=ZcbDGaxiW=QCTrRo3YqxS-rY0e5h5PrnKQt9htJfn4firJA@mail.gmail.com> <003401dc2aa6$623d1420$26b73c60$@nexbridge.com> <CAH=ZcbA0jpntXjPnrVi13Sz1PipnyBLNWKW4Q5taGEHqBrqj-A@mail.gmail.com>
+In-Reply-To: <CAH=ZcbA0jpntXjPnrVi13Sz1PipnyBLNWKW4Q5taGEHqBrqj-A@mail.gmail.com>
+Subject: RE: [PATCH RFC 0/3] Introduce Rust and announce that it will become mandatorty
+Date: Sun, 21 Sep 2025 19:07:15 -0400
+Organization: Nexbridge Inc.
+Message-ID: <008501dc2b4c$7f5ea450$7e1becf0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Date: Mon, 22 Sep 2025 04:26:48 +0700
-Subject: 041418236D4580017291203053944117783F86FD54E3D85C
-Message-Id: <FA703252-B089-4A2D-AD0B-0FE71214CC2F@icloud.com>
-To: git@vger.kernel.org
-X-Mailer: iPhone Mail (20H364)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIxMDIyMCBTYWx0ZWRfX1GsWqUBItWpR
- d7PpyGYtffGBjMJPmPvOkwvnoP5N1w9rcrWLEFVKaaYLlDt2rOFU6LjchcXMfAJsO2gpExF2yYs
- MURuMK64U5PzczzV1+ITRXyDbUuYTu8WMf4R/3Ct0z04VIu+Sa8XLJeLlY3sEy6GgNSNeVRUi6A
- PUyU31bruXs9PtLJudu6MmgyCRsrJ6hmaofp/v4yFUKvLwIjZBaIM4CEHq2mbuEvyfBAKV6aKKn
- ByBvpflxE86CH8/bLwCxGba7deLGP8Cn08rSJGop803xtGYzc3mgubBr75YDmOOVf8LB39EyQ=
-X-Proofpoint-GUID: 6-yJ6Ig1wCGhRo8PKXoBTpDUmrnrNuen
-X-Proofpoint-ORIG-GUID: 6-yJ6Ig1wCGhRo8PKXoBTpDUmrnrNuen
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-21_08,2025-09-19_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- adultscore=0 phishscore=0 mlxscore=0 clxscore=1011 suspectscore=0
- malwarescore=0 spamscore=0 mlxlogscore=420 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.22.0-2506270000 definitions=main-2509210220
-X-JNJ: AAAAAAAB9muWkrW0VFqVeWDoNoK3xI6Tc1dN17wv16L5S0MwNicjPOcX5OXcF60Mz70DHLX1XJ3hcDGvXY9B6la4JW/Uezh0TO2S6aRv8vncdTjhPW0y69ng4/cDcTNaN4lTanpIivW+rhZYFLfYHqx+JwiLsajLWv0vcPP8Id86kMkUKrNGVaSCcL5X6cmJqqqLNuuoHkDoZxluEhu08/L7PS0s1g3WhnTjsGGHjyUgngKPmJFsgzwHV2+/t9tuSv5CbyvlJoPfWjuwKqqxmttKQSLoYbNVuwDiSO2sbgzkzqStQ1nKXfCESQXO0tv/TOgRwM/6rqoB0ENke2VsMODWY6bhiEiCibr7SEdXOgnEOziTdkhoBtnXnq1BOs20DbqZvsc8S3AK3Y0Da1rdUZvS4sp1tjT91jlnVIp9jkkjeN6j06LP9/kvsPiMau2mC2/PoF9OihJZR73Gd1AW3iFcmC67SwIYGo+3POLVgkJQegkH6G10bny+QOsGvohJY+BlVGin0Cd7hf+dbaZnGfbD58h8OmymVYLyvO+gJ3WVD0+45lVbOx07pfVrC/GH7GVxet8/8mT2CFZINIc+kc3T6sWWxNY1UddOywSRZ8NG
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQLgmUmHR/cGrsIL/oCQ2NDpPqhQsAJqIl+QATT20pYCDwZOegJLM5dLApmyRbMCd1X2zwKjRYU7AV7GJwuyDQGlsA==
+Content-Language: en-ca
+X-Antivirus: Norton (VPS 250921-6, 9/21/2025), Outbound message
+X-Antivirus-Status: Clean
 
+On September 21, 2025 12:49 PM, Ezekiel Newren wrote:
+>On Sat, Sep 20, 2025 at 9:18=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
+>> This is a much longer discussion. Windows is simply not a trusted
+>> platform. NonStop is. Building on NonStop provides a virus
+>> free/malware free container that passes audit requirements for
+>> financial transactions that cannot be demonstrated on Windows. I have
+>customers who refuse all attempts at building anything on NonStop.
+>>
+>> In addition, production control cannot be done from windows. There is
+>> more to life than Dev in DevSecOps, which is the only thing Windows
+>> builds gives you. Unless git runs on NonStop, production artifacts
+>> (scripts, configuration, deployed objects) cannot be audited and =
+controlled.
+>
+>Can linux cross compile to NonStop? If so, would Linux be able to pass =
+audit
+>requirements?
+>
+>It seems like this might be a first mover problem. HPE NonStop doesn't =
+want to
+>support Rust because no one is demanding it from them, but engineers =
+don't ask
+>for it (or rather, aren't heard) because HPE NonStop refuses to support =
+it. I'll bet
+>NonStop doesn't support Git because why would they pay for it when =
+you're doing
+>it for them for free. and now people are talking about adding Rust to =
+Git which
+>means Git won't work on NonStop and then something breaks and =
+management
+>screams at you to "fix it", but you can't because their policy forbade =
+you from using
+>the tools that would allow you to "fix it".
+>
+>Am I telling the story right?
 
+Not really no. There is momentum for Rust on NonStop. It just takes time =
+to get
+budget for the effort. After getting budget, it takes time for the port. =
+I am likely to
+have some involvement in that, one way or another. NonStop does support =
+git,
+mostly through my ongoing efforts and they do use it extensively. This =
+really is a
+crucial application and the NonStop team does understand the =
+implications. The
+problem is that everything takes time, more than git is allowing in this =
+case. I cannot
+disclose more than that.
 
-=C4=90=C6=B0=E1=BB=A3c g=E1=BB=ADi t=E1=BB=AB iPhone c=E1=BB=A7a t=C3=B4i=
+Yes, people are screaming at me to fix it, which is not easy. The policy =
+is not the
+Problem, but the technical limitations are. It is not a surprise, =
+because I was involved
+In the POSIX effort when it was first introduced on NonStop, not that =
+many "in the know"
+Listened to my concerns, which are now having significant consequences.
+
+I am still working all possible angles to see that git stays relevant, =
+and appreciate
+any and all help from any source.
+
+Randall "The Reluctant Prophet" Becker
+
