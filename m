@@ -1,66 +1,66 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFF717555
-	for <git@vger.kernel.org>; Sun, 21 Sep 2025 13:06:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5C42D3A65
+	for <git@vger.kernel.org>; Sun, 21 Sep 2025 13:06:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758460003; cv=none; b=DaXVD2DgEIftGJ+UXdaueIWF+cfB0cjk6q/sJXP9BKmz3TKvTIygkzc9qpVwYDb/pgI2DcgXgN4Od5INFQsXcxNHkJidi9AjD7NIzLK70C6byYF9UU+jsYyJpXrfy9fCm+JbdCKlaiLLe4oUDgUYVXmXfuF3ivBXgW+hhnmG+Ok=
+	t=1758460013; cv=none; b=Q2Bda0PYlLIHUWzjV/qWr9Ajo0ZwG3A1rK7V1hzxnTYorr1cAVH2yla5UQl2V4na4Y93y5v1M9d0m4Fng9NyBgdBk+bFzDUqW79TiM/tNKkWHNwUG4cIwq+Hkxzhkf8dq1T3mlr+tuQ0lAfheJWsjLfVXIVIy38kd0Iuw0SrwnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758460003; c=relaxed/simple;
-	bh=C9beZN8rjUx7J7b9hhWd4gcWJLtdI1315BIW8m5lbsM=;
+	s=arc-20240116; t=1758460013; c=relaxed/simple;
+	bh=CJKxg7zD93RNrG20NjWhjkOtjKuXaVaf3s4G25fPPyk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aSaQcw4OWVOtdRN2BzVXjEm4ylE5QNXiZox0uHVdNI6sTuUp9LLobxUrwaDe4TdUTUbTduJzu4tUn0uxvx0h6k5QnZvdMm3cOq1lt9sgkV8RnmShB9K+umxDF/sv43XwYxBtRYrWYxjccVOZSh1PWQcJM/lu2qJ5ayKuidPs5vU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O4vk62iy; arc=none smtp.client-ip=209.85.221.41
+	 In-Reply-To:Content-Type; b=te/69GzhU9nlnZywiSrR96BBI6nB/c2XdEPnfSAHMNbnkEMDYBsMRYXRHNFV1Bm2ExLxqC/7GpGfI25u/JnwIeRNSn1sXZyaPJwCRQ+3vtYiXkVcxGOICEJVah+ItmTmZcw40NPit2tjphRyTBGUIck7vc5Yh6ng6n+cuPHjZa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a8Qjnci0; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O4vk62iy"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3ee64bc6b90so1499737f8f.0
-        for <git@vger.kernel.org>; Sun, 21 Sep 2025 06:06:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a8Qjnci0"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-45dfb8e986aso31493185e9.0
+        for <git@vger.kernel.org>; Sun, 21 Sep 2025 06:06:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758460000; x=1759064800; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
+        d=gmail.com; s=20230601; t=1758460010; x=1759064810; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=3K5TmkOXkHpRuGLdWcNoWohIEEmgKIk8HkPvE7hQweU=;
-        b=O4vk62iyc1VJblEmitqSbzkFX7Opx8mT61YYPmHDo9aH4228LX7kPuj5NvM3wjMvQo
-         0ELEYzBnBXXNQb/19Dnm0i0fASN2GPe/S1LoacpkI9jamMn83zfat4TNa1Up7QCCK/7L
-         5ssnXzAS+eTjSCWqOjKgUdnd8OykICFdROrdSUePmefwAlI3m0zFiWQkn7CZvle/P1HI
-         I+0s7t+L1uX5c9MGWkqLL0uJSMa1LWz9QNdv47EZnEGG+DBOo3LZoLDuDbcitjeCkFNt
-         FjhRTgaUX1A7gZvHjm3gxCBIg2nOmfFG6VsJ3biF14+pbdghZHjPpUmeQJtplihChTb7
-         BkCA==
+        bh=8c9lb4pmy8u6P2qTqzpbhpSN126h1Y/KlIHYXZDx7HM=;
+        b=a8Qjnci0vyGQzEjW2HTbBUEdwbQ6kAsjS+KpCZHZjQqmeCqDxW9XPG9uMxLfv7asv0
+         nE0rkZYd4qG/OnZtK4X6BvPSBlPd/xAa6n6SW5t4G0oyCosL2rOCDVm4DLGfgwJzfF62
+         /QEtXHROGuTc0to07I6Svv5gnF4z1EV2mkJ9PHG7BFO5ChQd8AQwkkjQF4lDgsjFl1S6
+         tnzvW73LnggpCpaBtgb2XvOQwWUTu9QPSsmFVUxzsMfvD6Tld3wkz/pDicdVQUTWOur1
+         /oRd45KOZjyiP1yNIocC9LuvGqgggp3vRrCBul9icRXF8LvG2RwTU8MxJHPrLHB4p6KJ
+         lAQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758460000; x=1759064800;
-        h=content-transfer-encoding:in-reply-to:from:content-language
+        d=1e100.net; s=20230601; t=1758460010; x=1759064810;
+        h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3K5TmkOXkHpRuGLdWcNoWohIEEmgKIk8HkPvE7hQweU=;
-        b=MXakRWJhsd32bKPlbwo21ngtJOowiEddiYbHB2+qQj1+ySLamVFdG+RMLl66fpiuKh
-         2zTXFlOfDKLeQa5HcsVUeK2ETASaZqQ+IathDAxhpqmhjdV98QWXpeVc/tLc3mx3p7Y/
-         g1xwimVN8wRWStEZmkaY7ZpPRJKJqWAgWnmu+xIArCMv8D4XyqMymYVbdJHwLk/sasr4
-         pKBsguio0iRxRlmISSY+yyWzMkTD+d7ranLnO4i1AKBkwtiLuMUD5QQxt0BYgGvAjrwQ
-         oUrQpfoWR0HVQGpkJBSYBYbKFGqVwhBADwbF70zXORecDNsBk4Ex3rWID4vQYZGtY5E9
-         16EA==
-X-Forwarded-Encrypted: i=1; AJvYcCWhl3QUD8Tg32nrVc+OvBliRRfKXeH/182KwOJOMidTl62ehrNzIcPHeuDfQ22LCWNcMFk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyaeJyaSvRMAeTbwgbaiogFoD/g/Hsf4tkXZsZ8Iphia6wYLV8x
-	vIAeF4LwKWhEORygcrMVHRPwOLRgbbYUHLy0Dfxxf/NG4hwhwn7Oyshh
-X-Gm-Gg: ASbGncvngB2jW5H7Jc35IJyrQnbPeYl6nU2xTRvSAXGTdejTHsMXBe79jtukHtYLfZZ
-	wJ9KieLyxwCtsaa/uZX94+IwspP9PyeE70++uQIKpx/m62uBJJyuohhV2gUtNz1bo48iGb+PvD5
-	q4UI6f5qIAhy05BLF3vd44rxz33NMjXl03iQMBOEr1ixPyaCxtiJ+z9b/FSaDka99QP0Zam3grE
-	La717dTZcOyx2P2SRqlg2UGLvD1HsrZRB15W5apcicJH7XY5a039AWxBePOY+VccAfhoE1HlxLL
-	K5Frk2VL7SywMlZxxBD/LbiIByfeQBm98i6rqFvbsSxyMs6tkyI3v5cFCszcCel+LwQ6/m/7JBa
-	HsKbl53LLM4fJqU+cVvPEdIcBeCN46UJwLF2FmYOWgHqCtrZXCCHmyV9yMP5QqFQQLFZ4n2G10N
-	RncAVy
-X-Google-Smtp-Source: AGHT+IFeL9Ima2/qpkUEB60aN81X4erusc3ulPEAh+693l5acD3rPFMz83dY4yvxVU3nSWli9MRyBA==
-X-Received: by 2002:a05:6000:2003:b0:3f9:fd59:7a6c with SMTP id ffacd0b85a97d-3f9fd597b64mr1813655f8f.0.1758459999518;
-        Sun, 21 Sep 2025 06:06:39 -0700 (PDT)
+        bh=8c9lb4pmy8u6P2qTqzpbhpSN126h1Y/KlIHYXZDx7HM=;
+        b=M//o0DFY5f8HtX3lFp2sJCDg0Ae6hZcYwGjP5bQAp2QQmSO8LhPgxf8v/mSq9uHaxg
+         XpFLmWQY+f9V4zKwJKnGbjI4YG52fMlhT3ZQikYmGW2PHLT33AP4DOg80aqNzbDaI8AU
+         3GQFndtx4kO0h/H06EZT+v8fKr9P1cVqvtqOMFMcibXKeboDUwua0nzpDsXsfhi/Kxxh
+         OXWF1K1mQJoCSGYrZGl8ce7bN0nJb4fbpB9WWXWYil4QRmPEJoq8XyVQJ//7xUUgwX/q
+         QE4oBGEvOSv5BZrB0k0+Hi2Kfm2saqKVVbs6D4bjjNYTIts3uvRNBokt4E+3y8N2Cw+7
+         qO3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXb9IMAIbKVERHytVxfgADoiRbVEhzZOO3wbq8shTNVIFUM82bEyyuhdR71i9odHK68NjU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUY2RA9WeqR5XlnJm0CDzHNdX3xErqYVNJSLZEh5QvYK8SHyUE
+	/PYulHRaDp8DYmi68Xh3p1OQ9LLrxc84BsSdMtvVJS6bkOomMqFasUWS
+X-Gm-Gg: ASbGncvs9t5+So/AN0UvxVcJutGMR7KVFzsFci1tUk4sbuCZzrqFg53AgKKMC6jmSMi
+	5ec4/QhabTwB/TBYZIyFwQhvozQTPWxYDHKUzcnzTCuhwW4EiKgK/heQCsiz8nrdowRkItexS4r
+	iXpgFoEsbPj5q89lUeE01WXmb0uj8DDZcRJlh+6fNU8Qiqyq9Nzs/OmDwE8CHD3VM2IKO1F8XBA
+	/pMMzRP55csWL6vAiShUf6Hh20O7URNy9+gZmpVdrX68AuRnKQHX2VbYcWiNdLYJLzOWuXd7qTg
+	4ZAMXb1SdCGbdL0EB0anGpWnRAU7glNm8wpJmh+vYoeoKCPgiwX0pkZLdESk/BMF59Vb4xF+bZP
+	FGYCSMcdOEfq5aHgnT6S4tCV14KHbGHjv2MGjvwwn2nBZlZlAbeucLq3Ntb618v218qe6rn1rH0
+	LRZTV2
+X-Google-Smtp-Source: AGHT+IE8Oh9TiOO/qae6M1h50KeS0zbmEXP4GLIEOK+amNLV3s/nCiF7qt2pZ7rowCIW6TBg6COt+Q==
+X-Received: by 2002:a05:600c:35ca:b0:45d:d0d6:223f with SMTP id 5b1f17b1804b1-4682c93f43emr109978075e9.0.1758460010051;
+        Sun, 21 Sep 2025 06:06:50 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:62a:101:600d:1d53:febb:27a5? ([2a0a:ef40:62a:101:600d:1d53:febb:27a5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-464f5a286edsm181550835e9.16.2025.09.21.06.06.38
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46139122cb5sm198337805e9.8.2025.09.21.06.06.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 21 Sep 2025 06:06:39 -0700 (PDT)
-Message-ID: <d22c61da-bd78-47cd-b3b6-adc0d3873fef@gmail.com>
-Date: Sun, 21 Sep 2025 14:06:52 +0100
+        Sun, 21 Sep 2025 06:06:49 -0700 (PDT)
+Message-ID: <daad78da-752b-40f4-9c69-d6f6597ca258@gmail.com>
+Date: Sun, 21 Sep 2025 14:07:02 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,62 +68,62 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/10] xdiff: delete fields ha, line, size in
- xdlclass_t in favor of an xrecord_t
+Subject: Re: [PATCH v3 09/10] xdiff: delete rchg aliasing
 To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Ben Knoble <ben.knoble@gmail.com>,
  Ezekiel Newren <ezekielnewren@gmail.com>
 References: <pull.2048.v2.git.git.1758239789.gitgitgadget@gmail.com>
  <pull.2048.v3.git.git.1758294992.gitgitgadget@gmail.com>
- <e1e94107c9722b751d6111460b17e02a7ffd96d1.1758294992.git.gitgitgadget@gmail.com>
-Content-Language: en-US
+ <fd541355609b715ebe94f9e025450165bd91d170.1758294992.git.gitgitgadget@gmail.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <e1e94107c9722b751d6111460b17e02a7ffd96d1.1758294992.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+In-Reply-To: <fd541355609b715ebe94f9e025450165bd91d170.1758294992.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Ezekiol
+Hi Ezekiel
 
-On 19/09/2025 16:16, Ezekiel Newren via GitGitGadget wrote:
-> From: Ezekiel Newren <ezekielnewren@gmail.com>
-> 
-> The fields from xdlclass_t are aliases of xrecord_t:
-> xdlclass_t.line -> xrecord_t.ptr
-> xdlclass_t.size -> xrecord_t.size
-> xdlclass_t.ha   -> xrecord_t.ha
-> 
-> Remove aliasing from xdlclass_t, to reduce future refactoring mistakes.
-
-This is a rather nebulous reason. I assume this is about changing the 
-types used in xrecord_t in which case it would be helpful to say 
-something like
-
-xdlclass_t carries a copy of the data in xrecord_t, but instead of 
-embedding xrecord_t it duplicates the individual fields. A future commit 
-will change the types used in xrecord_t so embed it in xdlclass_t first 
-so we don't have to remember to change the types here as well.
-
-As we're embedding the struct, instead of doing
-
-> -		rcrec->line = line;
-> -		rcrec->size = rec->size;
-> -		rcrec->ha = rec->ha;
-> +		rcrec->rec.ptr = rec->ptr;
-> +		rcrec->rec.size = rec->size;
-> +		rcrec->rec.ha = rec->ha;
-
-it would be simpler do do
-
--		rcrec->line = line;
--		rcrec->size = rec->size;
--		rcrec->ha = rec->ha;
-+		rcrec->rec = rec;
-
-which would make it clear we're copying all the struct members.
+What is the purpose of this change. On the face of it it makes the code 
+more verbose and introduces an extra pointer dereference into the loop 
+condition. The compiler may lift the deference out of the loop but it 
+would be helpful to know why this change is useful.
 
 Thanks
 
 Phillip
 
+On 19/09/2025 16:16, Ezekiel Newren via GitGitGadget wrote:
+> From: Ezekiel Newren <ezekielnewren@gmail.com>
+> 
+> Best-viewed-with: --color-words
+> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+> ---
+>   xdiff/xdiffi.c | 7 +++----
+>   1 file changed, 3 insertions(+), 4 deletions(-)
+> 
+> diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+> index a66125d44a..83c4cff6f7 100644
+> --- a/xdiff/xdiffi.c
+> +++ b/xdiff/xdiffi.c
+> @@ -932,16 +932,15 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+>   
+>   int xdl_build_script(xdfenv_t *xe, xdchange_t **xscr) {
+>   	xdchange_t *cscr = NULL, *xch;
+> -	char *rchg1 = xe->xdf1.rchg, *rchg2 = xe->xdf2.rchg;
+>   	long i1, i2, l1, l2;
+>   
+>   	/*
+>   	 * Trivial. Collects "groups" of changes and creates an edit script.
+>   	 */
+>   	for (i1 = xe->xdf1.nrec, i2 = xe->xdf2.nrec; i1 >= 0 || i2 >= 0; i1--, i2--)
+> -		if (rchg1[i1 - 1] || rchg2[i2 - 1]) {
+> -			for (l1 = i1; rchg1[i1 - 1]; i1--);
+> -			for (l2 = i2; rchg2[i2 - 1]; i2--);
+> +		if (xe->xdf1.rchg[i1 - 1] || xe->xdf2.rchg[i2 - 1]) {
+> +			for (l1 = i1; xe->xdf1.rchg[i1 - 1]; i1--);
+> +			for (l2 = i2; xe->xdf2.rchg[i2 - 1]; i2--);
+>   
+>   			if (!(xch = xdl_add_change(cscr, i1, i2, l1 - i1, l2 - i2))) {
+>   				xdl_free_script(cscr);
 
