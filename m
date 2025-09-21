@@ -1,124 +1,100 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6FF14AD20
-	for <git@vger.kernel.org>; Sun, 21 Sep 2025 00:00:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5E9E552
+	for <git@vger.kernel.org>; Sun, 21 Sep 2025 00:38:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758412817; cv=none; b=OiwnwYvRNfAWUOltWvm14O9+6blRlXbGFOMWbFi17MXLlWp89YbIaY+rSl4pimdaMDldHSScrEfRq42PFgHHXExu2i4hHmaIhqjXhpmLdQ/fTfg8bFkMAOiSlUpwxX7wIP2gVYAuOOVtoNOF8DdzNW3kipJuE6SNNxSz8LhoEVU=
+	t=1758415108; cv=none; b=cLBvffGdC95AYkmPwK7UaajOt47FcX1iaGAdb/dNMbj/9mSNQWcDT24/d+lZCBVprpacJJx46ndJNmht/dwTh9BT2jZA9IiJJXFige9nmDEf/mRzvpowULiMCkWmeI2psCGCy2PQFlik24PS84zH3VA0djK1+84V1RjS7KYey9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758412817; c=relaxed/simple;
-	bh=3Uw2aQhaAvwrEJBpVuk2MoIdFeZSXlXb0As6WlSN0vA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gP/IsGq5OTh8BJqmaWh6QweSXMEEMtMYH8IvCAzFDuKsYLMWlJgylGPCsHy6XmjP5TkNRyIUL62SJxjhgm8g3qbjrCi/2HEvCKyMoay8BGizJpvPrZduVUeCGZJM2WJKMxZpO6xfkWzyqMWjGe4zoOxhkdPNKV5eQV4AQ3z8wyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IuPprHw6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Oepth+HJ; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758415108; c=relaxed/simple;
+	bh=sZjpqrtou2cnrKZ0S7IiyHruWJN6Y1ieOevZH5svTOo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fck0MFTley9piiczdpeGtwoXQwXACerr1tzoDN8lOCsSHu6CvTtvdD98S6bIPS598ugCSxkFOhZsg0Zp06V8PKK/2oWfx8E6kW70zHK+3nIJYIEZcRQJLcHU86nHnCQKuxtD4emfqNLoDdMZIFXNTjPKXACjG/+2ky4baGADMgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fqoR1B/W; arc=none smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IuPprHw6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oepth+HJ"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4F22514000D5;
-	Sat, 20 Sep 2025 20:00:13 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Sat, 20 Sep 2025 20:00:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758412813; x=1758499213; bh=vle+Txe9nO
-	L+xYGK7+cfl3ont2uoa2VSnH1z0+ARM50=; b=IuPprHw6+98uRsoSldWuwkDHHq
-	AG6XtB0G+pJpWyUxOksoSyPG3VxS6ABcPhyqOzLm3AQCQpuSIj/VfBngtmMvueDa
-	V4p/ldWnPd3cGxKButwkAXP4p2uG1AsfwAfxJaAcm3OOYhwNcK/qLSqkFz1snql9
-	M+Dp3QE7looD48ieLAQrL5NDYE12RPFf9X/z2n4DeWh2ClbLXg4c13W7glXffJ89
-	3ez2eGGoGKv1Uuc4+EOiJN+PVeTUAtam2ISlY2N4u8zEPZPzQ87qd2SO1uSwFBIR
-	BsVw5S2QeNiO+HusWAWoa5ZtPjIYyk25u589zHHT48r7NM7E0jb09TU50l2A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758412813; x=1758499213; bh=vle+Txe9nOL+xYGK7+cfl3ont2uoa2VSnH1
-	z0+ARM50=; b=Oepth+HJJGKDTznIgAZrWzV9uuIetIgmMK90F3t91WVCurWScpD
-	Cdh9bJOqbo2MWZC1/dTqdOYE+E+EiffPZQwGeoube8bFohrC3IbzSVmAr9wWHi7a
-	qJPFSMFot8hBpR/ZWWxdD4F7TZXHOTJ4WT0RLkR+3/Dmbv69Lw+kd+IXIlEazir5
-	0rQUfwKRMkYoCCq2cB+iqGflz7Y5PuD4hVCNjjJBR1fUlV7uq3KCvW8XyOHGO55B
-	No6YZsv56jqj64U710bKnmgN9qqr4c/CwpYjJ3MKYbuC3sBLrPT/n1IejFlJNm3u
-	XrFLKqT13WEtrthZ+bV4oVTbOQ0EpxBanaQ==
-X-ME-Sender: <xms:DUDPaGij3Pjo2MlM06EcN6LaxsxfEjrqNPBJkSjZAS4DEX5t9vKQ5Q>
-    <xme:DUDPaEnf5O_a9nyBofujFCSQBa_GNIc3tQcr_CtnZ-GkKVgBoWcmagyfElxDV1faE
-    a6_kuQg5dgjzHKhyQ>
-X-ME-Received: <xmr:DUDPaEgWCnkYOJL2PUpBPr6mMgXHQDMMU47pk6I3aEfuanb7jtfYuO9fJ8WKnjufFswdiF6GkYrQX5OsjGPU3ytGcUy1WOK3JNZu>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehfeegkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihooh
-    guuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhm
-    rghilhdrtghomhdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:DUDPaA0BZdvj8bJG0X_HuWDYcnWpw8Jq-W8MkRf157LBebOmAgM0og>
-    <xmx:DUDPaFKAPLm2Q7fVh0cr6MFJ0yn1Sy_TlV45b9Es-nLTcTt5ZfaNkA>
-    <xmx:DUDPaIyqfhWUbKwU78yNzupCc1x9s_upB3i-p7p2wHxcyPlxiO_gbg>
-    <xmx:DUDPaLVgoSMs8i30m7lH9_5d81fReyJdOczDD8S8bBMzC5yQ31MlMA>
-    <xmx:DUDPaPQw9cECIDYAzHnWcyI0C5xYUwUWzk1iGfXwaInjJbuwAIfS63o->
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 20 Sep 2025 20:00:12 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Ben Knoble <ben.knoble@gmail.com>,  Ezekiel
- Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v3 10/10] xdiff: treat xdfile_t.rchg like an enum
-In-Reply-To: <1e404c3290bd4ba8b4973a597b976c301138cf73.1758294992.git.gitgitgadget@gmail.com>
-	(Ezekiel Newren via GitGitGadget's message of "Fri, 19 Sep 2025
-	15:16:32 +0000")
-References: <pull.2048.v2.git.git.1758239789.gitgitgadget@gmail.com>
-	<pull.2048.v3.git.git.1758294992.gitgitgadget@gmail.com>
-	<1e404c3290bd4ba8b4973a597b976c301138cf73.1758294992.git.gitgitgadget@gmail.com>
-Date: Sat, 20 Sep 2025 17:00:11 -0700
-Message-ID: <xmqqms6owu7o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fqoR1B/W"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-36a6a39752bso1087571fa.0
+        for <git@vger.kernel.org>; Sat, 20 Sep 2025 17:38:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758415105; x=1759019905; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uFPpUqVNvu5npGXXd+/LbuAlBrN1kNC9H2dgU0A5i9Y=;
+        b=fqoR1B/WCbh7e/LdryL+GB6lu2dpQhHLOr8LtfaWoAecvM9Ol15RaScEMsB1sTkt/U
+         E1w7+kapl+rD5/Mmag1akC1JY3AhQWMW1eXMUC9OZVljdvqDilIciJvIXWjc8f7WSd75
+         pUXnDGGZmHZtOD2L2Otd7lSECG8Ip7Z+YB9thwHEwNtOThuQsVl4ZPQow8YVVIezoDzC
+         s0pAJzxkov62zb5xB1cGi2nplpVp8hpgsVHeMJIAxZYDVW3AFHRNu1oHFuM27kJBqEbq
+         u98AvwKDVZSOOj0wXvQKxAPanIHnDATRYvm6D8nk2K+3kMSW0+naOLEr9kodzVURrF62
+         MdLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758415105; x=1759019905;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uFPpUqVNvu5npGXXd+/LbuAlBrN1kNC9H2dgU0A5i9Y=;
+        b=ZtKtBsph54IZ/nLEtPxu55X+SzSI0VamO0qAd938zj7VZPV3YZVKFCVnfs32XVX+VU
+         02zNbuSFLNVEhkBWYba+SIpzO4UJJE4uOa8xOTxxQpntJeTtpY7WJwyfA0fiDtYRCo3n
+         4lQV/UZ8/VctsLludKzE7j3gz0846gVOpmyuds+/93ngKnb9ngmJ8zSa91gEm8xKMmJd
+         Pj/BJlboYgfGAfFo4Dbe85dTuix+VBHIDNu0fvFobcMpCx1joBIJ52t89wwi/y2uniyL
+         DA80g4cvRfFcE87Y4/eaeEVzALeCENQmBMKfyf5qV+B9lI7xfiBem48SVWDYzNKDUMyy
+         nYnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVi3caqkkncEUSB0ifK+tOUs0Gxqn0DzmCH+hWnkdWvb74BB2zi473r5uZWX6nx/rhsIkk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyrWtLbxHNbVEj6BIdM4jWFR7gzTPpMj0q3PVze+INx1bg9Zqj1
+	rgdV9tERDdC5jEwXdk7BV7CfO4aFXnZcy7FnYa8kO9+62LC1l525Afd/5tVLGSHQ/Ex5GrPZq5N
+	aPBlV4J4B55ayln2JvB3zru8Ukn3zGfg=
+X-Gm-Gg: ASbGncstjQVmNmpZr4tmUtr0TSEWHFHhLndXQBtOtz0Sok6BZ5sBvkXefYP8sAN/QCL
+	8P5Tp/9O9gt75d/ayDY28Qd6dyegJNmxDImNf3GhjT47dxswst2RBFG/S3p7npCy0mcTWQvy4+4
+	V8zYXdT3msU0V/0C9Rf0208K9y1CSGRSzNsQJE/jdbadr+RjJuqTt8B1VLXEpysTjZcDwpL0rtH
+	BZfxsbj
+X-Google-Smtp-Source: AGHT+IHbOLV4Ta4vxxt4PzqTOh/VIdgMXl6C7GZS2BUMU2jzHZpMgunkvCM79pVSrsEi0YOs9yCHaJXVcDZLiYktqnU=
+X-Received: by 2002:a05:651c:4344:10b0:32c:bf84:eb05 with SMTP id
+ 38308e7fff4ca-36419e3e855mr28720101fa.33.1758415104894; Sat, 20 Sep 2025
+ 17:38:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2048.v2.git.git.1758239789.gitgitgadget@gmail.com>
+ <pull.2048.v3.git.git.1758294992.gitgitgadget@gmail.com> <1e404c3290bd4ba8b4973a597b976c301138cf73.1758294992.git.gitgitgadget@gmail.com>
+ <xmqqms6owu7o.fsf@gitster.g>
+In-Reply-To: <xmqqms6owu7o.fsf@gitster.g>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Sat, 20 Sep 2025 18:38:13 -0600
+X-Gm-Features: AS18NWC7rht7ovIC2vWiFp2iNKui7bmAzy8KL5uxf3HS4WAIURUyTY4sco3sxEI
+Message-ID: <CAH=ZcbD4oi1hdWDK8s2g6mQGrk+kwWffnSYE5gQZ_d3Z2Z3euA@mail.gmail.com>
+Subject: Re: [PATCH v3 10/10] xdiff: treat xdfile_t.rchg like an enum
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Elijah Newren <newren@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Ben Knoble <ben.knoble@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Sat, Sep 20, 2025 at 6:00=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> I am not comfortable with the idea of exposing a set of overly
+> genericly named macros like these, especially when they are *meant*
+> only to be used with xdfile_t.rchg, to those *.c files.  So far,
+> when they include <xdiff-interface.h> (or <ll-merge.h>), they have
+> been rest assured that their namespaces won't be contaminated and
+> they would not risk stepping on others' toes as long as they stay
+> away from inventing their own xdsomething or s_xsomething (neither
+> of which is quite similar to how we name our symbols and types).
 
-> diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-> index 2cecde5afe..7092879829 100644
-> --- a/xdiff/xdiff.h
-> +++ b/xdiff/xdiff.h
-> @@ -27,6 +27,10 @@
->  extern "C" {
->  #endif /* #ifdef __cplusplus */
->  
-> +#define NO 0
-> +#define YES 1
-> +#define MAYBE 2
+What if I move NO, YES, MAYBE into xprepare.c and refactor `char rchg`
+to `bool changed`? The problem with bool is that C needs to include
+stdbool.h to match how Rust defines bool. git-compat-util.h didn't
+include it, then it did, then it didn't because compat/posix.h
+included it instead.
 
-<xdiff/xdiff.h> is included surprisingly widely.
-
-I am not comfortable with the idea of exposing a set of overly
-genericly named macros like these, especially when they are *meant*
-only to be used with xdfile_t.rchg, to those *.c files.  So far,
-when they include <xdiff-interface.h> (or <ll-merge.h>), they have
-been rest assured that their namespaces won't be contaminated and
-they would not risk stepping on others' toes as long as they stay
-away from inventing their own xdsomething or s_xsomething (neither
-of which is quite similar to how we name our symbols and types).
-
-But these are names that they may legitimately want to use for their
-own use.
-
-
+How do you feel about xdiff.h including compat/posix.h too? If we
+don't use bool on the C side then Rust is going to be littered with
+some_condition !=3D 0 or other_condition =3D=3D 0 and won't be as clear tha=
+t
+it's a boolean instead of a numeric type.
