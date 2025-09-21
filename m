@@ -1,133 +1,172 @@
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2CE2D2395
-	for <git@vger.kernel.org>; Sun, 21 Sep 2025 12:22:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BF322FE10
+	for <git@vger.kernel.org>; Sun, 21 Sep 2025 13:06:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758457367; cv=none; b=aBmjEJxn4ZjSDrKoVsKdxGfRM7RjCzlA7fpFGtCcnGNYcgOmBnvtScAz+6TJv0SaHWyTaRGxWnTmotaiBtRdIswj+IMrhzUZEyIFyX47fJ35J+W/wDqre8g13GHC4hmmqFVhqTrYPrJQgNVFjk4kbEMEwtaKdkwKfCeEygAGBDM=
+	t=1758459964; cv=none; b=Pp8Jx4REBcEUVjypDrX6x2nt5PIS5SF01GeVFY5XTH4ejnbFyaw+an/rMzuyF+tohLAwUZ0QVYqRs2v3dG5H0vhcdmMCRL6PiPOUDiny+q5GM288nHVyt0cbnN78OpxM7gbU+YDrGM/JsfoVhUXtVmms42iQ9sv/Tg3R59+BYmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758457367; c=relaxed/simple;
-	bh=/hjLUXftX4i7JKE+lBJRzysrHrEVUI3vQtJ3IWtKLkc=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ciNWE0gwYTxv04p5+yhW6ljlKFc4oQCFyBjz8vVn0dxc4VaK24k2jNAUYT4bZ/YmeHiOzRqvy9WET6b3DfIvysI5ZeWb+/ePHFAdsceeMV7XH1zxcHXJtsxAGwzm5r3GQ39QBQaaa80noBhqGTAPMnyWo63opOJb9eyGc2lQX3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FkFTCj2G; arc=none smtp.client-ip=209.85.166.180
+	s=arc-20240116; t=1758459964; c=relaxed/simple;
+	bh=S1yFEMah+0M8h3ckHW9lUAQF8W/a3NTbmHFqizIxjAw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SbsQFDHDR0jAUjccW7eDvgFmOFG6Znat6YLwf1xnD/U/n/o9Kq/y12rah1cYVZh7MtRt3whPfi57rzk8zuE82LlvOw5zUtjeG4xz3ZN8LqFNAxSCKQWGqaL9Ir0TmRMYFl2vkxmWQVHTa+JlxYGSCA4DHW7GoM4NDC5uYWS/6BA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d/8rzHsk; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FkFTCj2G"
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-4248b34fc8eso13520765ab.3
-        for <git@vger.kernel.org>; Sun, 21 Sep 2025 05:22:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d/8rzHsk"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3e8ef75b146so3274459f8f.0
+        for <git@vger.kernel.org>; Sun, 21 Sep 2025 06:06:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758457365; x=1759062165; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JI40US1j2L0AL50sABRUzcYhvzC2y4gUNm6et1VQB5E=;
-        b=FkFTCj2GHUa6qugDNXdAYwQngtE7c9Tjn2/W7KvwzcEAjV6KrXDhm7WicfG4lWeV0J
-         TrggQ8/1zylPL99ReRkjof/q7NhJDEogmWKKLOzlQrg5BmswMOoWjhUJ7VmkTwJ7WHkP
-         kQKNQaCLiNc5b4zNgbkY/GZ+l4do5puxUibJv9soODNerP09deLcX7A8kqayntFr8oJc
-         4LgXzPGMxwY682WrQ0VMjFA0YA0SXGcRPrMTzcWv8sEsmWEjRRChxrdYMSAAQcUyRNqL
-         zai5P2jK1dcE/RVwXyPOngJij6clH5g9iHVHKBYVCUUA50wkK9S4Bh05u8fyLyCfXl0F
-         MDUA==
+        d=gmail.com; s=20230601; t=1758459960; x=1759064760; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rEGLdy9/++e07cIj24rUcyNzboCgIZ8CcwtG3njDPCI=;
+        b=d/8rzHskD2EH+hqiOoeGL6i5DIPs8cNqz6i+PfiNJjMMJO6sSZTaKExrbCMPwvpSUh
+         TAsbMNBREyNsnUZ4SdZI2RHGDZBWnQ3c3dUKLrqA27taJDB/n0rEr114XNUbjqyBw9s9
+         8Q2vHwf7HIWi3jQkBDz7Vte/ZFoUTr1vpnz1aouwhMmyFpeynkoi72tC+3/2MKkAes4E
+         GL9B1shRmB/+Zw8p2/X330ENP2SzRW1ooN8lPjJnKpno/wFfOOEAUw1Q0MIzwX9sMdPs
+         X/XKR7gVfv3BXSgr7D1HHaO+X9kMZS2cIA8WgR3Wdj9YgYR3nkF7AQEPjAi8+prABmke
+         nJTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758457365; x=1759062165;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JI40US1j2L0AL50sABRUzcYhvzC2y4gUNm6et1VQB5E=;
-        b=mhirXbNKpl+Tb9vlBn61DToODqhFiCKRi5eOpo+dJRZKCN7xuSED/RhZq/g9JDP17B
-         LC6O1tlrD7RUSkZ4m+hEjBvA4Q7YDXYNCOqOnfCB8ee477o5lMW5ZYb1nODdEwBzo9H6
-         d8KTKv+zj4waBQj/ylmCSrZYBDL8czYVegqfO0yXqQ0NbG799EmUaNShQ+hrvE05vPeU
-         z3BkyrpvFskvOnj2+w1U1t2yAI6YYrti1vl3vUCb6KOpe1YhODO1+Ntvud9rXOPoNOGC
-         UNm7DcHixpsNXw4C78V0KzKSMRnN8lvA/C1bCSQsxpVrxiLq7w7dWmHT1sm38VYRM6QE
-         rsAw==
-X-Gm-Message-State: AOJu0Ywdppp+lCSCtv8MaOD9o4eck01V9pp5Rem98HoEbnTVWEZCNajB
-	Dv7wZAlhudrkZwbvy0pVyXa5EuSSIJ23A5Ur6IT85AXDcFYdfPHQ3t8Y04MS1CCl
-X-Gm-Gg: ASbGncvEk6NuYUJSVOP0UF1TywwCVBs/7J4whpFP21Bt5Xwpvwf5prTL/FfBR6oNn0K
-	MTuyBxoGGn/dH8VUG7XtoxNs0bnh7AQrDUeGbGSFbQHPAsEmu6nkO+GwnZxZIHGTTYaIEutgMIc
-	R7x89QRSuG/m/UWjUTB/zZB20h6M9L2FKtmuidwlpzy9R+VKg8okuJBkg45lrOW5Gr3+8BloAwi
-	Zsr3/KoE/mB9DpLSyFCm3f92HsrsupjONajlxwnbcxK+iYpyaMnQ6O9HZSXvOoQnEYxf29KNUBt
-	O8YarWFfBHrgZtYah9JedR2Ht7C3f+WGQzmKoC8nzeFLulxpOaAYIMD5xXuY08mDO5RzrIlS8SI
-	euk/lYROolOmvUkYPlBlRMj7E
-X-Google-Smtp-Source: AGHT+IFD7LQ0D4DgwdaJMggn/qoiddVVzARSp9rri5hQmnVn059n5lzxBcbC55JhQOMOuOmRmHBPfg==
-X-Received: by 2002:a05:6e02:1b09:b0:424:57d:1a50 with SMTP id e9e14a558f8ab-42481947533mr148594475ab.11.1758457364950;
-        Sun, 21 Sep 2025 05:22:44 -0700 (PDT)
-Received: from [127.0.0.1] ([52.176.35.114])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-53d50aa5dc6sm4574390173.47.2025.09.21.05.22.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Sep 2025 05:22:44 -0700 (PDT)
-Message-Id: <bcb231125c95ff809c618eedab71375b94e6c69e.1758457356.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1974.git.1758457356.gitgitgadget@gmail.com>
-References: <pull.1974.git.1758457356.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 21 Sep 2025 12:22:36 +0000
-Subject: [PATCH 3/3] http-push: avoid new compile error
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1758459960; x=1759064760;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rEGLdy9/++e07cIj24rUcyNzboCgIZ8CcwtG3njDPCI=;
+        b=NURDfiG+H59KzrTHNokB8M1sJi/8s3sAH1FQcj0//AeVu2kktBXzK3SZsjR7Psd5zz
+         7pBR4I/yV4plvv+22yCNga1ucyGPt9EEHu4jwHCu2TOqr1seq3Ahud2qWm++5V1KD1Ob
+         qDd8iVtSOv91rZYpNfzQDnAh+ZquHV83GXhGsPexWNpUQnxByl56cQN3z0xwOHfEd1BD
+         cpDEcJdJGhFMPIB7dN1qNOE5BXjvb0o04/oBsAY4yaw2YNRjUS/CEpZVIGhh/Gp2Aqkk
+         AivI8f8KGC1yNDJ4RFkMukVJwyrbn8nBLm1U5K3dnPvjiU3QIiwkVC4ScZxyZeud5xc0
+         Xlyw==
+X-Forwarded-Encrypted: i=1; AJvYcCVMt/ZjyAzVWauZHCMleN10ZPKyWF7IBYv4jGN7rFHUN/1mrs3XjGhnN8U0P+wJhIePBFI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxZZb4d1LuMDWHacXMX8tqxop+6Jo04qTXKkTr1wIeH55dtv9hF
+	jMIOyAxuw62lmU6zA8NnQDXgAKNlk+1nfZvBRYsd4Z2y6amDcXzcUAMF
+X-Gm-Gg: ASbGncsNeXfiKXOJfu6sERjivL75U/MPt4hXPTxClWmNj1kHOemEXE7/uHK3Baiob3R
+	9QuNcnpDxIlsgFPkFbLnEJrxlL72OoxbQGTU7dyA0z7bO7FpI0yvPE9rDgXz/zF27ChBAqAOCsP
+	0w5KUISEf1uJo3SM7hLk1eTYutKitkXO5FE8X8tt0J4tDU3q2+NaNhvmr7hGsyA0tkP2P/0ICR9
+	BDtfo1cfsNVCFApUHpEy+hvnVVhnIL0/237sF21OAX/dbf0HDSbyTIoxHo4SSu8092vkfl6v0et
+	GczpfNd5qxhv3U6Px4jlken09EEfl49Lq2R2upF40RtgySaQJbZvsmEoaksnwMCprXjKsuOyPp4
+	ia2K+rlcCWLloS5C00Bo53ukuQsUz7pGihk24KX/Xpm6ZlMT8cdDFEXQFwCZUDDmKeprnshRSsU
+	MRllBZ
+X-Google-Smtp-Source: AGHT+IHdSLzFlLO/x7NxRfR37x8Ke2X4KwkMh1Wr0paEyJnAHejme6j5MD3bfMJowoch0zId1bhyFw==
+X-Received: by 2002:a05:6000:40da:b0:3e4:64b0:a75d with SMTP id ffacd0b85a97d-3ee83d9ff66mr5668381f8f.30.1758459960387;
+        Sun, 21 Sep 2025 06:06:00 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:62a:101:600d:1d53:febb:27a5? ([2a0a:ef40:62a:101:600d:1d53:febb:27a5])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3ee07407d33sm15877393f8f.18.2025.09.21.06.05.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 21 Sep 2025 06:05:59 -0700 (PDT)
+Message-ID: <cd39a321-a6c4-4126-a716-dc0b0cffa68d@gmail.com>
+Date: Sun, 21 Sep 2025 14:06:10 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 04/10] xdiff: delete xdl_get_rec() in xemit
+To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>, Ben Knoble <ben.knoble@gmail.com>,
+ Ezekiel Newren <ezekielnewren@gmail.com>
+References: <pull.2048.v2.git.git.1758239789.gitgitgadget@gmail.com>
+ <pull.2048.v3.git.git.1758294992.gitgitgadget@gmail.com>
+ <ddfee67e06bb56cfa8f11187dc27135bfce63647.1758294992.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <ddfee67e06bb56cfa8f11187dc27135bfce63647.1758294992.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Ezekiel
 
-With the recent update in Git for Windows/ARM64 as of
-https://github.com/git-for-windows/git-sdk-arm64/commit/21b288e16358
-cURL was updated from v8.15.0 to v8.16.0, and the LLVM-based builds (but
-strangely not the GCC-based builds) continuously greet me thusly:
+On 19/09/2025 16:16, Ezekiel Newren via GitGitGadget wrote:
+> From: Ezekiel Newren <ezekielnewren@gmail.com>
+> 
+> This function aliases the fields of xrecord_t, which makes it harder
+> to track the usages of those fields. Delete it.
 
-  http-push.c:211:2: error: call to '_curl_easy_setopt_err_long' declared
-  with 'warning' attribute: curl_easy_setopt expects a long argument
-  [-Werror,-Wattribute-warning]
-      CC builtin/apply.o
-    211 |         curl_easy_setopt(curl, CURLOPT_INFILESIZE, buffer->buf.len);
-        |         ^
-  C:/a/git-sdk-arm64/git-sdk-arm64/minimal-sdk/clangarm64/include/curl/typecheck-gcc.h:50:15:
-  note: expanded from macro 'curl_easy_setopt'
-     50 |               _curl_easy_setopt_err_long();                             \
-        |               ^
-  1 error generated.
-  make: *** [Makefile:2877: http-push.o] Error 1
+Patch 6 goes the other way and introduces a getter function that hides 
+the field accesses so I'm not sure why this one is so bad that it needs 
+to be removed.
 
-The easiest way to shut up that compile error (which is legitimate,
-seeing as the `CURLOPT_INFILESIZE` options expects a `long` parameter,
-but `buffer->buf.len` refers to the `size_t` attribute of a `strbuf`)
-would be to simply cast the parameter to a `long`.
+Thanks
 
-However, there is a much better solution: To use the
-`CURLOPT_INFILESIZE_LARGE` option instead, which was added in cURL
-v7.11.0 (see https://curl.se/ch/7.11.0.html) and which Git _already_
-uses in `curl_append_msgs_to_imap()`.
+Phillip
 
-This fix was the motivation for renaming `xcurl_off_t()` to
-`cast_size_t_to_curl_off_t()` and making it available more broadly,
-which is the reason why it is used here, too.
+> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+> ---
+>   xdiff/xemit.c | 38 +++++++++++++-------------------------
+>   1 file changed, 13 insertions(+), 25 deletions(-)
+> 
+> diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+> index 1d40c9cb40..b3793e81e2 100644
+> --- a/xdiff/xemit.c
+> +++ b/xdiff/xemit.c
+> @@ -22,21 +22,11 @@
+>   
+>   #include "xinclude.h"
+>   
+> -static long xdl_get_rec(xdfile_t *xdf, long ri, char const **rec) {
+> -
+> -	*rec = xdf->recs[ri]->ptr;
+> -
+> -	return xdf->recs[ri]->size;
+> -}
+> -
+> -
+> -static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *ecb) {
+> -	long size, psize = strlen(pre);
+> -	char const *rec;
+> -
+> -	size = xdl_get_rec(xdf, ri, &rec);
+> -	if (xdl_emit_diffrec(rec, size, pre, psize, ecb) < 0) {
+> +static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *ecb)
+> +{
+> +	xrecord_t *rec = xdf->recs[ri];
+>   
+> +	if (xdl_emit_diffrec(rec->ptr, rec->size, pre, strlen(pre), ecb) < 0) {
+>   		return -1;
+>   	}
+>   
+> @@ -120,11 +110,11 @@ static long def_ff(const char *rec, long len, char *buf, long sz)
+>   static long match_func_rec(xdfile_t *xdf, xdemitconf_t const *xecfg, long ri,
+>   			   char *buf, long sz)
+>   {
+> -	const char *rec;
+> -	long len = xdl_get_rec(xdf, ri, &rec);
+> +	xrecord_t *rec = xdf->recs[ri];
+> +
+>   	if (!xecfg->find_func)
+> -		return def_ff(rec, len, buf, sz);
+> -	return xecfg->find_func(rec, len, buf, sz, xecfg->find_func_priv);
+> +		return def_ff(rec->ptr, rec->size, buf, sz);
+> +	return xecfg->find_func(rec->ptr, rec->size, buf, sz, xecfg->find_func_priv);
+>   }
+>   
+>   static int is_func_rec(xdfile_t *xdf, xdemitconf_t const *xecfg, long ri)
+> @@ -160,14 +150,12 @@ static long get_func_line(xdfenv_t *xe, xdemitconf_t const *xecfg,
+>   
+>   static int is_empty_rec(xdfile_t *xdf, long ri)
+>   {
+> -	const char *rec;
+> -	long len = xdl_get_rec(xdf, ri, &rec);
+> +	xrecord_t *rec = xdf->recs[ri];
+> +	long i = 0;
+>   
+> -	while (len > 0 && XDL_ISSPACE(*rec)) {
+> -		rec++;
+> -		len--;
+> -	}
+> -	return !len;
+> +	for (; i < rec->size && XDL_ISSPACE(rec->ptr[i]); i++);
+> +
+> +	return i == rec->size;
+>   }
+>   
+>   int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- http-push.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/http-push.c b/http-push.c
-index 91a5465afb..7a9b96a6d0 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -208,7 +208,8 @@ static void curl_setup_http(CURL *curl, const char *url,
- 	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
- 	curl_easy_setopt(curl, CURLOPT_URL, url);
- 	curl_easy_setopt(curl, CURLOPT_INFILE, buffer);
--	curl_easy_setopt(curl, CURLOPT_INFILESIZE, buffer->buf.len);
-+	curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE,
-+			 cast_size_t_to_curl_off_t(buffer->buf.len));
- 	curl_easy_setopt(curl, CURLOPT_READFUNCTION, fread_buffer);
- 	curl_easy_setopt(curl, CURLOPT_SEEKFUNCTION, seek_buffer);
- 	curl_easy_setopt(curl, CURLOPT_SEEKDATA, buffer);
--- 
-gitgitgadget
