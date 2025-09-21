@@ -1,118 +1,131 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC861A3165
-	for <git@vger.kernel.org>; Sun, 21 Sep 2025 15:07:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323C91C861A
+	for <git@vger.kernel.org>; Sun, 21 Sep 2025 15:09:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758467262; cv=none; b=q1yG3xReDsxeRaD45ZgFBWptNoZab7jg9qvLyLx8SQAXTpjY0mS2Y0c+GFm1zHHFRispo+wiDVo+yeJrWYqXG7K8zXQ5KPx7yavgrrmpiKjAwQtobGbeFZ09WvQdeVz+nM+wWzl2AVsI63BidJ2ZrE/e3TktGqK/bg7OsPBfYE8=
+	t=1758467399; cv=none; b=usqBdHY6aeea46dNTjBc0LSMttF1iP2FIUBaTWp484vrliquoBo/uzs3DlX/m4cGWwdL/WZIBRuphx9FYvC9r0wDR7Xf0iTenOBtpHwGbeqh5peRvie65Ar6ChcXmLp1NVdutBkFxblTxEq6b7VG2sHAtbwKtzvbt/sI6VdaLqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758467262; c=relaxed/simple;
-	bh=4OVXj/oHRP8vp3AkCvbqGHJf9/nSlnjB6ADmQozTKYU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=U+mwokDyBNj8PssvAFp9pBw/Pwc3ThUpuCpddplKGS1sqik9W571Zy+8fTuMgbQDusmXlh7U+aRcXhLgY4d3f7bG19Wep3j8kYsyjOwyO2mDdDTTrC1gnHbvsiwLe6Vzpf5vgL6ziesFNAwCgVYB/PEIKgSlPnl4jR7B0PljMbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OZv83Hu7; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758467399; c=relaxed/simple;
+	bh=ZowSPn5lXr8bQ4JCqaNcyYAfzwa4/K0EXC2haBtImI0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=kysXEgBW1aAkyzWZinnpwKaY/Vc1/7028r3nAYYDEyNfkGhMoyqOyWtm58oThi7lRo+/rYkvQ6QZsYPhX5nnSPHxNzNfwItQ4HASZCaatxtvAC1xFuWiW4Us+FTf9AcUmzBNJVTamnnx0pYo7OG7jeW8jfffcuDwA+lkkRtq+ZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Yh3GRRYE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IK1b5U4z; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OZv83Hu7"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-57afc648b7dso1807129e87.2
-        for <git@vger.kernel.org>; Sun, 21 Sep 2025 08:07:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758467259; x=1759072059; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=psDcVhu5BZpcocQFgRmv333ZnEvbKup4MjT/QN4mU1M=;
-        b=OZv83Hu7ZGPxI10hJhmvMFy0uL0dCeZSo+TfhdhtuqtL5g6nkmdt0/+Qsln33BLzCQ
-         JoHVF5PSjeJ1rLL9YExFZ1lJz6E5UTU96pojImsi5dEl61Lh6K47RgGPSf4WQXLYl89l
-         e0Lg15vHwnrtJ2TobmaUhNLTG5KX7KI9J7aCp9/hQpTlEXGf/d81hbqFBOHbJt0NMNii
-         G9qfwEzAh3RzsUQkMD5Deu/DWnKEYU/g5G6TrfIU8ml0PTWHtTRmhiqWruSpYv8BN1YL
-         zWhDcaA9+5jp83l9/ndfoHtAY/8Oa46BsTg38dmjoLbuIn0MNdNLXPLCPjZrSXBeN60Y
-         qabw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758467259; x=1759072059;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=psDcVhu5BZpcocQFgRmv333ZnEvbKup4MjT/QN4mU1M=;
-        b=QskkxIMZma7LbOxKIq8k4HDMv40Z7025y6PVkO5AykaA8FvqLZ4XeYGFbwfGUmfzPW
-         3jD3BcXnTfVaosw6WsZGar4FNKLOmZwoHLFzWflvTimfCkYMorJhN0KDhv1VV3Fv1xo/
-         t7+eWYJodyaHidGN44ElnwGkdaaYDpDLZLOKLshTvI270C4PLReA9sVvgQ7qMivI60sM
-         NISgwStSD4Jf/vFjLOphFp4r6CtxVPCi7tfA8MeO52eemce+vdv2ckYk2lnKikXmTUy/
-         m4/rPLakL8TwbKQT7KvJnixWbP6WPxfOm9Kzj+KN6BjX1pTZljvunP4/phtRCOLkgbKH
-         MeIw==
-X-Forwarded-Encrypted: i=1; AJvYcCWQ7vskuNNZE4DKkwURgeFZmygHd8snIZkfOb6Fzh3U87LNI17doJoectmXfs/dGogwNBw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwJYvvuUWq4tpeLRMDzH/GMcIM+JY/ltnpgqQawf3Ev1nJJTEQx
-	TG9fZ9yEicZl6QiQ7/psk/8vmhgZolaclSKwig2hjKN/i7ujcCyPMgGKr7hT0q2qfNShenSqxvJ
-	OICiu3wPGG4kOurygOzB2u6g3JZQk/lg=
-X-Gm-Gg: ASbGncvjDFJlXaInNToHTjJ1BiCsdfKf6qsvkDVxZ5+9p/YTwic9PHg8RIV4LkYlp2n
-	+HgAe3Q8JfBvgVJ8B2kU9GIlNbMlJSPfT+vVKoUIZgo3TLnXNM8w9VnFTWVJ3lGEOipj9Z0NByM
-	dTsq3/mfjSg9hAzs7holKQr5HFZomm/jWjoP+Ht3Kl/l/WzQ2nmEwXC1zHjE6zes1Uye3a/wvLO
-	bADJVuML6KQX2wt2g0=
-X-Google-Smtp-Source: AGHT+IGX35d8g2sLiimW7NZzB9Ctmn1F4h25rBPVH5eFxGtJMCuWiJpU3gOxDVbJtMcqlO4NQU9EkDR+BTkfAdg9PFA=
-X-Received: by 2002:a05:6512:3b9c:b0:57d:7343:3bf with SMTP id
- 2adb3069b0e04-57d734305camr1006411e87.49.1758467258741; Sun, 21 Sep 2025
- 08:07:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Yh3GRRYE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IK1b5U4z"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id F3BD91D000A9;
+	Sun, 21 Sep 2025 11:09:55 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Sun, 21 Sep 2025 11:09:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758467395; x=1758553795; bh=vasZQgd8ls
+	DENBGdARMybYC1FRwPvSJS0FAvGYIDmso=; b=Yh3GRRYE5IN69O/vgE70GHTwfk
+	uVGI7tiVPy9jr13V4St8WucTouHRMwxdB/WMhkP4wns66azUfLzL5EkEthibL9cF
+	/lImQkTJjNNMg3GU76SYJwKi8KNx+qnAYWCWJJqZd132l/VC5Tl3BSofd5u5vXQS
+	kzsN0XrEx1M4zDHlU3TaeX0F1mBXih3y2TsTlAAqy47XwcOwvbI2YxjW479x8iOK
+	hd6SESSD8uvSiverK9JV7XaLyre7MIdYCP2V0cpapm5qXiPx4uBDBfjyAsMyf/QR
+	CKEJGSpuyN22ExZnDcjhjSObV6IVuuuRyIRf7AlKQLOZ3pa3666QRjT2PS7A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758467395; x=1758553795; bh=vasZQgd8lsDENBGdARMybYC1FRwPvSJS0FA
+	vGYIDmso=; b=IK1b5U4zvBdUqLEhqxL4xfVSZ2m1vF+arcnfDHOSrwb/oq/BoPy
+	uxJAEIFNWZfOV8Sg3Nq4qYOnzZOFsfqkwvpe9QaSzgPuM0g91TAtJaJav6LmnFMy
+	D8vKQkkThNSDrBMnLhQ6Yxlc4ckIY/KPdkUM+EvF8Zr2mj5MrePA3PyNRWvWPRi0
+	zN6/ebknncW571WnP+um4SMc7fo/XkLqqpNUJ4EKLNWvsE1lJtTNlXgbFNIvHPlN
+	EK3baxUoqyimFz1yJrbk+QiqcSSRvR3Ih9Ogst46kZTuIyIFsC5QuUIXyBa3f6Qw
+	gSIy45TyO9q/d36+hemDHRJBs2CL+YdkjaQ==
+X-ME-Sender: <xms:QxXQaIM60divpJpkzXJ-1RwkNw9HphIKfcv7W1Br-WpRD8F2qX_5yQ>
+    <xme:QxXQaJipVUQZwFtXgVL3hi8aYe7QY8f2MGG1k5iIy---dFXZa5x_YlK4vgOF5-hOF
+    BugXR9fNDxCPDWkSA>
+X-ME-Received: <xmr:QxXQaL3TFxDSZPRLhZKnX4oNnWDmqY5nhqG-mfPCkCBWHr621r8QMV_atRVFN4uFK8GygmHDXjqPM_JmVABa3u273kOXqx7tKvhN>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehhedvlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeekleetveffteegledtkedtkefgledtfedvieejieehvdefffejhffhgefgudef
+    gfenucffohhmrghinheptghurhhlrdhsvgenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
+    rhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhith
+    hgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinh
+    esghhmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:QxXQaDgr3gfKLheq9tzR21yWqzlAKvZ-9YXkiNv9ZKdULJodaQcg3w>
+    <xmx:QxXQaLcEo6qwJYQ6u5_UomoDAvTinQ5ujj-iKhAw9Uj6z7CWubymZg>
+    <xmx:QxXQaGl_RLD_-PCY_PAVNwd_p5OFDHKcSnZ52QY1Ojy_-iLPZwloQQ>
+    <xmx:QxXQaEt8mzX_o32Zqyx33UXvo4zplA9_k7Yfst8DZJOkykCV_RoixQ>
+    <xmx:QxXQaPI2evWBOfYsfmWo4OBuwt06wIQbPpLxsN_UOHS18CtPJmZ0w7c7>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 21 Sep 2025 11:09:55 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] http-push: avoid new compile error
+In-Reply-To: <bcb231125c95ff809c618eedab71375b94e6c69e.1758457356.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Sun, 21 Sep 2025
+	12:22:36 +0000")
+References: <pull.1974.git.1758457356.gitgitgadget@gmail.com>
+	<bcb231125c95ff809c618eedab71375b94e6c69e.1758457356.git.gitgitgadget@gmail.com>
+Date: Sun, 21 Sep 2025 08:09:54 -0700
+Message-ID: <xmqq7bxrx2nx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2048.v2.git.git.1758239789.gitgitgadget@gmail.com>
- <pull.2048.v3.git.git.1758294992.gitgitgadget@gmail.com> <ddfee67e06bb56cfa8f11187dc27135bfce63647.1758294992.git.gitgitgadget@gmail.com>
- <cd39a321-a6c4-4126-a716-dc0b0cffa68d@gmail.com>
-In-Reply-To: <cd39a321-a6c4-4126-a716-dc0b0cffa68d@gmail.com>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Sun, 21 Sep 2025 09:07:27 -0600
-X-Gm-Features: AS18NWBoberyr3Mer7UOuLRoXvkVG3PGzJ6mfgObqgBud4QlW1deZ_b4_mJGsJM
-Message-ID: <CAH=ZcbD6aw-=93URRjYKfYvt+0z2YrcwfyY9TmZHSsXXsXiB+g@mail.gmail.com>
-Subject: Re: [PATCH v3 04/10] xdiff: delete xdl_get_rec() in xemit
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Elijah Newren <newren@gmail.com>, Ben Knoble <ben.knoble@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Sun, Sep 21, 2025 at 7:06=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
-> Patch 6 goes the other way and introduces a getter function that hides
-> the field accesses so I'm not sure why this one is so bad that it needs
-> to be removed.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-I've added a copy below of the two functions for easy reference.
-To quote myself[1]:
-```
-The fields rindex and ha of xdfile_t are specific to the classic diff
-(myers and minimal). I plan on creating a struct for classic diff, but
-there's a lot of cleanup that needs to be done before that can happen,
-and leaving ha in would make those cleanups harder to follow.
-```
-get_hash() is a scaffolding function that will reduce refactor churn.
-It changes a few times in this patch series alone, and will change a
-few more times before the code is cleaned up enough to delete it. By
-contrast, xdl_get_rec() merely performs an array index, which is so
-trivial that it doesn't justify having its own function.
+> However, there is a much better solution: To use the
+> `CURLOPT_INFILESIZE_LARGE` option instead, which was added in cURL
+> v7.11.0 (see https://curl.se/ch/7.11.0.html) and which Git _already_
+> uses in `curl_append_msgs_to_imap()`.
+>
+> This fix was the motivation for renaming `xcurl_off_t()` to
+> `cast_size_t_to_curl_off_t()` and making it available more broadly,
+> which is the reason why it is used here, too.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  http-push.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 
-get_hash() reduces confusion because xdfile_t.ha is an array that is a
-sparse copy of xrecord_t.ha values from xdfile_t.recs. The field
-xrecord_t.ha is confusing on its own, as it is first used to store the
-hash of the line and later repurposed as a minimal perfect hash[2].
+As we saw in [1/3], we have been using "size large" for posting in
+remote-curl.c and this brings how the size for reading the data is
+handled to match that.
 
-static long xdl_get_rec(xdfile_t *xdf, long ri, char const **rec) {
+Looking good.  
 
-     *rec =3D xdf->recs[ri]->ptr;
+Will queue.  Thanks.
 
-     return xdf->recs[ri]->size;
-}
 
-static unsigned long get_hash(xdfile_t *xdf, long index)
-{
-    return xdf->recs[xdf->rindex[index]]->ha;
-}
 
-[1] https://lore.kernel.org/git/0bacb1191dad2748d2afa79665f1293b0381bde1.17=
-58294992.git.gitgitgadget@gmail.com/
-[2] https://lore.kernel.org/git/af96763036e13480ed4e6dfedcade5b2c90e414c.17=
-57274320.git.gitgitgadget@gmail.com/
+> diff --git a/http-push.c b/http-push.c
+> index 91a5465afb..7a9b96a6d0 100644
+> --- a/http-push.c
+> +++ b/http-push.c
+> @@ -208,7 +208,8 @@ static void curl_setup_http(CURL *curl, const char *url,
+>  	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
+>  	curl_easy_setopt(curl, CURLOPT_URL, url);
+>  	curl_easy_setopt(curl, CURLOPT_INFILE, buffer);
+> -	curl_easy_setopt(curl, CURLOPT_INFILESIZE, buffer->buf.len);
+> +	curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE,
+> +			 cast_size_t_to_curl_off_t(buffer->buf.len));
+>  	curl_easy_setopt(curl, CURLOPT_READFUNCTION, fread_buffer);
+>  	curl_easy_setopt(curl, CURLOPT_SEEKFUNCTION, seek_buffer);
+>  	curl_easy_setopt(curl, CURLOPT_SEEKDATA, buffer);
