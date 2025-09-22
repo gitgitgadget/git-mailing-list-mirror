@@ -1,222 +1,157 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE48121D3F5
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 21:26:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE541E502
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 21:35:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758576410; cv=none; b=LhpupSURdTtu4vVqZIcyMFU051isvTAurx/Dz+dGL3XV/Jd8Zu0ecJ4fJpRxXm4AByV25ce52CgQkt4MY2XkfOuEnhhhE0Ef0WkaO/U3IGXGxH0oHW7hVvUohv18OfUwqRrkoTVPGLKo9daOXbhu7AKXiAc05TbX47BAHrl8uXU=
+	t=1758576939; cv=none; b=jDVHkANkibN2MmnWtfCVV18qJyMtXXiXY+jWwW3cN5hTgL38cC/gI26jRurL94DiqTVqOBjTI61gGQ7FiO87oQBFEvs/qExpzVgZIuf7O71ABh8Y7vyGZtPn3OVJ2rG1m2Gaquy1Cnh/w48m9yAn4CFwc0qYW5oY9jq+Tv5tIQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758576410; c=relaxed/simple;
-	bh=WSfuHaQBlnyjGLX3y7wtcUI4y/eiFzjmaL5WwnZqR4I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nDB5rRfmzm+6EDrak6Rtsy5wi//EjUgteQaZUMbHpVEAC9b3wvAAvPH+WLcWIs2NiFEOiJRbr8BO5lOHf67eTIrCZsi0JYVhqnjlybT2BVAqh9XEh7sPZazjKqRGNNvKpD5+5NUeV2fKoO1tHN6Ssc+S0I1UeZ9rgiyOE15IZjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rJ+yFsAu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SxUJZR6P; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758576939; c=relaxed/simple;
+	bh=tZQoGTt4xYyAZmTkgOOO/FDW00xR9azIk+iviCTAK/k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FUiBFxJLUuigTQLIJla3Xlsl293SJj43wWkASo1kfQiIY83coxJ32EECaMLzEbIq7XvBzcH8QQZKTpWR8f4eU2BwRajrO4Awfl2zi2V8h0eugi79bz1fvlF2QyrJwSYPcfOHH28qa9moU+ytTXl8kp8105lJZj+mq3VNjD2c1BU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Q5HgDfJF; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rJ+yFsAu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SxUJZR6P"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9E0451D0019F;
-	Mon, 22 Sep 2025 17:26:46 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Mon, 22 Sep 2025 17:26:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758576406; x=1758662806; bh=xY6jAyqOPZ
-	qiG8qEKFSgka5dP1k+XvyY+sUlVbpe6UA=; b=rJ+yFsAut8Xq0AheB3fuJzdQLs
-	rjURgLch1WUi/v5C869wU7iQNhxs08I6FFg2MagEOZlEsMBIsYSeGFcwsV5SR4KM
-	YDsW7CpHhPRHfg2l1mJt/6B9IXqL8FQoqrGYqg6WWP4jPoq5dPrzCly1gs/Yz/xV
-	2QL6HJFXWZitop/txlwYEKCvXTvDc/QPlF/kTahXqBrxMO0mLlSyYr/nK1adlyv5
-	upUkt5LrprR9/ZFnrpr3aE1Y1JZxMekQMuQNHiD5lAW5BhiSZElmH9Se75pkz+sa
-	UzTirMoDrEiZeYzzl7khvPKVIa1/hiDphH2LE7zjiwVDGWPkcvUvIe/f8Tng==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758576406; x=1758662806; bh=xY6jAyqOPZqiG8qEKFSgka5dP1k+XvyY+sU
-	lVbpe6UA=; b=SxUJZR6PTNq93hPeVO1XpFh9O/8ILZ0HQ4oq+KMLgfr1kvKFxGq
-	oZldytyQjWyV1Aht7ttvGrV2N05pwtT8W/UhPZNPnSDRJKdmvkWeQhfn2/mNey1z
-	scQWERFiT+nxbnNkG0yKNMFoE/GOPF88v/4w6Gc333CNlUU6sd8lotGJbdA6xoPr
-	ACYKcoD1YJmYhJuEW9Fsej9B7ZtLyPqdZ1F07W+yJJUuP9p4mLcLFwA0yc/BCR9H
-	ADqiYLaoNOstiSr0vUQwW0gDnVOzoWnfnsIbTorzkrLpLruFsx9n1Y0BmS8TyAfP
-	FTuw9YcOXEQmiOxWL3qns7pKzKti2nktAzw==
-X-ME-Sender: <xms:Fr_RaB7boaS-Vc4zkLfjj8XLX1GPved5ev2GtTiuklkSsw6ioeEadg>
-    <xme:Fr_RaCmB4H5Bg8yi4JaGZF9DEActpHLcQaLiY8aW7lCdYEewwl9c81Nyisvi6RwgA
-    Rhi5JL2Jw9aBfI7Ro-SaUqnmQzPfHB_fbl0e0lurIwKWF1YZSNFDQ>
-X-ME-Received: <xmr:Fr_RaCQvMaKGFRVEH2y4Zp2ljY8yFKBLFSYywl8Tyxm3TZ8DtXyQcjn_ne8gmYK8ANGAO2-5d01F6mLbaBdO6KoPA7Dztbst_KhX>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeelvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkh
-    hrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghp
-    thhtoheprghpvgesrghpvgeftddttddrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Fr_RaBHaaNC_PnLwjFMF5rDaNne18pwkUABPttGxIMnnTEh2ETIi1A>
-    <xmx:Fr_RaHHusRyr-U092t-P5DIGT1IOIfAutnOrCWpVKTCIDKGZutfH0Q>
-    <xmx:Fr_RaPQqWHGzHRqpjckteFFdLw1o2zGb78YV1LecOfefbxRtsObSHw>
-    <xmx:Fr_RaIL4GbhDlwvdmtuYiRmC136ZE0WF8DKxPApPHJQyVWtUzh34GQ>
-    <xmx:Fr_RaMxc0hjeNspHk668rAug-pqp7I0DXqJ4DdicxTuUoafce_DfkD2t>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Sep 2025 17:26:45 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Lauri Niskanen
- <ape@ape3000.com>,  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 1/6] stash: tell setup_revisions() to free our allocated
- strings
-In-Reply-To: <20250922202509.GE2205919@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 22 Sep 2025 16:25:09 -0400")
-References: <20250919223351.GA3906184@coredump.intra.peff.net>
-	<20250919224027.GA594545@coredump.intra.peff.net>
-	<xmqq1pnywkwv.fsf@gitster.g>
-	<20250922190555.GA2205919@coredump.intra.peff.net>
-	<xmqqikhath3d.fsf@gitster.g>
-	<20250922202509.GE2205919@coredump.intra.peff.net>
-Date: Mon, 22 Sep 2025 14:26:44 -0700
-Message-ID: <xmqqms6mrxez.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Q5HgDfJF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1758576929;
+	bh=tZQoGTt4xYyAZmTkgOOO/FDW00xR9azIk+iviCTAK/k=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=Q5HgDfJF3yKFW07QxSQv5z6fB0COBkAR6tGsAmr54F7Xmp5PqKs5GZW+z2um6mVUB
+	 LAF3gPjnkb4UbM5eBwKIObZqtmt3BTZB8ZxOYK84pPz4x0PW+BFqFbhGwcqIQsgB5L
+	 9rfTHDbS0YBr0yXF1s1jMVSigB1udaeeTIsieR2QEQoNZLATsC76XVeujZOYguJJJm
+	 E3iYUChN1EIHs/rmhXXIz7D0GACZgwjpC8fXHDArp/n5jZj6yfCkapA5VIKqc1SwJP
+	 8RarN3U3N30ByBRJthHiXVi2RoCpVyIkd6LMkcJBZT8m5eFasHCQk33UDajxRgHvCT
+	 TCrVaUDPKzrAP6+aeA7fo5fN4eDBU+IdPyCt+ASOJN8PXf6jcwn6MYAAVB0zvD3vrL
+	 brwjdnekyibKtMux1vLgFG2PezLUziF2H8xf7/FplkJNsLS6Rz6Z6caxunHqeq8Ydq
+	 qykPUsGR1rBazucKIynlP/ArP4Fc0uFFU8snD2lyeGolP2Al3EJ
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:7cc9:7232:f513:ebf7])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5E73620105;
+	Mon, 22 Sep 2025 21:35:29 +0000 (UTC)
+Date: Mon, 22 Sep 2025 21:35:28 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Michael Orlitzky <michael@orlitzky.com>
+Cc: ezekielnewren@gmail.com,
+	20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im,
+	Johannes.Schindelin@gmx.de, ben.knoble@gmail.com, cb@256bit.org,
+	collin.funk1@gmail.com, contact@hacktivis.me, eschwartz@gentoo.org,
+	git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+	newren@gmail.com, phillip.wood123@gmail.com,
+	pierre-emmanuel.patry@embecosm.com, ps@pks.im, sam@gentoo.org
+Subject: Re: [PATCH RFC 0/3] Introduce Rust and announce that it will become
+ mandatorty
+Message-ID: <aNHBIHXYPmS5AvpP@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Michael Orlitzky <michael@orlitzky.com>, ezekielnewren@gmail.com,
+	20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im,
+	Johannes.Schindelin@gmx.de, ben.knoble@gmail.com, cb@256bit.org,
+	collin.funk1@gmail.com, contact@hacktivis.me, eschwartz@gentoo.org,
+	git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+	newren@gmail.com, phillip.wood123@gmail.com,
+	pierre-emmanuel.patry@embecosm.com, ps@pks.im, sam@gentoo.org
+References: <CAH=ZcbCUL-rWw5E6p26T0039gs9q-P8iK5fp73-RzTzKiZ0zMQ@mail.gmail.com>
+ <20250922155949.27019-1-michael@orlitzky.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="yp6LgRd2763fstZg"
+Content-Disposition: inline
+In-Reply-To: <20250922155949.27019-1-michael@orlitzky.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Jeff King <peff@peff.net> writes:
 
-> On Mon, Sep 22, 2025 at 12:36:22PM -0700, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> > Yeah, I had originally written just:
->> >
->> >   test_expect_success 'stash show -- does not leak' '
->> > 	git stash show --
->> >   '
->> >
->> > but it felt funny, since the test is doing nothing in a build without
->> > SANITIZE=leak. If we are OK with that funniness, I can switch back to
->> > that.
->> 
->> We have a prerequisite for that.  Very nice vehicle for
->> documentation purposes, even though we do not care about a single
->> "stash show" invocation for correctness or performance reasons.
->
-> Ah, nice. It crossed my mind that we could try marking it as such, but I
-> forgot (or never knew) that we already had this prereq available. I
-> guess it was mainly used as "!SANITIZE_LEAK" before for suppressing
-> leaks.
->
->> Perhaps I can squash the following in, unless you have other changes
->> in mind.
->
-> Thanks, that looks perfect for the code change. But we probably need to
-> update the discussion of the test in the commit message. Here's what I
-> came up with (replacing patch 1):
+--yp6LgRd2763fstZg
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks, will replace then.
+On 2025-09-22 at 15:59:49, Michael Orlitzky wrote:
+> There is no problem with supporting rust on Gentoo. Gentoo users build
+> from source, and rust is a problem for anyone who builds from
+> source. I'm writing this on a riscv/musl system. If there are no
+> binaries for your CPU/libc, let me tell you, it's not fun. And this is
+> like, my job. A normal person would be completely helpless.
 
-> -- >8 --
-> Subject: [PATCH] stash: tell setup_revisions() to free our allocated strings
->
-> In "git stash show", we do a first pass of parsing our command line
-> options by splitting them into revision args and stash args. These are
-> stored in strvecs, and we pass the revision args to setup_revisions().
->
-> But setup_revisions() may modify the argv we pass it, causing us to leak
-> some of the entries. In particular, if it sees a "--" string, that will
-> be dropped from argv. This is the same as other cases addressed by
-> f92dbdbc6a (revisions API: don't leak memory on argv elements that need
-> free()-ing, 2022-08-02), and we should fix it the same way: by passing
-> the free_removed_argv_elements option to setup_revisions().
->
-> The added test here is run only with SANITIZE=leak, without checking its
-> output, because the behavior of stash with "--" is a little odd:
->
->   1. Running "git stash show" will show --stat output. But running "git
->      stash show --" will show --patch.
->
->   2. I'd expect a non-option after "--" to be treated as a pathspec, so:
->
->        git stash show -p 1 -- foo
->
->      would look treat "1" as a stash (a synonym for stash@{1}) and
->      restrict the resulting diff to "foo". But it doesn't. We split the
->      revision/stash args without any regard to "--". So in the example
->      above both "1" and "foo" are stashes. Which is an error, but also:
->
->        git stash show -- foo
->
->      treats "foo" as a stash, not a pathspec.
+This is a problem with languages that bootstrap from earlier versions of
+themselves.  It also happens with other, less common languages.  GHC (a
+Haskell runtime) also has this problem and any distro that ships pandoc
+has to deal with it.
 
-All good.  I do regret that I didn't resist harder against the "1 is
-the same as stash@{1}" or insisted that the parser be written more
-robustly if we wanted to support such syntax, but that also is way
-too late to change now.
+It is certainly inconvenient, but there is mrustc to help the bootstrap
+process.  Granted, it does not work everywhere yet, but it should also
+not be too difficult to make it do so.
 
-> These are both oddities that we may want to address (or may not, if we
-> want to retain historical quirks). But they are well outside the scope
-> of this patch. So for now we'll just let the tests confirm we aren't
-> leaking without otherwise expecting any behavior. If we later address
-> either of those points and end up with another test that covers "stash
-> show --", we can drop this leak-only test.
+I do think the difficulty is worth it, though.  With Rust, we're going
+to get code that is thread-safe and memory-safe by the virtue of the
+fact that it compiles and that will allow us to have threading in more
+parts of the code where it might benefit us.  I also cannot tell you how
+many segfaults and null pointer dereferences I've written in Git (some
+in the past week) that are just no longer possible with Rust.
 
-OK.  
+As my proposal originally mentioned, there is enormous pressure from
+governments, security professionals, and large companies to improve
+memory safety, which I believe are legitimate concerns.  If we want Git
+to continue to be used widely, then we need to address those issues and
+Rust seems to be the best possible way to do that.  I don't think
+continuing in C only is going to be viable long term.
 
-By the way this also solves the original "git stash show -p --invalid";
-do we want to credit the bug reporter and mention that issue as well?
+> Nevertheless, the arch support issues are secondary. I'm sure it's a
+> lot of fun for the people who are writing rust code to do cargo
+> updates in the two or three directories they work in all day. But I'm
+> not writing rust code, don't care what language git is written in, and
+> have hundreds of other packages to keep up-to-date on multiple
+> machines. I want to be able to use my package manager to do that
+> efficiently. You know, the main tangible benefit of using a linux
+> distribution.
 
-Thanks.
+I don't think this is going to happen as you anticipate it will.  My
+original policy was to target Debian stable's release for a year after
+the new Debian stable came out and that will make using many crates
+nearly impossible.  We are going to have to be _extremely_ careful about
+dependencies in general and the things we are likely to use are things
+like bindgen and cbindgen, where typically an old version will work just
+fine and which are already packaged in major distros.  We are not going
+to be adding dependencies willy-nilly and running `cargo update` every
+other day.
 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  builtin/stash.c  | 3 ++-
->  t/t3903-stash.sh | 4 ++++
->  2 files changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index f5ddee5c7f..e5ab3c4cf5 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -957,6 +957,7 @@ static void diff_include_untracked(const struct stash_info *info, struct diff_op
->  static int show_stash(int argc, const char **argv, const char *prefix,
->  		      struct repository *repo UNUSED)
->  {
-> +	struct setup_revision_opt opt = { .free_removed_argv_elements = 1 };
->  	int i;
->  	int ret = -1;
->  	struct stash_info info = STASH_INFO_INIT;
-> @@ -1015,7 +1016,7 @@ static int show_stash(int argc, const char **argv, const char *prefix,
->  		}
->  	}
->  
-> -	argc = setup_revisions(revision_args.nr, revision_args.v, &rev, NULL);
-> +	argc = setup_revisions(revision_args.nr, revision_args.v, &rev, &opt);
->  	if (argc > 1)
->  		goto usage;
->  	if (!rev.diffopt.output_format) {
-> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-> index 0bb4648e36..daf96aa931 100755
-> --- a/t/t3903-stash.sh
-> +++ b/t/t3903-stash.sh
-> @@ -1741,4 +1741,8 @@ test_expect_success 'submodules does not affect the branch recorded in stash mes
->  	)
->  '
->  
-> +test_expect_success SANITIZE_LEAK 'stash show handles -- without leaking' '
-> +	git stash show --
-> +'
-> +
->  test_done
+> But every distribution is "packaging" rust the same way. They're
+> bundling random old versions of crates in violation of their own
+> policies because the ecosystem is unstable and the tooling encourages
+> tight coupling. By requiring rust, you are require me to go back to
+> managing dependencies like I'm on Windows XP again. Git is the most
+> important program I use, but it's not more important than package
+> management itself.
+
+I expect Debian already packages the crates that we need in acceptable
+versions, and I assume other distros do as well, so I don't anticipate
+this being a problem for us.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--yp6LgRd2763fstZg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaNHBHwAKCRB8DEliiIei
+geZIAP0ZyPFc4PjvajZBj3ZYrDLB/B0lVGO+/A28pRVtrfYiJAD/WKpyGdCPyc+3
+vLRnZLe3zRX/UtfwEuMEAQjVvSE5gwU=
+=rLMk
+-----END PGP SIGNATURE-----
+
+--yp6LgRd2763fstZg--
