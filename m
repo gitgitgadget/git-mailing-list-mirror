@@ -1,87 +1,98 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39719315D4C
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 17:32:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B83315D32
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 17:35:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758562364; cv=none; b=U+As7jN8lxL8BdXGl4rUnsKMQrnD32BnyURvX1cRT4v7n6bYqbWuaMedBdRRXxVUZTXXnSAyKfLECb2P2zKMsA+D82Z8RTho9aQNUbknRYFomn1GFMByzN4+DjBRoaA3nbBqLDr4tFXhA6neaBigHCut2i7kxGthNua7gMJPnhc=
+	t=1758562542; cv=none; b=pHL5OsX/T7jHblnBEGZjchi3Y2w9M1MCBfRkaOmWtTlvBiLnXTCP8GylSk/MDIyisvLUSXfjZs+gtISosITC7L7PNgkdOsk+DlBz5eE0fOg2xsm+0q8/+gyxFquonl6F4aiwzpltS61bSk6y5PyzWS/EpzGE8ULt0J+RBIQJl20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758562364; c=relaxed/simple;
-	bh=sf41joswSBJJtPMMDjRiUGTgBUP79aJpPmoX3X5RaHU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jFkFalCodUHSaQ637LC/CxY0fUhODf5P82v4u5oKXJo+jFkgSW71n7R4mgJMH1gTwJreqa5xfbDF66sdrLmS6T++fxqm9GLyOrEDZsXnxPa0EOmchzkqhq7yXM79D5nmTZ/5rwdy9Q1nHVgA9kmCEAXszlPVut40lK2KO8XQ58E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FTRpgSsL; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758562542; c=relaxed/simple;
+	bh=xvaXbWBVfI1xoXwpEduxzo/ac/UJSZ+h4e2WN7DdFUE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=F8glFG9DJjLZxvV9B5K801xkAiyMsIdYME0IRx/82+MSRX1RGOB+9dMRCD8tK+fQfkilOwojIy7no4OBojikmKzQIT9GP//7ApX1gb7kZfpaA/SDxNbqm27K21auvlx0SZDNy3msnampyve3mCXxwviaBmCRz1GbvgoXP1y+NRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ni8td4Sw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cl0s+pwX; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FTRpgSsL"
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-363cb0cd8a1so39666221fa.2
-        for <git@vger.kernel.org>; Mon, 22 Sep 2025 10:32:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758562360; x=1759167160; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sf41joswSBJJtPMMDjRiUGTgBUP79aJpPmoX3X5RaHU=;
-        b=FTRpgSsLr1TJfxM69icArUL5huZ4mbl3qxhW/2Y7SmQAss4hJJz5Eoqkb/kYptFGWg
-         qQwgtMFNyEOIsdvi0KLp6mDqvsN7j6uesDmqiwAyD/Q/As5Bzg1NTzjSrvuAsaMF7oDy
-         m9LJ3mwoz4s3muOhxDgfxQvH2QLypd4/IVBmTskFXXIH/7ZN11tzAjN2F1vxGm5q+FCL
-         XS3l1eg2bazJq5h3c0DAtXkS09jZ5js+dIAYiqqxw6RKGRfSDX6zIYs0bgt4DYjJa+Bu
-         9mtKXlfQOKEf4ms8xkSGLCh4Qs/YEOdgYqCbFBTBZVBbH9WR0x2Tp6YMs6/VLWgPtuB/
-         PntQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758562360; x=1759167160;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sf41joswSBJJtPMMDjRiUGTgBUP79aJpPmoX3X5RaHU=;
-        b=GNCK/q2gX8dtJ/6LJTlvbNCo9q19sScLyaUmfzssUIdSBBf+7UKAMyo8gIkQRvcJqk
-         5en7r1Vj05WpOBp1HXMcgmzMLxjnacCEmId/4/Rs7qh8s0d4WQxQmdNG/1+WCoVi89lC
-         TMi3vdpw7AKanGk8+XVYx/0NS6zybqiY/BhPQr44DFXUaexJmpBHAK8AtpyE0f5gdUjd
-         NxQHOOXdXTjTUQLWmGdxa5EtCjWqcpPRNRzDACLEqo1Rh7ltlRJGTwvVXldTPA5tUMkT
-         NlTBbUJqv8NDwnjV1vfnRQU/qiIG0mOycActzgiw2lIrJIr06lqKnCdZoN7n/OUz2K3B
-         e9aw==
-X-Forwarded-Encrypted: i=1; AJvYcCWagd+tOJpbH9doLC3iRLec1rqrijPvDqU5HfzqeC+kl5kViM82ZX0EROGEQunLLqHr6vI=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxy4puH9V+euzY54ABkh6ascQ6KYdhO4lwv9FYgczTigNP6RLoH
-	RvNkXGKMZAAjy33DStyPHVXuWg/gdqVoK8rE57PQDIvsQa3jHaBkMczA2kRIt1iJzLroMjI0vj+
-	kZRR81GC4KTH60H0OWXr7CEaoXv0+GkQ=
-X-Gm-Gg: ASbGncu4EsAS6EKL7TWT7LBtMijsTJ4bQAAiemjLn3CbZrrDVOrDp28mOf8h6ZBU14/
-	qOzGQeaNjkRHCKNmSChc3bBerQNFyJxYZTs3W6UY0f0+mUNdTPod7yN2SuE8wjdOdj2/1qU/OQU
-	IGKz4T8dTG0XRVAjYCa1gKXFZIXIHPKygJIbPe5l822DmuN58CykA5S851e12PtPvCkZKprC+O2
-	6V9Js5v
-X-Google-Smtp-Source: AGHT+IGj8Prz07hh4klZq/KUsFY25hNYrCEIwI4KYfUHy1AUPDLTim6w+970UGNKyMm5HA9/+oVYthFxCLR7++2x6Xc=
-X-Received: by 2002:a2e:b88f:0:b0:36b:631e:2aee with SMTP id
- 38308e7fff4ca-36b631e2dc4mr14238231fa.21.1758562359986; Mon, 22 Sep 2025
- 10:32:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ni8td4Sw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cl0s+pwX"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D3FF21400129;
+	Mon, 22 Sep 2025 13:35:39 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Mon, 22 Sep 2025 13:35:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758562539; x=1758648939; bh=xebAGo5lgB
+	6M1oROJs1+RK+lBKboDW+4LInhkXZgmSs=; b=ni8td4SwR+XxwX6+Z/Wl1Hgbtd
+	bjs3oer8B3xZ8zBVQ8/Ay8mdkkt4ezHTIpCxGH8Oh3nU0VTF3IIw6S0i9317667U
+	rfQUoIf5iRPXg7MPbJGObNAplLujMzr9pSdrRS6e7jsgliH2sCME7beNk+b0S5ii
+	/zWwTMdBlpBp0OkNvoWK0fSA+5fOlUqyDpplzne2L/9atdRvk4M+7+hVDmtr43yO
+	WNFul5J82LJmrOLhUUXm6MDJUjgn6yQu2oVIBusKxcDa5Q8WnzfmuYMc7+DsT8pG
+	B6oF9wAczhIXme1eA7OcWjpRP0hA9Gfx7YoxgRR8l4dZ8U9WRrhcwfAJcmzQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758562539; x=1758648939; bh=xebAGo5lgB6M1oROJs1+RK+lBKboDW+4LIn
+	hkXZgmSs=; b=cl0s+pwXhqhCVI1CgyVD8hqRcIZ1DZzCNQPPRtXBK2Bf2p3I9EK
+	PIfjQPCxgu1R8Xd48tGcdSctwkdBzdkN3RuPfunn/0No+llT1ID3Tu+ak95un6QM
+	3qY8P0MCWL5Kuuzj347mrRRlx79Nx8AuSuzlVT6sUshI8wJ3rQlcFvTcENeFbD8n
+	3RrKyn3CzQCkJOSUrz4tH3u9nPBJ5cBenYtnMe93jSu8eHwHgLT/0crWpgV7Cumj
+	1r6Cm8J/6MoUhrxzmw17tq0+9gtT+Zut342QPQ+TSgaiB/1vqr0JuzSNPEOC7Tjm
+	TxFH7A2zXNaGzBNUVWrPHPX/+1TOSJVQlmA==
+X-ME-Sender: <xms:64jRaHh4eX3BpdeDlWynQ49HKL5ldWcwplC1GeufWSKgotzJ7egoSQ>
+    <xme:64jRaLDbwhBrTlbSnmRHrQ3U9wuhmcor2sCMajbArfD_-MmcT6qL0WW7lmAbFFIbX
+    zZ9lCOU0-FM94ROvuY6-QWSemQeavQ450sQojN0KSb96JIcGxrTlQ0>
+X-ME-Received: <xmr:64jRaMG3gciykshAK0z7VAvLHZUI_m6JP2h0uDo3UQoX-2xFFVv_Ns1tOc6Shkse9I7cSVgEynuZknw93mzrvxvM1QrIbzeS6SXY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeegiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepth
+    hoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:64jRaDKxXoc3JzR3G7FhgNpjMLkpsvFQXZvEHx7ZKTf8WIXZQtzHeg>
+    <xmx:64jRaAmU3RkAsu4w6t2cLjLbyTXr-ghT3KMUdJOf0ea_oaDn5PcRZA>
+    <xmx:64jRaLRrOqtps8P_eFW-HxIzfCSI66PhVr9F4uYik9aZjAIZMcKB_Q>
+    <xmx:64jRaCKnfk7NMFD-zDEHGdQyIlu-jjX4qRVmCdr8svus45lUwWJSEw>
+    <xmx:64jRaAZd5ZlkcMUnYh0R9ckHDyWVHyaaYVgPp-Nknd84veDEgeaCLf7B>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Sep 2025 13:35:39 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 4/4] refs: do not clobber dangling symrefs
+In-Reply-To: <20250922172140.GB2202085@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 22 Sep 2025 13:21:40 -0400")
+References: <20250819192934.GD1059295@coredump.intra.peff.net>
+	<20250922122332.584428-1-toon@iotcl.com> <xmqqwm5qv5xh.fsf@gitster.g>
+	<20250922172140.GB2202085@coredump.intra.peff.net>
+Date: Mon, 22 Sep 2025 10:35:37 -0700
+Message-ID: <xmqqecryv192.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
- <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com> <aMpODEpyaaVhFMO0@pks.im>
- <CAH=ZcbBNFSwU7E+P7hkQnt9UrMKiCRESgGvWPL7pRUa0i2U5-Q@mail.gmail.com>
- <aNFIozagGc0MoseL@pks.im> <CAH=ZcbCZXavx52521cFHdXZn=BCWBiR1aG10ekZVg3PVVJb2VA@mail.gmail.com>
- <xmqqikhav3i0.fsf@gitster.g> <CAH=ZcbCsKdZAPxBEPUMvE471ogTNptjFy7FFksWnJfnX=J-F2A@mail.gmail.com>
-In-Reply-To: <CAH=ZcbCsKdZAPxBEPUMvE471ogTNptjFy7FFksWnJfnX=J-F2A@mail.gmail.com>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Mon, 22 Sep 2025 11:32:27 -0600
-X-Gm-Features: AS18NWCoP98saIaA1svrNIW9A7LAK2rCQWuod5YvL1UDfKGPCSz8uMFE5TZly2g
-Message-ID: <CAH=ZcbC_ecyPeLS_0DfN3+w9RTqcrt6Je08RPXqb6pJVGaPjuw@mail.gmail.com>
-Subject: Re: [PATCH v2 00/18] Introduce rust: In xdiff
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Sep 22, 2025 at 11:23=E2=80=AFAM Ezekiel Newren <ezekielnewren@gmai=
-l.com> wrote:
-> Cbindgen parse's Rust and generates C header files; If a field in a
-> struct uses u16 as the name then Rust won't compile, and cbindgen
-> can't create the C header file.
+Jeff King <peff@peff.net> writes:
 
-I just tried this in Rust and it turns out you actually can use u16 as
-a struct field name. My bad. I think that's a bad idea and should be
-discouraged though.
+> ... But we could add support for "ref <old-target>" to the
+> non-symref commands. That is not just a syntactic weakness, but
+> something you literally _can't_ do now (convert a symref into a regular
+> ref atomically).
+
+OK.  Your explanation makes sense.
+
