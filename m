@@ -1,157 +1,108 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE541E502
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 21:35:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD341253F39
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 21:35:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758576939; cv=none; b=jDVHkANkibN2MmnWtfCVV18qJyMtXXiXY+jWwW3cN5hTgL38cC/gI26jRurL94DiqTVqOBjTI61gGQ7FiO87oQBFEvs/qExpzVgZIuf7O71ABh8Y7vyGZtPn3OVJ2rG1m2Gaquy1Cnh/w48m9yAn4CFwc0qYW5oY9jq+Tv5tIQM=
+	t=1758576961; cv=none; b=GkZpPlKeA/PgUuEfQLGD/IA89iGr3eVIbwZQsWEII2F0HcHuY14otbjaMQ3n+rOMpGnqpq0ZeUUXP2LrT5fkzTF36e/Tg6xR52p6NTqs2+uu9V1R87n74Wkq4eHM17ksht7BZgdO5vZACmH+MqjEjxz9ysqNYpycBXZAodQ0dEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758576939; c=relaxed/simple;
-	bh=tZQoGTt4xYyAZmTkgOOO/FDW00xR9azIk+iviCTAK/k=;
+	s=arc-20240116; t=1758576961; c=relaxed/simple;
+	bh=S+SUJPEM5ytJhHXXBuRLCG4SEs/Ws6ad0hSvuzNBVWA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FUiBFxJLUuigTQLIJla3Xlsl293SJj43wWkASo1kfQiIY83coxJ32EECaMLzEbIq7XvBzcH8QQZKTpWR8f4eU2BwRajrO4Awfl2zi2V8h0eugi79bz1fvlF2QyrJwSYPcfOHH28qa9moU+ytTXl8kp8105lJZj+mq3VNjD2c1BU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Q5HgDfJF; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q+/KR/BwATN7tGORJQTW6/4fOEwHlvWW73AW60kNuaRPhrKodYtcP1VapzU+rZ7OM7RdUsLx5gIauAj9kXzPE3EqTpFMpxM5aoGv9+r2TdG9zw+iyZZlRLVyoJGKd18WzawTbFu8PQs4+rmrNNEc66PqmsGMIo1dS9S19g0DKgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Iv7V1x9i; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Q5HgDfJF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1758576929;
-	bh=tZQoGTt4xYyAZmTkgOOO/FDW00xR9azIk+iviCTAK/k=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=Q5HgDfJF3yKFW07QxSQv5z6fB0COBkAR6tGsAmr54F7Xmp5PqKs5GZW+z2um6mVUB
-	 LAF3gPjnkb4UbM5eBwKIObZqtmt3BTZB8ZxOYK84pPz4x0PW+BFqFbhGwcqIQsgB5L
-	 9rfTHDbS0YBr0yXF1s1jMVSigB1udaeeTIsieR2QEQoNZLATsC76XVeujZOYguJJJm
-	 E3iYUChN1EIHs/rmhXXIz7D0GACZgwjpC8fXHDArp/n5jZj6yfCkapA5VIKqc1SwJP
-	 8RarN3U3N30ByBRJthHiXVi2RoCpVyIkd6LMkcJBZT8m5eFasHCQk33UDajxRgHvCT
-	 TCrVaUDPKzrAP6+aeA7fo5fN4eDBU+IdPyCt+ASOJN8PXf6jcwn6MYAAVB0zvD3vrL
-	 brwjdnekyibKtMux1vLgFG2PezLUziF2H8xf7/FplkJNsLS6Rz6Z6caxunHqeq8Ydq
-	 qykPUsGR1rBazucKIynlP/ArP4Fc0uFFU8snD2lyeGolP2Al3EJ
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:7cc9:7232:f513:ebf7])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5E73620105;
-	Mon, 22 Sep 2025 21:35:29 +0000 (UTC)
-Date: Mon, 22 Sep 2025 21:35:28 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Michael Orlitzky <michael@orlitzky.com>
-Cc: ezekielnewren@gmail.com,
-	20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im,
-	Johannes.Schindelin@gmx.de, ben.knoble@gmail.com, cb@256bit.org,
-	collin.funk1@gmail.com, contact@hacktivis.me, eschwartz@gentoo.org,
-	git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-	newren@gmail.com, phillip.wood123@gmail.com,
-	pierre-emmanuel.patry@embecosm.com, ps@pks.im, sam@gentoo.org
-Subject: Re: [PATCH RFC 0/3] Introduce Rust and announce that it will become
- mandatorty
-Message-ID: <aNHBIHXYPmS5AvpP@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Michael Orlitzky <michael@orlitzky.com>, ezekielnewren@gmail.com,
-	20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im,
-	Johannes.Schindelin@gmx.de, ben.knoble@gmail.com, cb@256bit.org,
-	collin.funk1@gmail.com, contact@hacktivis.me, eschwartz@gentoo.org,
-	git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-	newren@gmail.com, phillip.wood123@gmail.com,
-	pierre-emmanuel.patry@embecosm.com, ps@pks.im, sam@gentoo.org
-References: <CAH=ZcbCUL-rWw5E6p26T0039gs9q-P8iK5fp73-RzTzKiZ0zMQ@mail.gmail.com>
- <20250922155949.27019-1-michael@orlitzky.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Iv7V1x9i"
+Received: (qmail 163188 invoked by uid 109); 22 Sep 2025 21:35:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=S+SUJPEM5ytJhHXXBuRLCG4SEs/Ws6ad0hSvuzNBVWA=; b=Iv7V1x9iJeNiNS/wJm/HnurSPavD8Fp6hZ85NeR2Hju9oFUhmXMr0nrLcrW1SnEJMjezm0hg1TVSPtCqCbAaKiHx9rSNz6oSCiQbV/MU5lUlejgsC4fH/ACb0bIS2TsME7qr4F64Tsb2tz/n6TsuThYBQLTFxlCXhBODIGuZe7uRRp39uHIIbgdiEOgfoi26Mx0osOxSRtAk1chGr1bkPPmVpb5SXasxT+2k2r9n9NLOtfuTMyxF4Aivy/tXetOWflf8PQV+pGc/zCJzYiGcW0OehOHQ8MU562x6zHwRRb+aapCW7nSS0WEuuKX+MNiuuAo3IJjZa5aN7UbJ5Gb9xQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Sep 2025 21:35:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 261024 invoked by uid 111); 22 Sep 2025 21:35:58 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Sep 2025 17:35:58 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 22 Sep 2025 17:35:58 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?utf-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?= <velocifyer@velocifyer.com>,
+	git@vger.kernel.org
+Subject: Re: How do i get news of git releases
+Message-ID: <20250922213558.GA2269472@coredump.intra.peff.net>
+References: <4ea9cb1e-4367-4926-a9ba-0680dd63e616@velocifyer.com>
+ <20250922201403.GD2205919@coredump.intra.peff.net>
+ <1ff96277-c9e7-483e-ac98-b109b9603475@velocifyer.com>
+ <20250922203815.GA2264272@coredump.intra.peff.net>
+ <xmqqtt0urxva.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yp6LgRd2763fstZg"
-Content-Disposition: inline
-In-Reply-To: <20250922155949.27019-1-michael@orlitzky.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---yp6LgRd2763fstZg
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqtt0urxva.fsf@gitster.g>
 
-On 2025-09-22 at 15:59:49, Michael Orlitzky wrote:
-> There is no problem with supporting rust on Gentoo. Gentoo users build
-> from source, and rust is a problem for anyone who builds from
-> source. I'm writing this on a riscv/musl system. If there are no
-> binaries for your CPU/libc, let me tell you, it's not fun. And this is
-> like, my job. A normal person would be completely helpless.
+On Mon, Sep 22, 2025 at 02:16:57PM -0700, Junio C Hamano wrote:
 
-This is a problem with languages that bootstrap from earlier versions of
-themselves.  It also happens with other, less common languages.  GHC (a
-Haskell runtime) also has this problem and any distro that ships pandoc
-has to deal with it.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Yes, they're already annotated tags. But they contain only the version
+> > number and signature. I suppose they could include the whole set of
+> > release notes (and it looks like we used to do that in some very old
+> > tags),
+> 
+> Eh, which one?  I do not recall ever doing so, but I may be
+> mistaken.
+> 
+> "git show v0.99.1" gives both tag object contents *and* the output
+> from "git show v0.99.1^0" for the commit, so it is possible that I
+> never did so, but those who ask "git show" may get such an
+> impression?
 
-It is certainly inconvenient, but there is mrustc to help the bootstrap
-process.  Granted, it does not work everywhere yet, but it should also
-not be too difficult to make it do so.
+I looked at:
 
-I do think the difficulty is worth it, though.  With Rust, we're going
-to get code that is thread-safe and memory-safe by the virtue of the
-fact that it compiles and that will allow us to have threading in more
-parts of the code where it might benefit us.  I also cannot tell you how
-many segfaults and null pointer dereferences I've written in Git (some
-in the past week) that are just no longer possible with Rust.
+  git for-each-ref --format='%(objectsize) %(refname)' refs/tags |
+  sort -n
 
-As my proposal originally mentioned, there is enormous pressure from
-governments, security professionals, and large companies to improve
-memory safety, which I believe are legitimate concerns.  If we want Git
-to continue to be used widely, then we need to address those issues and
-Rust seems to be the best possible way to do that.  I don't think
-continuing in C only is going to be viable long term.
+which shows a few bigger ones. v0.99.5 is the biggest, with what looks
+like shortlog output plus some hand-written notes. Ditto v1.4.3.2.
+But yeah, it is not very many.
 
-> Nevertheless, the arch support issues are secondary. I'm sure it's a
-> lot of fun for the people who are writing rust code to do cargo
-> updates in the two or three directories they work in all day. But I'm
-> not writing rust code, don't care what language git is written in, and
-> have hundreds of other packages to keep up-to-date on multiple
-> machines. I want to be able to use my package manager to do that
-> efficiently. You know, the main tangible benefit of using a linux
-> distribution.
+> >   3. The resulting objects would be much larger (the v2.51.0 tag is 974
+> >      bytes, but Documentation/RelNotes/2.51.0 is 14K, and some are even
+> >      larger). Git may open them frequently to peel the tags, which may
+> >      make some operations slower. Though it might be OK; we try to cache
+> >      peeled values in packed-refs, and possibly the peeling code could
+> >      learn to parse more progressively (e.g., grab the first 1K to see
+> >      if we hit the end-of-header there).
+> >
+> > Those aren't necessarily show-stoppers, but just some top-of-the-head
+> > thoughts. Junio (the maintainer, who actually makes the tags) might have
+> > more thoughts on why we used to do that sometimes and don't now.
+> 
+> I think #3 is a show-stopper.
+> 
+> We will keep the RelNotes file updated with every batch that updates
+> the 'master' front, so the contents of that imaginary tag that has
+> the copy of the release notes would become identical to the in-tree
+> blob at the point of a release.  There has to be a very good reason
+> why it is beneficial to _duplicate_ the information, not the other
+> way around to ask why we do not duplicate the information in
+> different places, I think.
 
-I don't think this is going to happen as you anticipate it will.  My
-original policy was to target Debian stable's release for a year after
-the new Debian stable came out and that will make using many crates
-nearly impossible.  We are going to have to be _extremely_ careful about
-dependencies in general and the things we are likely to use are things
-like bindgen and cbindgen, where typically an old version will work just
-fine and which are already packaged in major distros.  We are not going
-to be adding dependencies willy-nilly and running `cargo update` every
-other day.
+Yeah, I agree the duplication is kind of unseemly. The main reason, I
+think, would be: some third-party tools may mine information out of the
+tag automatically, but do not know how to find Documentation/RelNotes.
+I'm assuming GitHub would do that for the releases page (but actually, I
+do not know).
 
-> But every distribution is "packaging" rust the same way. They're
-> bundling random old versions of crates in violation of their own
-> policies because the ecosystem is unstable and the tooling encourages
-> tight coupling. By requiring rust, you are require me to go back to
-> managing dependencies like I'm on Windows XP again. Git is the most
-> important program I use, but it's not more important than package
-> management itself.
+If we did care about populating their releases page with more info, I
+suspect using their API to pass along the content would be a better
+solution.
 
-I expect Debian already packages the crates that we need in acceptable
-versions, and I assume other distros do as well, so I don't anticipate
-this being a problem for us.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---yp6LgRd2763fstZg
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaNHBHwAKCRB8DEliiIei
-geZIAP0ZyPFc4PjvajZBj3ZYrDLB/B0lVGO+/A28pRVtrfYiJAD/WKpyGdCPyc+3
-vLRnZLe3zRX/UtfwEuMEAQjVvSE5gwU=
-=rLMk
------END PGP SIGNATURE-----
-
---yp6LgRd2763fstZg--
+-Peff
