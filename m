@@ -1,120 +1,156 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F0228A3EF
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 21:54:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1402405E8
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 21:58:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758578089; cv=none; b=Ppbg804B4Kb6ydLIeiH2RyjtC47vZ0y6ix/uOgSeAilFFtqQNjRUuJMIG9g/Sv0c+sYkl+jVmPAqHPGFxbVNa9BSYv/G9YLA5jwBF9ZL6cnAebIu6YAVfIObZbsRnBYwH3HxrzCqsfBc5IDiHNx/Fkx1GdjbV8KUES4++YQ1K9I=
+	t=1758578295; cv=none; b=EiNa0Ljf1psx1cx6MSJQKN7n86yyRiKIWwHRMk3ULBK8FqYhkVwhR7zBv36d3n68Ole+bAJHaIpf0zPLketGDczv2Wmcf487dIUO+IppDWIMzS5APvKdi7ac2V2RdB5g/CZmr8NhMYvPWkEHdfNrxwmKPxvW5DHdZu61EeAS8TM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758578089; c=relaxed/simple;
-	bh=vkChuBJwFs+V5E0AbKYvQVEDahRTfCQwUyLOaGWfaco=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=HfDwmBPV9RFUUiNr4uYcwh1Ifhou3JReyCFoTmBsyO9SOREDTXkaK10oCkD77qCC4rDzJfBcxTO1+3t7T/ZjgHka4nOa2cgG6SCFWsoBUcYuXB8JcqRbTzjMwDDPyYBwIX4U5uIdPStMldFoMFwJ/rbgI1lediqs96rErRno79g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MlG7I8AN; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758578295; c=relaxed/simple;
+	bh=hpeK/mr/eTrHlb5/6Xpd3vEaZD6Ou/rH1O1l4tDysIQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GPylZBmzAGCucA78uz+Ni4D9XHPy3wXpGzDJroKkQgc4ZAMf5iDEPiZKGiXrvKQgtDQGKOsDprbOOtnS34A2N87B+SrPUIN6UUXsSTvjhdSPQmUkIhxKu27/rf6w25DfXxrjABz+7B45+PDF6UcL4BaseCJOENOzlScl9KHL+fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GjFy0CVt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SQfUYAQ2; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MlG7I8AN"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-26e68904f0eso28250765ad.0
-        for <git@vger.kernel.org>; Mon, 22 Sep 2025 14:54:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758578086; x=1759182886; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=/W55tTP7Jgkg3E+UxX8sBVf/gVy7hU+dt9dgGtWnrTs=;
-        b=MlG7I8ANOqNf79JeyFMb7wHY31Bjh+wQgSPsei4A2Jkt2vDdeKVP7Um6NZiJtZzbpJ
-         muaKCRnMk5PQIELr6YcTc8CMwZBgtdCHzbWxr7bur1BbDeag+8e8cYQ46UlC9MJjjjJa
-         /yMzoPQXK9SuP9GVQIlOS0CJmsPveH/03G+gFHTIa7Ng73NtFrkpslzJA9xzeYT+cTB8
-         ClYItQJDhfFuG1mtz4B+LEzzzAjH8TyogiKWo9GvQOSaqZEcphML+TqnB2/pBmFWsKBa
-         lvRhh/MvtjjUrjUFWABSvGnljSSxnqcPz46HkJMrLvH6ERfcGsnzQJ+XU4hVs0iOag3/
-         Pe6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758578086; x=1759182886;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/W55tTP7Jgkg3E+UxX8sBVf/gVy7hU+dt9dgGtWnrTs=;
-        b=vgNsiFR34gYVUuuPcP+tMeO0s3mBAy4TkJlLJoghgDjrAckS68oU7WKG+N77SYei5H
-         pZYfEQly3cciW/w49KWCJ92Zpvqxi8OvCRnkScj+nvFZChTpX/mevGKcyEK0XTly4g1g
-         Qqrnu2JMmPJ0FlGGB6LL7GXKh6R6oCRw5oNDdLiAIOUzzeIz/nw6YxtkzyyRTvxpLCwn
-         7mpP9Tkj3Ktw6Y08/z2EMzWxjmiq4B/cV/vNVk6twdABLvwuc2kg7inppOpR/HN0a8xc
-         JR8BnKKlnKvnjOlORjZrCellasE6vCeeyFQvTsH/qLQbfusNjFdHinLfGpr8bW2AvnPC
-         tI6Q==
-X-Gm-Message-State: AOJu0YxTis/Tez+h1VXSx8myFupkvkW3RK5nM8OysA0+bcI+2k9f5fWH
-	IJaXZhpJd3JKMZywHwPCvEI4fEx8BQ1zyVVTBl/7JpNi5I65zK3lUTtU/Tlazg==
-X-Gm-Gg: ASbGncvOjQROfppffLCrlvHk2dR/90DUvYhORNfzRzpDayAFzaJ1kbc2HBvdMe51dIU
-	4c0Nz4Z2x6mBmBzpkH4/q73fNj134fLR6kRl8ehjqoCriasIJYDcQtVWg2OikTivpFmrvs0G2+Z
-	/Ajrp1M7NFE7zdiSLx1JKVb879Q30BaqZsrXp564G3GrkuLQEi7HfNZXyhoP723rbqFlgQB+eK7
-	KYQxbWjoiGYxHtQuvXeCuVqw5jxEH3St+WHL2hSzuPQV1pIlGzVsTZgrTHOm+5PkSLNlaWYQOQ2
-	npmYPpe/e5szR53jJE1Kl6mZp59nGp3DEzgPsGl2UXfgE2qau3gTdAAnZ8QKondnfoUc3zeE3OP
-	UVM95Vk+dqkFpilcONVKkkXmv
-X-Google-Smtp-Source: AGHT+IF5VpoErYiXxFvuT2SYj5+4InqWGO1nh+WiMGDdcRrOxv/aEOzt6XzjLyMqbvxRErVsFMmsjw==
-X-Received: by 2002:a17:902:db09:b0:274:3db8:e755 with SMTP id d9443c01a7336-27cc79ca32amr3784955ad.30.1758578086017;
-        Mon, 22 Sep 2025 14:54:46 -0700 (PDT)
-Received: from [127.0.0.1] ([68.220.61.180])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2698030ee20sm142952695ad.109.2025.09.22.14.54.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Sep 2025 14:54:45 -0700 (PDT)
-Message-Id: <pull.2053.git.git.1758578084468.gitgitgadget@gmail.com>
-From: "Alan Da Costa via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 22 Sep 2025 21:54:44 +0000
-Subject: [PATCH] lockfile: add case insensitive filesystem note
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GjFy0CVt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SQfUYAQ2"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id D57EF1D002C4;
+	Mon, 22 Sep 2025 17:58:12 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 22 Sep 2025 17:58:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758578292; x=1758664692; bh=BdH7452kG+
+	SY8+3+DeFYV2Z/EBPRWotMn0gFSPgC9Og=; b=GjFy0CVtGisVlZDnHFV9IhUBcA
+	W4gN67QCMbqcQpSSUZfzkM8qei8Mw8rXQELcPir7HvZ5ZCligBgVo07OqVn7Gqzx
+	mrgFVG3r02k9aAx+Nx+sQtNBQGkEBRBdo3rAVy2Ed8FD56XOcm5Io2lt5quzdRZ3
+	Th1hvGyCF9aBzhOKORDW+xI2uyUgG2C1xxRo/EBm/6UfYpeX0jk+4SbwvEcfZ9+U
+	AbnbjfkyV+fPjQsJGcsSdi5uXWhBfLK1KD++lMn85IK1VgJAH/9KH2esTJTxw8LE
+	Rji5+oTcf7nel4iZ9L2km8DfhkKostaOFZG8F2+JPaujNHbSRsASDeZ/9I3Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758578292; x=1758664692; bh=BdH7452kG+SY8+3+DeFYV2Z/EBPRWotMn0g
+	FSPgC9Og=; b=SQfUYAQ2K/K5LQDJcorfS7JLH/DK/6kVQSoljQ2lPxjfJwxRxJp
+	XGTt0pq8UaZ6cfH3qI0nHpl+7iq9XLdFVNstbys66KFP2cQS9LQOC0KKoM+91sGd
+	7ZkhQKTXguIk/RjwSUeoZxwbgN+EElXm4IDwU1nMeGL9lXsS66pZ1q8jzdliDZWa
+	LWF6eBceRheLzzgTa6VhPPHb2cOL4zLTNFZXLASI54bn4v/W4K2Qt9VqeTEin9ZC
+	ULiiar2THKOScL63s/9/3CWPkp5QZVwWouWUd3w6DBfeZ4nMfmqBYTFOtEOe2Qw9
+	g4pPQjMruKqXxSddlPnQMZnqqx/Q87rKvSQ==
+X-ME-Sender: <xms:dMbRaLp0WTro5Z0gK68MPfqNHRfbuzdflPyknpIR176vKViiALIsvw>
+    <xme:dMbRaMqPnIE3UYw6HvlH74TRFefse97PXiy0CEEAt92j8TclSoKvRQK4dXLvsN5iA
+    mgMYLXcdvLS7nfhYX9Ukdfp0qC2B0_MlLmkTkhhQA5rhDgeKmwsdA>
+X-ME-Received: <xmr:dMbRaNPC-gApoz31dVKB_PLfg1Y4hN_7Lk6z_nldO9Ql2BZcPiw405She-l6sdpBEWrj6g-53NqSSgzoivmsfZj43xcAo1vgevtC>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeellecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtofdttd
+    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
+    sghogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffge
+    fgfeeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
+    hrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthho
+    fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghu
+    ghhssggrkhhkrdhnrghmvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:dMbRaNyTciPoJxpX_-lERjWl6TCQjar6g0nwxK_PFJSk-BehCIIxYA>
+    <xmx:dMbRaGvSscwTxluqdSEVlSWgVFem_aAg-uJdHd83Bub5V5J7Y_8bzA>
+    <xmx:dMbRaG4H_f371yGe7Ld71KYjOb5YtpyZi2BQgELGGzbAzmz2Ozfl2g>
+    <xmx:dMbRaFQRvD7DuJW_f3BsCsx-w3u1EYRUL-dor5DbQqC32qLT5BLleA>
+    <xmx:dMbRaL0cyY6hau34nPvYn9fEXsfIbAxuNfrGk_saACKIGImuyGqkTYo5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Sep 2025 17:58:12 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH 1/2] revision: add rdiff_other_arg to rev_info
+In-Reply-To: <bb065767336.1758574974.git.code@khaugsbakk.name>
+	(kristofferhaugsbakk@fastmail.com's message of "Mon, 22 Sep 2025
+	23:10:22 +0200")
+References: <cover.1758574974.git.code@khaugsbakk.name>
+	<bb065767336.1758574974.git.code@khaugsbakk.name>
+Date: Mon, 22 Sep 2025 14:58:10 -0700
+Message-ID: <xmqqikharvyl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Alan Da Costa <alandacosta@gmail.com>,
-    Alan Da Costa <alandacosta@gmail.com>
+Content-Type: text/plain
 
-From: Alan Da Costa <alandacosta@gmail.com>
+kristofferhaugsbakk@fastmail.com writes:
 
-* Add note of case insensitive client filesystems may error due to a lock
-  on a case variant ref to more quickly identify failure in fetch/pull
+> git-format-patch(1) is supposed to treat Git notes the same between
+> notes output beneath the commit message and the notes output for the
+> range-diff.
 
-Signed-off-by: Alan Da Costa <alandacosta@gmail.com>
----
-    lockfile: add case insensitive filesystem note
-    
-    When running git fetch or git pull on a case insensitive filesystem
-    (e.g., default macOS), if multiple case variants of the same remote ref
-    exist (often after a case-only rename), both variant locks map to the
-    same on-disk path. When a local update is required, Git creates a lock
-    for the first variant and then attempts to lock the second, which
-    collides with the same lock file, so an “existing lock” error is
-    reported. The underlying issue is mixed-case refs; resolve it by
-    consolidating the remote to a single-case variant and update local refs
-    accordingly.
+Is this an opinion, or are there things that existing pieces of code
+already do to achieve such a behaviour already?
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2053%2Fadacosta%2Flockfile-add-case-insensitive-filesystem-note-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2053/adacosta/lockfile-add-case-insensitive-filesystem-note-v1
-Pull-Request: https://github.com/git/git/pull/2053
+> diff --git a/revision.h b/revision.h
+> index 21e288c5baa..26c18a0934b 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -334,6 +334,7 @@ struct rev_info {
+>  	/* range-diff */
+>  	const char *rdiff1;
+>  	const char *rdiff2;
+> +	struct strvec rdiff_other_arg;
+>  	int creation_factor;
+>  	const char *rdiff_title;
 
- lockfile.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+When embedding a struct A in a struct B, we should always make sure
+that initialization macro/function for struct B is updated so that
+the initialization for struct A is done correctly for the new member.
 
-diff --git a/lockfile.c b/lockfile.c
-index 1d5ed01682..99a470bd3d 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -156,7 +156,10 @@ void unable_to_lock_message(const char *path, int err, struct strbuf *buf)
- 		    "an editor opened by 'git commit'. Please make sure all processes\n"
- 		    "are terminated then try again. If it still fails, a git process\n"
- 		    "may have crashed in this repository earlier:\n"
--		    "remove the file manually to continue."),
-+		    "remove the file manually to continue.\n\n"
-+		    "On case insensitive client filesystems, multiple mixed-case refs will resolve\n"
-+		    "to the same lock file, possibly causing this error. If so, ensure your remote\n"
-+		    "refs have a single case variant."),
- 			    absolute_path(path), strerror(err));
- 	} else
- 		strbuf_addf(buf, _("Unable to create '%s.lock': %s"),
+We do have REV_INFO_INIT for "struct rev_info"
 
-base-commit: ab427cd991100e94792fce124b0934135abdea4b
--- 
-gitgitgadget
+        #define REV_INFO_INIT { \
+                .abbrev = DEFAULT_ABBREV, \
+                .simplify_history = 1, \
+                .pruning.flags.recursive = 1, \
+                ...
+                .expand_tabs_in_log_default = 8, \
+        }
+
+that does not allow any existing callers to leave it uninitialized
+or get away by zero-initializing, so all the users must be using it
+or the system before your patch is already buggy.
+
+And we do have STRVEC_INIT that we must use in that initializer.
+
+        extern const char *empty_strvec[];
+
+        struct strvec {
+                const char **v;
+                size_t nr;
+                size_t alloc;
+        };
+
+        #define STRVEC_INIT { \
+                .v = empty_strvec, \
+        }
+
+So this step forgets to update revision.h to teach STRVEC_INIT on
+the new rdiff_other_arg member.
+
+Back when it was a random one-shot variable in range-diff, it might
+not have mattered all that much, but now we have it as a proper
+member of the struct, can we give it a name better than 'other_arg"?
+Or is it the case that truly any random crap can be slurped into the
+array and thrown back at "git log" without range-diff machinery
+understanding what it is doing at all (which I would not be
+surprised, as some parts of our code base is written in somewhat a
+sloppy way)?
+
+Thanks.
