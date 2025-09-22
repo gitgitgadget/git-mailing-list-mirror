@@ -1,24 +1,27 @@
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2846834BA39
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 06:37:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D741E89C
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 06:41:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758523075; cv=none; b=JbFfWqhzby41WjS7Y+JivrB+4T44PLtVzk9Vor7nw/mVdw7PKp5jBeHkvg/NhdU0i5MmFWJO07O/uz6VwVm+aWZwZjLiVqDLWwnxBwuHHa4R7SP6Tyxou3v5cudQBrQwLTCJUVEMYJfEph1NZXgJb1h33nJI+j0qElzu1x1+1t4=
+	t=1758523272; cv=none; b=dS6H8eiIDNYWMG3uI1nosIpRF9FUJ5m/JqESLx4AWRxEnot00Ra/1FVj1eve958gYWX7leaAfq8QirNdBMGe9U5Bct5IUPLw1Rt0Yq4AvaJ+wI1xSzmcZ/ZQZl4sVSVEiNvVGfOCL3w3GJEQz+zacCD1CVdkUM5mCvQVMt8Egdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758523075; c=relaxed/simple;
-	bh=+hRRCQbR6w0g8Elon72ApU4t33NY8fSIVgHifw0BLhc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oRaosxJ/sjfKBOpITAesEtJRB3ENVekekiXO1HbDoOXbu6RTEiyT/fpw1AAzkR8M0qnew8z5kDlwyiWUH2Ddkp7MnlGignoiAUidW8rQZjdLPLv78/numRAxgkVKaCKUQrTx+GiAgj4s5GFuSRrvYdUrfa/vW+N6f5M7HPJQM7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
+	s=arc-20240116; t=1758523272; c=relaxed/simple;
+	bh=ySfOBCzxufxeCahfhNeJ3Ga+xaUjaWtG87UVulHx01M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=QXaQqKLCt7ekiQk6KGhm8tg18wUVpfzZgC17UsQ477InoEWQP50xnjbXosa5QvVloR5oSswrhi45dL2WDGX8WNHgP4d1NTrczQbIxAA5gFxz2TmmFF0cVZCx6ter+BEMyUnE3mYqgssLvZ1bO0Ts50v7QuBjIWig3seQopqi+20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp3.bon.at (unknown [192.168.181.108])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4cVXXK5YFLz7Qv0f
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 08:00:33 +0200 (CEST)
 Received: from [192.168.0.104] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4cVYMC1C4WzRpKn;
-	Mon, 22 Sep 2025 08:37:43 +0200 (CEST)
-Message-ID: <92bdb432-1f6d-43d9-a93b-8cbaf3c4a7fa@kdbg.org>
-Date: Mon, 22 Sep 2025 08:37:42 +0200
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4cVXX85tJYzRnlJ;
+	Mon, 22 Sep 2025 08:00:24 +0200 (CEST)
+Message-ID: <199b7665-910a-4f44-a734-ced99bc8cb81@kdbg.org>
+Date: Mon, 22 Sep 2025 08:00:24 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -26,40 +29,46 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [BUG] gitk assumes availability of `osascript` on macos
+Subject: Re: [PATCH v2 1/2] gitk: fix the position of the main main window on
+ initialize
+To: Michael Rappazzo <rappazzo@gmail.com>
+References: <20250920184007.26183-1-rappazzo@gmail.com>
+ <20250920184007.26183-2-rappazzo@gmail.com>
 Content-Language: en-US
-To: Eric Sunshine <ericsunshine@gmail.com>, lists@humanleg.org.uk
-Cc: git@vger.kernel.org
-References: <2994140.eGJsNajkDb@alfonse>
- <CAPig+cTRYK+5ezmGxz0d1TwMTu1RKy7Xj05CzDE2-i14aUpSAg@mail.gmail.com>
 From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <CAPig+cTRYK+5ezmGxz0d1TwMTu1RKy7Xj05CzDE2-i14aUpSAg@mail.gmail.com>
+Cc: git@vger.kernel.org, Mark Levedahl <mlevedahl@gmail.com>
+In-Reply-To: <20250920184007.26183-2-rappazzo@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Am 20.09.25 um 21:52 schrieb Eric Sunshine:
-> On Sat, Sep 20, 2025 at 8:07 AM Robert Scott <lists@humanleg.org.uk> wrote:
->> Tiny one here. On macos, gitk (tested 2.50.1) attempts to call `osascript` so
->> it can focus/raise the UI. But it fails hard if `osascript` isn't present in
->> the $PATH.
->>
->> There are a number of reasons `osascript` might not be available in a
->> particular environment, e.g. if launched from inside a "pure" nix shell, but
->> seeing as it's just a quality-of-life feature it would be nice if failures to
->> call `osascript` could just be ignored.
+Am 20.09.25 um 20:40 schrieb Michael Rappazzo:
+> The main window geometry was only restoring size but not position.
+> Use after idle to ensure proper timing on OS's where that is necessary.
 > 
-> A patch[*] was posted to the mailing list years ago which, I believe,
-> should fix this problem for you. Unfortunately, the patch was never
-> picked up due to the then-maintainer of Gitk being missing-in-action.
-> Perhaps the current Gitk maintainer (Cc:'d) will pick up the patch.
+> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+> ---
+>  gitk | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> [*]: https://lore.kernel.org/git/20180724065120.7664-1-sunshine@sunshineco.com/
+> diff --git a/gitk b/gitk
+> index 6e4d71d585..95469a8fae 100755
+> --- a/gitk
+> +++ b/gitk
+> @@ -2775,6 +2775,8 @@ proc makewindow {} {
+>              }
+>              wm geometry . "${w}x$h"
+>          }
+> +        # Restore full geometry including position after window is mapped
+> +        after idle [list wm geometry . $geometry(main)]
+>      }
+>  
+>      if {[info exists geometry(state)] && $geometry(state) eq "zoomed"} {
 
-I've picked up the patch:
-https://github.com/j6t/gitk/compare/master...es/ignore-osascript-failure
-
-Please test and suggest improvements. Should the links in the commit
-message be redirected to lore.kernel.org?
+I have been carrying 22d37f865268 ("Revert "gitk: Only restore window
+size from ~/.gitk, not position"", 2008-05-26) since, like, 17 years in
+my branch j6t-testing. Perhaps Mark can tell us why b9bee11526ec ("gitk:
+Only restore window size from ~/.gitk, not position", 2008-03-10) was
+needed...
 
 -- Hannes
 
