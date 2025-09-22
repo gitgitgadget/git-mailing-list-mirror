@@ -1,84 +1,85 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1402405E8
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 21:58:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB7A1E502
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 22:01:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758578295; cv=none; b=EiNa0Ljf1psx1cx6MSJQKN7n86yyRiKIWwHRMk3ULBK8FqYhkVwhR7zBv36d3n68Ole+bAJHaIpf0zPLketGDczv2Wmcf487dIUO+IppDWIMzS5APvKdi7ac2V2RdB5g/CZmr8NhMYvPWkEHdfNrxwmKPxvW5DHdZu61EeAS8TM=
+	t=1758578491; cv=none; b=SeXc46KwYPyp1X1YoDgFVBfdYXEBPXpGn3gtNk+etoUPC8/ORa5tbq7mMC+2rE5ZgoYnZ7THvHWdRUioeBAYeIkAgqao7qANCKYp0+l9N30Qqg0Gm6X0urD0Bkc5z3G1Z6f9Or6oi9RF5uq3nbnw41XanbdwvXEwTsI1GFPb0wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758578295; c=relaxed/simple;
-	bh=hpeK/mr/eTrHlb5/6Xpd3vEaZD6Ou/rH1O1l4tDysIQ=;
+	s=arc-20240116; t=1758578491; c=relaxed/simple;
+	bh=Rz6N/3JmE1QDti2Tro74/tijk3kd/b3v+/dyVEleKKo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GPylZBmzAGCucA78uz+Ni4D9XHPy3wXpGzDJroKkQgc4ZAMf5iDEPiZKGiXrvKQgtDQGKOsDprbOOtnS34A2N87B+SrPUIN6UUXsSTvjhdSPQmUkIhxKu27/rf6w25DfXxrjABz+7B45+PDF6UcL4BaseCJOENOzlScl9KHL+fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GjFy0CVt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SQfUYAQ2; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=CvvfDh1nlH8JMlCZFuE5iq6CmUoN/RouDhprX8qwg2qIB8ahI218a32CxSh5u6G01e1DFQ5S4DYUoOD2ybAEY2rwqwaZtpEeVlud4eChN0SgfyO54zmqHZHrK895nsJHgXV0AnvTS1LEprT6NOsAnQAPRW7I5zmX+IvLobxhwRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=o7rr87bU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=obbYkl+7; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GjFy0CVt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SQfUYAQ2"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id D57EF1D002C4;
-	Mon, 22 Sep 2025 17:58:12 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="o7rr87bU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="obbYkl+7"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id C538D1D0020E;
+	Mon, 22 Sep 2025 18:01:26 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 22 Sep 2025 17:58:12 -0400
+  by phl-compute-08.internal (MEProxy); Mon, 22 Sep 2025 18:01:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758578292; x=1758664692; bh=BdH7452kG+
-	SY8+3+DeFYV2Z/EBPRWotMn0gFSPgC9Og=; b=GjFy0CVtGisVlZDnHFV9IhUBcA
-	W4gN67QCMbqcQpSSUZfzkM8qei8Mw8rXQELcPir7HvZ5ZCligBgVo07OqVn7Gqzx
-	mrgFVG3r02k9aAx+Nx+sQtNBQGkEBRBdo3rAVy2Ed8FD56XOcm5Io2lt5quzdRZ3
-	Th1hvGyCF9aBzhOKORDW+xI2uyUgG2C1xxRo/EBm/6UfYpeX0jk+4SbwvEcfZ9+U
-	AbnbjfkyV+fPjQsJGcsSdi5uXWhBfLK1KD++lMn85IK1VgJAH/9KH2esTJTxw8LE
-	Rji5+oTcf7nel4iZ9L2km8DfhkKostaOFZG8F2+JPaujNHbSRsASDeZ/9I3Q==
+	:subject:to:to; s=fm3; t=1758578486; x=1758664886; bh=6kMPlBqLYq
+	Puuebc0rpCmcLeTxeu1Bl2AcubQwKqxU4=; b=o7rr87bUxT9e9oi80ArEXsxItz
+	V87pyYALgImZlRHYpamgjH0/iWr6k8BThlYikkhzNGn/ewTCFEJlIV7MRFPvyeJ6
+	IJ+Mno15eUSjPo2JQAxKwiIpb1P5bvTeASoEqD5bMGpBOA8Qh6Xs0BOjNQaAF8RP
+	cGMrCq6rtgSUgh0TBCZusy8DqfXl7P8ajjAFgCGj+MK/w2fa0D3dJfduDaqMZtjH
+	uUEYJTAcGCDt1452qIqT4frElRwGMcUQItb+5RjLKq27GULQHHN8zNJEpWTkyLx9
+	OJtLaNcLsCRU/7pygmdWxpnHwKA6tpvv1Ea2RtqVBnZpcoxiX1k7z3RRbh7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758578292; x=1758664692; bh=BdH7452kG+SY8+3+DeFYV2Z/EBPRWotMn0g
-	FSPgC9Og=; b=SQfUYAQ2K/K5LQDJcorfS7JLH/DK/6kVQSoljQ2lPxjfJwxRxJp
-	XGTt0pq8UaZ6cfH3qI0nHpl+7iq9XLdFVNstbys66KFP2cQS9LQOC0KKoM+91sGd
-	7ZkhQKTXguIk/RjwSUeoZxwbgN+EElXm4IDwU1nMeGL9lXsS66pZ1q8jzdliDZWa
-	LWF6eBceRheLzzgTa6VhPPHb2cOL4zLTNFZXLASI54bn4v/W4K2Qt9VqeTEin9ZC
-	ULiiar2THKOScL63s/9/3CWPkp5QZVwWouWUd3w6DBfeZ4nMfmqBYTFOtEOe2Qw9
-	g4pPQjMruKqXxSddlPnQMZnqqx/Q87rKvSQ==
-X-ME-Sender: <xms:dMbRaLp0WTro5Z0gK68MPfqNHRfbuzdflPyknpIR176vKViiALIsvw>
-    <xme:dMbRaMqPnIE3UYw6HvlH74TRFefse97PXiy0CEEAt92j8TclSoKvRQK4dXLvsN5iA
-    mgMYLXcdvLS7nfhYX9Ukdfp0qC2B0_MlLmkTkhhQA5rhDgeKmwsdA>
-X-ME-Received: <xmr:dMbRaNPC-gApoz31dVKB_PLfg1Y4hN_7Lk6z_nldO9Ql2BZcPiw405She-l6sdpBEWrj6g-53NqSSgzoivmsfZj43xcAo1vgevtC>
+	1758578486; x=1758664886; bh=6kMPlBqLYqPuuebc0rpCmcLeTxeu1Bl2Acu
+	bQwKqxU4=; b=obbYkl+7zl1c8KDIYV51/l6Yzu1EnbABkB9QA/x+Fm9ubI89lAS
+	+k183TaXhNf9A2Q5QCZETM2f5wzQOn4VKYh5wUuOz0HtvX+WCxInlhIjZAOq0de0
+	06Wh0EE1vzzL/KULJJ94QnMRJ09Xc0ylikOfUYlk3+kP/lfAaJHFx6tdzgbBuu1C
+	RqQ1S9+FEY7VuHDNjKSZVtaPGOk8Ldd/SJnhJceD1wTTzUHkbd+A24M3YVv6VXve
+	RcIyjovZ6Ao5xTlSjdV0rXXwsElxlEuZapjSyHzKpPXwaAyDgHSmIwUBP2K7e1cL
+	rYU3KE9gYDTsOkiJa73hvwomIDLpftfHznw==
+X-ME-Sender: <xms:NsfRaAffZwStEWpACDBUs0utBg9038UdkbE5i4cCRBQhwwK4j54z3Q>
+    <xme:NsfRaJMAPUJb35BlSwo-qD6QsiiAtidl1ngycUdBREdP-62u_yyP2cvGn-gYBpg2T
+    eJ3aAd91cQVgBoaBYyaEqdgSQU3AafDEf9tNfNlLeyssO5fYi8OPA>
+X-ME-Received: <xmr:NsfRaGhe63HjE8SdNIBOGNHK-C4m-fEivztLKUp4N4WHrlp_EIksoocoY4KAhCdRUpvLW-gJLwasogIx9FqvScizPntvl3KFV1cB>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeellecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtofdttd
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
     ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffge
-    fgfeeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfr
+    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
+    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
     rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
     hrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthho
     fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepgh
     hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghu
     ghhssggrkhhkrdhnrghmvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
     hm
-X-ME-Proxy: <xmx:dMbRaNyTciPoJxpX_-lERjWl6TCQjar6g0nwxK_PFJSk-BehCIIxYA>
-    <xmx:dMbRaGvSscwTxluqdSEVlSWgVFem_aAg-uJdHd83Bub5V5J7Y_8bzA>
-    <xmx:dMbRaG4H_f371yGe7Ld71KYjOb5YtpyZi2BQgELGGzbAzmz2Ozfl2g>
-    <xmx:dMbRaFQRvD7DuJW_f3BsCsx-w3u1EYRUL-dor5DbQqC32qLT5BLleA>
-    <xmx:dMbRaL0cyY6hau34nPvYn9fEXsfIbAxuNfrGk_saACKIGImuyGqkTYo5>
+X-ME-Proxy: <xmx:NsfRaE2wCAkW18QM3qGKsXrDWW99Bx0dN19evd9GH92PSzTxNLbU0A>
+    <xmx:NsfRaIh0VaFvgdUN-a_ttMd6FjX_2lRvDqE2M3eUVg-SfrKMPSGzkw>
+    <xmx:NsfRaMcbCyTX5SlWr8a1uLEIEpYBmfOQ-sFNnlMRUSrhYIRNkPjRbw>
+    <xmx:NsfRaDmxDgnNmhpqTApA0cF5M4Hbduf9i_jEKOYumroOAacc_kKL-w>
+    <xmx:NsfRaNImIN9LBwVHoi-nLmsicySp-xJtS9nH9xPKMt5GaQL2fIudIRNt>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Sep 2025 17:58:12 -0400 (EDT)
+ 22 Sep 2025 18:01:26 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: kristofferhaugsbakk@fastmail.com
 Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH 1/2] revision: add rdiff_other_arg to rev_info
-In-Reply-To: <bb065767336.1758574974.git.code@khaugsbakk.name>
+Subject: Re: [PATCH 2/2] format-patch: handle range-diff on notes correctly
+ for single patches
+In-Reply-To: <7f2487af433.1758574974.git.code@khaugsbakk.name>
 	(kristofferhaugsbakk@fastmail.com's message of "Mon, 22 Sep 2025
-	23:10:22 +0200")
+	23:10:23 +0200")
 References: <cover.1758574974.git.code@khaugsbakk.name>
-	<bb065767336.1758574974.git.code@khaugsbakk.name>
-Date: Mon, 22 Sep 2025 14:58:10 -0700
-Message-ID: <xmqqikharvyl.fsf@gitster.g>
+	<7f2487af433.1758574974.git.code@khaugsbakk.name>
+Date: Mon, 22 Sep 2025 15:01:25 -0700
+Message-ID: <xmqqecryrvt6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,67 +91,61 @@ Content-Type: text/plain
 
 kristofferhaugsbakk@fastmail.com writes:
 
-> git-format-patch(1) is supposed to treat Git notes the same between
-> notes output beneath the commit message and the notes output for the
-> range-diff.
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>
+> No `--[no-]notes` options are sent to the range-diff subprocess in
+> `range-diff.c` when making a single patch.  This means that you can get
+> different Git notes below the commit message and in the range-diff
+> part.  (See the previous commit for elaboration.)
 
-Is this an opinion, or are there things that existing pieces of code
-already do to achieve such a behaviour already?
+Would this also mean "range-diff --no-notes" would not have any
+effect in squelching the note output in such a mode?  If so, perhaps
+we should say not just "can get different Git notes" but "can get
+notes even when you asked not to"?
 
-> diff --git a/revision.h b/revision.h
-> index 21e288c5baa..26c18a0934b 100644
-> --- a/revision.h
-> +++ b/revision.h
-> @@ -334,6 +334,7 @@ struct rev_info {
->  	/* range-diff */
->  	const char *rdiff1;
->  	const char *rdiff2;
-> +	struct strvec rdiff_other_arg;
->  	int creation_factor;
->  	const char *rdiff_title;
+> @@ -718,7 +718,8 @@ static void show_diff_of_diff(struct rev_info *opt)
+>  			.creation_factor = opt->creation_factor,
+>  			.dual_color = 1,
+>  			.max_memory = RANGE_DIFF_MAX_MEMORY_DEFAULT,
+> -			.diffopt = &opts
+> +			.diffopt = &opts,
+> +			.other_arg = &opt->rdiff_other_arg
+>  		};
+>  
+>  		memcpy(&dq, &diff_queued_diff, sizeof(diff_queued_diff));
+> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> index e091df6d01d..1e812df806b 100755
+> --- a/t/t3206-range-diff.sh
+> +++ b/t/t3206-range-diff.sh
+> @@ -707,7 +707,7 @@ test_expect_success 'format-patch --range-diff does not compare notes by default
+>  	! grep "note" 0000-*
+>  '
+>  
+> -test_expect_success 'format-patch --notes=custom --range-diff only compares custom notes' '
+> +test_expect_success 'format-patch --notes=custom --range-diff --cover-letter only compares custom notes' '
+>  	test_when_finished "git notes remove topic unmodified || :" &&
+>  	git notes add -m "topic note" topic &&
+>  	git notes add -m "unmodified note" unmodified &&
+> @@ -721,6 +721,20 @@ test_expect_success 'format-patch --notes=custom --range-diff only compares cust
+>  	! grep "## Notes ##" 0000-*
+>  '
+>  
+> +# --range-diff on a single commit requires --no-cover-letter
+> +test_expect_success 'format-patch --notes=custom --range-diff on single commit only compares custom notes' '
+> +	test_when_finished "git notes remove HEAD unmodified || :" &&
+> +	git notes add -m "topic note" HEAD &&
+> +	test_when_finished "git notes --ref=custom remove HEAD unmodified || :" &&
+> +	git notes add -m "unmodified note" unmodified &&
+> +	git notes --ref=custom add -m "topic note (custom)" HEAD &&
+> +	git notes --ref=custom add -m "unmodified note (custom)" unmodified &&
+> +	git format-patch --notes=custom --range-diff=$prev \
+> +		-1 --stdout >actual &&
+> +	test_grep "## Notes (custom) ##" actual &&
+> +	test_grep ! "## Notes ##" actual
+> +'
 
-When embedding a struct A in a struct B, we should always make sure
-that initialization macro/function for struct B is updated so that
-the initialization for struct A is done correctly for the new member.
+Sounds sensible.
 
-We do have REV_INFO_INIT for "struct rev_info"
-
-        #define REV_INFO_INIT { \
-                .abbrev = DEFAULT_ABBREV, \
-                .simplify_history = 1, \
-                .pruning.flags.recursive = 1, \
-                ...
-                .expand_tabs_in_log_default = 8, \
-        }
-
-that does not allow any existing callers to leave it uninitialized
-or get away by zero-initializing, so all the users must be using it
-or the system before your patch is already buggy.
-
-And we do have STRVEC_INIT that we must use in that initializer.
-
-        extern const char *empty_strvec[];
-
-        struct strvec {
-                const char **v;
-                size_t nr;
-                size_t alloc;
-        };
-
-        #define STRVEC_INIT { \
-                .v = empty_strvec, \
-        }
-
-So this step forgets to update revision.h to teach STRVEC_INIT on
-the new rdiff_other_arg member.
-
-Back when it was a random one-shot variable in range-diff, it might
-not have mattered all that much, but now we have it as a proper
-member of the struct, can we give it a name better than 'other_arg"?
-Or is it the case that truly any random crap can be slurped into the
-array and thrown back at "git log" without range-diff machinery
-understanding what it is doing at all (which I would not be
-surprised, as some parts of our code base is written in somewhat a
-sloppy way)?
-
-Thanks.
+>  test_expect_success 'format-patch --range-diff with --no-notes' '
+>  	test_when_finished "git notes remove topic unmodified || :" &&
+>  	git notes add -m "topic note" topic &&
