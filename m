@@ -1,53 +1,53 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3917E105
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 13:01:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7F1309EED
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 13:04:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758546120; cv=none; b=D9J3d4+T+r6KEuLKcZ4m9zoCv6r/41bIPJb1mgULdSSY6VcmMZoFzwifyDIFd1pcUW+mNoHBu1GSpob3PZvRTinTLSvjuW2bV8nKWNvAcDJK9gqSgQbVwQ/AxBjOBnD0s1fUyPtw9h9MboOolNtLqGzL2x0sv5spbA5HyZQeHFc=
+	t=1758546290; cv=none; b=dxPUIRJ/kw3X8iwXZLwNBgRsUl8Hv6UUy4h0evC8SGXqnIno0BjtGoq+2evMmcYW0invfQ2vLxrxu6+9TNmGHPp1Vti50+ZQfyG3hLPi0/zyjTTky4dSXzy2w/czmbq1NlV3+7T2tb60P+dJ48ziNgqUAvLesV5IvIGKOmoKSCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758546120; c=relaxed/simple;
-	bh=bhzl6T6dp22YWvLi3rTkHEAkmVD2ZjzOt0f+DeMfc6k=;
+	s=arc-20240116; t=1758546290; c=relaxed/simple;
+	bh=pnP9VYrYjB5d9v4rr7qOk5CojPY52UJR5EdReY8Qdto=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G57kv/7U9myTXnCCA9TciNiHnEwMJnh5KBVnhhlIIqUTvV0S4hbw3pECwLHLt4m7PS1FrZ+hChUQWL7i1IRRswH9j+ld07xm9Bg5OApim1u08GefluVzNcKihK5+0vQSgTXooDVuQPu6kZVd1Ai5InFf8AM1YmAT7TNzs4kvaBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pX7X2rjl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kng+BVmE; arc=none smtp.client-ip=202.12.124.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=SGlVWnbicQY2jAMSlsr512t1LZhEu4lb+8rnyOdXJBqUMlW6h9yyMuLOOKF4grnUP52QLP9r1SsFxbbheEyn0Fcj23km32qHDgNvH2xnYYDQl5c87CD1S7+a02QBYvUUlGN1hzKWvI2JwaOFWIcOPfqJ9gfaZZUII5IXTq/+I5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WGn320vG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EbNzlPpY; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pX7X2rjl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kng+BVmE"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 540B77A021E;
-	Mon, 22 Sep 2025 09:01:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WGn320vG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EbNzlPpY"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id A3CF91D0013B;
+	Mon, 22 Sep 2025 09:04:47 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 22 Sep 2025 09:01:58 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 22 Sep 2025 09:04:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758546118; x=1758632518; bh=7fXG6106sl
-	D9liGXHQ/0DaivP1HEIxhIlt0uvDOfdOY=; b=pX7X2rjlqVJq0ITkWMpG69ltPW
-	Xz20ca2/0s65fN1gh0FucDNk9OYUsR2XIzaYJLcTDL7CbHQBBSbYRQer7e5+DvQ6
-	3lnSyAuP2QTNvMQ7/raN1syAGuMDTHRiVUilcwSY1qgTXpASsBe4Ibkf8bFbRxRq
-	oWhW2F6ElLbv1ILLRO0bpPbKk7IUZxD10NXG/usANNJwvXfar/WEMSpgNR4alCjg
-	xOiilb9sGB9rYYIHKNmf8BZ5JrKvWQMcqxpXBW0NjOc1u3Nzra2XElwmVT6lVMpA
-	2upCCk5rOR8M1vUYWh0llP7+wAqley5RhBuWSt9hy5TUjwEK51G7TtnNrDtw==
+	:subject:to:to; s=fm1; t=1758546287; x=1758632687; bh=OcEu9cqlok
+	XObfLl2H+i1U2oxuqmRwjxVepm38cj15k=; b=WGn320vGlboddhcfaNE8rS8KbC
+	IE8UYyeJlYOfPzE2VxI3Gd+FeQ1KbPkYjT6gimv4rHCgC8KsS9b/qtk97hS4ZnUa
+	z+BrQGiS3eYtsjfRZBgMPiwhsnjySDpNPdqyHWmycPvLCOpe97Z7lf1uSOmpKAkL
+	ra3SEfjVJKcVeaVVrPB1bP+nu1U+eZqbvyALzzHKuIgjFOB0aIFOTl4oyIpV8P+0
+	zKoxgVJOLRgtlsJTth6b8KlOBNMDihcQoQQXsh2fokD7RDbflBkBZcHtK/Y3R8cP
+	PfXF/se/asBFVo0bJO1WPVCwms3yDPuxMpotr26K+Ecpv4ViUIRo+X093CkQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758546118; x=1758632518; bh=7fXG6106slD9liGXHQ/0DaivP1HEIxhIlt0
-	uvDOfdOY=; b=Kng+BVmEyeGdWIYtMUOlZFSyrUiQqDLeuvQgDqvF7NkOILfpRXo
-	Iv0SH+8xah+SKdJkBaeL8a7gHVQjeC6I/tD32YqGz8McUiU1T7aLv/6YaCRj1Szl
-	DojfNNG/fyp1G0d26MyavWeGkgTBGEI6geitNZtzL9TaV2wlOW3iPnl+/0jCqTDj
-	Bizfdb01a4hRmpnRwmlOPfkIMfewU2sY15KesL253uUo6EX/LBsbgyfl/QeiAjT9
-	9cauo0EZaU3fvs9J5J3nTeG2Oms7qiCc6pTNr0iA+kGaIw75tZLRiFHorn1gVpQz
-	5kPh4lhBEIps96P1tdbB0nvyJWrCh/Yhdzw==
-X-ME-Sender: <xms:xkjRaDdzFsi7dX2fVvW32hF4KrDo93pGlOxPdkVG_gnZMrANZnmQxA>
-    <xme:xkjRaEsL2eikGuRMFM5V58seIXuQ7uoLKy-cgd_WvhM7mdHjPJYCB1bSb09rhI42z
-    F4w4cS7CdN1AnmHCQ>
-X-ME-Received: <xmr:xkjRaC9bVB1fsyJ4Jslb8FWQQ2nK2HG3myAev1CQb68i790aHy9nWW_tJN3Efgi6RyteDdzyWyTA6DQA5SaAbSX3IomdTWh9BPsxJIMDzQ>
+	1758546287; x=1758632687; bh=OcEu9cqlokXObfLl2H+i1U2oxuqmRwjxVep
+	m38cj15k=; b=EbNzlPpY4yJzm747LRUxOXHqeuUoLcV2KxBDD5C8dqr3KcPX9P7
+	RzBdoMquE4s3TO1+/Q88hqhh0RTJMsbG2qyKpfxLMp/v6f0mQ238tDTI5NHo8daf
+	ceyALzr2ofDO5sZWsH0bcZlgkplneN7DkK02/K+rsfJKofVGEbiwpXEx2z+ZkueN
+	3goTP3KkOBSQxzn0Pgja09nPrDNPUw5ZVYpaYzFtTvINqzICP5JCy3pfXkw//eJy
+	K1vTZ1ITriAqU+Oog8RKPEuLTUSxydUoodvPmajJ1xO3t9VSBLUUFuKIlobmoUGJ
+	1+bPDjQCB6Bbs866wM5gzb1o3LnCxOpluUQ==
+X-ME-Sender: <xms:b0nRaFpTyZR77c9kNBCUu6Ps8w0Z9zplYIDxrI2XZ8p9RiE9TOXeJg>
+    <xme:b0nRaCNnfYtdoY3J6TVJ0DGrJWgEKXTc_SjadXexNj6m2jYon30MFgxMdnTFsRHV4
+    d3YyLiy6X62_tANYg>
+X-ME-Received: <xmr:b0nRaOxpclbLAQkCbdc75H6YXdiKupXym1lvuAvvzNAs5Kl2bK03V-4rR-tPHQFfhLQYWYxQ3stvomCHtzoZtwXLydGIlWQ8yxaXyxSBlA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehjeelvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -55,35 +55,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehjeelvdcutefuodetgg
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvgiivghkihgvlh
-    hnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:xkjRaP3JQE0pCXhqPZ7IgmMlAxlDMDdMpoEYMl8Ylpfrw9YfTgoAsQ>
-    <xmx:xkjRaHCoR7kyQnfnqmWF2NmINDH3hNnCgisNIsdqiJM7rXPN_vs_XA>
-    <xmx:xkjRaLefUAIqIsifNMRZoDxo8hSb5gglSE3jbn0o59m5FuarM5wzbg>
-    <xmx:xkjRaE6s91GOWec5_h2D_eDMX-LY1SVVgfttJbMpzrJX6GPVqu8VaA>
-    <xmx:xkjRaLOJkycIol4KKtu7m9Py-esAd_TOmBG6GGO86OCOKoRPK-Mq3FPY>
+    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhg
+    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:b0nRaDtXspQpT0WbTjgMuDna_RrFFe4gAuluPukYheWrhfYHQgOxFg>
+    <xmx:b0nRaP5zSG0nA9Q6vcUnsEcnhaPFKj1quVPg5CunaExHdloG9PUhWQ>
+    <xmx:b0nRaKSqIlrjTiX79JfH52H-OQmkHmhT502WjEWW7zzbfYk5iZHuvQ>
+    <xmx:b0nRaGrmbihaWVtOrcA9qrOcG54RbwRG7f_QfDNtjzEcqX0jupUEyg>
+    <xmx:b0nRaLa2xHLzohySL7ORBLoWMWowqGaaqU4G161q_4oH-XCmAVuk7_sz>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Sep 2025 09:01:57 -0400 (EDT)
+ 22 Sep 2025 09:04:46 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5deb6cc8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 22 Sep 2025 13:01:56 +0000 (UTC)
-Date: Mon, 22 Sep 2025 15:01:52 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 5f194894 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 22 Sep 2025 13:04:45 +0000 (UTC)
+Date: Mon, 22 Sep 2025 15:04:42 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v2 00/18] Introduce rust: In xdiff
-Message-ID: <aNFIwFD6E6Lngy5M@pks.im>
-References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
- <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
- <xmqqcy7pc8ix.fsf@gitster.g>
- <CABPp-BHJUkSERQon6xx=sHrhN7i=6ekv+Hz1+P+2mh0=Xw15Mg@mail.gmail.com>
- <xmqqy0qcae6z.fsf@gitster.g>
+Cc: git@vger.kernel.org, SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v3 4/5] builtin/config: special-case retrieving colors
+ without a key
+Message-ID: <aNFJanpSY8wd8-b1@pks.im>
+References: <20250918-pks-config-color-v3-0-08ea618cae26@pks.im>
+ <20250918-pks-config-color-v3-4-08ea618cae26@pks.im>
+ <xmqqikhg9rwx.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,40 +90,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqy0qcae6z.fsf@gitster.g>
+In-Reply-To: <xmqqikhg9rwx.fsf@gitster.g>
 
-On Wed, Sep 17, 2025 at 03:48:04PM -0700, Junio C Hamano wrote:
-> Elijah Newren <newren@gmail.com> writes:
+On Wed, Sep 17, 2025 at 11:49:18PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > So, how to move forward?
+> > Our documentation for git-config(1) has a section where it explains how
+> > to parse and use colors as Git would configure them. In order to get the
+> > ANSI color escape sequence to reset the colors to normal we recommend
+> > the following command:
 > >
-> > A) Modify Patrick's series to just take patch 7 of his v5.  Patrick
-> > did say that the roadmap was  "the more important discussion compared
-> > to the technical discussion", and merging that patch would achieve his
-> > goal of getting an initial roadmap.  Then Ezekiel could grab other
-> > pieces from Patrick's series (e.g. the help and varint stuff) and
-> > incorporate it into an "introduce rust" series.[*]
+> >     $ git config get --type=color --default="reset" ""
 > >
-> > B) Merge Patrick's series and tell Ezekiel to rebase, while noting to
-> > Ezekiel that the roadmap is the important bit from Patrick's series[*]
-> > and he can suggest changes to any of the other bits.
+> > This command is not supposed to parse any configuration keys. Instead,
+> > it is expected to parse the "reset" default value and turn it into a
+> > proper ANSI color escape sequence.
 > >
-> > C) Create a consolidated "introduce Rust" series with bits of both --
-> > what I think Ezekiel was trying to do with this series.
+> > It was reported though [1] that this command doesn't work:
+> >
+> >     $ git config get --type=color --default="reset" ""
+> >     error: key does not contain a section:
+> >
+> > This error was introduced in 4e51389000 (builtin/config: introduce "get"
+> > subcommand, 2024-05-06), where we introduced the "get" subcommand to
+> > retrieve configuration values. The preimage of that commit used `git
+> > config --get-color "" "reset"` instead, which still works.
+> >
+> > This use case is really quite specific to parsing colors, as it wouldn't
+> > make sense to give git-config(1) a default value and an empty config key
+> > only to return that default value unmodified. But with `--type=color` we
+> > don't return the value directly; we instead parse the value into an ANSI
+> > escape sequence.
+> >
+> > As such, we can easily special-case this one use case:
+> >
+> >     - If the provided config key is empty;
+> >
+> >     - the user is asking for a color code and the user; and
 > 
-> Ah, I didn't even realize C was what this series was trying to do.
-> 
-> I do not have particular preference between A and B, but I thought A
-> was closer to what was being done with this series, and as long as
-> Ezekiel and Patrick can join forces that way, it would be perfect.
+> "and the user;" -> ";" perhaps?
 
-I personally think either (A) or (B) would be good choices. I would
-slightly lean towards (B) just so that we have something that we can
-already play around with while building the next steps.
+Oh, yeah, thanks.
 
-By the way: I'm also happy to change attribution of some of the patches
-in my patch series to mention Ezekiel as author. I don't care much who
-is listed for the initial patches that introduce Rust, but would retain
-my own authorship for the "varint" and "BreakingChanges" commits.
+> >     - the user has provided a default value,
+> >
+> > then we call `get_color()` directly. Do so to make the documented
+> > command work as expected.
+> 
+> If we are willing to handle this as a special case anyway, I wonder
+> if it can easily be arranged to take this as a(nother) special case.
+> 
+>     $ git config get --type=color --default="reset"
+> 
+> I.e., instead of (or in addition to) "if the config key is empty",
+> special case "if the config key is not given", which may be slightly
+> more intuitive.
+> 
+> But even without it, what is presented is a vast improvement enough
+> ;-)
+
+We probably could, yeah. But it starts to become even weirder than it
+already is, so I'd honestly just leave it as-is for now :) I doubt that
+there's too many users out there that care about this anyway.
 
 Patrick
