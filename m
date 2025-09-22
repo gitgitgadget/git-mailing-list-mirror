@@ -1,160 +1,131 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BA82FD7B9
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 13:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3917E105
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 13:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758546090; cv=none; b=DO51NWzMC5LG8jpnU1/6fMWsikVtuZGmc7tk3De0gTPcsOEagIPYh43Lo2334UUd20VpjoHH5CxUQGUnoCFzg0AzjUjVZ59NeXzVdWFjzFHRJic3/bBI4QLeyFxjVENbuChZbcaCxS2xrmuABbqDfrfP4ykT4vSF0NV58A/eGr4=
+	t=1758546120; cv=none; b=D9J3d4+T+r6KEuLKcZ4m9zoCv6r/41bIPJb1mgULdSSY6VcmMZoFzwifyDIFd1pcUW+mNoHBu1GSpob3PZvRTinTLSvjuW2bV8nKWNvAcDJK9gqSgQbVwQ/AxBjOBnD0s1fUyPtw9h9MboOolNtLqGzL2x0sv5spbA5HyZQeHFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758546090; c=relaxed/simple;
-	bh=9X8wOXe2se1CrIMXecZwYGBerGj6EsXpNPeRIM6hSrs=;
+	s=arc-20240116; t=1758546120; c=relaxed/simple;
+	bh=bhzl6T6dp22YWvLi3rTkHEAkmVD2ZjzOt0f+DeMfc6k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rxjguozRGNEz8oR0PHX8SyILm/qy27ld9SFwkslcXLDDsdkgelb2Z83P9fhuB6idFR5Q0V6jMbuz8/uhZlST8IPuudbo9hNgH+iH53UZlaVtPtGKjiqkN4jiqhqS1OUbzqbi+8O1LQzXCPu6wCygaEpYzEyroq85Z6nHgQZMyq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PmrG4s9w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NHIEX2ux; arc=none smtp.client-ip=202.12.124.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=G57kv/7U9myTXnCCA9TciNiHnEwMJnh5KBVnhhlIIqUTvV0S4hbw3pECwLHLt4m7PS1FrZ+hChUQWL7i1IRRswH9j+ld07xm9Bg5OApim1u08GefluVzNcKihK5+0vQSgTXooDVuQPu6kZVd1Ai5InFf8AM1YmAT7TNzs4kvaBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pX7X2rjl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kng+BVmE; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PmrG4s9w";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NHIEX2ux"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C1B697A0059;
-	Mon, 22 Sep 2025 09:01:27 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pX7X2rjl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kng+BVmE"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 540B77A021E;
+	Mon, 22 Sep 2025 09:01:58 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 22 Sep 2025 09:01:27 -0400
+  by phl-compute-05.internal (MEProxy); Mon, 22 Sep 2025 09:01:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758546087;
-	 x=1758632487; bh=k2Wm9y3FBvBp0FHN6YGUDi5f4gTVjEM1EEzWTqlk/ok=; b=
-	PmrG4s9wE3accSyb5xwSRcf5tS++f05xPeIynau1dkqJWH4miU9zf27J0wxqZzaN
-	nfJTyn3e8PQouJfxjgFJGXX4XnImV65uzRr5qXfcK8o90QPuDbom0n4xIlM+imWl
-	0Wk4+98RwzLjYoRO/i9w2Kgsmsov3JKtLsJrZnLsiG2AXyHpUR1QrtcBUTN002Lf
-	qxiTHDbc9CYY6ZtxbgIGbKm4Wziweuu7bE/YdMLUNA/puKref/bE+OaqFlv6yx4B
-	mULVRu71Ki51S6KRopPzKx4/I2xdigX9SG0Q081BWIsZ8I8oWxP6dAzM+djZ4/4i
-	PSAlAbLcGzzsaw3Uj4Mnmg==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1758546118; x=1758632518; bh=7fXG6106sl
+	D9liGXHQ/0DaivP1HEIxhIlt0uvDOfdOY=; b=pX7X2rjlqVJq0ITkWMpG69ltPW
+	Xz20ca2/0s65fN1gh0FucDNk9OYUsR2XIzaYJLcTDL7CbHQBBSbYRQer7e5+DvQ6
+	3lnSyAuP2QTNvMQ7/raN1syAGuMDTHRiVUilcwSY1qgTXpASsBe4Ibkf8bFbRxRq
+	oWhW2F6ElLbv1ILLRO0bpPbKk7IUZxD10NXG/usANNJwvXfar/WEMSpgNR4alCjg
+	xOiilb9sGB9rYYIHKNmf8BZ5JrKvWQMcqxpXBW0NjOc1u3Nzra2XElwmVT6lVMpA
+	2upCCk5rOR8M1vUYWh0llP7+wAqley5RhBuWSt9hy5TUjwEK51G7TtnNrDtw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758546087; x=
-	1758632487; bh=k2Wm9y3FBvBp0FHN6YGUDi5f4gTVjEM1EEzWTqlk/ok=; b=N
-	HIEX2uxqqQW87npylhwOkT7IYOzk9MtFKhRKT5OjcghBq9K1xx3TjIMl/6smSLa4
-	kYg6Qok4XrMY8T0GwOHqUPmOWLL3Yk6bG32q+S7guuYz74kOaosXZ7h83KQkCQyP
-	/7oTU2/5OtXVs01JaABmo9V/XjD+g7r6by7AfRb7Up3f1Bp+OoVvptx6vX457bjm
-	qc+CnDVNO2QZiYD60203L5EZkRm+ygDdXvQ+HoW2LaBvNf90zz8tE5sSPH7jerE2
-	BdjIEOCz6PpoRbYYP08l9gPbrifTvA9kMBJomVUb3DDuex33jjUiVO2tYeqXcXFX
-	r7pf35sucLJU0hCGJ3M6A==
-X-ME-Sender: <xms:p0jRaMATrlbnKMj1fv-0N-fYR93m2fZhkSS4f5-kfDt9lzxA1b9HDw>
-    <xme:p0jRaBzxWjd23hqtwMJFfDNAs9znkrhZ8GUeu3EMncxBH8cuBwTx4ynagy-H7gqVI
-    opvOeAxGegfcldB6A>
-X-ME-Received: <xmr:p0jRaJBU8rwDPP2GUrN-IPC6pdKtIfiYL0N_9XjVWdhZu1yT7VD91ZRW1AR89MwqMGryavjXTPwgjhuxd_eqyWf1DLyNbstmlXFuXd3Xhw>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758546118; x=1758632518; bh=7fXG6106slD9liGXHQ/0DaivP1HEIxhIlt0
+	uvDOfdOY=; b=Kng+BVmEyeGdWIYtMUOlZFSyrUiQqDLeuvQgDqvF7NkOILfpRXo
+	Iv0SH+8xah+SKdJkBaeL8a7gHVQjeC6I/tD32YqGz8McUiU1T7aLv/6YaCRj1Szl
+	DojfNNG/fyp1G0d26MyavWeGkgTBGEI6geitNZtzL9TaV2wlOW3iPnl+/0jCqTDj
+	Bizfdb01a4hRmpnRwmlOPfkIMfewU2sY15KesL253uUo6EX/LBsbgyfl/QeiAjT9
+	9cauo0EZaU3fvs9J5J3nTeG2Oms7qiCc6pTNr0iA+kGaIw75tZLRiFHorn1gVpQz
+	5kPh4lhBEIps96P1tdbB0nvyJWrCh/Yhdzw==
+X-ME-Sender: <xms:xkjRaDdzFsi7dX2fVvW32hF4KrDo93pGlOxPdkVG_gnZMrANZnmQxA>
+    <xme:xkjRaEsL2eikGuRMFM5V58seIXuQ7uoLKy-cgd_WvhM7mdHjPJYCB1bSb09rhI42z
+    F4w4cS7CdN1AnmHCQ>
+X-ME-Received: <xmr:xkjRaC9bVB1fsyJ4Jslb8FWQQ2nK2HG3myAev1CQb68i790aHy9nWW_tJN3Efgi6RyteDdzyWyTA6DQA5SaAbSX3IomdTWh9BPsxJIMDzQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehjeelvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegviigvkhhivg
-    hlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughg
-    vghtsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:p0jRaObcSGoYvD8L4Wspep61YhUEKcJ8N1TSwRNE1PN_bzBncazccw>
-    <xmx:p0jRaBgzFto7cVU5Os70krcM6ymqxXm2woNTL6_ni6eCvP9hjOoo9A>
-    <xmx:p0jRaA5bTiVofTPqiiHZamFNN9uOQuLtai8FpZnFQh6ezjZJzcCEqQ>
-    <xmx:p0jRaI4ZQsDZdoIJoeKZAK2u5XYBbYlTOXVA6Ihz6rO24L150uorAg>
-    <xmx:p0jRaAvdmvd5SJOTM4IYZ7xrXHojFieKl2q2B65yUCO7IstPc5n9aDc3>
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvgiivghkihgvlh
+    hnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:xkjRaP3JQE0pCXhqPZ7IgmMlAxlDMDdMpoEYMl8Ylpfrw9YfTgoAsQ>
+    <xmx:xkjRaHCoR7kyQnfnqmWF2NmINDH3hNnCgisNIsdqiJM7rXPN_vs_XA>
+    <xmx:xkjRaLefUAIqIsifNMRZoDxo8hSb5gglSE3jbn0o59m5FuarM5wzbg>
+    <xmx:xkjRaE6s91GOWec5_h2D_eDMX-LY1SVVgfttJbMpzrJX6GPVqu8VaA>
+    <xmx:xkjRaLOJkycIol4KKtu7m9Py-esAd_TOmBG6GGO86OCOKoRPK-Mq3FPY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Sep 2025 09:01:26 -0400 (EDT)
+ 22 Sep 2025 09:01:57 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2af79459 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 22 Sep 2025 13:01:26 +0000 (UTC)
-Date: Mon, 22 Sep 2025 15:01:23 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 5deb6cc8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 22 Sep 2025 13:01:56 +0000 (UTC)
+Date: Mon, 22 Sep 2025 15:01:52 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>
 Subject: Re: [PATCH v2 00/18] Introduce rust: In xdiff
-Message-ID: <aNFIozagGc0MoseL@pks.im>
+Message-ID: <aNFIwFD6E6Lngy5M@pks.im>
 References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
  <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
- <aMpODEpyaaVhFMO0@pks.im>
- <CAH=ZcbBNFSwU7E+P7hkQnt9UrMKiCRESgGvWPL7pRUa0i2U5-Q@mail.gmail.com>
+ <xmqqcy7pc8ix.fsf@gitster.g>
+ <CABPp-BHJUkSERQon6xx=sHrhN7i=6ekv+Hz1+P+2mh0=Xw15Mg@mail.gmail.com>
+ <xmqqy0qcae6z.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAH=ZcbBNFSwU7E+P7hkQnt9UrMKiCRESgGvWPL7pRUa0i2U5-Q@mail.gmail.com>
+In-Reply-To: <xmqqy0qcae6z.fsf@gitster.g>
 
-On Fri, Sep 19, 2025 at 02:57:58PM -0600, Ezekiel Newren wrote:
-> On Tue, Sep 16, 2025 at 11:58 PM Patrick Steinhardt <ps@pks.im> wrote:
-> > Given that this isn't yet ready and given that this patch series is way
-> > bigger than the one I have in flight that focusses on introducing the
-> > policy [1]: how about we first merge that one down and then rebase your
-> > patches on top of it to iterate? It would reduce the scope of your patch
-> > series and allow us to make smaller steps towards our goal.
-> >
-> > To be clear: I very much think that most of the steps here are quite
-> > sensible. We definitely want to introduce cbindgen, we obviously need to
-> > introduce support on Windows, and I guess having multiple different
-> > workspaces is also something that could provide benefit.
-> >
-> > But there is no reason to have that all at once, so hence my suggestion
-> > to build out the infra one step at a time.
-> >
-> > What do you think?
+On Wed, Sep 17, 2025 at 03:48:04PM -0700, Junio C Hamano wrote:
+> Elijah Newren <newren@gmail.com> writes:
 > 
-> I think I made a big mistake of not making it clear that I intended v2
-> as more of an RFC. My worry (that I expressed very poorly or not at
-> all) is how hard will it be to apply my patches on top of your
-> foundation? I don't know if minor or major changes to your current
-> path would be needed, so I proposed a different way to Introduce Rust
-> while trying to incorporate work from others.
+> > So, how to move forward?
+> >
+> > A) Modify Patrick's series to just take patch 7 of his v5.  Patrick
+> > did say that the roadmap was  "the more important discussion compared
+> > to the technical discussion", and merging that patch would achieve his
+> > goal of getting an initial roadmap.  Then Ezekiel could grab other
+> > pieces from Patrick's series (e.g. the help and varint stuff) and
+> > incorporate it into an "introduce rust" series.[*]
+> >
+> > B) Merge Patrick's series and tell Ezekiel to rebase, while noting to
+> > Ezekiel that the roadmap is the important bit from Patrick's series[*]
+> > and he can suggest changes to any of the other bits.
+> >
+> > C) Create a consolidated "introduce Rust" series with bits of both --
+> > what I think Ezekiel was trying to do with this series.
+> 
+> Ah, I didn't even realize C was what this series was trying to do.
+> 
+> I do not have particular preference between A and B, but I thought A
+> was closer to what was being done with this series, and as long as
+> Ezekiel and Patrick can join forces that way, it would be perfect.
 
-Ah, fair enough. Thanks for clarifying your intentions!
+I personally think either (A) or (B) would be good choices. I would
+slightly lean towards (B) just so that we have something that we can
+already play around with while building the next steps.
 
-I don't think there'd have to be major changes to the current version
-of my patch series. The idea of that patch series is very much getting
-buy-in regarding our roadmap and focus less on the actual build infra.
-So the changes introduced are mostly an MVC, and I very much think that
-we'll have to iterate quite a bit on it, but that's intended.
-
-I think that a lot of the steps you outline below are logical next steps
-to get there. If I can change anything to make these next steps easier
-for you I'm happy to do so. But I also don't think it's too bad if we
-have to change the current infra quite significantly to get there.
-
-> I wanted feedback on:
->   * Cleaning up Rust type name collisions
->     * People don't like it, so I'll drop that
-
-I don't have a strong opinion on this. If it creates issues I personally
-don't mind fixing it.
-
->   * Have Makefile produce libgit.a correctly.
->     * I think this is a good idea, but it doesn't belong in this patch series.
->   * Adding Rust unit test which required fixing Make and adding
-> build-helper to reduce boilerplate code
->     * I think this is a good idea, but should be added later.
->   * Introduce cbindgen to avoid desync errors between Rust and C.
->     * LIke other points above; This should be added later.
-
-Agreed, these all make sense to me.
-
->   * What should we call the crate that will be the new home for .c and
-> .h files in the root of Git?
-
-We could call this something like "libgit-ffi", but I don't care too
-much.
-
-Thanks!
+By the way: I'm also happy to change attribution of some of the patches
+in my patch series to mention Ezekiel as author. I don't care much who
+is listed for the initial patches that introduce Rust, but would retain
+my own authorship for the "varint" and "BreakingChanges" commits.
 
 Patrick
