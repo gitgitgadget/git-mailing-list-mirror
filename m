@@ -1,127 +1,488 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D942315A848
-	for <git@vger.kernel.org>; Sun, 21 Sep 2025 23:42:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAD77D098
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 01:39:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758498138; cv=none; b=LnKiklmt08lLWI5ulE5HWHy2ngZPKgeJkp4i19/PD5Ot+T1Hh9zu28nF5v53vabHV2LFlhL7o2J2iSAZLQka3Kbc2QUsQ763BuZt7+q6I415VqjIPcDkri4jtOfMf/25iF/Zvk36WNO63ewbAsMCIGdFHygkYZmJG8K6CET/clk=
+	t=1758505161; cv=none; b=oWrNXOBq2nOyOXKCymGZY8YbFAgg/5hq4WBV3XkYxRFbIBguib+4BhZtcaW4r5JDum+PRbGpBVt71iFfYzpfdDVFqNS14oU1FWpnHxTcLswiiLRcTNgEmghhuBveQNX0OyAltGpIkKHZtuVCT2uqo95GeZ5+pGk+e5AApliCuh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758498138; c=relaxed/simple;
-	bh=ydq+lhmVnz4xYHVxH86ettiFQdN0RR5+jwpC2ZPalgQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sTPym8ZS+80LewaSUbT5iaeCmgavkEEg3Vzte9RImvcNcnmTfwsyrkqv5yxHx9Yciz8LplF1ArDrIJyK/043ODmjDgLpjcBrWe/ZYFFRtPopwbDeqiGu1OkZLq8vgMbdPjTctFxZ8jkjzMCfkOjwC7KBgevv2vHrxiZYujtu/ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E6XCpi8v; arc=none smtp.client-ip=209.85.208.178
+	s=arc-20240116; t=1758505161; c=relaxed/simple;
+	bh=fvSA6CKjnLNXfFFloaQ5tIETo+buWoOJBjWsI5Yio2w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=tQGgtp0GCg/w6L+2m9SUG0JivKeHZBFyWzsTKjUlskakgpj4bKienTVryAbAne59ju5IhYDB4PuJVxLpAaFYagH/vBlwDWZpIS9c2zk318RRfgAD4StoJiPN1zUPVUaXGhddWaUMw2WedIa2XU4GgqpCaBhD07DRJXMTTCzW7Fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T9Ie2EyV; arc=none smtp.client-ip=209.85.219.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E6XCpi8v"
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-3652d7800a8so18036271fa.0
-        for <git@vger.kernel.org>; Sun, 21 Sep 2025 16:42:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T9Ie2EyV"
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-ea5d856ac28so2655910276.1
+        for <git@vger.kernel.org>; Sun, 21 Sep 2025 18:39:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758498133; x=1759102933; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1758505158; x=1759109958; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ydq+lhmVnz4xYHVxH86ettiFQdN0RR5+jwpC2ZPalgQ=;
-        b=E6XCpi8vfTjqAx1yuUmQQFpA1J1nWxh+3DV+TaVxRH9f3A60Gh9O0oa+2JRl1ocowf
-         HAu0/aHzZjoU309CebBEhk6BTLanYVIPn0uCru0OsPU3GNWZBbpCsBpxJkAptL1jzxnG
-         Yw0GYH5rm52C28AtjDcX0U/zH5Kbb6mNeiSPuzvQrOQ7pmcNR35vCQYupVPfhaweErmd
-         deeOrOwcpr3xhvCmeSmJY0fQzDFznUaTHtpk4PzK8VKm01vT6CD7XC9CWo2vEL1XCTfk
-         zpoEblFzZ7mNP+1sFWZv/hgRm9rhPStqWn64v80pi/mYyzDWPH2P2YxXf39abrc5YixQ
-         wnow==
+        bh=V2d4SzLC93DziLhYbCwKjlQbLfuY7Qt75+GHWrrnasI=;
+        b=T9Ie2EyVhWIb/QedG5XRNzjovEhfL1ehCaOS5/BN15hXQBO9OvbCU48sCSOawXJolZ
+         grSKCq4br6lHwuBvm61Ey1fuNjrOFh2zo4Q/0YKtSSmXSoipoxX5ZG3cYgjrR8i98aHA
+         KDJAYQ+u7uCJ2sP7HvOnxjHhLZYCRWg0dHQ1yUPYIGSEx7gdT/13z4xF6EWI9GR6Iybz
+         uCjEsXfIy00m8piqshi4h6ZW4nf0nK8dmQWri3hs8a1m01SINjktQve8NcxfK2BFGLXv
+         yIFJqynhKoTCNK7YgDgxLarwl7whPOHkPv38rHf6KU7CHiVgx+fS7qJdEtIVFSIpFkbg
+         wlTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758498133; x=1759102933;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ydq+lhmVnz4xYHVxH86ettiFQdN0RR5+jwpC2ZPalgQ=;
-        b=KDPlqmXI8GBrPZ1cS7ShIWby3sNFXZLGr5uqjnLNiq/9SOV++0sb60y2Ne3sfqiYi1
-         MQhbOCyj75DrT8yVzkRrGxMEdoRRp/n1VKh2jR9PIe3wpF/0igDuoge6PS78c56T6uKJ
-         eoWC+nrX198LIZZoNMhS/xgSiQbc9YNxGZ0NunwQ37u7lEOPs8mm75mviOe5OWPaPZy9
-         g2k4ECVC5Sc20wPPUl1AjDin2n8dGhE8R71ewjQAQvP+oukwpTEPQ7egTuqvKhZhxqo3
-         afER2wJ0T2589+StpqtY9WQtBnsVcATUTguquTyFHUbNhTKShZ5HINRBXYyKO6W1bJ8V
-         y+2A==
-X-Forwarded-Encrypted: i=1; AJvYcCUthClYKHQeKspC9QiLWxrOgWEauQoJn7NH3HnARpW0uUWp4O5lATEQwXA9GoRQ5iRDF7I=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyyvc27W95WvjQVKcAWhY/xck4/Mrjjyxa/gPND5z5v6Z8ygnPY
-	9kFV2maJf69xkFY8SwtkMrRC2yablEHnPgrHqWmc6PKdCpeXXiMqJf3DhVYBGzvrFWMM2rS0LS/
-	kmCRyyR+E6nftwgK98gez9RuqH5I2p5A=
-X-Gm-Gg: ASbGncuv/dduw/+AcQQTk1hy56r6Gqew2yGKyW3HaoJgsNpf47pNAr8zos8kU6Vak8a
-	ezcH2IA5kbFK6SCTHuE379SFN0XBt03CGtjenNW3+ZFEAX+NDm+cvz/f+rZo8BkBxmkrK/jOk8+
-	06zyaoH2KqDsSBR7yn+DD7Lg7Ki+cjCtEx66oq1ZaWUaQXQvaO+GFSxuFbBrZ3nhxPQIVKbPm2p
-	hwbP4hJ
-X-Google-Smtp-Source: AGHT+IHmwVjNOiRalOU2G6xPxBcPf3KXC8CaMiEIFjCOdhxT89jmdBaX+lnM4T5OVbzNbgjwdEXhxdeqk2gB8OLUvko=
-X-Received: by 2002:a05:651c:2119:b0:36a:53fe:77a6 with SMTP id
- 38308e7fff4ca-36a53fe802bmr12927211fa.45.1758498132566; Sun, 21 Sep 2025
- 16:42:12 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1758505158; x=1759109958;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=V2d4SzLC93DziLhYbCwKjlQbLfuY7Qt75+GHWrrnasI=;
+        b=EkVsIP2cLRtlMcoYPO2hbfF/KLF855Z4PgsMPMAXRqqa247r2wPJLew1W8uuPviHRx
+         4OFUyNXuDXdDeigJ/zTXxu6YXPexnJGDN2Iw5DlQp4qHaLRiu5PY4MvvUJklciuJ5UgN
+         rSJfeGvnTZ6OmSr/CCN/mcOuQ42H4IkJsFFZ/i/xpeakH+1XNfN5GO/0eyEGGWlfHeoz
+         2MbJHVUKZXf/hGxfVfD/MjVXH9qq9uVuSmqjzC+W9jGwFsw6b2dpdchRW6Pz0aAa8DmJ
+         /GUAawqsTzuSVCT352Gk7MdqZj01Y+wokPIrI+87Rsd5mFfHJmv1ELcXhMHrqHbX3xL3
+         slQg==
+X-Gm-Message-State: AOJu0YzM3nyKkF1J4VIbZdnqUdIPxaqfHNRV0F3TwaiqIn15963EZoF2
+	Qd2NSTYOLSfdrXuzFTIKtASIssyp3x4+pKGVqqmZlSmfjTBimvp8poRRhwE8wg==
+X-Gm-Gg: ASbGncvX/26Lolk3TacJif/XFjDVfNANrsOMimd+axm3aVwVclOMfF5H+xYz3Nr7JIm
+	1pPuWzn7TyN0qQoqNUKIsw/X3bxQ35HKcZfLnO/6uoZ1h9/o04RFEO5PyDZv9PEfWcuvShXbk4q
+	Ej92+grswRhilKO3wsGoPHQ637ISa9KeCRGgd6oxiUAiAqSMQFNyJxaH7JdsK935x6jtaOVSbQS
+	17S56gbBqa3IwfJ9GpoiXKc3g/CQM36xgEVXpiQL51YOwgvQ7us1JsOCvsiGsFfoviUBnUwr8go
+	ELvTEBhRg1MHvvp0Jqh7TsYSyUc8fJud28pDzSeVDfLKOX1eFslmC8/WYX3CeFN0TsHrwSvBxBO
+	Aj+Z9BkqZ3Hskq3DjQ4DiRjAPkK1aihoD3WMufhdc9ac+PqLHNboNkCtRyF+VZhKChTcOMkt+g5
+	9Rbh+6QNcsBo8a
+X-Google-Smtp-Source: AGHT+IHplPSVXATz+Cd0L9cmuaLlq3/z1Ba6JhWO3HI4T5BCIPNyR0/sIoDDabYShdydqfWlU5HiRQ==
+X-Received: by 2002:a05:690c:6b0a:b0:723:b16a:d07 with SMTP id 00721157ae682-73d3ef2f00amr98886457b3.53.1758505158262;
+        Sun, 21 Sep 2025 18:39:18 -0700 (PDT)
+Received: from localhost.localdomain (69-77-149-20.skybest.com. [69.77.149.20])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-633bcd05dd7sm3942069d50.7.2025.09.21.18.39.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 21 Sep 2025 18:39:17 -0700 (PDT)
+Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH v3 0/4] Teach git-stash to use --index from config
+Date: Sun, 21 Sep 2025 21:39:02 -0400
+Message-ID: <cover.1758505011.git.ben.knoble+github@gmail.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <cover.1757982870.git.ben.knoble+github@gmail.com>
+References: <cover.1757982870.git.ben.knoble+github@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <8799E6DB-FC85-4F71-A6C1-363D1AC8ED06@macos-powerpc.org>
- <000001dc2a5d$ea10ffe0$be32ffa0$@nexbridge.com> <CAH=ZcbDJR7gJ0tyQ-bk-n+Zid_csED74+X5OkTfbEiy5-_2R-w@mail.gmail.com>
- <002001dc2a84$cda40380$68ec0a80$@nexbridge.com> <CAH=ZcbCf4sWKhOcCe4UkX3Y9VXZ-iHeh4QZ3ExrX1hbn5GE3vA@mail.gmail.com>
- <002c01dc2a95$400315f0$c00941d0$@nexbridge.com> <CAH=ZcbDGaxiW=QCTrRo3YqxS-rY0e5h5PrnKQt9htJfn4firJA@mail.gmail.com>
- <003401dc2aa6$623d1420$26b73c60$@nexbridge.com> <CAH=ZcbA0jpntXjPnrVi13Sz1PipnyBLNWKW4Q5taGEHqBrqj-A@mail.gmail.com>
- <008501dc2b4c$7f5ea450$7e1becf0$@nexbridge.com>
-In-Reply-To: <008501dc2b4c$7f5ea450$7e1becf0$@nexbridge.com>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Sun, 21 Sep 2025 17:42:01 -0600
-X-Gm-Features: AS18NWCc7abnXNW-l579vCBiw6B7aKr7PN5BEWpUtP4alxkqmVqlgShXEmgpNRQ
-Message-ID: <CAH=ZcbAop=z8-zA_aEE+sTHErg0gjzYRnqCd3XQF9=_TakBK8A@mail.gmail.com>
-Subject: Re: [PATCH RFC 0/3] Introduce Rust and announce that it will become mandatorty
-To: rsbecker@nexbridge.com
-Cc: 20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im, 
-	Johannes.Schindelin@gmx.de, ben.knoble@gmail.com, cb@256bit.org, 
-	collin.funk1@gmail.com, contact@hacktivis.me, eschwartz@gentoo.org, 
-	git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com, newren@gmail.com, 
-	phillip.wood123@gmail.com, pierre-emmanuel.patry@embecosm.com, ps@pks.im, 
-	sam@gentoo.org, sandals@crustytoothpaste.net
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sun, Sep 21, 2025 at 5:07=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
-> Not really no. There is momentum for Rust on NonStop. It just takes time =
-to get
-> budget for the effort. After getting budget, it takes time for the port. =
-I am likely to
-> have some involvement in that, one way or another. NonStop does support g=
-it,
-> mostly through my ongoing efforts and they do use it extensively. This re=
-ally is a
-> crucial application and the NonStop team does understand the implications=
-. The
-> problem is that everything takes time, more than git is allowing in this =
-case. I cannot
-> disclose more than that.
+Changes from v2:
+- use "rational" tests (check interactions between CLI, config; drop
+  duplicate tests) thanks to Phillip's review
 
-Ah, thank you for correcting me.
+Changes from v1:
+- configure --index via config
+- drop BreakingChanges related work
 
-> Yes, people are screaming at me to fix it, which is not easy. The policy =
-is not the
-> Problem, but the technical limitations are. It is not a surprise, because=
- I was involved
-> In the POSIX effort when it was first introduced on NonStop, not that man=
-y "in the know"
-> Listened to my concerns, which are now having significant consequences.
+With stash.index=true, git-stash(1) command now tries to reinstate the
+index by default in the "apply" and "pop" modes. Not doing so creates a
+common trap: "git stash apply" is not the reverse of "git stash push"
+because carefully staged indices are lost and have to be manually
+recreated. OTOH, this mode is not always desirable and may create more
+conflicts when applying stashes. Use "--no-index" to disable this behavior.
 
-I think you've mentioned threading as a major technical hurdle for
-Rust and GCC somewhere else on the mailing list (correct me if I'm
-wrong). That's why I've worked very hard on single threaded only
-translations. Also, I've been targeting Rust version 1.63.0 because
-that's what debian requires and so my local Rust development is locked
-to that version. I've managed to translate a huge amount of xdiff to
-Rust using no Cargo dependencies. I figure if I keep my Rust adoption
-effort as bare bones as possible that'll make it easier for NonStop to
-catch up to Git's Rust bare minimum requirement. I have been talking
-about adding cbindgen which pulls in like 40+ dependencies, but that's
-a different case because its only purpose is to generate C header
-files from parsed Rust files. I can write my Rust in a way that
-cbindgen can be disabled and the generated header files can be checked
-into Git or acquired somewhere else.
+Cf. <CAPx1GvcxyDDQmCssMjEnt6JoV6qPc5ZUpgPLX3mpUC_4PNYA1w@mail.gmail.com>,
+<c5a811ac-8cd3-c389-ac6d-29020a648c87@gmail.com>.
 
-I have 2 questions for you.
-What parts of Rust do you think will be easy to port?
-What parts of Rust do you think will be difficult to port?
+PS I've left some new t3903 tests as copy-pasta for now to get feedback
+on the rest of the series; there are bits of that file that could use an
+update to the modern style (e.g., not using "test 1 = $(cat file)").
+Since some new tests are substantially similar to old tests that use
+this style, such cleanup is /probably/ warranted but will delay eyeballs
+on the core of this series.
+
+Published-as: https://github.com/benknoble/git/tree/stash-apply-index
+v1: https://lore.kernel.org/git/20250510183358.36806-1-ben.knoble+github@gmail.com/
+v2: https://lore.kernel.org/git/cover.1757982870.git.ben.knoble+github@gmail.com/
+
+D. Ben Knoble (4):
+  t3903: reduce dependencies on previous tests
+  t3905: remove unneeded blank line
+  stash: refactor private config globals
+  stash: honor stash.index in apply, pop modes
+
+ Documentation/config/stash.adoc    |  5 ++++
+ builtin/stash.c                    | 17 ++++++++-----
+ t/t3903-stash.sh                   | 40 ++++++++++++++++++++++++++++++
+ t/t3905-stash-include-untracked.sh |  1 -
+ 4 files changed, 56 insertions(+), 7 deletions(-)
+
+Diff-intervalle contre v2 :
+1:  1328eb8eac = 1:  1328eb8eac t3903: reduce dependencies on previous tests
+2:  8ac06ad62d = 2:  8ac06ad62d t3905: remove unneeded blank line
+3:  bf0a561ce3 = 3:  bf0a561ce3 stash: refactor private config globals
+4:  585e124467 ! 4:  8e6cafbf3a stash: honor stash.index in apply, pop modes
+    @@ builtin/stash.c: static int git_stash_config(const char *var, const char *value,
+     
+      ## t/t3903-stash.sh ##
+     @@ t/t3903-stash.sh: setup_stash()
+    - 	test 1 = $(git show HEAD:file)
+    + 	)
+      '
+      
+    -+test_expect_success 'apply stashed changes with stash.index' '
+    -+	test_config stash.index true &&
+    -+	git reset --hard HEAD^ &&
+    -+	echo 5 >other-file &&
+    -+	git add other-file &&
+    -+	test_tick &&
+    -+	git commit -m other-file &&
+    -+	git stash apply &&
+    -+	test 3 = $(cat file) &&
+    -+	test 2 = $(git show :file) &&
+    -+	test 1 = $(git show HEAD:file)
+    -+'
+    -+
+    - test_expect_success 'apply stashed changes (including index)' '
+    - 	git reset --hard HEAD^ &&
+    - 	echo 6 >other-file &&
+    -@@ t/t3903-stash.sh: setup_stash()
+    - 	test 1 = $(git show HEAD:file)
+    - '
+    - 
+    -+test_expect_success 'drop top stash with stash.index' '
+    -+	test_config stash.index true &&
+    -+	git reset --hard &&
+    -+	git stash list >expected &&
+    -+	echo 7 >file &&
+    -+	git stash &&
+    -+	git stash drop &&
+    -+	git stash list >actual &&
+    -+	test_cmp expected actual &&
+    -+	git stash apply &&
+    -+	test 3 = $(cat file) &&
+    -+	test 2 = $(git show :file) &&
+    -+	test 1 = $(git show HEAD:file)
+    -+'
+    -+
+    - test_expect_success 'drop middle stash' '
+    - 	git reset --hard &&
+    - 	echo 8 >file &&
+    -@@ t/t3903-stash.sh: setup_stash()
+    - 	test 1 = $(git show HEAD:file)
+    - '
+    - 
+    -+test_expect_success 'drop middle stash with stash.index' '
+    -+	test_config stash.index true &&
+    -+	git reset --hard &&
+    -+	echo 8 >file &&
+    -+	git stash &&
+    -+	echo 9 >file &&
+    -+	git stash &&
+    -+	git stash drop stash@{1} &&
+    -+	test 2 = $(git stash list | wc -l) &&
+    -+	git stash apply &&
+    -+	test 9 = $(cat file) &&
+    -+	test 1 = $(git show :file) &&
+    -+	test 1 = $(git show HEAD:file) &&
+    -+	git reset --hard &&
+    -+	git stash drop &&
+    -+	git stash apply &&
+    -+	test 3 = $(cat file) &&
+    -+	test 2 = $(git show :file) &&
+    -+	test 1 = $(git show HEAD:file)
+    -+'
+    -+
+    - test_expect_success 'drop middle stash by index' '
+    - 	git reset --hard &&
+    - 	echo 8 >file &&
+    -@@ t/t3903-stash.sh: setup_stash()
+    - 	test 0 = $(git stash list | wc -l)
+    - '
+    - 
+    -+test_expect_success 'stash pop with stash.index' '
+    -+	test_config stash.index true &&
+    -+	git reset --hard &&
+    -+	setup_stash &&
+    -+	git stash pop &&
+    -+	test 3 = $(cat file) &&
+    -+	test 2 = $(git show :file) &&
+    -+	test 1 = $(git show HEAD:file) &&
+    -+	test 0 = $(git stash list | wc -l)
+    -+'
+    -+
+    - cat >expect <<EOF
+    - diff --git a/file2 b/file2
+    - new file mode 100644
+    -@@ t/t3903-stash.sh: setup_stash()
+    - 	test_must_be_empty output.out
+    - '
+    - 
+    -+test_expect_success 'pop -q works and is quiet with stash.index' '
+    -+	# Added file, deleted file, modified file all staged for commit
+    -+	echo foo >new-file &&
+    -+	echo test >file &&
+    -+	git add new-file file &&
+    -+	git rm other-file &&
+    ++test_expect_success 'stash.index=true implies --index' '
+    ++	# setup for a few related tests
+    ++	test_commit file base &&
+    ++	echo index >file &&
+    ++	git add file &&
+    ++	echo working >file &&
+     +	git stash &&
+     +
+    -+	test_config stash.index true &&
+    -+	git stash pop -q >output.out 2>&1 &&
+    -+	echo test >expect &&
+    -+	git show :file >actual &&
+    ++	test_when_finished "git reset --hard" &&
+    ++	git -c stash.index=true stash apply &&
+    ++	echo index >expect &&
+    ++	git show :0:file >actual &&
+     +	test_cmp expect actual &&
+    -+	test_must_be_empty output.out
+    ++	echo working >expect &&
+    ++	test_cmp expect file
+     +'
+     +
+    - test_expect_success 'pop -q --index works and is quiet' '
+    - 	echo foo >file &&
+    - 	git add file &&
+    -@@ t/t3903-stash.sh: setup_stash()
+    - 	test_path_is_file bar
+    - '
+    - 
+    -+test_expect_success 'stash -- <pathspec> stashes and restores the file with stash.index' '
+    -+	test_config stash.index true &&
+    -+	>foo &&
+    -+	>bar &&
+    -+	git add foo bar &&
+    -+	git stash push -- foo &&
+    -+	test_path_is_file bar &&
+    -+	test_path_is_missing foo &&
+    -+	git stash pop --no-index &&
+    -+	test_path_is_file foo &&
+    -+	test_path_is_file bar
+    ++test_expect_success 'stash.index=true overridden by --no-index' '
+    ++	test_when_finished "git reset --hard" &&
+    ++	git -c stash.index=true stash apply --no-index &&
+    ++	echo base >expect &&
+    ++	git show :0:file >actual &&
+    ++	test_cmp expect actual &&
+    ++	echo working >expect &&
+    ++	test_cmp expect file
+     +'
+     +
+    - test_expect_success 'stash -- <pathspec> stashes in subdirectory' '
+    - 	mkdir sub &&
+    - 	>foo &&
+    -@@ t/t3903-stash.sh: setup_stash()
+    - 	test_path_is_file bar
+    - '
+    - 
+    -+test_expect_success 'stash -- <pathspec> stashes in subdirectory with stash.index' '
+    -+	test_config stash.index true &&
+    -+	rm -r sub &&
+    -+	mkdir sub &&
+    -+	>foo &&
+    -+	>bar &&
+    -+	git add foo bar &&
+    -+	(
+    -+		cd sub &&
+    -+		git stash push -- ../foo
+    -+	) &&
+    -+	test_path_is_file bar &&
+    -+	test_path_is_missing foo &&
+    -+	git stash pop --no-index &&
+    -+	test_path_is_file foo &&
+    -+	test_path_is_file bar
+    ++test_expect_success 'stash.index=false overridden by --index' '
+    ++	test_when_finished "git reset --hard" &&
+    ++	git -c stash.index=false stash apply --index &&
+    ++	echo index >expect &&
+    ++	git show :0:file >actual &&
+    ++	test_cmp expect actual &&
+    ++	echo working >expect &&
+    ++	test_cmp expect file
+     +'
+     +
+    - test_expect_success 'stash with multiple pathspec arguments' '
+    - 	>foo &&
+    - 	>bar &&
+    -@@ t/t3903-stash.sh: setup_stash()
+    - 	test_path_is_file extra
+    - '
+    - 
+    -+test_expect_success 'stash with multiple pathspec arguments with stash.index' '
+    -+	test_config stash.index true &&
+    -+	>foo &&
+    -+	>bar &&
+    -+	>extra &&
+    -+	git add foo bar extra &&
+    -+	git stash push -- foo bar &&
+    -+	test_path_is_missing bar &&
+    -+	test_path_is_missing foo &&
+    -+	test_path_is_file extra &&
+    -+	git stash pop --no-index &&
+    -+	test_path_is_file foo &&
+    -+	test_path_is_file bar &&
+    -+	test_path_is_file extra
+    -+'
+    -+
+    - test_expect_success 'stash with file including $IFS character' '
+    - 	>"foo bar" &&
+    - 	>foo &&
+    -@@ t/t3903-stash.sh: setup_stash()
+    - 	test_path_is_file bar
+    - '
+    - 
+    -+test_expect_success 'stash with file including $IFS character with stash.index' '
+    -+	test_config stash.index true &&
+    -+	>"foo bar" &&
+    -+	>foo &&
+    -+	>bar &&
+    -+	git add foo* &&
+    -+	git stash push -- "foo b*" &&
+    -+	test_path_is_missing "foo bar" &&
+    -+	test_path_is_file foo &&
+    -+	test_path_is_file bar &&
+    -+	git stash pop --no-index &&
+    -+	test_path_is_file "foo bar" &&
+    -+	test_path_is_file foo &&
+    -+	test_path_is_file bar
+    -+'
+    -+
+    - test_expect_success 'stash with pathspec matching multiple paths' '
+    - 	echo original >file &&
+    - 	echo original >other-file &&
+    -@@ t/t3903-stash.sh: setup_stash()
+    - 	test_path_is_file bar
+    - '
+    - 
+    -+test_expect_success 'stash without verb with pathspec with stash.index' '
+    -+	test_config stash.index true &&
+    -+	>"foo bar" &&
+    -+	>foo &&
+    -+	>bar &&
+    -+	git add foo* &&
+    -+	git stash -- "foo b*" &&
+    -+	test_path_is_missing "foo bar" &&
+    -+	test_path_is_file foo &&
+    -+	test_path_is_file bar &&
+    -+	git stash pop --no-index &&
+    -+	test_path_is_file "foo bar" &&
+    -+	test_path_is_file foo &&
+    -+	test_path_is_file bar
+    -+'
+    -+
+    - test_expect_success 'stash -k -- <pathspec> leaves unstaged files intact' '
+    - 	git reset &&
+    - 	>foo &&
+    -
+    - ## t/t3904-stash-patch.sh ##
+    -@@
+    - 	verify_state dir/foo work head
+    - '
+    - 
+    -+test_expect_success 'git stash -p with stash.index' '
+    -+	test_config stash.index true &&
+    -+	set_state HEAD HEADfile_work HEADfile_index &&
+    -+	set_state dir/foo work index &&
+    -+	test_write_lines y n y | git stash save -p &&
+    -+	git reset --hard &&
+    -+	git stash apply &&
+    -+	verify_state HEAD HEADfile_work HEADfile_index &&
+    -+	verify_state dir/foo head index
+    -+'
+    -+
+    - test_expect_success 'git stash -p --no-keep-index' '
+    - 	set_state HEAD HEADfile_work HEADfile_index &&
+    - 	set_state bar bar_work bar_index &&
+    -
+    - ## t/t3905-stash-include-untracked.sh ##
+    -@@
+    - 
+    - . ./test-lib.sh
+    - 
+    --test_expect_success 'stash save --include-untracked some dirty working directory' '
+    -+setup() {
+    - 	echo 1 >file &&
+    - 	git add file &&
+    - 	test_tick &&
+    -@@
+    - 	git stash --include-untracked &&
+    - 	git diff-files --quiet &&
+    - 	git diff-index --cached --quiet HEAD
+    -+}
+    -+
+    -+test_expect_success 'stash save --include-untracked some dirty working directory' '
+    -+	setup
+    - '
+    - 
+    - test_expect_success 'stash save --include-untracked cleaned the untracked files' '
+    -@@
+    - 	test_cmp untracked_expect untracked/untracked
+    - '
+    - 
+    -+test_expect_success 'stash pop after save --include-untracked leaves files untracked again with stash.index' '
+    -+	git init repo &&
+    -+	test_when_finished rm -r repo &&
+    -+	(
+    -+		cd repo &&
+    -+		git config stash.index true &&
+    -+		setup &&
+    -+		cat >expect <<-EOF &&
+    -+		MM file
+    -+		?? HEAD
+    -+		?? actual
+    -+		?? expect
+    -+		?? file2
+    -+		?? untracked/
+    -+		EOF
+    -+
+    -+		git stash pop &&
+    -+		git status --porcelain >actual &&
+    -+		test_cmp expect actual &&
+    -+		echo 1 >expect_file2 &&
+    -+		test_cmp expect_file2 file2 &&
+    -+		echo untracked >untracked_expect &&
+    -+		test_cmp untracked_expect untracked/untracked
+    -+	)
+    -+'
+    -+
+    - test_expect_success 'clean up untracked/ directory to prepare for next tests' '
+    - 	git clean --force --quiet -d
+    - '
+    -@@
+    - 	test_path_is_file bar
+    - '
+    - 
+    -+test_expect_success 'stash push with $IFS character with stash.index' '
+    -+	test_config stash.index true &&
+    -+	>"foo bar" &&
+    -+	>foo &&
+    -+	>bar &&
+    -+	git add foo* &&
+    -+	git stash push --include-untracked -- "foo b*" &&
+    -+	test_path_is_missing "foo bar" &&
+    -+	test_path_is_file foo &&
+    -+	test_path_is_file bar &&
+    -+	git stash pop --no-index &&
+    -+	test_path_is_file "foo bar" &&
+    -+	test_path_is_file foo &&
+    -+	test_path_is_file bar
+    -+'
+    -+
+    - test_expect_success 'stash previously ignored file' '
+    - 	cat >.gitignore <<-EOF &&
+    - 	ignored
+    + test_done
+
+base-commit: 1ee85f0e215f22b0878d0ad4b2445d12bbb63887
+-- 
+2.48.1
+
