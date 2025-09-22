@@ -1,145 +1,92 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24363112BB
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 16:16:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326423112AB
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 16:17:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758557764; cv=none; b=SE3mAt03Z9nkUQ5z30mdGK61e1tlDX/WJCnAyjYAGlxJyzltKbse7ZwpHSqjEEf5gv38UdgRqyJbsj/UNzBqMh+byE5ct8d9kKXG4KyHNiHPUZzrO2ljL//mRLDtcQkT34k91QbeUAs8v8GItCrmov//onaMb0M6Gz9igkH11es=
+	t=1758557865; cv=none; b=h7ux3uPp8SMHtexfIgFTighhGWXHPFfisy22r1aMqc4Wpii03VSs/X3LpvoT+f+1IbLm7r0U0ImEs93f1S7NeNOlmG8WWM74Rul2jtWDEKn+IkM8YmjJA7i6QH0WpmekDI4bs0cPp6a63VIiai3d47tnWvF2UCu2vLMg8p1wVqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758557764; c=relaxed/simple;
-	bh=12QvPj+XGogzbA8aytkmyB73yrVL3XmFScvlkGoM4fA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NdNqn+8mO6U9ss16AqGfFaYGhKVz0PiQjt7vmX8EA9F0ujPeVXQU1o0slu3mjqRxwRyP5wCll1ZKrON6DOb1uejH44ObXt52Htklgp49cKnL4njHMO/hA4lPsuz8mUg49sSR89oiAhAMXu4BSCW45IIZFQrI5GqUwch4MmPWjcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YVNDnILq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fcdxepdk; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YVNDnILq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fcdxepdk"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C67EA7A0149;
-	Mon, 22 Sep 2025 12:16:01 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Mon, 22 Sep 2025 12:16:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758557761;
-	 x=1758644161; bh=R9XESX7+gtOGH2POjrway/DHvaLl1y9bT2LNQKDIWog=; b=
-	YVNDnILqAiraf5mnZiyvrgAgyigoDUAFIZ3P6DMtSc0PQPK/tjnvBU3MQJSrasRr
-	3tnISBgcBCPp2ECSEodr/PPFnims4mshgg0cqDr9jdeHbiFwlPufuy236SnxU7d9
-	u2LSv7iHJbrjFE5/Y85hpKcJ4+LGBdzkAfTFSCnNiqtRGhA+DCdD65hztH11GuGT
-	aAWPSde0ZQiD/eDK1PRRFw0DnuejXnSkIqVmSQpVoXroEBV1wqrFHKP7u3ey8RyY
-	Do4G9M/NiRDxjcyIyqdCdqdKkB2GMKxiscMC3hSEX3j1B27CZrtpVTK89QMpKGLZ
-	y+WUtwiI4Y02iE0wQnhv1g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758557761; x=
-	1758644161; bh=R9XESX7+gtOGH2POjrway/DHvaLl1y9bT2LNQKDIWog=; b=f
-	cdxepdkEF2IWSxIgLl03PdmEVhSRJ6fKhkr/QhsFXKBsoUgpVSjwtTfozfQvF4/e
-	ndfXKjALz/qYsDiu2VtID3SiAhgNHCmouHZSErPLzXCjAAsGTNxTsLklgJ3aDckS
-	gRnA+0InabMj7VZRri0028F25lcMwuNdlu0cpbcxBxzx1W5peOTp4ofkp09v7y2G
-	E65xb4jyqOZAhONvcKnBlRBe7mer2ZD63wuDBEaUXCLSxhKZtkzYIRMNWnll2DGW
-	R/S0PcFsEp+XssZEaetIgJapKDXf0ezrKta9NFH2RVwoTHvSjvV2ZLx5xc/VYAvo
-	vC4385sLGbHeGZyZ0TxNA==
-X-ME-Sender: <xms:QXbRaBZaykYm9Fg5nNSAR0qTSLJPBvLVwy6-nTP4KhE7F5JtJpbFqw>
-    <xme:QXbRaPQFjSxOHtraCb_9vZyRobJe19tI9jtu-oFjMbE8jKZ7rRWiFBNqaGYwpeck5
-    oMowAuoM2hDKIdTTCBTOmIXfs8_kalsa_dCzyFPF3aooSYOWfdRj0Q>
-X-ME-Received: <xmr:QXbRaMRTZ2OSqmWOgOhMJk7uUNhi8puogFR1Go6omhdMZ3V2VWBXlHe6FocZyN1dWQpU8TmWOYzOn4RbGkqqATAXXfuHf1mxUGHA6VvRjQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeeftdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epteehffdvtdeltedtteeuueekudegteetuddtgeeuueekteehfeeuvedviedttdevnecu
-    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeh
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvii
-    gvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghn
-    sehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:QXbRaLTskd4u4T20pRwp2b-t3uWoT9rpltHQTEhhXxFnxaS25dQqWw>
-    <xmx:QXbRaJ490WELsPfPnc3ZE6jtF4FQfPuz_vgaYi3Lk8cPI_2TMh9zUw>
-    <xmx:QXbRaP2JF3lIW6siYbwtPRvtkQmHDRCG_poAZNqTLCIDDRdNfM7dtA>
-    <xmx:QXbRaMBWdKZHucxWrAp2OyG0TVAi5suYPqFJJY-17uSpeDfI3V3aVw>
-    <xmx:QXbRaOi3XwWsIdAgpdBdPydctx6r_Zw1669gigQH9VNdZ2NH9CAYMpw5>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Sep 2025 12:16:00 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 20ae2533 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 22 Sep 2025 16:15:59 +0000 (UTC)
-Date: Mon, 22 Sep 2025 18:15:57 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH v2 00/18] Introduce rust: In xdiff
-Message-ID: <aNFz-0rO79l7crZ5@pks.im>
-References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
- <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
- <xmqqcy7pc8ix.fsf@gitster.g>
- <CABPp-BHJUkSERQon6xx=sHrhN7i=6ekv+Hz1+P+2mh0=Xw15Mg@mail.gmail.com>
- <xmqqy0qcae6z.fsf@gitster.g>
- <aNFIwFD6E6Lngy5M@pks.im>
- <CAH=ZcbDkDfc6j_gQCt_q9RLP_ozYqr09i1-xe2mvhSQRgf8MGg@mail.gmail.com>
+	s=arc-20240116; t=1758557865; c=relaxed/simple;
+	bh=JUlaI1WG5slBkkaq0NW33ennB8dNbYt0hZ/bVxyS/0E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gO6hWhUijpwIYt42QDKhX73qScgNs+ee5iA48daNh3k5z/5DA4lCOwZBPwO+PCImdhw3yF9mlImreQPRR1KeSBd/tJLmG1+KtJtxXws1qJJnUIjt2sjpPbaH+DlJABzYJx7SBjql/eIAr8JsvZM8+nNByxZDjQ9uly3iZ/9eKsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from mop.sam.mop (2.8.3.0.0.0.0.0.0.0.0.0.0.0.0.0.a.5.c.d.c.d.9.1.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:19dc:dc5a::382])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: sam)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 004EE3410E3;
+	Mon, 22 Sep 2025 16:17:40 +0000 (UTC)
+From: Sam James <sam@gentoo.org>
+To: Michael Orlitzky <michael@orlitzky.com>
+Cc: ezekielnewren@gmail.com,
+  20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im,
+  Johannes.Schindelin@gmx.de,  ben.knoble@gmail.com,  cb@256bit.org,
+  collin.funk1@gmail.com,  contact@hacktivis.me,  eschwartz@gentoo.org,
+  git@vger.kernel.org,  gitster@pobox.com,  me@ttaylorr.com,
+  newren@gmail.com,  phillip.wood123@gmail.com,
+  pierre-emmanuel.patry@embecosm.com,  ps@pks.im,
+  sandals@crustytoothpaste.net
+Subject: Re: [PATCH RFC 0/3] Introduce Rust and announce that it will become
+ mandatorty
+In-Reply-To: <20250922155949.27019-1-michael@orlitzky.com>
+Organization: Gentoo
+References: <CAH=ZcbCUL-rWw5E6p26T0039gs9q-P8iK5fp73-RzTzKiZ0zMQ@mail.gmail.com>
+	<20250922155949.27019-1-michael@orlitzky.com>
+User-Agent: mu4e 1.12.12; emacs 31.0.50
+Date: Mon, 22 Sep 2025 17:17:38 +0100
+Message-ID: <877bxq8nrx.fsf@gentoo.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAH=ZcbDkDfc6j_gQCt_q9RLP_ozYqr09i1-xe2mvhSQRgf8MGg@mail.gmail.com>
+Content-Type: text/plain
 
-On Mon, Sep 22, 2025 at 09:18:14AM -0600, Ezekiel Newren wrote:
-> On Mon, Sep 22, 2025 at 7:01 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > I personally think either (A) or (B) would be good choices. I would
-> > slightly lean towards (B) just so that we have something that we can
-> > already play around with while building the next steps.
-> 
-> I'm fine with B if you fix the wording in your Breaking Changes about
-> Rust being introduced in version 2.52. Rust was introduced to Git in
-> 2.49.
-> 
-> Elijah points this out in 1 and 2:
-> [1] https://lore.kernel.org/git/CABPp-BFXRbaHk9U3BX+d12bZ+ryGOp+btR0ODMw+HtD7xd+MBQ@mail.gmail.com/
-> [2] https://lore.kernel.org/git/CABPp-BEiK49f_UB5UPe3qM9O7vQGGFJ8Nshw1f6W_6Lw7HRL6Q@mail.gmail.com/
+Michael Orlitzky <michael@orlitzky.com> writes:
 
-Will adjust.
+>> We know for sure that NonStop currently does not support Rust at
+>> all, and that there are problems with porting Rust to Gentoo, but
+>> I'd like to hear what OSes and Architectures you use personally and
+>> professionally and why adding Rust would be a bad idea. Is it
+>> corporate policy? Is it that the Rust toolchain doesn't exist for
+>> your os/arch? Is it that Rust is a new language and isn't as battle
+>> tested as C? Something else?
+>
+> There is no problem with supporting rust on Gentoo. Gentoo users build
+> from source, and rust is a problem for anyone who builds from
+> source. I'm writing this on a riscv/musl system. If there are no
+> binaries for your CPU/libc, let me tell you, it's not fun. And this is
+> like, my job. A normal person would be completely helpless.
+>
 
-> > By the way: I'm also happy to change attribution of some of the patches
-> > in my patch series to mention Ezekiel as author. I don't care much who
-> > is listed for the initial patches that introduce Rust, but would retain
-> > my own authorship for the "varint" and "BreakingChanges" commits.
-> 
-> My only other concern is with varint. You use usize on the Rust side
-> and then uint64_t on the C side, but I'm ok with fixing that later as
-> it only breaks 'linux32 (i386/ubuntu:focal)' in the github workflows.
+That is precisely the problem that Eli and I have been describing in
+this thread (along with some more minor issues for Prefix to figure out,
+and then missing arch support where Rust doesn't support it at all).
 
-Oh, this is actually an oversight, good catch! I refactored "varint.c"
-to use `uint64_t`, but then forgot to adjust the Rust side in the same
-spirit. Will fix.
+He is referencing issues we brought up earlier in the (various) threads,
+not plucking it out of thin air.
 
-I suggested in [1] that I can change authorship of the patches that
-introduce the initial infrastructure into Meson and our Makefile (so I
-guess patches 1 and 3) to instead list you as author and myself as
-Co-authored-by. Is that something you want? Given that you have
-kickstarted the whole effort around introducing Rust again I wouldn't
-mind that at all.
+> Nevertheless, the arch support issues are secondary. I'm sure it's a
+> lot of fun for the people who are writing rust code to do cargo
+> updates in the two or three directories they work in all day. But I'm
+> not writing rust code, don't care what language git is written in, and
+> have hundreds of other packages to keep up-to-date on multiple
+> machines. I want to be able to use my package manager to do that
+> efficiently. You know, the main tangible benefit of using a linux
+> distribution.
+>
+> But every distribution is "packaging" rust the same way. They're
+> bundling random old versions of crates in violation of their own
+> policies because the ecosystem is unstable and the tooling encourages
+> tight coupling. By requiring rust, you are require me to go back to
+> managing dependencies like I'm on Windows XP again. Git is the most
+> important program I use, but it's not more important than package
+> management itself.
 
-In any case, I'll send a new version of the series tomorrow.
-
-Thanks!
-
-Patrick
-
-[1]: <aNFIwFD6E6Lngy5M@pks.im>
+Indeed, this is all terrible, and I agree with you, of course.
