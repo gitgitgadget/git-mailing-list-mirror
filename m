@@ -1,126 +1,107 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A11F192B66
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 16:47:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5973112BF
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 17:12:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758559628; cv=none; b=Ifxkd9f/K0QzyNuclM01xEoDgTYDV3OWXTROraaafF8NDwb1kRkcNTe8NfCf/A662uwUCok/YKNsyps7cUuUarAE95mup1nnGU7xMSKB99na9yvIzDXzyX6EZmDpaufZ5oqMg+U8MaZIgWnGs2IjD9yyt8UmpYpqJJZlvgi6FLU=
+	t=1758561137; cv=none; b=Lfnuy+CJx1m0+vtxResfDY5p2gaWPqFzn+6iQ1ukqqCY3frVyXqV0LyOQ0hgxDOxAgPGUL0v6TAHd8zX/IkSPeG2VzSyhtemaYF1dtnbccjLsrhuEqqV6oyJWyY5rpe7Dbzs/XxJ8b8ZtY628JMUQ+RicFt3nIQVa6iZZmoElQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758559628; c=relaxed/simple;
-	bh=4XMrbfNRRLAReZ9FL4LIwM6LiXzlJcHoFq63Gln2DDU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=k3XHrwKeKtJ6gvAZLfh0TF7UjjqtpHF3BOayNFMvcpkSiPfiKIOA6qSD/WRcP6Tk1WFK8f6CmKjYIwTCCVgY63poo6k+GTlYZ9FyXnGF02sM1YvVd/JkAoW6dR7Im1ohk6XYmQ2S/qckb0Vhghm8Q9rbGaFUo9o9KGb1I6bwkCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=r+Qv7oVl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JA6DoJbc; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758561137; c=relaxed/simple;
+	bh=zdPW8OkuAO9EtOuBMHYa1tg4A3pnH66dKnbM4MEDMbM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=p4s1l7/dV0EviFCXR0qAcmAjyzw/SqWn8hyEawYj+YQ6jFUzkGjo7c8tvHqnY1JIGxRXlulZ5BPG85HcX+bhFVadiGwgepRk+Bhly7gy69GQz/RfadqvBOW5wl7CADVSK+49V5Mko8JtvJRkxNCeEk4PMgZOlWQckzk8Vf5TtUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=YD/s4bg3; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="r+Qv7oVl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JA6DoJbc"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 814FEEC0311;
-	Mon, 22 Sep 2025 12:47:05 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Mon, 22 Sep 2025 12:47:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758559625; x=1758646025; bh=IHVy3UyUwI
-	aqxI8bs376nRZGc1NXsQof9HZTAvIdYqg=; b=r+Qv7oVl0agBfBbpPwbXTQFC7N
-	G9uRfRC9abaYywEogqiFIZiCrIn0lkEkDUDZrt+rsQW7pPFm3T/FbcY1SWROwGNc
-	IhibNw1ltilRr8PSQr4+nsCoRK7qxOoa+6akzHw4Zu+ZefSBkWXZb1Pr6lauTCR1
-	xWOdiJLtJzoQfU8lmoHjz497IvI0LAvvoofjRI7vbjs6z5MJtsw5RRLuRJbGek4W
-	iahpzOy7W6C5D6gQ8J6jsmmovDsI+3SBWbKHhPhNlLNhkmc+9UjciYrwD6Ep4WWR
-	fxSyofvrbI9KCyrNszYvWT/W5NEL2rBcVonjlloEmZhIMDYHN3r1NdvFLADA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758559625; x=1758646025; bh=IHVy3UyUwIaqxI8bs376nRZGc1NXsQof9HZ
-	TAvIdYqg=; b=JA6DoJbcU5GWqsB5Qkgy+z/JwuR8M7lRXwsxmB5TnBW7LDp9Pfj
-	yFTu7fFHOpNKlD5YKZpCoFgfwCy8gUISCypFHg+aQx6pxXiprGTwENUksvuRFeGy
-	cT97ozu6cwV7QhT0I3UnYC2P9E4MPGLu7D+9XCJIAEJK5xFgvDAxe5BuNM0jMdd1
-	+cSkKmGl2nzeSAk5QlqtRqOHr64rQOq/WlkmhMwhoFsmPtfdC4tRnrNzaLHhhwXh
-	VowBl+Y+FydwIVfwe7vZ3pC7qbtTFt3+HO9sikHaQm3vRUW+OaU9yZmS7YcKw6qF
-	H1ipDD7NG5LBOKh4NjegZxbgBYHfXwryDfQ==
-X-ME-Sender: <xms:iX3RaD7edFff8J1CqWZ4ObLrjkRRgWKv-e9DyvKdZ-F0nQ7fpbT3jA>
-    <xme:iX3RaPw6w_x95iLTIiXG-WraxYpnxUWmQiJXGz6BKojQbslXQxfYRFCPJ9bC-MdCS
-    VqwBmfGK0x-B1cHvYis2AoD80VmVJIfP_O0QQgp162ASbyG2OJYdQ>
-X-ME-Received: <xmr:iX3RaCwYgZHJ3HHpe_fjleYMBXEa-GHRmJVi0vSDUlTlaqp1jGwu3o5mVwYBd2ZOKnpSE4Rli2ehPriVOo2D8p-NCt-vvQiadGrt>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeefiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtghhithhgrggu
-    ghgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:iX3RaPz83-US3tLksewZtq0WYnsa7aMlRT70tUl90bUeov7H-nJz2A>
-    <xmx:iX3RaEbcDhOKXCRRIOigEkKaVpU7cNM0gbTG4njij2UMZDQtDfu_Kw>
-    <xmx:iX3RaIUHvz8_1o2_DtlzizRRt9MY3hm1T2Y_IXxkbBR52ViDFAbQEQ>
-    <xmx:iX3RaKj57F-oJZMslH6KAgT6wrpwsw9WjfPNNPkNQdnIIkIxEac-QQ>
-    <xmx:iX3RaDDygSf_crvIhdnZyTGq92dQc8vFWngWK8Wv99HlG0nBgwi8jR0G>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Sep 2025 12:47:04 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  Ezekiel Newren via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v2 00/18] Introduce rust: In xdiff
-In-Reply-To: <CAH=ZcbCZXavx52521cFHdXZn=BCWBiR1aG10ekZVg3PVVJb2VA@mail.gmail.com>
-	(Ezekiel Newren's message of "Mon, 22 Sep 2025 09:31:10 -0600")
-References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
-	<pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
-	<aMpODEpyaaVhFMO0@pks.im>
-	<CAH=ZcbBNFSwU7E+P7hkQnt9UrMKiCRESgGvWPL7pRUa0i2U5-Q@mail.gmail.com>
-	<aNFIozagGc0MoseL@pks.im>
-	<CAH=ZcbCZXavx52521cFHdXZn=BCWBiR1aG10ekZVg3PVVJb2VA@mail.gmail.com>
-Date: Mon, 22 Sep 2025 09:47:03 -0700
-Message-ID: <xmqqikhav3i0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="YD/s4bg3"
+Received: (qmail 161277 invoked by uid 109); 22 Sep 2025 17:12:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=zdPW8OkuAO9EtOuBMHYa1tg4A3pnH66dKnbM4MEDMbM=; b=YD/s4bg3b7K8Z1FE9l+3qyUXAx2xBI6S6+lUcH4NolbO5uXOlFpYOnL961hwlvpwfiHLR+6Q+kfflDoAksIT2FziWJOBM9We2XvQQmxKbruCmxX7Lkq8C41IbH/2iWINlb5lwaLvy+B7lBiaAbxxEk4VZpm1OdeV7Te6OzOkwOnmZJvPhdGvYP8ZmAvRmY/ZV4GFfhuBlyFUS6gJyJ/MhIhV5F3NkPTDuVVXwZq/usjmlnCSeZKJyIazYsMxLRPLI6JdEl7uVgsrdJgSV2z5Puw7yRDzcH3WNOY3rVXkyqTE1ZCAmXHwqnmUyMbSuHUUgQObYq6PitSczTiPF150MQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Sep 2025 17:12:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 252478 invoked by uid 111); 22 Sep 2025 17:12:04 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Sep 2025 13:12:04 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 22 Sep 2025 13:12:03 -0400
+From: Jeff King <peff@peff.net>
+To: Toon Claes <toon@iotcl.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 4/4] refs: do not clobber dangling symrefs
+Message-ID: <20250922171203.GA2202085@coredump.intra.peff.net>
+References: <20250819192934.GD1059295@coredump.intra.peff.net>
+ <20250922122332.584428-1-toon@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250922122332.584428-1-toon@iotcl.com>
 
-Ezekiel Newren <ezekielnewren@gmail.com> writes:
+On Mon, Sep 22, 2025 at 02:23:32PM +0200, Toon Claes wrote:
 
->> > I wanted feedback on:
->> >   * Cleaning up Rust type name collisions
->> >   * People don't like it, so I'll drop that
->>
->> I don't have a strong opinion on this. If it creates issues I personally
->> don't mind fixing it.
->
-> Junio doesn't like it, so I'm not going to do it.
+> At $DAYJOB we hit into an edge-case where this patch breaks our expectancies.
+> 
+> We use `update FOO_HEAD 000...000 000..000` to delete a symref, if that symref
+> is dangling (otherwise the old oid would have resolved to something). I've
+> attached a patch that would allow this (on top of your patches). Do you think it
+> makes sense to allow this scenario?
 
-It was not "I do not line u16 as a typename when a perfectly well
-established uint16_t is available", though.
+Hmm. That's a funny command. You are providing _two_ null oids. The
+first one says "this should be a deletion" and the second one says "the
+previous state is that this should be deleted". So it should always be a
+noop, if we are checking both sides.
 
-It was more about asking to explain the reason behind insisting to
-use u(8|16|32|64) types in C code.  Perhaps there is a compelling
-reason to do so that I was missing.
+I think the "right" way to say that is just:
 
-I know that the kernel has used these types for a long time, but
-that way predates their more recent flirt with Rust.  If your answer
-was "the kernel uses them", then I'd want that answer to cover a few
-additional questions, like 
+  update FOO_HEAD 000...000
 
- - Have they benefitted from their use of u(8|16|32|64) when they
-   started working with Rust and if so how?  
+with no old-oid field at all. Or just:
 
- - Would we be expected to reap the same benefit if we used these
-   types?
+  delete FOO_HEAD
 
-for example.
+but the two are internally the same thing.
 
-Thanks.
+So I think allowing this is working against what the patch is trying to
+do, which is to consistently enforce the old-oid match that the user
+asked for. The only thing that makes it an oddball is that it is
+inherently a broken thing to ask for in the first place (at least under
+the new, enforced regime). So we could perhaps allow it as a special
+case for historical reasons without hurting anybody too badly.
+
+I'd prefer not to do that, just because the refs code is already
+complicated enough. But whether that's practical would depend on how
+widespread this pattern is. Presumably it would not be that big a deal
+to fix what you're sending (and assuming this is Gitaly, I'd guess that
+it is bundled along with Git, so you are not that worried about people
+using new Git with old Gitaly). But I'm not sure how we'd find out if
+other people are doing the same thing in the wild.
+
+So I dunno. My inclination is to say that the double-null-oid invocation
+is weird and wrong, and callers should update if they need to. But I
+could be convinced otherwise.
+
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 1b3bf26add..5e46d3a110 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -2537,7 +2537,7 @@ static enum ref_transaction_error check_old_oid(struct ref_update *update,
+>  		 * that case to preserve the dangling symref.
+>  		 */
+>  		if ((update->flags & REF_NO_DEREF) && referent->len &&
+> -		    is_null_oid(oid)) {
+> +		    is_null_oid(oid) && !is_null_oid(&update->new_oid)) {
+>  			strbuf_addf(err, "cannot lock ref '%s': "
+>  				    "dangling symref already exists",
+>  				    ref_update_original_update_refname(update));
+
+I think the implementation here (and the matching one in the reftable
+code) is correct for what you want to do. We should probably note the
+special case in the comment above, too.
+
+-Peff
