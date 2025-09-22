@@ -1,126 +1,120 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20A127A465
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 21:47:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F0228A3EF
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 21:54:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758577630; cv=none; b=TBXjZ/gxpLX+o45DUwg7thhyZn4Laqd8xsoGOP3MhjNrBXrbRhwfr+r7FtDt6d2e89x1fyqulG9yi6/WReoSw1hez5pAb/GnUePRofStSmI1XiacefO89F02cL6EAoCY9Iewp8PCybKWZVyVHJ+8pMU+BqzPJ15Hndd6JRwaT8Y=
+	t=1758578089; cv=none; b=Ppbg804B4Kb6ydLIeiH2RyjtC47vZ0y6ix/uOgSeAilFFtqQNjRUuJMIG9g/Sv0c+sYkl+jVmPAqHPGFxbVNa9BSYv/G9YLA5jwBF9ZL6cnAebIu6YAVfIObZbsRnBYwH3HxrzCqsfBc5IDiHNx/Fkx1GdjbV8KUES4++YQ1K9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758577630; c=relaxed/simple;
-	bh=jPxo40Lz0ce4a/4KJ2DxLLYVFBmrz0ST7jBYT8KMl80=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fq6C1c47fl297ybbkpHhxA5AzucD3Hds9SGF6RW3nd9dVNqw9hlUzLfGR55sXSjuT1t9no3evrofosgazDtijRjK8tFBGZXAtbJidAEGNA1riTzLWJrB8e1YEVaPK/Pbk6Mr7zvGY/TtzTeDr1kuUut/NY50G3vW9Bv6VCHFdu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from mop.sam.mop (2.8.3.0.0.0.0.0.0.0.0.0.0.0.0.0.a.5.c.d.c.d.9.1.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:19dc:dc5a::382])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: sam)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id ADE2B3410A2;
-	Mon, 22 Sep 2025 21:47:05 +0000 (UTC)
-From: Sam James <sam@gentoo.org>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Michael Orlitzky <michael@orlitzky.com>,  ezekielnewren@gmail.com,
-  20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im,
-  Johannes.Schindelin@gmx.de,  ben.knoble@gmail.com,  cb@256bit.org,
-  collin.funk1@gmail.com,  contact@hacktivis.me,  eschwartz@gentoo.org,
-  git@vger.kernel.org,  gitster@pobox.com,  me@ttaylorr.com,
-  newren@gmail.com,  phillip.wood123@gmail.com,
-  pierre-emmanuel.patry@embecosm.com,  ps@pks.im
-Subject: Re: [PATCH RFC 0/3] Introduce Rust and announce that it will become
- mandatorty
-In-Reply-To: <aNHBIHXYPmS5AvpP@fruit.crustytoothpaste.net>
-Organization: Gentoo
-References: <CAH=ZcbCUL-rWw5E6p26T0039gs9q-P8iK5fp73-RzTzKiZ0zMQ@mail.gmail.com>
-	<20250922155949.27019-1-michael@orlitzky.com>
-	<aNHBIHXYPmS5AvpP@fruit.crustytoothpaste.net>
-User-Agent: mu4e 1.12.12; emacs 31.0.50
-Date: Mon, 22 Sep 2025 22:47:03 +0100
-Message-ID: <878qi66tyg.fsf@gentoo.org>
+	s=arc-20240116; t=1758578089; c=relaxed/simple;
+	bh=vkChuBJwFs+V5E0AbKYvQVEDahRTfCQwUyLOaGWfaco=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=HfDwmBPV9RFUUiNr4uYcwh1Ifhou3JReyCFoTmBsyO9SOREDTXkaK10oCkD77qCC4rDzJfBcxTO1+3t7T/ZjgHka4nOa2cgG6SCFWsoBUcYuXB8JcqRbTzjMwDDPyYBwIX4U5uIdPStMldFoMFwJ/rbgI1lediqs96rErRno79g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MlG7I8AN; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MlG7I8AN"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-26e68904f0eso28250765ad.0
+        for <git@vger.kernel.org>; Mon, 22 Sep 2025 14:54:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758578086; x=1759182886; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=/W55tTP7Jgkg3E+UxX8sBVf/gVy7hU+dt9dgGtWnrTs=;
+        b=MlG7I8ANOqNf79JeyFMb7wHY31Bjh+wQgSPsei4A2Jkt2vDdeKVP7Um6NZiJtZzbpJ
+         muaKCRnMk5PQIELr6YcTc8CMwZBgtdCHzbWxr7bur1BbDeag+8e8cYQ46UlC9MJjjjJa
+         /yMzoPQXK9SuP9GVQIlOS0CJmsPveH/03G+gFHTIa7Ng73NtFrkpslzJA9xzeYT+cTB8
+         ClYItQJDhfFuG1mtz4B+LEzzzAjH8TyogiKWo9GvQOSaqZEcphML+TqnB2/pBmFWsKBa
+         lvRhh/MvtjjUrjUFWABSvGnljSSxnqcPz46HkJMrLvH6ERfcGsnzQJ+XU4hVs0iOag3/
+         Pe6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758578086; x=1759182886;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/W55tTP7Jgkg3E+UxX8sBVf/gVy7hU+dt9dgGtWnrTs=;
+        b=vgNsiFR34gYVUuuPcP+tMeO0s3mBAy4TkJlLJoghgDjrAckS68oU7WKG+N77SYei5H
+         pZYfEQly3cciW/w49KWCJ92Zpvqxi8OvCRnkScj+nvFZChTpX/mevGKcyEK0XTly4g1g
+         Qqrnu2JMmPJ0FlGGB6LL7GXKh6R6oCRw5oNDdLiAIOUzzeIz/nw6YxtkzyyRTvxpLCwn
+         7mpP9Tkj3Ktw6Y08/z2EMzWxjmiq4B/cV/vNVk6twdABLvwuc2kg7inppOpR/HN0a8xc
+         JR8BnKKlnKvnjOlORjZrCellasE6vCeeyFQvTsH/qLQbfusNjFdHinLfGpr8bW2AvnPC
+         tI6Q==
+X-Gm-Message-State: AOJu0YxTis/Tez+h1VXSx8myFupkvkW3RK5nM8OysA0+bcI+2k9f5fWH
+	IJaXZhpJd3JKMZywHwPCvEI4fEx8BQ1zyVVTBl/7JpNi5I65zK3lUTtU/Tlazg==
+X-Gm-Gg: ASbGncvOjQROfppffLCrlvHk2dR/90DUvYhORNfzRzpDayAFzaJ1kbc2HBvdMe51dIU
+	4c0Nz4Z2x6mBmBzpkH4/q73fNj134fLR6kRl8ehjqoCriasIJYDcQtVWg2OikTivpFmrvs0G2+Z
+	/Ajrp1M7NFE7zdiSLx1JKVb879Q30BaqZsrXp564G3GrkuLQEi7HfNZXyhoP723rbqFlgQB+eK7
+	KYQxbWjoiGYxHtQuvXeCuVqw5jxEH3St+WHL2hSzuPQV1pIlGzVsTZgrTHOm+5PkSLNlaWYQOQ2
+	npmYPpe/e5szR53jJE1Kl6mZp59nGp3DEzgPsGl2UXfgE2qau3gTdAAnZ8QKondnfoUc3zeE3OP
+	UVM95Vk+dqkFpilcONVKkkXmv
+X-Google-Smtp-Source: AGHT+IF5VpoErYiXxFvuT2SYj5+4InqWGO1nh+WiMGDdcRrOxv/aEOzt6XzjLyMqbvxRErVsFMmsjw==
+X-Received: by 2002:a17:902:db09:b0:274:3db8:e755 with SMTP id d9443c01a7336-27cc79ca32amr3784955ad.30.1758578086017;
+        Mon, 22 Sep 2025 14:54:46 -0700 (PDT)
+Received: from [127.0.0.1] ([68.220.61.180])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2698030ee20sm142952695ad.109.2025.09.22.14.54.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Sep 2025 14:54:45 -0700 (PDT)
+Message-Id: <pull.2053.git.git.1758578084468.gitgitgadget@gmail.com>
+From: "Alan Da Costa via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 22 Sep 2025 21:54:44 +0000
+Subject: [PATCH] lockfile: add case insensitive filesystem note
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Alan Da Costa <alandacosta@gmail.com>,
+    Alan Da Costa <alandacosta@gmail.com>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+From: Alan Da Costa <alandacosta@gmail.com>
 
-> On 2025-09-22 at 15:59:49, Michael Orlitzky wrote:
->> There is no problem with supporting rust on Gentoo. Gentoo users build
->> from source, and rust is a problem for anyone who builds from
->> source. I'm writing this on a riscv/musl system. If there are no
->> binaries for your CPU/libc, let me tell you, it's not fun. And this is
->> like, my job. A normal person would be completely helpless.
->
-> This is a problem with languages that bootstrap from earlier versions of
-> themselves.  It also happens with other, less common languages.  GHC (a
-> Haskell runtime) also has this problem and any distro that ships pandoc
-> has to deal with it.
+* Add note of case insensitive client filesystems may error due to a lock
+  on a case variant ref to more quickly identify failure in fetch/pull
 
-Usually there's nothing too critical in such a language ;)
+Signed-off-by: Alan Da Costa <alandacosta@gmail.com>
+---
+    lockfile: add case insensitive filesystem note
+    
+    When running git fetch or git pull on a case insensitive filesystem
+    (e.g., default macOS), if multiple case variants of the same remote ref
+    exist (often after a case-only rename), both variant locks map to the
+    same on-disk path. When a local update is required, Git creates a lock
+    for the first variant and then attempts to lock the second, which
+    collides with the same lock file, so an “existing lock” error is
+    reported. The underlying issue is mixed-case refs; resolve it by
+    consolidating the remote to a single-case variant and update local refs
+    accordingly.
 
->
-> It is certainly inconvenient, but there is mrustc to help the bootstrap
-> process.  Granted, it does not work everywhere yet, but it should also
-> not be too difficult to make it do so.
->
-> I do think the difficulty is worth it, though.  With Rust, we're going
-> to get code that is thread-safe and memory-safe by the virtue of the
-> fact that it compiles and that will allow us to have threading in more
-> parts of the code where it might benefit us.  I also cannot tell you how
-> many segfaults and null pointer dereferences I've written in Git (some
-> in the past week) that are just no longer possible with Rust.
->
-> As my proposal originally mentioned, there is enormous pressure from
-> governments, security professionals, and large companies to improve
-> memory safety, which I believe are legitimate concerns.  If we want Git
-> to continue to be used widely, then we need to address those issues and
-> Rust seems to be the best possible way to do that.  I don't think
-> continuing in C only is going to be viable long term.
->
->> Nevertheless, the arch support issues are secondary. I'm sure it's a
->> lot of fun for the people who are writing rust code to do cargo
->> updates in the two or three directories they work in all day. But I'm
->> not writing rust code, don't care what language git is written in, and
->> have hundreds of other packages to keep up-to-date on multiple
->> machines. I want to be able to use my package manager to do that
->> efficiently. You know, the main tangible benefit of using a linux
->> distribution.
->
-> I don't think this is going to happen as you anticipate it will.  My
-> original policy was to target Debian stable's release for a year after
-> the new Debian stable came out and that will make using many crates
-> nearly impossible.  We are going to have to be _extremely_ careful about
-> dependencies in general and the things we are likely to use are things
-> like bindgen and cbindgen, where typically an old version will work just
-> fine and which are already packaged in major distros.  We are not going
-> to be adding dependencies willy-nilly and running `cargo update` every
-> other day.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2053%2Fadacosta%2Flockfile-add-case-insensitive-filesystem-note-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2053/adacosta/lockfile-add-case-insensitive-filesystem-note-v1
+Pull-Request: https://github.com/git/git/pull/2053
 
-That brings me significant comfort and I'm glad to hear it. I hope
-others agree with your position on having significant restraint on the
-use of external crates.
+ lockfile.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-git has always been quite good about dependencies pre-Rust.
+diff --git a/lockfile.c b/lockfile.c
+index 1d5ed01682..99a470bd3d 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -156,7 +156,10 @@ void unable_to_lock_message(const char *path, int err, struct strbuf *buf)
+ 		    "an editor opened by 'git commit'. Please make sure all processes\n"
+ 		    "are terminated then try again. If it still fails, a git process\n"
+ 		    "may have crashed in this repository earlier:\n"
+-		    "remove the file manually to continue."),
++		    "remove the file manually to continue.\n\n"
++		    "On case insensitive client filesystems, multiple mixed-case refs will resolve\n"
++		    "to the same lock file, possibly causing this error. If so, ensure your remote\n"
++		    "refs have a single case variant."),
+ 			    absolute_path(path), strerror(err));
+ 	} else
+ 		strbuf_addf(buf, _("Unable to create '%s.lock': %s"),
 
->
->> But every distribution is "packaging" rust the same way. They're
->> bundling random old versions of crates in violation of their own
->> policies because the ecosystem is unstable and the tooling encourages
->> tight coupling. By requiring rust, you are require me to go back to
->> managing dependencies like I'm on Windows XP again. Git is the most
->> important program I use, but it's not more important than package
->> management itself.
->
-> I expect Debian already packages the crates that we need in acceptable
-> versions, and I assume other distros do as well, so I don't anticipate
-> this being a problem for us.
-
-Yes, I expect on our end in Gentoo, that we'll probably need to use this
-to finally migrate to a Debian-style handling of crates, though that's
-not your problem.
+base-commit: ab427cd991100e94792fce124b0934135abdea4b
+-- 
+gitgitgadget
