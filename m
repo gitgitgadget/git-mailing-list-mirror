@@ -1,108 +1,112 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD341253F39
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 21:35:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8AB1F4CB7
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 21:38:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758576961; cv=none; b=GkZpPlKeA/PgUuEfQLGD/IA89iGr3eVIbwZQsWEII2F0HcHuY14otbjaMQ3n+rOMpGnqpq0ZeUUXP2LrT5fkzTF36e/Tg6xR52p6NTqs2+uu9V1R87n74Wkq4eHM17ksht7BZgdO5vZACmH+MqjEjxz9ysqNYpycBXZAodQ0dEQ=
+	t=1758577126; cv=none; b=drbD/QaH5PXTpdh4wr62c3gVXA37VKcS+PJvCs9+NaE46ccflBtjgfuX+/ddwGfdOr/2pBHA0rgRMvXXV3u0lzd8SQzT8aqGLeU76iEI+7fsQGV5i2Z4zE9s9EBfBO+zChLKR/lkmAy6JQsklkwqJkq+3oT4cDeK8rDLrtQIS/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758576961; c=relaxed/simple;
-	bh=S+SUJPEM5ytJhHXXBuRLCG4SEs/Ws6ad0hSvuzNBVWA=;
+	s=arc-20240116; t=1758577126; c=relaxed/simple;
+	bh=Ql5APieTcpph6C6MmQne3UzCQpH33OTdxqJIJlLu6rw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q+/KR/BwATN7tGORJQTW6/4fOEwHlvWW73AW60kNuaRPhrKodYtcP1VapzU+rZ7OM7RdUsLx5gIauAj9kXzPE3EqTpFMpxM5aoGv9+r2TdG9zw+iyZZlRLVyoJGKd18WzawTbFu8PQs4+rmrNNEc66PqmsGMIo1dS9S19g0DKgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Iv7V1x9i; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=oR+tN2nDQmW1MnVe+Y0SR6FgKC3267Tgg++RAqgRZx25x2KEZpN0S9dM7GnU5+kBLeH2BgEfQxFBeseZFh2d07IZh0kJcwSS/cQFYSlihL3g6ULNL+1fUVda1FGW/UyEgSO3gLrrjcj7ViFCmMbFoGCe10AxSYC8wHl7VB6RlM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=k578CY+9; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Iv7V1x9i"
-Received: (qmail 163188 invoked by uid 109); 22 Sep 2025 21:35:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=S+SUJPEM5ytJhHXXBuRLCG4SEs/Ws6ad0hSvuzNBVWA=; b=Iv7V1x9iJeNiNS/wJm/HnurSPavD8Fp6hZ85NeR2Hju9oFUhmXMr0nrLcrW1SnEJMjezm0hg1TVSPtCqCbAaKiHx9rSNz6oSCiQbV/MU5lUlejgsC4fH/ACb0bIS2TsME7qr4F64Tsb2tz/n6TsuThYBQLTFxlCXhBODIGuZe7uRRp39uHIIbgdiEOgfoi26Mx0osOxSRtAk1chGr1bkPPmVpb5SXasxT+2k2r9n9NLOtfuTMyxF4Aivy/tXetOWflf8PQV+pGc/zCJzYiGcW0OehOHQ8MU562x6zHwRRb+aapCW7nSS0WEuuKX+MNiuuAo3IJjZa5aN7UbJ5Gb9xQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Sep 2025 21:35:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 261024 invoked by uid 111); 22 Sep 2025 21:35:58 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Sep 2025 17:35:58 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 22 Sep 2025 17:35:58 -0400
-From: Jeff King <peff@peff.net>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="k578CY+9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1758577123;
+	bh=Ql5APieTcpph6C6MmQne3UzCQpH33OTdxqJIJlLu6rw=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=k578CY+9A8pecxGhjvR+tTT+yuW7QSA8m0tF1Q3/sx+eTVXmKVPi/zyZRzNFUqWEe
+	 lAPCKuZfWDt5ohGDCHB5lZmHMGPmwoineyUtPdKO1/VbqsUUslLhMLjTnaGooB8SZd
+	 s0oJuLQ/3etcRhMs4oM/Bmo4Edx77M069EEwySHwCbIccilezsJtiYPTqOK1hVgCdU
+	 CriGkMxt7ZSJ/+k/ZKr0YcCKlioIU5gChOY1/V9b/cb6q3DykHF9a1h2z0b/S7A+jm
+	 CV7Dvr3QIVP14TtuXKE3NDTl6fmC0BG8Jn1Bz4XdfYqDh29uu+46W6ntDlTkxxkoM4
+	 q5sRv1oDLz3fi+eQa3KUvZgmp5gROHdhuTpvWvAm7Kesm9QzNYTjH4PuFxrzdCkbA9
+	 lzpuuwf/OCWgIfEcLJsgrvRabgiwxSycvVwgvmOR5wSMXIDihOeVDDsYlSYtRnW54d
+	 5qpBipse1bOPbMSBrG1Hn5K7gEol3g/DVQM8Hy7LPmvCW8ED65V
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:7cc9:7232:f513:ebf7])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 219E220105;
+	Mon, 22 Sep 2025 21:38:43 +0000 (UTC)
+Date: Mon, 22 Sep 2025 21:38:41 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: =?utf-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?= <velocifyer@velocifyer.com>,
-	git@vger.kernel.org
-Subject: Re: How do i get news of git releases
-Message-ID: <20250922213558.GA2269472@coredump.intra.peff.net>
-References: <4ea9cb1e-4367-4926-a9ba-0680dd63e616@velocifyer.com>
- <20250922201403.GD2205919@coredump.intra.peff.net>
- <1ff96277-c9e7-483e-ac98-b109b9603475@velocifyer.com>
- <20250922203815.GA2264272@coredump.intra.peff.net>
- <xmqqtt0urxva.fsf@gitster.g>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 7/9] fsck: consider gpgsig headers expected in tags
+Message-ID: <aNHB4V7figj9lmfk@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>, Derrick Stolee <stolee@gmail.com>
+References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
+ <20250919010911.649831-8-sandals@crustytoothpaste.net>
+ <xmqqecs2yq83.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="manxOibBXFnqh1uk"
+Content-Disposition: inline
+In-Reply-To: <xmqqecs2yq83.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--manxOibBXFnqh1uk
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqtt0urxva.fsf@gitster.g>
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 22, 2025 at 02:16:57PM -0700, Junio C Hamano wrote:
+On 2025-09-19 at 23:31:08, Junio C Hamano wrote:
+> Could you wrap this overly long line?
+>=20
+> 	if (buffer < buffer_end &&=20
+> 	    (skip_prefix(buffer, "gpgsig ", &buffer) ||
+> 	     skip_prefix(buffer, "gpgsig-sha256 ", &buffer))) {
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Yes, they're already annotated tags. But they contain only the version
-> > number and signature. I suppose they could include the whole set of
-> > release notes (and it looks like we used to do that in some very old
-> > tags),
-> 
-> Eh, which one?  I do not recall ever doing so, but I may be
-> mistaken.
-> 
-> "git show v0.99.1" gives both tag object contents *and* the output
-> from "git show v0.99.1^0" for the commit, so it is possible that I
-> never did so, but those who ask "git show" may get such an
-> impression?
+Will fix in v2.
 
-I looked at:
+> Do we allow a tag object with both "gpgsig" and "gpgsig-sha256" or
+> detect as an error?  I think the most natural way to extend this
+> system in the future with a third hash function would be to still
+> have the primary hash in the payload and signatures created with
+> other compatibility hash functions on the header, so if we were to
+> detect, the rule may be "gpgsig* in the headers ought to be unique
+> and should not include the primary hash algorithm" plus "if you have
+> gpgsig* in the header, the body must also have inline signature, and
+> if you don't, the body must not", perhaps?
 
-  git for-each-ref --format='%(objectsize) %(refname)' refs/tags |
-  sort -n
+In v2, I'll make it such that `gpgsig` is allowed only when we're not
+using SHA-1 and `gpgsig-sha256` is allowed only when we're not using
+SHA-256.  It may be that we don't have a trailing signature, though,
+since we might turn a SHA-1 tag (signed only with SHA-1) into a SHA-256
+tag (which would have only a `gpgsig` header and no trailing SHA-256
+signature).
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-which shows a few bigger ones. v0.99.5 is the biggest, with what looks
-like shortlog output plus some hand-written notes. Ditto v1.4.3.2.
-But yeah, it is not very many.
+--manxOibBXFnqh1uk
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> >   3. The resulting objects would be much larger (the v2.51.0 tag is 974
-> >      bytes, but Documentation/RelNotes/2.51.0 is 14K, and some are even
-> >      larger). Git may open them frequently to peel the tags, which may
-> >      make some operations slower. Though it might be OK; we try to cache
-> >      peeled values in packed-refs, and possibly the peeling code could
-> >      learn to parse more progressively (e.g., grab the first 1K to see
-> >      if we hit the end-of-header there).
-> >
-> > Those aren't necessarily show-stoppers, but just some top-of-the-head
-> > thoughts. Junio (the maintainer, who actually makes the tags) might have
-> > more thoughts on why we used to do that sometimes and don't now.
-> 
-> I think #3 is a show-stopper.
-> 
-> We will keep the RelNotes file updated with every batch that updates
-> the 'master' front, so the contents of that imaginary tag that has
-> the copy of the release notes would become identical to the in-tree
-> blob at the point of a release.  There has to be a very good reason
-> why it is beneficial to _duplicate_ the information, not the other
-> way around to ask why we do not duplicate the information in
-> different places, I think.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
 
-Yeah, I agree the duplication is kind of unseemly. The main reason, I
-think, would be: some third-party tools may mine information out of the
-tag automatically, but do not know how to find Documentation/RelNotes.
-I'm assuming GitHub would do that for the releases page (but actually, I
-do not know).
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaNHB4QAKCRB8DEliiIei
+gb25AP40Rcylh7NoM+P05rzqsCc6aaNayXlhOCOr68xvU/mnhgEAr+l/5tBXUZ9R
+mw0HC8Ls8wnZ7Lt/9f5U7SsSobYTews=
+=0ltF
+-----END PGP SIGNATURE-----
 
-If we did care about populating their releases page with more info, I
-suspect using their API to pass along the content would be a better
-solution.
-
--Peff
+--manxOibBXFnqh1uk--
