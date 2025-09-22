@@ -1,99 +1,117 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC15202997
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 07:30:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BB5EACD
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 09:30:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758526242; cv=none; b=TLZrsxNNlu59RmjfpkvMBT7eHGb2p/cYgtDlaMMKrXkmlpBuTH3HXlpcSXHU2k3qporFyDt7WaudU/VAI1QD42xiu7lJt0uRChkyrZT9Vooh8JioEcYflZz6WZDBHg+rp5vxfLXNoG4gbst3BOSDiXWYGMTFNkqnXBvFIfawNbY=
+	t=1758533443; cv=none; b=h+eQQdMbiV+NUwQvu+SGGvBMn4/fYysROf3zwshv9UlMslmnq1g1q8eDwiPqmYbsm2/Urh/ee6fCCGFvy9xGj8TJnkvX8ukGkAfLkTR1bacmz9xK/x5LCOUAx7dNOKZ049sc8GoX2501wPPkw9yXpd2n/LVM4EeEnVDilgyNRRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758526242; c=relaxed/simple;
-	bh=J/3huCugAX0+IV7ETJNa+h5e2ayInlnHwTRe0iS7V7g=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=dtqFUARiWpsVib9J8awSweZ5xgnRm06uX+iu9LMTMhkFpHaJmuIq+/oBNl+eryOFsCx4MMreocdbUrQWHyFjxQp3yRiSfX9ngHU9nKLnRSXadG5WWZs+VwWKhi/ZTC56+Nl+xFEKTnyM5t4Vj4rax4i2cP6E4BlC1S+zlCgsuUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ULGQqzn2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BF69USMj; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1758533443; c=relaxed/simple;
+	bh=bGk+zgT3Dani1TpYLrTJdINu/Us+ieC9zttZ5U1fYlM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YKRucFd7ZWLQUAE1UE5XnuzGdyUJAiZHuk+yn/TZuXsHfsNqWJ6mFRsVkO+sm5wKloPIQOCpON+S0RlO/Hqu/Rx9Y98/ZwMI/VUoTB+xbRti8wLio56lVAw6+b/xeNwkJS5LdKd9bnPq9ybYGpoEs3Otnd1BBHwii2d6j0AqS08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cDQitALQ; arc=none smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ULGQqzn2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BF69USMj"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5AB8FEC00A6;
-	Mon, 22 Sep 2025 03:30:39 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Mon, 22 Sep 2025 03:30:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758526239;
-	 x=1758612639; bh=zfo/7+Pxox/XdZk395gwNN1w9erIHk3IbtLTkwt1xY8=; b=
-	ULGQqzn2O39rHPlal9kXimPsWkvKvoAc4FbnnRXoC8Gwc7DbBdkkRX7tSRDscWYR
-	qNOYHyFcghCaaAOMl69fz9jp7aTIHGi+AMgiHlfu2EJO7S1L4GkeY/7DguT38rGn
-	r5B/pfB8Ex7U6lF7etgTUdHIIInbL8aoWAE++gGzS80XU0n2qcoQ4hruvH5feG/Q
-	Srq0h4UDAiyST6AnsXWkk/2Qu7rOo4W3Zm8AhVp4kX9NLcT2agub6mDA8GeGMbPi
-	rrPj3TYJviIm+j+PvK0FhAuLoQ7UIVmc4kPjdSMcPH+XXOVBaIxkaCEf8FJshM7y
-	rxpO8mtCfhio8strrwCrWQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758526239; x=
-	1758612639; bh=zfo/7+Pxox/XdZk395gwNN1w9erIHk3IbtLTkwt1xY8=; b=B
-	F69USMjMlBalat7jL35ON7bWZt/4RpMk8Scj1DQt9IhZxZZGax7JKqSwx0a/3e6g
-	9wT+5EzpvRlmWDRaCXP9iGPDy3OXRib7JBTuKFZTHPlFNo5MecIuaf6e4UzPs2em
-	8aL/itnLFEHuUp+OKG9eS4mnx/ACsgIvIumtxgzm2uRBVxJLWSGptCKup7WZ8Mfx
-	zpCc1Iu+kYdD+49hM2k14a5dLqzXrI8iudpF0PBmzNc/EnSBhh8aPvJtd6dnDeG0
-	4xZXyKVvsyjAa1pOmP6+65Qeg+9QnPs/noyU6MqFTFUBWspb/YsgYExYjCpEqVlE
-	/iMYaW03E+umZKsh88y7Q==
-X-ME-Sender: <xms:H_vQaKqLRGJxagOdFHJ2FttJHiM-V8POKBxn234BGgfFkGPIh05mkoI>
-    <xme:H_vQaIpPWOFKfFFQm11ndYpDo6ApVFmS-G00wAIQeSI87VKaJVvqpMnHRv5ZyTtsz
-    NE1rMIE4vq4E8NU9A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehjedvhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeegtdejieetgefh
-    uedtuedttdeigfdvgeetkedtuedtudfgkeeluefgleetffejffenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrmhgvshesjhgrmhgvrdighiiipdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:H_vQaGsv9DAsL4QUqL4EvrDLavE9CJFNNNN7YhW3oSJweI-HzcS92g>
-    <xmx:H_vQaEbQ_KSh6rHkBLWmPbQQ7dkm_7g1rMzDCfgMylQDo8L9d_cfqA>
-    <xmx:H_vQaDt947Qv_KimYzsAwnWQ96Y07MLGROEEw30-efX81Cw6_LpURA>
-    <xmx:H_vQaOEGWN9vrTqoFYfMtdO0Mhqde3C0PrPpTlSXo6XLS7AQX01VUA>
-    <xmx:H_vQaGSbp5us0AOz78IWYQYLEKVRwNProqsUqeQR5EUikcxZsfqJVtk8>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 0D4721EA0070; Mon, 22 Sep 2025 03:30:39 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cDQitALQ"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-4b78f4aa547so10977201cf.3
+        for <git@vger.kernel.org>; Mon, 22 Sep 2025 02:30:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758533440; x=1759138240; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bGk+zgT3Dani1TpYLrTJdINu/Us+ieC9zttZ5U1fYlM=;
+        b=cDQitALQQgu/WHh8NcVBdrVmk9a9kJj6XkCwCpLJick1+uRUN13phvsoZdzKcJ8lif
+         B1/1m/K310NVQLQ1FZmby4mW8XmnE0IBzBUViWK93uPW+mxmufZGldaj1XcHZQHk09vE
+         FpQ8vt9zBrXrwKmHtjLmrcmqWnwSEoQ4esEkj0PzLK5VmIcll3hkBk9AlPi9FxSNEDuE
+         /KNA11mU5L71CXnyRtkrJExRX6klXWUWZwXGbuPNzWN8o4JQZDihpzH2037OKOMW7r0p
+         Mrih/e3OVmHk3Ci65fxg7/gU0KI67/nB2xcTkjFEwbGXRd9sQAMcBEmsmVQvlT2woq+I
+         p1cQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758533440; x=1759138240;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bGk+zgT3Dani1TpYLrTJdINu/Us+ieC9zttZ5U1fYlM=;
+        b=PApqNa7q+M938kDHBar5gqCT+BWDa0rw8Mf24+Adq9Mho3PiX2KFyV7Xu0QgYdPDqi
+         4z7zTsgkgyy4LRActoh2PqN2Oyt/5NTqtDK/qdcvZvzP4CqGo1HjSm/vzwsa51fylL0O
+         B96EOJaHIFcKBvUjTXFJzlVpoK1Z6gxomfD8lUs7T+8iCFpGEZasqjjc2ddR+M0T9AxL
+         fvxhjXcvwyHzciANWfj08IjZhLVHY71+RbTiamNcumUlLEdClw0DWbFfKgrlrceJwglP
+         nrkjQk/knvk9MAWvJwruSKzt6NCYaS1z19+WMo1PNYXBCrElpngPijJ/tIHIKet3gIKy
+         Xkmw==
+X-Forwarded-Encrypted: i=1; AJvYcCUDjkPt7OLccSwzSdkBGUHnZ9vV+b/Pqn1CmXuwkMeGmeDLDhSNllzJWtu5iONUSYd9Xns=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxJZr1qQHOxg1TUm6E+bPHjvrOL4ARMGi3CJZf9J9hiSY8oGKCR
+	BJfyNmlKIwA6qFWOVi6aP0IBUfhg6aDKwtQ/4ejww4FaeSQQ52xnU6vPxn0ep+nJgVVW+G7QJrC
+	u2U4ipueSWKOvT7fqpX08t9dbXKvxRDY1b8re4iI=
+X-Gm-Gg: ASbGncvDNVZwoIsbZxssq2rmUyPBKzh/DE/H4/sthYtc/eRlwnCopbBy/WQV/IBH2DC
+	wS37DXKbfSNiteFJWnD+lUgFfOyH2LOSgP93GXMYRG5nSBHImrxVbPq8erPrwKZAM+Vcq0RU3Dn
+	sX3eANLG+T9poHlAkiLhsa5SK6TvwhpRYOeuY64bwGv25zLXVbX3B/VGj+3vU8BmZwDaOdCtgtu
+	u6mNk9t/x+qmRvpW4HkJgOLrwDr2mJpPE4DovmfxQmHjD+fxZc=
+X-Google-Smtp-Source: AGHT+IFmDvgBqBCGtSX3Lv9fGIOwET5mLXYnUPxiZDRt9xhs9Glz63JdxyW3BXp9zF57ROmj1nog43ur40VyjJmCYV8=
+X-Received: by 2002:a05:6214:2262:b0:774:48fb:f8f2 with SMTP id
+ 6a1803df08f44-79903fc9c10mr98737896d6.0.1758533440369; Mon, 22 Sep 2025
+ 02:30:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A_YGYY6EOHPJ
-Date: Mon, 22 Sep 2025 09:30:16 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "James Puleo" <james@jame.xyz>
-Cc: git@vger.kernel.org
-Message-Id: <eb6dc2fa-d45c-4efd-9af2-93bcb72b06d7@app.fastmail.com>
-In-Reply-To: <20250922000127.al45qxhhq4w3o27f@jame.xyz>
-References: <d94afaec66f8ab8058764cee08e9dd56435dd667.camel@jame.xyz>
- <de3d58bd-5600-4bf3-812b-c329c4940afc@app.fastmail.com>
- <20250922000127.al45qxhhq4w3o27f@jame.xyz>
-Subject: Re: git whatchanged: fatal: refusing to run without --i-still-use-this
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+References: <2994140.eGJsNajkDb@alfonse> <CAPig+cTRYK+5ezmGxz0d1TwMTu1RKy7Xj05CzDE2-i14aUpSAg@mail.gmail.com>
+ <92bdb432-1f6d-43d9-a93b-8cbaf3c4a7fa@kdbg.org>
+In-Reply-To: <92bdb432-1f6d-43d9-a93b-8cbaf3c4a7fa@kdbg.org>
+From: Eric Sunshine <ericsunshine@gmail.com>
+Date: Mon, 22 Sep 2025 05:30:29 -0400
+X-Gm-Features: AS18NWAATly914J6P9G115xz1GB0-Dg--kMdOnLFXc3UMSckP4GhWGArwY1zk1k
+Message-ID: <CAPig+cQvjt8+3EGSj=-wP6p92402vuSg6FtU-kQ_27Ue__upsA@mail.gmail.com>
+Subject: Re: [BUG] gitk assumes availability of `osascript` on macos
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: lists@humanleg.org.uk, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 22, 2025, at 02:01, James wrote:
-> Thank you for the (indeed correct) options. They are exactly what I am
-> looking for.
+On Mon, Sep 22, 2025 at 2:37=E2=80=AFAM Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 20.09.25 um 21:52 schrieb Eric Sunshine:
+> > On Sat, Sep 20, 2025 at 8:07=E2=80=AFAM Robert Scott <lists@humanleg.or=
+g.uk> wrote:
+> >> Tiny one here. On macos, gitk (tested 2.50.1) attempts to call `osascr=
+ipt` so
+> >> it can focus/raise the UI. But it fails hard if `osascript` isn't pres=
+ent in
+> >> the $PATH.
+> >>
+> >> There are a number of reasons `osascript` might not be available in a
+> >> particular environment, e.g. if launched from inside a "pure" nix shel=
+l, but
+> >> seeing as it's just a quality-of-life feature it would be nice if fail=
+ures to
+> >> call `osascript` could just be ignored.
+> >
+> > A patch[*] was posted to the mailing list years ago which, I believe,
+> > should fix this problem for you. Unfortunately, the patch was never
+> > picked up due to the then-maintainer of Gitk being missing-in-action.
+> > Perhaps the current Gitk maintainer (Cc:'d) will pick up the patch.
+> >
+> > [*]: https://lore.kernel.org/git/20180724065120.7664-1-sunshine@sunshin=
+eco.com/
+>
+> I've picked up the patch:
+> https://github.com/j6t/gitk/compare/master...es/ignore-osascript-failure
 
-Glad this could be resolved.
+Thank you. Looks good to me.
 
--- 
-Kristoffer
+> Please test and suggest improvements. Should the links in the commit
+> message be redirected to lore.kernel.org?
+
+Updating the links would not be a bad idea. Here are the updated links
+if you want to amend locally:
+
+[1]: https://lore.kernel.org/git/D295145E-7596-4409-9681-D8ADBB9EBB0C@me.co=
+m/
+[2]: https://lore.kernel.org/git/CABNJ2G+h3zh+=3DwLA0KHjUn8TsfhqUK1Kn-1_=3D=
+6hnXVRJUPhuuA@mail.gmail.com/
+
+Otherwise, I can resend.
