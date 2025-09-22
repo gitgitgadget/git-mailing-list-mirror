@@ -1,113 +1,92 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from mail2.viabit.com (mail2.viabit.com [65.246.80.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF77D2EC0A8
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 15:54:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D55280CD5
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 16:05:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.246.80.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758556479; cv=none; b=LN+57FOZ2re0pRRclKyGMwX0TkS+l82QlzrmbJOi0dMxhbHh6Mvki0gT3V8wJpOK2mTNje4UZF3FBo2tkLMCWIHIS8Ed1rqC2p0/G1edWNO3KidwGkoEC75GmzsXG7gyMAT756mSuDHmGHnQPcUD5A1YE5bySDiUCYPJbrstBGU=
+	t=1758557144; cv=none; b=PKSV9AQVK6q81RXr6ZHeFcKPhBZC4qpYceYnDrHlPLlcMkibVY71XxKqhJrev+UMR7c49ACm+COReJGShUDJhshi/ZP0qxJYmfjICY0wfdhDYbsI0s4PZ/QU6ibRMZM4OSW6lYjYVnYCGqnSHjWag1/mYLihLyJVCC/SfcI0Viw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758556479; c=relaxed/simple;
-	bh=aV6COBIoLkppaYfA8DzRGB5tzwwwwQSvIRZSamwsMSA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Lz54mLpto156sACrVXLLkqkXvrlx26Hx18Ht84OCb/UkZX5gcGLZFRqhY2Q89m9JnbXDOLuWbJOxxZ6gxcjuDx8rISQr4JJysSBdOStNh6X5PpJdMjZcivS4XR7JzLwu1zxbwx+mYw9U5IcEk/IsaienbJI/5coBLKBluFPQ2jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fHcqZ6f8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RMe7QNFp; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758557144; c=relaxed/simple;
+	bh=1Ge2KLZTKCFSfcf2eypbhUdDNKj1Sx0SGUx6c742ktY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Xm78h9MvZaYGVPSfXC9v2I9DGQ9Is5OTM7ofO9FirZ7/1RbJRYilGt2HLyifagnH3GOVnrr35dSME6ua7eLGrzVygdW+4OcL+CjcIWtj3QR0ULjU5M+ZiqHVlxrNtZFGDSK84AjhntJ8B3l/jVkKXtfpO6YmsVKxCx7mOU7lzMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=orlitzky.com; spf=pass smtp.mailfrom=orlitzky.com; dkim=pass (1024-bit key) header.d=orlitzky.com header.i=@orlitzky.com header.b=PgoJm7zv; arc=none smtp.client-ip=65.246.80.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=orlitzky.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=orlitzky.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fHcqZ6f8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RMe7QNFp"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id BEE51EC00AA;
-	Mon, 22 Sep 2025 11:54:36 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Mon, 22 Sep 2025 11:54:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758556476; x=1758642876; bh=pCrHe92rSi
-	ScHqsc9SyojlQ3eG44bjvqNj1BA2VH4Ac=; b=fHcqZ6f8OagRdcVVQpKseYoByZ
-	16/nCn7NeCIafktSMwnYcbiW28TftjWnZ/J2Amy0xECwa2rNbat7IgXhZgTdi8AU
-	GENmrBf3QEf2o/xXR5vj0OlwUReI6akVxsLIkyfiLKTomUp7il7GrlYvEauOvUHy
-	rqSzteN5zviAL0SKPPhljOV8ey8WYEc/tsTHUiJ7gtGe73oThr4IKKpG6xzIxOOI
-	A6WfA7/0Zq0qHCsK+xueJfqWsU3cp2u2Oihej8Is6g24ZAjZU/XGH+BnRSQZO0Pn
-	hFwZPpws1qt9YZPEdgejunQv02YIhmjFdzXO0I0qr5BLy1igmNPlbXI0ZBKQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758556476; x=1758642876; bh=pCrHe92rSiScHqsc9SyojlQ3eG44bjvqNj1
-	BA2VH4Ac=; b=RMe7QNFpdPl6VAeVt4cs0phRSc05KSDrHvaU9xjAORpu9/C2G78
-	phw4qeptmdJg7bMX0hfVEtEuzGOLdtqzPiwQcNlPYKWOKARsrWCZS4mXR/FW9OWa
-	eTRlgfY96uzNnnQVmpPUmwDiCy59kx1oj2JCydRmCSjaWUsk4np7Iz3McJnG020T
-	sZO5aXjWCG4WNBes8VWekjS7549xdJy3t2pGyPY0qb2oawPUGE5KLk2O0bbRF4xQ
-	4tbbQ/74c+aX4hrABIbJEXG1rAd0J4TAj8NnB8bdiM0ZFfQN8Ys8n0Vqiseq+sWV
-	2YsZxjovEFFsfLsJBeic6RDnTu3gjozb0HQ==
-X-ME-Sender: <xms:O3HRaPJDUcT_pYUJZN_YffD0y_XMVdRGyoHIqeBgC4iV2CFBWIf7Jg>
-    <xme:O3HRaKIa7HtwAEvp73KlmnFWa0STszwrASMtFDJhg6y2bmO9USRNFBscN4ixwytiZ
-    cbeoMgctGTdqMK3tqkBJaVjIXvaeoD_dTuzfXURPJhRA7H73th0nQ>
-X-ME-Received: <xmr:O3HRaMvwtlr6OL_i4SmcWsLOZhM1CrUdanFx25dJcFShTGynDYuk1QZHVVdg8o-QdQjf_gnM6Q0w-m0HjFhpv_38a1Q_9Fwb75gU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkedviecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhope
-    hpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:O3HRaHT2ftrvAo85VJO9yT52fvLxW-s4VPOvSAArlZEAanrZg7oKKA>
-    <xmx:O3HRaCNdrJHkKxa7IbzUoWV9-P9hnmnkkzLlFLLIeeKXLIy4xKz75Q>
-    <xmx:O3HRaMZn62ZIP25sNgMZOWfmFaEWnoCu8f7IOySWy-h7MiN5S4QhFw>
-    <xmx:O3HRaMwm6jeBMADIk_AuSDiL656etWL_dzBI4vpPcT2aRSQTnLjH6w>
-    <xmx:PHHRaDB4VB8wu24MJzhuloSEELSsJ0MouUWBxiktNAIQaLT4tQKjfu_0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Sep 2025 11:54:35 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: peff@peff.net,  git@vger.kernel.org
-Subject: Re: [PATCH 4/4] refs: do not clobber dangling symrefs
-In-Reply-To: <20250922122332.584428-1-toon@iotcl.com> (Toon Claes's message of
-	"Mon, 22 Sep 2025 14:23:32 +0200")
-References: <20250819192934.GD1059295@coredump.intra.peff.net>
-	<20250922122332.584428-1-toon@iotcl.com>
-Date: Mon, 22 Sep 2025 08:54:34 -0700
-Message-ID: <xmqqwm5qv5xh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=orlitzky.com header.i=@orlitzky.com header.b="PgoJm7zv"
+Received: from mertle.michael.orlitzky.com (vpn1.metro-data.com [65.213.236.242])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail2.viabit.com (Postfix) with ESMTPSA id 4cVnqz50lrz43KL;
+	Mon, 22 Sep 2025 11:59:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1758556801; bh=1Ge2KLZTKCFSfcf2eypbhUdDNKj1Sx0SGUx6c742ktY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=PgoJm7zvg9A65h8NOGkhKxOag+GJbe3joQaI+XYa7lwr2OQGUFpMM8waqUP9hpJWZ
+	 Fs7FdsXFHPbgbRpifo+LfD/qsLXctGFNVohg9XRTGiIgHczvG2ObVNktz/MbeFP6oF
+	 0G7tr8PiyL8KqcSh7N4zlS0rqtPEe27J/I/XYahU=
+From: Michael Orlitzky <michael@orlitzky.com>
+To: ezekielnewren@gmail.com
+Cc: 20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im,
+	Johannes.Schindelin@gmx.de,
+	ben.knoble@gmail.com,
+	cb@256bit.org,
+	collin.funk1@gmail.com,
+	contact@hacktivis.me,
+	eschwartz@gentoo.org,
+	git@vger.kernel.org,
+	gitster@pobox.com,
+	me@ttaylorr.com,
+	newren@gmail.com,
+	phillip.wood123@gmail.com,
+	pierre-emmanuel.patry@embecosm.com,
+	ps@pks.im,
+	sam@gentoo.org,
+	sandals@crustytoothpaste.net
+Subject: Re: [PATCH RFC 0/3] Introduce Rust and announce that it will become mandatorty
+Date: Mon, 22 Sep 2025 11:59:49 -0400
+Message-ID: <20250922155949.27019-1-michael@orlitzky.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <CAH=ZcbCUL-rWw5E6p26T0039gs9q-P8iK5fp73-RzTzKiZ0zMQ@mail.gmail.com>
+References: <CAH=ZcbCUL-rWw5E6p26T0039gs9q-P8iK5fp73-RzTzKiZ0zMQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Toon Claes <toon@iotcl.com> writes:
+> We know for sure that NonStop currently does not support Rust at
+> all, and that there are problems with porting Rust to Gentoo, but
+> I'd like to hear what OSes and Architectures you use personally and
+> professionally and why adding Rust would be a bad idea. Is it
+> corporate policy? Is it that the Rust toolchain doesn't exist for
+> your os/arch? Is it that Rust is a new language and isn't as battle
+> tested as C? Something else?
 
-> We use `update FOO_HEAD 000...000 000..000` to delete a symref, if that symref
-> is dangling (otherwise the old oid would have resolved to something). I've
-> attached a patch that would allow this (on top of your patches). Do you think it
-> makes sense to allow this scenario?
-> ...
-> +	test_when_finished "git update-ref -d refs/heads/dangling" &&
-> +	git symbolic-ref refs/heads/dangling refs/heads/does-not-exist &&
-> +	echo "update refs/heads/dangling $Z $Z" >stdin &&
-> +	git update-ref --no-deref --stdin <stdin &&
+There is no problem with supporting rust on Gentoo. Gentoo users build
+from source, and rust is a problem for anyone who builds from
+source. I'm writing this on a riscv/musl system. If there are no
+binaries for your CPU/libc, let me tell you, it's not fun. And this is
+like, my job. A normal person would be completely helpless.
 
-"git update-ref --help" seems to show that the "--stdin" mode has a
-separate command that is designed for exactly the purpose of removing
-a symbolic ref, though.  If you are changing the semantics of "update"
-to make it safer while dealing with a dangling symbolic ref, do you
-also need to touch the code path that handles "symref-delete" command?
+Nevertheless, the arch support issues are secondary. I'm sure it's a
+lot of fun for the people who are writing rust code to do cargo
+updates in the two or three directories they work in all day. But I'm
+not writing rust code, don't care what language git is written in, and
+have hundreds of other packages to keep up-to-date on multiple
+machines. I want to be able to use my package manager to do that
+efficiently. You know, the main tangible benefit of using a linux
+distribution.
 
-> +	test_must_fail git rev-parse --verify refs/heads/dangling &&
-> +	test_must_fail git rev-parse --verify refs/heads/does-not-exist
-> +'
-> +
->  test_done
-> --
-> 2.51.0
+But every distribution is "packaging" rust the same way. They're
+bundling random old versions of crates in violation of their own
+policies because the ecosystem is unstable and the tooling encourages
+tight coupling. By requiring rust, you are require me to go back to
+managing dependencies like I'm on Windows XP again. Git is the most
+important program I use, but it's not more important than package
+management itself.
