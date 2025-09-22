@@ -1,108 +1,112 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7245331691F
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 18:41:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C871870810
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 19:05:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758566491; cv=none; b=EYqrplfPn/VoYgYSHvHZOdkeUDE1kowRTJOk15TvwNriJKpAFukv5Mi5QkUZjKWwzcc60h0ASwXc6FQJRcc3cdGDf1lkJHr4/ArXg31/WIITm2Py6QKHYpVCphcoq15STfycIR/TIOGc9jjIox46JCwzhMfWI7EaksyE/1pPIqc=
+	t=1758567961; cv=none; b=o5PQJiUxAa1BK+4wyplhyZ7KLRkNvIDJOuLL+HXnKD7NGxieOVLfre4HJnKDZbYYHMkge9dEP7UTlOxQLDs47ssCNAeslNUsnewl03+NMFnT0yNhkdkb61F8UkDs0k/oVjiXEkSIMKvNrBoX+iWW/NIa+AFnny/kgr8HkTZmRaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758566491; c=relaxed/simple;
-	bh=LIwEnx9BgRPYPFI6fjXn0nWfKQGOap1xCEm+iCm+L+U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qJK1stHimniOYmzRfe0DdUuX2Kfu0lA0kTNH3eTsJzw0qkc46JhlI1cmg9IcGsDAZJ++/qn5dbApNy7iesgfh89f6EzoCZIfwK2cmw2/o37/WCzWWocxIzxdATZIrt7CSJ9sj2dQYlcA2TOYMNtdBVQ0LnCltxmO1P+e8UrFez0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fiUhWyZc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M7OYBCrb; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758567961; c=relaxed/simple;
+	bh=GPsckhy7i6Q24D1KhFm7CwGoKK3nytUZMydUUnC08aw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KBb4hfgbhyilUq+oZ9862kwoWEfbabkunLkMwyq96Nlw+Rg68Z0VFl+uX9uew9nPty0vgb5t3Cn2nxdzT2kqcUikkA/DUMp1g5VwBmio6ES/SEfae+CuLq2mh2SZZikC0rbsnz3mMjIcY0sJBKS0KjFTHEYrXd+4Ts7jmZbuibU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CQoLn6/9; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fiUhWyZc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M7OYBCrb"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 524C91D0026F;
-	Mon, 22 Sep 2025 14:41:28 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 22 Sep 2025 14:41:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758566488; x=1758652888; bh=uxjRzqJEm1
-	Vw/HZSzA2/4y6xr4Tijk46O0MA7hVrg20=; b=fiUhWyZcbzPjS9WjmFWlYm8rg4
-	G7VTFM4L8vBzkc8oZbwc/C28B1rix2gzZUJ0WFHxbVgsUAr1zvBLRPMyy5AcTBB1
-	3H8eLmz7J92+kFLD7eBXjAH3hf3kza9mnAAP3M5V7KhCodDKMtyrP2exqihDeoZd
-	UPk36XV6rQXAd8+dI6hlSN3mgWi+WMvx1bk6v2rG19XouCOIohSsK2qBS7tKEBuF
-	DOg0T4qGanVEhBa/KRg03JsOAQhmwVWGPyWs17LIZM0bTpSRPR1YLtXc4E2yGhb+
-	tQU8i70+1CtV5R9tIeugHt7sw+E5nGQAjW6E7YjGTrWwjY83pTgI+RmW+t/w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758566488; x=1758652888; bh=uxjRzqJEm1Vw/HZSzA2/4y6xr4Tijk46O0M
-	A7hVrg20=; b=M7OYBCrb5XmqlFioIjlNl/X0YiIRjCUNsnFej3qPhO7gKd0AZ1G
-	r8NeKKmpzZhUwJ1oTPZRl7JTfYeU4jccuo/yk68PlU7t2dnd5vIhKmXL7ixEmLyt
-	Dg61sovx9g10Ihso8BFVkCgHl35LBH/HY+6bW1BtBKUiBgQS6LRh8/Oz9LBNcw2e
-	FY5Ga4tdJ4mDz4aSnZ3fowAv6wP+z+veEny8oCU6yq215lXEtbbswGp0E3KZFYmM
-	tyDLIRJd1vJ4w+WQcHHfcBagy2aB3M6xJCd7F74c83tSoD5wREQaMpCdkLugUzt3
-	VlMRpiTXFZU6seU3+dp9SQmX45snStw1ZPQ==
-X-ME-Sender: <xms:V5jRaFZXAG0l-DIA6RColRlzQGD6eOvMOJXihhVnq79ea0gA--C4Cg>
-    <xme:V5jRaDRaEeoilBzno3frzmblz2dHWYqyTDe6OlizajSJW_3yM6lPqYyHgEwngs0HF
-    qHRNkXM0sAWhgt9TF2S0ykTgQRIMMXe0YgwGrlS0TvvbVyVojs>
-X-ME-Received: <xmr:V5jRaASzcCMWHXqet6y5XG31X3pOAvZozpdkKr6Wakq-Fdl6fVSSE7FSLFROYv38M2LPvKLoy83HBbz6z00KYpb9yDtmbSWrzT_9>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeeitdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtghhithhgrggu
-    ghgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:WJjRaPT6Il1d2OxowXGTV-c8IqerjAJ4sOTKgX73gv15liHkfrlOIg>
-    <xmx:WJjRaN7OYTsHK02ZKoQC6G09hcS29-jlGQtEFA0PfkQt68b5zbEPaA>
-    <xmx:WJjRaD3iJGWQEeMudC3PkzV0EyfxN4PeGw-AtjSigUlbyfNSt0dVeg>
-    <xmx:WJjRaABqbADkF7BP9-ohJQy92mtkclHdcvEg3-COHkHbvjp4slB0Zw>
-    <xmx:WJjRaCgWOYjyCHCfGCEyBf79CYALb7kvno8o4jyqg8TbmDK6xAQiC6Ke>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Sep 2025 14:41:27 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  Ezekiel Newren via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v2 00/18] Introduce rust: In xdiff
-In-Reply-To: <CAH=ZcbA5hAM9kmO410KzVW7RXWWiwX2oJk6GGPP+6oVYatRVOw@mail.gmail.com>
-	(Ezekiel Newren's message of "Mon, 22 Sep 2025 12:33:50 -0600")
-References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
-	<pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
-	<aMpODEpyaaVhFMO0@pks.im>
-	<CAH=ZcbBNFSwU7E+P7hkQnt9UrMKiCRESgGvWPL7pRUa0i2U5-Q@mail.gmail.com>
-	<aNFIozagGc0MoseL@pks.im>
-	<CAH=ZcbCZXavx52521cFHdXZn=BCWBiR1aG10ekZVg3PVVJb2VA@mail.gmail.com>
-	<xmqqikhav3i0.fsf@gitster.g>
-	<CAH=ZcbCsKdZAPxBEPUMvE471ogTNptjFy7FFksWnJfnX=J-F2A@mail.gmail.com>
-	<CAH=ZcbC_ecyPeLS_0DfN3+w9RTqcrt6Je08RPXqb6pJVGaPjuw@mail.gmail.com>
-	<xmqqqzvytkqi.fsf@gitster.g>
-	<CAH=ZcbA5hAM9kmO410KzVW7RXWWiwX2oJk6GGPP+6oVYatRVOw@mail.gmail.com>
-Date: Mon, 22 Sep 2025 11:41:26 -0700
-Message-ID: <xmqqms6mtjmx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CQoLn6/9"
+Received: (qmail 161861 invoked by uid 109); 22 Sep 2025 19:05:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=GPsckhy7i6Q24D1KhFm7CwGoKK3nytUZMydUUnC08aw=; b=CQoLn6/9X7pXaR/Ns4MhI8We78hlQarwFQbDO0p4d/ZlyVab7fOpbjEcIsSmlTBs1xRV0AEVhGmAehZuInvtSX/fIf2Vu7ZN3Zgpd13vMwVIoyawyGzQR5Yo2+zGtePCd26ml8YFG8JCdew8MX0FuhfhmEq4rzKdvxoz/8K2lufubw0L6CVHTsVEYWu5GkgBEe2VxIgJ7b4lwRubTIJv5+a0kIZE5yrAu0Q9lir3w2t5pNcwGV/o4yZCIgNAZ4KKdIzgk49aF2Aqcn66Ofj3iuyHNr26icL1ZpnQ6lHn4n7OVTOHw+zXZJvcQJEBjJRqvrPlieCXpVwMBE9ovuJ63g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Sep 2025 19:05:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 258764 invoked by uid 111); 22 Sep 2025 19:05:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Sep 2025 15:05:56 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 22 Sep 2025 15:05:55 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Lauri Niskanen <ape@ape3000.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 1/6] stash: tell setup_revisions() to free our allocated
+ strings
+Message-ID: <20250922190555.GA2205919@coredump.intra.peff.net>
+References: <20250919223351.GA3906184@coredump.intra.peff.net>
+ <20250919224027.GA594545@coredump.intra.peff.net>
+ <xmqq1pnywkwv.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq1pnywkwv.fsf@gitster.g>
 
-Ezekiel Newren <ezekielnewren@gmail.com> writes:
+On Mon, Sep 22, 2025 at 08:45:36AM -0700, Junio C Hamano wrote:
 
-> already refactored my code to use [ui]int(8|16|32|64)_t in part 2 of
-> my xdiff cleanup.
+> "git stash show" gives a "git diff --stat stash~ stash" (i.e. the
+> worktree relative to then-current-HEAD in diffstat format), and "git
+> stash show --" (no other arguments) gives us "git diff -p" for the
+> same, it seems; this is with or without your patch.
 
-Noted.  I think [u]int(8|16|32|64)_t would be familiar to both C
-writers and Rust folks who need to peek into C for working with it.
+Oof, that is certainly unexpected. Ironically I had done all of the
+manual testing with "-p --", because the point of this topic was looking
+at how we passed arguments to setup_revisions(). And then I simplified
+it when I added the test, because it seemed that the "-p" would just be
+noise there.
 
-Thanks.
+So it is surprising that the test passes, but you explained that clearly
+below.
+
+> We may care "--" by itself does not change the output, but it has
+> already been giving different output without your patch.
+
+I think the difference is probably a bug, but one that is out of scope
+for what this patch is trying to fix. So even if we wanted to fix it,
+I'd prefer not to deal with it here.
+
+> I do not think we want to drop this test (we do want the "handles
+> without leaking" part of the test), but we should not expect the
+> output from these commands match.
+
+Yeah, I had originally written just:
+
+  test_expect_success 'stash show -- does not leak' '
+	git stash show --
+  '
+
+but it felt funny, since the test is doing nothing in a build without
+SANITIZE=leak. If we are OK with that funniness, I can switch back to
+that.
+
+> I only discovered this while merging this and another topic that
+> happen to touch the same t3903 into 'seen'.
+
+I'm glad you did. I would rather find out about it now while it is fresh
+in my mind, then 3 years from now when we all wonder what the heck is
+going on.
+
+> * I personally find the traditional behaviour nonsense and it may be
+> coming from the crappy command line parsing we have had forever, but
+> I am sure people who wrote
+> 
+>     git stash show --
+>     git stash show --end-of-options
+> 
+> out of "principle" in their scripts, and assumed that the patch
+> output is the norm for the command even though it should have been
+> giving diffstat, would be unhappy if we suddenly made them behave
+> exactly like "git stash show" (nothing else on the command line).
+
+Yeah, I agree with both points (that the current behavior is nonsense,
+but people may accidentally have been relying on it). I wouldn't feel
+_too_ bad about saying "you were relying on nonsense, and we have fixed
+the bug" in this case. But I think it should be a separate topic (and
+possibly one that makes "git stash show -- foo" do something sensible).
+
+-Peff
