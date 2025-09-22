@@ -1,54 +1,54 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C663112C3
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 16:29:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A11F192B66
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 16:47:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758558555; cv=none; b=GsLLCkwPw/ViB/jcrsn2DeOaT6hBa/d+G1PHpM0yS0ZhvmLEaQOZkWA7oAIZaEK5+fyXqTabW6C3/xbzCxXwC6MPes2MX3VkMVpZpErjJFIaiylhQ0Q77TyJBRdUS3gJBOrfs8IMchDvu9wTeIRinDz+4jNn0ZB5yJx13OqkhQw=
+	t=1758559628; cv=none; b=Ifxkd9f/K0QzyNuclM01xEoDgTYDV3OWXTROraaafF8NDwb1kRkcNTe8NfCf/A662uwUCok/YKNsyps7cUuUarAE95mup1nnGU7xMSKB99na9yvIzDXzyX6EZmDpaufZ5oqMg+U8MaZIgWnGs2IjD9yyt8UmpYpqJJZlvgi6FLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758558555; c=relaxed/simple;
-	bh=npC848oWqTsloiF+SG0KkQVD5qNge101Boz4gTLGTSc=;
+	s=arc-20240116; t=1758559628; c=relaxed/simple;
+	bh=4XMrbfNRRLAReZ9FL4LIwM6LiXzlJcHoFq63Gln2DDU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=p93w2vmYj8SQWtOFl66we9Vp35VB8KP3qpLTB+63QiGzHx4aej9sHeRLETyMv6ZsdXcEOo8AtgNJAjv/kUFmztGTupG4bv5mbwJhW7WeOG7pmAAe0BQRN1Q+3NydRhJw7//sEVmy7lH7RdggVNse15tVkKKZNTdPp32USpFUXuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=1keVCCsL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NSpnBw/r; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=k3XHrwKeKtJ6gvAZLfh0TF7UjjqtpHF3BOayNFMvcpkSiPfiKIOA6qSD/WRcP6Tk1WFK8f6CmKjYIwTCCVgY63poo6k+GTlYZ9FyXnGF02sM1YvVd/JkAoW6dR7Im1ohk6XYmQ2S/qckb0Vhghm8Q9rbGaFUo9o9KGb1I6bwkCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=r+Qv7oVl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JA6DoJbc; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="1keVCCsL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NSpnBw/r"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 08F1B1400167;
-	Mon, 22 Sep 2025 12:29:13 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Mon, 22 Sep 2025 12:29:13 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="r+Qv7oVl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JA6DoJbc"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 814FEEC0311;
+	Mon, 22 Sep 2025 12:47:05 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Mon, 22 Sep 2025 12:47:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758558553; x=1758644953; bh=04eanJEZq7
-	7qgI1aesXasO+f3OUmIUMkC9QTF1zlxR0=; b=1keVCCsLWt3Wa8JP5JUnv7aehS
-	B0beJ370UnT0bB8jA/pluJVaXTeBGrNPBumGImNIsPILNK26PWKkQ/BdI+mBGAir
-	at0ReIYr5yN5kFmFU/O/iPm0WiN92L5/dlVvUxA93B3a6w7g5FlKvsRIC13zz7eC
-	lcQS90hIlIe7YEM8GcoTfUhY5YgisxDC+4Q/FW4dklD3/BWc4AsETC+gtltZWR4S
-	54dge8/k6qXFw3iYMle3+wCG5Se67w2Hadn98DmBhSWtei8IrGRbh88Ambu7MdrV
-	NGgP5Wd9X+C8u0F3FeGchP3bdsnOjhbOsoKgIhDirOBnIlHBgPVGqtj+Guow==
+	:subject:to:to; s=fm3; t=1758559625; x=1758646025; bh=IHVy3UyUwI
+	aqxI8bs376nRZGc1NXsQof9HZTAvIdYqg=; b=r+Qv7oVl0agBfBbpPwbXTQFC7N
+	G9uRfRC9abaYywEogqiFIZiCrIn0lkEkDUDZrt+rsQW7pPFm3T/FbcY1SWROwGNc
+	IhibNw1ltilRr8PSQr4+nsCoRK7qxOoa+6akzHw4Zu+ZefSBkWXZb1Pr6lauTCR1
+	xWOdiJLtJzoQfU8lmoHjz497IvI0LAvvoofjRI7vbjs6z5MJtsw5RRLuRJbGek4W
+	iahpzOy7W6C5D6gQ8J6jsmmovDsI+3SBWbKHhPhNlLNhkmc+9UjciYrwD6Ep4WWR
+	fxSyofvrbI9KCyrNszYvWT/W5NEL2rBcVonjlloEmZhIMDYHN3r1NdvFLADA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758558553; x=1758644953; bh=04eanJEZq77qgI1aesXasO+f3OUmIUMkC9Q
-	TF1zlxR0=; b=NSpnBw/rS81tOp12UVriDN7fjQp3WglD1qd15hYUOtCTv0pgiPr
-	rIbXrb7aEkr7ymCJH7kGLFITR7l2vgZB71ewMaAWtblUiykgynJKYhCw49qUi8ib
-	qWFlxPPdrQIxB3xh9c5pAj6zM0AoYAqXdEQNdFQ+x4qokQrRXoUtmQugNn5vbplM
-	/B0rGxwBPmnKNGkxoKX+Hr5iCmwv75apOk4uIQjwa1UUnastkE7PxHxRQRaOpugF
-	Ah/1eMwX8NYO+VwvDdBZxbsVhD/npX9LQ2sH4SW2t9K98B3A4p+DdtR0GmwyJg4T
-	/nE2RT6fssbuaT2PLZTDushL9Z7ZBFVRd+w==
-X-ME-Sender: <xms:WHnRaP74dR49e41EL5UL52keUNuxKb3Vn22IQhmFSGVZlkf5KUlA9Q>
-    <xme:WHnRaLweRN9xu3NT-AbtfFn9sJ2LopZhvsXsmBsZFInhAQKhatM2p75XgXc5UsLBA
-    gGK5Noubl0DeCqdfs37qEu_wdL_3dU1yMHs0kVgtopKSAPc2ugmx48>
-X-ME-Received: <xmr:WHnRaOyQAESwrPl1BNcS9k1zHoan0PsJSy--EJQN0kxb-cxOfTheAD73kTUA13C3rqI6AIDAC-uuVAt7Gom0CQRl9yf2tExjttY0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeeffecutefuodetggdotefrod
+	1758559625; x=1758646025; bh=IHVy3UyUwIaqxI8bs376nRZGc1NXsQof9HZ
+	TAvIdYqg=; b=JA6DoJbcU5GWqsB5Qkgy+z/JwuR8M7lRXwsxmB5TnBW7LDp9Pfj
+	yFTu7fFHOpNKlD5YKZpCoFgfwCy8gUISCypFHg+aQx6pxXiprGTwENUksvuRFeGy
+	cT97ozu6cwV7QhT0I3UnYC2P9E4MPGLu7D+9XCJIAEJK5xFgvDAxe5BuNM0jMdd1
+	+cSkKmGl2nzeSAk5QlqtRqOHr64rQOq/WlkmhMwhoFsmPtfdC4tRnrNzaLHhhwXh
+	VowBl+Y+FydwIVfwe7vZ3pC7qbtTFt3+HO9sikHaQm3vRUW+OaU9yZmS7YcKw6qF
+	H1ipDD7NG5LBOKh4NjegZxbgBYHfXwryDfQ==
+X-ME-Sender: <xms:iX3RaD7edFff8J1CqWZ4ObLrjkRRgWKv-e9DyvKdZ-F0nQ7fpbT3jA>
+    <xme:iX3RaPw6w_x95iLTIiXG-WraxYpnxUWmQiJXGz6BKojQbslXQxfYRFCPJ9bC-MdCS
+    VqwBmfGK0x-B1cHvYis2AoD80VmVJIfP_O0QQgp162ASbyG2OJYdQ>
+X-ME-Received: <xmr:iX3RaCwYgZHJ3HHpe_fjleYMBXEa-GHRmJVi0vSDUlTlaqp1jGwu3o5mVwYBd2ZOKnpSE4Rli2ehPriVOo2D8p-NCt-vvQiadGrt>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeefiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
@@ -56,33 +56,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeeffecutefuodetgg
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
     htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhm
-    rghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
-    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:WHnRaLzmoj0rPV3HT-xUuxPPz1sEQVB0gZRlON1KtKsdHTPQSBvJKg>
-    <xmx:WHnRaAbjDoywaSOoc1yZugiE8EFdPGVqrPLJ3JheMl3Tzp-N-ixbBQ>
-    <xmx:WHnRaEVn0oMwazznTym94OGlcTMfcSkTRmGEpGxTl05jLpa3kzv1Nw>
-    <xmx:WHnRaGg-M4mpNxnOoqf6dum6F1SqSjEsDzdkd-TWtg1HvbDA5ifVWw>
-    <xmx:WHnRaPCLojaga0z0P8yQ938ZKzO2HyAFngdC6yOj_IMAiyDH1GenzwlU>
+    thhpohhuthdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtghhithhgrggu
+    ghgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:iX3RaPz83-US3tLksewZtq0WYnsa7aMlRT70tUl90bUeov7H-nJz2A>
+    <xmx:iX3RaEbcDhOKXCRRIOigEkKaVpU7cNM0gbTG4njij2UMZDQtDfu_Kw>
+    <xmx:iX3RaIUHvz8_1o2_DtlzizRRt9MY3hm1T2Y_IXxkbBR52ViDFAbQEQ>
+    <xmx:iX3RaKj57F-oJZMslH6KAgT6wrpwsw9WjfPNNPkNQdnIIkIxEac-QQ>
+    <xmx:iX3RaDDygSf_crvIhdnZyTGq92dQc8vFWngWK8Wv99HlG0nBgwi8jR0G>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Sep 2025 12:29:12 -0400 (EDT)
+ 22 Sep 2025 12:47:04 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>,  Kristoffer
- Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v3 4/5] builtin/config: special-case retrieving colors
- without a key
-In-Reply-To: <aNFJanpSY8wd8-b1@pks.im> (Patrick Steinhardt's message of "Mon,
-	22 Sep 2025 15:04:42 +0200")
-References: <20250918-pks-config-color-v3-0-08ea618cae26@pks.im>
-	<20250918-pks-config-color-v3-4-08ea618cae26@pks.im>
-	<xmqqikhg9rwx.fsf@gitster.g> <aNFJanpSY8wd8-b1@pks.im>
-Date: Mon, 22 Sep 2025 09:29:11 -0700
-Message-ID: <xmqqo6r2v4bs.fsf@gitster.g>
+To: Ezekiel Newren <ezekielnewren@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  Ezekiel Newren via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v2 00/18] Introduce rust: In xdiff
+In-Reply-To: <CAH=ZcbCZXavx52521cFHdXZn=BCWBiR1aG10ekZVg3PVVJb2VA@mail.gmail.com>
+	(Ezekiel Newren's message of "Mon, 22 Sep 2025 09:31:10 -0600")
+References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
+	<pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
+	<aMpODEpyaaVhFMO0@pks.im>
+	<CAH=ZcbBNFSwU7E+P7hkQnt9UrMKiCRESgGvWPL7pRUa0i2U5-Q@mail.gmail.com>
+	<aNFIozagGc0MoseL@pks.im>
+	<CAH=ZcbCZXavx52521cFHdXZn=BCWBiR1aG10ekZVg3PVVJb2VA@mail.gmail.com>
+Date: Mon, 22 Sep 2025 09:47:03 -0700
+Message-ID: <xmqqikhav3i0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,27 +92,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Ezekiel Newren <ezekielnewren@gmail.com> writes:
 
->> If we are willing to handle this as a special case anyway, I wonder
->> if it can easily be arranged to take this as a(nother) special case.
->> 
->>     $ git config get --type=color --default="reset"
->> 
->> I.e., instead of (or in addition to) "if the config key is empty",
->> special case "if the config key is not given", which may be slightly
->> more intuitive.
->> 
->> But even without it, what is presented is a vast improvement enough
->> ;-)
+>> > I wanted feedback on:
+>> >   * Cleaning up Rust type name collisions
+>> >   * People don't like it, so I'll drop that
+>>
+>> I don't have a strong opinion on this. If it creates issues I personally
+>> don't mind fixing it.
 >
-> We probably could, yeah. But it starts to become even weirder than it
-> already is, so I'd honestly just leave it as-is for now :) I doubt that
-> there's too many users out there that care about this anyway.
+> Junio doesn't like it, so I'm not going to do it.
 
-Yes, unless we can require "--default" to be spelled "--translate-this"
-only in that specific use case (which we don't want to), the keyless
-case would be even more strange than the empty key case, so I am
-happy with what we see in this series.
+It was not "I do not line u16 as a typename when a perfectly well
+established uint16_t is available", though.
+
+It was more about asking to explain the reason behind insisting to
+use u(8|16|32|64) types in C code.  Perhaps there is a compelling
+reason to do so that I was missing.
+
+I know that the kernel has used these types for a long time, but
+that way predates their more recent flirt with Rust.  If your answer
+was "the kernel uses them", then I'd want that answer to cover a few
+additional questions, like 
+
+ - Have they benefitted from their use of u(8|16|32|64) when they
+   started working with Rust and if so how?  
+
+ - Would we be expected to reap the same benefit if we used these
+   types?
+
+for example.
 
 Thanks.
