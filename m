@@ -1,129 +1,169 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2281AEACD
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 06:20:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A952A2ED842
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 06:34:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758522030; cv=none; b=E7jpNVFntGGMInO9SucbSUSrDH+M4wsWcGDSIToNemX38DNGldGRD/4Lv397XB9nEHFkmYanROi6f+CM86Jtf/gHG/hu/Q+TZzRGuh+amTHDhRv6MZV6x7bJQd7Sha9MTP6m3gBBpnHpmXYhccewHdDfbW6JJTbM/F2Ov1na0FU=
+	t=1758522901; cv=none; b=owGzpDLlnT+DH3FSDBNele6Gw9TvRyjN5SVfx0SrWmtORNxC7o9q/DAa4OqeeZ7eGpJlr/Rg177AXdUg26uk6XCdLaWkz3MMyZ+7Ap8BFpbTlWLgFgMGydnTPQSDZHO+Px0kFdqJioeSNgrXXhJwFviA3u+PWDV+WTKUQ1Xk0Bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758522030; c=relaxed/simple;
-	bh=bTunLdslZabiOR4xlqmHd5Fr7N5xDJWF99ri3wLwm08=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=csSt9O328COBfei5kk8Vko9H8dhziQEo+lk806qg0GljXjqoCfzL2/EHvszcNr35XYklbeGdllkSFTz01Y7Z8clTppKgeCnHb5pPc141ycvXKpuCVKKUBJTkCz7+gbaUTKk8VCfZdTcdAi8yu8YVNeprS5sRhg68TSPaqG0u/f0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oIYOMtdQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f2PhGcBN; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oIYOMtdQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f2PhGcBN"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 831671D0012F;
-	Mon, 22 Sep 2025 02:20:25 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 22 Sep 2025 02:20:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758522025; x=1758608425; bh=cI/eqvijO3
-	cfjSR2acDswAluuaVl5kEpwbxzoLqGpG4=; b=oIYOMtdQWzzygmYcJHPMq2ZMxV
-	oHYmMJuYeqXE/lmtVJKKWk8jqf9nFk890Ag/JR8FASSIXoiUwV3jCDzb4kdrNJw9
-	JGdkf8GLeNREmL8xaiZqwM38GI/StqI/IKmaEo+4eSR/uMrY5yHasiqW4jFpfRef
-	faqN1uzTB9Am1agcyETKI2I6i18ooSHlJioFveFkqqjsPNp3SOxSdycvvHWxw3Hn
-	LfUjILlF96HcdUMgUgHXpGemtyg21Vgu9MZQv9HtiInD2x6+1zvNhf4qwiv/7vsM
-	kMb3E/6P612HO/yy1Y0XEI/UefEMQdedKOdazbEFnGO0ESnQX+qFtVCfvkrg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758522025; x=1758608425; bh=cI/eqvijO3cfjSR2acDswAluuaVl5kEpwbx
-	zoLqGpG4=; b=f2PhGcBNMepwQH3goNOhJNU0OLs3AaxLPZyAkt7t4Znj0sFFtim
-	VsJyoAws9uIDDx5e6i9xbOJVoKOP8HR0MMEDq5ipp1Ph9Rv3cuK0QejHBDrHOCLP
-	VGxmbY4JKjdhl+k4tC1X3nk/b8wI0BMwBA+J5C/OneMIvC0fospxXDQzgfQbCQWj
-	f+v1Edrl4yePEY6JK+nwfzEWD9xreaAwGgZn0fuKGizPQjZ5qGHplr0LJz4ONPLA
-	zemcIAspfGRjcOP3sJww9Doj63Wscm3M+v0TQGk1Z6f0Am2UpkMtanQbu9YxvmuF
-	GPa0PBLIMpQTf7DqzlyocxE2VNWn832/RoQ==
-X-ME-Sender: <xms:qerQaDT2Z5miSpJUFTgX_NwWyFALEtRBA_bLp3t3-QNmrnxtyElc7w>
-    <xme:qerQaPWZUDbf3NV3meSEvTkt2ZHwyK4UG1Ed-mGan9Tl07AAQ5V2bPiwLlOglKjkt
-    6P8kRXGTTFTJw0Sfg>
-X-ME-Received: <xmr:qerQaFa5n8fArxXIkjS74wRZfQvq21_x6tmZgEPceffVmcExPPdmRZ7EZY5W2m5v7kBAFwRrI_SEmZ97r_HILmETLjv6U2je2AuO3faBHQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehjeduudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    ethfdvieejteetudfgffeukefgkeeitddttdegtddtueduhffhgeevvdeghedvueenucff
-    ohhmrghinhepghhithdqshgtmhdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeg
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehmrghtthhhvgifhh
-    hughhhvghsleefgeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:qerQaF1jDpyXh0EIW3TrJOUmB5x4vgRJkaIygSQ-eV4sq3xvDx3gqg>
-    <xmx:qerQaHgquO2yGgHpaeW-vAVODct0fJXboi-7oRG-OFWdYSLrR-f_8w>
-    <xmx:qerQaJb4HGxY1Ix03Feb8r5sb8LYj3SN04KB2gF_lnIuaY6OEa8zjA>
-    <xmx:qerQaHSCIWka-uOTdcQ0MyoraVmNLMfneFzJ6yCPP0em4HtF5qxTmg>
-    <xmx:qerQaKCuPZ6cHsGXFw2HmfQNj7ugqQkjALTYvOxdvCNQ1qn1uo2H3Cck>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Sep 2025 02:20:24 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 78cce5d2 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 22 Sep 2025 06:20:22 +0000 (UTC)
-Date: Mon, 22 Sep 2025 08:20:12 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthew Hughes <matthewhughes934@gmail.com>, git@vger.kernel.org
-Subject: Re: [QUESTION] how to find options set by scalar?
-Message-ID: <aNDqnMTJIoHi7Ifc@pks.im>
-References: <vppjutjcdglp44qvsk4qozphycyg663yrq5775zztim2oe7ty5@uttjrshb52bd>
- <aMkVqNbdgxqBJ9K4@pks.im>
- <evxbvwwyo4p4iboc4k6r2cd2cvlnm2upgxumqopdijwmvhxhxs@7xvg42heibp3>
- <xmqqikhf7bdf.fsf@gitster.g>
- <08deb8a8-6c34-4f11-a36b-93d151a56f9b@gmail.com>
+	s=arc-20240116; t=1758522901; c=relaxed/simple;
+	bh=0M0UbzjFGn3bmKZUxUSbFfFFPmCdFPPatvIb0DYQ42E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=L7FSb5U95gkJesjo/J0V1VB8UKIijySOdJG1gCLI3f5ORqjhnvNAbFpWd53mpaPMLChQqNdhWSbzEydZyu4AKhqGmKZ1F3OL3h/vL7B4csLGXH1GZkklRoVhTX0086S/aCZW+bc2oMtRvq7Hbtr+YNV34yo4gFCvJgfQSMfIOFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp2.bon.at (unknown [192.168.181.105])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4cVYJ05WmHz7Qv0P
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 08:34:56 +0200 (CEST)
+Received: from [192.168.0.104] (unknown [93.83.142.38])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4cVYHr0xvYzRq1q;
+	Mon, 22 Sep 2025 08:34:48 +0200 (CEST)
+Message-ID: <c6a33014-5d87-4750-b6ce-234e944131b4@kdbg.org>
+Date: Mon, 22 Sep 2025 08:34:47 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <08deb8a8-6c34-4f11-a36b-93d151a56f9b@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] gitk: make Tags and Heads window geometry sticky
+Content-Language: en-US
+To: Michael Rappazzo <rappazzo@gmail.com>, git@vger.kernel.org
+References: <20250920184007.26183-1-rappazzo@gmail.com>
+ <20250920184007.26183-3-rappazzo@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <20250920184007.26183-3-rappazzo@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Sep 19, 2025 at 11:38:50AM -0400, Derrick Stolee wrote:
-> On 9/18/2025 4:29 PM, Junio C Hamano wrote:
-> > Matthew Hughes <matthewhughes934@gmail.com> writes:
-> > 
-> >> I was also looking through the list of config options (within
-> >> `set_recommended_config`) and thought it might also be useful to comment why
-> >> each those settings are recommended in the context of working within a large
-> >> repository.
-> > 
-> > That would be ultra useful.
+Am 20.09.25 um 20:40 schrieb Michael Rappazzo:
+> Currently, the Tags and Heads window always opens at a default position
+> and size, requiring users to reposition it each time. This patch makes
+> the window remember its geometry between sessions.
 > 
-> I think all of these ideas are good ones. Adding the comment as Patrick
-> described is good, for sure.
+> This change saves and restores the Tags and Heads window size and position
+> relative to the main gitk window. The geometry is stored in the config file
+
+The "relative to the main Gitk window" is not true anymore.
+
+> as `geometry(showrefs)` and persists between gitk sessions. The window
+> position is stored relative to the main window, so it maintains the same
+> spatial relationship when the main window is moved or when gitk is restarted
+> on different monitors.
 > 
-> Instead of commenting the _reason_ in code or in the config, it would be
-> good to list the reasons for each recommended config in the Scalar docs
-> so they would be visible in web docs [1] for easy discovery.
+> Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+> ---
+>  gitk | 35 +++++++++++++++++++++++++++++++++--
+>  1 file changed, 33 insertions(+), 2 deletions(-)
 > 
-> [1] https://git-scm.com/docs/scalar
-> 
-> It seems like Patrick is already 80% of the way to a patch for the
-> comment in the config. I'll see if I can carve out some time next week
-> for the commentary on the config options in the Documentation.
+> diff --git a/gitk b/gitk
+> index 95469a8fae..0393241c85 100755
+> --- a/gitk
+> +++ b/gitk
+> @@ -3116,6 +3116,11 @@ proc savestuff {w} {
+>          puts $f "set geometry(pwsash1) \"[.tf.histframe.pwclist sashpos 1] 1\""
+>          puts $f "set geometry(botwidth) [winfo width .bleft]"
+>          puts $f "set geometry(botheight) [winfo height .bleft]"
+> +        if {[winfo exists .showrefs]} {
+> +            puts $f "set geometry(showrefs) \"[wm geometry .showrefs]\""
+> +        } elseif {[info exists geometry(showrefs)]} {
+> +            puts $f "set geometry(showrefs) \"$geometry(showrefs)\""
+> +        }
+>  
+>          array set view_save {}
+>          array set views {}
+> @@ -10209,11 +10214,13 @@ proc showrefs {} {
+>      if {[winfo exists $top]} {
+>          raise $top
+>          refill_reflist
+> +        wm protocol $top WM_DELETE_WINDOW [list destroy_showrefs $top]
+>          return
+>      }
+>      ttk_toplevel $top
+>      wm title $top [mc "Tags and heads: %s" [file tail [pwd]]]
+>      make_transient $top .
+> +    wm protocol $top WM_DELETE_WINDOW [list destroy_showrefs $top]
+>      text $top.list -background $bgcolor -foreground $fgcolor \
+>          -selectbackground $selectbgcolor -font mainfont \
+>          -xscrollcommand "$top.xsb set" -yscrollcommand "$top.ysb set" \
+> @@ -10239,8 +10246,8 @@ proc showrefs {} {
+>      ttk::checkbutton $top.sort -text [mc "Sort refs by type"] \
+>          -variable sortrefsbytype -command {refill_reflist}
+>      grid $top.sort - -sticky w -pady 2
+> -    ttk::button $top.close -command [list destroy $top] -text [mc "Close"]
+> -    bind $top <Key-Escape> [list destroy $top]
+> +    ttk::button $top.close -command [list destroy_showrefs $top] -text [mc "Close"]
+> +    bind $top <Key-Escape> [list destroy_showrefs $top]
+>      grid $top.close -
+>      grid columnconfigure $top 0 -weight 1
+>      grid rowconfigure $top 0 -weight 1
+> @@ -10249,6 +10256,8 @@ proc showrefs {} {
+>      bind $top.list <ButtonRelease-1> {sel_reflist %W %x %y; break}
+>      set reflist {}
+>      refill_reflist
+> +    after idle [list manage_showrefs_geometry $top restore]
 
-Agreed, that seems like a good compromise: we note in the config the
-values that were set by scalar(1), but the more verbose justification
-would be part of the docs.
+My thinking without having debugged it is:
 
-I'm a bit stretched right now, so if you want to work on this please
-feel free to just pick my patch and iterate on it.
+ 1. A Configure event happens with the default geometry when the window
+becomes visible. This records the default geometry in geometry(showrefs)
+by the handler that is bound in the next line below.
 
-Thanks!
+ 2. "After idle" the geometry is set to the then-current value of
+geometry(showrefs), which would then be the default geometry and not the
+one restored from the settings.
 
-Patrick
+Why is it not necessary to encode the now-current value of
+geometry(showrefs) (the restored value) in this after-idle handler? IOW,
+why does this work?
+
+> +    bind $top <Configure> [list manage_showrefs_geometry $top save]
+
+With this binding, all size and position changes are immediately
+recorded in the global geometry(showrefs) variable. Why do we still have
+to bind to so many other close events? Why is it necessary to check for
+`winfo exists .showrefs` and handle that in a separate branch in proc
+savestuff above?
+
+>  }
+>  
+>  proc sel_reflist {w x y} {
+> @@ -10281,6 +10290,28 @@ proc reflistfilter_change {n1 n2 op} {
+>      after 200 refill_reflist
+>  }
+>  
+> +proc manage_showrefs_geometry {top action} {
+> +    global geometry
+> +    switch $action {
+> +        save {
+> +            if {[winfo exists $top]} {
+> +                set geometry(showrefs) [wm geometry $top]
+> +            }
+> +        }
+> +        restore {
+> +            if {[info exists geometry(showrefs)] && [winfo exists $top]} {
+> +                after 1 [list wm geometry $top $geometry(showrefs)]
+> +            }
+> +        }
+> +    }
+> +}
+
+The two branches have no common code path. What is the rationale to have
+a single function with sub-commands instead of two distinct functions?
+
+> +
+> +proc destroy_showrefs {top} {
+> +    manage_showrefs_geometry $top save
+> +    savestuff .
+> +    destroy $top
+> +}
+> +
+>  proc refill_reflist {} {
+>      global reflist reflistfilter showrefstop headids tagids otherrefids sortrefsbytype
+>      global curview upstreamofref
+
+-- Hannes
+
