@@ -1,65 +1,65 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D4A20E023
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 13:36:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEAA7260D
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 14:07:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758548164; cv=none; b=KZt6BuurZ126GF39xJcnfuoKDGsXajz1YzRUezLpendBcA6x9YpKpyKu/G7c8YtA8NjK60ZpF0DklWaWgc4l5TR9ikvBpykrrIH6kNrK7dyWJ+UDFAan7ie94a7FI9JNvi6qECTL8qhkClD5C73EQCmzTne+SR4SruHAvN+LLc0=
+	t=1758550065; cv=none; b=M4BbH+CiRZ/Zpz0J2PeckaOVrofT+wCSboY3F9bwP4EcHzhOaWOEtRsoJMybxE2dPyiv2XbOGcWL91WxcHp/lTUoqhG9WqZZicgAZWKMsFj5RZO5XXtFzQ3tm8fPISadQ0j3NGCklwQon2YbECcOFrGFrMblGYt3QlyIyVgMcZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758548164; c=relaxed/simple;
-	bh=hsl0Sw7VAAFP4EYBnBSNmW3nU0/i6TWRP7tVsbGfHgg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DNdsgd2hCSy7klJ8QwABIpV+M6mrSaO5cFCkbycnlz0m1nGmQ1hFOtaeRCWKVYy68If1iatvRNPX8BT2k4WSc+fgToFJ9W0kckoqpKFpEnWSWGzsh1zZzsV4tDO9eHSmXgMXYBvFcL2GkL0Uy4kGcSGk5rOptoUMwl/FKX4Iz/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mVxJk3My; arc=none smtp.client-ip=209.85.222.178
+	s=arc-20240116; t=1758550065; c=relaxed/simple;
+	bh=Hp6nV2vsAMg/WzFPG0BcMV62CDJWntrw01BGs14R+Ng=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=pG41nI9GFotPZ8BNDBUAMcC3o7pfOM1TDsmMjjhgiSnFUsGSCVbzNiPOuY9ugK3BsjNc0eW2z3cbqF5dNpTZChplvPBWNX58Bl/6iFhFBVfZt0TEvoW8eMaQrPAZ5DCVyl7DvDQiaf3L/TiV/+6Y2xRHgpMyyD+yEiJ0LzyFEzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lUt6+fcR; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mVxJk3My"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8072bb631daso362802685a.1
-        for <git@vger.kernel.org>; Mon, 22 Sep 2025 06:36:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lUt6+fcR"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3f99ac9acc4so1262562f8f.3
+        for <git@vger.kernel.org>; Mon, 22 Sep 2025 07:07:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758548161; x=1759152961; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20230601; t=1758550062; x=1759154862; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6jka+5BuNYmVd+S6mr4k13NNX1oj4sDggzsm9F/WJZM=;
-        b=mVxJk3MyssH00KL0nPvZ6qhhW0LQRK36mXLBJIQ6q5KZnuvSzIqwwZ1Qq9qA7+hsbw
-         YVl14zOXwEwvhbvXCrjISSbVm1o7S0vpsOAr+UDdIixNdvIes9qbFcpU3A80XDxIvwPx
-         dvaogF/Vo/fV/iuwmv3tk4XkFFLmKas5wys8HBDbAXlo1WlI5Py63vkOVmpz+ObU1xmT
-         qp3dUQo8cRU7f/FOBoFtDbv4ElXN2TwCfOrrXjUrS81/DFznk7PU9HQhlt9bl35QTNTR
-         hY3F8muFrzC7mzB6ufjmXsZZy3zX/OQtf+uX4dRBYQASfsUlBqhIChjivPbN/vQ992rW
-         4bQw==
+        bh=Qd8IVm+mhWkmlzTBb/WtqBuBz98igubHfA/Y1FUw3h4=;
+        b=lUt6+fcRLno0H4HPGBOh05l5I0d88mv10flmZdEEsTvuNiCgNplE48Fmyz9PgNF8pu
+         t4ejx5D3/XHPejyStjaXkLPVoP3/VDbyoICbYnjEahJkPsoz3hP407OSK6/B9F5CSiRM
+         aRkWgyh8BLgD8KYLomRoyh82ouaekNdk3puIUIVU0idau0+IvF0ILohvHUNkdOFRGq+J
+         /esQ/pCanMYBtdbGZT58YrrmFJKuXA71pZdvL+kp1vP38VFEnbgDSfPJkf2jpyVcP3NX
+         yk3NenKXiY2AavMroBBKmebuiHc3AciNXGRnBSMCrPD30c6/nUF2PJRQUUyYyAmUKvYb
+         ZyoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758548161; x=1759152961;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1758550062; x=1759154862;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6jka+5BuNYmVd+S6mr4k13NNX1oj4sDggzsm9F/WJZM=;
-        b=EWsR8yIS0bJ3eB5rkwz6KB1z9DO8WbgtnOKkI9n7L3lYzurdxAcilh2BbemWg3lrpf
-         FIv+JoBm7sWnBM2+hhC2T2Tis/NUm0oHsI47exkm9qS9FA9pZAwzFcEs2pc5r1jZzNh+
-         170CaEDAOufnJueFI664F4hHd9uaEVIdHzybNebh1CVUt4vDB32kXE4PhL3DBTEn+dQ2
-         Wkki1CVwxeMcPkNwSMqjkZJ126oNbWE7msYdiKW0yD8peZTKWAOY/gp8xHN+5f++Jd74
-         zKhVzDm3zNCnoM9T8aJJSKttIePGhWxtww8aXqR9B2Aizt1t329tlrN6qPo2rZVp4p6s
-         +7LQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWl2V63mVQrhDXGGL+1T3WR4AqNwKQwgBT9ADrWXEH4mT9M/Z1JkBDGi7rceVPhaq0wMaw=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy1w5RCpiAhi4cpLjrTVRSK4RR5xdOOrIw6xT5sZEGKwY4oDCnJ
-	2un7S+lT/xLPOQi1kcQh7alc4bnHY1qd/prPA+uq5aLS0Jmi8W7s5wyc
-X-Gm-Gg: ASbGncuLXmkb9bOkcKVgEoDNDZaNCcCvAAx7sWbOXjE7+rzV+LkDiuJj6ukdFEO7CX9
-	4rki4xsEurHWQe7jqrY2nlVy9cvcs8ZbTz/1/22/8j/5uqGZpOsrqAemrPUmxl0vfHZT1zwjKlH
-	fPFzLLMI3qwrIBAQfZURWUS3wgjYNbfPSeHJh5H7UiBvA7kKFgePfvTQAkUxF1sNzpQra2lxIYR
-	5IM6wwt8TxbG/YiilnnzYLysHuElc3bJTbqRbQ/F3FnUGE2TC2ovRbdvGb6Kt2AdQcyv3wUBgIo
-	OQ2+kCQUYS5EEZVbJ91VnUZJ6+Y1SeXZsXSn6dguJDKLPNoktjNneVedvjNjIYC/pJ4jd8+2rN/
-	dweYPKuxVHwP3y8RpHIo9EfwL4mnB+z/MSm2YPVnCNbQLfy9ACM0Pw+DweFCBAIOc+tcc+uk=
-X-Google-Smtp-Source: AGHT+IEZKl2PUSgOs2sFQCq/8wntwlnOCwvGK9iJmbAGzcoyJ2YoqC8wSjd+SgWpWS+Un388ZJ19rA==
-X-Received: by 2002:a05:620a:4607:b0:804:4a23:38c1 with SMTP id af79cd13be357-83ba589b884mr1516948685a.36.1758548161385;
-        Mon, 22 Sep 2025 06:36:01 -0700 (PDT)
-Received: from ?IPV6:2605:a601:a6de:d300:c3d:251c:41c5:905f? ([2605:a601:a6de:d300:c3d:251c:41c5:905f])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-848b1f5b5f6sm219270885a.31.2025.09.22.06.36.00
+        bh=Qd8IVm+mhWkmlzTBb/WtqBuBz98igubHfA/Y1FUw3h4=;
+        b=iQ50/tI1D8gJ9pQl+iyBH3qDSlb4pibBNT1Ysu5xA+7lsi8dVYJrsnR0CWYTjunFEs
+         U3TPvTzgXvhJhXBY5BKTGPcDu6vjk0ONW0ZEyTr5R9vImH8M91DNTMKshhwTVTBa56bA
+         WTujbYcnvzWR/+IF/EjPVpQgizvamAANM2ypz7vPa/4vPLRu9X95NyOdfPtVkDR9LcRS
+         NQZ5ljwnBHzRrd63vPKo1rtGS3YiSgUqkEzzpn6Yt2hMjsSmUFOs0Vds1fwmypUrFazH
+         Bel7cRXEPIseV6to6seEqGT9msk+bCgi62hl/7Uv6aI4Zsq0vHdowzgpROZZie7As/Xo
+         3q3Q==
+X-Gm-Message-State: AOJu0Yxd+2WnR7cPlc7CgbJktvjxQZVHaZZasdo4mlRi2wMu1NL3CU6T
+	ezecr2bZlwVcVG1GVMlqAq5iocmHRLWzulub/Aw8coo3SHC0kbOtxW7f
+X-Gm-Gg: ASbGncs4DOKK+rxI5hqT8D8Oo3N+JTWZ8qVdeO91+xzj2F0R9/FnaGJ3X+hcFNiGaLx
+	JpR78U2dxv1Z8wZhoUaqb3FVuHdaNh27yIuRAUiE7mA/JA2U5kxe3FHTwxRidZUBu6jqw5UU5FJ
+	Z+d+pdAPQiadjs9LgtLqvMaNBVJnSy2n6Asu98+586loCz1FAg8bNk9ZwlFuBmXMDUQdL/MP9pV
+	qVV77wZlAFwRyJIz1ZaWXr+1nKmdd+R8WQHic/vh25N6b1pj9SYv11RBmMX7ilkMLZlRJgIyx/g
+	ZG2A9tzeYjbtbfV53DIOlzlueCznhZA8lvTdNzUifwckPQ9kMELb/7hlSNCHxKkzgo3uibBtGcL
+	XNNh1w4CV4TDtxYU2Or1JSDtqogeym45nrqe+Yg+aNCFrUiRyms5oKXbmdghktNJ8iRyoWmlEA5
+	s=
+X-Google-Smtp-Source: AGHT+IGe/eYs/kudJUjOgh7gEAz/7C+s+BGOBmCW4pGbPy8ZSTLsoUUCzJdgXlRqnri7uhXE9LO5HQ==
+X-Received: by 2002:a05:6000:238a:b0:3fe:34ec:2f8f with SMTP id ffacd0b85a97d-3fe34ec3351mr3089274f8f.40.1758550061636;
+        Mon, 22 Sep 2025 07:07:41 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-464f4f9f4e4sm228808135e9.13.2025.09.22.07.07.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Sep 2025 06:36:00 -0700 (PDT)
-Message-ID: <ffa61066-7004-48dd-9096-85b305373bc7@gmail.com>
-Date: Mon, 22 Sep 2025 09:36:00 -0400
+        Mon, 22 Sep 2025 07:07:41 -0700 (PDT)
+Message-ID: <f23fb338-3039-4c86-a36e-439d68d14acc@gmail.com>
+Date: Mon, 22 Sep 2025 15:07:40 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,55 +67,57 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [QUESTION] how to find options set by scalar?
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>,
- Matthew Hughes <matthewhughes934@gmail.com>, git@vger.kernel.org
-References: <vppjutjcdglp44qvsk4qozphycyg663yrq5775zztim2oe7ty5@uttjrshb52bd>
- <aMkVqNbdgxqBJ9K4@pks.im>
- <evxbvwwyo4p4iboc4k6r2cd2cvlnm2upgxumqopdijwmvhxhxs@7xvg42heibp3>
- <xmqqikhf7bdf.fsf@gitster.g> <08deb8a8-6c34-4f11-a36b-93d151a56f9b@gmail.com>
- <aNDqnMTJIoHi7Ifc@pks.im>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 7/9] BreakingChanges: announce Rust becoming mandatory
+To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Ben Knoble <ben.knoble@gmail.com>, Christian Brabandt <cb@256bit.org>,
+ Collin Funk <collin.funk1@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>,
+ Elijah Newren <newren@gmail.com>, Ezekiel Newren <ezekielnewren@gmail.com>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Junio C Hamano <gitster@pobox.com>,
+ Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+ Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+References: <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
+ <20250915-b4-pks-rust-breaking-change-v5-7-dc3a32fbb216@pks.im>
+ <72d0a316-ee3d-45a0-8122-77c52911614b@gmail.com> <aNFImn9toejLzIJR@pks.im>
 Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <aNDqnMTJIoHi7Ifc@pks.im>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <aNFImn9toejLzIJR@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 9/22/2025 2:20 AM, Patrick Steinhardt wrote:
-> On Fri, Sep 19, 2025 at 11:38:50AM -0400, Derrick Stolee wrote:
->> On 9/18/2025 4:29 PM, Junio C Hamano wrote:
->>> Matthew Hughes <matthewhughes934@gmail.com> writes:
->>>
->>>> I was also looking through the list of config options (within
->>>> `set_recommended_config`) and thought it might also be useful to comment why
->>>> each those settings are recommended in the context of working within a large
->>>> repository.
->>>
->>> That would be ultra useful.
->>
->> I think all of these ideas are good ones. Adding the comment as Patrick
->> described is good, for sure.
->>
->> Instead of commenting the _reason_ in code or in the config, it would be
->> good to list the reasons for each recommended config in the Scalar docs
->> so they would be visible in web docs [1] for easy discovery.
->>
->> [1] https://git-scm.com/docs/scalar
->>
->> It seems like Patrick is already 80% of the way to a patch for the
->> comment in the config. I'll see if I can carve out some time next week
->> for the commentary on the config options in the Documentation.
-> 
-> Agreed, that seems like a good compromise: we note in the config the
-> values that were set by scalar(1), but the more verbose justification
-> would be part of the docs.
-> 
-> I'm a bit stretched right now, so if you want to work on this please
-> feel free to just pick my patch and iterate on it.
+Hi Patrick
 
-Makes sense. I'll pick up your patch into my series as I prepare it.
+On 22/09/2025 14:01, Patrick Steinhardt wrote:
+> On Fri, Sep 19, 2025 at 02:59:58PM +0100, Phillip Wood wrote:
+>> On 15/09/2025 12:22, Patrick Steinhardt wrote:
+>>> 
+>>> +You can explicitly ask both Meson and our Makefile-based system to enable Rust
+>>> +by saying `meson configure -Drust=enabled` and `make WITH_RUST=YesPlease`,
+>>> +respectively.
+>>
+>> This is helpful but ideally before Git 2.53 we'd make the Makefile and meson
+>> print that information if they fail due to a missing rust compiler.
+> 
+> The intent here is to allow us a bit of time to iterate on the build
+> infra before making either of the build systems error out. Ezekiel has a
+> bunch of follow-ups that we'll want to land to also unblock support on
+> Windows and to implement things we don't yet have, like Rust-accessible
+> C bindings.
+> 
+> Is there any particular reason why you want to accelerate this timeline
+> and make the build systems error out right from the start?
 
-Thanks,
--Stolee
+I'm not suggesting that. I'm saying when rust is enabled by default in 
+Git 2.53, if the Makefile cannot find a rust compiler it should print a 
+message that says how to build git without rust so that users do not 
+have to wade through this document or our release notes to find out how 
+to do that.
+
+Thanks
+
+Phillip
 
