@@ -1,39 +1,103 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581C8241667
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 20:38:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F31D2D5427
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 20:59:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758573500; cv=none; b=WmTysLEQGQ/dZL2Mz1ejbXlPYh7Yfgq5J2GlYOQb5Os4KNHjWSt16VHxan7AABdzDA8fekylkl88PVz1lvavDzYU9vJGG7cjw/hwC/aKZSlJpgiy1RwPLh48aFPTewaVDwU2tnfu6uqoRGajPAcRe9s6fpMEfFjaUq+evq6y+7Q=
+	t=1758574747; cv=none; b=iPsh7CIcsJzSb92ggZOG288sqtYyQxLpE1H0D22mFaAdQ069PywKUot0kCCmUBXgleC+NdSvZON6Tb50AgX++1nW+ytYrttJUvp9GMvYm5uaTZ8cU7M/pRtRp3/EiNDVKVs+UmfYnTS8qVpZ4MWeB/Rv3NNWwDGiCPR+dSK7lao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758573500; c=relaxed/simple;
-	bh=90JwkWIrk7dsPs0E0O6EEQifWESdXbFPa4pYG21IjqE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dg1GEmMVNtqUHCwOJw5SiiDGKUYGo30ItX+qwtukcS/7+Ax/voRmJbPcdrNvvflGGNJJMQ+1X3NgvwO/UoBg5XC1zegmRAjXK9MjORJZMdM/h7A33nAoJWgNPiWMWJp0YCY19uAehFARyfljnPgpjj4eB3tiwWYNuC8eItdPqM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=hTp07Y4G; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1758574747; c=relaxed/simple;
+	bh=O0fQJCv1uHJZxqWEybnbnRGaxXRh+d0gibBCQcXqNaw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=X1sHIs54tZ/qIB6ggW3rCB9vYnNFBFBER/wea7AuRWqjMgU3cjJavA2N7Hh2aKrJ5S2X7o9/fs6lolL5JLDuS9VK1Bec9krJPirBoj1mfrZk1yhyTErVMVmCoJRJG3HKzrFrtv291eo8r0onRsWyDoi95cbMXrvdOXu0nzzXSAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nLS817aZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T+9r2JyT; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="hTp07Y4G"
-Received: (qmail 162611 invoked by uid 109); 22 Sep 2025 20:38:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=90JwkWIrk7dsPs0E0O6EEQifWESdXbFPa4pYG21IjqE=; b=hTp07Y4Gcm4KF5K1iK1+IJeQravSRFULHz9UJGOrFAsPH9kikXRInVnTKH/JLVIepVts4PsTkTyQBWASH8UFoDl3AoAlkhkhVoAOpupwVqBXi4CETbR5RvH48s2LRJE9zPfS/pfq3iD6uCiB9y3s2IHPofgRb9C7xMX1qe+FsSeH0umMWBjM3V/HFma6UUMZZ4tj3RbOgIAg5grGF2mPs9RnHLHgJQut2fKlfLQhHosdGKnAfr+ycn3NihAkVY6JhbFCaOdtRESlPd2IZYOW3G/cF+0b/GSe6BkgkOKq4CGb/vEZyP6bll4Vn4LIZb8dY0iJBfm5DIuojjj3tWZtzw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Sep 2025 20:38:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 260269 invoked by uid 111); 22 Sep 2025 20:38:16 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Sep 2025 16:38:16 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 22 Sep 2025 16:38:15 -0400
-From: Jeff King <peff@peff.net>
-To: =?utf-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?= <velocifyer@velocifyer.com>
-Cc: git@vger.kernel.org
-Subject: Re: How do i get news of git releases
-Message-ID: <20250922203815.GA2264272@coredump.intra.peff.net>
-References: <4ea9cb1e-4367-4926-a9ba-0680dd63e616@velocifyer.com>
- <20250922201403.GD2205919@coredump.intra.peff.net>
- <1ff96277-c9e7-483e-ac98-b109b9603475@velocifyer.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nLS817aZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T+9r2JyT"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 199F27A0268;
+	Mon, 22 Sep 2025 16:59:03 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Mon, 22 Sep 2025 16:59:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1758574742;
+	 x=1758661142; bh=eT6abeEvW6il6RWPFRYHM7UNgeLELqYqOD52vUCRK2E=; b=
+	nLS817aZSIgH4KsBQ2VGDoYLHR3YWoOelUQRgdWEDXbboVdyRytUREUgkj7SO9Rw
+	5E+K8LRP1EQms4zC6pWlao9LAQfrK/NOJTTchS8jPnDvp4ON4uIk3Pr63nh2PrSE
+	Kq30pc4zxV3kVj1sdtxMUb6LA3Aowsr4zSqfKr/beRcxFdl6SdlNNzQ6p50RsnJY
+	vrxEDyPAJrdSIWNg31LzzDnAs4GoMtR9AdI081y5qQGoPqPaFxRd0LTo5j6I/YVx
+	zUpyLhqu/Ck/NQLPVKsvx4E6RsQ8IO9pykbHvFDmanNCc4EwcA8y0eRpZpKiNWiG
+	3T0MRivmLA5l1YsSAzi76g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758574742; x=
+	1758661142; bh=eT6abeEvW6il6RWPFRYHM7UNgeLELqYqOD52vUCRK2E=; b=T
+	+9r2JyTrnPhm3uC9AU0P878PIMw/etxtXjElaNYAHfCjvzz45yx++C0oooMDrs7o
+	E147d60vSiOkOO80OJhTsJNdDlBIF2PytBkyVmWnpw9xXQXEZcXyArCwCBRLpx6P
+	sZlvx1Qf3Oi6MkAUgwqc/pNdv7uWwkA2zD831j262+vSUgXwtilaCfGoNq3dbdXU
+	7V00Xp8AVHn831LhXCZCWdSyeLz357ZQPXwCQ4v6HlFoNP8rzojZ3ViiehLRXDK8
+	LApq7phu6GAGnRMkPwc6Q3yIdsecKKc7Vn4gfeWmPKyDoaWLec01Bs/I0V2N0UQN
+	YcZ27SIlqzT0CFL9TP0lw==
+X-ME-Sender: <xms:lrjRaECzOrziSaVFP8yfWgqYHlkFu87Zdqj0Z0pj1eH7RF2UxjEtCA>
+    <xme:lrjRaC2ci04DOxFX8xRemcPunbrRXWgbnMPJNj7d4EF_XMzSHJCqwStke5t1cgWia
+    tfwWkqBKp85jzLJVuXwrUz3hVJNoJH-C_T5ax9J5q8fBBpg7evP>
+X-ME-Received: <xmr:lrjRaJOPM5lEh98-iQyNNr935N6wvWKA6iYZ0LOkLSeGq9JPw2xcj0w02EsaVZOARd_Zf2PSp0bfvPqkvl3fvpJbI2QI-dgGNZm->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeekjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudekpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgv
+    thdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohhnthgrtghtsehhrggtkhhtihhvihhs
+    rdhmvgdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtph
+    htthhopegtsgesvdehiegsihhtrdhorhhgpdhrtghpthhtoheptgholhhlihhnrdhfuhhn
+    khdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtoh
+    hordhorhhg
+X-ME-Proxy: <xmx:lrjRaH7yuqxxKFET7Xmkw43-YHfhvin5dnK-1BsL4Ul2Kk6rN7oOsw>
+    <xmx:lrjRaOYPgBQcYJNH2tZr-3hLYLRLxqcGJZcaYbg5WsuerL-ALDnqZQ>
+    <xmx:lrjRaMFBfQfKxqqnJoa0mJg_QiEAghTB1DMlPJguB35KSNe7pfm90g>
+    <xmx:lrjRaPkXFMKAdTmx0kvawkrUfnRyoHwqvqxQ-2pA9--liDZreYUJVA>
+    <xmx:lrjRaFs8NEql9zcR_ftGW8pw-W98fg5_uX0qSo9AW41flP8uLgWItFA5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Sep 2025 16:59:01 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Patrick Steinhardt
+ <ps@pks.im>,  git@vger.kernel.org,  "Haelwenn (lanodan) Monnier"
+ <contact@hacktivis.me>,  Ben Knoble <ben.knoble@gmail.com>,  Christian
+ Brabandt <cb@256bit.org>,  Collin Funk <collin.funk1@gmail.com>,  Eli
+ Schwartz <eschwartz@gentoo.org>,  Elijah Newren <newren@gmail.com>,
+  Ezekiel Newren <ezekielnewren@gmail.com>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Phillip Wood <phillip.wood123@gmail.com>,
+  Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,  Sam James
+ <sam@gentoo.org>,  Taylor Blau <me@ttaylorr.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v5 7/9] BreakingChanges: announce Rust becoming mandatory
+In-Reply-To: <aNGkt/DdnbjNu3s8@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1bor?=
+ =?utf-8?Q?=22's?= message of "Mon,
+	22 Sep 2025 21:34:15 +0200")
+References: <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
+	<20250915-b4-pks-rust-breaking-change-v5-7-dc3a32fbb216@pks.im>
+	<aMsxhp6ZO2Cdz7+k@szeder.dev>
+	<aMteF4VTq2C5sAhK@fruit.crustytoothpaste.net>
+	<aNGkt/DdnbjNu3s8@szeder.dev>
+Date: Mon, 22 Sep 2025 13:59:00 -0700
+Message-ID: <xmqq348etd9n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,56 +105,64 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1ff96277-c9e7-483e-ac98-b109b9603475@velocifyer.com>
 
-[please keep responses on-list]
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-On Mon, Sep 22, 2025 at 04:27:44PM -0400, 𝕍𝕖𝕝𝕠𝕔𝕚𝕗𝕪𝕖𝕣 wrote:
+> On Thu, Sep 18, 2025 at 01:19:19AM +0000, brian m. carlson wrote:
+>> On 2025-09-17 at 22:09:10, SZEDER Gábor wrote:
+>> > Providing an LTS release for those platforms that can't jump on the
+>> > Rust bandwagon is great, but...
+>> > 
+>> > Git 3.0 will switch the default hash algorithm for newly initialized
+>> > repositories to SHA-256, which, presumably, will also encourage SHA-1
+>> > -> SHA-256 migrations in existing repositories.  Alas, it appears that
+>> > the SHA-1/SHA-256 interop feature will only be available in Rust.
+>> > 
+>> > How will this affect those platforms without Rust?  What will and
+>> > won't work on such platforms?
+>> 
+>> On Git 3.0, nothing will work without Rust because it will be mandatory.
+>
+> Well, "What will and won't work with respect to hash transition" was
+> what I meant but, alas, didn't convey.
 
-> > The Git project doesn't maintain any RSS feeds that I'm aware of.
-> > However, releases are pushed to GitHub (among many other mirrors), and
-> > they do provide feeds. So I think pointing your feed-reader at:
-> > 
-> >    https://github.com/git/git/releases.atom
-> > 
-> > would work.
-> > 
-> > The project doesn't use GitHub's Releases feature specifically, but I
-> > think annotated tags that are pushed to the repo end up there, too. The
-> > resulting feed entries are a little bare. Possibly they could be
-> > populated with the release notes, but from the Git project's
-> > perspective, the GitHub repo is really just a Git mirror. Presumably it
-> > would require some scripting around GitHub's API for the tag pushes to
-> > also create Release entries (and then probably somebody would want the
-> > same for the GitLab mirror, and so on).
-> 
-> Why do the Git tags not have the changelog? You can use git-tag -a to create
-> a tag with a changelog.
+But "here is a topic to consolidate everything we talked about
+starting to use Rust" Ezekiel works on incorporates the "dip our
+toes in water rewrite of varint.c into Rust" Patrick started and
+"Rust will become mandatory" policy document written by brian [*].
+At 3.0, the WITH_BREAKING_CHANGES conditional compilation option is
+removed and the conditional code paths protected by that macro
+becomes unconditional.  When that happens, you won't have a git
+binary from the source for that version of Git at all, unless you
+can turn varint.rs into varint.o (which typically is done by
+compiling the source with Rust toolchain).
 
-Yes, they're already annotated tags. But they contain only the version
-number and signature. I suppose they could include the whole set of
-release notes (and it looks like we used to do that in some very old
-tags), but there may be some possible downsides:
+So I would think "nothing will work" is a very fair assessment of
+the consequence of that policy.  And the answer would be the same
+for "with respect to hash transition" question, I would think.
 
-  1. I'm not sure if anybody depends on the current format for
-     scripting.
+The version of the document in this thread talks about 2.52 (opt-in)
+and 2.53 (opt-out) before jumping to 3.0 (no way to opt-out) but it
+does not say anything about how far out that big version bump is.
+But the numbers I remember hearing was in the orders of 18 monts or
+so if I am not mistaken?
 
-  2. They can't be revised if we later fix up the Release Notes (e.g.,
-     typo fixes, but also they were recently all retroactively brushed
-     up to be renderable as asciidoc).
+As I already said a few times (e.g. <xmqq8qipzhg3.fsf@gitster.g>), I
+feel that the timeline hinted by any of these documents that were
+proposed is way too aggressive for affected people to practically
+prepare for.
 
-  3. The resulting objects would be much larger (the v2.51.0 tag is 974
-     bytes, but Documentation/RelNotes/2.51.0 is 14K, and some are even
-     larger). Git may open them frequently to peel the tags, which may
-     make some operations slower. Though it might be OK; we try to cache
-     peeled values in packed-refs, and possibly the peeling code could
-     learn to parse more progressively (e.g., grab the first 1K to see
-     if we hit the end-of-header there).
+By the way, I was hoping that the hash compatibility work can be
+done as an opt-in item available only for those with Rust, while
+Rustless folks are forever stuck in a single hash algorithm world,
+and be released well before Git 3.0 that makes Rust mandatory.  That
+does not change the fact that nothing will work wrt hash transition
+for Rustless folks, though ;-).
 
-Those aren't necessarily show-stoppers, but just some top-of-the-head
-thoughts. Junio (the maintainer, who actually makes the tags) might have
-more thoughts on why we used to do that sometimes and don't now.
 
--Peff
+[Footnote]
+
+* By the way, I _think_ I never saw that policy document until
+  Ezekiel started his topic and sent it out as one of the component
+  patches; how did it get there from brian to Ezekiel's topic?
