@@ -1,163 +1,134 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA693192B7D
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 16:24:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072DA3112BF
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 16:27:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758558271; cv=none; b=Rln8NcavTWvYGEqKDg/f4mEmCzzmVhuSUPxYY6rhoEo1a/vyQmEmZcFm0DIjuzb8999wmvHUrGl8e1ExVGMATlBsUMFCgA5J//y8gUOXnFHG1lYAOt4IAlZ9PHx46dMuwmSlTOshtIdivaC1yt8A1E7R6KSITvJSGMZyQOuHLKE=
+	t=1758558467; cv=none; b=uE9V0y9MN6qA6b4VVMZNMPkAUIPU9rRXGaiHXQrvxvSlfOfrGjnRJWBparCSXyhjKGFvmtS5WckkCpngyiPIGzRF7ax52yOWgOqakiwuoUTqSUi2gENGJcykaL+3Hak38SDcgs9//158pvgyRLHbjwtkL04/7/1iobkgfP6EGtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758558271; c=relaxed/simple;
-	bh=4Sz2YDAIRee6c8R1cKZ4LwL5cxEakBHx4ISkHhEPyBQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KfXZUTq/QLhGkSAmkQ4YIchVpnphNjkCp7uWTiB7K8APJ4zZwOQRpAuhC/g29ot47BuszKuHsybVkNa/2NlrSqzIycFxojw7Jz1ZkB/jJI7Ihiapvpoto1vwgxu76rqf9t/0inyJBDAUrGQbglFsr6k0uFZNPkFelGce6J6jtBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IwABacQt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ftuyXn5I; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758558467; c=relaxed/simple;
+	bh=kHfI/htBEXep84s4nNibuB6kQ2fAwtXZ9j596sKtLSk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=c9/LbnJfFsmygo9mTlrs0ODq4hMpRkdmMqY5kqUWDNgk9+JZHqOddByKPDWlOgKcnQkInFPRMv0sGiUviEI0+L32VmNwaHiZN49PE98whw8y8jZcJSROtIiCFVcEj/iAA+ecy8LPKU8uqk/oIdTKpo6oY0GGhnn+LdDd9UCMvGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h/5/0OD7; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IwABacQt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ftuyXn5I"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D8C64140019C;
-	Mon, 22 Sep 2025 12:24:28 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Mon, 22 Sep 2025 12:24:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758558268; x=1758644668; bh=gPFLmF5WCo
-	FVSExI7TCOq4R+/Lf7XwLEcBIkZxGId6g=; b=IwABacQtftDJxpm8Rbw9pVr0yh
-	KFkiC48vvJV1CLQuZrk2UzYxMTcmZE8P+V6Os4Heod3w5MSrSuo1XVpsUHO9p2z/
-	wqPIHvAYy/1fIQnjwHHE/WDGqJulw3+nsKIrJd2b+BcG2PVME0klwUfTJGtVf/sZ
-	jU+WW56CiHV3niBQztH5OKiC3mxdDbHIdY2WibvwD+JfUUFmNOH2FvLamJyxKVYp
-	08khpBcGBHTP6edFoXsYonbM2wVqMPOb38da6d97W8oIBJG630T/7+UU0RG27+6K
-	TSaZ195XtL4qGOHFkUThyG4MyU5VMRei8GGZm0mHnbot2P0grdtNMPHNmHug==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758558268; x=1758644668; bh=gPFLmF5WCoFVSExI7TCOq4R+/Lf7XwLEcBI
-	kZxGId6g=; b=ftuyXn5IhqVeUkg58dGQaFW64BaFVUxfie0fwBsI+rCau15kA0a
-	/BIVzmhs3EL6Ebw2Yap369XCD/SxU16us/lhob+sPFEsywrsozlkZMZ/DrwIu/bE
-	nD4wZD1BTdq7os7L+GISjEYxfvkZOTndFH+O4utpFaoTUfm33syijAA8HRoPpeg6
-	qlbFXO7YdXFqggslvmzkmrk8iqX84FZmGvfw95ZyjX+ywUH9QOkBZr8afyYsisxf
-	fHneHgVIWFFQ7B7nBjP/oJYt/ExcWtFYfY9uwUo4Baxju7pWUsBwUK6s7TjmdKvm
-	e6KlaaqQ/mjcWLt+e2ajNyhK46uVdJ/Q32A==
-X-ME-Sender: <xms:PHjRaD1379sUqOCTLPdAXzVhf5RwBEYd2qIb-opW6tXcT8hC_ykrLw>
-    <xme:PHjRaCgG_c8AzuD8VlUuhNgko_6htbrOwW0YPqPzyQ-qxTQRKt6TLWiZo1gWZJ_sD
-    NsOYQD3FZ9Tr3yVMlIlFR6c4HgHlOVQT54sc_cJYJUck0MdR4oF6g>
-X-ME-Received: <xmr:PHjRaDr_BqCSu7VGNtvqP96F3WWSY_-4qp09V8_-aeDLrI9k6oBgopG5R4bCD3y6T6xszOc7OQ8ZvqjjkSPyd734QR1VtGzlA3PF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeefvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghonhhtrggttheshhgrtghk
-    thhivhhishdrmhgvpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthh
-    hprghsthgvrdhnvghtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtoheptggssedvheeisghithdrohhrghdprhgtphhtthhopegtohhllh
-    hinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtthhopegvshgthhifrghrthii
-    sehgvghnthhoohdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:PHjRaFOXUlidWLnSbfz5MV7Inx045PcUJ0Wwzaedg1YGK_exWR6eFA>
-    <xmx:PHjRaP0KTmSifykuhazO6FeDpU15J3sfbLxrmUOClq5G_l16p-KJkA>
-    <xmx:PHjRaDpbCQ58cjzrHfVcLcyFRVuKWgrqisV7ECL3RuVGLoN6hRie1Q>
-    <xmx:PHjRaJd7u9uA2dUtzmFr_5z9QlMIuDLS9dfcDE4MyI-Xz6sQ-4EOgQ>
-    <xmx:PHjRaCuu3_n-3h8nRCo9kRi4q1Lb8ngGJeCNNGPvMwvVZvzt1GdUYCt1>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Sep 2025 12:24:27 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  "Haelwenn (lanodan) Monnier"
- <contact@hacktivis.me>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  Ben Knoble <ben.knoble@gmail.com>,
-  Christian Brabandt <cb@256bit.org>,  Collin Funk
- <collin.funk1@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,  Elijah
- Newren <newren@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>,
-  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Pierre-Emmanuel Patry
- <pierre-emmanuel.patry@embecosm.com>,  Sam James <sam@gentoo.org>,  Taylor
- Blau <me@ttaylorr.com>
-Subject: Re: [PATCH RFC v4 7/9] BreakingChanges: announce Rust becoming
- mandatory
-In-Reply-To: <aMfwGHL7dh8dk2cQ@pks.im> (Patrick Steinhardt's message of "Mon,
-	15 Sep 2025 12:53:12 +0200")
-References: <20250910-b4-pks-rust-breaking-change-v4-0-4a63fc69278d@pks.im>
-	<20250910-b4-pks-rust-breaking-change-v4-7-4a63fc69278d@pks.im>
-	<xmqqldmmqa1z.fsf@gitster.g> <aMfwGHL7dh8dk2cQ@pks.im>
-Date: Mon, 22 Sep 2025 09:24:26 -0700
-Message-ID: <xmqqsegev4jp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h/5/0OD7"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-36453927ffaso28414281fa.2
+        for <git@vger.kernel.org>; Mon, 22 Sep 2025 09:27:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758558464; x=1759163264; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kHfI/htBEXep84s4nNibuB6kQ2fAwtXZ9j596sKtLSk=;
+        b=h/5/0OD75bIOn0WdrGxZxWPblwu3HEk0GRcswROThWi5LCfr3fDlfsag61NPYwdxY1
+         5Dz8t9vrahoKSmJeUBcpeFhEpZd13s0pjfio30LiQv5VeMu6vXToPCmofZ+ihJyxVgv+
+         j0+AWuxum7zCZMvjqJ/WJpTIZ76+R/ZOUMgNGTXYrJ9P+4IZEdBP4r3pytV8Kduvf/El
+         RmaZF+JiLWhMZAurPCeF8AFUk2CNRbYivwkWgzOiElwmxuwyTvs0EhlVpeDBYlx0ch9f
+         Eh3G0mYRd2yqA2ntCD743ZbP+mL35+seL07N8F8m7yXLbk/of9z4pD6XR4+eJCvmomnj
+         B/OQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758558464; x=1759163264;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kHfI/htBEXep84s4nNibuB6kQ2fAwtXZ9j596sKtLSk=;
+        b=dJx6+U4o/9bke/2OgV4KF6uj+e13LDVEDl7k9Mij9t1AEfrcYCWmtvH+rTyK7qN3fE
+         712T9Ad+k2u4EEiC1jQ3hzD1Iy9S73JYFa0aoO2ItWtveHCyyXZJgMd/p/Jzt8Ujbj0j
+         OfemCKZzw7KgguIflfhYTgq6LfdZlxx2nNwsbFKINwTbMpHaANXM/3b/1deyJdzmOp7Q
+         l2ocV26V3XFRsQoSlDwElBFh+9umYKf2A8tWw3AZCGEzqQwzBS5JZHu1OshZ2QqSBhmQ
+         bW3Sz5SIMwIqRIYMq5ybOa4E89vmG9QNNVr/wnHgTlm6Yd02TbHdlHapzu/uwsKUGhAv
+         aZgQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVc0Wc3ndO4VpzoJcI+ou6lE6LeFh6/dgrXshy9nwX0S+6XSHPOX9CQjbS42o84TFQJvDE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywpq8GdNVCqFLMArraw5YQoMq1a5LhJ7CsgOdSaO0KBY9UHfmNn
+	HiOcowNuj/SieqGi2MYRNSeczgaBwX58DEGho8rPax5s8GZ+4/Ng+By9iCdFKDQDXN3qEWUWA4D
+	rqkaefG8zzuOk/5+m9ZHEKYtmEPi/rJM=
+X-Gm-Gg: ASbGncvWl2vh3RIzdvwUsL9fENRSsb9k1Z0kMlf7ucMKZtKvGAtK1NNLSDExvy7Ockk
+	+3jH4DaUE3qr9Rub8y7Qt/kTLubbXBfWQkcYAKe3qxuO2ZjDABIqOH6vy8jtSIzgl0vrAeYwEvh
+	TTsmLFJGblAYaslD//VHzSoJgMwcDzddu2BxZWT/ZSJmt5PjFGuXg0p37ACVO0yytU1i4y0EHda
+	xMau7jR
+X-Google-Smtp-Source: AGHT+IHbdojIzMTePfe20QHAf4qhCGOWlx1fIZ4CYXyI5FEV6oH4RVZOmwgsJdudXyCDnIWL6XJFYI4M6iUGZsyfCbU=
+X-Received: by 2002:a2e:a547:0:b0:36b:f63:27a1 with SMTP id
+ 38308e7fff4ca-36b0f633c09mr18646321fa.40.1758558463669; Mon, 22 Sep 2025
+ 09:27:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
+ <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com> <xmqqcy7pc8ix.fsf@gitster.g>
+ <CABPp-BHJUkSERQon6xx=sHrhN7i=6ekv+Hz1+P+2mh0=Xw15Mg@mail.gmail.com>
+ <xmqqy0qcae6z.fsf@gitster.g> <aNFIwFD6E6Lngy5M@pks.im> <CAH=ZcbDkDfc6j_gQCt_q9RLP_ozYqr09i1-xe2mvhSQRgf8MGg@mail.gmail.com>
+ <aNFz-0rO79l7crZ5@pks.im>
+In-Reply-To: <aNFz-0rO79l7crZ5@pks.im>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Mon, 22 Sep 2025 10:27:32 -0600
+X-Gm-Features: AS18NWDNiubOkRHuOl2hnXo945zSJ3mYrNjUlPWKbRBKLJsOOGEB9JFU4ecIePY
+Message-ID: <CAH=ZcbB_AZ7a=kQ_tHRtm7jPD6h_7AAiQYyaMQrG+ijj8Dyvrw@mail.gmail.com>
+Subject: Re: [PATCH v2 00/18] Introduce rust: In xdiff
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>, 
+	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
->> I am having a hard time imagining the practicality of this "hand
->> over but we still review" arrangement.  Some of the security fixes
->> are embargoed, and the reason why we are jetissoning the stale
->> codebase is presumably because nobody is willing to work on it other
->> than the "community support" folks.  I can imagine that we would
->> qualify them into the git-security cabal and let them use the forum
->> to coordinate among themselves, but then to what degree in the
->> "community support themselves" process is our involvement expected?
->> As long as we can make sure that they do not leak before the
->> official embargoed release, they do not need an official stamp of
->> approval from the project or by the Git maintainer---that is what it
->> means to "hand over maintainer ship", at least to me.
->> 
->> In other words, I like what I see in this paragraph, but I do not
->> think we can practically live with the part of the sentence after
->> the last ", but".
+On Mon, Sep 22, 2025 at 10:16=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
+te:
+> On Mon, Sep 22, 2025 at 09:18:14AM -0600, Ezekiel Newren wrote:
+> > On Mon, Sep 22, 2025 at 7:01=E2=80=AFAM Patrick Steinhardt <ps@pks.im> =
+wrote:
+> > > I personally think either (A) or (B) would be good choices. I would
+> > > slightly lean towards (B) just so that we have something that we can
+> > > already play around with while building the next steps.
+> >
+> > I'm fine with B if you fix the wording in your Breaking Changes about
+> > Rust being introduced in version 2.52. Rust was introduced to Git in
+> > 2.49.
+> >
+> > Elijah points this out in 1 and 2:
+> > [1] https://lore.kernel.org/git/CABPp-BFXRbaHk9U3BX+d12bZ+ryGOp+btR0ODM=
+w+HtD7xd+MBQ@mail.gmail.com/
+> > [2] https://lore.kernel.org/git/CABPp-BEiK49f_UB5UPe3qM9O7vQGGFJ8Nshw1f=
+6W_6Lw7HRL6Q@mail.gmail.com/
 >
-> I think the most important part here is that this community-supported
-> LTS release should still live in the canonical repositories. We should
-> avoid the situation where we hand over maintainership to such a degree
-> that the end result (the tagged LTS release) lives somewhere else.
+> Will adjust.
 
-Why is it a bad thing?  The official repository can have a README.md
-with a single entry "maintenance releases for Git 2.98 LTS (most
-notably with no Rust requirements) are found at this separate site".
+Thank you.
 
-> Otherwise we risk chaos and a plethora of different LTS releases, which
-> would be harmful both for us and those that rely on the LTS releases.
+> > > By the way: I'm also happy to change attribution of some of the patch=
+es
+> > > in my patch series to mention Ezekiel as author. I don't care much wh=
+o
+> > > is listed for the initial patches that introduce Rust, but would reta=
+in
+> > > my own authorship for the "varint" and "BreakingChanges" commits.
+> >
+> > My only other concern is with varint. You use usize on the Rust side
+> > and then uint64_t on the C side, but I'm ok with fixing that later as
+> > it only breaks 'linux32 (i386/ubuntu:focal)' in the github workflows.
+>
+> Oh, this is actually an oversight, good catch! I refactored "varint.c"
+> to use `uint64_t`, but then forgot to adjust the Rust side in the same
+> spirit. Will fix.
 
-No risk for that as long as we have a single "go there" pointer, right?
+You also missed updating varint.h.
 
-> And yes, that probably means that a trusted LTS maintainer should be on
-> git-security@ so that they are aware of upcoming security releases.
+> I suggested in [1] that I can change authorship of the patches that
+> introduce the initial infrastructure into Meson and our Makefile (so I
+> guess patches 1 and 3) to instead list you as author and myself as
+> Co-authored-by. Is that something you want? Given that you have
+> kickstarted the whole effort around introducing Rust again I wouldn't
+> mind that at all.
 
-Absolutely.
+It doesn't make sense to me to list myself as the author of any of
+your commits, but I would like my name referenced in your commit
+messages.
 
-And there should be a community of those who are working on helping
-the backporting effort around that LTS maintainer that ensures there
-is no "chaos and a plethora of different LTS releases".
+Thanks.
 
-We might occasionally update what is listed in "git ls-remote --tags"
-from our repository by syncing with them only for convenience, but
-the important point is that the community supported LTS should have
-its own official site, which is different from the cutting/bleeding
-edge.  Most importantly, a coordinated disclosure would say that the
-update to versions of
-
- - Git 3.0 to Git 3.4 are found $HERE, 
- - Git for Windows 3.0, 3.2, and 3.4 are found $THERE
- - Git 2.98 are found $COMMUNITY_LTS
-
-to make sure that people know where to find their updates.
-
-So, no, I do not think we should unnecessarily mix community LTS and
-the main project.
-
-
-
+Ezekiel.
