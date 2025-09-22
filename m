@@ -1,172 +1,163 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE50D8F49
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 22:15:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B8F19D8BC
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 22:19:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758579322; cv=none; b=ppbQMsUhISXCyImy9HkE+HhB3A4YqC1M5it8w+eAfA1lc345tLlQx8MxJJ8PrElDhriyalCzfLXgsAsNAmCUAuM0JjEW14dJOY0r1uQJWiWtsUylSl1giV2fBpoQBymuZclCLv+A2LZ08WxNmcEyXlWqMUYn8ToBzS1hBuCtWEc=
+	t=1758579552; cv=none; b=KbbWC707vhTgYNubA0m6gOM56KJaD77rDhfZ21Jaldg7IvnJUBpw0E8yu7wl3dcv1lLAv3+u0uo1eRLT3nGlQUXOvHFb3HuU3HHnN4gbERqPrwaH1rDcafVh5rD5EQzWJI8rT/CIinxq5ET9bYqG4q0H0YShg5SKnRfNCc13p/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758579322; c=relaxed/simple;
-	bh=6vL6NtDY0/EmURMhniCTBq7sM21BCX7yIiqE7oB83jU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pso1lKVYO9KkW2xdsHwE66VItqUjKA6rhYkjUn2I6zKdXvgI+Gp7DQ+ICFGT3puBuuFW+TIWAuaqLddxjIWJYaXGSI4K6HcUm3ACUbqxw0NN7swxklZMkNgp00pGQTlFl7WvKy1pmOM5KWQrlNNqoBa/xTLxLNfY8QlcTOCHj2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=okarxZ+H; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1758579552; c=relaxed/simple;
+	bh=gJtjvv80UQPNT4Q/rMlyY3391n8qWoY023bgOlvaMB8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=A+seoptn/bTd5bmEbAAUWXOPiiWTNXg06OXX23LRDu46+P0Qh8J00lZ75zICcNdEeAlmNrV0uTlYWZAdIDUAy4OaXb3VsiwnnZfF3f8Igb071X8J2eRJz9MD1IVP2yr3pCjF0uzIpwKq4YSTNaOZt8Wt/l1cP5SSCRKMe1VJopI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QwVgsn21; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KDpatJS9; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="okarxZ+H"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1758579318;
-	bh=6vL6NtDY0/EmURMhniCTBq7sM21BCX7yIiqE7oB83jU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=okarxZ+HoiHHdiCNv6LPDKMUoIrWVNVbSv/wyx52fIIONcM+ArTxhxtvGUaxREses
-	 8Gb8WaInHHgngdyb9IvrJnLWwZyI0UmXSCtgoyjAqb78qk/Fnu7jZoc/vEzOU/3RZH
-	 t2o1kOq+wbZgVbV/hOb+BaB94XAfgZljTSqEMb0UIoyqF+pAo/pii2H89AoVUiPQWv
-	 CmAFx069KqQ9kW9bo5EaxyXBKi8jBnwsGUGbcDaGfLhNmXwyR9Zwf+hVL67HH3Lc4l
-	 TNrsBwC8ftSwizh/Ri1VWbQ8Y2hJA23NdX/ncdO2r3UkRcqvaxEZjpD/4Ejd9bRbDE
-	 nPSEx9XXjAuZMCFUQ2O5CdsVkrZrej8iPSq/ihcTkaz7hp3l6YS/vzcPsSMjjrjT6c
-	 +0c48YqfWp6EkkzZSa0VDXJIqrgAN4fdN+iQtILhsBz5npQoEZvK1Z7vgy6B4LkEsT
-	 snwrDbTzjwe14LQ1uVz844D68mnlBHoLxmUYWgbrYw2IcOdpZrp
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:7cc9:7232:f513:ebf7])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 1C62D20105;
-	Mon, 22 Sep 2025 22:15:18 +0000 (UTC)
-Date: Mon, 22 Sep 2025 22:15:16 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Christian Brabandt <cb@256bit.org>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v5 7/9] BreakingChanges: announce Rust becoming mandatory
-Message-ID: <aNHKdFkiGLPcLEjP@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Christian Brabandt <cb@256bit.org>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-References: <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
- <20250915-b4-pks-rust-breaking-change-v5-7-dc3a32fbb216@pks.im>
- <aMsxhp6ZO2Cdz7+k@szeder.dev>
- <aMteF4VTq2C5sAhK@fruit.crustytoothpaste.net>
- <aNGkt/DdnbjNu3s8@szeder.dev>
- <xmqq348etd9n.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QwVgsn21";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KDpatJS9"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id 240951D00012;
+	Mon, 22 Sep 2025 18:19:09 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Mon, 22 Sep 2025 18:19:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1758579548;
+	 x=1758665948; bh=mki6vp2qy9O4A9D3xku/hK1sKXeff2EmGSCm7c8lLFI=; b=
+	QwVgsn21hP+0DwXp8usdB2an8+35DYAsQH5iYtcsJSvW+xbVCy9xQE7bwuNZm28F
+	xTjWpwq4muY13cXg/duDiDLnD7s5XAJMNVa5gczZsPsY7I1y3fWu3RBuHj2+dUHN
+	oxxPgwza6RY2X1clEtHiJjvRmNNoCXNswN/JEyeb+hMZgEDXpb2qZgEbKzqXfoRZ
+	65/0SNCpjihRFOYymfl8GQ9oJuRkD/1kiKCpV01CzwKQ0GkCg0ulyY+HgvpWzrb6
+	UikzQ82Jl//vXwVM0QoePOI7xLwPZskwta2jjNtq4nMUY5VWaBoOE/luPYkiTJNV
+	jyZwhU4dvTDZzNme7cvL/g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758579548; x=
+	1758665948; bh=mki6vp2qy9O4A9D3xku/hK1sKXeff2EmGSCm7c8lLFI=; b=K
+	DpatJS985CcpmocwH7pwzfL60B7zKjYC1lF897GzmrP0VbVewlqs81A65g4Q06zH
+	yu4/Q6qo4sxYIrcbU/8UOoDU45jiOZUMToiqf3RSyaJCStmmh3XMStlf/2Ps17re
+	6pKZZRlVf/AB/A77eluURgOGS/WakRx9H0pZQ5HC7FcRKGUmIDzRYN53tDn/S1I7
+	W/X1NwdOeTJiBLilshmQCrm8ukgB/sQ467c5EhdsAJl1xqm+Y8QCGac+fO897WJM
+	bU7jz04YfBTaeFLfY1MEnjvcHbdSMIgAZ0RRhoPB1iC5oQIw9wjFVR2BHHe3/y78
+	e4QFcX5KYURU8m9GmK8uw==
+X-ME-Sender: <xms:XMvRaLrD2_Cn1ptB0hEOFjX3dUV-vKwQ08whGljpzCuv9mMOIKCTgg>
+    <xme:XMvRaMoyEh4rCrrQLsGrI_LuxUx7e1rn6xTe9tPtF9_PR-IkSIYpaeiS-g7eQ8dEP
+    k2DnApXBEOl-xqzcEQGr18QOsIOwgtcrXoVJMOtYR43znhh--EbapI>
+X-ME-Received: <xmr:XMvRaNMpg5Mgxya8Oz8AT6E_aW8horOKX73h_xiQLE6ge1gKK2DLq47kJtIFDYbex1qEYIeR5B_xxlOLMxhPe8BgA75upjjOokq8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehledtfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepgeeghfdufeekgeeuiefgjefhjedvjeevtdehgeeuudekgfeileefueetjeei
+    ueelnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprghlrghnuggrtghoshhtrgesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:XMvRaNxuEAi_Qs_hHU9dS4xaRxExfAKnCb2-zhZxVYsJyv2TUNqecw>
+    <xmx:XMvRaGsRqtrCj8M8iruxNHJ3tiUaBq4ZBS5JyWvFG6iYU8C2VZ___A>
+    <xmx:XMvRaG7aSQ1xSFPoIid1380v8c39t7Dpqjt0AWWlHKJYqhGnq90WWw>
+    <xmx:XMvRaFToA0wBKpWN73IVRmM4ELH3bP_zpuaZGg9IyG14c4ZhQ9879w>
+    <xmx:XMvRaMu1Wi5pKmda5lpopLhYsK5Ish9QX2EXSfRNbwqAN6oi4DQcS-TE>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Sep 2025 18:19:08 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Alan Da Costa via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Alan Da Costa <alandacosta@gmail.com>
+Subject: Re: [PATCH] lockfile: add case insensitive filesystem note
+In-Reply-To: <pull.2053.git.git.1758578084468.gitgitgadget@gmail.com> (Alan Da
+	Costa via GitGitGadget's message of "Mon, 22 Sep 2025 21:54:44 +0000")
+References: <pull.2053.git.git.1758578084468.gitgitgadget@gmail.com>
+Date: Mon, 22 Sep 2025 15:19:07 -0700
+Message-ID: <xmqq8qi6ruzo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="EVuZV8a8o8GxiWl5"
-Content-Disposition: inline
-In-Reply-To: <xmqq348etd9n.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---EVuZV8a8o8GxiWl5
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On 2025-09-22 at 20:59:00, Junio C Hamano wrote:
-> The version of the document in this thread talks about 2.52 (opt-in)
-> and 2.53 (opt-out) before jumping to 3.0 (no way to opt-out) but it
-> does not say anything about how far out that big version bump is.
-> But the numbers I remember hearing was in the orders of 18 monts or
-> so if I am not mistaken?
+"Alan Da Costa via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I think the plan was 4 release cycles, or about a year.  Git 3.0 was
-going to replace 2.55.
+> From: Alan Da Costa <alandacosta@gmail.com>
+>
+> * Add note of case insensitive client filesystems may error due to a lock
+>   on a case variant ref to more quickly identify failure in fetch/pull
 
-> As I already said a few times (e.g. <xmqq8qipzhg3.fsf@gitster.g>), I
-> feel that the timeline hinted by any of these documents that were
-> proposed is way too aggressive for affected people to practically
-> prepare for.
+This does not have to be a single-item bulletted list.  Please lose
+the leading "* " from the first line, and " " from the second line,
+and finish the whole sentence with a full-stop "."
 
-I don't think it's substantially more aggressive than the
-interoperability code.  Both are aggressive timelines, but getting LLVM
-ported to some of the affected targets isn't out of the question
-(especially since older versions of it supported some of those targets)
-and once that's done, I'm pretty sure Rust upstream would be on board
-with supporting those systems.
+> Signed-off-by: Alan Da Costa <alandacosta@gmail.com>
+> ---
+>
+>     When running git fetch or git pull on a case insensitive filesystem
+>     (e.g., default macOS), if multiple case variants of the same remote ref
+>     exist (often after a case-only rename), both variant locks map to the
+>     same on-disk path. When a local update is required, Git creates a lock
+>     for the first variant and then attempts to lock the second, which
+>     collides with the same lock file, so an “existing lock” error is
+>     reported.
 
-> By the way, I was hoping that the hash compatibility work can be
-> done as an opt-in item available only for those with Rust, while
-> Rustless folks are forever stuck in a single hash algorithm world,
-> and be released well before Git 3.0 that makes Rust mandatory.  That
-> does not change the fact that nothing will work wrt hash transition
-> for Rustless folks, though ;-).
+And the message update may help unconfusing the user who gets this
+error, which is a good idea.  Thanks for working on this.
 
-I would love to have the interoperability work in sooner, but I don't
-think it's realistic.  I have about 100 patches and I expect a total of
-200 to 400 for the entire work.  That means someone has to send in 50 to
-100 patches every one of the four release cycles before 3.0 and get
-them sufficiently polished to get accepted, including any necessary
-re-rolls.  I don't think you actually want me to send all of those
-patches for one cycle at once, either.
+>     The underlying issue is mixed-case refs; resolve it by
+>     consolidating the remote to a single-case variant and update local refs
+>     accordingly.
 
-Even with time to work on it at work, that's a lot of time and effort
-for one person, and I also have personal responsibilities to family and
-friends (someone has to cook dinner, for instance).  We'll see if
-additional assistance is forthcoming, in which case timelines could
-possibly be more aggressive.
+This does not seem to match anything the patch does, though ;-)
 
-Otherwise, if we want Git 3.0 to contain the interoperability work and
-are unwilling to ship without it, then we may have a longer timeframe
-for Git 3.0, and it may be more like replacing Git 2.57 or 2.58 instead.
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2053%2Fadacosta%2Flockfile-add-case-insensitive-filesystem-note-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2053/adacosta/lockfile-add-case-insensitive-filesystem-note-v1
+> Pull-Request: https://github.com/git/git/pull/2053
+>
+>  lockfile.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 
-> [Footnote]
->=20
-> * By the way, I _think_ I never saw that policy document until
->   Ezekiel started his topic and sent it out as one of the component
->   patches; how did it get there from brian to Ezekiel's topic?
+> diff --git a/lockfile.c b/lockfile.c
+> index 1d5ed01682..99a470bd3d 100644
+> --- a/lockfile.c
+> +++ b/lockfile.c
+> @@ -156,7 +156,10 @@ void unable_to_lock_message(const char *path, int err, struct strbuf *buf)
+>  		    "an editor opened by 'git commit'. Please make sure all processes\n"
+>  		    "are terminated then try again. If it still fails, a git process\n"
+>  		    "may have crashed in this repository earlier:\n"
+> -		    "remove the file manually to continue."),
+> +		    "remove the file manually to continue.\n\n"
+> +		    "On case insensitive client filesystems, multiple mixed-case refs will resolve\n"
+> +		    "to the same lock file, possibly causing this error. If so, ensure your remote\n"
+> +		    "refs have a single case variant."),
+>  			    absolute_path(path), strerror(err));
 
-I had it in a branch of mine that I was going to submit at some point
-and I mentioned it to Ezekiel, who modified it and incorporated it.  The
-original branch should be `rust` on my remote for those who are
-interested.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+The two lines in the new part of the message seem to be longer than
+usual by two words or so.  Can you line wrap to balance?
 
---EVuZV8a8o8GxiWl5
-Content-Type: application/pgp-signature; name="signature.asc"
+The error is about our "local" filesystem, isn't it?  If you do not
+have control over what the remote does, you have no recourse.  If
+using the reftable backend on the local end work around the local
+filesystem's case insensitivity, that would be a better suggestion
+to give that such a user can actually act on.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
+In any case, wouldn't it make more sense to do this change
+conditionally by looking at the value of the ignore_case global
+(which in turn came from the core.ignorecase setting in .git/config
+when the repository was created by probing the filesystem
+capabilities)?  If you get this error and you are on a case
+sensitive system, the additional hints will lead the user to a
+wild goose chase.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaNHKdAAKCRB8DEliiIei
-gYkbAP99O3IxF960pleNaqEsCsda+D3xO8PCiuKehI/L0/QugAD+NzIPXM48Es21
-wXwuBL1b70SZDByss8BRL4WCp+hnfQc=
-=IIN6
------END PGP SIGNATURE-----
-
---EVuZV8a8o8GxiWl5--
+Thanks.
