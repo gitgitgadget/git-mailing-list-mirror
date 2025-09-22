@@ -1,97 +1,172 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9BE3A1CD
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 22:11:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE50D8F49
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 22:15:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758579105; cv=none; b=cw12Pziqa1u5Crz2xr2scasQ/rdY7sfTmVHEDhnMhloqDzyJ4tGXX82J5SRJe9xVvNw5+u0wyk1CTz1VN3MHmQhr9gbfeR/2otMIvdDM+wJ+KXntjl3ee1CVmojXO4ih7MzzaIiw8faLkjjqdswQiHCgyH6JOeuoZVp0caTWAKs=
+	t=1758579322; cv=none; b=ppbQMsUhISXCyImy9HkE+HhB3A4YqC1M5it8w+eAfA1lc345tLlQx8MxJJ8PrElDhriyalCzfLXgsAsNAmCUAuM0JjEW14dJOY0r1uQJWiWtsUylSl1giV2fBpoQBymuZclCLv+A2LZ08WxNmcEyXlWqMUYn8ToBzS1hBuCtWEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758579105; c=relaxed/simple;
-	bh=w0kVvWtbNaun1X5UkK4RXZLBEiccD1rgNUWQeJPingQ=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=ZGVD4Jrvbsb8D/k6kg505FUBlN9vdQu1A9iuZYKjBZ5BpzxulMNJVQazwwMlS6x+eTG/Q1CHdt8lr2gAWCcS5RemEzetqBhgk8jF6GkyVwNAPfKhzI+qpLPEXh2pM03eDzLW2plDg0qbm4ZXEmqFIGbzM7ujj8fz+09g2FHhJko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digital-mercenaries.com; spf=pass smtp.mailfrom=digital-mercenaries.com; dkim=pass (2048-bit key) header.d=digital-mercenaries.com header.i=@digital-mercenaries.com header.b=Goz61iTD; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digital-mercenaries.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=digital-mercenaries.com
+	s=arc-20240116; t=1758579322; c=relaxed/simple;
+	bh=6vL6NtDY0/EmURMhniCTBq7sM21BCX7yIiqE7oB83jU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Pso1lKVYO9KkW2xdsHwE66VItqUjKA6rhYkjUn2I6zKdXvgI+Gp7DQ+ICFGT3puBuuFW+TIWAuaqLddxjIWJYaXGSI4K6HcUm3ACUbqxw0NN7swxklZMkNgp00pGQTlFl7WvKy1pmOM5KWQrlNNqoBa/xTLxLNfY8QlcTOCHj2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=okarxZ+H; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=digital-mercenaries.com header.i=@digital-mercenaries.com header.b="Goz61iTD"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-77f2c7ba550so1710951b3a.1
-        for <git@vger.kernel.org>; Mon, 22 Sep 2025 15:11:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=digital-mercenaries.com; s=google; t=1758579101; x=1759183901; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W/otNnZaQ8ZlxnMCgQ5vDxQxdlgZ5lnU7cExXNecifA=;
-        b=Goz61iTDRBko2wWPNI/8NG87Gwh1uCyklxbZHIyBHMjuzbRkACOEFFP+kPVbOS6ClE
-         Z6lmwBke/NCiozERJYNdyNLbc8GjYKVzJN/qlbHKVR6yMt7YDzhPw1IuIPOiIZGzGnvC
-         A8k1PGx8vCZCtR+uE46ixksAdlJ83NIxnMM/G1PnnC+BtfixCETE3rgCJbnxYNwVJl1e
-         j4ZMJl+FcuLna9C+Qud9KtQRJTaH5irwRJNdyGbc24nGUBYmOResAd8Z5hYYH1xO9HE8
-         ZN3lEOpMj9boFg6RKV2J0daEZiv2QPhVC+Qq+FRPzndJd0KFqCjuqJva9G0LyHXMnOPP
-         XXbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758579101; x=1759183901;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=W/otNnZaQ8ZlxnMCgQ5vDxQxdlgZ5lnU7cExXNecifA=;
-        b=H1vtFaTgjMcxLVgZ+EZ0HZEotVxrKJJMEHcWzcuviuEgJWYjAdNO1fdUD6BrFz+KD5
-         CFlaBnuUtRCNpLFaq4iPYcENrt8oaHDX1zoChPujyJ4kgjiGWrNkGZxDe8SEmR9JbEFP
-         vnQfzg2/A/iSBdIoE7aN//7Ji9l3rWw9sPEWBPpLmiHrMoVnZ6G+5xGo0vLLuXfIn57G
-         1HLZsBx2yncVxo9DvAT1PbMwYgKIzB4T6c4Ora+Wgon6cL56qsJSGE9mJv3h5XBh1AlO
-         aXbn3mSc7ShZFUySegs8YXGxSQEoU5tw4hqCgPVcYOA/AS99brZnvjQcD2aaGqW9W/+J
-         bW0A==
-X-Gm-Message-State: AOJu0YzHHxdJrBE4srRXGQgCdI6ESCY1s1/2DbYbRb3KYDDga2MEI3hZ
-	552t8RiWkFLGAx2T2AdMcAw+J8pjDaw0TqAk68ShC6NuZJIVl4Rf1vtJJKC7bofOqKGOflnO84/
-	27culxMc=
-X-Gm-Gg: ASbGncuwlcdtHuYt0yr3gtiSfq2lUzbuwZzzUqoGPca4+3abHLBuvJevTJWHYTyV8se
-	9SzARzeQhizo4CQHEkEx3yXaSunfuAIMDvIQf87SqihYid4Rw9GtFFr5MJq6vIrSRHgqOjA92BE
-	6oh0K9p5PYJFcEqn8pQEqIOhYfK2hQKSGo2bJuCHojAWrm+znVeJjLt6KFSoTUf0bI025LXuoAi
-	ZqUqhlHaprA+GSvnfcHNa+9nKvoG7dKFsHd4lUOXBkKe+EqGrpAnxxzDZkj9mtbmQW1xSG51e9T
-	dNKJ35fdr+1ZjD7LbVs0pDH1Ou9wXDWiFyj+accwWzKdwkbtedqnIvehR6mck4D8liq2/NhOum/
-	h4/Du5uCL5Rmd1fHYk4NikkL9vybu1FL+zkMSOzY=
-X-Google-Smtp-Source: AGHT+IFIeU6ErJFEWWPIjk7ZQGFF5iQyIf0VXbBOVv1hp9CSyA0uD5arK1bqQ5ZYF13UI8ALbzUiHA==
-X-Received: by 2002:a05:6a00:17a3:b0:77f:2ecc:8c9f with SMTP id d2e1a72fcca58-77f53b08ab9mr560550b3a.18.1758579101518;
-        Mon, 22 Sep 2025 15:11:41 -0700 (PDT)
-Received: from [10.0.0.22] ([174.127.235.36])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-77cfe669a58sm13887637b3a.52.2025.09.22.15.11.40
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Sep 2025 15:11:40 -0700 (PDT)
-Message-ID: <8f201082-07b5-44a1-88cf-d6db551a598c@digital-mercenaries.com>
-Date: Mon, 22 Sep 2025 15:11:39 -0700
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="okarxZ+H"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1758579318;
+	bh=6vL6NtDY0/EmURMhniCTBq7sM21BCX7yIiqE7oB83jU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=okarxZ+HoiHHdiCNv6LPDKMUoIrWVNVbSv/wyx52fIIONcM+ArTxhxtvGUaxREses
+	 8Gb8WaInHHgngdyb9IvrJnLWwZyI0UmXSCtgoyjAqb78qk/Fnu7jZoc/vEzOU/3RZH
+	 t2o1kOq+wbZgVbV/hOb+BaB94XAfgZljTSqEMb0UIoyqF+pAo/pii2H89AoVUiPQWv
+	 CmAFx069KqQ9kW9bo5EaxyXBKi8jBnwsGUGbcDaGfLhNmXwyR9Zwf+hVL67HH3Lc4l
+	 TNrsBwC8ftSwizh/Ri1VWbQ8Y2hJA23NdX/ncdO2r3UkRcqvaxEZjpD/4Ejd9bRbDE
+	 nPSEx9XXjAuZMCFUQ2O5CdsVkrZrej8iPSq/ihcTkaz7hp3l6YS/vzcPsSMjjrjT6c
+	 +0c48YqfWp6EkkzZSa0VDXJIqrgAN4fdN+iQtILhsBz5npQoEZvK1Z7vgy6B4LkEsT
+	 snwrDbTzjwe14LQ1uVz844D68mnlBHoLxmUYWgbrYw2IcOdpZrp
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:7cc9:7232:f513:ebf7])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 1C62D20105;
+	Mon, 22 Sep 2025 22:15:18 +0000 (UTC)
+Date: Mon, 22 Sep 2025 22:15:16 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v5 7/9] BreakingChanges: announce Rust becoming mandatory
+Message-ID: <aNHKdFkiGLPcLEjP@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+References: <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
+ <20250915-b4-pks-rust-breaking-change-v5-7-dc3a32fbb216@pks.im>
+ <aMsxhp6ZO2Cdz7+k@szeder.dev>
+ <aMteF4VTq2C5sAhK@fruit.crustytoothpaste.net>
+ <aNGkt/DdnbjNu3s8@szeder.dev>
+ <xmqq348etd9n.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: git@vger.kernel.org
-From: S0AndS0 of Digital Mercenaries LLC <S0AndS0@digital-mercenaries.com>
-Subject: I still use this/these
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-Howdy Git/Kernel team!
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="EVuZV8a8o8GxiWl5"
+Content-Disposition: inline
+In-Reply-To: <xmqq348etd9n.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
-Recently, as of `git version 2.51.0`, running the following commands be 
-popping
-warnings;
+--EVuZV8a8o8GxiWl5
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-     git whatchanged <path>
+On 2025-09-22 at 20:59:00, Junio C Hamano wrote:
+> The version of the document in this thread talks about 2.52 (opt-in)
+> and 2.53 (opt-out) before jumping to 3.0 (no way to opt-out) but it
+> does not say anything about how far out that big version bump is.
+> But the numbers I remember hearing was in the orders of 18 monts or
+> so if I am not mistaken?
 
-     git log --since="$(date --date='-2 weeks' +%F)"
+I think the plan was 4 release cycles, or about a year.  Git 3.0 was
+going to replace 2.55.
 
-...  Warnings stating those using certain features slated for removal should
-email y'all about `--i-still-use-this`. If there are alternatives I can 
-alias,
-that will remain functional, please do let those like me know. Maybe via the
-same sorta warning system.
+> As I already said a few times (e.g. <xmqq8qipzhg3.fsf@gitster.g>), I
+> feel that the timeline hinted by any of these documents that were
+> proposed is way too aggressive for affected people to practically
+> prepare for.
 
+I don't think it's substantially more aggressive than the
+interoperability code.  Both are aggressive timelines, but getting LLVM
+ported to some of the affected targets isn't out of the question
+(especially since older versions of it supported some of those targets)
+and once that's done, I'm pretty sure Rust upstream would be on board
+with supporting those systems.
 
-Wishing ya a magnificent Monday!
-     S0AndS0 of Digital Mercenaries LLC
+> By the way, I was hoping that the hash compatibility work can be
+> done as an opt-in item available only for those with Rust, while
+> Rustless folks are forever stuck in a single hash algorithm world,
+> and be released well before Git 3.0 that makes Rust mandatory.  That
+> does not change the fact that nothing will work wrt hash transition
+> for Rustless folks, though ;-).
 
+I would love to have the interoperability work in sooner, but I don't
+think it's realistic.  I have about 100 patches and I expect a total of
+200 to 400 for the entire work.  That means someone has to send in 50 to
+100 patches every one of the four release cycles before 3.0 and get
+them sufficiently polished to get accepted, including any necessary
+re-rolls.  I don't think you actually want me to send all of those
+patches for one cycle at once, either.
+
+Even with time to work on it at work, that's a lot of time and effort
+for one person, and I also have personal responsibilities to family and
+friends (someone has to cook dinner, for instance).  We'll see if
+additional assistance is forthcoming, in which case timelines could
+possibly be more aggressive.
+
+Otherwise, if we want Git 3.0 to contain the interoperability work and
+are unwilling to ship without it, then we may have a longer timeframe
+for Git 3.0, and it may be more like replacing Git 2.57 or 2.58 instead.
+
+> [Footnote]
+>=20
+> * By the way, I _think_ I never saw that policy document until
+>   Ezekiel started his topic and sent it out as one of the component
+>   patches; how did it get there from brian to Ezekiel's topic?
+
+I had it in a branch of mine that I was going to submit at some point
+and I mentioned it to Ezekiel, who modified it and incorporated it.  The
+original branch should be `rust` on my remote for those who are
+interested.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--EVuZV8a8o8GxiWl5
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaNHKdAAKCRB8DEliiIei
+gYkbAP99O3IxF960pleNaqEsCsda+D3xO8PCiuKehI/L0/QugAD+NzIPXM48Es21
+wXwuBL1b70SZDByss8BRL4WCp+hnfQc=
+=IIN6
+-----END PGP SIGNATURE-----
+
+--EVuZV8a8o8GxiWl5--
