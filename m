@@ -1,92 +1,126 @@
-Received: from mail2.viabit.com (mail2.viabit.com [65.246.80.16])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D55280CD5
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 16:05:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.246.80.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437B448CFC
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 16:08:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758557144; cv=none; b=PKSV9AQVK6q81RXr6ZHeFcKPhBZC4qpYceYnDrHlPLlcMkibVY71XxKqhJrev+UMR7c49ACm+COReJGShUDJhshi/ZP0qxJYmfjICY0wfdhDYbsI0s4PZ/QU6ibRMZM4OSW6lYjYVnYCGqnSHjWag1/mYLihLyJVCC/SfcI0Viw=
+	t=1758557297; cv=none; b=tsnJetdkgwA6J2b8fFyjYYrW4tSuMZZ/lY/PD9/7HK9RITwcuG3hL1xlaroO90CL+rKC3WEudOrQSTmmbOGtcb5/dahFiMK+0EQsimimq+R6HygrHBfyl7Vuh4+wsmyc2N9+J6Y1D6gT1SrVug0DvxyoqRUVeiFWZXCsJFfCuZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758557144; c=relaxed/simple;
-	bh=1Ge2KLZTKCFSfcf2eypbhUdDNKj1Sx0SGUx6c742ktY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xm78h9MvZaYGVPSfXC9v2I9DGQ9Is5OTM7ofO9FirZ7/1RbJRYilGt2HLyifagnH3GOVnrr35dSME6ua7eLGrzVygdW+4OcL+CjcIWtj3QR0ULjU5M+ZiqHVlxrNtZFGDSK84AjhntJ8B3l/jVkKXtfpO6YmsVKxCx7mOU7lzMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=orlitzky.com; spf=pass smtp.mailfrom=orlitzky.com; dkim=pass (1024-bit key) header.d=orlitzky.com header.i=@orlitzky.com header.b=PgoJm7zv; arc=none smtp.client-ip=65.246.80.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=orlitzky.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=orlitzky.com
+	s=arc-20240116; t=1758557297; c=relaxed/simple;
+	bh=OlN8SAC59h7uKk1Tm0098mk7DT7Gw/nTsG4EDn5Se10=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LO6Mf+E0wVk46fcLFQwIIBWMuOiuqfCc39AosLzwGYHD7e7tL3VY+/d8qpZUbcScM0X5C/E66ug2oiX/D2w0ED257PZckC5jrMS8yEXYP2wl17iH3ydux71vPJwpImBbC7NxejOuwWxDtbdZWzCWcH+Alx5YUgZmi3iw+/GvwYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MBiVsb0e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ebwq+2iw; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=orlitzky.com header.i=@orlitzky.com header.b="PgoJm7zv"
-Received: from mertle.michael.orlitzky.com (vpn1.metro-data.com [65.213.236.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail2.viabit.com (Postfix) with ESMTPSA id 4cVnqz50lrz43KL;
-	Mon, 22 Sep 2025 11:59:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1758556801; bh=1Ge2KLZTKCFSfcf2eypbhUdDNKj1Sx0SGUx6c742ktY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PgoJm7zvg9A65h8NOGkhKxOag+GJbe3joQaI+XYa7lwr2OQGUFpMM8waqUP9hpJWZ
-	 Fs7FdsXFHPbgbRpifo+LfD/qsLXctGFNVohg9XRTGiIgHczvG2ObVNktz/MbeFP6oF
-	 0G7tr8PiyL8KqcSh7N4zlS0rqtPEe27J/I/XYahU=
-From: Michael Orlitzky <michael@orlitzky.com>
-To: ezekielnewren@gmail.com
-Cc: 20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im,
-	Johannes.Schindelin@gmx.de,
-	ben.knoble@gmail.com,
-	cb@256bit.org,
-	collin.funk1@gmail.com,
-	contact@hacktivis.me,
-	eschwartz@gentoo.org,
-	git@vger.kernel.org,
-	gitster@pobox.com,
-	me@ttaylorr.com,
-	newren@gmail.com,
-	phillip.wood123@gmail.com,
-	pierre-emmanuel.patry@embecosm.com,
-	ps@pks.im,
-	sam@gentoo.org,
-	sandals@crustytoothpaste.net
-Subject: Re: [PATCH RFC 0/3] Introduce Rust and announce that it will become mandatorty
-Date: Mon, 22 Sep 2025 11:59:49 -0400
-Message-ID: <20250922155949.27019-1-michael@orlitzky.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <CAH=ZcbCUL-rWw5E6p26T0039gs9q-P8iK5fp73-RzTzKiZ0zMQ@mail.gmail.com>
-References: <CAH=ZcbCUL-rWw5E6p26T0039gs9q-P8iK5fp73-RzTzKiZ0zMQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MBiVsb0e";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ebwq+2iw"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2D1251D001EE;
+	Mon, 22 Sep 2025 12:08:14 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Mon, 22 Sep 2025 12:08:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758557294;
+	 x=1758643694; bh=S/3StshpQdn8V2qI6AC8VWGDuoEc8AzvqFIxGGZxXsE=; b=
+	MBiVsb0erHkkP8Da5i2osIZFnbDfde/WcDIfNgtpXRxIefvYSOnr15xwpbJSxcCo
+	cq6cLspOOmLiA1uGLNobi2g1rdikRUI8SK0YRw5wzPInr4Gwn2t1XPGqiuHwpOZb
+	Qbaqi6jZMG9Oy9dhpwOi3mKRI8cm/gSgdrFdhwtMUBfRQrYa7Wc8swvp16WJj1xt
+	RvZUjb1NrTdfwber8q60tPvXLTY3kX7wVXZf0f3iBkiEDWxpnJcv36FwXvmWTpwu
+	hflBzY7wNQPk14r3UnHTL4VoHncDREJ61p0sKxbwyJxliuJ38F6RrW7mZT6ogwaJ
+	uH/ngSpHeT6s03zV5vuluQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758557294; x=
+	1758643694; bh=S/3StshpQdn8V2qI6AC8VWGDuoEc8AzvqFIxGGZxXsE=; b=E
+	bwq+2iwAHsxZbZMuQaz9xHipCnGPuFlQWBBj5bSaJDeo/cf+R6pI4o7808mUfAGf
+	j9vfCZH1prEv8b4UosC1NPpAMkC4HQO+C1yovsF5lGzNr7BntFmGW1iUe4qFW7Fn
+	eaNcObVcX4gWDkwdNq/mE4/Q9itRTk3KViI0MUzVfVcDiQsgJeGdoQjLv2lo8cM2
+	6xkSmA3lSRL4iO9l2ssGa8gm4M31HzNSC7Ofan/es9YO3gth/RfSqGzbPBTjzPz7
+	gLqHVVOaZr5mkVX59+FDEavmqtmnipF3R7ZBUXQBfElNadPSadrDDjySxV9NQEqO
+	DEB0mKgg+StGg01gvl+ZQ==
+X-ME-Sender: <xms:bXTRaKN-tOAUY8ZRVbhD4gOEKhCvZ6m64xIpXOqfnr8vBBVcMYN9AQ>
+    <xme:bXTRaAZVtqDFWeMqvNKHqWP3jIudAE7HLW7roetBUH7om91T9J262Onj3PAc_Bcj8
+    dg0GBqlt68Hvk1SdDjiT0pxGwqokNO8OTz7_OkrXeohQJhOHyh1XQ>
+X-ME-Received: <xmr:bXTRaOqfCwhEyJNDC5ouMM7LZPBJ0IkwVbgxseO2Cvqmx8USiwQOI7Zx6LJb7PODCbBNL_qwlnKcxH3Ii6qudBi00BgSIdn0m7kNwpLyIw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkedvkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:bXTRaEbWIR8CmPNghsc3gVwUU7MtFp3EyUHWzJ1iDO48CL_sd-p0hA>
+    <xmx:bXTRaGSb1E6U2HCns_7BdzNgzhtJX_JhzLIYcFWZ_Hzw7HOC5ScjWQ>
+    <xmx:bXTRaL6C45arvhQwjkL42VVQvR5m0KAixokCSfT5zVIDIuWFLEzyvQ>
+    <xmx:bXTRaLxoUF-1A2m1k_ItVqaBcbayBTMyt7H1FU_lfZ70hUn0mtfXlg>
+    <xmx:bnTRaK2NlWuAmvTT2rPfbyHs3QnasMZg76HKIRlebQ9tu7HzrG265l1->
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Sep 2025 12:08:13 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 619a8161 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 22 Sep 2025 16:08:11 +0000 (UTC)
+Date: Mon, 22 Sep 2025 18:08:00 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Ezekiel Newren <ezekielnewren@gmail.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH v2 00/18] Introduce rust: In xdiff
+Message-ID: <aNF0YJGxB4ZmociE@pks.im>
+References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
+ <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
+ <aMpODEpyaaVhFMO0@pks.im>
+ <CAH=ZcbBNFSwU7E+P7hkQnt9UrMKiCRESgGvWPL7pRUa0i2U5-Q@mail.gmail.com>
+ <aNFIozagGc0MoseL@pks.im>
+ <CAH=ZcbCZXavx52521cFHdXZn=BCWBiR1aG10ekZVg3PVVJb2VA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAH=ZcbCZXavx52521cFHdXZn=BCWBiR1aG10ekZVg3PVVJb2VA@mail.gmail.com>
 
-> We know for sure that NonStop currently does not support Rust at
-> all, and that there are problems with porting Rust to Gentoo, but
-> I'd like to hear what OSes and Architectures you use personally and
-> professionally and why adding Rust would be a bad idea. Is it
-> corporate policy? Is it that the Rust toolchain doesn't exist for
-> your os/arch? Is it that Rust is a new language and isn't as battle
-> tested as C? Something else?
+On Mon, Sep 22, 2025 at 09:31:10AM -0600, Ezekiel Newren wrote:
+> On Mon, Sep 22, 2025 at 7:01 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > I don't think there'd have to be major changes to the current version
+> > of my patch series. The idea of that patch series is very much getting
+> > buy-in regarding our roadmap and focus less on the actual build infra.
+> > So the changes introduced are mostly an MVC, and I very much think that
+> > we'll have to iterate quite a bit on it, but that's intended.
+> 
+> So long as you're flexible with the build infra details then I'm ok
+> with rebasing on your work.
+> 
+> What does MVC stand for?
 
-There is no problem with supporting rust on Gentoo. Gentoo users build
-from source, and rust is a problem for anyone who builds from
-source. I'm writing this on a riscv/musl system. If there are no
-binaries for your CPU/libc, let me tell you, it's not fun. And this is
-like, my job. A normal person would be completely helpless.
+Minimum viable... candidate? I guess I rather meant "product", so MVP
+would be the better term.
 
-Nevertheless, the arch support issues are secondary. I'm sure it's a
-lot of fun for the people who are writing rust code to do cargo
-updates in the two or three directories they work in all day. But I'm
-not writing rust code, don't care what language git is written in, and
-have hundreds of other packages to keep up-to-date on multiple
-machines. I want to be able to use my package manager to do that
-efficiently. You know, the main tangible benefit of using a linux
-distribution.
+[snip]
+> > >   * What should we call the crate that will be the new home for .c and
+> > > .h files in the root of Git?
+> >
+> > We could call this something like "libgit-ffi", but I don't care too
+> > much.
+> 
+> I prefer Eric Sunshine's suggestion of gitcore, no hyphen.
 
-But every distribution is "packaging" rust the same way. They're
-bundling random old versions of crates in violation of their own
-policies because the ecosystem is unstable and the tooling encourages
-tight coupling. By requiring rust, you are require me to go back to
-managing dependencies like I'm on Windows XP again. Git is the most
-important program I use, but it's not more important than package
-management itself.
+Sounds reasonable to me.
+
+Patrick
