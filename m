@@ -1,111 +1,131 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3853531A57E
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 21:05:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D073D27FB2A
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 21:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758575149; cv=none; b=LdfZlaKWw/uRGaqsRjV/wlba7QPgtStdiE69gIIKn95C+aG1WoafuUGOVbRHPKwYKFvc0Z+UvjPP47DPNxKHtLJa5uX7IcU5oedwJoK+4y3rSSjK40i5NRyVNczcd2tNVw96whak5Wd4kQbuXdpj6/hcVf630nabwNyzTSKNIIE=
+	t=1758575437; cv=none; b=reSt4Qfv2gVaXaox1Bz7mVNDgn4U/hWXmPazaEnfOVQu0SKYNNpTENRWzfNKsL6jFXEAtYqPhdXk5F7UxWiAKU504aBpS33LxunVjTRUpTqhYqYo1TzzJK5Ds+PR+DNMxGoK8z82NgNcsdWmsRJcPhE/mRbUCVDC3n1QNttqNhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758575149; c=relaxed/simple;
-	bh=LmiLGEB5mMWTCEJJZYc+367o2xPd/5Ia6JRFTCc0Keo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=s2rrlQ1nn8weZjTOtUIdqhr+Drmx4Y5BZIP/cE79Hu84UnSrnrCcho4dbgSKvGXofhlqe29n8Pw3STBJq9v7cHfTDSYzf3uZUJzGB1qomKh3KzGQ/XcDhocQ1y+MSz90OaP0eVN2lJq92IDZbp4lkmEzULE9nBeqYmscCubVNQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vi+odtj8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cwPxGKJ7; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758575437; c=relaxed/simple;
+	bh=qGNwm6ScUZx+tv77HcwcLhJxZ2FAU3llwEce/sWkdh0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=rL9q2qakTpH4VNZ5mUQV2KmRKWmPOH1QM/hYJ80lGkFTTVjPeUmPKZC5Oak+Jn+fcayPiU2qTBvQ5eFRaitlJmmOIRKEECTK+DYMzpCKtGMDLJBXseLiuRJd/YCd5Xp20UTRwfTheN7X24YXykLF7AB18jgZ+02wIdEyaV5cbFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=KaLI5A89; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bfvh9I2K; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vi+odtj8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cwPxGKJ7"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4CE961D00285;
-	Mon, 22 Sep 2025 17:05:46 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Mon, 22 Sep 2025 17:05:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758575146; x=1758661546; bh=LmiLGEB5mM
-	WTCEJJZYc+367o2xPd/5Ia6JRFTCc0Keo=; b=vi+odtj8Mo5czFlwWYS1mq+Ejk
-	FTQI1qjUdVKhUpzBp5/YahjLIVUmFQMJ+cbebXvi9nswMiGrGQ/gK0Q+MLgXxSpy
-	QdEwDA77hWPaTEGSFqV2QvulHIEq1QQh0u2/ScJlWL3YDgcqSrpyFwPqKJd7HYz5
-	JF/QMq30nZmxssYdkvSvJ1exF45N5u+lH7ucBmG2IV9BZFKr6jbN+ZVetsDdQHk3
-	GAK3FNvhQAXbBdSJ/bJKkXv98mrqxxj+FYD2tZeLRAZXBI3t2Gk7dHn56cf5z4fk
-	DTToabD9pLs6Coar1T7xeciu+3bO6n/cYgdV4ErfHFqxMDHKOL3+uuszaKaQ==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="KaLI5A89";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bfvh9I2K"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id E220F1D0029B;
+	Mon, 22 Sep 2025 17:10:34 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Mon, 22 Sep 2025 17:10:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm1; t=1758575434; x=1758661834; bh=vZ
+	F4TrvoIFVzYLxbmX/eymmreEO/aiwcKn7scOPim0Q=; b=KaLI5A89l38O9CRYdB
+	IR28Kgq3p7Nn2Guy4F5yjlHxhvVYgARnxgHPZLmjQ0Cif+OoBa6O9hWicSUDNAJc
+	PHxl8pZ50ZqlIjULuwDqaPX9KZYGJvJcenIZa+gUCU/gxiL6QlZSAZAbkwr2DgxT
+	Vim68LMe/fiJLd+q1P35B501MVIJyZJXSGkRIH2Y9LvDDO/L4vxqYN604bkL4Tqc
+	84oQgBUqLsnf2ryb+7lzL4Gq45Fy1P50Qau+PsS9ycFYq603gQ+QzwBl8l3Mr45W
+	BLITgzqqfZUjX67YI+viTA5jEWJ9a4vCW/cPF3LWPnsIIBmigpV9n8ghGdb6Ry9K
+	YMQw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758575146; x=1758661546; bh=LmiLGEB5mMWTCEJJZYc+367o2xPd/5Ia6JR
-	FTCc0Keo=; b=cwPxGKJ7B7re5gPj5WTmMR8AqCGrIrfIcDG/zpoAqqopMNss4t4
-	gA0Uv7XtsEslDToA/K98HlPfENwI642OjJd6talFg1j7cTw6dFiq796f0ycTK8Zw
-	S1gQNIflgQdQtvQsrrlrvG7xRGz4OI4uSIVSC1DDNUX69eoMX4VZ26C/4tR5IuyB
-	L0ibCMmETegssuAHIU7sqSyKP6/pOuVuvwpb9h2lAvPfGSBRA8/zbzapvaHhiMOr
-	In6i0i34GBU28Yp5ZKjmSf0NZW7AB3vp36zYZvINgrYaMTaoCuO2vfNGuc0D5/VB
-	hDZjKz7laGkmD9VTzrWh0AgFvQFxLftHaiw==
-X-ME-Sender: <xms:KbrRaIkipi5jtieuT2kX5jCzI09t0kk3xOgHWs7CHUVP0nAWAZE5yw>
-    <xme:KbrRaO2KPie4EHFuV0BXXpy_jr82wKFP8phpZzFfaiiXeoTCSoJuJHUY0wNcFzrGz
-    JbR9V5ASpbXMpli2jFxXVE_WtrEPzi3Fh6n3QPVzl__6i05gvlxOG8>
-X-ME-Received: <xmr:KbrRaLoi2OwgtA86PWVcEboUaogky48v4YbvocepdBLse6ZRrzzMAVzmjYA2Nduiv-p3QK40ugrYIDQ8MCk5ngebCdFJBgQDQnwQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeekkecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1758575434; x=1758661834; bh=vZF4TrvoIFVzYLxbmX/eymmreEO/
+	aiwcKn7scOPim0Q=; b=Bfvh9I2KW4tDGL8nyxN4yBoGiwUmRRwPdfN1dzJu0vwi
+	zcQcjwHiFSOATSxB3via6GtCQ0OT2puHS9Nk362+Wh14LOLZMDS41sGkCGSepJp8
+	9GRJScSYrrLuC2VdEAAKcliip4G7Vr+EIF7tKiBGBZfVv5susZn9AI29u4DHWjej
+	gThCY2+jOD6hkAcphnm2t5El+Zze+Vs+39VP73gPsp8fSCboW6mW3GGNnrAxGwID
+	Udvd//3811x5I/JX9jrO/gp8z+0hIRVY5HxCR67op0WgJXZkIuiSW6T6piFvAVhS
+	ZRPH622k3P8Kpj/KkSDUt8W7ufy7SaR9ZmWX2/voww==
+X-ME-Sender: <xms:SrvRaJbda-i75fuuz_AjIYHB7TX1MTUWcsn9M5nWgr6Imy1mVszTAMk>
+    <xme:SrvRaGa83RGeZiEh2KinX42DczhWur_pcKfrB1djzdyXgJN-LNSA7xuj20LI1dGIW
+    HDDoKnq4niWC3CJkoptTtOtr_kFqd8TsF_CXbzvziPSbHWWSdxXCw>
+X-ME-Received: <xmr:SrvRaJnR_SjzNnWBumSAdoHax2OKXdxtxvjHt9-Sgx_b3uwg9VLRZ8-aZsTQ8NQtowPw3I_TlrkUv1e6HQ3HatrcJWFYXLps4sGsQfpJgvm0Ah4Jm53UB_lFMw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeeklecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepffevvddvveethfejfeffffdvteekff
-    evkeeutdeiueevhfduteevudduuedvteehnecuffhomhgrihhnpehgihhthhhusgdrtgho
-    mhdpghhithdqshgtmhdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrd
-    hnvghtpdhrtghpthhtohepvhgvlhhotghifhihvghrsehvvghlohgtihhfhigvrhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:KbrRaDfz0S-t5OUzqP-hxpjihQAQ2CPd5X88eLYJQWGNmq0AKWqyRA>
-    <xmx:KbrRaCou3ZJWrFKkL-YA6ako3xxd6kJ0YAUhj4-8os7pXCfILfZjQw>
-    <xmx:KbrRaMGx9IjEVO7v7JW4eWXBdZzaj339pD9k5I_H02w6wKl3jTDDuw>
-    <xmx:KbrRaKsouuvI6HrW8kdjLzosMicDf98cVf04CM8c6GCQrqDIBFfUGg>
-    <xmx:KrrRaE_r28haIeOVUaMdeNRbr3IPHJskmEtohSqLikBF_CWJQ1kLHgaC>
-Feedback-ID: if26b431b:Fastmail
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofggtgfgsehtkeertdertd
+    ejnecuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghi
+    lhdrtghomhenucggtffrrghtthgvrhhnpeetgfekjeffudeffeffgeekvefgvedvgeffue
+    ejjeelgeduhfdtffeikeelfefhgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsth
+    hmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtoh
+    guvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:SrvRaCz9R40yjPzYb6Z5Bs6DNFal134YkBnvum0UhD_kADt2-pJGuQ>
+    <xmx:SrvRaHPRcktPtLqcvkGrAwmsZT-I0TXvPSZniRDbLbBfH6GjEq1JAg>
+    <xmx:SrvRaGRrrLWystjnoHoKDyELzzvTA8c3D_H7g5U8YTP7mRCdiuEyVw>
+    <xmx:SrvRaFZEqtY_D3oyBbTLF4N_QhVu__-TEMBFEB2ha6suam-VCXjDDA>
+    <xmx:SrvRaMxu3bF7T8c3reAVO6uRw7r6MkktVNBP9Gvxnat0TrR98AMBF0wW>
+Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Sep 2025 17:05:45 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: =?utf-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?=
- <velocifyer@velocifyer.com>,  git@vger.kernel.org
-Subject: Re: How do i get news of git releases
-In-Reply-To: <20250922201403.GD2205919@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 22 Sep 2025 16:14:03 -0400")
-References: <4ea9cb1e-4367-4926-a9ba-0680dd63e616@velocifyer.com>
-	<20250922201403.GD2205919@coredump.intra.peff.net>
-Date: Mon, 22 Sep 2025 14:05:44 -0700
-Message-ID: <xmqqy0q6rydz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 22 Sep 2025 17:10:33 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH 0/2] format-patch: handle range-diff on notes correctly for single patches
+Date: Mon, 22 Sep 2025 23:10:21 +0200
+Message-ID: <cover.1758574974.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.51.0.270.gdb73cbc1bc1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-> The project doesn't use GitHub's Releases feature specifically, but I
-> think annotated tags that are pushed to the repo end up there, too. The
-> resulting feed entries are a little bare. Possibly they could be
-> populated with the release notes, but from the Git project's
-> perspective, the GitHub repo is really just a Git mirror. Presumably it
-> would require some scripting around GitHub's API for the tag pushes to
-> also create Release entries (and then probably somebody would want the
-> same for the GitLab mirror, and so on).
->
-> I think it may also be a reasonable feature for git-scm.com to have its
-> own RSS feed. It already has to know about all of the releases (so it
-> can point to the most recent one, for example). Most of the development
-> for that site happens at https://github.com/git/git-scm.com. So if you
-> or anybody is interested in adding the feature, it would probably make
-> sense to start a discussion there.
+git-format-patch(1) does not handle Git notes correctly in the
+range-diff output for single-commit series.  It reverts to the
+default behavior of git-range-diff(1), which is to act like git-log(1).
 
-It would give us a bit finer grained report to trigger updates to
-the blob RelNotes symbolic link points at, if the rss geneators can
-monitor such things.
+Fix that notes handling to always output the same notes (namespaces) in
+the two positions:
+
+• beneath the commit message; and
+• in the range-diff.
+
+Do that by (patch by patch):
+
+1. Refactoring to use a new `ref_info` struct member
+2. Using that in `log-tree.c`
+
+§ Testing
+
+I have (for once) tried to check for leaks by running the test suite
+with this `config.mak`:
+
+```
+DEVELOPER=1
+DEBUG=1
+CC = ccache gcc
+CFLAGS+=-O0
+CFLAGS+=-ggdb3
+USE_ASCIIDOCTOR=true
+SANITIZE=leak,address
+```
+
+Kristoffer Haugsbakk (2):
+  revision: add rdiff_other_arg to rev_info
+  format-patch: handle range-diff on notes correctly for single patches
+
+ builtin/log.c         |  7 +++----
+ log-tree.c            |  3 ++-
+ revision.h            |  1 +
+ t/t3206-range-diff.sh | 16 +++++++++++++++-
+ 4 files changed, 21 insertions(+), 6 deletions(-)
+
+
+base-commit: ca2559c1d630eb4f04cdee2328aaf1c768907a9e
+-- 
+2.51.0.270.gdb73cbc1bc1
+
