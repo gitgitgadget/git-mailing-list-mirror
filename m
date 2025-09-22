@@ -1,119 +1,163 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA9C21CC62
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 16:22:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA693192B7D
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 16:24:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758558130; cv=none; b=BGUHXb8gpwpo6tcNx3NK1ap7m+sTayrvy6vPYeM+okpkpc69AEI0KG+ArdmIQGnw0jp1FXE+lPejckv6hKf/siW4uwdKhhw+HzO/VT+E2rNa95qhfDiPuckPFw6btWCxF317t56NOJCzXiqXHDY61UyE0Rl6GSFIHm7qEiSPv94=
+	t=1758558271; cv=none; b=Rln8NcavTWvYGEqKDg/f4mEmCzzmVhuSUPxYY6rhoEo1a/vyQmEmZcFm0DIjuzb8999wmvHUrGl8e1ExVGMATlBsUMFCgA5J//y8gUOXnFHG1lYAOt4IAlZ9PHx46dMuwmSlTOshtIdivaC1yt8A1E7R6KSITvJSGMZyQOuHLKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758558130; c=relaxed/simple;
-	bh=pS8QH8JjNE1TWWdb7yi5IQDuwZx26n/ptwsEuEwCovw=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OF04LSg2voZYw0edK4RENysToOrWW+tsrlu4D7Vpib+KCiDB7DAB+xf8uL4ZSgSS3EEnZG+H6EeT0TA0+7eVASlleHdW9LdeElf+nyJTcTHmkzEIb/0WNAVLiB7ESRtXYcZbHtg+5STUUv4UHmxKv7TmFL1XIlALXQb/DuMpF4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 58MGLdYk1993809
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Sep 2025 16:21:40 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Ezekiel Newren'" <ezekielnewren@gmail.com>
-Cc: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>,
-        <Johannes.Schindelin@gmx.de>, <ben.knoble@gmail.com>, <cb@256bit.org>,
-        <collin.funk1@gmail.com>, <contact@hacktivis.me>,
-        <eschwartz@gentoo.org>, <git@vger.kernel.org>, <gitster@pobox.com>,
-        <me@ttaylorr.com>, <newren@gmail.com>, <phillip.wood123@gmail.com>,
-        <pierre-emmanuel.patry@embecosm.com>, <ps@pks.im>, <sam@gentoo.org>,
-        <sandals@crustytoothpaste.net>
-References: <8799E6DB-FC85-4F71-A6C1-363D1AC8ED06@macos-powerpc.org> <000001dc2a5d$ea10ffe0$be32ffa0$@nexbridge.com> <CAH=ZcbDJR7gJ0tyQ-bk-n+Zid_csED74+X5OkTfbEiy5-_2R-w@mail.gmail.com> <002001dc2a84$cda40380$68ec0a80$@nexbridge.com> <CAH=ZcbCf4sWKhOcCe4UkX3Y9VXZ-iHeh4QZ3ExrX1hbn5GE3vA@mail.gmail.com> <002c01dc2a95$400315f0$c00941d0$@nexbridge.com> <CAH=ZcbDGaxiW=QCTrRo3YqxS-rY0e5h5PrnKQt9htJfn4firJA@mail.gmail.com> <003401dc2aa6$623d1420$26b73c60$@nexbridge.com> <CAH=ZcbA0jpntXjPnrVi13Sz1PipnyBLNWKW4Q5taGEHqBrqj-A@mail.gmail.com> <008501dc2b4c$7f5ea450$7e1becf0$@nexbridge.com> <CAH=ZcbAop=z8-zA_aEE+sTHErg0gjzYRnqCd3XQF9=_TakBK8A@mail.gmail.com>
-In-Reply-To: <CAH=ZcbAop=z8-zA_aEE+sTHErg0gjzYRnqCd3XQF9=_TakBK8A@mail.gmail.com>
-Subject: RE: [PATCH RFC 0/3] Introduce Rust and announce that it will become mandatorty
-Date: Mon, 22 Sep 2025 12:21:34 -0400
-Organization: Nexbridge Inc.
-Message-ID: <000001dc2bdc$fa856d40$ef9047c0$@nexbridge.com>
+	s=arc-20240116; t=1758558271; c=relaxed/simple;
+	bh=4Sz2YDAIRee6c8R1cKZ4LwL5cxEakBHx4ISkHhEPyBQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KfXZUTq/QLhGkSAmkQ4YIchVpnphNjkCp7uWTiB7K8APJ4zZwOQRpAuhC/g29ot47BuszKuHsybVkNa/2NlrSqzIycFxojw7Jz1ZkB/jJI7Ihiapvpoto1vwgxu76rqf9t/0inyJBDAUrGQbglFsr6k0uFZNPkFelGce6J6jtBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IwABacQt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ftuyXn5I; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IwABacQt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ftuyXn5I"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D8C64140019C;
+	Mon, 22 Sep 2025 12:24:28 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Mon, 22 Sep 2025 12:24:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758558268; x=1758644668; bh=gPFLmF5WCo
+	FVSExI7TCOq4R+/Lf7XwLEcBIkZxGId6g=; b=IwABacQtftDJxpm8Rbw9pVr0yh
+	KFkiC48vvJV1CLQuZrk2UzYxMTcmZE8P+V6Os4Heod3w5MSrSuo1XVpsUHO9p2z/
+	wqPIHvAYy/1fIQnjwHHE/WDGqJulw3+nsKIrJd2b+BcG2PVME0klwUfTJGtVf/sZ
+	jU+WW56CiHV3niBQztH5OKiC3mxdDbHIdY2WibvwD+JfUUFmNOH2FvLamJyxKVYp
+	08khpBcGBHTP6edFoXsYonbM2wVqMPOb38da6d97W8oIBJG630T/7+UU0RG27+6K
+	TSaZ195XtL4qGOHFkUThyG4MyU5VMRei8GGZm0mHnbot2P0grdtNMPHNmHug==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758558268; x=1758644668; bh=gPFLmF5WCoFVSExI7TCOq4R+/Lf7XwLEcBI
+	kZxGId6g=; b=ftuyXn5IhqVeUkg58dGQaFW64BaFVUxfie0fwBsI+rCau15kA0a
+	/BIVzmhs3EL6Ebw2Yap369XCD/SxU16us/lhob+sPFEsywrsozlkZMZ/DrwIu/bE
+	nD4wZD1BTdq7os7L+GISjEYxfvkZOTndFH+O4utpFaoTUfm33syijAA8HRoPpeg6
+	qlbFXO7YdXFqggslvmzkmrk8iqX84FZmGvfw95ZyjX+ywUH9QOkBZr8afyYsisxf
+	fHneHgVIWFFQ7B7nBjP/oJYt/ExcWtFYfY9uwUo4Baxju7pWUsBwUK6s7TjmdKvm
+	e6KlaaqQ/mjcWLt+e2ajNyhK46uVdJ/Q32A==
+X-ME-Sender: <xms:PHjRaD1379sUqOCTLPdAXzVhf5RwBEYd2qIb-opW6tXcT8hC_ykrLw>
+    <xme:PHjRaCgG_c8AzuD8VlUuhNgko_6htbrOwW0YPqPzyQ-qxTQRKt6TLWiZo1gWZJ_sD
+    NsOYQD3FZ9Tr3yVMlIlFR6c4HgHlOVQT54sc_cJYJUck0MdR4oF6g>
+X-ME-Received: <xmr:PHjRaDr_BqCSu7VGNtvqP96F3WWSY_-4qp09V8_-aeDLrI9k6oBgopG5R4bCD3y6T6xszOc7OQ8ZvqjjkSPyd734QR1VtGzlA3PF>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeefvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghonhhtrggttheshhgrtghk
+    thhivhhishdrmhgvpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthh
+    hprghsthgvrdhnvghtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtoheptggssedvheeisghithdrohhrghdprhgtphhtthhopegtohhllh
+    hinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtthhopegvshgthhifrghrthii
+    sehgvghnthhoohdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:PHjRaFOXUlidWLnSbfz5MV7Inx045PcUJ0Wwzaedg1YGK_exWR6eFA>
+    <xmx:PHjRaP0KTmSifykuhazO6FeDpU15J3sfbLxrmUOClq5G_l16p-KJkA>
+    <xmx:PHjRaDpbCQ58cjzrHfVcLcyFRVuKWgrqisV7ECL3RuVGLoN6hRie1Q>
+    <xmx:PHjRaJd7u9uA2dUtzmFr_5z9QlMIuDLS9dfcDE4MyI-Xz6sQ-4EOgQ>
+    <xmx:PHjRaCuu3_n-3h8nRCo9kRi4q1Lb8ngGJeCNNGPvMwvVZvzt1GdUYCt1>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Sep 2025 12:24:27 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  "Haelwenn (lanodan) Monnier"
+ <contact@hacktivis.me>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Ben Knoble <ben.knoble@gmail.com>,
+  Christian Brabandt <cb@256bit.org>,  Collin Funk
+ <collin.funk1@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,  Elijah
+ Newren <newren@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Pierre-Emmanuel Patry
+ <pierre-emmanuel.patry@embecosm.com>,  Sam James <sam@gentoo.org>,  Taylor
+ Blau <me@ttaylorr.com>
+Subject: Re: [PATCH RFC v4 7/9] BreakingChanges: announce Rust becoming
+ mandatory
+In-Reply-To: <aMfwGHL7dh8dk2cQ@pks.im> (Patrick Steinhardt's message of "Mon,
+	15 Sep 2025 12:53:12 +0200")
+References: <20250910-b4-pks-rust-breaking-change-v4-0-4a63fc69278d@pks.im>
+	<20250910-b4-pks-rust-breaking-change-v4-7-4a63fc69278d@pks.im>
+	<xmqqldmmqa1z.fsf@gitster.g> <aMfwGHL7dh8dk2cQ@pks.im>
+Date: Mon, 22 Sep 2025 09:24:26 -0700
+Message-ID: <xmqqsegev4jp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQLgmUmHR/cGrsIL/oCQ2NDpPqhQsAJqIl+QATT20pYCDwZOegJLM5dLApmyRbMCd1X2zwKjRYU7AV7GJwsBg9WBUQFBfVlNsff4O7A=
-Content-Language: en-ca
-X-Antivirus: Norton (VPS 250922-0, 9/21/2025), Outbound message
-X-Antivirus-Status: Clean
+Content-Type: text/plain
 
-On September 21, 2025 7:42 PM, Ezekiel Newren wrote:
->On Sun, Sep 21, 2025 at 5:07=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
->> Not really no. There is momentum for Rust on NonStop. It just takes
->> time to get budget for the effort. After getting budget, it takes =
-time
->> for the port. I am likely to have some involvement in that, one way =
-or
->> another. NonStop does support git, mostly through my ongoing efforts
->> and they do use it extensively. This really is a crucial application
->> and the NonStop team does understand the implications. The problem is
->> that everything takes time, more than git is allowing in this case. I =
-cannot disclose
->more than that.
->
->Ah, thank you for correcting me.
->
->> Yes, people are screaming at me to fix it, which is not easy. The
->> policy is not the Problem, but the technical limitations are. It is
->> not a surprise, because I was involved In the POSIX effort when it =
-was first
->introduced on NonStop, not that many "in the know"
->> Listened to my concerns, which are now having significant =
-consequences.
->
->I think you've mentioned threading as a major technical hurdle for Rust =
-and GCC
->somewhere else on the mailing list (correct me if I'm wrong). That's =
-why I've worked
->very hard on single threaded only translations. Also, I've been =
-targeting Rust version
->1.63.0 because that's what debian requires and so my local Rust =
-development is
->locked to that version. I've managed to translate a huge amount of =
-xdiff to Rust
->using no Cargo dependencies. I figure if I keep my Rust adoption effort =
-as bare
->bones as possible that'll make it easier for NonStop to catch up to =
-Git's Rust bare
->minimum requirement. I have been talking about adding cbindgen which =
-pulls in like
->40+ dependencies, but that's a different case because its only purpose =
-is to generate
->C header files from parsed Rust files. I can write my Rust in a way =
-that cbindgen can
->be disabled and the generated header files can be checked into Git or =
-acquired
->somewhere else.
->
->I have 2 questions for you.
->What parts of Rust do you think will be easy to port?
->What parts of Rust do you think will be difficult to port?
+Patrick Steinhardt <ps@pks.im> writes:
 
-I will ask the team member who are doing this port for their opinion.
+>> I am having a hard time imagining the practicality of this "hand
+>> over but we still review" arrangement.  Some of the security fixes
+>> are embargoed, and the reason why we are jetissoning the stale
+>> codebase is presumably because nobody is willing to work on it other
+>> than the "community support" folks.  I can imagine that we would
+>> qualify them into the git-security cabal and let them use the forum
+>> to coordinate among themselves, but then to what degree in the
+>> "community support themselves" process is our involvement expected?
+>> As long as we can make sure that they do not leak before the
+>> official embargoed release, they do not need an official stamp of
+>> approval from the project or by the Git maintainer---that is what it
+>> means to "hand over maintainer ship", at least to me.
+>> 
+>> In other words, I like what I see in this paragraph, but I do not
+>> think we can practically live with the part of the sentence after
+>> the last ", but".
+>
+> I think the most important part here is that this community-supported
+> LTS release should still live in the canonical repositories. We should
+> avoid the situation where we hand over maintainership to such a degree
+> that the end result (the tagged LTS release) lives somewhere else.
 
-Easy: NonStop is POSIX and has C17, so anything compatible with that =
-should
-not be difficult.
-Hard: Anything that depends on assumptions that gcc works 100% on the
-platform are hard and have to be worked around, so porting mrustc is =
-considered
-hard on that basis. Our first attempt at porting that did not go well as =
-we have to
-reconstruct the build options, at the very least, from scratch, while =
-not strictly
-difficult, it is always time consuming to figure out the intention.
+Why is it a bad thing?  The official repository can have a README.md
+with a single entry "maintenance releases for Git 2.98 LTS (most
+notably with no Rust requirements) are found at this separate site".
+
+> Otherwise we risk chaos and a plethora of different LTS releases, which
+> would be harmful both for us and those that rely on the LTS releases.
+
+No risk for that as long as we have a single "go there" pointer, right?
+
+> And yes, that probably means that a trusted LTS maintainer should be on
+> git-security@ so that they are aware of upcoming security releases.
+
+Absolutely.
+
+And there should be a community of those who are working on helping
+the backporting effort around that LTS maintainer that ensures there
+is no "chaos and a plethora of different LTS releases".
+
+We might occasionally update what is listed in "git ls-remote --tags"
+from our repository by syncing with them only for convenience, but
+the important point is that the community supported LTS should have
+its own official site, which is different from the cutting/bleeding
+edge.  Most importantly, a coordinated disclosure would say that the
+update to versions of
+
+ - Git 3.0 to Git 3.4 are found $HERE, 
+ - Git for Windows 3.0, 3.2, and 3.4 are found $THERE
+ - Git 2.98 are found $COMMUNITY_LTS
+
+to make sure that people know where to find their updates.
+
+So, no, I do not think we should unnecessarily mix community LTS and
+the main project.
+
+
 
