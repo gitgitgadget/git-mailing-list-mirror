@@ -1,329 +1,178 @@
-Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58AD231A059
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 19:52:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482B331B833
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 20:05:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570730; cv=none; b=JcGjwboD/PK2GNVm3pOsBru8TOTftnq7xWlQbmBsOu7DtEgYsIoHaWbJKuEE6Eb+/GzjM0MtxGNHgA17a0Vl/o+MFfZbupTFugm1EutnrI/7BgtJI//u7whH/wNBIydaFJ0sAAXX6Tm1evf7AY+Lx/8PRKa2K7tK7u2Jq1lF4U4=
+	t=1758571515; cv=none; b=VmjtUuqlVSDocARr0JLxdHwGBm344ME+aY8nfk6E2tOOWlbmwP8h1GPsXaDO8QWUx6V8Ewl8GxaDGGrqCx6MMKordxw3DWoez/n0N9WZYrak6+/yRl/0Np0QePo98JBXWp98khdAaryLPqpzQamAndLTTlS9jSNqBivLZ+NOmNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570730; c=relaxed/simple;
-	bh=r7IbiAeZ2GnyYdxPF/GUJV5tBx8NRsEGz71rbLBXCrE=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=HLy2QZKh2d1L91u/LKiv6XuiFA6CjWCNlLjJJlEw+lhQmRkxBuuEbgrKNacJpp3PODiJFGDNgM0RZF/47Ed0friOHlhkPbfqqbeyvgqrHfH39DRpMPGUiOvXEAaWnBGX5dgswaZn/nuRi1SKioD3QGtOdQDaLqpLhVLoYr9LlWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y05Za9WD; arc=none smtp.client-ip=209.85.166.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758571515; c=relaxed/simple;
+	bh=tVCB6HJtRyCNOtKmCltUYGM7k4wKG6Pt0jZt/PYqf0E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jpnG/zY8Xl52SB5fNc8D+kDqE9c/L3bhXaVSyKjqb836DxgC1O2/JfpeTPVp0DCybidH9nE0SG7c89HQS+nxCJ1/FiinZb75Xr314GssJtZWoLS5S0f3t12dM7jwdICArbQTQeSiy1/jsqH2+JiFHcqI3YSC2g1SqyocRqeEp90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=JKerlRG3; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y05Za9WD"
-Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-4248b079780so11173735ab.3
-        for <git@vger.kernel.org>; Mon, 22 Sep 2025 12:52:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758570727; x=1759175527; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fD1SD0JXFMBSOipFnhfOlZe8WUENRwMZfx/UidvyVWQ=;
-        b=Y05Za9WDZI78qTumEYLQFDo1AqWQb7DN35euWs/9G+esWuPSMRJ1Gmrp0w42rpcbWA
-         +K6L0LUBiH650m9v6q8wq5ghvxgSos/I3rFMPSBmTcnYnPQ4yMSfVGZk/L8MrwxkQrpr
-         F6Noc5R0WqOz1GwP8YEAFXxW87BoaAgPwqLxu6HMdnCyFYAYxJrRULxNhh6tFam4/stQ
-         PHYUvraR7zskKzsYDDHgQq67hAwRleZPN9gay5k2rbDLGKv4Hksdo/uoCFciGiS/al6j
-         pTERD8QZiPP+Zbia2y2HDIVdN/YufbicELdaTmDK73cRKzrYrqKtCv/DXfHGpYf3UY75
-         2vjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758570727; x=1759175527;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fD1SD0JXFMBSOipFnhfOlZe8WUENRwMZfx/UidvyVWQ=;
-        b=rlaunKnvse5LIrKLepjO10/qkiQIxdX6FckgSb8/xuBWprQqnrqyV+XIXseVpXhxM/
-         yK3fRelFY0d1kCgmsvZLrKHWzWc1u85K2B2ULSTnbntPkMk2lh4ys4ITO3qgKq5YiDR6
-         Ytv8Wf+DeJWZV9M49Mrrx/ZlKOqh5E/XbnFG6nHPKoHz6jmEvgSzSEL67CI4gBj3zPs5
-         5pJtWDbhChACLFOhT6AEJuVwvv4ub7HTDaPacANTIxOGrcHdbrbTMlG841dlWKbuOOxC
-         yMjMiTLRSB+e2Dgp3w4ZoYK/GxVPU9efo6ukB6g2jB8aQLbHjmvxh2hLBsD/UIL36uqS
-         NeLA==
-X-Gm-Message-State: AOJu0Yw6Maeww2da7w9GG4FZLGs5H3owa7y8D3EfVpYFlDKBveAMhbyo
-	uRZzrGLZ8wvFN0rFABLRB2OptfocsvS+GgSE0X25MMfoefpRtQSlO/brrcRJdA==
-X-Gm-Gg: ASbGncugJzUmOOCJ8hd56AbSHYs86XtPhGwBbSEjCGh4UOHD3nKr2ia23ANRnwDFfsG
-	J6vhJc0aW6z+o1FNGVIrcN1sbYQt9CpEjRtgZuXE75do+G6o0Y++tOOUHAAVWKRrWW5Tf7blxUb
-	T0ezy5Ag6HWIbrYaXjpcBuK1DAcbgj//16PztEqqOO5SSf3jyvctAHaVxFlELVbQzUJdjEWfwYd
-	wnLHSC3jNT43KtnrTw+1zS8JqJFnkP4iMUQGGrcafI1gUJ/ddL9lENOfAjmbLchaTkJDfLoOWvA
-	mhyxDC2LJ4bxF3DKrrZ4GMi+0amS0AVF/W059uJ8a15hBMGZFLkHBKJFjMwJfIRt6Vx88Bu7FXP
-	GF/zAS1cUAhupNIdphePQupEilQ==
-X-Google-Smtp-Source: AGHT+IFKMp5D1DW26xIj9Ox7I2XZIKLaYHQsxvYgBFTebI7Kp3RuxB+71B4zcCtE5kaF3fe244xqxA==
-X-Received: by 2002:a05:6e02:1a4b:b0:405:5e08:a3e4 with SMTP id e9e14a558f8ab-42581e036d7mr1973965ab.1.1758570727167;
-        Mon, 22 Sep 2025 12:52:07 -0700 (PDT)
-Received: from [127.0.0.1] ([132.196.80.135])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-556bf59a051sm2703251173.80.2025.09.22.12.52.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Sep 2025 12:52:06 -0700 (PDT)
-Message-Id: <034a4a7b2ad18812f68b5fcb8a61fb24f0a84d66.1758570701.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2048.v4.git.git.1758570701.gitgitgadget@gmail.com>
-References: <pull.2048.v3.git.git.1758294992.gitgitgadget@gmail.com>
-	<pull.2048.v4.git.git.1758570701.gitgitgadget@gmail.com>
-From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 22 Sep 2025 19:51:41 +0000
-Subject: [PATCH v4 12/12] xdiff: refactor 'char *rchg' to 'bool *changed' in
- xdfile_t
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="JKerlRG3"
+Received: (qmail 162416 invoked by uid 109); 22 Sep 2025 20:05:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=tVCB6HJtRyCNOtKmCltUYGM7k4wKG6Pt0jZt/PYqf0E=; b=JKerlRG3VraIT5dMFjtcNYN2yZIiZkjOaJf6sssmMz1hnIQ68P4p6VF4DdBolAn26BiII8DaulrOqqK66Zhecs+bm58xYetw/hSQBt6tgbmx5M6yldhVEzFnRHA5K7RlSt5GuQsRYHajLEsOJEaKR4ik752wP5FwVgBW1c0BvqXQ+MZ8e/6Im80lGod4VZMhd4tk4mCBbUJRQ6kKAna9sqvf26dKsUQ7OhKBMrXdow/vlxuOeGihoc/dPU61wLutJzmzSW7t6+uXK2ZwytvKGO7+fpS336OH8WF1fT/PEZM3pH2GjTw1VJXdMDpIdSXtNUO/MKOQHlT7BPqW/p4ziw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Sep 2025 20:05:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 259653 invoked by uid 111); 22 Sep 2025 20:05:10 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Sep 2025 16:05:10 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 22 Sep 2025 16:05:10 -0400
+From: Jeff King <peff@peff.net>
+To: Sainan <sainan@calamity.inc>
+Cc: Simon Richter <Simon.Richter@hogyros.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Could Git be smarter about object reuse?
+Message-ID: <20250922200510.GC2205919@coredump.intra.peff.net>
+References: <pmKix6R7b3WVLrcK6ig1Lh7RhrB5G4Hm5yam_fEoC839aatB-OjJEmSJJ-weErGEnt4Mvgf5slxgu6Pm1xlGZ4mr_i4MIAAEMYy8DjJnWgk=@calamity.inc>
+ <f478fc6f-77ab-4d4e-a8d9-2d44622ba8dd@hogyros.de>
+ <2RWL_muy24EPDZ9wWFx-WZfu4Br_F2LenvcVJbKewfSVYipYM3qmeEIgV-6o4EbL39ZjMXtLHbVFOCPcBdHHVAU-0BrgBtuQ9BdRjS_2niE=@calamity.inc>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Ben Knoble <ben.knoble@gmail.com>,
-    Jeff King <peff@peff.net>,
-    Ezekiel Newren <ezekielnewren@gmail.com>,
-    Ezekiel Newren <ezekielnewren@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2RWL_muy24EPDZ9wWFx-WZfu4Br_F2LenvcVJbKewfSVYipYM3qmeEIgV-6o4EbL39ZjMXtLHbVFOCPcBdHHVAU-0BrgBtuQ9BdRjS_2niE=@calamity.inc>
 
-From: Ezekiel Newren <ezekielnewren@gmail.com>
+On Mon, Sep 22, 2025 at 10:49:07AM +0000, Sainan wrote:
 
-Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
----
- xdiff/xdiffi.c     | 28 ++++++++++++++--------------
- xdiff/xhistogram.c |  8 ++++----
- xdiff/xpatience.c  |  8 ++++----
- xdiff/xprepare.c   | 12 ++++++------
- xdiff/xtypes.h     |  2 +-
- xdiff/xutils.c     |  4 ++--
- 6 files changed, 31 insertions(+), 31 deletions(-)
+> > The receiver sends a list of commits it has
+> 
+> This alone is not enough because if I'm amending a commit, it doesn't
+> have the new commit(s), but it does have the previous commit(s), so
+> the fact of blobs/trees being reusable is missed.
 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 6213ce7a03..b902be9d0e 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -278,10 +278,10 @@ int xdl_recs_cmp(xdfile_t *xdf1, long off1, long lim1,
- 	 */
- 	if (off1 == lim1) {
- 		for (; off2 < lim2; off2++)
--			xdf2->rchg[xdf2->rindex[off2]] = true;
-+			xdf2->changed[xdf2->rindex[off2]] = true;
- 	} else if (off2 == lim2) {
- 		for (; off1 < lim1; off1++)
--			xdf1->rchg[xdf1->rindex[off1]] = true;
-+			xdf1->changed[xdf1->rindex[off1]] = true;
- 	} else {
- 		xdpsplit_t spl;
- 		spl.i1 = spl.i2 = 0;
-@@ -708,7 +708,7 @@ struct xdlgroup {
- static void group_init(xdfile_t *xdf, struct xdlgroup *g)
- {
- 	g->start = g->end = 0;
--	while (xdf->rchg[g->end])
-+	while (xdf->changed[g->end])
- 		g->end++;
- }
- 
-@@ -722,7 +722,7 @@ static inline int group_next(xdfile_t *xdf, struct xdlgroup *g)
- 		return -1;
- 
- 	g->start = g->end + 1;
--	for (g->end = g->start; xdf->rchg[g->end]; g->end++)
-+	for (g->end = g->start; xdf->changed[g->end]; g->end++)
- 		;
- 
- 	return 0;
-@@ -738,7 +738,7 @@ static inline int group_previous(xdfile_t *xdf, struct xdlgroup *g)
- 		return -1;
- 
- 	g->end = g->start - 1;
--	for (g->start = g->end; xdf->rchg[g->start - 1]; g->start--)
-+	for (g->start = g->end; xdf->changed[g->start - 1]; g->start--)
- 		;
- 
- 	return 0;
-@@ -753,10 +753,10 @@ static int group_slide_down(xdfile_t *xdf, struct xdlgroup *g)
- {
- 	if (g->end < xdf->nrec &&
- 	    recs_match(&xdf->recs[g->start], &xdf->recs[g->end])) {
--		xdf->rchg[g->start++] = false;
--		xdf->rchg[g->end++] = true;
-+		xdf->changed[g->start++] = false;
-+		xdf->changed[g->end++] = true;
- 
--		while (xdf->rchg[g->end])
-+		while (xdf->changed[g->end])
- 			g->end++;
- 
- 		return 0;
-@@ -774,10 +774,10 @@ static int group_slide_up(xdfile_t *xdf, struct xdlgroup *g)
- {
- 	if (g->start > 0 &&
- 	    recs_match(&xdf->recs[g->start - 1], &xdf->recs[g->end - 1])) {
--		xdf->rchg[--g->start] = true;
--		xdf->rchg[--g->end] = false;
-+		xdf->changed[--g->start] = true;
-+		xdf->changed[--g->end] = false;
- 
--		while (xdf->rchg[g->start - 1])
-+		while (xdf->changed[g->start - 1])
- 			g->start--;
- 
- 		return 0;
-@@ -938,9 +938,9 @@ int xdl_build_script(xdfenv_t *xe, xdchange_t **xscr) {
- 	 * Trivial. Collects "groups" of changes and creates an edit script.
- 	 */
- 	for (i1 = xe->xdf1.nrec, i2 = xe->xdf2.nrec; i1 >= 0 || i2 >= 0; i1--, i2--)
--		if (xe->xdf1.rchg[i1 - 1] || xe->xdf2.rchg[i2 - 1]) {
--			for (l1 = i1; xe->xdf1.rchg[i1 - 1]; i1--);
--			for (l2 = i2; xe->xdf2.rchg[i2 - 1]; i2--);
-+		if (xe->xdf1.changed[i1 - 1] || xe->xdf2.changed[i2 - 1]) {
-+			for (l1 = i1; xe->xdf1.changed[i1 - 1]; i1--);
-+			for (l2 = i2; xe->xdf2.changed[i2 - 1]; i2--);
- 
- 			if (!(xch = xdl_add_change(cscr, i1, i2, l1 - i1, l2 - i2))) {
- 				xdl_free_script(cscr);
-diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
-index ad88406656..6dc450b1fe 100644
---- a/xdiff/xhistogram.c
-+++ b/xdiff/xhistogram.c
-@@ -318,11 +318,11 @@ redo:
- 
- 	if (!count1) {
- 		while(count2--)
--			env->xdf2.rchg[line2++ - 1] = true;
-+			env->xdf2.changed[line2++ - 1] = true;
- 		return 0;
- 	} else if (!count2) {
- 		while(count1--)
--			env->xdf1.rchg[line1++ - 1] = true;
-+			env->xdf1.changed[line1++ - 1] = true;
- 		return 0;
- 	}
- 
-@@ -335,9 +335,9 @@ redo:
- 	else {
- 		if (lcs.begin1 == 0 && lcs.begin2 == 0) {
- 			while (count1--)
--				env->xdf1.rchg[line1++ - 1] = true;
-+				env->xdf1.changed[line1++ - 1] = true;
- 			while (count2--)
--				env->xdf2.rchg[line2++ - 1] = true;
-+				env->xdf2.changed[line2++ - 1] = true;
- 			result = 0;
- 		} else {
- 			result = histogram_diff(xpp, env,
-diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
-index 042e889348..669b653580 100644
---- a/xdiff/xpatience.c
-+++ b/xdiff/xpatience.c
-@@ -331,11 +331,11 @@ static int patience_diff(xpparam_t const *xpp, xdfenv_t *env,
- 	/* trivial case: one side is empty */
- 	if (!count1) {
- 		while(count2--)
--			env->xdf2.rchg[line2++ - 1] = true;
-+			env->xdf2.changed[line2++ - 1] = true;
- 		return 0;
- 	} else if (!count2) {
- 		while(count1--)
--			env->xdf1.rchg[line1++ - 1] = true;
-+			env->xdf1.changed[line1++ - 1] = true;
- 		return 0;
- 	}
- 
-@@ -347,9 +347,9 @@ static int patience_diff(xpparam_t const *xpp, xdfenv_t *env,
- 	/* are there any matching lines at all? */
- 	if (!map.has_matches) {
- 		while(count1--)
--			env->xdf1.rchg[line1++ - 1] = true;
-+			env->xdf1.changed[line1++ - 1] = true;
- 		while(count2--)
--			env->xdf2.rchg[line2++ - 1] = true;
-+			env->xdf2.changed[line2++ - 1] = true;
- 		xdl_free(map.entries);
- 		return 0;
- 	}
-diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index f152e3acd8..009556f7c2 100644
---- a/xdiff/xprepare.c
-+++ b/xdiff/xprepare.c
-@@ -129,7 +129,7 @@ static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t
- static void xdl_free_ctx(xdfile_t *xdf)
- {
- 	xdl_free(xdf->rindex);
--	xdl_free(xdf->rchg - 1);
-+	xdl_free(xdf->changed - 1);
- 	xdl_free(xdf->recs);
- }
- 
-@@ -142,7 +142,7 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
- 	xrecord_t *crec;
- 
- 	xdf->rindex = NULL;
--	xdf->rchg = NULL;
-+	xdf->changed = NULL;
- 	xdf->recs = NULL;
- 
- 	if (!XDL_ALLOC_ARRAY(xdf->recs, narec))
-@@ -164,7 +164,7 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
- 		}
- 	}
- 
--	if (!XDL_CALLOC_ARRAY(xdf->rchg, xdf->nrec + 2))
-+	if (!XDL_CALLOC_ARRAY(xdf->changed, xdf->nrec + 2))
- 		goto abort;
- 
- 	if ((XDF_DIFF_ALG(xpp->flags) != XDF_PATIENCE_DIFF) &&
-@@ -173,7 +173,7 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
- 			goto abort;
- 	}
- 
--	xdf->rchg += 1;
-+	xdf->changed += 1;
- 	xdf->nreff = 0;
- 	xdf->dstart = 0;
- 	xdf->dend = xdf->nrec - 1;
-@@ -290,7 +290,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
- 		    (dis1[i] == MAYBE && !xdl_clean_mmatch(dis1, i, xdf1->dstart, xdf1->dend))) {
- 			xdf1->rindex[nreff++] = i;
- 		} else
--			xdf1->rchg[i] = true;
-+			xdf1->changed[i] = true;
- 	}
- 	xdf1->nreff = nreff;
- 
-@@ -300,7 +300,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
- 		    (dis2[i] == MAYBE && !xdl_clean_mmatch(dis2, i, xdf2->dstart, xdf2->dend))) {
- 			xdf2->rindex[nreff++] = i;
- 		} else
--			xdf2->rchg[i] = true;
-+			xdf2->changed[i] = true;
- 	}
- 	xdf2->nreff = nreff;
- 
-diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
-index 3d26cbf1ec..f145abba3e 100644
---- a/xdiff/xtypes.h
-+++ b/xdiff/xtypes.h
-@@ -48,7 +48,7 @@ typedef struct s_xdfile {
- 	xrecord_t *recs;
- 	long nrec;
- 	long dstart, dend;
--	char *rchg;
-+	bool *changed;
- 	long *rindex;
- 	long nreff;
- } xdfile_t;
-diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index 332982b509..ed65c222e6 100644
---- a/xdiff/xutils.c
-+++ b/xdiff/xutils.c
-@@ -425,8 +425,8 @@ int xdl_fall_back_diff(xdfenv_t *diff_env, xpparam_t const *xpp,
- 	if (xdl_do_diff(&subfile1, &subfile2, xpp, &env) < 0)
- 		return -1;
- 
--	memcpy(diff_env->xdf1.rchg + line1 - 1, env.xdf1.rchg, count1);
--	memcpy(diff_env->xdf2.rchg + line2 - 1, env.xdf2.rchg, count2);
-+	memcpy(diff_env->xdf1.changed + line1 - 1, env.xdf1.changed, count1);
-+	memcpy(diff_env->xdf2.changed + line2 - 1, env.xdf2.changed, count2);
- 
- 	xdl_free_env(&env);
- 
--- 
-gitgitgadget
+Pushing doesn't dig into every possible blob/tree within each commit to
+look for duplicates. Doing that is very expensive in the most general
+case (you'd have to walk the entire object graph to check if some old
+commit mentions the blob you are about to send). So there are some
+heuristics about how much to dig.
+
+We can simulate this case in a single repo like this:
+
+  git init
+  # or any big file; we want it to be obvious when it is sent
+  dd if=/dev/urandom bs=1M count=10 >rand.bin
+  git add rand.bin
+
+  # now make one commit
+  git commit -m one
+  one=$(git rev-parse HEAD)
+
+  # and an amended one with the same tree
+  git commit --amend -m two
+  two=$(git rev-parse HEAD)
+
+If we pushed $one to a server, and then tried to push $two the server
+will tell us it has $one already. And push will feed this to
+pack-objects:
+
+  echo ^$one >input
+  echo $two >>input
+
+And now we can run that same pack-objects locally to see the output:
+
+  $ git pack-objects --stdout --revs --thin --no-progress <input | wc -c
+  10489164
+
+So that demonstrates the issue. Interestingly, we used to suppress the
+duplicate long ago. If I use Git v2.0.5, for example, we send only 147
+bytes. Bisecting turns up the culprit as 2dacf26d09 (pack-objects: use
+--objects-edge-aggressive for shallow repos, 2014-12-24). The subject is
+a bit misleading there. It is enabling the "aggressive" form _only_ for
+shallow repos, whereas it had been used for both before that. 
+
+And the reasoning there is better explained by 1684c1b219 (rev-list: add
+an option to mark fewer edges as uninteresting, 2014-12-24), which says:
+
+    In commit fbd4a70 (list-objects: mark more commits as edges in
+    mark_edges_uninteresting - 2013-08-16), we marked an increasing number
+    of edges uninteresting.  This change, and the subsequent change to make
+    this conditional on --objects-edge, are used by --thin to make much
+    smaller packs for shallow clones.
+
+    Unfortunately, they cause a significant performance regression when
+    pushing non-shallow clones with lots of refs (23.322 seconds vs.
+    4.785 seconds with 22400 refs).  Add an option to git rev-list,
+    --objects-edge-aggressive, that preserves this more aggressive behavior,
+    while leaving --objects-edge to provide more performant behavior.
+    Preserve the current behavior for the moment by using the aggressive
+    option.
+
+Under the hood this is being handled by calls to rev-list. So we could
+see the objects more directly like this:
+
+  # this shows the blob; we are not doing any edge reporting at all
+  git rev-list --objects ^$one $two
+
+  # this is what pack-objects does by default; it also shows the blob
+  git rev-list --objects-edge ^$one $two
+
+  # and this is the more aggressive form that does suppress the blob
+  git rev-list --objects-edge-aggressive ^$one $two
+
+So I think there are a few things to ponder here:
+
+  1. Possibly our heuristics could be smarter.
+
+     This case is easy because it's the tree of a commit we know the
+     other side has. We could detect it without digging into any trees
+     by just marking the tree pointer of each uninteresting commit as
+     also uninteresting. I'm actually a little surprised we don't do
+     that already.
+
+     But there are more complex --amend cases, too. E.g., you might have
+     changed a nearby file, and the trees would be different (but the
+     blob may still be unchanged). To detect that we'd have to walk the
+     whole tree of the commit that the other side claims not to have.
+     And I suspect that's what --object-edge-aggressive is doing, and
+     why it would be expensive if the other side has a lot of refs.
+
+     But possibly we could be do the aggressive thing on just the tip of
+     a server-side ref when we are force-pushing over it. That would
+     help with amends, rebases, and so forth.
+
+  2. It would be nice if there was a knob for the user to turn, so they
+     can spend more CPU time to find duplicates that might make the push
+     smaller. There is a knob for rev-list, as shown above. But I don't
+     think you can control how pack-objects behaves (aside from lying
+     to it by passing --shallow), nor can you convince git-push itself
+     to trigger pack-objects with specific options. But you could
+     imagine a config option that would you do:
+
+       git -c pack.aggressiveEdges=true push ...
+
+     or something. It might be reasonable to turn on all the time in
+     repos with few refs, or you could do a one-off like the command
+     above if you saw that a push was going to be big.
+
+And finally, there is one more trick up our sleeve: reachability
+bitmaps. The idea there is that we store bitmaps of which objects are
+reachable from which commit, which lets us answer object-graph questions
+quickly. And in particular it lets us produce a full set difference
+between the reachable objects in two commits.
+
+So doing:
+
+  git repack -adb
+
+before running pack-objects (or git-push) will also produce the desired
+pack. The downside is that generating bitmaps is relatively expensive
+(much more CPU than the push would have used in the first place). In
+theory the results can then be amortized across many pushes, but the
+tradeoff isn't always great for a local repository which mostly packs to
+push (it's much better on a server that will serve many clones and
+fetches).
+
+-Peff
