@@ -1,207 +1,129 @@
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DB8199E9D
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 01:39:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2281AEACD
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 06:20:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758505166; cv=none; b=nsv2Il+pUyavC1dlFp4ijFP8rteUndXMnvXPNcw79J94HzH7FywJJf1LDGdH76iJcgPH4cpdwXLcSHG8eW0iAE0qmBeqWnepkp2/DLx40GsAzj9S/yGz2dD5+gR+MWSCbId7Mut41yuMnDJO/3nz0fljiBCYS5iHnh2NPJ5QdAQ=
+	t=1758522030; cv=none; b=E7jpNVFntGGMInO9SucbSUSrDH+M4wsWcGDSIToNemX38DNGldGRD/4Lv397XB9nEHFkmYanROi6f+CM86Jtf/gHG/hu/Q+TZzRGuh+amTHDhRv6MZV6x7bJQd7Sha9MTP6m3gBBpnHpmXYhccewHdDfbW6JJTbM/F2Ov1na0FU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758505166; c=relaxed/simple;
-	bh=UC9HRoIYtwl824f/YezEGuaTE+7QP6j+mWwmcOjC4B0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dFuWctrx3fZTQ/yNAicHfPyb3RL3wclHz/aTO9lx0/U0BY+G4IWVrJR0x0kzDujHHJqhzU21BFxMZYst6zSps88WqlBjFX4RFWnf/lxIiXeAdkG9SplrCjligT+RT5g3KPODxzdloFDQsO7PyXR0TieSC8opM8+4H5PZcdfrbUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i7o/eZJ9; arc=none smtp.client-ip=74.125.224.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758522030; c=relaxed/simple;
+	bh=bTunLdslZabiOR4xlqmHd5Fr7N5xDJWF99ri3wLwm08=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=csSt9O328COBfei5kk8Vko9H8dhziQEo+lk806qg0GljXjqoCfzL2/EHvszcNr35XYklbeGdllkSFTz01Y7Z8clTppKgeCnHb5pPc141ycvXKpuCVKKUBJTkCz7+gbaUTKk8VCfZdTcdAi8yu8YVNeprS5sRhg68TSPaqG0u/f0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oIYOMtdQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f2PhGcBN; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i7o/eZJ9"
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-6354a4b4871so171892d50.2
-        for <git@vger.kernel.org>; Sun, 21 Sep 2025 18:39:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758505164; x=1759109964; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RYv+rbkFxsxkyaChG8In6kryiIiuPySFuAWmE+4pwAU=;
-        b=i7o/eZJ9tAjBpBXj6sYhnTdB48X6fbe5X9cQOQ7QJgazNgo7UlavagyRUpCPLhsmws
-         zGFCoS/tyDCdxMrBJlhAmSxqWkVS0hxmaWuxUfajt36U7tY6C6uzWBk7KDYBkMito0Uo
-         LfX6rjg/5MnPiZttIprQE1wmitK/cuLCPsgKmKdzPxZRx2acnmQvkLUuL5gKE6TLBouA
-         B8tXIwbQKlo/iuKmOvQTZx0lrfwCSxqQtc0iKAf0pOfZwy9BdZMQXkN98rEEn6B3ZfRE
-         vQK4UoFNbF6vmGy14Rs9rgi/xsgV9rTvJ3UbWwG14k2RdjmKO6jINEMuajDmxXfMEfYV
-         W5Vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758505164; x=1759109964;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=RYv+rbkFxsxkyaChG8In6kryiIiuPySFuAWmE+4pwAU=;
-        b=LGahDsF6IaXu0WjSmbP9xG2G8w3w6tPah22rC+he1GSt0NIknjySpYtClvc65Fmml7
-         mxaL7WZv2BO32Si0FA8aH7Td/knhtTT+t0DJG51k0bv1HYTl8cd4ku5NINiI2ncVSOAP
-         bxLUT79osqxKNW1CjTbw6f9GfB/ouCOhY09K1Yug2RsPRy+x5u8v+ASeTZ3ZnuZqTYK2
-         ap907+b/7t9NUX5q4GTFC37MlibJqUyBdBMsuuYvmulQDUXqYLE8DRR6XuoazB2ROnt3
-         RB7g9Un2e+ByQtDFUaSxE4p4KQdYcKaFpnYc+WP3sHmnceJ+YW9JX5I27SsvwXA7LYEI
-         b/Kw==
-X-Gm-Message-State: AOJu0YzOL0ByZvpBrp1kxe13n5pdHjb2rCXMzcdLhUaksFTVR2E0/Lvu
-	6SmnnALj+0qzDM8q14yqMZC7eQILRwvIvsRkGjX91O9Mmlq9pcWfAHurk016GTkz
-X-Gm-Gg: ASbGncv3z5qEubZ2UWK3Xo7+Fiesu2I732ZaeBw2kDhDWzfflR08ry7O+udv14319DH
-	BKho89fRF0kqEGhV4zHILGoJe5TXZvXp0ukDDOLQcqBTqVWoInQU2ubnK6Xh+T3BM//S1Cduv08
-	fAhHfFR6HkVwWtE/LBvEV21Ybd7XNTzoGRNaMSqL9f0gqR2sstA8/ZeI2LV18yToFJerx11VR7v
-	DMsyrpkYLeDSCT+Go9M73DdB26m/eO+i62WsXLUuYy0lZBfSkj5tw4OaZzUYcWk2ls8bDRMzq+a
-	QbhAV1svspjhlzep3JDOr18VaWpjx36wgvrrjGbg+BmPGHwX5lP4+qkTJJI1faifwLHj70/774t
-	9vG5Pht+/lpQl4rgYfRlD0+ZrNkJCpqucPAox+71BXzeOSmKEK8pLPCMJX0dHKNtePiiUgRvDKu
-	quKQ==
-X-Google-Smtp-Source: AGHT+IE80327J14uv1CvWrwr0iCK65FtM/4SnK3nl8DDHLkOaYmIpnIrWFHrXT18Prybhf/GNZaOBA==
-X-Received: by 2002:a05:690e:250e:10b0:5f3:315d:900b with SMTP id 956f58d0204a3-6347f5e08f8mr7544353d50.38.1758505163695;
-        Sun, 21 Sep 2025 18:39:23 -0700 (PDT)
-Received: from localhost.localdomain (69-77-149-20.skybest.com. [69.77.149.20])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-633bcd05dd7sm3942069d50.7.2025.09.21.18.39.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Sep 2025 18:39:23 -0700 (PDT)
-Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	moti sd <motisd8@gmail.com>,
-	Denton Liu <liu.denton@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Glen Choo <glencbz@gmail.com>
-Subject: [PATCH v3 4/4] stash: honor stash.index in apply, pop modes
-Date: Sun, 21 Sep 2025 21:39:06 -0400
-Message-ID: <8e6cafbf3a01b968663b65559acf3df615eecbad.1758505011.git.ben.knoble+github@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <cover.1758505011.git.ben.knoble+github@gmail.com>
-References: <cover.1757982870.git.ben.knoble+github@gmail.com> <cover.1758505011.git.ben.knoble+github@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oIYOMtdQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f2PhGcBN"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 831671D0012F;
+	Mon, 22 Sep 2025 02:20:25 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 22 Sep 2025 02:20:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1758522025; x=1758608425; bh=cI/eqvijO3
+	cfjSR2acDswAluuaVl5kEpwbxzoLqGpG4=; b=oIYOMtdQWzzygmYcJHPMq2ZMxV
+	oHYmMJuYeqXE/lmtVJKKWk8jqf9nFk890Ag/JR8FASSIXoiUwV3jCDzb4kdrNJw9
+	JGdkf8GLeNREmL8xaiZqwM38GI/StqI/IKmaEo+4eSR/uMrY5yHasiqW4jFpfRef
+	faqN1uzTB9Am1agcyETKI2I6i18ooSHlJioFveFkqqjsPNp3SOxSdycvvHWxw3Hn
+	LfUjILlF96HcdUMgUgHXpGemtyg21Vgu9MZQv9HtiInD2x6+1zvNhf4qwiv/7vsM
+	kMb3E/6P612HO/yy1Y0XEI/UefEMQdedKOdazbEFnGO0ESnQX+qFtVCfvkrg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758522025; x=1758608425; bh=cI/eqvijO3cfjSR2acDswAluuaVl5kEpwbx
+	zoLqGpG4=; b=f2PhGcBNMepwQH3goNOhJNU0OLs3AaxLPZyAkt7t4Znj0sFFtim
+	VsJyoAws9uIDDx5e6i9xbOJVoKOP8HR0MMEDq5ipp1Ph9Rv3cuK0QejHBDrHOCLP
+	VGxmbY4JKjdhl+k4tC1X3nk/b8wI0BMwBA+J5C/OneMIvC0fospxXDQzgfQbCQWj
+	f+v1Edrl4yePEY6JK+nwfzEWD9xreaAwGgZn0fuKGizPQjZ5qGHplr0LJz4ONPLA
+	zemcIAspfGRjcOP3sJww9Doj63Wscm3M+v0TQGk1Z6f0Am2UpkMtanQbu9YxvmuF
+	GPa0PBLIMpQTf7DqzlyocxE2VNWn832/RoQ==
+X-ME-Sender: <xms:qerQaDT2Z5miSpJUFTgX_NwWyFALEtRBA_bLp3t3-QNmrnxtyElc7w>
+    <xme:qerQaPWZUDbf3NV3meSEvTkt2ZHwyK4UG1Ed-mGan9Tl07AAQ5V2bPiwLlOglKjkt
+    6P8kRXGTTFTJw0Sfg>
+X-ME-Received: <xmr:qerQaFa5n8fArxXIkjS74wRZfQvq21_x6tmZgEPceffVmcExPPdmRZ7EZY5W2m5v7kBAFwRrI_SEmZ97r_HILmETLjv6U2je2AuO3faBHQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehjeduudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    ethfdvieejteetudfgffeukefgkeeitddttdegtddtueduhffhgeevvdeghedvueenucff
+    ohhmrghinhepghhithdqshgtmhdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeg
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehmrghtthhhvgifhh
+    hughhhvghsleefgeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:qerQaF1jDpyXh0EIW3TrJOUmB5x4vgRJkaIygSQ-eV4sq3xvDx3gqg>
+    <xmx:qerQaHgquO2yGgHpaeW-vAVODct0fJXboi-7oRG-OFWdYSLrR-f_8w>
+    <xmx:qerQaJb4HGxY1Ix03Feb8r5sb8LYj3SN04KB2gF_lnIuaY6OEa8zjA>
+    <xmx:qerQaHSCIWka-uOTdcQ0MyoraVmNLMfneFzJ6yCPP0em4HtF5qxTmg>
+    <xmx:qerQaKCuPZ6cHsGXFw2HmfQNj7ugqQkjALTYvOxdvCNQ1qn1uo2H3Cck>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Sep 2025 02:20:24 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 78cce5d2 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 22 Sep 2025 06:20:22 +0000 (UTC)
+Date: Mon, 22 Sep 2025 08:20:12 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthew Hughes <matthewhughes934@gmail.com>, git@vger.kernel.org
+Subject: Re: [QUESTION] how to find options set by scalar?
+Message-ID: <aNDqnMTJIoHi7Ifc@pks.im>
+References: <vppjutjcdglp44qvsk4qozphycyg663yrq5775zztim2oe7ty5@uttjrshb52bd>
+ <aMkVqNbdgxqBJ9K4@pks.im>
+ <evxbvwwyo4p4iboc4k6r2cd2cvlnm2upgxumqopdijwmvhxhxs@7xvg42heibp3>
+ <xmqqikhf7bdf.fsf@gitster.g>
+ <08deb8a8-6c34-4f11-a36b-93d151a56f9b@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <08deb8a8-6c34-4f11-a36b-93d151a56f9b@gmail.com>
 
-With stash.index=true, git-stash(1) command now tries to reinstate the
-index by default in the "apply" and "pop" modes. Not doing so creates a
-common trap [1], [2]: "git stash apply" is not the reverse of "git stash
-push" because carefully staged indices are lost and have to be manually
-recreated. OTOH, this mode is not always desirable and may create more
-conflicts when applying stashes. As usual, "--no-index" will disable
-this behavior if you set "stash.index".
+On Fri, Sep 19, 2025 at 11:38:50AM -0400, Derrick Stolee wrote:
+> On 9/18/2025 4:29 PM, Junio C Hamano wrote:
+> > Matthew Hughes <matthewhughes934@gmail.com> writes:
+> > 
+> >> I was also looking through the list of config options (within
+> >> `set_recommended_config`) and thought it might also be useful to comment why
+> >> each those settings are recommended in the context of working within a large
+> >> repository.
+> > 
+> > That would be ultra useful.
+> 
+> I think all of these ideas are good ones. Adding the comment as Patrick
+> described is good, for sure.
+> 
+> Instead of commenting the _reason_ in code or in the config, it would be
+> good to list the reasons for each recommended config in the Scalar docs
+> so they would be visible in web docs [1] for easy discovery.
+> 
+> [1] https://git-scm.com/docs/scalar
+> 
+> It seems like Patrick is already 80% of the way to a patch for the
+> comment in the config. I'll see if I can carve out some time next week
+> for the commentary on the config options in the Documentation.
 
-[1]: https://lore.kernel.org/git/CAPx1GvcxyDDQmCssMjEnt6JoV6qPc5ZUpgPLX3mpUC_4PNYA1w@mail.gmail.com/
-[2]: https://lore.kernel.org/git/c5a811ac-8cd3-c389-ac6d-29020a648c87@gmail.com/
+Agreed, that seems like a good compromise: we note in the config the
+values that were set by scalar(1), but the more verbose justification
+would be part of the docs.
 
-Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
----
- Documentation/config/stash.adoc |  5 +++++
- builtin/stash.c                 |  9 ++++++--
- t/t3903-stash.sh                | 37 +++++++++++++++++++++++++++++++++
- 3 files changed, 49 insertions(+), 2 deletions(-)
+I'm a bit stretched right now, so if you want to work on this please
+feel free to just pick my patch and iterate on it.
 
-diff --git a/Documentation/config/stash.adoc b/Documentation/config/stash.adoc
-index ec1edaeba6..e556105a15 100644
---- a/Documentation/config/stash.adoc
-+++ b/Documentation/config/stash.adoc
-@@ -1,3 +1,8 @@
-+stash.index::
-+	If this is set to true, `git stash apply` and `git stash pop` will
-+	behave as if `--index` was supplied. Defaults to false. See the
-+	descriptions in linkgit:git-stash[1].
-+
- stash.showIncludeUntracked::
- 	If this is set to true, the `git stash show` command will show
- 	the untracked files of a stash entry.  Defaults to false. See
-diff --git a/builtin/stash.c b/builtin/stash.c
-index d9b478d1d1..8a0eef3c70 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -130,6 +130,7 @@ static struct strbuf stash_index_path = STRBUF_INIT;
- static int show_stat = 1;
- static int show_patch;
- static int show_include_untracked;
-+static int use_index;
- 
- /*
-  * w_commit is set to the commit containing the working tree
-@@ -662,7 +663,7 @@ static int apply_stash(int argc, const char **argv, const char *prefix,
- {
- 	int ret = -1;
- 	int quiet = 0;
--	int index = 0;
-+	int index = use_index;
- 	struct stash_info info = STASH_INFO_INIT;
- 	struct option options[] = {
- 		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
-@@ -759,7 +760,7 @@ static int pop_stash(int argc, const char **argv, const char *prefix,
- 		     struct repository *repo UNUSED)
- {
- 	int ret = -1;
--	int index = 0;
-+	int index = use_index;
- 	int quiet = 0;
- 	struct stash_info info = STASH_INFO_INIT;
- 	struct option options[] = {
-@@ -864,6 +865,10 @@ static int git_stash_config(const char *var, const char *value,
- 		show_include_untracked = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "stash.index")) {
-+		use_index = git_config_bool(var, value);
-+		return 0;
-+	}
- 	return git_diff_basic_config(var, value, ctx, cb);
- }
- 
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index b8936a653b..d6127173b1 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1595,4 +1595,41 @@ setup_stash()
- 	)
- '
- 
-+test_expect_success 'stash.index=true implies --index' '
-+	# setup for a few related tests
-+	test_commit file base &&
-+	echo index >file &&
-+	git add file &&
-+	echo working >file &&
-+	git stash &&
-+
-+	test_when_finished "git reset --hard" &&
-+	git -c stash.index=true stash apply &&
-+	echo index >expect &&
-+	git show :0:file >actual &&
-+	test_cmp expect actual &&
-+	echo working >expect &&
-+	test_cmp expect file
-+'
-+
-+test_expect_success 'stash.index=true overridden by --no-index' '
-+	test_when_finished "git reset --hard" &&
-+	git -c stash.index=true stash apply --no-index &&
-+	echo base >expect &&
-+	git show :0:file >actual &&
-+	test_cmp expect actual &&
-+	echo working >expect &&
-+	test_cmp expect file
-+'
-+
-+test_expect_success 'stash.index=false overridden by --index' '
-+	test_when_finished "git reset --hard" &&
-+	git -c stash.index=false stash apply --index &&
-+	echo index >expect &&
-+	git show :0:file >actual &&
-+	test_cmp expect actual &&
-+	echo working >expect &&
-+	test_cmp expect file
-+'
-+
- test_done
--- 
-2.48.1
+Thanks!
 
+Patrick
