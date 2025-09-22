@@ -1,65 +1,66 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEAA7260D
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 14:07:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFD11B0F11
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 14:11:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758550065; cv=none; b=M4BbH+CiRZ/Zpz0J2PeckaOVrofT+wCSboY3F9bwP4EcHzhOaWOEtRsoJMybxE2dPyiv2XbOGcWL91WxcHp/lTUoqhG9WqZZicgAZWKMsFj5RZO5XXtFzQ3tm8fPISadQ0j3NGCklwQon2YbECcOFrGFrMblGYt3QlyIyVgMcZk=
+	t=1758550277; cv=none; b=YhEbraRWcjX/bNFyJSUcudcHbXGzJlKapXHs7eBfef/mS90WD2EwVBsh8LLbrC8mbL+PlcidDp0T5bu44boVSl7iMz8Pegvml2DoAq4sa/X3jWFvRVT5blvgW5IdJD4PpmeLobzLS3o1PQYf0441l+mn5eZK0t4KhQU3WkSaQbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758550065; c=relaxed/simple;
-	bh=Hp6nV2vsAMg/WzFPG0BcMV62CDJWntrw01BGs14R+Ng=;
+	s=arc-20240116; t=1758550277; c=relaxed/simple;
+	bh=FDLsbjUwk499gBPeYm4MJhpPlsKR4+pcJg1qhti8TS4=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=pG41nI9GFotPZ8BNDBUAMcC3o7pfOM1TDsmMjjhgiSnFUsGSCVbzNiPOuY9ugK3BsjNc0eW2z3cbqF5dNpTZChplvPBWNX58Bl/6iFhFBVfZt0TEvoW8eMaQrPAZ5DCVyl7DvDQiaf3L/TiV/+6Y2xRHgpMyyD+yEiJ0LzyFEzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lUt6+fcR; arc=none smtp.client-ip=209.85.221.53
+	 In-Reply-To:Content-Type; b=ohbsBRssv3RsF6VgUYjUmcbYZKow4sFiIStbPiXKiG6tAoa2lJcwR7IhM6HbY+JUMwA4Dq9RxltCWSXucAFaGeUfvpr/Td6kmSqTRl7d31d0ndKT4wrHUw3n8K4YFP1f+4/d87LQlD1K0XdP5YTNM50oAMF+hLsblm9bprcM0Zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z3F6OXIj; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lUt6+fcR"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3f99ac9acc4so1262562f8f.3
-        for <git@vger.kernel.org>; Mon, 22 Sep 2025 07:07:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z3F6OXIj"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-45df7dc1b98so26714335e9.1
+        for <git@vger.kernel.org>; Mon, 22 Sep 2025 07:11:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758550062; x=1759154862; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758550272; x=1759155072; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Qd8IVm+mhWkmlzTBb/WtqBuBz98igubHfA/Y1FUw3h4=;
-        b=lUt6+fcRLno0H4HPGBOh05l5I0d88mv10flmZdEEsTvuNiCgNplE48Fmyz9PgNF8pu
-         t4ejx5D3/XHPejyStjaXkLPVoP3/VDbyoICbYnjEahJkPsoz3hP407OSK6/B9F5CSiRM
-         aRkWgyh8BLgD8KYLomRoyh82ouaekNdk3puIUIVU0idau0+IvF0ILohvHUNkdOFRGq+J
-         /esQ/pCanMYBtdbGZT58YrrmFJKuXA71pZdvL+kp1vP38VFEnbgDSfPJkf2jpyVcP3NX
-         yk3NenKXiY2AavMroBBKmebuiHc3AciNXGRnBSMCrPD30c6/nUF2PJRQUUyYyAmUKvYb
-         ZyoQ==
+        bh=4L4vsfKPkb5mWi4cW7AgOM3g0FGFjq+Tc3WAVU5LwSs=;
+        b=Z3F6OXIjljATP/Nrc+UipP6Zu3l9Sd+0rijKWafKIm3Khrj2bsKoHE4L1/6abmdwRF
+         EQRc7bk8hpG/h4BAAK/ixytBN1OQ7c7vYpfV9Ekz63F/Tvwx3/iK43dT/qEVDlsE9SXm
+         k3173gafqyPUwGzWwKew1ZROFTV6Tg/pJjalEcyoI8jnRNgoOucZoL5p6UmXrpuwY26X
+         TPMiK6PiBQvSv6pQQ6J14opuaLJ10XTyrN5UPZbduh1wzEoNEal8BppgYqHW8k3kzYh8
+         RLdTfNW17m2YnftFhwtWKTpn1x41p93daLTEuOeRRxdTpTHO0K6aPuwuuDXPyX5MyS0x
+         o/4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758550062; x=1759154862;
+        d=1e100.net; s=20230601; t=1758550272; x=1759155072;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qd8IVm+mhWkmlzTBb/WtqBuBz98igubHfA/Y1FUw3h4=;
-        b=iQ50/tI1D8gJ9pQl+iyBH3qDSlb4pibBNT1Ysu5xA+7lsi8dVYJrsnR0CWYTjunFEs
-         U3TPvTzgXvhJhXBY5BKTGPcDu6vjk0ONW0ZEyTr5R9vImH8M91DNTMKshhwTVTBa56bA
-         WTujbYcnvzWR/+IF/EjPVpQgizvamAANM2ypz7vPa/4vPLRu9X95NyOdfPtVkDR9LcRS
-         NQZ5ljwnBHzRrd63vPKo1rtGS3YiSgUqkEzzpn6Yt2hMjsSmUFOs0Vds1fwmypUrFazH
-         Bel7cRXEPIseV6to6seEqGT9msk+bCgi62hl/7Uv6aI4Zsq0vHdowzgpROZZie7As/Xo
-         3q3Q==
-X-Gm-Message-State: AOJu0Yxd+2WnR7cPlc7CgbJktvjxQZVHaZZasdo4mlRi2wMu1NL3CU6T
-	ezecr2bZlwVcVG1GVMlqAq5iocmHRLWzulub/Aw8coo3SHC0kbOtxW7f
-X-Gm-Gg: ASbGncs4DOKK+rxI5hqT8D8Oo3N+JTWZ8qVdeO91+xzj2F0R9/FnaGJ3X+hcFNiGaLx
-	JpR78U2dxv1Z8wZhoUaqb3FVuHdaNh27yIuRAUiE7mA/JA2U5kxe3FHTwxRidZUBu6jqw5UU5FJ
-	Z+d+pdAPQiadjs9LgtLqvMaNBVJnSy2n6Asu98+586loCz1FAg8bNk9ZwlFuBmXMDUQdL/MP9pV
-	qVV77wZlAFwRyJIz1ZaWXr+1nKmdd+R8WQHic/vh25N6b1pj9SYv11RBmMX7ilkMLZlRJgIyx/g
-	ZG2A9tzeYjbtbfV53DIOlzlueCznhZA8lvTdNzUifwckPQ9kMELb/7hlSNCHxKkzgo3uibBtGcL
-	XNNh1w4CV4TDtxYU2Or1JSDtqogeym45nrqe+Yg+aNCFrUiRyms5oKXbmdghktNJ8iRyoWmlEA5
-	s=
-X-Google-Smtp-Source: AGHT+IGe/eYs/kudJUjOgh7gEAz/7C+s+BGOBmCW4pGbPy8ZSTLsoUUCzJdgXlRqnri7uhXE9LO5HQ==
-X-Received: by 2002:a05:6000:238a:b0:3fe:34ec:2f8f with SMTP id ffacd0b85a97d-3fe34ec3351mr3089274f8f.40.1758550061636;
-        Mon, 22 Sep 2025 07:07:41 -0700 (PDT)
+        bh=4L4vsfKPkb5mWi4cW7AgOM3g0FGFjq+Tc3WAVU5LwSs=;
+        b=Y8rdMqcxt3s+Na3XadhACM+7Qd/00RPZGrlEUT3R2RHu/7GnqLqrkeia57hLRqY8S3
+         P1ltyTVnXWKslfKiAdZigTdU/GpecbYVXtg8HkZN9+vg9dRA7ygrAzyr4pO5Flve4M6p
+         Dz/BlwRc9Sm/nZno7Qq1Iz4+XSfPDiofu5yWPXqpUMU5lZo60a6EwHK+H5vJn/uENREO
+         RO+2HgxwJGk/cFIygjMGaoS+StcdPYtqu/jXPirnkv4InZ8eUTTX9KWm+U/OqHLqq5WK
+         cN92d7ZCRFtqkocW9ZXW7oFOYlBK3wva9jLfrqslFu358eovlopAWwwJkk9txCeJ3jEw
+         yg4w==
+X-Forwarded-Encrypted: i=1; AJvYcCVm4RGd92Z4nphOAJH3z7lfc28MCWsRIi+AILAQbH2Cusky30qppA7AC63CXZ/hcW3AX7M=@vger.kernel.org
+X-Gm-Message-State: AOJu0YypkXO1C6pzkVlrhSqTA/xpvK4SQa8J9mVokmYf46vTnU127s0z
+	ZUVlVqK3MgTFfSBQYpI6PyjD09lfTNXFHgHVOubyZEZjzy0+F7Mt+Isn
+X-Gm-Gg: ASbGncs6i29k1Jo7y2k0DDWmfFQ+LFb/1KZyNUaZsJSFg0EtJHhZwXYPpiO84BXsCZT
+	TnpV4vgRWWq1jTaBYS/7iarzt7NxeUOD0TfMU7yLAzrxMIhBI4A1pwzXMULtpu8KTdxa4WC1u0N
+	E8QvWVCW24/EE2rs71/nNUj5XgS78p1VTGbR9Fpz2dWhyRUVzTrK6fEGeHR5NwXN1xcDbBIPEXE
+	JZgm+h/6b8Mpqzr9FLxMuLIOU4QtgzfSpfsmwkxBPqhvQyfKFxp1o6+DM1rGyXS46bmBy8fJQRP
+	eIeLoEsShOs72KZu4s8BV1cDGA8hr2rPBO3NxaezHnjHEMWvGDFnp9fBA786h9cL1LA5Qfe/MBY
+	K/cf5u0vEtBtYoKXCbz2OCZgKLjreH+qsDDlUX0xUERVBKuIjFTEZOaH13Rgbv/UWESHUeru0IY
+	Y=
+X-Google-Smtp-Source: AGHT+IFoGLzh1PhUPSnWKsbuXQ9XINzqkWqcOpJDsFia7hlj1UR1fkFO7RcdEqlOG1pbYh0XTkEByw==
+X-Received: by 2002:a05:600c:46c6:b0:45b:804a:a65e with SMTP id 5b1f17b1804b1-467ebbbff33mr133148385e9.28.1758550271528;
+        Mon, 22 Sep 2025 07:11:11 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-464f4f9f4e4sm228808135e9.13.2025.09.22.07.07.40
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-464f0aac3fdsm198664615e9.1.2025.09.22.07.11.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Sep 2025 07:07:41 -0700 (PDT)
-Message-ID: <f23fb338-3039-4c86-a36e-439d68d14acc@gmail.com>
-Date: Mon, 22 Sep 2025 15:07:40 +0100
+        Mon, 22 Sep 2025 07:11:11 -0700 (PDT)
+Message-ID: <d7721018-3b2f-4764-b33d-4fc6bdc034a1@gmail.com>
+Date: Mon, 22 Sep 2025 15:11:10 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,55 +70,151 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 7/9] BreakingChanges: announce Rust becoming mandatory
-To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Ben Knoble <ben.knoble@gmail.com>, Christian Brabandt <cb@256bit.org>,
- Collin Funk <collin.funk1@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>,
- Elijah Newren <newren@gmail.com>, Ezekiel Newren <ezekielnewren@gmail.com>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Junio C Hamano <gitster@pobox.com>,
- Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
- Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-References: <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
- <20250915-b4-pks-rust-breaking-change-v5-7-dc3a32fbb216@pks.im>
- <72d0a316-ee3d-45a0-8122-77c52911614b@gmail.com> <aNFImn9toejLzIJR@pks.im>
+Subject: Re: [PATCH v3 4/4] stash: honor stash.index in apply, pop modes
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, moti sd <motisd8@gmail.com>,
+ Denton Liu <liu.denton@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+ Karthik Nayak <karthik.188@gmail.com>,
+ =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+ Glen Choo <glencbz@gmail.com>
+References: <cover.1757982870.git.ben.knoble+github@gmail.com>
+ <cover.1758505011.git.ben.knoble+github@gmail.com>
+ <8e6cafbf3a01b968663b65559acf3df615eecbad.1758505011.git.ben.knoble+github@gmail.com>
 Content-Language: en-US
-In-Reply-To: <aNFImn9toejLzIJR@pks.im>
+In-Reply-To: <8e6cafbf3a01b968663b65559acf3df615eecbad.1758505011.git.ben.knoble+github@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Patrick
+Hi Ben
 
-On 22/09/2025 14:01, Patrick Steinhardt wrote:
-> On Fri, Sep 19, 2025 at 02:59:58PM +0100, Phillip Wood wrote:
->> On 15/09/2025 12:22, Patrick Steinhardt wrote:
->>> 
->>> +You can explicitly ask both Meson and our Makefile-based system to enable Rust
->>> +by saying `meson configure -Drust=enabled` and `make WITH_RUST=YesPlease`,
->>> +respectively.
->>
->> This is helpful but ideally before Git 2.53 we'd make the Makefile and meson
->> print that information if they fail due to a missing rust compiler.
-> 
-> The intent here is to allow us a bit of time to iterate on the build
-> infra before making either of the build systems error out. Ezekiel has a
-> bunch of follow-ups that we'll want to land to also unblock support on
-> Windows and to implement things we don't yet have, like Rust-accessible
-> C bindings.
-> 
-> Is there any particular reason why you want to accelerate this timeline
-> and make the build systems error out right from the start?
+On 22/09/2025 02:39, D. Ben Knoble wrote:
+> With stash.index=true, git-stash(1) command now tries to reinstate the
+> index by default in the "apply" and "pop" modes. Not doing so creates a
+> common trap [1], [2]: "git stash apply" is not the reverse of "git stash
+> push" because carefully staged indices are lost and have to be manually
+> recreated. OTOH, this mode is not always desirable and may create more
+> conflicts when applying stashes. As usual, "--no-index" will disable
+> this behavior if you set "stash.index".
 
-I'm not suggesting that. I'm saying when rust is enabled by default in 
-Git 2.53, if the Makefile cannot find a rust compiler it should print a 
-message that says how to build git without rust so that users do not 
-have to wade through this document or our release notes to find out how 
-to do that.
+Thanks for updating the tests, they look good. As I said before I don't 
+have a strong opinion about this change but I certainly don't object to 
+it. I think this change will also affect the behavior of "git 
+merge/pull/rebase --autostash" which we should maybe call out in the 
+commit message. I don't think that change in behavior is a problem as it 
+is probably what the user would expect when they set this config.
 
 Thanks
 
 Phillip
+
+> [1]: https://lore.kernel.org/git/CAPx1GvcxyDDQmCssMjEnt6JoV6qPc5ZUpgPLX3mpUC_4PNYA1w@mail.gmail.com/
+> [2]: https://lore.kernel.org/git/c5a811ac-8cd3-c389-ac6d-29020a648c87@gmail.com/
+> 
+> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+> ---
+>   Documentation/config/stash.adoc |  5 +++++
+>   builtin/stash.c                 |  9 ++++++--
+>   t/t3903-stash.sh                | 37 +++++++++++++++++++++++++++++++++
+>   3 files changed, 49 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/config/stash.adoc b/Documentation/config/stash.adoc
+> index ec1edaeba6..e556105a15 100644
+> --- a/Documentation/config/stash.adoc
+> +++ b/Documentation/config/stash.adoc
+> @@ -1,3 +1,8 @@
+> +stash.index::
+> +	If this is set to true, `git stash apply` and `git stash pop` will
+> +	behave as if `--index` was supplied. Defaults to false. See the
+> +	descriptions in linkgit:git-stash[1].
+> +
+>   stash.showIncludeUntracked::
+>   	If this is set to true, the `git stash show` command will show
+>   	the untracked files of a stash entry.  Defaults to false. See
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index d9b478d1d1..8a0eef3c70 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -130,6 +130,7 @@ static struct strbuf stash_index_path = STRBUF_INIT;
+>   static int show_stat = 1;
+>   static int show_patch;
+>   static int show_include_untracked;
+> +static int use_index;
+>   
+>   /*
+>    * w_commit is set to the commit containing the working tree
+> @@ -662,7 +663,7 @@ static int apply_stash(int argc, const char **argv, const char *prefix,
+>   {
+>   	int ret = -1;
+>   	int quiet = 0;
+> -	int index = 0;
+> +	int index = use_index;
+>   	struct stash_info info = STASH_INFO_INIT;
+>   	struct option options[] = {
+>   		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
+> @@ -759,7 +760,7 @@ static int pop_stash(int argc, const char **argv, const char *prefix,
+>   		     struct repository *repo UNUSED)
+>   {
+>   	int ret = -1;
+> -	int index = 0;
+> +	int index = use_index;
+>   	int quiet = 0;
+>   	struct stash_info info = STASH_INFO_INIT;
+>   	struct option options[] = {
+> @@ -864,6 +865,10 @@ static int git_stash_config(const char *var, const char *value,
+>   		show_include_untracked = git_config_bool(var, value);
+>   		return 0;
+>   	}
+> +	if (!strcmp(var, "stash.index")) {
+> +		use_index = git_config_bool(var, value);
+> +		return 0;
+> +	}
+>   	return git_diff_basic_config(var, value, ctx, cb);
+>   }
+>   
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index b8936a653b..d6127173b1 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -1595,4 +1595,41 @@ setup_stash()
+>   	)
+>   '
+>   
+> +test_expect_success 'stash.index=true implies --index' '
+> +	# setup for a few related tests
+> +	test_commit file base &&
+> +	echo index >file &&
+> +	git add file &&
+> +	echo working >file &&
+> +	git stash &&
+> +
+> +	test_when_finished "git reset --hard" &&
+> +	git -c stash.index=true stash apply &&
+> +	echo index >expect &&
+> +	git show :0:file >actual &&
+> +	test_cmp expect actual &&
+> +	echo working >expect &&
+> +	test_cmp expect file
+> +'
+> +
+> +test_expect_success 'stash.index=true overridden by --no-index' '
+> +	test_when_finished "git reset --hard" &&
+> +	git -c stash.index=true stash apply --no-index &&
+> +	echo base >expect &&
+> +	git show :0:file >actual &&
+> +	test_cmp expect actual &&
+> +	echo working >expect &&
+> +	test_cmp expect file
+> +'
+> +
+> +test_expect_success 'stash.index=false overridden by --index' '
+> +	test_when_finished "git reset --hard" &&
+> +	git -c stash.index=false stash apply --index &&
+> +	echo index >expect &&
+> +	git show :0:file >actual &&
+> +	test_cmp expect actual &&
+> +	echo working >expect &&
+> +	test_cmp expect file
+> +'
+> +
+>   test_done
 
