@@ -1,163 +1,116 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B8F19D8BC
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 22:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9BF31A068
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 22:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758579552; cv=none; b=KbbWC707vhTgYNubA0m6gOM56KJaD77rDhfZ21Jaldg7IvnJUBpw0E8yu7wl3dcv1lLAv3+u0uo1eRLT3nGlQUXOvHFb3HuU3HHnN4gbERqPrwaH1rDcafVh5rD5EQzWJI8rT/CIinxq5ET9bYqG4q0H0YShg5SKnRfNCc13p/w=
+	t=1758579564; cv=none; b=P/5Auz1OKcb3JKw87VB9NOIhcVtA4JZ/WzCJHS4jKB9W8AwtEHbXNEgMLmtkXxImDSKAbpwileEJ9qWxdvMPJjRLSKKxBGuyW/KbnyYOYeWmBXovljm9Hkamml0s/AccBF9nEDJTnkl/do2aGfOC/rJH39WL5nwAJlimvxOo458=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758579552; c=relaxed/simple;
-	bh=gJtjvv80UQPNT4Q/rMlyY3391n8qWoY023bgOlvaMB8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=A+seoptn/bTd5bmEbAAUWXOPiiWTNXg06OXX23LRDu46+P0Qh8J00lZ75zICcNdEeAlmNrV0uTlYWZAdIDUAy4OaXb3VsiwnnZfF3f8Igb071X8J2eRJz9MD1IVP2yr3pCjF0uzIpwKq4YSTNaOZt8Wt/l1cP5SSCRKMe1VJopI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QwVgsn21; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KDpatJS9; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758579564; c=relaxed/simple;
+	bh=owxBXe30Ju8jZPs+g7+uNUx0Zfws6+DwlpIQhGsS1dQ=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Bt+tTStRIPgMLMmaXWJOTekE0dm81Iv3wlRBqDB6WK7D78bEJ7r/FOM56/QCKH/RTn1sEoR9fED7xQFjaWJDjCpphKeU33RnhwMaYjkEjvv51C3YvllpHLsui/eU2UhY4jnxi5nxzrOK4egRNSJwVV5w0BOIuhOCfNSGbXtyBe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ZCi59yQf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GH59ShYF; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QwVgsn21";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KDpatJS9"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 240951D00012;
-	Mon, 22 Sep 2025 18:19:09 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Mon, 22 Sep 2025 18:19:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1758579548;
-	 x=1758665948; bh=mki6vp2qy9O4A9D3xku/hK1sKXeff2EmGSCm7c8lLFI=; b=
-	QwVgsn21hP+0DwXp8usdB2an8+35DYAsQH5iYtcsJSvW+xbVCy9xQE7bwuNZm28F
-	xTjWpwq4muY13cXg/duDiDLnD7s5XAJMNVa5gczZsPsY7I1y3fWu3RBuHj2+dUHN
-	oxxPgwza6RY2X1clEtHiJjvRmNNoCXNswN/JEyeb+hMZgEDXpb2qZgEbKzqXfoRZ
-	65/0SNCpjihRFOYymfl8GQ9oJuRkD/1kiKCpV01CzwKQ0GkCg0ulyY+HgvpWzrb6
-	UikzQ82Jl//vXwVM0QoePOI7xLwPZskwta2jjNtq4nMUY5VWaBoOE/luPYkiTJNV
-	jyZwhU4dvTDZzNme7cvL/g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ZCi59yQf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GH59ShYF"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2BBDB1D00243;
+	Mon, 22 Sep 2025 18:19:20 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Mon, 22 Sep 2025 18:19:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758579548; x=
-	1758665948; bh=mki6vp2qy9O4A9D3xku/hK1sKXeff2EmGSCm7c8lLFI=; b=K
-	DpatJS985CcpmocwH7pwzfL60B7zKjYC1lF897GzmrP0VbVewlqs81A65g4Q06zH
-	yu4/Q6qo4sxYIrcbU/8UOoDU45jiOZUMToiqf3RSyaJCStmmh3XMStlf/2Ps17re
-	6pKZZRlVf/AB/A77eluURgOGS/WakRx9H0pZQ5HC7FcRKGUmIDzRYN53tDn/S1I7
-	W/X1NwdOeTJiBLilshmQCrm8ukgB/sQ467c5EhdsAJl1xqm+Y8QCGac+fO897WJM
-	bU7jz04YfBTaeFLfY1MEnjvcHbdSMIgAZ0RRhoPB1iC5oQIw9wjFVR2BHHe3/y78
-	e4QFcX5KYURU8m9GmK8uw==
-X-ME-Sender: <xms:XMvRaLrD2_Cn1ptB0hEOFjX3dUV-vKwQ08whGljpzCuv9mMOIKCTgg>
-    <xme:XMvRaMoyEh4rCrrQLsGrI_LuxUx7e1rn6xTe9tPtF9_PR-IkSIYpaeiS-g7eQ8dEP
-    k2DnApXBEOl-xqzcEQGr18QOsIOwgtcrXoVJMOtYR43znhh--EbapI>
-X-ME-Received: <xmr:XMvRaNMpg5Mgxya8Oz8AT6E_aW8horOKX73h_xiQLE6ge1gKK2DLq47kJtIFDYbex1qEYIeR5B_xxlOLMxhPe8BgA75upjjOokq8>
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758579560;
+	 x=1758665960; bh=DTEysQLvUM0/7G/a4UsoPwqqOoO33hXHNiBfpKu60TQ=; b=
+	ZCi59yQfX1OOlMW8U13o1uXeb8bcU2cVdMMqVyRN8F6XNCpO58ayrHrkeKpJpa6y
+	I7b4fOnDyBDjkrvogocD0xzsRpwpnChoHGsYhSWxklWMWaZc4RZm8JDfngp5Kab3
+	vinj/BsGjBkKjLxUwT0bQgm7Z/7mDtC4v/erBsD+7SV+F+ooEa2nXghctKZrKfY6
+	d4UtAE4jFLK9wp7jiM1jfMMGGv75rRtRvSOiLQ1frCmEe+X1+A00+JD1zTdGiNGA
+	rMbbmFNKxqVa4XfwO549WgqGfIRyF1ae9NSqt++gdLnk96EexMpV01GSscnl1zFW
+	G0orGdzxUht7Pck1SLpmtQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1758579560; x=1758665960; bh=D
+	TEysQLvUM0/7G/a4UsoPwqqOoO33hXHNiBfpKu60TQ=; b=GH59ShYFV1i16DFnX
+	zktvJn3utrcbnlGZEKfqLSP0EYnLhVV+cqcXHryQUUEERMJwbMabqNlugCDh/YLy
+	9A/89/uOS4NFhyg3HRIPdwoUhXtWswJXQrWGxd32NGGAQYFSFA1vfUxh2gBEVC5H
+	ebO9OxOptTCecsxfUHeUh8+GzQZnCwoDZk6BYj+6c6hlvtEsE3AvJ3an2mpiE9bq
+	VzNQkvXPa70YPiNR95H6hbLhdWE8jtc/62qaMnGdV3hzshbhlYA+BOMLCdyGQDBf
+	SHCdsROlt8DWKLQC9YVIVNVqRxeRDgRuQG6M8d+vlgSZQr06XEkjlWWflKNSoa4o
+	48NVg==
+X-ME-Sender: <xms:Z8vRaJYzRgwMWYwAu_I7KyRtUWUOBsPDgEu26dzicNiPZNLWvMWXXFk>
+    <xme:Z8vRaLOOE8qkPy3yKe7eIpnRDWtxQ65e-Kjg9G0G9pAYJb0Gq4fffMblQg_jJZfeT
+    on7FNNYKhWaLF9mnkdbbiOWyDxYED5PMBVfqe8OiktPPiaA6H09Kw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehledtfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepgeeghfdufeekgeeuiefgjefhjedvjeevtdehgeeuudekgfeileefueetjeei
-    ueelnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprghlrghnuggrtghoshhtrgesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:XMvRaNxuEAi_Qs_hHU9dS4xaRxExfAKnCb2-zhZxVYsJyv2TUNqecw>
-    <xmx:XMvRaGsRqtrCj8M8iruxNHJ3tiUaBq4ZBS5JyWvFG6iYU8C2VZ___A>
-    <xmx:XMvRaG7aSQ1xSFPoIid1380v8c39t7Dpqjt0AWWlHKJYqhGnq90WWw>
-    <xmx:XMvRaFToA0wBKpWN73IVRmM4ELH3bP_zpuaZGg9IyG14c4ZhQ9879w>
-    <xmx:XMvRaMu1Wi5pKmda5lpopLhYsK5Ish9QX2EXSfRNbwqAN6oi4DQcS-TE>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Sep 2025 18:19:08 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Alan Da Costa via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Alan Da Costa <alandacosta@gmail.com>
-Subject: Re: [PATCH] lockfile: add case insensitive filesystem note
-In-Reply-To: <pull.2053.git.git.1758578084468.gitgitgadget@gmail.com> (Alan Da
-	Costa via GitGitGadget's message of "Mon, 22 Sep 2025 21:54:44 +0000")
-References: <pull.2053.git.git.1758578084468.gitgitgadget@gmail.com>
-Date: Mon, 22 Sep 2025 15:19:07 -0700
-Message-ID: <xmqq8qi6ruzo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    hrpefoggffhffvkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthho
+    fhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkh
+    hksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdfgffettedulefh
+    feekheetgfegfeejveeikeeffeeikeekhfevieeltdekgfeunecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
+    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvg
+    epshhmthhpohhuthdprhgtphhtthhopehstdgrnhgushdtseguihhgihhtrghlqdhmvghr
+    tggvnhgrrhhivghsrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrgh
+X-ME-Proxy: <xmx:Z8vRaEGsfEVlQw4eMEvKmIO_UJuArq7rRChUyyjo8Wq5y117vh6lqw>
+    <xmx:Z8vRaLQGnuqdQZx08reogmQ0PMxeCODMGZY-CaQYLRfgxsLzBtbNqg>
+    <xmx:Z8vRaFsQBQ9Ih0IqoroQ1xRH6GSsf6UWa_ZPRIXnAGdw_fq_Kms8sA>
+    <xmx:Z8vRaCykVY3OCnz1scEE6YFUJdxIoK6t56oFbPvHYR2V5eCFyH31pg>
+    <xmx:Z8vRaL-M2JrrlCmvvy5K9O-wnuVHEGayC8M8smLcqPpKQegKx2vl5aYC>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id B82AA1EA0068; Mon, 22 Sep 2025 18:19:19 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: AC4a0_pyrYUo
+Date: Tue, 23 Sep 2025 00:18:59 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "S0AndS0 of Digital Mercenaries LLC" <S0AndS0@digital-mercenaries.com>,
+ git@vger.kernel.org
+Message-Id: <fd993486-069b-445a-ae91-a0f149fd3ea8@app.fastmail.com>
+In-Reply-To: <8f201082-07b5-44a1-88cf-d6db551a598c@digital-mercenaries.com>
+References: <8f201082-07b5-44a1-88cf-d6db551a598c@digital-mercenaries.com>
+Subject: Re: I still use this/these
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 
-"Alan Da Costa via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Alan Da Costa <alandacosta@gmail.com>
+On Tue, Sep 23, 2025, at 00:11, S0AndS0 of Digital Mercenaries LLC wrote:
+> Recently, as of `git version 2.51.0`, running the following commands be
+> popping
+> warnings;
 >
-> * Add note of case insensitive client filesystems may error due to a lock
->   on a case variant ref to more quickly identify failure in fetch/pull
-
-This does not have to be a single-item bulletted list.  Please lose
-the leading "* " from the first line, and " " from the second line,
-and finish the whole sentence with a full-stop "."
-
-> Signed-off-by: Alan Da Costa <alandacosta@gmail.com>
-> ---
+>  =C2=A0 =C2=A0 git whatchanged <path>
 >
->     When running git fetch or git pull on a case insensitive filesystem
->     (e.g., default macOS), if multiple case variants of the same remote ref
->     exist (often after a case-only rename), both variant locks map to the
->     same on-disk path. When a local update is required, Git creates a lock
->     for the first variant and then attempts to lock the second, which
->     collides with the same lock file, so an “existing lock” error is
->     reported.
-
-And the message update may help unconfusing the user who gets this
-error, which is a good idea.  Thanks for working on this.
-
->     The underlying issue is mixed-case refs; resolve it by
->     consolidating the remote to a single-case variant and update local refs
->     accordingly.
-
-This does not seem to match anything the patch does, though ;-)
-
+>  =C2=A0 =C2=A0 git log --since=3D"$(date --date=3D'-2 weeks' +%F)"
 >
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2053%2Fadacosta%2Flockfile-add-case-insensitive-filesystem-note-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2053/adacosta/lockfile-add-case-insensitive-filesystem-note-v1
-> Pull-Request: https://github.com/git/git/pull/2053
->
->  lockfile.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+> ...=C2=A0 Warnings stating those using certain features slated for rem=
+oval should
+> email y'all about `--i-still-use-this`. If there are alternatives I can
+> alias,
+> that will remain functional, please do let those like me know. Maybe v=
+ia the
+> same sorta warning system.
 
-> diff --git a/lockfile.c b/lockfile.c
-> index 1d5ed01682..99a470bd3d 100644
-> --- a/lockfile.c
-> +++ b/lockfile.c
-> @@ -156,7 +156,10 @@ void unable_to_lock_message(const char *path, int err, struct strbuf *buf)
->  		    "an editor opened by 'git commit'. Please make sure all processes\n"
->  		    "are terminated then try again. If it still fails, a git process\n"
->  		    "may have crashed in this repository earlier:\n"
-> -		    "remove the file manually to continue."),
-> +		    "remove the file manually to continue.\n\n"
-> +		    "On case insensitive client filesystems, multiple mixed-case refs will resolve\n"
-> +		    "to the same lock file, possibly causing this error. If so, ensure your remote\n"
-> +		    "refs have a single case variant."),
->  			    absolute_path(path), strerror(err));
+You can use
 
-The two lines in the new part of the message seem to be longer than
-usual by two words or so.  Can you line wrap to balance?
+    git log --raw --no-merges
 
-The error is about our "local" filesystem, isn't it?  If you do not
-have control over what the remote does, you have no recourse.  If
-using the reftable backend on the local end work around the local
-filesystem's case insensitivity, that would be a better suggestion
-to give that such a user can actually act on.
+If you want the same behavior.
 
-In any case, wouldn't it make more sense to do this change
-conditionally by looking at the value of the ignore_case global
-(which in turn came from the core.ignorecase setting in .git/config
-when the repository was created by probing the filesystem
-capabilities)?  If you get this error and you are on a case
-sensitive system, the additional hints will lead the user to a
-wild goose chase.
-
-Thanks.
+You can also replace `--raw` with `--stat` or `--name-only` if you want
+the list of files without the filemode, hashes, and change type (like
+M).
