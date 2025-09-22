@@ -1,143 +1,102 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5C31CBEAA
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 14:38:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027F22DECB1
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 15:18:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758551928; cv=none; b=AOFpmHXhwz51kVekx0N1kkpdJDRdC+P6bUoQsisfmlpzRpLPqirUbmUzOV5feIuWwQaa4m2kexYf5s3bb/9lSoXsFBWc7uJjsX9e0j9F53RW5ravvxJ5m4gykvTKGsg5nCmJOl5ZciXU2qPzLaRd1VZme6EfL9dWhPHVcbfbENU=
+	t=1758554309; cv=none; b=iUdNZKyNJ6LK0f6wVNk2x4MQAVAHtkfRpZlnGxSF3wNz98UwKDnvyIHrqOEHUP3d3FZUoN7zHVHO6LBPV2IhSez3EljA/9/okYMYhYtnzb+Kpux0wn8T1XtT9QbtQxmKAt9opEiTj6mPQOoBYmBEQRGtMc/kPQa5GimlkbWQq40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758551928; c=relaxed/simple;
-	bh=rz6+SC4wtzmx1arJU8Z+4qaQPf81eBxxSryzc8lYPaE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kVikNl48CkiWeSzKMtZuPTp0rL5ysbZ0pcofztucZVwcY1CGswZm6iZdaAzBkNM5F0OBXxGo9qhUu5FPbNPq8vlQloz2TSyAeNqnAenlks68rbHmHgP+SFLj96uH0iLMO14ExMvZ2eqsGFuPfrM3JL1IBm0C3O2YGDLNvpWIlXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IGD63DqG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RUC1v69x; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1758554309; c=relaxed/simple;
+	bh=gxltr/mfQIoiB52oth1rM4PS5+nt5q1N2uXTLIX9eOg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hTCRjjt0O399Xp2IIZUdNFUcJSl4eFTBh7jpzGBieas4nDkvrsBJpht/JtaLrE3WUrmx3XNXrMCpy4I65SD+swi4lB8Wv5RkzxqebhrL7VlzcwmhKVYBt22pweWqIZh8DePdD541yyk5svyRSClPi13rik4rpeO5iJIiaxkNxEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L06cbXNt; arc=none smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IGD63DqG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RUC1v69x"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7CF051D00238;
-	Mon, 22 Sep 2025 10:38:45 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Mon, 22 Sep 2025 10:38:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758551925; x=1758638325; bh=XLfUCZuCzf
-	MU2LIQea88PRxWMkGtVKawoberzSIyc0w=; b=IGD63DqGI1WpiIcxh1itJ1JkvZ
-	9pSvemtlaCV4OsXmvdYupfascDnp4Fr0Z04izXARYe1+IyljEJBoJS443x1Q1UFh
-	/GLiscMeC0RWkcEAr1BtHGLU+WlLcR3f1AsWyfbLZUxlJnntnNjfoCXXiruW2lyS
-	1iFVaABB8sDyS+KpxU59xpnE3FgkBBjRDPXb6+MkuUI+KgwVun7HnXLY6Ky3eMCR
-	y17ieEBnWpXPsNwaVsFZ/1e/mDgpvQtWUnfVemY2GfdRZOtoQEdBDJHkC9GSk1En
-	pNQWm+N0PORgu97m8OZ+kIo46qSpOD9mhW0D465SYZBD42DfaxzahAS8S0kg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758551925; x=1758638325; bh=XLfUCZuCzfMU2LIQea88PRxWMkGtVKawobe
-	rzSIyc0w=; b=RUC1v69xMAu5heW3WdDTtE6+QvXui2BADPuoiIFNHMWBrJKDOu6
-	qDGkSFf+vZYHPxn2P22f1GdxaqJKC2llHn5d3EAdQ86zwD4K+JRaYI12CwLfs1P/
-	2inR3SgnD131G+pPiSavrCiE1H/b2zLsQ0qopu3HXGNk7iyWd0r285pJsZE6VRk6
-	eOcnvkO0GYVvk9oJk30+6wjffrP+INWDYQeXSrsydqmC20kiSBBYbeAmEvlNIq1W
-	jcjWAyENfhirs8/JALYstTvJ/KBYS3epIN6p1ogv8F2gmmoBU4Y9eTnAc0Du6edK
-	GGmmMuds/xS/cL5gRBg8+TH/st4P6jEbmNw==
-X-ME-Sender: <xms:c1_RaCXc3kTnJBA8L22ddRNNZyw1QUo9M97ONo4Jm63BnfkLmv9WNg>
-    <xme:c1_RaGLJWusZtE3Mh5AW1u-DixvYQ4Inp_BO606aenESVH-dw0z8fIZVBYm7x9Yiu
-    NlHYqqQPx7JoZH7TpyhONia9gmjympeDdTdGVD_xxJmCr7fBelzdTQ>
-X-ME-Received: <xmr:c1_RaGDVmINVeWYC2J9eFBmkdhd5Zie4JruiNBT8IzqivgYWZFkx-uU_hN2ux27PR91HFfqq172XL6-_TzY9HtwNxIiS6KlGhMg15ivSWA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeduudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeduiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoh
-    epphhivghrrhgvqdgvmhhmrghnuhgvlhdrphgrthhrhiesvghmsggvtghoshhmrdgtohhm
-    pdhrtghpthhtohepshgrmhesghgvnhhtohhordhorhhgpdhrtghpthhtohepmhgvsehtth
-    grhihlohhrrhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgv
-    lhhmrdhorhhgrdhukhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprh
-    gtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsth
-    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:c1_RaGF5-v_As0te_c8NI5yTe9r_d2oxJWuf6kG8Acx88pqo6772hw>
-    <xmx:c1_RaDJccB68xuaZgbWVO76rI3kjRrJRkogqUFiqPDncggJKelMogA>
-    <xmx:c1_RaFprSiKz8236LQh6f6UoJuW1PvjjNBeBAMDcQ5li-nNrYEHEaw>
-    <xmx:c1_RaCitFu-Vv0m5aFF3JL2sOiH3CQYoS4_9nD30WUCbcaC_RTnkrA>
-    <xmx:dV_RaGshbb6HBcntqSuNlyzxceQ0nCQEh2wyHx5Oby5u9s8yccyn05Zi>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Sep 2025 10:38:41 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2b3be8ec (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 22 Sep 2025 14:38:40 +0000 (UTC)
-Date: Mon, 22 Sep 2025 16:38:36 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Christian Brabandt <cb@256bit.org>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v5 7/9] BreakingChanges: announce Rust becoming mandatory
-Message-ID: <aNFfbGWbOl5ziCJV@pks.im>
-References: <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
- <20250915-b4-pks-rust-breaking-change-v5-7-dc3a32fbb216@pks.im>
- <72d0a316-ee3d-45a0-8122-77c52911614b@gmail.com>
- <aNFImn9toejLzIJR@pks.im>
- <f23fb338-3039-4c86-a36e-439d68d14acc@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L06cbXNt"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-361d175c97fso36205411fa.3
+        for <git@vger.kernel.org>; Mon, 22 Sep 2025 08:18:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758554306; x=1759159106; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gxltr/mfQIoiB52oth1rM4PS5+nt5q1N2uXTLIX9eOg=;
+        b=L06cbXNtrbKG9caIhnvGgciyhChmF9GkRyKTc86sYikNr1AjwnEvpZkV9/YQR9GRCQ
+         VyfQ3FQCtcTulFync8auxxeyUMr48nNaHoi6+qj/HpGq6JYPS33oIyXe9aosUunfPJuo
+         nVRLJgnqGbenZg0B+lt4P4UJPQFr28su53COn9jXPTnJtiiftZ5rfy3CXjUFXi1IcZxQ
+         aCTbMfHzH4q/ZKscVD0X2u6gwTX6YtHKxIs/0gIZUQe9E8xzUKmu9UOcbUGHz4QGntE1
+         uBqyXZqckXTeyFxbpPdDjKdkL1nDIZpCA2U+rI8LvXJxZoE7/vp89ag7twLKyqvVvkA+
+         HnTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758554306; x=1759159106;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gxltr/mfQIoiB52oth1rM4PS5+nt5q1N2uXTLIX9eOg=;
+        b=I4MJBT2vAKuZ+7AqS1+g6xwUBodFaYy6Q8mafwDEMADE/0cUcHjLJEcN97ojW8yQ3a
+         vhIuwVx1r/uTUcvG5KNYBJlc925Q9UhQvaN5VS2LjBP/Nnwt9CPHUJFkxsvPcg9f8ozw
+         CBWMamAope+3dbpM7uaRi9U+9ukb2vpK6wbfmXRUOmIzr/XRWx1HfGzqef31xI138I32
+         MaqPscpjPtlm9SlzDx5tCJMPl4LRES58NkCaRfJkanPxSo1duzGVcSdGGzmb92FdGUo7
+         qv3dFiDQb3WzZsZoi3yVPvjmNf+UH7iOfOVtslS6Om+ocV1pMbKWBGQv+pHG0LyQfyxk
+         2MCg==
+X-Forwarded-Encrypted: i=1; AJvYcCW4nEgd8O6LRimp6Ma1LHz7aSXATdUQwR9niNMeZPA75rpSFx4wJsXve7/e6dM4H9dvpxc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzfrMyB+DyCQPa3aKuN4vhlKuO1mRmTFHB2KZIT3oTF6TRCLiW7
+	yIzOUtJtah0Yi/T9kHnom0Hu+J48zT6bfFHCguciyJedkvU/meJWBfpnASSBDuPsM8lXcFzIZtK
+	jv0WblDtxWWvSE9EPGVsHdh3Fir2P/hQ=
+X-Gm-Gg: ASbGncveaIn9uszN0YuHucHWbleNgZoeIq2/UggV56s8cro8XUsty44mtFvcQuQS7d6
+	atW5jqJTYb7GTJ0PxB51IedZyptPEeoG8jvzKmMUhXBJwzkvLEa4GjUPgNI5vcFCQdtHkZd+wh7
+	adlYytF6skYCMGczk8DbNhhG8nV6uMp84KPNdkvnK7QtA318uukmDJA9sSJYl39gRr8TeyD17ud
+	+PizE3k
+X-Google-Smtp-Source: AGHT+IE31Qhz/ykWXBC3Gu7VAGWQRejXuW15GVo14Ksu9WmeDcY9LEoOK0i8VL1QcG0NRegQFUCl8bJXqczG2VB6xtM=
+X-Received: by 2002:a2e:be8d:0:b0:36c:7a86:19e2 with SMTP id
+ 38308e7fff4ca-36c7a861b16mr3699791fa.21.1758554305814; Mon, 22 Sep 2025
+ 08:18:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f23fb338-3039-4c86-a36e-439d68d14acc@gmail.com>
+References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
+ <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com> <xmqqcy7pc8ix.fsf@gitster.g>
+ <CABPp-BHJUkSERQon6xx=sHrhN7i=6ekv+Hz1+P+2mh0=Xw15Mg@mail.gmail.com>
+ <xmqqy0qcae6z.fsf@gitster.g> <aNFIwFD6E6Lngy5M@pks.im>
+In-Reply-To: <aNFIwFD6E6Lngy5M@pks.im>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Mon, 22 Sep 2025 09:18:14 -0600
+X-Gm-Features: AS18NWDgtmlYEdlH_yYe7Vm4FFmqVc7wpGgLgk7DOV0E844lXH8woX4EwvyUFRw
+Message-ID: <CAH=ZcbDkDfc6j_gQCt_q9RLP_ozYqr09i1-xe2mvhSQRgf8MGg@mail.gmail.com>
+Subject: Re: [PATCH v2 00/18] Introduce rust: In xdiff
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>, 
+	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 22, 2025 at 03:07:40PM +0100, Phillip Wood wrote:
-> Hi Patrick
-> 
-> On 22/09/2025 14:01, Patrick Steinhardt wrote:
-> > On Fri, Sep 19, 2025 at 02:59:58PM +0100, Phillip Wood wrote:
-> > > On 15/09/2025 12:22, Patrick Steinhardt wrote:
-> > > > 
-> > > > +You can explicitly ask both Meson and our Makefile-based system to enable Rust
-> > > > +by saying `meson configure -Drust=enabled` and `make WITH_RUST=YesPlease`,
-> > > > +respectively.
-> > > 
-> > > This is helpful but ideally before Git 2.53 we'd make the Makefile and meson
-> > > print that information if they fail due to a missing rust compiler.
-> > 
-> > The intent here is to allow us a bit of time to iterate on the build
-> > infra before making either of the build systems error out. Ezekiel has a
-> > bunch of follow-ups that we'll want to land to also unblock support on
-> > Windows and to implement things we don't yet have, like Rust-accessible
-> > C bindings.
-> > 
-> > Is there any particular reason why you want to accelerate this timeline
-> > and make the build systems error out right from the start?
-> 
-> I'm not suggesting that. I'm saying when rust is enabled by default in Git
-> 2.53, if the Makefile cannot find a rust compiler it should print a message
-> that says how to build git without rust so that users do not have to wade
-> through this document or our release notes to find out how to do that.
+On Mon, Sep 22, 2025 at 7:01=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> I personally think either (A) or (B) would be good choices. I would
+> slightly lean towards (B) just so that we have something that we can
+> already play around with while building the next steps.
 
-Ah, sorry, I misread what you were saying. This would be a useful thing
-to do indeed.
+I'm fine with B if you fix the wording in your Breaking Changes about
+Rust being introduced in version 2.52. Rust was introduced to Git in
+2.49.
 
-Patrick
+Elijah points this out in 1 and 2:
+[1] https://lore.kernel.org/git/CABPp-BFXRbaHk9U3BX+d12bZ+ryGOp+btR0ODMw+Ht=
+D7xd+MBQ@mail.gmail.com/
+[2] https://lore.kernel.org/git/CABPp-BEiK49f_UB5UPe3qM9O7vQGGFJ8Nshw1f6W_6=
+Lw7HRL6Q@mail.gmail.com/
+
+> By the way: I'm also happy to change attribution of some of the patches
+> in my patch series to mention Ezekiel as author. I don't care much who
+> is listed for the initial patches that introduce Rust, but would retain
+> my own authorship for the "varint" and "BreakingChanges" commits.
+
+My only other concern is with varint. You use usize on the Rust side
+and then uint64_t on the C side, but I'm ok with fixing that later as
+it only breaks 'linux32 (i386/ubuntu:focal)' in the github workflows.
