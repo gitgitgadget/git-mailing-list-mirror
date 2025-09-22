@@ -1,145 +1,133 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00ADB2E2847
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 19:34:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BD3285C92
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 19:36:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569660; cv=none; b=GOsmzGjIrRHB369jTAC9qB+Ph9E8Xh0mITV3fXXTPMNBZyJZyal0rd/p9yninvBuyUP0bVgPd3HLGxeiKCIc9tRK9Pqv9+sKvflUtGq6azqBKNkD2bS56dCdlrFSKwhDyI4BN6iuls0Ps5BTYPgEYNTwPgtFbuJvl3Uoi8KX4xY=
+	t=1758569788; cv=none; b=htzREqdWt57TB002hIS0iZWSmNrEDAflSuYqymOMkwXIyZyTlrIYp49VcEiYknYL1tcINSr7t7MrJ24ObbNDP3r07Ox/BOS99kgyorkjFFygK4P5WYh8YSs0yIlMDVOwCeunpVjoLvbuWkL6zHRKm7awOqorCZkLsG/r0TC2Q4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569660; c=relaxed/simple;
-	bh=PW2gMztpS8JzGRvGTyQaw2gaFmkEBDfr64xUGDW5VdU=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HCi/FysH1gpDktGVV4wcK2KTNL0mnaDeC5SM0QFBieRgW5gZ2mzCB23M0eN7++Br2ZRl2MAwkNh3HVER4LbPoWBNU6IvC4iBkn/rFIL11NRuM97n2Saiznv22U8zdJHIEP25F9m6V4o8rY2UX2A8QGW9YpRR8VS80ZH657MNLbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e9SbkBcX; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758569788; c=relaxed/simple;
+	bh=fD+nL9t6vMMqK0nJLnl5GXjdVgP9KcimvlG+WZqME7M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=C/s8aJk2sd48qOaxIu/bj8Rxk0OKZvY1r21FNLN8D8Uw5GfaxgGXNPNM1+RzD5qgUkVjJTEx8vKV83/Qw0uNvXStbldyxStyOnq0KnRdhyeo9SaoJYHmX8A+PPaRh+JMltT0O7TmNOyR9TC192XXaER4dOLbFvi5AjP3dRFXUhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dXqVr5ih; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OagxYaze; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e9SbkBcX"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-46cbdf513d7so16782845e9.2
-        for <git@vger.kernel.org>; Mon, 22 Sep 2025 12:34:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758569657; x=1759174457; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YHBp3yioTXfT4ICKdIqCJ4uLrUndIsGPmcSZJnvVKQ8=;
-        b=e9SbkBcXOHmQGTTRgLBG07PAiYn/BLW31UET4gtjVpKuzjHvyYBxY3KCz9DRsZuXKZ
-         1tGjgoLIgN2/S2qvRO3MKcgyR50XTlIrXo56PIIYWFcX0gAhmxxqMZBqK7HbC775uH95
-         hFCP8F1ZT0ROIhvVtUeRHjWoQwkmGPfy0NukbcBqCdQvkMoulrWKAUmppM12/O925OhX
-         X5qHZ96rfwbnhU0YAxa/FesKL2B9l/+JqPmLqBAAQDh3BxtVymA6jg163ahulsOKXYvA
-         8lDY6O4YxqzSje7kGhOX56X5ZjX+NZiwskFdXugyQl96gsCvgA7/I7X/xttHbVqUtMqu
-         NB/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758569657; x=1759174457;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YHBp3yioTXfT4ICKdIqCJ4uLrUndIsGPmcSZJnvVKQ8=;
-        b=Sz3yVHq3ac9NcZgocj/RfsoIX5bbsqJqzngt2Soqr+VL1VVqtBJ43sE0sbtKDtCg8B
-         WFdr5Mm1YzJ4ms/LhlhNUyps8f3fA/jNFFO8DD6ID/jJx5eFeTO28A/QCKUTGykzmKak
-         EDKrCwZ4LV0pRc7F6gCqMARtr/+ICTGiMpPZuAkJvC+sjv3ulxCAMp1CZE/s3FDJId74
-         m4luNEN69Ns1BGZHdg2k4MQtlAeXNt51MiKYOAhGqoDchMQjbLBaiBi4CHBaJjhHFj4S
-         a4USxdNfoy2gIb014sENJLe0bG7lGrolanWxRI1S4vbsIbWV93aw0yD31bytRbJQ7agW
-         Q05Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUIeQKxCoz/SeogiUm5OWbWgc4nowhEWjCLA4l8PwjtSL5zXVTNqdda5Pr88BhOj7Kjock=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyrAa7YN1rtcHN6tsu90h5tgJ6NnhPMe0EK52sm0b71W98JrtiD
-	KF16QWr6Qd+t42cNnE740h3sxNEzdUTPAsiUUMcuJsseGeItaoDYF1Ly
-X-Gm-Gg: ASbGncsgxqu1zyydInRg02w1xehaOkGsVqNwA2HOJzsqEOrLuz3lvWp9Qni9MuSXIV9
-	4ywyKF11Cco29mpmBQ31RMmRCP13yb6/LZ3tjoe+KpKUp84AY94xjQ2eFMPrwnhcTDTAocgkp+r
-	t+ohxDDXTTdJUs2e6iWG+Ds/njilp6zlmK6YPccerznNWixeSezrU0M34XtrQ2zaGRJB4RLxpol
-	Y8p56q9Ywc1tBfD+rUfC5Z9AMrvQnctzQ52+Xsx4s6BcqiAinxTuM8MZxsYpWzAArnSw8o0lwiD
-	oa1RQBllPuHLOh2/Kvhz+h2+817vcwdE3NWGh581H8+goCF/VfyKo7HkTf2N63uQ0DV+juwRQzD
-	/h7ZSkbAXzwZm2ztFUNfyDRbE2ypgUDdiA/+f3d67gETjGN6tPa5B3tA=
-X-Google-Smtp-Source: AGHT+IFZNkG2ttfMIvNauKBrIyuhjBOnY8ebcn5PUHT21k/rxVh1COQljr9leUbeoTvYF1k7s2wNww==
-X-Received: by 2002:a05:6000:230e:b0:3ed:e1d8:bd6f with SMTP id ffacd0b85a97d-3ee86b84781mr11121927f8f.60.1758569656895;
-        Mon, 22 Sep 2025 12:34:16 -0700 (PDT)
-Received: from localhost (84-236-109-231.pool.digikabel.hu. [84.236.109.231])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-461383b7b9csm256523765e9.2.2025.09.22.12.34.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Sep 2025 12:34:16 -0700 (PDT)
-Date: Mon, 22 Sep 2025 21:34:15 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Christian Brabandt <cb@256bit.org>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v5 7/9] BreakingChanges: announce Rust becoming mandatory
-Message-ID: <aNGkt/DdnbjNu3s8@szeder.dev>
-References: <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
- <20250915-b4-pks-rust-breaking-change-v5-7-dc3a32fbb216@pks.im>
- <aMsxhp6ZO2Cdz7+k@szeder.dev>
- <aMteF4VTq2C5sAhK@fruit.crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dXqVr5ih";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OagxYaze"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BDEF57A01E6;
+	Mon, 22 Sep 2025 15:36:24 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Mon, 22 Sep 2025 15:36:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758569784; x=1758656184; bh=Eqrnas3K+L
+	/ge7fpkYEVxTlpzR7H+xKfBFA9pu6rnPs=; b=dXqVr5ihXk8nSs9arcuWeRD0W5
+	INUzRskDe2E2P8ShC0Lt+Lipeh8THZDmq6YP28AVappsw/wYxEge+GHMG5GBMzum
+	yQGXjtwZlTe9Ee7Pok7O0OY/CiYfWdZjzkQBHanyYNXlUzYK6jSRQLRcALRppmRo
+	S2hAk8suQXUx+ZUstrNivZ6vdlydnhX3diUXgorL/rGV2H6rIPTGvB6r531mLjt2
+	56P3XKh8vX3QIpJtQXeu6wDy2PiHUliXDO9Rhp0p1TeD3UwWkCnJcjBRV0UzvndD
+	s5Twevtqy3QuhnUpTZuCbWkBo8ggj58gVu3j6xQRFL4mk8fr5RmCWtrT7y9g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758569784; x=1758656184; bh=Eqrnas3K+L/ge7fpkYEVxTlpzR7H+xKfBFA
+	9pu6rnPs=; b=OagxYazeVOcfjg0kfT9FO7NcGU8mPH9LB2dG4EjanZtjeSmGeMb
+	G3guG/1PCslXreCIsTDtEJwiN97EFMjjHGy/SopOUpYobZfrj/TJ9/3sjKIlrkku
+	5HEoNTAPia7FIHPg56IusWcFEsNR7UzFzolhloyFZ/vFCD3tz/T3sLIuKjL5aZUj
+	H3SY9ToguJnbgoMxRQnU1faJds1wgCNxUJz2iFHcSQWueQf/LitUo6XUuOBg3JuA
+	gpxD/bTaTmA/eTWx4m5ziMhMKv8vKmBb85MSLXLVMk94PE9jCqEd+yPmnxWqmAtJ
+	fTBxFnGZr/AcMXqcoA91urS63jRtY8mg8ig==
+X-ME-Sender: <xms:OKXRaHTZjJeE_k4p78W6ZLefhJteVPzwpo4AZbbhUS3yhLCy6sJPZw>
+    <xme:OKXRaMcPuBgbpAYnP75OGElCi-Z7b4kUFKuF_KZdIqhVntFZDZow0N1TQ1qbO1Xb6
+    YNuQrAb9NWJAJWBsrgkAJolZhOeTzyglqcVcWlQBqoCcHwLEOQ2Ug>
+X-ME-Received: <xmr:OKXRaGrcwkoydQ4nLu5bCk668aM4B_ejnqS5nbWhfYPA5C0oLM_k19ZVxbyGbN6AHTWjoKSOoAjfvYOiioEZAGwzlO56QTmzpbg5>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehkeejudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkh
+    hrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghp
+    thhtoheprghpvgesrghpvgeftddttddrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:OKXRaN-EpOg6-056wmqg2MwF0WBIUQnrGLOv3EiPQYdWU_1gJcM-gQ>
+    <xmx:OKXRaCe8diPgh337CWmBz4BYMSzb-9pDwR8xqagadBdjIvNONH4C-g>
+    <xmx:OKXRaHJFvZsBJ1nVEmNiS9I81Em5kETFjKsZccqF6C9FjJ6Fyy4IWw>
+    <xmx:OKXRaCh0G0vbIs3yin14tInDNcnSTFoOxksmYEYnyaTNp1XTIArFRA>
+    <xmx:OKXRaNKinI7g-fn_LABII9-7WA-oKNrpFO3JO4l3qmXLOX-LptmO8EPT>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Sep 2025 15:36:23 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Lauri Niskanen
+ <ape@ape3000.com>,  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 1/6] stash: tell setup_revisions() to free our allocated
+ strings
+In-Reply-To: <20250922190555.GA2205919@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 22 Sep 2025 15:05:55 -0400")
+References: <20250919223351.GA3906184@coredump.intra.peff.net>
+	<20250919224027.GA594545@coredump.intra.peff.net>
+	<xmqq1pnywkwv.fsf@gitster.g>
+	<20250922190555.GA2205919@coredump.intra.peff.net>
+Date: Mon, 22 Sep 2025 12:36:22 -0700
+Message-ID: <xmqqikhath3d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aMteF4VTq2C5sAhK@fruit.crustytoothpaste.net>
+Content-Type: text/plain
 
-On Thu, Sep 18, 2025 at 01:19:19AM +0000, brian m. carlson wrote:
-> On 2025-09-17 at 22:09:10, SZEDER Gábor wrote:
-> > Providing an LTS release for those platforms that can't jump on the
-> > Rust bandwagon is great, but...
-> > 
-> > Git 3.0 will switch the default hash algorithm for newly initialized
-> > repositories to SHA-256, which, presumably, will also encourage SHA-1
-> > -> SHA-256 migrations in existing repositories.  Alas, it appears that
-> > the SHA-1/SHA-256 interop feature will only be available in Rust.
-> > 
-> > How will this affect those platforms without Rust?  What will and
-> > won't work on such platforms?
-> 
-> On Git 3.0, nothing will work without Rust because it will be mandatory.
+Jeff King <peff@peff.net> writes:
 
-Well, "What will and won't work with respect to hash transition" was
-what I meant but, alas, didn't convey.
+> Yeah, I had originally written just:
+>
+>   test_expect_success 'stash show -- does not leak' '
+> 	git stash show --
+>   '
+>
+> but it felt funny, since the test is doing nothing in a build without
+> SANITIZE=leak. If we are OK with that funniness, I can switch back to
+> that.
 
-> However, people who want to perform the conversion can do that by
-> booting a Linux VM[0] and converting the repository there, then pushing
-> it somewhere.  The only inconvenience is that you'll have to have a flag
-> day for working with the repository on older Git: you won't be able to
-> dynamically pull from or push to a repository with a different main
-> algorithm than you.
-> 
-> One of my first patches is that setting extensions.compatObjectFormat
-> without Rust will simply die and say that's not supported.  If that
-> config value is unset, then Git up to 3.0 will simply function as
-> normal, so full single-hash compatibility is assured.  We already have
-> that: SHA-256 repositories work just fine with SHA-256 remotes and SHA-1
-> repositories work just fine with SHA-1 remotes, but they're currently
-> not interoperable.
+We have a prerequisite for that.  Very nice vehicle for
+documentation purposes, even though we do not care about a single
+"stash show" invocation for correctness or performance reasons.
 
-Thanks for the explanation.  I think this would indeed be a worthwhile
-addition to the commit message, or perhaps even to the BreakingChanges
-document.
+Perhaps I can squash the following in, unless you have other changes
+in mind.
 
-> > I think it should be called out explicitly in the justification that
-> > whatever limitations this imposes on those platforms with respect to
-> > hash function transition, the project has duly considered that and is
-> > OK with it.
-> 
-> I am fine with this and I don't think this is a problem.
+ t/t3903-stash.sh | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-Not sure I can agree with that, though.
-
-
-> I realize the decision to incorporate Rust was made recently,
-
-Indeed it was.
-
+diff --git c/t/t3903-stash.sh w/t/t3903-stash.sh
+index 7ebeb057d3..930c31e547 100755
+--- c/t/t3903-stash.sh
++++ w/t/t3903-stash.sh
+@@ -1741,10 +1741,8 @@ test_expect_success 'submodules does not affect the branch recorded in stash mes
+ 	)
+ '
+ 
+-test_expect_success 'stash show handles --' '
+-	git stash show >expect &&
+-	git stash show -- >actual &&
+-	test_cmp expect actual
++test_expect_success SANITIZE_LEAK 'stash show handles -- without leaking' '
++	git stash show --
+ '
+ 
+ test_expect_success 'controlled error return on unrecognized option' '
