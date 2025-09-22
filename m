@@ -1,70 +1,70 @@
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112BD31A05E
-	for <git@vger.kernel.org>; Mon, 22 Sep 2025 19:51:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F8D31A57E
+	for <git@vger.kernel.org>; Mon, 22 Sep 2025 19:51:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570713; cv=none; b=Uhiv1w1JUcjCrdSpHgNfWaCzaGl2QxmazMQTsjOp+Q8aLKow8/5dDp6Pe3nBzP6GbrvWsRIQI+jrFQBSTacjDKNjLhQCP1GYD03bXF+t9HlygKjM78MrD1UiZn56n+npzLQWNEDbq+XP85csj4JPwF4nn9cjgFAJMdHhn89yUYQ=
+	t=1758570715; cv=none; b=j9DQWiNRrEK3JH4h7huFjD1D/o2djgxZqjDSESA6PaO66LMq1CwGgmu1J96ne/mr8d8rjPD+Rv6GV1EMmeUNUiYeqo98JKHoPFtacTunfTEn5eZ6Nq6QIIv6whpTbV6eo1LvjxFgpGNidh+hZENdZVRZ3MfO13+kDG2WfDOFlPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570713; c=relaxed/simple;
-	bh=BTBkqOBo46HKLrO1JkXLChyVjl9VuzfjDtDRU8/t574=;
+	s=arc-20240116; t=1758570715; c=relaxed/simple;
+	bh=At1/Svq2Yi0nc+CCONz+TXyna2MMhEGmHRQLDwkPwic=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=FLPb0R/JT7CoQ3nFT/p6LNu51qMlzLKyr9kSOoqiVD0+8yvErG/DprAN+1FbO9W1NoNymQ50ChBBwHpavNgEDvSj1YeDPtzSLwMeZyRlvRBmsIHGJhzklSRp8EzlHAFY2PQGEWgNxUdxvq293SdNS3NDKwjnvVVYQsmx8Byu6l8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iWkKTh9R; arc=none smtp.client-ip=209.85.166.172
+	 MIME-Version:To:Cc; b=Sa6tSlYaV+RKBqFujdTbmx4Ao1rNhVLAE2fcqTQcLVTXOe9hE9bDRX2CzBPgynoC4NLG9zJPQOb1jKY5AP5tFOk8meEhPQj0AChQn/uOCH4SmwjxPVKnBrdGX9nMi+IWxv7vYZBX9f6vBq3ghdRISd6d/u1RY6bIvuvBDuiOF/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HoJxomaa; arc=none smtp.client-ip=209.85.166.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iWkKTh9R"
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-4240784860bso19807365ab.1
-        for <git@vger.kernel.org>; Mon, 22 Sep 2025 12:51:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HoJxomaa"
+Received: by mail-il1-f181.google.com with SMTP id e9e14a558f8ab-42487ec747eso32348265ab.2
+        for <git@vger.kernel.org>; Mon, 22 Sep 2025 12:51:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758570711; x=1759175511; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758570712; x=1759175512; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5WErw3AydLrOKz0X239j3/jDTD9XruWWs5KcWhttI7Q=;
-        b=iWkKTh9RCu+h0b8Zvj4evx4uDEJj9SRTHoTHvqHBl+zcJgLNf5kNkscWQcdBwMsL17
-         0mWMVphaJdPRjOTFMjI1lWCLxcugfIilYT6kZ6O0q6FSJqg1sv70Wodv8wlrsw1DMod2
-         n8QQshu2CO2CHrEuWTWGiT9Jv8DCXDUl+rYeeao+2BN/T511Gp8iF99U/VkyJfOADkXj
-         9xQ64UMTbgYBHBWTNeJo8xOyZQ2VWY8X1diAvZaKPiKIoCtI7OeklzjVkynqvp51IN/J
-         X6XhLuX6c6dFbPDpAF6S60BYXz4r6ZIvW7WjEtVcUQTqS/f4pJGxvpqD4WVtcSqoENnc
-         HwRg==
+        bh=qoiqsHfrzKTczLvwTrlXS/z94nduZIZMqlZcRTbrgVA=;
+        b=HoJxomaaRgljQAFTt4ArGuH/4cV7/sZS/Ogq7g00/zz0nagp4sZD9NlvSY65ihnv7P
+         sNZ6R3e0+EUmKlAI4B30eu93xWKHOsd5Oeyn7hqXxB1RG8y91zt4DfeA1B7TNIXbNzZh
+         MrJyyKTr3oCqOnmzcaudks6HwNVH7HvqUhpfkwodmAjKwfP5liNYfH/iIRfx4JzAb01x
+         hq68YB/S/Jc2Xa/dfmkkLAbM2OqewqvZ7mZ4EsA2Lmf54LlJU5KTKUq6QoeZFMsoL0bJ
+         BAwauEAs0Ps1qzMJPQHF3NljOX0arMbe/jxgs2svRu97imiUalTiiLsvQVIlSrk9s04l
+         brkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758570711; x=1759175511;
+        d=1e100.net; s=20230601; t=1758570712; x=1759175512;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5WErw3AydLrOKz0X239j3/jDTD9XruWWs5KcWhttI7Q=;
-        b=NcKy3c0Ao7nQIejV32bPo5eUJC1fi1FAgOJrroal41pYJcGTb45nkrV85jJQlj6WY3
-         K/R42o8AQLohH49zBM8S+0sGkwv4AHtV+S95iz0DzzAvYgBVlNm3ZAZWcjRuWrp2ls9o
-         BUkW35NTs1pJemS0PBuvJjUgjMAUDTVVvIzPGodyRqW/Fo2Ps7YVWwIKWaFYyGMZ+Nyf
-         hPWApjStbud+v6zAE/5oolUWgCFRqAMVwLmMFQHuhXAJ58hj0dYf6rC0BZVEu0wBFrfL
-         FKM5iFJala8jY3aaOdihgnO3I4MGaxcz3aJTJXoZN+ZmneFjSByfn/Tf0QgzYVjrNHw0
-         GvJQ==
-X-Gm-Message-State: AOJu0Yx4PKXCr/IfV3G+KjI/RW2uG3kxjdBcxQNFUFMbiu2ZH+3U3zZx
-	t/NEUTVwsaJX1JhZmAEzG/jRo3Eup9bkEUhWCZZ6+tkxvKYpgMrNM7upR+BsEg==
-X-Gm-Gg: ASbGncvRHVfdNoTwUNG/eMG7HZJfNceiRQpQhnDRAJ0EadvJDFCtWul45ZlDg7aFXkS
-	DnWrwqY2e8OQI6PIPci2dFCQU3fb0crbe/Hm1ShhcbrC5EMF1FGdggPzwhDcXdN+qQAlVFkn8lG
-	iKuXL9gxroj2JGC1UqMzX/+VKReG9+IewoXzJFQXuqlzlvPR9fGbpS+oPuRzULQhPer4GmU8x9u
-	91TNOWxt5/a+838Dq3F6iDiFzkyFemeZi3Se+1hDeI7zv2Aap5405xV5g88FoPoegPs0Y+rF0Z0
-	+tmKXF2mFgiLm+D4jw/T7rQs0p5aO+E5xzx9kZRbIFNSzoJfVUFYZosDW4lNDtDWyIrm6kuEEh8
-	lr6k/8zs72sPzPfNzRqKsG2XZXw==
-X-Google-Smtp-Source: AGHT+IEoSLP1LW2Wkve3RGyWgzDzatdyy0fMSahpV8jZLTXOzvDBavjyz3OAYs1YV+HfxVSbksKtVw==
-X-Received: by 2002:a05:6e02:1489:b0:425:51dc:5b7b with SMTP id e9e14a558f8ab-42581e2e258mr2384165ab.13.1758570710600;
-        Mon, 22 Sep 2025 12:51:50 -0700 (PDT)
+        bh=qoiqsHfrzKTczLvwTrlXS/z94nduZIZMqlZcRTbrgVA=;
+        b=VRrokuoNxhq7uRAhPvdf9+OxqcszMWwxYy31scasd09PiHjZ55F3D1oq9rk65cimMp
+         LQmxeVWTMZBs5HeN/iGQ6wuexdEmRkFfsOri+vwZpMzJWpgW9rQ6hTRxp6mYNB85TuSe
+         n+dvoLmsO3RmfhrhQDOiF38sxreMfL3yj0e5v59nYTM5eJNsTrAyU+4Pz1M2dFpfAS5Q
+         YNdUBERiIbLvZZrkplGWe98NqsKg6t7Orhlm5QjvLW2lThnnQmncL0ggr8Op1lCJu4x7
+         xT0PlFOwD29VfYb1VmqG0GLeZ0yruYBDNufERMkRE1LXpiFGpJabEx7FC3OROo+z0NeW
+         n83A==
+X-Gm-Message-State: AOJu0YzyeK5DbL2yJpvOaP8pX1sNSD5XCYEYSFNbxVA8q3vcHMd1CPcL
+	T67nuruRXCLPZ4DfWkEw8DZ8Bq+EolnxbBU0B9/qmKy5Nmg77H8wUPuo2oqE2w==
+X-Gm-Gg: ASbGncuKIExDlX5WQv7MarUvmupwH4wUjW5LV4EjjViyyb6bx5TCGlzKXuPmjitnoYC
+	c5O5RoJ69UtqAOGpc1hkQTLl09mkwBWKunyfHHVKFMPCoLFhHCfvPuz77O9sd0sMXpFQEwF+lA3
+	X5gzazIk//ReGjblgnHl3aXR8JVifGRhTXdbVCcJGirCvpg5stlat8UAP1R6o3dHFh/li2L1HCv
+	JpJnPDsEBBfTQldUtuT71W/6h4sny+46HrwQRmPqalZBPcTIDopxnM+hS+4/sa2I10JajFJQa9W
+	btopE3tTJxq3JBMRdZiAvF1mf+GocM6RB+4R/3MlLd1+12vWfUnRswZ9uQrkiZi7+RRlRs1TqBd
+	Z/z9nhCWgYQJuBPpo7K38pi8kBA==
+X-Google-Smtp-Source: AGHT+IG06noqqChB+b+6MX1Lk1EdHOeNoUxQjyFkX15HdxY46FSASXkM3MjMqk69t+7MOO5pAo0ugw==
+X-Received: by 2002:a05:6e02:2706:b0:424:80f2:29b with SMTP id e9e14a558f8ab-42581e060bbmr2644805ab.4.1758570712027;
+        Mon, 22 Sep 2025 12:51:52 -0700 (PDT)
 Received: from [127.0.0.1] ([132.196.80.135])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-53d3e337de1sm6045547173.25.2025.09.22.12.51.49
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-53d54137b65sm6147211173.64.2025.09.22.12.51.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Sep 2025 12:51:50 -0700 (PDT)
-Message-Id: <311279c123da718a1462dc0a8695f0e06e7b0330.1758570701.git.gitgitgadget@gmail.com>
+        Mon, 22 Sep 2025 12:51:51 -0700 (PDT)
+Message-Id: <d84658ac83e529ecc6e72a54bd3831dfe1b46f89.1758570701.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2048.v4.git.git.1758570701.gitgitgadget@gmail.com>
 References: <pull.2048.v3.git.git.1758294992.gitgitgadget@gmail.com>
 	<pull.2048.v4.git.git.1758570701.gitgitgadget@gmail.com>
 From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 22 Sep 2025 19:51:33 +0000
-Subject: [PATCH v4 04/12] xdiff: delete superfluous function xdl_get_rec() in
- xemit
+Date: Mon, 22 Sep 2025 19:51:34 +0000
+Subject: [PATCH v4 05/12] xdiff: delete superfluous local variables that alias
+ fields in xrecord_t
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,69 +84,71 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Ezekiel Newren <ezekielnewren@gmail.com>
 
-When xrecord_t was a linked list, and recs didn't exist, I assume this
-function walked the list until it found the right record. Accessing
-a contiguous array is so trival that this function is now superfluous.
-Delete it.
+Use the type xrecord_t as the local variable for the functions in the
+file xdiff/xemit.c.
 
 Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- xdiff/xemit.c | 23 +++++++----------------
- 1 file changed, 7 insertions(+), 16 deletions(-)
+ xdiff/xemit.c | 29 +++++++++++++----------------
+ 1 file changed, 13 insertions(+), 16 deletions(-)
 
 diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index 1d40c9cb40..40fc8154f3 100644
+index 40fc8154f3..2161ac3cd0 100644
 --- a/xdiff/xemit.c
 +++ b/xdiff/xemit.c
-@@ -22,23 +22,14 @@
- 
+@@ -23,12 +23,11 @@
  #include "xinclude.h"
  
--static long xdl_get_rec(xdfile_t *xdf, long ri, char const **rec) {
--
--	*rec = xdf->recs[ri]->ptr;
--
--	return xdf->recs[ri]->size;
--}
--
  
- static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *ecb) {
- 	long size, psize = strlen(pre);
--	char const *rec;
--
--	size = xdl_get_rec(xdf, ri, &rec);
--	if (xdl_emit_diffrec(rec, size, pre, psize, ecb) < 0) {
-+	char const *rec = xdf->recs[ri]->ptr;
+-static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *ecb) {
+-	long size, psize = strlen(pre);
+-	char const *rec = xdf->recs[ri]->ptr;
++static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *ecb)
++{
++	xrecord_t *rec = xdf->recs[ri];
  
-+	size = xdf->recs[ri]->size;
-+	if (xdl_emit_diffrec(rec, size, pre, psize, ecb) < 0)
+-	size = xdf->recs[ri]->size;
+-	if (xdl_emit_diffrec(rec, size, pre, psize, ecb) < 0)
++	if (xdl_emit_diffrec(rec->ptr, rec->size, pre, strlen(pre), ecb) < 0)
  		return -1;
--	}
  
  	return 0;
- }
-@@ -120,8 +111,8 @@ static long def_ff(const char *rec, long len, char *buf, long sz)
+@@ -111,11 +110,11 @@ static long def_ff(const char *rec, long len, char *buf, long sz)
  static long match_func_rec(xdfile_t *xdf, xdemitconf_t const *xecfg, long ri,
  			   char *buf, long sz)
  {
--	const char *rec;
--	long len = xdl_get_rec(xdf, ri, &rec);
-+	const char *rec = xdf->recs[ri]->ptr;
-+	long len = xdf->recs[ri]->size;
+-	const char *rec = xdf->recs[ri]->ptr;
+-	long len = xdf->recs[ri]->size;
++	xrecord_t *rec = xdf->recs[ri];
++
  	if (!xecfg->find_func)
- 		return def_ff(rec, len, buf, sz);
- 	return xecfg->find_func(rec, len, buf, sz, xecfg->find_func_priv);
-@@ -160,8 +151,8 @@ static long get_func_line(xdfenv_t *xe, xdemitconf_t const *xecfg,
+-		return def_ff(rec, len, buf, sz);
+-	return xecfg->find_func(rec, len, buf, sz, xecfg->find_func_priv);
++		return def_ff(rec->ptr, rec->size, buf, sz);
++	return xecfg->find_func(rec->ptr, rec->size, buf, sz, xecfg->find_func_priv);
+ }
+ 
+ static int is_func_rec(xdfile_t *xdf, xdemitconf_t const *xecfg, long ri)
+@@ -151,14 +150,12 @@ static long get_func_line(xdfenv_t *xe, xdemitconf_t const *xecfg,
  
  static int is_empty_rec(xdfile_t *xdf, long ri)
  {
--	const char *rec;
--	long len = xdl_get_rec(xdf, ri, &rec);
-+	const char *rec = xdf->recs[ri]->ptr;
-+	long len = xdf->recs[ri]->size;
+-	const char *rec = xdf->recs[ri]->ptr;
+-	long len = xdf->recs[ri]->size;
++	xrecord_t *rec = xdf->recs[ri];
++	long i = 0;
  
- 	while (len > 0 && XDL_ISSPACE(*rec)) {
- 		rec++;
+-	while (len > 0 && XDL_ISSPACE(*rec)) {
+-		rec++;
+-		len--;
+-	}
+-	return !len;
++	for (; i < rec->size && XDL_ISSPACE(rec->ptr[i]); i++);
++
++	return i == rec->size;
+ }
+ 
+ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
 -- 
 gitgitgadget
 
