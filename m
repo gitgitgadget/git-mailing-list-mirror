@@ -1,230 +1,120 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E8D1EFF80
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 15:23:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21031805E
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 15:26:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758641034; cv=none; b=eMEmi0Nn+xm2+CxUNPVdUBZ8zDUoDZo+vY0cvZiu8yEwk6e/N5PDGmd53S4ChNJFO6oL4eoBazhxdBoFTTUzAVFszPxR9vv1nbaYkC7oGVn7fOw0CH2ehohblfTTJw7V8F5D0NsqAkXxfrEMSrus3+mI8nESSSgK0ZHXpOf8wCw=
+	t=1758641202; cv=none; b=bIeNZeUKpy//QlbbhPLgdP0TC2VZ9pjad1tabRmGEG9BY4jH2jhA3YL0QPI++X5H7boheOGvggnI3sRW0nKd0LK1DT7c2ksKhQq2ZIB7Homl9pElbsWJwz8dWEHg5ZTUW46vkey+52+LIRgGksrIKYCwLlq+MHoR1ESF9/W8YNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758641034; c=relaxed/simple;
-	bh=CSesH3d290vFcdz0pc0YSQt0piMTpwIW5SG8whtnDZg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LoNEC98Hfl7IxVztoiasndWqlwSi41ThApEAwdW2Mz+drLvsLyl73c35qt1an2Z7LnZlHZIydvtx/N7BUIyJrT5JA6UZoSnLjzfVbXufM3h8ZbCbTwY+MiKKOSwCHlIuyKxFdk5Z3MVaoUAuB3ZojFLMqp/DYPyhSDfkDtJnZ/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PZ79fehY; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758641202; c=relaxed/simple;
+	bh=nNDAklVu7Kz/XNU1p1dqqSK3nQo+YtWmeyRlwi4YsNY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HL8paFWyCGu9thy8C/vojvhL7wMYxxEBO5+Fe0IH0GEmyimq0jGiboUCwPGF2mMw7IOBnf1BmcYjle6f7GAnFIlIHYHDqsgSN102IWIxFy5g6dheN/qZIc7w9Xp3kPRfopHakLXG4QFwihgy8QxpQ/gzU7f5ij2cYeMuBeJnDsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YqNw0dUz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ARVDYIy9; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PZ79fehY"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3ee13baf2e1so4275860f8f.3
-        for <git@vger.kernel.org>; Tue, 23 Sep 2025 08:23:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758641031; x=1759245831; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=lQ97CHVxFviCPqqCCuMEAAjsGsGAh++7zDVNDPlYTRw=;
-        b=PZ79fehYxSlokB5WT/VKQfMbNa2nuOg4VbSxFuw6b3AmGfd88V4D/V6MHrwthVgNry
-         B4vTTU9LhI7TqZcVle5LdrDmDn2DALMMlJmowcbXdImCYh1rWAY6S0+MNU9jxzmUIjW9
-         OaEzcxhyELPxD9SM2sENV3pRGrwbI6n11UrRmv9poehJt5iiOoUHAetyh25Bu7+Vw1dC
-         rTQmRio4srXfheAjGRzb0SwLsQEQQdDu6kFLl+5KsumvaHdWUMH2nh6ITujvscYNW0bC
-         kG77EMooD6oZ6lC/8g8ydZT9nBPaMsJ724QtMK7j7WOBkmN92kvJA+X2XtXDuTwp4RrP
-         YKtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758641031; x=1759245831;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lQ97CHVxFviCPqqCCuMEAAjsGsGAh++7zDVNDPlYTRw=;
-        b=IPqcHoo5Rfigu4MDE24jo5J2E3+SGi+mONNnXAXREShb2asxmNXq1bo203uOrXurKg
-         wQQ+dvQOG8v5YkWtaIXJp/gi278vJhy6YEFrd60woNHjhtd7wvlXxvyTZTOtrU5N/vfr
-         pVVDAuU+2oXZ1/cYvjJhE/MimFXVUWFQaCfpy58Q08kbJQL3UL7uSQhu6/CHUzGp/PMG
-         VLAqnyg2DravTWBInehSDNKaj6zZ/rQ84+UK8UR1C09txKGECndCAtq0Dz4K+sVs+Slb
-         8tN58aOPvi6KGEqkdvpJVez7Yuf/dceLPH0gt7zhLAk1EwxiEJLM/mLJbmKBdshZV2VT
-         pziA==
-X-Forwarded-Encrypted: i=1; AJvYcCWY1K6f4RYY3MJCAerbYA7/SYbZitfvLLlXzTlFs9mPlL3Gk6aLeaRTFFCZVIH/+O68xgE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxb61WmOCPNm+BfHoHX4CyhOWocJoFwILLy2kYqDwyLeDUdrHQs
-	80FbHycPuu0BiBWckOBmg6Opf4FWQ22YQjFDfV5JS6rkZLrrHlcpGxQc
-X-Gm-Gg: ASbGncti14rkfVE/WoJFWIQ3dnNxyXtnH6I+U8sXPk+0lQo3XHIPwLVFHwfcI7bktcl
-	lHv7TZWL8D3G6v/i+E2ZrHnikexGOwjl3DKR3JJkdoISbNg534u8ijE5BfxxQ4xC9i+zk1Sbfs0
-	4tcozgiy7U9uqGrKNFJqOn7wz+gUQyWQqmR2iXPzOocBev0vEMRgOHW4mkkqYNXlSoZ78FxBf10
-	q+JC/AXLBIzrxzwmV6IIokExxIrK2yIpF+o+DFFFKLyNBfEOEWXhdRCYgXSdWeQ3lj0WA4XNAj+
-	pbWdsuzght3+MCrFpAvclOw5IzY9fjNh26nfzOV1wjFsXt2Lyqy/aXmLwzyUVu+BaugP+Cvhq89
-	jMjG3/Q6DhtcaPz4M9d1i3JL+nq9m+SNFiBLtGiXX/q3hvMasAxezdD1/pr6TR5QYPefXuTL4Gg
-	c=
-X-Google-Smtp-Source: AGHT+IFmX3JBRQYtg2U70t1a7jQMSgmh7bUIwgACjKalp4CWP6DJXXnMwiO+9IKgpJqs6HqPH2KS2g==
-X-Received: by 2002:a05:6000:1aca:b0:3ec:dd16:fc16 with SMTP id ffacd0b85a97d-405ca39d48bmr2643477f8f.43.1758641030835;
-        Tue, 23 Sep 2025 08:23:50 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3ee07407ccasm24381131f8f.15.2025.09.23.08.23.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Sep 2025 08:23:50 -0700 (PDT)
-Message-ID: <1635b82d-a3aa-4b83-8d7b-e415945dbd2e@gmail.com>
-Date: Tue, 23 Sep 2025 16:23:47 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YqNw0dUz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ARVDYIy9"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 656457A022D;
+	Tue, 23 Sep 2025 11:26:39 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Tue, 23 Sep 2025 11:26:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1758641199; x=1758727599; bh=1xrttT0+g2
+	s5iku+l+M9EcFFi5LyrF5QlpCv9R5PiGA=; b=YqNw0dUzwNjYdhi3BYNE1xgwmK
+	cavdIxpPZXEQF/QS7mUYj88d0O5OjcrPCsI/UKkZ+BCXnzNzja1FafmAVVv+Dyl0
+	taviXqOhWcjX52iTuAUKDR4eisRHlGrDK+OjGydigyGgV9mLjcYrcVMBsPSdYVJD
+	g2WTeTQjx/8RjJ+LnOsr60HpHd9pX9WUKuOv41f+o6Ng4nsfzp++kb3LHvOD9XYv
+	nd8rmbq6xjqNUx8SgIRwwMnqtPV8FHol8ZQngRFJnuBRQqJbzLTIu0saMTNT8P7n
+	ePYuRtDic8NkdR0nSjGGtPNStTCLWDl9sGiMECPvfA3oxisuQ60cF6hVAhzA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758641199; x=1758727599; bh=1xrttT0+g2s5iku+l+M9EcFFi5LyrF5QlpC
+	v9R5PiGA=; b=ARVDYIy9UbW9V74Z0sVb0BdhvxlKUlAo55CEg8h0dMpMHG4kJzl
+	/MKWII4jbTc22gsLQn/atftjVltQkXBh0HFfoK3NhU/kbOYiPHcwerIG7cSotQDG
+	jlFITsUnrqp2crihEipXFlPIotO5XNn7ECTPevLrW7Ypqzs2PRIV+nvXMgL+URTI
+	+zmSwc2oWxubSGl6fRymHXDUjOkuv9unhOJk/I/2a5BSXpiRUAuvcPB+/NkL3ZZA
+	N9X566XYPxFO3mfNVhenuGrX0DDSnvSHzFOL/a9OcmtilUzLwNKAvtrstQr9YVLj
+	bIU8cJb3JsB71KpIGCqBl4KONttLXLAazxw==
+X-ME-Sender: <xms:L7zSaI3msIrT-Peln0pBCDR6YFUTThC2NnXWTqtzhsWXDR9fUqnjTQ>
+    <xme:L7zSaKjPQn6EtpCF11605QSG5aO3J5WQpsb1uZTl7XNQ3bchjU4_UPpW9jUoAYEiz
+    B04m9hv16QjDua2B2-sz2H2iGslzZy6kn5t5D1sclFujqDhdXHVuQ>
+X-ME-Received: <xmr:L7zSaORiYRzhXdlk4Q4xiBG3wAPkrpWpPtf0_tvVW92Ns0lNK9ahKCEYofH3A9pU3hSCu1yvWHMqttDtTVtbnvt5E9ZTKQAqLDk5Rt59bolV>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiuddtkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrd
+    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrgh
+X-ME-Proxy: <xmx:L7zSaLh2Sl-bTWgG9zKPptabXa1tEXYx0_RaCh0KcUd6kR9NaiuBaQ>
+    <xmx:L7zSaO5XX-Xg9LfXryIuk_vJvy2EvEXInrrrwd5hsEc4xNG78GEJPg>
+    <xmx:L7zSaIDFkdDAZUyBDIt63yneMZuJNwtkxD1I8Tc-AYcuk6nIHvJ-pA>
+    <xmx:L7zSaFYhVUXr7Y2nQHNBZEdonlF31CRqqVxnugaTj5aPpJIC6iXPkg>
+    <xmx:L7zSaG9iIRI8aOblsEr2fluWC0eYo5EdH9jw3cMDHkLrUbjmAGVw69OQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 23 Sep 2025 11:26:38 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id a8fc66d8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 23 Sep 2025 15:26:36 +0000 (UTC)
+Date: Tue, 23 Sep 2025 17:26:34 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com
+Subject: Re: [PATCH 1/4] builtin/repo: introduce stats subcommand
+Message-ID: <aNK8KujMRfV93nag@pks.im>
+References: <20250923025700.3046260-1-jltobler@gmail.com>
+ <20250923025700.3046260-2-jltobler@gmail.com>
+ <aNJ7_GoKT5ea4QJE@pks.im>
+ <w4c752odnthf26stoiu7he2xk6fucocmsnxo5pa5vh5sg647g2@a6vphhukasgv>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] rebase -i: use same commit's message and date with f -C
-To: Mathias Rav <m@git.strova.dk>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>,
- Karthik Nayak <karthik.188@gmail.com>
-References: <92d4d585-09e9-4f1d-a471-1ad6b312fa61@app.fastmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <92d4d585-09e9-4f1d-a471-1ad6b312fa61@app.fastmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <w4c752odnthf26stoiu7he2xk6fucocmsnxo5pa5vh5sg647g2@a6vphhukasgv>
 
-Hi Mathias
+On Tue, Sep 23, 2025 at 10:10:50AM -0500, Justin Tobler wrote:
+> On 25/09/23 12:52PM, Patrick Steinhardt wrote:
+> > On Mon, Sep 22, 2025 at 09:56:57PM -0500, Justin Tobler wrote:
+[snip]
+> > > +static void stats_table_setup(struct stats_table *table, struct stats *stats)
+> > > +{
+> > > +	size_t ref_total;
+> > > +
+> > > +	ref_total = stats->branches + stats->remotes + stats->tags + stats->others;
+> > > +	stats_table_add(table, _("* References"), NULL);
+> > > +	stats_table_add_count(table, _("  * Count"), ref_total);
+> > > +	stats_table_add_count(table, _("    * Branches"), stats->branches);
+> > > +	stats_table_add_count(table, _("    * Tags"), stats->tags);
+> > > +	stats_table_add_count(table, _("    * Remotes"), stats->remotes);
+> > > +	stats_table_add_count(table, _("    * Others"), stats->others);
+> > > +}
+> > 
+> > Would it make sense to not translate the formatting directives, but only
+> > the actual words?
+> 
+> From a simplicity stand point, it is quite nice to have the formatted
+> offsets baked-in. It is probably better to separate out the
+> transalations though? I'll interate on this in the next version.
 
-On 23/09/2025 09:55, Mathias Rav wrote:
-> In `git rebase -i` with the fixup command, the -C flag controls whether
-> the commit message is taken from the previous or current commit,
-> but currently the author name, email and date are always taken from the
-> previous commit. The fixup command is used to squash two commits where
-> one commit has a good message and the other's message does not matter,
-> and it is usually also the case that the commit with the good message
-> is the one that has the good authorship information; the other is a
-> fixup commit that was presumably made by the user moments ago, whereas
-> the commit with the good message is the one whose date should be kept.
-> > Most of the time, a fixup commit is made on top of the commit to be
-> fixed up, in which case the rebase -i fixup command is used without -C.
-> The fixup -C case arises when an earlier commit in the branch is split,
-> leaving part of the commit to be squashed into a later commit, in which
-> case fixup -C would be expected to keep the date on the later commit,
-> and discard the author date of the ephemeral newly split commit.
+Yeah, I don't mind the baked-in offsets. We could allow formatting
+directives here and then pass the translated nouns as varargs.
 
-In that case I'd manually squash the later commit into the split commit 
-as I don't think you cannot use "rebase --autosquash" to automatically 
-squash a fixup commit into one of its descendants. I use "fixup -C" to 
-amend and reword existing commits in the same way that I use an ordinary 
-"fixup" to amend an existing commit. The only difference is that I'm 
-rewording the commit message at the same time as I'm possibly changing 
-the commit content. I use "fixup -C" to expanding the commit message, or 
-fix typos and want to keep the original commit's authorship as I would 
-do if I was not changing the commit message.
-
-I think the difference here is that the design of the "fixup" and 
-"squash" commands assumes that they are fixing up an ancestor, not a 
-descendant.
-
-Thanks
-
-Phillip
-> Change the behavior so that fixup with -C takes both message and author
-> from the current commit, instead of taking the author from the previous.
-> 
-> Tweak try_to_commit to allow specifying author in addition to AMEND_MSG,
-> and pass author from the current commit in do_pick_commit in `f -C`.
-> 
-> Tweak the help text in `git rebase -i` to reflect the changed behavior.
-> 
-> Add a test that ensures that the author metadata for the second current
-> commit is kept, and remove some author metadata checks from other tests
-> that now fail since the author metadata is different (as intended).
-> 
-> Signed-off-by: Mathias Rav <m@git.strova.dk>
-> ---
-> 
-> I described my own workflow for fixup -C above,
-> and it's the only use of fixup -C I'm aware of.
-> 
-> If the current behavior of keeping message from one
-> and author from another is useful in someone else's
-> workflow, then I'm happy to be enlightened.
-> 
-> Correct author dates are certainly more nice-to-have
-> than need-to-have in most git workflows, but I think
-> it's worthwhile to have git go the extra mile here.
-> 
->   rebase-interactive.c            |  4 ++--
->   sequencer.c                     |  5 +++--
->   t/t3437-rebase-fixup-options.sh | 15 ++++++++++-----
->   3 files changed, 15 insertions(+), 9 deletions(-)
-> 
-> diff --git a/rebase-interactive.c b/rebase-interactive.c
-> index 809f76a87b..dd303168c2 100644
-> --- a/rebase-interactive.c
-> +++ b/rebase-interactive.c
-> @@ -53,8 +53,8 @@ void append_todo_help(int command_count,
->   "s, squash <commit> = use commit, but meld into previous commit\n"
->   "f, fixup [-C | -c] <commit> = like \"squash\" but keep only the previous\n"
->   "                   commit's log message, unless -C is used, in which case\n"
-> -"                   keep only this commit's message; -c is same as -C but\n"
-> -"                   opens the editor\n"
-> +"                   keep this commit's message and date; -c is same as -C\n"
-> +"                   but opens the editor\n"
->   "x, exec <command> = run command (the rest of the line) using shell\n"
->   "b, break = stop here (continue rebase later with 'git rebase --continue')\n"
->   "d, drop <commit> = remove commit\n"
-> diff --git a/sequencer.c b/sequencer.c
-> index aaf2e4df64..80209b6b07 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -1560,7 +1560,8 @@ static int try_to_commit(struct repository *r,
->   			strbuf_addstr(msg, orig_message);
->   			hook_commit = "HEAD";
->   		}
-> -		author = amend_author = get_author(message);
-> +		if (!author)
-> +			author = amend_author = get_author(message);
->   		repo_unuse_commit_buffer(r, current_head,
->   					 message);
->   		if (!author) {
-> @@ -2419,7 +2420,7 @@ static int do_pick_commit(struct repository *r,
->   			strbuf_addstr(&ctx->message, oid_to_hex(&commit->object.oid));
->   			strbuf_addstr(&ctx->message, ")\n");
->   		}
-> -		if (!is_fixup(command))
-> +		if (is_fixup_flag(command, item->flags) || !is_fixup(command))
->   			author = get_author(msg.message);
->   	}
->   	ctx->have_message = 1;
-> diff --git a/t/t3437-rebase-fixup-options.sh b/t/t3437-rebase-fixup-options.sh
-> index 5d306a4769..2361d3fb78 100755
-> --- a/t/t3437-rebase-fixup-options.sh
-> +++ b/t/t3437-rebase-fixup-options.sh
-> @@ -85,6 +85,15 @@ test_expect_success 'simple fixup -C works' '
->   	test_commit_message HEAD -m "A2"
->   '
->   
-> +test_expect_success 'fixup -C keeps second commit date' '
-> +	test_when_finished "test_might_fail git rebase --abort" &&
-> +	git checkout --detach A2 &&
-> +	get_author HEAD >expect &&
-> +	FAKE_LINES="1 fixup_-C 2" git rebase -i B &&
-> +	get_author HEAD >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->   test_expect_success 'simple fixup -c works' '
->   	test_when_finished "test_might_fail git rebase --abort" &&
->   	git checkout --detach A2 &&
-> @@ -105,9 +114,7 @@ test_expect_success 'fixup -C removes amend! from message' '
->   	FAKE_LINES="1 fixup_-C 2" git rebase -i A &&
->   	test_cmp_rev HEAD^ A &&
->   	test_cmp_rev HEAD^{tree} A1^{tree} &&
-> -	test_commit_message HEAD expected-message &&
-> -	get_author HEAD >actual-author &&
-> -	test_cmp expected-author actual-author
-> +	test_commit_message HEAD expected-message
->   '
->   
->   test_expect_success 'fixup -C with conflicts gives correct message' '
-> @@ -181,8 +188,6 @@ test_expect_success 'multiple fixup -c opens editor once' '
->   		EXPECT_HEADER_COUNT=4 \
->   		git rebase -i A &&
->   	test_cmp_rev HEAD^ A &&
-> -	get_author HEAD >actual-author &&
-> -	test_cmp expected-author actual-author &&
->   	test_commit_message HEAD expected-message
->   '
->   
-
+Patrick
