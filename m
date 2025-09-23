@@ -1,104 +1,93 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0420F21C9F4
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 21:04:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A66134CB
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 21:15:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758661482; cv=none; b=A7ipYR7gA84kXFbnrvt7lnofk14CB3HR6v5JOA4JFQLmQ/mw97D7vYwCCMhxQAM9Hb69ns34ci6rA+wRIeM97gLJI7eWC9YfpN9y7/dRHkLAxHz9anUsM6HCDGWZlAhweJnzVgjXhZZ1D/pB/E5v2X4OJgWbUuvbvdFTWQbMoW0=
+	t=1758662158; cv=none; b=DbOpAMvakAjyAXtd7WJBWqamQXBinlRZC1cLCgHYZ3z9KIE0RYV+8UL0+e5wGRGsPI0Z+fBFHe95sHyIrUgllwEIrPVg0vKck4uETJpj99Qt7nSP0NMHIfbTIVB5r25lAL5T7mH+sIMh1ywZKvO7HkNvWcmskWxuqRwCHLqY9Fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758661482; c=relaxed/simple;
-	bh=aBaXSk/LVgPQViv5RfaF/dgStgAvwVuI1Mt5HpAT47Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oGlozbRY0gRktnfWKJynk31wo5YRsGCoqGX0PmuY2uRkH9RRG1TbsdBfaUBWHUfmbppO9rle84VKKnBNtCaer2LG+jkJ3+Wd0m5N8NHerRsKZhsi+eUQ3AF0YQQkzE2/s9bOq+YM+GOVlfjM4hlo6fVPiBthfQN2PNMHzvMn050=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=09JbTU9c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EE3V9qLf; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758662158; c=relaxed/simple;
+	bh=huFw1iTCvSy0hKmke1la4iyIflBoTHN4b+AOP5XyiT4=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=pGmGCRkj2njCYfVNzdfrgio2J9WQaWXuI3Z/A5I/MvM384TrwkJtSXtHXf6yoMkHjgfkIXSQ7ne1EqjYBjDaHCY1W0sdouyIllxP9h3gNfMpoZtTblFIJ5odR0QKt8hUsjSqqabPzzD93aK4yDD6azSXKbZc3T3/EczIxApGfnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=velocifyer.com; spf=pass smtp.mailfrom=velocifyer.com; dkim=pass (2048-bit key) header.d=velocifyer.com header.i=@velocifyer.com header.b=TdAsq60s; arc=none smtp.client-ip=91.218.175.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=velocifyer.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=velocifyer.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="09JbTU9c";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EE3V9qLf"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 23148140000E;
-	Tue, 23 Sep 2025 17:04:39 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 23 Sep 2025 17:04:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1758661479;
-	 x=1758747879; bh=TUpK2XNfF+uXoyjeocyuXWRP9S4Fp4FjLx46EMCZdPY=; b=
-	09JbTU9c+nlDaXZb5Yr8xOD6KdYZia06UIfCWiJ3dG2GX89wop/Ri3n48ROdoQaC
-	ChcTGffNX0QEK5euMbdFN3RGrbtlZN+OJGc+acri1u1Lgy7bZpwajcD2V0mRCsDY
-	jpIVP49lMZhfODl4vUx+xi3Wq5e9SgfdtjXGce5905LFUhDiAaR3sK0rgSQmhG7H
-	ZD1r8Z+f8T/rNMe8kePim5ZLG+zQgV/+YligHRRJKfsIVOt4QnsdQGqGaDrSwMB0
-	2KO3gF1bRQmYDO07yr/2HgHfgqY6ekw3PtNbZf4rKXN9bvBmUhaTu4n3sC9XLJ1f
-	gp4UN5d90Bv1fQnqjAQhiQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758661479; x=
-	1758747879; bh=TUpK2XNfF+uXoyjeocyuXWRP9S4Fp4FjLx46EMCZdPY=; b=E
-	E3V9qLfNcbsxxJdiM/KaxSXE/gTnJRL0TPwqZeZ7+wS33+0TMccftohgkcKOJvjv
-	TM086ApDayX9YtC1ycKva387GXSD7YHA2pNHsPnCktBxtxjd3P6sBLegkhfvm488
-	A2cxlEPVKiTeYLVtpASOawc5KUmFT2xS2OD5E7jhRRTiW9v65jOiXkivclrLBWfz
-	erD6Tie/T8ESoqtfTOn9YUvnPHmf85WhROw8+KV9xF9p8sayYskAoVCN+MPDXw74
-	RPC9rlqry/4xv9WIWuwjSeLSEAjMpimddONcbreI13k0nzPyViu3evPiTREg/MmV
-	o5NjVefKk56+oMwsEfvpg==
-X-ME-Sender: <xms:ZgvTaJbInAc--i_2e0zLJlLLXRlRiLpDMDJKcKpKLSquGboocblyKw>
-    <xme:ZgvTaHbsbnvBlwK12SmQcZMwTcOXuZD8CtufPsIR3CcPc0_Se8PQOzTpeBUc9vBXk
-    _lGYJmi63qrLTmOP0BvGK5acMmHfAHreCZpKgTlftmMl4pFBjylfg>
-X-ME-Received: <xmr:ZgvTaA_AXvXUzX4WBDRvRGtMtu5Jqf8NhzB7Bvn4x86S0Ctq8zMgZgSt6pQXY_26KtO3uOG4r8zq26BTq42ztCr4gZJQfUyk9UNn>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiudejiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ZgvTaGhO2YLI4BHdwvDjJPcl28pg3eha-s7J2m36CfK-kdT1Qduqmw>
-    <xmx:ZgvTaAcIGRhQBKuVUQS4ohDVLnbNKdBTO0krR95CokMyC5WhEL9-JQ>
-    <xmx:ZgvTaNoC6Ybu2PPKlp1t0oRFwy1DubKZPyID65JqpYnmXdc4vk1Rug>
-    <xmx:ZgvTaFAmqf5mjgaPueBw4M7Mb-0nQi6UoxiCDAU0sJTthrFFPPF4wA>
-    <xmx:ZwvTaAfvfaoUq2q6BDjejmcQknaTt6BGLKYFKb9Ejja8tZGr98OklAYP>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Sep 2025 17:04:38 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v2 00/18] Introduce rust: In xdiff
-In-Reply-To: <CAH=ZcbBO9bkZTTteZkLK6Ca0qS9v-_Xyw+Y471TFzpNSr7escg@mail.gmail.com>
-	(Ezekiel Newren's message of "Tue, 23 Sep 2025 12:05:56 -0600")
-References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
-	<pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
-	<CAH=ZcbBO9bkZTTteZkLK6Ca0qS9v-_Xyw+Y471TFzpNSr7escg@mail.gmail.com>
-Date: Tue, 23 Sep 2025 14:04:37 -0700
-Message-ID: <xmqqy0q4op7e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=velocifyer.com header.i=@velocifyer.com header.b="TdAsq60s"
+Message-ID: <fd7758e5-7719-4bed-b1b3-2137c49cc950@velocifyer.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=velocifyer.com;
+	s=key1; t=1758662153;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	to:to:cc:mime-version:mime-version:content-type:content-type:autocrypt:autocrypt;
+	bh=huFw1iTCvSy0hKmke1la4iyIflBoTHN4b+AOP5XyiT4=;
+	b=TdAsq60sH8fJY3Ba/g0mtnMUiOd1Fajt8mPJEOg2fn864GdBeIELP/PqJBgf2BnrukY3Kt
+	ttiTG4OwDmp/wrt1jZS5MYVD5M2Jo42OAqAhVHTnT7tr84p0CcO72RClC1Nj9Fh6nKt+Tz
+	ZUfdPZEj5IdQD/5TiLOGVRBzxXkpDjVFLtErso1gPjSIw+hlvvNrrJmAkuTEZksAH51JVu
+	B9JFYvLacC36fG/gfdrHnh8SSKahoZaooftrb54SQanqIhdew7U8x/JJaIw2d+TUlru0hs
+	d+d+2lihJg/7MliB/aRcHDFtz8UhMRx3EE74yravQdnRHzNm9D3es2nr00USNw==
+Date: Tue, 23 Sep 2025 17:15:46 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: =?UTF-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?=
+ <velocifyer@velocifyer.com>
+Subject: 0-Based indexes for git log
+Autocrypt: addr=velocifyer@velocifyer.com; keydata=
+ xjMEaCpEhBYJKwYBBAHaRw8BAQdAZBZWSN4ekixMHE7duMBmw/2uteCfmp68D/mxaYk/dyrN
+ JlZlbG9jaWZ5ZXIgPHZlbG9jaWZ5ZXJAdmVsb2NpZnllci5jb20+wo8EExYIADcWIQQboPxL
+ gODyGwJpjO5jTr+HQMdIvgUCaCpEhAUJBaOagAIbAwQLCQgHBRUICQoLBRYCAwEAAAoJEGNO
+ v4dAx0i+HU8BAJGd99DA1VdBzcYgch16XK7mC78ZqEwGegVCRerWry8RAQC3MJUOiyQ062Ol
+ /3iNXY6zk2QXaAsV8eUbFKUo1HiwAs44BGgqRIUSCisGAQQBl1UBBQEBB0CEoaVGilG8Qt/y
+ Xp135G4fhWjJH7VQkPIFo8/MsZspfwMBCAfCfgQYFggAJhYhBBug/EuA4PIbAmmM7mNOv4dA
+ x0i+BQJoKkSFBQkFo5qAAhsMAAoJEGNOv4dAx0i+yNYBAKcE1fbRCPqWwsIpRvOjSq9Spvhl
+ veEFpUMPaQ1tp7qOAPkBfZroJ8veENH/8sz+Gf/QK6O1kcqC4d/vAASzMpOiAQ==
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------306qNC0bM6IFO6Mpid2H0odg"
+X-Migadu-Flow: FLOW_OUT
 
-Ezekiel Newren <ezekielnewren@gmail.com> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------306qNC0bM6IFO6Mpid2H0odg
+Content-Type: multipart/mixed; boundary="------------T2wQvsysiWCapWBO24HoHD0F";
+ protected-headers="v1"
+From: =?UTF-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?=
+ <velocifyer@velocifyer.com>
+To: git@vger.kernel.org
+Message-ID: <fd7758e5-7719-4bed-b1b3-2137c49cc950@velocifyer.com>
+Subject: 0-Based indexes for git log
 
-> On Tue, Sep 16, 2025 at 7:16 PM Ezekiel Newren via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> DROP PATCH SERIES: I am dropping this patch series in favor of
-> Patrick's. Everything I want to add can be rebased on top of his work.
+--------------T2wQvsysiWCapWBO24HoHD0F
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-OK.  Thanks for expressing intentions clearly.  Will adjust my end
-by ejecting them from 'seen'.
+SW4gZ2l0IGxvZyBpdCB1c2VzIGEgMS1iYXNlZCBpbmRleCBmb3IgdGhlIGRhdGUgaW5zdGVh
+ZCBvZiBhIDAgYmFzZWQgDQppbmRleC4gU28gaXQgc2F5cyAiRnJpIFNlcCAxOSAxNDoyMzoy
+NCAyMDI1IC0wNDAwIiB3aGVuIGl0IHNob3VsZCBzYXkgDQoiRnJpIFNlcCAxOCAxNDoyMzoy
+NCAyMDI1IC0wNDAwIiAob3IgIkZyaWRheSAyMDI1LTgtMTjCoDE0OjIzOjI0IA0KKC00OjAw
+LjAwKSLCoCB0byBnZXQgYSBiZXR0ZXIgZm9ybWF0KQ0KDQotLSANCkdlb3JnZSB0cnVseSwg
+8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow0KVGhpcyBlbWFpbCBk
+b2VzIG5vdCBjb25zdGl0dXRlIGEgbGVnYWxseSBiaW5kaW5nIGNvbnRyYWN0DQo=
 
+--------------T2wQvsysiWCapWBO24HoHD0F--
+
+--------------306qNC0bM6IFO6Mpid2H0odg
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQQboPxLgODyGwJpjO5jTr+HQMdIvgUCaNMOAgUDAAAAAAAKCRBjTr+HQMdIvphH
+AQCt0w14GB1fvxJ6I9GGmAtObbiWnjsS7oCoTLAFOjDGhQEAuktAvY5UN66mCxStyukOYF7ec/EP
+NpkTCB5Xe1js/AM=
+=5IZv
+-----END PGP SIGNATURE-----
+
+--------------306qNC0bM6IFO6Mpid2H0odg--
