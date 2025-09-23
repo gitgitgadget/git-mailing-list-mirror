@@ -1,148 +1,117 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13AF72CCC0
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 01:06:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCD026A0AD
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 01:31:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758589596; cv=none; b=Kym24Y2DLJQlPMc/NJWYjuYXR8kjo6g9yu+QMWxGbrHOUgghiTTLRF83KYG3xn1ZV+rNEUdbnYLHr5LU3uGTPRnM0nfkeelRuTHMosXBxvYqa5E7m4CV61qhQ6I1wF2K/HUYIHkK5mEqApnUx2LvQarq+lIIQs3FHKR+d56hUtQ=
+	t=1758591070; cv=none; b=XWvn6JisAIk1Qo0mU56D/l4oy+bD4jiJOuMBr0DNbvKlt/1j2a88vRGKhq8ShDpKfJFhdhQSSEAu3OSC0CZ5jGySSzy5S66GMqeuIlqovmOG0bfT43WXvkGaPcQU6LtO/GT+gSm/79/tkyDpv1xXudHtGaYRCVWCYEb5pvCY6h8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758589596; c=relaxed/simple;
-	bh=a268r9LVExdi/XVIOpYLJSq0YsbKJNecCgGh63xg5BE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ew7q+gWTsqUZbjaMmcyZzZTpautzjD6x3eh6FOT85AhWrjWiQl5WudylsYFPqU9Cfg9CYzYc77egfebYAVBx0hbSWmkdDOvSAJNZpuAPt3smHPjSajEq1Jkn5TlxEJ/1ttIH5E+uC/n2zFJs75xCF7m96RZ/FiC6sH/+Xtc6ta0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gq0XMXIU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TU+ccE+u; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758591070; c=relaxed/simple;
+	bh=kpddNoKk8Ff/SQvGqVhx41VWSjI5bhef/46A7EKZNoA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FKL6hVhcjkGnnSuX3fSkctCIfCFJvlUxaLuT9TrUxa0U4ahHNUubgSh/Ninfi+PSO1UipgYM5KnZ2i7BxDOkgseZ29joD74PyRlZqVMFcQ506lGXLmjxiYpS8WG4aIsfLFQAM4avU1iE4H4T75yZBmFvNusBhPBxk5KFQbLMxhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lQ28ucSJ; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gq0XMXIU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TU+ccE+u"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id EB76F1D0020E;
-	Mon, 22 Sep 2025 21:06:32 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 22 Sep 2025 21:06:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758589592; x=1758675992; bh=cJ5gs5++ki
-	elAJlIf2s0JucPDhzIYSaMFJdI3hgMyp4=; b=Gq0XMXIUpbPBt4CfrZI59NRRZz
-	9IjQSuHHjEnp6P3j02K8b7HxMGFYFSt6u5T1Cx3usQ46S0m7aJZD4zyMcVfTZOgO
-	qm5JGxmm2BKdJx5iwGVJe8Mcy62CXUJSm4swJZCx/eFHiL+Au+Yr94PA7CMQnvyf
-	bXcYv9mOe3iH2ok7RMMu2x/wxWqLshRQ1CjgHIVgh/jJmXKbYMZs1okObA6NLtOQ
-	d7Q8KW+AGPOuTBNeoK4ZBVNktuz41w1kuhYyHiYfQXll2YU+ReSZLZPdMH4KkZoI
-	9uPFUVzW+xa7KydAyxnN3CCY5TTIE5dfBgIwz6TNKTEkpASFhRSrucyMOePA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758589592; x=1758675992; bh=cJ5gs5++kielAJlIf2s0JucPDhzIYSaMFJd
-	I3hgMyp4=; b=TU+ccE+uLD466rPfIznP7RO6EFBwD9O/Nxi7HQ0iuQq+EaQjA4v
-	Px7KruYbkiv9wDM8hCplDmxk5KhMZ99XWxiOz2ZrGxj4IcPptHgVHiiwjtx12nE8
-	l4aNmcNfL9SU/6lTyG6RBavZ2Do4aX/wx7Ss92L0nAREhd2FKizyXcaEBIwhOfrw
-	jVpKaf92CbrukX79DDuNj+bNBqiKf0anN+8beSMyAMK11dMvVJLmovHYCHJcqlC5
-	Zp9qUgcqfGDAolAYkV30tWJXwrTrlInfeaFjdoKV41yzGCEuzxLUtGV/UmdURBd9
-	JjCHoE0XmQCbzVRPmWx2U7tgXLZ628zuLNw==
-X-ME-Sender: <xms:mPLRaKXxmJscXplGe0x9NPQVRzty_E2xWh_NBZ5uzNLPQhgmaHW-CQ>
-    <xme:mPLRaFocvhGEm38vAxzBHqS0m3a0xWtxk1T45mPatH4_YPNMwZOWW6GweD2ttviuq
-    xZEJ2HEeIQTtUMLwLcaDJkyJ4fgyFza0clilPS8z67MWutaOaU9cA>
-X-ME-Received: <xmr:mPLRaEms7x3FG95VE2soZHNynR4VNzkSjoz4Irda9JAc0kSx2M5LtAtirZ3yM5vFOGhGOUQ4YNnRZ-xkl7HqsYcO9RI-hAD6vmar>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehleefjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrh
-    gvnhesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdef
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:mPLRaN0OC6qsGgC7XK7C4Sd_fTMjyHBqj-bUqute_nO6Hz_MQ1W-Jg>
-    <xmx:mPLRaJRwCtjur3swwahEyhQvxQU76-KWcI41p28lW33UnEM3JPHHcg>
-    <xmx:mPLRaOzkvl5y0qeih-3gPOCvPOfUKerkNrhxq3Cg89GyYZXrpnpjog>
-    <xmx:mPLRaBDRRg2sSnzy_nu_bwHLUNpX-6e24aLZK5olWbFTxIQOUFsVFQ>
-    <xmx:mPLRaLGpvqlYkPfS--egIm02svZgi612GXNa4Vou9nNmmmBD1Romn4pU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Sep 2025 21:06:32 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Ben Knoble <ben.knoble@gmail.com>,  Jeff
- King <peff@peff.net>
-Subject: Re: [PATCH v4 00/12] Cleanup xdfile_t and xrecord_t in xdiff.
-In-Reply-To: <CAH=ZcbC5Y04D4bGjfH3rZ8GKabDttFez5qb9i8mXVsfE3LF26w@mail.gmail.com>
-	(Ezekiel Newren's message of "Mon, 22 Sep 2025 18:13:58 -0600")
-References: <pull.2048.v3.git.git.1758294992.gitgitgadget@gmail.com>
-	<pull.2048.v4.git.git.1758570701.gitgitgadget@gmail.com>
-	<xmqq1pnyru1f.fsf@gitster.g>
-	<CAH=ZcbC5Y04D4bGjfH3rZ8GKabDttFez5qb9i8mXVsfE3LF26w@mail.gmail.com>
-Date: Mon, 22 Sep 2025 18:06:30 -0700
-Message-ID: <xmqqecryq8o9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lQ28ucSJ"
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-3612c38b902so46794761fa.2
+        for <git@vger.kernel.org>; Mon, 22 Sep 2025 18:31:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758591067; x=1759195867; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NBRzrnPmUZpMtUtDeFah+d56vmHIIpJxcf8112mmcHI=;
+        b=lQ28ucSJX+fXs4kvlvL6vwX+FbAgL+qYUuTXJS1MGmh4NcFi0oufMKCn7bcrpOaMxj
+         7wcQdtfkgQWqxc6/0pIuhZgN35UpURNmC/cnJUwpIOyRa8sxkGRTC8VAupeZPuPDer/Q
+         j+WWwiPn3A9b7siyNmr6SFuHfSrWwE43BK0+MmfZRPqZ3lNtQRix2Wo728ThxjtQ9/b/
+         nGKNXW6UKBwJ5GW9pRWjs0A4kbTQ+1Scb5wZZkqP3z2m4QseGbSWUOCY3a9hc9+3rd4p
+         YieSeE0eFuAK+mlh13Ig9HltqBKVxewZ2nB5xs2IsxSPebBL/amO4K3bm5rQdnWnyYKB
+         /pXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758591067; x=1759195867;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NBRzrnPmUZpMtUtDeFah+d56vmHIIpJxcf8112mmcHI=;
+        b=b83u01sUp8pSZy3XYL91zRtKFQpuBu1lY0ESM/KpwWNsjzLb8+uSlKxaz2uq17xgHS
+         diA/BtSSqBy2epcumoi4OTWdkyj2zYMmrC9uR/i74KXr6y2FeAEx5vHsVMe7d3BIUV8L
+         0GltDK36PAS3niiMpL+lV2cf0VlmazHWzB70Az3nlLZCwqInxjpimBu4ClCAqoI+D4IX
+         Ocd7nRF0eNUIgAJZcGI8hJusaNg/R/+cTWfRQs9JJeYVt9qut6y89RJ6Tx4mvoqB1hMv
+         AvyyX/sSKLp0z1oFfzagMDaB3bqfb+lYzQ+yNoIvDpguEr8Tp5TXQ3V0BVynFvzmnutf
+         RZUA==
+X-Forwarded-Encrypted: i=1; AJvYcCWzq4kTpK8XTrrG5tlH8MACQ7gsbqWiRJmthZ3JuUTwJyxHq2Sd79lmRfImstAfPg/SkTU=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw3i8oAXxrtXpOykqMfz6qQ10w6TEHXFEfxzmgDlZi2gmW/4eCz
+	Nc7Aty53cTlNvbJnNkqqtTruH5hEYXGyAIPaf53VA5191A1cAY0P+vBJ7NEtJwQsCThgtnLXW7V
+	PzFh1o/4fWzoOqdDlsuzK7US32DVMRiU=
+X-Gm-Gg: ASbGncvIJMuM49GzC/y3+UvJIlP8MuIGwU3C5DyWmTg5gXcNRevxwwVP8wI7h6l4eLL
+	MwYzW4+B3ewbHGigPO/s0b4JxAm4Bw/U8cYS6/S/fToKFaJ0j7u0ARxAEoN8wMVtv7QeLv3LUD/
+	WSTenxEClOVft+3B/MXs5lCkcvYw2XlptEHrUro3f10Ewx4mcogHws+lTLcM/IegnMuIt+17HvB
+	O/KkGQe
+X-Google-Smtp-Source: AGHT+IEjPU2UdRFNntzHVwGG26bb20LZU6Pem/6cl9nMkb6ANAeA3wUghnrMZ3e4hPwtyJ+rDHbDTPGZCKNJrSkyyXs=
+X-Received: by 2002:a05:651c:4094:b0:337:e0e1:d11e with SMTP id
+ 38308e7fff4ca-36d15d460a3mr924341fa.18.1758591066260; Mon, 22 Sep 2025
+ 18:31:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2048.v3.git.git.1758294992.gitgitgadget@gmail.com>
+ <pull.2048.v4.git.git.1758570701.gitgitgadget@gmail.com> <xmqq1pnyru1f.fsf@gitster.g>
+ <CAH=ZcbC5Y04D4bGjfH3rZ8GKabDttFez5qb9i8mXVsfE3LF26w@mail.gmail.com> <xmqqecryq8o9.fsf@gitster.g>
+In-Reply-To: <xmqqecryq8o9.fsf@gitster.g>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Mon, 22 Sep 2025 19:30:54 -0600
+X-Gm-Features: AS18NWD_Df8v9rwhvaQJj2NZ8M21al-gl8IB5zNn3ftW_PSX0GUEku8SMUcFKI4
+Message-ID: <CAH=ZcbAHgCLjpLMzditOg8CW-L1RPohGuQjst=h-rATTSoio3Q@mail.gmail.com>
+Subject: Re: [PATCH v4 00/12] Cleanup xdfile_t and xrecord_t in xdiff.
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Elijah Newren <newren@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Ben Knoble <ben.knoble@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ezekiel Newren <ezekielnewren@gmail.com> writes:
-
->> How about
->>
->>  - rename rchg[] to changed[], which is a very good move;
->>
->>  - optionally make it unsigned char, not char;
->>
->>  - the user of changed[] that uses only 0 or 1 and is not even aware
->>    of that MAYBE thing use 0 or 1;
->>
->>  - the user of changed[] that has to be aware of that MAYBE state
->>    use its own NO/YES/MAYBE for readability.
->>
->> Hmm?
+On Mon, Sep 22, 2025 at 7:06=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> > 'changed' is NEVER EVER!!! assigned anything other than 0 or 1 which
+> > strictly makes it a bool. It's easy to mistake that because the
+> > functions in xprepare.c that deal with NO, YES, and MAYBE are within a
+> > few lines of 'changed'. Please re-read xdl_cleanup_records() and
+> > xdl_clean_mmatch() very carefully. I will update my commit message to
+> > make this more clear.
 >
-> 'changed' is NEVER EVER!!! assigned anything other than 0 or 1 which
-> strictly makes it a bool. It's easy to mistake that because the
-> functions in xprepare.c that deal with NO, YES, and MAYBE are within a
-> few lines of 'changed'. Please re-read xdl_cleanup_records() and
-> xdl_clean_mmatch() very carefully. I will update my commit message to
-> make this more clear.
+> OK, then there is a variable with some type that is _not_ bool that
+> is used in xprepare.c and the code that deal with MAYBE does
+> something like
+>
+>         u8 current_state =3D MAYBE;
+>
+>         if (the .changed[line] is NOT valid)
+>                 current_state =3D MAYBE;
+>         else if (env->xdf.changed[line])
+>                 current_state =3D YES;
+>         else /* false */
+>                 current_state =3D NO;
+>
+> and then use current_state as a three-way variable, perhaps like
+>
+>         switch (current_state) {
+>         case YES:
+>                 do the yes thing;
+>                 break;
+>         case NO:
+>                 do the no thing;
+>                 break;
+>         case MAYBE:
+>                 do the maybe thing;
+>                 break;
+>         }
 
-OK, then there is a variable with some type that is _not_ bool that
-is used in xprepare.c and the code that deal with MAYBE does
-something like
-
-	u8 current_state = MAYBE;
-
-	if (the .changed[line] is NOT valid)
-		current_state = MAYBE;
-	else if (env->xdf.changed[line])
-		current_state = YES;
-	else /* false */
-		current_state = NO;
-
-and then use current_state as a three-way variable, perhaps like
-
-	switch (current_state) {
-	case YES:
-		do the yes thing;
-		break;
-	case NO:
-		do the no thing;
-		break;
-	case MAYBE:
-		do the maybe thing;
-		break;
-	}
-
-?
+I apologize for my previous phrasing. I was not very tactful. Yes, I
+think your suggestion is a good idea. I'll incorporate that into my
+patches.
