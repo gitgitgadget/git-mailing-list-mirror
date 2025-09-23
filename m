@@ -1,137 +1,138 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224A5321F32
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 16:26:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F7B327A2D
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 16:32:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758644817; cv=none; b=RlNVNGo3D841feR198oUfVYao6xjeh3puB4fN4SXdvD8z05TXfcQaI5zqspmSzHQtbTmky5k9MP4ZCB5YJ7sQH2HH8iszrfj8NzWvGeADWtxDDGenTiaAOoueRSKvHpq7Djyijw1YcFaQwdSJulVLBN5mDC+zMWHnrhGFB5Vd3U=
+	t=1758645178; cv=none; b=dgFvpirRyjqNyXhny6P7ArqWPG0sUFaO/P8X+xeHkGjnj2hUzPQYQSKp2MG/Bt5QMmdYeOJboYMHcrEb8zZdi6bgnPOG17DnhQ0KI+y8FUOCE0JocRygCl1/Fd65yLvLXyfEBQ6lQ/fGmwYVj/9S40tcmOM1WPGpci/7n7YqtSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758644817; c=relaxed/simple;
-	bh=Yo2UI0ytVL0b/i1ThpILe4Yw/3O/3Fy6XQR0gmZ2/kg=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=KgjOkXqDiDR05PjEI3u+c2L5jHZPGMxbCegbVQ+1XoHTiYpiAFVMkIwk/c2hcy7JpkFokpMxkTa+2qDTqaiGkRF0sv1zkd2iZeT/PV/tEf1GluIpuwt0jK9ChGsi3cPIEQgJdUO8qSTWcQXFBI2bkBVkh8MuFhblpR4UrjlmC6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ENDl1Yns; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wxuqyb4s; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1758645178; c=relaxed/simple;
+	bh=Ww3yCvaZ9fyE5q6KO9WQ3kalpExwuL5WV/prQ3G6/VU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Bf0w6QlJdoKQTvJTZRaJs8nnAW3OPjV9un0ttUIuIbp6G06hkkhy8J7b+abiuBIepMlQx7Obbqhp7zE9cKipR0iiOT6INZMtyKmuwmMYSeZsmlcGn3npnMsLwE8qQmnQi4qbFAgqZAVor2tZ2HH72hlZxNB0aC6SJUdsS5p8bso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d/vHUbcx; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ENDl1Yns";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wxuqyb4s"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2241CEC0096;
-	Tue, 23 Sep 2025 12:26:54 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Tue, 23 Sep 2025 12:26:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758644814;
-	 x=1758731214; bh=/jCyMMC8kvwU0SJWyBuYP5Xp2QuqW9OdMHz1jVk3oLY=; b=
-	ENDl1YnsStSAZH+WwozD8ZHUnItJCxWe/rVJKNQ7VmPOhY+ElN1pHf7XP3gxNksa
-	h28VaQJzK2yZs8tru3nAW7azj4OOAyzWYaiAMJm35WCD8FGyqZR6EDbsedjyiVhS
-	iOZfAJeu5LGLiZEhP/jW4Q/bzWnm+wPk2A4WQeNYY4s+d3iXgzpG3SZhMN7l7qU+
-	GI3J5EdKdQeqiT1DDfNh0EZjSTczWFr4crJYoLry7AgnKvNsmQ66aXQQxaXXEh+N
-	B/ZTGXIetSfRFTNEmsAVV1+oHvi+xMW4Xr/LgBi4j+54A0zfP+nRXqDvy2d7OW8i
-	5L05EyiPKuuNBeYgHznVdw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758644814; x=
-	1758731214; bh=/jCyMMC8kvwU0SJWyBuYP5Xp2QuqW9OdMHz1jVk3oLY=; b=W
-	xuqyb4sP+HR3RdCPbsol5TM0ctQbZu26gwFORsiP+IyJGXu1KyqTToKdYv+IcH0U
-	c4rHZIqWBaOwaliwz3lVLGasnDY+MwZ8xuRlmim2qqlsaF115uOtA4gu2E5hvWIk
-	9b/t0mfbwgunt8e+OfZwgetwQ1HwAaiSB/UrNrSOe5qdbhAIike5RZzW5zwQxM6b
-	dXM/6MeGS5gfHKKT6xs8XItYcKQMIqmhjO9ABhA95M9HgH+kAYkw9eLhWjZsHI+V
-	QUwfbfFu4IUVUC+iuejosP9BF+/cWmHsjaOdjqaFd6kS8L2pp0jzXQm+2tasELzg
-	L1I6IuNFBJg44NUJjbBfA==
-X-ME-Sender: <xms:TcrSaOrrza5qeuAWcJarKNZlzrDxjMRYVMxJiFeJv3DinQCfnYXcz8U>
-    <xme:TcrSaHeC6LIvs3VhldqefwWZWHb777gCFjxtxuHx19OaARwSyCQBq0d1j562HVgkF
-    c4QX0CyXbZkfQv5zZEWFydsVYYd0qtCFf5OR0Q61GPOiPsba7rw1w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiuddvtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertd
-    ertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
-    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
-    ftrfgrthhtvghrnheptdeigfegjeegjefhheeuvdegjeekleeguddukeeljeektdevjefg
-    iefgfeekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
-    pdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrgh
-X-ME-Proxy: <xmx:TcrSaJUhc5-K_RFMJAcC6NY7c_T2ZAozW2LR2Skq9-KRhSd_E-V7kA>
-    <xmx:TcrSaHhzZ6e4VPqxuoxP7-j8a0ibOxEA2EIyS12zwjTkTeFWOjUaig>
-    <xmx:TcrSaM93MKV4nNw5QZFieA9tE-95Z6d4dXHR_JaBHob2EqHYDfcT1A>
-    <xmx:TcrSaJDosnPx7_2nlN0iXvYUW5-s24mpnIhcsPo7k1VP21gx52-YLw>
-    <xmx:TsrSaKOaSihZyBVA2AgEslc523lkPLDc9tTZIs7R321-_nkPugJIpEWh>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id D75411EA0068; Tue, 23 Sep 2025 12:26:53 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d/vHUbcx"
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-365df96398bso432551fa.0
+        for <git@vger.kernel.org>; Tue, 23 Sep 2025 09:32:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758645174; x=1759249974; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ww3yCvaZ9fyE5q6KO9WQ3kalpExwuL5WV/prQ3G6/VU=;
+        b=d/vHUbcxmFijegnyQ1ObHI7u6yigslnB2W1UXRMJTZyk7U4xda9qADhhT5kcwf9nfU
+         IDw6z3lBqmePqP9J050bqhEBLkSg2BT6dFl962dZX6sQPFMkxPQPqyQQ1JYWEkVh83Ci
+         SNR/w27mlR1DUdQItxp9FK2YPyupymdAhDVcHy5B0dz57JnAALdhGlMOvYa637OOQWoi
+         Oke5cW/gdIElTUAVAE5LQJMrPvBaKI5BhtwYGHpJ/oai7ckNXyCf4+8jfo66mIZC3fLV
+         9N1XJRs0JMV+kaGTTG0HdZPf5t7n9eQieP0zJIQOZ6y1BOxR0kBEtV3TXwg6aa9WaJ9y
+         FJAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758645174; x=1759249974;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ww3yCvaZ9fyE5q6KO9WQ3kalpExwuL5WV/prQ3G6/VU=;
+        b=qS6HDvvR0ufpq2IfSwWXCZgJ1N+tumyQcA+a44dARoBlTWd9S9sC6HUPiU0ZXgM/U1
+         bnDY8TkhceuGljZRiicQI9XvNRWvPZMfoG7jHPuCeI4E/pipQd1IutalqHBhzKnz7yBE
+         TPA8rm7XRsCmHIxMlIS6IiWo3EJsBGw1/xVEkPcolA2EdweVq73rRahgF3KEqW02RXvG
+         967gfvIw11TAXFy/gyeOEkAXcETfPbVGIcBjKaKhQhPHOhNU2kanzAv6yK+GGJYjrhwp
+         b8KrCW7r+FQYPDvm9nOZ4hy3HdSpcFBhMqCLYijJE7FbAW4GD+3ulVnJ5LXZaBvQ2h/6
+         epeQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVFi9ycsuM1Y8pU5s9FWXRKwhUL7Rd1RbpbBE4J8F1c8qjbPefGrq37hKQPEwjblYx8kwc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwYUqN0/4KIz+OebE3WxmfZLnrq+ddaTFBBvCYeRsRE1Y7M9sqn
+	GqWIm/D5QUUHC0Q1bnRUrM4GvJ4WC7NjDGxkvLFd986bG4Vqrsw47zEwzRJMBZxbK7Eb5ppb+mJ
+	Ohlgj6cRznAbvrh+mWyrn9O6iQZXZB34=
+X-Gm-Gg: ASbGnctfqfta/ZFDjwe1DX+mOosXAwSMYjaoIMtzqovEnrvxuYkhSEbOP7Q8sLHjSy2
+	DnitB0R8VthI1XVItF7tskKf5kpxL5O0iOGBZb8p24qWbj56G1ZKYv4/nmvkKLVS4xUBgRMcjso
+	w4hJyKr+HdS+apuhpo/hwOZ/yOjYmQhvptUC+Jyl7UqemfN8+SEKPP1q2fIzy70vGXN1LIbkREd
+	JmdN4uFqMLbgkpfeG0=
+X-Google-Smtp-Source: AGHT+IEn78UmlUZZi0pwXZDRRXE7F5Lpc3pPByZG0o0nwwQai8lRlLuSD13JzV9CgMmj9WMOAiDj4s2bLTJUl4vVzc8=
+X-Received: by 2002:a05:651c:1541:b0:360:eb0d:76b3 with SMTP id
+ 38308e7fff4ca-36d13f3b716mr11109821fa.0.1758645173929; Tue, 23 Sep 2025
+ 09:32:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Ap9Hw1rPQ1Nk
-Date: Tue, 23 Sep 2025 18:26:33 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Message-Id: <269dd1ed-e8b0-448a-a85f-fdcafafbd0a0@app.fastmail.com>
-In-Reply-To: <xmqqecryrvt6.fsf@gitster.g>
-References: <cover.1758574974.git.code@khaugsbakk.name>
- <7f2487af433.1758574974.git.code@khaugsbakk.name>
- <xmqqecryrvt6.fsf@gitster.g>
-Subject: Re: [PATCH 2/2] format-patch: handle range-diff on notes correctly for single
- patches
-Content-Type: text/plain; charset=utf-8
+References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
+ <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com> <xmqqcy7pc8ix.fsf@gitster.g>
+ <CABPp-BHJUkSERQon6xx=sHrhN7i=6ekv+Hz1+P+2mh0=Xw15Mg@mail.gmail.com>
+ <xmqqy0qcae6z.fsf@gitster.g> <aNFIwFD6E6Lngy5M@pks.im> <CAH=ZcbDkDfc6j_gQCt_q9RLP_ozYqr09i1-xe2mvhSQRgf8MGg@mail.gmail.com>
+ <aNFz-0rO79l7crZ5@pks.im> <CAH=ZcbB_AZ7a=kQ_tHRtm7jPD6h_7AAiQYyaMQrG+ijj8Dyvrw@mail.gmail.com>
+ <aNIr_P6HMEvwERUL@pks.im>
+In-Reply-To: <aNIr_P6HMEvwERUL@pks.im>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Tue, 23 Sep 2025 10:32:41 -0600
+X-Gm-Features: AS18NWCPZ5A6Y0-JBGhfxLDvxLHDOhFypJTkh2PnRbgOAKUDjdQXCuZ7i9RR08Q
+Message-ID: <CAH=ZcbCLMHzMXZu3SQzJ-HvLuiG=goZ-xQWwr=J2Qs=k1=fy7g@mail.gmail.com>
+Subject: Re: [PATCH v2 00/18] Introduce rust: In xdiff
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>, 
+	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 23, 2025, at 00:01, Junio C Hamano wrote:
-> kristofferhaugsbakk@fastmail.com writes:
+On Mon, Sep 22, 2025 at 11:11=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
+te:
 >
->> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->>
->> No `--[no-]notes` options are sent to the range-diff subprocess in
->> `range-diff.c` when making a single patch.  This means that you can g=
-et
->> different Git notes below the commit message and in the range-diff
->> part.  (See the previous commit for elaboration.)
+> On Mon, Sep 22, 2025 at 10:27:32AM -0600, Ezekiel Newren wrote:
+> > On Mon, Sep 22, 2025 at 10:16=E2=80=AFAM Patrick Steinhardt <ps@pks.im>=
+ wrote:
+> > > On Mon, Sep 22, 2025 at 09:18:14AM -0600, Ezekiel Newren wrote:
+> > > > > By the way: I'm also happy to change attribution of some of the p=
+atches
+> > > > > in my patch series to mention Ezekiel as author. I don't care muc=
+h who
+> > > > > is listed for the initial patches that introduce Rust, but would =
+retain
+> > > > > my own authorship for the "varint" and "BreakingChanges" commits.
+> > > >
+> > > > My only other concern is with varint. You use usize on the Rust sid=
+e
+> > > > and then uint64_t on the C side, but I'm ok with fixing that later =
+as
+> > > > it only breaks 'linux32 (i386/ubuntu:focal)' in the github workflow=
+s.
+> > >
+> > > Oh, this is actually an oversight, good catch! I refactored "varint.c=
+"
+> > > to use `uint64_t`, but then forgot to adjust the Rust side in the sam=
+e
+> > > spirit. Will fix.
+> >
+> > You also missed updating varint.h.
+
+Oh, I think when I was editing your patches locally varint.h got out of syn=
+c.
+
+> Hm, am I missing anything? It does use `uint64_t`, and if it didn't it
+> would cause a compiler error due to mismatching declarations.
+
+unsigned char should be replaced with uint8_t. I don't know the exact
+location that causes linux32 (i386/ubuntu:focal) to fail, I think it
+had to do with specifying uint64_t on the C side, and usize on the
+Rust side. usize is 32-bits on i386/ubuntu:focal.
+
+> > > I suggested in [1] that I can change authorship of the patches that
+> > > introduce the initial infrastructure into Meson and our Makefile (so =
+I
+> > > guess patches 1 and 3) to instead list you as author and myself as
+> > > Co-authored-by. Is that something you want? Given that you have
+> > > kickstarted the whole effort around introducing Rust again I wouldn't
+> > > mind that at all.
+> >
+> > It doesn't make sense to me to list myself as the author of any of
+> > your commits, but I would like my name referenced in your commit
+> > messages.
 >
-> Would this also mean "range-diff --no-notes" would not have any
-> effect in squelching the note output in such a mode?
+> Okay, will do. Is it sufficient if I say something "Based-on-patch-by"
+> or "Inspired-by"? Don't really have much of a better idea for how to
+> include it, but please let me know in case you have any preference.
 
-Do you mean `git format-patch ... --range-diff --no-notes`?  Yes,
-`--no-notes` has no effect.  range-diff just does the default thing
-which is `--show-notes-by-default` (act like git-log(1), which shows the
-default notes namespace unless any `--[no-]notes` options are given (and
-there are no such options in this case)).
-
-> If so, perhaps we should say not just "can get different Git notes"
-> but "can get notes even when you asked not to"?
-
-I think =E2=80=9Ccan get different Git notes=E2=80=9D covers all possibi=
-lities, both too
-many and too few.
-
-But like the previous commit this one could maybe use a rewrite.
-
-    No `--[no-]--notes` options are sent to the range-diff subprocess in
-    `range-diff.c` when making a single patch.  This means that range-di=
-ff
-    will handle Git notes like git-log(1).
-
-    This is a problem when you ask to use certain notes, or none at all,
-    since that set of notes will appear beneath the commit message but t=
-he
-    range-diff will have whatever notes that git-log(1) would have given
-    you.
-
-That=E2=80=99s at least less dense.
-
->> @@ -718,7 +718,8 @@ static void show_diff_of_diff(struct rev_info *op=
-t)
->> [snip]
+Inspired-by would be my preference.
