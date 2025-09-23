@@ -1,212 +1,159 @@
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A72B1A23B9
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 15:39:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129F21F92E
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 15:41:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758641952; cv=none; b=WVDeYbhFeeu/1XqPZ8iiMESzSgSNMjg3j00pdhnSmKUvHN+r+avr28gjZqF+7ZTj2T1xpb0+yK0osUgAtdMRvNvQAGDyXVWsTo1kaws5AWxrD1H1D88kKXhBS8A/Z+UMtY0Z2wSRe1N1cJZM8m1O1D91JSBFrD1fANRNoUOJduM=
+	t=1758642110; cv=none; b=iJyQC/Zx1xJ2BtgbCLwmVfw461PB105eTk7IKdftns8KbxEuv7lLtdJ6rOE1TMbVq9Ic8ceRQa4eN9lDmj0labI6zZVPzb2AFy4KfYrPxSRheKwt655z9BZ0YQSJhB52I39KRbKvFXKypX2nwLGCJ204j9TIm/SE0JahSzRhZak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758641952; c=relaxed/simple;
-	bh=Q5wP19M1/v9XsUDYGJC7WFiFXGlMF+g7jo3Uu5HOq8U=;
+	s=arc-20240116; t=1758642110; c=relaxed/simple;
+	bh=BHVJtoNMHWQgXJ3kNIT+8UC7aKcEoK4DGgVRn/dE6Y0=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=ldnCBpJZQb9wxWRaIokQsr4oafSpiq4ECrWQgvUBjrvmXScRMQ6Um3RzSgc2wGLDy+wUC9URkAi4yXd0UIEWw+ZrqFnwO/sKLHRkAJAwj4cKQSFBdTkvXrhRPpK1LvOdvenntdKWBS2+MQzuPHo5EpM+U7Ek8IWC1xIuiLVmcyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jSbC8TdL; arc=none smtp.client-ip=209.85.217.54
+	 To:Content-Type; b=SWsozu7q1XmbSSfo5QPgJebHr0NS5KICzI9T+jv8Gz4NaVxnX/7HAZX8kUzOvoJTjb6ZkPaLfpKLW1fmrNOFDS8kGfJbvmAAu5pivGdJSRfwxDkXwvJHy3zU2/4Plmt1G89yFi6FKYPygaKRTs4XolbiWhE6XdE0WofmB03QnOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FoD/sOXp; arc=none smtp.client-ip=209.85.217.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jSbC8TdL"
-Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-51d14932f27so1989168137.2
-        for <git@vger.kernel.org>; Tue, 23 Sep 2025 08:39:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FoD/sOXp"
+Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-5570a77eabcso4215091137.1
+        for <git@vger.kernel.org>; Tue, 23 Sep 2025 08:41:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758641950; x=1759246750; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758642108; x=1759246908; darn=vger.kernel.org;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=4dfSLQClYB9zqOqNzEhKujpH66ibKWQFqgMh9/oJmS4=;
-        b=jSbC8TdLSL6PaQSAUQBVxORd3Ebqg8vLS9Vb/bzt/IHLrmersgc/3N/ZD5Z47Om341
-         HKgJHO14OhdHufaHXs0w62V7H4bhELzWbd4YEjVpwjAbjEB8fuwF/ofvgBVKtE6xFO22
-         hJLsymoR3ffW/ZCNEeFr7doIp4U0Fw08mJmlImbRBEQZz9VJiK+8ZI+LXZaAHQP06gSy
-         fGId1VmDJVjsQggvSPgXvfnNymQBa6S2BDfxdyqI/PkRxbarJLb7ciH0fdHzz1bmPGiT
-         GIvTDKbTjQdhgAAKgFtxxbScKGOLGt1jpA8blqPFRq11Bgz5uZrL1C5ZAnfr/jZJdi3G
-         cqLQ==
+        bh=TjmSQIb8ePAFF824tATmmgHwov4UJXlEJB5WqSbMcYw=;
+        b=FoD/sOXprjGUCLsAIBGhJcA6hKMH8gG4Vg0f4I0cTrMt339NAf0H4suSIYYkaC98MP
+         x8924KxwmAOLZMSZvqqE/XGDMbO/hYCAQEyHVJaJJxIQqW27azLjPGqkR5fo2nRkKNX7
+         sR7kZRll9prBmM7LbvjTZ2ZH4wa+2md1WR9dNnZ7bVfEggbigIp/z70xwussez5gH1n8
+         HwsZJueEwoqpT3PvCUpeBZLYasV35yT855EFj6fyIBYD2Q+dbF54hbJPPCuw0/WVF6Or
+         nNVE+DbJJNvujtl4wMqlkkyMdns2h9ZOPWDZZfXdF9nQFF/kIcskDocLqr6fmOWnUfuG
+         FOcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758641950; x=1759246750;
+        d=1e100.net; s=20230601; t=1758642108; x=1759246908;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4dfSLQClYB9zqOqNzEhKujpH66ibKWQFqgMh9/oJmS4=;
-        b=CWo1Z0FwuRzVjfDUDj74MOkdG6PJ0d9zeLU1PrcnjLpTplLPDDUKgbBtyf0BiBFz61
-         vzndpWx7hYJvgXQ++tJYvFVuGEsEGW2vQa25IIS7i116XP7zCHUFtEg4bw+Xm2K9Ecjc
-         wuPMti3hgZcAowmVFhVX8j1APhQram9iLYUhpm+VxEyAvg0ma3KydYgIXg//YxzA0B1k
-         mTjGfIbkzulSI130oV6kYAzIssZEtRVUumWDHkC0wxUTvRv1ACt/X4krFFmNscaFmUNs
-         mDCuRN1C06iFPTQViDBJV3utCPgFxglnIo2D5RkCiOjZjphpQPl9MHClLnmgZEazws1j
-         mnyg==
-X-Forwarded-Encrypted: i=1; AJvYcCV0zJiD5qvO473cNw+tJnC7uFLjg9hvqLTkTht1SBZcE7Y/ek/8R8Jw77uUco2CJLZz8Sg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YygB44fl+o6Ih3PDIQ2cV8UQi2yTWPekyLzTb5y75iQUoc9FQ3a
-	lxoD3wHgZl8I29R9fydACVTHAlVPCQDmFgDnSkPkHYt9XUKwda3xqkGk1cVRpt/exulphGnHTd1
-	t1rFbA0kRW6btiWCKFdVIaV52NvLCgts=
-X-Gm-Gg: ASbGncu56JCDPIKQYmRHh+wxKopkkmmrDCyRCXCoYWJKAqVwDn+HNXmVUHiQRZWnsRK
-	keriibtckQCv0tlQcW+HgPD9OYCIjFV5YRi0Ph6qVGtyXPiVNUrrkXq0F5dsFwNSqYTK5qgmaYp
-	CyZrDFCT2bf1LUGrq+jgqQ8u3JiBL38aVQmco43Y8ub/MXfezjbrwp9i23ZNyq2hpeuGoukL04G
-	XUY1bU=
-X-Google-Smtp-Source: AGHT+IEoP/WZQ5J77WHHikb+vhCbVGxfomKPmEBkrjf1mTIHNfjlrb8wbH/Qns+9Xhkts3bWjTD7mA9u/y6Lovr6ssI=
-X-Received: by 2002:a05:6102:5111:b0:593:6029:39ea with SMTP id
- ada2fe7eead31-5a579b1ba30mr1073058137.31.1758641949532; Tue, 23 Sep 2025
- 08:39:09 -0700 (PDT)
+        bh=TjmSQIb8ePAFF824tATmmgHwov4UJXlEJB5WqSbMcYw=;
+        b=XERqDhSA6bfUEczAroYBsLeJY2vWx5ynUq4pWCf/p99XoX5Pr4sh3iMVPvZdRZpXov
+         vlqLz/5laAsbXeVc5TutZqGgSYQPxsUUOPLUUGGl+LPWumh9jfUPm/G10YXPHNXZ2MKK
+         KThNTBVPVyMyra/mgQBSM1f290YqMd993ttPjQWAx51TklvbrmwzwYkee/sb62VHYpWZ
+         7NUdyBU6jiw7iYdToiux5IdwQrODgfg0TPJ7J6So5YYkK7bzjXrrJPioM2e25mVXR6Zb
+         heCvwYyVs6y+VCkXYYaX+4jw/Qdpc5nfMZ1QvkL55av8wodcF+ld/+JhYzpC6giAE68M
+         0xHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVUvBWninMs1n8nRrhVf5Rmwp+Cr9ythHLJ1OUrYxioi0ohbxzDVzT8B9TqypezHa1MhfE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxcAW41a7xM9B6Lysmh+OgntmYGYg09YFAzAvsuViYw3q9cvkPq
+	4bTv7kz6FCUtMgoKd1BW8doxGHJ/zAOzRs3pOIR0/u9YE6qaZ21WChvUo25t4Yx/nR9r0fZf64c
+	UlCH+xu0JNtR+ao5R7g22NCmpPn4y9ro=
+X-Gm-Gg: ASbGncvpcEMPXbNcu1MlFFOeweLqi5qy9vwlFX5W3Qe5Ika2ZcnfzEMh3KHffhikv5+
+	khQ+kd3Fuizelpu+lN8SkJLP+qPbeG+4hwn7CudiVU08xkuu97YG91f6vj+ebsra6hPdStp3zWz
+	bpNH6lxIjskF6n1fdFRICvi/t00H3vbf7zESph1oaNr9vJr5D3Wp3yq2nhgvv65kNH7/lK6yrZf
+	W4tpjY=
+X-Google-Smtp-Source: AGHT+IHsut+TE4rqUOD+jHjxDQhnsGB2CP0WzNWCyjgw02mdP0NSH+GUZcMbKJ7XACCVjmEw2KhAnvPHm1d/YI4RN98=
+X-Received: by 2002:a05:6102:38cc:b0:59e:2c90:fae2 with SMTP id
+ ada2fe7eead31-5a581876534mr1208987137.30.1758642107857; Tue, 23 Sep 2025
+ 08:41:47 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 23 Sep 2025 11:39:08 -0400
+ HTTPREST; Tue, 23 Sep 2025 11:41:44 -0400
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 23 Sep 2025 11:39:08 -0400
+ HTTPREST; Tue, 23 Sep 2025 11:41:44 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250923025700.3046260-4-jltobler@gmail.com>
-References: <20250923025700.3046260-1-jltobler@gmail.com> <20250923025700.3046260-4-jltobler@gmail.com>
+In-Reply-To: <20250923025700.3046260-5-jltobler@gmail.com>
+References: <20250923025700.3046260-1-jltobler@gmail.com> <20250923025700.3046260-5-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 23 Sep 2025 11:39:08 -0400
-X-Gm-Features: AS18NWCSYmCmxhnSW3XzGtMFgIfRDF1MTiAUmRCyVto_M-LL7SJ3LQ_W_1-J6w0
-Message-ID: <CAOLa=ZT0y-WOOFz8FdLm40AqwEATzNsg2fzvnJKPzx2mkPiz-g@mail.gmail.com>
-Subject: Re: [PATCH 3/4] builtin/repo: add keyvalue format for stats
+Date: Tue, 23 Sep 2025 11:41:44 -0400
+X-Gm-Features: AS18NWCCOeq9a31ir_4L1u-B6JF_NwU8mRXwArnTJh3m2jk5qb2qKnXUIZKNSa4
+Message-ID: <CAOLa=ZSyXFAE+=ApxscikcmYjtz2-EzrOdORZn3KfiU5Rg_RgA@mail.gmail.com>
+Subject: Re: [PATCH 4/4] builtin/repo: add nul format for stats
 To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000b07eac063f79bcc9"
+Content-Type: multipart/mixed; boundary="00000000000020582b063f79c6e5"
 
---000000000000b07eac063f79bcc9
+--00000000000020582b063f79c6e5
 Content-Type: text/plain; charset="UTF-8"
 
 Justin Tobler <jltobler@gmail.com> writes:
 
 [snip]
 
-> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-> index 2a67abfca8..7d0341e4f1 100644
-> --- a/Documentation/git-repo.adoc
-> +++ b/Documentation/git-repo.adoc
-> @@ -9,7 +9,7 @@ SYNOPSIS
->  --------
->  [synopsis]
->  git repo info [--format=(keyvalue|nul)] [-z] [<key>...]
-> -git repo stats
-> +git repo stats [--format=(table|keyvalue)]
->
->  DESCRIPTION
->  -----------
-> @@ -44,12 +44,22 @@ supported:
->  +
->  `-z` is an alias for `--format=nul`.
->
-> -stats::
-> +`stats [--format=(table|keyvalue)]`::
->  	Retrieve stats about the current repository. All references and
->  	reachable objects in the repository are categorized and counted
->  	accordingly.
->  +
-> -The table output format may change and is not intended for machine parsing.
-> +The output format can be chosen through the flag `--format`. Two formats are
-> +supported:
-> ++
-> +`table`:::
-> +	Outputs repository stats in a human-friendly table and is used by
-> +	default. This format may change and is not intended for machine
-> +	parsing.
-> +
-> +`keyvalue`:::
-> +	Each line of output contains a key-value pair of a repostiory stat. The
-
-s/repostiory/repository
-
-> +	'=' character is used to delimit between the key and the value.
->
-
-Does each value end with a newline or with a NUL? We should mention
-that here.
-
-[snip]
-
-> +static void stats_print(struct stats *stats)
-> +{
-> +	struct strbuf buf = STRBUF_INIT;
-> +
-> +	strbuf_addf(&buf, "references.branches.count=%" PRIuMAX "\n",
-> +		    (uintmax_t)stats->refs.branches);
-> +	strbuf_addf(&buf, "references.tags.count=%" PRIuMAX "\n",
-> +		    (uintmax_t)stats->refs.tags);
-> +	strbuf_addf(&buf, "references.remotes.count=%" PRIuMAX "\n",
-> +		    (uintmax_t)stats->refs.remotes);
-> +	strbuf_addf(&buf, "references.others.count=%" PRIuMAX "\n",
-> +		    (uintmax_t)stats->refs.others);
-> +
-> +	strbuf_addf(&buf, "objects.commits.count=%" PRIuMAX "\n",
-> +		    (uintmax_t)stats->objects.commits);
-> +	strbuf_addf(&buf, "objects.trees.count=%" PRIuMAX "\n",
-> +		    (uintmax_t)stats->objects.trees);
-> +	strbuf_addf(&buf, "objects.blobs.count=%" PRIuMAX "\n",
-> +		    (uintmax_t)stats->objects.blobs);
-> +	strbuf_addf(&buf, "objects.tags.count=%" PRIuMAX "\n",
-> +		    (uintmax_t)stats->objects.tags);
-> +
-> +	fwrite(buf.buf, sizeof(char), buf.len, stdout);
-> +	strbuf_release(&buf);
-> +}
-> +
-
-Okay so newline delimeted, similar to 'git repo info'.
-
->  static void stats_count_references(struct ref_stats *stats, struct ref_array *refs)
->  {
->  	for (int i = 0; i < refs->nr; i++) {
-> @@ -359,9 +390,16 @@ static void stats_count_objects(struct object_stats *stats,
->  	path_walk_info_clear(&info);
+> @@ -291,27 +291,31 @@ static void stats_table_print(struct stats_table *table)
+>  	strbuf_release(&buf);
 >  }
 >
-> -static int repo_stats(int argc UNUSED, const char **argv UNUSED,
-> -		      const char *prefix, struct repository *repo)
-> +static int repo_stats(int argc, const char **argv, const char *prefix,
-> +		      struct repository *repo)
+> -static void stats_print(struct stats *stats)
+> +static void stats_print(struct stats *stats, int nul_delim)
 >  {
-> +	enum output_format format = FORMAT_TABLE;
-> +	struct option options[] = {
-> +		OPT_CALLBACK_F(0, "format", &format, N_("format"),
-> +			       N_("output format"),
-> +			       PARSE_OPT_NONEG, parse_format_cb),
-> +		OPT_END()
-> +	};
->  	struct ref_filter filter = REF_FILTER_INIT;
->  	struct strvec ref_patterns = STRVEC_INIT;
->  	struct stats_table table = { 0 };
-> @@ -369,6 +407,10 @@ static int repo_stats(int argc UNUSED, const char **argv UNUSED,
->  	struct stats stats = { 0 };
->  	struct rev_info revs;
 >
-> +	parse_options(argc, argv, prefix, options, repo_usage, 0);
-> +	if (format == FORMAT_NUL_TERMINATED)
-> +		die(_("nul format not yet supported"));
+
+Nit: we can use 'bool' variable types now.
+
+>  	struct strbuf buf = STRBUF_INIT;
+> -
+> -	strbuf_addf(&buf, "references.branches.count=%" PRIuMAX "\n",
+> -		    (uintmax_t)stats->refs.branches);
+> -	strbuf_addf(&buf, "references.tags.count=%" PRIuMAX "\n",
+> -		    (uintmax_t)stats->refs.tags);
+> -	strbuf_addf(&buf, "references.remotes.count=%" PRIuMAX "\n",
+> -		    (uintmax_t)stats->refs.remotes);
+> -	strbuf_addf(&buf, "references.others.count=%" PRIuMAX "\n",
+> -		    (uintmax_t)stats->refs.others);
+> -
+> -	strbuf_addf(&buf, "objects.commits.count=%" PRIuMAX "\n",
+> -		    (uintmax_t)stats->objects.commits);
+> -	strbuf_addf(&buf, "objects.trees.count=%" PRIuMAX "\n",
+> -		    (uintmax_t)stats->objects.trees);
+> -	strbuf_addf(&buf, "objects.blobs.count=%" PRIuMAX "\n",
+> -		    (uintmax_t)stats->objects.blobs);
+> -	strbuf_addf(&buf, "objects.tags.count=%" PRIuMAX "\n",
+> -		    (uintmax_t)stats->objects.tags);
+> +	char delim = '\n';
 > +
+> +	if (nul_delim)
+> +		delim = '\0';
+> +
+> +	strbuf_addf(&buf, "references.branches.count=%" PRIuMAX "%c",
+> +		    (uintmax_t)stats->refs.branches, delim);
+> +	strbuf_addf(&buf, "references.tags.count=%" PRIuMAX "%c",
+> +		    (uintmax_t)stats->refs.tags, delim);
+> +	strbuf_addf(&buf, "references.remotes.count=%" PRIuMAX "%c",
+> +		    (uintmax_t)stats->refs.remotes, delim);
+> +	strbuf_addf(&buf, "references.others.count=%" PRIuMAX "%c",
+> +		    (uintmax_t)stats->refs.others, delim);
+> +
+> +	strbuf_addf(&buf, "objects.commits.count=%" PRIuMAX "%c",
+> +		    (uintmax_t)stats->objects.commits, delim);
+> +	strbuf_addf(&buf, "objects.trees.count=%" PRIuMAX "%c",
+> +		    (uintmax_t)stats->objects.trees, delim);
+> +	strbuf_addf(&buf, "objects.blobs.count=%" PRIuMAX "%c",
+> +		    (uintmax_t)stats->objects.blobs, delim);
+> +	strbuf_addf(&buf, "objects.tags.count=%" PRIuMAX "%c",
+> +		    (uintmax_t)stats->objects.tags, delim);
+>
+>  	fwrite(buf.buf, sizeof(char), buf.len, stdout);
+>  	strbuf_release(&buf);
 
-Okay I forsee the next patch adding this support.
+The rest looks good to me! :)
 
-The patch looks good!
-
-[snip]
-
---000000000000b07eac063f79bcc9
+--00000000000020582b063f79c6e5
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 7caf2b05508fe32e_0.1
+X-Attachment-Id: 6518a94006c3d026_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1qU3Z4a1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mdy9RQy80Z3JzQ1c4WUxXZjJjWUNjWDV5NTdKUEVFLwoyTzloMDJoWlZw
-Wmt1VmFLSUduRUh6cjNxS29CYkVXUlgrVHh0U0VMUmxoM1FIMFByZXAvcVJtbzRtZ0FxN1RkCkUx
-ciszUDRMYW1meWtaeEg4OXlTbmx5QVFFczVWZDFkdVRiWlFtT3VyMFJKRCs5bzE4VkhDaWhGUzBv
-Qk8zVFMKM3NYcE1yNWY2WlFoRWY4Q2pnWUhrY2t4NVJwMUEwbzkybUFwcGVtM09EV1gweTZWVXdO
-YmkvbjFJS29LcVVldwpPZ1hna0hJOFRlQzhMcXE4NVlMeEM5UjlXTUpTWU5KczM2dVhiM2xIVUtC
-dktrUENLNjE4NFFYVDVPeVhZdEU3ClYrRzdWaHREZ2dTTEdFNGFKL2F1UlJzSlJqYnpyYW1mRVYr
-VytVVnlxVEQ2RVV6TnhLS0phRk1DRTlPZ1RTZmQKa1RpSzN3L2gyUGJCUm9HS2owdVMvU2pDYWlJ
-Qk5UQXBBTHlSMFl3c0U1OEhNTGpKRjZzdG5yWCtSRVc0WVlFcwpOMEF2bUtXWlZIRDRta2I2bVhG
-ZVR5Ny9JaVBxbzI4RWYwajB4NDBZbWtTRUZFQjk5Rlk3WEpjc2VXcUc1VjJGCjNsWVhEVCt4WnJG
-OEZkNHRLSVlUNm1yR3BvZVcvcXZEVFNzVDExdz0KPUh6OVoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qU3Y3WVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNktHQy85cThxVElsRXJENVVVYnZ4eE82RWdubDNqRAoxMWNBbm9QY3VN
+OGR6aTFvRE1BOGxYNnRvSDJxTDlLSGcydVd5czlYQnNVSXNaRldFMXNuM3RBQVlUUks0dk5zCkJq
+ZnpUVlRZOVRTblRYTGRMcmYrNFlVU1h5QUdWNTZtZGNzbDFjK1lDTS9lRWk4a0lUdyt5VVBBalJY
+TlVQT08KRkcxNnI3VTRrRWVCaHJrL3RDZjRhTGpSdjBtamRqUVNac20vRDJ6Yjg4RzI3TWs3VUJX
+QkF3MWRCaVJrTFRTYQpBdmJHUisrZjBsWnFNdy9iTUJ3d0pIbmN3TWt5Ni81a2ZUUGwxOEVYaXli
+MFg5MXRUS1pzN1ZiNmhLRVRiSVVTCmFDallUSkVjT1ZlNVhDUDl3TnJNRkhxS3Z5Q3c1RlBoY3Jv
+TnlPejI2cGFsbVFIeXFqQWhURjhhWmFZemJRU00KK3lHc0NnTGdXb0FCbUFqL25qSVdTa0xuZmZT
+RzYvYmlLOStJTERKQ0kxaXIvR0FmSjh0ZnY3c3pmblBnR2hGQwpXZzJ6RlQwYWRIb3VyQjdaTGhv
+c2JHTE8vTENwV0pOTFhYendGSmdsRnNoRTJXSHhjdk01YzY2cEY0ZDJyMzl3CkxQbHBZNW8wZSs2
+WGk3OTFjN2dCK0d3cXJFMVNKSWFGTy9WTWJGTT0KPWYzekoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000b07eac063f79bcc9--
+--00000000000020582b063f79c6e5--
