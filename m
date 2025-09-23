@@ -1,113 +1,143 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913372D838E
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 18:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E6178F39
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 18:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758652463; cv=none; b=PjlIfKSdl5IiwXYB5S4eCDO55SwRS41bJWdjLcE7wYN5kZoMr2wzE52KUIy0rlp5ZMj2tBz0MLE7+MtFaGGpG2QE4dtue0gdzkkn/0v/TQ3kyFJ8d9Fpm5NsWPf2iQld0zVvBc/rDZL4Ihtr7iEWf9fhMSlVipSVDlmTSaHZU3A=
+	t=1758653322; cv=none; b=Ph05FRI/lAY2KP8bJyHpLbVhx9V7rpLRtOvj6DCRLpmpJj56gspP9kZJpmo26iOD9HjbfTFY5oC4TdORAe9HFkxykmNunA7HE0KNeTmoK+zkFKTj8DdJTZx9PBAEY8IeVLZovQUAK+y7Hdh6rizDTkW1/bG96SzNAKICZRPcGhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758652463; c=relaxed/simple;
-	bh=eaxSYAd+nFuFTt8ucGn7wiOA/P3Tm7SrTo9II8nA4FU=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:Subject:Content-Type; b=mkWGlkCwRUBMkYhUqtR4w9Dp4Y4xMCUjCPVua+2UqFW//+spgS3oy1uYVpIMo0wYI6kf1phEXdF1H6Xj+JrFob9IUVGYBgfqvDVYe98Pd7njSkkKE83nQ/dcIqc9ycyqxJBJXsP9GXwUL6Ds4LyX+DA4hurjQvoG1MZy/ClkHlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=azlsBJNu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l5xEcwN9; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1758653322; c=relaxed/simple;
+	bh=B+NBlNCcpsus9ndTx/DdW8BZf+2VWUjOmMvq1TA+R+Q=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RmVPkMtTNjxbUkhTl+iDrTjJZfNpMOGopqDPzrtdwcYJTgi72b+FPb1rHt61QNf9IsJ1ofaxHqZ9Nr9DpdElZNafo5mr60I2jFQcKhv62HpKm4SjhdH3WPKss8DzrPZynJ0jFo3QbaFRyAzoHY3Umfrr3M6aS9Htr+I1Dogsr90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=McmXKcgR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MAjO3MIx; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="azlsBJNu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l5xEcwN9"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A673E1400161;
-	Tue, 23 Sep 2025 14:34:20 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Tue, 23 Sep 2025 14:34:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:message-id:mime-version
-	:reply-to:subject:subject:to:to; s=fm3; t=1758652460; x=
-	1758738860; bh=CakqqS2BVLLv2xcxzCWDwGX7aTWNcXuuChVD7LUIpGI=; b=a
-	zlsBJNukDjgNLuqSplhfyaXgU9wbW8wJZlDOW2Olss+q0g2psR1LTYi2SCiQNQbC
-	BhEwO1A5VgZy1hvvivN/HuKGrVOHBaw9ENUFTyHAeIf5XTs9wT7DXcfbh58bF1mq
-	OtCKlHrfc0B2pkKDB2Bg4Vhpu5F0EAAnYjRvHj1GRN87kFFNZqQ1KBQEM4mGeBu8
-	M0WpZJYNVlvHQqyHtg9l8+jFaUwnHyfkrf9p0CAYJO8eWkSlK+dWvFiBcO5ZP8dA
-	yBTlXNDadm23Ft7QlGiOzqcbfu1GrOsnSNeq57fRFJ6+VJe0fYNiFmTfCmdnBDi3
-	EmSvy/B5rge46XOI6kU3A==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="McmXKcgR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MAjO3MIx"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8DA231400113;
+	Tue, 23 Sep 2025 14:48:38 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 23 Sep 2025 14:48:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758653318; x=1758739718; bh=1M2+1QN3Ng
+	jrNZWMoOw1RwE446ozOX0FEMeHXMl3z9U=; b=McmXKcgRhzm0pomZtarIMxh1hU
+	YhRsCr9B/YVOs9XiSFVqfOUaddKMUSV9DcODQ9RXJhWJeVnF7QZS2/bshZ7VN6GW
+	p06OxC1y9drkLFAQ2fgeek9RjOnLeNicgn3SosvXHJ9SRWv4Oor+wi+6rLHHyr/r
+	rcvfh5QrHQPwtqOz0lriKhlsPx+H0CCFeluDxe0gKs0nxBuKVrOxT5voE/liLOoX
+	iSl+oMRumFnZi94nZP8pWuG0/S/9otz1TPPDrxB2g+oZEoiuy0VrKIvrgJMOUjF/
+	2CucgJD4vtGuUVNu24xh6cY0eT7iuYHmbMazXSUT2nqPxmJ4bnMcYBeBQu0Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1758652460; x=1758738860; bh=CakqqS2BVLLv2xcxzCWDwGX7aTWN
-	cXuuChVD7LUIpGI=; b=l5xEcwN9bcQDnxGHbhPBG+dRjrP3uzET+gJ2kS3XdkTO
-	dEtBWkiRyyNJuRhVOmBn6mLu4LZ/iEjIUlSOx2RPvs+H6bRumNFq8AD+cTY+N6AV
-	wAI2kHsgFmmLbhtoSNUM4IHOdGkvqc7WLF9HKvvc54UdtP9Oic+VM0Irjur8Yl+B
-	/VCwdSuZBMoWzIDdQlmXB3RwKod8AF7YWSfPjG6PR1YutgxqSFSB/84zT62hq8te
-	zVb3/Zoj8ecDjf+a+ivv5oUlk0DVNQESEWJyce5eug7BW9JSOenb4EXqhRIgGjU3
-	02PbF/qHxXG799gZPiNb3bA8Gp4mLe24DMB7Q4bfVg==
-X-ME-Sender: <xms:LOjSaNrEW0-m5Dy9VYeDV3KDyX76f96vw4dmtorlvPZHjdANX29iINo>
-    <xme:LOjSaKeAdZ13lJP9yb3sq3oxPtYmJWXPsbTycXfZPY95VcEAZIMO9U_ZEGQl3mAst
-    6DHOGX2yIq8PK2LfDEBEXREf0bWNNtCTtvG8R2GtBxC49JZzSOv8w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiudegjecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758653318; x=1758739718; bh=1M2+1QN3NgjrNZWMoOw1RwE446ozOX0FEMe
+	HXMl3z9U=; b=MAjO3MIx4WXEZkaxOohiJk91wzlqasH4pSJl2svWjbjfiArpMs+
+	70jup9BfIkFD0M+6pK0WEhhQV0FoqlXMsj/30YSauma/1bXpz76U9j205uOYPKdO
+	2WurxIgdkPNKTOvvjQVOGw7fYa4R1Z1K3m66EgqH0JA4G1utsvuFW/L2jEsBhZBu
+	DUzLUNLgh3GLJdKmGo3a8YAGU9s2a11UC1zLWl6n629gx8vBucv2Q5Xila0JJiDa
+	jXjGFABL7HMXHii0nVJ7BAVkOY0+ImlLu89BWTyhNTh58nQhn9sno9fcdr9qXMnL
+	SARBz7cMe0T91uUT3KT1grOBQIDlroCWaRw==
+X-ME-Sender: <xms:huvSaKoQ2bC-vIsJBvFMXFyFhV4UbQjJHYcOW9GRfyBNny8_M2l_6g>
+    <xme:huvSaPi6STVr72k1erWyJEkl6Yi6q-liRF2Ie9iddk36zS-98xblfpPfuUp5qzr3q
+    EKVbEoaWeGkemN4bTamOYqaZKgIskTxZjuTj3JIYV0CZ-YQnhcfYA>
+X-ME-Received: <xmr:huvSaHj-Ef4gPu-ECrVP4MCejfJgKv0iEbMjOfZ_TZBlVWTvtjf8PJwj3y09mqY1NcWY7QomB02Eh6OkinS8vXnLynr_g2gRZwBq>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiudeglecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhf
-    fhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmh
-    gvqeenucggtffrrghtthgvrhhnpeffkefgleevjefhieetieekieejuefgleduueevueel
-    ieeuiedukeeihfdvtdffueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghrtghp
-    thhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhnrdgrvhhilhgrse
-    hfrhgvvgdrfhhrpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:LOjSaIUW6cu8ws-YSPEhzUtMlNfYlpxBprfOY9TzWxnxd9tzQXTfpA>
-    <xmx:LOjSaKhd8HyCqN6jX1TGhuehi7WfIN-LuuoWuGHr6H2T3RArH00sVg>
-    <xmx:LOjSaD9OIxfSXg4vAjp6qyzCB8vjKu32zYmCOoTtrJgQUluXvjs2dA>
-    <xmx:LOjSaEDWAPSUSP0LmH6q-UlQDg97c4kr7_K27Mnls7-uT27PWqEPWg>
-    <xmx:LOjSaNOZoahy-EZ5iXrO_n3B1PFZr8pWbgMlWyIe992cAHreboIUBGpb>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 51CFB1EA006B; Tue, 23 Sep 2025 14:34:20 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
+    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrh
+    hthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehshhgvjhhirghluhho
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:huvSaFhTioST2Y-VmYhoIVULcrahoXPVZKYvIu5kvYPOCcjaODtEKw>
+    <xmx:huvSaHJJ_A-H12Co8ZDdXogzvmQwUph6oulBtay8JH3uGbasb5t9Hg>
+    <xmx:huvSaEELfA2X-bxN0i83iG7WL4er5kwTFdGwtmL_AWwXwsWswz22YQ>
+    <xmx:huvSaLR4EkT9mYylPpoqZq53bM5vpTOn_8kXThYTgDo7nEpS-40ezQ>
+    <xmx:huvSaIxTOVrQDwEHEAd3GPzz3lid6ZvuO4Yi89yLJuaCah0RtaBocZ1a>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 23 Sep 2025 14:48:37 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: shejialuo <shejialuo@gmail.com>,  git@vger.kernel.org,  Patrick
+ Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 2/4] string-list: replace negative index encoding
+ with "exact_match" parameter
+In-Reply-To: <CAOLa=ZShms1D-cq=x04dtT2ULTVE3ZDo8DODFnJRP2wcJz0EgQ@mail.gmail.com>
+	(Karthik Nayak's message of "Tue, 23 Sep 2025 05:35:39 -0400")
+References: <aMp8yNFiXDyk2hP4@ArchLinux> <aMp9OtXLfRw7dEwA@ArchLinux>
+	<CAOLa=ZShms1D-cq=x04dtT2ULTVE3ZDo8DODFnJRP2wcJz0EgQ@mail.gmail.com>
+Date: Tue, 23 Sep 2025 11:48:36 -0700
+Message-ID: <xmqq348dovi3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 23 Sep 2025 20:34:00 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
-Message-Id: <a6e4e995-fc19-465d-bd7a-c002bc0db31f@app.fastmail.com>
-Subject: doc: config/extensions.adoc: line continuation syntax error
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-See the HTML output on e.g. latest `master` (ca2559c1 (The tenth batch,
-2025-09-18)) for `git-config.adoc`:
+> shejialuo <shejialuo@gmail.com> writes:
+>
+>> We would return negative index to indicate exact match by converting the
+>> original positive index to be "-1 - index" in
+>> "string_list_find_insert_index", which requires callers to decode this
+>> information. This approach has several limitations:
+>>
+>
+> Nit: It would be nice to start by explaining what
+> "string_list_find_insert_index" does and then talking about the negative
+> index. Perhaps something like:
+>
+>   The `string_list_find_insert_index()` function is used to determine
+>   the correct insertion index for a new string within the string list.
+>   The function also doubles up to convey if the string is already
+>   existing in the list, this is done by returning a negative index
+>   "-1 -index". Users are expected to decode this information.
 
-    + For historical reasons, this extension is respected regardless of =
-the core.repositoryFormatVersion setting.
+Yeah, such an introductory statement would help those who are not
+familiar with the convention.  Thanks for suggesting it.
 
-The context is a definition item `worktreeConfig` where this is the
-second paragraph following a bullet list.  So I thought maybe you can
-use:
+>> 1. It prevents us from using the full range of size_t, which is
+>>    necessary for large string list.
 
-    --
-    <bullets>
-    --
+It is a disease to think that countable things must be counted in
+size_t and it needs to be somehow cured.
 
-Here.  But we=E2=80=99re already inside a `--` block.  So apparently we =
-can=E2=80=99t do
-that.  I also tried a fair amount of permutations of using or not using
-line continuation in this context.
+It is a type to count the size of memory allocations, nothing more.
+If you are holding 1000-bytes per the stuff you are counting, you
+would not need the full range of size_t --- you'll ran out your
+memory way before you fill size_t with the things you are counting.
 
-This particular level of nesting seems tricky to resolve with Asciidoc.
-Maybe someone can figure it out.  So before I forget...
+When there is no external constraints (like you need to specify
+exact size to describe a file format to be interoperable), the most
+appropriate type to count things in is a platform natural "int".
+You wouldn't be handling billions of strings in string-list anyway
+(and that is smaller than half of 32-bit size_t; 64-bit size_t is
+much larger).
 
-Thanks
+>> 2. Using int for indices while other parts of the codebase use size_t
+>>    creates signed comparison warnings when these values are compared.
 
-(The Cc is because he is one of the Asciidoc experts as a FYI only)
+The other thing may be (mis)using size_t when it should not be.  If
+they were also using "int" that would also squelch the warnings from
+"-Wsign-compare".
 
---=20
-Kristoffer
+For an amusing read:
+
+  https://lore.kernel.org/lkml/CAHk-=wg+_6eQnLWm-kihFxJo1_EmyLSGruKVGzuRUwACE=osrA@mail.gmail.com/
