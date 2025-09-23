@@ -1,103 +1,136 @@
-Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBED627A919
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 17:10:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E260725D540
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 17:29:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758647445; cv=none; b=MwhRCpQ9nf7x+X+tVJYHDktMbRORkj4TZB2UD8+gMu2j5QIVYBSfC7TLu1dN2OrtbCXC4XucxFjFjbyFeSX9t/xCsXiwcvB+7xjJNpXB+csNaEtIxSy4QrYTJMiIvGWN2yA36+pOAamGq95Q6NkyF4bZvmWp2jEWjzcTFuE1K2g=
+	t=1758648594; cv=none; b=rchUrpw4rKFkN0+yK+o77dp9JSOUSIVBQ6knl+3Z6R8vg6mUvxacX/oAj86x10KKtqucCaAzUcLm8Jshpq2KROxo5FazS+w9tqR008/P8bSvmhU+kcHuhOYnXSP1Rj/xchp1HTe3Ex2AUrOAvxfv6uyEHRd/vNjsWO0bkOX3aGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758647445; c=relaxed/simple;
-	bh=qpU5uPtql4rqFgAS4DfTW/O2bAEE0lDH4ERX3va77N4=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=Qal4F8tsoPUK82/LrB1qHU79r2BXP7UgyGm9xTqagAXP0ZhiLz2mTVDqQYKljp2lClocEc+hnswVOkYj5ebM0m/AlLvKiDnlzKP8FnxuVmhQooGfEhb5CW7VVvGwvH/AUga6r3Epguk8zTY26yLuw7IQZv+Jh01cgV1wZL7vfUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T89aDILw; arc=none smtp.client-ip=74.125.224.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758648594; c=relaxed/simple;
+	bh=YU5dfrHGhab5mKyfX2TQkOPgBxnoQgGaCfyTzYHWmfI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WBzNW4WDXI4KdJLX780j+3DaZsuVP5OzeXPEj9SdXC/Iry2N0kXTYzwR3NJLqceaatgzO6RJ/KyFstECtABr0ex1y3HklRrwe3UUfsoIa7TfVzkoSFyeuCP48c90M7MVctiuuGF+EK4lKKd1UwD+mQfaSAI0RRYqnye8bcHYv8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nLCU63lf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H1r5i3s9; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T89aDILw"
-Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-635355713d9so2075934d50.3
-        for <git@vger.kernel.org>; Tue, 23 Sep 2025 10:10:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758647442; x=1759252242; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2PNNIYoA31xIJ2HZLEF5IiyYupvIwB3yptgI/TJqHGw=;
-        b=T89aDILw8ejN08G7Y77paCFinQL9ILsC6ghKL2+d6cdv3ICBieMga2U7kjjhKUSyYb
-         waZ+Km8wT75OqKvDdWqLcbMVGDhPJHMldbFE1z5+IEuDE0ScsG0mCcdqX1dHT5L5AFIG
-         L86f8FvGfWodrPGdGThYjYpqeWBcTP7feXj3/nnbR1vI23+h/AWlIqEQlOHXTc9dpESl
-         PgqB6O7FgCVROx5coSad71/cX5PY+8cpSedfgVwGBNd2/4pF2LCYN+NMhKqD8HJaCSlG
-         9rsbuPre/g3bk6nH5nTnVYbECYHCRVsAl4MgMIYco5YYNt/GQZhZen37dd28XtVlJNX7
-         bZTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758647442; x=1759252242;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2PNNIYoA31xIJ2HZLEF5IiyYupvIwB3yptgI/TJqHGw=;
-        b=LA/4svZMxRJ3iM14qOGv9Uj+h3IxPLtQIWVBBIAwLLKDVBdDjKqR9ASnI7TWk4QLBN
-         ie/pGqanMBq6x453Sw2us3CC1lBR31aPfL1pk9J62WnvTZ/6XSm6XJ6PnNpH5dO4lWJ0
-         hP1xRIcMHLdCZMS/PhurS4VKCKHs8RHory4+QFpM5MHGboeLSZWGDRIadyfjZHDPKtlg
-         cdL5FH9/vdvqXhPqVlGuerEGW6sDdNafd0DIhaFp/aoMxvNulgZunXrXy3ilq1lyV5Z4
-         CoJIHswjHOhes53n/CX/MJT4quFNwp//VWhp6N+ZVU+MHL3I/334c/SD4h6Wj2jrFWqW
-         7c+Q==
-X-Gm-Message-State: AOJu0YyGrxMNplVEk5tw93Y5mihcuDjtK6H/m0FRLd/gdM0MwUqjmS9C
-	89g6F1cKZlEDVQYSLHOwQ2s9aW9YoP5L/djbOKTTuMRq2jzqMbwxlGthzP8T01hr
-X-Gm-Gg: ASbGncvilOtHHIHfmXRORNLHnY91sda3j+vJpSFlT+GOCauBEeGoVpeYWm0IEfPKEQJ
-	zVrnT9cI0U7l01Y0lukj1rFrNYll6ywrNZL4FWMKqyeui3VtTE7TNxxMu+l3ZER0UmjTYrn+EIF
-	9FqMpnpBRaYmIyDecfN8brSnYdFWdniFVPKNt+8MqhkJNlG1Z8UTvRU0C5yuUtVFDOQby+EUiTo
-	WpwMGzmOhFavbF5wClo+WpPXNa0qF+FFM1BEvzQDeJq5BgZIVhNasWHraY1QAKy7NcZGogz6VNx
-	WjuQL4XsKoe3YlQwtgm2PomFcIc7gJqnvWEtprC9jDLEUexXoH4UhsjJ3rn9EyDC8l6zNWOJXiY
-	2wFnSD691trdAxafKPuUsKDSSTlDGpIHfU9/vOAZUodobuSm8H1s=
-X-Google-Smtp-Source: AGHT+IGA9oWqg2SAGzVoPv/uK/vtYpicRmx+0KRok/1zDiqZGscoQ64GRA2sapTQ47IKlasXBx5yTQ==
-X-Received: by 2002:a53:eb91:0:b0:632:e9f0:768c with SMTP id 956f58d0204a3-6360463d061mr2121914d50.24.1758647442245;
-        Tue, 23 Sep 2025 10:10:42 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:3535:152d:7414:b233])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-739716f628csm43542047b3.25.2025.09.23.10.10.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Sep 2025 10:10:41 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nLCU63lf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H1r5i3s9"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 753B81D00343;
+	Tue, 23 Sep 2025 13:29:50 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 23 Sep 2025 13:29:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758648590; x=1758734990; bh=aStgTJ7s5+
+	9amLfim+YlYnX1jFJyDsqrnplAVeWntQg=; b=nLCU63lf2QE+myq8LzQT+UoLQI
+	6es4LVpmzz16OOrAjR4rKgWaIkP9OI3wL8VlMx69jKTD3goV0PEeZqRUmbX6tp18
+	K0ADI1dZ1c6tj0EVvC5nBHtT6NirV0JE0JIYbDeIHS+Ie9NXtA2dX/gJedkrNaIe
+	NrmMnTz4aTRcsglIoqajJKf+gHLDuur+P0jfa07IjOE0z5m4fySgASiS6zOYsfcG
+	fQlPVhowjZPmLZymJl6wZT6Gzg1YyTto7rX/zT0I5YiNuX/Sx8s2wncw0TxssIAh
+	0Yn2I0LT/zJCCCEP2Vyl62gB92MV0OgWUOgJIK3k1lPLFmHwnBQRDvvjKDhw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758648590; x=1758734990; bh=aStgTJ7s5+9amLfim+YlYnX1jFJyDsqrnpl
+	AVeWntQg=; b=H1r5i3s9o1uaTXSdHQYvRRq0GxDYaMsjqnXfJKQv1g7ybVwRIcF
+	HlIkVq2JJ8WqSGHeypNsd+Qtq+zICcwMX4gS7RThQ/FxAA/qHqaBf5fKhcdz3MMz
+	6A9zcQ+B+w6YimsHUDb4VPQxvpg5QdVRtnJManSUXFP/xMX+k7L6rU0TiwE4h7XM
+	pcMDsZRh3VPZXOrpGEtscrzSUODHIetZ9lrQXGXP2sW5yeLP6Mp2Itt8PzC61t13
+	m8U9gYomm/TEQJwmf5zSuC73I1N2aLlxlNMX9wkU/gS/nnLntAGT6erkJW6xPOKa
+	03hdno55eL1TxOtBpKmS4fmb/j/DkFqYpmQ==
+X-ME-Sender: <xms:DdnSaJKYoE4QO_BuGxOZ1e2Su7LapmRLIMVXd0mluHsadjA3kiWvVQ>
+    <xme:DdnSaAA-CHwiFFEvIgDucBucWaQlzzq9mu5aVsK5vlNZfywKrt23kqtuChmKZuhTu
+    6wMf74y-WQWWG-vE9Bv_KLDzAkIgBJKf1eY8yr2WuapNsGB1cL26w>
+X-ME-Received: <xmr:DdnSaL6xnDBJRhkUsUp20tAhdtGHM3YamEitX0ev9t4-wDtAMs5e441lABowFUZdVwfmKjFxugRCnHHBlY1JC4zGuonv5QcQ9N3A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiudeffecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedujedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohhnthgrtghtsehhrggtkhhtih
+    hvihhsrdhmvgdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgr
+    shhtvgdrnhgvthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
+    dprhgtphhtthhopegtsgesvdehiegsihhtrdhorhhgpdhrtghpthhtoheptgholhhlihhn
+    rdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesgh
+    gvnhhtohhordhorhhg
+X-ME-Proxy: <xmx:DdnSaMGfj-ml9B-EPyvq2M-tnGESrPY6nTSJjMVindw8j-wJuJp9_g>
+    <xmx:DdnSaGTp0lu0xN-w3_L07jwr83s2B38M5OUQtGLBlzN3W0VvYRDzKQ>
+    <xmx:DdnSaGc9WlVf7ZQLBvpOBdlrJ-xucevGA6httEncXt3vWLelgHN6OQ>
+    <xmx:DdnSaMh4DAU2od3EDCIurOPKplOgr4HGd7Eovd5HhyM8UrEj41hUNg>
+    <xmx:DtnSaD4Ntg8Xr25pgR4Zd-sJ_DmCvwountZV9ZZTqSO_fIIJc8WKBQmO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 23 Sep 2025 13:29:49 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  "Haelwenn
+ (lanodan) Monnier" <contact@hacktivis.me>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Ben Knoble <ben.knoble@gmail.com>,
+  Christian Brabandt <cb@256bit.org>,  Collin Funk
+ <collin.funk1@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,  Elijah
+ Newren <newren@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Pierre-Emmanuel Patry
+ <pierre-emmanuel.patry@embecosm.com>,  Sam James <sam@gentoo.org>,  Taylor
+ Blau <me@ttaylorr.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v6 7/9] BreakingChanges: announce Rust becoming mandatory
+In-Reply-To: <d323c453-a800-413d-82d6-b0db0a4b76c0@gmail.com> (Phillip Wood's
+	message of "Tue, 23 Sep 2025 16:29:07 +0100")
+References: <20250923-b4-pks-rust-breaking-change-v6-0-59076fee486a@pks.im>
+	<20250923-b4-pks-rust-breaking-change-v6-7-59076fee486a@pks.im>
+	<d323c453-a800-413d-82d6-b0db0a4b76c0@gmail.com>
+Date: Tue, 23 Sep 2025 10:29:46 -0700
+Message-ID: <xmqqecrxoz5h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] rebase -i: use same commit's message and date with f -C
-Date: Tue, 23 Sep 2025 13:10:30 -0400
-Message-Id: <BF1B80E7-4DB9-4CDD-9C80-330C4B487DE9@gmail.com>
-References: <92d4d585-09e9-4f1d-a471-1ad6b312fa61@app.fastmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-In-Reply-To: <92d4d585-09e9-4f1d-a471-1ad6b312fa61@app.fastmail.com>
-To: Mathias Rav <m@git.strova.dk>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Le 23 sept. 2025 =C3=A0 04:56, Mathias Rav <m@git.strova.dk> a =C3=A9crit :=
+>> +We will evaluate the impact on downstream distributions before making Rust
+>> +mandatory in Git 3.0. If we see that the impact on downstream distributions
+>> +would be significant, we may decide to defer this breaking change to a
+>> +subsequent minor release. This evaluation will also take into account our own
+>> +learnings with how painful it is to keep Rust an optional component.
+>
+> I think this last paragraph is a welcome addition as it makes it clear
+> we're not going to blindly pursue rust if it causes widespread
+> problems. Personally I'd say "experience" rather than "learnings" but
+> that's probably me being a grumpy pedant.
 
+If this transition turns out to be way too disruptive even for the
+3.0 that promises big changes anyway, can "this breaking change"
+realistically be "deferred" to a subsequent "minor" release?
 
-[snip]
+The only way I can think of that is permissible in a minor release
+would be to pear it down so much that it no longer is disruptive,
+but that would be very different from "this breaking change"
+anymore.
 
-> I described my own workflow for fixup -C above,
-> and it's the only use of fixup -C I'm aware of.
->=20
-> If the current behavior of keeping message from one
-> and author from another is useful in someone else's
-> workflow, then I'm happy to be enlightened.
->=20
-> Correct author dates are certainly more nice-to-have
-> than need-to-have in most git workflows, but I think
-> it's worthwhile to have git go the extra mile here.
+Or is this talking about waiting until the downstream distribions
+either die out without adding Rust support or start supporting Rust?
+That, except for the risk of having to wait forever, might work, but
+then to surviving distros, it would no longer be a "breaking" change
+even if we ship the same change as "this breaking change", right?
 
-I can=E2=80=99t comment on the motivation, but :
+I don't know.  To me, the last sentence sounds like reserving the
+right to later say "we learned that trying to support opt-in Rust
+component that we have to (partially) replicate in C is so painful,
+so we won't keep Rust an optional component".
 
-> rebase-interactive.c            |  4 ++--
-> sequencer.c                     |  5 +++--
-> t/t3437-rebase-fixup-options.sh | 15 ++++++++++-----
-> 3 files changed, 15 insertions(+), 9 deletions(-)
-
-manual pages need updated also.=
