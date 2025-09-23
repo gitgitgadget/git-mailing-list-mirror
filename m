@@ -1,104 +1,80 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19189BA34
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 05:32:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C919154BF5
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 07:42:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758605542; cv=none; b=oiATWk6HCA3lDcqOyXC6m9mYI9XT8wt12MG6N359diFjsZXnQmK8DPnSeTvZnQC6W88KJKMWgRL5ue3tJd2w7bPdFN/SA1vrPzjFNuZzyIsVEZdnNvMoHxDAfAjlOU89FM7VIbXJ3zOBzGezyoY2J1crE59KCS8WzBPHkodDWKM=
+	t=1758613336; cv=none; b=kMalQeD4URUxnbFjFr6lpsjjA5oNiCAOMQL1QmdAefcDgfWaK0SueLlpr4RSVsL9lX+NSTDhaUHs7B5WTAxzHFt8j0cfO5oDPoB4r7lBZAB0CEuaAfbjUjREuSnzkMQHQf7m469TVbMomib8oF3o2ZnxF+f2/tKn3CFOmB6J/GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758605542; c=relaxed/simple;
-	bh=itLq1PA1DK+UtSJXBOKH5AFE591j1CJEPT5DhK33Pko=;
+	s=arc-20240116; t=1758613336; c=relaxed/simple;
+	bh=97Y/F6K8VVtb+XA+ht+zsLUNBHqvHB32opUJdm7CEig=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kHGzjwHjtmKU2s6uuvqjgiw/hHi8aiL/OIjO4U3cP2eQzso2ZMmDAIAwUfRMJy6vUCfpYFCpHH0a9TfMSnnI5ODcwE3MM+7uT/jFHi1byVMJ/zJYIsYKwyHUm8Qp9iIquNB7SjkN9aWNp8VGagpQWMvETrX4w1x7rWzzjciF4jI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cD5CuPqI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F3zqpJhu; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=esom9XPO3INZD7g76HNinmOGiXQ9RylIN4u4ncY7QsLZGTiW3iV5e2PDBdDiMaM4zesEwcwu12yEJ7LHD5fam2I41pQLQESpstOad/BazsqnLMp41JLc0Gbn81KH5w4Z+Y4RynLyD9jQ31ga6D33eSUOTOfUb4iQ/VHj5inJP4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KPk0FxNI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WqjgFx5l; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cD5CuPqI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F3zqpJhu"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 506521400089;
-	Tue, 23 Sep 2025 01:32:19 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 23 Sep 2025 01:32:19 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KPk0FxNI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WqjgFx5l"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0D5247A0268;
+	Tue, 23 Sep 2025 03:42:13 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Tue, 23 Sep 2025 03:42:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758605539; x=1758691939; bh=5h2m0sWBPm
-	A+wTn2y4WnooeHvvF+S5M0ZB50daxWEQQ=; b=cD5CuPqIWZfvCur+ot0W+7O1CD
-	QypMZV59lCBcDQMFSd1M7AfhjJUWfDaWv465W+NBQAJIrX5+6PjgEU4k/vG1j1yN
-	H+p5x2OOkdfrXHIDaD1RXRcCwEw7LfpgpH+g/+J2QTxJ5GK3rRze1mmVHt7IwdJR
-	dNFGU0bruHQBGxAFwrYdNQ/kMfZhmgSrLgYfe9HK8qe5j/kkOj1kQn/jGg/IXuia
-	4OS/JloedwoM4YawBUzbqj6etbA7MrZBwe7HTFz6EsQ+fXhHj9Un9kycNqbhDbs4
-	Wie3soMza3J8gpcVXF3u9MkNWA5y25U9sNYvopzLfMiKfjEh3eQiUNkshX/w==
+	:subject:to:to; s=fm1; t=1758613332; x=1758699732; bh=/ZaL4CS6Yt
+	+U/Y0K8/OJkcCjSmW6qOPKGv6fSb0Fgi0=; b=KPk0FxNIqM4c3KR2asFIM9fm5x
+	KMb5olWLyrrzUnm95fve02gAUtmOjJ/+Uz+JRBMiZ6DUo9tP1799ZZTsdGiz0wGd
+	JDGIvEr7t3FEexTAwnk4xIHPjBf6xV2IyPYii3lfcEDZRxN/i/0HaOij6W04nz7L
+	r7tnlqWBUR9NExVaC0gMBgHD/0MAd8pwh1crWfPYs8N57DeAkIREjXsadqTioeZM
+	VsJ5HVIU95lVK+pZS/HfQIK3PN5KFPOK9KUW73Tquw6syxJoEUbyEO45zhhX/hsU
+	9ejz/lhIFTYASc6/db0XIwSliZdg/kOLOMTrvccZe5ZBgh8KzwvDW14ulnUg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758605539; x=1758691939; bh=5h2m0sWBPmA+wTn2y4WnooeHvvF+S5M0ZB5
-	0daxWEQQ=; b=F3zqpJhuS8moLkkGMlCw9V2h84ULHscaFC1aF6h9daGIacvOpIG
-	zxbfXvxRBa3XbnHXQFk2prFpwxIIlKSSQk9FuxS/RfEP+Q7Gpsf+4fY8gWexZD73
-	On2dF4oSM4rMi5I1p2OEBTIwLObE1k9V55tXsqdRYn1fg4mMyEDmpPqIHenDP3fW
-	W3UTWZBUWrBZcw+VksESyibl1xXVYd/uEdKCoG+QILgzBHAYRIBbOFUpaEcKJhxH
-	80k1K4Mcw+UQACqY8S6g/ZDprmPkRtL81d6egLphOxLwiGWVqoJCQ1zEonf09mQE
-	1WPXVoN0OQAu86A90cLXU8JvJetpLKF9eXA==
-X-ME-Sender: <xms:4jDSaM1nSn0eXkoKNeXqN4vrz5VmdyHXueOeg_0M_16vpjYFsXvHSg>
-    <xme:4jDSaDfgzOkVnqnvSUW5W-5H7LPpoJiR08gwt0XlMIKkL0kEVcKAu_pKybRH347MM
-    mc6Cv9XmS8Rhqwfw1mzxQVgr9XX6msXgK6P59G54Q5wUnlisUh6NA>
-X-ME-Received: <xmr:4jDSaJVyHEUMVYmOHGn7gi1CreGqUbMdTvodmkbqqU6FZb93cyV24RVOS89gC_zeFP--XifTh7qjOVY4N6tCHzZlpGFCqFbdtk0eGOPkfqSR>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehleeltdcutefuodetggdotefrod
+	1758613332; x=1758699732; bh=/ZaL4CS6Yt+U/Y0K8/OJkcCjSmW6qOPKGv6
+	fSb0Fgi0=; b=WqjgFx5lSv2wxK7ADQJanvsFp+gVl/N7/CDsN5o0KfdC0FrfaQn
+	ge3I3VS0Y2SWh/1SNdvmOccnkyxtyJ5y8DMR1oo4PCqfEAMKWb9qbZtPKwQ2pQR4
+	nS2ws/paGcSwH2uMpmYrbpDJzhTYTb3YSTQCudZu+WPLZU5cSp9akvG5Eof2/eCX
+	s3Nr+Mxj5F9fJGF/YbGqAw0LDyVVY//RhBih8r4fQjqn3TM1nEdtQt/ZBmR8VOH4
+	YDnor2pOhfifdiVr0D3OOHaLWwp7Q95myj4yeo3btmEKYv80KKOQFactoGaYkDq3
+	bTAknr15v8CYx0w/z1ea29RWN/Rd5xsHkeA==
+X-ME-Sender: <xms:VE_SaN6mxg87ox02SjOqNidLvqdQn-R2BEZysq_t7zmh5Iu98hwRDw>
+    <xme:VE_SaA4gvGIMAi1qt8TCPJLuziXzSd-XDlfK5nqYzHLJc2wiNheNTIT_exYikrbK7
+    d30WT-AOfn_2xAIEz5wcqN1HGPsbhRF89kk3ryEkuh1hhgAT6j8zg>
+X-ME-Received: <xmr:VE_SaCEwF_Te840saIOLA6j81FVUfMtrCl2ZeX1p6H7Tlj6FM99KSgXkae0NDpPmzN-m_qjP3vLgYbw0X-A28hJwFmmIXewK5qdfTQMcYLKp>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitdduiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeduhedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopegvsh
-    gthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopegtohhllhhi
-    nhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtthhopegtsgesvdehiegsihhtrd
-    horhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgv
-    rdhnvghtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtg
-    homh
-X-ME-Proxy: <xmx:4jDSaD-8n1oxotMpqJuD_vlfrbaQe8MP0Iv6WD9YPq_RDQItEu2Hzg>
-    <xmx:4jDSaLhg_vE5dGcnWDej01aeGZgIumJG0m4fysNDz4x6gukOt0IzAQ>
-    <xmx:4jDSaHeiO2l8A2Lvuo9mnvJ0-pMZzUc8JualZjgtRnUfGlKVQvfq8Q>
-    <xmx:4jDSaMIbOu48HAqdGLGCmHUkx594TB9Whw9U9kJC3HfQL0h43o1HXQ>
-    <xmx:4zDSaEGejIlPmwzghtJC-W9LiXkuwd_EWprZJwCo4JwP4PPAo27Csqfv>
+    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
+    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:VE_SaBRtY-ceDExh3J5coEKo71I3D_L2n6jzbZlb5dR67UkNXK5N6Q>
+    <xmx:VE_SaDvni6kGblk59I5yPWA-hED5y-asQTCwR1mKUeolNwzU6XtS-A>
+    <xmx:VE_SaIxhTNR2BRKoWVJ_Ffl98vWlc6FcKz2vODEuq4rjLsFc_eUMxg>
+    <xmx:VE_SaF4DzjRMDuQJ5MnYC-Obb337YrZjpkWRcuuT0dJXzhoJe295YQ>
+    <xmx:VE_SaBR8_sVt_zSnruTgc93jtPZ8aplBY-Hcda5E8sxOTj16I8OF1qCN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Sep 2025 01:32:16 -0400 (EDT)
+ 23 Sep 2025 03:42:12 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d689ea0c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 23 Sep 2025 05:32:14 +0000 (UTC)
-Date: Tue, 23 Sep 2025 07:32:11 +0200
+	by mail (OpenSMTPD) with ESMTPSA id a8e93a45 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 23 Sep 2025 07:42:10 +0000 (UTC)
+Date: Tue, 23 Sep 2025 09:42:06 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Christian Brabandt <cb@256bit.org>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
-	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH RFC v4 7/9] BreakingChanges: announce Rust becoming
- mandatory
-Message-ID: <aNIw23JzQE1vz2JD@pks.im>
-References: <20250910-b4-pks-rust-breaking-change-v4-0-4a63fc69278d@pks.im>
- <20250910-b4-pks-rust-breaking-change-v4-7-4a63fc69278d@pks.im>
- <xmqqldmmqa1z.fsf@gitster.g>
- <aMfwGHL7dh8dk2cQ@pks.im>
- <xmqqsegev4jp.fsf@gitster.g>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Sep 2025, #09; Mon, 22)
+Message-ID: <aNJPTrPHA-xd12p6@pks.im>
+References: <xmqqldm6qehe.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -107,102 +83,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqsegev4jp.fsf@gitster.g>
+In-Reply-To: <xmqqldm6qehe.fsf@gitster.g>
 
-On Mon, Sep 22, 2025 at 09:24:26AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Sep 22, 2025 at 04:01:01PM -0700, Junio C Hamano wrote:
+> * ps/odb-clean-stale-wrappers (2025-09-10) 1 commit
+>  - odb: drop deprecated wrapper functions
 > 
-> >> I am having a hard time imagining the practicality of this "hand
-> >> over but we still review" arrangement.  Some of the security fixes
-> >> are embargoed, and the reason why we are jetissoning the stale
-> >> codebase is presumably because nobody is willing to work on it other
-> >> than the "community support" folks.  I can imagine that we would
-> >> qualify them into the git-security cabal and let them use the forum
-> >> to coordinate among themselves, but then to what degree in the
-> >> "community support themselves" process is our involvement expected?
-> >> As long as we can make sure that they do not leak before the
-> >> official embargoed release, they do not need an official stamp of
-> >> approval from the project or by the Git maintainer---that is what it
-> >> means to "hand over maintainer ship", at least to me.
-> >> 
-> >> In other words, I like what I see in this paragraph, but I do not
-> >> think we can practically live with the part of the sentence after
-> >> the last ", but".
-> >
-> > I think the most important part here is that this community-supported
-> > LTS release should still live in the canonical repositories. We should
-> > avoid the situation where we hand over maintainership to such a degree
-> > that the end result (the tagged LTS release) lives somewhere else.
+>  Code clean-up.
 > 
-> Why is it a bad thing?  The official repository can have a README.md
-> with a single entry "maintenance releases for Git 2.98 LTS (most
-> notably with no Rust requirements) are found at this separate site".
+>  Breaks build when merged to 'seen'.
+>  cf. <20250910153759.GA562601@coredump.intra.peff.net>
+>  source: <20250910-b4-pks-odb-drop-wrappers-v1-1-6ed660cb1eec@pks.im>
 
-There's a couple reasons:
+With the evil merge this that adds the missing "repository.h" header
+this status is now out-of-date, right? Is there anything else I can do
+to get the topic rolling again?
 
-  - The LTS maintainer may not be as familiar with the Git codebase as
-    we are, so they would benefit from the usual processes on the
-    mailing list.
-
-  - The LTS maintainer may not be as trusted as other regulars on the
-    mailing list are, so we (from my POV) may want to avoid having a
-    basically unobserved fork elsewhere.
-
-  - The end result would still be "git", and users will come to us to
-    complain about issues in the LTS release.
-
-  - Initial releases of the LTS release branch that are managed by us
-    would sit in our repo, whereas subsequent releases would sit in the
-    LTS release. This will likely cause confusion.
-
-  - We reduce chances of a hard fork of Git.
-
-So with these in mind I think it would be sensible to keep the LTS
-release as part of the canonical repository.
-
-> > Otherwise we risk chaos and a plethora of different LTS releases, which
-> > would be harmful both for us and those that rely on the LTS releases.
-> 
-> No risk for that as long as we have a single "go there" pointer, right?
-
-It somewhat reduces the risk, true. I still worry a bit about
-encouraging a hard fork.
-
-> > And yes, that probably means that a trusted LTS maintainer should be on
-> > git-security@ so that they are aware of upcoming security releases.
-> 
-> Absolutely.
-> 
-> And there should be a community of those who are working on helping
-> the backporting effort around that LTS maintainer that ensures there
-> is no "chaos and a plethora of different LTS releases".
-
-Fair.
-
-> We might occasionally update what is listed in "git ls-remote --tags"
-> from our repository by syncing with them only for convenience, but
-> the important point is that the community supported LTS should have
-> its own official site, which is different from the cutting/bleeding
-> edge.  Most importantly, a coordinated disclosure would say that the
-> update to versions of
-> 
->  - Git 3.0 to Git 3.4 are found $HERE, 
->  - Git for Windows 3.0, 3.2, and 3.4 are found $THERE
->  - Git 2.98 are found $COMMUNITY_LTS
-> 
-> to make sure that people know where to find their updates.
-> 
-> So, no, I do not think we should unnecessarily mix community LTS and
-> the main project.
-
-How about the following tradeoff: the community LTS is developed outside
-of the usual Git workflow, for example on a forge, so that the LTS
-maintainers can work in their preferred flow. But eventually, once they
-want to do a release they send a pull request to the Git mailing list
-and then the tag lives in the canonical Git repository.
-
-It gives the LTS maintainers flexibility, but still makes the canonical
-repository the single source of truth for Git releases. Furthermore,
-we'd have a way to double check the results before creating the tags.
+Thanks!
 
 Patrick
