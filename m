@@ -1,151 +1,140 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7266266584
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 05:05:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051F730DD34
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 05:11:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758603916; cv=none; b=e8aa5Aln3qIhaSH9oZ96HbQIRpipvfsbHTeO1uqYp2kS4FL8+BNastJojQ3hJcYa1NN/xu9hxYs8NbiyHZylqWI1dyJ5HSOYE9+N1k6W+TULLfSUQzsbkP57Zx0ciWJFZaXqVz4juN1bXYxQrnAT/paqENUFDv5dwV9b/+YBVrY=
+	t=1758604292; cv=none; b=jpj0oxo3m/ich88eawp14/PVyslySrE8Eazt5yA+ABAnrhPAuiYY2CwslQvnItlxVpZFGSwE7mz3shvD+VIm9G67Dc7dCqlRm4YT6B9MAUa2HQcX0+LStghWysy8XXQkeQ+4mOGcxSjK6jbyX6+A3EG+ZocQRcF4SwMxsUPE7FI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758603916; c=relaxed/simple;
-	bh=Gu2tqsdm3IJA1JnNPb4NIVa6QV69weWaWRRYV8uFUmM=;
+	s=arc-20240116; t=1758604292; c=relaxed/simple;
+	bh=uOmMZzHF8R2qYMkqZMmEfaYzAytE2as9ngKNH51BoFQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pdsS8ZZSjwAOg7KBzjR5OnXegGvsqJmnf+q5ywTH6eLx4dfv6maYI41XlTMuHPTv1SWrvYtDKMKZAq5fPcWhtvtCG98mHPBHrpXXqKbFWm10dm5BM/9Q/pfKaMPnV6o619DOP0UdaKXVXJ4OJUn2Ga9ZW9aoR4wxEr5gFkmsiOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XPseiG6b; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=grhA1wwb; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=mCPLXF474Fi3hp4Q42m2LoZDg3mRvd2uTbghGlt20AKhfl2XlRUOalwW+qT/ayUgDYIXOmq9YZ/WVYTkmEtSdIE+GggRRA5PIzW2jvQCe9DRuqL7umfbI4qzmUyC/PHmV+D9k8iiYtJoaq1a+lRJFOASfhSnZGEggo/rm8jrj/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=M6zPXyvn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=keNjVpSH; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XPseiG6b";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="grhA1wwb"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 129E0EC00D4;
-	Tue, 23 Sep 2025 01:05:14 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="M6zPXyvn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="keNjVpSH"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 24A5B1400088;
+	Tue, 23 Sep 2025 01:11:30 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 23 Sep 2025 01:05:14 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 23 Sep 2025 01:11:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758603914; x=1758690314; bh=UhqBUeyZtu
-	Gokmi2Xw+MCTzl2uefxBhfHuJ5OfZNhKI=; b=XPseiG6byDfFuwuxMUwcJd8KF/
-	/OO2MkDmRt1IpODrks1hRhr7BcVdMEYuaFZc6dQhiWGaNCQh/XWuKSZonv/+fyhy
-	DDb0oAPTW8pTF+rv57aZmEZ1lN4jmhe0V8CiKkl+XgDOc8Ywo2GjvbsC7jANO3ia
-	QxEzaFhJcWScUVEELgkxda+97S0NS5+0i40DX+V7KQO0qjpecVQ0B3B8ugjKrR8R
-	zYzLDY/9jIVoguH0eJkIfo59WVYP1OmFjT8Rx+G4AULVXdZyNQgEJtIdbqdM2ceC
-	CUYl0vsz4ecEHbQScsfYyi8GlDjnbTNp22hXNJ04YPEj3Vm9j/INkb6gEGcw==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758604290;
+	 x=1758690690; bh=AEgNpQiBV7bv6ie12aAeakuWBeKvJdktksyIsW+5iGo=; b=
+	M6zPXyvnkKIAmCk8+AVw3WI9fS5OBZP3JiZEMrRJaY28n9UlK3K86jymsS8AX7TB
+	hOE5KgAuRUC4TZBW3CzYiaWl5fx5y13k72HzZTSdkLYyvxwmhqG0M38beRWKY6Tv
+	U9mSVq95RgRUPfHRILBuL8vnOn7VOottrS5wQBYl6Rxqmgh1AFKPVReXRNfelJGs
+	wlsWmq172zJSVeXVk9u+scfEY7ApgDGxdBtKOfe7gxFcRF9umii9hpekCtFIGlI/
+	0PEOcgdbF/lEs3SZ9FqDnIV3aoFr9U52UUXdJs5enBj6NjichGQLQCZKCn6y8Nbq
+	JPsAkZDM3o5IMFaahrvzwg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758603914; x=1758690314; bh=UhqBUeyZtuGokmi2Xw+MCTzl2uefxBhfHuJ
-	5OfZNhKI=; b=grhA1wwbTbsxi41u3WMqPMlaUF0tLf2kFCYT8aoV3yqi/Zv4sX9
-	Y2fKXiIlUfvUfv253GUnodHthpJp9ik6JUZHk7GaVMdEd1yKy5H0J3DO/LrMbUTO
-	uJicqETav6ivoLca3ywqaDF2Z5LpGYBujm5NocnTIRn63m4LTheya6JmbhTeKpZy
-	UhFdSz1BOQ13/oPFZOrPfr2EBhOzrF0qFmEfBQiIeJu2d+NzCmR3k2hREn9HsnL9
-	2zZfEP1HOImmwDi4IGTh6aZWzlp0EKZcKO2hdAmY9y2u4xodG/gDDdbWrwsee3X6
-	P7b9wttT849KeTSi/9pxgyRCzxTC3NvzWxQ==
-X-ME-Sender: <xms:iSrSaOn8mLPr14XIuj6H152QRH0xsC8f0qtlguF78ppKnm8peVXDZw>
-    <xme:iSrSaGR401PbU4LkMHgTPtJ20xB3K9RZi3rABFfs1OiajIZaUHDMLdtfcKG3gvcM6
-    rDBSzFCqaTn28ugTnBynf0woLMNr9W1Y8EtwSdq5cmUhNJC5bAm0Q>
-X-ME-Received: <xmr:iSrSaMaKR8QbSQuSkW-0ifaEMIAAn30zTHPcuEATNdnQZtd-Tc94NlUVFOxMyBgUTdZ0w040JBcAT49oVyr6jPzjQJ4F7qmJzE893vkFt5GE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehleekgecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758604290; x=
+	1758690690; bh=AEgNpQiBV7bv6ie12aAeakuWBeKvJdktksyIsW+5iGo=; b=k
+	eNjVpSHD6tPu/nkEVjzGY+znBwnqxsrPb9RRIZsgWXCVFeL9qm6Z0S5jo9EHdVb/
+	+0DyzTqLKmt5H12+5SIUbRAGXUynCrP6kIVIB/r3dW0t2aIAIUbC18PWf9F9yN2C
+	ghi3LsKtLnLsseTRI+xm6YoLdZ18ZH996O/9RC4MJAoN6qyZS/Dc3udNsNLDEzey
+	uH5crdq53koPNHPtichF1n244ZnYQ9RGs+kOdcRLtIEK7kvLovr1uIIoOPXZAAnW
+	s7unz2uU44v0Tl64rhjsPuWHEgN/q1dndXJB/zHwxVlDndUWyvVvsPn8+ivZaKxr
+	M/wIVRTl1CS77wY8dHAEg==
+X-ME-Sender: <xms:ASzSaPNiOHJ8aVFdnWJT9AaMe41cwWh3I3YKuy5p3xe8Y0838ssClQ>
+    <xme:ASzSaA1aGVgWKwdPSRggA9_xcUV513RQ-BWDm90mb-hxW2ZUB81CgeSQuEN5JUi5Y
+    86cCVw0LnaiHscaWJNaNVeIVGJduJf2d_xDTPlg7rYUkGKkf_uZ>
+X-ME-Received: <xmr:ASzSaGmYwTaRD6amnXj7lqHGhqxjD_euWvUX5kcbyi_spcuFQ51HIqnulGeJL99wCQDFVTLUJETrqiKdJuwxCnmS9bKII0SJThoerIQua3FU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdehleekiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeduiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepphhivghrrhgvqdgvmhhmrghnuhgvlhdrphgrthhrhiesvghmsggvtghoshhmrdgtoh
-    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehm
-    vgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopegtsgesvdehiegsihhtrdhorhhgpdhrtghpthhtohep
-    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhhitghhrggvlhesohhrlh
-    hithiikhihrdgtohhmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehsrghmsehgvghnthhoohdrohhrgh
-X-ME-Proxy: <xmx:iSrSaO_JPdL5ehaqfvjZmkIfjdpF_IkYB2QBZj5pms0PBiM5pQA2iQ>
-    <xmx:iSrSaGm_uoyrhleO_RcMQsVulCbTWfBh_PLQjNgDjqPxFgXfKeQPww>
-    <xmx:iSrSaDY1--m7Iun58VJ83Kbx5OrYAb8xbFolyMUjxvOqphoHHuFYdQ>
-    <xmx:iSrSaOOz3UdipS15RposP0Od-yF0QGuf81b41bajU8UMX9mouQAtDg>
-    <xmx:iirSaNUE36F__CTSDk2txam2DSVgguSJ2H1hGEl-5JCnJEYPRzVerbK6>
+    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfi
+    hrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhes
+    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:ASzSaPVkyVOoZ2sgZY2IrqNNgP_BRT7yFpT_0pQC3y47d17CJHG3pg>
+    <xmx:ASzSaEvXZVpXdmRyAp0jhg_JDskGyYKBjoOjaexSVhZhJGv4rwQYNA>
+    <xmx:ASzSaKZm6oNkjq8T77dW1TEPxDtOYObdVXuYLQgwRmOxIId2Wi7wYg>
+    <xmx:ASzSaLUgSK768b9eLI-pDPwxouDL2BB5nhxFxQj-_3-qfvBVnkZ6nQ>
+    <xmx:AizSaGmrptpx_vIrOkmBprL2vr-jxDtR5iPyl9vxjSxmKp7sljUIyG-i>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Sep 2025 01:05:11 -0400 (EDT)
+ 23 Sep 2025 01:11:28 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a5bd4d5f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 23 Sep 2025 05:05:09 +0000 (UTC)
-Date: Tue, 23 Sep 2025 07:05:06 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 79259ba1 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 23 Sep 2025 05:11:27 +0000 (UTC)
+Date: Tue, 23 Sep 2025 07:11:24 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Sam James <sam@gentoo.org>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Michael Orlitzky <michael@orlitzky.com>, ezekielnewren@gmail.com,
-	20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im,
-	Johannes.Schindelin@gmx.de, ben.knoble@gmail.com, cb@256bit.org,
-	collin.funk1@gmail.com, contact@hacktivis.me, eschwartz@gentoo.org,
-	git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-	newren@gmail.com, phillip.wood123@gmail.com,
-	pierre-emmanuel.patry@embecosm.com
-Subject: Re: [PATCH RFC 0/3] Introduce Rust and announce that it will become
- mandatorty
-Message-ID: <aNIqgghQwyWV7Tis@pks.im>
-References: <CAH=ZcbCUL-rWw5E6p26T0039gs9q-P8iK5fp73-RzTzKiZ0zMQ@mail.gmail.com>
- <20250922155949.27019-1-michael@orlitzky.com>
- <aNHBIHXYPmS5AvpP@fruit.crustytoothpaste.net>
- <878qi66tyg.fsf@gentoo.org>
+To: Ezekiel Newren <ezekielnewren@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH v2 00/18] Introduce rust: In xdiff
+Message-ID: <aNIr_P6HMEvwERUL@pks.im>
+References: <pull.2043.git.git.1756496539.gitgitgadget@gmail.com>
+ <pull.2043.v2.git.git.1758071798.gitgitgadget@gmail.com>
+ <xmqqcy7pc8ix.fsf@gitster.g>
+ <CABPp-BHJUkSERQon6xx=sHrhN7i=6ekv+Hz1+P+2mh0=Xw15Mg@mail.gmail.com>
+ <xmqqy0qcae6z.fsf@gitster.g>
+ <aNFIwFD6E6Lngy5M@pks.im>
+ <CAH=ZcbDkDfc6j_gQCt_q9RLP_ozYqr09i1-xe2mvhSQRgf8MGg@mail.gmail.com>
+ <aNFz-0rO79l7crZ5@pks.im>
+ <CAH=ZcbB_AZ7a=kQ_tHRtm7jPD6h_7AAiQYyaMQrG+ijj8Dyvrw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <878qi66tyg.fsf@gentoo.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAH=ZcbB_AZ7a=kQ_tHRtm7jPD6h_7AAiQYyaMQrG+ijj8Dyvrw@mail.gmail.com>
 
-On Mon, Sep 22, 2025 at 10:47:03PM +0100, Sam James wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> > I don't think this is going to happen as you anticipate it will.  My
-> > original policy was to target Debian stable's release for a year after
-> > the new Debian stable came out and that will make using many crates
-> > nearly impossible.  We are going to have to be _extremely_ careful about
-> > dependencies in general and the things we are likely to use are things
-> > like bindgen and cbindgen, where typically an old version will work just
-> > fine and which are already packaged in major distros.  We are not going
-> > to be adding dependencies willy-nilly and running `cargo update` every
-> > other day.
+On Mon, Sep 22, 2025 at 10:27:32AM -0600, Ezekiel Newren wrote:
+> On Mon, Sep 22, 2025 at 10:16 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > On Mon, Sep 22, 2025 at 09:18:14AM -0600, Ezekiel Newren wrote:
+> > > > By the way: I'm also happy to change attribution of some of the patches
+> > > > in my patch series to mention Ezekiel as author. I don't care much who
+> > > > is listed for the initial patches that introduce Rust, but would retain
+> > > > my own authorship for the "varint" and "BreakingChanges" commits.
+> > >
+> > > My only other concern is with varint. You use usize on the Rust side
+> > > and then uint64_t on the C side, but I'm ok with fixing that later as
+> > > it only breaks 'linux32 (i386/ubuntu:focal)' in the github workflows.
+> >
+> > Oh, this is actually an oversight, good catch! I refactored "varint.c"
+> > to use `uint64_t`, but then forgot to adjust the Rust side in the same
+> > spirit. Will fix.
 > 
-> That brings me significant comfort and I'm glad to hear it. I hope
-> others agree with your position on having significant restraint on the
-> use of external crates.
+> You also missed updating varint.h.
+
+Hm, am I missing anything? It does use `uint64_t`, and if it didn't it
+would cause a compiler error due to mismatching declarations.
+
+> > I suggested in [1] that I can change authorship of the patches that
+> > introduce the initial infrastructure into Meson and our Makefile (so I
+> > guess patches 1 and 3) to instead list you as author and myself as
+> > Co-authored-by. Is that something you want? Given that you have
+> > kickstarted the whole effort around introducing Rust again I wouldn't
+> > mind that at all.
 > 
-> git has always been quite good about dependencies pre-Rust.
+> It doesn't make sense to me to list myself as the author of any of
+> your commits, but I would like my name referenced in your commit
+> messages.
 
-I certainly echo brian's sentiment here. Rust dependencies are easy to
-use, but they are also one part that worries me quite significantly due
-to multiple reasons:
-
-  - Pulling in many dependencies opens us up for supply chain attacks.
-
-  - Every single dependency is a source for vulnerabilities in general.
-    We're already good enough in creating these ourselves.
-
-  - Dependencies may have hard requirements on the Rust version,
-    requiring us to bump the minimum required toolchain version.
-
-  - In general, I'm not a fan of having even dozens of dependencies. It
-    causes bloat and externalizes a bunch of knowledge.
-
-So I think we should and need to be very conservative about adding any
-new dependencies. There will be cases where it makes sense, but every
-new dependency should be well-reasoned.
-
-After this patch series lands, one of the next steps will also be to add
-a policy for how we want to use Rust in the Git project. brian has
-already written such a policy (see e.g. [1]), and it already mentions
-that we'll need to be careful about adding dependencies. Might be worth
-it to flesh that part out a bit more, but that's something we can
-discuss at a later point.
+Okay, will do. Is it sufficient if I say something "Based-on-patch-by"
+or "Inspired-by"? Don't really have much of a better idea for how to
+include it, but please let me know in case you have any preference.
 
 Patrick
-
-[1]: <6d065f550fe871cf010409f7bd2a63438cf52723.1756496539.git.gitgitgadget@gmail.com>
