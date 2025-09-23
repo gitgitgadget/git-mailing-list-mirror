@@ -1,108 +1,126 @@
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D18946C
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 01:59:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF671184
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 02:57:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758592799; cv=none; b=ukNcxr6cQJRuHIv4dHyFMeGmSGhLWDJhIEHUHjLibGJa7JF9kIC2H69FEtPuxY/ped/QEN8/rV8HmAcgSI0Fe6WYW8R7EocOFZKty9dnKKwUG1HghKnSZPytfgjtzAsR0jvsTakJR61Zj+kM1V3YpTMHWs1P49P1uhNWuD+vrb0=
+	t=1758596228; cv=none; b=ZhqpMIVzRuuHp1Dg5plpZbOpDwZp9Q+b5i07Z7xA8iWOu1C+8DqlhZvOD3KBvhFvx+UPoxAZtbncGVYYVAi9G+oOKJFj2gwCmUzDJhCLH80x+xGOs7tQOHmRtWTITGDPKLfsopPc2AwFvAIOPUqIpyQLS40gYInAHoe0aH/bXdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758592799; c=relaxed/simple;
-	bh=PqAlTO+/crEsJJAS6jentCZoZwNP85CgWITtWboYhR4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HRCckfWXFEq20vWbPPHD+xGvNhFLF0xXrbrSoXNdGCz3SEiV0Ai+B39Vkl2banFrgm9ESO0Hgk7OWw1P6f2vsb6G0A8ebO/zgFTb9gynbMA9fph3V5sfrOi0tGYuqjmfYwyOii6SuxAjJ8Bhvfqm1X0vvfURm9QO7KAbaY9HzxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e+f/fJdL; arc=none smtp.client-ip=209.85.166.54
+	s=arc-20240116; t=1758596228; c=relaxed/simple;
+	bh=E+y3hZuJ2MD+pXXFUxmV97Ck2AL6GdY/x8GQbycDVqY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=I4/+4VXTNuTdxyaaLwG0hvz47xB5etqguq4gXtSg9yuPsHFWw/vbPfwSo2S8IMd9cMW83jUKe3HnDShJ62mVpX0KDmskajzhCWVVwCD9JlV/qWi59cXT6M7pUIEdzGBMdT95mcC1Kx3J9bjMQmJCW0Tn6Sd/060itC0FrPgGwzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j6RUDChL; arc=none smtp.client-ip=209.85.210.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e+f/fJdL"
-Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-8ca2e53c0d3so62381039f.1
-        for <git@vger.kernel.org>; Mon, 22 Sep 2025 18:59:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j6RUDChL"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7859d18aa33so929649a34.0
+        for <git@vger.kernel.org>; Mon, 22 Sep 2025 19:57:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758592797; x=1759197597; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gzjhJS+7kd7OtAKNHIGT/EC9rB9t1g3LqnEY83nKAUY=;
-        b=e+f/fJdL5p7KVR+01heXS1AXAo53ntH4BDT3Htcpn31bTmA5Hwq2oIJWeWyTahedpR
-         BA2Ep6McodoBvBzI5RXsgHEGJmoodxny5SxBYDo+mc4YtFNg+aYibGS2KN3Ic32eqyjy
-         1fbYN50LMoERXOiJ+ZuZeDl76LmoihVgcLqTgKXPnuHsRAsayel+PQdwpC5SV046/LkL
-         aXXQYbrB9pgIZnAJeebTPonZJbXbo7qsulcOyF2L8YB0uFh9P7SS/6QFYARbO/4pAsf5
-         9I+UmJpD+IE/Kc3lAkfvkPWPuteCgMTQV7l8MlpYzO9HgVBRWgpiXCsvcZjJ75lS3wB2
-         FmdQ==
+        d=gmail.com; s=20230601; t=1758596225; x=1759201025; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=htAKuG0v0rBfQuUl4tKndHi9yPqmBjaze6xgWZD4bBQ=;
+        b=j6RUDChLJNyX4ufLG7t9u5NzTeXKAv/SmRn0BH5tUiTKrI86ss6mU5CPQBzUJd1Pa3
+         6eKFOSoCYJGZwo4VWSH246D2Bl7XBW1sMwj3HXY8iTvvg/V6ZHUu5L/qWnv528WvGfph
+         bWFeqGOQQv5vdPHr3wskik/hB1Bg/ORkuX9jBqcwj86hpxA3NVgtdm30ga9uhleQse1n
+         /8PO0sDbgniZy9xkuYuQe4Qutkob83gYffmtl8L3WPWpRZwkATIBu4Ms2Ghlabl1lbXt
+         qBDS4uBL02lmLCDp0t3BGcv7ZWKp6c4AShDSew9ttPE8Gm7ZxMuCscpQZTL2dXwtBS0W
+         WGzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758592797; x=1759197597;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gzjhJS+7kd7OtAKNHIGT/EC9rB9t1g3LqnEY83nKAUY=;
-        b=SWXgBjZnqKIXZ36z1xi02RL5NpliDT/T6oLQEQv+btYFya5jV3MO+bbji+LOb7TItX
-         CIwqobMzZkyQpIAj7BTUeQUH+i7HeH/jagiomNvJ1Dz9RH+Pc7qfyRFgi9Vl4ZxAkv/k
-         84nCZ+4bVpaCiYDO5Qa0q4oBo6/clfbMTt23khcxEhnfOG9L7EpsNtCeNzcbd4/4V+jk
-         wR2qXDMM0ORouPePDzng2APeqJx5YlAVE+s6WMlRXE5xun1rC1zeab2WT4mEAX6T/YBe
-         Jo3me8a+chcGOoMUq1/PXUxmVV/z8JAoxdJEr8CCc0leM+RvnQo0EsnbuRX5bYZQHUcn
-         5p4w==
-X-Forwarded-Encrypted: i=1; AJvYcCVsLssXghZJ47M70n06ANV5+o+Reg4vkNCcliSuONMKJLkzvONjLCaEENqWJdSBWvrFJUY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzMtoMi8GOtylqzgrtWzLoWOWVbvILsncEroXvDeDn+Skg8hhg5
-	jM2AgetBY8hmJkS7LzArLf5QOrYsUVxNQfB7i8Upfv9L98cxJQOvCN98DP+BHC4wq1P38s/b/En
-	5IkoQYGbzsZoOyYmyX2je4nXep9ATVLo=
-X-Gm-Gg: ASbGncu8nkndEoJ9RqzvNeyTXIJVzFBAzWeAcdlWTBzhjjobEJeaqPewnLym7nVs0ua
-	530W/Xikaa54uBo15LlH3WlYRqyEFveWixzBpLInYQMUzlkirAzR9SneYAVyxjfOx4GjkAjIW8Q
-	6LTukahfDaI8A9WNZv7bhQ66KaMzfRQ6I8PGXwQC0PcKEHQgVAm5La7dWM8rNSqQa2cQhTI2EJU
-	oBdbkOeiV9VrfodJ8Tk9n5cykVDzRUJ0vaq6Q0=
-X-Google-Smtp-Source: AGHT+IHHeRlpv3hn6CpR+D4SCshM63c+jbMi+o4JAQKc6/x25Sb/B1+Ns++eb8HAEbm7hbA6AcRcoMbi4v6ci3y/G4g=
-X-Received: by 2002:a5e:d70f:0:b0:887:55f8:5dea with SMTP id
- ca18e2360f4ac-8e202079815mr141095339f.14.1758592797217; Mon, 22 Sep 2025
- 18:59:57 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1758596225; x=1759201025;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=htAKuG0v0rBfQuUl4tKndHi9yPqmBjaze6xgWZD4bBQ=;
+        b=ePFOcsZ5ti4o2Gi9/gODoq6PaaZl2dH3u7aFDY1Bx3P9dHGwW4HdjXtGQSiTEViNmd
+         jE5nwhZyJIaAheLsNCUIqTvDxSCOi5w3Yl6D04vwpHxmn2ZRgtYvyvFOSrmNSJomwOSw
+         ZgojhkhUwmjT6VaycD0eIDq96Q1OprKOox2+4XbkRyT2srXoLkM8TL6hErgkVcjm1U4n
+         UgL4HO4v7n9nKPckaKIaBM2yKwHERnSy+ir/+M4i5IPXg+KKYcz3RTVYUknk3WejhSTG
+         L1USqwQIfP7/LM3LNAfUxUZ8u4VoqePY9BlNLTKQbR30q/CZjg0a/Pahl2ixxYf2+f9V
+         U6aA==
+X-Gm-Message-State: AOJu0Yz+urbTwuawd+5nFlDnGroKhlOiAxvr57yeq7DKftYDRxV7ZW8k
+	GgJvNd7FbfDuUfNDTQhrdtXOP72ViTdKDXjso2qlWbPNZkoaORvZ59txked5TQ==
+X-Gm-Gg: ASbGncuXbY/9cpF//ozNy8eg7IRddBvhZD6paveMewnKU4C0aoN0K3BiHWuoPjIkQZI
+	H6dGPR1HciAQpErwm4M8N3A/A0prp1JhOuaTFbwIBsvnjOf5eyYDrjkll2LT9jOpWG3dI1HgqjJ
+	bvjEuDu01p8YmTXSe2ePbLuDl3hQs3N11/xPrCro3m1xwbaiup6joH5XyqmzBrMfCXCsDN3mxyv
+	tcU9zwnSFxcGwktN5P9IL3QDKbDsFxSH1EKAbSVG5UgiK+exyl2zr0qW7VWMYYC0sJIzNOxpznB
+	5J4WxIeIW6t9rFiLrt5hykPX2zexRntoqGwx6786f9OACgwhlKLlv5LZW2Z+an41NgSMzC+2TOn
+	+/nx77pJ+BmfzrKwNFx6qGjIvXuiCCZk=
+X-Google-Smtp-Source: AGHT+IFM4d5A3hJk0gFL9fl/GQX9j+n1mm1+dYSxQUYcXWgj+DslYfKllbuT1Q6rpsW2Y7M9vI/iYw==
+X-Received: by 2002:a05:6830:290b:b0:761:919b:fe19 with SMTP id 46e09a7af769-79157d565e0mr505044a34.29.1758596225545;
+        Mon, 22 Sep 2025 19:57:05 -0700 (PDT)
+Received: from denethor.localdomain ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7692936963esm6431664a34.23.2025.09.22.19.57.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Sep 2025 19:57:04 -0700 (PDT)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: karthik.188@gmail.com,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH 0/4] builtin/repo: introduce stats subcommand
+Date: Mon, 22 Sep 2025 21:56:56 -0500
+Message-ID: <20250923025700.3046260-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.51.0.193.g4975ec3473b
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
- <20250915-b4-pks-rust-breaking-change-v5-7-dc3a32fbb216@pks.im>
- <aMsxhp6ZO2Cdz7+k@szeder.dev> <aMteF4VTq2C5sAhK@fruit.crustytoothpaste.net>
- <aNGkt/DdnbjNu3s8@szeder.dev> <xmqq348etd9n.fsf@gitster.g>
- <aNHKdFkiGLPcLEjP@fruit.crustytoothpaste.net> <xmqqplbiqeol.fsf@gitster.g>
-In-Reply-To: <xmqqplbiqeol.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 22 Sep 2025 18:59:46 -0700
-X-Gm-Features: AS18NWBbJFbFhXIAVE4lsIxDLJ6nS8QOJODn-dLqwww_0826HaFG3hM_a2KQ5z4
-Message-ID: <CABPp-BFd4T4sJV=3uB_vfvSddQWeAdr=2x4T8i61VQHWJMW=tA@mail.gmail.com>
-Subject: Re: [PATCH v5 7/9] BreakingChanges: announce Rust becoming mandatory
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, Ben Knoble <ben.knoble@gmail.com>, 
-	Christian Brabandt <cb@256bit.org>, Collin Funk <collin.funk1@gmail.com>, 
-	Eli Schwartz <eschwartz@gentoo.org>, Ezekiel Newren <ezekielnewren@gmail.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, Sam James <sam@gentoo.org>, 
-	Taylor Blau <me@ttaylorr.com>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Sep 22, 2025 at 3:56=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> >> [Footnote]
-> >>
-> >> * By the way, I _think_ I never saw that policy document until
-> >>   Ezekiel started his topic and sent it out as one of the component
-> >>   patches; how did it get there from brian to Ezekiel's topic?
-> >
-> > I had it in a branch of mine that I was going to submit at some point
-> > and I mentioned it to Ezekiel, who modified it and incorporated it.  Th=
-e
-> > original branch should be `rust` on my remote for those who are
-> > interested.
->
-> I figured that something like that happened.  I was mostly
-> interested in how firm those original authors supported the version
-> with Ezekiel's changes, as outsides would not be able to telll how
-> extensive the change were.
->
-> Thanks.
+Greetings,
 
-Footnote 1 of https://lore.kernel.org/git/aHlwZPbiKnakMN75@fruit.crustytoot=
-hpaste.net/
+The shape of a repository's history can have huge impacts on the
+performance and health of the repository itself. Currently, Git lacks a
+means to surface key stats/information regarding the shape of a
+repository via a single command. Acquiring this information requires
+users to be fairly knowledgeable about the structure of a Git repository
+and how to identify the relevant data points. To fill this gap,
+supplemental tools such as git-sizer(1) have been developed.
+
+To allow users to more readily identify potential issues for a
+repository, introduce the "stats" subcommand in git-repo(1) to output
+stats for the repository that may be of interest to users. The goal of
+this subcommand is to eventually provide similar functionality to
+git-sizer(1), but in Git natively.
+
+In this initial version, the "stats" subcommand only surfaces counts of
+the various reference and object types in a repository. In a follow-up
+series, I would like to introduce additional data points that are
+present in git-sizer(1) such as largest objects, combined object sizes
+by type, and other general repository shape information.
+
+Some other general features that would be nice to introduce eventually:
+
+- A "level of concern" meter for reported stats. This could indicate to
+  users which stats may be worth looking into further.
+- Links to OIDs of interesting objects that correspond to certain stats.
+- Options to limit which references to use when evaluating the
+  repository.
+- A progress meter to provide better user feedback while the repository
+  is being evaluated.
+
+Thanks,
+-Justin
+
+Justin Tobler (4):
+  builtin/repo: introduce stats subcommand
+  builtin/repo: add object counts in stats output
+  builtin/repo: add keyvalue format for stats
+  builtin/repo: add nul format for stats
+
+ Documentation/git-repo.adoc |  22 +++
+ builtin/repo.c              | 287 ++++++++++++++++++++++++++++++++++++
+ t/meson.build               |   1 +
+ t/t1901-repo-stats.sh       | 157 ++++++++++++++++++++
+ 4 files changed, 467 insertions(+)
+ create mode 100755 t/t1901-repo-stats.sh
+
+
+base-commit: ca2559c1d630eb4f04cdee2328aaf1c768907a9e
+-- 
+2.51.0.193.g4975ec3473b
+
