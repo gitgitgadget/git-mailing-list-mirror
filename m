@@ -1,55 +1,55 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDD2321274
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 10:17:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458BD32127D
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 10:17:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758622650; cv=none; b=tQCKPb4FfiEjiup9S7VOXj9jDSIoXoA+moL3XeITmhMtTddnAbM8OXB+q14VOX0iL9QK5ayeULQhHgEE7+etOqMCP9y3AaUTaCU0/NJGPz4Led1nO3O4MBGoMiTULpar/fjGtuj0TzPyjN1DfZqb3oH2BzaviUsLqyEQN+MBtao=
+	t=1758622653; cv=none; b=nHizt3WmgHxDakqpb9NHnSqcwc2mKGozJlytR8xCekCNbin7stDkXYK8P2z6w5YlH9aExS2zetknJstjA8380AFYvJ0pixQx2Mlbaen0PPCrwxsieaWdSR4qmIWQSRffr+JLI1xCrWU8re+GGDw2mhYSlxD4o/2PmJlwcSR9UL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758622650; c=relaxed/simple;
-	bh=kQdBBMPMviC5fsrF7X74Y5dDU+kAzztD6qcPjttlwOM=;
+	s=arc-20240116; t=1758622653; c=relaxed/simple;
+	bh=Njcav+F0/slK8cTh8E9INbGE7JMbiJIVLxwt33b+9ys=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KtaDN/awUvMPp8ky9CAXxDeMuGifIFTUYdqSutQ6IZMg9Is9o1XLsFRoA/DptfygkihjM2dYNOVxkvw43TCP0O6x0OxaFM9I1GxT6oeI6cKCfO47U9wvB13DisReVxMiu7s54ub05mY7h+FPp9jzA8hUEM5gkkfMropBNm5YZ+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NiMBdp5M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cl7KSzXR; arc=none smtp.client-ip=202.12.124.154
+	 In-Reply-To:To:Cc; b=emOx9RyYy2CzIDNpGcVEY1/6fGdH2lIOqQqE5rSuFF7xGLt8TV89buOiED7zHfOjzB7QqagwvPS0xuIejpbDGcP1RrGOwmEM+vTYc96q9sEbWD6iuxqsvMFxOyYI7KeyJ63tMou8DogSVbG7mL1HQ3A3LhK+UIGLUpvyQ5Mzd9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PrKp2oEK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RC7H/LZK; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NiMBdp5M";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cl7KSzXR"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B1F0C7A01ED;
-	Tue, 23 Sep 2025 06:17:27 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PrKp2oEK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RC7H/LZK"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 75BD11D002D0;
+	Tue, 23 Sep 2025 06:17:31 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 23 Sep 2025 06:17:27 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 23 Sep 2025 06:17:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758622647;
-	 x=1758709047; bh=FtsG2kAwa2bhk6ZOqa3pZnFF0wCO4vnyKXfiPKKeMG0=; b=
-	NiMBdp5MDe7dauZbKZVK63D/QYEEYW5R0p3bnbGWsQFmODMtr/H+PAb4fYEr4S16
-	pKoYQe+xmPPhjHseYiWp1ztvnAYkiqQ0VwVL9PxiqFxXrldOLENop/ottlvgRKDF
-	TVyWYJeBcFtxuczw9NesxUQKH/YEHHnQUQGxOrV27+UG0gqF6qEsGnk3NECCueMX
-	73BH7Vz8p+spnqGtDDxW+jThEJyA9tcnkvvwWJI+xQ818yxo22K+aV6PSiJxgkVH
-	h7J/zUfG7qIpj+fabqqoDFQESFNx27YW37IKCtkcLOe8JN0nhc2zil/5R2Stxhi5
-	ZtyxLSZQZfXmWwI8S6ovyg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758622651;
+	 x=1758709051; bh=TggbCMkmrdghZxnr0TzdHYKMyZ2Zq/jormkxR8X7lno=; b=
+	PrKp2oEKS1SDLhTo93Ancx2MrhMxWfoJXcSIpuWk27LxD7AtAgxt8LSM6Vwu704+
+	GGa8eiAOkGtF2EWvvHgK11Ael4V/bDrkJVaxEqLd/0HsKUiNk03G1znuP1yc5m3T
+	Uu52/7xXow5gie6WG4FTjCGXcEBwSKbblWq4wNMu0nFeZBqyEYjLV1LI8bya9W1E
+	QKoAfYQAxi4E3zoyiSTn82kmiPqZbyFnGScH8jar5BrB5kvK5fJ8BEle1a/p/lXk
+	54BPrjUOMYYKftcrepRlk3Js0w5H79K8fUCiWXVJGe8lg0K1Fe9NI3dTmHmd6GpO
+	57bCbhO1HB1d5HCQTPDZgQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758622647; x=
-	1758709047; bh=FtsG2kAwa2bhk6ZOqa3pZnFF0wCO4vnyKXfiPKKeMG0=; b=c
-	l7KSzXRCF7uUPzTpmyQE/UZWDfbux0YOVZplXGd5jih+J0m31mNt6uJg8RjxHwuA
-	k1yiGP9OOH+4d2wuXofJTa+PJ8tj9a+R8kjBoxrlZHsVSwUhNOs22PKXCbBMX2nA
-	DNs0SI8uwWBtdeFAnr6vlL29hMapEf/APMdXotu8YtDbdVp4VbhqOS2ZmSXTlNGG
-	/E/wtG1YghmafSm8/xEczMbNVfWo5lBwsvnOqNN48KnDQN8/CAocV/Aizj1eIyBW
-	nWEFUdvXz09d6ABUtVp2quxPlbbcQa3ucf7byBiyJESS+ZKmz61ujk/x793kD9ut
-	8ODgZ9+7fNaf372SEkDuw==
-X-ME-Sender: <xms:t3PSaMkQzfsW3a5NrBlIRr5p8SVBzFf-v1_qgfL8S8N1RFc7JZQUHQ>
-    <xme:t3PSaPj8ITKS1Qnuk1KcLZmAckeYDcy4Yoj6z9FEFjnNohSnl7cjo3w-KBgqOhfxK
-    rJRFqxWZ3s4hsDnMRiyYBgjjB27lylDg8mPmcuyLh1b6rWhm7Yf>
-X-ME-Received: <xmr:t3PSaEfgIm8r_IPxLzLWdwuxp8VzYKqdGCRXsQvkeUQ0tNmYDHlEO2IPbirK-xs7TdmXgx9_Ko7lDHa3GbJ19p9ORe6ex1gtCCTGGzJIn1eF>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758622651; x=
+	1758709051; bh=TggbCMkmrdghZxnr0TzdHYKMyZ2Zq/jormkxR8X7lno=; b=R
+	C7H/LZK5s7jqKAqOzauX+ybBCLiSj16m4umhBURsLYvLAGjyFy+ek2o/fYvyq4Gd
+	W2qwcRSle2Oo2/CdmNnaegUlwB25yx0N6ncQT/9U2H6dWIyNAXdXwce3jy3vT55j
+	7QTXwizHgzx3X9n3bAOLS++ndf0P2je0PBwulFOLfOVcwvPGTq9YxXiqeB1hhP72
+	gNY0TSkQ4r6yZY1ROXRwyrCaJU+jDO4HegGUv3pA4LYSdll8EHiUmdGXxkd3c5RC
+	yBqSIlOyUkGqLqJhriSmFq2v8EGtpoEZhmu2HTTkEBeeZ8rT1VLlV7kdVwQEWGzN
+	tbSQ81rVxrIrOIHUQRDog==
+X-ME-Sender: <xms:u3PSaFJQco1uPq9u-9-IeFEztpsKc4K9esizz6scSu-f-rWL7urxwg>
+    <xme:u3PSaE0g3wzB7AeaJKKrParNG0rVpN4FS2h4nAX7AEv2kzbJyfPGuvEWBa6pcKJWJ
+    ej5YahiLS5wE9cTGU7WjzAt7nYYlhsAzZTAxuOwqWT8zpyCqBaxRg>
+X-ME-Received: <xmr:u3PSaHhJxce-InvEji5-JT-5z1DO-JXITFct_4S0H0p1zf4hAFtCEmk_mk2uYcqjR4mLEbnD4Sj9z8ec77GRjBtYGVJWhDCmnOF4V6d6--1p>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitdegjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -58,25 +58,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitdegjecutefuodetgg
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfh
-    hfrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthho
-    pehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrd
-    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrgh
-X-ME-Proxy: <xmx:t3PSaPi3ut7XNPs50vqfTgQZ8feKFX9SAS3nPPK9xpeSAh1i43UDdQ>
-    <xmx:t3PSaMzz3qXFRQSCV58rEAMGxIraLeLx2FD01-nantga6gYN0McL9A>
-    <xmx:t3PSaLM0Nybg0j2r8Sb9u0V1M4niRiuISGe-2cv5qiGMFu2N2RvwPA>
-    <xmx:t3PSaNW45rs-quIm7tlKUU_29mrhSmV7OOrmfRzJhCnrUax1D1BDRw>
-    <xmx:t3PSaJ70LhZyqa6EZDKSMAjL0f2xuqUUbMWJDw8JSH0Vwsg73A0hGOLE>
+    ohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhr
+    rhdrtghomh
+X-ME-Proxy: <xmx:u3PSaNWHj_0m_clInIq3j5crhcoJlqVpxayoZtyXvfOnibGNCpDAtQ>
+    <xmx:u3PSaOUC-D4I7aAjpOmzfWHB5aDHXuTuF8-1EkAoyYt0wFS7LJY7hg>
+    <xmx:u3PSaFgYf3LKGTkDy_polAbuzKnrT2d1b3oicUtCY0e3FZmeX5ZJBQ>
+    <xmx:u3PSaBbkJL82tkNxoVSKxl4Lrbrh1FFlsrRoZHrtx0k_dl4QJuGM5w>
+    <xmx:u3PSaMmmWfvmBRi6sPuymlKic6Y9C_ztmDpvEleccDe3FUpDJNDL6x3y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Sep 2025 06:17:26 -0400 (EDT)
+ 23 Sep 2025 06:17:30 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id db830ab5 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 23 Sep 2025 10:17:25 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id e6be9b18 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 23 Sep 2025 10:17:29 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 23 Sep 2025 12:17:05 +0200
-Subject: [PATCH v6 06/15] odb: move kept cache into `struct packfile_store`
+Date: Tue, 23 Sep 2025 12:17:06 +0200
+Subject: [PATCH v6 07/15] packfile: reorder functions to avoid function
+ declaration
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250923-b4-pks-packfiles-store-v6-6-b48f2a882759@pks.im>
+Message-Id: <20250923-b4-pks-packfiles-store-v6-7-b48f2a882759@pks.im>
 References: <20250923-b4-pks-packfiles-store-v6-0-b48f2a882759@pks.im>
 In-Reply-To: <20250923-b4-pks-packfiles-store-v6-0-b48f2a882759@pks.im>
 To: git@vger.kernel.org
@@ -94,115 +95,99 @@ Cc: Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>,
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.2
 
-The object database tracks a cache of "kept" packfiles, which is used by
-git-pack-objects(1) to handle cruft objects. With the introduction of
-the `struct packfile_store` we have a better place to host this cache
-though.
-
-Move the cache accordingly.
-
-This moves the last bit of packfile-related state from the object
-database into the packfile store. Adapt the comment for the `packfiles`
-pointer in `struct object_database` to reflect this.
+Reorder functions so that we can avoid a forward declaration of
+`prepare_packed_git()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb.h      | 10 +---------
- packfile.c | 16 ++++++++--------
- packfile.h | 14 ++++++++++++++
- 3 files changed, 23 insertions(+), 17 deletions(-)
+ packfile.c | 67 +++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 33 insertions(+), 34 deletions(-)
 
-diff --git a/odb.h b/odb.h
-index 3044b6a661..9dd7bb6bc3 100644
---- a/odb.h
-+++ b/odb.h
-@@ -131,16 +131,8 @@ struct object_database {
- 	struct commit_graph *commit_graph;
- 	unsigned commit_graph_attempted : 1; /* if loading has been attempted */
- 
--	/*
--	 * private data
--	 *
--	 * Should only be accessed directly by packfile.c and midx.c.
--	 */
-+	/* Should only be accessed directly by packfile.c and midx.c. */
- 	struct packfile_store *packfiles;
--	struct {
--		struct packed_git **packs;
--		unsigned flags;
--	} kept_pack_cache;
- 
- 	/*
- 	 * This is meant to hold a *small* number of objects that you would
 diff --git a/packfile.c b/packfile.c
-index 861d7ffd6f..95a78f267f 100644
+index 95a78f267f..5588a7ad6d 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -2091,19 +2091,19 @@ int find_pack_entry(struct repository *r, const struct object_id *oid, struct pa
- static void maybe_invalidate_kept_pack_cache(struct repository *r,
- 					     unsigned flags)
- {
--	if (!r->objects->kept_pack_cache.packs)
-+	if (!r->objects->packfiles->kept_cache.packs)
- 		return;
--	if (r->objects->kept_pack_cache.flags == flags)
-+	if (r->objects->packfiles->kept_cache.flags == flags)
- 		return;
--	FREE_AND_NULL(r->objects->kept_pack_cache.packs);
--	r->objects->kept_pack_cache.flags = 0;
-+	FREE_AND_NULL(r->objects->packfiles->kept_cache.packs);
-+	r->objects->packfiles->kept_cache.flags = 0;
+@@ -946,40 +946,6 @@ static void prepare_packed_git_one(struct odb_source *source)
+ 	string_list_clear(data.garbage, 0);
  }
  
- struct packed_git **kept_pack_cache(struct repository *r, unsigned flags)
- {
- 	maybe_invalidate_kept_pack_cache(r, flags);
+-static void prepare_packed_git(struct repository *r);
+-/*
+- * Give a fast, rough count of the number of objects in the repository. This
+- * ignores loose objects completely. If you have a lot of them, then either
+- * you should repack because your performance will be awful, or they are
+- * all unreachable objects about to be pruned, in which case they're not really
+- * interesting as a measure of repo size in the first place.
+- */
+-unsigned long repo_approximate_object_count(struct repository *r)
+-{
+-	if (!r->objects->approximate_object_count_valid) {
+-		struct odb_source *source;
+-		unsigned long count = 0;
+-		struct packed_git *p;
+-
+-		prepare_packed_git(r);
+-
+-		for (source = r->objects->sources; source; source = source->next) {
+-			struct multi_pack_index *m = get_multi_pack_index(source);
+-			if (m)
+-				count += m->num_objects;
+-		}
+-
+-		for (p = r->objects->packfiles->packs; p; p = p->next) {
+-			if (open_pack_index(p))
+-				continue;
+-			count += p->num_objects;
+-		}
+-		r->objects->approximate_object_count = count;
+-		r->objects->approximate_object_count_valid = 1;
+-	}
+-	return r->objects->approximate_object_count;
+-}
+-
+ DEFINE_LIST_SORT(static, sort_packs, struct packed_git, next);
  
--	if (!r->objects->kept_pack_cache.packs) {
-+	if (!r->objects->packfiles->kept_cache.packs) {
- 		struct packed_git **packs = NULL;
- 		size_t nr = 0, alloc = 0;
- 		struct packed_git *p;
-@@ -2126,11 +2126,11 @@ struct packed_git **kept_pack_cache(struct repository *r, unsigned flags)
- 		ALLOC_GROW(packs, nr + 1, alloc);
- 		packs[nr] = NULL;
- 
--		r->objects->kept_pack_cache.packs = packs;
--		r->objects->kept_pack_cache.flags = flags;
-+		r->objects->packfiles->kept_cache.packs = packs;
-+		r->objects->packfiles->kept_cache.flags = flags;
- 	}
- 
--	return r->objects->kept_pack_cache.packs;
-+	return r->objects->packfiles->kept_cache.packs;
+ static int sort_pack(const struct packed_git *a, const struct packed_git *b)
+@@ -1098,6 +1064,39 @@ struct list_head *get_packed_git_mru(struct repository *r)
+ 	return &r->objects->packfiles->mru;
  }
  
- int find_kept_pack_entry(struct repository *r,
-diff --git a/packfile.h b/packfile.h
-index d48d46cc1b..bf66211986 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -64,6 +64,20 @@ struct packfile_store {
- 	 */
- 	struct packed_git *packs;
- 
-+	/*
-+	 * Cache of packfiles which are marked as "kept", either because there
-+	 * is an on-disk ".keep" file or because they are marked as "kept" in
-+	 * memory.
-+	 *
-+	 * Should not be accessed directly, but via `kept_pack_cache()`. The
-+	 * list of packs gets invalidated when the stored flags and the flags
-+	 * passed to `kept_pack_cache()` mismatch.
-+	 */
-+	struct {
-+		struct packed_git **packs;
-+		unsigned flags;
-+	} kept_cache;
++/*
++ * Give a fast, rough count of the number of objects in the repository. This
++ * ignores loose objects completely. If you have a lot of them, then either
++ * you should repack because your performance will be awful, or they are
++ * all unreachable objects about to be pruned, in which case they're not really
++ * interesting as a measure of repo size in the first place.
++ */
++unsigned long repo_approximate_object_count(struct repository *r)
++{
++	if (!r->objects->approximate_object_count_valid) {
++		struct odb_source *source;
++		unsigned long count = 0;
++		struct packed_git *p;
 +
- 	/* A most-recently-used ordered version of the packs list. */
- 	struct list_head mru;
- 
++		prepare_packed_git(r);
++
++		for (source = r->objects->sources; source; source = source->next) {
++			struct multi_pack_index *m = get_multi_pack_index(source);
++			if (m)
++				count += m->num_objects;
++		}
++
++		for (p = r->objects->packfiles->packs; p; p = p->next) {
++			if (open_pack_index(p))
++				continue;
++			count += p->num_objects;
++		}
++		r->objects->approximate_object_count = count;
++		r->objects->approximate_object_count_valid = 1;
++	}
++	return r->objects->approximate_object_count;
++}
++
+ unsigned long unpack_object_header_buffer(const unsigned char *buf,
+ 		unsigned long len, enum object_type *type, unsigned long *sizep)
+ {
 
 -- 
 2.51.0.536.g15c5d4f767.dirty
