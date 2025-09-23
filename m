@@ -1,119 +1,136 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C372EDD5D
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 07:56:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A6F3191A1
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 08:03:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758614183; cv=none; b=oEyZipv4ssRrKQNmc1jdC24fw43N+AK1c8qcnuUbjjCtevu7HyqIOJg5zjirsH9krWinx7qi5QjwRi+wmcKgtwLUgX67L11PVkF6nUEEcjtogY4esyCgfldo7I4YXFm7DK9MP/ef1l5fPdgY/YGXxhCMTvgBe4GWVkFFNHkT258=
+	t=1758614619; cv=none; b=uV0G1Z+Tc4h5w629Wd41x0/+Or6Iew+QLNlLVxU22m+wjLY/gGTXQgwMcmN/A8JxAhi4xtY8CXOXdzQhTOyTpxIvt/Qun8+Dh05ZnkCSB+Zw1YviikNaJgWwZaYlMk+Oq+847ecXF5XmoKWrOrL+oP7jDXuyP+y00lw/izNcBow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758614183; c=relaxed/simple;
-	bh=b1S7yL86R3lsgtjtFaZ86W7sbfNfGZyxBlsVIkVzEEI=;
+	s=arc-20240116; t=1758614619; c=relaxed/simple;
+	bh=tUNUssAJ69hXDco93CnQHErZhT6fNT4zd9mmWdrsw78=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NnvTrOGmh3NzSDQqvPNZGnup1H405mw/VtbvYcUUljgr4DbaDy9hAd9N0fBIkxhzV7e3NoboLq8xMUeqvzJdMbiEiYR9p+qJQjlI+36/vEhYLPUOgnE3qGr7t/v0CRvnWh5Ci/SdQva5Uhru75tvPJiFoDLfEyvGbCiWdsz78S0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l4LpYB7C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TFxxrypJ; arc=none smtp.client-ip=202.12.124.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=FMm3m+XL11clObX2Ae0O+78iTd8P+2C3RgO2FyorBoVPJn0KscOwujS48WW0Py8eGtQp3tXpTSnwkVF7e1Dsoodcj9Q6vUNuVse18sWAC2yfrYxuEDtLvtOoOBe4JS2ew8EMaQsvEyCTQ97xGAGRRyV7Q8XCUZBaew5nydc4zT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AsTrPhIa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fyVM9tEr; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l4LpYB7C";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TFxxrypJ"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CA37C7A0141;
-	Tue, 23 Sep 2025 03:56:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AsTrPhIa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fyVM9tEr"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 60B5A1D00077;
+	Tue, 23 Sep 2025 04:03:36 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Tue, 23 Sep 2025 03:56:19 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 23 Sep 2025 04:03:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758614179;
-	 x=1758700579; bh=b1S7yL86R3lsgtjtFaZ86W7sbfNfGZyxBlsVIkVzEEI=; b=
-	l4LpYB7CRCCjgeaN8CbWJAlKlX3AWpeMy2pEisXh4eaiRhED2lJpzLaU5Q/Yw9Pp
-	zEfx6F8xPhqJIW6REy9YgBQDC/ZlQNHNRFzdj9Ja8wELF5m+J1yy/5xA3eLjTGww
-	tMBrAU8KmMbnVp3srnTV33uYCKvGXYQrBei4xvQFhg4o1fuCuzIE/ifxXe8x4tSv
-	ct5Qgo9AHB/P5AiA3ZRLYdRRbyFn/EJst7oDyeZ2TZDGRtJUOUcHO+gV1Dg9JQbf
-	PNkUyGffJ7MhPpYoq7VitktDajCiATm0I+JS2fcprgnfddif+TPwwflnAvc98OvD
-	2QGt0b6HsjTdKcNje9RWFw==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1758614616; x=1758701016; bh=P4mhriCxYH
+	acncmrY0AfKq3M84FPpYWFO/M6WBaIPiM=; b=AsTrPhIaDzAiAAmotvp5ALB+g3
+	FzYx56jqeVDMbdZSrfNam6WxnqLOjcyAGjNvBcldaVOTESLzcVkphX8qtG8tnYKp
+	wbX4oVHepCJFMYxL3hj5vdFnHggheARkUoFooyc/fb/jV5+eYKQXzPWveCXtSpxH
+	53rugOLHhGQpz6bLfVYbcy11oOXIxxwHuT8HukeqJfKYEPS+bNeJemqff30yuHYH
+	1Eve7fTQWv2rSWeNVGnTWa8gxqis9osKPxqYj3FG3LraRzfhsR1R9I8ZxpB9Xi8i
+	tjBxRSk23ySbDORWrPBJ2L3JsQKbzJ5YYHiXScatPeIPDW5RQ4q9ZerPyWLQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758614179; x=
-	1758700579; bh=b1S7yL86R3lsgtjtFaZ86W7sbfNfGZyxBlsVIkVzEEI=; b=T
-	FxxrypJI1ptOZXEQfeLVchW6+xnAWQVOCpP5PFyOJtn6K9jW7arwYPNC69mUU5Yn
-	4RLM3N1t3/KRkaZHpPWZlt8MrsY0gAPPAVn+PL/DagxB6SZBN5DLqwfK698V3aWg
-	SYcVLJJ7AZjIXGFNPZgOLWPnV4IMW1pUpnpcT05EHtJxRhQ//9Bl6iwm/dayPYtg
-	MLY3k5tibrTVcL0mEr6wWH002en0MNL7+Dv0tE6EBDFwkQkTduU/NtyF1fhAXPHt
-	svkve/E/gWBYoONRlnkHifFpzzY4napTtDa6yYKtZvhyYxqvlPf4bjWxljSmwU06
-	R1Gn3scqX0/5iDnBMyzKw==
-X-ME-Sender: <xms:o1LSaAu47P-lm-TIk10DmXs0LYzDEzENNGuDZYdhnrGzuRCAIL77vg>
-    <xme:o1LSaLRMaLJdywjDkLqnbGCBUJ3RDe1wLf1xC2ww61MuM5GvKEVtdJejTyuAun5st
-    Q-zob6ZaPWfoGN5Azg5neeAxsN1MV_H7F82Y0TGhxf7IBg9HCsH_g>
-X-ME-Received: <xmr:o1LSaGOWgyZw6NmCEkH86bdms5wPyiPCOf_ycty3AZFYfaKgjyYlZy3EZUJhfqODRK_rEQTTsnTyOs6YSiPFJQhALSqYff_ZDDr4OwA0PDDK>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitddulecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758614616; x=1758701016; bh=P4mhriCxYHacncmrY0AfKq3M84FPpYWFO/M
+	6WBaIPiM=; b=fyVM9tErV3e+JgN5SiW5W7VZPcrRui/D9k0jqP0isYBwjmxkeyQ
+	E20DJfjkj3TbY5qVrxFnPO7TU/2swz6fN2J0D6tFn5dsnBbS//uzC9xAykMXdJYi
+	81TPHsmSUh5NxJEim0IW8g7IAPeUDjpZWzhRvcehmTyrqBpe80p+kditY+6I080x
+	9WqJjEZ7nwApVX6u2Frg+B0x14aLNWd8XxWf8prRUMGI/yJeMhRJqleUCKZuUNMb
+	v7/UiIclCCTllePtt1tM7FXxkV/2icHdgPqgreB0S9+8czVgIs00TQ+wHecLmwil
+	551B7lzcS9K1JHdn2kRzOLPUGcG/p32LDfg==
+X-ME-Sender: <xms:WFTSaHQThoTpiMqYb_g_AGjLEYg9DnMeuJ5MzYLePxRQls_arGgzuQ>
+    <xme:WFTSaOwfFELIUJpA8YgxJDoddvdv6E2JU9I9XIKjfsHPs2z4IoipBFRX_0PjniGnd
+    9Ot4CG0ECrwwmIUzOGr9HWth_TrsMfDJlU89rV1cvWm5_yi6CNZ>
+X-ME-Received: <xmr:WFTSaKeVGIEsQKbIGaIPcfeY9FAoFwebYaGpRIgi-y_AoB_vLY_3tN4QZsmt3qJUVK8Y-tDomHlfrUJIvJg9vcIvyhi8o5KAJ0r10toTlnCU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitddvtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtugfgjgesthekrodttddtjeenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    eptdeludetgfelueejgffhvedvveefhedvvdfggeehgeekjedvfedtkeejkedvgeetnecu
-    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeg
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtth
-    hopegrlhgrnhgurggtohhsthgrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:o1LSaAZI_mpemLKKKgBbbtM_Po25a8kEGAEa-3-W2Y1QG8BlzuXzOQ>
-    <xmx:o1LSaAwibSTBrpeWjlt2yaNADIAcUgDF3IZ5ls70zCFZtFzooODzRA>
-    <xmx:o1LSaLItS3VrCl9X1Y02_-52e9HIw8FDaZ3p0V1UkwK7Pai3X5e9vg>
-    <xmx:o1LSaKrzOpslf6xO3k0BIKcPNkoWghoAxvzzMQvEpHOXp7obPe2XAw>
-    <xmx:o1LSaPoms3F6aMgY7camjxWJ30MvvJdfTQlTI7_2DENgQWY7EOvVLYyM>
+    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
+    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:WFTSaCILuv1yfACNaPcetvBXLKUcVgX8StORjEDapnQ9M2iKJYLh3w>
+    <xmx:WFTSaDHHVdfKVGd7NRGabQJLobK6Subn3MDZfpiH4Ravw_CmtA7BlQ>
+    <xmx:WFTSaErBP32KnrtQyiJXI6iyGmXzCv4JHozf3KXW0d5A8IUimeLyjA>
+    <xmx:WFTSaER7mtNEwz5nVOtpOO3H3tgI9I8fjqry3a7BONLCKgDJpOTNtg>
+    <xmx:WFTSaKrrzXHnAO0A6WPpEIPEVWFRI7TQtmVC4u41PKrcSVtKePeKVT5b>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Sep 2025 03:56:18 -0400 (EDT)
+ 23 Sep 2025 04:03:35 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e88b72e1 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 23 Sep 2025 07:56:17 +0000 (UTC)
-Date: Tue, 23 Sep 2025 09:56:13 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 5f179c4f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 23 Sep 2025 08:03:34 +0000 (UTC)
+Date: Tue, 23 Sep 2025 10:03:31 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Alan Da Costa via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Alan Da Costa <alandacosta@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH] lockfile: add case insensitive filesystem note
-Message-ID: <aNJSnUGzzMlmrDQw@pks.im>
-References: <pull.2053.git.git.1758578084468.gitgitgadget@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC] doc: check-docs and WITH_BREAKING_CHANGES
+Message-ID: <aNJUUxfhM7QYDQGj@pks.im>
+References: <xmqqjz1u161e.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <pull.2053.git.git.1758578084468.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqjz1u161e.fsf@gitster.g>
 
-On Mon, Sep 22, 2025 at 09:54:44PM +0000, Alan Da Costa via GitGitGadget wrote:
-> From: Alan Da Costa <alandacosta@gmail.com>
-> When running git fetch or git pull on a case insensitive filesystem
-> (e.g., default macOS), if multiple case variants of the same remote ref
-> exist (often after a case-only rename), both variant locks map to the
-> same on-disk path. When a local update is required, Git creates a lock
-> for the first variant and then attempts to lock the second, which
-> collides with the same lock file, so an “existing lock” error is
-> reported. The underlying issue is mixed-case refs; resolve it by
-> consolidating the remote to a single-case variant and update local refs
-> accordingly.
+On Fri, Sep 19, 2025 at 02:33:33PM -0700, Junio C Hamano wrote:
+> Shouldn't we do something like this for breaking builds?
+> 
+> Documentation/Makefile pays attention to EXCLUDED_PROGRAMS to
+> pretend that the git-$deprecated.adoc files do not exist
+> 
+>     -include GIT-EXCLUDED-PROGRAMS
+> 
+>     MAN1_TXT += $(filter-out \
+>                     $(patsubst %,%.adoc,$(EXCLUDED_PROGRAMS)) \
+>                     $(addsuffix .adoc, $(ARTICLES) $(SP_ARTICLES)), \
+>                     $(wildcard git-*.adoc))
+> 
+> but nobody seems to put the removed programs on the list.  
+> 
+> The dependencies around Documentation/GIT-EXCLUDED-PROGRAMS is still
+> screwed up, I think, but this may be a good first step to straighten
+> it out.  If "make -C Documentation" runs lint-docs by default, for
+> example, we may want to tweak the Makefile down there to make
+> link-docs target depend on the GIT-EXCLUDED-PROGRAMS perhaps.
+> 
+> diff --git i/Makefile w/Makefile
+> index 893070be76..711cade8fd 100644
+> --- i/Makefile
+> +++ w/Makefile
 
-Are you aware of Karthik's recent patch series at [1]? It looks like
-this addresses your exact problem in a more direct way, and the
-resulting error messages that we have in that patch series also give a
-bit more advice for how to handle the situation.
+Curious, but what's up with the "i" and "w" prefixes here? :)
 
-The patch series wasn't merged yet, but will probably be merged soon.
-Could you maybe test that series and say whether it addresses your need?
+> @@ -892,6 +892,8 @@ BUILT_INS += git-switch$X
+>  BUILT_INS += git-version$X
+>  ifndef WITH_BREAKING_CHANGES
+>  BUILT_INS += git-whatchanged$X
+> +else
+> +EXCLUDED_PROGRAMS += git-whatchanged
+>  endif
+>  
+>  # what 'all' will build but not install in gitexecdir
 
-Thanks!
+I think this change makes sense indeed. It means that we stop linting
+the docs, which is a bit of a weird side effect that may or may not be
+sensible. But in any case, we should probably stop installing these man
+pages.
+
+I say "probably" because this got me thinking: we could keep the man
+page for a while, but completely replace their its with a notice saying
+that the command got removed. Even better, we could even tell users what
+the replacement is.
 
 Patrick
-
-[1]: https://lore.kernel.org/git/20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-0-35e69bbb507d@gmail.com/
