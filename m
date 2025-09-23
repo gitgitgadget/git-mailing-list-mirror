@@ -1,86 +1,111 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B511A23A9
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 00:54:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378561D8E1A
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 00:55:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758588864; cv=none; b=lmMAnMm4BQekXc+jYt0soBIRPaxPRtbIGecSeZAv2VhqSSorF6bd2rAAVit5296xgUmK/nbghmIDBLV0iQMOIVGHfThrIGRWXirOXGzpW8g8Qa+Pk8/6fsSZRmB33ROl7HYu82bSbwUprCPbjW/4/WPLaLtJ5ICgaca0RUGZVNg=
+	t=1758588942; cv=none; b=HEXIMzDMEoqhmteVxB37evTvOqh28JrzfvpAbE+C0k4/PNDyih06dOCp6DWWyD2gnVoE0ixQGex49alP3WjTj48wYzlbIkAXtID8M4SczTp8O3xUOeB9hvVKU3+1XNu3fTkEMTE/+uCJU2w+u5wx8MKmhG1rn4RZ0AVYKccH4AQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758588864; c=relaxed/simple;
-	bh=BamXP6CapcdHcj71dznxsGVFOf9/2KW0y/vHlFEXBTQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bTvFwD8M8pfp69f8TJeSOI9mKbv5k/3lnvIa1SHirUKdnGLlIG1zwiNRyO5idLyao51OEb21Up8QuH+sNNkhjSN8sXvcEIovUMGi+YARMHdlyHw1m217VRnDdKieV6osJ1XT/xDvcbHBVcAgG4OpOULdWwaxiRg/LSqsSIuzrvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=IbzoSNgN; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1758588942; c=relaxed/simple;
+	bh=jCwwwcWBETPHZJUXc4K5SefkIOWVEycIPSeeRySTOkU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
+	 In-Reply-To:Content-Type; b=RzIBQMj1CnOy44XPnnUZifrJOWY8dBu1QCrMqSD1hd23PE6KuyoxU5vqARsU1+p2psr8a0ITf6DbpYCxz+JXEMz5jq7S38ave4udWHsMxffRDqvQNRAw3FkJLDZD4HsKTKSe/2V8d7BWMA6CB3Vdr0pN2bjoa0LWz4St7g+EiM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digital-mercenaries.com; spf=pass smtp.mailfrom=digital-mercenaries.com; dkim=pass (2048-bit key) header.d=digital-mercenaries.com header.i=@digital-mercenaries.com header.b=SJnbob9W; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digital-mercenaries.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=digital-mercenaries.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="IbzoSNgN"
-Received: (qmail 164511 invoked by uid 109); 23 Sep 2025 00:54:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=BamXP6CapcdHcj71dznxsGVFOf9/2KW0y/vHlFEXBTQ=; b=IbzoSNgNPC2P/seRDM+yjFyoFSy0zcsADAzyL3usHFP91/m8EsBK7u1AgdgLQsHu4kkjVoDS/3c1Q3XBV5akVTnNqqvqlF4nPp8UbYuyZIiOKlJoZT/Y4NEinDpjjw1EsyGG6ITp8Ia09WJ3VFNRarjXubFvwalwpGV3RyWos5z+p0aK9RhvUs2ypyB5vHtXPELa/9ed5iyvMAip1YoicsCHnvxc5zRCenIX4tXptklYpwmEDP2QSmzEPRcdSL939+N+bnSdNSWpGTwbxmLPHHhR7oGIiNftmI/N4i7YtfSHpDa6jYaIsrwtlFA4lOSR+FzbWQo4rselvWSEZY9fIQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 23 Sep 2025 00:54:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 263481 invoked by uid 111); 23 Sep 2025 00:54:21 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Sep 2025 20:54:21 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 22 Sep 2025 20:54:21 -0400
-From: Jeff King <peff@peff.net>
-To: Sainan <sainan@calamity.inc>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Could Git be smarter about object reuse?
-Message-ID: <20250923005421.GB2271307@coredump.intra.peff.net>
-References: <pmKix6R7b3WVLrcK6ig1Lh7RhrB5G4Hm5yam_fEoC839aatB-OjJEmSJJ-weErGEnt4Mvgf5slxgu6Pm1xlGZ4mr_i4MIAAEMYy8DjJnWgk=@calamity.inc>
- <f478fc6f-77ab-4d4e-a8d9-2d44622ba8dd@hogyros.de>
- <2RWL_muy24EPDZ9wWFx-WZfu4Br_F2LenvcVJbKewfSVYipYM3qmeEIgV-6o4EbL39ZjMXtLHbVFOCPcBdHHVAU-0BrgBtuQ9BdRjS_2niE=@calamity.inc>
- <20250922200510.GC2205919@coredump.intra.peff.net>
- <ZURUr5sfXi0wsjBeXiwAxyNgalVa2ZveXDgoTcexUNOAgcP_JscHvFFDIss4stpsiB2MzUQ_Z30tFrPSgr8W8V02ecfCj4BFFwQqWwJpba4=@calamity.inc>
+	dkim=pass (2048-bit key) header.d=digital-mercenaries.com header.i=@digital-mercenaries.com header.b="SJnbob9W"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-b5507d3ccd8so4561095a12.0
+        for <git@vger.kernel.org>; Mon, 22 Sep 2025 17:55:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=digital-mercenaries.com; s=google; t=1758588939; x=1759193739; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:subject:from:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=owWDekuChY3kYxq17xxrcJx5p+YLNtlr29ISpkU5KDQ=;
+        b=SJnbob9WeiKfarbvZ64R+Wh8/udjCFLYTSohUAau36HlOGKq0qG5l0eXAz7Lv6t0Ct
+         eNSSdgA//JYQwd5evIZVFvOaa1HVAdmrsuazhGUSKq3u5PYIJWVDGps0lRltR2kZPkOn
+         Vp6cUKoDAT/MiCAIegGYsm7sEwM62KHcif4WnXTkK+UzP0/Dk8YvB+i+lkfMhPiEL2F8
+         Vjjh99h5TsDqbh54qXOtqPLDje965u25OEk4jKw/8Uaf1XEpq7J5x6SsZuL1fxXpWXjW
+         2xInbRR5l9fLIwTgKSIKBsnFnZcmNzj5JfFJWdzuSVwi6HhjEUjaJIc8ufd95EHGjYxH
+         3QXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758588939; x=1759193739;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=owWDekuChY3kYxq17xxrcJx5p+YLNtlr29ISpkU5KDQ=;
+        b=gsh7uSy9WwBErV+SLe0SL9nVK+7b25vHrnmK8qWmei+w5BgZWjrDiSqk9PuOnpygNv
+         HcjCaLuD97f1g5IlVDYz9AIaq9Wzv28QA/jRWKhPDd8dFHeevOsxwIaHIoLB8LtkeBXI
+         OPu4gIq8UBdRk65PQeNCaRSSI9lD81RUIVfVYfe1hbxRwNbiAT2CrteNX1yzfeB+i4Yk
+         s2Owou9Xi4egoEmZmQGjfwkVdl9TWb4ShyFXwXkOtCnzZTeDtV5GIz5J3UmzTWpA3m4e
+         XcIrApswtAgdxE6hubiYsMlZhLU7s+gRvd44aqP39tDRQBW/9Ga75H7MGp7wSCJa2RHy
+         KrYA==
+X-Forwarded-Encrypted: i=1; AJvYcCWDkmZ7koBm1VZug8fClnOGoDOnaHHG0NFJyTRWf/QUNzBwxEtcJaLh2PKrsMYgk51I/24=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyi6Np6FvoeOjG6vnDNGe65Aaw75XUL93wm7exPcOW2d/KEUydk
+	zV6SLzZo3BoslBGSfr9tR0NhvhoCAv3B7dNpamXf0Vl8pqLElwUv8L5qeIbFpcWxZQHJGIGyFkb
+	JJIRZ
+X-Gm-Gg: ASbGncvqh2XvCkJJl4ANCPrpj+9tf4R7a3Lg8SMSjj/HfDl1mVMgRfhZGYaICjjhkJO
+	7Q6vjo0zoq/FkXlCwNk4gY3gsCE6k+fJoBJsnA7++bUhKtKuFwXAXXlBZGZK/hZyupVttTxLsGR
+	3HOZuSWVpXZuG1FtiRlu8fxTgIdwxXvznequk3pgIjIVa9FCDRKnCpjeBSYUzglXOipRitREaTA
+	ZX+zdBe8i444Zob97tVVtfOWXeO7gN3om7Plt28HNCcK94FWwc5yOje9Zr0JnW573rcdI8vUeZk
+	QWQiajQcegoojBInglI1cc3hVdkYg/IXemywkgIx+MsS5iChjA4PrDdRTnaKJiul7kq6/5h1TK8
+	N48Y9qmZkOCWsDzLpPXt15AQoB6EpWnrz/icpW9AN6cFgnNAK4A==
+X-Google-Smtp-Source: AGHT+IF9f8mfsflHoXnoMeHt+RjCOBZkoOLdwt+9dA5KU3SuqaQB00KVvEhRDPooOvcAUato6N3cYg==
+X-Received: by 2002:a05:6a20:3ca8:b0:245:ff00:5332 with SMTP id adf61e73a8af0-2cfd69d08d4mr1224454637.7.1758588939284;
+        Mon, 22 Sep 2025 17:55:39 -0700 (PDT)
+Received: from [10.0.0.22] ([174.127.235.36])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-77f2f76f87dsm5202151b3a.48.2025.09.22.17.55.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Sep 2025 17:55:38 -0700 (PDT)
+Message-ID: <f2ea5a0b-278f-460a-a0c0-00477f61e19d@digital-mercenaries.com>
+Date: Mon, 22 Sep 2025 17:55:37 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZURUr5sfXi0wsjBeXiwAxyNgalVa2ZveXDgoTcexUNOAgcP_JscHvFFDIss4stpsiB2MzUQ_Z30tFrPSgr8W8V02ecfCj4BFFwQqWwJpba4=@calamity.inc>
+User-Agent: Mozilla Thunderbird
+From: S0AndS0 of Digital Mercenaries LLC <S0AndS0@digital-mercenaries.com>
+Subject: Re: I still use this/these
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ git@vger.kernel.org
+References: <8f201082-07b5-44a1-88cf-d6db551a598c@digital-mercenaries.com>
+ <fd993486-069b-445a-ae91-a0f149fd3ea8@app.fastmail.com>
+Content-Language: en-US
+In-Reply-To: <fd993486-069b-445a-ae91-a0f149fd3ea8@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Mon, Sep 22, 2025 at 10:09:41PM +0000, Sainan wrote:
 
-> > git repack -adb
-> 
-> Certainly got my fans spinning for a bit. :)
-> 
-> But I can indeed confirm that it does solve the issue at least when
-> amending a commit (will need to do further testing and generally get a
-> feel for it).
-> 
-> However, one issue that I'm immediately noticing is that if I do 'git
-> pull', I get a new pack that is bitmap-less, once again likely
-> exposing me to the same problems.
+On 9/22/25 15:18, Kristoffer Haugsbakk wrote:
+> On Tue, Sep 23, 2025, at 00:11, S0AndS0 of Digital Mercenaries LLC wrote:
+>> Recently, as of `git version 2.51.0`, running the following commands be
+>> popping
+>> warnings;
+>>
+>>       git whatchanged <path>
+>>
+>>       git log --since="$(date --date='-2 weeks' +%F)"
+> You can use
+>
+>      git log --raw --no-merges
+>
+> If you want the same behavior.
+>
+> You can also replace `--raw` with `--stat` or `--name-only` if you want
+> the list of files without the filemode, hashes, and change type (like
+> M).
 
-It should still work. The bitmap format is meant to degrade
-progressively. So if if you have a history like this:
 
-   ROOT--...--A--B--C
-               \
-		D
+Wow, thanks for the rapid repose Kristoffer!
 
-and we have a bitmap for commit "B", then asking about "C" will let us
-traverse backwards until we hit "B", when we can fill in everything down
-to the root from the bitmap. We just have to traverse C's tree (but we
-can even avoid going into subtrees that are already mentioned in the
-bitmap).
 
-For D it's a little trickier. We can't use the bitmap for B, but the
-idea is that we sprinkle them throughout history so that we'll
-eventually hit one and stop traversing.
 
-So the big thing for making your case work is deciding whether we should
-use bitmaps at all. And if we have some already, then generally Git will
-try to use them, even if it means doing some fill-in traversal (because
-we really don't know how much fill-in traversal there will be ahead of
-time).
+I'll alias `--raw` until my muscle memory for `git wh<tab>` catches up x-)
 
--Peff
+If I am not miss remembering plans to remove `--since` then is there a new
+equivalent for filtering logs over time?
+
