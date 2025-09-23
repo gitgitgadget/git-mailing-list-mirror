@@ -1,82 +1,82 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358F92741C9
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 21:38:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AA06252900
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 21:50:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758663538; cv=none; b=ciPUJ0FEOsiTkOOhVLO0/Lq5qJbyEtjxF1t4KUU7gfe+BSlUZkbYMVFJx0yDGuQNHpiBQeizRrLO6QE8rioFRmqa7Etlz6HLqF4CAX7QRn9o/SnQhtf9ZHlFj1QieWRlal3FvdJ3WWVN3/Pz492ZRXPCMgJS8Go5hRXMizPBlu4=
+	t=1758664250; cv=none; b=KtWxUBmkBcVspX2h8fVFfPBFHxCOyMLqseZJUp2NWbFQMOjrHzfI8+GtuDU5UG0NSYVi6lidU300Opqefei+/dlUuNati8zJvLZWLcfFlNhGiEpYeDn9BaeWhS/pGqECa2PKnQvPXvWrkQR0ZW5zNx7Bq1vwCAnDYYrGgRAJBUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758663538; c=relaxed/simple;
-	bh=CAj8vfTozMciaFbsKQc//6cDbkoqjbA6b+Vow0gEAOM=;
+	s=arc-20240116; t=1758664250; c=relaxed/simple;
+	bh=0ZSyUYtOQFNE+y7sHUu/9V8RxpOfIG9giUk3oWae4DU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CTkVKOlOgmwz4jvQZlqZaSaQdRBMB2Dt9Wu4ZPTXtefwgTOFRZeyvKoVuPY7XmTj4dxve89RWLJgBGATu9m1as9f5X4TMf3wSq1wYoQqXdxP1zbiO1ErqxBv9igYat6YdvVzn0AagM1V5sp6dcjl3OiHPgE+O8/UmWAxP2PlbzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jPgULx0X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fznmf70q; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=oJV5EjpV9UJdEl7uFyDyvVdQ6GVuEfCEDeI0/REBrERzp94nQWuB2elQt+0C+pPQAkJmMgMMmnEHgidNDNmSOP/8vXgkGDTxYb9z0+Hzyy9Wt1gK3eK4N8kql+qGoCkawne/dxXyBRwkSqWeh5r8yTaUAACd3LHQclp8yHjVrHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bp6oGkD/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fMQRS3jh; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jPgULx0X";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fznmf70q"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4B47A140007D;
-	Tue, 23 Sep 2025 17:38:55 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bp6oGkD/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fMQRS3jh"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 88111EC00E0;
+	Tue, 23 Sep 2025 17:50:47 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 23 Sep 2025 17:38:55 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 23 Sep 2025 17:50:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758663535; x=1758749935; bh=7f2vuhsgZg
-	sFxmee4hXnVZAtQgCQDvKWPu5lQkYnr80=; b=jPgULx0XFicOGDEDiy3SmokmOO
-	3wOxlh2j5xhJX/3cbPIMwFayNtQw2w5m1m3G3DkJUs2fH3s/nw/oitbU0LMqrYq/
-	rvvZ6/QF6fBCUc0e/NXTzRyiqFfO+KdNQ0lxAt3ZcRmW/9EAjodQFf6ZZ26bCEId
-	aqWctcAZOhsEQbF4P01M7B6kc8QRCoXtLNWAmEhEb+2mCYwaFJbi18rELYuAAf5r
-	n5eQzdrTyvMHWP5XVK3HCi3sQdlBRn1anEORd5RlKIrO6v09uqqJav6XSuCW1pAN
-	IQCbhDCabh9OCBRbMmLvOguCBnjPM50naWEyv/lwsDwVlzBgiG4a8D1I3WEA==
+	:subject:to:to; s=fm3; t=1758664247; x=1758750647; bh=dvmx2sBcfy
+	xloFQH0CvC4JllyPDsotjL2u7g+R6Z8Ig=; b=bp6oGkD/QV8R3AcIFum3f0z1m1
+	Y2nNvEA0lx+bz2WGs98OeFSfuc3mo9bYAc1gY9s8fT3IAt0ECOzmwUyJxO9b6X9H
+	ElDt7PxPB7PrAlfdBvnM50ckPwuPpxdZuPkUq7ekgA19youmRljQhmmstk0IOYpO
+	PveG6Dsu8a/U7zomofItR783AmLirE9yHLi/sznLG1wqsBn1G96pMlVI6PVptKhB
+	sDuJNyuOSb4+RJY+GgTctPR7yF4352+vaSI4WOnVqmurO3kB9h0Yc3ZLyJvyN1o2
+	PEnxTmXJU5KDL/BxS2WUQlakwtymB20+1eQuVstJPA8Byli7QcqL3BAdT7Tw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758663535; x=1758749935; bh=7f2vuhsgZgsFxmee4hXnVZAtQgCQDvKWPu5
-	lQkYnr80=; b=fznmf70qzaVtkoELfbvI5045vaT6lOG2dZOWyg10mOyrXO/AUAv
-	Mx0kGVPvF/Ig36RrWDlZ4vswVZd3oqtO9x8qwdAEPjm26QRP5aw3Vl2hMK91ojup
-	66mtX+yo+Cjg6Bc5QzfJayGC9TAlUsFnBYpPH7KNbYp+RVHtPvROuTGHWJbkO8rc
-	XM2PjtapvspHpuTA/m8rN3A3u8coAzaNgUj7sQDEALzA7FlOKGqVqKlonH3cYUAz
-	AP2+aTf2uUl2XysdGR/lVSCpz4KLEkfUhZOoMOAT5ZffIV3s63DdXtg3KSUL8mMG
-	oJPfnNyl9SblhmQX9VybiZXButZ/oHsXyFQ==
-X-ME-Sender: <xms:bhPTaMycvFOznvi4Rl8qp8jIEPr2uR84awYGemG66MOxJbRtKeVPzw>
-    <xme:bhPTaLtY1N6KCnTOFXheXTXfOxNMUsBXFeD7xZbOPfWxffEYFuY1AQFtNMI8_xSps
-    hQC8hTf5c6MwS7h0uPgXuW-3soznGDAQEFbyak0IdJXH_lbtzDT>
-X-ME-Received: <xmr:bhPTaB3dcCb5o37OlKOgrXa28DZ-g6swTaQtuPEQtXf_E4a-xNUYprNubjg3Wfs5RAU2RNhFYykYflDXoV8PHSjB1VNV_2IqgGbM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiudekfecutefuodetggdotefrod
+	1758664247; x=1758750647; bh=dvmx2sBcfyxloFQH0CvC4JllyPDsotjL2u7
+	g+R6Z8Ig=; b=fMQRS3jh+2SXqUtc2IwvbLomvZCFSxM5GK75T6rfdameLSSBreH
+	BsMzKvTzhAkyC3eSYYE9qeElLymk9fvOz+tHsXkTNDiUXALzF66+ttxjTeFSSx5B
+	0RQycaEfiQZHW5kQ3C81bFAl5IncxKi1FM0tntl/V4RO3GEIppWxkPk9AK13WvKj
+	ugviQvSvqDfs88YxEO0MzxDDU8OxklPfpfa/dIKOmYIRp5zW+xV//XgW4uNV0L4L
+	91t+5VIeN6uqcxADK0yF6x6Y4DY0dbRmSX6f4Y90WWQ1T/gCc2R29Y1MpFECZyYN
+	dBEB0zbaWCXEqPW5x7tcwVWLRqGB0ztcAuQ==
+X-ME-Sender: <xms:NxbTaPmpfAZAwgVrMegE-MvQ1FXLhDxMAcNHfdTT-Sw9YEB-jpVoAw>
+    <xme:NxbTaJv7gn7fzFYn3b64WIU6qAI5mVWaYhXsVWYaN7QPHDbgxyVs92aDXP333YA8h
+    DBMwRaO0XqgJx7QaH5MfPXQ6cTgI7R2lVzsvkhy6_tqOgR_awVGww>
+X-ME-Received: <xmr:NxbTaN_1yItR44VbzAYTNUnaKGrAxZJ5hiNIvdHjlRY8Rv_Hw_6DL02qRaQUX7PPiAqDP3LTQ8sG3sWtFPIOhLVQuqucwdpUaYF7>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiudekhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehmsehgihhtrdhsthhrohhvrgdrughkpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhp
-    rdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:bhPTaO8Zn9zm-HNdp0WoDZ_Yka6t-NdmWuxCGcnKufXaVs4QmMmYFg>
-    <xmx:bhPTaKNXca5nlC9iLT8seLH2_7kflhbZ0VI4CzccJ7bpngTRVmr6Mw>
-    <xmx:bhPTaKfs48Qs6wKAfQADKEJWouSSYh3WyR7lJktV-gl0Id_Ka0PHfA>
-    <xmx:bhPTaBWKs8zLivt8CwLVo6SL4q8sAuBx9nrS2CtM75JjfmJDTxohBA>
-    <xmx:bxPTaC_I1qkkIk7g5lr-QefysBZFxdzMTomnLm3ygntWTBH8swVK8Et4>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehmvggvthhsohhniheftddujeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    phhssehpkhhsrdhimhdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:NxbTaDM0rKJ98elNNDqXmFBsGPJ-FmbaM5FPj5XmAQFcjllo0Td4xQ>
+    <xmx:NxbTaLHIUYitjzEeP4AF_K6czfXpdbQjPg8kvEWCMloCBpaWLZNYQQ>
+    <xmx:NxbTaBTTSQqa4LgK0VcoC2lDxjfS3IIS2u0RNF9BlmqMfGSTvYwsRQ>
+    <xmx:NxbTaIsfvPkPggK70E9vo52PQK0kWvJw1kbtI38c7VVW_doqnxZteA>
+    <xmx:NxbTaCe0b4HtNK3k7JqMXUaRoB8kqL8xEEZhQ_T7nYezEBncjeuBYATH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Sep 2025 17:38:54 -0400 (EDT)
+ 23 Sep 2025 17:50:46 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Mathias Rav" <m@git.strova.dk>
-Cc: git@vger.kernel.org,  "Phillip Wood" <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] rebase -i: use same commit's message and date with f -C
-In-Reply-To: <92d4d585-09e9-4f1d-a471-1ad6b312fa61@app.fastmail.com> (Mathias
-	Rav's message of "Tue, 23 Sep 2025 10:55:02 +0200")
-References: <92d4d585-09e9-4f1d-a471-1ad6b312fa61@app.fastmail.com>
-Date: Tue, 23 Sep 2025 14:38:53 -0700
-Message-ID: <xmqqldm4onma.fsf@gitster.g>
+To: Meet Soni <meetsoni3017@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  shejialuo@gmail.com
+Subject: Re: [GSoC][PATCH] builtin/refs: add 'get' subcommand
+In-Reply-To: <20250923104533.21165-1-meetsoni3017@gmail.com> (Meet Soni's
+	message of "Tue, 23 Sep 2025 16:15:33 +0530")
+References: <20250923104533.21165-1-meetsoni3017@gmail.com>
+Date: Tue, 23 Sep 2025 14:50:46 -0700
+Message-ID: <xmqqecrwon2h.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,32 +86,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Mathias Rav" <m@git.strova.dk> writes:
+Meet Soni <meetsoni3017@gmail.com> writes:
 
-> In `git rebase -i` with the fixup command, the -C flag controls whether
-> the commit message is taken from the previous or current commit,
-> but currently the author name, email and date are always taken from the
-> previous commit.
+> While `git-rev-parse(1)` and `git-show-ref(1)` can be used to read
+> reference values, they have drawbacks for scripting and discoverability.
+> `rev-parse` performs DWIM expansion which is unpredictable for scripts,
+> and `show-ref --verify` is difficult to discover and cannot read the
+> direct target of a symbolic reference.
 
-As the name of the command says, you are fixing up the previous one,
-so I do not find it a problem if the credit for writing the
-resulting combined commit stays with the author of the previous one.
-The authorship information both covers the contents recorded in the
-commit's tree, as well as the commit message.
+Well "refs get" is even harder to discover (it is not even in Git
+2.50's manual that is available everywhere on the net), so difficult
+to discover is not a good excuse.  In a sense show-ref was invented
+exactly to serve as something like "refs get" you are writing, so I
+wonder if a better approach is to extend it instead of introducing
+a new subcommand in a distant place from it?
 
-Granted, many commits of this project that is a one-liner change
-often have 50 lines of explanation in the commit log message, but
-still I think it is sensible to give more authorship credit to the
-author of the contents the tree of the final commit than to the
-author of the log message of the final commit.
+Perhaps "show-ref --verify --no-deref" or something that does not
+dereference but works directly on a symbolic ref?
 
-> Change the behavior so that fixup with -C takes both message and author
-> from the current commit, instead of taking the author from the previous.
-
-I am somewhat negative to this change.  I am perfectly fine to have
-a separate "I may have started from that previous one, but that was
-so broken that I essentially dismantled the original and replaced
-with the new one.  It is better to attribute the credit to whoever
-did this last one that is replacing" command.  But the "fixup"
-command people have been familiar with would be different, I would
-think.
