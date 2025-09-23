@@ -1,86 +1,86 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84A231FED3
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 09:45:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFAE320CA4
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 09:45:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758620736; cv=none; b=dIpOBYSGpIE1OP6w1grW5NxI+RIayEjjlqlPKYIqrw8E8t+jk7RNRUvonnasbCC9JEwcLT0EDWFkpI1EOWE+36I/vGlvzbupoXjMqzyJ2feCQyPiEkRhQL0+QNIobambh79/xTI3yuzFHQDZGPHW+DoXL3rtmuVF2/+JRmTFaJk=
+	t=1758620739; cv=none; b=rIUdpwL5cYoP/9Sgl5xa0yEMRo0N6s+6wnCRkQZqbu/GNx1khIBigmp/FA4lTPYLrnpB0ZkmnrB/7InUfA9U8xfNpYi4h97KpjjpzyuYyppuA49GgHPhGgQhTNdMVJoVul/Eft7dIGYbAz9ZCo71Xx9Wk+ga+DM3TE8C3f2hN9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758620736; c=relaxed/simple;
-	bh=4Y0j1F1MiZXlce5xaZIdZPP9wpTxxQxqb/IpAWlAf5o=;
+	s=arc-20240116; t=1758620739; c=relaxed/simple;
+	bh=+wuCjkIb9RvkHGA1ACtf1EPHbpKcL2jPBN4Ym2xLoTI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=W0IPa5XB/A70Hloy9T+sSA2cOyXM/mNIdEz9gBHMtwh1yQneolZ72J9hr+DVeUEesWUX4JLH/OVz99pYGn/FZqFm8up4VkuVv38EYDy0xn8o+FPf0I7xPRWO5VH0XeMNFdABDta4be6avIv23ooNJCScE6tyXYMJZ3HByLh+I10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hK+lsPJ9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KJrtjE9S; arc=none smtp.client-ip=202.12.124.153
+	 In-Reply-To:To:Cc; b=n/6nff9A+4MVdEmWp9BXIRN6lgGolAyILHF8tlXGVJJVMS+YzMNyIj6t0WebKbglWhgFBrObMy//UHyqVfZWFf8zJUPq8m0L48GI1iK3EsNiWYTAMV2A3lbsXPPynJ5RRsI1MDqGwjmNQrY67K77kkxRxgMYETMxb7QsWz5kd6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=U+hvBVzp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OhrOos/o; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hK+lsPJ9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KJrtjE9S"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="U+hvBVzp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OhrOos/o"
 Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 84C7C7A02CA;
-	Tue, 23 Sep 2025 05:45:33 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 9B3311D0029F;
+	Tue, 23 Sep 2025 05:45:36 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Tue, 23 Sep 2025 05:45:33 -0400
+  by phl-compute-08.internal (MEProxy); Tue, 23 Sep 2025 05:45:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758620733;
-	 x=1758707133; bh=RX5WKe5TJTRnVZAwTVm1ofxzD8MoSb5MblPFCAnbfb4=; b=
-	hK+lsPJ9Rg5O7rK3ElGQueqEHw9KLTOcwpRtXN1/ElPC9VQ1xeEj8tyOXI9HCFJv
-	AVfSkYMTA1pmeCcncn5ShWyczqO1Wz9BkOspY42UB/y1LyQrqCChrlp82HiLCXN4
-	eQjGoy/pb2DNriwwV13zJNIXE5B48s889s1UTlmVk0w3UflV+/O4f2qgM47yH2p+
-	Hd1xRziw/hgx83vZu+vaWe3dgKkgp30V67LonkhzyrCkE0937NivVn+FQ1efeHLx
-	4Y2VTr/rkrnnwljvuQvRas4EzOaBrRvWGYMdIYNdDJ11wPZnb/PFcEbq3sk2UVe/
-	EzgpAL5rut7qAbkS4JNwRg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758620736;
+	 x=1758707136; bh=+u99EIfnu/1eeux90BzzZXXskYWiKISpUzBf4Hbu1m8=; b=
+	U+hvBVzpmpWwbW2jySdSvHBmIlmJDxL3U/oOZwMKbL6ujNH71KyMzkk90YljUp1w
+	JQYKKdQ5/zunNYfVnTDbkGkItNRzvaD/hCiDSxmw7HRzhH/xH0zYgDXZbaSoGE9j
+	fk+4DxNsHwk5VL9Vocl3oH1UGZKllsKgu5B9zxbD+Su2mlKYwRBDTXf6aEGbgKCU
+	eY1Ha+FIGlVYqDYi3+wFIDj+KNzKflfgIQjXOr3fsQmdrFYQB5VNjTd9UwFJvWfM
+	LTRxYLtOk1WXecvLz02GJEJ9nNmBLOb0fQyTXREBdXL/FOxvCJFwLATGpzXgDN88
+	6TuP7qet78ssL3UkqR75/w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758620733; x=
-	1758707133; bh=RX5WKe5TJTRnVZAwTVm1ofxzD8MoSb5MblPFCAnbfb4=; b=K
-	JrtjE9SSvTuAaFYj/Fesr18Gk65XVtwpKRO51KVHyxcLMjCr/EEkmt2oNzOozUj/
-	zv5m817Yrhrd0B1/bcBuLzDUYU+PyZqPsyKGknjJ3O3GpqqJTuBxtTvJbdhcmHCO
-	S3L1JYRzMQGyM5nxbGn/40O0Yl9NQSROvCkmjLtrmxGNlKtjfg1bB66z6+sM/zTW
-	VxRtQBLKQzCo5dxeILAic0uUl+t3+U7YnrulNRC5pxovm5eQUf53zL4zlDX2+Azz
-	Vb8GpcC613QQ/ylow1bguTDZAxPdNpxGMMWaJE/B2AKiAH9nrePyK9ewUCiI/nxh
-	UdWzq3RLd3ltQylUnIUZA==
-X-ME-Sender: <xms:PWzSaMC1XTv-Ci2LOhI8bMgXgtyrMW3QhFYe6D23jxhg0fbPqKysTg>
-    <xme:PWzSaO9V27hRnvSwscz2jl6Ftffa6kMz_Gt0xRbHJd1354fKajUSOwRUujo6Lh9p1
-    I4M0Q1v_ttIM9XD5QtTLbUlXrEvvDVDs-mBq0qHDQ4WmNdyx1U5Ehc>
-X-ME-Received: <xmr:PWzSaPXAz5-6398gcyxw6vRdsvB9rLXY0gDVDq3x59nBwakydFKHSwoCsIAFijjnQT1BfSpTXoCqUjFWABI8X7pI9GI_o3JSug6YQHFfsGTT>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758620736; x=
+	1758707136; bh=+u99EIfnu/1eeux90BzzZXXskYWiKISpUzBf4Hbu1m8=; b=O
+	hrOos/oeTu2GYvtxdUibAMPwf3JTLWPWncWRj6IYt3fUE5JUK6pndFVCqKZDousa
+	QdWlD0J+q/0Hltw8rUwg16pCZKlXtzA+q0TEZkbNtnDU1fuGFLEzrYVX3ZT8d8LQ
+	uoeI1tpxbI+PTd4hELLyMpY1jisGAeUv6Ny4Sb1+eocbvgnLfW5GyFq6QgBSZK0G
+	J+nrDjGY5A80AXSORx4JFJ0sdTnnIeYHBTxChlpgCV9JCQvMm78L8BOK9vbC8Eb+
+	bxe3wllAZYht74U8INa22sDomH0c1ZAvMUiU76oaZXuYYFyEpgRSEfQU2DV1Pn2z
+	WlAZw6N/VoY/A4liNLqGw==
+X-ME-Sender: <xms:QGzSaHO1sC_x3dQwweqOWcDYjT2jSS4yERjpRDOj1R7xKys4pNImsg>
+    <xme:QGzSaCYH8UQK_Y_0Nh4blFIqlwqYyBiGrJuZ4-4QUNENEpE0OwzwjcKORCzQ5F38x
+    ZEYTMcqqhRQqoyfT5aD_ZqIHSdY-pVajav2a68FVyr8gILslRLM4w>
+X-ME-Received: <xmr:QGzSaGCf99LIR9p6tSISOFeLfIP8TOAPlffilozk_o-jIdB_MgSQiSCJ8Mo2O7d7rtv_rzhIuu6F2Gsa2eAP1IVPHoyC9rPFeYpJ0f9Jk9Wc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitdegtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epfefgvedtvedufedutedugffhjefgleegheehffelgfegffehieegvdfgfeehuefgnecu
-    ffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedu
-    iedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepshgrmhesghgvnhhtohhordhorhhgpdhrtghpthhtohepphhh
-    ihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhish
-    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthho
-    pegtohhnthgrtghtsehhrggtkhhtihhvihhsrdhmvgdprhgtphhtthhopehsrghnuggrlh
-    hssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopegvshgthhif
-    rghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopegtsgesvdehiegsihhtrdhorh
-    hgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:PWzSaPIVP2GEErn1FGpCNoJOO_4gKT11xqOseaqBZzjgG7aclumY9w>
-    <xmx:PWzSaLDOVkfx-wpTIOWz1419tKDhIxq9daU-wlutk1bPbEyvz6-QIA>
-    <xmx:PWzSaHGAmzt2M77_-uFXc5W3Qdh3uUV-w6EGxE9R9geDjWrrX5JEzQ>
-    <xmx:PWzSaAK-GJH2hrlmwIW9cTrLR_wAaXi-LZeSass5hvopiP-H-jHQ0g>
-    <xmx:PWzSaJvYZrogaPXrypXZVwfRLohwKiDoG8m2mR15mYTGm1P0qIojdVQ2>
+    epuedtheejheejueegfedukedvieelvdegjefgjeefkefffedtleeukeeujeeviedunecu
+    ffhomhgrihhnpegtohgttghirdhtohdpmhgrkhdruggvvhenucevlhhushhtvghrufhiii
+    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgt
+    phhtthhopeduiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghonhhtrggtth
+    eshhgrtghkthhivhhishdrmhgvpdhrtghpthhtohepshgrmhesghgvnhhtohhordhorhhg
+    pdhrtghpthhtoheptgholhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepphhivghrrhgvqdgvmhhmrghnuhgvlhdrphgrthhrhiesvghmsggvtghoshhmrdgt
+    ohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomh
+    dprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvsh
+    drshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehnvgifrhgvnhesghhm
+    rghilhdrtghomh
+X-ME-Proxy: <xmx:QGzSaIHrsM87Z0io2nyCEaH7g2HL62H-e99IePg6IdJ5uwlXuIq8-w>
+    <xmx:QGzSaJM2gXUvVOjVZTgi-z6pMzRPh8r7b7whMllGu7c-AcHPiv6wWA>
+    <xmx:QGzSaBiuQ5w3wR8ST07zcc-79-PhYL1rgCwuwApweavZdG3Yd1Mb6Q>
+    <xmx:QGzSaB04rLmpymUlVI6LWIRDiZf7eRRUaQtFtrwSsV5ON0WlKHqLFA>
+    <xmx:QGzSaAFnQNh92_1QSkqqrGbG5z-2bTcPWeq10jTXrhMg0Cp99rfGWhNW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Sep 2025 05:45:30 -0400 (EDT)
+ 23 Sep 2025 05:45:34 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 680bf8a7 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 23 Sep 2025 09:45:28 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id ead1ce0e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 23 Sep 2025 09:45:32 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 23 Sep 2025 11:45:20 +0200
-Subject: [PATCH v6 1/9] meson: add infrastructure to build internal Rust
- library
+Date: Tue, 23 Sep 2025 11:45:21 +0200
+Subject: [PATCH v6 2/9] Makefile: reorder sources after includes
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +89,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250923-b4-pks-rust-breaking-change-v6-1-59076fee486a@pks.im>
+Message-Id: <20250923-b4-pks-rust-breaking-change-v6-2-59076fee486a@pks.im>
 References: <20250923-b4-pks-rust-breaking-change-v6-0-59076fee486a@pks.im>
 In-Reply-To: <20250923-b4-pks-rust-breaking-change-v6-0-59076fee486a@pks.im>
 To: git@vger.kernel.org
@@ -106,196 +106,212 @@ Cc: "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 X-Mailer: b4 0.14.2
 
-Add the infrastructure into Meson to build an internal Rust library.
-Building the Rust parts of Git are for now entirely optional, as they
-are mostly intended as a test balloon for both Git developers, but also
-for distributors of Git. So for now, they may contain:
+In an upcoming change we'll make some of the sources compile
+conditionally based on whether or not `WITH_RUST` is defined. To let
+developers specify that flag in their "config.mak" we'll thus have to
+reorder our sources so that they come after the include of that file.
 
-  - New features that are not mission critical to Git and that users can
-    easily live without.
+Do so.
 
-  - Alternative implementations of small subsystems.
-
-If these test balloons are successful, we will eventually make Rust a
-mandatory dependency for our build process in Git 3.0.
-
-The availability of a Rust toolchain will be auto-detected by Meson at
-setup time. This behaviour can be tweaked via the `-Drust=` feature
-toggle.
-
-Next to the linkable Rust library, also wire up tests that can be
-executed via `meson test`. This allows us to use the native unit testing
-capabilities of Rust.
-
-Note that the Rust edition is currently set to 2018. This edition is
-supported by Rust 1.49, which is the target for the upcoming gcc-rs
-backend. For now we don't use any features of Rust that would require a
-newer version, so settling on this old version makes sense so that
-gcc-rs may become an alternative backend for compiling Git. If we _do_
-want to introduce features that were added in more recent editions of
-Rust though we should reevaluate that choice.
-
-Inspired-by: Ezekiel Newren <ezekielnewren@gmail.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Cargo.toml         |  9 +++++++++
- meson.build        | 10 +++++++++-
- meson_options.txt  |  2 ++
- src/cargo-meson.sh | 32 ++++++++++++++++++++++++++++++++
- src/lib.rs         |  0
- src/meson.build    | 40 ++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 92 insertions(+), 1 deletion(-)
+ Makefile | 176 +++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 88 insertions(+), 88 deletions(-)
 
-diff --git a/Cargo.toml b/Cargo.toml
-new file mode 100644
-index 00000000000..b9a41dbc792
---- /dev/null
-+++ b/Cargo.toml
-@@ -0,0 +1,9 @@
-+[package]
-+name = "git"
-+version = "0.1.0"
-+edition = "2018"
-+
-+[lib]
-+crate-type = ["staticlib"]
-+
-+[dependencies]
-diff --git a/meson.build b/meson.build
-index e8ec0eca165..234a9e9d6fd 100644
---- a/meson.build
-+++ b/meson.build
-@@ -220,7 +220,7 @@ project('git', 'c',
-   # learned to define __STDC_VERSION__ with C11 and later. We thus require
-   # GNU C99 and fall back to C11. Meson only learned to handle the fallback
-   # with version 1.3.0, so on older versions we use GNU C99 unconditionally.
--  default_options: meson.version().version_compare('>=1.3.0') ? ['c_std=gnu99,c11'] : ['c_std=gnu99'],
-+  default_options: meson.version().version_compare('>=1.3.0') ? ['rust_std=2018', 'c_std=gnu99,c11'] : ['rust_std=2018', 'c_std=gnu99'],
- )
+diff --git a/Makefile b/Makefile
+index 555b7f4dc3..7e52625d75 100644
+--- a/Makefile
++++ b/Makefile
+@@ -919,6 +919,94 @@ LIB_FILE = libgit.a
+ XDIFF_LIB = xdiff/lib.a
+ REFTABLE_LIB = reftable/libreftable.a
  
- fs = import('fs')
-@@ -1702,6 +1702,13 @@ version_def_h = custom_target(
- )
- libgit_sources += version_def_h
- 
-+cargo = find_program('cargo', dirs: program_path, native: true, required: get_option('rust'))
-+rust_option = get_option('rust').disable_auto_if(not cargo.found())
-+if rust_option.allowed()
-+  subdir('src')
-+  libgit_c_args += '-DWITH_RUST'
++# xdiff and reftable libs may in turn depend on what is in libgit.a
++GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
++EXTLIBS =
++
++GIT_USER_AGENT = git/$(GIT_VERSION)
++
++ifeq ($(wildcard sha1collisiondetection/lib/sha1.h),sha1collisiondetection/lib/sha1.h)
++DC_SHA1_SUBMODULE = auto
 +endif
 +
- libgit = declare_dependency(
-   link_with: static_library('git',
-     sources: libgit_sources,
-@@ -2239,6 +2246,7 @@ summary({
-   'pcre2': pcre2,
-   'perl': perl_features_enabled,
-   'python': target_python.found(),
-+  'rust': rust_option.allowed(),
- }, section: 'Auto-detected features', bool_yn: true)
- 
- summary({
-diff --git a/meson_options.txt b/meson_options.txt
-index 1668f260a18..143dee9237c 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -71,6 +71,8 @@ option('zlib_backend', type: 'combo', choices: ['auto', 'zlib', 'zlib-ng'], valu
- # Build tweaks.
- option('breaking_changes', type: 'boolean', value: false,
-   description: 'Enable upcoming breaking changes.')
-+option('rust', type: 'feature', value: 'auto',
-+  description: 'Enable building with Rust.')
- option('macos_use_homebrew_gettext', type: 'boolean', value: true,
-   description: 'Use gettext from Homebrew instead of the slightly-broken system-provided one.')
- 
-diff --git a/src/cargo-meson.sh b/src/cargo-meson.sh
-new file mode 100755
-index 00000000000..f29745beb36
---- /dev/null
-+++ b/src/cargo-meson.sh
-@@ -0,0 +1,32 @@
-+#!/bin/sh
++# Set CFLAGS, LDFLAGS and other *FLAGS variables. These might be
++# tweaked by config.* below as well as the command-line, both of
++# which'll override these defaults.
++# Older versions of GCC may require adding "-std=gnu99" at the end.
++CFLAGS = -g -O2 -Wall
++LDFLAGS =
++CC_LD_DYNPATH = -Wl,-rpath,
++BASIC_CFLAGS = -I.
++BASIC_LDFLAGS =
 +
-+if test "$#" -lt 2
-+then
-+	exit 1
-+fi
++# library flags
++ARFLAGS = rcs
++PTHREAD_CFLAGS =
 +
-+SOURCE_DIR="$1"
-+BUILD_DIR="$2"
-+BUILD_TYPE=debug
++# For the 'sparse' target
++SPARSE_FLAGS ?= -std=gnu99 -D__STDC_NO_VLA__
++SP_EXTRA_FLAGS =
 +
-+shift 2
++# For informing GIT-BUILD-OPTIONS of the SANITIZE=leak,address targets
++SANITIZE_LEAK =
++SANITIZE_ADDRESS =
 +
-+for arg
-+do
-+	case "$arg" in
-+	--release)
-+		BUILD_TYPE=release;;
-+	esac
-+done
++# For the 'coccicheck' target
++SPATCH_INCLUDE_FLAGS = --all-includes
++SPATCH_FLAGS =
++SPATCH_TEST_FLAGS =
 +
-+cargo build --lib --quiet --manifest-path="$SOURCE_DIR/Cargo.toml" --target-dir="$BUILD_DIR" "$@"
-+RET=$?
-+if test $RET -ne 0
-+then
-+	exit $RET
-+fi
++# If *.o files are present, have "coccicheck" depend on them, with
++# COMPUTE_HEADER_DEPENDENCIES this will speed up the common-case of
++# only needing to re-generate coccicheck results for the users of a
++# given API if it's changed, and not all files in the project. If
++# COMPUTE_HEADER_DEPENDENCIES=no this will be unset too.
++SPATCH_USE_O_DEPENDENCIES = YesPlease
 +
-+if ! cmp "$BUILD_DIR/$BUILD_TYPE/libgit.a" "$BUILD_DIR/libgit.a" >/dev/null 2>&1
-+then
-+	cp "$BUILD_DIR/$BUILD_TYPE/libgit.a" "$BUILD_DIR/libgit.a"
-+fi
-diff --git a/src/lib.rs b/src/lib.rs
-new file mode 100644
-index 00000000000..e69de29bb2d
-diff --git a/src/meson.build b/src/meson.build
-new file mode 100644
-index 00000000000..734de0b4fa9
---- /dev/null
-+++ b/src/meson.build
-@@ -0,0 +1,40 @@
-+libgit_rs_sources = [
-+  'lib.rs',
-+]
++# Set SPATCH_CONCAT_COCCI to concatenate the contrib/cocci/*.cocci
++# files into a single contrib/cocci/ALL.cocci before running
++# "coccicheck".
++#
++# Pros:
++#
++# - Speeds up a one-shot run of "make coccicheck", as we won't have to
++#   parse *.[ch] files N times for the N *.cocci rules
++#
++# Cons:
++#
++# - Will make incremental development of *.cocci slower, as
++#   e.g. changing strbuf.cocci will re-run all *.cocci.
++#
++# - Makes error and performance analysis harder, as rules will be
++#   applied from a monolithic ALL.cocci, rather than
++#   e.g. strbuf.cocci. To work around this either undefine this, or
++#   generate a specific patch, e.g. this will always use strbuf.cocci,
++#   not ALL.cocci:
++#
++#	make contrib/coccinelle/strbuf.cocci.patch
++SPATCH_CONCAT_COCCI = YesPlease
 +
-+# Unfortunately we must use a wrapper command to move the output file into the
-+# current build directory. This can fixed once `cargo build --artifact-dir`
-+# stabilizes. See https://github.com/rust-lang/cargo/issues/6790 for that
-+# effort.
-+cargo_command = [
-+  shell,
-+  meson.current_source_dir() / 'cargo-meson.sh',
-+  meson.project_source_root(),
-+  meson.current_build_dir(),
-+]
-+if get_option('buildtype') == 'release'
-+  cargo_command += '--release'
++# Rebuild 'coccicheck' if $(SPATCH), its flags etc. change
++TRACK_SPATCH_DEFINES =
++TRACK_SPATCH_DEFINES += $(SPATCH)
++TRACK_SPATCH_DEFINES += $(SPATCH_INCLUDE_FLAGS)
++TRACK_SPATCH_DEFINES += $(SPATCH_FLAGS)
++TRACK_SPATCH_DEFINES += $(SPATCH_TEST_FLAGS)
++GIT-SPATCH-DEFINES: FORCE
++	@FLAGS='$(TRACK_SPATCH_DEFINES)'; \
++	    if test x"$$FLAGS" != x"`cat GIT-SPATCH-DEFINES 2>/dev/null`" ; then \
++		echo >&2 "    * new spatch flags"; \
++		echo "$$FLAGS" >GIT-SPATCH-DEFINES; \
++            fi
++
++include config.mak.uname
++-include config.mak.autogen
++-include config.mak
++
++ifdef DEVELOPER
++include config.mak.dev
 +endif
 +
-+libgit_rs = custom_target('git_rs',
-+  input: libgit_rs_sources + [
-+    meson.project_source_root() / 'Cargo.toml',
-+  ],
-+  output: 'libgit.a',
-+  command: cargo_command,
-+)
-+libgit_dependencies += declare_dependency(link_with: libgit_rs)
-+
-+if get_option('tests')
-+  test('rust', cargo,
-+    args: [
-+      'test',
-+      '--manifest-path',
-+      meson.project_source_root() / 'Cargo.toml',
-+      '--target-dir',
-+      meson.current_build_dir() / 'target',
-+    ],
-+    timeout: 0,
-+    protocol: 'rust',
-+  )
-+endif
+ GENERATED_H += command-list.h
+ GENERATED_H += config-list.h
+ GENERATED_H += hook-list.h
+@@ -1387,94 +1475,6 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
+ 
+ UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+ 
+-# xdiff and reftable libs may in turn depend on what is in libgit.a
+-GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
+-EXTLIBS =
+-
+-GIT_USER_AGENT = git/$(GIT_VERSION)
+-
+-ifeq ($(wildcard sha1collisiondetection/lib/sha1.h),sha1collisiondetection/lib/sha1.h)
+-DC_SHA1_SUBMODULE = auto
+-endif
+-
+-# Set CFLAGS, LDFLAGS and other *FLAGS variables. These might be
+-# tweaked by config.* below as well as the command-line, both of
+-# which'll override these defaults.
+-# Older versions of GCC may require adding "-std=gnu99" at the end.
+-CFLAGS = -g -O2 -Wall
+-LDFLAGS =
+-CC_LD_DYNPATH = -Wl,-rpath,
+-BASIC_CFLAGS = -I.
+-BASIC_LDFLAGS =
+-
+-# library flags
+-ARFLAGS = rcs
+-PTHREAD_CFLAGS =
+-
+-# For the 'sparse' target
+-SPARSE_FLAGS ?= -std=gnu99 -D__STDC_NO_VLA__
+-SP_EXTRA_FLAGS =
+-
+-# For informing GIT-BUILD-OPTIONS of the SANITIZE=leak,address targets
+-SANITIZE_LEAK =
+-SANITIZE_ADDRESS =
+-
+-# For the 'coccicheck' target
+-SPATCH_INCLUDE_FLAGS = --all-includes
+-SPATCH_FLAGS =
+-SPATCH_TEST_FLAGS =
+-
+-# If *.o files are present, have "coccicheck" depend on them, with
+-# COMPUTE_HEADER_DEPENDENCIES this will speed up the common-case of
+-# only needing to re-generate coccicheck results for the users of a
+-# given API if it's changed, and not all files in the project. If
+-# COMPUTE_HEADER_DEPENDENCIES=no this will be unset too.
+-SPATCH_USE_O_DEPENDENCIES = YesPlease
+-
+-# Set SPATCH_CONCAT_COCCI to concatenate the contrib/cocci/*.cocci
+-# files into a single contrib/cocci/ALL.cocci before running
+-# "coccicheck".
+-#
+-# Pros:
+-#
+-# - Speeds up a one-shot run of "make coccicheck", as we won't have to
+-#   parse *.[ch] files N times for the N *.cocci rules
+-#
+-# Cons:
+-#
+-# - Will make incremental development of *.cocci slower, as
+-#   e.g. changing strbuf.cocci will re-run all *.cocci.
+-#
+-# - Makes error and performance analysis harder, as rules will be
+-#   applied from a monolithic ALL.cocci, rather than
+-#   e.g. strbuf.cocci. To work around this either undefine this, or
+-#   generate a specific patch, e.g. this will always use strbuf.cocci,
+-#   not ALL.cocci:
+-#
+-#	make contrib/coccinelle/strbuf.cocci.patch
+-SPATCH_CONCAT_COCCI = YesPlease
+-
+-# Rebuild 'coccicheck' if $(SPATCH), its flags etc. change
+-TRACK_SPATCH_DEFINES =
+-TRACK_SPATCH_DEFINES += $(SPATCH)
+-TRACK_SPATCH_DEFINES += $(SPATCH_INCLUDE_FLAGS)
+-TRACK_SPATCH_DEFINES += $(SPATCH_FLAGS)
+-TRACK_SPATCH_DEFINES += $(SPATCH_TEST_FLAGS)
+-GIT-SPATCH-DEFINES: FORCE
+-	@FLAGS='$(TRACK_SPATCH_DEFINES)'; \
+-	    if test x"$$FLAGS" != x"`cat GIT-SPATCH-DEFINES 2>/dev/null`" ; then \
+-		echo >&2 "    * new spatch flags"; \
+-		echo "$$FLAGS" >GIT-SPATCH-DEFINES; \
+-            fi
+-
+-include config.mak.uname
+--include config.mak.autogen
+--include config.mak
+-
+-ifdef DEVELOPER
+-include config.mak.dev
+-endif
+-
+ GIT-VERSION-FILE: FORCE
+ 	@OLD=$$(cat $@ 2>/dev/null || :) && \
+ 	$(call version_gen,"$(shell pwd)",GIT-VERSION-FILE.in,$@) && \
 
 -- 
 2.51.0.536.g15c5d4f767.dirty
