@@ -1,141 +1,184 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2B286359
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 18:08:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2265A86359
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 18:10:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758650941; cv=none; b=JbUxNHcfzLVBxgXwMHPJx1pWdufG8DgM4Tcu3H5kZljpBdzL8GvavcmcHefvQL/VRTQU9HXGmMPHAXBJaZ1aibbv/T+hwjB1pbtrLq1ud2UFBhV4Rn/wQt7FShaZO/sl1mZPgIKBDj/QU1R6bML9S7qxeaH0RtYT4apE+OmJxHo=
+	t=1758651055; cv=none; b=im9o6dbD9M+9Uo95nAeUinhI7fQSvugVdLkL1+/4svdgFGsK1SRPp0/x3w9KTYviYoi8g1SvPgVDxfmRMI45ZrMxqjhGNr2nLuvaMAtgompGBMarvcVl96qeabPXP6SU2ghH+MckJEdazendfJNo43yOPFT9zw6fZEqFSGM8CzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758650941; c=relaxed/simple;
-	bh=LtJ7znj3m17S9c1M34DwwQM14iOPdG6umVOtb8/NMEs=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=qP6EAoXTtnc6pR9PH3q440kMc+dyM6obgGforZP0qfrUQ27zGDNDzbBTPNgACD/F9FBOtgfGdWmRm9m4ky2tDDC4t5kwY/c5Xj2N79xwXOEh+9LlAgHgHV4L0eabMBqJrsqCoc8KXKjSnxQCxwwbcierE8r0omAYZCJO6N68Jq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=JSSZD22M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X7aGrgT+; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1758651055; c=relaxed/simple;
+	bh=vgyhS4ZyjFP2gWUk+Rl3QGo7vRQgHnvJC9wRERVjOdw=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=X+MiV7D+Cp5ui7tsrnUGxHvtAgJWz4U5iBwCXEuyyTeyMsg+yEBqQ003AYLQ3u/8SJNlhQFkTl+Bj2aAmWXqPdk2MvAsLohIMAKcfkdjv6l6+VTq8YwrbD11Cq83/7Jofu12Z2KeoFvKAMIutP5Qkec1bDpwQzN2l3yARdOc/As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nr6pBTba; arc=none smtp.client-ip=209.85.166.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="JSSZD22M";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X7aGrgT+"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3BF737A02FE;
-	Tue, 23 Sep 2025 14:08:58 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Tue, 23 Sep 2025 14:08:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758650938;
-	 x=1758737338; bh=H69mDqxu5iKGBDa4QMwRzxrW5UOetLMoTLKu67eo9vQ=; b=
-	JSSZD22MXvCa6MQ6ZWFaYgDRLW5o69bmNuwXapRnZFryBns3DBLuaPo9kG+UrjRN
-	iv3S1FOxEr+dPK5r/k2ZFjjJFaWwkIi8QT347PbVnqOi8FTmR0iO359RX9HSyqzp
-	i+Hl8+ViPW0gBmmlFvR0+KSupNjb+s3sNbeoZKiBIXI9bU+qvBf6rvhr8DQ9aMBA
-	leVO25/8XV89eG+7AQpyNORQc78zzWk5o4gcQwv8X0ly+Ow+3aX0I2qDCCSIFCU3
-	BMA+y0pTxwsMe+aDgvvWigAJRr7sm+rgLKLYNM4vH1gTnYIKpUJ4qAOEpCrBMkTM
-	UFqhb+9qJ+ZwA9UmsPwKvg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758650938; x=
-	1758737338; bh=H69mDqxu5iKGBDa4QMwRzxrW5UOetLMoTLKu67eo9vQ=; b=X
-	7aGrgT+363+FiTNAqX8Ch/fU0l6ulu3itnMZV+isp4ks2E3oMODNHxzGLRggwNXy
-	5b+bL+Yn78GKG79vW5mVjDGM5qZOQ+Z5rQtUT5ojpmVOZIumcStjT7krlUUsjCJQ
-	iWUhTldH+xA6WAHEVO+agwuFb6hwQxlEQH0r968ROdODwy9oBmfe6YLFlSSMG+iJ
-	mZFU+ht2MrlrRnTR7s0jkAT6yz1hCK6F5fzzuU67rJVfgHk4LGMybjahhvuZd1Ft
-	CLa0onVhl0/U8xoqWMVEawAi0gRvvMI0wp1cO+M+zuCCZtjuFYc8xg/E5Z+7R7Iy
-	USmEyBjoZ/Xxu8RiioVnw==
-X-ME-Sender: <xms:OeLSaDilgBahc_w_qWxM_tJ8YUf0YodlQX5EtyrZkKoYC1LmJ7KQcQ>
-    <xme:OeLSaK18ZeRgjVJczxuJXt0Q9PwWKEvhwFxdjNs07TRE-7xlLJNGX5xok12vlJPq3
-    Z79Yj_mZmOZ3BlVljkK0jz61X33hzkm3oXqofMZLQaBkP96IWl-lA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiudegudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecuogfuuhhsphgvtghtffhomhgrihhnucdlgeelmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfluhhlihgr
-    ucfgvhgrnhhsfdcuoehjuhhlihgrsehjvhhnshdrtggrqeenucggtffrrghtthgvrhhnpe
-    ekiefgiedtieekjeefveejueeggfehheelgfegkeelueelledvgfeigeeltdfgleenucff
-    ohhmrghinhepshhouhhrtggvfhhorhhgvgdrnhgvthenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjuhhlihgrsehjvhhnshdrtggrpdhnsggp
-    rhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlh
-    hssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtghhi
-    thhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrd
-    hnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:OeLSaGJTCA8kqs_DB0PQF2vT0AqzNZrCPMaTznlbVyQq7Iulq17a4A>
-    <xmx:OeLSaL-a7ZSbEWbpTtaU-2uffEhZUugnKv0UYGiF4rsm0gAdiN_f5w>
-    <xmx:OeLSaBKzh9l8oRRMXxn5zs6LUlXu-_g8LJdWhnOZkY3UCDR7pgr3ew>
-    <xmx:OeLSaIm414hr353ywX-tYBF4xCIw67mqTmoy23tdhMwSv9c7FmSNaA>
-    <xmx:OuLSaEkNI-7Rw_iMJ1d8MS4emAnEaIqJLeea0Pz4JQ7GraPdH4mNuZLw>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 94AC378026F; Tue, 23 Sep 2025 14:08:57 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nr6pBTba"
+Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-889b846c314so145440539f.2
+        for <git@vger.kernel.org>; Tue, 23 Sep 2025 11:10:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758651053; x=1759255853; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=efyWWCjevaYmR+Um/+X7wq0eIGC3x6Ubs8ygsaxqfjA=;
+        b=Nr6pBTbaCq95zshY2KliTEdy4fvb0As+Mn2y4DBl9fyfgSlRQ7t96bCGdTGp3ZYZeF
+         gn55mrtUgbUfs6T286/GptbCSfOlr4oArJihY/Qviu2CSdQ9xSi5/cWC6lWAnHbfuAu2
+         70imJY6jGflwfF5RIVJuyX90YFgmYPucqlJBIR8h7vN+hxw9o9nhf+zBC+pr2kotF3Kk
+         sUtso65UaawFjbVRUIeMNcio57MFLOhV19Pxf1XfI7dfCm6HbKR8RhKMYjtxbF2WPjdc
+         Li3DoW7sXUMx7VZFn8R1fpTTCAJ5So3ZWSX0vJH34eWkU51yflDKiO+Va7Mb4YvjfuJh
+         gVMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758651053; x=1759255853;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=efyWWCjevaYmR+Um/+X7wq0eIGC3x6Ubs8ygsaxqfjA=;
+        b=WmsnMhc2worzlmPum50bq9gYEBjD66RPQkEmWTxJruCMLEyeIYYT//EziGZF+/lLQh
+         KulmkjOAGDZDTUlF/FU5cfRA452MeUWYeYYqWpKUvxv93yR7QWNdQuyuPIhkqI+luBxP
+         Alg8yJrf8c5qGK3ndoTjTDt5hwMGOOAlzyIfBa3ONeJX0Zep4Q0yNnyNmSAua5987DMX
+         WD9sc6JAJpNVCk7Ue5UkERj0ofZaF0Rb3dzR6KH0GWQPRVSPfqZSKSkOlYNoTC1X/CGs
+         IW5eToPPxu/r+ACcUc/VNTeBaY/GIYOqo5wZhzX96XWhZwXjlTdkkojP7hv+F3KmsyRm
+         KgSA==
+X-Gm-Message-State: AOJu0YxEY77kJiwqjkDHsujP6tbjbPk3lW//56b9qE6LwNz5cWuAG0Pu
+	+L50+4/k42Y4ST3gfn7a0O0PC/mMbza9IIlVsTPoqvzw2h4HW3nJd80HXiq+qA==
+X-Gm-Gg: ASbGncvIGQYR/TwGiW3b1v338182fbr6Wpnotqnl/z4yWI3rIVF8QmqZQmOGVhRjHOw
+	En02ebzQSgb/SQlPznxfU/JoFTpnZJWAbYXlbu3HORdZVlYJqt2Jm27mTHyQpqJJcqcXaZyiAaO
+	Tbz//78YrlrI0PLVRRlxoW59VTYJpuOoB4dWVWa+DDEXsILcF6Ns586+r66eY6H5YCsC+ZvOe+L
+	ko7U/rMcQKl2dkTvnBIr1N3i9OPQ5T8MClznOoRo5gyBMJI/pQeRXWXglaikjIBDZDLjhXVHtEJ
+	OC9l1mQA6iqRd5LIgq1QpbpwF51Ccas3pw0M/OUC5ZgslWp0henqeAMMImn6XzZUNSGN4cB5ZF2
+	1dRr+KLRHwDb8296YLOsqfp89YQ==
+X-Google-Smtp-Source: AGHT+IGTiZLkE5vpTRFBp51R07/4ebnwtpuGYfPaX0rRsrTyo08lUjnkWqqwnl//xnX27Za72oiLUA==
+X-Received: by 2002:a05:6602:6d06:b0:89a:8809:1767 with SMTP id ca18e2360f4ac-8e1e1629855mr638043339f.2.1758651052566;
+        Tue, 23 Sep 2025 11:10:52 -0700 (PDT)
+Received: from [127.0.0.1] ([64.236.200.121])
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-8a4804376a0sm559215039f.19.2025.09.23.11.10.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Sep 2025 11:10:51 -0700 (PDT)
+Message-Id: <pull.1973.v2.git.1758651049.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1973.git.1758144815.gitgitgadget@gmail.com>
+References: <pull.1973.git.1758144815.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 23 Sep 2025 18:10:47 +0000
+Subject: [PATCH v2 0/2] doc: git-push: clarify section
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: APYrWJik5Pow
-Date: Tue, 23 Sep 2025 14:08:37 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Jeff King" <peff@peff.net>,
- "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Message-Id: <955752f2-5695-433b-95d8-a7a40cb41d65@app.fastmail.com>
-In-Reply-To: <20250919042545.GA3979@coredump.intra.peff.net>
-References: <pull.1973.git.1758144815.gitgitgadget@gmail.com>
- <aMymMLkJg7PkmxL7@fruit.crustytoothpaste.net>
- <20250919042545.GA3979@coredump.intra.peff.net>
-Subject: Re: [PATCH 0/2] doc: git-push: clarify section
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+    Jeff King <peff@peff.net>,
+    Julia Evans <julia@jvns.ca>
+
+This is a continuation of the changes to git push, from
+https://lore.kernel.org/git/pull.1964.git.1756240823.gitgitgadget@gmail.com/
+. These changes to the refspec section got kind of big so I'm moving them
+into a separate topic.
+
+I don't love the nested list in PUSH RULES but the sentence starting with
+"If the source is a tag or commit object..." is really a tough one to read,
+it's not going to be relevant to the vast majority of people, and I think
+keeping it contained inside a bullet point will make it much easier to skip
+over to get to later information which is more likely to be relevant to
+folks.
+
+Changes since the original thread:
+
+ * The main change is to move the rules for pushing out of the section and
+   into their own section ("PUSH RULES") so that it can be easily referenced
+   from other places in the man page.
+ * removed "+:<dst> is optional.", from Junio's review
+ * kept "+ is optional and does the same thing as --force", since now the
+   push rules are in their own section.
+ * fixed the fully expanded refspec form (main:refs/heads/main =>
+   refs/heads/main:refs/heads/main)
+ * switched from a numbered list to an unordered list, from Junio's review.
+   I think the numbered list looks a lot nicer in the terminal output, but
+   it's true that there isn't any order. I briefly attempted to understand
+   how AsciiDoc's nroff (?) generation works to see if it's possible to make
+   unordered lists indent with fewer spaces (2 instead of 4) but I was left
+   feeling that nroff/troff/etc are not for mere mortals like me to
+   understand.
+ * made it clear that "tag v1.0" is not really a refspec, from Junio's
+   review
+
+Changes in v2:
+
+ * Say just "The source can be any object." and don't try to educate folks
+   further about tags, from Junio's review
+ * Mention both exceptions to --force working, from Junio's review
+ * Change "local branch or commit being pushed" => "commit being pushed" to
+   make it clear that it's just 1 condition, from Junio's review
+ * Remove an awkward double colon, from Junio's review
+ * Be explicit that creations are always allowed, from Junio's revew
+
+Julia Evans (2):
+  doc: git-push: create PUSH RULES section
+  doc: git-push: rewrite refspec specification
+
+ Documentation/git-push.adoc | 199 +++++++++++++++++++-----------------
+ 1 file changed, 103 insertions(+), 96 deletions(-)
 
 
+base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1973%2Fjvns%2Fclarify-refspec-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1973/jvns/clarify-refspec-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1973
 
-On Fri, Sep 19, 2025, at 12:25 AM, Jeff King wrote:
-> On Fri, Sep 19, 2025 at 12:39:12AM +0000, brian m. carlson wrote:
->
->> In this case we have two possible implementations, AsciiDoc and
->> Asciidoctor, but both use the man macros.  I think if there were some
->> way to control the value generated as the argument to the `.RS` macro,
->> then that would be what you want, but I have no idea how to adjust that
->> in either one.  Personally, I would just leave it as it is, since I
->> believe 4 is the traditional value used with the man macros, even if
->> typographically or aesthetically it might be suboptimal.
->
-> I think both implementations will just generate XML via our Makefile,
-> and ultimately it is DocBook which will convert the <orderedlist> into
-> actual roff. So something like:
->
-> diff --git a/Documentation/manpage-normal.xsl b/Documentation/manpage-normal.xsl
-> index beb5ff8ec2..b494fbb5df 100644
-> --- a/Documentation/manpage-normal.xsl
-> +++ b/Documentation/manpage-normal.xsl
-> @@ -11,4 +11,6 @@
->  <!-- unset maximum length of title -->
->  <xsl:param name="man.th.title.max.length"/>
-> 
-> +<xsl:param name="man.indent.width" select="2"/>
-> +
->  </xsl:stylesheet>
-> would affect that process.
+Range-diff vs v1:
 
-That's good to know, thanks. We'd need a way to indent unordered lists
-by 2 and ordered lists by 4 anyway (to make space for the numbers in the
-ordered lists) and at that point I'm not sure if it would even
-look good. I think I'll leave this rabbit hole as is :)
+ 1:  2f2dc22c47 ! 1:  8be0554d02 doc: git-push: create PUSH RULES section
+     @@ Documentation/git-push.adoc: allowing a forced update.
+      -	to update a remote ref whose current value does not match
+      -	what is expected.
+      +	Usually, `git push` will refuse to update a branch that is not an
+     -+	ancestor of the local branch or commit being pushed.
+     ++	ancestor of the commit being pushed.
+       +
+      -This flag disables these checks, and can cause the remote repository
+      -to lose commits; use it with care.
+     @@ Documentation/git-push.adoc: reason::
+      +Because branches and tags are intended to be used differently, the
+      +safety rules for pushing to a branch are different from the rules
+      +for pushing to a tag. In the following rules "update" means any
+     -+modifications except deletes. Deletions are always allowed, except when
+     -+forbidden by configuration or hooks.
+     ++modifications except deletions and creations. Deletions and creations
+     ++are always allowed, except when forbidden by configuration or hooks.
+      +
+      +1. If the push destination is a **branch** (`refs/heads/*`): only
+     -+   fast-forward updates are allowed: the destination must be an ancestor
+     -+   of the source commit. The source must be a commit.
+     ++   fast-forward updates are allowed, which means the destination must be
+     ++   an ancestor of the source commit. The source must be a commit.
+      +2. If the push destination is a **tag** (`refs/tags/*`): all updates will
+     -+   be rejected. The source can be any object
+     -+   (since commits, trees and blobs can be tagged).
+     ++   be rejected. The source can be any object.
+      +3. If the push destination is not a branch or tag:
+      +   * If the source is a tree or blob object, any updates will be rejected
+      +   * If the source is a tag or commit object, any fast-forward update
+     @@ Documentation/git-push.adoc: reason::
+      +     new tag object which an existing commit points to.
+      +
+      +You can override these rules by passing `--force` or by adding the
+     -+optional leading `+` to a refspec. The only exception to this is that no
+     -+amount of forcing will make a branch accept a non-commit object.
+     ++optional leading `+` to a refspec. The only exceptions are that no
+     ++amount of forcing will make a branch accept a non-commit object,
+     ++and forcing won't make the remote repository accept a push that it's
+     ++configured to deny.
+      +
+      +Hooks and configuration can also override or amend these rules,
+      +see e.g. `receive.denyNonFastForwards` and `receive.denyDeletes`
+ 2:  e1b667f645 = 2:  11ad190c3e doc: git-push: rewrite refspec specification
 
-> And I think there might even be a specific
-> list-indent variable, but I didn't dig very far. I agree it's probably
-> not worth going too far into the rabbit hole of manpage styling. The
-> parameter docs are here:
->
->   https://docbook.sourceforge.net/release/xsl/1.78.1/doc/manpages/indent.html
->
-> I believe Asciidocttor _can_ generate roff directly, but we don't use it
-> that way. I don't think it would make sense to do so unless we are ready
-> to drop AsciiDoc support entirely (since keeping them as close together
-> as possible reduces the maintenance burden).
->
-> -Peff
+-- 
+gitgitgadget
