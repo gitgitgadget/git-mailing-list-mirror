@@ -1,143 +1,108 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E6178F39
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 18:48:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0BE3019D3
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 19:35:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758653322; cv=none; b=Ph05FRI/lAY2KP8bJyHpLbVhx9V7rpLRtOvj6DCRLpmpJj56gspP9kZJpmo26iOD9HjbfTFY5oC4TdORAe9HFkxykmNunA7HE0KNeTmoK+zkFKTj8DdJTZx9PBAEY8IeVLZovQUAK+y7Hdh6rizDTkW1/bG96SzNAKICZRPcGhU=
+	t=1758656137; cv=none; b=rws5WrngnP12txtrZ8B+i0ECKez7bZz6IKwlJTSdXlj+vshiOauakBX5IcB3oiegQIgMy9IdEGmyH4ABKauT+bRY3SLCkN1b5opsnDNThjfBcNbTPTI1Ht7Ki6AhV1XqOvYfxwFiiwWAidUNUvJzsw8txN2apVQSmjMxKEDRgJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758653322; c=relaxed/simple;
-	bh=B+NBlNCcpsus9ndTx/DdW8BZf+2VWUjOmMvq1TA+R+Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RmVPkMtTNjxbUkhTl+iDrTjJZfNpMOGopqDPzrtdwcYJTgi72b+FPb1rHt61QNf9IsJ1ofaxHqZ9Nr9DpdElZNafo5mr60I2jFQcKhv62HpKm4SjhdH3WPKss8DzrPZynJ0jFo3QbaFRyAzoHY3Umfrr3M6aS9Htr+I1Dogsr90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=McmXKcgR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MAjO3MIx; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758656137; c=relaxed/simple;
+	bh=X63ihEiysw6+75rWoM0QRDkJp43Uhy78aar5HxP95MI=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=ujt1+oi8r8DnJeGEmNKJ6MFetMl5qlSHwFBw8FRtX/UaKW9jF/X9awoaAMEO7DAVrsbaVvvkmZihfj7m2RVKcf993ZVb9mlY3edVxkQd9lR+xMX+NowWo1E6llUEFFWMDG/s+3a9YxrxptP9gxvpIWwmYaHz0B3N3R+4wxmbWX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lTX8qWZM; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="McmXKcgR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MAjO3MIx"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8DA231400113;
-	Tue, 23 Sep 2025 14:48:38 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 23 Sep 2025 14:48:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758653318; x=1758739718; bh=1M2+1QN3Ng
-	jrNZWMoOw1RwE446ozOX0FEMeHXMl3z9U=; b=McmXKcgRhzm0pomZtarIMxh1hU
-	YhRsCr9B/YVOs9XiSFVqfOUaddKMUSV9DcODQ9RXJhWJeVnF7QZS2/bshZ7VN6GW
-	p06OxC1y9drkLFAQ2fgeek9RjOnLeNicgn3SosvXHJ9SRWv4Oor+wi+6rLHHyr/r
-	rcvfh5QrHQPwtqOz0lriKhlsPx+H0CCFeluDxe0gKs0nxBuKVrOxT5voE/liLOoX
-	iSl+oMRumFnZi94nZP8pWuG0/S/9otz1TPPDrxB2g+oZEoiuy0VrKIvrgJMOUjF/
-	2CucgJD4vtGuUVNu24xh6cY0eT7iuYHmbMazXSUT2nqPxmJ4bnMcYBeBQu0Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758653318; x=1758739718; bh=1M2+1QN3NgjrNZWMoOw1RwE446ozOX0FEMe
-	HXMl3z9U=; b=MAjO3MIx4WXEZkaxOohiJk91wzlqasH4pSJl2svWjbjfiArpMs+
-	70jup9BfIkFD0M+6pK0WEhhQV0FoqlXMsj/30YSauma/1bXpz76U9j205uOYPKdO
-	2WurxIgdkPNKTOvvjQVOGw7fYa4R1Z1K3m66EgqH0JA4G1utsvuFW/L2jEsBhZBu
-	DUzLUNLgh3GLJdKmGo3a8YAGU9s2a11UC1zLWl6n629gx8vBucv2Q5Xila0JJiDa
-	jXjGFABL7HMXHii0nVJ7BAVkOY0+ImlLu89BWTyhNTh58nQhn9sno9fcdr9qXMnL
-	SARBz7cMe0T91uUT3KT1grOBQIDlroCWaRw==
-X-ME-Sender: <xms:huvSaKoQ2bC-vIsJBvFMXFyFhV4UbQjJHYcOW9GRfyBNny8_M2l_6g>
-    <xme:huvSaPi6STVr72k1erWyJEkl6Yi6q-liRF2Ie9iddk36zS-98xblfpPfuUp5qzr3q
-    EKVbEoaWeGkemN4bTamOYqaZKgIskTxZjuTj3JIYV0CZ-YQnhcfYA>
-X-ME-Received: <xmr:huvSaHj-Ef4gPu-ECrVP4MCejfJgKv0iEbMjOfZ_TZBlVWTvtjf8PJwj3y09mqY1NcWY7QomB02Eh6OkinS8vXnLynr_g2gRZwBq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiudeglecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
-    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrh
-    hthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehshhgvjhhirghluhho
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:huvSaFhTioST2Y-VmYhoIVULcrahoXPVZKYvIu5kvYPOCcjaODtEKw>
-    <xmx:huvSaHJJ_A-H12Co8ZDdXogzvmQwUph6oulBtay8JH3uGbasb5t9Hg>
-    <xmx:huvSaEELfA2X-bxN0i83iG7WL4er5kwTFdGwtmL_AWwXwsWswz22YQ>
-    <xmx:huvSaLR4EkT9mYylPpoqZq53bM5vpTOn_8kXThYTgDo7nEpS-40ezQ>
-    <xmx:huvSaIxTOVrQDwEHEAd3GPzz3lid6ZvuO4Yi89yLJuaCah0RtaBocZ1a>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Sep 2025 14:48:37 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: shejialuo <shejialuo@gmail.com>,  git@vger.kernel.org,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 2/4] string-list: replace negative index encoding
- with "exact_match" parameter
-In-Reply-To: <CAOLa=ZShms1D-cq=x04dtT2ULTVE3ZDo8DODFnJRP2wcJz0EgQ@mail.gmail.com>
-	(Karthik Nayak's message of "Tue, 23 Sep 2025 05:35:39 -0400")
-References: <aMp8yNFiXDyk2hP4@ArchLinux> <aMp9OtXLfRw7dEwA@ArchLinux>
-	<CAOLa=ZShms1D-cq=x04dtT2ULTVE3ZDo8DODFnJRP2wcJz0EgQ@mail.gmail.com>
-Date: Tue, 23 Sep 2025 11:48:36 -0700
-Message-ID: <xmqq348dovi3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lTX8qWZM"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b3164978f11so131782966b.3
+        for <git@vger.kernel.org>; Tue, 23 Sep 2025 12:35:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758656134; x=1759260934; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=X63ihEiysw6+75rWoM0QRDkJp43Uhy78aar5HxP95MI=;
+        b=lTX8qWZMKV2pyl7YzRgmXPasEFVZNRFeUO5hf31idavq9G3ZiTdLi6czsWaqsE42fz
+         ncx2mTt+xfFH9tw7C7XcOUYsD3g6SZ45qyVS76LngnWWdWH5UL7rAq6FD9us11iUGWMs
+         iIc/KxLe5CKOm9r6q93Zc42F+dMNMk9ZLfPXT3MudoZe/YdBZyOeT6EWjPodT0y8Sgek
+         x00R3BbWlz50mhEdfYLRfL2Rgc0GhU6tv8SYsCnhG5aH7nrbGOBOVo6vmWqgViuW3NzY
+         A68oC0NSn6KDHTxHRmr1P/r2dHvj5W6/pVedf+8i09DejUE6C6uXs0LVJkUBnuXhh7dh
+         Ed4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758656134; x=1759260934;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=X63ihEiysw6+75rWoM0QRDkJp43Uhy78aar5HxP95MI=;
+        b=WZAOIiQuGW/JXck1x07tNPx7HLL5lqP++apPZXXaDI+IlfYx2WpwJKS93S5dPC846b
+         r2LJ+A2kttPPbh3gYG8EahfDxvpPoNvrI6+Et8IOy1MIupCmtdTrTUFVH84yTP8X2SJu
+         cU41yHNA7E5SF2y4MD5HSQeH8wvRce6MZDBW1sLwg+RG54lA60gipEOVgbVDNKkFCbOa
+         BccC4FiuxAg9eTNA9wr9MGXkVkGMT1Hz1Noq7FDUhmrBJu0nT1X6D5Mxt6sPmP2Y0uOz
+         VCqrBaty8O2biCOodOr+CQLweR8BMnWK/sIt8dqTse1vpS0OTZWBq7y1zkC8Gcmvz4yY
+         WdGw==
+X-Gm-Message-State: AOJu0YxLz3CAriP9r+0nsWQYzD3lkru+Orj0dZ6lUyK1CVApkCFLXcew
+	Am5s6rCXJ3OPcM/DDYlJQcpkj7xSSkDXhwFXf/3rASYj+heqsCXwV/xgavKtwohHoQ6x0VCo8cM
+	kdzi1fdGOZC6CawHniXMIr6q1NQiKvPUG3+5O
+X-Gm-Gg: ASbGncu29J6f+6k5suVA7UC1zguriBX11Mybb9pgPg8BMQcpZKsVkjeA+A+MbQgxjyQ
+	w1pfk6Uetr4b1/22Y89PIy/Cl/PfU5gXFRQuDhm0iF/W++t4/xzTFANGKi8eOM7AEy4cD1e/vPP
+	1jmNkwHixl3+b+MJjEDXbhhDb+t6dNXpGOtavEKaW3tmicnq13RClUVUBfmHpBsuHwMmaYem3ni
+	AJmRqVX0dtIQLN3Ttdv354OhE2zmfrzBbzAxTVT
+X-Google-Smtp-Source: AGHT+IEHTAOssAaODYnIzexSuv1QqSakg35cyKbSka/2UmncEJByx7cou0y2OLa/hD/bIJBXcWaUzkslAbD6ScSLbms=
+X-Received: by 2002:a17:907:94c5:b0:b28:c29d:7b2d with SMTP id
+ a640c23a62f3a-b302a17b96dmr308273266b.39.1758656133937; Tue, 23 Sep 2025
+ 12:35:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Marcin Wisnicki <mwisnicki@gmail.com>
+Date: Tue, 23 Sep 2025 15:35:22 -0400
+X-Gm-Features: AS18NWBIPmj2sBvLkuwtkvDLeuo1DQptoeWtQTysZqagY5K8foqmX-tMx4gK-wE
+Message-ID: <CAC9GOO8KCuLCZguZm_dg2MKS=cO=YUb9Uc+VLNTZSXMiO9wcig@mail.gmail.com>
+Subject: [BUG] No context menu in gitk on macos
+To: git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+# What did you do before the bug happened? (Steps to reproduce your issue)
 
-> shejialuo <shejialuo@gmail.com> writes:
->
->> We would return negative index to indicate exact match by converting the
->> original positive index to be "-1 - index" in
->> "string_list_find_insert_index", which requires callers to decode this
->> information. This approach has several limitations:
->>
->
-> Nit: It would be nice to start by explaining what
-> "string_list_find_insert_index" does and then talking about the negative
-> index. Perhaps something like:
->
->   The `string_list_find_insert_index()` function is used to determine
->   the correct insertion index for a new string within the string list.
->   The function also doubles up to convey if the string is already
->   existing in the list, this is done by returning a negative index
->   "-1 -index". Users are expected to decode this information.
+1. create repo with one commit
+2. gitk
+3. right click on commit
 
-Yeah, such an introductory statement would help those who are not
-familiar with the convention.  Thanks for suggesting it.
+# What did you expect to happen? (Expected behavior)
 
->> 1. It prevents us from using the full range of size_t, which is
->>    necessary for large string list.
+See context menu like on Windows
 
-It is a disease to think that countable things must be counted in
-size_t and it needs to be somehow cured.
+# What happened instead? (Actual behavior)
 
-It is a type to count the size of memory allocations, nothing more.
-If you are holding 1000-bytes per the stuff you are counting, you
-would not need the full range of size_t --- you'll ran out your
-memory way before you fill size_t with the things you are counting.
+Nothing
 
-When there is no external constraints (like you need to specify
-exact size to describe a file format to be interoperable), the most
-appropriate type to count things in is a platform natural "int".
-You wouldn't be handling billions of strings in string-list anyway
-(and that is smaller than half of 32-bit size_t; 64-bit size_t is
-much larger).
+# What's different between what you expected and what actually happened?
 
->> 2. Using int for indices while other parts of the codebase use size_t
->>    creates signed comparison warnings when these values are compared.
 
-The other thing may be (mis)using size_t when it should not be.  If
-they were also using "int" that would also squelch the warnings from
-"-Wsign-compare".
+# Anything else you want to add:
 
-For an amusing read:
+[System Info]
+git version:
+git version 2.51.0
+cpu: arm64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+libcurl: 8.7.1
+zlib: 1.2.12
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-format: files
+default-hash: sha1
+uname: Darwin 24.6.0 Darwin Kernel Version 24.6.0: Mon Jul 14 11:28:30
+PDT 2025; root:xnu-11417.140.69~1/RELEASE_ARM64_T6030 arm64
+compiler info: clang: 17.0.0 (clang-1700.0.13.3)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/zsh
 
-  https://lore.kernel.org/lkml/CAHk-=wg+_6eQnLWm-kihFxJo1_EmyLSGruKVGzuRUwACE=osrA@mail.gmail.com/
+
+[Enabled Hooks]
