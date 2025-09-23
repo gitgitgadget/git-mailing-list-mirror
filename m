@@ -1,120 +1,115 @@
-Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791B23043B9
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 19:45:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05461400E
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 19:54:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758656715; cv=none; b=to6uHgZ3ancshQDVaZkXS3SzSV8FrE+blDjp36UaZDvYAj3rpVWLN7rTgztOzDcmuYoChXPx0heooWT5mwotExi4ewReNDgpSNH45X/gSqC1G+l10qEC5v0ACWZazHUuNFT1W9XIX/ZFtJXAlJcZgi/HHcJI7qHy/onzHSQO8YE=
+	t=1758657265; cv=none; b=AoScaw24OeVa7lc2Eg7YRUDhBRQ/wHOjccts/IloYXBnWSBkdG+a7D6jVOtXt6MJECDR7iLo0nh7vO7XBs6smBAz2eCfU7QCHXzc73VH8Vq949iK9yLZwDl7MndAqKgAexCP1fQvs5Evu3WqdxpfqjvzAVg/AeuMGd9CMoKtxY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758656715; c=relaxed/simple;
-	bh=YDzgjpivu6TPnSYA2iSSudK9TwK2BQBZWCMAzda6Ci8=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=OHxFDDwDyNsytbZqhIzLr2xlXNs68aEp4pp8APXPyDT021H62SSMBTS7wl9pVMPUkccwINN1fGhvFGa3pwQaIVU4tjIeufizrVDCkmmANQLqW2tTPGl16IIeSdarLBi5fNc2B+SJftMr8Y2ahVDh1k35QMrQ8BN/4LrTk6Q52ZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QGBmSIRs; arc=none smtp.client-ip=209.85.166.175
+	s=arc-20240116; t=1758657265; c=relaxed/simple;
+	bh=/GFyQQRZy2cABI6RSvglhiPsIqg4fAhUnLRd26e4dDg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=SXKsm0HKAJnCIsFBWeMUlC7+Ksaug3zEjBWFnxNZ433WgVUyuAUZBHTxQ6TJY98PxR7XWXmit164hOxjj66GgIVUJi/8K39FRWbPeQ0tfQMkevyAk876TfUG7uoyOS7J5xekLkI3olwm30ButjeapaSv8IQ0OMHSK1fwbi6BIXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JoR3dr75; arc=none smtp.client-ip=209.85.208.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QGBmSIRs"
-Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-4248c9a64f7so1496945ab.0
-        for <git@vger.kernel.org>; Tue, 23 Sep 2025 12:45:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JoR3dr75"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-61feb87fe26so7758620a12.1
+        for <git@vger.kernel.org>; Tue, 23 Sep 2025 12:54:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758656712; x=1759261512; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CFR1grZHtBpB2nhM7kw913+mjxSCrq+uYREgTlkM0fI=;
-        b=QGBmSIRsK6QCfliI+k/aLicRGfCXME8u+iFm15R0q3ykdTcfugB40Gv4nm4x5+DK/7
-         sKv1DF7VX5NEUkNqvrTPVn99J8k8YhOg1cTfZFnOpNMU/zz+93Qk1Igp9BZZ+6D3yi3B
-         t/5n2dNMM0qTFVUuV/qPp2IgQrdIFT28mvbVWAWP+3Kx19YXn7DJW6oWiaUs3hs94te0
-         YlicKuymBlCGPmWc1rTEp1vJOUuYk5Mj5ujxV0y4UMMQA0Xit/AvJwy1hUIwrRp7+aVi
-         Vm4vNdtAcm/HkRDmk2KvknyAKgDlVyqImt/ANyJvlbBVYS8KJ88SRFUvru0H6V+RSaRO
-         vQeg==
+        d=gmail.com; s=20230601; t=1758657261; x=1759262061; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/GFyQQRZy2cABI6RSvglhiPsIqg4fAhUnLRd26e4dDg=;
+        b=JoR3dr75a/Ph84A1XMCxZUilO6fD3vZIdP4Lc9XFHqt9cJQPt9NN6Y1DgG14SKy9TK
+         SMEeuVLnHpx5SWryPQtC6Ubu2E0S/+qY05wbSYf/J2iieFF9VX7bF7PYgVtRoc+DrjZ0
+         bzHZt4DZrNPBpRc31lZ0HZXuLVtvnCbLYyuaaz0UqlHA+t5FUom2YLgga5hbd2Jbm6ix
+         SyPae8y2fjIN61mraQalm3aaM4uvlgyi+Tf8nbZ7Bjbf9t0FnlXTQ/+GQpKYKdnpCt14
+         SDF0MQMYft1bZeYQrpBKR/WiGtJzPs+BDSEiBSPKVM3m+1sv5S97XFSDTvih3EM5mF8T
+         XZyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758656712; x=1759261512;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CFR1grZHtBpB2nhM7kw913+mjxSCrq+uYREgTlkM0fI=;
-        b=Mq5vMKqxgieP2Hg3U45j9Dt1h56LR+SfXRQfRYKTe7L/BY/OlS/WbR5wQb0Twubw82
-         F5WeFqxizLFvNGKqqztGULXRfC0K9aOfQKGeBRoyzwptOAFqgtTWTHL3XNXEp3DPCg5h
-         c8Xo40rHDMGs8F9UX5IoWMJrtC500H/kZPdgcgpgY4f2KdXsUogudWxdbokRgM5SJYA3
-         ciixRHJzkHd90j6wBBShQDl7PASTNAWnNnXzee79O2z4eaPBsvlt35UAsm/amd3G4vF4
-         am827hb+/TqVq428XoKaFoKOIkOQV7MkZ/s/zh6emBrCCVYWOOfa1uMRfZLGyUGnbvfW
-         kW+w==
-X-Gm-Message-State: AOJu0Yx0Kd/cIDi3mzSHD6d1PTI8HWF8yAYa5sjw1vh2T+Yi2xlBmKNF
-	Nuz5O8NPXFJCHx9m7wT76KkzSCgKst2xgvODUH4rWSe2gjFqpUQY6wFwS+bEABLI
-X-Gm-Gg: ASbGncuTTqT1JunMVTfBLQj8ifAkwLlQxPtA507EtpIpQAhxaG/dJsW3J71xPLDSQEA
-	AA5FooTHjEw5P6l4mUw65pt7kignN4cnYCtVTDHvy2jCtjg4grFJWuyEJ9UIdMUnNb5yuJrNZfr
-	0Th5BTP4Eve2HWhQ0fahN2Lxv7hAo7+HaIgpz+Vt/2iDEWfLEFKXs0wgvExvvzOICiaKfpRMuia
-	tYWwEeqR9Q5YhB58xg8Q92J7kcO1Y77aHQhuec8YyCoUOiCoFiUhLOC/ej9RGh3PLWVWQzNwnJS
-	0Widmrdz2R+usuO27V+uM1Q1+XDBkWdDMiHGwHWkopml0GaiIHOpNgOKbXPSrm3kjbJldIhKgDe
-	5vR0bAdr7/bXJLFIr+9btG5MxMg==
-X-Google-Smtp-Source: AGHT+IFnBsznx4az3J81fNcsaGlmF+T3Yu0TnVAeQQfNT1++cnYlFtLE44h/BoVrnH1ldIzlkz22dw==
-X-Received: by 2002:a05:6e02:156f:b0:425:51dc:5b6c with SMTP id e9e14a558f8ab-425823289dfmr53108095ab.13.1758656712108;
-        Tue, 23 Sep 2025 12:45:12 -0700 (PDT)
-Received: from [127.0.0.1] ([52.154.130.210])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-4244afae874sm74600165ab.24.2025.09.23.12.45.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Sep 2025 12:45:11 -0700 (PDT)
-Message-Id: <c7f09c2bd32baf9e1dda355656bba811484e90a0.1758656702.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1976.git.1758656702.gitgitgadget@gmail.com>
-References: <pull.1976.git.1758656702.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 23 Sep 2025 19:45:02 +0000
-Subject: [PATCH 4/4] doc: git-pull: clarify how to exit a conflicted merge
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1758657261; x=1759262061;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/GFyQQRZy2cABI6RSvglhiPsIqg4fAhUnLRd26e4dDg=;
+        b=CyKMe67JEwDHyKbCZVRjMi4tTFw1PE4WULy2L0PcTGNu9Sm10Z5EpQ41/kX4U3/Pcy
+         Zu1eZyFpkcZkZum4rKHsxWkBL3fNC206LzlIC+AlwvF6esHXb3tKP710EEuiDjAOeJ0c
+         0T+QtTimEZFfAOLX4w6KHPXzPWdL+5NiWQ7Sp6fCsZmRtDBn9ZltlZmTsF8j3zADPC5u
+         /o/Dnbs0KEtMfS1tRRN4Xr+sBcsoTUEsyqLcTpD6fUSJNjhS13rXXdT4/tvm1VkDfcUn
+         8RJLsBnmAIU5YoMVY0MdQAeFLtEzYNSUYkkp0ac7ZNLWwp/0Xz6nD71c2AVb1HvNeUX8
+         LYBg==
+X-Gm-Message-State: AOJu0YzB6YB0cfay8XEXvWpD9dJfy9Aa+dzMv6LPbNZWrkJ5D9/mjL3O
+	E37/LPMpvbLmx01YR48xKvqwDbdVJ/Pu/vJY4HEYdllz012DsJVtsREQ9al4m2OOeyj5vJFJtvF
+	GjobpN3+zhqQSN4Zhspf6sk0udTf+wp/Wxznb
+X-Gm-Gg: ASbGncs4I32mR+Hjp5nzKlHOHpbAtFOPSrErmx2BpCESiQpAUB2Q5nHtfxxVDIAFj7O
+	Af4+xwR5QX+OE6jpwLzyFeBoQXFjplvCK0WV+1uSZuupc4FSqppR2GgvA+etkz6kxWhNToZpVUW
+	DfXVa71KGpMJK2oNQzgKUXwyJM3s4HqgCXpogEQEjdM6/9GidrwSxvq5RExA7G1HSCHawbc9EA1
+	Crr8laikjWjxiaxai/bXi3DJHJX9RX9da7HcsDi
+X-Google-Smtp-Source: AGHT+IGBeKTTkltlUHrmybrbg2al27Eq4TG6WRky75nIbgG7LtYu026V8oape1AwlmwUy0YX2QjEMCrby4GffxUDZ1Q=
+X-Received: by 2002:a17:906:fd84:b0:b07:dbf9:a2a2 with SMTP id
+ a640c23a62f3a-b30274588a4mr391834766b.20.1758657261429; Tue, 23 Sep 2025
+ 12:54:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+References: <CAC9GOO8KCuLCZguZm_dg2MKS=cO=YUb9Uc+VLNTZSXMiO9wcig@mail.gmail.com>
+In-Reply-To: <CAC9GOO8KCuLCZguZm_dg2MKS=cO=YUb9Uc+VLNTZSXMiO9wcig@mail.gmail.com>
+From: Marcin Wisnicki <mwisnicki@gmail.com>
+Date: Tue, 23 Sep 2025 15:54:09 -0400
+X-Gm-Features: AS18NWCttjFinh6t5td5DgHn2gb1NyQa84KBDOhQmVjQmz4R1B7g0rV1QCfwiqk
+Message-ID: <CAC9GOO8MLaBEfmyJhq3SHPmOCv+6KVLT_pW9xMm5Qxu4065pCg@mail.gmail.com>
+Subject: Re: [BUG] No context menu in gitk on macos
+To: git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Julia Evans <julia@jvns.ca>
+Nevermind, brew upgrade 2.51.0_1 -> 2.51.0_2 fixed it
 
-From user feedback:
-
-- One user is confused about why `git reset --merge`
-  (why not just `git reset`?). Handle this by mentioning
-  `git merge --abort` and `git reset --abort` instead, which have a
-  more obvious meaning.
-- 2 users want to know what "In older versions of Git" means exactly
-  (in versions older than 1.7.0). Handle this by removing the warning
-  since it was added 15 years ago (in 3f8fc184c0e2c)
-
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
- Documentation/git-pull.adoc | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
-
-diff --git a/Documentation/git-pull.adoc b/Documentation/git-pull.adoc
-index 91903b0a94..eec05ab6c7 100644
---- a/Documentation/git-pull.adoc
-+++ b/Documentation/git-pull.adoc
-@@ -30,15 +30,9 @@ branch. There are 4 main options for integrating the remote branch:
- You can also set the configuration options `pull.rebase`, `pull.squash`,
- or `pull.ff` with your preferred behaviour.
- 
--In Git 1.7.0 or later, to cancel a conflicting merge, use
--`git reset --merge`.  *Warning*: In older versions of Git, running 'git pull'
--with uncommitted changes is discouraged: while possible, it leaves you
--in a state that may be hard to back out of in the case of a conflict.
--
--If any of the remote changes overlap with local uncommitted changes,
--the merge will be automatically canceled and the work tree untouched.
--It is generally best to get any local changes in working order before
--pulling or stash them away with linkgit:git-stash[1].
-+If there's a merge conflict during the merge or rebase that you don't
-+want to handle, you can safely abort it with `git merge --abort` or `git
-+--rebase abort`.
- 
- OPTIONS
- -------
--- 
-gitgitgadget
+On Tue, 23 Sept 2025 at 15:35, Marcin Wisnicki <mwisnicki@gmail.com> wrote:
+>
+> # What did you do before the bug happened? (Steps to reproduce your issue)
+>
+> 1. create repo with one commit
+> 2. gitk
+> 3. right click on commit
+>
+> # What did you expect to happen? (Expected behavior)
+>
+> See context menu like on Windows
+>
+> # What happened instead? (Actual behavior)
+>
+> Nothing
+>
+> # What's different between what you expected and what actually happened?
+>
+>
+> # Anything else you want to add:
+>
+> [System Info]
+> git version:
+> git version 2.51.0
+> cpu: arm64
+> no commit associated with this build
+> sizeof-long: 8
+> sizeof-size_t: 8
+> shell-path: /bin/sh
+> feature: fsmonitor--daemon
+> libcurl: 8.7.1
+> zlib: 1.2.12
+> SHA-1: SHA1_DC
+> SHA-256: SHA256_BLK
+> default-ref-format: files
+> default-hash: sha1
+> uname: Darwin 24.6.0 Darwin Kernel Version 24.6.0: Mon Jul 14 11:28:30
+> PDT 2025; root:xnu-11417.140.69~1/RELEASE_ARM64_T6030 arm64
+> compiler info: clang: 17.0.0 (clang-1700.0.13.3)
+> libc info: no libc information available
+> $SHELL (typically, interactive shell): /bin/zsh
+>
+>
+> [Enabled Hooks]
