@@ -1,131 +1,73 @@
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-g3-154.zohomail360.com (sender4-g3-154.zohomail360.com [136.143.188.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DEA27F73A
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 23:34:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758670467; cv=none; b=NoXBH8AndOqmnMxt9nY5krTw3Ddb2p5oIDTPzymPEyuFZdzayYwD7bjPapL9D+eA8VbVHqhBGEkycufrkPbNi2lFuzlhTSv03RK5MVh05QwY6zPniP8gmoUJutOguOxvOBgy6Hnh8YREy1l+iur5VCJ3AUygTLevfT9Wi9cQDkQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758670467; c=relaxed/simple;
-	bh=oncy1qMF5ZtSHd8oQQNs/gq+n8TSXk+BBJsuUN033r0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MAdunO/t/Qys4Q/QKl3VAgKB+I0dretePg/qGKlGOvaXeWAaQBQl+WglgZ6pyZ859h8/7CpQHXs+sBK3EN0hKJidU1KzXDca+2oEtk+zdfk6eFvAQHegzBZx1YXzWzFF3jnPZHMfzPumSEGqMCJgXsPJz12XuZzt21z/bBQb16A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e1vSCyn7; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A569F12F5A5
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 00:23:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.154
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758673419; cv=pass; b=o0fPp5/CCR3h0wWFVaBg0FAnwU0h1Pnk9+9JKBpkSV48B4IWrho0toV2jCNX2HAKZVe0/l0FtGU/Lyg8qAs/IPODrBQ/6VFSaJH0Pc2jimhodyAuCVSIULTKl7ql7AEO8xzeBWyhO5dOfmhZwsN49uC+szH+Cxu0/fdq2cZAbWU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758673419; c=relaxed/simple;
+	bh=rOash2+xMcyoKGoee4ZAJfscYggf1Grpxo2/PDWBTNA=;
+	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type; b=DV7NB4ZkvL/VigGAjSi02eO4TxJdNPpMlgmi/+HDeEd33cODRqBsDYtz/8QfS2Kk2A7n/yUW19FLmjUMIAJZ8xcBK84K1VP7xRGzj5Pbmu+Tv7wzcZYjk0i5tDUSQrp9cOpp1Nduj2IZZ41T0+X8TWlAzRpKGmg8MBUKaDaIiA0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=maguitec.com.mx; spf=pass smtp.mailfrom=bounce-zem.maguitec.com.mx; dkim=pass (1024-bit key) header.d=maguitec.com.mx header.i=@maguitec.com.mx header.b=fQt1iEs0; arc=pass smtp.client-ip=136.143.188.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=maguitec.com.mx
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bounce-zem.maguitec.com.mx
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e1vSCyn7"
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-3612c38b902so56672941fa.2
-        for <git@vger.kernel.org>; Tue, 23 Sep 2025 16:34:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758670463; x=1759275263; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=oncy1qMF5ZtSHd8oQQNs/gq+n8TSXk+BBJsuUN033r0=;
-        b=e1vSCyn77SAuxYLaDuz01q3Wcdmuy1cE7nQYg+l8bzwKjGxgtOrZtJgbzs0IIUZhJA
-         CREfZZZgbbD2ql+eH0eE/ERg0z4O+smqLZBlToMsU/gjQkuBpK3XMrX0+4EaXCbKE5Zl
-         YWXCXAcmvs6yYyOVNrkkJCvwu1Q7m0XzCRwj1EQXAbJP4zDyIWRC2g2sHNwsCrEXZHT2
-         qjoEew78+sRag6zuBCrqf+WNvSQ+O1K9+ybKlvMSQ4C5kP6LAvqm9gDiIjPg8QlxtRW2
-         E5b+17xAd2rfYAX6k6fyrDilOCMeh338W49GgwAURshh4zg+w2+dK87WPbjEpZtwT530
-         PFbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758670463; x=1759275263;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oncy1qMF5ZtSHd8oQQNs/gq+n8TSXk+BBJsuUN033r0=;
-        b=G54p610gSh/oi6FMtPZhriUCFUu8us1b1k4OO48UdsajKEUQEdu4VB2cqky+H8+ODM
-         WDHH/d1Aql1SMoYmOWIkqy8dQhtCvCI/wnLs5f0TIhnV1lOIZQhEpUyf1EMmCYJxUuwN
-         c848cePGWLLX5ig8cKLOBb/fu5cJqIFcITNud1u35sg4dk2jqtqZyiOIMaPL7wz1+3Xt
-         XvEjwanryET0z6pjRWAd5v6cN89X0zIV05rZSBHUFF4FulmbY7pnG4cCCKmuASXXQM0Z
-         UIxUGjU0DSr/YzN6RQIzGnsSWjx37dc9nkO3ncu28+phuE0PbhSwD6Kdb9GKjF9yyoz4
-         MYkw==
-X-Forwarded-Encrypted: i=1; AJvYcCVH1dEMhWdhLaDMWz1ZQbJJrh8UbZVd+oTo+WPdS5d9ybozfhckDdJq0wTzYmYojOXTZgk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw4sRe9VM98FL93czz52W3vvLswuBMlBtnOk15H0Y+UjCal6Fds
-	CQBkbcYTiDpj3r+AGT5HVJnTlxF5Y9SNytMatKzdcoUZ+cn/cOha9ohN+Dzpfr2ibNZCqoj4bJu
-	XfZXikrNnRyVIJb+Op+8B6ScY5V9qognSDDE8
-X-Gm-Gg: ASbGncv5J9K5/0CXOYB4XgSR+DzP2gcJgATMznnN8zUHhVCE50WOMlpWtW0DrmMNOGL
-	3VzyAzQrB2R6wjU5B9Oi5xJnoHsW+YNf8z5bDFWhNw5bpG7Yrc5SZLR/bhT/hyKgHS+EirHuojE
-	iRRcAW/1HRS5msgB5NZcOsORsogRCvfNvFdLng00GZ7dbhpWA4I+OqGJueLMbVvfzqAnS/DhFZG
-	HOf1A==
-X-Google-Smtp-Source: AGHT+IH42ekjeBVhB4rFX+3tXmkEqcdDg076aHjRaBi8TmDK2KXWUPVMNlCH+lZEXsVCWgXJi0fmcEFSlH6zIN+uaj4=
-X-Received: by 2002:a05:651c:1990:b0:36d:1f0e:1c02 with SMTP id
- 38308e7fff4ca-36d1f0e24d9mr12345521fa.39.1758670463115; Tue, 23 Sep 2025
- 16:34:23 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=maguitec.com.mx header.i=@maguitec.com.mx header.b="fQt1iEs0"
+ARC-Seal: i=1; a=rsa-sha256; t=1758673416; cv=none; 
+	d=us.zohomail360.com; s=zohoarc; 
+	b=EflLouuREdI88fYeCyiRS7be48aPx827XnH7Tdk1AqhT3F5fcaO9y0wFh5cjc2v6W5lfN3WyvudnO+3dZ4m2IdxXwDBs6FXSKSmfYfLxqFp1vBhK3ZXouQdbYD0yMBXu8ZNHjOdRkxC3f8sm/UllT2WOFk2IvtXSjhY8j65yFG4=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=us.zohomail360.com; s=zohoarc; 
+	t=1758673416; h=Content-Type:Content-Transfer-Encoding:Date:Date:From:From:MIME-Version:Message-ID:Reply-To:Reply-To:Subject:Subject:To:To:Message-Id:Cc; 
+	bh=rOash2+xMcyoKGoee4ZAJfscYggf1Grpxo2/PDWBTNA=; 
+	b=dspWkYku3OvwQgkKqfmyKoFAlnKIVsjPVjRdNLqcD6j97DVLkhTMN4WGPq6SqiSabm3v+YXeJsd71NScFD/aESQZG729N+9PTDuHYU88aqUq93WPeI19DjiTTQwpKNKynjr5HbrA05S1uP/gs7zzZSNLeI5xz8VANWNz4F3WrCA=
+ARC-Authentication-Results: i=1; mx.us.zohomail360.com;
+	dkim=pass  header.i=maguitec.com.mx;
+	spf=pass  smtp.mailfrom=investorrelations+95c399a0-98d7-11f0-8217-5254007ea3ec_vt1@bounce-zem.maguitec.com.mx;
+	dmarc=pass header.from=<investorrelations@maguitec.com.mx>
+Received: by mx.zohomail.com with SMTPS id 1758671215416908.7444865012585;
+	Tue, 23 Sep 2025 16:46:55 -0700 (PDT)
+DKIM-Signature: a=rsa-sha256; b=fQt1iEs0Rt0fXdp+VXbV/zCkzQnQee6kJTbycphs1OUSk3D4e0r+hUFq1hpUMEA2qwYCAD/VP+SsNFmO7Ajh4y+o5ekspX2Z2MWJepRypaj88RU+iNSA06yncPe6wfRNcNJMeWPKcGSVlacoB2OdgS3i1JSv7ZsBFSYmABLr94A=; c=relaxed/relaxed; s=15205840; d=maguitec.com.mx; v=1; bh=rOash2+xMcyoKGoee4ZAJfscYggf1Grpxo2/PDWBTNA=; h=date:from:reply-to:to:message-id:subject:mime-version:content-type:content-transfer-encoding:date:from:reply-to:to:message-id:subject;
+Date: Tue, 23 Sep 2025 16:46:55 -0700 (PDT)
+From: Al Sayyid Sultan <investorrelations@maguitec.com.mx>
+Reply-To: investorrelations@alhaitham-investment.ae
+To: git@vger.kernel.org
+Message-ID: <2d6f.1aedd99b146bc1ac.m1.95c399a0-98d7-11f0-8217-5254007ea3ec.19978f9183a@bounce-zem.maguitec.com.mx>
+Subject: Thematic Funds Letter Of Intent
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CACEPZDXGGn0S_8PpEc=BVHhvyuZhWfiDmbxNOK7iPWJOj1jrXg@mail.gmail.com>
- <aMnhSm5QSdRwiJds@fruit.crustytoothpaste.net> <CACEPZDU2Bu2c9RFBwD499-UUNyQGuRRXNbMx0aBrqwGoc=4EhQ@mail.gmail.com>
- <aMyGHriNpmekoqD5@fruit.crustytoothpaste.net> <CACEPZDWgoa18LAhzOzu__jy8ssgR8-PmZb6gmDzCS=q6f25=wA@mail.gmail.com>
- <CABPp-BEU-DzNtyeC0j9OKJhqnmOw18TXvCwmmPjZL33Hp=gSUQ@mail.gmail.com> <CACEPZDUYKhRBB9Te+dn8fdgDtuo_gHdmxqGBMvp+xG+GEiYc3g@mail.gmail.com>
-In-Reply-To: <CACEPZDUYKhRBB9Te+dn8fdgDtuo_gHdmxqGBMvp+xG+GEiYc3g@mail.gmail.com>
-From: Antonio Mennillo <antoniomennillo87@gmail.com>
-Date: Wed, 24 Sep 2025 01:33:46 +0200
-X-Gm-Features: AS18NWALtJscWGghEGu0jR_jkQwnvI5vIi2Vn4rKMdMMZjzb_H-fnE87fyjPL6o
-Message-ID: <CACEPZDUah8CqnMpXRNB_djp7_fWZe56XRXVF-swtk-R=XpMJOQ@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BRFC=5D_git=2Drebase=2Dclean=3A_mitigating_a_=E2=80=9Csemantic?=
-	=?UTF-8?Q?_conflict_cascade=E2=80=9D_during_rebase?=
-To: Elijah Newren <newren@gmail.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+content-transfer-encoding-Orig: quoted-printable
+content-type-Orig: text/plain;\r\n\tcharset="utf-8"
+Original-Envelope-Id: 2d6f.1aedd99b146bc1ac.m1.95c399a0-98d7-11f0-8217-5254007ea3ec.19978f9183a
+X-JID: 2d6f.1aedd99b146bc1ac.s1.95c399a0-98d7-11f0-8217-5254007ea3ec.19978f9183a
+TM-MAIL-JID: 2d6f.1aedd99b146bc1ac.m1.95c399a0-98d7-11f0-8217-5254007ea3ec.19978f9183a
+X-App-Message-ID: 2d6f.1aedd99b146bc1ac.m1.95c399a0-98d7-11f0-8217-5254007ea3ec.19978f9183a
+X-Report-Abuse: <abuse+2d6f.1aedd99b146bc1ac.m1.95c399a0-98d7-11f0-8217-5254007ea3ec.19978f9183a@zeptomail.com>
+X-ZohoMailClient: External
 
-Hi Brian, Elijah,
+To: git@vger.kernel.org
+Date: 24-09-2025
+Thematic Funds Letter Of Intent
 
-I need to acknowledge that my initial reasoning around this tool
-developed quite rapidly, driven both by enthusiasm for sharing results
-and by pressure from growing interest in my work network. Now, with
-more time to reflect, I can analyze your comments more rationally
-seeing all the implications.
+It's a pleasure to connect with you
 
-The "semantic conflict" example should be considered only as a
-limiting use case I've seen in emergency situations. It was not
-intended as the definition of the tool, but my fault I set it up in
-the object of the mailing list. The actual purpose is to consolidate
-rebase conflicts into a single step (one-pass conflict resolution) via
-squash, ideally reducing the cardinality from N to 1.
-For instance, rebasing a 20-commit feature branch with 5 conflict
-points currently requires 5 separate git rebase --continue cycles.
-This tool consolidates those into a single resolution step, then aims
-to reconstruct the commits. On large codebases, such as multi-modular
-Java projects, managing a rebase in an IDE becomes significantly more
-manageable with one consolidated conflict rather than dozens, reducing
-both cognitive load and the chance of errors.
+Having been referred to your investment by my team, we would be=20
+honored to review your available investment projects for onward=20
+referral to my principal investors who can allocate capital for=20
+the financing of it.
 
-I fully understand and respect the importance of atomic commits. To be
-explicit, this tool:
+kindly advise at your convenience
 
-- does not make non-atomic commits atomic
-- does not guarantee bisectability
-- does not replace developer discipline
+Best Regards,
 
-It only reduces the number of conflict resolution iterations. Poor
-commit atomicity will still widely affect the number of conflicting
-files. The "temporal flattening" I mentioned earlier refers simply to
-this consolidation.
-
-From a technical standpoint, I am developing a different approach that
-properly addresses the concerns you raised. This new implementation
-works directly with Git's internal structures to ensure deterministic
-behavior, specifically handling revert detection, intermediate-only
-conflicts, non-content conflicts, and attribution at appropriate
-granularity levels.
-
-I'm targeting this weekend for a working implementation with
-integration test coverage.
-
-The goal remains pragmatic: helping developers handle complex rebases
-more efficiently when dealing with real-world constraints. The
-consequence of a bad commit atomicity will still be there to be solved
-by a strict commit discipline.
-
-What becomes easier is avoiding redundant conflict resolution cycles,
-while the consequences of poor commit atomicity remain unchanged as
-the Git philosophy rightly points out.
-
-Best regards,
-Antonio
+Respectfully,
+Al Sayyid Sultan Yarub Al Busaidi
+Director
