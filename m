@@ -1,85 +1,86 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EB4320A3F
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 09:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE2D320CCC
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 09:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758620749; cv=none; b=OTSgWUiErU9xONnMcH0DzulAPIVqQZ2oYVJ2Q7/CIC4/oCurcHhiMGkSvWPnsCTsceBkfH+uPwMpnHqwuBeScJcRyXCRPJbUD5ZQF8CT1Ns0pFNwZIUY+p4vNbfj+oFa8yiZzDgi5ml/u+xs+T9jCv0lz42kumHvanXI2fhs+Vs=
+	t=1758620752; cv=none; b=gWmiIxAF3nM0dWvSHD372e5XWMMJQz2H5Bd0zi/DVT/07ui4AANY5/X7+weAfGJGl5Vl2PL0BgkA1LcCNXTJzIL/i1HvFxrX2f97GbYx4AXPbLy+0R51od6uickTh3bKpZwJvoZGJ4BPSYI/NN2bVX18EdcZ9TAXnU4r1WSU/rA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758620749; c=relaxed/simple;
-	bh=dr9Bze8qqQpJpQfOMDrrNCDRy/xNpcn3cZI9wCmzfHs=;
+	s=arc-20240116; t=1758620752; c=relaxed/simple;
+	bh=uMQ4lt5aUlsrxIvJY4d8cod7FipVsKa+emmNZ86ODhQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=D2QXWxC1nhxrn0tcGUtQR2ZWj6ay/aHeagsTxON/BiXBLTt7OqPFmCK61GQdJUcA0MnU8U4Z2yYwgmRt2FK6q4aqCHdkj2IKaRgq1pfm5FZAWM0TbBG7bSJzFKQ5KHDEt0U8jpN44VwIj4xGEnwf5EdmYucvEqDeJCQBCkL40Os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c9EfOIvt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PSDIXIny; arc=none smtp.client-ip=202.12.124.145
+	 In-Reply-To:To:Cc; b=RUgvsvlsWPLAeP+d/dYJVZHGQ8XGkIy7kzLtKbdx0OQ8iANC7VgxRrHnRr2QKBqR1ZCAUHfQNhIjbn7d+54YxdVstFFxaE8Tppft22GJP286rEBuz9t4ZZxRAyn/Uey91LCalxgHyu5qJPF+fVC1Jg7v00mdu8OvmFf9Nq2Yjxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pyjqag+a; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QZRZ70Ol; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c9EfOIvt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PSDIXIny"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pyjqag+a";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QZRZ70Ol"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 36DAB1D00244;
-	Tue, 23 Sep 2025 05:45:46 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 5532E1D002F7;
+	Tue, 23 Sep 2025 05:45:49 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 23 Sep 2025 05:45:46 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 23 Sep 2025 05:45:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758620746;
-	 x=1758707146; bh=2EUZSrw5AwCUqSZzyEptqCF9cYQXQWwzSW0o5FaocLE=; b=
-	c9EfOIvteoM7QpMAxBMSq73ocsqiUvAF70gROcRu7CHGjUoM6J9jj7Aapw9RgXY4
-	jETJS+jfLcRMfu1s7VoURmMEdHnrkHhC6aa9pWSmPpfTgXPzid+E/Wx7WsJ5PG6C
-	ur7LgQCJq4vgpXUvdWH7k3Jex4K9NBH2z/S5CRsz61ucJIhcqWvWpFpZ+x9IQ+G+
-	F3oQsSWs0914sZsZGTYnijQ6Y67q+HOHdkWm/gki4D8gwdgNg/Pzck5TINtwLgGZ
-	EQG1M7H1/3tEIaR5K9ywf0v2hGUa10er9lXmQrKovmZkZDep6O3cquumBXBoe5tK
-	fqpeWNgLFhMrYUKfgvXCgg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758620749;
+	 x=1758707149; bh=/lmCKcrFqk4Xt6BVo+8YYSMaWuc3fYO4K7A41bjCGrk=; b=
+	pyjqag+a11ztqo+VwIMtBnC4LHwxM09G3c14kP3vH8huH5vRCbPXNrEKkTw8G8oV
+	78ZwGvK0JR7hbQE8lQOkv8H9XjPqplXKoG0GE3IezdDJ5hX9aWRHYvsBoie7B1Ti
+	PCqH1C2ctalMtsN4dupeUJzYlFu5gMKgwWPK5FHqsdEBnVzzJ+KQN/uMMC0tDoHk
+	wIf/RgA+vDDE/psRe08oQdTviBnG171vbxQ0OiRaokDF3D69ZmtBuwpANerNDmKL
+	7B3wjLAmDFRuFein1MJ6iQodQxtKvqtInTI3yfdHZrdpgfDydpQYo4orVSMUUiHl
+	tlp9mFLhy01H+/maYycbiA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758620746; x=
-	1758707146; bh=2EUZSrw5AwCUqSZzyEptqCF9cYQXQWwzSW0o5FaocLE=; b=P
-	SDIXIny8YeWWKS4l54irx1svd8UG8zfqMqiQkg0m8vjo4Sr1yd7hn8AL/gSo5Zxc
-	yiXpoTjbv5AI2GXqaQjTLkWoZq2FcXFjtwB2uZjwsCj0tz3+PtiCjkotkXVVC7/f
-	GWejcN7UHGQsbmiUyeCTIOXTs4kPbqvkTq97Y+ZRPc0JYVL8V8PrTA23R5VKZYc5
-	fU0TInRWzyWpudOv8mflkbNtOL4LvaseOLwx6M2FbTucUG05jjpSCnzjOqiyzNi6
-	2Bn0qDt237SU815brASGZRwGwRtWRtAFup8o2p9DfRGw8lgsEJySxsHLFqjanPvE
-	sujhCqtFBndE1ty0kptyA==
-X-ME-Sender: <xms:SWzSaI73p3BPdQIwEk7h_7rneMs_EJJr9wKdffjoKIvg-zHnaIfqjA>
-    <xme:SWzSaKhruZvyiOj3HVvMd2Ov8482UnHA9IzqDXwUjLyoOGDu19H2V3rs_u7wrzmHp
-    2RhzBCyrbSMFYFLORgDSN3UFOSyD_xVA3GTQRrPQ9OUPIkjPXKI>
-X-ME-Received: <xmr:SWzSaCmWHSoscvbDQ7srsGe7W63p21DEld87-dk0_uzM28lhUpmzxLxtKalbWyC2m0836g7mPUTgDMqF-C6pDMDA_tYj2rf2ZuG7fToJdFmU>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758620749; x=
+	1758707149; bh=/lmCKcrFqk4Xt6BVo+8YYSMaWuc3fYO4K7A41bjCGrk=; b=Q
+	ZRZ70Olj6U4JUvhR3xoFZOI7GZs5FDjcIQZNu7vQHvh3+6XSFh6V4tnZjIajr2C1
+	/VjVIO/oYlKxTPqy9dMWDo4AbMXiFRYCciMRQTWwz2jBja8ZMJfzZ0rrRLet45jN
+	EwG0YyYkugmrx0LYdwn/eWC0wbrYM2zRM7S0HG1BpXJ0pVetwbv7rzPZiKKv1czY
+	zRMl8/sk01TzPXLqEAjnjkt9I8pvORuQlXC8/RfwGTtx+nkA9ZpUHSL+nIW+nNnC
+	AgfaNXC6AK3f//bwpOmZEK05ZTKSBKE2NOoa9pkskDdqtX5cZHiGOsdJJenjjcJI
+	8UuTZeL8sJJ0pSnn4hSlw==
+X-ME-Sender: <xms:TWzSaMwz9wTTDlpgDDvny7zYfXuYUKtWX1vYO_TrNjFSUMtLjDZTAg>
+    <xme:TWzSaAvJhBF5g1vyEiUbCPHPA3ugdbWeq_YH2g-8SHbkQTuFvsaZgBfmqLpvtQyXC
+    c9P0Gk88ehvt73oB_UtsrPioHb8ik0XbtJWFM9FJBg0Cemmvr6Xhw>
+X-ME-Received: <xmr:TWzSaOHrMAOEi8Kz2qLp3dbdUN5YsyC_zjb8Nj9zg3UDG5z7aGjJvyrLaQ436N2Av1HOo6xqilAYtpAFvTD-h1cmO4mwAb_mRSdMIi5B3jYy>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitdegtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepudeipdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtth
-    hopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopegtsgesvdeh
-    iegsihhtrdhorhhgpdhrtghpthhtohepshgrmhesghgvnhhtohhordhorhhgpdhrtghpth
-    htoheptgholhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpthhtoheptgho
-    nhhtrggttheshhgrtghkthhivhhishdrmhgvpdhrtghpthhtohepphhhihhllhhiphdrfi
-    hoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhu
-    shhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehmvgesthhtrgihlhhorh
-    hrrdgtohhm
-X-ME-Proxy: <xmx:SWzSaBvQ-Jn9uBUwNNiKDR_WsZsKSinySms4DNY0JSbb5u2CwVduVw>
-    <xmx:SWzSaAA9gBBkbKI7ad4JMdaAwbnueE9BECV9XYu-jCia7JYkhzmBwA>
-    <xmx:SWzSaOWAuY25vdnpqYl6BpPu0mkjq-XELgGSMEE8S15xO_AYhyPgpA>
-    <xmx:SWzSaJHda0oiliJBF45Rm76vho0RD5_DTmxoTSU2Upt7eTBpNbSL0Q>
-    <xmx:SmzSaK3n8N438dXvDKslCc3bHOdr7nyvNS-g1qOdcPRVhEUdMitmOvTF>
+    epheegjeelgfdugeellefflefhieeuteehfefhvedtfedvtdfhhfekgfehleeggfdtnecu
+    ffhomhgrihhnpegrshgpmhhuthgpshhlihgtvgdrrghsnecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghp
+    thhtohepudeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlh
+    horhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprh
+    gtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepphhivghrrhgvqdgvmhhmrghnuhgvlhdrphgrthhrhiesvghmsggvtghoshhmrd
+    gtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
+    mhgrihhlrdgtohhmpdhrtghpthhtoheptggssedvheeisghithdrohhrghdprhgtphhtth
+    hopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopehsrghmsehg
+    vghnthhoohdrohhrgh
+X-ME-Proxy: <xmx:TWzSaG5kvjduehU86LziN-GR4MsOu_twYUSIp0NiZE1FkbS_FxBWHA>
+    <xmx:TWzSaHyhXt5wyztZKi7WYwTPN4uXjWxNn2wiSd0SmSUVXBqKrO4xfA>
+    <xmx:TWzSaE2JY81WvJAyrdYGuPQPjYbDhtwV9spBcdwDa-DmHWbtVDCWzA>
+    <xmx:TWzSaK4rCk4wZ3wvmGxVX1ug9xgdclnWNFA8AEYdYJoovWXTxKhz5g>
+    <xmx:TWzSaMr08AqU1I6Ioqra5CwMCQykZj2mOG1Vt3XVRehYPv11mZzg4RIW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Sep 2025 05:45:43 -0400 (EDT)
+ 23 Sep 2025 05:45:46 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a24352fd (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 23 Sep 2025 09:45:41 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 3f0416b9 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 23 Sep 2025 09:45:44 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 23 Sep 2025 11:45:24 +0200
-Subject: [PATCH v6 5/9] varint: use explicit width for integers
+Date: Tue, 23 Sep 2025 11:45:25 +0200
+Subject: [PATCH v6 6/9] varint: reimplement as test balloon for Rust
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,7 +89,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250923-b4-pks-rust-breaking-change-v6-5-59076fee486a@pks.im>
+Message-Id: <20250923-b4-pks-rust-breaking-change-v6-6-59076fee486a@pks.im>
 References: <20250923-b4-pks-rust-breaking-change-v6-0-59076fee486a@pks.im>
 In-Reply-To: <20250923-b4-pks-rust-breaking-change-v6-0-59076fee486a@pks.im>
 To: git@vger.kernel.org
@@ -105,158 +106,183 @@ Cc: "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 X-Mailer: b4 0.14.2
 
-The varint subsystem currently uses implcit widths for integers. On the
-one hand we use `uintmax_t` for the actual value. On the other hand, we
-use `int` for the length of the encoded varint.
+Implement a trivial test balloon for our Rust build infrastructure by
+reimplementing the "varint.c" subsystem in Rust. This subsystem is
+chosen because it is trivial to convert and because it doesn't have any
+dependencies to other components of Git.
 
-Both of these have known maximum vaules, as we only support at most 16
-bytes when encoding varints. Thus, we know that we won't ever exceed
-`uint64_t` for the actual value and `uint8_t` for the prefix length.
+If support for Rust is enabled, we stop compiling "varint.c" and instead
+compile and use "src/varint.rs".
 
-Refactor the code to use explicit widths. Besides making the logic
-platform-independent, it also makes our life a bit easier in the next
-commit, where we reimplement "varint.c" in Rust.
-
-Suggested-by: Ezekiel Newren <ezekielnewren@gmail.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- dir.c        | 18 ++++++++++--------
- read-cache.c |  6 ++++--
- varint.c     |  6 +++---
- varint.h     |  4 ++--
- 4 files changed, 19 insertions(+), 15 deletions(-)
+ Makefile        |  3 ++
+ meson.build     |  5 +++-
+ src/lib.rs      |  1 +
+ src/meson.build |  1 +
+ src/varint.rs   | 92 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 101 insertions(+), 1 deletion(-)
 
-diff --git a/dir.c b/dir.c
-index 71108ac79b7..0a67a99cb3d 100644
---- a/dir.c
-+++ b/dir.c
-@@ -3579,7 +3579,8 @@ static void write_one_dir(struct untracked_cache_dir *untracked,
- 	struct stat_data stat_data;
- 	struct strbuf *out = &wd->out;
- 	unsigned char intbuf[16];
--	unsigned int intlen, value;
-+	unsigned int value;
-+	uint8_t intlen;
- 	int i = wd->index++;
+diff --git a/Makefile b/Makefile
+index e8518198fcb..d7d6f6eefcb 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1307,7 +1307,9 @@ LIB_OBJS += urlmatch.o
+ LIB_OBJS += usage.o
+ LIB_OBJS += userdiff.o
+ LIB_OBJS += utf8.o
++ifndef WITH_RUST
+ LIB_OBJS += varint.o
++endif
+ LIB_OBJS += version.o
+ LIB_OBJS += versioncmp.o
+ LIB_OBJS += walker.o
+@@ -1499,6 +1501,7 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
+ UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
  
- 	/*
-@@ -3632,7 +3633,7 @@ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untra
- 	struct ondisk_untracked_cache *ouc;
- 	struct write_data wd;
- 	unsigned char varbuf[16];
--	int varint_len;
-+	uint8_t varint_len;
- 	const unsigned hashsz = the_hash_algo->rawsz;
+ RUST_SOURCES += src/lib.rs
++RUST_SOURCES += src/varint.rs
  
- 	CALLOC_ARRAY(ouc, 1);
-@@ -3738,7 +3739,7 @@ static int read_one_dir(struct untracked_cache_dir **untracked_,
- 	struct untracked_cache_dir ud, *untracked;
- 	const unsigned char *data = rd->data, *end = rd->end;
- 	const unsigned char *eos;
--	unsigned int value;
-+	uint64_t value;
- 	int i;
+ GIT-VERSION-FILE: FORCE
+ 	@OLD=$$(cat $@ 2>/dev/null || :) && \
+diff --git a/meson.build b/meson.build
+index 234a9e9d6fd..37dfa286017 100644
+--- a/meson.build
++++ b/meson.build
+@@ -522,7 +522,6 @@ libgit_sources = [
+   'usage.c',
+   'userdiff.c',
+   'utf8.c',
+-  'varint.c',
+   'version.c',
+   'versioncmp.c',
+   'walker.c',
+@@ -1707,6 +1706,10 @@ rust_option = get_option('rust').disable_auto_if(not cargo.found())
+ if rust_option.allowed()
+   subdir('src')
+   libgit_c_args += '-DWITH_RUST'
++else
++  libgit_sources += [
++    'varint.c',
++  ]
+ endif
  
- 	memset(&ud, 0, sizeof(ud));
-@@ -3830,7 +3831,8 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
- 	struct read_data rd;
- 	const unsigned char *next = data, *end = (const unsigned char *)data + sz;
- 	const char *ident;
--	int ident_len;
-+	uint64_t ident_len;
-+	uint64_t varint_len;
- 	ssize_t len;
- 	const char *exclude_per_dir;
- 	const unsigned hashsz = the_hash_algo->rawsz;
-@@ -3867,8 +3869,8 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
- 	if (next >= end)
- 		goto done2;
+ libgit = declare_dependency(
+diff --git a/src/lib.rs b/src/lib.rs
+index e69de29bb2d..9da70d8b57d 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -0,0 +1 @@
++pub mod varint;
+diff --git a/src/meson.build b/src/meson.build
+index 734de0b4fa9..b19ef4c0b51 100644
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -1,5 +1,6 @@
+ libgit_rs_sources = [
+   'lib.rs',
++  'varint.rs',
+ ]
  
--	len = decode_varint(&next);
--	if (next > end || len == 0)
-+	varint_len = decode_varint(&next);
-+	if (next > end || varint_len == 0)
- 		goto done2;
- 
- 	rd.valid      = ewah_new();
-@@ -3877,9 +3879,9 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
- 	rd.data	      = next;
- 	rd.end	      = end;
- 	rd.index      = 0;
--	ALLOC_ARRAY(rd.ucd, len);
-+	ALLOC_ARRAY(rd.ucd, varint_len);
- 
--	if (read_one_dir(&uc->root, &rd) || rd.index != len)
-+	if (read_one_dir(&uc->root, &rd) || rd.index != varint_len)
- 		goto done;
- 
- 	next = rd.data;
-diff --git a/read-cache.c b/read-cache.c
-index 06ad74db228..41b44148b1e 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1807,7 +1807,7 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
- 
- 	if (expand_name_field) {
- 		const unsigned char *cp = (const unsigned char *)name;
--		size_t strip_len, previous_len;
-+		uint64_t strip_len, previous_len;
- 
- 		/* If we're at the beginning of a block, ignore the previous name */
- 		strip_len = decode_varint(&cp);
-@@ -2655,8 +2655,10 @@ static int ce_write_entry(struct hashfile *f, struct cache_entry *ce,
- 		hashwrite(f, ce->name, len);
- 		hashwrite(f, padding, align_padding_size(size, len));
- 	} else {
--		int common, to_remove, prefix_size;
-+		int common, to_remove;
-+		uint8_t prefix_size;
- 		unsigned char to_remove_vi[16];
+ # Unfortunately we must use a wrapper command to move the output file into the
+diff --git a/src/varint.rs b/src/varint.rs
+new file mode 100644
+index 00000000000..6e610bdd8e0
+--- /dev/null
++++ b/src/varint.rs
+@@ -0,0 +1,92 @@
++#[no_mangle]
++pub unsafe extern "C" fn decode_varint(bufp: *mut *const u8) -> u64 {
++    let mut buf = *bufp;
++    let mut c = *buf;
++    let mut val = u64::from(c & 127);
 +
- 		for (common = 0;
- 		     (common < previous_name->len &&
- 		      ce->name[common] &&
-diff --git a/varint.c b/varint.c
-index 409c4977a1e..03cd54416b6 100644
---- a/varint.c
-+++ b/varint.c
-@@ -1,11 +1,11 @@
- #include "git-compat-util.h"
- #include "varint.h"
- 
--uintmax_t decode_varint(const unsigned char **bufp)
-+uint64_t decode_varint(const unsigned char **bufp)
- {
- 	const unsigned char *buf = *bufp;
- 	unsigned char c = *buf++;
--	uintmax_t val = c & 127;
-+	uint64_t val = c & 127;
- 	while (c & 128) {
- 		val += 1;
- 		if (!val || MSB(val, 7))
-@@ -17,7 +17,7 @@ uintmax_t decode_varint(const unsigned char **bufp)
- 	return val;
- }
- 
--int encode_varint(uintmax_t value, unsigned char *buf)
-+uint8_t encode_varint(uint64_t value, unsigned char *buf)
- {
- 	unsigned char varint[16];
- 	unsigned pos = sizeof(varint) - 1;
-diff --git a/varint.h b/varint.h
-index f78bb0ca528..eb401935bd2 100644
---- a/varint.h
-+++ b/varint.h
-@@ -1,7 +1,7 @@
- #ifndef VARINT_H
- #define VARINT_H
- 
--int encode_varint(uintmax_t, unsigned char *);
--uintmax_t decode_varint(const unsigned char **);
-+uint8_t encode_varint(uint64_t, unsigned char *);
-+uint64_t decode_varint(const unsigned char **);
- 
- #endif /* VARINT_H */
++    buf = buf.add(1);
++
++    while (c & 128) != 0 {
++        val = val.wrapping_add(1);
++        if val == 0 || val.leading_zeros() < 7 {
++            return 0; // overflow
++        }
++
++        c = *buf;
++        buf = buf.add(1);
++
++        val = (val << 7) + u64::from(c & 127);
++    }
++
++    *bufp = buf;
++    val
++}
++
++#[no_mangle]
++pub unsafe extern "C" fn encode_varint(value: u64, buf: *mut u8) -> u8 {
++    let mut varint: [u8; 16] = [0; 16];
++    let mut pos = varint.len() - 1;
++
++    varint[pos] = (value & 127) as u8;
++
++    let mut value = value >> 7;
++    while value != 0 {
++        pos -= 1;
++        value -= 1;
++        varint[pos] = 128 | (value & 127) as u8;
++        value >>= 7;
++    }
++
++    if !buf.is_null() {
++        std::ptr::copy_nonoverlapping(varint.as_ptr().add(pos), buf, varint.len() - pos);
++    }
++
++    (varint.len() - pos) as u8
++}
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++
++    #[test]
++    fn test_decode_varint() {
++        unsafe {
++            assert_eq!(decode_varint(&mut [0x00].as_slice().as_ptr()), 0);
++            assert_eq!(decode_varint(&mut [0x01].as_slice().as_ptr()), 1);
++            assert_eq!(decode_varint(&mut [0x7f].as_slice().as_ptr()), 127);
++            assert_eq!(decode_varint(&mut [0x80, 0x00].as_slice().as_ptr()), 128);
++            assert_eq!(decode_varint(&mut [0x80, 0x01].as_slice().as_ptr()), 129);
++            assert_eq!(decode_varint(&mut [0x80, 0x7f].as_slice().as_ptr()), 255);
++
++            // Overflows are expected to return 0.
++            assert_eq!(decode_varint(&mut [0x88; 16].as_slice().as_ptr()), 0);
++        }
++    }
++
++    #[test]
++    fn test_encode_varint() {
++        unsafe {
++            let mut varint: [u8; 16] = [0; 16];
++
++            assert_eq!(encode_varint(0, std::ptr::null_mut()), 1);
++
++            assert_eq!(encode_varint(0, varint.as_mut_slice().as_mut_ptr()), 1);
++            assert_eq!(varint, [0; 16]);
++
++            assert_eq!(encode_varint(10, varint.as_mut_slice().as_mut_ptr()), 1);
++            assert_eq!(varint, [10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
++
++            assert_eq!(encode_varint(127, varint.as_mut_slice().as_mut_ptr()), 1);
++            assert_eq!(varint, [127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
++
++            assert_eq!(encode_varint(128, varint.as_mut_slice().as_mut_ptr()), 2);
++            assert_eq!(varint, [128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
++
++            assert_eq!(encode_varint(129, varint.as_mut_slice().as_mut_ptr()), 2);
++            assert_eq!(varint, [128, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
++
++            assert_eq!(encode_varint(255, varint.as_mut_slice().as_mut_ptr()), 2);
++            assert_eq!(varint, [128, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
++        }
++    }
++}
 
 -- 
 2.51.0.536.g15c5d4f767.dirty
