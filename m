@@ -1,174 +1,152 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33923218D2
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 10:17:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42E9632127A
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 10:40:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758622679; cv=none; b=ecfjZsJLTXu9lwOyaza0JcIybqg1V41g8oen0u+r1pK6JHx2htTQgmPFFivuPYjFisNXn44TxneZru2+uZRGZbCCXRtRV3X7kZO1odEj0NXyyynZhYxZsw+MHcEj0vNkBdc20XJrDJNejIw1dKbxBijFTISJZFC5VX1rvuyfWK4=
+	t=1758624003; cv=none; b=VZWIQw++NFuDBv360xyxVfNjG/luupmmoHGO4mEEhUB9xJ2qMA3zCtDnMBhAu7mRZtESNTNfb3sfcSzfBbCYP/GS5w7GxdI+E3Npa0FXFk0UXYx+l9NgXw0mEJ7c9/dsYSVmsV7+etOCp01MWqHKHQUbwH75Pknhqv7plQlct8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758622679; c=relaxed/simple;
-	bh=szCMnRNexz5L0O171gfIVlX6irvSRRf6kL1/SvQppn8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=S6bsHumjFhDBZEixzsWGp2aS0MFjUmq3QSQF72Ux0kIco5BGmam+/E5gW6HPD+qCfvOGrC8pMdi6ia8BKB2c0X5cDpO1OeWgNaKaJ+yQbktjZljQjXThDuUZwljVxKHmRoLbt6OlTjzL3UYqWP57BHOS/HsEboYQEWpAZ+G86p4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=C9KXTS/G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EZveBEzX; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1758624003; c=relaxed/simple;
+	bh=sbqtkAtkemP83TaCdvnDJ09X1UgS2+Iqln7qtKv5UQ4=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=jFtwqKvxRLHcW7JqSKBX4aCP36nfcjXm4CC1xZIMAbHdbCNYqiC7ZPzhv52VHempZY2CJYgle3Hv+c5KdEhJ61HbI8Az40II0RqDyCyUQEisI8iY5k4t0d445WSAvTobZdI8yDleoyKfKLpmiPin1hP0SCSGFp9Kigpai+iWDxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eTtswTs3; arc=none smtp.client-ip=209.85.166.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="C9KXTS/G";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EZveBEzX"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0501D1D00260;
-	Tue, 23 Sep 2025 06:17:56 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 23 Sep 2025 06:17:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758622676;
-	 x=1758709076; bh=+YGa+tFALUDDxEx/jLjbSsYR6kOgvYwOE7Ve1AeWp+I=; b=
-	C9KXTS/G81/1bstltYXW7MDKaL7Y4w/U7wRomeDo1qfHMDzJ4cda3aFRzaA2+EkU
-	OvibR/YRZppPfrLisJHn8h+bSrL6HSxTWhLb/bIMWC+oYpAtgT/3fsWtyftjNDqC
-	/VTg3SU0pvhSPOsVFL5aOJW7mOvtns+QCFaWzu9pKJB2qz7JsbjMJWerNYfrmTcP
-	TZMREgAJlhY6rTPx7wlCKn4chQiykdF+n0AQ5Dbrmo2WP8b8YIGXbUJHIPbUg989
-	1TisQ/YSnprnb+F4F0JlCpdMvh6Z/1JjYg5oFmaqP8j+D0EsD6/N6fpeGDfoXGV3
-	3PKgMJHBQaZWa99x5o1a+g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758622676; x=
-	1758709076; bh=+YGa+tFALUDDxEx/jLjbSsYR6kOgvYwOE7Ve1AeWp+I=; b=E
-	ZveBEzXfsrX4rdkeoDWRoUFfmgC7GbUSKgQT0mYYhvH7vmvI2IGgazWP4OjTa1c+
-	ofP08AAX9OzshLTFSsI8oonuWOmS5mEOi4pTaLQDv5qwuXf3rQU+V/H10aZI2Wsl
-	76T+eYi2hr1K8TnZR2PU60YK9jpqMbQROaxjaCcH1Vju+npH0mCNS4VElKMDW/kY
-	upOHDU1qfi9kYLzuq4vzm8gdC583M7y8Lal65zMYh4FvlD9w6tLye1eIRbL0x/FO
-	UPeI4RCl4O071aVMgFYWQjs5dP0HkfdDjP9NiQlszeAnj27T3EKGyPYzhViFj0Pm
-	/TTK6oOGS+hG93xELR/ww==
-X-ME-Sender: <xms:1HPSaGSWkBBL2DxrY3e5HX-JCLjHI1yaWAU9-5li2KTTEeHsuXmPLQ>
-    <xme:1HPSaEM7oZnz4XWy96IhHE-fHfRvBA-HfUo_-cFojYAgw6Hi-rgyy8YMltGDWd51B
-    zKPYKtqp_oZRn15ohcjwdRGm2NBQHY03p33gtf3bh6h-T_Y2OVf>
-X-ME-Received: <xmr:1HPSaETdleTLoXdp61yHVOdLEt6mT4iHfMK9vCj6IUb_p3X-3qcSr4b9zWRW2Dazk4JbKZ5TKWvRGgW0byOzIX_T_s_FEvgDDJlFLCuGnlbs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitdegjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjh
-    hlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhr
-    rhdrtghomh
-X-ME-Proxy: <xmx:1HPSaCgdwFEDkIuIWWhy7SBuHHxeAKdrQHfXco_I0zYnnlD6f8inLg>
-    <xmx:1HPSaN94DoleggiVD62RQlEddbNeNaENJDhs1BpQ3QlBVonS2mSOdw>
-    <xmx:1HPSaJFHXjkMOgSp0np_HsgmWHs03rCmoWXEn61jC3FPbe4a0PHSkA>
-    <xmx:1HPSaAnD6td5Ypd-EFfbvDDu_Iwd3D9y523BpKwWSH3en_-dZoo6fQ>
-    <xmx:1HPSaMpQLgXKzkCGam_E9v4jjtfKBb3mF_90uR_NZSEJRWpfI9bOigO->
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Sep 2025 06:17:55 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d4408547 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 23 Sep 2025 10:17:54 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 23 Sep 2025 12:17:14 +0200
-Subject: [PATCH v6 15/15] packfile: refactor `get_packed_git_mru()` to work
- on packfile store
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eTtswTs3"
+Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-8877b60f7a5so196870139f.3
+        for <git@vger.kernel.org>; Tue, 23 Sep 2025 03:40:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758624001; x=1759228801; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=lYsa3QdkVjgJLYY6F9sCaPXA0X3yw9kDOQs6/ZenfBY=;
+        b=eTtswTs3oElhZkVnAt3SXAOOJkjyn/4uDHzxq/gKMYA+6m/omrbTPMlJImXO7NDqsu
+         /bxFeB+8dLvNam94ESQHXVAAIdF4AJGMPunud54Uk+iCa1a4GosaU0WdyfL2uifhxcEJ
+         Aeh1L4Rr+jjc8J5et926Lv5HBKQoVRA8lCuswRaQWJOWEeOLxcYXqHWwFRdh0R3HvqPQ
+         +xqcUR5N9au3hlkhwVG3KVP2V+ULhwazPO3dWIrv3Mw/1Gjet6DPAptZfYgvi3dNE+y/
+         wF1LpgcYpmOumUhEdcAxOKBsRMb0WaDdThuCtWu/8uHZMttvznM9veCje+ElWIjqyZRz
+         jusw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758624001; x=1759228801;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lYsa3QdkVjgJLYY6F9sCaPXA0X3yw9kDOQs6/ZenfBY=;
+        b=bfqBg+E6PcizDle/EREVf0JwG6yxE1wvS0TBtcGy/CW/vwV3Mf1k2GQ2q+ndwJSVmC
+         tgBnQzk/DeBHLDSOfkSZEKGaUQ/A2WJToFgfpdKoGf8DcPeLu/l617YFdkHitAtEGCSc
+         goyPqEeieTZdnkHHNI+3zNovPO0rycMK2lRvTORrR71ftDqBFhyal2WjcSdT10c8XJ2G
+         thnVzkJ07wbGmEGm2cX8CECKGGNRH4g8qzh1lu/T4NIXjHdi95DXG2zS5Vb/jEgQEV1Y
+         YMYR4to9s0DxS77iYQG2RTY9Ky7NGB7dq+iCkMwR+kekglivzcjcfNGPTExW5iuVgEmU
+         4vkg==
+X-Gm-Message-State: AOJu0YxPrwFSsX/o9JgxET7+ZFpFmn+0Iuw9XcnGzNLKj4sSqFzYGnQ9
+	GvqIOS54Awz69XZqkskGnaQtsVinRRmTX42rBXesMsDXQdjo5VBJISTg0AbA4w==
+X-Gm-Gg: ASbGncvbkByTiKsW9kX7SjIisO/CWn6gLEIrkhIuDN8LYFxZ6rJNlScIlElnBwHRfXM
+	JP++qqSzHYSLEjAamFje6YEFO+djCo8Zu40OZSXen8wJJqAUoqSqHJIEW3R1cZCdzLOlAu1k63o
+	Mp+bqUt6ESwJZMVPWdTJJcpUuglKy3DbOax08e727lF7GcRvoHAUnC3Q3PWP3IYvzZTHiNEKlO+
+	ua100AfVDceAAPex4Yq3vJ1jjzPkVso8q/4mzqED49cPVoS4hA/O6VRyxT6ovk7bT3uoUlhrPsz
+	XbbfJCEaFN300pXAXg+1ykGfkW5Dbyw0gezKIpOvMtd7lhcwA9C74bkSw+UQqXIMgEve2o4BpSj
+	4DiziXTMxVJxppBZkwCWWffp2kBgX/+/M3b8jVw==
+X-Google-Smtp-Source: AGHT+IHNKZzOxFvIXcXtGYJftFGuYmsKmEpBkGA/aNjc1HcXCKjA5tYipgqYZAifacvVGboui/TyRg==
+X-Received: by 2002:a05:6e02:1885:b0:424:7cee:1135 with SMTP id e9e14a558f8ab-42581ec5942mr34115555ab.25.1758624000854;
+        Tue, 23 Sep 2025 03:40:00 -0700 (PDT)
+Received: from [127.0.0.1] ([135.232.176.182])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-56508512241sm259060173.69.2025.09.23.03.40.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Sep 2025 03:40:00 -0700 (PDT)
+Message-Id: <pull.1975.git.1758623999720.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 23 Sep 2025 10:39:59 +0000
+Subject: [PATCH] l10n: bump actions/setup-go from 5 to 6
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250923-b4-pks-packfiles-store-v6-15-b48f2a882759@pks.im>
-References: <20250923-b4-pks-packfiles-store-v6-0-b48f2a882759@pks.im>
-In-Reply-To: <20250923-b4-pks-packfiles-store-v6-0-b48f2a882759@pks.im>
 To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>, 
- Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>, 
- Justin Tobler <jltobler@gmail.com>
-X-Mailer: b4 0.14.2
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-The `get_packed_git_mru()` function prepares the packfile store and then
-returns its packfiles in most-recently-used order. Refactor it to accept
-a packfile store instead of a repository to clarify its scope.
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+[Originally opened at https://github.com/git-for-windows/git/pull/5811]
+
+Bumps [actions/setup-go](https://github.com/actions/setup-go)
+from 5 to 6.
+- [Release notes](https://github.com/actions/setup-go/releases)
+- [Commits](https://github.com/actions/setup-go/compare/v5...v6)
+
 ---
- builtin/pack-objects.c | 4 ++--
- packfile.c             | 6 +++---
- packfile.h             | 7 +++++--
- 3 files changed, 10 insertions(+), 7 deletions(-)
+    l10n: bump actions/setup-go from 5 to 6
+    
+    (Originally opened at https://github.com/git-for-windows/git/pull/5811,
+    then at https://github.com/git-l10n/git-po/pull/870)
+    
+    Bumps actions/setup-go [https://github.com/actions/setup-go] from 5 to
+    6.
+    
+     * Release notes [https://github.com/actions/setup-go/releases]
+     * Commits [https://github.com/actions/setup-go/compare/v5...v6]
+    
+    
+    What's Changed in actions/setup-go@v6
+    =====================================
+    
+    
+    Breaking Changes
+    ================
+    
+     * Improve toolchain handling to ensure more reliable and consistent
+       toolchain selection and management by @matthewhughes934
+       [https://github.com/matthewhughes934] in #460
+       [https://github.com/actions/setup-go/pull/460]
+     * Upgrade Nodejs runtime from node20 to node 24 by @salmanmkc
+       [https://github.com/salmanmkc] in #624
+       [https://github.com/actions/setup-go/pull/624]
+    
+    Make sure your runner is on version v2.327.1 or later to ensure
+    compatibility with this release. See Release Notes
+    [https://github.com/actions/runner/releases/tag/v2.327.1]
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index de351b757a..61bbbdfb83 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1748,12 +1748,12 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
- 		}
- 	}
- 
--	list_for_each(pos, get_packed_git_mru(the_repository)) {
-+	list_for_each(pos, packfile_store_get_packs_mru(the_repository->objects->packfiles)) {
- 		struct packed_git *p = list_entry(pos, struct packed_git, mru);
- 		want = want_object_in_pack_one(p, oid, exclude, found_pack, found_offset, found_mtime);
- 		if (!exclude && want > 0)
- 			list_move(&p->mru,
--				  get_packed_git_mru(the_repository));
-+				  packfile_store_get_packs_mru(the_repository->objects->packfiles));
- 		if (want != -1)
- 			return want;
- 	}
-diff --git a/packfile.c b/packfile.c
-index cd5431b6aa..5a7caec292 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1048,10 +1048,10 @@ struct packed_git *packfile_store_get_all_packs(struct packfile_store *store)
- 	return store->packs;
- }
- 
--struct list_head *get_packed_git_mru(struct repository *r)
-+struct list_head *packfile_store_get_packs_mru(struct packfile_store *store)
- {
--	packfile_store_prepare(r->objects->packfiles);
--	return &r->objects->packfiles->mru;
-+	packfile_store_prepare(store);
-+	return &store->mru;
- }
- 
- /*
-diff --git a/packfile.h b/packfile.h
-index 1afb9cd664..e7a5792b6c 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -148,6 +148,11 @@ struct packed_git *packfile_store_get_packs(struct packfile_store *store);
-  */
- struct packed_git *packfile_store_get_all_packs(struct packfile_store *store);
- 
-+/*
-+ * Get all packs in most-recently-used order.
-+ */
-+struct list_head *packfile_store_get_packs_mru(struct packfile_store *store);
-+
- /*
-  * Open the packfile and add it to the store if it isn't yet known. Returns
-  * either the newly opened packfile or the preexisting packfile. Returns a
-@@ -232,8 +237,6 @@ int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
- #define PACKDIR_FILE_GARBAGE 4
- extern void (*report_garbage)(unsigned seen_bits, const char *path);
- 
--struct list_head *get_packed_git_mru(struct repository *r);
--
- /*
-  * Give a rough count of objects in the repository. This sacrifices accuracy
-  * for speed.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1975%2Fdscho%2Fdependabot%2Fgithub_actions%2Factions%2Fsetup-go-6-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1975/dscho/dependabot/github_actions/actions/setup-go-6-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1975
 
+updated-dependencies:
+- dependency-name: actions/setup-go
+  dependency-version: '6'
+  dependency-type: direct:production
+  update-type: version-update:semver-major
+...
+
+  Original-author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+
+Signed-off-by: dependabot[bot] <support@github.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ .github/workflows/l10n.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/l10n.yml b/.github/workflows/l10n.yml
+index e2c3dbdcb5..95e55134bd 100644
+--- a/.github/workflows/l10n.yml
++++ b/.github/workflows/l10n.yml
+@@ -63,7 +63,7 @@ jobs:
+             origin \
+             ${{ github.ref }} \
+             $args
+-      - uses: actions/setup-go@v5
++      - uses: actions/setup-go@v6
+         with:
+           go-version: '>=1.16'
+           cache: false
+
+base-commit: 79ee0dce2a61b7552f9b5c73f0cf2d974a20a029
 -- 
-2.51.0.536.g15c5d4f767.dirty
-
+gitgitgadget
