@@ -1,109 +1,106 @@
-Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F7A26F2BE
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 19:42:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA127303A2A
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 19:45:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758656532; cv=none; b=i0TwJkxg+dq2/8FPkxLgXy4U0iOXGHmxWqB2rmDFrntucOCNk1ZzpHxoyuIpDiq2l0h3N+FwuNXdjUQ2oAywlzz89CWZ9QSL08InD3XSV/mah0xg3uBu+H0aEdX0CMSSI70WlmjVwppmW/I4oW+yyNN+VblFyBzWnP38+KlO+J8=
+	t=1758656708; cv=none; b=pskOQNslIRK4iONya97MXy9kp0KEiVMsmgBzL9JmBeaUm7tvZmrZV5MfD0foIFIgf4b9R15qt7tOPGrPoNN94Vc7AGWWZM9Wme44Irxe+gQJ0oZfKLNqgckqC2MtQ+mBVZWOvS2fDcHVd7ENSzG68GF2DRbUCJyKPNUyrR69n+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758656532; c=relaxed/simple;
-	bh=cvqqzbjUWiiAJEJ6HAdQ+Ju9WQ+Vs48WJIeQlQ0oZbQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FfeHIfW+nTlOaZiaSZdZ1RtVA+gKm4FjLMfZGDwtaCQw/YyCxIy7Igm65HDBHSBeq7IaGu434x4m5SIXleIk8FOLsYJ4Irr9alurx+VNt26C+iaAGMyiTocRKd1tE6zQ0D3fRhMWo8Ik+tlNdnCuGyDNFUgzGz/l2gWeZXHjhmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=velocifyer.com; spf=pass smtp.mailfrom=velocifyer.com; dkim=pass (2048-bit key) header.d=velocifyer.com header.i=@velocifyer.com header.b=P+IwBa2H; arc=none smtp.client-ip=91.218.175.185
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=velocifyer.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=velocifyer.com
+	s=arc-20240116; t=1758656708; c=relaxed/simple;
+	bh=ohD4CeTfMWHF5sKaRjV4FRtafSQXF9x2kkJKOE5H+ZE=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=jyCHWaBVkvS6zXRiIJrUn36EKCVr0seyPcV5GNtgcG0l0QT59ZiaanKfNoHxZMCX7rouNj6MQKdcqASlH/t1BdUGWhzDSNNddVeP6J7gaqxxPp9BXU8rLdznbD9fY5OWw+19tg7/b6Cn/De6HKaptHL9fN79gaVdZOAuBFUqatc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jpY/34sc; arc=none smtp.client-ip=209.85.166.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=velocifyer.com header.i=@velocifyer.com header.b="P+IwBa2H"
-Message-ID: <b5867a92-c516-4a66-a108-8cabbc166336@velocifyer.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=velocifyer.com;
-	s=key1; t=1758656525;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=cvqqzbjUWiiAJEJ6HAdQ+Ju9WQ+Vs48WJIeQlQ0oZbQ=;
-	b=P+IwBa2HhMTJ2/GCvYZjhVWTrPMaw0TwonOoqnBa8iZq/kYsR1P6EuWwj0TbWSVY7KXylE
-	cXggSrp2GUNNGZwoxVfk663R6ebGhBeI1BbAUVPi7h/gjBJH9wm7Sh0Z2uutabvYrwokSl
-	4+XXctHxRn7MmiHoS/QNZ/ybGcNWBX8bUFx7mo+iBSatnecsaChWn22O4C42HonFmb5XgF
-	0uIQPS89qWePVvKTW29aJk8S429K4YeqzXfX/gqqe1r7brKnzHkEAZvXpw376S0v4vfmeL
-	OrNIvgCvT54qdtoLuq3fQ/kbUpXtE1dFPKKqcY1+1pW+ynru5CSBKmaiTnripg==
-Date: Tue, 23 Sep 2025 15:41:55 -0400
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jpY/34sc"
+Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-8eeeeb37cc5so36809739f.0
+        for <git@vger.kernel.org>; Tue, 23 Sep 2025 12:45:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758656705; x=1759261505; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=EFIM+YdLnYD4u8xXVIjIxbeUSc88hO9Var/lt2ardE8=;
+        b=jpY/34scxzXa4+gZGXrVbuq6xZcCk3qcV9NRT0zbzLoDN0ITPF469cz9m5qE47sv6z
+         JlkE1DktuY5jeRUmCxbK1v/m7/6J2soRrDDiT25/dhJVw10inYE0ZqPk4dDOe0rqrCML
+         aHPHMsnGnkAmRR4XQjpSAl7g8NrKRa36sm/NjH8DM/xecL/F7ntSHfB4T5rlfHHfm654
+         tHX5K+CRvC3LMB8XxO9syA4qqyxYa+UjG0coLRVN9jzWKGhZ4xyDZZH5CDwqHoE2XvvK
+         L01M+wFM+ibEFRiIgaRi4Ve9g0SwyM9aM3qhFpWMpYPQJ2ZMs24TtNd02agFEs4VZTgU
+         YveA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758656705; x=1759261505;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EFIM+YdLnYD4u8xXVIjIxbeUSc88hO9Var/lt2ardE8=;
+        b=qL/xQszhoY60P5eZvPC6UZKwGuUuRpk5iBLlzGfiPme1gTUzqZdk5pqVFS0nkyJhtw
+         cucA2B+b6BK5ieY5MUjUinisWmbkrKbCTHTZFngAz5Xyv4T8gvok0Iaib4KqjsoWwe8H
+         DY3x/mJTZlxdEUBkTuwnDib95k1ajZ9m+86QnFzuZiw9h94r+kbAl4eYzzB0g9S1JsJd
+         HcpDML34f/PfnSLeUoUINlgf7/XbawibuxKZ8ocTSZPV9wMqfzVQdT8gzZu8blrx2j+9
+         e/R6cEW8PNWSVCcSjNySBvmuSdKXcpilAa8BTVVmTaon3iNYIpnFzHYEgZ9QKpESVcrR
+         0Mpw==
+X-Gm-Message-State: AOJu0YxNMgLb13BEaKJfErOCfzPo96z9Axy7kytwfDUS7VXuZZOoWSG8
+	Bf7fVLCLPTMzJw7e4Em7t6OhEIEzAb9O3pTUApw//Law2f4eASv6P/p8gQ2Z6A==
+X-Gm-Gg: ASbGnct2HCvdwhyQEnzGUm8DtbbiIvAWod1EH+OJSIXzQETsi40Lb6Pvpy9cQ3eEVZH
+	yNnUaPQD/UGp2+W3TsUCMy/Gj+j+hwBZx0TXWW3qa0JVZHE0Mx8SXaAxHdUyknwtEfGnxOHAORu
+	x7jEdK3VQSMnVXMrVdn9R91bfVfYDJQ4epXB+sTxL1tuH2razv31pZyKHSbBPvTliG+GdMDQnrL
+	KMc+S6ElBohrpEjEu3gwc/4GrPNjLurE3S00U8CkV8s0rz26lOcpJMDVE+vU/9rUMaaMV8VSHUo
+	g+f6t5PDgCygiN/4sOLOS25fKC6FG8BzaWW9HJFW1PCmcpaTam+gZ53uy9bTngq70KVcYkxjQz9
+	zC9gtwuIWML0m739iQtTn0LbFvA==
+X-Google-Smtp-Source: AGHT+IFrnpoAGoByfV9APBZvo5HuOj3ngjQpbOh2spLyC6WOESymQuu7dJsAO3Vp8QPGFD5CYpMmKw==
+X-Received: by 2002:a05:6602:6b83:b0:887:5303:b3f9 with SMTP id ca18e2360f4ac-8e1d1a13f4dmr647018939f.10.1758656705403;
+        Tue, 23 Sep 2025 12:45:05 -0700 (PDT)
+Received: from [127.0.0.1] ([52.154.130.210])
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-8db17087bfdsm144171139f.8.2025.09.23.12.45.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Sep 2025 12:45:04 -0700 (PDT)
+Message-Id: <pull.1976.git.1758656702.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 23 Sep 2025 19:44:58 +0000
+Subject: [PATCH 0/4] doc: git-pull: clarify DESCRIPTION section
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: How do i get news of git releases
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org
-References: <4ea9cb1e-4367-4926-a9ba-0680dd63e616@velocifyer.com>
- <CAP8UFD2asXf_4_02khYRVWVQruBdvoMkZVE-6cVHttT9gHdWqw@mail.gmail.com>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: =?UTF-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?=
- <velocifyer@velocifyer.com>
-Autocrypt: addr=velocifyer@velocifyer.com; keydata=
- xjMEaCpEhBYJKwYBBAHaRw8BAQdAZBZWSN4ekixMHE7duMBmw/2uteCfmp68D/mxaYk/dyrN
- JlZlbG9jaWZ5ZXIgPHZlbG9jaWZ5ZXJAdmVsb2NpZnllci5jb20+wo8EExYIADcWIQQboPxL
- gODyGwJpjO5jTr+HQMdIvgUCaCpEhAUJBaOagAIbAwQLCQgHBRUICQoLBRYCAwEAAAoJEGNO
- v4dAx0i+HU8BAJGd99DA1VdBzcYgch16XK7mC78ZqEwGegVCRerWry8RAQC3MJUOiyQ062Ol
- /3iNXY6zk2QXaAsV8eUbFKUo1HiwAs44BGgqRIUSCisGAQQBl1UBBQEBB0CEoaVGilG8Qt/y
- Xp135G4fhWjJH7VQkPIFo8/MsZspfwMBCAfCfgQYFggAJhYhBBug/EuA4PIbAmmM7mNOv4dA
- x0i+BQJoKkSFBQkFo5qAAhsMAAoJEGNOv4dAx0i+yNYBAKcE1fbRCPqWwsIpRvOjSq9Spvhl
- veEFpUMPaQ1tp7qOAPkBfZroJ8veENH/8sz+Gf/QK6O1kcqC4d/vAASzMpOiAQ==
-In-Reply-To: <CAP8UFD2asXf_4_02khYRVWVQruBdvoMkZVE-6cVHttT9gHdWqw@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------fuPwsBoYDEuX0awQ0n30anNV"
-X-Migadu-Flow: FLOW_OUT
+To: git@vger.kernel.org
+Cc: Julia Evans <julia@jvns.ca>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------fuPwsBoYDEuX0awQ0n30anNV
-Content-Type: multipart/mixed; boundary="------------sC0B018O03CUKcbAr0bFhauf";
- protected-headers="v1"
-From: =?UTF-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?=
- <velocifyer@velocifyer.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org
-Message-ID: <b5867a92-c516-4a66-a108-8cabbc166336@velocifyer.com>
-Subject: Re: How do i get news of git releases
-References: <4ea9cb1e-4367-4926-a9ba-0680dd63e616@velocifyer.com>
- <CAP8UFD2asXf_4_02khYRVWVQruBdvoMkZVE-6cVHttT9gHdWqw@mail.gmail.com>
-In-Reply-To: <CAP8UFD2asXf_4_02khYRVWVQruBdvoMkZVE-6cVHttT9gHdWqw@mail.gmail.com>
+I got feedback from 15 Git users on the current git pull man page, using
+this tool: https://text-feedback.wizardzines.com/git-pull.
 
---------------sC0B018O03CUKcbAr0bFhauf
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+My goals here are to be clear about the relationship between git pull and
+fetch/merge/rebase etc, make sure users know the current default for git
+pull (--ff-only) since some folks still remember the old default, and to
+help users quickly figure out what command they need to run to
+merge/rebase/squash/etc.
 
-PiBUaGUgVVJMIGZvciBlYWNoIHJlbGVhc2UgcG9pbnRzIHRvIHRoZSBhbm5vdW5jZW1lbnQg
-ZW1haWwgb24gdGhlDQo+IG1haWxpbmcgbGlzdCBhcmNoaXZlLiBUaGF0IGVtYWlsIGNvbnRh
-aW5zIHRoZSByZWxlYXNlIG5vdGVzLg0KSWYgdGhleSBhbHJlYWR5IGhhdmUgdGhlIHJlYWxl
-YXNlIG5vdGVzIG9uIHRoZSBtYWlsaW5nIGxpc3QsIHdoeSBkbyB0aGV5IA0Kbm90IGhhdmUg
-YSBzZXByYXRlICJnaXQtYW5ub3VuY2UiIG1haWxpbmcgbGlzdCB3aXRoIGp1c3QgdGhlIHJl
-bGVhc2UgDQpub3RlcyBhbmQgb3RoZXIgaW1wb3J0YW50IGFubm91bmNlbWVudHMNCi0tIA0K
-R2VvcmdlIHRydWx5LCDwnZWN8J2VlvCdlZ3wnZWg8J2VlPCdlZrwnZWX8J2VqvCdlZbwnZWj
-DQpJbXByb3ZlIHlvdXIgd2lmaSByZWNlcHRpb24gZm9yIGZyZWUgDQo8aHR0cHM6Ly93d3cu
-eW91dHViZS5jb20vd2F0Y2g/dj1MWThXaTdYUlhDQT4NClRoaXMgZW1haWwgZG9lcyBub3Qg
-Y29uc3RpdHV0ZSBhIGxlZ2FsbHkgYmluZGluZyBjb250cmFjdCDigK4NClJlbWVtYmVyIHRv
-IHJlcGx5IGFsbCBvbiBtYWlsaW5nIGxpc3RzICh0aGlzIGlzIGhlcmUgc28gaSBkb24ndCBm
-b3JnZXQgDQp0byB1c2UgcmVwbHkgYWxsKShJZiB5b3UgYXJlIHJlYWRpbmcgdGhpcyBpIGZv
-cmdvdCB0byByZW1vdmUgaXQpDQo=
+I've taken a pretty aggressive approach because I think it's possible to
+have a pretty short and focused DESCRIPTION section here while keeping the
+most important info. Open to hearing that I've removed too much.
 
---------------sC0B018O03CUKcbAr0bFhauf--
+This references the UPSTREAM BRANCHES section from
+https://lore.kernel.org/git/0ec629d4037bf5d1ccc248ca1bbd87ccc08119a3.1757703309.git.gitgitgadget@gmail.com/
+, so if that isn't merged I'll need to revisit the approach here.
 
---------------fuPwsBoYDEuX0awQ0n30anNV
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Julia Evans (4):
+  doc: git-pull: move <repository> and <refspec> params
+  doc: git-pull: clarify options for integrating remote branch
+  doc: git-pull: delete the example
+  doc: git-pull: clarify how to exit a conflicted merge
 
------BEGIN PGP SIGNATURE-----
+ Documentation/git-pull.adoc | 86 ++++++++++++++-----------------------
+ 1 file changed, 32 insertions(+), 54 deletions(-)
 
-wnsEABYIACMWIQQboPxLgODyGwJpjO5jTr+HQMdIvgUCaNL4AwUDAAAAAAAKCRBjTr+HQMdIvlaC
-AP9Lo/S20RHuErPnLl8V+buKTaRLfe9nZMctFqnrnRDNcgEAoII7YIp/xlKbg/s1MkLMFM9MrGkz
-QHME1gfwV2ehXA0=
-=X+QB
------END PGP SIGNATURE-----
 
---------------fuPwsBoYDEuX0awQ0n30anNV--
+base-commit: ca2559c1d630eb4f04cdee2328aaf1c768907a9e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1976%2Fjvns%2Fclarify-pull-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1976/jvns/clarify-pull-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1976
+-- 
+gitgitgadget
