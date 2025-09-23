@@ -1,149 +1,142 @@
-Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E31285073
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 17:44:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADBE281503
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 17:48:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758649485; cv=none; b=nJykhbW2S8u5krc3LI9nagDT4xnNLyYlssvaxCoL7+G+PAl4BQHSTaSqVV8BvLYSsLIwZsM0t44m7rLCUQ05BnaNWfJ+hhxdqzAFontB05SgLsZhaOa+nx0hz2kliMZJ9GP8vgK9LgV9RFrmwFZzbrmtxfroVpB4RQC9qbId89o=
+	t=1758649698; cv=none; b=eT5SB/LIIYwXCCtzzThNGl12y2j7C+x/5lEbDxT21AZJjqxaS585vFR69SuzSMn7hjZpkO4md9esGyGCT9/RcGYdlLPJfYEBBAb14CpgV3DRv4ZmhCR+Vf9aVjFK1jye1FunaFF0fl7c71rwf2nTsghRdxIRza5KeO7mlXuNeRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758649485; c=relaxed/simple;
-	bh=Jzhnyq9+W+GntfnzF3FtN4Kys6RGZslXGFClr8IoQTs=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=fZsKRtXsF716bnAMLYPm4foKZiKhEM1hEQmgn1GuQVRzzzFNgOr28joAhlZsG/zP5d1Dc25iJHV7qsf0Y4RQzH+7lYioIeCmZtTU1E5nln5nh95mI/bZrVTsPtHTEU8k2xyRswZhE/U/nT98DFLIlo1PMOzboVfh1/GIJbMWoMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M3WRBZ4G; arc=none smtp.client-ip=209.85.166.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758649698; c=relaxed/simple;
+	bh=88phrxrdec6/HR8dLRL8b3R/GMYIPLRvBeewXdF+OeE=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Hol81fy5j8jXnx/9S7H2UNKqDcslthCfNx8ayhU2xMfCjj2w7I7mNSCy6ahJFpLoK3giF7tm9yYlk+k1prO86qb59QYbHg2RIGiIH7xZ81lFIFe/JWJ8KZ3hyMrhXLc88ScF/hQ73EogVh6BMHraux5GQhQyeJz5hq9TGTL5TDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=az1LYZTc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jOm1/Iu/; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M3WRBZ4G"
-Received: by mail-il1-f171.google.com with SMTP id e9e14a558f8ab-4248b07bb14so16585385ab.3
-        for <git@vger.kernel.org>; Tue, 23 Sep 2025 10:44:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758649482; x=1759254282; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=orlfTCAfcTcInZAIGxb3X5lgRpwxAmOGy4uYmZRhuE0=;
-        b=M3WRBZ4GMB+F1ZZH6KiZXVvdDXGc+6wVhJCNUFgzEZiUcoSH2H49ID+aqMKCr6uawf
-         N0UBDSLam/X5u9ZvgA3Ja5DD/BFEl77Y9+ROf8uvXa3cuHI8rt5K1YKiBU5sjxFKaXO3
-         nAJ32AVcxBFCd2MQJBe27ktp/O1vKG0u7r0MNSNfKA2GSOBLX/622B4/6GYV0OQxqoXR
-         1K1Mlp/rQRioKidcH8K6xTz6jYZlZlA2H4XfJ17ztl12241NbZB5xJu+bCmctByLHsQ7
-         g8YHAhi187eCoC7s6gpP5QWGYlK4jWWeNz7Ey9Vx7Y53Le9qU1d4d6+oWaHReaxfamx/
-         KrzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758649482; x=1759254282;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=orlfTCAfcTcInZAIGxb3X5lgRpwxAmOGy4uYmZRhuE0=;
-        b=d1YOnnY62W353HhTREfekJzqlenRKMPIz9I7IeaQWgGan/ilDmWzfRkpPMiCqVjw8V
-         yS4SAlutKEyzRpI9ammHBNJeU/4TQk/7//7e+nKGvdAdngSbyDW5FTbkOUKNK/CF96qL
-         64hWOjrpbN8aYjL/KsW+UU7jIyWismwCCIfvH9ycUPEw0gZE0qMjFHVxUinhIWIubaxn
-         fI785o9yVhFWPSR8FP+uO88715vUp+JP55zZpzhS54vmHKI7u1X3hoxFXGfOyu970pbT
-         i8PtkV0EL+6KdiMFcmYNq2Ftu89XcF0RDRsT1P4INFY3PayqVzSCOTCuKJNn7Vi3Z8j4
-         1MUA==
-X-Gm-Message-State: AOJu0YyGA1ufa41Zl8hqHQ7DTsgljiNXtyBSS+WNHQvbgd4B3aiRAiXu
-	nozRJik7sT6WZXbJQ9GO6/DIkxQEp5Cg9JQlSZ//iPzZNnQhxEypFIJhJx/sUOdJ
-X-Gm-Gg: ASbGncssnnU2AUcfEp1WFYmJB4D5nChvilOmnDyYsCrREySpphYePQKx68L/zA8HTE+
-	tBLxduTN2hMVF/fa+MecwsCAxKwWGQL4QlfAssPNbJIZHlMbMqjhmHMYgygR/kdYVV9USjYYCLy
-	7l3pmwnAm/4c6Tir/qWOM4EwF3uXydBccvJeZh3oDdqmoR5NxFimAdiIVfQUWHAOEt135UOECKY
-	V/UCwWRxun1wn3nThowuzIgOd8E7CVJnlbSCzQeknSnt9Hc2CwGcP+l8kXRt08sChck/a1DNkSu
-	Lzm7TP2fyYnpL+C3nkiXvZj6BPzzW1fhEyzQcjuRei2xHe1v3id11L/QNwPCd5Pk+eto8qzvzTS
-	nDB1QHzezUGxMTtJ2RTLHNsMO
-X-Google-Smtp-Source: AGHT+IETRgkyIDlxOSlnpieOuaGH6IfQsHGUEqgnyY9HNg110Q7vcW6xhRjP3vtb7h1LF5g8uZprjw==
-X-Received: by 2002:a05:6e02:168a:b0:41d:5ef3:e06 with SMTP id e9e14a558f8ab-42581e37017mr59867055ab.12.1758649482441;
-        Tue, 23 Sep 2025 10:44:42 -0700 (PDT)
-Received: from [127.0.0.1] ([64.236.177.97])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-53d56e41e3csm7253649173.71.2025.09.23.10.44.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Sep 2025 10:44:41 -0700 (PDT)
-Message-Id: <be6453d010bdc9d2b49988d6841dd7e7f9bdf1f8.1758649472.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1964.v3.git.1758649472.gitgitgadget@gmail.com>
-References: <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
-	<pull.1964.v3.git.1758649472.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 23 Sep 2025 17:44:32 +0000
-Subject: [PATCH v3 4/4] doc: git-push: clarify "what to push"
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="az1LYZTc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jOm1/Iu/"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id EB87FEC01C0;
+	Tue, 23 Sep 2025 13:48:13 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Tue, 23 Sep 2025 13:48:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758649693;
+	 x=1758736093; bh=qtyVU+xLb8tAK5mDD5psf8QD8DhOIuIZ1Nawqc3Nam0=; b=
+	az1LYZTcVhZjRgvo4eztPmqCDQ7/Z3buC5JQIMuYw+DDsi+PK6ZV2pAeCsobwOg5
+	1o4JI0w9NN8uQ/7vg66eQQxVktnvnTYaVLgviVvpgrOw75ofl+U+vvXzO9jj3N1Z
+	uaXsGjbEo1ZpBszU+Gd3hiZrQeQIiE/ckJ+QHj+hbwNEbW6WysEoPoZkS1HwwWec
+	tykqYw/QYD/hl9bpI/t+70Xo6/Sok7DSrcfx4OhUaJhd/F11VXWu6g+Dpeu/X7XL
+	5DqEn5hTv9b3WODGNgHJoOGcDkv1Gez3ZLY1KlrSGX3rwQnR1VxRFmsWpwGVjVTc
+	YoVQX38B6tsFGPYadxfP8A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758649693; x=
+	1758736093; bh=qtyVU+xLb8tAK5mDD5psf8QD8DhOIuIZ1Nawqc3Nam0=; b=j
+	Om1/Iu/kWaLbIZEJSZlO9KsJ9jjcqVNMev9VBChSgrrcMeq7bXeAn9Y4QGVbhK4t
+	+1g9+YG3yLFouw8Qx2XD09Wf29hs7P/yx/voNHGEhwcwjzHL4bWPAwJV7prgZHVE
+	OA4g1BJ8LxVs5m2+AEltqalWfhzdPmk2DgqxGtdEaLYvWzKzDUMGMowi9klLPPe4
+	vjBxTz3cULhE1/KTojSNZP59kH017bgQgnn7E705044mTjTYydKRQNoitetEPl+N
+	TzlBqm1BjRaTqPd5TWrkNUsuu94dOvFeaWjgEcewUc9XQl+R25FkMYpnvLezlIif
+	htpwVxQg6LRWs1Hu37mGg==
+X-ME-Sender: <xms:Xd3SaBlNBSKMdztvecyhtUke69uOLn6eTESd_Jk2kp_AWy9jpHeWk2o>
+    <xme:Xd3SaHodIdw2zQjtn8-h2vGxZKFlbys02KIwoMvW97S2UTeuu-ilYs6EDGzu5gfyA
+    _lK27jF2dzTkhkGTjMkP6qPGoHVYY5qOJwpd27b9KFnQs6GpL6gwA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiudefjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertd
+    ertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
+    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
+    ftrfgrthhtvghrnheptdeigfegjeegjefhheeuvdegjeekleeguddukeeljeektdevjefg
+    iefgfeekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
+    pdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrgh
+X-ME-Proxy: <xmx:Xd3SaIQskfglAhKTgVur79KsBP4q6u7jp3PraLIdqq9YGu_Q6Avrtg>
+    <xmx:Xd3SaDvVWO2M128IaEVmqLQollbb_OHLh6NIeJeypAp69VyfTfUX4A>
+    <xmx:Xd3SaNZJkIQrOreqEFjEAN7-LV6Q4gouclvdwwanuIf_9p8c1c-M8g>
+    <xmx:Xd3SaIufpVaKW8U_Ebs4VR6B7DbM1kDq5ytF4itEkf67wvNe4WAIog>
+    <xmx:Xd3SaLb7BhosENfks8p157_W1JFdm5lZq13r2ZU2buniHjhlIPGhKjFc>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id AD4631EA0068; Tue, 23 Sep 2025 13:48:13 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+X-ThreadId: AV1qRGHblxFk
+Date: Tue, 23 Sep 2025 19:47:52 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Message-Id: <f1da0f06-e57c-4abd-b9ce-ef3fd5ce2037@app.fastmail.com>
+In-Reply-To: <xmqqa52loyvq.fsf@gitster.g>
+References: <cover.1758574974.git.code@khaugsbakk.name>
+ <bb065767336.1758574974.git.code@khaugsbakk.name>
+ <xmqqikharvyl.fsf@gitster.g>
+ <ba9b7fb2-c990-44fb-a506-0800d02854a9@app.fastmail.com>
+ <xmqqa52loyvq.fsf@gitster.g>
+Subject: Re: [PATCH 1/2] revision: add rdiff_other_arg to rev_info
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-From: Julia Evans <julia@jvns.ca>
+On Tue, Sep 23, 2025, at 19:35, Junio C Hamano wrote:
+> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+>
+>> On Mon, Sep 22, 2025, at 23:58, Junio C Hamano wrote:
+>>> kristofferhaugsbakk@fastmail.com writes:
+>>>
+>>>> git-format-patch(1) is supposed to treat Git notes the same between
+>>>> notes output beneath the commit message and the notes output for the
+>>>> range-diff.
+>>>
+>>> Is this an opinion, or are there things that existing pieces of code
+>>> already do to achieve such a behaviour already?
+>>
+>> What I mean is that
+>> [snip]
+>> That=E2=80=99s the point of passing `--notes` to range-diff.
+>
+> OK.  So it is more like "range-diff is supposed to show comparison
+> of pairs of patches; if format-patch shows one set of notes after
+> three-dash lines in its output, range-diff invoked by format-patch
+> to compare its patches with another set of patches should also be
+> comparing patches generated with the same set of notes".  That makes
+> sense to me.
 
-From user feedback: 6 users says they found the "what to push"
-paragraphs confusing, for many different reasons, including:
+Exactly.
 
-* what does "..." in <refspec>... mean?
-* "consult XXX configuration" is hard to parse
-* it refers to the `git-config` man page even though the config
-  information for `git push` is included in this man page under
-  CONFIGURATION
-* the default ("push to a branch with the same name") is what they use
-  99% of the time, they would have expected it to appear earlier instead
-  of at the very end
-* not understanding what the term "upstream" means in Git
-  ("are branches tracked by some system besides their names?"")
+I might eventually send some drafts of better commit messages.
 
-Address all of these by using a numbered "in order of precedence" list
-(similar to the previous commit), by giving a little bit of context
-around "upstream branch": it's something that you may have to set
-explicitly, and referring to the new UPSTREAM BRANCHES section.
+>> Thanks for the explanation.  I=E2=80=99ve added `.rdiff_other_arg =3D=
+ STRVEC_INIT
+>> \` to `REV_INFO_INIT`.
+>
+> Yup, I think I already have a fix-up patch mixed in your series in
+> the integration result I pushed out last night.
 
-The default behaviour is still discussed pretty late but it should be
-easier to skim now to get to the relevant information.
+Oh yeah I saw that afterwards.  Which made me spot a mistake in my own
+fixup... which was instructive. ;)
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
- Documentation/git-push.adoc | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+>> Could it be as simple as `log_arg` or `log_args`?
+>
+> Yeah, that is much better than "other" (where it is unclear what are
+> the "primary" things that "others" are in contrast).
 
-diff --git a/Documentation/git-push.adoc b/Documentation/git-push.adoc
-index 368f2625a2..839e6abeec 100644
---- a/Documentation/git-push.adoc
-+++ b/Documentation/git-push.adoc
-@@ -28,18 +28,20 @@ argument (for example `git push dev`), then if that's not specified the
- upstream configuration for the current branch, and then defaults
- to `origin`.
- 
--When the command line does not specify what to push with `<refspec>...`
--arguments or `--all`, `--mirror`, `--tags` options, the command finds
--the default `<refspec>` by consulting `remote.*.push` configuration,
--and if it is not found, honors `push.default` configuration to decide
--what to push (See linkgit:git-config[1] for the meaning of `push.default`).
--
--When neither the command-line nor the configuration specifies what to
--push, the default behavior is used, which corresponds to the `simple`
--value for `push.default`: the current branch is pushed to the
--corresponding upstream branch, but as a safety measure, the push is
--aborted if the upstream branch does not have the same name as the
--local one.
-+To decide which branches, tags, or other refs to push, Git uses
-+(in order of precedence):
-+
-+1. The `<refspec>` argument(s) (for example `main` in `git push origin main`)
-+   or the `--all`, `--mirror`, or `--tags` options
-+2. The `remote.*.push` configuration for the repository being pushed to
-+3. The `push.default` configuration. The default is `push.default=simple`,
-+   which will push to a branch with the same name as the current branch.
-+   See the CONFIGURATION section below for more on `push.default`.
-+
-+As a safety measure, `git push` may fail if you haven't set an upstream
-+for the current branch, depending on what `push.default` is set to.
-+See the UPSTREAM BRANCHES section below for more on how to set and
-+use upstreams.
- 
- You can make interesting things happen to a repository
- every time you push into it, by setting up 'hooks' there.  See
--- 
-gitgitgadget
+I remember looking at the code and having that realization: Oh, *other*
+is *log*.  Huh.
+
+... Maybe specifically `log_args` since it=E2=80=99s a `strvec`?  `git g=
+rep
+'struct strvec'` seems to give me a lot of plural (style).
