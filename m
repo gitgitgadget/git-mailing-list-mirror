@@ -1,160 +1,257 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7B71D90C8
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 17:37:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D0028032D
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 17:44:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758649078; cv=none; b=Lzs/GP0+f19iJkiHRMpp/31/WUhfzZahLkt83aSC9HYhvZ4ag3bqu9DI4cBQCL33VKWcdQ+/UKeaPloeYm6S8fWOF5Qx5KbAtGSr9WBAgzbz0fLmupRBpetRv4ujS82H1iKueqfhJzzJN92chKYPXezR/07/strx8Vp/LBt/h5o=
+	t=1758649476; cv=none; b=sHdqrPjyF9YeuQk1H3w24WR9l97YJHCtPA8+xm9B5ho89yHfkEU40ry3CEYfFF8T7pGk0XEvWV+YHyVCBTEIr4USZWCX/1G8zF4ZpQPfCb7QBVmGV70621EQtW3sP5VZIjIiqRQIHSmb0HynUuKFNgxLLBDITa6KidJa64V3nVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758649078; c=relaxed/simple;
-	bh=b4b2XpAl1WThBTyX7gGtX/kV8HRW/Nla76isQCFbKLc=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=padHqLn6sxqwbo113MNfZ+UXsGRm/9wBiBOoKbKo07GTUuny3Iq6cqsHbEZ4I6fcNLRlyHoh51H2PbZ2Af3oLD37yS2nSLYqYhtxYYAMyA02lA6HmwXEdIhPye1HnMLWjE+ZBo8ZzT6Tefcz6vDRoDlaxo1pWcS7ZXCB3Fc/HsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=T6/UGU6k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=egEJh8uZ; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1758649476; c=relaxed/simple;
+	bh=WBSoZInItHg1vKYvI7EgBkhPdLNG/tWdnBzZ+DPEglE=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=mkQYdxFUU5WZnEwPKK5CM/fbdEkzE2gC6lIYQg5bGT4qZAegG3RoTIhrbTKew6RM3Vs3NPkirqq1aV4JMDAyN5Y87nYywH5L/Ml1ZcMZ1FasKAJ/a9pFPPx9Gi121T2/uAEDLnrvep5B9lo581vs0l6RIfW9PCYiBCzxIxVMi7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B5RWnV9g; arc=none smtp.client-ip=209.85.166.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="T6/UGU6k";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="egEJh8uZ"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 96AB31400034;
-	Tue, 23 Sep 2025 13:37:55 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Tue, 23 Sep 2025 13:37:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758649075;
-	 x=1758735475; bh=N/F/eH5eF1T6dL/Et7a0TNL8whNse/ygsr8JokMvBJg=; b=
-	T6/UGU6kRmwd3YZpBo78rhwQzA20+LiecCYJV01RW5QNGK2KTxGuHdCwwdB/lj3q
-	OvXEYB7a81Z7E1LCw0dROOS4C8RO991+LMOlw0RFVRYbGbbH4Jd6uIjfzGKjGaxe
-	fhNljE1tRQ/BRUdQSdeextLg60/fd+049tKSP8EsxZbuVTlJuRIlEDsNDeRsYUuh
-	qibO0Rsvklu5qpWdl+PtPFF1aKuRGMcS/7oF6IZHcMk8WsS7AE0xx4gXytkH00ly
-	BRuxtS3dMh1lMgkzPKK3gmkfairOHyOeN99iDDS5nALSQP1eSoUBj4XW1ex94mKa
-	Lk7d0Rtdqq8mxeGq7oou8w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758649075; x=
-	1758735475; bh=N/F/eH5eF1T6dL/Et7a0TNL8whNse/ygsr8JokMvBJg=; b=e
-	gEJh8uZNpC6FYmn0hafGlmAxjxKG9CV+h1Jfv2c0nNuHbm2JTH92hoeM5gRGLC9s
-	tjLCX9/PNHx9Usr7WVq2lM9x9my3GS87b07zVMrhsl70/utu9ulWgWnxmnZGqaai
-	9/juGz6gbgGInqpQuDSrFY/ROTrJWmoWLJScX9Bk9mHCIe7Z3RTwZxkiIixrIYpf
-	MyKdsa985LgAsyBBJykwQg/YEV7lxG2vs0ZKfOOxw9qC3eLDUb6Y6StbXdAkviuP
-	aThw08vs2tgcKPD0PhYEpOC6SUsX6urst7sQyo+SD84007gNYXSgWtM4tpAlc0a3
-	HhP0upW398crC7Ee7Ixnw==
-X-ME-Sender: <xms:89rSaIJc-4SfNAmJ_FFEzjHxy-cBb2QecB3qXAl_FsUkA5zHh-anav0>
-    <xme:89rSaC8DilNQqDoVoxQsnZrxX5k8kt94mFGSMLXNjeUpFr_5QNVcLs04jAvGT9e-v
-    lIo0kcXVDM76Uc-nosOrkPTEdjDl-kV0WsXm4SRg4s8CeIGeV9-Hm4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiudefgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
-    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghl
-    mhdrohhrghdruhhkpdhrtghpthhtohepmhesghhithdrshhtrhhovhgrrdgukhdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:89rSaB3ghd2zwtqWaUovj9h9E34Fcu8oODltjg4NQXRACFaf0h05zg>
-    <xmx:89rSaO9gQ3WIPmZN1gMtjcvaUb7YegtMkjbDBbNa1KCxhvsmSL6VNg>
-    <xmx:89rSaKOSLbg7_f_4YQ4dk5GeVFbiwySJDOYUCYRf1eS-TqiBlXeduw>
-    <xmx:89rSaKcLC2uP3eDHuqkhSsSX3WM0TI1XTZVLpKxdzkgb7T-MaqlTMw>
-    <xmx:89rSaD6qX0b5NjcNm2ASlGahyhHbmdmahjWA0zYev2BKLM1b_UI7VFGG>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id EE2031EA0068; Tue, 23 Sep 2025 13:37:54 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B5RWnV9g"
+Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-8c3414ad279so74457339f.2
+        for <git@vger.kernel.org>; Tue, 23 Sep 2025 10:44:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758649474; x=1759254274; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dWy903bcKBsclAwsQWXk3guUybIYw0sq6wUXQES1eL4=;
+        b=B5RWnV9gFzAFo6GYBpgsVIdsnn3J+TWKxyxICeA0NIkWRsxNs2dUs4+FLlZYg5992Q
+         i6aopY4fLpMTGUnjT+sT6JyV+QwqjJOM1L1fyECFV6gS0rc0cENiUe9LWFOgOTed2xwm
+         ZLRyffz1FdNOSZbEM/I1Rcqo7pPw5n43o3vcot4wA7MyX+v7nb2rWFz0UsWtYDK2SLeh
+         +HtWWSAh4KReSr+gZVPHL810Z9my6+wdEVyW6kY7tWcfp26fI0BnIj8Z3/wsT+ycYA2K
+         aytzdTd/esFUUhnIDp80AUP6NaziPfRAR2BvsLAUNeJ0Ge+g7YA9Shki5IonnUhvCISZ
+         CP7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758649474; x=1759254274;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dWy903bcKBsclAwsQWXk3guUybIYw0sq6wUXQES1eL4=;
+        b=R+zwLv4LLX9Gyk02O6dOo7FReCST3pR+jzZlNaRBqtyPSXsq4uSwxw9OtTO7sLr3TG
+         szlBVo0tgYF2oBLgm0QojgggAJLe171aFsvGA2Cuse9kRoPw68H8bY++lCTYjB2i3aF5
+         IKmjHzLJToWvAQ0vieGMhaZ7NZiYkI0UIc9DM+Ry+GbkU4x8OtoX6d/gRvg13Z4/VlAO
+         X6/sIeTaZBGXnIgurujXT9czdLopgRZiOlMsxSsajbIXl2EC3cG0Fp7IAfE4Q1PtUGH0
+         VqaqHfqSf9GDYUt8UD2aitKcp+aWgsn3cqi/e6z/JGcyUX40iE5dSqjYCr7YAO75ErIp
+         G08w==
+X-Gm-Message-State: AOJu0YzqHhq/BKK8WVz0jlimMz0o5YFi0yf3hWmGLaHjvYfD40NsvEzj
+	qyhmwjR2c1qHIJp1ps9T31w2uK+uhdfDGhkW7YKC4avytch3ZEG4E+M3C0vsFA==
+X-Gm-Gg: ASbGnct9QEDI6R50K/Djn31gOWzjW63KGNCjnGJ41/kPWEi8YFkTLwC0itZc7AGMNl4
+	0ML79G/Sh44QXdZ6X7sACkdO4sf3KzId4YVOyDEPmvsx0MWxwyADH0dhwS9S4nQ/z87aJrODzYF
+	bTgb+LHaDGACEZoyRlVm+6fYvtWcYWGhAI6ONDiC/8/NhnQubkNmZ/JfNPP0OzlBeeG863pixFO
+	LaGLduxyWV4L6I/Bh0L8HAXvcQYqHm8BH9wPWCmdGcwks6tkEklBdISvjKfAaEY+dt3qpVc0ImE
+	uiPw3bIwlNp+7Iq0QHFDhILhGwIuEWOUo4bMudnS67cAlhMvNyo8bnnqVL21OmImgOcMVVnk8Dw
+	lh+jtFJMZSI07N5MxIGT20NtbGGoZpqEdlzI=
+X-Google-Smtp-Source: AGHT+IEXZApeXCZydAE7jndXzN+lF194qLiRhMUhodjHXlB8t5k5SqQB/yvAN7BEp46Xc4BwdmgjTg==
+X-Received: by 2002:a05:6e02:160e:b0:40d:e7d8:63fa with SMTP id e9e14a558f8ab-42581e9b6cfmr49323545ab.26.1758649473529;
+        Tue, 23 Sep 2025 10:44:33 -0700 (PDT)
+Received: from [127.0.0.1] ([64.236.177.97])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5608003cf11sm2115627173.6.2025.09.23.10.44.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Sep 2025 10:44:33 -0700 (PDT)
+Message-Id: <pull.1964.v3.git.1758649472.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
+References: <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 23 Sep 2025 17:44:28 +0000
+Subject: [PATCH v3 0/4] doc: git-push: clarify DESCRIPTION section
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: ADSuoCYrCBSs
-Date: Tue, 23 Sep 2025 19:37:34 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Mathias Rav" <m@git.strova.dk>, git@vger.kernel.org
-Cc: "Junio C Hamano" <gitster@pobox.com>,
- "Phillip Wood" <phillip.wood@dunelm.org.uk>
-Message-Id: <4e74c0c0-11a8-42bc-a229-196402628b7e@app.fastmail.com>
-In-Reply-To: <92d4d585-09e9-4f1d-a471-1ad6b312fa61@app.fastmail.com>
-References: <92d4d585-09e9-4f1d-a471-1ad6b312fa61@app.fastmail.com>
-Subject: Re: [PATCH] rebase -i: use same commit's message and date with f -C
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Julia Evans <julia@jvns.ca>
 
-On Tue, Sep 23, 2025, at 10:55, Mathias Rav wrote:
-> In `git rebase -i` with the fixup command, the -C flag controls whether
-> the commit message is taken from the previous or current commit,
+I surveyed 16 Git users about the git push man page. Here's a rewrite of the
+DESCRIPTION section and the definition of <refspec> based on the feedback.
+The goal is to clarify it while communicating the same information. The most
+common piece of feedback was that folks didn't understand what the term
+"ref" means. Most of the users who said they did not understand the term
+"ref" have been using Git for 10+ years.
 
-That=E2=80=99s also for `fixup -c`.  With `fixup -C` it just also does n=
-ot open
-the editor.
+changes in v2:
 
-Maybe this refers to how `amend!` is changed to `fixup -C`?
+ * The biggest change is to add a new UPSTREAM BRANCHES section to explain
+   what an upstream is
+ * Drop the "refspec" changes from this patch series, I've made revisions to
+   them based on the comments here but I felt like this was getting too big.
+ * Added some backticks `` that I'd missed, from Ben's review
+ * From Junio's review, "The current branch must have a configured upstream
+   with the same name, so this will fail when pushing a new branch" was not
+   true, so replace it with a less detailed but hopefully true statement.
+   After a very long conversation with Ben I realized that actually
+   push.default=simple's behaviour is not really that simple (perhaps I
+   should think of it as more "safe" than "simple", since "current" seems
+   simpler), so it's more realistic to refer any questions to the
+   CONFIGURATION section which describes the behaviour in more detail.
+ * Rewrite all the commits to explain the problem they're trying to solve &
+   thinking behind them in more detail. Let me know if I added too much /
+   not enough detail.
 
-> but currently the author name, email and date are always taken from the
-> previous commit. The fixup command is used to squash two commits where
-> one commit has a good message and the other's message does not matter,
-> and it is usually also the case that the commit with the good message
-> is the one that has the good authorship information; the other is a
-> fixup commit that was presumably made by the user moments ago, whereas
-> the commit with the good message is the one whose date should be kept.
+changes in v3:
 
-I think the rule from the manual
+ * mention that git push also needs to send data in addition to updating the
+   branch, from Junio's review
+ * fix a newline, from Junio's review
+ * un-rename urls-remotes.adoc, from Junio's review
+ * mention pushRemote and git checkout in the UPSTREAM BRANCHES section and
+   be clearer about what's meant by "the relationship between the current
+   branch and the upstream", from Junio's review
+ * fix AsciiDoc formatting issue, from Junio's review
 
-       If you want to fold two or more commits into one, replace the
-       command "pick" for the second and subsequent commits with
-       "squash" or "fixup". If the commits had different authors, the
-       folded commit will be attributed to the author of the first
-       commit. ...
+Julia Evans (4):
+  doc: git-push: clarify intro
+  doc: add an UPSTREAM BRANCHES section to pull/push/fetch
+  doc: git-push: clarify "where to push"
+  doc: git-push: clarify "what to push"
 
-is simple enough.  Adding this exception for `fixup -C` doesn=E2=80=99t=20
-make sense to me.
+ Documentation/git-push.adoc     | 43 +++++++++++++++++---------------
+ Documentation/urls-remotes.adoc | 44 ++++++++++++++++++++++++++++++---
+ 2 files changed, 64 insertions(+), 23 deletions(-)
 
-Why not use `git commit --amend --reset-author --no-edit` in
-that case?[1]
 
-Granted using `fixup -C` is more advanced interactive use than what I
-get into.
+base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1964%2Fjvns%2Fclarify-push-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1964/jvns/clarify-push-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1964
 
-=E2=80=A0 1: On author date: I had a commit from the first of June that =
-I got
-    back to.  After rewriting the commit message and adding more things
-    to it the author date still says first of June.  For better or worse
-    this is apparently the =E2=80=9Cnormal=E2=80=9D baseline.
+Range-diff vs v2:
 
-> Most of the time, a fixup commit is made on top of the commit to be
-> fixed up, in which case the rebase -i fixup command is used without -C.
-> The fixup -C case arises when an earlier commit in the branch is split,
-> leaving part of the commit to be squashed into a later commit, in which
-> case fixup -C would be expected to keep the date on the later commit,
-> and discard the author date of the ephemeral newly split commit.
->
-> Change the behavior so that fixup with -C takes both message and author
-> from the current commit, instead of taking the author from the previou=
-s.
->
-> Tweak try_to_commit to allow specifying author in addition to AMEND_MS=
-G,
-> and pass author from the current commit in do_pick_commit in `f -C`.
->
-> Tweak the help text in `git rebase -i` to reflect the changed behavior.
->
-> Add a test that ensures that the author metadata for the second current
-> commit is kept, and remove some author metadata checks from other tests
-> that now fail since the author metadata is different (as intended).
->
-> Signed-off-by: Mathias Rav <m@git.strova.dk>
-> ---
->[snip]
+ 1:  270edd2b00 ! 1:  2870c77e80 doc: git-push: clarify intro
+     @@ Documentation/git-push.adoc: SYNOPSIS
+      -every time you push into it, by setting up 'hooks' there.  See
+      -documentation for linkgit:git-receive-pack[1].
+      +Updates one or more branches, tags, or other references in a remote
+     -+repository from your local repository.
+     ++repository from your local repository, and sends all necessary data
+     ++that isn't already on the remote.
+       
+       When the command line does not specify where to push with the
+       `<repository>` argument, `branch.*.remote` configuration for the
+     @@ Documentation/git-push.adoc: corresponding upstream branch, but as a safety meas
+      +You can make interesting things happen to a repository
+      +every time you push into it, by setting up 'hooks' there.  See
+      +documentation for linkgit:git-receive-pack[1].
+     ++
+       
+       OPTIONS[[OPTIONS]]
+       ------------------
+ 2:  0ec629d403 ! 2:  3ecfb5c3a6 doc: add an UPSTREAM BRANCHES section to pull/push/fetch
+     @@ Commit message
+      
+          Signed-off-by: Julia Evans <julia@jvns.ca>
+      
+     - ## Documentation/git-fetch.adoc ##
+     -@@ Documentation/git-fetch.adoc: include::pull-fetch-param.adoc[]
+     - 	Read refspecs, one per line, from stdin in addition to those provided
+     - 	as arguments. The "tag <name>" format is not supported.
+     - 
+     --include::urls-remotes.adoc[]
+     -+include::urls-remotes-upstreams.adoc[]
+     - 
+     - 
+     - CONFIGURED REMOTE-TRACKING BRANCHES[[CRTB]]
+     -
+     - ## Documentation/git-pull.adoc ##
+     -@@ Documentation/git-pull.adoc: include::fetch-options.adoc[]
+     - 
+     - include::pull-fetch-param.adoc[]
+     - 
+     --include::urls-remotes.adoc[]
+     -+include::urls-remotes-upstreams.adoc[]
+     - 
+     - include::merge-strategies.adoc[]
+     - 
+     -
+     - ## Documentation/git-push.adoc ##
+     -@@ Documentation/git-push.adoc: further recursion will occur. In this case, "only" is treated as "on-demand".
+     - --ipv6::
+     - 	Use IPv6 addresses only, ignoring IPv4 addresses.
+     - 
+     --include::urls-remotes.adoc[]
+     -+include::urls-remotes-upstreams.adoc[]
+     - 
+     - OUTPUT
+     - ------
+     -
+     - ## Documentation/urls-remotes.adoc => Documentation/urls-remotes-upstreams.adoc ##
+     -@@ Documentation/urls-remotes-upstreams.adoc: git push uses:
+     + ## Documentation/urls-remotes.adoc ##
+     +@@ Documentation/urls-remotes.adoc: git push uses:
+       	HEAD:refs/heads/<head>
+       ------------
+       
+     @@ Documentation/urls-remotes-upstreams.adoc: git push uses:
+      +Git defaults to using the upstream branch for remote operations, for example:
+      +
+      +* It's the default for `git pull` or `git fetch` with no arguments
+     -+* It's sometimes the default for `git push` with no arguments. See the
+     -+  `push.default` section of linkgit:git-config[1] for the details.
+     -+* `git status` and `git branch -v` will show the
+     -+  relationship between the current branch and the upstream,
+     -+  for example "Your branch is up to date with origin/main"
+     ++* It's the default for `git push` with no arguments, with some exceptions.
+     ++  For example, you can use the `branch.<name>.pushRemote` option to push
+     ++  to a different remote than you pull from, and by default with
+     ++  `push.default=simple` the upstream branch you configure must have
+     ++  the same name.
+     ++* Various commands, including `git checkout` and `git status`, will
+     ++  show you how many commits have been added to your current branch and
+     ++  the upstream since you forked from it, for example "Your branch and
+     ++  'origin/main' have diverged, and have 2 and 3 different commits each
+     ++  respectively"
+      +
+      +The upstream is stored in `.git/config`, in the "remote" and "merge"
+      +fields. For example, if `main`'s upstream is `origin/main`:
+      +
+     -+```
+     -+[branch "main"]
+     -+   remote = origin
+     -+   merge = refs/heads/main
+     -+```
+     ++	[branch "main"]
+     ++	   remote = origin
+     ++	   merge = refs/heads/main
+      +
+      +You can set an upstream branch explicitly with
+      +`git push --set-upstream <remote> <branch>` or `git branch --track`,
+ 3:  374740c678 ! 3:  bfd6072983 doc: git-push: clarify "where to push"
+     @@ Commit message
+          doc: git-push: clarify "where to push"
+      
+          Be clearer about what we're describing ("which repository" instead of
+     -    "what to push"), and start with a positive "try X, then Y, then Z"
+     +    "where to push"), and start with a positive "try X, then Y, then Z"
+          instead of a negative ("if X is not specified..").
+      
+          Signed-off-by: Julia Evans <julia@jvns.ca>
+      
+       ## Documentation/git-push.adoc ##
+     -@@ Documentation/git-push.adoc: DESCRIPTION
+     - Updates one or more branches, tags, or other references in a remote
+     - repository from your local repository.
+     +@@ Documentation/git-push.adoc: Updates one or more branches, tags, or other references in a remote
+     + repository from your local repository, and sends all necessary data
+     + that isn't already on the remote.
+       
+      -When the command line does not specify where to push with the
+      -`<repository>` argument, `branch.*.remote` configuration for the
+ 4:  59732f1e47 = 4:  be6453d010 doc: git-push: clarify "what to push"
 
---=20
-Kristoffer
+-- 
+gitgitgadget
