@@ -1,137 +1,92 @@
 Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75E9224F6
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 00:14:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B811E155A4E
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 00:43:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758586453; cv=none; b=WsGIo4qLqPejF+gqHaoATXqnSGHZZ9VA5v7pNCmTIVA2EHXl33VE3DZINHH8NHt/r+lWQstHt17bXqWduY3165X+6Ak5f0CzLS/jYP2Rt4Q5jj0lZ01jtWylsqRi9I1UDzpJEx/CCaVEReSSOCfvU3qzgoVSdcj6KpTyySSWTFg=
+	t=1758588227; cv=none; b=Y970ONKrkHvm+ftIGeL/ZpXZ2/l67a3HZF+RBM/fw2r2cTHTXI/AhLx84jliOGUsquxIYf01v+rcsNe3mbL3zHZ4ViI0CHHg0VZbY+LIgL2/EYUPwckSKCIhgVdt0nnI26ssHDwG2ezIxuGZruk/+zCIMdbsS8GWYOR1EWhagXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758586453; c=relaxed/simple;
-	bh=UsZOts6xUR53aDiMhVMid7Yk1RsSiszZfifzCFpArko=;
+	s=arc-20240116; t=1758588227; c=relaxed/simple;
+	bh=H+LHf2k0NjmUAEhUkidXUKrA53D26CVtdHEIxjh7o2M=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fucwAk3Nz4/TCaNvhz+b5j1oS8Nmr+87trT+Wg+0bZMONfVKUvTL21ltE8N+moj9HcsRjez/t8aBAUDdh4OvBeGQvB9BmH3mUeKRw7vZMUGviEF5qmjcoorF5QUugrHt61DBFI5mPkQW0hyh4Wxdd+Wv0S/KtN5KG0d38sA4Dvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BxtiWtmZ; arc=none smtp.client-ip=209.85.208.172
+	 To:Cc:Content-Type; b=VEhKovfahp3XC+zgzDewi+AqSjlTd3BnCCXlkHgpyvZchmsdsrBANWkxhGE6riYcJf2dz7eE10jO+ANDC3dBw3j1eo41EjMnfusZRFk2RsQ9kVRu9BEV0eFjyuUIBTv+1pd0IDBz/kDSqxniLTzvLg1EFT9ukQpGZHIr+qeAkQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IQ4aypF+; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BxtiWtmZ"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-33ca74c62acso47177091fa.1
-        for <git@vger.kernel.org>; Mon, 22 Sep 2025 17:14:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IQ4aypF+"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-3635bd94dadso39534931fa.1
+        for <git@vger.kernel.org>; Mon, 22 Sep 2025 17:43:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758586450; x=1759191250; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758588224; x=1759193024; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=juuRmdtIG9kdI0LivxQcUqY9cxV8WrFXJti3TAOvJyY=;
-        b=BxtiWtmZtnxoMGB22zY0qgFanmd4HfVTxXPrfNlWvaaGzs1qGRCQ1VuEpkxDS+XdVT
-         X2fnfM8dZnGU7FwTD14Cmd+JZ0pf8H3U1zUXZLmZjIjjHa0OFFkHsOw1tfXbQeobRhfs
-         VEssTlV0XqxCJq63JfXLpEeQVf2jeRLurMBhliaD4ZnG7KropWuXfOB01L11f23J8unP
-         Uv95rmv6Z/PU3L32HA2o6OKKpzaUe9s+igBztFclBS8AfWvwaNC3ZF+A9OyDSEsJ77+i
-         rHwXOj8nQEf8LNRa5sZJ40/nWsFd9RONdno+kAejQ+MdaUpkFRIbDhheurZua2eU6c2o
-         jlmw==
+        bh=j4TPg+erqmw4s8nsNvMSmqBGqur2z3mLN/i9VfW7XgE=;
+        b=IQ4aypF+AekxlvuOif1MuHXo1thr5sBxOI2AEJMEsa/DMKCdD+z2OP5RCEuk68xtxI
+         Re2Dr0d5VdPPkMie+dzMMLzd3WNpPKVJ9BQ/tymTyjLUfbMo+3lDnhmEklH3s/wLxnFf
+         z0oIDH6R/YMdNGanBQrDBZez95Of2U3twvEIO1EOyirKTv02L8ctmGGCjfWI5PunMHRD
+         3+pKS3PQfAVucU3fDOub97aD5Mtc7i2xhL1n4A6tP67Dk0HHT0Yb801yoCvJKCsyHqyn
+         YvLKWtqJQo3Y9zMK2k+VQldB4DOcwiktSLB9nFPkKeQtvxIM8LD6gE0Lhin8feygSsm6
+         9eoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758586450; x=1759191250;
+        d=1e100.net; s=20230601; t=1758588224; x=1759193024;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=juuRmdtIG9kdI0LivxQcUqY9cxV8WrFXJti3TAOvJyY=;
-        b=BV3iIIQ4XJMfa0C7imXvA4MvYzjtx8xTA1qLONNFpxwBxY4/UJJmH1bpX1UQ+wXFoN
-         Rheo0tC4ueQDWd0YboVbGr+4+VImUfpu0pUDu+dAwjHTlcuuQXZA0up9wdMKNdUICv7k
-         23uF6qK9K6fke974pr7BpYP4KJCN3pptB1F7HlZk+0r4nYjal4ziCh9yj/6tF5qD0Y8E
-         lzZz7fWH0+OXTjLqabVfg8XWnV23KeGg9QwPQeLlVIMZ8g8MoRBVioNDMnO8/LjmZRVm
-         5leOfoil6eGuEETIUms3WCkCP/tK/ZyskZRvz1T4EpolQPJW/tZyKI7n0mZKGKpu+7IE
-         sKcA==
-X-Forwarded-Encrypted: i=1; AJvYcCXouc+Y8clc5c4OR8PJsmZkH/t6Az2AWFBPcXp/puGYI0djZBdzZOsck7zLDkTCD/yhTsM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx5DGHPyTa8XFLbIQ7hOqAnwsDlX80bIPgvxzAXTzUimFxf/Lkd
-	mWVtsR+iS6MrdA7tZWR1KeN6jklkCd+UswgEzyZbsL4+nQSnWfRZFu/7LA1YtapUmIGBm4FqEjJ
-	OYfqAM858iz8gsvORExvTUdwsOWNoouCbdFWi6zA=
-X-Gm-Gg: ASbGncuI5AQLMtGZ9ILi/MuvI7LRAqPirAtD9lvl8cBe2izTLc/7KECQuy95ggnMT/W
-	MZzhgLRScxlVMDVS+ZAZJtpnih9SdCf2Ekr5vN71O+UvNU+DtlBYC7Fl1Yh6wdS7Y2oEfq1v5Pl
-	IGxi7hL/x/AHKVY996qD3ovvdsKRj7awZYnrsoDsgh6A8MsM0xpM5Y4ilMJG6h/Z8czzSqFOww5
-	xt4vLmk
-X-Google-Smtp-Source: AGHT+IFP1CidAmUwxuk1/CSID9uyNbi9xo6aILX41fBCz/TiN8pez7m9hMVtDwrWmls2SM64ddwhKjK81uVnstqytok=
-X-Received: by 2002:a2e:bc23:0:b0:367:8b63:3364 with SMTP id
- 38308e7fff4ca-36d17fd0673mr1555801fa.36.1758586449734; Mon, 22 Sep 2025
- 17:14:09 -0700 (PDT)
+        bh=j4TPg+erqmw4s8nsNvMSmqBGqur2z3mLN/i9VfW7XgE=;
+        b=MCkPwQn74jUfwzFb33Eq7SO45gaNWJt5D/vMT4uCY5O3OANCI1koQ27sKosbSYGlc9
+         fyLV4aMW/Kyg4xLdgVKUOWHK/8d5/IIPYzna+wVqBmjzrYYIrYKPFREB7FcR6IGjUT8i
+         WNpfl+WKCWoezacgn64AosRMyJYMy/4WUB5sVzYj9C32kWixUYdePbjHISJYca6k7h4h
+         HV/ljbMnTfBdF16BAx45aT7fxPaU0UuN6fT5NJIM/NfnV/vg0npOs5/mS+BK/Pebjhv8
+         EHYbqY7wyOU3WsXCWXS3tskWz1vOJPmjdfqtz7T3H0V4lpIdC2kYd0eJCTd5O+9WRsAZ
+         463w==
+X-Forwarded-Encrypted: i=1; AJvYcCUiRpUUOR4J3kCJBUyIkiZQTZuRKWdxRL3aZem40fslm2o7zhrYaJEdfOPLjgBEgRGjghQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwuDaFIBJ+5BCfDd3Zb2tSqFOknAz5BNcOrE9o9Vt468xu9qZEW
+	buVjOpqh8kSI95MbVLQ7Ks2VSXJ9E1HmhBkiuThm2TTn1HY74qZwd9U4lmJreF0uO+wxQLD/22X
+	5Z6SwkXSEsfAzJULlXAkz9PP/ctYFoPY=
+X-Gm-Gg: ASbGnctZOB+WQfMpdrStqCEvbKnuO1Porg1ws+3frqb7uAeU7rh0dR/ZzKctVHr3GGX
+	DHPlhQA/+mV/RmyR4VR7Fs3qttBV7+1yvah/e8y46F4MQe1GwfPu8en14j1QX9m3k8TG2l7h74w
+	jbIx1ycItQmPPzz2Q7EeOFulQTG+KxgL21d5rwQzNbYC0BU9fo1QfSi04aZnbkPzz46FON7ZRyO
+	7PXPHRc
+X-Google-Smtp-Source: AGHT+IG9D7GbOk9Lo5cqD4gbnUj1XfqBxoWuBK9CYb23AFik0HO3sOzicbkLh8jM1cgTzO/nW2aJAvriFBvosCg8/FA=
+X-Received: by 2002:a05:651c:23c6:10b0:367:64e:f5a2 with SMTP id
+ 38308e7fff4ca-36d171f0e0fmr1296131fa.36.1758588223465; Mon, 22 Sep 2025
+ 17:43:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2048.v3.git.git.1758294992.gitgitgadget@gmail.com>
- <pull.2048.v4.git.git.1758570701.gitgitgadget@gmail.com> <xmqq1pnyru1f.fsf@gitster.g>
-In-Reply-To: <xmqq1pnyru1f.fsf@gitster.g>
+References: <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
+ <20250915-b4-pks-rust-breaking-change-v5-7-dc3a32fbb216@pks.im>
+ <aMsxhp6ZO2Cdz7+k@szeder.dev> <aMteF4VTq2C5sAhK@fruit.crustytoothpaste.net>
+ <aNGkt/DdnbjNu3s8@szeder.dev> <xmqq348etd9n.fsf@gitster.g>
+In-Reply-To: <xmqq348etd9n.fsf@gitster.g>
 From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Mon, 22 Sep 2025 18:13:58 -0600
-X-Gm-Features: AS18NWAG-9nfQDkES3fem_nAy1PFccXrHHUu84_8xu8PMwOkt5agldzZnlIAZ9w
-Message-ID: <CAH=ZcbC5Y04D4bGjfH3rZ8GKabDttFez5qb9i8mXVsfE3LF26w@mail.gmail.com>
-Subject: Re: [PATCH v4 00/12] Cleanup xdfile_t and xrecord_t in xdiff.
+Date: Mon, 22 Sep 2025 18:43:31 -0600
+X-Gm-Features: AS18NWCg8MMGi2jDVW_6-hyb5svqiQnNOgNZ9uUjtaSwRRazoR0Hd-5WrOHfl2U
+Message-ID: <CAH=ZcbCiSWSQQBEcqA9PTsrG2qgpo7a7zx_ahcUS227p0zELDw@mail.gmail.com>
+Subject: Re: [PATCH v5 7/9] BreakingChanges: announce Rust becoming mandatory
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Elijah Newren <newren@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Ben Knoble <ben.knoble@gmail.com>, Jeff King <peff@peff.net>
+Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, Ben Knoble <ben.knoble@gmail.com>, 
+	Christian Brabandt <cb@256bit.org>, Collin Funk <collin.funk1@gmail.com>, 
+	Eli Schwartz <eschwartz@gentoo.org>, Elijah Newren <newren@gmail.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, Sam James <sam@gentoo.org>, 
+	Taylor Blau <me@ttaylorr.com>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 22, 2025 at 4:39=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+On Mon, Sep 22, 2025 at 2:59=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
 wrote:
->
-> "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > Changes since v3.
-> >
-> >  * Address review feedback.
-> >  * Split the deletion of xdl_get_rec() into 2 commits.
->
->
-> >  * Move NO, YES, MAYBE into xprepare.c, and use bool literals.
->
-> The elements of this array is of type "char"; it makes me feel a bit
-> awkward that the code
->
->  * assigns bool "true" or "false" to "char"
->
->  * expects that reading it in another compilation unit yields 0 or 1
->
-> Instead of abusing boolean true/false, I'd rather see the code that
-> assigns 0 or 1 to use 0 or 1 as literals.  As the array got a much
-> better name .changed[], anybody would understand that
->
->     env->xdf.changed[line] =3D 0;
->     env->xdf.changed[line] =3D 1;
->
-> mean what they mean.
->
-> >  * refactor 'char rchg' to 'bool changed'
->
-> Hmph, I am not sure if it is a good idea to pretend that this
-> changed[] array that is more than bool to be a mere bool.  An object
-> declared as type _Bool is guaranteed to be only large enough to
-> store the values 0 and 1.  Granted that you cannot allocate less
-> than a single bite or make an array of bits in modern architectures,
-> an array of _Bool would likely be byte addressed and if you assign 2
-> and read it back, you may get 2 back in practice, but I'd rather not
-> to see such a strange code to live in this codebase.
->
-> How about
->
->  - rename rchg[] to changed[], which is a very good move;
->
->  - optionally make it unsigned char, not char;
->
->  - the user of changed[] that uses only 0 or 1 and is not even aware
->    of that MAYBE thing use 0 or 1;
->
->  - the user of changed[] that has to be aware of that MAYBE state
->    use its own NO/YES/MAYBE for readability.
->
-> Hmm?
+> * By the way, I _think_ I never saw that policy document until
+>   Ezekiel started his topic and sent it out as one of the component
+>   patches; how did it get there from brian to Ezekiel's topic?
 
-'changed' is NEVER EVER!!! assigned anything other than 0 or 1 which
-strictly makes it a bool. It's easy to mistake that because the
-functions in xprepare.c that deal with NO, YES, and MAYBE are within a
-few lines of 'changed'. Please re-read xdl_cleanup_records() and
-xdl_clean_mmatch() very carefully. I will update my commit message to
-make this more clear.
+You'll have to ask Elijah that. I was oblivious to it until Elijah
+pointed it out to me, and now I've forgotten.
