@@ -1,215 +1,135 @@
-Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78504309F12
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 21:18:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A1D263F38
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 21:20:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758662295; cv=none; b=nakwXnCuGvdSUIHO4gy5kOuCqlRD78x3s6jj1l/cTlsBVa4S4nNX5UgN1r5GtMx61CKlNbHfsze6ktQ/Mjp32QhS62PoYwDQU+DrDmE5W+QEkbv6O2P++WXl9GNp8AuAGgZJWrqWLe7lAspY6rCiPLxubfoK3tUqpoH9C20A/74=
+	t=1758662446; cv=none; b=pfLxKssz2G+DgXBlF9KGgwQzduSFfYKscS5eG5qIKgD3rc1OxZw5jV5js0KEG5uure/PQUwGGSu95fFDYJqT24DQiOTZb1y6Wj9VzNqPQVxOXWc7vBp6rdqW+YjhnYLY1vqjmkxk5HL+bUTj7e6ooYwxBZ3N9k50kEbJusdrkvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758662295; c=relaxed/simple;
-	bh=vTjqp9j+6eL/xlw58MLD0ZaXNwjcmEhaWRTAczLd+tg=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bOnx831RGt1w9u6vZb8gpDJ5f96EekJnR0w0uaYbv3TmfmBSiHWkVi3a88O5psskpi+uCweKZaPWYsOGtSeeQzBEfjvrFpIQ7xEStey28xGVgQO11O5I9w2RODTHmwGAO4sgWElGEWOevy129sC2j/cBe0IElOmBSVkiESwLZDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=SuueWvDU; arc=none smtp.client-ip=212.27.42.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1758662446; c=relaxed/simple;
+	bh=AqVIn9oQIvrM7TFl6xOQy/WLzvOoV4rrgBj3GAYvEo8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hLjy8BVXvGg+YWBbgEpft+O0vkI5hdISTTrHWdv6Aaycxy5FFt6nqZ6yI1zjagmLEtnT+XeuLa/9U0P7ZJLU8Oo4nymzN359fVbUHthh9CmQS9kwap11PFX1XUdSPgO25wKhSnyJkYHDgenumzNUmjTJlqPt9xyrvFVk60FEqVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DUlFa6l7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BOl4OXg/; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="SuueWvDU"
-Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
-	by smtpfb2-g21.free.fr (Postfix) with ESMTP id BE16F4C544
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 23:08:19 +0200 (CEST)
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:2e73:8277:125a:43a4])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp1-g21.free.fr (Postfix) with ESMTPSA id 27117B0056A;
-	Tue, 23 Sep 2025 23:08:11 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1758661692;
-	bh=vTjqp9j+6eL/xlw58MLD0ZaXNwjcmEhaWRTAczLd+tg=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=SuueWvDUhovO2hMS6QBWq4PnxqnAOaW0z38Xkz6eyHurVB5FDL0zXYBNcIjQHnWZ4
-	 Hiq4SMag6GvAK4X9EaOp903y3seLzcC7xWN4zC+flxBfMMn1SJf393l+/6X0eXk5c2
-	 rrVqNAztfFroZBPaKHqSHSDCnVgxUBymw+IOM7wEG9z0iLevsOhLqxVR0J8l2Ni/ZK
-	 dbuStcHqf/ygGBlk6dNR3yLlJexuQAMAqOCQc1KtIGeVVer836TAG1z7iwxl4LiFvW
-	 vRr2FXauhXXtFy9Wh7225hEEMbXiKrTcakYepnFwDIysUe8uIbSc/f1awacPuPdkt9
-	 FbWwwcstCU3Gw==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: doc: config/extensions.adoc: line continuation syntax error
-Date: Tue, 23 Sep 2025 23:08:10 +0200
-Message-ID: <6196161.lOV4Wx5bFT@cayenne>
-In-Reply-To: <a6e4e995-fc19-465d-bd7a-c002bc0db31f@app.fastmail.com>
-References: <a6e4e995-fc19-465d-bd7a-c002bc0db31f@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DUlFa6l7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BOl4OXg/"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id E4B9AEC018C;
+	Tue, 23 Sep 2025 17:20:43 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 23 Sep 2025 17:20:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1758662443;
+	 x=1758748843; bh=HRbL1gyYm3EHkcz5kxWGsXoqrcGQwQfvDugr3BoQsNo=; b=
+	DUlFa6l7e+d5iQSh5j/W7mEIRkb5XmtzkCY7B2Ll+j3pwx9/odrQ98mzTGD9B1NV
+	Gjq4ln+4gjQLJ2yHv5g1fBwrqZpM05imgXlfGFhLA1PUXCLSE1jeyr5cqokMrqri
+	ynfaWkMj5XuC7hVdHC9iL+yRUnDYzMuAaDUXXFwR84VzWcoJ5Kx4uFHEuhGf4RKY
+	wYOIm7jQ7UkTHIN+La9eL4ybdyGPV2ij5hDgeoX/YlOYtUsIr5IWyyFd0M6amwZg
+	lO0QKzmzIVFrtRr2RRclgLRfX7a8T4jPYxcKXa+Aix3dW+bii2ayYtZ7KgZ8vA1C
+	dg3HHmtulB5fWhN8NO1osA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758662443; x=
+	1758748843; bh=HRbL1gyYm3EHkcz5kxWGsXoqrcGQwQfvDugr3BoQsNo=; b=B
+	Ol4OXg/BFKc/PUo79CRUsOLPQQ7ndBpf3SuukuCTyK7xBB1gnruDzuR2MCwowL7p
+	l/V0iVdEOWWQW1I9IEnttxg6jWmTg+BJ0vtrMux1jiGf/vfYchY8wnlBolyeJJ9C
+	8fUQDPuL/Jr78Y9PU/f5t4CY616gi826t/NBaKQB3gDPP3+7AXEUN8fX23PNdO0v
+	PEeDLmHVb8rPxt5Yw7Tx8xbLvMRxuFYXaqYNhCfPsoMPlvDLTaykcl7RFQW7gjy5
+	iC69edgAFgDDQxx3vcLAvBrzdZ80XPiN8W1LOBPEfaD7vZB6RiLaBrqKZpbMJkaL
+	xaV9hhcYODAFEAQ0+GkFw==
+X-ME-Sender: <xms:Kw_TaNmRq6d-BSKQOtucxGWOOJiymhQqIHsqGBZKfiwb4yEbPWlrQg>
+    <xme:Kw_TaAQH9NwQ1hLM6Gw3Wzqc0M0jM4m5E2QMoQTQT8uksma2JvCMyb_RhWgYX-zue
+    kY8R08ZL7svoulhHuRdaYhneimaO5ZDQIZr9-6zbc3UKNWt1YZQkA>
+X-ME-Received: <xmr:Kw_TaBCdYnaggkgGfgsOSlXR3dx3FIhKX1RwYmauIZeTE4wptvYqSNhDYEKM87BgeBtOlzojATtOr1EoA34AG5OVFoy9Mn1Fqakn>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiudejlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekofdttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepkefgtdeuvdejfffgheeufeeugefhtdejhffgkefhhfetieffteehleehtdfg
+    hedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Kw_TaHTDo5SHghlchQ6OgfH4z1R1owbMOE6lVqujnygcHxBBhtQEAw>
+    <xmx:Kw_TaPrrpZzrabZtJW9rxHFcF1Uer4Tjcf023YAL4srQERejQ5PO6A>
+    <xmx:Kw_TaJyWsSWXaMyLQsxpoFJiDjNTtcFXUSNgNo_t6MDNt3mgIlLYRg>
+    <xmx:Kw_TaEJSkCcsoiN2cEUKmTCe-7Fs225xuxhu-lofR2TgELyCN4U3lA>
+    <xmx:Kw_TaAZHc7LY9aX1kdVmlKb3pJkiQ3insypXMtuGEY2fom0LIXCk6lO2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 23 Sep 2025 17:20:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] format-patch: handle range-diff on notes correctly
+ for single patches
+In-Reply-To: <269dd1ed-e8b0-448a-a85f-fdcafafbd0a0@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Tue, 23 Sep 2025 18:26:33 +0200")
+References: <cover.1758574974.git.code@khaugsbakk.name>
+	<7f2487af433.1758574974.git.code@khaugsbakk.name>
+	<xmqqecryrvt6.fsf@gitster.g>
+	<269dd1ed-e8b0-448a-a85f-fdcafafbd0a0@app.fastmail.com>
+Date: Tue, 23 Sep 2025 14:20:42 -0700
+Message-ID: <xmqqplbgoogl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Tuesday, 23 September 2025 20:34:00 CEST Kristoffer Haugsbakk wrote:
-> Hi
->=20
-> See the HTML output on e.g. latest `master` (ca2559c1 (The tenth batch,
-> 2025-09-18)) for `git-config.adoc`:
->=20
->     + For historical reasons, this extension is respected regardless of t=
-he
-> core.repositoryFormatVersion setting.
->=20
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-At first, I could not see the same output. It seems to be again a discrepan=
-cy=20
-between asciidoc.py and asciidoctor. Only asciidoctor is producing this=20
-output, and for me, it looks like a bug in asciidoctor.
+> On Tue, Sep 23, 2025, at 00:01, Junio C Hamano wrote:
+>> kristofferhaugsbakk@fastmail.com writes:
+>>
+>>> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>>>
+>>> No `--[no-]notes` options are sent to the range-diff subprocess in
+>>> `range-diff.c` when making a single patch.  This means that you can get
+>>> different Git notes below the commit message and in the range-diff
+>>> part.  (See the previous commit for elaboration.)
+>>
+>> Would this also mean "range-diff --no-notes" would not have any
+>> effect in squelching the note output in such a mode?
+>
+> Do you mean `git format-patch ... --range-diff --no-notes`?  Yes,
+> `--no-notes` has no effect.  range-diff just does the default thing
+> which is `--show-notes-by-default` (act like git-log(1), which shows the
+> default notes namespace unless any `--[no-]notes` options are given (and
+> there are no such options in this case)).
 
+And this change will fix that too, which is nice.
 
-> The context is a definition item `worktreeConfig` where this is the
-> second paragraph following a bullet list.  So I thought maybe you can
-> use:
->=20
->     --
->     <bullets>
->     --
->=20
-> Here.  But we=E2=80=99re already inside a `--` block.  So apparently we c=
-an=E2=80=99t do
-> that.  I also tried a fair amount of permutations of using or not using
-> line continuation in this context.
->=20
-> This particular level of nesting seems tricky to resolve with Asciidoc.
-> Maybe someone can figure it out.  So before I forget...
->=20
-> Thanks
->=20
-> (The Cc is because he is one of the Asciidoc experts as a FYI only)
+> But like the previous commit this one could maybe use a rewrite.
+>
+>     No `--[no-]--notes` options are sent to the range-diff subprocess in
 
-Indeed, open blocks cannot be nested [1]. But, the first open block is not=
-=20
-necessary as it is a workaround for the missing knowledge of multi-level=20
-definition lists.
+"--notes" --> "notes", as a required single dash after negation is
+already inside [] ;-)
 
-[1]: https://docs.asciidoctor.org/asciidoc/latest/blocks/open-blocks/
-#:~:text=3DIt%20allows%20you%20to%20apply,inside%20of%20another%20open%20bl=
-ock.
+>     `range-diff.c` when making a single patch.  This means that range-diff
+>     will handle Git notes like git-log(1).
+>
+>     This is a problem when you ask to use certain notes, or none at all,
+>     since that set of notes will appear beneath the commit message but the
+>     range-diff will have whatever notes that git-log(1) would have given
+>     you.
+>
+> That’s at least less dense.
 
-Something along the following lines seems to work with asciidoctor while=20
-preserving the original paragraph nesting:
-
-diff --git a/Documentation/config/extensions.adoc b/Documentation/config/
-extensions.adoc
-index 829f2523fc..556eda5d12 100644
-=2D-- a/Documentation/config/extensions.adoc
-+++ b/Documentation/config/extensions.adoc
-@@ -3,8 +3,7 @@ extensions.*::
- 	`core.repositoryFormatVersion` is not `1`. See
- 	linkgit:gitrepository-layout[5].
- +
-=2D--
-=2DcompatObjectFormat::
-+compatObjectFormat:::
- 	Specify a compatibility hash algorithm to use.  The acceptable=20
-values
- 	are `sha1` and `sha256`.  The value specified must be different from=20
-the
- 	value of `extensions.objectFormat`.  This allows client level
-@@ -19,18 +18,18 @@ Note that the functionality enabled by this extension i=
-s=20
-incomplete and subject
- to change.  It currently exists only to allow development and testing of
- the underlying feature and is not designed to be enabled by end users.
-=20
-=2Dnoop::
-+noop:::
- 	This extension does not change git's behavior at all. It is useful=20
-only
- 	for testing format-1 compatibility.
- +
- For historical reasons, this extension is respected regardless of the
- `core.repositoryFormatVersion` setting.
-=20
-=2Dnoop-v1::
-+noop-v1:::
- 	This extension does not change git's behavior at all. It is useful=20
-only
- 	for testing format-1 compatibility.
-=20
-=2DobjectFormat::
-+objectFormat:::
- 	Specify the hash algorithm to use.  The acceptable values are=20
-`sha1` and
- 	`sha256`.  If not specified, `sha1` is assumed.
- +
-@@ -38,7 +37,7 @@ Note that this setting should only be set by linkgit:git-
-init[1] or
- linkgit:git-clone[1].  Trying to change it after initialization will not
- work and will produce hard-to-diagnose issues.
-=20
-=2DpartialClone::
-+partialClone:::
- 	When enabled, indicates that the repo was created with a partial=20
-clone
- 	(or later performed a partial fetch) and that the remote may have
- 	omitted sending certain unwanted objects.  Such a remote is called=20
-a
-@@ -50,14 +49,14 @@ The value of this key is the name of the promisor remot=
-e.
- For historical reasons, this extension is respected regardless of the
- `core.repositoryFormatVersion` setting.
-=20
-=2DpreciousObjects::
-+preciousObjects:::
- 	If enabled, indicates that objects in the repository MUST NOT be=20
-deleted
- 	(e.g., by `git-prune` or `git repack -d`).
- +
- For historical reasons, this extension is respected regardless of the
- `core.repositoryFormatVersion` setting.
-=20
-=2DrefStorage::
-+refStorage:::
- 	Specify the ref storage format to use. The acceptable values are:
- +
- include::../ref-storage-format.adoc[]
-@@ -67,13 +66,13 @@ Note that this setting should only be set by linkgit:gi=
-t-
-init[1] or
- linkgit:git-clone[1]. Trying to change it after initialization will not
- work and will produce hard-to-diagnose issues.
-=20
-=2DrelativeWorktrees::
-+relativeWorktrees:::
- 	If enabled, indicates at least one worktree has been linked with
- 	relative paths. Automatically set if a worktree has been created or
- 	repaired with either the `--relative-paths` option or with the
- 	`worktree.useRelativePaths` config set to `true`.
-=20
-=2DworktreeConfig::
-+worktreeConfig:::
- 	If enabled, then worktrees will load config settings from the
- 	`$GIT_DIR/config.worktree` file in addition to the
- 	`$GIT_COMMON_DIR/config` file. Note that `$GIT_COMMON_DIR` and
-@@ -87,11 +86,12 @@ When enabling this extension, you must be careful to mo=
-ve
- certain values from the common config file to the main working tree's
- `config.worktree` file, if present:
- +
-+--
- * `core.worktree` must be moved from `$GIT_COMMON_DIR/config` to
-   `$GIT_COMMON_DIR/config.worktree`.
- * If `core.bare` is true, then it must be moved from `$GIT_COMMON_DIR/conf=
-ig`
-   to `$GIT_COMMON_DIR/config.worktree`.
-=2D
-+--
- +
- It may also be beneficial to adjust the locations of `core.sparseCheckout`
- and `core.sparseCheckoutCone` depending on your desire for customizable
-@@ -104,4 +104,3 @@ details.
- +
- For historical reasons, this extension is respected regardless of the
- `core.repositoryFormatVersion` setting.
-=2D--
-
-
-
+Thanks.
