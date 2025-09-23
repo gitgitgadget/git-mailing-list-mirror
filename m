@@ -1,104 +1,119 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C919154BF5
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 07:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C372EDD5D
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 07:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758613336; cv=none; b=kMalQeD4URUxnbFjFr6lpsjjA5oNiCAOMQL1QmdAefcDgfWaK0SueLlpr4RSVsL9lX+NSTDhaUHs7B5WTAxzHFt8j0cfO5oDPoB4r7lBZAB0CEuaAfbjUjREuSnzkMQHQf7m469TVbMomib8oF3o2ZnxF+f2/tKn3CFOmB6J/GI=
+	t=1758614183; cv=none; b=oEyZipv4ssRrKQNmc1jdC24fw43N+AK1c8qcnuUbjjCtevu7HyqIOJg5zjirsH9krWinx7qi5QjwRi+wmcKgtwLUgX67L11PVkF6nUEEcjtogY4esyCgfldo7I4YXFm7DK9MP/ef1l5fPdgY/YGXxhCMTvgBe4GWVkFFNHkT258=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758613336; c=relaxed/simple;
-	bh=97Y/F6K8VVtb+XA+ht+zsLUNBHqvHB32opUJdm7CEig=;
+	s=arc-20240116; t=1758614183; c=relaxed/simple;
+	bh=b1S7yL86R3lsgtjtFaZ86W7sbfNfGZyxBlsVIkVzEEI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=esom9XPO3INZD7g76HNinmOGiXQ9RylIN4u4ncY7QsLZGTiW3iV5e2PDBdDiMaM4zesEwcwu12yEJ7LHD5fam2I41pQLQESpstOad/BazsqnLMp41JLc0Gbn81KH5w4Z+Y4RynLyD9jQ31ga6D33eSUOTOfUb4iQ/VHj5inJP4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KPk0FxNI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WqjgFx5l; arc=none smtp.client-ip=202.12.124.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=NnvTrOGmh3NzSDQqvPNZGnup1H405mw/VtbvYcUUljgr4DbaDy9hAd9N0fBIkxhzV7e3NoboLq8xMUeqvzJdMbiEiYR9p+qJQjlI+36/vEhYLPUOgnE3qGr7t/v0CRvnWh5Ci/SdQva5Uhru75tvPJiFoDLfEyvGbCiWdsz78S0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l4LpYB7C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TFxxrypJ; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KPk0FxNI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WqjgFx5l"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0D5247A0268;
-	Tue, 23 Sep 2025 03:42:13 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Tue, 23 Sep 2025 03:42:13 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l4LpYB7C";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TFxxrypJ"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CA37C7A0141;
+	Tue, 23 Sep 2025 03:56:19 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Tue, 23 Sep 2025 03:56:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758613332; x=1758699732; bh=/ZaL4CS6Yt
-	+U/Y0K8/OJkcCjSmW6qOPKGv6fSb0Fgi0=; b=KPk0FxNIqM4c3KR2asFIM9fm5x
-	KMb5olWLyrrzUnm95fve02gAUtmOjJ/+Uz+JRBMiZ6DUo9tP1799ZZTsdGiz0wGd
-	JDGIvEr7t3FEexTAwnk4xIHPjBf6xV2IyPYii3lfcEDZRxN/i/0HaOij6W04nz7L
-	r7tnlqWBUR9NExVaC0gMBgHD/0MAd8pwh1crWfPYs8N57DeAkIREjXsadqTioeZM
-	VsJ5HVIU95lVK+pZS/HfQIK3PN5KFPOK9KUW73Tquw6syxJoEUbyEO45zhhX/hsU
-	9ejz/lhIFTYASc6/db0XIwSliZdg/kOLOMTrvccZe5ZBgh8KzwvDW14ulnUg==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758614179;
+	 x=1758700579; bh=b1S7yL86R3lsgtjtFaZ86W7sbfNfGZyxBlsVIkVzEEI=; b=
+	l4LpYB7CRCCjgeaN8CbWJAlKlX3AWpeMy2pEisXh4eaiRhED2lJpzLaU5Q/Yw9Pp
+	zEfx6F8xPhqJIW6REy9YgBQDC/ZlQNHNRFzdj9Ja8wELF5m+J1yy/5xA3eLjTGww
+	tMBrAU8KmMbnVp3srnTV33uYCKvGXYQrBei4xvQFhg4o1fuCuzIE/ifxXe8x4tSv
+	ct5Qgo9AHB/P5AiA3ZRLYdRRbyFn/EJst7oDyeZ2TZDGRtJUOUcHO+gV1Dg9JQbf
+	PNkUyGffJ7MhPpYoq7VitktDajCiATm0I+JS2fcprgnfddif+TPwwflnAvc98OvD
+	2QGt0b6HsjTdKcNje9RWFw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758613332; x=1758699732; bh=/ZaL4CS6Yt+U/Y0K8/OJkcCjSmW6qOPKGv6
-	fSb0Fgi0=; b=WqjgFx5lSv2wxK7ADQJanvsFp+gVl/N7/CDsN5o0KfdC0FrfaQn
-	ge3I3VS0Y2SWh/1SNdvmOccnkyxtyJ5y8DMR1oo4PCqfEAMKWb9qbZtPKwQ2pQR4
-	nS2ws/paGcSwH2uMpmYrbpDJzhTYTb3YSTQCudZu+WPLZU5cSp9akvG5Eof2/eCX
-	s3Nr+Mxj5F9fJGF/YbGqAw0LDyVVY//RhBih8r4fQjqn3TM1nEdtQt/ZBmR8VOH4
-	YDnor2pOhfifdiVr0D3OOHaLWwp7Q95myj4yeo3btmEKYv80KKOQFactoGaYkDq3
-	bTAknr15v8CYx0w/z1ea29RWN/Rd5xsHkeA==
-X-ME-Sender: <xms:VE_SaN6mxg87ox02SjOqNidLvqdQn-R2BEZysq_t7zmh5Iu98hwRDw>
-    <xme:VE_SaA4gvGIMAi1qt8TCPJLuziXzSd-XDlfK5nqYzHLJc2wiNheNTIT_exYikrbK7
-    d30WT-AOfn_2xAIEz5wcqN1HGPsbhRF89kk3ryEkuh1hhgAT6j8zg>
-X-ME-Received: <xmr:VE_SaCEwF_Te840saIOLA6j81FVUfMtrCl2ZeX1p6H7Tlj6FM99KSgXkae0NDpPmzN-m_qjP3vLgYbw0X-A28hJwFmmIXewK5qdfTQMcYLKp>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitdduiecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758614179; x=
+	1758700579; bh=b1S7yL86R3lsgtjtFaZ86W7sbfNfGZyxBlsVIkVzEEI=; b=T
+	FxxrypJI1ptOZXEQfeLVchW6+xnAWQVOCpP5PFyOJtn6K9jW7arwYPNC69mUU5Yn
+	4RLM3N1t3/KRkaZHpPWZlt8MrsY0gAPPAVn+PL/DagxB6SZBN5DLqwfK698V3aWg
+	SYcVLJJ7AZjIXGFNPZgOLWPnV4IMW1pUpnpcT05EHtJxRhQ//9Bl6iwm/dayPYtg
+	MLY3k5tibrTVcL0mEr6wWH002en0MNL7+Dv0tE6EBDFwkQkTduU/NtyF1fhAXPHt
+	svkve/E/gWBYoONRlnkHifFpzzY4napTtDa6yYKtZvhyYxqvlPf4bjWxljSmwU06
+	R1Gn3scqX0/5iDnBMyzKw==
+X-ME-Sender: <xms:o1LSaAu47P-lm-TIk10DmXs0LYzDEzENNGuDZYdhnrGzuRCAIL77vg>
+    <xme:o1LSaLRMaLJdywjDkLqnbGCBUJ3RDe1wLf1xC2ww61MuM5GvKEVtdJejTyuAun5st
+    Q-zob6ZaPWfoGN5Azg5neeAxsN1MV_H7F82Y0TGhxf7IBg9HCsH_g>
+X-ME-Received: <xmr:o1LSaGOWgyZw6NmCEkH86bdms5wPyiPCOf_ycty3AZFYfaKgjyYlZy3EZUJhfqODRK_rEQTTsnTyOs6YSiPFJQhALSqYff_ZDDr4OwA0PDDK>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitddulecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
-    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:VE_SaBRtY-ceDExh3J5coEKo71I3D_L2n6jzbZlb5dR67UkNXK5N6Q>
-    <xmx:VE_SaDvni6kGblk59I5yPWA-hED5y-asQTCwR1mKUeolNwzU6XtS-A>
-    <xmx:VE_SaIxhTNR2BRKoWVJ_Ffl98vWlc6FcKz2vODEuq4rjLsFc_eUMxg>
-    <xmx:VE_SaF4DzjRMDuQJ5MnYC-Obb337YrZjpkWRcuuT0dJXzhoJe295YQ>
-    <xmx:VE_SaBR8_sVt_zSnruTgc93jtPZ8aplBY-Hcda5E8sxOTj16I8OF1qCN>
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtugfgjgesthekrodttddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    eptdeludetgfelueejgffhvedvveefhedvvdfggeehgeekjedvfedtkeejkedvgeetnecu
+    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeg
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtth
+    hopegrlhgrnhgurggtohhsthgrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:o1LSaAZI_mpemLKKKgBbbtM_Po25a8kEGAEa-3-W2Y1QG8BlzuXzOQ>
+    <xmx:o1LSaAwibSTBrpeWjlt2yaNADIAcUgDF3IZ5ls70zCFZtFzooODzRA>
+    <xmx:o1LSaLItS3VrCl9X1Y02_-52e9HIw8FDaZ3p0V1UkwK7Pai3X5e9vg>
+    <xmx:o1LSaKrzOpslf6xO3k0BIKcPNkoWghoAxvzzMQvEpHOXp7obPe2XAw>
+    <xmx:o1LSaPoms3F6aMgY7camjxWJ30MvvJdfTQlTI7_2DENgQWY7EOvVLYyM>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Sep 2025 03:42:12 -0400 (EDT)
+ 23 Sep 2025 03:56:18 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a8e93a45 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 23 Sep 2025 07:42:10 +0000 (UTC)
-Date: Tue, 23 Sep 2025 09:42:06 +0200
+	by mail (OpenSMTPD) with ESMTPSA id e88b72e1 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 23 Sep 2025 07:56:17 +0000 (UTC)
+Date: Tue, 23 Sep 2025 09:56:13 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2025, #09; Mon, 22)
-Message-ID: <aNJPTrPHA-xd12p6@pks.im>
-References: <xmqqldm6qehe.fsf@gitster.g>
+To: Alan Da Costa via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Alan Da Costa <alandacosta@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH] lockfile: add case insensitive filesystem note
+Message-ID: <aNJSnUGzzMlmrDQw@pks.im>
+References: <pull.2053.git.git.1758578084468.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqldm6qehe.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <pull.2053.git.git.1758578084468.gitgitgadget@gmail.com>
 
-On Mon, Sep 22, 2025 at 04:01:01PM -0700, Junio C Hamano wrote:
-> * ps/odb-clean-stale-wrappers (2025-09-10) 1 commit
->  - odb: drop deprecated wrapper functions
-> 
->  Code clean-up.
-> 
->  Breaks build when merged to 'seen'.
->  cf. <20250910153759.GA562601@coredump.intra.peff.net>
->  source: <20250910-b4-pks-odb-drop-wrappers-v1-1-6ed660cb1eec@pks.im>
+On Mon, Sep 22, 2025 at 09:54:44PM +0000, Alan Da Costa via GitGitGadget wrote:
+> From: Alan Da Costa <alandacosta@gmail.com>
+> When running git fetch or git pull on a case insensitive filesystem
+> (e.g., default macOS), if multiple case variants of the same remote ref
+> exist (often after a case-only rename), both variant locks map to the
+> same on-disk path. When a local update is required, Git creates a lock
+> for the first variant and then attempts to lock the second, which
+> collides with the same lock file, so an “existing lock” error is
+> reported. The underlying issue is mixed-case refs; resolve it by
+> consolidating the remote to a single-case variant and update local refs
+> accordingly.
 
-With the evil merge this that adds the missing "repository.h" header
-this status is now out-of-date, right? Is there anything else I can do
-to get the topic rolling again?
+Are you aware of Karthik's recent patch series at [1]? It looks like
+this addresses your exact problem in a more direct way, and the
+resulting error messages that we have in that patch series also give a
+bit more advice for how to handle the situation.
+
+The patch series wasn't merged yet, but will probably be merged soon.
+Could you maybe test that series and say whether it addresses your need?
 
 Thanks!
 
 Patrick
+
+[1]: https://lore.kernel.org/git/20250902-587-git-fetch-1-fails-fetches-on-case-insensitive-repositories-v1-0-35e69bbb507d@gmail.com/
