@@ -1,53 +1,53 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB321E480
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 10:52:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B4D32143A
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 10:52:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758624778; cv=none; b=YEEM9tzwlLTZ5TKjBWS3JEmzEcb2iiDzcaZsxqnvYrLCIkpTsE5a4lBtDRlpW10M0/15NDP5Re1uaKoMlR1RTlVbeN04U5OcXN0SEKi5AcZTAaW5a6nJzhuPQQX8j8yNbTTzKMuTsvlNKntBTddkRlBqoPjYxZgT6u1mVw0/h4Y=
+	t=1758624782; cv=none; b=otBWQ8et/VikvYq7OMV01xjxup0K3ytWAvS09CDtUUpvL4gi3lme4pIdBl08lOZcY2ny6XsayAWMFV03yZWULvF0fyxXKI0aHc7ik9pp/Y6IjnDLTrmVDYc4GxCiBnrQYcqBRG9pIhqt7kNd3N+h4ioiNz9BFw7vcLNi0VnH9zY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758624778; c=relaxed/simple;
-	bh=HawwWVA6FwKCL1Q/J7BDVRLDIqeKF4bSRA7pjvJk0PE=;
+	s=arc-20240116; t=1758624782; c=relaxed/simple;
+	bh=pKxgXG5AdA3K7jYdCmz95sfBq3vWMo9DwysVBpTaAQY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RBdujp70IJUWfVy4+QQJ2X0Lr91cgyzs1tkmocYbxBqLWLeGS4yTru6g9fZbUAWAynRrm7Y4JN5vzqQYfYVxKq+0bGE/0EUoM2LLAMV5Npcn5RjuRkIzxKkbUtezAD1z6onmagWFh+YAhN6sVR63jKsiH6K6fqdpxBTXgHyJhgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ioA8M+mo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I+lTjYjO; arc=none smtp.client-ip=202.12.124.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=QFK/NRhc5WWCvR1B4MfcMNVYr1yq4s9IctKuWxWnndVU6J3nV9CTGdm7/jRNGy6hb0wFd4+dT+3k4j0j9erFm7WS03OAOJ8oRDSkocTDRpo47+vZqn2X6mklG/sdw53M4BkW/VsHDbLv8E/OZOxszGwQHbLlaT8YCk3+KR9d54E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AgiNDZqR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cmmOwVnw; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ioA8M+mo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I+lTjYjO"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id DE6631D00269;
-	Tue, 23 Sep 2025 06:52:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AgiNDZqR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cmmOwVnw"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 24DB07A017D;
+	Tue, 23 Sep 2025 06:52:59 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 23 Sep 2025 06:52:54 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 23 Sep 2025 06:52:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758624774; x=1758711174; bh=Ok5gSUIu0o
-	EL6IrZABGDLSni38z6LQyw2Vkx+UijFmo=; b=ioA8M+moV4Ad+uyyO8KJUD5oWJ
-	E8BJu2jh1gfi5kUoXfvWLMDpcwybsiQ8BgIEennznssa1V9QseidjB8YhVe5BFts
-	bkS5mHcNqD4eam+UslMKr5Jh+XcRkTiw2NY5FXPGaSEgRElYtWkH8c+9s8QwgHig
-	2Iwveqc3hQe6XVcxDueWQ+rp31o6Fvi1yLQnUX+bvdkUg+mhvgshOAUL4UlZckfI
-	SoN/wrUPnAJeEFCOpsuy7N8SuOrtPXnSdy0x9m5rRvP2E8VJjKJMgXzucpWC2uxY
-	4n5l15w08B+WEO2/yGaoUSwkTymDPrBT1UDoIHbnOpxCyw3bDES79P0Q3y4A==
+	:subject:to:to; s=fm1; t=1758624778; x=1758711178; bh=4OkUHHqsuy
+	9WIQyz/i9zfxNyC0H5UUOlXlDsR7afBNM=; b=AgiNDZqRMTJMyatYFpOFUZZhhi
+	Tzb7VEeSuE/CjPu7+zcZsVGEsOyoqVId4BzaQvgy2h5ePItHYgIq0ebgT3fPeWId
+	IOwSJCTWdAvzveX3EdGMXB4Ob1cC6Xfa1CXIH0eaUnk72wuikavKmW5esJmCL7Ww
+	A7ZRWhQfVyCSDALgnIs2S3DCG/o6bG02dDRiXN2NZxlkRAuXEq4/0oVDpjzJMO7g
+	eEdebJD6SEwUP1wm4TBQLC4BThCZVw72u6X7+ZdYoeGbyNhS+kyfRjVHEuiyqv0c
+	HXukJRiKDE9iNs9kX27QwV5JzlRYbsJ4luDkuGXE3TdWMiFKceZcTTmxoXUQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758624774; x=1758711174; bh=Ok5gSUIu0oEL6IrZABGDLSni38z6LQyw2Vk
-	x+UijFmo=; b=I+lTjYjOYmTrkG8IbGk/DBpXXA0KkO+ifNvyFKvQDhPqM1jVsji
-	jFOTTEU3cOJS6wm8tdaQGWdpKBTXFAn/TiBRyvAwfrLHhIAQFRaSY7ZvfIGmbozl
-	9DWFcYz0fj0vq6JAqQDXo2daWwDMAZWk8BlUoU9jRYz89XbUhGs2zMt220etwtj+
-	59jr8n1IZ6zUNu4ydNCW5VfAsLTW2QnnAmxRajgzlvmcdPpenO7YQzlPOyAoO+ow
-	jrqlW6Ty+CLEQf8VvySEzwD2salwc72eEuV+evgCYa6KxqgC1LJWb1tkVo9I6p3F
-	2zn0gavyKQNvFlGCUcbt9rZWMms7oBhYCUA==
-X-ME-Sender: <xms:BnzSaJ_bH9J9A6gOox_rZimZZpffzkepWeRM__ruq-hormQibh9pxQ>
-    <xme:BnzSaFJURyGWrgGIRlHw10GdQ724qCOCB2C_ox3Jd6JE4OfwEi_-_WJPvt82tTUdD
-    pNroLHNnkINZpddDYFfY19uXFEZuxi-5gvZhNEFfCzSmNuBRSolXw>
-X-ME-Received: <xmr:BnzSaEabNk3Kv1pAD0b14v-DFiwprd7BbPPr-fli1pPNe9vTvvp3umpzqO5Okcv9pzeyhxCNWv56RUR5HbmXclHBr7o16GIjr8VtHfe-jnkx>
+	1758624778; x=1758711178; bh=4OkUHHqsuy9WIQyz/i9zfxNyC0H5UUOlXlD
+	sR7afBNM=; b=cmmOwVnwa3x7mGRAs/ZLPHuYZCnZ1Pf+krvxCMhfxpPjnBBXpg4
+	7Dsmo/aULqh5B641GbhPdE2tF2upP8LDudUps2UNhFPm/J6ogm/Plgy1T9StLlxM
+	eW820a5CNAk10q+9e1XpfkJRym+jozDhtzaQwZhwtbB7Dp0zbByC3VLGR6DNVz2U
+	b1v8rRVNUltTh3tjaGcYcd8TFISOyHMmYtJ6TvyCslej2iUlEAwiBJltR873Hstt
+	fls4qYnY2lA4DbRW963EYVfRHum4QOcPlnTRANUQCuUfQG7LonzWhhamz5cYYNNt
+	ODvY9vOcoM6K9t5/+KZip/nlp9DAgcDhT4w==
+X-ME-Sender: <xms:CnzSaBIhS0GlcmaRiMtDYaRU3GtkhXSH1ZEM2Z16UIY-URi30gxB5w>
+    <xme:CnzSaEk4HRcOGiihPxhWyxYZL7QFmIWDE9E5F2bPBPds7nKCmIC4MVr0rfZCHp8wM
+    P9f4mbnNtJhCsOUNg7YGglej2cqysRWlVuwry4GLg3gT_gQOMoFUgo>
+X-ME-Received: <xmr:CnzSaHGVzH0QgB01Kfy0Vi0VOLtMvXenemIyMe4DBwHaJJfoDkwRSsMwPGpnDNUVdarAXXHrbp8ll0BZ6x9cz-YIJdrfCW21A6THRdhCCuDJ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitdehgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -56,28 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitdehgecutefuodetgg
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghi
-    lhdrtghomh
-X-ME-Proxy: <xmx:BnzSaHKEE7FPmFaTH3OYbeiDw3anGbbroM_b_AVx9h3FfvOnNFhfSA>
-    <xmx:BnzSaCBMx02pjpbCsD4lp36gmLyB8JCrXJ9ULBHBXVitDakuNBKfjw>
-    <xmx:BnzSaMqqUSSBLEgbMtM7gXjg-jur1xyTKDX6S9tWgyQDEcRBEWAUlw>
-    <xmx:BnzSaNg9QuKLfD1a0ICO8Tg90MFtJCCJJCV9i2Brzd6XTvy2sq6g4A>
-    <xmx:BnzSaLmhWG1LXXJ9EZiyrTlvyaUhD1oO_Z5w3LfD-cSAO9dGPlMVIzgy>
+    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosg
+    hlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrgh
+X-ME-Proxy: <xmx:CnzSaMGqVQloXghnIH4BaZui1qVxQ_wl7ptWrJsTooBudREEDCMvUg>
+    <xmx:CnzSaMOVMCPcYwdQUpNyO75Z6RslznEq5VRleacGKfQyRK82zPOzRg>
+    <xmx:CnzSaDF3ktYoDYKhPcebs7Z0jEDhaOml2FRvlZTFE_Wn8S2T6qI4_w>
+    <xmx:CnzSaLPPccDCaCNPF8cFFradAUS8H8BQPQXWGQOAl_dv5q15izRDpA>
+    <xmx:CnzSaCCtIaIFM8PSleB_TuQS2peU9_2fe0WbWUJXlIC8L4Do7tf2okOX>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Sep 2025 06:52:53 -0400 (EDT)
+ 23 Sep 2025 06:52:58 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 1932b6ea (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 23 Sep 2025 10:52:52 +0000 (UTC)
-Date: Tue, 23 Sep 2025 12:52:44 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 4baf7ed8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 23 Sep 2025 10:52:57 +0000 (UTC)
+Date: Tue, 23 Sep 2025 12:52:54 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org, karthik.188@gmail.com
-Subject: Re: [PATCH 1/4] builtin/repo: introduce stats subcommand
-Message-ID: <aNJ7_GoKT5ea4QJE@pks.im>
+Subject: Re: [PATCH 2/4] builtin/repo: add object counts in stats output
+Message-ID: <aNJ8BvTZ_yNSrBA6@pks.im>
 References: <20250923025700.3046260-1-jltobler@gmail.com>
- <20250923025700.3046260-2-jltobler@gmail.com>
+ <20250923025700.3046260-3-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,320 +86,223 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250923025700.3046260-2-jltobler@gmail.com>
+In-Reply-To: <20250923025700.3046260-3-jltobler@gmail.com>
 
-On Mon, Sep 22, 2025 at 09:56:57PM -0500, Justin Tobler wrote:
-> The shape of a repository's history can have huge impacts on the
-> performance and health of the repository itself. Currently, Git lacks a
-> means to surface key stats/information regarding the shape of a
-> repository via a single command. Acquiring this information requires
-> users to be fairly knowledgeable about the structure of a Git repository
-> and how to identify the relevant data points. To fill this gap,
-> supplemental tools such as git-sizer(1) have been developed.
-> 
-> To allow users to more readily identify potential issues for a
-> repository, introduce the "stats" subcommand in git-repo(1) to output
-> stats for the repository that may be of interest to users. The goal of
-> this subcommand is to eventually provide similar functionality to
-> git-sizer(1), but in Git natively.
-
-Nit: "but natively in Git" would read more natural.
-
-> The initial version of this command only iterates through all references
-> in the repository and tracks the count of branches, tags, remotes, and
-
-s/remotes/remote refs/
-
-> other reference types. The corresponding information is displayed in a
-> human-friendly table formatted in a very similar manner to git-sizer(1).
-> The width of each table column is adjusted automatically to satisfy the
-> requirements of the widest row contained.
-> 
-> Subsequent commits will surface additional relevant data points to
-> output.
-> 
-> Signed-off-by: Justin Tobler <jltobler@gmail.com>
-
-Is this command built on Derrick's git-survey(1)? If so, it would
-probably be nice to add a "Based-on-patch-by" tag.
-
+On Mon, Sep 22, 2025 at 09:56:58PM -0500, Justin Tobler wrote:
 > diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-> index 209afd1b61..7762329551 100644
+> index 7762329551..2a67abfca8 100644
 > --- a/Documentation/git-repo.adoc
 > +++ b/Documentation/git-repo.adoc
-> @@ -43,6 +44,12 @@ supported:
->  +
+> @@ -45,8 +45,9 @@ supported:
 >  `-z` is an alias for `--format=nul`.
 >  
-> +stats::
-> +	Retrieve stats about the current repository. All references in the
+>  stats::
+> -	Retrieve stats about the current repository. All references in the
+> -	repository are categorized and counted accordingly.
+> +	Retrieve stats about the current repository. All references and
+> +	reachable objects in the repository are categorized and counted
+> +	accordingly.
+>  +
+>  The table output format may change and is not intended for machine parsing.
 
-s/stats/statistics/
+I already wanted to mention this on the first commit, but would it maybe
+make sense if this was a bulleted list of information that we surface
+right from the start? Then we don't have to reflow the whole paragraph
+every time we surface new information.
 
-> +	repository are categorized and counted accordingly.
-> ++
-> +The table output format may change and is not intended for machine parsing.
-
-I guess we don't yet have a machine-parseable interface in this state,
-so we cannot ponit to it.
-
-> @@ -156,12 +159,160 @@ static int repo_info(int argc, const char **argv, const char *prefix,
+> diff --git a/builtin/repo.c b/builtin/repo.c
+> index 15899dd74c..a24ea0e66b 100644
+> --- a/builtin/repo.c
+> +++ b/builtin/repo.c
+> @@ -159,13 +161,25 @@ static int repo_info(int argc, const char **argv, const char *prefix,
 >  	return print_fields(argc, argv, repo, format);
 >  }
 >  
-> +struct stats {
-> +	size_t branches;
-> +	size_t remotes;
+> -struct stats {
+> +struct ref_stats {
+
+Nit: let's call it `ref_stats` right from the start instead of renaming.
+
+>  	size_t branches;
+>  	size_t remotes;
+>  	size_t tags;
+>  	size_t others;
+>  };
+>  
+> +struct object_stats {
 > +	size_t tags;
-> +	size_t others;
+> +	size_t commits;
+> +	size_t trees;
+> +	size_t blobs;
 > +};
 > +
-> +struct stats_table {
-> +	struct string_list rows;
-> +
-> +	int name_col_width;
-> +	int value_col_width;
+> +struct stats {
 
-You assign the result from `strlen()` to these fields, so they should
-probably be `size_t`.
+I'd maybe call this `struct repo_stats`. `stats` feels quite generic and
+very close to a collision with `struct stat`.
 
-> +};
+> @@ -207,15 +221,27 @@ static void stats_table_add_count(struct stats_table *table, const char *name,
+>  
+>  static void stats_table_setup(struct stats_table *table, struct stats *stats)
+>  {
+> +	struct object_stats objects = stats->objects;
+> +	struct ref_stats refs = stats->refs;
+
+We can avoid the copies by making these pointers. Not that it'd really
+matter all that much.
+
+> +	size_t object_total;
+>  	size_t ref_total;
+>  
+> -	ref_total = stats->branches + stats->remotes + stats->tags + stats->others;
+> +	ref_total = refs.branches + refs.remotes + refs.tags + refs.others;
+>  	stats_table_add(table, _("* References"), NULL);
+>  	stats_table_add_count(table, _("  * Count"), ref_total);
+> -	stats_table_add_count(table, _("    * Branches"), stats->branches);
+> -	stats_table_add_count(table, _("    * Tags"), stats->tags);
+> -	stats_table_add_count(table, _("    * Remotes"), stats->remotes);
+> -	stats_table_add_count(table, _("    * Others"), stats->others);
+> +	stats_table_add_count(table, _("    * Branches"), refs.branches);
+> +	stats_table_add_count(table, _("    * Tags"), refs.tags);
+> +	stats_table_add_count(table, _("    * Remotes"), refs.remotes);
+> +	stats_table_add_count(table, _("    * Others"), refs.others);
 > +
-> +struct stats_table_entry {
-> +	char *value;
-> +};
-> +
-> +static void stats_table_add(struct stats_table *table, const char *name,
-> +			    struct stats_table_entry *entry)
+> +	object_total = objects.commits + objects.trees + objects.blobs + objects.tags;
+> +	stats_table_add(table, "", NULL);
+> +	stats_table_add(table, _("* Objects"), NULL);
+
+Should we maybe say "Reachable objects" here to clarify that this
+doesn't count unreachable ones?
+
+> @@ -282,25 +308,80 @@ static void stats_count_references(struct stats *stats, struct ref_array *refs)
+>  	}
+>  }
+>  
+> +static int count_objects(const char *path UNUSED, struct oid_array *oids,
+> +			 enum object_type type, void *data)
 > +{
-> +	int name_width = strlen(name);
-
-`strlen()` returns `size_t`.
-
-> +	struct string_list_item *item;
+> +	struct object_stats *stats = data;
 > +
-> +	item = string_list_append(&table->rows, name);
-> +	item->util = entry;
-> +
-> +	if (name_width > table->name_col_width)
-> +		table->name_col_width = name_width;
-> +	if (entry) {
-> +		int value_width = strlen(entry->value);
-> +		if (value_width > table->value_col_width)
-> +			table->value_col_width = value_width;
-> +	}
+> +	switch (type) {
+> +	case OBJ_TAG:
+> +		stats->tags += oids->nr;
+> +		break;
+> +	case OBJ_COMMIT:
+> +		stats->commits += oids->nr;
+> +		break;
+> +	case OBJ_TREE:
+> +		stats->trees += oids->nr;
+> +		break;
+> +	case OBJ_BLOB:
+> +		stats->blobs += oids->nr;
+> +		break;
+> +	default:
 
-I was wondering at first why you'd ever want to not pass an entry, but
-we use that to have "dividers" in the table. Makes sense.
+Let's `BUG()` here. This case should never happen, and if it does
+something is seriously wrong.
 
-> +}
-> +
-> +static void stats_table_add_count(struct stats_table *table, const char *name,
-> +				  size_t value)
-> +{
-> +	struct stats_table_entry *entry;
-> +
-> +	CALLOC_ARRAY(entry, 1);
-> +	entry->value = xstrfmt("%" PRIuMAX, (uintmax_t)value);
-> +	stats_table_add(table, name, entry);
-> +}
-> +
-> +static void stats_table_setup(struct stats_table *table, struct stats *stats)
-> +{
-> +	size_t ref_total;
-> +
-> +	ref_total = stats->branches + stats->remotes + stats->tags + stats->others;
-> +	stats_table_add(table, _("* References"), NULL);
-> +	stats_table_add_count(table, _("  * Count"), ref_total);
-> +	stats_table_add_count(table, _("    * Branches"), stats->branches);
-> +	stats_table_add_count(table, _("    * Tags"), stats->tags);
-> +	stats_table_add_count(table, _("    * Remotes"), stats->remotes);
-> +	stats_table_add_count(table, _("    * Others"), stats->others);
-> +}
-
-Would it make sense to not translate the formatting directives, but only
-the actual words?
-
-> +static void stats_table_print(struct stats_table *table)
-> +{
-> +	const char *name_col_title = _("Repository stats");
-> +	const char *value_col_title = _("Value");
-> +	int name_col_width = strlen(name_col_title);
-> +	int value_col_width = strlen(value_col_title);
-
-These should both be `size_t`.
-
-> +	struct strbuf buf = STRBUF_INIT;
-> +	struct string_list_item *item;
-> +
-> +	if (table->name_col_width > name_col_width)
-> +		name_col_width = table->name_col_width;
-> +	if (table->value_col_width > value_col_width)
-> +		value_col_width = table->value_col_width;
-> +
-> +	strbuf_addf(&buf, "| %-*s | %-*s |\n", name_col_width, name_col_title,
-> +		    value_col_width, value_col_title);
-
-Aha, that's why you went with `int`. You can use `cast_size_to_to_int()`
-to convert between the types.
-
-> +	strbuf_addstr(&buf, "| ");
-> +	strbuf_addchars(&buf, '-', name_col_width);
-> +	strbuf_addstr(&buf, " | ");
-> +	strbuf_addchars(&buf, '-', value_col_width);
-> +	strbuf_addstr(&buf, " |\n");
-> +
-> +	for_each_string_list_item (item, &table->rows) {
-
-We typically don't have a space after between the macro and its
-arguments.
-
-> +		struct stats_table_entry *entry = item->util;
-> +		const char *value = "";
-> +
-> +		if (entry) {
-> +			struct stats_table_entry *entry = item->util;
-> +			value = entry->value;
-> +		}
-> +
-> +		strbuf_addf(&buf, "| %-*s | %*s |\n", name_col_width,
-> +			    item->string, value_col_width, value);
-> +
-> +		if (entry)
-> +			free(entry->value);
-
-It's a bit weird that we free the values when we pretend to only print
-data. Sure, we probably don't ever have a usecase where we want to print
-data a second time. But I still think it would be nice to separate
-concerns.
-
+> +		break;
 > +	}
 > +
-> +	fputs(buf.buf, stdout);
-> +	strbuf_release(&buf);
+> +	return 0;
 > +}
 > +
-> +static void stats_count_references(struct stats *stats, struct ref_array *refs)
+> +static void stats_count_objects(struct object_stats *stats,
+> +				struct ref_array *refs, struct rev_info *revs)
 > +{
+> +	struct path_walk_info info = PATH_WALK_INFO_INIT;
+> +
+> +	info.revs = revs;
+> +	info.path_fn = count_objects;
+> +	info.path_fn_data = stats;
+> +
 > +	for (int i = 0; i < refs->nr; i++) {
 > +		struct ref_array_item *ref = refs->items[i];
 > +
 > +		switch (ref->kind) {
 > +		case FILTER_REFS_BRANCHES:
-> +			stats->branches++;
-> +			break;
-> +		case FILTER_REFS_REMOTES:
-> +			stats->remotes++;
-> +			break;
 > +		case FILTER_REFS_TAGS:
-> +			stats->tags++;
-> +			break;
+> +		case FILTER_REFS_REMOTES:
 > +		case FILTER_REFS_OTHERS:
-> +			stats->others++;
+> +			add_pending_oid(revs, NULL, &ref->objectname, 0);
 > +			break;
-
-Do we want to have a `default:` case where we `BUG()`? Otherwise we may
-not notice that we undercount the overall number of refs.
-
 > +		}
 > +	}
+> +
+> +	walk_objects_by_path(&info);
+> +	path_walk_info_clear(&info);
 > +}
-> +
-> +static int repo_stats(int argc UNUSED, const char **argv UNUSED,
-> +		      const char *prefix UNUSED, struct repository *repo UNUSED)
 
-Not a new issue, but I'd rather call this `cmd_repo_stats()` to note
-that this is the entrypoint. We might as well adapt the other subcommand
-to follow that naming schema in a preparatory commit.
-
-> +{
-> +	struct ref_filter filter = REF_FILTER_INIT;
-> +	struct strvec ref_patterns = STRVEC_INIT;
-> +	struct stats_table table = { 0 };
-> +	struct ref_array refs = { 0 };
-> +	struct stats stats = { 0 };
-> +
-> +	filter.name_patterns = ref_patterns.v;
-> +	filter_refs(&refs, &filter, FILTER_REFS_REGULAR);
-
-`filter_refs()` may return an error code which we should probably
-handle.
+I guess this can take a while, so having a progress meter would be great
+to have to give the user some info what's happening. I guess it doesn't
+have to be part of the first iteration thuogh as long as this is
+something we plan to add at a later point.
 
 > diff --git a/t/t1901-repo-stats.sh b/t/t1901-repo-stats.sh
-> new file mode 100755
-> index 0000000000..27c32ec45f
-> --- /dev/null
+> index 27c32ec45f..c6a7f08be5 100755
+> --- a/t/t1901-repo-stats.sh
 > +++ b/t/t1901-repo-stats.sh
-> @@ -0,0 +1,59 @@
-> +#!/bin/sh
+> @@ -20,6 +20,13 @@ test_expect_success 'empty repository stats' '
+>  		|     * Tags       |     0 |
+>  		|     * Remotes    |     0 |
+>  		|     * Others     |     0 |
+> +		|                  |       |
+> +		| * Objects        |       |
+> +		|   * Count        |     0 |
+> +		|     * Commits    |     0 |
+> +		|     * Trees      |     0 |
+> +		|     * Blobs      |     0 |
+> +		|     * Tags       |     0 |
+>  		EOF
+>  
+>  		test_cmp expect out &&
+> @@ -49,6 +56,45 @@ test_expect_success 'repository stats with references' '
+>  		|     * Tags       |     1 |
+>  		|     * Remotes    |     1 |
+>  		|     * Others     |     1 |
+> +		|                  |       |
+> +		| * Objects        |       |
+> +		|   * Count        |     5 |
+> +		|     * Commits    |     2 |
+> +		|     * Trees      |     2 |
+> +		|     * Blobs      |     1 |
+> +		|     * Tags       |     0 |
+> +		EOF
 > +
-> +test_description='test git repo stats'
+> +		test_cmp expect out &&
+> +		test_line_count = 0 err
+> +	)
+> +'
 > +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'empty repository stats' '
-
-Nit: I don't think it's necessary to repeat "repository stats" in every
-test name. That's already clear from the test suite.
-
+> +test_expect_success 'repository stats with objects' '
 > +	test_when_finished "rm -rf repo" &&
 > +	git init repo &&
 > +	(
 > +		cd repo &&
+> +		test_commit_bulk 42 &&
+> +		git tag -a foo -m bar &&
 > +		git repo stats >out 2>err &&
 > +
 > +		cat >expect <<-EOF &&
-
-s/EOF/\EOF/, as we don't need to expand any variables.
-
 > +		| Repository stats | Value |
 > +		| ---------------- | ----- |
 > +		| * References     |       |
-> +		|   * Count        |     0 |
-> +		|     * Branches   |     0 |
-> +		|     * Tags       |     0 |
+> +		|   * Count        |     2 |
+> +		|     * Branches   |     1 |
+> +		|     * Tags       |     1 |
 > +		|     * Remotes    |     0 |
 > +		|     * Others     |     0 |
-> +		EOF
-> +
-> +		test_cmp expect out &&
-> +		test_line_count = 0 err
-> +	)
-> +'
-> +
-> +test_expect_success 'repository stats with references' '
-
-Same comment regarding the name.
-
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		git commit --allow-empty -m init &&
-> +		oid="$(git rev-parse HEAD)" &&
-> +		git switch -c foo &&
-> +		git tag init &&
-> +		git update-ref refs/remotes/origin/foo "$oid" &&
-> +		git notes add -m foo &&
-> +		git repo stats >out 2>err &&
-> +
-> +		cat >expect <<-EOF &&
-
-Likewise regarding "\EOF".
-
-> +		| Repository stats | Value |
-> +		| ---------------- | ----- |
-> +		| * References     |       |
-> +		|   * Count        |     5 |
-> +		|     * Branches   |     2 |
+> +		|                  |       |
+> +		| * Objects        |       |
+> +		|   * Count        |   127 |
+> +		|     * Commits    |    42 |
+> +		|     * Trees      |    42 |
+> +		|     * Blobs      |    42 |
 > +		|     * Tags       |     1 |
-> +		|     * Remotes    |     1 |
-> +		|     * Others     |     1 |
-> +		EOF
-> +
-> +		test_cmp expect out &&
-> +		test_line_count = 0 err
-> +	)
-> +'
+>  		EOF
+
+I quite like the output format, by the way. It's nice to read and makes
+it sufficiently clear that this is not expected to be parsed by a
+machine.
 
 Patrick
