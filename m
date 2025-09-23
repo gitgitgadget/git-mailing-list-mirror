@@ -1,70 +1,70 @@
-Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23066244685
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 15:10:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66FBA61FFE
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 15:19:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758640254; cv=none; b=trIOaT5z73VeUSqR4rlaiQ0iO/fkaAj0BzdPmYmfCvMNfXfFfysIZ5zLi8BxemaXOg2PESEDhwIkczRLF2EarLj5ENAsxJdKj3X7jX8RirKSSk+F0qX6vdVZj8CtDnCIIwIRdWfxUN2AyufMOlmfFwctGBL26nQg0s0EmynOiSk=
+	t=1758640795; cv=none; b=JApvRfQiuxaxsTSeOIeaVYPJ5+/30GtEZxONWeDj546jeBgg23ka4yjO8OuVIer77wb8XeV3gJtBxD8BOv9hsQK3oOD2If2nqYX+huMJIgN+v1MoHTBshcWGru/UVCDEt+UosMaonNDMN7WUw6J2gtWxQEibRioihph41wWlxwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758640254; c=relaxed/simple;
-	bh=IuDnVEDDoDHlsi+1Tgvr2qLstGhlcSN/QdH2YavFEms=;
+	s=arc-20240116; t=1758640795; c=relaxed/simple;
+	bh=iOcGfOClVVt1pMDFLMFCVd+ub2TBh8EVGUamVIHoiZM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SXa7PcQ2W2iF4eFwrXQjjkdUre4CJ/07ApmQ/sqwGdzIOMtDg2PRZx9lf65lOoY5tWDt9nRBh6HDnf2X1/FgAoT+WpLnOiwQBigk1ZzW1YMFXqUA3ZEYWs07QkqpEg0gTFDA5TecYXIKDyilc8Xnl1omAubf+LX7KlncpS9tx9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LJEH2tXg; arc=none smtp.client-ip=209.85.161.51
+	 Content-Type:Content-Disposition:In-Reply-To; b=VIYQUdk4JNrI3BP6TZoJ7cq1zxf/Eze1AKgn+ci9qclaqe7m0unfBasNqWP7Z4vSbOZiWzte5TL2wyLryEJmdKYc7JLAbvo7WPvCoPqE6ZRuoD+Xm5yqyO5qPYHSQlwfQnO3KdPJyg21jPg9/1v82Apvzo9tpT1RNDDW1elutUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jb0MNhlA; arc=none smtp.client-ip=209.85.160.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LJEH2tXg"
-Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-62192ee029dso932205eaf.0
-        for <git@vger.kernel.org>; Tue, 23 Sep 2025 08:10:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jb0MNhlA"
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-32bd4f1b671so4624918fac.0
+        for <git@vger.kernel.org>; Tue, 23 Sep 2025 08:19:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758640252; x=1759245052; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758640792; x=1759245592; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iTmBdk5HmnAGYcbALMXw8qRHyRo8QZv3Z3GpThC1M7s=;
-        b=LJEH2tXgvk32yHtsiidEJQm9xgd+aubmZ4XGEC2tekDvjBqxtNlOyJNU8K1bC3jEA8
-         +JTymcMPK1jRV6lMgWJIxTVRcRqN8BE4lRF5zZ1fnpqUXjSAuMNxy4ch422FtPu6FBe6
-         2kWdlVIYgo5DM6WLl9R8iz5kYYW6BDML703Cte+YhqwRiubDof0yRCKkCo7GyEg3jml/
-         YtUO65vA/0QkxkrKf4y/4XO7Fd1GCwnyageluxJ0UXBtxh66Al2H8Xx2T+wR/+wM7fcs
-         EJvs84yd7CeX4Q+kTPz4aGDHRjekOKnPi/nt+Xqub9xmdTDafFrUycCd91bdUQeu2/Qu
-         HoHA==
+        bh=IUaBE02vmMVsmdKDv4syz//fpm2NqXbweXTeF49Gf50=;
+        b=jb0MNhlALLZTTLTUlWmcdKJ81A+EAjmgZq47oq4yDX37sKYbPbf6wmIs2e3/gvhZLd
+         br6WlCO4UWYG0to4AwaGeHGk2MOc6GtOJRBgjGwDrNE439K8yF626WqZDJpEoKRzKd6R
+         wjNlq5aDlHpF7XRrVA4b8viUUCwb2aXLmdlD2V0gEOHsM61J+zBLeqeWefRM2h01W/wU
+         iXm9J4oKKbfVJ8BhOfD6xgJCFX7mERIy5bIbbHmkFotwsd0Ayqkv4FgaOIfXRbwKX8mH
+         mFlbUqvOWSBfw6IVnlgT52YrBGWFlY0D8K/vSt+lz3318NKJm+xVg0YqCETjR8ynOQUY
+         RxUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758640252; x=1759245052;
+        d=1e100.net; s=20230601; t=1758640792; x=1759245592;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iTmBdk5HmnAGYcbALMXw8qRHyRo8QZv3Z3GpThC1M7s=;
-        b=cZkcTnpql8JfCT+WHffhccDeCxQG3Sd2h65z6NPb1tXRyqZapXBeuqEPZlUQVsnqoA
-         T53jA1glwQLSp6e+ZzdiQsPSAFrwHwrOsr10iK0dLonShXc47Hor0H7LxFORc87jh5H9
-         mLQF7LcCiU5SmzP+q6hhcoAxwi5TL7ecML0Kz6UKQagLK/x4XaZw7xDjcDldaY5T9mNg
-         r25BMpyh+9rss6WoLQzgVt4SMx37A3jxXynua66NqhyuM+n1M7VZY2lpFCx7f8U2y16Z
-         isAWANJm3j0bKU2leVr19AE+dl5uGS1xhcoZG3dT9nEqZHQPwzo4J6FLPjyVt1hkKhAG
-         dlrQ==
-X-Gm-Message-State: AOJu0YxYpOlMsC71mjxOH6rdITC7jTDIqXojLDEoaAcETYVVta1MNopc
-	f9r0fgV7FDaPIolbwg+bTZFZziwOJq5h8QJnp7/dGHCV9ok4H7KFooP1
-X-Gm-Gg: ASbGncuMMSqeTyg9a3ODCDCPAYK9mEMsYZ84tozRCPobOW3ofNMySAy4YV8wYPEGpUX
-	O9kX/+F57lW4J9GemY+dKUdfjYlO0QKynaRs5hYcMLWcjefK9CUwPIoEuzyPcNMQq3T6GNEo6rf
-	cqE8PJvHmGeTXYu9BB83Se2ioF1cx6mFLqvvaBYKM50oFbhEmcdFvruhKYB3X2VY9CBpjrAWFQH
-	xgdaJ7QJNtVdC2K8MLpntMh20x4LsWzMkKKMKb7o8Bx7hMQ1XPASmJfGmHYbG20iPgMkMN5ETYN
-	5tgInaHz66hz9PV7mouM15k5TNtwigk7khv8EM05bwrmXVqH72kP2Z7I1gzmWHHFyPQbMHzW7WC
-	sQ3i9fYpnn9AFNpKG0/I+HN5zi5Y=
-X-Google-Smtp-Source: AGHT+IE5Sla0C1le4bpvcUpv0EbYgcJFIdiPcuVC4hSn0qWJk1OdJmtnk8xRl9/lZJk99iB1hD0XVg==
-X-Received: by 2002:a05:6808:3999:b0:438:201f:e036 with SMTP id 5614622812f47-43f2d28d0fcmr1274148b6e.9.1758640251869;
-        Tue, 23 Sep 2025 08:10:51 -0700 (PDT)
+        bh=IUaBE02vmMVsmdKDv4syz//fpm2NqXbweXTeF49Gf50=;
+        b=TIabL8nafXceowdcLopkjTKOcnjRjMi1zr0YByATbwhYCk9s1NTqOZfcoVhfEhTIey
+         EAki0+h88CfQlbwSEFrQ157TOsj10sMWhLN5Pmhayg1VRzdwcRZ0DSW6xI1AcMQaNCuc
+         aK4n/e9yHLPCttQYC68cIfuZo+/FCU8G+qCt7/GotuVOcVu53oyXD4jl0ZhTt7NX4NP2
+         YGGaKzq7K0D/vk0XVH9snagXWnYOD7N5gEx1JcnWq3YqnExcUyPA2nDTmt8NS+HzU9j5
+         Zb67XYbjzYO1skzekxIVm2WYzAliRvTCUg5SflCGPxxBn9l7305YNB8mROvZHyNwzvgP
+         cHTg==
+X-Gm-Message-State: AOJu0YyAkjY8wwPMb7DyWMwUsFANklFNymr8RjOA6ckXyDH7mgP9aTGl
+	gTHX1ufmMKa7QlCfEEQ7JlKGWYnCU9dpP7ohPt9pUEoj/wqMA2JJSrlx
+X-Gm-Gg: ASbGncsYryvynC5f2C8ECSrSIRPZnwma/8vwhUE3C7HhWIout0S7e+CgEZ/dcP6zEna
+	lm4rsx/hgEHyqQHAvcAclPsfiOmhi7UcuBH8/Udazz8wctobWiMMx1y2wNauMDv1ZEyw55rHtSn
+	UqpBRkhAcqlPQRNOsGXb/IAvpSEmjrQ5NvCblaaACet3NiymJ4wGE+Hqiin4Lox/HnzVGzDLEBL
+	fIP1dmD909rzZuK5t7HtK398ufitXfCJuwsMDSL+5cKwE6Jd+5Z2myjwExr771LOS0bv45AaGuv
+	ip8DWgIuS5Nqx5u03Kj6aMd2trot2zTZqlMtwPkpOpGmTLNxw/pGI4U9EacRcQzDU5UzG8b1ROV
+	XzYlYv6uL0YhGOfww
+X-Google-Smtp-Source: AGHT+IHVRXIYz8DrUG8gdxg/f7LkqsWCNx3hUFz97G/g4xda8Z0SDsd9UZv9NOL/QVT9uzq4bldU2g==
+X-Received: by 2002:a05:6870:4cc4:b0:33d:c5bc:1a05 with SMTP id 586e51a60fabf-34cc1ea0f34mr1778006fac.10.1758640792141;
+        Tue, 23 Sep 2025 08:19:52 -0700 (PDT)
 Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-336e5a2cfc7sm9240380fac.18.2025.09.23.08.10.51
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-336e5f5479bsm9643178fac.26.2025.09.23.08.19.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Sep 2025 08:10:51 -0700 (PDT)
-Date: Tue, 23 Sep 2025 10:10:50 -0500
+        Tue, 23 Sep 2025 08:19:51 -0700 (PDT)
+Date: Tue, 23 Sep 2025 10:19:51 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, karthik.188@gmail.com
-Subject: Re: [PATCH 1/4] builtin/repo: introduce stats subcommand
-Message-ID: <w4c752odnthf26stoiu7he2xk6fucocmsnxo5pa5vh5sg647g2@a6vphhukasgv>
+Subject: Re: [PATCH 2/4] builtin/repo: add object counts in stats output
+Message-ID: <rarmjytj4aci2uwewga3firgh3py65cd4nuu3dq52bxvjejp2a@hg2i3fpzjcir>
 References: <20250923025700.3046260-1-jltobler@gmail.com>
- <20250923025700.3046260-2-jltobler@gmail.com>
- <aNJ7_GoKT5ea4QJE@pks.im>
+ <20250923025700.3046260-3-jltobler@gmail.com>
+ <aNJ8BvTZ_yNSrBA6@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,204 +73,175 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aNJ7_GoKT5ea4QJE@pks.im>
+In-Reply-To: <aNJ8BvTZ_yNSrBA6@pks.im>
 
 On 25/09/23 12:52PM, Patrick Steinhardt wrote:
-> On Mon, Sep 22, 2025 at 09:56:57PM -0500, Justin Tobler wrote:
-[snip]
-> > Signed-off-by: Justin Tobler <jltobler@gmail.com>
+> On Mon, Sep 22, 2025 at 09:56:58PM -0500, Justin Tobler wrote:
+> > diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+> > index 7762329551..2a67abfca8 100644
+> > --- a/Documentation/git-repo.adoc
+> > +++ b/Documentation/git-repo.adoc
+> > @@ -45,8 +45,9 @@ supported:
+> >  `-z` is an alias for `--format=nul`.
+> >  
+> >  stats::
+> > -	Retrieve stats about the current repository. All references in the
+> > -	repository are categorized and counted accordingly.
+> > +	Retrieve stats about the current repository. All references and
+> > +	reachable objects in the repository are categorized and counted
+> > +	accordingly.
+> >  +
+> >  The table output format may change and is not intended for machine parsing.
 > 
-> Is this command built on Derrick's git-survey(1)? If so, it would
-> probably be nice to add a "Based-on-patch-by" tag.
+> I already wanted to mention this on the first commit, but would it maybe
+> make sense if this was a bulleted list of information that we surface
+> right from the start? Then we don't have to reflow the whole paragraph
+> every time we surface new information.
 
-The git-survey(1) series sent by Derrick certainly served as inspiration
-for this series. I didn't build this series from those patches, but
-there is probably some overlap since I'm trying to accomplish something
-very similar. I don't mind at all adding a "Based-on-patch-by" tag
-though. Will do in the next version :)
+Makes sense.
 
-[snip]
-> > +	struct string_list_item *item;
+> > diff --git a/builtin/repo.c b/builtin/repo.c
+> > index 15899dd74c..a24ea0e66b 100644
+> > --- a/builtin/repo.c
+> > +++ b/builtin/repo.c
+> > @@ -159,13 +161,25 @@ static int repo_info(int argc, const char **argv, const char *prefix,
+> >  	return print_fields(argc, argv, repo, format);
+> >  }
+> >  
+> > -struct stats {
+> > +struct ref_stats {
+> 
+> Nit: let's call it `ref_stats` right from the start instead of renaming.
+
+Will do.
+
+> >  	size_t branches;
+> >  	size_t remotes;
+> >  	size_t tags;
+> >  	size_t others;
+> >  };
+> >  
+> > +struct object_stats {
+> > +	size_t tags;
+> > +	size_t commits;
+> > +	size_t trees;
+> > +	size_t blobs;
+> > +};
 > > +
-> > +	item = string_list_append(&table->rows, name);
-> > +	item->util = entry;
+> > +struct stats {
+> 
+> I'd maybe call this `struct repo_stats`. `stats` feels quite generic and
+> very close to a collision with `struct stat`.
+
+That's fair. I quite like the name `repo_stats`. I'll use that instead.
+Thanks
+
+> 
+> > @@ -207,15 +221,27 @@ static void stats_table_add_count(struct stats_table *table, const char *name,
+> >  
+> >  static void stats_table_setup(struct stats_table *table, struct stats *stats)
+> >  {
+> > +	struct object_stats objects = stats->objects;
+> > +	struct ref_stats refs = stats->refs;
+> 
+> We can avoid the copies by making these pointers. Not that it'd really
+> matter all that much.
+
+Ya, I'll change this in the next version.
+
+> > +	size_t object_total;
+> >  	size_t ref_total;
+> >  
+> > -	ref_total = stats->branches + stats->remotes + stats->tags + stats->others;
+> > +	ref_total = refs.branches + refs.remotes + refs.tags + refs.others;
+> >  	stats_table_add(table, _("* References"), NULL);
+> >  	stats_table_add_count(table, _("  * Count"), ref_total);
+> > -	stats_table_add_count(table, _("    * Branches"), stats->branches);
+> > -	stats_table_add_count(table, _("    * Tags"), stats->tags);
+> > -	stats_table_add_count(table, _("    * Remotes"), stats->remotes);
+> > -	stats_table_add_count(table, _("    * Others"), stats->others);
+> > +	stats_table_add_count(table, _("    * Branches"), refs.branches);
+> > +	stats_table_add_count(table, _("    * Tags"), refs.tags);
+> > +	stats_table_add_count(table, _("    * Remotes"), refs.remotes);
+> > +	stats_table_add_count(table, _("    * Others"), refs.others);
 > > +
-> > +	if (name_width > table->name_col_width)
-> > +		table->name_col_width = name_width;
-> > +	if (entry) {
-> > +		int value_width = strlen(entry->value);
-> > +		if (value_width > table->value_col_width)
-> > +			table->value_col_width = value_width;
+> > +	object_total = objects.commits + objects.trees + objects.blobs + objects.tags;
+> > +	stats_table_add(table, "", NULL);
+> > +	stats_table_add(table, _("* Objects"), NULL);
+> 
+> Should we maybe say "Reachable objects" here to clarify that this
+> doesn't count unreachable ones?
+
+Good suggestion. Will update.
+
+> > @@ -282,25 +308,80 @@ static void stats_count_references(struct stats *stats, struct ref_array *refs)
+> >  	}
+> >  }
+> >  
+> > +static int count_objects(const char *path UNUSED, struct oid_array *oids,
+> > +			 enum object_type type, void *data)
+> > +{
+> > +	struct object_stats *stats = data;
+> > +
+> > +	switch (type) {
+> > +	case OBJ_TAG:
+> > +		stats->tags += oids->nr;
+> > +		break;
+> > +	case OBJ_COMMIT:
+> > +		stats->commits += oids->nr;
+> > +		break;
+> > +	case OBJ_TREE:
+> > +		stats->trees += oids->nr;
+> > +		break;
+> > +	case OBJ_BLOB:
+> > +		stats->blobs += oids->nr;
+> > +		break;
+> > +	default:
+> 
+> Let's `BUG()` here. This case should never happen, and if it does
+> something is seriously wrong.
+
+I agree it doesn't hurt to be more defensive here. I'll update in the
+next version.
+
+> > +		break;
 > > +	}
-> 
-> I was wondering at first why you'd ever want to not pass an entry, but
-> we use that to have "dividers" in the table. Makes sense.
-
-Yup. Also, some rows like "* References" may have a name, but no value.
-
+> > +
+> > +	return 0;
 > > +}
 > > +
-> > +static void stats_table_add_count(struct stats_table *table, const char *name,
-> > +				  size_t value)
+> > +static void stats_count_objects(struct object_stats *stats,
+> > +				struct ref_array *refs, struct rev_info *revs)
 > > +{
-> > +	struct stats_table_entry *entry;
+> > +	struct path_walk_info info = PATH_WALK_INFO_INIT;
 > > +
-> > +	CALLOC_ARRAY(entry, 1);
-> > +	entry->value = xstrfmt("%" PRIuMAX, (uintmax_t)value);
-> > +	stats_table_add(table, name, entry);
-> > +}
+> > +	info.revs = revs;
+> > +	info.path_fn = count_objects;
+> > +	info.path_fn_data = stats;
 > > +
-> > +static void stats_table_setup(struct stats_table *table, struct stats *stats)
-> > +{
-> > +	size_t ref_total;
-> > +
-> > +	ref_total = stats->branches + stats->remotes + stats->tags + stats->others;
-> > +	stats_table_add(table, _("* References"), NULL);
-> > +	stats_table_add_count(table, _("  * Count"), ref_total);
-> > +	stats_table_add_count(table, _("    * Branches"), stats->branches);
-> > +	stats_table_add_count(table, _("    * Tags"), stats->tags);
-> > +	stats_table_add_count(table, _("    * Remotes"), stats->remotes);
-> > +	stats_table_add_count(table, _("    * Others"), stats->others);
-> > +}
-> 
-> Would it make sense to not translate the formatting directives, but only
-> the actual words?
-
-From a simplicity stand point, it is quite nice to have the formatted
-offsets baked-in. It is probably better to separate out the
-transalations though? I'll interate on this in the next version.
-
-> > +	struct strbuf buf = STRBUF_INIT;
-> > +	struct string_list_item *item;
-> > +
-> > +	if (table->name_col_width > name_col_width)
-> > +		name_col_width = table->name_col_width;
-> > +	if (table->value_col_width > value_col_width)
-> > +		value_col_width = table->value_col_width;
-> > +
-> > +	strbuf_addf(&buf, "| %-*s | %-*s |\n", name_col_width, name_col_title,
-> > +		    value_col_width, value_col_title);
-> 
-> Aha, that's why you went with `int`. You can use `cast_size_to_to_int()`
-> to convert between the types.
-
-Yep :) I'll adapt following your suggestion in the next version.
-
-> > +	strbuf_addstr(&buf, "| ");
-> > +	strbuf_addchars(&buf, '-', name_col_width);
-> > +	strbuf_addstr(&buf, " | ");
-> > +	strbuf_addchars(&buf, '-', value_col_width);
-> > +	strbuf_addstr(&buf, " |\n");
-> > +
-> > +	for_each_string_list_item (item, &table->rows) {
-> 
-> We typically don't have a space after between the macro and its
-> arguments.
-
-Your right! I seem to recall the style linter wanted me to have it this
-way, but I'll change it back to be consistent.
-
-> > +		struct stats_table_entry *entry = item->util;
-> > +		const char *value = "";
-> > +
-> > +		if (entry) {
-> > +			struct stats_table_entry *entry = item->util;
-> > +			value = entry->value;
-> > +		}
-> > +
-> > +		strbuf_addf(&buf, "| %-*s | %*s |\n", name_col_width,
-> > +			    item->string, value_col_width, value);
-> > +
-> > +		if (entry)
-> > +			free(entry->value);
-> 
-> It's a bit weird that we free the values when we pretend to only print
-> data. Sure, we probably don't ever have a usecase where we want to print
-> data a second time. But I still think it would be nice to separate
-> concerns.
-
-That's fair. I'll probably add a stats_table_clear() in the next
-version.
-
-> > +	}
-> > +
-> > +	fputs(buf.buf, stdout);
-> > +	strbuf_release(&buf);
-> > +}
-> > +
-> > +static void stats_count_references(struct stats *stats, struct ref_array *refs)
-> > +{
 > > +	for (int i = 0; i < refs->nr; i++) {
 > > +		struct ref_array_item *ref = refs->items[i];
 > > +
 > > +		switch (ref->kind) {
 > > +		case FILTER_REFS_BRANCHES:
-> > +			stats->branches++;
-> > +			break;
-> > +		case FILTER_REFS_REMOTES:
-> > +			stats->remotes++;
-> > +			break;
 > > +		case FILTER_REFS_TAGS:
-> > +			stats->tags++;
-> > +			break;
+> > +		case FILTER_REFS_REMOTES:
 > > +		case FILTER_REFS_OTHERS:
-> > +			stats->others++;
+> > +			add_pending_oid(revs, NULL, &ref->objectname, 0);
 > > +			break;
-> 
-> Do we want to have a `default:` case where we `BUG()`? Otherwise we may
-> not notice that we undercount the overall number of refs.
-
-Since filter_refs() is only checking regular references, we shouldn't
-ever encounter other types, but it doesn't hurt to BUG() here if it were
-to happen. Will do.
-
 > > +		}
 > > +	}
+> > +
+> > +	walk_objects_by_path(&info);
+> > +	path_walk_info_clear(&info);
 > > +}
-> > +
-> > +static int repo_stats(int argc UNUSED, const char **argv UNUSED,
-> > +		      const char *prefix UNUSED, struct repository *repo UNUSED)
 > 
-> Not a new issue, but I'd rather call this `cmd_repo_stats()` to note
-> that this is the entrypoint. We might as well adapt the other subcommand
-> to follow that naming schema in a preparatory commit.
+> I guess this can take a while, so having a progress meter would be great
+> to have to give the user some info what's happening. I guess it doesn't
+> have to be part of the first iteration thuogh as long as this is
+> something we plan to add at a later point.
 
-Make sense. I'll update repo_info() in a preparatory commit as
-suggested.
+Ya, I was planning on adding a progress meter in the future. It may not
+be too much to add it as part of this series though. I'll take a look.
 
-> > +{
-> > +	struct ref_filter filter = REF_FILTER_INIT;
-> > +	struct strvec ref_patterns = STRVEC_INIT;
-> > +	struct stats_table table = { 0 };
-> > +	struct ref_array refs = { 0 };
-> > +	struct stats stats = { 0 };
-> > +
-> > +	filter.name_patterns = ref_patterns.v;
-> > +	filter_refs(&refs, &filter, FILTER_REFS_REGULAR);
-> 
-> `filter_refs()` may return an error code which we should probably
-> handle.
-
-Will do.
-
-> > diff --git a/t/t1901-repo-stats.sh b/t/t1901-repo-stats.sh
-> > new file mode 100755
-> > index 0000000000..27c32ec45f
-> > --- /dev/null
-> > +++ b/t/t1901-repo-stats.sh
-> > @@ -0,0 +1,59 @@
-> > +#!/bin/sh
-> > +
-> > +test_description='test git repo stats'
-> > +
-> > +. ./test-lib.sh
-> > +
-> > +test_expect_success 'empty repository stats' '
-> 
-> Nit: I don't think it's necessary to repeat "repository stats" in every
-> test name. That's already clear from the test suite.
-
-That's fair. Will adapt the tests accordingly.
-
-Thanks for the review,
 -Justin
