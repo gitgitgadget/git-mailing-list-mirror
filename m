@@ -1,100 +1,109 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A4522E3FA
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 16:36:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EEE2797B1
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 16:51:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758645418; cv=none; b=lV5kAM5fdvOHGdm51MKJviqHHNfmzrBkznC0Eyrv9n3HO60L07kkFWO6Nf58aSEKqbp8m6rPLDhY5jzPHl89ssQucv7QvVtb1AGHc1+vIuBYWVm00otDGq/LT2ze3E/aluzHbHVQsTymRF4eLqaGUe1kDlapOamG1HJVJjAn8sw=
+	t=1758646264; cv=none; b=Q77U2FWLHRCEgjMAi+7mb7VLE76g5878jtxLQy6ZzH6Vjyb9IRebdi7bo73t7A17UP3/6VI2HckOIm8vmfqI67KuD7ZxauQ9Qrr1sI9ZP2CQE7sjEjT8kV790pmfFle72j3YEsVUxoEsjwM/pLB63iatnwFtMWXS0806Y+CC48E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758645418; c=relaxed/simple;
-	bh=xcw8uCUIJRMdlQ6SI7sI755/ysrEPZmt6V/cY17frkk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=QTfS7El4cvje1ENF2dcnPNPs2LHWQg6QryOmfEtPwA5OyzNxsTB9LV0gliyA05omP9otEAqMjnb0LJhZVuSCRttDvfGaOX/vTqu6ubBElToEo2AGyIQ9SVu/k6gHGy36DSedujIzMdpSKaEAsW+/yQgKCiYubleucEbvCeMse24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digital-mercenaries.com; spf=pass smtp.mailfrom=digital-mercenaries.com; dkim=pass (2048-bit key) header.d=digital-mercenaries.com header.i=@digital-mercenaries.com header.b=QpuGi6Et; arc=none smtp.client-ip=209.85.216.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digital-mercenaries.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=digital-mercenaries.com
+	s=arc-20240116; t=1758646264; c=relaxed/simple;
+	bh=NaadDQINS2NBBOujFIfR3+DoTD2Lksvp26ZIoOwtme0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=V4xzpmhpY6RXOCngXQlOUyDOzN7QqYlWUjsPtQ1qH9CsLFfp4xKsGZ1vThLm1IREaWQaswH0qYEZ3DGA2dGUhIMgchka+JUdP2hUN9gUWcpqvkDki3pV5Io5G89TrlouJqfBfhlqlP8YGvKMFAa3oiVMrXYtxmsEl1mTFo4Rc9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yqot9dsM; arc=none smtp.client-ip=209.85.208.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=digital-mercenaries.com header.i=@digital-mercenaries.com header.b="QpuGi6Et"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-32b8919e7c7so6521094a91.2
-        for <git@vger.kernel.org>; Tue, 23 Sep 2025 09:36:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yqot9dsM"
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-36453927ffaso38779111fa.2
+        for <git@vger.kernel.org>; Tue, 23 Sep 2025 09:51:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=digital-mercenaries.com; s=google; t=1758645416; x=1759250216; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=xcw8uCUIJRMdlQ6SI7sI755/ysrEPZmt6V/cY17frkk=;
-        b=QpuGi6EtR8CHn6c8CqAfMEfxatGWODEyfSTUY86sruVG91Wj481kSBu5kvTPaxsEmx
-         TsxA8cVweRvni1NBlDFIL8GgE3aIstSJAd/0LL3DT8lMWI7uMq+LAiVZ0owuyI+9lbAu
-         hicyfWsKAb70vV93l/Q/wE176Vl5Bvd9sIue4rh2ANVPDwwJA26BDZPfqgkfwJCLSodh
-         S3WFncZk0z53iaX4BuBl3x9S5t9rFx+hUKc/UPzaB+Fd/BvJ6sWL6y+VdBngJHYWS6Ux
-         KJqNdYfSrLHkubPGcnRTqMo3uzk7rNeyOUGeKfFKJ0L0ha/TVLzB7pRbXTu9S5JUT0yZ
-         4xKQ==
+        d=gmail.com; s=20230601; t=1758646260; x=1759251060; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DVDIdaRyzdXIn1qlVR7PZGxkpcyomrHI5M2PBPszvJo=;
+        b=Yqot9dsMB3UNmBhyZYWuovmoXGG3juDJZK+SWg5IaBuUxPYkfrVj1P9CD5NGxu/URo
+         jrlRzrOkndlRsyoO6mzIjAhG+CiTf17sRP4w3XVb69Qokctz3+Wzyq1yNmLLbxpPU056
+         eSgG09oApfm8x/eLXziP1E4IxwVbolVSWVJE//Za47ozdn2wKP88A1bBbSPiu39BIaTA
+         arSQ9ZnGOfXJS84PKCaJ0/kWppxERmrz5kTzU4taG2c2hlaSXuhqwoloBVbGn4HLFRiv
+         zw0tRUoGI0UeCQDV0rVjeJrCQJ5wuvR1wHB1NpmCSfpk+x0mBKfLhj8drMmmJnRVY289
+         MmlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758645416; x=1759250216;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xcw8uCUIJRMdlQ6SI7sI755/ysrEPZmt6V/cY17frkk=;
-        b=M6SAY6e6Z0ShsSFIvC60qBYg0Bz72v2wdg0kPH/n1cc6EktZs3+ur976YyO/iLJel5
-         ZdaO655XvrgsYIRFeL11zcn71NnRS+W6zUTsonPgFUi/JqWhLxpjKr4zHxmvS+hKwKZb
-         EqdHyTQhZBaVvxhVUyOJxXM3QQSDrFjaiUnREFhTgIPAp0z3CLmAEZnIzobZuVtrG95R
-         KF0r+93Pjv2t2GIyGMkwTnueTqdFIrdx/PRG1QDhKsJEBxjyA7VZYgNdGAbUjUdvltpD
-         cDYRNBaVR3qYVC8IJIJwbaybwqbnHh1dpXZKmWrxb95yPxZ/CbdyZ8QAMCZJjyEUbto4
-         kbFA==
-X-Forwarded-Encrypted: i=1; AJvYcCXOtEDHKW6K8totu1NbGJGvT/k2Ahi4t7GLFBOY0akIiIVc5HwXGeqxR+8VmnL2YtbAPHk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzxrPqwOrCyUINJ13DqE2tUtRjRbDiOLXtKuGSOFwrF3fhwg2RW
-	5omuNNJV5AReRmCLYRWkJstIQF8KGxps/VNbH6Phl6YDbb81yrH13fhsMt83KgGdnwSASu8NcOX
-	pC1Ac
-X-Gm-Gg: ASbGncvboOyUQLD0DrwnzIbDTShKnP6LbNAWIoNdu76+B/BNezuHir+oY3ZtPBdYEIU
-	+KW6yr3MOX/oxLPVh9wCWFEu+dLb8TvwG/WvHEs5YJM9UH+y8/1J/sCLAYxCSWFhl42rwfNYnuQ
-	XkjNL2wAkH3x+KDhIwidH31zrJzzIG6MaM1JuDE7oaxUII/y3LMKKxdJ1hfHHl2M8ikyetAIpS2
-	DBc2yuXuUVMJ5GYGnPvg3p8YqHrY8b7tsD8WazjzIK3YhhREUmF0H5tp17Zqj0Llg/zMMLoj85q
-	ynB2UygFlkr1nuP4OWLLJXF1ykmTnryt9A7lDdpEpgkgFgSJaVlnUQyd1Ur/cEQWOFR7gzwXEBv
-	njSEnACppttJSaWNRrnHQKeA/GvKdcKHYLnHOcT3WRp1PJJpwkg==
-X-Google-Smtp-Source: AGHT+IH3UcfJChLaS4HlOpK589EcJrvxGFhYWN13cab3LN8vuHcODrRFEQ2V5pt+Es0GdgtcG8CJ6A==
-X-Received: by 2002:a17:90b:4a91:b0:32b:a307:23dc with SMTP id 98e67ed59e1d1-332a95e936amr4031691a91.24.1758645416159;
-        Tue, 23 Sep 2025 09:36:56 -0700 (PDT)
-Received: from [10.0.0.21] ([174.127.235.36])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-332a68cc5e7sm1305008a91.0.2025.09.23.09.36.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Sep 2025 09:36:55 -0700 (PDT)
-Message-ID: <39045a98-cc86-4733-8365-2238e9747201@digital-mercenaries.com>
-Date: Tue, 23 Sep 2025 09:36:54 -0700
+        d=1e100.net; s=20230601; t=1758646260; x=1759251060;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DVDIdaRyzdXIn1qlVR7PZGxkpcyomrHI5M2PBPszvJo=;
+        b=eNVs5DWq7V84VHn+6AG4IZUFKtPoOCCbnqEgLeSNNWBOm4V6Ox2cxp0E2F20zcuFbP
+         CwltcZg0S9osV/w26LoZcL0hlE2M7cnamfgWEWtU/QTAIHzr2Jo1pEElgeOPakJhhuKS
+         qFc9eRQC2n0kjNohxTgCBaYpcyBPqpBMmFcbjmwkZOcdaIBRBDjTnEtEHrTltxgaZuez
+         QSnPPaniQvcWZrvtEWmP3/jAAgdqnC0Rzdl4qwjw9NXIq5cD1XDhZSI4VlZlZJ3CDNvs
+         81W4HJvhc8OynGFnC23nHTBQPSLY34t32EQwWT7V4wlgx6676SzpL6TdB+GZ7DYOJnqZ
+         aH8g==
+X-Forwarded-Encrypted: i=1; AJvYcCVYVR0U1zvi5I+ADVo7o7oINUttq/D7zdB0jw8Zc8PMKmWq4dyZ2BY+PxcpF3+5/Ysqq78=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxdkrOdg2VpHteI8eH0wQtPU0JA17wFiVtxLRyDHERlV/54WxY9
+	Tn1WyVOggEldupXf6PuY7WGJSyugpmQuv3WHi0n7h6P0AGaTzkdEJoy1etUftSp0uk9lkNhhXUw
+	/n/fuAIs8gMc2wdmq/7HG+M5FH72i+vE=
+X-Gm-Gg: ASbGnctbd5VkyEQ3/w4KCqfRMQ85SnLyuxsZ6GkMYHeHhGzIt+tjObKE/grNIaGAFuE
+	yuJ5rx1NI3DJb3W6oy6jM7U/P3mIwFOIfIv9OuzIvqm8hEePa9DoOSQ/GD6/FsqBkvQLfmQ7bx3
+	4i4I4gb7xADD3oT41PFlCbP97NQr6SfAoPaDEBk1C1HSE63zP6amfJivoo1ij11RyxtaoVp69nw
+	c9XsrtA
+X-Google-Smtp-Source: AGHT+IGPG1t+s+dTc6i4/k9q4zlCeiUEW2Nvq2VXdOeCKwI4YypNm8K/asjpEEBGbTXKZSjgj/j7WQZkdZOzGlzM4v8=
+X-Received: by 2002:a2e:a9a6:0:b0:36e:1962:1ed6 with SMTP id
+ 38308e7fff4ca-36e19623e29mr1375461fa.40.1758646260203; Tue, 23 Sep 2025
+ 09:51:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: S0AndS0 of Digital Mercenaries LLC <S0AndS0@digital-mercenaries.com>
-Subject: Re: I still use this/these
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- git@vger.kernel.org
-References: <8f201082-07b5-44a1-88cf-d6db551a598c@digital-mercenaries.com>
- <fd993486-069b-445a-ae91-a0f149fd3ea8@app.fastmail.com>
- <f2ea5a0b-278f-460a-a0c0-00477f61e19d@digital-mercenaries.com>
- <CALnO6CAkyScNvARtxSadUL+fNDQmbXke=+fF=O0cnsV8Biwtww@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CALnO6CAkyScNvARtxSadUL+fNDQmbXke=+fF=O0cnsV8Biwtww@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <pull.2048.v3.git.git.1758294992.gitgitgadget@gmail.com>
+ <pull.2048.v4.git.git.1758570701.gitgitgadget@gmail.com> <xmqq1pnyru1f.fsf@gitster.g>
+ <CAH=ZcbC5Y04D4bGjfH3rZ8GKabDttFez5qb9i8mXVsfE3LF26w@mail.gmail.com>
+ <xmqqecryq8o9.fsf@gitster.g> <CAH=ZcbAHgCLjpLMzditOg8CW-L1RPohGuQjst=h-rATTSoio3Q@mail.gmail.com>
+ <xmqqa52lqmup.fsf@gitster.g>
+In-Reply-To: <xmqqa52lqmup.fsf@gitster.g>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Tue, 23 Sep 2025 10:50:49 -0600
+X-Gm-Features: AS18NWAmNX4h9kr6KtEx5Qktqsc-ma3sCzRc3MI4_RSKDSDROMyX_HuIAVBfK8U
+Message-ID: <CAH=ZcbBWjzHcQMX3_fjp4a0gSgOv-yHqZEK4T2+jaWp1nMmoHw@mail.gmail.com>
+Subject: Re: [PATCH v4 00/12] Cleanup xdfile_t and xrecord_t in xdiff.
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Elijah Newren <newren@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Ben Knoble <ben.knoble@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On 9/23/25 06:04, D. Ben Knoble wrote:
-> On Mon, Sep 22, 2025 at 8:56 PM S0AndS0 of Digital Mercenaries LLC
-> <S0AndS0@digital-mercenaries.com> wrote:
->> If I am not miss remembering plans to remove `--since` then is there a new
->> equivalent for filtering logs over time?
-> I don't believe "--since" is deprecated: I can find no mention of such
-> a thing in Documentation/RelNotes.
+On Tue, Sep 23, 2025 at 8:12=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Ezekiel Newren <ezekielnewren@gmail.com> writes:
 >
+> > I apologize for my previous phrasing. I was not very tactful. Yes, I
+> > think your suggestion is a good idea. I'll incorporate that into my
+> > patches.
+>
+> I didn't get an impression that you were _not_ tactful at all.  If
+> the arrangement is like what I outlined in the message you are
+> responding to, I am perfectly fine if the type of changed[] is an
+> array of bool.  The only thing I found was disturbing was the idea
+> to assign 2 into a _Bool.  Comparing a _Bool, which can be either 0
+> oor 1, and find it is different from litral 2 (or MAYBE that is
+> defined to be 2) is perfectly fine.
 
-Thanks for checking Ben!
+I'm going to reroll this to make it much easier to see that the enum
+macros are separate from rchg/changed. After carefully re-reading
+those 2 functions, I think the macros NONE(0), SOME(1), TOO_MANY(2)
+make more sense. I think what dis1 and dis2 (which I'll rename to
+matches1, matches2) was doing is setting a state value based on the
+question "How many times does this line in file 1 show up in file 2,
+and vice versa". My guess is that if the line in file 1 doesn't show
+up in file 2 then it's obviously different. But if the number of
+matches is greater than some threshold and isn't minimal then TOO_MANY
+otherwise set it to SOME. So I think dis1, dis2 are meant as "Here is
+how we deal with the number of matches found in the other file."
 
-Oof, I cannot reproduce warnings with `--since` so I be totally mistaken.
-
-Again thanks to y'all for time and help...  and Git in general (-!
-
+Is this explanation congruent with the classic diff (myers/minimal)?
