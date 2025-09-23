@@ -1,142 +1,95 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADBE281503
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 17:48:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8575327EC80
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 17:48:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758649698; cv=none; b=eT5SB/LIIYwXCCtzzThNGl12y2j7C+x/5lEbDxT21AZJjqxaS585vFR69SuzSMn7hjZpkO4md9esGyGCT9/RcGYdlLPJfYEBBAb14CpgV3DRv4ZmhCR+Vf9aVjFK1jye1FunaFF0fl7c71rwf2nTsghRdxIRza5KeO7mlXuNeRQ=
+	t=1758649709; cv=none; b=GYsV1mlfy4mLqaPtKIxPVqIrtIMghHzFLf5yRgN45p5tppHgtw1PvrAnGXtVCuNJpZ6riqabOQS/H9bD7LPXqD4xwT+YxxxKA/xnrPWIBWNOL77ZDaj3POXZcUT0U6AXNnepVAYjC3VcYN8MJH7l1N6pvPT15FwnpgvH/2EUI8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758649698; c=relaxed/simple;
-	bh=88phrxrdec6/HR8dLRL8b3R/GMYIPLRvBeewXdF+OeE=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Hol81fy5j8jXnx/9S7H2UNKqDcslthCfNx8ayhU2xMfCjj2w7I7mNSCy6ahJFpLoK3giF7tm9yYlk+k1prO86qb59QYbHg2RIGiIH7xZ81lFIFe/JWJ8KZ3hyMrhXLc88ScF/hQ73EogVh6BMHraux5GQhQyeJz5hq9TGTL5TDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=az1LYZTc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jOm1/Iu/; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1758649709; c=relaxed/simple;
+	bh=ZnlwPW3AaoNVW1W+1p7cl9wqalH0QyzmO56oVmg6O9c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XFPpgzMGNfUCIJ2t0PcqUwGEaMwkMgIejLR0q8LxE96jYc9r8NeBR2Q6L8NUsL0SVTr+s3lRWXO+51Vm/TRSBkBPCwgvGyl0tv76WCvpaWRAvWFiyeD8eIQtvFcd0/uE1i4GBewOcyDVQ9yXn8ags6VMXi0Uo6S+hq4z0mf5xdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=NKMngtFz; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="az1LYZTc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jOm1/Iu/"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id EB87FEC01C0;
-	Tue, 23 Sep 2025 13:48:13 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Tue, 23 Sep 2025 13:48:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758649693;
-	 x=1758736093; bh=qtyVU+xLb8tAK5mDD5psf8QD8DhOIuIZ1Nawqc3Nam0=; b=
-	az1LYZTcVhZjRgvo4eztPmqCDQ7/Z3buC5JQIMuYw+DDsi+PK6ZV2pAeCsobwOg5
-	1o4JI0w9NN8uQ/7vg66eQQxVktnvnTYaVLgviVvpgrOw75ofl+U+vvXzO9jj3N1Z
-	uaXsGjbEo1ZpBszU+Gd3hiZrQeQIiE/ckJ+QHj+hbwNEbW6WysEoPoZkS1HwwWec
-	tykqYw/QYD/hl9bpI/t+70Xo6/Sok7DSrcfx4OhUaJhd/F11VXWu6g+Dpeu/X7XL
-	5DqEn5hTv9b3WODGNgHJoOGcDkv1Gez3ZLY1KlrSGX3rwQnR1VxRFmsWpwGVjVTc
-	YoVQX38B6tsFGPYadxfP8A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758649693; x=
-	1758736093; bh=qtyVU+xLb8tAK5mDD5psf8QD8DhOIuIZ1Nawqc3Nam0=; b=j
-	Om1/Iu/kWaLbIZEJSZlO9KsJ9jjcqVNMev9VBChSgrrcMeq7bXeAn9Y4QGVbhK4t
-	+1g9+YG3yLFouw8Qx2XD09Wf29hs7P/yx/voNHGEhwcwjzHL4bWPAwJV7prgZHVE
-	OA4g1BJ8LxVs5m2+AEltqalWfhzdPmk2DgqxGtdEaLYvWzKzDUMGMowi9klLPPe4
-	vjBxTz3cULhE1/KTojSNZP59kH017bgQgnn7E705044mTjTYydKRQNoitetEPl+N
-	TzlBqm1BjRaTqPd5TWrkNUsuu94dOvFeaWjgEcewUc9XQl+R25FkMYpnvLezlIif
-	htpwVxQg6LRWs1Hu37mGg==
-X-ME-Sender: <xms:Xd3SaBlNBSKMdztvecyhtUke69uOLn6eTESd_Jk2kp_AWy9jpHeWk2o>
-    <xme:Xd3SaHodIdw2zQjtn8-h2vGxZKFlbys02KIwoMvW97S2UTeuu-ilYs6EDGzu5gfyA
-    _lK27jF2dzTkhkGTjMkP6qPGoHVYY5qOJwpd27b9KFnQs6GpL6gwA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiudefjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertd
-    ertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
-    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
-    ftrfgrthhtvghrnheptdeigfegjeegjefhheeuvdegjeekleeguddukeeljeektdevjefg
-    iefgfeekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
-    pdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrgh
-X-ME-Proxy: <xmx:Xd3SaIQskfglAhKTgVur79KsBP4q6u7jp3PraLIdqq9YGu_Q6Avrtg>
-    <xmx:Xd3SaDvVWO2M128IaEVmqLQollbb_OHLh6NIeJeypAp69VyfTfUX4A>
-    <xmx:Xd3SaNZJkIQrOreqEFjEAN7-LV6Q4gouclvdwwanuIf_9p8c1c-M8g>
-    <xmx:Xd3SaIufpVaKW8U_Ebs4VR6B7DbM1kDq5ytF4itEkf67wvNe4WAIog>
-    <xmx:Xd3SaLb7BhosENfks8p157_W1JFdm5lZq13r2ZU2buniHjhlIPGhKjFc>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id AD4631EA0068; Tue, 23 Sep 2025 13:48:13 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="NKMngtFz"
+Received: (qmail 8267 invoked by uid 109); 23 Sep 2025 17:48:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ZnlwPW3AaoNVW1W+1p7cl9wqalH0QyzmO56oVmg6O9c=; b=NKMngtFzE6FEecR1SGCJrFSrxnjxfBYm4Mpph9+BJptRzotjgr0GqMPr44XJxAoXBlKweU6jDhrO6EBHzWRl5PQXrISI8UI02EWbSMEM/Ez+EzYGE1HE1F9jEouI2rGqC6dBTCGz0Ox3AM/BkBJMKG2/LNxS340n8tieUKFsQJbB2PaBPEHY8gHnv/wCh6wJYtWdvmbOdH6uRPpOJE98nzXCgrG5VZdj/a0gr89pVAsNx/e+q7xBwUrE1OjkxaF82tx9FX6AOfE3/YxhsKKwtXlfHCcc5lgDAXTQh3nSjaui+xheL6lnvF35X2coR8SFhkUPY4XKuv/JzY80aaABEw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 23 Sep 2025 17:48:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11795 invoked by uid 111); 23 Sep 2025 17:48:25 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 23 Sep 2025 13:48:25 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 23 Sep 2025 13:48:25 -0400
+From: Jeff King <peff@peff.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: gitoxide-compatible licensing of Git's Rust code, was Re: [PATCH
+ 6/7] xdiff: conditionally use Rust's implementation of xxhash
+Message-ID: <20250923174825.GB1136654@coredump.intra.peff.net>
+References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
+ <5a959c9bdad79cf972b95dcf4324135dd7c94dac.1752784344.git.gitgitgadget@gmail.com>
+ <5596e569-6632-c2b1-37af-a978de5408cd@gmx.de>
+ <dd3a7ab0-947b-4592-a086-8c7028f02ffd@gmail.com>
+ <9818dc92-3569-3e6f-0252-245c2bf0bf84@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AV1qRGHblxFk
-Date: Tue, 23 Sep 2025 19:47:52 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Message-Id: <f1da0f06-e57c-4abd-b9ce-ef3fd5ce2037@app.fastmail.com>
-In-Reply-To: <xmqqa52loyvq.fsf@gitster.g>
-References: <cover.1758574974.git.code@khaugsbakk.name>
- <bb065767336.1758574974.git.code@khaugsbakk.name>
- <xmqqikharvyl.fsf@gitster.g>
- <ba9b7fb2-c990-44fb-a506-0800d02854a9@app.fastmail.com>
- <xmqqa52loyvq.fsf@gitster.g>
-Subject: Re: [PATCH 1/2] revision: add rdiff_other_arg to rev_info
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <9818dc92-3569-3e6f-0252-245c2bf0bf84@gmx.de>
 
-On Tue, Sep 23, 2025, at 19:35, Junio C Hamano wrote:
-> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
->
->> On Mon, Sep 22, 2025, at 23:58, Junio C Hamano wrote:
->>> kristofferhaugsbakk@fastmail.com writes:
->>>
->>>> git-format-patch(1) is supposed to treat Git notes the same between
->>>> notes output beneath the commit message and the notes output for the
->>>> range-diff.
->>>
->>> Is this an opinion, or are there things that existing pieces of code
->>> already do to achieve such a behaviour already?
->>
->> What I mean is that
->> [snip]
->> That=E2=80=99s the point of passing `--notes` to range-diff.
->
-> OK.  So it is more like "range-diff is supposed to show comparison
-> of pairs of patches; if format-patch shows one set of notes after
-> three-dash lines in its output, range-diff invoked by format-patch
-> to compare its patches with another set of patches should also be
-> comparing patches generated with the same set of notes".  That makes
-> sense to me.
+On Tue, Sep 23, 2025 at 11:57:18AM +0200, Johannes Schindelin wrote:
 
-Exactly.
+> It would not even take more than something as simple as GPLv2+exception.
+> We do have prior art for that: The Git project itself suggests in its very
+> own `COPYING` file to use the following license in new files:
+> 
+>         This file is licensed under the GPL v2, or a later version
+>         at the discretion of Linus.
+> 
+> Note the exception? For new Rust code (and of course excluding code that
+> has been ported verbatim from GPLv2-licensed code), GPL v2 could be used
+> with an exception along these lines: This file is licensed under the GPL
+> v2, with the exception that it can be freely used in the Gitoxide project.
 
-I might eventually send some drafts of better commit messages.
+I think this "and of course" parenthetical might be a sticking point.
+Obviously taking the code verbatim and re-licensing it is not allowed.
+But I think even reading the C code and then writing substantially
+similar Rust code may be legally questionable. The Rust code under the
+more permissive license has to either be clean-room, or have permission
+for re-licensing from the original authors (which is getting to be all
+but impossible over time as code ends up being touched by many people).
 
->> Thanks for the explanation.  I=E2=80=99ve added `.rdiff_other_arg =3D=
- STRVEC_INIT
->> \` to `REV_INFO_INIT`.
->
-> Yup, I think I already have a fix-up patch mixed in your series in
-> the integration result I pushed out last night.
+I think this is the same issue that libgit2 ran into. If it were just a
+matter of porting over and re-writing new features, more of it would
+have been done. But for code to come under the new license it can't just
+be a port, but has to be an independent work.
 
-Oh yeah I saw that afterwards.  Which made me spot a mistake in my own
-fixup... which was instructive. ;)
+So I wonder if this just creates the same awkward silo between Git's
+Rust code and its C code (that we already have between Git and libgit2).
 
->> Could it be as simple as `log_arg` or `log_args`?
->
-> Yeah, that is much better than "other" (where it is unclear what are
-> the "primary" things that "others" are in contrast).
+> I am not a lawyer (which everybody but laywers are nowadays required to
+> say), therefore this likely needs some tweaking.
 
-I remember looking at the code and having that realization: Oh, *other*
-is *log*.  Huh.
+Me either. I do like the goal you're trying to accomplish, but I worry
+that it will end up causing headaches down the line. Even if we, the
+developers, are a bit permissive about what constitutes "porting" and
+don't require a clean-room implementation, this kind of thing scares off
+the legal teams that approve using the Rust modules in bigger projects.
+IIRC Microsoft put in a big effort into vetting libgit2's provenance
+before agreeing to use it in Visual Studio.
 
-... Maybe specifically `log_args` since it=E2=80=99s a `strvec`?  `git g=
-rep
-'struct strvec'` seems to give me a lot of plural (style).
+-Peff
