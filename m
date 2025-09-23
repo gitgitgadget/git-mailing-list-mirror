@@ -1,80 +1,83 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A6F3191A1
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 08:03:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DAB22154F
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 08:15:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758614619; cv=none; b=uV0G1Z+Tc4h5w629Wd41x0/+Or6Iew+QLNlLVxU22m+wjLY/gGTXQgwMcmN/A8JxAhi4xtY8CXOXdzQhTOyTpxIvt/Qun8+Dh05ZnkCSB+Zw1YviikNaJgWwZaYlMk+Oq+847ecXF5XmoKWrOrL+oP7jDXuyP+y00lw/izNcBow=
+	t=1758615303; cv=none; b=V7+qliy3+7D2/CS/EzpTBWjA9zRaubPi8imf1pb6CenPUwJDtu3Zlwgxa91Oh7PawBULjia6ojGshMuZylY3ANteFyBaFblEIMkc2FMQThnI/CXKg6pTm0S0WcrcCpezBiYxoZZdtvehWsPNp9Ci9r/9pALqjwfQqhSP9CecRRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758614619; c=relaxed/simple;
-	bh=tUNUssAJ69hXDco93CnQHErZhT6fNT4zd9mmWdrsw78=;
+	s=arc-20240116; t=1758615303; c=relaxed/simple;
+	bh=qWS22DXiCvFYvXyBCI7aXtc/Poj4Iw1R9lH8KqCa/dY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FMm3m+XL11clObX2Ae0O+78iTd8P+2C3RgO2FyorBoVPJn0KscOwujS48WW0Py8eGtQp3tXpTSnwkVF7e1Dsoodcj9Q6vUNuVse18sWAC2yfrYxuEDtLvtOoOBe4JS2ew8EMaQsvEyCTQ97xGAGRRyV7Q8XCUZBaew5nydc4zT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AsTrPhIa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fyVM9tEr; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=tE/0J7OIKO9E+wCHqxNw98mmLcgP2FNUWuJgl6Swz7PwtVTq0D7WoP5jOpStORbMYLvW/+QGKbKog4at2WKDX/MWErHZs0TLOiyZDZEMXbB6vL6IrJGtheobs5cHeUBtKqsrXFAxhM8ETRqUTTo9uc5qrb7VJFk9wrjOyabAsQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oE8DxcL2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n4F0lTo7; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AsTrPhIa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fyVM9tEr"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 60B5A1D00077;
-	Tue, 23 Sep 2025 04:03:36 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 23 Sep 2025 04:03:36 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oE8DxcL2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n4F0lTo7"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id ACC507A0043;
+	Tue, 23 Sep 2025 04:15:00 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Tue, 23 Sep 2025 04:15:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758614616; x=1758701016; bh=P4mhriCxYH
-	acncmrY0AfKq3M84FPpYWFO/M6WBaIPiM=; b=AsTrPhIaDzAiAAmotvp5ALB+g3
-	FzYx56jqeVDMbdZSrfNam6WxnqLOjcyAGjNvBcldaVOTESLzcVkphX8qtG8tnYKp
-	wbX4oVHepCJFMYxL3hj5vdFnHggheARkUoFooyc/fb/jV5+eYKQXzPWveCXtSpxH
-	53rugOLHhGQpz6bLfVYbcy11oOXIxxwHuT8HukeqJfKYEPS+bNeJemqff30yuHYH
-	1Eve7fTQWv2rSWeNVGnTWa8gxqis9osKPxqYj3FG3LraRzfhsR1R9I8ZxpB9Xi8i
-	tjBxRSk23ySbDORWrPBJ2L3JsQKbzJ5YYHiXScatPeIPDW5RQ4q9ZerPyWLQ==
+	:subject:to:to; s=fm1; t=1758615300; x=1758701700; bh=+JC/uzfMJv
+	mPvcbYtRomecOiQLXQSn+MrJZAcJ1kIHg=; b=oE8DxcL2WvfP7TeJcIb2oWMSyv
+	+QDbBuic0swx5yrLQSMwuBK3Pi6o/9DfFZMOmzCtPyXBWs8dPwWYeCOUOO6Jqr5v
+	qtrOACxgcNVbLqHJXT8lo2bikCH8DGykrzvABDieNbg9JAjabzKg+jQweAg0ctYI
+	Tvn2sPSPYSaaK4URoZJEeWauQcCT6hCqRHxdE4KQo00yFrWZskFhXx0RMepSijA6
+	2zvVjhh2pzynkN91bkTSA34P2KKPPV6TmLSrGztH6hYesfZ448V2T3f4jocsOihA
+	2GD/0QvFGiRaCTT6A21soROtTAhcf0dg1w3sKU3H23O+yV46U84SY1UR2t5g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758614616; x=1758701016; bh=P4mhriCxYHacncmrY0AfKq3M84FPpYWFO/M
-	6WBaIPiM=; b=fyVM9tErV3e+JgN5SiW5W7VZPcrRui/D9k0jqP0isYBwjmxkeyQ
-	E20DJfjkj3TbY5qVrxFnPO7TU/2swz6fN2J0D6tFn5dsnBbS//uzC9xAykMXdJYi
-	81TPHsmSUh5NxJEim0IW8g7IAPeUDjpZWzhRvcehmTyrqBpe80p+kditY+6I080x
-	9WqJjEZ7nwApVX6u2Frg+B0x14aLNWd8XxWf8prRUMGI/yJeMhRJqleUCKZuUNMb
-	v7/UiIclCCTllePtt1tM7FXxkV/2icHdgPqgreB0S9+8czVgIs00TQ+wHecLmwil
-	551B7lzcS9K1JHdn2kRzOLPUGcG/p32LDfg==
-X-ME-Sender: <xms:WFTSaHQThoTpiMqYb_g_AGjLEYg9DnMeuJ5MzYLePxRQls_arGgzuQ>
-    <xme:WFTSaOwfFELIUJpA8YgxJDoddvdv6E2JU9I9XIKjfsHPs2z4IoipBFRX_0PjniGnd
-    9Ot4CG0ECrwwmIUzOGr9HWth_TrsMfDJlU89rV1cvWm5_yi6CNZ>
-X-ME-Received: <xmr:WFTSaKeVGIEsQKbIGaIPcfeY9FAoFwebYaGpRIgi-y_AoB_vLY_3tN4QZsmt3qJUVK8Y-tDomHlfrUJIvJg9vcIvyhi8o5KAJ0r10toTlnCU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitddvtdcutefuodetggdotefrod
+	1758615300; x=1758701700; bh=+JC/uzfMJvmPvcbYtRomecOiQLXQSn+MrJZ
+	AcJ1kIHg=; b=n4F0lTo7HwFwmAFXYFNIBiHisANx/KzaKOdsyT7M75bB7OZBbq+
+	tlSE+zxIgJL3GqrJ7gqShalxwS7gg55tcLb/SDF7+7S3GdJ67K1670umvYeTMBFM
+	dxY/TUR0MRrFblOaEQxBmNOXcsXaFLWXZ8LAxVbrZlcdEQ100rt3GagKueHzkZE3
+	JerO/xssluj2BbY0J7eEIiyBAMejXN/JDmB3oWDTiDtc7CrQoi+bNHusy391/SBK
+	3S6T4ko5S/z/fzYl5mJehHjLT2az3Zg/GwB+8grHUd1gILDY1ik4oT0EjZfCIRpK
+	NX5l8LKyp+16ZojZ5uwoqy9f53Ajewm7Iaw==
+X-ME-Sender: <xms:BFfSaIzx5_0ui0jx3judjLs3T03L87QxGH8wzITR-muz_gDRs4bpEQ>
+    <xme:BFfSaDuYp0VUbvhVOwS28u1TH3Kcuq2F8UU4CsfBKpcz2r0sK9LQlbgHs1WaIQngD
+    -2T-BusrC7IzYchQUdb-nhG2B-VTg8rqS3jgDbux_fRhi34SVg9>
+X-ME-Received: <xmr:BFfSaHvbAvCNP9bU34iD2vy1-lST0YZJ_0Sr7dI6rlXhwwkziy48Z4lUvLQ8yEy6zSkFZ4JZse2IU1YI2zkqqG6RfnjdgQ0tTtB6aIh4H2FZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitddvvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
     dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
     rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
     fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhoug
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
     gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:WFTSaCILuv1yfACNaPcetvBXLKUcVgX8StORjEDapnQ9M2iKJYLh3w>
-    <xmx:WFTSaDHHVdfKVGd7NRGabQJLobK6Subn3MDZfpiH4Ravw_CmtA7BlQ>
-    <xmx:WFTSaErBP32KnrtQyiJXI6iyGmXzCv4JHozf3KXW0d5A8IUimeLyjA>
-    <xmx:WFTSaER7mtNEwz5nVOtpOO3H3tgI9I8fjqry3a7BONLCKgDJpOTNtg>
-    <xmx:WFTSaKrrzXHnAO0A6WPpEIPEVWFRI7TQtmVC4u41PKrcSVtKePeKVT5b>
+    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepsh
+    hhvghjihgrlhhuohesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:BFfSaAN5lqqTRjejLQV2agipVqUkfsoRn_LN0uZE9jkD3IN8CrSy3Q>
+    <xmx:BFfSaN2z72UEoOEUmow023yU7Sn81yHftXh9MMKuiibTZSJ684lFaw>
+    <xmx:BFfSaEOk9UIVYwmO_yeBZnhJZXiuwhFZm_sovBiv_UH-7y7Y7RKj0Q>
+    <xmx:BFfSaF0swinndjEg-Y1DaVmjQMot49VrbPd_TnYrSTU5bAEyXqW7Pw>
+    <xmx:BFfSaDu6FIms-hEe9XAdAbz9SY8IeVZo31_VXUv9d2mnYpWddTvtc4fc>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Sep 2025 04:03:35 -0400 (EDT)
+ 23 Sep 2025 04:14:59 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5f179c4f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 23 Sep 2025 08:03:34 +0000 (UTC)
-Date: Tue, 23 Sep 2025 10:03:31 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 9078732c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 23 Sep 2025 08:14:58 +0000 (UTC)
+Date: Tue, 23 Sep 2025 10:14:55 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [RFC] doc: check-docs and WITH_BREAKING_CHANGES
-Message-ID: <aNJUUxfhM7QYDQGj@pks.im>
-References: <xmqqjz1u161e.fsf@gitster.g>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/4] string-list: replace negative index encoding with
+ "exact_match" parameter
+Message-ID: <aNJW_z-BD1eDttec@pks.im>
+References: <aMp8yNFiXDyk2hP4@ArchLinux>
+ <aMp9OtXLfRw7dEwA@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,54 +86,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqjz1u161e.fsf@gitster.g>
+In-Reply-To: <aMp9OtXLfRw7dEwA@ArchLinux>
 
-On Fri, Sep 19, 2025 at 02:33:33PM -0700, Junio C Hamano wrote:
-> Shouldn't we do something like this for breaking builds?
+On Wed, Sep 17, 2025 at 05:19:54PM +0800, shejialuo wrote:
+> We would return negative index to indicate exact match by converting the
+> original positive index to be "-1 - index" in
+> "string_list_find_insert_index", which requires callers to decode this
+> information. This approach has several limitations:
 > 
-> Documentation/Makefile pays attention to EXCLUDED_PROGRAMS to
-> pretend that the git-$deprecated.adoc files do not exist
-> 
->     -include GIT-EXCLUDED-PROGRAMS
-> 
->     MAN1_TXT += $(filter-out \
->                     $(patsubst %,%.adoc,$(EXCLUDED_PROGRAMS)) \
->                     $(addsuffix .adoc, $(ARTICLES) $(SP_ARTICLES)), \
->                     $(wildcard git-*.adoc))
-> 
-> but nobody seems to put the removed programs on the list.  
-> 
-> The dependencies around Documentation/GIT-EXCLUDED-PROGRAMS is still
-> screwed up, I think, but this may be a good first step to straighten
-> it out.  If "make -C Documentation" runs lint-docs by default, for
-> example, we may want to tweak the Makefile down there to make
-> link-docs target depend on the GIT-EXCLUDED-PROGRAMS perhaps.
-> 
-> diff --git i/Makefile w/Makefile
-> index 893070be76..711cade8fd 100644
-> --- i/Makefile
-> +++ w/Makefile
+> 1. It prevents us from using the full range of size_t, which is
+>    necessary for large string list.
 
-Curious, but what's up with the "i" and "w" prefixes here? :)
+I guess this is more of a theoretical concern. We probably wouldn't
+handle it well when our list had 2 billion entries anyway.
 
-> @@ -892,6 +892,8 @@ BUILT_INS += git-switch$X
->  BUILT_INS += git-version$X
->  ifndef WITH_BREAKING_CHANGES
->  BUILT_INS += git-whatchanged$X
-> +else
-> +EXCLUDED_PROGRAMS += git-whatchanged
->  endif
->  
->  # what 'all' will build but not install in gitexecdir
+> 2. Using int for indices while other parts of the codebase use size_t
+>    creates signed comparison warnings when these values are compared.
 
-I think this change makes sense indeed. It means that we stop linting
-the docs, which is a bit of a weird side effect that may or may not be
-sensible. But in any case, we should probably stop installing these man
-pages.
+Yup.
 
-I say "probably" because this got me thinking: we could keep the man
-page for a while, but completely replace their its with a notice saying
-that the command got removed. Even better, we could even tell users what
-the replacement is.
+I think that the required juggling around negative indices is another
+factor here. It's somewhat weird, and while existing callers all handle
+this correct I think that it makes for a suboptimal interface.
+
+> To address these limitations, change the function to return size_t for
+> the index value and use a separate bool parameter to indicate whether
+> the index refers to an existing entry or an insertion point.
+> 
+> In some cases, the callers of "string_list_find_insert_index" only need
+> the index position and don't care whether an exact match is found.
+> However, "get_entry_index" currently requires a non-NULL "exact_match"
+> parameter, forcing these callers to declare unnecessary variables.
+> Let's allow callers to pass NULL for the "exact_match" parameter when
+> they don't need this information, reducing unnecessary variable
+> declarations in calling code.
+
+Makes sense.
+
+I don't really think that my above comments need to be addressed, and
+the other patches in this series look good to me. Thanks!
 
 Patrick
