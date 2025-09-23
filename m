@@ -1,127 +1,174 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6872B22ACEB
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 09:35:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2ABA2DC79B
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 09:35:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758620117; cv=none; b=jR9AXOSMKdNDtzMjCN4T3SAl3cWgrEbr+5ENwidh++ZXXygSXAH8AlOVPp6U/Zi0C1qU8/kKI/uW/tQLmm7Sg+3OFc4jC2/cPpQj/qgkPKYS1jd4azGMnkbLIcu5wge9CxG8CoF0MeWQIvXVn4PM84LdTe38htOMl67jzlWPlhE=
+	t=1758620143; cv=none; b=YPZHLz0qds08Uaqd3dmrsspy+cT5Xb4EgA79TreI/ubqVgz20lDBWHPrM+eHCQj+kGXhwOrFNKm/X3MyHGqgFXFdNm7g7DI0rK4y6pKbu+cXGdR0LhRGkMTIitaJ7cfxtUXO3Cxb2ZfzJ7x/mdrSWo5SGblaTJq9d3C7qZNyWnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758620117; c=relaxed/simple;
-	bh=2ynQbUoGjR2LkX9xsN7APEhe3bmvBaq53Pc2cticzFY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V4ODoarXelHNdhUo8KrMmEa+8jXvFsO0wQomlP/Sem2m1r20O/d45Wh+n5nTwbX0MJsa2upAdcXvizZ/NzVRHwuqxlKeNFvKio5NCzBDwl655uJ9H/moc8FlcJqW3wmVf+2betT0ixGlUHr+IhIT4HzYmRIUke2E4WEJx6hZNxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=omS1Dn8G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jSfqJ8ya; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1758620143; c=relaxed/simple;
+	bh=uNfpDQT1RboAcEm8by3aa8pAFEwo8uSp5gR7Ty0/W9c=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JKOvnd0I1RLYBR3GKUY+7Np+BdvBnrq/leGP/pSi7rh/fvlQ4HUnqs5/YkynGhb/vRlxsuKSLRXL4bFIJeEFXeOG6INBCn685uflR9tWF4m/rYTlSg89G7DdxgPvyrV9SYtn/JqXJERZIcx6SGhovJ4+sry0hhLLEdIxUQHOOXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZQvmoI9i; arc=none smtp.client-ip=209.85.222.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="omS1Dn8G";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jSfqJ8ya"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3C4347A028F;
-	Tue, 23 Sep 2025 05:35:14 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 23 Sep 2025 05:35:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758620114; x=1758706514; bh=dc0Tb6GZh5
-	f/YSfgtyS2F142LoV3mAVNZAIVAfmR2as=; b=omS1Dn8GayErNpqrjCJvTaOhYH
-	AT64ncXEoxqJol4aeVrbhYiRHnuGgIiGY8tRZb4COGrrS6SAPENaP9nEn16jICXj
-	1rVx4MhalQBa/gs+Tsa8P80rhhmS5AVPy/VrDUFab54JA+pDR2iSDn0r4uU22hQ9
-	4Lcg0xg9cuow4kdaYl/0SOFm41VzFSUUm0PX67UKDHRn8RDbNIe6qUlki5BZjQdZ
-	lRD1LST2ucDk+9NrIiY9tuKNI/exgv14QUQ+IsBloA/lhCycyJPiYV6yx8s8WM9y
-	mKU1/JKpGiEyp1Z4LJg4BGy7kIcR2nmpeeFGVv6kqcHWsp6xYl7kxNKhQZ3Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758620114; x=1758706514; bh=dc0Tb6GZh5f/YSfgtyS2F142LoV3mAVNZAI
-	VAfmR2as=; b=jSfqJ8yaLWCVJv/i8LUQTbJdAE5aLCMW+bBI2BsuUIY5BDII/d4
-	e1/+47YTU4APCWxCZdCZgTlAoD96F+jdE5La3A0P8Pglb6qfDlJ9VvZVR6MpYqDk
-	QNP5GgbfBz/cF1VWgJQ9FhLorZ4YEfQdQsT/b2mE3N7iwZkq6jSD+noLMXSlDIpg
-	9Gt6C1O/hvQB5BUmw8dNqrIkVfan23swqC/ARZpHpboLToVeiPMQBIqW7vrrX122
-	/TTYHF8vlH7OvgWvt80NJTNXDCYsyAKCCayAyHIlxaJsC6/9jETak7TMIZ8ZLk9e
-	7vV4TgjGNWcurxvMd9PuKNcm5jcW2ScIZZw==
-X-ME-Sender: <xms:0WnSaIAKH3BupeGFJn4DQL8sAumgWDyKtEg_AWN0hc1_SaglmVp42g>
-    <xme:0WnSaC_TaZcfwmRjiuv8DePoBwx-yKpTddmWxp4aQrAVFMWM-ft57aeRaL137fcN2
-    jSaUTSF_UoqpKXGy2jwQ6e9G29CRPSYgRpyWWY9Wzwkq8SMKRmr-g>
-X-ME-Received: <xmr:0WnSaMCUDOFWwaekGFd4QQ2zLTvvK_jsi8uu2EUAGKnOM963eqoIypECAgmQnPngWZpJz3lz8YseGx5CqNAWF20BhOA9XU_2SF1oOJMT3iL3>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeitdefkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtth
-    grhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhope
-    hjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhf
-    rdhnvght
-X-ME-Proxy: <xmx:0WnSaPSkdScDEWEEohlZHsQCGJg5avNj0Q-wiA0IpMpXqLnHspK6qg>
-    <xmx:0WnSaLuSareo_WwGxqy19RDB11X_vE56y0cszSrAp3E-6u9HkE2Pyg>
-    <xmx:0WnSaD3yoFSk8lHTMXan5Esj-GlqPMVN8ZL3BgQHzHUOheYA_HNv4A>
-    <xmx:0WnSaEX2M9dsGh6otlo16HdVm9iaVnEYeztsftxeTpUdwNOuOlLQ1w>
-    <xmx:0mnSaKbi7JApPC3q3iOaKkOdBaJ9QcKZ1dxZbfHpOfJmydensQERlahw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Sep 2025 05:35:12 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c9dec1ad (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 23 Sep 2025 09:35:12 +0000 (UTC)
-Date: Tue, 23 Sep 2025 11:35:09 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 04/15] odb: move packfile map into `struct
- packfile_store`
-Message-ID: <aNJpzUATL6wAQiuy@pks.im>
-References: <20250915-b4-pks-packfiles-store-v5-0-d6340350934f@pks.im>
- <20250915-b4-pks-packfiles-store-v5-4-d6340350934f@pks.im>
- <54aadwxqaxm5sewgxg6aegfrvtqrdla6mxbhkrdbbufgqpb3sd@ymwtrihoj4kb>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZQvmoI9i"
+Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-89018e9f902so2892351241.0
+        for <git@vger.kernel.org>; Tue, 23 Sep 2025 02:35:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758620141; x=1759224941; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=c54ZJQiinSUU0djnuLtkM1UKA27AK6HbXmxyL8YHG7A=;
+        b=ZQvmoI9isRMTIXFp6b/RPj91ihAUoGP6U1SlLJx0gzGHkHepMz5nqNvOaSYKdepODL
+         ML2eTX+HW83WavnaGtbQG5cnKVhCJXgqNQOw0ap7QwIMtCAnjSKj7GZVHo7fOwqYwYSD
+         v20Dny5fIRMcpfTVq34YtUtu+6j+lWIKpaJIMdl1G5vj/9AJcPh/OI1oXdgylqDKFsro
+         eFHAujYOXceKS40cT3ftR83aoQGn5psUyOw1sfy46hHbeJVqn++6i+95j/WajJPf4HAJ
+         oS4HChL03qOhrrN4TY4Vxg/qF6mf1Bsw4LMZCqnTdEe1QdvOqN610P3ngwl4Tutg1KYU
+         dQDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758620141; x=1759224941;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=c54ZJQiinSUU0djnuLtkM1UKA27AK6HbXmxyL8YHG7A=;
+        b=W6v/DXFGC/LDTUuEetZStW3gGMKeUM6mRmX258TBfFxvhhi4aJMMNSoMMcdRktChFO
+         ZDp76OJjcpwE3A1lIYvKHkJrebnJ/jgzuf/huYKaoMEQD01dLeUz+Ycnd5b/vK/Pm7ns
+         /TL1lWs8rIENWJNXd9uUxhF/mLpo7eUsnkBknZnG/zIjZDlQ+JyHBmvLmG6hqdIhS0n0
+         zygs5zFStpp9ldMbmRudZVR1JwKg8yNZA2OZf+IU4rK0DlrJJrwyRDLpdETfmgKjzSfo
+         hin0uWhkEZNWbIFR5lq5XoH+JziMkXt3et3s93eT/Ugcm02WVjDUodUJm9XfSdahk3jK
+         nHcw==
+X-Forwarded-Encrypted: i=1; AJvYcCW1tQtr4f0apFejovhQj53NLcptoM+lmPUTrU4+7hvwbwFTr/3IW9J/4VkvhuuVjaDyWV0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxcAfFfN2aN8dPkHjIiaL96wf7DT5Fbz3yeZW9O8ATWxOvrF92a
+	pnxtEGhGUSePGmDlEyAic6kFiYOdw7qT0hfKV7Mb6mEy5uRUSMuWxenIRsyl2lbsebOSOCVtZZw
+	0/DTSdIo9S2DcEOZFib85WWt1bRRr79s=
+X-Gm-Gg: ASbGncvMmnf6lpTnNTfoO13aLN288BKmmhiuQqNVgSRs8fmi+emWwOyFzmHRjgNMfim
+	fCDXb+jj0uNkOJFliUqHkto+K3VTot4J31pscTf01DzmkfqmUSXai8/okXCBaHHeKTQvhzVtls4
+	E+599FC5uqER43ZnUZeVSeMmEy7JFXAcFTG7IkGg340WsM1SNhQjFUfBkOWaVeOOidN29jIFLxS
+	kUq1UHvaD5HDjK9pxYKnuwTfUcWWdsj2fUYOD0VKw==
+X-Google-Smtp-Source: AGHT+IE2PzH6E8OHotKNXsENObDlvw6c/1Col4PSgsVxZjtqQrAXrp4J+wPDavjRDqtR29neb64FdH470mlgW3Q+mt8=
+X-Received: by 2002:a05:6102:3a0e:b0:5a1:f09f:524e with SMTP id
+ ada2fe7eead31-5a58118f853mr748732137.16.1758620140638; Tue, 23 Sep 2025
+ 02:35:40 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 23 Sep 2025 05:35:39 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 23 Sep 2025 05:35:39 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <aMp9OtXLfRw7dEwA@ArchLinux>
+References: <aMp8yNFiXDyk2hP4@ArchLinux> <aMp9OtXLfRw7dEwA@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <54aadwxqaxm5sewgxg6aegfrvtqrdla6mxbhkrdbbufgqpb3sd@ymwtrihoj4kb>
+Date: Tue, 23 Sep 2025 05:35:39 -0400
+X-Gm-Features: AS18NWAowxGbZ4WGbC8OL1hDsuko8lHt6a9KUR0Pug5O5DZ-nCoQA96jg-3AKFQ
+Message-ID: <CAOLa=ZShms1D-cq=x04dtT2ULTVE3ZDo8DODFnJRP2wcJz0EgQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] string-list: replace negative index encoding with
+ "exact_match" parameter
+To: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: multipart/mixed; boundary="000000000000c74627063f74a81e"
 
-On Wed, Sep 17, 2025 at 05:15:44PM -0500, Justin Tobler wrote:
-> On 25/09/15 10:54AM, Patrick Steinhardt wrote:
-> > diff --git a/midx.c b/midx.c
-> > index 7726c13d7e..e96970efbf 100644
-> > --- a/midx.c
-> > +++ b/midx.c
-> > @@ -460,7 +460,7 @@ int prepare_midx_pack(struct multi_pack_index *m,
-> >  	strbuf_addbuf(&key, &pack_name);
-> >  	strbuf_strip_suffix(&key, ".idx");
-> >  	strbuf_addstr(&key, ".pack");
-> > -	p = hashmap_get_entry_from_hash(&r->objects->pack_map,
-> > +	p = hashmap_get_entry_from_hash(&r->objects->packfiles->map,
-> >  					strhash(key.buf), key.buf,
-> >  					struct packed_git, packmap_ent);
-> 
-> In `struct object_database`, the comment above the defined `struct
-> packfile_store *packfiles` says it "should only be accessed directly by
-> packfile.c". Now that the packfile map has been moved into `struct
-> packfile_store`, it looks like "midx.c" now reaches into this structure.
-> 
-> Is this something we should consider?
+--000000000000c74627063f74a81e
+Content-Type: text/plain; charset="UTF-8"
 
-Hm, probably I guess. I think overall the comment doesn't add that much
-value anymore now that things are a bit more self-contained, but let's
-keep it for now and update it accordingly.
+shejialuo <shejialuo@gmail.com> writes:
 
-Eventually, it will be dropped anyway as we move the data structures
-into the object source backend, as it becomes obvious that this is
-private data at that point.
+> We would return negative index to indicate exact match by converting the
+> original positive index to be "-1 - index" in
+> "string_list_find_insert_index", which requires callers to decode this
+> information. This approach has several limitations:
+>
 
-Patrick
+Nit: It would be nice to start by explaining what
+"string_list_find_insert_index" does and then talking about the negative
+index. Perhaps something like:
+
+  The `string_list_find_insert_index()` function is used to determine
+  the correct insertion index for a new string within the string list.
+  The function also doubles up to convey if the string is already
+  existing in the list, this is done by returning a negative index
+  "-1 -index". Users are expected to decode this information.
+
+> 1. It prevents us from using the full range of size_t, which is
+>    necessary for large string list.
+> 2. Using int for indices while other parts of the codebase use size_t
+>    creates signed comparison warnings when these values are compared.
+>
+> To address these limitations, change the function to return size_t for
+> the index value and use a separate bool parameter to indicate whether
+> the index refers to an existing entry or an insertion point.
+>
+> In some cases, the callers of "string_list_find_insert_index" only need
+> the index position and don't care whether an exact match is found.
+> However, "get_entry_index" currently requires a non-NULL "exact_match"
+> parameter, forcing these callers to declare unnecessary variables.
+> Let's allow callers to pass NULL for the "exact_match" parameter when
+> they don't need this information, reducing unnecessary variable
+> declarations in calling code.
+>
+
+Makes sense, and much cleaner..
+
+> Signed-off-by: shejialuo <shejialuo@gmail.com>
+> ---
+>  add-interactive.c |  7 ++++---
+>  mailmap.c         |  7 +++----
+>  refs.c            |  2 +-
+>  string-list.c     | 14 ++++++--------
+>  string-list.h     |  2 +-
+>  5 files changed, 15 insertions(+), 17 deletions(-)
+>
+> diff --git a/add-interactive.c b/add-interactive.c
+> index 3e692b47ec..7c0fd3d218 100644
+> --- a/add-interactive.c
+> +++ b/add-interactive.c
+> @@ -221,7 +221,8 @@ static void find_unique_prefixes(struct prefix_item_list *list)
+>
+>  static ssize_t find_unique(const char *string, struct prefix_item_list *list)
+>  {
+> -	int index = string_list_find_insert_index(&list->sorted, string, 1);
+> +	bool exact_match;
+> +	int index = string_list_find_insert_index(&list->sorted, string, &exact_match);
+>  	struct string_list_item *item;
+>
+>  	if (list->items.nr != list->sorted.nr)
+> @@ -229,8 +230,8 @@ static ssize_t find_unique(const char *string, struct prefix_item_list *list)
+>  		    " vs %"PRIuMAX")",
+>  		    (uintmax_t)list->items.nr, (uintmax_t)list->sorted.nr);
+>
+> -	if (index < 0)
+> -		item = list->sorted.items[-1 - index].util;
+
+Thanks for this, this is so confusing to read if one doesn't know that
+the incoming information is encoded with a special format.
+
+Rest of the patch looks great.
+
+[snip]
+
+--000000000000c74627063f74a81e
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: dc106f3b692c6a70_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qU2Fla1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNWxxQy85QnZENnlmRlM3Z3h5MytKdUJuaGdsbFNrcgozYUR0QjZpeVFK
+aVQ3aXYxSHNGZDE3TWJRSFRnMGdQVkJ1azM1dkhWZkhpK0VUUVZ0djZDVmVEY1NERTMvK1VhCktp
+K1I3cVBEZ0h1Wko0aWRvYnh2RzZaRU9xUk9ZdmM3bDZHcWRKbVE5aVlNdDRzT3B2T0xxbXg0eEFS
+N1A1dlkKbFUxVGU0VWtFc0Y3M1huQm91bENmMWpMeWloOEZ4dU5jUFVIQmErWmJqYmplMHBGTkZX
+aU0yMnVMNmNxR1hYYwpDSGcraDJ5LzZVZU96WFRrTXBzUFVYQXg2ZEQwNFI0VzJjYTNOMDRZNFFT
+WlJqaERGWVV0TFg3RVZ2RGRKT0F4CjFvL2dOUURHek9VT0V4MVNQeFRpRVlNVld5VkkwYjVrc3FY
+MEFDZk5maDNxRDZrUTNQSUYyNm1jTVc3MWFseVYKK3lhOStnTkdDV2NaeHppTHMxRW1NSXd3YTV0
+cm9WbDFmYkcvcjJTTmpUWU9wRjUvRU53b0pTd2dqY0xYSnZ1UQpmQ1pRbmtyWlpoakVaMTlaM09W
+NWxncmZUamNRQVNma0xsZjUxd3J2L2YxZ0d6dDNGLzdBLzkwL3ZabWNzOXdQCjdxOXNnQzdMeDdw
+OGxPUXpLbVZpSzdLMkVadFRuQTJwaEF3bHVwOD0KPWNMRXAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000c74627063f74a81e--
