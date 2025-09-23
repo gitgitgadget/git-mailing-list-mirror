@@ -1,109 +1,110 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EEE2797B1
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 16:51:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D3C3128C9
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 16:54:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758646264; cv=none; b=Q77U2FWLHRCEgjMAi+7mb7VLE76g5878jtxLQy6ZzH6Vjyb9IRebdi7bo73t7A17UP3/6VI2HckOIm8vmfqI67KuD7ZxauQ9Qrr1sI9ZP2CQE7sjEjT8kV790pmfFle72j3YEsVUxoEsjwM/pLB63iatnwFtMWXS0806Y+CC48E=
+	t=1758646481; cv=none; b=H/BfrxWYeUPBby2qYSX4rmhT3dU2pG97RK9z9je3GTwDqTQ6VEKuzdh/Z/oZfsy3PP+GG1H/haug+Sg+fxjU6qEW1SPe/0lnRg8QxxbuaZOVG9joszgHCNfajG7KPhYvgmYRbS2IOHhxFqobYXEvS2JepQ9EQwoK9R1sR1ptuI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758646264; c=relaxed/simple;
-	bh=NaadDQINS2NBBOujFIfR3+DoTD2Lksvp26ZIoOwtme0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=V4xzpmhpY6RXOCngXQlOUyDOzN7QqYlWUjsPtQ1qH9CsLFfp4xKsGZ1vThLm1IREaWQaswH0qYEZ3DGA2dGUhIMgchka+JUdP2hUN9gUWcpqvkDki3pV5Io5G89TrlouJqfBfhlqlP8YGvKMFAa3oiVMrXYtxmsEl1mTFo4Rc9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yqot9dsM; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758646481; c=relaxed/simple;
+	bh=AnHwX0v14YgPTFxwZyD8ioZ6ZlIabI8z5oA1czDAzLI=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:Subject:Content-Type; b=ug+0UegEt/rtxnDi+bsLWkea0HGy2Fu9cksQtFI/njmxglUKWDo0opi4TbC2H6df7OpeSC/OgJPTgOE6Nlz00f/m4fn0wl63uZDz3IK9yH/Ak8+ECz+vEPpTGOy30aWai+SZDLLu3lE3G2JMYvaEPvdaKELwlS0tuQ8X7fsOX4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=CuMPV7GC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D2zAkuZn; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yqot9dsM"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-36453927ffaso38779111fa.2
-        for <git@vger.kernel.org>; Tue, 23 Sep 2025 09:51:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758646260; x=1759251060; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DVDIdaRyzdXIn1qlVR7PZGxkpcyomrHI5M2PBPszvJo=;
-        b=Yqot9dsMB3UNmBhyZYWuovmoXGG3juDJZK+SWg5IaBuUxPYkfrVj1P9CD5NGxu/URo
-         jrlRzrOkndlRsyoO6mzIjAhG+CiTf17sRP4w3XVb69Qokctz3+Wzyq1yNmLLbxpPU056
-         eSgG09oApfm8x/eLXziP1E4IxwVbolVSWVJE//Za47ozdn2wKP88A1bBbSPiu39BIaTA
-         arSQ9ZnGOfXJS84PKCaJ0/kWppxERmrz5kTzU4taG2c2hlaSXuhqwoloBVbGn4HLFRiv
-         zw0tRUoGI0UeCQDV0rVjeJrCQJ5wuvR1wHB1NpmCSfpk+x0mBKfLhj8drMmmJnRVY289
-         MmlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758646260; x=1759251060;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DVDIdaRyzdXIn1qlVR7PZGxkpcyomrHI5M2PBPszvJo=;
-        b=eNVs5DWq7V84VHn+6AG4IZUFKtPoOCCbnqEgLeSNNWBOm4V6Ox2cxp0E2F20zcuFbP
-         CwltcZg0S9osV/w26LoZcL0hlE2M7cnamfgWEWtU/QTAIHzr2Jo1pEElgeOPakJhhuKS
-         qFc9eRQC2n0kjNohxTgCBaYpcyBPqpBMmFcbjmwkZOcdaIBRBDjTnEtEHrTltxgaZuez
-         QSnPPaniQvcWZrvtEWmP3/jAAgdqnC0Rzdl4qwjw9NXIq5cD1XDhZSI4VlZlZJ3CDNvs
-         81W4HJvhc8OynGFnC23nHTBQPSLY34t32EQwWT7V4wlgx6676SzpL6TdB+GZ7DYOJnqZ
-         aH8g==
-X-Forwarded-Encrypted: i=1; AJvYcCVYVR0U1zvi5I+ADVo7o7oINUttq/D7zdB0jw8Zc8PMKmWq4dyZ2BY+PxcpF3+5/Ysqq78=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxdkrOdg2VpHteI8eH0wQtPU0JA17wFiVtxLRyDHERlV/54WxY9
-	Tn1WyVOggEldupXf6PuY7WGJSyugpmQuv3WHi0n7h6P0AGaTzkdEJoy1etUftSp0uk9lkNhhXUw
-	/n/fuAIs8gMc2wdmq/7HG+M5FH72i+vE=
-X-Gm-Gg: ASbGnctbd5VkyEQ3/w4KCqfRMQ85SnLyuxsZ6GkMYHeHhGzIt+tjObKE/grNIaGAFuE
-	yuJ5rx1NI3DJb3W6oy6jM7U/P3mIwFOIfIv9OuzIvqm8hEePa9DoOSQ/GD6/FsqBkvQLfmQ7bx3
-	4i4I4gb7xADD3oT41PFlCbP97NQr6SfAoPaDEBk1C1HSE63zP6amfJivoo1ij11RyxtaoVp69nw
-	c9XsrtA
-X-Google-Smtp-Source: AGHT+IGPG1t+s+dTc6i4/k9q4zlCeiUEW2Nvq2VXdOeCKwI4YypNm8K/asjpEEBGbTXKZSjgj/j7WQZkdZOzGlzM4v8=
-X-Received: by 2002:a2e:a9a6:0:b0:36e:1962:1ed6 with SMTP id
- 38308e7fff4ca-36e19623e29mr1375461fa.40.1758646260203; Tue, 23 Sep 2025
- 09:51:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="CuMPV7GC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D2zAkuZn"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E3D59140012B;
+	Tue, 23 Sep 2025 12:54:36 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Tue, 23 Sep 2025 12:54:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm1; t=1758646476; x=1758732876; bh=KH
+	nl7MeLQ0VR6gp7vwNmwukh6ogpBwUNA6sDLgg9nGU=; b=CuMPV7GCeU8VpFmFor
+	Pqwo1z/esFwaKNTrmgWkrLpG8jaiWDK3d+WMiGYD5hXT+LZMv6T9w05QMIElbvKM
+	0NQkyvw4d8xWj6NLZawuBbl9oabVZCoQg+RsfWfa/UYrE4vmB7tEDw/C7GJ7ijUg
+	KO0w9SSmGjsaq/l3xnqsWtsWrWK5Q8Q6kI5sO6E/VEv2efkXj6EmWVWpXIL6wJz9
+	50wVsQJG8vD36znTdWagP8Qx8O+9Md+Cbjumx0YGO4hBKV///OUw1WjxYnnaiOAi
+	ASZWJifJ9mAzA2WxHytV0AV+KHEAxSc0WKo8YFHkwAMn6xXICDIg2OMhWccx2ani
+	g/kw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1758646476; x=1758732876; bh=KHnl7MeLQ0VR6gp7vwNmwukh6ogp
+	BwUNA6sDLgg9nGU=; b=D2zAkuZn7YWH2Jixi2bsvVZvblwRFQ65Yv582V4UkxS9
+	SJ0F7+MMOAICc9U32jpVDuGENg44CzwvUzd0zrlFcA430zCPzpPdCWVNCl1Q87K2
+	144CPy93Ve7yyoi6Url+qRgf/IVMLJtSuEepmkYVjO6a3x7M2nrq2d2iC0Qj1iab
+	A+XHl0F3RXoysKvMgcanJeJPTjA7twSp62cykRvsvr1ycMiTjbwlLXXYwUgVAlKd
+	DCQP08TPpu4OMd5ibXD1oZrpQPdIwOU+cq+cAsuMp34JqyNOsAcNM8yuf/JBUnNY
+	9NPd1rfBxRz9tgSfdApHPGsx1zwg2uagmgJ0Mjk5ag==
+X-ME-Sender: <xms:zNDSaAdXG_8ntm_n7qa-KZwu1ZF1pm22VhLQTfrswcX9_wfuXkfYyHc>
+    <xme:zNDSaNAr11a3BQESlMAC4CgmmM7t4wLLB3ciddrK7366XVLf0yxfClRdu6WZYwQRd
+    bHyDwldKZw2edJ3fD6lglvD0_AAPjs3595RuuSs6UuW-k5La1alLIA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiuddviecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhf
+    fhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkh
+    esfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeduvdehvedtudeuleev
+    ffelgfelgeejjeelgeeiieejhefhueeggeeuieegvefftdenucffohhmrghinhepkhgvrh
+    hnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
+    rhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtoh
+    hmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehs
+    uhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:zNDSaPKNFQdCIyyxYFxio37IVSRP_AveAczXrrQ-CqRfjNqXbHnbPQ>
+    <xmx:zNDSaBElp0C8l4MuTh_7BFpOwBu_cv7f3CRqUY7TNUIx_K1cbuXb2g>
+    <xmx:zNDSaPSL6oUUFUIA-IfcACvNuNJEmyQMNhTkX7fiRtt_PFJJsBI6Nw>
+    <xmx:zNDSaFG6IvkK7tOCymYmHsmTmaJpe1Iw0DS3zsSG_cs3w3f11srt1A>
+    <xmx:zNDSaCwNRBA90nidFBw7QBkSXqO7FAuDMYOR4cbRGkpAfX_M-7KYfQ11>
+Feedback-ID: i83a1424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 7B4321EA0068; Tue, 23 Sep 2025 12:54:36 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2048.v3.git.git.1758294992.gitgitgadget@gmail.com>
- <pull.2048.v4.git.git.1758570701.gitgitgadget@gmail.com> <xmqq1pnyru1f.fsf@gitster.g>
- <CAH=ZcbC5Y04D4bGjfH3rZ8GKabDttFez5qb9i8mXVsfE3LF26w@mail.gmail.com>
- <xmqqecryq8o9.fsf@gitster.g> <CAH=ZcbAHgCLjpLMzditOg8CW-L1RPohGuQjst=h-rATTSoio3Q@mail.gmail.com>
- <xmqqa52lqmup.fsf@gitster.g>
-In-Reply-To: <xmqqa52lqmup.fsf@gitster.g>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Tue, 23 Sep 2025 10:50:49 -0600
-X-Gm-Features: AS18NWAmNX4h9kr6KtEx5Qktqsc-ma3sCzRc3MI4_RSKDSDROMyX_HuIAVBfK8U
-Message-ID: <CAH=ZcbBWjzHcQMX3_fjp4a0gSgOv-yHqZEK4T2+jaWp1nMmoHw@mail.gmail.com>
-Subject: Re: [PATCH v4 00/12] Cleanup xdfile_t and xrecord_t in xdiff.
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Elijah Newren <newren@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Ben Knoble <ben.knoble@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Date: Tue, 23 Sep 2025 18:53:04 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: git@vger.kernel.org
+Cc: "Eric Sunshine" <sunshine@sunshineco.com>
+Message-Id: <3945bf06-ba04-4ecb-887e-0f3a76e1c2f8@app.fastmail.com>
+Subject: format-patch: why are the Range-diff: and Interdiff: headers translated?
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 23, 2025 at 8:12=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> Ezekiel Newren <ezekielnewren@gmail.com> writes:
->
-> > I apologize for my previous phrasing. I was not very tactful. Yes, I
-> > think your suggestion is a good idea. I'll incorporate that into my
-> > patches.
->
-> I didn't get an impression that you were _not_ tactful at all.  If
-> the arrangement is like what I outlined in the message you are
-> responding to, I am perfectly fine if the type of changed[] is an
-> array of bool.  The only thing I found was disturbing was the idea
-> to assign 2 into a _Bool.  Comparing a _Bool, which can be either 0
-> oor 1, and find it is different from litral 2 (or MAYBE that is
-> defined to be 2) is perfectly fine.
+git-format-patch(1) has had translated strings for `Range-diff:` and
+`Interdiff:` since they were introduced.[1][2][3]
 
-I'm going to reroll this to make it much easier to see that the enum
-macros are separate from rchg/changed. After carefully re-reading
-those 2 functions, I think the macros NONE(0), SOME(1), TOO_MANY(2)
-make more sense. I think what dis1 and dis2 (which I'll rename to
-matches1, matches2) was doing is setting a state value based on the
-question "How many times does this line in file 1 show up in file 2,
-and vice versa". My guess is that if the line in file 1 doesn't show
-up in file 2 then it's obviously different. But if the number of
-matches is greater than some threshold and isn't minimal then TOO_MANY
-otherwise set it to SOME. So I think dis1, dis2 are meant as "Here is
-how we deal with the number of matches found in the other file."
+    // Example
+    _("Interdiff against v%d: ...
 
-Is this explanation congruent with the classic diff (myers/minimal)?
+Is that how translated/l10n Git is supposed to to work?  I get
+translating errors and such=E2=80=94that=E2=80=99s for the user.  But a =
+Colombian user
+might send out patches to an international email list.  Why should their
+own translated UI (again, if I=E2=80=99m understanding l10n correctly) a=
+ffect
+the patch output?
+
+I found no comments on these changes.
+
+=F0=9F=94=97 1: https://lore.kernel.org/git/20180722095717.17912-1-sunsh=
+ine@sunshineco.com/#t
+=E2=80=A0 2: 688cb1c9 (Merge branch 'es/format-patch-interdiff', 2018-09=
+-17)
+=E2=80=A0 3: 881c019e (Merge branch 'es/format-patch-rangediff', 2018-09=
+-17)
+
+--=20
+Kristoffer
