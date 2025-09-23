@@ -1,97 +1,113 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EFB72FD7CE
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 18:16:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913372D838E
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 18:34:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758651389; cv=none; b=BOrz6kQMr+ZABmHEKK5PMrANmhmz3Wh2UBMyRRc7WYaBpf/nt1Ns6ClHtwH0nvBJJZD0bUJ/Z3xDYSsEG/dFJ1vA435CYmtJ/XuiMDunw2N0RniTfPYRg/U8apFGhYEXQDaiUfCc0/ZP+8pdAnID4hmgFlxfmbakdpTY8sBZp8c=
+	t=1758652463; cv=none; b=PjlIfKSdl5IiwXYB5S4eCDO55SwRS41bJWdjLcE7wYN5kZoMr2wzE52KUIy0rlp5ZMj2tBz0MLE7+MtFaGGpG2QE4dtue0gdzkkn/0v/TQ3kyFJ8d9Fpm5NsWPf2iQld0zVvBc/rDZL4Ihtr7iEWf9fhMSlVipSVDlmTSaHZU3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758651389; c=relaxed/simple;
-	bh=ExS4YdoT8ro47CuhCA7Ft+cNdVmmMV7NaK99TvPfEso=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WpBziCsvSnoKMLp0vqTAu3k3yYACiFM5TD2H1jkrMt2XkRFqsxjgVRGhjebVFzCB+ugCqgXW1WhZhOU+cPoSB0ZioVzVE/sE4E6AEX1DZ/BLeEEkVP6zcN6I5ZK0U/sJA9bMur+QgdwQZmt2sZlPBU5qdT1dPvAeo1voNPhsg4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-79be84493aaso1557356d6.3
-        for <git@vger.kernel.org>; Tue, 23 Sep 2025 11:16:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758651386; x=1759256186;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4d51G7N05NDr37pDMoBWSrrWvrzvwKlWzukIrtAf6WY=;
-        b=Gm1a/oG8ajKY4YAYyNIXiEhcYjlnEAE0ADLYRZSL5zG/M1P0l3wsM/ZjglxLRKNu6r
-         vwVHgLj9gq9SapB94twxneCc7NWz9Zk7E8G3KVIVMB0FbRxHtp9d7SYVB+snyuGkxOAm
-         wHg9oR7RfL/6D79Tf3OdALcmuTF/Ysf9g5+S/XczWdorvBHcPQ83ZGUk2y8sBCONYaDR
-         qmQJibKGhhNxiF0V8wgZXDQxeL+6kgEwaYSR3eH8SAybfP7B6zVqfJkctlzyHvvx+fBr
-         YK6hv8zac+/bq+QBjp2qfRa+/neY0eAEfcUUEwUz/8wSjG4uCutnbbRhU9SXbJORFqyk
-         jBGQ==
-X-Gm-Message-State: AOJu0YxysiA91jcn2MgslPg8pOf2p9w1tJQ0IG9K7QY9hwWpfHHlyiT1
-	awR5j+wX4BeIEFwZJ0trU1GEzgWPfbBQpHOT8T/vN9J3TDgj8dDzMOt7Iu5tUz4m49blyPUiqLY
-	aYmELVOtc7PWhBM+1ped0b4fAt5vZ9tk=
-X-Gm-Gg: ASbGnctFyg7cRPnv26ATjDOM1eIVWVky4MGS6TMUvYZKf/tVMDZ7z4uxH1VNBWlEszQ
-	vAk3f9ADJlvqr5g29b/uaOqJMc1PulvEs8u7lcKnkIPnN/+lpZaYr5zReX1E39n0S0XaDKDBCqQ
-	twRUBO7aw66346oRRtr9PdMNOhhOIV7V1b9HiHdF3hActTFKUAJYr9ty0AkfNy/nZS508OODTfl
-	s8f1A==
-X-Google-Smtp-Source: AGHT+IFC5p2Du2fC1LFbQlXhrRF5xFf/6aRv36zMq6egvxdWhhz6WIqX1kcDQiCAW7nPrNY7XkuioHbQQkxmiv8a6Qo=
-X-Received: by 2002:ad4:5969:0:b0:78f:145b:56d9 with SMTP id
- 6a1803df08f44-7e71d7937dfmr25138016d6.8.1758651386247; Tue, 23 Sep 2025
- 11:16:26 -0700 (PDT)
+	s=arc-20240116; t=1758652463; c=relaxed/simple;
+	bh=eaxSYAd+nFuFTt8ucGn7wiOA/P3Tm7SrTo9II8nA4FU=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:Subject:Content-Type; b=mkWGlkCwRUBMkYhUqtR4w9Dp4Y4xMCUjCPVua+2UqFW//+spgS3oy1uYVpIMo0wYI6kf1phEXdF1H6Xj+JrFob9IUVGYBgfqvDVYe98Pd7njSkkKE83nQ/dcIqc9ycyqxJBJXsP9GXwUL6Ds4LyX+DA4hurjQvoG1MZy/ClkHlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=azlsBJNu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l5xEcwN9; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="azlsBJNu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l5xEcwN9"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A673E1400161;
+	Tue, 23 Sep 2025 14:34:20 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Tue, 23 Sep 2025 14:34:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:message-id:mime-version
+	:reply-to:subject:subject:to:to; s=fm3; t=1758652460; x=
+	1758738860; bh=CakqqS2BVLLv2xcxzCWDwGX7aTWNcXuuChVD7LUIpGI=; b=a
+	zlsBJNukDjgNLuqSplhfyaXgU9wbW8wJZlDOW2Olss+q0g2psR1LTYi2SCiQNQbC
+	BhEwO1A5VgZy1hvvivN/HuKGrVOHBaw9ENUFTyHAeIf5XTs9wT7DXcfbh58bF1mq
+	OtCKlHrfc0B2pkKDB2Bg4Vhpu5F0EAAnYjRvHj1GRN87kFFNZqQ1KBQEM4mGeBu8
+	M0WpZJYNVlvHQqyHtg9l8+jFaUwnHyfkrf9p0CAYJO8eWkSlK+dWvFiBcO5ZP8dA
+	yBTlXNDadm23Ft7QlGiOzqcbfu1GrOsnSNeq57fRFJ6+VJe0fYNiFmTfCmdnBDi3
+	EmSvy/B5rge46XOI6kU3A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1758652460; x=1758738860; bh=CakqqS2BVLLv2xcxzCWDwGX7aTWN
+	cXuuChVD7LUIpGI=; b=l5xEcwN9bcQDnxGHbhPBG+dRjrP3uzET+gJ2kS3XdkTO
+	dEtBWkiRyyNJuRhVOmBn6mLu4LZ/iEjIUlSOx2RPvs+H6bRumNFq8AD+cTY+N6AV
+	wAI2kHsgFmmLbhtoSNUM4IHOdGkvqc7WLF9HKvvc54UdtP9Oic+VM0Irjur8Yl+B
+	/VCwdSuZBMoWzIDdQlmXB3RwKod8AF7YWSfPjG6PR1YutgxqSFSB/84zT62hq8te
+	zVb3/Zoj8ecDjf+a+ivv5oUlk0DVNQESEWJyce5eug7BW9JSOenb4EXqhRIgGjU3
+	02PbF/qHxXG799gZPiNb3bA8Gp4mLe24DMB7Q4bfVg==
+X-ME-Sender: <xms:LOjSaNrEW0-m5Dy9VYeDV3KDyX76f96vw4dmtorlvPZHjdANX29iINo>
+    <xme:LOjSaKeAdZ13lJP9yb3sq3oxPtYmJWXPsbTycXfZPY95VcEAZIMO9U_ZEGQl3mAst
+    6DHOGX2yIq8PK2LfDEBEXREf0bWNNtCTtvG8R2GtBxC49JZzSOv8w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiudegjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhf
+    fhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmh
+    gvqeenucggtffrrghtthgvrhhnpeffkefgleevjefhieetieekieejuefgleduueevueel
+    ieeuiedukeeihfdvtdffueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghrtghp
+    thhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhnrdgrvhhilhgrse
+    hfrhgvvgdrfhhrpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:LOjSaIUW6cu8ws-YSPEhzUtMlNfYlpxBprfOY9TzWxnxd9tzQXTfpA>
+    <xmx:LOjSaKhd8HyCqN6jX1TGhuehi7WfIN-LuuoWuGHr6H2T3RArH00sVg>
+    <xmx:LOjSaD9OIxfSXg4vAjp6qyzCB8vjKu32zYmCOoTtrJgQUluXvjs2dA>
+    <xmx:LOjSaEDWAPSUSP0LmH6q-UlQDg97c4kr7_K27Mnls7-uT27PWqEPWg>
+    <xmx:LOjSaNOZoahy-EZ5iXrO_n3B1PFZr8pWbgMlWyIe992cAHreboIUBGpb>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 51CFB1EA006B; Tue, 23 Sep 2025 14:34:20 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <3945bf06-ba04-4ecb-887e-0f3a76e1c2f8@app.fastmail.com>
-In-Reply-To: <3945bf06-ba04-4ecb-887e-0f3a76e1c2f8@app.fastmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 23 Sep 2025 14:16:13 -0400
-X-Gm-Features: AS18NWAfz6JgqyjrhQrxrTiQFCgGykndfoYuwWqzV82QqMbvA3v3uBBh8AvLRac
-Message-ID: <CAPig+cS-qYqpK2GOzSLQtqF_gqan6hftnnOnfMFUKby1nT5n7w@mail.gmail.com>
-Subject: Re: format-patch: why are the Range-diff: and Interdiff: headers translated?
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Date: Tue, 23 Sep 2025 20:34:00 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
+Message-Id: <a6e4e995-fc19-465d-bd7a-c002bc0db31f@app.fastmail.com>
+Subject: doc: config/extensions.adoc: line continuation syntax error
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 23, 2025 at 12:54=E2=80=AFPM Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
-> git-format-patch(1) has had translated strings for `Range-diff:` and
-> `Interdiff:` since they were introduced.[1][2][3]
->
->     // Example
->     _("Interdiff against v%d: ...
->
-> Is that how translated/l10n Git is supposed to to work?  I get
-> translating errors and such=E2=80=94that=E2=80=99s for the user.  But a C=
-olombian user
-> might send out patches to an international email list.  Why should their
-> own translated UI (again, if I=E2=80=99m understanding l10n correctly) af=
-fect
-> the patch output?
+Hi
 
-Making these translatable was deliberate. As I recall, I had been able
-to formulate arguments in favor of both making them translatable and
-making them non-translatable, though I no longer remember what those
-arguments were. One argument in favor may have been that (a) the
-titles "Interdiff" & "Range-diff" are meant for human readers, not for
-machine consumption, and (b) there may very well be
-non-English-centric projects (open-source or not) using a patch-based
-workflow.
+See the HTML output on e.g. latest `master` (ca2559c1 (The tenth batch,
+2025-09-18)) for `git-config.adoc`:
 
-I further recall that I was expecting pushback from reviewers and was
-surprised when there was none. Hence, those titles remained
-translatable in the final version.
+    + For historical reasons, this extension is respected regardless of =
+the core.repositoryFormatVersion setting.
 
-As far as I recall, this is only the second time in the intervening
-years that someone has questioned why the titles are translatable. If
-your reason for posing this question is that you believe the titles
-should not be translatable and you wish to submit a patch series to
-rectify that, then you won't get pushback from me. Also, in support of
-such a proposal, I do recall (though can't find the email) that Junio
-once pushed back years ago against someone proposing to make the
-diffstat "x file changed, y insertions(+), z deletions(-)" summary
-translatable.
+The context is a definition item `worktreeConfig` where this is the
+second paragraph following a bullet list.  So I thought maybe you can
+use:
+
+    --
+    <bullets>
+    --
+
+Here.  But we=E2=80=99re already inside a `--` block.  So apparently we =
+can=E2=80=99t do
+that.  I also tried a fair amount of permutations of using or not using
+line continuation in this context.
+
+This particular level of nesting seems tricky to resolve with Asciidoc.
+Maybe someone can figure it out.  So before I forget...
+
+Thanks
+
+(The Cc is because he is one of the Asciidoc experts as a FYI only)
+
+--=20
+Kristoffer
