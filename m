@@ -1,108 +1,109 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0BE3019D3
-	for <git@vger.kernel.org>; Tue, 23 Sep 2025 19:35:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F7A26F2BE
+	for <git@vger.kernel.org>; Tue, 23 Sep 2025 19:42:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758656137; cv=none; b=rws5WrngnP12txtrZ8B+i0ECKez7bZz6IKwlJTSdXlj+vshiOauakBX5IcB3oiegQIgMy9IdEGmyH4ABKauT+bRY3SLCkN1b5opsnDNThjfBcNbTPTI1Ht7Ki6AhV1XqOvYfxwFiiwWAidUNUvJzsw8txN2apVQSmjMxKEDRgJA=
+	t=1758656532; cv=none; b=i0TwJkxg+dq2/8FPkxLgXy4U0iOXGHmxWqB2rmDFrntucOCNk1ZzpHxoyuIpDiq2l0h3N+FwuNXdjUQ2oAywlzz89CWZ9QSL08InD3XSV/mah0xg3uBu+H0aEdX0CMSSI70WlmjVwppmW/I4oW+yyNN+VblFyBzWnP38+KlO+J8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758656137; c=relaxed/simple;
-	bh=X63ihEiysw6+75rWoM0QRDkJp43Uhy78aar5HxP95MI=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=ujt1+oi8r8DnJeGEmNKJ6MFetMl5qlSHwFBw8FRtX/UaKW9jF/X9awoaAMEO7DAVrsbaVvvkmZihfj7m2RVKcf993ZVb9mlY3edVxkQd9lR+xMX+NowWo1E6llUEFFWMDG/s+3a9YxrxptP9gxvpIWwmYaHz0B3N3R+4wxmbWX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lTX8qWZM; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758656532; c=relaxed/simple;
+	bh=cvqqzbjUWiiAJEJ6HAdQ+Ju9WQ+Vs48WJIeQlQ0oZbQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FfeHIfW+nTlOaZiaSZdZ1RtVA+gKm4FjLMfZGDwtaCQw/YyCxIy7Igm65HDBHSBeq7IaGu434x4m5SIXleIk8FOLsYJ4Irr9alurx+VNt26C+iaAGMyiTocRKd1tE6zQ0D3fRhMWo8Ik+tlNdnCuGyDNFUgzGz/l2gWeZXHjhmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=velocifyer.com; spf=pass smtp.mailfrom=velocifyer.com; dkim=pass (2048-bit key) header.d=velocifyer.com header.i=@velocifyer.com header.b=P+IwBa2H; arc=none smtp.client-ip=91.218.175.185
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=velocifyer.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=velocifyer.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lTX8qWZM"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b3164978f11so131782966b.3
-        for <git@vger.kernel.org>; Tue, 23 Sep 2025 12:35:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758656134; x=1759260934; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=X63ihEiysw6+75rWoM0QRDkJp43Uhy78aar5HxP95MI=;
-        b=lTX8qWZMKV2pyl7YzRgmXPasEFVZNRFeUO5hf31idavq9G3ZiTdLi6czsWaqsE42fz
-         ncx2mTt+xfFH9tw7C7XcOUYsD3g6SZ45qyVS76LngnWWdWH5UL7rAq6FD9us11iUGWMs
-         iIc/KxLe5CKOm9r6q93Zc42F+dMNMk9ZLfPXT3MudoZe/YdBZyOeT6EWjPodT0y8Sgek
-         x00R3BbWlz50mhEdfYLRfL2Rgc0GhU6tv8SYsCnhG5aH7nrbGOBOVo6vmWqgViuW3NzY
-         A68oC0NSn6KDHTxHRmr1P/r2dHvj5W6/pVedf+8i09DejUE6C6uXs0LVJkUBnuXhh7dh
-         Ed4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758656134; x=1759260934;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=X63ihEiysw6+75rWoM0QRDkJp43Uhy78aar5HxP95MI=;
-        b=WZAOIiQuGW/JXck1x07tNPx7HLL5lqP++apPZXXaDI+IlfYx2WpwJKS93S5dPC846b
-         r2LJ+A2kttPPbh3gYG8EahfDxvpPoNvrI6+Et8IOy1MIupCmtdTrTUFVH84yTP8X2SJu
-         cU41yHNA7E5SF2y4MD5HSQeH8wvRce6MZDBW1sLwg+RG54lA60gipEOVgbVDNKkFCbOa
-         BccC4FiuxAg9eTNA9wr9MGXkVkGMT1Hz1Noq7FDUhmrBJu0nT1X6D5Mxt6sPmP2Y0uOz
-         VCqrBaty8O2biCOodOr+CQLweR8BMnWK/sIt8dqTse1vpS0OTZWBq7y1zkC8Gcmvz4yY
-         WdGw==
-X-Gm-Message-State: AOJu0YxLz3CAriP9r+0nsWQYzD3lkru+Orj0dZ6lUyK1CVApkCFLXcew
-	Am5s6rCXJ3OPcM/DDYlJQcpkj7xSSkDXhwFXf/3rASYj+heqsCXwV/xgavKtwohHoQ6x0VCo8cM
-	kdzi1fdGOZC6CawHniXMIr6q1NQiKvPUG3+5O
-X-Gm-Gg: ASbGncu29J6f+6k5suVA7UC1zguriBX11Mybb9pgPg8BMQcpZKsVkjeA+A+MbQgxjyQ
-	w1pfk6Uetr4b1/22Y89PIy/Cl/PfU5gXFRQuDhm0iF/W++t4/xzTFANGKi8eOM7AEy4cD1e/vPP
-	1jmNkwHixl3+b+MJjEDXbhhDb+t6dNXpGOtavEKaW3tmicnq13RClUVUBfmHpBsuHwMmaYem3ni
-	AJmRqVX0dtIQLN3Ttdv354OhE2zmfrzBbzAxTVT
-X-Google-Smtp-Source: AGHT+IEHTAOssAaODYnIzexSuv1QqSakg35cyKbSka/2UmncEJByx7cou0y2OLa/hD/bIJBXcWaUzkslAbD6ScSLbms=
-X-Received: by 2002:a17:907:94c5:b0:b28:c29d:7b2d with SMTP id
- a640c23a62f3a-b302a17b96dmr308273266b.39.1758656133937; Tue, 23 Sep 2025
- 12:35:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=velocifyer.com header.i=@velocifyer.com header.b="P+IwBa2H"
+Message-ID: <b5867a92-c516-4a66-a108-8cabbc166336@velocifyer.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=velocifyer.com;
+	s=key1; t=1758656525;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=cvqqzbjUWiiAJEJ6HAdQ+Ju9WQ+Vs48WJIeQlQ0oZbQ=;
+	b=P+IwBa2HhMTJ2/GCvYZjhVWTrPMaw0TwonOoqnBa8iZq/kYsR1P6EuWwj0TbWSVY7KXylE
+	cXggSrp2GUNNGZwoxVfk663R6ebGhBeI1BbAUVPi7h/gjBJH9wm7Sh0Z2uutabvYrwokSl
+	4+XXctHxRn7MmiHoS/QNZ/ybGcNWBX8bUFx7mo+iBSatnecsaChWn22O4C42HonFmb5XgF
+	0uIQPS89qWePVvKTW29aJk8S429K4YeqzXfX/gqqe1r7brKnzHkEAZvXpw376S0v4vfmeL
+	OrNIvgCvT54qdtoLuq3fQ/kbUpXtE1dFPKKqcY1+1pW+ynru5CSBKmaiTnripg==
+Date: Tue, 23 Sep 2025 15:41:55 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Marcin Wisnicki <mwisnicki@gmail.com>
-Date: Tue, 23 Sep 2025 15:35:22 -0400
-X-Gm-Features: AS18NWBIPmj2sBvLkuwtkvDLeuo1DQptoeWtQTysZqagY5K8foqmX-tMx4gK-wE
-Message-ID: <CAC9GOO8KCuLCZguZm_dg2MKS=cO=YUb9Uc+VLNTZSXMiO9wcig@mail.gmail.com>
-Subject: [BUG] No context menu in gitk on macos
-To: git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: How do i get news of git releases
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org
+References: <4ea9cb1e-4367-4926-a9ba-0680dd63e616@velocifyer.com>
+ <CAP8UFD2asXf_4_02khYRVWVQruBdvoMkZVE-6cVHttT9gHdWqw@mail.gmail.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: =?UTF-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?=
+ <velocifyer@velocifyer.com>
+Autocrypt: addr=velocifyer@velocifyer.com; keydata=
+ xjMEaCpEhBYJKwYBBAHaRw8BAQdAZBZWSN4ekixMHE7duMBmw/2uteCfmp68D/mxaYk/dyrN
+ JlZlbG9jaWZ5ZXIgPHZlbG9jaWZ5ZXJAdmVsb2NpZnllci5jb20+wo8EExYIADcWIQQboPxL
+ gODyGwJpjO5jTr+HQMdIvgUCaCpEhAUJBaOagAIbAwQLCQgHBRUICQoLBRYCAwEAAAoJEGNO
+ v4dAx0i+HU8BAJGd99DA1VdBzcYgch16XK7mC78ZqEwGegVCRerWry8RAQC3MJUOiyQ062Ol
+ /3iNXY6zk2QXaAsV8eUbFKUo1HiwAs44BGgqRIUSCisGAQQBl1UBBQEBB0CEoaVGilG8Qt/y
+ Xp135G4fhWjJH7VQkPIFo8/MsZspfwMBCAfCfgQYFggAJhYhBBug/EuA4PIbAmmM7mNOv4dA
+ x0i+BQJoKkSFBQkFo5qAAhsMAAoJEGNOv4dAx0i+yNYBAKcE1fbRCPqWwsIpRvOjSq9Spvhl
+ veEFpUMPaQ1tp7qOAPkBfZroJ8veENH/8sz+Gf/QK6O1kcqC4d/vAASzMpOiAQ==
+In-Reply-To: <CAP8UFD2asXf_4_02khYRVWVQruBdvoMkZVE-6cVHttT9gHdWqw@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------fuPwsBoYDEuX0awQ0n30anNV"
+X-Migadu-Flow: FLOW_OUT
 
-# What did you do before the bug happened? (Steps to reproduce your issue)
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------fuPwsBoYDEuX0awQ0n30anNV
+Content-Type: multipart/mixed; boundary="------------sC0B018O03CUKcbAr0bFhauf";
+ protected-headers="v1"
+From: =?UTF-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?=
+ <velocifyer@velocifyer.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org
+Message-ID: <b5867a92-c516-4a66-a108-8cabbc166336@velocifyer.com>
+Subject: Re: How do i get news of git releases
+References: <4ea9cb1e-4367-4926-a9ba-0680dd63e616@velocifyer.com>
+ <CAP8UFD2asXf_4_02khYRVWVQruBdvoMkZVE-6cVHttT9gHdWqw@mail.gmail.com>
+In-Reply-To: <CAP8UFD2asXf_4_02khYRVWVQruBdvoMkZVE-6cVHttT9gHdWqw@mail.gmail.com>
 
-1. create repo with one commit
-2. gitk
-3. right click on commit
+--------------sC0B018O03CUKcbAr0bFhauf
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-# What did you expect to happen? (Expected behavior)
+PiBUaGUgVVJMIGZvciBlYWNoIHJlbGVhc2UgcG9pbnRzIHRvIHRoZSBhbm5vdW5jZW1lbnQg
+ZW1haWwgb24gdGhlDQo+IG1haWxpbmcgbGlzdCBhcmNoaXZlLiBUaGF0IGVtYWlsIGNvbnRh
+aW5zIHRoZSByZWxlYXNlIG5vdGVzLg0KSWYgdGhleSBhbHJlYWR5IGhhdmUgdGhlIHJlYWxl
+YXNlIG5vdGVzIG9uIHRoZSBtYWlsaW5nIGxpc3QsIHdoeSBkbyB0aGV5IA0Kbm90IGhhdmUg
+YSBzZXByYXRlICJnaXQtYW5ub3VuY2UiIG1haWxpbmcgbGlzdCB3aXRoIGp1c3QgdGhlIHJl
+bGVhc2UgDQpub3RlcyBhbmQgb3RoZXIgaW1wb3J0YW50IGFubm91bmNlbWVudHMNCi0tIA0K
+R2VvcmdlIHRydWx5LCDwnZWN8J2VlvCdlZ3wnZWg8J2VlPCdlZrwnZWX8J2VqvCdlZbwnZWj
+DQpJbXByb3ZlIHlvdXIgd2lmaSByZWNlcHRpb24gZm9yIGZyZWUgDQo8aHR0cHM6Ly93d3cu
+eW91dHViZS5jb20vd2F0Y2g/dj1MWThXaTdYUlhDQT4NClRoaXMgZW1haWwgZG9lcyBub3Qg
+Y29uc3RpdHV0ZSBhIGxlZ2FsbHkgYmluZGluZyBjb250cmFjdCDigK4NClJlbWVtYmVyIHRv
+IHJlcGx5IGFsbCBvbiBtYWlsaW5nIGxpc3RzICh0aGlzIGlzIGhlcmUgc28gaSBkb24ndCBm
+b3JnZXQgDQp0byB1c2UgcmVwbHkgYWxsKShJZiB5b3UgYXJlIHJlYWRpbmcgdGhpcyBpIGZv
+cmdvdCB0byByZW1vdmUgaXQpDQo=
 
-See context menu like on Windows
+--------------sC0B018O03CUKcbAr0bFhauf--
 
-# What happened instead? (Actual behavior)
+--------------fuPwsBoYDEuX0awQ0n30anNV
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-Nothing
+-----BEGIN PGP SIGNATURE-----
 
-# What's different between what you expected and what actually happened?
+wnsEABYIACMWIQQboPxLgODyGwJpjO5jTr+HQMdIvgUCaNL4AwUDAAAAAAAKCRBjTr+HQMdIvlaC
+AP9Lo/S20RHuErPnLl8V+buKTaRLfe9nZMctFqnrnRDNcgEAoII7YIp/xlKbg/s1MkLMFM9MrGkz
+QHME1gfwV2ehXA0=
+=X+QB
+-----END PGP SIGNATURE-----
 
-
-# Anything else you want to add:
-
-[System Info]
-git version:
-git version 2.51.0
-cpu: arm64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-libcurl: 8.7.1
-zlib: 1.2.12
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-default-ref-format: files
-default-hash: sha1
-uname: Darwin 24.6.0 Darwin Kernel Version 24.6.0: Mon Jul 14 11:28:30
-PDT 2025; root:xnu-11417.140.69~1/RELEASE_ARM64_T6030 arm64
-compiler info: clang: 17.0.0 (clang-1700.0.13.3)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
-
-
-[Enabled Hooks]
+--------------fuPwsBoYDEuX0awQ0n30anNV--
