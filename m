@@ -1,84 +1,84 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924F51E5201
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 05:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB07323D7E0
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 05:54:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758693275; cv=none; b=WkYU9xApu1VCtBZv/N9a+c58nLKaCGeSqO3CG0ufCzzcAHy37RLxvSvDUQNf7KWvsRoywzG+FDa7r+xznG2t01u0vVovXuyFspv3z1/vPq3H4b+EFNdiK1YARwz5W/xY7d0IH8Gp6kyHpw0BL1JbIemI02hhE0JfhAD3RQ74kR8=
+	t=1758693279; cv=none; b=Y6arfHeOjDyXeHTwrfvI3kkScFUBG6lIGqNOgeR/zUWZ1B8z2Oe19MYcNRxDtJBlbtCPDXYWoj1GkMxQ5azrWxdAB5YpRTmn8/AQYv2UayoLYw3Z3KxNfumF9kyNjy2bGNQ8uRf8gAXlswhbCz8mAgeJ6PAOPJzXyuH6dAuFi0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758693275; c=relaxed/simple;
-	bh=hd6fIRR50cbkTJKvKkxnFfRnWEs7jTY3/xheJuG7Wr0=;
+	s=arc-20240116; t=1758693279; c=relaxed/simple;
+	bh=H0Yce1lJajV8SCllWETH/RmkwUHsQ9UD8P4UPxJXuBM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F+X4mUh7yPCX+qiWwkg6wjb0mgk9YIvWs2QSbAnZRycsEKvDlqS890xG8A+X3GVqPVxifBVCo+Eru+2ReIg/YCyFmSp5C1DysG1jsZYjnzZXWfaJuSP2i5gD0XpNywqch0hVRkyskqKcR2t3ao2Gd89lIxPaUDwPwbECYh+eOII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F5sPiw4l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UbloEP3w; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=pcScdrFd7QPtIxKrElL6W2ayEVSkCdDqdFt1PToPnwOJd4aBC2ut8MyMLCtdBwlAHyb1pm1n+AM36UULt75Wu8KXhCdKZ1IJROB3cjI6aUz4ktrk6UToQkkSROqp0gCmLYGsJ9Cb9y4RKwup5y0au2r5vfAalopgRrSPjwkuhz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CG1K39iY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nJ5h4DFO; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F5sPiw4l";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UbloEP3w"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CA040140007C;
-	Wed, 24 Sep 2025 01:54:31 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CG1K39iY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nJ5h4DFO"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F05EC14000E6;
+	Wed, 24 Sep 2025 01:54:36 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 24 Sep 2025 01:54:31 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 24 Sep 2025 01:54:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758693271; x=1758779671; bh=BmPTkoNQmc
-	pxKypJ/Mrp6eVb3rHZqAxixh/3uzjeOnY=; b=F5sPiw4lKFkHO2SjpxYgiTtZC5
-	UtHH1Y+Jo4xUY3G5zIXJD9Ia3GSMJ1VR3hZbPRKk2hwYpjdrYEv2ks5i2p+1L8EY
-	I1cQRn/iLlYsXrzVXu+ArqgkKVtBUBl8Prk24izDmxDpqja9V6KIRA+C/T3Lze0J
-	26nLqntkMehIic4L2f0h4A+bUnxMAyxxms9yJxLvJPHc/EEtCgx3UcJCkNajLI9x
-	rtHWrGeQ8kSsSSHENIgkRWAzUPXO26jF6Ojp5wjnwbEIp6RjUSVf++FlgGWe6LCI
-	Bn/2SLQk4f00SMH8eX2YWSciobjN9TdI+ldX070pwiXrA88a6Z3OIB0X7FEw==
+	:subject:to:to; s=fm1; t=1758693276; x=1758779676; bh=i1hQ8lPPlU
+	s9SzgzXecdUZHJrBm4i/bVyUT4ezDRvSY=; b=CG1K39iY95yxYGsrC67P/0NHO2
+	bkLKYGz/Su49lYhR0yQZ7r5fpJ8UZoHUSUSZ1FNYAUxWETS3XNe7Oe9uqQbD2TDI
+	Pdka6q87Pz+7t12Jr5S6o8E/7S+6peQerMzyoC6uYALvZRF0Ydb6PlX6MTfE96HJ
+	8hBwoEj+YcQtq49v5AhuPMc+T/9n35nvYzEf+mnl04YQvcbpLd6g6HbhSiFCQFfz
+	LJbqwPxaGvhWFZ466Y57fsyZ3cpsWc5sLAI5zGvSmEhBR1Y+dqBGxBdl+RXmnFOz
+	oUf0zGQQtc3UAmBYygLHqnNUprNtUlUyiz7vOx5oEo/p802VDl0ZIu7O0Qsg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758693271; x=1758779671; bh=BmPTkoNQmcpxKypJ/Mrp6eVb3rHZqAxixh/
-	3uzjeOnY=; b=UbloEP3wIuxJAT2WPlDsxkkIZMJb7iwTgP/Rj5xxKotrCGIV8a9
-	yWVLm+38XmedhYLz1d0Y0UVoN4JrNNLYiJMYvql8nat4l/pu0lzMHu8LvA8ofMUi
-	Jmy3XMXWByGOlvR2f8V4703i+sZqogYgeVG7AKioandytklAQShM0BbA3yYCHDkZ
-	1pZZor4cU3soqJQU/Ceivkdjo7+WmmEfdQ1RN/l5o2RZNF8Es4GDt0YZkIQSi19W
-	ZDldh95Yr0jWddkmY97C2Epnk07S47imOGJDJPs++wsquVIRDECKU0OpISF/QDhv
-	qQ1DQI5VR0IHaO1WfDC1i5zelXN7On7NYcg==
-X-ME-Sender: <xms:l4fTaK0xgRs1vDfPFCg1Oo5y0ZkZCEEchlqJlHHRmV5bzrmMQuDPCQ>
-    <xme:l4fTaEFVTv3CYuUcWE6OGP40MNDsmkHIaQ4nwuV26FisWrHtaFIpraI6IGbYHZCZ3
-    HcyoIwVqi0sovxG4ZMOaj0ktWAoZcYK8NG5HX8v5_4Au1IgcDO4>
-X-ME-Received: <xmr:l4fTaH7AyJ6XQz2EjvEFD6Xk6a5P_h03mlo6r30w74fPkA3S_ClbX7OiZ7blBpr4I9SM7JY5AhWxqR7b0e1kdrmm2yLEVVT5f7ZIlWgVHA>
+	1758693276; x=1758779676; bh=i1hQ8lPPlUs9SzgzXecdUZHJrBm4i/bVyUT
+	4ezDRvSY=; b=nJ5h4DFOpPJ7EgMTbwLNVqv+nqaKSQrSaZSEMgYkidd2mXZRRFF
+	LsiLRQ9XJPFSewIpCMP7Nfaea6s/2uOOO0fbgYnCNvZu3qs6Vm5foiXW11Di7+/8
+	IznHO0rRyx0m5Tj2ZYiP6ON97HPbKakqMbrRXsS+U+Zrsrpkf0DfeD12u/UOSHaC
+	9pwJ8879MJYWisohUy4oR2PSfi9q4Y2I+O7Tm0HJSde+owTk7bigsQxrUbYVD+d5
+	EaiVcrLO7GT0GHNoHIdfKj+Vio/XmYobwPPv8TVetZSmdjlN7/b7X7pHM7wGSvfq
+	pbfvsgJ9Fm6/r2ta4lcXfbr4Zd+FMVWD5hA==
+X-ME-Sender: <xms:nIfTaP0AaKbN3hCJJCt1Guf9nOwvotsyrwjmox23kt7YPtHJR37muw>
+    <xme:nIfTaFF6lv19MxrOZO5JQQ7B6JTvEtAOyzF4oESJeGWlzMBw5WDGQJTAnCd7wu5BG
+    3pH5kNkO3algmeio6T5VEx1r84y7o83fcpDPz2AOwYMgcbmcI1s>
+X-ME-Received: <xmr:nIfTaE7ojJm86Go5RiyM199XpaThlliD0SrOP4wlzCpD8dTs1uCaloTqJT5RoKSH2Y5ImmRMVNx7NXwFhLFFuPYt3v0AJgVemda5voMOmg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeivdekvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpefrrghtrhhitghk
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    ejtddtgeffkedujeejgeduhefghedtgfdtieduleeulefgueetheeludegueeuveenucev
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhvghjihgrlh
+    huohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
     ohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:l4fTaKs3s4lrF-6vSd_VLWDG5atbc52L7Q4FCf1AWIVLZJauJOvMAA>
-    <xmx:l4fTaI6LN-7zj7CTVnpKb8poqgutkJhDWLUKPHmAer6I0ni43MGf_w>
-    <xmx:l4fTaFVNhm7Emv0Z9RUZe9vVPpaX_srPUWsv6hi1HuSdKnTGOdppJg>
-    <xmx:l4fTaK9e8EACrCzZRu1a39RshZgw9myKoHl--OKnXDQGhVz2VSgIDA>
-    <xmx:l4fTaDYwdLg3uKKhJ1cs9mnsWS-4R5OpiEyb_ZsOus_UtER6cCUYrcLx>
+X-ME-Proxy: <xmx:nIfTaDsLvZ4FuZzihNbp-HrmrFqfyO6aFgwmnXWxl8LkqMM99oTc9A>
+    <xmx:nIfTaN7_OaC4GyyfPnfWiEZpoXAaJefXRCyRuqSxdDvyo7TlhL7S7Q>
+    <xmx:nIfTaGWz0QdYafD67Vj0LBhYBn9H8I9FyPe8Jo44ijmfE4hcLbCqxw>
+    <xmx:nIfTaH8zfToxFsAHB9Qo-pLJdEyehJRiElLaBs-L6oo0uDeyrv86bw>
+    <xmx:nIfTaAY8Opkp3gB89uW25k9kdqB5I3FSRu7fz2HyDlMZOzrmwspg35Ya>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Sep 2025 01:54:30 -0400 (EDT)
+ 24 Sep 2025 01:54:35 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9a2fdb6e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 24 Sep 2025 05:54:29 +0000 (UTC)
-Date: Wed, 24 Sep 2025 07:54:21 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 0213bf08 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 24 Sep 2025 05:54:35 +0000 (UTC)
+Date: Wed, 24 Sep 2025 07:54:31 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, gitster@pobox.com, shejialuo@gmail.com
-Subject: Re: [PATCH v3 3/8] reftable: check for trailing newline in
- 'tables.list'
-Message-ID: <aNOHjdVEbCufSCPw@pks.im>
+Subject: Re: [PATCH v3 4/8] reftable: ensure tables in a stack use sequential
+ update indices
+Message-ID: <aNOHl65jYyoNXou_@pks.im>
 References: <20250918-228-reftable-introduce-consistency-checks-v3-0-271af03eb34d@gmail.com>
- <20250918-228-reftable-introduce-consistency-checks-v3-3-271af03eb34d@gmail.com>
+ <20250918-228-reftable-introduce-consistency-checks-v3-4-271af03eb34d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,43 +87,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250918-228-reftable-introduce-consistency-checks-v3-3-271af03eb34d@gmail.com>
+In-Reply-To: <20250918-228-reftable-introduce-consistency-checks-v3-4-271af03eb34d@gmail.com>
 
-On Thu, Sep 18, 2025 at 10:11:44AM +0200, Karthik Nayak wrote:
-> diff --git a/reftable/basics.c b/reftable/basics.c
-> index 9988ebd635..75d4086769 100644
-> --- a/reftable/basics.c
-> +++ b/reftable/basics.c
-> @@ -195,7 +195,7 @@ size_t names_length(const char **names)
->  	return p - names;
->  }
+On Thu, Sep 18, 2025 at 10:11:45AM +0200, Karthik Nayak wrote:
+> diff --git a/reftable/stack.c b/reftable/stack.c
+> index 955be1edb6..a458f5a4c5 100644
+> --- a/reftable/stack.c
+> +++ b/reftable/stack.c
+> @@ -317,6 +318,14 @@ static int reftable_stack_reload_once(struct reftable_stack *st,
 >  
-> -char **parse_names(char *buf, int size)
-> +char **parse_names(char *buf, int size, int *err)
->  {
->  	char **names = NULL;
->  	size_t names_cap = 0;
+>  		new_tables[new_tables_len] = table;
+>  		new_tables_len++;
+> +
+> +		/* table's update indices must be sequential */
 
-Nit: Wouldn't it be more natural to return an `int` and assign the
-result to an out-pointer?
+Let's make this a full sentence starting with an upper-case letter and a
+period.
 
-> @@ -205,30 +205,40 @@ char **parse_names(char *buf, int size)
->  
->  	while (p < end) {
->  		char *next = strchr(p, '\n');
+> +		if (prev_table && (prev_table->max_update_index != table->min_update_index - 1)) {
 
-Not a new issue, but it's kind of broken that we use strchr(3p) here. We
-really should be using `memchr(p, '\n', size - (end - p))` as the user
-provides the size to us. And the provided size should be `size_t`.
+I wonder whether this check is too strict. It _must_ be true that the
+new table's minimum update index is greater than the previous table's
+maximum update index. But in theory, there is no reason why there cannot
+be a gap between those.
 
-> -		if (next && next < end) {
-> +		if (!next) {
-> +			*err = REFTABLE_FORMAT_ERROR;
-> +			goto done;
-> +		} else if (next < end) {
->  			*next = 0;
+The reason why this makes me a bit uneasy is stack compaction. Say we
+have three different tables:
 
-Can we maybe convert this line to `*next = '\0'` while at it? It made my
-reading hiccup a bit.
+  - A base table with record r1 with update index 1.
+  - A second table with record r2 with update index 2.
+  - A third table with a deletion record d(r2) and a new record r3 with
+    update index 3.
+
+Now if we compact the second and the third table, the compaction will
+realize that r2 is deleted and thus no longer needs to be part of the
+compacted table. So the new state is:
+
+  - A base table with record r1 and update index r1.
+  - The compacted table with record r3 with update index 3.
+
+I'm not too certain how the minimum update index of that second table
+would be encoded in the header. In theory, both minimum and maximum
+update index of that table could truthfully be 3, and the result would
+still be both valid and sensible. The new check you introduce would
+trigger though, as there now is a gap between those two tables.
+
+So I think we should loosen that condition to ensure that we have proper
+ordering of update indices, but not a gapless order.
 
 Patrick
