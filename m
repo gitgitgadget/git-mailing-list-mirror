@@ -1,138 +1,102 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B881F30F94E
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 15:22:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F99C305E3A
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 15:26:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758727370; cv=none; b=aPEUgyyu8peNtf5dzgEK2wd2pm1NUai18oG60P8jFLX+N0nuB9aeE9SJ/CuGxaVapE7zViCPicqE8AGpVEb8+Ld3mykGiqdt1M0vCkx8/o7lKgw4gkOve9MjmfoJXzIQbdvWPpYjB2b56KsY8AFByWWnK9JGSoqIS02736KvllE=
+	t=1758727588; cv=none; b=KnoaJo8psuxIiqM8mvQik1Rt+T1C5eT1v3meFaOPkk2+SqZ5BpT0+AoMYixlz+slWUXK/mxmuNaNFBj3udKneWZowvej0nV8h+lay+m48LyMNh0PnHsiUj3GftQ69/5Pv3wvd2fVa0SsZoqCPzThpoeEGD4YSyotUoFgKjwsiKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758727370; c=relaxed/simple;
-	bh=SU152vtNyacVAgRMCQjkrw1jK4IvXohOZDchreuVjO4=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=nHOZ2hNl/9YE26a2cn4t2HrfCR3wZkZlHaLczluEIUBfgAMpvdhoH7GhryGM6TCHtQTrAz7VLMa9FG69aeVfmPW3KpTpjbig2AppYpExLaaTQrY8TmAwRXcXizRvvZokgE6zgmqrL+ysAfAd1UPloyzx0CEVh8bTgczun0hQ9dY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=git.strova.dk; spf=none smtp.mailfrom=git.strova.dk; dkim=pass (2048-bit key) header.d=strova.dk header.i=@strova.dk header.b=PqY2JxS/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fQ6gQwv8; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=git.strova.dk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=git.strova.dk
+	s=arc-20240116; t=1758727588; c=relaxed/simple;
+	bh=Mz0YVAHkGACdiuQeuG75iYcTslb6xWj6w2Q++DCu74E=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=SdIaQfCRyXWE9NhGPMNrolIFweRQeVDcNYY/j6J2BdS51JkiE3OE2etc0knnoJq/zBOgiNC2nshFBKwc992WLh7ujf9EJKAOso7a/JUmdXeHXY1j/zZLFNoh1BXHHk6LEmbcqadRddwn6edH20gpE0KiRJc/Yh0/gGTo7WmU8sU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L6vpnKTb; arc=none smtp.client-ip=74.125.224.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=strova.dk header.i=@strova.dk header.b="PqY2JxS/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fQ6gQwv8"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id A6C431D000B5;
-	Wed, 24 Sep 2025 11:22:46 -0400 (EDT)
-Received: from phl-imap-02 ([10.202.2.81])
-  by phl-compute-05.internal (MEProxy); Wed, 24 Sep 2025 11:22:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=strova.dk; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758727366;
-	 x=1758813766; bh=SnHK9fLLKq5Z5MTMV4jvA/8eTuppjaliGPOBAX2ZB7E=; b=
-	PqY2JxS/TmUAOAELwxXOK4KaIyYu2OjCcCaJbbzV50vPjTmfipmsA+8YnggFy/tj
-	Juy1zII3nbMyTjnMr/W7afPMgdHNMWND85qODZNZ4LI1mjPfBJ7nYzqYw4LMjkiJ
-	zJZFrnaDYy/e4K7kL8PgxSU0vRq4cu2D3y3QcoB2BIru12MYFTRJus29RJA1V/fs
-	SKbtkn0qUSSoMCZLgv5OJgmPlxqEuoWksL1zqCN4n/QNZbQw+Jb3J2vA7soMFNtx
-	y3WM8plGUEqe+oVAQmQ68Dex2FgiJCcQDb95Rhbe01DRwP0TGVqiyatRypSdC6rM
-	/XXkP1E0mluz17lkkAFJfA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758727366; x=
-	1758813766; bh=SnHK9fLLKq5Z5MTMV4jvA/8eTuppjaliGPOBAX2ZB7E=; b=f
-	Q6gQwv8CATjLZeQpu/kTbQyHAePSnRsFl8vbvy/Vua6hGV97LF9B9puMjvpKy1XD
-	/svDmDnlBzLhS60A/M6rxWWEv+DH5zKSWsuMSyqL+saECZKx0YvDP5IJtdMufUhx
-	6CiKLa+YZnl0HD+fhZKb25ch95nu5aKmJs8Cy8kn/Z89Y3F0RFVUaFiru6+0wNPk
-	4xK72bK7Klwzc0JlA57mANsl909sEcvyKWZcuR7KQBubca3nqXjdI0pZx1idrIN3
-	jjrdDzkkZlwUCl7cluXgDHMxHrqStwcAVJxQg1EHGtKE98EamOhnSajajAgy5e/C
-	Hp++BQ1J1a8YwjF35i3nA==
-X-ME-Sender: <xms:xQzUaMILB0eJmZ8WB6fxi2HyWZdNAoU_txJ8qBpKr0C6dcxoGLowmQ>
-    <xme:xQzUaG8h94B1nDkZ83-kCBElBXrSphKWJyTvPtCMR2cunffgcyNZ2VdAxRVXMeYbR
-    9LY3AnPXiAdT91p1F4fDYh4OsXYtbFQpUXrvh1Bhm9_NQWv2BHPkM_M>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeifeeliecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdforghthhhi
-    rghsucftrghvfdcuoehmsehgihhtrdhsthhrohhvrgdrughkqeenucggtffrrghtthgvrh
-    hnpeeuleelgfevgffgheeuhfffkedvkeejueduieehffevhefhjeejuddtgeevgeegffen
-    ucffohhmrghinhepphgrthhhrdhlohgtrghlnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepmhesghhithdrshhtrhhovhgrrdgukhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepjheitheskhgusghg
-    rdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:xQzUaAyV5p3ru3dVtNjjETOsll4yJZ6RMsGy2uf0v1rzyK1Gn0sxfw>
-    <xmx:xQzUaPuLvIIJ5G0rHK4E1Qv8TfzYu8cNq7IubNBzKuNkIEdbIM5_0g>
-    <xmx:xQzUaF0vWk1rOMbLZNHWbJXBKvwq_Wv125i_FI4qYfIls1ffKP67iA>
-    <xmx:xQzUaC-f3GA9FVpgpOVZ1FQ5LsBdcZ5lJb2AFLIlF7L1v7NR2b82jw>
-    <xmx:xgzUaP7s8IR7Kz0TZoL-ygQvVU4oiQmr7l1OxPIMlwtAWhLzEiZ8hi2V>
-Feedback-ID: ic5d648a2:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 84BFF700065; Wed, 24 Sep 2025 11:22:45 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L6vpnKTb"
+Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-6352c8b683eso3703901d50.2
+        for <git@vger.kernel.org>; Wed, 24 Sep 2025 08:26:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758727585; x=1759332385; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Mz0YVAHkGACdiuQeuG75iYcTslb6xWj6w2Q++DCu74E=;
+        b=L6vpnKTbQqtooCWuViT4OkYi9AgNbX4cJik6JxdjFuHCHNl1yTqBvAEmOptu/J4XcN
+         e6gDkfOkmGfm4gj4kMyWaseIGnYporEYCbAE8GWM5rpbL1LIMY9LKMChb4f0uHaGYiIU
+         oim1n7VK12qsC8Hf0L5qKGmsUr7hRas0ge1VSzlM44Rlmrv1j6xgJGm9T4LC7XkphBAr
+         g7ISZ7/aEsHf2WB7zJraBGFUuB/2HsmQM0HoQjM0vBjn0ptbWbqBvRAf1hf05Ga/bATL
+         1h89nE7jfZFgShqgB8wSFBI2kqI2zc6i7sMfiTWl/iwIprArCsoUFjwMYYAs4YPYx479
+         LCiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758727585; x=1759332385;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Mz0YVAHkGACdiuQeuG75iYcTslb6xWj6w2Q++DCu74E=;
+        b=HMSwAHMF7vKN/wg1CxWDGCSEdOrboNbBmi66gvkw8/If+TwL5SKZ5WcxMPZBgLUjAb
+         MbQdwhwpRMJ+XzXzBjJzxEPRjQY0Hdt53TEYS3Z0NEqBO1I9u/QRVmY1cIu1Ke5ofbK4
+         JzKWLRJz9phTDr003BFh4nru89gP26MCUSgjnKhbbMjeFO3ubfdmfqbNU6BRJ/T7RNWl
+         j2I3m5aMaePKG6EIU4DUt+s3G3B9/W4DMF2d3+zG2s4GuaFD+ly25WKWFlt8qTppE7up
+         5Hv/j1x4xewGvbOEFMJzw2cKs2+Uvegm7/OOWIijKAd0VdTGCqOpRbOXb6GBx7F6/sCL
+         sGCg==
+X-Gm-Message-State: AOJu0YxyDDFBEaANT9TW2VGqlEJ+19mnPgPoEIwNNQ8XL+NY5K+tvWci
+	Z9gqXYz0r0Kn1IgPec5MaTtkzyQ/aedbMug0WphAE+uGUzgzzH4dKlkcT0+X438f
+X-Gm-Gg: ASbGncswsfZ4y57fUcUL0fVRofbOxdg9cuiVwrnOmqPNqTqu1IZ0H/H0SXmh+lmsnEX
+	BnMJKIMmWyyUiaNK7US3yxUP3Lq6za2nEY40pKWPtJNKGw+4BSpidikEWt/3XVq7z7vlrakanlZ
+	zwCoxo9EFatjfa2JrAjIkGmqndWVI3nbBX8Xp8UMiaV4+OaJq8pYgDlXQJJ5hqgK7+Yy7qWr3A9
+	Ms8BnNRxHlyJgV4ic86PAuOXI3GqeI+WCOI6gQxol2GLaShWwXBHge1qGjKHulRjhPVaLTqfRWB
+	2UFYiIKKtMMfntSWkgnWlXACDbaAHTb2OVV9NYFBaKPSR9xsFCs/ER4tj3kQIB5DbiZkv8Q8/9u
+	C0Ttm/uGalbLgtOuPJH7099OIONY0bysQRg0J3tEdw5fg3hRZJCM=
+X-Google-Smtp-Source: AGHT+IHKTHgNRXGlkkLIPOEQRjpH9b+jog3AcQPdBWvSAzvV0ignIgIZfxgJWI5ZrYhYmBXC5pONhQ==
+X-Received: by 2002:a05:690e:2553:b0:635:2ba3:c264 with SMTP id 956f58d0204a3-6361a76e624mr46075d50.19.1758727584807;
+        Wed, 24 Sep 2025 08:26:24 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:5194:54a6:d414:9d55])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-ea5ce8544b5sm5950103276.17.2025.09.24.08.26.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Sep 2025 08:26:24 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-ThreadId: AIKuU7SDf1aB
-Date: Wed, 24 Sep 2025 17:21:24 +0200
-From: "Mathias Rav" <m@git.strova.dk>
-To: "Johannes Sixt" <j6t@kdbg.org>, "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Phillip Wood" <phillip.wood@dunelm.org.uk>
-Message-Id: <7de3da11-6191-4fa3-bd0d-842dc45690e7@app.fastmail.com>
-In-Reply-To: <0a14a93e-7da2-43e1-9d71-c58a69c7a4af@kdbg.org>
-References: <92d4d585-09e9-4f1d-a471-1ad6b312fa61@app.fastmail.com>
- <xmqqldm4onma.fsf@gitster.g> <0a14a93e-7da2-43e1-9d71-c58a69c7a4af@kdbg.org>
-Subject: Re: [PATCH] rebase -i: use same commit's message and date with f -C
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: 0-Based indexes for git log
+Date: Wed, 24 Sep 2025 11:26:13 -0400
+Message-Id: <B4B7BB74-9B69-4CDB-B4F2-FFB976A5B0CA@gmail.com>
+References: <27456c8a-25f4-40f2-a791-efd35457d121@velocifyer.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+In-Reply-To: <27456c8a-25f4-40f2-a791-efd35457d121@velocifyer.com>
+To: =?utf-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW?=
+ =?utf-8?B?8J2Vow==?= <velocifyer@velocifyer.com>
+X-Mailer: iPhone Mail (21F90)
 
-On Wed, Sep 24, 2025, at 10:47 AM, Johannes Sixt wrote:
-> Am 23.09.25 um 23:38 schrieb Junio C Hamano:
->> "Mathias Rav" <m@git.strova.dk> writes:
->>> Change the behavior so that fixup with -C takes both message and author
->>> from the current commit, instead of taking the author from the previous.
->> 
->> I am somewhat negative to this change.  I am perfectly fine to have
->> a separate "I may have started from that previous one, but that was
->> so broken that I essentially dismantled the original and replaced
->> with the new one.  It is better to attribute the credit to whoever
->> did this last one that is replacing" command.  But the "fixup"
->> command people have been familiar with would be different, I would
->> think.
->
-> The common situation where the proposed change is handy isn't where a
-> previous commit is fixed up.
->
-> Sometimes, a previous commit is a fixup for a later one, for example, a
-> change slipped into in earlier commit that should go into a later commit
-> and has been split off into its own commit. Many times it would be
-> sufficient to reorder the commits and be done. However, sometimes (and
-> not even infrequently), reordering the commits introduces conflicts that
-> do not happen if the order remains. Here, we want the proposed feature.
->
-> Since your argument hinges on the word and meaning of "fixup" (which I
-> can buy somewhat), we could extend "squash" with an option that
-> specifies which commit supplies the date and authorship metadata.
 
-I have never used the "amend!" autosquash feature and I was not aware of
-it until I stepped through the code in sequencer.c to implement my
-proposed change. I think the `git commit --amend` manual explains quite
-nicely why you could want to keep the author of one commit and the
-message of another.
+> Le 24 sept. 2025 =C3=A0 09:46, =F0=9D=95=8D=F0=9D=95=96=F0=9D=95=9D=F0=9D=95=
+=A0=F0=9D=95=94=F0=9D=95=9A=F0=9D=95=97=F0=9D=95=AA=F0=9D=95=96=F0=9D=95=A3 <=
+velocifyer@velocifyer.com> a =C3=A9crit :
+>=20
+> =EF=BB=BF
+>>=20
+>> Are these date formats locale-specific? In both the US English and France=
+ French locales I use commonly, the 19th of September in 2025 _is_ a Friday.=
+ Showing 18 would only be confusing.
+>=20
+> Showing 19 confuses me because i'm used to 0-based indexes where the 19th i=
+s labeld as 18. Showing 18 would not cunfuse most people.
 
-Before discovering "f -C" to achieve the "fixdown" behavior, as Hannes
-describes, I used "x f" to invoke my own single-letter shell script to
-achieve the behavior I wanted, and I guess I am fine with going back to
-that for the cases where I want to preserve author dates (which, to be
-fair, is often not that important to me).
+I would need evidence of that. Everyone I interact with agrees to write =C2=AB=
+ 19 =C2=BB when =C2=AB 19th =C2=BB is implied.
 
-For completeness, the implementation is ~/.local/lib/git-rebase-utils/f
+As I asked: is this particular to an community? I=E2=80=99m genuinely curiou=
+s if there are groups or cultures that communicate this way.=20
 
-	#!/bin/sh
-	git cherry-pick -n "$1" && git commit --amend -nC "$1"
-
-...with shell alias git='PATH=~/.local/lib/git-rebase-utils:$PATH \git'
-allowing "x f" in git rebase -i without polluting the regular $PATH.
+As Peff points out, you can probably make commands display your own personal=
+ preference (or a locale should handle this for your community). But I don=E2=
+=80=99t think this is something we can force on other people, because it wou=
+ld be confusing.=20=
