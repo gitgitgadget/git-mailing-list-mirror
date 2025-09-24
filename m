@@ -1,82 +1,84 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021C71B423C
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 22:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA2926B971
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 22:24:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758752338; cv=none; b=s5k5DSXAy9hkALx5B2Xg9myMX25npTvv+EuwgxMR/VQ6U3EiPTk/GgxSZ9nbW1mGjAgPJuGtLh6pkCihR86XCxLyigcy9/qQbcl6mC5B9zW9drJU8qCJ7vbgcj/K+eZXLyhotvX/LtBgZg0cy4uTzv/17yBvYWCdxt1/ugV+aQ4=
+	t=1758752661; cv=none; b=B4t2/C5+ekYzeRmWevFQVG/k+1MmyEhbUIxKbEjiEb86Fxf8WY60NToq9dED8n7A6QE4ujpEqDr8s/lgUdvGbvdZ9JR6HwvSKd2se1/nK+vu6Qvao4571LUVMEywGVN2zjjvaRqjk499rh1s29bnlyub6X1zkEJLlnr7HaIM3QA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758752338; c=relaxed/simple;
-	bh=wZDno6jEY/z7jN/yoqgUwZpxQSMO3ne2+02kQsb0BHw=;
+	s=arc-20240116; t=1758752661; c=relaxed/simple;
+	bh=048ifUTAfUHp0QfPFoLXO3dFB0Lcyf9uJa+aSjL4mEw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KbjCfgJ/PLGS6JMhWTIVjElfb1XlZQAxqT+anObEyvLOhUIBoWo/TWRkA7Mwm0Zpg9+XVZB5BNtG+/xPfw1py6FMerxVTiw58o62cggYpsOeMTsMHdfCLuykV2WjJpiTCpUTPCvHFdDTczJaBB3wQOnLyaq2z2eTExwP1oABBvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gIupFJf8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DQ8cXPYn; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=iYCEa47rvHZUz/WMaEAgdUndg1VNoY2xAulwIibFIBgZb3VwzSalct/Tq4F4Bbhg9CPKidKmbKx0lI3nYNQnR5YzKTCcS8Zu21CcnqHfWiCWZh6ZoNYXa1K0y0LrW6w2EgAMd0chulvXJrFO+oC8+CRsauHvlfmQme66tAyr42A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EI/0/B7S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ei9jTa/f; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gIupFJf8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DQ8cXPYn"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3782814000DF;
-	Wed, 24 Sep 2025 18:18:55 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EI/0/B7S";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ei9jTa/f"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4E30E140009A;
+	Wed, 24 Sep 2025 18:24:19 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Wed, 24 Sep 2025 18:18:55 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 24 Sep 2025 18:24:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758752335; x=1758838735; bh=L6ftJV/3Rh
-	9zVIq2/+gncuUwtSgyeBO8v0jPVT3s8Vk=; b=gIupFJf8wlNFFo9bst1F8uRlSP
-	h/IMRF+RXz7JVla4X6vSH1pHK8zGwPwj7BkPfRWPV0bMkjj3WLm+4P2FgojOxRUN
-	/0gUID4MRvc/PLYI1iHUYkkMHdPsGsFHuwBiK7KVZp3KTw/VVzoQQcKKzpNBEu7f
-	+hgQ1bFq/p8kP0+/kpOi1wAAur2dhU373C5vYOWNVZleM61vjOhOV97SOsafZvc+
-	rU45XqHU9c0dLme3sHoMx6h8W6aLxl4GvSLwFPAQHc04GJarydrQ3t2AL5HdCAOS
-	rNYU8sR9QHTyURU9P37UGlmzIRG/3G/5Y8SIpyzIQlIqtx6nLBCCk1pkUC/w==
+	:subject:to:to; s=fm3; t=1758752659; x=1758839059; bh=7TTGIRdSIk
+	N7qxLcLmWy0E+rm93qD4+pp8xAsfBfdR4=; b=EI/0/B7Sls2ZBYn4v7+HejFpDD
+	OoJ0Dd0Hi4ozmKFfbWArFXIPzqt19V6sEEpeLVtbZeJm1kAmsIH9inbuqoUyIFaf
+	7Zu2raXuCvGb6K+/7af98z/svh4W2NzTQNiS9SDGE3GHkb/HnMs+8uLH0kYJnaIT
+	tyDfwTfrAOy6a3jtPJSX1/hI4OHlY8JyDtH/XUcd43tV1LZP8UJBshOuhqlyJVLF
+	ncY3o2/75tbZjHfp1zf3l8J12GICwPE0de+6Sp2jzUq4koVjRwNJ/Oo087x0Noov
+	YiKU8tljPDZfUEuNulSasmVnLsf6MJNHzIzjXkSJqi5yGUkYx5LiziAxpm6A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758752335; x=1758838735; bh=L6ftJV/3Rh9zVIq2/+gncuUwtSgyeBO8v0j
-	PVT3s8Vk=; b=DQ8cXPYnBB7XnkStjkp7CeuSvffoK1Hdrx5uojshg39DpC7KNOe
-	rcyuD8UKVuaKLYPwyK+v0L7o4mOks1/r7Zg5w2ZKfTHmn37aLzP/9OWjAGzbuJlN
-	mXiqaW4Y5YDax7OHzV7TqXB0WE7xaSPBHnuKuj1H8t8jlyRASv6gn9mvdclN3lZv
-	vTo2Npl/MVqpFq3nrBgOKFdRuqIBWyt0WtqumvI70LpmC5oVmhnDiIrGIi0qwYe/
-	qh6DlU9V5dmtoVBWoPEZNURTh/axDmjje1MHOvvjOBj3n7NWHvdftSEbI7dvOD6j
-	HjoL9dQrUEil8nd+Fh3CcEGh6BlGh5q6MLg==
-X-ME-Sender: <xms:Tm7UaB6Lqt9ryczSyLjLpo9gNhsaX9ICcvW_qnyAQ7d4bjPZTshE6g>
-    <xme:Tm7UaF7wcBv5W87caapV-MCnGyLp4sMb_G5r2jKxGjpX0c8Zcnh5EmC6W_ulUdL2r
-    CQsqj3-3WUMA6n-hc2DCp8W6mJEOKOzeWI-9bujkWzEHaQwiaRp>
-X-ME-Received: <xmr:Tm7UaNfZnK83EoguGNdvDdAbSYsAML0ChOyRvQFM4CLj4qJyMrPqK5W3jhnJE4V16vILdMPZarq1pLLgAJ3j_cTmBHFVbc3nZRuL>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeigeejlecutefuodetggdotefrod
+	1758752659; x=1758839059; bh=7TTGIRdSIkN7qxLcLmWy0E+rm93qD4+pp8x
+	AsfBfdR4=; b=ei9jTa/fLGXHn0uy4b0Zu/qNw80WpOmPuJOncu+E/kbP3aarTXi
+	W6wx9KxveoFnmQubyAEp/iaWrdljjf3WKmEGeKrOn0yaUvNqPH9HuPCK58bIshnG
+	c/vq8PHsUkDu2856yofXaaohOdVuTQYkVh66vtBEr8NISNsJF1+Kr89dN/c/1LEG
+	W1PVsWvNjCq/pL9plr4aMLJ5wKLRVHzzoMg1b0P21MHdGtn/lUXjrFB8rEbiWATP
+	jOl8mbLJNTAsWFAELVlFivYHpF/zp6kDJO4RGJ3M8mGB8xjw5KG+y9FvsIllNOwd
+	SKYzQpKw58uEl5pEuuHbpQXddLde8tS3VmA==
+X-ME-Sender: <xms:k2_UaG9Yc7BW5hE6cjzm_HhH6heVIo7t8kq9LSgWSX7r_atlfaU2JA>
+    <xme:k2_UaNshE-7LOHwSmCCAFAoxaYmqb4DGyBa26flZ3WEi0uGC60YwQFUjbamyP2PL7
+    D-qiVOo7GlxMZalcDsLztdgwvn-oS_BVMSp5dYn1qI2ZnrOFtTzyQ>
+X-ME-Received: <xmr:k2_UaBA6XhxtBtZtHjWqoL0eUW78uRRX5YXnKKApTtzacHSuHiCvPoeUi3UQvW7Px4KBXILqJ466EtQMjTWo8iXtob5dca7FdHIP>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeigeektdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjrggtohgsrdgvrdhkvghllhgvrhesihhnthgvlhdrtg
-    homhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdgu
-    vgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Tm7UaJD4087cu8e78bWbBDmqgHTzedJBseTsyKUtL2vcRUGo3XBK0A>
-    <xmx:Tm7UaA9rkzNLhEPqo1steIopFx0CIjdwOzga8FNdtalV9ub1QES09Q>
-    <xmx:Tm7UaEJdXmop34KwEeUvGhXufX10b_pUaLWGMB1Sskij6C9CC6Bjmw>
-    <xmx:Tm7UaJgUus6ndKODb-Gy1few-lWNkWrsV5aZJNs3Rml0086cRBP4rw>
-    <xmx:T27UaJpOc1KAUEKfzFLdHe-5MOPHmkZKXQQsLHrW5Y4Hvj-3Pv_e-NNm>
+    gvrhhnpeetgfeuffevhfeffffgveeuueevtdehgedvheeujeejteekteejueffffejudej
+    hfenucffohhmrghinhepughifhhfqdhnohdqihhnuggvgidrtgifnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
+    gidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepjhgrtghosgdrvgdrkhgvlhhlvghrsehinhhtvghlrdgtohhmpdhrtghpthhtohep
+    jhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:k2_UaNUmKfzV6lbXoknJEl3mvGp9wCv8bYG1N18EIx_lrMkPPoSCXA>
+    <xmx:k2_UaHAcBob30A5K0DyjjDxY0SkehoBE9JFwei-SPgqJ56o4C7Ba4g>
+    <xmx:k2_UaI8J_TNVfEA-ZcicflnKmmmDwzhsasdy_fLQ7XRpXorvLsdgcA>
+    <xmx:k2_UaGGfEtPZ0yCHI1UkJ20w5YVDpWXDbY0pgCBb5Mtx3vVkZVMqSg>
+    <xmx:k2_UaLOlOXHfb0xW_kc07R4EmM7lgYA-wrNkFIinyCxzkt2obUn41--r>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Sep 2025 18:18:54 -0400 (EDT)
+ 24 Sep 2025 18:24:18 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jacob Keller <jacob.e.keller@intel.com>
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  git@vger.kernel.org
 Subject: Re: [PATCH] diff --no-index: fix logic for paths ending in '/'
-In-Reply-To: <20250924-jk-fix-no-index-path-with-slash-v1-1-6b2028c0de92@intel.com>
-	(Jacob Keller's message of "Wed, 24 Sep 2025 13:57:15 -0700")
+In-Reply-To: <xmqqa52jjxyq.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	24 Sep 2025 15:18:53 -0700")
 References: <20250924-jk-fix-no-index-path-with-slash-v1-1-6b2028c0de92@intel.com>
-Date: Wed, 24 Sep 2025 15:18:53 -0700
-Message-ID: <xmqqa52jjxyq.fsf@gitster.g>
+	<xmqqa52jjxyq.fsf@gitster.g>
+Date: Wed, 24 Sep 2025 15:24:17 -0700
+Message-ID: <xmqq5xd7jxpq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,88 +88,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> diff --git a/diff-no-index.c b/diff-no-index.c
-> index 88ae4cee56ba..c70f82b80559 100644
-> --- a/diff-no-index.c
-> +++ b/diff-no-index.c
-> ...
-> @@ -346,7 +355,8 @@ int diff_no_index(struct rev_info *revs, const struct git_hash_algo *algop,
->  		  int implicit_no_index, int argc, const char **argv)
->  {
->  	struct pathspec pathspec, *ps = NULL;
-> -	int i, no_index, skip1 = 0, skip2 = 0;
-> +	struct strbuf ps_match1 = STRBUF_INIT, ps_match2 = STRBUF_INIT;
-> +	int i, no_index;
->  	int ret = 1;
->  	const char *paths[2];
->  	char *to_free[ARRAY_SIZE(paths)] = { 0 };
-> @@ -387,11 +397,6 @@ int diff_no_index(struct rev_info *revs, const struct git_hash_algo *algop,
->  			       NULL, &argv[2]);
->  		if (pathspec.nr)
->  			ps = &pathspec;
-> -
-> -		skip1 = strlen(paths[0]);
-> -		skip1 += paths[0][skip1] == '/' ? 0 : 1;
-> -		skip2 = strlen(paths[1]);
-> -		skip2 += paths[1][skip2] == '/' ? 0 : 1;
->  	} else if (argc > 2) {
->  		warning(_("Limiting comparison with pathspecs is only "
->  			  "supported if both paths are directories."));
-> @@ -415,7 +420,7 @@ int diff_no_index(struct rev_info *revs, const struct git_hash_algo *algop,
->  	revs->diffopt.flags.exit_with_status = 1;
->  
->  	if (queue_diff(&revs->diffopt, algop, paths[0], paths[1], 0, ps,
-> -		       skip1, skip2))
-> +		       &ps_match1, &ps_match2))
+> Hence, I think the clean-up code of this function this goto ...
+>
+>>  		goto out;
+>
+> ... jumps to would need
+>
+> 	strbuf_release(&ps_match1);
+> 	strbuf_release(&ps_match2);
+>
+> added after that "out:" label?
+>
+> If we run this test with leak sanitizer, wouldn't it find leak in
+> these (I haven't tried it myself---I just am speculating)?
 
-Inside queue_diff() that makes recursive calls to itself, lenthens
-these strbuf to hold longer paths while using setlen when it wants
-to trim the tail end of the paths.
+Now I did, and my speculations were both correct.  The SANITIZE=leak
+build fails, and with these two releases the test passes.
 
-So it is likely that ps_match.buf would never become NUL even when
-ps_match.len goes down to 0 after the recursion and queue_diff()
-uses setlen to trim the string back to what was originally in there.
+You can squash this in, or I can do so myself if you like, if this
+is the only change that is required.
 
-Hence, I think the clean-up code of this function this goto ...
+ diff-no-index.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
->  		goto out;
-
-... jumps to would need
-
-	strbuf_release(&ps_match1);
-	strbuf_release(&ps_match2);
-
-added after that "out:" label?
-
-If we run this test with leak sanitizer, wouldn't it find leak in
-these (I haven't tried it myself---I just am speculating)?
-
-> diff --git a/t/t4053-diff-no-index.sh b/t/t4053-diff-no-index.sh
-> index 01db9243abfe..e0ea437685b0 100755
-> --- a/t/t4053-diff-no-index.sh
-> +++ b/t/t4053-diff-no-index.sh
-> @@ -322,6 +322,22 @@ test_expect_success 'diff --no-index with pathspec' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'diff --no-index first path ending in slash with pathspec' '
-> +	test_expect_code 1 git diff --name-status --no-index a/ b 1 >actual &&
-> +	cat >expect <<-EOF &&
-> +	D	a/1
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'diff --no-index second path ending in slash with pathspec' '
-> +	test_expect_code 1 git diff --name-status --no-index a b/ 1 >actual &&
-> +	cat >expect <<-EOF &&
-> +	D	a/1
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
->  test_expect_success 'diff --no-index with pathspec no matches' '
->  	test_expect_code 0 git diff --name-status --no-index a b missing
->  '
+diff --git c/diff-no-index.c w/diff-no-index.c
+index c70f82b805..f320424f05 100644
+--- c/diff-no-index.c
++++ w/diff-no-index.c
+@@ -436,6 +436,8 @@ int diff_no_index(struct rev_info *revs, const struct git_hash_algo *algop,
+ 	for (i = 0; i < ARRAY_SIZE(to_free); i++)
+ 		free(to_free[i]);
+ 	strbuf_release(&replacement);
++	strbuf_release(&ps_match1);
++	strbuf_release(&ps_match2);
+ 	if (ps)
+ 		clear_pathspec(ps);
+ 	return ret;
