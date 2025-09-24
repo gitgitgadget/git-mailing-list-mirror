@@ -1,106 +1,108 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA5F1A76B1
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 13:20:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF73618B0A
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 13:42:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758720020; cv=none; b=lGoFEVAkEhefKuHl+LNcphM9+a9AwbTjhgue305NQOzTSRK8fbBUM8eAaG8tqh8tEthNvYcEtreNflM/ZN/5FUtcoK9YmPv3CnmxB+p5vqP0Q/BxQgWQxWrbzMaak3yJJ5QDJ78PZ4bLKMH0xZJ1aEJgdouiJYZykkGTOaDSNmo=
+	t=1758721354; cv=none; b=YjPexWvVOjEoMqV0a8CUbFifDRJMBIewgOeAs45K34SPYpZQWCkqQ3OOP/9W+qZc/CKsx1HlvZUvhaAIoNuRYtVNKtGcVnR/0M/IwaN591sPiIf456HjHv/SCqutwpSCVRnm0qs4SBCpFhsNrCX8dT34ya5hcT0ypbmThKTY5Rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758720020; c=relaxed/simple;
-	bh=daoMcrzEiBXUjbdQnAvKmoOr0jysOxLlm2LdlHpnQz0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NupURTcMy4ePKuO/VBVZ+7eEfI5+Bw6CpYzxLwN6QIbT6sKZJnxidP139exPK01jShffqEqi0ovcHe5JZ/b+WmbSidPCHXFP4mK6d7I/7HMWLj0vxXQ2LtCYpsr3O260D/HEdud312yzxiozcyLchVgvCAq9qTTkXh2fnFk+49Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L+oeZl/o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VV+m51ig; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758721354; c=relaxed/simple;
+	bh=q/XnfY+kK1GUquNIOEiUhldW9ymf4dhrAb1HzpHeTrg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Rv+4x+wJjFWd2a7PxXx1VsBfLzwUV6qb1lpXiiVhP7UOMsY/evn/k29ta6iTUiuV/fD52ikiOCBTATZALlC2dPBQza/ZLRir0KvGTqZmWTpZlI+n/tYukfscHqNM1GJ21loadFKziUTDXLPjMp1mCZULkwrHJkSbGbqQgzySvXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=velocifyer.com; spf=pass smtp.mailfrom=velocifyer.com; dkim=pass (2048-bit key) header.d=velocifyer.com header.i=@velocifyer.com header.b=FnpgM51E; arc=none smtp.client-ip=91.218.175.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=velocifyer.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=velocifyer.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L+oeZl/o";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VV+m51ig"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1C73F1400139;
-	Wed, 24 Sep 2025 09:20:15 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Wed, 24 Sep 2025 09:20:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758720015; x=1758806415; bh=daoMcrzEiB
-	XUjbdQnAvKmoOr0jysOxLlm2LdlHpnQz0=; b=L+oeZl/oh54nv4A7hJL6I1aI0c
-	4zqKvy0EvViDRpXy6vl515KiHBQaJqJw/MRTkzYOlDtLUnhlEON8ExwqgyG+14Wg
-	/2XD6H3cge/BiHenI57fG4AJzvfg07/tttUj80286jGXWbHGPEHpG/9L5a0PCbSJ
-	+7ApAZNcvguvF+1Z3e9coHci0eT1iGgvvCShwolV9XRad+B4oj+cqWjsmNvxPdOi
-	JbdhfxMJXIkQ/VLuOQlPADREMdsJEyBg8CKd/dVmu/AWA0fq74IyLt9vmmE0xbO2
-	SUEQ0vS2rNsnThvDUYv4ci/3QgwOHCqQgnQzqYhPS2lgixYB8jp0/iFpy7Gg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758720015; x=1758806415; bh=daoMcrzEiBXUjbdQnAvKmoOr0jysOxLlm2L
-	dlHpnQz0=; b=VV+m51igY68v7fZ9rpn9t9ao3Afs0IToire2sr01sMKb8WGVi2q
-	fxJWlSVzhpoQ36P0/TpuWQWFPfJPKcLuTXMS8FB7xuvdg/DxGBb7AVdPmf6wdrVg
-	UMCIK/znv6MYvyLH+ljTmjb97+MMK33trHjolOa1E61i9H6OczVXxjICOsDCGELh
-	zIsMb+oFGILqE8bPqfxcIwVVtMNaZW8aVieGJp6Zr19KOT80MM1EdCnEJ5lN8d12
-	R29ZTC4XD04IbOeQU7rfs1bkFb6ijhseeomPHHVtSekROvcJiecmGTXtHR+DrUIN
-	Jfoysz1IcRkyhyY78CpMgF/m4fnb88e+mng==
-X-ME-Sender: <xms:DvDTaJ3eqWE8I-prYawVGwsf9bnRSvXKh_Ka-le7jDQs2QCQZQKt-Q>
-    <xme:DvDTaDwYgokshPa8NxuyDzx1YvSHDtvsRYAKdN9Uxq1TtCin1hfFTsMaybJAMEX6R
-    tld04GcefylOE0Uih6V24FakQoSsAtXQnrnqPWC0nO7gxeuqabCWw>
-X-ME-Received: <xmr:DvDTaDuUPRabkiAUt8sk4wduMxgTP9BddUljWpZ9MXWF8ZBaTOZBE6uaUYI4SteAt9XYLWiHc6zdW6z8UOHXjfWnJ9wpYQG2ICUy>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeifeejudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkh
-    grrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehshhgvjhhirghl
-    uhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:DvDTaNyOtn-ARF82NzpjYJXlXnFjKAiGBBeTzwP7V0kqarc1Vi3qXQ>
-    <xmx:DvDTaOBKWka2tMnkN0TyUCC9CuoQai9soEUHJaCFQ6Gpyx4eaU3nRg>
-    <xmx:DvDTaDdAZ-lMwgDtPuDlKgYWCTDAPM0SLtRMVtKshqGt7-N5BnrD_Q>
-    <xmx:DvDTaAk4ZBeHTxjPBcg8a-v814RCC0NyTzV0ypnXA8hc-uY-e7AhYQ>
-    <xmx:D_DTaEkzNeCMPjNmKeZ0CUsmtD8rDM3XJXbllR0epgG5A4aTtB3i_a7a>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Sep 2025 09:20:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  shejialuo <shejialuo@gmail.com>,
-  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 2/4] string-list: replace negative index encoding
- with "exact_match" parameter
-In-Reply-To: <20250924053601.GC1173044@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 24 Sep 2025 01:36:01 -0400")
-References: <aMp8yNFiXDyk2hP4@ArchLinux> <aMp9OtXLfRw7dEwA@ArchLinux>
-	<CAOLa=ZShms1D-cq=x04dtT2ULTVE3ZDo8DODFnJRP2wcJz0EgQ@mail.gmail.com>
-	<xmqq348dovi3.fsf@gitster.g>
-	<20250924053601.GC1173044@coredump.intra.peff.net>
-Date: Wed, 24 Sep 2025 06:20:13 -0700
-Message-ID: <xmqqwm5om1gy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=velocifyer.com header.i=@velocifyer.com header.b="FnpgM51E"
+Message-ID: <55e313f2-8ec3-4f6c-afe9-19d938e3a605@velocifyer.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=velocifyer.com;
+	s=key1; t=1758721347;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=q/XnfY+kK1GUquNIOEiUhldW9ymf4dhrAb1HzpHeTrg=;
+	b=FnpgM51EAZ/x4S9wbUwU3J/sZAQ/OWm6y1zD5sLoF3Cs95+LVM6uFbK0HxFsNqCrjha15w
+	6e1YWXOCrzhmy11+ZesO9gCk/mUAbWsCwZ+rIz0AfW+IuvXHfxka5vwibOucYn1s0+xSpE
+	psflEoATY9a4Rs/PLN71BR1Q9SXxAjaJH3nQW/ajVBBLJ7m4zq2u2w2DD3S8RTJ4IMMBTG
+	NVo4IZc651i7Wm9Btr0h0rpRG6YiMj784Hz48yzX019iur4m5x7WAgug6zLaf+rSrOlXLE
+	u0/db9Xz4pjaWUZ5DWjrNtv8xdrPCz4hCatfGyMK4JK8BHA6HUwamcEJC5vK3A==
+Date: Wed, 24 Sep 2025 09:42:21 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Subject: Re: 0-Based indexes for git log
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+References: <fd7758e5-7719-4bed-b1b3-2137c49cc950@velocifyer.com>
+ <20250924052216.GB1173044@coredump.intra.peff.net>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: =?UTF-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?=
+ <velocifyer@velocifyer.com>
+Autocrypt: addr=velocifyer@velocifyer.com; keydata=
+ xjMEaCpEhBYJKwYBBAHaRw8BAQdAZBZWSN4ekixMHE7duMBmw/2uteCfmp68D/mxaYk/dyrN
+ JlZlbG9jaWZ5ZXIgPHZlbG9jaWZ5ZXJAdmVsb2NpZnllci5jb20+wo8EExYIADcWIQQboPxL
+ gODyGwJpjO5jTr+HQMdIvgUCaCpEhAUJBaOagAIbAwQLCQgHBRUICQoLBRYCAwEAAAoJEGNO
+ v4dAx0i+HU8BAJGd99DA1VdBzcYgch16XK7mC78ZqEwGegVCRerWry8RAQC3MJUOiyQ062Ol
+ /3iNXY6zk2QXaAsV8eUbFKUo1HiwAs44BGgqRIUSCisGAQQBl1UBBQEBB0CEoaVGilG8Qt/y
+ Xp135G4fhWjJH7VQkPIFo8/MsZspfwMBCAfCfgQYFggAJhYhBBug/EuA4PIbAmmM7mNOv4dA
+ x0i+BQJoKkSFBQkFo5qAAhsMAAoJEGNOv4dAx0i+yNYBAKcE1fbRCPqWwsIpRvOjSq9Spvhl
+ veEFpUMPaQ1tp7qOAPkBfZroJ8veENH/8sz+Gf/QK6O1kcqC4d/vAASzMpOiAQ==
+In-Reply-To: <20250924052216.GB1173044@coredump.intra.peff.net>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------cOkuhBC9PShmipwLfE03d0sM"
+X-Migadu-Flow: FLOW_OUT
 
-Jeff King <peff@peff.net> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------cOkuhBC9PShmipwLfE03d0sM
+Content-Type: multipart/mixed; boundary="------------OdmXxSrHR0OoPZQEUtIZebBx";
+ protected-headers="v1"
+From: =?UTF-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?=
+ <velocifyer@velocifyer.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Message-ID: <55e313f2-8ec3-4f6c-afe9-19d938e3a605@velocifyer.com>
+Subject: Re: 0-Based indexes for git log
+References: <fd7758e5-7719-4bed-b1b3-2137c49cc950@velocifyer.com>
+ <20250924052216.GB1173044@coredump.intra.peff.net>
+In-Reply-To: <20250924052216.GB1173044@coredump.intra.peff.net>
 
-> I agree that size_t is much more than one needs for counting most
-> things. But the problem is that "int" is much too small, if you are
-> worried about malicious input causing integer overflows that could cause
-> memory access errors.
+--------------OdmXxSrHR0OoPZQEUtIZebBx
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Well, a malicious input can cause overflow/wraparound size_t while
-parsing, so I do not think that is really an argument.
+W3NlbnQgYWdhaW4gYmVjYXVzZSBpIGRpZG5gdCByZXBseSBhbGwNCj4gQXJlIHlvdSBwcm9w
+b3NpbmcgdGhhdCB0aGUgZmlyc3QgZGF5IG9mIFNlcHRlbWJlciBpcyB0aGUgMHRoPyBZb3Ug
+bWlnaHQNCj4gYmUgYWJsZSB0byBkbyB0aGF0IHdpdGggbG9jYWxlIHN1cHBvcnQgYW5kIHVz
+aW5nIHN0cmZ0aW1lJ3MgJWMgb3B0aW9uLA0KPiBidXQgSSdtIG5vdCBzdXJlIGhvdyBwb3dl
+cmZ1bCBsb2NhbGVzIGFyZSAob3IgaG93IG9uZSBldmVuIGRlZmluZXMNCj4gdGhlbSkuDQoN
+Ck5vLCBpIGFtIHN1Z2VzdGluZyB0aGF0IGl0IGlzIHN0aWxsIHRoZSAxc3QgYnV0IGl0IGlz
+IHNlcHRlbWJlciAwDQoNCi0tIA0KR2VvcmdlIHRydWx5LCDwnZWN8J2VlvCdlZ3wnZWg8J2V
+lPCdlZrwnZWX8J2VqvCdlZbwnZWjDQpUaGlzIGVtYWlsIGRvZXMgbm90IGNvbnN0aXR1dGUg
+YSBsZWdhbGx5IGJpbmRpbmcgY29udHJhY3QNClJlbWVtYmVyIHRvIHJlcGx5IGFsbCBvbiBt
+YWlsaW5nIGxpc3RzICh0aGlzIGlzIGhlcmUgc28gaSBkb24ndCBmb3JnZXQgDQp0byB1c2Ug
+cmVwbHkgYWxsKShJZiB5b3UgYXJlIHJlYWRpbmcgdGhpcyBpIGZvcmdvdCB0byByZW1vdmUg
+aXQpDQo=
 
-The code need to be protected against such overflows either way.
+--------------OdmXxSrHR0OoPZQEUtIZebBx--
 
+--------------cOkuhBC9PShmipwLfE03d0sM
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQQboPxLgODyGwJpjO5jTr+HQMdIvgUCaNP1PgUDAAAAAAAKCRBjTr+HQMdIvoKS
+AP99jrNrHEjNQ+nffuzyf+N5c9Fcfmm4r8rQULD1tEYYDgEAiKvZTcmXTKM8G1bmMQ1Of7BNktSs
+5FU7GZZKfkGjygY=
+=T/FD
+-----END PGP SIGNATURE-----
+
+--------------cOkuhBC9PShmipwLfE03d0sM--
