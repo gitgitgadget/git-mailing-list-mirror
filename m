@@ -1,73 +1,80 @@
-Received: from sender4-g3-154.zohomail360.com (sender4-g3-154.zohomail360.com [136.143.188.154])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A569F12F5A5
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 00:23:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.154
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758673419; cv=pass; b=o0fPp5/CCR3h0wWFVaBg0FAnwU0h1Pnk9+9JKBpkSV48B4IWrho0toV2jCNX2HAKZVe0/l0FtGU/Lyg8qAs/IPODrBQ/6VFSaJH0Pc2jimhodyAuCVSIULTKl7ql7AEO8xzeBWyhO5dOfmhZwsN49uC+szH+Cxu0/fdq2cZAbWU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758673419; c=relaxed/simple;
-	bh=rOash2+xMcyoKGoee4ZAJfscYggf1Grpxo2/PDWBTNA=;
-	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type; b=DV7NB4ZkvL/VigGAjSi02eO4TxJdNPpMlgmi/+HDeEd33cODRqBsDYtz/8QfS2Kk2A7n/yUW19FLmjUMIAJZ8xcBK84K1VP7xRGzj5Pbmu+Tv7wzcZYjk0i5tDUSQrp9cOpp1Nduj2IZZ41T0+X8TWlAzRpKGmg8MBUKaDaIiA0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=maguitec.com.mx; spf=pass smtp.mailfrom=bounce-zem.maguitec.com.mx; dkim=pass (1024-bit key) header.d=maguitec.com.mx header.i=@maguitec.com.mx header.b=fQt1iEs0; arc=pass smtp.client-ip=136.143.188.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=maguitec.com.mx
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bounce-zem.maguitec.com.mx
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF67FC2E0
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 00:41:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758674498; cv=none; b=r072uCibFjtumkO9RXVeN1gInN5YJX0OHwJstgQpfVnFieF3OTe4YrOKJsCkV+Io/wNh2StbXTKFBlSYDBCm1U0V+OFb68WQQwE3SBTj67fuGE61gaNdgDPZlDEQQDmQ0J3uICoDx9mmMYH1hfPZj6QVybKPObsbEaGwuRRUk4A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758674498; c=relaxed/simple;
+	bh=Domi8k0G+Q5QH6UAEtimWeLd+Wh21qCjGQa6we8Hkyw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BZT9UAbDAxU92aF4bZzW3cH2yGnyQQYlHuvu/c8gmabJgg6p1giXELEoNtBoEuHdiBhxiRPhfZ6dVkW8CC22Rt49Xj3AePkjt04rL7/rSfSlf2OqTYPmCfJhgyxn4MgDlaJiefBDVgbBkAJu/6nmQV+tdVdxq0Gfp6/oPKQA5g8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SnQrQ85x; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=maguitec.com.mx header.i=@maguitec.com.mx header.b="fQt1iEs0"
-ARC-Seal: i=1; a=rsa-sha256; t=1758673416; cv=none; 
-	d=us.zohomail360.com; s=zohoarc; 
-	b=EflLouuREdI88fYeCyiRS7be48aPx827XnH7Tdk1AqhT3F5fcaO9y0wFh5cjc2v6W5lfN3WyvudnO+3dZ4m2IdxXwDBs6FXSKSmfYfLxqFp1vBhK3ZXouQdbYD0yMBXu8ZNHjOdRkxC3f8sm/UllT2WOFk2IvtXSjhY8j65yFG4=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=us.zohomail360.com; s=zohoarc; 
-	t=1758673416; h=Content-Type:Content-Transfer-Encoding:Date:Date:From:From:MIME-Version:Message-ID:Reply-To:Reply-To:Subject:Subject:To:To:Message-Id:Cc; 
-	bh=rOash2+xMcyoKGoee4ZAJfscYggf1Grpxo2/PDWBTNA=; 
-	b=dspWkYku3OvwQgkKqfmyKoFAlnKIVsjPVjRdNLqcD6j97DVLkhTMN4WGPq6SqiSabm3v+YXeJsd71NScFD/aESQZG729N+9PTDuHYU88aqUq93WPeI19DjiTTQwpKNKynjr5HbrA05S1uP/gs7zzZSNLeI5xz8VANWNz4F3WrCA=
-ARC-Authentication-Results: i=1; mx.us.zohomail360.com;
-	dkim=pass  header.i=maguitec.com.mx;
-	spf=pass  smtp.mailfrom=investorrelations+95c399a0-98d7-11f0-8217-5254007ea3ec_vt1@bounce-zem.maguitec.com.mx;
-	dmarc=pass header.from=<investorrelations@maguitec.com.mx>
-Received: by mx.zohomail.com with SMTPS id 1758671215416908.7444865012585;
-	Tue, 23 Sep 2025 16:46:55 -0700 (PDT)
-DKIM-Signature: a=rsa-sha256; b=fQt1iEs0Rt0fXdp+VXbV/zCkzQnQee6kJTbycphs1OUSk3D4e0r+hUFq1hpUMEA2qwYCAD/VP+SsNFmO7Ajh4y+o5ekspX2Z2MWJepRypaj88RU+iNSA06yncPe6wfRNcNJMeWPKcGSVlacoB2OdgS3i1JSv7ZsBFSYmABLr94A=; c=relaxed/relaxed; s=15205840; d=maguitec.com.mx; v=1; bh=rOash2+xMcyoKGoee4ZAJfscYggf1Grpxo2/PDWBTNA=; h=date:from:reply-to:to:message-id:subject:mime-version:content-type:content-transfer-encoding:date:from:reply-to:to:message-id:subject;
-Date: Tue, 23 Sep 2025 16:46:55 -0700 (PDT)
-From: Al Sayyid Sultan <investorrelations@maguitec.com.mx>
-Reply-To: investorrelations@alhaitham-investment.ae
-To: git@vger.kernel.org
-Message-ID: <2d6f.1aedd99b146bc1ac.m1.95c399a0-98d7-11f0-8217-5254007ea3ec.19978f9183a@bounce-zem.maguitec.com.mx>
-Subject: Thematic Funds Letter Of Intent
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SnQrQ85x"
+Received: (qmail 10623 invoked by uid 109); 24 Sep 2025 00:41:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=Domi8k0G+Q5QH6UAEtimWeLd+Wh21qCjGQa6we8Hkyw=; b=SnQrQ85xwD7VSwr8iunFWoCN9+n6mOlqEZGpKC6tUvuOZPCDUZoApuO6tSEtTEMIbVdkestBnMunL6NHosTupkaCkMMxyILZF0eX0d1FdzKS6yGbzFwDSkM1WLV8pV6zLv3h3FkYaSLmAe3dpUhRmWSMowWaBWnXGX83qc2+va8LS5YPY4adTDFaB+d0FdWJfpyuqmcQI5dItjiaA4wW1xO2oU4D5DMMBSDA9LNa6hCxkE2nXJlJeDPPMqVEGedUFVXyNVx0QWEiHfa2bj3W+eS26T4WQuKxlnCrObQrsDroclXSBBB9PTJl6kq4aVxqVUFNmB7eVOtkI+yxzyf2ZA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 24 Sep 2025 00:41:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16432 invoked by uid 111); 24 Sep 2025 00:41:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 23 Sep 2025 20:41:34 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 23 Sep 2025 20:41:33 -0400
+From: Jeff King <peff@peff.net>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+Subject: Re: format-patch: why are the Range-diff: and Interdiff: headers
+ translated?
+Message-ID: <20250924004133.GA1142438@coredump.intra.peff.net>
+References: <3945bf06-ba04-4ecb-887e-0f3a76e1c2f8@app.fastmail.com>
+ <CAPig+cS-qYqpK2GOzSLQtqF_gqan6hftnnOnfMFUKby1nT5n7w@mail.gmail.com>
+ <54b9d6a1-6edf-43e0-8e6b-e096f322df64@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-content-transfer-encoding-Orig: quoted-printable
-content-type-Orig: text/plain;\r\n\tcharset="utf-8"
-Original-Envelope-Id: 2d6f.1aedd99b146bc1ac.m1.95c399a0-98d7-11f0-8217-5254007ea3ec.19978f9183a
-X-JID: 2d6f.1aedd99b146bc1ac.s1.95c399a0-98d7-11f0-8217-5254007ea3ec.19978f9183a
-TM-MAIL-JID: 2d6f.1aedd99b146bc1ac.m1.95c399a0-98d7-11f0-8217-5254007ea3ec.19978f9183a
-X-App-Message-ID: 2d6f.1aedd99b146bc1ac.m1.95c399a0-98d7-11f0-8217-5254007ea3ec.19978f9183a
-X-Report-Abuse: <abuse+2d6f.1aedd99b146bc1ac.m1.95c399a0-98d7-11f0-8217-5254007ea3ec.19978f9183a@zeptomail.com>
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <54b9d6a1-6edf-43e0-8e6b-e096f322df64@app.fastmail.com>
 
-To: git@vger.kernel.org
-Date: 24-09-2025
-Thematic Funds Letter Of Intent
+On Tue, Sep 23, 2025 at 09:59:55PM +0200, Kristoffer Haugsbakk wrote:
 
-It's a pleasure to connect with you
+> I’m not concerned about machine-readability.  My thought was that
+> localization/l10n of this software was intended for the user themselves.
+> And also that users might, without intending to do so necessarily, end
+> up using localized output in contexts where they do want English
+> strings, like on an English-language mailing list.  Even though they
+> might prefer Spanish (from my Colombian example) when using Git
+> themselves.
+> 
+> But there might for all I know be Colombian/Latin American patch mailing
+> lists where localization like this works great.
+> 
+> I’m not really in the natural target group for l10n Git.  I might be
+> totally missing all the use-cases here.
 
-Having been referred to your investment by my team, we would be=20
-honored to review your available investment projects for onward=20
-referral to my principal investors who can allocate capital for=20
-the financing of it.
+I'm not a user of the l10n stuff either, so you can take my opinion with
+a grain of salt. But it seems obvious to me that "the language I am most
+comfortable using" and "the language for the project I am contributing
+to" might not necessarily be the same.
 
-kindly advise at your convenience
+I'm not sure how well gettext supports this use case, though. The first
+one should obviously come from LANG, etc. If we added a hypothetical
+format.lang config option, is there a way to tell gettext to translate a
+string using a language string provided per-call, rather than from the
+environment?
 
-Best Regards,
+I don't know that anybody is really even asking for this, so I'm not
+proposing to spend a lot of effort on it. But the thread made me wonder
+what is even possible/easy to do here.
 
-Respectfully,
-Al Sayyid Sultan Yarub Al Busaidi
-Director
+-Peff
