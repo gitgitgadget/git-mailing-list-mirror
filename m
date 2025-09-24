@@ -1,141 +1,127 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0C6273FD
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 20:01:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8287B255F24
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 20:13:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758744101; cv=none; b=nE/1/rnQj+vc4q/yoz5GCAreboY9LTqjjQ4c16T1i8R5edY0k6kUzQ/vKcpQ8gR8nEBDJrtUOn1dr380iOrC8pf2KIuwIVvtMSeGnrnIDAhNHE6L7tVYlgvu13/c3NayrGYcrV7MPJWVZSiv5MLOFp1eT534NOTiADCcPC/v6Ko=
+	t=1758744835; cv=none; b=TMdzhUj5NoG40aSBAL2ZVxPkKsUk+vhX0nBr7GVejDyETA54Zfr1jL75ZO+p3B51bUFqTXalmpWYtgHQiCuwn8cOoUFZZhrhyU1Gd2HFUbRkrodGNufKjt+vXzKyaToPHkTr5mDZfe0oWaduWn6sEOWu1K012K9cS1FGYY8dOLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758744101; c=relaxed/simple;
-	bh=/tQTIJGFo/ukmDD3wh/WJ0cDtAH1oechcuEZjlPV/Uo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lnO+ZPJgx7hBwDuzSwrpw4SEeS/E0h4rhlZuXqgvX01V2RB54Z+XkS5vTcB2rgAM5ZwF85F/OpYDhs2EDf9ePsRA9ozWkdpDA32KbXv692lhnCjyXU24RQFBA3FykJbw0Cv0BslcVX71v8tmVT0C0jkyL7SUOYbt9A818Bj+E58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gr6EvQ/o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nJMWA7Dt; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758744835; c=relaxed/simple;
+	bh=hIzmU8aflRRyJ6L9Ih1/LCfzMkwR/4qzrUhpXhm51dk=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IeOFV6y10jRzi1YapkOXZ4b1pwQyKb9c2jxl14iEQLVXABHav/0zXWQazOPr2Ju8vvacMLb+EnUrFaNFBPNPqGNTXEuTjHqH01eLKEmP0FrUzaCmMUb9CrflaScPJ9RF08btj2uIMzl19ry/R+aMd4k4LHop1WsFgjUzEreeKHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JPBs4ymw; arc=none smtp.client-ip=209.85.222.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gr6EvQ/o";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nJMWA7Dt"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6749AEC0136;
-	Wed, 24 Sep 2025 16:01:38 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 24 Sep 2025 16:01:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758744098; x=1758830498; bh=qESqAJVSZO
-	gfafzNHbp3MWXwSCyZ/rcoHXXqw4ZCznc=; b=gr6EvQ/oMftvg5lXuVnQhtHUX3
-	OUYP9XJ49Vhq0+lRW/RcmvtmBrLDxWbSq9Mw4mG5/PovrQF7MiMO5UPbfLB+vYdP
-	JCl6abhMtBbU0MuTY6o+nOITCfxo0oUPFlgvr3eHVuB1E54p3T6ek3yS1tjb69lC
-	obCYKt2MT+EkAyd1tpkhvsd4iaHAlB/ppvS5LH4PEgePhjqjqczuJVXWLkecsS8Z
-	u03uDs47nSRnI7Bctz7rRfZe2fl9oApij6Yvs56ZW/lJdee3D7/1F1nVYPZLUi0R
-	M/7zC5+aJE4EeVNO0ERcH0TVuDthUkdSfvrk0NZEqqwTuaUBuah7+5ab/qqw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758744098; x=1758830498; bh=qESqAJVSZOgfafzNHbp3MWXwSCyZ/rcoHXX
-	qw4ZCznc=; b=nJMWA7DtIjFC8GJ5jXWu0kRYFlJAB3BEsF7C1AHqNSy9WywNROr
-	mbaa749xaN/3l5W/lHt9q6BbQ98jRNhUqP0kq55sbEsd+xS3tMbXk4IVrKbEl31Y
-	sA5UI9V+iBzQOi24peGn9f3c3oz9vaAABwjSWMrsIHanmwfdFJ5H9w+QL3LOUXzY
-	RDGJBFVDRb3LQpBIuisSN5MANmNuqxEXDgCKirnFROh8vE7QULd2sAcFu5Vk30zN
-	DugflkZYhFuPdInZHHBmAwoLAspg6qsNDe/NBAuW3oyI20Xo+YYyIKgXr0lZ2MOi
-	fLd18tiJOhAYz7wKr3h1ksoLcGWkIrrQhkg==
-X-ME-Sender: <xms:Ik7UaDq28zpBf83rOXUVINm4s0qp6mZuzbwWvMd9AXjOV6-XBLYlaQ>
-    <xme:Ik7UaBX0ZVDB-pnNwchoyO-3fh4ODarx8BGw0pIuCQNlEbqugiUuWNx03uO0UKuSq
-    1AeA2ydESiVXag8xifn6n2TyO9D9gwvF-S0xg3nP94JazlVWWxNDE8>
-X-ME-Received: <xmr:Ik7UaKAl01Z8EeOo1WRSvYL8FSEkjlDFppEcorYbajZ7J3HEQqpqM_4mQvtyjfDitBIvbUAFeNCNO8jVH_nmG4l84iUqFgz7nDlB>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeigeehudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    sggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofh
-    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepjhhu
-    lhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:Ik7UaN00Iv-vfvEvEAn4Kg3Nr7gpVjVP_sW2bRk_tBEewOG1x7ze3Q>
-    <xmx:Ik7UaE3fQCUsXt-LMXLBKkZl99e5TFTjLAAnUz-UUUl0h8BydvsyQA>
-    <xmx:Ik7UaKBgalVy63vZwxfRE2t71Q3w3kkZflwpTBFks6VKjWeMUuh2oA>
-    <xmx:Ik7UaL5ao9Lni1KTso2H62BEbFYXKNXyfeU_28vX8SQzKxeA2yUMGQ>
-    <xmx:Ik7UaLPFsLYATVYFGI0XsBAHCu-WkWhiS0IKlfTSHtGBxT2ZBjV9nfYv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Sep 2025 16:01:37 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,
-  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Julia Evans
- <julia@jvns.ca>
-Subject: Re: [PATCH v3 4/4] doc: git-push: clarify "what to push"
-In-Reply-To: <be6453d010bdc9d2b49988d6841dd7e7f9bdf1f8.1758649472.git.gitgitgadget@gmail.com>
-	(Julia Evans via GitGitGadget's message of "Tue, 23 Sep 2025 17:44:32
-	+0000")
-References: <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
-	<pull.1964.v3.git.1758649472.gitgitgadget@gmail.com>
-	<be6453d010bdc9d2b49988d6841dd7e7f9bdf1f8.1758649472.git.gitgitgadget@gmail.com>
-Date: Wed, 24 Sep 2025 13:01:36 -0700
-Message-ID: <xmqqqzvvk4bj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JPBs4ymw"
+Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-890190c7912so61874241.2
+        for <git@vger.kernel.org>; Wed, 24 Sep 2025 13:13:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758744832; x=1759349632; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WaosAhM+63L0bn1vJokP1YBBjznWnuE+vxNrKuquTCs=;
+        b=JPBs4ymwksFYJ6gxDmVHjNq1IxkNLfolHLJ2AcXkgSCTPyWIK1bjAggKIbSpGSTWPY
+         DSPAPOUv9h48dVMqpoSEXdf24TLFCbJhw9xd53JquO2KICPBmm6RCRwQXjL4VqiK04RG
+         +BZu8y4FZtLrvY7SFn3dxAzQ9XM3F0g5TC/V3hM7o0ITYRiUtYpPlMpuDRQSCJFOiR3R
+         anfWvabxHz/jwvpWLcjtBZpRVSlPp7dAC0Rj4Iq2Uf8xOI6SBmycYz8llUIBmR+tVT66
+         /2H6m6gbgXHpeuLXpqsT737eyQT1/ck0IbP5nQde2sExAKy9hmJ6/KXU6Kztzj2CiC9z
+         2Q9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758744832; x=1759349632;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WaosAhM+63L0bn1vJokP1YBBjznWnuE+vxNrKuquTCs=;
+        b=ATards3FX9GAwQ9U5x7LsnCPTPOs0gQfwf6XsKihErY0i69kOJ+8UlpUnxxlzdQaVF
+         4j5SCZBahq0jg4upRcwklWeWVT6QlMALLoJiXBLg0+ojB+U2dEUZnCXi3hzgwrHXZuVm
+         qIZqKYBd6YsWV1RLFzTcMedu+umI1N+Cz8yA1bDi75ebl9d4iPXBaJ5GDDcqeiPdA/Lh
+         SI1963oO4gwhAvq5QfLDlw3pFmCWM8XuMYfsur2bE2ZCazQRfImgF/KxiljPGyS1CiKb
+         TW2IL3uqZ3VHcabOCDDQ5+LwisoT1G5VIsVlDuMhHrMb/Ej+fXPKKlBOqfbWWjTyhn4h
+         2Ddw==
+X-Forwarded-Encrypted: i=1; AJvYcCX1ENnCpjsOvmCDZ4llW6na+ENJfJU9uvSQzu6W8WEVnqjNBktG2W7YHV5aSohMSJt0+eM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YynzRnP3EgUweAKP+43nUGqJqhP8chQ8MUcrJlUYfOq9EKn4UXA
+	Cb/LncMWuymGDuvpPTqAhBua5KFV89cGSKnVhx519uejnBW0cCyw1NHMc5VqbqPgssVg+ECff0v
+	vg+HZdQwIFFD9yTrFagFbZxZaESPQwjQ=
+X-Gm-Gg: ASbGncvAB/r5EewWweTAVhA7Ce1QjGchFd8KlsGqgB9aeHPzczYA1Qt/y6FqDP7NfvV
+	+lswT+o3T0o1IhLfHn8FHzsrmeZwRPoaweFTRT1KBKgkz+D5cx3DrJ99pKQzCNOR3QnUxlxAcDr
+	hScg8+ucwbcBt1VE3R1ig49pGatL5l/EZfb3RMTKCHlO90xmJk0GkBVg6xLZHV0CMOgeNleP+NZ
+	56dXVFHvyVvQkV8+Bpgg4ULeLY9wZsSnRdOdDSCkQ==
+X-Google-Smtp-Source: AGHT+IFi40owCE5b/FJAf8nqaDfT/6VjWFLWd6zT8Atl0Gcql/KNrPwyrTq4PyINDT29XeRQsnpZCGrlhH1YYt85qdE=
+X-Received: by 2002:a05:6122:3126:b0:54a:9e47:7624 with SMTP id
+ 71dfb90a1353d-54bea253b8dmr600422e0c.14.1758744832251; Wed, 24 Sep 2025
+ 13:13:52 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 24 Sep 2025 13:13:51 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 24 Sep 2025 13:13:51 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqikh7lob7.fsf@gitster.g>
+References: <20250918-228-reftable-introduce-consistency-checks-v3-0-271af03eb34d@gmail.com>
+ <20250918-228-reftable-introduce-consistency-checks-v3-4-271af03eb34d@gmail.com>
+ <aNOHl65jYyoNXou_@pks.im> <CAOLa=ZTf7KL23+=Fggfg=4LXt1Dsd6nRCFg3q_Dhuom2Bk+L7A@mail.gmail.com>
+ <xmqqikh7lob7.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Wed, 24 Sep 2025 13:13:51 -0700
+X-Gm-Features: AS18NWBsqDdPBvFTsvv39hrlWk1PCdwQHWbnDpxZwkF3rQ1prziES--Dn7kF1bo
+Message-ID: <CAOLa=ZQxM_iRMLoKt2ZoTSngkQ3EzXiJJ9hiJxRqHSaq2o0Nfw@mail.gmail.com>
+Subject: Re: [PATCH v3 4/8] reftable: ensure tables in a stack use sequential
+ update indices
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, shejialuo@gmail.com
+Content-Type: multipart/mixed; boundary="000000000000fa3723063f91b0ce"
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+--000000000000fa3723063f91b0ce
+Content-Type: text/plain; charset="UTF-8"
 
-> -When the command line does not specify what to push with `<refspec>...`
-> -arguments or `--all`, `--mirror`, `--tags` options, the command finds
-> -the default `<refspec>` by consulting `remote.*.push` configuration,
-> -and if it is not found, honors `push.default` configuration to decide
-> -what to push (See linkgit:git-config[1] for the meaning of `push.default`).
-> -
-> -When neither the command-line nor the configuration specifies what to
-> -push, the default behavior is used, which corresponds to the `simple`
-> -value for `push.default`: the current branch is pushed to the
-> -corresponding upstream branch, but as a safety measure, the push is
-> -aborted if the upstream branch does not have the same name as the
-> -local one.
+Junio C Hamano <gitster@pobox.com> writes:
 
-That's a lot of text, and ...
 
-> +To decide which branches, tags, or other refs to push, Git uses
-> +(in order of precedence):
-> +
-> +1. The `<refspec>` argument(s) (for example `main` in `git push origin main`)
-> +   or the `--all`, `--mirror`, or `--tags` options
-> +2. The `remote.*.push` configuration for the repository being pushed to
-> +3. The `push.default` configuration. The default is `push.default=simple`,
-> +   which will push to a branch with the same name as the current branch.
-> +   See the CONFIGURATION section below for more on `push.default`.
+>>> Now if we compact the second and the third table, the compaction will
+>>> realize that r2 is deleted and thus no longer needs to be part of the
+>>> compacted table. So the new state is:
+>>>
+>>>   - A base table with record r1 and update index r1.
+>>>   - The compacted table with record r3 with update index 3.
+>> ...
+>> However, I think your point  holds. I do think eventually we could
+>> optimize this to ensure that we do something like you described.
+>>
+>> I will make changes accordingly.
+>
+> If you allow gaps in the indices, it is a bit confusing to call them
+> "sequential"; "monotonically increasing" is less confusing and it
+> conveys the author's intention to allow gaps clear (otherwise the
+> author wouldn't be using such an awkward two-word phrase instead of
+> "sequencial").
 
-.. the above gives us vastly more pleasant readability improvement.
-Nice.
+Wouldn't 'monotonically increasing' suggest that
+prev_table.max_update_index can be equal to cur_table.min_update_index?
+I have locally changed it to 'ascending order' for similar reasons.
 
-I do not know if you want to do anything to the lack of any
-punctuation at the end of sentences 1. and 2. (I would have written
-';' if I were writing this myself).
+--000000000000fa3723063f91b0ce
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: cb46e05a08dfee88_0.1
 
-> +As a safety measure, `git push` may fail if you haven't set an upstream
-> +for the current branch, depending on what `push.default` is set to.
-> +See the UPSTREAM BRANCHES section below for more on how to set and
-> +use upstreams.
-
-This feels a bit out of place, as the safety measure, as I
-understand it, is only relevant in 3. and only when push.default is
-set to "simple".  If we are referring the user to the configuration
-section, then it may be a better place to say that the "simple"
-setting requires you to integrate with the branch with the same name.
- 
-Thanks.
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qVVVQMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMkx3Qy80K2c0Ukt6VWx6My9sN3YvNGwwOHJBdGxMOQp4U3k1a3RzK3J3
+VHZEcS8xYkxNZW8yT1dxOEpwZlh6N2lLbmRIUEd0TDA0TnA2NUtONndVVVF2NmM0QWwwcVRICis1
+ajFlemc2eTltUnVDeXlWRTI0UGNGbExKNTZHOGVyRFNYTTA3QitudDJqb0xTL2N3NlNoSjFQbGw5
+YmZTRncKckZONkJRRjFXUDZRUkQ5Z3N5Y29MNmg3Sm9zREwwek9reis0emk5Q1Z5OTg0T3hlanEz
+SWp0d0lDZis1OWFteAo1U1RpeVVBOHFuajNheTNmRE15eXFBWFJlbGg1MHUwT2hmaENNN2l2WmlE
+TmgxVllZOVhWR09IT3AyWnVHdTllCjZnT1NxMnlNVHR4TXhXeUM4L2ZCdGIzTmtxMG11eHkyQ3hx
+eXFXNVZEcEZZYlpCMHNpbmJEZk9iTlFJMmxWK2IKN3VodEJvbmEzbWcvTThJRmxGMWp3Qk03RzZs
+dU43Y1RReHBnQnp3Y2VGQjlyRnppcmlueFc3elFVaS9uaUl0bQprYmxoNlh1TklGQ24wYzlYVzNp
+QmROUWdHU0tZWDlDa0RhVDFNeVlyNEJ4KzdCUmxWckYvQVZXSTF0ejBvVU8vCmM1dUtQck1YWXNU
+R2pVQTBkTkh2S1VsSzQ3MnM2bVdnZEdnbUNzVT0KPXU5NXAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000fa3723063f91b0ce--
