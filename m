@@ -1,100 +1,137 @@
-Received: from out-176.mta1.migadu.com (out-176.mta1.migadu.com [95.215.58.176])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D038314A7B
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 17:01:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6724B30BB94
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 17:11:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758733310; cv=none; b=PDtBKRFk4QrYQiK1asJesf+Tdi75zYX4rZjNAeRbOl7eHMwfSDVUV9fY+L6iFHX1SBvZPHVHb/gQ8YYHOzBzKro9KTHnw0xh7hbV/639viOPv3Hfi+HZ53FNEdxGJPQJSa6h8ISjlPrau60wKeBPA0+pKmr0NIJmp+6RKmVcMh8=
+	t=1758733874; cv=none; b=kunfEJfBUHI88CeJ4BipyZnCTNACDGF58ODuY+zS3CHNzNA5uE99RQ2arBqxmjmezcwV8LqPqXZH2rB5T2xd2nw4+I+k3Dyv5v0Dl+mW9Z/yli4SJJaJ1WmNZW1n5dKeCXEWxGt1N8ABAaOXa0IT6aBV05iB7Eonp7En6zVgVHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758733310; c=relaxed/simple;
-	bh=+m5HQbyRcjh5lLzCeQGd9zZtumRMKdXp4/Xw0q8x44Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=vEgEEIE5VOZ83dsLnjKdIJU0WmyanujST6PkHXYlQQ6idKiKgLVkkpxoDjLE20ixPoYcEDMLKY2cO39+BINs/CASPEC2DvN8KA2UOw6JmBM4XHVmjnXy8422RO0c/JidVhAFOXwzvN2JbAWEPG27ash5xUzICmMsKJ7aHz6OVZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=velocifyer.com; spf=pass smtp.mailfrom=velocifyer.com; dkim=pass (2048-bit key) header.d=velocifyer.com header.i=@velocifyer.com header.b=IDa8VCkX; arc=none smtp.client-ip=95.215.58.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=velocifyer.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=velocifyer.com
+	s=arc-20240116; t=1758733874; c=relaxed/simple;
+	bh=2WmHJiTGUWbZ//v345z9n1vfS5ZettvzBbTbegofLTU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uvh6lCqDb7v2IghHuOSFH3KxkMveaB0XEgkhU9w01HP7N1PsTcrMdOnPXVMe9aN+gfTnFOWYilJOub268yUOgsESc2UnOLocLVQXpvpODcWbtLOvKaKFuk+vuREIFRWW3Pq6NSOBI0mu5oFCVQl06NMt8NdJho9SRNSf0iXGWPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rS4D5LGE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GDD55HCt; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=velocifyer.com header.i=@velocifyer.com header.b="IDa8VCkX"
-Message-ID: <75860b99-b7b5-4398-b32f-47a4873508aa@velocifyer.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=velocifyer.com;
-	s=key1; t=1758733299;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=+m5HQbyRcjh5lLzCeQGd9zZtumRMKdXp4/Xw0q8x44Y=;
-	b=IDa8VCkXtBMyb56Kh7LLuFAQu+s19lqxjbThOkBsIqFs0CM9glvPe/A8LjrzdMr9mIl08g
-	ZBYgcoQfQOthrvgOmQ0swLmXatdUEfNPDaoXy3nHCA/VsBywH+E0VUpxp9j4vNE1olXqTT
-	BgZIWiySJUGDkMVA7gzybn7AOMCs5IftLaLRgCZBQj4cwoLwUSvtg3p2KPQUCY4qmU2Y55
-	x+4lQAtRHt8ikvdVY4HzJgEpz5FvxjlQbw3o3Wps5FIAYXDD38yZXBfeJFcVRFPjfxfGYl
-	fKgdFAtycTjPJDOBXwLbUNf1G61hntjZHhz+H8Pjr02+zraQU4edfUWRVsfkVg==
-Date: Wed, 24 Sep 2025 13:01:30 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rS4D5LGE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GDD55HCt"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A3B801400050;
+	Wed, 24 Sep 2025 13:11:10 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Wed, 24 Sep 2025 13:11:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1758733870;
+	 x=1758820270; bh=pB5khzNai9C9nirA+NUhVLvtxFL7JW01h5LpnTGZhp0=; b=
+	rS4D5LGEsYoiAKFUZZ6gFv5cduKG9Tc/TnY8YgjtyVMXSyk/DUftcnsJzzgyJzUR
+	rwqNgjjo/JVA7M5UUJ1v/NyBGKhLIdJ8sDrTaYUjgs8SF2quHSXi7KKeO0YAQTZo
+	bx9KrWvL/6x3rl6b8kJ2N3WAd/Y7Lrp3t9VuJFccZGpspsL4t4B2Yl+7AC4Rw2L0
+	M5XIDVK8e2XgJR7UgEQESTDOa+fs9Ne82fJa1fUNDcujysQg43dAFVqhzdoDOq2H
+	+TY9RpZw4vEcK84DWn/5ejK3ggdnqOCPviv8Wqa6/s6wURCItBHCaj71ijuR26Ff
+	hlJJDYO8hBV1/rrxNs1uKg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758733870; x=
+	1758820270; bh=pB5khzNai9C9nirA+NUhVLvtxFL7JW01h5LpnTGZhp0=; b=G
+	DD55HCt3ZfIo4bqRQaVA9LoNqkgnTxiUn6Sm/doupR8eHSMRK3R7EGVrxLKKB82V
+	ki+zsgd3ggJqeWzA2JKWgvTUHtZ30F9lhVx279vdQRq31RdMyfEMZMUZlLRQqzpV
+	ZYVNkPu3JnRidU2l7Omuay5725Y9+3vW33FBevXxldhmqUd8Lbiox4OAJbzT9gzG
+	UupJqoJq2DxhUnNXUtF12Yl8Rau/+6g3+b7x+bljMFhxprbpgs4CdEbGGf4bTSEb
+	2I1YUvTR75qGodd94slRzQAvqGGP1+BqstLroMN6jsuHu8MWelOl92VgV8HEihUD
+	1C3qeBRqgSgaMHodCLCeA==
+X-ME-Sender: <xms:LibUaEnp7xEd1y1ykgUx3ZzP9cU6w1LrvmX5pyQ4MhMzhDyIrPAwwA>
+    <xme:LibUaHgre4Pu7Tf4UwMlmTNWauCOpiQXjXp-eHtuzQOnyPOb8neU603QzTPl1it36
+    Z5U7irtHhQqFbgdGk1fAej-KIl0LOYet0lo7EdQvKf018Si38bx7A>
+X-ME-Received: <xmr:LibUaMes4g9tD5IAISJ6t4snmvvZwEmXmWVe_6kLEAiCfxmGzwQg9adSVVBbwQw2TQZEOHIpl3Ay9gA0pt4KOlV8Y_Ssm9x8TOMl>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeigedujecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepleehtdevjeejtddtjeeugeejieeuleekieetvdfggfdugffftdeflefhhfdu
+    uefhnecuffhomhgrihhnpeigkhgtugdrtghomhdpfihithhhghhoohhglhgvrdgtohhmne
+    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhs
+    thgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehmvggvthhsohhniheftddujeesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:LibUaHjKHyhrW6ijq36ly84SqSemHoLSBpSYU2JCPegHSrUaanfMFQ>
+    <xmx:LibUaEzUhsJwgAdQowIXzeh0LjYyxdW2nkGe01EgDCgdlVoKiOFU1Q>
+    <xmx:LibUaDPLZCPeeEyjQt3cgVnvJ1Zzdu7RMFsW40n9N_s4zNj976Rgdg>
+    <xmx:LibUaFXNhjvwrRsLApZ71HIRYqPhIIlIFB_VT1RbejLRdM9XmXsxOQ>
+    <xmx:LibUaHJPvLhNCElov3nYM7v-Kd-eMXrZRBaeG0LX1rBi7pEsUp4WQc6a>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 24 Sep 2025 13:11:09 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  Meet Soni <meetsoni3017@gmail.com>,
+  git@vger.kernel.org,  shejialuo@gmail.com
+Subject: Re: [GSoC][PATCH] builtin/refs: add 'get' subcommand
+In-Reply-To: <4FEB2B85-FC32-4076-9DA6-F47AAB096CB0@gmail.com> (Ben Knoble's
+	message of "Wed, 24 Sep 2025 11:29:11 -0400")
+References: <aNOQhncjwYCwCaZ3@pks.im>
+	<4FEB2B85-FC32-4076-9DA6-F47AAB096CB0@gmail.com>
+Date: Wed, 24 Sep 2025 10:11:08 -0700
+Message-ID: <xmqq7bxnn5cj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: 0-Based indexes for git log
-To: Nico Williams <nico@cryptonector.com>
-Cc: git@vger.kernel.org
-References: <fd7758e5-7719-4bed-b1b3-2137c49cc950@velocifyer.com>
- <aNQRoMgSRVvNtStG@ubby>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: =?UTF-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?=
- <velocifyer@velocifyer.com>
-Autocrypt: addr=velocifyer@velocifyer.com; keydata=
- xjMEaCpEhBYJKwYBBAHaRw8BAQdAZBZWSN4ekixMHE7duMBmw/2uteCfmp68D/mxaYk/dyrN
- JlZlbG9jaWZ5ZXIgPHZlbG9jaWZ5ZXJAdmVsb2NpZnllci5jb20+wo8EExYIADcWIQQboPxL
- gODyGwJpjO5jTr+HQMdIvgUCaCpEhAUJBaOagAIbAwQLCQgHBRUICQoLBRYCAwEAAAoJEGNO
- v4dAx0i+HU8BAJGd99DA1VdBzcYgch16XK7mC78ZqEwGegVCRerWry8RAQC3MJUOiyQ062Ol
- /3iNXY6zk2QXaAsV8eUbFKUo1HiwAs44BGgqRIUSCisGAQQBl1UBBQEBB0CEoaVGilG8Qt/y
- Xp135G4fhWjJH7VQkPIFo8/MsZspfwMBCAfCfgQYFggAJhYhBBug/EuA4PIbAmmM7mNOv4dA
- x0i+BQJoKkSFBQkFo5qAAhsMAAoJEGNOv4dAx0i+yNYBAKcE1fbRCPqWwsIpRvOjSq9Spvhl
- veEFpUMPaQ1tp7qOAPkBfZroJ8veENH/8sz+Gf/QK6O1kcqC4d/vAASzMpOiAQ==
-In-Reply-To: <aNQRoMgSRVvNtStG@ubby>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------JXNvOKtIf7YGTWbCQ8s9YbnR"
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------JXNvOKtIf7YGTWbCQ8s9YbnR
-Content-Type: multipart/mixed; boundary="------------Hf6mkwZWJoPZ14UwYl005p1q";
- protected-headers="v1"
-From: =?UTF-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?=
- <velocifyer@velocifyer.com>
-To: Nico Williams <nico@cryptonector.com>
-Cc: git@vger.kernel.org
-Message-ID: <75860b99-b7b5-4398-b32f-47a4873508aa@velocifyer.com>
-Subject: Re: 0-Based indexes for git log
-References: <fd7758e5-7719-4bed-b1b3-2137c49cc950@velocifyer.com>
- <aNQRoMgSRVvNtStG@ubby>
-In-Reply-To: <aNQRoMgSRVvNtStG@ubby>
+Ben Knoble <ben.knoble@gmail.com> writes:
 
---------------Hf6mkwZWJoPZ14UwYl005p1q
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+>>> Perhaps "show-ref --verify --no-deref" or something that does not
+>>> dereference but works directly on a symbolic ref?
+>> 
+>> For now: yes, it's more difficult to discover for sure. But users will
+>> adjust over time as they get more familiar with git-refs(1), and from
+>> thereon I think it will become significantly easier to discover that
+>> subcommand.
 
-PiBEYXkgb2YgbW9udGggbnVtYmVycyBhcmUgMS1iYXNlZC4NCg0KSSBjb25zaWRlciBkYXkg
-b2YgbW9udGggdG8gdXNlIGEgMC1iYXNlZCBpbmRleA0KDQotLSANCkdlb3JnZSB0cnVseSwg
-8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow0KVGhpcyBlbWFpbCBk
-b2VzIG5vdCBjb25zdGl0dXRlIGEgbGVnYWxseSBiaW5kaW5nIGNvbnRyYWN0DQo=
+But unfortunately, that is a tautology, isn't it?  With the same
+effort to advertise git-refs to make it more familiar to the
+"users", you can make "show-ref" familiar to the same "users", and
+problem solved, without a need to do anything to "git-refs"?
 
---------------Hf6mkwZWJoPZ14UwYl005p1q--
+> I think this goes to perhaps some of my unasked questions: who is
+> the target audience? My experience suggest that most
+> mostly-porcelain users don’t acquire familiarity with scripting
+> commands, so it sounds like we’re talking about script-writers
+> here (and in the commit message).
+>
+> But how do we encourage script writers to discover these things? 🤔 Hm. 
 
---------------JXNvOKtIf7YGTWbCQ8s9YbnR
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Great question.  I understand what the patch author is trying to
+achieve (i.e. "consolidate ref-related functionality into git-refs",
+which is the title of GSoC project [*]), but what are we, as Git
+project, trying to achive by "consolidating"?  I often cannot shake
+the feeling that it may a make-work job without a clear answer to
+that question.  Or perhps xkcd.com/927/?
 
------BEGIN PGP SIGNATURE-----
+Perhaps the hope is to have a single kitchen sink "git refs" command
+that does anything related to "refs", so that they only need to
+learn this single command (and unlearn all the previous experiences
+they gained) and after that, they do not have to "discover" more
+things?
 
-wnsEABYIACMWIQQboPxLgODyGwJpjO5jTr+HQMdIvgUCaNQj6gUDAAAAAAAKCRBjTr+HQMdIvgQ1
-AP9115qD7onGWaoFtAqKIleiXvIJl1JJ4MvJzn7qMv7TlgD9HnxVPcrt9y+2odzOmnKeMYMpzCzO
-01zOTflYtUu2iAU=
-=FP3a
------END PGP SIGNATURE-----
 
---------------JXNvOKtIf7YGTWbCQ8s9YbnR--
+
+
+[Reference]
+
+* https://summerofcode.withgoogle.com/programs/2025/projects/xVrT5e2q
