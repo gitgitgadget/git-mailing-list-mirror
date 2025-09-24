@@ -1,132 +1,132 @@
-Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3322D6E60
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 18:44:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30DBC313E0C
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 18:51:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758739451; cv=none; b=Bnzaz8r324Mbr4jJPbRsOWt2e03p2CL/wN84Gq5TFhyrWgw+d1OzPY9wod3IECwC4YPw6odBm+srS7SOIBQXtjLXMzCTKsV/eK9bmpbWTJ1JJAu2FBANqgYoXp8kxpSSyDqFSudg2BfIPRvEmDxtPSWLjOsEycVw7nXy8nFkLWA=
+	t=1758739884; cv=none; b=LX4fLVjohpDYlPiFBsHEU2soln3nqAphZY7tTQC0fIaq0kVeAWvsg3LNK4OqWCa7J52BzuievemLLCguA0APOwjTFfK/CQm0VMV7jKOM/07VIx6PAbYvDJ87g8NeeNzIL+3+IZz5HGxVd5WMrBIyTUrtSuspvApUHz0Cv4K7kPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758739451; c=relaxed/simple;
-	bh=eI98yffMN63ddBwIKL7ZZciyZhYKQYIcPCvsNs5dLNA=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jpR0C/SNmD6rB8L4jsBEthjG74fFFpoqe+HFhkDn4pKbkCjZqZxqsJh0rwhnNztxOWcyYlx+oldy+w6MRNNS9s3/ZdwRPMWvgHVcuNfN2bJ6DyrRLuYAwFrpGl6jroC/M+w0x69jOkIKrDZ51Ac/FSrhH4UfMf3UEAEMKS3GedQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mKhet0vp; arc=none smtp.client-ip=209.85.222.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758739884; c=relaxed/simple;
+	bh=4c0o1c+db8bEHhodDaYMhbiUEbOlQFN1GK32UzgM+OE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NSUK1Y64WcHd97XBaLWOAXfnvhvrTlKFe0LM+GoQ6+b/hBgnFfWf7e/g20cfoBDv5uIzma2bAhWfJrbH1zfdJD1NpTOP01OwlQUnx78syHmPtlOHBiE6bQeg/4s2ai7GVxcNkdARQO+kHnTCldOlkWTayvGRo1FgzaWtRiPQoWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QNc1W0hX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l7hrJBZj; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mKhet0vp"
-Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-8e2702252b0so29982241.3
-        for <git@vger.kernel.org>; Wed, 24 Sep 2025 11:44:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758739449; x=1759344249; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=JDE2lwIrkvrNlYCpZzkj6c306lhVCPKoOa+p9hC5pPc=;
-        b=mKhet0vpIt3+Y2dKG2cDKFrfboUNIBV8q2Vx82eqP0NtRrkkfndrznOB1HzMAcAE3U
-         /4+HBVdOulueS2I/1mCgrhSiFmS0l9Az6P1L/3mjsc4qAgDxVXm0HFyUBsu46dqLNH70
-         0YvgZqrLQsnFMVs7Lc+mpNcE2NzpTZvsqadGcquH4H5noCtR5lIcnZi3Tf/TE5Q4U2mI
-         S4VlelC8TiNvG2WjdJ43csnESkzDjuquriKKwppeo5aCImNLaNuKgIpDU7J7JoDQAWnT
-         ROhK8aBg07ZBKUOh3M0Tp/xDgpP4PxuFcbfEVPO3eGHMwVUGhG8wqeFHn2t+S2xwr58L
-         7vZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758739449; x=1759344249;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JDE2lwIrkvrNlYCpZzkj6c306lhVCPKoOa+p9hC5pPc=;
-        b=fjtY79Dpc5lQu98Kwr9o1UCoUZg3ioclNy1ijJgKAdS5fJi3z10EAAc1lEu7XSIHVA
-         ou2oUSpUGUhimIHwORAHJu9zDGHTGYeb8JgrvFjQh54nr+ZnhUkmbYlDaaAJhRj0x5xM
-         lEB8nURR1Aydztxq28md2kFT3Q6QbO4hl8szLLC6TLF4i8TJr5onHVUhbU0PJNPljC8q
-         7tGY1S/ffZ/wLoGcphU1Df5SWp/XKGoz1zQbhURQg/ldyR7ZQuhFhaMSG26904Q1AMRB
-         deIvvk36PJUYZ4IC2oz+kPtyk15YodkXCbxHbsNjEjy8vnHMSO1L1VQYOUaK3h1T0/NZ
-         Kcrw==
-X-Gm-Message-State: AOJu0YyaxygYMXF9TTuy9cRNdI+Vs/nN0FheWKod2h4LqL8UA2On1qGV
-	lVoVZ38L4tXwrgC91+G01EsH7VD5RrscVWPFl41RHxJFAlVl7ILWohgiRXHh1YYghPSJ05PUg4u
-	GYXWIldSRrdyqf9f06sgdE+UXzaHpbqI=
-X-Gm-Gg: ASbGnctciKgK+XwuwnzYqPlovC1ukLmRg5jFETihzP8prYW42oFjPzp8al95S3WBMQH
-	Lt/1NYRRoO5AkNQmdcT33I9eSVugyBtWZnbS61CIWVV3PF5Gbm8YmnRLzNCo1+FYZccxeTs+ihz
-	PQ8TZojtUQ+y7W3Z3powzdP5qKDXU1qpo8A4bEpnW6nJQw36jyLjHiDm0fHXG/yakIjVI2UHLaF
-	9xDLDKpFdg3ptwa+l6xav1ZL2T33fhP/1Vyds7qig==
-X-Google-Smtp-Source: AGHT+IG0IFX3CIMwo/k25rNnqpFZ5h2BJDl2Lr2P++dcZEZyHiFJjKhf9zUhaWkicB2ZGLx8gb88X3jQhiDbDZ5g1CY=
-X-Received: by 2002:a05:6102:dcb:b0:5a2:c93c:8f82 with SMTP id
- ada2fe7eead31-5acc5f55624mr467225137.9.1758739447998; Wed, 24 Sep 2025
- 11:44:07 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 24 Sep 2025 13:44:06 -0500
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 24 Sep 2025 13:44:06 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aNOHr7lm4WXUyHa5@pks.im>
-References: <20250918-228-reftable-introduce-consistency-checks-v3-0-271af03eb34d@gmail.com>
- <20250918-228-reftable-introduce-consistency-checks-v3-8-271af03eb34d@gmail.com>
- <aNOHr7lm4WXUyHa5@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QNc1W0hX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l7hrJBZj"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 34950140005A;
+	Wed, 24 Sep 2025 14:51:21 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 24 Sep 2025 14:51:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758739881; x=1758826281; bh=JKoeODgNbb
+	IaChIb8RqmGaeubrcVvXzpUs6sScEV1B0=; b=QNc1W0hX0AtNWF06NiAAk+Oj7h
+	tY0Hj6spgREO788WCAoOWclwo2HRZQCWh0jddkPeAQNP0jm4QF3W8A9iTvxzLrSf
+	bjNcFhsG+h04fT8dTr4nSUz6ON2n2nWbvK+b8JZWWr8K7ClOvS8KXEBQ82BYwmq3
+	da2rYZWhim1d4GRgvC2vcRv4NG5bPMqNLeQHkhVb+tfB382+P967BBdZ6bK2zoVc
+	vlqVS1zaUvrsNm6FwzDH+HP7IQqaEIDmMXZuQ9Yx0CylEvAMYAzzT2fxbEeF/6hr
+	W2FNgvjEw2NpINLxBTKzudqPm1k3B2g7qGfKyl4w8vMet5Kph7okfTVk+pnQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758739881; x=1758826281; bh=JKoeODgNbbIaChIb8RqmGaeubrcVvXzpUs6
+	sScEV1B0=; b=l7hrJBZj+iYDlhLh902a5mjiRm6ht7pzOKVUFY3UeiqZMBFpyYe
+	R+K8tlr/vxSg2tCjMSC3wrZ4iUbjlMoyfYQraicpdyuUomld9sZhsDYrxWS/rJvC
+	WWfZfQJ01d93zDWhxuIymuDhtQC8uv4CBowiPsqVhn75s7tNtAE/80ls41cUY88/
+	9foK/0swwWLkQWBlRxf9uX9MNJxIF1FqEvOPYKOCeQUaLBUkywCAgjk3L0V4MVVL
+	+66bnGD3Tb4FudAuolUwcjwW3upbfoKOX7FBB/wfsqLwxebiyNiLsNlj+g+Lsjay
+	7rH4j91WVZJteG90GsSJdNGTKEVFrZwUuig==
+X-ME-Sender: <xms:qD3UaGk-EdpCE1W47XAx2_uCNaIKrWcnsnBieecewx4rTCJNAroBNQ>
+    <xme:qD3UaE2pZFF8l0XgstoOeoO0BRo8yBAunjNbG1HaSEWMl17bl0mwGlfxWVwEvnuPi
+    SMXMBhQIPf1IU9VQVJiLdKthygSvwxYaCYz2C9tykIrc2syBm8dGA>
+X-ME-Received: <xmr:qD3UaJpR3V7XBhCxE35hMCClujQ5iZkc_kxk-uykjs_QkRqG4Cr2rgpsvTFjFfnW6Dh0_gxWSIbUk9aVcMwHGmIysFAHNXHrZAws>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeigeefjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilh
+    drtghomhdprhgtphhtthhopehvvghlohgtihhfhigvrhesvhgvlhhotghifhihvghrrdgt
+    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:qT3UaJcopNp7PtPoDyG4Ba37_-VBnhYU53Z8VTEdoofyzHSCWG26UA>
+    <xmx:qT3UaAoo0p4n_wGLaHRiY096CJVCA2m-obL0Xf_dbP5j9Th8nHeRkw>
+    <xmx:qT3UaCFWQlNT2xQXSjxncZxD81Fa2aKt8TXqCkZRhIJNCRuxqs1qvA>
+    <xmx:qT3UaItl95gPZwF9an5P9-2_OMR8Q0O4n1uaGSu6za1iFrIFQ8YHwA>
+    <xmx:qT3UaLqBqBzZuksQa6E633Bn4JuJdIVofJFy8zgUqidoyyDX4i9LQV9I>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 24 Sep 2025 14:51:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: =?utf-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?=
+ <velocifyer@velocifyer.com>,  git@vger.kernel.org
+Subject: Re: How do i get news of git releases
+In-Reply-To: <CAP8UFD0t76v3XYgoLjZ-527EePQKihSNyA=AO0QjJHDy=u32JQ@mail.gmail.com>
+	(Christian Couder's message of "Wed, 24 Sep 2025 10:38:17 +0200")
+References: <4ea9cb1e-4367-4926-a9ba-0680dd63e616@velocifyer.com>
+	<CAP8UFD2asXf_4_02khYRVWVQruBdvoMkZVE-6cVHttT9gHdWqw@mail.gmail.com>
+	<b5867a92-c516-4a66-a108-8cabbc166336@velocifyer.com>
+	<CAP8UFD0t76v3XYgoLjZ-527EePQKihSNyA=AO0QjJHDy=u32JQ@mail.gmail.com>
+Date: Wed, 24 Sep 2025 11:51:19 -0700
+Message-ID: <xmqqcy7flm54.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 24 Sep 2025 13:44:06 -0500
-X-Gm-Features: AS18NWCaA1rtds07C5L3xYFfzzDWS5AVvqlH9VWQkNHlbeRO7snB_5k9nixU1Lg
-Message-ID: <CAOLa=ZS+CGh6kuT87xoR_GnxJkBABk3g0CtOqU9wfnCVS=AcBw@mail.gmail.com>
-Subject: Re: [PATCH v3 8/8] refs/reftable: add fsck check for checking the
- table name
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, gitster@pobox.com, shejialuo@gmail.com
-Content-Type: multipart/mixed; boundary="0000000000000d0917063f90709b"
+Content-Type: text/plain
 
---0000000000000d0917063f90709b
-Content-Type: text/plain; charset="UTF-8"
+Christian Couder <christian.couder@gmail.com> writes:
 
-Patrick Steinhardt <ps@pks.im> writes:
-
->> +static int reftable_fsck_error_handler(struct reftable_fsck_info *info,
->> +				       void *cb_data)
->> +{
->> +	struct fsck_ref_report report = { .path = info->path };
->> +	struct fsck_options *o = cb_data;
->> +	enum fsck_msg_id msg_id;
->> +
->> +	if (info->error < 0 || info->error >= REFTABLE_FSCK_MAX_VALUE)
->> +		BUG("unknown fsck error: %d", info->error);
+> On Tue, Sep 23, 2025 at 9:42 PM
+> <velocifyer@velocifyer.com> wrote:
+>>
+>> > The URL for each release points to the announcement email on the
+>> > mailing list archive. That email contains the release notes.
 >
-> `info->error` is an enum, and whether or not it is signed is an
-> implementation detail of the platform. But I wonder whether this check
-> may cause some platforms to warn about an impossible condition.
+>> If they already have the realease notes on the mailing list, why do they
+>> not have a seprate "git-announce" mailing list with just the release
+>> notes and other important announcements
 >
+> We try to keep everything on a single mailing list as much as possible
+> to not split the community.
 
-I didn't really think of that. I guess typecasting it to an int would be
-the best way forward here.
+I do not see how the presence of an "announce-only" list would
+fracture the community.  You could make such a list strictly
+read-only for participants (i.e. only the list owners can send
+things out, responses may be routed to those on whose behalf the
+message was sent to the list, just to /dev/null, or perhaps to the
+main list) for make it even clear that the secondary list is for
+announce-only and any discussion about the items announced would
+still happen on the main list.
 
->> +
->> +	msg_id = fsck_msg_id_map[info->error];
->> +
->> +	if (!msg_id)
->> +		BUG("fsck_msg_id value missing for reftable error: %d", info->error);
->
-> Yup, makes sense.
->
-> Patrick
+It does take resources and coordination.  It won't happen without
+anybody spending an extra effort.
 
-Thanks for the review.
+Because those who would be writing the announce material for such a
+secondary list are making enough efforts to help this community
+thrive already, I do not particularly see the initial "why not a
+separate announce list" question a very productive thing to think
+about or respond to.  Unless the requestor is proposing to help such
+an effort on continuous basis, that is.
 
---0000000000000d0917063f90709b
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 89d925bad5cc1722_0.1
+> Also what is important depends a lot on the reader. For example
+> Git for Windows or Git Rev News announcements might be important
+> for some but not for others. So many people would have to sort
+> things out anyway even if there were separate mailing lists.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1qVU8vVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mLy9qQy80MlprWVFSME41VHR1OXhTT0NJZlJ3ajkrMgpqTEVSTlVPS0Nx
-SHpwT2RIaHZjWTBGdEtyOFUyZjUyaEZKVVdWSVpiZEpOaFgvM2tFR1IwVFU1WGZZWk5HM3ZECnRi
-VjloMnBPd3k3bDIway9ia08wOE5Gak81TWEyS1lHWHA5SnF3TUNpQWdFU1VsMjlMdjJiTDhiMXZF
-WDlpWHUKcGJjTStWaE9JZENjQkkxYVBYb0RQYWxUWXZzdnFhb1JQMVp1ZEUzYWpTTnU1YndPdWNj
-ZWtSSG5EcFRWRk9QYQp4cEVVb0ZnVHQ1WVZJOHJaVDdlRFdQODBhME0yWkFCMGsyaVZjVVI4a2I3
-SlFvL1F3VnN3YjhVWEU4QTlyNTBrClNGRGlYRm5VdWpNWG51Qk1xaHpRRFdGSVhwNHo3MGIzbG1u
-Mnp5S1NTLy9Db1lvd05SMUpGdjZFalFzZDNaZ0sKRjhyODBLaHI0Zlo5T0ErSCtLc29YWDhnNXRI
-Uk5scW03MWNjelI2ZnBZQ2hUNzBueS9MTE1KdUx1QUVFWEFqdAowMWhZRjEzbHkyVEVlcXZVWnVF
-eFlwNFY0OUFxQmZ3cTZwL3R1U2hWRmRLV1cwbndrR2dveUNzbWlWTmY0c0xWCnc1dWxhVWJjc3Jq
-NUdPcXg0ZmlJWi9pODBKZFhjQ0hURnNPR21TQT0KPTF5UloKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000000d0917063f90709b--
+That's very true.
