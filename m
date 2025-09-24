@@ -1,164 +1,127 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5042DECD3
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 10:21:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1653E2E5B2E
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 11:06:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758709323; cv=none; b=OFwVJ4wCQkAqx358AYPON6wvV32YtwMP5nrH0Ofgq/cFK6HipzqI1pHX2UEdT3Erb1UNgG9hqLFx2jLVa/vjCk3LACLZAoWwUqtHOEOgX2z2InZmj68cUVRX77l+DPVivOhlmZ3FW/LY+4lkhd/ZlJz5GO/PSFQRH7dfC+rWbPc=
+	t=1758712018; cv=none; b=hyWgh/LTM927Xu4Wm2ZbIwFFXMIWyzCaW7Yzj5OjTaKpi91YEryMc2NMsF68l6nQG54gsx/tQMLjALLbiFh8c0jupEU33ANFBswm5ZzYUXjOYTAXF5sP1KRu1m5wnA4KGMIZ+5THNbZFhfivuRydbUBDSahuEevaqHLZjgtLeaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758709323; c=relaxed/simple;
-	bh=koChYTBc8Ev80td7RjG10VOCJwOjidTEiJ5aFe/FrMk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OdUx3/S0ngp0N63DUxmr6TLQyNO9njiE4tondcR3vh9hqtAwUOdlQ212QH6oMltBF99nrWlolVjNCBKdLKtFw7CKNIwkOFRFjruiRd5AQPMkm+vqNrFvkp4GuZi2Cn2IhB1s0g8bJ7DVVpt7m9XCbawxdcibQPS2OEtgKhBNpn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LnWlOFZd; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1758712018; c=relaxed/simple;
+	bh=95o7yJ4Om9hEK4ScQiJHRvUYmaoBkBV3U3rubtrMT/c=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RL0ebdYPbsEC2G49B9Xu63FBOwDJjF9oos03fWOZXfhszpmtEj4axRqFRZz026Qdf5meMCnuWzhLaiLdeVxUArottnuOGmMtd5x4OHnk/ZyGCUGICveWG8b+yL/+Q+1sQh02TkGAsSex3YVJUxAzPOH4OgWP30Y45HJrVKOn1vY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bdp6ltHc; arc=none smtp.client-ip=209.85.222.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LnWlOFZd"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-46e2c3b6d4cso4197235e9.3
-        for <git@vger.kernel.org>; Wed, 24 Sep 2025 03:21:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bdp6ltHc"
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-89018e9f902so3548516241.0
+        for <git@vger.kernel.org>; Wed, 24 Sep 2025 04:06:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758709316; x=1759314116; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QNuvz16jb48lSwD6HvUeVn3w29xeLPlOp8ZRF3U87Q0=;
-        b=LnWlOFZdZfyT/Y1gp8cy0R9xU4SobRmkyg7YUCJMaO1tnPZV3lwtUnPTUNr1x2gsxo
-         Khbua3K1KpAxIpR158gHmpInueUD+PAEKPJIEAKYOLnIVMJhCfhj/mmJuO2eiumZx9XG
-         WLz1e5sRFb6ffCdcKRq7qGNYajss7mk8MERTKYZBckhEwIwtzp6RWo6ENyagcZUxXCgg
-         TmXH1FUb5BmG4+5tECwbvHF3+EXc1FhIj68RVeKRM6OlRxuKtOOS9kZvMsCm/Gvtx7+e
-         BDldHjyeTTrYhHJZ57p8S5LZWU2/xjmxI+3cnUZH4pyezJUWACTeEVxloX7Yd5QDC/4A
-         /31Q==
+        d=gmail.com; s=20230601; t=1758712011; x=1759316811; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=U0Yq0F7/criI+QGPS3yhCPd2vb1VWfYEF/8VzX3IjFo=;
+        b=bdp6ltHczrRWCxFb55UL6ffsEbQoqRXO77aaRO+enxWgzb6oyQHLJgqd+KODXzq+qy
+         mgrYkmyNkid7Pe0i9LsGIRahNMN5kWq4/08d8KoiIznE0/yjiLRoRlxZZW4W4hBG4QPA
+         Mgj9IWZI4V/s8niWSrbyZij8L4ZOtjAhgD5YAsUsPCE7MoxWWzm8ycqj0KmLiGoMe2tR
+         fwh2VttE5rDqcfO+GUN/zsHsXp6wSiSWr/nUvUgupyU8m2BenQgxdS9fxCEWgcJh5Dl4
+         XjlxfguVZiOpABijnkzGqlQRE29toh7A0NNElqzhz3uZ2E+z/PxdnXQU+h/7Bt+ecKiZ
+         CLKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758709316; x=1759314116;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QNuvz16jb48lSwD6HvUeVn3w29xeLPlOp8ZRF3U87Q0=;
-        b=f3NW08PVemHhtBjytMqTzTALxVJAd0/T+E6IGXckc7gqBIz3UCuE4yblW5mECZcJ/v
-         TBpNzfDE2xWDoTY4r2NIvT5UFoWx8MjeVrueSBFUIfE7FDyF6ky9miu3TVeZjKirUt7l
-         0ad9QDixyawLmwlr3Y0XUuH2eFdTIHxJBplFGx323AGjG/KJW2HBSEOiicFVjprQzysc
-         +2eD53Oc/0N9ZzZnTlwHn4NJadEjWmCN8F8IHPKMfD/RRRBr0mrxhNjkVldvlAPEbjSv
-         MNs1dsiIKDR5eSn/oZM7nIMlA0R1Qa3nJ8JagrDulfL6GGh8mcRZDkYaA4V/HCS53UbM
-         8GDw==
-X-Forwarded-Encrypted: i=1; AJvYcCU19HWlj8dEuI/sH8lt/b4VHsMIScHtAgzXwlEuxL7gUbRFZJBihdX9/EIrROry4weGGgI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyvizADWeRdls3A83yi+KWCJgz6ZEfm62CsZpjDTRJtMqn4yUn+
-	lR5OpQz74D/nFFYqaQQr02fUwRwInmfbNAWoG1KyCuR8Y3Z+RTSr+/yB
-X-Gm-Gg: ASbGncslufPveRpA0aedWykceei8nNDnU+K54ps6UJMNw3Ejfhrs9K+1TyqdGPGbHaF
-	CF3WAYiZRl85ZCbIcZp/7Fk7mkj98vd7KwPv4VjGUOBkxYqLyqF1nFqBrDMRqiaOtwKpWPGXHiY
-	UKsFKnmC//F83rZ1Y7WA43695kOhplogEer+GX1zqnXvHu8VSieGS9PIZvjY0CAP9NlgDZ1UYrc
-	9vJpGnbbuZoXwsQqiAvKGx9OXzQMxrZxDy7/khqja1lnzwjrFeNCHnmC22pcHM4hzPo8XkOFmjc
-	c+nJ6ZyPHMocOvSCQ0XG/GR0BNZFcp1NqKM3BCOywRgYvfzJ0OdXtsm9uxzQXs6vuYyPeBGjc0I
-	/30JbRQDQSFFRx6rERlsC8x/P65VbIhE6Y4vtRsELce68a8he9Z3zcWJ1f33z2nouVbUdmNMUJl
-	UHvW+r1Y2leHbO
-X-Google-Smtp-Source: AGHT+IEirQs3UmrDur1OYucQ0XyEYogVUEMI4q/EkygKZFbE2FYQjqQFM88iMgH1FzZxOk9KUFhvgA==
-X-Received: by 2002:a5d:5885:0:b0:3ee:1125:5250 with SMTP id ffacd0b85a97d-405c5052405mr5241039f8f.24.1758709316216;
-        Wed, 24 Sep 2025 03:21:56 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:5052:777:6f22:7bc0? ([2a0a:ef40:62a:101:5052:777:6f22:7bc0])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e2c0203a1sm9445235e9.9.2025.09.24.03.21.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Sep 2025 03:21:55 -0700 (PDT)
-Message-ID: <3d03290e-bfad-41de-9735-91b126ae9e57@gmail.com>
-Date: Wed, 24 Sep 2025 11:22:21 +0100
+        d=1e100.net; s=20230601; t=1758712011; x=1759316811;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=U0Yq0F7/criI+QGPS3yhCPd2vb1VWfYEF/8VzX3IjFo=;
+        b=XU6dxc9WWwR1YkHVInmLBQGyZofCFua240AArxU2nF/Vngqr5CszsG3oXJGFDtFpky
+         IaeTNxp8P3FtE0HNZI+qzJSRIqUI1UGJNOvLAzaLPh00UkE8fs16gEm4h0sZF2FItOkX
+         buSUIpuumcEyJiIrfqZM0NfErxRyVEn1TRfvtOpMhXSKDHtD5J749V0WM+MbndSTtf8W
+         7nkvqKF7+ZqWPDhDv3CdieP2rEl/UyJ9nsnXHmKR29XXrlCdlSeaiiGsiPE9QqVh1l8f
+         NuZfEp1OWzfM/VjeawNkmwD6tmCS5TH6DtGN/LyeFzQBNqNX7WJzPXlwYwYeLB1bBDAP
+         7KSg==
+X-Forwarded-Encrypted: i=1; AJvYcCXsEIDKOnxMaVRJaUvJj6BsQ3M1juCYuq4DSE/4oxob/joWdcnHKgIswOhqynddxjuRQ9M=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx9ZpUOPV9ieKp6soZBhYnHvVwrIqzwuX5vko2v26k5h2cezfJs
+	pDUBD57neNzIHhKDBSx6M5DpuZGASHKVCqWkH1ZVF2HjBP5lfTbxqibVwBxr+4b06Szzni+Q2s6
+	0CVOb4bssLObcDJRYncBObPjEYYkzcnE=
+X-Gm-Gg: ASbGncu1hUQG2h6jIkmlPTWXIidtvsp/WWA4Y6A0X1HW6wZ8NE1TQucnOQc9RLFBQsU
+	P/3l3CJgoUWDALD+5Sx+bwW/q3B/EZ/HZvjovJgo9WjHBOoc1L7o81d7ZMLd68w131W0ZPTNWw1
+	We8v1xpODbhg6E1vIwBDx7Y10VTwSsrx0SQCrn+h6b0j/OC87i2/eEuNdZmg81mPhDYucVWf2Tf
+	OBMoMZQ8djGaTzxLoq5Qg466iSE+QX5uKyPN84Tzw==
+X-Google-Smtp-Source: AGHT+IFFjjlW8LbPfgsXM1AUHX47sjEnHpOxJwf417bhbij0U3aKnMifPdCgMhPiP9neGbgyFGXolrvVDMdy4PC8BD8=
+X-Received: by 2002:a05:6102:4a95:b0:5a4:60ff:80c2 with SMTP id
+ ada2fe7eead31-5a5829169a4mr2415174137.30.1758712010930; Wed, 24 Sep 2025
+ 04:06:50 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 24 Sep 2025 04:06:49 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 24 Sep 2025 04:06:49 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <b6d03748-8171-4df3-83fd-7f4025d9eb6c@app.fastmail.com>
+References: <20250918-228-reftable-introduce-consistency-checks-v3-0-271af03eb34d@gmail.com>
+ <20250918-228-reftable-introduce-consistency-checks-v3-3-271af03eb34d@gmail.com>
+ <b6d03748-8171-4df3-83fd-7f4025d9eb6c@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 05/13] xdiff: delete superfluous local variables that
- alias fields in xrecord_t
-To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Phillip Wood
- <phillip.wood123@gmail.com>, Ben Knoble <ben.knoble@gmail.com>,
- Jeff King <peff@peff.net>, Ezekiel Newren <ezekielnewren@gmail.com>
-References: <pull.2048.v4.git.git.1758570701.gitgitgadget@gmail.com>
- <pull.2048.v5.git.git.1758662670.gitgitgadget@gmail.com>
- <1d550cf308a189721ba089443f29678ead0344e5.1758662670.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <1d550cf308a189721ba089443f29678ead0344e5.1758662670.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Wed, 24 Sep 2025 04:06:49 -0700
+X-Gm-Features: AS18NWDFGHSIXO-6Va4eJiuBh6MFzVMjKrKkHX0RlbDpNyvrAgnvv_IXx75DgcI
+Message-ID: <CAOLa=ZSkx--7A6zs3RK3Noa=bBZ8mSLMVWBYr7tUFXQkrstgMw@mail.gmail.com>
+Subject: Re: [PATCH v3 3/8] reftable: check for trailing newline in 'tables.list'
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, shejialuo <shejialuo@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000ac9c1d063f8a0cd4"
 
-On 23/09/2025 22:24, Ezekiel Newren via GitGitGadget wrote:
-> From: Ezekiel Newren <ezekielnewren@gmail.com>
-> 
-> Use the type xrecord_t as the local variable for the functions in the
-> file xdiff/xemit.c.
+--000000000000ac9c1d063f8a0cd4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This explains what the change is but not why it is being made. Commit 
-messages in this project are expected to explain the reason for the 
-change so that future readers can understand why a change was made.
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-Thanks
+> On Thu, Sep 18, 2025, at 10:11, Karthik Nayak wrote:
+>> In the reftable format, the 'tables.list' file contains a newline
+>> separated list of tables. While we parse this file, we do not check or
+>> care about trailing newlines. Tighten the parser in `parse_names()` to
+>> return an appropriate error if there is no trailing newline.
+>
+> Nit:[1] newline-separated + requiring a trailing newline sounds like it
+> really equals: newline-terminated list.  Is this moving from
+> effectively using newline-separated to a newline-terminated format?
+>
+> =E2=80=A0 1: Since others have commented anyway
+>
 
-Phillip
+I see the confusion, it is a newline-separated list, but we don't
+check/care for the last newline. We don't require a separate terminating
+newline. Let me amend the commit message to make this clearer.
 
-> 
-> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
-> ---
->   xdiff/xemit.c | 29 +++++++++++++----------------
->   1 file changed, 13 insertions(+), 16 deletions(-)
-> 
-> diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-> index 40fc8154f3..2161ac3cd0 100644
-> --- a/xdiff/xemit.c
-> +++ b/xdiff/xemit.c
-> @@ -23,12 +23,11 @@
->   #include "xinclude.h"
->   
->   
-> -static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *ecb) {
-> -	long size, psize = strlen(pre);
-> -	char const *rec = xdf->recs[ri]->ptr;
-> +static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *ecb)
-> +{
-> +	xrecord_t *rec = xdf->recs[ri];
->   
-> -	size = xdf->recs[ri]->size;
-> -	if (xdl_emit_diffrec(rec, size, pre, psize, ecb) < 0)
-> +	if (xdl_emit_diffrec(rec->ptr, rec->size, pre, strlen(pre), ecb) < 0)
->   		return -1;
->   
->   	return 0;
-> @@ -111,11 +110,11 @@ static long def_ff(const char *rec, long len, char *buf, long sz)
->   static long match_func_rec(xdfile_t *xdf, xdemitconf_t const *xecfg, long ri,
->   			   char *buf, long sz)
->   {
-> -	const char *rec = xdf->recs[ri]->ptr;
-> -	long len = xdf->recs[ri]->size;
-> +	xrecord_t *rec = xdf->recs[ri];
-> +
->   	if (!xecfg->find_func)
-> -		return def_ff(rec, len, buf, sz);
-> -	return xecfg->find_func(rec, len, buf, sz, xecfg->find_func_priv);
-> +		return def_ff(rec->ptr, rec->size, buf, sz);
-> +	return xecfg->find_func(rec->ptr, rec->size, buf, sz, xecfg->find_func_priv);
->   }
->   
->   static int is_func_rec(xdfile_t *xdf, xdemitconf_t const *xecfg, long ri)
-> @@ -151,14 +150,12 @@ static long get_func_line(xdfenv_t *xe, xdemitconf_t const *xecfg,
->   
->   static int is_empty_rec(xdfile_t *xdf, long ri)
->   {
-> -	const char *rec = xdf->recs[ri]->ptr;
-> -	long len = xdf->recs[ri]->size;
-> +	xrecord_t *rec = xdf->recs[ri];
-> +	long i = 0;
->   
-> -	while (len > 0 && XDL_ISSPACE(*rec)) {
-> -		rec++;
-> -		len--;
-> -	}
-> -	return !len;
-> +	for (; i < rec->size && XDL_ISSPACE(rec->ptr[i]); i++);
-> +
-> +	return i == rec->size;
->   }
->   
->   int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
+>>
+>> This requires modification to `parse_names()` to accept a third argument
+>> which will hold the error value.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
 
+--000000000000ac9c1d063f8a0cd4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: e7dcdfab6573ac3_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qVDBNZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mM0tsQy80MXpXNkhaRlFGSm1vK2hneFdIbEQwdGVsQQpCVW9JWmx3SEhK
+M3o1YUVPZmNFc0M1TWFGUFdvS0tnRlpCVHQ5S1IvQTBlQzd1bVJpaHo2eVVxMFFVMFlJWVlrCkkw
+b2RaamhXN3orSzJoNnM5bGhjTkVNdWxCNG1ERy96MDcxVDN6S00xdmVKbG1oYXBqY3YyRzRvczh4
+a3RrazIKTCtxUVBac25qZXhrTmgreEVsNDZEVEZjRE1GL2pQZzZCaWZ5N1FMZEF1SmxVR2w5YlNF
+Zk5JbzlleFBJalIzZwpTYVQ4Vi9HOHQ0VEMxaXRQYWhvWEZBTzREMm1LRXl1bDhSMHR6OC9EenBL
+U21FMXIvaGVOamZmcy9HckdUV05yCkE4d1JnNUEyNFlBYXdDaC84ZHFSdUlIZVAwRTF1MVQ4MWt3
+TWI4TDkvdXFISXIyalVBYW4xNjltbXdham1VaFYKNjFzWWMzM0krL2FVUTF4UUJXcWoxRVhjTGVS
+WnBOMGs5aTM3RzFHelcyOEdlK0lONVU3akl2cGIxeFRpK1VvcwpMUC9nR0JaRDZtRUlHYmhIdzZl
+Zk1wdU9GMEs1d1d1dnVDZkp2QldYTTUyQWhCSFc2MTRON2l0TjVzblI3ZE5XCjd0cGg5Y3pOMW1o
+Y2ZhRDdDY0lsVzBjVVNCRTFLSHl4K1B3bUVIRT0KPU12V08KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000ac9c1d063f8a0cd4--
