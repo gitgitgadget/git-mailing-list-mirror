@@ -1,303 +1,325 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D389228F4
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 18:23:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758738229; cv=fail; b=rKY5BDkREYbEOs8fUMNC9RuG3prW1EehI8Cly3w2HjLzDewbTBBmHB+9PROLELq4Rc6OIb2+O/4wwlpjaHdxsnavh+3A6Go2UZtjx9C9iens0Y4pnkHJUCuLs+uBiWwPYeXwgXm+jYTL9qWSQvo7J5Ps52UVS+segW97oTr/1+0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758738229; c=relaxed/simple;
-	bh=abdZLMleIofwZ8rgZuxpkh8eUT55GQfs4pUOCPAA1ds=;
-	h=Message-ID:Date:Subject:From:To:CC:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=RnUW24gAbSpCy5oa8ylug90Eqd18V+i9Wx2e4QZ0SHqEdDvy8EJx96FSJ6v61pyAOz3U7leMrDvIOU/4YACxJw+J1hv6FtD6kC9qdIGy9x8rkyEtZKVpQBBwJXaqSOKFfyn4Od0aDIdZQ7IGIZsqfnllqGn/S/M2vVTz0k45ZTA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=aXnv6rrs; arc=fail smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374CA29DB6E
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 18:40:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758739235; cv=none; b=FdVIoYtVH+phSOSdyDuK3QTDCa6MzTOKpOieryrsaGl8Fp3aMzFh9H0wQ0rjCC0ikXfuKNfedDKxh0owDjM6wadjS6x+wxAo0QqhiHdzf8XX+xI8jp8LJt1JG2+JA9IW7ZHvVe2gvCMzYh8DvXrUtVHIgChzK39/wqhKLS5f+e4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758739235; c=relaxed/simple;
+	bh=3sRDxK/1Cwfc+yx6D9LpEGZaJhZtfaE1HR4Orq8LfmY=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hbilYk0sII8EeVHp+BvDc3kflRnSoxtizyf8HtsleUZMeJq0DZWQaRq+I4GqLeVZjIA8ahYe+RUerPPpBvE1etsN0OmTsaFM6nIbSPKtxyl9nqs3fpCMLfcYu2BTkAEBoTjnDHKc4ER4bscokmss316bZlUS6/bJ+YSKtv8Vtm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y0f9ej3F; arc=none smtp.client-ip=209.85.222.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="aXnv6rrs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1758738227; x=1790274227;
-  h=message-id:date:subject:from:to:cc:references:
-   in-reply-to:mime-version;
-  bh=abdZLMleIofwZ8rgZuxpkh8eUT55GQfs4pUOCPAA1ds=;
-  b=aXnv6rrsdCgCIRS2RX4y4g2/JD8KfCUuvvWThIyKctXF1UWVCJiu6CUk
-   YgSjbrwybPpEoLffFvY6naEuj3h3hUh2zUDT3WDaTB+d38c4hMfqvINT1
-   7qq7ehayEbhP4gVPAnBZjV8y8hHAbrZbzuNrAQ0neenVPieqQFhuv72PW
-   0FZ5s4dUyOzHHJ6WSP3AD1WPuVoak4EvKG1crWoTgB+Fri6MyHh0iTfy8
-   ImD0yKGTjubA6DiWkl0o2HyACDIm6zv3SzewlrpoDN/c26/UUaSL5+BhU
-   UAdfxfqZcjTxe7r7Zbw1jQEZ1fzqPMu4jI0k3Np1C5IhdgqBT+i9MvU98
-   w==;
-X-CSE-ConnectionGUID: fLFygK0/TguEI2Ae/QV98Q==
-X-CSE-MsgGUID: OUe0H1u0Tr+pDPUAVqdBPQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11563"; a="64883516"
-X-IronPort-AV: E=Sophos;i="6.18,291,1751266800"; 
-   d="asc'?scan'208";a="64883516"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Sep 2025 11:23:47 -0700
-X-CSE-ConnectionGUID: 97TYgpIcS8qXW04eezBiMw==
-X-CSE-MsgGUID: VYTvVZr5RDaKW9pnPwggVA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,291,1751266800"; 
-   d="asc'?scan'208";a="176687471"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
-  by orviesa009.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Sep 2025 11:23:46 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Wed, 24 Sep 2025 11:23:46 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27 via Frontend Transport; Wed, 24 Sep 2025 11:23:46 -0700
-Received: from PH8PR06CU001.outbound.protection.outlook.com (40.107.209.65) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Wed, 24 Sep 2025 11:23:45 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xMCjubFazKQsn+pYy+69riuanlaae2gNslfrmErPuaSn9xlNfwUDNjX4pa4T9AxBsYJLQPE4ojSTXCnRaC58SDtTVULPrF+qYoebOpUCvM/bivSrAll+qhasMYMauXJmB/Jb8my9pXp+/BTaJ76+ONNM+Aiov71cYUzM52+BC8tCXdNqvGUZ6DRzKJFqGWI6xmaWcjXFd2vcOHbcQ1u0S7oXsvIspgtsTM6OawKoIMQa69ziS2GFRJg55/dIl4ntCjRxaIfNuCx8PZvrRvUxPOWfZRcJMZpIQpsiu5QWxV/yGs3FbB59IDz9fXRhyAej39BWScFhohsVMrz9WFTMaA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=abdZLMleIofwZ8rgZuxpkh8eUT55GQfs4pUOCPAA1ds=;
- b=uAt76fr0Zl13LcqwN/8OxNVlMGK3aW0eFYKhvITNjfwgg+R+4+cvDxZszPWZYsDBSNjyZTuq0+cl90l52Z8lDYNcThsS71c4DeDJI+VD8biEXdkkEE4yKJ4VkayyfQKSVMboe0w75wZeg0reUJYoRSkmwqlRmsHEwdiquhyALbeHFK8fS8El9GHdIvKvnH5gOYArsLWoFGTkrKfikL0mlEiIzQ3e/ptlX3OV9ipBq6gBbwkG/BQA4O0xeVhVl6L5YX+rhjsX83nAv/C8jGeC97JMSG9H2MzVr1yM7mVO0Y91RWsDPOVSvwrwY9eaJrGDwiqY5oNtqdkJkDSiNtaRFg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CO1PR11MB5089.namprd11.prod.outlook.com (2603:10b6:303:9b::16)
- by CO1PR11MB4946.namprd11.prod.outlook.com (2603:10b6:303:9e::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.10; Wed, 24 Sep
- 2025 18:23:43 +0000
-Received: from CO1PR11MB5089.namprd11.prod.outlook.com
- ([fe80::81f7:c6c0:ca43:11c3]) by CO1PR11MB5089.namprd11.prod.outlook.com
- ([fe80::81f7:c6c0:ca43:11c3%4]) with mapi id 15.20.9137.018; Wed, 24 Sep 2025
- 18:23:43 +0000
-Message-ID: <c919ef8a-cf37-4ee7-9713-775246bc7243@intel.com>
-Date: Wed, 24 Sep 2025 11:23:42 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] diff --no-index: support limiting by pathspec
-From: Jacob Keller <jacob.e.keller@intel.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-CC: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, Jacob Keller
-	<jacob.keller@gmail.com>
-References: <20250521232917.2333291-1-jacob.e.keller@intel.com>
- <20250521232917.2333291-4-jacob.e.keller@intel.com>
- <c75ec5f9-407a-6555-d4fb-bb629d54ec61@gmx.de>
- <a9cecd57-e683-4efd-9c79-5618000319f3@intel.com>
- <35e55d20-d4aa-4b88-aa93-9192612fd1b8@gmx.de>
- <5da981d0-0a9c-4840-b413-54ec29d349e6@intel.com>
-Content-Language: en-US
-Autocrypt: addr=jacob.e.keller@intel.com; keydata=
- xjMEaFx9ShYJKwYBBAHaRw8BAQdAE+TQsi9s60VNWijGeBIKU6hsXLwMt/JY9ni1wnsVd7nN
- J0phY29iIEtlbGxlciA8amFjb2IuZS5rZWxsZXJAaW50ZWwuY29tPsKTBBMWCgA7FiEEIEBU
- qdczkFYq7EMeapZdPm8PKOgFAmhcfUoCGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AA
- CgkQapZdPm8PKOiZAAEA4UV0uM2PhFAw+tlK81gP+fgRqBVYlhmMyroXadv0lH4BAIf4jLxI
- UPEL4+zzp4ekaw8IyFz+mRMUBaS2l+cpoBUBzjgEaFx9ShIKKwYBBAGXVQEFAQEHQF386lYe
- MPZBiQHGXwjbBWS5OMBems5rgajcBMKc4W4aAwEIB8J4BBgWCgAgFiEEIEBUqdczkFYq7EMe
- apZdPm8PKOgFAmhcfUoCGwwACgkQapZdPm8PKOjbUQD+MsPBANqBUiNt+7w0dC73R6UcQzbg
- cFx4Yvms6cJjeD4BAKf193xbq7W3T7r9BdfTw6HRFYDiHXgkyoc/2Q4/T+8H
-In-Reply-To: <5da981d0-0a9c-4840-b413-54ec29d349e6@intel.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature";
-	boundary="------------A1VcCUA0F3i9xAhWAHhy8Ns8"
-X-ClientProxiedBy: MW2PR16CA0061.namprd16.prod.outlook.com
- (2603:10b6:907:1::38) To CO1PR11MB5089.namprd11.prod.outlook.com
- (2603:10b6:303:9b::16)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y0f9ej3F"
+Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-905b08b09f5so22374241.3
+        for <git@vger.kernel.org>; Wed, 24 Sep 2025 11:40:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758739233; x=1759344033; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Yo9SZnTJyIzAia4/kBRoybnDzrZ9N4BcBGvC+neUrp0=;
+        b=Y0f9ej3FMcmAUc3tGj8JyxYZQj2Evx53QetO2Zoc5MTNEfvt/xRaNR+tqIZ5vmwFO6
+         n7UKWBomM9+O3E6J11vJ4vHQwuGyVsgaCuYTFY7uPtm7RnND+orBq7LSoLFHuQIeXmED
+         TgeeVgoURnoyJ6SNaJp09ry6eEgOUZLJse/pxWoeaMaslnxQIP9gC2wn11xqym+BisXl
+         b85ANPPTtV4tTGTnNNFJ66wKZXPV+o8a3ClUZGXtXRDPlP9obYXFXv+TOLqUbWC0njID
+         bqK2kIA/YOySeuD0iit18E4eqHIlJHiF1So3lI2GfGftGsplUOE7kMxFjazyKwFRK+nF
+         avJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758739233; x=1759344033;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Yo9SZnTJyIzAia4/kBRoybnDzrZ9N4BcBGvC+neUrp0=;
+        b=c8GmocE5zZ/3BlbnpOTyb/Uui281LrsPzmkN79P5GEpGzsj6YtSOH0Jz659QIamKdG
+         c2t68wdT6Pt7zSggRJ0fqqztmbQX1C2e9XygIcr8JGtqRBv85j1sShF0+8E3VXC/40la
+         NrhRM4qx77vZHWkBzncAmht4ZVcb6SAwOclXH31vTGzSVRqk5iBSn1PFoQMsSO50hxyO
+         ZlJsiul8uNk1bBeM0WagLDVf04zbgprkDRFxQl4Cw8lPEzBrnCmJytAARjXZb5kUmwfo
+         x0WSRkDsYh3SrR8M6sPxbXW5Eo5lxF4ZnJgZUHJCA0TVkbTxONZDqhrjaEOZKPQXzIuV
+         YTXw==
+X-Gm-Message-State: AOJu0Yw1ZuVJpo/17Ax3XiHuFlnQag2ev1IzXRJuj9jdadCLdQUQMs9n
+	79v1I+bMJWoVkFUYFDgh/UFxOrCs+DurlTKTTFbu7GyzoVS9v3xrYM/dN/QtIKAaVPOG5FXZFgQ
+	p9SrNfaL+HbLmdy8Sz5oBZl6ZU9LL0yU8cJor
+X-Gm-Gg: ASbGncvPH6wDSaOqv52FUKW6xx6InNTJTWKiVChb63RMIncNn7CW/6w9UHVM7y4G0yv
+	ndJ7QufOvnh0pE/PlscvLNFE0dR+MHPiLhUAvWAaCl0o9svt+DRNmxVLwQgts4wnu9+a/Sx+548
+	t8kPxWlB1ycOSqmAm51kEke4KZFlBgh5becargvzYCe6peGznyqjVQ3IroYkTRT0BVA/DfP6yaJ
+	LUT2EoKwG1/9a47KLLk7WCg5xI/RBhsOgrLvXeeAw==
+X-Google-Smtp-Source: AGHT+IGdIgbfKekwY8OHYthygEwAdU21mDH/7XC5ZKRQwYOp8ulnROF4e1aRCMBmxAxsPxYSIdwg9oZwwBXxbxiRDGw=
+X-Received: by 2002:a05:6102:161e:b0:4de:d08f:6727 with SMTP id
+ ada2fe7eead31-5acc776fb05mr525298137.13.1758739232723; Wed, 24 Sep 2025
+ 11:40:32 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 24 Sep 2025 11:40:31 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 24 Sep 2025 11:40:31 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <aNOHqEq5qxXrOCX7@pks.im>
+References: <20250918-228-reftable-introduce-consistency-checks-v3-0-271af03eb34d@gmail.com>
+ <20250918-228-reftable-introduce-consistency-checks-v3-7-271af03eb34d@gmail.com>
+ <aNOHqEq5qxXrOCX7@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PR11MB5089:EE_|CO1PR11MB4946:EE_
-X-MS-Office365-Filtering-Correlation-Id: dd40a309-1e83-4cc0-a6cd-08ddfb977e74
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?K1pia25jdGUyMjJlQmhiVE5SaFJkaUE0ejJHUlNsaDVFQUw5N1Z3ZEhnZk9n?=
- =?utf-8?B?ZEZ2YU4yU09BcUR4Q0xIL25BVnVWNzg5bjVZSllBN3l2WFc2eTJwUzRwQnF0?=
- =?utf-8?B?WVIyQ0lUbUZSZUVsOEo4MU13UUNVT0lGc1NxOTVyckp5aDBqRXRrWEVla2lM?=
- =?utf-8?B?clNKVXo1TVdIUEYyTWdRcUluaWkvUUVMSnpPOXRWekczYlY2MUhlL2V5MUV4?=
- =?utf-8?B?UzNGby9FdXYyNGJFT2JJK2ZJL3RxQUpyakpSc3B3c0VaWVhBd243NmJ0U3B1?=
- =?utf-8?B?Nm5ldVh0bXFOZENhODNrdVEzbW14YXRhOHg5d3l0TlBwck80ZGlON1B1eXNm?=
- =?utf-8?B?TTQ4akJLZ1VMNEVIRDc3QlNpU1dUWUIrVWhZMllqUjhJRUVFRnZscU5ibHE0?=
- =?utf-8?B?WWJlL1NJY2JZOGNqNHcvcW4reERqc000LzV3djMrdWtLOCt0YWphMEZmSnFh?=
- =?utf-8?B?d2dMdUxvL3FnU3pUdzh2ejVrQW5PSFZoZDBBRXhJWFYrM0EwM0szMEt5MHdH?=
- =?utf-8?B?OHhKRjFVR0U0dUNxblUyWHJIWWhKMmhRd1NRd2crMWtuRDRqd3NFWWZ2ZEc5?=
- =?utf-8?B?UnIrNWVYTFFtWHpTVE5CRi91YUJkc0FKYlJqbVVFVnNITzViUWhpOVcwM09m?=
- =?utf-8?B?L3k2NTdWSDh4aER3bVRzcWV0bmtsWHZRY2pmbmdvNXV5MDd1ZDE1dlArVmhp?=
- =?utf-8?B?NXk0MTFTVlg4Y21rbU1JRDRVNGhPYkNsMVQ4WUtkditKUDNMemxIalpoRmZl?=
- =?utf-8?B?RHVKdnIyTXBPNklwVk9PQVM4VDJCL0RvTzJ0eG9qWDdrZEcvemxKeS8vNDdv?=
- =?utf-8?B?UE5XVHc5eVdpRm9YK2JYRG0wTjI4Qjd3N3Vqb0dLVUlqQ1RncThnWW9kVkNm?=
- =?utf-8?B?UFdtV3J3cThFOEFCS2VEbjB4RWtIQ2RnVmsyMXBDQ0ZYNjIwZVlqVkorQmp3?=
- =?utf-8?B?clFPWTNoOUswVUp1VkpGSlBzQlFCSVRKZ2RTZzd2VnRXL1dVdnN0QXM0YVp2?=
- =?utf-8?B?UlFLUk53UWpOMEdBNmlsSzdnYnFoTFZZZCswVERnMnl3TmlKSC9VZnJ0RG1H?=
- =?utf-8?B?RjU5R0lWYmZscmlBdS9UNUc4MFlxRGI1RTNaWFhQM3NuK1pQbkFnVEZFcm1l?=
- =?utf-8?B?dXl0aXlQcjkwMjVhdVNnS0RPQ3FVbDc3V21vYU96cGpGaGwyY1V4YnIxV2NG?=
- =?utf-8?B?UkF2VkV4RFBwVm9yNDZnbVZ3L2s3ekx5TDIyanpBMlN0VFNBenNKY05OZW1y?=
- =?utf-8?B?bUhVcitxWEJVUGVPQVovbGxoaDBucm5hc2FxWjFRaGp3enlZRmkwZndWcm9O?=
- =?utf-8?B?Z1RTTGNmb0ttRW9UeUNNYlRHd3dNNTV2Ui9HZks2SGl3Z01lWVV3RFd2R2Y3?=
- =?utf-8?B?Y2J6UDJIMkxxWFpHUjFOcDJuTE16bG1HMEZNL2hidHBqY2pIZDZVMjJJdHhB?=
- =?utf-8?B?clFmRHJmOHJhUkZHNGdnL0ZWN0Y5a01HeGc2L2hIa3dkakxUbU5YTzJhVG1r?=
- =?utf-8?B?VXdwM0ZwUnd3R2U3VEVHbXc2NGZTdGtDZjE4RWYxSUVmL01lYzArVUErMWtD?=
- =?utf-8?B?czB0TGtvbHVwdGNCazVEZzFteDk1UTUxWU5IMkZXTUZSZlVJMnd5cUdQemlx?=
- =?utf-8?B?amhhb0twRnFTVTM0UGtUdVE4Y0FjVnhCOWF6YTZhLzd0cytWUW1uK0VNaU1W?=
- =?utf-8?B?Q3Y4clZrMG1nbzJZMzBPRmlhTXNCdEZydFVJQjV2UDJEOEVhM1hmNHlWeW42?=
- =?utf-8?B?a0lGWmlkTGQ5WlNWTEhDRTY0TGNYTVJnSWQ3ZHdMUDVxMXNvUVZPUFF6VUNH?=
- =?utf-8?B?Q3RuaTcyRGo5LzYxVk5mRTNzY09GMXY2bzlvYUk5SDBxNEF4WUc2S2RsMnY5?=
- =?utf-8?B?VWk0OStKcUp2RVZib0k1dEFheGdpWXVicDJxUTViOE4xT1A3TUIyNmJZZ1pa?=
- =?utf-8?Q?bAyQ4am/Pcs=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB5089.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OWdoQXlPcVpIZFFISytkYjdROU9zam51VVdhZTN1Rm8vMVJ3enlsSnJrVjUz?=
- =?utf-8?B?SHhZWkNSUFVQWEhhZTZQbjI3MS9rOXY3WjRIMFBzVThCN1hhbTloMmVROXh6?=
- =?utf-8?B?MXhicEUvYzE3MllsSUJKa2NkRVRWK2kvaDVnOTBYTlBBeTRVWWhWVXhablcr?=
- =?utf-8?B?SUJiakhzeDFpTVFXWjNndFdmL0Q4MXNwVFFrbEFNakZiZHJod05CU0N3MFFa?=
- =?utf-8?B?UTZpTEdzUWRNY0NCNmg4dWc0N3RDanVoMEM3bTZZd1l5U2tGTmttTUd5ZEd2?=
- =?utf-8?B?VmhXMDNnbDNacjh3Zk1FeW9XS2JnUmNLaUZWKzlvR01Sam9iRnFpV09hK2dx?=
- =?utf-8?B?M2Zab0FHSkgwL1grY2c0UWdHdWFwYzIzKzVGN2t0WllySkZPT2E1Szg5Lzdk?=
- =?utf-8?B?N3pLNjAzcVVJY3hKN3Fya1Zoc0xQVGxlQjkyWElBQnQyaUZsRUNoaDBoQ1FR?=
- =?utf-8?B?ZG1kaml0RXg0SzFNV0Fud0RhMTRQTmQrcFIwQVRuSjZQY1Z6aGZTbHB6YVR3?=
- =?utf-8?B?L1dsRFZlZ2pIejdVbkNOK0swZDZrM3dJSW5IaGZ4WFVUbzc1TTVLR3ovUWVR?=
- =?utf-8?B?bkM3RDdadFR6MW9jOVRlZ3JvNS9DK3dWSjNrZ256RGx4Uk1MUG83bEZXZ2Nt?=
- =?utf-8?B?SEZhZUttSWYrR2hMd1o5ekN5VlBGbHBoMDlaaXJuc3FNeWVPMUVJTk4zUXN2?=
- =?utf-8?B?Uk84dng4VXZLY0sxL3B0aXoxaTh6LzRwaTYrdFZGK2NtMWVTMDNtaTU3RjNC?=
- =?utf-8?B?aUdSL0hGcnpuTkZDL1ZoVzczNDg5bFdCbE9YNG5xZUFjVStsTEpFbVJ4UWVt?=
- =?utf-8?B?STNzMjBRRnY2YW5ldmdoWkRkWmZ0ZnlONERiMUpKZm5JbmhyejBMMDFiWlpp?=
- =?utf-8?B?dm9pMjVQR3gzNnpReXdab2FQU01tQ01FaFVGZ1dXd09DQ1AyeGFFenNzTW9E?=
- =?utf-8?B?VWNFOGZXTWxrbUNwZmZyNU94bVl1VlJNSmZ0d3dSbjdCZ2l1M1BnS2RPQjFh?=
- =?utf-8?B?OTBWcVYyMzZXdHNnWG85OUo1aWNRejlWRS9MdjVUYjZ5d01KR1Z6N2RRUlUr?=
- =?utf-8?B?b0pQaTBjTEhxZTZQc3RCTGYzMXNLdVhLUC84dEJtWTdmNzhETkZzMXp6dHpP?=
- =?utf-8?B?R2xwNVVQMUlXUEJqQkZHd3ZDOHg0NC9xd2xBREhRQ3NocXM5SkxmZGJOdG1W?=
- =?utf-8?B?OXNaMkRKU3I2ZENuNVppVHlRc2YvQ3lDdjh5WXZXOFFuZEFEYUZqZDFzR0xy?=
- =?utf-8?B?dGErV2MyeGRmbERDSzBXUGJ1K1c1MCtzVFlWWmNvQ3VIdmtlYytRVDR2TmdF?=
- =?utf-8?B?cklhZU5JNy9YMWpsT3NhUE1pMzlwc254U2dHcDNsQWoya3Brc1hCZnlReGJq?=
- =?utf-8?B?TVBCdmhBSGNDNjZSa2IydkZBdkFhL2l3U0ZWSmZxTVBYdCsyQzI0bVdoN2w1?=
- =?utf-8?B?S2RiR0NLcjhkYUQ1VFVRMGg3NlY1Ymg2OE5OSGNnQm5saWJDamFJYzUxTTh6?=
- =?utf-8?B?TXpPSWErV1V1RTR0c0N1a1lQWG5FcGcyTFZTN2g2aTBXYkZKWHBBaXZxODZX?=
- =?utf-8?B?WXdjcVZjcUhsUE5LOWpZNzhWQS9TU0dWTkMxMmZ6N3VaVXIzZnkzMnd4Ym9k?=
- =?utf-8?B?Y0hCMXFWK0NrZjJCeGQxL1I3cFo1cXFlNGVuMzJIcStFbThJZjgwTEFzbEFH?=
- =?utf-8?B?MUgyUEdyc3hzTmxkREM4SjJNSi9mSWtGUEJYZFRrclZ4ZDZ1TnJYYWI1Vkp6?=
- =?utf-8?B?SEMrWFVJSHROSFB0MnFFczYxNjZZTk53dXUrRlZJNDdnWW1DVkw5SzhOSnhO?=
- =?utf-8?B?UlVrTHlBWTlwN0N3cE5YdGZEcmlFMERjU1RIMVhncnVsYjNUaEtXTEZBVjVn?=
- =?utf-8?B?K3ArZFRWQXNsc0pQdjMxVDdjdjk4c21rdU5zOUIrTHNYMUFGL3pDMEhOZllU?=
- =?utf-8?B?dnRiSFFGMG1EaVA4a0JDN1p3TWxBTG5zUHRhMTM3UTF6TEdpV2ZpVHF2QzR6?=
- =?utf-8?B?MHdlMVlUVzVMbk8wWnJxK3Q3NEM0K0t6K1VhS2ZMdUhGamN6N2RNUG5hcENI?=
- =?utf-8?B?RFp2NW8wc2M4ckwwWW5EMWRVSjBONS9JcTFTbWdUYVhsVFRET1VSUnVxRXgy?=
- =?utf-8?B?dGowWStyUHdMdlpVRCswcHJZbVJvQU5qaHRrcUxYTW1UWU9udE52THJOMmE4?=
- =?utf-8?B?dmc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: dd40a309-1e83-4cc0-a6cd-08ddfb977e74
-X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5089.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2025 18:23:43.7938
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 97Cq8ItZKrWuwf3xBrIKuvzGq7OLpFE9QVpARZva2JN0y+qJa+CAybJToh9ykOjwGwlP0DHImuOwKAdE7WEPimE8Jj1CdlYduLxFN87dYoY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB4946
-X-OriginatorOrg: intel.com
+Date: Wed, 24 Sep 2025 11:40:31 -0700
+X-Gm-Features: AS18NWBOIw-sQi_loOwz40TkNTZFerEKjbp-q-GBpoX3oEQB1weq01mctZFWa0g
+Message-ID: <CAOLa=ZQ641MncC9ACm9jfjx0WtQ+nK2shtyucQOxd08LDXDzAw@mail.gmail.com>
+Subject: Re: [PATCH v3 7/8] reftable: add code to facilitate consistency checks
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, gitster@pobox.com, shejialuo@gmail.com
+Content-Type: multipart/mixed; boundary="00000000000038322e063f90639a"
 
---------------A1VcCUA0F3i9xAhWAHhy8Ns8
-Content-Type: multipart/mixed; boundary="------------OIBuYpu1p0o94xt43CTPxvHw";
- protected-headers="v1"
-From: Jacob Keller <jacob.e.keller@intel.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
- Jacob Keller <jacob.keller@gmail.com>
-Message-ID: <c919ef8a-cf37-4ee7-9713-775246bc7243@intel.com>
-Subject: Re: [PATCH v4 3/3] diff --no-index: support limiting by pathspec
-References: <20250521232917.2333291-1-jacob.e.keller@intel.com>
- <20250521232917.2333291-4-jacob.e.keller@intel.com>
- <c75ec5f9-407a-6555-d4fb-bb629d54ec61@gmx.de>
- <a9cecd57-e683-4efd-9c79-5618000319f3@intel.com>
- <35e55d20-d4aa-4b88-aa93-9192612fd1b8@gmx.de>
- <5da981d0-0a9c-4840-b413-54ec29d349e6@intel.com>
-In-Reply-To: <5da981d0-0a9c-4840-b413-54ec29d349e6@intel.com>
-Autocrypt-Gossip: addr=jacob.keller@gmail.com; keydata=
- xjMEaFx9ShYJKwYBBAHaRw8BAQdAE+TQsi9s60VNWijGeBIKU6hsXLwMt/JY9ni1wnsVd7nN
- JUphY29iIEtlbGxlciA8amFjb2Iua2VsbGVyQGdtYWlsLmNvbT7ClgQTFgoAPgIbAwULCQgH
- AgIiAgYVCgkICwIEFgIDAQIeBwIXgBYhBCBAVKnXM5BWKuxDHmqWXT5vDyjoBQJoXH7qAhkB
- AAoJEGqWXT5vDyjoe8EA/1OU/7mbkVnufmQ/9+04ObhGJmLDNglAT27MGpPikmh2AQDQoVz7
- JRAnpV98jwFnJhADcLlQ5vuo6htfg3Li5CMeC844BGhcfUoSCisGAQQBl1UBBQEBB0Bd/OpW
- HjD2QYkBxl8I2wVkuTjAXprOa4Go3ATCnOFuGgMBCAfCeAQYFgoAIBYhBCBAVKnXM5BWKuxD
- HmqWXT5vDyjoBQJoXH1KAhsMAAoJEGqWXT5vDyjo21EA/jLDwQDagVIjbfu8NHQu90elHEM2
- 4HBceGL5rOnCY3g+AQCn9fd8W6u1t0+6/QXX08Oh0RWA4h14JMqHP9kOP0/vBw==
+--00000000000038322e063f90639a
+Content-Type: text/plain; charset="UTF-8"
 
---------------OIBuYpu1p0o94xt43CTPxvHw
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Patrick Steinhardt <ps@pks.im> writes:
 
+> On Thu, Sep 18, 2025 at 10:11:48AM +0200, Karthik Nayak wrote:
+>> diff --git a/reftable/fsck.c b/reftable/fsck.c
+>> new file mode 100644
+>> index 0000000000..785e4b43e8
+>> --- /dev/null
+>> +++ b/reftable/fsck.c
+>> @@ -0,0 +1,112 @@
+>> +#include "basics.h"
+>> +#include "reftable-fsck.h"
+>> +#include "stack.h"
+>> +
+>> +static bool valid_table_name(const char *name, uint64_t *min_update_index,
+>> +			     uint64_t *max_update_index)
+>> +{
+>> +	const char *ptr = name;
+>> +	char *endptr;
+>> +
+>> +	/* strtoull doesn't set errno on success */
+>> +	errno = 0;
+>> +
+>> +	*min_update_index = strtoull(ptr, &endptr, 16);
+>> +	if (errno == EINVAL)
+>> +		return false;
+>
+> strtoull may also return ERANGE. In general, shouldn't we abort whenever
+> errno is non-zero here?
+>
 
+Yeah, that would be much better. will change.
 
-On 9/24/2025 11:19 AM, Jacob Keller wrote:
->=20
->=20
-> On 9/24/2025 4:19 AM, Johannes Schindelin wrote:
->> Hi Jacob,
->>
->> On Tue, 23 Sep 2025, Jacob Keller wrote:
->>
->>> On 9/23/2025 7:57 AM, Johannes Schindelin wrote:
->>>
->>>> However, this makes me wonder whether the logic itself is sound? It =
-is
->>>> not immediately obvious to me why the `paths[0]` and `paths[1]` valu=
-es
->>>> aren't matched against the pathspec yet their entirety is seemingly
->>>> skipped in `read_directory_contents()`?
->>>
->>> I recall fiddling a lot to try and get this working. The idea here is=
+>> +	ptr = endptr;
+>> +
+>> +	if (strncmp(ptr, "-", 1))
+>> +		return false;
+>
+> Better:
+>
+>     if (*ptr != '-')
+>         return false;
+>
 
->>> that fixup_paths does some conversions to handle the DWIM logic where=
- a
->>> "diff D F" becomes "diff D/F F". It returns true if both paths are
->>> directories, so we only enter this block when both paths are
->>> directories. (Which is required because we only support pathspec
->>> limiting for directory differences).
->>
->> I do wonder, after seeing that `read_directory_contents()` has to
->> (re-)construct a complete `strbuf` in every single invocation whether =
-it
->> would make more sense to construct two `strbuf`s in `diff_no_index()` =
-and
->> pass those along to `queue_diff()` _instead_ of `skip1`/`skip2`. The
->> `queue_diff()` function would then have to extend these
->> `strbuf`s as it already does with `buffer1`/`buffer2`.
->>
+I did use that below. I think I missed changing this, will do.
 
-Ah, but I see what you meant better after some more thought. Instead of
-bothering with skip1 and skip2 at all, we just generate the sub part of
-the path along with buffer1/buffer2, but we start these new pathspec
-bits empty, so that we can construct the proper C/D/E path in
-read_directory_contents directly without needing to do a skip or memmove
-etc.
+>> +	ptr++;
+>> +
+>> +	*max_update_index = strtoull(ptr, &endptr, 16);
+>> +	if (errno == EINVAL)
+>> +		return false;
+>> +	ptr = endptr;
+>> +
+>> +	if (*ptr != '-')
+>> +		return false;
+>> +	ptr++;
+>> +
+>> +	strtoul(ptr, &endptr, 16);
+>> +	if (errno == EINVAL)
+>> +		return false;
+>> +	ptr = endptr;
+>> +
+>> +	if (strcmp(ptr, ".ref") && strcmp(ptr, ".log"))
+>> +		return false;
+>
+> Yup, makes sense. We don't do so ourselves, but in theory it is possible
+> for tables to have a ".log" suffix. If so, they are expected to only
+> contain reflog records.
+>
 
-Makes sense. Good suggestion!
+Yeah, I missed this in the previous iteration, but realized while
+reading the spec that this could be possible.
 
-I'll try to work on this today and make a test case to confirm this.
+>> +	return true;
+>> +}
+>> +
+>> +static int stack_check_all_files_in_dir(struct reftable_stack *stack,
+>> +					reftable_fsck_report_fn report_fn,
+>> +					void *cb_data)
+>> +{
+>> +	DIR *dir = opendir(stack->reftable_dir);
+>
+> I think it would make sense to move this function call close to the
+> conditional.
+>
 
-Thanks,
-Jake
+Fair enough, will move.
 
---------------OIBuYpu1p0o94xt43CTPxvHw--
+>> +	struct reftable_fsck_info info;
+>> +	struct dirent *d = NULL;
+>> +	uint64_t min, max;
+>> +	int err = 0;
+>> +
+>> +	if (!dir)
+>> +		return 0;
+>> +
+>> +	while ((d = readdir(dir))) {
+>> +		if (!strcmp(d->d_name, "tables.list"))
+>> +			continue;
+>> +
+>> +		if ((d->d_name[0] == '.' &&
+>> +		     (d->d_name[1] == '\0' ||
+>> +		      (d->d_name[1] == '.' && d->d_name[2] == '\0'))))
+>> +			continue;
+>> +
+>> +		if (d->d_type == DT_REG) {
+>> +			if (!valid_table_name(d->d_name, &min, &max)) {
+>> +				info.error = REFTABLE_FSCK_ERROR_TABLE_NAME;
+>> +				info.msg = "file with invalid table name";
+>> +				info.path = d->d_name;
+>> +
+>> +				err |= report_fn(&info, cb_data);
+>> +			}
+>
+> One problem with this is that this is racy with concurrent writers. We
+> don't recognize the "tables.list.lock" file, and neither do we recognize
+> "0x*-0x*.{ref,log}.temp.XXXXXX"-style files.
+>
+> Would it be a better approach be to instead go through table names as
+> loaded by the stack? The reftable code already knows to prune unknown
+> files anyway, so I don't think we should scan for any other files.
+>
 
---------------A1VcCUA0F3i9xAhWAHhy8Ns8
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+I actually had a more structured code here, where the idea was:
 
------BEGIN PGP SIGNATURE-----
+- For each stack
+  - Run stack level checks
+  - For each table in stack
+    - Run table level checks
+    - For each block in table
+      - Run block level checks
+      - For each ref / log
+        - Run ref / log level checks
 
-wnsEABYIACMWIQQgQFSp1zOQVirsQx5qll0+bw8o6AUCaNQ3LgUDAAAAAAAKCRBqll0+bw8o6Ny3
-AP0VYhUrTd5jRUT52xSti+JP0G3Lu1d87tV2KojjFXrZVAD+O3mAYSU/MNBKt/qJoigxg579SQvx
-ibmYcO91fHITvQk=
-=sO6v
------END PGP SIGNATURE-----
+But we move some of my tests to be runtime checks, leaving this as the
+only check remaining. We could still do the first level of what I
+mentioned above. The only reason I didn't was because we wanted to check
+all files in the stack dir. But I think this is much better, having
+unknown files in the reftable directory doesn't affect the repository in
+any way. So I would argue perhaps that we shouldn't even care about it.
 
---------------A1VcCUA0F3i9xAhWAHhy8Ns8--
+>> +		} else {
+>> +			info.error = REFTABLE_FSCK_ERROR_INVALID_FILE_TYPE;
+>> +			info.msg = "file with unexpected type";
+>> +			info.path = d->d_name;
+>> +
+>> +			err |= report_fn(&info, cb_data);
+>> +		}
+>> +	}
+>> +
+>> +	closedir(dir);
+>> +	return err;
+>> +}
+>> +
+>> +static int stack_checks(struct reftable_stack *stack,
+>> +			reftable_fsck_report_fn report_fn,
+>> +			void *cb_data)
+>> +{
+>> +	struct reftable_buf msg = REFTABLE_BUF_INIT;
+>> +	char **names = NULL;
+>
+> This variable is unused.
+>
+
+Leftover code, will cleanup.
+
+>> +	int err = 0;
+>> +
+>> +	if (stack == NULL)
+>> +		goto out;
+>
+> Why should someone ever pass a `NULL` stack?
+>
+
+This should be safe to remove.
+
+>> +	err |= stack_check_all_files_in_dir(stack, report_fn, cb_data);
+>> +
+>> +out:
+>> +	free_names(names);
+>> +	reftable_buf_release(&msg);
+>> +	return err;
+>> +}
+>> +
+>> +int reftable_fsck_check(struct reftable_stack *stack,
+>> +			reftable_fsck_report_fn report_fn,
+>> +			reftable_fsck_verbose_fn verbose_fn,
+>> +			void *cb_data)
+>> +{
+>> +	verbose_fn("Checking reftable: stack checks", cb_data);
+>> +	return stack_checks(stack, report_fn, cb_data);
+>
+> Nit: having this extra function call to `stack_checks()` feels a bit
+> weird as it could just as well be inlined. Is this preparing for a
+> future change?
+
+Yeah, mostly the idea was to break things up into layers as I mentioned
+above. Let's make it simpler for now and we can make it nicer when we
+get around adding more checks.
+
+>
+>> +}
+>> diff --git a/reftable/reftable-fsck.h b/reftable/reftable-fsck.h
+>> new file mode 100644
+>> index 0000000000..5e13ac9f02
+>> --- /dev/null
+>> +++ b/reftable/reftable-fsck.h
+>> @@ -0,0 +1,42 @@
+>> +#ifndef REFTABLE_FSCK_H
+>> +#define REFTABLE_FSCK_H
+>> +
+>> +#include "reftable-stack.h"
+>> +
+>> +enum reftable_fsck_error {
+>> +	/* Non regular file in the reftable directory */
+>> +	REFTABLE_FSCK_ERROR_INVALID_FILE_TYPE = 0,
+>> +	/* Invalid table name */
+>> +	REFTABLE_FSCK_ERROR_TABLE_NAME,
+>> +	/* Used for bounds checking, must be last */
+>> +	REFTABLE_FSCK_MAX_VALUE
+>
+> Let's add a trailing comma here.
+>
+> Patrick
+
+Will do.
+
+--00000000000038322e063f90639a
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: fcf1a3b2ca3197f2_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qVU94MFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMmU1Qy85M2FGNnkxTEtaTXVFYitvMGNNempRZ0c2Ngp6ZE94UWZJd1ly
+VXMzN3RWQnB3d2VkN2JLLzdGdEF1b091MSthOVp3aGkxSlRrVnZydHlwNTJhdTFnZWl4K0tBClhE
+bzltSFVscWxEQjF5djRZVGZXMDdhLzRxSm5EVlM2MWVYbzJreFdvL0MxREJJYXJaY0l5cjNqL1Ax
+dDUyQjQKeTE1L3d3S0pOWEY4RzNncDRQelk1b2VLRjc1aThWSlIrQ05acDZ6SStsRWlMSVd4NS82
+RDZJRThjcWI1a3FaTQpXTlkvYTFOM3B1Um16TEp3bzIzVTQvbmxDb1BSdFJQTGRKaHRTWXRNQXUv
+d1cwWXNUUEJHODJzVjh2RVNZOGRKClJDMUdmWEh4Y2xGeXFsVEdBTkhhbFdJUnJ0bXlaZUNzTTB0
+S3NVQlRJQ3VzYnB0cUdpQXE5bUNzcmVhUXJpYVkKVmxWWjZKRG1VMGwyUENhaUthWmFpdlh5R2RD
+MW5XZ3QyZzFQL0x1U0pyekk4WTFVMmtyblRFRHpkTC8yU3I3UApEeFVkWTRERTlETHpTWHIzZnMw
+UHNHMzdOQ2ZDVWlIL2VzRm5TcjdCck1hRzZXVUZOajc2dVdHaXU4aTdIRWEvCnMyZWg1Z0V5N2Yx
+UW5NZWErcE9QQnhBeFRXeWVCaUNDaWJvZWVvVT0KPTBLRVcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000038322e063f90639a--
