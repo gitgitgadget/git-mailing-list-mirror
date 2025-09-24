@@ -1,102 +1,137 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCC823B0
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 20:48:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2361C25A35D
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 20:55:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758746913; cv=none; b=Q4H0SQTc924YDWXkFCGs1rhvDqFjP6tLG1o1mJQFN1DYrv50DRqkNS2kiFhXmW4nQSbTJaKiI6HhmpuzqLsMN8oOg2Azjkl9eFeWwAFFMQX2a6iyMr0+IYWQFmt53RWpJUJBu3kghBc0TIjcjvHggyK6hBVhZxTnIc3H/yhhtKA=
+	t=1758747305; cv=none; b=Yx5rQaUqF9PyN3jV7sfcOg631z4OZ6SapYdiF+iX3wjB2IWRPMXI3Mp72bYkXS817do6+tOW2yYjNyah5ApfULVnlCen1Cesr83Xets1/ClwQij8oTiyciLDWAszebk6/L6kFQT7lnmg7IexUdY5KYHa+ygeRO8zRX19c4XAOOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758746913; c=relaxed/simple;
-	bh=wrOKCEV1AmfmkZlS9OrgYE7IoJSvhbWTI1xEItOlH2s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pXdTEeQV3uCGTzV2rQbxxWqYd45AN/c2GyTYF36FFa1dCyujgXr/o65TaYRgXgx+aFyaoQXmD7MapADW9cvHbgYiK4HSQ7PTjPQdWTQuhEnp4TAjOUof9iU0JDvCQTrLb0WqJJijQ+gy5VUBXk7H6M9q0hyI72fxGRCRvS75f9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y9zRaEne; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gUzl0ofE; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758747305; c=relaxed/simple;
+	bh=HxsmplmClN3mxU4vahwM74WNh0b7ZN+FEuPZGKcPsX8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Pjpg3BAMl4dYOTxSMk+FfgYZODWJQF8B4Z3AtqThJ85SMy12XWF5Q3ejpenMTyVQ2M3DiNoOlEpp0tbAnXPEXEvBtZZI8MReoDOrARRrwTieJoPrfblnzwWDdYzLxHdP30kmDUE27qeqL/qdsdKbRIkkF6R7H7IKqIzoQVPPX4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=HLPjfe9W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ApDM2BFx; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y9zRaEne";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gUzl0ofE"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 219C9EC0198;
-	Wed, 24 Sep 2025 16:48:30 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 24 Sep 2025 16:48:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758746910; x=1758833310; bh=SGjJ2rTY0v
-	CCjGndFCCVSzPdbIU1mLdJWzA6EPhSPDM=; b=Y9zRaEneJnZT8NKJnwjr4XDzQP
-	UGgCZHP+avFAvetIpd2b+WzuJr1ruM9gmJbrTOf6IiIGDXv7LqCfRQmhnNi+1jnL
-	KARBFcif1o+9EmaGKn48c5FSN8YglfIH+L5H9KD6x1zi9IBZ7YJaXze4BZI6y9ur
-	X31GXpWQkk0xqjXKC/30LwLgf16QOyQYh5U2A1igPVTOo35/UojsqMylc74YTlpv
-	cajTS3OnmzbD2dJJExqdOqAeO2eqWtm4TjHINFIyDEDNLlqx2LuwBNxtT3REmM8w
-	doKxaMtHQMmfzsk58R+FEa1G3UjSdmS2VeOw9gWb9Ts9Q1gqKFPIFF+SKvOg==
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="HLPjfe9W";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ApDM2BFx"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4F32A7A013D;
+	Wed, 24 Sep 2025 16:55:02 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-04.internal (MEProxy); Wed, 24 Sep 2025 16:55:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758747302;
+	 x=1758833702; bh=5BRuGF3Qzcv7Kpq5molfAgoB6uj5qUPOn4/PRjnjQW0=; b=
+	HLPjfe9WSq6y/IhISpfNOuPpzbJ+yJVIMtN5wHc8w27Q5elbXY5j8QlIbPkPbdRP
+	h0ABK1UXCKCc9EmOGsNq16UpRZs9YfNsoSqaTViPpOjjC6+uD3r9LENHCs3/61Yc
+	zZ4vmr5deVlRozud2b3fAVFV+BOFNnmWALllWRz8KxqG/Ybs9q7i/CjKowzqxxsR
+	5sHRQUD3JT9h8x5dqf8gOOyc5JejRVq04fIx4AhYBhcMlE72xBkXvYjU6tIusYal
+	rw3WRtRjQIpct7pyZ5dbINycD9I1nhSbxZ6hmljRbsF3L2KCSJ0/w2F4EBJIxDOn
+	ABB67hcQtQw2qA6EbaugMA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758746910; x=1758833310; bh=SGjJ2rTY0vCCjGndFCCVSzPdbIU1mLdJWzA
-	6EPhSPDM=; b=gUzl0ofEDVfNu/lyNoeS9mxD06itGvMM4E27rM3LOFagEqbC/RI
-	j0H2lO18sFKvMmuaUhlRYOia4qc0qFGffwFJL/GkWbxspoQRiIQ0sqll0jYzCjqX
-	ZA4KLImO9EzgDe+IeqIddzMH3QrRlRG+gTsUo/NXb7z9snEP9DfBk4i+nhRdSozX
-	Myej7oVAZdMMQsqU8lmVSHjMcIDv97elFSMWW1PHi4FDAxqxdlc5YeDJo4/WKKkZ
-	HCdstNyYKIcQzGBWhZ7UabaL+IgNunYp8cB8wAbFxB/LINWVDUR6npj32UOt9k3M
-	hTA6H5zitd7dd3WarGUC1ZWyQd7CWE/EZkQ==
-X-ME-Sender: <xms:HVnUaNeKpOa7IEfgZ71Rp4agJyfVzTzy_WIA01cSX1W1QrwD60KJeQ>
-    <xme:HVnUaEKh_Hx7HGheGZRvdMktWcUod9_3wS0ixb2iQ4ByZs54_4i2v3ST5_vQMdW3g
-    Y0y__5lBSzldCDh5ZBhpqCApOAe34oLXzHJEhO8lsLK9QjASIYAXQ>
-X-ME-Received: <xmr:HVnUaCE9g2tO0x4JTbay9copVfMpV9MagWyydHalKgi30_fL15DneoHf8ZXnfyWjZqalZANsc2YaeIDdvWMrSlZhLi7KebnTboOZ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeigeeiudcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758747302; x=
+	1758833702; bh=5BRuGF3Qzcv7Kpq5molfAgoB6uj5qUPOn4/PRjnjQW0=; b=A
+	pDM2BFxwcNa99fmw1k7YKQxYh+16WmII22tg9MWf7H2U5KAzUnlnT6z4dhvQN2bi
+	eIk3vm+J7jCItJFc1vxPNmk+Oy1QlXB31wIhkBIqOT62Ua8Ek9xgBZURgXdJ/+2t
+	IF1SWkUv66y6PlYUteVexsc3jGfsVFBt9sJbgEohz4Y6MD/Rh6M6ud05KIfyTjj/
+	lDOJ0UcBCac1FbfNMjX+Iuk8h2FX2bVGw+Ra2GGwujM9zEjsaipuZn+wFEBUd49P
+	JySo+DeLAJy7Y/Jv0OPoTwC2YDtzFoc1sb4P7qKCJV3oU6Zoedh1/Bx/Pc3qucN1
+	RHHcB/7LV4QjW1hSwgBMg==
+X-ME-Sender: <xms:pVrUaCR6p1mGjLibaSWYcg9D4WZAXmyUeqj0se4aUyTlvpignihsUw>
+    <xme:pVrUaCktylDANv5XqGPTjXNhziqXNt54qLEkvbJTgJ2nH5DBuiFhAEDnt8qpwdlLk
+    ZQrEkyEG0fvzrkSRwPmxXh5EudavkGAQVLZiCZqV6majN7Vp76Pj3c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeigeeivdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
-    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepohhsfi
-    grlhgurdgsuhguuggvnhhhrghgvghnsehgmhigrdguvgdprhgtphhtthhopehmsehgihht
-    rdhsthhrohhvrgdrughkpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhu
-    khdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:HVnUaHDuqZ8JzV7cXfJRNVCayGle0MY-9eGN4W5uF2vPgqylDPRXug>
-    <xmx:HVnUaF-Alt9hhCmg4lFrjO-SfuMmpbk5u2NGw8s1GE7lBQoN8MDhUg>
-    <xmx:HVnUaDBy6wdwxaYswhsSk1oiakukoJjJ9wxBsLvpXhDAYTyWaTcPSw>
-    <xmx:HVnUaKSNjDLULzJ2B3aFRi3swTK0XIAJAmkroMWFWqGAK3zH9wV3xA>
-    <xmx:HlnUaDf3WjvLepxDRZV3alIlbI2xjEVfHBCgkD3wqx8un1NhfwOpMb-0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Sep 2025 16:48:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: Mathias Rav <m@git.strova.dk>,  git@vger.kernel.org,  Phillip Wood
- <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] rebase -i: use same commit's message and date with f -C
-In-Reply-To: <aNQiRFbBysXXAPDR@ugly.lan> (Oswald Buddenhagen's message of
-	"Wed, 24 Sep 2025 18:54:28 +0200")
-References: <92d4d585-09e9-4f1d-a471-1ad6b312fa61@app.fastmail.com>
-	<aNQiRFbBysXXAPDR@ugly.lan>
-Date: Wed, 24 Sep 2025 13:48:27 -0700
-Message-ID: <xmqqms6jk25g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfluhhlihgr
+    ucfgvhgrnhhsfdcuoehjuhhlihgrsehjvhhnshdrtggrqeenucggtffrrghtthgvrhhnpe
+    fgveekudeviedvveeuhefhvdetgefgffdufeeguddtkeegtdeltdevhfdtuddttdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjuhhlihgrse
+    hjvhhnshdrtggrpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgt
+    phhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:pVrUaFv_b4inPoGzTBnbwzxneH-jHofq3S1kYJXWMKkQcYhGFfyIqQ>
+    <xmx:plrUaGP_yfFNU-C-Lp20wBkb342iaKn6uIsCq7mAbYd3k0DqvJ2QDQ>
+    <xmx:plrUaL0qGiJcjobXzGytMYj3z2g_wHUwzVdLdR_0apfPisu-qN99kA>
+    <xmx:plrUaKOBV16yhDca91fUJJBHQbFKmhvUviQhoQLcElKCCi8tVunSdg>
+    <xmx:plrUaBN4H-gG8l-wf1SsLC8_l5TW2r2hJGQ93DNUOXii0PEA2qRiG7nZ>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id D8B8D78026F; Wed, 24 Sep 2025 16:55:01 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: ATtqAgZ0pDEJ
+Date: Wed, 24 Sep 2025 16:54:40 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+Message-Id: <f6dea581-04c5-4b05-ab81-1fb06de1cf41@app.fastmail.com>
+In-Reply-To: 
+ <CALnO6CCkWaxZKGseHR7dk20erFPAvGMqO+OYr3Np+y+=1Y34HA@mail.gmail.com>
+References: <pull.1976.git.1758656702.gitgitgadget@gmail.com>
+ <ffbb9d7c6aff77f9a1caed86a20bcc6b9afe66e7.1758656702.git.gitgitgadget@gmail.com>
+ <CALnO6CCkWaxZKGseHR7dk20erFPAvGMqO+OYr3Np+y+=1Y34HA@mail.gmail.com>
+Subject: Re: [PATCH 2/4] doc: git-pull: clarify options for integrating remote branch
 Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 
-> On Tue, Sep 23, 2025 at 10:55:02AM +0200, Mathias Rav wrote:
->>Change the behavior so that fixup with -C takes both message and author
->>from the current commit, instead of taking the author from the previous.
->>
-> related thread: https://lore.kernel.org/git/YjXRM5HiRizZ035p@ugly/T/#u
+>> -More precisely, `git pull` runs `git fetch` with the given parameters
+>> -and then depending on configuration options or command line flags,
+>> -will call either `git rebase` or `git merge` to reconcile diverging
+>> -branches.
+>> +Integrate changes from a remote repository into the current branch.
+>> +
+>> +First, `git pull` runs `git fetch` with the same arguments to fetch
+>
+> Hm. Is it worth saying "similar" rather than "same" since we don't
+> pass e.g. `--rebase` to `git fetch`? Or is that detail unimportant in
+> this context?
 
-Thanks.  That's a great pointer that shows everybody involved in
-this round has pretty much held the same position over the years
-;-).
+That's a good point, I'll try to think of a better way to phrase it.
+
+I guess the truth is that `git pull` has three categories of options, 
+those it passes verbatim to `git fetch`, those it passes verbatim to `git merge`,
+and the others (-q, -v, and --recurse-submodules).
+That's a bit of a mouthful but maybe there's a way to say that explicitly
+that isn't too awkward, it does seem helpful to know when reading the
+OPTIONS section.
+
+>> +remote branch(es). Then it integrates the remote branch into the current
+>> +branch.
+>
+> Plural-singular here leaves me wondering how Git decides which of
+> multiple fetched branches to integrate. A quick test of the form
+>
+>     git pull origin refs/heads/\*:refs/remotes/origin/\*
+>
+> just gives an error in every mode I tried, so I'm now confused about this use :)
+
+I find it confusing too. My current strategy for handling this here is to
+somewhat awkwardly say "it's explained in the DEFAULT BEHAVIOUR section"
+a bit further down.
+
+It's a tricky situation because I find the DEFAULT BEHAVIOUR section very
+confusing. It seems like there's a fair amount of duplication with other
+sections that could be cleaned up to make it easier. But removing the
+duplication and making it easier to understand feels like too many changes
+for this series, especially because really doing it well probably involves the
+sub-project of "clean up the <refspec> section of the `git fetch` man page".
+
+In any case, I'll see if I can find a way to make it a little less awkward.
