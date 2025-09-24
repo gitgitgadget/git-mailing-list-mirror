@@ -1,54 +1,54 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77D527F754
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 07:56:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BBB253F1A
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 07:56:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758700573; cv=none; b=q9SQ4yLpRf8v0X4YmwNIp02WVzXu49wGx7C79IoNQ1CbuqkKitlj4MIrTIVS8YDzefZCDotiAUKMfNLEzRCyyUdCmRQAPG1nn+QpYugGcRc0gJaN143khEM4E4U1PngC2h2BSavZPxD7C7oouuCPe0fkl4PB1pCWMqAycBuh2as=
+	t=1758700574; cv=none; b=T1VyIhIfYPZBvBn6nAPLMPd4CHgBGLNLcblOtzBVB9+IsQ+K2MZM/9yxy1IzpV0dJ0DvhbXhYsVGXcSuPA8Jpc6/JlexHc8C7ny1QyJVxFrTW9yMeLF9/YkTZGXhG3rY3sCD9V4w97DfB6VHh0s94wMLeaQcFpqT5fLqJctPRDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758700573; c=relaxed/simple;
-	bh=0p6BbVagOSB6PDSMQMAse/LHnG1Fe3Z06PMK4XTS7PQ=;
+	s=arc-20240116; t=1758700574; c=relaxed/simple;
+	bh=Tx8hMadj/0qYznlXm5P3IJG4Da9Grgt3O9ptF+SfOcM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hluLx8Dxo2GxWQfujEx1+IPZv+39sLqKAVrIIsK1svKKkfyC04583zOZIUOjPWs3Y9Ir9zVjAAuWAYoeSTmZzAk1qGU3PKEm8KsxJ7HRSkfjyKk/+hbMhpCvNl6lrJvVb2WfNLTsD5My+T3rETqDe1J48yzXVJNygI+KzlCMM/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=J0PKS9Ad; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AVZpjkSF; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=tG2FOnqE17phGmNDZR1xXj/KmElqmhqW79T0uKob4zhk9w68WdlBcQN9CxktM15pKozOxTLXLQsd3V1NzEixvgBRLepIQQ13wf32YFWePRDB5Pyhvk2yEUfzuomH3+YrADj2XbgkomNxSSLKCIIk822tbPlpg1Ynn7YjYwWn3gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KpoGpa6T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OOBu6Kh5; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="J0PKS9Ad";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AVZpjkSF"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D4E02140008B;
-	Wed, 24 Sep 2025 03:56:06 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KpoGpa6T";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OOBu6Kh5"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 16A09EC00A6;
+	Wed, 24 Sep 2025 03:56:12 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Wed, 24 Sep 2025 03:56:06 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 24 Sep 2025 03:56:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758700566; x=1758786966; bh=YdIm4lVEYX
-	dMIHD4mZ2X9vd+1SpJi1p7KZO6kv/LP2g=; b=J0PKS9AdBvprhQl/QHPwWF2sjx
-	f44jliY1XB0XmpYPEBuBXOpIQgpLqpLwDV5St65iBQNbZI5u9D+W/hc1qhktUMNQ
-	cgYaqFHIbNwOj3HPUQ+HqhbnLB07/rabqNMvnN70S2+ljsu/qP++16kqFVXQ9/p4
-	eO+ED2LK8tJVPOmPrI6dVE3hmbbvvbPmWe5IaX2MARhyuEmbhLJNbpNVPngS2FhD
-	/0KR/Lj+LIy2Kes97Oywhc5XFv2Ffn8GFX9o0d8pEHRmorkczcmnlLTUqACnlh6H
-	sOIV0hWaAxsvCOVpUi3ShN1uYkLCLT4fFlZEns/w8PTr4xghTx4jFahV2pOg==
+	:subject:to:to; s=fm1; t=1758700572; x=1758786972; bh=7BmxqzZJ40
+	FOX6mG5FVSzI7YATiwkUGvC9TiTvIgRqE=; b=KpoGpa6Txr/9x38SQsU9PNxHsb
+	k2x3pnKoaSuWr0kLhAre4udcrmR6rrdnztt6OqmLbXU9GDBOyirX0sk26/3hGx1g
+	ddzOIsuPQS6gjpjSz1heAcLl3iXG/BfHnnCTg63I4ckXzsI2CCIP+EowHz6LRxC+
+	tqkgbJP3qNndC7ddnDkrElt/RG0EaOvi49swJmKwo44Bb0i0A/jmnijlg/AnyX5m
+	Xvez5VDDlKpENEo7igcXZhR4mxo2H5eoGJ7+EUPY6tv8fnXkJv7al+feHxipOhqq
+	1iJvnsbaLTbWSKUOHGAgUfsRRryy0E4X52wa5JaEa4p7jBv7sT/aqhREwgBw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758700566; x=1758786966; bh=YdIm4lVEYXdMIHD4mZ2X9vd+1SpJi1p7KZO
-	6kv/LP2g=; b=AVZpjkSFr78ZjCLvXnjTJOBpPWB8+cOUpr39G2ucyD7rzQoc0dJ
-	aAATaHeZpZ3gZInG12qnJx6H9XwIff7JVdQUxnIKj0fEgqdJR+aNEMqxRLmS0d6c
-	UTjMPc27Sn7486ffw5QtgwPcHEnQTcU1966Wl+RLjTs5nvMio76060WzQ9eKSf9r
-	jC4/q2lc2P0URagE0RBXkQhvdNIb2YH/qEgIGXR7Zkwcw7CYdZgRQd0tUizh9y50
-	x5vq+xAQXSjs7bw0w2KMSGkqOYSr7/nSlsR7S78UHuOwSPiUAANdmNY9bTIhQlnm
-	G3r1HG4ywZTfbnOS31Rdx/MgPDDjj1iZiXQ==
-X-ME-Sender: <xms:FqTTaJkjCtdLwLKjz0_6bQfegUgQH_-fN96kUkuPm7-dCqwjnJqqLw>
-    <xme:FqTTaL1eh41EUW08LbrtDWFj_PAP6HG9L9XZ5YraUhPzgaWkfDA15lyieOIojaHYW
-    OGEBb8l23kam3JEFsniKLaDjWAG_zZ0lDuP43BhCPg4nymhZ4zA>
-X-ME-Received: <xmr:FqTTaEoy54v11-fegnYaIQUP01trxbuf9NvBNlA9E4NQx8kOL8Y7GeoOwDhcxVDIx4QXRmetTiDbzW2oMM0SeFdGyQEOoaZxrp9djcQKxA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeifedtiecutefuodetggdotefrod
+	1758700572; x=1758786972; bh=7BmxqzZJ40FOX6mG5FVSzI7YATiwkUGvC9T
+	iTvIgRqE=; b=OOBu6Kh5CYOEY5MKkWe5zVJ0qMCkOdfAA85UCpcAeObU1TLM+Pa
+	ziZyCjy+QfgIx29Z/nBNGxocmPnzKTh8j1KkSUXjDQB/4YMcRPmbalyE/kizZ1FD
+	ZccPjkRy97T+likJtTueQ/ieUzE7/EomrRzO63Qc0KdOBX4vzBfD8n5CTdDs4Hnv
+	BXTR6+zYY8xU9UuFWLgHWEpwOnXklKfjKkRlyDd3u3tnGE/pEVJCxVhv5wD0HOt6
+	KnjiQL2V9ZfkdUuWra5mGlROL5YaP9Ggl8K0DUvl/Cpkufkq+QSVL4uvQuDmGdfI
+	wAZ7i8CqkD2k+44niOd7px+WKtHY6jeYNGA==
+X-ME-Sender: <xms:G6TTaFbLDuei5DZvN2vnEK7u75LUK5nySWzFnO5u7oeVyjY9JaSAog>
+    <xme:G6TTaDaYchZlRuaYK-D1veeszibMIxVNScNBlHd4cBmW0XZtOtMHWgXXHhtPnbLl7
+    s8mTdGi6R0Y5xeB2E9CTuFN88E1Xk2zAKL6a81oZKxG5e-4yihzNA>
+X-ME-Received: <xmr:G6TTaM9gPRe0oehP_9yEuPTJofj1SdT0PTgkN7-mS7F5Vr_OZbInrgl-oq6aUTPRO16Vww0tlmFS_Qs8QoOcOw-n91sHVStMPJpsphuvqA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeifedtjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
@@ -56,29 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeifedtiecutefuodetgg
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
-X-ME-Proxy: <xmx:FqTTaIfz9qm_A2YvKp-8ITZgT1vAU0up2BXp1bFMjFniWqPJjIX8xQ>
-    <xmx:FqTTaDowpnz-eV8yOpWWSVAucF_6FjlYunpJGNvyBxDHBFii3CZ0Pg>
-    <xmx:FqTTaJHyJHLXlWHspoDdbEzqahixeUFlxj0BE_GWHGGlYZDL3Zs4Fw>
-    <xmx:FqTTaDuhQK_xMigfm2hrDTx8wF4u6eoqRr2RWIAXAIOvQNrrrwbzKQ>
-    <xmx:FqTTaLZM4fFiadYaH01X9kQJi9wsr-5x_F1GA0bGucWvwy8iTWdufOIV>
+    pehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrh
+    hushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:G6TTaChAEKSLjLvXX96qgVNcEvFSu5hW-_4GKgM7FcB6S-ldBbZUxQ>
+    <xmx:G6TTaMd2sPYZD1ymXg8l7GlMLHPIakd42Vqn6IucNH2p5uYZEezoeQ>
+    <xmx:G6TTaJqq4_OCf1C8-3RqyDYKzVKK6vEX_p6yadX0qhjeyvyCkyOtGQ>
+    <xmx:G6TTaBATGb0F4Zrkkflo1cpa_-9v4gDyqrB6OGHThDrjjeGWJ4Jenw>
+    <xmx:HKTTaFMF9amhRuel76j7ZlkptWn3qDg8ZVUik8b9fG4B4S49W2qJHcCS>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Sep 2025 03:56:05 -0400 (EDT)
+ 24 Sep 2025 03:56:10 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 778ae8fd (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 24 Sep 2025 07:56:05 +0000 (UTC)
-Date: Wed, 24 Sep 2025 09:56:01 +0200
+	by mail (OpenSMTPD) with ESMTPSA id e902fa1b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 24 Sep 2025 07:56:10 +0000 (UTC)
+Date: Wed, 24 Sep 2025 09:56:07 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 8/9] Allow specifying compatibility hash
-Message-ID: <aNOkEVUag91bv2RP@pks.im>
+Subject: Re: [PATCH 9/9] t: add a prerequisite for a compatibility hash
+Message-ID: <aNOkF7Isc7OihClu@pks.im>
 References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
- <20250919010911.649831-9-sandals@crustytoothpaste.net>
+ <20250919010911.649831-10-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,60 +87,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250919010911.649831-9-sandals@crustytoothpaste.net>
+In-Reply-To: <20250919010911.649831-10-sandals@crustytoothpaste.net>
 
-On Fri, Sep 19, 2025 at 01:09:10AM +0000, brian m. carlson wrote:
+On Fri, Sep 19, 2025 at 01:09:11AM +0000, brian m. carlson wrote:
+> In some cases, we'll need to adjust our test suite to work in a proper
+> way with a compatibility hash.  For example, in such a case, we'll only
+> use pack index v3, since v1 and v2 lack support for multiple algorithms.
+> Since we won't want to write those older formats, we'll need to skip
+> tests that do so.
+> 
+> Let's add a COMPAT_HASH prerequisite and define the BROKEN_OBJECTS
+> prerequisite in terms of it.
 
-Tiny nit: it would help if the patch subject was prefixed with "t:".
-
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index a28de7b19b..52d7759bf5 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -1708,11 +1708,16 @@ test_set_hash () {
->  # Detect the hash algorithm in use.
->  test_detect_hash () {
->  	case "${GIT_TEST_DEFAULT_HASH:-$GIT_TEST_BUILTIN_HASH}" in
-> -	"sha256")
-> +	*:*)
-> +	    test_hash_algo="${GIT_TEST_DEFAULT_HASH%%:*}"
-> +	    test_compat_hash_algo="${GIT_TEST_DEFAULT_HASH##*:}"
-> +	    test_repo_compat_hash_algo="$test_compat_hash_algo"
-> +	    ;;
-> +	sha256)
->  	    test_hash_algo=sha256
->  	    test_compat_hash_algo=sha1
->  	    ;;
-> -	*)
-> +	sha1)
->  	    test_hash_algo=sha1
->  	    test_compat_hash_algo=sha256
->  	    ;;
-
-Makes sense, I guess. It's a bit hard to judge without seeing any actual
-tests, but I don't think that should hold off adding the infrastructure.
-Worst case we can still adjust it at later point in time.
-
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 621cd31ae1..14c777e4e2 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -1917,6 +1917,13 @@ test_lazy_prereq DEFAULT_HASH_ALGORITHM '
->  test_lazy_prereq DEFAULT_REPO_FORMAT '
->  	test_have_prereq SHA1,REFFILES
->  '
-> +# BROKEN_OBJECTS is a test if we can write deliberately broken objects and
-
-s/if/whether/
-
-> +# expect them to work.  When running using SHA-256 mode with SHA-1
-> +# compatibility, we cannot write such objects because there's no SHA-1
-> +# compatibility value for a nonexistent object.
-> +test_lazy_prereq BROKEN_OBJECTS '
-> +	test -z "$test_repo_compat_hash_algo"
-> +'
->  
->  # Ensure that no test accidentally triggers a Git command
->  # that runs the actual maintenance scheduler, affecting a user's
+Nit: I think this commit could easily be squashed into the preceding
+commit.
 
 Patrick
