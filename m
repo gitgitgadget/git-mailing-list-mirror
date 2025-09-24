@@ -1,325 +1,132 @@
 Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374CA29DB6E
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 18:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3322D6E60
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 18:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758739235; cv=none; b=FdVIoYtVH+phSOSdyDuK3QTDCa6MzTOKpOieryrsaGl8Fp3aMzFh9H0wQ0rjCC0ikXfuKNfedDKxh0owDjM6wadjS6x+wxAo0QqhiHdzf8XX+xI8jp8LJt1JG2+JA9IW7ZHvVe2gvCMzYh8DvXrUtVHIgChzK39/wqhKLS5f+e4=
+	t=1758739451; cv=none; b=Bnzaz8r324Mbr4jJPbRsOWt2e03p2CL/wN84Gq5TFhyrWgw+d1OzPY9wod3IECwC4YPw6odBm+srS7SOIBQXtjLXMzCTKsV/eK9bmpbWTJ1JJAu2FBANqgYoXp8kxpSSyDqFSudg2BfIPRvEmDxtPSWLjOsEycVw7nXy8nFkLWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758739235; c=relaxed/simple;
-	bh=3sRDxK/1Cwfc+yx6D9LpEGZaJhZtfaE1HR4Orq8LfmY=;
+	s=arc-20240116; t=1758739451; c=relaxed/simple;
+	bh=eI98yffMN63ddBwIKL7ZZciyZhYKQYIcPCvsNs5dLNA=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hbilYk0sII8EeVHp+BvDc3kflRnSoxtizyf8HtsleUZMeJq0DZWQaRq+I4GqLeVZjIA8ahYe+RUerPPpBvE1etsN0OmTsaFM6nIbSPKtxyl9nqs3fpCMLfcYu2BTkAEBoTjnDHKc4ER4bscokmss316bZlUS6/bJ+YSKtv8Vtm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y0f9ej3F; arc=none smtp.client-ip=209.85.222.45
+	 To:Cc:Content-Type; b=jpR0C/SNmD6rB8L4jsBEthjG74fFFpoqe+HFhkDn4pKbkCjZqZxqsJh0rwhnNztxOWcyYlx+oldy+w6MRNNS9s3/ZdwRPMWvgHVcuNfN2bJ6DyrRLuYAwFrpGl6jroC/M+w0x69jOkIKrDZ51Ac/FSrhH4UfMf3UEAEMKS3GedQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mKhet0vp; arc=none smtp.client-ip=209.85.222.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y0f9ej3F"
-Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-905b08b09f5so22374241.3
-        for <git@vger.kernel.org>; Wed, 24 Sep 2025 11:40:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mKhet0vp"
+Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-8e2702252b0so29982241.3
+        for <git@vger.kernel.org>; Wed, 24 Sep 2025 11:44:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758739233; x=1759344033; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758739449; x=1759344249; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Yo9SZnTJyIzAia4/kBRoybnDzrZ9N4BcBGvC+neUrp0=;
-        b=Y0f9ej3FMcmAUc3tGj8JyxYZQj2Evx53QetO2Zoc5MTNEfvt/xRaNR+tqIZ5vmwFO6
-         n7UKWBomM9+O3E6J11vJ4vHQwuGyVsgaCuYTFY7uPtm7RnND+orBq7LSoLFHuQIeXmED
-         TgeeVgoURnoyJ6SNaJp09ry6eEgOUZLJse/pxWoeaMaslnxQIP9gC2wn11xqym+BisXl
-         b85ANPPTtV4tTGTnNNFJ66wKZXPV+o8a3ClUZGXtXRDPlP9obYXFXv+TOLqUbWC0njID
-         bqK2kIA/YOySeuD0iit18E4eqHIlJHiF1So3lI2GfGftGsplUOE7kMxFjazyKwFRK+nF
-         avJg==
+        bh=JDE2lwIrkvrNlYCpZzkj6c306lhVCPKoOa+p9hC5pPc=;
+        b=mKhet0vpIt3+Y2dKG2cDKFrfboUNIBV8q2Vx82eqP0NtRrkkfndrznOB1HzMAcAE3U
+         /4+HBVdOulueS2I/1mCgrhSiFmS0l9Az6P1L/3mjsc4qAgDxVXm0HFyUBsu46dqLNH70
+         0YvgZqrLQsnFMVs7Lc+mpNcE2NzpTZvsqadGcquH4H5noCtR5lIcnZi3Tf/TE5Q4U2mI
+         S4VlelC8TiNvG2WjdJ43csnESkzDjuquriKKwppeo5aCImNLaNuKgIpDU7J7JoDQAWnT
+         ROhK8aBg07ZBKUOh3M0Tp/xDgpP4PxuFcbfEVPO3eGHMwVUGhG8wqeFHn2t+S2xwr58L
+         7vZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758739233; x=1759344033;
+        d=1e100.net; s=20230601; t=1758739449; x=1759344249;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Yo9SZnTJyIzAia4/kBRoybnDzrZ9N4BcBGvC+neUrp0=;
-        b=c8GmocE5zZ/3BlbnpOTyb/Uui281LrsPzmkN79P5GEpGzsj6YtSOH0Jz659QIamKdG
-         c2t68wdT6Pt7zSggRJ0fqqztmbQX1C2e9XygIcr8JGtqRBv85j1sShF0+8E3VXC/40la
-         NrhRM4qx77vZHWkBzncAmht4ZVcb6SAwOclXH31vTGzSVRqk5iBSn1PFoQMsSO50hxyO
-         ZlJsiul8uNk1bBeM0WagLDVf04zbgprkDRFxQl4Cw8lPEzBrnCmJytAARjXZb5kUmwfo
-         x0WSRkDsYh3SrR8M6sPxbXW5Eo5lxF4ZnJgZUHJCA0TVkbTxONZDqhrjaEOZKPQXzIuV
-         YTXw==
-X-Gm-Message-State: AOJu0Yw1ZuVJpo/17Ax3XiHuFlnQag2ev1IzXRJuj9jdadCLdQUQMs9n
-	79v1I+bMJWoVkFUYFDgh/UFxOrCs+DurlTKTTFbu7GyzoVS9v3xrYM/dN/QtIKAaVPOG5FXZFgQ
-	p9SrNfaL+HbLmdy8Sz5oBZl6ZU9LL0yU8cJor
-X-Gm-Gg: ASbGncvPH6wDSaOqv52FUKW6xx6InNTJTWKiVChb63RMIncNn7CW/6w9UHVM7y4G0yv
-	ndJ7QufOvnh0pE/PlscvLNFE0dR+MHPiLhUAvWAaCl0o9svt+DRNmxVLwQgts4wnu9+a/Sx+548
-	t8kPxWlB1ycOSqmAm51kEke4KZFlBgh5becargvzYCe6peGznyqjVQ3IroYkTRT0BVA/DfP6yaJ
-	LUT2EoKwG1/9a47KLLk7WCg5xI/RBhsOgrLvXeeAw==
-X-Google-Smtp-Source: AGHT+IGdIgbfKekwY8OHYthygEwAdU21mDH/7XC5ZKRQwYOp8ulnROF4e1aRCMBmxAxsPxYSIdwg9oZwwBXxbxiRDGw=
-X-Received: by 2002:a05:6102:161e:b0:4de:d08f:6727 with SMTP id
- ada2fe7eead31-5acc776fb05mr525298137.13.1758739232723; Wed, 24 Sep 2025
- 11:40:32 -0700 (PDT)
+        bh=JDE2lwIrkvrNlYCpZzkj6c306lhVCPKoOa+p9hC5pPc=;
+        b=fjtY79Dpc5lQu98Kwr9o1UCoUZg3ioclNy1ijJgKAdS5fJi3z10EAAc1lEu7XSIHVA
+         ou2oUSpUGUhimIHwORAHJu9zDGHTGYeb8JgrvFjQh54nr+ZnhUkmbYlDaaAJhRj0x5xM
+         lEB8nURR1Aydztxq28md2kFT3Q6QbO4hl8szLLC6TLF4i8TJr5onHVUhbU0PJNPljC8q
+         7tGY1S/ffZ/wLoGcphU1Df5SWp/XKGoz1zQbhURQg/ldyR7ZQuhFhaMSG26904Q1AMRB
+         deIvvk36PJUYZ4IC2oz+kPtyk15YodkXCbxHbsNjEjy8vnHMSO1L1VQYOUaK3h1T0/NZ
+         Kcrw==
+X-Gm-Message-State: AOJu0YyaxygYMXF9TTuy9cRNdI+Vs/nN0FheWKod2h4LqL8UA2On1qGV
+	lVoVZ38L4tXwrgC91+G01EsH7VD5RrscVWPFl41RHxJFAlVl7ILWohgiRXHh1YYghPSJ05PUg4u
+	GYXWIldSRrdyqf9f06sgdE+UXzaHpbqI=
+X-Gm-Gg: ASbGnctciKgK+XwuwnzYqPlovC1ukLmRg5jFETihzP8prYW42oFjPzp8al95S3WBMQH
+	Lt/1NYRRoO5AkNQmdcT33I9eSVugyBtWZnbS61CIWVV3PF5Gbm8YmnRLzNCo1+FYZccxeTs+ihz
+	PQ8TZojtUQ+y7W3Z3powzdP5qKDXU1qpo8A4bEpnW6nJQw36jyLjHiDm0fHXG/yakIjVI2UHLaF
+	9xDLDKpFdg3ptwa+l6xav1ZL2T33fhP/1Vyds7qig==
+X-Google-Smtp-Source: AGHT+IG0IFX3CIMwo/k25rNnqpFZ5h2BJDl2Lr2P++dcZEZyHiFJjKhf9zUhaWkicB2ZGLx8gb88X3jQhiDbDZ5g1CY=
+X-Received: by 2002:a05:6102:dcb:b0:5a2:c93c:8f82 with SMTP id
+ ada2fe7eead31-5acc5f55624mr467225137.9.1758739447998; Wed, 24 Sep 2025
+ 11:44:07 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 24 Sep 2025 11:40:31 -0700
+ HTTPREST; Wed, 24 Sep 2025 13:44:06 -0500
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 24 Sep 2025 11:40:31 -0700
+ HTTPREST; Wed, 24 Sep 2025 13:44:06 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aNOHqEq5qxXrOCX7@pks.im>
+In-Reply-To: <aNOHr7lm4WXUyHa5@pks.im>
 References: <20250918-228-reftable-introduce-consistency-checks-v3-0-271af03eb34d@gmail.com>
- <20250918-228-reftable-introduce-consistency-checks-v3-7-271af03eb34d@gmail.com>
- <aNOHqEq5qxXrOCX7@pks.im>
+ <20250918-228-reftable-introduce-consistency-checks-v3-8-271af03eb34d@gmail.com>
+ <aNOHr7lm4WXUyHa5@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 24 Sep 2025 11:40:31 -0700
-X-Gm-Features: AS18NWBOIw-sQi_loOwz40TkNTZFerEKjbp-q-GBpoX3oEQB1weq01mctZFWa0g
-Message-ID: <CAOLa=ZQ641MncC9ACm9jfjx0WtQ+nK2shtyucQOxd08LDXDzAw@mail.gmail.com>
-Subject: Re: [PATCH v3 7/8] reftable: add code to facilitate consistency checks
+Date: Wed, 24 Sep 2025 13:44:06 -0500
+X-Gm-Features: AS18NWCaA1rtds07C5L3xYFfzzDWS5AVvqlH9VWQkNHlbeRO7snB_5k9nixU1Lg
+Message-ID: <CAOLa=ZS+CGh6kuT87xoR_GnxJkBABk3g0CtOqU9wfnCVS=AcBw@mail.gmail.com>
+Subject: Re: [PATCH v3 8/8] refs/reftable: add fsck check for checking the
+ table name
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, gitster@pobox.com, shejialuo@gmail.com
-Content-Type: multipart/mixed; boundary="00000000000038322e063f90639a"
+Content-Type: multipart/mixed; boundary="0000000000000d0917063f90709b"
 
---00000000000038322e063f90639a
+--0000000000000d0917063f90709b
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Thu, Sep 18, 2025 at 10:11:48AM +0200, Karthik Nayak wrote:
->> diff --git a/reftable/fsck.c b/reftable/fsck.c
->> new file mode 100644
->> index 0000000000..785e4b43e8
->> --- /dev/null
->> +++ b/reftable/fsck.c
->> @@ -0,0 +1,112 @@
->> +#include "basics.h"
->> +#include "reftable-fsck.h"
->> +#include "stack.h"
->> +
->> +static bool valid_table_name(const char *name, uint64_t *min_update_index,
->> +			     uint64_t *max_update_index)
+>> +static int reftable_fsck_error_handler(struct reftable_fsck_info *info,
+>> +				       void *cb_data)
 >> +{
->> +	const char *ptr = name;
->> +	char *endptr;
+>> +	struct fsck_ref_report report = { .path = info->path };
+>> +	struct fsck_options *o = cb_data;
+>> +	enum fsck_msg_id msg_id;
 >> +
->> +	/* strtoull doesn't set errno on success */
->> +	errno = 0;
->> +
->> +	*min_update_index = strtoull(ptr, &endptr, 16);
->> +	if (errno == EINVAL)
->> +		return false;
+>> +	if (info->error < 0 || info->error >= REFTABLE_FSCK_MAX_VALUE)
+>> +		BUG("unknown fsck error: %d", info->error);
 >
-> strtoull may also return ERANGE. In general, shouldn't we abort whenever
-> errno is non-zero here?
+> `info->error` is an enum, and whether or not it is signed is an
+> implementation detail of the platform. But I wonder whether this check
+> may cause some platforms to warn about an impossible condition.
 >
 
-Yeah, that would be much better. will change.
+I didn't really think of that. I guess typecasting it to an int would be
+the best way forward here.
 
->> +	ptr = endptr;
 >> +
->> +	if (strncmp(ptr, "-", 1))
->> +		return false;
+>> +	msg_id = fsck_msg_id_map[info->error];
+>> +
+>> +	if (!msg_id)
+>> +		BUG("fsck_msg_id value missing for reftable error: %d", info->error);
 >
-> Better:
->
->     if (*ptr != '-')
->         return false;
->
-
-I did use that below. I think I missed changing this, will do.
-
->> +	ptr++;
->> +
->> +	*max_update_index = strtoull(ptr, &endptr, 16);
->> +	if (errno == EINVAL)
->> +		return false;
->> +	ptr = endptr;
->> +
->> +	if (*ptr != '-')
->> +		return false;
->> +	ptr++;
->> +
->> +	strtoul(ptr, &endptr, 16);
->> +	if (errno == EINVAL)
->> +		return false;
->> +	ptr = endptr;
->> +
->> +	if (strcmp(ptr, ".ref") && strcmp(ptr, ".log"))
->> +		return false;
->
-> Yup, makes sense. We don't do so ourselves, but in theory it is possible
-> for tables to have a ".log" suffix. If so, they are expected to only
-> contain reflog records.
->
-
-Yeah, I missed this in the previous iteration, but realized while
-reading the spec that this could be possible.
-
->> +	return true;
->> +}
->> +
->> +static int stack_check_all_files_in_dir(struct reftable_stack *stack,
->> +					reftable_fsck_report_fn report_fn,
->> +					void *cb_data)
->> +{
->> +	DIR *dir = opendir(stack->reftable_dir);
->
-> I think it would make sense to move this function call close to the
-> conditional.
->
-
-Fair enough, will move.
-
->> +	struct reftable_fsck_info info;
->> +	struct dirent *d = NULL;
->> +	uint64_t min, max;
->> +	int err = 0;
->> +
->> +	if (!dir)
->> +		return 0;
->> +
->> +	while ((d = readdir(dir))) {
->> +		if (!strcmp(d->d_name, "tables.list"))
->> +			continue;
->> +
->> +		if ((d->d_name[0] == '.' &&
->> +		     (d->d_name[1] == '\0' ||
->> +		      (d->d_name[1] == '.' && d->d_name[2] == '\0'))))
->> +			continue;
->> +
->> +		if (d->d_type == DT_REG) {
->> +			if (!valid_table_name(d->d_name, &min, &max)) {
->> +				info.error = REFTABLE_FSCK_ERROR_TABLE_NAME;
->> +				info.msg = "file with invalid table name";
->> +				info.path = d->d_name;
->> +
->> +				err |= report_fn(&info, cb_data);
->> +			}
->
-> One problem with this is that this is racy with concurrent writers. We
-> don't recognize the "tables.list.lock" file, and neither do we recognize
-> "0x*-0x*.{ref,log}.temp.XXXXXX"-style files.
->
-> Would it be a better approach be to instead go through table names as
-> loaded by the stack? The reftable code already knows to prune unknown
-> files anyway, so I don't think we should scan for any other files.
->
-
-I actually had a more structured code here, where the idea was:
-
-- For each stack
-  - Run stack level checks
-  - For each table in stack
-    - Run table level checks
-    - For each block in table
-      - Run block level checks
-      - For each ref / log
-        - Run ref / log level checks
-
-But we move some of my tests to be runtime checks, leaving this as the
-only check remaining. We could still do the first level of what I
-mentioned above. The only reason I didn't was because we wanted to check
-all files in the stack dir. But I think this is much better, having
-unknown files in the reftable directory doesn't affect the repository in
-any way. So I would argue perhaps that we shouldn't even care about it.
-
->> +		} else {
->> +			info.error = REFTABLE_FSCK_ERROR_INVALID_FILE_TYPE;
->> +			info.msg = "file with unexpected type";
->> +			info.path = d->d_name;
->> +
->> +			err |= report_fn(&info, cb_data);
->> +		}
->> +	}
->> +
->> +	closedir(dir);
->> +	return err;
->> +}
->> +
->> +static int stack_checks(struct reftable_stack *stack,
->> +			reftable_fsck_report_fn report_fn,
->> +			void *cb_data)
->> +{
->> +	struct reftable_buf msg = REFTABLE_BUF_INIT;
->> +	char **names = NULL;
->
-> This variable is unused.
->
-
-Leftover code, will cleanup.
-
->> +	int err = 0;
->> +
->> +	if (stack == NULL)
->> +		goto out;
->
-> Why should someone ever pass a `NULL` stack?
->
-
-This should be safe to remove.
-
->> +	err |= stack_check_all_files_in_dir(stack, report_fn, cb_data);
->> +
->> +out:
->> +	free_names(names);
->> +	reftable_buf_release(&msg);
->> +	return err;
->> +}
->> +
->> +int reftable_fsck_check(struct reftable_stack *stack,
->> +			reftable_fsck_report_fn report_fn,
->> +			reftable_fsck_verbose_fn verbose_fn,
->> +			void *cb_data)
->> +{
->> +	verbose_fn("Checking reftable: stack checks", cb_data);
->> +	return stack_checks(stack, report_fn, cb_data);
->
-> Nit: having this extra function call to `stack_checks()` feels a bit
-> weird as it could just as well be inlined. Is this preparing for a
-> future change?
-
-Yeah, mostly the idea was to break things up into layers as I mentioned
-above. Let's make it simpler for now and we can make it nicer when we
-get around adding more checks.
-
->
->> +}
->> diff --git a/reftable/reftable-fsck.h b/reftable/reftable-fsck.h
->> new file mode 100644
->> index 0000000000..5e13ac9f02
->> --- /dev/null
->> +++ b/reftable/reftable-fsck.h
->> @@ -0,0 +1,42 @@
->> +#ifndef REFTABLE_FSCK_H
->> +#define REFTABLE_FSCK_H
->> +
->> +#include "reftable-stack.h"
->> +
->> +enum reftable_fsck_error {
->> +	/* Non regular file in the reftable directory */
->> +	REFTABLE_FSCK_ERROR_INVALID_FILE_TYPE = 0,
->> +	/* Invalid table name */
->> +	REFTABLE_FSCK_ERROR_TABLE_NAME,
->> +	/* Used for bounds checking, must be last */
->> +	REFTABLE_FSCK_MAX_VALUE
->
-> Let's add a trailing comma here.
+> Yup, makes sense.
 >
 > Patrick
 
-Will do.
+Thanks for the review.
 
---00000000000038322e063f90639a
+--0000000000000d0917063f90709b
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: fcf1a3b2ca3197f2_0.1
+X-Attachment-Id: 89d925bad5cc1722_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1qVU94MFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMmU1Qy85M2FGNnkxTEtaTXVFYitvMGNNempRZ0c2Ngp6ZE94UWZJd1ly
-VXMzN3RWQnB3d2VkN2JLLzdGdEF1b091MSthOVp3aGkxSlRrVnZydHlwNTJhdTFnZWl4K0tBClhE
-bzltSFVscWxEQjF5djRZVGZXMDdhLzRxSm5EVlM2MWVYbzJreFdvL0MxREJJYXJaY0l5cjNqL1Ax
-dDUyQjQKeTE1L3d3S0pOWEY4RzNncDRQelk1b2VLRjc1aThWSlIrQ05acDZ6SStsRWlMSVd4NS82
-RDZJRThjcWI1a3FaTQpXTlkvYTFOM3B1Um16TEp3bzIzVTQvbmxDb1BSdFJQTGRKaHRTWXRNQXUv
-d1cwWXNUUEJHODJzVjh2RVNZOGRKClJDMUdmWEh4Y2xGeXFsVEdBTkhhbFdJUnJ0bXlaZUNzTTB0
-S3NVQlRJQ3VzYnB0cUdpQXE5bUNzcmVhUXJpYVkKVmxWWjZKRG1VMGwyUENhaUthWmFpdlh5R2RD
-MW5XZ3QyZzFQL0x1U0pyekk4WTFVMmtyblRFRHpkTC8yU3I3UApEeFVkWTRERTlETHpTWHIzZnMw
-UHNHMzdOQ2ZDVWlIL2VzRm5TcjdCck1hRzZXVUZOajc2dVdHaXU4aTdIRWEvCnMyZWg1Z0V5N2Yx
-UW5NZWErcE9QQnhBeFRXeWVCaUNDaWJvZWVvVT0KPTBLRVcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qVU8vVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mLy9qQy80MlprWVFSME41VHR1OXhTT0NJZlJ3ajkrMgpqTEVSTlVPS0Nx
+SHpwT2RIaHZjWTBGdEtyOFUyZjUyaEZKVVdWSVpiZEpOaFgvM2tFR1IwVFU1WGZZWk5HM3ZECnRi
+VjloMnBPd3k3bDIway9ia08wOE5Gak81TWEyS1lHWHA5SnF3TUNpQWdFU1VsMjlMdjJiTDhiMXZF
+WDlpWHUKcGJjTStWaE9JZENjQkkxYVBYb0RQYWxUWXZzdnFhb1JQMVp1ZEUzYWpTTnU1YndPdWNj
+ZWtSSG5EcFRWRk9QYQp4cEVVb0ZnVHQ1WVZJOHJaVDdlRFdQODBhME0yWkFCMGsyaVZjVVI4a2I3
+SlFvL1F3VnN3YjhVWEU4QTlyNTBrClNGRGlYRm5VdWpNWG51Qk1xaHpRRFdGSVhwNHo3MGIzbG1u
+Mnp5S1NTLy9Db1lvd05SMUpGdjZFalFzZDNaZ0sKRjhyODBLaHI0Zlo5T0ErSCtLc29YWDhnNXRI
+Uk5scW03MWNjelI2ZnBZQ2hUNzBueS9MTE1KdUx1QUVFWEFqdAowMWhZRjEzbHkyVEVlcXZVWnVF
+eFlwNFY0OUFxQmZ3cTZwL3R1U2hWRmRLV1cwbndrR2dveUNzbWlWTmY0c0xWCnc1dWxhVWJjc3Jq
+NUdPcXg0ZmlJWi9pODBKZFhjQ0hURnNPR21TQT0KPTF5UloKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000038322e063f90639a--
+--0000000000000d0917063f90709b--
