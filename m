@@ -1,115 +1,147 @@
-Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9388730FF29
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 15:29:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E0118BC3B
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 15:30:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758727766; cv=none; b=JqMfjRzjY5SLZMfb0K+Q7/rfXmsEtUQ52dQowJ2tFf6Ql0rBXEJHmA8S6XiwloPIwYY29WheqJSB84bK8t22jngNu2+BdPMpoucOXshGGNRLndjTRGxs8yXIetvwklI8lD+f+zpqOg1ozD/FXthasM2QdGluazPSI8oa/0Lw1zg=
+	t=1758727836; cv=none; b=f4hEX/0/fY8R4rVOjzCagynJtTTPjEDcSUoX1/Q1UiZ0Qfbo7BsHUIhNwle656+aCX7FK84cSKIVBbe6FGUsJLkgcFw5BqJfng/lAR5QXG8dMUHUgkDuk8NppB7rMTyVKQtzjoyD6zU2JhKiY0deQO4zi1Upg7RsScCS1LOxC74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758727766; c=relaxed/simple;
-	bh=Bz4Wmq4Xhb2+pQRKOCdNGrzxgSD1xQe2rRtTM4tlJ/Q=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=prJWspNOtijT1YpcOv50KPPMzFLPrRA4G7JlQnzqPTOKUsTr2sHrVwk1tgJjBm0Q6pX8dJ6cf6mQjOpBwxsQKDVinyBlFgxVtqnVH83UszgE3d4v4U671K2AbY6NhOeNyKIMCC7+Iyo1G5t+Wid4zDN3+R+S7nxf8APGK2lXS9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YsLck6Ew; arc=none smtp.client-ip=74.125.224.42
+	s=arc-20240116; t=1758727836; c=relaxed/simple;
+	bh=AC9B6O2u6T5CYczObJKUJN97TCA3iVkIHg+OKvkmqiw=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=YpxzyjBTPTjhAgFUd5HNaxwr7Y9IAm+ukaMKqdmL8DoBHVVF0U9Z4XaL1EiHTD3vynugX5ngbSIISTI61ZIft6syUiGwjfS88vOKtN2/805UxvKrvZ2gKaG7OdIJaqH8TcbGi811KYJNw9HLxaWIt2gDleHfu3I2EbF8rybpWjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yhpd7tG5; arc=none smtp.client-ip=209.85.219.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YsLck6Ew"
-Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-60170e15cf6so4551565d50.0
-        for <git@vger.kernel.org>; Wed, 24 Sep 2025 08:29:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yhpd7tG5"
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e931c71a1baso7736123276.0
+        for <git@vger.kernel.org>; Wed, 24 Sep 2025 08:30:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758727763; x=1759332563; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jHxZx0chCYMG1tzfNxPLxo93Bv3xu8hVEVjGmb3TLfM=;
-        b=YsLck6Ewrej3tM0kGzZhY68eMHBIJhElHAkaVN7Pr9f5yNu7mejYQ0XOaJ5EH0BXha
-         rrrqxL8I6VGjIgMBguOUZu3SN42RlOsZit4GYfLCSkPDlY+gc84jfzDgi0nQnTJjHgXq
-         mexRTGnBEpYlY2IiUKkeZAC9ipJF1OLiZcAHdb4f9c0gVGPVo1KBZIDlD6evq0YK+Uft
-         UvDhuHIEcsI8nAycYyooR3o0GjwXaKXnYgdtDfS0IvuIIK7hSHkOat8cikv8zsch1CmY
-         i58cGV6PvuDtcpacjF/NDxq+lWbsedTwTh02kue1KM7UNcJt0vvNn/7qz265vlPAYm58
-         Kc/g==
+        d=gmail.com; s=20230601; t=1758727834; x=1759332634; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=A5YNuzdK9aMtiZwfnYbud2bR0MFZx6OFvVfx2GS6FqM=;
+        b=Yhpd7tG54VKjoOpAce48wOTUGZMiY3mJHasRECVO6GcGsTJudymI8P2WlgnSJb+QKX
+         pgOX74vwa5P+ENN+zUIM+UmCCxUmwJEjvVq+gAt568fFLm/LarWbbTLkMlYVdXbHj76O
+         rZFDXGdFMYVY2539ypQgIhMi4Uv9ftZXlZFA5YZ7arMc70/r4lSHnt0qxuaB1JTIlJQ/
+         dkHpG81PKRo7UGS6PE3vVLq73AkdVrFV0k104UdtDi5wvFs88CIaV15p1DkLEd5//AJJ
+         oj162VpM6zL8u2EH/igx/Vv8q3iM3D0bUFZm+LUdfsLICO01Wu+xPiio2a3Q2k4lsp2B
+         rrLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758727763; x=1759332563;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jHxZx0chCYMG1tzfNxPLxo93Bv3xu8hVEVjGmb3TLfM=;
-        b=l3tUBiO7INh9GKrvAw1Bu71tLLFWKux5xrCQ62eUSQoH5PgRdMX+pkY25ANLB6D6GA
-         +yfxmyX7+EkEXItioYLTXmakGfAnLX4WCzAnYJBQx20HJD1qa42nYxBHGU7sjdtuBoat
-         JKhO12JblOiNRbCPZPfC3h6s6SYBEbSE9cRPwOEy/JoVxZwH07Okrj1WChlAOPyEigT8
-         c7pCNoLMJqwDvGx2Asi6ZdfU8+BOXkG1B/k/CbIe6XlK8Th+N4KPzcAIgqY2iOjfcEHH
-         dXgHEbp7neZonb8h8fXhzXHedsu6VNayc0n1YlmRNqdfErQvYPXchujn3400HMO8a8Oq
-         1Oxw==
-X-Forwarded-Encrypted: i=1; AJvYcCXlcycaiJ1Ku+OlNZcsR28qg6FT+YQlvDkOoljHssdaulGXWMh1h8hsdpwBGa2fDtKKX+M=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzooCY5JKEidAh4PdjoiL8HoF/LD63Qf6lwgK3DspXUT6UkNxID
-	N4owa8jRKhXkDaqRhlx83zDMa6ljjjOn1ez0N0+x7QBn/aCiWFZjA5zb
-X-Gm-Gg: ASbGncuqp+8J+u/l+01vaE6ny/b5m5NFXIxD3STWveOpTVjzD+Q+MnfVlWk/BunlH/k
-	qSpDDqK9LNlzsuuIUonGdvDqLrB8gXXe+UdGt4SWG+7AQTk880TyoypnVE5Ffx9chddTFwOyalO
-	5bkBp+enSIhkjvL8uQmEKG3rqgoK6kjP6mHn9yQz2hwlzAIm99JjgfvF8VVodtivs7J4n9PKdTx
-	J8F+70PS1nrmVLnAyFVF8gh8dYdCRg1cs39FJi7Gnh05vf1u0ZWu+T/tjeW+3li1FYfVsR5yhBE
-	bq5Gw4bwinfDSarLCqTgSJO3fhn+klBWA06s3NQrZ+oLXit0/0RD3o8Gv+rntLD2ZFaq40zpaGI
-	E9daG+SP1xBWAPY5zJop4DAlII+S6OOnifN307tj4N54XgeWn3xH9V+QtOACAkA==
-X-Google-Smtp-Source: AGHT+IFEjOY6UOgyMZMwfd99vtZsYQJ1v7SjIrqAfaLNGSuti/P+VqZ29gzM6RpYDMnN7sdEUEeTsw==
-X-Received: by 2002:a05:690e:1599:20b0:633:bbcd:5837 with SMTP id 956f58d0204a3-6361a742ac2mr88353d50.20.1758727763072;
-        Wed, 24 Sep 2025 08:29:23 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:5194:54a6:d414:9d55])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-75d312ee6d1sm8166587b3.56.2025.09.24.08.29.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Sep 2025 08:29:22 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        d=1e100.net; s=20230601; t=1758727834; x=1759332634;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=A5YNuzdK9aMtiZwfnYbud2bR0MFZx6OFvVfx2GS6FqM=;
+        b=rKa7XRBErYB+PvolWvLt3CRSR940WoWI8rfiQKTpp8IQo5M1uglS90ZYusxmx7EhzN
+         MoNv9kDPSAHQsDNsCoGY2Jip4STrozJKFLWJ+cfyuN1nk0o9Z3m100PU5XEAnHWDYOlR
+         MdHo/7578Tt9Uo7Rk4byjlUxhVf/YfjYpGFSEWOLFpe6jadIinj4SnQmTyWkrgo7zLX6
+         pKrTywO/f/zTJYetQYKISPkyonBXAQQ5/nTIUXjrtJO7ICi/3mtTsO4rxe/6rNWCtnAA
+         qKfZ0VZezJ5LfMomx+TaLgtGKrHQllj5qxsclUxTCPpHYtwr+Kt+zhHVIhq605KJuWTj
+         Vy0g==
+X-Gm-Message-State: AOJu0Yw2s8pVjNssYKG1gJmisZED+3Rq8lx2rseqgldGKhQ4kmKlY4fP
+	woZLC8W0fajx+fb1cTOPKbQ9zaMZI1PyixdXhknsrmuFo337ETBNZ6sMViOEZczfLpTZ3b6v22V
+	eBXkj14Ke1FtoSzk+k7A/3KGltM93UNzuNTab
+X-Gm-Gg: ASbGncvn0eyWzNRxgVi61fEXBBbf24WUL2PcXIuHjKCsnpqodkL/b/nN/hI2WQgscd7
+	jQ7mUaJwAbk7wlx0x4D7WLWrr1DJmqOzthtZAugKdU596n4BnQ7/eDbZc3MdESxYEByiAi3CtVk
+	LwXdEkP0VHf+S7O0eyk0eOxSuZWyexJyUqEKQ7O2XT5jZfaQk1ye8iBnoyphT0xAW3Vg3WtrP+/
+	vCgIz65
+X-Google-Smtp-Source: AGHT+IH18RCEPG9CALtyi3TmSDb3eLM2Aj20YlYVyTFJCAtP7PsEEcjI8fgU6dvhOKOwSEds5/X6bv452rEI4qgmDQk=
+X-Received: by 2002:a05:6902:100d:b0:ea3:be0a:ccdb with SMTP id
+ 3f1490d57ef6-eb37fcc8b51mr417975276.49.1758727833481; Wed, 24 Sep 2025
+ 08:30:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [GSoC][PATCH] builtin/refs: add 'get' subcommand
-Date: Wed, 24 Sep 2025 11:29:11 -0400
-Message-Id: <4FEB2B85-FC32-4076-9DA6-F47AAB096CB0@gmail.com>
-References: <aNOQhncjwYCwCaZ3@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, Meet Soni <meetsoni3017@gmail.com>,
- git@vger.kernel.org, shejialuo@gmail.com
-In-Reply-To: <aNOQhncjwYCwCaZ3@pks.im>
-To: Patrick Steinhardt <ps@pks.im>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+From: Hosam Aly <hosamaly6@gmail.com>
+Date: Wed, 24 Sep 2025 18:29:57 +0300
+X-Gm-Features: AS18NWAUBEsQaikfwuJvA7z5Sze5XSwq50p91N5E2HUIfyS4fwefQFWC_vmaWGw
+Message-ID: <CAJA-u1rnzef53+eW_mbwd_40q+-vt747Q_dP3PG_HKt1yXcmXQ@mail.gmail.com>
+Subject: Bug report: Untracked file lost from git stash
+To: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+
+Hello,
+
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
+
+What did you do before the bug happened? (Steps to reproduce your issue)
+I have a file in one directory. I made many changes _and_ moved it to
+a different directory, but that caused git to lose track of the
+renaming due to a low similarity index. As such, I decided to do it in
+two steps and used `git stash -u` to shelve my changes. Following
+that, I moved the file and then tried to unstash it, assuming that the
+worst that could happen would be a conflict that I would easily solve.
+```
+git init .
+mkdir d1 d2
+echo code1 > d1/f
+git add d1/f
+git commit -m 'Add file in d1'
+mv d1/f d2/
+echo code2 > d2/f
+git stash -u
+git stash show --stat
+
+git mv d1/f d2/
+git commit -m 'Move file to d2'
+echo code3 > d2/f
+git stash pop
+```
+
+What did you expect to happen? (Expected behavior)
+* `git stash show` should show a file that was deleted and another
+that is untracked and has different contents.
+* `git stash pop` should apply the changes, potentially with the
+conflict markers.
+
+What happened instead? (Actual behavior)
+* The stash shows the deleted file but not the untracked one!
+  ```
+   d1/f | 1 -
+   1 file changed, 1 deletion(-)
+  ```
+* `git stash pop` says it's unable to restore the untracked file.
+
+What's different between what you expected and what actually happened?
+* The stash entry doesn't show the untracked file. It should show it
+(or refuse to create the stash).
+* Trying `git checkout 'stash@{0}' -- d2/f` says it doesn't know about the file.
+
+Anything else you want to add:
+I seem to have lost the changes I made (symbolized by code2 above).
+I wasn't able to restore them using any of the git commands that I know.
+I'm no expert but I'm the best in my company at using Git, and yet I wasn't
+able to restore code2 using any git commands.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
 
 
-> Le 24 sept. 2025 =C3=A0 02:37, Patrick Steinhardt <ps@pks.im> a =C3=A9crit=
- :
->=20
-> =EF=BB=BFOn Tue, Sep 23, 2025 at 02:50:46PM -0700, Junio C Hamano wrote:
->> Meet Soni <meetsoni3017@gmail.com> writes:
->>=20
->>> While `git-rev-parse(1)` and `git-show-ref(1)` can be used to read
->>> reference values, they have drawbacks for scripting and discoverability.=
+[System Info]
+git version:
+git version 2.51.0
+cpu: arm64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+libcurl: 8.7.1
+zlib: 1.2.12
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-format: files
+default-hash: sha1
+uname: Darwin 24.6.0 Darwin Kernel Version 24.6.0: Mon Aug 11 21:15:09
+PDT 2025; root:xnu-11417.140.69.701.11~1/RELEASE_ARM64_T6041 arm64
+compiler info: clang: 17.0.0 (clang-1700.0.13.3)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/zsh
 
->>> `rev-parse` performs DWIM expansion which is unpredictable for scripts,
->>> and `show-ref --verify` is difficult to discover and cannot read the
->>> direct target of a symbolic reference.
->>=20
->> Well "refs get" is even harder to discover (it is not even in Git
->> 2.50's manual that is available everywhere on the net), so difficult
->> to discover is not a good excuse.  In a sense show-ref was invented
->> exactly to serve as something like "refs get" you are writing, so I
->> wonder if a better approach is to extend it instead of introducing
->> a new subcommand in a distant place from it?
->>=20
->> Perhaps "show-ref --verify --no-deref" or something that does not
->> dereference but works directly on a symbolic ref?
->=20
-> For now: yes, it's more difficult to discover for sure. But users will
-> adjust over time as they get more familiar with git-refs(1), and from
-> thereon I think it will become significantly easier to discover that
-> subcommand.
 
-I think this goes to perhaps some of my unasked questions: who is the target=
- audience? My experience suggest that most mostly-porcelain users don=E2=80=99=
-t acquire familiarity with scripting commands, so it sounds like we=E2=80=99=
-re talking about script-writers here (and in the commit message).
-
-But how do we encourage script writers to discover these things? =F0=9F=A4=94=
- Hm.=20=
+[Enabled Hooks]
