@@ -1,127 +1,157 @@
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1653E2E5B2E
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 11:06:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E6C2E175F
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 11:19:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758712018; cv=none; b=hyWgh/LTM927Xu4Wm2ZbIwFFXMIWyzCaW7Yzj5OjTaKpi91YEryMc2NMsF68l6nQG54gsx/tQMLjALLbiFh8c0jupEU33ANFBswm5ZzYUXjOYTAXF5sP1KRu1m5wnA4KGMIZ+5THNbZFhfivuRydbUBDSahuEevaqHLZjgtLeaI=
+	t=1758712779; cv=none; b=ahXHRuoBuYGME0hPkyay3B/03qovd0Tl4Dp6UUb7ysGTFB7WN+itQUpKHSJOvspclnOJ2hCDRsQeTxALCdbJhCPjDMRtzVFKvXxAUklaROc8q69C325hXnOY5pOucdoC5Q9QWTYTgTqnXJSNX3NGdDG0kTIW2j7GN394p2A8xeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758712018; c=relaxed/simple;
-	bh=95o7yJ4Om9hEK4ScQiJHRvUYmaoBkBV3U3rubtrMT/c=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RL0ebdYPbsEC2G49B9Xu63FBOwDJjF9oos03fWOZXfhszpmtEj4axRqFRZz026Qdf5meMCnuWzhLaiLdeVxUArottnuOGmMtd5x4OHnk/ZyGCUGICveWG8b+yL/+Q+1sQh02TkGAsSex3YVJUxAzPOH4OgWP30Y45HJrVKOn1vY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bdp6ltHc; arc=none smtp.client-ip=209.85.222.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758712779; c=relaxed/simple;
+	bh=8yXB7w3dwlHlpWSsL0rIZoloWKPDQBR4lwshGkC+t7Q=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=lFRQjMMMPbrw+Y9VRzGDVGbzEv71CuvRKxFQ8y0u4usp7qqSufSw6BqzbxuIzaz0NlN7bcuzHVEtehgA9L5S3HWhJwR8Q3KdNX1xoPWX/WEKVdfyZMHzvMsHFJ53aUQ4YxG81GqbX4un49jmMqIrHQLthdpuhBm1t9Uln6SlWeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=dRIwIDK2; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bdp6ltHc"
-Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-89018e9f902so3548516241.0
-        for <git@vger.kernel.org>; Wed, 24 Sep 2025 04:06:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758712011; x=1759316811; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=U0Yq0F7/criI+QGPS3yhCPd2vb1VWfYEF/8VzX3IjFo=;
-        b=bdp6ltHczrRWCxFb55UL6ffsEbQoqRXO77aaRO+enxWgzb6oyQHLJgqd+KODXzq+qy
-         mgrYkmyNkid7Pe0i9LsGIRahNMN5kWq4/08d8KoiIznE0/yjiLRoRlxZZW4W4hBG4QPA
-         Mgj9IWZI4V/s8niWSrbyZij8L4ZOtjAhgD5YAsUsPCE7MoxWWzm8ycqj0KmLiGoMe2tR
-         fwh2VttE5rDqcfO+GUN/zsHsXp6wSiSWr/nUvUgupyU8m2BenQgxdS9fxCEWgcJh5Dl4
-         XjlxfguVZiOpABijnkzGqlQRE29toh7A0NNElqzhz3uZ2E+z/PxdnXQU+h/7Bt+ecKiZ
-         CLKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758712011; x=1759316811;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U0Yq0F7/criI+QGPS3yhCPd2vb1VWfYEF/8VzX3IjFo=;
-        b=XU6dxc9WWwR1YkHVInmLBQGyZofCFua240AArxU2nF/Vngqr5CszsG3oXJGFDtFpky
-         IaeTNxp8P3FtE0HNZI+qzJSRIqUI1UGJNOvLAzaLPh00UkE8fs16gEm4h0sZF2FItOkX
-         buSUIpuumcEyJiIrfqZM0NfErxRyVEn1TRfvtOpMhXSKDHtD5J749V0WM+MbndSTtf8W
-         7nkvqKF7+ZqWPDhDv3CdieP2rEl/UyJ9nsnXHmKR29XXrlCdlSeaiiGsiPE9QqVh1l8f
-         NuZfEp1OWzfM/VjeawNkmwD6tmCS5TH6DtGN/LyeFzQBNqNX7WJzPXlwYwYeLB1bBDAP
-         7KSg==
-X-Forwarded-Encrypted: i=1; AJvYcCXsEIDKOnxMaVRJaUvJj6BsQ3M1juCYuq4DSE/4oxob/joWdcnHKgIswOhqynddxjuRQ9M=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx9ZpUOPV9ieKp6soZBhYnHvVwrIqzwuX5vko2v26k5h2cezfJs
-	pDUBD57neNzIHhKDBSx6M5DpuZGASHKVCqWkH1ZVF2HjBP5lfTbxqibVwBxr+4b06Szzni+Q2s6
-	0CVOb4bssLObcDJRYncBObPjEYYkzcnE=
-X-Gm-Gg: ASbGncu1hUQG2h6jIkmlPTWXIidtvsp/WWA4Y6A0X1HW6wZ8NE1TQucnOQc9RLFBQsU
-	P/3l3CJgoUWDALD+5Sx+bwW/q3B/EZ/HZvjovJgo9WjHBOoc1L7o81d7ZMLd68w131W0ZPTNWw1
-	We8v1xpODbhg6E1vIwBDx7Y10VTwSsrx0SQCrn+h6b0j/OC87i2/eEuNdZmg81mPhDYucVWf2Tf
-	OBMoMZQ8djGaTzxLoq5Qg466iSE+QX5uKyPN84Tzw==
-X-Google-Smtp-Source: AGHT+IFFjjlW8LbPfgsXM1AUHX47sjEnHpOxJwf417bhbij0U3aKnMifPdCgMhPiP9neGbgyFGXolrvVDMdy4PC8BD8=
-X-Received: by 2002:a05:6102:4a95:b0:5a4:60ff:80c2 with SMTP id
- ada2fe7eead31-5a5829169a4mr2415174137.30.1758712010930; Wed, 24 Sep 2025
- 04:06:50 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 24 Sep 2025 04:06:49 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 24 Sep 2025 04:06:49 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <b6d03748-8171-4df3-83fd-7f4025d9eb6c@app.fastmail.com>
-References: <20250918-228-reftable-introduce-consistency-checks-v3-0-271af03eb34d@gmail.com>
- <20250918-228-reftable-introduce-consistency-checks-v3-3-271af03eb34d@gmail.com>
- <b6d03748-8171-4df3-83fd-7f4025d9eb6c@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="dRIwIDK2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1758712774; x=1759317574;
+	i=johannes.schindelin@gmx.de;
+	bh=8yXB7w3dwlHlpWSsL0rIZoloWKPDQBR4lwshGkC+t7Q=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=dRIwIDK2mulG3YJgqCX9K/3AXLIchFWeCknhlZ+Q7AqNhFomHxQsUyWBZtR8G4/j
+	 /F9cmx/i+4L/NBStC7ZenWpP+Y0qSFpvuAJVc7HcKuiGDLXezR/NSaSbR5nuCATdu
+	 3hCeOyy58wa52oNvlcFMenHODVpg+NZd5jLKbmhQvwU4NU2e+tej4duSdwNQij3sX
+	 vHgUpPOE55KWmSuyYGwfg8sd5xMzkY518ThjbM4K4adr5DaZ1lDewEtFbXeWmPNSa
+	 RUjrdJ3Q3OGNMWvVPniFCYdUUUhuHR96opny9fwSHyH/rpJSFVE9NoeGJriYv/L5o
+	 LEJ1qRgMLAVbO+UjsA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.212.228]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mj8mb-1uOSDT01ll-00fgnf; Wed, 24
+ Sep 2025 13:19:34 +0200
+Date: Wed, 24 Sep 2025 13:19:32 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jacob Keller <jacob.e.keller@intel.com>
+cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+    Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v4 3/3] diff --no-index: support limiting by pathspec
+In-Reply-To: <a9cecd57-e683-4efd-9c79-5618000319f3@intel.com>
+Message-ID: <35e55d20-d4aa-4b88-aa93-9192612fd1b8@gmx.de>
+References: <20250521232917.2333291-1-jacob.e.keller@intel.com> <20250521232917.2333291-4-jacob.e.keller@intel.com> <c75ec5f9-407a-6555-d4fb-bb629d54ec61@gmx.de> <a9cecd57-e683-4efd-9c79-5618000319f3@intel.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 24 Sep 2025 04:06:49 -0700
-X-Gm-Features: AS18NWDFGHSIXO-6Va4eJiuBh6MFzVMjKrKkHX0RlbDpNyvrAgnvv_IXx75DgcI
-Message-ID: <CAOLa=ZSkx--7A6zs3RK3Noa=bBZ8mSLMVWBYr7tUFXQkrstgMw@mail.gmail.com>
-Subject: Re: [PATCH v3 3/8] reftable: check for trailing newline in 'tables.list'
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, shejialuo <shejialuo@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000ac9c1d063f8a0cd4"
-
---000000000000ac9c1d063f8a0cd4
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:t0eiKAwqPhcia7zcNJZYXC0umnBfbE4xkjQKwYeqqfTur2ooIsn
+ BuqdK+j3ceHWk+0OczeLOgoePD6X23G0e1HXgxbGiJ9oxfullkAUt4biaLQGTC1YFs+jQ2h
+ XcWZUuKxM4xennzbRvYJ2BxYrIkhu3Pc2tD+EDQ93Ckv0vUNzwhD5oeAEFUgz0hJ+6PmEHz
+ y6RgYYe+39ikuRiwlE+fg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:iSbp9zuGUWA=;KJTl33D4pmMBdDRnBWvxvqM1PLl
+ 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
+ 3IxKNVddFKKRLwVH31EPLudECZG176/+Mr0/Q
 Content-Transfer-Encoding: quoted-printable
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+Hi Jacob,
 
-> On Thu, Sep 18, 2025, at 10:11, Karthik Nayak wrote:
->> In the reftable format, the 'tables.list' file contains a newline
->> separated list of tables. While we parse this file, we do not check or
->> care about trailing newlines. Tighten the parser in `parse_names()` to
->> return an appropriate error if there is no trailing newline.
->
-> Nit:[1] newline-separated + requiring a trailing newline sounds like it
-> really equals: newline-terminated list.  Is this moving from
-> effectively using newline-separated to a newline-terminated format?
->
-> =E2=80=A0 1: Since others have commented anyway
->
+On Tue, 23 Sep 2025, Jacob Keller wrote:
 
-I see the confusion, it is a newline-separated list, but we don't
-check/care for the last newline. We don't require a separate terminating
-newline. Let me amend the commit message to make this clearer.
+> On 9/23/2025 7:57 AM, Johannes Schindelin wrote:
+>=20
+> > However, this makes me wonder whether the logic itself is sound? It is
+> > not immediately obvious to me why the `paths[0]` and `paths[1]` values
+> > aren't matched against the pathspec yet their entirety is seemingly
+> > skipped in `read_directory_contents()`?
+>=20
+> I recall fiddling a lot to try and get this working. The idea here is
+> that fixup_paths does some conversions to handle the DWIM logic where a
+> "diff D F" becomes "diff D/F F". It returns true if both paths are
+> directories, so we only enter this block when both paths are
+> directories. (Which is required because we only support pathspec
+> limiting for directory differences).
 
->>
->> This requires modification to `parse_names()` to accept a third argument
->> which will hold the error value.
->>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
+I do wonder, after seeing that `read_directory_contents()` has to
+(re-)construct a complete `strbuf` in every single invocation whether it
+would make more sense to construct two `strbuf`s in `diff_no_index()` and
+pass those along to `queue_diff()` _instead_ of `skip1`/`skip2`. The
+`queue_diff()` function would then have to extend these
+`strbuf`s as it already does with `buffer1`/`buffer2`.
 
---000000000000ac9c1d063f8a0cd4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: e7dcdfab6573ac3_0.1
+That would avoid appending the same prefix only to remove it right away
+(with a not exactly cheap `memmove()`) during every
+`read_directory_contents()` invocation, too, in addition to allocating and
+releasing those `strbuf`s over and over again.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1qVDBNZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mM0tsQy80MXpXNkhaRlFGSm1vK2hneFdIbEQwdGVsQQpCVW9JWmx3SEhK
-M3o1YUVPZmNFc0M1TWFGUFdvS0tnRlpCVHQ5S1IvQTBlQzd1bVJpaHo2eVVxMFFVMFlJWVlrCkkw
-b2RaamhXN3orSzJoNnM5bGhjTkVNdWxCNG1ERy96MDcxVDN6S00xdmVKbG1oYXBqY3YyRzRvczh4
-a3RrazIKTCtxUVBac25qZXhrTmgreEVsNDZEVEZjRE1GL2pQZzZCaWZ5N1FMZEF1SmxVR2w5YlNF
-Zk5JbzlleFBJalIzZwpTYVQ4Vi9HOHQ0VEMxaXRQYWhvWEZBTzREMm1LRXl1bDhSMHR6OC9EenBL
-U21FMXIvaGVOamZmcy9HckdUV05yCkE4d1JnNUEyNFlBYXdDaC84ZHFSdUlIZVAwRTF1MVQ4MWt3
-TWI4TDkvdXFISXIyalVBYW4xNjltbXdham1VaFYKNjFzWWMzM0krL2FVUTF4UUJXcWoxRVhjTGVS
-WnBOMGs5aTM3RzFHelcyOEdlK0lONVU3akl2cGIxeFRpK1VvcwpMUC9nR0JaRDZtRUlHYmhIdzZl
-Zk1wdU9GMEs1d1d1dnVDZkp2QldYTTUyQWhCSFc2MTRON2l0TjVzblI3ZE5XCjd0cGg5Y3pOMW1o
-Y2ZhRDdDY0lsVzBjVVNCRTFLSHl4K1B3bUVIRT0KPU12V08KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000ac9c1d063f8a0cd4--
+Ciao,
+Johannes
