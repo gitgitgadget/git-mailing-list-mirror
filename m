@@ -1,40 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF67FC2E0
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 00:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9586A52F99
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 00:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758674498; cv=none; b=r072uCibFjtumkO9RXVeN1gInN5YJX0OHwJstgQpfVnFieF3OTe4YrOKJsCkV+Io/wNh2StbXTKFBlSYDBCm1U0V+OFb68WQQwE3SBTj67fuGE61gaNdgDPZlDEQQDmQ0J3uICoDx9mmMYH1hfPZj6QVybKPObsbEaGwuRRUk4A=
+	t=1758675256; cv=none; b=MnEDdoVWOHY9Xpp3zi8sVo9woku8mAoEhd2EiCNWVKV5CnLr/7AreyjUR4ttXzbKsB+s0+NYIHPfx2ESxPETL9QBsdydq84l+kJ2o8MSn/vqOuIdC03F/SqcZ/jFsgHOGzQxBp9+X9hDSflOhItPJUx+ukSo2l7Kl5KyNbL4rY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758674498; c=relaxed/simple;
-	bh=Domi8k0G+Q5QH6UAEtimWeLd+Wh21qCjGQa6we8Hkyw=;
+	s=arc-20240116; t=1758675256; c=relaxed/simple;
+	bh=Rk3JeamrdrGeys9QyXEUuXZvgTrzX57lzk1QU6yKiJ0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BZT9UAbDAxU92aF4bZzW3cH2yGnyQQYlHuvu/c8gmabJgg6p1giXELEoNtBoEuHdiBhxiRPhfZ6dVkW8CC22Rt49Xj3AePkjt04rL7/rSfSlf2OqTYPmCfJhgyxn4MgDlaJiefBDVgbBkAJu/6nmQV+tdVdxq0Gfp6/oPKQA5g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SnQrQ85x; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=NQsTMuF3IH7eQprfM9RpaRTIKgqKxQw59IY6T5V13cDOF84k2KrTy76RE021MA03y/RxKBuz4h1c+w1Nb7Hjqr3+nARy6AO8NfBjpBq2ZLHZMdxIhTVD/gBjAmS6SZ/LR9N3BG2o6dh0SNblTzQxm5tHKefsiy9AtDivmVy4pgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=BPZ1RGKd; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SnQrQ85x"
-Received: (qmail 10623 invoked by uid 109); 24 Sep 2025 00:41:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=Domi8k0G+Q5QH6UAEtimWeLd+Wh21qCjGQa6we8Hkyw=; b=SnQrQ85xwD7VSwr8iunFWoCN9+n6mOlqEZGpKC6tUvuOZPCDUZoApuO6tSEtTEMIbVdkestBnMunL6NHosTupkaCkMMxyILZF0eX0d1FdzKS6yGbzFwDSkM1WLV8pV6zLv3h3FkYaSLmAe3dpUhRmWSMowWaBWnXGX83qc2+va8LS5YPY4adTDFaB+d0FdWJfpyuqmcQI5dItjiaA4wW1xO2oU4D5DMMBSDA9LNa6hCxkE2nXJlJeDPPMqVEGedUFVXyNVx0QWEiHfa2bj3W+eS26T4WQuKxlnCrObQrsDroclXSBBB9PTJl6kq4aVxqVUFNmB7eVOtkI+yxzyf2ZA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="BPZ1RGKd"
+Received: (qmail 10714 invoked by uid 109); 24 Sep 2025 00:54:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=Rk3JeamrdrGeys9QyXEUuXZvgTrzX57lzk1QU6yKiJ0=; b=BPZ1RGKdmXXVsXiIlN8IC7ZpF2DhQxinIhf7NHLVQGTqRyj9JkkloDpiETlmeM7ndtLiRJMXSH2ZaI8AuYDidAH2ya6n/EzQgqNo3nkeJ17Ncv39QT3QT9zQ6sIQUCsubgESVb1nTEqVz2m2bwb71nZDew5iGpSJZzMvziBMI+ACiSEyVld+qOuddS+Vc9NELV5Pzyx75CMTG+DOV+tew4cwnKxKtRvCQIVZXYVzMdck8P/sGC8IDfxwyu5MhQqhsVgdp4MSseXf9zoYhJ0SFdRkI5/zqWHad3o4ItmIHpZgM9gJnW2/7d2tmMBXUXuSgQtXbAdhV0vjnKrjYvBTxA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 24 Sep 2025 00:41:34 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 24 Sep 2025 00:54:13 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16432 invoked by uid 111); 24 Sep 2025 00:41:34 -0000
+Received: (qmail 16600 invoked by uid 111); 24 Sep 2025 00:54:12 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 23 Sep 2025 20:41:34 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 23 Sep 2025 20:54:12 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 23 Sep 2025 20:41:33 -0400
+Date: Tue, 23 Sep 2025 20:54:12 -0400
 From: Jeff King <peff@peff.net>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-Subject: Re: format-patch: why are the Range-diff: and Interdiff: headers
- translated?
-Message-ID: <20250924004133.GA1142438@coredump.intra.peff.net>
-References: <3945bf06-ba04-4ecb-887e-0f3a76e1c2f8@app.fastmail.com>
- <CAPig+cS-qYqpK2GOzSLQtqF_gqan6hftnnOnfMFUKby1nT5n7w@mail.gmail.com>
- <54b9d6a1-6edf-43e0-8e6b-e096f322df64@app.fastmail.com>
+To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: doc: config/extensions.adoc: line continuation syntax error
+Message-ID: <20250924005412.GB1142438@coredump.intra.peff.net>
+References: <a6e4e995-fc19-465d-bd7a-c002bc0db31f@app.fastmail.com>
+ <6196161.lOV4Wx5bFT@cayenne>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,37 +42,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <54b9d6a1-6edf-43e0-8e6b-e096f322df64@app.fastmail.com>
+In-Reply-To: <6196161.lOV4Wx5bFT@cayenne>
 
-On Tue, Sep 23, 2025 at 09:59:55PM +0200, Kristoffer Haugsbakk wrote:
+On Tue, Sep 23, 2025 at 11:08:10PM +0200, Jean-Noël AVILA wrote:
 
-> I’m not concerned about machine-readability.  My thought was that
-> localization/l10n of this software was intended for the user themselves.
-> And also that users might, without intending to do so necessarily, end
-> up using localized output in contexts where they do want English
-> strings, like on an English-language mailing list.  Even though they
-> might prefer Spanish (from my Colombian example) when using Git
-> themselves.
-> 
-> But there might for all I know be Colombian/Latin American patch mailing
-> lists where localization like this works great.
-> 
-> I’m not really in the natural target group for l10n Git.  I might be
-> totally missing all the use-cases here.
+> Indeed, open blocks cannot be nested [1]. But, the first open block is not 
+> necessary as it is a workaround for the missing knowledge of multi-level 
+> definition lists.
 
-I'm not a user of the l10n stuff either, so you can take my opinion with
-a grain of salt. But it seems obvious to me that "the language I am most
-comfortable using" and "the language for the project I am contributing
-to" might not necessarily be the same.
+We've run in this before, but I don't think we ever came up with a
+satisfactory general solution.
 
-I'm not sure how well gettext supports this use case, though. The first
-one should obviously come from LANG, etc. If we added a hypothetical
-format.lang config option, is there a way to tell gettext to translate a
-string using a language string provided per-call, rather than from the
-environment?
+You can find one more case with:
 
-I don't know that anybody is really even asking for this, so I'm not
-proposing to spend a lot of effort on it. But the thread made me wonder
-what is even possible/easy to do here.
+  cd Documentation
+  ./doc-diff --from-asciidoc --to-asciidoctor HEAD HEAD
+
+and searching in the pager for:
+
+  /^\+[ ]+\+
+
+which shows added lines starting with "+". The other one is in the
+pretty-formats %(decorate) description, which is included in a few
+places.
+
+There are some other hits for ASCII art, some of which I think are
+mis-rendered. But that's a separate problem. :)
 
 -Peff
