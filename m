@@ -1,146 +1,108 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5282A2629C
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 17:21:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97A92629C
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 17:22:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758734514; cv=none; b=cqLMC/1RtIaUMlhvZbFpmQJCjKIBvgYEcWdex5H9JN+4wF/SAqGHHhEI3a+HajoRGere9udgp+yARSMynWuckYZEBNZWGnjWRaMoaimJj8/Gc27ZgB+GdJFSTq2vW449n/E0zvg/7H8d9AItXK2hq72TvXYrxf51+P9gY5l8Rgg=
+	t=1758734552; cv=none; b=Egk9cVwnu4gKldm8PVC/gZEg2pfjJFmrtjZQrShYi56cKbE+TyOtXFl8skbea1l+ZsfiywJKIuoaE5RvJ/FffqSfqszMdCtwOqcS1AsELJE782YmvNq2hgOjxmoehgX05hGQikTduJLbvDDU7XibqgFNGuVVeKqE9UeVET8e9Bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758734514; c=relaxed/simple;
-	bh=/ZWaNtmm4JVqbzxavg47xzHdUoxShF/CHrlm/U9PUro=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=lDBzSNlR7NF12fFiOt3DZdZpJ1WAMFT77lVj9+UfgxK3SqZgmMpGxU6SgvhKcyomh/PNxBuvKTG9r2MYUspEhr2YAZ9YzO20I6ypsTChw7fRTbmoMTKulvlOPBa/8dGdYQx8LRmaNSGk7pP5fQd9rScj1ded2n5UGo8qArBOcGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=PvDmGm6K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j7kEMbWg; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1758734552; c=relaxed/simple;
+	bh=BGg3AZ5cfXdRBwhKG8nGuSV1TDOC6bkCq8C4yaxAhXY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OhzAC7EoUuAsT8dArOtWL+BYu0QUz2DerX3IJDsyrWdzyXQWbq7euXaCrU5Ypx/ePWs7eggGhbYjZnUjQLB2yzU+kbzrSf8k2XTwm2gsZB+6g/X13w5FkCiwFHHOlfBMvHe12nOhQzQudZgbAIqWTfTQwMoU62wDCFYJv1L2vA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=07SesZTz; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="PvDmGm6K";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j7kEMbWg"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5DB911D000BC;
-	Wed, 24 Sep 2025 13:21:51 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Wed, 24 Sep 2025 13:21:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758734511;
-	 x=1758820911; bh=OcmFh+A9qbHUhQZ1theZRGaKFeq8gRp0eNr/Hqrvz1U=; b=
-	PvDmGm6KPwElCnhOpqy2Q+vlgUvDSWB4UmENNidemr0sagnUVQdtafo6AtNZAU58
-	OicxonwLWf/vVVdKWaffbeCN9T9ca/vrcdfVVAR/XQr5MbSI2FwVGqd9NUfDMCNx
-	nt6WpeMKf1LFLREo2DjlDJrwy2d5WULWj9y2K5ROB4ONcyPG7jsY28CrO9taCkRB
-	yMaKoEr+lzxMXGahPe4kUuC9s/5vvtpmOnuw4fTv7AQOioXYsrpKwBSk5eDu2FBC
-	ScSRXlnbX/PHJrBohQp7daNGbzwOoxCCNp4shRWBJMf/k1qJUQYNrNPF2jOtB8l/
-	3YfGsUlBRw08zYmoCkzGFQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1758734511; x=1758820911; bh=O
-	cmFh+A9qbHUhQZ1theZRGaKFeq8gRp0eNr/Hqrvz1U=; b=j7kEMbWgfG7p81fvJ
-	68zqSxrXUoxOTjQ9A4xZ/rAHGtx+wWAAbYXxm/XyWJK5TeTcKhH4QZK3w0iWr0qz
-	15D4yHN1u+hLbcw8hGEefmz4V0ub+ZNtoQlacRLTzy0iXXxvMcHXaNYEMcilElvX
-	10OzXKrm++dEDqTqQO2ud8PbRcAs5dY7aFHypQeR1jpChWHfeY9IFWYCH1Wl4KbB
-	xEXJv/zKn8okvWUWbFSKmz3/wh9b3VKMSwEPmF9t7kbQw36Bwt/Mg6HTlMib6+5r
-	dZ5A86SxAXlRP4FKRPfP7KP2efuW+D4SylqAZODPtNuyThi1HrOHbyD3jBfP3Xpr
-	cUYfA==
-X-ME-Sender: <xms:rijUaBTV8j8W8WB7JXtKk3P7h1rxzoAlwFNuvMhne74yqMi5wxdFJg>
-    <xme:rijUaFmF0we98UPaSHQQydef0Y1Qh9RryVAMAHxVvmpaWNqXxZElryS0ZYDsKdrmC
-    UHYJ7xOh_ndePOQhCDpefRnuhdzmoeEpm5IB43_49-Lg0gkW4snuqc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeigedvtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkjghfufgtgfesthejredtre
-    dttdenucfhrhhomhepfdfluhhlihgrucfgvhgrnhhsfdcuoehjuhhlihgrsehjvhhnshdr
-    tggrqeenucggtffrrghtthgvrhhnpeehhedtleegfedvtedtfefgffevfeeuvdelieetje
-    dufefhueeivdeukeeuleeitdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
-    mhgrihhlfhhrohhmpehjuhhlihgrsehjvhhnshdrtggrpdhnsggprhgtphhtthhopedvpd
-    hmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:rijUaD-prCqpQzi68_JMa758twhna_-5q9tYys9QQc4f2TU05gURqg>
-    <xmx:rijUaNrygBug9k1qRC4c54N6QSx2nVc7C_WmK8StU4eRNpsGMs9XnA>
-    <xmx:rijUaInA1WY1rWOzVkJNGySwNGsL1GOH_NMV3Yiys4uN3T6ar5v6Qw>
-    <xmx:rijUaML74b0Wie12FWdieI9UR7_aMJENdTlImsEDtvUMnRcfjTuDGg>
-    <xmx:ryjUaOUOS-Hez-__pmnNw3LklSto4mMHXVmqiiM-6jXrNW849x6TA1oR>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id DB9E178026F; Wed, 24 Sep 2025 13:21:50 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="07SesZTz"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2681645b7b6so213495ad.1
+        for <git@vger.kernel.org>; Wed, 24 Sep 2025 10:22:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1758734550; x=1759339350; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6Mxg87c8jNFLloKBediEESeHmxcSJZBWHQNIWLWOACg=;
+        b=07SesZTzwf+3hIRusI/CHsFVI554APD9y0YVT7zwJhyGyGRaY+pSL8PsIJSYfCEhLl
+         ZlDot6qgwbza/0AyR/6nMJ4p+QHZbyxyBcs8sNqbHEtmaGm90hPlkAmBgNq976pqQpoU
+         eNIHy3Z7cOdaZvxMGkgNQFQDnDR1p2k0nHwmFpnl8HtgK88AHf1tyk2+ukVH6xvAlqi7
+         yvE+0OOtW3VfTn/nUl8aAYmGUz8DjJ+nWKy2s8Dv0vCnFf/MRukYWNhf0WugeoBm3miW
+         W8hNoTlkFlUR/e8Mz0/ZjggziY76X1ugMI7ToL/gDQ0lUZbcO3qMpP1u/3wFUaNheBL8
+         P3uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758734550; x=1759339350;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6Mxg87c8jNFLloKBediEESeHmxcSJZBWHQNIWLWOACg=;
+        b=YqYxDsRpmlHqaPbhZHdWjxwGT9jaNcfdJRr5N2JjpkFj+Likm6z89jQCX4gHTA7ZaI
+         UycI2Vik0NcckrSPsZbZOdeKgjJkIuRHsq4AM2upK+c2IYXOkOu0qok6r0ZdeoL8sURV
+         2zsfbzqmm2grIuaQ8yAYmz30EwhKNtJqoaqBuS6wXDlY3B4SH7QCjcbVtrAHV7fxBAp7
+         kNRq5kI+kNRTJBhjFuTFeTzEbbluv4+4M/gCrWx9dUsz5UPjq6L6zJHG1vLzob/eKpNu
+         bB6r5h1IqhSg5GrIXNvBMymfh2CcjafcNC8TsDQBRQj281sGwlwwEEST6LHqcbedxb+u
+         tRZg==
+X-Gm-Message-State: AOJu0Yw/WU7ZxxOW4LbEopQzwErWRjAm7cc5vR+RIpJtvSnMGe3QJ6aE
+	wrIjZz9OplKvRhu7AegIMNEGg3flHXljpQfPzZTffHjAZYnRlg+M0H9tiBxXV8cCpSRrcAoEhdS
+	+3kQBCOKo/lBW+Fy//hCqPM+U4abR2mQ10xexdhTvdXaXCTMljA+1QcjGnhw=
+X-Gm-Gg: ASbGncsUXGR696eJiyNSjZrXL1raNBfTHJQfMLUF/oxE4L04kitVKgaxmdehagWt0C3
+	UydwSwpVKxWwj+4K4gZjPT/y1D4jOkAJIuYLw4lvAvvI+VfSZljC9OmZTQdvfh6NwjtwtzWJIGS
+	tiHwj+xnrni0fhYjCbT0JUlUrnAdGCnX8QF30jD09K5uX8DLsm1v4nHm59OkKQUKKGEsUT5N2ix
+	rw5fFSMU6Qn+CWI/MMSzWKme5El9aogFXYhjU3HdhxuuPV58l/0v7Y=
+X-Google-Smtp-Source: AGHT+IEWdZ1+nb86j1C9/sQfC063Fixi5FYFY4sNxFZaG0AW44QMTGCFv/wu+v0IXpHdx6PZH/UVoPMPwYxg0PQayqQ=
+X-Received: by 2002:a17:902:ec8c:b0:26d:a02f:b046 with SMTP id
+ d9443c01a7336-27ed3fc4c47mr885945ad.11.1758734549585; Wed, 24 Sep 2025
+ 10:22:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Arp_fDZwitDF
-Date: Wed, 24 Sep 2025 13:21:30 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Message-Id: <1928a79e-c0e1-4510-8717-89053b54ff48@app.fastmail.com>
-In-Reply-To: 
- <c7f09c2bd32baf9e1dda355656bba811484e90a0.1758656702.git.gitgitgadget@gmail.com>
-References: <pull.1976.git.1758656702.gitgitgadget@gmail.com>
- <c7f09c2bd32baf9e1dda355656bba811484e90a0.1758656702.git.gitgitgadget@gmail.com>
-Subject: Re: [PATCH 4/4] doc: git-pull: clarify how to exit a conflicted merge
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+References: <fd7758e5-7719-4bed-b1b3-2137c49cc950@velocifyer.com> <f1599790-b48c-4c37-8cf7-4756f5064d2e@velocifyer.com>
+In-Reply-To: <f1599790-b48c-4c37-8cf7-4756f5064d2e@velocifyer.com>
+From: Emily Shaffer <nasamuffin@google.com>
+Date: Wed, 24 Sep 2025 10:22:16 -0700
+X-Gm-Features: AS18NWDrlP5YC0vjgxT5sem5cwcOMrSnI-7Rd_oSuj3P2Mxb45njJ02Re1CGqBQ
+Message-ID: <CAJoAoZkhqF83gsT963X81zZZi0wvYV9umEoXaArVpan6nDCoDg@mail.gmail.com>
+Subject: Re: 0-Based indexes for git log
+To: =?UTF-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?= <velocifyer@velocifyer.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 23, 2025, at 3:45 PM, Julia Evans via GitGitGadget wrote:
-> From: Julia Evans <julia@jvns.ca>
+On Wed, Sep 24, 2025 at 10:15=E2=80=AFAM =F0=9D=95=8D=F0=9D=95=96=F0=9D=95=
+=9D=F0=9D=95=A0=F0=9D=95=94=F0=9D=95=9A=F0=9D=95=97=F0=9D=95=AA=F0=9D=95=96=
+=F0=9D=95=A3
+<velocifyer@velocifyer.com> wrote:
 >
-> From user feedback:
+> > In git log it uses a 1-based index for the date instead of a 0 based
+> > index. So it says "Fri Sep 19 14:23:24 2025 -0400" when it should say
+> > "Fri Sep 18 14:23:24 2025 -0400" (or "Friday 2025-8-18 14:23:24
+> > (-4:00.00)"  to get a better format)
+> >
+> I suggest git adds a config option for 0-based date and automaticly uses
+> 0-based date if there is a file at $HOME/use-0-based-index-for-date or
+> $USE-0-BASED-INDEX-FOR-DATE =3D=3D true
+
+Git uses strftime from libc for date formatting. strftime[1] doesn't
+offer a way to format the date as you prefer - what you're asking for
+appears to be a personal preference, not a standard in any community
+of the world. I think that your best bet would be to attempt to
+contribute an option to strftime to render the day of the month from
+0-30, but I would be surprised if such a contribution were to be
+welcomed - as, again, this looks like a preference held by very few.
+Based on my quick refresher through date.[ch] in the Git codebase, it
+would be infeasible to add such a flag and custom formatting.
+
+However, Git is open source software, and you're fully welcome to
+patch your copy of Git to accept such a config (or this ~/some-file,
+which is not a way Git typically sets configuration) and build it
+yourself locally.
+
+1: https://www.man7.org/linux/man-pages/man3/strftime.3.html
 >
-> - One user is confused about why `git reset --merge`
->   (why not just `git reset`?). Handle this by mentioning
->   `git merge --abort` and `git reset --abort` instead, which have a
->   more obvious meaning.
-> - 2 users want to know what "In older versions of Git" means exactly
->   (in versions older than 1.7.0). Handle this by removing the warning
->   since it was added 15 years ago (in 3f8fc184c0e2c)
->
-> Signed-off-by: Julia Evans <julia@jvns.ca>
-> ---
->  Documentation/git-pull.adoc | 12 +++---------
->  1 file changed, 3 insertions(+), 9 deletions(-)
->
-> diff --git a/Documentation/git-pull.adoc b/Documentation/git-pull.adoc
-> index 91903b0a94..eec05ab6c7 100644
-> --- a/Documentation/git-pull.adoc
-> +++ b/Documentation/git-pull.adoc
-> @@ -30,15 +30,9 @@ branch. There are 4 main options for integrating the 
-> remote branch:
->  You can also set the configuration options `pull.rebase`, 
-> `pull.squash`,
->  or `pull.ff` with your preferred behaviour.
-> 
-> -In Git 1.7.0 or later, to cancel a conflicting merge, use
-> -`git reset --merge`.  *Warning*: In older versions of Git, running 'git pull'
-> -with uncommitted changes is discouraged: while possible, it leaves you
-> -in a state that may be hard to back out of in the case of a conflict.
-> -
-> -If any of the remote changes overlap with local uncommitted changes,
-> -the merge will be automatically canceled and the work tree untouched.
-> -It is generally best to get any local changes in working order before
-> -pulling or stash them away with linkgit:git-stash[1].
-
-After sending this I thought to read the `git merge` man page, which has
-this warning:
-
-> WARNING: Running `git merge` with non-trivial uncommitted changes is
-discouraged: while possible, it may leave you in a state that is hard to
-back out of in the case of a conflict.
-
-I think I was probably too hasty in removing the warning entirely, since I
-mainly use `git pull --rebase` and I hadn't fully thought through how
-`git merge` has a different approach to uncommitted changes than 
-`git rebase`.
-
-I think a warning similar to that one would make sense, since any warning
-that applies to `git merge` should also apply to `git pull`.
-
-> +If there's a merge conflict during the merge or rebase that you don't
-> +want to handle, you can safely abort it with `git merge --abort` or `git
-> +--rebase abort`.
-
-Also I noticed a typo in `git --rebase abort` :)
+> --
+> George truly, =F0=9D=95=8D=F0=9D=95=96=F0=9D=95=9D=F0=9D=95=A0=F0=9D=95=
+=94=F0=9D=95=9A=F0=9D=95=97=F0=9D=95=AA=F0=9D=95=96=F0=9D=95=A3
+> This email does not constitute a legally binding contract
