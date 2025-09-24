@@ -1,103 +1,102 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8926A28F4
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 20:41:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCC823B0
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 20:48:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758746464; cv=none; b=q50CPA3QY0piRnopvFOV0RB2YnrowCJVZ5+Kzrj0KkBPOsIm/AgEKHeVgloRN3Zyr8uOUyoef2XLicPfVQikG5QFcap7mHTWJRfGIXAKztJCCeMPXqoCiiyj9kU0Izy/BrmXnJessuaxz7Xy5rvc/D1GByfkC7aNzBvp/zmznbU=
+	t=1758746913; cv=none; b=Q4H0SQTc924YDWXkFCGs1rhvDqFjP6tLG1o1mJQFN1DYrv50DRqkNS2kiFhXmW4nQSbTJaKiI6HhmpuzqLsMN8oOg2Azjkl9eFeWwAFFMQX2a6iyMr0+IYWQFmt53RWpJUJBu3kghBc0TIjcjvHggyK6hBVhZxTnIc3H/yhhtKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758746464; c=relaxed/simple;
-	bh=WhUer27ZvnkMQILz2vps0+fLAMdX8G4DwAX5vKM/tr0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MOtk5pLAJQCqlAZUEnZepgADnvccoKeoRPj8hv2rOhwtUjYAcmNzKWcK6ThYvC7GXhucYk3aa7k2GcCxh3awFbFXH15n8Swuc3Q/dNnfR7rDgoTioL3wvLbMCS1wkBER7yxcIkOhtSBuHT6BFdiY2Wys4gPKDr/FvPTRhv6wde4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k13XzGzp; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758746913; c=relaxed/simple;
+	bh=wrOKCEV1AmfmkZlS9OrgYE7IoJSvhbWTI1xEItOlH2s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pXdTEeQV3uCGTzV2rQbxxWqYd45AN/c2GyTYF36FFa1dCyujgXr/o65TaYRgXgx+aFyaoQXmD7MapADW9cvHbgYiK4HSQ7PTjPQdWTQuhEnp4TAjOUof9iU0JDvCQTrLb0WqJJijQ+gy5VUBXk7H6M9q0hyI72fxGRCRvS75f9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y9zRaEne; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gUzl0ofE; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k13XzGzp"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-631845b51e2so222544a12.3
-        for <git@vger.kernel.org>; Wed, 24 Sep 2025 13:41:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758746461; x=1759351261; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WhUer27ZvnkMQILz2vps0+fLAMdX8G4DwAX5vKM/tr0=;
-        b=k13XzGzpfAk9frjkzePvdqNZyTwrqSZJQOK8TvsD6o+0cM41tbLDBRV7dw5u5+NyfH
-         3Qp1s2HSCrRL+apaGkr/7UpUIA7YpPCWItpPV2TuZ3Lq3SuL1iAlNjBvL/iyO6o+uxFP
-         dsj+YtGsAZj5PHbpI1ahPoFfmR4a8qbYDuQ7kO+pwXar7rNjdRRYnqRk75VoZQLmF1Ds
-         180oHSEE/c1x9pWz82xa+mF5Y7G/S4iVrW+iVo8xhw87GSki5iQTxOuSVhbhyND568yX
-         HPkWjEnjAU03TGtkm/NXHgrHEvu52pl9Je3AKs1UQZGsYVw21cv37dUF3tdWJO/yybTs
-         H5hQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758746461; x=1759351261;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WhUer27ZvnkMQILz2vps0+fLAMdX8G4DwAX5vKM/tr0=;
-        b=p1pY0IlISBfW+0Fvnc2yfdw/Otfijd/KX2j3PvCLPUJG7Gs4a+7SQsxq9xhayPFrJg
-         5wDB4r6xuIBFcHkoopgiFq7Luf9yoPRosKilc5LJ9ki5yMeJTONJ3xNFajGbNAESLYJK
-         UVW5Okck2vZW+2IsWaRTyaQIJKoDTyj6GV6/6vZhk59cCaWHHtG/DiSG6kWjLyPrGXFh
-         9VBe36O2ZpnGfphxIZTFtvV5Vx0mO/WNWn0+nqZgEGK4mrxI0edyUzNW5YBheNIZROLC
-         Kf3r0ABIL4gA3/d8zbAtFIJzn8NtR2BntAU3pFJbnffta0n4cfnqR7BsPLT5nDd8X9NI
-         k7NQ==
-X-Gm-Message-State: AOJu0YzbZyS0RmI4eUl/3OPPKoQ/TY1ON9eEYDjTx/sNVd9JDwATeHRx
-	6TohQWzd4QNUc9sELZt70lbCo0nkUbI3sahiqO3bR5G/T0cr5JK0sWhcL5o1V4h5lInvXeWDwBt
-	JPkL7Hks6cRmw4LydcFqcgyfBld75+88=
-X-Gm-Gg: ASbGncv/SnboEAJoctpeVb3noKkr1CjZ+BV2GQGZdPOsdBJZQPSCPgIpZEtyR1Vc80t
-	ShfYpjcatos5DJ9rSy5vT8J5RvpdwqGTv91WtIkPgmd3I4ShVB9RPi/En6tCGG4Fnw7iW81Srsw
-	P6KI/6N89qyzL8tvxQmQN+7d96G2XBgknsvTMSSpJX+7x6jZTuqw+JCO+Mav05SLCX1ylN5V+H5
-	qYyxX/YBP52YTdwhjcJIf5UdmvebPaIgsn2eB5dbw==
-X-Google-Smtp-Source: AGHT+IGju8F9RL9PGNUvsFyqDhHooWlUtLDWx5cBOtcpJxjBFTuxd2ykQyyO+D5zqQpsfrISTAgv3WXYQ9gpJXCctyI=
-X-Received: by 2002:aa7:cc86:0:b0:634:4d49:6b6f with SMTP id
- 4fb4d7f45d1cf-6349fa8f0abmr606768a12.26.1758746460725; Wed, 24 Sep 2025
- 13:41:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y9zRaEne";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gUzl0ofE"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 219C9EC0198;
+	Wed, 24 Sep 2025 16:48:30 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Wed, 24 Sep 2025 16:48:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758746910; x=1758833310; bh=SGjJ2rTY0v
+	CCjGndFCCVSzPdbIU1mLdJWzA6EPhSPDM=; b=Y9zRaEneJnZT8NKJnwjr4XDzQP
+	UGgCZHP+avFAvetIpd2b+WzuJr1ruM9gmJbrTOf6IiIGDXv7LqCfRQmhnNi+1jnL
+	KARBFcif1o+9EmaGKn48c5FSN8YglfIH+L5H9KD6x1zi9IBZ7YJaXze4BZI6y9ur
+	X31GXpWQkk0xqjXKC/30LwLgf16QOyQYh5U2A1igPVTOo35/UojsqMylc74YTlpv
+	cajTS3OnmzbD2dJJExqdOqAeO2eqWtm4TjHINFIyDEDNLlqx2LuwBNxtT3REmM8w
+	doKxaMtHQMmfzsk58R+FEa1G3UjSdmS2VeOw9gWb9Ts9Q1gqKFPIFF+SKvOg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758746910; x=1758833310; bh=SGjJ2rTY0vCCjGndFCCVSzPdbIU1mLdJWzA
+	6EPhSPDM=; b=gUzl0ofEDVfNu/lyNoeS9mxD06itGvMM4E27rM3LOFagEqbC/RI
+	j0H2lO18sFKvMmuaUhlRYOia4qc0qFGffwFJL/GkWbxspoQRiIQ0sqll0jYzCjqX
+	ZA4KLImO9EzgDe+IeqIddzMH3QrRlRG+gTsUo/NXb7z9snEP9DfBk4i+nhRdSozX
+	Myej7oVAZdMMQsqU8lmVSHjMcIDv97elFSMWW1PHi4FDAxqxdlc5YeDJo4/WKKkZ
+	HCdstNyYKIcQzGBWhZ7UabaL+IgNunYp8cB8wAbFxB/LINWVDUR6npj32UOt9k3M
+	hTA6H5zitd7dd3WarGUC1ZWyQd7CWE/EZkQ==
+X-ME-Sender: <xms:HVnUaNeKpOa7IEfgZ71Rp4agJyfVzTzy_WIA01cSX1W1QrwD60KJeQ>
+    <xme:HVnUaEKh_Hx7HGheGZRvdMktWcUod9_3wS0ixb2iQ4ByZs54_4i2v3ST5_vQMdW3g
+    Y0y__5lBSzldCDh5ZBhpqCApOAe34oLXzHJEhO8lsLK9QjASIYAXQ>
+X-ME-Received: <xmr:HVnUaCE9g2tO0x4JTbay9copVfMpV9MagWyydHalKgi30_fL15DneoHf8ZXnfyWjZqalZANsc2YaeIDdvWMrSlZhLi7KebnTboOZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeigeeiudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
+    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepohhsfi
+    grlhgurdgsuhguuggvnhhhrghgvghnsehgmhigrdguvgdprhgtphhtthhopehmsehgihht
+    rdhsthhrohhvrgdrughkpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhu
+    khdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:HVnUaHDuqZ8JzV7cXfJRNVCayGle0MY-9eGN4W5uF2vPgqylDPRXug>
+    <xmx:HVnUaF-Alt9hhCmg4lFrjO-SfuMmpbk5u2NGw8s1GE7lBQoN8MDhUg>
+    <xmx:HVnUaDBy6wdwxaYswhsSk1oiakukoJjJ9wxBsLvpXhDAYTyWaTcPSw>
+    <xmx:HVnUaKSNjDLULzJ2B3aFRi3swTK0XIAJAmkroMWFWqGAK3zH9wV3xA>
+    <xmx:HlnUaDf3WjvLepxDRZV3alIlbI2xjEVfHBCgkD3wqx8un1NhfwOpMb-0>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 24 Sep 2025 16:48:28 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc: Mathias Rav <m@git.strova.dk>,  git@vger.kernel.org,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH] rebase -i: use same commit's message and date with f -C
+In-Reply-To: <aNQiRFbBysXXAPDR@ugly.lan> (Oswald Buddenhagen's message of
+	"Wed, 24 Sep 2025 18:54:28 +0200")
+References: <92d4d585-09e9-4f1d-a471-1ad6b312fa61@app.fastmail.com>
+	<aNQiRFbBysXXAPDR@ugly.lan>
+Date: Wed, 24 Sep 2025 13:48:27 -0700
+Message-ID: <xmqqms6jk25g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1757982870.git.ben.knoble+github@gmail.com>
- <cover.1758505011.git.ben.knoble+github@gmail.com> <8e6cafbf3a01b968663b65559acf3df615eecbad.1758505011.git.ben.knoble+github@gmail.com>
- <d7721018-3b2f-4764-b33d-4fc6bdc034a1@gmail.com>
-In-Reply-To: <d7721018-3b2f-4764-b33d-4fc6bdc034a1@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Date: Wed, 24 Sep 2025 16:40:48 -0400
-X-Gm-Features: AS18NWDH4DzhiwvLdJxln6EpBrIqOk1TP6-ZC64C5QouTdwbkvmxUtz13x7FMs8
-Message-ID: <CALnO6CA9z39rgGd673p-ZMzMOBM_G37YPOs4ysNtPHGGCDVM-A@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] stash: honor stash.index in apply, pop modes
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, moti sd <motisd8@gmail.com>, 
-	Denton Liu <liu.denton@gmail.com>, Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Glen Choo <glencbz@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Sep 22, 2025 at 10:11=E2=80=AFAM Phillip Wood <phillip.wood123@gmai=
-l.com> wrote:
->
-> Hi Ben
->
-> On 22/09/2025 02:39, D. Ben Knoble wrote:
-> > With stash.index=3Dtrue, git-stash(1) command now tries to reinstate th=
-e
-> > index by default in the "apply" and "pop" modes. Not doing so creates a
-> > common trap [1], [2]: "git stash apply" is not the reverse of "git stas=
-h
-> > push" because carefully staged indices are lost and have to be manually
-> > recreated. OTOH, this mode is not always desirable and may create more
-> > conflicts when applying stashes. As usual, "--no-index" will disable
-> > this behavior if you set "stash.index".
->
-> Thanks for updating the tests, they look good. As I said before I don't
-> have a strong opinion about this change but I certainly don't object to
-> it. I think this change will also affect the behavior of "git
-> merge/pull/rebase --autostash" which we should maybe call out in the
-> commit message. I don't think that change in behavior is a problem as it
-> is probably what the user would expect when they set this config.
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 
-Agreed, I hadn't considered that here. Should we also update the docs,
-do you think?
+> On Tue, Sep 23, 2025 at 10:55:02AM +0200, Mathias Rav wrote:
+>>Change the behavior so that fixup with -C takes both message and author
+>>from the current commit, instead of taking the author from the previous.
+>>
+> related thread: https://lore.kernel.org/git/YjXRM5HiRizZ035p@ugly/T/#u
+
+Thanks.  That's a great pointer that shows everybody involved in
+this round has pretty much held the same position over the years
+;-).
