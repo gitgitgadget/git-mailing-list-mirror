@@ -1,92 +1,85 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64982882DE
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 08:38:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDD426D4DD
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 08:47:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758703112; cv=none; b=MC7tdUtrb47ponOw1sb0QnI55xjyCoRg7JudzQ/i5pBwCLoGbUM0mlz1In3FYva4WqK0a+DdJ4a9o+C9dHTjdMROJVOR0wyTWIZGfKc6x1pZLtnqBoU7fx/slkrCXpQw/fOPb7fm7W3pYXt9kd1JFLOdieZT6OdFUyeizKNkHVI=
+	t=1758703672; cv=none; b=EWYwUikGwgGm+9Odj3YvNR23RgPNTxJIauM73FPkv2BtpFBjbXdTJTan/nzNez7ZRm3zEVsojVu4qxZQ6wargfLPAay/nP0mgwWE0XP1ZJ6oMiss7Ss42h0gK55ljxy8JjvZP6ppf5mWCb7E4V5Q6Cnwgqjk1SbLCOoFzRItGpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758703112; c=relaxed/simple;
-	bh=yokxg+XE8gzitK5xMBAwj7nV1D9GQX3DbnUzYBMOdrI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pgEIlu3wWGth/QtLcxjvybP8esJpwmW7SEQd3q18r8FHw97hz+yXvG3kz+kaeSmlkI7hvEjoFVYJJbl3liBvRcPnbmtxi+oVQh1BDDNJjfrKOi5zpXRZ91zWKmZ/YWuQVebWUZ0apbif94My1UiUmO/rP8uUQgUbn5V6SY28WcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mhpvaDN0; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mhpvaDN0"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-b2e66a300cbso505099166b.3
-        for <git@vger.kernel.org>; Wed, 24 Sep 2025 01:38:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758703109; x=1759307909; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yokxg+XE8gzitK5xMBAwj7nV1D9GQX3DbnUzYBMOdrI=;
-        b=mhpvaDN0lG7Badk38ADGAIgmGTB/TgGcQcU+YeOvePyPY2/EBvg5EbQCxOspucaYdj
-         m9MkYPpOk+U2cAywqMopno05Ejn8sUH3AId8itTAk0dJY/nz2Ysv7j8IYdfMnuztIv+Q
-         mr4vB5rOwpL8dP+jveyEoMC876iZzZpNdUM0Ow1ee6sn92Kg08DID3uh9kWYq4SY4ltm
-         L/Hqaec/5wJScD1CLtOIfq+URxg/HvB2Y+9K8oEiTEwXQazpgheGVT2hLmNONT+7p1Ev
-         puqse/xSPX8lRCQgLtJp4415pOz6tSG5Qowp0eJMw/t/962CYqjGxvRBRz6/LAbHTL16
-         zRUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758703109; x=1759307909;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yokxg+XE8gzitK5xMBAwj7nV1D9GQX3DbnUzYBMOdrI=;
-        b=RryVK82su/t2iwf28eML5X9323BGh0In3r2xPiMnGgZHrSK7rAaAJ0CDOOfY4/p1nf
-         T8mhfawSKoW2iHJkzjkaNjp1I3IDvEa1oYitvEHQMggOTcsW6P/P0XLaY81hGFu+f3m3
-         DvzrBqUbz4nJAy3JssjnAdxkrEBNfcQi1EM+zT5fPFjkfL5y2qMLjg2h31m0ija8ILMJ
-         LUsja7sE7wE1GmVZORkaoJmAaWAX60uPe3GCob4ZxCLvF11kyWArv4lVlclwkQebohAF
-         sQdC+E0+/UJ9n2dHD2KdUzNzfIVbzdx+TgRQftlzqKYWJrAZBu69GEK0rieiYi8J/9EK
-         F2nA==
-X-Gm-Message-State: AOJu0YyqJa9u5Py7n93JB3WUzSwQcZfsXzPVbDrIqD7Il/jSNJAglVZC
-	yGdIUhTBGgp7HlaeXxComoYP34VNPoAPovmDC0dpsh+88BsTyx9GkhvXAUTpoVXjrEuTiMaAegd
-	NQTXPZxxSauHDVao9qo2FsmZgEZtlIG8jh8QV
-X-Gm-Gg: ASbGncs0A/egQskrmkxEogedDD12usuaxhB5RYb/1JUcLig078J4KDuQKT61UiQWqOo
-	MgPRT5Zf79lTX5gUgO3hcttTcYpu/FsXTakQ8TAsDDWt2SUOgRWNlhl5etHiNxXhTpHbb1++mZ6
-	/ZewypvHYaBzMNmTJqgzjEULyKBMfYvRIEREbgjFJAwAYPkuV0R1sfeDiPDSqqXDovA/f7V4ia8
-	Bs1Vs1G/nuUIrAC7YLmUWer62+GthXzRSOgc1Y=
-X-Google-Smtp-Source: AGHT+IFkbeGdBmgYVxk6i/R87FaRv3Edakyfl9SItrLmm4HHycaP4z3VN4Mv4Cr2KcoV2+6KkZJQGBkjgWEVCant77k=
-X-Received: by 2002:a17:907:9482:b0:b18:63b8:c508 with SMTP id
- a640c23a62f3a-b302c00a739mr505656766b.44.1758703109023; Wed, 24 Sep 2025
- 01:38:29 -0700 (PDT)
+	s=arc-20240116; t=1758703672; c=relaxed/simple;
+	bh=i1EuYvuBEnD0oLT9NS2wA0rC1t+5fRnCIR5w7s8SNsM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DUAWMLPSYghxTQWeBys3fOOP/R2WSVCXXI7H69Bh4AjrAQbFrPDH7MGA5p7UdYBQXVx/q1n0+GIgjlrZ8u1fijBIo5TjCT22jSio1Ig3n+BSSMAUQu0aqZ9tLNEKyL3tJCRmrb+v07Tjh12QJYMExGWySWFp/FoZmnYRrJCfgBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.104] (unknown [93.83.142.38])
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4cWr8C6GYnzRpKs;
+	Wed, 24 Sep 2025 10:47:39 +0200 (CEST)
+Message-ID: <0a14a93e-7da2-43e1-9d71-c58a69c7a4af@kdbg.org>
+Date: Wed, 24 Sep 2025 10:47:39 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <4ea9cb1e-4367-4926-a9ba-0680dd63e616@velocifyer.com>
- <CAP8UFD2asXf_4_02khYRVWVQruBdvoMkZVE-6cVHttT9gHdWqw@mail.gmail.com> <b5867a92-c516-4a66-a108-8cabbc166336@velocifyer.com>
-In-Reply-To: <b5867a92-c516-4a66-a108-8cabbc166336@velocifyer.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 24 Sep 2025 10:38:17 +0200
-X-Gm-Features: AS18NWCRA_jG30e_EcnXRgQymP2GNgzx_Llk-FUIwqX3Un-tH138jxqBW7sfQl0
-Message-ID: <CAP8UFD0t76v3XYgoLjZ-527EePQKihSNyA=AO0QjJHDy=u32JQ@mail.gmail.com>
-Subject: Re: How do i get news of git releases
-To: =?UTF-8?B?8J2VjfCdlZbwnZWd8J2VoPCdlZTwnZWa8J2Vl/CdlarwnZWW8J2Vow==?= <velocifyer@velocifyer.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] rebase -i: use same commit's message and date with f -C
+To: Junio C Hamano <gitster@pobox.com>, Mathias Rav <m@git.strova.dk>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <92d4d585-09e9-4f1d-a471-1ad6b312fa61@app.fastmail.com>
+ <xmqqldm4onma.fsf@gitster.g>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <xmqqldm4onma.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Sep 23, 2025 at 9:42=E2=80=AFPM =F0=9D=95=8D=F0=9D=95=96=F0=9D=95=
-=9D=F0=9D=95=A0=F0=9D=95=94=F0=9D=95=9A=F0=9D=95=97=F0=9D=95=AA=F0=9D=95=96=
-=F0=9D=95=A3
-<velocifyer@velocifyer.com> wrote:
->
-> > The URL for each release points to the announcement email on the
-> > mailing list archive. That email contains the release notes.
+Am 23.09.25 um 23:38 schrieb Junio C Hamano:
+> "Mathias Rav" <m@git.strova.dk> writes:
+> 
+>> In `git rebase -i` with the fixup command, the -C flag controls whether
+>> the commit message is taken from the previous or current commit,
+>> but currently the author name, email and date are always taken from the
+>> previous commit.
+> 
+> As the name of the command says, you are fixing up the previous one,
+> so I do not find it a problem if the credit for writing the
+> resulting combined commit stays with the author of the previous one.
+> The authorship information both covers the contents recorded in the
+> commit's tree, as well as the commit message.
+> 
+> Granted, many commits of this project that is a one-liner change
+> often have 50 lines of explanation in the commit log message, but
+> still I think it is sensible to give more authorship credit to the
+> author of the contents the tree of the final commit than to the
+> author of the log message of the final commit.
+> 
+>> Change the behavior so that fixup with -C takes both message and author
+>> from the current commit, instead of taking the author from the previous.
+> 
+> I am somewhat negative to this change.  I am perfectly fine to have
+> a separate "I may have started from that previous one, but that was
+> so broken that I essentially dismantled the original and replaced
+> with the new one.  It is better to attribute the credit to whoever
+> did this last one that is replacing" command.  But the "fixup"
+> command people have been familiar with would be different, I would
+> think.
+The common situation where the proposed change is handy isn't where a
+previous commit is fixed up.
 
-> If they already have the realease notes on the mailing list, why do they
-> not have a seprate "git-announce" mailing list with just the release
-> notes and other important announcements
+Sometimes, a previous commit is a fixup for a later one, for example, a
+change slipped into in earlier commit that should go into a later commit
+and has been split off into its own commit. Many times it would be
+sufficient to reorder the commits and be done. However, sometimes (and
+not even infrequently), reordering the commits introduces conflicts that
+do not happen if the order remains. Here, we want the proposed feature.
 
-We try to keep everything on a single mailing list as much as possible
-to not split the community. Also what is important depends a lot on
-the reader. For example Git for Windows or Git Rev News announcements
-might be important for some but not for others. So many people would
-have to sort things out anyway even if there were separate mailing
-lists.
+Since your argument hinges on the word and meaning of "fixup" (which I
+can buy somewhat), we could extend "squash" with an option that
+specifies which commit supplies the date and authorship metadata.
+
+-- Hannes
+
