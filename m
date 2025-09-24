@@ -1,152 +1,275 @@
-Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D40D27F732
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 10:02:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556862DE6E6
+	for <git@vger.kernel.org>; Wed, 24 Sep 2025 10:21:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758708129; cv=none; b=j4wrnrhkkiKvHonW6s7e31COeTSz2CnVm+NNH8pIwxc6d7E59+q9A05mXfM5KKM4cNDkSTLvyGDIHAg4gstqxSdIvX965Dxui9JYaNa80ppNDzMr1G54UipihHhKzhjvZceHydlJ6mLiqfLr94jPRoaPo/g+pNZlktJW+S2XkY4=
+	t=1758709288; cv=none; b=qfevUPT28wRkTd+XcALcyuxdKkYmJjVC8aejSI+YQwnWRwrxzTBwzyPhrjBEACU9eUvHis7pd8Atk/0+uvy6UWyh1ALhNuXvl/8PpSC+g2JLKm2V6RkdrBWDS8rDeNTI1CSWB1AxYQQ0PZ7CdkNzkWH7qW64zUgIl9kw+KQ2zwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758708129; c=relaxed/simple;
-	bh=1cMQSdsc9dKqmud3GFAdL1oa5xRRfojFZo25AMYorG4=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Cm/Lod9m5ioJVP7BA53aW+IFqNRUfSutMww7H8l+ys0HthK78q6koh5u9R09kDXDaW/jSWL4Cv7CDzgm6IT/uvAFjfmzVDdT5Le2w4egHLWk5lp7t8f+An/SaS6PP0xJqe7w4dpfe7y/Es9ddyRyMU9JAvsrg2r5JvdH3J+EdiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IvX/5SJp; arc=none smtp.client-ip=209.85.222.53
+	s=arc-20240116; t=1758709288; c=relaxed/simple;
+	bh=06rBbLXG252REZd61p1JUm6Hn+gbVpJSTPnICAWegQ8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NoMRy9eDQeDGqR6njbLT0hfStCO5QS9I6dZxnh8dt9DbkojdT/Ns43Q9hLdt8Ueei8sm7ucL9SMZlupH5jDSxi7zxUCNsn9GabB27n4SAynFwf/NCNui/9CIb6lhTW+1RoR5TsViPLrhevOZlgPIDTBWj8FY/7+454LaBLATfXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fyxftuq+; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IvX/5SJp"
-Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-89018e97232so1606212241.0
-        for <git@vger.kernel.org>; Wed, 24 Sep 2025 03:02:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fyxftuq+"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-45df7dc1b98so41382275e9.1
+        for <git@vger.kernel.org>; Wed, 24 Sep 2025 03:21:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758708123; x=1759312923; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pR/ubudWndmLLontM4veXXXOUoyk8o0rX78MMAjVbCY=;
-        b=IvX/5SJpHGDnBXRxvZRfj+mZEJ/QJX4w3N3zxGyMVL6F4h6fXWCed2bNrJtw/znyHJ
-         hlJrcvvY9//nLasZ0xed2LvCaw1AR6J96fmlfGvjAe9g5fepXoKUrtmfgRD55DyaU3gZ
-         eHRJiE2zNRDlkzZ6c1Iv5N3oKWgGFqaZSSdVAmAz0ifXSJrrGjqG4WoYjN/C3ENKI1Ap
-         lHpaF1RR1IfjtVLZOUbOCo1jeNY6fL5JtuJnf7Q4UjaGTV8HayrofpZOGlTX33Ykyoqh
-         SviZDSAA4JaaZZrNDR4EWvrLZu7jC4hzmJYpUYdWi1w5WF2Zpzd15cXFNJAV5lDZaLyN
-         TB7w==
+        d=gmail.com; s=20230601; t=1758709282; x=1759314082; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=j4BJ+hlR/zqy89pgeVC5MjJEQY4M0mSZJbFQrGDF7+c=;
+        b=Fyxftuq+68oMj0odhHcuEQ8Y4mdI0clxeFhGGdnAnLv3kwmCN+qeokoQwfQjTfk+Ry
+         Fq2RfdMAJufTQ5ZEi70fOunwtg6ncoHYkzbVEK4J2D6tyC+r/FEiT6G74foRmUVjB6nT
+         FM5UgXe7Uiri8VcjcW+lE6VSAlhloC5YvbiA9G7H/CJWiqsrRL3IOR3dQtoTdg3CR7GH
+         jsCcBsG42q9eik/eT7s5Ey1ZRn0rSVjCy32ATMglQd9fhRHqa55TFJpDubbN/YOe58Gi
+         EkuuoxgoR34Eh0j2dF3NvpWABa5XKTkggNx1anEEWLXrC9XjhsJ6L/BstSfzzMUmXIvK
+         V6lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758708123; x=1759312923;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pR/ubudWndmLLontM4veXXXOUoyk8o0rX78MMAjVbCY=;
-        b=k04D0ohEJrIytTNywLER6m+tKpp+5YMPQ+XNYHXRvt0Y65ykcgJzoPVRkjcXZPG8GP
-         /jQA/btoHdFqNOxvGa1J0ez1rXaiw/WuabRQAYljhBYKY7XN2yC1YjVFo7ToSgxBQZe9
-         6CrMdzXeulV1iKKFdp/VYf5f+Q3LGrJAbFAxnv3cC4WWBtqivgWM/Qm8jTD1EsYq8bWu
-         EAgaxka6rpXb9McoT/twSFj9JeLrmDmUUQSBZ5WX6JYq8PKyfM5VXPhsKaURWUo5cBLN
-         PMz79QAxL1v4Ffbt67uWhKFtiYoLvQizVja67Zft5SoSZbPSgCAJoCOzIcjskcaB5+Bv
-         eUaA==
-X-Gm-Message-State: AOJu0YxqXQOb+EmksUJjDvup+QFupIe7jDhWz1guLIBO6xVbb0ZGyVKJ
-	gmpACK3+zcz0vthywG5c48cy8+lKTTL9X6IlHZnmhnHlb/hI1SlbdP3JnZwzNY/IiIyMBEsgEzo
-	Sciq3Pn/o8n7EfupmZP8qR8qEBa8ZgV8=
-X-Gm-Gg: ASbGnct8QRXjhsZtwp8txYf+DqBWf5r9WyC0NDFc4hgdna4tQ8kZxbV1P+fQs1WQNiJ
-	vsT5Pdbhrx6Cex/IIy7WPjklbEKAVJEBLEah5SQaUJ9M2ZLWBqmynR5OPqGxXbw3KLkf0A/XZWR
-	lRw/cQ10vuYWMIijmM+b10SM4+0mLdoM+t7Jir0w0DLQ8Y8P5DZayOZ5Pdp1nuDqrQ+CvGDvAWj
-	f8Rh386oVf3RPLqGV1X4K7TDL6ZenGDmpsV3Tkx
-X-Google-Smtp-Source: AGHT+IGeZ4z+aecA41IdjQ+4f1/4BzvnP2myo9jYpD49n/ZTGF2WdzJ37VvJ8e3eIvlqMAd6GU3zEaEL24B15xf9M0M=
-X-Received: by 2002:a05:6102:c52:b0:4fc:1a18:aaa2 with SMTP id
- ada2fe7eead31-5a574fc713amr1817150137.5.1758708122771; Wed, 24 Sep 2025
- 03:02:02 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 24 Sep 2025 06:02:01 -0400
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 24 Sep 2025 06:02:01 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aNOHjdVEbCufSCPw@pks.im>
-References: <20250918-228-reftable-introduce-consistency-checks-v3-0-271af03eb34d@gmail.com>
- <20250918-228-reftable-introduce-consistency-checks-v3-3-271af03eb34d@gmail.com>
- <aNOHjdVEbCufSCPw@pks.im>
+        d=1e100.net; s=20230601; t=1758709282; x=1759314082;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=j4BJ+hlR/zqy89pgeVC5MjJEQY4M0mSZJbFQrGDF7+c=;
+        b=vLETPCrCSPWKTufNiKgk8brhbFEqMSAISGwbQg8LY7pD473s9ShoGhpH6LaDNpNnpd
+         gH+dsTe7J9p6SbVTGnRWGRQQSH/O7Wjhp/6EL3UmR3AwzgP8M2YojO4z5wg15tIRUNIX
+         Evem5S9RwFWy43gUZyNrNwLaRnRi/N+qvFC8v6nn+WzLSDLLFUQvXFpIwLgC1euLgD33
+         Y592Fu4GCuHgXDi5bPMm8hnOk410ii/0aAmdV50nzqzs/k96opWd/oR3Wj3OAZcq2J2+
+         VXdrlR9TsLYryXJWcbqdeee+cxYHhKDFndrQHf0WpX7xIZ0ZIzWq1f7LDBqtC7UFduq3
+         Gqcg==
+X-Forwarded-Encrypted: i=1; AJvYcCUbrFM2SKViDM2yYnM5RpmsRMyo2maVM+qi8sQCxhvd90kLmRhxT89fA25Lff4uynLXIjI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzKCXResxh1ATduz0lkIg2eWTN0ZbeH/v8Yd5KbudQfQ9Y82R89
+	NlXNSLzg49pAkZlCQKs9yvaLZ4yJJRuskHuA1PtvmdNGRM3uBO/ndoXOwPYMsQ==
+X-Gm-Gg: ASbGncskgtbWXsYsnsY0RO+YCQnAzZIsauxPS5U0ocCzywFzE6zgVug8dHjl2rRlnsq
+	+O4O1zI2k0ymyHB04d0ezHHk45f6W3XssfPMqIzrlYgAS7gkEjNIQ0Hn/x5bNTm9qLmwRAS/W84
+	HXgdVKG1C9PUYuE1ewJWcE4MM18HSvUr9hYQpZ8C+4Kk0G+xhgoGl7syVELlyOd9kI64x7POBVP
+	QvITn6fsRTcNCJt+2thXYt2v8tbtRP89v6eDGnN1U3IwRfNaXi4JpqecYqTuzXDkBi0cpgU5oRJ
+	OVkYKtvxBD8L9ULSazxSDpKKnm7+CuKwHtwzUKY+nW4EQz0Y/Uf5AzbDeBXt/LLlJaWjIS1pf8d
+	6C2M6hae1NvH0yb5JOQEqcLCCx39aqfQC2H69nDAlb8YzOYx1htfo4q8AZtsQC4x4uMh9HEV5ag
+	RScA==
+X-Google-Smtp-Source: AGHT+IEcxxHYRd/QspX9BDVSgeTun2ThkMX+pMEkBV6cNjWozou33Y0jfH5IHUsHMsCjN+eCnaEcaw==
+X-Received: by 2002:a05:600c:3b93:b0:467:f71c:147 with SMTP id 5b1f17b1804b1-46e1dae65f3mr60272795e9.36.1758709281229;
+        Wed, 24 Sep 2025 03:21:21 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:62a:101:5052:777:6f22:7bc0? ([2a0a:ef40:62a:101:5052:777:6f22:7bc0])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3f02f332c31sm21544628f8f.45.2025.09.24.03.21.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Sep 2025 03:21:20 -0700 (PDT)
+Message-ID: <a17e00fa-bf4b-4b53-817b-297236178101@gmail.com>
+Date: Wed, 24 Sep 2025 11:21:46 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 24 Sep 2025 06:02:01 -0400
-X-Gm-Features: AS18NWAn4V6D3tKY1lWrgb-jewQUG8rRId1_RSpYeEyvoZzuR9C2fouZpjr2Q9I
-Message-ID: <CAOLa=ZQMDjpMLeyHxeePY3VQjD1GhotXA6-GDhTNY_BDu4zSVQ@mail.gmail.com>
-Subject: Re: [PATCH v3 3/8] reftable: check for trailing newline in 'tables.list'
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, gitster@pobox.com, shejialuo@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000ec2904063f8924ad"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 13/13] xdiff: change type of xdfile_t.changed from char
+ to bool
+To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>, Phillip Wood
+ <phillip.wood123@gmail.com>, Ben Knoble <ben.knoble@gmail.com>,
+ Jeff King <peff@peff.net>, Ezekiel Newren <ezekielnewren@gmail.com>
+References: <pull.2048.v4.git.git.1758570701.gitgitgadget@gmail.com>
+ <pull.2048.v5.git.git.1758662670.gitgitgadget@gmail.com>
+ <975e845bfa80fe838433f7f64759a72f6d565aea.1758662670.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <975e845bfa80fe838433f7f64759a72f6d565aea.1758662670.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---000000000000ec2904063f8924ad
-Content-Type: text/plain; charset="UTF-8"
+On 23/09/2025 22:24, Ezekiel Newren via GitGitGadget wrote:
+> From: Ezekiel Newren <ezekielnewren@gmail.com>
+> 
+> The only values possible for 'changed' is 1 and 0, which exactly maps
+> to a bool type. It might not look like this is the case because
+> matches1 and matches2 (which use to be dis1, and dis2) were also char
+> and were assigned numerical values within a few lines of 'changed'
+> (what used to be rchg).
+> 
+> Using NONE, SOME, TOO_MANY for matches1[i]/matches2[j], and true/false
+> for changed[k] makes it clear to future readers that these are
+> logically separate concepts.
 
-Patrick Steinhardt <ps@pks.im> writes:
+Nicely explained - I think this change is a very good idea and 
+separating it out like this makes it much clearer what's going on 
+compared to V4.
 
-> On Thu, Sep 18, 2025 at 10:11:44AM +0200, Karthik Nayak wrote:
->> diff --git a/reftable/basics.c b/reftable/basics.c
->> index 9988ebd635..75d4086769 100644
->> --- a/reftable/basics.c
->> +++ b/reftable/basics.c
->> @@ -195,7 +195,7 @@ size_t names_length(const char **names)
->>  	return p - names;
->>  }
->>
->> -char **parse_names(char *buf, int size)
->> +char **parse_names(char *buf, int size, int *err)
->>  {
->>  	char **names = NULL;
->>  	size_t names_cap = 0;
->
-> Nit: Wouldn't it be more natural to return an `int` and assign the
-> result to an out-pointer?
->
+Thanks
 
-I thought about that too, I couldn't find enough consistency or reason to
-warrant one over the other. So I picked the one with the least change.
-Let me change it.
+Phillip
 
->> @@ -205,30 +205,40 @@ char **parse_names(char *buf, int size)
->>
->>  	while (p < end) {
->>  		char *next = strchr(p, '\n');
->
-> Not a new issue, but it's kind of broken that we use strchr(3p) here. We
-> really should be using `memchr(p, '\n', size - (end - p))` as the user
-> provides the size to us. And the provided size should be `size_t`.
->
+> Best-viewed-with: --color-words
+> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+> ---
+>   xdiff/xdiffi.c     | 12 ++++++------
+>   xdiff/xhistogram.c |  8 ++++----
+>   xdiff/xpatience.c  |  8 ++++----
+>   xdiff/xprepare.c   | 12 ++++++------
+>   xdiff/xtypes.h     |  2 +-
+>   5 files changed, 21 insertions(+), 21 deletions(-)
+> 
+> diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+> index 5535452061..b902be9d0e 100644
+> --- a/xdiff/xdiffi.c
+> +++ b/xdiff/xdiffi.c
+> @@ -278,10 +278,10 @@ int xdl_recs_cmp(xdfile_t *xdf1, long off1, long lim1,
+>   	 */
+>   	if (off1 == lim1) {
+>   		for (; off2 < lim2; off2++)
+> -			xdf2->changed[xdf2->rindex[off2]] = 1;
+> +			xdf2->changed[xdf2->rindex[off2]] = true;
+>   	} else if (off2 == lim2) {
+>   		for (; off1 < lim1; off1++)
+> -			xdf1->changed[xdf1->rindex[off1]] = 1;
+> +			xdf1->changed[xdf1->rindex[off1]] = true;
+>   	} else {
+>   		xdpsplit_t spl;
+>   		spl.i1 = spl.i2 = 0;
+> @@ -753,8 +753,8 @@ static int group_slide_down(xdfile_t *xdf, struct xdlgroup *g)
+>   {
+>   	if (g->end < xdf->nrec &&
+>   	    recs_match(&xdf->recs[g->start], &xdf->recs[g->end])) {
+> -		xdf->changed[g->start++] = 0;
+> -		xdf->changed[g->end++] = 1;
+> +		xdf->changed[g->start++] = false;
+> +		xdf->changed[g->end++] = true;
+>   
+>   		while (xdf->changed[g->end])
+>   			g->end++;
+> @@ -774,8 +774,8 @@ static int group_slide_up(xdfile_t *xdf, struct xdlgroup *g)
+>   {
+>   	if (g->start > 0 &&
+>   	    recs_match(&xdf->recs[g->start - 1], &xdf->recs[g->end - 1])) {
+> -		xdf->changed[--g->start] = 1;
+> -		xdf->changed[--g->end] = 0;
+> +		xdf->changed[--g->start] = true;
+> +		xdf->changed[--g->end] = false;
+>   
+>   		while (xdf->changed[g->start - 1])
+>   			g->start--;
+> diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
+> index 15ca15f6b0..6dc450b1fe 100644
+> --- a/xdiff/xhistogram.c
+> +++ b/xdiff/xhistogram.c
+> @@ -318,11 +318,11 @@ redo:
+>   
+>   	if (!count1) {
+>   		while(count2--)
+> -			env->xdf2.changed[line2++ - 1] = 1;
+> +			env->xdf2.changed[line2++ - 1] = true;
+>   		return 0;
+>   	} else if (!count2) {
+>   		while(count1--)
+> -			env->xdf1.changed[line1++ - 1] = 1;
+> +			env->xdf1.changed[line1++ - 1] = true;
+>   		return 0;
+>   	}
+>   
+> @@ -335,9 +335,9 @@ redo:
+>   	else {
+>   		if (lcs.begin1 == 0 && lcs.begin2 == 0) {
+>   			while (count1--)
+> -				env->xdf1.changed[line1++ - 1] = 1;
+> +				env->xdf1.changed[line1++ - 1] = true;
+>   			while (count2--)
+> -				env->xdf2.changed[line2++ - 1] = 1;
+> +				env->xdf2.changed[line2++ - 1] = true;
+>   			result = 0;
+>   		} else {
+>   			result = histogram_diff(xpp, env,
+> diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
+> index 14092ffb86..669b653580 100644
+> --- a/xdiff/xpatience.c
+> +++ b/xdiff/xpatience.c
+> @@ -331,11 +331,11 @@ static int patience_diff(xpparam_t const *xpp, xdfenv_t *env,
+>   	/* trivial case: one side is empty */
+>   	if (!count1) {
+>   		while(count2--)
+> -			env->xdf2.changed[line2++ - 1] = 1;
+> +			env->xdf2.changed[line2++ - 1] = true;
+>   		return 0;
+>   	} else if (!count2) {
+>   		while(count1--)
+> -			env->xdf1.changed[line1++ - 1] = 1;
+> +			env->xdf1.changed[line1++ - 1] = true;
+>   		return 0;
+>   	}
+>   
+> @@ -347,9 +347,9 @@ static int patience_diff(xpparam_t const *xpp, xdfenv_t *env,
+>   	/* are there any matching lines at all? */
+>   	if (!map.has_matches) {
+>   		while(count1--)
+> -			env->xdf1.changed[line1++ - 1] = 1;
+> +			env->xdf1.changed[line1++ - 1] = true;
+>   		while(count2--)
+> -			env->xdf2.changed[line2++ - 1] = 1;
+> +			env->xdf2.changed[line2++ - 1] = true;
+>   		xdl_free(map.entries);
+>   		return 0;
+>   	}
+> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
+> index e1d575f779..070d220f3b 100644
+> --- a/xdiff/xprepare.c
+> +++ b/xdiff/xprepare.c
+> @@ -273,7 +273,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+>   
+>   	/*
+>   	 * Create temporary arrays that will help us decide if
+> -	 * changed[i] should remain 0 or become 1.
+> +	 * changed[i] should remain false, or become true.
+>   	 */
+>   	if (!XDL_CALLOC_ARRAY(matches1, xdf1->nrec + 1)) {
+>   		status = -1;
+> @@ -305,16 +305,16 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+>   
+>   	/*
+>   	 * Use temporary arrays to decide if changed[i] should remain
+> -	 * 0 or become 1.
+> +	 * false, or become true.
+>   	 */
+>   	for (nreff = 0, i = xdf1->dstart, recs = &xdf1->recs[xdf1->dstart];
+>   	     i <= xdf1->dend; i++, recs++) {
+>   		if (matches1[i] == SOME ||
+>   		    (matches1[i] == TOO_MANY && !xdl_clean_mmatch(matches1, i, xdf1->dstart, xdf1->dend))) {
+>   			xdf1->rindex[nreff++] = i;
+> -			/* changed[i] remains 0 */
+> +			/* changed[i] remains false */
+>   		} else
+> -			xdf1->changed[i] = 1;
+> +			xdf1->changed[i] = true;
+>   	}
+>   	xdf1->nreff = nreff;
+>   
+> @@ -323,9 +323,9 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+>   		if (matches2[i] == SOME ||
+>   		    (matches2[i] == TOO_MANY && !xdl_clean_mmatch(matches2, i, xdf2->dstart, xdf2->dend))) {
+>   			xdf2->rindex[nreff++] = i;
+> -			/* changed[i] remains 0 */
+> +			/* changed[i] remains false */
+>   		} else
+> -			xdf2->changed[i] = 1;
+> +			xdf2->changed[i] = true;
+>   	}
+>   	xdf2->nreff = nreff;
+>   
+> diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
+> index c4b5d2d8fa..f145abba3e 100644
+> --- a/xdiff/xtypes.h
+> +++ b/xdiff/xtypes.h
+> @@ -48,7 +48,7 @@ typedef struct s_xdfile {
+>   	xrecord_t *recs;
+>   	long nrec;
+>   	long dstart, dend;
+> -	char *changed;
+> +	bool *changed;
+>   	long *rindex;
+>   	long nreff;
+>   } xdfile_t;
 
-I think that's fair. But I'll avoid making this change now, I've already
-added a few commits which are mostly tangential.
-
->> -		if (next && next < end) {
->> +		if (!next) {
->> +			*err = REFTABLE_FORMAT_ERROR;
->> +			goto done;
->> +		} else if (next < end) {
->>  			*next = 0;
->
-> Can we maybe convert this line to `*next = '\0'` while at it? It made my
-> reading hiccup a bit.
->
-
-Yeah, I could definitely add this in.
-
-> Patrick
-
---000000000000ec2904063f8924ad
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 2fe69ee6770ca8da_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1qVHdaSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK0h6Qy8wYk1BM2lMTDVMT0prSGptNGlLOGVsYTVuVwo5NnhYTUxvNGVj
-QlpXc2RtenlGd0VPOXl6RnZzNXRjbndpem5OYU5vOGZDcXVURFBlR3RIZzB1aWUyNnZ5ay9tCjhm
-NDRaYkZSLzl2YzFtcStHSTdSZGs3SjN4RG01Ylc3Z0pWREoxUi96LytEM0s4NnlFaHkxaUNVMDJK
-T2hQbHkKZVE2a3EvMmYwTDNRMGE2QTc4RDN4UkQ2UEU3b2pFelNGR2dUbjN6b244V25pQ21aVWd4
-aWtYUm5wcVI4cHBPWApKb0QxS0JzbmVKMURiZ2RrV3p1N1hhNHBLTDkvbUFsQ2Z6b1IyTE5BNzA2
-SFc1amxzYlpJa3E3UitPbmxxZ3pFCmp3bGpLNklHdllKQWVzZWJwTjZncVY3czZlNzNQaFdjV1Bl
-Nnk5RmtNSGR0Q2sxRFlsNzlxeWZIRFh2eVk0MmsKZ2xOdDU0U25VUy9IWUtRN0JzNlE3RFNkcTRJ
-OVZWOWtPaEQ0a1JFQzEwakdqR1hrMStpVjlhYlNKVmRTWGFyWAp2VnZLTHdBU1Vub2luYVovU3FG
-WjRkaXV6bFR4YldLQWpWWkVFS1VMWW9BcndEaDlBM2ppczkya3dNcVd1d0h0Cmxaaml5VmhxLzlr
-bkQwT25SMnV1RER6aEJ5NjJBSlYrZm1LNVFXOD0KPTcyYW0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000ec2904063f8924ad--
