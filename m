@@ -1,86 +1,85 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5742F617A
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 06:30:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C132F6184
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 06:30:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758781847; cv=none; b=P3hIu3xuloac4SsVJVUjk+66XzRSHHA4kV9LiTUDj8KGHXLdFw7uYH+HrkzuqyY5JMuATkO5tEfMb/fC6FqepKO1oyfP3dLmwh23bC2wvKdyyQc+32gy0B1OrxKsN8Z0jM1U5yhFv6SLv609tphSb1GXazY64Y6t2gGZmjg6xJg=
+	t=1758781851; cv=none; b=qp3EGJNjmjc37n01cCLDmYk6IQ9rZXRY5u2z0ilJSqFgcMBCKN1s6inXiHIISThDTyNTivuInTp83aHhKRktI8B8ECKEzBNlBB67qmAtOJKvxBqxTvUbxw0bb+z+lY+3BxcU2p7M3pWGo3WM09m5MJMfCmGEuzJ4xJqJ5oDGsQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758781847; c=relaxed/simple;
-	bh=ogwayu2OgM/zoBPC/vaAGWeGd+gSbtdarvjA+3JCXdU=;
+	s=arc-20240116; t=1758781851; c=relaxed/simple;
+	bh=G2+bXFinkgZzbFugE8U05wp5gaKa47xBfDYPIYFFk6w=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=E3xQWbZcnPpoU47ZN+S035I6/uq0ja8CoH1/VumHck/+fysyNgIpmb06Q0URNWoGVCqZoBMpJoaIfdMLrRm0gfYZLqi/5XDrhqevFXS+tn7o1l+9MZDwcZvQtMsfyDLVXudfKgEnW4+djVGbGnZaw+sD08NTo3PLWEg6zun1244=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tmB04Mdh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oZ34UKZq; arc=none smtp.client-ip=202.12.124.149
+	 In-Reply-To:To:Cc; b=Xac3RvDUUJNJHUtLpdQVXg7Q6f5PMGBAKa8n52XZyvzMFgJRhkbbj/MYxa5c51wrNX4V6uwJDgfSOhK05/Yta41Suifg9LZLhdL/ZO0+r7p9i6pnxGDxLduTVtdWMmUr5HcZ8ZaxneLYbEdDJDgSOiW0b618tq7F8JHsHfAjhb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KLOsrZqI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BhwLggIb; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tmB04Mdh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oZ34UKZq"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4E64D1D001A0;
-	Thu, 25 Sep 2025 02:30:44 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KLOsrZqI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BhwLggIb"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7FA057A013F;
+	Thu, 25 Sep 2025 02:30:47 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 25 Sep 2025 02:30:44 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 25 Sep 2025 02:30:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758781844;
-	 x=1758868244; bh=3lRinMBohEL0TwUTyQb3VtQIqMOXqLqFAniM4ssPcTo=; b=
-	tmB04MdheEq5VHNZ6sYuNq1r15BB5eczf7jKm6M252qrzODT5b4R6x1Fe3HV85aj
-	oMhiG6PNvZN30oDx62d/rI/Jqf48uNDrkhw07dTMspdyg/1qJ1jTEl/LjA6gS28s
-	r6czZ/UCOa36bGtDcGWaSLdA5XJD7EJ2blfzxgYmhjkjkgvwH4RYYHJjkuvH3+xj
-	hdEvxuDSHa1n4Rpd+0zE9EeoTApmsEOQOQyCYzfjloWtQUt30GzcXwMISetXdwCp
-	q2zf/GMAHEFQ09iq6YQPVmDfci4nMtY7Yiv1IV7oY3s2zjQcAxVWFr2C7dohb+KV
-	scizi/8VjIi1QROna3HY4g==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758781847;
+	 x=1758868247; bh=QGYnUXHt6lNVnX+kmsTRtKJvg9TNrgrUtU0WWYNRDYk=; b=
+	KLOsrZqIClEmzljMmy33hbHqh62aR9qTL2M5TiFUcYYEkCFhLxPAGlht1T+HA9iq
+	0Y2MJUgvtzPIA/7Y4KVA1KjuPXHXmZDEhIOP++iXAYwU4fr1mteAWR6IANlUWjTS
+	12T4Xx4iBgyD1igUliXqbbKuXLaQv8/4OfQVoo3JBWC1mKXKoj8HyjZUKtA0agd/
+	ivAsm4cAxnfzMMUXfL3C5PgzZZhrrxYpxq4oqX2S7EcFswbztn6ibpEIy6kFUFww
+	ORNH46mp3JRldR4QlJGZAeazCnlo7dqCHoTVVLROrMZ3QPxtKZ5vjawLvNqe3rXz
+	68alM8HFxo+bfduZQJcN5w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758781844; x=
-	1758868244; bh=3lRinMBohEL0TwUTyQb3VtQIqMOXqLqFAniM4ssPcTo=; b=o
-	Z34UKZqlihMPGMGA/VRz7AEFb240k+rpdFwop64YZVDekoy8TyQvxuzNywqRdAme
-	hKGLurvPDBZJkWLaEwNN0ds/esYqMGIAZp+fa8dIY+acTvTgJtrFXv97ANi8o+He
-	0+G3d8Lu2guiGiFTyFiiOXYTAjAwpbMqO5+Wo7fwAAEzmE4KmduADpMQz3yCfr9Y
-	daygEz8cRKWd+DlAvz4kxEsMRLeB4diwbJs/wMby2vlnX6BqKjaWEqLY5nKKtNz8
-	ESQmPqUvqMuFLsnlGvDP9tLRTzX6H8Svlz8jMxNAoPOc3AoxX7bErpafBnxFTf7J
-	N68gaRjlLKeqOX+5v08Tg==
-X-ME-Sender: <xms:k-HUaGNYacO4jq-DtSC8iaw_goZCcMHGZHs4Lup5dYXSotP40-yMiA>
-    <xme:k-HUaFYHMmJ3nPqph6p5cgGtjqf7NFjTMc-x_gdRzVb0-CP_ve6SIwslU27Cz8qV9
-    C2cXF019PCn3kzgUX1mNCFPxFfXIVeUvWXN08kfpU3p2DzIbyH9-w>
-X-ME-Received: <xmr:k-HUaNDTD3qpD0U7vpKa2T_BcRAVobsdbhQPTHHViuvn14iZT1lXnB_P-Hd2zL70Au3Jfpg8f149Hjd3dfZEwueBEqNIsSDjyc8b9OGzjyA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758781847; x=
+	1758868247; bh=QGYnUXHt6lNVnX+kmsTRtKJvg9TNrgrUtU0WWYNRDYk=; b=B
+	hwLggIbGnaC5NguxIatBQ6WuY/J6QbO8T37n7emmNhfHtoQkxof0YgQyjI9oAaXM
+	szGpEEeob7yLH+WqwgkUyT2GR3J6QLS907cTxPFqdU6LcugGb+ygTeBPTBUdXgbT
+	CLjxysgVLQ6bO9VIzphCnSlu1PeVyE+KB3CB3EdsA/LSFO2f6NU39k3lTwqS+xLC
+	fmlfBo2ZFGJfWSnPFjPTlZvDHxJAdvF8x+Yp9uiFOnF+66tjceVcpXl/YUoaGsM6
+	2sRWPCcaJ5SyGjrUx9zhRMxJZOa9MuTZt7xUT27dlKjIOVD0w85cG2HZ6mOY+nwz
+	kGoOE4yGlyGX46CGC7fWA==
+X-ME-Sender: <xms:l-HUaHDFeJpSZOy-u9avrgpTftbXe0hM0Sgd4oUTCJBU4gU-SmMHoQ>
+    <xme:l-HUaN8juZ1GTnk_sJei1Uhdl2vvQH_oVnzU56V0JROBApcX2L802cV37TkWqtjk4
+    9Gh8baPLoCnFN9RmWcvmZSbIOFt32nNJNfLNywE-OdDRv7DPm6Sig>
+X-ME-Received: <xmr:l-HUaCUQhlJ913BLqb2PD_R137jMCwlxX-afViuO_SDDB4Nm2eB6ToIjoOnukCV-nnyTmgGpQafBPE28H8gunKuEsW8aG111yWvpRnZ7g-g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiheejjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepudeipdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtth
-    hopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptggssedvheeisghithdroh
-    hrghdprhgtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgt
-    phhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprh
-    gtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopehk
-    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtph
-    htthhopehsrghmsehgvghnthhoohdrohhrgh
-X-ME-Proxy: <xmx:lOHUaDHfWys_GPQd3mKcfqOEr9oRx_Cm-DVJmt1aGYxSLq7nnfqG1Q>
-    <xmx:lOHUaIMYe1qqT7OwRkN_JDN7-s_5lgj74bizDP1dKlwPjvZZv0WJcQ>
-    <xmx:lOHUaEiB5gRKSzK8E_oQXR1HhiANDeJVfKLGSpcne914WlNgN3-LNQ>
-    <xmx:lOHUaI1D_eAByev7ZfpsVoTQ8ht-vjqCNzUhNwoc4QQUFD6Xli6-lA>
-    <xmx:lOHUaPEKNuQ93wYdh3F_GJ2A2epzyuOiueu4xHiamCIzjBZaBGsA9B6i>
+    thhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtph
+    htthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtthhopehj
+    ohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehsrg
+    hmsehgvghnthhoohdrohhrghdprhgtphhtthhopegtohhnthgrtghtsehhrggtkhhtihhv
+    ihhsrdhmvgdprhgtphhtthhopehpihgvrhhrvgdqvghmmhgrnhhuvghlrdhprghtrhihse
+    gvmhgsvggtohhsmhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
+    pdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
+    htthhopehnvgifrhgvnhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:l-HUaGLtQ-Q2CV-FxE-7CaTO8MPJoTKN9pfdz5Qlr_tHxrjvH3D4Sw>
+    <xmx:l-HUaGApNSU6UtDzoUJbTcf0Mq3KubpqOvYPv39VD1VrtZaJjXT8xg>
+    <xmx:l-HUaGE9ArMdN3oLZacShiiNiwGnzlZK37xliw7yLtfxbJNvO5r4kg>
+    <xmx:l-HUaDLQ1gKCnsxRveMQHLjmo991k3HpE39oHYDSJvPJgHGZhaKVRg>
+    <xmx:l-HUaC6AGFa2vRvD_AYXjIEnxOrc1IbGuJeQVM4ukW_VCCY4kuPLgOCR>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Sep 2025 02:30:41 -0400 (EDT)
+ 25 Sep 2025 02:30:44 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d1f58cd5 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 25 Sep 2025 06:30:40 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id ba598422 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 25 Sep 2025 06:30:43 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 25 Sep 2025 08:30:10 +0200
-Subject: [PATCH v7 8/9] ci: convert "pedantic" job into full build with
- breaking changes
+Date: Thu, 25 Sep 2025 08:30:11 +0200
+Subject: [PATCH v7 9/9] ci: enable Rust for breaking-changes jobs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +88,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250925-b4-pks-rust-breaking-change-v7-8-4e49dcb904d5@pks.im>
+Message-Id: <20250925-b4-pks-rust-breaking-change-v7-9-4e49dcb904d5@pks.im>
 References: <20250925-b4-pks-rust-breaking-change-v7-0-4e49dcb904d5@pks.im>
 In-Reply-To: <20250925-b4-pks-rust-breaking-change-v7-0-4e49dcb904d5@pks.im>
 To: git@vger.kernel.org
@@ -106,156 +105,51 @@ Cc: "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 X-Mailer: b4 0.14.2
 
-The "pedantic" CI job is building on Fedora with `DEVOPTS=pedantic`.
-This build flag doesn't do anything anymore starting with 6a8cbc41ba
-(developer: enable pedantic by default, 2021-09-03), where we have
-flipped the default so that developers have to opt-out of pedantic
-builds via the "no-pedantic" option. As such, all this job really does
-is to do a normal build on Fedora, which isn't all that interesting.
-
-Convert that job into a full build-and-test job that uses Meson with
-breaking changes enabled. This plugs two gaps:
-
-  - We now test on another distro that we didn't run tests on
-    beforehand.
-
-  - We verify that breaking changes work as expected with Meson.
-
-Furthermore, in a subsequent commit we'll modify both jobs that use
-breaking changes to also enable Rust. By converting the Fedora job to
-use Meson, we ensure that we test our Rust build infrastructure for both
-build systems.
+Enable Rust for our breaking-changes jobs so that we can verify that the
+build infrastructure and the converted Rust subsystems work as expected.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- .github/workflows/main.yml |  4 ++--
- .gitlab-ci.yml             |  4 ++--
- ci/install-dependencies.sh |  6 +++++-
- ci/run-build-and-tests.sh  | 29 ++++++++---------------------
- 4 files changed, 17 insertions(+), 26 deletions(-)
+ ci/install-dependencies.sh | 4 ++--
+ ci/run-build-and-tests.sh  | 2 ++
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index d122e79415..393ea4d1cc 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -379,6 +379,8 @@ jobs:
-         - jobname: linux-breaking-changes
-           cc: gcc
-           image: ubuntu:rolling
-+        - jobname: fedora-breaking-changes-meson
-+          image: fedora:latest
-         - jobname: linux-leaks
-           image: ubuntu:rolling
-           cc: gcc
-@@ -396,8 +398,6 @@ jobs:
-         # Supported until 2025-04-02.
-         - jobname: linux32
-           image: i386/ubuntu:focal
--        - jobname: pedantic
--          image: fedora:latest
-         # A RHEL 8 compatible distro.  Supported until 2029-05-31.
-         - jobname: almalinux-8
-           image: almalinux:8
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index af10ebb59a..4248506909 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -45,6 +45,8 @@ test:linux:
-       - jobname: linux-breaking-changes
-         image: ubuntu:20.04
-         CC: gcc
-+      - jobname: fedora-breaking-changes-meson
-+        image: fedora:latest
-       - jobname: linux-TEST-vars
-         image: ubuntu:20.04
-         CC: gcc
-@@ -58,8 +60,6 @@ test:linux:
-       - jobname: linux-asan-ubsan
-         image: ubuntu:rolling
-         CC: clang
--      - jobname: pedantic
--        image: fedora:latest
-       - jobname: linux-musl-meson
-         image: alpine:latest
-       - jobname: linux32
 diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index d061a47293..35bd05b85b 100755
+index 35bd05b85b..0d3aa496fc 100755
 --- a/ci/install-dependencies.sh
 +++ b/ci/install-dependencies.sh
-@@ -30,8 +30,12 @@ alpine-*)
- 		bash cvs gnupg perl-cgi perl-dbd-sqlite perl-io-tty >/dev/null
- 	;;
- fedora-*|almalinux-*)
-+	case "$jobname" in
-+	*-meson)
-+		MESON_DEPS="meson ninja";;
-+	esac
+@@ -35,7 +35,7 @@ fedora-*|almalinux-*)
+ 		MESON_DEPS="meson ninja";;
+ 	esac
  	dnf -yq update >/dev/null &&
--	dnf -yq install shadow-utils sudo make gcc findutils diffutils perl python3 gawk gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
-+	dnf -yq install shadow-utils sudo make pkg-config gcc findutils diffutils perl python3 gawk gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel $MESON_DEPS >/dev/null
+-	dnf -yq install shadow-utils sudo make pkg-config gcc findutils diffutils perl python3 gawk gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel $MESON_DEPS >/dev/null
++	dnf -yq install shadow-utils sudo make pkg-config gcc findutils diffutils perl python3 gawk gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel $MESON_DEPS cargo >/dev/null
  	;;
  ubuntu-*|i386/ubuntu-*|debian-*)
  	# Required so that apt doesn't wait for user input on certain packages.
+@@ -62,7 +62,7 @@ ubuntu-*|i386/ubuntu-*|debian-*)
+ 		make libssl-dev libcurl4-openssl-dev libexpat-dev wget sudo default-jre \
+ 		tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl \
+ 		libemail-valid-perl libio-pty-perl libio-socket-ssl-perl libnet-smtp-ssl-perl libdbd-sqlite3-perl libcgi-pm-perl \
+-		libsecret-1-dev libpcre2-dev meson ninja-build pkg-config \
++		libsecret-1-dev libpcre2-dev meson ninja-build pkg-config cargo \
+ 		${CC_PACKAGE:-${CC:-gcc}} $PYTHON_PACKAGE
+ 
+ 	case "$distro" in
 diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 01823fd0f1..3680446649 100755
+index 3680446649..c718bd101a 100755
 --- a/ci/run-build-and-tests.sh
 +++ b/ci/run-build-and-tests.sh
-@@ -5,12 +5,11 @@
- 
- . ${0%/*}/lib.sh
- 
--run_tests=t
--
- case "$jobname" in
--linux-breaking-changes)
-+fedora-breaking-changes-musl|linux-breaking-changes)
+@@ -9,7 +9,9 @@ case "$jobname" in
+ fedora-breaking-changes-musl|linux-breaking-changes)
  	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  	export WITH_BREAKING_CHANGES=YesPlease
-+	MESONFLAGS="$MESONFLAGS -Dbreaking_changes=true"
++	export WITH_RUST=YesPlease
+ 	MESONFLAGS="$MESONFLAGS -Dbreaking_changes=true"
++	MESONFLAGS="$MESONFLAGS -Drust=enabled"
  	;;
  linux-TEST-vars)
  	export OPENSSL_SHA1_UNSAFE=YesPlease
-@@ -36,12 +35,6 @@ linux-sha256)
- linux-reftable|linux-reftable-leaks|osx-reftable)
- 	export GIT_TEST_DEFAULT_REF_FORMAT=reftable
- 	;;
--pedantic)
--	# Don't run the tests; we only care about whether Git can be
--	# built.
--	export DEVOPTS=pedantic
--	run_tests=
--	;;
- esac
- 
- case "$jobname" in
-@@ -54,21 +47,15 @@ case "$jobname" in
- 		-Dtest_output_directory="${TEST_OUTPUT_DIRECTORY:-$(pwd)/t}" \
- 		$MESONFLAGS
- 	group "Build" meson compile -C build --
--	if test -n "$run_tests"
--	then
--		group "Run tests" meson test -C build --print-errorlogs --test-args="$GIT_TEST_OPTS" || (
--			./t/aggregate-results.sh "${TEST_OUTPUT_DIRECTORY:-t}/test-results"
--			handle_failed_tests
--		)
--	fi
-+	group "Run tests" meson test -C build --print-errorlogs --test-args="$GIT_TEST_OPTS" || (
-+		./t/aggregate-results.sh "${TEST_OUTPUT_DIRECTORY:-t}/test-results"
-+		handle_failed_tests
-+	)
- 	;;
- *)
- 	group Build make
--	if test -n "$run_tests"
--	then
--		group "Run tests" make test ||
--		handle_failed_tests
--	fi
-+	group "Run tests" make test ||
-+	handle_failed_tests
- 	;;
- esac
- 
 
 -- 
 2.51.0.618.g983fd99d29.dirty
