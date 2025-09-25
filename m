@@ -1,82 +1,385 @@
-Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C1B31328C
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 17:34:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758821653; cv=none; b=cOKaDVUfde4i6f36qqfFoc7k4vyRvpykT6QHHBBvPPHTl1fqGhC7h9D7hYbV6SpAsoEUDTjR8WeskTKhDEYECRRYMfyoTWSIR8o39gayGihy9lrZOIIyrjFB1CNPx7fBKxUOiIYSCUh+W/uUgL/cYG+IHKQeqoMGRZUCWloRFpY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758821653; c=relaxed/simple;
-	bh=zn6PxKDzEiow8zQVle9veM8suYZHNsCC2vfjXtPnI10=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dFr9qPV01nQzb8i40x92x1L5KNLkt6XlmVo+pr1Uidi2GxzcZIX8NDZpWc69JZ3NsOCssoSxM4WfiOvnakkajj2re19IkoMXht8Cy3bi3FzEdC/RH9T/W67z5acrIbMcuZeRj7/SZcA+jvR8mR/uLsjADz+MWLQKc9BArUegPA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jVeZnsh9; arc=none smtp.client-ip=209.85.221.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44E331326C
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 18:03:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758823411; cv=pass; b=ssBydqTLt2r/V4zrV+HhsSRXSTNyWTitBh/EOlpG4SS8tmc1VpF+st1wDozCt4nkzcIv7TCP1+YivGP0hi2EqnpwK/JDDTzl82zBvS3Pqt3qt2LBnVOfeI8SS0Xm+e1nKeAIQejMjQCg7LAucXFC40QaG+ze3CpR1YDM7VrVcvw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758823411; c=relaxed/simple;
+	bh=heMEBA7yc8I2Bd3mhW0Qe43mVxnTtjjIT5ajtkrPs20=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=gD+4u2PExxJBN9sSIT+E7MRXarxG0imedcuKrPt8E0wJosk44n5/70+OwvL7VVQn0vFCLAWFaHzgr/eBBsauCymqlhaBgPm02R5bfKuyNJLdOAoKHEbzQ4EaXPv5EX9J7Qr04jltz6E+G2wvqzi+PJKdWhqd1G/2r4IWMjjKD3M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=fUBS7ZJr; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jVeZnsh9"
-Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-54bc6356624so1611475e0c.1
-        for <git@vger.kernel.org>; Thu, 25 Sep 2025 10:34:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758821650; x=1759426450; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=zn6PxKDzEiow8zQVle9veM8suYZHNsCC2vfjXtPnI10=;
-        b=jVeZnsh9MttxjHHy2DRonpSeLlDRz7Fn1LZlRtwtXF/Q+ERvRLFTyA+xZlkivpOIyt
-         uaPArWYRUDhK8CP8YbeViSscS31HTGFE4tqMxax1tl5HwIQ0/F4AkVl+5T89bAcrqhFH
-         CDNxzIL6JzBs3xoMH0RP6LupaUu/sKBOm0Ei6AJBFA3yR8PB6y8kR///v9AKrmTNe7ms
-         R7XEc5RnybYLnk4la/qRZDmnxC2rfwre2oVxeqQ8PPpIE7pZmTiUTQ3vhhKc1fecqrFc
-         cZPglvm0lPvxrnhblv17D813pqjTdTjPkrFl8WBl3z9bLOrniybUhSowGNH6Z6TuLGls
-         5pjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758821650; x=1759426450;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zn6PxKDzEiow8zQVle9veM8suYZHNsCC2vfjXtPnI10=;
-        b=X7gqU9cNE1IFtQWcbVq97cnLXjyvbmCCFdYYygrQ5r7xhUU779mMJ1JGGoPXle3y11
-         EcgKGVwYGkBQhRFKbOOzuZ07TxU/vdtEeE5BTU/3a9gkNMDm4ubfd+Vx2i09D/PI6WF0
-         //9STm7p8PEgY0C/3iys+d+zQgt1oZruu8pvzcfDXSxfiDYj3R6kLVsf7MKyem2Xu0KB
-         eGphFko0W3X48mYvSv/Hk4KHQQfDuRxjGvWnHSLZxD26H4JOumx4imv4Xf1vFshUssh4
-         AZRzdIPvOp7IAf7mC+Dmfx8dPXnmL3nQ/mj+y3uM51Gniydcm/Wsb3+aOIK75/MdYB3b
-         xJ5w==
-X-Gm-Message-State: AOJu0YzRgxoss38SJNPF9yeGAHeGxnrpnAbx4/C/zkwml9epWuvV653U
-	FePmjNFYj/Cq8Y5mKo4bXtXoEvgGsO5n+OSO3DY0pWD4u6a81wk7xOYzGN27u9zMu1jwz2ysHrl
-	cQa8nOobi0FDHEoJQBKrDejOihz0OWt8=
-X-Gm-Gg: ASbGncsPxMvjwqhlxIDwc+L4UVldUVzZp+jcKdRqeENiutrT4pmNev86SVhkB56z1js
-	jLMIDzs2yfvTnpvp1yy7e6TjHQwQBdNaNNwGPECc2tbRKmbUyV2h1tLD8amLV1w24wuUX86Ggzb
-	9kxQcuTY2n6yr4Ug+6cn+R12DpfdWU/DFJyLZ+SopAjZJZcflpaASyNqgRYFcLr7rtxbkU1nRQF
-	/k+A6tsan5g2hNcAHX8JL6ya5+AKtAXS3rC2YU=
-X-Google-Smtp-Source: AGHT+IFU4pCtPEnpjBXzXLqSG5fhC1fRwfsECt+T7KrjwdAjbsBSs8e0TjM67NgrdXnyPeVJx/acviuoc5gGvi/Dkug=
-X-Received: by 2002:a05:6122:da0:b0:54a:a3b1:db63 with SMTP id
- 71dfb90a1353d-54bed4b4facmr1536951e0c.6.1758821650464; Thu, 25 Sep 2025
- 10:34:10 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="fUBS7ZJr"
+ARC-Seal: i=1; a=rsa-sha256; t=1758823397; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=AKWFdWYIUySQhOLtK3QcxfzdF3qrQjjAdS99R4XHxgnuxobD23JNQ8b0/X52bkRPekrpZM3AfOzIBGSxum9F6W0u7q5VfBPGzP2uJ8zS4GS2Fj0qiDwnibFrT7Siyepd90yrti3Z5e6PVOJ1lHIojNAecoX5HfoEMadt4xscqLA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1758823397; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=7Nu7EL0Bjc8H4KKoMfh3gwmy+JcYsym+EbH1mHhAMsY=; 
+	b=J6eCqxrUfGna5t8TFaTHiABnbvRCxSvrc1uEtbfMtB1WdGRQ29b2RSsigH1UYwJd8VeJpLEoDwcfXeoHpgl1b2exH430G5Cezq6HEEm/CHxBPWjFuD6BwAti60nUQAjo4MO/FMU1CFwUHQlJnx1OPifyNvfgaZk2ruTcKWAqBEw=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1758823397;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=7Nu7EL0Bjc8H4KKoMfh3gwmy+JcYsym+EbH1mHhAMsY=;
+	b=fUBS7ZJrsKV4vaLr9uiD3yxMqLdOunfqRjRT21Z4sEGF0ChWPywz87LBt+V4VyTK
+	K+mfLq68LDVP0g2oi7FMI70GWYoi7DH8p0QdJIv3yHetPQihdiD99wVnjL/rdXumeCs
+	q/OVb+W7Iyh5Bi1C4A/L0BD93eWSLffL/pXqnKYI=
+Received: by mx.zohomail.com with SMTPS id 175882339373147.90313334624227;
+	Thu, 25 Sep 2025 11:03:13 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org
+Cc: Emily Shaffer <emilyshaffer@google.com>,
+	Rodrigo Damazio Bovendorp <rdamazio@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Josh Steadmon <steadmon@google.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH 10/10] receive-pack: convert receive hooks to hook.h
+Date: Thu, 25 Sep 2025 21:02:57 +0300
+Message-ID: <20250925180257.13844-1-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.49.1
+In-Reply-To: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAP8UFD2OcOaSsumKGZ-oVVWzttc48CvmQZD8tQaWTGQR7wR1EA@mail.gmail.com>
- <CAPSxiM8prcfrnm8ktMG+DqguuNXvZukg=RQVV3oWdU88RNsiZA@mail.gmail.com> <CAP8UFD0ygkJ7v5Q2BwxuqsuAi0-+Htx8Wqa9JXALcVFh2q2_Nw@mail.gmail.com>
-In-Reply-To: <CAP8UFD0ygkJ7v5Q2BwxuqsuAi0-+Htx8Wqa9JXALcVFh2q2_Nw@mail.gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Thu, 25 Sep 2025 23:03:59 +0530
-X-Gm-Features: AS18NWAGq2QmpB4cX15QnV9KATP5eoR2cc5jYWT6PlPPAb-008-G32fBVX0wn6M
-Message-ID: <CAPSxiM_SHQ6HnLkKgP3B5MufRs18uOrz-0yhWR27X5aF89ZSGg@mail.gmail.com>
-Subject: Re: Participating in the Outreachy December 2025 cohort
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
->> Hi Usman,
-Hi Christian,
+From: Emily Shaffer <emilyshaffer@google.com>
 
-> So far it looks like we would co-mentor together a project about
-> removing global state similar to Ayush's GSoC 2025 project. I hope it
-> works for you.
-It works for me.
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+---
+ builtin/receive-pack.c | 243 +++++++++++++++++++++--------------------
+ 1 file changed, 122 insertions(+), 121 deletions(-)
 
-Thank you.
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 78d4df349e..5e5ce34371 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -749,7 +749,7 @@ static int check_cert_push_options(const struct string_list *push_options)
+ 	return retval;
+ }
+ 
+-static void prepare_push_cert_sha1(struct child_process *proc)
++static void prepare_push_cert_sha1(struct run_hooks_opt *opt)
+ {
+ 	static int already_done;
+ 
+@@ -775,168 +775,126 @@ static void prepare_push_cert_sha1(struct child_process *proc)
+ 		nonce_status = check_nonce(sigcheck.payload);
+ 	}
+ 	if (!is_null_oid(&push_cert_oid)) {
+-		strvec_pushf(&proc->env, "GIT_PUSH_CERT=%s",
++		strvec_pushf(&opt->env, "GIT_PUSH_CERT=%s",
+ 			     oid_to_hex(&push_cert_oid));
+-		strvec_pushf(&proc->env, "GIT_PUSH_CERT_SIGNER=%s",
++		strvec_pushf(&opt->env, "GIT_PUSH_CERT_SIGNER=%s",
+ 			     sigcheck.signer ? sigcheck.signer : "");
+-		strvec_pushf(&proc->env, "GIT_PUSH_CERT_KEY=%s",
++		strvec_pushf(&opt->env, "GIT_PUSH_CERT_KEY=%s",
+ 			     sigcheck.key ? sigcheck.key : "");
+-		strvec_pushf(&proc->env, "GIT_PUSH_CERT_STATUS=%c",
++		strvec_pushf(&opt->env, "GIT_PUSH_CERT_STATUS=%c",
+ 			     sigcheck.result);
+ 		if (push_cert_nonce) {
+-			strvec_pushf(&proc->env,
++			strvec_pushf(&opt->env,
+ 				     "GIT_PUSH_CERT_NONCE=%s",
+ 				     push_cert_nonce);
+-			strvec_pushf(&proc->env,
++			strvec_pushf(&opt->env,
+ 				     "GIT_PUSH_CERT_NONCE_STATUS=%s",
+ 				     nonce_status);
+ 			if (nonce_status == NONCE_SLOP)
+-				strvec_pushf(&proc->env,
++				strvec_pushf(&opt->env,
+ 					     "GIT_PUSH_CERT_NONCE_SLOP=%ld",
+ 					     nonce_stamp_slop);
+ 		}
+ 	}
+ }
+ 
++struct receive_hook_feed_context {
++	struct command *cmd;
++	int skip_broken;
++};
++
+ struct receive_hook_feed_state {
+ 	struct command *cmd;
+ 	struct ref_push_report *report;
+ 	int skip_broken;
+ 	struct strbuf buf;
+-	const struct string_list *push_options;
+ };
+ 
+-typedef int (*feed_fn)(void *, const char **, size_t *);
+-static int run_and_feed_hook(const char *hook_name, feed_fn feed,
+-			     struct receive_hook_feed_state *feed_state)
++static int feed_receive_hook(int hook_stdin_fd, struct receive_hook_feed_state *state, int lines_batch_size)
+ {
+-	struct child_process proc = CHILD_PROCESS_INIT;
+-	struct async muxer;
+-	int code;
+-	const char *hook_path = find_hook(the_repository, hook_name);
++	struct command *cmd = state->cmd;
+ 
+-	if (!hook_path)
+-		return 0;
++	strbuf_reset(&state->buf);
+ 
+-	strvec_push(&proc.args, hook_path);
+-	proc.in = -1;
+-	proc.stdout_to_stderr = 1;
+-	proc.trace2_hook_name = hook_name;
+-
+-	if (feed_state->push_options) {
+-		size_t i;
+-		for (i = 0; i < feed_state->push_options->nr; i++)
+-			strvec_pushf(&proc.env,
+-				     "GIT_PUSH_OPTION_%"PRIuMAX"=%s",
+-				     (uintmax_t)i,
+-				     feed_state->push_options->items[i].string);
+-		strvec_pushf(&proc.env, "GIT_PUSH_OPTION_COUNT=%"PRIuMAX"",
+-			     (uintmax_t)feed_state->push_options->nr);
+-	} else
+-		strvec_pushf(&proc.env, "GIT_PUSH_OPTION_COUNT");
++	/* batch lines to avoid going through run-command's ppoll for each line */
++	for (int i = 0; i < lines_batch_size; i++) {
++		while (cmd &&
++		       state->skip_broken && (cmd->error_string || cmd->did_not_exist))
++			cmd = cmd->next;
+ 
+-	if (tmp_objdir)
+-		strvec_pushv(&proc.env, tmp_objdir_env(tmp_objdir));
++		if (!cmd)
++			break;  /* no more commands left */
+ 
+-	if (use_sideband) {
+-		memset(&muxer, 0, sizeof(muxer));
+-		muxer.proc = copy_to_sideband;
+-		muxer.in = -1;
+-		code = start_async(&muxer);
+-		if (code)
+-			return code;
+-		proc.err = muxer.in;
+-	}
++		if (!state->report)
++			state->report = cmd->report;
+ 
+-	prepare_push_cert_sha1(&proc);
++		if (state->report) {
++			struct object_id *old_oid;
++			struct object_id *new_oid;
++			const char *ref_name;
+ 
+-	code = start_command(&proc);
+-	if (code) {
+-		if (use_sideband)
+-			finish_async(&muxer);
+-		return code;
+-	}
++			old_oid = state->report->old_oid ? state->report->old_oid : &cmd->old_oid;
++			new_oid = state->report->new_oid ? state->report->new_oid : &cmd->new_oid;
++			ref_name = state->report->ref_name ? state->report->ref_name : cmd->ref_name;
+ 
+-	sigchain_push(SIGPIPE, SIG_IGN);
++			strbuf_addf(&state->buf, "%s %s %s\n",
++				    oid_to_hex(old_oid), oid_to_hex(new_oid),
++				    ref_name);
+ 
+-	while (1) {
+-		const char *buf;
+-		size_t n;
+-		if (feed(feed_state, &buf, &n))
+-			break;
+-		if (write_in_full(proc.in, buf, n) < 0)
+-			break;
++			state->report = state->report->next;
++			if (!state->report)
++				cmd = cmd->next;
++		} else {
++			strbuf_addf(&state->buf, "%s %s %s\n",
++				    oid_to_hex(&cmd->old_oid), oid_to_hex(&cmd->new_oid),
++				    cmd->ref_name);
++			cmd = cmd->next;
++		}
+ 	}
+-	close(proc.in);
+-	if (use_sideband)
+-		finish_async(&muxer);
+ 
+-	sigchain_pop(SIGPIPE);
++	state->cmd = cmd;
++
++	if (state->buf.len > 0) {
++		int ret = write_in_full(hook_stdin_fd, state->buf.buf, state->buf.len);
++		if (ret < 0) {
++			if (errno == EPIPE)
++				return 1; /* child closed pipe */
++			return ret;
++		}
++	}
+ 
+-	return finish_command(&proc);
++	return state->cmd ? 0 : 1;  /* 0 = more to come, 1 = EOF */
+ }
+ 
+-static int feed_receive_hook(void *state_, const char **bufp, size_t *sizep)
++static int feed_receive_hook_cb(int hook_stdin_fd, void *pp_cb, void *pp_task_cb UNUSED)
+ {
+-	struct receive_hook_feed_state *state = state_;
+-	struct command *cmd = state->cmd;
++	struct hook_cb_data *hook_cb = pp_cb;
++	struct receive_hook_feed_state *feed_state = hook_cb->options->feed_pipe_cb_data;
+ 
+-	while (cmd &&
+-	       state->skip_broken && (cmd->error_string || cmd->did_not_exist))
+-		cmd = cmd->next;
+-	if (!cmd)
+-		return -1; /* EOF */
+-	if (!bufp)
+-		return 0; /* OK, can feed something. */
+-	strbuf_reset(&state->buf);
+-	if (!state->report)
+-		state->report = cmd->report;
+-	if (state->report) {
+-		struct object_id *old_oid;
+-		struct object_id *new_oid;
+-		const char *ref_name;
+-
+-		old_oid = state->report->old_oid ? state->report->old_oid : &cmd->old_oid;
+-		new_oid = state->report->new_oid ? state->report->new_oid : &cmd->new_oid;
+-		ref_name = state->report->ref_name ? state->report->ref_name : cmd->ref_name;
+-		strbuf_addf(&state->buf, "%s %s %s\n",
+-			    oid_to_hex(old_oid), oid_to_hex(new_oid),
+-			    ref_name);
+-		state->report = state->report->next;
+-		if (!state->report)
+-			state->cmd = cmd->next;
+-	} else {
+-		strbuf_addf(&state->buf, "%s %s %s\n",
+-			    oid_to_hex(&cmd->old_oid), oid_to_hex(&cmd->new_oid),
+-			    cmd->ref_name);
+-		state->cmd = cmd->next;
+-	}
+-	if (bufp) {
+-		*bufp = state->buf.buf;
+-		*sizep = state->buf.len;
++	/* first-time setup */
++	if (!hook_cb->options->feed_pipe_cb_data) {
++		struct receive_hook_feed_context *ctx = hook_cb->options->feed_pipe_ctx;
++		if (!ctx)
++			BUG("run_hooks_opt.feed_pipe_ctx required for receive hook");
++
++		hook_cb->options->feed_pipe_cb_data = xmalloc(sizeof(struct receive_hook_feed_state));
++		feed_state = hook_cb->options->feed_pipe_cb_data;
++		strbuf_init(&feed_state->buf, 0);
++		feed_state->cmd = ctx->cmd;
++		feed_state->skip_broken = ctx->skip_broken;
++		feed_state->report = NULL;
+ 	}
+-	return 0;
+-}
+ 
+-static int run_receive_hook(struct command *commands,
+-			    const char *hook_name,
+-			    int skip_broken,
+-			    const struct string_list *push_options)
+-{
+-	struct receive_hook_feed_state state;
+-	int status;
++	/* batch 500 lines at once to avoid going through the run-command ppoll loop too often */
++	if (feed_receive_hook(hook_stdin_fd, feed_state, 500) == 0)
++		return 0; /* still have more data to feed */
+ 
+-	strbuf_init(&state.buf, 0);
+-	state.cmd = commands;
+-	state.skip_broken = skip_broken;
+-	state.report = NULL;
+-	if (feed_receive_hook(&state, NULL, NULL))
+-		return 0;
+-	state.cmd = commands;
+-	state.push_options = push_options;
+-	status = run_and_feed_hook(hook_name, feed_receive_hook, &state);
+-	strbuf_release(&state.buf);
+-	return status;
++	strbuf_release(&feed_state->buf);
++
++	if (hook_cb->options->feed_pipe_cb_data)
++		FREE_AND_NULL(hook_cb->options->feed_pipe_cb_data);
++
++	return 1; /* done feeding, run-command can close pipe */
+ }
+ 
+ static void hook_output_to_sideband(struct strbuf *output, void *cb_data UNUSED)
+@@ -972,6 +930,49 @@ static void hook_output_to_sideband(struct strbuf *output, void *cb_data UNUSED)
+ 	send_sideband(1, 2, output->buf, output->len, use_sideband);
+ }
+ 
++static int run_receive_hook(struct command *commands,
++			    const char *hook_name,
++			    int skip_broken,
++			    const struct string_list *push_options)
++{
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct receive_hook_feed_context ctx;
++	struct command *iter = commands;
++
++	/* if there are no valid commands, don't invoke the hook at all. */
++	while (iter && skip_broken && (iter->error_string || iter->did_not_exist))
++		iter = iter->next;
++	if (!iter)
++		return 0;
++
++	if (push_options) {
++		int i;
++		for (i = 0; i < push_options->nr; i++)
++			strvec_pushf(&opt.env, "GIT_PUSH_OPTION_%d=%s", i,
++				     push_options->items[i].string);
++		strvec_pushf(&opt.env, "GIT_PUSH_OPTION_COUNT=%"PRIuMAX"",
++					     (uintmax_t)push_options->nr);
++	} else
++		strvec_push(&opt.env, "GIT_PUSH_OPTION_COUNT");
++
++	if (tmp_objdir)
++		strvec_pushv(&opt.env, tmp_objdir_env(tmp_objdir));
++
++	prepare_push_cert_sha1(&opt);
++
++	/* set up sideband printer */
++	if (use_sideband)
++		opt.consume_sideband = hook_output_to_sideband;
++
++	/* set up stdin callback */
++	ctx.cmd = commands;
++	ctx.skip_broken = skip_broken;
++	opt.feed_pipe = feed_receive_hook_cb;
++	opt.feed_pipe_ctx = &ctx;
++
++	return run_hooks_opt(the_repository, hook_name, &opt);
++}
++
+ static int run_update_hook(struct command *cmd)
+ {
+ 	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+-- 
+2.49.1
+
