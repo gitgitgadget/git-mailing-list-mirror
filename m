@@ -1,119 +1,176 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C70A30C375
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 17:08:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9848F30B53C
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 17:09:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758820138; cv=none; b=iGhEtWpy9l70E3DMZQYHvcj/08NDDXwU73/7TPcLHa2O1mPEH9gANOqKLZcufx3Cqyq7lRhjjgLO3DS9Lpzkxi63V/724bTjo+t9GieA66Je6lmJQrbDIcX+46iESMi7Ege69iyncnpFzH0Kli3w4FZMGPlSBfAUefU2+uSl0rQ=
+	t=1758820153; cv=none; b=F1utIcKOiU8c6icbN5XaouS4QUUgovw0hPMd8561l6YizUW5l9fmez7E67C6eR87BpoT6M05W96fgejHbsvZdn54eZ2WibQ8/yxPfV+sb7itBi13gy4uixoiJ0uJkTrjsa9GppX3MXSnrnj/MTf17NBbxYduD/2k4xBxKikmGjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758820138; c=relaxed/simple;
-	bh=islPjBzJ0xjX/cZ+CBtLcQOIY7RAsErpRuk7fkM4kNg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Vq62JSl16/VNVL9pdWeRefj1cI8ugMIQQvgdU74JWGr9DsIKHv0TYcdAVZePaeS+kl5tvjBebTEwPmItHp57W4pD1fbnS0bcR1cKqztMpX2bLp2E0a24BxGeAaWQ1qZV1Uw+HA1prfJUgU21wHSMHeNl4bE8VdRCoHrRLbOrdoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lGLyohjl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LiWzy9iQ; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758820153; c=relaxed/simple;
+	bh=7IvYpzNT4ZEJiiHQiV+/n9NhsWJsbDy+52TJimZmD5E=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=oLhiv0QZBnx6WbvPnYAD7RJmiRW3Xu1IObhYiAIzOT23HsylUh+1lW/drAYDHWBfDwuo8yXd/SvZ/lbJzT8ynJbhNwGsxGIvmerIgjneF+zX+JQpXbWugG4LJtVUlqQtFQ3aAGUrL9KquWDE3BsCrFfn1tqGuw9bfWT3ljga5HQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=nDLIqVcO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KkAQG6RV; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lGLyohjl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LiWzy9iQ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 867EB7A00B0;
-	Thu, 25 Sep 2025 13:08:55 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 25 Sep 2025 13:08:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758820135; x=1758906535; bh=islPjBzJ0x
-	jX/cZ+CBtLcQOIY7RAsErpRuk7fkM4kNg=; b=lGLyohjljcsp1BfAsikMts9rUK
-	mW5s6sh6tSKNzpU6jAM0fak6ktdmlQof05/oM0B38B1CK2VjE4jURir6UJ0UIe/g
-	EWE8F91oJgCPD7iGs7tQT+9enuiq+W+HLaXlaUYa81LrKdkMhTod4ditNFh4/3dc
-	4R/r+OP4WmwQwcrP42ECqAq1WoG/2fKU/hlm6ukmqrGpirA3W8IXi+uwUq0f3xfn
-	GdTcl7dzbijVjEgX/oHhhdfgPDsjvMKNmVCVFv4FQ+H9+Fqwdy+qkz7QYdqjcdvK
-	WsXHT3ctzXfK8C3IpKON1GiZ0YxXjMcp1xDsrjDEPwuNGXjZ6gM43C4k2Wpg==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="nDLIqVcO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KkAQG6RV"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B251D14000DE;
+	Thu, 25 Sep 2025 13:09:10 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Thu, 25 Sep 2025 13:09:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758820150;
+	 x=1758906550; bh=tdu+/3WPOON80ws6W8p/7EfyaE+ZSIMKYdLY7KlAlK0=; b=
+	nDLIqVcOrJrJ/rm7GaY5jDF7bgpJbkgbktBWILF8hrtzovsVNFvtl5H/+KcUFJoB
+	9Lux/UyPkvsLZXj90aUjzsJxN/ZGYh5ONYbeQwPxSb49ijAGpLTkDH850kOvJrA5
+	fGxIjk3svAofu1TRG+z4UGv3jcW2c68+okrN8yXN7Hb2Z/4tCTYpS5iL1aylqvFQ
+	kIIxys4NzfCg3cFHADpa0bQTLJpWjEQy9p3P9k2O00GYnKkxXyk4Q/H2cl4e/XMP
+	R1sURcu481S4XbYmt/PAqo2u0iQKI8ZlY/V33pv9j/eoCje3JP2YWmN3I7tDzHjH
+	K6EO64BzHFZ5NNDMoJFwTA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758820135; x=1758906535; bh=islPjBzJ0xjX/cZ+CBtLcQOIY7RAsErpRuk
-	7fkM4kNg=; b=LiWzy9iQ/GZpAEO8iEBiqM6G2zAtRNyBcsXSvPlXwQuPBMkaf6B
-	yjFhBX+lU7TCtaTOOtx6Vx42OAcAM+8d42TMsHB0fXr4Bh0V+KfQOoeQqwvzFhFE
-	yuhoiHo+f5MfsUnfIPEqxNoy4eZ8E3mwHt10fec4QsJIivmZHcAT/QXEPKYMcJEw
-	dmqPTx6f2XvAewloRVnOT1BkHKSe/VP8mtnX6svXYfE7TO4IXAOcTGC3jv+aBtUV
-	a3zlAXvxCNcXWkch+V6qpMjv40HaNL0CnxdWYi86jCkPoTAERoJzcdJxUK+5oFjZ
-	mt/KTP0/8aM245S9ACkFCRg5JBaA7PLOiqg==
-X-ME-Sender: <xms:JnfVaLZvawvAS3IFYBwxh2Agg-VwtCF_riaMusmQARYRrOKAMN5p6g>
-    <xme:JnfVaFUzFMLJuEFa6ZHzz9oIABVr4CRnpPapctsEf63D5fBZk-qL9GwMS0KvwFT2y
-    rSe0CsrhQOExowt87Pzk6B2XY6ld8KZHFZBoopSLu8_mC61LWhJlA>
-X-ME-Received: <xmr:JnfVaM-vHN_udErIfY8fKGVse9PKDFb0L6OBOg0885tN1MqLOh-TxqShUxqcA1tRUt91BknUchCq3gRFFwedX6MrgXAI6RrLLu_X>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758820150; x=
+	1758906550; bh=tdu+/3WPOON80ws6W8p/7EfyaE+ZSIMKYdLY7KlAlK0=; b=K
+	kAQG6RV7AKzrgq7GvHE7wrOGvckKQcCLqjaRF5FIf2Hf5aIcavJJe+CLebo+ZVYh
+	1IBF4QubW2iWL2u4Ny5Mej9c298szQDij8lLzPH1JMG2OjlHWaXz6pkaEorJIdEM
+	fgSPFhKCpJGArv4oLmltHXch6L+Q1u7lhQOWJ3O3kf4C4TKkuCYj7AxDOs1Ov5Xs
+	bP+Zneu6BzbbvB5x4ipHjNCMu4zDpVTOLss4Irinfu2nppJm8vr8eUlbiBG7S/rs
+	nNNIPQ24A5z7ojI1zIruAGSfJc8IMHkrbNLeHDhQJzxLi/SJ2BT3PeGAXlym1JSg
+	PdQIxuqoFpkVTjibF1+yg==
+X-ME-Sender: <xms:NnfVaE85Kw19tVSS-LjOwvLHy1g-Ewk604pAaqZ4O9fPTMHx11MlUq0>
+    <xme:NnfVaEJYinmfXSKevxOh2Ga8VZQj6E9JRfm33i-HGY-rlZ0ELKcPBx0UfSmDvZig9
+    ybWwTFY0Jp1AXUE8z3hqLNezO_oXnlFVGvBE39cJiEHB4leviJNLw>
+X-ME-Received: <xmr:NnfVaHboiNi2AhUFlZIkUfChZ3MBN2fmw5gItnAxJZN9Vm7GBtqC4_-zt534nfVmWQ8M7LdfGlOOZHi8pHiSx_1K7wdxYTyuC4ET3jQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeijedthecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepmhesghhithdrshhtrhhovhgrrdgukhdprhgtphhtthhopehj
-    iehtsehkuggsghdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdr
-    uhhkpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:JnfVaG_ZzFgEuqhLIKF1ZliZrNE0TX-QpgNZGclSTNrrmPZnz7C-9g>
-    <xmx:JnfVaEQqKnrQ4gTBx7dZq0Gk7HyGWNqcJxDJLUxbi0TxtQ9stvnE3w>
-    <xmx:JnfVaCeFTGMGn9fJom-UGX8ppE-hiNm-VAwrBFC6ZIQnyTVzaeXIcw>
-    <xmx:JnfVaACQ3uA64T8aTKf5wOZAOtTTgHo-L9AVtsZtnBcbp7Vydy1gyA>
-    <xmx:J3fVaAPcDjfR4q-FHYj39HpClMDsi1dG461yrJagTcaI8I4tG3s3B8WH>
-Feedback-ID: if26b431b:Fastmail
+    hrpefhvfevufffkffojghfgggtgfesthekgidtredtjeenucfhrhhomhepkhhrihhsthho
+    fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvg
+    hrnhepteffleeijefgueeilefhgeduffevgfdvveejvedukeekhfffjeevffeftdfftdef
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrih
+    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgt
+    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdr
+    nhgrmhgvpdhrtghpthhtoheplhhiuhdruggvnhhtohhnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:NnfVaOKBt7xoJf5AkgoWixXbky2Pe2oiAcqHXsuAjn1rIdM11rAoEQ>
+    <xmx:NnfVaNDUjFtrGWBz8DuLTyZTPtfrxf5q8QIgx3azqV7RTiXwlq_dlA>
+    <xmx:NnfVaLr9ehxi47tB2ZLDAYprkek8NsOAud3avBLNayBz0s9oA36z9Q>
+    <xmx:NnfVaAgunkHMSNQPuFLj9zLMWqjrOMPUUbly6RcSO6sjMAt7lWFe7w>
+    <xmx:NnfVaIBMEjibDhIWCllJslB-4j4QUYd0pNkyyqLUA9XtHrxeh6i6h2gP>
+Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Sep 2025 13:08:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Mathias Rav <m@git.strova.dk>,  Johannes Sixt <j6t@kdbg.org>,
-  git@vger.kernel.org,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] rebase -i: use same commit's message and date with f -C
-In-Reply-To: <12659f80-2934-4158-9a22-7a4c11060679@gmail.com> (Phillip Wood's
-	message of "Thu, 25 Sep 2025 11:11:56 +0100")
-References: <92d4d585-09e9-4f1d-a471-1ad6b312fa61@app.fastmail.com>
-	<xmqqldm4onma.fsf@gitster.g>
-	<0a14a93e-7da2-43e1-9d71-c58a69c7a4af@kdbg.org>
-	<7de3da11-6191-4fa3-bd0d-842dc45690e7@app.fastmail.com>
-	<12659f80-2934-4158-9a22-7a4c11060679@gmail.com>
-Date: Thu, 25 Sep 2025 10:08:52 -0700
-Message-ID: <xmqq7bxmh32z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 25 Sep 2025 13:09:09 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Denton Liu <liu.denton@gmail.com>
+Subject: [PATCH v2 3/3] format-patch: handle range-diff on notes correctly for single patches
+Date: Thu, 25 Sep 2025 19:07:36 +0200
+Message-ID: <2be637081d4.1758819879.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.51.0.311.g9b2318464ce
+In-Reply-To: <v2-cover.1758819879.git.code@khaugsbakk.name>
+References: <cover.1758574974.git.code@khaugsbakk.name> <v2-cover.1758819879.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-> Hi Mathias
->
-> On 24/09/2025 16:21, Mathias Rav wrote:
->> I have never used the "amend!" autosquash feature and I was not
->> aware of
->> it until I stepped through the code in sequencer.c to implement my
->> proposed change. I think the `git commit --amend` manual explains quite
->> nicely why you could want to keep the author of one commit and the
->> message of another.
->> Before discovering "f -C" to achieve the "fixdown" behavior, as
->> Hannes
->> describes, I used "x f" to invoke my own single-letter shell script to
->> achieve the behavior I wanted, and I guess I am fine with going back to
->> that for the cases where I want to preserve author dates (which, to be
->> fair, is often not that important to me).
->
-> I'd be happy to see a patch that implemented a new option for "fixup"
-> that copied the author. As the discussion that Oswald linked to shows
-> this is not the first time someone has wanted this functionality. The
-> issue is that we don't want to change the existing behavior, not that
-> we don't want to support this via a different option.
+(The two next paragraphs are taken from the previous commit.)
 
-Yup, thanks for stating this more clealy than I would.
+git-format-patch(1) supports Git notes by showing them beneath the
+patch/commit message, similar to git-log(1). The command also supports
+showing those same notes ref names in the range diff output.
+
+Note *the same* ref names; any Git notes options or configuration
+variables need to be handed off to the range-diff machinery. This works
+correctly in the case when the range diff is on the cover letter. But it
+does not work correctly when the output is a single patch with an
+embedded range diff.
+
+Concretely, git-format-patch(1) needs to pass `--[no-]notes` options on
+to the range-diff subprocess in `range-diff.c`. Range diffs for single-
+commit series are handled in `log-tree.c`. But `log-tree.c` had no
+access to any `log_arg` variable before we added it to `rev_info` in the
+previous commit.
+
+Use that new struct member to fix this inconsistency.
+
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
+
+Notes (series):
+    v1:
+    
+    I’ve tried to conform to 6caa96c2 (t3206: test_when_finished before
+    dirtying operations, not after, 2024-08-06) in the test here.
+
+ log-tree.c            |  3 ++-
+ t/t3206-range-diff.sh | 16 +++++++++++++++-
+ 2 files changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/log-tree.c b/log-tree.c
+index 73d21f71764..3d38c748e45 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -718,7 +718,8 @@ static void show_diff_of_diff(struct rev_info *opt)
+ 			.creation_factor = opt->creation_factor,
+ 			.dual_color = 1,
+ 			.max_memory = RANGE_DIFF_MAX_MEMORY_DEFAULT,
+-			.diffopt = &opts
++			.diffopt = &opts,
++			.log_arg = &opt->rdiff_log_arg
+ 		};
+ 
+ 		memcpy(&dq, &diff_queued_diff, sizeof(diff_queued_diff));
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index e091df6d01d..1e812df806b 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -707,7 +707,7 @@ test_expect_success 'format-patch --range-diff does not compare notes by default
+ 	! grep "note" 0000-*
+ '
+ 
+-test_expect_success 'format-patch --notes=custom --range-diff only compares custom notes' '
++test_expect_success 'format-patch --notes=custom --range-diff --cover-letter only compares custom notes' '
+ 	test_when_finished "git notes remove topic unmodified || :" &&
+ 	git notes add -m "topic note" topic &&
+ 	git notes add -m "unmodified note" unmodified &&
+@@ -721,6 +721,20 @@ test_expect_success 'format-patch --notes=custom --range-diff only compares cust
+ 	! grep "## Notes ##" 0000-*
+ '
+ 
++# --range-diff on a single commit requires --no-cover-letter
++test_expect_success 'format-patch --notes=custom --range-diff on single commit only compares custom notes' '
++	test_when_finished "git notes remove HEAD unmodified || :" &&
++	git notes add -m "topic note" HEAD &&
++	test_when_finished "git notes --ref=custom remove HEAD unmodified || :" &&
++	git notes add -m "unmodified note" unmodified &&
++	git notes --ref=custom add -m "topic note (custom)" HEAD &&
++	git notes --ref=custom add -m "unmodified note (custom)" unmodified &&
++	git format-patch --notes=custom --range-diff=$prev \
++		-1 --stdout >actual &&
++	test_grep "## Notes (custom) ##" actual &&
++	test_grep ! "## Notes ##" actual
++'
++
+ test_expect_success 'format-patch --range-diff with --no-notes' '
+ 	test_when_finished "git notes remove topic unmodified || :" &&
+ 	git notes add -m "topic note" topic &&
+-- 
+2.51.0.311.g9b2318464ce
+
