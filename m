@@ -1,71 +1,70 @@
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084CD2EE27C
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 23:29:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3AE2EFD89
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 23:29:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758842981; cv=none; b=pwc/Cxb+y5wViIdeAwumgdPU9Ied192koDxCJJ+6M+oluHD52ivq8CJzP47BDZILDSqLph6pR3R8gatIRcWPjwDocpKiuv5bC+s69gRmKRACq/C4YeVCQL38kSVK3AC4K/R2YqW/CodxZny5Hk2IbY3qzwvT0h7c/Pu13kfjRao=
+	t=1758842982; cv=none; b=ulY3ebSB2F68498SzRV37RjykV4f+990qmFEG4Csd9+cTcJhKgxfi3dO19Dyz5Py56rSCwGEavKP0hEe348ZxoFEM8/hIvRnkI2CsZEA7dqE2k8YWvws/8j91rvFGWoW4MFS4Fle4Zd5TavGyX4IvvDwFzureSf0+F9sLjIsLX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758842981; c=relaxed/simple;
-	bh=Yn9lhm7gyIARtoQ47vwLdk/4SejPG7DzAQuNSrbjW40=;
+	s=arc-20240116; t=1758842982; c=relaxed/simple;
+	bh=ZCNcEtFJK8MKMFygeuHu27hVOJJ5noJjF6IfVv69NXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DHwp8u+joBcYUzNZgJmq30lULmcoqyHBkpDdZ/3hTm+kZPEIOq0QtsYe10eS+zVw9aC0ygWYez8Uq9P8+ggV20GpvxIZxIp6JUpxGJyBPVe+BAt9RLU1K7ioFceTzAB3axIq8VVjx6Bs4l8NN6dzGIk7fJwEoelvDK8QzfAFVA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XumAhz2w; arc=none smtp.client-ip=209.85.160.45
+	 MIME-Version; b=ixFKArOF4eQErVD83SqRlFIEB6/e5dcIGpfpjjeLU+cTEX7w02hPamHcSSwtMD2iAVgEP3HMR6rrnV61xo3fq80eqW0MwS6sBtY+x4t0ruB8LaaKR6r+D7K+0/UdLZnB+gegTBDr/LOl8UnMG+6RanLXJdF3nSJ0MnorEQXE80o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KoMTMKoe; arc=none smtp.client-ip=209.85.160.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XumAhz2w"
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-35bdcaf79e7so1216589fac.0
-        for <git@vger.kernel.org>; Thu, 25 Sep 2025 16:29:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KoMTMKoe"
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-30cce8c3afaso1360627fac.1
+        for <git@vger.kernel.org>; Thu, 25 Sep 2025 16:29:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758842979; x=1759447779; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758842980; x=1759447780; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IqHOOiBm75FZe9uKk/l3sxX5+JzKX8R/KasVSiJx1d8=;
-        b=XumAhz2wDm/8YeXCQSHOw6gmp6hqHrWno4mbVv4gQ7p1DnR6/TP/tDH9YSwd+RtzWt
-         cU2n+rmk5WAC0HBupt8mrNtG8LqtkvEvnbMx36rfknOB5pu7x0LloCI7RbKdgO8XibqH
-         ER3UvD/5b50qICFgicn7NJ7uKGbS+7I1JZF5tOB/lnLOLhc9Ud/WF30N8SNJnsIJjMlx
-         uRxjpFAoorougpfa/iE6aiZ503gMVPrmLGOmSoq6UkwO4imAojd3BCUEpnLeS7IFqjQX
-         qLYFVvP8jOtv1WpyexY5n4slo6nS6gKox2hj3u9SmYOlmU/ENYCqMRKQQiowj7o24YpH
-         MirA==
+        bh=kslP/ZUNNInHYbCe/94YCGaozirRw1DzxlZgTjHUmv0=;
+        b=KoMTMKoeOqi/Hjo1Wd9f8VMUKw8Cnz6RBqOqsU2uyXBnQrgvvMoao/lt1JLtgNLZeg
+         lgqQ2h3efmcZmqTvoA1OBvKJom5SvMDjz8jD1/EH3V9zr+GvcVIbT5HMNmJnJisaL0kF
+         TMq+VWKzW9M9neVAP/1E7nrs8nI7/QVeDbSF9zWrsbAOQpmDDGp5jYPjP0q7CfIdQ9tA
+         PHxbicGQl8uxKgUlldiXBm8aPavx62ShL9zKdfiilPIMVRJP9mf4UVys4zR3iQw3wBpe
+         GGWv9vo6Xyk+FZiNx9C25u0pSlIW5ovaA0URc27YcvgZ8wiMkfMVId1eE+rMe/Xco66u
+         dA6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758842979; x=1759447779;
+        d=1e100.net; s=20230601; t=1758842980; x=1759447780;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IqHOOiBm75FZe9uKk/l3sxX5+JzKX8R/KasVSiJx1d8=;
-        b=ad21VHhp2VfWJOJ0D4mX3ldH4M8whmAxbaPd1OeVNrPsgyPdNzb8tuNApvDZD/hQyE
-         fAbLcu973U4+KhO3swswyyaxvqHRww+yj1j9MUIPtQJfcmx47m//Dgci+Ch4dXoN26pT
-         5qdF8DMHE5Igb9zQQ8Bf23z7YkTy2xMWz8N+k88F99UgEYgNAd2/fLfIC0mPmhyGu39F
-         f12jAWl2zapPwm9NdZ/FO0KyrawMIGOUpo+XOGdBfBLPedD1FFzEOZZ2CEqsiuhb6aUS
-         zKgtErmGDfmodmoyxNQYAVHU9bWssE3cjZZzKWKgC9eiY20V5t9+RPDL4eZSGhYRfrDz
-         O/aw==
-X-Gm-Message-State: AOJu0YwYQw7fCzllDThT4OV3hEFzzbsolJoorQ6L/soi7AFlptYCdnUq
-	joOOb5CCxzFmHYys2+PxYtIJ6sBK1BNuEzX/O0hXh3qTS7uBPCYzlgfhoZJAgg==
-X-Gm-Gg: ASbGncszYOyGTomT1gabGWjqtT74bHA5rIxAcy7N/RRY1+gwHYBdgTd0gSDwFlBRLd7
-	Lot5vlBNY8Uyzu5sASrrifS5wlYb/AJoel34OdU1SVSszQ9u2d8Ljm/phRGtR1zh210KbvGkrll
-	IGh2O6wKMB+3A+9FMGreNkEq65f4iJ1gO3BDoydPbsg5w9OgNE8/qmuJcBby7KjyLMMO+WRI/rs
-	kW8b0l+i1VsUlnGhqjb5rEb1oQoyMebd1d6bAolcbSAb+G42h9kSYEM9IpsI/rbVqeLRyRSmp7m
-	jwu9RYd1m8WMTBSKWQOINNzpzSAVb3mIienzaCHLVF3rBEnPqkm6AWs9ID3csr872Y1YFhjt0zY
-	nvhvH2hiwT6ZKKZn0oUy3YIR7xPNGbzFxzu8+IeszPg==
-X-Google-Smtp-Source: AGHT+IGcsLDqhxSxlQ1NfstgvCtV7X1fTtsqKV4llmow3putTTIN7EwgnTlRLWCxFMIakKVmjGQJVg==
-X-Received: by 2002:a05:6871:107:b0:331:7220:f4e7 with SMTP id 586e51a60fabf-35eea09ee77mr2652221fac.33.1758842978690;
-        Thu, 25 Sep 2025 16:29:38 -0700 (PDT)
+        bh=kslP/ZUNNInHYbCe/94YCGaozirRw1DzxlZgTjHUmv0=;
+        b=aCaY+ybK5fxz1iYH5BwZ8aA4mOKPqAw75g9yjWL37EyEPO4qgGK6PPhb1KbzpykZ9J
+         KEC+MKO7/efimfachOw+p9LATm4uX4BgUgfLXye4rNQf6E21hSmEgAq6LjmIJNJIKwE8
+         AFusx9YPmAob8sJNbEsOcWzQRVhey6/cbq1EvrCbHIZXSXtcC5xy24kxtnkdRNPsuHOM
+         qE47w6jPVMDUJMMabgDIPvDH8aj7dBTQUAlQ7eLb0wW8t6gXsVJ7HbNdGuvKm+T9s6bi
+         sf8wjGAJT7v5MP4yffDGtv51SfykxIamoTzYy85gxtMsiA5YdM4WeddKrhA2MwKcCwP/
+         /47A==
+X-Gm-Message-State: AOJu0Ywf9+23giKzh6xN4xGg2V23d9Z4q6pJeLZhRyshW09GMY6BbwGO
+	EDeQ910MPo8soFon9bCR2MXUAMw1oKLRZwAme7zwDWvFYAea+65HOGtzDQCo6w==
+X-Gm-Gg: ASbGncvk598WKZT+BjiSdPmce9BqJrv9rMwrFcdXorPovFiKdP1du+QPkew9kV2sPIa
+	bOBsEEDJZ2IS6dr/11ipu5pFfj638otfeeV5jMuEgaI0NMG+rXIZNcn+RQLjrza1SJfTJm4xKNj
+	+1bvreVu5xZ7AI61ER6PG/b2XtRZzrjOWIDyvbRourJIj+9Bx//vSpkQOjILPIqxdkqszgMktGZ
+	xe3P3yUNE3wIQWcii3/3dMYNu47bwSgOnk1qYOt8J4u4NOqBfkfovzuhYax5jecfHInD4HfNxGU
+	bi4X5vrlSf2/VzySA23JA4zlDn59c/F+nNEculYjPnUZLU7uj/6FzhF7wI/I3jYpHPpG4BPD5Wh
+	wNrq/9+BwzJsWykoHvh7fVktFCVVnCIc=
+X-Google-Smtp-Source: AGHT+IEIvR53uR3i8jBcmUoqYBGPmYcn+5vc6iBCBCRo1/ED1NjYjmG19I3Svjsq+11VCp+M9ArGEQ==
+X-Received: by 2002:a05:6870:fb88:b0:30b:a20a:8799 with SMTP id 586e51a60fabf-35ee8a3715emr2790879fac.27.1758842979707;
+        Thu, 25 Sep 2025 16:29:39 -0700 (PDT)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7a2402e5d70sm674273a34.36.2025.09.25.16.29.37
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7a2402e5d70sm674273a34.36.2025.09.25.16.29.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Sep 2025 16:29:38 -0700 (PDT)
+        Thu, 25 Sep 2025 16:29:39 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	karthik.188@gmail.com,
-	Justin Tobler <jltobler@gmail.com>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH v3 4/7] builtin/repo: introduce stats subcommand
-Date: Thu, 25 Sep 2025 18:29:25 -0500
-Message-ID: <20250925232928.3846-5-jltobler@gmail.com>
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH v3 5/7] builtin/repo: add object counts in stats output
+Date: Thu, 25 Sep 2025 18:29:26 -0500
+Message-ID: <20250925232928.3846-6-jltobler@gmail.com>
 X-Mailer: git-send-email 2.51.0.193.g4975ec3473b
 In-Reply-To: <20250925232928.3846-1-jltobler@gmail.com>
 References: <20250924212426.2930029-1-jltobler@gmail.com>
@@ -78,373 +77,273 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The shape of a repository's history can have huge impacts on the
-performance and health of the repository itself. Currently, Git lacks a
-means to surface key stats/information regarding the shape of a
-repository via a single command. Acquiring this information requires
-users to be fairly knowledgeable about the structure of a Git repository
-and how to identify the relevant data points. To fill this gap,
-supplemental tools such as git-sizer(1) have been developed.
+The amount of objects in a repository can provide insight regarding its
+shape. To surface this information, use the path-walk API to count the
+number of reachable objects in the repository by object type. All
+regular references are used to determine the reachable set of objects.
+The object counts are appended to the same table containing the
+reference information.
 
-To allow users to more readily identify potential issues for a
-repository, introduce the "stats" subcommand in git-repo(1) to output
-stats for the repository that may be of interest to users. The goal of
-this subcommand is to eventually provide similar functionality to
-git-sizer(1), but natively in Git.
-
-The initial version of this command only iterates through all references
-in the repository and tracks the count of branches, tags, remote refs,
-and other reference types. The corresponding information is displayed in
-a human-friendly table formatted in a very similar manner to
-git-sizer(1). The width of each table column is adjusted automatically
-to satisfy the requirements of the widest row contained.
-
-Subsequent commits will surface additional relevant data points to
-output.
-
-Based-on-patch-by: Derrick Stolee <stolee@gmail.com>
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- Documentation/git-repo.adoc |  10 ++
- builtin/repo.c              | 196 ++++++++++++++++++++++++++++++++++++
- t/meson.build               |   1 +
- t/t1901-repo-stats.sh       |  61 +++++++++++
- 4 files changed, 268 insertions(+)
- create mode 100755 t/t1901-repo-stats.sh
+ Documentation/git-repo.adoc |  1 +
+ builtin/repo.c              | 96 +++++++++++++++++++++++++++++++++++--
+ t/t1901-repo-stats.sh       | 51 +++++++++++++-------
+ 3 files changed, 126 insertions(+), 22 deletions(-)
 
 diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index 209afd1b61..a009bf8cf1 100644
+index a009bf8cf1..0b8d74ed3e 100644
 --- a/Documentation/git-repo.adoc
 +++ b/Documentation/git-repo.adoc
-@@ -9,6 +9,7 @@ SYNOPSIS
- --------
- [synopsis]
- git repo info [--format=(keyvalue|nul)] [-z] [<key>...]
-+git repo stats
- 
- DESCRIPTION
- -----------
-@@ -43,6 +44,15 @@ supported:
+@@ -49,6 +49,7 @@ supported:
+ 	of information are reported:
  +
- `-z` is an alias for `--format=nul`.
+ * Reference counts categorized by type
++* Reachable object counts categorized by type
  
-+`stats`::
-+	Retrieve statistics about the current repository. The following kinds
-+	of information are reported:
-++
-+* Reference counts categorized by type
-+
-++
-+The table output format may change and is not intended for machine parsing.
-+
- INFO KEYS
- ---------
- In order to obtain a set of values from `git repo info`, you should provide
+ +
+ The table output format may change and is not intended for machine parsing.
 diff --git a/builtin/repo.c b/builtin/repo.c
-index eeeab8fbd2..0b7dd636e5 100644
+index 0b7dd636e5..43cd6b1b38 100644
 --- a/builtin/repo.c
 +++ b/builtin/repo.c
-@@ -4,12 +4,15 @@
+@@ -3,9 +3,11 @@
+ #include "builtin.h"
  #include "environment.h"
  #include "parse-options.h"
++#include "path-walk.h"
  #include "quote.h"
-+#include "ref-filter.h"
+ #include "ref-filter.h"
  #include "refs.h"
++#include "revision.h"
  #include "strbuf.h"
-+#include "string-list.h"
+ #include "string-list.h"
  #include "shallow.h"
- 
- static const char *const repo_usage[] = {
- 	"git repo info [--format=(keyvalue|nul)] [-z] [<key>...]",
-+	"git repo stats",
- 	NULL
+@@ -166,6 +168,18 @@ struct ref_stats {
+ 	size_t others;
  };
  
-@@ -156,12 +159,205 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
- 	return print_fields(argc, argv, repo, format);
++struct object_stats {
++	size_t tags;
++	size_t commits;
++	size_t trees;
++	size_t blobs;
++};
++
++struct repo_stats {
++	struct ref_stats refs;
++	struct object_stats objects;
++};
++
+ struct stats_table {
+ 	struct string_list rows;
+ 
+@@ -227,8 +241,16 @@ static void stats_table_count_addf(struct stats_table *table, size_t value,
+ 	va_end(ap);
  }
  
-+struct ref_stats {
-+	size_t branches;
-+	size_t remotes;
-+	size_t tags;
-+	size_t others;
-+};
-+
-+struct stats_table {
-+	struct string_list rows;
-+
-+	size_t name_col_width;
-+	size_t value_col_width;
-+};
-+
-+/*
-+ * Holds column data that gets stored for each row.
-+ */
-+struct stats_table_entry {
-+	char *value;
-+};
-+
-+static void stats_table_vaddf(struct stats_table *table,
-+			      struct stats_table_entry *entry,
-+			      const char *format, va_list ap)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct string_list_item *item;
-+	char *formatted_name;
-+	size_t name_width;
-+
-+	strbuf_vaddf(&buf, format, ap);
-+	formatted_name = strbuf_detach(&buf, &name_width);
-+
-+	item = string_list_append_nodup(&table->rows, formatted_name);
-+	item->util = entry;
-+
-+	if (name_width > table->name_col_width)
-+		table->name_col_width = name_width;
-+	if (entry) {
-+		size_t value_width = strlen(entry->value);
-+		if (value_width > table->value_col_width)
-+			table->value_col_width = value_width;
-+	}
+-static void stats_table_setup(struct stats_table *table, struct ref_stats *refs)
++static inline size_t get_total_object_count(struct object_stats *stats)
+ {
++	return stats->tags + stats->commits + stats->trees + stats->blobs;
 +}
 +
-+static void stats_table_addf(struct stats_table *table, const char *format, ...)
++static void stats_table_setup(struct stats_table *table, struct repo_stats *stats)
 +{
-+	va_list ap;
++	struct object_stats *objects = &stats->objects;
++	struct ref_stats *refs = &stats->refs;
++	size_t object_total;
+ 	size_t ref_total;
+ 
+ 	ref_total = refs->branches + refs->remotes + refs->tags + refs->others;
+@@ -238,6 +260,15 @@ static void stats_table_setup(struct stats_table *table, struct ref_stats *refs)
+ 	stats_table_count_addf(table, refs->tags, "    * %s", _("Tags"));
+ 	stats_table_count_addf(table, refs->remotes, "    * %s", _("Remotes"));
+ 	stats_table_count_addf(table, refs->others, "    * %s", _("Others"));
 +
-+	va_start(ap, format);
-+	stats_table_vaddf(table, NULL, format, ap);
-+	va_end(ap);
-+}
-+
-+static void stats_table_count_addf(struct stats_table *table, size_t value,
-+				   const char *format, ...)
++	object_total = get_total_object_count(objects);
++	stats_table_addf(table, "");
++	stats_table_addf(table, "* %s", _("Reachable objects"));
++	stats_table_count_addf(table, object_total, "  * %s", _("Count"));
++	stats_table_count_addf(table, objects->commits, "    * %s", _("Commits"));
++	stats_table_count_addf(table, objects->trees, "    * %s", _("Trees"));
++	stats_table_count_addf(table, objects->blobs, "    * %s", _("Blobs"));
++	stats_table_count_addf(table, objects->tags, "    * %s", _("Tags"));
+ }
+ 
+ static inline size_t max_size_t(size_t a, size_t b)
+@@ -322,30 +353,87 @@ static void stats_count_references(struct ref_stats *stats, struct ref_array *re
+ 	}
+ }
+ 
++static int count_objects(const char *path UNUSED, struct oid_array *oids,
++			 enum object_type type, void *cb_data)
 +{
-+	struct stats_table_entry *entry;
-+	va_list ap;
++	struct object_stats *stats = cb_data;
 +
-+	CALLOC_ARRAY(entry, 1);
-+	entry->value = xstrfmt("%" PRIuMAX, (uintmax_t)value);
-+
-+	va_start(ap, format);
-+	stats_table_vaddf(table, entry, format, ap);
-+	va_end(ap);
-+}
-+
-+static void stats_table_setup(struct stats_table *table, struct ref_stats *refs)
-+{
-+	size_t ref_total;
-+
-+	ref_total = refs->branches + refs->remotes + refs->tags + refs->others;
-+	stats_table_addf(table, "* %s", _("References"));
-+	stats_table_count_addf(table, ref_total, "  * %s", _("Count"));
-+	stats_table_count_addf(table, refs->branches, "    * %s", _("Branches"));
-+	stats_table_count_addf(table, refs->tags, "    * %s", _("Tags"));
-+	stats_table_count_addf(table, refs->remotes, "    * %s", _("Remotes"));
-+	stats_table_count_addf(table, refs->others, "    * %s", _("Others"));
-+}
-+
-+static inline size_t max_size_t(size_t a, size_t b)
-+{
-+	return (a > b) ? a : b;
-+}
-+
-+static void stats_table_print(const struct stats_table *table)
-+{
-+	const char *name_col_title = _("Repository stats");
-+	const char *value_col_title = _("Value");
-+	size_t name_title_len = strlen(name_col_title);
-+	size_t value_title_len = strlen(value_col_title);
-+	struct string_list_item *item;
-+	int name_col_width;
-+	int value_col_width;
-+
-+	name_col_width = cast_size_t_to_int(
-+		max_size_t(table->name_col_width, name_title_len));
-+	value_col_width = cast_size_t_to_int(
-+		max_size_t(table->value_col_width, value_title_len));
-+
-+	printf("| %-*s | %-*s |\n", name_col_width, name_col_title,
-+	       value_col_width, value_col_title);
-+	printf("| ");
-+	for (int i = 0; i < name_col_width; i++)
-+		putchar('-');
-+	printf(" | ");
-+	for (int i = 0; i < value_col_width; i++)
-+		putchar('-');
-+	printf(" |\n");
-+
-+	for_each_string_list_item(item, &table->rows) {
-+		struct stats_table_entry *entry = item->util;
-+		const char *value = "";
-+
-+		if (entry) {
-+			struct stats_table_entry *entry = item->util;
-+			value = entry->value;
-+		}
-+
-+		printf("| %-*s | %*s |\n", name_col_width, item->string,
-+		       value_col_width, value);
-+	}
-+}
-+
-+static void stats_table_clear(struct stats_table *table)
-+{
-+	struct stats_table_entry *entry;
-+	struct string_list_item *item;
-+
-+	for_each_string_list_item(item, &table->rows) {
-+		entry = item->util;
-+		if (entry)
-+			free(entry->value);
++	switch (type) {
++	case OBJ_TAG:
++		stats->tags += oids->nr;
++		break;
++	case OBJ_COMMIT:
++		stats->commits += oids->nr;
++		break;
++	case OBJ_TREE:
++		stats->trees += oids->nr;
++		break;
++	case OBJ_BLOB:
++		stats->blobs += oids->nr;
++		break;
++	default:
++		BUG("invalid object type");
 +	}
 +
-+	string_list_clear(&table->rows, 1);
++	return 0;
 +}
 +
-+static void stats_count_references(struct ref_stats *stats, struct ref_array *refs)
++static void stats_count_objects(struct object_stats *stats,
++				struct ref_array *refs, struct rev_info *revs)
 +{
++	struct path_walk_info info = PATH_WALK_INFO_INIT;
++
++	info.revs = revs;
++	info.path_fn = count_objects;
++	info.path_fn_data = stats;
++
 +	for (int i = 0; i < refs->nr; i++) {
 +		struct ref_array_item *ref = refs->items[i];
 +
 +		switch (ref->kind) {
 +		case FILTER_REFS_BRANCHES:
-+			stats->branches++;
-+			break;
-+		case FILTER_REFS_REMOTES:
-+			stats->remotes++;
-+			break;
 +		case FILTER_REFS_TAGS:
-+			stats->tags++;
-+			break;
++		case FILTER_REFS_REMOTES:
 +		case FILTER_REFS_OTHERS:
-+			stats->others++;
++			add_pending_oid(revs, NULL, &ref->objectname, 0);
 +			break;
 +		default:
 +			BUG("unexpected reference type");
 +		}
 +	}
++
++	walk_objects_by_path(&info);
++	path_walk_info_clear(&info);
 +}
 +
-+static int cmd_repo_stats(int argc, const char **argv, const char *prefix,
-+			  struct repository *repo UNUSED)
-+{
-+	struct ref_filter filter = REF_FILTER_INIT;
-+	struct stats_table table = {
-+		.rows = STRING_LIST_INIT_DUP,
-+	};
-+	struct ref_stats stats = { 0 };
-+	struct ref_array refs = { 0 };
-+	struct option options[] = { 0 };
-+
-+	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
-+	if (argc)
-+		usage(_("too many arguments"));
-+
-+	if (filter_refs(&refs, &filter, FILTER_REFS_REGULAR))
-+		die(_("unable to filter refs"));
-+
-+	stats_count_references(&stats, &refs);
-+
-+	stats_table_setup(&table, &stats);
-+	stats_table_print(&table);
-+
-+	stats_table_clear(&table);
-+	ref_array_clear(&refs);
-+
-+	return 0;
-+}
-+
- int cmd_repo(int argc, const char **argv, const char *prefix,
- 	     struct repository *repo)
+ static int cmd_repo_stats(int argc, const char **argv, const char *prefix,
+-			  struct repository *repo UNUSED)
++			  struct repository *repo)
  {
- 	parse_opt_subcommand_fn *fn = NULL;
- 	struct option options[] = {
- 		OPT_SUBCOMMAND("info", &fn, cmd_repo_info),
-+		OPT_SUBCOMMAND("stats", &fn, cmd_repo_stats),
- 		OPT_END()
+ 	struct ref_filter filter = REF_FILTER_INIT;
+ 	struct stats_table table = {
+ 		.rows = STRING_LIST_INIT_DUP,
  	};
+-	struct ref_stats stats = { 0 };
++	struct repo_stats stats = { 0 };
+ 	struct ref_array refs = { 0 };
++	struct rev_info revs;
+ 	struct option options[] = { 0 };
  
-diff --git a/t/meson.build b/t/meson.build
-index 7974795fe4..071d4a5112 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -236,6 +236,7 @@ integration_tests = [
-   't1701-racy-split-index.sh',
-   't1800-hook.sh',
-   't1900-repo.sh',
-+  't1901-repo-stats.sh',
-   't2000-conflict-when-checking-files-out.sh',
-   't2002-checkout-cache-u.sh',
-   't2003-checkout-cache-mkdir.sh',
+ 	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
+ 	if (argc)
+ 		usage(_("too many arguments"));
+ 
++	repo_init_revisions(repo, &revs, prefix);
+ 	if (filter_refs(&refs, &filter, FILTER_REFS_REGULAR))
+ 		die(_("unable to filter refs"));
+ 
+-	stats_count_references(&stats, &refs);
++	stats_count_references(&stats.refs, &refs);
++	stats_count_objects(&stats.objects, &refs, &revs);
+ 
+ 	stats_table_setup(&table, &stats);
+ 	stats_table_print(&table);
+ 
+ 	stats_table_clear(&table);
++	release_revisions(&revs);
+ 	ref_array_clear(&refs);
+ 
+ 	return 0;
 diff --git a/t/t1901-repo-stats.sh b/t/t1901-repo-stats.sh
-new file mode 100755
-index 0000000000..535ac511dd
---- /dev/null
+index 535ac511dd..315b9e1767 100755
+--- a/t/t1901-repo-stats.sh
 +++ b/t/t1901-repo-stats.sh
-@@ -0,0 +1,61 @@
-+#!/bin/sh
-+
-+test_description='test git repo stats'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'empty repository' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		cat >expect <<-\EOF &&
-+		| Repository stats | Value |
-+		| ---------------- | ----- |
-+		| * References     |       |
-+		|   * Count        |     0 |
-+		|     * Branches   |     0 |
-+		|     * Tags       |     0 |
-+		|     * Remotes    |     0 |
-+		|     * Others     |     0 |
-+		EOF
-+
-+		git repo stats >out 2>err &&
-+
-+		test_cmp expect out &&
-+		test_line_count = 0 err
-+	)
-+'
-+
-+test_expect_success 'repository with references' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		git commit --allow-empty -m init &&
-+		git tag -a foo -m bar &&
-+
-+		oid="$(git rev-parse HEAD)" &&
-+		git update-ref refs/remotes/origin/foo "$oid" &&
-+
-+		git notes add -m foo &&
-+
-+		cat >expect <<-\EOF &&
-+		| Repository stats | Value |
-+		| ---------------- | ----- |
-+		| * References     |       |
-+		|   * Count        |     4 |
-+		|     * Branches   |     1 |
-+		|     * Tags       |     1 |
-+		|     * Remotes    |     1 |
-+		|     * Others     |     1 |
-+		EOF
-+
-+		git repo stats >out 2>err &&
-+
-+		test_cmp expect out &&
-+		test_line_count = 0 err
-+	)
-+'
-+
-+test_done
+@@ -10,14 +10,21 @@ test_expect_success 'empty repository' '
+ 	(
+ 		cd repo &&
+ 		cat >expect <<-\EOF &&
+-		| Repository stats | Value |
+-		| ---------------- | ----- |
+-		| * References     |       |
+-		|   * Count        |     0 |
+-		|     * Branches   |     0 |
+-		|     * Tags       |     0 |
+-		|     * Remotes    |     0 |
+-		|     * Others     |     0 |
++		| Repository stats    | Value |
++		| ------------------- | ----- |
++		| * References        |       |
++		|   * Count           |     0 |
++		|     * Branches      |     0 |
++		|     * Tags          |     0 |
++		|     * Remotes       |     0 |
++		|     * Others        |     0 |
++		|                     |       |
++		| * Reachable objects |       |
++		|   * Count           |     0 |
++		|     * Commits       |     0 |
++		|     * Trees         |     0 |
++		|     * Blobs         |     0 |
++		|     * Tags          |     0 |
+ 		EOF
+ 
+ 		git repo stats >out 2>err &&
+@@ -27,28 +34,36 @@ test_expect_success 'empty repository' '
+ 	)
+ '
+ 
+-test_expect_success 'repository with references' '
++test_expect_success 'repository with references and objects' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
+ 	(
+ 		cd repo &&
+-		git commit --allow-empty -m init &&
++		test_commit_bulk 42 &&
+ 		git tag -a foo -m bar &&
+ 
+ 		oid="$(git rev-parse HEAD)" &&
+ 		git update-ref refs/remotes/origin/foo "$oid" &&
+ 
++		# Also creates a commit, tree, and blob.
+ 		git notes add -m foo &&
+ 
+ 		cat >expect <<-\EOF &&
+-		| Repository stats | Value |
+-		| ---------------- | ----- |
+-		| * References     |       |
+-		|   * Count        |     4 |
+-		|     * Branches   |     1 |
+-		|     * Tags       |     1 |
+-		|     * Remotes    |     1 |
+-		|     * Others     |     1 |
++		| Repository stats    | Value |
++		| ------------------- | ----- |
++		| * References        |       |
++		|   * Count           |     4 |
++		|     * Branches      |     1 |
++		|     * Tags          |     1 |
++		|     * Remotes       |     1 |
++		|     * Others        |     1 |
++		|                     |       |
++		| * Reachable objects |       |
++		|   * Count           |   130 |
++		|     * Commits       |    43 |
++		|     * Trees         |    43 |
++		|     * Blobs         |    43 |
++		|     * Tags          |     1 |
+ 		EOF
+ 
+ 		git repo stats >out 2>err &&
 -- 
 2.51.0.193.g4975ec3473b
 
