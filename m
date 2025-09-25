@@ -1,135 +1,84 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEA2A944
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 18:43:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4FEA944
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 18:59:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758825832; cv=none; b=Sj54r2k+YXpB/14B0uqNpu5skSx30oqehdFapmC+C4QAH+XfJNtxxxDHku+UIZk6BjbniTeb4NoCOLVA/H+odvWsDfAznuMeI1Kt3Llza1aBULQAaQgo8wbmoD5rOUJVVMtqfvgZuhQ+YVmNuzUOKY1/4F4EsZDFgPqLeASXn8A=
+	t=1758826748; cv=none; b=FZeEt+MQ00acPB1o72BZP5BRU/lJUoU+94QojG95yzmip/Y1MEEOLLk7i4XSV89I3XweEMhc0WtB3i0FHopVB8LWzjvtrlTLtuhP+SDB2FesS7OclPeotKN0OSFNwzuwrnkonXZQO9HdsbgRTWi/ExLKQwBvgNa7Sz9Qr0lntmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758825832; c=relaxed/simple;
-	bh=fWZst0Xepwn7io8gMOIUwnLoC6Pk62tcKPG25JiwrQE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ojQGjWaLT7UKy4Osnq3I/Jvzwtm7VsnmjWfLW6HMv2RHDBOMv8As95C//+PQH9UnPGFWPQO5fRX5cZqBHm2JkRCY7sxPLIAoadL/hRI7PaKHLyjUjx+ZJDNfhHNAkLLFRF9n7HgAJbJJsxOI4mjRZ92EluO6wt7yyrcSFLUpkSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ykH6teVR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hn0VzXOI; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758826748; c=relaxed/simple;
+	bh=PvTw+3Os1Fsap0zz4aaGLlg3qB66Y2ry9bPHlVSJIsg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=o1Yr3vGXPZG/vR/JvQ6dh9In1MpQEQ+E5kxYOkdaFWqw5SHoU4bXjkuSBpon1pMOIWZdXefmhQb2KQ9qUNqvHI6YU/Y44DuHXglzVdewpflPSmnZhpPEPrtFdo8v32zlzFwyqeKbRUL6nuQckBlnSdsSfXdOC9H1Zuzxe92XPsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TA6/MLSt; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ykH6teVR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hn0VzXOI"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 700D4EC01CE;
-	Thu, 25 Sep 2025 14:43:49 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Thu, 25 Sep 2025 14:43:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758825829; x=1758912229; bh=e5b+R4OrOL
-	uTzm8gSZb71Re4Tk4nDVAZSJfpbIQxTrM=; b=ykH6teVROnBgMmV75mg7pBNVQq
-	JQYXZ7zf9v6Ki/+aHPufa8jM+biVlo6Lt/D4gQhAOYQFIa650yfeQxqbMcuKzxtO
-	pEhrJ56jYXPMDnUaAgCEM9IA/DauCqsIT71EPDXS0Vv+TeBpm2bnY2xAzrKLKliZ
-	3/zbeJUc7T/nB8QZRgdtIVdZKL/xtZEOAirOS2WyMDfS3Z9lxTXbit+ES/5nnGtO
-	B4lqdGlmL2KpN93cl+f3w717ve4G7e7Wwrc87ruhN/euKzCJEJqwwmvQC+Rtmr7G
-	WuYSHqettJN7jQwDMlXK6o3xToxrMvsgU9LJmyhObiTYDihtNOzWzRS1rPhw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758825829; x=1758912229; bh=e5b+R4OrOLuTzm8gSZb71Re4Tk4nDVAZSJf
-	pbIQxTrM=; b=Hn0VzXOIsXUpACwHKSXY4Y1MIRZlVHYhVju2EUGQ1DI/BAQpMPM
-	8jInx2vDdEeNzPiiNtbbAlwue5DeF7yRPoqCE4EjqUcEMNTf73NvarPkK5oneKC7
-	EZZo8D15ubgRu5Nye5LhI3KoXLzhlNs4Mat+kdf9JdTymibu47eIxykEH2k/SFEa
-	2y8rG3eJANZOW8bqZWepYksRofz9jrZ2LCPgUSvU8FGEdo+u0A9x7F3rFfdJKOJf
-	CSzg6UJo4x2GVOZVsRpSBuPiU5QsG50iDtFK0xyh51e6xiCnsc5Rmvt5Q4C+u9KH
-	vqNBzLfDDW9eXM/E2ZorNqOf0ayO05dgzzg==
-X-ME-Sender: <xms:ZY3VaCUjOC7En4UebEoHJcNRsTHw_NsQROaPPkifewuX8L64BQUTtQ>
-    <xme:ZY3VaHCPWeIAjx6i4bLemfmkGx9QHGdBktvA6aA4r8zJmA20S95YF1oJKifAj5BkX
-    kiiwTy8mFJzinTY8MRz4RY24v5Q2Vj96ZQKV9RoAygTPNprnXNkuA>
-X-ME-Received: <xmr:ZY3VaG0iLhb5nvdKIiTOrasxV0IZGXp5RXRRn1-e01RhE5TaA9Qe6Eipc6GvS8-Ukv8-LnE6DO2XOVgz71u5U5x4PkE8tiMv-Qs3>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeijedvgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprh
-    gtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvvghtshhonhhifedtudej
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ZY3VaJ1lhI1IOY_nJ_9KTCWYuocuuDQpCHugMs43-DfADrc-6XC3sA>
-    <xmx:ZY3VaLBwlpavIKByGgvxCzS5UbciitCSbIAr4zrSFqIVSC0RGh7AGw>
-    <xmx:ZY3VaI6RlNdPwDsGgU80pWyvx9S2uU8VbPl8sGxj70Deqi3DsrEe0A>
-    <xmx:ZY3VaMKRvZba37_Igtge6iMVBVFic-Jq8w46w_pEDNPoqvfZnHjhzA>
-    <xmx:ZY3VaN4gldsUwa-iI-eZoxHGYJW8K0lTqWy28wtt41_XPNkJN-TMcn8p>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Sep 2025 14:43:48 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  Meet Soni <meetsoni3017@gmail.com>,
-  git@vger.kernel.org,  shejialuo@gmail.com
-Subject: Re: [GSoC][PATCH] builtin/refs: add 'get' subcommand
-In-Reply-To: <CALnO6CD0fCF15Vdh7_AtuWiKeXUFbU_kqV=+wAMkmABzchV=Tw@mail.gmail.com>
-	(D. Ben Knoble's message of "Thu, 25 Sep 2025 14:08:11 -0400")
-References: <aNOQhncjwYCwCaZ3@pks.im>
-	<4FEB2B85-FC32-4076-9DA6-F47AAB096CB0@gmail.com>
-	<xmqq7bxnn5cj.fsf@gitster.g> <aNTgRGeaPajVz1dv@pks.im>
-	<CALnO6CD0fCF15Vdh7_AtuWiKeXUFbU_kqV=+wAMkmABzchV=Tw@mail.gmail.com>
-Date: Thu, 25 Sep 2025 11:43:47 -0700
-Message-ID: <xmqqtt0qfk4c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TA6/MLSt"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-62fca01f0d9so2548295a12.3
+        for <git@vger.kernel.org>; Thu, 25 Sep 2025 11:59:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758826745; x=1759431545; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PvTw+3Os1Fsap0zz4aaGLlg3qB66Y2ry9bPHlVSJIsg=;
+        b=TA6/MLStC868lsOQLDhI0uT0bLLn3jhrE1hTKHy9+ubotQXNVMgchu8S0IpXHCmeDu
+         yPGI0wNEKsh0qrGHKcjaXCc866FCb5IiQFWtYLyhkeI419FJzgSPKfbYYe/RPINOPwGc
+         aXqDhY+ySOA3nqrhcQv7l3yzYWX9aXSh+7cwr2xmEhg42+mLgRjJPGppxfSQuo0A96t6
+         OhLAs/Bxb6UVnjtqEQEZJUdA6+IMwsL1j0KO9g4MD45zzG2EGAUlx0X6f9dHVpzju3sF
+         EtdTmyhEDe/dDt/F0by7lqAVDJW+/besXs3QeATVl4HHTAvxcY5AogvlxrRGhHWDZfI7
+         Jk9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758826745; x=1759431545;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PvTw+3Os1Fsap0zz4aaGLlg3qB66Y2ry9bPHlVSJIsg=;
+        b=u9V0mc8XT+oNxuYE/yQqj2rvrN1J00KL8e6AyF8ahvwlROuzoWonEVgZG1Qh4YNlgu
+         bSmu/k4Zaqqj05yw3jr7DpSt61kHEy3NthhNBHGqUZlu1RCA0wEW1LgzF76ml0B+aHpf
+         QmQa2guftij1NUlZ9PBs7+fdWGqxqr2+xvzLtWmb1mGxbe+MvSF9HiGapfgjOX1sZFRI
+         M3dkfMkHTKWsQ2V6qz4LSilssLOPNWGwW+2hpOpczsXl2KlfIHDjcgzsiOj0U8buKCS8
+         c3nEtokyfCxURjtn0hcy6w+2sXa3LcBF5KrptGcIWkN4bBvZUQ9eJL4VOUtkRvrSgz9U
+         uIJg==
+X-Gm-Message-State: AOJu0YxiKEoV8eGOh9XPyOcJnVrGNOjcBccukEYbIH4zIOxoTCaj5xee
+	iAPWtPzJzT5RLpTBMj16/c7sKf/yhK6w+A7/xaKpY0umfBeOZ6vOliqEYFzpPmb8SIc3P6Cz0ux
+	9hfNlS1l3DI6OD8iIL0+1ZZBbDsOLW+Q=
+X-Gm-Gg: ASbGncvLhy8IVIFmEKpCVs/tqRN4ANeqyQVpG4+t54yj7LzA19G4LCNEOOJL38gWp+E
+	lmZ4uylZuOZmijYYiQCQVcgSmz9ClyJvn3a76/J+9v1Nfd6yCYJsVdMYYG/aCz7gSgKCL5EMyZ4
+	OAtVTKikouHCBoKmxYbNnITAgFKg6lrgswFmoMyV1dzZ6xQm2qOUp3XUs+7cQW/c2JWTcK94TUI
+	Xu/SqdIG6JaFTexSfSCwZlTZESEq7HK/2qcLcfuHri20WnshlO5
+X-Google-Smtp-Source: AGHT+IFVytCVQW53ELvZ7aGzeYHmHw/0zIiaqmQM/yQYYo1QSSE2pVKot9G08YumILCoMOgqxnr1sDIDK1PRqaTLnJ4=
+X-Received: by 2002:a17:907:86a4:b0:b04:706a:bcfc with SMTP id
+ a640c23a62f3a-b34ba93ca7fmr513852566b.33.1758826744887; Thu, 25 Sep 2025
+ 11:59:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com> <20250925125352.1728840-5-adrian.ratiu@collabora.com>
+In-Reply-To: <20250925125352.1728840-5-adrian.ratiu@collabora.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Thu, 25 Sep 2025 14:58:53 -0400
+X-Gm-Features: AS18NWABrYg_21k_fKatbVSrgpe2Olko3LxqckbvzlChLkOzuctsKozSixWrNvo
+Message-ID: <CALnO6CB0786UDZ_P7WHEETNj5YV0NigEjeOa2BSXvJzt6X4t0A@mail.gmail.com>
+Subject: Re: [PATCH 04/10] transport: convert pre-push hook to hook.h
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, 
+	Rodrigo Damazio Bovendorp <rdamazio@google.com>, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
+	Josh Steadmon <steadmon@google.com>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
-
->> I don't quite think so. The problem is that we have so many different
->> tools that relate to refs, and you have to remember all of them:
-
-Yup, but ...
-
->>   - `git show-refs --verify` to read a single reference, unless it's a
->>     symbolic reference.
->>
->>   - `git symbolic-ref` to read symbolic refs.
->>
->>   - `git show-refs --exists` to check a reference for existence.
->>
->>   - `git show-ref` and `git for-each-ref` to list references.
->>
->>   - `git pack-refs` to optimize references.
->>
->>   - `git update-refs` to update references`
->>
->> I'd claim that this is quite hard to remember. So...
+On Thu, Sep 25, 2025 at 8:54=E2=80=AFAM Adrian Ratiu <adrian.ratiu@collabor=
+a.com> wrote:
 >
-> Agreed! To be clear: me asking questions should be taken as support
-> for this exercise :)
+> From: Emily Shaffer <emilyshaffer@google.com>
+>
+> Move the pre-push hook away from run-command.h to and over to
+> the new hook.h library.
 
-... the same thing can be said about subcommands of "git refs", all
-of which you have to remember.  I am not sure if this "everything
-under "git refs" really makes much difference.
-
->> That's also where the "git refs get" proposal comes from. Sure, you can
->> use `git show-refs --verify`, potentially with a `--no-dereference` flag
->> if you want to read normal refs. But I would claim that this is almost
->> impossible to discover without searching through our manpages.
-
-So?  That still does not indicate adding yet another command to do
-it is the right solution to the discover-ability problem.  Instead
-of shifting and moving things around, reimplementing things to risk
-introducing new bugs, wouldn't it be more productive to spend effort
-on improving the documentation and possibly filling the gaps of
-features?
-
-Thanks.
+Perhaps s/to and// ?
