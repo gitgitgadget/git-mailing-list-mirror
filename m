@@ -1,129 +1,126 @@
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dcvr.yhbt.net (public-inbox.org [173.255.242.215])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C816828E9
-	for <git@vger.kernel.org>; Wed, 24 Sep 2025 22:46:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86723C01
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 01:16:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758754009; cv=none; b=YYa0HrXwVU/Bx8V1rGNW8/NZ/THLjHb4xwuqvQJ4ocC6vJrNRNLAblgLJXRaOgB4Dd9YxU65M7OFmytJr4fwH3wILDZyNEh1qiDzi+rVCgSF5LuMYuq26Dz8nqCYih7EVKxKUkq6mwzpxphou4658a6ahYwnyYjkTM4BnxHvXEE=
+	t=1758763002; cv=none; b=cZwPsV7jzWQaSX7nDBzapevWx8LTsCZbvA/7x/8MiMXpgXWlnmHoII1UFGJGyxef/iDPSJL7Xi5IpJCZ507UIGYFRrmEx1nM1B7FzqrhVBHnxeuljuXiuNz8D1cBRLxHPrCs56kQ8vGuVWmntOtC2r0qhax4Y15e4wVYkvRPv84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758754009; c=relaxed/simple;
-	bh=UWoqdnEzBF62IAaXlufwB0dqeaH7abVyVBx8dF3QAMg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GUiFZpF26fFGWfRoH3fSbGUB0RlJYwKC1NPamSvbQER5+juHreDiil7v+pqAdGQ6bePi4/nMhzRVDkHMi5i3MxANPhAXaEu61Ng2hqU1RVYEG41KquC+mEVAjWRZJgZlhJ0DIPoSgoeGfeHuVW4eVv5WPEGD/vzfpamWcfVAYPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cmZstayZ; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758763002; c=relaxed/simple;
+	bh=b/FbCFPQh3S77derjQfi+kHPnHQcdnNMRuJxdMsuknk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UGGi3o05WYoZUNLl8A21AmbqUJgUr3OJXh76CX8ZokHgeM4FLotUtQStMZedRGQDYa9GYv6Foq7Yrcr0Q0hWATNO9O1JSQxRhDWK2HBFyCwLcfAL9d+jZlLc0f+SSzOCLA0jPOTUSOTAjhgESeXPH3dw2TiCVdcVg/pSu+3mjMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=5m56zD+Z; arc=none smtp.client-ip=173.255.242.215
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cmZstayZ"
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-3682ac7f33fso3217651fa.0
-        for <git@vger.kernel.org>; Wed, 24 Sep 2025 15:46:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758754006; x=1759358806; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zZBNak23Po/tejGhqC9OXeL3h2/FGXTEqiAFvJekIjc=;
-        b=cmZstayZ0hmG57q8gQ9gSmjjr6LWVSp29kTxI5DhAyntMAzBCaVBeKLbAoYOFR5dyt
-         7Wy0+s5Z2fcfoMSAU1vNaaZGIbyp8DUOz5Rld1bv3UdPJnuNWfTozEnqc0S3nbpO6GuP
-         hhpbns0e44RGWXIPsaSTPEOsUyt/F2cjKE+UNnR4RHcNPfirL9LKZU0vVJkjvsvyY5va
-         mWyCQQ6HOjQHZwF95FA7NBpHaw3Ubetq+s0c1UuzF15sJg27QMbExABxDmY8BLNoR7E9
-         89hCWB7YgS7SbkfreGcHlSiGKje4e57xk1uACSJ0Gdyd+sWa+LAo7+Jg1u0h8ARwJrHH
-         HHRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758754006; x=1759358806;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zZBNak23Po/tejGhqC9OXeL3h2/FGXTEqiAFvJekIjc=;
-        b=ryJLq/746IXb/mViKApZm3i3TglcddVekisw59wkVCEnpU+e3sfpcpPIKtl2DW2Oei
-         ZWGb2fORPp2UjKFNQB2ANEfn0qll8g8LGpwfKF+27gQ6EVCGJ+qovJ8JU4CrDblRsw7F
-         WsnTC4smatmSas6YK2PDIyBQuxeL2MMwjc3ICbqXaZp+ejTnd8FbV8bI29NEvNvsKxuX
-         195RwilL9yD7dk9WwnqMraJ2cm7EbFm7DGwg8wUzuqaIZsKx8whaZPPmSGOuYkmtLUqd
-         iKlNKRg0uoufvCBXlYBo35OApIkNp1m94689ZyP5JyLaIxPGub5f/VrvWbgT/h4KEqyb
-         j1wA==
-X-Forwarded-Encrypted: i=1; AJvYcCWUyGine1vt64Uu9cUxqNG9F//abax9xk7GRB3cNuzv6MJSI/DCzIRQ15Lnrw3ZXHbjc90=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzyeLMPx+FqD/kEt0B3L02cpgUyMb0UbV2GQSNvfyVjd8EN3ZbN
-	tpvSRs038oCDJSOmA/Fycw3Y39ULc6o2XUgoi1Lm3DtYMZmEwNmmaC1uiAjjS9628jDievOv2pU
-	zSvKLeKHAw0wYcd6WJj66KizlX/aQ1MWXhfHHzjOmlg==
-X-Gm-Gg: ASbGnctrGoYPoF9097iuPEipIFgTtWmbIIftmYbke7s3veZ0eJzatqF3hdaSDN59Oen
-	xvdAESYXN4pGkRMX1eoBEYUXim1ZC5Mffs4z88vVDM31fd78WKGXf7FtQiBT+JWR5hIRp2iwHuJ
-	ZD/Dy0/MUmM7qYNbZqRsVNAjcIM7of7kBf+l705Lphk2fn4okm8f28pzlyYtDhAE/ynucIP1Hpj
-	SMOKUVl
-X-Google-Smtp-Source: AGHT+IHAaVdvbghexyQzUU26H4iLAsON7M4orW1GwfUZl464ycTmHCCsMrcngNHsMRUULgBogBAizdJuQklmlkq1z80=
-X-Received: by 2002:a05:651c:2551:20b0:36c:983e:479c with SMTP id
- 38308e7fff4ca-36fb318e7f1mr1000531fa.20.1758754005601; Wed, 24 Sep 2025
- 15:46:45 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="5m56zD+Z"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
+	s=selector1; t=1758762643;
+	bh=b/FbCFPQh3S77derjQfi+kHPnHQcdnNMRuJxdMsuknk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=5m56zD+ZLRKQhgfVH5yoKoderlCHy4WtrE61UuRkj0qMiSQzj5et7gQ/sifvTVBYD
+	 ips3gt/EYhnAK5tPlpHe2nSYFvWa2IGwPSN0LWrhl0M94veb3CfSsEvQVTuyDvUz4P
+	 9ELtGrSkyWsadBn85FHVtFTH/n3kFEwRZEbTbCKA=
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id C47261F47D;
+	Thu, 25 Sep 2025 01:10:43 +0000 (UTC)
+Date: Thu, 25 Sep 2025 01:10:43 +0000
+From: Eric Wong <e@80x24.org>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: what's missing from newer C? [was: [PATCH v5 0/9] Introduce Rust
+ ....]
+Message-ID: <20250925011043.M401827@dcvr>
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
+ <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2048.v4.git.git.1758570701.gitgitgadget@gmail.com>
- <pull.2048.v5.git.git.1758662670.gitgitgadget@gmail.com> <7b0856108a29f42e5a4d3faf7489d5522b683f71.1758662670.git.gitgitgadget@gmail.com>
- <0bb4f30b-6737-43a2-9aeb-3903c0dc5ce6@gmail.com> <CAH=ZcbCf7bUTL=BwCD8B6-AVHZg+K3JafvksLQWUx2D-XR58wA@mail.gmail.com>
- <xmqqqzvvn9tq.fsf@gitster.g> <CAH=ZcbAcvoXJYPHE=mcZSqPLuUPxKcSs-vd307X7uXi+aG3evw@mail.gmail.com>
- <xmqqikh7k05r.fsf@gitster.g>
-In-Reply-To: <xmqqikh7k05r.fsf@gitster.g>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Wed, 24 Sep 2025 16:46:34 -0600
-X-Gm-Features: AS18NWA5KJCjp3pQkZbG8y3_Aa-9KiKmOjHkB-4iXDdXlZj9MXFFwq0SY9sEreI
-Message-ID: <CAH=ZcbAm8++qGNX883epk0h3NA-Z=8+RX1bDJeTe=n2jjSsdmg@mail.gmail.com>
-Subject: Re: [PATCH v5 10/13] xdiff: delete rchg aliasing
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, 
-	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Elijah Newren <newren@gmail.com>, Ben Knoble <ben.knoble@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
 
-On Wed, Sep 24, 2025 at 3:31=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Ezekiel Newren <ezekielnewren@gmail.com> writes:
->
-> > I have a question for everyone: Does preparing C code to be translated
-> > into Rust count as a valid reason for changing it? Provided that there
-> > is no violation of the Git style (or very small in some cases).
-> >
-> > If my intent was to keep this as C code forever I'd agree, but...
->
-> You'd agree that "I am preparing this for eventual rewrite" would be
-> a valid reason?  Or you are agreeing with something else?
+Patrick Steinhardt <ps@pks.im> wrote:
+> this small patch series introduces Rust into the core of Git. This patch
+> series is designed as a test balloon, similar to how we introduced test
+> balloons for C99 features in the past. The goal is threefold:
 
-I'd agree that my reasons for making this change are insufficient. I
-think usage tracking tools _is_ a weak argument, but perhaps not quite
-as weak as what you're thinking. For example, when I renamed the rchg
-field to changed, it was as simple as right-clicking the field,
-choosing Rename, typing 'changed', and letting the IDE update every
-use. Patch 11/13, "xdiff: rename rchg -> changed in xdfile_t", was
-generated directly from that one action. That patch was clean because
-I had already gone through and removed all the aliases of that field.
+>   - Give distributors time to ease into the new toolchain requirements.
+>     Introducing Rust is impossible for some platforms and hard for
+>     others.
+> 
+>   - Announce that Git 3.0 will make Rust a mandatory part of our build
+>     infrastructure.
 
-> > My
-> > other reason is that it more closely follows Rust paradigms. Creating
-> > multiple pointers to the same memory in Rust subverts the borrow
-> > checker's ability to keep track of who owns the memory.
->
-> Sure.  But looking at the use of rchg[12] in xdl_build_script(), if
-> they were "const char *", combined with the fact that they are local
-> and their addresses are never taken (to be leaked to our callers),
-> you wouldn't have much trouble with the current code, or would you
-> still have issues?
+Newer (and perhaps experimental) C has some safety and ergonomic
+features which Rust advocates might be overlooking:
 
-For xdl_build_script() specifically it would work just fine keeping
-the local variable aliasing in. I think this is another case of
-personal preference vs established style. Which path would you prefer
-that I take?
+1. C23 has stdckdint.h for checked arithmetic to prevent overflows
 
-1. Drop this commit and remember to refactor rchg1, rchg2 to changed1,
-and changed2.
-2. Keep this commit with reasons like this:
-  * Refactor churn: Later commits will refactor rchg.
-  * No additional meaning: The local variables express the same
-meaning as the struct field itself. Also, the conditional and the
-inner loop is easy enough to follow without using the local aliases to
-make the code shorter.
+2. __counted_by__ attribute in clang 18 and gcc 15 for
+   guarding against buffer overflows:
+   https://people.kernel.org/gustavoars/how-to-use-the-new-counted_by-attribute-in-c-and-linux
+   It's easy to fall back to disabling it for unsupported compilers.
 
-My preference is number 2.
+3. __cleanup__ attribute is supported by TinyCC, gcc, and clang
+   for many years (even decades), now.  Auto cleanup makes managing
+   locks for parallelism much easier along with normal resource
+   management ergonomic improvement.  __cleanup__ should be trivial
+   for other compiler maintainers to add (even TinyCC supports it)
+
+4. Userspace RCU provides concurrent data structures even w/o
+   RCU (and AFAIK ConcurrencyKit, too, but I've never used CK)
+
+5. compilers check format strings nowadays (but I dislike format
+   strings for performance reasons unless using qrintf)
+
+6. regexps (POSIX ERE or PCRE2) are already used by git and can
+   be used more extensively to make safer parsers.  There's also
+   things like wuffs and re2c to generate C (I've yet to try
+   either).
+
+We also have Valgrind, ASAN, TSAN, etc...
+
+__cleanup__ and __counted_by__ are the biggest deals to me and I
+hope they'll be standardized soon.  The rest of the other stuff
+is pretty well-known at this point...
+
+
+What else is missing from C?
+
+
+FWIW, I detest hacking in verbose AOT languages in general and
+don't write a lot of C as a result.  However, I've spent a
+large part of this century fixing C code written by others for
+the usual memory leaks, memory errors, races, overflows, etc.
+
+I'm not particularly a fan of the C code in git for a variety
+of reasons but have sought to improve it here and there
+(container_of, list.h, etc.)
+
+Building git nowadays is painful for me due to the (lack of)
+speed from lld/gold/mold on my ancient hardware.  Rust's
+famously slow compilation speeds would mean only developers
+willing to work for and/or promote $MEGACORP interests would be
+able to afford to hack on code.
+
+Thanks for reading.
