@@ -1,145 +1,129 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627072FB985
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 11:44:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53ED21DF265
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 12:46:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758800676; cv=none; b=apRLzkqnVHWAUiPMtxC6AOeZb0EcZfBiyTbQj3gWBCCsuTmPrQJuGtzSHlauZEkVppMY3acRQoaiRb8VZe60SVb8Ay9HaACkNb8DTKyfh3JZa2flEivGxk1MmOUJZ7kpc/vSh6m+/4wOJQy3USY/xkyc4Y12DwBpoTPyjUiNQeg=
+	t=1758804368; cv=none; b=kIJb/ZOg9t/1qjv6e8e+nOGNsWtuS+SiBkF7np/SsX5AAlVb/25gn58DFCgP1aiSLbn4LXe8hrJjvCl/b3/aLOs/i9M848XONJOxLz/RSOGlo8QCgTML4pCX8D419BKow5zCzcpIgiCYYBrsQhf7HG+w0WqWhpbd5GvTF0jz554=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758800676; c=relaxed/simple;
-	bh=Vm/rVxpmy0cmZ7gmBDVeBfsVMEqjU7TGas2EzOtC+qs=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=uuNyqOb90eHEZWArxXC5aUdPrU1Fn9Os7Jmg1WTvkbK7pJHbReV83fP09grhbiA6uhd8LAJ0wI/nSkFN//f0MH6K3PRqTqfkvuiTPqwUIOvTXHYtTZC2PwMYn/ByueZF60bSzYkcn5tD99S818vFEDy4q20J8MRYvn/NHeQ7z04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O+yBJo24; arc=none smtp.client-ip=209.85.222.174
+	s=arc-20240116; t=1758804368; c=relaxed/simple;
+	bh=2nTIKmm+FqpGHAYR08MsW8Nn1EIOqTvkF38m63P4pmw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BnXgJ44mXrsgOk2DsZW3RhgOrL6oGqLvsWH0txxjnGELDIeXAODH2Q5zvWy5fz6VaqTpAWqBTZPOGxW2ML694lFCvk1ZlAlRQk94GvDQ/R8yOy4qRSacvAUZHbxaQqUqS/7g0YSJUBJrnkLf+oUGAuO0oSSDURjpxVzSJPP4MHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PcNZ4xLc; arc=none smtp.client-ip=209.85.208.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O+yBJo24"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-85c66a8a462so66990685a.0
-        for <git@vger.kernel.org>; Thu, 25 Sep 2025 04:44:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PcNZ4xLc"
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-36a6a397477so9228131fa.3
+        for <git@vger.kernel.org>; Thu, 25 Sep 2025 05:46:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758800674; x=1759405474; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1758804364; x=1759409164; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IoowTXkBJcEmZPY4llr7ch/RHORltqdssQwef+UEu3s=;
-        b=O+yBJo24JQnn9fryl5O9cgooDidbA1oHHm7HHYZ+KQ/b/V3r55d9dtOydAZiob7vBf
-         S6+fAOXckGTzaNbLdFXy3KE4ysGzf7Z1yaaEIUhxFJ5G0v3Fg2Tp7bnsGqgv7jyxn8Ac
-         yYxAFkOiYfwOKIjgv2zw0KVNgLwPlMe91Feb7GoWkGX4BVgZ6jhaoL2sGb4vxCT93aPE
-         BAOmDYXyJ+eM3ukA5F7o0EehXiEw2uYDHzCad23HVOS3mX5ryVgZgd4+bXwrdamrrdwG
-         iwJihUusG2h7ICb9oXk8v9YaVOlV5VWbpwWCJdAti1Hdm180P7r2Nzbf5iwiijtXxlMD
-         xLGA==
+        bh=u0SBX0ksJ1fQKrvBntTvoe3iiOWKcQ/a/lA8BcqnPNQ=;
+        b=PcNZ4xLcuVvcDQ4+07aM5xNS5+oEdb2MuPV4RWIUIVtwtehD3tdY6ezkNg/JsnG7q5
+         ZOe5hAkVvctxKBAQ574zHdeaUVNUe4+DjfdqR/fK/f1K94UigAJRGhNgWDKa4LiZIW55
+         kV9qZp65OiFJ907MmHGn0nM6h+iYhHsoZJKl0iDRCJt7bZ5hMXMe8MBV7/+ltmCDsAN5
+         V30AfRpvAffukhgxjf2jyHVciJMrC2Hd2aEDg1cfaxDdHTSc91ZW+cMRd5tf6s5W5lLq
+         KnX4uqsk5Vjaw9F7zNyIDsQFHSIHP/YvNwswiCJgSkyDD7O0A0VXd5mLQkEJnAdRKx3U
+         SVwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758800674; x=1759405474;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1758804364; x=1759409164;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IoowTXkBJcEmZPY4llr7ch/RHORltqdssQwef+UEu3s=;
-        b=up1MFbp2EbIRf1Rz18Hra7+hk1RcfiCD36CwGOemWgK/K5qmCXE0lM+oKveY/Nk5cT
-         aZitc17U7yRAZT6eZ49zbft3ziI7jTs+Q1xW7C0R1gu6XLTtkzwCpca5f1/cEufD8Wix
-         Jc75TW/3fa4FKtTBIk6A637IDAbOxes1UHw74X/XtDWfKTIJbAx0SbR7Go9XZcH8cEGe
-         Jmp+ixq/lt7sgY5Cqeyyn7C5i4TOdLuSxD4gUCOtuOIVuLirLGqMUILsQP/By+1sskmW
-         afeBd3EyTNbvrUZx8q24GtnFVRRwYMEjJ7T2iDZMUEoh09aPUnSDrJG5Gx3+fsi5e4vs
-         dw9w==
-X-Gm-Message-State: AOJu0YwReEllysNM0IvO8ZfZf4q67kEjyPU1EWbNR1h62KYtjnokOFEw
-	0dT4iipeZxpclZGsF7ZKrA6jvCYAwx+OrZ3a5Nhd+FXc11LAAhHJrGkZsKOu5yMI
-X-Gm-Gg: ASbGncv9DsygPQfBNp9B0Z0GGB2X4hqoFK2cSIw+k0pFBvkMd3oyTK9lPSHuGCpcgFf
-	UjENsyy8sYlvBTLHflxFjJUIiyRzuPged/pRWNg1YWxi22cFktqWf0wwVw+eq7GlkwwQxBzwPA4
-	zN2/Y2MMK/dsyMmLbNRqHQNbMUFN4PfVtHxBWGNP1Xesweyc3p7JjnFd/kWyJH6b9Wce3atPOZE
-	+v1BBWWo25XYA+5q5Gi34ZU53D8hpJQf9QgWQrOi4OWvVRlekk1nIygTFg1CUVXg5FnhP380UhH
-	zIRKLhuzWnUcFP7DyKhF4R0Da13fw2mfIKKVuuqbgaI2VJ8KYOcy9EgYATBbCIDtTHzM9kHfpJs
-	ClniQYh9dsAqmQr3vevDfNwlo8g==
-X-Google-Smtp-Source: AGHT+IHFalAz+HTB5JiBR9G/N5McjJUDibKjWrCbqgcHch0VNnSeYB4VTLJHfE79e+JwXgz67iGlNQ==
-X-Received: by 2002:a05:620a:2902:b0:82b:54f:5b8a with SMTP id af79cd13be357-85aed30bd65mr446949385a.75.1758800673774;
-        Thu, 25 Sep 2025 04:44:33 -0700 (PDT)
-Received: from [127.0.0.1] ([172.174.167.23])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-85c335b7050sm93788485a.58.2025.09.25.04.44.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Sep 2025 04:44:33 -0700 (PDT)
-Message-Id: <a5904a2ac00ea6de142344272b45f6b4697b4f98.1758800669.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1977.git.1758800669.gitgitgadget@gmail.com>
-References: <pull.1977.git.1758800669.gitgitgadget@gmail.com>
-From: "ionnss via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 25 Sep 2025 11:44:29 +0000
-Subject: [PATCH 2/2] libgit-rs: add get_bool() method to ConfigSet
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=u0SBX0ksJ1fQKrvBntTvoe3iiOWKcQ/a/lA8BcqnPNQ=;
+        b=kILgbbWsicfXerB8LThcMIOTPm3ihnn7TEytkldsyaI5hqHyMf0B2sxc332yk+Y+in
+         DW6wes/VHx9EUS2XMI2RW5fCwsvrp4txESROAWPJJWLWQgQ0f2M+juAfM8/0KXhB+86c
+         t+Dkgwm40JD2RZ9Eh1RJJQ4fe6Xb0cQZs9nm72LLHnN2zPA7imkrmoWys2byKB4R5KmV
+         NyDsEy5KAwdfl55Gqx41OCdR0rN2b8kepBGSANzGyl0LoSgHFV3akcQHfHisZiamKn7u
+         xlIydg2pc7juLfR689tQf4xX+UHNCLzfcJV3oGyVrYa2TfUmMV7mZuLgdVG+5JI7wj3r
+         5BtA==
+X-Gm-Message-State: AOJu0YwdOopjAf3o7MkD86Asj7Lhs6splnwLPl7NmZuwjdqHI5S/uTsG
+	JCtNexYOwNYIrGsT8Pv1ChDrhXxHTzIGcJN4bjgiMyIMXTeb4Wui3lZC3Yylx8Jjuw/PtbY4YAg
+	xE4gvqs2i4WhBCImMEi/twHsul9fXAeVUFAyoWog=
+X-Gm-Gg: ASbGncsnp/pwA+o1vb534k1kNNc78wKUrRR5wWjdhvpylLHtucTibdF8Y1+fOu55563
+	2PDdyW87E/ibrZs9YxV/1H2sYN0bfJ1V4H07O2/EspCu9UnOuwQW5dLUGftrrvlCrLjjvzcEiiy
+	cMAAzjbdx8LhSfa86/sguzkWps5bkNA9MCbeFEG+LzJo5riRp6W9VsY24zjmrQaAzCQrrcKmhZ4
+	1UR3KM=
+X-Google-Smtp-Source: AGHT+IFP21ypVNSmYL6YLa5DDsfLvfvOJXWeIaWAV5uR8FGXMt3J3gqBpLKBbY+RTb+NAEQmjGYxEu1q6yMbqnV6jO4=
+X-Received: by 2002:a2e:9a12:0:b0:36a:878b:6e2c with SMTP id
+ 38308e7fff4ca-36f7c9e7f29mr10504731fa.3.1758804364145; Thu, 25 Sep 2025
+ 05:46:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: ions <zara.leonardo@gmail.com>,
-    ionnss <zara.leonardo@gmail.com>
+References: <20250920184007.26183-1-rappazzo@gmail.com> <20250920184007.26183-3-rappazzo@gmail.com>
+ <c6a33014-5d87-4750-b6ce-234e944131b4@kdbg.org>
+In-Reply-To: <c6a33014-5d87-4750-b6ce-234e944131b4@kdbg.org>
+From: Mike Rappazzo <rappazzo@gmail.com>
+Date: Thu, 25 Sep 2025 08:45:52 -0400
+X-Gm-Features: AS18NWDWpnw6-n8bkvzPiVABXqD4NtHHEdIvAU9skvYX0sb5CY7IWEYhrDeM0AA
+Message-ID: <CANoM8SW6gsfmhPYWq2_7f9DuwyQ4vVpbWkaPn4mDTg--LAZUJg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] gitk: make Tags and Heads window geometry sticky
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: ionnss <zara.leonardo@gmail.com>
+On Mon, Sep 22, 2025 at 2:34=E2=80=AFAM Johannes Sixt <j6t@kdbg.org> wrote:
+> > @@ -10249,6 +10256,8 @@ proc showrefs {} {
+> >      bind $top.list <ButtonRelease-1> {sel_reflist %W %x %y; break}
+> >      set reflist {}
+> >      refill_reflist
+> > +    after idle [list manage_showrefs_geometry $top restore]
+>
+> My thinking without having debugged it is:
+>
+>  1. A Configure event happens with the default geometry when the window
+> becomes visible. This records the default geometry in geometry(showrefs)
+> by the handler that is bound in the next line below.
+>
+>  2. "After idle" the geometry is set to the then-current value of
+> geometry(showrefs), which would then be the default geometry and not the
+> one restored from the settings.
+>
+> Why is it not necessary to encode the now-current value of
+> geometry(showrefs) (the restored value) in this after-idle handler? IOW,
+> why does this work?
 
-Add support for parsing boolean configuration values in the Rust
-ConfigSet API. The method follows Git's standard boolean parsing
-rules, accepting true/yes/on/1 as true and false/no/off/0 as false.
+When I was testing this, I used MacOS, Windows 11, and Gnome (Ubuntu).
+On Mac the call
+worked without the `after idle`.  On both Windows and Gnome, it needed
+the `after idle` for it
+to work as I expected.  I'm not sure exactly why.  Do you want me to
+try to adjust this?  Do you
+have a suggestion for it?
 
-The implementation reuses the existing get_string() infrastructure
-and adds case-insensitive boolean parsing logic.
 
-Signed-off-by: ionnss <zara.leonardo@gmail.com>
----
- contrib/libgit-rs/src/config.rs    | 24 ++++++++++++++++++++++++
- contrib/libgit-rs/testdata/config3 |  2 ++
- 2 files changed, 26 insertions(+)
+> > +proc manage_showrefs_geometry {top action} {
+> > +    global geometry
+> > +    switch $action {
+> > +        save {
+> > +            if {[winfo exists $top]} {
+> > +                set geometry(showrefs) [wm geometry $top]
+> > +            }
+> > +        }
+> > +        restore {
+> > +            if {[info exists geometry(showrefs)] && [winfo exists $top=
+]} {
+> > +                after 1 [list wm geometry $top $geometry(showrefs)]
+> > +            }
+> > +        }
+> > +    }
+> > +}
+>
+> The two branches have no common code path. What is the rationale to have
+> a single function with sub-commands instead of two distinct functions?
 
-diff --git a/contrib/libgit-rs/src/config.rs b/contrib/libgit-rs/src/config.rs
-index 6bf04845c8..3f4a32c72d 100644
---- a/contrib/libgit-rs/src/config.rs
-+++ b/contrib/libgit-rs/src/config.rs
-@@ -68,6 +68,26 @@ impl ConfigSet {
-             Some(owned_str)
-         }
-     }
-+
-+    pub fn get_bool(&mut self, key: &str) -> Option<bool> {
-+        let key = CString::new(key).expect("Couldn't convert key to CString");
-+        let mut val: *mut c_char = std::ptr::null_mut();
-+        unsafe {
-+            if libgit_configset_get_string(self.0, key.as_ptr(), &mut val as *mut *mut c_char) != 0
-+            {
-+                return None;
-+            }
-+            let borrowed_str = CStr::from_ptr(val);
-+            let owned_str =
-+                String::from(borrowed_str.to_str().expect("Couldn't convert val to str"));
-+            free(val as *mut c_void); // Free the xstrdup()ed pointer from the C side
-+            match owned_str.to_lowercase().as_str() {
-+                "true" | "yes" | "on" | "1" => Some(true),
-+                "false" | "no" | "off" | "0" => Some(false),
-+                _ => None,
-+            }
-+        }
-+    }
- }
- 
- impl Default for ConfigSet {
-@@ -102,5 +122,9 @@ mod tests {
-         assert_eq!(cs.get_int("trace2.eventNesting"), Some(3));
-         // ConfigSet returns None for missing key
-         assert_eq!(cs.get_string("foo.bar"), None);
-+        // Test boolean parsing
-+        assert_eq!(cs.get_bool("test.booleanValue"), Some(true));
-+        // Test missing boolean key
-+        assert_eq!(cs.get_bool("missing.boolean"), None);
-     }
- }
-diff --git a/contrib/libgit-rs/testdata/config3 b/contrib/libgit-rs/testdata/config3
-index ca7b9a7c38..83a474ccef 100644
---- a/contrib/libgit-rs/testdata/config3
-+++ b/contrib/libgit-rs/testdata/config3
-@@ -1,2 +1,4 @@
- [trace2]
- 	eventNesting = 3
-+[test]
-+	booleanValue = true
--- 
-gitgitgadget
+Yeah, that's my bad.  I started with something different, and whittled
+it down to this.  I'll adjust
+in the next iteration.
+
+_Mike
