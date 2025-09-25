@@ -1,113 +1,220 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E702E62AF
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 02:50:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5747D2367AD
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 05:39:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758768644; cv=none; b=EP4CISAQ6uPKnGaG0F9+0mDO1T7xf4K6jEdMyoSHowuaKjFNL2cjmfs3O2oLe1VDCejGqZ6qT0WJniSZZmD4404pwzerk77SMnCbtDclsMLsPUIQKv+yjzWb8Oz73SDZ+zRssHvOKJGjsilI/iH67T8F6jmUWBv4CddiY6GYzz8=
+	t=1758778746; cv=none; b=qMXt1d3WLP3yxq8VLxJJ91il4Tqm8VZy3s6lQpXKKepNG4ZBVkh1iPVUsIiI8yfAmgT3y3+MgIudiJ4J8ZgEhkurZebetqRi/CWWGsncnGwAZGJj0zyj4nsyW0mt7UlYRr1SxXmsWkqIjKQPxLix0gAA4ZUYXb42x03B0vv964c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758768644; c=relaxed/simple;
-	bh=UyimzEudSUffd+xX+nYmeRMGoV01BYDe5pLZchS4n0Q=;
+	s=arc-20240116; t=1758778746; c=relaxed/simple;
+	bh=Wsq+fJd7nsFUQcpB4De9h1BaFXSSzpVl/52GMBUTSZ8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T7Jo7PKbp2m1XgZmZIirjqzFPMMkUt4A7r4v5d/CXYs5fNFUeJ164sG73Q6fhxzzaqdLRQdHqgWj/M8xrq+s3EibkF/CuCGFjQ3jmqo5iI2Va87fr/bDCMXFPoPs7dBrlImfKOelYySrXed1vt5AYHm26HjSv5JCP/Z/B/7h9vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=h7u2dViD; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=XM2MYpuM1so2fZ+laPwjR5AoUqCfqbfXGBSIbaFFjr1NoufY2qb3tQBGL3MCrmRxyhCZSeIHK3QnABLCkdvGLb5TQRJt6pZzEJPB2Is9NKMTLGgLucpMYYagzI/H/SVDD/IIPBf2/xvCFwCIsXJ9MaolvWO8xVoiXtbjuL6FkSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DAcMOVkc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TFwNbzJ2; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="h7u2dViD"
-Received: (qmail 22438 invoked by uid 109); 25 Sep 2025 02:50:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=UyimzEudSUffd+xX+nYmeRMGoV01BYDe5pLZchS4n0Q=; b=h7u2dViD+Uhr0zhiubhFB+CPzAhDi8EMcNVaxt7YUr1GfkNRq5SFQJ6Mvh+ewEdcTG1DclQel3+QC1uTPKTgwgAhCHBUP/0yKZVRMSmAtcqL9BNdPVorniLqDxpJ/RCmGDevIjS+FyjeHupOtm+kS3bk/B8lI2DKcCEqlTJ2JXw8WQKiUJfVuUlSp94+Pf/L/7iPfllOgAYFInjczd478S7XwsXiXfPFCnPZTQAAoILbUjQl01uOmy/RMbTDYLCzul5QdjmBp+6Msgp6MNDb25EKEcjqnbU7bRDHxZDoLnhyw444UN+3I2MELdFJKJEkiSXf5pCSLCV4f0xjfCVTdg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 25 Sep 2025 02:50:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30919 invoked by uid 111); 25 Sep 2025 02:50:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 24 Sep 2025 22:50:40 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 24 Sep 2025 22:50:40 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, shejialuo <shejialuo@gmail.com>,
-	git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 2/4] string-list: replace negative index encoding with
- "exact_match" parameter
-Message-ID: <20250925025040.GB3202669@coredump.intra.peff.net>
-References: <aMp8yNFiXDyk2hP4@ArchLinux>
- <aMp9OtXLfRw7dEwA@ArchLinux>
- <CAOLa=ZShms1D-cq=x04dtT2ULTVE3ZDo8DODFnJRP2wcJz0EgQ@mail.gmail.com>
- <xmqq348dovi3.fsf@gitster.g>
- <20250924053601.GC1173044@coredump.intra.peff.net>
- <xmqqwm5om1gy.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DAcMOVkc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TFwNbzJ2"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 320DF14000CF;
+	Thu, 25 Sep 2025 01:39:02 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Thu, 25 Sep 2025 01:39:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1758778742; x=1758865142; bh=Ez+mQj6R6y
+	MWf9Hi0KEvj8G//tZTvSgSQnSJKbCoZnE=; b=DAcMOVkcJZ+FsxnHi0nFumDzyn
+	Vaf4nz4ftSBg4o5h3wqo/Rn8H7Qjg1zncYAgz4FixWE3HDUuDi4IBg68mIMmvwB1
+	vwZDfdMuwlicpwSyTpyG9m+HIxx7W4FBnl4/nW8tASKrG4fEgmX4+F+YYXru4IH+
+	pLsrDRalp96D6j/AAWNSqpPyNx87pU/OSnDCAzg0ewzeOjAMHYEw3QvSBWLUoMc7
+	7C/QO4ELT0j82L/HoNO2T5J9rIvl03tRFw6uvwrNj1UQuMGuGnpFXo8QkrRkhe7J
+	KDcFZOOWcuqB6umQuQMNQ/J+svLinfI6mumXFknyx5aJupdHBPCTqV2P1ahA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758778742; x=1758865142; bh=Ez+mQj6R6yMWf9Hi0KEvj8G//tZTvSgSQnS
+	JKbCoZnE=; b=TFwNbzJ2nC+C9vpCX9i719PXQ4EuEF8dH5z5kPPJFiKlRW4nBo9
+	Vf8PvzGEqglzxbZ6FXkp/1wc0lw7rkS9sBtb3raC3958274EVjb8OrfkE4F0B2yF
+	O/VJBZ2QsQ15Sxy1wEUjgjVHVmxTN/eFPaZtUGIJWtmk12OBY0vhYaifqcGxUwV7
+	krqyXJI/lOfaQm1YJ/M4ITUpZ5BuzJ53tvSbhj9zIk96Aippv5CHkRdce69R+eLV
+	A+VaxIez3lx11/Sl1r5bh6a0D2LXB07xlSPcQk+tH9OaRdJAliAyID3r50Z46Bj9
+	dRffRuK7urv7vh2CUlgcvrObLnk3j75STkA==
+X-ME-Sender: <xms:ddXUaHPf86Wu-Bv9subXJfxOFUYsFRCqx9MPbpczsxRMNXC4VG9vIw>
+    <xme:ddXUaI82yt4VLrwRkBCY4k7r4Ml2j4-yk-b6-osj4UrJkTLJgmbDN0agLVHn9KE5A
+    azdLVF_8yg5oXtC0LnorNNWIz4O0WI6AlNIc0E2fLDAXpT4wFw5m8I>
+X-ME-Received: <xmr:ddXUaLTC20QnkTjB4xI0v2qoqWEAJkKf35nFHoapfXsLv02_SpRH0WzlsAzktwyrBULo5riEWP3Rfj08pSIba3O8TgAtXLQ6vv0kdB_ThrY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiheeijecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:dtXUaKmsjzHhqHBjDF7urf0CiOjhA1MB7-sVvnd4HykqEutCyTs_XA>
+    <xmx:dtXUaLSPWZZFCKP3p8N8Fz9coZ3sKGzvH2jHpIamEMdL_MOyFUhjgQ>
+    <xmx:dtXUaIM1xFtULcce9zTw1JwK4VYi8D2qBwU8C3pzwlcREF6Ftm0OZA>
+    <xmx:dtXUaEWOTdGn5ymk4ZMXsLmETS6NpDA_Fk1lnRgb-Cq7Smi4ELE2_Q>
+    <xmx:dtXUaGnI2QkEdW8TLwvv5ysqZfXU5Km4WxFEsKl7ZDgirx9KPlzuiw3j>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 25 Sep 2025 01:39:01 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 15760533 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 25 Sep 2025 05:38:59 +0000 (UTC)
+Date: Thu, 25 Sep 2025 07:38:51 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 3/6] builtin/repo: introduce stats subcommand
+Message-ID: <aNTVa3-RtYNPlcHc@pks.im>
+References: <20250923025700.3046260-1-jltobler@gmail.com>
+ <20250924212426.2930029-1-jltobler@gmail.com>
+ <20250924212426.2930029-4-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqwm5om1gy.fsf@gitster.g>
+In-Reply-To: <20250924212426.2930029-4-jltobler@gmail.com>
 
-On Wed, Sep 24, 2025 at 06:20:13AM -0700, Junio C Hamano wrote:
+On Wed, Sep 24, 2025 at 04:24:23PM -0500, Justin Tobler wrote:
+> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+> index 209afd1b61..a009bf8cf1 100644
+> --- a/Documentation/git-repo.adoc
+> +++ b/Documentation/git-repo.adoc
+> @@ -156,12 +159,188 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
+>  	return print_fields(argc, argv, repo, format);
+>  }
+>  
+> +struct ref_stats {
+> +	size_t branches;
+> +	size_t remotes;
+> +	size_t tags;
+> +	size_t others;
+> +};
+> +
+> +struct stats_table {
+> +	struct string_list rows;
+> +
+> +	size_t name_col_width;
+> +	size_t value_col_width;
+> +};
+> +
+> +/*
+> + * Holds column data that gets stored for each row.
+> + */
+> +struct stats_table_entry {
+> +	char *value;
+> +};
+> +
+> +static void stats_table_add(struct stats_table *table, const char *format,
+> +			    const char *name, struct stats_table_entry *entry)
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I agree that size_t is much more than one needs for counting most
-> > things. But the problem is that "int" is much too small, if you are
-> > worried about malicious input causing integer overflows that could cause
-> > memory access errors.
-> 
-> Well, a malicious input can cause overflow/wraparound size_t while
-> parsing, so I do not think that is really an argument.
-> 
-> The code need to be protected against such overflows either way.
+We could of course accept varargs right from the start and thus allow
+the caller to pass arbitrary formatting directives. But I guess we don't
+need it now, so it's fine to not do it.
 
-Yes, but it's much harder to wrap a size_t, especially if the code is
-allocating as it goes (e.g., a loop expanding an array). Because if
-expanding your allocation from "n" to "n+k" items will overflow, then
-that implies the current allocation is within "k" items of filling up
-the entire memory space.
+[snip]
+> +static void stats_table_print(struct stats_table *table)
 
-In many cases "k" is 1, or a small-ish number (like the size of a
-struct). In cases where the size is computed purely from untrusted
-input, we do need overflow checks (and have added them over the years).
-We do those checks in the size_t space, since that's how we count
-allocated bytes, even if the thing we are storing is not 1 byte per
-item.
+Nit: The table can be marked as `const` as we don't modify it.
 
-If a data structure uses a smaller type (like "int") to do book-keeping
-for its allocation, it risks the case where the smaller type wraps, but
-is still valid as a size_t. For a signed type and a small "k" this is
-often OK (if you wrap 2^31-1 around to -2^31, that ends up as an
-implausibly large size_t and the allocation will fail). But there are
-cases where you can wrap straight back around to "0", underallocate, and
-have an unexpectedly small allocation.
+> +{
+> +	const char *name_col_title = _("Repository stats");
+> +	const char *value_col_title = _("Value");
+> +	size_t name_title_len = strlen(name_col_title);
+> +	size_t value_title_len = strlen(value_col_title);
+> +	struct strbuf buf = STRBUF_INIT;
+> +	struct string_list_item *item;
+> +	int name_col_width;
+> +	int value_col_width;
+> +
+> +	name_col_width = cast_size_t_to_int(
+> +		max_size_t(table->name_col_width, name_title_len));
+> +	value_col_width = cast_size_t_to_int(
+> +		max_size_t(table->value_col_width, value_title_len));
+> +
+> +	strbuf_addf(&buf, "| %-*s | %-*s |\n", name_col_width, name_col_title,
+> +		    value_col_width, value_col_title);
+> +	strbuf_addstr(&buf, "| ");
+> +	strbuf_addchars(&buf, '-', name_col_width);
+> +	strbuf_addstr(&buf, " | ");
+> +	strbuf_addchars(&buf, '-', value_col_width);
+> +	strbuf_addstr(&buf, " |\n");
+> +
+> +	for_each_string_list_item(item, &table->rows) {
+> +		struct stats_table_entry *entry = item->util;
+> +		const char *value = "";
+> +
+> +		if (entry) {
+> +			struct stats_table_entry *entry = item->util;
+> +			value = entry->value;
+> +		}
+> +
+> +		strbuf_addf(&buf, "| %-*s | %*s |\n", name_col_width,
+> +			    item->string, value_col_width, value);
+> +	}
+> +
+> +	fputs(buf.buf, stdout);
+> +	strbuf_release(&buf);
+> +}
 
-I don't _think_ we have any cases of those anymore, but it's hard to
-audit for. And IMHO easier to reason about if we use size_t for
-book-keeping.
+By the way, is there any specific reason we do the detour via the strbuf
+instead of printing the data to stdout directly?
 
-But if we use size_t inside string_list, say, and you do this:
+> +static void stats_table_clear(struct stats_table *table)
+> +{
+> +	struct stats_table_entry *entry;
+> +	struct string_list_item *item;
+> +
+> +	for_each_string_list_item(item, &table->rows) {
+> +		entry = item->util;
+> +		if (entry)
+> +			free(entry->value);
+> +	}
+> +
+> +	string_list_clear(&table->rows, 1);
+> +}
 
-   for (int i = 0; i < list.nr; i++)
-	printf("got: %s", list->items[i].string);
+Yeah, this is much nicer now.
 
-Now we have another problem. The string list can store more than 2^31
-items (even if we do not expect it to). And at some point you start
-looking at list->items[-2147483648]. It's at least an out-of-bounds
-read, rather than a write, but it's still rather ugly (and a clever
-attacker can often stuff buffers to convince it to read whatever values
-they want).
+> +static void stats_count_references(struct ref_stats *stats, struct ref_array *refs)
+> +{
+> +	for (int i = 0; i < refs->nr; i++) {
+> +		struct ref_array_item *ref = refs->items[i];
+> +
+> +		switch (ref->kind) {
+> +		case FILTER_REFS_BRANCHES:
+> +			stats->branches++;
+> +			break;
+> +		case FILTER_REFS_REMOTES:
+> +			stats->remotes++;
+> +			break;
+> +		case FILTER_REFS_TAGS:
+> +			stats->tags++;
+> +			break;
+> +		case FILTER_REFS_OTHERS:
+> +			stats->others++;
+> +			break;
+> +		default:
+> +			BUG("unexpected reference type");
+> +		}
+> +	}
+> +}
 
-If the iterator is a size_t, then overflow in that loop is impossible
-(because it implies we've allocated the entire address space). And ditto
-if it is a signed 64-bit value (which would implies we've allocated half
-of the entire address space).
+Here we're now being defensive. Good.
 
-So yes, I'd agree we need to protect against overflows, and that's what
-I'm advocating for. But I think consistently using integer types that
-are sized along with our memory is an important part of our strategy
-there.
-
--Peff
+Patrick
