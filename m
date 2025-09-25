@@ -1,127 +1,168 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F24262FD1
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 13:33:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B4A21ADA4
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 13:58:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758807198; cv=none; b=SsUfRNDmmhxYBnKPYvQYzwVp7S/IGhOxcOMG3/DusFN6PkdI16K/xwO//RBiMuLOMe5sLlgAsV6EqBojmEnabvmbXoBJaKrK4WGhSYV2rKr3pLZE+CrlpwVbjurT+3k5azD6XJ2xUZc9p7A/cgI58CxFZPKJS8KhLwAek7DygSw=
+	t=1758808738; cv=none; b=FCNUs/8aA/sXCprxseqSVFm+fqfz2g/WdCXbA88uZX2mbf4pENbPveWQWlwJWzcv1xjFOuQ1T48qM2wPkGoCrf1+i8iCVHtmfC661I24DHvEb6+jmMusQeycwmEI7jQWSJ5g9+y4Ro1VdtBFMsoX1mu1FkFjsjrL1T0g0Mg+USs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758807198; c=relaxed/simple;
-	bh=DQnxXiGoIRv+/o7+hLXFih8efPpsWI6/Y+cu4b9rb7s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=a3quDUFaHOWGkt4qIe1xz8nn8502OQArPffBXmikKbqjbebBz1eNLAaa6YLsm0EaIgOfaREcRWBHBvrvc9rqls4AJeKr+T6Jk91w4WdvJHAAkY+Z/om0V5Fkq493VmfIe9c159VbKC0ekmQIufR4AZz5lpll5kTL/7AdkLAkrJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LIF4mYrJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a1NxsaG3; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758808738; c=relaxed/simple;
+	bh=s5a6lFFrPe3t721PbuVjGXsF/bMV05agLxFATa2AyqY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XFjnhAZkUSl69hPPJPv2hyHsBmosZN60h/VtzZgWtPfKdYZ2D28cv6FX1LFqvxfSaiw/QJjM3c9qFo1Lv0EhTR9XSDBU1gvQUvEAGEZmMGH+O0SHSiVojfJKooYyu66sosG3BuP0FdCoRTrWmsGp1gTb95xHvpkPmxpGRCugAec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jZgF2qay; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eLdxCaxh; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LIF4mYrJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a1NxsaG3"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9CD637A0204;
-	Thu, 25 Sep 2025 09:33:15 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Thu, 25 Sep 2025 09:33:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jZgF2qay";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eLdxCaxh"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B759A140008A;
+	Thu, 25 Sep 2025 09:58:53 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Thu, 25 Sep 2025 09:58:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758807195; x=1758893595; bh=1hVvIrovUL
-	mLR0wLZhXos3xzWhUgv8YTwmM2uPiiOfc=; b=LIF4mYrJqH2KF5BOuaFyFMmNeQ
-	K7HgaDsfuw4hqmPh+IeyCX0OxMyWNPrSJnSSD/VmYtA5L4VYdglk6jD45y50W6iv
-	RI+S3oEg7BHFs/CMQRN+7nsu1X1klKQmoPWC7JCGjauvnqTUY2FG+aoQbbXatp6L
-	5zI3pApF3lDEtUsTnuENys58cCgB5q3SK5tUl8vGqSTvSG/YwsjSsPwSON7aYPH5
-	r2IZSmGtM+6J98xOlBAJdacssIN/k4agAM3iDvGk6QvThmICxjFIFxjQMAmOwAto
-	hRG9kmgC6ZYliU82vim2UHjaUGlKbZrlG0Xww86YXmAJp9C/UmBPOW7kFpzg==
+	:subject:to:to; s=fm1; t=1758808733; x=1758895133; bh=NOUMtk3+Hx
+	3TBjjR4DVKIOwpGie1lYDabVEfYZ6NDrY=; b=jZgF2qayheJhmA4emD/GgIO81Z
+	HKLHR6oClXw2ffdObfaS8hBdbSt4T+8PWM9OuSYPt8mqu0CE5p6h7L+XaHe3m6gM
+	xJj0XO9lj9nResbq7y3xRcck0liKUwMLlNkKiCPzwT+5l7rVveSAGirZVnBv2AFR
+	1zHBRMIkrmohYt5cqB0fZhY+q4UX6CpEWgAg+6dFj2rM2Z/XxfcOdJ62FzfW0+VM
+	JEWKOrKK1piuMhOhESQPjNcBdnpUIPOKQGYVsC27rL2bD06sZMdmKF+Q7yoq9AS3
+	vs9YpDBYRMlS0uwh41zwztY4lYKRvwhxB2fu22TY/zR2bOcIOT1LREmpW+TQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758807195; x=1758893595; bh=1hVvIrovULmLR0wLZhXos3xzWhUgv8YTwmM
-	2uPiiOfc=; b=a1NxsaG3uI70FGFkqoKCNCioCnCU69CIv8NN1mjxTdmQlojTL0z
-	U9VD+aW3xk/mP/IKdHGIt1Nh0zo63b3z1wWu2ao9X30RtOdKk7eBJGyhhPdPm5vT
-	FuFij60++PlDeh6d2xh/I3Kptof/MSYrbl6jitlX44Vlxjgp1/xGRP2NExiGLlyc
-	q+I/rcQo3Qy8OaLHbxjQSjUvxUnBATMVTmpwtLKwRFPJLfv7aXKq8Da8bD/RjI76
-	Jaa51faAWJW2yT95jUWt1RbPG+H0a7A9zPe0bCQwhjfkE6BK7U76F7MIjd+qCsXW
-	0T5kI0kMKR9Pr4Z40AufnXy5KDZcR0f70lA==
-X-ME-Sender: <xms:mkTVaI2hx4EI6mSC35oRsckarp9huiCupRz2Q8EOYl985RfCISuGZQ>
-    <xme:mkTVaGy4kciJq_es4ckkFvEXVwUol29_xAi5QMNj3h00ZSOmgdV3L7AiI7eYZ3pAU
-    qyNTwgAT0BGiFonTQtN_hYrSfbbRNpo1pnLP1-d20QpK9hPBWri>
-X-ME-Received: <xmr:mkTVaKvoD0aog2J959Tjmsjl--gyWKQcuhTZzzYMPLQqJo8AO6vN-n5MjLfjcZlr6XcfXAbZALQJk9C1vi--8ZQIumVSGdR76JxR>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiieeiudcutefuodetggdotefrod
+	1758808733; x=1758895133; bh=NOUMtk3+Hx3TBjjR4DVKIOwpGie1lYDabVE
+	fYZ6NDrY=; b=eLdxCaxhApJbroXQQWclAqbN9MMJvB4RsboqcZHerpgSOD+AOv6
+	sTR9jN0xcZC9XVHBXI5qmXbIfwfeqyv8BNY4ZuPYbWurIGxQNKnrEyLFycwHwVCe
+	Iz0eSTDFFIzZNipEfbV1luCdNwssXMBMaux/SicyRH6WZCWMjIhXKkhYUHplkmUt
+	Rz6gPLSZoaozxWd3QHJ67L8cC/1ftCsGDgBw/pHg1mIrHrh2YZc0p/+Cy5oCNH8B
+	2RGrQjOVpwaqml9CzgFML+AJWvMZWOOCdznqDceZ4+ub5TA+Ygmd9L3Bgxv/G29V
+	oDrK4g0GB+COgXTmxdRBOXkEytVx2oNJk3Q==
+X-ME-Sender: <xms:nUrVaLsW_zS8vOuYxY5ucJUJGpOd_RvGYnv-odV2pTgD3-qfkLdggQ>
+    <xme:nUrVaD6nPo-AfEPk-hcc_167j3YIjuvMvzHaY-fzzVjuUiRZo01Nb-XqFVln6rHTa
+    3PH7yGl2NULFZrY3jxXbPQwV5K8Nca_lOS1bXWduz1QOjWL8nXAcQ>
+X-ME-Received: <xmr:nUrVaMLxlG2U5PwqgAJIC_XMvVeqwxNw8umEtmQXLbD-bCLlz3wC1M8LKmDAOk_oYjsL8yIQd86-a3Gr4A8ZzX3g2tfi_aBzNHMYsVaxl-8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiieeijecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkh
-    grrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehshhgvjhhirghl
-    uhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:mkTVaIwiYcv4WMkDXJ_12KsYEZwiRih87yZeBOjhftw7xTYGR0Pwjw>
-    <xmx:mkTVaNBM64RlnJrjtatAxFh3Km0VL7xBDFRrgXS0sOjFoOTpGXOx7w>
-    <xmx:mkTVaGezIr4kD-3pNGJwlLKPCBGiTSn0DQg-orwjmaNjLe6BhGZRoQ>
-    <xmx:mkTVaHlj8eQeP6cSFZ-jF4M7GZYWG0pEbJ1eeBmTKmLPdlLJVh7DqQ>
-    <xmx:m0TVaDnPo8TcxMZO6LjLre2qK3EAl8Wjzs8m4cxt1VW9mx5DThjFMSsz>
-Feedback-ID: if26b431b:Fastmail
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosg
+    hlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrgh
+X-ME-Proxy: <xmx:nUrVaD6_QX3Aal7n3APeQyIimfB3wrMfGV_e14eOcPoKi6kjb54pGg>
+    <xmx:nUrVaPycWeKMUmmh5LyOg4peFSmq_duqMomkiW3iiloykuvU3d2XJA>
+    <xmx:nUrVaHbAEy4EHO73mS04fuRWfM_baUny_GlnEJtpYrh19s5kmniVLQ>
+    <xmx:nUrVaBQA7osb27A-itMl7heu7hrWJoXgSu0X6DfbAbKHWvdnuzwIkg>
+    <xmx:nUrVaGVDpsw2Pvd3ZxhxEqAAu0XAGNJe4ikBS6gH05N0Z9l18_m5wGTG>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Sep 2025 09:33:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  shejialuo <shejialuo@gmail.com>,
-  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 2/4] string-list: replace negative index encoding
- with "exact_match" parameter
-In-Reply-To: <20250925025040.GB3202669@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 24 Sep 2025 22:50:40 -0400")
-References: <aMp8yNFiXDyk2hP4@ArchLinux> <aMp9OtXLfRw7dEwA@ArchLinux>
-	<CAOLa=ZShms1D-cq=x04dtT2ULTVE3ZDo8DODFnJRP2wcJz0EgQ@mail.gmail.com>
-	<xmqq348dovi3.fsf@gitster.g>
-	<20250924053601.GC1173044@coredump.intra.peff.net>
-	<xmqqwm5om1gy.fsf@gitster.g>
-	<20250925025040.GB3202669@coredump.intra.peff.net>
-Date: Thu, 25 Sep 2025 06:33:13 -0700
-Message-ID: <xmqq5xd6irmu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 25 Sep 2025 09:58:52 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id bbb236c3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 25 Sep 2025 13:58:51 +0000 (UTC)
+Date: Thu, 25 Sep 2025 15:58:42 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com
+Subject: Re: [PATCH v2 5/6] builtin/repo: add keyvalue and nul format for
+ stats
+Message-ID: <aNVKki1hXoYi8qCV@pks.im>
+References: <20250923025700.3046260-1-jltobler@gmail.com>
+ <20250924212426.2930029-1-jltobler@gmail.com>
+ <20250924212426.2930029-6-jltobler@gmail.com>
+ <aNTVdy4hhLDlMpVT@pks.im>
+ <lqzdrznf6kynr35eo74zodbfeofj6hnmskm2wqk6ty3o7wwaci@nyytil34eyzq>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <lqzdrznf6kynr35eo74zodbfeofj6hnmskm2wqk6ty3o7wwaci@nyytil34eyzq>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Sep 25, 2025 at 08:16:06AM -0500, Justin Tobler wrote:
+> On 25/09/25 07:39AM, Patrick Steinhardt wrote:
+> > On Wed, Sep 24, 2025 at 04:24:25PM -0500, Justin Tobler wrote:
+> > > diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+> > > index 0b8d74ed3e..db21b75522 100644
+> > > --- a/Documentation/git-repo.adoc
+> > > +++ b/Documentation/git-repo.adoc
+> > > @@ -52,7 +52,26 @@ supported:
+> > >  * Reachable object counts categorized by type
+> > >  
+> > >  +
+> > > -The table output format may change and is not intended for machine parsing.
+> > > +The output format can be chosen through the flag `--format`. Three formats are
+> > > +supported:
+> > > ++
+> > > +`table`:::
+> > > +	Outputs repository stats in a human-friendly table and is used by
+> > > +	default. This format may change and is not intended for machine
+> > > +	parsing.
+> > 
+> > Let's mention that this is the default format.
+> 
+> I didn't mention that it is "used by default", but I think the wording
+> could be more clear here. Will improve in the next version.
 
-> Yes, but it's much harder to wrap a size_t, especially if the code is
-> allocating as it goes (e.g., a loop expanding an array). Because if
-> expanding your allocation from "n" to "n+k" items will overflow, then
-> that implies the current allocation is within "k" items of filling up
-> the entire memory space.
+Oh, I completely missed this. I guess I was looking for a sentence like
+"This is the default." at the end of this paragraph, which is what we
+often use in other parts.
 
-We'd be protecting ourselves by noticing that n+k wraps around with
-st_add() and friends, and relying on malloc() and realloc() to
-notice and signal an error.  Use of size_t to count the number of
-things that are getting allocated is not making these any easier to
-do compared to the case you were counting in "int", no?  Either way
-we'd need to be careful.
+> > > +`keyvalue`:::
+> > > +	Each line of output contains a key-value pair for a repository stat.
+> > > +	The '=' character is used to delimit between the key and the value.
+> > > +	Values containing "unusual" characters are quoted as explained for the
+> > > +	configuration variable `core.quotePath` (see linkgit:git-config[1]).
+> > 
+> > In the current state there is never any quoting, so this statement here
+> > is a bit misleading. Should we maybe drop that part?
+> 
+> While there are currently not any values in the output that would
+> require quoting, I'm inclined to leave this note in the documentation.
+> That way we set the expectation regarding how parsers should handle the
+> output from the start.
 
-> But if we use size_t inside string_list, say, and you do this:
->
->    for (int i = 0; i < list.nr; i++)
-> 	printf("got: %s", list->items[i].string);
->
-> Now we have another problem.
+Fair enough.
 
-It is obvious that in order to count up from 0 to list.nr, you'd
-better use a counter variable of the typeof(list.nr) or manage the
-wraparound yourself.  So I do not see what is new here.  My point
-was that use of size_t to _count_ the strings in the string list is
-where the problem stems from.
+> > > @@ -407,8 +447,20 @@ static int cmd_repo_stats(int argc UNUSED, const char **argv UNUSED,
+> > >  	stats_count_references(&stats.refs, &refs);
+> > >  	stats_count_objects(&stats.objects, &refs, &revs);
+> > >  
+> > > -	stats_table_setup(&table, &stats);
+> > > -	stats_table_print(&table);
+> > > +	switch (format) {
+> > > +	case FORMAT_TABLE:
+> > > +		stats_table_setup(&table, &stats);
+> > > +		stats_table_print(&table);
+> > > +		break;
+> > > +	case FORMAT_KEYVALUE:
+> > > +		stats_keyvalue_print(&stats, '=', '\n');
+> > > +		break;
+> > > +	case FORMAT_NUL_TERMINATED:
+> > > +		stats_keyvalue_print(&stats, '\n', '\0');
+> > > +		break;
+> > 
+> > This reads much nicer now. The newline as key-value delimiter is a
+> > curious choice, but you simply do what we already do in `git repo info`.
+> 
+> I agree that the key-value delimiter chosen is a bit strange. The
+> command is still experimental so we could maybe change it if want. Not
+> sure if it would be worth it though.
 
-So, I still do not buy into the religion or superstition that things
-must be counted in size_t yet.
+Dunno. If we wanted to do it I'd do it in a follow-up patch series
+anyway.
 
+Patrick
