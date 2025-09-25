@@ -1,107 +1,63 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from smtp86.iad3b.emailsrvr.com (smtp86.iad3b.emailsrvr.com [146.20.161.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8F319C546
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 21:48:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9513FC2
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 21:52:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=146.20.161.86
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758836939; cv=none; b=dZsg4kgNt4aQIwDhZYOWq8I3W7omRBXSmQ9rJXRcy7LFDNCpPrnS7DLG/TfLH2tL/IPc9rGwjibwMh28oiBRR2uxH8p3HOc/CyrP2+ooiW4Fw+7IRmBxJYO2EoNQZaRYlIFEyHlUd6Wj5A9duFo0Dg+vCdatpjz/fzUtmQIop6w=
+	t=1758837129; cv=none; b=FSQk70XNPM4y1lhZ5mUxBIIVbGPDKrheaFOitsalSf8akFFhZCRB5sNndBTM3ahdb0nRqq9gCzJhGwGVXDvJoStkhaOy3BOPCAuO3RKx3qTdoyUuMN7KnTQhta5pjaG9YBa8Vc8jcZJR3DMbTNMCEeZBK2nFE2I2UlSoD2HTXUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758836939; c=relaxed/simple;
-	bh=sLpNoLV+AVXP6G4W71qfiUXX8lR08/gGbNrqXxV/Z7o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LaM8TuXObMgWf5sk2ZIAeY1Rx7EBTrWXNO4j0ULKOCi3kLWRd2dJruKNR6CAaJtsXFux88rIS29eqVVt/gSgZGwlBRB3CMnJEiH6chUMg0SCkIhT8vZ06/rExUjwLNeR4nXFINjnCYoUlWneIB8vfgExMZBttLEFerneD/fx25g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=05hjJyTM; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1758837129; c=relaxed/simple;
+	bh=YuGIAb1EsJAAtFJFSrcNTniqp8bxMLKuMi2RV1N9EVY=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=FIa8GIMDP0eBmVP9DYOW9DzhxP+758mQTKLgcgM2jM+HFwl7qGBkj+gPSU0my+A5PDgr6N8rxkGGLk/qGZj2RvHLgkQZAo/5bev22tXBxuD+KHXWIJjf6dDPEKUjjsMWGjJSWjo1Vp9uQEj500i3obKcnBbdC/e0A5NiYN/1qWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=electrooptical.net; spf=pass smtp.mailfrom=electrooptical.net; dkim=pass (1024-bit key) header.d=electrooptical.net header.i=@electrooptical.net header.b=sLnT+OMm; arc=none smtp.client-ip=146.20.161.86
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=electrooptical.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=electrooptical.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="05hjJyTM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1758836937;
-	bh=sLpNoLV+AVXP6G4W71qfiUXX8lR08/gGbNrqXxV/Z7o=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=05hjJyTM5pby3u4FtaFB0DciDcTeekemKGwiHs1w+S1ieM9kiUMUIRQtyGuEPFZSd
-	 anDcZDZyYdGCHRWwKlIlVtjLi69HkqWSztpr/N5+seyfyx05Nqn8FLGhvRmGJxvsv5
-	 bzji4lNyy5GA6dRVXPyYUwLaPbOoT4peJUkZZNcHkub4rEwqUWWD0tx10H/bgSyIY2
-	 gCKx87uvSBYaq1a5P9+HbAqwQxoj1c2KALA+818x50wPch5kQJmN3SgwePQ3KfM+2j
-	 EjX9SjuFNnkuhepy9WvgwnlqOtbKhqm6zHFegb0+kTKRQPr5Gbotgp3BmI+jwbTdDp
-	 eJza5GzUtJ9nb4J1tPP4VlihnpfDDmp8W14i0TCCYZ/v0SyGEfr9+DC0WdS5g1bvq1
-	 LbbgEJ+0yVlTTvQjk5msxwpeQVpDwPs6RKtjI4mNnPsQzANf66lSGVgh7BWfP8QFx8
-	 S2m8hVMDuRdhztnrNiYl1QqlB2HfMPhPzqDB9heQk7Djw1HAYND
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:916c:9d5f:e4b:808d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 149CC20107;
-	Thu, 25 Sep 2025 21:48:57 +0000 (UTC)
-Date: Thu, 25 Sep 2025 21:48:55 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 6/9] rev-parse: allow printing compatibility hash
-Message-ID: <aNW4x6Tb1g-YKqzw@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Derrick Stolee <stolee@gmail.com>
-References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
- <20250919010911.649831-7-sandals@crustytoothpaste.net>
- <aNOkDEsJIfq0Ufgg@pks.im>
+	dkim=pass (1024-bit key) header.d=electrooptical.net header.i=@electrooptical.net header.b="sLnT+OMm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=electrooptical.net;
+	s=20230609-lhoc62o1; t=1758836696;
+	bh=YuGIAb1EsJAAtFJFSrcNTniqp8bxMLKuMi2RV1N9EVY=;
+	h=Date:To:From:Subject:From;
+	b=sLnT+OMmcpXarkTHfnRVCofPtLeVvbZcG2kApRTo0V6ARCE+tW/RNranCX+USwrNi
+	 QfdhmJ+E12+2+zn48LsgS6ty6QcsWSeYkrZXVxyN91XS9A7TeNuItgOaMD9fC6I3eg
+	 k69q1EBYv325Gs2d+gR1FU7ZzEH83jo3FU2ku+XY=
+X-Auth-ID: pcdhobbs@electrooptical.net
+Received: by smtp11.relay.iad3b.emailsrvr.com (Authenticated sender: pcdhobbs-AT-electrooptical.net) with ESMTPSA id 3BC85403A3;
+	Thu, 25 Sep 2025 17:44:56 -0400 (EDT)
+Message-ID: <67a6ec3a-a718-438f-ac4c-ff989f316a9b@electrooptical.net>
+Date: Thu, 25 Sep 2025 17:44:55 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xZ3amuw0oEwt0XG7"
-Content-Disposition: inline
-In-Reply-To: <aNOkDEsJIfq0Ufgg@pks.im>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git@vger.kernel.org
+From: Phil Hobbs <pcdhobbs@electrooptical.net>
+Subject: whatchanged is super useful!
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Classification-ID: a78c571a-dcdc-41f4-919f-9173c14eeeef-1-1
 
+I use git whatchanged all the time.  Please don't remove it!
 
---xZ3amuw0oEwt0XG7
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks
 
-On 2025-09-24 at 07:55:56, Patrick Steinhardt wrote:
-> On Fri, Sep 19, 2025 at 01:09:08AM +0000, brian m. carlson wrote:
-> > diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-> > index 58a4583088..98c5a772bd 100755
-> > --- a/t/t1500-rev-parse.sh
-> > +++ b/t/t1500-rev-parse.sh
-> > @@ -207,6 +207,40 @@ test_expect_success 'rev-parse --show-object-forma=
-t in repo' '
-> >  	grep "unknown mode for --show-object-format: squeamish-ossifrage" err
-> >  '
-> > =20
-> > +
-> > +test_expect_success RUST 'rev-parse --show-object-format in repo with =
-compat mode' '
->=20
-> Does this test really depend on the RUST prereq? I cannot see anything
-> here that would require it.
+Phil Hobbs
 
-I think that should move up into part 2.  Will fix for v2.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+-- 
+Dr Philip C D Hobbs
+Principal Consultant
+ElectroOptical Innovations LLC
+Optics, Electro-optics, Photonics, Analog Electronics
 
---xZ3amuw0oEwt0XG7
-Content-Type: application/pgp-signature; name="signature.asc"
+160 North State Road #203
+Briarcliff Manor NY 10510
+845-480-2058
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
+pcdhobbs at electrooptical dot net
+http://electrooptical.net
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaNW4xwAKCRB8DEliiIei
-gSxJAQCIv03BR8xuliHPbeOB/mWuOhweBHKCslSj+XgwiSgUpQD/a6RBtzvFw2SE
-pxUqUA2egrZiIEj/P/eqdgfQAPwBUwQ=
-=Gkx5
------END PGP SIGNATURE-----
-
---xZ3amuw0oEwt0XG7--
