@@ -1,69 +1,69 @@
-Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E84302758
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 15:10:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94313303A38
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 15:10:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758813045; cv=none; b=NYS40cnLPf7XbqMZth3jROI1W2Kt4h8xnXQ/V2TtP25PkHH8HaXLN0rV5z+m1pykELJeS9AqG8tyhlXspvCZgmqbUN3DIoJbcsnJL4EtcnhcYIzWR+D1btHwG7znwfomW/CkbXy5JR7YeEew/mt69YeI+iwXl3eiLgAijO9azAE=
+	t=1758813046; cv=none; b=ehxJlME4u9lvhLnX+zsDwsgz6pblLRzuk+eka7sRJlbKYr25w86H3w8j82KmNoGZdd0feMjSJRLTZQCXOmXt/6BT1eo5tDVBN59PIB28nwd2oGhepeHpCYfKSo3p5kegAGnE6vC5Vs3s5LsGmMHd5iBMDOtRwGvJUq1wwNJdFLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758813045; c=relaxed/simple;
-	bh=qtSQ8E3FxYfTAumEG7YvUd5oq9LkHCa+D6xXZiDHlO0=;
+	s=arc-20240116; t=1758813046; c=relaxed/simple;
+	bh=6BxJNHVmapUhE8CmFSJC+0D5/VYP9DXlmMVkCIyl5Zo=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=LL7/VQgBaT8+EIDruoNH9l8rC/FeLufdK3uiqT2XBSFZb2FY3IEe8W9nfvGAiwtg3DRIC1yS/O5IEHuzZahCU1ugniv33tBU+KHFFxjAq/eDSYSqywWPoSJjW+T+V+dNT1uRegTntzDKVinzXVu9TJqdaeh8NFKEBRcX0/FxVpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D3KJgb1e; arc=none smtp.client-ip=209.85.166.52
+	 MIME-Version:To:Cc; b=BYmJpijsqGCjThoRyNdR1lxXUJW5F8vC6YBZSluukXzEF5GVkXnGD+s5UItGvRvk3JS6bY5/lmaOmC/K2Rg0zIlwo0I9KekF5WDDRoxaiTxPyDZ5n2Wyb6R1vpzUxWT8TXhBM1qV+fzyd1HbpRq0xr2HtQmrgxdyjHW9dm/zQfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EpyeFldm; arc=none smtp.client-ip=209.85.166.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D3KJgb1e"
-Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-90a0b3ddebeso16763039f.0
-        for <git@vger.kernel.org>; Thu, 25 Sep 2025 08:10:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EpyeFldm"
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-42486ed0706so5182185ab.0
+        for <git@vger.kernel.org>; Thu, 25 Sep 2025 08:10:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758813042; x=1759417842; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758813043; x=1759417843; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OwvbXw7yeyduK5FQwcplE2FeWWV8zQHgiDfDuuucg3I=;
-        b=D3KJgb1eGXIfVWUfeBzyVzfCUTAo8CMNl3HIu6GUv8Jbb32yAMwkXHnXOQH93xeZTR
-         5agcRLiB4oGKHr45WVI3XeT3CTNSAZMwxIZbBe+JvM6YauqmF2N3ye4m+BsImTN3QmmX
-         jGo32kppdaH0VVSRN3pX1zQebG6Vev+KXh3SRSY4Oz3yfrRXV1drsmNOIcbWhlCAuTji
-         1CNqfh1QP2xXDhV4EP6h5+V92VseDKn6SdFmQtTkAsBeghsgMn/nZbkM2cfhyQGD2x1x
-         WZitLcisFYvJfEogEwCe6jWw+7Xz6Roj6gKcfT5SU+cBTEn4I442z5CZVTmAzoj3TI4e
-         0RAw==
+        bh=+H6qc8mvTPGjG0BAc9G2r7GIn56OElBrGsejPWmWR0Y=;
+        b=EpyeFldmtRpcOLdNDfazjFooTNgzgcJfK5s8r6EZVJ3Tu2M1k7h1+OOwQleO/YMI9O
+         BGZvRVQ0bYPI7oyZ9ynNV/LGNiZ2cYQz6NhP4Od1b6fpihZIMx2ODlDh++MVxmgmto8L
+         2WxA5rVV9zAWrbjnzvvQarBJlTpXQzT1UbJU5syGb99gdLsbGOK2ycR2wTKBxsA5pbXl
+         bM8rC9gwdMkJtK2eFwWXzB3yB+hEYs2bH1GNXJoniM6ZIlcmho4p45mYWC1uS2sSnV70
+         x23u4tInlFd5+b3665SP5Gy7253v3y/p2F+z5F+MBSr20yvG5O8vwVct4COxFn1djYdc
+         EJKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758813042; x=1759417842;
+        d=1e100.net; s=20230601; t=1758813043; x=1759417843;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OwvbXw7yeyduK5FQwcplE2FeWWV8zQHgiDfDuuucg3I=;
-        b=l6f9yEXjCdKTkiy9koJqX+fwo5+MAqxtPUUFe62S8hVax9jm0WOx3GogPD3HxaohxN
-         /eqnzeJ3SGX+Ya64vVanLzTpaDdntTDYsnMSBD51+GBHMLuCCPMDk9N0Cu1m5+CzgD+h
-         VL69lkeWwfKQ8yBphQkTOnyFQj6wslifH4Fg8YWv7ipoIeIuqRVtYl+gQCeT2x8Uayt6
-         K7ifNGCaW5Yh2VgjTn/I2fenV2yyxk3M5tzBFfdciK62/z7P3gfc4xCl0A6jMTO373x2
-         eMcj3sQ2y5JJv1Ew/YBZdKYAl8hEujvmGzt3t3ekcOd7lQebovszHd1FYWQiwLc0/XZZ
-         QG2A==
-X-Gm-Message-State: AOJu0YyjF1iG5KaI2d94ZFynp4nesci9yWuc0OuSN+OgIxcbWVl+K1br
-	L7XEidzljizFbRgD8lLYMeQjI124T9Pj/76Eth4LnIRsShSCatemuXPqNTHag/BR
-X-Gm-Gg: ASbGncvJ+L4DqjhuQOOZbTQMWSUBTO5bDUwt6Cgp/RP1Y5pCAqy+tNafWPVMUfgPsui
-	5ZP4Q59EH5237IXjfb6DxXvYqV4FcpNLfs8VDqGidPH3VtjH3WyRoKijBV2xmRLOgdI8PuJx4Xi
-	cNjjZPKGsJsU0EF8mrrL/IhDCzQlvIuR0F0HTIiH46eJ+cyREzgcGK5V6/Uu99VqGGw8TD1y4x4
-	3EvKF9LIW3rAI1sUMlBLjvk5AhBNJnxYSsmXrA07uwA4aHlczL4qr9H9PbNOAnBp8jK5f3/UMkZ
-	VJw0qho78Xc8HW0TJ3lH4d2QOCKxln4lz/gbaL6vq3Fcg5B+D/8+/V3pRbeaPNHucWHZDYSUDYj
-	wMsz2/AYy/BOAXixbwApYZMhevQ==
-X-Google-Smtp-Source: AGHT+IFGUVdvwDGbmb6j963QNuXk+i9CShb0Mg1w9AyEFken/wJswCTQeS46lfskQbCjv4lKOgJpEA==
-X-Received: by 2002:a05:6e02:12cf:b0:424:9926:a97b with SMTP id e9e14a558f8ab-42595654326mr56534955ab.25.1758813041747;
-        Thu, 25 Sep 2025 08:10:41 -0700 (PDT)
+        bh=+H6qc8mvTPGjG0BAc9G2r7GIn56OElBrGsejPWmWR0Y=;
+        b=jDvvIWLPLcaBLob35xUJSGTm1BfvusjvUGMg8faEYUL56CdxY6X3NgBbujwHUrsoiH
+         8UGyVsfOjUs/P5YyHVam2hJFcYmSmUtxbyUQkMi2gaVBvtXrmwkIxyhIgNqZkipfC2AU
+         OrYdRKxg/cyFDIHWot/UtBs7zrGdX3Y8moOVkVfi6x6otSAnpfMB8rJJbJaPQ28Fbm/9
+         k76cnyKiZtkkbESD4FEuizR2hPkAWHMgSvMnU8grwWjx+WmjXrdi/2Yo6ZImn7SKNkE/
+         1sYqWj2VveFQq+f8XOX0lJtrOW2eCFb9I6H8CRNISzUDOWb5c2+CQpV1d8e2LXD4v+hw
+         uixw==
+X-Gm-Message-State: AOJu0YyOs7MnaYc7R5t+mObLTlctNGxbmW/OXNjD8UEe+XrYB7d9DdmQ
+	Rp/5KUrj3ZoivaPqJ6WqfEZz4hdnjlQ7swoYfYXtVpUqkxBG8Wx/dq7LP8hq4Vk5
+X-Gm-Gg: ASbGnctNzmFzOLc9GG+mjJifuqp0vT6ggiO/uozdu3oFuOEYDxDkxyScGpCfxd5YW2z
+	MfyJoNU0AIKMfKFM1Pjd9CyxsgVCJDljN/z7TpYy6AAxknmZSvFTMWtqq6UdklHdxAuvEnYFTdj
+	Um4ILRfI9BAZNmYvr/+kr6LceuszHNZfJtlqCSe/Q8fyzyZk7agmChKZAfSQenP319n0suSC3uX
+	a6tYFox0cUPC2gYmd9eq+AR0jrTmtuent4LJrzr8YV6Ec8Iu5FQWE29CI8DNB/oN66VrqtMX9ma
+	H/WZwRfJndi1bUysVk4nDWSfHZ+Cmf0mtEMdrUQWeZmokCveIJCQG+01elmOjOj2KHA5k3oI2dl
+	0aBqu5xhh2gyCF6PGdaeeLdlaMA==
+X-Google-Smtp-Source: AGHT+IHStSHcpQjNdBP504yd3LS5/Lc5o/d1oTioDnovBiYHuFqmJZtG5/zHKFyqxkBRKzjr1M4apw==
+X-Received: by 2002:a92:c982:0:b0:3f2:a771:9fb3 with SMTP id e9e14a558f8ab-4259566ca81mr44008155ab.27.1758813043017;
+        Thu, 25 Sep 2025 08:10:43 -0700 (PDT)
 Received: from [127.0.0.1] ([52.176.124.180])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-425bfc9ac86sm10826965ab.29.2025.09.25.08.10.40
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-56a647da50fsm903635173.15.2025.09.25.08.10.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Sep 2025 08:10:40 -0700 (PDT)
-Message-Id: <4935dde39933744ecd957d84d3b71287fc274074.1758813038.git.gitgitgadget@gmail.com>
+        Thu, 25 Sep 2025 08:10:42 -0700 (PDT)
+Message-Id: <390686dbb3665b86d4651dfbc9dae0c3067e8745.1758813038.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1863.v3.git.1758813038.gitgitgadget@gmail.com>
 References: <pull.1863.v2.git.1757950144.gitgitgadget@gmail.com>
 	<pull.1863.v3.git.1758813038.gitgitgadget@gmail.com>
 From: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 25 Sep 2025 15:10:37 +0000
-Subject: [PATCH v3 1/2] add -p: mark split hunks as undecided
+Date: Thu, 25 Sep 2025 15:10:38 +0000
+Subject: [PATCH v3 2/2] add-patch: update hunk splitability after editing
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,71 +82,83 @@ Cc: Justin Tobler <jltobler@gmail.com>,
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-When a hunk is split, each of the new hunks inherits whether it is
-selected or not from the original hunk. If a selected hunk is split
-all of the new hunks are marked as "selected" and the user is only
-prompted with the first of the split hunks. The user is not asked
-whether or not they wish to select the rest of the new hunks. This
-means that if they wish to deselect any of the new hunks apart from
-the first one they have to navigate back to the hunk they want to
-deselect before they can deselect it. This is unfortunate as the user
-is presumably splitting the original hunk because they only want to
-select some sub-set of it.
-
-Instead mark all the new hunks as "undecided" so that the user is
-prompted whether they wish to select each one in turn. In the case
-where the user only wants to change the selection of the first of
-the split hunks they will now have to do more work re-selecting the
-remaining split hunks. However, changing the selection of any of the
-other newly created hunks is now much simpler as the user no-longer has
-to navigate back to them in order to change their selected state.
+If, when the user edits a hunk, they change deletion lines into
+context lines or vice versa, then the number of hunks that the edited
+hunk can be split into may differ from the unedited hunk. This means
+that so we should recalculate `hunk->splittable_into` after the hunk
+has been edited. In practice users are unlikely to hit this bug as it
+is doubtful that a user who has edited a hunk will split it afterwards.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- add-patch.c                |  3 ++-
- t/t3701-add-interactive.sh | 10 ++++++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ add-patch.c                | 12 +++++++++++-
+ t/t3701-add-interactive.sh | 21 +++++++++++++++++++++
+ 2 files changed, 32 insertions(+), 1 deletion(-)
 
 diff --git a/add-patch.c b/add-patch.c
-index 302e6ba7d9..61f42de9ea 100644
+index 61f42de9ea..bcc2d7666f 100644
 --- a/add-patch.c
 +++ b/add-patch.c
-@@ -956,6 +956,7 @@ static int split_hunk(struct add_p_state *s, struct file_diff *file_diff,
- 			* sizeof(*hunk));
- 	hunk = file_diff->hunk + hunk_index;
- 	hunk->splittable_into = 1;
-+	hunk->use = UNDECIDED_HUNK;
- 	memset(hunk + 1, 0, (splittable_into - 1) * sizeof(*hunk));
+@@ -1185,19 +1185,29 @@ static ssize_t recount_edited_hunk(struct add_p_state *s, struct hunk *hunk,
+ {
+ 	struct hunk_header *header = &hunk->header;
+ 	size_t i;
++	char ch, marker = ' ';
  
- 	header = &hunk->header;
-@@ -1057,7 +1058,7 @@ next_hunk_line:
++	hunk->splittable_into = 0;
+ 	header->old_count = header->new_count = 0;
+ 	for (i = hunk->start; i < hunk->end; ) {
+-		switch(normalize_marker(&s->plain.buf[i])) {
++		ch = normalize_marker(&s->plain.buf[i]);
++		switch (ch) {
+ 		case '-':
+ 			header->old_count++;
++			if (marker == ' ')
++				hunk->splittable_into++;
++			marker = ch;
+ 			break;
+ 		case '+':
+ 			header->new_count++;
++			if (marker == ' ')
++				hunk->splittable_into++;
++			marker = ch;
+ 			break;
+ 		case ' ':
+ 			header->old_count++;
+ 			header->new_count++;
++			marker = ch;
+ 			break;
+ 		}
  
- 		hunk++;
- 		hunk->splittable_into = 1;
--		hunk->use = hunk[-1].use;
-+		hunk->use = UNDECIDED_HUNK;
- 		header = &hunk->header;
- 
- 		header->old_count = header->new_count = context_line_count;
 diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 04d2a19835..a6829fd085 100755
+index a6829fd085..13739a4582 100755
 --- a/t/t3701-add-interactive.sh
 +++ b/t/t3701-add-interactive.sh
-@@ -1301,4 +1301,14 @@ do
- 	'
- done
+@@ -1311,4 +1311,25 @@ test_expect_success 'splitting previous hunk marks split hunks as undecided' '
+ 	test_cmp expect actual
+ '
  
-+test_expect_success 'splitting previous hunk marks split hunks as undecided' '
-+	test_write_lines a " " b c d e f g h i j k >file &&
++test_expect_success 'splitting edited hunk' '
++	# Before the first hunk is edited it can be split into two
++	# hunks, after editing it can be split into three hunks.
++
++	write_script fake-editor.sh <<-\EOF &&
++	sed "s/^ c/-c/" "$1" >"$1.tmp" &&
++	mv "$1.tmp" "$1"
++	EOF
++
++	test_write_lines a b c d e f g h i j k l m n >file &&
 +	git add file &&
-+	test_write_lines x " " b y d e f g h i j x >file &&
-+	test_write_lines n K s n y q | git add -p file &&
++	test_write_lines A b c d E f g h i j k l M n >file &&
++	(
++		test_set_editor "$(pwd)/fake-editor.sh" &&
++		test_write_lines e K s j y n y q | git add -p file
++	) &&
 +	git cat-file blob :file >actual &&
-+	test_write_lines a " " b y d e f g h i j k >expect &&
++	test_write_lines a b d e f g h i j k l M n >expect &&
 +	test_cmp expect actual
 +'
 +
  test_done
 -- 
 gitgitgadget
-
