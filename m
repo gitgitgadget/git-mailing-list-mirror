@@ -1,88 +1,90 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE3613635E
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 19:17:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FAC23128D7
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 20:05:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758827875; cv=none; b=ha0JVbK43A2MJcI97meKM4FZvJnQacsEKYuk3z34IRc7grpbJ6AKd3xhBaZ1rd8ScaQu5I2jmlA89WG9mo+x1ONVI9g8klRvoJMgqKq0wKv5J1mglKRYwoPUCSQ4UOGPuAlsJMOyKUBQGi3CgMI9rI2GTI2m8pKHYM9RpFnIVGw=
+	t=1758830748; cv=none; b=tWzuDwC1sAQC0Xmz6w0lSrNymEiqoGfPKx75UeByDXC8xj0AQ2XsbEkdernognH3pfnOdOCNJ/SuCIHnuuJxoQt7FI6xOj/Oy2djl9dAAT7A9G5RgAD92RsIdG3SLrlab2bLgj/gacbEq9Yl77IqyBG7Tc/acVWSFytffQJRfg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758827875; c=relaxed/simple;
-	bh=sQkMcs2kbryWhMVmUBZeOiZ7kfZ0me1PjlMjL1BvSIA=;
+	s=arc-20240116; t=1758830748; c=relaxed/simple;
+	bh=C8D82I3J6RX4CP9u5ckOswGX8e7gabpH7BSHgWy8yVk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HUvSVQ1zCqcsP7gzpvr8hzyBGIJT8RzoD5YpCzlN56qO6cUcqcWHE51Oq4Emo9gZp1eLkCmIRipptA5sTH924/ZkWDN9flpLn2Dk/lE2FlhKrzkfrXDgUDu+khBAeAuVh/CQRsqj3MlC6Qm1jXpcnyQkF2O0e70VAIQ8U9d0Oak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ARx+whhR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U49RFKLT; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=dKdWi9VFbr+cidiQtf/0AtHwl6zylN1+jMfQp6fNDL2JoPUVAgN0lnoL4yPDF8yfrDxvDaWkgFGCc6f48m2Dq59rlx7JxuqLK5xqX2KjJc7SpWqndugrCRHYe6IhHlrpVLlUEwopVxQqNFiTewm8Yoh5M3jS1Z4KdjzUfBIjEZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ty+GGoJq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U2UTF51W; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ARx+whhR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U49RFKLT"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3FC751400053;
-	Thu, 25 Sep 2025 15:17:52 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ty+GGoJq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U2UTF51W"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AD82C1400064;
+	Thu, 25 Sep 2025 16:05:45 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Thu, 25 Sep 2025 15:17:52 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 25 Sep 2025 16:05:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758827872; x=1758914272; bh=CRdLTBH4Ci
-	EmOP1NfC4kTsrbu+mSx0tYxgqzYsJrRXQ=; b=ARx+whhRt2A5pYzyhWzqhvBMbd
-	013BVHp8hTcotcZaDzajEuOcFOJsMaTqpn28QFtLAxizAyxRuj+naDgmLrpgTu1N
-	+ccbLxV+szw/CpMGlsyxndIRvhX0DS0+PqhGMcbqFFlRXQ58PuFGP/d83ShlPnnt
-	BQY77SBQjVKVTTI7P+nekw7Cbm7hfxTarNzD5e+zDn6/s4C4uSxz/MKPjlVTvNnt
-	WlYaOxZTS8Zpkpwio8nFqQcErMZjkYnsFhBIV2sLMUSs8iiFF1mgqpIx/pN/o1xN
-	ouUFSI7VaXRNkfFaB9xsnpBEJp+h5hRl4TzpwOtRltTwY2IZBRjDY3N/8M6A==
+	:subject:to:to; s=fm3; t=1758830745; x=1758917145; bh=/qJubgj2ON
+	ecuX7MHFtpog1J+ISQ+xnuChZeRVQsrvw=; b=ty+GGoJq2WHNjZOhlASRDVdq/q
+	CEZklwYlZTqA5C2yXXXHGVlsY9JD8Q8Y4vkt7UsAA24BFW7HefCb9Ijw0VhwhhFz
+	B4W+m/X+1EkBS/BUy8+h87OHQ2JkfvPgmsBGFdZYUE71OVyXbCT49ovj0VIRixa+
+	0BYWqLtYGBw4w2bNMjrnVxRqZg3OEZ8Ht6s/rQGFt9sYRjMwWojNFha3mWFifkSY
+	ceZW+TJ52xQEKsZoPTOpNRAJLey4q1hWnhQUTAYBnb0SPn3t4Ly70PrGbHz9hXHQ
+	ztp8oLmwZhKFuMEIsM0+cIw+IHsoMRbRwqPTPDsnN2N5J951HnxIQRkTYmGw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758827872; x=1758914272; bh=CRdLTBH4CiEmOP1NfC4kTsrbu+mSx0tYxgq
-	zYsJrRXQ=; b=U49RFKLTRHyn+qOrpluZskp5JWfCUUpk3MefW91AjasZ8xRVcNl
-	0z9vubUFHZCjSbtrGMtYHaw/iNzN4x8GE6/WVrNaMF0S7fbay6ATnxNQhkctzNq7
-	g4cwJ0KWa3/d9pd4JzaqBwG28fn2GW/Lhk8VRjtwLTT3cVuFY7Oy8jvaKoRlR4v4
-	HLOUFDVJQGhUtdW9bX+7MpQlNnSrRLhGqDcPHknTPMnP3xLQs04hjB8fj2MAIdfe
-	IB51ED9Y0pdRMQ63nG9I6VqtnEHnuXoQvbmu3VuE0a7VRjAnQ2Qrub+BSuOCq+WM
-	M24dDH6e7Nx9tY3ZwFBX6CVQxDoR/5hBrAw==
-X-ME-Sender: <xms:X5XVaAG2qFVCh7ZRtGG2_RhUM1hMcQu-0X8-0fEBjyx-RJjGf0FGBw>
-    <xme:X5XVaANLc86bSSYA48jwGOLIdW8VJiTR40eGAcSDOMHkKpmfkpTGw15trzylueKQq
-    e1PT1CN6n-r-EtyN54E6BlR8Q7hqSLnySI2mjhBUWwGlNv5dLQu>
-X-ME-Received: <xmr:X5XVaCc1UuCPZczP77Ax4yQYA7GaWHsAzIMlnuf6eO9AOp1a4wUZxfFskPdbRZVAN6Znj8icraJpaKVDhUQSwbxsleGGruW5zktF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeijeeftdcutefuodetggdotefrod
+	1758830745; x=1758917145; bh=/qJubgj2ONecuX7MHFtpog1J+ISQ+xnuChZ
+	eRVQsrvw=; b=U2UTF51WFutp0B2xLzaMP/5AVkGAlFgjmGoEkjkAmlJZvdF5nMN
+	B/2Jz2g9pOM7HA5IxkMIEm1iQD4+4f4RFkAiBSiXLxzb6v3Fm0GnlzQkHVTz3WQ4
+	6Y2F99s6Qiz6P4R5VlkTsJ9PEXDpW+E2Z/siZcS3VxOnPBvNd21bIuDJctGuXLtq
+	nRdk5xx0LFNdH1MvlRRK6+Gd4FV9Om4ZRMvYF//BsdN+YnmAlMSiY3fDkMWyDGXE
+	cw5lQstoVTyQX08kUxRNQRhxkR8gPH94pzzNx6s/ov+LG32MBDyE84MrYdL5Gu5C
+	XBFDsAptwr1sCrsRYEu81BsddPmLstqd7yQ==
+X-ME-Sender: <xms:maDVaOH0qDI-qv7gJ0NB_prFJvc8gMmObdGiQcAWjjch8Q80Io_ICQ>
+    <xme:maDVaOZkx8leQg_twVAt4f0zSoXZpyB18TNvOo8yYXziOkrqAt393T_jkY49yilc3
+    nU_qIG8xPvfN1sb5Jvn_tOWNFJ8pvt_hsybBPmOTyo_U4Q3f3s--g>
+X-ME-Received: <xmr:maDVaOVXIRoCneayyd9_xqCS-c-ZupDdtNXHorU9bZbBorlf8upRlUl9ogX0erHyMn30ts7kD9VrKWDGkJ_HOE_TKnnQGis63Lcf>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeijeegtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
-    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhsse
-    hpkhhsrdhimhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtth
-    grhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:YJXVaNvVVrYcC_eKhpDRMUSlg_eNhEWsvTSHCFxLZ1uB1cy8Q2n1MQ>
-    <xmx:YJXVaDmNFewSNphrhc4lnY04TieubCWFT17UO0olV3G9vI0ldOs5ZA>
-    <xmx:YJXVaPywloQX0U3HUb-pxSbqbCekodjwEGeTFuXKM6uZ3fSLiomEiw>
-    <xmx:YJXVaFMLtd317BD8oK3F9F9xVk_cQA7hyxuIgIEAq0uhNofqVepPbQ>
-    <xmx:YJXVaEFph5r2l0mE8XMa_O-eGOitmJKUGhCOTsuU_-nMcU7BS_XHJ1Ur>
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhlrggsohhrrg
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhope
+    hruggrmhgriihiohesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhi
+    mhdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpthhtoh
+    eprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomh
+X-ME-Proxy: <xmx:maDVaElILycujGC_PoHC2JQQpHlcg0t7La7IOLYf57ch8sHlPhjVjA>
+    <xmx:maDVaJDrnUPPSs76AtZfBbotkNJwestiBZIMZ9_5L7gdmsdnp3N7sA>
+    <xmx:maDVaDiqWJVXt5zbndosXW2x-F4_Vi6bQrHSofNKFFVZa0Ocp_S-mQ>
+    <xmx:maDVaGwaEj5_VF2H_aMkSZt1HZVQKa4t-EQTKLi145l_up-CNxq70g>
+    <xmx:maDVaDzsizG5Jvz4g_vS6Ui_REIade8OL_qPabki_Hj5yPnE13jR_CXT>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Sep 2025 15:17:51 -0400 (EDT)
+ 25 Sep 2025 16:05:45 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Derrick Stolee <stolee@gmail.com>,  git@vger.kernel.org,
-    Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 0/6] odb: track commit graphs via object source
-In-Reply-To: <aMFjGoPhGsRCTihO@pks.im> (Patrick Steinhardt's message of "Wed,
-	10 Sep 2025 13:38:02 +0200")
-References: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
-	<xmqq5xdx7qx4.fsf@gitster.g>
-	<cf7aeda1-297a-4805-b0ae-e379ce11bbcf@gmail.com>
-	<aL67U0-tw7O-y6_X@pks.im>
-	<4e67fb02-bbbb-4cd8-9892-6f65b4f82b26@gmail.com>
-	<aMFjGoPhGsRCTihO@pks.im>
-Date: Thu, 25 Sep 2025 12:17:50 -0700
-Message-ID: <xmqqo6qyfijl.fsf@gitster.g>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org,  Emily Shaffer <emilyshaffer@google.com>,  Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>,  Patrick Steinhardt <ps@pks.im>,
+  Josh Steadmon <steadmon@google.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?=
+ Bjarmason
+ <avarab@gmail.com>
+Subject: Re: [PATCH 02/10] hook: provide stdin via callback
+In-Reply-To: <20250925125352.1728840-3-adrian.ratiu@collabora.com> (Adrian
+	Ratiu's message of "Thu, 25 Sep 2025 15:53:45 +0300")
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+	<20250925125352.1728840-3-adrian.ratiu@collabora.com>
+Date: Thu, 25 Sep 2025 13:05:43 -0700
+Message-ID: <xmqqh5wqfgbs.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,44 +94,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 
-> There is no inherent reason why a new backend would not be able to use
-> the existing commit-graph infrastructure indeed. But there are reasons
-> that specific backends may not want to do so. If objects are already
-> stored in a database table, then it may make way more sense to store
-> additional metadata that is currently stored in the commit-graph in a
-> secondary database table instead of in the commit graph.
-> ...
-> This is roughly what I have in my head right now. And I realize that
-> this information really should be sitting in a design document. I'm
-> working on that, but still need to land two more patch series before I
-> want to send such a patch series to the list.
+> @@ -69,6 +69,10 @@ static int pick_next_hook(struct child_process *cp,
+>  	if (hook_cb->options->path_to_stdin) {
+>  		cp->no_stdin = 0;
+>  		cp->in = xopen(hook_cb->options->path_to_stdin, O_RDONLY);
+> +	} else if (hook_cb->options->feed_pipe) {
+> +		cp->no_stdin = 0;
+> +		/* start_command() will allocate a pipe / stdin fd for us */
+> +		cp->in = -1;
+>  	}
+>  	cp->stdout_to_stderr = 1;
+>  	cp->trace2_hook_name = hook_cb->hook_name;
 
-So is everybody happy with this line of thought that makes it
-mandatory for each backend to decide and implement the commit-graph
-support if they want to?
+OK, so when feed_pipe is defined, just like when path_to_stdin is
+specified, we stop saying there is nothing coming from the standard
+input, and intead set cp->in so that the child process would read
+from there.  Unlike path_to_stdin case it is not pointing at a file
+descriptor that is opened for a filesystem entity.  ".in = -1" is a
+standard signal to run-command.[ch] machinery that a pipe to that
+child is to be prepared.
 
-My reading of the later part of Taylor's message[*] tells me that at
-least Taylor does not agree with that position, and I am not sure
-about this design choice, either.  Surely, each backend can have its
-own optimization, but looking at the way data from the commit-graph
-and other auxiliary data files are used to optimize real operations
-(like populating the essential fields of the commit object first
-from the graph, only to read other things lazily from the object
-database, or switching to completely different traversal machinery
-when reachability bitmap is available), we cannot say that each
-backend can store whatever side data they please and leave it at
-that.  The code paths that are supposed to be generic need to be
-aware of these side data used for optimization to some degree, so
-conceptually it is much cleaner (well, at least to my eyes, that is)
-to declare that the auxiliary data files like commit-graph and
-reachability bitmaps are defined on the objects in the repository,
-no matter what backend is used to store them.
+> @@ -37,6 +38,24 @@ struct run_hooks_opt
+>  	 * Path to file which should be piped to stdin for each hook.
+>  	 */
+>  	const char *path_to_stdin;
+> +
+> +	/**
+> +	 * Callback to ask for more content to pipe to each hook stdin.
+> +	 *
+> +	 * If a hook needs to consume large quantities of data (e.g. a list of all refs received in a
+> +	 * client push), feeding data via in-memory strings or slurping to/from files via path_to_stdin
+> +	 * will not be efficient, so this callback allows for piecemeal reading and writing.
+> +	 *
+> +	 * Add initalization context to hook.feed_pipe_ctx.
+> +	 */
+> +	feed_pipe_fn feed_pipe;
+> +	void *feed_pipe_ctx;
+
+The comment for the member is a bit too wide.  More importantly,
+this does not seem to capture the fact that this is completely
+ignored when path_to_stdin is already in effect.  We should at least
+document it if we wanted to leave the behaviour as is, but I wonder
+if we want to detect and flag it as BUG() if both feed_pipe and
+path_to_stdin are not NULL.  There is no inherent reason why the
+data prepared in a file must take precedence over data coming over a
+pipe.
+
+Thanks.
 
 
 
 
-[Reference]
-
- * https://lore.kernel.org/git/aMNWgD4wKa1a5R8g@nand.local/ 
