@@ -1,159 +1,172 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1B72E9EAD
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 06:14:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3241280308
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 06:25:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758780876; cv=none; b=aPO++N2xEZWPo7oo2YmxXuRSbh5z9wc4s41FvpuOvNx+3JP0kWGdsewg2AmzN7cfG4+eGwzsC1Vjgh7hO2y0IAW8RZqAzqb3f7a++XPnAlbK3+49x723J1zOH+x2iPjXgwH+e1t718i7JGIwslVEQx22zvZwALq4vA6XvXrbe0c=
+	t=1758781517; cv=none; b=Qd/8x1v9LRwu2//PmsQottBwrA6d1F7apQXexeUYex8F/Se40H7yuwSLQ1JRDlHRvYFTlTQnjps7g9OksmxRxovIVmMg5EKfV2AduKHEwI0t9kBf6Jc0ZEWoTZAGWg4J2pHXdccHkFJRhuYtElHGzPclpCciuQbkbluBUSbMx0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758780876; c=relaxed/simple;
-	bh=Mz42+dKlaw/Hk0bIX96k0TEw4MVlyPQGefBoaMi1bok=;
+	s=arc-20240116; t=1758781517; c=relaxed/simple;
+	bh=rJSoGc44zLH+Mu25F1v9//gReOuum9ng6ZI0vY6oVjM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G/md3+MDzc5J65fHQTY2UhVAadAMHRsGtpk3yCYd8DOtobAkwmy7j9HeYWZYiaEF+zT1uZVHZtv/Cfz9J7WvMuDR5kMJns43nfACsBuSxKsLYnW3r7k4w6OHTnQn4J6lxypck3p9uSNA4VY9HEWO/jDgLYARv50Ri6FL5KJA5Nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Qzkyen/a; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ALnebwtn; arc=none smtp.client-ip=202.12.124.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=KwqYpWqxWJt2+jUEmm+MyxLWgOrMr4YCDOjyvA+Z+oARS2Jlv/k9cqZBooSaNLbf3980x7NMS3DEUyfcTn7thQS/U8sRKYPGKlugYCaS/eWCL4YpLVCPWQMt/F49vfWJW1V8l/Vq9AbdWDpelCXAslC0BNtGpqRZ98p3B64P654=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=D7PnIDqu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bywvcChG; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Qzkyen/a";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ALnebwtn"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id EFDF91D000CF;
-	Thu, 25 Sep 2025 02:14:33 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="D7PnIDqu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bywvcChG"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B90F17A0088;
+	Thu, 25 Sep 2025 02:25:14 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Thu, 25 Sep 2025 02:14:34 -0400
+  by phl-compute-11.internal (MEProxy); Thu, 25 Sep 2025 02:25:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758780873; x=1758867273; bh=dGF5XkLBYl
-	biF97rMLtGtLkps+d9UBJm+QEmL1ra62A=; b=Qzkyen/aFiD7QWh1V3MCwnYmDT
-	+Hlw1yuaa2zTyFPCusFk+Ql2g9W0OMsHWyVODIqUwXvEaQaDUFEMlBGlmOdd0BfF
-	pWpNPfN0SchMhB9b4lzoBT6b5X9HCHPwoLlOWC2AAfbpzGQH4lBDIyC7gUivMLxO
-	1Wm3UCH01BYuuaaI7+gSYtijBuvNd+rwN5eS0au2DFtk26q4JtnNzeMsjoCk3JPo
-	xl36EIeszy7cArVLQcMzCuJ7IcShC3QcmW7FIBRp2LlA0SKj+I7KO4NFNqe2kQ4p
-	fsY7XilTe5pw1y7PFa7rkqpvEb5T/EVB6Uyrh0hLnm3FBf+RlWLjrRFNKizg==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758781514;
+	 x=1758867914; bh=cqWhxVX6Skf6VgsN5CYUdb3B3PwyNtcNmDZbk0mkZUs=; b=
+	D7PnIDqudiSo2l/bH6JcxSVU7aVyPFidVk5F6pZW+NBVZfWsHq2GJpP7Siv1tEV9
+	6zrG75800C18NBwykSfvPKco9w2qJBIyi9uqojJ9Z8R3VGhv3UxCkSo6Ko37TEyA
+	Yzu0c7fRPLinQ+4dgB5HdgiRGH+ZTSdsLmji9C7KNQpislAJRrBp0UX3/IoyKlgW
+	6atC6OuFlgTTQB0it0nhaBv1lmAaxeFRXi0y/CkzCYOA1N0ule7y7eSfZzrsFKLM
+	FpXKUx+NgdbvkNrs0QuZItD8F5DvCxPtheMrCpG1DcQBeXX6vPU8enfqU30n6j60
+	9zOLY9ikzYiZqdohV43shw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758780873; x=1758867273; bh=dGF5XkLBYlbiF97rMLtGtLkps+d9UBJm+QE
-	mL1ra62A=; b=ALnebwtnrZWjZ9FzOMe1leG6o/s3JfW2jrbFP82adPn1argFMES
-	RBR9kn+bMQIVx/aeBYClhwCmeDjCckr0wzh6xNtT5Wa2l7X83CIeurF4+rPuLtQZ
-	+L86IpQMrEfgXrn6pyRPfiwKlN3lZmQfoB/j3zlc4z8YeQKhBD0QY6IiXCX/RJVi
-	6H6P7kpr1+/mPPVfSNN+gvFlnql9gH79OtvTjYr95KggoZd/unALDTH0czgFjplR
-	jSTDPYT9grRqF+wGNCFMeXkgbuLkCcAsdMwwNKF5zlqPTl7vaVbOoEHIe46jDyQM
-	DHI4HDWSabiSPUs/UdVp6cCipefSo2dc9uQ==
-X-ME-Sender: <xms:yd3UaFp-zk8Q1XZiOuzQvUQcjX13o7WdVfsNZraMmDeuUaDSYedn4g>
-    <xme:yd3UaOpol2rslCg7IgnM20hGwcYgZetimqu3bGSimJVnm5L1tyYxZzcNN5y2qTYxr
-    ycf3azab5u_oK-QIL4kcM5pWpQlWz5b3144eKwU0GbJ4BPaOzlx>
-X-ME-Received: <xmr:yd3UaHP1W3yq_QDqDu5dYTkBVfySnbnKsHLpGcIQsrfwJ120j94gwOK4foXCCX774IeWvFWmJrZhFx7bMFIrBXGFwHb3WpBG1s4zZ1hAN-Y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiheejgecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758781514; x=
+	1758867914; bh=cqWhxVX6Skf6VgsN5CYUdb3B3PwyNtcNmDZbk0mkZUs=; b=b
+	ywvcChG9YiiX/hzHGp7NKKMNb+S5QOjIFmW1HVJll71ua5AecjC1zi2VwnYNfKr1
+	KkwYNFSGUfjvEEaohNKs0fyRcx5VENXmEdPalSHeF07pmoR6QxaTJRSVeI7ljmep
+	JYWBJQEVeynfSulS/7VwkWJVRLata/rY83F7dc6NPVFG12iNoucTF8xt00Qw077K
+	Oao2rHRj1dyj6Y1U2UeurV9M1qZjUl3+Ru8dOoYXfvIgkIyGr1dbtqdlCQRFeAYK
+	ICW65RozVggMqjLpPXzVjiXjQ9hUpBW8XgMOPsehJUBq5zzJD60aOI5zD16WZ4WO
+	riH1r3CykjuaDg7f/y4xA==
+X-ME-Sender: <xms:SuDUaOK88kCRhan0E38j7j00W5yE4Elt2T9k4Q0-xgV7R9ctWk53vA>
+    <xme:SuDUaNBekvTxOMCX587cSs9W42qCFU9ofzQZ96NCV6Ln4rQADYIbbvJVK34nwanxb
+    MMpXd126Hq_oG2KFtUCiSdYR08ERca-OgUPtYHCspU6edwcI9lt>
+X-ME-Received: <xmr:SuDUaHDRUw5UfiaKm-bpIp6MYexBrgWPsfdOjCijX3ORIFmUCHe1QeK-BMz9ZCY1pG7HCF1ToW7AQAl5l0-L6Q4VdvDU1HGk4YLgJAb3JKM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiheejjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    ejtddtgeffkedujeejgeduhefghedtgfdtieduleeulefgueetheeludegueeuveenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:yd3UaPzh0GrGpoSnHfOWpXVMuiKTucOkFaCAvmmG-c0dQZJ6ES6dmg>
-    <xmx:yd3UaAvWia8d336N531gqQ1EgPA8DJjLYgNHHDhwCzUgvfJwOsyTRA>
-    <xmx:yd3UaI5SuL7purHcXdm44jV9CG9nTZTvN5GfUizyb56cCmC0k70HaQ>
-    <xmx:yd3UaPTNeZWwJ7XtcDXFmJAfWcgl-juMtAy3iWbvY3y3bLUGBkmcRA>
-    <xmx:yd3UaGtJKgLoSHKp1L6AuZlSbGx0QE3QDpk2wQnZIxRvrGmnOyxfsy3F>
+    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epjeejfefgieejleetvdfhjeffkefghedvffegjedvieefgfevhfdugfeggefgteefnecu
+    ffhomhgrihhnpeigkhgtugdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhm
+    ohguvgepshhmthhpohhuthdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepmhgvvghtshhonhhifedtudejsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:SuDUaPD2uyBAjlbPVmw44e1FB1zYoC1eRTxOZYb0RtVwraYZHlhxmw>
+    <xmx:SuDUaCqBOcoYsoSGkAzN0migjHnHhU8U7xCeISSJK8D3PIpp14bN0w>
+    <xmx:SuDUaJkUPEeZi6KUERdwXXPX5K7EV_iWk1r4cqJgMaawMhC37g9sPQ>
+    <xmx:SuDUaCyDW1Dbm-NPW6k9XioNHSc9MZUc_0tIqDpkJgQXSg4la7bFqA>
+    <xmx:SuDUaCRl6nQZeHlkW3--kkO6k-WsGGqDQQ0LAxcO4QFrPmZFJ54Dg49t>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Sep 2025 02:14:32 -0400 (EDT)
+ 25 Sep 2025 02:25:13 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ebb856f9 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 25 Sep 2025 06:14:31 +0000 (UTC)
-Date: Thu, 25 Sep 2025 08:14:27 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 71c7f532 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 25 Sep 2025 06:25:11 +0000 (UTC)
+Date: Thu, 25 Sep 2025 08:25:08 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, shejialuo@gmail.com
-Subject: Re: [PATCH v3 7/8] reftable: add code to facilitate consistency
- checks
-Message-ID: <aNTdwzUMlubjcppb@pks.im>
-References: <20250918-228-reftable-introduce-consistency-checks-v3-0-271af03eb34d@gmail.com>
- <20250918-228-reftable-introduce-consistency-checks-v3-7-271af03eb34d@gmail.com>
- <aNOHqEq5qxXrOCX7@pks.im>
- <CAOLa=ZQ641MncC9ACm9jfjx0WtQ+nK2shtyucQOxd08LDXDzAw@mail.gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ben Knoble <ben.knoble@gmail.com>, Meet Soni <meetsoni3017@gmail.com>,
+	git@vger.kernel.org, shejialuo@gmail.com
+Subject: Re: [GSoC][PATCH] builtin/refs: add 'get' subcommand
+Message-ID: <aNTgRGeaPajVz1dv@pks.im>
+References: <aNOQhncjwYCwCaZ3@pks.im>
+ <4FEB2B85-FC32-4076-9DA6-F47AAB096CB0@gmail.com>
+ <xmqq7bxnn5cj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQ641MncC9ACm9jfjx0WtQ+nK2shtyucQOxd08LDXDzAw@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq7bxnn5cj.fsf@gitster.g>
 
-On Wed, Sep 24, 2025 at 11:40:31AM -0700, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > On Thu, Sep 18, 2025 at 10:11:48AM +0200, Karthik Nayak wrote:
-> >> diff --git a/reftable/fsck.c b/reftable/fsck.c
-> >> new file mode 100644
-> >> index 0000000000..785e4b43e8
-> >> --- /dev/null
-> >> +++ b/reftable/fsck.c
-[snip]
-> >> +	struct reftable_fsck_info info;
-> >> +	struct dirent *d = NULL;
-> >> +	uint64_t min, max;
-> >> +	int err = 0;
-> >> +
-> >> +	if (!dir)
-> >> +		return 0;
-> >> +
-> >> +	while ((d = readdir(dir))) {
-> >> +		if (!strcmp(d->d_name, "tables.list"))
-> >> +			continue;
-> >> +
-> >> +		if ((d->d_name[0] == '.' &&
-> >> +		     (d->d_name[1] == '\0' ||
-> >> +		      (d->d_name[1] == '.' && d->d_name[2] == '\0'))))
-> >> +			continue;
-> >> +
-> >> +		if (d->d_type == DT_REG) {
-> >> +			if (!valid_table_name(d->d_name, &min, &max)) {
-> >> +				info.error = REFTABLE_FSCK_ERROR_TABLE_NAME;
-> >> +				info.msg = "file with invalid table name";
-> >> +				info.path = d->d_name;
-> >> +
-> >> +				err |= report_fn(&info, cb_data);
-> >> +			}
-> >
-> > One problem with this is that this is racy with concurrent writers. We
-> > don't recognize the "tables.list.lock" file, and neither do we recognize
-> > "0x*-0x*.{ref,log}.temp.XXXXXX"-style files.
-> >
-> > Would it be a better approach be to instead go through table names as
-> > loaded by the stack? The reftable code already knows to prune unknown
-> > files anyway, so I don't think we should scan for any other files.
-> >
+On Wed, Sep 24, 2025 at 10:11:08AM -0700, Junio C Hamano wrote:
+> Ben Knoble <ben.knoble@gmail.com> writes:
 > 
-> I actually had a more structured code here, where the idea was:
+> >>> Perhaps "show-ref --verify --no-deref" or something that does not
+> >>> dereference but works directly on a symbolic ref?
+> >> 
+> >> For now: yes, it's more difficult to discover for sure. But users will
+> >> adjust over time as they get more familiar with git-refs(1), and from
+> >> thereon I think it will become significantly easier to discover that
+> >> subcommand.
 > 
-> - For each stack
->   - Run stack level checks
->   - For each table in stack
->     - Run table level checks
->     - For each block in table
->       - Run block level checks
->       - For each ref / log
->         - Run ref / log level checks
-> 
-> But we move some of my tests to be runtime checks, leaving this as the
-> only check remaining. We could still do the first level of what I
-> mentioned above. The only reason I didn't was because we wanted to check
-> all files in the stack dir. But I think this is much better, having
-> unknown files in the reftable directory doesn't affect the repository in
-> any way. So I would argue perhaps that we shouldn't even care about it.
+> But unfortunately, that is a tautology, isn't it?  With the same
+> effort to advertise git-refs to make it more familiar to the
+> "users", you can make "show-ref" familiar to the same "users", and
+> problem solved, without a need to do anything to "git-refs"?
 
-Yeah, agreed. As long as we don't know about any edge cases where this
-does or did create problems I agree.
+I don't quite think so. The problem is that we have so many different
+tools that relate to refs, and you have to remember all of them:
+
+  - `git show-refs --verify` to read a single reference, unless it's a
+    symbolic reference.
+
+  - `git symbolic-ref` to read symbolic refs.
+
+  - `git show-refs --exists` to check a reference for existence.
+
+  - `git show-ref` and `git for-each-ref` to list references.
+
+  - `git pack-refs` to optimize references.
+
+  - `git update-refs` to update references`
+
+I'd claim that this is quite hard to remember. So...
+
+> > I think this goes to perhaps some of my unasked questions: who is
+> > the target audience? My experience suggest that most
+> > mostly-porcelain users don’t acquire familiarity with scripting
+> > commands, so it sounds like we’re talking about script-writers
+> > here (and in the commit message).
+> >
+> > But how do we encourage script writers to discover these things? 🤔 Hm. 
+> 
+> Great question.  I understand what the patch author is trying to
+> achieve (i.e. "consolidate ref-related functionality into git-refs",
+> which is the title of GSoC project [*]), but what are we, as Git
+> project, trying to achive by "consolidating"?  I often cannot shake
+> the feeling that it may a make-work job without a clear answer to
+> that question.  Or perhps xkcd.com/927/?
+> 
+> Perhaps the hope is to have a single kitchen sink "git refs" command
+> that does anything related to "refs", so that they only need to
+> learn this single command (and unlearn all the previous experiences
+> they gained) and after that, they do not have to "discover" more
+> things?
+
+... yes, this is exactly the goal of this exercise. You basically only
+need to know about the entrypoint git-refs(1). Once you know about it,
+you don't have to discover all the other commands, as it is now way
+easier to discover what ref-related functionality you have available.
+You can easily use tab completion (well, once it's wired up), type `git
+refs -h` to learn about evertyhing refs, and we now have a single
+manpage that will tell you everything about ref-related use commands.
+
+You could partially address that problem by providing a gitrefs(5)
+manpage that gives an overview. And maybe that's still something one
+could do, also to paint a bit of a broader picture. But documentation is
+only part of the solution -- with git-refs(1) we get some "natural"
+discoverability.
+
+That's also where the "git refs get" proposal comes from. Sure, you can
+use `git show-refs --verify`, potentially with a `--no-dereference` flag
+if you want to read normal refs. But I would claim that this is almost
+impossible to discover without searching through our manpages.
 
 Patrick
