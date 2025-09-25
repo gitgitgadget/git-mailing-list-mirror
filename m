@@ -1,129 +1,122 @@
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53ED21DF265
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 12:46:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758804368; cv=none; b=kIJb/ZOg9t/1qjv6e8e+nOGNsWtuS+SiBkF7np/SsX5AAlVb/25gn58DFCgP1aiSLbn4LXe8hrJjvCl/b3/aLOs/i9M848XONJOxLz/RSOGlo8QCgTML4pCX8D419BKow5zCzcpIgiCYYBrsQhf7HG+w0WqWhpbd5GvTF0jz554=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758804368; c=relaxed/simple;
-	bh=2nTIKmm+FqpGHAYR08MsW8Nn1EIOqTvkF38m63P4pmw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BnXgJ44mXrsgOk2DsZW3RhgOrL6oGqLvsWH0txxjnGELDIeXAODH2Q5zvWy5fz6VaqTpAWqBTZPOGxW2ML694lFCvk1ZlAlRQk94GvDQ/R8yOy4qRSacvAUZHbxaQqUqS/7g0YSJUBJrnkLf+oUGAuO0oSSDURjpxVzSJPP4MHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PcNZ4xLc; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C412B14A0B5
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 12:54:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758804867; cv=pass; b=Gy4Yd91oPjnmxRMQu35hT9JoP1eNQNbg3rgjAHw+0DTmlLzf8VnXlse7C1/bPloZswhRFFlwkJs5S30wczV2pqXyzwvV+/145JGgtMYExF8s8jMEhUDsZJIkd+/0YU5U90NezT7QPNoBAQwCtcXTnE99xwoP5vu+pB5RULJ18Uo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758804867; c=relaxed/simple;
+	bh=YldKuwj+EyXoZAiJ5++VzYqe+pKKr1enOnPmDSIq2JI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=S5wXgu5C8fGJ9P7x6pIYiPzgEvzVxHmAyJQSINdRNHWQsMXClLrbiTIUxrUVbJYC1DDqdz8ZbXnL7sxH202eVUUlvRHSgIuBgPeFb1/rIew3IdcDk97Gr9ErnfifRU0a/Xg+QfWpeDnoVz8ANEuJJrNl7n4g7Gt7GE9FSXrQ6DY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=ItdeQj3X; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PcNZ4xLc"
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-36a6a397477so9228131fa.3
-        for <git@vger.kernel.org>; Thu, 25 Sep 2025 05:46:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758804364; x=1759409164; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u0SBX0ksJ1fQKrvBntTvoe3iiOWKcQ/a/lA8BcqnPNQ=;
-        b=PcNZ4xLcuVvcDQ4+07aM5xNS5+oEdb2MuPV4RWIUIVtwtehD3tdY6ezkNg/JsnG7q5
-         ZOe5hAkVvctxKBAQ574zHdeaUVNUe4+DjfdqR/fK/f1K94UigAJRGhNgWDKa4LiZIW55
-         kV9qZp65OiFJ907MmHGn0nM6h+iYhHsoZJKl0iDRCJt7bZ5hMXMe8MBV7/+ltmCDsAN5
-         V30AfRpvAffukhgxjf2jyHVciJMrC2Hd2aEDg1cfaxDdHTSc91ZW+cMRd5tf6s5W5lLq
-         KnX4uqsk5Vjaw9F7zNyIDsQFHSIHP/YvNwswiCJgSkyDD7O0A0VXd5mLQkEJnAdRKx3U
-         SVwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758804364; x=1759409164;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=u0SBX0ksJ1fQKrvBntTvoe3iiOWKcQ/a/lA8BcqnPNQ=;
-        b=kILgbbWsicfXerB8LThcMIOTPm3ihnn7TEytkldsyaI5hqHyMf0B2sxc332yk+Y+in
-         DW6wes/VHx9EUS2XMI2RW5fCwsvrp4txESROAWPJJWLWQgQ0f2M+juAfM8/0KXhB+86c
-         t+Dkgwm40JD2RZ9Eh1RJJQ4fe6Xb0cQZs9nm72LLHnN2zPA7imkrmoWys2byKB4R5KmV
-         NyDsEy5KAwdfl55Gqx41OCdR0rN2b8kepBGSANzGyl0LoSgHFV3akcQHfHisZiamKn7u
-         xlIydg2pc7juLfR689tQf4xX+UHNCLzfcJV3oGyVrYa2TfUmMV7mZuLgdVG+5JI7wj3r
-         5BtA==
-X-Gm-Message-State: AOJu0YwdOopjAf3o7MkD86Asj7Lhs6splnwLPl7NmZuwjdqHI5S/uTsG
-	JCtNexYOwNYIrGsT8Pv1ChDrhXxHTzIGcJN4bjgiMyIMXTeb4Wui3lZC3Yylx8Jjuw/PtbY4YAg
-	xE4gvqs2i4WhBCImMEi/twHsul9fXAeVUFAyoWog=
-X-Gm-Gg: ASbGncsnp/pwA+o1vb534k1kNNc78wKUrRR5wWjdhvpylLHtucTibdF8Y1+fOu55563
-	2PDdyW87E/ibrZs9YxV/1H2sYN0bfJ1V4H07O2/EspCu9UnOuwQW5dLUGftrrvlCrLjjvzcEiiy
-	cMAAzjbdx8LhSfa86/sguzkWps5bkNA9MCbeFEG+LzJo5riRp6W9VsY24zjmrQaAzCQrrcKmhZ4
-	1UR3KM=
-X-Google-Smtp-Source: AGHT+IFP21ypVNSmYL6YLa5DDsfLvfvOJXWeIaWAV5uR8FGXMt3J3gqBpLKBbY+RTb+NAEQmjGYxEu1q6yMbqnV6jO4=
-X-Received: by 2002:a2e:9a12:0:b0:36a:878b:6e2c with SMTP id
- 38308e7fff4ca-36f7c9e7f29mr10504731fa.3.1758804364145; Thu, 25 Sep 2025
- 05:46:04 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="ItdeQj3X"
+ARC-Seal: i=1; a=rsa-sha256; t=1758804855; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=PMr9eyeeXF0L5J7OtXrIWrUFkJmjD9WKJK3VapbuYE9pWNpQObI+Ai2LZ2nOYd0CZ8sHj41K7jMfSwwgoyyuSauCNMgql3sxXn8YvZxPpmpG7zDfAURUAEZ66GpJKeXj7gc199x6V06mXTrPb8Xp71RddM8cXnaKDDz2sB2TaUM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1758804855; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=G3ewBVGl6AehKuPfXnB7N4gaz54xvRblMlGRg9b3GAE=; 
+	b=lc2fZ3Ee4Q36sTxrUiyREojqliRPMVWZvlT5fZgdrhhw5nDH8TbeHIbBJ5RWjhDIJZBuB53H8U0UfFnp7vD6F6GAjfViUIkBbuPwJST0fdL3DfzNrXtcYtJUJUILVaVIJKPorG7JtlWG2kxPnfBIf8+bp4h/BKp2fsqG5kpMLro=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1758804855;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=G3ewBVGl6AehKuPfXnB7N4gaz54xvRblMlGRg9b3GAE=;
+	b=ItdeQj3XrSbpVn5a/Qv6NQ5pkAJyb9cqhzWoHDCBA3fzIa11B7utHOLm2qZNFzch
+	XlyOO6uJmGVPKsqoBHUlktBnEV6zzIMWhmS5fLRvAb0z7dp1tLAQ6St0Zye7eGDfVcR
+	qkLywFkqgF37pNaP2XO8gp7h8HE1UGcr1o46U1h4=
+Received: by mx.zohomail.com with SMTPS id 1758804853260889.5162192225828;
+	Thu, 25 Sep 2025 05:54:13 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org
+Cc: Emily Shaffer <emilyshaffer@google.com>,
+	Rodrigo Damazio Bovendorp <rdamazio@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Josh Steadmon <steadmon@google.com>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH 00/10] Convert remaining hooks to hook.h
+Date: Thu, 25 Sep 2025 15:53:43 +0300
+Message-ID: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.49.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250920184007.26183-1-rappazzo@gmail.com> <20250920184007.26183-3-rappazzo@gmail.com>
- <c6a33014-5d87-4750-b6ce-234e944131b4@kdbg.org>
-In-Reply-To: <c6a33014-5d87-4750-b6ce-234e944131b4@kdbg.org>
-From: Mike Rappazzo <rappazzo@gmail.com>
-Date: Thu, 25 Sep 2025 08:45:52 -0400
-X-Gm-Features: AS18NWDWpnw6-n8bkvzPiVABXqD4NtHHEdIvAU9skvYX0sb5CY7IWEYhrDeM0AA
-Message-ID: <CANoM8SW6gsfmhPYWq2_7f9DuwyQ4vVpbWkaPn4mDTg--LAZUJg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] gitk: make Tags and Heads window geometry sticky
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-On Mon, Sep 22, 2025 at 2:34=E2=80=AFAM Johannes Sixt <j6t@kdbg.org> wrote:
-> > @@ -10249,6 +10256,8 @@ proc showrefs {} {
-> >      bind $top.list <ButtonRelease-1> {sel_reflist %W %x %y; break}
-> >      set reflist {}
-> >      refill_reflist
-> > +    after idle [list manage_showrefs_geometry $top restore]
->
-> My thinking without having debugged it is:
->
->  1. A Configure event happens with the default geometry when the window
-> becomes visible. This records the default geometry in geometry(showrefs)
-> by the handler that is bound in the next line below.
->
->  2. "After idle" the geometry is set to the then-current value of
-> geometry(showrefs), which would then be the default geometry and not the
-> one restored from the settings.
->
-> Why is it not necessary to encode the now-current value of
-> geometry(showrefs) (the restored value) in this after-idle handler? IOW,
-> why does this work?
+Hello everyone,
 
-When I was testing this, I used MacOS, Windows 11, and Gnome (Ubuntu).
-On Mac the call
-worked without the `after idle`.  On both Windows and Gnome, it needed
-the `after idle` for it
-to work as I expected.  I'm not sure exactly why.  Do you want me to
-try to adjust this?  Do you
-have a suggestion for it?
+This is a continuation of Emily and Aevar's work to convert remaining hooks
+to the hook.h interface, by adding and using two new run-command/hook APIs:
+ * feeding hook stdin via a callback
+ * capturing server-side collated outputs
 
+I've tried to keep the implementations as simple as possible and avoid any
+unnecessary copying by feeding the data directly to the hook stdin fds and
+even batching the writes of pre/post-receive so we achieve similar perf/data/
+syscall efficiency as we had before the callback conversion.
 
-> > +proc manage_showrefs_geometry {top action} {
-> > +    global geometry
-> > +    switch $action {
-> > +        save {
-> > +            if {[winfo exists $top]} {
-> > +                set geometry(showrefs) [wm geometry $top]
-> > +            }
-> > +        }
-> > +        restore {
-> > +            if {[info exists geometry(showrefs)] && [winfo exists $top=
-]} {
-> > +                after 1 [list wm geometry $top $geometry(showrefs)]
-> > +            }
-> > +        }
-> > +    }
-> > +}
->
-> The two branches have no common code path. What is the rationale to have
-> a single function with sub-commands instead of two distinct functions?
+As suggested by Aevar [1], I've removed the string_list API, the extra copies
+and the $'\n' assumptions on the data, however I did not go the full zero-copy
+route with mmap-ing because I think that will break backwards compatbility. We
+could explore that in a future series as an efficientization of the current IPC,
+this patch series basically aims for parity with the existing implementation.
 
-Yeah, that's my bad.  I started with something different, and whittled
-it down to this.  I'll adjust
-in the next iteration.
+This series also unblocks config-based hooks and hooks parallelization which will
+follow up in a separate series.
 
-_Mike
+The patch series is based on the master branch, I've pushed it to github [2] and
+it also passes CI runs. [3]. Also merged and tested against next with no conflicts.
+
+1: https://lore.kernel.org/git/230209.86y1p7y4fa.gmgdl@evledraar.gmail.com/
+2: https://github.com/10ne1/git/tree/dev/aratiu/hooks-conversion-v1
+3: https://github.com/10ne1/git/actions/runs/18006589297
+
+Big warm thank you,
+Adrian
+
+Adrian Ratiu (1):
+  reference-transaction: use hook.h to run hooks
+
+Emily Shaffer (9):
+  run-command: add stdin callback for parallelization
+  hook: provide stdin via callback
+  hook: convert 'post-rewrite' hook in sequencer.c to hook.h
+  transport: convert pre-push hook to hook.h
+  run-command: allow capturing of collated output
+  hooks: allow callers to capture output
+  receive-pack: convert 'update' hook to hook.h
+  post-update: use hook.h library
+  receive-pack: convert receive hooks to hook.h
+
+ builtin/fetch.c             |   2 +-
+ builtin/receive-pack.c      | 310 +++++++++++++++++++-----------------
+ builtin/submodule--helper.c |   2 +-
+ hook.c                      |  11 +-
+ hook.h                      |  30 ++++
+ refs.c                      |  61 ++++---
+ run-command.c               | 115 +++++++++++--
+ run-command.h               |  44 ++++-
+ sequencer.c                 |  62 +++++---
+ submodule.c                 |   2 +-
+ t/helper/test-run-command.c |  67 +++++++-
+ t/t0061-run-command.sh      |  37 +++++
+ transport.c                 |  79 ++++-----
+ 13 files changed, 547 insertions(+), 275 deletions(-)
+
+-- 
+2.49.1
+
