@@ -1,198 +1,197 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCE72512FF
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 07:39:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8206270578
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 08:20:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758785963; cv=none; b=aFwu9v1Dc9u7CmTdPgF83Sim2jdWdvi65TJm28c434EXCNCR44p7N9vzisLIzHDdLFLdLnrCWH84MuNvE/ULy+a93+U6gY5yy6QZXPG3TfiF3rD9fisAJSYwCk5s+wq8lB8xQx7nUome3ZXqTMEs/oDMeA1Y/HWj0BhD3Gz6Sww=
+	t=1758788419; cv=none; b=aiUcIOy5hBxTziHwTeEJlX5elWPtd1HpamSubikQWoR15VvPTFDDp+pRIkT5cD4TJTjL8EH95gWqL0Dt1EXayL35BHHLthmhHEn/omY7ABd41m5n9jZOMaSWWjY8uFfHzkXlw0K/nddSJy0/ameIq135FtNggJUdZf75TI+BwyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758785963; c=relaxed/simple;
-	bh=Ka4uD+AdtLIHG615I7qltoCtY81hbTMSUXR/0B0hs2s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iaEIYh01jqsXF9sq9TV+7XhLQHWFaYAjGYUB+5BaabHEnokrjx64PP0awGAIVYN0e9CMa3ZhozJM3cJ+he4qclwKBpcBP0w1Y8Ch6mWqW/SSXTEswRVym3HZXYN6/F1man8mUY5dRNnO5RVh74Aa4rcGExiMMWq87YZL0iF0PM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=yAXG77OZ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=hUGHH/19; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=yAXG77OZ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=hUGHH/19; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1758788419; c=relaxed/simple;
+	bh=kI7avvne8rCck7qDC45zlKY9zF++SVm7Byj8dufvytQ=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dJu/QfjrwNSRCsxfXnjbteTC8pCIRjjD/HqfLA5FT26XG1InhHpkRxMJvLuuxqfej2DZq3UpYPQR2SIBL+1UG2F1NiAY3BJ8Re3egEaSjfuaumFd4NJtwJlOlaZH/De5WwDPdw6xoKv8dpPY+9HuK5UdWUmatrPz4YsDWxh1C5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IKfde+8V; arc=none smtp.client-ip=209.85.217.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="yAXG77OZ";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="hUGHH/19";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="yAXG77OZ";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="hUGHH/19"
-Received: from kitsune.suse.cz (unknown [10.100.12.127])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id A2EDD40298;
-	Thu, 25 Sep 2025 07:39:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1758785957; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=V+H5LLpQetZrPGKEohHjgV3N6VAd1zXhubwEVo23NsE=;
-	b=yAXG77OZU82TdVxG6HizYjOXyblk8JcbgmCd0cbNvtu/+F+QjXqOSreZmqSGDM1qihY2/K
-	SuADXgIjDNTdmfuU4qmEYWMSveR/Mdh2qVq3zOUKykhEIsjcpubI/EnCOSEPrBMr0UGWz8
-	y+J7NraVHgIE0Z+bsBR0JzFuUqoreAE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1758785957;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=V+H5LLpQetZrPGKEohHjgV3N6VAd1zXhubwEVo23NsE=;
-	b=hUGHH/19ZdGNFHjdqP0djeRPLz+Y933iQ5Yf1hBKT8U+pNG3QHn8VFTAQ7ClzwxkBG5NLi
-	52PBf0kibhZCVUAQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1758785957; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=V+H5LLpQetZrPGKEohHjgV3N6VAd1zXhubwEVo23NsE=;
-	b=yAXG77OZU82TdVxG6HizYjOXyblk8JcbgmCd0cbNvtu/+F+QjXqOSreZmqSGDM1qihY2/K
-	SuADXgIjDNTdmfuU4qmEYWMSveR/Mdh2qVq3zOUKykhEIsjcpubI/EnCOSEPrBMr0UGWz8
-	y+J7NraVHgIE0Z+bsBR0JzFuUqoreAE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1758785957;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=V+H5LLpQetZrPGKEohHjgV3N6VAd1zXhubwEVo23NsE=;
-	b=hUGHH/19ZdGNFHjdqP0djeRPLz+Y933iQ5Yf1hBKT8U+pNG3QHn8VFTAQ7ClzwxkBG5NLi
-	52PBf0kibhZCVUAQ==
-Date: Thu, 25 Sep 2025 09:39:16 +0200
-From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Rename detection fails on symlinked files
-Message-ID: <aNTxpDrfUKsbvkZt@kitsune.suse.cz>
-References: <aFFN9UHCspTjliMv@kitsune.suse.cz>
- <CABPp-BFdEn8rYu+FW+CdgrKNDUGBY9h6ePSH-vjYy-f_Pji0-Q@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IKfde+8V"
+Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-51d14932f27so374711137.2
+        for <git@vger.kernel.org>; Thu, 25 Sep 2025 01:20:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758788415; x=1759393215; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dWlS0o+3GRVl9HHSCSOe9aD2ZfpdyTKLGFyiLyJ+Htw=;
+        b=IKfde+8VL7O35Vlort6Le2CJ1tVGpsQQzFJBKDeIzM0rYzM8gtiDwdKgsDCy+PltOi
+         YY4uc5MVQK8C/9q4fEi0/4cHe0YidpO1Fht1cWTChnz9aKS1+MYTw37JlmjLDGNuH5sf
+         j6tV0HlvEwfqMiXdQBPb9zewm14xZ1ujfj29TIfKXOjwY1NrYPyZe755TSexiW+8pgvo
+         Ww2pcPtlYwoQkly2YffziEwDUQZYNMZzNl3vhHS/ieo76zJ1w6ekqMrWZ6n6grpVnQ6I
+         8O9UFqLhhJ3p7TF6lJFp3L4XilsubX05cbjV9OV4Mq5ed0bDKZcnq73gkO1b2Wfy38P+
+         Bxbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758788415; x=1759393215;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dWlS0o+3GRVl9HHSCSOe9aD2ZfpdyTKLGFyiLyJ+Htw=;
+        b=VCqwnuCUGA/irTbN6j2+2gTjtSSqlzfW1nEKQ9hLGYq3Ps1xjFkPoIGFKv/UDwP3Tr
+         LFL+64G7PgJtBMk2AOmwXwWPr1c4wZjdewWOxzexc6v52NkQ+6KbBDAGRqIkWTf9zi2t
+         A8opXu5Jq9Io83QRfg1wxz/upzJ/4jLBn5vO2xBPLa7g89rtBU4GkBRzOKOqmgKoorjb
+         8kWfznj0meO5Abscwr3t5s0NMLxUXaiCJO12s4yRIx2tfRLGpuWJ4Q5VyLTVZV4sle1I
+         dQIbdgRPLPwpZUaW1be1m/YBjlhsEB+LdZC2EOqlSPuJoms3SBHV/tKXrVAZxCn4jhFZ
+         +7Fg==
+X-Gm-Message-State: AOJu0YwH5R8P+OEr44VYbuhoxOEgqyI9D5hQb/H4itI86YT+WcRBSQGe
+	99+aAjzileyT751RV0EPnIp2pW+DeTW+g0g3oY1hTxtp14hxm5LWKX1r4VNWQvT00A78YpCHfSp
+	7POE9/7Zf3lSs1EBFxW3DAKt9RObVVYSD0Oyb
+X-Gm-Gg: ASbGnct93jRNh2OT0Bbtk79Y5JOVbleCH61MpoH4CC12uPsejyxbpytGRAm+6G6Bgqg
+	tWMdACW8uJhEioNZWDfmZGfUX3hdHWoFhAm0N3nqjFUWeEt1aR59yoCQLgiKOA6DjKdj+Bi8Hol
+	A1lz93+blb/vaJCr440DkB/+Fj6tWS+ja2XT8KUF08oeMAaUq4geE5apYdkD9iN8ZrQmtng91QE
+	HUa7TY7PrsG31SBNahzj+cGwAC2GVXcuDZg8IG1fg==
+X-Google-Smtp-Source: AGHT+IE+IKHoPWsixHExVhjzPDwEH+SRVFzA5HMDw0Ph5Ld3160esAS1EhUDKFSPUuQoliEhRDdspNWbNB12opoA5Ck=
+X-Received: by 2002:a05:6102:390d:b0:59b:ecd8:c0d6 with SMTP id
+ ada2fe7eead31-5acc62383b7mr939355137.9.1758788414564; Thu, 25 Sep 2025
+ 01:20:14 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 25 Sep 2025 01:20:11 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 25 Sep 2025 01:20:11 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <aNPkA9UZtEqHsa3f@pks.im>
+References: <20250924-583-git-for-each-ref-start-after-v1-1-c73be2b5db5a@gmail.com>
+ <aNPkA9UZtEqHsa3f@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABPp-BFdEn8rYu+FW+CdgrKNDUGBY9h6ePSH-vjYy-f_Pji0-Q@mail.gmail.com>
-X-Spam-Level: 
-X-Spamd-Result: default: False [-4.30 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-0.996];
-	MIME_GOOD(-0.10)[text/plain];
-	ARC_NA(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	MIME_TRACE(0.00)[0:+];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCVD_COUNT_ZERO(0.00)[0];
-	RCPT_COUNT_TWO(0.00)[2];
-	TO_DN_SOME(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
-	FROM_EQ_ENVFROM(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
-X-Spam-Flag: NO
-X-Spam-Score: -4.30
+Date: Thu, 25 Sep 2025 01:20:11 -0700
+X-Gm-Features: AS18NWBzZJJJOm_Rro72GxAG2kdiNC_W1H7D9Azm5srU0CQnlDayEW4dGsJDMWc
+Message-ID: <CAOLa=ZS=y5Q-_BH+q2xhzh6mpg2oQJptv1rp_T0jdqH-jBf0+g@mail.gmail.com>
+Subject: Re: [PATCH] refs/ref-cache: stop seeking into empty directories
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000afa3de063f9bd630"
 
-On Tue, Jun 17, 2025 at 10:44:23AM -0700, Elijah Newren wrote:
-> Hi,
-> 
-> On Tue, Jun 17, 2025 at 4:16 AM Michal Suchánek <msuchanek@suse.de> wrote:
-> 
-> I think your subject might be slightly misleading, and that a more
-> accurate subject might be: Rename detection is not performed for files
-> still present in the target version.  Let me explain why and you can
-> check if I'm understanding your problem setup correctly.
-> 
-> > commit 5d51b10d8b5206ef5eeb9d214237b2ec2e0b789e (HEAD -> master)
-> > Author: Michal Suchanek <msuchanek@suse.de>
-> > Date:   Tue Jun 17 13:08:51 2025 +0200
-> >
-> >     rename file
-> >
-> > diff --git a/somefile b/somefile-renamed
-> > similarity index 100%
-> > rename from somefile
-> > rename to somefile-renamed
-> 
-> So you've renamed a file, detected at the time you run git log -p.
-> 
-> > ln -s somefile-renamed somefile
-> > git add somefile
-> > git commit --amend
-> 
-> Here, you reintroduce the original file, as a symlink, and amend the commit.
+--000000000000afa3de063f9bd630
+Content-Type: text/plain; charset="UTF-8"
 
-No, there is no original file:
+Patrick Steinhardt <ps@pks.im> writes:
 
-diff --git a/some file b/some file
-deleted file mode 100644
-index b649a9b..0000000
---- a/some file 
-+++ /dev/null
-@@ -1 +0,0 @@
--some text
-\ No newline at end of file
-diff --git a/some file b/some file
-new file mode 120000
-index 0000000..b649a9b
---- /dev/null
-+++ b/some file 
-@@ -0,0 +1 @@
-+some text
-\ No newline at end of file
+> On Wed, Sep 24, 2025 at 09:55:51AM +0200, Karthik Nayak wrote:
+>> The 'cache_ref_iterator_seek()' function is used to seek the
+>> `ref_iterator` to the desired reference in the ref-cache mechanism. We
+>> use the seeking functionality to implement the '--start-after' flag in
+>> 'git-for-each-ref(1)'.
+>>
+>> When using the files-backend with packed-refs, it is possible that some
+>> of the refs directories are empty. For e.g. just after repacking, the
+>> 'refs/heads' directory would be empty. The ref-cache seek mechanism
+>> doesn't take this into consideration, causing SEGFAULT as we try to
+>> access entries within the directory.
+>
+> Why do we even try to access any entry in an empty directory? We have
+> `dir->nr`, so shouldn't we check that `idx < dir->nr` every time we try
+> to deref an entry?
+>
+> In other words, I wonder whether we fix a symptom of a missing bounds
+> check instead of addressing that missing bounds check as the root cause
+> directly.
+>
 
-See, the plain file and symlink is so different that changing the mode
-to symlink is represented as removing a file, and adding a symlink. Not
-same file mode change, not even a rename. The symlink is so different
-from the file that it's completely unrelated, even with exactly same
-content. Mode change to/from symlink always breaks, regardless of content and
-the break rewrites setting.
+We do a bounds check to ensure that we don't overflow the entries in a
+directory with `idx = idx >= dir->nr ? dir->nr - 1 : idx;`.
 
-diff --git a/some file b/some file
-deleted file mode 100644
-index b649a9b..0000000
---- a/some file 
-+++ /dev/null
-@@ -1 +0,0 @@
--some text
-\ No newline at end of file
-diff --git a/some file b/some file
-new file mode 120000
-index 0000000..b649a9b
---- /dev/null
-+++ b/some file 
-@@ -0,0 +1 @@
-+some text
-\ No newline at end of file
-diff --git a/some other file b/some other file
-new file mode 100644
-index 0000000..b649a9b
---- /dev/null
-+++ b/some other file   
-@@ -0,0 +1 @@
-+some text
-\ No newline at end of file
+The issue is that when `dir->nr = 0`, this will set the `idx = -1`. So
+this is where it fails.
 
-And here we now have one removal and two additions of the same content,
-no rename detected.
+Taking a step back, the while loop shouldn't even operate when we hit a
+directory with no entries. So I'll modify the loop condition to include
+a check for `dir->nr`.
 
-So git cannot agree with itself if symlink and plain file is actually
-the same file or not. They are presented as comletely unrelated to the
-user yet rename detection fails to detect the rename of the plain file
-that is completely unrelated to the added symlink. That is the
-discrepancy, and the bug.
+>> Fix this by breaking out of the
+>> loop when we enter an empty directory.
+>>
+>> Add tests which simulate this behavior and also provide coverage over
+>> using the feature over packed-refs.
+>
+> Nit: the commit subject might be adjusted to mention the symptom we're
+> fixing rather than what we're doing in the commit. At least, it feels
+> like the segfault is the more important thing to talk about here.
+>
 
-Thanks
+That's fair, let me modify that.
 
-Michal
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>>  refs/ref-cache.c               |  3 ++
+>>  t/t6302-for-each-ref-filter.sh | 65 ++++++++++++++++++++++++++++++++++++++++++
+>>  2 files changed, 68 insertions(+)
+>>
+>> diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+>> index c180e0aad7..8a260028ec 100644
+>> --- a/refs/ref-cache.c
+>> +++ b/refs/ref-cache.c
+>> @@ -507,6 +507,9 @@ static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
+>>  			slash = strchr(slash, '/');
+>>  			len = slash ? (size_t)(slash - refname) : strlen(refname);
+>>
+>> +			if (dir->nr == 0)
+>> +				break;
+>
+> Can't we break before sorting already? Avoids a couple of no-op changes.
+>
+
+Yup, in the next iteration, I'll move it to the loop condition, so we
+don't even enter the loop.
+
+>>  			for (idx = 0; idx < dir->nr; idx++) {
+>>  				cmp = strncmp(refname, dir->entries[idx]->name, len);
+>>  				if (cmp <= 0)
+>> diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+>> index 9b80ea1e3b..d14567cb62 100755
+>> --- a/t/t6302-for-each-ref-filter.sh
+>> +++ b/t/t6302-for-each-ref-filter.sh
+>> @@ -754,4 +754,69 @@ test_expect_success 'start after used with custom sort order' '
+>>  	test_cmp expect actual
+>>  '
+>>
+>> +test_expect_success 'start after with packed refs' '
+>> +	test_when_finished "rm -rf repo" &&
+>> +	git init repo &&
+>> +	(
+>> +		cd repo &&
+>> +		test_commit default &&
+>> +
+>> +		git update-ref --stdin <<-EOF &&
+>
+> s/EOF/\EOF/
+>
+> The same is true for the other test.
+>
+> Patrick
+
+This always trips me up. Will fix.
+
+Thanks for the review.
+
+--000000000000afa3de063f9bd630
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: bfa0d8554072f023_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qVSt6a1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mL29QQy85V0dYYjdZUnVINXhSZVUwVUM0bDZNRnRsdQpmakR2eng5cE9z
+enMrMWtKYks4d3h0QlpHWDZZZG9mVFpieWxTRElwL3Rpam9JRm5yRUdIVUY0OE8xaHFMeC83Clh4
+SU5XQjJ5MkhNd1A5NkJvME13THZUR2VaVVRTbEdWa3Q3NVREMGFkU2JzdFZZaVF5cktGemdTRCs3
+UXNQMGgKckYwNCsxMW5iQ2JCQ1I0SXNkMUVXTUtUeHVldys1TjhSWTJJR2FGV0xrV3RpeE1DT3dk
+b3VTQzBUcCtrSS9JSQpITmRMOGNzUlgxY2hYNUZoK3hlKytnQ0cxM2RzVEFLQ1Z5SmxTSkJYUkJv
+aTEveWFlT1VoREc0d1RYb0NyYmF2CmR6cVdTUjRIRkNvaWwzZCtGUUkxMVhYM1NvbXZoMlRnV1RT
+NHRuWXhaTTd1RG1NTVJ5c2VsYmRPd3g3QU1XNDMKelhTVEFhdFgvTWVheHZEK0FBUDV1Y3loZHI0
+T21RVSs1VUZvVXJFbzlIYXhyYSs1ME8wN1p1QU4zaVJ0dERyMQpKMTBTaEpwVWdOQ1g3NjJCbHpE
+Q2MxTjJwcVY3MnZrTDJzbVM4bmJaeXFIaEVqL1JodUFFNWsrNmxPSzltVVd1CkRZTFZsRm5aNnNT
+dGFRcDl6cFdmNEI1MnhQM29RT09HTmtRVHZvOD0KPUNBcUIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000afa3de063f9bd630--
