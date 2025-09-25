@@ -1,170 +1,198 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69E51A2541
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 07:09:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCE72512FF
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 07:39:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758784195; cv=none; b=U1burssL+L/wzMh8CeY8c3FzBxeQoqaDGMBJ0srt/aO8ZQyB2jNBNCEt08UpLFI2sOiGEWZPym/oG1HqkMKmkzJDVKVFkx7mGeCVLLmqzlekeWw57SGGVn1CTHJMwnDHhIe+SgfxlZ2fFV5+xSsJF/niF6j28zOFnJpSHH6t9Ro=
+	t=1758785963; cv=none; b=aFwu9v1Dc9u7CmTdPgF83Sim2jdWdvi65TJm28c434EXCNCR44p7N9vzisLIzHDdLFLdLnrCWH84MuNvE/ULy+a93+U6gY5yy6QZXPG3TfiF3rD9fisAJSYwCk5s+wq8lB8xQx7nUome3ZXqTMEs/oDMeA1Y/HWj0BhD3Gz6Sww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758784195; c=relaxed/simple;
-	bh=/yOueebCvNf4aFVekNkZLcF6USVNHz5Fu71hATxcm0c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qHx6WxxaLCatjEVPkpFRGSs3cRiAFfuE83EPXagiRDL24z8hA3rUrh8edK9PvVJlIZ11lcnMR6n6xfBbWPL5igbYSdRu04yuFVvIonr1NIzK+urYBjXN/TDyXenIfKpciMOulw+NtmvmG7qLBbXXh/mldbMla4m8JLdqNOD1GLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=13F+3hda; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DnpS3F4v; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758785963; c=relaxed/simple;
+	bh=Ka4uD+AdtLIHG615I7qltoCtY81hbTMSUXR/0B0hs2s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iaEIYh01jqsXF9sq9TV+7XhLQHWFaYAjGYUB+5BaabHEnokrjx64PP0awGAIVYN0e9CMa3ZhozJM3cJ+he4qclwKBpcBP0w1Y8Ch6mWqW/SSXTEswRVym3HZXYN6/F1man8mUY5dRNnO5RVh74Aa4rcGExiMMWq87YZL0iF0PM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=yAXG77OZ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=hUGHH/19; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=yAXG77OZ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=hUGHH/19; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="13F+3hda";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DnpS3F4v"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AE93C7A0074;
-	Thu, 25 Sep 2025 03:09:52 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 25 Sep 2025 03:09:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758784192; x=1758870592; bh=bWJOKt7EeM
-	XXBwcEHmBzg481tdjafeTJZGjSZXxYrro=; b=13F+3hdaozn0JEH3f1AXCTHtsF
-	6tMFElaYYRwi/txdnP1qoAqnQQ3VTYYRMpM9KGS6gpMoDGqAMz0MX+s885fzKHWy
-	A1slBVvDzY+5RoSuxit3XrGEnShs3gx+NdDMMZD9hhlG2Z+8iiHwxMRLC4aZ35zV
-	VRqa5wIjYq8lAcIQWISPWoyFJKebEYGb2fD6FmdyirTZi3LT8dBTrsH+dJpjbJW/
-	27quMdAsCqF1RNZijFOSUV9JlHOZM0BBdfW9HZArmoU0Vs021Xc28xUtuSS/Ai+x
-	b6ea5ZC76xE/C41fUBAPvhc9u8k0sE9rt4MmJeQVzgpLBTJfEmofaPa4S50Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758784192; x=1758870592; bh=bWJOKt7EeMXXBwcEHmBzg481tdjafeTJZGj
-	SZXxYrro=; b=DnpS3F4vj0hBqX+1OnlsoQqWDLFIutRxdlyMPssc8baYVdJRRd4
-	L3etkQpq4npIU/V2p5PZURAQ45Bevmot7Nn9IKqt4W21atwDuNIPARTUoMtxj03P
-	Cg/TwvjIC6mhywGsgNd8IMIyeeDD5EQ6YO+mKVquWZEodTDQ8iZPhqV7Be7v1Eu/
-	mZ0ghsnfQ3m6tT/5ONynoQH6oZ+znhVb/R1c8pLHVjVhq5OOd5x7f4DcQ9kEfXMC
-	YJJsBdytCtSrCehA6uDPorI44J1IeCXrZKgp5KfPBVBsw83WxPBucBKV/Q7KfM7k
-	BVWo1fi22MYP4cniIuXSPc34JW7nao9nLTQ==
-X-ME-Sender: <xms:wOrUaABiXnX6nwi5krLfNuN-VwAzTdFfMJ0T7WvWViZDS3dSPuWZaQ>
-    <xme:wOrUaBm1pKtZf-AiS31ewA32glHxSPwrWYDzyYWBoPPVdGdyVo2z3GoOjztPJrgfV
-    yzhCT4c8rdYQjGkzPGpn4GKj5BF8QjBJeTtOHFbV8lyEZBblvlA>
-X-ME-Received: <xmr:wOrUaJxPbkSnSCGMRCfP9fON4JAKo6v8QZfzQ4-w1d_vu11gLLUd56ZCK4DK28n3ObrNUDG56CxY-k_UUIE8kOtFwEgFQQIhR-oh>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiheekhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgvfihrvghn
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:wOrUaDQrN1_KFdaxVfJj8c-of1D0mKwEIpkXnbbMELwccCDpxBOP2A>
-    <xmx:wOrUaJ-rfC--NVEXKGr0mp-dvgh5rKyJ0fHXQiH6fqWrLw29YBGsJA>
-    <xmx:wOrUaJvqkTMH1aJUSNL_4vMqncjgaucBY98HPm2xW_RbLOR9Rq73sQ>
-    <xmx:wOrUaJN2j0GczLkYVH-Hhg6iBZm_GmdCDT8gDywO4fM8Ijt89zpylQ>
-    <xmx:wOrUaFS223ouIlK8n_QBqSFl7ZuMoJxVs1pCXuBRXWudRb7BykZX-lEa>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Sep 2025 03:09:51 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  Ezekiel Newren via
- GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Elijah
- Newren <newren@gmail.com>,  Ben Knoble <ben.knoble@gmail.com>,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH v5 10/13] xdiff: delete rchg aliasing
-In-Reply-To: <CAH=ZcbAm8++qGNX883epk0h3NA-Z=8+RX1bDJeTe=n2jjSsdmg@mail.gmail.com>
-	(Ezekiel Newren's message of "Wed, 24 Sep 2025 16:46:34 -0600")
-References: <pull.2048.v4.git.git.1758570701.gitgitgadget@gmail.com>
-	<pull.2048.v5.git.git.1758662670.gitgitgadget@gmail.com>
-	<7b0856108a29f42e5a4d3faf7489d5522b683f71.1758662670.git.gitgitgadget@gmail.com>
-	<0bb4f30b-6737-43a2-9aeb-3903c0dc5ce6@gmail.com>
-	<CAH=ZcbCf7bUTL=BwCD8B6-AVHZg+K3JafvksLQWUx2D-XR58wA@mail.gmail.com>
-	<xmqqqzvvn9tq.fsf@gitster.g>
-	<CAH=ZcbAcvoXJYPHE=mcZSqPLuUPxKcSs-vd307X7uXi+aG3evw@mail.gmail.com>
-	<xmqqikh7k05r.fsf@gitster.g>
-	<CAH=ZcbAm8++qGNX883epk0h3NA-Z=8+RX1bDJeTe=n2jjSsdmg@mail.gmail.com>
-Date: Thu, 25 Sep 2025 00:09:50 -0700
-Message-ID: <xmqqh5wrhutd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="yAXG77OZ";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="hUGHH/19";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="yAXG77OZ";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="hUGHH/19"
+Received: from kitsune.suse.cz (unknown [10.100.12.127])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id A2EDD40298;
+	Thu, 25 Sep 2025 07:39:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1758785957; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=V+H5LLpQetZrPGKEohHjgV3N6VAd1zXhubwEVo23NsE=;
+	b=yAXG77OZU82TdVxG6HizYjOXyblk8JcbgmCd0cbNvtu/+F+QjXqOSreZmqSGDM1qihY2/K
+	SuADXgIjDNTdmfuU4qmEYWMSveR/Mdh2qVq3zOUKykhEIsjcpubI/EnCOSEPrBMr0UGWz8
+	y+J7NraVHgIE0Z+bsBR0JzFuUqoreAE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1758785957;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=V+H5LLpQetZrPGKEohHjgV3N6VAd1zXhubwEVo23NsE=;
+	b=hUGHH/19ZdGNFHjdqP0djeRPLz+Y933iQ5Yf1hBKT8U+pNG3QHn8VFTAQ7ClzwxkBG5NLi
+	52PBf0kibhZCVUAQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1758785957; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=V+H5LLpQetZrPGKEohHjgV3N6VAd1zXhubwEVo23NsE=;
+	b=yAXG77OZU82TdVxG6HizYjOXyblk8JcbgmCd0cbNvtu/+F+QjXqOSreZmqSGDM1qihY2/K
+	SuADXgIjDNTdmfuU4qmEYWMSveR/Mdh2qVq3zOUKykhEIsjcpubI/EnCOSEPrBMr0UGWz8
+	y+J7NraVHgIE0Z+bsBR0JzFuUqoreAE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1758785957;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=V+H5LLpQetZrPGKEohHjgV3N6VAd1zXhubwEVo23NsE=;
+	b=hUGHH/19ZdGNFHjdqP0djeRPLz+Y933iQ5Yf1hBKT8U+pNG3QHn8VFTAQ7ClzwxkBG5NLi
+	52PBf0kibhZCVUAQ==
+Date: Thu, 25 Sep 2025 09:39:16 +0200
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Rename detection fails on symlinked files
+Message-ID: <aNTxpDrfUKsbvkZt@kitsune.suse.cz>
+References: <aFFN9UHCspTjliMv@kitsune.suse.cz>
+ <CABPp-BFdEn8rYu+FW+CdgrKNDUGBY9h6ePSH-vjYy-f_Pji0-Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABPp-BFdEn8rYu+FW+CdgrKNDUGBY9h6ePSH-vjYy-f_Pji0-Q@mail.gmail.com>
+X-Spam-Level: 
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.996];
+	MIME_GOOD(-0.10)[text/plain];
+	ARC_NA(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	MIME_TRACE(0.00)[0:+];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RCVD_COUNT_ZERO(0.00)[0];
+	RCPT_COUNT_TWO(0.00)[2];
+	TO_DN_SOME(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_TO(0.00)[gmail.com];
+	FROM_EQ_ENVFROM(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
+X-Spam-Flag: NO
+X-Spam-Score: -4.30
 
-Ezekiel Newren <ezekielnewren@gmail.com> writes:
+On Tue, Jun 17, 2025 at 10:44:23AM -0700, Elijah Newren wrote:
+> Hi,
+> 
+> On Tue, Jun 17, 2025 at 4:16 AM Michal Suchánek <msuchanek@suse.de> wrote:
+> 
+> I think your subject might be slightly misleading, and that a more
+> accurate subject might be: Rename detection is not performed for files
+> still present in the target version.  Let me explain why and you can
+> check if I'm understanding your problem setup correctly.
+> 
+> > commit 5d51b10d8b5206ef5eeb9d214237b2ec2e0b789e (HEAD -> master)
+> > Author: Michal Suchanek <msuchanek@suse.de>
+> > Date:   Tue Jun 17 13:08:51 2025 +0200
+> >
+> >     rename file
+> >
+> > diff --git a/somefile b/somefile-renamed
+> > similarity index 100%
+> > rename from somefile
+> > rename to somefile-renamed
+> 
+> So you've renamed a file, detected at the time you run git log -p.
+> 
+> > ln -s somefile-renamed somefile
+> > git add somefile
+> > git commit --amend
+> 
+> Here, you reintroduce the original file, as a symlink, and amend the commit.
 
-> I'd agree that my reasons for making this change are insufficient. I
-> think usage tracking tools _is_ a weak argument, but perhaps not quite
-> as weak as what you're thinking. For example, when I renamed the rchg
-> field to changed, it was as simple as right-clicking the field,
-> choosing Rename, typing 'changed', and letting the IDE update every
-> use. Patch 11/13, "xdiff: rename rchg -> changed in xdfile_t", was
-> generated directly from that one action. That patch was clean because
-> I had already gone through and removed all the aliases of that field.
+No, there is no original file:
 
-If I am reading you correctly, you are describing IDE's syntax-aware
-editor's symbol renaming feature; I am not quite sure what it has to
-do with "usage tracking", which would be more of static analysis
-thing, no?
+diff --git a/some file b/some file
+deleted file mode 100644
+index b649a9b..0000000
+--- a/some file 
++++ /dev/null
+@@ -1 +0,0 @@
+-some text
+\ No newline at end of file
+diff --git a/some file b/some file
+new file mode 120000
+index 0000000..b649a9b
+--- /dev/null
++++ b/some file 
+@@ -0,0 +1 @@
++some text
+\ No newline at end of file
 
-Surely, IDE makes these symbol renaming easy and that would be one
-reason that makes "because we will change this part of the code in
-later commit" less relevant, isn't it?  Whether the struct member
-rchg is accessed directly in the conditional and loop, or is used as
-the source of an assignment to a local variable, it needs to be
-renamed either way.  And with tools, it is not as bad.
+See, the plain file and symlink is so different that changing the mode
+to symlink is represented as removing a file, and adding a symlink. Not
+same file mode change, not even a rename. The symlink is so different
+from the file that it's completely unrelated, even with exactly same
+content. Mode change to/from symlink always breaks, regardless of content and
+the break rewrites setting.
 
->> Sure.  But looking at the use of rchg[12] in xdl_build_script(), if
->> they were "const char *", combined with the fact that they are local
->> and their addresses are never taken (to be leaked to our callers),
->> you wouldn't have much trouble with the current code, or would you
->> still have issues?
->
-> For xdl_build_script() specifically it would work just fine keeping
-> the local variable aliasing in.
+diff --git a/some file b/some file
+deleted file mode 100644
+index b649a9b..0000000
+--- a/some file 
++++ /dev/null
+@@ -1 +0,0 @@
+-some text
+\ No newline at end of file
+diff --git a/some file b/some file
+new file mode 120000
+index 0000000..b649a9b
+--- /dev/null
++++ b/some file 
+@@ -0,0 +1 @@
++some text
+\ No newline at end of file
+diff --git a/some other file b/some other file
+new file mode 100644
+index 0000000..b649a9b
+--- /dev/null
++++ b/some other file   
+@@ -0,0 +1 @@
++some text
+\ No newline at end of file
 
-And transliterating that directly to Rust would not cause the borrow
-issue as you described?  Then it would be great.  One less thing to
-worry about when we need to look at C and then write an equivalent
-in Rust.
+And here we now have one removal and two additions of the same content,
+no rename detected.
 
-> 2. Keep this commit with reasons like this:
->   * Refactor churn: Later commits will refactor rchg.
->   * No additional meaning: The local variables express the same
-> meaning as the struct field itself. Also, the conditional and the
-> inner loop is easy enough to follow without using the local aliases to
-> make the code shorter.
+So git cannot agree with itself if symlink and plain file is actually
+the same file or not. They are presented as comletely unrelated to the
+user yet rename detection fails to detect the rename of the plain file
+that is completely unrelated to the added symlink. That is the
+discrepancy, and the bug.
 
-If you have to go route #2, I can live with it, but "No additional
-meaning" is _not_ a valid reason to remove aliasing variables.
+Thanks
 
-By definition, a local variable that aliases something like a deeply
-nested structure member should *not* introduce any additional
-meaning (in other words, if the code modifies that local variable
-making it out of sync with the underlying structure, the variable is
-not without "addtional meaning" and is no longer an alias).
-
-The whole reason I asked you to justify removal of the local
-variable on the basis of lack of readability improvement ("the
-original is simple enough to read without shorter variables") was
-just that.  "This variable is merely an alias to something else",
-aka "There is no meaning added by the presence of this variable", is
-*not* a valid reason to remove it by itself.
-
-So, with the same code but with a better justification like "the
-original uses a few local variables to shorten the code, but open
-coding the access to underlying members of nested structure without
-these local variables is not all that hard to read, so let's do so",
-would probably be an acceptable explanation with no need for other
-excuses, I would think.
-
-Thanks.
+Michal
