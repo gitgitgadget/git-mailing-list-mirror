@@ -1,84 +1,99 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3812367AD
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 05:39:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FFC246BC5
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 05:42:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758778762; cv=none; b=sLGqR5sS3BdC81DSposLso6lIzxRCiY0Z+Z5j+eQu42AWHy2G5JtMZJ0ZoWr5gMd9Uu47kgWHD5l1LSdT9ufVF5RAQSADyzCwU6V7tP/7u7IV2QpAt7oWnE7M3Bpf7UvmX1zPO1FKqF/4MmDVUjBjpCHzpl+YneJJaBDKuBU85c=
+	t=1758778950; cv=none; b=pfWddJgeDDlF/vz0M2zPMf1ixvZYBsI0VkI9sDHDki4MskRNXFKON/VkC8iD2G+i48TTbHr2rzpc7kQuD76SHNHGCLkJ9y0pkjDhZN2w5qr1F0AUiCbHnQL+LqxPEukHdBqu8jUb2adQzLzyx6cANNq0PIOOy8F2NrDaNnpBZJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758778762; c=relaxed/simple;
-	bh=ub2GJkt97a9QywsR6tstcRAehi1FkIwUzbGEhWekU48=;
+	s=arc-20240116; t=1758778950; c=relaxed/simple;
+	bh=Bz7mcF7hxWsXWYfj412y4s32qguzt+vIEhAStNVmoIU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B+lN3sm4x4k/9JWYXGhakvsQKvazFpojP/8dsneTYKC6IB6eTHuhHW6Em1AT7u6fgY/zH5nkjI7WoQ2QDTNofwsv+d0Lz8WjsCPaEiovFCQNMUgSpMIRYZpzR2hCFgyYyKzr5Z//GdCL7CRepO3xPYOiUeI/8zR9o4egkmQDpts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bZ67t6MD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R/yJcuYC; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=b66yw2gfvBdwT7KfjfdPakFVlWe6+VHcSOy1GIwHOdyczJvVbbbeGCOYgQ5sSnNfSkVqp/QczSQAhGwG44mNPWTa0+jRRxYC3JWju1vSF53Fr0jC7ydC6pR6CsK9hqUj2RlA/rq6Dg0ZptPzRpnDZUbTDjnqpMn9wr28ZR1/zOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YXfe/yE1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EmOzhIGP; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bZ67t6MD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R/yJcuYC"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 79DFB1400123;
-	Thu, 25 Sep 2025 01:39:19 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Thu, 25 Sep 2025 01:39:19 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YXfe/yE1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EmOzhIGP"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9E3D9EC01C2;
+	Thu, 25 Sep 2025 01:42:27 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Thu, 25 Sep 2025 01:42:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758778759; x=1758865159; bh=oYUQAbfG+u
-	9QLLY17U8KAmpTM2sQmw8bHEXU41SrIoc=; b=bZ67t6MDs0k/9/NkloK43do/sm
-	6a639y+B2mNwiDvYE8SXaZaN9oPLi1E8kZzcYMK9/BLTUXn5ROq+0YTb982pT2eU
-	uMD405wFS10Va5UlB4voWA+sFWX54rBYgviRuQVoS0qbjl16oeeR7ClzCYgvxQUQ
-	NfNfI1tY18oo2nHRVBMejI26KYQ6WiPG9Wgvvf75d4nfeOf6Q1SGv5cAADWz3z9Y
-	Xtqg6mshcXlrtWak+gA+ZBzpkOp/bkv4QDzaS/BZXxEjEqcqc3gLC5ueEHhTlmd0
-	XGke0F1u2ppJcU+UJ0HndZs3c7lNObIHLqJvihk72bWgFFVQSx4VZKq+vCiA==
+	:subject:to:to; s=fm1; t=1758778947; x=1758865347; bh=/5pLZSl68M
+	MTC9R0pjF3xLwSxRvnhhJxGYXJrjAizdU=; b=YXfe/yE1tbLyzZgnYNAXKkj2gv
+	VpkWwo7lS6XNnccjz4c7WvYYkVDrfIjsqhR17q6CwaBWyJu8oUvTjgiryjqjo3lS
+	06RpAbh3DoqYv0m1lZAyVXEd4ufYcav5Wh3nb9WUIOzHeQ1rU8blGumNn8wRjzN3
+	zY0koB9xXmNRzW9tBGNt96DzRze+t7QkZSU3+iozMalcpCcZ7ZI8NK9hXiwnjPSQ
+	+/Tolb8gQRuKSjXFmfKkz8imhywVSvpTZeb9OALDGJFY+nymRyKvKzdRzh7ln3J9
+	W1q9kJI9IS/7RBbGcrgFxCrZlIL9aVPijlgKYvauXTojvk0VY6z+ezgeKhyw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758778759; x=1758865159; bh=oYUQAbfG+u9QLLY17U8KAmpTM2sQmw8bHEX
-	U41SrIoc=; b=R/yJcuYCVhHH66cDs2jJgbJW7gQOVCWN47gBsNHP2TnOIDvOd6s
-	SzIPUan5dzZOTUEqicatxY0mwXXkarikEDqeUNZP1Wtj/yUhE+hC/g7Q6ft4zPmF
-	CoQJs5xYm0xmL9aProwtf5Dv6q8Kp4biIJqM2gTlyduzQdq7gwz6T3mJnrQ82Qav
-	VCGIDZCO3FHLSRKW0hnmo8PwSlhx0dLMioX6vIFj6nyRK385cjlL44u0Mfew78On
-	ffDQkECMGQ+JQsX93Rv/1Bo7DCwMov6GzLomgUrwtzHNrZXf8Xlxmn7bpWwfBSXU
-	iNv3eHIILCVZN+77+mh70GaV8vdvXtCEZrw==
-X-ME-Sender: <xms:h9XUaBHE_lJz2yFaosPoSxqrigFNe6A_EZbzyiFrx_o2hrOP3DOnUw>
-    <xme:h9XUaNy4Hmr70Itp6RRa8zfn8haSA0uINjEOPjS9vSuPMl0YhLY4LHL0aJ90IsyOn
-    BU4SJi3lgYWfi9XvEgur_EAAnQxwwEofRITt6d6c7KyzOi-9ShX-g>
-X-ME-Received: <xmr:h9XUaAhmeDCCkDLnN-WFLYOyD0YF6hyYMVRXdsBEuCcQXMJGR0YPZjRj97b0Zr2b1v2vdfrfi2EvcseZIJP6YYKH369jtR8qestqkfkUga0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiheeijecutefuodetggdotefrod
+	1758778947; x=1758865347; bh=/5pLZSl68MMTC9R0pjF3xLwSxRvnhhJxGYX
+	JrjAizdU=; b=EmOzhIGPXIfk80nt5k2q//9Z9rewsGqXblGVeijOHqaGjW0Mlgs
+	ojDClMM9RfoTX/I7lW1KbPFQK5Od3X0csIb36BDCKIIASMbffY/A/R4Prz63L5oq
+	uZ1XlEj03SuoANFHr/5Yb4fSnzbCSS1l8+4Yfkph3f2D2nwZzfPm3h2/VEtpvhbJ
+	xoI3CSmJy8hT5WX1olHYaaemndSVVhP5dABgcC2ysGDAU4vLxaUfEB8mQQF3/S+T
+	grOXyM5Y6Hu4FsjhCQq5NkRtfzCkuSJ8LuKSgEMUl+EXK4d3ooyu7o2QZMLS4Gb9
+	BH5gtDZVLdrr9YpI1IXKMeFOxJEEvbDqV8Q==
+X-ME-Sender: <xms:QtbUaAdu6WJUldNbBqDcjk-tXpQM08-9Qh8LXuBAG9WKsyhOksx1zQ>
+    <xme:QtbUaMNAm8u4Hg4oscDO3ia_m3U3xAcDYTfeL5X5e8ntbLr33kne2A0jhYLcLppyS
+    7CM4287H_Ti-Sb220A-fr0xdXO2XQyt6NuKuXHgcNXoc5IsBw2Cxg>
+X-ME-Received: <xmr:QtbUaIJTTCNF2ed2AuaeRg9DTPXbPmP0NaJbCi8CDVCN7Md_Kd_uGVeRJIIN3Lwyxe_GGwKXIqMKxIdnL87YapxkC76XH4BBdxTpj_VD6UU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiheeikecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrd
-    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrgh
-X-ME-Proxy: <xmx:h9XUaAwlGbdgJ04GP5sN9ISY4Pw6Tz70UV9bNJ_x0_tnk2ELkmzMCQ>
-    <xmx:h9XUaLIJb4aNFbdcBj-HySgt-rzVJyWRaAL9DvlfoV4q6KPPyEXXsA>
-    <xmx:h9XUaPSNplaRF4RvKUnFGs74O3GIxYh7ZfAIdRkzCf6bzgn60kxGxQ>
-    <xmx:h9XUaLqyNmsSG7bBPlot9CEbs_6ddhAZhAQ_mcSTY0NJarLvzRLUvQ>
-    <xmx:h9XUaOO-hTcStbw6Si3vmyMxnY8qSOhiSVzJsvRMAJ-IRnlM6QAj8ElZ>
+    drihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshgrnhgurghlshestghruhhsth
+    ihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrd
+    horhhgrdhukhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehg
+    mhigrdguvgdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:Q9bUaEJYFjMGhoRrY1-p6Y9sIi2DDFD8iguPEAX62pdscqF4ajtn_A>
+    <xmx:Q9bUaK4wau_FPAfhRgtE2QI7lY5a3-wOwVxJEmxEzQG7y702MQg1uw>
+    <xmx:Q9bUaGfuDk8ZAyEAatbKUheDObZg3-9ZPM3G9Pu6bLF6nt1ImfakyA>
+    <xmx:Q9bUaNHgnbMF-q1H-XitIsxZbRFopCSfBrPJp1CdAQ80H8begr_JaA>
+    <xmx:Q9bUaAe8kIgjujmnUc9NMpnjtAM3nZDM_Zoh1W-hi6T9UX2GmJJM_2fk>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Sep 2025 01:39:18 -0400 (EDT)
+ 25 Sep 2025 01:42:25 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 436ec8f3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 25 Sep 2025 05:39:18 +0000 (UTC)
-Date: Thu, 25 Sep 2025 07:39:14 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 7781637b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 25 Sep 2025 05:42:24 +0000 (UTC)
+Date: Thu, 25 Sep 2025 07:42:21 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com
-Subject: Re: [PATCH v2 6/6] builtin/repo: add progress meter for stats
-Message-ID: <aNTVgnEGE2qUwZwK@pks.im>
-References: <20250923025700.3046260-1-jltobler@gmail.com>
- <20250924212426.2930029-1-jltobler@gmail.com>
- <20250924212426.2930029-7-jltobler@gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: phillip.wood@dunelm.org.uk,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: gitoxide-compatible licensing of Git's Rust code, was Re: [PATCH
+ 6/7] xdiff: conditionally use Rust's implementation of xxhash
+Message-ID: <aNTWPSWTaHnW3wKt@pks.im>
+References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
+ <5a959c9bdad79cf972b95dcf4324135dd7c94dac.1752784344.git.gitgitgadget@gmail.com>
+ <5596e569-6632-c2b1-37af-a978de5408cd@gmx.de>
+ <dd3a7ab0-947b-4592-a086-8c7028f02ffd@gmail.com>
+ <9818dc92-3569-3e6f-0252-245c2bf0bf84@gmx.de>
+ <20250923174825.GB1136654@coredump.intra.peff.net>
+ <bfaaf26f-5759-4812-9057-b3e0bf7c7949@gmail.com>
+ <20250925022555.GA3202669@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,110 +102,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250924212426.2930029-7-jltobler@gmail.com>
+In-Reply-To: <20250925022555.GA3202669@coredump.intra.peff.net>
 
-On Wed, Sep 24, 2025 at 04:24:26PM -0500, Justin Tobler wrote:
-> diff --git a/builtin/repo.c b/builtin/repo.c
-> index fe7d43f78e..fdc8af92dc 100644
-> --- a/builtin/repo.c
-> +++ b/builtin/repo.c
-> @@ -344,8 +345,14 @@ static void stats_keyvalue_print(struct repo_stats *stats, char key_delim,
->  	strbuf_release(&buf);
->  }
->  
-> -static void stats_count_references(struct ref_stats *stats, struct ref_array *refs)
-> +static void stats_count_references(struct ref_stats *stats, struct ref_array *refs,
-> +				   struct repository *repo, int show_progress)
->  {
-> +	struct progress *progress = NULL;
-> +
-> +	if (show_progress)
-> +		progress = start_progress(repo, _("Counting references"), refs->nr);
+On Wed, Sep 24, 2025 at 10:25:55PM -0400, Jeff King wrote:
+> On Wed, Sep 24, 2025 at 02:48:26PM +0100, Phillip Wood wrote:
+> 
+> > Thanks for putting this so clearly, I agree with everything that you've
+> > written here. Another thing I'm concerned/confused about is how the
+> > exception for a single project works in practice. Does it mean that a third
+> > party that wants to re-use some code from GitOxide has to check if the code
+> > originally came from Git to determine which license it is under? Or does it
+> > mean that anyone who wants to use Git's code without the copyleft
+> > restrictions can do so if they launder it through GitOxide first? Neither of
+> > those seems like a great outcome.
+> 
+> If I understand the suggestion correctly, it's not to license it
+> specifically to GitOxide. It's to use a permissive license (like GPL
+> with linking exception) that would make it compatible with other
+> projects with similar licenses (like GitOxide).
 
-We tend to use `start_delayed_progress()` so that the progress meter is
-not displayed when the action takes less than a second. The delay can be
-disabled in our tests by using `GIT_PROGRESS_DELAY=0`.
+Yeah, we certainly shouldn't single out a specific project from my point
+of view. But going with something like LGPL or GPL with linking
+exception would be quite a sensible choice from my point of view.
 
-> @@ -365,13 +372,24 @@ static void stats_count_references(struct ref_stats *stats, struct ref_array *re
->  		default:
->  			BUG("unexpected reference type");
->  		}
-> +
-> +		display_progress(progress, i + 1);
->  	}
-> +
-> +	stop_progress(&progress);
->  }
->  
-> +struct count_objects_data {
-> +	struct object_stats *stats;
-> +	struct progress *progress;
-> +};
-> +
->  static int count_objects(const char *path UNUSED, struct oid_array *oids,
->  			 enum object_type type, void *cb_data)
->  {
-> -	struct object_stats *stats = cb_data;
-> +	struct count_objects_data *data = cb_data;
-> +	struct object_stats *stats = data->stats;
-> +	size_t object_count;
->  
->  	switch (type) {
->  	case OBJ_TAG:
-> @@ -390,17 +408,24 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
->  		BUG("invalid object type");
->  	}
->  
-> +	object_count = stats->tags + stats->commits + stats->trees + stats->blobs;
-
-We have this computation in two locations now. Maybe we should
-deduplicate it via something like:
-
-    static inline size_t stats_get_total_object_count()
-    {
-        return stats->tags + stats->commits + stats->trees + stats->blobs;
-    }
-
-> @@ -417,8 +442,12 @@ static void stats_count_objects(struct object_stats *stats,
->  		}
->  	}
->  
-> +	if (show_progress)
-> +		data.progress = start_progress(repo, _("Counting Objects"), 0);
-
-s/Objects/objects/
-
-> @@ -432,10 +461,12 @@ static int cmd_repo_stats(int argc, const char **argv, const char *prefix,
->  	struct repo_stats stats = { 0 };
->  	struct ref_array refs = { 0 };
->  	struct rev_info revs;
-> +	int show_progress = -1;
->  	struct option options[] = {
->  		OPT_CALLBACK_F(0, "format", &format, N_("format"),
->  			       N_("output format"),
->  			       PARSE_OPT_NONEG, parse_format_cb),
-> +		OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
->  		OPT_END()
->  	};
->  
-> @@ -444,8 +475,11 @@ static int cmd_repo_stats(int argc, const char **argv, const char *prefix,
->  	if (filter_refs(&refs, &filter, FILTER_REFS_REGULAR))
->  		die(_("unable to filter refs"));
->  
-> -	stats_count_references(&stats.refs, &refs);
-> -	stats_count_objects(&stats.objects, &refs, &revs);
-> +	if (show_progress < 0)
-> +		show_progress = isatty(2);
-
-Makes sense.
-
-> +	stats_count_references(&stats.refs, &refs, repo, show_progress);
-> +	stats_count_objects(&stats.objects, &refs, &revs, repo, show_progress);
->  
->  	switch (format) {
->  	case FORMAT_TABLE:
-
-Should our tests be updated to verify that we know to print progress
-depending on whether or not `--progress` is passed?
+I cannot really say much about the concerns. Should we maybe ask the SFC
+for some guidance here?
 
 Patrick
