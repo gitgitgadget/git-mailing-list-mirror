@@ -1,110 +1,122 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B930527FB21
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 21:45:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9155724A04A
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 21:47:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758836742; cv=none; b=J5fEkhj3itYGZR2ln8xAQBH+6Uz+3tmrfx9UzfUSd3VHnNSp4fg7qcI9c6CBCQCwfLYYFi6rUAZK3bSFd2yfxJkV5xOAOfc0ZPb9L1s9164+YgssLG07AnUbeEFTaYzsMZH52SzgggzeTuGcNsY6kLIg90YluCk+4imSVttOuew=
+	t=1758836824; cv=none; b=SFH5XKCHiRmxQZik5D1geGapKl3yGOB7BMCrH13BtYbi+wLouKnIY2xk8+dOU2ZhlOtB1OfhPSN3GZZdKUujywyqHKoklVmUAS3FbHaqiQklI+HmWYvD7oWtD1/6Hws8icc4PQ4vz3/YYHDTlaR5IlKQQPKZSyzdRWg/to7nztQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758836742; c=relaxed/simple;
-	bh=SdwzjCXnZoTqvOopyD7SJ61iKPU5yCLbnT3Ww6n80wY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FX5+bMY8MRPN1IZ6LqXxNq60KT/VENpceCkxAevBAuus51K6iD7UxQSGGUMzx28gKS34L4cHsHFnN/85u1PPSyqTwDtUpSpvgxY7G8cqNS73SPHt2XlO/nVRHtWq3HJUWOwG4UuZyOPKu5/9y1wqgWBh7bzCSrGHo7ZvD07784A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=29xPzhZY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lndnVTdV; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758836824; c=relaxed/simple;
+	bh=h89ICDPDg7eMdsQfT7Gm2Sj9IkUtiDMEqWzmSZGw43g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dwIjUL4F/NMLiClb9YMnzxCnAhd5LSMXlDQBq4JVk0PXIHNg4cfFkV88/PfzOkY0aPdJz9qwMA6ZlQBfnQBci2gO4XpFwGAa6A80WmxF944L07kd2YCtLP3fqgZlDx+Tqs5DMlauEnNe1yE3HaRVsfbObqT5q3zdTTuO6DgX6Rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=OaU8EBPw; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="29xPzhZY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lndnVTdV"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C881E1400096;
-	Thu, 25 Sep 2025 17:45:39 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 25 Sep 2025 17:45:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1758836739;
-	 x=1758923139; bh=H95hzFULkWLweOHH4Mek/HSOYm9MVZ4H3gjHjOQBJL4=; b=
-	29xPzhZY1KdEy9AYZDoUOgfZNuIKxw7S+fJgwh3Rkb0Hsy7cwrtl++x1nhiuK7Do
-	0N7HZLUn3fkxRSqkSf/nSLzIeexmRZyvVejavUgCYF9MgbrJsfWIbtGlYa3TYXfP
-	COVukioeMhaLmh9He3FDS5z3Ab+RBcznSNV2JsE4y4RZxgeIvMZH0F2wFN9ZbjF4
-	+RJEpoc3Vu1tkrTcDOVjgCZ1l+oiwlpP9fy7Dd5C7uZ8gIk9bnd1Ab6DStQrwvgq
-	uxSYNRapnW1c6v2RcISWj/zvJLiRuR4YaBHSN18HXCpYATwV09eS7ZWQ61IF64zo
-	Dj7kXvmpx/GhYyuC8Fqieg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758836739; x=
-	1758923139; bh=H95hzFULkWLweOHH4Mek/HSOYm9MVZ4H3gjHjOQBJL4=; b=l
-	ndnVTdVlqb7pL3C9bVMXAfxJ8k1j0CMcOOTiFh51nEk9hm5KWqUCN3r+8071Npub
-	oiqVU+O/K7kgDTz7QP+MvxHwbVuRjiE0HxlXMLi3H3IWfjFHu35uUfe1e0igZBsl
-	BszA54xgDAikkb3p7GS9zucZ0YQiZzFboPWpiEmXzDJmUbJmVkbU8J2HRXR4BASb
-	i+RaGxVbbZcik3PQlrvQlBOpJEiSouic6aI+EC6AtwJjEDGdP5xTfr/UU3l0YxxF
-	dKw5wvRaVchaN6hUfTZbtaYD+T+wkVj+gSTw5FvVbFazSiClJ2eL3RjOgHY91etV
-	dCxw+LnR9Oi/C14GduSdQ==
-X-ME-Sender: <xms:A7jVaLG97PGuEuXLabxEQXee4bG-gZNZe3huYUDE9ShVAFeIVsg1mQ>
-    <xme:A7jVaHbFzp94MCfAw6H-y2-EahgqXdxn0yycglz_oGv4oGsTun1hG-rnmO3YKAPKC
-    GjfdairkZsTwfOT2V4XiYBmR-d5vXluYibVcJ6s-J_Zyy7XXf7d9w>
-X-ME-Received: <xmr:A7jVaDXVxsAzQ66UIdpdJttfhGdsGMqihZ98UF4i90Ml5Zm22IOtAVRMnQmtzK_vLMv-kD5hodkhLqj9B8fD4wJDVIDU3xQXcT87>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeijeeitdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorh
-    grrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopegvmhhilhihshhhrghffhgvrhesghhoohhglhgvrdgtohhmpdhrtghpthhtoh
-    eprhgurghmrgiiihhosehgohhoghhlvgdrtghomhdprhgtphhtthhopehpshesphhkshdr
-    ihhmpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtth
-    hopegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:A7jVaFmD-6-gczkmmN60E17F4uEsgFH8xgpZEJeogwVxRtYoBOxzyA>
-    <xmx:A7jVaGBxY1KuxU-CY1GXxgk8_jZCFODAx-4Yzp4frv7gdeA7dkd1TQ>
-    <xmx:A7jVaMiDaxFw_ne1l-t498zLZDgwL6In9EFOLdvDF8kG7lltVV8T9g>
-    <xmx:A7jVaLwcUHKB6IYAiQcy6n1OtvIlwzNriiN4gdLpLyoaYtrH1g7JBA>
-    <xmx:A7jVaDxCM6oi-ypqM3WoRrcdk6ea2rGClFIWCpPXIc_ywYf67rFA_GFv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Sep 2025 17:45:39 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org,  Emily Shaffer <emilyshaffer@google.com>,  Rodrigo
- Damazio Bovendorp <rdamazio@google.com>,  Patrick Steinhardt <ps@pks.im>,
-  Josh Steadmon <steadmon@google.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?=
- Bjarmason
- <avarab@gmail.com>
-Subject: Re: [PATCH 05/10] reference-transaction: use hook.h to run hooks
-In-Reply-To: <20250925125352.1728840-6-adrian.ratiu@collabora.com> (Adrian
-	Ratiu's message of "Thu, 25 Sep 2025 15:53:48 +0300")
-References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
-	<20250925125352.1728840-6-adrian.ratiu@collabora.com>
-Date: Thu, 25 Sep 2025 14:45:37 -0700
-Message-ID: <xmqqv7l6dx4u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="OaU8EBPw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1758836820;
+	bh=h89ICDPDg7eMdsQfT7Gm2Sj9IkUtiDMEqWzmSZGw43g=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=OaU8EBPwtaRKPJKwPmTw76gc0PcVevI3NX7N97BHOKMiEuy2kiWQGToCuat1h6I+J
+	 w4tAGfN/cUdUDT48RojTo/az+WR8Ui3uHApZ0EDyzsqnyH57YvZO6n0tLFsGfHKSgx
+	 KfxcV5ISgeuGUPtASJ2DjqDgDvJ21dwUMD6YwtDd8sOF1R5ZHlsnfpjcBHxIrhehXP
+	 0q6JCpgHp9sAloNPgz/rdNq9NZapFZHfv0xYBbtt9byrolpAGrxKI1O8KlloI8Rjpy
+	 CwBIqTji3VodfJA3esU8bwqM2SO8vs9VC/XHkx2QqqfNFfaKtdmmP+k1Mt0bGYemY7
+	 xSirRLwyBdzKnwtV3uOQOL36FHFbP7IDtA8u/yDb3NrJLe6ZO1RI0G4YnPO0ENpOwa
+	 jCTYAXgqX2GyZ1r6N3FiP4oTIIcLNErhQKP7p3HGfpGBfW6fWXwtlOVOMG5LNi/p5/
+	 Ea+wbCCk7Nc1etTU/Ged1HREi3l4N84h6saSrU83CIdmflyISqf
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:916c:9d5f:e4b:808d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 228BE20107;
+	Thu, 25 Sep 2025 21:47:00 +0000 (UTC)
+Date: Thu, 25 Sep 2025 21:46:58 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 3/9] docs: reflect actual double signature for tags
+Message-ID: <aNW4UgPE_sitLgGU@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
+ <20250919010911.649831-4-sandals@crustytoothpaste.net>
+ <xmqq348i138l.fsf@gitster.g>
+ <aM7IQibwwKFJZcYE@fruit.crustytoothpaste.net>
+ <aNOj-1xy-UTP_3E1@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="hv7I24J2NwH6lS/x"
+Content-Disposition: inline
+In-Reply-To: <aNOj-1xy-UTP_3E1@pks.im>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--hv7I24J2NwH6lS/x
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+On 2025-09-24 at 07:55:39, Patrick Steinhardt wrote:
+> You mentioned a "missed patch" in the commit message. So is this design
+> here intentional or merely an oversight?
 
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
-> ---
->  refs.c | 61 ++++++++++++++++++++++++++++------------------------------
->  1 file changed, 29 insertions(+), 32 deletions(-)
+The original design was to implement all SHA-256 signatures in the
+`gpgsig-sha256` header, but the patch to do that got dropped
+accidentally for 2.29, so we shipped without it.  I decided to fix it in
+a compatible way for 2.30 using the design here so that users who had
+created SHA-256 tags with 2.29 would not have them be mistaken for
+signatures over the SHA-1 values of the tag by Git 2.30.
 
-Please describe what is done, why, and what benefit we are reaping,
-just like you did for the previous few steps.
+I knew that people would try things out nearly immediately and that some
+people would use very old versions of Git from their LTS distro and did
+not want to risk making an incompatible change that would break the
+object format, even while things were marked experimental.
+
+> I'm mostly asking because it feels weird to me that an object shouldn't
+> have both fields. I would assume that it's easier to implement and
+> reason about if this signature always was a header, or multiple that is.
+> But I'm not familiar enough with the logic here to really judge, so I
+> assume that there are good reasons that I miss.
+
+We should not have both fields.  In the SHA-256 version of the tag, the
+in-body signature is SHA-256 and there is optionally a `gpgsig` header
+for the SHA-1 version of the tag.  When that tag is converted into SHA-1
+format, the in-body signature moves to the `gpgsig-sha256` header and
+the one that was formerly in the `gpgsig` header is placed in body and
+that header is removed.
+
+So we will never have both unless we have an additional hash algorithm,
+say, SHA-3-512, where, when in SHA-3-512 format, the in-body signature
+is over SHA-3-512 and there may be both `gpgsig` and `gpgsig-sha256`
+headers.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--hv7I24J2NwH6lS/x
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaNW4UgAKCRB8DEliiIei
+gS6+AP9EzG9XicbhlyoD43t7FjFUjRK6SeIPhVqOoFTpZu5KpgD8Cl5UAfZIeYKe
+hl2cVdUUz9Q8pIflY22S8edhCRUN1w4=
+=cVcQ
+-----END PGP SIGNATURE-----
+
+--hv7I24J2NwH6lS/x--
