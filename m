@@ -1,85 +1,90 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4826D27467B
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 21:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B1E1917FB
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 21:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758834403; cv=none; b=uhbqC/vwWtdBmTKimmg8o3FSkvElWnr5LJk6WqSOeXFyQhNOhjkHS+V2eW8JktjcafvIv9ZL0ymzKSl42KXOzQi4dC5C19OS+8j9ohosjE4JvQF6Noq9ToXoZgUQFw4Lm61nU3qZ+9qzRolfKjNMqQBLN5IwhYnjmfoWt/qwGko=
+	t=1758834950; cv=none; b=J9jUzt2VxhOwsvY5JjSZ9VxfC51yudd/Ea76nQanY1u1DjkOzfTiq3W9B2rQKij4PzmLZp+W4JAEx0LPiBr2SxMq/ixJjvlTRFuDDBCyVWpBe+avfinOexn8CO8WkzHKioknWawqtmJhTlaW/FIWOjPBQwHDtiNC/HLPn5Z1SUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758834403; c=relaxed/simple;
-	bh=qQu8N8aRnpl7A2UNl2FXKD15wkDtRVHqRj0+pgwXFtM=;
+	s=arc-20240116; t=1758834950; c=relaxed/simple;
+	bh=aJF2JxWProV3oXB617piKjYrI35MuGcj/+pdS9IEJis=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Y9h0BN0LzrO4d0NUYT7o1Q/kXaOsae2AftJ6Oeux37ISJR63RMwBs8ToIjgJzhfdHXZ05k0rq9TElHkCKQ8btzutYUzfi0vyPM8J8ihMOcs4SAlW3Oghj3Aw76pMB99z3j8+ghRyeFz2DCQeWfMgiMNglMQgfsXfRlncv+dSuz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GJI9vTYL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IdHxKoFt; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=a/0/BcLzbt+LN9ALkjkXZ3eMhDWGiUf7VTYhOe/PvKfT3jY6a4w839/XMWuMjtnXLy2vhknSDpkUfBUs/RBcobsP9o67wJyOO3/E+Kb02hzX5Kqk8XihCq4howo9rTyRxbf/JoDTvAu1Hj9Cly3GJQQKFOjvQKwa+u9uAsKEmSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=n2hCD8gK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NpMhHzws; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GJI9vTYL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IdHxKoFt"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 352E8EC009B;
-	Thu, 25 Sep 2025 17:06:40 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="n2hCD8gK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NpMhHzws"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 17CB3EC0105;
+	Thu, 25 Sep 2025 17:15:48 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 25 Sep 2025 17:06:40 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 25 Sep 2025 17:15:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758834400; x=1758920800; bh=9C/KYAofYv
-	M2LNZQGuXYK/5fFbqgL/VZKOmrehcJKK0=; b=GJI9vTYLrZbywKQuYnChN1lI5Z
-	+IepEm2K5XUMge5XcH4IMh91Hetr4J2pQ6AtCAEslpBxn8qwanl03RnmSbl/XmTh
-	OQMTIAui5v0gw9eWtnscG4LiznqjPU+uO+Yzsc0xWLJPtbX40/AT4C4FzUwRI4A8
-	BXMWWZflQsVSaCoEGal63Jr+rXS/GhoB1aREgZtPTX2PSmzxmt66CmcFlQ+uuTqi
-	hQ8FPwFwUjCf6InwFs+D6XyQlriwROz8Vz+BFpaSRawH+VGaHxaxiI4CvM0RJamk
-	knbPyEGiYLmO20QZ/XkWB6ALKsvJlp425CGv6T/unqvzb2cT74XoQHRwEQxA==
+	:subject:to:to; s=fm3; t=1758834948; x=1758921348; bh=h3MHKLa3cS
+	DFWu5hMYcav3r6AwuR1hDBEq+Vph9A3oo=; b=n2hCD8gK2KsX1foRU/BRCPdqSm
+	iJhjX2Jy0xqi0aDuz2DYLM5pbzDYJpMw4rtAzU6yf/dhRnHHUJ77ITR/fbVkD73S
+	BdT8rPxtX3OajhOcmaHfgUZGxvnB5HTim4k1PaNuj69BARvRP96xAnzLlPjQBc4M
+	0yUTRuwi39mXFOU8jMEomk2AbOlYjF6/ZxqZnjJ4yQPjIXz8ROhO0S8QkTJ10NXU
+	S8hwcdBLHDA4PSAVjvE+M3A7IaaCXjth2VNUtTI+VPaOZuRA9QVyMbKwwvk0spN7
+	vIkjMcnhrnMQf79RiLIIN1mY/YWnBGXHeAoWFxxiKjlwMwgS1PrMf0J0jobw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758834400; x=1758920800; bh=9C/KYAofYvM2LNZQGuXYK/5fFbqgL/VZKOm
-	rehcJKK0=; b=IdHxKoFt67cwjk1fbjYeNWuQPZBRK2TLaumtojSErGiLMyyXBv9
-	OwvJxIORz/mHmDYGiOVLpNlZ1fr3iE6Oj74xdaZ0Dgwi8b/VrFLWEy215Tm5jbHD
-	EaL3mot4g4a/oqr2CU3RaGiqxg1cYFcM6m5FTe9RmYGPTIWWdWICjl/oIGjkhi2X
-	BR5W6Mpq/W+5ETsA5kBbliPRFbGtusLo/jzxpt+MvaT0JnEcF4fQ0H+R79F67TbE
-	OsTrQaedj+mrkeu+3eJlr08YLl1sG1DRiZ16hkWhpUM3FaIsODkoz9FtkgNAT1CZ
-	G5u2NeCK/UgC7MfwIqXqQn8fDKIVyctan7A==
-X-ME-Sender: <xms:367VaBMOwxgyU_rNaJDzaaooCZvtHG7QwOGTN9VR7O9tV1QgERA21A>
-    <xme:367VaK_QZKB3LzHb0cj_W1IPQ2wKMIFCt6NypZ1oeODBSv_VhoQFfMkFhix20Ao44
-    O5qFtVHVcXXrD15eyxgg1KEAievli8Jx5XqZGGkBm4CtIJS_C_vMA>
-X-ME-Received: <xmr:367VaFQiqG9zkDRGUEiMlKGqpGt_Y-SoTqmD7MSXdkvH8yLfTK145iF2YOC2YUmiyNl9ryTZOq_n26P8CdU94_zGzSz0asRXtzY->
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeijeehfecutefuodetggdotefrod
+	1758834948; x=1758921348; bh=h3MHKLa3cSDFWu5hMYcav3r6AwuR1hDBEq+
+	Vph9A3oo=; b=NpMhHzws1rBW/33ToyuLn2qWjpHUKf34QzWxbh3Bk5T21lXbTgm
+	zQXwt/K35aG7922/SOp+oh6RjHTioTqqeN+x9K2GERIcEqB5EtUpfRwxD35sAZKx
+	cWrJNqloIfvB3+Gi2TCga7M/5RfspOPImkR2BbkL6XMI0ENgv2BSensxVFLXqvDr
+	ceA1Y995vvy26zWZqYt101+eisneVYoYxI8HlV+jGaG0DCaASMqOUw9P53ezvU57
+	eiXdu81zm2L5Mzew5ZgP3n/839hcGvuk/G0WAzYq5bUZxL+ymYS7B1UWg9VYq6Nd
+	NAiPTFBtp0fzMLz/DBM1i1mGyVUrCTRjKiw==
+X-ME-Sender: <xms:A7HVaFeRTN4TooSR56CzSCUr4lzJJzkfQzGBdfS15mQ3US7Ih3YEag>
+    <xme:A7HVaG5N09Y2vWQVszgaX1eLBkUxQO52XqLzpwp1PoxZK1VTWtJwZVKnwtFYHPqgK
+    YPoJJLd-pFAbZQiLQtbdzuleAXKPHDDtV_Bgw14IY2VFE9CSC7vfg>
+X-ME-Received: <xmr:A7HVaIUmtF3Q0wErYB_EX0-r68o8_5IylgLJ9RDAX4CLB4oxQM95D9h413ymauIEk7AtDfo4lqU7u6yuYJ_oFKmVEmMQPGWOjJru>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeijeehgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehhohhsrghmrghlhieisehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:367VaMkj_u9Gm3z1mX8eHKDJ3Kpp37pQFWkC_JcFD4t10wsnXS_AxQ>
-    <xmx:367VaFQI6XsSJa7b3Phxs3kiw0-PCtwNKDOeazfGXVsmtAW5ZytqUQ>
-    <xmx:367VaKNRuvNxK9er-VUwMUPc0pk8qd7ZPdSVnZzGCEpmYfqacNnNLA>
-    <xmx:367VaOVH3E-z8MBIS4dn85nrpVMXWalLAkeVyGHnyhA8CR8N-nX2Bw>
-    <xmx:4K7VaIz5GSJL39vvd1Kh6Ilzf7TrjgATD7xU7IPmip4Xl0wzBTkBl9jh>
+    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
+    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepgh
+    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehf
+    rghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:A7HVaF5U2Xy0_awY4v0fUSNA7pzjhLnaMQWa2mM8ShvZNUiMhbjlfA>
+    <xmx:A7HVaDovcxsW0ohMc0HLX9sTD6RcHyS-VXP7UhW9TkWYO6Pm6jWO8A>
+    <xmx:A7HVaIlWIZHXMpy7GgXCHYc-CKJJ1ziwqIrB35bnvA65h-rV3_HkZg>
+    <xmx:A7HVaPNkRWHqKUPdFIX8kjqwHQarWsSNsHI0OT-exq1hxua9JuQSYA>
+    <xmx:BLHVaOBf4IYk-WvfiLCjSnV5L5RifdfhMT7vD9atAM_B3ePCizVCrkh1>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Sep 2025 17:06:39 -0400 (EDT)
+ 25 Sep 2025 17:15:47 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Hosam Aly <hosamaly6@gmail.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  Git Mailing List
- <git@vger.kernel.org>
-Subject: Re: Bug report: Untracked file lost from git stash
-In-Reply-To: <CAJA-u1oORK9b2=mg-s_n6-Jn3VBhe6sqrWg8VN0-MdEOjZGcwg@mail.gmail.com>
-	(Hosam Aly's message of "Thu, 25 Sep 2025 23:22:40 +0300")
-References: <CAJA-u1rnzef53+eW_mbwd_40q+-vt747Q_dP3PG_HKt1yXcmXQ@mail.gmail.com>
-	<CALnO6CCfwdKcqxFSvX68WDvzceYeo0ougz4337ejChbPB9aGEg@mail.gmail.com>
-	<CAJA-u1oORK9b2=mg-s_n6-Jn3VBhe6sqrWg8VN0-MdEOjZGcwg@mail.gmail.com>
-Date: Thu, 25 Sep 2025 14:06:38 -0700
-Message-ID: <xmqq4isqfdi9.fsf@gitster.g>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "D. Ben
+ Knoble" <ben.knoble@gmail.com>,  "Kristoffer Haugsbakk"
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v3 4/4] doc: git-push: clarify "what to push"
+In-Reply-To: <2365a7b9-3d22-4406-876d-65822822655f@app.fastmail.com> (Julia
+	Evans's message of "Thu, 25 Sep 2025 16:50:32 -0400")
+References: <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
+	<pull.1964.v3.git.1758649472.gitgitgadget@gmail.com>
+	<be6453d010bdc9d2b49988d6841dd7e7f9bdf1f8.1758649472.git.gitgitgadget@gmail.com>
+	<xmqqqzvvk4bj.fsf@gitster.g>
+	<2365a7b9-3d22-4406-876d-65822822655f@app.fastmail.com>
+Date: Thu, 25 Sep 2025 14:15:46 -0700
+Message-ID: <xmqqzfaidyil.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,34 +94,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Hosam Aly <hosamaly6@gmail.com> writes:
+"Julia Evans" <julia@jvns.ca> writes:
 
-> Feature request: I wish that the maintainers would consider changing
-> the default value of `stash.showIncludeUntracked` to true. If
-> something is stashed and the user asks about it, they should be told
-> about it without hiding anything. Consider the case where all the
-> stashed files are untracked; `git stash show` currently shows nothing,
-> which is very confusing.
+>>> +As a safety measure, `git push` may fail if you haven't set an upstream
+>>> +for the current branch, depending on what `push.default` is set to.
+>>> +See the UPSTREAM BRANCHES section below for more on how to set and
+>>> +use upstreams.
+>>
+>> This feels a bit out of place, as the safety measure, as I
+>> understand it, is only relevant in 3. and only when push.default is
+>> set to "simple".  If we are referring the user to the configuration
+>> section, then it may be a better place to say that the "simple"
+>> setting requires you to integrate with the branch with the same name.
+>
+> That makes sense. My goal here is really to communicate that you may need
+> to set an upstream for `git push` to work, since it hasn't been mentioned yet
+> that the upstream branch might be involved in deciding what remote branch
+> to push to, and it comes up pretty often when using the command.
 
-Do we include untracked paths in the stash by default without
-configuration and/or command line option?  If we do, then such a
-change will affect so many folks that it would be possible to do so
-only at a large version boundary, like Git 3.0.
+Actually, I think it is a mistake to tell people to use unadorned
+"git push" all the time.  Have them say "git push origin mytopic",
+get them feel sick of doing so all the time, and then tell them they
+do not have to if they set an upstream for the current branch.  IOW,
+"sometimes you need to" is the source of the confusion that comes
+from giving them too much DWIMmery.  You'd by default need to tell
+Git, because you know more about your project than Git does, until
+you tell Git once, after which Git knows what to do.
 
-But untracked paths are not recorded by default, and a stash entry
-that records the untracked ones is a sign enough that the user cares
-about these untracked ones when the stash entry was created.
+> Perhaps this instead:
+>
+> "Depending on the value of `push.default`, git push` may fail if the current
+> branch doesn't have a configured upstream branch.
+> See the UPSTREAM BRANCHES section below for more on how to set and
+> use upstreams."
 
-Even though I do dislike any suggestion to change existing behaviour
-established more than a few years, I would be more sympathetic than
-usual to a wish for such a change in the default.  In other words, I
-tend to agree that the default should show untracked if recorded.  I
-am actually tempted to argue that the presence of the configuration
-variable stash.showIncludeUntracked and the "--include-untracked"
-command line option is a bug ;-) but I won't.
+So, rather, something like this
 
-Thanks.
+    "git push" needs to know what branch to push to update what
+    branch of which repository.  It is done by giving command line
+    arguments and/or setting configuration variables to the command.
+    See UPSTREAM BRANCHES section for more information.
 
-
-
-
+would be more in line with a preferrable mindset users would have to
+successfully use "git push", I think.
