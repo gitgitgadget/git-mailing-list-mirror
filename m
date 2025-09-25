@@ -1,86 +1,85 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1FF2F60DF
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 06:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8C12F6173
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 06:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758781841; cv=none; b=DxaYgprZqF//V1Fyn345CeuC0xi5WxrS7kerm0V6/1akVWFwkM3cBFPtg3VireFILm+L6su1l5tPxVQXUk3rWrgDHLpgoUOdjqEWYMNjoBN9SE+euHiW9HyWUOHVa0f+CA5dYbh76DkbyKRTVHpNS7RwWY4jiakAMJG9U0KRqrg=
+	t=1758781844; cv=none; b=Lv9jT6LteM0onq6aJa4J5ZC5oOJrI7/dEgRQpRhKy/vKMfV7fJ9rBmFZXIWFIfuWPjhu212K4lYlzPVRcAM3J+ussxLXlHhjBwSwZQACRlGSgnIb0An9YJJFQpe3GCmT3hU7hcdxGVZuQlLNJWYx+hGOUF8rhSPPxT/b3llGP3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758781841; c=relaxed/simple;
-	bh=AWy5tSXlSfE1PJ072LLuHO8I/QrGSat58zDJBttdxXk=;
+	s=arc-20240116; t=1758781844; c=relaxed/simple;
+	bh=GChFZPek48zlnsZJ/Lcqooz40ciMi9Bz1pPDl+Nvk48=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cQut45qguQ6TBgbzBsc2sXYymj1wRBb9vPnMH099EK4gUFLG86r7Lx5nT4Agmi/F7+GNuS9bktdgL1bMrs2s9eXOF3T8EL9d83JM2hOVNyjM9hBsnLtu2gK+VZsBtgt5MA6jnz/Vw0KHa4CUtre44lNALvzVCHYzoU2xZanVwik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PwIfEzti; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XBaG95Vl; arc=none smtp.client-ip=202.12.124.157
+	 In-Reply-To:To:Cc; b=cqRdh3zOqzFqVZSXxm8AJHPUC2vnQs8/SHeVgSRTiuVpdvBJeYqzlTIF5Fvqxmc6o7ZRzoYbcvT4gqY8E0VxcCUIYv1RxFibMqACvITcTvOG8+TKqXhKU9xWlYg5FK37615XSH99QpJ+zbYo4Wjnklz9AUEm/kLSnEUXRfSTiUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GQNcS0IP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WYhZLHK4; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PwIfEzti";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XBaG95Vl"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id DA8E37A00AF;
-	Thu, 25 Sep 2025 02:30:37 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GQNcS0IP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WYhZLHK4"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 44D0E7A0146;
+	Thu, 25 Sep 2025 02:30:41 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 25 Sep 2025 02:30:38 -0400
+  by phl-compute-08.internal (MEProxy); Thu, 25 Sep 2025 02:30:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758781837;
-	 x=1758868237; bh=iHC4CzYiX4HVoXUunF1L+RhC++xKpyszIqExFwV/1gE=; b=
-	PwIfEzti5/j7CWhahhTmzNDgEwd8C7mprIIq56OxJGYKFq2bko+UcTRDxx5waiub
-	32hf/hV2LnBl0V1kgJtsYYWo2Ri/s0sVf0e5GVnucRc5bUT2eHnhyBI21MiEZ+Au
-	L6nBlIxZLuV+BCwXWNIF89jmMofHEkLgBNMEzvsUa95Tc7msrC0wG7rQ++JPkDZM
-	phju2cMB9jjt8paDmPyzO9tMnw+o4r55dwZAmq0C0OaBHZw2NJT6N4BbZhpDMqcn
-	QYry9UtGfC0pUeG6If4KwpDOr71KYv1NyPrqWJ1LEumDMF7LpFZwPUSZcK1+75SW
-	wIMbC2s1eJhe4fuM45ucAA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758781841;
+	 x=1758868241; bh=zOyauCcZWQHljVVYvbb6mJMojgX35aeGr5IIRjaeM00=; b=
+	GQNcS0IPOSKu7B17WSg2/ihF1KCwRzKS3kna+mTwP7wE+dsQo6Vg0h25cgpf+FDL
+	zrVX7QQQaYPVWR6v4dkz+9Hm9IXGKFv4mJm/KSUTjPFPnuZ6+vrtOCIaDFwXRylG
+	pfDPVZM6TWBGFQ6u+B8ojLyOos+aWeUSgSYaeCCN6OIYj3og8c4ZW4WE24uQFbF8
+	nGFN5mqky8SbXtDoqfKjDp+35BRMt5xajmD2rx7jwCazk7fCZ+2a0beeyW9xF3bM
+	pYlgl8AfwRW6D6Gd3K5P7I/1/U7b3bo5nPtySpoDOU2ClhjVduFkpJpb02LxXXW/
+	ezsiIGKYB18ljxhyHxefDg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758781837; x=
-	1758868237; bh=iHC4CzYiX4HVoXUunF1L+RhC++xKpyszIqExFwV/1gE=; b=X
-	BaG95Vl6mnDDvxnjeWlWWBSYNesbySDWMVu2lVlCSI8LzP2SAnGsrXjC1tnh6GDb
-	l1ref5rFjNxPUl4NVdLBrsdhgVxitCg0DnwP4zPGuTPvkQpV1gRHzxdOewDwmHiA
-	Vh4SbpuY8d9so7Jqg76PWjV3vaZQbqEQSRNugzaS7BGwKxqdQ4hwZ75ViOI6Ednb
-	PPydmj0CRu1C5pxs2Dj9VeDBMueQGlV+rgDy5vlR0+FEWxiCPiWKhEDqsOCZ4RIQ
-	G9AjZcmMRUbIjoJBFc3P+zZvDBwH+nG1D/R1jLIigxKP6G3WWeluaf588CGqjEbz
-	Lny//2FBxyW7+NpKOKy/Q==
-X-ME-Sender: <xms:jeHUaH75g7-H83VLP5llda88JuohlkhGNiZBIBX5VUHNrnbhQVNofg>
-    <xme:jeHUaNXhKpVtTf9txE45gUtztlNYPpnACC8fV4Yz5Z_CBPXuj6Tv9zE4qPCptDig6
-    DyvbnYCAWj88BzPZuoJUE0UAE6Da5w1nbqjJdLHUUvARfav_v0>
-X-ME-Received: <xmr:jeHUaOP1ZlEiRaIjI7ggbDHRYAKzRT5y2cNvr2nN5MQVZ8dwcE86W6t1TGiBUwR41vyBEtCiLd4N5IpNIK0TwXVMYC8C1oZ_FVIeDAiv_9E>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758781841; x=
+	1758868241; bh=zOyauCcZWQHljVVYvbb6mJMojgX35aeGr5IIRjaeM00=; b=W
+	YhZLHK4WkS08E6fiTihI+L/JTlONo0qZod330GrbGTO1diTYcIKZ3UvdDV0ACF+o
+	Hc2uJ0uFcDfe8BG4ozkrzKSW+4Z3oqdWIZMOC2cGUi4Cm7piykxEQ2tFFsoqKfpM
+	HFD8eiER66/JSRJXO+w75Ig41wj/jYCsxtJGivkLAGdMWbdaOcK1b6WlbWcTFXbz
+	f8/PnJDlN4nwRekiy3jxLnSsLpoITaBMuhOyngG4OaBz+seIA+O48J9Q+DETUzyR
+	kJ5pFvkdxyE+ZfxsABVCxHFCXGn+WmXUPmhRshys+0wH4+z8GUR/sRSBFrwcI/yi
+	Akna1EKFMTLhwWiGVFYtw==
+X-ME-Sender: <xms:kOHUaIGD3vC0i-92pitRAmyXpFBwDIOZd1Bxz6KMma3YrEZOzx7Saw>
+    <xme:kOHUaBxXesV-AFVjwHfwd7gWUJYKu4M6mXgHVh7m79Beh3W3j6mcQ0ZbwGh593kY6
+    1YeGnbwWbh2vK0RrupXm4e70FwWCMYnGogkRFWu1wv2M574E8ZJOOg>
+X-ME-Received: <xmr:kOHUaB6vDfZrQa1pBAEHP6Gjj10KQI8B0NW9n5C6woGuBIU4W3DgrlP1p_NhGtLbXHo-Peu2vt7eogUd252VzDYy3LJVvWLJaLoTqp62NIg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiheejjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epheegjeelgfdugeellefflefhieeuteehfefhvedtfedvtdfhhfekgfehleeggfdtnecu
-    ffhomhgrihhnpegrshgpmhhuthgpshhlihgtvgdrrghsnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghp
-    thhtohepudeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegvshgthhifrghrth
-    iisehgvghnthhoohdrohhrghdprhgtphhtthhopegtsgesvdehiegsihhtrdhorhhgpdhr
-    tghpthhtoheptgholhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhi
-    phdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhsse
-    gtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopegviigvkhhivghl
-    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstg
-    hhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhl
-    rdgtohhm
-X-ME-Proxy: <xmx:jeHUaEhzlgc2FhIhiA_EUq66mEX1SPBN6P2OP5XAzDOTuOb_jh48Cw>
-    <xmx:jeHUaE7QrDfJnbvzRj7JBLwrCuXWmwBn6XaDO7YSfcPBSyx1o8Cg3A>
-    <xmx:jeHUaLckVle-fbPRQGhfcYA3UVrw5pLZO7mhZQq76dJmCOabUaPxgA>
-    <xmx:jeHUaNCTrzOhXS4XiNoyjJZkDgiB6NPf6nzhlX3C-khHSd6qoJxCyg>
-    <xmx:jeHUaFxJ-v1ABwNt7u-IpnxIL9EQwIPxOGSGxfwcER4FH8U85nhGqOu4>
+    epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepudeipdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopegtsgesvdehiegsihhtrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomhdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdp
+    rhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
+    drtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgt
+    phhtthhopegtohhnthgrtghtsehhrggtkhhtihhvihhsrdhmvgdprhgtphhtthhopegvii
+    gvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhivghrrhgv
+    qdgvmhhmrghnuhgvlhdrphgrthhrhiesvghmsggvtghoshhmrdgtohhmpdhrtghpthhtoh
+    epjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
+X-ME-Proxy: <xmx:kOHUaGdTYtn_0J5AebeW7nu6j5rfXcyijE-KILsKn0jjSJICnz_v7w>
+    <xmx:kOHUaIEXazVceTHFAoTu9EtrZ9YWqSB6KFCrxMaE9ej6XR-S-TXgVw>
+    <xmx:kOHUaG5HVjLXRa-HG4Zi1A_1WYFami-n5pDOcl4DJmRxHi7T1vCdDQ>
+    <xmx:kOHUaLvFokTomczxRWIcEG-VFjqiHwkQrcs-uNF2X8AaAjV7lIeq7A>
+    <xmx:keHUaC8qTZTYKaOkZ2tuVGmBlzIfivM5C2FW682GBjLmT7n7W5Tg4Yjb>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Sep 2025 02:30:35 -0400 (EDT)
+ 25 Sep 2025 02:30:38 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b6ad6875 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 25 Sep 2025 06:30:33 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 2a86ed51 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 25 Sep 2025 06:30:36 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 25 Sep 2025 08:30:08 +0200
-Subject: [PATCH v7 6/9] varint: reimplement as test balloon for Rust
+Date: Thu, 25 Sep 2025 08:30:09 +0200
+Subject: [PATCH v7 7/9] BreakingChanges: announce Rust becoming mandatory
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +88,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250925-b4-pks-rust-breaking-change-v7-6-4e49dcb904d5@pks.im>
+Message-Id: <20250925-b4-pks-rust-breaking-change-v7-7-4e49dcb904d5@pks.im>
 References: <20250925-b4-pks-rust-breaking-change-v7-0-4e49dcb904d5@pks.im>
 In-Reply-To: <20250925-b4-pks-rust-breaking-change-v7-0-4e49dcb904d5@pks.im>
 To: git@vger.kernel.org
@@ -106,183 +105,102 @@ Cc: "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 X-Mailer: b4 0.14.2
 
-Implement a trivial test balloon for our Rust build infrastructure by
-reimplementing the "varint.c" subsystem in Rust. This subsystem is
-chosen because it is trivial to convert and because it doesn't have any
-dependencies to other components of Git.
+Over the last couple of years the appetite for bringing Rust into the
+codebase has grown significantly across the developer base. Introducing
+Rust is a major change though and has ramifications for the whole
+ecosystem:
 
-If support for Rust is enabled, we stop compiling "varint.c" and instead
-compile and use "src/varint.rs".
+  - Some platforms have a Rust toolchain available, but have not yet
+    integrated it into their build infrastructure.
+
+  - Some platforms don't have any support for Rust at all.
+
+  - Some platforms may have to figure out how to fit Rust into their
+    bootstrapping sequence.
+
+Due to this, and given that Git is a critical piece of infrastructure
+for the whole industry, we cannot just introduce such a heavyweight
+dependency without doing our due diligence.
+
+Instead, preceding commits have introduced a test balloon into our build
+infrastructure that convert one tiny subsystem to use Rust. For now,
+using Rust to build that subsystem is entirely optional -- if no Rust
+support is available, we continue to use the C implementation. This test
+balloon has the intention to give distributions time and let them ease
+into our adoption of Rust.
+
+Having multiple implementations of the same subsystem is not sustainable
+though, and the plan is to eventually be able to use Rust freely all
+across our codebase. As such, there is the intent to make Rust become a
+mandatory part of our build process.
+
+Add an announcement to our breaking changes that Rust will become
+mandatory in Git 3.0. A (very careful and non-binding) estimate might be
+that this major release might be released in the second half of next
+year, which should give distributors enough time to prepare for the
+change.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Makefile        |  3 ++
- meson.build     |  5 +++-
- src/lib.rs      |  1 +
- src/meson.build |  1 +
- src/varint.rs   | 92 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 101 insertions(+), 1 deletion(-)
+ Documentation/BreakingChanges.adoc | 45 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index 31e79342e1d..2a7fc5cb1f3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1307,7 +1307,9 @@ LIB_OBJS += urlmatch.o
- LIB_OBJS += usage.o
- LIB_OBJS += userdiff.o
- LIB_OBJS += utf8.o
-+ifndef WITH_RUST
- LIB_OBJS += varint.o
-+endif
- LIB_OBJS += version.o
- LIB_OBJS += versioncmp.o
- LIB_OBJS += walker.o
-@@ -1499,6 +1501,7 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
- UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
+index f8d2eba061..c21f902134 100644
+--- a/Documentation/BreakingChanges.adoc
++++ b/Documentation/BreakingChanges.adoc
+@@ -165,6 +165,51 @@ A prerequisite for this change is that the ecosystem is ready to support the
+ "reftable" format. Most importantly, alternative implementations of Git like
+ JGit, libgit2 and Gitoxide need to support it.
  
- RUST_SOURCES += src/lib.rs
-+RUST_SOURCES += src/varint.rs
++* Git will require Rust as a mandatory part of the build process. While Git
++  already started to adopt Rust in Git 2.49, all parts written in Rust are
++  optional for the time being. This includes:
+++
++  ** The Rust wrapper around libgit.a that is part of "contrib/" and which has
++     been introduced in Git 2.49.
++  ** Subsystems that have an alternative implementation in Rust to test
++     interoperability between our C and Rust codebase.
++  ** Newly written features that are not mission critical for a fully functional
++     Git client.
+++
++These changes are meant as test balloons to allow distributors of Git to prepare
++for Rust becoming a mandatory part of the build process. There will be multiple
++milestones for the introduction of Rust:
+++
++--
++1. Initially, with Git 2.52, support for Rust will be auto-detected by Meson and
++   disabled in our Makefile so that the project can sort out the initial
++   infrastructure.
++2. In Git 2.53, both build systems will default-enable support for Rust.
++   Consequently, builds will break by default if Rust is not available on the
++   build host. The use of Rust can still be explicitly disabled via build
++   flags.
++3. In Git 3.0, the build options will be removed and support for Rust is
++   mandatory.
++--
+++
++You can explicitly ask both Meson and our Makefile-based system to enable Rust
++by saying `meson configure -Drust=enabled` and `make WITH_RUST=YesPlease`,
++respectively.
+++
++The Git project will declare the last version before Git 3.0 to be a long-term
++support release. This long-term release will receive important bug fixes for at
++least four release cycles and security fixes for six release cycles. The Git
++project will hand over maintainership of the long-term release to distributors
++in case they need to extend the life of that long-term release even further.
++Details of how this long-term release will be handed over to the community will
++be discussed once the Git project decides to stop officially supporting it.
+++
++We will evaluate the impact on downstream distributions before making Rust
++mandatory in Git 3.0. If we see that the impact on downstream distributions
++would be significant, we may decide to defer this change to a subsequent minor
++release. This evaluation will also take into account our own experience with
++how painful it is to keep Rust an optional component.
++
+ === Removals
  
- GIT-VERSION-FILE: FORCE
- 	@OLD=$$(cat $@ 2>/dev/null || :) && \
-diff --git a/meson.build b/meson.build
-index 234a9e9d6fd..37dfa286017 100644
---- a/meson.build
-+++ b/meson.build
-@@ -522,7 +522,6 @@ libgit_sources = [
-   'usage.c',
-   'userdiff.c',
-   'utf8.c',
--  'varint.c',
-   'version.c',
-   'versioncmp.c',
-   'walker.c',
-@@ -1707,6 +1706,10 @@ rust_option = get_option('rust').disable_auto_if(not cargo.found())
- if rust_option.allowed()
-   subdir('src')
-   libgit_c_args += '-DWITH_RUST'
-+else
-+  libgit_sources += [
-+    'varint.c',
-+  ]
- endif
- 
- libgit = declare_dependency(
-diff --git a/src/lib.rs b/src/lib.rs
-index e69de29bb2d..9da70d8b57d 100644
---- a/src/lib.rs
-+++ b/src/lib.rs
-@@ -0,0 +1 @@
-+pub mod varint;
-diff --git a/src/meson.build b/src/meson.build
-index c8d874b2106..25b9ad5a147 100644
---- a/src/meson.build
-+++ b/src/meson.build
-@@ -1,5 +1,6 @@
- libgit_rs_sources = [
-   'lib.rs',
-+  'varint.rs',
- ]
- 
- # Unfortunately we must use a wrapper command to move the output file into the
-diff --git a/src/varint.rs b/src/varint.rs
-new file mode 100644
-index 00000000000..6e610bdd8e0
---- /dev/null
-+++ b/src/varint.rs
-@@ -0,0 +1,92 @@
-+#[no_mangle]
-+pub unsafe extern "C" fn decode_varint(bufp: *mut *const u8) -> u64 {
-+    let mut buf = *bufp;
-+    let mut c = *buf;
-+    let mut val = u64::from(c & 127);
-+
-+    buf = buf.add(1);
-+
-+    while (c & 128) != 0 {
-+        val = val.wrapping_add(1);
-+        if val == 0 || val.leading_zeros() < 7 {
-+            return 0; // overflow
-+        }
-+
-+        c = *buf;
-+        buf = buf.add(1);
-+
-+        val = (val << 7) + u64::from(c & 127);
-+    }
-+
-+    *bufp = buf;
-+    val
-+}
-+
-+#[no_mangle]
-+pub unsafe extern "C" fn encode_varint(value: u64, buf: *mut u8) -> u8 {
-+    let mut varint: [u8; 16] = [0; 16];
-+    let mut pos = varint.len() - 1;
-+
-+    varint[pos] = (value & 127) as u8;
-+
-+    let mut value = value >> 7;
-+    while value != 0 {
-+        pos -= 1;
-+        value -= 1;
-+        varint[pos] = 128 | (value & 127) as u8;
-+        value >>= 7;
-+    }
-+
-+    if !buf.is_null() {
-+        std::ptr::copy_nonoverlapping(varint.as_ptr().add(pos), buf, varint.len() - pos);
-+    }
-+
-+    (varint.len() - pos) as u8
-+}
-+
-+#[cfg(test)]
-+mod tests {
-+    use super::*;
-+
-+    #[test]
-+    fn test_decode_varint() {
-+        unsafe {
-+            assert_eq!(decode_varint(&mut [0x00].as_slice().as_ptr()), 0);
-+            assert_eq!(decode_varint(&mut [0x01].as_slice().as_ptr()), 1);
-+            assert_eq!(decode_varint(&mut [0x7f].as_slice().as_ptr()), 127);
-+            assert_eq!(decode_varint(&mut [0x80, 0x00].as_slice().as_ptr()), 128);
-+            assert_eq!(decode_varint(&mut [0x80, 0x01].as_slice().as_ptr()), 129);
-+            assert_eq!(decode_varint(&mut [0x80, 0x7f].as_slice().as_ptr()), 255);
-+
-+            // Overflows are expected to return 0.
-+            assert_eq!(decode_varint(&mut [0x88; 16].as_slice().as_ptr()), 0);
-+        }
-+    }
-+
-+    #[test]
-+    fn test_encode_varint() {
-+        unsafe {
-+            let mut varint: [u8; 16] = [0; 16];
-+
-+            assert_eq!(encode_varint(0, std::ptr::null_mut()), 1);
-+
-+            assert_eq!(encode_varint(0, varint.as_mut_slice().as_mut_ptr()), 1);
-+            assert_eq!(varint, [0; 16]);
-+
-+            assert_eq!(encode_varint(10, varint.as_mut_slice().as_mut_ptr()), 1);
-+            assert_eq!(varint, [10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-+
-+            assert_eq!(encode_varint(127, varint.as_mut_slice().as_mut_ptr()), 1);
-+            assert_eq!(varint, [127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-+
-+            assert_eq!(encode_varint(128, varint.as_mut_slice().as_mut_ptr()), 2);
-+            assert_eq!(varint, [128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-+
-+            assert_eq!(encode_varint(129, varint.as_mut_slice().as_mut_ptr()), 2);
-+            assert_eq!(varint, [128, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-+
-+            assert_eq!(encode_varint(255, varint.as_mut_slice().as_mut_ptr()), 2);
-+            assert_eq!(varint, [128, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-+        }
-+    }
-+}
+ * Support for grafting commits has long been superseded by git-replace(1).
 
 -- 
 2.51.0.618.g983fd99d29.dirty
