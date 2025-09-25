@@ -1,72 +1,72 @@
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FF735957
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 13:01:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A711E9B2D
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 13:16:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758805284; cv=none; b=XDxoneU5/ZTFgNM6A/xN+W56bA8pQWfLPcGln9D/mds9VL7pe+yvQH9e8UN8f+ffAse9Y1Bo7fcbqMZh4TP30RXHsWQI1i7AfCdqsnLvQUpXYh6WJFK2gTCURBr8VcXvTNvMoy6wwZE1WcpBUzLJOIOE2vlfUorm98wZZgo5kv8=
+	t=1758806171; cv=none; b=sY2I4LrXo9QP7LYjm+kaim41zP2UQ/UvzhWEq3n+9w3ELQOrgiaToc7EHmXRkNnqthPCt8L/k6LHye7PoU197K5nMiPWEHD0v6e509OqhLnlIjYS5VO2ZGXcSqXoZnMtUWcjxjdA4yILX7NYCMQ5SymHrBxB/UwdCiMbhuqBsR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758805284; c=relaxed/simple;
-	bh=5CWzjfGixhPIkf9ZLYWBWJzWKJ7urc+MLyNagFpVUeQ=;
+	s=arc-20240116; t=1758806171; c=relaxed/simple;
+	bh=gCzvoOP3L32DLCX1rY//TuRD4vp/g5nSd7nFNP8FSfc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YzGxCLKCuzjVD9S1eTYSQyy0seIEZZesWBD7hCjcdScNXaQo072363OiSY3VnDPGysPPkz78x9HAXBFJCOHXODLK0R+VwE0PwlcW6i5lEUHxHoRmcEU5lqzqbqiURJnlq49CBoXyLjDcoIvpO8yxxx2VslwJxr5ipEkhVYNAnN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TSkAz1E1; arc=none smtp.client-ip=209.85.161.44
+	 Content-Type:Content-Disposition:In-Reply-To; b=MTOsRlCkbPJ8QEtkfjypd23SNiq4+e1/gcTrgkhyA9UOcL4vVXcGhBWmdzyUwtdWVK+guDMQJ4bwNm2aPFOfG+hEoXr5uAaHfoLBPQXsrBUqqC9J1s80CDMersquEgSJfNHpgHX+ftHzGDFc4KfUfpclychmivqO+BgEiOfU1uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ex5InwCO; arc=none smtp.client-ip=209.85.160.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TSkAz1E1"
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-63b7f426926so336384eaf.3
-        for <git@vger.kernel.org>; Thu, 25 Sep 2025 06:01:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ex5InwCO"
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-30cce872d9cso943392fac.1
+        for <git@vger.kernel.org>; Thu, 25 Sep 2025 06:16:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758805282; x=1759410082; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758806167; x=1759410967; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rK8wya4pnTXypOpcsZcAkDwMi6HpuMneN5CYUjbXCMs=;
-        b=TSkAz1E1s71WvTlOg3Bj7KKCEiWmMpqVy3RHU4vahJbvVMsvI7qTcrvAvxCKQqfmXg
-         +3OhSGKkpPwcVuCCWKzy5TiDRdw75CX2I3paEVLLFtSaYFfmQjsO/93wnR3NCAOcFlu7
-         TkbMtZB++6xmayaXdPIt3Vc8qNW9oFryn1ZxjIn7vzJocLrt98qUsH6sSyho4siqvRJw
-         vY2f0PXO6HCaCTgYN6zSTyJl043LVVd99xhGF4WdGb3GY2X3S7q2dO92wOa3jh8OMBHI
-         30iLEDseFdozeU5kev/75Z2aGOJFUZdEovxyfHp0XCPor9VwgPsXJO++XBFpU9UMBcXP
-         7d7A==
+        bh=t1Sqg1iSNgzJ1RVVQiVjp7LIs70fyPzhAIppjGZEg3U=;
+        b=ex5InwCO01Vbd5QIu29uH7bzhwCTIimDLZ2eT+2WBhZcsYY9JDVXFcR9hMMtqo8skC
+         GrtboAH2oDdLWtPtbbDLZZ4w2CLEu2NoUW6QLvkNozDbM20hqml5MaNiKpVRBXqzPfUb
+         8FnS8f4G8Cff1v712PyeVnPji+FpqgXuOytGh+sLevEX98Gcf75EjxQcDj+iNw0TsW4A
+         k10TzhtPZkn5Qcn+8Hj8j/wz+bBb7E5SDWFlPopCh4dEt2tydJL7IPdHmqEYKD9PrJIT
+         gVmDvtt8kc3dfp7YAuA2pTmu/uzwizKJtIqmsp7dQeYNgTuwNTj8O7EOlU5PzCKk60Nf
+         R1vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758805282; x=1759410082;
+        d=1e100.net; s=20230601; t=1758806167; x=1759410967;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rK8wya4pnTXypOpcsZcAkDwMi6HpuMneN5CYUjbXCMs=;
-        b=ai/QlHH28ZEQI5d/H1t/nuJQCKZ71oXE2nsAI3vhzcvCdnFBcXVZ21zk22NSxoeXYu
-         u/pb6MlCOBdw+82tZg+FeXKmmekHQpZZeIIR56ZfpFXv5EJ4whaPPckvyfHjYqFZXtMm
-         UywHMWvdYyvjcyYTKwPf5UzcWDNhpv0gudsW7nHDa8LAfmGXP4P8fmIiOoGijbgjHarQ
-         ixwNuWA59yTutU1pFalNRCjLABT5nZUMgOEAA1nZ/UNXOj+08Muj557wi/OiGgZ3gJXj
-         aSN8HWFLM4YLX537ahhNN9kPJ+jCH8YiNiuGYM7E7V0FuAbEXEkPE/ZgElSqNf5k6yfM
-         n1qw==
-X-Gm-Message-State: AOJu0YwsjjTubqV9KEJo/kZllEGtNPIqQC4gThlolrbi7hdfs2BbBrtE
-	NJtNTe8+JWBs6tG5h0bH38Exj5dikYbpaeyteflUsHQf4uM92Lg0lUoj
-X-Gm-Gg: ASbGnctEonVEKmotYMvbQS+jR1accNYiH23v57gmSRoq1XXYchuobH4nxtT1LxeWxxM
-	+k3AWYhPhlGBeDUUEk0hE5a7/o9zNsOlc2L+sUxvMpUhAYSy7PXIybx511KsOQx0Qvl9SuqWlo8
-	9CR0Bw9WjunryAPcsmA6dSVZF+fsQWU8rhC3RPZoa0ljxyfp399S+amSwgdcDrk4S1i9A7ztMIS
-	w1gzdytqskXvb265jGdjCqUfBg6dGwHXztiGJvI1g0SlArQ+72mB4G3Su/FC14krAX0xLcmBdP2
-	jlV6EcuTZFd6uRDangGWDQGoI+beDcA5lMrVY4BgabBNf3G424+j4bBXNqVO5nVc///n4Ua60yb
-	OXQZAuRhwQExubo0Y
-X-Google-Smtp-Source: AGHT+IG+aYtVLjHjJPqUZelhiORQw3tOnWOxNHuX64WoE4Nm0jkh81l/frhSZzztvr609p7302R3NQ==
-X-Received: by 2002:a05:6808:f88:b0:439:b9b4:2d77 with SMTP id 5614622812f47-43f4ce618camr1615299b6e.34.1758805281640;
-        Thu, 25 Sep 2025 06:01:21 -0700 (PDT)
+        bh=t1Sqg1iSNgzJ1RVVQiVjp7LIs70fyPzhAIppjGZEg3U=;
+        b=h5606rualocQEK9mohRfyjy+6CQCjD6xGGBaM4BGgn8FCfVFRF8oqii6fBm0/W5q7S
+         NixBtCDyd4+rgpa0eUb6IqHFtxVebDSYZeYxlxvBwAK85tuwSbq8Yt0HGJDlYxqs1wY4
+         La9yKaVCofu8U3Z8+OBOvnuDoaqs16D6WUv4tur8kXmDhU6s0Cs3pu7T38UIuHbffVMX
+         fnguxFVBjQqvKhpvKFzHTqXMDhClY7VG260mOjbi3wgvWnULjXpyM5P1SzBs6VjfNGJz
+         92iRofWz0aBj1H7GS2U7uXKVv4jPAwYIg7prNHp+MPlpgNSgcsARZwiMjP8ify8mMsCP
+         fHbQ==
+X-Gm-Message-State: AOJu0YydGuUFebpqc2oxxbPixsNiz4flu4H9sjLgHWMLw0jbTjJ34lVm
+	MDwIE9Xa5E+2Wrp+xEphLUKZVs6R52uUVSip1SXXMwT7Enxc3ZEo19cj
+X-Gm-Gg: ASbGncur9zKPqyEconxwQRc+xNRtO+bTlZdWBDHM+HOgQD/767gYgC+CowMyvEFFH7c
+	430bc5ZiyVQqNFyZcEITmCpK5hJP6ywxaCLsU5P9LD6LnZKntAcYAahRVBctA+q3qpfrkHCx0uJ
+	kekHdW3+lmzA7k5KUoke17g4WRwtOC4lVkQOg2CRSAjQ5dhNn+efWuiieqe03pGJnEjBGHsO4qV
+	we7z4Uyjfq3JnCAM1f0WTEVHXtSneeIzAHPr1zstTCIiHn1uSPg/laKruil+3vAMKfIr0rwLUMU
+	Jazxzf176sUqFangVLbpYF4tBL0JHK+HM4gIwFizBAO9ttnMq+tE1ZYsJ5swTHamwKY+CqN39Y+
+	w+3ljlQVwRgCwKJu9
+X-Google-Smtp-Source: AGHT+IE8zSd7HHZLbhRfTL4tGw3SnsB4wsLKgHs902hADTM3q17b7DL9IZ37BJiQ+iR5ClPgx5Tmyg==
+X-Received: by 2002:a05:6870:b529:b0:347:bd94:8d12 with SMTP id 586e51a60fabf-35ec0b32902mr1505972fac.19.1758806167321;
+        Thu, 25 Sep 2025 06:16:07 -0700 (PDT)
 Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-43f5123bd55sm334117b6e.26.2025.09.25.06.01.20
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-363a3d46f3fsm557935fac.9.2025.09.25.06.16.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Sep 2025 06:01:20 -0700 (PDT)
-Date: Thu, 25 Sep 2025 08:01:20 -0500
+        Thu, 25 Sep 2025 06:16:06 -0700 (PDT)
+Date: Thu, 25 Sep 2025 08:16:06 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, karthik.188@gmail.com, 
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 3/6] builtin/repo: introduce stats subcommand
-Message-ID: <a3qgun7qrabs6wplbv5p75cokmr2flklnvyhzteytiu356b2pp@nruhrm4d2hhk>
+Cc: git@vger.kernel.org, karthik.188@gmail.com
+Subject: Re: [PATCH v2 5/6] builtin/repo: add keyvalue and nul format for
+ stats
+Message-ID: <lqzdrznf6kynr35eo74zodbfeofj6hnmskm2wqk6ty3o7wwaci@nyytil34eyzq>
 References: <20250923025700.3046260-1-jltobler@gmail.com>
  <20250924212426.2930029-1-jltobler@gmail.com>
- <20250924212426.2930029-4-jltobler@gmail.com>
- <aNTVa3-RtYNPlcHc@pks.im>
+ <20250924212426.2930029-6-jltobler@gmail.com>
+ <aNTVdy4hhLDlMpVT@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,75 +75,186 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aNTVa3-RtYNPlcHc@pks.im>
+In-Reply-To: <aNTVdy4hhLDlMpVT@pks.im>
 
-On 25/09/25 07:38AM, Patrick Steinhardt wrote:
-> On Wed, Sep 24, 2025 at 04:24:23PM -0500, Justin Tobler wrote:
+On 25/09/25 07:39AM, Patrick Steinhardt wrote:
+> On Wed, Sep 24, 2025 at 04:24:25PM -0500, Justin Tobler wrote:
+> > diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+> > index 0b8d74ed3e..db21b75522 100644
+> > --- a/Documentation/git-repo.adoc
+> > +++ b/Documentation/git-repo.adoc
+> > @@ -52,7 +52,26 @@ supported:
+> >  * Reachable object counts categorized by type
+> >  
+> >  +
+> > -The table output format may change and is not intended for machine parsing.
+> > +The output format can be chosen through the flag `--format`. Three formats are
+> > +supported:
+> > ++
+> > +`table`:::
+> > +	Outputs repository stats in a human-friendly table and is used by
+> > +	default. This format may change and is not intended for machine
+> > +	parsing.
+> 
+> Let's mention that this is the default format.
+
+I didn't mention that it is "used by default", but I think the wording
+could be more clear here. Will improve in the next version.
+
+> > +`keyvalue`:::
+> > +	Each line of output contains a key-value pair for a repository stat.
+> > +	The '=' character is used to delimit between the key and the value.
+> > +	Values containing "unusual" characters are quoted as explained for the
+> > +	configuration variable `core.quotePath` (see linkgit:git-config[1]).
+> 
+> In the current state there is never any quoting, so this statement here
+> is a bit misleading. Should we maybe drop that part?
+
+While there are currently not any values in the output that would
+require quoting, I'm inclined to leave this note in the documentation.
+That way we set the expectation regarding how parsers should handle the
+output from the start.
+
 [snip]
-> > +static void stats_table_add(struct stats_table *table, const char *format,
-> > +			    const char *name, struct stats_table_entry *entry)
-> 
-> We could of course accept varargs right from the start and thus allow
-> the caller to pass arbitrary formatting directives. But I guess we don't
-> need it now, so it's fine to not do it.
-
-I was on the fence about using varargs from the start. I figured since
-we don't have a need right now for multiple formatting directives, we
-could just pass the one. I might just go ahead and implement varargs
-here in the next version though.
-
-> [snip]
-> > +static void stats_table_print(struct stats_table *table)
-> 
-> Nit: The table can be marked as `const` as we don't modify it.
-
-Will update.
-
+> > +static void stats_keyvalue_print(struct repo_stats *stats, char key_delim,
+> > +				 char value_delim)
 > > +{
-> > +	const char *name_col_title = _("Repository stats");
-> > +	const char *value_col_title = _("Value");
-> > +	size_t name_title_len = strlen(name_col_title);
-> > +	size_t value_title_len = strlen(value_col_title);
 > > +	struct strbuf buf = STRBUF_INIT;
-> > +	struct string_list_item *item;
-> > +	int name_col_width;
-> > +	int value_col_width;
 > > +
-> > +	name_col_width = cast_size_t_to_int(
-> > +		max_size_t(table->name_col_width, name_title_len));
-> > +	value_col_width = cast_size_t_to_int(
-> > +		max_size_t(table->value_col_width, value_title_len));
+> > +	strbuf_addf(&buf, "references.branches.count%c%" PRIuMAX "%c",
+> > +		    key_delim, (uintmax_t)stats->refs.branches, value_delim);
+> > +	strbuf_addf(&buf, "references.tags.count%c%" PRIuMAX "%c",
+> > +		    key_delim, (uintmax_t)stats->refs.tags, value_delim);
+> > +	strbuf_addf(&buf, "references.remotes.count%c%" PRIuMAX "%c",
+> > +		    key_delim, (uintmax_t)stats->refs.remotes, value_delim);
+> > +	strbuf_addf(&buf, "references.others.count%c%" PRIuMAX "%c",
+> > +		    key_delim, (uintmax_t)stats->refs.others, value_delim);
 > > +
-> > +	strbuf_addf(&buf, "| %-*s | %-*s |\n", name_col_width, name_col_title,
-> > +		    value_col_width, value_col_title);
-> > +	strbuf_addstr(&buf, "| ");
-> > +	strbuf_addchars(&buf, '-', name_col_width);
-> > +	strbuf_addstr(&buf, " | ");
-> > +	strbuf_addchars(&buf, '-', value_col_width);
-> > +	strbuf_addstr(&buf, " |\n");
+> > +	strbuf_addf(&buf, "objects.commits.count%c%" PRIuMAX "%c",
+> > +		    key_delim, (uintmax_t)stats->objects.commits, value_delim);
+> > +	strbuf_addf(&buf, "objects.trees.count%c%" PRIuMAX "%c",
+> > +		    key_delim, (uintmax_t)stats->objects.trees, value_delim);
+> > +	strbuf_addf(&buf, "objects.blobs.count%c%" PRIuMAX "%c",
+> > +		    key_delim, (uintmax_t)stats->objects.blobs, value_delim);
+> > +	strbuf_addf(&buf, "objects.tags.count%c%" PRIuMAX "%c",
+> > +		    key_delim, (uintmax_t)stats->objects.tags, value_delim);
 > > +
-> > +	for_each_string_list_item(item, &table->rows) {
-> > +		struct stats_table_entry *entry = item->util;
-> > +		const char *value = "";
-> > +
-> > +		if (entry) {
-> > +			struct stats_table_entry *entry = item->util;
-> > +			value = entry->value;
-> > +		}
-> > +
-> > +		strbuf_addf(&buf, "| %-*s | %*s |\n", name_col_width,
-> > +			    item->string, value_col_width, value);
-> > +	}
-> > +
-> > +	fputs(buf.buf, stdout);
+> > +	fwrite(buf.buf, sizeof(char), buf.len, stdout);
 > > +	strbuf_release(&buf);
 > > +}
 > 
-> By the way, is there any specific reason we do the detour via the strbuf
-> instead of printing the data to stdout directly?
+> Same question here regarding the buffering. Can't we print to stdout
+> directly, or is there a reason not to?
 
-Not really. I think it's just a holdover from a previous implementation
-that was passing around a strbuf before printing. I'll go ahead and just
-print directly to stdout via printf in the next version.
+Ya, we can just write to stdout directly. Will update.
+
+> > @@ -389,17 +421,25 @@ static void stats_count_objects(struct object_stats *stats,
+> >  	path_walk_info_clear(&info);
+> >  }
+> >  
+> > -static int cmd_repo_stats(int argc UNUSED, const char **argv UNUSED,
+> > -			  const char *prefix, struct repository *repo)
+> > +static int cmd_repo_stats(int argc, const char **argv, const char *prefix,
+> > +			  struct repository *repo)
+> >  {
+> >  	struct ref_filter filter = REF_FILTER_INIT;
+> >  	struct stats_table table = {
+> >  		.rows = STRING_LIST_INIT_DUP,
+> >  	};
+> > +	enum output_format format = FORMAT_TABLE;
+> >  	struct repo_stats stats = { 0 };
+> >  	struct ref_array refs = { 0 };
+> >  	struct rev_info revs;
+> > +	struct option options[] = {
+> > +		OPT_CALLBACK_F(0, "format", &format, N_("format"),
+> > +			       N_("output format"),
+> > +			       PARSE_OPT_NONEG, parse_format_cb),
+> > +		OPT_END()
+> > +	};
+> >  
+> > +	parse_options(argc, argv, prefix, options, repo_usage, 0);
+> 
+> I think it would be sensible to introduce this call to `parse_options()`
+> right in the first commit that wires up the new subcommand. If we don't
+> do that we otherwise accept arbitrary arguments without raising any
+> error, and neither do we know to output help.
+> 
+> So we should move the addition to a previous commit and probably do the
+> following:
+> 
+>         argc = parse_options(...);
+>         if (argc)
+>             usagef("too many arguments");
+
+Good point. I'll add this in the next version.
+
+> > @@ -407,8 +447,20 @@ static int cmd_repo_stats(int argc UNUSED, const char **argv UNUSED,
+> >  	stats_count_references(&stats.refs, &refs);
+> >  	stats_count_objects(&stats.objects, &refs, &revs);
+> >  
+> > -	stats_table_setup(&table, &stats);
+> > -	stats_table_print(&table);
+> > +	switch (format) {
+> > +	case FORMAT_TABLE:
+> > +		stats_table_setup(&table, &stats);
+> > +		stats_table_print(&table);
+> > +		break;
+> > +	case FORMAT_KEYVALUE:
+> > +		stats_keyvalue_print(&stats, '=', '\n');
+> > +		break;
+> > +	case FORMAT_NUL_TERMINATED:
+> > +		stats_keyvalue_print(&stats, '\n', '\0');
+> > +		break;
+> 
+> This reads much nicer now. The newline as key-value delimiter is a
+> curious choice, but you simply do what we already do in `git repo info`.
+
+I agree that the key-value delimiter chosen is a bit strange. The
+command is still experimental so we could maybe change it if want. Not
+sure if it would be worth it though.
+
+> > diff --git a/t/t1901-repo-stats.sh b/t/t1901-repo-stats.sh
+> > index 315b9e1767..d2c1b6e307 100755
+> > --- a/t/t1901-repo-stats.sh
+> > +++ b/t/t1901-repo-stats.sh
+> > @@ -73,4 +73,37 @@ test_expect_success 'repository with references and objects' '
+> >  	)
+> >  '
+> >  
+> > +test_expect_success 'repository stats with keyvalue and nul format' '
+> > +	test_when_finished "rm -rf repo" &&
+> > +	git init repo &&
+> > +	(
+> > +		cd repo &&
+> > +		test_commit_bulk 42 &&
+> > +		git tag -a foo -m bar &&
+> > +
+> > +		cat >expect <<-\EOF &&
+> > +		references.branches.count=1
+> > +		references.tags.count=1
+> > +		references.remotes.count=0
+> > +		references.others.count=0
+> > +		objects.commits.count=42
+> > +		objects.trees.count=42
+> > +		objects.blobs.count=42
+> > +		objects.tags.count=1
+> > +		EOF
+> > +
+> > +		git repo stats --format=keyvalue >out 2>err &&
+> > +
+> > +		test_cmp expect out &&
+> > +		test_line_count = 0 err &&
+> > +
+> > +		# Replace key and value delimiters for nul format.
+> > +		tr "\n" "\0" <expect | tr "=" "\n" >expect_null &&
+> 
+> You can do this without the pipe:
+> 
+>     tr "\n=" "\0\n" <expect >expect_nul
+> 
+> Also, let's call the file `expect_nul` (with a single 'l') to match the
+> format.
+
+Thanks. Will update.
 
 -Justin
