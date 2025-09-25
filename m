@@ -1,99 +1,174 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086B03191C9
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 18:36:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F9B31AF09
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 18:41:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758825368; cv=none; b=fhoCpYwReNSv9q0w+ui9FzjF+ArQme4yGVOsVOps7+bFC5I2ml2zcKiSR8UIuQoHAewKEPz0/ZwsNSMgM8xQBHiAzUslzV+yRXGXIngeCocJun2HSI37OUWIDUtEwR82TUH9uX4BPsTdt3yMkevO3DLjdjRgHivXo17/ZnHT3xQ=
+	t=1758825674; cv=none; b=Lkpq9L/zgltyDR2IkKIFU92s6RYTQz4uLqPnETm/UBhTGWXF1R6o+6pAoNFSNzF6LMIqxUl8eP00MDF4DK5vEgpnWKf+S4nyYiO+xQ0chiHRVlXKDgf651lcEPnnKswzXoi0NPo9KhV49Rxor0h5Q1J1l0HX0IXRntLTiiQU6Ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758825368; c=relaxed/simple;
-	bh=QNy2LumQnng13yz2/+Wvnmdp7euD13JknlUJg2h/Yqo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Pxwyp1kLc0YpOEFteZElem+v3YeY4jg5oQbqeDwJLM8KJvxPd6yi4T3gs7x3e2mODzdOnaGnX5niG3BOt+QdaNV7oC88xDytpE+UPNkGl76g6cXUiwLumS1xWt+C2bCM5B463WbZWT9swFkgX4NzV3luxQA0rILdcLCLVTuajFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mv7AQtYU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cIJHvwEf; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758825674; c=relaxed/simple;
+	bh=s60novMoyKigpTeF0h4voBQzHMxe148L0tiSHla2JHE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uFUN1XyAJHl/9xtaqcH00oHFAfclH3Leq7QyQB0/LPS4Iu5jQDWnl5NhGaVXQNhDdLzsCwU6XlBXfw4rReh7UcdV5LDcF0BUWjb7lAj7dFu+X+03QOrIVSQ0QMxfwkMq+SUcDAAhPyM1zHwc+4pyb5kUrzBgTsRjX+qDgmlopME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cs05JhSj; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mv7AQtYU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cIJHvwEf"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2797D14000A7;
-	Thu, 25 Sep 2025 14:36:05 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 25 Sep 2025 14:36:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1758825365; x=1758911765; bh=SfvOFc2VXH
-	ZxnOZ3LkSVHrmZ3jRtyeKt9ANEa/clSnQ=; b=mv7AQtYUjGSeEqKsTbCxxF6ctD
-	SwylIFg4++QSv44WfvJO+IQ6ZZAuImgP9vBWypPog5a3ZXKwhFnrhbBlHPYc2QWQ
-	pssS01Ru8PlqT1iIF4taw7I/nEo0XRpwUxcKtmu9+HYVc4pQpyY/gdRzn93mZoXP
-	QHwhTdEUulgfaNLB5kjue0uSdSOHNFtXJExKWiPEm6j5UYveb0PgGYkkKCPAUSRa
-	y+iSl8gnYRfTuR85dA+3kBkA9vPsiQrn0sWdUVaat1ghw6NK86VsizRiva4PwpNS
-	Mta3H52BF4GLJv9Q0vg3Btc4uDeKzfg397sQDuwDsNFELrcoJOnnenfugCLA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1758825365; x=1758911765; bh=SfvOFc2VXHZxnOZ3LkSVHrmZ3jRtyeKt9AN
-	Ea/clSnQ=; b=cIJHvwEf2XB0dmWvpokr0figEgoTqydftmBLO2Io+H1H+v26l4c
-	4znHePskZ9/wsYDyRNJWJStauwWbSTzszIaDCYfrqCP4Ys2W8q0ROCDSFfpdLa0r
-	DAM8oH0cExUB7R/7nf8rzjRSQlGWfhFjNsJQ9035ol5/em+etOMR82NLF/rkDGo/
-	Ob+uOU5O4ngBiNEshCcVR0Lr5cGChC1oNehBadlByMs9jnuInRLcqF19k3IOZkTz
-	gVaZdfp3sH43JlWvGotHfUMY/6bBgE0ay5e+nFK7cFneuI/v3UdwfcPIfquA5VWx
-	B4mNP2MYKMIYTLMlffqrOmD5eIySIycXDDA==
-X-ME-Sender: <xms:lIvVaN4C-tEu1chUAHvmgTa_PLfVZUTN8ekvNxBhW1xqQW4Q7L0pCw>
-    <xme:lIvVaB5t3ZGEeGOy4sf9A8JolU6PNCgDcV-svhMQb6cPtVd-_cJiLb19JsvCLQuAa
-    rl6YpWNbjNBbI8UaYPy2aQz0FbU7vHeNNmlVmmbpzsE8LFsGrbtLpA>
-X-ME-Received: <xmr:lIvVaJd34hRaNVpi0V_WvFIFRET90uDZb6V_AELpkwZeUo_aAtrulPMzMMYtdBZrqm4ryzZg0fTyamTB3RH4YsI3SBA5DjTFlDG0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeijedvvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjrggtohgsrdgvrdhkvghllhgvrhesihhnthgvlhdrtg
-    homhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdgu
-    vgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:lIvVaFCjMmYHPsFhQ1lft6bHeEoyD__SCYZEYjZdPd6zISgwUAvocw>
-    <xmx:lIvVaM-eSp04R3NByYpMsVSvtxcAacSjvRe-0qpdLDhpF2Oth7b2_Q>
-    <xmx:lIvVaALm3TpUDH8X71vIyR5HbQtrJhxAZrjTEfmj_6FGK4OkxYSktQ>
-    <xmx:lIvVaFjO47qpWrolykSiawCXE_12o9q4QdOakByKr8ZBMwzWJd9_Xg>
-    <xmx:lYvVaFq0rejX12AHaPMzA2rYeFdVNoU2MDWBpgH3gomlPXXR9qtVetx4>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Sep 2025 14:36:04 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  <git@vger.kernel.org>
-Subject: Re: [PATCH] diff --no-index: fix logic for paths ending in '/'
-In-Reply-To: <de75e7f3-6c59-4f62-8d11-dea33804cc59@intel.com> (Jacob Keller's
-	message of "Thu, 25 Sep 2025 10:17:54 -0700")
-References: <20250924-jk-fix-no-index-path-with-slash-v1-1-6b2028c0de92@intel.com>
-	<xmqqa52jjxyq.fsf@gitster.g> <xmqq5xd7jxpq.fsf@gitster.g>
-	<de75e7f3-6c59-4f62-8d11-dea33804cc59@intel.com>
-Date: Thu, 25 Sep 2025 11:36:03 -0700
-Message-ID: <xmqqy0q2fkh8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cs05JhSj"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-367064ef8a9so10388841fa.2
+        for <git@vger.kernel.org>; Thu, 25 Sep 2025 11:41:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758825671; x=1759430471; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uFYuzWpMpTc8Kp5jy/hYCHQ+XNNkjsihoQmBi+n8ug0=;
+        b=cs05JhSjipgcntrhbTODSxDsZ4P4XQZ+Z7rHvlQNDLsGcDYraQeoboEPwFaPmpW7Zd
+         RkCxplZbWOafHAxdtEvipa5kxZpvtWvNnEGrQ8yiTF3hTInuNWkb1matCuGoRJcQDepp
+         Qzyo3B+aKhYi5Uut209axdZ6NkXHRgKe8Ca98nPIFkeOIG5cFEDZ/GNM1XRfTaZZLX6m
+         IdkWjg0dTGXQ3Yb/0GQ+EUcIfpGujeSq3o0AIhKQeIj8rfIkDOlZo2DIvjybyOLZkNEh
+         reIdfPsjY3fYwe8Q1jJy0IRrUAnV/3kmsJf/oZ9achoOPAOjilpdeEPnr5+xHb2Nqje1
+         caZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758825671; x=1759430471;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uFYuzWpMpTc8Kp5jy/hYCHQ+XNNkjsihoQmBi+n8ug0=;
+        b=eJiKgXFMA7jE7lDvBev6P2fWtQ/gCZLRRP9loUWj27rsP6/9jwacUv693b3eIKfhUR
+         i86AAHxsodIR2SzrcVrUD4ud1NgDWyPeiAWbdivICFYQ/EGDwMURHYD93siaXkTv3S0d
+         krLzj4+9ZwqIxx2P/N6BmZvKSxIglU8mmOP6nuxVvDZ6AA5kR9EfCY2mYRF54msHWaew
+         2ORCpIyGg3WTYUqFAoFZtXfBppSc8Hyd0MfqTT5kVaqvP80U2Vl7z0DH1KI9JHr9QQtu
+         C5paOeJmsc/fUCOfHJUDN0lqKPD9iLomeW1udWU4sp10vzH/v1BZePav1Rx6hcHtc6nc
+         bRpA==
+X-Forwarded-Encrypted: i=1; AJvYcCVPTmuZZPppfYaSdyVEW2fQnB7Ep/YSSEcZLiQHbziEAqLnx/Jo4KFD+v7wficyMrQBLao=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzFyFEuqTxgluz1BxTAscJ4nGxvthvYNfwIFvnR8jW+QSnaMhwu
+	UwaSqT4sewkc+FZxdkXWYaeauu0ZazLmaFADc0V+EdBouNDBBYLDg5NT5oD4xBBXWLhQdoMLTBX
+	WCL5BddEqQxJ24xHa60qWih46uHFpCupWtsyj0JTMHOn+
+X-Gm-Gg: ASbGncs/3TnCBiAIVKDpwe3Y/6mXx37YO2soReCBrwdPZd6e4ChCpu73Ts3vfOoNEAG
+	V27K2aaYdgYtak55OJXpKaODUafYAYQR7mxjuaWZQGNzWmsxZzYtOW0i61Ypmv9/mRYzRaEEVUv
+	usgK4j+pN0mkG5bJATxH1fbuSUoyOs1yG+aGc2ODaU2+6a4358CkIYoUzGGtvZEj/+5JjzWCGBq
+	aHSSIAf
+X-Google-Smtp-Source: AGHT+IH9uu1lxKVr/at72B4X+u3uUJ9/uQ/KMzk9zUp4swb/VIdtJjM3JQzf8l8km0Jo5xQmbEv5haGuldbeZ+KWaao=
+X-Received: by 2002:a2e:b88e:0:b0:367:5a84:bc98 with SMTP id
+ 38308e7fff4ca-36f7f934e79mr11307321fa.30.1758825670864; Thu, 25 Sep 2025
+ 11:41:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2048.v4.git.git.1758570701.gitgitgadget@gmail.com>
+ <pull.2048.v5.git.git.1758662670.gitgitgadget@gmail.com> <08a0fceb72b2bd0a2803d24b9874b7f9bd03703a.1758662670.git.gitgitgadget@gmail.com>
+ <311f7dbe-b970-4a5b-9d53-05f019cc54cd@gmail.com> <CAH=ZcbBcEbTqQ-FpYSdr_QjSM5sKerECKsSVdTyHoSQqG-V9iA@mail.gmail.com>
+ <1c3461c3-09bb-404d-a4dc-a895baba68f2@gmail.com>
+In-Reply-To: <1c3461c3-09bb-404d-a4dc-a895baba68f2@gmail.com>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Thu, 25 Sep 2025 12:40:59 -0600
+X-Gm-Features: AS18NWBDcBfCgGMqV837U6Iz_BLeWp4OrQDkAzIpK2zX7Rj5w8kc4zhKiZRaB0w
+Message-ID: <CAH=ZcbC-cB35AGmiKgEQdFa5ee+DftwOQ_dUe4=T+Vq-dxR+qQ@mail.gmail.com>
+Subject: Re: [PATCH v5 12/13] xdiff: use enum macros NONE(0), SOME(1),
+ TOO_MANY(2) in xprepare.c
+To: phillip.wood@dunelm.org.uk
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Elijah Newren <newren@gmail.com>, Ben Knoble <ben.knoble@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+On Wed, Sep 24, 2025 at 9:18=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
+>
+> On 24/09/2025 15:46, Ezekiel Newren wrote:
+> > On Wed, Sep 24, 2025 at 4:21=E2=80=AFAM Phillip Wood <phillip.wood123@g=
+mail.com> wrote:
+> >>
+> >> On 23/09/2025 22:24, Ezekiel Newren via GitGitGadget wrote:
+> >>> From: Ezekiel Newren <ezekielnewren@gmail.com>
+> >>>
+> >>> Rename dis1, dis2 to matches1, matches2.
+> >>>
+> >>> Define macros NONE(0), SOME(1), TOO_MANY(2) as the enum values for
+> >>> matches1 and matches2. These states will influence whether changed[i]
+> >>> is set to 1 or kept as 0.
+> >>
+> >> This message also says what is being changed rather than why it is bei=
+ng
+> >> changed. I think the rename here is a good idea but I'm not sure what
+> >> "rdis[01]" and "rpdis[01]" are used for and whether they should be
+> >> renamed if we're renaming "dis[01]"
+> >
+> > "Rename dis1, dis2 to matches1, matches2 to give the variable names a
+> > more obvious meaning."
+> >
+> > Would something like that work, or do I need to refine it further?
+>
+> I'd maybe add a sentence before that to explain that "dis1 and dis2 are
+> used to record if a line has zero, one or many matches on the other side
+> of the diff". I don't think any of these patches need huge commit
+> messages but a couple of sentences explaining the reasoning would be
+> helpful for anyone looking at them it the future.
+>
+> > I
+> > would love to rename rdis, rpdis, etc... except that I don't
+> > understand what is happening or why. Could someone explain the purpose
+> > of these variables?
+>
+> Good question, I'm not sure anyone has an intimate knowledge of this
+> code. My understanding is that the code aims to remove runs of common
+> lines when they occur between unique lines in order to reduce the number
+> of lines we need to look at when we're calculating the diff. I haven't
+> worked through the code in detail though.
 
->> Now I did, and my speculations were both correct.  The SANITIZE=leak
->> build fails, and with these two releases the test passes.
->> 
->> You can squash this in, or I can do so myself if you like, if this
->> is the only change that is required.
+I'm really struggling with how to write this commit message. I would
+very much appreciate suggestions. Here is what I have so far:
+--- commit message start ---
+xdiff: use enum macros NONE(0), SOME(1), TOO_MANY(2) in xprepare.c
 
-Will do.  Thanks.
+The local variables dis1 and dis2 describe how a line should be treated
+based on how many lines, in the other file, match this line. NONE means
+the other file does not have any matches to this line. SOME means that
+there are more than 0 matches, but less than some heuristic threshold.
+TOO_MANY is when there are more matches than that heuristic threshold.
+
+Note: When need_min is true, matches[i] is always set to SOME when the
+number of matches is greater than 0.
+
+The names dis1 and dis2 don't convey what they mean, so let's rename
+them to matches1 and matches2.
+
+Define macros NONE(0), SOME(1), TOO_MANY(2) as the enum values for
+matches1 and matches2. These states will influence whether changed[i]
+is set to 1 or kept as 0.
+
+The variables r, rdis0, rpdis0, rdis1, rpdis1 in xdl_clean_mmatch()
+have not been renamed because I don't understand their purpose.
+--- commit message end ---
+
+I'll explain the parts of the code that are relevant to the commit
+message with an example. The following snippet goes through every line
+(matches1[i]) of file1 to determine what matches1[i] should be by
+looking at the number of times that line shows up in file2.
+
+    if ((mlim =3D xdl_bogosqrt(xdf1->nrec)) > XDL_MAX_EQLIMIT)
+        mlim =3D XDL_MAX_EQLIMIT;
+    for (i =3D xdf1->dstart, recs =3D &xdf1->recs[xdf1->dstart]; i <=3D
+xdf1->dend; i++, recs++) {
+        rcrec =3D cf->rcrecs[recs->ha];
+        nm =3D rcrec ? rcrec->len2 : 0;
+        matches1[i] =3D (nm =3D=3D 0) ? NONE: (nm >=3D mlim && !need_min) ?
+TOO_MANY: SOME;
+    }
+
+The lines:
+    rcrec =3D cf->rcrecs[recs->ha];
+    nm =3D rcrec ? rcrec->len2 : 0;
+gets the number of matches from file2 (i.e. rcrec->len2), and then this lin=
+e:
+    matches1[i] =3D (nm =3D=3D 0) ? NONE: (nm >=3D mlim && !need_min) ? TOO=
+_MANY: SOME;
+Is the logic to set matches1[i] (the line in question of file1) to
+NONE, SOME, or TOO_MANY.
+mlim seems to be some heuristic threshold based on the XDL_MAX_EQLIMIT
+constant which is set to 1024.
