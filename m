@@ -1,85 +1,87 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0308A30B52D
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 17:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4495A3081BB
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 17:08:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758820099; cv=none; b=ICrlW4LU0sk6swWiwSlVsEOeITDUUqBtm2NawjbLkoBhJ0kxN/Cd6AN3DW9BQYFlBrQ6iBFfG26sXeKd9qK2/fucnImpowRJhY5Fa/d7hgHJ2FZXJPnXOKJE3QAnldAx1uZY4IIbsMJeOtAnRAk1qCoD3oqbEvjSMrVLE4KH1zE=
+	t=1758820116; cv=none; b=qKbeSoDNNpb5raLZUYqS1xo6o8ew9NYa5f6ja346HBF2oAs/8XGVJy6Uimb2BHXvfLILi1IjY8VzMmRl0mXYUFXic7l/f4XhJoYOYGNLesOET5rAnXuOvlxM2N6sWUDhxahp1DwXQDU2+s4mrYjDIOBVzq0TQJvQByt2PTZPiq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758820099; c=relaxed/simple;
-	bh=xQKbcVqlbnpj9/DcRAA1LLT/dwOl7OKUWaHA9GF26XE=;
+	s=arc-20240116; t=1758820116; c=relaxed/simple;
+	bh=sKgZ8G1JWWcsLL0F96heOW3Nz7oxy7hH8yoTlCmfJpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aeFnVkv/o/hDJkCc/K31wmtk0MtCX3Bg8ZMdtCX40+I7/RZ41ayNKxZ2i2/k4aPfpHhUZZ8/cIHe4K984OQX5iFB0M69EUUuHeHI0ku5ac53J3NfI/vzTxe+AQL6CNvR5kXdJLXMtZH61L+Xsvzly9dMeenAMGbDoSk4+HszVBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Ox+HINxN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q/fKGYqt; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=IZSuwbatIXBfxjNBZyqsFpBOFrcQpEu53JXxzTPlb1QOPxsSgudiYg2LdbY5GD/UC0j+uf0zKV+WaMolvnZKdWImRoxHb5sb4i61Xxh20klEb/IKEbbpKxV3ognYAqEBjVZjQwT4tHkgP0CR8m6pPL6eFhwRuvyDlSh8q7Druz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Tg6ojufr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hoN4kyGs; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Ox+HINxN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q/fKGYqt"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 19BE2EC01CA;
-	Thu, 25 Sep 2025 13:08:15 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 25 Sep 2025 13:08:15 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Tg6ojufr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hoN4kyGs"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7A176EC01E2;
+	Thu, 25 Sep 2025 13:08:33 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Thu, 25 Sep 2025 13:08:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758820095;
-	 x=1758906495; bh=PbBMjjoWvzU8yL9MR7Yta9ADXD6venRZ/P1B+wHn0J0=; b=
-	Ox+HINxNcdKjB1fewEy0ytlDMUS8cl+SvLT+MD/K+kj79dr8CXrAt0/e6/QUmKKX
-	JsQUG3gGGJsN8xQT67WYX1CebgnAn2ZjFKk+R9ni3Pq7GIwWyokUxUnxi2RFCIuY
-	tPXtiXwrgNpFN7y2SCuEHfnomWupwrlLAq95ZRKzwTKO7NufPmXedsaA6aE+4GGs
-	sFDcUM/kuKpn4rU0CsOAyK5bNMTm5aeskJIdnIeiCz4BfJouQiMwvbJ0FzpdYAty
-	KcuaM0H7ytvq126qf3WcFqdvm50bFgJTK6Ey6JCX8mp9jIIbZNSnjIrS93X5DnJk
-	KBnkAUuh3XEi4JGzHEG2jQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758820113;
+	 x=1758906513; bh=2ALSPSD7bN7Ts+3/d+82SNIugoi83JaCku/JU611PR4=; b=
+	Tg6ojufrU6GtRUpt10oQU7vQKy66LlKyvKGrq9SdG0wnEbp0BXtjPz6h0EMswjA5
+	Qjjsq9ihYBsE+/+XNXtzPS2mePyhuP1d3Zm9x29Tuq40OZodziu8wf9FdixV/pLT
+	TR3CSkdaLQD/mFxW8Amy1XDA+YCsiUA6vUvF7A114un233ZmMzd9L/Uo2CDUz65U
+	yxRMS/hdHWUxa5Jdqg/+gycRxvAvKHdewsRVFfrW4aIvM5vhLtSHD9W1kp13lZet
+	FO434cxv7QR8VUsEmPsiIO/xL4SeL1tXsbZbZ0lAnyAeFfopNOjizNTZPSh/MtJQ
+	SHS6F9dCQxhSykAEnGEDOg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758820095; x=
-	1758906495; bh=PbBMjjoWvzU8yL9MR7Yta9ADXD6venRZ/P1B+wHn0J0=; b=Q
-	/fKGYqtGCyDENv1ue2p9ElvMzASTpHy9WKc7F/m6L4UcIq9G6QPQemrxytuyo7u9
-	VWYYSMQ6M9NphocCde+K7EKkR6OXiBWnxWQlYLTHs59/9PxWDbBX07s6VS/6E3gc
-	8XS28NONl3XD79CgdLY8GKMC4FWFVxJH7e2D3SSn/a22QSnT0jgrXDALX+JT+7xs
-	bGTHA+HtGu9JOzNAhSV5Jk416serg+V2S9Tl6iGdpCkG+D5HmjIfMOKwcjP3URA4
-	vTBg/5gV3W88cxHjBeFHZYv9m/PodDdgc48EuCRXAsSyJ+4rKb/Ru1zwuobYptsS
-	uAKYTwEQSUGcBY2Eihljg==
-X-ME-Sender: <xms:_nbVaOaCtu7FCFJECsDhZeTdY8zBupLzLT6aKa6WqYgpcS2P80rjmR8>
-    <xme:_nbVaI1XKm_kucYdv0bKxgPEoIIP9D24CfMJ4jMslxSGtOQK2w0ff2P1Ltxw4ciUI
-    xS8cvFaEC_-5eZkdCQFQUgzPlnTc2VfIsNIMABUaF3lkwN6RVeMJw>
-X-ME-Received: <xmr:_nbVaGX9KZD6nXHumYsbSglaXIPiI2bgRa_f_PU8InGj6JZ42y4e3WwyYuY3WObCHvGTRZDJSTFxvTObD9X2IXx89d1N1xmw5S1vWLI>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758820113; x=
+	1758906513; bh=2ALSPSD7bN7Ts+3/d+82SNIugoi83JaCku/JU611PR4=; b=h
+	oN4kyGs/9UBOecB11YlbzKexYSRCxUuBSrunjghvlaf8TY76slGboKxcy9diFwn9
+	9b9qsd45qK6EWyppw8YaUvZisoBygWQCu2rWJkYU7qANf8d4ljljsN13nZGviE/x
+	UeYSf5W1haqK3sU2dBVVChGcC3Wm43n17nplPL0+CK0h8LHOuawn6FzGnyouyiiw
+	yjOdrZEoKWwp2vqeOY3ulYb6QdWg/eiQuZcknDXaUAWv4G8yWKA4feXBXYNYuTra
+	Sbm33c34eYjI+kF4p1oapz6LryIO4e/qge4JbEHKFbNC1OXlTXIYA2bvm18SpMgp
+	1iSGNR0hYwKV42wmh9rqg==
+X-ME-Sender: <xms:EXfVaGT7PYxHEw0LqUD8WA-4y29S2QYwlQogrVg2MyTPEw665yFwv3M>
+    <xme:EXfVaCyinkGnCpGgUk9RdhMBN_KYYdmE0sanTuWIRKDN2Beei7yV5rN5vYZ2BHyYO
+    4tfUwYm8rgoNPqNpeBAq86ZihmvPeFdLMQvH-_u_PvZvoerhZvj_A>
+X-ME-Received: <xmr:EXfVaI2iuIwkC5dPeAKsJV1gIzuAYqFgQySGLEaXflMKDHl0eYbm5PYdfeHzpF29Ih5tLEuCVxewg_groQ5MDK0ioQNBXfhg2UrXCpw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeijedthecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthho
+    hrpefhvfevufffkffojghfgggtgfesthekgidtredtjeenucfhrhhomhepkhhrihhsthho
     fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvg
-    hrnhephfffudefgeelueehkeelgffhhfejgfdtffdvhedttefggffggeffffefudelveek
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpughifhhfohhpthdrnhhonecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhf
-    vghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhope
-    efpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpd
-    hrtghpthhtoheplhhiuhdruggvnhhtohhnsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:_nbVaKUlcDMBkx7lTPugvrfXzr-ZdnciNQGad24RY-zUgP-KNYfT-g>
-    <xmx:_nbVaNfAD92X-FW-pf5LPfRKQ3yelYKOrXGLd21-CF6io7mtTFdMWw>
-    <xmx:_nbVaLXGu4mKA_zsl1u-xqwM9rEcpmwp5FV2b9I8oNmwJ6b0GTneHg>
-    <xmx:_nbVaOdCKew94pnNfHtutXAWJFOkQ7Po0RPG9J07kJMatVzN67zOHw>
-    <xmx:_3bVaA0UL_NHALM9RYYl6HdZKCOf58HK6Dvv-aV5YqtRBRD1ZNpNd0QX>
+    hrnhepffevffdtudefueefudeiheetieelvedtueeffeefgfffffdutdegffeihfelvdfg
+    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhk
+    sehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehlihhurd
+    guvghnthhonhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:EXfVaA7yw8UkS1gzsDmeWvPEU1aXXr28hzW_prOd76_PJe6LjKA-dg>
+    <xmx:EXfVaLXZDzb-zYWUYpl1pY4wT0BRwa4YGoagRAeE7cTkHX_HwdlZ4w>
+    <xmx:EXfVaPCdyjm1Vq58d0mxbSH7ceOHLQHp4sUxx7Wa-5-C8VEzSL8MNA>
+    <xmx:EXfVaK7yVeY_u_7SdiDIoAaG3KpBGBZblojaMIzMnDlFLnL85QL71Q>
+    <xmx:EXfVaAWb3pKTsN4vllavDDK1-ltNgQCSz6c4XqurY8hv-8lJjCyHnHve>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Sep 2025 13:08:14 -0400 (EDT)
+ 25 Sep 2025 13:08:32 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Denton Liu <liu.denton@gmail.com>
-Subject: [PATCH v2 0/3] format-patch: handle range-diff on notes correctly for single patches
-Date: Thu, 25 Sep 2025 19:07:33 +0200
-Message-ID: <v2-cover.1758819879.git.code@khaugsbakk.name>
+	Denton Liu <liu.denton@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 1/3] range-diff: rename other_arg to log_arg
+Date: Thu, 25 Sep 2025 19:07:34 +0200
+Message-ID: <bd037df14f5.1758819879.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.51.0.311.g9b2318464ce
-In-Reply-To: <cover.1758574974.git.code@khaugsbakk.name>
-References: <cover.1758574974.git.code@khaugsbakk.name>
+In-Reply-To: <v2-cover.1758819879.git.code@khaugsbakk.name>
+References: <cover.1758574974.git.code@khaugsbakk.name> <v2-cover.1758819879.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,156 +93,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-git-format-patch(1) does not handle Git notes correctly in the
-range-diff output for single-commit series.  It reverts to the
-default behavior of git-range-diff(1), which is to act like git-log(1).
+Rename `other_arg` to `log_arg` in `range_diff_options` and
+related places.
 
-Git notes can be added to patches where they go beneath the commit
-message (similar to git-log(1)).  You can of course use any set of notes
-ref names.  And the range-diff is supposed to use the same ref names.
-This works for the case when you have a cover letter (for more than one
-commit) but not when you have a single commit.
+“Other argument” comes from bd361918 (range-diff: pass through --notes
+to `git log`, 2019-11-20) which introduced Git notes handling to
+git-range-diff(1) by passing that option on to git-log(1). And that kind
+of name might be fine in a local context. However, it was initially
+spread among multiple files, and is now[1] part of the
+`range_diff_options` struct. It is, prima facie, difficult to guess what
+“other” means, especially when just looking at the struct.
 
-See patch 2/3 for a full explanation of the problem.
+But with a little reading we find out that it is used for `--[no-]notes`
+and `--diff-merges`, which are both passed on to git-log(1). We should
+just rename it to reflect this role; `log_arg` suggests, along with the
+`strvec` type, that it is used to pass extra arguments to git-log(1).
 
-Fix that notes handling to always output the same notes (ref names) in
-the two positions:
+† 1: since f1ce6c19 (range-diff: combine all options in a single data
+     structure, 2021-02-05)
 
-• beneath the commit message; and
-• in the range diff.
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
-Patch-by-patch:
+Notes (series):
+    v2 (new):
+    
+    Add a preliminary commit after discussing the `other_arg` name with
+    Junio.
+    
+      “ Back when it was a random one-shot variable in range-diff, it might
+        not have mattered all that much, but now we have it as a proper
+        member of the struct, can we give it a name better than 'other_arg"?
+    
+    Link: https://lore.kernel.org/git/xmqqikharvyl.fsf@gitster.g/
+    
+    Later:
+    
+      “ My personal preference is to name arrays singular so that you can
+        name its 0th element by saying dog[0], not dogs[0].  "dog[1] and
+        dog[2] are friends" not dogs[1] and dogs[2].  An exception is when
+        most of the time you use the array as a single unit as a collection,
+        passing it around in the call chain, rarely addressing each individual
+        element.  I am OK to see such an array called plural (but of course,
+        singular names are always fine)..
+    
+    And I chose singular to personal preference in this context (the use
+    etc. for this kind of variable).
 
-1. Rename `other_arg` to `log_arg`
-2. Refactor to use a new `rev_info` struct member
-3. Use that in `log-tree.c` in order to solve the problem
+ builtin/log.c        |  8 ++++----
+ builtin/range-diff.c | 16 ++++++++--------
+ range-diff.c         | 10 +++++-----
+ range-diff.h         |  2 +-
+ 4 files changed, 18 insertions(+), 18 deletions(-)
 
-§ Changes in v2
-
-Mostly better commit messages.  Fix a mistake in the `rev_info` struct
-handling.
-
-Patch-by-patch (see notes on them for details):
-
-1. (new) Better variable name
-2. Rewrite commit message and fix mistake
-3. Rewrite commit message by mostly stealing from patch 2/3
-
-About the commit messages: the first one just jumped into the problem
-without a proper introduction (see the note on patch 2/3).  Not clear
-enough.  But I didn’t act on this review feedback:[1]
-
-  “ Would this also mean "range-diff --no-notes" would not have any
-    effect in squelching the note output in such a mode?  If so, perhaps
-    we should say not just "can get different Git notes" but "can get
-    notes even when you asked not to"?
-
-🔗 1: https://lore.kernel.org/git/xmqqecryrvt6.fsf@gitster.g/
-
-Since both commits in v1 already said `--[no-]notes`.
-
-§ CC
-
-Denton Liu wrote a commit mentioned in patch 1/3.  It’s been more years
-than the recommended cutoff, but he has been active recently.
-
-§ Link to the previous version
-
-https://lore.kernel.org/git/cover.1758574974.git.code@khaugsbakk.name/
-
-❦ ❦ ❦ ❦ ❦
-
-(this means you can skip to the diffs)
-
-§ How I Present Patch Series
-
-Version: 1
-
-The cover letter:
-
-• Problem statement and solution
-• (optional) Summary of what each commit/patch does
-• Changes compared to the previous version
-  • Note that all versions are not included
-• (optional) “CC”/“Cc” which explains all or parts of the CC list
-  • But some things are not noteworthy, like the standard practice of
-    including previous-round respondents
-• Link to the previous version
-  • This is new.  I thought it was redundant but some people (like me!)
-    use webapp email clients which are not that great for navigating
-    among tree-like email threads.  So I was inspired by this practice
-    which many others already use.
-• I like including an interdiff in addition to the range diff if I can.
-  They are just so convenient and complementary to the range diff.
-
-Then each commit/patch might have Git notes with a `series` namespace
-(ref name) These contain:
-
-• Comments/questions to reviewers about my approach or statements made
-  in the commit message.
-• Lines starting with `v<version>:` which introduce a changelog for that
-  version.  Lately (Sep 2025) these have been written in the “imperative
-  mood”, like what is done for a commit message in this (Git) project.
-  A bit strange, given that most others seem to use the more immediately
-  natural past-tense.  But on the other hand: how many new contributors
-  to this project use the wrong tense/mood in their commit messages?
-  The Git project rule is not “natural”.  But I think it’s better
-  nonetheless and worth the effort.
-
-  (And it might be worth the effort in this context, too.  We will see.)
-• ... But this kind of changelog might also be conducive to a bullet
-  list of changes.  So I might either skip the previous point, do only a
-  bullet point, or do both: a presentation and then the bullet points
-  summarizing the presentation.
-• Note that all `v<version>:` are kept between versions, which is not
-  consistent with how I only have the “Changes” part for the previous
-  version.
-• `v<version>:` are ordered newest-to-oldest.
-
-Kristoffer Haugsbakk (3):
-  range-diff: rename other_arg to log_arg
-  revision: add rdiff_log_arg to rev_info
-  format-patch: handle range-diff on notes correctly for single patches
-
- builtin/log.c         |  7 +++----
- builtin/range-diff.c  | 16 ++++++++--------
- log-tree.c            |  3 ++-
- range-diff.c          | 10 +++++-----
- range-diff.h          |  2 +-
- revision.h            |  2 ++
- t/t3206-range-diff.sh | 16 +++++++++++++++-
- 7 files changed, 36 insertions(+), 20 deletions(-)
-
-Interdiff against v1:
 diff --git a/builtin/log.c b/builtin/log.c
-index 56dd9fbc057..9eff62ce111 100644
+index 5f552d14c0f..131512ac1af 100644
 --- a/builtin/log.c
 +++ b/builtin/log.c
-@@ -1405,7 +1405,7 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
+@@ -1400,13 +1400,13 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
+ 		 * can be added later if deemed desirable.
+ 		 */
+ 		struct diff_options opts;
+-		struct strvec other_arg = STRVEC_INIT;
++		struct strvec log_arg = STRVEC_INIT;
+ 		struct range_diff_options range_diff_opts = {
+ 			.creation_factor = rev->creation_factor,
  			.dual_color = 1,
  			.max_memory = RANGE_DIFF_MAX_MEMORY_DEFAULT,
  			.diffopt = &opts,
--			.other_arg = &rev->rdiff_other_arg
-+			.log_arg = &rev->rdiff_log_arg
+-			.other_arg = &other_arg
++			.log_arg = &log_arg
  		};
  
  		repo_diff_setup(the_repository, &opts);
-@@ -2325,7 +2325,7 @@ int cmd_format_patch(int argc,
- 		rev.rdiff_title = diff_title(&rdiff_title, reroll_count,
- 					     _("Range-diff:"),
- 					     _("Range-diff against v%d:"));
--		get_notes_args(&(rev.rdiff_other_arg), &rev);
-+		get_notes_args(&(rev.rdiff_log_arg), &rev);
+@@ -1414,9 +1414,9 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
+ 		opts.use_color = rev->diffopt.use_color;
+ 		diff_setup_done(&opts);
+ 		fprintf_ln(rev->diffopt.file, "%s", rev->rdiff_title);
+-		get_notes_args(&other_arg, rev);
++		get_notes_args(&log_arg, rev);
+ 		show_range_diff(rev->rdiff1, rev->rdiff2, &range_diff_opts);
+-		strvec_clear(&other_arg);
++		strvec_clear(&log_arg);
  	}
- 
- 	/*
-@@ -2485,7 +2485,7 @@ int cmd_format_patch(int argc,
- 	rev.diffopt.no_free = 0;
- 	release_revisions(&rev);
- 	format_config_release(&cfg);
--	strvec_clear(&rev.rdiff_other_arg);
-+	strvec_clear(&rev.rdiff_log_arg);
- 	return 0;
  }
  
 diff --git a/builtin/range-diff.c b/builtin/range-diff.c
@@ -317,19 +253,6 @@ index aafcc99b962..f88b40e3607 100644
  	strvec_clear(&diff_merges_arg);
  	strbuf_release(&range1);
  	strbuf_release(&range2);
-diff --git a/log-tree.c b/log-tree.c
-index 831284288f9..3d38c748e45 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -719,7 +719,7 @@ static void show_diff_of_diff(struct rev_info *opt)
- 			.dual_color = 1,
- 			.max_memory = RANGE_DIFF_MAX_MEMORY_DEFAULT,
- 			.diffopt = &opts,
--			.other_arg = &opt->rdiff_other_arg
-+			.log_arg = &opt->rdiff_log_arg
- 		};
- 
- 		memcpy(&dq, &diff_queued_diff, sizeof(diff_queued_diff));
 diff --git a/range-diff.c b/range-diff.c
 index ca449a07693..57edff40a85 100644
 --- a/range-diff.c
@@ -379,237 +302,6 @@ index 9d39818e349..9b70a80009e 100644
  };
  
  /*
-diff --git a/revision.h b/revision.h
-index 26c18a0934b..ce30570d86a 100644
---- a/revision.h
-+++ b/revision.h
-@@ -334,7 +334,7 @@ struct rev_info {
- 	/* range-diff */
- 	const char *rdiff1;
- 	const char *rdiff2;
--	struct strvec rdiff_other_arg;
-+	struct strvec rdiff_log_arg;
- 	int creation_factor;
- 	const char *rdiff_title;
- 
-@@ -411,6 +411,7 @@ struct rev_info {
- 	.expand_tabs_in_log = -1, \
- 	.commit_format = CMIT_FMT_DEFAULT, \
- 	.expand_tabs_in_log_default = 8, \
-+	.rdiff_log_arg = STRVEC_INIT, \
- }
- 
- /**
-Range-diff against v1:
--:  ----------- > 1:  bd037df14f5 range-diff: rename other_arg to log_arg
-1:  bb065767336 ! 2:  d9419743773 revision: add rdiff_other_arg to rev_info
-    @@ Metadata
-     Author: Kristoffer Haugsbakk <code@khaugsbakk.name>
-     
-      ## Commit message ##
-    -    revision: add rdiff_other_arg to rev_info
-    -
-    -    git-format-patch(1) needs to pass `--[no-]notes` options on to the
-    -    range-diff subprocess in `range-diff.c`.  This is handled in `builtin/
-    -    log.c` by the local variable `other_arg` in the case of multiple
-    -    commits, but not in the single commit case where there is no cover
-    -    letter and the range-diff is on that single resulting patch; the
-    -    range-diff is then made in `log-tree.c`, whither `other_arg` has not
-    -    been propagated.
-    -
-    -    git-format-patch(1) is supposed to treat Git notes the same between
-    -    notes output beneath the commit message and the notes output for the
-    -    range-diff.  But this lack of notes handling in `log-tree.c` breaks
-    -    that expected behavior; range-diff notes handling for a single patch
-    -    acts like a normal git-range-diff(1) invocation with regards to notes.
-    -    You can, for example, end up with a patch where the note beneath the
-    -    commit message has the correct notes namespace, but the range-diff has
-    -    all the notes that are configured to be displayed by git-log(1).[1]
-    -
-    -    We need to fix this.  But first lay the groundwork by converting
-    -    `other_arg` to a struct member; next we can simply use that member
-    +    revision: add rdiff_log_arg to rev_info
-    +
-    +    git-format-patch(1) supports Git notes by showing them beneath the
-    +    patch/commit message, similar to git-log(1). The command also supports
-    +    showing those same notes ref names in the range diff output.
-    +
-    +    Note *the same* ref names; any Git notes options or configuration
-    +    variables need to be handed off to the range-diff machinery. This works
-    +    correctly in the case when the range diff is on the cover letter. But it
-    +    does not work correctly when the output is a single patch with an
-    +    embedded range diff.
-    +
-    +    Concretely, git-format-patch(1) needs to pass `--[no-]notes` options
-    +    on to the range-diff subprocess in `range-diff.c`. This is handled in
-    +    `builtin/log.c` by the local variable `log_arg` in the case of mul-
-    +    tiple commits, but not in the single commit case where there is no
-    +    cover letter and the range diff is embedded in the patch output; the
-    +    range diff is then made in `log-tree.c`, whither `log_arg` has not
-    +    been propagated. This means that the range-diff subprocess reverts
-    +    to its default behavior, which is to act like git-log(1) w.r.t. notes.
-    +
-    +    We need to fix this. But first lay the groundwork by converting
-    +    `log_arg` to a struct member; next we can simply use that member
-         in `log-tree.c` without having to thread it from `builtin/log.c`.
-     
-         No functional changes.
-     
-    -    † 1: See the configuration variable `format.notes` for git-format-
-    -         patch(1); c.f. `notes.displayRef` for git-log(1).  These two
-    -         have nothing to do with each other.
-    -
-    +    Helped-by: Junio C Hamano <gitster@pobox.com>
-         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-     
-     
-      ## Notes (series) ##
-    +    v2:
-    +
-    +    Rewrite the commit message.  The message jumps into the problem without
-    +    setting the stage.  I think the problem should be presented for a future
-    +    reader with only some basic prerequisite knowledge of this area; they
-    +    might use git-format-patch(1), but they might not use Git notes *with*
-    +    format-patch.[1]  For that reason, start with two paragraphs that pre-
-    +    sent how notes are handled.  Then continue with the story in a format
-    +    similar to v1.
-    +
-    +    Note that the different “range diff” and “range-diff” spellings are
-    +    intentional.  “Range diff” here refers to the diff output while
-    +    “range-diff” refers to the machinery that creates that output.
-    +
-    +    † 1: I don’t really see much Git notes use on patches on this mailing
-    +         list.  And even less with non-default namespaces.  But in any case:
-    +         the stage should be set properly even if regulars here *did* use
-    +         format-patch notes a lot.
-    +
-    +    Also fix handling of struct-in-struct (helped by Junio).
-    +
-    +    • Rewrite the commit message
-    +    • Fix struct-in-struct
-    +    • (And) Reset author date.  I started this in June but the time
-    +      investment is mostly from these last days.
-    +
-    +    v1:
-    +
-         There is also `other_arg` in `builtin/range-diff.c` but `rev_info` does
-         not seem to be involved.
-     
-    @@ builtin/log.c: static void make_cover_letter(struct rev_info *rev, int use_separ
-      		 * can be added later if deemed desirable.
-      		 */
-      		struct diff_options opts;
-    --		struct strvec other_arg = STRVEC_INIT;
-    +-		struct strvec log_arg = STRVEC_INIT;
-      		struct range_diff_options range_diff_opts = {
-      			.creation_factor = rev->creation_factor,
-      			.dual_color = 1,
-      			.max_memory = RANGE_DIFF_MAX_MEMORY_DEFAULT,
-      			.diffopt = &opts,
-    --			.other_arg = &other_arg
-    -+			.other_arg = &rev->rdiff_other_arg
-    +-			.log_arg = &log_arg
-    ++			.log_arg = &rev->rdiff_log_arg
-      		};
-      
-      		repo_diff_setup(the_repository, &opts);
-    @@ builtin/log.c: static void make_cover_letter(struct rev_info *rev, int use_separ
-      		opts.use_color = rev->diffopt.use_color;
-      		diff_setup_done(&opts);
-      		fprintf_ln(rev->diffopt.file, "%s", rev->rdiff_title);
-    --		get_notes_args(&other_arg, rev);
-    +-		get_notes_args(&log_arg, rev);
-      		show_range_diff(rev->rdiff1, rev->rdiff2, &range_diff_opts);
-    --		strvec_clear(&other_arg);
-    +-		strvec_clear(&log_arg);
-      	}
-      }
-      
-    @@ builtin/log.c: int cmd_format_patch(int argc,
-      		rev.rdiff_title = diff_title(&rdiff_title, reroll_count,
-      					     _("Range-diff:"),
-      					     _("Range-diff against v%d:"));
-    -+		get_notes_args(&(rev.rdiff_other_arg), &rev);
-    ++		get_notes_args(&(rev.rdiff_log_arg), &rev);
-      	}
-      
-      	/*
-    @@ builtin/log.c: int cmd_format_patch(int argc,
-      	rev.diffopt.no_free = 0;
-      	release_revisions(&rev);
-      	format_config_release(&cfg);
-    -+	strvec_clear(&rev.rdiff_other_arg);
-    ++	strvec_clear(&rev.rdiff_log_arg);
-      	return 0;
-      }
-      
-    @@ revision.h: struct rev_info {
-      	/* range-diff */
-      	const char *rdiff1;
-      	const char *rdiff2;
-    -+	struct strvec rdiff_other_arg;
-    ++	struct strvec rdiff_log_arg;
-      	int creation_factor;
-      	const char *rdiff_title;
-      
-    +@@ revision.h: struct rev_info {
-    + 	.expand_tabs_in_log = -1, \
-    + 	.commit_format = CMIT_FMT_DEFAULT, \
-    + 	.expand_tabs_in_log_default = 8, \
-    ++	.rdiff_log_arg = STRVEC_INIT, \
-    + }
-    + 
-    + /**
-2:  7f2487af433 ! 3:  2be637081d4 format-patch: handle range-diff on notes correctly for single patches
-    @@ Metadata
-      ## Commit message ##
-         format-patch: handle range-diff on notes correctly for single patches
-     
-    -    No `--[no-]notes` options are sent to the range-diff subprocess in
-    -    `range-diff.c` when making a single patch.  This means that you can get
-    -    different Git notes below the commit message and in the range-diff
-    -    part.  (See the previous commit for elaboration.)
-    +    (The two next paragraphs are taken from the previous commit.)
-     
-    -    Use the struct member that we introduced and populated in the
-    +    git-format-patch(1) supports Git notes by showing them beneath the
-    +    patch/commit message, similar to git-log(1). The command also supports
-    +    showing those same notes ref names in the range diff output.
-    +
-    +    Note *the same* ref names; any Git notes options or configuration
-    +    variables need to be handed off to the range-diff machinery. This works
-    +    correctly in the case when the range diff is on the cover letter. But it
-    +    does not work correctly when the output is a single patch with an
-    +    embedded range diff.
-    +
-    +    Concretely, git-format-patch(1) needs to pass `--[no-]notes` options on
-    +    to the range-diff subprocess in `range-diff.c`. Range diffs for single-
-    +    commit series are handled in `log-tree.c`. But `log-tree.c` had no
-    +    access to any `log_arg` variable before we added it to `rev_info` in the
-         previous commit.
-     
-    +    Use that new struct member to fix this inconsistency.
-    +
-         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-     
-     
-      ## Notes (series) ##
-    +    v1:
-    +
-         I’ve tried to conform to 6caa96c2 (t3206: test_when_finished before
-         dirtying operations, not after, 2024-08-06) in the test here.
-     
-    @@ log-tree.c: static void show_diff_of_diff(struct rev_info *opt)
-      			.max_memory = RANGE_DIFF_MAX_MEMORY_DEFAULT,
-     -			.diffopt = &opts
-     +			.diffopt = &opts,
-    -+			.other_arg = &opt->rdiff_other_arg
-    ++			.log_arg = &opt->rdiff_log_arg
-      		};
-      
-      		memcpy(&dq, &diff_queued_diff, sizeof(diff_queued_diff));
-
-base-commit: ca2559c1d630eb4f04cdee2328aaf1c768907a9e
 -- 
 2.51.0.311.g9b2318464ce
 
