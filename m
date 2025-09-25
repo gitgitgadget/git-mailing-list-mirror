@@ -1,156 +1,122 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8A0231830
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 20:50:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4826D27467B
+	for <git@vger.kernel.org>; Thu, 25 Sep 2025 21:06:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758833456; cv=none; b=kT187zX5VX416ZZ5t6i0tRI6c6jvhvg/PVPXlrkcYOWrgVwTAj6WH8xHbRmMPxK1sBF+Qy4xyNBIGHKemgoKyJIrzfzp896EDIs1nRBmtpXqxMwUQb5/dK19Ll2Rp6q8T6YBwi4jkYuk6FCmuoPcLHyFE83QfnkB2v/PhlDJcTo=
+	t=1758834403; cv=none; b=uhbqC/vwWtdBmTKimmg8o3FSkvElWnr5LJk6WqSOeXFyQhNOhjkHS+V2eW8JktjcafvIv9ZL0ymzKSl42KXOzQi4dC5C19OS+8j9ohosjE4JvQF6Noq9ToXoZgUQFw4Lm61nU3qZ+9qzRolfKjNMqQBLN5IwhYnjmfoWt/qwGko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758833456; c=relaxed/simple;
-	bh=562E+LBvSXbK+auNpkKlnYzOy8S9+f6z+IHU9i8fvS8=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=aenHw1zny85MuuRSrJJXtYOrR2FZDQr0XmWKS2kvfq4kLtTuoFvPscRHMsyZn5eI/iSXYd0BczMDPqRV6T6plYU9a+8/fQ4qLYhSLvEdUzxCksp9wA2YjPGUzLr/B8+vDvvTeX+EP+3rjbeR1+fvs5b8CdC38hjcD5OGYSnKYs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=t9ySCBjT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=altlevFR; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1758834403; c=relaxed/simple;
+	bh=qQu8N8aRnpl7A2UNl2FXKD15wkDtRVHqRj0+pgwXFtM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Y9h0BN0LzrO4d0NUYT7o1Q/kXaOsae2AftJ6Oeux37ISJR63RMwBs8ToIjgJzhfdHXZ05k0rq9TElHkCKQ8btzutYUzfi0vyPM8J8ihMOcs4SAlW3Oghj3Aw76pMB99z3j8+ghRyeFz2DCQeWfMgiMNglMQgfsXfRlncv+dSuz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GJI9vTYL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IdHxKoFt; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="t9ySCBjT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="altlevFR"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 72CBE7A0089;
-	Thu, 25 Sep 2025 16:50:53 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Thu, 25 Sep 2025 16:50:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758833453;
-	 x=1758919853; bh=QCDJ9iKYrs5WHPAAEU9NfsYBRAdLBovNGbsCZGdod8o=; b=
-	t9ySCBjTzoeOZhdAc71uNQ9F9wQtYLe0XNjhbRG1DgQ2FKyQa4XGnNUeYvXtUHLy
-	BKRHWEUfrzzxPQF9KaRBduPBPt1g/9LynzbFYmW7qwy+2oZ64fLQzblbFLkmtP3o
-	4pt1LMlNoWqWrez4MUSUFlPXTezyBVjxBgEZTs3WS6tUqeVQxPoYaS6EedtZXAMw
-	YM5Q7JJeIBEIhl1Cdm2kdjrCI9Wldl5cDcw7uO42CdpAqhAkkURwOE22Kad/gz/d
-	tAZ0+8Jxk5/N6n4xK+M3T8qKZC6SgEKn/r5Jc1LXKhadMNPIvXr/WGCUf3Z1Ib8G
-	UuqWKfglKzGAcI7iGon0fw==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GJI9vTYL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IdHxKoFt"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 352E8EC009B;
+	Thu, 25 Sep 2025 17:06:40 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Thu, 25 Sep 2025 17:06:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1758834400; x=1758920800; bh=9C/KYAofYv
+	M2LNZQGuXYK/5fFbqgL/VZKOmrehcJKK0=; b=GJI9vTYLrZbywKQuYnChN1lI5Z
+	+IepEm2K5XUMge5XcH4IMh91Hetr4J2pQ6AtCAEslpBxn8qwanl03RnmSbl/XmTh
+	OQMTIAui5v0gw9eWtnscG4LiznqjPU+uO+Yzsc0xWLJPtbX40/AT4C4FzUwRI4A8
+	BXMWWZflQsVSaCoEGal63Jr+rXS/GhoB1aREgZtPTX2PSmzxmt66CmcFlQ+uuTqi
+	hQ8FPwFwUjCf6InwFs+D6XyQlriwROz8Vz+BFpaSRawH+VGaHxaxiI4CvM0RJamk
+	knbPyEGiYLmO20QZ/XkWB6ALKsvJlp425CGv6T/unqvzb2cT74XoQHRwEQxA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758833453; x=
-	1758919853; bh=QCDJ9iKYrs5WHPAAEU9NfsYBRAdLBovNGbsCZGdod8o=; b=a
-	ltlevFRIP99yRKGNjvEzRVtBKpQjMfiFnaQiiE1Ye3Fcp/uuQsqCQUp8yFaqG24T
-	uozdaI9vpeA6vvuSMVuI3ggDYfwwj4F7v4h5Wh7vXk/9nqk0+xCpQnKs1rk7bTB4
-	oPqBQJYbLg7wmvG1b3/lAosf/EzmL/i3BLVzUt5YeTlAa+BQ7hRSXUhO62FR7NYd
-	aUcTOQtFHqGSYqSXfbLe03MT7El3c6714gEgPcr1nkmPOpPPHlke5P1CIIkX9+9K
-	kkXrcSu7X4wfr7h9oR8xwOGvry0XX2fNLE5eIypFlrpjcstci9+aLRmKajnBVeEg
-	xZNc2r+O6pxmTNEuiEw7g==
-X-ME-Sender: <xms:LavVaCQiMhetY9BdaUBB8B6qqK1kjDlk67bg9DE-somZjIiFivZjqg>
-    <xme:LavVaCm1w3decpTzZm8vofAUdXaC3_XlOOSQSyM2o-ZUt5dSDGLE1Vqx1kk7svDNn
-    R7eXeV4UwrwhNXzGP2IVVWc3BiORzKxPle3BWI1njNpBqKU8xJKO2U>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeijeeglecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1758834400; x=1758920800; bh=9C/KYAofYvM2LNZQGuXYK/5fFbqgL/VZKOm
+	rehcJKK0=; b=IdHxKoFt67cwjk1fbjYeNWuQPZBRK2TLaumtojSErGiLMyyXBv9
+	OwvJxIORz/mHmDYGiOVLpNlZ1fr3iE6Oj74xdaZ0Dgwi8b/VrFLWEy215Tm5jbHD
+	EaL3mot4g4a/oqr2CU3RaGiqxg1cYFcM6m5FTe9RmYGPTIWWdWICjl/oIGjkhi2X
+	BR5W6Mpq/W+5ETsA5kBbliPRFbGtusLo/jzxpt+MvaT0JnEcF4fQ0H+R79F67TbE
+	OsTrQaedj+mrkeu+3eJlr08YLl1sG1DRiZ16hkWhpUM3FaIsODkoz9FtkgNAT1CZ
+	G5u2NeCK/UgC7MfwIqXqQn8fDKIVyctan7A==
+X-ME-Sender: <xms:367VaBMOwxgyU_rNaJDzaaooCZvtHG7QwOGTN9VR7O9tV1QgERA21A>
+    <xme:367VaK_QZKB3LzHb0cj_W1IPQ2wKMIFCt6NypZ1oeODBSv_VhoQFfMkFhix20Ao44
+    O5qFtVHVcXXrD15eyxgg1KEAievli8Jx5XqZGGkBm4CtIJS_C_vMA>
+X-ME-Received: <xmr:367VaFQiqG9zkDRGUEiMlKGqpGt_Y-SoTqmD7MSXdkvH8yLfTK145iF2YOC2YUmiyNl9ryTZOq_n26P8CdU94_zGzSz0asRXtzY->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeijeehfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfluhhlihgr
-    ucfgvhgrnhhsfdcuoehjuhhlihgrsehjvhhnshdrtggrqeenucggtffrrghtthgvrhhnpe
-    fgveekudeviedvveeuhefhvdetgefgffdufeeguddtkeegtdeltdevhfdtuddttdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjuhhlihgrse
-    hjvhhnshdrtggrpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgt
-    phhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtg
-    homhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrgh
-X-ME-Proxy: <xmx:LavVaBWXHQlXv1fBQx7ee51e9R3TJ67cftPHfFprj60PD9wIVXYSPA>
-    <xmx:LavVaDFcU3oOPSqSaqr1QShqceTjmR6AHrddmNw7y7R7nNQPmAczHw>
-    <xmx:LavVaNcDlKq0XdU7s8Qi1yp5IumCs8pDTs_8NBMo5Wvjt680LvuEOQ>
-    <xmx:LavVaEImqZxf0X7TI7N3_6qQX8zNaewd7oqinqxWJHYgiNRTvFjcvQ>
-    <xmx:LavVaNrEhtILOt7aAunm_EA30oiKxX2oYXp7d6aid00dCTRPRchYUINe>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 01A3578026F; Thu, 25 Sep 2025 16:50:53 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehhohhsrghmrghlhieisehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhm
+X-ME-Proxy: <xmx:367VaMkj_u9Gm3z1mX8eHKDJ3Kpp37pQFWkC_JcFD4t10wsnXS_AxQ>
+    <xmx:367VaFQI6XsSJa7b3Phxs3kiw0-PCtwNKDOeazfGXVsmtAW5ZytqUQ>
+    <xmx:367VaKNRuvNxK9er-VUwMUPc0pk8qd7ZPdSVnZzGCEpmYfqacNnNLA>
+    <xmx:367VaOVH3E-z8MBIS4dn85nrpVMXWalLAkeVyGHnyhA8CR8N-nX2Bw>
+    <xmx:4K7VaIz5GSJL39vvd1Kh6Ilzf7TrjgATD7xU7IPmip4Xl0wzBTkBl9jh>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 25 Sep 2025 17:06:39 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Hosam Aly <hosamaly6@gmail.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  Git Mailing List
+ <git@vger.kernel.org>
+Subject: Re: Bug report: Untracked file lost from git stash
+In-Reply-To: <CAJA-u1oORK9b2=mg-s_n6-Jn3VBhe6sqrWg8VN0-MdEOjZGcwg@mail.gmail.com>
+	(Hosam Aly's message of "Thu, 25 Sep 2025 23:22:40 +0300")
+References: <CAJA-u1rnzef53+eW_mbwd_40q+-vt747Q_dP3PG_HKt1yXcmXQ@mail.gmail.com>
+	<CALnO6CCfwdKcqxFSvX68WDvzceYeo0ougz4337ejChbPB9aGEg@mail.gmail.com>
+	<CAJA-u1oORK9b2=mg-s_n6-Jn3VBhe6sqrWg8VN0-MdEOjZGcwg@mail.gmail.com>
+Date: Thu, 25 Sep 2025 14:06:38 -0700
+Message-ID: <xmqq4isqfdi9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: ALMQnK0r4jnk
-Date: Thu, 25 Sep 2025 16:50:32 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Message-Id: <2365a7b9-3d22-4406-876d-65822822655f@app.fastmail.com>
-In-Reply-To: <xmqqqzvvk4bj.fsf@gitster.g>
-References: <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
- <pull.1964.v3.git.1758649472.gitgitgadget@gmail.com>
- <be6453d010bdc9d2b49988d6841dd7e7f9bdf1f8.1758649472.git.gitgitgadget@gmail.com>
- <xmqqqzvvk4bj.fsf@gitster.g>
-Subject: Re: [PATCH v3 4/4] doc: git-push: clarify "what to push"
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+
+Hosam Aly <hosamaly6@gmail.com> writes:
+
+> Feature request: I wish that the maintainers would consider changing
+> the default value of `stash.showIncludeUntracked` to true. If
+> something is stashed and the user asks about it, they should be told
+> about it without hiding anything. Consider the case where all the
+> stashed files are untracked; `git stash show` currently shows nothing,
+> which is very confusing.
+
+Do we include untracked paths in the stash by default without
+configuration and/or command line option?  If we do, then such a
+change will affect so many folks that it would be possible to do so
+only at a large version boundary, like Git 3.0.
+
+But untracked paths are not recorded by default, and a stash entry
+that records the untracked ones is a sign enough that the user cares
+about these untracked ones when the stash entry was created.
+
+Even though I do dislike any suggestion to change existing behaviour
+established more than a few years, I would be more sympathetic than
+usual to a wish for such a change in the default.  In other words, I
+tend to agree that the default should show untracked if recorded.  I
+am actually tempted to argue that the presence of the configuration
+variable stash.showIncludeUntracked and the "--include-untracked"
+command line option is a bug ;-) but I won't.
+
+Thanks.
 
 
 
-On Wed, Sep 24, 2025, at 4:01 PM, Junio C Hamano wrote:
-> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> -When the command line does not specify what to push with `<refspec>...`
->> -arguments or `--all`, `--mirror`, `--tags` options, the command finds
->> -the default `<refspec>` by consulting `remote.*.push` configuration,
->> -and if it is not found, honors `push.default` configuration to decide
->> -what to push (See linkgit:git-config[1] for the meaning of `push.default`).
->> -
->> -When neither the command-line nor the configuration specifies what to
->> -push, the default behavior is used, which corresponds to the `simple`
->> -value for `push.default`: the current branch is pushed to the
->> -corresponding upstream branch, but as a safety measure, the push is
->> -aborted if the upstream branch does not have the same name as the
->> -local one.
->
-> That's a lot of text, and ...
->
->> +To decide which branches, tags, or other refs to push, Git uses
->> +(in order of precedence):
->> +
->> +1. The `<refspec>` argument(s) (for example `main` in `git push origin main`)
->> +   or the `--all`, `--mirror`, or `--tags` options
->> +2. The `remote.*.push` configuration for the repository being pushed to
->> +3. The `push.default` configuration. The default is `push.default=simple`,
->> +   which will push to a branch with the same name as the current branch.
->> +   See the CONFIGURATION section below for more on `push.default`.
->
-> .. the above gives us vastly more pleasant readability improvement.
-> Nice.
->
-> I do not know if you want to do anything to the lack of any
-> punctuation at the end of sentences 1. and 2. (I would have written
-> ';' if I were writing this myself).
->
->> +As a safety measure, `git push` may fail if you haven't set an upstream
->> +for the current branch, depending on what `push.default` is set to.
->> +See the UPSTREAM BRANCHES section below for more on how to set and
->> +use upstreams.
->
-> This feels a bit out of place, as the safety measure, as I
-> understand it, is only relevant in 3. and only when push.default is
-> set to "simple".  If we are referring the user to the configuration
-> section, then it may be a better place to say that the "simple"
-> setting requires you to integrate with the branch with the same name.
 
-That makes sense. My goal here is really to communicate that you may need
-to set an upstream for `git push` to work, since it hasn't been mentioned yet
-that the upstream branch might be involved in deciding what remote branch
-to push to, and it comes up pretty often when using the command.
-Perhaps this instead:
-
-"Depending on the value of `push.default`, git push` may fail if the current
-branch doesn't have a configured upstream branch.
-See the UPSTREAM BRANCHES section below for more on how to set and
-use upstreams."
-
-> Thanks.
