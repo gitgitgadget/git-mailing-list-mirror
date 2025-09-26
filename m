@@ -1,116 +1,95 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-ptp-004.plus.net (avasout-ptp-004.plus.net [84.93.230.250])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF51246BC5
-	for <git@vger.kernel.org>; Thu, 25 Sep 2025 23:51:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0CD2B2DA
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 00:22:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.250
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758844295; cv=none; b=N9yzF2Gy+Nz/2HhdwMOMCXjjdDp0iz0G299X/QVcGutN0M/gWM+LXUqIqXzxiIGkhGlkvXqWsfYbIYXNyj97atKzqsrO7K/NzgLEDA6dp4vWylx916yZR4g8X/3RFWY1xvGhh2IGQyJl+gFeY8okiFmku0kBzPr+cpzRp82LNgA=
+	t=1758846136; cv=none; b=sWROAj+MosCBiqRegmMkYhq7+/LOJpdTjxGc/sAQeaVtKDI9LvicIh8BClLTbxJQOYJBMNMFk7MpnfceP0YsSEqJ/YeE2bN39HDG0m44ugJzIiPyNkMX/3xkzNFkb6bduv6pTGiARZuqh68Ycje58Chvqmb8VqSsKEVokcj151A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758844295; c=relaxed/simple;
-	bh=UAK7wpq+3gW3YDBGbJnKfhT8kk9ix8R1zbABoGmpmyA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mMj3XtYxv0P/8/kGGv3ZTkYtPII15Q9CIgku4RUbJyU7ybZerxcwCn3bC6ygx7sqVcLi6vsTCNdbiXmFFjbCvSAQ+36qATbCA4cwMAv52HCCxIzOFVcBQquR1gG29XPfvyIMj718OI1V/mIK+MVnhQZ/7wkj6zA3KMfP/6tKD5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-85f66d9251dso14437185a.0
-        for <git@vger.kernel.org>; Thu, 25 Sep 2025 16:51:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758844293; x=1759449093;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WT5wdaA8KTIoCVgSd4TdA7Xs5z16AAH9glesB/3jU24=;
-        b=YmpjFzsdWRW3qlqcfs4gBi/rPnmGl2ahoQ5S6QrUzMcPrM94xI3Q3mJ3QrwU2pEsrI
-         tTwS1NnYBMD2qVfea5DKLzaK1BlJCc4ju1j6UGLJjqG93VuEHjTHyPeyVgro/KJ2SEeV
-         BBQ6xGldz/rampa2701DzOPn99Ao2sMmT0/ijG0dRYZGmGp/uDEpXXnGdMThmxlo5JDN
-         DoJHdXuAotaEriheEnV0tQHHeyChyy1U8Fe7AThQ0qT6QHlkWfMY9I0Y8LkEmv+9FCC7
-         6ZsySFaSqjB362VBO9l/RiPfhQetwGBLUcC7lcKNiZFHL7peYfDQ/d3MpCKzPYwSJTAI
-         EEwQ==
-X-Gm-Message-State: AOJu0YzW6jKOQcAJayJ4qzz/45NLM7/CM7IecbmsX4FwxVS7v7wAivKq
-	8slqOz3TPagMK2Ig2K7X7tWiHZZxzBHhHZTi8uyKmPmTIm4O+YwnvP0fURtNuvDuxarkSpzUEH/
-	Ch6Hx3TI8agsHIvlCe0eAAzTqwHCAS8w=
-X-Gm-Gg: ASbGnctn1CYhW489UZt4OSbyDysbYfci+syxOwQJygj1yZtTZ2KujE/ZnZm/4qiTN5q
-	PKAc3ZDxWmSucwunrl7Hz9qQ0WA6pxy4KOziFpDGmbDrbPNNRqioDUAi5tO1O5iaIqO+SoxPteb
-	LSftt91Wfx/M8NGMAXmL1L2eQ+oNsqFq6N94bwvlX0qGI8NldXn+73EOJ+QOVqNG9whbU0A7cOq
-	nEkdg==
-X-Google-Smtp-Source: AGHT+IFq1vbyZuH5QJ9yB6KkQRaaOz/OF6zsUmxT0FrQ7WOpcXXmzDWfrWiRyP5mPP7rv4XYDaO3EsP4ilN6cM88x24=
-X-Received: by 2002:ad4:5dcb:0:b0:797:1974:b824 with SMTP id
- 6a1803df08f44-7fc2740a087mr48978746d6.2.1758844292763; Thu, 25 Sep 2025
- 16:51:32 -0700 (PDT)
+	s=arc-20240116; t=1758846136; c=relaxed/simple;
+	bh=KxHzgFQxYrsWjcGwyMljz5nucph2fVdDXgYpqRfn8eI=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=keQFTfYup7IHHZfs03Nwpv4QUraPMjQlaE2dzFSvaPVWqMWFYzIcMgV6ABLCIdABMyIF0SnU+w5T7O0yF3Yb5+kT0lQXRYtlqHdJT293PLeY2OH0BV6Ss4182RRBzI5QQtg++K66Qg8+8fKzzEiA1U4ftl5D5Wh554wUbs01cBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=pi1SZadL; arc=none smtp.client-ip=84.93.230.250
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="pi1SZadL"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id 1wDwvu0FI2D8r1wDyvBSP9; Fri, 26 Sep 2025 01:22:10 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1758846130; bh=/7kVtx4xNGmqhMQ//ifeYQxGi9TCVlCm9FO9qQmzpP8=;
+	h=Date:To:Cc:From:Subject;
+	b=pi1SZadLXRD6xKEfgbFm4w/pmMmpumizOf2jcXfegOa/dCOY81dQDxOTH8UwjdbNT
+	 ZUqbvPNZVfIFDh+FGsYBiVdGgfdxVFJfWxdUhYKL93AImhalnNHeziD5cI9p2ryf30
+	 SdGxbUZ/7AFB4LTRCQuubImCQykIrSgyk4silK8M/T2uW+A4OEAlh6eF8zV3ArDtfR
+	 DDqhA9hW8+tswF7TOCOKWFs448Uta1yyVpBhlXDw0oLwmsHH9jKRClnPZrHryOT17A
+	 2XV5t1uZfYW7ymxHzHADiPCfP9GBAeAhKl1VVllNyhwciAEzHZqzokn4vK+rwLFfNH
+	 42T7EEMn882Pw==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=beTIU/PB c=1 sm=1 tr=0 ts=68d5dcb2
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=fGnoxqtQ9Yn6lRRlILMA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <2326e1c8-19a3-4454-ab71-0a6cfa8cf8e9@ramsayjones.plus.com>
+Date: Fri, 26 Sep 2025 01:22:08 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250924212426.2930029-1-jltobler@gmail.com> <20250925232928.3846-1-jltobler@gmail.com>
- <20250925232928.3846-5-jltobler@gmail.com>
-In-Reply-To: <20250925232928.3846-5-jltobler@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 25 Sep 2025 19:51:20 -0400
-X-Gm-Features: AS18NWDuxUFjODkSRvQuG1dDx9g1OoMCLekY3cVxz_-hzLvUyJvVSJqXxBfmmSs
-Message-ID: <CAPig+cTSpq132SZQHUzYHJNqY-nOYizFW71Lu3o6a6m3jDNVJQ@mail.gmail.com>
-Subject: Re: [PATCH v3 4/7] builtin/repo: introduce stats subcommand
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, karthik.188@gmail.com, 
-	Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: GIT Mailing-list <git@vger.kernel.org>
+Cc: Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>,
+ Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH 1/4] doc: add some missing technical documents
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfPUFhn1H9PhmSztrhQHgKw4h529m14mlGO+nq8Fg4Ab3DC2hABS12egON2RaYXzyzJep74IhB8BUFsV8YNjK7UnwZkf7OtYiO8I8ebou8X/UMBN10avH
+ Z98OyLdStLOh0M85Fzk13TbwHBEqSfBh1A49RwFrHIExHYJfplDYvcWLw/Ja0chjQRFTczsW5KP/ZcbdILw6ybTNTclkP0dDgrc=
 
-On Thu, Sep 25, 2025 at 7:30=E2=80=AFPM Justin Tobler <jltobler@gmail.com> =
-wrote:
-> The shape of a repository's history can have huge impacts on the
-> performance and health of the repository itself. Currently, Git lacks a
-> means to surface key stats/information regarding the shape of a
-> repository via a single command. Acquiring this information requires
-> users to be fairly knowledgeable about the structure of a Git repository
-> and how to identify the relevant data points. To fill this gap,
-> supplemental tools such as git-sizer(1) have been developed.
-> [...]
-> Signed-off-by: Justin Tobler <jltobler@gmail.com>
-> ---
-> diff --git a/builtin/repo.c b/builtin/repo.c
-> @@ -156,12 +159,205 @@ static int cmd_repo_info(int argc, const char **ar=
-gv, const char *prefix,
-> +static void stats_table_vaddf(struct stats_table *table,
-> +                             struct stats_table_entry *entry,
-> +                             const char *format, va_list ap)
-> +{
-> +       size_t name_width;
-> +
-> +       strbuf_vaddf(&buf, format, ap);
-> +       formatted_name =3D strbuf_detach(&buf, &name_width);
-> +       [...]
-> +       if (name_width > table->name_col_width)
-> +               table->name_col_width =3D name_width;
 
-Here, you're using the byte length of the composed string to compute
-the table width which you will use for alignment purposes when
-rendering the table...
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
+ Documentation/Makefile | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-> +static void stats_table_setup(struct stats_table *table, struct ref_stat=
-s *refs)
-> +{
-> +       size_t ref_total;
-> +
-> +       ref_total =3D refs->branches + refs->remotes + refs->tags + refs-=
->others;
-> +       stats_table_addf(table, "* %s", _("References"));
-> +       stats_table_count_addf(table, ref_total, "  * %s", _("Count"));
-> +       stats_table_count_addf(table, refs->branches, "    * %s", _("Bran=
-ches"));
-> +       stats_table_count_addf(table, refs->tags, "    * %s", _("Tags"));
-> +       stats_table_count_addf(table, refs->remotes, "    * %s", _("Remot=
-es"));
-> +       stats_table_count_addf(table, refs->others, "    * %s", _("Others=
-"));
-> +}
-
-...however, here you feed the function translatable strings, which
-means that the display length of the composed string is not guaranteed
-to be the same as the byte length.
-
-To resolve this, you probably want to investigate Git's utf8.h header,
-in particular, the utf8_strwidth() function.
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 6fb83d0c6e..a3fbd29744 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -119,18 +119,26 @@ TECH_DOCS += ToolsForGit
+ TECH_DOCS += technical/bitmap-format
+ TECH_DOCS += technical/build-systems
+ TECH_DOCS += technical/bundle-uri
++TECH_DOCS += technical/commit-graph
++TECH_DOCS += technical/directory-rename-detection
+ TECH_DOCS += technical/hash-function-transition
+ TECH_DOCS += technical/long-running-process-protocol
+ TECH_DOCS += technical/multi-pack-index
++TECH_DOCS += technical/packfile-uri
+ TECH_DOCS += technical/pack-heuristics
+ TECH_DOCS += technical/parallel-checkout
+ TECH_DOCS += technical/partial-clone
+ TECH_DOCS += technical/platform-support
+ TECH_DOCS += technical/racy-git
+ TECH_DOCS += technical/reftable
++TECH_DOCS += technical/remembering-renames
++TECH_DOCS += technical/repository-version
++TECH_DOCS += technical/rerere
+ TECH_DOCS += technical/scalar
+ TECH_DOCS += technical/send-pack-pipeline
+ TECH_DOCS += technical/shallow
++TECH_DOCS += technical/sparse-checkout
++TECH_DOCS += technical/sparse-index
+ TECH_DOCS += technical/trivial-merge
+ TECH_DOCS += technical/unit-tests
+ SP_ARTICLES += $(TECH_DOCS)
+-- 
+2.51.0
