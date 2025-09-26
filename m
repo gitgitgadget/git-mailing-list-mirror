@@ -1,121 +1,101 @@
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F9A1DC1AB
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 06:43:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A69D27F4CE
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 07:13:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758869023; cv=none; b=olmMvFCtW8iHbLzs3ay9zkKRrVb/X2MZeKb0swTWjT9c63Z/H3LzYCw1ktztvVzIGkDN6LrvbW4EILb1OvjXzPlCpZfq0gwEzH1n6r+zxupeejvdSQujUaa8+iimQxr/yxqORVspf+jK8FE7D7urfC8X0VEnhql/Ysset2Hz7xI=
+	t=1758870804; cv=none; b=SyUG8unFAtO8GrhaFWB+CbCjNBlOEw/yEGXs8H27umLFEAAm0pZY5UIhv/kbNi7lTZIPHk9i3onPghsgyjRNtDYJ6BUpA2ABJw3mAmJtSDEanmHPWBTZxcpSPRLRxU63BNFGWAozM6PP7L+f6vzKR/E+VDXYBg6PCJVv7NVKXsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758869023; c=relaxed/simple;
-	bh=emiV6qkPnSxgO1PQL2DAzVVPz/ikvaQGuN1JuEKPgFo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pyITrOS3aFa5rcs8/zUDgYQAZrxsB0O51kVaG5t9VKMFliwJAVL6zZAB0PXXfhWz6HozA+aOp/1Q5OS9i6rtX2wFDNCXq+lWwX6UY43VlN8JJwW+pYB2gJsfm3HllCUpSoKN7DYzm+MpSKzo3FuCS6DzPTH2IW/1F2ISKLNrjjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kMH7DQZ0; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758870804; c=relaxed/simple;
+	bh=0fKNq3k6jnQGusXDuhpsQh3Ra3SlLaEsZIBr62or9XI=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=QwIuCGjPGA86JBWhqS9Mk5c0qX7BpHjb07X1pdZsc51kecAx44+ikavBCSfHfX4u/2/mPNrKEI2C8VdVOtWl8YHhVS/GJX0C/YUkuaCobK42ce/6+VpGSWkPRwBe8zHDDh7AEprLhLiax1OaH4o1akAg3OGbxdoLOatW+fnNJoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=pNeYqvZ0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rphYGH7K; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kMH7DQZ0"
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-581b92e680bso2937608e87.0
-        for <git@vger.kernel.org>; Thu, 25 Sep 2025 23:43:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758869020; x=1759473820; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FrqMAvU6R7OVJRl+nvKPbKOMLOfVhh/MELON6vuEkvo=;
-        b=kMH7DQZ0R5XmWtMaoclPpJi7sd0Y4jS8ybLEnvzkPSBuwyH7+qUBh8fFfMJFLDEf1C
-         nEo1mnmral74ScovF1LW6jyP20yGveNAAtWXU89y7tSS1LKsGureelB7qB49nAvE8nHY
-         +isMxoH1DyDGa8aHdB15yFooAYRw/R/iGJMjLro5pkxMEzsQM8qlb1T6swOvWSt0DQZN
-         eUwUI9V6WOyoCCzrw5nXflJzrFL+SEGHq13KVwUENoftfKoFObRVV853LEb1MJLVV9kd
-         +qlsltJtORSzq8SzIQ9oUF+meCci2nG2HZcmDf4rw50YPG8Gt72hnWv2el3+PALLHPDv
-         ORkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758869020; x=1759473820;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FrqMAvU6R7OVJRl+nvKPbKOMLOfVhh/MELON6vuEkvo=;
-        b=iTChVU1H3MC8xZFy7vu3/Vcz9+a3g8HlJJSw5lhDcz0jGuFwvwECCXsB/Acx10ZEy0
-         rgDLTTT2o+WWm40OVUPNIDKnlMEADDDwtjWidK6awrgZCwego0dIv0mk13lA5u1ftQu5
-         HasuQFe6/TzdsGoih3BnWrF9lX7cV4ulHiIYXIdSi3g5Nb/It5Febg4N5z3PWoF+820e
-         Xnp8UBybKeB4Pyh0f9Q9wJtxM3Zx259whCqhyjKQnGfqnBK7wzI+azMVwuWCgBS5cuvp
-         tAOD/oAgLgDuaBJRVGxnO6Yz3+1kODyROYw0yoKHu/apZeIY9QP2uq5d347e5cBQXe7i
-         UEWA==
-X-Gm-Message-State: AOJu0Yy/4LA4gz9/DCFeN/O31r/sku98M6jgNOfJgapmP1eivwyjZxaP
-	yBYBIfCjxPJ+7SnUGJ2i1Ser9XkUrQFzl9tqYHTVCXQ9FLbAuqBqGZXC6SwhaCBd5DaXPL+JKij
-	PFrn8WCAuwSa+6pHHLP/Gafcs+Rj07ss=
-X-Gm-Gg: ASbGncumyRHfaXjBkn+94m4vGZHqsjU97gdiAMSruF6i2iwdey9tfMYk4gT5SEKGM2R
-	I/xT73Iu6UV2KVuOcSXOXOgezYiuFmM9/pEUtgev9lVjJLv/gPrBEyoeddhEVD94cnQoBLDJHUg
-	aR7Cyi5dkwWh8JHZsrmR2Sqd6VPUPMCQmiMhP1pNVgxEYw2hVguIwWzp+w7a6r2rQdudXf2HQbO
-	Hq+k21u
-X-Google-Smtp-Source: AGHT+IH6Xgsdr1e9364051E/JopjBkRc64LGlEVtWYYBJEeRz24v3GX1C1/3WhwEcK8lLKvixNq66qDHCPpmRFqk/f8=
-X-Received: by 2002:a05:6512:68d:b0:57c:4428:4f14 with SMTP id
- 2adb3069b0e04-58307a37356mr1686636e87.24.1758869019587; Thu, 25 Sep 2025
- 23:43:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="pNeYqvZ0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rphYGH7K"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 71C4E1400062;
+	Fri, 26 Sep 2025 03:13:21 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Fri, 26 Sep 2025 03:13:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1758870801;
+	 x=1758957201; bh=0fKNq3k6jnQGusXDuhpsQh3Ra3SlLaEsZIBr62or9XI=; b=
+	pNeYqvZ0fotImJZt8OlT+wPgvEQEcJEkTpAvsP5Et3QdHRTTeecOoGTOFHbY3RxS
+	5vjK/7nXL9frIVr6hEc7jSHJ8We5AJcBe8eGL7GCOr6fjrGDcz7MHO2jDOr/otM2
+	gH+mvDeZ6wJb/AQaoS7gfsTczJvjrn7WbI79fIyQOdAQ/g5qtcBU+Jjk7ecBUYdT
+	Htjreqh0tN0dTryxNa0f8fuUBeSdzrSbdifSxeqQTDzjkqlZIdKkCsDIYJgyw27z
+	bgaDZQkJkJLkBryW1GihcSIVZYB2AEx9CXVX1EbUToG9355bEgfAlso08W95k07k
+	+Jsm3x2R2RA4XraYoX8F4Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1758870801; x=1758957201; bh=0
+	fKNq3k6jnQGusXDuhpsQh3Ra3SlLaEsZIBr62or9XI=; b=rphYGH7KDCTD9bauw
+	lqSDBU9C3DI4YYqi0rYfKWhRmn+ONlYKshFRSBBZZ2iAh6jwhIg6zAVOeG3ni1CF
+	mqQIOL9cKTXy88lyhL2AfcNgFxT42W8ch5PDmIcWrJ6Q4TcRtf+FdktT+IPS0tvN
+	duwUuK3eahBpyiVUJpgAd/cyTWJejwIF9Z7t0sM/f1EjHYJtWj5NLYoZywBboztV
+	FtnsNuE0DGKC2bMpeK7pXFZvG/03ojk1JBSi7SFdfsyMfzxtNOva2WC1KWTVRAni
+	80eRNAZXlXdacYIQbI/ieU024W2+UY5VphK33wWMply6hkAV8wTjY51M5bztaVDS
+	Uxw0g==
+X-ME-Sender: <xms:ET3WaGlw7jUWqbrbWA5tdLqj5aVM006S81-zl8INeWVCtAhEuc-M15k>
+    <xme:ET3WaIoG37myNdmV0GYb2u2yyy_AK4PKOMMt1HCpAVIIhVOF0IdpklaBPtnuCG5Gm
+    b0JCFez2i3djBYGkdJB-sm1IoV9vhL9hUqDi9XsHoOrM9SqYOwpKXs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeikeejgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkjghfufgtgfesthhqredtre
+    dtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhr
+    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtf
+    frrghtthgvrhhnpedtgfffteetudelhfefkeehtefggeefjeevieekfeefieekkefhveei
+    ledtkefgueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
+    nhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvlh
+    htughofihntdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:ET3WaNTDSdkEZ2lSICErrdH5mWEZink5xE15ZrN_ksu5o1XGNRcAww>
+    <xmx:ET3WaEsio1FvkM5QvRC2MSst6BLGxbyLHI-reu0DHr0cw5CHRMvXiA>
+    <xmx:ET3WaKZ5L-Qj-mnLuJ-cUvyHbT0AdRHpulcbuEHhD4589bMUYPOdUQ>
+    <xmx:ET3WaBvbIYZiY-GQtyssJHBCteDNIgyTdNKjNLdMZy6IuBf6Al7lvg>
+    <xmx:ET3WaFaXgEJBXuM1wey9kpk2PFJ0IzV2qeZOruzKN8HHUQZd-PHxTdwR>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 266871EA006C; Fri, 26 Sep 2025 03:13:21 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1977.git.1758800669.gitgitgadget@gmail.com> <a5904a2ac00ea6de142344272b45f6b4697b4f98.1758800669.git.gitgitgadget@gmail.com>
-In-Reply-To: <a5904a2ac00ea6de142344272b45f6b4697b4f98.1758800669.git.gitgitgadget@gmail.com>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Thu, 25 Sep 2025 23:43:27 -0700
-X-Gm-Features: AS18NWARezaWj_VBtUiCWZdNvVqGZDB4Ss_0SOYESGaxy6apfl9F_Y08MkTmGbg
-Message-ID: <CAPx1Gvcj-mVfXFMpLuvda_s89e_3jwdjMMdywEOya16yStXvFw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] libgit-rs: add get_bool() method to ConfigSet
-To: ionnss via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, ionnss <zara.leonardo@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: A85bjPg_JiWc
+Date: Fri, 26 Sep 2025 09:13:00 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Neal Miller" <meltdown03@gmail.com>, git@vger.kernel.org
+Message-Id: <7e3a5da4-0ac2-40ae-a96e-0e9a88a68d7e@app.fastmail.com>
+In-Reply-To: <19a81573bf1ef7c544106e8fa7dd3b2db304c4f7.camel@gmail.com>
+References: <19a81573bf1ef7c544106e8fa7dd3b2db304c4f7.camel@gmail.com>
+Subject: Re: git whatchanged
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-A bit minor, and I'm not a real Rust programmer, but:
+Good morning
 
-On Thu, Sep 25, 2025 at 4:44=E2=80=AFAM ionnss via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: ionnss <zara.leonardo@gmail.com>
->
-> Add support for parsing boolean configuration values in the Rust
-> ConfigSet API. The method follows Git's standard boolean parsing
-> rules, accepting true/yes/on/1 as true and false/no/off/0 as false.
->
-> The implementation reuses the existing get_string() infrastructure
-> and adds case-insensitive boolean parsing logic.
->
-> Signed-off-by: ionnss <zara.leonardo@gmail.com>
-> ---
->  contrib/libgit-rs/src/config.rs    | 24 ++++++++++++++++++++++++
->  contrib/libgit-rs/testdata/config3 |  2 ++
->  2 files changed, 26 insertions(+)
->
-> diff --git a/contrib/libgit-rs/src/config.rs b/contrib/libgit-rs/src/conf=
-ig.rs
-> index 6bf04845c8..3f4a32c72d 100644
-> --- a/contrib/libgit-rs/src/config.rs
-> +++ b/contrib/libgit-rs/src/config.rs
-> @@ -68,6 +68,26 @@ impl ConfigSet {
->              Some(owned_str)
->          }
->      }
-> +
-> +    pub fn get_bool(&mut self, key: &str) -> Option<bool> {
-> +        let key =3D CString::new(key).expect("Couldn't convert key to CS=
-tring");
+On Fri, Sep 26, 2025, at 03:00, Neal Miller wrote:
+> --i-still-use-this
 
-The string argument for `.expect` should be phrased in
-a more positive manner in terms of what is expected,
-since failure will cause a panic. So, something like:
+You can replace it with `git log`:
 
-    let key =3D CString::new(key).expect("boolean key should be valid CStri=
-ng");
+=E2=80=A2 Given: `git whatchanged <opts>`
+=E2=80=A2 Replace with: `git log <opts> --no-merges --raw`
 
-which would produce, e.g.,
-
-    panic: boolean key should be valid CString: ... details of key ...
-
-A similar rule applies to the later `.expect`.
-
-Chris
+Additionally for the sake of readability, you might have more use for
+`--stat` or `--name-only` rather than `--raw` if you are only reading
+the output.
