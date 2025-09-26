@@ -1,243 +1,242 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD15129A78
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 15:52:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758901947; cv=none; b=KX0VFptBcXXymYfNkaEkA+kuyOR8JjfR+eW6jRPQmbimYuDXsffQT6qiMuotiLVV9bTm8/KAULMRR7nl0T6zIUupbqK44+UYYPWOdWsghq1A03eX6xXYGZwjTDsEI6cl2z1N5DbPQtJcJtCC0QLl/+Dqapf0lr1NXq1ur6/zOlQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758901947; c=relaxed/simple;
-	bh=x42bG4dSqMxd48eisA6rtkL/Znb6TN60EA0bf37ynXs=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A914E129A78
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 15:54:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758902047; cv=pass; b=KLBLd0JaZUGsRIeUdnzR9r3QOc7UM5LTQP9wx3FRg9OzNZM2wI3Vc8a2bc0GgKyzHKkBU+9Wz8EkMAoNVsG9veoZdpQUGpf8YlEiQkc3D4Ijn9uqurR2lfZxNsDLJ6rplpCmM+3cbRyYDRwatzSDuw5+7yUc1P4avOcfzA05noo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758902047; c=relaxed/simple;
+	bh=owFWXUk/JNix4XM0ieDJb4XREHHOZlX+88SlZlmcLb4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fC/H2vzsuwZJ7fQgSnq47rYg4aDVpqfwXhaYAYPaC0y395xInFf3BT3451Xp0f2N+IQf8CZWaUQqFD4MF22Pl3XlkAOnif/odgnO8tKw2hpCCuljD5+p2VAZyBEmAWmliEWDY45TT27UcunUQDM1o3ttAM52kbjZghUrcOwzZMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=b0zPceUe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cCZLQefy; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=EaOfDut0g/iDAEzgsX0KYpXjmCi8jPD2u1uFLM7KfS1H/ddu8bgDnyonEBu6XSaRu1RSTNZLHoCWpjcFIzyoBL1lb6Ey3fSw6tptrxeLN/vlzlVjcTAeQ5183WgdxMNv9z7MRj7/D9KxlF28btYH+2l6/8AFqPKGdhoGeXU48HA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=bp2HA4nq; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="b0zPceUe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cCZLQefy"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4E6631D00114;
-	Fri, 26 Sep 2025 11:52:24 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 26 Sep 2025 11:52:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758901944; x=1758988344; bh=jFk3zOO+f+
-	GD3xamexUqMCu3LEJFxCObasQ/8y9s/6o=; b=b0zPceUeu9JeEn+Ak7MSz7679S
-	T4IR/GredO1zrywGFbnfh03zrNu95xoKZIsfjmx0ARcu1wqQ1BHoz7FCnn8C5RPR
-	AdntG6U6fFkUFWhjQ4kFc4PMARcUaGVLECD9gwD9tKHaMuiIC75TDXcUFjhkrP7H
-	0NmqqQqbIaM5lmriI49KCysHK0n0gR+rSHGpyqmsNvIWEPGDAItN0LEdIlGkncwy
-	iSu0Rh1O/MmRIuDnddDaINr7/F7ybsEKWWgpVibNIURKaN2tUOWdfJwiMn3wfU0/
-	hlvBaFIYDe0csJplV4Vh32f1sSm759tdDnB/vt6+aKuBtCUg/rVt4yP5SVFg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1758901944; x=1758988344; bh=jFk3zOO+f+GD3xamexUqMCu3LEJFxCObasQ
-	/8y9s/6o=; b=cCZLQefypd5Sq3BYqRglqzGAxOEyFyXfR5d0dWpvIsqKtLkkTUG
-	4nTEwWGEKSAj0n66cJnoNpOXybMjPFuquBwcU8uxXXM3CQrPSkR+kLPhPk9KElrx
-	EO6gTW6Iz26Wm6oEjtrJqIM/0sea+suBBrkmwvV8OytzLUE0CCVWCdoArL5VHJzN
-	cDVLfiNuOHPOTxar7DFR7g5IDZL/CsnRPYSNMHR0NWxnVP2meNreCGwco1+1tsdd
-	zbwW6WtaxXWVCwnpzvd/sMRQTsa7eqlAB/0zfow+n2zVR2Tx2mQE4h9Sgr0hpvUh
-	j0lvJBnNRO/As1NXe6qsClkNprOxZ81PK1w==
-X-ME-Sender: <xms:t7bWaPtqd6A6zAj3qoZjhb8xqOnZNfqLd7bbQycYo1TDsIdbRKLHeA>
-    <xme:t7bWaB85-2vmwYBnAPk93ONk5pFbG6p345MivJreTQcqBpppw_TObK5FdUeKGd-Td
-    rto7iK-oRTp4vX0B2VEpq4d4DPoHR46dzD69kHyh_iEQDNFZqw>
-X-ME-Received: <xmr:t7bWaC3p8m6vIiJ09Tfhwn-rDLXJTIyyI3SHDuvbiv2ZNqVx7UjhgmA692rX6Tq3SYGuhMF2fhqkErlOa8smAnmgz7FWGhGz4ZnF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeileejkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeeffedtheevhefffeettdeuleejveetkedvleettdeujeejkeekgfelteekkeff
-    geenucffohhmrghinheptghhrhhomhhiuhhmrdhorhhgnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
-    mhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprh
-    grmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:t7bWaOAPZHqagVMgLXwuiofm5geA1varOelBkCUfyS2vZ2QVNPua0w>
-    <xmx:t7bWaGdKlzt6DtYPtXCZh3FygjSdhUYMqHUWmLFhwn-QCYrefQydJw>
-    <xmx:t7bWaD55qCwaL1xRKax5Pm9nE87ZFs6_Y70wfkhwpY5c7HbD526dnA>
-    <xmx:t7bWaBWulDJmN5T7epGEiP6YWfKN_ThMu1J8UrJGaqI3iANaHWNxjg>
-    <xmx:uLbWaI56PWDnwOcpbN3WMF8Thv7BP1xLFC1VuqUwdLtsF8lErdRH5oe9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 26 Sep 2025 11:52:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,
-  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [RFC PATCH 4/4] doc: commit-graph.adoc: fix up some formatting
-In-Reply-To: <875fb7a0-6dd9-412b-a34a-21758c339871@ramsayjones.plus.com>
-	(Ramsay Jones's message of "Fri, 26 Sep 2025 01:28:05 +0100")
-References: <875fb7a0-6dd9-412b-a34a-21758c339871@ramsayjones.plus.com>
-Date: Fri, 26 Sep 2025 08:52:22 -0700
-Message-ID: <xmqqfrc9citl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="bp2HA4nq"
+ARC-Seal: i=1; a=rsa-sha256; t=1758902028; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=YiS0fVcqnyAu+pJQ7eDRgE1MP6pVj5x/+UQIyv5N5wmhv11uliIdqGXjrdH90eTveNNzUSE72bVYqQpV4a+QYZ/he8Dcto59W6Jduc+HCl+A06z1+BPRZKNuFVPVh84N0M86rS1aG7hVWy+bsUHFFb3NONbTwy7aSa5XbvG2hR0=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1758902028; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=FnYozJ+ay4AMcbZ/c/DGD/xysQ5WMZMYE2C/KIxiP+E=; 
+	b=geU1vbH06bwOgR2z+3W+Pe67ciWwu5toHvrRC8J0VfDaJGcPkFJNay4jhtDEqzPiqSRNk7+3If8NHl/o0FQG5gkv+d3OsrSY3ynzEcjyfNIDGcnxDPAoMlinbYzAXcSbx5duTLTfhFxOKCyXWFfg/nKKBwGUE3BCwsru/RsJeps=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1758902028;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=FnYozJ+ay4AMcbZ/c/DGD/xysQ5WMZMYE2C/KIxiP+E=;
+	b=bp2HA4nqgGCVK1Mwwyl2KX9oAh3/ujrZKITlW+5oZgZ25JvEyuz973Ep+WQDUsv3
+	uX/h+2yM7zzPiJUX5aGz2tTCP5BHADjKVrT2tcTV2UTc8MwAAQMy48Vyxav4fQ3sc4/
+	Hd3dLmCA/LariPUtFhX2DQFY4jRkS8gyDt/1Sjro=
+Received: by mx.zohomail.com with SMTPS id 1758902025924436.3883321093648;
+	Fri, 26 Sep 2025 08:53:45 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Cc: Emily Shaffer <emilyshaffer@google.com>, Rodrigo Damazio Bovendorp
+ <rdamazio@google.com>, Junio C Hamano <gitster@pobox.com>, Patrick
+ Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>,
+ =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?=
+ Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 03/10] hook: convert 'post-rewrite' hook in sequencer.c
+ to hook.h
+In-Reply-To: <f408e46c-650a-4632-9628-cf817e393e7f@gmail.com>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20250925125352.1728840-4-adrian.ratiu@collabora.com>
+ <f408e46c-650a-4632-9628-cf817e393e7f@gmail.com>
+Date: Fri, 26 Sep 2025 18:53:41 +0300
+Message-ID: <87zfahmcqi.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-ZohoMailClient: External
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+On Fri, 26 Sep 2025, Phillip Wood <phillip.wood123@gmail.com>=20
+wrote:
+> Hi Adrian=20
+>=20
+> Thanks for working on this, it would be really good to be able=20
+> to run  hooks in parallel.=20
 
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
->  Documentation/technical/commit-graph.adoc | 34 +++++++++++------------
->  1 file changed, 16 insertions(+), 18 deletions(-)
+Hi Phillip and thank you for your feedback! It is very valuable=20
+and appreciated on all my patch series.
 
-Are these the issues?
+>=20
+> On 25/09/2025 13:53, Adrian Ratiu wrote:=20
+>> From: Emily Shaffer <emilyshaffer@google.com>  By using=20
+>> 'hook.h' for 'post-rewrite', we simplify hook invocations by=20
+>> not needing to put together our own 'struct child_process'.=20
+>=20
+> Right so instead we use the new api to feed an strbuf into the=20
+> hook's  stdin, sounds reasonable.=20
 
- - Use ={n} prefixes instead of underlines for the section headers.
+That is the high level idea yes, maybe I can improve the commit=20
+msg a bit in v2 to make it clearer (those are not actually my=20
+words :).
 
- - Use ={n} not #{n} prefixes for the section headers.
+Slightly unrelated:
 
- - A blank line between a leading text before a numbered list.
+I actually thought about putting pipe_from_strbuf() into hook.c or=20
+someplace similar because it's a generic utility function, however=20
+this is the only hook which needs it, so I've left it in=20
+sequencer.c.
+=20
+>> The signal handling that's being removed by this commit now=20
+>> takes place in run-command.h:run_processes_parallel(), so it is=20
+>> OK to remove them here.   Signed-off-by: Emily Shaffer=20
+>> <emilyshaffer@google.com> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0=20
+>> Bjarmason <avarab@gmail.com> Signed-off-by: Adrian Ratiu=20
+>> <adrian.ratiu@collabora.com> ---=20
+>>   sequencer.c | 62=20
+>>   ++++++++++++++++++++++++++++++++--------------------- 1 file=20
+>>   changed, 38 insertions(+), 24 deletions(-)=20
+>>  diff --git a/sequencer.c b/sequencer.c index=20
+>> 9ae40a91b2..93cd6ab1f2 100644 --- a/sequencer.c +++=20
+>> b/sequencer.c @@ -1298,32 +1298,46 @@ int=20
+>> update_head_with_reflog(const struct commit *old_head,=20
+>>   	return ret; }=20=20
+>> +static int pipe_from_strbuf(int hook_stdin_fd, void *pp_cb,=20
+>> void *pp_task_cb UNUSED) +{ +	struct hook_cb_data=20
+>> *hook_cb =3D pp_cb; +	struct strbuf *to_pipe =3D=20
+>> hook_cb->options->feed_pipe_ctx; +	int ret; + +	if=20
+>> (!to_pipe || !to_pipe->len) +		return 1; /*=20
+>> nothing to feed */=20
+>=20
+> Why are we running the hook if there is nothing to pass to it?=20
 
- - Mark-up of displayed materials.
+run-commands has a ppoll loop which calls the stdin feed callback=20
+(pipe_from_stdbuf in this case) repeatedly until it signals=20
+reading is finished by return 1;
 
-The majority of our pages (I think all of the manual pages) use
-underlines.  Are we getting warnings on them that we'd need to
-change?  I personally find the underlined style easier to read
-in the source text (even though I understand why people would
-prefer to use the ={n} prefix style---having to adjust the length
-of the underline is a bit more work when retitling).
+Now that I look again at this code, I made the mistake of assuming=20
+it needs to work recursively:
+    1. write the strbuf
+    2. reset the strbuf (return 0)
+    3. next callback sees the strbuf is empty and stops the loop=20
+    (return 1)
 
-The remainder of this message does not have any comment from me,
-but is left as a reference for others.
+The line you're asking asking here is actually step 3. :)
 
-> diff --git a/Documentation/technical/commit-graph.adoc b/Documentation/technical/commit-graph.adoc
-> index 2c26e95e51..15396f58ab 100644
-> --- a/Documentation/technical/commit-graph.adoc
-> +++ b/Documentation/technical/commit-graph.adoc
-> @@ -1,5 +1,4 @@
-> -Git Commit-Graph Design Notes
-> -=============================
-> += Git Commit-Graph Design Notes
->  
->  Git walks the commit graph for many reasons, including:
->  
-> @@ -39,6 +38,7 @@ A consumer may load the following info for a commit from the graph:
->  Values 1-4 satisfy the requirements of parse_commit_gently().
->  
->  There are two definitions of generation number:
-> +
->  1. Corrected committer dates (generation number v2)
->  2. Topological levels (generation number v1)
->  
-> @@ -122,8 +122,7 @@ can be stored in the commit-graph file using the 30 bits available
->  to topological levels. This presents another case where a commit can
->  have generation number equal to that of a parent.
->  
-> -Design Details
-> ---------------
-> +== Design Details
->  
->  - The commit-graph file is stored in a file named 'commit-graph' in the
->    .git/objects/info directory. This could be stored in the info directory
-> @@ -149,8 +148,7 @@ Design Details
->    helpful for these clones, anyway. The commit-graph will not be read or
->    written when shallow commits are present.
->  
-> -Commit-Graphs Chains
-> ---------------------
-> +== Commit-Graphs Chains
->  
->  Typically, repos grow with near-constant velocity (commits per day). Over time,
->  the number of commits added by a fetch operation is much smaller than the
-> @@ -158,7 +156,7 @@ number of commits in the full history. By creating a "chain" of commit-graphs,
->  we enable fast writes of new commit data without rewriting the entire commit
->  history -- at least, most of the time.
->  
-> -## File Layout
-> +=== File Layout
->  
->  A commit-graph chain uses multiple files, and we use a fixed naming convention
->  to organize these files. Each commit-graph file has a name
-> @@ -170,11 +168,11 @@ hashes for the files in order from "lowest" to "highest".
->  
->  For example, if the `commit-graph-chain` file contains the lines
->  
-> -```
-> +----
->  	{hash0}
->  	{hash1}
->  	{hash2}
-> -```
-> +----
->  
->  then the commit-graph chain looks like the following diagram:
->  
-> @@ -213,7 +211,7 @@ specifying the hashes of all files in the lower layers. In the above example,
->  `graph-{hash1}.graph` contains `{hash0}` while `graph-{hash2}.graph` contains
->  `{hash0}` and `{hash1}`.
->  
-> -## Merging commit-graph files
-> +=== Merging commit-graph files
->  
->  If we only added a new commit-graph file on every write, we would run into a
->  linear search problem through many commit-graph files.  Instead, we use a merge
-> @@ -257,14 +255,14 @@ lock-file.  When the file is flushed, we rename it to `graph-{hash3}`
->  according to the computed `{hash3}`. Finally, we write the new chain data to
->  `commit-graph-chain.lock`:
->  
-> -```
-> +----
->  	{hash3}
->  	{hash0}
-> -```
-> +----
->  
->  We then close the lock-file.
->  
-> -## Merge Strategy
-> +=== Merge Strategy
->  
->  When writing a set of commits that do not exist in the commit-graph stack of
->  height N, we default to creating a new file at level N + 1. We then decide to
-> @@ -289,7 +287,7 @@ The merge strategy values (2 for the size multiple, 64,000 for the maximum
->  number of commits) could be extracted into config settings for full
->  flexibility.
->  
-> -## Handling Mixed Generation Number Chains
-> +=== Handling Mixed Generation Number Chains
->  
->  With the introduction of generation number v2 and generation data chunk, the
->  following scenario is possible:
-> @@ -318,7 +316,7 @@ have corrected commit dates when written by compatible versions of Git. Thus,
->  rewriting split commit-graph as a single file (`--split=replace`) creates a
->  single layer with corrected commit dates.
->  
-> -## Deleting graph-{hash} files
-> +=== Deleting graph-\{hash\} files
->  
->  After a new tip file is written, some `graph-{hash}` files may no longer
->  be part of a chain. It is important to remove these files from disk, eventually.
-> @@ -333,7 +331,7 @@ files whose modified times are older than a given expiry window. This window
->  defaults to zero, but can be changed using command-line arguments or a config
->  setting.
->  
-> -## Chains across multiple object directories
-> +=== Chains across multiple object directories
->  
->  In a repo with alternates, we look for the `commit-graph-chain` file starting
->  in the local object directory and then in each alternate. The first file that
-> @@ -369,8 +367,8 @@ their custom environment:
->      access to the new chain until its chain is updated to reference those files.
->      (This may change in the future [5].)
->  
-> -Related Links
-> --------------
-> +== Related Links
-> +
->  [0] https://bugs.chromium.org/p/git/issues/detail?id=8
->      Chromium work item for: Serialized Commit Graph
+This all can be simplified by writing just once and returning 1=20
+immediately since it's just a simple strbuf to write to stdin.
+
+We still need to keep the pointer null check though, just in case.
+=20
+>> +	ret =3D write_in_full(hook_stdin_fd, to_pipe->buf,=20
+>> to_pipe->len);=20
+>=20
+> This will block until the hook has read all of the input. Unless=20
+> the  hook drains and closes stdin before it does anything else=20
+> it will block  the parallel execution of other hooks.=20
+
+I double checked the write_in_full / xwrite implementations. :)
+
+Sorry for the wall of text btw, I try to explain as best I can.
+
+I think it blocks only if/when the stdin fd pipe is full, which=20
+can't happen in this specific instance because the strbuf data is=20
+small, so the write_in_full() call just writes all it has, then=20
+returns.
+
+In other words, the most important aspect I think is how much data=20
+we are writing to the pipe in every single callback call.
+
+The idea of these callbacks is to write small chunks of data at a=20
+time, then switch context: it's usually the child hook processes=20
+which end up blocking for their stdin input which is fed by the=20
+parent which multiplexes between the parallel processes.
+
+Of course, a balance needs to be found: I've noticed, in other=20
+hooks, that if we write too small chunks of data in each callback,=20
+we unnecessarily increase wait times for hooks.
+
+This can be seen especially in hooks like post-receive which can=20
+get a lot of data: if we feed one line at a time and let's say=20
+run-command's ppoll loop adds 100ms delay between callbacks, then=20
+from 7-800 ms we end up with something like 90 seconds!
+
+Of course that is a pathological case and the solution there is to=20
+batch more data in a single callback write. I've actually batched=20
+500 lines in every write for those update hooks (we can do more or=20
+less).
+
+None of this is set in stone and can be changed. What I tried is=20
+to get similar performance with what we had before these=20
+callbacks.
+
+If you notice any specific degradation or unnecessary blocking,=20
+please raise it up and we can address it.
+=20
+>> +	if (ret < 0) { +		if (errno =3D=3D EPIPE) { +=20
+>> return 1; /* child closed pipe, nothing more to feed */ +=20
+>> }=20
+>=20
+> Style: we don't use braces for single statement bodies.=20
+
+Ack, will fix in v2.
+=20
+>> +		return ret; +	} + +	/* Reset the input buffer=20
+>> to avoid sending it again */ +	strbuf_reset(to_pipe);=20
+>=20
+> Shouldn't the return value do that?
+
+Yes, as explained above with my 1 2 3 recursive steps above we=20
+don't actually need this and the function can be simplified.
+
+I'll do that in v2.
+=20
+>> +	return ret; +}=20
+>=20
+> The changes to run_rewrite_hook() look fine. I'm not sure whats=20
+> happening in commit_post_rewrite() below though - am I missing=20
+> something  or have you just renamed "child" -> "notes_cp". If so=20
+> I don't see what  that has to do with using the new api.
+
+Thanks for spotting this!
+
+It's actually a leftover from Emily and Aevar's string_list API=20
+implementation which I've rewritten / removed and this hunk fell=20
+through the cracks. :)
+
+Will drop it in v2.
+
+>
+> Thanks
+>
+> Phillip
+>
+>>   void commit_post_rewrite(struct repository *r,
+>> @@ -5140,16 +5154,16 @@ static int pick_commits(struct repository *r,
+>>   		flush_rewritten_pending();
+>>   		if (!stat(rebase_path_rewritten_list(), &st) &&
+>>   				st.st_size > 0) {
+>> -			struct child_process child =3D CHILD_PROCESS_INIT;
+>> +			struct child_process notes_cp =3D CHILD_PROCESS_INIT;
+>>   			struct run_hooks_opt hook_opt =3D RUN_HOOKS_OPT_INIT;
+>>=20=20=20
+>> -			child.in =3D open(rebase_path_rewritten_list(), O_RDONLY);
+>> -			child.git_cmd =3D 1;
+>> -			strvec_push(&child.args, "notes");
+>> -			strvec_push(&child.args, "copy");
+>> -			strvec_push(&child.args, "--for-rewrite=3Drebase");
+>> +			notes_cp.in =3D open(rebase_path_rewritten_list(), O_RDONLY);
+>> +			notes_cp.git_cmd =3D 1;
+>> +			strvec_push(&notes_cp.args, "notes");
+>> +			strvec_push(&notes_cp.args, "copy");
+>> +			strvec_push(&notes_cp.args, "--for-rewrite=3Drebase");
+>>   			/* we don't care if this copying failed */
+>> -			run_command(&child);
+>> +			run_command(&notes_cp);
+>>=20=20=20
+>>   			hook_opt.path_to_stdin =3D rebase_path_rewritten_list();
+>>   			strvec_push(&hook_opt.args, "rebase");
