@@ -1,190 +1,176 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DABB2F7ABA
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 14:12:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758895968; cv=none; b=M211tBGRw03br1OdOK7g7tupOLtwtPDgxrvj9mT467Yl1GF/exAUGagFAeJFZmsPPxStytg98DBI7lPLlwsEhoFsKlMbtrtdZ/a28DHwkSnd1kKPjszRm9wJg0A+O5CwJA/9ND1it+nBUYZHwISYfvo+e6xHe4FSn8NAND9AReM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758895968; c=relaxed/simple;
-	bh=3sKRbFLp6qB4L/ink0nv+8qGpu5BXPclWMBqzCa/u0A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j3gygN1Oy0Z92YPbB8L4dPuRN98uXOK4EGHTYFEej1AA8sXOGbU/s2hGXXI/TGR33bHRL79ddr01HFgIrkovAUVR63kXF6iDX926dR2v0fz1OjPBB8Bk5WO8v2VHy//wW9EhXNIPH+ljmykLVkciRFWKwhjH3vJoPvePAmx6lms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MwNFmyYS; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A951E86E
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 14:14:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758896099; cv=pass; b=nhZq15Kw6VSidjHPx8l520WcFbRBiTxGHXJjwITfq6zCgeoBurrHcuCr3cSS069tRTmzzNWrw3fPIKX/To8wSfMA+Vl2EdZWrSj+UImIRte2r2jKWzngzZ1Y/5UwJf8TkMFqcGUlqu1tBEjaYFn9wojm8yXOsKta/rOelP5RKfQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758896099; c=relaxed/simple;
+	bh=+hvNPof/SilC/3lp9p5rgLsZMcuznOp0e59B6d13cfM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=D24uYUYNIwNoJHRqExRWLL+D2zHVmfGHE47x7LR1ZrUksoAr190bysKqWoYz6h9k+6fdfyy7/Xe0NyW1pa2cmAwrKCvv9HRRhbejqYVhLZiFe0LfA80YHB+8vknMPTE4Tu6p2MMxsdRFjGfGf/cEW2mZ8TKHz/vsFyAORhSb26c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=eIk5JrNM; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MwNFmyYS"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-46e1cc6299cso21559805e9.1
-        for <git@vger.kernel.org>; Fri, 26 Sep 2025 07:12:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758895965; x=1759500765; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=q+2Ewv06o/lr9Do3qc/ffreVp2vNpbBEuBf0+1YbIGU=;
-        b=MwNFmyYSnY0hEc58Bkz17j2mgOkZWmPDeofUcf2tFXAkNtHTYJSaHxZIerGsQ46QBe
-         iIVbhP67roFKDaISH9A7IN5uR5LFvoxgJ6pDfS7oEY7hlVrAQ374dd0+noXS9n7xOXW4
-         Yuy9MvmSGyl9xn8MmzNqS58t6tQ6TujqTQUiWdy0tHpegdD6wVG2aGTWtv363KINqzMH
-         Bbw2DQcV8rEqRCrBn+K6yJNxgr2nDUTBorYRB6CcNHlQNGZ2hg5T/lcsGoNjpQqrRGIa
-         RvFwRCOQmzSx9LIQ74hnz3XIsl25Z3+j6m2UIvHiV07uh6LAUnfii+cMdqly4rYS1EkO
-         PaBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758895965; x=1759500765;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=q+2Ewv06o/lr9Do3qc/ffreVp2vNpbBEuBf0+1YbIGU=;
-        b=Z/dkCvAbwYpd9RLibRPx6WbJ80eNziKNAHzv5qZoRyexuqDXMv8jjkt5u4G92+1AQC
-         ULh1BsqgpUYmnXqWcgIkYtN9Z8sc2sLaBR/1LROXQk1m3Q97lMhh05s/U3T27OoIaul0
-         r5UaEgTZySPgQv1/FBiQh860fEu5wL/OPTgNh1aYN7NeWtqAokyVz4KkthXZiBerxKmz
-         HPtgjv7eOeXIi0dzTNWEPDY/Yal0VPYWPzvV4R1Zbd7DrwGOA8vUy66WeyWFntoIjVYk
-         51A3sAoTREP5NHX0fCCZX26wODjveFOSC4edM1P3+UwfEDt6RToWo779Xp3Z//geXG7i
-         bmUg==
-X-Forwarded-Encrypted: i=1; AJvYcCVtH6wt0Kpb6SxC8OaYbuhqlZiFreUU8QiFSuE6S/UlXYTkHGPb+F1IF6WdzOqAQzmhJB0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxjkge9IuBNxTNLTCCtM04dAtD05J2QGiLrKEPQI7M13lwO6Mzm
-	OcKjksEF8LayKa8dK7XZRIlPGkwHWCAZDpidFbSWMm0rneSXDNoVjCLP
-X-Gm-Gg: ASbGncuQ1yYS1jBODeOgaK1EmWipg2E/v6Y8aLkFEDoWDMe/IyBm5LJ7e4R69TwDfTR
-	SR8k06XbeaZ7BQbJ4JynJtPJSy29TtBbIUuu6WlZu1LV1x46TlvM1iTYFaMh6GAGdxJdhIvDt0M
-	OQg6NvzZuUFmpTdSKkumlZ9uJlV+JHHXrcjVsJTUAWmuzYqX+/X9hIEnPHgMijEuTctPAQvqs6H
-	jZdOyFgdHC+b7ZVxzIKXS3iIk3k6qPUAQ70FyS2dkMfPACEdyX93kTQCnmiJsem7ZAqTPJuCUsp
-	b973uXLcEsH/Bl1ZIxKxP6rjkxUxfVjO26EboUUpVRV6+tJTfEyRy6TEdJu7Sn/S2Tr9WPmMxIA
-	iQLnG88FHt6QJMqba2qIKiCe8AsHJAIgtB9GPOdGshQ6hbHaBpMRShg0gY/W2KwfQkwXIrdIH65
-	Ylu9SaOO3ggw==
-X-Google-Smtp-Source: AGHT+IFY8sN75sCDI34k9pSfVVY5RxlrqY+2FZfSQUehCv0H+BL4PEAki3JSOZxZJq+3Xb68WBVqyg==
-X-Received: by 2002:a5d:588d:0:b0:3e9:d9bd:5043 with SMTP id ffacd0b85a97d-40e3ab8747emr6862485f8f.0.1758895964455;
-        Fri, 26 Sep 2025 07:12:44 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-40fc9247e85sm7645290f8f.60.2025.09.26.07.12.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Sep 2025 07:12:44 -0700 (PDT)
-Message-ID: <f408e46c-650a-4632-9628-cf817e393e7f@gmail.com>
-Date: Fri, 26 Sep 2025 15:12:43 +0100
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="eIk5JrNM"
+ARC-Seal: i=1; a=rsa-sha256; t=1758896085; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=NfQDM7iW9pOuSRHijkrGbwRX0+v2Nyfa9mAvPDxFUH/JRenb6l7jewUshyxmXZfSCu3Ej3K642lTu8B/681hvbHAOcAIbiqeCqe2cx3FGM30DkfiCk7I7OJFPw1VoHdnBIyyLlNbykx7UpWBRJV9vIduTRal+7UwYphIqXzLHh4=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1758896085; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=NTYuik8R3+HAf7o8Lti5J+d0DANG+fZod5gxgfpFRAY=; 
+	b=RP5h1pS6YdJ6v6kRF3a5vKis2Ayc+YYySuDIc17N9qox2QGp4U4eLAjK3au7RQa+P9ZmMSONopC9GHAB2RHjHRnRA3nwxqyzJqxU3TgZ1vMEiTVh/OeoTUoH2WBFwlPPLbheLkQHadwA77pFIeaXANm5EDyv/DIXZCG+rJu/2ak=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1758896085;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=NTYuik8R3+HAf7o8Lti5J+d0DANG+fZod5gxgfpFRAY=;
+	b=eIk5JrNMIJaLgCnkFkL1oskkpUZvEoB2SHljXij6S6b6OwYjI8WQoV6hs1AM3ANI
+	XN4+wpc5DGgjcq6m01GLvbBDa9qI5EfW0DqqaLGnvD3cw/RC05m2isLsbaiKatix5gn
+	zCKFKw7ZI3n3RFIW/r2IdJBwZCrlEVhKYNuQ3GAc=
+Received: by mx.zohomail.com with SMTPS id 1758896083458329.38615303546567;
+	Fri, 26 Sep 2025 07:14:43 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Patrick Steinhardt <ps@pks.im>,
+ Josh Steadmon <steadmon@google.com>, =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?=
+ Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 06/10] run-command: allow capturing of collated output
+In-Reply-To: <xmqqplbedwtg.fsf@gitster.g>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20250925125352.1728840-7-adrian.ratiu@collabora.com>
+ <xmqqplbedwtg.fsf@gitster.g>
+Date: Fri, 26 Sep 2025 17:14:39 +0300
+Message-ID: <873489nvw0.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 03/10] hook: convert 'post-rewrite' hook in sequencer.c to
- hook.h
-To: Adrian Ratiu <adrian.ratiu@collabora.com>, git@vger.kernel.org
-Cc: Emily Shaffer <emilyshaffer@google.com>,
- Rodrigo Damazio Bovendorp <rdamazio@google.com>,
- Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
- Josh Steadmon <steadmon@google.com>,
- =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
- <20250925125352.1728840-4-adrian.ratiu@collabora.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20250925125352.1728840-4-adrian.ratiu@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; format=flowed
+X-ZohoMailClient: External
 
-Hi Adrian
-
-Thanks for working on this, it would be really good to be able to run 
-hooks in parallel.
-
-On 25/09/2025 13:53, Adrian Ratiu wrote:
-> From: Emily Shaffer <emilyshaffer@google.com>
+On Thu, 25 Sep 2025, Junio C Hamano <gitster@pobox.com> wrote: 
+>> diff --git a/builtin/fetch.c b/builtin/fetch.c index 
+>> 24645c4653..53bd5552c4 100644 --- a/builtin/fetch.c +++ 
+>> b/builtin/fetch.c @@ -2129,7 +2129,7 @@ static int 
+>> fetch_multiple(struct string_list *list, int max_children, 
+>>   if (max_children != 1 && list->nr != 1) { struct 
+>>  parallel_fetch_state state = { argv.v, list, 0, 0, config }; 
+>> -		const struct run_process_parallel_opts opts = { + 
+>> struct run_process_parallel_opts opts = { 
+>>  			.tr2_category = "fetch", .tr2_label = 
+>>  "parallel/fetch", 
 > 
-> By using 'hook.h' for 'post-rewrite', we simplify hook invocations by
-> not needing to put together our own 'struct child_process'.
-
-Right so instead we use the new api to feed an strbuf into the hook's 
-stdin, sounds reasonable.
-
-> The signal handling that's being removed by this commit now takes
-> place in run-command.h:run_processes_parallel(), so it is OK to remove
-> them here.
+> This ... 
 > 
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
-> ---
->   sequencer.c | 62 ++++++++++++++++++++++++++++++++---------------------
->   1 file changed, 38 insertions(+), 24 deletions(-)
+>> diff --git a/builtin/submodule--helper.c 
+>> b/builtin/submodule--helper.c index 07a1935cbe..76cae9f015 
+>> 100644 --- a/builtin/submodule--helper.c +++ 
+>> b/builtin/submodule--helper.c @@ -2700,7 +2700,7 @@ static int 
+>> update_submodules(struct update_data *update_data) 
+>>  { int i, ret = 0; struct submodule_update_clone suc = 
+>>  SUBMODULE_UPDATE_CLONE_INIT; 
+>> -	const struct run_process_parallel_opts opts = { + 
+>> struct run_process_parallel_opts opts = { 
+>>  		.tr2_category = "submodule", .tr2_label = 
+>>  "parallel/update", 
 > 
-> diff --git a/sequencer.c b/sequencer.c
-> index 9ae40a91b2..93cd6ab1f2 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -1298,32 +1298,46 @@ int update_head_with_reflog(const struct commit *old_head,
->   	return ret;
->   }
->   
-> +static int pipe_from_strbuf(int hook_stdin_fd, void *pp_cb, void *pp_task_cb UNUSED)
-> +{
-> +	struct hook_cb_data *hook_cb = pp_cb;
-> +	struct strbuf *to_pipe = hook_cb->options->feed_pipe_ctx;
-> +	int ret;
-> +
-> +	if (!to_pipe || !to_pipe->len)
-> +		return 1; /* nothing to feed */
+> ... and this ... 
+> 
+>>   
+>> diff --git a/hook.c b/hook.c index 54568d5bc0..199c210b97 
+>> 100644 --- a/hook.c +++ b/hook.c @@ -135,7 +135,7 @@ int 
+>> run_hooks_opt(struct repository *r, const char *hook_name, 
+>>  	}; const char *const hook_path = find_hook(r, hook_name); 
+>>  int ret = 0; 
+>> -	const struct run_process_parallel_opts opts = { + 
+>> struct run_process_parallel_opts opts = { 
+>>  		.tr2_category = "hook", .tr2_label = hook_name, 
+> 
+> ... and this are curious changes that are not explained in the 
+> proposed log message. 
 
-Why are we running the hook if there is nothing to pass to it?
+Yes and sorry for not explaining these better. The only reason I 
+had to remove the const is to be able to set opts->ungroup = 0 
+below.
 
-> +	ret = write_in_full(hook_stdin_fd, to_pipe->buf, to_pipe->len);
+If I can find a way to do what you propose, then 100% I will drop 
+all these hunks. I agree that is the best way forward in v2.
 
-This will block until the hook has read all of the input. Unless the 
-hook drains and closes stdin before it does anything else it will block 
-the parallel execution of other hooks.
+> 
+>> @@ -1841,6 +1852,10 @@ void run_processes_parallel(const struct 
+>> run_process_parallel_opts *opts) 
+>>  					   "max:%"PRIuMAX, 
+>>  (uintmax_t)opts->processes);  
+>> +	/* ungroup and reading sideband are mutualy exclusive, so 
+>> disable ungroup */ +	If (opts->ungroup && 
+>> opts->consume_sideband) +		opts->ungroup = 0; 
+> 
+> Make it a BUG(""), which may help avoid unintended bugs, 
+> especially ... 
 
-> +	if (ret < 0) {
-> +		if (errno == EPIPE) {
-> +			return 1; /* child closed pipe, nothing more to feed */
-> +		}
+I did exactly this and got test failures because some tests end up 
+setting both ungroup and consume_sideband. Since the original code 
+I got from Emily and Aevar just defaulted to setting ungroup = 0 
+and removing the const I went with that instead of actually fixing 
+the tests, assuming the tests actually need to do that. :)
 
-Style: we don't use braces for single statement bodies.
+Now I know better and for v2 I will fix the tests and add a BUG() 
+here, with proper reasoning for the test modification.
 
-> +		return ret;
-> +	}
-> +
-> +	/* Reset the input buffer to avoid sending it again */
-> +	strbuf_reset(to_pipe);
+An example of test which fails because it sets both is:
+t1416-ref-transaction-hooks.sh
+not ok 7 - interleaving hook calls succeed
+ 
+>> diff --git a/run-command.h b/run-command.h index 
+>> 4679987c8e..ad0bab14b0 100644 --- a/run-command.h +++ 
+>> b/run-command.h @@ -436,6 +436,20 @@ typedef int 
+>> (*feed_pipe_fn)(int child_in, 
+>>  				void *pp_cb, void *pp_task_cb);  
+>> +/** + * If this callback is provided, instead of collating 
+>> process output to stderr, + * they will be collated into a new 
+>> pipe. consume_sideband_fn will be called + * repeatedly. When 
+>> output is available on that pipe, it will be contained in + * 
+>> 'output'. But it will be called with an empty 'output' too, to 
+>> allow for + * keepalives or similar operations if necessary.  + 
+>> * + * pp_cb is the callback cookie as passed into 
+>> run_processes_parallel.  + * + * Since this callback is 
+>> provided with the collated output, no task cookie is + * 
+>> provided.  + */ +typedef void (*consume_sideband_fn)(struct 
+>> strbuf *output, void *pp_cb); + 
+>>  /** 
+>>   * This callback is called on every child process that 
+>>   finished processing.  * 
+>> @@ -495,6 +509,12 @@ struct run_process_parallel_opts 
+>>  	 */ feed_pipe_fn feed_pipe;  
+>> +	/* +	 * consume_sideband: see consume_sideband_fn() 
+>> above. This can be NULL +	 * to omit any special handling. 
+>> +	 */ +	consume_sideband_fn consume_sideband; 
+> 
+> ... because which one between this and ungroup gets precedence. 
+> Document that they are mutually exclusive, and help the callers 
+> with a BUG("") message when both are set.
 
-Shouldn't the return value do that?
-> +	return ret;
-> +}
+Agreed, will do in v2.
+ 
+> 
+>> @@ -529,7 +549,7 @@ struct run_process_parallel_opts 
+>>   * emitting their own output, including dealing with any race 
+>>   * conditions due to writing in parallel to stdout and stderr. 
+>>   */ 
+>> -void run_processes_parallel(const struct 
+>> run_process_parallel_opts *opts); +void 
+>> run_processes_parallel(struct run_process_parallel_opts *opts); 
+> 
+> This is the same unexplained curiousity I touched earlier. 
 
-The changes to run_rewrite_hook() look fine. I'm not sure whats 
-happening in commit_post_rewrite() below though - am I missing something 
-or have you just renamed "child" -> "notes_cp". If so I don't see what 
-that has to do with using the new api.
-
-Thanks
-
-Phillip
-
->   void commit_post_rewrite(struct repository *r,
-> @@ -5140,16 +5154,16 @@ static int pick_commits(struct repository *r,
->   		flush_rewritten_pending();
->   		if (!stat(rebase_path_rewritten_list(), &st) &&
->   				st.st_size > 0) {
-> -			struct child_process child = CHILD_PROCESS_INIT;
-> +			struct child_process notes_cp = CHILD_PROCESS_INIT;
->   			struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
->   
-> -			child.in = open(rebase_path_rewritten_list(), O_RDONLY);
-> -			child.git_cmd = 1;
-> -			strvec_push(&child.args, "notes");
-> -			strvec_push(&child.args, "copy");
-> -			strvec_push(&child.args, "--for-rewrite=rebase");
-> +			notes_cp.in = open(rebase_path_rewritten_list(), O_RDONLY);
-> +			notes_cp.git_cmd = 1;
-> +			strvec_push(&notes_cp.args, "notes");
-> +			strvec_push(&notes_cp.args, "copy");
-> +			strvec_push(&notes_cp.args, "--for-rewrite=rebase");
->   			/* we don't care if this copying failed */
-> -			run_command(&child);
-> +			run_command(&notes_cp);
->   
->   			hook_opt.path_to_stdin = rebase_path_rewritten_list();
->   			strvec_push(&hook_opt.args, "rebase");
-
+Yes, I promise I'll drop all these in v2.
