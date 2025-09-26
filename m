@@ -1,131 +1,90 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5A934BA4D
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 17:40:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655B134BA4D
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 17:41:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758908445; cv=none; b=aQz3KancwqL0x/5lsUGCryVEHK7+V19BB1cIiYCzS0A1ptggw8sveEvjLRohT8RoKPeADJEkuMDXlNl5dG03uifhDfTeC2K6eG+8E6Lvd8Rd28WLPAjjep0sFXgXDTeOGiE2mpAo5Cn04F8kOdmBYH/v0xrKCmVw98LWaegSYBY=
+	t=1758908479; cv=none; b=ELKBnFGEMXZbuxrbxliMXaKzF5EskkY0QJf19ElqrCeZCs+C5wT7FfuebQsF29txMR6hIucKErLsP9D2QXCH+yPIINVCj1vt393i5O2kCR+4rwPk+/fwCJyZQrX+C9mWpnxiRDZptSQ1zFMEw5xClYCyY+24mch97RzuYDs2NDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758908445; c=relaxed/simple;
-	bh=//C1yx94asv6+4oXJETLNJrlWlwHegiag1e0B4bXL6I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QJeaHIBt3KYL/QBcNkQen1+L7RAu6xWb1w5JGLQzHmiDZL14BbGpjez/iIOUnmW3lSfECvEWH0L+hEPVKMT1Qzk3fkkL8DlXOGvev6HDNBC99Cvl42fWuXUuEoR/of8uKUSCuOTxMV4Q1QVDE6MxGt4v2h6ILLUgPu8PiNR64Lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gmEQz67/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kmkzc2Wq; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gmEQz67/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kmkzc2Wq"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 724DE7A0041;
-	Fri, 26 Sep 2025 13:40:42 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 26 Sep 2025 13:40:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758908442; x=1758994842; bh=QcJihtF++8
-	lv1amX0cF4qS3/rNDVgOR7glCtOXjz2vk=; b=gmEQz67/cUmNIzSTo4fXQOUtub
-	DL5zvqhN3RywXrtGHfxMuUEMbLXv69htscelGJoZcIclO4rUE5so8d2s5o/Nowxp
-	5uVBcXv5qOmDWrVYtZxfyivNLhlZ+B6AMhZ+UXTU0YV1QLL9UvMQjEzCXqTwGsDX
-	vCpW7HQRG7qMgeplruhQQRZ1EU+CuptIEIg7UDM/UowGH0GLbcCL9BP5X0Yvl3D1
-	YOlzSby+5GAsiNpVhZrqgEwYBJiF4W5OPvAARiWjeAsRvGybaQtot4n6ngp/oJwh
-	FS4eKTjZprGnWmBQ/6KQXsGpipBoeAKnDL2m3WhHWMefs53QWV4ErmjyN4nA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1758908442; x=1758994842; bh=QcJihtF++8lv1amX0cF4qS3/rNDVgOR7glC
-	tOXjz2vk=; b=kmkzc2WqRcCUv62fQeJAn83rr4YnvUhD2J8rMyAm2yLuuzloPiD
-	LHDiBB7645TCeA8OIMZwpiILVW2u6zxECHH6BMjgPPHBd0Rjhyj32uKnCoQ/y1mQ
-	pezIm/E898vbh/71n5KwFZRBVT0Dqb2AT5YAe5l+QpwXer1WSJej34ifiplUMn6N
-	h9NqupapgZEOY4eQScjK21skdxcvB5BXF+BuFIZyw3Em9RsLV3MwuUeQNalFgPr9
-	Qbis1brX61IdIq5A+dIuR8XicloEWEWhR+lYe8j6qFjvxlnzTbaDCiIo9XZWfdsu
-	cG9xoK+FpKS2l3HRRdbpoBjwUiQ1NtpTQNQ==
-X-ME-Sender: <xms:GtDWaK3crPEoyeedJcl3JdvUISN55Vuq5gr0YxdlsHKILMZ2gVQ3vA>
-    <xme:GtDWaEEkiA2NfXKuiowYCd2BcMbMj7KpC5gEKF4ND02xxHva8zVHmAXbf4QY-7wAb
-    0FcrOZwoJu8pdS7KXU4GwTw69nDBbGYXIo8f7nwbguESHMa8I34jw>
-X-ME-Received: <xmr:GtDWaH7jX0shcPZmdofhG3qiGuX8dAy8Yu1ytQ2TajvsioWSYUG-2SlUE3fNKYrIjc7EB-_tz5Z2wQNxj0iUaK7rHPXP4IX_7H_->
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeileellecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpedukefguefhhfetffeijedthfdvieevgeefteekteffhefhjeeivdevtdeghfdv
-    keenucffohhmrghinhepghhithhhuhgsrdgtohhmpdgrhhhhohhkrdhnohifnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhes
-    phhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpd
-    hrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnh
-    gvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:GtDWaKsefxP3RCCnQwMaq6dfn7rXK23UYFLaXwlC7wgRHVoiLTR7NA>
-    <xmx:GtDWaI7mkr8ziKg2KMFKl656i5V4_SGsKCjg2qV2a2X1AfNx8H9hTA>
-    <xmx:GtDWaFUMLoqLfVb1dXFz4_IcRX93xP03X4uNdMowNh787Sb4vqWdpg>
-    <xmx:GtDWaK-x9tBl6yg4k-xlfpjU2CPXYoUPcaRNJJ4A4UVhIZR5mxqY9Q>
-    <xmx:GtDWaFTn4BDYk9KuWt2ywJ8r7-ZJWyGpjkZmOjZLDPmBUkerbDOMkm51>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 26 Sep 2025 13:40:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 0/3] Fix curl_easy_setopt() parameter type problem,
- again
-In-Reply-To: <pull.1974.v2.git.1758882772.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Fri, 26 Sep 2025 10:32:49
-	+0000")
-References: <pull.1974.git.1758457356.gitgitgadget@gmail.com>
-	<pull.1974.v2.git.1758882772.gitgitgadget@gmail.com>
-Date: Fri, 26 Sep 2025 10:40:40 -0700
-Message-ID: <xmqqo6qxaz8n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1758908479; c=relaxed/simple;
+	bh=lFOp5gRGDkVkpuuX3bp5/BTJJ2frNO54LFjElH90FlU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=a5+sgso4zBYyOLO4T1u1G+0qAwKOQjGRD2zGyO5gcWbj+Z1kjzewvUN3RdC5ZZpr4yisVLbW/J8M0zJqchje/7fqwwG/bNyRZhIIP7OiUM6SIDGizNO8xp344gnN1Axah+xQGb+fiyrh2HpI2j1u9CaBvsmdkjJsi8F7IurqZLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-79523f3f925so3434796d6.1
+        for <git@vger.kernel.org>; Fri, 26 Sep 2025 10:41:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758908476; x=1759513276;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3MXMGF/sqy1hL8B0CVPsnJ+VJJ/5tsYNzkGtQqYPz2w=;
+        b=wMaz4AhS+cF9XBZ6j7BrByxE21HF+acSLx8DfjcORCl/lJOj/FhKTse6Tls8x6aKXs
+         Z8KPK2TAKx8pzMYDZxKmIHxLBL5Rc4pykfeN+7pFIe410pja1P+2+vyEbjElabEMpc4g
+         59z/jE83iUTQU2FB04dZMH6O8H3WEKLa4V5f0B2+VRaCQZEUosh2ZK4hkYrYCMzKRRDM
+         2i+BtrYWNpa+hWdoksvexJg2iQQTOBnxLfgX5sWjRZR+EmQakbB5avRBx6Cpp4QZ//3J
+         wpHwRBKLN4dyeRll++pk0XiuYfRj6zwj9ARCx7Zl8J99cNGGdNsITl53gMfGVzYfFOSF
+         HXwg==
+X-Forwarded-Encrypted: i=1; AJvYcCXnkcjGiyOrQFJvMypWFGhcEJgD37mWxJ4gY1aJ7as0oqTACBMPHi/jEWWKCdKh5kaHEAM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw+GnXNwJNcCfWmyjtAiADDJfQLV/Oco1vz4wn5x38sxkS4T7hr
+	8uT3rdseVO6tr+t0ZNsqeubzBDTdLBTZLo3i/iN/wsDQEayDF5JGcDr03z+oI9nqIuUPPMpCX+c
+	LLhGjintQoZdeLTpw/NhgiNBItVv9crw=
+X-Gm-Gg: ASbGncvv2sCozFJPY+uT21JHaXwI8cx5NYFIacLNfTgwXJ0kPSPcO6x4yBIrfzZxEo8
+	+NUKsj+ngzcsnvEpWJvpdGzi/izdP9PKDqGlDriXY94oJwA9cBo5GcHUKhCInJQe2h0TGVfHFbi
+	gKmsZDWaeJ/MAOo4dy5BwJpy20h1U0sbCvhnzhGzPNf3ik2TYTw5De4CAcPspYzPL+dIOs8SIus
+	IGt/g==
+X-Google-Smtp-Source: AGHT+IHTlXUKcBOmhX3XRjlmX4qwnHwzqSjfNdgHOdsrse8RUwvhvcNfWIaazeli6ZKutzsmamcHpkXsjt9GvNJ56CI=
+X-Received: by 2002:a05:6214:2a4e:b0:794:3dd3:a98f with SMTP id
+ 6a1803df08f44-7fc2678d689mr78457526d6.1.1758908476109; Fri, 26 Sep 2025
+ 10:41:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <5cbb5c0a-4c51-4d15-816d-6d7d4fdf4fe1@gmail.com>
+ <1f78a660-3c1b-7aea-5b3e-945ec2b1ad80@gmx.de> <f3a051ef-328c-4778-9c78-33d52d273479@gmail.com>
+In-Reply-To: <f3a051ef-328c-4778-9c78-33d52d273479@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 26 Sep 2025 13:41:05 -0400
+X-Gm-Features: AS18NWCZHWSL3UB0Ru3B5PosFF2UeYzOD8GgesI7y1ApRxL3NE029XttGyfi9R8
+Message-ID: <CAPig+cTOeCWGeNHvnBK8v2UyAV2DRs8QW7DMHGkfRHW3vSTgQA@mail.gmail.com>
+Subject: Re: git merge --no-ff failure
+To: Nikolay.Shustov@gmail.com
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
-
-> As of last week, every CI build of Git for Windows' ARM64 flavor of its SDK
-> started failing (the first failed build is this here:
-> https://github.com/git-for-windows/git-sdk-arm64/actions/runs/17633130672/job/50104373185).
-> ..
-> For the record, these patches apply cleanly all the way back to v2.22,
-> according to git replay. I did not try to test whether it builds, though,
-> because all kinds of stunts are required nowadays to build this old versions
-> even without any patches on top.
-> Range-diff vs v1:
+On Fri, Sep 26, 2025 at 10:03=E2=80=AFAM Nikolay Shustov
+<nikolay.shustov@gmail.com> wrote:
+> Now thinking about it, the only quirk I that I did not mention was:
+> Our p4 depot, unfortunately, has some files which names end with dot
+> (.). E.g. "/somehing/blah."
+> Naturally, (a known thing) git p4 on Windows created "/somehing/blah"
+> for it and then showed  "/something/blah." removed and "/somehing/blah"
+> as untracked. I renamed "/somehing/blah" to "/somehing/blah." manually
+> to calm down its double personality :-)
+> (BTW, I think git on Windows could be doing a better job about such files=
+)
 >
->  1:  7caaec9102 ! 1:  114eb9c8ec http: offer to cast `size_t` to `curl_off_t` safely
->      @@ Commit message
->           naming convention of the helper functions that safely cast from one data
->           type to another which has been well established in `git-compat-util.h`.
->       
->      -    With this move, the error message can unfortunately no longer be renamed
->      -    because the `_(...)` function is not available at the time of
->      -    definition.
->      +    With this move, `gettext.h` must be `#include`d in `http.h` to allow the
->      +    error message to remain translatable.
+> But the other git p4 repo I created from another p4 depot, where merge
+> --no-ff works fine, does not have such files.
+> This is the only thing I could think about may be a bit... unusual.
+>
+> I can try to experiment with that if you think this could be relevant.
 
-Ahh, OK.  Now I understand that's what you meant.
+That's almost certainly the issue. Microsoft documentation[*] does state:
 
->  2:  e1d5a85f70 ! 2:  fdd1327e7b imap-send: be more careful when casting to `curl_off_t`
->      @@ Commit message
->           imap-send: be more careful when casting to `curl_off_t`
->       
->           When casting a `size_t` to `curl_off_t`, there is a currently uncommon
->      -    chance that the value can be cut off (`curl_off_t` is supposed to be
->      -    guaranteed to be 64-bit).
->      +    chance that the value can be cut off (`curl_off_t` is expected to be a
->      +    signed 64-bit data type).
+    Do not end a file or directory name with a space or a period.
+    Although the underlying file system may support such names, the
+    Windows shell and user interface does not.
 
-Will replace.  Let me mark the topic for 'next'.
+And, indeed, functions such as open(), fopen(), etc. which Git calls
+return an error on Windows when presented with a filename which ends
+in a period.
 
-Thanks.
+[*]: https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
