@@ -1,176 +1,163 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A951E86E
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 14:14:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758896099; cv=pass; b=nhZq15Kw6VSidjHPx8l520WcFbRBiTxGHXJjwITfq6zCgeoBurrHcuCr3cSS069tRTmzzNWrw3fPIKX/To8wSfMA+Vl2EdZWrSj+UImIRte2r2jKWzngzZ1Y/5UwJf8TkMFqcGUlqu1tBEjaYFn9wojm8yXOsKta/rOelP5RKfQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758896099; c=relaxed/simple;
-	bh=+hvNPof/SilC/3lp9p5rgLsZMcuznOp0e59B6d13cfM=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1001F4192
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 15:29:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758900567; cv=none; b=Viqdh8cX1049MMh8cm23586yGQ3jyNW7n83a6Ha1RxcidtZmJMiC9/5OTgJUvL3Ma2MkPVtfyZMy5CTaZlgEu6VoN8CFqva/GmDtwvL7nfMhAe/kB1zJx47IMrgHhjpMJUkQ6d0L+mlXrtk8QG8l/0SQHnJGiZS7NWatOW/HKbI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758900567; c=relaxed/simple;
+	bh=It8Myx60AN+Xz17Lp24ie1itqKxWFLK4Qz+NaBs+ORg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=D24uYUYNIwNoJHRqExRWLL+D2zHVmfGHE47x7LR1ZrUksoAr190bysKqWoYz6h9k+6fdfyy7/Xe0NyW1pa2cmAwrKCvv9HRRhbejqYVhLZiFe0LfA80YHB+8vknMPTE4Tu6p2MMxsdRFjGfGf/cEW2mZ8TKHz/vsFyAORhSb26c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=eIk5JrNM; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	 MIME-Version:Content-Type; b=TSBoYtZMftoxGvIbk5FCUMk6Q5zgf2Aht8feCjtxKPffKELrnMl1yivo+5QiC6C/faT1EwUB2TGe6R6dCTRVN9KYV31UXvdlw11lPMAvW/2sx6gt0b+dLImbZdXPubmlQKflc2hdutq8l5TR+5FVZQT7D7hwdvOzS9mmvZjTsOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KzLB9Njs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uXjH1BRd; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="eIk5JrNM"
-ARC-Seal: i=1; a=rsa-sha256; t=1758896085; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=NfQDM7iW9pOuSRHijkrGbwRX0+v2Nyfa9mAvPDxFUH/JRenb6l7jewUshyxmXZfSCu3Ej3K642lTu8B/681hvbHAOcAIbiqeCqe2cx3FGM30DkfiCk7I7OJFPw1VoHdnBIyyLlNbykx7UpWBRJV9vIduTRal+7UwYphIqXzLHh4=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1758896085; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=NTYuik8R3+HAf7o8Lti5J+d0DANG+fZod5gxgfpFRAY=; 
-	b=RP5h1pS6YdJ6v6kRF3a5vKis2Ayc+YYySuDIc17N9qox2QGp4U4eLAjK3au7RQa+P9ZmMSONopC9GHAB2RHjHRnRA3nwxqyzJqxU3TgZ1vMEiTVh/OeoTUoH2WBFwlPPLbheLkQHadwA77pFIeaXANm5EDyv/DIXZCG+rJu/2ak=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1758896085;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=NTYuik8R3+HAf7o8Lti5J+d0DANG+fZod5gxgfpFRAY=;
-	b=eIk5JrNMIJaLgCnkFkL1oskkpUZvEoB2SHljXij6S6b6OwYjI8WQoV6hs1AM3ANI
-	XN4+wpc5DGgjcq6m01GLvbBDa9qI5EfW0DqqaLGnvD3cw/RC05m2isLsbaiKatix5gn
-	zCKFKw7ZI3n3RFIW/r2IdJBwZCrlEVhKYNuQ3GAc=
-Received: by mx.zohomail.com with SMTPS id 1758896083458329.38615303546567;
-	Fri, 26 Sep 2025 07:14:43 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
- Damazio Bovendorp <rdamazio@google.com>, Patrick Steinhardt <ps@pks.im>,
- Josh Steadmon <steadmon@google.com>, =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?=
- Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 06/10] run-command: allow capturing of collated output
-In-Reply-To: <xmqqplbedwtg.fsf@gitster.g>
-References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
- <20250925125352.1728840-7-adrian.ratiu@collabora.com>
- <xmqqplbedwtg.fsf@gitster.g>
-Date: Fri, 26 Sep 2025 17:14:39 +0300
-Message-ID: <873489nvw0.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KzLB9Njs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uXjH1BRd"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D8AF07A016D;
+	Fri, 26 Sep 2025 11:29:23 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Fri, 26 Sep 2025 11:29:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1758900563; x=1758986963; bh=vUINAaJZGi
+	V2DzUmzZNB/Aj7zj2kmabPCRIsH2Qq4eU=; b=KzLB9NjsK3IN3rmTPLkOkzsJBQ
+	TUcH0ekTjcLrWUt5S4vLfFRcmZfLEgYgOCk7UqdABq05m84++Y43ceQvAyepDVAN
+	X79hJn3O7eP+k3Lr3nRImi5rh1uL4NUdRjQs+PykUzTWEIyPDKSWS6QFn6526+GZ
+	ZadVP1gAvWE03ghkohJvQzBqc3XcSvkX6I+8kQq+SNLrxR+3ruvXwr4D8eE4WBSA
+	+cfi95xugO4buKZU5G5nRU9CSAAEMHTP9tG8sXg3Cu4b7dW3IFgwPfnV+LSLH9ml
+	3QG5yvgtk1TGLl4FlPgsEyiF5QX2nBZBcqr9Of4pd+Ul1CPRup/4NDguHqCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1758900563; x=1758986963; bh=vUINAaJZGiV2DzUmzZNB/Aj7zj2kmabPCRI
+	sH2Qq4eU=; b=uXjH1BRdd7OJK3HHZnHpKxarPLjEcO/ZdLp+q26nS8mjQumdCwR
+	2wb7hO8AMVhMmaU31Q+Gm3A8TDYCGMGY5VV/wFjJLGMC22WK+BeSnAHgn6oWLhuu
+	qPQDNcSViOKdEHfSF418E9ICMxL+ehcKcpP90zswjT28ThWMUfWO3lbmZ/q+hpfQ
+	d/ry4itDnphlLhc2vX7QcEBnuVn53kHlgt26w84j4qAISW5GSGMaH7Nw/FX2KpOt
+	d11/r1StJieiBqB4f9qaO3gGmrXQG+RlDLWpBldEB47nWM7+Jsxh96cqxjnYVh1a
+	+hNSDedKJXlBCAmGMSd20Mhs9DGTQQvNwSQ==
+X-ME-Sender: <xms:U7HWaEecULkXHW74PUjSIgi3efsEl70PX92J9RNJfL_WEUqst_SWzw>
+    <xme:U7HWaJ6Vn-5yYCZfB2Zap20JVfuzVhPGXPUD_5ji35SB9auIBtfzUU0TpyaBV6yiY
+    qXkypF6I4cSMSc3N21a80t4d2iHPPdzybHsNtvABaYY0AzAbPA>
+X-ME-Received: <xmr:U7HWaPUCyjSrJT4nuAESmncJZRyiOo7Rb7BQvD8mHf1PtpNY9zXshhsTsODclbM68BQkvt9xlaSNNjooqoD1dxszVyNSyHdCl53G>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeileejfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeetgefhffduueejfefhhfdttedtfeffheeilefhudegvdffhfelfeffleeggeel
+    ffenucffohhmrghinhepuggvfhgruhhlthdrrghsnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhulh
+    hirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhr
+    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:U7HWaA7QdAwpmHpPDZbJrI9_82BPeMBpHsKHI8QiwmIXeO_-KI3Wwg>
+    <xmx:U7HWaCr5BphoFy2fK9LtGN9CH_N0SK06o8lODfnzrx8Dlm5HnksZFA>
+    <xmx:U7HWaLnxu6x6x1qrNl_UVBwnGqdgcd6_-UNQDldqK3J304ZrzIHWJQ>
+    <xmx:U7HWaGOYxrk1h-U8YEIJMxdWmgIlpiE9AW7-SsPIb7gf-Q4Fs7UxoQ>
+    <xmx:U7HWaND1aTas-rnM2G_wF5RSNpx6aIUxniqd4QfFeRYgR9PvSZIPHmgI>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 26 Sep 2025 11:29:23 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "D. Ben
+ Knoble" <ben.knoble@gmail.com>,  "Kristoffer Haugsbakk"
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v3 4/4] doc: git-push: clarify "what to push"
+In-Reply-To: <xmqq348admuo.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	25 Sep 2025 18:27:43 -0700")
+References: <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
+	<pull.1964.v3.git.1758649472.gitgitgadget@gmail.com>
+	<be6453d010bdc9d2b49988d6841dd7e7f9bdf1f8.1758649472.git.gitgitgadget@gmail.com>
+	<xmqqqzvvk4bj.fsf@gitster.g>
+	<2365a7b9-3d22-4406-876d-65822822655f@app.fastmail.com>
+	<xmqqzfaidyil.fsf@gitster.g>
+	<1422594f-b0a8-4a7a-bf78-940693757224@app.fastmail.com>
+	<xmqq348admuo.fsf@gitster.g>
+Date: Fri, 26 Sep 2025 08:29:21 -0700
+Message-ID: <xmqqwm5lcjvy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed
-X-ZohoMailClient: External
+Content-Type: text/plain
 
-On Thu, 25 Sep 2025, Junio C Hamano <gitster@pobox.com> wrote: 
->> diff --git a/builtin/fetch.c b/builtin/fetch.c index 
->> 24645c4653..53bd5552c4 100644 --- a/builtin/fetch.c +++ 
->> b/builtin/fetch.c @@ -2129,7 +2129,7 @@ static int 
->> fetch_multiple(struct string_list *list, int max_children, 
->>   if (max_children != 1 && list->nr != 1) { struct 
->>  parallel_fetch_state state = { argv.v, list, 0, 0, config }; 
->> -		const struct run_process_parallel_opts opts = { + 
->> struct run_process_parallel_opts opts = { 
->>  			.tr2_category = "fetch", .tr2_label = 
->>  "parallel/fetch", 
-> 
-> This ... 
-> 
->> diff --git a/builtin/submodule--helper.c 
->> b/builtin/submodule--helper.c index 07a1935cbe..76cae9f015 
->> 100644 --- a/builtin/submodule--helper.c +++ 
->> b/builtin/submodule--helper.c @@ -2700,7 +2700,7 @@ static int 
->> update_submodules(struct update_data *update_data) 
->>  { int i, ret = 0; struct submodule_update_clone suc = 
->>  SUBMODULE_UPDATE_CLONE_INIT; 
->> -	const struct run_process_parallel_opts opts = { + 
->> struct run_process_parallel_opts opts = { 
->>  		.tr2_category = "submodule", .tr2_label = 
->>  "parallel/update", 
-> 
-> ... and this ... 
-> 
->>   
->> diff --git a/hook.c b/hook.c index 54568d5bc0..199c210b97 
->> 100644 --- a/hook.c +++ b/hook.c @@ -135,7 +135,7 @@ int 
->> run_hooks_opt(struct repository *r, const char *hook_name, 
->>  	}; const char *const hook_path = find_hook(r, hook_name); 
->>  int ret = 0; 
->> -	const struct run_process_parallel_opts opts = { + 
->> struct run_process_parallel_opts opts = { 
->>  		.tr2_category = "hook", .tr2_label = hook_name, 
-> 
-> ... and this are curious changes that are not explained in the 
-> proposed log message. 
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yes and sorry for not explaining these better. The only reason I 
-had to remove the const is to be able to set opts->ungroup = 0 
-below.
+>> But I'm not sure it's true in this case: we just said above that
+>> "The default is `push.default=simple`, which will push to a branch with
+>> the same name as the current branch."
+>
+> So I think this simplified statement is what causes confusion.  It
+> says push.default=simple will push to such and such place, but that
+> is not true....
 
-If I can find a way to do what you propose, then 100% I will drop 
-all these hunks. I agree that is the best way forward in v2.
+After sleeping on this, I do think that at the crux of confusing
+wording in the current draft is the lack of stress on "simple" being
+a narrower special case of more general "upstream" for various
+push.default modes.  In either of these modes, unless told otherwise
+with the configuration file or the command line arguments, "git
+push" pushes to update the upstream of the current branch.  There
+is, as you said, an additional safety measure in the "simple" mode,
+that rejects a configuration to have a branch whose name is
+different in the remote repository as the upstream branch.
 
-> 
->> @@ -1841,6 +1852,10 @@ void run_processes_parallel(const struct 
->> run_process_parallel_opts *opts) 
->>  					   "max:%"PRIuMAX, 
->>  (uintmax_t)opts->processes);  
->> +	/* ungroup and reading sideband are mutualy exclusive, so 
->> disable ungroup */ +	If (opts->ungroup && 
->> opts->consume_sideband) +		opts->ungroup = 0; 
-> 
-> Make it a BUG(""), which may help avoid unintended bugs, 
-> especially ... 
+In other words, the push.default=simple mode does not tell Git to
+push to a branch with the same name.  Rather, as a variant of the
+push.default=upstream mode, it tells Git to follow the same "push to
+the upstream branch" rule, which requires you to configure your
+upstream.  But the mode gives additional limit on the name of the
+branch that can be set to upstream.
 
-I did exactly this and got test failures because some tests end up 
-setting both ungroup and consume_sideband. Since the original code 
-I got from Emily and Aevar just defaulted to setting ungroup = 0 
-and removing the const I went with that instead of actually fixing 
-the tests, assuming the tests actually need to do that. :)
+We should make our text clear enough that anybody who read about the
+push.default=simple configuration easily understand the above.  We
+would need to find a good division between what to put in the main
+text and what to leave out to the "see ... for more detauls" part to
+guide those who read about "git push" command to the same
+realization without bombarding them with descriptions of full range
+of possible values of push.default.
 
-Now I know better and for v2 I will fix the tests and add a BUG() 
-here, with proper reasoning for the test modification.
+Peeking our earlier exchange to help me formulate my thinking a
+bit...
 
-An example of test which fails because it sets both is:
-t1416-ref-transaction-hooks.sh
-not ok 7 - interleaving hook calls succeed
- 
->> diff --git a/run-command.h b/run-command.h index 
->> 4679987c8e..ad0bab14b0 100644 --- a/run-command.h +++ 
->> b/run-command.h @@ -436,6 +436,20 @@ typedef int 
->> (*feed_pipe_fn)(int child_in, 
->>  				void *pp_cb, void *pp_task_cb);  
->> +/** + * If this callback is provided, instead of collating 
->> process output to stderr, + * they will be collated into a new 
->> pipe. consume_sideband_fn will be called + * repeatedly. When 
->> output is available on that pipe, it will be contained in + * 
->> 'output'. But it will be called with an empty 'output' too, to 
->> allow for + * keepalives or similar operations if necessary.  + 
->> * + * pp_cb is the callback cookie as passed into 
->> run_processes_parallel.  + * + * Since this callback is 
->> provided with the collated output, no task cookie is + * 
->> provided.  + */ +typedef void (*consume_sideband_fn)(struct 
->> strbuf *output, void *pp_cb); + 
->>  /** 
->>   * This callback is called on every child process that 
->>   finished processing.  * 
->> @@ -495,6 +509,12 @@ struct run_process_parallel_opts 
->>  	 */ feed_pipe_fn feed_pipe;  
->> +	/* +	 * consume_sideband: see consume_sideband_fn() 
->> above. This can be NULL +	 * to omit any special handling. 
->> +	 */ +	consume_sideband_fn consume_sideband; 
-> 
-> ... because which one between this and ungroup gets precedence. 
-> Document that they are mutually exclusive, and help the callers 
-> with a BUG("") message when both are set.
+> +To decide which branches, tags, or other refs to push, Git uses
+> +(in order of precedence):
+> +
+> +1. The `<refspec>` argument(s) (for example `main` in `git push origin main`)
+> +   or the `--all`, `--mirror`, or `--tags` options
+> +2. The `remote.*.push` configuration for the repository being pushed to
+> +3. The `push.default` configuration. The default is `push.default=simple`,
+> +   which will push to a branch with the same name as the current branch.
+> +   See the CONFIGURATION section below for more on `push.default`.
+> +
+> +As a safety measure, `git push` may fail if you haven't set an upstream
+> +for the current branch, depending on what `push.default` is set to.
+> +See the UPSTREAM BRANCHES section below for more on how to set and
+> +use upstreams.
 
-Agreed, will do in v2.
- 
-> 
->> @@ -529,7 +549,7 @@ struct run_process_parallel_opts 
->>   * emitting their own output, including dealing with any race 
->>   * conditions due to writing in parallel to stdout and stderr. 
->>   */ 
->> -void run_processes_parallel(const struct 
->> run_process_parallel_opts *opts); +void 
->> run_processes_parallel(struct run_process_parallel_opts *opts); 
-> 
-> This is the same unexplained curiousity I touched earlier. 
+... here is my attempt.
 
-Yes, I promise I'll drop all these in v2.
+    3. The `push.default` configuration. The default is `simple`,
+       which is a variant of `upstream`.  In either mode, "git push"
+       updates the configured upstream branch (see the UPSTREAM
+       BRANCHES section for more on how to set and use upstreams).
+       The 'simple' mode has an additional limitation that the name
+       of your configured upstream must be the same as your branch.
+
+(iow, I rolled the "As a safety measure" paragraph into 3. itself).
+
