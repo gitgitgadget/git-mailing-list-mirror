@@ -1,135 +1,151 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E163FE7
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 21:21:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2191D6187
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 22:18:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758921690; cv=none; b=BDE+Hja8fOfyYEarlZPPCHlG3FIstrubNU1THwdsmNf2MhsbTJiZ02fZvxLue5kzLIgpEoiLUFf63T7ZDGv1J3LxyEPVe8CVki9FnUX2SWD+63P+k0ZaRFc+yLEDRQBqMZTIU9MimMSVgShMasmg0ECrbCt7lEMffYgA9PNsIdg=
+	t=1758925085; cv=none; b=BYJctU10lv5dAwPAuwbHUB/xVjKvEd6iYzCUfN1F/KVZDdYWETYdj8WBVVtE/p8n2rf7jqIjUUe3L9dNh3vZyheawF4krElmFN7NJhZuzsu1ZIElM5oIQ6lpUHbHnj8Vwmn6vz0tHupnQfr5SC+CxUAYkXnqi2pzwN6xhTupv6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758921690; c=relaxed/simple;
-	bh=+Sv0xFcsJ2LdijijlVV+kHRSPYZYcgDanCrPhmYblQw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qwjZnxuE2b6NjwGromx3gbglb4jNdjCXQ//cXFB5KhLrYddBct/sphHpPiiyMphC/DC6ntokimKSZ/1UUagVZi9VoCcGme/glNRnWuOwWMIPkgAYxU+QXTE69q1VdcvOn0jr/iAbn92D4C3fzvz+JuQMGuId3ZtRLgCRqrVcXMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WWQLhmaI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jYCngWGr; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758925085; c=relaxed/simple;
+	bh=0y98ljHdSdbTQamhbBHcuj4E9BPfLngI30wt1AW6GeY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iHBa74VybENRuoOcLzJgrgxJxBXMUIIXAx4SI7pqViyYur1JYgPLO6j69YKZT6s6F2u/YhyChaOzmtcfUxMLwb84cIby6PTtnRYwzXVrM/RNumR+m+WHLu6UxRancRbqcR/mSUqjiGy/NziaDrS/pH2LkU3F58H8rkD985O2GEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nmVTe4bQ; arc=none smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WWQLhmaI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jYCngWGr"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 57EC01D000DC;
-	Fri, 26 Sep 2025 17:21:27 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 26 Sep 2025 17:21:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758921687; x=1759008087; bh=Q0WJbIwuK3
-	UFQxjazEvlhp0xKX6AQewaLMaqIihRY90=; b=WWQLhmaISEtnyGI98aTD6yuy4Y
-	S/o5rcX+6183C4B8yw3D2D4H7gkUOWrOBUzLP0Ag/1qT2MKKrh6aicvLJiB+3gtS
-	Qs1ffUz5q5eSlLd9hkqMSnP5RuZEXhk1z3LUJWocicvWHdsN+ijqtqYcrDhXeZa5
-	ntrWGNUUJg/OBRZG4a1shsUv5jxKF8ghFHH2A41BZ0EcDTUAqTfL04XRt4meK9m+
-	805d4k9eiKANXmSt59gZVouOqfb3zsawTf5Oaui9w+OYBaCaZFFofuzwoJj4CwY7
-	XjxgPAiuzqIeScNiH/ENrV2e2M6WMj0z+4lIJFMPZcS64lDr92AH95Fi5OlA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1758921687; x=1759008087; bh=Q0WJbIwuK3UFQxjazEvlhp0xKX6AQewaLMa
-	qIihRY90=; b=jYCngWGrj1HB6Kc7WhBvoYRcNd9PJXl323EljFVMUBG+50sx6tq
-	XmMbqwNSdCW2fxt+1u+ofGPxXtJAPfdJp720fkcAZ1RU3O7maXNP7/U8R/rhlYMT
-	Efi+Y9gaEgRoyB5nkhARwx3c8tDkSptSFgHMOaeaOU4+BdS58s4LU1MWtw8jVfl3
-	bgILicxHZDeIe+TYrsvQblES7lJyRoJSRXAzlso/qiKhDnVEhROGVFD9MUs3OcQY
-	6JcpVR5FfqUBfW9MyEBxEaI+UX5jl1vKcRyfTI+3/n5ZSkrIx2sWbosbM4LlSb2L
-	XrrHw8pOGXxGZH2/Efd/jonZF/q7T53t7iw==
-X-ME-Sender: <xms:1gPXaN4XXZqZiOun46R-PfaNbPf6QPz8Oo2x8APmM9H1e15XRwIuyg>
-    <xme:1gPXaMbHXWd_vYqB45jdDGnn3BlKJwE-ezcUDnFXe5dBO5VGwEoonDeaZJXyXaPlg
-    yLRgAnXHEisPlsaupwLGT5CE6f0I8rmUDc6ba0t01xRxNI14_3T>
-X-ME-Received: <xmr:1gPXaEiwB1hm3OHYhlDuirhSet82inOlJ-0ypJN5ihojuqhw52aOOaryjrCSIA1-_UcfSEuUyCCL4ldMTwVcIIIOnj-T4lznAszO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejtdeggecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluh
-    hsrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:1gPXaF8YA1rIHKCv3u42B7c3nlAZtM_5jITQx12GoempteBpfxHuvw>
-    <xmx:1gPXaHoCBEvRHvzchmFjj0ElHbTfMYVpZxWiB6NWNsLqBQHonjR0dg>
-    <xmx:1gPXaFXr15ZTKJrQE5kkJGSQaUSj9EufpfxWw0LAyS9OHA0UjEZUQA>
-    <xmx:1gPXaODrfCgN5ju2Ao3gJ6G8eLOs-F4-qhNGDEEzWkbR1TYcEfvhew>
-    <xmx:1wPXaCPs-29mUn-YuxFd77dPkzH4QAVe_BXbaa0WGKQPWdfxMPC-zOd0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 26 Sep 2025 17:21:26 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,
-  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [RFC PATCH 4/4] doc: commit-graph.adoc: fix up some formatting
-In-Reply-To: <c8e40336-0a16-4da9-b251-d166f80ffeb3@ramsayjones.plus.com>
-	(Ramsay Jones's message of "Fri, 26 Sep 2025 19:11:57 +0100")
-References: <875fb7a0-6dd9-412b-a34a-21758c339871@ramsayjones.plus.com>
-	<xmqqfrc9citl.fsf@gitster.g>
-	<c8e40336-0a16-4da9-b251-d166f80ffeb3@ramsayjones.plus.com>
-Date: Fri, 26 Sep 2025 14:21:24 -0700
-Message-ID: <xmqqwm5kap0r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nmVTe4bQ"
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-36639c30bb7so26773701fa.3
+        for <git@vger.kernel.org>; Fri, 26 Sep 2025 15:18:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758925081; x=1759529881; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZmE0E9rWxkmkYD0K/McRUjTSZ3D3+1ll3ZUrWS2r/6s=;
+        b=nmVTe4bQI35yQEt2TCv8vDvm017/4IOO6PBBUuD+Nzt3+vIgAopXjy2NC+stzbQXoc
+         2B1FkDgApW8Y/Rcc2NCsC7XnbPB3Stg3jDpkx3tq4b42FyuIx3vWY09F2MQuwbOoJ87P
+         SMFQUtNpjAZC7xmCK2lRkZZL1g2XCVVAVofrVBk6RUf94XpLuYjAVrnIWC/2IfGWrDuO
+         PLdO/mWuJuxrVkx6013l73YNygwEsjwd5ldMcVDnTosImXzVLLNLCwl9K4MDu3CKDN9Y
+         b0j1XWcPnpPYAyex0D8lS+BCrGhkSr5blDx6I6vCSh99yUKKCbj3xGCMJdhz78U3CniO
+         c2pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758925081; x=1759529881;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZmE0E9rWxkmkYD0K/McRUjTSZ3D3+1ll3ZUrWS2r/6s=;
+        b=LxADteepXMyIqmHAScs+Cs099OoIBzm/sjkk+yDbE0vqEGCh+8GezKwtppOXB9eFYv
+         6cN52UeWGSHW9I5U0TjVFDTH8wac2yZFMlagBeGU40NvlkzC01obTURtKkS2ut+NOl0a
+         j07icS/2C7KosvJqyH/BHNEqV4Vm41FcJe9Wqk8tdlf2Rm/pd6sSbjHNDxeJlHm75fgH
+         /iMXVbuws0nndM4l3fPYBuVvA6HGsRZwVzOw073MZuFYKEpTHLzfPfEgkA+NwyhFiEc9
+         teELm7qXXCcYK+ql3p/nl2lE28lVVePWdmOgbtKRpwyEqDl2lpNXfT0Oq5iNhKRJuyzx
+         eo4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWgWA1mr/FMA+8+JB0CLq2tjRaXhznMm5zEuYIOcrycqteX/pj7lVFMEfemRdk9doCnTHE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzF8mVR/Hsdzhh0YLevCEh0ZnkGnYWB8lhznahm+9RJIL37FfBA
+	t54xc6yrhWXmb3lmmWrgxx/M3591wlhr3KgQenBqOuYaoDwQutCRD/wVqUObGUprcgu3KE+zj8v
+	FKe1IfzE4BGDFNVmT4sAF+oo77AcmyhI=
+X-Gm-Gg: ASbGncv6/PInSWoqy3Q3KHmd2XrSNd+76PphM+pjPV9n1hjRR1nc00YDBJ0HIVLa/jq
+	PomJJ6zwpev1Nil18v2G0x2cTTO0Nr8zlXtj5gVa+22KXxcSl9wPNeXC07ENj+1ujPsxzwhmBpk
+	emBnYC1IsHPlFSZJf4m6JJaB0KuD5Cy6KJ3IjZalw60WhLq7UC8hRmlDY3PTa20mCMNyBXGa8Lx
+	ev5xzin
+X-Google-Smtp-Source: AGHT+IFuakuaosf2m6eob4MMsTtkzrJE32byjlm4IvCI9mlPTmumE762luOrQodCQCdPS3X0vrsCnQ1NwZ+1ug/7iBw=
+X-Received: by 2002:a05:651c:221d:b0:36a:878b:6e34 with SMTP id
+ 38308e7fff4ca-36f7a3ccc2emr28170931fa.0.1758925081214; Fri, 26 Sep 2025
+ 15:18:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
+ <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im> <20250925011043.M401827@dcvr>
+In-Reply-To: <20250925011043.M401827@dcvr>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Fri, 26 Sep 2025 16:17:49 -0600
+X-Gm-Features: AS18NWD_HS0UxO07bU_xHS7LrdPt7c5ZjIulRJ16Z1u-vkUigqTVQ0zcf902pE8
+Message-ID: <CAH=ZcbCEioNGaksTKnYyakABWGwTWv4WQZCnOtARydtLrx11MQ@mail.gmail.com>
+Subject: Re: what's missing from newer C? [was: [PATCH v5 0/9] Introduce Rust ....]
+To: Eric Wong <e@80x24.org>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Ben Knoble <ben.knoble@gmail.com>, Christian Brabandt <cb@256bit.org>, 
+	Collin Funk <collin.funk1@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>, 
+	Elijah Newren <newren@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, Sam James <sam@gentoo.org>, 
+	Taylor Blau <me@ttaylorr.com>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+On Wed, Sep 24, 2025 at 7:10=E2=80=AFPM Eric Wong <e@80x24.org> wrote:
+> What else is missing from C?
 
-> I tried searching the web for the answer, without success, so went with
-> the 'prefix' style used here. However, when I read the above, it made me
-> look at out current docs and gitworkflows.adoc showed me I should have
-> used an '~' character instead.
->
-> I just tried this and it works great (apart from having to \-quote the
-> '{' and '}' characters in one title), so a revised 'diff' is given below.
+1. Checked Arithmetic
+  * C23: <stdckdint.h> for checked integer operations.
+  * Rust: built-ins like checked_add, wrapping_add.
+2. __counted_by__ attribute
+  * Clang 18 / GCC 15: experimental, helps catch buffer overflows.
+  * Rust: slices already carry length, preventing out-of-bounds by design.
+3. __cleanup__ attribute
+  * GCC, Clang, TinyCC: long-standing extension for RAII-like cleanup.
+  * Rust: Drop trait ensures deterministic cleanup.
+4. RCU / concurrency libraries
+  * Userspace RCU, ConcurrencyKit, etc. available in C.
+  * Rust: crossbeam, Arc, lock-free crates.
+5. Format string checking
+  * GCC/Clang/MSVC check format strings at compile time.
+  * Rust: format! macros type-check arguments.
+6. Regex and parsing
+  * C: POSIX regex, PCRE2, re2c, wuffs.
+  * Rust: regex crate (safe, no unchecked buffer access).
+7. Dynamic analysis
+  * C: Valgrind, ASan, TSan, UBSan, MSan.
+  * Rust: Miri, LLVM sanitizers.
 
-Oy.  It is one of the special things I am unsure about---would a
-character used for such quoting (e.g., backslash in this case) count
-as one display space to count the number of underlying characters?
+What else is missing in C?
 
-That is, which one of these do AsciiDoc and Asciidoctor want?
+Compared to Rust, here's where C still falls short at the language
+level (not just tooling):
 
-    Deleting graph-\{hash\} files
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. Ownership and lifetimes
+  * No borrow checker; compiler can't prevent use-after-free, double
+free, or aliasing bugs.
+2. Async/await coroutines
+  * No language support. Async requires threads, callbacks, or libraries.
+  * Rust: async fn / .await integrated into the language.
+3. Explicit numeric conversions
+  * C silently promotes between ints/floats/signed/unsigned.
+  * Rust requires explicit casts (down and up), reducing surprises.
+4. Sum types with exhaustiveness checks
+  * C: enum + union is manual, compiler won=E2=80=99t enforce full handling=
+.
+  * Rust: enum + match requires covering all variants.
+5. Safer error handling
+  * C: errno, return codes, ad hoc conventions.
+  * Rust: Result<T, E> + ? operator, forcing handling.
+6. Concurrency safety by design
+  * C11 added atomics, but race conditions are unchecked.
+  * Rust: Send / Sync traits enforce thread-safety at compile time.
+7. Namespaces / modules
+  * C: relies on foo_bar() prefixes and headers.
+  * Rust: mod and crate system.
+8. Default immutability
+  * C: everything mutable unless marked const.
+  * Rust: immutable by default, opt into mut. You have a choice of 1
+mutable reference xor many immutable references to something.
+9. Package management
+  * C: out of scope for the language
+  * Rust: built in with Cargo dependencies
 
-    Deleting graph-\{hash\} files
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~--
+In Rust there is a difference between concurrency and parallelism.
+Concurrency in Rust is about running multiple tasks with a single
+system thread. Whereas parallelism is about assigning tasks to
+multiple threads. I highly doubt that C will ever get coroutines
+because it requires the compiler to create a state machine out of each
+function that uses async or await keywords. The C language just isn't
+robust enough for that in my opinion.
 
-There is
-
-    OPTIONS[[OPTIONS]]
-    ------------------
-
-that appears in MyFirstContribution.adoc (even though that is an
-illustration of what you would write in the source and never used),
-and
-
-    `builtin_objectmode`
-    ~~~~~~~~~~~~~~~~~~~~
-
-that appears in gitattributes.adoc (this one is rendered), so I've
-been assuming that these characters necessary for mark-up do count.
-
-I guess this is the same "prefix is easier to write, underling is
-harder to write correctly" theme?  If we know which one is correct
-and can use the correct version, then I do prefer the underlined
-form.
-
-Thanks.
-
+And there's probably more that I haven't covered here.
