@@ -1,121 +1,104 @@
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3401805E
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 01:38:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03325258CE7
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 02:29:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758850695; cv=none; b=I7YsDEtA/P6nfzdpXiDsgKlpO3yNVxVhVDw8g1XfO95LktB1E+M2MumuI89jCEzKvuDw31CqU4VT30hczGRuYPvm+K1ng0/GDX+iT+Xp4TdUHenu7O19c8RVxDYByI6lWrSUHNNCgFO7/8eW6VB1fuapFULzm14JlZDfC/Mmteg=
+	t=1758853771; cv=none; b=brX3arQdz+cESWZzhGJtCSuxtDqkto7KO3UjKrcpa6gq/iR0IJRrEMWHcftRwmlxPb0LK8KxTEBWn34GrZ5h0D1krfV+Zpj4Rj3VKaappgIwzPh1qwmmYd9NCVYgNxEbFlK/U7aHWcFktf+n/ZL32ueuKDUd5shjcVS2jY9LWg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758850695; c=relaxed/simple;
-	bh=vDDxdo3ojlZ4Wye88zsJtafPg9Z4NEn9Zf8NLZjqD/c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V+7OdVmLoUsNk6twx5RHYYIEM616+v61bTgK+VL590k4rIdRhdn+ujs0JuBTvpYdwomhFY/hlV6ihWraU8Xn1ZLIDrCIsi/HjttQQpiwRFFi04hUVJNWfJTRIfz2KptqsPZc7oAr1kjzoYQgyqFiMHTMlseuPraUpHtbvzSg860=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cdy2xX2t; arc=none smtp.client-ip=209.85.160.41
+	s=arc-20240116; t=1758853771; c=relaxed/simple;
+	bh=E4e2A4n1X52jeVMkPHK6n36OdlBg9iytN+PxD8x4zkk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Kr1mzrkmWZKcJ9pWwaEfoPsPVB/yt3pAn9MsTCk+u/UOEv9rccPZ4OIqOeh60WMvOYY6H2ATdJ3R8oTMyfewA6FyJ+4EfU2Ne/SzbC/kt8sRFlhPW1y3gZs6sPOoMIUvVJw6vSp00iIzARNm2EAoZk3chfComyhOP83hW4hxRNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dZDwudOg; arc=none smtp.client-ip=209.85.208.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cdy2xX2t"
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-35b7f8e07d5so1281143fac.0
-        for <git@vger.kernel.org>; Thu, 25 Sep 2025 18:38:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dZDwudOg"
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-3635bd94dadso14961191fa.1
+        for <git@vger.kernel.org>; Thu, 25 Sep 2025 19:29:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758850692; x=1759455492; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=FBNApe9g3ULrayqRh0991NoK5j18ZUdQF+6jssrw4nk=;
-        b=Cdy2xX2tt9CnVNKFU/JNPzhxojyrrXWGRgY0rDnAjeiS/lbJ2lyvC1/ovncT8WQyvL
-         KnEhaWFKJRRlBraO/wsNwOn3rzp57yxGa6OkUhdA8AGqSfxFmKA7ouHYY/TLncFOqJtI
-         4i3PtlqWMPUaLjBOdMGTIAIocVzXLwxc5yLagImUGvhcht9QkBtdBYUeXIqvNSnb/rCD
-         abv0LnWclE5V+k8X+TN8B3enHaPs+fzOdTDn6vy2uPT69Q0Jdu2UxYan+qB7iprDEB3W
-         yx3USMZOoOUlcQponSMa2ezf+tTFFhfRTI0Y/aYtGn8PsRd+mGPQz7lxQD+E/IdkYoia
-         owBw==
+        d=gmail.com; s=20230601; t=1758853768; x=1759458568; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=E4e2A4n1X52jeVMkPHK6n36OdlBg9iytN+PxD8x4zkk=;
+        b=dZDwudOgpw7PYLQ//S20+D9BgXIm7bzyObpe6CtM0br+2sV/PCk4lILgXTCsZ3xxzy
+         AKLioubLZXiqKwOsQalqiymHU7lbS07HQcEtJ3TfAf5Aj9XELv75KSLGCn2nRU69VgrR
+         /imiY8N8lLtndkfT/xubR6cF73/Bsk2YukzA58HjvqDbzfSfn3m6bHfVCyqeutcVzX/s
+         13B/rT8XTwAffmslfMO0Qw9fZJTgmzMuuRL/vK/AY96bJjZDuT7AfUY9WUidcmHQ3d3V
+         VumtBNIIUVZOKavV5qI0U7x0o2Dv6EpZY/YbBeayNtKA6diYiJ446RCBr1HUUNctBTRq
+         JADA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758850692; x=1759455492;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FBNApe9g3ULrayqRh0991NoK5j18ZUdQF+6jssrw4nk=;
-        b=lPQCJCjdSTe/tcqDJdfCbE+LUUMQsfJMkPaxwVjPwLexW+8elNeefR8/aJmJqogUVH
-         D9bgbcl0K/qUcrXnMq4XdM8XJaNjsj/r6uj8nG+S5jxgg2iGtPLw6jNPq01+zlvJBkv0
-         NP86T1FmYZfVoUGpBXn1u3h+18Hpauy2q4x92UhFoDOH/ZhXiqNmlvgqNKzS/yHKRTq4
-         VbZm4D+UVahOxGIEyWKq9c01s+sTOyk4hx0BFtXzBXZjQXZsi5bAehgCyCMnyaB9SBUR
-         p7bIaGyVG8bl5Q2huTuq3HSKiCS2RXFJNMDgeye2S350vH4BqoMg+NGpvpcIjTde0GYr
-         lCPw==
-X-Gm-Message-State: AOJu0YwxepKWi1et/IivniTOc1b/BYZ0J1SR4OEOJ8mVYjwDF4sGfi83
-	RPLSdOMRxLPO0/DWkkpJDfNHZ9v2wHUxoUhX0eayiK5ZXFm2ow6G4UIL2vNEYA==
-X-Gm-Gg: ASbGncuh2GNDSkv8zVNiGmK979pjeHjdM1nfyr/KoeMc+9wzjFlw8WZZE9SPyU7yn6Y
-	wpfN1EcDl6aIp2vpiv0Ocvd78sTR4I5dkOhC0ZeVy0zBOzUaZ3UHBBGvqOl1giPS7VkRYORa46A
-	CZpXUJgIqEaJAcG6sYOmbSsiE1SYMdvOpIOW+mQvlSKHwy9QLqlhsMviUmzAJOzXBzz6pSy9Sj3
-	O2KtrjYNEYZL/XXz/5cB2DPYq3R/vHrPYnD81lB0ApQJwsbDigDVchSrVXCHMSVo8I0FBqUVhFX
-	BPRiciX66ZS52ntotUCIuU7Q7qUEPks9pBEDu9W71ZchfJUlC4wKwLx5J364gnqVV9f10es9qvH
-	p/GD8HZlIB4yjvD94
-X-Google-Smtp-Source: AGHT+IEfbFWlGhpLIrKwvzFqrL8Jr8fSE8yUpLnoNhfJP/t1IdjQ3MPQWrVs+nhIJ8H/0xmmRh+0eg==
-X-Received: by 2002:a05:6870:8094:b0:358:ecec:93 with SMTP id 586e51a60fabf-35e903d565emr2813017fac.0.1758850692295;
-        Thu, 25 Sep 2025 18:38:12 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-363b3ffc433sm1012782fac.28.2025.09.25.18.38.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Sep 2025 18:38:11 -0700 (PDT)
-Date: Thu, 25 Sep 2025 20:38:10 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org, ps@pks.im, karthik.188@gmail.com, 
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 4/7] builtin/repo: introduce stats subcommand
-Message-ID: <wugagxpikclvhv5ajxzmeb42rneuv3hoi3bd23lqt5uysdotdg@gxvmipzrajdu>
-References: <20250924212426.2930029-1-jltobler@gmail.com>
- <20250925232928.3846-1-jltobler@gmail.com>
- <20250925232928.3846-5-jltobler@gmail.com>
- <CAPig+cTSpq132SZQHUzYHJNqY-nOYizFW71Lu3o6a6m3jDNVJQ@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1758853768; x=1759458568;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=E4e2A4n1X52jeVMkPHK6n36OdlBg9iytN+PxD8x4zkk=;
+        b=weYOYgj6tjS+T4hOROvSTEmHbj/XtNjYDu29N4pOkR7KwjQUH08lIQBGZ2BneLhdAe
+         MQJOC03DSUl5XGB+BogY1eXzUqE3c2aBhVG2vw7W9ysoOzg33ymO/5U2WJVScF6r3Tlc
+         mfcgT4a0zu+9B3o4rZ1Hx2q7cEq8VORDcBmqmpM+lkme7NTClmDqFAvRJJQLTW7qn85B
+         l6OncaRRWGJUjzSO1rlkgVAFU62fi6CZwwrl6QJKJUZX5x/n+S6fvvPrkpeDvQNulNeM
+         i2yCmIxfWFg9DxFL8/8gIBpBDMqbZSVrTGizhgXXcHFLlEdFZEGknb9HwnIxLLU1hRIX
+         kOCQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUM0r4l6QM1QIQYLLvcGHfMCdbeDwQJJ6OPfznmYddcGLdm1/GIhQoMDT9Ntd3EZgNyfI4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxf7KwXJexM6ZGKdz5aZw2vikfIEz/iEndfAULwTQ0PboVz6kHB
+	frkCtSajEB5nMtDeB9YUrN/M/SOv8s/mJoyWTnGV3Fj4B1IHqQn4bJUvcaqiPH9/GW3EVLXltgH
+	jDvV9/pAlVjPlNFAbl/h3VQUbqTHN0qBm6Z/wmbJcQWQN
+X-Gm-Gg: ASbGnctaFg6GlGAvPmMkU+mSxGK2cFvtE8Egh2AYLuzPW/XGddSIDy1kvYLNvGfDg1z
+	62E/F+k6d4pbWVOFVSSS+bkHhe/t2FDttQkHCDJGWF8Z3NctLTHtp1UH/MvJmXimLg10ezRRgBX
+	2XLWmfSxxFiiWg46p8lUL3hOW1DCfmgRxy/I/YU/uzW+Z0prw/FMVewLRdSBch830s8FiBlXhHR
+	+kjzJKv
+X-Google-Smtp-Source: AGHT+IEaSeq8bbGBiHeMDgamf0FB2vhVXapeIsUnxi2emV9H1SXRWMD0o6fBChXoLqJYFKI8II+ojd3dz8II3BrrjV4=
+X-Received: by 2002:a05:651c:210d:b0:36a:a8bb:9b9a with SMTP id
+ 38308e7fff4ca-3707c0ba684mr9744741fa.0.1758853767801; Thu, 25 Sep 2025
+ 19:29:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cTSpq132SZQHUzYHJNqY-nOYizFW71Lu3o6a6m3jDNVJQ@mail.gmail.com>
+References: <pull.2048.v4.git.git.1758570701.gitgitgadget@gmail.com>
+ <pull.2048.v5.git.git.1758662670.gitgitgadget@gmail.com> <08a0fceb72b2bd0a2803d24b9874b7f9bd03703a.1758662670.git.gitgitgadget@gmail.com>
+ <311f7dbe-b970-4a5b-9d53-05f019cc54cd@gmail.com> <CAH=ZcbBcEbTqQ-FpYSdr_QjSM5sKerECKsSVdTyHoSQqG-V9iA@mail.gmail.com>
+ <1c3461c3-09bb-404d-a4dc-a895baba68f2@gmail.com> <CAH=ZcbC-cB35AGmiKgEQdFa5ee+DftwOQ_dUe4=T+Vq-dxR+qQ@mail.gmail.com>
+In-Reply-To: <CAH=ZcbC-cB35AGmiKgEQdFa5ee+DftwOQ_dUe4=T+Vq-dxR+qQ@mail.gmail.com>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Thu, 25 Sep 2025 20:29:16 -0600
+X-Gm-Features: AS18NWBlzSGMiGrlONsSuew3FipswRH4l978JNOcAclG2rtWtns2asBag9FQ8kc
+Message-ID: <CAH=ZcbA0Y90eQV3fHFsROqQu40Mv==XOtctrdW0fQwzb0p05xA@mail.gmail.com>
+Subject: Re: [PATCH v5 12/13] xdiff: use enum macros NONE(0), SOME(1),
+ TOO_MANY(2) in xprepare.c
+To: phillip.wood@dunelm.org.uk
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Elijah Newren <newren@gmail.com>, Ben Knoble <ben.knoble@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 25/09/25 07:51PM, Eric Sunshine wrote:
-> On Thu, Sep 25, 2025 at 7:30 PM Justin Tobler <jltobler@gmail.com> wrote:
-[snip]
-> > +       strbuf_vaddf(&buf, format, ap);
-> > +       formatted_name = strbuf_detach(&buf, &name_width);
-> > +       [...]
-> > +       if (name_width > table->name_col_width)
-> > +               table->name_col_width = name_width;
-> 
-> Here, you're using the byte length of the composed string to compute
-> the table width which you will use for alignment purposes when
-> rendering the table...
-> 
-> > +static void stats_table_setup(struct stats_table *table, struct ref_stats *refs)
-> > +{
-> > +       size_t ref_total;
-> > +
-> > +       ref_total = refs->branches + refs->remotes + refs->tags + refs->others;
-> > +       stats_table_addf(table, "* %s", _("References"));
-> > +       stats_table_count_addf(table, ref_total, "  * %s", _("Count"));
-> > +       stats_table_count_addf(table, refs->branches, "    * %s", _("Branches"));
-> > +       stats_table_count_addf(table, refs->tags, "    * %s", _("Tags"));
-> > +       stats_table_count_addf(table, refs->remotes, "    * %s", _("Remotes"));
-> > +       stats_table_count_addf(table, refs->others, "    * %s", _("Others"));
-> > +}
-> 
-> ...however, here you feed the function translatable strings, which
-> means that the display length of the composed string is not guaranteed
-> to be the same as the byte length.
-> 
-> To resolve this, you probably want to investigate Git's utf8.h header,
-> in particular, the utf8_strwidth() function.
+On Thu, Sep 25, 2025 at 12:40=E2=80=AFPM Ezekiel Newren <ezekielnewren@gmai=
+l.com> wrote:
+> I'm really struggling with how to write this commit message. I would
+> very much appreciate suggestions. Here is what I have so far:
+> --- commit message start ---
+> xdiff: use enum macros NONE(0), SOME(1), TOO_MANY(2) in xprepare.c
+> ...
 
-Thanks for raising this. I hadn't considered the fact that the
-characters in translated strings could occupy more than one byte. I'll
-address this in the next version by using utf8_strwidth() as you
-mentioned. :)
+I think I understand what is happening now. The macros I should be
+using are: DISCARD(0), KEEP(1), INVESTIGATE(2). The comments in and
+around xdl_cleanup_records() and xdl_clean_mmatch() uses the term
+discard, and not discarded. I think what DISCARD means is discard this
+line from consideration in the diff algorithm, and KEEP means the diff
+algorithm is going to look at that line. INVESTIGATE means that the
+current line has more matches in the other file than some threshold,
+so we need to do some more work to decide if the line should be kept
+or discarded.
 
-Thanks,
--Justin
+xdl_cleanup_records() does not belong in xprepare.c because it is only
+used by the classic diff (myers/minimal). It should be moved to
+xdiffi.c, but it depends on the classifier which is only defined in
+xprepare.c. So I can't move xdl_cleanup_records() until more of the
+code has been cleaned up.
+
+I'll work on the commit, and hopefully publish the next version soon.
