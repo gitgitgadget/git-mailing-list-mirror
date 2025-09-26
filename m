@@ -1,136 +1,202 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from avasout-peh-002.plus.net (avasout-peh-002.plus.net [212.159.14.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B33E72633
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 17:52:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3316ADD
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 18:12:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758909155; cv=none; b=DDevHq6/BwzxCRU7n2ssGOXpQAWy6/RDisV7nnYMl2nADETBnrUFGtrARE8S+EbVVZti8rizu/iRqo4UT7nCHNy0b4ouqoSJx0Ow0IO+c4B1PT4wLVEx7WyCEg8qSFjHUhU7yG29pUWz+UOvM31CzecsEr6UBb3a/Hf1+Nbrv5c=
+	t=1758910333; cv=none; b=Ziqc/nowcZ3I6YMKVG80ZxzVBPrXMR8ymvNjFBMg5YJaH4N3AL+ZPNDadhMwRXhOsQOeMLTcRxZUmPhNAuE510F7/LlwMW1XZmUDveMSiJukKRsR/OH0RjcEDOYu3IOirwy3Wr3fyWiF9KE/tljRVVtz9XTmDxEg+sUcWUNW040=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758909155; c=relaxed/simple;
-	bh=dlqkGDr/LU4ht6ewaChQB8ErB7U61pjT97yoMqO7FHE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=duUf/L+iRkIF9TJA8r2/PKVFnCv7MVbLS+ssXN10U8crxQoesMtpAwHOCWKL1PP9uZ4KSxIZsBQse+ZKcavlEoiW4XNXGqvrMNcBJWkGom/SQ0MTcTk5R3bybtl4eoDVq3XcX8I6eBKTqr60bb6jqM3HJ00gsN89KbLzMjqZwew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IRhNvAWg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CiHIBtoz; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758910333; c=relaxed/simple;
+	bh=rwyGbL/8BsGDYpy7hZN9jZNsvvCfuTVtsZ8DRw92KrE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CGtJhZzx+RLRT0pClhCXJODYZzo8om1aE5MSGtveAXNNI2NUAlWt0CarWbbgBcuxC0E0vBIpqieoBZ6+F6QZEpJZOpHHzOlrSMRiuJ3yNGcZpk/H9WCnPHbwqbT2g1W2PYU/kX3t0wHbrtXLZ7VXjhihSsyJnd7BtK/vbzCHL9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=q7nROaaf; arc=none smtp.client-ip=212.159.14.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IRhNvAWg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CiHIBtoz"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8A5717A00CB;
-	Fri, 26 Sep 2025 13:52:31 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Fri, 26 Sep 2025 13:52:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758909151; x=1758995551; bh=k6dBDQRMLy
-	npsQ5z6K7wsUdy//b6FywL5Ibwsj/Opr0=; b=IRhNvAWgV3EChuXaIrSzYfJsBj
-	wck6vAbl98Uuej4+po5R7t1rvZMCVGpmmkvzeGIUUqgaKjVaso6eg6RLrXfXe1PI
-	De7RB9GtK3QVkIOGXSbanxAbjQ8eBQDpapalrMag4LL8HyJg55DY1pfrxDeZN0ou
-	wFNIdB9+6tqDQMkN267GqQdLCI+FncDl0lJi0Hl19jDu9yXxYjbW27owK4VHhLkW
-	dgiQn2wu+u/bQS6+9Khl/lOwKPpKWGjdSHmXXylLNgW2fPpiMx1Xh/bg5gy67gkJ
-	tqb7+Qs8Ykr3xOEH6J8X40Ad4seop7a4/oR3RodEbCcmHViwpZ7LNUd/CHNg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1758909151; x=1758995551; bh=k6dBDQRMLynpsQ5z6K7wsUdy//b6FywL5Ib
-	wsj/Opr0=; b=CiHIBtozmTQg4SPr2RfOXzhlFrxJo+X4cm3aQ/ShPJcPDCZ3XyL
-	l68gaE7X/ZOwLf7pb6mTlfmvY/+z0bP4z3VWnIusW+cVGLATnQeb52Q1t4t2lz8b
-	H9+KmINGFuULl39xkbQVz3AYNValOmVgxb4QnIb4GkkIPwBI5gme+z2YvV35OplQ
-	6V+j2/UMJBqajPBIBN2mdxIrsh2tvif/o0lPlFh5QbqgRi49DMJns4gZPN11zMvg
-	SBEh/zjNewSGxMIL5IaN2w8sIq7bgS99JoJ0MyX5Xvrwo2tcltxyR4QEnK22pP24
-	CYVHJRO//Jm7h4FsTBw99HlI5qbmm+J6cdg==
-X-ME-Sender: <xms:39LWaCySDNd6Ph9H-4TVq_8n3hK_JJ7YjOCNHUuM_a4ZS7XSArzmHw>
-    <xme:39LWaA2l8fYvTFkeNON6wmnE_TkeUr0hY5mzKcZcJqW3hAgzXLeXhcHt1tjdliwAj
-    cLyiFCrmnyIXfBOxfgotZkMfE6r2mZh0U6TVWSvANh2Pk0sKx1BZTw>
-X-ME-Received: <xmr:39LWaH_JRjTUhcvh3FrKxkLJW57yEOcerqQ22UJIkWqGqQghzrgSuv16OG2wdFvquLU7XnFEUnezyfETwCStw_lvqirPOzmB0N_w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejtddtudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorhgrrdgt
-    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
-    hopegvmhhilhihshhhrghffhgvrhesghhoohhglhgvrdgtohhmpdhrtghpthhtoheprhgu
-    rghmrgiiihhosehgohhoghhlvgdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpd
-    hrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopegr
-    vhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhm
-X-ME-Proxy: <xmx:39LWaIqazMt1u-nSnN0YeCZc3MRz733V29qt6PMGcKcgWlS3PbR6gg>
-    <xmx:39LWaJT4rT1RNCXVe53siynvga0SvsIHGItDuXPQy-3PGxBxFEFiUg>
-    <xmx:39LWaDOFeSL1f9CISo-_xcD8lA0Kic-FqoERl6nXDjZY2iQQ6ZK1cg>
-    <xmx:39LWaPiEdKl6v9tYLkU9qMU5uD2J2n83hhJOPZLcOLtP_AKFU3s4LA>
-    <xmx:39LWaA0xlaq_s1l45TMIaiL8Ojr4dT01pJGPnF5Yyi0MxU7Lf-zMa8Zq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 26 Sep 2025 13:52:30 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Adrian Ratiu <adrian.ratiu@collabora.com>,  git@vger.kernel.org,  Emily
- Shaffer <emilyshaffer@google.com>,  Rodrigo Damazio Bovendorp
- <rdamazio@google.com>,  Patrick Steinhardt <ps@pks.im>,  Josh Steadmon
- <steadmon@google.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>
-Subject: Re: [PATCH 03/10] hook: convert 'post-rewrite' hook in sequencer.c
- to hook.h
-In-Reply-To: <f408e46c-650a-4632-9628-cf817e393e7f@gmail.com> (Phillip Wood's
-	message of "Fri, 26 Sep 2025 15:12:43 +0100")
-References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
-	<20250925125352.1728840-4-adrian.ratiu@collabora.com>
-	<f408e46c-650a-4632-9628-cf817e393e7f@gmail.com>
-Date: Fri, 26 Sep 2025 10:52:29 -0700
-Message-ID: <xmqqikh5ayoy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="q7nROaaf"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id 2CvFvx4BrYrrN2CvHvqpdM; Fri, 26 Sep 2025 19:12:00 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1758910320; bh=laCKpkYR92zEc+aLHLh0i60vRa+j8PP1dmtmgCT3Uw4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=q7nROaafRdvt3VUqwkcMVZD4YkAFpsdAhhyk/qAhKug2QcvN3hBWwarTY1fNAOZIB
+	 W2fjmbVcXm/r8pLikrXtDhH5v7JFhoKNHtI7hkUW+h0fcqmIUF5U310uEf8khsAa0P
+	 ZbNcQFFl33GXoRuLt6CHcqtAI7MxmCyB5uPg/l3+QTESqxcsYgIVYkgXcr4Ieia8jh
+	 s5aXSG6f7aQl5CWDay8kEY9MR6bb3mt+y4/uLNbvTF3aRcAn5iv5Zd+SKBYlIeJ0xC
+	 UxuElJ6Xm1kXTJxgHCDQ0wb++1dpd37F2RnUy8SKGJKLWgyuApVB1y++FRdZilTiUm
+	 fXqL1mNOo2LyQ==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=ELSl0EZC c=1 sm=1 tr=0 ts=68d6d770
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=2GgndpBNRjo-BeXyWioA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <c8e40336-0a16-4da9-b251-d166f80ffeb3@ramsayjones.plus.com>
+Date: Fri, 26 Sep 2025 19:11:57 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 4/4] doc: commit-graph.adoc: fix up some formatting
+To: Junio C Hamano <gitster@pobox.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
+ Derrick Stolee <stolee@gmail.com>
+References: <875fb7a0-6dd9-412b-a34a-21758c339871@ramsayjones.plus.com>
+ <xmqqfrc9citl.fsf@gitster.g>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <xmqqfrc9citl.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfOGhjJmqvb2r3CynXpnx6lWfek33hdAI+gyHGORiMPznSQjXvFcMT2OhoFjsJf9TP2HXi2NzFqz9EJ70NaiouwOFXYUgdmTd5v8ll3JAJhalIS2fdKUg
+ D8dNMLOxD6WbZvAtN+6xff7bXRtKNQHUzP3FfpTKUaGzLHcgQ2XqIixg4G1vw34gX2GircDDySUPaSOiZDVG7uy6TMXhvVjaKCk=
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
 
->> +	ret = write_in_full(hook_stdin_fd, to_pipe->buf, to_pipe->len);
->
-> This will block until the hook has read all of the input. Unless the
-> hook drains and closes stdin before it does anything else it will
-> block the parallel execution of other hooks.
 
-Ouch.
+On 26/09/2025 4:52 pm, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> 
+>> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+>> ---
+>>  Documentation/technical/commit-graph.adoc | 34 +++++++++++------------
+>>  1 file changed, 16 insertions(+), 18 deletions(-)
+> 
+> Are these the issues?
+> 
+>  - Use ={n} prefixes instead of underlines for the section headers.
+> 
+>  - Use ={n} not #{n} prefixes for the section headers.
+> 
+>  - A blank line between a leading text before a numbered list.
+> 
+>  - Mark-up of displayed materials.
+> 
+> The majority of our pages (I think all of the manual pages) use
+> underlines.  Are we getting warnings on them that we'd need to
+> change?  I personally find the underlined style easier to read
+> in the source text (even though I understand why people would
+> prefer to use the ={n} prefix style---having to adjust the length
+> of the underline is a bit more work when retitling).
 
->> +	if (ret < 0) {
->> +		if (errno == EPIPE) {
->> +			return 1; /* child closed pipe, nothing more to feed */
->> +		}
->
-> Style: we don't use braces for single statement bodies.
->
->> +		return ret;
->> +	}
->> +
->> +	/* Reset the input buffer to avoid sending it again */
->> +	strbuf_reset(to_pipe);
->
-> Shouldn't the return value do that?
+Heh, my first attempt used an '+' character for the underlining of the
+'next' level headers, rather than '## ', since that was what I thought
+it was (from a very vague memory), but asciidoc disagreed! ;)
 
-Sorry, I do not understand this comment, but did you mean to_pipe
-strbuf is left with some buffered bytes when we take the early-return
-path when we got an error above?
+I tried searching the web for the answer, without success, so went with
+the 'prefix' style used here. However, when I read the above, it made me
+look at out current docs and gitworkflows.adoc showed me I should have
+used an '~' character instead.
 
-This part of the new code makes me wonder what the lifetime rules
-for the to_pipe message are?
+I just tried this and it works great (apart from having to \-quote the
+'{' and '}' characters in one title), so a revised 'diff' is given below.
 
-In the original code before this rewrite, it was clear that the
-caller of this function was responsible to allocate the strbuf, to
-feed it to the subprocess, and to release the resources it held.
-Now, what is the rule?  The caller still prepares the strbuf, but
-the called machinery using the hook API will release the resources?
+[all the other problems remain, of course]
+
+Would you prefer this 'patch'?
+
+ATB,
+Ramsay Jones
+
+--- >8 ---
+diff --git a/Documentation/technical/commit-graph.adoc b/Documentation/technical/commit-graph.adoc
+index 2c26e95e51..f5522ba437 100644
+--- a/Documentation/technical/commit-graph.adoc
++++ b/Documentation/technical/commit-graph.adoc
+@@ -39,6 +39,7 @@ A consumer may load the following info for a commit from the graph:
+ Values 1-4 satisfy the requirements of parse_commit_gently().
+ 
+ There are two definitions of generation number:
++
+ 1. Corrected committer dates (generation number v2)
+ 2. Topological levels (generation number v1)
+ 
+@@ -158,7 +159,8 @@ number of commits in the full history. By creating a "chain" of commit-graphs,
+ we enable fast writes of new commit data without rewriting the entire commit
+ history -- at least, most of the time.
+ 
+-## File Layout
++File Layout
++~~~~~~~~~~~
+ 
+ A commit-graph chain uses multiple files, and we use a fixed naming convention
+ to organize these files. Each commit-graph file has a name
+@@ -170,11 +172,11 @@ hashes for the files in order from "lowest" to "highest".
+ 
+ For example, if the `commit-graph-chain` file contains the lines
+ 
+-```
++----
+ 	{hash0}
+ 	{hash1}
+ 	{hash2}
+-```
++----
+ 
+ then the commit-graph chain looks like the following diagram:
+ 
+@@ -213,7 +215,8 @@ specifying the hashes of all files in the lower layers. In the above example,
+ `graph-{hash1}.graph` contains `{hash0}` while `graph-{hash2}.graph` contains
+ `{hash0}` and `{hash1}`.
+ 
+-## Merging commit-graph files
++Merging commit-graph files
++~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ If we only added a new commit-graph file on every write, we would run into a
+ linear search problem through many commit-graph files.  Instead, we use a merge
+@@ -257,14 +260,15 @@ lock-file.  When the file is flushed, we rename it to `graph-{hash3}`
+ according to the computed `{hash3}`. Finally, we write the new chain data to
+ `commit-graph-chain.lock`:
+ 
+-```
++----
+ 	{hash3}
+ 	{hash0}
+-```
++----
+ 
+ We then close the lock-file.
+ 
+-## Merge Strategy
++Merge Strategy
++~~~~~~~~~~~~~~
+ 
+ When writing a set of commits that do not exist in the commit-graph stack of
+ height N, we default to creating a new file at level N + 1. We then decide to
+@@ -289,7 +293,8 @@ The merge strategy values (2 for the size multiple, 64,000 for the maximum
+ number of commits) could be extracted into config settings for full
+ flexibility.
+ 
+-## Handling Mixed Generation Number Chains
++Handling Mixed Generation Number Chains
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ With the introduction of generation number v2 and generation data chunk, the
+ following scenario is possible:
+@@ -318,7 +323,8 @@ have corrected commit dates when written by compatible versions of Git. Thus,
+ rewriting split commit-graph as a single file (`--split=replace`) creates a
+ single layer with corrected commit dates.
+ 
+-## Deleting graph-{hash} files
++Deleting graph-\{hash\} files
++~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ After a new tip file is written, some `graph-{hash}` files may no longer
+ be part of a chain. It is important to remove these files from disk, eventually.
+@@ -333,7 +339,8 @@ files whose modified times are older than a given expiry window. This window
+ defaults to zero, but can be changed using command-line arguments or a config
+ setting.
+ 
+-## Chains across multiple object directories
++Chains across multiple object directories
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ In a repo with alternates, we look for the `commit-graph-chain` file starting
+ in the local object directory and then in each alternate. The first file that
