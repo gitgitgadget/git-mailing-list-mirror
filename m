@@ -1,41 +1,41 @@
 Received: from avasout-ptp-004.plus.net (avasout-ptp-004.plus.net [84.93.230.250])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40F1DDA9
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 00:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB768DDA9
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 00:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.250
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758846269; cv=none; b=mIKNNbTlnlE3vZcsPIugYgmlybKoJeP/X69R0NuaB7PMnOeDiy8x93pJOQnvdunddh2zuKOn9jJlVUdzhGikmtchKMwT1wWBboNDmhypms6UJwiuSA09AiAtk5eOXsEMgwC42Xb74cDxydkllXgBbpdZv42AyfgdRLXjABl/5mE=
+	t=1758846379; cv=none; b=YQFEpJEiSCaPtBTzhjbVVs0V1wB5cTtwf5DrKC9DzcWzZvQmFkwMDxX7W7fMOlKecAEaElxig478np7dqlR9B9fSlTijRHYeR+04XFyq9GFe7k+pOfcOX/oGo6trLq4ngfTKx0BkYBDlPAxfpauqtyKD7sCSXIoDxzmTALFm+2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758846269; c=relaxed/simple;
-	bh=waaEs87VAF9Mt7kUIQ1j9+uwiJQkaUED6hAFOFv1oqk=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=qwhSXscxB1ZNubd5HBbEtm8V2Jc+r8XyjErdyhzCrZ/cJQQsjrCn/Pdfg/zDcP3Q4C/PYYiFJnOjnv02Yez/YVauqROJBS0dwKGQ2mGPvg3UQQPbBjb4MDmsw8rTrlYnnyU7vDUmPk0Y/TwIEZ3JqEH9bdH+JFgPMJMM923qIcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=MV80lo0E; arc=none smtp.client-ip=84.93.230.250
+	s=arc-20240116; t=1758846379; c=relaxed/simple;
+	bh=Hy+2TBm8ZG+iWBnAszLkQfGa4GbGTHAkmxGIRVXyHcc=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=iEhxcKPhqPG8ZdzvgYpxz/0O77c9PBV+TFjvVLvxhAhqTJS5xPBsLO8eBT9M2Cr/K9t+n5p/TfqG1Vgf7lCSqWhzYxQTS3r4X64t4vtnmnufmyfDm4KH2UIcKS+13P80GUA9bqTL4LUZnS9+JW9ZQgTqsoUT84dwCvj3lBDNJTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=T7CoKeh5; arc=none smtp.client-ip=84.93.230.250
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="MV80lo0E"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="T7CoKeh5"
 Received: from [10.0.2.15] ([80.189.83.109])
 	by smtp with ESMTPA
-	id 1wG6vu0kK2D8r1wG7vBSjI; Fri, 26 Sep 2025 01:24:24 +0100
+	id 1wHuvu19t2D8r1wHvvBSwV; Fri, 26 Sep 2025 01:26:15 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1758846264; bh=ZOs4yf3JbmHV01kXPH9yVb4i1cVUYJK+3mm83RWlWPY=;
+	t=1758846375; bh=41qYSr/u8/BF8huB8WU3pC10eaVS6vhfkifXZEtYM08=;
 	h=Date:To:Cc:From:Subject;
-	b=MV80lo0EosRd7VeA/NdDFxqAsDN+8mOTGIUSxI9uUcEqpcavV/aK4HzjCEPrmPh6S
-	 THPMt02tQREbtn9bh5axjMLrsGHBhE41yKSeJxOYDQ39IcT3Wl9vtpN9nCoYqpQfH9
-	 nmp+F2rHwxQHFUlrzSz2vHIDAVz+KWRQ6rh11mOE/2OwoVzbgvSslKVxsEWFngiVZE
-	 AzZ/TgGw4a5mw1h7oSaMH9xnXUuX802YfHiHN9Xx/mAfRyCvMn3W5iwYSFWKMdstC6
-	 /70efgje9iF9oMhGY1bpcnLzTrj+28laYpaJbOhPFWv0gUxcFIj2Jt76ayZg+NB9D+
-	 pDbq2rkI8Y9vA==
+	b=T7CoKeh5b86ELGuTV56vg3qXfGsgSimVT0nE1htoMGDi9cJvkcduUKpTawkkuRK/o
+	 izBCACkuZM8tEEW6nkMKAHjZVjCY13B9fWx/5gEVDLZ4WUI9P8zn2AzNkZIWQKdHip
+	 LvtRAiGS+/rqakhiQ8/yQXKJHrBPs4hY5h183palDCiOZcRzUoCltqw+eAkLGoK1PW
+	 AL619DBRSdAEGayKWPDR+/mRzYwPgYNKpf4CxfbZav3oquZ+n0NIX0n5Kvb/L+mgIL
+	 sFJrCjLmujkpix+B4Jej5rfkl+Zfcdt4Ff/2jPbkc+BnWCHUb6GnjkTWedyX2XjIdo
+	 CrKvBinzEM93A==
 X-Clacks-Overhead: "GNU Terry Pratchett"
 X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=beTIU/PB c=1 sm=1 tr=0 ts=68d5dd38
+X-CNFS-Analysis: v=2.4 cv=beTIU/PB c=1 sm=1 tr=0 ts=68d5dda7
  a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=iy8Wnop-l4UNZM7VUBIA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
+ a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=EBOSESyhAAAA:8
+ a=EpNwF9wgQfMGozLllNgA:9 a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH: ramsayjones@:2500
-Message-ID: <6dc8844c-8554-4c6c-a3bd-5ad2c04ab7a6@ramsayjones.plus.com>
-Date: Fri, 26 Sep 2025 01:24:22 +0100
+Message-ID: <19964f5e-f553-4eda-8a62-7d0aa3017657@ramsayjones.plus.com>
+Date: Fri, 26 Sep 2025 01:26:14 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,164 +48,178 @@ To: GIT Mailing-list <git@vger.kernel.org>
 Cc: Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>,
  Junio C Hamano <gitster@pobox.com>
 From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [RFC PATCH 2/4] doc: remembering-renames.adoc: fix asciidoc warnings
+Subject: [RFC PATCH 3/4] doc: sparse-checkout.adoc: fix asciidoc warnings
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfL64zFTWtEX4boHW4Y7OPGBJVLowlyTZ1UVBAvCqGkwpqof5gBKmnZBBR9YUi4I4LeT57GeDoVPCsD4DeXT8kKKot8wB3sTfy8Mqqng4OCt75SL/I3eW
- w4DRX/0+1DnAcwGP/Z9UngJVXa5srksLg9/0ecIpSMLfrfBJDH4l9li+2gECL2IjNVS9u1tH/HqxL+4d+Yhc0AO65ZPWYVaQIgQ=
+X-CMAE-Envelope: MS4xfH0mHrn811fcMdaGLb/6/6JDRsQt8WaxgV6aWS5o7dVrk6wmP7qy2Cq+//zOD6HBVDebpIwRvYekRMTQCi8VnFbnnIyoNqcp2pNmr0hHT8xkGtNTp/is
+ yDp+/Ayl3EM9wLc8ce3z+Y/+ApcaBnKdnYpSFkmTW+I8NFFp8C6HtF76D2Um87jeJVa2WNd2nveqhlmunxXf9U46nv73X3QvItI=
 
 
 Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- .../technical/remembering-renames.adoc        | 63 +++++++++----------
- 1 file changed, 31 insertions(+), 32 deletions(-)
+ Documentation/technical/sparse-checkout.adoc | 38 ++++++++++----------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/Documentation/technical/remembering-renames.adoc b/Documentation/technical/remembering-renames.adoc
-index 73f41761e2..89db8b406d 100644
---- a/Documentation/technical/remembering-renames.adoc
-+++ b/Documentation/technical/remembering-renames.adoc
-@@ -10,32 +10,32 @@ history as an optimization, assuming all merges are automatic and clean
- 
- Outline:
- 
--  0. Assumptions
-+  0 Assumptions
- 
--  1. How rebasing and cherry-picking work
-+  1 How rebasing and cherry-picking work
- 
--  2. Why the renames on MERGE_SIDE1 in any given pick are *always* a
--     superset of the renames on MERGE_SIDE1 for the next pick.
-+  2 Why the renames on MERGE_SIDE1 in any given pick are *always* a
-+    superset of the renames on MERGE_SIDE1 for the next pick.
- 
--  3. Why any rename on MERGE_SIDE1 in any given pick is _almost_ always also
--     a rename on MERGE_SIDE1 for the next pick
-+  3 Why any rename on MERGE_SIDE1 in any given pick is _almost_ always also
-+    a rename on MERGE_SIDE1 for the next pick
- 
--  4. A detailed description of the counter-examples to #3.
-+  4 A detailed description of the counter-examples to #3.
- 
--  5. Why the special cases in #4 are still fully reasonable to use to pair
--     up files for three-way content merging in the merge machinery, and why
--     they do not affect the correctness of the merge.
-+  5 Why the special cases in #4 are still fully reasonable to use to pair
-+    up files for three-way content merging in the merge machinery, and why
-+    they do not affect the correctness of the merge.
- 
--  6. Interaction with skipping of "irrelevant" renames
-+  6 Interaction with skipping of "irrelevant" renames
- 
--  7. Additional items that need to be cached
-+  7 Additional items that need to be cached
- 
--  8. How directory rename detection interacts with the above and why this
--     optimization is still safe even if merge.directoryRenames is set to
--     "true".
-+  8 How directory rename detection interacts with the above and why this
-+    optimization is still safe even if merge.directoryRenames is set to
-+    "true".
+diff --git a/Documentation/technical/sparse-checkout.adoc b/Documentation/technical/sparse-checkout.adoc
+index 0f750ef3e3..0701c0f90d 100644
+--- a/Documentation/technical/sparse-checkout.adoc
++++ b/Documentation/technical/sparse-checkout.adoc
+@@ -14,7 +14,7 @@ Table of contents:
+   * Reference Emails
  
  
--=== 0. Assumptions ===
-+== 0. Assumptions ==
+-=== Terminology ===
++== Terminology ==
  
- There are two assumptions that will hold throughout this document:
- 
-@@ -91,7 +91,7 @@ this config setting, but we have to discuss a few more cases to show why;
- this discussion is deferred until section 8.
- 
- 
--=== 1. How rebasing and cherry-picking work ===
-+== 1. How rebasing and cherry-picking work ==
- 
- Consider the following setup (from the git-rebase manpage):
- 
-@@ -138,8 +138,7 @@ Conceptually the two statements above are the same as a three-way merge of
- B, B', and C, at least the parts before you decide to record a commit.
+ cone mode: one of two modes for specifying the desired subset of files
+ 	in a sparse-checkout.  In cone-mode, the user specifies
+@@ -92,7 +92,7 @@ vivifying: When a command restores a tracked file to the working tree (and
+ 	file), this is referred to as "vivifying" the file.
  
  
--=== 2. Why the renames on MERGE_SIDE1 in any given pick are always a ===
--===    superset of the renames on MERGE_SIDE1 for the next pick.     ===
-+== 2. Why the renames on MERGE_SIDE1 in any given pick are always a superset of the renames on MERGE_SIDE1 for the next pick. ==
+-=== Purpose of sparse-checkouts ===
++== Purpose of sparse-checkouts ==
  
- The merge machinery uses the filenames it is fed from MERGE_BASE,
- MERGE_SIDE1, and MERGE_SIDE2.  It will only move content to a different
-@@ -181,8 +180,7 @@ are a subset of those between E and G.  Equivalently, all renames between E
- and G are a superset of those between A and A'.
- 
- 
--=== 3. Why any rename on MERGE_SIDE1 in any given pick is _almost_   ===
--===    always also a rename on MERGE_SIDE1 for the next pick.        ===
-+== 3. Why any rename on MERGE_SIDE1 in any given pick is _almost_ always also a rename on MERGE_SIDE1 for the next pick. ==
- 
- Let's again look at the first two picks:
- 
-@@ -254,7 +252,7 @@ were detected as renames, A:oldfile and A':newfile should also be
- detectable as renames almost always.
+ sparse-checkouts exist to allow users to work with a subset of their
+ files.
+@@ -255,7 +255,7 @@ will perceive the checkout as dense, and commands should thus behave as if
+ all files are present.
  
  
--=== 4. A detailed description of the counter-examples to #3.         ===
-+== 4. A detailed description of the counter-examples to #3. ==
+-=== Usecases of primary concern ===
++== Usecases of primary concern ==
  
- We already noted in section 3 that rename/rename(1to1) (i.e. both sides
- renaming a file the same way) was one counter-example.  The more
-@@ -276,18 +274,21 @@ still somehow merge cleanly), then traditional rename detection would not
- detect A:oldfile and A':newfile as renames.
- 
- Here's an example where that can happen:
-+
-   * E:oldfile had 20 lines
-+
-   * G:newfile added 10 new lines at the beginning of the file
-+
-   * A:oldfile kept the first 3 lines of the file, and deleted all the rest
-+
- then
-+
-   => A':newfile would have 13 lines, 3 of which matches those in A:oldfile.
--E:oldfile -> G:newfile would be detected as a rename, but A:oldfile and
--A':newfile would not be.
-+  E:oldfile -> G:newfile would be detected as a rename, but A:oldfile and
-+  A':newfile would not be.
+ Most of the rest of this document will focus on Behavior A and Behavior
+ B.  Some notes about the other two cases and why we are not focusing on
+@@ -300,7 +300,7 @@ Behavior C do not assume they are part of the Behavior B camp and propose
+ patches that break things for the real Behavior B folks.
  
  
--=== 5. Why the special cases in #4 are still fully reasonable to use to    ===
--===    pair up files for three-way content merging in the merge machinery, ===
--===    and why they do not affect the correctness of the merge.            ===
-+== 5. Why the special cases in #4 are still fully reasonable to use to pair up files for three-way content merging in the merge machinery, and why they do not affect the correctness of the merge. ==
+-=== Oversimplified mental models ===
++== Oversimplified mental models ==
  
- In the rename/rename(1to1) case, A:newfile and A':newfile are not renames
- since they use the *same* filename.  However, files with the same filename
-@@ -394,7 +395,7 @@ cases 1 and 3 seem to provide as good or better behavior with the
- optimization than without.
+ An oversimplification of the differences in the above behaviors is:
+ 
+@@ -313,7 +313,7 @@ An oversimplification of the differences in the above behaviors is:
+ 	      they can later lazily be populated instead.
  
  
--=== 6. Interaction with skipping of "irrelevant" renames ===
-+== 6. Interaction with skipping of "irrelevant" renames ==
+-=== Desired behavior ===
++== Desired behavior ==
  
- Previous optimizations involved skipping rename detection for paths
- considered to be "irrelevant".  See for example the following commits:
-@@ -421,7 +422,7 @@ detection -- though we can limit it to the paths for which we have not
- already detected renames.
- 
- 
--=== 7. Additional items that need to be cached ===
-+== 7. Additional items that need to be cached ==
- 
- It turns out we have to cache more than just renames; we also cache:
- 
-@@ -482,9 +483,7 @@ we store the trees to compare with what we are asked to merge next
- time.
+ As noted previously, despite the simple idea of just working with a subset
+ of files, there are a range of different behavioral changes that need to be
+@@ -542,7 +542,7 @@ understanding these differences can be beneficial.
+   * gitk?
  
  
--=== 8. How directory rename detection interacts with the above and   ===
--===    why this optimization is still safe even if                   ===
--===    merge.directoryRenames is set to "true".                      ===
-+== 8. How directory rename detection interacts with the above and why this optimization is still safe even if merge.directoryRenames is set to "true". ==
+-=== Behavior classes ===
++== Behavior classes ==
  
- As noted in the assumptions section:
+ From the above there are a few classes of behavior:
+ 
+@@ -609,7 +609,7 @@ From the above there are a few classes of behavior:
+     specification.
+ 
+ 
+-=== Subcommand-dependent defaults ===
++== Subcommand-dependent defaults ==
+ 
+ Note that we have different defaults depending on the command for the
+ desired behavior :
+@@ -749,7 +749,7 @@ desired behavior :
+     implemented.
+ 
+ 
+-=== Sparse specification vs. sparsity patterns ===
++== Sparse specification vs. sparsity patterns ==
+ 
+ In a well-behaved situation, the sparse specification is given directly
+ by the $GIT_DIR/info/sparse-checkout file.  However, it can transiently
+@@ -821,7 +821,7 @@ under behavior B index operations are lumped with history and tend to
+ operate full-tree.
+ 
+ 
+-=== Implementation Questions ===
++== Implementation Questions ==
+ 
+   * Do the options --scope={sparse,all} sound good to others?  Are there better
+     options?
+@@ -892,7 +892,7 @@ operate full-tree.
+     is seamless for them.
+ 
+ 
+-=== Implementation Goals/Plans ===
++== Implementation Goals/Plans ==
+ 
+  * Get buy-in on this document in general.
+ 
+@@ -920,15 +920,15 @@ operate full-tree.
+      commands.  IMPORTANT: make sure diff machinery changes don't mess with
+      format-patch, fast-export, etc.
+ 
+-=== Known bugs ===
++== Known bugs ==
+ 
+ This list used to be a lot longer (see e.g. [1,2,3,4,5,6,7,8,9]), but we've
+ been working on it.
+ 
+-0. Behavior A is not well supported in Git.  (Behavior B didn't used to
++1. Behavior A is not well supported in Git.  (Behavior B didn't used to
+    be either, but was the easier of the two to implement.)
+ 
+-1. am and apply:
++2. am and apply:
+ 
+    apply, without `--index` or `--cached`, relies on files being present
+    in the working copy, and also writes to them unconditionally.  As
+@@ -948,7 +948,7 @@ been working on it.
+    files and then complain that those vivified files would be
+    overwritten by merge.
+ 
+-2. reset --hard:
++3. reset --hard:
+ 
+    reset --hard provides confusing error message (works correctly, but
+    misleads the user into believing it didn't):
+@@ -971,13 +971,13 @@ been working on it.
+     `git reset --hard` DID remove addme from the index and the working tree, contrary
+     to the error message, but in line with how reset --hard should behave.
+ 
+-3. read-tree
++4. read-tree
+ 
+    `read-tree` doesn't apply the 'SKIP_WORKTREE' bit to *any* of the
+    entries it reads into the index, resulting in all your files suddenly
+    appearing to be "deleted".
+ 
+-4. Checkout, restore:
++5. Checkout, restore:
+ 
+    These command do not handle path & revision arguments appropriately:
+ 
+@@ -1030,7 +1030,7 @@ been working on it.
+     S tracked
+     H tracked-but-maybe-skipped
+ 
+-5. checkout and restore --staged, continued:
++6. checkout and restore --staged, continued:
+ 
+    These commands do not correctly scope operations to the sparse
+    specification, and make it worse by not setting important SKIP_WORKTREE
+@@ -1046,11 +1046,11 @@ been working on it.
+    the sparse specification, but then it will be important to set the
+    SKIP_WORKTREE bits appropriately.
+ 
+-6. Performance issues; see:
++7. Performance issues; see:
+     https://lore.kernel.org/git/CABPp-BEkJQoKZsQGCYioyga_uoDQ6iBeW+FKr8JhyuuTMK1RDw@mail.gmail.com/
+ 
+ 
+-=== Reference Emails ===
++== Reference Emails ==
+ 
+ Emails that detail various bugs we've had in sparse-checkout:
  
 -- 
 2.51.0
