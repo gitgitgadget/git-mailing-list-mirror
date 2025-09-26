@@ -1,76 +1,112 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 196F32750F3
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 13:04:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758891847; cv=pass; b=LXgI16Cb30N7TA3aK5ccZlUb6OmEJScfZSXNGw7hYvhZYX4e68J+rLqh7ZK5IVArUkV8dhAfNSKeBEjTae3J+EKqQDlh/9OAvd2BoPLHJ59t2g75MpKlYvgsaAb9EyKiOV/SlVqUt8EvYDDdStsGG5eJbXvXfsNeEn24FoNbDsg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758891847; c=relaxed/simple;
-	bh=/EsAVtYwxACmONHeiKA8IyU+2AeQlY66FZD8fSO0q/k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UUdyG5FPSk2sORlJ+JC9wjtvMs5DVKTnAs1eFG8U4fmIncM0YeC1PlswZa9wRmFGdwDGhvM1eqdHzdeMu4UJVnE3CZC3w8p5TfXKmv5iOEGJWVs7LrmFToXy+Ln1mfVWwLW6Cgs3mIUmlY/KYFSHfGuW8WDThoX/BqpWtw6tPJU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=T3Jdzl8o; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43BE2267B07
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 13:40:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.46
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758894014; cv=none; b=c/qQIhqNYKyLE9hwm0xqFlzuqMfbbL987SQ2yg9gAffCXrQh5N9k4t+Zk3Pri1iRJ/JIMXc0AqLOGVPjB5x0yFsWXojA4huZoYO5pfdVjoUvmYz0u81FVKy/HcXK5sdXXB6+7ybtfNuSetotcrAmfcFE9xkS/EFnhN54bfSYxEU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758894014; c=relaxed/simple;
+	bh=/AXPkqVi2CoAG17Z9q9u56J0QTYWGnGLTX1xGfFxjRk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AUqRD739d9Aho+h0XdVWzNOYt76oy5RAhNe35+21OeKr0C4hoNU/xztJsNpAjSTgkXbYtPdxXSv7hLp+wmyImfKgwpiKck1Eeu7vNW7RDCsu4rRrHa1MBtYixvue12phBOxSiuntPt2KOp/JjdgJnpUH/KNaBndk0pHQFHch0vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WxOih4B+; arc=none smtp.client-ip=209.85.222.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="T3Jdzl8o"
-ARC-Seal: i=1; a=rsa-sha256; t=1758891829; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=Y0L3HGY3ySQi3nqCc/NjF/rfOKQVIIzj2D2lMX/ICZeFY70M1kBL1iBQPPQwY9Y3LOO/qYiy6pYXRtnvDgPrrguYpEN75kOSqWfCpUVir19QH3x12NDIS4vmMNNfiRmu5t7mzd5ifSvd7MS1sosMPO50sSPO3irn0WLl4y7OENs=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1758891829; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=qeox/zUuGx5HkhHyiWVJvAIi7Qnjl8utU/m6JiAdz94=; 
-	b=byFwwNla4YS6G2HaxTBfpdN+FTyu1RKZ5T4bgsZ0rdpvgkGA1GRy3lxRefwQ2ospLAoAiBqwcXXP1bfawAMSlLS/wuNznetsL8vEM+9ILQJmAEakQ67vdHkfbmqZ8kTYNt/Ur0emL5r0K7qOcXLLhLAtZfopoaHajvgfrZLVK6I=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1758891829;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=qeox/zUuGx5HkhHyiWVJvAIi7Qnjl8utU/m6JiAdz94=;
-	b=T3Jdzl8opCRc9CfPdoUCRvZuP303za2gkwi+fHJDsLmViHhK3iS5IDmX8bDTQqLn
-	+5NbaxZDq5uxZCs01SyG90/R0n5SOB7fI3qFIWC2uWVFUn09ERwe48zOPGPX9vYeL08
-	up+/Wa/iUrF2+N5MRDVfTQGrpEyStwwwfXc5vOtU=
-Received: by mx.zohomail.com with SMTPS id 1758891827084357.2345056200438;
-	Fri, 26 Sep 2025 06:03:47 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
- Damazio Bovendorp <rdamazio@google.com>, Patrick Steinhardt <ps@pks.im>,
- Josh Steadmon <steadmon@google.com>, =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?=
- Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 05/10] reference-transaction: use hook.h to run hooks
-In-Reply-To: <xmqqv7l6dx4u.fsf@gitster.g>
-References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
- <20250925125352.1728840-6-adrian.ratiu@collabora.com>
- <xmqqv7l6dx4u.fsf@gitster.g>
-Date: Fri, 26 Sep 2025 16:03:43 +0300
-Message-ID: <875xd5nz68.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WxOih4B+"
+Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-91a57bd6efeso600710241.3
+        for <git@vger.kernel.org>; Fri, 26 Sep 2025 06:40:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758894012; x=1759498812; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Cnlq66arSc3lZu5bGJYVO4SQBuSdWyrJEf4GovFUng4=;
+        b=WxOih4B+RcMsnNBsLUoFjha27wZgzu/3YEPN21TkfDieUIRJRLSI4gkkP6qg52wx1a
+         iRBJ6a8EAmA6KBwl1azQk6B21Rj5r+3PAJeGAcTrQYtIP7xo4mzm/6YBwg5YXTpS72i2
+         JhvkNfedXAaW+KoVzDvA9fuymfs3eNARkY7Bg+p/rmEpecyz4zOng2tjeqf6VALFfw6y
+         Ak/RUdXNN6ed0cQbARSjhIsRjtIvEfQTVSH+byAJ/nmHT1eWLgpejs9+5vpgsgV8zk8R
+         fKpwXqThAF9z/7HP4V3I8P9GOg7Gz9dNN12kiFPjEqZAqxH8XLDp/9pbajrlbwlJ1URe
+         tw6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758894012; x=1759498812;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Cnlq66arSc3lZu5bGJYVO4SQBuSdWyrJEf4GovFUng4=;
+        b=XhsLopgEUuYxNL0I5C1RvUPZI6AX/ZxgrdFSSCLJHAcUKf5yM2TApOQa92ZwrYHboW
+         bMqlihEsERp3qyLij8GCVf/vSNJscI5nuLTNF18Lf2VGU9EYD3QiJeYsgi2pH03NPQni
+         3ODbR8Ih1m57M5Nn1XoGeN3NHM9GAKlRrbNqcdGHGLIDcpwDmlOJ/KsfNNmvAqqRJ5Q4
+         AU0R2r6mQ+jEF0qJcx9M2qs/Wr7QvY5usYOUeQqWUMH0eww0zlVRYThErBJjZA5dDhM6
+         Tp+v1ESWw4I1oxkUS9VINwpcCo08Ly486/4qLdK4Z6pK9vQGvEYqA5JFOHCnp+J/nn1P
+         RH5g==
+X-Gm-Message-State: AOJu0YypmNdwdXbysgS8wMdYHgCA7JDfhglce2Oy/cdHcEF/RSrpL3c4
+	bjqnM1U0bpG7//zxb+oj1fjAgPqrID+eDnWSPyNMCD15gnfj7nTJgTZI
+X-Gm-Gg: ASbGncuowKakJZnn82Ner4dFw3w4m5WZ1fRek5yqWQzzQ1RfNHl2ZQvQi0rk3ruw1ZW
+	NV1p7Rly+nVmhD5wZvSZGVxA1Kl8MPBnC0ZeV2XmyYZsRcW+qVnT68g5oPQVOHdm8SjGhT7Nm/G
+	2saAyF/iBH0UlKj7KH/kOjrfIkhsmueovdNNauobYE7UYUf+iT+w35ihWn8xZAvvPBXOVB4aKTI
+	exoaqTTnj15YJN1bBw6OwEco5qYif3rwN9XMk9Q/Cheh916V7AAuI+6f+mAAf1jXfSkJunoLlyn
+	kAD8dM94jINWDPoiukLq+WRmG8/QW7NP3gq91I8UcgRWceKvvnmqIumC/N2xqvfHG+DEt1ym1+d
+	rrvm/uUl/OOez9aLXoNUvwMF6hmA9HzuFxRveJhBpk4X+5UuKHVoRTSG6qgEteFesq0MCv80=
+X-Google-Smtp-Source: AGHT+IE0SwEyjhwqoR1Iv9vxfmNtZ6yj76amZ71ZjGWIdeN4CUIAPFouvvKUonw0KnJDyQWG/TH/LA==
+X-Received: by 2002:a05:6122:308e:b0:544:9414:105f with SMTP id 71dfb90a1353d-54bea0b83d9mr2910658e0c.2.1758894011757;
+        Fri, 26 Sep 2025 06:40:11 -0700 (PDT)
+Received: from ?IPV6:2605:a601:a6de:d300:74ae:976a:4e3f:7fa? ([2605:a601:a6de:d300:74ae:976a:4e3f:7fa])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-54bed881ea0sm897680e0c.1.2025.09.26.06.40.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 Sep 2025 06:40:11 -0700 (PDT)
+Message-ID: <71c5d266-18ff-4ad3-81a3-30b9a1fefde2@gmail.com>
+Date: Fri, 26 Sep 2025 09:40:10 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-ZohoMailClient: External
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/7] sparse-checkout: add 'clean' command
+To: Junio C Hamano <gitster@pobox.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, newren@gmail.com, Patrick Steinhardt <ps@pks.im>
+References: <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
+ <pull.1941.v3.git.1757673011.gitgitgadget@gmail.com>
+ <xmqq348rodiw.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqq348rodiw.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, 25 Sep 2025, Junio C Hamano <gitster@pobox.com> wrote:
-> Adrian Ratiu <adrian.ratiu@collabora.com> writes:=20
->=20
->> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>=20
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>=
-=20
->> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com> ---=20
->>  refs.c | 61=20
->>  ++++++++++++++++++++++++++++------------------------------ 1=20
->>  file changed, 29 insertions(+), 32 deletions(-)=20
->=20
-> Please describe what is done, why, and what benefit we are=20
-> reaping, just like you did for the previous few steps.=20
+On 9/12/2025 12:12 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> NEW: This series is rebased on a recent master to remove dependence on the
+>> updates to the global variables used by the sparse-checkout system.
+>>
+>> When using cone-mode sparse-checkout, users specify which tracked
+>> directories they want (recursively) and any directory not part of the parent
+>> paths for those directories are considered "out of scope". When changing
+>> sparse-checkouts, there are a variety of reasons why these "out of scope"
+>> directories could remain, including:
+>>
+>>  * The user has .gitignore or .git/info/exclude files that tell Git to not
+>>    remove files of a certain type.
+>>  * Some filesystem blocker prevented the removal of a tracked file. This is
+>>    usually more of an issue on Windows where a read handle will block file
+>>    deletion.
+> 
+> The updated documentation was easeier to follow (even though I had a
+> "Huh?" moment with "Opportunistically" a bit).  Comparing with the
+> previous version (with my rebase to get rid of the dependence on the
+> other topic) and this one, I see a few more code paths have learned
+> to pass "struct repository *" pointers throughout the callchain,
+> which is very nice.
 
-Ack, will do in v2.
+I'm hoping to see some feedback from Elijah whose feedback on v2 was
+very helpful. Here is a ping to see if he's available.
+
+Thanks,
+-Stolee
+
