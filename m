@@ -1,199 +1,226 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD8015D1
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 19:03:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B2B1F542E
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 19:12:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758913417; cv=none; b=lPpZ2qcktCayArGrL9WaIwP4/hc34y4R78X0ig7FpKb8C8EB20APp/kpa1+fZ/nNp7Ojp+1yEcTQfO+dIU6kJryLtjXUGeje57Baipy5xnYUgJn0D4GivRwdsp5d4cTnfMq4SWGrzapS4ENREMEh0bExJG2IVI7SsfJwg9mi3gE=
+	t=1758913923; cv=none; b=HCBzfCsUBUKCRXSJFaVmJmlnK1HtdNcZUE52kkdGQ9vhqgOdskvudCgFCQXQca7lL+DeWyR0lUPgvTHBDDBSk9+UOm00NmEbQ71jSa4QjcZ4vq8ZkuOAks3nVGw7FW5Joo79KXJKiAvg2A72zCX6LCIa5/5FPFnWIeWq0A1wwkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758913417; c=relaxed/simple;
-	bh=AY4L/ZI+7sbdG6M/cfHGjHCoiVCN5yN+bKONevEGFlg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rFb/yz/70M1YJ79yn5qUChpiccM8BlFDewVXBDwvCk7Zt4NdzjMne0at1fNtsAXFwwVtqpLPciUbHbdw/As9pnZ/D8f+nHBAN79H2P9p7Kz6Lu24uVPg5sWGIMXpHjxrrgzpO4j8fkGrsDP/x/LgnUjHRLxrcq5xB1MbsOHAVKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dgZeJu92; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G6TCKlLP; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758913923; c=relaxed/simple;
+	bh=3EYauaYkZucjieFQisxfR+MFQZnvLfqm+To33O0/9E4=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=b15l6AV0RqHdRAEODynUv4jSJ9vktLG//2cRz+p8CNhD+Sn4kQbcRYp5LPQNQz6D3aDOF+yvjrDi2s0ibE/PXJb26RTl2Nq32/2iEkKIPjfUYTu6tOJSERWwgOqRXU7EJb/bPito01AU63lwuqQ7Wtp6sJfqe+mx5tNgy4vIH1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=TArqI+fg; arc=none smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dgZeJu92";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G6TCKlLP"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4AFC27A00AD;
-	Fri, 26 Sep 2025 15:03:33 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 26 Sep 2025 15:03:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758913413; x=1758999813; bh=5Xtq5jqZnM
-	XRx3+YJ6djri469yaB152ond8VPw3iPHk=; b=dgZeJu92OS0/7pOeXnVozIcUzt
-	FfRvrzEv7S1dlwcFzcsqeVP9iS1kuXUYuOThdQN8z/sd3SYVDbdzjtnMGoPpG+Rw
-	BSclxy2/PWe3tmrNY1OPmu5fwkLOyXihmAPw5d8wMtsVa6mJHhhIRGGAbxW2RUtx
-	Zkd3/c4t/1xcMBtDnInzKp++TCs5qsPX1WCsZFUixBBR6OjFBARGAYsbBiQatLD+
-	4RbqMH/CvcFoOx1lfaBFVyri1DtRajiZZU8XYDJb5lfAQiZDWxICBVm5+NbcFYiz
-	dGwa/DnBTcDa6ir24vmUsuUA35T8NtLUWfCoyzwdG+IndP33KMP5uYXkrmOQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1758913413; x=1758999813; bh=5Xtq5jqZnMXRx3+YJ6djri469yaB152ond8
-	VPw3iPHk=; b=G6TCKlLPYuf+vQR29uYbVtKaXb8kqU15dcZCDiJgs7tYz0pTndf
-	XfkSpmHFB/RcJ35QD8WCQiheCnz/ce0meVwb7rlrlb5ycJSCIVZ6DwMdmzjf3wz5
-	9JnYjs10JBZuQnP1qnQvdhhKd3mWoj3XFP+wHzCNzce7m2SvOKkkejn06eZLHXsE
-	pOzB64DoUjLkjq1jadciaicUrWSIuzBtjArQwW4cTWOXyUeaOyUqzsDzp1l8t42h
-	j4RDPx7guQgX5LS4XqCaECwBUSEVDCkzrzab0/BkqRBJumr76Y7ePwwcvK8fK9QK
-	AlGvdSJtQJcfPvlp5nlWqdm/2TYleXgK1AQ==
-X-ME-Sender: <xms:hOPWaLZXj7gVvRqAolNI3m7DNeABxNE_rkHzAhePqulbdZj7wBx_lA>
-    <xme:hOPWaOEdDwXDq4INGSKeCvRU5ecR6uE5MZJWZCrvzuNJKtbKzy9vMr35nMYDmdpVU
-    ZhX9sroYIzbFhNpVzPyg6idss3GfPQlQPMbwQPHrzHmxtf6GYs>
-X-ME-Received: <xmr:hOPWaHw5d66w5qo3OAb3Us3zNSe4Z5uQCugOvZJUF4iY1myHRD3q2jFj-WerVikQxwIVsKH1yIz3mLhTK5l_FiWErWiLhVyq9QHE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejtdduiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
-    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhulh
-    hirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhr
-    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:hOPWaIlRptC7TF6xL_SIOdMch2MqhfFqlAsQjSXN-GtnCafNn7MM9w>
-    <xmx:hOPWaImc06Irmd0ajLcIRJWYzB1TnQUSWaKcLID-IknT6VSr_Sv5PQ>
-    <xmx:hOPWaCzbOB43CMNELSwTpU6N_xHDIacWtdorThGbjZ6wpV_n3VODVw>
-    <xmx:hOPWaFpQtzXvkTHycAz4yQ2Tvc1Bfp-Vx6o_DVGg6JCS0rammELO3A>
-    <xmx:hePWaO_lYeU3Lci_qkwTxvVB5bGUGUcgb-jcqXTaeWCN8015kfkNE0Ys>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 26 Sep 2025 15:03:32 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  "Kristoffer Haugsbakk"
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v3 4/4] doc: git-push: clarify "what to push"
-In-Reply-To: <442a4f25-7d7b-4f34-9e2c-ce396277e7be@app.fastmail.com> (Julia
-	Evans's message of "Fri, 26 Sep 2025 13:31:32 -0400")
-References: <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
-	<pull.1964.v3.git.1758649472.gitgitgadget@gmail.com>
-	<be6453d010bdc9d2b49988d6841dd7e7f9bdf1f8.1758649472.git.gitgitgadget@gmail.com>
-	<xmqqqzvvk4bj.fsf@gitster.g>
-	<2365a7b9-3d22-4406-876d-65822822655f@app.fastmail.com>
-	<xmqqzfaidyil.fsf@gitster.g>
-	<1422594f-b0a8-4a7a-bf78-940693757224@app.fastmail.com>
-	<xmqq348admuo.fsf@gitster.g> <xmqqwm5lcjvy.fsf@gitster.g>
-	<442a4f25-7d7b-4f34-9e2c-ce396277e7be@app.fastmail.com>
-Date: Fri, 26 Sep 2025 12:03:31 -0700
-Message-ID: <xmqqa52havek.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="TArqI+fg"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-71d5fe46572so34142877b3.1
+        for <git@vger.kernel.org>; Fri, 26 Sep 2025 12:12:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1758913920; x=1759518720; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-disposition:mime-version
+         :message-id:subject:to:from:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=278hDRFbiGWXUbogW4XsKh6BbDKavf0puG9Puvfv4yM=;
+        b=TArqI+fg4Lau0T5WFUHFueBB41Av19fz1XJHGNCMk1R2wbgKBteCPeHLV/GCpo2q0s
+         SeFVbqz8m7Ux9VgHLtESd4YddVItIYJg8y+jqmvOq9r7dFnaeTaHZchDbi7f3Jc5B+xj
+         sGN8ui+98DIh5zfb0SWhyBBYEYMWWu5fUg1QJWuH9hhLN8PtovQNfMhCqlvMd6Fya7Py
+         /eILrumfxWRhRmzkfSID/p88sMGGU9EXWdLuRnRly1d0+8eyUJLJ37PBedVSScDufmU/
+         SE+HfvYOKYk8uAm07k3T8P7qJGlWnZhzhPKGIpOAkk71hH/G7X+IsodmlX7iUMrMjFZK
+         3/Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758913920; x=1759518720;
+        h=content-transfer-encoding:content-disposition:mime-version
+         :message-id:subject:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=278hDRFbiGWXUbogW4XsKh6BbDKavf0puG9Puvfv4yM=;
+        b=HasUMbzY+lSZck2vEC3Uu2AYjgQyDe0Wdc4sEItXw3QON5wj3SD1cOvMejsuWYq65T
+         jiLm6xEscrCDYuV8qagOJbOyWm9FYXNFSVO8l79YImfK17ka50Y/js0UGLDMoAO3VGgd
+         0s9wdF/uWd2Bw50Ouu4akCgM2vf8zzhis5wbPDN2/Nqb/CNGQvnycCM//6/NHY1NlKDm
+         9cjeCbFA0+JJuGDR1MDjrkdg6UXMXfI2pRC8YlevH9in7xiR++H9ZtMjK5gfHL0ObFrE
+         yc8eqRolS43FLVSpbQtkmhI13y07ZD25kr3tyZ27/RRc73/fRReujq3A4SQ67Da4xL/K
+         f1uA==
+X-Gm-Message-State: AOJu0Yxx5v3VYsfKCnFV3NMWtSDrY1QXBt0YxrRxpMPHYyyBxWIqckTo
+	ZnjwKJrnBMRonnEzfjx0evAC4AbyAqebE5dW8+aTqN1ngZTOFXLKmulPpSMkXtevnyBuX6yiP7y
+	truQ9U6g=
+X-Gm-Gg: ASbGncvlOfRyF9HSGnAKfXhc4FW6QyjZIMG3n9qVB4jgmjBfiDcFZSpibqYWnUJhHdR
+	cjrLiKkv6xqTN4w+HsXW/jYU5zYA94i5OQpr4KDYouozsIhR104pSHc7Y60tSAKTuHMzfIZFBnT
+	sIytsOEgcjzKMsd0fhCxzQ1yrIIkd8byKa/P3Yk8qvv0n5dlKhIVFaiav9ULKbfHkowRr0dZePI
+	S7p4XM+aTEu10/UqMvadie6hlHRUfLBxFwV+eCXYHJi2GFQEiZdK/rQ13NtRPFh2rvgRONQoXBQ
+	VSYjFt4x2npNA4dDfXioNS6FyYn0Q8jMbD74lq50YJSV8wxPGU+13XE0ELlCrSRfsjP7+6mjjWg
+	oiDgPbyVT1ZHzGnyJVpxTicT91RYdVBgagPJo9JJN1RoQr99jyeE52nrP8erUiRo8MWRWxeTvD/
+	/VqCC3Bkf/05iQTGMMxsg8okws0nYa5wTc1RcM
+X-Google-Smtp-Source: AGHT+IHGpoaliQGDTY2lNdZ6R0vaeiwfN55wsPUe5qPiXPMcPDnJGK7Y+AyMlRohsSphPr8nhSGaIQ==
+X-Received: by 2002:a05:690c:110:b0:733:d35b:d7f4 with SMTP id 00721157ae682-7722cde624amr7878297b3.21.1758913919702;
+        Fri, 26 Sep 2025 12:11:59 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-6361e8c28dbsm1355860d50.3.2025.09.26.12.11.59
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Sep 2025 12:11:59 -0700 (PDT)
+Date: Fri, 26 Sep 2025 15:11:58 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Subject: Git / Software Freedom Conservancy status report (2025)
+Message-ID: <aNblfuTDdtxLdImC@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-"Julia Evans" <julia@jvns.ca> writes:
+As we get close to Git Merge next week, I wanted to refresh the annual
+"Git at SFC" status report. This report reflects changes in project's
+financials and our other activities at SFC.
 
->> In other words, the push.default=simple mode does not tell Git to
->> push to a branch with the same name.  Rather, as a variant of the
->> push.default=upstream mode, it tells Git to follow the same "push to
->> the upstream branch" rule, which requires you to configure your
->> upstream.  But the mode gives additional limit on the name of the
->> branch that can be set to upstream.
->
-> I like the idea of explaining it as "push.default=simple uses the
-> configured upstream branch, with the restriction that the upstream
-> branch must have the same name".
->
-> But as I learned from you earlier in this thread: https://lore.kernel.org/git/pull.1964.v2.git.1757703309.gitgitgadget@gmail.com/T/#m896f4a32ca462d69637b56f9bdfaa61e55e6b952
-> push.default=simple will sometimes push the current branch
-> to the remote branch with the same name even if there's no configured
-> upstream branch.
+This email will serve as that report for the year 2025.
 
-It was not me teaching anybody, though.  I was showing my puzzlement
-and confusion.
+The previous report (from last year, whose format I have been trying to
+stick to) may be found at:
 
-When b55e6775 (push: introduce new push.default mode "simple",
-2012-04-24) introduced the "simple" mode, the intention was fairly
-clear:
+  https://lore.kernel.org/git/Zusxcweod1O88h7j@nand.local/
 
-    push: introduce new push.default mode "simple"
-    
-    When calling "git push" without argument, we want to allow Git to do
-    something simple to explain and safe. push.default=matching is unsafe
-    when used to push to shared repositories, and hard to explain to
-    beginners in some contexts. It is debatable whether 'upstream' or
-    'current' is the safest or the easiest to explain, so introduce a new
-    mode called 'simple' that is the intersection of them: push to the
-    upstream branch, but only if it has the same name remotely. If not, give
-    an error that suggests the right command to push explicitely to
-    'upstream' or 'current'.
-    
-    A question is whether to allow pushing when no upstream is configured. An
-    argument in favor of allowing the push is that it makes the new mode work
-    in more cases. On the other hand, refusing to push when no upstream is
-    configured encourages the user to set the upstream, which will be
-    beneficial on the next pull. Lacking better argument, we chose to deny
-    the push, because it will be easier to change in the future if someone
-    shows us wrong.
-    
-    Original-patch-by: Jeff King <peff@peff.net>
-    Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+# Background
 
-We did reject a "git push" (no other arguments) in an unconfigured
-repository using push.default=simple.
+Git is a member project of the Software Freedom Conservancy. The Git
+project joined Conservancy in 2010 so Conservancy could help us manage
+our money and other assets, and provide legal representation for
+trademark matters. Conservancy doesn't hold any copyright on any of the
+project's code. Similarly, being a member project at Conservancy does
+not grant Conservancy any influence in the project's development. The
+technical direction that Git takes is up to us.
 
-We must have _broken_ it along the way somewhere over the years.
+Interested readers can take a look at a more full picture of what
+Conservancy does for the Git project at:
 
-In the output from
+  https://sfconservancy.org/projects/services/
 
-  $ git log --all-match --grep=push.default --grep=simple
+A "Project Leadership Committee" (PLC) represents the Git project at
+Conservancy. The PLC currently consists of Junio C Hamano, Christian
+Couder, Ævar Arnfjörð Bjarmason, and myself.
 
-there are a handful of changes that touch PUSH_DEFAULT_SIMPLE in
-ancient history; ed2b1829 (push: change `simple` to accommodate
-triangular workflows, 2013-06-19), seems to have broken the
-unconfigured case, which 00a6fa07 (push: truly use "simple" as
-default, not "upstream", 2014-11-26) tried to fix it, and then
-another commit e291c75a (remote.c: add branch_get_push, 2015-05-21)
-further tweaked on the triangular (i.e. the remote you are pushing
-to is different from the remote you are fetching from) workflow.
+# Financials
 
-But that is long time ago; I do not think we can _fix_ the breakage
-as that would be a big behaviour change.  If 'simple' works to
-update the branch with the same name as your current branch at the
-remote you cloned from without you having to do anything special,
-such a convinience is something the existing users we acquired over
-the past 10 years must have become very accustomed to already.  We
-cannot break them.
+Since we don't have real time access to our financials, we rely on
+Conservancy to send us snapshots of our ledger as we request them. This
+report will share the financials from a snapshot taken on 2025-09-24,
+which should be fairly close to where we are at the time of the
+Contributor's Summit and Git Merge next week.
 
-    And that is my excuse for stopping to look into the detauls of
-    these commits the above "git log" command found ;-)
+The Git project currently has ~$99k USD in our accounts, which is a ~$6k
+USD increase from where we were around this time last year. Last year we
+reported a increase of ~$4k USD over the previous year, so this year's
+financials around in line with what we've seen in the past.
 
-> So it seems more accurate to say that push.default.simple will push
-> to the branch with the same name, with the restriction that you might
-> have to set an upstream, because the branch must always have the
-> same name, but whether or not you have to set an upstream depends
-> on the situation.
+Here are the project's ledger numbers as they have changed since when I
+last shared them as of 2024-09-18. Note that there is some back-dating
+going on here for ledger entries that did not clear until after the last
+report.
 
-Now, I am still confused as I was when I wrote the message you
-cited earlier.
+            $-8,466.35 Income:Git
+            $-8,210.10   Donations
+              $-256.25   Royalties
+             $3,409.06 Expenses:Git
+               $152.69   General (Bank Fees)
+             $1,846.90   Conferences:Travel
+             $1,250.00   Filing Fees
+               $154.23   Hosting
+               $112.50   Promotional Items
+                 $5.24   Tax:Sales
+                $-5.90 Assets:Receivable:Accounts
+               $723.53 Liabilities:Payable:Accounts
+  --------------------
+						$-4,339.66
 
-Do we ever have a case where, with the "simple" mode, you have to
-set an upstream?  You may have set an upstream in a way that is not
-compatible with the "simple" mode and need to fix it, but otherwise,
-it appears that the "simple" mode should always work for an
-unsuspecting user who does not configure their repository and
-remotes into some nonstandard shape.
+(As usual, this is double-entry, so negative numbers are good.)
 
-And if so, perhaps we do not need any special warning/note to write
-for a place where we talk about "git push" generally (as opposed to
-where we talk about push.default=simple settings)?
+Our balance as of 2024-09-17 was $-93,836.27 (not accounting for
+backdated entries). Our balance as of 2025-09-24 is $-98,781.05. That
+is a net change of $-4,944.78, which is better than what is reported
+above. Despite my best efforts, I can't seem to account for where the
+extra $605.12 is coming from.
 
-Thanks.
+Like last time, most of our money comes from donations. This year,
+~3.02% of it comes from royalties, which is a little better than the
+proportion from last year (which was closer to 1.8%). All of the
+royalties come from Amazon affiliate links. 10% of all incoming money
+goes to Conservancy's general fund (the above numbers are after that 10%
+has been deducted).
+
+## Expenses
+
+More interesting is where we spent money. Like last year, the biggest
+chunk of our expenses went towards conference travel. We spent more in
+that category than last year (where we spent only $675.96).
+
+This year we have a new pair of expenditures totalling $1,250 USD for
+trademark filing fees, handled through Conservancy's legal counsel. $650
+of that came from our Section(s) 8 & 9 renewal[1], and the remainder was
+used to file a Petition for Cancellation against a third-party[2]. We
+continue to receive requests to use the Mark in various ways.
+
+We are no longer paying Heroku to host git-scm.com. The $153.23 we did
+spend in the "Hosting" category was for one final month of Heroku, and
+domain renewals for git-scm.com and git-scm.org. Hosting the git-scm.com
+site on GitHub Pages is free, and saves the project ~$721.32 USD per
+year.
+
+## Future expenses?
+
+The project continues to take in a modest but quite healthy amount of
+money, and has very few expenses.
+
+I continue to wonder if there are other ways that we should be spending
+our money. If others have thoughts about what the project should do with
+its money, please feel free to share them.
+
+### Outreachy
+
+The Git project participates in Outreachy, which is a program that
+provides internships in open-source to anyone from any background who
+faces under-representation, systemic bias, or discrimination in the
+technical industry where they are living.
+
+Outreachy suggests that companies to donate $10k USD per internship they
+want to sponsor (previously this was $8k USD). The Git project has
+historically benefited from GitHub and/or GitLab covering these costs
+for us. We may want to consider budgeting for this in the future
+ourselves, in case we want to take on more interns than those companies
+are willing to sponsor.
+
+# Trademark matters
+
+As above, we filed two petitions related to the "GIT" trademark this
+year[1,2]. The PLC continues to receive a steady trickle of requests to
+use the "GIT" mark in various ways that are not compliant with our
+policy[3].
+
+I cannot recall us approving any requests outside of ones that did not
+violate our policy to begin with. Over the years there has been some
+light discussion on if we want to change how we treat our trademark
+and/or if we want to alter the policy.
+
+Nothing substantial has happened in those discussions, though others
+should feel free to resurrect them if they wish.
+
+# Conclusion
+
+That's all for this year. I'm happy to answer any questions on the list,
+and I'll propose a session on it at the Contributor's Summit in a couple
+of days, in case folks want to discuss this further in person.
+
+I'm looking forward to seeing folks next who are able to attend Git
+Merge either in person or remotely. See you then!
+
+Thanks,
+Taylor
+
+[1]: https://tsdr.uspto.gov/documentviewer?caseId=sn85961336&docId=S8920250131165809&linkId=3#docIndex=2&page=1
+[2]: https://ttabvue.uspto.gov/ttabvue/ttabvue-92089369-CAN-1.pdf
+[3]: https://git-scm.com/about/trademark
