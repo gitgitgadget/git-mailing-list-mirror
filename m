@@ -1,191 +1,124 @@
-Received: from avasout-ptp-004.plus.net (avasout-ptp-004.plus.net [84.93.230.250])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F7F72602
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 00:28:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.250
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8628714B950
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 01:00:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758846491; cv=none; b=NCkcPJRshk8N4QLKF4l5JquBy4sF2ZkkDYTKQkZ8UhY1D1jbaZZCuZqm2SOqy+sGhUf+qROgqgJzLfJsYZqJ2dupJO1VABXsA5MxVSK7iiscsPGsAlQJ31cW73TkTAA+mFHmfPPacuh1zfgmyQq3B0/WVrMwyXSN4SoSXsWlnl8=
+	t=1758848457; cv=none; b=k1Ezclh+Lt+sR/tlr6iScuCRDUGdoEtecOUUcf8zOvwhNvQnQm3ZQ1IRet8ofKyJMpMEUefhuA6WgOL/uonWlb0cm37+bs1rw8Bm19/VvNathXwbmh4pYRVDWlgW4sxXDbLZJMPUGI4ZwrYj9Nbj2Va6rU9mByr4j4gtRf7NsDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758846491; c=relaxed/simple;
-	bh=r9igLev33E/rFIZLoLqK95+s67YdOBXtW1d5GkQlhEU=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=blIXVR3mrbv1h2Ly+/Z/0gP5Wogv35W2hyFMegLg1+X/2jNYKpbFugxlwD7ILmUWS1zHXplvFtYs2B0Mzjbk0XR75GV2+tH1KYuX6yTZs3FXLx06fXwT/qKcXAsMg/3wI7IVOjifJNxFLig4FMFeYsmSU5G0C2N17WgT8r/KJzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=Z8HLNP/q; arc=none smtp.client-ip=84.93.230.250
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1758848457; c=relaxed/simple;
+	bh=9C5PtoWAGTSC0QnxZYuvIuZN2zLeomHUR6TLgohEMUE=;
+	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=HGzXIeZ4uPADA9UNw23S2qz9v69SaDth/hv9LyOg+jtEVJ6e3m+y2EFOv9yn7zcMiEhUAaRS8NnsLSSAJMbtvZDoEdMZVyDOLWmmwFR5yZM60ESXxjnnafCWF0A4DOZGk6Q7POwaLQDlgEsJU+OiYPs9yDyVm0/J8iLkYN3GscI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TsY08xrg; arc=none smtp.client-ip=209.85.210.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="Z8HLNP/q"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id 1wJhvu1ZI2D8r1wJjvBTFX; Fri, 26 Sep 2025 01:28:07 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1758846487; bh=WSboGYkUBJRKdCv6z20dC/og+ihEkCmwH/00pt501pQ=;
-	h=Date:To:Cc:From:Subject;
-	b=Z8HLNP/qMDdY6bTfady83c8Q9dlZzXdIh0tO5KQwTP08TWqWpd0AyLEacQA/MsT3E
-	 YnBrJ9BQJYjngxWITNbIuuOVvlDDk4F1zNcJvowNGXUNVchiFvHh5Jd6r4eTq/hpP2
-	 M3sf8yR4NJ1NzOTtGj34vqOMUYTeo6HYL43wqR4nKl3lEjr5Mp3adrwCpBfdZv3Fwd
-	 aPpa9judW2ht1ulm4kf48j3kbEfW8b16Ra96lxtf2PLPnXQ4qJr0HWGImcBCpr5PKU
-	 FKYMyrWluE1F4VySSULedmQvMrI9XMYULU/CDZGfV4e+632OKoHVftO03o+9mQTKb3
-	 w8bBEMyXZ9KzA==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=beTIU/PB c=1 sm=1 tr=0 ts=68d5de17
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=cm27Pg_UAAAA:8 a=EBOSESyhAAAA:8 a=Vg5F4PhgkVHSLG9jODYA:9
- a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <875fb7a0-6dd9-412b-a34a-21758c339871@ramsayjones.plus.com>
-Date: Fri, 26 Sep 2025 01:28:05 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TsY08xrg"
+Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-7939ac99c29so1508174a34.0
+        for <git@vger.kernel.org>; Thu, 25 Sep 2025 18:00:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758848455; x=1759453255; darn=vger.kernel.org;
+        h=mime-version:user-agent:autocrypt:date:to:from:subject:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9C5PtoWAGTSC0QnxZYuvIuZN2zLeomHUR6TLgohEMUE=;
+        b=TsY08xrgRCN7d+q6iecNxKVZ3+YwDMaX0sexCJ7pP7Il8VmokN5GQMjbAEddX7oyBZ
+         N9D9Xxy7poIbp8wglAdjWuCQyxwHYq/psh3v4eqLfmTnSU/BgSCQDUDxy7Z38ZDk8mG7
+         SeKih7EFWluOryJwoyTrqj9ZcYvZUWxdoO94yEV68ydQo+jalxBB5lZ6PsyeVU+b1+5N
+         OaPmWrLQEytfTAsYRbt/q1ECK8QI5kpKG8ZUkwYxo9/upC6FpiXTXJRH9pbXswCj6xwf
+         lVx185hBeprbZ7m1nRPinTmf/i2jM4W5vojetHLrsrnaFjx59W3xcLwj4vcp5zaAgIhC
+         KYEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758848455; x=1759453255;
+        h=mime-version:user-agent:autocrypt:date:to:from:subject:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9C5PtoWAGTSC0QnxZYuvIuZN2zLeomHUR6TLgohEMUE=;
+        b=bOWtUY8D83eixV80AYeOtQfyGhne4AtdmazTxAVRLX/kUIq+BVuV2nDlOIPfZhbKiE
+         TZ5SnsCfzmIGiXEu1Fqfa3fg4tx0WrVNgXdUlw7jYFNAuWj1AsudGDL6awDVWG479xCS
+         MAfnbl4frkLXjc6zV//6J30F+eDfsxiwoGv/WOHL0Uy3k8AO3J/eQpYLfFl16N5+hOSH
+         XVaRVHvF7MH9pSFZ7Q78Frns4sxi/ey3xufvjkoBYgnvqdNvB1NueylKZczA1umuLge7
+         SGBVCKyNWkkpdOD3i/Ma3AIS/MxyWbH6yQyEE3w12b5cJL1Cu+RDjqA4LIM8oEyRZjVH
+         Oi0g==
+X-Gm-Message-State: AOJu0YyKk5BjTc4Xic21QmgAAPseYLft+tILgcm/VPHP3tyw8yynMrH+
+	4z0NvHh+w4i/jpX+Vu+qxnAhGMClel+ccfzSM6fA8a9+pJz8bLzNnHlNe663n5am
+X-Gm-Gg: ASbGnctTXz8OXGKhSlgvNONgvyzjkRBYzR52bbkAcImtzhJirHlrM8grNxVjaB8sv47
+	XhWkiVQ7EyOr0eUO6kFWS5ioGh9gMr9Qq870hbA0+sJFZnOk8P8onQ/y+TT7wLWlaFqcNl/n3fD
+	DRndy8s+dTEnpgDQJdKYba50pwRWG0KU6edG484dT2MO8edCGI/eYrD14R/nwWt68nTj+H8lBV8
+	Bhum2kfZXFedOa7wuE8RUjmgBf+eBhNnrPMyYvymVJE1JnbJI1vCdQ86lVgD5ihtioq4On3QTQE
+	pYurhx2/YfkwsmoY3JCuU0JXib+PT8HYMObEEK3GQWP5Y0D9gqywDHEGBAotBSr+Qyr8XesDFhn
+	h6qb0G4yh9+6pmtbGAy42meIcVyGxB9Ym9FyUC2Dxj7wH0B4JhlXnLYzr7m7oeAvyFUKwkdSmzf
+	QBpc7GLl7yJ1dIJZp5maiLevH3GWe/HTQ=
+X-Google-Smtp-Source: AGHT+IHJosLm5ry1yfdKsZa7J5JFcR5TSjxFZ0vR2eYUUE4Nz/p9Od+jL2YGlt3SQClQDuj3LKOt7Q==
+X-Received: by 2002:a05:6830:67ed:b0:757:b8ad:c2b9 with SMTP id 46e09a7af769-7a03d1226b5mr645493a34.1.1758848455256;
+        Thu, 25 Sep 2025 18:00:55 -0700 (PDT)
+Received: from [192.168.0.171] (h135-135-197-41.abdlwi.broadband.dynamic.tds.net. [135.135.197.41])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-56a6a5ae6b1sm1290995173.68.2025.09.25.18.00.54
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Sep 2025 18:00:54 -0700 (PDT)
+Message-ID: <19a81573bf1ef7c544106e8fa7dd3b2db304c4f7.camel@gmail.com>
+Subject: git whatchanged
+From: Neal Miller <meltdown03@gmail.com>
+To: git@vger.kernel.org
+Date: Thu, 25 Sep 2025 20:00:47 -0500
+Autocrypt: addr=meltdown03@gmail.com; prefer-encrypt=mutual;
+ keydata=mQINBFnLCSkBEADELqmI8SzCYyZjwjnj3SMT/aKHSWCT/xuJlkYRBGOVakFEYMxBHxw2H
+ HvVgVS5QbEIC3GAfmdL4HkxAIxlsVXtuNsWdOM6SQQJA/RTekf6Ee8+1qk4kqwPuu7JNayAL4PKy3
+ napZhLAu1nUX/+noJTPDICKXw2H6VTirvi5w12WWJ4PTIWVlI5f4bjniZy0wqwu+SSLG+9gQPcNnq
+ /FtXzQKeuz+sH3mVSAx1iG9RFZsM28bTltbo47s4k4hwAUZpgQXuxX13IO0wTVzVCBxMUmMTSTWiM
+ 1C+nSPnjwsUblbHkwdkUf6DXnrdKxoL4n1f3nSUPX7Ey+KVXyThx2SCdkU22Qi5alssYkOSMvN/T+
+ Rmyc4l2fR9/oI1M7WUsz5Eip6G5jlbkJ1WHAOteNl36+yj5XYErPlf8L74LgkgRp5YeeUlqNoWwF2
+ Sw73pD7C8NsjnknFcIG5E8vWgWgqXm66eoVKNxd+aV9a16gjOJQ+SSPqO1wHM/AiVuAYHJPAFGjqW
+ 3ZzqmQpetdgclrZgEHIfcdNVd8Uf+SSVeEB7ty0ndPo8G5Drdt+1upAxO2ffXmahI4iBs8OOAloRi
+ lX9FUBHiWJetSHCaeOLxMvBpRDls2X4wSdQAQ/NeMSQX8zVuyNsmOsk7d4s949tONGBp6/nhkDLkT
+ sS8GwCPeRIezQARAQABtCJOZWFsIE1pbGxlciA8bWVsdGRvd24wM0BnbWFpbC5jb20+iQJOBBMBCA
+ A4FiEErYqSfL3b5eA6ZvbjB9s6hB3b8q0FAlnLCSkCGwMFCwkIBwIGFQgJCgsCBBYCAwECHgECF4A
+ ACgkQB9s6hB3b8q3G0g//f755fxY1/ONx2YBzG7efVu+6t3Gczk7H1fpBO1WLk1Q4rhCuFHhdtMbe
+ lf9LkTrEeEdet6wgi/OdwIFEZCDHhmM+LFVpd/Agu3jC79ae1kVfIp1au4fKc/38w491rljRIMjif
+ yi/8AEgujYlaU55j7ixDUkvlYoIwM11UboV1NYeaidMRSP3vrE7qNhLh2WLjSZLCDWO+j04/XwHu9
+ 16AwyLUEUcI/QEZZQ8tildBhLidaKCZ4Erq8AD7hoFlhEWUMW8JtJ5eY8OYjXEVzg0Q5vmQp6vd54
+ 957dfiWaUeiJnOcjVHrQp2EXPKRLLN05iuWHNUVdevc2BVanCWsVGN78Ssea1GEINZjJMyfgnhJJV
+ k8KcHA6EEAaWg0c/+Ojk5nDa9IuZoI3uemvGb6fdDqYdkv/VdTIBM+sLNeF+IAEFRbUfyOLTkN/HN
+ bDAGrTSXw/MM0JgaMaxt2LUkEcCR+TIjXqYoImtaDpwRbVXntC08tzVksboJW0O1h0sdCWgkPDpdm
+ ZdbvaZPbO9wPyTJdcthtevIwLUeZwC8V0wuKtTgdBBdpPkK0nTPI9/x5LGLmzcq5Lkfsvm5BEtmPu
+ ABfMch5Imbf7u3SJwpB6SnGvzPPSTmLN7DQOtAeqf+wznvjQrWSgG/W8ZGbC92hYbuzaqnv56KPpw
+ i0pfqRILEXM=
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-ozOuy1Maz4vKeZo9zJCc"
+User-Agent: Evolution 3.58.0 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: GIT Mailing-list <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>, Derrick Stolee <stolee@gmail.com>,
- Junio C Hamano <gitster@pobox.com>
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [RFC PATCH 4/4] doc: commit-graph.adoc: fix up some formatting
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfBWgNemBDKheOgq/yTCV0EjKvRcKOekmp/L2PIrTwNN9l1K5kpOcvMr9cLJ8756URVW3FIy8vRO3yUXyycYIR9RHnPXifGn6PnqMW3WXs7lErMpT5iQ9
- KmDOEjBjHlcEsMsTzjsQLxhS5uV59kRCnXoWdaFhIM84FV2qL2YE4n6MN2QcY2ZTdv+YCNEz9EiGhrXE8H30Lcc+++0MpTWsIDw=
 
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
- Documentation/technical/commit-graph.adoc | 34 +++++++++++------------
- 1 file changed, 16 insertions(+), 18 deletions(-)
+--=-ozOuy1Maz4vKeZo9zJCc
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/Documentation/technical/commit-graph.adoc b/Documentation/technical/commit-graph.adoc
-index 2c26e95e51..15396f58ab 100644
---- a/Documentation/technical/commit-graph.adoc
-+++ b/Documentation/technical/commit-graph.adoc
-@@ -1,5 +1,4 @@
--Git Commit-Graph Design Notes
--=============================
-+= Git Commit-Graph Design Notes
- 
- Git walks the commit graph for many reasons, including:
- 
-@@ -39,6 +38,7 @@ A consumer may load the following info for a commit from the graph:
- Values 1-4 satisfy the requirements of parse_commit_gently().
- 
- There are two definitions of generation number:
-+
- 1. Corrected committer dates (generation number v2)
- 2. Topological levels (generation number v1)
- 
-@@ -122,8 +122,7 @@ can be stored in the commit-graph file using the 30 bits available
- to topological levels. This presents another case where a commit can
- have generation number equal to that of a parent.
- 
--Design Details
----------------
-+== Design Details
- 
- - The commit-graph file is stored in a file named 'commit-graph' in the
-   .git/objects/info directory. This could be stored in the info directory
-@@ -149,8 +148,7 @@ Design Details
-   helpful for these clones, anyway. The commit-graph will not be read or
-   written when shallow commits are present.
- 
--Commit-Graphs Chains
----------------------
-+== Commit-Graphs Chains
- 
- Typically, repos grow with near-constant velocity (commits per day). Over time,
- the number of commits added by a fetch operation is much smaller than the
-@@ -158,7 +156,7 @@ number of commits in the full history. By creating a "chain" of commit-graphs,
- we enable fast writes of new commit data without rewriting the entire commit
- history -- at least, most of the time.
- 
--## File Layout
-+=== File Layout
- 
- A commit-graph chain uses multiple files, and we use a fixed naming convention
- to organize these files. Each commit-graph file has a name
-@@ -170,11 +168,11 @@ hashes for the files in order from "lowest" to "highest".
- 
- For example, if the `commit-graph-chain` file contains the lines
- 
--```
-+----
- 	{hash0}
- 	{hash1}
- 	{hash2}
--```
-+----
- 
- then the commit-graph chain looks like the following diagram:
- 
-@@ -213,7 +211,7 @@ specifying the hashes of all files in the lower layers. In the above example,
- `graph-{hash1}.graph` contains `{hash0}` while `graph-{hash2}.graph` contains
- `{hash0}` and `{hash1}`.
- 
--## Merging commit-graph files
-+=== Merging commit-graph files
- 
- If we only added a new commit-graph file on every write, we would run into a
- linear search problem through many commit-graph files.  Instead, we use a merge
-@@ -257,14 +255,14 @@ lock-file.  When the file is flushed, we rename it to `graph-{hash3}`
- according to the computed `{hash3}`. Finally, we write the new chain data to
- `commit-graph-chain.lock`:
- 
--```
-+----
- 	{hash3}
- 	{hash0}
--```
-+----
- 
- We then close the lock-file.
- 
--## Merge Strategy
-+=== Merge Strategy
- 
- When writing a set of commits that do not exist in the commit-graph stack of
- height N, we default to creating a new file at level N + 1. We then decide to
-@@ -289,7 +287,7 @@ The merge strategy values (2 for the size multiple, 64,000 for the maximum
- number of commits) could be extracted into config settings for full
- flexibility.
- 
--## Handling Mixed Generation Number Chains
-+=== Handling Mixed Generation Number Chains
- 
- With the introduction of generation number v2 and generation data chunk, the
- following scenario is possible:
-@@ -318,7 +316,7 @@ have corrected commit dates when written by compatible versions of Git. Thus,
- rewriting split commit-graph as a single file (`--split=replace`) creates a
- single layer with corrected commit dates.
- 
--## Deleting graph-{hash} files
-+=== Deleting graph-\{hash\} files
- 
- After a new tip file is written, some `graph-{hash}` files may no longer
- be part of a chain. It is important to remove these files from disk, eventually.
-@@ -333,7 +331,7 @@ files whose modified times are older than a given expiry window. This window
- defaults to zero, but can be changed using command-line arguments or a config
- setting.
- 
--## Chains across multiple object directories
-+=== Chains across multiple object directories
- 
- In a repo with alternates, we look for the `commit-graph-chain` file starting
- in the local object directory and then in each alternate. The first file that
-@@ -369,8 +367,8 @@ their custom environment:
-     access to the new chain until its chain is updated to reference those files.
-     (This may change in the future [5].)
- 
--Related Links
---------------
-+== Related Links
-+
- [0] https://bugs.chromium.org/p/git/issues/detail?id=8
-     Chromium work item for: Serialized Commit Graph
- 
--- 
-2.51.0
+--i-still-use-this
+
+--=-ozOuy1Maz4vKeZo9zJCc
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErYqSfL3b5eA6ZvbjB9s6hB3b8q0FAmjV5cAACgkQB9s6hB3b
+8q2X5w//epShgkkpVtlH09CPoZVU/Qkn1XgzNxu998+ygJ2MJQCDM3EPxpbP5Stm
+RsG3qea5ysB57wdVWjm3QcNH5fnZYNaBZNKjT4iAbAn5jrPEkAJOkcpXtIktDvBB
+euTRLAkaRFzIw7VCyblmFI4ux1z1jEezoZ48SkjvMTCAU/zEesY1iddvhp1pENAp
+6dUubed0d5/uhbc2FvJ5KmznvH1p5xvYdKzcuFZQC5z5FMg5GxemBKZ786PF95pw
+JsHgjhZAHEVBFUYI9egSUxJblORKXsqYSJhWeS+waHdsa8UXRRsjmIN1aT+cTPXd
+Swz8iLVIqGCjqySBM57puqKnhl64PS9QAtHsPGmpeZjOB4WTvT2n3GCNx/VhrGfE
+iuixSq1/a4m+iwnC+UwOdmLWuWlVblbx2cO9BMFzxowIaH3lzl0oBB3pyZ6iB7tT
+S1p1ZfWRMwahkpnxNzzJiUcWIxT7YjRHxW+ZhjETLMulQihZdpWRrNgHxzBH49UX
+66OQc/I+h8niwR4RdUnvEHbMpk50qxlI17rwucZOAN7iNJLXSsKT+POtAoUCo7V8
+qNyU3YToWfGpj+04Y6JzH/Zj2fw9dlAv6PdpQ6exHR8BlAHLnHrFve3h5h/xIUs1
+2JKBdnT26JJ+r1E62oGcRrMwwboI/E+Or+uCijf/sdEsaVCXDYM=
+=NfPR
+-----END PGP SIGNATURE-----
+
+--=-ozOuy1Maz4vKeZo9zJCc--
