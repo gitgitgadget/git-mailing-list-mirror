@@ -1,101 +1,142 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A69D27F4CE
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 07:13:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7F725F975
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 07:25:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758870804; cv=none; b=SyUG8unFAtO8GrhaFWB+CbCjNBlOEw/yEGXs8H27umLFEAAm0pZY5UIhv/kbNi7lTZIPHk9i3onPghsgyjRNtDYJ6BUpA2ABJw3mAmJtSDEanmHPWBTZxcpSPRLRxU63BNFGWAozM6PP7L+f6vzKR/E+VDXYBg6PCJVv7NVKXsU=
+	t=1758871558; cv=none; b=ktAUiitkCjoRMg3iOHUyOnipUkXGGGR240cEyM8STVgSieerKz/C8gV0ZvFVm3ZHRGxPLWkjhq9CyNOWJMOAqkM2/ugq9GMMAmLIcoe3x77VqIMNOIAguW0E9iuJtt7nBaPkX1fQSw+ioEze406ZPpzKrg5VzKqMoKB/2q8k9+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758870804; c=relaxed/simple;
-	bh=0fKNq3k6jnQGusXDuhpsQh3Ra3SlLaEsZIBr62or9XI=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=QwIuCGjPGA86JBWhqS9Mk5c0qX7BpHjb07X1pdZsc51kecAx44+ikavBCSfHfX4u/2/mPNrKEI2C8VdVOtWl8YHhVS/GJX0C/YUkuaCobK42ce/6+VpGSWkPRwBe8zHDDh7AEprLhLiax1OaH4o1akAg3OGbxdoLOatW+fnNJoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=pNeYqvZ0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rphYGH7K; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1758871558; c=relaxed/simple;
+	bh=TeIPUDS+vHz5/TMx+yGjf8YtEH83rc8jg7WK7iZfgrA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=DT5GMp03CHYeY6yMT3WpAkwVL4KojngHSkou3WwN22fF2uAJXpFuB0D88Zck5z+Sdl1NBCiFnqlm0O2r0vQdyeK3Z1NrwaiLdRjjUfTpqIISFRBALpeZwWfcTxNcFwzjoitnnDZ/1YUhS8CYWMsMVsTLnWwmpsSjvq/pKeZ5uQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eSs2NwH7; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="pNeYqvZ0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rphYGH7K"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 71C4E1400062;
-	Fri, 26 Sep 2025 03:13:21 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Fri, 26 Sep 2025 03:13:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1758870801;
-	 x=1758957201; bh=0fKNq3k6jnQGusXDuhpsQh3Ra3SlLaEsZIBr62or9XI=; b=
-	pNeYqvZ0fotImJZt8OlT+wPgvEQEcJEkTpAvsP5Et3QdHRTTeecOoGTOFHbY3RxS
-	5vjK/7nXL9frIVr6hEc7jSHJ8We5AJcBe8eGL7GCOr6fjrGDcz7MHO2jDOr/otM2
-	gH+mvDeZ6wJb/AQaoS7gfsTczJvjrn7WbI79fIyQOdAQ/g5qtcBU+Jjk7ecBUYdT
-	Htjreqh0tN0dTryxNa0f8fuUBeSdzrSbdifSxeqQTDzjkqlZIdKkCsDIYJgyw27z
-	bgaDZQkJkJLkBryW1GihcSIVZYB2AEx9CXVX1EbUToG9355bEgfAlso08W95k07k
-	+Jsm3x2R2RA4XraYoX8F4Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1758870801; x=1758957201; bh=0
-	fKNq3k6jnQGusXDuhpsQh3Ra3SlLaEsZIBr62or9XI=; b=rphYGH7KDCTD9bauw
-	lqSDBU9C3DI4YYqi0rYfKWhRmn+ONlYKshFRSBBZZ2iAh6jwhIg6zAVOeG3ni1CF
-	mqQIOL9cKTXy88lyhL2AfcNgFxT42W8ch5PDmIcWrJ6Q4TcRtf+FdktT+IPS0tvN
-	duwUuK3eahBpyiVUJpgAd/cyTWJejwIF9Z7t0sM/f1EjHYJtWj5NLYoZywBboztV
-	FtnsNuE0DGKC2bMpeK7pXFZvG/03ojk1JBSi7SFdfsyMfzxtNOva2WC1KWTVRAni
-	80eRNAZXlXdacYIQbI/ieU024W2+UY5VphK33wWMply6hkAV8wTjY51M5bztaVDS
-	Uxw0g==
-X-ME-Sender: <xms:ET3WaGlw7jUWqbrbWA5tdLqj5aVM006S81-zl8INeWVCtAhEuc-M15k>
-    <xme:ET3WaIoG37myNdmV0GYb2u2yyy_AK4PKOMMt1HCpAVIIhVOF0IdpklaBPtnuCG5Gm
-    b0JCFez2i3djBYGkdJB-sm1IoV9vhL9hUqDi9XsHoOrM9SqYOwpKXs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeikeejgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkjghfufgtgfesthhqredtre
-    dtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhr
-    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtf
-    frrghtthgvrhhnpedtgfffteetudelhfefkeehtefggeefjeevieekfeefieekkefhveei
-    ledtkefgueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
-    hmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
-    nhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvlh
-    htughofihntdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:ET3WaNTDSdkEZ2lSICErrdH5mWEZink5xE15ZrN_ksu5o1XGNRcAww>
-    <xmx:ET3WaEsio1FvkM5QvRC2MSst6BLGxbyLHI-reu0DHr0cw5CHRMvXiA>
-    <xmx:ET3WaKZ5L-Qj-mnLuJ-cUvyHbT0AdRHpulcbuEHhD4589bMUYPOdUQ>
-    <xmx:ET3WaBvbIYZiY-GQtyssJHBCteDNIgyTdNKjNLdMZy6IuBf6Al7lvg>
-    <xmx:ET3WaFaXgEJBXuM1wey9kpk2PFJ0IzV2qeZOruzKN8HHUQZd-PHxTdwR>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 266871EA006C; Fri, 26 Sep 2025 03:13:21 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eSs2NwH7"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-62fb48315ddso3272942a12.2
+        for <git@vger.kernel.org>; Fri, 26 Sep 2025 00:25:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758871555; x=1759476355; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UYfDe4BgEwoLeRMRSq+TFdffhHPG7+HnprKnPi5I8Bk=;
+        b=eSs2NwH7itNx3+3r0EEaRUCSSqaFGg3axe+0DXWeQVa1JTV//EoPhsGm6NMT+Oq+GO
+         Via+d+x1QJlCph2ulgKR8PqWEeIl5hLsrLLTdyIS50oGX4Tz7/dViuSmURHjzcFV/evu
+         AZ1KhXweCNJMZq5LvZ97QvrCwNurb4kfSHoLkpA6dQMhEsu1/iugJB1d+C7RwjH0aGZW
+         I7l3rxpkcd4JcgGzzinQJI/g5e6OQW2zSKyCKIwpSjCxA/hhXfCuLKMLt2JKU7EwEhAa
+         emNG0UVJGxkiYvg/GgvbjMSioXAFWiS6h6Ba1g4juP/MzeCq+D1Hub4Z21GlhHf01Ke9
+         ikbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758871555; x=1759476355;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UYfDe4BgEwoLeRMRSq+TFdffhHPG7+HnprKnPi5I8Bk=;
+        b=MODKy+bc1/zk2EBujm+AWOJ5Wx6A3iyS1jJalexB0bb96K36uzj5VMqNkg54GCt5o+
+         PCg+aUkphgFxZ83K6HvcNW3PWP5806U/fyBqVZC4w1UIgoY8Nh+ArPkhifaH/DdZvl0J
+         DW4g3TPMzhgBSyTey/OToUJpZ/5Khbl+osbMLqbOLM3d6/84o9O6M691KqUtoODqyyZ5
+         tYY166dFTnqAj09ntV8Gzf6LIr0TBnSrPtdjEBl1quXj5IYeBJEX/cb8Nu9lOaB0qP4N
+         0YSEgQIgqFgPSXgvK6L4blGgtHA1CgBMQFG3Q/SVG61N2FLtFBMnX/sdY07RGtXMoHtC
+         IJXA==
+X-Gm-Message-State: AOJu0Yy+q0kVCH7b/g4JXXiPc8Zr1NXWPoqZE3wn6AOSUu4Nge3Dl53k
+	uYJTfvTYKhk6ag8vZbN2oJrwUV/jdbHN+c2PrfuwFSWwAjW2p/BdeNpg
+X-Gm-Gg: ASbGncuuuOTS3V4drorzqq0XWXI91EkyNYv2AbnNrztUOqxY2qOJK86DYV1kb7jXDHm
+	xdpyZorGUzXZ6WDD3YwA5QOfgfGbSm5kfXtcd0zMApw+jYwRtla+eUOEy+l2yM1VTDjkBwIwp1+
+	/JGxpsvCJ7XCYzKfnTMbKQ/qamgEoyCFIWNcxrZR4udZQ6yBPfA5CMYjE6y2XxuIkjkySqqFAtc
+	+xYIV22psUMMfD4a24L3g2ZvFVX8UTYijyTXADQOfN/l0/V3ouPvM6QPuUJwFBmuw1E4K91Y/L5
+	eJF9uA5aDWTSYer0OjivbAy2A+xGBHiAt07TawCEV21zer4z7wuMn9K2BkxGYuZF0UvuBvi1Z0q
+	c4RnCalZ2iOQFt7OM6jDXL8mf1r7r
+X-Google-Smtp-Source: AGHT+IGwJIML44yz7+9Ngzb0EIvAU6/3S12fhOHAB3heZZh7bQAdYIeLkt75s4bOcQSGVg6bX03DWA==
+X-Received: by 2002:a05:6402:430e:b0:631:614f:8f88 with SMTP id 4fb4d7f45d1cf-6349fa73ec9mr4835035a12.20.1758871555042;
+        Fri, 26 Sep 2025 00:25:55 -0700 (PDT)
+Received: from [127.0.0.2] ([2a02:2455:8268:bc00:2fd5:3bfb:87f3:d768])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-634a3af54desm2368795a12.40.2025.09.26.00.25.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Sep 2025 00:25:54 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+Date: Fri, 26 Sep 2025 09:25:44 +0200
+Subject: [PATCH v4 1/7] refs: remove unused headers
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A85bjPg_JiWc
-Date: Fri, 26 Sep 2025 09:13:00 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Neal Miller" <meltdown03@gmail.com>, git@vger.kernel.org
-Message-Id: <7e3a5da4-0ac2-40ae-a96e-0e9a88a68d7e@app.fastmail.com>
-In-Reply-To: <19a81573bf1ef7c544106e8fa7dd3b2db304c4f7.camel@gmail.com>
-References: <19a81573bf1ef7c544106e8fa7dd3b2db304c4f7.camel@gmail.com>
-Subject: Re: git whatchanged
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250926-228-reftable-introduce-consistency-checks-v4-1-c96fd8551c0d@gmail.com>
+References: <20250926-228-reftable-introduce-consistency-checks-v4-0-c96fd8551c0d@gmail.com>
+In-Reply-To: <20250926-228-reftable-introduce-consistency-checks-v4-0-c96fd8551c0d@gmail.com>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, gitster@pobox.com, 
+ shejialuo@gmail.com
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1344; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=TeIPUDS+vHz5/TMx+yGjf8YtEH83rc8jg7WK7iZfgrA=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGjWP/6lLT4PW1bu/CVX1Pa4GPvR3IZTfFIdn
+ UcXr1uW8hzwPokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJo1j/+AAoJED7VnySO
+ Rox/ekcL/iCUP1VPVUwGbEHwseGV/zuet4hAv7DI/pi6Wb5VauG70ZtxO0Bdes9ryhi2zQuMV96
+ L2wbQNIfUjV+f6Od2VtBNqPFxncu1UBoDm9iGMXwbetaeyDrnULS8N0zVdAzEOS0oCqzLl5k5JD
+ 1LcZGdHVevOhWtxQp4GQKAPv8vcflB4/Rj5qPhEo9IdDfdkjhoBY0R4QrjdILH97+MxIuC0UpDC
+ DdG+LtqYN/nZLKozslQjC/yZY+tgY3uXTiEBUk4gjJPsqJ3AWTvp04OOzptYLcmA1wMyhlbSlDP
+ u6Ra7L8j8uFGbLhrAyYkQGBh8VlGOTPqFii19ubMYFqKbXPZk4rtCrNfeA8E2FNuAfkS+pzKEBQ
+ FxgBuO+WN7c5zXuhxjnny9iSSLzErnBhV0yiHl53kDJvRt0jM8qoz3OhSGlD8VnuETS7nhgfSOU
+ +RAzZvm9yyueGpalv9/8as+mK3clOOiBHMLFTbZOMaVZ3+Lyk14XDKOFXpDgEG4g6GdI6BWXu/6
+ GY=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Good morning
+In the 'refs/' namespace, some of the included header files are not
+needed, let's remove them.
 
-On Fri, Sep 26, 2025, at 03:00, Neal Miller wrote:
-> --i-still-use-this
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ refs/debug.c            | 1 -
+ refs/files-backend.c    | 1 -
+ refs/reftable-backend.c | 1 -
+ 3 files changed, 3 deletions(-)
 
-You can replace it with `git log`:
+diff --git a/refs/debug.c b/refs/debug.c
+index 1cb955961e..697adbd0dc 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -1,7 +1,6 @@
+ #include "git-compat-util.h"
+ #include "hex.h"
+ #include "refs-internal.h"
+-#include "string-list.h"
+ #include "trace.h"
+ 
+ static struct trace_key trace_refs = TRACE_KEY_INIT(REFS);
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 1b3bf26add..d4fb033417 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -20,7 +20,6 @@
+ #include "../dir-iterator.h"
+ #include "../lockfile.h"
+ #include "../object.h"
+-#include "../object-file.h"
+ #include "../path.h"
+ #include "../dir.h"
+ #include "../chdir-notify.h"
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 9e889da2ff..2152349cb9 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -11,7 +11,6 @@
+ #include "../hex.h"
+ #include "../iterator.h"
+ #include "../ident.h"
+-#include "../lockfile.h"
+ #include "../object.h"
+ #include "../path.h"
+ #include "../refs.h"
 
-=E2=80=A2 Given: `git whatchanged <opts>`
-=E2=80=A2 Replace with: `git log <opts> --no-merges --raw`
+-- 
+2.51.0
 
-Additionally for the sake of readability, you might have more use for
-`--stat` or `--name-only` rather than `--raw` if you are only reading
-the output.
