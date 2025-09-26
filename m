@@ -1,195 +1,137 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C106E433AD
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 23:07:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF2C433AD
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 23:08:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758928072; cv=none; b=MG75vfix2XFsCEIotEhgBXzKrH4JAK44H7PgHryvef2SWqoZ/rZZSW5ADRu8CpxyMoYCwbKuu/CYs86rbtj9b0ulSw9Iw5cA3to3AbMaVzMNzPkO7Tgoc+pUi4JDdtvi5fVPsavHDY85eVFvnUiWGsX24M8vZCnWfcEmDbM1A20=
+	t=1758928132; cv=none; b=jIY0LuJSmUawHyny9Wjs7P5k2LPsxhDqw0yC5BYYrrK9BDl85Iv/g+li3ilGD0UQ07Nf+D1PrpgyofudTSSZsicN4Kb2bUD4wnSwUSvHqPvRaYDM/k1wOCRjZq3eQyjIrm8sK9RJy/x8mPzWHve/0kDVPZtfAo3oJepRChvn0/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758928072; c=relaxed/simple;
-	bh=+IHjMtVnZscQLS099wZdbaWnGOAaJ9M7k0WG+bH9e/w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BY2QN/61hFNqLcRdDUYz+uHqB6hrnnXOQOHwo3yDXupaqN62nhiGNpkiwV1eUWeupTtS0pSKTxlHUtZq24UCMEfplOLYZJXHnrBIC4EbK9KR5JNTFLSIzs9vof0NLX7J0zZHNufkuf2yxjoO9lmRbj8v83jKxuzK1bUTLm/WAIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Abl6V1jX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b4y5z0kU; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758928132; c=relaxed/simple;
+	bh=kM3OeiQ1lRkCqJnPLXvSdEm7PAUwGXdmpfseisv9rJU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=HKXK6eSiJN9XdtxLJ9JCsjwE1KIrdYAL05AhRvgL7j0KzxwY4Aj0sVenNTs7/FW/VVFkYtqIwUXghAKcJSconesQOA4jNciPJUwtvmVvk1kFGjBVnW2i40YwnUzYWg2eDasMAub/01FIhmFZXKY6RkpQk50e9Pefvy8+e86QFZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JUgZNUPt; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Abl6V1jX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b4y5z0kU"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id D1D581D000EC;
-	Fri, 26 Sep 2025 19:07:48 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Fri, 26 Sep 2025 19:07:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758928068;
-	 x=1759014468; bh=aiwL5lJvOAxgFp2xMSEEpeONqsURAtvvSfl++1CAQEU=; b=
-	Abl6V1jXYOwW1FeYmzdFOFQxlcMCMuEBKvOf51PDkGk9v+1Ddt+HqJ1NCTY/WbTu
-	j0larblFsr8IzmqCWO29SegQiuhJA4CszsMhteb1csNurWbWEHEw8pJ7iRu4h0Cd
-	TdgM1ykOYD4KHJddNHnSKve58dgtj33n8xmuFnOTycB15MgoRJ2DocInWjRM+jyZ
-	f4RBkcQ5kUP8q0448xsAdPNd6kHeHndqn8O0S+ZqJiKjwCGoKui5apKHKYqfwy0T
-	8PEttIeiQ/01GTScy8aXvFajy/LOY6BmUKKVdj7uc1euAmYXGjpxMiAjvVJfZO58
-	BSRWPKuy5jCmok/u3nQ5tw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1758928068; x=
-	1759014468; bh=aiwL5lJvOAxgFp2xMSEEpeONqsURAtvvSfl++1CAQEU=; b=b
-	4y5z0kUWOtX1kOp6j4QxsjHjqybc0nCP53acB2MGvGavuPDpKQ9tfBdgJ33RqjbD
-	XEL+Tl1oKpi20vPI2rAzRup6D1INH7QxxmkxtrNq8mOKsgSrLr2Sz4emn0HCTGS0
-	OLJGWAeKO+ilGqYiMjvqmuEEpIeyZWQm4vDQunNvNYuONfMX8zoUXPyjZJZmrkGe
-	APUykOYg0/WTsLe6P8+JOZsKHJaXNjFm0xVzZ/u7Uec5PpitymFQdak4g+Qlsr56
-	Sm/qFuQqqpyO0uU+AWcE67TCQyoiQ90yIJDB8L3v+PzjDrfl0L6doYUsNbNJxTxB
-	fd0Q6DRG9F8ld+Tz1QzyQ==
-X-ME-Sender: <xms:xBzXaG0Brleqc2CBfBe9hZVM4On9jYMIcQ6z3SI9g8n6AolamD_oMA>
-    <xme:xBzXaMzKS3gcqEXwLWunin2mu7ZKxaDeR2l75U4e2u_5JkvXOWCSHWNEC5YJO1aeJ
-    TSinlrEcvJkWwy_J3P9rmUIwnL7kcEoL_xui-YB3GhNSfHLi44j>
-X-ME-Received: <xmr:xBzXaIv7S3U_XgNsC3WjVuYInWL_pHGWNHhh208X_dpVA2d674CGEQC5WM1J4lZ6s_W0mSxodub6q6pXjBQtFQnCyQ59pdyTSPaB>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejtdeihecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffdtfeffgffgueehlefhgeffvdevgfevkeegvdfgheeljefghfekudelgeel
-    uedtnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpuggvfhgruhhlthdrrghsnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
-    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtghhi
-    thhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:xBzXaOxraoc1BbXt9G2yM4hryYgsZREm0KKNqvWspfeNtsiX4TilRg>
-    <xmx:xBzXaLDKS9EcUf-f0GfMO95XaIMa425bYDc0LQpGTAQX-x25G8b-fQ>
-    <xmx:xBzXaMeLzz5M6835x8rkCDxSFPJCfc52tKKHmIO-ZHD3W9Jc9gnzbQ>
-    <xmx:xBzXaFnEb7ESGSGKNOy5Ph9_q6IDnAbnYtQwYrhgDvYosFSfofNrEg>
-    <xmx:xBzXaNaqC9YS9VDetbJp4w4mMx2UpaIxSdAMtGzyQ2hrMIx_9TuhJspU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 26 Sep 2025 19:07:48 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  "Kristoffer Haugsbakk"
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v3 4/4] doc: git-push: clarify "what to push"
-In-Reply-To: <2b8193d1-f492-4cfd-b568-107d68112d9a@app.fastmail.com> (Julia
-	Evans's message of "Fri, 26 Sep 2025 18:27:00 -0400")
-References: <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
-	<pull.1964.v3.git.1758649472.gitgitgadget@gmail.com>
-	<be6453d010bdc9d2b49988d6841dd7e7f9bdf1f8.1758649472.git.gitgitgadget@gmail.com>
-	<xmqqqzvvk4bj.fsf@gitster.g>
-	<2365a7b9-3d22-4406-876d-65822822655f@app.fastmail.com>
-	<xmqqzfaidyil.fsf@gitster.g>
-	<1422594f-b0a8-4a7a-bf78-940693757224@app.fastmail.com>
-	<xmqq348admuo.fsf@gitster.g> <xmqqwm5lcjvy.fsf@gitster.g>
-	<442a4f25-7d7b-4f34-9e2c-ce396277e7be@app.fastmail.com>
-	<xmqqa52havek.fsf@gitster.g>
-	<2b8193d1-f492-4cfd-b568-107d68112d9a@app.fastmail.com>
-Date: Fri, 26 Sep 2025 16:07:46 -0700
-Message-ID: <xmqqecrsak3h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JUgZNUPt"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-3352018e051so2479222a91.0
+        for <git@vger.kernel.org>; Fri, 26 Sep 2025 16:08:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758928130; x=1759532930; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dtV2fwPuxhaYMQ4Q3nwjxVMgYN87JoE6v/Np9N0Lx9o=;
+        b=JUgZNUPtvKJWPIgKEtEF/wofNP6ebGsj6rqGeDu+AUsLtCzUqkC6oIj0vnYMvNVOvr
+         2yl2/7Sou5WqNRmlahpTUbxJyQj4xmpmLmIghyIuf0sbhUTzwXD0BTVCNhAtB0KVqaB5
+         zJVWqbDsIbDl/tvLD0uCH5NAV1RWLTPoXrozGl5mxIO0aNywYg31ZbEEuWzNjwZ+6FMz
+         IuyJlYWhlNyKtcYpc3LILK02wD+YssX3o4KfLR+Q14COtNiszwmOmoPj0GQziqh9zNVM
+         4KzkPm6knF9tBg6slt2ORZ/fs/UnnmbwffC988EXAQrhTzPh69YNzrnK6ly4MnPlilj9
+         V0mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758928130; x=1759532930;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dtV2fwPuxhaYMQ4Q3nwjxVMgYN87JoE6v/Np9N0Lx9o=;
+        b=gdLUVr+v0aEClxkL687mC7Ze1A7dzKpxh8+iulMB645wd8hJ8qviENlGfkE5l9mURX
+         AmKCDMUf6PawkYFMt8yeCBI4SWojcvBHjhngyuHcM2n8JiO+51yBYHm5TglCny3Ll89b
+         s4zVoGG6qR7ieO+CKBNDqV1ska47fv51c6hTJsJZrK4X+lXPJ2jhmGZkOSlg9YGr/pMe
+         88D3q68AMm030fItRAwW512fLu6+qHSRLdiaR+8foxKwbg0/PqhFGubcBD7Kke+uSH2K
+         XTtIOem8hM9MzJM9UCj37YDgTq3usa5KLt13qMC1Wn+E2ZZGeBPWaL9VjTXOfaYrqpMG
+         d2Lw==
+X-Gm-Message-State: AOJu0YyJsB+cPvUQK8y8l1OhqRbMpInEooxomH5KFJ6dXS7imLi/rPmq
+	hoytvIARsAdfK7oP5ZFPapJgVRGJtQR1wtgrC+sI0LKTAblB4GM69wj6h5SupA==
+X-Gm-Gg: ASbGncsTUagoz6chB5AkW/gAsXGYGuuuBOHQs59IyPPQgmRIRdRIx9Wt8fyToTq94Rg
+	IlT4nxHrwuIa68Hgg9AoYPEkbsWyIps2kQ4KlOMcYiSL/BPDTmu0kzwhec2IvAJr7V+rGW2vFV4
+	Lh9vtOibTMlvShtRl2VrjFEOfuLc0t6y/hagmICL/1kpnE/jvwQfmclF1BvzeRqJkHmwYqYjbQN
+	9hPZmhqy2IuoN3goY4YxbKSHk8aDesjYu5NQfvI5cfqq+JVX1K6Es+0rCL5qNyXYVdb/nMGneWk
+	6DGEzNdkl3NxiQ8F1q0GJJfV8Q0bxxqZmoLydv1frNXu17H+UAEXigGQhLcOmoZhOW5NS2dWtQ6
+	TshGn6v8Z36YovHhiAtfSz9yL/Y409N5v9HiIrscyqEk2FwG7Gxado+cAlbLPhr/okofAUo4oRj
+	mt9acEGozMdqKbi/NazV8wojw3W1h67v++krKBQBAZpy9QYSC17w==
+X-Google-Smtp-Source: AGHT+IEE2Wwgp2KitUgokSHerLNt4s/VIIeysZnFo2gkZdOUuZDf2yB4KygVm4HmbYXp+xgckUqYig==
+X-Received: by 2002:a17:90a:d008:b0:32e:a5c2:7f87 with SMTP id 98e67ed59e1d1-3342a2d8c17mr9052669a91.22.1758928130075;
+        Fri, 26 Sep 2025 16:08:50 -0700 (PDT)
+Received: from localhost.localdomain ([2406:7400:56:596:4193:db28:d218:fc74])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3341bda71bdsm10005981a91.11.2025.09.26.16.08.46
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 26 Sep 2025 16:08:49 -0700 (PDT)
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	christian.couder@gmail.com,
+	ps@pks.im,
+	newren@gmail.com,
+	code@khaugsbakk.name,
+	rybak.a.v@gmail.com,
+	karthik.188@gmail.com,
+	jltobler@gmail.com,
+	toon@iotcl.com,
+	johncai86@gmail.com,
+	johannes.schindelin@gmx.de,
+	Siddharth Asthana <siddharthasthana31@gmail.com>
+Subject: [PATCH v2 0/1] replay: make atomic ref updates the default behavior
+Date: Sat, 27 Sep 2025 04:38:37 +0530
+Message-ID: <20250926230838.35870-1-siddharthasthana31@gmail.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250908043620.57848-1-siddharthasthana31@gmail.com>
+References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-"Julia Evans" <julia@jvns.ca> writes:
+This is v2 of the git-replay atomic updates series.
 
-> On Fri, Sep 26, 2025, at 3:03 PM, Junio C Hamano wrote:
->> "Julia Evans" <julia@jvns.ca> writes:
->>
->>>> In other words, the push.default=simple mode does not tell Git to
->>>> push to a branch with the same name.  Rather, as a variant of the
->>>> push.default=upstream mode, it tells Git to follow the same "push to
->>>> the upstream branch" rule, which requires you to configure your
->>>> upstream.  But the mode gives additional limit on the name of the
->>>> branch that can be set to upstream.
->>>
->>> I like the idea of explaining it as "push.default=simple uses the
->>> configured upstream branch, with the restriction that the upstream
->>> branch must have the same name".
->>>
->>> But as I learned from you earlier in this thread: https://lore.kernel.org/git/pull.1964.v2.git.1757703309.gitgitgadget@gmail.com/T/#m896f4a32ca462d69637b56f9bdfaa61e55e6b952
->>> push.default=simple will sometimes push the current branch
->>> to the remote branch with the same name even if there's no configured
->>> upstream branch.
->>
->> It was not me teaching anybody, though.  I was showing my puzzlement
->> and confusion.
->> Now, I am still confused as I was when I wrote the message you
->> cited earlier.
->>
->> Do we ever have a case where, with the "simple" mode, you have to
->> set an upstream?
->
-> Yes. If you clone a repository, create a new branch, and run  `git push`
-> (to push to `origin`), Git will complain that you haven’t set an upstream
-> for that branch, like this:
->
->     $ git push
->     fatal: The current branch testtesttesttest has no upstream branch.
->     To push the current branch and set the remote as upstream, use
->     
->         git push --set-upstream origin testtesttesttest
->     To have this happen automatically for branches without a tracking
->     upstream, see 'push.autoSetupRemote' in 'git help config'
+Based on the extensive community feedback from v1, I've completely redesigned
+the approach. Instead of adding new --update-refs options, this version makes
+atomic ref updates the default behavior of git replay.
 
-Hmph, that contradicts with the observation we had in the message
-you cited earlier, but it does reproduce for me as well.  Puzzled
-again.
+Why this change makes sense:
+- git replay is explicitly marked as EXPERIMENTAL with behavior changes expected
+- The command is primarily used server-side where atomic transactions are crucial
+- Current pipeline approach (git replay | git update-ref --stdin) creates 
+  coordination complexity and lacks atomic guarantees by default
+- Patrick Steinhardt noted performance issues with individual ref updates 
+  in reftable backend
+- Elijah Newren and Junio Hamano endorsed making the better behavior default
 
-> My best guess from my experimentation and from reading some
-> of the commit messages/code is that the rules for how
-> `push.default=simple` works are something like:
->
-> 1. If the remote you're pushing to is the remote that `git pull`
->    would normally pull from if run without any arguments,
->    then require the user to set an upstream
->    (with the idea that the remote is somehow "special"
->    and should be protected from accidental pushes)
+The new design:
+    # Default: atomic ref updates (no pipeline needed)
+    git replay --onto main topic1..topic2
 
-This is the traditional 'simple'
+    # Traditional behavior preserved for compatibility  
+    git replay --output-commands --onto main topic1..topic2 | git update-ref --stdin
 
+Key changes since v1:
+- Made atomic ref updates the default instead of opt-in via --update-refs
+- Eliminated confusing --update vs --update-refs option distinction  
+- Avoided naming collision with git rebase --update-refs
+- Fixed --allow-partial exit code behavior (exits 0 only if ALL updates succeed)
+- Used die_for_incompatible_opt2() for consistent error reporting
+- Updated documentation with proper line wrapping and consistent terminology
+- Added comprehensive testing and performance considerations
 
-> 2. Otherwise, push to the branch to with the same name
->    without requiring an upstream to be set
+This approach gives us atomic transactions by default while preserving full
+backward compatibility for existing workflows that need the pipeline approach.
 
-This is what 'triangular' feature we saw earlier in the "git log"
-output in my message you are responding to had a few commits for.
+Thanks to Christian Couder, Patrick Steinhardt, Elijah Newren, Junio C Hamano,
+Kristoffer Haugsbakk, and Andrei Rybak for the excellent feedback that led to 
+this much cleaner design!
 
-> That said, the exact details of how push.default=simple works
-> (ironically) seem complicated enough that I don't think it's worth
-> documenting in detail at the beginning of the `git push` man page.
+Siddharth Asthana (1):
+  replay: make atomic ref updates the default behavior
 
-Totally agreed.
+ Documentation/git-replay.adoc |  76 +++++++++++++---
+ builtin/replay.c              | 114 ++++++++++++++++++++---
+ t/t3650-replay-basics.sh      | 166 ++++++++++++++++++++++++++++++++--
+ 3 files changed, 319 insertions(+), 37 deletions(-)
 
-> To go back to the original text I suggested:
->
->> 3. The `push.default` configuration. The default is `push.default=simple`,
->>    which will push to a branch with the same name as the current branch.
->>    See the CONFIGURATION section below for more on `push.default`.
->> 
->> As a safety measure, `git push` may fail if you haven't set an upstream
->> for the current branch, depending on what `push.default` is set to.
->> See the UPSTREAM BRANCHES section below for more on how to set and
->> use upstreams.
->
-> The words "may fail" are definitely vague, and I agree it doesn't feel good
-> to give a vague explanation like this. But if we think the current
-> behaviour is "broken" and hard to understand and that we have to keep it for
-> backwards compatibility reasons, giving a slightly vague explanation
-> (perhaps with a reference to where someone can read all the gritty
-> details) might be the best path.
-
-OK.  Thanks for helping me think this through.
+-- 
+2.51.0
 
