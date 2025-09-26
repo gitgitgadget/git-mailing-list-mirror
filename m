@@ -1,279 +1,635 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83651C28E
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 22:27:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B99E18E3F
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 22:42:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758925644; cv=none; b=Bczw2n7CYNjkiqVnm3n8rkU4jzI+ZJ0TC1oaSAZzNA66pi8f+RmJsS2q/QvzoZezbhktUzPn9VxxTNDZqgCWK6P336gJxGrweFi3ePAJT02CJTydoYhvn3mSnU/I5IvZIZnMvrxmqyWxXkJ/DdHx+ACfohDUoPDMHRthLJ+FNJc=
+	t=1758926525; cv=none; b=dXr7NVzat25z/0yRLYoIyi3CPcINGs3PUksgHpk/5AJvHz1rWQSqyDJuWykyPMQJVmns7iDS3N+R4P2mLQyOhpzUEQGO8tYPjfbXkqotyjjqBAqhn400vg9uUI+aC2pnjWOUhztCXC5ng5xnO4RZBWf4z47jH/O7EoeQSm6GEXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758925644; c=relaxed/simple;
-	bh=Vg4uZlyZ0HkocMZU8OO1FNdEuI0+g40mt2USbjUyi9U=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=JdoBsmMaDdOnKWfUKE+sHmaZWVGQ6UEzLTbqxytceVXbFFU6G4Xg6twoHTMcaKxUalxOzZXMmMpLWjtjV6PQxK+qBGCNBlNxNjVuloXtKsInkaXuEtxjm11GnMQqoqlokd33G/8kHV18FcyDkt4ldSFZD+Ek8QICLX7dywKcvfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=HCI9pK6v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wo2UWGrn; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1758926525; c=relaxed/simple;
+	bh=2g8MErdIe+HAZ9KrzGnqeNvc3fUUdlyD8CDI8ex5qS0=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=amXgU1gEakQN8L3UpZ5BZ0IU0pzWIwvGSAUvyGsQz03bFMpF/FvdC8DQvMUmCU4Yqrw8Lxi9puRw04HHqR+dmZRB96+WkfHnrmYg4h1wszgzRwx54votiW0imWWKesesthK0R26AS4BF/oprOEgwuA+fdIE1RZ/StdgzfJ8mc84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CMN6wbGk; arc=none smtp.client-ip=209.85.215.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="HCI9pK6v";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wo2UWGrn"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id CA8791D00017;
-	Fri, 26 Sep 2025 18:27:20 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Fri, 26 Sep 2025 18:27:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1758925640;
-	 x=1759012040; bh=+2FlHLoMpFTBYw6iFSSs9DtdtJl5mDiPuxxhQtNWvjQ=; b=
-	HCI9pK6vboGMRn3w60qxagWCKSwDVqBncPriRH6745fg+FM6NtkIpGzEMZ+X26PI
-	q3BRrHVX0hgk/BSKUThhmEXPo1357ZRFYZgA2SoidusdhgyGkzPupk314P6tYq3H
-	KzJOojR70vIN0bHNi9JYL3A3gBplmBDB1muGr1/vpSAtdhXYzBACKCjBp4u2VZFL
-	bgJ93oTrgRrsTx6CZ20uByltC05YvXi5XrVE5xnSXQtu2zEtBAFKIUd6rklcPZl2
-	SEJ6AYV/zrY43t3vdUnrMOCHIUGavRVoFEcqPktdoB2W/tDiBF/m0ztCFV6hUl2B
-	/re7oxEWT9gWg2mlv5N8pA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1758925640; x=
-	1759012040; bh=+2FlHLoMpFTBYw6iFSSs9DtdtJl5mDiPuxxhQtNWvjQ=; b=W
-	o2UWGrnLVcUGo2xxoJM37wwjxFx9Sv4bb+zCiASiCBvhJXwXx8XjjjikxOeicMuW
-	1AO+P145CpjRCOXSRyxLtDCzrYXJevpxR2w9w0otNqV1IIiKsEmtOzHNQgO0HRfr
-	BWmzn5DkX4GR9TuvCqjGgy4El1kcQ1Yefvi5mH8BzNJrz3q6rIRL7w5B1Q5q+gBQ
-	RH19tilOHJaCA12bsOPYSHtO8T+uzYbJUAG1xnZOito+sQqh4jnG9r49lLdVzVsv
-	G+zvcrMd91R+RePuJd5B+cS3ysfN2hU7bpO0f4Zu4Z/HuOWFIvGxV3YFLvGG9vdn
-	I12Q3UHSuqCIWxQdGB1yA==
-X-ME-Sender: <xms:SBPXaCcBu2podiYrfAVFTQF4NAqYGO33NAWnao5bO1zv7t-qJAiLkA>
-    <xme:SBPXaHBbKzI9A8HuxZamEcYmoCIc9qCUd8203XvDmpMwHyN0EkNaGb_z_GsvHWy3S
-    32ISKkOQXXjYNIeyoRq9YqNYBXjeqa0fOIpfhrbsf4x0U0DaD-foQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejtdehjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfluhhlihgr
-    ucfgvhgrnhhsfdcuoehjuhhlihgrsehjvhhnshdrtggrqeenucggtffrrghtthgvrhhnpe
-    ekveegtdeggeduvdfftedvheduudegfeeuteelieekgeekfeeiueetudelhfejffenucff
-    ohhmrghinhepkhgvrhhnvghlrdhorhhgpdguvghfrghulhhtrdgrshenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjuhhlihgrsehjvhhnshdr
-    tggrpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgt
-    phhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrgh
-X-ME-Proxy: <xmx:SBPXaNDmPQGQeKEMT55uDgj6PgRCTDprLGcj-FVYJW2n1cGrrpP_4Q>
-    <xmx:SBPXaNBQG9KTyD7litJ3sjeGjiBOQjLj22APgKR2IjSAsr6-cCRmbw>
-    <xmx:SBPXaIoFEhU2h448g8rfTN2_SdsuFiS24IwgDrwF_Zpm8lNBV8ZWeg>
-    <xmx:SBPXaHmx2vTzsFlpEolxGUw4_cBzAbbErusoSJaaAqUVV_wMsNmOUA>
-    <xmx:SBPXaFXspl1L0-hE1gf0GpeRLTrlApJ3zkJJ8W6GHSMzXFM2NNof8HqW>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 593B9780271; Fri, 26 Sep 2025 18:27:20 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CMN6wbGk"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-b55562f3130so1940140a12.2
+        for <git@vger.kernel.org>; Fri, 26 Sep 2025 15:42:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758926522; x=1759531322; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tme6D7LwhT3vc1KyNy/Lp8t5iUpfE8vXlI2D38Qlk2k=;
+        b=CMN6wbGkb1lr5ydRtaxS742L9NdwPJCHffR4NC6+4A6ZOPLeXmQVsCnxhNcdYtaQQn
+         Tox/FnaSdN1rzJpirf+JeI/tXrUngUmnRXYHRoWIi1xhR/EikFrwKqn6GIhVJTWZdcPc
+         cJtBwWAmmIacCFuBCe6G0f3G5YtCiVZPJ9Vz2wb/Xg50UkxKwYDVK9Vzv1/hny9PXVC7
+         e/cMG8bR8Q2JMFfn15WnZU4SDSq/lrojcclDa4NiltVvZPXWHoqh81qqek9rDvLhuBfK
+         dpZetYipSWlBkidhR4YKyIkpYv31eDOLT05O90HMU3MCl61JNsReva5WezjDY0QDfbCY
+         /lqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758926522; x=1759531322;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tme6D7LwhT3vc1KyNy/Lp8t5iUpfE8vXlI2D38Qlk2k=;
+        b=bipCImaXq7DxRtp3V/FpYxM/Mm4o/TGdYK1OmBcSEX5LqY7pLDVRrQYdW9POOFEyJ0
+         z5+ifKgfT/4mhieSVZOhr9SWo59gRoF1rxXtwDE62UUuWzQ3sDQA7LnbIHA7XCxx7iR+
+         pffZlotkpMla4tc/SdZumJIOOqQclndKhXp/OF6EesR8LLCZ2R0oCSxQ0KHXDXdMos73
+         rvpagb335ge434FgzQPlm1KbcV+qp4DJxPR94Sdlfcwe5eOX+bqckISZ4YpA3JC+GSv8
+         WXvYbiGjZ4o3TF0DXTSb1qcYSb6YYxm51WGcRlJGIfTbKWqIkstrBnWplvJksXxxpp3z
+         DyjA==
+X-Gm-Message-State: AOJu0YzLLlxwM1+lRQP7fxebdaxQcnyvcfho/2H6h7hBqE531c2HXArN
+	m6Ek8q1mWlnWHeb3sxRcHNDCPzcKfrH4rrhGecy4s7H+mmo3jfW9NpymBU5eNA==
+X-Gm-Gg: ASbGncvgwYRULEW+iwKRIxO5kLEo/coAqL8a3gndBSst9BNMtFYQfiDhJjvvZl81cMl
+	gumPq3jKXmzKv4R3/EZYeuvmONbfKTj8dgHl2F1H7Fe+j1D/Eq5DOqhpUWKmp1ALB5FKazGNovb
+	x6W3idafePMjeP4szbBqmJFRcIuC1cNULDaDxUZLFpw2ESv7yXuklz8N+IiMpClYZSq7VvO8xI4
+	iyMFOWVDdBOqFsIh7lOxpZzu81kY0ta5yvKtNx8g3uRB5xVTZVy4Q2KVM3TfdXvBF9VkpAUi2b7
+	XVRE82GTu3RFsNvpDOFvV7V98sWRhsSoHg3L/u9Shz2lmq84R4FsCPlcCZDc+UuoCFocvgTjSc5
+	2Zz5SrTQOMW9tbDWv5aJzOG0HKTDDXjAeMyc=
+X-Google-Smtp-Source: AGHT+IE90rHMOmfZddbWcYrlmzqTIDxFihXUuh26lUUzETc4ZnKIXxMXC0zkunNM/UIbCDl1e64r/w==
+X-Received: by 2002:a17:90b:3882:b0:32e:1b1c:f8b8 with SMTP id 98e67ed59e1d1-3342a2d2459mr10487213a91.26.1758926521430;
+        Fri, 26 Sep 2025 15:42:01 -0700 (PDT)
+Received: from [127.0.0.1] ([104.209.5.149])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3341be1474asm9996448a91.17.2025.09.26.15.42.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Sep 2025 15:42:00 -0700 (PDT)
+Message-Id: <pull.2048.v6.git.git.1758926520.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2048.v5.git.git.1758662670.gitgitgadget@gmail.com>
+References: <pull.2048.v5.git.git.1758662670.gitgitgadget@gmail.com>
+From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 26 Sep 2025 22:41:47 +0000
+Subject: [PATCH v6 00/12] Cleanup xdfile_t and xrecord_t in xdiff.
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: ALMQnK0r4jnk
-Date: Fri, 26 Sep 2025 18:27:00 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org,
- "D. Ben Knoble" <ben.knoble@gmail.com>,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Message-Id: <2b8193d1-f492-4cfd-b568-107d68112d9a@app.fastmail.com>
-In-Reply-To: <xmqqa52havek.fsf@gitster.g>
-References: <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
- <pull.1964.v3.git.1758649472.gitgitgadget@gmail.com>
- <be6453d010bdc9d2b49988d6841dd7e7f9bdf1f8.1758649472.git.gitgitgadget@gmail.com>
- <xmqqqzvvk4bj.fsf@gitster.g>
- <2365a7b9-3d22-4406-876d-65822822655f@app.fastmail.com>
- <xmqqzfaidyil.fsf@gitster.g>
- <1422594f-b0a8-4a7a-bf78-940693757224@app.fastmail.com>
- <xmqq348admuo.fsf@gitster.g> <xmqqwm5lcjvy.fsf@gitster.g>
- <442a4f25-7d7b-4f34-9e2c-ce396277e7be@app.fastmail.com>
- <xmqqa52havek.fsf@gitster.g>
-Subject: Re: [PATCH v3 4/4] doc: git-push: clarify "what to push"
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Ben Knoble <ben.knoble@gmail.com>,
+    Jeff King <peff@peff.net>,
+    Ezekiel Newren <ezekielnewren@gmail.com>
+
+Changes since v5.
+
+ * Address review feedback on commit messages.
+ * Drop commit "xdiff: delete rchg aliasing"
+ * Use DISCARD/KEEP/INVESTIGATE instead of NONE/SOME/TOO_MANY
+ * Fix the word wrapping in the comments of xprepare.c
+
+Cleanup of the functions xdl_cleanup_records() and xdl_clean_mmatch() is out
+of scope for this patch series. The changes to them are incidental to
+explaining why 'char rchg' is refactored to 'bool changed'.
+
+Changes since v4.
+
+ * Make it clear that the field xdfile_t.rchg (now 'xdfile_t.changed') is
+   distinct from the local variables dis1, dis2 (now 'matches1',
+   'matches2').
+ * Use NONE, SOME, TOO_MANY instead of NO, YES, MAYBE.
+ * Use bool literals for xdfile_t.changed.
+
+Changes since v3.
+
+ * Address review feedback.
+ * Split the deletion of xdl_get_rec() into 2 commits.
+ * Move NO, YES, MAYBE into xprepare.c, and use bool literals.
+ * refactor 'char rchg' to 'bool changed'
+
+Changes since v2.
+
+ * No patch changes, just resending to get patch 9 to show up on the mailing
+   list.
+ * A few tweaks to the cover letter.
+
+Changes since v1, to address review feedback.
+
+ * Only include the clean up patches; The remaining patches will be split
+   into a separate series.
+ * Commit message clarifications.
+ * Minor style cleanups.
+ * Performance impacts included in commit message of patch 8.
 
 
+Relevant part of the original cover letter follows:
+===================================================
 
-On Fri, Sep 26, 2025, at 3:03 PM, Junio C Hamano wrote:
-> "Julia Evans" <julia@jvns.ca> writes:
->
->>> In other words, the push.default=3Dsimple mode does not tell Git to
->>> push to a branch with the same name.  Rather, as a variant of the
->>> push.default=3Dupstream mode, it tells Git to follow the same "push =
-to
->>> the upstream branch" rule, which requires you to configure your
->>> upstream.  But the mode gives additional limit on the name of the
->>> branch that can be set to upstream.
->>
->> I like the idea of explaining it as "push.default=3Dsimple uses the
->> configured upstream branch, with the restriction that the upstream
->> branch must have the same name".
->>
->> But as I learned from you earlier in this thread: https://lore.kernel=
-.org/git/pull.1964.v2.git.1757703309.gitgitgadget@gmail.com/T/#m896f4a32=
-ca462d69637b56f9bdfaa61e55e6b952
->> push.default=3Dsimple will sometimes push the current branch
->> to the remote branch with the same name even if there's no configured
->> upstream branch.
->
-> It was not me teaching anybody, though.  I was showing my puzzlement
-> and confusion.
+Before:
 
-Oh, I'm glad I'm not the only one who's been confused about how
-`push.default=3Dsimple` behaves :)
+typedef struct s_xrecord {
+	struct s_xrecord *next;
+	char const *ptr;
+	long size;
+	unsigned long ha;
+} xrecord_t;
 
-> When b55e6775 (push: introduce new push.default mode "simple",
-> 2012-04-24) introduced the "simple" mode, the intention was fairly
-> clear:
->
->     push: introduce new push.default mode "simple"
->   =20
->     When calling "git push" without argument, we want to allow Git to =
-do
->     something simple to explain and safe. push.default=3Dmatching is u=
-nsafe
->     when used to push to shared repositories, and hard to explain to
->     beginners in some contexts. It is debatable whether 'upstream' or
->     'current' is the safest or the easiest to explain, so introduce a =
-new
->     mode called 'simple' that is the intersection of them: push to the
->     upstream branch, but only if it has the same name remotely. If not=
-, give
->     an error that suggests the right command to push explicitely to
->     'upstream' or 'current'.
->   =20
->     A question is whether to allow pushing when no upstream is configu=
-red. An
->     argument in favor of allowing the push is that it makes the new mo=
-de work
->     in more cases. On the other hand, refusing to push when no upstrea=
-m is
->     configured encourages the user to set the upstream, which will be
->     beneficial on the next pull. Lacking better argument, we chose to =
-deny
->     the push, because it will be easier to change in the future if som=
-eone
->     shows us wrong.
->   =20
->     Original-patch-by: Jeff King <peff@peff.net>
->     Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> We did reject a "git push" (no other arguments) in an unconfigured
-> repository using push.default=3Dsimple.
->
-> We must have _broken_ it along the way somewhere over the years.
->
-> In the output from
->
->   $ git log --all-match --grep=3Dpush.default --grep=3Dsimple
->
-> there are a handful of changes that touch PUSH_DEFAULT_SIMPLE in
-> ancient history; ed2b1829 (push: change `simple` to accommodate
-> triangular workflows, 2013-06-19), seems to have broken the
-> unconfigured case, which 00a6fa07 (push: truly use "simple" as
-> default, not "upstream", 2014-11-26) tried to fix it, and then
-> another commit e291c75a (remote.c: add branch_get_push, 2015-05-21)
-> further tweaked on the triangular (i.e. the remote you are pushing
-> to is different from the remote you are fetching from) workflow.
->
-> But that is long time ago; I do not think we can _fix_ the breakage
-> as that would be a big behaviour change.  If 'simple' works to
-> update the branch with the same name as your current branch at the
-> remote you cloned from without you having to do anything special,
-> such a convinience is something the existing users we acquired over
-> the past 10 years must have become very accustomed to already.  We
-> cannot break them.
+typedef struct s_xdfile {
+	chastore_t rcha;
+	long nrec;
+	unsigned int hbits;
+	xrecord_t **rhash;
+	long dstart, dend;
+	xrecord_t **recs;
+	char *rchg;
+	long *rindex;
+	long nreff;
+	unsigned long *ha;
+} xdfile_t;
 
-That makes sense, can=E2=80=99t break backwards compatibility.
 
->     And that is my excuse for stopping to look into the detauls of
->     these commits the above "git log" command found ;-)
->
->> So it seems more accurate to say that push.default.simple will push
->> to the branch with the same name, with the restriction that you might
->> have to set an upstream, because the branch must always have the
->> same name, but whether or not you have to set an upstream depends
->> on the situation.
->
-> Now, I am still confused as I was when I wrote the message you
-> cited earlier.
->
-> Do we ever have a case where, with the "simple" mode, you have to
-> set an upstream?
+After cleanup:
 
-Yes. If you clone a repository, create a new branch, and run  `git push`
-(to push to `origin`), Git will complain that you haven=E2=80=99t set an=
- upstream
-for that branch, like this:
+typedef struct s_xrecord {
+	char const *ptr;
+	long size;
+	unsigned long ha;
+} xrecord_t;
 
-    $ git push
-    fatal: The current branch testtesttesttest has no upstream branch.
-    To push the current branch and set the remote as upstream, use
-   =20
-        git push --set-upstream origin testtesttesttest
-    To have this happen automatically for branches without a tracking
-    upstream, see 'push.autoSetupRemote' in 'git help config'
+typedef struct s_xdfile {
+	xrecord_t *recs;
+	long nrec;
+	long dstart, dend;
+	bool *changed;
+	long *rindex;
+	long nreff;
+} xdfile_t;
 
-I use `push.default=3Dsimple` and this has happened to me a lot in the
-past, personally I set `push.autoSetupRemote` to deal with this.
 
-My best guess from my experimentation and from reading some
-of the commit messages/code is that the rules for how
-`push.default=3Dsimple` works are something like:
+===
 
-1. If the remote you're pushing to is the remote that `git pull`
-   would normally pull from if run without any arguments,
-   then require the user to set an upstream
-   (with the idea that the remote is somehow "special"
-   and should be protected from accidental pushes)
-2. Otherwise, push to the branch to with the same name
-   without requiring an upstream to be set
+Ezekiel Newren (12):
+  xdiff: delete static forward declarations in xprepare
+  xdiff: delete local variables and initialize/free xdfile_t directly
+  xdiff: delete unnecessary fields from xrecord_t and xdfile_t
+  xdiff: delete superfluous function xdl_get_rec() in xemit
+  xdiff: delete local variables that alias fields in xrecord_t
+  xdiff: delete struct diffdata_t
+  xdiff: delete redundant array xdfile_t.ha
+  xdiff: delete fields ha, line, size in xdlclass_t in favor of an
+    xrecord_t
+  xdiff: delete chastore from xdfile_t
+  xdiff: rename rchg -> changed in xdfile_t
+  xdiff: add macros DISCARD(0), KEEP(1), INVESTIGATE(2) in xprepare.c
+  xdiff: change type of xdfile_t.changed from char to bool
 
-That said, the exact details of how push.default=3Dsimple works
-(ironically) seem complicated enough that I don't think it's worth
-documenting in detail at the beginning of the `git push` man page.
-I definitely haven't been able to fully understand what they are yet.
-Certainly it's true that sometimes you have to set an upstream
-and sometimes you don't.
+ xdiff/xdiffi.c     | 102 ++++++-------
+ xdiff/xdiffi.h     |  11 +-
+ xdiff/xemit.c      |  38 ++---
+ xdiff/xhistogram.c |  10 +-
+ xdiff/xmerge.c     |  56 ++++----
+ xdiff/xpatience.c  |  18 +--
+ xdiff/xprepare.c   | 346 ++++++++++++++++++++-------------------------
+ xdiff/xtypes.h     |   9 +-
+ xdiff/xutils.c     |  16 +--
+ 9 files changed, 269 insertions(+), 337 deletions(-)
 
-To go back to the original text I suggested:
 
-> 3. The `push.default` configuration. The default is `push.default=3Dsi=
-mple`,
->    which will push to a branch with the same name as the current branc=
-h.
->    See the CONFIGURATION section below for more on `push.default`.
->=20
-> As a safety measure, `git push` may fail if you haven't set an upstream
-> for the current branch, depending on what `push.default` is set to.
-> See the UPSTREAM BRANCHES section below for more on how to set and
-> use upstreams.
+base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2048%2Fezekielnewren%2Fuse_rust_types_in_xdiff-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2048/ezekielnewren/use_rust_types_in_xdiff-v6
+Pull-Request: https://github.com/git/git/pull/2048
 
-The words "may fail" are definitely vague, and I agree it doesn't feel g=
-ood
-to give a vague explanation like this. But if we think the current
-behaviour is "broken" and hard to understand and that we have to keep it=
- for
-backwards compatibility reasons, giving a slightly vague explanation
-(perhaps with a reference to where someone can read all the gritty
-details) might be the best path.
+Range-diff vs v5:
 
-I do like the idea (that I think you mentioned before) of adding a very
-simple sentence like this near the beginning explaining what
-`git push origin main` does, since it's easy to explain, and someone cou=
-ld
-easily successfully start using `git push` without knowing any other
-information.
+  1:  890e508000 =  1:  890e508000 xdiff: delete static forward declarations in xprepare
+  2:  0cfd75b1ff =  2:  0cfd75b1ff xdiff: delete local variables and initialize/free xdfile_t directly
+  3:  92c81d2ff6 =  3:  92c81d2ff6 xdiff: delete unnecessary fields from xrecord_t and xdfile_t
+  4:  7d3a7e617c =  4:  7d3a7e617c xdiff: delete superfluous function xdl_get_rec() in xemit
+  5:  1d550cf308 !  5:  7a9380328e xdiff: delete superfluous local variables that alias fields in xrecord_t
+     @@ Metadata
+      Author: Ezekiel Newren <ezekielnewren@gmail.com>
+      
+       ## Commit message ##
+     -    xdiff: delete superfluous local variables that alias fields in xrecord_t
+     +    xdiff: delete local variables that alias fields in xrecord_t
+      
+          Use the type xrecord_t as the local variable for the functions in the
+     -    file xdiff/xemit.c.
+     +    file xdiff/xemit.c. Most places directly reference the fields inside of
+     +    this struct, doing that here makes it more consistent with the rest of
+     +    the code.
+      
+          Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+      
+  6:  2a3a1b657e !  6:  6dce41cd3d xdiff: delete struct diffdata_t
+     @@ Commit message
+          diffdata_t.rindex -> xdfile_t.rindex
+          diffdata_t.rchg   -> xdfile_t.rchg
+      
+     +    I think this struct existed before xdfile_t, and was kept for backward
+     +    compatibility reasons. I think xdiffi should have been refactored to
+     +    use the new (xdfile_t) struct, but was easier to alias it instead.
+     +
+     +    The local variables rchg* and rindex* don't shorten the lines by much,
+     +    nor do they really need to be there to make the code more readable.
+     +    Delete them.
+     +
+          Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+      
+       ## xdiff/xdiffi.c ##
+  7:  4c6543cbe3 =  7:  637d1032ab xdiff: delete redundant array xdfile_t.ha
+  8:  21bf4b5a20 =  8:  738daab090 xdiff: delete fields ha, line, size in xdlclass_t in favor of an xrecord_t
+  9:  ef6ae7d29c =  9:  59b00b63b8 xdiff: delete chastore from xdfile_t
+ 10:  7b0856108a <  -:  ---------- xdiff: delete rchg aliasing
+ 11:  570ab9f898 ! 10:  5702ca6912 xdiff: rename rchg -> changed in xdfile_t
+     @@ Metadata
+       ## Commit message ##
+          xdiff: rename rchg -> changed in xdfile_t
+      
+     +    The field rchg (now 'changed') declares if a line in a file is changed
+     +    or not. A later commit will change it's type from 'char' to 'bool'
+     +    to make its purpose even more clear.
+     +
+          Best-viewed-with: --color-words
+          Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+      
+     @@ xdiff/xdiffi.c: static int group_slide_up(xdfile_t *xdf, struct xdlgroup *g)
+       			g->start--;
+       
+       		return 0;
+     -@@ xdiff/xdiffi.c: int xdl_build_script(xdfenv_t *xe, xdchange_t **xscr) {
+     +@@ xdiff/xdiffi.c: int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+     + 
+     + int xdl_build_script(xdfenv_t *xe, xdchange_t **xscr) {
+     + 	xdchange_t *cscr = NULL, *xch;
+     +-	char *rchg1 = xe->xdf1.rchg, *rchg2 = xe->xdf2.rchg;
+     ++	char *changed1 = xe->xdf1.changed, *changed2 = xe->xdf2.changed;
+     + 	long i1, i2, l1, l2;
+     + 
+     + 	/*
+       	 * Trivial. Collects "groups" of changes and creates an edit script.
+       	 */
+       	for (i1 = xe->xdf1.nrec, i2 = xe->xdf2.nrec; i1 >= 0 || i2 >= 0; i1--, i2--)
+     --		if (xe->xdf1.rchg[i1 - 1] || xe->xdf2.rchg[i2 - 1]) {
+     --			for (l1 = i1; xe->xdf1.rchg[i1 - 1]; i1--);
+     --			for (l2 = i2; xe->xdf2.rchg[i2 - 1]; i2--);
+     -+		if (xe->xdf1.changed[i1 - 1] || xe->xdf2.changed[i2 - 1]) {
+     -+			for (l1 = i1; xe->xdf1.changed[i1 - 1]; i1--);
+     -+			for (l2 = i2; xe->xdf2.changed[i2 - 1]; i2--);
+     +-		if (rchg1[i1 - 1] || rchg2[i2 - 1]) {
+     +-			for (l1 = i1; rchg1[i1 - 1]; i1--);
+     +-			for (l2 = i2; rchg2[i2 - 1]; i2--);
+     ++		if (changed1[i1 - 1] || changed2[i2 - 1]) {
+     ++			for (l1 = i1; changed1[i1 - 1]; i1--);
+     ++			for (l2 = i2; changed2[i2 - 1]; i2--);
+       
+       			if (!(xch = xdl_add_change(cscr, i1, i2, l1 - i1, l2 - i2))) {
+       				xdl_free_script(cscr);
+ 12:  08a0fceb72 ! 11:  f08782a977 xdiff: use enum macros NONE(0), SOME(1), TOO_MANY(2) in xprepare.c
+     @@ Metadata
+      Author: Ezekiel Newren <ezekielnewren@gmail.com>
+      
+       ## Commit message ##
+     -    xdiff: use enum macros NONE(0), SOME(1), TOO_MANY(2) in xprepare.c
+     +    xdiff: add macros DISCARD(0), KEEP(1), INVESTIGATE(2) in xprepare.c
+      
+     -    Rename dis1, dis2 to matches1, matches2.
+     +    This commit is refactor-only; no behavior is changed. A future commit
+     +    will use bool literals for changed[i].
+      
+     -    Define macros NONE(0), SOME(1), TOO_MANY(2) as the enum values for
+     -    matches1 and matches2. These states will influence whether changed[i]
+     -    is set to 1 or kept as 0.
+     +    The functions xdl_clean_mmatch() and xdl_cleanup_records() will be
+     +    cleaned up more in a future patch series. The changes to
+     +    xdl_cleanup_records(), in this patch, is just to make it clear why
+     +    `char rchg` is refactored to `bool changed`.
+     +
+     +    Rename dis* to action* and replace literal numericals with macros.
+     +    The old names came from when dis* (which I think was short for discard)
+     +    was treated like a boolean, but over time it grew into a ternary state
+     +    machine. The result was confusing because dis* and rchg* both used 0/1
+     +    values with different meanings.
+     +
+     +    The new names and macros make the states explicit. nm is short for
+     +    number of matches, and mlim is a heuristic limit:
+     +
+     +      nm == 0       -> action[i] = DISCARD     -> changed[i] = true
+     +      0 < nm < mlim -> action[i] = KEEP        -> changed[i] = false
+     +      nm >= mlim    -> action[i] = INVESTIGATE -> changed[i] = xdl_clean_mmatch()
+     +
+     +    When need_min is true, only DISCARD and KEEP occur because the limit
+     +    is effectively infinite.
+      
+          Best-viewed-with: --color-words
+          Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+     @@ xdiff/xprepare.c
+       #define XDL_GUESS_NLINES1 256
+       #define XDL_GUESS_NLINES2 20
+       
+     -+#define NONE 0
+     -+#define SOME 1
+     -+#define TOO_MANY 2
+     ++#define DISCARD 0
+     ++#define KEEP 1
+     ++#define INVESTIGATE 2
+       
+       typedef struct s_xdlclass {
+       	struct s_xdlclass *next;
+     @@ xdiff/xprepare.c: void xdl_free_env(xdfenv_t *xe) {
+       
+       
+      -static int xdl_clean_mmatch(char const *dis, long i, long s, long e) {
+     -+static bool xdl_clean_mmatch(uint8_t const *matches, long i, long s, long e) {
+     ++static bool xdl_clean_mmatch(uint8_t const *action, long i, long s, long e) {
+       	long r, rdis0, rpdis0, rdis1, rpdis1;
+       
+       	/*
+      -	 * Limits the window the is examined during the similar-lines
+      -	 * scan. The loops below stops when dis[i - r] == 1 (line that
+     +-	 * has no match), but there are corner cases where the loop
+     +-	 * proceed all the way to the extremities by causing huge
+     +-	 * performance penalties in case of big files.
+      +	 * Limits the window that is examined during the similar-lines
+     -+	 * scan. The loops below stops when matches[i - r] == SOME (line that
+     - 	 * has no match), but there are corner cases where the loop
+     - 	 * proceed all the way to the extremities by causing huge
+     - 	 * performance penalties in case of big files.
+     ++	 * scan. The loops below stops when action[i - r] == KEEP
+     ++	 * (line that has no match), but there are corner cases where
+     ++	 * the loop proceed all the way to the extremities by causing
+     ++	 * huge performance penalties in case of big files.
+     + 	 */
+     + 	if (i - s > XDL_SIMSCAN_WINDOW)
+     + 		s = i - XDL_SIMSCAN_WINDOW;
+      @@ xdiff/xprepare.c: static int xdl_clean_mmatch(char const *dis, long i, long s, long e) {
+       
+       	/*
+       	 * Scans the lines before 'i' to find a run of lines that either
+      -	 * have no match (dis[j] == 0) or have multiple matches (dis[j] > 1).
+      -	 * Note that we always call this function with dis[i] > 1, so the
+     -+	 * have no match (matches[j] == NONE) or have multiple matches (matches[j] == TOO_MANY).
+     -+	 * Note that we always call this function with matches[i] == TOO_MANY, so the
+     - 	 * current line (i) is already a multimatch line.
+     +-	 * current line (i) is already a multimatch line.
+     ++	 * have no match (action[j] == DISCARD) or have multiple matches
+     ++	 * (action[j] == INVESTIGATE). Note that we always call this
+     ++	 * function with action[i] == INVESTIGATE, so the current line
+     ++	 * (i) is already a multimatch line.
+       	 */
+       	for (r = 1, rdis0 = 0, rpdis0 = 1; (i - r) >= s; r++) {
+      -		if (!dis[i - r])
+     -+		if (matches[i - r] == NONE)
+     ++		if (action[i - r] == DISCARD)
+       			rdis0++;
+      -		else if (dis[i - r] == 2)
+     -+		else if (matches[i - r] == TOO_MANY)
+     ++		else if (action[i - r] == INVESTIGATE)
+       			rpdis0++;
+      -		else
+     -+		else if (matches[i - r] == SOME)
+     ++		else if (action[i - r] == KEEP)
+       			break;
+      +		else
+     -+			BUG("Illegal value for matches[i - r]");
+     ++			BUG("Illegal value for action[i - r]");
+       	}
+       	/*
+     - 	 * If the run before the line 'i' found only multimatch lines, we
+     +-	 * If the run before the line 'i' found only multimatch lines, we
+      -	 * return 0 and hence we don't make the current line (i) discarded.
+     -+	 * return false and hence we don't make the current line (i) discarded.
+     - 	 * We want to discard multimatch lines only when they appear in the
+     +-	 * We want to discard multimatch lines only when they appear in the
+      -	 * middle of runs with nomatch lines (dis[j] == 0).
+     -+	 * middle of runs with nomatch lines (matches[j] == NONE).
+     ++	 * If the run before the line 'i' found only multimatch lines,
+     ++	 * we return false and hence we don't make the current line (i)
+     ++	 * discarded. We want to discard multimatch lines only when
+     ++	 * they appear in the middle of runs with nomatch lines
+     ++	 * (action[j] == DISCARD).
+       	 */
+       	if (rdis0 == 0)
+       		return 0;
+       	for (r = 1, rdis1 = 0, rpdis1 = 1; (i + r) <= e; r++) {
+      -		if (!dis[i + r])
+     -+		if (matches[i + r] == NONE)
+     ++		if (action[i + r] == DISCARD)
+       			rdis1++;
+      -		else if (dis[i + r] == 2)
+     -+		else if (matches[i + r] == TOO_MANY)
+     ++		else if (action[i + r] == INVESTIGATE)
+       			rpdis1++;
+      -		else
+     -+		else if (matches[i + r] == SOME)
+     ++		else if (action[i + r] == KEEP)
+       			break;
+      +		else
+     -+			BUG("Illegal value for matches[i + r]");
+     ++			BUG("Illegal value for action[i + r]");
+       	}
+       	/*
+     - 	 * If the run after the line 'i' found only multimatch lines, we
+     +-	 * If the run after the line 'i' found only multimatch lines, we
+      -	 * return 0 and hence we don't make the current line (i) discarded.
+     -+	 * return false and hence we don't make the current line (i) discarded.
+     ++	 * If the run after the line 'i' found only multimatch lines,
+     ++	 * we return false and hence we don't make the current line (i)
+     ++	 * discarded.
+       	 */
+       	if (rdis1 == 0)
+      -		return 0;
+     @@ xdiff/xprepare.c: static int xdl_clean_mmatch(char const *dis, long i, long s, l
+       	xdlclass_t *rcrec;
+      -	char *dis, *dis1, *dis2;
+      -	int need_min = !!(cf->flags & XDF_NEED_MINIMAL);
+     -+	uint8_t *matches1, *matches2;
+     -+	int status = 0;
+     ++	uint8_t *action1 = NULL, *action2 = NULL;
+      +	bool need_min = !!(cf->flags & XDF_NEED_MINIMAL);
+     ++	int ret = 0;
+       
+      -	if (!XDL_CALLOC_ARRAY(dis, xdf1->nrec + xdf2->nrec + 2))
+      -		return -1;
+      -	dis1 = dis;
+      -	dis2 = dis1 + xdf1->nrec + 1;
+     -+	matches1 = NULL;
+     -+	matches2 = NULL;
+     -+
+      +	/*
+      +	 * Create temporary arrays that will help us decide if
+      +	 * changed[i] should remain 0 or become 1.
+      +	 */
+     -+	if (!XDL_CALLOC_ARRAY(matches1, xdf1->nrec + 1)) {
+     -+		status = -1;
+     ++	if (!XDL_CALLOC_ARRAY(action1, xdf1->nrec + 1)) {
+     ++		ret = -1;
+      +		goto cleanup;
+      +	}
+     -+	if (!XDL_CALLOC_ARRAY(matches2, xdf2->nrec + 1)) {
+     -+		status = -1;
+     ++	if (!XDL_CALLOC_ARRAY(action2, xdf2->nrec + 1)) {
+     ++		ret = -1;
+      +		goto cleanup;
+      +	}
+       
+      +	/*
+     -+	 * Initialize temporary arrays with NONE, SOME, or TOO_MANY.
+     ++	 * Initialize temporary arrays with DISCARD, KEEP, or INVESTIGATE.
+      +	 */
+       	if ((mlim = xdl_bogosqrt(xdf1->nrec)) > XDL_MAX_EQLIMIT)
+       		mlim = XDL_MAX_EQLIMIT;
+     @@ xdiff/xprepare.c: static int xdl_clean_mmatch(char const *dis, long i, long s, l
+       		rcrec = cf->rcrecs[recs->ha];
+       		nm = rcrec ? rcrec->len2 : 0;
+      -		dis1[i] = (nm == 0) ? 0: (nm >= mlim && !need_min) ? 2: 1;
+     -+		matches1[i] = (nm == 0) ? NONE: (nm >= mlim && !need_min) ? TOO_MANY: SOME;
+     ++		action1[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
+       	}
+       
+       	if ((mlim = xdl_bogosqrt(xdf2->nrec)) > XDL_MAX_EQLIMIT)
+     @@ xdiff/xprepare.c: static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *
+       		rcrec = cf->rcrecs[recs->ha];
+       		nm = rcrec ? rcrec->len1 : 0;
+      -		dis2[i] = (nm == 0) ? 0: (nm >= mlim && !need_min) ? 2: 1;
+     -+		matches2[i] = (nm == 0) ? NONE: (nm >= mlim && !need_min) ? TOO_MANY: SOME;
+     ++		action2[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
+       	}
+       
+      +	/*
+     @@ xdiff/xprepare.c: static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *
+       	     i <= xdf1->dend; i++, recs++) {
+      -		if (dis1[i] == 1 ||
+      -		    (dis1[i] == 2 && !xdl_clean_mmatch(dis1, i, xdf1->dstart, xdf1->dend))) {
+     -+		if (matches1[i] == SOME ||
+     -+		    (matches1[i] == TOO_MANY && !xdl_clean_mmatch(matches1, i, xdf1->dstart, xdf1->dend))) {
+     ++		if (action1[i] == KEEP ||
+     ++		    (action1[i] == INVESTIGATE && !xdl_clean_mmatch(action1, i, xdf1->dstart, xdf1->dend))) {
+       			xdf1->rindex[nreff++] = i;
+     -+			/* changed[i] remains 0 */
+     ++			/* changed[i] remains 0, i.e. keep */
+       		} else
+       			xdf1->changed[i] = 1;
+     ++			/* i.e. discard */
+       	}
+     -@@ xdiff/xprepare.c: static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+     + 	xdf1->nreff = nreff;
+       
+       	for (nreff = 0, i = xdf2->dstart, recs = &xdf2->recs[xdf2->dstart];
+       	     i <= xdf2->dend; i++, recs++) {
+      -		if (dis2[i] == 1 ||
+      -		    (dis2[i] == 2 && !xdl_clean_mmatch(dis2, i, xdf2->dstart, xdf2->dend))) {
+     -+		if (matches2[i] == SOME ||
+     -+		    (matches2[i] == TOO_MANY && !xdl_clean_mmatch(matches2, i, xdf2->dstart, xdf2->dend))) {
+     ++		if (action2[i] == KEEP ||
+     ++		    (action2[i] == INVESTIGATE && !xdl_clean_mmatch(action2, i, xdf2->dstart, xdf2->dend))) {
+       			xdf2->rindex[nreff++] = i;
+     -+			/* changed[i] remains 0 */
+     ++			/* changed[i] remains 0, i.e. keep */
+       		} else
+       			xdf2->changed[i] = 1;
+     ++			/* i.e. discard */
+       	}
+       	xdf2->nreff = nreff;
+       
+      -	xdl_free(dis);
+      +cleanup:
+     -+	xdl_free(matches1);
+     -+	xdl_free(matches2);
+     ++	xdl_free(action1);
+     ++	xdl_free(action2);
+       
+      -	return 0;
+     -+	return status;
+     ++	return ret;
+       }
+       
+       
+ 13:  975e845bfa ! 12:  83e1ace5bd xdiff: change type of xdfile_t.changed from char to bool
+     @@ Commit message
+          xdiff: change type of xdfile_t.changed from char to bool
+      
+          The only values possible for 'changed' is 1 and 0, which exactly maps
+     -    to a bool type. It might not look like this is the case because
+     -    matches1 and matches2 (which use to be dis1, and dis2) were also char
+     -    and were assigned numerical values within a few lines of 'changed'
+     -    (what used to be rchg).
+     +    to a bool type. It might not look like this because action1 and action2
+     +    (which use to be dis1, and dis2) were also of type char and were
+     +    assigned numerical values within a few lines of 'changed' (what used to
+     +    be rchg).
+      
+     -    Using NONE, SOME, TOO_MANY for matches1[i]/matches2[j], and true/false
+     +    Using DISCARD/KEEP/INVESTIGATE for action1[i]/action2[j], and true/false
+          for changed[k] makes it clear to future readers that these are
+          logically separate concepts.
+      
+     @@ xdiff/xdiffi.c: static int group_slide_up(xdfile_t *xdf, struct xdlgroup *g)
+       
+       		while (xdf->changed[g->start - 1])
+       			g->start--;
+     +@@ xdiff/xdiffi.c: int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+     + 
+     + int xdl_build_script(xdfenv_t *xe, xdchange_t **xscr) {
+     + 	xdchange_t *cscr = NULL, *xch;
+     +-	char *changed1 = xe->xdf1.changed, *changed2 = xe->xdf2.changed;
+     ++	bool *changed1 = xe->xdf1.changed, *changed2 = xe->xdf2.changed;
+     + 	long i1, i2, l1, l2;
+     + 
+     + 	/*
+      
+       ## xdiff/xhistogram.c ##
+      @@ xdiff/xhistogram.c: redo:
+     @@ xdiff/xprepare.c: static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *
+      -	 * changed[i] should remain 0 or become 1.
+      +	 * changed[i] should remain false, or become true.
+       	 */
+     - 	if (!XDL_CALLOC_ARRAY(matches1, xdf1->nrec + 1)) {
+     - 		status = -1;
+     + 	if (!XDL_CALLOC_ARRAY(action1, xdf1->nrec + 1)) {
+     + 		ret = -1;
+      @@ xdiff/xprepare.c: static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+       
+       	/*
+     @@ xdiff/xprepare.c: static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *
+       	 */
+       	for (nreff = 0, i = xdf1->dstart, recs = &xdf1->recs[xdf1->dstart];
+       	     i <= xdf1->dend; i++, recs++) {
+     - 		if (matches1[i] == SOME ||
+     - 		    (matches1[i] == TOO_MANY && !xdl_clean_mmatch(matches1, i, xdf1->dstart, xdf1->dend))) {
+     + 		if (action1[i] == KEEP ||
+     + 		    (action1[i] == INVESTIGATE && !xdl_clean_mmatch(action1, i, xdf1->dstart, xdf1->dend))) {
+       			xdf1->rindex[nreff++] = i;
+     --			/* changed[i] remains 0 */
+     -+			/* changed[i] remains false */
+     +-			/* changed[i] remains 0, i.e. keep */
+     ++			/* changed[i] remains false, i.e. keep */
+       		} else
+      -			xdf1->changed[i] = 1;
+      +			xdf1->changed[i] = true;
+     + 			/* i.e. discard */
+       	}
+       	xdf1->nreff = nreff;
+     - 
+      @@ xdiff/xprepare.c: static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+     - 		if (matches2[i] == SOME ||
+     - 		    (matches2[i] == TOO_MANY && !xdl_clean_mmatch(matches2, i, xdf2->dstart, xdf2->dend))) {
+     + 		if (action2[i] == KEEP ||
+     + 		    (action2[i] == INVESTIGATE && !xdl_clean_mmatch(action2, i, xdf2->dstart, xdf2->dend))) {
+       			xdf2->rindex[nreff++] = i;
+     --			/* changed[i] remains 0 */
+     -+			/* changed[i] remains false */
+     +-			/* changed[i] remains 0, i.e. keep */
+     ++			/* changed[i] remains false, i.e. keep */
+       		} else
+      -			xdf2->changed[i] = 1;
+      +			xdf2->changed[i] = true;
+     + 			/* i.e. discard */
+       	}
+       	xdf2->nreff = nreff;
+     - 
+      
+       ## xdiff/xtypes.h ##
+      @@ xdiff/xtypes.h: typedef struct s_xdfile {
 
-> `git push origin main` will push the local `main` branch to the `main`
-branch on `origin`.
+-- 
+gitgitgadget
