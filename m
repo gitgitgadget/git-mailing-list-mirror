@@ -1,93 +1,84 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1001F4192
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 15:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9303A10FD
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 15:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758900567; cv=none; b=Viqdh8cX1049MMh8cm23586yGQ3jyNW7n83a6Ha1RxcidtZmJMiC9/5OTgJUvL3Ma2MkPVtfyZMy5CTaZlgEu6VoN8CFqva/GmDtwvL7nfMhAe/kB1zJx47IMrgHhjpMJUkQ6d0L+mlXrtk8QG8l/0SQHnJGiZS7NWatOW/HKbI=
+	t=1758901364; cv=none; b=Qb0ucCTLmkmA7frj+Zde97us6oXzckBuPrsW/GDzLMk3yd6Og4PBxmLgcjKqd+oPxF3o1OsuOSqcZY1CJg3p2/DrRFGalWvK6hgugz2ye8H6zMUSKUQbeBTqovVHmNlGesh9pjg4yd/yek3SvXPyF+60H2d4UdBSqc7ApvpujfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758900567; c=relaxed/simple;
-	bh=It8Myx60AN+Xz17Lp24ie1itqKxWFLK4Qz+NaBs+ORg=;
+	s=arc-20240116; t=1758901364; c=relaxed/simple;
+	bh=yOdjS2g6p4TsRgpMgX276jDT03go9M41y6byxWqjccc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TSBoYtZMftoxGvIbk5FCUMk6Q5zgf2Aht8feCjtxKPffKELrnMl1yivo+5QiC6C/faT1EwUB2TGe6R6dCTRVN9KYV31UXvdlw11lPMAvW/2sx6gt0b+dLImbZdXPubmlQKflc2hdutq8l5TR+5FVZQT7D7hwdvOzS9mmvZjTsOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KzLB9Njs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uXjH1BRd; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=hOsx6ZB5MdkCbqMs1M/svb7mK4Ekss6tf1GsksVqG8B4pskNwAf6VsZ+WIjKtV5ODnfBpxa3sLrSKb2+C6DY41g5bQsUt9/+EVbx5RedKAkMUOg6W+iJm6RS1mZs7/vWRTmurM0gXHiENyRaMafZh2AW8VZggUxERzzHbmRotes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BB0D09wM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HZdjAmdK; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KzLB9Njs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uXjH1BRd"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D8AF07A016D;
-	Fri, 26 Sep 2025 11:29:23 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BB0D09wM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HZdjAmdK"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id ADF607A00BA;
+	Fri, 26 Sep 2025 11:42:41 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 26 Sep 2025 11:29:24 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 26 Sep 2025 11:42:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758900563; x=1758986963; bh=vUINAaJZGi
-	V2DzUmzZNB/Aj7zj2kmabPCRIsH2Qq4eU=; b=KzLB9NjsK3IN3rmTPLkOkzsJBQ
-	TUcH0ekTjcLrWUt5S4vLfFRcmZfLEgYgOCk7UqdABq05m84++Y43ceQvAyepDVAN
-	X79hJn3O7eP+k3Lr3nRImi5rh1uL4NUdRjQs+PykUzTWEIyPDKSWS6QFn6526+GZ
-	ZadVP1gAvWE03ghkohJvQzBqc3XcSvkX6I+8kQq+SNLrxR+3ruvXwr4D8eE4WBSA
-	+cfi95xugO4buKZU5G5nRU9CSAAEMHTP9tG8sXg3Cu4b7dW3IFgwPfnV+LSLH9ml
-	3QG5yvgtk1TGLl4FlPgsEyiF5QX2nBZBcqr9Of4pd+Ul1CPRup/4NDguHqCg==
+	:subject:to:to; s=fm1; t=1758901361; x=1758987761; bh=rvSTeLDfZj
+	dYU0n2Yif1OEpTucyhjlksXt9ixHvzJJI=; b=BB0D09wMjKN90hjindIrEAS+V+
+	y+NByVA29mX+x/l47kcWMLGIFw7xUJaABpEyNU2gB4POy84qw6ipHV9munNdvT/C
+	gPgH5KJQpxmdItIBnLw6t3jUX506ay2A3l9y5BsImklSv80gDlEbj/Jy0U1gforZ
+	SesBA0M6VzSht4rSHuZHMHoNgsEuREOduvOoss1cHgZn1ill7g5M+H6ZHYH9hACZ
+	BOMeGJUBS933DwYeK3ez7f/Gsf7ka16HDN1q+R1fGxPrph/55pU4clKLPYyd9uw1
+	r96K8g+hxIl34WQzpBoan3hpHudHDDubLg2OuOR+UzpG4TebH++BwtSCX5vA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1758900563; x=1758986963; bh=vUINAaJZGiV2DzUmzZNB/Aj7zj2kmabPCRI
-	sH2Qq4eU=; b=uXjH1BRdd7OJK3HHZnHpKxarPLjEcO/ZdLp+q26nS8mjQumdCwR
-	2wb7hO8AMVhMmaU31Q+Gm3A8TDYCGMGY5VV/wFjJLGMC22WK+BeSnAHgn6oWLhuu
-	qPQDNcSViOKdEHfSF418E9ICMxL+ehcKcpP90zswjT28ThWMUfWO3lbmZ/q+hpfQ
-	d/ry4itDnphlLhc2vX7QcEBnuVn53kHlgt26w84j4qAISW5GSGMaH7Nw/FX2KpOt
-	d11/r1StJieiBqB4f9qaO3gGmrXQG+RlDLWpBldEB47nWM7+Jsxh96cqxjnYVh1a
-	+hNSDedKJXlBCAmGMSd20Mhs9DGTQQvNwSQ==
-X-ME-Sender: <xms:U7HWaEecULkXHW74PUjSIgi3efsEl70PX92J9RNJfL_WEUqst_SWzw>
-    <xme:U7HWaJ6Vn-5yYCZfB2Zap20JVfuzVhPGXPUD_5ji35SB9auIBtfzUU0TpyaBV6yiY
-    qXkypF6I4cSMSc3N21a80t4d2iHPPdzybHsNtvABaYY0AzAbPA>
-X-ME-Received: <xmr:U7HWaPUCyjSrJT4nuAESmncJZRyiOo7Rb7BQvD8mHf1PtpNY9zXshhsTsODclbM68BQkvt9xlaSNNjooqoD1dxszVyNSyHdCl53G>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeileejfecutefuodetggdotefrod
+	1758901361; x=1758987761; bh=rvSTeLDfZjdYU0n2Yif1OEpTucyhjlksXt9
+	ixHvzJJI=; b=HZdjAmdKBDVsoVXPMH9z3a7662xuGnntXXb+LE/3BjBRtdGFWxF
+	tGV7hpBkAYvTBPthS6lelR9iqD2VbClsdwPcMJLfD9ycZrlVoDgYFvhrKkfCxXbf
+	SZxikRdOBCsYt6iNuz8NFK/hnzx6hUJ2hB4m280+7CPsvv+Vgb1+8U+13TTxKuZ+
+	ziTZlFxloGnMywLT0hkT5QWsBq0VlsOsXi9hbQ7znRcWhivqb1QfeFm3tXQjYO5M
+	ZFW+MO379km24MODLx7zlzE9hVcROcBSKw/Z6o6L9qJ0skucVjcIGWXRJIr1e1f7
+	c19VbTRWO7trxLXV1W0xMFdh3SSLsVMvPbA==
+X-ME-Sender: <xms:cLTWaDmPxQB8SfY725GqhukWEVLGPtq1uCmNzHX2na_PblMxPGdH7w>
+    <xme:cLTWaIVb-M7imKHYOpaKxvrJJE7L8_GiC1clO0okFnQLKlPw7L5MRsKK9dcZ-zv73
+    WL0_GXni-uV4cBCyzOON3SraZrTyUna_EvmXtldMQMXkdE6ld-F-A>
+X-ME-Received: <xmr:cLTWaJsyqisr6NtDkxrp1cepfVBCmG53q1YwtQs21l5do_TCtNru-RRNt8IkCCdyBSlZm4GvJszaiuX37FWJUloKMJreEKYCPFSW>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeileejiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeetgefhffduueejfefhhfdttedtfeffheeilefhudegvdffhfelfeffleeggeel
-    ffenucffohhmrghinhepuggvfhgruhhlthdrrghsnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhulh
-    hirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhr
-    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:U7HWaA7QdAwpmHpPDZbJrI9_82BPeMBpHsKHI8QiwmIXeO_-KI3Wwg>
-    <xmx:U7HWaCr5BphoFy2fK9LtGN9CH_N0SK06o8lODfnzrx8Dlm5HnksZFA>
-    <xmx:U7HWaLnxu6x6x1qrNl_UVBwnGqdgcd6_-UNQDldqK3J304ZrzIHWJQ>
-    <xmx:U7HWaGOYxrk1h-U8YEIJMxdWmgIlpiE9AW7-SsPIb7gf-Q4Fs7UxoQ>
-    <xmx:U7HWaND1aTas-rnM2G_wF5RSNpx6aIUxniqd4QfFeRYgR9PvSZIPHmgI>
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluh
+    hsrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:cLTWaLYnz5UfeNu-z185yBZz9jcA_tNFAgtiv9LoyWOPmkSjANjKZw>
+    <xmx:cLTWaIW04qz0p_9J18agEHg_1FZn-BrUc59KA_WDKSPuJzWPP92ypw>
+    <xmx:cLTWaAScwwLXdZd1B4BVIrj-OZRz0ez93GBOaLK8Ufa_mNwvPW6OXA>
+    <xmx:cLTWaGNg6H8Kxtb9QmWLP8dOCtJS1Q8fBArgrsmwRr6MY7UgNGXPUg>
+    <xmx:cbTWaKTOEtS73yEXhuTndCNFXotVT6nI4v-zc0_UFWx7_nRMhDmqVvaB>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 26 Sep 2025 11:29:23 -0400 (EDT)
+ 26 Sep 2025 11:42:40 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  "Kristoffer Haugsbakk"
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v3 4/4] doc: git-push: clarify "what to push"
-In-Reply-To: <xmqq348admuo.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	25 Sep 2025 18:27:43 -0700")
-References: <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
-	<pull.1964.v3.git.1758649472.gitgitgadget@gmail.com>
-	<be6453d010bdc9d2b49988d6841dd7e7f9bdf1f8.1758649472.git.gitgitgadget@gmail.com>
-	<xmqqqzvvk4bj.fsf@gitster.g>
-	<2365a7b9-3d22-4406-876d-65822822655f@app.fastmail.com>
-	<xmqqzfaidyil.fsf@gitster.g>
-	<1422594f-b0a8-4a7a-bf78-940693757224@app.fastmail.com>
-	<xmqq348admuo.fsf@gitster.g>
-Date: Fri, 26 Sep 2025 08:29:21 -0700
-Message-ID: <xmqqwm5lcjvy.fsf@gitster.g>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,
+  Elijah Newren <newren@gmail.com>
+Subject: Re: [RFC PATCH 2/4] doc: remembering-renames.adoc: fix asciidoc
+ warnings
+In-Reply-To: <6dc8844c-8554-4c6c-a3bd-5ad2c04ab7a6@ramsayjones.plus.com>
+	(Ramsay Jones's message of "Fri, 26 Sep 2025 01:24:22 +0100")
+References: <6dc8844c-8554-4c6c-a3bd-5ad2c04ab7a6@ramsayjones.plus.com>
+Date: Fri, 26 Sep 2025 08:42:39 -0700
+Message-ID: <xmqqqzvtcj9s.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -97,67 +88,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
->> But I'm not sure it's true in this case: we just said above that
->> "The default is `push.default=simple`, which will push to a branch with
->> the same name as the current branch."
->
-> So I think this simplified statement is what causes confusion.  It
-> says push.default=simple will push to such and such place, but that
-> is not true....
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>  .../technical/remembering-renames.adoc        | 63 +++++++++----------
+>  1 file changed, 31 insertions(+), 32 deletions(-)
 
-After sleeping on this, I do think that at the crux of confusing
-wording in the current draft is the lack of stress on "simple" being
-a narrower special case of more general "upstream" for various
-push.default modes.  In either of these modes, unless told otherwise
-with the configuration file or the command line arguments, "git
-push" pushes to update the upstream of the current branch.  There
-is, as you said, an additional safety measure in the "simple" mode,
-that rejects a configuration to have a branch whose name is
-different in the remote repository as the upstream branch.
+I know this is RFC not to be directly applied yet, but can you
+describe what warnings are in scope of this fix to help commenting
+on the changes?
 
-In other words, the push.default=simple mode does not tell Git to
-push to a branch with the same name.  Rather, as a variant of the
-push.default=upstream mode, it tells Git to follow the same "push to
-the upstream branch" rule, which requires you to configure your
-upstream.  But the mode gives additional limit on the name of the
-branch that can be set to upstream.
+> diff --git a/Documentation/technical/remembering-renames.adoc b/Documentation/technical/remembering-renames.adoc
+> index 73f41761e2..89db8b406d 100644
+> --- a/Documentation/technical/remembering-renames.adoc
+> +++ b/Documentation/technical/remembering-renames.adoc
+> @@ -10,32 +10,32 @@ history as an optimization, assuming all merges are automatic and clean
+>  
+>  Outline:
+>  
+> -  0. Assumptions
+> +  0 Assumptions
+>  
+> -  1. How rebasing and cherry-picking work
+> +  1 How rebasing and cherry-picking work
+> ...  
+> -  8. How directory rename detection interacts with the above and why this
+> -     optimization is still safe even if merge.directoryRenames is set to
+> -     "true".
+> +  8 How directory rename detection interacts with the above and why this
+> +    optimization is still safe even if merge.directoryRenames is set to
+> +    "true".
 
-We should make our text clear enough that anybody who read about the
-push.default=simple configuration easily understand the above.  We
-would need to find a good division between what to put in the main
-text and what to leave out to the "see ... for more detauls" part to
-guide those who read about "git push" command to the same
-realization without bombarding them with descriptions of full range
-of possible values of push.default.
+I always thought that numbered list would have a period "." after
+the number, but if doing this produces commonly accepted rendition
+of a numbered list without warnings, I can buy it.  I personally may
+feel it a bit awkward to read the source text until I get
+accustomed, though.
 
-Peeking our earlier exchange to help me formulate my thinking a
-bit...
+> -=== 0. Assumptions ===
+> +== 0. Assumptions ==
 
-> +To decide which branches, tags, or other refs to push, Git uses
-> +(in order of precedence):
+This is because these sections are not nested within a group that is
+headed with a "== title ==" chapter?  Which makes sense.  I notice
+that this one has a period "." after the number (which the warning
+mechanism probably did not care---it is just part of the title).
+
+>  Here's an example where that can happen:
 > +
-> +1. The `<refspec>` argument(s) (for example `main` in `git push origin main`)
-> +   or the `--all`, `--mirror`, or `--tags` options
-> +2. The `remote.*.push` configuration for the repository being pushed to
-> +3. The `push.default` configuration. The default is `push.default=simple`,
-> +   which will push to a branch with the same name as the current branch.
-> +   See the CONFIGURATION section below for more on `push.default`.
+>    * E:oldfile had 20 lines
 > +
-> +As a safety measure, `git push` may fail if you haven't set an upstream
-> +for the current branch, depending on what `push.default` is set to.
-> +See the UPSTREAM BRANCHES section below for more on how to set and
-> +use upstreams.
+>    * G:newfile added 10 new lines at the beginning of the file
+> +
+>    * A:oldfile kept the first 3 lines of the file, and deleted all the rest
+> +
+>  then
+> +
+>    => A':newfile would have 13 lines, 3 of which matches those in A:oldfile.
+> -E:oldfile -> G:newfile would be detected as a rename, but A:oldfile and
+> -A':newfile would not be.
+> +  E:oldfile -> G:newfile would be detected as a rename, but A:oldfile and
+> +  A':newfile would not be.
 
-... here is my attempt.
-
-    3. The `push.default` configuration. The default is `simple`,
-       which is a variant of `upstream`.  In either mode, "git push"
-       updates the configured upstream branch (see the UPSTREAM
-       BRANCHES section for more on how to set and use upstreams).
-       The 'simple' mode has an additional limitation that the name
-       of your configured upstream must be the same as your branch.
-
-(iow, I rolled the "As a safety measure" paragraph into 3. itself).
-
+With blank lines in between I personally find the source text easier
+to read, so no complaints ;-)
