@@ -1,70 +1,69 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618442F3634
-	for <git@vger.kernel.org>; Fri, 26 Sep 2025 10:32:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF3C2F4A13
+	for <git@vger.kernel.org>; Fri, 26 Sep 2025 10:33:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758882780; cv=none; b=HXm8SQBMV0iqf79VRT1Xpq4AcAAEjONYqVMJ3bOCGtEHl0eqvzJt9QXdGf2x3Oh6JSVqyxZqUXi9iNB3rFP+RhZguOXEvKghkyoHKQuCQ7rGJWlzm8jdvRWMYaUTIUNuUHf9psqzoRoSa3ViiMIswEP2KU2OY9OAJlVk5zax1XU=
+	t=1758882782; cv=none; b=CW9EgTAmdwhwa2NyZqD3kf3yK2vckYrjNR5KCjozBNVbch6nWLNTULEcbVSF80BvK/8/U+1yeFRcE7dO8CHzBTPxEY84kiKEgnqPuRb/6NCQzJT+x9B/IH0pGuZowbM+hmtR+SZukECh4Dt/jJp3EhTGTIAw5eUAaNPxWViJTYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758882780; c=relaxed/simple;
-	bh=1pcfg0oeF7VgR2qMil4nxrpA0xLpEpO3NpqXwd15VVI=;
+	s=arc-20240116; t=1758882782; c=relaxed/simple;
+	bh=/hjLUXftX4i7JKE+lBJRzysrHrEVUI3vQtJ3IWtKLkc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=YqYnX+TnJ2iiGZhRZsqv8ItEdVP9BCnuP3b4LO8cziQ7x9xUbX+dQJLSuE019aMwjqVnmy7Z49q9uymZttZfCJg5bnHW9AT14Uf7J18iqmw/ljEPYNYRsXdem3xTahsi1D3j3tri0R2Aa03CIxDBnqD0ovKY3Jb99uc/ZyLgHn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZOyO1X8j; arc=none smtp.client-ip=209.85.160.171
+	 MIME-Version:To:Cc; b=NBvO3P3GTz2mnhxvkA9PvMOopTTYI17dFNE9pnfLms9FBnwk3/BkXkWkn4JyzvRuvNR2+9aI98QAH7143IEb/U7TsK30kU2fFtbCWvCwhnBd05bNlmrFWGS0t6vEW6nK97vTuOU5FE2kcRAJFqfHrBEQ1CZud2dlvI2RaRoHKWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X7Kst1Je; arc=none smtp.client-ip=209.85.219.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZOyO1X8j"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4d41154079aso11187741cf.0
-        for <git@vger.kernel.org>; Fri, 26 Sep 2025 03:32:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X7Kst1Je"
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-78f15d58576so15956516d6.0
+        for <git@vger.kernel.org>; Fri, 26 Sep 2025 03:33:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758882777; x=1759487577; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758882779; x=1759487579; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JYA4ZJvkdG7KSH+Wn14M0Rd8cAv6f0TimgAcMrFtZBo=;
-        b=ZOyO1X8jJ0KZjBZMrrVUfdF9/sNzAE5NmrpEjFPNc7BmdJoUHTSgWV7roW17LJin+D
-         s7ESol2pkVir4eC9utTxdnP5w9IsxEdDafOnY5rQQ8C5nSNrDT0w9lk1fml+uODBZVZn
-         jqF0+J6Bu+lUzWuTOCchtwh+9IG3Davocr2nV8EtYh70EQRns3EgWevAMP/vLZpOLmkh
-         Wls9ogxkWnLdgUwlW8VDvliymidY/kPLvkLmDQxOpybBTpBowsafpPLj6SzEoD09S+f5
-         QRzDNKB+njtbMYEXTBbwZaMO3kJ4WqMtqlIwimaVLH4g9ctVhdEXOXfocbGTImYYzVeH
-         JpIA==
+        bh=JI40US1j2L0AL50sABRUzcYhvzC2y4gUNm6et1VQB5E=;
+        b=X7Kst1JecvShvR038eMNVpixycCJoqNr/0MYKhahXjt+ROqVd8H735fUxekfgn53L7
+         77ZOSJdyF/KC8q9FrlOPl8xe9YDUbfK3tjxil6iulMbHuo25VECxkouxegbhnJzwHx9V
+         P4RRzv9pfXyWUWUVYTvdIdR+H0AheFYN8XcM5euc/LDMmdmxIoWDsER/7P5HNEQ3msiZ
+         iGoGZ3TvWIqm2mLa+E4D52kiunPCOgqx1/Wwo1cDwIO08emOC6WjppIGPGwxhCH110Qm
+         X4zJy1ZdmQXn4cd4MFTQ65MJ0tRUV3JyQMRv7LU/20zGDPqIVFdn0/KMzSK0kTv5Hkry
+         zPiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758882777; x=1759487577;
+        d=1e100.net; s=20230601; t=1758882779; x=1759487579;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JYA4ZJvkdG7KSH+Wn14M0Rd8cAv6f0TimgAcMrFtZBo=;
-        b=PZYrU4eDtvu/wiBG6yOVtUPOcDpqDHponVM0ODlDg/bwgpgfRIaZn4vbmNJ8vXbNpC
-         9P1fJcHIylRACbiujlDRL5/MigPuCe+sVIqgMY6gRkWBu8RRZppHGFGeadoHSyGhGILp
-         6ot4fx5RFJR5KRqPBfUtpm2Ir/EwVYxVtjuAnjqjQKjFbv3LhxZHLtbNs+6E/t9fJqnV
-         d+9E2E9y2gtPHOSVT2J+GbKJ+IpnUAnVCXkCHj5cVo3c+W16j8eT+hVPTovtex76yt10
-         4Je4x6WUiPu9bN2cbWmJ461GhYKa1AW1queWYbGJlxfNZDiBR4RaqEecZXBOYlKwbnrX
-         wloA==
-X-Gm-Message-State: AOJu0YydLjCZYfEfB9Cuc6CrTkvL6QH8l1CQ84ecUM7rDzQa+zweG/7l
-	SBBAswl3/XR9gZxRuVcyYjnr32e8y/x6Bl/qr0jr3pPplGmsbJCALWAGIe9+ce+8
-X-Gm-Gg: ASbGncvx+FyJZa4sqySUbu0IgQjCCvO1uQcPsGzA7Ja9dP6uhYG7FIVD6RQJGslfskH
-	Xmg0M/KuwtAyqigy7b/2U+nNXmk1yzKiTockoXqAS6Pj4UuCZ2EdDf7OufH0JDcVyR50m8AfrjY
-	2UR3G9YTmuMbGFElEIWTdeISUksHTkL9WTGJ2jxmR6eO2mGxKrkscKCEX9TC9vWTsJ0YujbJ0IS
-	jT8M0SzhcWMhIMW+EUhZ9HYpvwh1QjF0LXWLyKAMQd/pD4TnEfxwAeT7xjSIzdanFwcvY1XVbAc
-	rGpXL1cXlG3SeeCuMOH/adYoMtObUoq6k2wfu/2vGsJeHWqqDBfwZWo/3gUmeeBwuhFqQXI33zr
-	xoDhgGBVPhKBseeJ9O+302g==
-X-Google-Smtp-Source: AGHT+IH3rsuE9/XzH/srA+L0n7Mi2Cq4k9neMJJU4Ni7tndgRXW/9oCqPsFKZYXjT2uM+/uTI9h9ZA==
-X-Received: by 2002:a05:622a:13d0:b0:4b7:aa52:a710 with SMTP id d75a77b69052e-4da4d126930mr90567281cf.80.1758882777036;
-        Fri, 26 Sep 2025 03:32:57 -0700 (PDT)
+        bh=JI40US1j2L0AL50sABRUzcYhvzC2y4gUNm6et1VQB5E=;
+        b=I6gftsZhQPxZAwtrp1e02Ev7F8ZcpAWnXoR1wrHSXRQqx1xx3x6MBBQX5dsC2OsDag
+         5QitXjK1YLsQLyubEEiO5czUrEXksFE2F2CsITt1QpBpWiGOpcrBooi9ClXJcx1Tf/78
+         MDyvG8T+Bf+3Q3DEgLGdglXGBRod8OkEqYq30fBTPsFTr8gBqC8UjgFuu11kGiiJ5/eI
+         3opiky2P9DAZIfgAzxrQW06oFfjQkpvQrXjRfrD2xCMoaAg/3OoVqfhtoVv28Itwjr6V
+         MEaXVB4cqVPjItGjGQmp05sR8BAhQl3m67IDf2vkfkvZlLyJClc3CWiBmUAbdLtL2yAu
+         iaEQ==
+X-Gm-Message-State: AOJu0YyiJhg5587FbTtjCNsEPXU9ZP78N31BUAlws8I212Dy4VHXztSM
+	RJ8DIY3uhv3DfdEkYT58cC7ac/8gGqO+Njgy6BpDNJNGuIDV/nLYdWSwdHboHzo5
+X-Gm-Gg: ASbGncslkP3zLFmeGfLeoJ9trCTDX5sfxl4pdim1KcpcNByW71oRJg7RXeHqeiErCnV
+	dhadcPYNUcq8o7NNg5NNSt5KCNHj7APPD3eNRkHAIY9XM9yAlK+1ThlTJZbkt0ZLgOfaZnet1Xs
+	JCEOpqpCRUNtBdgz3Xl/3evOyiel2arHL8JF+vcK6egvVHit7zYV27jNstAMyte6mWPmLONGjRf
+	VoagBGnfn4scFI8Az1lF4IJiUvW5m2w4U7ENfs5m5Y9ha6LEImEX9pkgsKhEir4DHhZ5BjqPZlF
+	2Wp6UjnXMwAxk8Oc+pLHtUv3voQJSToYQ93B2Nx7hPR+DMBe0qTqxAI+mBO71rb0yvdf1GCaezM
+	ehgvuzXgRtsOFiwc+eYEZp1eurzpVXLUE
+X-Google-Smtp-Source: AGHT+IH4fh3TyTxB2V9J/hsTfkto3EKztxtkBkiC56AHDJ2Jwk1STAdmuJn/oGBCQfw72pXzQbscbg==
+X-Received: by 2002:a05:6214:4108:b0:796:e048:ee97 with SMTP id 6a1803df08f44-800f6042e93mr80976586d6.19.1758882779024;
+        Fri, 26 Sep 2025 03:32:59 -0700 (PDT)
 Received: from [127.0.0.1] ([20.55.87.52])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4db0b9458e1sm23356031cf.15.2025.09.26.03.32.55
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-81c8496e0besm7829066d6.24.2025.09.26.03.32.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Sep 2025 03:32:56 -0700 (PDT)
-Message-Id: <fdd1327e7bbc0f42c11c354346859437eb29448b.1758882772.git.gitgitgadget@gmail.com>
+        Fri, 26 Sep 2025 03:32:58 -0700 (PDT)
+Message-Id: <140755673d7a5ab211e3e25dd741e705410036cb.1758882772.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1974.v2.git.1758882772.gitgitgadget@gmail.com>
 References: <pull.1974.git.1758457356.gitgitgadget@gmail.com>
 	<pull.1974.v2.git.1758882772.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 26 Sep 2025 10:32:51 +0000
-Subject: [PATCH v2 2/3] imap-send: be more careful when casting to
- `curl_off_t`
+Date: Fri, 26 Sep 2025 10:32:52 +0000
+Subject: [PATCH v2 3/3] http-push: avoid new compile error
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,28 +79,56 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When casting a `size_t` to `curl_off_t`, there is a currently uncommon
-chance that the value can be cut off (`curl_off_t` is expected to be a
-signed 64-bit data type).
+With the recent update in Git for Windows/ARM64 as of
+https://github.com/git-for-windows/git-sdk-arm64/commit/21b288e16358
+cURL was updated from v8.15.0 to v8.16.0, and the LLVM-based builds (but
+strangely not the GCC-based builds) continuously greet me thusly:
+
+  http-push.c:211:2: error: call to '_curl_easy_setopt_err_long' declared
+  with 'warning' attribute: curl_easy_setopt expects a long argument
+  [-Werror,-Wattribute-warning]
+      CC builtin/apply.o
+    211 |         curl_easy_setopt(curl, CURLOPT_INFILESIZE, buffer->buf.len);
+        |         ^
+  C:/a/git-sdk-arm64/git-sdk-arm64/minimal-sdk/clangarm64/include/curl/typecheck-gcc.h:50:15:
+  note: expanded from macro 'curl_easy_setopt'
+     50 |               _curl_easy_setopt_err_long();                             \
+        |               ^
+  1 error generated.
+  make: *** [Makefile:2877: http-push.o] Error 1
+
+The easiest way to shut up that compile error (which is legitimate,
+seeing as the `CURLOPT_INFILESIZE` options expects a `long` parameter,
+but `buffer->buf.len` refers to the `size_t` attribute of a `strbuf`)
+would be to simply cast the parameter to a `long`.
+
+However, there is a much better solution: To use the
+`CURLOPT_INFILESIZE_LARGE` option instead, which was added in cURL
+v7.11.0 (see https://curl.se/ch/7.11.0.html) and which Git _already_
+uses in `curl_append_msgs_to_imap()`.
+
+This fix was the motivation for renaming `xcurl_off_t()` to
+`cast_size_t_to_curl_off_t()` and making it available more broadly,
+which is the reason why it is used here, too.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- imap-send.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ http-push.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/imap-send.c b/imap-send.c
-index 4bd5b8aa0d..26dda7f328 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -1721,7 +1721,7 @@ static int curl_append_msgs_to_imap(struct imap_server_conf *server,
- 		lf_to_crlf(&msgbuf.buf);
- 
- 		curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE,
--				 (curl_off_t)(msgbuf.buf.len-prev_len));
-+				 cast_size_t_to_curl_off_t(msgbuf.buf.len-prev_len));
- 
- 		res = curl_easy_perform(curl);
- 
+diff --git a/http-push.c b/http-push.c
+index 91a5465afb..7a9b96a6d0 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -208,7 +208,8 @@ static void curl_setup_http(CURL *curl, const char *url,
+ 	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
+ 	curl_easy_setopt(curl, CURLOPT_URL, url);
+ 	curl_easy_setopt(curl, CURLOPT_INFILE, buffer);
+-	curl_easy_setopt(curl, CURLOPT_INFILESIZE, buffer->buf.len);
++	curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE,
++			 cast_size_t_to_curl_off_t(buffer->buf.len));
+ 	curl_easy_setopt(curl, CURLOPT_READFUNCTION, fread_buffer);
+ 	curl_easy_setopt(curl, CURLOPT_SEEKFUNCTION, seek_buffer);
+ 	curl_easy_setopt(curl, CURLOPT_SEEKDATA, buffer);
 -- 
 gitgitgadget
-
