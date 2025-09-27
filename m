@@ -1,125 +1,109 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C9818DF89
-	for <git@vger.kernel.org>; Sat, 27 Sep 2025 15:40:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3351DE4FB
+	for <git@vger.kernel.org>; Sat, 27 Sep 2025 15:52:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758987625; cv=none; b=mftDlUwWcYrFzdfd1oozWIzXFc+a8UYxK2J8JbfsvSMIl7zlKhMU2F3qrmbmgXb7Be4yMc76fGDyI/9hDHiJpQ+USMHTod1smf3GjCaKPJE8ANB0KOxRvVeaP9Bx5CL4MZN9Q9pOW3YoIuKP+dgSFGmDa8YkPpD1aAhV5B/FdTI=
+	t=1758988322; cv=none; b=R1MLFpYrfYXz0YdZkRDU7pOXhem+rDIOqM+D7RkZJH+jkpfyaQuDlpNKJIgL1FVZEqxy7dTZN4HGcITDyh7iIzb+Xz2SStbOMtxNwPZyz/K/j5f49BufrNMeXE+c1olKKYUONiGRC24Atc4+lU6BErqWOTTAZhk6CdAnITN3Bug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758987625; c=relaxed/simple;
-	bh=Bryl9xO9u7QFJcOfK1awDNj2R8o2ZUdlSx7TWZutfDk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fjR6saFKQ2vSpkZtWqd8ODNCcJM7G1Cb7Okvom1iq213NlBOjxqWJ/pXPHGABXOv4gs/CmJl/+jBWNNTpieL8q0nGkKLkFkz+zT4lsg1cytTerOckUouMz5fZiAyWf4sc7s0XMd7DJZYIf6e0BUe9HeWY3Y3Zs9GDFVhwM17+OA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DkUA9Nz1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v9nspZTc; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1758988322; c=relaxed/simple;
+	bh=/NU3abL40QzzEOyrzzSryNxNgYvt4nr5ufPWTD6arWc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fMFCDHli8nVvDlQXwosyzhAZrt0iaS22jB0HNr2E19KT1HwN0nbWXHe7fYX39MX5QR7sbK1Ho2dFq+yFs717iLmW+Se7RcoPZ0B8tJpiS6uK2L6/gtGkzQ7UY2LOp7bj129Wk4/qA4QXlY88N7W83PjuMGBv4nDQfbCEsax/j0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z5LGpp6e; arc=none smtp.client-ip=209.85.160.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DkUA9Nz1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v9nspZTc"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 682237A0101;
-	Sat, 27 Sep 2025 11:40:17 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Sat, 27 Sep 2025 11:40:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1758987617; x=1759074017; bh=S0oV+jZ7JB
-	hNvzzhpGv+g+r72Oj9w5eilyBtzsKSj9s=; b=DkUA9Nz1GnF79JsI9j+sPT2tUH
-	EmbPGdWew7FsdYJoMYLaS5JPANFmO763wJW1PRVsxup4Lm0a6NWQJa4ujLxa5BuY
-	PxL2FjgaKheU/yFa2HKuEqpJa/OMhRjc5OEn2xZD+3REtdQbdiOcTSnQvizpCUYc
-	Vfk2LL8Q+YJf/Ol1ouhL1oyqxCeALazLSCNXn7Z2usv/Mbw+9zucv9pqqBcJa7PM
-	55+EWLqJWZxDuaIqqaI3DXmd+23t7352wxOoeROB9ZNfv8w8CEutlF8WsPM4xfnq
-	2f95zDJjAqaLcQNDXx4qzcZ8HALw2vd+CeNtLyk8NbyUYasaxsH6zjqHTZfw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1758987617; x=1759074017; bh=S0oV+jZ7JBhNvzzhpGv+g+r72Oj9w5eilyB
-	tzsKSj9s=; b=v9nspZTc3HQVIuH3g0iY0o/eyqiVBx1xdZIvtlOBWemo3V2RyJb
-	8cgk90CIEWsY6eIGkZA1e5aouBvnXsHhVV0Jf81TidLe6w1/X3bIX4ubISVfwJcV
-	8sD4uT6kIZlERyYaw3Ir7BUWrCxX8yR40qsZn37MEOGmdif8SbcAuh+DnwpQnadV
-	eSLHFrECz2GXPeJqkrlV15GyNAMty2guqQZah/jSbOZvtY81lW7sko0G9EbumEvr
-	yO18KV6HCo07nFZI0NiKfzskBtpP9fNVEyghik9+NTGNBgQLKqpDvsYgRY7PvsWA
-	ms6mh3OFT9TfjBoK2zaXkuch0xV+capuHvA==
-X-ME-Sender: <xms:YAXYaCAK91c9gNUKp5e88zzIZ0D8okK1T4s3HuKk-xOYe9oeNzMpOA>
-    <xme:YAXYaANROXRXKEoDqoWz_uijG8-e-0HyGVcrX8x59fD3qUNU9uNf0s-Pnxy24rCns
-    PuJZUEOp4YYZ1A9nq28pZVtMLV5dA9Vpv8LXimFVIaMJy8XvGX-mdo>
-X-ME-Received: <xmr:YAXYaPaKt4y9naVP0rl5471Eq-7MK4obQBh2eYGtP6Uw1hXUYMENO-QIfHgBuxELpLSAZPZEyX6EqQspIfM9x1Bzea7JJnANj8Uh>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejvdeifecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehp
-    khhsrdhimhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:YAXYaHuetCOquKhmKsqEFa5vuZ42Crb7yfdyZp0mLthylTFhDb1Gnw>
-    <xmx:YAXYaJPLI6R-j_uZLleXrJ-Ik7QOFh3MPj0gOcyeRwO9qPCup_cjHw>
-    <xmx:YAXYaG7e18DWIlPa1Rvvog4MyVOaYQLNMjkWEQFXseK68XatUTRMAA>
-    <xmx:YAXYaHT_MI3Tf9-LfyoAG6ISFFXLPnmKH8ZJAPNZeMX7WjcI0_PHZw>
-    <xmx:YQXYaLHNoqQpgSyJrD1jzrGlyhI1C0SJxWQEx4XinNaYZrerNfBFtAPf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 27 Sep 2025 11:40:16 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  karthik.188@gmail.com,
-  sunshine@sunshineco.com
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z5LGpp6e"
+Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-3729f8eaa10so548383fac.3
+        for <git@vger.kernel.org>; Sat, 27 Sep 2025 08:52:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758988320; x=1759593120; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZbLH5i51ExSZFmPDZXdbH10Lw7k7QKEfuohYMN2dVI4=;
+        b=Z5LGpp6ezT9u27+c/auF0Mz3kUT2gt+8ZxTAOR93KKQxChdE0LLMHqt/WopAgte+Jb
+         vTzZFyEymMtpfXA4rHPbz6LxJrweqxREsY+WAurx1H+CTzEaQyzwkUUkq8ibWh+uaZ1i
+         03zamFIwOlA3HmScECew9ZyS1ZphzMYWAJVQ0/fHf3OHzHOy6bVsr7/XTRQwsLp8NAei
+         nwx2kjih22BM1C1wcocvmRhhCVFV0Shrq7dNlrvHTTp8+8rThtCv3bib/BWcfPvIpDMJ
+         wRMNx2tT3EYktdWlBJV2d596Z4GdSO73Czj3d1kCErESmHBDvbnw7mUwpaWIlDYPDnX7
+         KQmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758988320; x=1759593120;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZbLH5i51ExSZFmPDZXdbH10Lw7k7QKEfuohYMN2dVI4=;
+        b=T5FTeriyPFPJ7HpskdjXTuaITEJ26BCDot2XfPvoGHS8uhOx7orpr4+LEcpzlKeIT5
+         hM/hqdywrMeWHqhNOpVG0GEN/InXwCDzeNQ7qojRIomM+LuZ3miuK3Xz/raamJ/kqjv4
+         1JludK7EqdEyaxkOVrKw/B2r7vkxYU+vKe5/iVrY/QOZc9JIFg3XcDi3gU9zX0ct4A5F
+         AmtSYbMJB2/2TGs3YK84IFMbEVRJeBetBUUMRMfZ8px9BAHtTDfYAJfw+xx8fYK5eS+F
+         5uQOo4KDHe9IHjjvwvxZz5L4wYEWIA26VOBE+bGykQJVToNwDPT0Dkxl7UHzw+KmBQmy
+         dUXA==
+X-Gm-Message-State: AOJu0YxmQkUnFQYmzjBGEPG5tblKfPA20t6jwrfvaYzS8KFDIaSbaBJg
+	kzRJzgqMvLytnA89runYJ4pp85drzPY9MW4YbQMzKnVHPZa6Or18Ma1e
+X-Gm-Gg: ASbGncsHu7GcDR1CRXFNc/z112XwLxGGmXF09vgjfe0cB23GJ1X7A2WQOg6oYuo2lyA
+	WVtNYvz6bPLeNUcGJHaYvN6iQGougiAcTOmojHznnzo/gUk2hZ4JsmXxTl5FuGN49fzJPJ+W3A1
+	ke2DKPk7ElEpIkdKE2m560+aGucwlCDYSStIlepRzSUxPoPqqwZhw97xnGGSTg4Rp9H9bgVWnrT
+	FK0GwHzkeGSRFKKrTggix/+gSUhrqZlLkG/NXt4t2O9qMPouSbSDYLBr0Xf4tVO7Hgy8LXCTomZ
+	IklazNQp91jJTUeAqY7a3yzIeHkWpVkAJTvl4qkUxvdCmgrxsd4gidny3gOS5pnlc+PYG6BtgwE
+	tbCq0uFPuWlHQo9LhJRDkevM99QqWBihVdgS6QZs/6o73PlmqI8bGjzxjB+L4chq0Ok5w
+X-Google-Smtp-Source: AGHT+IFpD7h4yeGYFQdvY8L3UGQbTlKp+sVFZ20A6Aar5ttJVnbOK2TmMqZz1pmfm6ELsG3LanbSSw==
+X-Received: by 2002:a05:6871:290e:20b0:36d:31f3:9f1c with SMTP id 586e51a60fabf-36d31f3f7e2mr3053253fac.14.1758988319808;
+        Sat, 27 Sep 2025 08:51:59 -0700 (PDT)
+Received: from localhost (syn-070-116-215-226.biz.spectrum.com. [70.116.215.226])
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-363a3f3610bsm2239608fac.14.2025.09.27.08.51.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 27 Sep 2025 08:51:59 -0700 (PDT)
+Date: Sat, 27 Sep 2025 10:51:57 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, karthik.188@gmail.com, 
+	sunshine@sunshineco.com
 Subject: Re: [PATCH v4 3/7] clang-format: exclude control macros from
  SpaceBeforeParens
-In-Reply-To: <20250927145049.723341-4-jltobler@gmail.com> (Justin Tobler's
-	message of "Sat, 27 Sep 2025 09:50:45 -0500")
+Message-ID: <5g4ysjfqrjltnqr35xh4efhzmqmzpmut44pherfsjzqinfbpmo@6ax5lzob7sox>
 References: <20250925232928.3846-1-jltobler@gmail.com>
-	<20250927145049.723341-1-jltobler@gmail.com>
-	<20250927145049.723341-4-jltobler@gmail.com>
-Date: Sat, 27 Sep 2025 08:40:15 -0700
-Message-ID: <xmqqv7l39a5c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20250927145049.723341-1-jltobler@gmail.com>
+ <20250927145049.723341-4-jltobler@gmail.com>
+ <xmqqv7l39a5c.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqv7l39a5c.fsf@gitster.g>
 
-Justin Tobler <jltobler@gmail.com> writes:
+On 25/09/27 08:40AM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> 
+> > The formatter currently suggests adding a space between a control macro
+> > and parentheses. In the Git project, this is not typically expected. Set
+> > `SpaceBeforeParens` to `ControlStatementsExceptControlMacros`
+> > accordingly.
+> >
+> > Helped-by: Karthik Nayak <karthik.188@gmail.com>
+> > Signed-off-by: Justin Tobler <jltobler@gmail.com>
+> > ---
+> >  .clang-format | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> While this may be a welcome addition, I somehow do not think it
+> belongs as [3/7] to this series, whose theme is about "git repo
+> stats".
 
-> The formatter currently suggests adding a space between a control macro
-> and parentheses. In the Git project, this is not typically expected. Set
-> `SpaceBeforeParens` to `ControlStatementsExceptControlMacros`
-> accordingly.
->
-> Helped-by: Karthik Nayak <karthik.188@gmail.com>
-> Signed-off-by: Justin Tobler <jltobler@gmail.com>
-> ---
->  .clang-format | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+That's completely fair. I noticed the formatter flagged this issue while
+working on this series, but I was also on the fence as to whether it
+should be submitted separately.
 
-While this may be a welcome addition, I somehow do not think it
-belongs as [3/7] to this series, whose theme is about "git repo
-stats".
+> Perhaps make it a separate topic and have it graduate sooner?
 
-Perhaps make it a separate topic and have it graduate sooner?
+I'll send this patch as a separate topic and can send another version of
+this series without this patch.
 
-> diff --git a/.clang-format b/.clang-format
-> index dcfd0aad60..86b4fe33e5 100644
-> --- a/.clang-format
-> +++ b/.clang-format
-> @@ -149,7 +149,7 @@ SpaceBeforeCaseColon: false
->  #     f();
->  #   }
->  # }
-> -SpaceBeforeParens: ControlStatements
-> +SpaceBeforeParens: ControlStatementsExceptControlMacros
->  
->  # Don't insert spaces inside empty '()'
->  SpaceInEmptyParentheses: false
+Thanks,
+-Justin
