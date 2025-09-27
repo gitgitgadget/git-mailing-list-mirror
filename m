@@ -1,209 +1,132 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF832AD02
-	for <git@vger.kernel.org>; Sat, 27 Sep 2025 00:07:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57741F4181
+	for <git@vger.kernel.org>; Sat, 27 Sep 2025 01:36:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758931673; cv=none; b=XKrUo7ytt+nJ8DZl39DiW+GDmRLkg+u0PvVusMaVIYWtIfG8X4BKUUpQlzaEIgYwSGKgZMmJrq9tEs6bI0mWIYMOKBteMz/xP/BFqUz9mowjIDlVbv7zBWUqS7M8yOvynydelD4eUQTPEeoiNQBr4GjAobmAzv3hY8PcEHsoUpw=
+	t=1758937001; cv=none; b=ALNGapu74tHo9bMKfgSUQOjzqbqmqQS3iL7h30np4vR1TEowtPSj2e+maz4LrTD29iH1n4TiKzz8hgyoscEgIviGT94XCkN53x6fGCVgFSrDJR6/Bl681Nba0nS/lhuUtnWUA2Qd8bTaLaIPPWNrQpL9JbnbXJJVzpmrfyLIACI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758931673; c=relaxed/simple;
-	bh=9wYr0jJHVxzd0YnKZgcPYPKzBmVdFoB3juYWjuQRv34=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Evk0+bLZPe+vnqGige7Htib4sK4Jjky095iFuJxypwvd39WdEhi4LVLs0pLQ3aeTfLnyucGVqQikJiLePoMQ2yb2yWzlsN65+0ULrXETTDfkGP85zZJk52C81zjQ/yMjjv+TR8pkMcsOFlLai5/lP1vU1QZMhWW4EIehMhKXKh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pg+9Xa23; arc=none smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758937001; c=relaxed/simple;
+	bh=GcchYoma76hJGuSfrAoMJuYy0GF/BPnjc7rFZ/jKlQc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hbb8vz19RdsoKygPLlEj4EPtKm6YppJRGTtdkeylkD+4JAf8KQSG1ffdl386518fxCOw6u6kYjzDFKnpFxJLkW0u2dG7n7brjb3Smtty14z5ljwroVvw+1yU5PXTjDR6HzSYFwDe77iMqUPpp2nw06koDfB7Li60tK1HDA9rL1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Bs3mwbUC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t46WoJ70; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pg+9Xa23"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-86302b5a933so84606285a.0
-        for <git@vger.kernel.org>; Fri, 26 Sep 2025 17:07:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758931670; x=1759536470; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=o3sqfjx55ZiICZ9DzKoT4sGfJCLS493DtHBd7vD1b4M=;
-        b=Pg+9Xa23DbDY2BSCSNAesnl6cQEZwOmW+rpAviiwhgbrBqL8aQewwafV3K3buKjh7b
-         GR54oocxWz1JPD01+fpp7HDYfzEx9DMPiH8FhHTMrYdCLKVN4IafBkYDVanYEbRMQVOF
-         v8830lfoIF8bTXcpSP3MWZgm3ZKc+KbfF3hLhj7ryD3Il7Bg3hroFKTjEmcY/jUyXC3D
-         ju+GUGcs+FFfl6nlw4aXQhUbOFYa2f8zLRMseSt67kMGuhyvLJE7XlsOEBIw7QjD1Kij
-         gAqJxUcOTXyJvnP2RlmRIkMuJ5sawDmu8QIuLbzjliCT/Vl+4Z+aV0Sa2mYPZFFSKh+d
-         5eoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758931670; x=1759536470;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=o3sqfjx55ZiICZ9DzKoT4sGfJCLS493DtHBd7vD1b4M=;
-        b=JDAbiY2a46vJ3UeOBAvem/djihrapRItK1P60TQGLrlmPBrbtGPtjAFTLnqZ+3z+/Z
-         bfzRjlDGNALN02nm9h2/a5aPDxwCkMFgyEJoY+2HkO42TUDlAOoP9qHV/Hhik+4gHPWu
-         Y7RFSqk6T4K3cSsqgxuvi9JgdrAIrZMXP2CglyP3h7GvY5Q1KYxUR4TV/IZb61yK0Yb3
-         zdx7PTDWPvq8/eH5m1Z6Ax/t3nJktRY0EGr/ITNHG2Fo4xdGF5fd5Qu/Zz/qjwTRMgmV
-         D0nqfaQbfWTre52HeiypkPENw3C5E7z2j8/mTFK+l64WK125EYkJWF2Q6lOJkrPFP4R7
-         wKbA==
-X-Gm-Message-State: AOJu0Yzj7M5Q57BA933+D4jZANxyP9iY460Qoq0jJL4nGtOG3pANiq5S
-	u+Fr/ChahrS7mO0h0NsvDIpvzEHIv3bX9ZcNTBAItEIs3LvNwjKvWpzCMBjPHjgk
-X-Gm-Gg: ASbGncsbcAR2C9vYov2rYKCoMhMBrEp2gfaGIj/x7l4uM9EMCow3Xj2xrPCGW/k15/Q
-	RjbwRA/ymQKMe4vgVUdiXsIIAFd4cTw5TFOqVPLpySsCHT3hF25ZNJ3S8760Jql3b+Z2kbaR0oK
-	rLEUZcslxZjA8TUSHM48x4Kn4pqjfAmQGsRBXn+pEWiPPlBwFJr9XbMygoFQilQN9gjpoxoMppb
-	dskJRJggW/4jkIoqsG7GaG5gqEH6zk8y/BeNFK9pSKF0DZEpz2aUsBztnOBxOIa8R+I2NT0oZDW
-	HklD6s60ps3vEcf/lW5y7wjDe0mCoChGPg2yidFyOStXtxJpAVfdSEPMDnfsvUtrU25jxA3KqiW
-	nImcQ9guus377oeNl5YqyGUP+Mg==
-X-Google-Smtp-Source: AGHT+IGv55gVDpCQI8BgsnZrUidL28WqC1G5fU3KVzr/0yU37wKJMFqRObRKxfzAOxQOspfzyg1V9w==
-X-Received: by 2002:a05:620a:2988:b0:857:9a62:170b with SMTP id af79cd13be357-85ade9629a6mr1230504785a.3.1758931669786;
-        Fri, 26 Sep 2025 17:07:49 -0700 (PDT)
-Received: from [127.0.0.1] ([145.132.102.52])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-85c3218f0b9sm365880485a.48.2025.09.26.17.07.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Sep 2025 17:07:48 -0700 (PDT)
-Message-Id: <43784e3ff991929b5c314ad5b9ab6573e6ca48c4.1758931659.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1977.v2.git.1758931659.gitgitgadget@gmail.com>
-References: <pull.1977.git.1758800669.gitgitgadget@gmail.com>
-	<pull.1977.v2.git.1758931659.gitgitgadget@gmail.com>
-From: "ionnss via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 27 Sep 2025 00:07:39 +0000
-Subject: [PATCH v2 3/3] libgit-rs: address review feedback for get_bool()
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Bs3mwbUC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t46WoJ70"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id C594DEC01A2;
+	Fri, 26 Sep 2025 21:36:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 26 Sep 2025 21:36:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1758936998; x=1759023398; bh=s1Bpspd605
+	touwdmARd06zcx4ds/LU36x/62aZiM8w0=; b=Bs3mwbUC+ZtHm6nM/zamulXXHW
+	fXXGDvnWbvn58Dl+lQW6WORTiFwSyoAPgoTIEj+dq49adLxqPpu5lQP7xQ/+OOWk
+	bT9G43BoJCuPiydVQKXJafaJyeUm9u4CMpkM40ZGVcocR/F/AXN52Fnonyic1s67
+	u/rMEgbTtLf+m6bSWROdBV+wbJGYz/M5awiih4yCXMb5rhohzu+OHTieOK7nebrD
+	UfaryEfhOY9kbPFzyW1GXcSjDHd0eNWDXyt/Vix/1Td/SO3S50HosN7njYuuMjAK
+	8TUw32Y4luulyOu9s/gtjw3SlAh4at7UQDkLqJjwpyVDX3TtYxfCzDY1nHzA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1758936998; x=1759023398; bh=s1Bpspd605touwdmARd06zcx4ds/LU36x/6
+	2aZiM8w0=; b=t46WoJ70RUsBahU3CGSrKttPXaxKcvNgtAGe8Ui6OfTowVzcGQL
+	//+t6aSaTr7/FdoCovgUvvhjnJ2UDjaWuhSE+E/gaK3IAwsOzRw6SYS0ehzmdCgg
+	7VvBtu68KrUXU6qTiB3AmRUy4dO7J7vZ/1BI+xOp23NCuXW9kYUs+nyHE27DyJt1
+	+TzSnlM3fyxYJ6jiRg047O8+w9x2uihXe3HNFDczuvnhv9wh1hje+lIgiR7rGtAi
+	CbhyE4iLqFhIaWadnrW+fln/bYNcCRI03gthpan3kL2Qg0nh2za21DlpBlhZ/f4z
+	55l6rT76bcja61OIGV3qeJz6XjMEIyaSRqA==
+X-ME-Sender: <xms:pj_XaLdlzbazDTTzhXqOxDv2defj2f7WGCi2kOIQYeeSNSAdJCMX8w>
+    <xme:pj_XaCvjK1vRbgSTuyZRVPfHN-zEK03Gh_j9jk3IgryqcHgdtNgsQwZcw_OQApjMH
+    _fRrMeWOHl0Emt6aGKRoUKMDqjN0bOmzqeTZCNtr4UxRRrFttqfIw>
+X-ME-Received: <xmr:pj_XaEkYgipK0ec3ZTw6kKpdds5W7t0eGUx9dED4wZvr-U7j66Gh8YhjIdrE7lvWyGk54mZ7eCQEHqxYIZJtCDZHWXDZtxunQehV>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejtdelgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluh
+    hsrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:pj_XaMxGfrASypl7wevgfKrtFcErDYWAojAKUMxbW3HU5qRc52fxGA>
+    <xmx:pj_XaOO0qBsSpe5tLp89PQcRQ81SYUzDzVGiM-7eQnhrmfZ8rEyB7A>
+    <xmx:pj_XaAo4DuwqkPif6wEXXb3zd8fA1OvsVaIVfcB6E7e599ToeQq6aw>
+    <xmx:pj_XaPEyYuYBy8p4WL3p2S0zY7UhZWm2-giR0-dhRHp97YX6MhsJVQ>
+    <xmx:pj_XaOxHvJoCcSsNgQzCg_5uazE1pQ2GL4rA0bdEl4mPeaH1Sw2gLiVd>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 26 Sep 2025 21:36:37 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,
+  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [RFC PATCH 4/4] doc: commit-graph.adoc: fix up some formatting
+In-Reply-To: <3323ebff-f6ac-4065-8507-efd5a9e4a16d@ramsayjones.plus.com>
+	(Ramsay Jones's message of "Sat, 27 Sep 2025 00:30:31 +0100")
+References: <875fb7a0-6dd9-412b-a34a-21758c339871@ramsayjones.plus.com>
+	<xmqqfrc9citl.fsf@gitster.g>
+	<c8e40336-0a16-4da9-b251-d166f80ffeb3@ramsayjones.plus.com>
+	<xmqqwm5kap0r.fsf@gitster.g>
+	<3323ebff-f6ac-4065-8507-efd5a9e4a16d@ramsayjones.plus.com>
+Date: Fri, 26 Sep 2025 18:36:36 -0700
+Message-ID: <xmqqa52gad7f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Chris Torek <chris.torek@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    ions <zara.leonardo@gmail.com>,
-    ionnss <zara.leonardo@gmail.com>
+Content-Type: text/plain
 
-From: ionnss <zara.leonardo@gmail.com>
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-- Use git_configset_get_bool() C function instead of reimplementing parsing
-- Fix libgit_configset_get_bool() function signature in bindings
-- Improve .expect() error messages to be more descriptive
-- Add comprehensive boolean tests including edge cases (00, 100, 007)
+>> That is, which one of these do AsciiDoc and Asciidoctor want?
+>> 
+>>     Deleting graph-\{hash\} files
+>>     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>
+> This is what I did and, with asciidoc anyway, looked fine.
+>
+>>     Deleting graph-\{hash\} files
+>>     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>
+> I just tried this, and it was fine also! :)
+>
+> Hmm, let me just try asciidoctor ...
+>
+> Well, with asciidoctor it requires the underlining to be exactly
+> the same size as the text (ie the second example above), otherwise
+> it mangles the heading (well it doesn't seem to recognize it as a
+> heading at all. It looks like:
+>
+> Deleting graph-{hash} files ~~~~~~~~~
+>
+> So, not the first time asciidoc and asciidoctor differ in the rendered
+> output. (yes, the number of ~ chars is not the same as the input).
 
-This addresses feedback from Phillip Wood and Chris Torek about using
-Git's actual boolean parsing logic rather than duplicating it in Rust.
+Yeah, so the latter one (i.e. count escapes and mark-up letters when
+computing how long your underline need to be) is required to please
+both.  I knew AsciiDoc allowed a bit of slop and that is how your
+experiment (the first one above) was fine.  I didn't know how large
+a slop AsciiDoc allowed, but it seems at least we can be missing two
+and the tool is still happy.
 
-Signed-off-by: ionnss <zara.leonardo@gmail.com>
----
- contrib/libgit-rs/src/config.rs    | 33 ++++++++++++++++--------------
- contrib/libgit-rs/testdata/config3 |  4 +---
- contrib/libgit-rs/testdata/config4 | 10 +++++++++
- contrib/libgit-sys/src/lib.rs      |  6 ++++++
- 4 files changed, 35 insertions(+), 18 deletions(-)
- create mode 100644 contrib/libgit-rs/testdata/config4
+> So, I need to change the diff to extend the underlining on that
+> heading, so both asciidoc and asciidoctor both render it correctly.
 
-diff --git a/contrib/libgit-rs/src/config.rs b/contrib/libgit-rs/src/config.rs
-index 3f4a32c72d..b280b952b2 100644
---- a/contrib/libgit-rs/src/config.rs
-+++ b/contrib/libgit-rs/src/config.rs
-@@ -69,24 +69,18 @@ impl ConfigSet {
-         }
-     }
- 
-+    /// Load the value for the given key and attempt to parse it as a boolean. Dies with a fatal error
-+    /// if the value cannot be parsed. Returns None if the key is not present.
-     pub fn get_bool(&mut self, key: &str) -> Option<bool> {
--        let key = CString::new(key).expect("Couldn't convert key to CString");
--        let mut val: *mut c_char = std::ptr::null_mut();
-+        let key = CString::new(key).expect("config key should be valid CString");
-+        let mut val: c_int = 0;
-         unsafe {
--            if libgit_configset_get_string(self.0, key.as_ptr(), &mut val as *mut *mut c_char) != 0
--            {
-+            if libgit_configset_get_bool(self.0, key.as_ptr(), &mut val as *mut c_int) != 0 {
-                 return None;
-             }
--            let borrowed_str = CStr::from_ptr(val);
--            let owned_str =
--                String::from(borrowed_str.to_str().expect("Couldn't convert val to str"));
--            free(val as *mut c_void); // Free the xstrdup()ed pointer from the C side
--            match owned_str.to_lowercase().as_str() {
--                "true" | "yes" | "on" | "1" => Some(true),
--                "false" | "no" | "off" | "0" => Some(false),
--                _ => None,
--            }
-         }
-+
-+        Some(val != 0)
-     }
- }
- 
-@@ -115,6 +109,7 @@ mod tests {
-             Path::new("testdata/config1"),
-             Path::new("testdata/config2"),
-             Path::new("testdata/config3"),
-+            Path::new("testdata/config4"),
-         ]);
-         // ConfigSet retrieves correct value
-         assert_eq!(cs.get_int("trace2.eventTarget"), Some(1));
-@@ -122,8 +117,16 @@ mod tests {
-         assert_eq!(cs.get_int("trace2.eventNesting"), Some(3));
-         // ConfigSet returns None for missing key
-         assert_eq!(cs.get_string("foo.bar"), None);
--        // Test boolean parsing
--        assert_eq!(cs.get_bool("test.booleanValue"), Some(true));
-+        // Test boolean parsing - comprehensive tests
-+        assert_eq!(cs.get_bool("test.boolTrue"), Some(true));
-+        assert_eq!(cs.get_bool("test.boolFalse"), Some(false));
-+        assert_eq!(cs.get_bool("test.boolYes"), Some(true));
-+        assert_eq!(cs.get_bool("test.boolNo"), Some(false));
-+        assert_eq!(cs.get_bool("test.boolOne"), Some(true));
-+        assert_eq!(cs.get_bool("test.boolZero"), Some(false));
-+        assert_eq!(cs.get_bool("test.boolZeroZero"), Some(false)); // "00" → false
-+        assert_eq!(cs.get_bool("test.boolHundred"), Some(true)); // "100" → true
-+        assert_eq!(cs.get_bool("test.boolSeven"), Some(true)); // "007" → true
-         // Test missing boolean key
-         assert_eq!(cs.get_bool("missing.boolean"), None);
-     }
-diff --git a/contrib/libgit-rs/testdata/config3 b/contrib/libgit-rs/testdata/config3
-index 83a474ccef..3ea5b96f12 100644
---- a/contrib/libgit-rs/testdata/config3
-+++ b/contrib/libgit-rs/testdata/config3
-@@ -1,4 +1,2 @@
- [trace2]
--	eventNesting = 3
--[test]
--	booleanValue = true
-+	eventNesting = 3
-\ No newline at end of file
-diff --git a/contrib/libgit-rs/testdata/config4 b/contrib/libgit-rs/testdata/config4
-new file mode 100644
-index 0000000000..5b75385c38
---- /dev/null
-+++ b/contrib/libgit-rs/testdata/config4
-@@ -0,0 +1,10 @@
-+[test]
-+	boolTrue = true
-+	boolFalse = false
-+	boolYes = yes
-+	boolNo = no
-+	boolOne = 1
-+	boolZero = 0
-+	boolZeroZero = 00
-+	boolHundred = 100
-+	boolSeven = 007
-diff --git a/contrib/libgit-sys/src/lib.rs b/contrib/libgit-sys/src/lib.rs
-index 4bfc650450..b104fda8f6 100644
---- a/contrib/libgit-sys/src/lib.rs
-+++ b/contrib/libgit-sys/src/lib.rs
-@@ -43,6 +43,12 @@ extern "C" {
-         dest: *mut *mut c_char,
-     ) -> c_int;
- 
-+    pub fn libgit_configset_get_bool(
-+        cs: *mut libgit_config_set,
-+        key: *const c_char,
-+        dest: *mut c_int,
-+    ) -> c_int;
-+
- }
- 
- #[cfg(test)]
--- 
-gitgitgadget
+So it seems.
+
+Thanks.
