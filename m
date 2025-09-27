@@ -1,68 +1,69 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FABAD23
-	for <git@vger.kernel.org>; Sat, 27 Sep 2025 00:07:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F991210FB
+	for <git@vger.kernel.org>; Sat, 27 Sep 2025 00:07:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758931665; cv=none; b=GzXRlpaZuXgDTJ0SGJteMKpFWSmZZH4shKv5fTxzIYeclP0fAEnBqztFtp+A9BasImtsC58DtAX0ayH4QsjISGoftpcZ0myTV6fEer7VTjekas4Qmv1cgGwFuhx1UPpE6CsMVo5ftwhXwIZENx7RQnCD9MV78KnVvTPfArbEhzU=
+	t=1758931668; cv=none; b=c+PZrZYuMPkFCHxw07liPQRp30Nmsz7Crx/FqXiOWSjq3hd4XOGXfmWIhvAAXlUp9IKN4O07swqdvb1siBZGkcq6p4FzWbJ9l/33PoWhqUkO4DMgVuVQ2M9Ho5lZZzkvxGtjRtk0V2o3IJCspbY6gSteC87RgVZrdNt8AHZ1zrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758931665; c=relaxed/simple;
-	bh=iHE6ryTOpcPDLhjSoGUfG4PNqaaSHpF26u5Ekcykd+U=;
+	s=arc-20240116; t=1758931668; c=relaxed/simple;
+	bh=rwixZ5310GB1yWYMUco5cwCkSGj+L7ibVrC8UHnHRN4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=HZmrKUblJ6BoSKamSwUPcUhmU2lUvIGxi9M1DpQoKdbgWLKylNHRtUwkIvXU71oIf+juG/evCTVW91fVRHSpScdmqovwQfq1Uih2N1eQYJBf8pHwH8VwgAFgG2bghmaq6IOBAuqjFsymKde97rcjeznNL0+93NZYNpxqikfnrDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=THd19RcT; arc=none smtp.client-ip=209.85.160.171
+	 MIME-Version:To:Cc; b=KDArh4UmmXGHS6EPP82wB+ENWcIdvp6gqTD63qs8tbaTudbU9+LtFBws3AZTxLkgbscpQqhYeww8umOVD/ORS5f3XGYac3JDm15bn7HaOOO0brHB7PqkSjDW+twR4sMoZS7GCORD6wQ6q2Gzv6v8PeFSEEddvRXXFPJVwZcXL+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OIhn7ey6; arc=none smtp.client-ip=209.85.222.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="THd19RcT"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4df0467b510so2429191cf.3
-        for <git@vger.kernel.org>; Fri, 26 Sep 2025 17:07:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OIhn7ey6"
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-8571a0947d1so295012985a.0
+        for <git@vger.kernel.org>; Fri, 26 Sep 2025 17:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758931662; x=1759536462; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758931665; x=1759536465; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ajNUIyN8r1Ljkdpi6NRy0WS8IXInGh8FPN52e+5oTqQ=;
-        b=THd19RcTSp+TvBb9QMT6i60NhUSjJ2wNHtv7t+bCJFInD4+cL3Pe1Tx8KM7gKu0eYD
-         ViZaL9GgirnhPkhYS1HNB03fG1o7qaejAqe9cVN8Pa3NQk69CyrwGgjdycX55YcojZQM
-         bAL2b8jSr8gWitHpqNgvMC8byA62Pmfo3WSLP+a6ky+t9ZCx7GywZpIf59gq4e8rvDCW
-         5cfuJdOCjBuUu62VIYcxyZn4NsTXZ16i2ZosYzSBSAmHPZm9rFi4Suvgv59+UNq/UtkT
-         UXXXzRV1HiqOvccgCCWzPEPCFn3MSuyFJEPhcL9D/zvp/IcFYDr66k5fwORoV5g3vAIA
-         Nzsg==
+        bh=uxoFNfmxJNaO8HV39KBL3+UwvUgT52a9pCMuGP/Z+2I=;
+        b=OIhn7ey6P4KPRoRhLfJbTa0s/jaedq3uykIE5QUOiHs+eokX/7P1XWZFUQV3Mi1b3d
+         im6mnm1eMx4M7bpR3dfnOkwMZZ1SY5CavwwE1uC+cWQph6b8PwQVgvISpnTwTPoUY1H+
+         bxi+7cYDNXNDCQz0QtwJys4YYYHcoH+sq3Qx8iLISRRDuPppghhm6+/0dMtrVW6lt9dP
+         f0EnPrmHyt1RHexTAy+XPR56l94IReakGsBIeL555735jD5zvsDGs8tkfhvhkChiALkM
+         hjG/lMa+Sh79ghTBYlhCkSToaWydOJqUh6gOClC2qiVhMM1NlaeLbtgfD/Q1btDoGpek
+         aMQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758931662; x=1759536462;
+        d=1e100.net; s=20230601; t=1758931665; x=1759536465;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ajNUIyN8r1Ljkdpi6NRy0WS8IXInGh8FPN52e+5oTqQ=;
-        b=C2XxnOIVLiDeLza83vF+mBToDD4SFovLsOMnY0nG0Tf8PRP4ec+DH8U29HkwQMdFTK
-         Xqe6AUoKzPod8GCG4gfAB7urWXqIqMyPFEbwPDgydygnl7/oJZr/+BsBL/fY7qzUKBbn
-         NmYwN4MkR8v9fk8fY9LmL0+jvaBeV+UZHu6eq1ruaxZxSP7WXqcWzd3PwnRtBq1R1qZ6
-         /BTVBX/Ebtho7S9S+Vdxoedzl4uZW4GgAwkTkMNXhujrwrxmLjqPTaOzSip8HRi4l683
-         C7A4gXLQrK3adiF1btsnNwylgfdU9rwzASoFjN7VkG9HgOp30KfKa+FjYV+xcp3xyt2q
-         T0pQ==
-X-Gm-Message-State: AOJu0YwTxsEh9+yuJAUnNGRRJEe97dy4r4t/m4HujqWO1aVgOThkXwlq
-	IeB6PtsUZjIL3lnLOu0+pEXIBQSLwLUjXeRP3Kb3RNmPGkKe7hQoY4EgHLz/t7gU
-X-Gm-Gg: ASbGncuI810NjtNOy/78BoLVIzlSxBUIYDS+ado0uNHaMsxmYfJU0I19W8Nzc7hk8G+
-	eDJPRLRhd/gYqBz15FgC1dKK2i9iQ695xSMVFkU+DVIpkEDGLfC6MXQdPZUisgW2Gq4fQ1nIzBV
-	jBy47jHvGd8CVMtaZDiWavZ1QubMJVrguRJnT5Po+B1VINTWE7rRk/E2hiCuJYQ01+oTrv2ReaC
-	tCb2DsZQZgXwagWcG4/DlE8VKTgN0w3KHFx999fQ+S1kjo/ymeMSO0lAvuMHWJATCq5YBdjGfHa
-	Lg86FlguIN9aEOvwAAEq8HW0/Zpp3h+3yCElWqc3FU66qU1wE9B4ZQOYNiQ2C6c8jQySZ9dxxt7
-	ZUqLPo+fDMmxNcxePYOCughgDHw==
-X-Google-Smtp-Source: AGHT+IFVLQOMHaGm8GlpAPL2NQF49/EwIHFM4ZJudLPEBS9UfUnFUcw2r1gjuN6/vQuU3lr7I+kS3g==
-X-Received: by 2002:a05:622a:7d0b:b0:4db:d59c:264b with SMTP id d75a77b69052e-4dbd59c2897mr75100251cf.37.1758931662349;
-        Fri, 26 Sep 2025 17:07:42 -0700 (PDT)
+        bh=uxoFNfmxJNaO8HV39KBL3+UwvUgT52a9pCMuGP/Z+2I=;
+        b=nAR8Td+d+8XpR1xr/qr5oTyBSAKF7cDksC0phK6JsAx7zdXHAHnn6earOC/ZQTFkxq
+         hpghlcwCAn/Jpp7Proq5NwZkLLyTSR21UjckSJhNJ1nSgKY9AIiwa5eDV+rnWsNFMW7B
+         ZPPgsWUQt29f8SI3bUYt/jZHZJ42WfDC29DmXanco3UX0kj8CFdh7CrM1ZjfoibrYril
+         YanoehEdUWzBcbB5KDyeQ34bWzUpGEGV4DGZl/v3bEsR2FxawzVQPTe9veBhWD7xy/4N
+         Oxscgfhvfr8DsI5Z8/kIKebbQCpHL2VisxEpLinG1f/H0InB1UjO+np6AR8ZImmaU+aq
+         4Gww==
+X-Gm-Message-State: AOJu0Yy8cpRQauygrbK4wMJ4Gv2BkUkL85ZrwQ7U9zwV0PZspJELEDFL
+	nvVd1VnbiQsO58EKiUn/FqiLXbne5dqtyiVlht7B4uGaGfFnRhesq9xU/kK79J5q
+X-Gm-Gg: ASbGncuBCULbXPuaSWcq4zEW0SOGwqxJP7Y9breVEjgD+iSVfkn3uXufQR0oynqSQS8
+	xU5qS0rl0xeIS6v+giHB6l/SfHcWZNzsFrIRYY4/szEroW8TlP/P/GUsl+5f31CprwsRMlw/quL
+	t3dja418ObfLhDOCfHEG8V5PYAamA+F1ghiJ6vbB3Pk8mfO3Y5mIV2IkJMee9ALhjlJF7UWshnP
+	C4zYLBbnhfgeit+uVfX2bB3g+nG9XyGU1bcnYLo4FwETSaA71bCvxr3vZir2RJCl8LdcqCWyNmj
+	XfV7opI7I+M99kYx6IhQ4GetiTy3eiml2Ud26CZZW9IPM0lORhuQIqVMkql1TraPZngB63a1CMO
+	uCRCzqUCChsMtz1EnlYBXA0Qo+g==
+X-Google-Smtp-Source: AGHT+IGbQwELTt/3luBw2F5gNtBwsCbZ4HpCWM1uNPEjsRGNnOBUBMeKfdeKJazm3hG4yJYCeyWdEw==
+X-Received: by 2002:a05:620a:29ca:b0:855:4f0f:d782 with SMTP id af79cd13be357-86462eace68mr199037585a.34.1758931664846;
+        Fri, 26 Sep 2025 17:07:44 -0700 (PDT)
 Received: from [127.0.0.1] ([145.132.102.52])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4db11222a17sm33347421cf.38.2025.09.26.17.07.40
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-85c27378987sm371534485a.4.2025.09.26.17.07.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Sep 2025 17:07:41 -0700 (PDT)
-Message-Id: <pull.1977.v2.git.1758931659.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1977.git.1758800669.gitgitgadget@gmail.com>
+        Fri, 26 Sep 2025 17:07:43 -0700 (PDT)
+Message-Id: <d7810781fc3af1902c99cccbd50853dd630a0080.1758931659.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1977.v2.git.1758931659.gitgitgadget@gmail.com>
 References: <pull.1977.git.1758800669.gitgitgadget@gmail.com>
-From: "ions via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 27 Sep 2025 00:07:36 +0000
-Subject: [PATCH v2 0/3] libgit-rs: add get_bool() method to ConfigSet
+	<pull.1977.v2.git.1758931659.gitgitgadget@gmail.com>
+From: "ionnss via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 27 Sep 2025 00:07:37 +0000
+Subject: [PATCH v2 1/3] po: fix escaped underscores in README.md
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,55 +76,45 @@ MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Chris Torek <chris.torek@gmail.com>,
     Phillip Wood <phillip.wood123@gmail.com>,
-    ions <zara.leonardo@gmail.com>
+    ions <zara.leonardo@gmail.com>,
+    ionnss <zara.leonardo@gmail.com>
 
-Purpose
+From: ionnss <zara.leonardo@gmail.com>
 
-This pull request introduces a get_bool() method to the ConfigSet module in
-the libgit-rs library. The goal is to enhance the functionality of ConfigSet
-by providing a way to fetch and handle boolean configuration values more
-easily and consistently.
+Remove unnecessary backslashes from language code examples.
+The underscores in "ll\_CC" and "zh\_CN" don't need escaping
+in Markdown.
 
-Implementation Details
+Signed-off-by: ionnss <zara.leonardo@gmail.com>
+---
+ po/README.md | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-• Added a get_bool() method to the ConfigSet module.
-
-• The method retrieves configuration values as boolean values, ensuring
-proper parsing and error handling.
-
-• This addition simplifies the process of working with boolean
-configurations for developers using the ConfigSet module.
-
-Testing
-
-• Added unit tests to verify the correctness of the get_bool() method.
-
-• Tested edge cases to ensure robustness.
-
-ionnss (3):
-  po: fix escaped underscores in README.md
-  libgit-rs: add get_bool() method to ConfigSet
-  libgit-rs: address review feedback for get_bool()
-
- contrib/libgit-rs/src/config.rs    | 27 +++++++++++++++++++++++++++
- contrib/libgit-rs/testdata/config3 |  2 +-
- contrib/libgit-rs/testdata/config4 | 10 ++++++++++
- contrib/libgit-sys/src/lib.rs      |  6 ++++++
- po/README.md                       |  6 +++---
- 5 files changed, 47 insertions(+), 4 deletions(-)
- create mode 100644 contrib/libgit-rs/testdata/config4
-
-
-base-commit: bb69721404348ea2db0a081c41ab6ebfe75bdec8
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1977%2Fionnss%2Fadd-rust-configset-get-bool-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1977/ionnss/add-rust-configset-get-bool-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1977
-
-Range-diff vs v1:
-
- 1:  d7810781fc = 1:  d7810781fc po: fix escaped underscores in README.md
- 2:  a5904a2ac0 = 2:  a5904a2ac0 libgit-rs: add get_bool() method to ConfigSet
- -:  ---------- > 3:  43784e3ff9 libgit-rs: address review feedback for get_bool()
-
+diff --git a/po/README.md b/po/README.md
+index ec08aa24ad..d7757bed4e 100644
+--- a/po/README.md
++++ b/po/README.md
+@@ -13,9 +13,9 @@ We will use XX as an alias to refer to the language translation code in
+ the following paragraphs, for example we use "po/XX.po" to refer to the
+ translation file for a specific language. But this doesn't mean that
+ the language code has only two letters. The language code can be in one
+-of two forms: "ll" or "ll\_CC". Here "ll" is the ISO 639 two-letter
++of two forms: "ll" or "ll_CC". Here "ll" is the ISO 639 two-letter
+ language code and "CC" is the ISO 3166 two-letter code for country names
+-and subdivisions. For example: "de" for German language code, "zh\_CN"
++and subdivisions. For example: "de" for German language code, "zh_CN"
+ for Simplified Chinese language code.
+ 
+ 
+@@ -126,7 +126,7 @@ you add a translation for the first time by running:
+ make po-init PO_FILE=po/XX.po
+ ```
+ 
+-where XX is the locale, e.g. "de", "is", "pt\_BR", "zh\_CN", etc.
++where XX is the locale, e.g. "de", "is", "pt_BR", "zh_CN", etc.
+ 
+ The newly generated message file "po/XX.po" is based on the core pot
+ file "po/git-core.pot", so it contains only a minimal set of messages
 -- 
 gitgitgadget
+
