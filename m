@@ -1,121 +1,91 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0933521A444
-	for <git@vger.kernel.org>; Sat, 27 Sep 2025 17:55:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5E418DF8D
+	for <git@vger.kernel.org>; Sat, 27 Sep 2025 18:49:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758995733; cv=none; b=EgAe9MbexXPJQpyNkPuKSjymn1LGqM4rlTXUvkRK0swSN2PpJ3/c++j19d0aT/lAhfsd2BGBbTAHO3u+7U1HGAREsRAhOiSercPlLgw+mXVY+UVMqZcqZJ2XRS1MHucnXjgXBujWIzUkvniOLm++32TqDwqsxHV8oghboJvi3x0=
+	t=1758998976; cv=none; b=UtSvWM7/sZ6FRGFuGPE4wGGWAvERtrAfYUxG0uGh+dSobakZMLk3ElTqQYn+Rzdiel+MSH35/qw2R0IT0mSR/nfiDpRr9CykC6jTjp8YfXGO5vKw7X/obWKlc210g+jMhNyxRT5aI/rKbW3+OjCWN/EPCWojWyRr0LjV3Mvsf8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758995733; c=relaxed/simple;
-	bh=J1gDr4QhvKE6sCFy7/g7vbydWNRoWC7YU4cg0vUYXfw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=keQWtEKOVM+bIdQMTOmSLnmdAImY+g+8qYxOoBLIzywc79qeW3uRUCRYOek99OKGWhBVXDnI0xrNo3y4x7/VmBofQFXW45UHxwNATNtp4JjzMWXJoj+bbSot24ng1NlhFIgAYkW6pdxpXaduyLEopZruk94X+DbqDSa6/oA1q0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=qVVbxgNs; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=EIvqHky7; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=qVVbxgNs; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=EIvqHky7; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1758998976; c=relaxed/simple;
+	bh=6lnQobDiQkInrPMGvwzkfGj2Pe7y+Gdk4x8/B8SB3Bk=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=I3ztjaQltperpq0UQRj2OXIHb1F7Lv1OB8gBhNxVy+G5+DKtOp1jNnOmvI3uNe2jA1hqfujoW/JtoEcH6gX1KucRGGVAucpgdHiIds5MTjQKg1dqEsCiGmINmW5tcZ0Fbg71UoAWdfkyLD/AKElKz687thqMO6ugrYvXwrIr+3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KSm1Bccx; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="qVVbxgNs";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="EIvqHky7";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="qVVbxgNs";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="EIvqHky7"
-Received: from kitsune.suse.cz (unknown [10.100.12.127])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 0636B1F7AB;
-	Sat, 27 Sep 2025 17:55:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1758995729; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=kOsLyVryqiDF5JHRgzigOqURwXbubocmArnKGg+uOHk=;
-	b=qVVbxgNsaNXyNOkhSMrukfrRL5GXFGioEMEmi1BAbSOTEmBtcSNlFDL12U1vEQmTy8zML5
-	ch03f/XWx7mET95myq8qs7qV/eIPE/Bp5GxjG7JRvCO9y/SZClmTBWD7buVZJxzSdigC+s
-	fqbTNX1NggSzzmz4STghVkYSVDZYNxE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1758995729;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=kOsLyVryqiDF5JHRgzigOqURwXbubocmArnKGg+uOHk=;
-	b=EIvqHky7WxppwU7/g7DhDZg9DV9YU4COWraafjm0DGZhV1sIH7w2o3tGeILOZBp0V7USwu
-	1QA/lYNzc1pY4BCA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1758995729; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=kOsLyVryqiDF5JHRgzigOqURwXbubocmArnKGg+uOHk=;
-	b=qVVbxgNsaNXyNOkhSMrukfrRL5GXFGioEMEmi1BAbSOTEmBtcSNlFDL12U1vEQmTy8zML5
-	ch03f/XWx7mET95myq8qs7qV/eIPE/Bp5GxjG7JRvCO9y/SZClmTBWD7buVZJxzSdigC+s
-	fqbTNX1NggSzzmz4STghVkYSVDZYNxE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1758995729;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=kOsLyVryqiDF5JHRgzigOqURwXbubocmArnKGg+uOHk=;
-	b=EIvqHky7WxppwU7/g7DhDZg9DV9YU4COWraafjm0DGZhV1sIH7w2o3tGeILOZBp0V7USwu
-	1QA/lYNzc1pY4BCA==
-Date: Sat, 27 Sep 2025 19:55:27 +0200
-From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "Jakub T. Jankiewicz" <jcubic@jcubic.pl>, git@vger.kernel.org
-Subject: Re: What is the reason behind not hiding git worktrees from git?
-Message-ID: <aNglDzeOT5_4ZbdV@kitsune.suse.cz>
-References: <20250927152824.3132af88@jcubic>
- <xmqq4isn96s7.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KSm1Bccx"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-b267ca7c402so48429366b.0
+        for <git@vger.kernel.org>; Sat, 27 Sep 2025 11:49:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758998972; x=1759603772; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=6lnQobDiQkInrPMGvwzkfGj2Pe7y+Gdk4x8/B8SB3Bk=;
+        b=KSm1BccxWrE5yiLbW5GirTdD4Qa3qbJsf/QjhOz3hYzVAuXhLgeOS2piRHjJy98GMe
+         L0to5QEnKjTazuFFi3xrUN8myGsLwqtuAPYpFN7U46t5fOjyRfO+0FD49scG50+JyrWB
+         zQhDE0cUZoYq7pGA8GvZ6i9A5ICBs7PLFvF/VsPz1wVBsH24FMpFNaxrt6qvUSG/F08q
+         5vmiVqQXLZ3jLzbnOD85SiE+Xvsm8mqoYC6sdELbOAQk9sbRCyURYvO9lHEMwBF+720v
+         rwVK/KpcI7bH9bppLU9xPa5Kexj2ND7B48SnH8wm5lBICChJ5Buo5ymNVQV7BtvbAcVg
+         ETzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758998972; x=1759603772;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6lnQobDiQkInrPMGvwzkfGj2Pe7y+Gdk4x8/B8SB3Bk=;
+        b=RuNr3CABWJ2lh4N0Hvzz8EjLd5HMfNHlRvCd8FHa6E+tmawbd/9LbmO4AMN9mM1jUU
+         +npduIC1HFVc6Lkk4V98CWYHK3nj3nwBP3du/ApXccpxDK9/Nymr3gjAK5dW/hKzhggH
+         Zk11gAFNTPWjveoEUOdTpZ8ytM9eSaMaL2nUZuDFAZvzpLDoZ4p1VLlafC7+6G7XH+jq
+         ESisCnTLKnvbJ03vK8HV36dtLz/fQlKRkUWtgezOmxCyIFA2vA5eorqCwc4QnxvThUCp
+         qYQk6HzvWvZPV1ab9UFYyVfc35iaCj6F1VfBxHs0HtSDQh/CAYKdQXHw6ieEvh56asxV
+         julw==
+X-Gm-Message-State: AOJu0YwP/ilyvgi+SiUFASq/rwZXDXeW1ai2qtgMuEzTN6uKzcdRovz+
+	Ssd0AZ7zXuGNirmFh4OQniAgjyFYJYxv7hs0arQzmaD3g+IFkd4M8rxMGVlVuleCggYj1DSHyjO
+	87ctEjVGEIUiR6jfzhr+K+Imer19lsxOrHkmD30k=
+X-Gm-Gg: ASbGncu/WoAq0Q4158VNBF/E10TK1cUlzohGJCrjIVmtQAHXZ9tjXScsWvFfqatzcwP
+	yl5rfgfhDvG39F8eLxoOti0N6YQQ/WQhZ4h/+k4rdX9lJZq1lW3ohe85cyZJezmGs5xRK50+V7C
+	MNom5yZNbrrXH8oFA/0babIJlL7GCAzHzt1eoiVxcQjLFBgjgGPzodI+w/wuxscVQssR+NB0eLC
+	wDCM3OGi3dhA//s55qTj8gq7kPH4W4D9TRVSiWHe0M6VMfr96v+ANlrAIF6jZcjkHe8tCaOVVHu
+	9Yg=
+X-Google-Smtp-Source: AGHT+IFPNnOppOeYIKqzweljaTscn5W+7fih6hpnig3W2V4FKJU+ds2v9YzXqVvc7fwpuwxoH1heWOhDdeQHDhFCKlY=
+X-Received: by 2002:a17:907:7b9e:b0:b0b:8d02:f34b with SMTP id
+ a640c23a62f3a-b34bb6055bbmr629810466b.4.1758998972358; Sat, 27 Sep 2025
+ 11:49:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq4isn96s7.fsf@gitster.g>
-X-Spam-Level: 
-X-Spamd-Result: default: False [-3.30 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	SUBJECT_ENDS_QUESTION(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-0.983];
-	MIME_GOOD(-0.10)[text/plain];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_COUNT_ZERO(0.00)[0];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RCPT_COUNT_THREE(0.00)[3]
-X-Spam-Flag: NO
-X-Spam-Score: -3.30
+From: M Hickford <mirth.hickford@gmail.com>
+Date: Sat, 27 Sep 2025 19:48:46 +0100
+X-Gm-Features: AS18NWA-jEMRRtJG6GSjxJfBgzh6s1s2ugQLy5zDcpF_fHoyW5Wucby2QYgt8UI
+Message-ID: <CAGJzqsn7BbaVckJ17XhsDHLtmS3OZPBG=oniwe+FRjhEwGc+Eg@mail.gmail.com>
+Subject: Feature request: partial URL matching for credential config
+To: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Sep 27, 2025 at 09:52:56AM -0700, Junio C Hamano wrote:
-> "Jakub T. Jankiewicz" <jcubic@jcubic.pl> writes:
-> 
-> > Why git work trees are are not automatically ignored by git?
-> 
-> Because there is no reason to ignore them, and ignoring them would
-> be annoyingly inconvenient.  Worktrees are not special and treated
-> the same way as an ordinary Git working tree with embedded .git
-> directory.
+Hi. A git-credential-oauth user would like to define separate
+credential config for two URLs prefixes of the same host (eg.
+https://example.com/org1/* and http://example.com/org2/*)
+https://github.com/hickford/git-credential-oauth/issues/83
 
-Sure, that's another repository.
+I don't believe this is currently possible
+https://git-scm.com/docs/gitcredentials
 
-It does not not show its own .git directory as untracked files although
-it is in the main worktree, though.
+> If the "pattern" URL does include a path component, then this too must ma=
+tch exactly: the context https://example.com/bar/baz.git will match a confi=
+g entry for https://example.com/bar/baz.git (in addition to matching the co=
+nfig entry for https://example.com) but will not match a config entry for h=
+ttps://example.com/bar.
 
-So why another worktree of the same repository is shown?
+Any thoughts on adding support for URL prefix matching?
 
-That can be seen as inconsistent.
+Example syntax could be credential.https://example.com/org1/*.key
+(explicit wildcard) or credential.https://example.com/org1/.key
+(implicit wildcard)
 
-Thanks
-
-Michal
+Peace
+-M
