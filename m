@@ -1,128 +1,93 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2DA1EF36E
-	for <git@vger.kernel.org>; Sun, 28 Sep 2025 13:30:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D494C98
+	for <git@vger.kernel.org>; Sun, 28 Sep 2025 13:54:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759066220; cv=none; b=Josdpv/6Zd/VZCuYiKT7gJ7kdRv6Zfsxc0iea3sCWCMkqeC3DpoaAPwFUwWJVD3r9fja4hO78duft6thOVpJIgbgNveAnwO993XPPzTPzZEeMphC01+PBDnOiDh900C6Sd+m1SpBI7FM03ssEoZssZZNvllVUg8Ps/GqT1yeAm4=
+	t=1759067681; cv=none; b=rsza4dF7xLFaOIlmiG/hv2BL5ybVPGDFDsUPoyNcrvRQyDZU6kuUP2aXHCSfnR1k/cx+RUDAxuNuxNYjQrHbLFUvjgrURzQ3e7FfJ5smPxenLg7AQFAejt1Xtu33cCJr+FqvNqLeVQ3CRrgsdSDvrCgo+FZwYOp0BiWosGSAlQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759066220; c=relaxed/simple;
-	bh=/eaSPkdwZQBBixtJ+7m3iQOJVH3tj5EkbXsmD1Njzzw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GdXLxKykTD8km0jxXXh4sER8pLUYKw5yK9zhsebAMW1YhpvIL8cYRkWQD3Qpa6HgiFb7w/hsTs0x/DOIZBkfaEGhfMEn1+DDR2R1hMYUuMYAxkUBVstqhroDx6r4Uk/ch6b2XAq/Nigk7cpBjondWVcI8y5WsDvrNmv8lxax3XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A2pRr4/T; arc=none smtp.client-ip=209.85.208.172
+	s=arc-20240116; t=1759067681; c=relaxed/simple;
+	bh=ZRtHRRjrxPbz/VYv+aRUebNMaivmCU7dRix92ZIpLUI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JAz7JETDjs2g92npbMbj7CVmZCXKC6TMKiXUPr+fusrXVEZ8qn0axNLnE87X6aXEPuM4wM153xn0JvEbbkrrs+El5zgkN5FLs/cQdsqZW5wMmUPAs6GwXvrdFU07zdrken/r8BypqL0FykpWMmofEuNs5qj+XQCVXl1Lp52/gu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lDbzUrNV; arc=none smtp.client-ip=209.85.222.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A2pRr4/T"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-3635bd94f3eso35024461fa.0
-        for <git@vger.kernel.org>; Sun, 28 Sep 2025 06:30:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lDbzUrNV"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-85a4ceb4c3dso407459085a.3
+        for <git@vger.kernel.org>; Sun, 28 Sep 2025 06:54:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759066217; x=1759671017; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7Pd4REASvSqfWOUGoJEfv6s5EImkKSNBo78wdk29sIk=;
-        b=A2pRr4/TX0tfo2LMgkl7Fye3Wi7H2eFqgDDZgP1pfMkuvbST8ep7KncwMBfqyDF+dm
-         fpTmHLxqh23XWLtL33eIH/2dQD90IGYyU7QDtUew5tLkoxUKFpHUnCXRaMkluToSE72X
-         RfyhgYbl5MvWTqsxMSJgb4de1JOTMJSxgYxAbeVGEn9xBEYV9Et6pC3P0XI/9txBduJC
-         WS8DAfkKI7nduUP9QnrZ9XjK9AS24efNaQeQ5wWtia5Mh/39dqwpbXnCCb+AuuR0mwJa
-         uw+SNcgmVLYKSMPG3ShdoMPuX6EOFzy+V5zepsqNvXB/U8Sc0qVCPaqjIAJi8TGc3YxE
-         uOeA==
+        d=gmail.com; s=20230601; t=1759067679; x=1759672479; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mw96fqyhWy5Mi04SU19sQP58/iYbS7eNSeX/Tw28mJ8=;
+        b=lDbzUrNV24Yzd0xog3cABzhXEYdMMGep9fUwYT04Y/OPJjyqBTb+dM/SFGcDeX1JYQ
+         pENZ1tFt/X8AhIqxz5gdMzCnvaRdv6D2fjjxTx4sJJmon3dIYJAJp8EKlAkEqaDQUWX0
+         XUGtU3H1Jtabpq6UXfOZKVWc9YnFZNcz/MQW16cdt55DwLJ9USVStJzLeqKtDz2ddKbt
+         n2BnoNp6MSCqUzA5qTLuMGgRS25Qih4K98XfiSN1yySntLX/feylajGqFAqmnOVQOVjG
+         UZDSk+ALkHPSq8cKu8ibvrIEvSB2kr/urE6+u41ys15XwKowwFxVOjXH1StMrr20MCsY
+         IVQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759066217; x=1759671017;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7Pd4REASvSqfWOUGoJEfv6s5EImkKSNBo78wdk29sIk=;
-        b=m82ew46JZyKAZaB1G8/p0BkQn0zrCHYqmFjiuJcamnHdIlMgOU9EHim0TWcPKYijMc
-         IHBr7BO3s9iRto2tkXrPFXUFnPTiLTO/8rZQogC3am3LnlZE4SdVtEeNQjBDufWLLZ/G
-         JGFOCbB9KYxEvgRYsw6Dcu5gbjhoc7ZNwttxJO71WZX2amSoi+ZmTAMl+TTvIL3WjP7i
-         2NWH4HlrobLVm5b0bwJ4cK0t4hi3HWiQdoRamsPL25PtzDnHJTSImWa6Gsqe+qH6Ze1Z
-         Dbz2EV7ZtNhfzk4ibA/HXJuW4sIPqM3xA7JsyH7umzhbwHGSSASe9b8bH3PH8+ciDCPV
-         rKoQ==
-X-Gm-Message-State: AOJu0YwivxWnKWRZ1Ln0HL1kz3rs2aSBDCWJZVmHsBBpgHd6lgqhm/d7
-	CkfK4UVDDxxL2aPRDMXFsT+i38CIOxwfhAxJ9y4nE7cFRfOgtlmNd3HXHfUW3dIjLZ/DmznIOcN
-	uYVrhL4YYRdkZXYd/JjDle/oRBo2xqSe8QO4p8NU=
-X-Gm-Gg: ASbGncsC3SwxeR2N+SrFP8J/f4B0H13iIATN8RTPar+upoJEuw5tdS7tvdoLz5HRTFm
-	9HpUwL5QdbKp07YdLXBD5QRc1kBdkaX/2I7NlkTUKTXBsNZqckcg2owHtuBJT/SUkLB/UZcHWPw
-	bJJH1jXTTbX0Tq0sctjckQEIUHX5/85+h1BdRHJa9uy2SWoir5FcEDkxv1svNM3r9fFN8jcPHrC
-	CSQzK0=
-X-Google-Smtp-Source: AGHT+IFfpAxmv1ZlCTul/hL/SnR+uVXZRK//cvIRJvZ1OyjANK6TusL5f0PG5HQM7lT+0Xoc6lAEHcR0WA98WgVDzfs=
-X-Received: by 2002:a05:651c:3608:b0:333:7e5b:15c0 with SMTP id
- 38308e7fff4ca-36f7dab3512mr37681111fa.13.1759066216475; Sun, 28 Sep 2025
- 06:30:16 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1759067679; x=1759672479;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mw96fqyhWy5Mi04SU19sQP58/iYbS7eNSeX/Tw28mJ8=;
+        b=w+cX6AcJXIb6oCgOp2qDY4xXy9CNEDChbXyeDdML2NBjra/Xhavn2wa1jFa2ze0R1X
+         IvlKrQSmjLlOWMCFvqPAJ+aGpoLScRZ45Zexz3ueMZEb7uumB20wljw9Hte14ObO6ebO
+         jMg5pTutY9Rai2PfcgLJ0QaI+EfgpL3XCrgYHpYKJ0aP3TMQ80bInIYvcZCDKRNXDQcd
+         n+vjYQuJ5znMH7aqvYCcvLH9+Cd6U5oIs9lrC4t4UoMnDwsaFuDIsGvHZnA+IHd5zLJa
+         Sgw3+ZFfGkywaPhevjMHlPb7JzO4Ow93fcRfV5XfM0XymAJE89r3hcxbYXVVnA4uZ0tp
+         bl/Q==
+X-Gm-Message-State: AOJu0Yxh5XGFz3kJeL9dMKJ7Io6r9UTzh7lOMMxWAW0cIThbGAGhCMFG
+	kwbjIKm5JyrBtKXqKLgneKWWe/OoqFxIKT+4n9LobkPI8zyy1TRWlbg3VP9gQEnq
+X-Gm-Gg: ASbGncucCMvBGGZGmrPisYXWdp0Fm+UZP2oEr2YAcLWhqzwBVqjDl3fQUZCMa8uHrCQ
+	XShu4IuGwE7s1FgXEVBuqJ5dcRQy70tHBT7kki0Fq/0Hl+M4/3/w5GR4je2svEqA8UDebOjzcKp
+	6yyTSu/dBKBXMLsFUeUk9F6pnZzEgqGSiCOyToLWAAnCQtxxR7w8IZtSm+zXk7HFGT0ckldn8f5
+	X14YHOEMH+hlgxTdvFtuHjagTgUqYN0nttr5zid76MoKmL1Ps8Xm3fdm714LFL2JC6GYC55a1B+
+	Jf5BxBj0hc3KxebtEOhYIz+zFeoKQycD2N57p15DMrTe6P+CrbOxRuuVES82yEoUbNNBW0sOImt
+	e1RdBKnI/hSldaBRuhJRUeIxXk9e9qV4l8sweQmoWSx6FmGGmCd4MEQndeI6aw1rQtWQ1UyCP5T
+	xKmb/dtO7fhwY9PcdB2a/kOmCJHKeFCM6QAjf+h0xF
+X-Google-Smtp-Source: AGHT+IG6i9+K71CaajBQB4UU8fwo9KRhME9JYAhYRWojgv20LfkyPUJ58uD+Tlc/jnskL4Kywa5zIw==
+X-Received: by 2002:a05:620a:7106:b0:862:79a9:eaf2 with SMTP id af79cd13be357-86279a9ee01mr900477185a.20.1759067678635;
+        Sun, 28 Sep 2025 06:54:38 -0700 (PDT)
+Received: from USROMMRAPPAZZ01.rappazzo.network (pool-74-105-50-139.nwrknj.fios.verizon.net. [74.105.50.139])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-85c307ad101sm590426985a.36.2025.09.28.06.54.37
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sun, 28 Sep 2025 06:54:38 -0700 (PDT)
+From: Michael Rappazzo <rappazzo@gmail.com>
+To: git@vger.kernel.org
+Cc: j6t@kdbg.org,
+	Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH v3 0/2] gitk: make Tags and Heads window geometry sticky
+Date: Sun, 28 Sep 2025 09:54:33 -0400
+Message-ID: <20250928135435.59623-1-rappazzo@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250920184007.26183-1-rappazzo@gmail.com> <20250920184007.26183-3-rappazzo@gmail.com>
- <c6a33014-5d87-4750-b6ce-234e944131b4@kdbg.org> <CANoM8SW6gsfmhPYWq2_7f9DuwyQ4vVpbWkaPn4mDTg--LAZUJg@mail.gmail.com>
-In-Reply-To: <CANoM8SW6gsfmhPYWq2_7f9DuwyQ4vVpbWkaPn4mDTg--LAZUJg@mail.gmail.com>
-From: Mike Rappazzo <rappazzo@gmail.com>
-Date: Sun, 28 Sep 2025 09:30:05 -0400
-X-Gm-Features: AS18NWBf3nwdiIZ_ZrMhE1b_m8h1CJdz4y8orAVXXVfXmral93MMrkYApQRzBLc
-Message-ID: <CANoM8SXnxxF6UMSfQ06ANfEv7HFCEEMCVoGgod1-DuFeHp6tXg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] gitk: make Tags and Heads window geometry sticky
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, Sep 25, 2025 at 8:45=E2=80=AFAM Mike Rappazzo <rappazzo@gmail.com> =
-wrote:
->
-> On Mon, Sep 22, 2025 at 2:34=E2=80=AFAM Johannes Sixt <j6t@kdbg.org> wrot=
-e:
-> > > @@ -10249,6 +10256,8 @@ proc showrefs {} {
-> > >      bind $top.list <ButtonRelease-1> {sel_reflist %W %x %y; break}
-> > >      set reflist {}
-> > >      refill_reflist
-> > > +    after idle [list manage_showrefs_geometry $top restore]
-> >
-> > My thinking without having debugged it is:
-> >
-> >  1. A Configure event happens with the default geometry when the window
-> > becomes visible. This records the default geometry in geometry(showrefs=
-)
-> > by the handler that is bound in the next line below.
-> >
-> >  2. "After idle" the geometry is set to the then-current value of
-> > geometry(showrefs), which would then be the default geometry and not th=
-e
-> > one restored from the settings.
-> >
-> > Why is it not necessary to encode the now-current value of
-> > geometry(showrefs) (the restored value) in this after-idle handler? IOW=
-,
-> > why does this work?
->
-> When I was testing this, I used MacOS, Windows 11, and Gnome (Ubuntu).
-> On Mac the call
-> worked without the `after idle`.  On both Windows and Gnome, it needed
-> the `after idle` for it
-> to work as I expected.  I'm not sure exactly why.  Do you want me to
-> try to adjust this?  Do you
-> have a suggestion for it?
->
+Changes since v2:
+ - replaced my commit to restore the window size and position with the
+   commit that was already floating around from Hannes's repository.  I
+   included this because the next commit relies on it to work correctly
+   in some environments.
+ - split the manage_showrefs_geometry function into 2 functions.
 
-Digging into this a little more, I think the platform differences relate to
-how each window manager handles the initial window mapping and geometry
-setting sequence.
+Johannes Sixt (1):
+  Revert "gitk: Only restore window size from ~/.gitk, not position"
 
-On MacOS, the window geometry can be set immediately during window creation
-without timing issues. However, on Windows and Gnome, there seems to
-be a race condition where setting geometry too early gets overridden by
-the window manager's default placement logic.
+Michael Rappazzo (1):
+  gitk: make Tags and Heads window geometry sticky
 
-Using `after idle` ensures we set the geometry after the window manager
-has finished its initial setup, which is why it's needed on Windows and
-Gnome but not MacOS.
+ gitk | 51 +++++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 39 insertions(+), 12 deletions(-)
 
-I will split the manage_showrefs_geometry function and send an updated patc=
-h
+-- 
+2.51.0
 
- _Mike
