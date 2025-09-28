@@ -1,72 +1,72 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B41D19C540
-	for <git@vger.kernel.org>; Sun, 28 Sep 2025 22:07:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BD119C540
+	for <git@vger.kernel.org>; Sun, 28 Sep 2025 22:08:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759097281; cv=none; b=SeFNvZs323i8TETuBRDKAHZoEbd8eelWWr7uTKNonzSGc+QCW9TtSmsvLl4qWz2s332yHJVQNNd5Cl1QX7TQM3imDXOGw/1myUVNiBZuHBbuxfog3t4bI77KgGbDKYIw3yA3qtvvBbVvZb/uKwoCWq1U5LMNA6fHn31/rn3k0xQ=
+	t=1759097285; cv=none; b=eQ9qziks8ijyfWjqDoXMxW55hvnPZ2WeObtTqv42on9bbktrTVQxIRX1Df/IY74AYRFxb2WRzGXf933Gp+zqEaqsOD4KlzBZdSK26uuxPBJci0cACNnk3k210qu8sxP9W1VJeHR4ogN5SOqUOdyLVS3xu0eZwM+ZA+VEKEfGn/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759097281; c=relaxed/simple;
-	bh=mtciMcVvzVnreyTuALuQ/XRTH65JJHYljpJOOKg0FRs=;
+	s=arc-20240116; t=1759097285; c=relaxed/simple;
+	bh=ZczB+MDCoyH8b9dxwRApHrjp96+lF2H4faL/Q/a4kGU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SoN8AIGSVgjVWpXR0oSTqkpkIhtuTI69r3B28gWv0m9GrqgNpJAXhzWyRSEqbb5YY4hkxfMhNgSwm70TWCYZ+6biNJNv9ij5OOnXcJeQ7H4+9RKPrM3brEknSKZ2lZDwx7cgK1OEiY/3YkWzQbKSnkI7c/98W6bUinULGo8GiPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=PRGTuFjV; arc=none smtp.client-ip=209.85.128.177
+	 Content-Type:Content-Disposition:In-Reply-To; b=NthxGWm4V1YihMWN1i9XwxPXYgsyU5x8rOaT0J8sNeme4Za6x8KlzxczA8xyugqOaCFvSWMlxdL6wz6ECMzYAuh/hs7YgbTC/EG08MwAB/hfmdjvgU+8Mk+4AbRPSQZW88mOgnKPG4IDp/3nPLh5KPKWwK88+gEsbUQKaygXYn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=eKvcX5+t; arc=none smtp.client-ip=74.125.224.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="PRGTuFjV"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-71d6014810fso40622987b3.0
-        for <git@vger.kernel.org>; Sun, 28 Sep 2025 15:07:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="eKvcX5+t"
+Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-635349b6fe6so2188506d50.2
+        for <git@vger.kernel.org>; Sun, 28 Sep 2025 15:08:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759097279; x=1759702079; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1759097283; x=1759702083; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5GiHRCLFfnWwp90CiOu9NuuxAAg+K4ct6A9+FY49gRU=;
-        b=PRGTuFjVpdN/geet0byVgAMTsOR6v9fxZTCyC4optsy6/CQ2t/R3asQwsyxOEOOyeG
-         SJDTNjG38V1g4vhRDIbHO3QS3Di+SGFaL5vD8Xxw5zDDCNU0XR0N/i2Inlh1yM934r3L
-         GZ9MjcEkxZhsOHf2e4heYZj4LsIA1d9D1PKZBLGPzpImTTLxsoe2G3BYI6DmYIIL7Hbo
-         xAlam7Z9XwhyG/5WIgOelprz4xA2nHRNERwO2tcOkO+Iaga6+fTvxYMxkBR3SSExrB/9
-         5vmUoEUY/KQ/3VdA903m9eUWl9vR1SKVDV2ClK050K9uR8Y/K56l+xK5CrnZQIVgOrT/
-         eU3w==
+        bh=1dw8S3wrxJ8mH+C02NMLO5snv53lEuPv3/5U9SFimQM=;
+        b=eKvcX5+tx+STpBqAm4VrAz/3p3tr0lB7kDQc8oG0TEZxHtmOBUHqBi3HDwvA9WrudJ
+         ynyqOv2hcGSbl41E/broNFakVTX9jFa5Y50rtrTnCqRPyHoAbjQsiHt5ATjEhaLW2fYg
+         Dj62AWORTxcCgdJtDgtrkhDLB8F9Ls2z3j7FuZy/uNZcFcMq6aOPPROUU2p38lcrJ0fh
+         ISFl7m3m9dAeMERd4tmZEBTl9QJxTSfZcZ/c48iPhUibu5y2vMCe67tWEjwb17Sk4m40
+         EjlEvU73GrzHrMOd9KcaZ9/QtvwhqfPBUr/+9sbV5o0Pi6FvRGqZ810zr7ySC/X0jRPH
+         A6Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759097279; x=1759702079;
+        d=1e100.net; s=20230601; t=1759097283; x=1759702083;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5GiHRCLFfnWwp90CiOu9NuuxAAg+K4ct6A9+FY49gRU=;
-        b=Ep0aa4fbAphOG/+tgoHUaKXqBy6vywQy0p1MX8xT3jwUDD9IF+o5m17plt5cXqOcAM
-         /LlKxu57nV8JnPfiJ+3TWr0jf40E6tGdXs+4qqdnkk2W84IN7dMmGIMD6iM4FGrCCVkf
-         6j55ke7tIJHuJJgJyTu1+Kpe5bWB5ngLiy+7NH8qg/uLJevCCI02dWaX6y10sm94aET/
-         JwZGc1luFx5ruqmE9f9ekwt0T9t5RrKFqvICtosi4yXOi5/4mYVBwvNmlTVf+cYpzTet
-         ehjyNv3j6kBTA8gGXg3rRG62Dwsqys4933s6GiNy+z189A3d6RdHdAxjHI/GQYhsdFVM
-         CORQ==
-X-Gm-Message-State: AOJu0YwWLxNe36QZ8prb/22njMG5BgPRszmWyNqO551oDuLDxrJeK4OU
-	lAtMfiJWFqgdEJb+mjy/lkcmdEOS7CUb2mVIvoYAFrUeremZJ6kSQbgVU8trXc0rlx8JITa42P2
-	U3OvlYtk=
-X-Gm-Gg: ASbGnctUlY8CngoUdWRLjgWLoFASJnQS6MvcV867XFP92aPPJuyyLiSw4a0xBJo72Bu
-	tiKgc1BM1izLB0ozIB7/jFapAIaa3wtY0gM/dSOaSmVIFPZr/JG+fIW+kQhsz3CtmqZKvmj4L1J
-	CK7uTceroXTMPYecUdlit48Id2XI0xvnRhBSuPWu/FwLwoQyrIOPoHYqkEaGQUVe+MQKOLG3QOg
-	guk6rwzmPZMLksIwbkL8Y3dczX8qVrSVYpHV34/YJMDP8g+JgHZeZ0GJaSKjz4u15qBpvVCMqa2
-	pGe2NhMGmKksybrochjDWLDRct6jpV4eA2UDV7ExUkPlpSBnpke9FryokYkrI323C2ukHm7baNE
-	0Lj4miysQckipHMhsiT8x0m43T/Asz6HrB3xv+WqHWtuAMkFFIew2u8BTzFTldHZcUnNlKunwFe
-	oSJl1CKC+TmiPAXaILMilwJjkZ8Q==
-X-Google-Smtp-Source: AGHT+IH09TTt1LabI4vg8ZwcfiU6vm4qYP/trIPNyzn2HlnDPZXxCKdeXk7r6mNE8LevTsWu3ie6rQ==
-X-Received: by 2002:a53:b106:0:b0:636:149a:f54e with SMTP id 956f58d0204a3-6361a87fa19mr13734429d50.37.1759097278936;
-        Sun, 28 Sep 2025 15:07:58 -0700 (PDT)
+        bh=1dw8S3wrxJ8mH+C02NMLO5snv53lEuPv3/5U9SFimQM=;
+        b=rSWPxGEH6F+DpEpIpaLtW7sz8TKzdxQaEjKcCxLZNSmKZC95qtA3+N2q1l9NOnY4wv
+         UU7PRpjeJW0oDlljQstXyrb9y2PqN77MnCoF/pC7pAWg1i+wmKf0P9ssguW4BHU9xo83
+         JS5f+lE496OkgDy90EOdynlUAtJOdlJ86k19UMveDghKNuTzOeO47ugnI2WzyW4HqbAS
+         ckQGj/0bAkmgtBiIk2BL5oQczOKawMFIjOj3oQzcJzdvBxiWV4EKWEUO1XVWkYI+QRyJ
+         aTUGytNkK7OHHvpIqfobCwq7dcDgk71to0FDbllIm8dtNtXAi2Vq0wxseWgrpmio6v4g
+         xfwg==
+X-Gm-Message-State: AOJu0YwFWWsrU5evvZmFQrhoB5SKp5pv7gNHoOyHzY/jOHuwqW5XyUYK
+	o2afY0Lbk65m1KWKIKvv7X5STKTu6e0JoGJpcPxQ8/2WrTdxXZsZZrr/d7DHWqnEtmrBuU0Q91q
+	6TbWD17A=
+X-Gm-Gg: ASbGnct2udkJtkRyi9B3Gxzx6vH2PjnFx/oMobdwJygy0VTTVsW7xesKKnwXAGbt6Ng
+	A7CNCAUqzdmlxzhc5ctTN2lDbYoUdnITe/EHENnhHpoj/j4KA+e2M8oBrsHuEgxoSIV+rvVvaA9
+	eCpl7sKDe79yhc+tGnuwSD87gQ4FmulmEimO47v8IaImLJEquK0dXFLWuZqDFu8E4XjuepfmK3a
+	XnOMBztS+KnE6qFnL5HavTPx1AzJoGK6evE8VAel2XotkMZgRzrBTVsnHNeoTugTlMQuVnoNUPl
+	HaIVFunA28hCliA7WikC797ap9fwoprLJQqihCFAoDN/MGEYhJJ5x/hZykRU6dziValhOWVro6T
+	KpIHIPZm0j0SBGQAGUB7ocFCpgpc2QH0k9F+2wYTsjtHWDMsVK/x7z7kF8NPdrsfbmPjrR32/us
+	dG8QswotwvV0ZAMPipYmX0+iYJcQ==
+X-Google-Smtp-Source: AGHT+IHMumnBJLUhw0CwUbrcYcWWs3dvAfytEshretlEU+r86136oo/v9fOrY8Otf+HR+RYmkvnY1A==
+X-Received: by 2002:a53:ed11:0:b0:633:ab16:f82c with SMTP id 956f58d0204a3-6361a7bf340mr13717187d50.18.1759097282642;
+        Sun, 28 Sep 2025 15:08:02 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-637d39f36a7sm912783d50.1.2025.09.28.15.07.58
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-eb38393ced8sm2938724276.28.2025.09.28.15.08.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Sep 2025 15:07:58 -0700 (PDT)
-Date: Sun, 28 Sep 2025 18:07:56 -0400
+        Sun, 28 Sep 2025 15:08:02 -0700 (PDT)
+Date: Sun, 28 Sep 2025 18:08:00 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 12/49] builtin/repack.c: pass both pack_objects args to
- repack_config
-Message-ID: <75386eed60c80a52c42720e4918853ff05c5584c.1759097191.git.me@ttaylorr.com>
+Subject: [PATCH 13/49] repack: move 'delta_base_offset' to 'struct
+ pack_objects_args'
+Message-ID: <06347b6ab23d5ab1d9a7945da67473b5b9e02ad1.1759097191.git.me@ttaylorr.com>
 References: <cover.1759097191.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -78,63 +78,96 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1759097191.git.me@ttaylorr.com>
 
-A subsequent commit will remove 'delta_base_offset' as a static variable
-within builtin/repack.c, and reintroduce it as a member of the 'struct
-pack_objects_args'.
+The static variable 'delta_base_offset' determines whether or not we
+pass the "--delta-base-offset" command-line argument when spawning
+pack-objects as a child process. Its introduction dates back to when
+repack was rewritten in C, all the way back in a1bbc6c017 (repack:
+rewrite the shell script in C, 2013-09-15).
 
-As a result, the repack_config callback will need to have both the
-cruft- and non-cruft 'struct pack_objects_args's in scope. Introduce a
-new 'struct repack_config_ctx' to allow the callee to provide both
-pointers to the callback.
+'struct pack_objects_args' was introduced much later on in 4571324b99
+(builtin/repack.c: allow configuring cruft pack generation, 2022-05-20),
+but did not move the 'delta_base_offset' variable.
+
+Since the 'delta_base_offset' is a property of an individual
+pack-objects command, re-introduce that variable as a member of 'struct
+pack_objects_args', which will enable further code movement in the
+subsequent commits.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ builtin/repack.c | 11 ++++++-----
+ repack.h         |  3 +++
+ 2 files changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/repack.c b/builtin/repack.c
-index 6dfcb3327e..af6de8d77a 100644
+index af6de8d77a..f4af830353 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -54,10 +54,16 @@ static const char incremental_bitmap_conflict_error[] = N_(
- "--no-write-bitmap-index or disable the pack.writeBitmaps configuration."
- );
+@@ -34,7 +34,6 @@
+ #define RETAIN_PACK 2
  
-+struct repack_config_ctx {
-+	struct pack_objects_args *po_args;
-+	struct pack_objects_args *cruft_po_args;
-+};
-+
- static int repack_config(const char *var, const char *value,
+ static int pack_everything;
+-static int delta_base_offset = 1;
+ static int pack_kept_objects = -1;
+ static int write_bitmaps = -1;
+ static int use_delta_islands;
+@@ -63,9 +62,10 @@ static int repack_config(const char *var, const char *value,
  			 const struct config_context *ctx, void *cb)
  {
--	struct pack_objects_args *cruft_po_args = cb;
-+	struct repack_config_ctx *repack_ctx = cb;
-+	struct pack_objects_args *cruft_po_args = repack_ctx->cruft_po_args;
+ 	struct repack_config_ctx *repack_ctx = cb;
++	struct pack_objects_args *po_args = repack_ctx->po_args;
+ 	struct pack_objects_args *cruft_po_args = repack_ctx->cruft_po_args;
  	if (!strcmp(var, "repack.usedeltabaseoffset")) {
- 		delta_base_offset = git_config_bool(var, value);
+-		delta_base_offset = git_config_bool(var, value);
++		po_args->delta_base_offset = git_config_bool(var, value);
  		return 0;
-@@ -1260,6 +1266,7 @@ int cmd_repack(int argc,
- 	size_t midx_pack_names_nr = 0;
- 
- 	/* variables to be filled by option parsing */
-+	struct repack_config_ctx config_ctx;
- 	int delete_redundant = 0;
+ 	}
+ 	if (!strcmp(var, "repack.packkeptobjects")) {
+@@ -315,7 +315,7 @@ static void prepare_pack_objects(struct child_process *cmd,
+ 		strvec_push(&cmd->args,  "--local");
+ 	if (args->quiet)
+ 		strvec_push(&cmd->args,  "--quiet");
+-	if (delta_base_offset)
++	if (args->delta_base_offset)
+ 		strvec_push(&cmd->args,  "--delta-base-offset");
+ 	strvec_push(&cmd->args, out);
+ 	cmd->git_cmd = 1;
+@@ -1271,8 +1271,8 @@ int cmd_repack(int argc,
  	const char *unpack_unreachable = NULL;
  	int keep_unreachable = 0;
-@@ -1343,7 +1350,11 @@ int cmd_repack(int argc,
+ 	struct string_list keep_pack_list = STRING_LIST_INIT_NODUP;
+-	struct pack_objects_args po_args = { 0 };
+-	struct pack_objects_args cruft_po_args = { 0 };
++	struct pack_objects_args po_args = PACK_OBJECTS_ARGS_INIT;
++	struct pack_objects_args cruft_po_args = PACK_OBJECTS_ARGS_INIT;
+ 	int write_midx = 0;
+ 	const char *cruft_expiration = NULL;
+ 	const char *expire_to = NULL;
+@@ -1567,6 +1567,7 @@ int cmd_repack(int argc,
  
- 	list_objects_filter_init(&po_args.filter_options);
+ 		cruft_po_args.local = po_args.local;
+ 		cruft_po_args.quiet = po_args.quiet;
++		cruft_po_args.delta_base_offset = po_args.delta_base_offset;
  
--	repo_config(repo, repack_config, &cruft_po_args);
-+	memset(&config_ctx, 0, sizeof(config_ctx));
-+	config_ctx.po_args = &po_args;
-+	config_ctx.cruft_po_args = &cruft_po_args;
+ 		ret = write_cruft_pack(&cruft_po_args, packtmp, pack_prefix,
+ 				       cruft_expiration,
+diff --git a/repack.h b/repack.h
+index 421d439d5a..12632d7fec 100644
+--- a/repack.h
++++ b/repack.h
+@@ -15,9 +15,12 @@ struct pack_objects_args {
+ 	int local;
+ 	int name_hash_version;
+ 	int path_walk;
++	int delta_base_offset;
+ 	struct list_objects_filter_options filter_options;
+ };
+ 
++#define PACK_OBJECTS_ARGS_INIT { .delta_base_offset = 1 }
 +
-+	repo_config(repo, repack_config, &config_ctx);
+ void pack_objects_args_release(struct pack_objects_args *args);
  
- 	argc = parse_options(argc, argv, prefix, builtin_repack_options,
- 				git_repack_usage, 0);
+ #endif /* REPACK_H */
 -- 
 2.51.0.243.g16eca91f2c0
 
