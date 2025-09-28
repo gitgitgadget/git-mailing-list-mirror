@@ -1,206 +1,126 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607EC29D28A
-	for <git@vger.kernel.org>; Sun, 28 Sep 2025 21:30:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3C95227
+	for <git@vger.kernel.org>; Sun, 28 Sep 2025 21:39:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759095023; cv=none; b=LViDXmtCwjpUutIM18GOSLXVt3ZwCJT5T+xtwPNc9muASTP7YqDdyC+thtCXFdIscCQ+Fo5geScLiB4XV0lcEvJVdqcrz4ZXxGuyHrmQDCDbMSuLWPca/dc7p4EZ5MJ4NCatg11TJqoqV/ncmutxE+cZ47k6WEhvJEKkGEiiALI=
+	t=1759095548; cv=none; b=fLa0PizddWtxzs+p7eKNXeDobB5xfph+s73I2hgWlFU0GpPIzgmtkOUZaH7kbjE+Ti1ugysdgarIV7HosJ4qQnEnGOnDef1PQsjUrJv2NBaZX2L4xiQU7dIcNKMrlJvDDQAF8CbPf4F4r8ksOeoUzdt1/6vXdSbt2x8zDFhP6l0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759095023; c=relaxed/simple;
-	bh=zk6brOS30aHISnBbQKJwgIKZOx062wv3WzO2gCgBPmc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fMUTM21VyF6Nl6cK6K7IhlJELlxgbg/TmDfWUcb88COM4mCdV4ZLIKsJLRHkLxTo6iXZzKcG6UAQlFQA0SyBTlVHR+ZhkZwoj6I41ZstckcZOc9U037NM1LVudBJ0jcKW8WE8pqh3YZTAVV6mDQaDw2XhwpmZQB6Ku02xKiiapo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N8ESM+6H; arc=none smtp.client-ip=209.85.128.178
+	s=arc-20240116; t=1759095548; c=relaxed/simple;
+	bh=IyZVS1lwx5NGlMDczKoh7EfAry/Q98tNjKh5MC0gDs4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=R0Cajp5I4XHriC7+vTUeWgiJDnc7keKcIy1QcL2XL1PnSIWvGRoYFL5Je+nleZc1muuy29XGSvV3s0UwQEwmXx453UIgSpwPccWkbGkQZx1UUkBttEMq8qEHufqAjI0e76P/kDtMGLCYlj4uG2C3st/O5QcS9ZxhBNkywJhm82k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dyt1gEof; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N8ESM+6H"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-71d5fb5e34cso53077797b3.0
-        for <git@vger.kernel.org>; Sun, 28 Sep 2025 14:30:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dyt1gEof"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-62fc89cd68bso7347876a12.0
+        for <git@vger.kernel.org>; Sun, 28 Sep 2025 14:39:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759095018; x=1759699818; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1759095545; x=1759700345; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WVK3UCqtNIE9p+zVw8k0rHn8L8YJx/BVEZIMMX4Q8JE=;
-        b=N8ESM+6HjUQ7QdzrKQFzqFCyJYJZoPOuh//sfS3PkWJol60MqmGefwirPAKaaf/XeC
-         wr5A7k+wm84yaNm3W0/Ey9vV9Q9tNvEoENLhgHeIYRk2DH/jnO0MKUw7z7GskFhrMNJc
-         NGSDZTOBxf9ycVXN2guJJWPYZ50STJ5yfHMXg2Druf56BIXe1w26c2u7ptjFH9/Yzstj
-         yt2vJR5vdVfQBPWza1OBj341hZ2HApy3iF34MAShqPhT+8XsYLHPkBeQbSf5sIGO9lvw
-         mwVjV8k8dC4FBIaCZuUAKRsHymTtsZakje89OjpzcyQpvDxQO8vaZJLwB7mf2Mi0hi76
-         UR6Q==
+        bh=BqYBtSyF9vZjMASgt0HpBmHGy2hl8BJB51jMq9Sx7dg=;
+        b=Dyt1gEofDLIn94s2jd/5CjIJLEI3DhuQ4M6AwpmL3/VNdg0wmQ8DED109/C3jjPiO2
+         sEGAi5B0yyatR3PkCJ7sMLqxAJJI/yNtulmSlpsjtJLZlIJ6N1vW7c1CFezaPhLp2MOQ
+         6UdDydjrsG6Pk24aEZsxEXDGoaqalSPbzgyUZGxR3bpnKcBOvFP4dBXnSZ7xOfMHuQc4
+         r52Yx6rD32g6EytE0iYwL24EEW6z2FjXhjLfGbVmPdwLrOtobA3BOhyOuhp+zRV/gEVt
+         l6mPU4oabwy/Rg7HbKB8QHeO2AUL7RqgzziO1qgcVfjAf6IuszqWUI4WHww9hNH2WTbV
+         FoIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759095018; x=1759699818;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=WVK3UCqtNIE9p+zVw8k0rHn8L8YJx/BVEZIMMX4Q8JE=;
-        b=CTR7yN1ehBgB2BMDUObzWuvaoskVuAimCFi8og7XELqXFwhrIfwiH1wXL72/vPTeRh
-         t6/VrA5o1FxiT57YwkeopIyZtmIg3jFt/l6RDoFgDfq/xqbykAZ7wy4LnB4XHAswyp5x
-         mzaed8EKCR+sE0sPxCXp688J3fQ2D2pfSOVW7CMK2QC5FkNx+vs7ejzjWbR4O6uCFTTk
-         RMqtCUuaJe/v8GmW/qklqPres92/zC8gboAUH3vO5Fwrg6AYqBblAtr47oz7alP36Z8O
-         iVzW3rj0RWT6MkXOFkh6fLLEJIDxoTgw1Byay6LqXJPwBBINWnUUg0E43aJG2tQYOOIl
-         Aupg==
-X-Gm-Message-State: AOJu0YzHDN8+Vuor751tAUQDQgyCPdVUCounr14R/tSbFH0NW4+oLAL1
-	BWJ+pGKuqS0HjzVecGfwMLAQaMOK/C3rJTeoUve1nFvExLiydkiogA11ou9LMnkk
-X-Gm-Gg: ASbGncsx7d8k1OcY5B//TTOOOnIqugOhSIipg0gBH9UqG5HtWBH5t3ZK2uDNE+kxn8U
-	zooxpvaAGzfyoamTvWBNhXP2z6NJq6mZs51ylG6KGLfXWl+aBpOMg4U+xxEzhwA5qKtuqiFHwVL
-	EIETGAZH2J/Zspknx11A1SdTI3ezK6zqVjacpbfFgqUtHgbTh0X8layXdBJ6IYvfwM2o8aGenxi
-	ZxNDNp92q4g09JFml+madnnyYnju0XzsmsllngIL2mqzvZUoV5deMdHobbFfTZpvmOh1fyNvMnw
-	xqpfWoNFfUN2pLvkAF0AuNw9Hm9+i1d/0dZTrjV1cyYw3WPNRRVgScsbK/ZEkVjGbeSTfHy8afp
-	T7phpM5C6PcLScR0c01MqgIU+9zmMU6zEproEfyzvmj9eM4QhEXRzcH7W1Kv9mZEkdvyhnac=
-X-Google-Smtp-Source: AGHT+IGbfeis+5KMIf8f9gYC88X9rqMM1XWN88g0yyi1sIBWnuwL7N9zASRG2rqqlHOIZfI+wcD91A==
-X-Received: by 2002:a05:690c:630e:b0:746:d23:c70 with SMTP id 00721157ae682-765570fd1a7mr149931697b3.19.1759095017934;
-        Sun, 28 Sep 2025 14:30:17 -0700 (PDT)
-Received: from localhost.localdomain ([2605:a601:90a8:8b00:488:b20c:c605:ba83])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-63ad64e5d45sm51448d50.29.2025.09.28.14.30.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Sep 2025 14:30:17 -0700 (PDT)
-Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Noah Pendleton <noah.pendleton@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Thranur Andul <thranur@gmail.com>,
-	Michael Grosser <grosser.michael@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Taylor Blau <me@ttaylorr.com>,
-	"D. Ben Knoble" <ben.knoble+github@gmail.com>
-Subject: [PATCH v2 3/3] parseopt: values of pathname type can be prefixed with :(optional)
-Date: Sun, 28 Sep 2025 17:29:16 -0400
-Message-ID: <5f7057c236c9af3152bd531eed2e4ad0ac35e291.1759094936.git.ben.knoble+github@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <cover.1759094936.git.ben.knoble+github@gmail.com>
-References: <20250501214057.371711-1-gitster@pobox.com> <cover.1759094936.git.ben.knoble+github@gmail.com>
+        d=1e100.net; s=20230601; t=1759095545; x=1759700345;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BqYBtSyF9vZjMASgt0HpBmHGy2hl8BJB51jMq9Sx7dg=;
+        b=oM2vGZ+rR6lcB7whzdORKDlxk3z/XCqQBQTFCM61T1kne/Th3i6aPlh4UMM8X/ie0R
+         bAVGPUok/X0OIsbyuiel70i/QHvHVxhGgR+BiCMy6hDw6x7zCFpyrME5kFV5wVnG0RuN
+         y2609DBGgA/xDtJuNWD3CXp+5clHsYqZCUFuX07vyogkTTUKGcvw8VRO/6xDiw6Tc4a5
+         X40+WSiDU/DuvZ7xSKJk31tZfX7PubaNYztpkLGWWRLbBmcpSGy866aFfaeXHciTaWVq
+         UMs3NrdrGtbqg26H1kPbAzBy8Z1rdnvWIIxUjabCQOaz8fCNu6sIXiVn6NMnxRFkN0Ft
+         I9UQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVYpxiXIKbWNCPkps+CmJJQFSLfAJqrkFytvlMvyqynZZZ1ev6kBJ//bGrlpNV8TCW9etE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzpuvsdGETJP6u0uWaBUtSB975mWujVReZJUK2/34/bvbL1JMh+
+	z8AMEOb36X+ZyH6KRb4N6nHCCcxRTlPYc6FLE6jKM9Mnf1uUcYpvfcD8iMZWUjkqGtrE/MbDDNW
+	+gUwN1/NXOP84czcdTzMB5DmDfFwkKyw=
+X-Gm-Gg: ASbGncsPIUaElpmtR/Gs45NjIMmF0XOQ2ipRUiysodVoXIkXHhEsNEyHQZ5ieubYpsy
+	Inos/IcrElp/rbkuVf1LuNmnSdT/mkhKSk5/oCmO//hHwxhUjKYppWPk+eZ4V1gTol2XWsYB9dp
+	kwLuKvj5xRyzp7TpSgapndbOk/qcGRq7nJaVqXHY2EUuKcX1ujlB5AmpOyxN8Anaj+sueffc9GY
+	hWpuBaaii2ETNbkng3DShrUel+fJBZX2xIe+17s
+X-Google-Smtp-Source: AGHT+IF1JKEvfveuzwzfqK+7Rf71lVJYAbQAGluHTQ3ZtNjx9EUPUJ08mVgFEYxS5uRs21vjcZD12ZMIpcQlGICc9+4=
+X-Received: by 2002:a17:907:d26:b0:b0b:47af:1655 with SMTP id
+ a640c23a62f3a-b34bab2db0amr1553635766b.15.1759095544906; Sun, 28 Sep 2025
+ 14:39:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
+ <pull.1964.v3.git.1758649472.gitgitgadget@gmail.com> <be6453d010bdc9d2b49988d6841dd7e7f9bdf1f8.1758649472.git.gitgitgadget@gmail.com>
+ <xmqqqzvvk4bj.fsf@gitster.g> <2365a7b9-3d22-4406-876d-65822822655f@app.fastmail.com>
+ <xmqqzfaidyil.fsf@gitster.g> <1422594f-b0a8-4a7a-bf78-940693757224@app.fastmail.com>
+ <xmqq348admuo.fsf@gitster.g> <xmqqwm5lcjvy.fsf@gitster.g> <442a4f25-7d7b-4f34-9e2c-ce396277e7be@app.fastmail.com>
+ <xmqqa52havek.fsf@gitster.g> <2b8193d1-f492-4cfd-b568-107d68112d9a@app.fastmail.com>
+ <xmqqecrsak3h.fsf@gitster.g>
+In-Reply-To: <xmqqecrsak3h.fsf@gitster.g>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Sun, 28 Sep 2025 17:38:52 -0400
+X-Gm-Features: AS18NWDCDX9n_JQnsjfVjEiT8YTMsIH4h8Bfy1kfqXApnlh1wpXqnHc3otl5tzc
+Message-ID: <CALnO6CBVF6+dvhYApEQ6npz9JuDNBVGhYfzi_6D9fOGzu4JTHg@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] doc: git-push: clarify "what to push"
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Julia Evans <julia@jvns.ca>, Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Junio C Hamano <gitster@pobox.com>
+On Fri, Sep 26, 2025 at 7:07=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> "Julia Evans" <julia@jvns.ca> writes:
+> > My best guess from my experimentation and from reading some
+> > of the commit messages/code is that the rules for how
+> > `push.default=3Dsimple` works are something like:
+> >
+> > 1. If the remote you're pushing to is the remote that `git pull`
+> >    would normally pull from if run without any arguments,
+> >    then require the user to set an upstream
+> >    (with the idea that the remote is somehow "special"
+> >    and should be protected from accidental pushes)
+>
+> This is the traditional 'simple'
+>
+>
+> > 2. Otherwise, push to the branch to with the same name
+> >    without requiring an upstream to be set
+>
+> This is what 'triangular' feature we saw earlier in the "git log"
+> output in my message you are responding to had a few commits for.
+>
+> > That said, the exact details of how push.default=3Dsimple works
+> > (ironically) seem complicated enough that I don't think it's worth
+> > documenting in detail at the beginning of the `git push` man page.
+>
+> Totally agreed.
 
-In the previous step, we introduced an optional filename that can be
-given to a configuration variable, and nullify the fact that such a
-configuration setting even existed if the named path is missing or
-empty.
+Seconded: Julia and I spent quite a bit of time in Discord trying to
+piece this puzzle back together [1], and while I don't think we found
+_all_ the commits you listed, we found most of them. My summary was
 
-Let's do the same for command line options that name a pathname.
+> I think the logic is:
+>
+> - pushing to the same remote you pull from? Only if @{upstream} is set (?=
+? and maybe something about branch name matching, i don't remember),
+> - pushing somewhere else? Pushes to destination=3Dsame name
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
----
- Documentation/gitcli.adoc                 | 14 ++++++++++
- parse-options.c                           | 31 +++++++++++++++--------
- t/t7500-commit-template-squash-signoff.sh | 10 ++++++++
- 3 files changed, 44 insertions(+), 11 deletions(-)
+[1]: https://discord.com/channels/1042895022950994071/1412969828066787462
 
-diff --git a/Documentation/gitcli.adoc b/Documentation/gitcli.adoc
-index 1ea681b59d..ef2a0a399d 100644
---- a/Documentation/gitcli.adoc
-+++ b/Documentation/gitcli.adoc
-@@ -216,6 +216,20 @@ $ git describe --abbrev=10 HEAD  # correct
- $ git describe --abbrev 10 HEAD  # NOT WHAT YOU MEANT
- ----------------------------
- 
-+
-+Magic filename options
-+~~~~~~~~~~~~~~~~~~~~~~
-+Options that take a filename allow a prefix `:(optional)`. For example:
-+
-+----------------------------
-+git commit -F :(optional)COMMIT_EDITMSG
-+# if COMMIT_EDITMSG does not exist, equivalent to
-+git commit
-+----------------------------
-+
-+Like with configuration values, if the named file is missing Git behaves as if
-+the option was not given at all. See "Values" in linkgit:git-config[1].
-+
- NOTES ON FREQUENTLY CONFUSED OPTIONS
- ------------------------------------
- 
-diff --git a/parse-options.c b/parse-options.c
-index 5224203ffe..4faf66023a 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -133,7 +133,6 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
- {
- 	const char *arg;
- 	const int unset = flags & OPT_UNSET;
--	int err;
- 
- 	if (unset && p->opt)
- 		return error(_("%s takes no value"), optname(opt, flags));
-@@ -209,21 +208,31 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
- 	case OPTION_FILENAME:
- 	{
- 		const char *value;
--
--		FREE_AND_NULL(*(char **)opt->value);
--
--		err = 0;
-+		int is_optional;
- 
- 		if (unset)
- 			value = NULL;
- 		else if (opt->flags & PARSE_OPT_OPTARG && !p->opt)
--			value = (const char *) opt->defval;
--		else
--			err = get_arg(p, opt, flags, &value);
-+			value = (char *)opt->defval;
-+		else {
-+			int err = get_arg(p, opt, flags, &value);
-+			if (err)
-+				return err;
-+		}
-+		if (!value)
-+			return 0;
- 
--		if (!err)
--			*(char **)opt->value = fix_filename(p->prefix, value);
--		return err;
-+		is_optional = skip_prefix(value, ":(optional)", &value);
-+		if (!value)
-+			is_optional = 0;
-+		value = fix_filename(p->prefix, value);
-+		if (is_optional && is_empty_or_missing_file(value)) {
-+			free((char *)value);
-+		} else {
-+			FREE_AND_NULL(*(char **)opt->value);
-+			*(const char **)opt->value = value;
-+		}
-+		return 0;
- 	}
- 	case OPTION_CALLBACK:
- 	{
-diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
-index 366f7f23b3..c065f12baf 100755
---- a/t/t7500-commit-template-squash-signoff.sh
-+++ b/t/t7500-commit-template-squash-signoff.sh
-@@ -37,6 +37,16 @@ commit_msg_is ()
- 	)
- '
- 
-+test_expect_success 'nonexistent optional template file on command line' '
-+	echo changes >> foo &&
-+	git add foo &&
-+	(
-+		GIT_EDITOR="echo hello >\"\$1\"" &&
-+		export GIT_EDITOR &&
-+		git commit --template ":(optional)$PWD/notexist"
-+	)
-+'
-+
- test_expect_success 'nonexistent template file in config should return error' '
- 	test_config commit.template "$PWD"/notexist &&
- 	(
--- 
-2.48.1
+Getting a clear picture _somewhere_ of this default would probably be nice.
 
+--=20
+D. Ben Knoble
