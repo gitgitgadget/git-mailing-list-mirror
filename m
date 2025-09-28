@@ -1,126 +1,115 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-yw1-f196.google.com (mail-yw1-f196.google.com [209.85.128.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3C95227
-	for <git@vger.kernel.org>; Sun, 28 Sep 2025 21:39:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76ABB1FB3
+	for <git@vger.kernel.org>; Sun, 28 Sep 2025 22:06:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759095548; cv=none; b=fLa0PizddWtxzs+p7eKNXeDobB5xfph+s73I2hgWlFU0GpPIzgmtkOUZaH7kbjE+Ti1ugysdgarIV7HosJ4qQnEnGOnDef1PQsjUrJv2NBaZX2L4xiQU7dIcNKMrlJvDDQAF8CbPf4F4r8ksOeoUzdt1/6vXdSbt2x8zDFhP6l0=
+	t=1759097167; cv=none; b=YJN33oKFu2w+sVpc+JFaKMOWmFSGZt/r5ysVnYie5UzfQqdK1tkgrYMToK8IEnlvBvjWjVK9XOwMy/qtD8RI72zJnqKW4dZIYi+FhGg+ysRTlgocMnYuztY2ntwr+VAOIg8T1uZP3Ep7cZi6uTQXYfiHY8MOzam4Nn16lfQirqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759095548; c=relaxed/simple;
-	bh=IyZVS1lwx5NGlMDczKoh7EfAry/Q98tNjKh5MC0gDs4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R0Cajp5I4XHriC7+vTUeWgiJDnc7keKcIy1QcL2XL1PnSIWvGRoYFL5Je+nleZc1muuy29XGSvV3s0UwQEwmXx453UIgSpwPccWkbGkQZx1UUkBttEMq8qEHufqAjI0e76P/kDtMGLCYlj4uG2C3st/O5QcS9ZxhBNkywJhm82k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dyt1gEof; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759097167; c=relaxed/simple;
+	bh=uDxxDRFac1/Oqt2GazzSIxWieght78hQYDAUhs6ctHk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fnq/Ynw3X14/PcXDAELM7OVjlpM+4t2Mmnzb+zTNnvKZS/9g2/SqjW1KYjxok43a5ZN52bLqKpYnvCq4kUwgJD6j/LKXd5uFP3JeanOENw7CV+nRrS+CtyLg6VuxlTfcwLCMpu7U1JD05LD7ZC8D7LvPoMxdem3KYH3opS9uZto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=kNQf1Cdm; arc=none smtp.client-ip=209.85.128.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dyt1gEof"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-62fc89cd68bso7347876a12.0
-        for <git@vger.kernel.org>; Sun, 28 Sep 2025 14:39:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="kNQf1Cdm"
+Received: by mail-yw1-f196.google.com with SMTP id 00721157ae682-71d603acc23so37827787b3.1
+        for <git@vger.kernel.org>; Sun, 28 Sep 2025 15:06:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759095545; x=1759700345; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BqYBtSyF9vZjMASgt0HpBmHGy2hl8BJB51jMq9Sx7dg=;
-        b=Dyt1gEofDLIn94s2jd/5CjIJLEI3DhuQ4M6AwpmL3/VNdg0wmQ8DED109/C3jjPiO2
-         sEGAi5B0yyatR3PkCJ7sMLqxAJJI/yNtulmSlpsjtJLZlIJ6N1vW7c1CFezaPhLp2MOQ
-         6UdDydjrsG6Pk24aEZsxEXDGoaqalSPbzgyUZGxR3bpnKcBOvFP4dBXnSZ7xOfMHuQc4
-         r52Yx6rD32g6EytE0iYwL24EEW6z2FjXhjLfGbVmPdwLrOtobA3BOhyOuhp+zRV/gEVt
-         l6mPU4oabwy/Rg7HbKB8QHeO2AUL7RqgzziO1qgcVfjAf6IuszqWUI4WHww9hNH2WTbV
-         FoIQ==
+        d=ttaylorr.com; s=google; t=1759097163; x=1759701963; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ret643yBLdwaaSh4tmGzwOI/24g2/8vnNlViJp/iQ3o=;
+        b=kNQf1CdmhpxDvKBYtYyZzPyoEPa3b5DBjm7HPlxSFDLLl4ciEfM6rtqhyrlh9AUVlm
+         RZk/qYDSUHVFFfKjaW0h3bFYh9KiFWziWojoo9mfLb0nzBqyrMD8Mm2nfBaC0Di/68lQ
+         l0oxt9c4Md7QizadpO2xKRzZFqvl9sC+RvbSA6Ns9bCYR8T9JeCW0lxfZJTstULxGSfA
+         1OX9r15sVix/lij8ikdTTi42rxyCw00Z+ilTi9zyqfZNUIMEhrBvnqU6VIVe7ozl0keL
+         dgEPDb3pfzP3pOi0oWZJcOZ2nuyw+LyjnxeNjzZwx9xKA4IrKVG8w/wGRbcDQasOSkaL
+         7pqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759095545; x=1759700345;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BqYBtSyF9vZjMASgt0HpBmHGy2hl8BJB51jMq9Sx7dg=;
-        b=oM2vGZ+rR6lcB7whzdORKDlxk3z/XCqQBQTFCM61T1kne/Th3i6aPlh4UMM8X/ie0R
-         bAVGPUok/X0OIsbyuiel70i/QHvHVxhGgR+BiCMy6hDw6x7zCFpyrME5kFV5wVnG0RuN
-         y2609DBGgA/xDtJuNWD3CXp+5clHsYqZCUFuX07vyogkTTUKGcvw8VRO/6xDiw6Tc4a5
-         X40+WSiDU/DuvZ7xSKJk31tZfX7PubaNYztpkLGWWRLbBmcpSGy866aFfaeXHciTaWVq
-         UMs3NrdrGtbqg26H1kPbAzBy8Z1rdnvWIIxUjabCQOaz8fCNu6sIXiVn6NMnxRFkN0Ft
-         I9UQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVYpxiXIKbWNCPkps+CmJJQFSLfAJqrkFytvlMvyqynZZZ1ev6kBJ//bGrlpNV8TCW9etE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzpuvsdGETJP6u0uWaBUtSB975mWujVReZJUK2/34/bvbL1JMh+
-	z8AMEOb36X+ZyH6KRb4N6nHCCcxRTlPYc6FLE6jKM9Mnf1uUcYpvfcD8iMZWUjkqGtrE/MbDDNW
-	+gUwN1/NXOP84czcdTzMB5DmDfFwkKyw=
-X-Gm-Gg: ASbGncsPIUaElpmtR/Gs45NjIMmF0XOQ2ipRUiysodVoXIkXHhEsNEyHQZ5ieubYpsy
-	Inos/IcrElp/rbkuVf1LuNmnSdT/mkhKSk5/oCmO//hHwxhUjKYppWPk+eZ4V1gTol2XWsYB9dp
-	kwLuKvj5xRyzp7TpSgapndbOk/qcGRq7nJaVqXHY2EUuKcX1ujlB5AmpOyxN8Anaj+sueffc9GY
-	hWpuBaaii2ETNbkng3DShrUel+fJBZX2xIe+17s
-X-Google-Smtp-Source: AGHT+IF1JKEvfveuzwzfqK+7Rf71lVJYAbQAGluHTQ3ZtNjx9EUPUJ08mVgFEYxS5uRs21vjcZD12ZMIpcQlGICc9+4=
-X-Received: by 2002:a17:907:d26:b0:b0b:47af:1655 with SMTP id
- a640c23a62f3a-b34bab2db0amr1553635766b.15.1759095544906; Sun, 28 Sep 2025
- 14:39:04 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1759097163; x=1759701963;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ret643yBLdwaaSh4tmGzwOI/24g2/8vnNlViJp/iQ3o=;
+        b=ORb47pjAiFTHL3yOH7lq1p0SK7IfJdQxmkvdLdazZkE/vo61FnO0yyq1pjlBrN5wDS
+         nCLqq0/JxmDr4IrRqVvsS6skcHePWSjA7nqkZLNV+1Az699D6kV1e0tQOEf1FedkXzaf
+         GIBzPjfbVTIPC4RR41IgvIrSUNUPq8Pc0vQfePizc0FhaexL5R+1Z5zBxENXyUlc2Jnh
+         mWJBh2EhUtbNhCssmjqhNs4rJ64G1syNNcxAMRrRcf2gXy0AntRXYPi4hIyM5ojYh4m5
+         63jdOsG3rbJGhXFdsRnvyOKM/Jq2AF7hywE/ySYMGgWl0ocztYfrG5gyWZszTbir8toJ
+         +Smg==
+X-Forwarded-Encrypted: i=1; AJvYcCVf2QaKDydJJoCo1Wux6XXf8BwP3/MxfvrAv5n52PZDxnqTpAlkTw5O11vTcwC/Di2mJDA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzUjmvgC5ace3gtmCvkhZaayZl1DxfIUG4LhXkNC0Rhgf5Angge
+	Mp1xTttWL3cjOXeUNG3Ip4pnoXZILdcM06F20zMMu9LclXD5I9byQWv5URM4CaK6eWs=
+X-Gm-Gg: ASbGncuz4NEhX++j6betTR3XIhvdvRbP4VIxVNmomKs9g1QTVSm+Sy+paM6SMVSH9yv
+	sn7znfLZFEOrgakYNPUMzOGiyWTE2qJDtT1q4fvYgpm2lbU7VSh2fiAG/kxuKJAb0nxcX7AMdSW
+	s3qk/H2XxJJV1DsbIihW7NTxH1sxwQcGmO6JBvGEah3T4MxXnxf4lm+cuXRNyqg857g1AuDc5Tm
+	2wfMcfU5rNJoxPb2MK1jcBCWpYHQRHbNry5WMdlch/03UND0BWHX18DNcm1PohqXXQmXj34Fk2q
+	lhWsk64s7TFYcHlK2PMH9dsUAK1ZYawxulLEGu7eOoZ9nWkCKBirMv6F6z01djcOm/bdclORYJv
+	fgy/LcyHVTN7+4HuauK3WF4MyzjuxlKlaA8ukWW3gaL6SR2pn6p1PvsKDPQ4Y/cpENs88FV1biI
+	nc2fwGh9COLsEOjCp6+mmcVzH6KN02fn4uUHAj
+X-Google-Smtp-Source: AGHT+IHbs5vaLEL1eI6TXfazJn3ZMjnCaBy9MVlvG7b7CT8cY3HjdF+wYNTKzO27RgvF7Sd50vP2tQ==
+X-Received: by 2002:a05:690c:4444:b0:746:85b9:14d7 with SMTP id 00721157ae682-764034235c5mr169153697b3.37.1759097163265;
+        Sun, 28 Sep 2025 15:06:03 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-76b726bdd46sm17804717b3.22.2025.09.28.15.06.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Sep 2025 15:06:02 -0700 (PDT)
+Date: Sun, 28 Sep 2025 18:05:54 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v6 00/15] packfile: carve out a new packfile store
+Message-ID: <aNmxQqV3+1Ad12qC@nand.local>
+References: <20250819-b4-pks-packfiles-store-v1-0-1660842e125a@pks.im>
+ <20250923-b4-pks-packfiles-store-v6-0-b48f2a882759@pks.im>
+ <xmqqwm5mh5vw.fsf@gitster.g>
+ <aNYj9oijx4dhJBOk@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1964.v2.git.1757703309.gitgitgadget@gmail.com>
- <pull.1964.v3.git.1758649472.gitgitgadget@gmail.com> <be6453d010bdc9d2b49988d6841dd7e7f9bdf1f8.1758649472.git.gitgitgadget@gmail.com>
- <xmqqqzvvk4bj.fsf@gitster.g> <2365a7b9-3d22-4406-876d-65822822655f@app.fastmail.com>
- <xmqqzfaidyil.fsf@gitster.g> <1422594f-b0a8-4a7a-bf78-940693757224@app.fastmail.com>
- <xmqq348admuo.fsf@gitster.g> <xmqqwm5lcjvy.fsf@gitster.g> <442a4f25-7d7b-4f34-9e2c-ce396277e7be@app.fastmail.com>
- <xmqqa52havek.fsf@gitster.g> <2b8193d1-f492-4cfd-b568-107d68112d9a@app.fastmail.com>
- <xmqqecrsak3h.fsf@gitster.g>
-In-Reply-To: <xmqqecrsak3h.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sun, 28 Sep 2025 17:38:52 -0400
-X-Gm-Features: AS18NWDCDX9n_JQnsjfVjEiT8YTMsIH4h8Bfy1kfqXApnlh1wpXqnHc3otl5tzc
-Message-ID: <CALnO6CBVF6+dvhYApEQ6npz9JuDNBVGhYfzi_6D9fOGzu4JTHg@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] doc: git-push: clarify "what to push"
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Julia Evans <julia@jvns.ca>, Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aNYj9oijx4dhJBOk@pks.im>
 
-On Fri, Sep 26, 2025 at 7:07=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Julia Evans" <julia@jvns.ca> writes:
-> > My best guess from my experimentation and from reading some
-> > of the commit messages/code is that the rules for how
-> > `push.default=3Dsimple` works are something like:
+On Fri, Sep 26, 2025 at 07:26:14AM +0200, Patrick Steinhardt wrote:
+> On Thu, Sep 25, 2025 at 09:08:19AM -0700, Junio C Hamano wrote:
+> > Patrick Steinhardt <ps@pks.im> writes:
 > >
-> > 1. If the remote you're pushing to is the remote that `git pull`
-> >    would normally pull from if run without any arguments,
-> >    then require the user to set an upstream
-> >    (with the idea that the remote is somehow "special"
-> >    and should be protected from accidental pushes)
+> > > information about a object database's packfiles is currently distributed
+> > > across two different structures:
+> > >
+> > >   - `struct packed_git` contains the `next` pointer as well as the
+> > >     `mru_head`, both of which serve to store the list of packfiles.
+> > >
+> > >   - `struct object_database` contains several fields that relate to the
+> > >     packfiles.
+> > > ...
+> > > Changes in v6:
+> > >   - Fix a grammar issue in a commit message.
+> > >   - Update a comment to reflect that we access `struct packfile_store`
+> > >     in "midx.c" directly, as well.
+> > >   - Link to v5: https://lore.kernel.org/r/20250915-b4-pks-packfiles-store-v5-0-d6340350934f@pks.im
+> >
+> > It seems that we are basically done with the topic and strayed into
+> > nitpicking territory?   Shall we declare victory and mark the topic
+> > for 'next'?
 >
-> This is the traditional 'simple'
->
->
-> > 2. Otherwise, push to the branch to with the same name
-> >    without requiring an upstream to be set
->
-> This is what 'triangular' feature we saw earlier in the "git log"
-> output in my message you are responding to had a few commits for.
->
-> > That said, the exact details of how push.default=3Dsimple works
-> > (ironically) seem complicated enough that I don't think it's worth
-> > documenting in detail at the beginning of the `git push` man page.
->
-> Totally agreed.
+> >From my point of view it should be ready to go, yeah. Thanks!
 
-Seconded: Julia and I spent quite a bit of time in Discord trying to
-piece this puzzle back together [1], and while I don't think we found
-_all_ the commits you listed, we found most of them. My summary was
+Yeah, this version looks good to me. I apologize for the delay in
+reading v5, but looking at the range-diffs between v4 and v6, the result
+looks good to me.
 
-> I think the logic is:
->
-> - pushing to the same remote you pull from? Only if @{upstream} is set (?=
-? and maybe something about branch name matching, i don't remember),
-> - pushing somewhere else? Pushes to destination=3Dsame name
+  Acked-by: Taylor Blau <me@ttaylorr.com>
 
-[1]: https://discord.com/channels/1042895022950994071/1412969828066787462
-
-Getting a clear picture _somewhere_ of this default would probably be nice.
-
---=20
-D. Ben Knoble
+Thanks,
+Taylor
