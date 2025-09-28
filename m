@@ -1,62 +1,63 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9C82367A0
-	for <git@vger.kernel.org>; Sun, 28 Sep 2025 21:30:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D5E27280B
+	for <git@vger.kernel.org>; Sun, 28 Sep 2025 21:30:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759095018; cv=none; b=qMTNcbZpqiqHl+ebVzTBkwoG2siSZFLtbdoYHXOoHxOz/7KKbeKkuM4a9i1KXqoMdC2cj4keEtXPRS/FnzqsPOmXYjPs74QupRAmrnz/I2FI8LjuZTzeAWt8Wwi4BQ1zncpkyPpilSk4sKt0CoLn6UNNRRBimF8qbVMG+YfAUGM=
+	t=1759095020; cv=none; b=qDmZDyoFCeI0hJen+/jpoXWMmQl4txmCQ0Hhy8V1J2GvmiMSQk54+7/qMtE1sFBsSR4XSMvyBk8SsyMc5L0GQCheI+6DI/qUrCNnwGHwvUh7MDaYwYl9wn3aIRe+9KDrfVMaNQhmjqigh8+/om0TS+zhQ+zWk5Wb/eRg7EK2hJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759095018; c=relaxed/simple;
-	bh=XZFiVQ1Mi8ah/cv89Xv/z5jNxvgZytM4qO46tq1HuPg=;
+	s=arc-20240116; t=1759095020; c=relaxed/simple;
+	bh=gpvb66p+D8+pqNkkR+7UGdP9PL3bSCG3bkL4pwtOtQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l4mlVu0A/HqXqKyhvc0qnNK4zMJseC4S6XTPBzuuvh3DUC5Lhi0v+e1Ow4SK162/rkXBG7D0uCTN6Hc0xZ0rTF/c/mKZVKTppesdfC06Up/TF76lZul83LJT5ZZomqTBv25GFZRGayZqw6o1OhB60u4esQZSBFpaC9n0Ks31bY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J1UWyKaq; arc=none smtp.client-ip=209.85.128.171
+	 MIME-Version; b=DZDPVWHUs7Nbz3GOVnXVV+XFLIm7NiEb0Ps/B1bEMUP/gnf/DjP8W50TUEJ+6c1yv9dhONeLXimxjwViS2WqqJHGulJjCSR0PkHIQzARMiPOyk+Y0A/ANj7LXEu2qFg89CUI4PiQ8L1kHQTrq+hLWg9uRJnl7tzJG8p69FvL8ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z8LjWcU6; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J1UWyKaq"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-71d60528734so42908107b3.2
-        for <git@vger.kernel.org>; Sun, 28 Sep 2025 14:30:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z8LjWcU6"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-71d605c6501so39559257b3.3
+        for <git@vger.kernel.org>; Sun, 28 Sep 2025 14:30:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759095014; x=1759699814; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1759095016; x=1759699816; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8R9nSAisXvGp4yysastjon8jxpOn8BY8/8h4sesIEQI=;
-        b=J1UWyKaqJF0l1JAXe0dX62oIcfSNSzcOKiJHIGaqLf4/w8ErExDd87KpTVIP4ZT9S4
-         0AJ1CqZFQMjMjIR40ovkVJOHKa53UhFl4tLjbcjr62jN6a3Rvy+tLz4hXmqv9/T8cTZb
-         scVY4nNE/3O5n1kMkwG0UAnf1pDmP+nEBn+k3LTGlOf5VzjLfQ+lO8Vlyok10Db5EPQX
-         4LbADNIcHGhO3xlHUSUI4ty/vkzS5Awb/fJ4VwvD9nMe09h3lfLTwjy1xXact+BUjEU3
-         k4gHg2+35wNYiFRVcNg0QPLsYqpsT5gEJVI5AvHQ/9KGGhvbyb5MckbVAjGYg0ZTG3Mq
-         erEg==
+        bh=VOD3EzTAY6fae6vEfIvPOeQy93Ojgv+6M0DJgE6Vkj0=;
+        b=Z8LjWcU6l70m1Uc/c9znXe+Yg0FVQPgTJ3i3pREBc68Pqh+JuMlybu9WmnP5tIRF8v
+         7g+utR8CojFQbrvw+lnaqeLw5dK01pwFj/YgAmn7TIUqGhUq8Jk63vXhGKbHCYzbHWL0
+         UsRTmC6nkdGPUd+tLzU8fm6gJcH+Wts2HwobhhWjDhHf1Xozl2fhya+3Rkudto/7xRqo
+         NTCKABI9idHUI+APJ+sHXPRZjCuP9oBFJLarG36PdhH0wigdcJy1w9YbL319CiBXQcRL
+         1x9HTJv92xTCTqDXRUmd59xtCU+HhE20aT/nHN7E/zBcFNt/fDlr/502IOKuKNKd00gj
+         9tvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759095014; x=1759699814;
+        d=1e100.net; s=20230601; t=1759095016; x=1759699816;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=8R9nSAisXvGp4yysastjon8jxpOn8BY8/8h4sesIEQI=;
-        b=NXGDRPdPMgIY6Y4PEx1jJq+CnAjutV7wadBnqnDxkY6SEaSuRQvz/EsLYqI7WmLgcv
-         yKestFSasQK0tSo+k4TSBNixpIrhDAFxdi7VdpdSzAcUS5Ybf7rHQPlVvkBJ9zmesjWj
-         aoW/66fCntcZcpZxepNU56vMo1v5r2GcpLyGGSPIlQNjL2vejzdjSq85zhtdSn2MdvNy
-         u8FzDuVOY8QxahL6XTvjiNns7Pc2APjrxd1eq7IHiz+tJP+02A4NWR729fPBfDbjdVRi
-         7v8HZKQJIygmDiQ/1mvqpalziqelZLAfDHLf0dji0lLTQYdv61MdU+crXBfLNJoPD/A9
-         yVBA==
-X-Gm-Message-State: AOJu0YwBzi0BDR70gnmKpjj/pWYULEY/8nZAdvoumW3KTpN5CwYKlNMY
-	fowraKa8J1akR7k4dxgTzGonHn2aOC8B/6JA2Hen0Lu1ZpJD17hEjpTOE2L5VY5X
-X-Gm-Gg: ASbGnctc56c9GKa9mN89AnpDSNs8oUvQ/hxnQHlqRTSGornalmtfGT1T6AeECOPKPPE
-	YcAiZXHWYQR7W4YzXor4ZkHhPZbWmDWntENfHGg/+zafi5KDJMUROdpkN7tnkIIWlnCwVGoVJEI
-	wP9mB7xrEFoWqLmZEZbpgF3EnvYwcyyVHShgVaj8KrzDpJkYCPNLRogLilbXyQFQQj46Ju7rQJW
-	0kiwZrLZMBpsznUEmor27NXLCNO2lkJ1vZnXxQrm+O91qTxnrL77sJntWg3H72rTMWgoE0yqyRj
-	ShorFt+QmcgLRGL0Q6PG56JptsBLu2pSfWZClidTrpTMqloEaA4arvsfw7T7XLZfHrrcaOnGiYo
-	0+S/KImxsZ8ApIG5wMaZS7yamAtz5kdYgERbI9ZymHmAWLDRtz4WQ4/Ulp6oOpffJFaJh1cw=
-X-Google-Smtp-Source: AGHT+IG6z0PrF8vTEOunRlxMkAWb/ULWp/F57sn864+W+brCMPi0U4csvnLGGlJUA0Cykq5V5t1tPQ==
-X-Received: by 2002:a05:690c:74c1:b0:720:bb3:ec14 with SMTP id 00721157ae682-7640185174emr178424727b3.25.1759095014218;
-        Sun, 28 Sep 2025 14:30:14 -0700 (PDT)
+        bh=VOD3EzTAY6fae6vEfIvPOeQy93Ojgv+6M0DJgE6Vkj0=;
+        b=CBeRBrxWohipSFQ5lwBubfaKq20VWBB/QOaR8G4yoLNEGRPuKuXpwrlurE8y5yTNT7
+         jU0Ws/soEymW4xO7Vinf2O19QpI6w45K2yWkD2sGpkOlfYrm35+HPHHt0hSOeiLDM8OM
+         wZJE9kJ0MHLcDPHJHEJhcOOEPYc0cX9XURb63YEuGcmAHuiaB0fvfaNyWFdrGb4a+Lou
+         NLcTWm9R9HsIICJVO4gXnSdCl0ojg5C7Rr5mKwwspKXU/JvV37YXgw6DRwTr1/DEbHu3
+         QIDQd0Bz0DStPf42RNs58wUB3VZ3VFSwI45K2qVd55Vvi2DCZ9XCegFRX5wyUPTZfaso
+         auzQ==
+X-Gm-Message-State: AOJu0YydhkHLssQkMgQPKHtg1v2EpQyOa2upde8zqI8BWwEmgmPSYo2Y
+	Xwf3r3t7uMP/mYJ9CEbRtRP9E4qHD84WW9WYh7u6HAkB8FOu27ZpXEkNU9AJALnb
+X-Gm-Gg: ASbGncvOGI35uUGWcCN0t8n7dZ3zH9pGVu90H9ce/qWQ5XExykAw3bnJh7+UehCotnm
+	unUwHQ35bf653dsLUmwsNYoPsLGo7hEh6Qflfsq75x8j9DV1aQWI9If1EAoeDlh09q8I6rsgx+0
+	/pc8sGhxVAoElKCd2KMDoz9LqAPCu+yo3Vt8u7PSyxGCYbXj5NufKLCNowcUkgbPNepw/pcpmqX
+	9OBDS4rszOQJXZNjRpgld244iWGFgRKLtBMo2vWN2AgKoAZds68ysoYvIff4hIhXlA0au8iNPgH
+	+EWL9NLZsV0RPPlQyJ0g/5re/inL+zrlic/yxCdAYYDEGsfuRldMy8GnLMM7507b760PEqZ+GJg
+	aNH3VBtSIlXQOW/qcE/HD9sX3EgKk1VjFFRqGBwHjCnBRwdUKHgr7NzMeew5UHlVFfGSBPHLVX6
+	4yquiJog==
+X-Google-Smtp-Source: AGHT+IFjovxmRGWFazCGgusXt9E16DK/gzG1UCE0TN0baqdjOmWI65KQRHUnMnh+Nsh1HjPfGo2HvQ==
+X-Received: by 2002:a05:690c:6c0d:b0:765:37fb:6fc8 with SMTP id 00721157ae682-765381a0a2fmr167448807b3.26.1759095016399;
+        Sun, 28 Sep 2025 14:30:16 -0700 (PDT)
 Received: from localhost.localdomain ([2605:a601:90a8:8b00:488:b20c:c605:ba83])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-63ad64e5d45sm51448d50.29.2025.09.28.14.30.13
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-63ad64e5d45sm51448d50.29.2025.09.28.14.30.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Sep 2025 14:30:13 -0700 (PDT)
+        Sun, 28 Sep 2025 14:30:16 -0700 (PDT)
 Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
 From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
 To: git@vger.kernel.org
@@ -68,10 +69,15 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Michael Grosser <grosser.michael@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Taylor Blau <me@ttaylorr.com>,
-	"D. Ben Knoble" <ben.knoble+github@gmail.com>
-Subject: [PATCH v2 1/3] t7500: make each piece more independent
-Date: Sun, 28 Sep 2025 17:29:14 -0400
-Message-ID: <63b2b24d42906162f2415da37ccc75c921518b7a.1759094936.git.ben.knoble+github@gmail.com>
+	"D. Ben Knoble" <ben.knoble+github@gmail.com>,
+	Matheus Tavares <matheus.tavb@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Calvin Wan <calvinwan@google.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	=?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+Subject: [PATCH v2 2/3] config: values of pathname type can be prefixed with :(optional)
+Date: Sun, 28 Sep 2025 17:29:15 -0400
+Message-ID: <5c97f580a9e77c464bc6bf4ed9ea8546711c6637.1759094936.git.ben.knoble+github@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1759094936.git.ben.knoble+github@gmail.com>
 References: <20250501214057.371711-1-gitster@pobox.com> <cover.1759094936.git.ben.knoble+github@gmail.com>
@@ -85,75 +91,142 @@ Content-Transfer-Encoding: 8bit
 
 From: Junio C Hamano <gitster@pobox.com>
 
-These tests prepare the working tree & index state to have something
-to be committed, and try a sequence of "test_must_fail git commit".
-If an earlier one did not fail by a bug, a later one will fail for
-a wrong reason (namely, "nothing to commit").
+Sometimes people want to specify additional configuration data
+as "best effort" basis.  Maybe commit.template configuration file points
+at somewhere in ~/template/ but on a particular system, the file may not
+exist and the user may be OK without using the template in such a case.
 
-Give them "--allow-empty" to make sure that they would work even
-when there is nothing to commit by accident.
+When the value given to a configuration variable whose type is
+pathname wants to signal such an optional file, it can be marked by
+prepending ":(optional)" in front of it.  Such a setting that is
+marked optional would avoid getting the command barf for a missing
+file, as an optional configuration setting that names a missing
+file is not even seen.
+
+cf. <xmqq5ywehb69.fsf@gitster.g>
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
 ---
- t/t7500-commit-template-squash-signoff.sh | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
 
+Notes:
+    The 2nd paragraph in this commit is wrapped strangely
+    
+    I've kept the strange wrapping length for now, but can reflow it if
+    desired.
+
+ Documentation/config.adoc                 |  4 +++-
+ config.c                                  | 16 ++++++++++++++--
+ t/t7500-commit-template-squash-signoff.sh |  9 +++++++++
+ wrapper.c                                 | 13 +++++++++++++
+ wrapper.h                                 |  4 +++-
+ 5 files changed, 42 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/config.adoc b/Documentation/config.adoc
+index cc769251be..7301ced836 100644
+--- a/Documentation/config.adoc
++++ b/Documentation/config.adoc
+@@ -358,7 +358,9 @@ compiled without runtime prefix support, the compiled-in prefix will be
+ substituted instead. In the unlikely event that a literal path needs to
+ be specified that should _not_ be expanded, it needs to be prefixed by
+ `./`, like so: `./%(prefix)/bin`.
+-
+++
++If prefixed with `:(optional)`, the configuration variable is treated
++as if it does not exist, if the named path does not exist.
+ 
+ Variables
+ ~~~~~~~~~
+diff --git a/config.c b/config.c
+index 97ffef4270..73fc74c8fa 100644
+--- a/config.c
++++ b/config.c
+@@ -1279,11 +1279,23 @@ int git_config_string(char **dest, const char *var, const char *value)
+ 
+ int git_config_pathname(char **dest, const char *var, const char *value)
+ {
++	int is_optional;
++	char *path;
++
+ 	if (!value)
+ 		return config_error_nonbool(var);
+-	*dest = interpolate_path(value, 0);
+-	if (!*dest)
++
++	is_optional = skip_prefix(value, ":(optional)", &value);
++	path = interpolate_path(value, 0);
++	if (!path)
+ 		die(_("failed to expand user dir in: '%s'"), value);
++
++	if (is_optional && is_missing_file(path)) {
++		free(path);
++		return 0;
++	}
++
++	*dest = path;
+ 	return 0;
+ }
+ 
 diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
-index 4dca8d97a7..05cda50186 100755
+index 05cda50186..366f7f23b3 100755
 --- a/t/t7500-commit-template-squash-signoff.sh
 +++ b/t/t7500-commit-template-squash-signoff.sh
-@@ -42,7 +42,7 @@ commit_msg_is ()
- 	(
- 		GIT_EDITOR="echo hello >\"\$1\"" &&
- 		export GIT_EDITOR &&
--		test_must_fail git commit
-+		test_must_fail git commit --allow-empty
+@@ -46,6 +46,15 @@ commit_msg_is ()
  	)
  '
  
-@@ -50,33 +50,33 @@ commit_msg_is ()
++test_expect_success 'nonexistent optional template file in config' '
++	test_config commit.template ":(optional)$PWD"/notexist &&
++	(
++		GIT_EDITOR="echo hello >\"\$1\"" &&
++		export GIT_EDITOR &&
++		git commit --allow-empty
++	)
++'
++
+ # From now on we'll use a template file that exists.
  TEMPLATE="$PWD"/template
  
- test_expect_success 'unedited template should not commit' '
--	echo "template line" > "$TEMPLATE" &&
--	test_must_fail git commit --template "$TEMPLATE"
-+	echo "template line" >"$TEMPLATE" &&
-+	test_must_fail git commit --allow-empty --template "$TEMPLATE"
- '
+diff --git a/wrapper.c b/wrapper.c
+index 2f00d2ac87..3d507d4204 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -721,6 +721,19 @@ int xgethostname(char *buf, size_t len)
+ 	return ret;
+ }
  
- test_expect_success 'unedited template with comments should not commit' '
--	echo "# comment in template" >> "$TEMPLATE" &&
--	test_must_fail git commit --template "$TEMPLATE"
-+	echo "# comment in template" >>"$TEMPLATE" &&
-+	test_must_fail git commit --allow-empty --template "$TEMPLATE"
- '
++int is_missing_file(const char *filename)
++{
++	struct stat st;
++
++	if (stat(filename, &st) < 0) {
++		if (errno == ENOENT)
++			return 1;
++		die_errno(_("could not stat %s"), filename);
++	}
++
++	return 0;
++}
++
+ int is_empty_or_missing_file(const char *filename)
+ {
+ 	struct stat st;
+diff --git a/wrapper.h b/wrapper.h
+index 7df824e34a..44a8597ac3 100644
+--- a/wrapper.h
++++ b/wrapper.h
+@@ -66,7 +66,9 @@ void write_file_buf(const char *path, const char *buf, size_t len);
+ __attribute__((format (printf, 2, 3)))
+ void write_file(const char *path, const char *fmt, ...);
  
- test_expect_success 'a Signed-off-by line by itself should not commit' '
- 	(
- 		test_set_editor "$TEST_DIRECTORY"/t7500/add-signed-off &&
--		test_must_fail git commit --template "$TEMPLATE"
-+		test_must_fail git commit --allow-empty --template "$TEMPLATE"
- 	)
- '
+-/* Return 1 if the file is empty or does not exists, 0 otherwise. */
++/* Return 1 if the file does not exist, 0 otherwise. */
++int is_missing_file(const char *filename);
++/* Return 1 if the file is empty or does not exist, 0 otherwise. */
+ int is_empty_or_missing_file(const char *filename);
  
- test_expect_success 'adding comments to a template should not commit' '
- 	(
- 		test_set_editor "$TEST_DIRECTORY"/t7500/add-comments &&
--		test_must_fail git commit --template "$TEMPLATE"
-+		test_must_fail git commit --allow-empty --template "$TEMPLATE"
- 	)
- '
- 
- test_expect_success 'adding real content to a template should commit' '
- 	(
- 		test_set_editor "$TEST_DIRECTORY"/t7500/add-content &&
--		git commit --template "$TEMPLATE"
-+		git commit --allow-empty --template "$TEMPLATE"
- 	) &&
- 	commit_msg_is "template linecommit message"
- '
+ enum fsync_action {
 -- 
 2.48.1
 
