@@ -1,72 +1,72 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9979519C540
-	for <git@vger.kernel.org>; Sun, 28 Sep 2025 22:07:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76EB319C540
+	for <git@vger.kernel.org>; Sun, 28 Sep 2025 22:07:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759097247; cv=none; b=bbNZanH8dn6E3obiXPDE9hcqaORVUQBwlERJvoevg7K037AaZ41SRABhCUAEjY7eh15IBGln6j27hkLi1W7pOBhT3127onzXVVbcdBJkxLgc1suKh9piA6ReYRkmWDSq5u+5bvVJnvzgGUfJoDOknhytL8G5xGJdbJsRATUwYMM=
+	t=1759097251; cv=none; b=JOk8qQLcOrxWJkW1NX6+ZQG4GD+Ir6IjgGDEUAFt74e1yO/H3/7Xk8a8nmmRZ6J0tnLySVxEO7IDW43XVFvQL3fci1ANJ3KM4wP5FqQLFkL+td8q6ZwHlAFtHHDVa+BmDujS/XOphAbeJTUSmAU7Z+9VV2I1QeBCfnJVh6pS0R8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759097247; c=relaxed/simple;
-	bh=e3OxlYjX7SG/OuSyY4iue3HIMAsk6vow3hf4wi4jSNU=;
+	s=arc-20240116; t=1759097251; c=relaxed/simple;
+	bh=bQiUFX3C6xAhAtQQHdBe4pH66NJN80WWporfs3Pi8LQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=txZd8c30SyHFstxyNnS88OktnyrbOLAvAznGDRGzjugI0bTym4Bo2qMNp2aQUgdo4b3pqg4lnyPXn10KElNVdyOY3zemFyG9S1+6JHRwVzU9nwQUh7R/zb6Rq9ygH+wJeda/6QwjajwhMmRte2RXFoITYAkeWLMK2G/2l93Ph4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=SzZpaL5g; arc=none smtp.client-ip=209.85.128.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=WLWof2oXTFv0ajttZ/AioK/IY6Ahf4GPfOUi58HZi7I9ZDsTGoV6HfATnjfH8XropBT6BNQLKBEi8qrkzetDkO3xx0DMpBzdUJqBscFGMxNcP+6G/OZZPEkqmnSxVvIxQViQWitJqxze3RmMerJ7Prnrmc3CrXxJpr8HF9E8Htw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=pW4vsuEo; arc=none smtp.client-ip=209.85.128.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="SzZpaL5g"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-749399349ddso48393567b3.3
-        for <git@vger.kernel.org>; Sun, 28 Sep 2025 15:07:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="pW4vsuEo"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-71d60157747so41828637b3.0
+        for <git@vger.kernel.org>; Sun, 28 Sep 2025 15:07:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759097244; x=1759702044; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1759097248; x=1759702048; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zSlh+5z3nj+CPpwN/ejkm/e/3mEAotekxMZHvJb4wO8=;
-        b=SzZpaL5g4TUJyeK0H+bDr5mTaeos92owjBXX9Hspv7t3cO0UuqsVUvuhuiioyYfL8q
-         BBB3LU87tu4jULr7xf/KLvmYiGwMjgbUEWsm1eRM/x+xw5atGi1GpMkFnrJjat0AME11
-         15aStToXQnaoJ7JaOI/AiHeVJ38cunH0IQF19ZYfDr2oBVeFDIKGFgQ17oDLpcunZUj0
-         SZdEk6C5MSlMaHjjT3A8FAMdaD/wbqd5lO6bCvfxTI0vNdHZHYe4jVl6d45Klx2yJZ2z
-         QNinrlObnVHdeQnrvSp2GPWTdY8E9aOUCm4pb5UPnnGv++/TDhGssQrnk3VFuTAhhJeW
-         SRDA==
+        bh=78+6IZ8JBbb37dn5R5UIymYRmsw/t8mLdEXFqZiLhIo=;
+        b=pW4vsuEoxFerPaHjvUN5RpxVl2wcS3wkI21rmrEux04O3THdRqFqx2M6Uv+kYcvOKv
+         xyX+PQ3kGzhZ5wegj/W9ap4QsMKmfBqpfeMsOV+nyvEixgO5+9auGyKVhxA2Kp6+Ypb6
+         ubnMlXs6jl8CCXVxKRAMYl64Eejf3PZpb1pUoAFQkahcei/yMxQ2t69EiKa8H5+vM15W
+         GIPZlUCU6mPKd2R2f3YGQQAYBj5GyJ0ZJglQMdjFVOncerdTSbXh72dP7YilNLlj6uNJ
+         lt1IYoplJGKkRMgAElO6uKm9p2DI8VLG8kw3bygDjBA+AHjfWaWCQ0qmLozGGIP9Z8T3
+         LbHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759097244; x=1759702044;
+        d=1e100.net; s=20230601; t=1759097248; x=1759702048;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zSlh+5z3nj+CPpwN/ejkm/e/3mEAotekxMZHvJb4wO8=;
-        b=FQwQvCpuiwHJaptpIBulzAQV6e8zC2QxKg5c0EIrQoygL/KCZlWuOOhhO5U/lkE5DM
-         o9iz98GGlK8l6zr5VhHAJgoDWz3XvI+LXmErNNLD8V2G4eEveD8N7EvapBhLb0kJIGrc
-         Ca6kjdldWdKJBDwTMknugwzNwDqxmtHvic/djyiPJEmaedOLmpB21ToDmDiK5AsofiZk
-         +izI/DpyitdVTF4KYS8WMhdYSnBdSp+/KiM8/zKELA2V1wCvmg/KXgQfz5We3OyUAyfh
-         ZvlnBt8A6ebBoNcEosRhISQADMkExiPestSewgq2PjpCe5K+vMTz7V49ZTZkaql0RuI1
-         yu8g==
-X-Gm-Message-State: AOJu0YwpijKVJN18U2BphK77DggNT0rzLKkEDrdpm2FkxwXvJsW7a/Bj
-	PF8F0/pynL8A1DuQZc1ht3/Icyt6TmWJASJhj80OSTPJ3POfe4dUq107udQeULO6hi5Biot4k9T
-	4nroQTZ8=
-X-Gm-Gg: ASbGncsoFtEYiog86HsuG9jLDFt5qSgw/iTuQys4WtDid4TAZg8IvU3hjH8tAh8aOCH
-	rtRkmacvfdpz/B/3THAOsvrPE4HQ9th4ot9zUNk93aj9DkGQdTL/rowCT8eYirhAbdtvKJZ1949
-	HlzHLsBqlZE69JqAeuD/o7NLdjp+Dx2G+UHTitwMG38hi07GMa1HvgJmV7GQmdQlpTTL+4NZKlD
-	7OXzssXyPwxYofKl0CMYUmvWjV92aQKu0o6DFtCdMBnlWKVUgvanKvK9R1lSFebBO+9C+5KZkDx
-	XXKtG3kd7/OoasUclx8DrxxKdzhLTSywyOpyPOo6MlIEqIOu+9p5NIfE39pzzCgdCEGShJmxGC6
-	+EBoo/danBZ3bQdkS0ZuPQCONVgNbeVVmWSmat2VjKKdfmxEbjwrjZ/qnS6uaG9kuuUwq8FX6dQ
-	6WggfA3hc+AVd3appyaGme1HVy+Q==
-X-Google-Smtp-Source: AGHT+IHjR/jMU+f/+0EpjGnrb8Cv6DddYF01d+UT4vy8Ksk06CS1e81G1IOM3tOrUB0wWVfQF/Gcgg==
-X-Received: by 2002:a05:690c:2d0a:b0:72c:126c:a997 with SMTP id 00721157ae682-763fabe0612mr144819587b3.22.1759097244430;
-        Sun, 28 Sep 2025 15:07:24 -0700 (PDT)
+        bh=78+6IZ8JBbb37dn5R5UIymYRmsw/t8mLdEXFqZiLhIo=;
+        b=YtnEXOkMf87stwdD4iSrTBexZ3786unMkxInn1U81bkHqHVh3I7ioLnTYiEkzpBw7c
+         3ycpVgs6Bqo9wYSkSY8S1yQ/5EKw9eI49Mz2v4S/oi1JMyZg1D9wKLU2K7uvhueBBHov
+         Wna9Qz8t4ik82pb3XktVAWOIRpMJVIycjBDYTpBfn2pIAbzO6oeH4i7zsPG8X6QWCJnY
+         oYRIJwN5PGJd8Ebm2Zy0N8+IsN1oNvlrcwakFUBe6bfbIsQZjAWMaxv3rah+BNebQIaB
+         X28IcYqs0s0V42pBIwWcLLI/V/BPjZHPhLhoEHhQj8mgrKUJPUMlSdg+35PGZxfCtrOB
+         a1fw==
+X-Gm-Message-State: AOJu0YzSmOKQgD4G+DvUluGqmf2vNnIeI5Hx4scM7Qvme55X3lgAZAvC
+	QNKQVPQC0FJAp3tuseN7dLeW+ra63ivIgdTBMoUH+XhaZJJ9P8UscqCGtAl7wayTL5f92NPpcBI
+	xwDw/1rfpJA==
+X-Gm-Gg: ASbGncuq+SxYkePCGLt9yKbgKA3Qo0oeO+oXeEufVwa2EHU0AbFQbReUe+swuNxbhda
+	W8Q0KMRFqEvRq7yv+BTGba8H0I5osqA4SLs3bJumUaZh/lZDW81H36h+06IvrbpPDaUEAVAHYfC
+	Q7NT6TsCDhCAlniTB+M8D5jcoRmIMr3JF/SL9rpVaxil4apSVMRoeUTyLa5nxs3D2FMZV54V0X7
+	RkLLIRnL0GxiPi5D0/+0Ty5A4SXGtXmWEgHr51tq5+lHbmFILRMKRjHeNpsJhIKdNTf1V5JL/wh
+	Guiw8a+s+FF/KiyIbbf1vTdOgM2j6QmZk8vxelsouku4jBul65uP8G9F6c2Bkv4Ja3xuii8+G1I
+	aU5Y+EG9wl5Iv4FGwNF5H8+LGJUE9+H6ZoNNJMCTl7v5C+WqIrndwD9tgtgmlmN1/gUvDN9IonV
+	ioayfn8CI1PBeLu7MP8jLqMPfmxA==
+X-Google-Smtp-Source: AGHT+IFuhvl/MLkIK8OavPC59pzbVBkxAk7AdvCgzftCrJfUgWKbkzt69T3FvixsmGFjnImlDlXq7w==
+X-Received: by 2002:a05:690c:c85:b0:71f:9a36:d342 with SMTP id 00721157ae682-764054e0921mr163329347b3.52.1759097248334;
+        Sun, 28 Sep 2025 15:07:28 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-636d5b1d94asm1937691d50.25.2025.09.28.15.07.24
+        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-636d5b1d881sm1910869d50.19.2025.09.28.15.07.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Sep 2025 15:07:24 -0700 (PDT)
-Date: Sun, 28 Sep 2025 18:07:22 -0400
+        Sun, 28 Sep 2025 15:07:28 -0700 (PDT)
+Date: Sun, 28 Sep 2025 18:07:26 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 03/49] builtin/repack.c: avoid "the_repository" when taking a
- ref snapshot
-Message-ID: <866e43b0cd74a7bbc13870c66ffd58ca8387aa9e.1759097191.git.me@ttaylorr.com>
+Subject: [PATCH 04/49] builtin/repack.c: avoid "the_repository" when removing
+ packs
+Message-ID: <f404dfa34f06a882e5ebf0b6ffa01ba365ac866b.1759097191.git.me@ttaylorr.com>
 References: <cover.1759097191.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -78,82 +78,72 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1759097191.git.me@ttaylorr.com>
 
-Avoid using "the_repository" in various MIDX-related ref snapshotting
-functions.
+The 'remove_redundant_pack()' function uses "the_repository" to obtain,
+and optionally remove, the repository's MIDX. Instead of relying on
+"the_repository", pass around a "struct repository *" parameter through
+its callers, and use that instead.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ builtin/repack.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
 diff --git a/builtin/repack.c b/builtin/repack.c
-index 7223553bed..113f5fc67f 100644
+index 113f5fc67f..93802531e1 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -771,6 +771,7 @@ static int midx_has_unknown_packs(char **midx_pack_names,
+@@ -221,33 +221,35 @@ static void mark_packs_for_deletion(struct existing_packs *existing,
+ 	mark_packs_for_deletion_1(names, &existing->cruft_packs);
  }
  
- struct midx_snapshot_ref_data {
-+	struct repository *repo;
- 	struct tempfile *f;
- 	struct oidset seen;
- 	int preferred;
-@@ -784,13 +785,13 @@ static int midx_snapshot_ref_one(const char *refname UNUSED,
- 	struct midx_snapshot_ref_data *data = _data;
- 	struct object_id peeled;
- 
--	if (!peel_iterated_oid(the_repository, oid, &peeled))
-+	if (!peel_iterated_oid(data->repo, oid, &peeled))
- 		oid = &peeled;
- 
- 	if (oidset_insert(&data->seen, oid))
- 		return 0; /* already seen */
- 
--	if (odb_read_object_info(the_repository->objects, oid, NULL) != OBJ_COMMIT)
-+	if (odb_read_object_info(data->repo->objects, oid, NULL) != OBJ_COMMIT)
- 		return 0;
- 
- 	fprintf(data->f->fp, "%s%s\n", data->preferred ? "+" : "",
-@@ -799,11 +800,12 @@ static int midx_snapshot_ref_one(const char *refname UNUSED,
- 	return 0;
- }
- 
--static void midx_snapshot_refs(struct tempfile *f)
-+static void midx_snapshot_refs(struct repository *repo, struct tempfile *f)
+-static void remove_redundant_pack(const char *dir_name, const char *base_name)
++static void remove_redundant_pack(struct repository *repo,
++				  const char *dir_name, const char *base_name)
  {
- 	struct midx_snapshot_ref_data data;
--	const struct string_list *preferred = bitmap_preferred_tips(the_repository);
-+	const struct string_list *preferred = bitmap_preferred_tips(repo);
+ 	struct strbuf buf = STRBUF_INIT;
+-	struct odb_source *source = the_repository->objects->sources;
++	struct odb_source *source = repo->objects->sources;
+ 	struct multi_pack_index *m = get_multi_pack_index(source);
+ 	strbuf_addf(&buf, "%s.pack", base_name);
+ 	if (m && source->local && midx_contains_pack(m, buf.buf))
+-		clear_midx_file(the_repository);
++		clear_midx_file(repo);
+ 	strbuf_insertf(&buf, 0, "%s/", dir_name);
+ 	unlink_pack_path(buf.buf, 1);
+ 	strbuf_release(&buf);
+ }
  
-+	data.repo = repo;
- 	data.f = f;
- 	data.preferred = 0;
- 	oidset_init(&data.seen, 0);
-@@ -817,13 +819,13 @@ static void midx_snapshot_refs(struct tempfile *f)
+-static void remove_redundant_packs_1(struct string_list *packs)
++static void remove_redundant_packs_1(struct repository *repo,
++				     struct string_list *packs)
+ {
+ 	struct string_list_item *item;
+ 	for_each_string_list_item(item, packs) {
+ 		if (!pack_is_marked_for_deletion(item))
+ 			continue;
+-		remove_redundant_pack(packdir, item->string);
++		remove_redundant_pack(repo, packdir, item->string);
+ 	}
+ }
  
- 		data.preferred = 1;
- 		for_each_string_list_item(item, preferred)
--			refs_for_each_ref_in(get_main_ref_store(the_repository),
-+			refs_for_each_ref_in(get_main_ref_store(repo),
- 					     item->string,
- 					     midx_snapshot_ref_one, &data);
- 		data.preferred = 0;
+ static void remove_redundant_existing_packs(struct existing_packs *existing)
+ {
+-	remove_redundant_packs_1(&existing->non_kept_packs);
+-	remove_redundant_packs_1(&existing->cruft_packs);
++	remove_redundant_packs_1(existing->repo, &existing->non_kept_packs);
++	remove_redundant_packs_1(existing->repo, &existing->cruft_packs);
+ }
+ 
+ static void existing_packs_release(struct existing_packs *existing)
+@@ -685,7 +687,7 @@ static void geometry_remove_redundant_packs(struct pack_geometry *geometry,
+ 		    (string_list_has_string(&existing->kept_packs, buf.buf)))
+ 			continue;
+ 
+-		remove_redundant_pack(packdir, buf.buf);
++		remove_redundant_pack(existing->repo, packdir, buf.buf);
  	}
  
--	refs_for_each_ref(get_main_ref_store(the_repository),
-+	refs_for_each_ref(get_main_ref_store(repo),
- 			  midx_snapshot_ref_one, &data);
- 
- 	if (close_tempfile_gently(f)) {
-@@ -1397,7 +1399,7 @@ int cmd_repack(int argc,
- 			    "bitmap-ref-tips");
- 
- 		refs_snapshot = xmks_tempfile(path.buf);
--		midx_snapshot_refs(refs_snapshot);
-+		midx_snapshot_refs(repo, refs_snapshot);
- 
- 		strbuf_release(&path);
- 	}
+ 	strbuf_release(&buf);
 -- 
 2.51.0.243.g16eca91f2c0
 
