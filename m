@@ -1,180 +1,175 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0551A83ED
-	for <git@vger.kernel.org>; Sun, 28 Sep 2025 13:54:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E9D190685
+	for <git@vger.kernel.org>; Sun, 28 Sep 2025 14:03:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759067690; cv=none; b=axUek/zniNoD+6FWZjOSgAbVxKrwLm7MXr6EYfzAUJb6glfcRr932R0bAdSC+mvtL9gP3ituDFvHAH1sN3de5INJ6Mp1CVoV0GjTmd1QWBzOE8/WekdY2XJJtWy77yTYVE1uGylhOdU6mi0DCLVtRPETQyZ5MuWqpsqJqtUhWYE=
+	t=1759068213; cv=none; b=VrVuxsNBa0UXK+orKMs5pYEmJJaVnFJ/ly2hVMIZ5nQ6+Urb0wCe/D9kkRp5sfhXu9BuhJaz87U95736/cpR6w0Od2rLqNGE7WBDUyewnm9sND5UuLLutYCVJrur0qiZ30ucsP1p41pflF3Y5hBbpMLJMTHacsbhYEKGzj9VGsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759067690; c=relaxed/simple;
-	bh=qnYMqrQB65BM7EbRQV73bs4dJL6YRmsxMtxXmGBVbu8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=srQ7OjFANZM6IkmPp1U9+kLN/up6eY9Jenp7+wJVU/qDWTnYY1AXA/+Z2Pqx4yxH22hLimVEfi/U8QSqrTuWXmy6CBbalSBMAHo8XuCXtbM/QYgDfjdiEsa1zFGoICJOP8Keu3L5fhEEKAYp4VR6KhqusB0JLObm+xRdvNDAsa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S95ukp62; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759068213; c=relaxed/simple;
+	bh=/Og2tNETjR+9AZhF51Qg+kUA8BHclR9ASojEgvf3kJc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=E2gCq+z2Mo7iR8ldQlj3MHUWg6VOz59ZyOPfWM+fi8s8G+bh9OyCKLgtgTlhyKVVEqSpMYhFQtUWPJ7ZjVlBolQX55R4V+aoByGhnGmT46C73q3Kk9uqGPsabQVtGkcFTOVrplxVEh1ShPxnrkPHvOk7zunPefFI3GZ+XZzGcaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=rE5u5YbR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ksc/SJpg; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S95ukp62"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-85780d76b48so397190185a.1
-        for <git@vger.kernel.org>; Sun, 28 Sep 2025 06:54:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759067686; x=1759672486; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uQZnEbEekfxK6STvmPIcxAeSH1fjUFLzKlAoNt+ap5I=;
-        b=S95ukp62AZ8WObrVrIXLdUxxVrLzLPKiq4CCv+SSaLSdC9u4MDGAvnplBOSvsvi77V
-         /35GJDZxYhk7UlJCma1fEHfhHvEJu6MjDOV0VcnNOBc8oPtxH9fqkl2BGpnuZiokzs68
-         s46nu6r5E/Vto9Ym91vmIw13eTTty28tTfV7psoHRvpPqPvOGuZYpmFCisOShXxheJKa
-         bPX4Y9wsSeAeLXFJ5Tt7hkxiFFdIRaMboB3wldI/1gcmI+m+CpjgqSZnkfdcdYRx28nm
-         LaQGLhbzOoWIcbd83dhrm7A+KptJwympO1MNu1Mdzz0C7EvkxZX4L367e7kIEcHxTPMp
-         SiMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759067686; x=1759672486;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uQZnEbEekfxK6STvmPIcxAeSH1fjUFLzKlAoNt+ap5I=;
-        b=nSEWLHfNiwgxDBJ4Tw6AQuaq/EqhNwgCT+T+Da+KLJUBEsD+V3T4EyOvsKkFAHOjWs
-         F/FGcMFZWYEqcngPZM4m+jfMZXa+easTTwK3jBd6mYAlEDqqkn21tn50tNPsWqfBWyAD
-         Jt3wAtqCDvv7+TcT7Og3OlIAmk5+O2aeSkoCrepXlUaN6xC4RB3r7mlLH7rOzGb95cPK
-         ecf6Av/rIkboLZ0SAc6XJrFRw2feHPAO+5voJWFhZaGhqPWVCEq4ZiYgBDBEt5NPmCoX
-         51JgYuL4B855/TS2Xra8Qe8dUc8Aj97FP7qOkp4OchhAUoT8gnBYLDTI23ukAeStWbu2
-         KpIA==
-X-Gm-Message-State: AOJu0YxRJhxtsiFqGireYEQKxLgacnuAUdLH1ywIjRG5GcAs1pCPqUYk
-	frT1NH3OFse1PkCq8e8Cn38bqcV0lRxXwzhKOwZdQKuwD4W3S6fTIymUKYDHY4eL
-X-Gm-Gg: ASbGncue4xnJrp+j5H1N4aWUclfQ8nj/8ZX7MWzw8o4X8YctdAMxaeFu0ZNoqEpMhO9
-	1o+MpDVvnaWGT0DaQLQSVQGzH6nrQh8IRBmYZrMaAX70X2TNjqo+bIPZc8XARPgoapMxLQG9kj0
-	u5QZtG2Van56ZKcesNLpyBEDXYWVpWN4CTxagD7BeUIiexyFdTs12KNxURpyYHeCh1zZz+LYE0X
-	TDQ9VsC1isTc8nwtuioqdkoWrAaHn7B2zbH5cGlUS9FQ3zBwzbiRuN48pfZRuBUJAiWsu+ADMhr
-	6b96OJTJnoq/LlUshdAffXLmSyBYB6cbOF7ziuadvfkayzlGH7YiAqor1y1kPokOEljvoLMCXqI
-	0JKr8a5aANnr2FrQeXOAeFa1sVrqu3ad9XuL3WkXkhhphbbCb18JUq2D/qG8F4l2X45zHTfyv55
-	7Ez6e+nGlRsHQakNpSwD60mX5o/ZBQdA==
-X-Google-Smtp-Source: AGHT+IFKj/3bO7MOLPP7pQsFZPSodNpBpzqO4jHdlafA3OtTbDeWbRRGJztBw5ivsDLQ0tECVycBrg==
-X-Received: by 2002:a05:620a:2a01:b0:84e:3c02:810e with SMTP id af79cd13be357-85ae033cbe4mr1716195985a.19.1759067685804;
-        Sun, 28 Sep 2025 06:54:45 -0700 (PDT)
-Received: from USROMMRAPPAZZ01.rappazzo.network (pool-74-105-50-139.nwrknj.fios.verizon.net. [74.105.50.139])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-85c307ad101sm590426985a.36.2025.09.28.06.54.45
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 28 Sep 2025 06:54:45 -0700 (PDT)
-From: Michael Rappazzo <rappazzo@gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="rE5u5YbR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ksc/SJpg"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id E9CE31D0010B;
+	Sun, 28 Sep 2025 10:03:29 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Sun, 28 Sep 2025 10:03:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm2; t=1759068209; x=1759154609; bh=0k
+	xDz+/w3+7bUSuoojhRhqEj4QdT4yUgkchLRWSKNI4=; b=rE5u5YbRLC8frgAlDB
+	tK2miDRDE73Qhm2Bf6tCGO4K9dSvvp/mQtBdy/3jj5BZNC2sKcyq2b8hp1qIoQUx
+	regQQ5BTrZUOvM5z+Nz7HDqsmPCr9uGA7Rl18rbH6qfFb2wdSIRySL6JqmdiE3R/
+	7+7Y5Oi+HV4YEHGH5Gc55RzqB0Ef17mfXoHcJOyFW3Y3IfqHWU2VmgUriNI87Ydr
+	g8DQ/5vR30wWzK8bxPPR/UbLX+/vFIGEXIAwy4UfQXEq2wb/+8iqZfKu0Fy2G2n+
+	bhpnEZ9vW6OFkQ2GWBzZGbR/QNbiPh0zl4wJ0eMJW7hmR1TKN+IDwS1tin+alGw0
+	FCyw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1759068209; x=1759154609; bh=0kxDz+/w3+7bUSuoojhRhqEj4QdT
+	4yUgkchLRWSKNI4=; b=Ksc/SJpgz50VjSORADuPiPz+X6WnMquDh6YPzz3j/LaA
+	FfYhyUvc1Ic02QX3UEmcgy1eAYVqthENlktdPdjF4JLynTpOgLrimrd633xBR+4m
+	hBARNsVmEyDBT9RmfcahtpSYIj0+9Ehs3Z6m5aSDNt+groQ3Y0gjT6OVHcYs2s73
+	qG50p3tqg2EeW5T1y+J4A8AQcl/1y03c8H3YXee9e4EMkjbfU2MWoLlmg+3aPn5l
+	xdksl17bu4aziDp/BwQk9gBO04a1Fk7Q4bhKMl4NShAO+xqQNxQIhYnMBPzk4sbG
+	iUFGD9X2ezylNKqjTZjHN8mQSPugO/R2YZlySaqmnQ==
+X-ME-Sender: <xms:MUDZaGy9oTifFaPb7u8uocDlC3pvp85jgMUW-TBqE2C8sgiwS1Tq740>
+    <xme:MUDZaIROMI3vBfhJxLqbjf__-ZEsZnQezAuF5wwtXD-MVkZYneeChlbfr2gqIlqjO
+    vnnZb_HuCDVVFbmXIlSRDhRvzNzJXSLnU_1aVhFlIWOSPUnULP4>
+X-ME-Received: <xmr:MUDZaF_8FJLAj4c_zmJyoDxP0rNUoVeL6aZcKR1VgRcO4k7hVJrfsYNTFYsx8q34TUR9IuNC6HV3jnHqFskOCjMzzZ4eLRxDCcZI2pvw3r15f2bTOliD8Fw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejheefvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofggtgfgsehtkeigtdertd
+    ejnecuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghi
+    lhdrtghomhenucggtffrrghtthgvrhhnpeffffehteegkeefieejffevkeehfefhteduue
+    fggfehkeefkeeugfdvhedukeejkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsth
+    hmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtoh
+    guvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:MUDZaHoXGz9BVKbkqdKDzTO67DFsr5uMf_XhwjD-TA4ioLDItcvmlA>
+    <xmx:MUDZaKkY34_OodOwHPS4qCALC4ywLIKWU-FoNum2mLUsRHKfS7rwtQ>
+    <xmx:MUDZaGJBiZmx3i2z65_g-wl6kg8cy-jXkQZ-XEC-blxam03Wt0t_lQ>
+    <xmx:MUDZaHyVG84HNRQhQxGO9P_Wcavx3J0Z0BCss67ge9ytKYWd_67yqA>
+    <xmx:MUDZaKLxnWeUt27dmvR7p6q6w1xdBPSjHcJxsxTaVA3Zzc9V3Wpc1w0n>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 28 Sep 2025 10:03:28 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
-Cc: j6t@kdbg.org,
-	Michael Rappazzo <rappazzo@gmail.com>
-Subject: [PATCH v3 2/2] gitk: make Tags and Heads window geometry sticky
-Date: Sun, 28 Sep 2025 09:54:35 -0400
-Message-ID: <20250928135435.59623-3-rappazzo@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250928135435.59623-1-rappazzo@gmail.com>
-References: <20250928135435.59623-1-rappazzo@gmail.com>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH] doc: patch-id: fix accidental literal blocks
+Date: Sun, 28 Sep 2025 16:03:08 +0200
+Message-ID: <0520e8f9caf.1759067095.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.51.0.327.gddebdc8c038
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Currently, the Tags and Heads window always opens at a default position
-and size, requiring users to reposition it each time. This patch makes
-the window remember its geometry between sessions.
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-This change saves and restores the Tags and Heads window size and position
-relative to the main gitk window. The geometry is stored in the config file
-as `geometry(showrefs)` and persists between gitk sessions. The window
-position is stored relative to the main window, so it maintains the same
-spatial relationship when the main window is moved or when gitk is restarted
-on different monitors.
+The options here are apparently written with the assumption that you
+can continue a block like e.g. a description list by maintaining the
+same indentation level.  This is not the the case; you need to use list
+continuation (+) for the elements following the first paragraph if you
+want to be guaranteed a predictable output
 
-Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
+This is kind of subtle since only the last paragraph of each option gets
+rendered in an unintended way, namely as literal blocks.  This is easier
+to see in the HTML output since the man page output just has a slightly
+larger indentation on these paragraphs.
+
+Let’s use list continuation throughout, collapse the indentation in
+front of all paragraphs except the first one, and wrap the unordered
+list in an open block (`--`).
+
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- gitk | 39 +++++++++++++++++++++++++++++++++++++--
- 1 file changed, 37 insertions(+), 2 deletions(-)
+ Documentation/git-patch-id.adoc | 43 ++++++++++++++++++---------------
+ 1 file changed, 23 insertions(+), 20 deletions(-)
 
-diff --git a/gitk b/gitk
-index 275f353811..79a6dcdb4c 100755
---- a/gitk
-+++ b/gitk
-@@ -3106,6 +3106,11 @@ proc savestuff {w} {
-         puts $f "set geometry(pwsash1) \"[.tf.histframe.pwclist sashpos 1] 1\""
-         puts $f "set geometry(botwidth) [winfo width .bleft]"
-         puts $f "set geometry(botheight) [winfo height .bleft]"
-+        if {[winfo exists .showrefs]} {
-+            puts $f "set geometry(showrefs) \"[wm geometry .showrefs]\""
-+        } elseif {[info exists geometry(showrefs)]} {
-+            puts $f "set geometry(showrefs) \"$geometry(showrefs)\""
-+        }
+diff --git a/Documentation/git-patch-id.adoc b/Documentation/git-patch-id.adoc
+index 1d15fa45d51..45da0f27acd 100644
+--- a/Documentation/git-patch-id.adoc
++++ b/Documentation/git-patch-id.adoc
+@@ -33,27 +33,30 @@ OPTIONS
+ --verbatim::
+ 	Calculate the patch-id of the input as it is given, do not strip
+ 	any whitespace.
+-
+-	This is the default if patchid.verbatim is true.
+++
++This is the default if patchid.verbatim is true.
  
-         array set view_save {}
-         array set views {}
-@@ -10199,11 +10204,13 @@ proc showrefs {} {
-     if {[winfo exists $top]} {
-         raise $top
-         refill_reflist
-+        wm protocol $top WM_DELETE_WINDOW [list destroy_showrefs $top]
-         return
-     }
-     ttk_toplevel $top
-     wm title $top [mc "Tags and heads: %s" [file tail [pwd]]]
-     make_transient $top .
-+    wm protocol $top WM_DELETE_WINDOW [list destroy_showrefs $top]
-     text $top.list -background $bgcolor -foreground $fgcolor \
-         -selectbackground $selectbgcolor -font mainfont \
-         -xscrollcommand "$top.xsb set" -yscrollcommand "$top.ysb set" \
-@@ -10229,8 +10236,8 @@ proc showrefs {} {
-     ttk::checkbutton $top.sort -text [mc "Sort refs by type"] \
-         -variable sortrefsbytype -command {refill_reflist}
-     grid $top.sort - -sticky w -pady 2
--    ttk::button $top.close -command [list destroy $top] -text [mc "Close"]
--    bind $top <Key-Escape> [list destroy $top]
-+    ttk::button $top.close -command [list destroy_showrefs $top] -text [mc "Close"]
-+    bind $top <Key-Escape> [list destroy_showrefs $top]
-     grid $top.close -
-     grid columnconfigure $top 0 -weight 1
-     grid rowconfigure $top 0 -weight 1
-@@ -10239,6 +10246,9 @@ proc showrefs {} {
-     bind $top.list <ButtonRelease-1> {sel_reflist %W %x %y; break}
-     set reflist {}
-     refill_reflist
-+    # Restore geometry after the window is fully created and mapped
-+    # Delay Configure binding to avoid overwriting restored geometry
-+    bind $top <Map> [list after idle [list setup_showrefs_geometry_tracking $top]]
- }
+ --stable::
+ 	Use a "stable" sum of hashes as the patch ID. With this option:
+-	 - Reordering file diffs that make up a patch does not affect the ID.
+-	   In particular, two patches produced by comparing the same two trees
+-	   with two different settings for "-O<orderfile>" result in the same
+-	   patch ID signature, thereby allowing the computed result to be used
+-	   as a key to index some meta-information about the change between
+-	   the two trees;
+-
+-	 - Result is different from the value produced by git 1.9 and older
+-	   or produced when an "unstable" hash (see --unstable below) is
+-	   configured - even when used on a diff output taken without any use
+-	   of "-O<orderfile>", thereby making existing databases storing such
+-	   "unstable" or historical patch-ids unusable.
+-
+-	 - All whitespace within the patch is ignored and does not affect the id.
+-
+-	This is the default if patchid.stable is set to true.
+++
++--
++- Reordering file diffs that make up a patch does not affect the ID.
++  In particular, two patches produced by comparing the same two trees
++  with two different settings for "-O<orderfile>" result in the same
++  patch ID signature, thereby allowing the computed result to be used
++  as a key to index some meta-information about the change between
++  the two trees;
++
++- Result is different from the value produced by git 1.9 and older
++  or produced when an "unstable" hash (see --unstable below) is
++  configured - even when used on a diff output taken without any use
++  of "-O<orderfile>", thereby making existing databases storing such
++  "unstable" or historical patch-ids unusable.
++
++- All whitespace within the patch is ignored and does not affect the id.
++--
+++
++This is the default if patchid.stable is set to true.
  
- proc sel_reflist {w x y} {
-@@ -10271,6 +10281,31 @@ proc reflistfilter_change {n1 n2 op} {
-     after 200 refill_reflist
- }
+ --unstable::
+ 	Use an "unstable" hash as the patch ID. With this option,
+@@ -61,8 +64,8 @@ OPTIONS
+ 	by git 1.9 and older and whitespace is ignored.  Users with pre-existing
+ 	databases storing patch-ids produced by git 1.9 and older (who do not deal
+ 	with reordered patches) may want to use this option.
+-
+-	This is the default.
+++
++This is the default.
  
-+proc save_showrefs_geometry {top} {
-+    global geometry
-+    if {[winfo exists $top]} {
-+        set geometry(showrefs) [wm geometry $top]
-+    }
-+}
-+
-+proc restore_showrefs_geometry {top} {
-+    global geometry
-+    if {[info exists geometry(showrefs)] && [winfo exists $top]} {
-+        wm geometry $top $geometry(showrefs)
-+    }
-+}
-+
-+proc setup_showrefs_geometry_tracking {top} {
-+    restore_showrefs_geometry $top
-+    bind $top <Configure> [list save_showrefs_geometry $top]
-+}
-+
-+proc destroy_showrefs {top} {
-+    save_showrefs_geometry $top
-+    savestuff .
-+    destroy $top
-+}
-+
- proc refill_reflist {} {
-     global reflist reflistfilter showrefstop headids tagids otherrefids sortrefsbytype
-     global curview upstreamofref
+ GIT
+ ---
+
+base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
 -- 
-2.51.0
+2.51.0.327.gddebdc8c038
 
