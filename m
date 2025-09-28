@@ -1,71 +1,72 @@
-Received: from mail-yx1-f68.google.com (mail-yx1-f68.google.com [74.125.224.68])
+Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329CB19FA93
-	for <git@vger.kernel.org>; Sun, 28 Sep 2025 22:08:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DDF19FA93
+	for <git@vger.kernel.org>; Sun, 28 Sep 2025 22:08:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759097316; cv=none; b=EJnnu6YQJAv//+TSf+9+HaiDVHcngXXrcqa4UHX0y85TOGTGLRlJpFLwgaJzCHRLcLlG6MJynBz1FzY5ZG2JMYo6IhFKxjz/cEhbE4pgsIqgeiGyNDbXIW+f/ls+ZeAp+IR1EKOWc0pFteO9elPtiGBE+k4UlmtqH87yPObpjoA=
+	t=1759097320; cv=none; b=FlPA1ydRIo+GPwJacxjOwclJmayGBofmMsytzbR5as/gSwyw7wa2ql+dY2+eHS0sHmleBC+edCAlX8IdKoYa46/aAdW5bAZIFL2ktvChTiDGbOn1Gx6SJu8i4Qa6zZkM/d+3oUqh3GZBohVRQYczIma54XRHI2KngmkAbWWnISU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759097316; c=relaxed/simple;
-	bh=oQKLQ7ogaozpv6qzZh+5unkC3kp+OspytGd0xeOTa1g=;
+	s=arc-20240116; t=1759097320; c=relaxed/simple;
+	bh=/SFWQfiStKUjkfipfs13yj3hZSnDhu2wrvmsOCpHw40=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AE23wlCX10c+GL7KanR67l7LHiOFfmII7uivKsWhVocqfGo9v7pbGXLRozWhnA3xKPM7NFygVAgF1IRZcKMLRox8s/Uz3QidjqoydUvAgYMPDKzKYGDmkX3kUF67xQ1qlDG6JanUenYnaGQFH1/YZlr3TSJXDJdQNca8rBbSe/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=PoQitCK1; arc=none smtp.client-ip=74.125.224.68
+	 Content-Type:Content-Disposition:In-Reply-To; b=qIY69MHnsudvUFf4U+YN4h9Id2oEP5HsXo6QGlOI9c1p5e/Z6jCYPhnDEcFKeeZ1Z1az+NWS1dqDVqvxwZKof/DhZKsrWSyPZiYG5LzjibmjwYhppd0inplT4cYrKjuh6GIvV5agCoQzpSTYa59Z5ZzfLF9OC/nkhWS/ZgsQuLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Wf71HGRA; arc=none smtp.client-ip=74.125.224.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="PoQitCK1"
-Received: by mail-yx1-f68.google.com with SMTP id 956f58d0204a3-6354a4b4871so3536364d50.2
-        for <git@vger.kernel.org>; Sun, 28 Sep 2025 15:08:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Wf71HGRA"
+Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-6353f2937f3so3018582d50.3
+        for <git@vger.kernel.org>; Sun, 28 Sep 2025 15:08:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759097314; x=1759702114; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1759097318; x=1759702118; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LqIz6OzC6O4VGsHq3XVXFfT187D1Z7EcHYwW67+UtPc=;
-        b=PoQitCK1aM3cg7a9HjeZGCymIobKJ33bUrFkKSZv8bmZWWvqpTKn5H9PMQBUHJeJWd
-         kpp7i0Lts1viLhbPxdsNReMUKF8yG1FqL0GfzpaajpVGLbDFxFw01b4xeL4vgffGnKdo
-         1Qlk+88KwuPm0K+SoYwc1wDKjc8k6oZONX2B5wWyY7S9VuH6m5cL4Y0iWhs4ttBX/yzM
-         aTa5JX7iY2ClTLASKnPEBTwUtnG4oDbh+vD11P6SC9907uSHQ8bz1iu5VVbpa/3yPAT0
-         NBEhonXbGh2eBQcfJkR8BcPvSTSiVhppJuah38oPedJYZJPhdlmGelpUOBhAYNHJIHDb
-         uVZw==
+        bh=7m+d2dINJHY4yhntyueJTRcLgL/pcpCnEDKKfCNezb4=;
+        b=Wf71HGRAwSPxYPNBBtsueXazAX912oClI0kzCoYoIrbmdZRczmFYOHsXGt4E58UJEA
+         WiP+u7sJBSlNWAirs9NwzI3THdECzH+2yAkNxBDoGs9E0ymoLClWHksAoN7hqp7K1CwV
+         MrjlbHaN8vx1qw/FS9piMmZSweWAyDX4+S5Hr0CCHR7o8f6wwCCd9wCmh0FF0gxB2hax
+         eGoi6g8DtpBL/u65EWZnlUd2xTjitlrra3xtX9Zq6ZkYKtBfKiKxMlyYe/AbtwtMOFCm
+         ljTZP5AMov6FZDZf9gRjmcsZRa3iqEqgedGsjMwsoiFTaclkPiFQbM4pmwrDpz27aBNL
+         BA3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759097314; x=1759702114;
+        d=1e100.net; s=20230601; t=1759097318; x=1759702118;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LqIz6OzC6O4VGsHq3XVXFfT187D1Z7EcHYwW67+UtPc=;
-        b=aDbEMpUu0z225X4Q+I+sTVVwlXdaFBCkVZ7IbU3cQzlV1KldYbHm3mADhNtF92D3f3
-         nmId4kvS5UvDN00NzLInd1nz3opZ+opM8CUZlbAOSkHoQ8Vgyn0lyL8Q2bY7PeprDvDy
-         yUCPrJaO1XGNJ1//Q6esjNolJZsNQIunYVuX3eegcaRsa1pQefYHD6LwFWI1vpW74ric
-         uHB/xL/rn8Uk/l27tUU9phclHOHVu4x4NsOKJgYTyq19hToGEcAHWx3sTagydjN6uFsV
-         9z4TkRqlZrXwvgIHTDJsFqdsuC81/otlPpzZKenADD4RvGfyW2A5rPHpNbEhE604bIzJ
-         fVuw==
-X-Gm-Message-State: AOJu0YxDvl/FHWvOVBKdE4KelEYJjVjP2fvzN4vh6YxBjMeQNDBu+9na
-	yfjqIl6mB0TL6d+yhO/k2k6X5oJTJP+/nStx5S58M303j6YSE5+HPz4CHQ63bNz9O7YfA8KDaPy
-	p+7rizJQaVTjZ
-X-Gm-Gg: ASbGnctPnZkdjWgojxd0f4Ew3SbqKW5YtuHFV1ymlSeSvRYb8fokCwEcVYyVrOgw96S
-	gf8Yzzx0/t0i/hZc6zM7SdENJ2dMey0BtNRk/hjyP0UEK0fHagGbWYbGTHvxbsjRMuUmphRkXT7
-	XPIq6LdNOdcGedOC9LvM0dwTNxEGVTXRudvFLt+yBzXg5MSKXlEqK9xVykTypGMyVDreUhPK3iO
-	SMmGS2LIZ3yVwjedtXevGMpZqH3Z0RXtmqnd297VfoZfoH63DnVb6TaMB1k+0/f8D8pUT4/v0hg
-	5K81IFoiqqQOvHAVvObiyIqKBl3iJOFpmMaVFYLI7XcwpsguQCONiVFqk3KANLJ6RBcBNbV/DaU
-	QmCh1RAhnpOfSzUjeZJ+Y0Chyxfamy/njYut7eIbyVWveohNZYiSWIYDRc/EfyAjzWY8vv8eoll
-	UXQUh8vHHdIh10UDaepCVadPCmCXH2OVbjrQWq
-X-Google-Smtp-Source: AGHT+IHsSRisz6yh5VvuRQtlB8QVAK9/CbJQbppH+Bu5MK6HK+ciY67gX3Bd2JDPZ2ceZCsx+GRyBw==
-X-Received: by 2002:a05:690e:150b:b0:633:ac5d:29e9 with SMTP id 956f58d0204a3-6361a7195ffmr14619585d50.6.1759097313965;
-        Sun, 28 Sep 2025 15:08:33 -0700 (PDT)
+        bh=7m+d2dINJHY4yhntyueJTRcLgL/pcpCnEDKKfCNezb4=;
+        b=gmPLuuMUbp+Xyw8Au7I/HyMoIWLk5yKZoxo2HFZyruoPZA4+syk5wFqq9990jwxzBK
+         rR6i9iNpogHh/cikm+4l6aPqg7IZ76rvloeMz1hIMgiVYl5bpCPb9BQa9hCGPmOVt2a+
+         b44ZxM3sMtKgtJicYR5xBJkDWtv2SPWw5HY3xQ5pm4Bsu5Abe8+22/uGYfhKcyyzbr50
+         8bS4fcafQDhgKKtJJfeh6BZ61kuUGl278asKcJ6CuUb7TVM3bUze5H0azOcO3EPapqvM
+         A7PLC0QvN+lXx5zMFqxXd7Hn4JmqUwufaMiMP3B0t4Mrt6cljdMtw5UxUl8clFeiuIAE
+         Q3WQ==
+X-Gm-Message-State: AOJu0YzTtaaEMGMUt0Qqq2EB50n+5O4eFSyhR0L6U3K/mgCcsLMH2MMC
+	m4V+uIolvGQgSFCIGG8MT7Og8bS+EBktmYqfYbYWAhFkxexmQy1wKgRctOV9WvfbKrwuDRooZBT
+	ufiN2FqE=
+X-Gm-Gg: ASbGncvPbPh0vL4gtBdMAB2pMNzTyoWSjf04EorX0d/3OIC9BUguPGq3/8KY12pvvS5
+	k78IPR75Tzi/rp+E6XqXVzYxtq4G3lWM7BUMHN3RKMPFFN4l3T+kPBlK21ixtFitNl8J4wZv4i1
+	yNz3ZkKvxRfEA/TgOFKM5/DQaCM2xGaxBXxCqhyJLpcecMfIfddde4zla7W5xlcnDrk5Xd+Cv45
+	Czn8u+rD/gXmOEBz4nqeXI08RsleK0dEO47rWTIXPSdKhcCtDFzLcZpvRmkIeDvHGI+EeVp/NF4
+	Pt+1YQAclKtVgxcJgdfqNM7hSuvjA6uurPtWrj7Ei8Uzb+artxVYXSTfKo3wUVUICx57zgKYYtx
+	XFKsc+eSIS4wzATIQCh9wS1/uWrnBGZb8IMFwd/izDKpkZ4edze5yEZnHTH+VTJICQ+Un7Vg+Zf
+	rK2Dw5WZmaK0DYVKSUGDXvL64BYtF/P6I6JDNy
+X-Google-Smtp-Source: AGHT+IGs3besbUwTyOKNkK+cKYR+gz2Ii1lhxtDt5+Z4gkNMz88jsjtyn0PUChuqBK0CWZBTIRAD7A==
+X-Received: by 2002:a05:690e:1406:b0:635:4ece:2412 with SMTP id 956f58d0204a3-6361a8a52f9mr15833862d50.50.1759097317794;
+        Sun, 28 Sep 2025 15:08:37 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-eb383929b93sm2942326276.21.2025.09.28.15.08.33
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-eb38393c958sm2931931276.26.2025.09.28.15.08.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Sep 2025 15:08:33 -0700 (PDT)
-Date: Sun, 28 Sep 2025 18:08:31 -0400
+        Sun, 28 Sep 2025 15:08:37 -0700 (PDT)
+Date: Sun, 28 Sep 2025 18:08:35 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 21/49] builtin/repack.c: factor our "generated_pack_install"
-Message-ID: <96d27261e75fd2ae46d9633b3d4eff243dbcc187.1759097191.git.me@ttaylorr.com>
+Subject: [PATCH 22/49] builtin/repack.c: pass "packtmp" to
+ `generated_pack_populate()`
+Message-ID: <ab0dc6668339f24787dc80d2dc05f0d31cfadae6.1759097191.git.me@ttaylorr.com>
 References: <cover.1759097191.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,122 +78,50 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1759097191.git.me@ttaylorr.com>
 
-Once all new packs are known to exist, 'repack' installs their contents
-from their temporary location into their permanent one. This is a
-semi-involved procedure for each pack, since for each extension (e.g.,
-".idx", ".pack", ".mtimes", and so on) we have to either:
+In a similar spirit as previous commits, this function needs to know the
+temporary pack prefix, which it currently accesses through the static
+"packtmp" variable within builtin/repack.c.
 
- - adjust the filemode of the temporary file before renaming it into
-   place, or
-
- - die() if we are missing a non-optional extension, or
-
- - unlink() any existing file for extensions that we did not generate
-   (e.g., if a non-cruft pack we generated was identical to, say, a
-   cruft pack which existed at the beginning of the process, we have to
-   remove the ".mtimes" file).
-
-Extract this procedure into its own function, and call it
-"generated_pack_install"(). This will set us up for pulling this
-function out of the builtin entirely and making it part of the repack.h
-API, which will be done in a future commit.
+Pass it explicitly as a function parameter to facilitate moving this
+function out of builtin/repack.c entirely.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c | 66 ++++++++++++++++++++++++++----------------------
- 1 file changed, 36 insertions(+), 30 deletions(-)
+ builtin/repack.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/repack.c b/builtin/repack.c
-index a4d80b6b04..8c3a5f4f80 100644
+index 8c3a5f4f80..2141c43bd2 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -183,6 +183,38 @@ static int generated_pack_has_ext(const struct generated_pack *pack,
- 	BUG("unknown pack extension: '%s'", ext);
- }
+@@ -150,7 +150,8 @@ struct generated_pack {
+ 	struct tempfile *tempfiles[ARRAY_SIZE(exts)];
+ };
  
-+static void generated_pack_install(struct generated_pack *pack,
-+				   const char *name)
-+{
-+	int ext;
-+	for (ext = 0; ext < ARRAY_SIZE(exts); ext++) {
-+		char *fname;
-+
-+		fname = mkpathdup("%s/pack-%s%s", packdir, name,
-+				  exts[ext].name);
-+
-+		if (pack->tempfiles[ext]) {
-+			const char *fname_old = get_tempfile_path(pack->tempfiles[ext]);
-+			struct stat statbuffer;
-+
-+			if (!stat(fname_old, &statbuffer)) {
-+				statbuffer.st_mode &= ~(S_IWUSR | S_IWGRP | S_IWOTH);
-+				chmod(fname_old, statbuffer.st_mode);
-+			}
-+
-+			if (rename_tempfile(&pack->tempfiles[ext], fname))
-+				die_errno(_("renaming pack to '%s' failed"),
-+					  fname);
-+		} else if (!exts[ext].optional)
-+			die(_("pack-objects did not write a '%s' file for pack %s-%s"),
-+			    exts[ext].name, packtmp, name);
-+		else if (unlink(fname) < 0 && errno != ENOENT)
-+			die_errno(_("could not unlink: %s"), fname);
-+
-+		free(fname);
-+	}
-+}
-+
- static void repack_promisor_objects(struct repository *repo,
- 				    const struct pack_objects_args *args,
- 				    struct string_list *names)
-@@ -1045,7 +1077,7 @@ int cmd_repack(int argc,
- 	struct existing_packs existing = EXISTING_PACKS_INIT;
- 	struct pack_geometry geometry = { 0 };
- 	struct tempfile *refs_snapshot = NULL;
--	int i, ext, ret;
-+	int i, ret;
- 	int show_progress;
- 	char **midx_pack_names = NULL;
- 	size_t midx_pack_names_nr = 0;
-@@ -1434,35 +1466,9 @@ int cmd_repack(int argc,
- 	/*
- 	 * Ok we have prepared all new packfiles.
- 	 */
--	for_each_string_list_item(item, &names) {
--		struct generated_pack *pack = item->util;
--
--		for (ext = 0; ext < ARRAY_SIZE(exts); ext++) {
--			char *fname;
--
--			fname = mkpathdup("%s/pack-%s%s",
--					packdir, item->string, exts[ext].name);
--
--			if (pack->tempfiles[ext]) {
--				const char *fname_old = get_tempfile_path(pack->tempfiles[ext]);
--				struct stat statbuffer;
--
--				if (!stat(fname_old, &statbuffer)) {
--					statbuffer.st_mode &= ~(S_IWUSR | S_IWGRP | S_IWOTH);
--					chmod(fname_old, statbuffer.st_mode);
--				}
--
--				if (rename_tempfile(&pack->tempfiles[ext], fname))
--					die_errno(_("renaming pack to '%s' failed"), fname);
--			} else if (!exts[ext].optional)
--				die(_("pack-objects did not write a '%s' file for pack %s-%s"),
--				    exts[ext].name, packtmp, item->string);
--			else if (unlink(fname) < 0 && errno != ENOENT)
--				die_errno(_("could not unlink: %s"), fname);
--
--			free(fname);
--		}
--	}
-+	for_each_string_list_item(item, &names)
-+		generated_pack_install((struct generated_pack *)item->util,
-+				       item->string);
- 	/* End of pack replacement. */
+-static struct generated_pack *generated_pack_populate(const char *name)
++static struct generated_pack *generated_pack_populate(const char *name,
++						      const char *packtmp)
+ {
+ 	struct stat statbuf;
+ 	struct strbuf path = STRBUF_INIT;
+@@ -271,7 +272,7 @@ static void repack_promisor_objects(struct repository *repo,
+ 					  line.buf);
+ 		write_promisor_file(promisor_name, NULL, 0);
  
- 	if (delete_redundant && pack_everything & ALL_INTO_ONE)
+-		item->util = generated_pack_populate(item->string);
++		item->util = generated_pack_populate(item->string, packtmp);
+ 
+ 		free(promisor_name);
+ 	}
+@@ -896,7 +897,7 @@ static int finish_pack_objects_cmd(const struct git_hash_algo *algop,
+ 		 */
+ 		if (local) {
+ 			item = string_list_append(names, line.buf);
+-			item->util = generated_pack_populate(line.buf);
++			item->util = generated_pack_populate(line.buf, packtmp);
+ 		}
+ 	}
+ 	fclose(out);
 -- 
 2.51.0.243.g16eca91f2c0
 
