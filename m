@@ -1,71 +1,72 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BECC19C540
-	for <git@vger.kernel.org>; Sun, 28 Sep 2025 22:09:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A637F19C540
+	for <git@vger.kernel.org>; Sun, 28 Sep 2025 22:10:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759097398; cv=none; b=MEvKFSAviFYgNjQPnfIzwd7Ip6dUS5WeDifPCuy7ImuBfSV4Ohc69M9wyaJzCwcoKdZdR23EHqxgmCpPE3rskZOyzgvTO72VniZCq0OLybIFVTFE0f7IOnpYKZoDPfh0C4zHQcuTl+rpk0eQY+KieIk8gicrd/2s+Qy/KcCMXIE=
+	t=1759097403; cv=none; b=jmPLc2fkNulzCvYMzNXiGYzsNQ/gYrnvyQfzYkZQHkw3kpWVWQ5jgXQalEScdmgxhdH4pyXWcHm0Sea2a34coStqWZru96IvC4tdlcGiypizQcUxwUYB/5sa9wH/7tXiEa9TnKrdgbwyZ6jc123ftcllQx9+ko71ImPIu73S41g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759097398; c=relaxed/simple;
-	bh=6wr3ixb98+ZqOMhKZHKdsg4Q7iWK9qaNYSCaJK5khw8=;
+	s=arc-20240116; t=1759097403; c=relaxed/simple;
+	bh=ywBJEI0AMT4kAjslMpJQHjIcuhUxdJuyTQQu+CtIClk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SgTBOdi+DohWInVSCsUwbXFnjZSCM9soGIODb5KkFwb29uzchGRTHfCLCNuR/0swc01jpp0kWxncbn2J6DJMhBRRAEzjxwDsmxoPsIL+GdGAux2UvqAbQcaMHbqB1p8I+yo0S4/68dxcaI++lAH7VEqMyIqwuv+zkvn8cceZhNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=kqQkBSEt; arc=none smtp.client-ip=209.85.128.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=s6ByVCeb5IfbxlZv2Odl3YsGbPkgegGDvz+Yqx7Og/KWSYIDfEnPNtXs3jy21SgN+CzqPhiRwA8CKR3CjqpvneoH8ii6U+gaMkjv4jgVMe0cBSkyOT+1h5wMkDIvNLCdpYcQup7KcILji8jCfQ8ZmwJlDQCn7I0pk2NOoOJ+jwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=hLKP6m1u; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="kqQkBSEt"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-723ad237d1eso41802157b3.1
-        for <git@vger.kernel.org>; Sun, 28 Sep 2025 15:09:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="hLKP6m1u"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-71d5fe46572so52939287b3.1
+        for <git@vger.kernel.org>; Sun, 28 Sep 2025 15:10:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759097395; x=1759702195; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1759097400; x=1759702200; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PlcxYRkmmeTbZUIG8NBAby2nVHE4zbKx84egJgcxo5k=;
-        b=kqQkBSEtcIF1jTDGXayRme8vyhsCd6gdqMk1Lx+jQIFIcftVdymzNDSSQobcE/tDO5
-         2LwHFpprb2urTsbUQniBf2fjmwPHWw1Ujve5UbfL34MN0rCgadstVyBBWookvJfcrZZe
-         eyGeXHISH5w9qJ/o/5gTCWWhNeSpk221EshE/j8ly/xKmKX9YXKJSIHHKWUnEVXCziMj
-         elgSPWOsU5cp+jKjv8JQ7wYP0hxUd+BIHMf4x90Q9JkFt5wOJvZjBwcM7/a0QxXNWGeV
-         UyPL+ldVzl+dX7bvAkl7WDKSmQcX0otzRvpVqXAMBTLnMotCqXD7UcHxC5yotNlXByU9
-         /iNg==
+        bh=pSyCap5rTofeNgeps3fxzAOmj3s0mOvn1DeqCXrOlU0=;
+        b=hLKP6m1uZHmyrTQBK2nIfnru/5MuUs3JCNckqhMQmgYw5gcOHabjGMD7WtVPGxnlWp
+         HAdgbTexLiBtSOCGbZN04FKdcCdetkfChM4vkeqLJo6pqfOKNTyaOp3y2ORB9xX61lcY
+         I49LV+HU2MmYsJkWIZkDMaNgUZ/lF2vwfOGTP1+V1KNsqyngqdk6/QELGtxeX8r/Asc8
+         5ICeJak0SHFjCcx7m70Sy1DVcatuJaRgQexwkqvBdV6FV3uiZXiLhSl7isnv/IfTgUe9
+         ahbbG/Nu8kQF06ncLbIzo14vmVdIRNCAhQmV9LKvpXU6acqxNxsMNR16qIdUxuCIWpIg
+         X0eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759097395; x=1759702195;
+        d=1e100.net; s=20230601; t=1759097400; x=1759702200;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PlcxYRkmmeTbZUIG8NBAby2nVHE4zbKx84egJgcxo5k=;
-        b=uhTjLHkN6CcD1OUW10nKJmaZBOsWAQrjXPMiRMEiRG2gpBKZMmzEf3RpHm2SA1KR2k
-         +IvhfdAPEaSVVwhB/GgM9loPf7RhS/672bqAXniuhKy+EUxrxExi61tyjoaZ/JDriH+e
-         59keRFZ+xUIOkvyXf8X6/QOYbHYK1+3UKbO1cmgnnA0+PhSj6JOj7WGJDUBQGdGL/y10
-         43JTWwX0dcT98BCVkse4mhWARz1/bC9THyFmPpUlQEkqSBjxFh8DGbsGR10Jng4gztR9
-         kIy8l5U98GKVxJX4xvolwl2Xcdb3hrKI3WsgdMKOl5o+Py+2n+jF8OJI9n1thiweN/aT
-         nSfw==
-X-Gm-Message-State: AOJu0Yw6JRE2GZlzWPFc/3aVi4BUdBLrm4yyx5YOzDbX7R3+3mQRGss+
-	LfKtDLhxpaJ85ff/G0LhElj8/2ZSEbt4N/AACS0BaO12o9/G73HZmJ+5QPod2X7kZy46N7Kv+Nu
-	G+J+oShw=
-X-Gm-Gg: ASbGncsdXkEel+xytmb1f+tEaeWzLRS6JeiohEkGW6h0OcTFpeQX04CTIp5+CBhPMiB
-	MJMPUjqWW4PIjvZa/bWEs/9F0TN+kduZJBucqboGkMTDS5IeXDo8D2oCanNIW+TT/RF5MutPbxk
-	eFZSkw0fTGAAyqJGlCqbE2tZN5Iel+l/ME2OMtgZUDouzF4PKYelPgTvoogPwDOcKYj/rsmY89x
-	OUlicGQvqqoje+CUkY+WaFP6BjX8mlL2r5b9M/i7sTg9fX/TGQAZyS/PTpCoOC2myi15lguqsYE
-	3QrseFMOquBiaBWYPOUxb3WJ1MDMfuzHzjAhjt9fPaWjZFFkva0kKV3DxW4DADMsG3dD3f1cEED
-	loGxJ0cC1mjIhOJwwPq2N8oH6DjrdYojSkyDVcFhI8+A8oNMqISllNsdVwCDAkLb4hm+ZokP14f
-	EFgVXz7wvcGyX+OM8uj5MkYEyYRg==
-X-Google-Smtp-Source: AGHT+IFmfpvmkhN+iH3E5zsUf/Fc+QYUS/A1VTD7JVPj8f4dAPZ1Cw7ZappjhZkOupB6U8MHntAWhA==
-X-Received: by 2002:a05:690c:d84:b0:76b:c002:71bb with SMTP id 00721157ae682-76bc0027599mr126791207b3.4.1759097395468;
-        Sun, 28 Sep 2025 15:09:55 -0700 (PDT)
+        bh=pSyCap5rTofeNgeps3fxzAOmj3s0mOvn1DeqCXrOlU0=;
+        b=PmUWRYdxisLAhyEPzEJX9px/LsujxwUUvYUlCuhHh4SzEeykZzTAwdhohTXT+hiyrq
+         bT9EQ+lki7zy0onF2YCRSgvVodmHtFt3XineCRvgxZTN/TXOPId8b3awsaBx9rhCOGsn
+         kX0Q1st9tFbIPpWEYw9dISQLqNcUCvizyFRDgXCOQhKa8AVOKfKCQLirEZ7n6cfPEIwU
+         hWZLKJuLRX9/TXyEQ16/r6PGUlxT9N03tgbsxy01udB+Ft/sOQ2ZRlWrtl3ZvnDI/7Ze
+         /2DB4FhrmGKGdgjLGsiRgE/HLxAHHBJDR7QLvZpYT3G2tCet1tja1xzuqMd2gM4xk2XL
+         fHhw==
+X-Gm-Message-State: AOJu0YzuGR2q1IKpM+RDRTcI+R2AoJzWZrz/dPWSHUPGvw0xKEdhwBRA
+	fz/aiySC26LM8T5Qflq5HFjgnwlY4M3MmLmlG8Hz+TgTifFCcptNKyGLWNGJ6fZil0BJcjTsY32
+	UozmvJKI=
+X-Gm-Gg: ASbGncsmvgrlbIHcM4t0wx1rqh6ldBDeOir8XKk1HK0qcZxJYhhKZz2iCCUcqR+01i+
+	N8Lop2ccS3zlPnc4b0UKDthf4OcPX0BkR4khPkR1j3FGJLNqFiQqxCHzG2nUi2xGjjjJxqtEjF0
+	RLnTfBPwCJHNpQJLHfRJktv9cEkVvrMik3RVQ1dgEFQwrs6zW6Jgc5DPVCYda+LNij3eHjJJ0cG
+	23f4SVecK5kTTVfGoZcSVH/VunIblqx7zzv6MwAnj6sZkVwXuWP3T0AOjtdF/Qr9VYgHvGumOoX
+	s0c+yenM1Ag5tBKBB66buPZDbhJYZ8W8IQj2XkdtLCVghtLN1sZ5S5NVoWmso/nGyEEbTxv7MWD
+	GiAcSd0tamRPfvSz1E1gCTL81uMFDw5mIkibbVlNxyahJ65pcRY8z4ETcsceMC3y24s0ggfTr8l
+	Rn+5bfBmWD23W5GfdMWXDHBPgeQyIg4chQ3Q+o
+X-Google-Smtp-Source: AGHT+IFKKa7yAvZg/ofEJomFmG1qcnxno4iGv6EUc9bQCH4Vg/n50iDzzwphT7g/i9dt//LhfuHncg==
+X-Received: by 2002:a05:690c:6605:b0:734:be90:3b11 with SMTP id 00721157ae682-77229ce5df6mr43235997b3.17.1759097400569;
+        Sun, 28 Sep 2025 15:10:00 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-765c60b7c4asm22748497b3.36.2025.09.28.15.09.55
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-765bb916b3bsm23143047b3.2.2025.09.28.15.10.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Sep 2025 15:09:55 -0700 (PDT)
-Date: Sun, 28 Sep 2025 18:09:51 -0400
+        Sun, 28 Sep 2025 15:10:00 -0700 (PDT)
+Date: Sun, 28 Sep 2025 18:09:57 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 40/49] builtin/repack.c: introduce `struct write_pack_opts`
-Message-ID: <109109618687efeb932bee7dd5882557ab0576f4.1759097191.git.me@ttaylorr.com>
+Subject: [PATCH 41/49] builtin/repack.c: use `write_pack_opts` within
+ `write_cruft_pack()`
+Message-ID: <7826afc17376f0d4a7f3169d9aafce21b3273ff5.1759097191.git.me@ttaylorr.com>
 References: <cover.1759097191.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,55 +78,33 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1759097191.git.me@ttaylorr.com>
 
-There are various functions within the 'repack' builtin which are
-responsible for writing different kinds of packs. They include:
-
- - `static int write_filtered_pack(...)`
- - `static int write_cruft_pack(...)`
-
-as well as the function `finish_pack_objects_cmd()`, which is
-responsible for finalizing a new pack write, and recording the checksum
-of its contents in the 'names' list.
-
-Both of these `write_` functions have a few things in common. They both
-take a pointer to the 'pack_objects_args' struct, as well as a pair of
-character pointers for `destination` and `pack_prefix`.
-
-Instead of repeating those arguments for each function, let's extract an
-options struct called "write_pack_opts" which has these three parameters
-as member fields. While we're at it, add fields for "packdir," and
-"packtmp", both of which are static variables within the builtin, and
-need to be read from within these two functions.
-
-This will shorten the list of parameters that callers have to provide to
-`write_filtered_pack()`, avoid ambiguity when passing multiple variables
-of the same type, and provide a unified interface for the two functions
-mentioned earlier.
+Similar to the changes made in the previous commit to
+`write_filtered_pack()`, teach `write_cruft_pack()` to take a
+`write_pack_opts` struct and use that where possible.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c | 28 +++++++++++++++-------------
- repack.h         |  8 ++++++++
- 2 files changed, 23 insertions(+), 13 deletions(-)
+ builtin/repack.c | 27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/repack.c b/builtin/repack.c
-index 5fed79e826..6df7c88085 100644
+index 6df7c88085..501359c580 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -138,9 +138,7 @@ static int finish_pack_objects_cmd(const struct git_hash_algo *algop,
- 	return finish_command(cmd);
+@@ -221,9 +221,7 @@ static void combine_small_cruft_packs(FILE *in, size_t combine_cruft_below_size,
+ 	strbuf_release(&buf);
  }
  
--static int write_filtered_pack(const struct pack_objects_args *args,
--			       const char *destination,
--			       const char *pack_prefix,
-+static int write_filtered_pack(struct write_pack_opts *opts,
- 			       struct existing_packs *existing,
- 			       struct string_list *names)
- {
-@@ -150,9 +148,9 @@ static int write_filtered_pack(const struct pack_objects_args *args,
+-static int write_cruft_pack(const struct pack_objects_args *args,
+-			    const char *destination,
+-			    const char *pack_prefix,
++static int write_cruft_pack(struct write_pack_opts *opts,
+ 			    const char *cruft_expiration,
+ 			    unsigned long combine_cruft_below_size,
+ 			    struct string_list *names,
+@@ -234,9 +232,9 @@ static int write_cruft_pack(const struct pack_objects_args *args,
+ 	FILE *in;
  	int ret;
- 	const char *caret;
  	const char *scratch;
 -	int local = skip_prefix(destination, packdir, &scratch);
 +	int local = skip_prefix(opts->destination, opts->packdir, &scratch);
@@ -133,62 +112,55 @@ index 5fed79e826..6df7c88085 100644
 -	prepare_pack_objects(&cmd, args, destination);
 +	prepare_pack_objects(&cmd, opts->po_args, opts->destination);
  
- 	strvec_push(&cmd.args, "--stdin-packs");
- 
-@@ -175,7 +173,7 @@ static int write_filtered_pack(const struct pack_objects_args *args,
+ 	strvec_push(&cmd.args, "--cruft");
+ 	if (cruft_expiration)
+@@ -267,7 +265,7 @@ static int write_cruft_pack(const struct pack_objects_args *args,
  	 */
  	in = xfdopen(cmd.in, "w");
  	for_each_string_list_item(item, names)
--		fprintf(in, "^%s-%s.pack\n", pack_prefix, item->string);
-+		fprintf(in, "^%s-%s.pack\n", opts->pack_prefix, item->string);
- 	for_each_string_list_item(item, &existing->non_kept_packs)
- 		fprintf(in, "%s.pack\n", item->string);
- 	for_each_string_list_item(item, &existing->cruft_packs)
-@@ -665,14 +663,18 @@ int cmd_repack(int argc,
- 	}
+-		fprintf(in, "%s-%s.pack\n", pack_prefix, item->string);
++		fprintf(in, "%s-%s.pack\n", opts->pack_prefix, item->string);
+ 	if (combine_cruft_below_size && !cruft_expiration) {
+ 		combine_small_cruft_packs(in, combine_cruft_below_size,
+ 					  existing);
+@@ -599,6 +597,13 @@ int cmd_repack(int argc,
  
- 	if (po_args.filter_options.choice) {
--		if (!filter_to)
--			filter_to = packtmp;
+ 	if (pack_everything & PACK_CRUFT) {
+ 		const char *pack_prefix = find_pack_prefix(packdir, packtmp);
 +		struct write_pack_opts opts = {
-+			.po_args = &po_args,
-+			.destination = filter_to,
-+			.pack_prefix = find_pack_prefix(packdir, packtmp),
-+			.packdir = packdir,
++			.po_args = &cruft_po_args,
++			.destination = packtmp,
++			.pack_prefix = pack_prefix,
 +			.packtmp = packtmp,
++			.packdir = packdir,
 +		};
  
--		ret = write_filtered_pack(&po_args,
--					  filter_to,
--					  find_pack_prefix(packdir, packtmp),
--					  &existing,
--					  &names);
-+		if (!opts.destination)
-+			opts.destination = packtmp;
-+
-+		ret = write_filtered_pack(&opts, &existing, &names);
+ 		if (!cruft_po_args.window)
+ 			cruft_po_args.window = xstrdup_or_null(po_args.window);
+@@ -615,8 +620,7 @@ int cmd_repack(int argc,
+ 		cruft_po_args.quiet = po_args.quiet;
+ 		cruft_po_args.delta_base_offset = po_args.delta_base_offset;
+ 
+-		ret = write_cruft_pack(&cruft_po_args, packtmp, pack_prefix,
+-				       cruft_expiration,
++		ret = write_cruft_pack(&opts, cruft_expiration,
+ 				       combine_cruft_below_size, &names,
+ 				       &existing);
  		if (ret)
- 			goto cleanup;
- 	}
-diff --git a/repack.h b/repack.h
-index 25a31ac0a0..6ef503f623 100644
---- a/repack.h
-+++ b/repack.h
-@@ -32,6 +32,14 @@ void pack_objects_args_release(struct pack_objects_args *args);
- void repack_remove_redundant_pack(struct repository *repo, const char *dir_name,
- 				  const char *base_name);
- 
-+struct write_pack_opts {
-+	struct pack_objects_args *po_args;
-+	const char *destination;
-+	const char *pack_prefix;
-+	const char *packdir;
-+	const char *packtmp;
-+};
-+
- struct repository;
- struct packed_git;
- 
+@@ -651,11 +655,8 @@ int cmd_repack(int argc,
+ 			 * pack, but rather removing all cruft packs from the
+ 			 * main repository regardless of size.
+ 			 */
+-			ret = write_cruft_pack(&cruft_po_args, expire_to,
+-					       pack_prefix,
+-					       NULL,
+-					       0ul,
+-					       &names,
++			opts.destination = expire_to;
++			ret = write_cruft_pack(&opts, NULL, 0ul, &names,
+ 					       &existing);
+ 			if (ret)
+ 				goto cleanup;
 -- 
 2.51.0.243.g16eca91f2c0
 
