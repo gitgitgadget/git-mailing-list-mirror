@@ -1,71 +1,70 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1934C98
-	for <git@vger.kernel.org>; Sun, 28 Sep 2025 13:54:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0551A83ED
+	for <git@vger.kernel.org>; Sun, 28 Sep 2025 13:54:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759067689; cv=none; b=kLWt61770cUkQIXLoiRw2GrCqNOUbZLIvN8IsymejKxbA7Aeu6/UEHsazWLMzRstKw7wrgoWCNFKF9lip2i9uRvqykLkGB4JBkxjInRtW+Oq80defEFeV2sSSFb0mze1L+GlovSdoEJBv2UE1b68g4pUdR9euZ28fX/QNwbkPhs=
+	t=1759067690; cv=none; b=axUek/zniNoD+6FWZjOSgAbVxKrwLm7MXr6EYfzAUJb6glfcRr932R0bAdSC+mvtL9gP3ituDFvHAH1sN3de5INJ6Mp1CVoV0GjTmd1QWBzOE8/WekdY2XJJtWy77yTYVE1uGylhOdU6mi0DCLVtRPETQyZ5MuWqpsqJqtUhWYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759067689; c=relaxed/simple;
-	bh=xcDrrQ5nvR85OtjF3L6JopdnLoipt0r07FDdAXNFGnI=;
+	s=arc-20240116; t=1759067690; c=relaxed/simple;
+	bh=qnYMqrQB65BM7EbRQV73bs4dJL6YRmsxMtxXmGBVbu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C53FLIufNG4xD999moiCQFVhWMTmLE3kg8JncY3KhHaXI2yGlo9grBYYm8+MoeKWkomO7NLr7h9VC9NMdJNQv98/RCN0+elv8H03+rjKqTTqx/VUs2i6Kvdq32uL0zpc0Fh2vkbgmCrv0g3mJ5jPaqYS+HrycUZtqz4IAVw9o8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BAWZQBgv; arc=none smtp.client-ip=209.85.222.177
+	 MIME-Version; b=srQ7OjFANZM6IkmPp1U9+kLN/up6eY9Jenp7+wJVU/qDWTnYY1AXA/+Z2Pqx4yxH22hLimVEfi/U8QSqrTuWXmy6CBbalSBMAHo8XuCXtbM/QYgDfjdiEsa1zFGoICJOP8Keu3L5fhEEKAYp4VR6KhqusB0JLObm+xRdvNDAsa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S95ukp62; arc=none smtp.client-ip=209.85.222.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BAWZQBgv"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-85a4ceb4c3dso407462185a.3
-        for <git@vger.kernel.org>; Sun, 28 Sep 2025 06:54:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S95ukp62"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-85780d76b48so397190185a.1
+        for <git@vger.kernel.org>; Sun, 28 Sep 2025 06:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759067684; x=1759672484; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1759067686; x=1759672486; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lT/dAUprFctOjImfylPobbn/LkOkiTqlDwOf/pwWnBo=;
-        b=BAWZQBgvut+IqUzhSCrxS9n0F69gG0sF0TmHPX2tRca7AsuYfM7ISZuM1b9HQ+Imwd
-         m0UFItoqTGZJ4nN9OnP3M31iKBY73KkzuPxVaJGu5jJ0xfE6mhZ4dWEMYAIzUQFwB60/
-         zSFpvbTv1HrfeB3PY5PDdLOUJ1JthyVfF+7gM4nT5hBXyzeG8Gsbudh0Tkuov0NC2GtB
-         vP3omDFaRTHRYYX90b7geTBSe8vrIPIJ/iT7uuU/QFFHqgZAZBU0HLeRjYcKT1mDdRMv
-         FqTBDEJyxKOK76TziSlgp3/IcUIb8Z38iB9hOjVHzY8WhoDWjG5C1SKajWcsPCA2uXXh
-         D5lQ==
+        bh=uQZnEbEekfxK6STvmPIcxAeSH1fjUFLzKlAoNt+ap5I=;
+        b=S95ukp62AZ8WObrVrIXLdUxxVrLzLPKiq4CCv+SSaLSdC9u4MDGAvnplBOSvsvi77V
+         /35GJDZxYhk7UlJCma1fEHfhHvEJu6MjDOV0VcnNOBc8oPtxH9fqkl2BGpnuZiokzs68
+         s46nu6r5E/Vto9Ym91vmIw13eTTty28tTfV7psoHRvpPqPvOGuZYpmFCisOShXxheJKa
+         bPX4Y9wsSeAeLXFJ5Tt7hkxiFFdIRaMboB3wldI/1gcmI+m+CpjgqSZnkfdcdYRx28nm
+         LaQGLhbzOoWIcbd83dhrm7A+KptJwympO1MNu1Mdzz0C7EvkxZX4L367e7kIEcHxTPMp
+         SiMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759067684; x=1759672484;
+        d=1e100.net; s=20230601; t=1759067686; x=1759672486;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lT/dAUprFctOjImfylPobbn/LkOkiTqlDwOf/pwWnBo=;
-        b=WgJnso4w7Xm/pP6qSk3qRY5jMQsFbxcs5C+GECU78bFjj2RAQbVgmlBnVr0ALtDe30
-         IiRsKajnrrV9Ne6BQ6jDcLZRJbbNyi09mNy8gMK/jbRyzu3hqBuezVMpTGUxyll+yTwH
-         1F3NuiETcE7JDFH0GDboxqh+bZrLMJRnJKm4x4IMfIsgV3L7wuQt0R7b95jttEi6LVOg
-         8NwvGiwlKPM55AKNz6vNIz0aV65k5x/11/THAaHFEvOo8yznjoxKv/nNlKqNG1PunTvl
-         ZVVkGDUK+N9sffCjYX/5cmn9H5Q7Fi3tNS0kDyqKReiDT4+IZXJVB2wqZwiLwZ3vg9GX
-         qIqA==
-X-Gm-Message-State: AOJu0YzQT6+UJD3i8hr2Sp11L42eHqDcUqeeW19E7adVQf5j8VcpBKSO
-	BqquCaaUYNtz2nwrCYpiB/xkV0G6REQmI4JwzzooctUmClxRhUOaauizRZYCoK4N
-X-Gm-Gg: ASbGncs0l+GGx61+AEpIpLVrBOMs+wR9GuwMOtxrHOnHR0D6RzYJUgJ/7bSVBNQEaFF
-	GTzghc5br4tirKSW6Be15D618QIlnJnQriMHeI1sboxiQg5q+uVsygyn8sjlNZx7G2ODLkW97nv
-	RtPcX9TrSfA+0uPzJlV1Qn02xOHb2t9qQcMR+xecYMiTR5NHTFm4qj2Ta0TlLwoxJ2LKzhgcgME
-	dAhzvDU74XyK+VqOtUvqFsiHSU5gbgNEervg2FfpYmBXVI1IktYLDqAXhltLjctS+69pZjmz5w4
-	yJk5oWAKt4BYY0LX4unO5kQTUOfcTbdrJqjwCQzDYrCR4daSERsqr7ChVti9MTqJjXfL+3KTj1t
-	dH/vN7m8gj149QEp/FpNT9D8r+debevTbDS9VB7HALqUvtpTViG2f6gEDUDjXiKtPMUXTMqcecJ
-	GS70O0xDjHtTjeJfgpzoagndxS8lnPQsiA5jO+nqof
-X-Google-Smtp-Source: AGHT+IFFtXC3NquF925BfY1whwX98lzJrjx3tDD3+Fl4A+fJimZpljlJaLvrD+WrKW4yU8Qwzcv/DA==
-X-Received: by 2002:a05:620a:29d2:b0:813:41c3:e888 with SMTP id af79cd13be357-85ae061bc62mr1868271385a.32.1759067683598;
-        Sun, 28 Sep 2025 06:54:43 -0700 (PDT)
+        bh=uQZnEbEekfxK6STvmPIcxAeSH1fjUFLzKlAoNt+ap5I=;
+        b=nSEWLHfNiwgxDBJ4Tw6AQuaq/EqhNwgCT+T+Da+KLJUBEsD+V3T4EyOvsKkFAHOjWs
+         F/FGcMFZWYEqcngPZM4m+jfMZXa+easTTwK3jBd6mYAlEDqqkn21tn50tNPsWqfBWyAD
+         Jt3wAtqCDvv7+TcT7Og3OlIAmk5+O2aeSkoCrepXlUaN6xC4RB3r7mlLH7rOzGb95cPK
+         ecf6Av/rIkboLZ0SAc6XJrFRw2feHPAO+5voJWFhZaGhqPWVCEq4ZiYgBDBEt5NPmCoX
+         51JgYuL4B855/TS2Xra8Qe8dUc8Aj97FP7qOkp4OchhAUoT8gnBYLDTI23ukAeStWbu2
+         KpIA==
+X-Gm-Message-State: AOJu0YxRJhxtsiFqGireYEQKxLgacnuAUdLH1ywIjRG5GcAs1pCPqUYk
+	frT1NH3OFse1PkCq8e8Cn38bqcV0lRxXwzhKOwZdQKuwD4W3S6fTIymUKYDHY4eL
+X-Gm-Gg: ASbGncue4xnJrp+j5H1N4aWUclfQ8nj/8ZX7MWzw8o4X8YctdAMxaeFu0ZNoqEpMhO9
+	1o+MpDVvnaWGT0DaQLQSVQGzH6nrQh8IRBmYZrMaAX70X2TNjqo+bIPZc8XARPgoapMxLQG9kj0
+	u5QZtG2Van56ZKcesNLpyBEDXYWVpWN4CTxagD7BeUIiexyFdTs12KNxURpyYHeCh1zZz+LYE0X
+	TDQ9VsC1isTc8nwtuioqdkoWrAaHn7B2zbH5cGlUS9FQ3zBwzbiRuN48pfZRuBUJAiWsu+ADMhr
+	6b96OJTJnoq/LlUshdAffXLmSyBYB6cbOF7ziuadvfkayzlGH7YiAqor1y1kPokOEljvoLMCXqI
+	0JKr8a5aANnr2FrQeXOAeFa1sVrqu3ad9XuL3WkXkhhphbbCb18JUq2D/qG8F4l2X45zHTfyv55
+	7Ez6e+nGlRsHQakNpSwD60mX5o/ZBQdA==
+X-Google-Smtp-Source: AGHT+IFKj/3bO7MOLPP7pQsFZPSodNpBpzqO4jHdlafA3OtTbDeWbRRGJztBw5ivsDLQ0tECVycBrg==
+X-Received: by 2002:a05:620a:2a01:b0:84e:3c02:810e with SMTP id af79cd13be357-85ae033cbe4mr1716195985a.19.1759067685804;
+        Sun, 28 Sep 2025 06:54:45 -0700 (PDT)
 Received: from USROMMRAPPAZZ01.rappazzo.network (pool-74-105-50-139.nwrknj.fios.verizon.net. [74.105.50.139])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-85c307ad101sm590426985a.36.2025.09.28.06.54.41
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-85c307ad101sm590426985a.36.2025.09.28.06.54.45
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 28 Sep 2025 06:54:42 -0700 (PDT)
+        Sun, 28 Sep 2025 06:54:45 -0700 (PDT)
 From: Michael Rappazzo <rappazzo@gmail.com>
 To: git@vger.kernel.org
 Cc: j6t@kdbg.org,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH v3 1/2] Revert "gitk: Only restore window size from ~/.gitk, not position"
-Date: Sun, 28 Sep 2025 09:54:34 -0400
-Message-ID: <20250928135435.59623-2-rappazzo@gmail.com>
+	Michael Rappazzo <rappazzo@gmail.com>
+Subject: [PATCH v3 2/2] gitk: make Tags and Heads window geometry sticky
+Date: Sun, 28 Sep 2025 09:54:35 -0400
+Message-ID: <20250928135435.59623-3-rappazzo@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250928135435.59623-1-rappazzo@gmail.com>
 References: <20250928135435.59623-1-rappazzo@gmail.com>
@@ -77,47 +76,105 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Sixt <johannes.sixt@telecom.at>
+Currently, the Tags and Heads window always opens at a default position
+and size, requiring users to reposition it each time. This patch makes
+the window remember its geometry between sessions.
 
-This reverts commit b9bee11526ec23541ddbbd75716bfd1acc241463.
+This change saves and restores the Tags and Heads window size and position
+relative to the main gitk window. The geometry is stored in the config file
+as `geometry(showrefs)` and persists between gitk sessions. The window
+position is stored relative to the main window, so it maintains the same
+spatial relationship when the main window is moved or when gitk is restarted
+on different monitors.
 
-The commit catered to an unsupportable port of the Windows Tcl/Tk
-stuck at 8.4.1 that was used by Cygwin. 8.4.1 has some bad bugs in its
-layout engine, and forced changes in Gitk to be compatible. All this
-became irrelevant around 2011 after Cygwin gained an X11 server and
-switched to a supportable port of the Unix/X11 Tcl/Tk (it is now on the
-current 8.6 code base).
-
-Helped-by: Mark Levedahl <mlevedahl@gmail.com>
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Michael Rappazzo <rappazzo@gmail.com>
 ---
- gitk | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ gitk | 39 +++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 37 insertions(+), 2 deletions(-)
 
 diff --git a/gitk b/gitk
-index 6e4d71d585..275f353811 100755
+index 275f353811..79a6dcdb4c 100755
 --- a/gitk
 +++ b/gitk
-@@ -2764,17 +2764,9 @@ proc makewindow {} {
-     .pwbottom add .bright
-     .ctop add .pwbottom
+@@ -3106,6 +3106,11 @@ proc savestuff {w} {
+         puts $f "set geometry(pwsash1) \"[.tf.histframe.pwclist sashpos 1] 1\""
+         puts $f "set geometry(botwidth) [winfo width .bleft]"
+         puts $f "set geometry(botheight) [winfo height .bleft]"
++        if {[winfo exists .showrefs]} {
++            puts $f "set geometry(showrefs) \"[wm geometry .showrefs]\""
++        } elseif {[info exists geometry(showrefs)]} {
++            puts $f "set geometry(showrefs) \"$geometry(showrefs)\""
++        }
  
--    # restore window width & height if known
-+    # restore window position if known
-     if {[info exists geometry(main)]} {
--        if {[scan $geometry(main) "%dx%d" w h] >= 2} {
--            if {$w > [winfo screenwidth .]} {
--                set w [winfo screenwidth .]
--            }
--            if {$h > [winfo screenheight .]} {
--                set h [winfo screenheight .]
--            }
--            wm geometry . "${w}x$h"
--        }
-+        wm geometry . "$geometry(main)"
+         array set view_save {}
+         array set views {}
+@@ -10199,11 +10204,13 @@ proc showrefs {} {
+     if {[winfo exists $top]} {
+         raise $top
+         refill_reflist
++        wm protocol $top WM_DELETE_WINDOW [list destroy_showrefs $top]
+         return
      }
+     ttk_toplevel $top
+     wm title $top [mc "Tags and heads: %s" [file tail [pwd]]]
+     make_transient $top .
++    wm protocol $top WM_DELETE_WINDOW [list destroy_showrefs $top]
+     text $top.list -background $bgcolor -foreground $fgcolor \
+         -selectbackground $selectbgcolor -font mainfont \
+         -xscrollcommand "$top.xsb set" -yscrollcommand "$top.ysb set" \
+@@ -10229,8 +10236,8 @@ proc showrefs {} {
+     ttk::checkbutton $top.sort -text [mc "Sort refs by type"] \
+         -variable sortrefsbytype -command {refill_reflist}
+     grid $top.sort - -sticky w -pady 2
+-    ttk::button $top.close -command [list destroy $top] -text [mc "Close"]
+-    bind $top <Key-Escape> [list destroy $top]
++    ttk::button $top.close -command [list destroy_showrefs $top] -text [mc "Close"]
++    bind $top <Key-Escape> [list destroy_showrefs $top]
+     grid $top.close -
+     grid columnconfigure $top 0 -weight 1
+     grid rowconfigure $top 0 -weight 1
+@@ -10239,6 +10246,9 @@ proc showrefs {} {
+     bind $top.list <ButtonRelease-1> {sel_reflist %W %x %y; break}
+     set reflist {}
+     refill_reflist
++    # Restore geometry after the window is fully created and mapped
++    # Delay Configure binding to avoid overwriting restored geometry
++    bind $top <Map> [list after idle [list setup_showrefs_geometry_tracking $top]]
+ }
  
-     if {[info exists geometry(state)] && $geometry(state) eq "zoomed"} {
+ proc sel_reflist {w x y} {
+@@ -10271,6 +10281,31 @@ proc reflistfilter_change {n1 n2 op} {
+     after 200 refill_reflist
+ }
+ 
++proc save_showrefs_geometry {top} {
++    global geometry
++    if {[winfo exists $top]} {
++        set geometry(showrefs) [wm geometry $top]
++    }
++}
++
++proc restore_showrefs_geometry {top} {
++    global geometry
++    if {[info exists geometry(showrefs)] && [winfo exists $top]} {
++        wm geometry $top $geometry(showrefs)
++    }
++}
++
++proc setup_showrefs_geometry_tracking {top} {
++    restore_showrefs_geometry $top
++    bind $top <Configure> [list save_showrefs_geometry $top]
++}
++
++proc destroy_showrefs {top} {
++    save_showrefs_geometry $top
++    savestuff .
++    destroy $top
++}
++
+ proc refill_reflist {} {
+     global reflist reflistfilter showrefstop headids tagids otherrefids sortrefsbytype
+     global curview upstreamofref
 -- 
 2.51.0
 
