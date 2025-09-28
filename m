@@ -1,162 +1,138 @@
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
+Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4453734BA2D
-	for <git@vger.kernel.org>; Sun, 28 Sep 2025 01:12:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635B516DEB1
+	for <git@vger.kernel.org>; Sun, 28 Sep 2025 02:21:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759021976; cv=none; b=dgRtGuwbyUpmsGve4wGcrIkXGZIby9mKZRMifTIY9CqsMgDYU5FgGt4MZwmsbcQHUz9JclreESnnVs8JmXGUj99bI3cU8iFPkY2gPBXXeKTRCVOtlTcWMvRfbrBojUr0rSJ4t06vDRyxPkS91PlO5EuIHWFJ/CuHJyDSAnTbXt4=
+	t=1759026086; cv=none; b=j/tHM/3RSsE3b8nx4gQy+pB6AvAe03Y1LDIlzusiP5qpR/Kd0P6Je8BLbg1AJpRqAvuzVtH+OUgcWkng6bCj4hqFHmt5TzzODnlzR0Wdag47j4nJcPnqHs8OrRYvNBJbpx1hVLzy+LCD3esZvSscyjaLq/QU2rXy4h/TmmOOUNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759021976; c=relaxed/simple;
-	bh=j2y8PadhLB/h8mTXZy8dBYSshhFa9zo7IOGSbLxk4BQ=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=N2kY1Q9jXcF6cMt14nzdApBr9Uf0gJZsbQA8fOoayDLO27UCDzKTtI8gNBag+KULrM60oIbD9l9sswQswy/aLG9aV24/xyODyYGidH3XjnvgEPrHC46E6sFFQUTTyOhkDhgY+1CiMCu0bswiNhbW48kXA8Jw9aZ/rD9dY6oBgcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yf9lpw+I; arc=none smtp.client-ip=209.85.166.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759026086; c=relaxed/simple;
+	bh=oC2dx9ojbaqwVWBt0GOLji5PaNlfZPLknRmfjX5pE24=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RVRT6tqXjHW35YltQ4ZSsKZm0q7unOUButC6wc10DzJuT+iAS+RA0/vNkbKfs1U6UVDxr/4sh53uZ+nLqUejdUi2KteloavnOEmWRC3y+rq2FEa0eRyWhWobeXof+CRWKaaBTUhTGQqRJJNDe8XORvJqZLf+lFZoj/7xq193PVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=XwnDjQd4; arc=none smtp.client-ip=74.125.224.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yf9lpw+I"
-Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-911520e43edso66574339f.0
-        for <git@vger.kernel.org>; Sat, 27 Sep 2025 18:12:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="XwnDjQd4"
+Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-6360f986fb0so2705637d50.3
+        for <git@vger.kernel.org>; Sat, 27 Sep 2025 19:21:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759021974; x=1759626774; darn=vger.kernel.org;
-        h=mime-version:user-agent:autocrypt:references:in-reply-to:date:to
-         :from:subject:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=j2y8PadhLB/h8mTXZy8dBYSshhFa9zo7IOGSbLxk4BQ=;
-        b=Yf9lpw+IXTmiSdic3+uR9kQZeeTmt6TC7dPTnLOsYD60jvS/NFw6+E7YzNX31dUUia
-         ERBb97YUw/qwTJ1QYOyrw59ObPSY57lrOu3LYXWEXMBQS42X4Q1GW4Gp6/yJcg01Ojht
-         AvuPHCVbgGu7dwY3TYYQbLTL/6op8I8LyXoiK4CSExaXHwev2anIBZSODEkf0LppjC7I
-         ZaSv1ZmNuXbZZRHRSkvqFlSkoWbddTH6BylIoL69+wgpWy4+831Obqr8DMC6C4Y61xg2
-         3c3jSb+wkiY0PyIzsJPHGOS8k4DiKPqAmyugK18SwOFuuKFhfgx3RLKM57fw9bjXi5Fr
-         WV/A==
+        d=ttaylorr.com; s=google; t=1759026083; x=1759630883; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NCTqMXxzkrcRxR1z7h/sRjKg9Gwmvj+uFp4pgCeY7cc=;
+        b=XwnDjQd4HlMIS7TGEfbEK2jy6Pp/bNhxV81tZpvNSkn2QZ/MaDxchvhvEAtEf5UWFc
+         TeOurlyKAXdIqtpeg9VycF+dcl4Oc8v4kY4IrMVaQWmtBIrUCXBRtcPDYKvsc6Q2TnJg
+         qYuKt9iyfxom4EIoZifrVgZ59XR57/SF9b7dJigO1ivTxvsMTHU/Bk/qaMNyaHgMmYeb
+         GUyYb5dDLIbL/rSkVShqaZZdnWG+UXLqvwMp+JhXVPZvnhLBidfMdv6KFR0FwZGARXq7
+         qGnPsHf25dGcbtwUR9F5b8PKsKp7kY6jvyr3LmzcBGRZM0l1yNwOxjSpQHkLYAlhqB9G
+         mTUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759021974; x=1759626774;
-        h=mime-version:user-agent:autocrypt:references:in-reply-to:date:to
-         :from:subject:message-id:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1759026083; x=1759630883;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=j2y8PadhLB/h8mTXZy8dBYSshhFa9zo7IOGSbLxk4BQ=;
-        b=D0RmXWdFARWzhIHqs+By6YxTZkBpve/yd+At2MfUIC9bhyLnythTtrth8Oq2WISSuw
-         kxMlGE++P47p+hy1QWC0nHfCoB3KtPVN9lRvOqqjqOnqluRjnT4lcwbEnBahZ9YZWf6Z
-         rD9qJwt0bnBcZ92FDig1q/Gdb78npkq5dfIk4YFx4BgUSTlGTiKW/LAnx5dtdboBZKHZ
-         N9JNIDvG6gpScpFkHgitQ9DNAaBYmqHyc9yrdeXS1MFXL4TaLi/orv667QEZL4icDc6Z
-         PtM+rRyiXCdTaqCmVvrVTZOoObRDgPzjXUFc/99MMOEdrdSV+fENMsI8Bm+JP4OFqX9x
-         +pIA==
-X-Forwarded-Encrypted: i=1; AJvYcCXLDJNubHsI7OgH2fXETZu+uP/5BUGcxHAu1n+Z56QBP0YNVWiDD6rzD6DkhtcJ8IHdups=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx6OWBrseiyOnSamUGv++c1n3+q6bcQTTVzPjRJurSTb6QZEKQl
-	7ZIEYdRuG9p0p0HvhJaUIRPIfOa0KM7t6v/r3ZMqOZj6TEdr9aY1BxDi
-X-Gm-Gg: ASbGnctGf8lfbGGJ8YFC4Vl9gw+Eu7DOlArasl55o5hBk0OQNCLtcJGP7gumsj8t9J8
-	aKQXlVmuDcIH5QUxG9O9FvVPwDPd71HdqgyJ2T49JhOz2+oAs45h6QWjr7OaAfGB6nheSIh9yb0
-	eXW8saEAvCJU6PAcMqfD8X5WDbCcCpVbhJtya/hqGeDS/sRd/S67NIeB8LtyDDx2iAW1IHgDe9a
-	ip19CoRuNzi0l/G0rOjB4RnUF7s8kLI6S0gyZsp5g27+wOZYEvOZP7tWf3k1wgUkOj5bEJb1V0L
-	tDkkBmhleuH6QB1G2e51b4FIm1iNqtrknCXgxZboiQe8IDkp3CDUVNIwYSTC1xoeEdd6PgZNYAi
-	X9CYl5LCpiCR07+XizrydRWyolqd51M7UTEaNs8Ym3DGP1cW/paHgehg5gQpdFa6PVQbGm3bp+C
-	zrYw44/ZCEag==
-X-Google-Smtp-Source: AGHT+IEsJSWwoTV7ziphuEy5rnw4b2/JG5GvDqzRP0bvq8Gaz2/QeSF+ObCAVrNbfbMABZLj9wHSkA==
-X-Received: by 2002:a05:6e02:12eb:b0:426:9b32:d156 with SMTP id e9e14a558f8ab-4269b32d198mr139684275ab.26.1759021974277;
-        Sat, 27 Sep 2025 18:12:54 -0700 (PDT)
-Received: from [192.168.0.171] (h135-135-197-41.abdlwi.broadband.dynamic.tds.net. [135.135.197.41])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-42644dd4281sm36717215ab.40.2025.09.27.18.12.52
+        bh=NCTqMXxzkrcRxR1z7h/sRjKg9Gwmvj+uFp4pgCeY7cc=;
+        b=VHfSYOxRdPJlrj5ua5abA5IaZQlTraqrRNkY306xwfs3j72LZiZgguenMY0YrhdJHw
+         r2Vo+V4NR2QwS+TURb33iZDs2zrYgNcdo30ROGDZtvpSptMCS4E2wEm3gNzmbQB6RlRP
+         CTfpyihVOlAuMksnea4pawLJdb4C8PmHhJ35feGh8OmdHerc/bXt1DpPQiyY2X8NxQYO
+         1yPmS50QXAV2bcC4d8Mo+a3zgyy0NBAuKOiz/crVyuc/lgKGmgEdYjxOLvbFuKF5djWx
+         HkOg73J1FmUIF2bRLWag8PR1wCIGHgPhQQn0g0dkRJVMmi7D7Bd4laTO0trUqJ3GEC1a
+         gLPA==
+X-Gm-Message-State: AOJu0YwHCDToojTtSllPVevLNr2ckuSvnhH6DJax9JdptOKfxvZKHiKh
+	RwCynMy1p4qksnjjX9yT5nXQrH0Ek6/2bxkDTpsLVSuKOCN8LsQj3fsK4DBv8EhqFqg=
+X-Gm-Gg: ASbGncv900prXkcHEY/FjkpQ9RfL9zttysokgKuaQZkniriSgRpNW+MIkzbleHPF1pf
+	jAbNqJAH5VJJFrr58YDqs/V3s1sSOXtY4GqxBqzPsY6U0wdGAlUQzd8oZuCZXj2U31b3goNocaB
+	dGiF2zRGkb+10FY3PE9B0gXRsG26cs0OT3UG6FiHx7t74h5N1FrwhmeJA+d8t7hZBjClpkOH/XY
+	ilNBBRnpahwtOlx/WaMji6WhB+RB7Y+FxI7B8gUJR/IJ8mj3kJyOxTBXJAgN8LSGulUX0T2ktO2
+	EmOHcYq6t1wXfcCarX5V9Lf+7nsforH61Z5lpq0G9S9xh9MMEQsb8tACSChkEgtj2Rj3EkAwAdL
+	sJVcWBC1BLa4yhbX8fYX2Nnv4McaJcGL205MPAyZfbh7e6dEPlRYkFaqaXzw3tDJvMFfyLXp1YO
+	ywtPBS0Ch3WnAxmze6I6jYFNC8NJO2jROv+6SN1BNlgvl2GQZCZeU2rLA=
+X-Google-Smtp-Source: AGHT+IEVqgh+HYOqSAO6M43C0fW6mvtXma61IEcfFEU2dK5Sm7plaHv/z8ZVps8xCYnSC31h0l3khQ==
+X-Received: by 2002:a53:720b:0:b0:635:4ece:20a4 with SMTP id 956f58d0204a3-6361a851688mr12078786d50.41.1759026083232;
+        Sat, 27 Sep 2025 19:21:23 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-eb38393d51csm2400696276.27.2025.09.27.19.21.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Sep 2025 18:12:53 -0700 (PDT)
-Message-ID: <e41c0aa427d45e922c86cd88b3ba626054901bcc.camel@gmail.com>
-Subject: Re: git whatchanged
-From: Neal Miller <meltdown03@gmail.com>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
-	git@vger.kernel.org
-Date: Sat, 27 Sep 2025 20:12:46 -0500
-In-Reply-To: <7e3a5da4-0ac2-40ae-a96e-0e9a88a68d7e@app.fastmail.com>
-References: <19a81573bf1ef7c544106e8fa7dd3b2db304c4f7.camel@gmail.com>
-	 <7e3a5da4-0ac2-40ae-a96e-0e9a88a68d7e@app.fastmail.com>
-Autocrypt: addr=meltdown03@gmail.com; prefer-encrypt=mutual;
- keydata=mQINBFnLCSkBEADELqmI8SzCYyZjwjnj3SMT/aKHSWCT/xuJlkYRBGOVakFEYMxBHxw2H
- HvVgVS5QbEIC3GAfmdL4HkxAIxlsVXtuNsWdOM6SQQJA/RTekf6Ee8+1qk4kqwPuu7JNayAL4PKy3
- napZhLAu1nUX/+noJTPDICKXw2H6VTirvi5w12WWJ4PTIWVlI5f4bjniZy0wqwu+SSLG+9gQPcNnq
- /FtXzQKeuz+sH3mVSAx1iG9RFZsM28bTltbo47s4k4hwAUZpgQXuxX13IO0wTVzVCBxMUmMTSTWiM
- 1C+nSPnjwsUblbHkwdkUf6DXnrdKxoL4n1f3nSUPX7Ey+KVXyThx2SCdkU22Qi5alssYkOSMvN/T+
- Rmyc4l2fR9/oI1M7WUsz5Eip6G5jlbkJ1WHAOteNl36+yj5XYErPlf8L74LgkgRp5YeeUlqNoWwF2
- Sw73pD7C8NsjnknFcIG5E8vWgWgqXm66eoVKNxd+aV9a16gjOJQ+SSPqO1wHM/AiVuAYHJPAFGjqW
- 3ZzqmQpetdgclrZgEHIfcdNVd8Uf+SSVeEB7ty0ndPo8G5Drdt+1upAxO2ffXmahI4iBs8OOAloRi
- lX9FUBHiWJetSHCaeOLxMvBpRDls2X4wSdQAQ/NeMSQX8zVuyNsmOsk7d4s949tONGBp6/nhkDLkT
- sS8GwCPeRIezQARAQABtCJOZWFsIE1pbGxlciA8bWVsdGRvd24wM0BnbWFpbC5jb20+iQJOBBMBCA
- A4FiEErYqSfL3b5eA6ZvbjB9s6hB3b8q0FAlnLCSkCGwMFCwkIBwIGFQgJCgsCBBYCAwECHgECF4A
- ACgkQB9s6hB3b8q3G0g//f755fxY1/ONx2YBzG7efVu+6t3Gczk7H1fpBO1WLk1Q4rhCuFHhdtMbe
- lf9LkTrEeEdet6wgi/OdwIFEZCDHhmM+LFVpd/Agu3jC79ae1kVfIp1au4fKc/38w491rljRIMjif
- yi/8AEgujYlaU55j7ixDUkvlYoIwM11UboV1NYeaidMRSP3vrE7qNhLh2WLjSZLCDWO+j04/XwHu9
- 16AwyLUEUcI/QEZZQ8tildBhLidaKCZ4Erq8AD7hoFlhEWUMW8JtJ5eY8OYjXEVzg0Q5vmQp6vd54
- 957dfiWaUeiJnOcjVHrQp2EXPKRLLN05iuWHNUVdevc2BVanCWsVGN78Ssea1GEINZjJMyfgnhJJV
- k8KcHA6EEAaWg0c/+Ojk5nDa9IuZoI3uemvGb6fdDqYdkv/VdTIBM+sLNeF+IAEFRbUfyOLTkN/HN
- bDAGrTSXw/MM0JgaMaxt2LUkEcCR+TIjXqYoImtaDpwRbVXntC08tzVksboJW0O1h0sdCWgkPDpdm
- ZdbvaZPbO9wPyTJdcthtevIwLUeZwC8V0wuKtTgdBBdpPkK0nTPI9/x5LGLmzcq5Lkfsvm5BEtmPu
- ABfMch5Imbf7u3SJwpB6SnGvzPPSTmLN7DQOtAeqf+wznvjQrWSgG/W8ZGbC92hYbuzaqnv56KPpw
- i0pfqRILEXM=
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-Vs36KmqMcKWuK1pPlIk1"
-User-Agent: Evolution 3.58.0 
+        Sat, 27 Sep 2025 19:21:22 -0700 (PDT)
+Date: Sat, 27 Sep 2025 22:21:15 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC] How to accellerate the patch flow (or should we?)
+Message-ID: <aNiblmQxtZyigbcu@nand.local>
+References: <xmqqldm0am4b.fsf@gitster.g>
+ <aNhX9AJ/zq4IYhmW@nand.local>
+ <xmqqseg777k8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqseg777k8.fsf@gitster.g>
 
-
---=-Vs36KmqMcKWuK1pPlIk1
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Thank you, I found that 'git log -p --abbrev-commit --pretty=3Dmedium'
-gives the identical output as the the 'git whatchanged -p --abbrev-
-commit --pretty=3Dmedium' command that my alias, 'gwch' was set to use in
-oh-my-zsh. I'll just set my alias to that now instead.
-On Fri, 2025-09-26 at 09:13 +0200, Kristoffer Haugsbakk wrote:
-
-
->=20
-> > Good morning
-> > On Fri, Sep 26, 2025, at 03:00, Neal Miller wrote:
->=20
->=20
->=20
-> >=20
-> >=20
-> > >=20
-> > >=20
-> > > > --i-still-use-this
-> > >=20
-> >=20
->=20
->=20
->=20
-> > You can replace it with `git log`:
-> > =E2=80=A2 Given: `git whatchanged <opts>`=E2=80=A2 Replace with: `git l=
-og <opts> --
-no-merges --raw`
-> > Additionally for the sake of readability, you might have more use
-for`--stat` or `--name-only` rather than `--raw` if you are only
-reading the output.
+On Sat, Sep 27, 2025 at 05:19:03PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
+> >> ... (note that this is based on the assumption
+> >> that "find any remaining bugs while it is in 'next' before it hits
+> >> 'master'" philosophy is working, but we have never run experiments
+> >> to shorten this to say 3 days to see if we see more bugs on 'master'
+> >> yet).
+> > ...
+> > I have a vague recollection that Google internally has their engineers
+> > run a version of Git that is based on 'next'. But after spending a few
+> > minutes searching through the list archives, I can't seem to find any
+> > record of that.
+>
+> They do, but the frequency they update desktop installations is lower
+> than the frequency I merge new topics to update the tip of 'next', so
+> I suspect they alone would not be sufficient guinea pigs.
 
+Good to know, and yeah, if Googlers aren't receiving 'next' updates as
+frequently as the maintainer is producing them, then I don't think that
+increases the risk of shortening the period for which topics cook on
+'next' before graduating.
 
+> It would lead us into ugly awkwardness when we start clarifying what
+> exactly "contributor" is in the new sentence, though.  If a person,
+> whom none of us have ever heard of, sends their first message to
+> this list saying "Ack", does that count?  If an active developer,
+> who is known to be sloppier than others, sends an "Ack" to somebody
+> else's patch that was posted 3 hours before (hence there wouldn't
+> have sufficient time to think through the issues), how much should
+> that "Ack" weigh?
+>
+> Perhaps rephrasing it to "those who have helped in polishing the
+> patches with their reviews and discussing the issues with the patch
+> author" to tighten the language a bit may help?
+>
+> I dunno, as that would still give the "ack right" to a random
+> noisemaker who threw a drive-by "review" that did not add much value
+> to the patches, if the original author responded "Thanks" out of
+> courtesy.
 
---=-Vs36KmqMcKWuK1pPlIk1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+Good point. Having a REVIEWERS file might help with that. Perhaps that
+file starts with just you on it, and then it can be expanded to form a
+network of trusted reviewers over time.
 
------BEGIN PGP SIGNATURE-----
+Building on the "how code review is done at GitHub" thing... GitHub has
+a concept of required reviewers for PRs based on what file(s) are
+modified as a part of the PR via its CODEOWNERS file. I share your
+feeling below that the project is not large enough to have individual
+areas have separate groups of reviewers, so perhaps just a single list
+is fine.
 
-iQIzBAABCgAdFiEErYqSfL3b5eA6ZvbjB9s6hB3b8q0FAmjYi44ACgkQB9s6hB3b
-8q2EPRAAohWkMSxg/NyrJL1cQUVvDsFax6gDazKfD1WnTjmBwSatZpNf5banEPSu
-jVZqo2GTtidsZQTeDbUIu5+uMeGgSGVKbUQBzAxyl0M1LY2jTfLHmL6Rk+SOfua8
-kJv6hKL2M+x0o4hd87d6JMBTEVFpiNaAKQFd3SaTujGMDQIEH2fuKWzKawVNd8cg
-ffFCYcmwM+ieAawP5+l3Cx2g5V2vK938JSnGvgs2ViBBsepapHwWopB43U0RYiHg
-gaAEO0PyWB8t2IRAUlzsRWKsvRRrTAkQVBF/897grnt4jOzIMR/kEMX+q4rwyw8V
-TGaXbS4ZhIn7WPSU1V6DRtDPLGsb9oz61a9RwnOSa3ko48z3I22ljuTTOJj5iPKM
-YLys0qSii7rdSa7HrZyCmm+pPi1L6tGY4rIi8iXSTv3Uh7rzgln5jgt7gCjNe9/A
-ifj5ghvjsLg7wS67JS2zAdLQtHm/AnXFLjxbmroGawQwLGoRrfN7u5lDviqh4Qic
-NyK+3X2WiONzfVWNkFQucXJSIVMGxlWpzDHVYZBnxsK4ykBf05ebtkjrPhf0kTar
-5iAx3e8YIgsGPTqwq08fa12KkQLgpQV6fjxSM57bvB4gDhWZnRWl3AkpyfNngiJ/
-M1hR0v49YBQ0NO1+T+V9A4QVFkxE6J5g5S6DLHVF6wQOZy7oif4=
-=2D7W
------END PGP SIGNATURE-----
+> True.  It was a strawman to invite other more realistic ideas (like
+> your "positive ack required"), and was not necessarily designed to
+> be workable ;-).
 
---=-Vs36KmqMcKWuK1pPlIk1--
+;-).
+
+Thanks,
+Taylor
