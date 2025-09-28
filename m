@@ -1,153 +1,125 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1EE12F2E
-	for <git@vger.kernel.org>; Sun, 28 Sep 2025 15:01:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D321714B7
+	for <git@vger.kernel.org>; Sun, 28 Sep 2025 15:35:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759071679; cv=none; b=FTWsQsDFe3lZ/xM4x/TGpR5I6L1Vyzn0Zjmd8MNlIk/0nBjO1A/YVvdL+CinhcXOghEOyS7jRKq38ZrLq4pTZn+vDhzMESwdYWpOnXyFvbz8r8PugWFNkiHbgy0F5JjHFIbH28KfhYrOJ2M1Fk2gFSm9OZAOjHf/o7U8oVsQ0QY=
+	t=1759073707; cv=none; b=dFhPW79KxotyuYqLZ4YG6iAZIuJt7zF8KYXS/WgR9UoFzZf+d0J8HoUBazKr1QA7lNy9kqRwACwg/ulTTeuqJpfy68yI+NF/z6GXu6ioSYu/Yx4zoVAc7HGK+GA3ye/bNAToSgZWk1Yx0Bpm9aqGklgqtHeoEIq+tyqmZB4ASZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759071679; c=relaxed/simple;
-	bh=xAMVjrlR0i8Yoy7tpTPriv5PrtGW1k7wcW1n6CK6occ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ePY2JgB1jQUeLzTYwuQv6votaq/pRzA4XFSucN6Cn8trkZkNITtJqQF41MLkvxt7G/TfAFOZPLH16DBk1y8noNQ3GTsQnLo0omL02SSS4c6mlw/VgEYN4Om1616p5ylGaUO7mRy3FpC9kWNyY5mgAtAR1KRQTdvgJcA9gVv7+BA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jgZFyQUy; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759073707; c=relaxed/simple;
+	bh=Po86VjOWW9dD5O4a3dS0+cj9liOTZJ9fSs1ktbCQK04=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ov28fQrtaVPFINpL9QohRICcdKltZngARzMhSBTZQf+G/oa1hDS0OK5nv9Mqr+WEH7JOWZ2y3gbsS+6bgjA7WFW6H4U8uJKeUMkDWMEHgTEG0hpOSpUdkdkgoHoU/hvi0hwEaidBvdV03bGi/q9KbNAgWXt6r0bgOyaOuyjmvUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=M8IQpccZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KM9tzh/f; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jgZFyQUy"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-367874aeeacso15751411fa.1
-        for <git@vger.kernel.org>; Sun, 28 Sep 2025 08:01:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759071675; x=1759676475; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=d3yHW2aa1i6Rn73jB55I1tgSYrJSw7UEfRH5li43cZ0=;
-        b=jgZFyQUyhHAZ2XKgZmMMWjF+WelyySgGNmJ9MNS7VK0277l9aJAgtoDrfPu20cG3Uc
-         33lewXUzD0nsgzRFpJOOrg/mCoISBNrWi2W4aijtE4G32Ij1NPne836E8lSQ0bf58fNc
-         b2Ulj+HI1/d+7ctLDT2XVVbemXx1HfrV1mUTsNb2DjVtSrEuYx9BSNvM5/Pb26K1qBiJ
-         Ol7b7fOiN8PQQD1RTAa+uxcDRXTN9ydV1mCIV7UP7tB3wryGB2fWhM/FIyWH64zSyIg4
-         kHxArYeY9zfJJP6WhmrvsIsc874dengTBoMhlGNaGY2rcQCB8bKEQZNQT/1NHlH0PU12
-         e8YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759071675; x=1759676475;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=d3yHW2aa1i6Rn73jB55I1tgSYrJSw7UEfRH5li43cZ0=;
-        b=I7VOWgTG4n+0VQ10qAd5XciEBCD9B712AMV8ZK6VdIUKdVcd+npxTrEeFjINvYjh7I
-         yFSv5LueGe6UlJZiOQ1yXjLL45RXFGmMsIviCopwkSVGB3j/Sc34VsyOtTf76f8K66f2
-         iKJalXs4Y8Q+37s5FZad6gOziHLkkSo+OFjv48nON3ZrWs00Iw1oyZq5ghrlcVKRa7f+
-         ayURJGBDfy9kMoq3FI+rjdXe1ZGGn/rFPFgX0h1ceVtuyAq4arua9nG+Wy7lJpHYxSFC
-         ZD/vEmG8DyOAe2ZUqLYwwAuvQCAc85rMRABYScZ0YEIZDvA766lRROr5/Pv9mssmQW64
-         STOg==
-X-Gm-Message-State: AOJu0Yyf3D8i0eI4I2Zh9opVGpJ/IZVcj2XX5JiRvdyqYM+9aeCdEGbM
-	hj1fj7DhWXJqDXCTE2bTgSZ7HCaJWlC83L+JwZyvgkRdUSMfS69mgIEsKiCp0tr+hT2TT/Y3U4Z
-	GQgxSguHqZQTLv75SdECyO4HMKAz+zfY=
-X-Gm-Gg: ASbGncuyaci0Nhja0hubWOJHZytBwWw/fytqswTdx8V1wXWwlx8QduyVMwWj/3JLdR2
-	ZuQ4HHxbBdb7+BovSoWbmfCj6cUCQZRZRGW5qDkBCKIMPifazovS5sPirxwzgm8AsS29rN1+TYi
-	+iqeSGellkyjcvkhnec0prz8Vz4uIv4Gqq/mLE9niZ9psTxqz/+r3S0lO53SVEI0vmUgKuJdAzb
-	VXEsQg=
-X-Google-Smtp-Source: AGHT+IGO7jNILWpF0guIgkEbfhbrvuHnudwow0de7fAk4Kv7dgdjCM80fu4AoFlIPeoBskvpy12fVSRadlWHh0iBYps=
-X-Received: by 2002:a2e:a58b:0:b0:364:f830:230b with SMTP id
- 38308e7fff4ca-36f7f248f86mr38700231fa.22.1759071674252; Sun, 28 Sep 2025
- 08:01:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="M8IQpccZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KM9tzh/f"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4B4A01D000A5;
+	Sun, 28 Sep 2025 11:35:04 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Sun, 28 Sep 2025 11:35:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1759073704;
+	 x=1759160104; bh=Po86VjOWW9dD5O4a3dS0+cj9liOTZJ9fSs1ktbCQK04=; b=
+	M8IQpccZo8DpdtzgSp54M6Slq3IkXCE9QmK2ctrfB5+6ksK390EfBNkgKM3DxHFa
+	Kd3nfK8mru+G1OcmKi49gdinyQHIyciM2r3DXMbJ7GUxvOPOa5jD9koYScFhvP51
+	xIsTtSsbuYtAlf8imPkK7nAnf80XTn3FBlH/8nH6oWJbayDxjbOFDwTJP0bqGWqT
+	lZDdTq0wyWkZSt5LClevYcBdRhN5x9CevM+KZ0gLMEV8Zw7E5KklAGmEHh7HO8JX
+	neY7KHPjbVtOrAl/fdwN05qyb6OXYyCze4rGc20iBZKK9nZL8FOLgTPNW8c8kIV4
+	LJxgxsIo1WE1zFgAQRc5/w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759073704; x=
+	1759160104; bh=Po86VjOWW9dD5O4a3dS0+cj9liOTZJ9fSs1ktbCQK04=; b=K
+	M9tzh/fId+9Y/sI5CbokGR/IXKOsbvy55nyKDa32tfl6WzbAcGUOc7i0zptHhXDN
+	Y/qyhEA7ZOsZGuspo43Y73GzURGQPRecNDj/gUKjqGKpjrp1JXVRGrR6a2N45Bgt
+	Ot81drEP1px506dFYjrhSpc68jmrs5Pqm7kz5PD+GX5r2pgSTz3LUF2piIs+ga3t
+	Le8oAG8ndIO1GZtuojP9Mac3kCPc2oaOx+bEVcHPQRRn5eh8yJj07vGxobYXxARg
+	4xRMtkS+MtZAkn78ZrRS6QsKweUlYNdZFHYUL0HhvWlYdortvlMxZeSfJRK7UqrP
+	FXb6kvZpEPPuTerW+hPkA==
+X-ME-Sender: <xms:p1XZaLRpPaXGsKMBsBsGNYhUpsIaH7a7SJkU9EzGz9FbGNzFzeuK7A>
+    <xme:p1XZaDqgOi2Z5xOIcIzbcOoCGAmuHjQUmG4qViYNrzGusOEF9Kxt1cdfNgyn4JTJK
+    F-qy06_P19BJwaUapb_zgeF9dc3r-_IdDbtGFFZQVMxRCWRjJ2c3Q>
+X-ME-Received: <xmr:p1XZaJLndJJGVnZd9ms5hDJaWizjbPVEEM5PT9WiHOsqW65QFcTjBJmyUiEcBRbjvSCp4N-pIR-FeSHqcmH5b6tV3gitWy7JbUWb>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejheehtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenogfuuh
+    hsphgvtghtffhomhgrihhnucdlgeelmdenucfjughrpefhvfevufgjfhffkfgfgggtgfes
+    thekredttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsth
+    gvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepgeevgfeifeefieffhfef
+    ieehheeuteefjedutdeludekhfffueeghfeiheeuleelnecuffhomhgrihhnpehgihhthh
+    husgdrtghomhdpghhithhhuhgsrdhiohenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
+    gtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjnhdrrghvihhl
+    rgesfhhrvggvrdhfrhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvges
+    khhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhm
+X-ME-Proxy: <xmx:p1XZaGrvDADY0CGG7wPty_dfnwvdgX0H5oRul1wgFc0XXBYc-rKZuw>
+    <xmx:p1XZaBzpaHtbwONFoXSxOHhMVXcRLJPIlwlEi8WKLVY4esDCMtX2pQ>
+    <xmx:p1XZaKPC5v6-lNcChNesZmJjk09-dTF8lOMh2dBFZJWJn31MCtGT4g>
+    <xmx:p1XZaG6ZnPl3asYCZ56W4irITteB1VYyKh0P-vceKi-RRA-uTjpvPw>
+    <xmx:qFXZaHyI1oe-elAMJPcyAOK56Ec7KqVyV8bWOmg0s8BXtUqzIJYOk7FK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 28 Sep 2025 11:35:03 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <code@khaugsbakk.name>
+Subject: Re: [PATCH v2] doc: change the markup of paragraphs following a
+ nested list item
+In-Reply-To: <20250927195032.37223-1-jn.avila@free.fr> (=?utf-8?Q?=22Jean-?=
+ =?utf-8?Q?No=C3=ABl?= Avila"'s
+	message of "Sat, 27 Sep 2025 21:39:45 +0200")
+References: <xmqq5xd5aqa5.fsf@gitster.g>
+	<20250927195032.37223-1-jn.avila@free.fr>
+Date: Sun, 28 Sep 2025 08:35:01 -0700
+Message-ID: <xmqqo6qu7fq2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250928135435.59623-1-rappazzo@gmail.com> <20250928135435.59623-2-rappazzo@gmail.com>
- <be1e6cba-c94d-4c2f-ab68-e368ffe9daa5@gmail.com>
-In-Reply-To: <be1e6cba-c94d-4c2f-ab68-e368ffe9daa5@gmail.com>
-From: Mike Rappazzo <rappazzo@gmail.com>
-Date: Sun, 28 Sep 2025 11:01:02 -0400
-X-Gm-Features: AS18NWAOPSTYo-iUFgBA3sGSkNyMErm9fCyDeWwi2eMufLNTjH3k56ljsG8-V7g
-Message-ID: <CANoM8SWT4atDtFDgMvx5ivun9-sXZCsmT6gUG07byYOB0+2DFw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] Revert "gitk: Only restore window size from
- ~/.gitk, not position"
-To: Mark Levedahl <mlevedahl@gmail.com>
-Cc: git@vger.kernel.org, j6t@kdbg.org, 
-	Johannes Sixt <johannes.sixt@telecom.at>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Sun, Sep 28, 2025 at 10:17=E2=80=AFAM Mark Levedahl <mlevedahl@gmail.com=
-> wrote:
+Jean-Noël Avila <jn.avila@free.fr> writes:
+
+> Asciidoctor and asciidoc.py have different behaviors when a paragraph
+> follows a nested list item. Asciidoctor has a bug[1] that makes it keep a
+> plus sign (+) used to attached paragraphs at the beginning of the paragraph.
 >
-> On 9/28/25 9:54 AM, Michael Rappazzo wrote:
-> > From: Johannes Sixt <johannes.sixt@telecom.at>
-> >
-> > This reverts commit b9bee11526ec23541ddbbd75716bfd1acc241463.
-> >
-> > The commit catered to an unsupportable port of the Windows Tcl/Tk
-> > stuck at 8.4.1 that was used by Cygwin. 8.4.1 has some bad bugs in its
-> > layout engine, and forced changes in Gitk to be compatible. All this
-> > became irrelevant around 2011 after Cygwin gained an X11 server and
-> > switched to a supportable port of the Unix/X11 Tcl/Tk (it is now on the
-> > current 8.6 code base).
-> >
-> > Helped-by: Mark Levedahl <mlevedahl@gmail.com>
-> > Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> > ---
-> >  gitk | 12 ++----------
-> >  1 file changed, 2 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/gitk b/gitk
-> > index 6e4d71d585..275f353811 100755
-> > --- a/gitk
-> > +++ b/gitk
-> > @@ -2764,17 +2764,9 @@ proc makewindow {} {
-> >      .pwbottom add .bright
-> >      .ctop add .pwbottom
-> >
-> > -    # restore window width & height if known
-> > +    # restore window position if known
-> >      if {[info exists geometry(main)]} {
-> > -        if {[scan $geometry(main) "%dx%d" w h] >=3D 2} {
-> > -            if {$w > [winfo screenwidth .]} {
-> > -                set w [winfo screenwidth .]
-> > -            }
-> > -            if {$h > [winfo screenheight .]} {
-> > -                set h [winfo screenheight .]
-> > -            }
-> > -            wm geometry . "${w}x$h"
-> > -        }
-> > +        wm geometry . "$geometry(main)"
-> >      }
-> >
-> >      if {[info exists geometry(state)] && $geometry(state) eq "zoomed"}=
- {
-> I mis-interpreted an earlier inquiry about the patch being reverted here.=
- Patch e9937d2a03
-> actually addressed the issues of Cygwin's 8.4.1 Tcl/Tk. Part of that was =
-fixing the window
-> geometry being restored, as sometimes the window manager would size the m=
-ain window in a
-> manner causing 8.4.1 to fail. But, this override of the main window manag=
-er on all
-> platforms raised complaints on the mailing list, and commit b9bee11526 wa=
-s the response:
-> it was only the SIZE of the Window that mattered on Cygwin, not its locat=
-ion, so allowing
-> window managers to set the location was ok.
+> This commit uses workarounds to avoid this problem by using second level
+> definition lists and open blocks.
 >
-> Personally, I'm fine with gitk remembering / restoring the full window ge=
-ometry (I wrote
-> it that way in e9937d2a03).
-
-In my v2 version there is a slight difference:
-+        after idle [list wm geometry . $geometry(main)]
-
-This seems likely related to my second patch changes where I use `after
-idle` due to the timing concerns which I reported on in my latest email
-from that series[1].
-
-[1] https://lore.kernel.org/git/CANoM8SXnxxF6UMSfQ06ANfEv7HFCEEMCVoGgod1-Du=
-FeHp6tXg@mail.gmail.com/T/#e1fc2a76267e3077c0de40ad8902e2158c00164e1
-
-
+> [1]:https://github.com/asciidoctor/asciidoctor/issues/4704
 >
-> Mark
+> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+> ---
+>
+> Sorry for the straight/stray confusion. It is saner to remove it.
+>
+> The first occurrence of the described issue is a few lines below where you
+> looked at:
+>
+> https://git.github.io/htmldocs/git-config.html#:~:text=+%20For%20historical
+>
+> also see the second one:
+>
+> https://git.github.io/htmldocs/git-log.html#:~:text=%2B%20%25(decorate
+>
+> And big thank you to peff for teaching doc-diff.
+
+Thanks!
