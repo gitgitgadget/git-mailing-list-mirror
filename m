@@ -1,72 +1,72 @@
-Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DDF19FA93
-	for <git@vger.kernel.org>; Sun, 28 Sep 2025 22:08:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44EA29C343
+	for <git@vger.kernel.org>; Sun, 28 Sep 2025 22:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759097320; cv=none; b=FlPA1ydRIo+GPwJacxjOwclJmayGBofmMsytzbR5as/gSwyw7wa2ql+dY2+eHS0sHmleBC+edCAlX8IdKoYa46/aAdW5bAZIFL2ktvChTiDGbOn1Gx6SJu8i4Qa6zZkM/d+3oUqh3GZBohVRQYczIma54XRHI2KngmkAbWWnISU=
+	t=1759097324; cv=none; b=fhd6Udn0lxtnneHjjdcgdRAXOoRpyFeNXC+pEdiTre6ZJ7zIm73e0GxE4HuelIYlaFz+C1POJOohP9DkB+nuJAwsz4zynwOX2EvSMoGMCRAgAENdIBV/Gc4sAikQ4Nq+nQQghK179aZS9n2IdPiEOTblov9Lre1JB4vVO6GFOZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759097320; c=relaxed/simple;
-	bh=/SFWQfiStKUjkfipfs13yj3hZSnDhu2wrvmsOCpHw40=;
+	s=arc-20240116; t=1759097324; c=relaxed/simple;
+	bh=LRELeyGcQKT0M+PuVlIAQJB1yCAnC2D2MAv6ouh5ED4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qIY69MHnsudvUFf4U+YN4h9Id2oEP5HsXo6QGlOI9c1p5e/Z6jCYPhnDEcFKeeZ1Z1az+NWS1dqDVqvxwZKof/DhZKsrWSyPZiYG5LzjibmjwYhppd0inplT4cYrKjuh6GIvV5agCoQzpSTYa59Z5ZzfLF9OC/nkhWS/ZgsQuLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Wf71HGRA; arc=none smtp.client-ip=74.125.224.47
+	 Content-Type:Content-Disposition:In-Reply-To; b=JuMeiqsYmcNjsdcn0hbds0i6JjMcp36WxmPGjZdPYZg9OEp/arDbgSx6Nnk/CY0q+eR8gCPZwR2asB+xScG2nKqiNGjhpZ73MbCVzHJ4OjDHdtZqLr0XPgVAE9Xvfg+wCglTlU6e9igVsYzcwWdSVaeuhTf9TirUipScew+Fo04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=aE97r4Bm; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Wf71HGRA"
-Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-6353f2937f3so3018582d50.3
-        for <git@vger.kernel.org>; Sun, 28 Sep 2025 15:08:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="aE97r4Bm"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-7501c24a731so34104757b3.3
+        for <git@vger.kernel.org>; Sun, 28 Sep 2025 15:08:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759097318; x=1759702118; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1759097322; x=1759702122; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7m+d2dINJHY4yhntyueJTRcLgL/pcpCnEDKKfCNezb4=;
-        b=Wf71HGRAwSPxYPNBBtsueXazAX912oClI0kzCoYoIrbmdZRczmFYOHsXGt4E58UJEA
-         WiP+u7sJBSlNWAirs9NwzI3THdECzH+2yAkNxBDoGs9E0ymoLClWHksAoN7hqp7K1CwV
-         MrjlbHaN8vx1qw/FS9piMmZSweWAyDX4+S5Hr0CCHR7o8f6wwCCd9wCmh0FF0gxB2hax
-         eGoi6g8DtpBL/u65EWZnlUd2xTjitlrra3xtX9Zq6ZkYKtBfKiKxMlyYe/AbtwtMOFCm
-         ljTZP5AMov6FZDZf9gRjmcsZRa3iqEqgedGsjMwsoiFTaclkPiFQbM4pmwrDpz27aBNL
-         BA3A==
+        bh=xe+CFEAozmtPQviL96CwuJDqqWJKp/r7uPnmHjAmzPs=;
+        b=aE97r4BmELzvr1i+tprf7m9BECtLXTOVK2zuIdizjYqTcf+bIfMFLsdTO3bdgcvTpT
+         PWVwClebJ7KOGQTnryAEsTL5dmPCZqJ1hOWm+6yY9vrxMuXaj3Rln4XsIKZ0sEbVfCeE
+         SkB+aQw/7Dgy7Lw3P7drumepnDMxO7/4/flgseo6lgidABen3I+HAkXfVmsIFhen0xgy
+         m4yMLVqe07TdSV4whLl/EeHdi7W7tZk9q9rTUfNx68r+pumlm4YPBWg/qMyMDDKhSoxg
+         0oIE+uKTZwtEui2znLSUQ1TDnOu6umK/mgO0RW1rJ0lu0MTjOvIFpvCfixL1vBmBaANf
+         w8mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759097318; x=1759702118;
+        d=1e100.net; s=20230601; t=1759097322; x=1759702122;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7m+d2dINJHY4yhntyueJTRcLgL/pcpCnEDKKfCNezb4=;
-        b=gmPLuuMUbp+Xyw8Au7I/HyMoIWLk5yKZoxo2HFZyruoPZA4+syk5wFqq9990jwxzBK
-         rR6i9iNpogHh/cikm+4l6aPqg7IZ76rvloeMz1hIMgiVYl5bpCPb9BQa9hCGPmOVt2a+
-         b44ZxM3sMtKgtJicYR5xBJkDWtv2SPWw5HY3xQ5pm4Bsu5Abe8+22/uGYfhKcyyzbr50
-         8bS4fcafQDhgKKtJJfeh6BZ61kuUGl278asKcJ6CuUb7TVM3bUze5H0azOcO3EPapqvM
-         A7PLC0QvN+lXx5zMFqxXd7Hn4JmqUwufaMiMP3B0t4Mrt6cljdMtw5UxUl8clFeiuIAE
-         Q3WQ==
-X-Gm-Message-State: AOJu0YzTtaaEMGMUt0Qqq2EB50n+5O4eFSyhR0L6U3K/mgCcsLMH2MMC
-	m4V+uIolvGQgSFCIGG8MT7Og8bS+EBktmYqfYbYWAhFkxexmQy1wKgRctOV9WvfbKrwuDRooZBT
-	ufiN2FqE=
-X-Gm-Gg: ASbGncvPbPh0vL4gtBdMAB2pMNzTyoWSjf04EorX0d/3OIC9BUguPGq3/8KY12pvvS5
-	k78IPR75Tzi/rp+E6XqXVzYxtq4G3lWM7BUMHN3RKMPFFN4l3T+kPBlK21ixtFitNl8J4wZv4i1
-	yNz3ZkKvxRfEA/TgOFKM5/DQaCM2xGaxBXxCqhyJLpcecMfIfddde4zla7W5xlcnDrk5Xd+Cv45
-	Czn8u+rD/gXmOEBz4nqeXI08RsleK0dEO47rWTIXPSdKhcCtDFzLcZpvRmkIeDvHGI+EeVp/NF4
-	Pt+1YQAclKtVgxcJgdfqNM7hSuvjA6uurPtWrj7Ei8Uzb+artxVYXSTfKo3wUVUICx57zgKYYtx
-	XFKsc+eSIS4wzATIQCh9wS1/uWrnBGZb8IMFwd/izDKpkZ4edze5yEZnHTH+VTJICQ+Un7Vg+Zf
-	rK2Dw5WZmaK0DYVKSUGDXvL64BYtF/P6I6JDNy
-X-Google-Smtp-Source: AGHT+IGs3besbUwTyOKNkK+cKYR+gz2Ii1lhxtDt5+Z4gkNMz88jsjtyn0PUChuqBK0CWZBTIRAD7A==
-X-Received: by 2002:a05:690e:1406:b0:635:4ece:2412 with SMTP id 956f58d0204a3-6361a8a52f9mr15833862d50.50.1759097317794;
-        Sun, 28 Sep 2025 15:08:37 -0700 (PDT)
+        bh=xe+CFEAozmtPQviL96CwuJDqqWJKp/r7uPnmHjAmzPs=;
+        b=j0rYsj75BVEmZi7hmE3b+HUij+hsE+7bRmEyAh1HhSl3pvBeX2uu7ElzkkahM3N6FC
+         ux1XuoTMS0lKn42140Zbtxjg9jAEildf6TP6SncH/DbyeeHaD6lGwF5Ps8Wng3HNgZ1L
+         YtXfQXrdonvJC4f6R6oTxQBqz6FOqNbIM+QcUf0zubK6Bhoou+9vPtlO/2ZxvkHwQrAZ
+         TkdlZsfHEOzklfJmRXL4ZVh70XYgY6NA36fiBQLHoldSnh+VEuRb+cbqd2J/LA0qj6RC
+         ODpTBojT7RfCb1gPaXv0qcGglo5/ZpXIUdPEviMg3uZo9O+2Po3diR0DRnsedLeYp4Ui
+         Cdig==
+X-Gm-Message-State: AOJu0YzZIlEPEGdXixYWB4E2dOT/EohwzbOGPGOIWADu6lBzmCOv7yPU
+	bc/reQvI5gpXTaIRMdhQM6nP0sG05TxFs71HsdHSjG6u4uV1egVGYgTEai545wfffQWl9vUQ4MC
+	uIWrEwI1Kjw==
+X-Gm-Gg: ASbGnctF0378KXl9MzGRMOtG3P3gMHIV8t2mXdHudY4KfTz5sEobuzscMS3AX/FODxm
+	21/5OKMAa89KFoM5NRk8XxKmkmtwJdPgUdEGbBz6odkJxICGiR8CSt6CAl4FuDZuR403FUF7brB
+	FxOc39PUeRO4NOn2JGeANX1/MMBOGueKsJAILID+a3qVk1ESIhwMAqBNSGpMaOEfJvh6s+XYFvG
+	lE2lYmCdS8cZJcFPeKdZUCGgSXnokQbU1T3ZUyKK+fqTe+lIhCCzXOORmXMhh7YD1a4dMU6tDK2
+	K57yP4x4r3P+dRBPUBRMFE8qEUdYumxGeoVZoq0tacrupNT/2+rkFmhtc//qV8bdRKbFkd+PKUp
+	vupkD2odyh5JPzfHmtk5/TRLTkQyR9mDLByKA2sW8GUq/6W3MjfrHHO5TTCNnVZuNTHSFqzZ+nY
+	72EUue8pOQ0DP7ry3o6j5Ym8HwOexXUb8Ni2TW
+X-Google-Smtp-Source: AGHT+IFIPIJMnDo8BP9rp8wJ9FqnMJZi6UCZsTQuV7LamnEIjYmJSJtWJGijsN9NKjG5n+t3Crn92g==
+X-Received: by 2002:a05:690c:4507:b0:750:1c8f:e5b0 with SMTP id 00721157ae682-763f8b4da09mr130879117b3.6.1759097321674;
+        Sun, 28 Sep 2025 15:08:41 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-eb38393c958sm2931931276.26.2025.09.28.15.08.37
+        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-636d5b1d8bbsm1932267d50.20.2025.09.28.15.08.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Sep 2025 15:08:37 -0700 (PDT)
-Date: Sun, 28 Sep 2025 18:08:35 -0400
+        Sun, 28 Sep 2025 15:08:41 -0700 (PDT)
+Date: Sun, 28 Sep 2025 18:08:39 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 22/49] builtin/repack.c: pass "packtmp" to
- `generated_pack_populate()`
-Message-ID: <ab0dc6668339f24787dc80d2dc05f0d31cfadae6.1759097191.git.me@ttaylorr.com>
+Subject: [PATCH 23/49] builtin/repack.c: provide pack locations to
+ `generated_pack_install()`
+Message-ID: <e9d525d83a2f763429bdeb89f6f73f06a70f3319.1759097191.git.me@ttaylorr.com>
 References: <cover.1759097191.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -78,50 +78,43 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1759097191.git.me@ttaylorr.com>
 
-In a similar spirit as previous commits, this function needs to know the
-temporary pack prefix, which it currently accesses through the static
-"packtmp" variable within builtin/repack.c.
+Repeat what was done in the preceding commit for the
+`generated_pack_install()` function, which needs both "packdir" and
+"packtmp".
 
-Pass it explicitly as a function parameter to facilitate moving this
-function out of builtin/repack.c entirely.
+(As an aside, it is somewhat unfortunate that the final three parameters
+to this function are all "const char *", making errors like passing
+"packdir" and "packtmp" in the wrong order easy. We could define a new
+structure here, but that may be too heavy-handed.)
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ builtin/repack.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/repack.c b/builtin/repack.c
-index 8c3a5f4f80..2141c43bd2 100644
+index 2141c43bd2..a4f0a19453 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -150,7 +150,8 @@ struct generated_pack {
- 	struct tempfile *tempfiles[ARRAY_SIZE(exts)];
- };
+@@ -185,7 +185,8 @@ static int generated_pack_has_ext(const struct generated_pack *pack,
+ }
  
--static struct generated_pack *generated_pack_populate(const char *name)
-+static struct generated_pack *generated_pack_populate(const char *name,
-+						      const char *packtmp)
+ static void generated_pack_install(struct generated_pack *pack,
+-				   const char *name)
++				   const char *name,
++				   const char *packdir, const char *packtmp)
  {
- 	struct stat statbuf;
- 	struct strbuf path = STRBUF_INIT;
-@@ -271,7 +272,7 @@ static void repack_promisor_objects(struct repository *repo,
- 					  line.buf);
- 		write_promisor_file(promisor_name, NULL, 0);
+ 	int ext;
+ 	for (ext = 0; ext < ARRAY_SIZE(exts); ext++) {
+@@ -1469,7 +1470,7 @@ int cmd_repack(int argc,
+ 	 */
+ 	for_each_string_list_item(item, &names)
+ 		generated_pack_install((struct generated_pack *)item->util,
+-				       item->string);
++				       item->string, packdir, packtmp);
+ 	/* End of pack replacement. */
  
--		item->util = generated_pack_populate(item->string);
-+		item->util = generated_pack_populate(item->string, packtmp);
- 
- 		free(promisor_name);
- 	}
-@@ -896,7 +897,7 @@ static int finish_pack_objects_cmd(const struct git_hash_algo *algop,
- 		 */
- 		if (local) {
- 			item = string_list_append(names, line.buf);
--			item->util = generated_pack_populate(line.buf);
-+			item->util = generated_pack_populate(line.buf, packtmp);
- 		}
- 	}
- 	fclose(out);
+ 	if (delete_redundant && pack_everything & ALL_INTO_ONE)
 -- 
 2.51.0.243.g16eca91f2c0
 
