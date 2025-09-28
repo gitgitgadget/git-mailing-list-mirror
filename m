@@ -1,138 +1,143 @@
-Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635B516DEB1
-	for <git@vger.kernel.org>; Sun, 28 Sep 2025 02:21:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1861373
+	for <git@vger.kernel.org>; Sun, 28 Sep 2025 02:34:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759026086; cv=none; b=j/tHM/3RSsE3b8nx4gQy+pB6AvAe03Y1LDIlzusiP5qpR/Kd0P6Je8BLbg1AJpRqAvuzVtH+OUgcWkng6bCj4hqFHmt5TzzODnlzR0Wdag47j4nJcPnqHs8OrRYvNBJbpx1hVLzy+LCD3esZvSscyjaLq/QU2rXy4h/TmmOOUNI=
+	t=1759026878; cv=none; b=VKx7kumXAxqK9oQn+tvD0SSUdN2p/dnt3S8x7fYAy8IepRkJdsA1hho1cvDXewhtxNHGz5xjRSdk9YOzPNe6GHPh+AKSaUIoZM6RAU44NSb9aoIiUfTDXGfBaWfbmGOGDlSRP/tvOTXzyJFX0bs3+1R6Pp9eO3GxUT91StGCldU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759026086; c=relaxed/simple;
-	bh=oC2dx9ojbaqwVWBt0GOLji5PaNlfZPLknRmfjX5pE24=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RVRT6tqXjHW35YltQ4ZSsKZm0q7unOUButC6wc10DzJuT+iAS+RA0/vNkbKfs1U6UVDxr/4sh53uZ+nLqUejdUi2KteloavnOEmWRC3y+rq2FEa0eRyWhWobeXof+CRWKaaBTUhTGQqRJJNDe8XORvJqZLf+lFZoj/7xq193PVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=XwnDjQd4; arc=none smtp.client-ip=74.125.224.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1759026878; c=relaxed/simple;
+	bh=Ydqde2L+jStq8f01eBag1AElr3i6oSnuRmpv7WNkEF0=;
+	h=From:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=mewcCEAPdACAH162qpWwbf+h1mqwSMylQoJwxOhJON9ZrfZSjpm5swludcfLCJm4q4+QUAmJH0hSzo9vdfL65+M4lcEhw9e3MC0r+Ar2IDPLzeHJPpfp5NaK6mV8wJhL3mAS8lO2IH2ai0zpGmCIt8tvWFsZptLgr0uZo80EZK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hq1zVJ0o; arc=none smtp.client-ip=209.85.222.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="XwnDjQd4"
-Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-6360f986fb0so2705637d50.3
-        for <git@vger.kernel.org>; Sat, 27 Sep 2025 19:21:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hq1zVJ0o"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-85780d76b48so364273285a.1
+        for <git@vger.kernel.org>; Sat, 27 Sep 2025 19:34:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759026083; x=1759630883; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NCTqMXxzkrcRxR1z7h/sRjKg9Gwmvj+uFp4pgCeY7cc=;
-        b=XwnDjQd4HlMIS7TGEfbEK2jy6Pp/bNhxV81tZpvNSkn2QZ/MaDxchvhvEAtEf5UWFc
-         TeOurlyKAXdIqtpeg9VycF+dcl4Oc8v4kY4IrMVaQWmtBIrUCXBRtcPDYKvsc6Q2TnJg
-         qYuKt9iyfxom4EIoZifrVgZ59XR57/SF9b7dJigO1ivTxvsMTHU/Bk/qaMNyaHgMmYeb
-         GUyYb5dDLIbL/rSkVShqaZZdnWG+UXLqvwMp+JhXVPZvnhLBidfMdv6KFR0FwZGARXq7
-         qGnPsHf25dGcbtwUR9F5b8PKsKp7kY6jvyr3LmzcBGRZM0l1yNwOxjSpQHkLYAlhqB9G
-         mTUQ==
+        d=gmail.com; s=20230601; t=1759026875; x=1759631675; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:user-agent:mime-version:date:message-id:from:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=qtcUULQsBwe2YHwjREsGOAKZxjTFTrU1+oy16/AeErU=;
+        b=hq1zVJ0oF5IWRYZhOv7Sd6uEMY94+e7mUpq7EHw7ZS5KQSTI3kooMhZW9tl0ilvWuS
+         ITEFgj3shNKXLQjQe8huSbG3HLCvbeDMd2s7sov1Io0eaGo4cDc66O1VIuz+MXTKSeSK
+         3C3pN7hptcDudipxmcNnvLNbINLdI40LHjRvzntEL0lfwsbnvvCSWS4jnz3EVzVYA3Ow
+         Hj/rFNl+uZyZ8apJNdneA0eWG6V9OukOzQmScWXazzGal1Ugbc7pJ0DEdZ4Wg3/M98kI
+         WLeZ3uOzsG0EtZz8vDr70QVC8bHtqZV74b6I69Ta7/Xc3Zff6kedxy+T/+uUwgHNowz2
+         7KNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759026083; x=1759630883;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NCTqMXxzkrcRxR1z7h/sRjKg9Gwmvj+uFp4pgCeY7cc=;
-        b=VHfSYOxRdPJlrj5ua5abA5IaZQlTraqrRNkY306xwfs3j72LZiZgguenMY0YrhdJHw
-         r2Vo+V4NR2QwS+TURb33iZDs2zrYgNcdo30ROGDZtvpSptMCS4E2wEm3gNzmbQB6RlRP
-         CTfpyihVOlAuMksnea4pawLJdb4C8PmHhJ35feGh8OmdHerc/bXt1DpPQiyY2X8NxQYO
-         1yPmS50QXAV2bcC4d8Mo+a3zgyy0NBAuKOiz/crVyuc/lgKGmgEdYjxOLvbFuKF5djWx
-         HkOg73J1FmUIF2bRLWag8PR1wCIGHgPhQQn0g0dkRJVMmi7D7Bd4laTO0trUqJ3GEC1a
-         gLPA==
-X-Gm-Message-State: AOJu0YwHCDToojTtSllPVevLNr2ckuSvnhH6DJax9JdptOKfxvZKHiKh
-	RwCynMy1p4qksnjjX9yT5nXQrH0Ek6/2bxkDTpsLVSuKOCN8LsQj3fsK4DBv8EhqFqg=
-X-Gm-Gg: ASbGncv900prXkcHEY/FjkpQ9RfL9zttysokgKuaQZkniriSgRpNW+MIkzbleHPF1pf
-	jAbNqJAH5VJJFrr58YDqs/V3s1sSOXtY4GqxBqzPsY6U0wdGAlUQzd8oZuCZXj2U31b3goNocaB
-	dGiF2zRGkb+10FY3PE9B0gXRsG26cs0OT3UG6FiHx7t74h5N1FrwhmeJA+d8t7hZBjClpkOH/XY
-	ilNBBRnpahwtOlx/WaMji6WhB+RB7Y+FxI7B8gUJR/IJ8mj3kJyOxTBXJAgN8LSGulUX0T2ktO2
-	EmOHcYq6t1wXfcCarX5V9Lf+7nsforH61Z5lpq0G9S9xh9MMEQsb8tACSChkEgtj2Rj3EkAwAdL
-	sJVcWBC1BLa4yhbX8fYX2Nnv4McaJcGL205MPAyZfbh7e6dEPlRYkFaqaXzw3tDJvMFfyLXp1YO
-	ywtPBS0Ch3WnAxmze6I6jYFNC8NJO2jROv+6SN1BNlgvl2GQZCZeU2rLA=
-X-Google-Smtp-Source: AGHT+IEVqgh+HYOqSAO6M43C0fW6mvtXma61IEcfFEU2dK5Sm7plaHv/z8ZVps8xCYnSC31h0l3khQ==
-X-Received: by 2002:a53:720b:0:b0:635:4ece:20a4 with SMTP id 956f58d0204a3-6361a851688mr12078786d50.41.1759026083232;
-        Sat, 27 Sep 2025 19:21:23 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-eb38393d51csm2400696276.27.2025.09.27.19.21.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Sep 2025 19:21:22 -0700 (PDT)
-Date: Sat, 27 Sep 2025 22:21:15 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [RFC] How to accellerate the patch flow (or should we?)
-Message-ID: <aNiblmQxtZyigbcu@nand.local>
-References: <xmqqldm0am4b.fsf@gitster.g>
- <aNhX9AJ/zq4IYhmW@nand.local>
- <xmqqseg777k8.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1759026875; x=1759631675;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:user-agent:mime-version:date:message-id:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qtcUULQsBwe2YHwjREsGOAKZxjTFTrU1+oy16/AeErU=;
+        b=oMOt1vOn4Zbdv+1Fnu/bxpHJX821WjMAYASGoqMvC10c4jnY3aK9lZmZm3hOMvQRbN
+         Vyw5kJ69XNYKwPeIeIOVeXabFS7JF0ftyW5Asb4CXVM8m5MywRk2ikJNsp/Tp9/P78rx
+         l/vEnYLrxRdLIHsTtWipWd5Upq4GtMcXXT4Nxze/iFOIujZ52zQobaobr8TavtXfPute
+         7wBv0GAst0TpwT2jgYV0mLPtTQtJbm3mhq3fnF4M0JPT16u5T4hMU4ybwJnvptB0RurC
+         Tccvti9SZrKpS7hY0f6O4ZciB+PqD/eMlk/6+u36VjAMoGqONNZzsBw6DX3m4+Yn6r9/
+         AqvA==
+X-Forwarded-Encrypted: i=1; AJvYcCVtfHnUU+lJ2T5TO0wNW+NtDDBq7QgechRApD7lHJsvRgPXt9Lw687KaXZfXoJCHX8Q5X8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy0QqGyNkYKkM8nYjUSOUvE7w0O4qLoGBjXIuxjfr9C0rkXGHGQ
+	ZOC4WgmRXrEJyCWRUfPXorrkwPTijDh7TdPfwKNiU6jzaFhf+FB7CVpV
+X-Gm-Gg: ASbGncsuK94vcXpcS26HIWYyN5CD1L0HbeAKRv+94MNIv6OBVAoW2zuNKwdd7nSqUt7
+	/HE9isBblISEVBNVBeKg0Kk20QNMBfQia7UyRjhYlmMBsl71JxejhTX2apAljf93cHaISzJFSe8
+	2obQXTbF5g7Lp67ICmb3yrjQTPZL9Jv5Vvpy+GzUhuPyKJwn9oO0hrFE7drNFkePbHe59uWJyEQ
+	1BYkj2MZidbOmMz//OW8KYbKuY7uyWZKZLSraOawPZS5/VyqM7qGtoXItF/0rd4o+kXg/1iOgBj
+	V32Lg88eHAblF94D9CciLfEdc8icTXOVY3LrYRngqMM7hZALrFVlo9+/TJqG/Dw3V02AIkZm8Me
+	ZAJY8c4H6MHTuhED54DCB1aW6BeR5oxKbgwVISNLvUA89
+X-Google-Smtp-Source: AGHT+IGnt6YEY04XHvxKPR8pIreW9CWa3RjlltZDKS+27vzntnaL+7JN5UEZK0zFbhqYkY2IySDgGg==
+X-Received: by 2002:a05:620a:2a01:b0:84e:3c02:810e with SMTP id af79cd13be357-85ae033cbe4mr1568620585a.19.1759026875271;
+        Sat, 27 Sep 2025 19:34:35 -0700 (PDT)
+Received: from [192.168.1.174] ([71.192.65.134])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-85c306b662esm514443385a.35.2025.09.27.19.34.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 27 Sep 2025 19:34:34 -0700 (PDT)
+From: Nikolay Shustov <nikolay.shustov@gmail.com>
+X-Google-Original-From: Nikolay Shustov <Nikolay.Shustov@gmail.com>
+Message-ID: <e6ad07ab-2c0b-43eb-8c1e-b69d97458e74@gmail.com>
+Date: Sat, 27 Sep 2025 22:34:34 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqseg777k8.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Subject: Re: git merge --no-ff failure
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org
+References: <5cbb5c0a-4c51-4d15-816d-6d7d4fdf4fe1@gmail.com>
+ <1f78a660-3c1b-7aea-5b3e-945ec2b1ad80@gmx.de>
+ <f3a051ef-328c-4778-9c78-33d52d273479@gmail.com>
+ <CAPig+cTOeCWGeNHvnBK8v2UyAV2DRs8QW7DMHGkfRHW3vSTgQA@mail.gmail.com>
+ <CAEcERAxiuSAvpPCzsWSpoNQRmbgF0B92augTVgSqNN1jb7mJYA@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAEcERAxiuSAvpPCzsWSpoNQRmbgF0B92augTVgSqNN1jb7mJYA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Sat, Sep 27, 2025 at 05:19:03PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+Sigh. I added file with dot in the end to the p4 repository that on 
+which git behaving well before, and now, with the same scenario, git 
+fails the same way.
+So, I have to agree that you are right and it is, indeed, the root of 
+problem.
+
+BTW, Windows does have API for working with the such files.
+Cygwin, for example, uses it, and has no problems with filenames like that.
+
+Thanks and Cheers,
+- Nikolay
+
+On 9/27/25 07:55, Nikolay Shustov wrote:
+> Thank you, I will experiment with that. But why would these files be 
+> involved into merge operation? They are not the ones that changed, git 
+> does not see them as something that would be merged. For all that, it 
+> does not appear that git would have to be concerned with them in this 
+> case?
 >
-> >> ... (note that this is based on the assumption
-> >> that "find any remaining bugs while it is in 'next' before it hits
-> >> 'master'" philosophy is working, but we have never run experiments
-> >> to shorten this to say 3 days to see if we see more bugs on 'master'
-> >> yet).
-> > ...
-> > I have a vague recollection that Google internally has their engineers
-> > run a version of Git that is based on 'next'. But after spending a few
-> > minutes searching through the list archives, I can't seem to find any
-> > record of that.
+> On Fri, Sep 26, 2025 at 1:41 PM Eric Sunshine 
+> <sunshine@sunshineco.com> wrote:
 >
-> They do, but the frequency they update desktop installations is lower
-> than the frequency I merge new topics to update the tip of 'next', so
-> I suspect they alone would not be sufficient guinea pigs.
-
-Good to know, and yeah, if Googlers aren't receiving 'next' updates as
-frequently as the maintainer is producing them, then I don't think that
-increases the risk of shortening the period for which topics cook on
-'next' before graduating.
-
-> It would lead us into ugly awkwardness when we start clarifying what
-> exactly "contributor" is in the new sentence, though.  If a person,
-> whom none of us have ever heard of, sends their first message to
-> this list saying "Ack", does that count?  If an active developer,
-> who is known to be sloppier than others, sends an "Ack" to somebody
-> else's patch that was posted 3 hours before (hence there wouldn't
-> have sufficient time to think through the issues), how much should
-> that "Ack" weigh?
+>     On Fri, Sep 26, 2025 at 10:03 AM Nikolay Shustov
+>     <nikolay.shustov@gmail.com> wrote:
+>     > Now thinking about it, the only quirk I that I did not mention was:
+>     > Our p4 depot, unfortunately, has some files which names end with dot
+>     > (.). E.g. "/somehing/blah."
+>     > Naturally, (a known thing) git p4 on Windows created
+>     "/somehing/blah"
+>     > for it and then showed  "/something/blah." removed and
+>     "/somehing/blah"
+>     > as untracked. I renamed "/somehing/blah" to "/somehing/blah."
+>     manually
+>     > to calm down its double personality :-)
+>     > (BTW, I think git on Windows could be doing a better job about
+>     such files)
+>     >
+>     > But the other git p4 repo I created from another p4 depot, where
+>     merge
+>     > --no-ff works fine, does not have such files.
+>     > This is the only thing I could think about may be a bit... unusual.
+>     >
+>     > I can try to experiment with that if you think this could be
+>     relevant.
 >
-> Perhaps rephrasing it to "those who have helped in polishing the
-> patches with their reviews and discussing the issues with the patch
-> author" to tighten the language a bit may help?
+>     That's almost certainly the issue. Microsoft documentation[*] does
+>     state:
 >
-> I dunno, as that would still give the "ack right" to a random
-> noisemaker who threw a drive-by "review" that did not add much value
-> to the patches, if the original author responded "Thanks" out of
-> courtesy.
-
-Good point. Having a REVIEWERS file might help with that. Perhaps that
-file starts with just you on it, and then it can be expanded to form a
-network of trusted reviewers over time.
-
-Building on the "how code review is done at GitHub" thing... GitHub has
-a concept of required reviewers for PRs based on what file(s) are
-modified as a part of the PR via its CODEOWNERS file. I share your
-feeling below that the project is not large enough to have individual
-areas have separate groups of reviewers, so perhaps just a single list
-is fine.
-
-> True.  It was a strawman to invite other more realistic ideas (like
-> your "positive ack required"), and was not necessarily designed to
-> be workable ;-).
-
-;-).
-
-Thanks,
-Taylor
+>         Do not end a file or directory name with a space or a period.
+>         Although the underlying file system may support such names, the
+>         Windows shell and user interface does not.
+>
+>     And, indeed, functions such as open(), fopen(), etc. which Git calls
+>     return an error on Windows when presented with a filename which ends
+>     in a period.
+>
+>     [*]:
+>     https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
+>
