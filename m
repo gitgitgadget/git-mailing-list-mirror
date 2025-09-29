@@ -1,93 +1,175 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010005.outbound.protection.outlook.com [52.101.84.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290AD80604
-	for <git@vger.kernel.org>; Mon, 29 Sep 2025 11:33:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5A91922FD
+	for <git@vger.kernel.org>; Mon, 29 Sep 2025 12:10:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.5
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759145635; cv=pass; b=TT+HG3j/XUH24A3yRukXPGBuq3lAT8P5jgyGsYN6OfhVJrqEaIKMVyuBGbhK7HMBl4Ip99Ae2sGGmb62tKXqg63tK9AxjNyzTrz00gXJ3C2TB+U7FwOUXNaDUDFePUy1Elhr2yKWftbbW185Kjg5BSyIxOEaCe1B4xc7DI/arr0=
+	t=1759147844; cv=fail; b=uwNKwh/zkoqlrsDkSqstW8tGrP+vHJz+EIwaXSEBfJJL7m1kdjzyy2grEXPj92uaV/NpMIkyHVAZgQ68nW/S/BSi/nxBd/m+vy3wfMoo11h9bXL0KQ5xxjqIyaPz0gZS/Tmmcw8OMSMlsyXScD8+oaxAnyjydiXrGwvWfI9wggA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759145635; c=relaxed/simple;
-	bh=U2hdRZCtpKIqsouFLARsXUfrU7I1TbZW/+JTq89CBSU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=M/s8ixnB3ryoxeb/4DSip/77UrUnK9IyGXydT7lyHzwxMl81KvuAm5h26Ml2zo3K7dE4Syh3XRebTdL91d+vQK1BkRpmBExmjpmhMggyqQJTFmCrzxwuI8ZKihwi2sq6TwJjkqQj6F0QToQ5Yw3QxCDJH8mm2iliZY21T94CE1s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=F+dDoIby; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	s=arc-20240116; t=1759147844; c=relaxed/simple;
+	bh=TPAZbOEMP06v039R0/bE+RyKhqBNaQjcXg+OZpQwr4s=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=ki/uQlnVyWLOIF0vgaJwrc8rTxOGewJTBOZqoGUHvl30cCHv/nVNlJYVyz1cT9aRVQI0pzESiF7XQ3D5LUQul2ch8EzMN+DBUEHnnJ8cKObJEo0OKmchU3WlcqJLLSX5iKX6hlFMbc0agkNpB0SDOa69oD2ZZSNfMVYAqI8/ZOI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=prevas.dk; spf=pass smtp.mailfrom=prevas.dk; dkim=pass (1024-bit key) header.d=prevas.dk header.i=@prevas.dk header.b=I9z8umUJ; arc=fail smtp.client-ip=52.101.84.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=prevas.dk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prevas.dk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="F+dDoIby"
-ARC-Seal: i=1; a=rsa-sha256; t=1759145616; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=WYBeyhe0bMz7CjYYELtehB+tXAO9AlGNjGvT2zGKQYERXL/uQzUlcVGcJR8Acl6V6Gm6o2MNeL13mEAS2Gn/44j8hHAPIeMBENQ0TNzACAgH0Mbqvj+woIulZYnrS3wisK8VJGhWRU2+UdloUK0V6p6+JnNtT6er3//7AGWD9d0=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1759145616; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=f/ErkmLBZCo4NYJtIScQ6CoD2KeByMl9Hd2Z3BEy/pA=; 
-	b=RUsetDaZPtNAsGMx7VyDD5UEQ/vsd9dG+QV+urX60+IUg5aktvXV7BUYb3NPBsaXCDcSMew5bnw632nqm+rBecVRpepEvgu2UJuIj+qYt2sZIJXXCeYA4wIuz5gx1r0ngJ+HxuKQKw89R57WfVc4P/9nTNHFb//SSnACo/USCN0=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759145616;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=f/ErkmLBZCo4NYJtIScQ6CoD2KeByMl9Hd2Z3BEy/pA=;
-	b=F+dDoIby+xdUJdi5RgrePWivikgylU13L9YKQBujPiS6Z7nzq7iuN+imVAvY9B/w
-	safxi6f7i/fQ0Kf/E9LDSMBCY7ztcgN5UrRN7pRMNfWTC7GeyR+Rf19Axn7uYrYuoNp
-	L2phu5MbEUJfWYbugR+QnVMIPylP3rRpbXqIV0E4=
-Received: by mx.zohomail.com with SMTPS id 175914561283645.79963114424061;
-	Mon, 29 Sep 2025 04:33:32 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Cc: Emily Shaffer <emilyshaffer@google.com>, Rodrigo Damazio Bovendorp
- <rdamazio@google.com>, Junio C Hamano <gitster@pobox.com>, Patrick
- Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>,
- =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?=
- Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 04/10] transport: convert pre-push hook to hook.h
-In-Reply-To: <1f942894-9393-4b5c-8d7f-2d0aaad594f1@gmail.com>
-References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
- <20250925125352.1728840-5-adrian.ratiu@collabora.com>
- <1f942894-9393-4b5c-8d7f-2d0aaad594f1@gmail.com>
-Date: Mon, 29 Sep 2025 14:33:29 +0300
-Message-ID: <87zfadbiie.fsf@collabora.com>
+	dkim=pass (1024-bit key) header.d=prevas.dk header.i=@prevas.dk header.b="I9z8umUJ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wMo0sgsFBOLwPespkoPYIhX+vkh9ZM6Ph3nnWagTlz2PRujzNfsjW0hh2hPXZxtfx1OgxKY4/EVuDe00tquhBvyhF22AwAK0uoi2vWJ9DNhM1vEBI4LpKb7eCqoRgy2Ko8reg2lscAEnpUbZXlamEJH6iPbOqQneuGgpJOkMQ7ZPvPsuYz5CUe6bY2xSJ3znJAth0HZVH+R/j+pHprsrToUvn+y71ikpoIMMADLQJl6fZoKf5wu3RUPnwmO/tHcKXjD0goc/KTkFQvPdsLVLsXz5CGsv0nKODcQ0ApJzES7UGxEEi++AkXlQ59/pKQ+vnQ//JN+drx5KahwtmS03dQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8j8d9J0Wb01puZi5AAq6wcZrdebw6thkzVnW/Jk5k24=;
+ b=vpgUl/ganCQibwQMcOLsvEmcs9F5rpR7cJ0UnRXk4/S9H7tYPu2SKAGaiQy0IrpI0zQyA/Umb2IoZuDknRTrQXUfHKUHimY91rECnC60g4FtKeNSFYKwhtJUOv6vPNQf3WXibWP11db4EMdGAS+shrrKzh+mYMpIJQi/qf4KUo1bnR7O4OC6hzI4j5cLbE+z5vz63KVhYJN48pwFeKGvNdTRg6XMwTVRbqD3DrDnhfRkNI/6gdjqkVA0C99ClpdcM4UGnhJ6CTDq11NNNlr4BtfGntIOUGQ4qbuP1LCdGMAd/bwrSR/joGny0Xi4ZGP8gQHs8iWZ0xrTPd2JotbDEw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=prevas.dk; dmarc=pass action=none header.from=prevas.dk;
+ dkim=pass header.d=prevas.dk; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prevas.dk;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8j8d9J0Wb01puZi5AAq6wcZrdebw6thkzVnW/Jk5k24=;
+ b=I9z8umUJdgY1fR5MlgV4+Uaa3YkHh0l77AaU9LrE6qKBdxLjp0GCgXOZZE7NQYUYSmAoxMgcBLZhI+j9ymNCJUqsONitYwRINm7sGZ1+XBu/z0hWmyjKEgUjlleQj5hw8C5mlC7m/DOto9oRuuipkL7GToHl+HADXyNoi3f4O78=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=prevas.dk;
+Received: from AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:681::18)
+ by AS2PR10MB7778.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:62f::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.17; Mon, 29 Sep
+ 2025 12:10:33 +0000
+Received: from AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::c2c9:6363:c7c2:fad5]) by AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::c2c9:6363:c7c2:fad5%6]) with mapi id 15.20.9160.015; Mon, 29 Sep 2025
+ 12:10:33 +0000
+From: Rasmus Villemoes <ravi@prevas.dk>
+To: git@vger.kernel.org
+Subject: customizing "cherry picked from commit abcd" comment
+Date: Mon, 29 Sep 2025 14:10:30 +0200
+Message-ID: <87v7l18nnt.fsf@prevas.dk>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Content-Type: text/plain
+X-ClientProxiedBy: MM0P280CA0031.SWEP280.PROD.OUTLOOK.COM
+ (2603:10a6:190:b::19) To AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:20b:681::18)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed
-X-ZohoMailClient: External
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AS5PR10MB8243:EE_|AS2PR10MB7778:EE_
+X-MS-Office365-Filtering-Correlation-Id: 55ec55fc-3136-4e90-708e-08ddff5130b1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|52116014|376014|1800799024|366016|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?Q8DoEQ+3bgJXF5x0IEXkNXUBJcjaS0ybjf7d6sKPCDP2/yBFd+gsbO8ecK4T?=
+ =?us-ascii?Q?ckCvDzvjmN2zEiOt08Wno1mxSsPsNdAR94lzZQoDbFfVK8QdGD2ObW/4G1H3?=
+ =?us-ascii?Q?Azhj+Urowfmzo0szJsl5jjw94nl9vqMORp1zvEJfLGuK2VNQbEi8PXATDwVO?=
+ =?us-ascii?Q?Dx2pUtlAIKnHCpUll4pgwSB5xOCzyyvitfh2TrQiMXXkiofNAJBy1taIxiTy?=
+ =?us-ascii?Q?i8zxDZycT9jg088J7TF7kB0Tc7tVG5IM3xUY0DDVSAiC7FVRmx+LlWNYvtQ5?=
+ =?us-ascii?Q?3r2y79qfdRY5zupMj8KfbwOo8cAL2CZx/w83XFf59Ioo2hRvf0+SmiLcl79c?=
+ =?us-ascii?Q?vepjvCx4NowF0KPyaqu3PmtO5yD7APEipFMubyRI3Xw85JGgBN4rZ6VUE7cy?=
+ =?us-ascii?Q?QqYlB2weNNLJb/BfXSO5mEQJT84gM0p5hOm2G7JAXrayDWM4AOdKK+dBctq2?=
+ =?us-ascii?Q?VQLQ3G5gMswWrxw5RiWVte4aVpBmFf+B+Z1pfzjsbNu4Yrd2f7N5QinRQIAN?=
+ =?us-ascii?Q?a/1KqLQ3ZH60XnmQyVqXEuVKZa+jGLVZpnxCmp3zWe4t/IOGqCNpDPaoNhjc?=
+ =?us-ascii?Q?WCzElKSn4V9IrXYivNqdHy6l+Juk2DoNBWqx9moEdiT/Mb+PKzjhU60gqXOs?=
+ =?us-ascii?Q?82k1hSsWrH0ooIBfwR7FfrmVMpjvn/DNkLCIxfZNFpkaU+8RnPw4bQMzXmZI?=
+ =?us-ascii?Q?vODjhLm0g9CkT4OExx+/axft/aqjp5uD8b6CxzBVRMdxF88zxFG6NKT0Gmpi?=
+ =?us-ascii?Q?8DKzkrVofN9fwo3WnZYGo0AGP0RFMb68ciCDSQtyGQ9yQZk46K74w4CIFbwG?=
+ =?us-ascii?Q?ekPbdWAQmjh1+FyH9kwQrBG7LpKT0VAiP33MRtOIDnpK5F3lFG8Hk+SSgAgr?=
+ =?us-ascii?Q?Hw25UWxdBEgSbzto0hhYvFbH5wvdHGDTJgXSxo5XSE9o0ChN5hC9d54PBYjs?=
+ =?us-ascii?Q?o3gR7XZU/TiMGJyQYmDobeLIPZgd8ltjpkvTtlEd58BGkg9TST0mNDxlozzu?=
+ =?us-ascii?Q?TJ9wXV2yXMDTMhEPSYnp0D9FvZZy10POLsiXkuG5DW+BMFVxAzP7JlH33cBC?=
+ =?us-ascii?Q?wTbL7qPJY6DZcoYnyglul/WK9z2VqAAvNTfKwH+3VyzynQ+cpuGXw4oTGK+K?=
+ =?us-ascii?Q?SLM9m9pv+wxd304zoePx9ZHRPrmmhIY9efEnil74qYgQUITcZd3zZ+QkcqDv?=
+ =?us-ascii?Q?l430CYphLIhF8ZmgOMWBUTLaQrUgrsBX8iqIIzHBLcGzSkqN7p9vLQ0I6UWA?=
+ =?us-ascii?Q?+Kue4WNlE3sXyLijrWRBblPqdso84ffDs0SKfqNyMrVExxVDrGRAfQrh4xxZ?=
+ =?us-ascii?Q?BTAd7uH461p85LN20mngcKrpZtD6Bs4CIgrupPFwoBjM3pC4+KMwcqcqvx2v?=
+ =?us-ascii?Q?KF/Q/MeGy1jqLxro4DchRaF5CCPSxCSlfLAK7NXz6I1vCNjNDUgGKW9CLAnU?=
+ =?us-ascii?Q?XZbaFNGEdOj1sM54fM6btZWgDM92u2cc7Qt8JJ4CCu8UBgRhEcSO6ZtBr+MT?=
+ =?us-ascii?Q?T6AxImfu2/CJMXlGtMQTFWprTMKAEai+ui1c?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(52116014)(376014)(1800799024)(366016)(38350700014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?O14ctipC9UBNJjL/Z+hPQC2IjzAbTzbiEMm3JPHEYpsoNE6MWXSC5Ha9hhhB?=
+ =?us-ascii?Q?y8pcjhXCC5pg1FVgLB2jXMd1XKw8mS9cWdry2BbOAQDgpa9pLQR8Gr0MO9Gt?=
+ =?us-ascii?Q?LNSVuvRx3WwfdeaS015isEqPCKhMBEusUhFevQCKJ0Vl4mdkrBdz3YZNNaid?=
+ =?us-ascii?Q?Bznn3xyosYqqaEmO9pODkLWPLszl13GSrBRp7GS5hnLrA1N464PPZuCdYi8i?=
+ =?us-ascii?Q?+1knqHWd2lAB5AevQCTsg3Bfs1wdJbwVmeVH9N8efocZ+fNkV74OGJRrf4Tx?=
+ =?us-ascii?Q?mxZjOew0FGSVeC5SFL1AC8MJSshP+YJIy0VjxDijcjyWTgUwyNbQV+Z3hoH9?=
+ =?us-ascii?Q?VJzlM8ou6vJ3Xt9S7wmzO8FYnPUxx7BG2llIXqwlNBedKitveLi4QSSfHrVK?=
+ =?us-ascii?Q?M3d3ApVeM9ifSeldy/djbCeJmBWpN7WvIIGW61cXDbu4yzYiUUWvuF5Y/CqO?=
+ =?us-ascii?Q?MNr61iLEFCZZOINYbVVMMmo+TWpHoscr4L6VrV3S+VzdcX2gWbXnsm/KQ9ic?=
+ =?us-ascii?Q?nJ+4TQF3LqpsAZHPoNvkXJQUh29yXKYcO5rJkc8NP7hazNOUnSa23CO3qSYu?=
+ =?us-ascii?Q?uN8HOHVoQJRi00DQut1vCkbE9lMXSUm4mnuHWCMM+w/Xxx07MkdV31Dy3l4V?=
+ =?us-ascii?Q?eUycO9/8fvjxo+cc+E0PwBcEt0hK74pPucQ2K1t+9M2LA2MqxsNytgYHJHkv?=
+ =?us-ascii?Q?oohQyyMY5ZFx4vaviCBZFLEq0rJnWXeG63hc5oYwxsTO4y3gTVq4E5P2EW/I?=
+ =?us-ascii?Q?qxRydQYsDTD1fuUzqiBqYk06pGanZkBTgq6OOTfKaPeuWDPrHZt6xL9wM6o0?=
+ =?us-ascii?Q?KSzXxTa/BGXrzX9u+wSC7QIIIGvSvY8pleAUj1CrG2FxcHEviW5wn8P18XUk?=
+ =?us-ascii?Q?W+8MTaLGDuumsvOWNb2/khmvQ0XNDv7SahbTqquME5QFKdXU2XSg0nCxpCcx?=
+ =?us-ascii?Q?72GcVeS8BKEbpR5FVDP0TSxcJJxYn6+83rXbboN1cQog9k7fKXquYhfBH17I?=
+ =?us-ascii?Q?aV8dD39B4a0I31+zL0cRyYzO9uefmN5n+FKwiX8COcp1m3+HUR8PVj6nhBAL?=
+ =?us-ascii?Q?pDdQyV4LdKGVduwNQghOWcWiR+z9Ro5LLL1C2nsT1Nu/+1NYqhqdmzJXrbSB?=
+ =?us-ascii?Q?VkErbktPAVWGkeuX0t8GMvDrrlb4VbfSSh9QtlyXfqhkbm1HmlxHsosz/AEX?=
+ =?us-ascii?Q?cQCt770aXcNDS5c7PpMKCEQrXzfQfz0fHDS5fhsT2y2Jzu11WPCQA+i91xyJ?=
+ =?us-ascii?Q?ZAbHP31mdkNtFV6OHADZj7cQEKOwOlTQMb/M9hLXYw27W+GyUlEX6Y+gqMBh?=
+ =?us-ascii?Q?VBLN7AKuUj8ZM8Y30vTKP8uiJlIpHMSaEuvbhQLWYCQjjO4b808UfHYpoyYz?=
+ =?us-ascii?Q?ZHioDfHh/4PaQMfiGsUS40rgqSdXyDwSImDZ4G1UOZiUnXb4TJSomCU+vW96?=
+ =?us-ascii?Q?mq3LWK21n5skNLDx9SqsVqhQiubfCwl0mlbgy6Mo2QQW6DdwrYJ3VI0XFy3W?=
+ =?us-ascii?Q?d8qYAePu1ceDLLlYEdjPmeRP0glSlCtACqJU23wCjA1RGjzXkyghqTk0Qy7f?=
+ =?us-ascii?Q?zgfgOXKafCeSRYvbWUkQvbq8ZsrGC8tYHF3LrMDeCM0fV/PGmN9go2JxvXdp?=
+ =?us-ascii?Q?vw=3D=3D?=
+X-OriginatorOrg: prevas.dk
+X-MS-Exchange-CrossTenant-Network-Message-Id: 55ec55fc-3136-4e90-708e-08ddff5130b1
+X-MS-Exchange-CrossTenant-AuthSource: AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2025 12:10:33.3488
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: d350cf71-778d-4780-88f5-071a4cb1ed61
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Q9kakm2NxBBEqskoxCBIU+ZFCX0XN8wsGmFHAz5w+gXkQR6Sv6YT0PHQe5yDo5aGQ5haeTnawOt60X9iYKxeZcn4a7VKBtYvgiT4kqwe/a8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2PR10MB7778
 
-On Fri, 26 Sep 2025, Phillip Wood <phillip.wood123@gmail.com> 
-wrote:
-> Hi Adrian
->
-> On 25/09/2025 13:53, Adrian Ratiu wrote:
->>   
->> -static int run_pre_push_hook(struct transport *transport,
->> -			     struct ref *remote_refs)
->> +static int pre_push_hook_feed_stdin(int hook_stdin_fd, void *pp_cb, void *pp_task_cb UNUSED)
->>   {
->> -	int ret = 0, x;
->> -	struct ref *r;
->> -	struct child_process proc = CHILD_PROCESS_INIT;
->> -	struct strbuf buf;
->> -	const char *hook_path = find_hook(the_repository, "pre-push");
->> -
->> -	if (!hook_path)
->> -		return 0;
->> +	struct hook_cb_data *hook_cb = pp_cb;
->> +	struct ref *r = hook_cb->options->feed_pipe_ctx;
->>   
->> -	strvec_push(&proc.args, hook_path);
->> -	strvec_push(&proc.args, transport->remote->name);
->> -	strvec_push(&proc.args, transport->url);
->> +	if (r) {
->> +		struct strbuf buf = STRBUF_INIT;
->
-> If we passed the strbuf in as part of the context and called 
-> strbuf_reset() before using it each time we'd avoid allocating a new 
-> buffer for each ref just as the current code does.
+Hi,
 
-That is a good idea. Will do it in v2. Thanks!
+When working on a custom U-Boot or linux kernel based of some vX.Y, I often end up
+cherry-picking fixes from upstream. Using "cherry-pick -x" is nice, but
+I usually amend the commit so that it doesn't just say
+
+    (cherry picked from commit bfbbd8472edbcff1f530ef8e1d74c56af74ecf13)
+
+but instead
+
+    (cherry picked from commit bfbbd8472edbcff1f530ef8e1d74c56af74ecf13 aka v2025.01-rc2~35^2~5)
+
+This makes it easier, when porting to v+1, to know if that commit still
+needs to be cherry-picked or is already included, and also makes it
+obvious to anyone reading the current history to know the "upstream
+status" of that commit.
+
+Now editing in that, which I get from "git describe --contains
+--match=v*", is not too onerous, but I'd still like a way to automate
+it. What I imagine is some config knob indicating an executable to call
+with a single argument, the full sha1 of the cherry-picked commit, and
+using that executable's stdout in lieu of the default -x message.
+
+Of course, it's quite possible that the script cannot find anything
+meaningful to say. So one would have to define what it means if it
+prints nothing on stdout, and/or what it means if it exits
+unsuccessfully. I'm leaning on saying "exit 0 => use stdout as-is, even
+if empty; exit != 0 => fail the cherry pick operation", but I can
+certainly be convinced that some other behaviour is more sensible,
+e.g. having some combination indicate "fall back to the default
+message".
+
+Is this something that others could find useful, or is it too niche? If
+the former, I'll try to cook up a patch, but I'd also like some input on
+what the semantics should be, or if there's some other idea for
+achieving the same thing without a custom callback.
+
+Rasmus
