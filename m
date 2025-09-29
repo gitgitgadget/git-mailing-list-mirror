@@ -1,118 +1,126 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3CA35950
-	for <git@vger.kernel.org>; Sun, 28 Sep 2025 22:58:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759100285; cv=none; b=qhxg4U6wOVdVAkrGP4TKBW3FARWtbXhySlcLO9+mcnIQgZX0wN14b0IbI5TlsBEO6Qxsx8XGeWDQPqguIRP6znOnwbW8YH1AbQX03AAPpBxtl89aMo8+mTRIHd92rOm54ueTZ67GuKgzlbg0rQMJBmHeth2MWVAOnrAhu23fsE8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759100285; c=relaxed/simple;
-	bh=j0KFcmWUOg1o/d4c0PTumfBCZSWCKp4u/QKPascE/dE=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7083B2110E
+	for <git@vger.kernel.org>; Mon, 29 Sep 2025 07:33:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759131224; cv=pass; b=ErwXOd4qS/cOHZIl0uPfUod91HGYpyhZ0/BFDyCddu89bcnIECKVntPYLm94+Gc8OL8j8p8r9d4eLlLmkAdx0glHQ7xA/4ULJlNXP1lg1p3N89lcxpJOARJzbXXMj14qVB8A1wVlx6pdJHtHKsUvLnHI0Ikhd1eaSm7NYK1xbOs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759131224; c=relaxed/simple;
+	bh=3MyMghkH3YOvPdeA1VPC1YDlEjWXXx0vwd5MeUx8vFc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fzp5Z8ZNr+sJPz9fLsEwACLDVQqEv/mojsPd5RmTr9yhthp3pJwBYLWs47pKO5I3PqLo93Mpww40dvN9YSmw6ledBJsm9cLsYXyo2ga1nAbjT0YmCG9Wfk4MUIer7mtHMP04EmJ41Yo+VGcx6Nn65yuDI9O3Hgs4H9D3Oi/odsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SrQZXeqP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dBV8rDKN; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=BnM7f1Ci66YzTTEARRQVxNZOYPVebBwNSjj0J6GoJZT6evLHWGg2WZfzPoyzaP+qkDaqOaUhDshRacQJ9tuDnqU37hMoN9Jw1ge4NSN6T3eq5wGJR+8KQ2n0HvzVE78BgMiZ2d8RkQBENXwghgHNt6UxGdtaU4f6jxq9goTiGmc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=HX/cd6cI; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SrQZXeqP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dBV8rDKN"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2A6D6EC00A2;
-	Sun, 28 Sep 2025 18:58:02 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Sun, 28 Sep 2025 18:58:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1759100282; x=1759186682; bh=0cq4x0ysMf
-	k5EvjwsoF2K6df1pS+hOty3p4wgqfKuII=; b=SrQZXeqPxKG4PvmUY0t7yFKJN/
-	uAnGfI40yo3iXQrHgFeRQjX8H9qjJMsNDWZQYKNqf1gzO1hfOS+h9PfoS3chTks9
-	jfjWy1+W/4AQLvjLFw5yur8cxOCdePww+i5+EGrl7u8SK+Ef6N+AmTPpEHcSHsav
-	W3Tt7DaTe33UxwsthFkn0kO+mZczrq+mposOjjCvQnQpDJDSNeR22RwTdTox4Nr8
-	zM0xpJ9ZiHxeilXmzsnDTTh3z7JG/qsow0dYgws2SAeX3UePSa9e9VOXEMIpXiDr
-	95/LiuBDIR2S5RSjgEAFvBnnmRFuKaa1IyYxQNpDnHjHzTGA9H44on312n2Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759100282; x=1759186682; bh=0cq4x0ysMfk5EvjwsoF2K6df1pS+hOty3p4
-	wgqfKuII=; b=dBV8rDKNozW+8uTIFuzfVUPbc89EO50frSlgZ3Efv037HSOSsxn
-	yScsx19a5X/C5zBsi8r4Od+AWHafB89zOwTbilb4ka+Ae0tD3zosRyh2rXSbc/wt
-	P6WG5gMR3C76iPXrvxOJK3b61/qlsxwyHdKFqAoHc4ZK87WROLYewLvGdmTqPoev
-	vJGVvnOwFXjxnWHePtvk5kSo+u/9hQY506R3puBni1diq0IvmPeV+SBhEpuhYJ/M
-	81+YAq+Jl+jD18ILPqJuFybDpt7MsEWsuq+8Ynd+2r/BAqIzEt3t/4O5yYaTvegr
-	NxSsA5mewL++wx0g2ehCJ+9W/CN3hy443Tw==
-X-ME-Sender: <xms:eb3ZaAqqCLY43opZaHBny8yJGsBhvl6bLtlDTzSVxReok-xHpagYNg>
-    <xme:eb3ZaI5me7ZZ8Ju8KM9OJ0AOkjovp0zT3cSPtylSQ1JcMZxcE-g7VJx40pTD_FRQy
-    fowgDfuGdNx99zFbU7nCbvJU0BWmvuybX10fNpVDnqneW82cRtmjA>
-X-ME-Received: <xmr:eb3ZaHca2ioo3wMZRBmOhpDPpNYKRh_g-S3TbYQ8BY9rm1MCi7dWJmTFBPSn3doKRtc42VBKMB89reb6O1YNDDYNEeKRJl4vbZJl>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejieeflecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgv
-    fhhfrdhnvghtpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepphhssehpkhhsrdhimhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:eb3ZaN6cB1mDIO_b6ZiBKZ1LAPcAx87v5NL5fJJZDB387Gg_vA8R2g>
-    <xmx:er3ZaOsSiidncuUzxnAMpibhbNBddpg9UhKQZ2ADvc5QIrXzjOISZA>
-    <xmx:er3ZaNiPum_GGDnHJMLgrn8tgaOsNAU5o3glbru-BgJs5k3FhjqQYg>
-    <xmx:er3ZaJqqpY7GbA_fk96exTJwvZZoI0onxUjCXVzrPQLLl9tyBXHTUA>
-    <xmx:er3ZaL4OVrUod4D-I8a82enN2nne1Jge1tHgiKIuqIoeRBd2EihV6lxL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 28 Sep 2025 18:58:01 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
- <newren@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  Justin Tobler
- <jltobler@gmail.com>
-Subject: Re: [PATCH 00/49] repack: prepare for incremental MIDX-based repacking
-In-Reply-To: <cover.1759097191.git.me@ttaylorr.com> (Taylor Blau's message of
-	"Sun, 28 Sep 2025 18:07:10 -0400")
-References: <cover.1759097191.git.me@ttaylorr.com>
-Date: Sun, 28 Sep 2025 15:58:00 -0700
-Message-ID: <xmqqcy7a5gnb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="HX/cd6cI"
+ARC-Seal: i=1; a=rsa-sha256; t=1759131211; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=DI2qq6UELU2G40xBkAelPh1fEZBfapdBMQQiVnoe+a94JLbLEVC0Jms1LaoCZMpJ9umZFkiSKGnwLCSVJ6Pzf98HMerACNdyhtW3wVKDTMBS1ulqD37FUNndjYbY+b1ICAhJoZD4UuoVYEetyUTbf8P8TgSSSrQw5LsyU+5jt+s=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1759131211; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=A9PV5fV9O9a/lxSb+VAbsDJMoR3ayzo8rD1+Uy22vyY=; 
+	b=bH8sAke3iBQzeniHVs8xU1pg5LHSxW1oKmsOGL27VNkOYryJcywRAi5vibKQYd2kfnzenmkUom9DbuuVeBSnKaNrZqNZ7Oj2dlx3i1SM25EbwHYK+1aEHqYocSKXWyWNf209VU6FLEN3I0JKAIo45RR+P6aqKebf2UMgoXYHbs8=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759131211;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=A9PV5fV9O9a/lxSb+VAbsDJMoR3ayzo8rD1+Uy22vyY=;
+	b=HX/cd6cIJzHco86ebHUM3XDNWoUVGws9ho7AQNZqp5q3bcjAT1QYhChPzziEwzuD
+	cLd7/4MOjwZontHWhiD5em1wKVCJCUjSAAjMe+WSw9dQkWoPZUwgQoaLKRy/FA7LnWM
+	f4tJUPDFnAi2SzA+uyfF7Mss3/pVWO4lbE25EewQ=
+Received: by mx.zohomail.com with SMTPS id 1759131208487612.5961903936956;
+	Mon, 29 Sep 2025 00:33:28 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>, Phillip Wood
+ <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org, Emily
+ Shaffer <emilyshaffer@google.com>, Rodrigo Damazio Bovendorp
+ <rdamazio@google.com>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon
+ <steadmon@google.com>, =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>
+Subject: Re: [PATCH 03/10] hook: convert 'post-rewrite' hook in sequencer.c
+ to hook.h
+In-Reply-To: <xmqqikh5ayoy.fsf@gitster.g>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20250925125352.1728840-4-adrian.ratiu@collabora.com>
+ <f408e46c-650a-4632-9628-cf817e393e7f@gmail.com>
+ <xmqqikh5ayoy.fsf@gitster.g>
+Date: Mon, 29 Sep 2025 10:33:23 +0300
+Message-ID: <873485d870.fsf@gentoo.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; format=flowed
+X-ZohoMailClient: External
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Fri, 26 Sep 2025, Junio C Hamano <gitster@pobox.com> wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes: 
+> 
+>>> +	ret = write_in_full(hook_stdin_fd, to_pipe->buf, 
+>>> to_pipe->len); 
+>> 
+>> This will block until the hook has read all of the 
+>> input. Unless the hook drains and closes stdin before it does 
+>> anything else it will block the parallel execution of other 
+>> hooks. 
+> 
+> Ouch. 
 
->  * This series depends on ps/packfile-store at dd52a29b78 (packfile:
->    refactor `get_packed_git_mru()` to work on packfile store,
->    2025-09-23).
->
->  * This series is split out of my local copy of
->    tb/incremental-midx-part-3. I suggest queueing it as
->    tb/incremental-midx-part-3.1 ;-).
+I replied separately to this, because I do not think it is 
+correct. :)
 
-Both of these comments are very much appreciated.  Do we say
-something to encourage these in our developer-facing documentation?
+Please see my other reply and if there are further questions or 
+concerns we can continue the discussion there, happy to address 
+them.
+ 
+>>> +	if (ret < 0) { +		if (errno == EPIPE) { + 
+>>> return 1; /* child closed pipe, nothing more to feed */ + 
+>>> } 
+>> 
+>> Style: we don't use braces for single statement bodies. 
+>> 
+>>> +		return ret; +	} + +	/* Reset the input buffer 
+>>> to avoid sending it again */ +	strbuf_reset(to_pipe); 
+>> 
+>> Shouldn't the return value do that? 
+> 
+> Sorry, I do not understand this comment, but did you mean 
+> to_pipe strbuf is left with some buffered bytes when we take the 
+> early-return path when we got an error above?
 
-The points to stress are:
+I described in the other reply how this function works. I messed 
+up by making it more complicated than necessary. I'll simplify it 
+in v2.
 
- - If you are not building directly on top of the recent tip of
-   'master', mention what topics that are not yet in 'master' your
-   patches depend on.
+Basically I assumed this write works recursively and the reset 
+stops the loop, so the next call exits early to stops loop.
 
- - If your series is a part of a larger effort, briefly describe
-   what your overall direction and grand vision is, and state where
-   in that grand picture the current series fits.
+Since we write just 1 strbuf once, there is no need for 
+recursiveness and we can just return based on the return value, as 
+Phillip suggested.
+ 
+> 
+> This part of the new code makes me wonder what the lifetime 
+> rules for the to_pipe message are? 
+> 
+> In the original code before this rewrite, it was clear that the 
+> caller of this function was responsible to allocate the strbuf, 
+> to feed it to the subprocess, and to release the resources it 
+> held.  Now, what is the rule?  The caller still prepares the 
+> strbuf, but the called machinery using the hook API will release 
+> the resources? 
 
- - If you have a short one-line summary for the topic to be used as
-   a topic branch name in mind, do suggest it.
+It's the same as before: the caller owns the strbuf and releases 
+it (see the strbuf_release(&sb); in this patch's context, I did 
+not modify that).
 
-Thanks.
+I'll document this in addition to simplifying the function logic in v2.
