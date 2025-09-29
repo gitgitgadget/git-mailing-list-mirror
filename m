@@ -1,120 +1,132 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB9B1DB125
-	for <git@vger.kernel.org>; Mon, 29 Sep 2025 21:19:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CE91FE451
+	for <git@vger.kernel.org>; Mon, 29 Sep 2025 21:39:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759180801; cv=none; b=Nwizt9SgSGKReqbJPxtZ+SkQxXjwkk+TtHh+TT2eC1KuxwjHzNbzB4rKljBdaRI5iWJCLhOHrZubEDgiN+TOPdW7DiS/C2OJuZuS/ml1h4RjDPlfoo/leUP8TtZZaLx2rWtSMcktgNy2IFT7NIKQM02Td3Dh+Fm2t2htrSp4BLE=
+	t=1759181955; cv=none; b=ee/qVY61MuVOTllq01h7ijxg8/wG0twrgpiz1kqUo7khJUFLN/R5srROC384PewvvYh8YxstrA8GHtrYi4ThBV5QvmN8jpwsfG8J6Hhp5qYl3wQKZMLk17Np8j5UDz1UEEL4hgWf1ym3cVNEQbKyScaADB0PqNCMUlLB5bzx2ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759180801; c=relaxed/simple;
-	bh=HCX3m3iEgMCw7YrhBcG5WvqEk1uRmzJbJQezhoWx1e8=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=awiACQw1OCm/hcpTWihIS30klneiZAxTuV700sdsNTL9rB9gH/DA/Y1rBdVIHt3jOMmfXByKUbBggTPsJe4gbJwqyPbVjSxrUB0fbRT8XAVg+20TXz5KpjPwmQt8P684tfNpKeM8YUZOd1iFG04wnOgRKmNF5ZIU+L1GC09NEyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zf2mdEoA; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759181955; c=relaxed/simple;
+	bh=cS4Jyl3pdbddr7ocYLaclyx9EtnhhKLGwT7JZFxMFdU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HH/NqnO9DAM88eiYpo532CxK8F1z9tVv8y/Y0ph6lZE32wAvY1HvDg4k/Dtp35izFrekvMGWZav2q/5kV+o1D7DX4vVbn3AP0M00Kg8ENuCVWfTFlEPH7ZqGGwbv7I/Rq9E2JhqqV3AB6EDoIsQK62uxSe4sqv1zjPZg3fgjfSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TyF66t5H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UHUsbe0+; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zf2mdEoA"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-71d6051aeafso54395127b3.2
-        for <git@vger.kernel.org>; Mon, 29 Sep 2025 14:19:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759180798; x=1759785598; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mIPtMY5JgBaVKF0Ixaz0KV+bbo0XCoVYHXqz13HZfUc=;
-        b=Zf2mdEoAqof51hLKNicrpFY8oIeW40vzBwpkXofGIkwYKyGigf/AW/x+24jqaJHJYP
-         RLQ8k/8z6I2qOl/W8jNVFd+lFcS7m6hbUZaUWRfUYLrKjQv39Ky3L/alprnyilragsJ7
-         UH/nnvvvnFuAvlQ1a7pvOcxD8i0z7j+3Yu8E2xt2g8em8O38gyvsCt2uOxt9OEmpRIKA
-         ux7Eu6GuStpj0BDXyeswz1Zwk9GROUbsX4NUJvxAGz4qwBkapAl9kIaalQ5khdRJL6tC
-         NQ5BlAIVyVkrfdrxql31qPkCkoWNDKKOzeZL4DVbOZspIO8A6SoHdX9piHAWkKSi1WlH
-         3k/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759180798; x=1759785598;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mIPtMY5JgBaVKF0Ixaz0KV+bbo0XCoVYHXqz13HZfUc=;
-        b=kXpEpYZ+sCOs/5hzA4U2UO7Cl70RNAc86VVa9Gahs+Yox9hfxkLTuWnX4KyWaesFQe
-         ik1WquNoxccPcD5bojlge4cJx6ptzRER+7n3Fp2HBQGywBXm8jZX+RswMjj3CQ7k+9sb
-         5sI8U1r6c7xTxUY59q5z8c/z994BBB9OkYE+Je7olMN46+QagaeStip8LzXuxzmw9rfL
-         F+lwcmmRMWVlLIOlCANkaGmUZn+LSPqNs54Zq1v/H/2w2HkMHw1NM1aSK+hMOg8QvpKU
-         tntUIsYUTigzqgqSAklpsgvupmNDxuBBP2qycAawom68FM1wSyrZ9sdiWKsBqJSTl75W
-         fW7A==
-X-Forwarded-Encrypted: i=1; AJvYcCWmh0evGDU6TYl1o7GpnFLkapbT/NIWQ9qHZFwUftRev/5qDUZQ/73q5XwKLbPmNqhDeSY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzU3ljQiwPh+z0mIertwWcjx92oq75VaWwwDocc2V21uEERUguB
-	m25wAGGqboGmr+M6As+GwIFFQ4RCUUQAzOzdaq5Qlyxcm2QioeLJBa43sRTe5x+c
-X-Gm-Gg: ASbGncuu1Esc0IlC/oxO3bBrVIxA+YhMh7jnA8tuUuPX8Qt8tGNRu/D2fXmuxvY5AfY
-	pzPhW+7So28l4rQQZb7GoAy0+EiZLXeDLbHOBGmA/Uf0/6aPb2AOtUMRiJDkgmavMO7Wt/W2BW+
-	PCkoo7/Oif5FXeSFegqhxZhK7xzsDKW4fcEBimajSkHaRJPa/OeH2KcITvmIQPdmfaD2N3CKB7g
-	CUvYoYlRa3KJMbnLcEEOe0RxN1YejMUK47Ktat8Klf7p0CZYpeYAn+8dVCmQSCdwczbPfFCKHBx
-	9lcxNU5DB5pPgdA0q1MIt8CvdybDKFjy/tFOepz1wdQuCmET7CnhLXxnUoutDZ3wgVgXTCJe5vy
-	NR2YMInTCRN06gJdi2zNFqV3Gmge6unvt1krzU9WhzmTsPqNS6Cw=
-X-Google-Smtp-Source: AGHT+IH6wMTAsAjEQrR//z2juBs7MflG1/v1zXnTDwbGya85MAHErtzK/Pdx3Jq/Nval2xxKmzsRMA==
-X-Received: by 2002:a05:690c:4808:b0:772:a175:8b75 with SMTP id 00721157ae682-772a175b577mr133147477b3.13.1759180798218;
-        Mon, 29 Sep 2025 14:19:58 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:e8c8:f46d:5858:5703])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-765c7da8385sm31707777b3.60.2025.09.29.14.19.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Sep 2025 14:19:57 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TyF66t5H";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UHUsbe0+"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id BAED8EC0229;
+	Mon, 29 Sep 2025 17:39:11 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Mon, 29 Sep 2025 17:39:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1759181951; x=1759268351; bh=apmzeeohsV
+	d/pOOIEn4KAWLyBqLFca/mX0DLxN7CBZM=; b=TyF66t5H4/OpEFa+KmiaV2yb/Q
+	nJaENMGPHtYRKd2mVzuyoT0PKFQqLWnqgUaEG6FQ42o4xTm/FiMRas0lkevTnUAc
+	huvvkhdm7uPzhTZPX41qjfosOyj1cYdI4gVnBme4HJz5o3BPE2jtH+9LcO8xoz5T
+	WwlR4/7ox9Hv6pvJmBtia1RzcP76Bpv8d94R21Z9OHXI4qTdcQONJ0qSUs/wqc93
+	kOP7aFRWrCIHf2VCDKcUY6mhaRdyBan0vByGXeqIEARK0rRNnvkwc+N45dLnz6ge
+	+nk3G1nwGzXslP+ILOEIlTXkScgYLnA+V+6jD7niA8vulG2UhfQKlID+gzJg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759181951; x=1759268351; bh=apmzeeohsVd/pOOIEn4KAWLyBqLFca/mX0D
+	LxN7CBZM=; b=UHUsbe0+y/mRL6PYV7/LJpv1tkJSMe59Nk4e9UowWgGciqwEalc
+	wIYeIWex8n4deV5pzqK/5EpbjAaN8F/kJ3oOryx4rd4IxkO3oDIS+w9nC40eRdF+
+	EqKf+NUNjftBuH1v5zZnvyzU8ftob+ltdlt7VQ9oq0xlwhzFt2U6Amje0nnCzRNe
+	xm7jXY4Gafbu0h6FK98S+d4k2w/qNnA5bQXjlPCalW28J/b9PzstdWoP3ehY0oVz
+	G/AiaSW1Xhs4HlpEmCcelVZ9G9UFpLuiZsM00NAXBffQOpfPgCrQJTc+VMcaAHYm
+	v3Ac7SvzRGtdsUXPDlgLs48hdb77/kbiykQ==
+X-ME-Sender: <xms:f_zaaLO_O0E1uWoZJ9NfHbyQ6kaYjHpcCH6r8N0Pun1v4DBVXYL40g>
+    <xme:f_zaaJqyIF-AwltcY6E2hwSeIH99dGYdhwySUXzRBSKHuEsfahaYPFlJE5zZo3f22
+    MS3MO670HIHr9-OxnoZ3bqecBQQkWLyQihF_b2ZgkktScIKHlZ5iQ>
+X-ME-Received: <xmr:f_zaaEHCHVxVcWI0OKl_IikDCl289pf0CBBYehzH03OXHtFwYULcq0QIlPXqkE95rwRBK7m5J2HbBbWGc4ULQHBBN-U0xZkq4udnWIEZw3w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejleduudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    ejvedugefgffffieegtefhgfeikeevfeefheevvdegieetgeeujeeliefhiedtueenucff
+    ohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrd
+    gtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgt
+    phhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:f_zaaGqLC0sfi2EZF0d_-9pyFqjGqhIMn7ViI7UgK_NT3G8esY_qrg>
+    <xmx:f_zaaFZnWSv1VXrUTBge-Rje6-7IBHVANbuWPaIjmE8ID9a02ERgwA>
+    <xmx:f_zaaHViYC7RYnkzdjTFb7JP190SMe2HjGIBqStTpK5fpHgggL0M1A>
+    <xmx:f_zaaG-AY59vUqE26tt-rsRYBU2UGJntSpAaJVe0gE8vTHFQuZnclA>
+    <xmx:f_zaaDq93IXflQq5-R0gH0L_i9iH6dZVqGt_j91W6bs24i6IOUX9J36I>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 29 Sep 2025 17:39:09 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 744b2826 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 29 Sep 2025 21:39:08 +0000 (UTC)
+Date: Mon, 29 Sep 2025 23:39:05 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v6 00/15] packfile: carve out a new packfile store
+Message-ID: <aNr8eSabW3rw0Ze8@pks.im>
+References: <20250819-b4-pks-packfiles-store-v1-0-1660842e125a@pks.im>
+ <20250923-b4-pks-packfiles-store-v6-0-b48f2a882759@pks.im>
+ <xmqqwm5mh5vw.fsf@gitster.g>
+ <aNYj9oijx4dhJBOk@pks.im>
+ <aNmxQqV3+1Ad12qC@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [RFC] How to accellerate the patch flow (or should we?)
-Date: Mon, 29 Sep 2025 17:19:47 -0400
-Message-Id: <B0E6ED38-85AB-4D8B-BC72-9056086A28E5@gmail.com>
-References: <b583b17e-96a5-4f22-8cc4-acbd3dfec82b@app.fastmail.com>
-Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
- git@vger.kernel.org
-In-Reply-To: <b583b17e-96a5-4f22-8cc4-acbd3dfec82b@app.fastmail.com>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aNmxQqV3+1Ad12qC@nand.local>
 
+On Sun, Sep 28, 2025 at 06:05:54PM -0400, Taylor Blau wrote:
+> On Fri, Sep 26, 2025 at 07:26:14AM +0200, Patrick Steinhardt wrote:
+> > On Thu, Sep 25, 2025 at 09:08:19AM -0700, Junio C Hamano wrote:
+> > > Patrick Steinhardt <ps@pks.im> writes:
+> > >
+> > > > information about a object database's packfiles is currently distributed
+> > > > across two different structures:
+> > > >
+> > > >   - `struct packed_git` contains the `next` pointer as well as the
+> > > >     `mru_head`, both of which serve to store the list of packfiles.
+> > > >
+> > > >   - `struct object_database` contains several fields that relate to the
+> > > >     packfiles.
+> > > > ...
+> > > > Changes in v6:
+> > > >   - Fix a grammar issue in a commit message.
+> > > >   - Update a comment to reflect that we access `struct packfile_store`
+> > > >     in "midx.c" directly, as well.
+> > > >   - Link to v5: https://lore.kernel.org/r/20250915-b4-pks-packfiles-store-v5-0-d6340350934f@pks.im
+> > >
+> > > It seems that we are basically done with the topic and strayed into
+> > > nitpicking territory?   Shall we declare victory and mark the topic
+> > > for 'next'?
+> >
+> > >From my point of view it should be ready to go, yeah. Thanks!
+> 
+> Yeah, this version looks good to me. I apologize for the delay in
+> reading v5, but looking at the range-diffs between v4 and v6, the result
+> looks good to me.
+> 
+>   Acked-by: Taylor Blau <me@ttaylorr.com>
 
-> Le 29 sept. 2025 =C3=A0 16:13, Kristoffer Haugsbakk <kristofferhaugsbakk@f=
-astmail.com> a =C3=A9crit :
->=20
-> =EF=BB=BFOn Sat, Sep 27, 2025, at 23:32, Taylor Blau wrote:
->>> On Fri, Sep 26, 2025 at 03:24:04PM -0700, Junio C Hamano wrote:
->>> 4. While the above cycle is running, the maintainer may queue it in
->>>    'seen', for two purposes.  (1) not to lose sight and forget
->>>    about the change.  (2) to catch potential conflicts and overlaps
->>>    with other in-flight topics to keep their interaction manageable.
->>=20
->> Perhaps a third purpose is to let the maintainer (or those who use
->> and/or build off of 'seen' as their daily driver) detect any bugs in
->> that topic, or via interaction with other topics in 'seen'.
->>=20
->>> The time taken during 7. is pretty much fixed and unless we are
->>> willing to sacrifice the quality of the end result, cannot
->>> reasonably be shortened (note that this is based on the assumption
->>> that "find any remaining bugs while it is in 'next' before it hits
->>> 'master'" philosophy is working, but we have never run experiments
->>> to shorten this to say 3 days to see if we see more bugs on 'master'
->>> yet).
->>=20
->> I have mixed feelings about this. On the one hand, I am a little
->> uncomfortable with the idea of shortening the time in 'next' to fewer
->> than 7 days. I, too, have the feeling that having more time in 'next'
->> gives us a greater chance of spotting bugs in a topic that is otherwise
->> destined for 'master'.
->>=20
->> On the other hand, how many people are using 'next' as their daily
->> driver? Of those, how many are actively looking for bugs in the topics
->> that are in master..next. And of those, how many are actually triggering
->> unique code paths that would expose those bugs in the first place?
->=20
-> Theoretically all the projects that make heavy use of git(1) could run
-> `next` (and `master`) as an alternative configuration of their
-> integration tests.
+Thanks!
 
-This reminds me of crater from Rust: could we work with know =E2=80=9Cbig us=
-ers=E2=80=9D in the ecosystems to run their tests against our next/master Gi=
-t periodically? On every commit?
+Patrick
