@@ -1,232 +1,159 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6D619A2A3
-	for <git@vger.kernel.org>; Mon, 29 Sep 2025 20:47:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C77A33F9
+	for <git@vger.kernel.org>; Mon, 29 Sep 2025 21:17:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759178875; cv=none; b=eTEjqqKFUIJzAFBmQKLjFlu428+3uoGLg9jtHOFHJhFY/yIL11KM9pBZV9cVoUcq+wWWpFO3g9ACEFjfs1xKxQk+MQ+t665hsTWWv2jTcOeasaGgwfzw2/+fzpSvLCBLDrD6v8ckM8JE/cTWQJR+bygR+pY6PUSbK5Xo58gJ3FM=
+	t=1759180661; cv=none; b=JnE44UVuJjsQudWFgcv3R3i90xHEAguUO1/rWD8Be+fgS7QeQqDEKXuWtYCe6UdrPb4HfsNrSXsO0HrkkgVOr4FYhdcD/OyxsoM8yogEMdWsNajQYA8hr7YU7g9Z2bRTAQEDSMYUeQtxKPGEC0zCEItJcAkSrePLnThdeE9uCI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759178875; c=relaxed/simple;
-	bh=2+3agxI/JOo7NzLCPYiNruKg0mNncLc5eISRhXqbjn0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZJ8nVo/9HvRw9+s9FaXPai/zBxXOWjnrMeFsxlzAW4ncq39BVow8Qdtd8poNf1K4waWU1MM+TbE+9uknECMr0Cts6lRtdJuwE6Se+ef+pbZoPi6ykXqxvoU7HDFCysN+ME1A43eka3a7+jhQ2rFS7yCS3FpdMZDnWwKtUAQjpsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=A29hmUVQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FPMtiuN1; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1759180661; c=relaxed/simple;
+	bh=erqUuL9pY3bhIlIBSeB8eOrDlUvhuB3ig5XGiwMSWus=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=Se/EahXRYGFp8JBhudYFbncrlqD+LhH+6VV6vUZZO1825LT7B4yDOKsGjAehiFl6/VdWg+hrVKgnz388NwqfO0lKaM3IVWVclamgNzsoBxZRSV4iD0ERjo/u9hZNrHVyE579gTWcGX7XcMjBTjTqcW/OFlJKXVFjKUWY8Ceq+PU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OvW2kmLv; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="A29hmUVQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FPMtiuN1"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 86EF014000D5;
-	Mon, 29 Sep 2025 16:47:50 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 29 Sep 2025 16:47:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759178870;
-	 x=1759265270; bh=87dxbMHMdGEyndYYW4L9UR3PZtJ+GhnvFusLEYu7ht0=; b=
-	A29hmUVQjoQwFN3dBbBPLhI9wt+4AW50itnXX0NOqdch7gtJ+yFvuBuD84J6qnJQ
-	EEhsTEQeNXyY7KbwXERpJGtTZjNvHfYCVPLc61ayr0hBieRXxdokshgX3+vlI42y
-	5Xk9sOVNSHzCckVeFjSMdAxS2KnaZTH4t3TWRzw4gN0ymKPlN+CypD0mgXj7tknW
-	KIFlx0uCElLW/O8Vx7J5sUAvGhiqTKqYE/2O1pgxtW8Zbqnw8oajsV6p0k3hyPjN
-	byBi6raipJPS+k1yIwJNVRY7fQhpTNPTYoG1/ZT4J/wkWbTQ8UbuyUWydvyRaXge
-	9AIwq6XkOmzr3UnccBdZzw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759178870; x=
-	1759265270; bh=87dxbMHMdGEyndYYW4L9UR3PZtJ+GhnvFusLEYu7ht0=; b=F
-	PMtiuN1H4dErZChXR8+tLZDvZol1xgQFM4fGO4e/ilisKeYHt3pDgrwyQNT4lrvl
-	MWNdIQIY2QHRhEZ4s6r5Z396muYFGfhpNZFwLfuunGdEabZlEaQKS0VqnQFbhO/z
-	Ua+uifUp8bOBOdDZBMhZN73qVcV3vmqoLbmsx9RCAMYdjTQJ5YOCDiTLf4+Mkz8S
-	5Q+RlxkSQ6amCrR6eI8mkQMYyhRNzdAVob+UnADvFpEXfa2FZMaDBPj/tW28R0Nq
-	qdMQqCyJ/13rxmv4XR1x6gJAil71yu8hQoU9EFiekop+55IzZ5L67QbZKjE+JO3H
-	GTAJzgih0rFCcVtzdmbxQ==
-X-ME-Sender: <xms:dvDaaEztqbICoRXgk7XzYWyfjNTRD0CIou7flYFnEPG7uC5IVbr3Apo>
-    <xme:dvDaaOTwL0AdNMJ7twOnLacVP5N8NzH5WJqyiKDtpczuRrrvNPpw0B3L54we_XJnf
-    U5YDWzOPJP-zJWo8C_ht7PD7B5haGcBIc4Cm095Dozn1WzxSS31>
-X-ME-Received: <xmr:dvDaaD9fT2VhkdXX5NR6XQrgFoyJwrdEncqLhXn9y_bDsIGT8SbN4VZPZ3ruNJVO-JzovWQMV9yQv9gk4Xx1DpI7QmlM2KLnaSY_KI7BbU_Xhn30QYH0-M3n2A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejledtudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgjfhggtgfgsehtkeertd
-    ertdejnecuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
-    rghilhdrtghomhenucggtffrrghtthgvrhhnpefhgfeglefhjeekgfetleetjefhteeihe
-    egfedtudduffegjefhkeetudeggffhkeenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    gtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:dvDaaNpwTAotxg7ZvEvIUgbXqxSN932H5eBmc0Mie9PE5aMoOdDpsg>
-    <xmx:dvDaaIlmrg7g5-MlZQaNRFzmIOsHUkBn0iB3XUbI6FpZdPVkUYEj6g>
-    <xmx:dvDaaMKpROJ1Vs0BcVIMvPfC2EgUFR3UtDoOq6Hf9OXx1E7XOzNTVQ>
-    <xmx:dvDaaFxGLZ6mVAeTW9I2jJVcxYmpmwMS-0HLSvmVCI7nbxBd2emQRw>
-    <xmx:dvDaaIKR25toI81fuACQpdnhkNyL9I-NNlHytqKCX7J2ISQSAeZgjgyw>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Sep 2025 16:47:49 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH v2] doc: patch-id: fix accidental literal blocks
-Date: Mon, 29 Sep 2025 22:47:28 +0200
-Message-ID: <v2-e5ad12cc3b3.1759178715.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.51.0.327.gddebdc8c038
-In-Reply-To: <0520e8f9caf.1759067095.git.code@khaugsbakk.name>
-References: <0520e8f9caf.1759067095.git.code@khaugsbakk.name>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OvW2kmLv"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-72ce9790aceso53544647b3.3
+        for <git@vger.kernel.org>; Mon, 29 Sep 2025 14:17:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759180659; x=1759785459; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=erqUuL9pY3bhIlIBSeB8eOrDlUvhuB3ig5XGiwMSWus=;
+        b=OvW2kmLvMNryv8vU2TVGnUuJCW0sbYDzt4igOkn+UGnjssb3OO/3O846wM1oE+WJ0f
+         1PUZxfRxOv3Ri7iSBT2YMleOrEN/WhbI658FnZkAG5eXuznEbrtLmRBGSIjCfICgzbrl
+         wwYyGQdd/w2XpvwF2+UBW35VbhFt+OGAJTWGVIx7VNOPmY01jFVBSJYtM3pQSDOdQh9x
+         UISUtVZ3m5L/VibhN3yrMwaWRVwSDJi+O4KWN1Hj5uZxNT7Ue4FQD+byaMJzRjta9goO
+         QTNlhrp0RIGv15mYC6GouJMH+ExUTXTtyXNUJOQQfcKkVaAXi3Is+8/egNT/t0hUczqB
+         VCwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759180659; x=1759785459;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=erqUuL9pY3bhIlIBSeB8eOrDlUvhuB3ig5XGiwMSWus=;
+        b=algSNuL9xmh6xVLNAow4VdW/wPDy5Gi0hQID4HHRm2oEqv+nyAHxxq469FQ8uy7/aM
+         rruuPiXHP+6Bk67Aa0hqss8zucV/Z2FAQrF2mvnXOC3apPh/vQtVEgsrZwWDJvZuzqTZ
+         Fd/nkZkqN07YxqhFVkomcmqRsG9AYEeyyFje5J7aQIpVR3CzKnYBR+7WdaZKBO5EIobL
+         T+dm/W1dHO87MqRIrxyYq6BdXLt51yXhD6eR6UEeGc2SKZnbxWso123IvoJ+xgv7HUa0
+         A7A4hv8CID2eHuUHGhFqgvDmrNnDieGGDx9fN5h1+3XQjjaVoEOfNnMJec8UGsvUQ7zC
+         E+nA==
+X-Forwarded-Encrypted: i=1; AJvYcCVJgYLnEKku+izxLM8Rzkw9ZjJ1Hp/mkjpW8bx92rpBfQi9sMx082O/UTs/Y5Hnmm+kwlA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz57+0/Kc+DK4JWlLzPYwlGjtUroSs1FS9EVMh3vW0+oQzgzTjo
+	zHpw1KG3hsFIfYG8lq5wYz+0cyyi+mKfJ6X83qWR4J+ljH7OX+TxFqJ8K0yzUvgA
+X-Gm-Gg: ASbGncvmNw2lYepfrKA5v/BPj8c4xIW+ILQZsjIv96nJIf/lcsyI4eauIuWp7Q5qSsr
+	E7su3Ceap8OTt1H8AP9DGWIbQYTn2r2FkSyjWyQRHcffWCfw6wOK62MGKkQ77JZxlBLfbPOzgKs
+	0ktYMZN7JCRKEYCuKx9dXA9ebDzFZxg86lfQhx3mJ78PPucbaO6FsPpxX/I11VSt7eoBX3ZYWzb
+	LWRQm4lpNAgyN5yTuYWmdgwgggnPHtfVmQ47l/54QBrZ40ybc9C4SiFFXhLDeduXHgPwz2bFTX2
+	p/GQ3ufGcWh/mFcKDKLok6iwrHYPFjzjNqw1pwHtKa1zAWm8nQRIEJdYoO8y+5GUteLEk+NLLpU
+	HH9FVMcNmyr5ETCbufAq34EecdsIleZVmj2xS1SvRMOXMSSe1L4D8IcdUEoJtWw==
+X-Google-Smtp-Source: AGHT+IE1L0n/K8ZGcDm3OVSDN8LFDxUJiCDhoV6+i9qqiUyQPe7FPWiAlsxqky3J7HYgsYdko5U4Mg==
+X-Received: by 2002:a05:690c:4513:b0:72f:d215:60a2 with SMTP id 00721157ae682-763f9e7663bmr186496697b3.7.1759180658743;
+        Mon, 29 Sep 2025 14:17:38 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:e8c8:f46d:5858:5703])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-765c60b7ac1sm31815237b3.44.2025.09.29.14.17.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Sep 2025 14:17:38 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: [Feature Request] Support for sharing root-level files across repositories
+Date: Mon, 29 Sep 2025 17:17:27 -0400
+Message-Id: <8C362D63-3EF1-4042-A825-7DAFA9A51B22@gmail.com>
+References: <03d601dc3166$0f302170$2d906450$@nexbridge.com>
+Cc: George Ogden <george.ogden.human@gmail.com>, git@vger.kernel.org
+In-Reply-To: <03d601dc3166$0f302170$2d906450$@nexbridge.com>
+To: rsbecker@nexbridge.com
+X-Mailer: iPhone Mail (21F90)
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-All the final paragraphs on these three options are rendered as
-literal blocks. The intent was surely to keep each of them wed to their
-respective description list items. But the attempt at maintaining the
-indentation level of the block causes each them to be interpreted as a
-code block, since code blocks can be represented using indentation.
+> Le 29 sept. 2025 =C3=A0 13:25, rsbecker@nexbridge.com a =C3=A9crit :
+>=20
+> =EF=BB=BFOn September 26, 2025 4:33 AM, George Ogden wrote:
+>> Hello Git developers,
+>>=20
+>> Firstly, apologies if this has already been discussed or if there is a wa=
+y to solve this
+>> problem that I am not aware of.
+>>=20
+>> Motivation
+>>=20
+>> Git submodules are very useful for sharing directories between repositori=
+es.
+>> However, in some workflows, there is a need to share a single file that m=
+ust live in
+>> the repository root.
+>>=20
+>> A concrete example is .pre-commit-config.yaml. I maintain a standard temp=
+late
+>> across many repositories. When I add a new hook or update a version, I ha=
+ve to
+>> manually update the file in each repository. I could use a submodule for t=
+his, but
+>> submodules always appear in a subdirectory =E2=80=94 not at the root wher=
+e tools expect
+>> this file.
+>>=20
+>> The same issue arises with other configuration files that need to reside a=
+t the top
+>> level of a project (linters, CI configs, licenses, etc.).
+>>=20
+>> Proposal
+>>=20
+>> It would be helpful if Git provided a way to share a file across reposito=
+ries so that it
+>> appears at the root of the working tree, without requiring a separate bui=
+ld step,
+>> symlink, or copy operation.
+>>=20
+>> I understand there are alternative approaches (subtrees, packages, extern=
+al
+>> tooling), but they all involve extra indirection. Having first-class supp=
+ort within Git
+>> for this use case would make it much simpler and more consistent.
+>>=20
+>> Thanks
+>>=20
+>> Thank you for your work maintaining and evolving Git! I would greatly app=
+reciate
+>> any feedback on whether this idea has been considered before, and if ther=
+e are
+>> technical reasons it may not fit Git=E2=80=99s model.
+>=20
+> I have been thinking about a current use case for this RFE. Consider
+> GNU/Configure-based projects where we have config.guess and config.sub in t=
+he
+> repository root. These two files are independent of the project itself and=
+ truly
+> should be shared and managed from a single authoritative source. It can be=
+ a
+> real delay/pain to wait for the project to manually update these two files=
 
-We need to use list continuation (+) in order to keep them wed to
-their blocks.
+> from an upstream to get platform support for their project.
+>=20
+> In order to support something like this, we might need a submodule concept=
 
-There is also an unordered list which sandwiches two paragraphs on an
-option. We don’t need to do anything about that since it attaches to the
-description list item without list continuation (i.e. it is already
-correct). But for consistency let’s use list continuation and an open
-block on it.
+> That supports something like a link upwards. Or this might be something
+> That could be part of the sparse-checkout infrastructure. I'm not sure, bu=
+t I
+> Do think there is merit to this. It could also apply to organisations that=
+ have
+> cross-application root certificates that need to be in the same directory
+> as the application root.
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+Sparse-checkout made me think of some kind of =E2=80=9Crepository overlay=E2=
+=80=9D: as long as there are no conflicts (or perhaps for later versions, co=
+nflicts are resolved by higher-layers-win), each layer (i.e., repository) kn=
+ows only about its own files.
 
-Notes (series):
-    v2:
-    
-    Rewrite the commit message.  Especially with an eye towards
-    explaining (and not hedging) why and how things work the way they do; in
-    particular that the unordered list is already fine and doesn’t need a
-    list continuation.  But let’s go ahead and do it anyway since it doesn’t
-    hurt and keeps things more consistent.
-    
-    Also describe the problem immediately instead of burying the lede/lead
-    with “The options here are apparently written ...”.
-    
-    Also less “the the” mistakes.
-
- Documentation/git-patch-id.adoc | 43 ++++++++++++++++++---------------
- 1 file changed, 23 insertions(+), 20 deletions(-)
-
-diff --git a/Documentation/git-patch-id.adoc b/Documentation/git-patch-id.adoc
-index 1d15fa45d51..45da0f27acd 100644
---- a/Documentation/git-patch-id.adoc
-+++ b/Documentation/git-patch-id.adoc
-@@ -33,27 +33,30 @@ OPTIONS
- --verbatim::
- 	Calculate the patch-id of the input as it is given, do not strip
- 	any whitespace.
--
--	This is the default if patchid.verbatim is true.
-++
-+This is the default if patchid.verbatim is true.
- 
- --stable::
- 	Use a "stable" sum of hashes as the patch ID. With this option:
--	 - Reordering file diffs that make up a patch does not affect the ID.
--	   In particular, two patches produced by comparing the same two trees
--	   with two different settings for "-O<orderfile>" result in the same
--	   patch ID signature, thereby allowing the computed result to be used
--	   as a key to index some meta-information about the change between
--	   the two trees;
--
--	 - Result is different from the value produced by git 1.9 and older
--	   or produced when an "unstable" hash (see --unstable below) is
--	   configured - even when used on a diff output taken without any use
--	   of "-O<orderfile>", thereby making existing databases storing such
--	   "unstable" or historical patch-ids unusable.
--
--	 - All whitespace within the patch is ignored and does not affect the id.
--
--	This is the default if patchid.stable is set to true.
-++
-+--
-+- Reordering file diffs that make up a patch does not affect the ID.
-+  In particular, two patches produced by comparing the same two trees
-+  with two different settings for "-O<orderfile>" result in the same
-+  patch ID signature, thereby allowing the computed result to be used
-+  as a key to index some meta-information about the change between
-+  the two trees;
-+
-+- Result is different from the value produced by git 1.9 and older
-+  or produced when an "unstable" hash (see --unstable below) is
-+  configured - even when used on a diff output taken without any use
-+  of "-O<orderfile>", thereby making existing databases storing such
-+  "unstable" or historical patch-ids unusable.
-+
-+- All whitespace within the patch is ignored and does not affect the id.
-+--
-++
-+This is the default if patchid.stable is set to true.
- 
- --unstable::
- 	Use an "unstable" hash as the patch ID. With this option,
-@@ -61,8 +64,8 @@ OPTIONS
- 	by git 1.9 and older and whitespace is ignored.  Users with pre-existing
- 	databases storing patch-ids produced by git 1.9 and older (who do not deal
- 	with reordered patches) may want to use this option.
--
--	This is the default.
-++
-+This is the default.
- 
- GIT
- ---
-
-Interdiff against v1:
-
-Range-diff against v1:
-1:  0520e8f9caf ! 1:  e5ad12cc3b3 doc: patch-id: fix accidental literal blocks
-    @@ Metadata
-      ## Commit message ##
-         doc: patch-id: fix accidental literal blocks
-     
-    -    The options here are apparently written with the assumption that you
-    -    can continue a block like e.g. a description list by maintaining the
-    -    same indentation level.  This is not the the case; you need to use list
-    -    continuation (+) for the elements following the first paragraph if you
-    -    want to be guaranteed a predictable output
-    +    All the final paragraphs on these three options are rendered as
-    +    literal blocks. The intent was surely to keep each of them wed to their
-    +    respective description list items. But the attempt at maintaining the
-    +    indentation level of the block causes each them to be interpreted as a
-    +    code block, since code blocks can be represented using indentation.
-     
-    -    This is kind of subtle since only the last paragraph of each option gets
-    -    rendered in an unintended way, namely as literal blocks.  This is easier
-    -    to see in the HTML output since the man page output just has a slightly
-    -    larger indentation on these paragraphs.
-    +    We need to use list continuation (+) in order to keep them wed to
-    +    their blocks.
-     
-    -    Let’s use list continuation throughout, collapse the indentation in
-    -    front of all paragraphs except the first one, and wrap the unordered
-    -    list in an open block (`--`).
-    +    There is also an unordered list which sandwiches two paragraphs on an
-    +    option. We don’t need to do anything about that since it attaches to the
-    +    description list item without list continuation (i.e. it is already
-    +    correct). But for consistency let’s use list continuation and an open
-    +    block on it.
-     
-         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-     
-
-base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
--- 
-2.51.0.327.gddebdc8c038
-
+Adding untracked files would need some work to choose a layer.=20=
