@@ -1,88 +1,88 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8BE26C38C
-	for <git@vger.kernel.org>; Mon, 29 Sep 2025 23:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1780B26F2A6
+	for <git@vger.kernel.org>; Mon, 29 Sep 2025 23:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759188102; cv=none; b=Fobpf+IoVKJ1H4ot8HFvGYnKssN5xsc8VNZTC4qc/eIvGmnOoGXjoQ7XZYlDeLyWBVoc1jyFwl1wVtQZSwA1rRnDC69OcsP79rUG86367peRvhq2aT64U1qSTtP/6q1jrG8v5QiItQeFnrEP5gi0gYCEPoDKw+idAc+mekCYS4g=
+	t=1759188107; cv=none; b=GZADUt3P3JXNAPXxs9KR5pRBugoKa2ViNXi9QkaM1mWEqyRbb1XIaG6IkZska3Dirc4bxQuhPH1GMkbHjnik9HY7ia5NVvC+KyOA76WoCgq92fppPpP6KLwAHhoxheW4hbfA+tkiP60HmQhMbMhVGcnpwMX8jB6nmYDrdIZZSdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759188102; c=relaxed/simple;
-	bh=SWW66oWGKFd7trhlJCn+++AaBgq0gLNt8DEhBs3c+Lk=;
+	s=arc-20240116; t=1759188107; c=relaxed/simple;
+	bh=IiRtcxq8dZrYbUI2noNsr6f4gEAYOrDafryMxUqcaZ8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fbN1LN+a0LgpsJNCcteMQngfZ6+ysCvZVLTmwc15YNIJWw8fdb3iMuYLnGtv2+FcpYSSDOtw81lg9pJoZ9NQsOZdM4601RVfucTMyJsG3D4GZtltoClQNvMPtLuw8+KOJaHDgWOKV5cHcVRRqGc70Facd8R5cPZQRNZ8A3rTmS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WIdFvCBn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SKKId8Z9; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=UPVKCWj/kqNYkXvFeUF7EXGeKPAMaS/IQmzYXM2FY284YBwvwf4+Jktd4veOysGmQ99EXgteABn1ud/jUAtPE/U7WRYpvKyfnKsLF1a3Q4UuAmv4y4AfScdRlAX2oIUp/Yh7YYLa8S2XvnDGzu+iPshsNVX/M5MvujrEqzTdO1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZCyCHzh7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tnIZE86Q; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WIdFvCBn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SKKId8Z9"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 214BFEC0185;
-	Mon, 29 Sep 2025 19:21:39 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZCyCHzh7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tnIZE86Q"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 75079EC0196;
+	Mon, 29 Sep 2025 19:21:45 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Mon, 29 Sep 2025 19:21:39 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 29 Sep 2025 19:21:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759188099; x=1759274499; bh=pYzKjIzchd
-	0gyp6eq3gTloqTo5eZ1UOKdcb8+I2XqU4=; b=WIdFvCBn5llqetXXto+Th8NLCH
-	n9EgYAHpVl34f1b0h82tWXuV/VaRnGweKqfBwTPIyDRfPuAAmHrABa5K3KNVq9AJ
-	R/j5EWlWe5mXkTlGi159nv/Yshkutc9NpUJkIq0nCix0+cfbweKaR0vj8a4lW4y2
-	xOqhgtJhvecf4yDHGtGH9aveiH9fxNkaQTdkO8flegQQRAkhFWewKQdgIAhrcn1Z
-	CkxkBPhw6R5Qsbo3m9c03ejDK7MCKQxJe9fQi+uw6w80z82O1ppl7If9JdEODOcX
-	oaLvaDpA0RmpCf79wcILII0IbDuWSx4NgWi5mmhCtL54hR1mzSgDs+bF+qpw==
+	:subject:to:to; s=fm2; t=1759188105; x=1759274505; bh=VMqrf9UW7v
+	1Ea/Ef38NZiUQjck5b/9hLUKfBq7DiGWI=; b=ZCyCHzh7jylyFoVkoN6nldhCPh
+	ellnZzKB0ExV7cKxqe2KINSS0MCsSdxpE6lilg83ofjVEUVSnbgS5bNbdkZ0vpL0
+	nMnOZHxfyBTgeYZgjHy+7hWlim7ARwrZapvj6axqcEBfKMBA+R+0plgkQK4zKRJ3
+	UePiyf1swDYEIki7gMgZEAsPvsrgU+7n0mR6YB2oXk1U9pUA7IVzx9M3L5lC4jn3
+	gjtO1SSdW0Ixle9OaS83XnZSUlsk8lHI476fn8yhtQbsEdM3rmqYX6I1/R/suCyk
+	Nm3YNgQx7tjIG25Qx9g0U0fAiLRAuF5wPXG4jG/SEcZls7nuYEQBLU1n/0OQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759188099; x=1759274499; bh=pYzKjIzchd0gyp6eq3gTloqTo5eZ1UOKdcb
-	8+I2XqU4=; b=SKKId8Z9KY5ihpOJ3lQBP/EfBIAiZXSTqk+O/ZOfSbu9TFmajOe
-	tl3uhgDTUF04SrxlYSknAIuz3lbkuSGyH1eaHBbe5R1vpg1PNyW2OgWqldES/6Fa
-	4g0kHBN4O7WT3ho97fV2eU43Ku58sWbFnGScgcoNSQN0w3bsYJVQIwVczXGoJtYK
-	zSGjqiH4rJsZ/07WIoT7j7R+ps4NtIohLPGMTl2EDY0DaT6cjKuWGS2AsiyN9k7O
-	ZkHseNnxw/Y7Uu8AZb7w1CA8hoZM6DufjzDgGrCiUhkKCQ/y4fuz1BQ2Cz1YjBrk
-	XYokHaiIM/EV9mvsnvr3UJt6DA3nSfrZoCQ==
-X-ME-Sender: <xms:ghTbaA0kw8zTdbA45Ghfh0NPKFyPc7mysrD12lzig4OIjbkzSZBjLg>
-    <xme:ghTbaOxI5_qS31iSDI36oJQLE0ccLvQuuRm_A6A6F68rT63Ic0NYh5TNVsV2Oad6m
-    ldkfh735ninVY9g8zGj32XU1izsQ-mUlajC1I_JNKpqVvEn_qKF_Q>
-X-ME-Received: <xmr:ghTbaCtvUcobqW-lMs3VlMcWrX8dH-RC2wOYD5b9ExU-55r8nK1OzhQYSodcS5JowI1j5HBDEB-EhstwnybPYuzaRgeVdiVECkHrYgFmrh4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejleeftdcutefuodetggdotefrod
+	1759188105; x=1759274505; bh=VMqrf9UW7v1Ea/Ef38NZiUQjck5b/9hLUKf
+	Bq7DiGWI=; b=tnIZE86Q1jFRDgbK3lvxOSMRlnN2uVd/1jz2hzjmNzn21+PQqnc
+	6aoAkhaSrCIjcSUtwI4VJz5ACGmm8TcFGCE0DxjhqjA7Omb8nHDj/b0B5b0ihaV9
+	TzBfSGvPqDvW2fKof4xbhSiBTdAZRkZgNwqvKYswkrXFPa1iE2EmxAGC5uqAQLNe
+	iUimiZrRzibMaVkVV1X7+ViYXYXr0zdx6plFTpo1heqzdDsn+BypM/+NMy8g0rpd
+	PalH9QNjuXUJjq8dAOsToLnNphqyT1QvCEODB0W/NP1T8iQnJ5xxaT2xlmqBSor6
+	AyfVQjNxZYKB/muP0veCKYugUSU33f6K2Fw==
+X-ME-Sender: <xms:iRTbaHARW8ZtwQ6RstSVTM5ipi5Vf_TRDESa8tJuIYa7txoHzixWcQ>
+    <xme:iRTbaBNOInGjRpj3K2Iu7dfg9QcojmAcCS6CMkD2FuyxL9GAmRc95v51gfa53hoyg
+    Ovzj2u7AluI0RSMvJ4o0VASWXG9Qf7dvXnxhK2FPJY8_tafXkdmrg>
+X-ME-Received: <xmr:iRTbaMaqB7ou7TJPjNsaHWRB8BAvtNci1uP-4GSqZKrn4TbCP-7QB8-GW69Y9-m8cNH8wcOrHrmYFcxz0iHNePs3lKHuJC200X3L_eH123w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejleefudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    lhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
-    gvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
-    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:ghTbaAxnHvgsypy5xZMX8uwyl8Zk50BTyfAGONf1MKTaqiA41vGojg>
-    <xmx:ghTbaFB3DMNsk4Zl9ZslMbndLK39cDqxaRgybG_eHE-pOJYhvU9DUA>
-    <xmx:ghTbaOfLcCyvXi-RX7wP86dj-bPIjgAwiw2IDIpZ2-hYIhy4HyNACw>
-    <xmx:ghTbaPnRNJz9BWiXeYn8lEK8b686NQHihvIlaq5xrdlTFiewKhjfHA>
-    <xmx:gxTbaDThXBDJIrxcGvXXE6-ghlCEVXtiQSHFSzUCxh-ZVpG6nSJNdiIA>
+    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepnhgvfihrvg
+    hnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:iRTbaAsKJx8sQRW73mCPJYjYGyl_OVwkPhQYlQ3vakCbdm40pqTShw>
+    <xmx:iRTbaOP3Pol2XPKpWAqYSXBloATZGrwkP5H3MOSdqk-TfqGZBeBj1Q>
+    <xmx:iRTbaH6c-fD7TTF1fUwg2AkHBzeMvkePvOrh3b1izhr9heieRbFu0A>
+    <xmx:iRTbaERMEXP9MTe12gJoCq6dTcRo523tEJtUOcPH9BKO5DYeMR3rnw>
+    <xmx:iRTbaMf3fqstNMj6B9CqUIQrakEyE9umSZJ1TfkRKxeYc4qLIV6PsPaq>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Sep 2025 19:21:37 -0400 (EDT)
+ 29 Sep 2025 19:21:44 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a4677ba0 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 29 Sep 2025 23:21:37 +0000 (UTC)
-Date: Tue, 30 Sep 2025 01:21:34 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 7de4fab0 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 29 Sep 2025 23:21:43 +0000 (UTC)
+Date: Tue, 30 Sep 2025 01:21:40 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 17/49] builtin/repack.c: pass "packdir" when removing
- packs
-Message-ID: <aNsUfrE-2Wc8_1Fm@pks.im>
+Subject: Re: [PATCH 19/49] repack: remove 'existing_packs' API from the
+ builtin
+Message-ID: <aNsUhEVUmzmZ5gp3@pks.im>
 References: <cover.1759097191.git.me@ttaylorr.com>
- <df75c3130bced8d5489dc9184701a0a544617049.1759097191.git.me@ttaylorr.com>
+ <ae267fcc820dc19497f9f897bc5915b2040739e5.1759097191.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,21 +91,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <df75c3130bced8d5489dc9184701a0a544617049.1759097191.git.me@ttaylorr.com>
+In-Reply-To: <ae267fcc820dc19497f9f897bc5915b2040739e5.1759097191.git.me@ttaylorr.com>
 
-On Sun, Sep 28, 2025 at 06:08:16PM -0400, Taylor Blau wrote:
-> builtin/repack.c defines a static "packdir" to instruct pack-objects on
-> where to write any new packfiles. This is also the directory scanned
-> when removing any packfiles which were made redundant by the latest
-> repack.
+On Sun, Sep 28, 2025 at 06:08:23PM -0400, Taylor Blau wrote:
+> The repack builtin defines an API for keeping track of which packs
+> were found in the repository at the beginning of the repack operation.
+> This is used to classify what state a pack was in (kept, non-kept, or
+> cruft), and is also used to mark which packs to delete (or keep) at the
+> end of a repack operation.
 > 
-> Prepare to move the "existing_packs_remove_redundant" function to its
-> own compilation unit by passing in this information as a parameter to
-> that function.
+> Now that the prerequisite refactoring is complete, this API is isolated
+> enough that it can be moved out to repack.ch and removed from the
 
-I would have expected that we also get rid of that static variable
-either in this commit or a follow-up. Is there any reason why you
-skipped over this? If so, it would be great to highlight in the commit
-message.
+Tiniest nit, sorry: I found the spelling of "repack.ch" a bit confusing
+at first, as it looked like a typo. Maybe say "repack.{c,h}" or
+"repack.[ch]"?
 
 Patrick
