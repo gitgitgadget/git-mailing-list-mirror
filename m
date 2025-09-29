@@ -1,116 +1,170 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6B72236F3
-	for <git@vger.kernel.org>; Mon, 29 Sep 2025 18:13:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417DB2264AD
+	for <git@vger.kernel.org>; Mon, 29 Sep 2025 19:33:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759169616; cv=none; b=CeTmzIgj1nymsSJVkBfSwONivBXv6IxnHuywr3wP+DAO6IKwBR680yGILogv9q+2aKTsMJEV0Y5sbgO0GM/hHu51gSx/UQrqWCi2zsZ80BJnM/CegurdvyU8ESlvY6S908rFUucip0jHIWt9Ib/IS5r+HRQg0L40aYJlivj9Ev8=
+	t=1759174401; cv=none; b=FDqYwEbQQb04esdj9ra9fB+G2Tz2xTycJ6PSesXnnIvtcgmrUxI+I+ONQ5dKUStT6gZ7zB55tc0uwwXIyi7IQF+9swQ2tpkXSXfyT+e5NMUB3/2sJS403TMNwb8l0uGmzinc5DwN156PfBmWU11Wam5pR54QFd2cnaR9vtJDpHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759169616; c=relaxed/simple;
-	bh=o8mxx5vBc9NuQH4F5nIqRKOHDuY9ymERoXKtvHlRo5o=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=WH8qFDbFpQgFcQ5RpUKyluLpFmepbMtrlmsVfzGFztJJAuJtZoGxuLdHGRMS3zRHpyYOxI9f9/C3paO7tq1V1qrCDsspFg3WboWkeIsSSV/vVBEVtBbyIc55/N4yA5FXg7i6bHX0SoOIYmsVYSPHg5Ue7O3JwOaVPk+5QCqmHcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=sObEdMZY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EuhImE/P; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1759174401; c=relaxed/simple;
+	bh=Oy5TPgAP5bys7fnpIPrGdyHSkzdtWcHx7EJeKRmYGvY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CtRFqaOOwvZRJRtH04zuiZfxk5fKinK1K+3Y90tGd/7hsSpYFfWxjF3gx8Z/R4goNbtOxU/9aHPkqnfpvXvEKCWGGeHVYbWx+F6sl1BaB4baxKcXHf/lT/yjhEhwT8cSTGgFtyJ8v9jpjN3hzo/m374bORdjWwU4Zqm+DjeZ1CQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KDLbJNuo; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="sObEdMZY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EuhImE/P"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id AEBADEC009E;
-	Mon, 29 Sep 2025 14:13:33 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Mon, 29 Sep 2025 14:13:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759169613;
-	 x=1759256013; bh=qbz7g948bWhqdW99bOv5m/qR/lMkevdLpUIKMDzpYPY=; b=
-	sObEdMZYXwjnvRcvL4xk0uKoEDWrLHLYhuoMpmJ7LirdSjtFcpJF77udSnqPvOEJ
-	F3G04KkCVxkPl//UZph4G/52TDz5Mk/FXwN+hIWMB6Gl9HfLaTufq3kcoUgY2Cf4
-	V5yoxzYfz1ruyn3vcoLUM8Xl04rlGntUoop0KIToAl+5AFC9EAdb+y185x1/5TMi
-	iNIppBha6pwFtOkp1Ju4DtHKgG5+iv0ZA9xuOOpuDwhDhK0dyi8Kg050CDIndVo1
-	LXvSGEJhU7oqjFaIhqHkn2kT4ZCT/V5YR+y421F+jJFeGO+pifdxfxp10TaZBLYp
-	LYjqO+RTFrFxg0KTaJ5d6Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759169613; x=
-	1759256013; bh=qbz7g948bWhqdW99bOv5m/qR/lMkevdLpUIKMDzpYPY=; b=E
-	uhImE/PcxQ6Db7ROc+U9oWOjlJCpRUA60IyBOWpavsaYYo1Klrd6EXDSbQnz/Nyy
-	mV8glaime3FxO1q6o46j91la86ciGUpu9m/NnOTespMZDiTmAbBUm+b9aUc9SH7M
-	wwMA3WJSQSeIwA83o64A8R54VxuM7xpHoqu1MdVCKp6/d5ptl3W5TytSBf5FV/Hv
-	Q57bfgt13kvSeK3hmsGy42syEz9v92vuHfod46xF9clSM6BmlZ+2rnYIOZEUuBcc
-	2+bIA2BiYxjV/eY03HdNpA5PUC6TAdqyLZWvGAAQ0h6Jq1OK6L235qT1IV0nCs07
-	Ub4vbdU/j/KhDGnxfmvzA==
-X-ME-Sender: <xms:TczaaN_mth2mpQ76B6yFiRJP5uwdw2jtDCcizWs2NPcNvn1OAYz7VJ8>
-    <xme:TczaaMh6bw1RB1NEUHnZV_7F4-iYFzPZW2MxMr-6Jm7sVYMZvGAMljGVz06OODzPq
-    ejErWk6QyI7o-dnUEYjUtvY6Ctd_L8oQ1459eLrhzNqLPtPewuxkg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejkeejtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
-    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:TczaaP48e-yUYUipUuqXwqDXBdGlLuWoc46DpQyXsBJLvP3yfgLSFw>
-    <xmx:TczaaMqvN9ANb10pNBq1SPT-55sc_nyosWvHsf432U5uVm3rAOuZ3w>
-    <xmx:TczaaJjQPlRa232vWIMIiUydze-FdGlESa9_4b8lLAmgKDyCbmeRZg>
-    <xmx:TczaaOLh2HQeowV3tsQDhPPQ85bQ60tyLRh9MBXmUpvynpCeq8vGsg>
-    <xmx:TczaaDQNtUhdVv3zBsgtqIRpWJFXoAgAG78yNYYEeDujCHXFaR6130Fv>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 586991EA0068; Mon, 29 Sep 2025 14:13:33 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KDLbJNuo"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-62f24b7be4fso9021514a12.0
+        for <git@vger.kernel.org>; Mon, 29 Sep 2025 12:33:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759174398; x=1759779198; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Oy5TPgAP5bys7fnpIPrGdyHSkzdtWcHx7EJeKRmYGvY=;
+        b=KDLbJNuo+M5PXOXVthszD943Kg6GOmErFCCNctjRLXaVAVl7yoJkUaYMapR4f8NYj/
+         M0hDNdw1CedlPnN4w0zy2D7jQTAuutUhD5uw1ft8XXcufeRt2LPvuK2EnoXz881VygVe
+         +WdW4gMnwEp/Yr0d/9fEwJUoKRl4sFBj++Kzd44TEwdXbxZ5Iam/I7eRXDhh9ILc393+
+         1f3LncQOjD0ylpKEOERscpnIqHp7P6QOnriPMbVuS1soAxi7jR0HDD8wdGAz3shbQtPB
+         0IJ+m8NtmtNmm118DHlsSLEQxsh7lIvExA6wQ77KmZQ8drv3RUy89cxAN8xcEsnG0MzG
+         Vd9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759174398; x=1759779198;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Oy5TPgAP5bys7fnpIPrGdyHSkzdtWcHx7EJeKRmYGvY=;
+        b=jzp+PSju9hJyOhlShuJSACLk7v790at9TM3pue5+pO5sFDWy4NpT1+W3lU4tpt00BM
+         YdEVvNGiSyOYOsLU6FI8zDGManPvm7nSDsinl94agz3TuWd86Wawd74fBz02yVN1jEYO
+         0b0xAa5SifiCkuLRbuAW4K3Q0O3tgC45LJ9GF6GDhOjtw7p5AZsdgaqIPYf86i2BoJPo
+         wYkx+Pv8hpnfK1PBZ9jri0RTH87CoCkeFYIFDJz2nSKV0gB2M9hL0+TB2c/lpjLdH+5y
+         jXObiPDyeAqM2USJYdML8njQ2RXT3MrgjwqKXM5UiS7/kLhNJyEMg7bBLqKdmHUhn3AQ
+         1tGQ==
+X-Gm-Message-State: AOJu0YwesDrLvXWFqMvavBGmhgsCAJrOmKruEmCcR1caFs1NWeA/CBj+
+	xueGPUnnjVXJWxKX8ONSORbtnBmbDSTwZuO6XWFeHLPenI0h1nK6loQj81Rf7y4yPxHi64DUytr
+	7eq6gaOgbswYgDNNtAXWqsUx8kFXKyor1OV0IOQeeRA==
+X-Gm-Gg: ASbGncuhS+HN954M6dKPPuYEgFemBilCRXEEpoKJDpcGHeV+oSi5ihlvGdWqZyfUbL/
+	JlQ4B7BkYijNF2TFGgK3cpFAKpqKE20ahNVoj1fyqX/AyOF8qxIC/42dn9eJ4oHa0csiEd2adeP
+	cVzUD0go/VM9zMT/d5K2XMthmsn4rg6JiFoRgiZtyNBxok0e9+WwriDHlG5oeWRIrsTT85dOxpp
+	glNS2whxfGwYEaFMN23m2Pw5IANLwGnEtpIkw0CePDWGOuetQ33XPxA4Ywpa/jUI22owA==
+X-Google-Smtp-Source: AGHT+IEjJ7MDPmU1K5hpFgVLwFmfOLMHxfFphTTdkDvjUrB2r72N40ZbW+F94Iy9YWdEuD3TsWUIEaucijBcXdR9iYs=
+X-Received: by 2002:a05:6402:5243:b0:62f:760c:345c with SMTP id
+ 4fb4d7f45d1cf-6349f9f56cbmr17209975a12.16.1759174398252; Mon, 29 Sep 2025
+ 12:33:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AlH9lrHFu41k
-Date: Mon, 29 Sep 2025 20:13:12 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-Cc: "Julia Evans" <julia@jvns.ca>
-Message-Id: <5fc9a038-584d-4bba-8960-fae843421245@app.fastmail.com>
-In-Reply-To: <xmqqbjmydw5i.fsf@gitster.g>
-References: <xmqqbjmydw5i.fsf@gitster.g>
-Subject: Re: What's cooking in git.git (Sep 2025, #10; Thu, 25)
-Content-Type: text/plain; charset=utf-8
+References: <CAJ5EAUw_VN4GXiHYJq0et8oZN0L+AHZz+ROLtK3Hxdp3SEL3=g@mail.gmail.com>
+ <03d601dc3166$0f302170$2d906450$@nexbridge.com>
+In-Reply-To: <03d601dc3166$0f302170$2d906450$@nexbridge.com>
+From: George Ogden <george.ogden.human@gmail.com>
+Date: Mon, 29 Sep 2025 21:32:41 +0200
+X-Gm-Features: AS18NWBh1dHcmkyW5R6X0rZR7dlg9chnL5YA1tetXp1uh43_apyx-Gu9Oy82LA0
+Message-ID: <CAJ5EAUyfOLZHqs8BKnxzjHXj6H1ZiWSKLimL5smB3ML0KCLEKw@mail.gmail.com>
+Subject: Re: [Feature Request] Support for sharing root-level files across repositories
+To: rsbecker@nexbridge.com
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 26, 2025, at 00:06, Junio C Hamano wrote:
-> * je/doc-checkout (2025-09-10) 7 commits
->   (merged to 'next' on 2025-09-23 at b776ac7a24)
->  + doc: git-checkout: clarify restoring files section
->  + doc: git-checkout: split up restoring files section
->  + doc: git-checkout: deduplicate --detach explanation
->  + doc: git-checkout: clarify `-b` and `-B`
->  + doc: git-checkout: clarify `git checkout <branch>`
->  + doc: git-checkout: clarify ARGUMENT DISAMBIGUATION
->  + doc: git-checkout: clarify intro sentence
+Hi Randall,
+
+Thanks so much for your thoughtful reply. I agree that there would be
+a lot of use cases beyond the one I initially mentioned.
+
+I don=E2=80=99t have the technical background to suggest how this might bes=
+t
+fit into Git, but I=E2=80=99d be very interested to hear more from others o=
+n
+the list about possible directions. My main motivation is simply to
+make it easier to maintain a single shared file across multiple
+repositories, without having to copy it around manually.
+
+Thanks again for taking the time to engage with this idea. I really
+appreciate it.
+
+Best regards,
+George
+
+On Mon, 29 Sept 2025 at 19:25, <rsbecker@nexbridge.com> wrote:
 >
->  Doc updates.
+> On September 26, 2025 4:33 AM, George Ogden wrote:
+> >Hello Git developers,
+> >
+> >Firstly, apologies if this has already been discussed or if there is a w=
+ay to solve this
+> >problem that I am not aware of.
+> >
+> >Motivation
+> >
+> >Git submodules are very useful for sharing directories between repositor=
+ies.
+> >However, in some workflows, there is a need to share a single file that =
+must live in
+> >the repository root.
+> >
+> >A concrete example is .pre-commit-config.yaml. I maintain a standard tem=
+plate
+> >across many repositories. When I add a new hook or update a version, I h=
+ave to
+> >manually update the file in each repository. I could use a submodule for=
+ this, but
+> >submodules always appear in a subdirectory =E2=80=94 not at the root whe=
+re tools expect
+> >this file.
+> >
+> >The same issue arises with other configuration files that need to reside=
+ at the top
+> >level of a project (linters, CI configs, licenses, etc.).
+> >
+> >Proposal
+> >
+> >It would be helpful if Git provided a way to share a file across reposit=
+ories so that it
+> >appears at the root of the working tree, without requiring a separate bu=
+ild step,
+> >symlink, or copy operation.
+> >
+> >I understand there are alternative approaches (subtrees, packages, exter=
+nal
+> >tooling), but they all involve extra indirection. Having first-class sup=
+port within Git
+> >for this use case would make it much simpler and more consistent.
+> >
+> >Thanks
+> >
+> >Thank you for your work maintaining and evolving Git! I would greatly ap=
+preciate
+> >any feedback on whether this idea has been considered before, and if the=
+re are
+> >technical reasons it may not fit Git=E2=80=99s model.
 >
->  Will merge to 'master'.
->  cf. <236a79f4-e9a2-4335-bbff-79ae0cc67e9b@app.fastmail.com>
->  source: <pull.1962.v4.git.1757531669.gitgitgadget@gmail.com>
-
-There=E2=80=99s two small syntax problems.  You might want a small commi=
-t on top
-of the series.
-
-See <df251b0c-c593-41ed-903e-8fb1c323b874@app.fastmail.com>
-
---=20
-Kristoffer Haugsbakk
-
+> I have been thinking about a current use case for this RFE. Consider
+> GNU/Configure-based projects where we have config.guess and config.sub in=
+ the
+> repository root. These two files are independent of the project itself an=
+d truly
+> should be shared and managed from a single authoritative source. It can b=
+e a
+> real delay/pain to wait for the project to manually update these two file=
+s
+> from an upstream to get platform support for their project.
+>
+> In order to support something like this, we might need a submodule concep=
+t
+> That supports something like a link upwards. Or this might be something
+> That could be part of the sparse-checkout infrastructure. I'm not sure, b=
+ut I
+> Do think there is merit to this. It could also apply to organisations tha=
+t have
+> cross-application root certificates that need to be in the same directory
+> as the application root.
+>
+> Just my musings.
+> --Randall
+>
