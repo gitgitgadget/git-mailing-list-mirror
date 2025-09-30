@@ -1,112 +1,121 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49C4229B2A
-	for <git@vger.kernel.org>; Tue, 30 Sep 2025 23:07:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76B12D0634
+	for <git@vger.kernel.org>; Tue, 30 Sep 2025 23:39:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759273673; cv=none; b=RigZkagjKDsmtRlNqPida45TZ3Qtr3YHeVm1gVuLi37P9YeXEISbVJJLWbmOR58R41iEkMif151HPOu9qBG8RQ1io/Xc146ZIwJKXxRJ0oC/BOTqNc2R8FXF1SZpaD/2sRfB3g3Vdp1ordrpvZEggWnfB7LXtyJk84s1vEzFJYw=
+	t=1759275571; cv=none; b=Ttu4bWwm3p7EJWcy5bdc8FwuIty1zGK05RCqkZH5kdU8FGvfgT+5pEsz0i5JBE7DybRLlA3eug9Wk5TwuZpa+SoxsykRLylwPdVfULXvT4bD/2STtypAKfpzXLD1SLCCaJwcZuorj258Qg1Ya3ICxDwx2ry3PSdgLVFgS+60O5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759273673; c=relaxed/simple;
-	bh=T+AoZJan2eo47iOAO9ED1kvngB/oSq9WdjOhhiga8aM=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=hP48a4GE3mxSqwtkaW8jKvgT9P3YPMy73Jl4ZiS483tUsYQIm7Fmu9b01yaYuDjayM0kYECL9OLX93BMrZEFnUl3dPKYJyABLQ44e5LCXqVXrM8pFID/CvtOBXfUfXMagJCvM49nbckdW+pu5nhYH3zkT3+kGAguai6Dvqw55ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=h+pyw631; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1759275571; c=relaxed/simple;
+	bh=Tn0h3nfMa+hG5Dq/cFwOtqncya2ZLOI+PdfWF4928ik=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Is7Z5Ml7JWr6IDcM1TU04b8YBgKguqsKJANRf5cacPUWqzD8+jluumVlez6Qc9F+1AznnaK2CNwF6qAikSeIHf17trkC5lChOaidQ2s0oXrG7TCX/FGEsipRDCf55M8Qg4bsg12aJtKTXvH76J3Mdhwsf2w3DN2cVl8RooJswr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IqbbCqV3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EA1uX0R0; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="h+pyw631"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1759273664;
-	bh=T+AoZJan2eo47iOAO9ED1kvngB/oSq9WdjOhhiga8aM=;
-	h=Date:From:To:Subject:Content-Type:Content-Disposition:From:
-	 Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-	 Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-	b=h+pyw631BH6czvI4Fk1dFYFR4B0txK541CsggLhiZ87HKet81ybPyD40XeOskLpwB
-	 eYj4jYk9VubdXRrXWcKMJVYa2LhyZmA7oh93zpdyXwURopTJ/HPnUv+qyrvh8jFKU2
-	 vm4Wwg4ALIPX0WqDZlrjvahX1xBxAKAkDBYMWZlHJaXBmQq/VilRkPkrni6M/zNgSe
-	 L7aAQA4T6g9sD7njLHVLUuVqFduymm8SKOZqQfSP3HXyUE/eyynTgHSwgg8J5IXIdb
-	 7agWEgVcFIoDkWjBZUeUnwdTtAIFrPOJG3+Mlpjx7+gb7FCvEEA26BBkDX8/GOLTWM
-	 Sw/lpXtT2OSJWrWyJkR7Vd4444ifF0+/XJN8Ow95OLhRR1rUPLT3utaIht+RwEmUhO
-	 63SDXOl9JMAbO2CVoytSwH/JT70+Z7vcG0MGggvHS672ZPKV7mglTtEkrYNaO8ZapJ
-	 vgsdSMtLYL+Od4zhy5NClAyvWoH1Qot/plJSZMhQulj53rqab/g
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:3c0c:de88:5b0d:9364])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 4E38020113
-	for <git@vger.kernel.org>; Tue, 30 Sep 2025 23:07:44 +0000 (UTC)
-Date: Tue, 30 Sep 2025 23:07:42 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: git@vger.kernel.org
-Subject: When should we release Git 3.0?
-Message-ID: <aNxivuJEnSHbQNdr@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IqbbCqV3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EA1uX0R0"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A513214000D3;
+	Tue, 30 Sep 2025 19:39:27 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Tue, 30 Sep 2025 19:39:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759275567; x=1759361967; bh=EGisIcpLVN
+	xhtkz2Jh6iPftr2SBmZSi9uolQiIM0qKU=; b=IqbbCqV3HfV7HdWleF8uNCC8ai
+	Ifvw0yykWmVbDrbI6nW6NyWtFafOL7BJZSMLXFGNLJ3woYEb59wC76rSa2h4e7S+
+	gcisM0U83ZlDE9dN8uOItrMn6LMUrdOA2X4ypHnDqDXDp8jnjYiE6ZI7XV2MhGJ/
+	jECXpiYdG2YJkQUB833dQvqXkAZw+XvtCZDltyzaVQUt9/FRAW1Ypgr4QINjAsE0
+	wdCUR6TuqC+KS4CUjq7/1QAm49awEXGKltdbA6ZJJXmB7koDMzR7SF0Xzb7Lr7X1
+	oMBIouv5O0zqddko46MahIiW5yCgqWWbRyg5lHMgd5/NxP72hSV6/8EV72hQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759275567; x=1759361967; bh=EGisIcpLVNxhtkz2Jh6iPftr2SBmZSi9uol
+	QiIM0qKU=; b=EA1uX0R0qBf71I3cNPrlWjlFq7Pt5VRhKEt8CEbP0Zofd99Bje9
+	HXfVQzwYkbH0uEyfUjXcP5cultw/6sL9TUgzMQZl4skEJ/h6LiMFSmDMOPXzmP60
+	4dBjbVu4aY3zlzKh3MUYs+A0O3wmAeXqKpqyQXZuRyt2fueIpBGtaXKe8VUQgLib
+	evYigVjOvC7uU7q4Sl6Kij234hrwHvuZDi45Uze3kA0xhR4vxyYZKSV1zzp4xFO3
+	JIGMgRYZvwCTfPGJdjDCkMwNEWyvDoGNHetZ5O6xei9bHsPQIenAYCZMxW9m3wE2
+	ADGUfRh58zA2nkFpIS4Tpk7yKQON+/Hr71w==
+X-ME-Sender: <xms:L2rcaC7HYtGChF-k87cI_v3uXD-3BFkKJlcDlSUlTaQte97HgJ06gg>
+    <xme:L2rcaPlj21-XbkFcT09hQtVctTyJbrZDL_iSvzq5W1VqRXTqizIKWFrihvVTsK6bL
+    tbQjHlZWK00K05C5E6ZkzsM0K3XhI1VZzS3RdAvXOzguyGZ9PelXQ>
+X-ME-Received: <xmr:L2rcaLShikx_k0nZn-0bMCJEUQVbprSajtjF-a1ns4ggwOSOC6TSWcHHgpOPsaZbvdSafGt57aapzW2OuTArqNqihqCEVPoiMgbh>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekudejjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    sggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofh
+    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepjhhu
+    lhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:L2rcaGEBLDJMM4j5hvZzi5tSIqm8ny0czaR1x6VIu_894uc4TzUM5A>
+    <xmx:L2rcaIGL26-GX7AKVok4jopdYaN_5bNrqp9Vq_2_H8eDFmewuqviTw>
+    <xmx:L2rcaMRq7CedpXZ9PxduUp2pmj_BOEYPcoMAEJsRxtgbOCMqo6kYog>
+    <xmx:L2rcaBIETtpWll9yT8zk29k2wgEF0BWQROHRTs_b79QNFChdOTpq4w>
+    <xmx:L2rcaOc6FVitUDR89wurKgD1ST_NRPgY9YJLzKjs_ivYsSOYoko6mZeQ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 30 Sep 2025 19:39:26 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Julia Evans
+ <julia@jvns.ca>
+Subject: Re: [PATCH v4 2/5] doc: add an UPSTREAM BRANCHES section to
+ pull/push/fetch
+In-Reply-To: <69825d46349e55dd1b17444ab4e6d542fd44f371.1759262314.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Tue, 30 Sep 2025 19:58:31
+	+0000")
+References: <pull.1964.v3.git.1758649472.gitgitgadget@gmail.com>
+	<pull.1964.v4.git.1759262314.gitgitgadget@gmail.com>
+	<69825d46349e55dd1b17444ab4e6d542fd44f371.1759262314.git.gitgitgadget@gmail.com>
+Date: Tue, 30 Sep 2025 16:39:25 -0700
+Message-ID: <xmqqtt0j33yq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="nplUULpJmJrTBpU4"
-Content-Disposition: inline
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
---nplUULpJmJrTBpU4
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> +You can set an upstream branch explicitly with
+> +`git push --set-upstream <remote> <branch>` or `git branch --track`,
 
-There's been discussion at the Contributor Summit about when we should
-release Git 3.0.  The original plan that was discussed was to release in
-about a year, which is about 4 releases away.
+I am wondering if this confuses beginners, appearing as if the
+latter does not need any other command line arguments, as the former
+does say two pieces of information needs to be given.
 
-Almost all of the functionality that we had wanted in Git 3.0 has been
-implemented.  The two major things we may want to consider as blockers
-for Git 3.0 are the following:
+> +but Git will often automatically set the upstream for you, for example:
+> +
+> +* When you clone a repository, Git will automatically set the upstream
+> +  for the default branch.
+> +* If you have the `push.autoSetupRemote` configuration option set,
+> +  `git push` will automatically set the upstream the first time you push
+> +  a branch.
+> +* Checking out a remote-tracking branch with `git checkout <branch>`
+> +  will automatically create a local branch with that name and set
+> +  the upstream to the remote branch.
+> +
+> +[NOTE]
+> +Upstream branches are sometimes referred to as "tracking information",
+> +as in "set the branch's tracking information".
 
-* The SHA-256 interoperability work is not done yet.  My estimate of
-  this work is 200=E2=80=93400 patches, of which about 100 are done.  If the
-  original schedule is maintained, this would require writing up to 75
-  patches and sending in 100 patches per cycle, which is unrealistic
-  without additional contributors.
-* Some forges and other projects do not yet have full SHA-256 support.
-  It's my understanding that all of the major forges are undertaking or
-  have undertaken this work and are at various levels of completion, but
-  it's not clear that other projects have appropriate support.
-
-We may also wish to stick to a stricter timeframe for this release
-regardless and make four releases from now or the next release a year
-away Git 3.0 regardless of whether those items above are completed.
-
-Discussions at the Contributor Summit did mention the advantage of
-having a hard deadline would be that it would make projects and forges
-spend the time to implement SHA-256 support if they're lacking it.
-
-I personally do not want the interoperability work to be a blocker.  I
-haven't really heard other commitments of contributors who want to work
-on it and I don't really want to have to run full tilt trying to get it
-out.  However, some other people may feel differently, in which I case I
-encourage their participation in the project.
-
-What do others think about this?
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---nplUULpJmJrTBpU4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaNxivgAKCRB8DEliiIei
-gVOQAP45MMgtqUrHB1zVo8fVmKhZxGHuX+eKfiLE6r0aLbc7AwD+IXaFuSqmOmfw
-mETjm9JxF3j0dVw7YwQk/HocDlDyZAE=
-=dCV+
------END PGP SIGNATURE-----
-
---nplUULpJmJrTBpU4--
+Everything else looked great.  Thanks for working on this.
