@@ -1,127 +1,99 @@
-Received: from mail.lohmann.sh (mail.lohmann.sh [23.88.42.106])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C7B8F7D
-	for <git@vger.kernel.org>; Tue, 30 Sep 2025 14:38:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.88.42.106
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B924772617
+	for <git@vger.kernel.org>; Tue, 30 Sep 2025 14:42:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759243095; cv=none; b=tJX2r4lXxAkSZ6ZrSyU1DUpwlHm3i5F3+5kOb4BftZc0JV8EXrmmY5/RIqfV1EQha95rMEejXMdGIqM3SxdwAaQyK1UXvMOxP/KP4hkSbLnCHGCmZ/+gihujmkjuQoloyIRVHe7i7bgIHmivq8qe1HE3I6LnQzA5TD34oizCbHo=
+	t=1759243382; cv=none; b=NPQKR4Fil5DMWpsy3xcFTFcePqYV0F2xBC1V/vtCGiCzMDS9CTH2KNabX3za5eEIIJ2gOTnVUj6DuFVdvEo0eZyJWoi9UwTqy9WR7onuNOkcRconbv1eqNKrx4tfg/Jnw4XbLW7tdGLTES7DwnxOvwPPK0qB8+afit1Z7PU1seQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759243095; c=relaxed/simple;
-	bh=OeSi+aBCin9uniecULaKsn2p0Opv767+qu9Cr/dhluI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/8DkAan2TNR+v4Kv7v+HoxGmuZ/5VqH9hNz50VGEXk0LxWMlFq+4m+X1nJbL+GBRLzE8qp9PlM47sxSbcYGhnFJ4LO24AD7rCNxc88tfTlo0dNuRNj2+Ls08RjtqMhabfFrE0nK8A0UGvzzk72+NGln49ZQ6hKUjI5Q4gdz8xE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lohmann.sh; spf=pass smtp.mailfrom=lohmann.sh; dkim=pass (2048-bit key) header.d=lohmann.sh header.i=@lohmann.sh header.b=B2AnoW5A; arc=none smtp.client-ip=23.88.42.106
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lohmann.sh
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lohmann.sh
+	s=arc-20240116; t=1759243382; c=relaxed/simple;
+	bh=56a+AYul9UuTHcPHjjeOPGu0fd7vdcDBtbNjx07tbPg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jn726g11909vbqTRi5IL18178Moe4Lxgyi15WwAehCvkAWCsTPyWuc0aKw2K5gPTVtO9JEuag8CttTUWOYXKj8skLDWjLIXWXrxu8AKGYs9z2pNca3a0KwlhMJYBInHOWQ8z3+9icnUk1aQ65LthlOkSfpSOVQYNvLm2iFNq5c0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NYpDjvFs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F2ICX+yC; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lohmann.sh header.i=@lohmann.sh header.b="B2AnoW5A"
-From: git@lohmann.sh
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lohmann.sh; s=mail3;
-	t=1759243075;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=eWTkIlUaOd/pEvqXluVmLHpxknIHxX2mQNsTMgEGudI=;
-	b=B2AnoW5ANIyngbPGK3j9FlgEy58eN95JcDCBlXcFYFZa9MU52+HAQo9dpyTzJeen5D3uBr
-	7D5MsbTRE13YRAU4QBH08eGiKBtSU9T2dzrzW4IKx0IJm5jCi6iBSRFLbyKMQ87UP+qUMw
-	eMWug4TZtXi2/3rwsqzs37r7hAmHqn7UiWjnJbfu8frP4TEH4OgMXsstzovHwF8Q+no/WY
-	AYD7Prpsmzc5iac3I1hvButpxe1RssSbKWG2e7kZixGi/VHpMTMxITxsXnN5BZCjD6LvRE
-	827oBQOrctVWzGMNdMgKRXiEe+blz+yUVoahJdXH0Lz4O22y8GeKGs9eCmITNg==
-To: ps@pks.im
-Cc: git@vger.kernel.org,
-	Michael Lohmann <git@lohmann.sh>
-Subject: [PATCH v2] builtin/reflog: respect user config in "write" subcommand
-Date: Tue, 30 Sep 2025 16:37:41 +0200
-Message-ID: <20250930143741.18331-1-git@lohmann.sh>
-In-Reply-To: <aNu-cTrJwPdcW6hq@pks.im>
-References: <aNu-cTrJwPdcW6hq@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NYpDjvFs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F2ICX+yC"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C8CB01400190;
+	Tue, 30 Sep 2025 10:42:58 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Tue, 30 Sep 2025 10:42:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759243378; x=1759329778; bh=56a+AYul9U
+	uTHcPHjjeOPGu0fd7vdcDBtbNjx07tbPg=; b=NYpDjvFsKnv8KONEs01BAohUUW
+	jp7xG3e5kk2oLsig2gk35+MoPnfD3rYDXobcE38jo/P88qldItzKV8V9TMvRyADI
+	bn4OsY/BCkp7z6Q9qEl88pf0fTyK/5ZrfdKzO+lNS94mEZnjstm0yiIupIGbNdLk
+	ZgOzmPJrWgksTdVZaCiWyPTEUuCYEWtI1E9bavNi9I0x1WVQ10fT6cSbNO3cttB9
+	TzTapBm7DnjuSQOXeHvgEF/T13ayIqRo880XAt5P/AA/C8250k2S/wXBD7EXHusE
+	QW5k6JnsZ3trmZwRoFfCk84NprSJT23PSs2A2UNAAODqubfFI/AzD0/L/UWQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759243378; x=1759329778; bh=56a+AYul9UuTHcPHjjeOPGu0fd7vdcDBtbN
+	jx07tbPg=; b=F2ICX+yCEDbg6SL4B4SznarecvtVNv2zN936x3yEr4e3YaW1HkK
+	7kbZOwyrsN+hKMManYbDaD4s4FW+oClv2br58nzcGPYNJI4FQsEtGgFSsO0Z/8qj
+	8wLXFtN2En/oHHWMp26AnKG2g0g0F9ojSXUr0H7MZsAQVW6O4VhcgOhxoh+bV8Pr
+	V5IZnpRWz02v26O2fT1RyruUOQ4xOAwykkEYyKWjp5s4FNExUdntw2VgZbaojHTB
+	VQ4l/ZNWiJ6yS28mADDLcc3ooOdY97XmMdRXMWzklNO5v0HAFx1TVTjl3zPuJ8Md
+	VdcLjMasv6PRPC9xYKsGHFF40kZ8dXM/H+w==
+X-ME-Sender: <xms:cuzbaLZdbVC0rkkXsh-PLmBCCqsd00KD7LvqipfQvC9v-1sz_-EPYQ>
+    <xme:cuzbaBYruRs8fRLpDhGFgFcwMvyX_MmEXL9ZTvXjTUbt54FZ20R7d0c-ZqzKdDmOM
+    WO6W-j_eXRgnuDeqMsuFksKC7ZNTH8cc6UFRoYMfmIXJ1J2wJKRdw>
+X-ME-Received: <xmr:cuzbaC8qv2RrD0nRy63y_-KlPcR7laGvgpsjDfUA9GsPRwPBHsc2acorKTBNIQGDShn0f3W0fcKWN19qGKvSKCvJv5_ByniUsCxL>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekuddufecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmh
+    igrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepghhithdqphgrtghkrghgvghrshesghhoohhglhgvghhrohhuphhsrdgtohhmpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:cuzbaAg-vyMMPmlemHCNOzj-rJxHny3tGtcAR6Vg3BJzYagvJa7khA>
+    <xmx:cuzbaCfPydaPQoYJQtzkJ-V-ioVw72tvlwHY9C7xUbgt3d_Lc5bCmA>
+    <xmx:cuzbaHqLlNzmWxNQZxoc7HAuCMkPiBZkUNxNrzWmDBov5XuB6VObTA>
+    <xmx:cuzbaHAS8kjfKyMyQ0QaWWNVlsjmqc29C18j6U_xNtiucNVMDW2ohw>
+    <xmx:cuzbaFBS7e6fr9fPWxrNiCGFSUYMGiAkwhElQIR6AnWKBmxsMqVGbVVX>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 30 Sep 2025 10:42:58 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: git@vger.kernel.org,  git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git for Windows 2.51.0(2)
+In-Reply-To: <1N2mBa-1uKVV81q0a-017bZy@mail.gmx.net> (Johannes Schindelin's
+	message of "Tue, 30 Sep 2025 00:24:41 +0200 (CEST)")
+References: <1N2mBa-1uKVV81q0a-017bZy@mail.gmx.net>
+Date: Tue, 30 Sep 2025 07:42:56 -0700
+Message-ID: <xmqqms6c57db.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-From: Michael Lohmann <git@lohmann.sh>
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-The reflog write recognizes only GIT_COMMITTER_NAME and
-GIT_COMMITTER_EMAIL environment variables, ignoring the user.name and
-user.email settings from the Git configuration.
+> Bug Fixes
+> ...
 
-The test suite sets these variables, so this behavior was unnoticed.
+I see you are merging a lot of fixes ahead of me, which is very much
+appreciated, as I was planning to do 2.51.1 before 2.52, and the
+selections you made so far are very sensible and pretty much in line
+with what I had in mind.
 
-Ensure that the reflog write also uses the values of user.name and
-user.email if set in the Git configuration.
-
-Co-authored-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Michael Lohmann <git@lohmann.sh>
----
-Thank you for your feedback! Is this better now or how could I improve
-it?
-
-The reason why I sent it from my other email address was that originally
-I didn't expect to submit a patch. Since I sent the first email from the
-other address, I wasn't sure if it was easier to keep the context, but I
-didn't have the other perspective. Now sent from the git email.
-
-Change compared to last version:
-- aligned commit message with style guide
-- created a separate test case
-
-Michael
-
- builtin/reflog.c        |  2 ++
- t/t1421-reflog-write.sh | 19 +++++++++++++++++++
- 2 files changed, 21 insertions(+)
-
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index c8f6b93d60..40884787b9 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -422,6 +422,8 @@ static int cmd_reflog_write(int argc, const char **argv, const char *prefix,
- 	if (argc != 4)
- 		usage_with_options(reflog_write_usage, options);
- 
-+	repo_config(repo, git_ident_config, NULL);
-+
- 	ref = argv[0];
- 	if (!is_root_ref(ref) && check_refname_format(ref, 0))
- 		die(_("invalid reference name: %s"), ref);
-diff --git a/t/t1421-reflog-write.sh b/t/t1421-reflog-write.sh
-index 46df64c176..cf0e8608fe 100755
---- a/t/t1421-reflog-write.sh
-+++ b/t/t1421-reflog-write.sh
-@@ -108,6 +108,25 @@ test_expect_success 'simple writes' '
- 	)
- '
- 
-+test_expect_success 'uses user.name and user.email config' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit initial &&
-+		COMMIT_OID=$(git rev-parse HEAD) &&
-+
-+		sane_unset GIT_COMMITTER_NAME &&
-+		sane_unset GIT_COMMITTER_EMAIL &&
-+		git config --local user.name "Author" &&
-+		git config --local user.email "a@uth.or" &&
-+		git reflog write refs/heads/something $ZERO_OID $COMMIT_OID first &&
-+		test_reflog_matches . refs/heads/something <<-EOF
-+		$ZERO_OID $COMMIT_OID Author <a@uth.or> 1112911993 -0700	first
-+		EOF
-+	)
-+'
-+
- test_expect_success 'can write to root ref' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
-
-base-commit: 821f583da6d30a84249f75f33501504d597bc16b
--- 
-2.50.1 (Apple Git-155)
-
+Thanks!
