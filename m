@@ -1,175 +1,280 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6976818A93F
-	for <git@vger.kernel.org>; Mon, 29 Sep 2025 23:57:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98341255F27
+	for <git@vger.kernel.org>; Tue, 30 Sep 2025 08:24:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759190269; cv=none; b=JpwjE46mGr/cCJc3PwqHLZnNUv8SogSTiRzrKajyuozumi+jfnSyJxfKQSnuQesafQFRVkwOXo4UMZl3gStObrzFUlvEdXvGL/L/ur89Egbv+Gq9zX1vYFlzoglMO/Gqp/FUZas6lMOc17GWITTQY9/JWxYvvJ4ooesaL5XirGA=
+	t=1759220645; cv=none; b=Hrpkhqla63zE+PbpquysEIkdXWay4Jo47P1L4mYG4RiEtjyBZlZTX7f0W8qjGnufbL92MnZYMa/dOXlA7uSkI+rwvqzCjyYPqqwBvhu2m+/MkSELVwsW61qz+fbOGS+j8odBMAgA1/wVxGua/1TcZl+ptDG5O16Y0Vb8kDtuUp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759190269; c=relaxed/simple;
-	bh=2TK9/xxcIentux5MDsVOnbJfGIil/Yr5oFdoV1GoHsU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XDEm2RMM7nzFaZHBJACc4/JMCEXVSqijZ6BZgNZZmHmXICf5/vGCqOyscZ/kFi9853zOoFEHeLQCdArZ1Py5lEIrX3PTp0WZm3Ozes/clJ7VxhZ4Lr/QkOqWukH3dRYEzvmLpgUTB9NPHTy6g8C6RKzh3Tc689aQwq5FOGWpsuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gN14avqo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G3px6E6e; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1759220645; c=relaxed/simple;
+	bh=Ufn0Xr3FahiwH215+EKEB4X7Yt+ckA3Tyg4GGoXQnWY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AOVift6oR8nZt8/UdvMVxz2+/0HuUZQaMG1jHk1Q5AIoaP9LpQ0zUUjr0muoUqsIx7ypxRZ4BAkEGpeynTFbpoYDrsLNmdy4CmaY8HprZr4oTNdhL8csVd82Zl61JjeKvfa4UatrpUsbig91+DyPuhKNI21j9R0U0e0xyiI3DjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QV8KpSNf; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gN14avqo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G3px6E6e"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9B270EC001E;
-	Mon, 29 Sep 2025 19:57:46 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 29 Sep 2025 19:57:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759190266;
-	 x=1759276666; bh=KEsRLe5kHeUPJV60lfwZHv1GNDCYiV5SggVzepQESy0=; b=
-	gN14avqoxuobgmo5h6UxEhRsaZOmY12VBYN/boHUVFs17ed6ZwQ+Nikz1r1M1z4/
-	fqTyOpDRyCmCZ9ud4ushOu662KAtIyduzcbhnY7bRDlaKhjE4J4dEAEtQqj/eeUb
-	HwUbrblvUuZfCPXt3XsdQ7ombhjLZZs9WD/pBCwX++Jxe8CjgDSA3CZDaJWPG7Ou
-	VSfpYTbARGOeb/kU3isIrqNolzFrWOd963ntuvOaEW9vgco9uYCfPKCRfazkEhPM
-	BYCU790vA35K8s+4PBaseaxv9jfqQfCTzFCpoIVPBSaXPD/dLHxuv4jUGPkoBcEb
-	JEXjnxAHUdFjC9rcb5GMzg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759190266; x=
-	1759276666; bh=KEsRLe5kHeUPJV60lfwZHv1GNDCYiV5SggVzepQESy0=; b=G
-	3px6E6eshyohqk7tCf/vMe5avEYbMvtbRZ+RJW8/gq/lQh5Rk4vDtF6blcjhzvzi
-	ONZ1DyAi8TPGUpB6ui/XCdefOWhs1I3OwAW2YNpJlPSHZW8qgNam2/dygENyeagW
-	Mbdy7UvDUqAfSvgmQcGxFwWCKS0t4niBdmKD7YHRm01Q/uYATkefkI0RTJjIX0TV
-	TpcEUhkGyfR5AT1iy0zX51gzsfRomnfAqu+uan4vHP3WkeJoRhUjf6fhnoA4N1lg
-	jYuMUD82KFM1VxXRpc91A/Wg8Hvd9RNHYWVLO7znup5kQZ1A3bg0gM4BPQJ0Dv/B
-	LayXrEfeccPz6IUyl4KbQ==
-X-ME-Sender: <xms:-RzbaDAYVPzXEDFRpmWIYefRsSuFeQyqBT-oM7hsZDh9bjegNETzSg>
-    <xme:-RzbaPgLXcIr3yinvvj8WuOv66HF66Nv3eFX8SGd27-vivfex9S08ZjZ0Bf3VW4sK
-    Fow2Ce9pNO7RGdlJSeBqxRAvuazOz5T8bispC2SP8VTP8WkEgArNw>
-X-ME-Received: <xmr:-RzbaMPeR6czAi9ULaBPO93GxIOOj8tVNbbYWD16SgkgFel5u1Q4tuic8ufKltJe3PTt-uVJjAUJuGdi_qeAD9bqXhq1NjTYZbCTpEFjLUA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejleefkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertd
-    dttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehke
-    dvveetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhmlhhkohesnhhothdqvghvihhlrdguvg
-X-ME-Proxy: <xmx:-RzbaA5UW2nxYIlPTyzVL29xD76rr_1dPS7cxncxqYE5fYbxZn9T4A>
-    <xmx:-RzbaK3bFXTMv-qFIpOQyq4WobSiW_ojJzzKDHacEr1YvYfLe90UPA>
-    <xmx:-RzbaBbivzdNIpQGNj3nlzBURK7msQpveTorIuYM09vAmSTL6_CuQQ>
-    <xmx:-RzbaCC6r31dE-mSNrEblmGvJF4cRjt-jz0c-oxVAaufzumLySp08Q>
-    <xmx:-hzbaFNNgTnHCkYEdi2nTBDdZY5RBcSKnOHZgFPoR6xhWpRJs5IVfzml>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Sep 2025 19:57:45 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 97ea6efb (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 29 Sep 2025 23:57:42 +0000 (UTC)
-Date: Tue, 30 Sep 2025 01:57:40 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Michael <gitmlko@not-evil.de>
-Cc: git@vger.kernel.org
-Subject: Re: git reflog write does not pick up user.name and user.email from
- config
-Message-ID: <aNsc9En-DjxVOLcV@pks.im>
-References: <519E887F-2028-476E-B26D-85E23F7974A5@not-evil.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QV8KpSNf"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-b07d4d24d09so1089661366b.2
+        for <git@vger.kernel.org>; Tue, 30 Sep 2025 01:24:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759220642; x=1759825442; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VuovjUlR+a4GqDcQ5ZUmsK6bb+k3SHggIqK5PFIotV4=;
+        b=QV8KpSNfWiBLO/4biuWhHbcUa0qZ6cZy7dlR8XQKdjBrymf9s2jltc2kVV/8tEmf2w
+         CwqrsIRtQCYVPNFI6ddjEjOFBeELtrRP0zXV4iFNqfLvJGoDnO+C4C59JM6rXb+xls+q
+         udKkIewHDbayCiqpQ+zLH+GKqpFmLnXApNjUXUzPbyOQkdtWEw/lM5D8m/oZFiZu9KyA
+         HNlCAIDqKHQ4YxdPoLsPl1+3cltQwFVNoffBnpYlUJC2JzgILO5LfZRd6scl5Mvm9JEh
+         YouMdIgPByh8Ykp0iSMbKOFKnQ5MCPH3hZOxOIW7kkOoC69GiNQX1QkAkF2bsB8p3SY4
+         RWkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759220642; x=1759825442;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VuovjUlR+a4GqDcQ5ZUmsK6bb+k3SHggIqK5PFIotV4=;
+        b=r2YNIam0l/y3KT8gkw7CmzVwjf/py9ghCIB5lFe9csAIQ/Hoh0zoEpsnhEEMj43wP8
+         1B72FKGDmLCzyVxYVPE8Z97XSEoN6VSGh0nfMHQ8FRlnNimfI+YV2V9UPMrDO+4ox2Ie
+         K0lNkKpEFJZKXbP61g6zhuJ99o7754wcIc/nwXF+k0rykzc1GEwH/66l4ZzuEIky32FV
+         NEFjW5cjxIZac9Y0NeqqxiXtckT2Lksag+mxWSdN4thX4gzg3LGZnUnSdc0JshGvW8Vz
+         t7Os6hrrplihGVeho8Qam0fqiASkWQntQeMrFpWmSQuv21Mily+Sci0QgIxMzJhx0M3U
+         SZhA==
+X-Gm-Message-State: AOJu0Yzvn/ex8VuLGpBpvhsGMdbhMyqDw+3MK76Xc7tf4ZDkbjrS3avB
+	mI9LIf8KDfbhkmZtMfJqOfrlObVUbdzV1Fc2TDtCauuBeB/EDmPn/5YJmGUb9cEVEOJXSuBywxP
+	wu+OWwM9KSb8s1q3srNC6sdf9B67H7X0=
+X-Gm-Gg: ASbGnctGE4xV6dfR+iOOoZzFAHPl4tjtz1aEvIi6GXzjarIkEedPq7VuOS1HRxaMrgo
+	ncy7DCJzV4nfZBgHuKmBirDFqlC8ROYGAepWWJ8aAPqz22n/TVgsLwA+ArojMHtbLpiGi4EYbTX
+	X7WjkVOr4//fZpBrebCGae0mrDl+9Ntpsy3254TLI62e5hg8g8EiF9mL2MDsphQm2ZGRHDyfYxc
+	jOP0i8xnLtpqf0pxSWOTnyLOaCVP5XeDW3iXsWtIQ==
+X-Google-Smtp-Source: AGHT+IE7ayt++JKrdpHU6zggTPPHbxf/CCjNvmXjMEz9elMI2hKFQXZcGBnLis2hgSBYLE6BO4dx8OrFDWVQrSqExYE=
+X-Received: by 2002:a17:907:961e:b0:b3f:c562:fae9 with SMTP id
+ a640c23a62f3a-b3fc562fdcfmr637879066b.53.1759220641616; Tue, 30 Sep 2025
+ 01:24:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <519E887F-2028-476E-B26D-85E23F7974A5@not-evil.de>
+References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
+ <20250926230838.35870-1-siddharthasthana31@gmail.com> <20250926230838.35870-2-siddharthasthana31@gmail.com>
+In-Reply-To: <20250926230838.35870-2-siddharthasthana31@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 30 Sep 2025 10:23:49 +0200
+X-Gm-Features: AS18NWBNs1T1-0n7i19V5SJ6lE4dr8KYaLEoePn8Y5VJ6y1Yf7tf3ZYJRW-4nNI
+Message-ID: <CAP8UFD0POvYDgGtEx8GBhvKkd8XzzWQsy8XxAKL9M3+uz3ka+w@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] replay: make atomic ref updates the default behavior
+To: Siddharth Asthana <siddharthasthana31@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im, newren@gmail.com, 
+	code@khaugsbakk.name, rybak.a.v@gmail.com, karthik.188@gmail.com, 
+	jltobler@gmail.com, toon@iotcl.com, johncai86@gmail.com, 
+	johannes.schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Michael,
+On Sat, Sep 27, 2025 at 1:09=E2=80=AFAM Siddharth Asthana
+<siddharthasthana31@gmail.com> wrote:
+>
+> The git replay command currently outputs update commands that must be
+> piped to git update-ref --stdin to actually update references:
+>
+>     git replay --onto main topic1..topic2 | git update-ref --stdin
+>
+> This design has significant limitations for server-side operations. The
+> two-command pipeline creates coordination complexity, provides no atomic
+> transaction guarantees by default, and complicates automation in bare
+> repository environments where git replay is primarily used.
 
-On Mon, Sep 29, 2025 at 01:11:56PM +0200, Michael wrote:
-> Hi there!
-> 
-> I've been playing around with a toy project (an interactive step by step
-> git tutorial that is just a repo) where I have been creating a reflog
-> manually so far. I was happy to see the new `reflog write` feature and
-> wanted to integrate it.
-> 
-> When comparing the results of my hand made reflog with the new
-> `git reflog write` result I found some differences: It does not seem to
-> pick up the "user.name" and "user.email" from the local git config.
-> 
-> Example:
-> 
-> ```bash
-> git init example && cd example
-> git config --local user.name "C O Mitter"
-> git config --local user.email "committer@example.com"
-> 
-> message="hi"
-> oid="0000000000000000000000000000000000000000"
-> 
-> # Setting env vars works as expected
-> GIT_COMMITTER_NAME="$(git config --get user.name)" \
->   GIT_COMMITTER_EMAIL="$(git config --get user.email)" \
->   git reflog write "refs/test_vars" "$oid" "$oid" "$message"
-> 
-> # Picking up the information from the local config does not work
-> unset GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL
-> git reflog write "refs/test_no_vars" "$oid" "$oid" "$message"
-> 
-> # Since setting the env variables to the config value, no diff expected
-> # but:
-> diff .git/logs/refs/test_*
-> # 1c1
-> # < 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 Michael <michael@mycomp.local> 1759142076 +0200	hi
-> # ---
-> # > 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 C O Mitter <committer@example.com> 1759142076 +0200	hi
-> ```
-> 
-> Intuitively I would expect these values to be picked up from the local
-> config instead of having to specify them in env variables. I didn't
-> expect it to fall back to some system values, instead of git config. Is
-> there a reason that this information is not used from the config? And if
-> yes, could you set some config, so that it gets picked up?
+Yeah, right.
 
-Thanks for this great bug report!
+> During extensive mailing list discussion, multiple maintainers identified
+> that the current approach
 
-You're definitely onto something. The problem indeed is that we don't
-parse any of the configuration right now, but I agree a 100% that we
-really should.
+When you say "current approach" we first think we are talking about
+the behavior you described above when you said "The git replay command
+currently ..."
 
-The reason why I never noticed this issue is that our test suite by
-default sets both GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL. If set,
-we'll end up writing those into the reflog as expected. So it's a bit of
-a test gap we have.
+> forces users to opt-in to atomic behavior rather
+> than defaulting to the safer, more reliable option.
 
-> Unfortunately my ability to understand C is too limited to grasp how
-> `git_committer_info` works…
+But here you are actually talking about what the previous version of
+this patch did.
 
-You't typically call it with `repo_config()`. So if you want to work on
-this, the below should work. Only thing that's missing would be a test
-to verify that the gitconfig is parsed now as well as a proper commit
-message to tie it all together.
+> Elijah Newren noted
+> that the experimental status explicitly allows such behavior changes, whi=
+le
+> Patrick Steinhardt highlighted performance concerns with individual ref
+> updates in the reftable backend.
 
-Thanks!
+Also the commit message is not the right place to describe what
+happened during discussions of the previous version(s) of a patch.
+It's not the right place to talk about previous version(s) of a patch
+in general. Those things should go into the cover letter.
 
-Patrick
+If you want to talk about an option that was considered but rejected,
+you can say something like the following instead of the whole
+paragraph:
 
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index c8f6b93d60..40884787b9 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -422,6 +422,8 @@ static int cmd_reflog_write(int argc, const char **argv, const char *prefix,
- 	if (argc != 4)
- 		usage_with_options(reflog_write_usage, options);
- 
-+	repo_config(repo, git_ident_config, NULL);
-+
- 	ref = argv[0];
- 	if (!is_root_ref(ref) && check_refname_format(ref, 0))
- 		die(_("invalid reference name: %s"), ref);
+"To address this limitation, adding an option named for example
+`--atomic-update` was considered. With such an option `git replay
+--atomic-update --onto main topic1..topic2` would atomically update
+all the refs without having to use a separate `git update-ref --stdin`
+command. The issue is that this would force users to opt-in to the
+atomic behavior rather than have it as the default safer, faster and
+more reliable option.
+
+Fortunately the experimental status of the `git replay` command
+explicitly allows behavior changes, so we are allowed to make the
+command atomically update all the refs by default.
+"
+
+> The core issue is that git replay was designed around command output rath=
+er
+> than direct action. This made sense for a plumbing tool, but creates barr=
+iers
+> for the primary use case: server-side operations that need reliable, atom=
+ic
+> ref updates without pipeline complexity.
+
+I think this paragraph should go just before the "Fortunately the
+experimental status of the `git replay` command explicitly ..." that I
+suggest above.
+
+> This patch changes the default behavior to update refs directly using Git=
+'s
+
+s/This patch changes/Let's change/
+
+(See our SubmittingPatches documentation where it suggests using
+imperative mood to describe the changes we make.)
+
+> ref transaction API:
+>
+>     git replay --onto main topic1..topic2
+>     # No output; all refs updated atomically or none
+>
+> The implementation uses ref_store_transaction_begin() with atomic mode by
+> default, ensuring all ref updates succeed or all fail as a single operati=
+on.
+> This leverages git replay's existing server-side strengths (in-memory ope=
+ration,
+> no work tree requirement) while adding the atomic guarantees that server
+> operations require.
+>
+> For users needing the traditional pipeline workflow, --output-commands
+> preserves the original behavior:
+
+I think something like:
+
+"For users needing the traditional pipeline workflow, let's add a new
+`--output-commands`option that preserves the original behavior:"
+
+is more explicit and makes it clear that it's a new option added by
+this patch and not an existing option.
+
+>     git replay --output-commands --onto main topic1..topic2 | git update-=
+ref --stdin
+>
+> The --allow-partial option enables partial failure tolerance.
+
+In the same way, something like:
+
+"Let's also add a new `--allow-partial` option that enables partial
+failure tolerance."
+
+> However, following
+> maintainer feedback, it implements a "strict success" model: the command =
+exits
+
+I think you can remove "following maintainer feedback" here. The cover
+letter or a trailer like "Helped-by: ..." at the end of the commit
+message (but Junio will add his "Signed-off-by: ..." anyway so adding
+an Helped-by: ... about him is redundant) are the right place to
+mention people who helped or suggested changes.
+
+> with code 0 only if ALL ref updates succeed, and exits with code 1 if ANY
+> updates fail. This ensures that --allow-partial changes error reporting s=
+tyle
+> (warnings vs hard errors) but not success criteria, handling edge cases l=
+ike
+> "no updates needed" cleanly.
+>
+> Implementation details:
+> - Empty commit ranges now return success (exit code 0) rather than failur=
+e,
+>   as no commits to replay is a valid successful operation
+
+Nit: as all the sentences in this "Implementation details" list start
+with an uppercase, I think they should end with a full stop.
+
+> - Added comprehensive test coverage with 12 new tests covering atomic beh=
+avior,
+>   option validation, bare repository support, and edge cases
+> - Fixed test isolation issues to prevent branch state contamination betwe=
+en tests
+> - Maintains C89 compliance and follows Git's established coding conventio=
+ns
+
+I am not sure this one is worth mentioning here, at least not like
+this. You may want to say in the cover letter that compared to the
+previous version this patch doesn't use 'bool' anymore and explain
+why. Or maybe you want to explain here that using the 'bool' type was
+considered but rejected for some reason. But in both cases, you should
+be explicit about the reason.
+
+> - Refactored option validation to use die_for_incompatible_opt2() for bot=
+h
+>   --advance/--contained and --allow-partial/--output-commands conflicts,
+>   providing consistent error reporting
+> - Fixed --allow-partial exit code behavior to implement "strict success" =
+model
+>   where any ref update failures result in exit code 1, even with partial =
+tolerance
+
+This should probably go to the cover letter, as we should not talk in
+the commit message about changes since a previous version of the
+commit.
+
+> - Updated documentation with proper line wrapping, consistent terminology=
+ using
+>   "old default behavior", performance context, and reorganized examples f=
+or clarity
+
+This also sounds like a change compared to the previous version of the patc=
+h.
+
+> - Eliminates individual ref updates (refs_update_ref calls) that perform
+>   poorly with reftable backend
+
+This also sounds like a change compared to the previous version of the patc=
+h.
+
+> - Uses only batched ref transactions for optimal performance across all
+>   ref backends
+
+I think you can remove "only" in the sentence as in the
+--output-commands case no transaction is used.
+
+> - Avoids naming collision with git rebase --update-refs by using distinct
+>   option names
+
+This also sounds like a change compared to the previous version of the patc=
+h.
+
+> - Defaults to atomic behavior while preserving pipeline compatibility
+
+This has been discussed above. It doesn't look like an implementation
+detail to me.
+
+> The result is a command that works better for its primary use case (serve=
+r-side
+> operations) while maintaining full backward compatibility for existing wo=
+rkflows.
+>
+> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+
+Adding "Helped-by: ..." trailers for at least Elijah and Patrick would be n=
+ice.
