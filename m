@@ -1,135 +1,142 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4709265CCD
-	for <git@vger.kernel.org>; Tue, 30 Sep 2025 15:47:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70AED14D283
+	for <git@vger.kernel.org>; Tue, 30 Sep 2025 16:40:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759247237; cv=none; b=Uh/fx44SVHpQQV/uDjpXuDbzEWe6dghqUoNXbZ7yD+FzYYAdOI/E0obMAgDp7Tt1ZAldRfxbkuwSYyyZEXOSvhU7tQMd/lIjdg2BLdUjdE9k94x8PGtg4yz1srvyfJVC/jdH9EqWIXPIFNjdfj9+dTZS/vo4GpiRWrr+ol9GdoI=
+	t=1759250404; cv=none; b=AX3JLNMIE1DBRcL2+RM0vAd6gkYVWxHw8mbCIrwAnSL7em0KX8M99FdVM9dCngFLAAWkVzO2AGB9n8zgF/cEBX/JeZhbcb32TR0zJMIZc2TLLtFzEJLwr7rgGNBoKW2TD3/LFa8m8VgTpNR9l6K3eC1WJEmYFp0ggg+UXEaCp1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759247237; c=relaxed/simple;
-	bh=HZSscRMeyiRqjQ5e889PkEcWFuhd7LyvuCEjq90nKt0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TNroLkccykJ06tAv5PFlBMYZ8+7Ypxo8+5fNDHlylLyUxB8feiFGnffRlwvaDcDOjFMwXFVZWFi3SH6ce8m2WS7o8oiIiKUTfBqQ8j4f7AzzVhjQ7UqgvUZLYflBLDXTh1cjDSKuMOSpSMvzgCIjCPgVOm7+ePuIO9izJgRfve8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bIl3O4OR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jurHi5h8; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1759250404; c=relaxed/simple;
+	bh=zHNSkjUiEBLamcbfZN80BScGfH08Cg0KcF8h3kz1V/o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QnCuG+JtY+5Os7sdhU3/IUhkeyPaSYIxecAOQVEdtt/8rMDKE+L83P34JkfcipD2UhJhvQzpSkXNrjjz/m4oZxA6S5dYIgXsZE/mf/IyiT3SYGdxiGM1juT+h4zyMSCYO2ZANzqQc698x9kcG7ORkBnfGVsBR7v40APfpQUTnkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=MCCLQcDT; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bIl3O4OR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jurHi5h8"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id B3288EC011F;
-	Tue, 30 Sep 2025 11:47:13 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Tue, 30 Sep 2025 11:47:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1759247233;
-	 x=1759333633; bh=jKygv4NdbM8YgWA8jj3M+2ggzsFvfiWktqi7g98++t8=; b=
-	bIl3O4OR366JWcjj/U3IpGOFG9ncPlQ1pjKOO0Hi69DLPZd9ICTozK90TZE0dC2D
-	P+43g1WVISkXERybSenWGeyxl76PgJ8IRuzYR+wDMVLMdr4xBALu1w3T/J9t2gGW
-	rsnvPu2l1oVVY92L/T5vfyv19feGD7SJNetYCahGEkY9NSSyZaVbz0JmKkyLw/bc
-	cSVCVS+bIZ7eDu8UkJ9zFv3r6CiMSGCoQFGmyALvM5U4t7NsGnKl4rfkXb3zIdYH
-	cS495buYm71y3lEGnTb4piNzaLazBwKldmnNvK6br//9KrjtIyq6691WNW2QfFnZ
-	osq1ySCbc5UiTJjzLgXE2Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759247233; x=
-	1759333633; bh=jKygv4NdbM8YgWA8jj3M+2ggzsFvfiWktqi7g98++t8=; b=j
-	urHi5h8jrwYqmxVcDGMA+dhoLMLGB7RhHYTEZByK96onjysKMBNWfjD6lnMkuxqA
-	r92DjWRab/hsITJUUn1n5NATlV5mHm6n39juPRneNAlxWsWMKCsZHLisH122Ruk1
-	HRYMHbI0wqwcVcqxqpm65boNdtZMO3bVOsYeIzdtswi1cMytFRJ15UPiQ5vOe5Bx
-	Kobh1+cDCNzfpXDJTDqqHfLYQ/9J7gBkKAcQsMg2vlYYXFbnVAcDgu88DpdmaAIS
-	dmgH/wQSxCHkxT3nPhAmLAlLZIxwB30SZJX1XSxf9r0GTjssKG6SXx2uKde+3ymz
-	1XM7JOh/jaK9X54tjNzpg==
-X-ME-Sender: <xms:gPvbaB0bAujVgGu3V2QH_YdkpRXHzlFacxxDUT_gAuXCDWqFCxveVQ>
-    <xme:gPvbaO9_Ku3mdWQlyVqmeHZL5sWYsEef_Cnpb6wDZEaUr1nRbsvr05FMeGj_A-_m2
-    1lOjoHDhRaboLRuOsRpWMDcmUvNriXMzWnelhExM83FfFSOEPtu4g>
-X-ME-Received: <xmr:gPvbaKPFb_-GQtfi5XTK4TFtgaqREWDE4-8H0shj8s-vHCa9T_js1voaX3WPrTSGn8vZ_VGfvcahjdt4os7Kn9-0mIfu7jhwVdDv>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekuddvfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhhsuhgthhgrnhgvkhesshhushgvrdguvgdprhgtph
-    htthhopehjrghsohhnuddutghhohgtrgesphhrohhtohhnrdhmvgdprhgtphhtthhopehj
-    tghusghitgesjhgtuhgsihgtrdhplhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:gPvbaKfCDEDgenfXKJHhpayEfzNz8422-OKh5HHX0L1sRI7dNjG1gA>
-    <xmx:gPvbaBWoWjVc8FMc2qMZK3Vdr0BSHhN7l_KpPgR18riSq8yd75aQTg>
-    <xmx:gPvbaKjI9FdL8SCVsE2wSwpCILPGbFcQQCO6Rs0vOVU-Zsx0afTqAg>
-    <xmx:gPvbaI-nmWDM5FZBjIO14YxJOTZEmi3h-yXsL_n07udpfQZ-jxX79A>
-    <xmx:gfvbaPMZlQTeVFRrSOhmAyuPp7zfaLkHrmG4Zl5dVhzpJlhV4VHUrO1y>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Sep 2025 11:47:12 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>
-Cc: Jason Cho <jason11choca@proton.me>,  "Jakub T. Jankiewicz"
- <jcubic@jcubic.pl>,  git@vger.kernel.org
-Subject: Re: What is the reason behind not hiding git worktrees from git?
-In-Reply-To: <aNuxUqDMNcZZs68n@kitsune.suse.cz> ("Michal =?utf-8?Q?Such?=
- =?utf-8?Q?=C3=A1nek=22's?= message
-	of "Tue, 30 Sep 2025 12:30:42 +0200")
-References: <20250927152824.3132af88@jcubic> <xmqq4isn96s7.fsf@gitster.g>
-	<aNglDzeOT5_4ZbdV@kitsune.suse.cz>
-	<KUIfhZpMUwujq7A0Qdiri2OEhWabUXUVVpHZb7o0A-iqAC_46qQd5acUqN9TlkFMGe2t-aY4IXFQCjs6gKsawBCGSazI3QDPigdI7KrRf_A=@proton.me>
-	<GY1ni5SFkgBgVIHm9HoO9dtLuLWbUPCv5mjcsy5VGi09PyRLV_gv3MMw2zsinKpi5Aon9J-LESzTUuwMOUNLRRLqyXM7ON-98WTzhH7RIYY=@proton.me>
-	<aNuxUqDMNcZZs68n@kitsune.suse.cz>
-Date: Tue, 30 Sep 2025 08:47:11 -0700
-Message-ID: <xmqqzfac3pts.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MCCLQcDT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1759250401;
+	bh=zHNSkjUiEBLamcbfZN80BScGfH08Cg0KcF8h3kz1V/o=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=MCCLQcDTVsDjzO+B2+np1csVXFnYCmJ2PNIF6x1+oBL1PXEf4/Lgw9UKEURsB4O+o
+	 VWYN7On0jA5vCUIJHUQrNTQFv/nckqK1PjN36S5gCBjRo0aESckjy0TUF7b8vaKNE0
+	 Oqt0XzaBL40I9bT9lVI723ZtDP3iyKHceHVDPaWrt9yQuIoOYIytZH2PaYZhlMv5j0
+	 oycGpHAfHS//j2EuD6EoVHUl99+aIqhTt44x53wNdyfn6gHsWhJ6AdYpuy+AHzwxbo
+	 MYGoR1t/Pe6JNuBc+3BO4tx0r/zRmpRQ5Do977KOnriPdZO0ucDz6NrRFu42gafJmy
+	 12wWA2qfWtrvFhVIlyLTQvZ2jA+e8rcMYffCv26kTRVCkTIf2Y3FiAi+z1opma6dBb
+	 X/gIEkqyee3VxRiAqPqATa5mt56SMQ/OMgiA1mOmhFCX5rubzH6FxDBFdU1Bou7Ssc
+	 sxaAhB1L4nwcnlfNqSz6a6tEMipB1GNKYtzy5JOdoSjAllTjYs9
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:3c0c:de88:5b0d:9364])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 1471120119;
+	Tue, 30 Sep 2025 16:40:01 +0000 (UTC)
+Date: Tue, 30 Sep 2025 16:39:59 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 5/9] docs: add documentation for loose objects
+Message-ID: <aNwH3wqMzbNMpnEB@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Derrick Stolee <stolee@gmail.com>
+References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
+ <20250919010911.649831-6-sandals@crustytoothpaste.net>
+ <aNOkBuigxCODIcVN@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="lHw28jTdidSW8HEH"
+Content-Disposition: inline
+In-Reply-To: <aNOkBuigxCODIcVN@pks.im>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--lHw28jTdidSW8HEH
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Michal Suchánek <msuchanek@suse.de> writes:
+On 2025-09-24 at 07:55:50, Patrick Steinhardt wrote:
+> On Fri, Sep 19, 2025 at 01:09:07AM +0000, brian m. carlson wrote:
+> > We currently have no documentation for how loose objects are stored.
+> > Let's add some here so its easy for people to understand how they
+>=20
+> Nit: s/its/it is/
 
-> On Sat, Sep 27, 2025 at 09:26:54PM +0000, Jason Cho wrote:
->> I think the best practice is to not add a work tre within the master work tree.
->
-> And is that best practice documented somewhere?
+Will be fixed in v2.
 
-I do not think it is documented anywhere.
+> Do we maybe want to call this "gitformat-loose-objects(5)"? "loose"
+> feels rather generic.
 
-In fact, I do not think the inventors of the worktree feature ever
-expected this end-user expectation that checking out multiple
-worktrees of the repository *INSIDE* a repository's checkout would
-be any useful without confusing users.
+We have "index" and "pack", so I'd rather keep it short.
 
-IOW, omission of the documentation is by an assumptionk that nobody
-would imagine doing in any other way.  
+> > @@ -0,0 +1,49 @@
+> > +gitformat-loose(5)
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> Makes me wonder whether we should also have gitformat-reffiles(5) and
+> gitformat-reftables(5). Obviously nothing you have to do, but rather an
+> action item for myself or others interested in the ref backends.
 
-We can and should fix it retroactively, if the lack of documentation
-is not guiding our users in the right direction.  Any takers?
+Yeah, I definitely think that would be useful.
 
-> IIRC there are some VCSs for which it is common practice to keep
-> checkouts of multiple branches side by side in the repository directory.
+> > +SYNOPSIS
+> > +--------
+> > +[verse]
+> > +$GIT_DIR/objects/[0-9a-f][0-9a-f]/*
+> > +$GIT_DIR/objects/loose-object-idx
+> > +$GIT_DIR/objects/loose-map/map-*.map
+>=20
+> It's a bit weird to list the mapping files here without explaining them.
+> Should we maybe drop them for now and only add them once we also add a
+> section explaining their format?
 
-I can understand "side-by-side" but not "in".  Next to the primary
-workree (aka "initial clone") would be more common.
+I've bumped those two lines to a future commit (probably part 2).
 
-> IIRC the repository directory itself is not a checkout in this case.
-> Anyway, there is no obvious reason for anyone not familiar with git
-> internals to not do this.
+> I feel that "most of its primary repository data" is a bit misleading,
+> as one can expect that most of the data should be in packfiles instead.
+> How about the following instead:
+>=20
+>     Loose objects are how Git stores individual objects, where every
+>     object is written as a separate file.
+>=20
+>     Over the lifetime of a repository, new objects are typically written
+>     as loose objects initially. Eventually, these loose objects will be
+>     compacted into packfiles via repository maintenance to improve disk
+>     space usage and speed up the lookup of those objects.
 
-Meaning anybody not familiar with the tool would do any random thing
-outside of the usage pattern that the users of the tool have been
-establishing over the years?  I can certainly understand that.  But
-then, creating a set of worktrees, one per branch, next to the
-primary worktree that checks out the 'main' branch, would also equally
-be a likely layout, I would imagine.
+I adopted most of this language.
 
-Thanks.
+> Should we maybe give a hint why we have these sharding directories?
+
+Done in v2.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--lHw28jTdidSW8HEH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaNwH3wAKCRB8DEliiIei
+gcAxAP9bsSA74nn5LstvSY2Yb6EZ6LUVHaAwSUCePkjozaeAfAEAi5G1WrLTI6GU
+ufraCBcgv2fZq3nNbU6/5XAvOTcKcQg=
+=Ja8N
+-----END PGP SIGNATURE-----
+
+--lHw28jTdidSW8HEH--
