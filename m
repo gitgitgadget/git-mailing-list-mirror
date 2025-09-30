@@ -1,69 +1,70 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0938326980E
-	for <git@vger.kernel.org>; Tue, 30 Sep 2025 19:58:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5763028725E
+	for <git@vger.kernel.org>; Tue, 30 Sep 2025 19:58:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759262320; cv=none; b=VNIhC5t3j6/HUaxlpf02KVv/PtxMfcL9CU88qAgdsMIvyZH6BIZ/yZoCiXoxRTNypzKgrBbzHDJte8ZR1XJo1GWtRzupUTBazqKJhDOxrGk36pAVky+Y5e8+RsFSJ6gNIilD8GfpP2chKNkZSv8PDIRgDxWv20OGayvAsxI4dIY=
+	t=1759262321; cv=none; b=XSGK5ans4Tr+4TWz3OracFdpLpJORygN6LwPrRigzpbGWeSBYsiYltqzOI+1Lp+pTFE8/yIl+Qs7gkhDKsuylQFbjB6Z857x/UGhDElPMPatbLTH+SM8ov2J/imfx8onUhdZ1wYuk/Y5R6euzIbEMbmOHNe5ZXksAYWAHJVX8wA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759262320; c=relaxed/simple;
-	bh=55DJASOpaSeo5tHatmGd/+jQ4xh4WwrvINnecJgKjKg=;
+	s=arc-20240116; t=1759262321; c=relaxed/simple;
+	bh=ds0nJ+gBBPaw7Wx2snz0avjhZaZxEPDMUVxNghUy4MU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=G7Kb68+vFxOwTrKsR2TSIOTcS+J6Hq5fP69l6s/AzWqfxgNuyVkSbwQIgJycwyjB50qvnSTecf13Mn0pamybTtYWatRSvu7phu1qw8Qaj26vXUu/rM2NuVxmv8gMmtUmlYK5aUPd5HFroaYZ7b6hwnqT+BAj/LpJ4HccPwUMcUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G395OX0c; arc=none smtp.client-ip=209.85.215.174
+	 MIME-Version:To:Cc; b=Y27pdLo9eMQLRnEJSjku8BxyTxOjcTtvJa9jGW/KHBtu6hmSaK2ZFojKg7y1p+q/oi9B3dkxJ8srkIqXo9/INgequny+r6APeJNn/ruY+K2OcRsxria17aPH2JDak5+8QW/PfdCjA4WqhSPCPDvXVGSmzhvyWg/dfjVQlfnx6NU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gnFRL1SF; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G395OX0c"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-b57bffc0248so219415a12.0
-        for <git@vger.kernel.org>; Tue, 30 Sep 2025 12:58:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gnFRL1SF"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-279e2554c8fso64938565ad.2
+        for <git@vger.kernel.org>; Tue, 30 Sep 2025 12:58:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759262318; x=1759867118; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1759262319; x=1759867119; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kGdIcmZns6U85XDYnW+k/aIiGwf4itNWqcFr9Jns37k=;
-        b=G395OX0c9zHceK2f9akh01tDEIPEtu4tQM/xaVuvJpo75zjnNgyGuh9WsfLSx54jD5
-         ZifGLDNrGSxIOATr3r9HhmdtV+WNa9twO8o2SMwubsqMOSa4zOqPPWc9h/lMEmZCvg+p
-         YS6YYDeMasYLNsg/tTXpb50TPKbYCWNnnSVYxRu5lCi2zojWDGyes2B356ZVW5pZY0WU
-         CKV1yOg+Mnd9GcnfmZCrb2CN9Q82Qn85BN2c7RDAAQwLiNbF+0M1xr4wTBwD4K+fFnMw
-         W9m4PduSYi3JX5D1VnxueWG+P7Z0qNdh2jkmiooehzVvOPjWuc3OXVmKYPCT+UqJqqce
-         elCA==
+        bh=9mA/T57MyYrvMUBdhSMYl4ImtAJpN1EibsFR4is+ulU=;
+        b=gnFRL1SFCPVgfhnOUwbRznUk/vCrUkPzGYTER5lX6e2rM29oKWsQ/quBXOlwxI+Qbs
+         IYtj9BETn0s4uzETwumgXej5le/BV3p6qIMVblhb4y4jgMvp6MQlvIosMOT2k1/bX0eF
+         zKXoV014DA/o3u75ffQKqhHXXV9VB8FmFSkxatQ0RC7ziULqLUhCNSVzgZzSMF0+05cI
+         ilPYDvIyvjYNl1xCqIzrO+1yuD3T2k13kvzmis0qXkJRkxMkFxotKuNfNv1nOSLJHuvV
+         uxNX14wrh3gfqRlZd6ktZfO4galIuJiRqMhrS+7jul4eHAcFR+oX7jjLEBq8iWoQ9MVj
+         YTjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759262318; x=1759867118;
+        d=1e100.net; s=20230601; t=1759262319; x=1759867119;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=kGdIcmZns6U85XDYnW+k/aIiGwf4itNWqcFr9Jns37k=;
-        b=ChjU3tv4DjVkrYMxZGz5rBd52tmALzAFI5fYi9agD1t6lDC6i4tEBgsmpKfzgDW/Ru
-         Sxki+8RknU/ZJ+U/FXeeEl2OE9L3FP8l30170CLeez/ehPy2MRNABxT57CF3JHgzLdKh
-         xliLuNEVN+rd+dV2iDcNEn05i/A9Ev4hGzPoL22qqWy2ffNdh60OVrdZ5H7HUdIXC0qH
-         W1L6SCM0RCBztz9SPj3DjaCBjKvt7MWJwReFt/kBCHXbDxRyDS91n3oYHuHNZw49G8BF
-         ICzX2pyRXnZyYb8X7+fS7Fxo/LpaDelxsN517XzPGpmXeiv+TxXCE10QPm9bw8a4tFCB
-         rJtQ==
-X-Gm-Message-State: AOJu0YyK2CuFayih66syGufIz+LEIdGEmggLK8Q6DIyUAokZKNUxjHJo
-	HMkb7hj9cc+eSSlpvWx4hvi4Ger1LFRZsl8M0v3De/KWsl1t0lkhcvcSdf8hLg==
-X-Gm-Gg: ASbGncsJlGAs6PgMg7V+dyuCFNUp9V1VCgYeDHEKSHw/WANYCenJ+BiTnmmsW8Ign17
-	CgZ4vdYgbm74Z+Lpmoi8IBMMu3HD4gry1WQZRj8y6ANRUu1FxwN0OxgWawZUmnORNLOeKaiNyHz
-	IcnLuRjCog8Jmu7mb/LbSCCXDmk2dKGfjrGaHueSL2i7f2+HEuCu/QLo6BPv0kNEAK5MGDmh59F
-	b6EVFTCKKBMyPzaVMCs6/Gkc5rUI5JN/di0YK+c64qfjJG0BMUyYylZWbpWmw0XYtQaMf2X/n4K
-	IIu9ju1ADdqF08yzfpdkWkUB2r5J43m5+TgG581Jy/PtQpw9QotWNxqwkPQxlB2NHph4gehFKW/
-	JK3wqWuS4+TVF+tJTyYUMpk6YmMGRePn94coao+e9Tbt26qYboQ==
-X-Google-Smtp-Source: AGHT+IFJPzwxpFTwHAv4pfxE9JUnYRAIYQFY5Ga8Xrpw6Q1oZoy/59ltY/Lj7VD0cJR+/Xm7veNp+Q==
-X-Received: by 2002:a17:90b:3905:b0:32e:ca60:6bd7 with SMTP id 98e67ed59e1d1-3383abb456emr6652915a91.11.1759262317613;
-        Tue, 30 Sep 2025 12:58:37 -0700 (PDT)
+        bh=9mA/T57MyYrvMUBdhSMYl4ImtAJpN1EibsFR4is+ulU=;
+        b=JlAAhy4mzGEcu2W4g08j5qXjedIVvCvaJsGIOYqjdmBf7yyGChb4Ex7+3+vF14kNR+
+         FubgPweHlEqkuOlCc7gxDyEq1rDjgxDqHD54KmR/yKW2z9iUd1WcFjsWjPdypf7MteX5
+         b0xjxmpccchOVLXNAd81BCOcoX4eLQYtiQQjENbe8ULuCh61V0DCSBRn4zvKGIRaxgLH
+         B5ax4Mvua14FzMG3caUqdroad56x0jW4N1Ck9Z4C9EYH3ONn15q6SfCPl9h1jYmQJeu6
+         dgyOeay6aAzoqsq9eCBwoE2MWNrCPzyG67EBcPUQrpIyQv2XEfuWssxGy4Ggbva38bHi
+         /TSQ==
+X-Gm-Message-State: AOJu0YwAOgBS91LVoOPYyGIt+YmEP2xGeqrabEnPqan2VBMR7udJTiRl
+	IwyAK6ENIopcDhM64jcPqdj5v6PzyxKGJKRZb2Z1gJPoazwion47dMJ0CHGkGw==
+X-Gm-Gg: ASbGncsclxviVckI08r979CLWoLD44iBSeaOn25kVaKw+cGzd/LI8iH151I+XsR8+y9
+	O/ivHbFlfmZzGdRjuYzJHhZVwPGQtFtv8xkmitSGzY2SV2b10PGlFT0frpn02dsp5FavCgnGaa9
+	Ju9lqTx2aRxJ36zNM0nBWwJrbLkX/j2MdyV98+uZzoUbjmizQHqlpWnpCmB3bB+6XEdq+cxot18
+	xQU/qNQNNHwIn4YkG2LRYBkzi7PUdQ0XlGBtS4Fv5bNXHGkDTE/doDcdHcqiUOLGBnXojyK1yya
+	BxXapjlH0UWLPcItiULMLNelUgZtRBNe+Y5EcHMbBd1b6/64aO3CsMHRTTyVH5kce+wM5uE5esr
+	yRy5lOVCki5/i9IWwT/1mj0bCAHhw9TlW5oOVq+8BNh1NCSRCtQ==
+X-Google-Smtp-Source: AGHT+IHoMRiLsAUBL5n6/icyxzf4nlvWaIb+EtQPM89In87ENKf89gJ1Idp4AZ5vP2q61zJIltZ5JA==
+X-Received: by 2002:a17:903:1b2c:b0:28c:2db3:b9ab with SMTP id d9443c01a7336-28e7f2a62bbmr11906675ad.26.1759262319047;
+        Tue, 30 Sep 2025 12:58:39 -0700 (PDT)
 Received: from [127.0.0.1] ([172.215.210.53])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-339a6ec12fdsm388071a91.10.2025.09.30.12.58.36
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-27ed66d3cafsm167989565ad.14.2025.09.30.12.58.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Sep 2025 12:58:37 -0700 (PDT)
-Message-Id: <d3160fb0af036c4e5f536c34da831a0ca705d535.1759262314.git.gitgitgadget@gmail.com>
+        Tue, 30 Sep 2025 12:58:38 -0700 (PDT)
+Message-Id: <69825d46349e55dd1b17444ab4e6d542fd44f371.1759262314.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1964.v4.git.1759262314.gitgitgadget@gmail.com>
 References: <pull.1964.v3.git.1758649472.gitgitgadget@gmail.com>
 	<pull.1964.v4.git.1759262314.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 30 Sep 2025 19:58:30 +0000
-Subject: [PATCH v4 1/5] doc: git-push: clarify intro
+Date: Tue, 30 Sep 2025 19:58:31 +0000
+Subject: [PATCH v4 2/5] doc: add an UPSTREAM BRANCHES section to
+ pull/push/fetch
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,53 +82,99 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
 
 From: Julia Evans <julia@jvns.ca>
 
-From user feedback, 5 users are unsure what "ref" and/or "objects" means
-in this context. 3 users said they don't know what "complete the refs"
-means.
+From user feedback: one user mentioned that they don't know what the
+term "upstream branch" means. As far as I can tell, the most complete
+description is under the `--track` option in `git branch`. Upstreams
+are an important concept in Git and the `git branch` man page is not an
+obvious place for that information to live.
 
-Many users also commented that receive hooks do not seem like the most
-important thing to know about `git push`, and that this information
-should not be the second sentence in the man page.
+There's also a very terse description of "upstream branch" in the
+glossary that's missing a lot of key information, like the fact that the
+upstream is used by `git status` and `git pull`, as well as a
+description in `git-config` in `branch.<name>.remote` which doesn't
+explain the relationship to `git status` either.
 
-Use more familiar language to make it more accessible to users who do
-not know what a "ref" is and move the "hooks" comment to the end.
+Since the `git pull`, `git push`, and `git fetch` man pages already
+include sections on REMOTES and the syntax for URLs, add a section on
+UPSTREAM BRANCHES to `urls-remotes.adoc`.
+
+In the new UPSTREAM BRANCHES section, cover the various ways that
+upstreams branches are automatically set in Git, since users may
+mistakenly think that their branch does not have an upstream branch if
+they didn't explicitly set one.
+
+A terminology note: Git uses two terms for this concept:
+
+- "tracking" as in "the tracking information for the 'foo' branch"
+  or the `--track` option to `git branch`
+- "upstream" or "upstream branch", as in `git push --set-upstream`.
+  This term is also used in the `git rebase` man page to refer to the
+  first argument to `git rebase`, as well as in `git pull` to refer to
+  the branch which is going to be merged into the current branch ("merge
+  the upstream branch into the current branch")
+
+Use "upstream branch" as a heading for this concept even though the term
+"upstream branch" is not always used strictly in the sense of "the
+tracking information for the current branch". "Upstream" is used much
+more often than "tracking" in the Git docs to refer to this concept and
+the goal is to help users understand the docs.
 
 Signed-off-by: Julia Evans <julia@jvns.ca>
 ---
- Documentation/git-push.adoc | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ Documentation/urls-remotes.adoc | 43 +++++++++++++++++++++++++++++++--
+ 1 file changed, 41 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-push.adoc b/Documentation/git-push.adoc
-index d1978650d6..25d972f248 100644
---- a/Documentation/git-push.adoc
-+++ b/Documentation/git-push.adoc
-@@ -19,12 +19,9 @@ SYNOPSIS
- DESCRIPTION
- -----------
+diff --git a/Documentation/urls-remotes.adoc b/Documentation/urls-remotes.adoc
+index 9b10151198..dba5adeb58 100644
+--- a/Documentation/urls-remotes.adoc
++++ b/Documentation/urls-remotes.adoc
+@@ -92,5 +92,44 @@ git push uses:
+ ------------
  
--Updates remote refs using local refs, while sending objects
--necessary to complete the given refs.
+ 
 -
--You can make interesting things happen to a repository
--every time you push into it, by setting up 'hooks' there.  See
--documentation for linkgit:git-receive-pack[1].
-+Updates one or more branches, tags, or other references in a remote
-+repository from your local repository, and sends all necessary data
-+that isn't already on the remote.
- 
- When the command line does not specify where to push with the
- `<repository>` argument, `branch.*.remote` configuration for the
-@@ -44,6 +41,10 @@ corresponding upstream branch, but as a safety measure, the push is
- aborted if the upstream branch does not have the same name as the
- local one.
- 
-+You can make interesting things happen to a repository
-+every time you push into it, by setting up 'hooks' there.  See
-+documentation for linkgit:git-receive-pack[1].
+-
++UPSTREAM BRANCHES[[UPSTREAM-BRANCHES]]
++--------------------------------------
 +
- 
- OPTIONS[[OPTIONS]]
- ------------------
++Branches in Git can optionally have an upstream remote branch.
++Git defaults to using the upstream branch for remote operations, for example:
++
++* It's the default for `git pull` or `git fetch` with no arguments.
++* It's the default for `git push` with no arguments, with some exceptions.
++  For example, you can use the `branch.<name>.pushRemote` option to push
++  to a different remote than you pull from, and by default with
++  `push.default=simple` the upstream branch you configure must have
++  the same name.
++* Various commands, including `git checkout` and `git status`, will
++  show you how many commits have been added to your current branch and
++  the upstream since you forked from it, for example "Your branch and
++  'origin/main' have diverged, and have 2 and 3 different commits each
++  respectively".
++
++The upstream is stored in `.git/config`, in the "remote" and "merge"
++fields. For example, if `main`'s upstream is `origin/main`:
++
++	[branch "main"]
++	   remote = origin
++	   merge = refs/heads/main
++
++You can set an upstream branch explicitly with
++`git push --set-upstream <remote> <branch>` or `git branch --track`,
++but Git will often automatically set the upstream for you, for example:
++
++* When you clone a repository, Git will automatically set the upstream
++  for the default branch.
++* If you have the `push.autoSetupRemote` configuration option set,
++  `git push` will automatically set the upstream the first time you push
++  a branch.
++* Checking out a remote-tracking branch with `git checkout <branch>`
++  will automatically create a local branch with that name and set
++  the upstream to the remote branch.
++
++[NOTE]
++Upstream branches are sometimes referred to as "tracking information",
++as in "set the branch's tracking information".
 -- 
 gitgitgadget
 
