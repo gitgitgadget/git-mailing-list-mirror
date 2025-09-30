@@ -1,151 +1,112 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808342F6167
-	for <git@vger.kernel.org>; Tue, 30 Sep 2025 11:26:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134FD25C81F
+	for <git@vger.kernel.org>; Tue, 30 Sep 2025 13:31:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759231610; cv=none; b=RAXiwM2fbtDMGOxpPgcZUC1jdbwEprNeZ1/GpUMyK3bXk45OpfWdhR/5pJkDWbRushy87TQL0eTTuSOtKOBrlEKYYBI3cGbov7zoZikSt+bWYnbHpo0XwMzV/42KSzyP04/1HIb7MUiN7T/0sjO+Bu/j+ZpFlPRN458ee5jag6U=
+	t=1759239109; cv=none; b=H0qOz17p2sOl/pLBGdIgE2vEneP+MT7tJs2f66lamItHuhfK//BVtGdgg5br9A+/EcOndFRP1Ugqm9byLXGV/lOtFm1SW1RbJWhypG2p7XkqfzJ8/is7y9thWu5zPyGsqE5rfT3KlVCIMZlKiahXvhmPhfB3ytTqXryq8Q4NmD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759231610; c=relaxed/simple;
-	bh=Ei6d7Xo+NAdeu6o/MddAAK8o42UoGAmUEbWzGDYOCoA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jxtRvabZyVDUM9DyjYcFvyta4F6XgaqWUQKon7VWV87rnrPdmclAbRQLiB8+tyex1wjhKtreJl/aJWbqsOItyYqbS4DfiFlDrG9EPMP7dKiaxd01hZsZzr3U3B2BcQ+2+5U5PFAliOqSiHJ41y5CYG6zxPjQcoQ3wb3qtxX8XVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KFSKuoRV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hXnI3WW8; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1759239109; c=relaxed/simple;
+	bh=C8ICiwrJASBMWkeyaWmwRPwucjyQntaaONAgXONurI8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=ttHJN9QctpMFmzCYmKLZILeekEQTDFx3fiIWs96iOkJ3Uz9l0hmjRDz2CDmM1LU3nNzYnXwDrb0YygF+oWUgEEPccZSkq7B2TsZVn9rTum9R7pG5Ca9Fj+elteQTzy/LTdT3HVYPLq3CS8pSfoTwMennlxf9xS6PN2CWubdxDsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=QIl5mdGd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CT40sXHV; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KFSKuoRV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hXnI3WW8"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="QIl5mdGd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CT40sXHV"
 Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4F0761D00069;
-	Tue, 30 Sep 2025 07:26:46 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Tue, 30 Sep 2025 07:26:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759231606; x=1759318006; bh=vh5PwO9ZZz
-	vWo+4TZEpkLN/h4FRknWOgSkV0c+sXvgw=; b=KFSKuoRV+M8oYivd4VIIAo6q2S
-	viOZX7/9iivm1zOYNyvNvdSC478RLtoOHAk5aCkHxDqyEoR2apizxmrepOez4Zuq
-	hPBCtGgeMaFRJZkVeWUoJJbQ/N0IseXoRFeFcu0ToTooVtIkZtGRA0bt8MMDbczl
-	cKjPOTwzmT7elI6XZaOUaBtDGZzTh5MhZNEhYKo7n7tKXngA3hdZtqg3qEkIfgm6
-	PkI5xST/yuG3enO4HZr5peV7DHrIrXKGIIJnMRFBJSfrg+p/hfc87ZIo4AjixOCU
-	sbG4DULnsuaWZRXw8UZpCwFjNmCU/saaflbEzu2mJ09UywoV8oEcq+2NJNOw==
+	by mailfout.phl.internal (Postfix) with ESMTP id 13338EC0136;
+	Tue, 30 Sep 2025 09:31:46 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Tue, 30 Sep 2025 09:31:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759239106;
+	 x=1759325506; bh=C8ICiwrJASBMWkeyaWmwRPwucjyQntaaONAgXONurI8=; b=
+	QIl5mdGdmgbClztvjxG6gYqatEnJxAv2H/GD+cshio5EPWuxy4+oBe9M2f7haNWJ
+	XrjHHU3QKfMUx+gncVyTo06AJXW7HiaaLSEaQTo+ieMEZ6/irV8tFnOP04ZXm49q
+	JU7KmMJNW/HN8j7VhDgt9XiKsgmLKcJHIvleMrTOOie6Fpi/70VJXAz9mKTRUvai
+	taEwh4TYH7PJ84SKEQXHn3IBC3HFaRre8mBSapz/bK3qodebZQlLgjBLrXkwSYDs
+	wENFjgkkuUsWhprhuHRwBZ1SbF58FEwA7umUJh7CvKaQDZ69kl5liB8q0uajLAGw
+	u3GIPb3Chi1HvInibI1zXA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759231606; x=1759318006; bh=vh5PwO9ZZzvWo+4TZEpkLN/h4FRknWOgSkV
-	0c+sXvgw=; b=hXnI3WW82eylZIvCMBZnC3zSE4MPF8gQtei68zM6Ma9mq+Rognu
-	Nq7c/UrO27WNlNZbQkQB2x9z9prFax/d4+oe0Y+JUt8+u5QdV+2HfrBo5bE+92yD
-	uKZ4E8e/qUzO+dbgQ91FLcGAwAVdnJiBMuW4Jbn7DdnBydzjK5x95bh7c6G6fdw8
-	qnTdPgKk4kwzN4pNvJiBhHJQjHfXmNGkgE5ZA8p1V2CD5FOx6JBwFa6eQ0JD9Id2
-	jLFTr9/GOSt3fL7xlQlUbA9eIvL4Yv52c5mNUa4MoKKuykto9ljHjAVH8aliF7zz
-	te0ysz348cFXJg+wJhl5XSFc2hnkKlDEv7g==
-X-ME-Sender: <xms:dL7baGAnQFTVH8UFX0czmP_Stthvx18cHdfb1IlzOHhkAwVkWSLTtQ>
-    <xme:dL7baH_7AsFFBir3niQ4BM7AzjtI_UNAZRsgcWlWUlYFLilHmLdyG41dsZ92dUUfh
-    ajgf-_4C8BegUA1QRmcI8Dfz9QIuIP6iHzP19LBzICpDJcAF0U3nQ>
-X-ME-Received: <xmr:dL7baG83ywtphCHYpFVMFoHKchuH6qRFrSCkmJueWoOJEKZYvEQ5yb518ziSKXK--qkGxcwz285NmP8jiFg4D4iNlvYuhsEUrchKgNbI5r9V>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdektdejgecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759239106; x=
+	1759325506; bh=C8ICiwrJASBMWkeyaWmwRPwucjyQntaaONAgXONurI8=; b=C
+	T40sXHV1k9afNubLnnsm+EupkCivz6jHb+Cg9uy19N9o2ykL+TLpAbNkwfmvXOPn
+	pk6GXOog2O4kXYzAAkAjDoKQgjYPjnE4cEXBEINzcLH2XP56TKQl2Xy23UJ+L1Li
+	rFPP+TcXJJGz1PSbDUoXKXJuHyBspeiUL1rWwswaqtxO+ekYbR27ulMltIiM3qRC
+	ELmWqOdjuBEgPaKjl5W54OKcvpOI0DbalsAF2ePyg4YmRkDuj94SGib286KPkGsL
+	gBXJbj/S/XRvgGV+lXa85Wwmmnc3MmZlT7W2EyIwdrcVcL95NB+8dxreoSeGLiRr
+	zph4yOlyCWVpK98MfruSw==
+X-ME-Sender: <xms:wdvbaEqKk67l5w-LHNRIlEYFwgt0Sii2rW8n7zVZ-IK8itGiU_y0kTI>
+    <xme:wdvbaFcx12YFk8KPPZEQ8UKp07VCZnTIahVk0hJHKB8BJ2vzvyP1D8_2DBUnizNk9
+    vn9D2uGLjoR7UT_tE4M-qjO1keVvfROwMU8nGWHKHnS5YdvPyIeYw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdektdellecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
-    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhmlhhkohesnhhothdqvghvihhlrdgu
-    vgdprhgtphhtthhopehgihhtsehlohhhmhgrnhhnrdhshhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:dL7baOfXct7bakg1fUYVjApWdHdezxwRHEL6pxP8WF3FDeifSzngZg>
-    <xmx:dL7baPHyNKqPMOQi7p9GYd2oye7Hhfk6eMekIH-dKDAfMi0jFH5lIw>
-    <xmx:dL7baMd3jQmwH91F9YS2LGs0kDQRZC5Xyh3S0q7tGRaDbPluQRxtsg>
-    <xmx:dL7baJHTH5Z10sHKGbc8ctNktqIbHGmEP5_gNfX7F0AyvlwBaPGcVA>
-    <xmx:dr7baOE5DRr7v36Cl9_OsxviAAQRIkIZ5CXkcvwUnYANp-DvyXxUL3Au>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Sep 2025 07:26:43 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id efbe2e28 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 30 Sep 2025 11:26:42 +0000 (UTC)
-Date: Tue, 30 Sep 2025 13:26:41 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: gitmlko@not-evil.de
-Cc: git@vger.kernel.org, Michael Lohmann <git@lohmann.sh>
-Subject: Re: [PATCH] builtin/reflog: respect user config in "write" subcommand
-Message-ID: <aNu-cTrJwPdcW6hq@pks.im>
-References: <aNsc9En-DjxVOLcV@pks.im>
- <20250930091411.14179-1-gitmlko@not-evil.de>
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeegtdejieetgefh
+    uedtuedttdeigfdvgeetkedtuedtudfgkeeluefgleetffejffenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepjedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthho
+    pehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifoh
+    hougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgv
+    thdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:wdvbaMgMd0_vfR41OthAQyMfAclViRwZ7aletiZYGhW3K8tK1EnLrA>
+    <xmx:wdvbaFuPO5L66rzS7jUoNmFXu6eJPZ6LnOW6jKOVJs9OOanwpEwVUw>
+    <xmx:wdvbaCSgwB9oauy1XJHhv6A6POpvBLIMWncwKoEY2JXuH-T3Iras0g>
+    <xmx:wdvbaB3nYcAzU0TliXgID9ZHpBbrk-Gltb3YZ8KsstMSVwB3iA1AMA>
+    <xmx:wtvbaCq5XpM7EO5p4Jf4zcIRhEiHlgeJVY5pBx0LUgHKhmQOP0fQSkh0>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 984621EA0068; Tue, 30 Sep 2025 09:31:45 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250930091411.14179-1-gitmlko@not-evil.de>
+X-ThreadId: APikHCLOdt3g
+Date: Tue, 30 Sep 2025 15:31:25 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: "Elijah Newren" <newren@gmail.com>,
+ "Phillip Wood" <phillip.wood123@gmail.com>,
+ "D. Ben Knoble" <ben.knoble@gmail.com>, "Jeff King" <peff@peff.net>,
+ "Ezekiel Newren" <ezekielnewren@gmail.com>
+Message-Id: <db85429d-2c89-43ec-a92e-96ad8d0049ce@app.fastmail.com>
+In-Reply-To: 
+ <7d3a7e617c68cba19e6ea1195bd6d753a5795a4d.1758662670.git.gitgitgadget@gmail.com>
+References: <pull.2048.v4.git.git.1758570701.gitgitgadget@gmail.com>
+ <pull.2048.v5.git.git.1758662670.gitgitgadget@gmail.com>
+ <7d3a7e617c68cba19e6ea1195bd6d753a5795a4d.1758662670.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v5 04/13] xdiff: delete superfluous function xdl_get_rec() in xemit
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Tue, Sep 30, 2025 at 11:14:11AM +0200, gitmlko@not-evil.de wrote:
-> From: Michael Lohmann <git@lohmann.sh>
+On Tue, Sep 23, 2025, at 23:24, Ezekiel Newren via GitGitGadget wrote:
+> From: Ezekiel Newren <ezekielnewren@gmail.com>
+>
+> When xrecord_t was a linked list, and recs didn't exist, I assume this
+> function walked the list until it found the right record. Accessing
+> a contiguous array is so trival that this function is now superfluous.
 
-Is there any specific reason why the originating mail address and the
-author information disagree with one another? It makes it hard for us to
-verify that these mail addresses actually map to the same person.
+s/trival/trivial/
 
-> Previously, the reflog write command only recognized the environment
-> variables GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL. It did not account
-> for user.name and user.email settings from the Git configuration.
-
-Nit: we typically write our commit messages in the following style:
-
-  - We describe the problem in the present tense.
-
-  - We then proceed to describe why that problem exists. In our context,
-    it's also relevant to explain why our tests didn't catch the issue.
-
-  - Finally, we use imperative mood to say how the problem is fixed, as
-    if instructing the code to change.
-
-Happy to provide more guidance here as needed.
-
-> Since the test suite always sets these variables, it was unnoticed that
-> not present, it would use the system config as defaults instead of the
-> git config.
-> 
-> Co-Authored-By: Patrick Steinhardt <ps@pks.im>
-
-Another tiny nit: This should be "Co-authored-by", with everything
-except the leading "C" being lower-case.
-
-> diff --git a/t/t1421-reflog-write.sh b/t/t1421-reflog-write.sh
-> index 46df64c176..65fc4cae93 100755
-> --- a/t/t1421-reflog-write.sh
-> +++ b/t/t1421-reflog-write.sh
-> @@ -101,10 +101,19 @@ test_expect_success 'simple writes' '
->  		EOF
->  
->  		git reflog write refs/heads/something $COMMIT_OID $COMMIT_OID second &&
-> -		test_reflog_matches . refs/heads/something <<-EOF
-> +		test_reflog_matches . refs/heads/something <<-EOF &&
->  		$ZERO_OID $COMMIT_OID $SIGNATURE	first
->  		$COMMIT_OID $COMMIT_OID $SIGNATURE	second
->  		EOF
-> +
-> +		sane_unset GIT_COMMITTER_NAME &&
-> +		sane_unset GIT_COMMITTER_EMAIL &&
-> +		git config --local user.name "Author" &&
-> +		git config --local user.email "a@uth.or" &&
-> +		git reflog write refs/heads/something_new $ZERO_OID $COMMIT_OID first &&
-> +		test_reflog_matches . refs/heads/something_new <<-EOF
-> +		$ZERO_OID $COMMIT_OID Author <a@uth.or> 1112911993 -0700	first
-> +		EOF
->  	)
->  '
-
-I think it would be preferable to make this a separate test case.
-
-Thanks for working on this!
-
-Patrick
+> Delete it.
+>
+> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+> ---
