@@ -1,56 +1,56 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE64284B33
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 15:57:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AA928507C
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 15:57:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759334278; cv=none; b=Shyyjf6jsHo7FrZoNfYXIghVIkrNGHV6ijZcrlRbaHiBN9R3afvQteUIykGuHyaMkYGPIbFa8/0ZF8KkOEiSymLNBy6BjnTXJaHdx5paZUQF/Ktw3OI93WF3XbIt0ggABStgcHc5AhSzfJ0fIpYr8CJFKMozCoTeVtK/jNdcAjw=
+	t=1759334281; cv=none; b=e8W4DIXlPeyAZIkEAEVascy57WFc7V43Gz6RijwUdjmyz+520fYur6g8bYVNQei8ImbUjlIr3FIVqHa8kNSLmGuhzncP7OzWhxR8yQROzlYcdLw6BAo/OVHDs41KcedNHuvJ7nAKzWijSLyDtUjOv96J04iCDefi1QNpOpjSeco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759334278; c=relaxed/simple;
-	bh=y0cNqkqV3ApI0X/bp71xjo+UXFrqJTTf+mWeJ/3d5oU=;
+	s=arc-20240116; t=1759334281; c=relaxed/simple;
+	bh=ZuJ7Pl4l95TFS+ZyXQ6MjtDSUhFVpdfsGQFM026RhfI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mGGMTH47nrhQ3thRuxL+aPhoHuLDS1nKjvRK9jZ/dZsk3SHkchcMqKmxdL4cLCdlIOLNIuN4Aywy8br+LRMLcbN1yEX/D/e+UqAWRovN4QnOO4eSWTuWSw6LgSeWDlg20ehUcahHbbmoCOhyMoW9JKxiyBgvkLjMmcYOQ6AqVmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VBFcwg0k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=amMsFi7y; arc=none smtp.client-ip=202.12.124.146
+	 In-Reply-To:To:Cc; b=dxc6T7ervN+ir3TSZqmbnt/vQRsTBVlFqvB7P7T7uCYMWdYDoO7IwcmjOcw1U2U63+PbaEanqErWbAOlrm/exvr8sMiH+7VlxjLjrXK6tZZ0L1+eD2uWREhFasoDbIORscjPPg/nQ9sFcRPiQ2r+zY7XLY3ZXVPD/uGaRgV7GRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fpDvzqQs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vTq6JiOW; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VBFcwg0k";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="amMsFi7y"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id E2C321D0030C;
-	Wed,  1 Oct 2025 11:57:55 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fpDvzqQs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vTq6JiOW"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E3CD97A0321;
+	Wed,  1 Oct 2025 11:57:58 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Wed, 01 Oct 2025 11:57:56 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 01 Oct 2025 11:57:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759334275;
-	 x=1759420675; bh=pYPKPxzEdZaUkPdFKpTharICfBen/48yzCNuNRvv8Sk=; b=
-	VBFcwg0km3mBw5+jeU3hNUxRKeGqw0sRVuHMcO/HOLvc4+LPX7V7s68SNkPwiDEB
-	E1JlZsC+OC1ePdxUgCghyTzCjbnkaCJQSbQJw4E8EtXJs81rjPtSLFG/hOM0KyDu
-	9CfdWlkJr6SnvwmFH/aR57FqLBFKoe4vbQ/Y+y+rIhXngU9kVlYW+lY7h6E501Ky
-	0BaqFXFwbHt7s+ypq8EdynL3LopDq7fTPLYbRTb/nH/5L5qu+Mf8Ql/JCr3Agy3f
-	E9bxdgfSfuwv33GP4L9A4NBK0AEmS0D6n6kwJcmjOWW4jV5wd7EHIjRuDYqdP1/m
-	D161zqWziPIYZ9mT8kgqlA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759334278;
+	 x=1759420678; bh=CeAVZYYFMx8UXnvrtNzKNr+1Eg7xENc+3iluqNav3UQ=; b=
+	fpDvzqQszdG9Xerb+JquUUjiheoSA28nx+MsEGTqf1YXBVDfAkCsblon4fPjA6Rk
+	mZNOmazJu3nb7J61EeIF51PwFp3qBNHSqBdZOvx4kYcWGefNzXnz36BZMWY97TXS
+	ELlF3+ANaF8MkqMoww/60HR3HOkYMoCl9FJn+I7EbcvEXQdtFIEvhsFnzUpl0mXL
+	sEPyOYEBEw9AXJS47Tea/ic+19/b8+PgPbrA35ojB885KjOmuEfhEwLT+NTTaU2i
+	ZK48WJETLK0+xIHEVILi0j6SXlSHT3/3NrruBVGHBsTw2zh32RFoOHFPW7rorgEh
+	3lOmydWngeG50LR/lxi54Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759334275; x=
-	1759420675; bh=pYPKPxzEdZaUkPdFKpTharICfBen/48yzCNuNRvv8Sk=; b=a
-	mMsFi7yf+Xs90vMg9Uxv1ChLjVAToMBXTuy76vWNvbBjzbPuZusNVoXnhseIA9Zq
-	cj1RQaOKVUV/6lMlHS0GJ3UpSfIgD6DQ83wXIXhZz9KNXShiMA50v/JU28JkcwxO
-	t8NnnIR47F8fOydhu0RDwMUV8RbYIM9bFAZ3D/zsHWvFt4MaVejJcjWxWB1vNxJu
-	tL1NCLJcp2RvK9foLp+A1oHgWj3naIbdRZXanGG2i4GahpXSa7aWt+8I0gVR0naC
-	2TP+OetgtlXS+VNRW83QDaMIa9h7iQs1D8H1JxUpO1/RIRVtKqngPglpXS2ZLDSl
-	uLoAWv4NOD9OxR7cEQzBA==
-X-ME-Sender: <xms:g0_daI0BiKzmBCjJx844ZXfotuDmP4dyyU-aM1Vn-h507euJxkhbxg>
-    <xme:g0_daCJSsum_0UX8Y7Ow2rxkxbMR3sw09LsD5ciw9pmmwmJoR3EgYUjoOlca3mgLy
-    qowuJ1fQavHiuyb4O-vmWEwUHou8p5_FZ5uAJkIwdrVVa0Epftm>
-X-ME-Received: <xmr:g0_daHFCnH29fG5BuA05eJD8Qmf7JRJE2kwjIGqpWt21xqXvLWpd1as289BbMCgRHAUEnNpA-ML4HCDMMLzD7UqcegxeRprYArTaZPkS6Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekfeehhecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759334278; x=
+	1759420678; bh=CeAVZYYFMx8UXnvrtNzKNr+1Eg7xENc+3iluqNav3UQ=; b=v
+	Tq6JiOWu6AV8seyzB/hzlh6p7a58yGhmcZBZvbbC8/zxrSuE629XBHfDCPtEVEVd
+	AWjJ1CArNOYNdoa4W2KnoTtftNcGEhGK+5htQVm/745Y/K4RtqmTsmUNAda+iSgi
+	PVNnla4vbK1CRqw4FHhXRa8SxwwBM6liFTXOBkyJLytsNYuP+Zh0A1VOKozvA93a
+	sepXHKweaOpRPS/AxUQMnoMyXIjtJmfrlTDn3OlpCV51Dw0BAty4y6YoTy3x7Of8
+	K0lSC0xxtJg9mLfAdJrJP+o02TPB0qi4nrdqtuUwM86eTbFAZ4bYt6RcZdbzm4Xa
+	WY69lAHqBEf/IGpx/rkFA==
+X-ME-Sender: <xms:hk_daHT7nlk3h-h_JE05vYXwVSR3lN-53BK2bubGf99l1hTcS4lsTg>
+    <xme:hk_daH1D9PPuBQlNKFkOedrt7BkkhUfufiJzTjo8n2PEmpVlT_opvBQvY9aEI9E3O
+    Q_kgNbQMraUJnYf2AeYiHzkE5lOMfiEF8w1sW5fTonOIwq8Gr2JLg>
+X-ME-Received: <xmr:hk_daDDIa4T6KmJuJX_C-C6py6YR7_rBX2ucyULmv1m01DgcsqHjGaDC6f6Gb-WAabbZvPWrHFGRbSwR--VgPXqmihprflEYyxJP6siMTg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekfeehiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
@@ -58,27 +58,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekfeehhecutefuodetgg
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
     vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
-    hrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    shhorhhgrghnohhvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrse
-    hfrhgvvgdrfhhrpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepmhgrrhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhg
-X-ME-Proxy: <xmx:g0_daOXtTpJdNolHhoSruJYd3iwNNplh_7qflSrpwdNP5Csb5aoSlw>
-    <xmx:g0_daPyWsUKH4prleQ9J8FyG7yQXiIwMVx3GYhqtqvqRJD0fvLNnHA>
-    <xmx:g0_daDSvS4ytIgayUM86WT6GKM58HkZmYd9LERCm_mEiyjPUA1eOTQ>
-    <xmx:g0_daLihVdpWSW-p4GNzUs_8yjnvzjkY_LmkTsQ5guCI69v3hHofJw>
-    <xmx:g0_daCx0_T2tOPO4Y83K0trX-QyFNQWE_EI7_7XkvpfclylT7xND9Npr>
+    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslh
+    gvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhorhhgrghnohhvsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
+    rhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehmrghrth
+    hinhhvohhniiesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:hk_daDh66Nj39uV2FvVJkViOpmtR5eo70To97fRK8HZVcQOjM00-4A>
+    <xmx:hk_daFPoqJzjn41yhoL3dHjmDmi-tfIMwYe-amHW9xUy6qu9MHUqbg>
+    <xmx:hk_daD974XsWOoqA7cx5XUstBfLgz2DXqUPoB1Ztl5197_VClvF6XQ>
+    <xmx:hk_daGdkkxZSDNR88aDxpQR3DGwljMxBY8sagfExfzS3KOeAZ4nldg>
+    <xmx:hk_daGucKpUvZC0DJ9xdPPjlElVaE5PS_1egstZU-uCv2bw3yM7cXy01>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Oct 2025 11:57:54 -0400 (EDT)
+ 1 Oct 2025 11:57:57 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f653856b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 1 Oct 2025 15:57:53 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id a5c46e8d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 1 Oct 2025 15:57:56 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 01 Oct 2025 17:57:29 +0200
-Subject: [PATCH v4 03/12] replay: stop using `the_repository`
+Date: Wed, 01 Oct 2025 17:57:30 +0200
+Subject: [PATCH v4 04/12] replay: parse commits before dereferencing them
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251001-b4-pks-history-builtin-v4-3-8e61ddb86317@pks.im>
+Message-Id: <20251001-b4-pks-history-builtin-v4-4-8e61ddb86317@pks.im>
 References: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im>
 In-Reply-To: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im>
 To: git@vger.kernel.org
@@ -99,32 +99,36 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  Elijah Newren <newren@gmail.com>
 X-Mailer: b4 0.14.2
 
-In `create_commit()` we're using `the_repository` even though we already
-have a repository passed to use as an argument. Fix this.
+When looking up a commit it may not be parsed yet. Callers that wish to
+access the fields of `struct commit` have to call `repo_parse_commit()`
+first so that it is guaranteed to be populated.
 
-Note that we still cannot get rid of `USE_THE_REPOSITORY_VARIABLE`. This
-is because we use `DEFAULT_ABBREV and `get_commit_output_encoding()`,
-both of which are stored as global variables that can be modified via
-the Git configuration.
+We didn't yet care about doing so, because code paths that lead to
+`pick_regular_commit()` in "builtin/replay.c" already implicitly parsed
+the commits. But now that the function is exposed to outside callers
+it's quite easy to get this wrong.
+
+Make the function easier to use by calling `repo_parse_commit()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- replay.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ replay.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/replay.c b/replay.c
-index e22ce39940..13d75d8054 100644
+index 13d75d8054..c3628d2488 100644
 --- a/replay.c
 +++ b/replay.c
-@@ -62,7 +62,7 @@ static struct commit *create_commit(struct repository *repo,
- 	obj = parse_object(repo, &ret);
+@@ -90,6 +90,9 @@ struct commit *replay_pick_regular_commit(struct repository *repo,
+ 	struct commit *base, *replayed_base;
+ 	struct tree *pickme_tree, *base_tree;
  
- out:
--	repo_unuse_commit_buffer(the_repository, based_on, message);
-+	repo_unuse_commit_buffer(repo, based_on, message);
- 	free_commit_extra_headers(extra);
- 	free_commit_list(parents);
- 	strbuf_release(&msg);
++	if (repo_parse_commit(repo, pickme))
++		return NULL;
++
+ 	base = pickme->parents->item;
+ 	replayed_base = mapped_commit(replayed_commits, base, onto);
+ 
 
 -- 
 2.51.0.700.g236ee7b076.dirty
