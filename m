@@ -1,104 +1,138 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47352737F4
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 06:58:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E21626B74D
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 07:13:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759301896; cv=none; b=r2PzAx+4+xxVQ+Yxj79nI4hBuGP57CRQqXsvhxt1jFUl2SnuzHSxxeiAk4oMrdV0tau1cgJysaEh0nQxmTkG26k1nsiJ/NaNMBudecwAjB4UkvNsamsncuvUNIMu02ZLm2uxR4GP1MY7jA6Cfysi1N2K4lIztf+5Nu7MZZixIc4=
+	t=1759302807; cv=none; b=RgKL0ujToIJn3C+P9YDRFr/MCS6dELxWQsu42ykgmBwsud5JucqLnTdtGbaVHIzKTAkngYFQtPxB/ASahAQRH95vZtIYeQ9KaanmlNB+q90xmI2gNl3WJYvTyDTh7YHkODFvaoBsywvlGdZ3x8tDDQqHtzOQhU5Ngyd2F2vDuGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759301896; c=relaxed/simple;
-	bh=mjHP8EunJdEMMrw0w4EL0eYu3xl+YoYL6X+zWzhX98Y=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=p8GqFA3DeHou70qnrckCEN5i2V0K6zluukafe75cKlE8V08yS1x7wsJqYm+dpzuufsZyXOYp7HPtXsUjCnsGbJLLFawa1IO4gVBGdJH31GHOAXFBOfhMeymPwi8rVx50FApLUHAc9eClLbfFjJXJDTWHTG9m3JftpiUQWLgFa1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jo57aDtT; arc=none smtp.client-ip=209.85.218.53
+	s=arc-20240116; t=1759302807; c=relaxed/simple;
+	bh=1WVaYJSSvCZZEh0djmI1NyoNR6o0oSYSfxiLlqqVOug=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=HnbAX8OKFIccUVg8BKh591ZIDHMaRzcPf6CdzhCMUcm7F2cUWvWol0Ugw8HiHaziT9gS7ArRDTRSyU81Xt8Hh7qy8w4ReXSN6MmdAOnrAhS7SrR8JX31hCr4ypmozSFL7vn+wEWV9dVnCb9CvWaGWtXMqG79y0eVR/quSLyTioY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X614TpWE; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jo57aDtT"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-afcb7322da8so1330741466b.0
-        for <git@vger.kernel.org>; Tue, 30 Sep 2025 23:58:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X614TpWE"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-46e29d65728so46205785e9.3
+        for <git@vger.kernel.org>; Wed, 01 Oct 2025 00:13:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759301890; x=1759906690; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=iZ30s1rLA+0HJRWUL9wMVdoBig362eLrAgIn2QQrJtk=;
-        b=Jo57aDtTsdrP5VWtWTGT6RvVSQIRlUNG02I2ky0n+x/4qcWR0li9XOov7GCikmEVRg
-         gHBzXjXMIEbBi1UVVhNxMlwZNqXL4Kg6hL/0itmZjXfV1Gq7LrgKF0jy+3MnfTpIy7Rl
-         CFzgxQJZ843jFRh0BCY+lbLuueBisiCzk0K2W8S8X8pM6SgqIUwYTc+yB/U/JywxqNA0
-         evjx7SmLKH2Mbjmho8MzrLZ7COsPAL7diRZuFbj4dRcp4aeOy02FAOXepx8J9bicCUQJ
-         54BjUrjjlb0aBoTn0aPJ/S9ibdXwpwPk54kMf4BD/XOI/9ZRMcf/HleqDdasPpA1ewC8
-         +HGw==
+        d=gmail.com; s=20230601; t=1759302804; x=1759907604; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=B3tP6cHQBFOtCzB5V5EPROqS5giXUT0XkJKx9/bMCAs=;
+        b=X614TpWEpVdsGVPwDjGSnaFMH5PwC1jQYEfuzXsvv+G/4hk9mRIJ/Vh9Ku5MedqD5W
+         6FMPCxxROD9e4mavc1RRFCVSTLZSFDwgp3fDVnbKlg6/6xCuuCwIeHX7yfn7CP9x4HxF
+         w9vanZV88qixUtvjIBu8+9io2IMJ47aIwrUsYNqbUIYCPdwqy4ywy8Zqobl8kZQvO5wD
+         JRiRv4w7xOO4YBSu8G5eM4gbvM/JQn85SbcsQnsSS5wZK+OkF7yG5hEhcggcoqqfF/vS
+         2A3wabBTgWl0aziNxSZQQBElIozG25xXMBivezHSrJoS6qLKB9uxY/hecer45vANAR6z
+         nj3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759301890; x=1759906690;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iZ30s1rLA+0HJRWUL9wMVdoBig362eLrAgIn2QQrJtk=;
-        b=V37zNZ08akOMxwC9cR7DEE8Ug4lzzXbRTwg3g10UWeUscFLKJqSrkfZ12uYboDPP4P
-         gSy3iWGL5CiOCSazdBtlBVMZD7dR5otHeUkips8QzZDULzK8AkK0UxvX6Ua/Hka1i1tV
-         /2M8QZmYU0bb5OnwVHK+v7N0trnxeYQ2D4s0yG1RxwDHLQaX+zQBYkJGeW01ZGE1daMe
-         LF3W1Ji6se7CCXZfZXs9VgvhzaTGeBFO7AERglLS0n+8BK29R82dnFqYFAYicX3MwK1I
-         XiQgwEuJvO+W9JDR4c2PcZY6Mx5EWadrI+husp4CKaBarSY/1Ipe0yaMGWDIvnqR9Uh4
-         7rjA==
-X-Gm-Message-State: AOJu0YySRI9PbQoX/zn3paSQREC4wlQg35Q0EnmOefPa1KZo199vRwSB
-	zpDdiRB7UU/q8dlazJHrv/FuwUnTLOHcw2jBYbVIG1Wh5hHPiXOMIXM/zEEjRZ5mFzOciQeG1/A
-	MU19cloN8wX8FMR56jzEZ8LmlFr6hGhcB3HHrzco=
-X-Gm-Gg: ASbGncvoOMzCble1bbGqHx5WqFFv/d2XwLr6K3LgZIjtowZyrsfsyd2E2puH2a8gTDN
-	3f96ikNu/1qAA9kLIoYDxdSk32Uy1X+jEN6D7BQmcwGuYzlH/iLq1xMoEIE8PUpqf2eO2L2JBir
-	2rCYajU1dQTzv3UeobMjinKTQpo40xAE0muG7ZsD5TCB0Vp/EDC87Xh3rRbCLr5Hz9y7OLOSSZf
-	Jw6H296Xb+9A2jQr1K/tkr/dQZBHmk=
-X-Google-Smtp-Source: AGHT+IGx1OdyZXa4nukT1LBtRivO89NOyH0DpB+lhNlZ5eI8v7TNt56LUpRSRcSU8JDb//wLBKp8RDGT87SeWcee+Ag=
-X-Received: by 2002:a17:907:720a:b0:b24:3412:7cfe with SMTP id
- a640c23a62f3a-b46ea41438amr279038666b.63.1759301890420; Tue, 30 Sep 2025
- 23:58:10 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1759302804; x=1759907604;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=B3tP6cHQBFOtCzB5V5EPROqS5giXUT0XkJKx9/bMCAs=;
+        b=XUjnpUvLX2+AKHQYde42DMj7Zb9l7B2cUHt3OPOFapAtgyZle1wy4J9j85KIP/Ap1P
+         CQ2qwZCdOPKA9r40Te6pHdu5efUPyt2V2/ev08e2Zc9OCQI+UsLKmGZAns8omKEQ7X29
+         P2Q8sxwwe3NxCUbwnWg+GClnXa6w4HTZBRWMl7VV+g0iQiqN/q+Xkfm/+EeU/rKtPVRO
+         KAuI0dGlTfq9MJ06mBuPAlP12UP/aboQVf1prQ7mfJ4bL6GR9eX0nOZ0+Z9KB8RuYNLb
+         g92seljMDwGKabC7eJh+xzJB9+TK6uc6K709xAMq1t+IzuXKpSzp0rOt+oQpX9BDOogz
+         pvGQ==
+X-Gm-Message-State: AOJu0YyyDVR1N3IxyM+dJs01GBKd3l6AbIn1CusLjPoa8mOzlEBYcegr
+	7esceZ4X5BwU8PHkJB0MtXS72vGSajOR6MoFXujIeJVOwxuL1HadhfFrt78SDNI9p0c=
+X-Gm-Gg: ASbGncsUuQnZR33zFaUvZd/tJlRGY6hJfIyrG5IZB+pAkDvKrzhfT4dbFVs+il1e4V6
+	XUCHk3NNpqp3Tr6pq0dI6w4xuUfXOngagPi07RWkE2ebh7Fw+/LIwXZ2r9YxUE4KZiqq6zTYjrQ
+	ZmtOHg/f51M5kvI9NK1OGhnnCeIDKPjH2ldiOdPC7UdSxJkXVcZIBN3bEsRtAXU+ORkkRkszadQ
+	VYMFAfBjVg0J9KVN+uYWyTBkvXzly16kN28XweuSkyXbX8AfCRGMjDk8JaTP8QIV+K6//inx+E+
+	nFJ465xMnRSvTC0BirWShIjFwXazpDfFwBJIhR3EAMDoOleIAlmSzt/Pw/b6d9L4QdugSxW27rU
+	16iTXuVkOlBuyGkwO7uR/8QAUwwuJ6sM32flyix33gO2EEdXquvptK3TS2OjdRjSY9ak=
+X-Google-Smtp-Source: AGHT+IGhDcNKmfsBhvb6emB3sGhQQJelUqEyjmsLfof0At3SCmOf01/m8KBEZayjw/bHC6PsgVbOzg==
+X-Received: by 2002:a5d:64e6:0:b0:3ec:e152:e2ce with SMTP id ffacd0b85a97d-4255780b3bfmr1678417f8f.32.1759302803694;
+        Wed, 01 Oct 2025 00:13:23 -0700 (PDT)
+Received: from smtpclient.apple ([87.224.78.51])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-40fac4a5e41sm27486247f8f.0.2025.10.01.00.13.23
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 Oct 2025 00:13:23 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 1 Oct 2025 08:57:58 +0200
-X-Gm-Features: AS18NWBQpMMH0X5xJ3SVF1tP2e13-Jy9w8PCId4gdv52jtwZSt5FJm8mRAtil1M
-Message-ID: <CAP8UFD142fn2x4yS_Z-N6x5AFf5V=ouq+gJqAbHAoB6tDoCSrg@mail.gmail.com>
-Subject: Draft of Git Rev News edition 127
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	"D. Ben Knoble" <ben.knoble@gmail.com>, 
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>, Patrick Steinhardt <ps@pks.im>, 
-	Derrick Stolee <stolee@gmail.com>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
-	=?UTF-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= <dilyan.palauzov@aegee.org>, 
-	Toon Claes <toon@iotcl.com>, Gerard Murphy <gjmurphy1@icloud.com>, 
-	Jack Lot <jack@themoderncoder.com>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: When should we release Git 3.0?
+From: Luca Milanesio <luca.milanesio@gmail.com>
+In-Reply-To: <aNxivuJEnSHbQNdr@fruit.crustytoothpaste.net>
+Date: Wed, 1 Oct 2025 08:13:12 +0100
+Cc: Luca Milanesio <luca.milanesio@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E03F997F-1738-4CF6-B7D5-206183FA5BD1@gmail.com>
+References: <aNxivuJEnSHbQNdr@fruit.crustytoothpaste.net>
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-Hi everyone,
 
-A draft of a new Git Rev News edition is available here:
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-127.md
+> On 1 Oct 2025, at 00:07, brian m. carlson =
+<sandals@crustytoothpaste.net> wrote:
+>=20
+> There's been discussion at the Contributor Summit about when we should
+> release Git 3.0.  The original plan that was discussed was to release =
+in
+> about a year, which is about 4 releases away.
+>=20
+> Almost all of the functionality that we had wanted in Git 3.0 has been
+> implemented.  The two major things we may want to consider as blockers
+> for Git 3.0 are the following:
+>=20
+> * The SHA-256 interoperability work is not done yet.  My estimate of
+>  this work is 200=E2=80=93400 patches, of which about 100 are done.  =
+If the
+>  original schedule is maintained, this would require writing up to 75
+>  patches and sending in 100 patches per cycle, which is unrealistic
+>  without additional contributors.
+> * Some forges and other projects do not yet have full SHA-256 support.
+>  It's my understanding that all of the major forges are undertaking or
+>  have undertaken this work and are at various levels of completion, =
+but
+>  it's not clear that other projects have appropriate support.
+>=20
+> We may also wish to stick to a stricter timeframe for this release
+> regardless and make four releases from now or the next release a year
+> away Git 3.0 regardless of whether those items above are completed.
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+I apologise to not have participated to the Contributor Summit, I just =
+joined the Git Mini-Summit in Amsterdam and we discussed briefly Gerrit =
+3.0 over dinner, but not with such a detail.
+Do you have the notes or recording of the discussion?
 
-  https://github.com/git/git.github.io/issues/797
+I am worried that if we rush into Git 3.0 with breaking changes that =
+would make other =E2=80=9Cforges=E2=80=9D (e.g. JGit) incompatible, we =
+would be in a difficult situation with the other Git ecosystem that =
+isn=E2=80=99t based on the C-Git implementation.
 
-You can also reply to this email.
+> Discussions at the Contributor Summit did mention the advantage of
+> having a hard deadline would be that it would make projects and forges
+> spend the time to implement SHA-256 support if they're lacking it.
 
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub,
-volunteering for being interviewed and so on, are very much
-appreciated.
+Happy to spend more time on it, I believe Nasser and Martin from the =
+JGit project attended in-person yesterday.
+Any commitment from your side? Do you have budget from your $DAY_JOB?
 
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
+> I personally do not want the interoperability work to be a blocker.  I
+> haven't really heard other commitments of contributors who want to =
+work
+> on it and I don't really want to have to run full tilt trying to get =
+it
+> out.  However, some other people may feel differently, in which I case =
+I
+> encourage their participation in the project.
 
-Jakub, Markus, Kaartic and I plan to publish this edition on Friday
-October 3nd, 2025.
+Sure, happy to participate.
 
-Thanks,
-Christian.
+Luca.=
