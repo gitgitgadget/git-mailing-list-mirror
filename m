@@ -1,82 +1,80 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96191286D44
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 16:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E56286D7B
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 16:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759336651; cv=none; b=oAyRW7tuSIiM+s68lhREtQjVTtowsFqKUpWpb4oG//I0nu2Q3rT6ljGDgKcOTOBn72OEK27ytH+8412GEVH9FaCe1OfTiS5jVKQ3HUCEU/nKYvGEYGL3cZyrd9xg8Vf4m2kc2sZFGwTg9/ufL1AnDUlC97NKUGagOXeVF/GR3bU=
+	t=1759336910; cv=none; b=EQnK8kMj1Ybbg4JTzbi9JtuG+jYQiy/LOg7H+BCA854eniOT2D+EeCwfek6dR5++Mh9ZpqD2Ow5TfodObQp3QzR0HsOhp60uKD1KixfbJ3AuZ6A+aL0QjT5sJkX5JjjJp4N+vJOoVjj6k5PL1p/xzTvWbEb0V9uswgaowE1vkWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759336651; c=relaxed/simple;
-	bh=suHJc1pJZIp88YYdyVUy98gSGRnObUJYd4KNBiW8zOg=;
+	s=arc-20240116; t=1759336910; c=relaxed/simple;
+	bh=PYaGyvwk/Xs7rP1FfCnU+UHtQX3bbBRn5XNtXv/cFbA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZsQJ7frtOrwjrYzXt0MGxUoFkfKqcDB8LQHmILN0+6UFW+3wivDnuu0rnVmKuug+YQ2HGPnutZmGxh08ILUK31rC+S35UKb1lFGcdiePMFM55R+QxWr/1bYi/cYwQ/ySbpVQa8ZR0/OZYawtIluXF5+6BI5PRela7B3ZBWPhyRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fKcYmUhs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PdcSMDV/; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=i7wHZeASH4PzrbjdmGbtnyFLvUDERaWLj+mf4QK8ZuHPqNhKCBDWhffJNTEBJchWlUuSg+d9SQVq76m2wV3k88ayRxMPI5+yOPbt5SfERX2RrpudHNbnodfzbUmGKFsGSrnLVaMgn1qAhFDz2IJvWh6B8tn6tEcIhVN1VudyEeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XGpxW/61; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gW/BzZVZ; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fKcYmUhs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PdcSMDV/"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id A67121D003D8;
-	Wed,  1 Oct 2025 12:37:26 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XGpxW/61";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gW/BzZVZ"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id C454A1D00292;
+	Wed,  1 Oct 2025 12:41:47 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Wed, 01 Oct 2025 12:37:26 -0400
+  by phl-compute-02.internal (MEProxy); Wed, 01 Oct 2025 12:41:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1759336646; x=1759423046; bh=W7IXHMmUCQ
-	+Ny6wZwVF/re3JNVv6EA0vpLuBoPXR4aI=; b=fKcYmUhsvJSKAl6LQlqdWs24+S
-	N1STfVGkOKSzNt6fjJEa90DgZOVGz2XIuozl3FpBPvwAVXyfj2TCCiy7LgV9Kluv
-	dC8hqhUZSKJCNCs8aoMOQ2hK+BMC8dvwYKmTsOopiEEU+xWSfDEMjfcWVGA5NlWx
-	4LARUQVilkWaI/Zbc2RFixX7z7URMCtEDaZPRwd4ULaT1Zl/BtDFmX7Tatl/bHgK
-	JNcVoPEaI4noN33K5DUZGmGk3aM5sqpARFfj4VzCRIS3Z036lr9P7/zhEsX7rG88
-	4VKcJrlA0jY1IaKTqyNNTEH6LPKfuEm9iu3uhTp3w+Lzq45YUioeWOm/Dq9A==
+	:subject:to:to; s=fm1; t=1759336907; x=1759423307; bh=Cw8p0LHC4H
+	WFXKpEL2VRm4MoENnWHMzu8ps9uyjZt04=; b=XGpxW/61GYxLsXry5qSAZTz3Yj
+	ux29efPjhv+fXoOTNoM5VDfF253sMm0BZkBzov6YlplN4gI8z8zoPCZt6qLiUbGx
+	9E4trHF0RVFMCje/N1lXYBJj/iccjgda46FUxLQk8Wrw6lY7puTVzJ9BJ/t5KAKu
+	QUiQNdH8/q2+aoHS6m8Vx7eMSAy/B/39Puy9hy+waprrYYJIe+NH/2OjSs4T+DVn
+	B+9OrnieKDgx5bukkRoVKJsWNOQ88NCMVLd7SiDfRJEgSatZdqVer9JNYNzmRaMl
+	Q4A1Aditiz22KEwiqvjQG0TosnBo1j69BOAxG29rbSMsEF5QWvCuTzthllBQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759336646; x=1759423046; bh=W7IXHMmUCQ+Ny6wZwVF/re3JNVv6EA0vpLu
-	BoPXR4aI=; b=PdcSMDV/fvcHvUVRo9lNezZfPDw8i0NJHxOSeq1hiLO0qR0uN8c
-	vq/Iz0Ss5wcq5aVAkzMNw/oh+auqy+XApx4g3w6LW0dR1/YI7af/1btcXCPZOHWZ
-	U0HWoiUFqon05XIUk778vtHN18Bx2r0iNmmY3bG+0RqSBxU5nxzICv3OqxQabb1u
-	1hCRBOw8zW85Ur/x1n1DhPI1AIoaG6PhPBT1jBuGbEzypm5JCkEftOdMOdamoaLD
-	emtM3T3JydAf1wGc7UWI5peibE/sceScZM19efnSk2vNWQxlD7ndLdgXoGgO+iuA
-	JHK6Rsyj/ql2cynIFve83DNFGTvPXXbTRxA==
-X-ME-Sender: <xms:xljdaMB9MVREny982vMdBV09Z4tn47X5Gbuqe-VFYSyabSSHEKmR7A>
-    <xme:xljdaFjLOyBTwqqHHTmqf_5tO2pyORWRubp5WNYnhidDq9_2fzYL_7CuQIcqcL05i
-    dtRIVBlEN8nm--woduHEyh1t60Nl1yXsYFJBfIoKzOVyG1dQgO-3A>
-X-ME-Received: <xmr:xljdaEmyMKX8RDMh62U418DAJxLrWu8oDnvHoM-O6B0ZElpzNUrabv4KqR5_jf3TaZcht1IQJ0-jH12IuFU44xE0QHYO1IexCE5l>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekfeeifecutefuodetggdotefrod
+	1759336907; x=1759423307; bh=Cw8p0LHC4HWFXKpEL2VRm4MoENnWHMzu8ps
+	9uyjZt04=; b=gW/BzZVZrHCUQ755lRzTOYu+k5AkJwf8SidTlVMCeaSivVsaq9R
+	TMqmlqdmyc+Ajn5daEkhNloheQFdUCOHUoq6PGphW/lDhnW8n8DHXD6hZm0jdFat
+	M2DzjqOuxPk+Ub7mazqNYxTg9X3WzJOWpjTRy3PKd9C3WhwTklQYWOfx/HhIAe2Q
+	kN4OZ7KLi0/mEKkfchKh08mYc9uNJMUm0vTE7qZH2RuwbTnunsK+dHSXIngNHOVf
+	2+eqtkVpgILiobQ+dojCnthMV2A4eHwSiCVBDZrDx3zB81MtZ7SoW4Z2PS+nWxdk
+	59UIE94vKW3T/UI4T4pVLk6p4PUkZt909rQ==
+X-ME-Sender: <xms:y1ndaCBk_0-Hvgmtz2x2P9W14EnHUjJA_BX7bGYVKyT-qDc5cdGB-Q>
+    <xme:y1ndaD9ZBEM86fxrzDKEy4qWiW1rokpvEJjP5cHnzd8oSkyWF36asZFOqRmN_Lb1U
+    nrqZruLG2P8_ESMPwauhB4ZfqCorsJ0A394QQggfU4cFrcr8EUN8VI>
+X-ME-Received: <xmr:y1ndaC-imo1KDRpqp2rK0o-4Pf6bNDoMTDaO3CRXvyQP8sj2jXNF7GMf1hkohcbVwbna3_prRP8yD1CKnUH9JCaGNuIioofVQIRj>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekfeeihecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
     ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
     sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
     eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
     rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghl
-    shestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:xljdaBqNVZh0UWPXEiKKwCGZm5D_ewySFg01HVhkeRHSz32sq5NE4w>
-    <xmx:xljdaNGlawaKHXJMjR5dQQupw8dMP5f-Qks3ZZXhlCfBucchQLV0tQ>
-    <xmx:xljdaNytEdyPNVd90x0_mI_eR0uCs8wKAB3taceGiM9ytqrSKAYpnw>
-    <xmx:xljdaCrCdSxIXjSSQ0OQjrxpxJHDPydg4gAHCas8x_YmwEdS7tlW2g>
-    <xmx:xljdaBHH2XU7WOGlER29MWAWvZ0seS1kJU_m1bCyRZRQFKuCTvN9tAHC>
+    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohephhgvnhhrihhq
+    uhgvghhoghhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:y1ndaKfLq2ahuz6-iVEvVjJubj2Rq0Rxc4uW2pzbZZZCS8oU-h9WOA>
+    <xmx:y1ndaLE7cwoPvQi3Cbn0hiAKeu_0uv6uPS1j6UcPSgoeQMvFTKC_4A>
+    <xmx:y1ndaIfxborZU9YYAAc1uhR9ZwjlSh2iBX1To7q9CUwqIDKYdiH2Ug>
+    <xmx:y1ndaFEqg8bRWIriepU6y-V5wINdTPJC8JherGtADruHxliI7Jvdpg>
+    <xmx:y1ndaHkHj68aayJnqWZBuj9ML5rSBhrlW_DOVWEXiAQcwFeKQEHptc8n>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Oct 2025 12:37:25 -0400 (EDT)
+ 1 Oct 2025 12:41:47 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH 1/1] Define an extended tree format
-In-Reply-To: <20251001005814.846992-2-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Wed, 1 Oct 2025 00:58:14 +0000")
-References: <20251001005814.846992-1-sandals@crustytoothpaste.net>
-	<20251001005814.846992-2-sandals@crustytoothpaste.net>
-Date: Wed, 01 Oct 2025 09:37:24 -0700
-Message-ID: <xmqqldlu37ej.fsf@gitster.g>
+To: Henrique Soares <henriquegogo@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: How mantainers check Git diffs and patches?
+In-Reply-To: <aNygY8Cm7LEaBzV6@localhost> (Henrique Soares's message of "Wed,
+	1 Oct 2025 00:30:43 -0300")
+References: <aNygY8Cm7LEaBzV6@localhost>
+Date: Wed, 01 Oct 2025 09:41:46 -0700
+Message-ID: <xmqqh5wi3779.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,36 +84,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Henrique Soares <henriquegogo@gmail.com> writes:
 
-> +The first part of what is traditionally the file name consists of a modified
-> +BER-encoded integer representing the number of bytes in the extended
-> +information section not including this length itself; that is, the number of
-> +bytes which must be skipped to reach the file name.  This allows parsing
-> +unknown values in a graceful way.
+> This is a simple question I have related to the PR diff review process.
+>
+> How Git maintainers use to check diffs and review the code? I mean,
+> sometimes I see that there are some large PATCHES that is hard or
+> probably impossible to review only using e-mail client.
+>
+> Do you use some syntax highlight in client e-mail; any pipeline that
+> automatically download e-mails and apply to a local branch; or for each
+> PR you save the e-mail file then "git apply" to review / test the diff?
+>
+> This isn't a technical question, I'm just curious about how you do it.
 
-In short, you prepend extra bytes that contain no NUL in front of
-the pathname part of the tree entry, but that extra bytes begins
-with the length to allow skipping.  
+Even a very small patch that applies a change to an early part of an
+ultra-long function may be hard to assess depending on how far the
+effect of that change gets propagated through the code flow to
+affect the code near the bottom of the function.
 
-The tree entries must be in sorted order, but I presume that this
-extra information merely happens to be encoded inside pathname
-field, but does not contribute to the ordering of the entries?
-
-For debuggability, I am not sure if modified BER is the best format
-(it is essentially binary gibberish).
-
-For extensibility, I wonder if we should allow more than (type,
-flags) to be given in the future?  I guess a new <type> will allow
-extra things after <flags> (like conflict tree takes stage number),
-so the format is already extensible (we do not want to see people
-willy-nilly add extended stuff to the tree object anyway, since it
-would allow the logically same object represented by multiple byte
-streams that are not bit-for-bit identical, so extensibility is a
-double-edged sword, but still necessary).
-
-When we have more than one stage #1 entries (can happen in a
-criss-cross merge) or multiple stage #3 entries (octopus), what sort
-order do we apply to them for conflict tree entries?
-
-As you said, it does look ugly ;-)
+Patches are medium for reliable transmission.  Once you apply the
+patch to your tree (perhaps giving it its own topic branch, perhaps
+to a detached HEAD with the full intention that you will discard it
+after you are done inspecting the change the patch brings in), you
+can use any regular tools you use while developing and reviewing
+your own code.
