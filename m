@@ -1,159 +1,108 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114211509A0
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 14:03:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B402FC871
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 15:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759327412; cv=none; b=WkU6qE0Kza6n5ENgwAt5YG7layhJtZcvECn1WvnVEps5RFMyERLR+Em1KJ9BsmeZ2YryqhZgnV4uxpA8M4ed+QX7tR4jJy1HNV4HGZCenPwT95yWxOnypWKg10m9xLUxSF5ngl2f7DvoyQ0x3eMehik5eX7dIWjpYTDW91fYmSY=
+	t=1759331299; cv=none; b=AvqVUEhYksVfj4qYqwjoLTGWsZV6WrvMU0tNIuO/LieoZEJPEADzLduxPD0r/4xJb9oLItjJ1oO3ocWKuCbckDnt83fHlN7mc1lQ1ZDLtZgU0VONx+Sgh2yQlA5U0WREn7YJNQQ2nfsVbEhza9UlT5ZvRG4tdiZaJt1FZ8yVhGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759327412; c=relaxed/simple;
-	bh=XNdC8dZtQ99iV00knh8tnpgtXSLD+78odp0lIDcrsTo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nG+BzBVUcPH2oG4sflZ7Vz34yLVLk101dVs7bXDY8/naMbgS/FdwKXp1sHk+mQvxeElu0k4RF3fDrtf3mwkyzIC51NLkq03mRgSAQkjNzhA7MNJFvxXFU5yhSgQ+Z+InXI8PYELpV93Ts1gJ/E5JZm4kk1nTsE0dyjN+Oei2HrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m3RB1QKg; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759331299; c=relaxed/simple;
+	bh=Ex4ws7Lvxq149Vm196R+H01ECv1DQxxJFFFQruKmV9M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GNEvFv2zvSPcdLCtSc+VYGDZ6ixLqsQ5Ow53YO/q6Qi6qqZ0D5Bialv5/26OUXP4ewcxUMRsZG2R+3DfAY+9zus2mJxaX5NaxvbzSMZshbK+F7krICbl7mgvwjkGVmmN819fCaE4CHIi2KSYjZ4iRKDf0TotVHvfWx0Rw2ywy3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=PHEulZ93; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m3RB1QKg"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-46e3cdc1a6aso8290085e9.1
-        for <git@vger.kernel.org>; Wed, 01 Oct 2025 07:03:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="PHEulZ93"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-27d4d6b7ab5so109693065ad.2
+        for <git@vger.kernel.org>; Wed, 01 Oct 2025 08:08:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759327409; x=1759932209; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bASCUWs+BxsXuyIsWDEjmPpiONVWstbgdaRpdcyyMcI=;
-        b=m3RB1QKg0yJGUrZ/iA8rs9X5oeqvy66lsTyRmfW8kUB/N4uMGl1sEhLBJ3dLEksWZu
-         W5dgvz2yw+y8O0cDWGhx+eY8ckNllGg0P2lBSq3TFH6jw8G21nL3FWXH0wF87s8snl2Y
-         HcTTMMZ4vYpy4XE5Dob8tbrRSDHhiAzAYzJjt6f5rYjRpQbVFtnELwwawaDCnqVkc55/
-         UnF1ntk1WPMeG23+j+5mAUlP0ojifHg5LYLm6mlKTUcuTIwFcP05/gltNqmf7tbkq9KF
-         nG9sBGbL5WoJohPMmPurGJ4EwGt7Xp38lXVKw5Gtl1ZnihuRGJtOjjzH5hT0Sm2tECpy
-         KqWg==
+        d=bytedance.com; s=google; t=1759331296; x=1759936096; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BB9PKOQ8YH7cQB+vNIsMwwdjfTeeteVJFWOUhRdoy8g=;
+        b=PHEulZ93nEuSPa4NDhFVY6GN3KEXwAMd1c9nrjBsiN37KLTF4Ko4+m2JhT8SQFUt2Z
+         uGfM/bbH6GGD392PDLEp02dwM7vUvNV2iKlxizH13Lnr4VfCuXmTM9B8IdEEBDvQ/YGA
+         US32nGHBggZwpcJKeeCENSkhVfPz6FC46sugXIPtEqEDR7ACkzwaW8YUJ7eC0VJEohtf
+         i7ZjVnO1wjlLamltSlcIg0pNuKAmX/IFe8j7oYLQtqjkmXlanoH6xPWXyui52P9allJm
+         FBZ7GI89EHXq26OQlxeaNuqv8QXsWm1Yn2wwrtK64x7uTu4fDF667ff0AJ32RgV22WeF
+         Y/Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759327409; x=1759932209;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bASCUWs+BxsXuyIsWDEjmPpiONVWstbgdaRpdcyyMcI=;
-        b=HQtoMChBHjiF35Tjx7hqMhNhPAyntcadZBEOupV2un5B3fOGLZiuIdVIEmr0Ch8Udh
-         RZmAKK+YRB6FE6WWcf6Jgki6NSeLKlMOOwSnv/dI8rzl6QVkwbGsbV0Xqlt812RfxK9T
-         EEeSdV0/40MEj5Dj6zDdXE9J/eZo6xBAtjT0ZBSnO8S9Bopl7hmNSGBvYLWwGsBNisXT
-         fQGn1kgUDoX4hxOB0Jbq5mu1GVd8/ZDrO/zWDejLZw28IY6coe1MZQJ6u+3eGZRtyOVA
-         mavxK8J+EKtdMLTkwiVrMUrLxxse2t/u842MO/6saINApKsTKcMyYYpN0TAc1+mPiSuL
-         i0XQ==
-X-Gm-Message-State: AOJu0Yy+VlTYDf9UHGIRLlIi7cyBqgZ3WZQ8y+37I4ZdHLQNqNlgE0Iy
-	PLFaNFV1/Hl0IyKoTPM/mLWyo2mcb+OE0ZljYbZSzgmELHsMCOHgi51krUX8UpFh
-X-Gm-Gg: ASbGnctG2gW0NlwRbPftdBkUGzdFLx9bknT2mPni1sNAGvN4Gf/sP49XAjArgJ+RUdg
-	x15AWnetKjZteAMOwqsLiw2KlndDqOG7rmVgJCwrmK2HfsCPDOCKAaOjegu4R98zGWVg1MjiChC
-	GDDiHHQCf1UhOd7kXzelpUuOba0uF42eikRoAVODot3acKDilbredViZT5ql0wpV1jtvfPdzZz6
-	wn1+Zfn24Z4MZZy4V/aXZWJa+v0Wj3w25wsQEiwMlkViP/IAjXX2q7YG0Z9FMAYe8a+L/blPVuA
-	x8I/9b+jQ19AzVbJfKJhuYl37e7bDfyvh/DrLd7mUQM5sdZH16wpB08eN+YhyGn3YdXqcdX1Y0h
-	bjOjcRY6++6XD2/FCoZG4GOJ69sF4wG+33QkyPf5JUlKfdVqb8ihxlg+4AizA+l2fD7G17SNEYw
-	==
-X-Google-Smtp-Source: AGHT+IE3Lg5Umf/+/mBexMQuLUcbvlyCj8w3eWwfN9LrHOKEondcBELTEJdRY5L+azjVMDXsQT2GGQ==
-X-Received: by 2002:a05:600c:c08d:b0:45b:9b9f:88cb with SMTP id 5b1f17b1804b1-46e58cea5b9mr54036045e9.16.1759327408563;
-        Wed, 01 Oct 2025 07:03:28 -0700 (PDT)
-Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e61a029a0sm40057675e9.13.2025.10.01.07.03.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Oct 2025 07:03:27 -0700 (PDT)
-From: Christian Couder <christian.couder@gmail.com>
+        d=1e100.net; s=20230601; t=1759331296; x=1759936096;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BB9PKOQ8YH7cQB+vNIsMwwdjfTeeteVJFWOUhRdoy8g=;
+        b=MURI6l0lZqOgOxq97TRxAlw61e+tUllxjyTibt26fyRZFSNOFdD6l94m5arak8ZlWP
+         OjIIIxIJblJov4au/E7I4KhWhV/ScszlQWqjNvypdEj9+bhL2RGfnmghCtC2oO6GafXl
+         AuY5l7m9BSRd5OpZB7vrMduKRTSga3YlWKR4fpAS4Nj9oH37kV0XI16RpCdw/cLmwQ1A
+         PSmQr7n/1V1gfSFSjSrgKhPf3oboVb6XSLKv04PfTXynlE+Nxpfoqm7j5+SKBtG2n0K7
+         G4CjhPqegskaaunjr+7Fmrrb+UY3LfKaQVAmHjHZo3Ny550795i/G3xgPnrp+GvLdUrS
+         /ZYw==
+X-Gm-Message-State: AOJu0Yy8W8eTFvfHWuh2zUzo11Thuu5jmFtYaQ/nSLhvjirw3AtMYhQZ
+	pC9gVMOEttd2Z03t1JuPlvTXmqFHeIk8i3JgrQQlTcrAorxf9XbOvcmwW1WwejIJqVV3K2RpJVT
+	L7AOo
+X-Gm-Gg: ASbGncu9F7MpOW3oPDs5rP+WM6F71d9oV1c3RQRpQpimafLoDTSLHhUmvRm58cyLNAu
+	iDCv3VLxXu1M6wKH6tujRLnLD+RgH9OTLOHMylrvDQ4kPiHOfCNDxVEeqXD8OrOmfS5GW7Nexol
+	/0RxhDgqWp33Ir1lQIK2i+QYbFFeu2LPKEF86zd1+NeGD6eSZ2NN59JWwSjXoYCxlxV0hplrLm3
+	mwBFWx9s2JnXYXDvAJEigsNiXSG0emoLCQAzlr31dqF/en7pmafLl2Fctebzky78Vp/NCtaw2xJ
+	pYja60yPmZLRsJDlBXmdzfqGfD7Xwh5VOU2bLsE+KTKUgbrzXQbWrk0l+7BV+2PJXaCWxwO7r7X
+	DEThjqeRBkdTgfv/OEaSrY53MjGaIB/JLhwpV5c2XwBQDgCOgRkrpdgaNcMRBjVAK4rdfPbYk3D
+	G582leiOMzTSeduok=
+X-Google-Smtp-Source: AGHT+IHloiWX/TEDDCgLmrd4pbka+2k++Y8Qf9Qn0R3uH8lQBlfY7KaOVl4XqynmqFFBqF3xxcn3lA==
+X-Received: by 2002:a17:903:15ce:b0:264:70da:7a3b with SMTP id d9443c01a7336-28e7f441e97mr49719735ad.49.1759331296221;
+        Wed, 01 Oct 2025 08:08:16 -0700 (PDT)
+Received: from LTY2K703JV.bytedance.net ([139.177.225.245])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-27ed68821f8sm187106925ad.73.2025.10.01.08.08.14
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 01 Oct 2025 08:08:15 -0700 (PDT)
+From: Han Young <hanyang.tony@bytedance.com>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Taylor Blau <me@ttaylorr.com>,
-	Rick Sanders <rick@sfconservancy.org>,
-	Git at SFC <git@sfconservancy.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Patrick Steinhardt <ps@pks.im>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2] SubmittingPatches: add section about AI
-Date: Wed,  1 Oct 2025 16:02:50 +0200
-Message-ID: <20251001140310.527097-1-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.51.0.195.ge34f015aea.dirty
-In-Reply-To: <xmqqcyalm0mh.fsf@gitster.g>
-References: <xmqqcyalm0mh.fsf@gitster.g>
+Cc: karthik.188@gmail.com,
+	Han Young <hanyoung@protonmail.com>
+Subject: [PATCH 0/1] files-backend: check symref name before update
+Date: Wed,  1 Oct 2025 23:08:04 +0800
+Message-ID: <20251001150805.9652-1-hanyang.tony@bytedance.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-As more and more developer tools use AI, we are facing two main risks
-related to AI generated content:
+From: Han Young <hanyoung@protonmail.com>
 
-  - its situation regarding copyright and license is not clear,
-    and:
+In the ref files backend, the symbolic reference name is not checked
+before an update. This could cause reference and lock files to be created
+outside the refs/ directory.
 
-  - more and more bad quality content could be submitted for review to
-    the mailing list.
+Below are the original bug report by Sigma:
 
-To mitigate both risks, let's add an "Use of Artificial Intelligence"
-section to "Documentation/SubmittingPatches" with the goal of
-discouraging its blind use to generate content that is submitted to
-the project, while still allowing us to benefit from its help in some
-innovative, useful and less risky ways.
+  $ echo ref: refs/../HEAD > .git/HEAD
+  $ git commit -m "test" --allow-empty
+  fatal: cannot lock ref 'HEAD': Unable to create '/home/sigma/headtest/.git/refs/../HEAD.lock': File exists.
 
-Helped-by: Rick Sanders <rick@sfconservancy.org>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+  Another git process seems to be running in this repository, e.g.
+  an editor opened by 'git commit'. Please make sure all processes
+  are terminated then try again. If it still fails, a git process
+  may have crashed in this repository earlier:
+  remove the file manually to continue.
 
----
-This is inspired by the "AI guidelines" section we already have for
-mentoring programs (like GSoC or Outreachy) in:
+In this case, while trying to update the symbolic reference refs/../HEAD,
+the lock file conflicts with the ./git/HEAD.lock.
 
-https://git.github.io/General-Application-Information/
+If the HEAD points to refs/../foo, a reference file named foo will be
+created under ./git directory.
 
-which was discussed briefly in a PR
-(https://github.com/git/git.github.io/pull/771)
-and in a small thread on the mailing list
-(https://lore.kernel.org/git/CAP8UFD37_qsTjM97GK2EOWHteqoUKdwxjKS-SU629H2LnbTTtA@mail.gmail.com/).
+Han Young (1):
+  files-backend: check symref name before update
 
- Documentation/SubmittingPatches | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ refs/files-backend.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 86ca7f6a78..04191e2945 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -446,6 +446,34 @@ highlighted above.
- Only capitalize the very first letter of the trailer, i.e. favor
- "Signed-off-by" over "Signed-Off-By" and "Acked-by:" over "Acked-By".
- 
-+[[ai]]
-+=== Use of Artificial Intelligence (AI)
-+
-+The Developer's Certificate of Origin requires contributors to certify
-+that they know the origin of their contributions to the project and
-+that they have the right to submit it under the project's license.
-+It's not yet clear that this can be legally satisfied when submitting
-+significant amount of content that has been generated by AI tools.
-+
-+Another issue with AI generated content is that AIs still often
-+hallucinate or just produce bad code, commit messages, documentation
-+or output, even when you point out their mistakes.
-+
-+To avoid these issues, we will reject anything that looks AI
-+generated, that sounds overly formal or bloated, that looks like AI
-+slop, that looks good on the surface but makes no sense, or that
-+senders don’t understand or cannot explain.
-+
-+We strongly recommend using AI tools carefully and responsibly.
-+
-+Contributors would often benefit more from AI by using it to guide and
-+help them step by step towards producing a solution by themselves
-+rather than by asking for a full solution that they would then mostly
-+copy-paste. They can also use AI to help with debugging, or with
-+checking for obvious mistakes, things that can be improved, things
-+that don’t match our style, guidelines or our feedback, before sending
-+it to us.
-+
- [[git-tools]]
- === Generate your patch using Git tools out of your commits.
- 
 -- 
-2.51.0.195.ge34f015aea.dirty
+2.51.0.373.gaf4ee0e35.dirty
 
