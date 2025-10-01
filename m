@@ -1,150 +1,95 @@
-Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37D32D3EF2
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 18:02:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4732D4817
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 18:43:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759341757; cv=none; b=ak2XrkCjLiJWSiXeMOB+wArQqnaV6bkUbXhzjkXLfieNxgx/GHKb30ER3N7lN8YK64hzHxGlsEljSn8TxshT2Xc9CMMRuD5CIDpTCACQ+smcjnD2Vqn17dKDuDWsw4iIMcP6mBSx3CA+o2ywqrRIKr+BH05Bl1wrC8gFNU+Njxc=
+	t=1759344226; cv=none; b=myjO+ryrtk+5BRlE9eCD0xEqCI+Rh3qrwtfFRgHL460Z3dQHJcidWWyRVBi4O7h7OpZv7G+0ZGlim/p0oseySq3QSMW3TrwH0HQKs0LbUKs0wkqC4QhtJGvR40HuseGz6Yk/r7Pa3ny1zXHjV0BYlJ50iQeLkTP/yV5MZdDcrAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759341757; c=relaxed/simple;
-	bh=xkQKbZ67Q9yg1+nPreF51oFZGpE4qyjtVVUErBWTt1I=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=u7G4XSs9+HD+hRtgxHmYTE22/S5YjKghD5O3yTgV+O0eaU1RfilxxLKd5SAIvILIQRt+6C7HRe2bEwG9K7VkCsiTShbBg4+LTxK87woDA3C4Q3t8rPg+A5vcCCxNQ0NlL7/AhQESbpSFxgcSTJiiU/gQNldBtgEmVv3dt2hVCGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JvPwFAHx; arc=none smtp.client-ip=209.85.166.52
+	s=arc-20240116; t=1759344226; c=relaxed/simple;
+	bh=wjyfBesF1jMigcF8nNM6QA3o6j5nn9df8zGqlBXavec=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jCmUoMwZt0ec3mJI+t+Z8pZNfpmWFcEBV9LRfpgnKN4u20Arp//MXUzyI50Lx84HhrBl0hccKv9BXT/6Ybtd3QAjFWfSumGEhzKW4P8sxbH8efx8m/YXS1ynN6Kqf2AmJe41kTNeLXoRMBh2AFHaid+uFLvwkcxhgnM95WcM1eU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZLRe7t0p; arc=none smtp.client-ip=209.85.208.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JvPwFAHx"
-Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-8b0055cbd0fso7592139f.2
-        for <git@vger.kernel.org>; Wed, 01 Oct 2025 11:02:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZLRe7t0p"
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-3696f1d5102so1382361fa.3
+        for <git@vger.kernel.org>; Wed, 01 Oct 2025 11:43:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759341754; x=1759946554; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1759344222; x=1759949022; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OyToMiOgzz3UrQ6/En0knXmOmSDd7CBKm+PLeRgVLuo=;
-        b=JvPwFAHx95CbRY9s5xBIbbtmdFsde0RhNj2BliCofDr6vokDDGxh97InF8dqefhwfG
-         nYCTeIKh41mjHlWZl1lgqj9C0ev4oAAkgBYAfJUpP/CFoMrG0T2lmKOzmOuSSmWbdfG3
-         +V7uGNXWqtvQliEMpXCP0drvYPzIBgzyXGXskliBsnsZpDgf4VsAsOeePQFKrlveH7Ge
-         ZhYVLgitvmr0PbymBsIkv4/G+C5PiqkcA8E2mVIKKpZDMn1P4KfytkKowO716sY7J9Mk
-         Xd4v7pFOnh5sNPxEEpRGQWN0VLNoFu9IxP8t/FW72pYmeL8rcbtgWBbrGs2kX9vXw9Z0
-         GHPQ==
+        bh=wjyfBesF1jMigcF8nNM6QA3o6j5nn9df8zGqlBXavec=;
+        b=ZLRe7t0p8+gM+Zz5+kft8Y7vLYHq1wL7OV9HcwgN7RvcNP/NnolTQgaIqWNOry8Te8
+         yNI2oWiJQ1EJKMZWYg7rkVwBV3uW1A09RtKCUOV5x1my4VrPs0Tn6MW3MgvQ4Bv0dLOh
+         4xO+RFRaJBAoE+B/fbXAzYqUX9xsHMYRBF9fql1T7wseiB+7lPMqrDB+E5NIzMMTVjVv
+         c1btWv/reIdvp2Hp55W1qpPs/TdnsdiBUtQNDvrSHJZAFP8VYaJs4DOkOP4g8NWIULXZ
+         SA2wf12nYXT8OCCvCXVr5yUA687xb7Jk3WOJc7RMsoNPaFutZj46jiOAidgdekrVvSRh
+         df4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759341754; x=1759946554;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1759344222; x=1759949022;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OyToMiOgzz3UrQ6/En0knXmOmSDd7CBKm+PLeRgVLuo=;
-        b=KK0jbuT5bofv1F0NX9S/psWxMF6PIuPwtziFAXt5Wp63QH6bQwxi90zzvDvTFfnnxK
-         U2gdKtvVb9EqNNMweB7CLF3VT6B7st3bGWMrXW1PGWFDurKDEnNffdhJKTASvYdrpAkl
-         VqfdRqqEQycFYJycRILdl5DLMUuqd8i0PjXztHZNBew+rTsWkYbRebyat2oUYF4Nn4Su
-         48p4ddI88bF3VtjWXqop9xlDlyGrnNO2nKzxtfNDRE0gRry7761i/V4nKnStu0vkVfK6
-         d44nMBBvluCNozi0au3T3htb5YBCpCKhkrE7h9OYD33G6+fih3wiWtdi2T+jpxKIgkOY
-         euig==
-X-Gm-Message-State: AOJu0YzV9RTO39j6zudQEFyEhaZPN94XjChSKuyViNnbVnLodnuDFFou
-	cUHBvJE61qsErJrOfonO2iwmn5A9hbLajoz9yqI6jPZMdl1B8rTcnmxYRSJKLg==
-X-Gm-Gg: ASbGncuwQl4PjbvNfpAGVUBziY571zf/BEtZo0sG39zNaLvPIADzSglRDv8yH3HTnXc
-	KM7astflCoK9Jbfh8X9mgM9JF6bR6KoOvPlaAbUbon/K20iXPnXgfHiFC2IsCwD3mEZku2f2HjH
-	3BtpBk1qmrqgBdjtGiMR0jjcWImJbD+ZAizltAzdbgLjadEV7luIwr2W8t6HJvumR82hOO++SJB
-	g5MX7SySE9mk+pIV+/v4kVF/2hSQQvEzocTYHFAVh6+CHCUIKhqxtYvqMdc17HUGdEAFgqlipYV
-	kKgGzDyjNdxGiP+Iebh4pww7xT4mWoY4V0YbeXvWx2IlpH7/0X40v33j8oyF02BkPuMhdX02+Ek
-	idqMhmWafOH9pa8sIgnXgl/isoSBh+30ESI64BBaxwoK9qu1E6Q==
-X-Google-Smtp-Source: AGHT+IEsRw8BcO4SVEBYBh8+9MEe9tjvEAAF2tFwm113FdQlL8aFkPeDDlU3gSksiOdu4EUqxboOuw==
-X-Received: by 2002:a05:6602:1352:b0:884:1e28:904e with SMTP id ca18e2360f4ac-937acc0b764mr652058339f.12.1759341754462;
-        Wed, 01 Oct 2025 11:02:34 -0700 (PDT)
-Received: from [127.0.0.1] ([64.236.176.149])
-        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-93a87bb7003sm6353539f.13.2025.10.01.11.02.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Oct 2025 11:02:33 -0700 (PDT)
-Message-Id: <8549f634153b1ab394a2e6630d8cc1209261a31a.1759341748.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2065.git.git.1759341748.gitgitgadget@gmail.com>
-References: <pull.2065.git.git.1759341748.gitgitgadget@gmail.com>
-From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 01 Oct 2025 18:02:28 +0000
-Subject: [PATCH 3/3] make: delete REFTABLE_LIB, add reftable to LIB_OBJS
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=wjyfBesF1jMigcF8nNM6QA3o6j5nn9df8zGqlBXavec=;
+        b=kd7NPyJJZ+7/ZGMrC8PebjY2sEq7GgtLa9u0khN7xA4fiG82nDdmR9OcCOboI3iZd4
+         O16LzqpCIffPYHnRIRHjCf+bijj33zG4F8Av2heH2UY2dU1dmtSA8KABmUAQk+hXwXKs
+         XbB47MH8pyNpXz/RXzGU2Y0hzX90K51JC1NBa7yiImlg6CuAZYhWqMn+H6ZjlJM9pJd6
+         4jPTXqG7apReOX/SbnqYSyRVc3xn7kbGTUHl8zbu0eNqb5jfpX+1SqkHZntg6aDNkxox
+         KPZf3J2x88c4w/xAD0qZvmkDuZgHSxipTnOQIkHehNvqq8IJEEtpQfDBLjKolKunxgl4
+         SwNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXhkGt6+k/wfVCEoaNLbrvP/agONhxtcJXbrvn7eG+Pp08ZTpskx0iXlKbnbFecwc1GezY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwvP7qPBJq2kqFvgmlxzwsGXypB2t56CUvOcQ41yM2NoMHCXVIf
+	BLG1qMlbWFmAIGq4SGm19szQLNSL8BA3qquvhrCYSsBoFw3UdkX2TUTyspm/i0EQWLd6DtUoE+n
+	YmwoLoyk6EL2Nv/4rr9PB6cPhMni7CjY=
+X-Gm-Gg: ASbGncu3rgnuAiA0YxCJMAMRCvQYHy6mSBvSmbOLAB0Lpt3Hz1zZyxImBVHXFtNyKej
+	8IbtswyBOSJ9WVQD96g5QziVCqGReQrTSzJjSdi27wFjauMkrRTOSEggsKOCLUTPq1Y3j5lSGYK
+	YHDON4qpJxBQUlkqmkwyKb2ew8GkzPRTLgIavEZBM7U/FHIEFVrieqNepmjrGeeTB2GnYfW60dy
+	5Fn28OwflexFDg5WKbnwIAJQ4ZrZVsL
+X-Google-Smtp-Source: AGHT+IH7vMTkCtSs0fz1iGn8CCyarukF56Bske9kHjEiFm5JTRdk3U/cy/C35wWHQIEbyJOXiyylIQsHJxvuQblvxzU=
+X-Received: by 2002:a2e:b8c5:0:b0:36a:1852:f33d with SMTP id
+ 38308e7fff4ca-373a73e30bbmr14453651fa.28.1759344222098; Wed, 01 Oct 2025
+ 11:43:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Ezekiel Newren <ezekielnewren@gmail.com>,
-    Ezekiel Newren <ezekielnewren@gmail.com>
-
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
+ <20250925-b4-pks-rust-breaking-change-v7-0-4e49dcb904d5@pks.im> <xmqqikh6h4ma.fsf@gitster.g>
+In-Reply-To: <xmqqikh6h4ma.fsf@gitster.g>
 From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Wed, 1 Oct 2025 12:43:30 -0600
+X-Gm-Features: AS18NWANSzENwKu96J-HS7Ygzx1E3OsfoO3SVnpDlUjrjUnnNC0VVKoN2e87qDE
+Message-ID: <CAH=ZcbAF6k-=k2K6Zi6a=igsCt=aDmmA7UXUw-PVL1WJNif2-Q@mail.gmail.com>
+Subject: Re: [PATCH v7 0/9] Introduce Rust and announce that it will become mandatory
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Ben Knoble <ben.knoble@gmail.com>, Christian Brabandt <cb@256bit.org>, 
+	Collin Funk <collin.funk1@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>, 
+	Elijah Newren <newren@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	Phillip Wood <phillip.wood123@gmail.com>, 
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, Sam James <sam@gentoo.org>, 
+	Taylor Blau <me@ttaylorr.com>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Same idea as the previous commit except that I don't know when or if
-reftable will be turned into a Rust crate.
+On Thu, Sep 25, 2025 at 10:35=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+> If I recall the coordination discussion correctly, when people are
+> happy with this series, Ezekiel's stuff (not the "xdiff clean-up"
+> that is to improve/adjust code that is purely in C without any Rust
+> component, which can independently advance without waiting for any
+> of these) will be rebuilt on top.
 
-Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
----
- Makefile | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+Your understanding is correct. I've dropped my "Introduce Rust" patch
+series in favor of Patrick's. Once Patrick's stuff gets merged I'll
+work on rebasing my Rust stuff on top.
 
-diff --git a/Makefile b/Makefile
-index d89ba03286..4c63045443 100644
---- a/Makefile
-+++ b/Makefile
-@@ -918,7 +918,6 @@ export PYTHON_PATH
- TEST_SHELL_PATH = $(SHELL_PATH)
- 
- LIB_FILE = libgit.a
--REFTABLE_LIB = reftable/libreftable.a
- 
- GENERATED_H += command-list.h
- GENERATED_H += config-list.h
-@@ -1411,9 +1410,9 @@ REFTABLE_OBJS += reftable/system.o
- REFTABLE_OBJS += reftable/table.o
- REFTABLE_OBJS += reftable/tree.o
- REFTABLE_OBJS += reftable/writer.o
-+LIB_OBJS += $(REFTABLE_OBJS)
- 
--# reftable lib may in turn depend on what is in libgit.a
--GITLIBS = common-main.o $(LIB_FILE) $(REFTABLE_LIB) $(LIB_FILE)
-+GITLIBS = common-main.o $(LIB_FILE)
- EXTLIBS =
- 
- GIT_USER_AGENT = git/$(GIT_VERSION)
-@@ -2766,7 +2765,7 @@ OBJECTS += $(SCALAR_OBJS)
- OBJECTS += $(PROGRAM_OBJS)
- OBJECTS += $(TEST_OBJS)
- OBJECTS += $(FUZZ_OBJS)
--OBJECTS += $(REFTABLE_OBJS) $(REFTABLE_TEST_OBJS)
-+OBJECTS += $(REFTABLE_TEST_OBJS)
- OBJECTS += $(UNIT_TEST_OBJS)
- OBJECTS += $(CLAR_TEST_OBJS)
- OBJECTS += $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS))
-@@ -2918,9 +2917,6 @@ scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
- $(LIB_FILE): $(LIB_OBJS)
- 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
- 
--$(REFTABLE_LIB): $(REFTABLE_OBJS)
--	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
--
- export DEFAULT_EDITOR DEFAULT_PAGER
- 
- Documentation/GIT-EXCLUDED-PROGRAMS: FORCE
-@@ -3759,7 +3755,7 @@ clean: profile-clean coverage-clean cocciclean
- 	$(RM) git.rc git.res
- 	$(RM) $(OBJECTS)
- 	$(RM) headless-git.o
--	$(RM) $(LIB_FILE) $(REFTABLE_LIB)
-+	$(RM) $(LIB_FILE)
- 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS)
- 	$(RM) $(TEST_PROGRAMS)
- 	$(RM) $(FUZZ_PROGRAMS)
-@@ -3952,7 +3948,6 @@ endif
- 
- LIBGIT_PUB_OBJS += contrib/libgit-sys/public_symbol_export.o
- LIBGIT_PUB_OBJS += libgit.a
--LIBGIT_PUB_OBJS += reftable/libreftable.a
- 
- LIBGIT_PARTIAL_EXPORT = contrib/libgit-sys/partial_symbol_export.o
- 
--- 
-gitgitgadget
+Aside from a few typos, this patch series looks good to me.
