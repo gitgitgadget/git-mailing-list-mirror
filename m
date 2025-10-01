@@ -1,93 +1,36 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C1130276F
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 20:59:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF56230EF81
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 21:11:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759352363; cv=none; b=oI/k6ml/MdwlDfZPit4dkC/4Um04LKRYInZeTNxW0yPo+yAxdheg/9r4IGweH+dcN3LfflGTqdHcYwq6Bd+1Ty7nPM9R7Zjk7cBiTHqWgMBTAQxiY2yrvzNGdRgapwZZAV1lkjdGYvUtHOJkQX8nwVCsjDFQzk2gwG1TqsaocGE=
+	t=1759353104; cv=none; b=OA5cK66SSpNPe5KclfcKqDZaU6DDCC56F+mMZPzjQiN0b7LVX/DeAIKgef6y1JynBY/GHSRMldbbnrfzkqaQIdqQTl7IvGAms9h15F/Et0IGp6EAKSrCBrFCdZWe3CLmzXR5sHNnASOjrlSp6ox51e/+IlwyWhTYJ2lpUQIdKiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759352363; c=relaxed/simple;
-	bh=B5RnTBy4xa0B05GlW6UYUcJ4UvUUswhk8SDf+R9Scu8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jvmkWO0CZjlEkUQVijECfVDPzIcBf/NqZsjSL4AzePcHTTSCDv4RBaUMyO4pm3kJW+zOhp5Hm0/mfzmVdGKkZJIR1nVJ7gcoEL/ygGxMlcBPNNluCLHI6Mi24Oc1CdesD0+u7Xju4W0WzOr5QsAN2NHpbW4i5ko3IwxTdrFnNqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HTb4evUA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QL2JMSwP; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1759353104; c=relaxed/simple;
+	bh=NcQSgZmBBiA/N4pLZcqqc8m5U3ax2NpqzJevAKJp8K4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GM4GduxjQZL7ykVxlsZ+jO+6VJv7oWD5kJxY33/B/fssd/nsgJsNrGVJribU6iPYBa4xWMdjph24Vmy8nx9Mk6/68Cq9Lfbnqsl+T8MbRlc78w7xrd7dA46sPaogN6lcQKtEuNhnkhOBIfOPirUVkz9x0SmxxAKGV+amxs9WKEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=YU3AIXiW; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HTb4evUA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QL2JMSwP"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 611147A00B1;
-	Wed,  1 Oct 2025 16:59:20 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 01 Oct 2025 16:59:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1759352360;
-	 x=1759438760; bh=75B5gpZVmgqjuaak7oIgsZnePE79SPOZ1wmsN1TcIQ8=; b=
-	HTb4evUAPB+/49A63JCHEXpWYlKQJYv74Ps+cSPNxkbyPqeFTo+2zz4ZEoicN75+
-	mPKK3WETHshkbwad4rlrSd+txnOBITkkSnM1GDXCezR/khSqGeN2u4fsbLccQZvA
-	G4gHOEKhwXL4e21wNhZdmilmfo3HsRHhiMDu1SlKRfImiBsorl7fU5t2PQ7gmlWC
-	92L7X23Mta8AVkPbYnUYfKaJb3hP6YeQUVgOdStvSQcpJGHYbUhSrbSnRKpFxwOi
-	MQxmzFkui4khLTWEAdo7VE0vbFfDNxuqrjsRdIfNZcD+AvUFsv+X9W3J89zEdBs6
-	IozU3sG+DtQyZd0UJWoJMA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759352360; x=
-	1759438760; bh=75B5gpZVmgqjuaak7oIgsZnePE79SPOZ1wmsN1TcIQ8=; b=Q
-	L2JMSwPgAMJpBEMYlajK4flT4tcstwA+lC9yGSPzWqUg6vIV/2fyMhzT7rI9sAey
-	AAY7wDEay2RDRxRxKXXYxfBEZTVX4vPTeB9Ah5Q2mAX1alezJFBw0++GPr8pAnwK
-	QUAyMx/uS5nCPIvGjGgw4rdythP/lPDpRbjpdUxxfyyap9K8k10TbRJBiGlmCuz6
-	gNvhaQy2vCQSC6/sAyLHlMw8OK7KODzynUl2NLhDOcoDIb3FWFUSP2yJeHOzVX8a
-	ILgWUYHnPNhstSjKSQ01fczXON3XkPm+TMdJoLnCWr37o1M8MVBUYXEUYP45Oo22
-	8K2bs+E8FnHJJwWRIyNzQ==
-X-ME-Sender: <xms:J5bdaPAZ0ixNep8COcbxAxxvGHYlmzNTilSyvVrhKpSa_tU4rREhQg>
-    <xme:J5bdaIGLthRVD2U1USyJM3aMhouJTN8NjXZQcNl9uUWbTj9vn5uEAXbWnZySDORbp
-    311DAjyCcDGcfgTYy2m-h_vMjrK-43OwHmcAZRghB-UQ6OnXqlq>
-X-ME-Received: <xmr:J5bdaOMgGdO01I1_IgyeKTmsZroaLQdGDTkeMA9a5TMAaZEIB5BYIBwle2oB7U9eBAMQq_OC-po4eiqecNPUjYsgkfSGzTPUOYKz>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekgeduiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoheprhhitghksehsfh
-    gtohhnshgvrhhvrghntgihrdhorhhgpdhrtghpthhtohepghhithesshhftghonhhsvghr
-    vhgrnhgthidrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlih
-    hnsehgmhigrdguvgdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoheptghh
-    rhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:J5bdaB6oD66tGuqq11m2dPuIaMnHiYmSHnlw2eD3ylBPrPq5B22EQA>
-    <xmx:J5bdaJi43a76w7SGv0inyrzuHYyiC0OiKHPYFoO3K1ZnuglC2KzdSg>
-    <xmx:J5bdaOfeAbbUNwLGxTpLbvQZxYlkaNOcPk0ogMDq8mr5aYKa-ILLcw>
-    <xmx:J5bdaJxuCsWkWLoSaJXRDoMBTx5JiTPMAXVxdalFdQzTqUo32k1zYw>
-    <xmx:KJbdaIm7AIXr48G45zH-CYrNW4_TI6nvRD8KnDum0vyYTBM_As6PYVL0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Oct 2025 16:59:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Rick Sanders
- <rick@sfconservancy.org>,  Git at SFC <git@sfconservancy.org>,  Johannes
- Schindelin <Johannes.Schindelin@gmx.de>,  Patrick Steinhardt <ps@pks.im>,
-  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2] SubmittingPatches: add section about AI
-In-Reply-To: <20251001140310.527097-1-christian.couder@gmail.com> (Christian
-	Couder's message of "Wed, 1 Oct 2025 16:02:50 +0200")
-References: <xmqqcyalm0mh.fsf@gitster.g>
-	<20251001140310.527097-1-christian.couder@gmail.com>
-Date: Wed, 01 Oct 2025 13:59:17 -0700
-Message-ID: <xmqq4isi1gpm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="YU3AIXiW"
+Received: (qmail 98654 invoked by uid 109); 1 Oct 2025 21:11:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=NcQSgZmBBiA/N4pLZcqqc8m5U3ax2NpqzJevAKJp8K4=; b=YU3AIXiWCnsY7tPyEHksVFoRt0j5gCrGG3IUT0/0Ga3DQNeFX9ZpAuvIJPyZReMJPZVfVzcgZolEYsyrvNn3kHg5qBL+EGEUKY4LjOlomQ8DrMOySZ63qwMPUny4GvkZhCHlDxg+ldywusufNwxX2vuzCP91a8aQuMIKXy4kzYmEKDiGcw0z7Voh1I+XgYY0CB38jlikNkCh1NPTvqxdENZlBVjdAnBbcxyUFPHaVC+zyez1D3bRzUWx1bRyvWfZuCEbRhHTRm3xUaxFYjV3+zlrKYZOcHMRmGmzhqrD7ifjshGMc6Ghuv0Xxy5EEsikpQSPMhvlvg3XywEBMh3SEQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Oct 2025 21:11:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 140576 invoked by uid 1000); 1 Oct 2025 21:11:40 -0000
+Date: Wed, 1 Oct 2025 17:11:40 -0400
+From: Jeff King <peff@peff.net>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/1] Define an extended tree format
+Message-ID: <20251001211140.GA140550@peff.net>
+References: <20251001005814.846992-1-sandals@crustytoothpaste.net>
+ <20251001005814.846992-2-sandals@crustytoothpaste.net>
+ <20251001174110.GA137600@peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -95,71 +38,119 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <20251001174110.GA137600@peff.net>
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Wed, Oct 01, 2025 at 01:41:10PM -0400, Jeff King wrote:
 
-> As more and more developer tools use AI, we are facing two main risks
-> related to AI generated content:
->
->   - its situation regarding copyright and license is not clear,
->     and:
->
->   - more and more bad quality content could be submitted for review to
->     the mailing list.
->
-> To mitigate both risks, let's add an "Use of Artificial Intelligence"
-> section to "Documentation/SubmittingPatches" with the goal of
-> discouraging its blind use to generate content that is submitted to
-> the project, while still allowing us to benefit from its help in some
-> innovative, useful and less risky ways.
->
-> Helped-by: Rick Sanders <rick@sfconservancy.org>
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->
-> ---
-> This is inspired by the "AI guidelines" section we already have for
+> My gut feeling is that would keep the gross-ness confined to a few bits
+> of code, and you could still operate on these natively with tools like
+> mktree, ls-tree, and so on. The ugly names will leak out to the user
+> sometimes, but most porcelain flows would do the right thing.
 
-A more important thing to mention is that Rick is a lawyer at SFC
-helped us to draft the wording used in this one.
+I was hoping make a proof-of-concept patch to get more familiar with
+exactly what it would look like for various commands. So the scenario I
+came up with was this:
 
-> +[[ai]]
-> +=== Use of Artificial Intelligence (AI)
-> +
-> +The Developer's Certificate of Origin requires contributors to certify
-> +that they know the origin of their contributions to the project and
-> +that they have the right to submit it under the project's license.
-> +It's not yet clear that this can be legally satisfied when submitting
-> +significant amount of content that has been generated by AI tools.
-> +
-> +Another issue with AI generated content is that AIs still often
-> +hallucinate or just produce bad code, commit messages, documentation
-> +or output, even when you point out their mistakes.
-> +
-> +To avoid these issues, we will reject anything that looks AI
-> +generated, that sounds overly formal or bloated, that looks like AI
-> +slop, that looks good on the surface but makes no sense, or that
-> +senders don’t understand or cannot explain.
+-- >8 --
+#!/bin/sh
 
-A milder way to phrase this would be to jump directly to "we reject
-what the sender cannot explain when asked about it".  "How does this
-work?"  "Why is this a good thing to do?"  "Where did it come from?"
-instead of saying "looks AI generated".
+# you can have a sha256 module in a sha1 repo or vice versa
+sup_algo=$1; shift
+sub_algo=$1; shift
 
-It would sidestep the "who decides if it looks AI generated?" question.
+rm -rf sub super clone
 
-> +We strongly recommend using AI tools carefully and responsibly.
-> +
-> +Contributors would often benefit more from AI by using it to guide and
-> +help them step by step towards producing a solution by themselves
-> +rather than by asking for a full solution that they would then mostly
-> +copy-paste. They can also use AI to help with debugging, or with
-> +checking for obvious mistakes, things that can be improved, things
-> +that don’t match our style, guidelines or our feedback, before sending
-> +it to us.
-> +
->  [[git-tools]]
->  === Generate your patch using Git tools out of your commits.
+# a boring sub-project with one commit
+git init --object-format=$sub_algo sub &&
+(
+	cd sub &&
+	echo content >file &&
+	git add file &&
+	git commit -m msg
+) &&
 
+# the superproject includes it
+git init --object-format=$sup_algo super &&
+(
+	cd super &&
+	git -c protocol.file.allow=always submodule add "$PWD/../sub" foo &&
+	git commit -m 'add sub'
+) &&
 
-Thanks.
+# and then in theory we can clone it and check out the submodule
+git -c protocol.file.allow=always clone --recurse-submodules super clone
+-- >8 --
+
+But there were two unexpected bits. The first is that the above doesn't
+just need a way to store the foreign-hash oid in a tree. It needs to be
+in the index, too.
+
+We could perhaps use the same hackery there, storing sha1-...-foo in the
+index with the sentinel hash. Or perhaps we could extend the index to
+support holding foreign hashes. I'm not sure which would be less
+annoying. If the index and trees don't match, then tree-to-index
+comparisons get weird. If the index and filesystem don't match, then
+index to filesystem comparisons get weird. My gut feeling is that making
+index-to-filesystem comparisons weird (so putting the hacked name into
+the index) is probably going to be better, just because the filesystem
+is already out of our control. So we can do sorted comparisons between
+the index and trees, but filesystem operations are inherently asking
+about paths one by one. But I'd have to dig deeper to get more confident
+in that opinion.
+
+The other unexpected thing is that the sequence above works today! I
+think it is mostly accidental, though. When we read the head of the
+submodule, we get a "struct object_id" with a different algo field. But
+we never pay attention to that field, and just treat it as if it is
+using our native algorithm.
+
+So if I use a sha256 submodule in a sha1 repo, the final part of the
+output (in the recursive clone) looks like this:
+
+  Submodule path 'foo': checked out 'db8b8f8006f4564e7862b246c4d57100790e2196'
+
+We've truncated the sha256 to 20 bytes (40 hex) and used that instead of
+the full oid. But Git is flexible enough that it is happy to find the
+object by its abbreviated hash, and checks it out without complaining.
+
+If we go the other way, with a sha1 submodule in a sha256 repo, we get
+this final line:
+
+  Submodule path 'foo': checked out '03f08992d562b03e2af5b4256e17b82be8eafa98000000000000000000000000'
+
+I expected to get random garbage at the end, since we only copied in the
+first 20 bytes, but since c98d762ed9 (global: ensure that object IDs are
+always padded, 2024-06-14) we zero-pad all oids. The intent there was
+making internal comparisons fast, but it happens to help us out here. I
+am a little puzzled that Git is willing to check out the zero-padded
+name, but I wonder if we simply parse it into an object_id struct and
+then only look at the first algo->raw_size bytes.
+
+So it all works as expected, but I feel like it's mostly by accident. My
+gut feeling is that we probably wanted something like this to protect us
+from confusion:
+
+index 06ad74db22..295b0c6318 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -719,6 +719,8 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
+ 	if (S_ISDIR(st_mode)) {
+ 		if (repo_resolve_gitlink_ref(the_repository, path, "HEAD", &oid) < 0)
+ 			return error(_("'%s' does not have a commit checked out"), path);
++		if (oid.algo != hash_algo_by_ptr(the_repository->hash_algo))
++			return error(_("object format %s of '%s' is incompatible with this repository (%s)"), hash_algos[oid.algo].name, path, the_repository->hash_algo->name);
+ 		while (namelen && path[namelen-1] == '/')
+ 			namelen--;
+ 	}
+
+Of course that is strictly worse for somebody who is relying on the
+current accidental behavior. ;) And in the long run, I think this is the
+spot we'd want to hook to do whatever massaging we need (whether
+converting to the equivalent in-repo algorithm, or hacking up the name
+to store the foreign hash).
+
+I also won't be at all surprised if you've run across this already in
+your interop work.
+
+-Peff
