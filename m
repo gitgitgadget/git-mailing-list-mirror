@@ -1,138 +1,107 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E21626B74D
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 07:13:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7591F1538
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 07:37:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759302807; cv=none; b=RgKL0ujToIJn3C+P9YDRFr/MCS6dELxWQsu42ykgmBwsud5JucqLnTdtGbaVHIzKTAkngYFQtPxB/ASahAQRH95vZtIYeQ9KaanmlNB+q90xmI2gNl3WJYvTyDTh7YHkODFvaoBsywvlGdZ3x8tDDQqHtzOQhU5Ngyd2F2vDuGs=
+	t=1759304242; cv=none; b=b4WvY+Yt5Q9XbS5lIXBNo20UdEVpidH5VdFNZe0XFIU6nYQqghcX4B8q1tiE0bRnzhVXgCaEvKdMfKAqef5+kJcnp9LQZKG73EsMrGB5cXITi+iTCGvoUfTQHLbLEmIwMPDmEfIdQse+/5qlV+ZAWgOZRcYaGciaKcMM/+SI+Uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759302807; c=relaxed/simple;
-	bh=1WVaYJSSvCZZEh0djmI1NyoNR6o0oSYSfxiLlqqVOug=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=HnbAX8OKFIccUVg8BKh591ZIDHMaRzcPf6CdzhCMUcm7F2cUWvWol0Ugw8HiHaziT9gS7ArRDTRSyU81Xt8Hh7qy8w4ReXSN6MmdAOnrAhS7SrR8JX31hCr4ypmozSFL7vn+wEWV9dVnCb9CvWaGWtXMqG79y0eVR/quSLyTioY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X614TpWE; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759304242; c=relaxed/simple;
+	bh=qLLkJStI8RqAzVWMN6p60zHkvaFqrmld3p5ofduXBaw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YTT3ki93Br7r4uOTgxwtoGdPf5iwsUI6z9kDyg3IcplgHj40VBnJ4nOhmLt1wcDNeY2PEPjHKUkPc+StVweevSnZjecdHmNzOKdXauZFbAGXQU01An4pkFCs3Xsj1pSIvEkRc9Vpud8vaeCAQgprdVAWdg1m1WmNBo+OgbVcRic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Dqh51xfu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LEqc7Ova; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X614TpWE"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-46e29d65728so46205785e9.3
-        for <git@vger.kernel.org>; Wed, 01 Oct 2025 00:13:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759302804; x=1759907604; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B3tP6cHQBFOtCzB5V5EPROqS5giXUT0XkJKx9/bMCAs=;
-        b=X614TpWEpVdsGVPwDjGSnaFMH5PwC1jQYEfuzXsvv+G/4hk9mRIJ/Vh9Ku5MedqD5W
-         6FMPCxxROD9e4mavc1RRFCVSTLZSFDwgp3fDVnbKlg6/6xCuuCwIeHX7yfn7CP9x4HxF
-         w9vanZV88qixUtvjIBu8+9io2IMJ47aIwrUsYNqbUIYCPdwqy4ywy8Zqobl8kZQvO5wD
-         JRiRv4w7xOO4YBSu8G5eM4gbvM/JQn85SbcsQnsSS5wZK+OkF7yG5hEhcggcoqqfF/vS
-         2A3wabBTgWl0aziNxSZQQBElIozG25xXMBivezHSrJoS6qLKB9uxY/hecer45vANAR6z
-         nj3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759302804; x=1759907604;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=B3tP6cHQBFOtCzB5V5EPROqS5giXUT0XkJKx9/bMCAs=;
-        b=XUjnpUvLX2+AKHQYde42DMj7Zb9l7B2cUHt3OPOFapAtgyZle1wy4J9j85KIP/Ap1P
-         CQ2qwZCdOPKA9r40Te6pHdu5efUPyt2V2/ev08e2Zc9OCQI+UsLKmGZAns8omKEQ7X29
-         P2Q8sxwwe3NxCUbwnWg+GClnXa6w4HTZBRWMl7VV+g0iQiqN/q+Xkfm/+EeU/rKtPVRO
-         KAuI0dGlTfq9MJ06mBuPAlP12UP/aboQVf1prQ7mfJ4bL6GR9eX0nOZ0+Z9KB8RuYNLb
-         g92seljMDwGKabC7eJh+xzJB9+TK6uc6K709xAMq1t+IzuXKpSzp0rOt+oQpX9BDOogz
-         pvGQ==
-X-Gm-Message-State: AOJu0YyyDVR1N3IxyM+dJs01GBKd3l6AbIn1CusLjPoa8mOzlEBYcegr
-	7esceZ4X5BwU8PHkJB0MtXS72vGSajOR6MoFXujIeJVOwxuL1HadhfFrt78SDNI9p0c=
-X-Gm-Gg: ASbGncsUuQnZR33zFaUvZd/tJlRGY6hJfIyrG5IZB+pAkDvKrzhfT4dbFVs+il1e4V6
-	XUCHk3NNpqp3Tr6pq0dI6w4xuUfXOngagPi07RWkE2ebh7Fw+/LIwXZ2r9YxUE4KZiqq6zTYjrQ
-	ZmtOHg/f51M5kvI9NK1OGhnnCeIDKPjH2ldiOdPC7UdSxJkXVcZIBN3bEsRtAXU+ORkkRkszadQ
-	VYMFAfBjVg0J9KVN+uYWyTBkvXzly16kN28XweuSkyXbX8AfCRGMjDk8JaTP8QIV+K6//inx+E+
-	nFJ465xMnRSvTC0BirWShIjFwXazpDfFwBJIhR3EAMDoOleIAlmSzt/Pw/b6d9L4QdugSxW27rU
-	16iTXuVkOlBuyGkwO7uR/8QAUwwuJ6sM32flyix33gO2EEdXquvptK3TS2OjdRjSY9ak=
-X-Google-Smtp-Source: AGHT+IGhDcNKmfsBhvb6emB3sGhQQJelUqEyjmsLfof0At3SCmOf01/m8KBEZayjw/bHC6PsgVbOzg==
-X-Received: by 2002:a5d:64e6:0:b0:3ec:e152:e2ce with SMTP id ffacd0b85a97d-4255780b3bfmr1678417f8f.32.1759302803694;
-        Wed, 01 Oct 2025 00:13:23 -0700 (PDT)
-Received: from smtpclient.apple ([87.224.78.51])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-40fac4a5e41sm27486247f8f.0.2025.10.01.00.13.23
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Oct 2025 00:13:23 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Dqh51xfu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LEqc7Ova"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id DBF8A1D001B3;
+	Wed,  1 Oct 2025 03:37:18 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Wed, 01 Oct 2025 03:37:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1759304238; x=1759390638; bh=tXqrieXYub
+	qd8zwNJTEo8VcVr+jmHN2WRlQuN2bzAk4=; b=Dqh51xfuarWtHTV+zI/zk1DzcY
+	UYJehEyAtzdLLhajA+lSnsEKsmml5nGxl6PgqNw9BQQU2uuLwVN9wTm9ebpMBqQb
+	pyA5ouW8om+uYoW9DdtegsH8FoNQaGH28EANF2rDprUkB9qDJv6cswmFlP2g9l68
+	p6deNNNq//y1fhqGFXykxaq7CUcXc3680S56EmVkzAAFwXbLVkxUBn0rtOYEF4/d
+	n3FiRDnHBTYO0ZkYBnvBZGcHknT3+42j6+1vJyrhwH/Nso26NL2eMb1X+EbSB3Kz
+	1MOn/+hdk8YFp4bSM9jrm00QXGF5ylEiUgLTIUpFXYpzSYniXRqGZCbVxt1Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759304238; x=1759390638; bh=tXqrieXYubqd8zwNJTEo8VcVr+jmHN2WRlQ
+	uN2bzAk4=; b=LEqc7Ovartb6+XCr+VZ0pZDVSH2uj6Hc3nTNbu9N2JCnq/7Pw/R
+	RJd/HrbV1hL4VAQRbRKtR8tob1bA6zMaJfwQ67QQuwru5r+mqQk8rVmJfvKVrouo
+	Dh+G559tYZnU6jz8SmQEE1zPbsUKxiuuclnWHu4mB8X7kB+esryVDvOAsoclcEtt
+	jdPX389tMOh3K7hB0THAR4NU/gd5J4xmOsg+Wgz4nihiZm/e6hfGSSaWlVNmfxzD
+	i4nxDcl5GIuFK61YNO35xL9cOU7CEJhHFTBACoiVVpWoFFPT+/jU8aqpHu1zJSd8
+	2QVn53UvPpf5uU8i0KR0AWDIybF1s22LE4A==
+X-ME-Sender: <xms:LtrcaNgbeErnAzbROZVluzAxlKMO5TtxWVGKocaBwiVkPOOtLMUfaA>
+    <xme:LtrcaJfiGUskfsMooLLaMSrmt7myA0xWc6BHXP2uCUSC4zE5LEz1RZ09h44rkcknl
+    gNwSrC-nA5Igr58SmK40IeTsyi8ffwMWzYH_VzYqZmhLiaoIe2pSAc>
+X-ME-Received: <xmr:LtrcaKcsS0X1kmRPpf7Qm254AvoZSnzP-_SUTOEzSF7tboiDUam69A7cmmfn3YGP-e8SAMkjtOCcOiRqCzhIY1RgO9ykiNlOjxkerrKgIw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekvdehiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
+    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
+    rhgtphhtthhopehgihhtsehlohhhmhgrnhhnrdhshhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:LtrcaL-Q3u_YPPbcL50FJl7k_X5bGXEDvWIZn0AB8m2U7U-AcsHrrw>
+    <xmx:LtrcaOm2RJQcH24SLKRgsyV7oGogMH9_CK6ojyzPjhg1UHVJYibEiQ>
+    <xmx:LtrcaF-49JT4Gs3jT9rj2CIfaGT-HxF8SoBToedufPrQy5pPrMmqiQ>
+    <xmx:LtrcaEnkPhGpgsrM2M14c3K1hHMQeGVMz-g1rDo6PpDk8zhCOpdg6w>
+    <xmx:LtrcaBqRnMqdqasqomsP9Mwen29io7DUJl6LciV6EywxUsccyWhNaowg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 1 Oct 2025 03:37:17 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id e6632c1e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 1 Oct 2025 07:37:15 +0000 (UTC)
+Date: Wed, 1 Oct 2025 09:37:12 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Michael Lohmann <git@lohmann.sh>
+Cc: gitster@pobox.com, git@vger.kernel.org
+Subject: Re: [PATCH v3] builtin/reflog: respect user config in "write"
+ subcommand
+Message-ID: <aNzaKAuuzzX1xg6I@pks.im>
+References: <xmqqplb750f2.fsf@gitster.g>
+ <20250930195320.23825-1-git@lohmann.sh>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: When should we release Git 3.0?
-From: Luca Milanesio <luca.milanesio@gmail.com>
-In-Reply-To: <aNxivuJEnSHbQNdr@fruit.crustytoothpaste.net>
-Date: Wed, 1 Oct 2025 08:13:12 +0100
-Cc: Luca Milanesio <luca.milanesio@gmail.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <E03F997F-1738-4CF6-B7D5-206183FA5BD1@gmail.com>
-References: <aNxivuJEnSHbQNdr@fruit.crustytoothpaste.net>
-To: git@vger.kernel.org
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250930195320.23825-1-git@lohmann.sh>
 
+On Tue, Sep 30, 2025 at 09:53:20PM +0200, Michael Lohmann wrote:
+> The reflog write recognizes only GIT_COMMITTER_NAME and
+> GIT_COMMITTER_EMAIL environment variables, but forgot to honor the
+> user.name and user.email configuration variables, due to lack of
+> repo_config() call to grab these values from the configuration files.
+> 
+> The test suite sets these variables, so this behavior was unnoticed.
+> 
+> Ensure that the reflog write also uses the values of user.name and
+> user.email if set in the Git configuration.
+> 
+> Co-authored-by: Patrick Steinhardt <ps@pks.im>
+> Signed-off-by: Michael Lohmann <git@lohmann.sh>
 
+Thanks, this version looks good to me!
 
-> On 1 Oct 2025, at 00:07, brian m. carlson =
-<sandals@crustytoothpaste.net> wrote:
->=20
-> There's been discussion at the Contributor Summit about when we should
-> release Git 3.0.  The original plan that was discussed was to release =
-in
-> about a year, which is about 4 releases away.
->=20
-> Almost all of the functionality that we had wanted in Git 3.0 has been
-> implemented.  The two major things we may want to consider as blockers
-> for Git 3.0 are the following:
->=20
-> * The SHA-256 interoperability work is not done yet.  My estimate of
->  this work is 200=E2=80=93400 patches, of which about 100 are done.  =
-If the
->  original schedule is maintained, this would require writing up to 75
->  patches and sending in 100 patches per cycle, which is unrealistic
->  without additional contributors.
-> * Some forges and other projects do not yet have full SHA-256 support.
->  It's my understanding that all of the major forges are undertaking or
->  have undertaken this work and are at various levels of completion, =
-but
->  it's not clear that other projects have appropriate support.
->=20
-> We may also wish to stick to a stricter timeframe for this release
-> regardless and make four releases from now or the next release a year
-> away Git 3.0 regardless of whether those items above are completed.
-
-I apologise to not have participated to the Contributor Summit, I just =
-joined the Git Mini-Summit in Amsterdam and we discussed briefly Gerrit =
-3.0 over dinner, but not with such a detail.
-Do you have the notes or recording of the discussion?
-
-I am worried that if we rush into Git 3.0 with breaking changes that =
-would make other =E2=80=9Cforges=E2=80=9D (e.g. JGit) incompatible, we =
-would be in a difficult situation with the other Git ecosystem that =
-isn=E2=80=99t based on the C-Git implementation.
-
-> Discussions at the Contributor Summit did mention the advantage of
-> having a hard deadline would be that it would make projects and forges
-> spend the time to implement SHA-256 support if they're lacking it.
-
-Happy to spend more time on it, I believe Nasser and Martin from the =
-JGit project attended in-person yesterday.
-Any commitment from your side? Do you have budget from your $DAY_JOB?
-
-> I personally do not want the interoperability work to be a blocker.  I
-> haven't really heard other commitments of contributors who want to =
-work
-> on it and I don't really want to have to run full tilt trying to get =
-it
-> out.  However, some other people may feel differently, in which I case =
-I
-> encourage their participation in the project.
-
-Sure, happy to participate.
-
-Luca.=
+Patrick
