@@ -1,178 +1,165 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21649C148
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 20:56:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C1130276F
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 20:59:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759352213; cv=none; b=iSjLO6dCzvXBeaiz/cpU19XF+hO5V4iKkLsA9uuWmg9K6kwStKvwpUBR5ipu+31H/zypajrEehWQJQ8+IVh98nGvvxXB9px48d3AABCtCxSNQdVW/KnCc/0K9BHotwgKkd+SXP0qVHG6dHW/8gsWoCOaS70KIrNG2JXy0Gnt/Xg=
+	t=1759352363; cv=none; b=oI/k6ml/MdwlDfZPit4dkC/4Um04LKRYInZeTNxW0yPo+yAxdheg/9r4IGweH+dcN3LfflGTqdHcYwq6Bd+1Ty7nPM9R7Zjk7cBiTHqWgMBTAQxiY2yrvzNGdRgapwZZAV1lkjdGYvUtHOJkQX8nwVCsjDFQzk2gwG1TqsaocGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759352213; c=relaxed/simple;
-	bh=de9bIPPI88C3yj+xfZZCiOuTpiblDyEfqHT1/cQMsyY=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=gMQto7XTmGnDU9EmhJnEj2+hiqsAvlZjA5dTyvk1K5fY17YnO+STrrWJyTgjr5j9F9dzFfr+XjAkagP0zmPqjkNKUihy8MsvO4tM/GiaxtVjw2Glz8jRrFbZcWAgTQOTaGozSXPL9BI8ksUPM65PXYZmjGf2fypfDy9tL0yKfC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AWXXAaHe; arc=none smtp.client-ip=209.85.210.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759352363; c=relaxed/simple;
+	bh=B5RnTBy4xa0B05GlW6UYUcJ4UvUUswhk8SDf+R9Scu8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jvmkWO0CZjlEkUQVijECfVDPzIcBf/NqZsjSL4AzePcHTTSCDv4RBaUMyO4pm3kJW+zOhp5Hm0/mfzmVdGKkZJIR1nVJ7gcoEL/ygGxMlcBPNNluCLHI6Mi24Oc1CdesD0+u7Xju4W0WzOr5QsAN2NHpbW4i5ko3IwxTdrFnNqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HTb4evUA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QL2JMSwP; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AWXXAaHe"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-781206cce18so286206b3a.0
-        for <git@vger.kernel.org>; Wed, 01 Oct 2025 13:56:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759352211; x=1759957011; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=lh08vWRcS48CIdDW1HczTk9Gp8uevIqP/JVrhH0IPXw=;
-        b=AWXXAaHeUK2eJxgjbRU85jndkXva+L6VVGgaBkbBUabOmd6uYS90P9+4+GTkzG3Odv
-         amG9wau3H9Hh/TqgPgwuUFH3miQOnsSASpCCxRrIHuCFqnG47qsWGZz2xstPiStiEWQO
-         S1pM/jjAlSzAEwPDptccingfTmf/I6HV8du6Du4lKnC1DGe1G+S1XxkLtoZI4FLoYToT
-         xtK5LKp4XouP3TMFnyu8SnxridyZDAwtmtoHGtiqOV0wqckAmvSvoiUwtqLhEEPjHEF7
-         XlwHbB6gLx1qtydwtZoFkf2x/iEDCvAj3uzE58NpdNsJw6CWuhaItTKHAOE60pvN0K8x
-         q6Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759352211; x=1759957011;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lh08vWRcS48CIdDW1HczTk9Gp8uevIqP/JVrhH0IPXw=;
-        b=PZGTybgvfTnRLC3WpHvS/MgXSybRrJs2pQMCM/wfHNjNUSf9rtC+sKI804SXlcAFM8
-         eCLmJ04G1XVSUBDtT2tnHheLi6PaHuqMNtxYCYeqeaHP/VeTsUCKagBlojMtzRm7xW/W
-         9Lzwb9AjmevdTYgThZy/3H1KNzArXugxqh/Cew08ILiMPSa7XHistZc1wq7mQbH32Zy/
-         /oJvb1AQRb24DWvRBvVC7o3h0/dAo3ZKSfoxuf6qgk6ovTl3l8LFxX7V9HJscDYRXY1b
-         2EhkfwEQAcWhccOi8kqaOxLF1gd3CQvCwaLG2YM4wOhp5bESeJzMafxmv1yey+JNW0lG
-         5q1g==
-X-Gm-Message-State: AOJu0Yy0rIJQY4ZFhA88wjhopVrKwHkFZaKyxI2ExEWqBekjWxfZEPV4
-	oWkR4o4og+su6HXAXn4f/GS8NLZ4uT/CLAjlqjW3bJARCraeieqf6t1bWLi5NQ==
-X-Gm-Gg: ASbGncvbdf7DEX0SsrBOfsiNRVnsPpqjYB6hyzxnW74uolHgHnxeH2nQ24cY1p56y7C
-	PhBG80t164kW10l/JoNfjqV6Ro7v0lFS7jq36DQbUziQC7xNH04RobrSlunbuUMk6g3jGuy6ryC
-	ZvUutX16oD6d4u6G+tee5v6duvT6tkaDNYmOHlq03NcFlmsYc2ueN73C0F6sciW6/8Rh+/1jVwh
-	rqZuoIe9u8tu3/z2Y8c6+FgDwbNFlAGtjxbibdNaDYTPIk+Udbga+LvApVxUXu2WCH1pY03KsPk
-	K1dj0lyNQKk3PAzUr4gypxXhe5IaLObQxqtLOtF4eB/zin3nW1RSeLm2UbkZ0S9YABJz40TsqED
-	09w5dpX4ZVsL/idaQdmSPSQ9V1M2JTVPu01Y31v1dPgd68+PLPg==
-X-Google-Smtp-Source: AGHT+IE2l1d/LCmusRpzy9Pl1PzPWYwR7kUmIXzXO0OVlh1xm0VcsqM2p4BWyx7aY3OeWWlbZ8ZuIw==
-X-Received: by 2002:a05:6a20:549c:b0:248:ef8:66df with SMTP id adf61e73a8af0-32a2728446fmr1231219637.30.1759352211029;
-        Wed, 01 Oct 2025 13:56:51 -0700 (PDT)
-Received: from [127.0.0.1] ([172.208.153.22])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b6099f5990csm381144a12.38.2025.10.01.13.56.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Oct 2025 13:56:50 -0700 (PDT)
-Message-Id: <pull.1979.git.1759352209657.gitgitgadget@gmail.com>
-From: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 01 Oct 2025 20:56:49 +0000
-Subject: [PATCH] docs/gitcredentials: describe URL prefix matching
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HTb4evUA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QL2JMSwP"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 611147A00B1;
+	Wed,  1 Oct 2025 16:59:20 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Wed, 01 Oct 2025 16:59:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1759352360;
+	 x=1759438760; bh=75B5gpZVmgqjuaak7oIgsZnePE79SPOZ1wmsN1TcIQ8=; b=
+	HTb4evUAPB+/49A63JCHEXpWYlKQJYv74Ps+cSPNxkbyPqeFTo+2zz4ZEoicN75+
+	mPKK3WETHshkbwad4rlrSd+txnOBITkkSnM1GDXCezR/khSqGeN2u4fsbLccQZvA
+	G4gHOEKhwXL4e21wNhZdmilmfo3HsRHhiMDu1SlKRfImiBsorl7fU5t2PQ7gmlWC
+	92L7X23Mta8AVkPbYnUYfKaJb3hP6YeQUVgOdStvSQcpJGHYbUhSrbSnRKpFxwOi
+	MQxmzFkui4khLTWEAdo7VE0vbFfDNxuqrjsRdIfNZcD+AvUFsv+X9W3J89zEdBs6
+	IozU3sG+DtQyZd0UJWoJMA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759352360; x=
+	1759438760; bh=75B5gpZVmgqjuaak7oIgsZnePE79SPOZ1wmsN1TcIQ8=; b=Q
+	L2JMSwPgAMJpBEMYlajK4flT4tcstwA+lC9yGSPzWqUg6vIV/2fyMhzT7rI9sAey
+	AAY7wDEay2RDRxRxKXXYxfBEZTVX4vPTeB9Ah5Q2mAX1alezJFBw0++GPr8pAnwK
+	QUAyMx/uS5nCPIvGjGgw4rdythP/lPDpRbjpdUxxfyyap9K8k10TbRJBiGlmCuz6
+	gNvhaQy2vCQSC6/sAyLHlMw8OK7KODzynUl2NLhDOcoDIb3FWFUSP2yJeHOzVX8a
+	ILgWUYHnPNhstSjKSQ01fczXON3XkPm+TMdJoLnCWr37o1M8MVBUYXEUYP45Oo22
+	8K2bs+E8FnHJJwWRIyNzQ==
+X-ME-Sender: <xms:J5bdaPAZ0ixNep8COcbxAxxvGHYlmzNTilSyvVrhKpSa_tU4rREhQg>
+    <xme:J5bdaIGLthRVD2U1USyJM3aMhouJTN8NjXZQcNl9uUWbTj9vn5uEAXbWnZySDORbp
+    311DAjyCcDGcfgTYy2m-h_vMjrK-43OwHmcAZRghB-UQ6OnXqlq>
+X-ME-Received: <xmr:J5bdaOMgGdO01I1_IgyeKTmsZroaLQdGDTkeMA9a5TMAaZEIB5BYIBwle2oB7U9eBAMQq_OC-po4eiqecNPUjYsgkfSGzTPUOYKz>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekgeduiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoheprhhitghksehsfh
+    gtohhnshgvrhhvrghntgihrdhorhhgpdhrtghpthhtohepghhithesshhftghonhhsvghr
+    vhgrnhgthidrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlih
+    hnsehgmhigrdguvgdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoheptghh
+    rhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:J5bdaB6oD66tGuqq11m2dPuIaMnHiYmSHnlw2eD3ylBPrPq5B22EQA>
+    <xmx:J5bdaJi43a76w7SGv0inyrzuHYyiC0OiKHPYFoO3K1ZnuglC2KzdSg>
+    <xmx:J5bdaOfeAbbUNwLGxTpLbvQZxYlkaNOcPk0ogMDq8mr5aYKa-ILLcw>
+    <xmx:J5bdaJxuCsWkWLoSaJXRDoMBTx5JiTPMAXVxdalFdQzTqUo32k1zYw>
+    <xmx:KJbdaIm7AIXr48G45zH-CYrNW4_TI6nvRD8KnDum0vyYTBM_As6PYVL0>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 1 Oct 2025 16:59:18 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Rick Sanders
+ <rick@sfconservancy.org>,  Git at SFC <git@sfconservancy.org>,  Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>,  Patrick Steinhardt <ps@pks.im>,
+  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2] SubmittingPatches: add section about AI
+In-Reply-To: <20251001140310.527097-1-christian.couder@gmail.com> (Christian
+	Couder's message of "Wed, 1 Oct 2025 16:02:50 +0200")
+References: <xmqqcyalm0mh.fsf@gitster.g>
+	<20251001140310.527097-1-christian.couder@gmail.com>
+Date: Wed, 01 Oct 2025 13:59:17 -0700
+Message-ID: <xmqq4isi1gpm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: sandals@crustytoothpaste.net,
-    Johannes.Schindelin@gmx.de,
-    M Hickford <mirth.hickford@gmail.com>,
-    M Hickford <mirth.hickford@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-From: M Hickford <mirth.hickford@gmail.com>
+Christian Couder <christian.couder@gmail.com> writes:
 
-Documentation was inaccurate since 9a121b0d226 (credential: handle
-`credential.<partial-URL>.<key>` again, 2020-04-24)
+> As more and more developer tools use AI, we are facing two main risks
+> related to AI generated content:
+>
+>   - its situation regarding copyright and license is not clear,
+>     and:
+>
+>   - more and more bad quality content could be submitted for review to
+>     the mailing list.
+>
+> To mitigate both risks, let's add an "Use of Artificial Intelligence"
+> section to "Documentation/SubmittingPatches" with the goal of
+> discouraging its blind use to generate content that is submitted to
+> the project, while still allowing us to benefit from its help in some
+> innovative, useful and less risky ways.
+>
+> Helped-by: Rick Sanders <rick@sfconservancy.org>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>
+> ---
+> This is inspired by the "AI guidelines" section we already have for
 
-Add tests for documented behaviour.
+A more important thing to mention is that Rick is a lawyer at SFC
+helped us to draft the wording used in this one.
 
-Signed-off-by: M Hickford <mirth.hickford@gmail.com>
----
-    docs/gitcredentials: describe URL prefix matching
+> +[[ai]]
+> +=== Use of Artificial Intelligence (AI)
+> +
+> +The Developer's Certificate of Origin requires contributors to certify
+> +that they know the origin of their contributions to the project and
+> +that they have the right to submit it under the project's license.
+> +It's not yet clear that this can be legally satisfied when submitting
+> +significant amount of content that has been generated by AI tools.
+> +
+> +Another issue with AI generated content is that AIs still often
+> +hallucinate or just produce bad code, commit messages, documentation
+> +or output, even when you point out their mistakes.
+> +
+> +To avoid these issues, we will reject anything that looks AI
+> +generated, that sounds overly formal or bloated, that looks like AI
+> +slop, that looks good on the surface but makes no sense, or that
+> +senders don’t understand or cannot explain.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1979%2Fhickford%2Furl-prefix-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1979/hickford/url-prefix-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1979
+A milder way to phrase this would be to jump directly to "we reject
+what the sender cannot explain when asked about it".  "How does this
+work?"  "Why is this a good thing to do?"  "Where did it come from?"
+instead of saying "looks AI generated".
 
- Documentation/gitcredentials.adoc | 15 +++++++--------
- t/t0300-credentials.sh            | 19 +++++++++++++++----
- 2 files changed, 22 insertions(+), 12 deletions(-)
+It would sidestep the "who decides if it looks AI generated?" question.
 
-diff --git a/Documentation/gitcredentials.adoc b/Documentation/gitcredentials.adoc
-index 3337bb475d..60c2cc4ade 100644
---- a/Documentation/gitcredentials.adoc
-+++ b/Documentation/gitcredentials.adoc
-@@ -150,9 +150,8 @@ pattern in the config file. For example, if you have this in your config file:
- 	username = foo
- --------------------------------------
- 
--then we will match: both protocols are the same, both hosts are the same, and
--the "pattern" URL does not care about the path component at all. However, this
--context would not match:
-+then we will match: both protocols are the same and both hosts are the same.
-+However, this context would not match:
- 
- --------------------------------------
- [credential "https://kernel.org"]
-@@ -166,11 +165,11 @@ match: Git compares the protocols exactly.  However, you may use wildcards in
- the domain name and other pattern matching techniques as with the `http.<URL>.*`
- options.
- 
--If the "pattern" URL does include a path component, then this too must match
--exactly: the context `https://example.com/bar/baz.git` will match a config
--entry for `https://example.com/bar/baz.git` (in addition to matching the config
--entry for `https://example.com`) but will not match a config entry for
--`https://example.com/bar`.
-+If the "pattern" URL does include a path component, then this must match
-+as a prefix path: the context `https://example.com/bar` will match a config
-+entry for `https://example.com/bar/baz.git` but will not match a config entry for
-+`https://example.com/other/repo.git` or `https://example.com/barry/repo.git`
-+(even though it is a string prefix).
- 
- 
- CONFIGURATION OPTIONS
-diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
-index cb3a85c7ff..07aa834d33 100755
---- a/t/t0300-credentials.sh
-+++ b/t/t0300-credentials.sh
-@@ -991,18 +991,24 @@ test_expect_success 'url parser not confused by encoded markers' '
- 
- test_expect_success 'credential config with partial URLs' '
- 	echo "echo password=yep" | write_script git-credential-yep &&
--	test_write_lines url=https://user@example.com/repo.git >stdin &&
-+	test_write_lines url=https://user@example.com/org/repo.git >stdin &&
- 	for partial in \
- 		example.com \
-+		example.com/org/repo.git \
- 		user@example.com \
-+		user@example.com/org/repo.git \
- 		https:// \
- 		https://example.com \
- 		https://example.com/ \
-+		https://example.com/org \
-+		https://example.com/org/ \
-+		https://example.com/org/repo.git \
- 		https://user@example.com \
- 		https://user@example.com/ \
--		https://example.com/repo.git \
--		https://user@example.com/repo.git \
--		/repo.git
-+		https://user@example.com/org \
-+		https://user@example.com/org/ \
-+		https://user@example.com/org/repo.git \
-+		/org/repo.git
- 	do
- 		git -c credential.$partial.helper=yep \
- 			credential fill <stdin >stdout &&
-@@ -1012,7 +1018,12 @@ test_expect_success 'credential config with partial URLs' '
- 
- 	for partial in \
- 		dont.use.this \
-+		example.com/o \
-+		user@example.com/o \
- 		http:// \
-+		https://example.com/o \
-+		https://user@example.com/o \
-+		/o \
- 		/repo
- 	do
- 		git -c credential.$partial.helper=yep \
+> +We strongly recommend using AI tools carefully and responsibly.
+> +
+> +Contributors would often benefit more from AI by using it to guide and
+> +help them step by step towards producing a solution by themselves
+> +rather than by asking for a full solution that they would then mostly
+> +copy-paste. They can also use AI to help with debugging, or with
+> +checking for obvious mistakes, things that can be improved, things
+> +that don’t match our style, guidelines or our feedback, before sending
+> +it to us.
+> +
+>  [[git-tools]]
+>  === Generate your patch using Git tools out of your commits.
 
-base-commit: 821f583da6d30a84249f75f33501504d597bc16b
--- 
-gitgitgadget
+
+Thanks.
