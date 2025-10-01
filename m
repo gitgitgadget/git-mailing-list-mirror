@@ -1,85 +1,85 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC2628467B
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 15:58:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F4C27F010
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 15:58:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759334297; cv=none; b=ZTzPWtKzgw+fOMCpJ0n4ZL4tm+6vYIvj/qRQLSJI98umLSQZqaa4Zt5hNb37avvjev6HP8SsefeWA1U9H8jr/SHMUGhkHLy6l/PcnEGH/cdr1eanLQcYFqOUnGJ0BWCpWeHw0ZAQ/1i+6ZyUhK3B8uJIQ0GK83URbauf7lJ37Tw=
+	t=1759334300; cv=none; b=fkLuu+ezeJLUBnKoEQqMfgkOdJSALsw3PWB0pYPCMoObx/Tho+6tNDyFrLNeGbyrgNUeJrZ5QmZncZTVakwSz5VRS7fW3Azrij1unzXNFFgB0phLl1YKOOZF8tGe2TwAoK/JzzQnvDy/mBlg7fZvP/Ek+WGkjv/ny9bT+FUPx/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759334297; c=relaxed/simple;
-	bh=PEPhYn4OulEyOEWu7s2o7bmfQwJapL8cbDKA3HTLxVQ=;
+	s=arc-20240116; t=1759334300; c=relaxed/simple;
+	bh=ZGU8Qup26GtalYHjTOyhrH+rosIMixBsdcqctbCiPsw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=MSOfNHhwOkaWgPUkMpMcMoM6QsBXVYyzvgdWWQH/uF8cj3DPOW7Tb/TmK/AeD68emrjHpQ4Vujdrk+vKf0+7d4lhqRRc0ZcLlOmJGI1Pn3PU/aOCcie5cADr950drwsl24Vs0VvWNz+pvNpWPAgWpOGqblfapHcjkS4uYepyENw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ehL8f89v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fYFNm6oy; arc=none smtp.client-ip=202.12.124.146
+	 In-Reply-To:To:Cc; b=XVDCton4/OhzXmGzDpDcUmtdRlz2afQIM/b/7g1vGv776uoWzzUKpSt0+VHtSBnL5x1aEYjR9u/+PZ7HcYwFMGWGW9aaVFGLazdGGlxu1a11HMOWcDdBPW343U94ek1ucTjhBTk7kiGVXUvEAcizjiPyuBQ6aMJKc5ghY/rAx6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nWCYGm2F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xb1cBj7Q; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ehL8f89v";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fYFNm6oy"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nWCYGm2F";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xb1cBj7Q"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 58F021D00308;
-	Wed,  1 Oct 2025 11:58:14 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 546247A00C3;
+	Wed,  1 Oct 2025 11:58:18 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 01 Oct 2025 11:58:14 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 01 Oct 2025 11:58:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759334294;
-	 x=1759420694; bh=MXU1KRTtbZaU6zDazqGuOb6Jhpjj2xNTXJMcNaVwAnU=; b=
-	ehL8f89vYEMPrUPXEdEfRee3XQQVlbUowAa65ATwTHQjVnI7HJ0o3GmFrRnVP+b7
-	vvG82+pmhdcElYgvk59Njp4IFDyxELkp9TWo4R2hKMW60PHkXeCz21tJ5hYMerYg
-	Owy4ycfxs2WzQZMMMKs0ykty3rIyUXuWkwOHrQhLX6t73piSSWPBqa1WXwrXk8uQ
-	6CZZvY0JfnoLpPcI0MplYwQ7GBtD2oiN6b4CqGP6McGdp1p4pL2fcRG6nEi7pGqR
-	lXgrNIYJbd4tzSxihSd++gqzfyqfSzDx/BLptJFHH9hwXk7L6UvVuCxH+RWC3gNj
-	mA6duPGMBgOjS9Mpm3tocA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759334298;
+	 x=1759420698; bh=RDbIdZqf4SH6GYywf06d7mz2m6s0uY24GBl0re7yLDk=; b=
+	nWCYGm2FS2C9g5s32jygNbcohBUjozq2PImcg8lEMrCqlKJtipY4MTHCGlkQ7cYO
+	ngWUlAf7/IPuN2BgzpNdCKPsFazbFEWRnt3is3nzuebYJ2fVPhWDHuaBqyIWQD2I
+	1tJjzNxeFFNurcDwZMHYq1l2oCEcSfldZRUueStLgMgCZiPh30IRi1vpBu5uAs0Q
+	6M9z2t6NT+G7dsWBeg1NbWm2rMR/mDoA0diQFAn+oUIx4NFlLhWIsEMtB7VwL+Rg
+	dcEgn9uVMZVFgE0IeSv6RxSU46LW06AwIlIBrJaqQs6OqHq5IvqceBOAmyaMyvYh
+	IsGz4rBssvOPh/Gnhhtmew==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759334294; x=
-	1759420694; bh=MXU1KRTtbZaU6zDazqGuOb6Jhpjj2xNTXJMcNaVwAnU=; b=f
-	YFNm6oyHX6rR2C6h0cvuNNzUggqpe/UbUcrJbFakuINNoaPvpcywrztPDADD9AJ0
-	KSp4RGg8dVXOHrqA94dFVgwtR3MqYIBA5YUkRzMxVVb/uGuEK8HjIbIOJS2b503z
-	8KxLtNp26ufkAPDnzwTRBWhhVcOBGA0TWrrHK8tp2spFL114gygwzTbVkkB3ET0v
-	pldjqerC0NCS2lmKwYbMgH6AzQNUwf0WKK9Bvx6J/jMCFRXTSxK5Q4kI5jp35sLL
-	ntBqHEaQKtqulfZCl7zZWYbdT0Ca5HDf8p5EngiPu3K4OQsvBZ7i4+lKwAUUotKl
-	YjbM/xOQ1RcgdF8GOy/Ig==
-X-ME-Sender: <xms:lk_daOOtxYRnDOicQf352TXVfGHLb-CY5EGNSQRFCLNsx9qnBa3wCQ>
-    <xme:lk_daMD2EdjY9xMFUnxlJ05odgr7r1iaieSOvjWX9eTozYxViK_4PIe8e96ncEzfL
-    oEDhRwDSGYtkHoNFvNt4uAOOLT3dXu4YGgtbDDikfWIOBE1EYwbJw>
-X-ME-Received: <xmr:lk_daLdN4680YMSbAWyenQSCJuHYN_rS-DWBf9AvEa0m9tiTEVq6jIPL3WyhHmhXqEFosm090UqWKRvvY9fVm2TFMOcULWbYXI8G6DSziQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759334298; x=
+	1759420698; bh=RDbIdZqf4SH6GYywf06d7mz2m6s0uY24GBl0re7yLDk=; b=X
+	b1cBj7QwVzJYbwKBBmaGGzHTz96HpP57HlNethGq4olplwNCZvlzoV/JqYVzQ8gO
+	stnuZwmA4Mk0LZDDyLGgq+8ySnaXjta+3D43fWQaDYPPoo7flFw3W0NL5wF3RGRa
+	5egEzMY/kCj2DCIDLI2ACm6DfNDvJNWyEt46RJaeFylkJ2yAyRtAzWxy3pN3Iybx
+	Q0XTnlwh4GZebd6rReV+4YRC7/+eIs4LE5SLpw1MOrJoq6FuRrX4pDpsD14nX4Ro
+	BVWLseG/CsWrnGTWUh+UaFvMXfU3DoOCj0Ss6w+A63CiqCJGb7TGhGUuOpYH/bqx
+	8vdxVkwH9gtYPIPNlbfhQ==
+X-ME-Sender: <xms:mk_daPAbLbudii6jdM56mv44PugGMYcP3P0UK4KXt15UZZ1_zg01KA>
+    <xme:mk_daEmA96jRuQiCb0_P5mPQmDxq6MKUqHl1TJe2M7ZjG1qRl9yCs5zpQqwAB-_Q8
+    oGiomc2JgW5fDywQVi4S1IEsFdCUl8VpxGtw8wYOdKBevSQEEYU>
+X-ME-Received: <xmr:mk_daAzze3M4xM3fKquvHqCofg0ykNuOtuYMEDp4ju4rff-wkZ2peNreDrUG3UdlqllZjIxVEYMgMdBWQvwTSm5t9jy0kSGJ6sVhqzCrZA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekfeehiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epgffhtdevvdekteegueetvdelgffgjedtkefguedtveehheevhfetiefggfelveeinecu
-    ffhomhgrihhnpegtfhhgrdhhvghlphenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeekpdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepmhgr
-    rhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhorhhgrghnohhvse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkh
-    hrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:lk_daLOeN-dr41PHuyS7q7YTURMmSV7d8U7KRQcehpLcpGMPmq8ZOw>
-    <xmx:lk_daLLyhRo6ZTTzYYTKYFr0UJ8R2174ppCm-9bvPt5icY78zq_QkQ>
-    <xmx:lk_daLI_5JszVe_uR5CrDe2BfNyIKBEjWOvhr0258RSrGAFcLn6qhA>
-    <xmx:lk_daF5bRAhC8PuCXQSeKTM_POzKqUoP1N289AJu5v6rEehRAQCvjQ>
-    <xmx:lk_daHJQoNZZtT9NdxLQsHX2N6XjIw7UNkss8BTOUH0389fwxxJSuHIV>
+    epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
+    vehluhhsthgvrhfuihiivgepgeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepmhgrrhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsohhrghgrnhhovhesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpth
+    htohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgr
+    vhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgsh
+    gsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgr
+    ihhlrdgtohhm
+X-ME-Proxy: <xmx:mk_daORhHHQC27OsjmWLSCnDi9TXynnHHZE9O-TtTakedy8aAy48Dg>
+    <xmx:mk_daI8Udw4eYQKlTyCwZnDgLXwrvj4_-aFxaGlVz7VEfAByAELf2w>
+    <xmx:mk_daMs4uPvTzlUyjJqWZ7PPh74Vy_EvWHcA-vj-Lgwi3HdbLEC8dw>
+    <xmx:mk_daAPhXZjYAYj6Wf0GIo8sBXsdpDR19s9s47UWOh0kMGPDTX3s9A>
+    <xmx:mk_daLFogiLIhmuzKeea5KQG9eb2RI29CJb59anfcrOIeHZvEVXhmmu1>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Oct 2025 11:58:12 -0400 (EDT)
+ 1 Oct 2025 11:58:16 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 913ce7b5 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 1 Oct 2025 15:58:12 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 3aa7a2f4 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 1 Oct 2025 15:58:15 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 01 Oct 2025 17:57:35 +0200
-Subject: [PATCH v4 09/12] add-patch: remove dependency on "add-interactive"
- subsystem
+Date: Wed, 01 Oct 2025 17:57:36 +0200
+Subject: [PATCH v4 10/12] add-patch: add support for in-memory index
+ patching
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,7 +88,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251001-b4-pks-history-builtin-v4-9-8e61ddb86317@pks.im>
+Message-Id: <20251001-b4-pks-history-builtin-v4-10-8e61ddb86317@pks.im>
 References: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im>
 In-Reply-To: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im>
 To: git@vger.kernel.org
@@ -100,240 +100,214 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  Elijah Newren <newren@gmail.com>
 X-Mailer: b4 0.14.2
 
-With the preceding commit we have split out interactive configuration
-that is used by both "git add -p" and "git add -i". But we still
-initialize that configuration in the "add -p" subsystem by calling
-`init_add_i_state()`, even though we only do so to initialize the
-interactive configuration as well as a repository pointer.
+With `run_add_p()` callers have the ability to apply changes from a
+specific revision to a repository's index. This infra supports several
+different modes, like for example applying changes to the index,
+worktree or both.
 
-Stop doing so and instead store and initialize the interactive
-configuration in `struct add_p_state` directly.
+One feature that is missing though is the ability to apply changes to an
+in-memory index different from the repository's index. Add a new
+function `run_add_p_index()` to plug this gap.
+
+This new function will be used in a subsequent commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- add-patch.c | 70 ++++++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 37 insertions(+), 33 deletions(-)
+ add-patch.c | 110 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ add-patch.h |   8 +++++
+ 2 files changed, 115 insertions(+), 3 deletions(-)
 
 diff --git a/add-patch.c b/add-patch.c
-index 29c15695dd..9c0f3b23ef 100644
+index 9c0f3b23ef..fac82c3886 100644
 --- a/add-patch.c
 +++ b/add-patch.c
-@@ -2,7 +2,6 @@
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
+@@ -4,11 +4,13 @@
  #include "git-compat-util.h"
--#include "add-interactive.h"
  #include "add-patch.h"
  #include "advice.h"
++#include "commit.h"
  #include "config.h"
-@@ -263,7 +262,8 @@ struct hunk {
- };
+ #include "diff.h"
+ #include "editor.h"
+ #include "environment.h"
+ #include "gettext.h"
++#include "hex.h"
+ #include "object-name.h"
+ #include "pager.h"
+ #include "read-cache-ll.h"
+@@ -263,6 +265,8 @@ struct hunk {
  
  struct add_p_state {
--	struct add_i_state s;
-+	struct repository *r;
-+	struct interactive_config cfg;
+ 	struct repository *r;
++	struct index_state *index;
++	const char *index_file;
+ 	struct interactive_config cfg;
  	struct strbuf answer, buf;
  
- 	/* parsed diff */
-@@ -408,7 +408,7 @@ static void add_p_state_clear(struct add_p_state *s)
- 	for (i = 0; i < s->file_diff_nr; i++)
- 		free(s->file_diff[i].hunk);
- 	free(s->file_diff);
--	clear_add_i_state(&s->s);
-+	interactive_config_clear(&s->cfg);
- }
- 
- __attribute__((format (printf, 2, 3)))
-@@ -417,9 +417,9 @@ static void err(struct add_p_state *s, const char *fmt, ...)
- 	va_list args;
- 
- 	va_start(args, fmt);
--	fputs(s->s.cfg.error_color, stdout);
-+	fputs(s->cfg.error_color, stdout);
- 	vprintf(fmt, args);
--	puts(s->s.cfg.reset_color_interactive);
-+	puts(s->cfg.reset_color_interactive);
- 	va_end(args);
- }
- 
-@@ -437,7 +437,7 @@ static void setup_child_process(struct add_p_state *s,
+@@ -437,7 +441,7 @@ static void setup_child_process(struct add_p_state *s,
  
  	cp->git_cmd = 1;
  	strvec_pushf(&cp->env,
--		     INDEX_ENVIRONMENT "=%s", s->s.r->index_file);
-+		     INDEX_ENVIRONMENT "=%s", s->r->index_file);
+-		     INDEX_ENVIRONMENT "=%s", s->r->index_file);
++		     INDEX_ENVIRONMENT "=%s", s->index_file);
  }
  
  static int parse_range(const char **p,
-@@ -542,12 +542,12 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
- 	int res;
- 
- 	strvec_pushv(&args, s->mode->diff_cmd);
--	if (s->s.cfg.context != -1)
--		strvec_pushf(&args, "--unified=%i", s->s.cfg.context);
--	if (s->s.cfg.interhunkcontext != -1)
--		strvec_pushf(&args, "--inter-hunk-context=%i", s->s.cfg.interhunkcontext);
--	if (s->s.cfg.interactive_diff_algorithm)
--		strvec_pushf(&args, "--diff-algorithm=%s", s->s.cfg.interactive_diff_algorithm);
-+	if (s->cfg.context != -1)
-+		strvec_pushf(&args, "--unified=%i", s->cfg.context);
-+	if (s->cfg.interhunkcontext != -1)
-+		strvec_pushf(&args, "--inter-hunk-context=%i", s->cfg.interhunkcontext);
-+	if (s->cfg.interactive_diff_algorithm)
-+		strvec_pushf(&args, "--diff-algorithm=%s", s->cfg.interactive_diff_algorithm);
- 	if (s->revision) {
- 		struct object_id oid;
- 		strvec_push(&args,
-@@ -576,9 +576,9 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
- 	}
- 	strbuf_complete_line(plain);
- 
--	if (want_color_fd(1, s->s.cfg.use_color_diff)) {
-+	if (want_color_fd(1, s->cfg.use_color_diff)) {
- 		struct child_process colored_cp = CHILD_PROCESS_INIT;
--		const char *diff_filter = s->s.cfg.interactive_diff_filter;
-+		const char *diff_filter = s->cfg.interactive_diff_filter;
- 
- 		setup_child_process(s, &colored_cp, NULL);
- 		xsnprintf((char *)args.v[color_arg_index], 8, "--color");
-@@ -811,7 +811,7 @@ static void render_hunk(struct add_p_state *s, struct hunk *hunk,
- 				   hunk->colored_end - hunk->colored_start);
- 			return;
- 		} else {
--			strbuf_addstr(out, s->s.cfg.fraginfo_color);
-+			strbuf_addstr(out, s->cfg.fraginfo_color);
- 			p = s->colored.buf + header->colored_extra_start;
- 			len = header->colored_extra_end
- 				- header->colored_extra_start;
-@@ -833,7 +833,7 @@ static void render_hunk(struct add_p_state *s, struct hunk *hunk,
- 		if (len)
- 			strbuf_add(out, p, len);
- 		else if (colored)
--			strbuf_addf(out, "%s\n", s->s.cfg.reset_color_diff);
-+			strbuf_addf(out, "%s\n", s->cfg.reset_color_diff);
- 		else
- 			strbuf_addch(out, '\n');
- 	}
-@@ -1221,12 +1221,12 @@ static void recolor_hunk(struct add_p_state *s, struct hunk *hunk)
- 
- 		strbuf_addstr(&s->colored,
- 			      plain[current] == '-' ?
--			      s->s.cfg.file_old_color :
-+			      s->cfg.file_old_color :
- 			      plain[current] == '+' ?
--			      s->s.cfg.file_new_color :
--			      s->s.cfg.context_color);
-+			      s->cfg.file_new_color :
-+			      s->cfg.context_color);
- 		strbuf_add(&s->colored, plain + current, eol - current);
--		strbuf_addstr(&s->colored, s->s.cfg.reset_color_diff);
-+		strbuf_addstr(&s->colored, s->cfg.reset_color_diff);
- 		if (next > eol)
- 			strbuf_add(&s->colored, plain + eol, next - eol);
- 		current = next;
-@@ -1345,7 +1345,7 @@ static int run_apply_check(struct add_p_state *s,
- 
- static int read_single_character(struct add_p_state *s)
- {
--	if (s->s.cfg.use_single_key) {
-+	if (s->cfg.use_single_key) {
- 		int res = read_key_without_echo(&s->answer);
- 		printf("%s\n", res == EOF ? "" : s->answer.buf);
- 		return res;
-@@ -1359,7 +1359,7 @@ static int read_single_character(struct add_p_state *s)
- static int prompt_yesno(struct add_p_state *s, const char *prompt)
- {
- 	for (;;) {
--		color_fprintf(stdout, s->s.cfg.prompt_color, "%s", _(prompt));
-+		color_fprintf(stdout, s->cfg.prompt_color, "%s", _(prompt));
- 		fflush(stdout);
- 		if (read_single_character(s) == EOF)
- 			return -1;
-@@ -1640,15 +1640,15 @@ static int patch_update_file(struct add_p_state *s,
- 		else
- 			prompt_mode_type = PROMPT_HUNK;
- 
--		printf("%s(%"PRIuMAX"/%"PRIuMAX") ", s->s.cfg.prompt_color,
-+		printf("%s(%"PRIuMAX"/%"PRIuMAX") ", s->cfg.prompt_color,
- 			      (uintmax_t)hunk_index + 1,
- 			      (uintmax_t)(file_diff->hunk_nr
- 						? file_diff->hunk_nr
- 						: 1));
- 		printf(_(s->mode->prompt_mode[prompt_mode_type]),
- 		       s->buf.buf);
--		if (*s->s.cfg.reset_color_interactive)
--			fputs(s->s.cfg.reset_color_interactive, stdout);
-+		if (*s->cfg.reset_color_interactive)
-+			fputs(s->cfg.reset_color_interactive, stdout);
- 		fflush(stdout);
- 		if (read_single_character(s) == EOF)
- 			break;
-@@ -1805,7 +1805,7 @@ static int patch_update_file(struct add_p_state *s,
- 				err(s, _("Sorry, cannot split this hunk"));
- 			} else if (!split_hunk(s, file_diff,
- 					     hunk - file_diff->hunk)) {
--				color_fprintf_ln(stdout, s->s.cfg.header_color,
-+				color_fprintf_ln(stdout, s->cfg.header_color,
- 						 _("Split into %d hunks."),
- 						 (int)splittable_into);
- 				rendered_hunk_index = -1;
-@@ -1823,7 +1823,7 @@ static int patch_update_file(struct add_p_state *s,
- 		} else if (s->answer.buf[0] == '?') {
- 			const char *p = _(help_patch_remainder), *eol = p;
- 
--			color_fprintf(stdout, s->s.cfg.help_color, "%s",
-+			color_fprintf(stdout, s->cfg.help_color, "%s",
- 				      _(s->mode->help_patch_text));
- 
- 			/*
-@@ -1841,7 +1841,7 @@ static int patch_update_file(struct add_p_state *s,
- 				if (*p != '?' && !strchr(s->buf.buf, *p))
- 					continue;
- 
--				color_fprintf_ln(stdout, s->s.cfg.help_color,
-+				color_fprintf_ln(stdout, s->cfg.help_color,
- 						 "%.*s", (int)(eol - p), p);
- 			}
- 		} else {
-@@ -1861,7 +1861,7 @@ static int patch_update_file(struct add_p_state *s,
+@@ -1861,7 +1865,7 @@ static int patch_update_file(struct add_p_state *s,
  		strbuf_reset(&s->buf);
  		reassemble_patch(s, file_diff, 0, &s->buf);
  
--		discard_index(s->s.r->index);
-+		discard_index(s->r->index);
+-		discard_index(s->r->index);
++		discard_index(s->index);
  		if (s->mode->apply_for_checkout)
  			apply_for_checkout(s, &s->buf,
  					   s->mode->is_reverse);
-@@ -1872,8 +1872,8 @@ static int patch_update_file(struct add_p_state *s,
+@@ -1872,9 +1876,11 @@ static int patch_update_file(struct add_p_state *s,
  					 NULL, 0, NULL, 0))
  				error(_("'git apply' failed"));
  		}
--		if (repo_read_index(s->s.r) >= 0)
--			repo_refresh_and_write_index(s->s.r, REFRESH_QUIET, 0,
-+		if (repo_read_index(s->r) >= 0)
-+			repo_refresh_and_write_index(s->r, REFRESH_QUIET, 0,
+-		if (repo_read_index(s->r) >= 0)
++		if (read_index_from(s->index, s->index_file, s->r->gitdir) >= 0 &&
++		    s->index == s->r->index) {
+ 			repo_refresh_and_write_index(s->r, REFRESH_QUIET, 0,
  						     1, NULL, NULL, NULL);
++		}
  	}
  
-@@ -1886,11 +1886,15 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
- 	      const struct pathspec *ps)
+ 	putchar('\n');
+@@ -1887,6 +1893,8 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
  {
  	struct add_p_state s = {
--		{ r }, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
+ 		.r = r,
++		.index = r->index,
++		.index_file = r->index_file,
+ 		.answer = STRBUF_INIT,
+ 		.buf = STRBUF_INIT,
+ 		.plain = STRBUF_INIT,
+@@ -1945,3 +1953,99 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
+ 	add_p_state_clear(&s);
+ 	return 0;
+ }
++
++int run_add_p_index(struct repository *r,
++		    struct index_state *index,
++		    const char *index_file,
++		    struct interactive_options *opts,
++		    const char *revision,
++		    const struct pathspec *ps)
++{
++	struct patch_mode mode = {
++		.apply_args = { "--cached", NULL },
++		.apply_check_args = { "--cached", NULL },
++		.prompt_mode = {
++			N_("Stage mode change [y,n,q,a,d%s,?]? "),
++			N_("Stage deletion [y,n,q,a,d%s,?]? "),
++			N_("Stage addition [y,n,q,a,d%s,?]? "),
++			N_("Stage this hunk [y,n,q,a,d%s,?]? ")
++		},
++		.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
++				     "will immediately be marked for staging."),
++		.help_patch_text =
++			N_("y - stage this hunk\n"
++			   "n - do not stage this hunk\n"
++			   "q - quit; do not stage this hunk or any of the remaining "
++				"ones\n"
++			   "a - stage this hunk and all later hunks in the file\n"
++			   "d - do not stage this hunk or any of the later hunks in "
++				"the file\n"),
++		.index_only = 1,
++	};
++	struct add_p_state s = {
 +		.r = r,
++		.index = index,
++		.index_file = index_file,
 +		.answer = STRBUF_INIT,
 +		.buf = STRBUF_INIT,
 +		.plain = STRBUF_INIT,
 +		.colored = STRBUF_INIT,
- 	};
- 	size_t i, binary_count = 0;
- 
--	init_add_i_state(&s.s, r, opts);
++		.mode = &mode,
++		.revision = revision,
++	};
++	struct strbuf parent_revision = STRBUF_INIT;
++	char parent_tree_oid[GIT_MAX_HEXSZ + 1];
++	size_t binary_count = 0;
++	struct commit *commit;
++	int ret;
++
++	commit = lookup_commit_reference_by_name(revision);
++	if (!commit) {
++		err(&s, _("Revision does not refer to a commit"));
++		ret = -1;
++		goto out;
++	}
++
++	if (commit->parents)
++		oid_to_hex_r(parent_tree_oid, get_commit_tree_oid(commit->parents->item));
++	else
++		oid_to_hex_r(parent_tree_oid, r->hash_algo->empty_tree);
++
++	strbuf_addf(&parent_revision, "%s~", revision);
++	mode.diff_cmd[0] = "diff-tree";
++	mode.diff_cmd[1] = "-r";
++	mode.diff_cmd[2] = parent_tree_oid;
++
 +	interactive_config_init(&s.cfg, r, opts);
++
++	if (parse_diff(&s, ps) < 0) {
++		ret = -1;
++		goto out;
++	}
++
++	for (size_t i = 0; i < s.file_diff_nr; i++) {
++		if (s.file_diff[i].binary && !s.file_diff[i].hunk_nr)
++			binary_count++;
++		else if (patch_update_file(&s, s.file_diff + i))
++			break;
++	}
++
++	if (s.file_diff_nr == 0) {
++		err(&s, _("No changes."));
++		ret = -1;
++		goto out;
++	}
++
++	if (binary_count == s.file_diff_nr) {
++		err(&s, _("Only binary files changed."));
++		ret = -1;
++		goto out;
++	}
++
++	ret = 0;
++
++out:
++	strbuf_release(&parent_revision);
++	add_p_state_clear(&s);
++	return ret;
++}
+diff --git a/add-patch.h b/add-patch.h
+index a4a05d9d14..901c42fd7b 100644
+--- a/add-patch.h
++++ b/add-patch.h
+@@ -3,6 +3,7 @@
  
- 	if (mode == ADD_P_STASH)
- 		s.mode = &patch_mode_stash;
+ #include "color.h"
+ 
++struct index_state;
+ struct pathspec;
+ struct repository;
+ 
+@@ -53,4 +54,11 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
+ 	      struct interactive_options *opts, const char *revision,
+ 	      const struct pathspec *ps);
+ 
++int run_add_p_index(struct repository *r,
++		    struct index_state *index,
++		    const char *index_file,
++		    struct interactive_options *opts,
++		    const char *revision,
++		    const struct pathspec *ps);
++
+ #endif
 
 -- 
 2.51.0.700.g236ee7b076.dirty
