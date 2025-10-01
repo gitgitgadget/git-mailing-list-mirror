@@ -1,51 +1,49 @@
-Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0AF017AE1D
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 17:31:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
+Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07085288DB
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 17:36:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759339881; cv=none; b=JQgzb8lnaes3Td4YeQiPyyPGYg1oU/R4oJwKTdG3ndHisaapnuHZ9rFl252A6eTgcCLBiFvJvBUGnXr2U30DjJPLXzTPSUuCw/9QtrAHTQ0so1S5iMFcgOyOGra2Vyw7Gy7AveYdlUZpotSNOa6d8ncXzxo2fM5u9uNz/A3qMyk=
+	t=1759340178; cv=none; b=oKIQeBIumwiNJ8740j2gWres+xDy9nkDDvDLgwAEYwyBZFV098FcZckB5+wJUo649faAbYt8dHo+T6E6hpG+qcKv2oH/N8KfCsbymScn3/qA3Rb7/8SYMVJfqkPU1QKu3A4i/Pakw58eYPDJXD62UggokVIxgID6geH5gtmhrm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759339881; c=relaxed/simple;
-	bh=kf51B6zDTuijL5ckfYO7/2iXi1Y1uox5Lbqkc79uBrI=;
+	s=arc-20240116; t=1759340178; c=relaxed/simple;
+	bh=282pDPnsPSTPkwSDFeC2JVPtOUCZTTbbklX5PvfEymE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Dec863l7vLLosE0sX8dKsKt9E2JtK/mixe8xOTxAuYAWAJlvkXWdXBDlM+xim8kxgAFlo6PwuLnEoMRL6DI4Xp4qkmdVXhc42pIosV3gNb705bNtBnz3i3/DkItzlEBcSm6jAwduhwSXbmiuXD/tABTJVNwjxoIq7knq+YiuwpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=pEegFDS3; arc=none smtp.client-ip=212.27.42.10
+	 MIME-Version:Content-Type; b=roh6+BJKf7X58WZjtIoilfj7ongi8jwWJiwp/NHefzcEVKCSjBFWjRj//VT55VDUkJ2llG+Nsu0RUHVQcmQaDq2ka6N4J7C6R0acRsoaeBF516cN54jlmTlQkY++LhPJWKsOzHUXqNewTeuaOVyFI8fcOem4S3XzUht3uFgBPI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=dUR/tEO8; arc=none smtp.client-ip=212.27.42.3
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="pEegFDS3"
-Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
-	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 5C2BC4D24A
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 19:31:07 +0200 (CEST)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="dUR/tEO8"
 Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:f5ae:5744:1198:6c76])
 	(Authenticated sender: jn.avila@free.fr)
-	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 6366B13F8CE;
-	Wed,  1 Oct 2025 19:30:55 +0200 (CEST)
+	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 4E09113F89A;
+	Wed,  1 Oct 2025 19:36:09 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1759339860;
-	bh=kf51B6zDTuijL5ckfYO7/2iXi1Y1uox5Lbqkc79uBrI=;
+	s=smtp-20201208; t=1759340174;
+	bh=282pDPnsPSTPkwSDFeC2JVPtOUCZTTbbklX5PvfEymE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pEegFDS3NJ72sFK5g0iGSlWwWzJHPrGu4Z4lhPSTLFb6hiLfAm2fEI/k5Wyej8zQn
-	 4YaOpzIDWWKpugJcQ+jaPbWKhe8rjrHwBWvTjC2OtpPRZHyiYC3wH8MfL3AeJm1RWa
-	 Msm6MepEkZMcjA9ryNhS15Fs5okwJ8XIbv6h+LqVQGA1wVDnZrgcodNwXGq7Hs/Vtx
-	 wPalpbOXogqZXcb/GWn9ozvaDnsOzNPyOo1ceewaYHa6kpswgv8eclVmEyanc64Xbe
-	 xVHFuZ4I3z/L1RaxvmbmqjjMl2QADQ6GRaJuHHNaYsnMRdw8Cws0YXPp5bvQOl0p3p
-	 YCxic3LrTeRwA==
+	b=dUR/tEO8XetTTt8x/E0k9AYbY/5RM6Wor25YSlVEXeIrx95B/7JoL4Az/IxxH+eXF
+	 IriEVln+6ulCWoeBXvqm6uALb1ccAWQSiLTkw4xt4HtFv3h8l4tlT7Yvf/uDd8gL/a
+	 eik0UMoGS0Av1sas80SUnhs+1n4WyaKxn87Cc5ar5DLZUDwxGPLRtTm2iyLhyf2CZA
+	 Gn5l3K65CtVM3TH3zI1n2FQYoi3BlQjTAfCbUZzBXLOv4K7m5Zamu9nBchulbwaNC/
+	 ZaBzLezom4fWcmVqsPzH7qC/KEPeg0yN2IeWMFnUiHFBvW63dpnvIeZo2PDYf61ual
+	 OSngMtwtT9zaA==
 From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
 To: git@vger.kernel.org, Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
 Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
  Julia Evans <julia@jvns.ca>, Julia Evans <julia@jvns.ca>
-Subject:
- Re: [PATCH v4 2/5] doc: add an UPSTREAM BRANCHES section to pull/push/fetch
-Date: Wed, 01 Oct 2025 19:30:55 +0200
-Message-ID: <5044672.31r3eYUQgx@cayenne>
+Subject: Re: [PATCH v4 4/5] doc: git-push: clarify "what to push"
+Date: Wed, 01 Oct 2025 19:36:09 +0200
+Message-ID: <5015949.GXAFRqVoOG@cayenne>
 In-Reply-To:
- <69825d46349e55dd1b17444ab4e6d542fd44f371.1759262314.git.gitgitgadget@gmail.com>
+ <c1d4ea8d27ff037fcc40c2c6dc1c4f0bd9000b1b.1759262314.git.gitgitgadget@gmail.com>
 References:
  <pull.1964.v3.git.1758649472.gitgitgadget@gmail.com>
  <pull.1964.v4.git.1759262314.gitgitgadget@gmail.com>
- <69825d46349e55dd1b17444ab4e6d542fd44f371.1759262314.git.gitgitgadget@gmail.com>
+ <c1d4ea8d27ff037fcc40c2c6dc1c4f0bd9000b1b.1759262314.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -55,129 +53,111 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="utf-8"
 
-On Tuesday, 30 September 2025 21:58:31 CEST Julia Evans via GitGitGadget 
+On Tuesday, 30 September 2025 21:58:33 CEST Julia Evans via GitGitGadget 
 wrote:
 > From: Julia Evans <julia@jvns.ca>
 > 
-> From user feedback: one user mentioned that they don't know what the
-> term "upstream branch" means. As far as I can tell, the most complete
-> description is under the `--track` option in `git branch`. Upstreams
-> are an important concept in Git and the `git branch` man page is not an
-> obvious place for that information to live.
+> From user feedback: 6 users says they found the "what to push"
+> paragraphs confusing, for many different reasons, including:
 > 
-> There's also a very terse description of "upstream branch" in the
-> glossary that's missing a lot of key information, like the fact that the
-> upstream is used by `git status` and `git pull`, as well as a
-> description in `git-config` in `branch.<name>.remote` which doesn't
-> explain the relationship to `git status` either.
+> * what does "..." in <refspec>... mean?
+> * "consult XXX configuration" is hard to parse
+> * it refers to the `git-config` man page even though the config
+>   information for `git push` is included in this man page under
+>   CONFIGURATION
+> * the default ("push to a branch with the same name") is what they use
+>   99% of the time, they would have expected it to appear earlier instead
+>   of at the very end
+> * not understanding what the term "upstream" means in Git
+>   ("are branches tracked by some system besides their names?"")
 > 
-> Since the `git pull`, `git push`, and `git fetch` man pages already
-> include sections on REMOTES and the syntax for URLs, add a section on
-> UPSTREAM BRANCHES to `urls-remotes.adoc`.
+> Also, the current explanation of `push.default=simple` ("the
+> current branch is pushed to the corresponding upstream branch, but
+> as a safety measure, the push is aborted if the upstream branch
+> does not have the same  name as the local one.") is not accurate:
+> `push.default=simple` does not always require you to set a corresponding
+> upstream branch.
 > 
-> In the new UPSTREAM BRANCHES section, cover the various ways that
-> upstreams branches are automatically set in Git, since users may
-> mistakenly think that their branch does not have an upstream branch if
-> they didn't explicitly set one.
+> Address all of these by
 > 
-> A terminology note: Git uses two terms for this concept:
+> * using a numbered "in order of precedence" list
+> * giving a more accurate explanation of how `push.default=simple` works
+> * giving a little bit of context around "upstream branch": it's
+>   something that you may have to set explicitly
+> * referring to the new UPSTREAM BRANCHES section
 > 
-> - "tracking" as in "the tracking information for the 'foo' branch"
->   or the `--track` option to `git branch`
-> - "upstream" or "upstream branch", as in `git push --set-upstream`.
->   This term is also used in the `git rebase` man page to refer to the
->   first argument to `git rebase`, as well as in `git pull` to refer to
->   the branch which is going to be merged into the current branch ("merge
->   the upstream branch into the current branch")
+> The default behaviour is still discussed pretty late but it should be
+> easier to skim now to get to the relevant information.
 > 
-> Use "upstream branch" as a heading for this concept even though the term
-> "upstream branch" is not always used strictly in the sense of "the
-> tracking information for the current branch". "Upstream" is used much
-> more often than "tracking" in the Git docs to refer to this concept and
-> the goal is to help users understand the docs.
+> In "`git push` may fail if...",  I'm intentionally being vague about
+> what exactly `git push` does, because (as discussed on the mailing list)
+> the behaviour of `push.default=simple` is very confusing, perhaps broken,
+> and certainly not worth trying to explain in an introductory context.
+> `push.default.simple` sometimes requires you to set an upstream and
+> sometimes doesn't and the exact conditions under which it does/doesn't
+> are hard to describe.
 > 
 > Signed-off-by: Julia Evans <julia@jvns.ca>
 > ---
->  Documentation/urls-remotes.adoc | 43 +++++++++++++++++++++++++++++++--
->  1 file changed, 41 insertions(+), 2 deletions(-)
+>  Documentation/git-push.adoc | 28 +++++++++++++++-------------
+>  1 file changed, 15 insertions(+), 13 deletions(-)
 > 
-> diff --git a/Documentation/urls-remotes.adoc b/Documentation/urls-
-remotes.adoc
-> index 9b10151198..dba5adeb58 100644
-> --- a/Documentation/urls-remotes.adoc
-> +++ b/Documentation/urls-remotes.adoc
-> @@ -92,5 +92,44 @@ git push uses:
->  ------------
+> diff --git a/Documentation/git-push.adoc b/Documentation/git-push.adoc
+> index acdf25e5cd..2848cf2e1f 100644
+> --- a/Documentation/git-push.adoc
+> +++ b/Documentation/git-push.adoc
+> @@ -26,18 +26,20 @@ that isn't already on the remote.
+>  The `<repository>` argument defaults to the upstream for the current 
+branch,
+>  or `origin` if there's no configured upstream.
 > 
-> 
+> -When the command line does not specify what to push with `<refspec>...`
+> -arguments or `--all`, `--mirror`, `--tags` options, the command finds
+> -the default `<refspec>` by consulting `remote.*.push` configuration,
+> -and if it is not found, honors `push.default` configuration to decide
+> -what to push (See linkgit:git-config[1] for the meaning of `push.default`).
 > -
-> -
-> +UPSTREAM BRANCHES[[UPSTREAM-BRANCHES]]
-> +--------------------------------------
-
-Please do not put anchors on the same line as the paragraph. The anchor is 
-attached to the paragraph (the block in asciidoc terminology) if it is not 
-attached to an inline element. So it can appear just before the block with the 
-same effect.
-
-Additionally, this clears up the text from the anchor, which is safer for 
-translation.
-
-[[UPSTREAM-BRANCHES]]
-UPSTREAM BRANCHES
-
+> -When neither the command-line nor the configuration specifies what to
+> -push, the default behavior is used, which corresponds to the `simple`
+> -value for `push.default`: the current branch is pushed to the
+> -corresponding upstream branch, but as a safety measure, the push is
+> -aborted if the upstream branch does not have the same name as the
+> -local one.
+> +To decide which branches, tags, or other refs to push, Git uses
+> +(in order of precedence):
 > +
-> +Branches in Git can optionally have an upstream remote branch.
-> +Git defaults to using the upstream branch for remote operations, for 
-example:
-> +
-> +* It's the default for `git pull` or `git fetch` with no arguments.
-> +* It's the default for `git push` with no arguments, with some exceptions.
-> +  For example, you can use the `branch.<name>.pushRemote` option to push
-> +  to a different remote than you pull from, and by default with
-> +  `push.default=simple` the upstream branch you configure must have
-> +  the same name.
-> +* Various commands, including `git checkout` and `git status`, will
-> +  show you how many commits have been added to your current branch and
-> +  the upstream since you forked from it, for example "Your branch and
-> +  'origin/main' have diverged, and have 2 and 3 different commits each
-> +  respectively".
-> +
-> +The upstream is stored in `.git/config`, in the "remote" and "merge"
-> +fields. For example, if `main`'s upstream is `origin/main`:
-> +
-> +	[branch "main"]
-> +	   remote = origin
-> +	   merge = refs/heads/main
-> +
+> +1. The `<refspec>` argument(s) (for example `main` in `git push origin 
+main`)
+> +   or the `--all`, `--mirror`, or `--tags` options
+> +2. The `remote.*.push` configuration for the repository being pushed to
+> +3. The `push.default` configuration. The default is `push.default=simple`,
+> +   which will push to a branch with the same name as the current branch.
+> +   See the <<CONFIGURATION,CONFIGURATION>> section below for more on
 
-Please mark the code block with a dedicated fence:
+Good: using the cross-reference with custom label is translator's friendly.  
+Thank you.
 
-----
-[branch "main"]
-   remote = origin
-   merge = refs/heads/main
-----
 
-using tabs may lead to issues if the text is modified later.
+> `push.default`. +
+> +`git push` may fail if you haven't set an upstream for the current branch,
+> +depending on what `push.default` is set to.
+> +See the <<UPSTREAM-BRANCHES,UPSTREAM BRANCHES>> section below for more
+> +on how to set and use upstreams.
+> 
+>  You can make interesting things happen to a repository
+>  every time you push into it, by setting up 'hooks' there.  See
+> @@ -696,7 +698,7 @@ a `git gc` command on the origin repository.
+> 
+>  include::transfer-data-leaks.adoc[]
+> 
+> -CONFIGURATION
+> +CONFIGURATION[[CONFIGURATION]]
+>  -------------
 
-> +You can set an upstream branch explicitly with
-> +`git push --set-upstream <remote> <branch>` or `git branch --track`,
-> +but Git will often automatically set the upstream for you, for example:
-> +
-> +* When you clone a repository, Git will automatically set the upstream
-> +  for the default branch.
-> +* If you have the `push.autoSetupRemote` configuration option set,
-> +  `git push` will automatically set the upstream the first time you push
-> +  a branch.
-> +* Checking out a remote-tracking branch with `git checkout <branch>`
-> +  will automatically create a local branch with that name and set
-> +  the upstream to the remote branch.
-> +
-> +[NOTE]
-> +Upstream branches are sometimes referred to as "tracking information",
-> +as in "set the branch's tracking information".
+Same remark concerning anchors.
 
-Thanks
+Otherwise, LGTM
+
+
 
 
