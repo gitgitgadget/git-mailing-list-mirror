@@ -1,107 +1,104 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7591F1538
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 07:37:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD2D17A2FC
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 08:15:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759304242; cv=none; b=b4WvY+Yt5Q9XbS5lIXBNo20UdEVpidH5VdFNZe0XFIU6nYQqghcX4B8q1tiE0bRnzhVXgCaEvKdMfKAqef5+kJcnp9LQZKG73EsMrGB5cXITi+iTCGvoUfTQHLbLEmIwMPDmEfIdQse+/5qlV+ZAWgOZRcYaGciaKcMM/+SI+Uo=
+	t=1759306560; cv=none; b=vCw+kIjlu9AlTJHc7BziwpQr8c4I54Z0hlxuYUqwv9MjRzS//lPkLtc7xsFcoN1HdZInDhA94bjRjIWeTaot7MSkFjDgOJ9ecQZo156eens/ZVdCudNS7R3ktyMv/huB8frPVQoVomO2uBTIQO0Xd47CINIM7r0LEJnXoOpOe8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759304242; c=relaxed/simple;
-	bh=qLLkJStI8RqAzVWMN6p60zHkvaFqrmld3p5ofduXBaw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YTT3ki93Br7r4uOTgxwtoGdPf5iwsUI6z9kDyg3IcplgHj40VBnJ4nOhmLt1wcDNeY2PEPjHKUkPc+StVweevSnZjecdHmNzOKdXauZFbAGXQU01An4pkFCs3Xsj1pSIvEkRc9Vpud8vaeCAQgprdVAWdg1m1WmNBo+OgbVcRic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Dqh51xfu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LEqc7Ova; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1759306560; c=relaxed/simple;
+	bh=SqP7W8shkY2ogiC7sRWYuRh8Db97n0tmvsvlRRQpcI0=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=azlYg7W6OrDGccZqJR72cVQNho9oP5voRu8r8w6CESa8PMa7xqtfIbRzsQrjYY/Wwv1Fw5r6H3uuBz/f8fJKua14/dwh+xA9QrtXusdikm8sMIaU7HiX9rkEC4/FFPE2FPcg3j+FrrXqi+ngnWSx9Exvj8dG+IiAtQGvATPyywQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=bSwAcIAo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Sa/YwoP8; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Dqh51xfu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LEqc7Ova"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id DBF8A1D001B3;
-	Wed,  1 Oct 2025 03:37:18 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 01 Oct 2025 03:37:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759304238; x=1759390638; bh=tXqrieXYub
-	qd8zwNJTEo8VcVr+jmHN2WRlQuN2bzAk4=; b=Dqh51xfuarWtHTV+zI/zk1DzcY
-	UYJehEyAtzdLLhajA+lSnsEKsmml5nGxl6PgqNw9BQQU2uuLwVN9wTm9ebpMBqQb
-	pyA5ouW8om+uYoW9DdtegsH8FoNQaGH28EANF2rDprUkB9qDJv6cswmFlP2g9l68
-	p6deNNNq//y1fhqGFXykxaq7CUcXc3680S56EmVkzAAFwXbLVkxUBn0rtOYEF4/d
-	n3FiRDnHBTYO0ZkYBnvBZGcHknT3+42j6+1vJyrhwH/Nso26NL2eMb1X+EbSB3Kz
-	1MOn/+hdk8YFp4bSM9jrm00QXGF5ylEiUgLTIUpFXYpzSYniXRqGZCbVxt1Q==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="bSwAcIAo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Sa/YwoP8"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id BA967EC0184;
+	Wed,  1 Oct 2025 04:15:56 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Wed, 01 Oct 2025 04:15:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759306556;
+	 x=1759392956; bh=SqP7W8shkY2ogiC7sRWYuRh8Db97n0tmvsvlRRQpcI0=; b=
+	bSwAcIAoopjeGN762SQVjQ+VQ+QT8IDdEnawh4fL3q6pBUTCydWzyMHTc+ctQmQQ
+	zW5QWsonQRHaO70S0e/V1rrcA3fDheZIRSCmmkmJHAxjEvCF6PhDaB7bReFFgTek
+	Z0YvhigkghO1dKzwzVzhDfHdcY3ehUiPy3xF/2x+2wa709UmjYjKzJn6G+SDiKAb
+	s5irBaUiavEGqrkRuwlcC60XgaNp9hWaSE7AkMLf5nnxbAW1rIxWZntn5x83DNmi
+	3yJ8QHX9HuJ42y/xK7Z8zO1tL6ra+SbWlMr4TFcLSgqmy5kD8N8f1+CAkUlJkHN9
+	lLqZp5NPEJFytOLUrF1+vQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759304238; x=1759390638; bh=tXqrieXYubqd8zwNJTEo8VcVr+jmHN2WRlQ
-	uN2bzAk4=; b=LEqc7Ovartb6+XCr+VZ0pZDVSH2uj6Hc3nTNbu9N2JCnq/7Pw/R
-	RJd/HrbV1hL4VAQRbRKtR8tob1bA6zMaJfwQ67QQuwru5r+mqQk8rVmJfvKVrouo
-	Dh+G559tYZnU6jz8SmQEE1zPbsUKxiuuclnWHu4mB8X7kB+esryVDvOAsoclcEtt
-	jdPX389tMOh3K7hB0THAR4NU/gd5J4xmOsg+Wgz4nihiZm/e6hfGSSaWlVNmfxzD
-	i4nxDcl5GIuFK61YNO35xL9cOU7CEJhHFTBACoiVVpWoFFPT+/jU8aqpHu1zJSd8
-	2QVn53UvPpf5uU8i0KR0AWDIybF1s22LE4A==
-X-ME-Sender: <xms:LtrcaNgbeErnAzbROZVluzAxlKMO5TtxWVGKocaBwiVkPOOtLMUfaA>
-    <xme:LtrcaJfiGUskfsMooLLaMSrmt7myA0xWc6BHXP2uCUSC4zE5LEz1RZ09h44rkcknl
-    gNwSrC-nA5Igr58SmK40IeTsyi8ffwMWzYH_VzYqZmhLiaoIe2pSAc>
-X-ME-Received: <xmr:LtrcaKcsS0X1kmRPpf7Qm254AvoZSnzP-_SUTOEzSF7tboiDUam69A7cmmfn3YGP-e8SAMkjtOCcOiRqCzhIY1RgO9ykiNlOjxkerrKgIw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekvdehiecutefuodetggdotefrod
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1759306556; x=1759392956; bh=S
+	qP7W8shkY2ogiC7sRWYuRh8Db97n0tmvsvlRRQpcI0=; b=Sa/YwoP8zySqfLKmk
+	/3ftxiv740+H/fSZUltAkBEwUZqgqhPvu9AoJFYskkCQkHxw9uzqhpkVclLbDLUN
+	aCISdQw5FCU9bGJxQJFW3ItDmor9Ku2Z71smL883YRHDp1rhgRZHROoQfpPFDCEf
+	eugwx2xplKykYU8V3XIeOlvpv6sQMqNLD+6JklCPdA96fDOjFiX+dO8VEzgztyNO
+	Z+iHaA1Dr5iwlYJQ90HpyUEDS/b7kl1T8RSF/XXVmqtxJnrUekJJGwuqNREcGCLZ
+	WeveCnw/K2ckeQzSx3Fbjbp7gCMs5G4RJgSoBAt/MXQUuiNizhFdSuABqOsaNeo2
+	0kQqQ==
+X-ME-Sender: <xms:POPcaF-ZV9pfu82Qf-yJLlEjE_gwO6MZI3h05wwx6e0wDIM7aqsPhZs>
+    <xme:POPcaEh7OkwlGERsIzs_yA_LVJ2jI6E5AVBGNTIxeExapSX3Km3MA7dEsmFth630i
+    meXMegepIJcFno_ZtOLmGKGAf57qh1xwO0v6QiEYrJAA6C1oWjy>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekvdeifecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
-    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
-    rhgtphhtthhopehgihhtsehlohhhmhgrnhhnrdhshhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:LtrcaL-Q3u_YPPbcL50FJl7k_X5bGXEDvWIZn0AB8m2U7U-AcsHrrw>
-    <xmx:LtrcaOm2RJQcH24SLKRgsyV7oGogMH9_CK6ojyzPjhg1UHVJYibEiQ>
-    <xmx:LtrcaF-49JT4Gs3jT9rj2CIfaGT-HxF8SoBToedufPrQy5pPrMmqiQ>
-    <xmx:LtrcaEnkPhGpgsrM2M14c3K1hHMQeGVMz-g1rDo6PpDk8zhCOpdg6w>
-    <xmx:LtrcaBqRnMqdqasqomsP9Mwen29io7DUJl6LciV6EywxUsccyWhNaowg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Oct 2025 03:37:17 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e6632c1e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 1 Oct 2025 07:37:15 +0000 (UTC)
-Date: Wed, 1 Oct 2025 09:37:12 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Michael Lohmann <git@lohmann.sh>
-Cc: gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH v3] builtin/reflog: respect user config in "write"
- subcommand
-Message-ID: <aNzaKAuuzzX1xg6I@pks.im>
-References: <xmqqplb750f2.fsf@gitster.g>
- <20250930195320.23825-1-git@lohmann.sh>
+    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkjghfufgtgfesthejredtre
+    dttdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhr
+    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtf
+    frrghtthgvrhhnpefftdffhfefffejfeffteetvdettdevfeetheegtdehtdeiudefffdu
+    leffleeljeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
+    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvg
+    epshhmthhpohhuthdprhgtphhtthhopehhvghnrhhiqhhuvghgohhgohesghhmrghilhdr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:POPcaEoWxzktU1_SmG2aHax7ryRAQdoIBc7ef-RfBNComX2_IFv5NQ>
+    <xmx:POPcaIlC3VenoLjGC2SlQb8eNUfbe6zr5p8oyNqw81ubrYFNhm7-3g>
+    <xmx:POPcaAzoDkGImXbfXhq7sWdy2CW4je7hd9-r8svgUWlSN_IoVRMFiQ>
+    <xmx:POPcaImAewhGtAEPJRJLbWsHxiq3QoheHEPYaF4uk1CVN1VQ359swQ>
+    <xmx:POPcaJQleOYicbDERetGcLyHMawNl6CN-LB2FeGq6MCakNa4VzBcogzi>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 64B3F1EA0068; Wed,  1 Oct 2025 04:15:56 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250930195320.23825-1-git@lohmann.sh>
+X-ThreadId: AM38Qt76lGbZ
+Date: Wed, 01 Oct 2025 10:15:35 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Henrique Soares" <henriquegogo@gmail.com>, git@vger.kernel.org
+Message-Id: <ba6b9a5e-72b5-4d66-a484-37140438702a@app.fastmail.com>
+In-Reply-To: <aNygY8Cm7LEaBzV6@localhost>
+References: <aNygY8Cm7LEaBzV6@localhost>
+Subject: Re: How mantainers check Git diffs and patches?
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Tue, Sep 30, 2025 at 09:53:20PM +0200, Michael Lohmann wrote:
-> The reflog write recognizes only GIT_COMMITTER_NAME and
-> GIT_COMMITTER_EMAIL environment variables, but forgot to honor the
-> user.name and user.email configuration variables, due to lack of
-> repo_config() call to grab these values from the configuration files.
-> 
-> The test suite sets these variables, so this behavior was unnoticed.
-> 
-> Ensure that the reflog write also uses the values of user.name and
-> user.email if set in the Git configuration.
-> 
-> Co-authored-by: Patrick Steinhardt <ps@pks.im>
-> Signed-off-by: Michael Lohmann <git@lohmann.sh>
+On Wed, Oct 1, 2025, at 05:30, Henrique Soares wrote:
+> This is a simple question I have related to the PR diff review process.
+>
+> How Git maintainers use to check diffs and review the code? I mean,
+> sometimes I see that there are some large PATCHES that is hard or
+> probably impossible to review only using e-mail client.
+>
+> Do you use some syntax highlight in client e-mail; any pipeline that
+> automatically download e-mails and apply to a local branch; or for each
+> PR you save the e-mail file then "git apply" to review / test the diff?
+>
+> This isn't a technical question, I'm just curious about how you do it.
 
-Thanks, this version looks good to me!
+Here is a relevant message (2016).
 
-Patrick
+https://lore.kernel.org/git/20160809113703.57irthzzpg6j3dmv@sigill.intra.peff.net/
