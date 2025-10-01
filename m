@@ -1,176 +1,87 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1974A1DC994
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 00:58:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859431531C8
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 03:30:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759280305; cv=none; b=KSPkJsZ9w4tl4oHowmgdpuLT1htyE3vhJq195m3p8Bg2FYFWRvLISkw+XOlcyIvABrFdAdmpQcNO+y+Z5FqRbuFHNMcFdDLKg1sFq34eU62Yg7i09J3K75uS5sEACNemSmVaj2czRKyfdTKAJVnpIvBBZksL6y7Ns3FQwHIKwpE=
+	t=1759289449; cv=none; b=ZAFC7EHJvIe+aunSD5oyPxhSC+JuCOzgWsHekWMfqerta8gF1F2KVnnUFvNbeJtliFki0EsLScw9WWiws0GDKJB/K3z7aP9E63xph5LnEJlj0LACmrjS3QxFNVzocWhd8Lx9V3sOgXIgwKs2F8d+oq5/y/16XDtHqgz5IlF+lXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759280305; c=relaxed/simple;
-	bh=tBQHyLui0Q6qs6bD3FOXPwKHgOXK9fuUmk6Au/KrmMk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mRPNX5AC9/oKvxzvf1gTJJvzobuPH3fxe+zLHTkz2e7t1NtZBpyjQdBwJjr0lLwQN4W45lLokTie5twCtCFLjRKCDVuUNf2XYAfn2ooYBvWSFG4KrvQjuzpZhDCF6bBmvZoI1N9BzEBooBXVse1Do1e1agHtf3ooNq7dDDhzuqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=hO8O8tGs; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1759289449; c=relaxed/simple;
+	bh=WFcby7g1UvMfs3CF+aci2HAfc2W13cTNCT7Gy7GPFVc=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=ZbiUt3oPcm/sHXGiifE8tTNz5cxNo5P+oFGMii4X4xUcTzaiXBYya+aSLvBvUlaCqQXxexXBaCZscxYiBj+yS8yqfEG+QhMfkth8s9nAcRFZW6gmNhJPK1GS+mg3jnlc1ibOGqhIeOnlQBQ1d+ID0YmB46nI9hc3493oPw4xlCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VmvXhDyM; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="hO8O8tGs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1759280300;
-	bh=tBQHyLui0Q6qs6bD3FOXPwKHgOXK9fuUmk6Au/KrmMk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=hO8O8tGsW+UdLba5wJ+KzpTnQXr9Gxq1gJpANvoVC+UZbOwz7PsRVrGEMbFMDV9UA
-	 0WJDI6dVXA15ohTL2vHUpLckJQOW8Pqh/TCllaoJ1AAVmpPHGKcHMcF8n1du7heN8e
-	 pTEtQqaSxtFs2AgkivazTtCLM/+QEUtSuONqCwUC/AJT0ZogssXh2dHZMqYYmhN/aS
-	 rbJLB1VpDB/RHPBoQirt6no82/mhb1VRS+XoiSfs3EOgm+zdM5qCqre8zUt5YAV0XJ
-	 UBLz5c9qxGlcpw/MMGUWeMFhanxv5l96Pk0u3nlUYBJv7WhhdYQjtgzCjUs7d19QUk
-	 3n1r4BlqfnxNeFJfSl57hsQBOX5xnLE8J8giLgI/RFRQD9zNttfKKIahjF2hkwR6k7
-	 5mbxbKmieTJOmigPHgszk4v0ZFgBATSghNLcVIXSq2EtVmfBB7+BV3Mr0wdv0Jirr7
-	 1DLFF7M7CmnY5RdLykLVTZM2217fclZGNldjptiCNt8eXNyRbNv
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:3c0c:de88:5b0d:9364])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id D578920119;
-	Wed,  1 Oct 2025 00:58:20 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Jeff King <peff@peff.net>
-Subject: [RFC PATCH 1/1] Define an extended tree format
-Date: Wed,  1 Oct 2025 00:58:14 +0000
-Message-ID: <20251001005814.846992-2-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
-In-Reply-To: <20251001005814.846992-1-sandals@crustytoothpaste.net>
-References: <20251001005814.846992-1-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VmvXhDyM"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-7833765433cso5086837b3a.0
+        for <git@vger.kernel.org>; Tue, 30 Sep 2025 20:30:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759289447; x=1759894247; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WFcby7g1UvMfs3CF+aci2HAfc2W13cTNCT7Gy7GPFVc=;
+        b=VmvXhDyMkmSGtrbGTWUeuYGwog8Frl/vjjWCX5LyMZ7gDnvQFqRmaEZd61iBnTsBep
+         r99/f2DctIGtajEdAMzR/EA7Sfh1M8aVd3q8e0vev4OcJVegL67Ez5RZmUWlmAiKFbAx
+         DVLBUhMs0NmTbhzPKJDhxuc1TbgZdIr538G+lfaO1UcG50C54sck18UjDRmfIBJb2xmQ
+         7m3v/DBQh+9Qf31dAi4BHIAn0qmyl2L1Gs6nIWxsJlC3YmbKmEvB3Gk2u9LlurTsqnua
+         et/7Kicmwbevn2CcXJ4rbUud4lhM+Lb+hMSqxZr8Nib4qNW99u2HlSMUhFM3D6daGAey
+         TDng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759289447; x=1759894247;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WFcby7g1UvMfs3CF+aci2HAfc2W13cTNCT7Gy7GPFVc=;
+        b=MafV1lO3LGh9Km4lSMd67uju0F+1cVZQpQIH2S7iIFzl1lGl1mKay6VmbNTmSPqGPU
+         Vwo2/hoe31WTYzZJpU5kCSRvNEApfKs+M9hBr09oWss0KkQLVfCSMvE6ueJCgjdR1npL
+         Rzq8qbgpQvkURz8pitgz7RwNNXrfst7DdrDVM0g3w5hZ2GoqcC0trPlEnx2v1dg4zNOw
+         BQY+yGk8LDGIs4vGnWOU+XYD1otDAtW8soBXIuwEEvbvPl/ZWxF5mERxMZvnkA63O867
+         BVKNW44YaF26AEpTzo/ucvj6ivwyq3/dP8cPWlW2itR9HCIbudZpp0Afu0Ox4GBoMfjs
+         r6qw==
+X-Gm-Message-State: AOJu0YzswouMIORrk3gxf5VVnonxFbBncIvOUvD+kWQ8pFaAWdtQkguz
+	zHhK+u51/gDfWkOD8kvOk/EI2hj8Qk5vpoRIUpLuBAGiWZcLYQy9KSill7GPnpMC
+X-Gm-Gg: ASbGnctLujQYoIbqbKuXNcWZGx/E33QGLww9nFlfJWykryf6uwOVmp9iRHWpexsafWx
+	+XxeljI6hWTq+PJBaxwr9pABAtmBN6yswoI+phQNcVqN9P6MvixGCybFeCtTcmRUve36OqMSgm7
+	1Sc1WzGI4xPt75KgJgDmbfuudLtvfaqfdaFPGVu8RTQDb1oFVMPf39L8d08yZHOdO0bvO8Ak7ur
+	nLzWlNDqaeEeD3Y/aVMGISlXXqg8jWZyuOSde/rHQXQLob7ctfDYxMmHIGDDMjEN1l2+OUlxBTw
+	AJgNCdca9/wzd8XBAeZJcJ4a7cPYfLPB6S+dybLCP0M/dzfZ6fGVALXeicEJtjw7nwwUvAjYueD
+	MZ5cnGM/6gYyaTHOVQkofKk5V55hUeTlLqKViYzpdEFe8Sfkr
+X-Google-Smtp-Source: AGHT+IF8Jdb43wiiUWZr5aqHeVc07kgfnneN+c/F4uw2gfx9JINwa6Vm0YWUrBoNXaaVLptMLlbnxw==
+X-Received: by 2002:a05:6a20:9185:b0:263:1c48:912f with SMTP id adf61e73a8af0-321cf4173e4mr2735442637.12.1759289447395;
+        Tue, 30 Sep 2025 20:30:47 -0700 (PDT)
+Received: from localhost ([2804:248:fd27:1700:3621:b550:5c5f:5497])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b57c53babe8sm15151854a12.6.2025.09.30.20.30.46
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Sep 2025 20:30:47 -0700 (PDT)
+Date: Wed, 1 Oct 2025 00:30:43 -0300
+From: Henrique Soares <henriquegogo@gmail.com>
+To: git@vger.kernel.org
+Subject: How mantainers check Git diffs and patches?
+Message-ID: <aNygY8Cm7LEaBzV6@localhost>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-There are some cases in which we want to encode additional information
-in a tree but there is currently no possible way to do so.  Define a
-format for extended trees that uses mode 130000 plus some additional
-nonzero bytes in the file name to encode additional data in a mostly
-backwards compatible way.
+Hello,
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Documentation/Makefile                     |  1 +
- Documentation/gitformat-extended-tree.adoc | 77 ++++++++++++++++++++++
- Documentation/meson.build                  |  1 +
- 3 files changed, 79 insertions(+)
- create mode 100644 Documentation/gitformat-extended-tree.adoc
+This is a simple question I have related to the PR diff review process.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 6fb83d0c6e..6d8ad220ed 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -33,6 +33,7 @@ MAN5_TXT += gitattributes.adoc
- MAN5_TXT += gitformat-bundle.adoc
- MAN5_TXT += gitformat-chunk.adoc
- MAN5_TXT += gitformat-commit-graph.adoc
-+MAN5_TXT += gitformat-extended-tree.adoc
- MAN5_TXT += gitformat-index.adoc
- MAN5_TXT += gitformat-pack.adoc
- MAN5_TXT += gitformat-signature.adoc
-diff --git a/Documentation/gitformat-extended-tree.adoc b/Documentation/gitformat-extended-tree.adoc
-new file mode 100644
-index 0000000000..fc28bb16c9
---- /dev/null
-+++ b/Documentation/gitformat-extended-tree.adoc
-@@ -0,0 +1,77 @@
-+Extended Tree Format
-+====================
-+
-+Rationale
-+---------
-+
-+Git needs to store some additional types of data in repositories that we had
-+previously not considered.  Unfortunately, we lack a good way to extend tree
-+formats in a backwards compatible way.
-+
-+This document proposes an approach that adds an extended tree format that is
-+backwards compatible with earlier versions of Git except that it will appear
-+that the tree is improperly sorted.  This is done by encoding additional bytes
-+that are guaranteed to be nonzero and that earlier versions of Git will
-+consider part of the file name.
-+
-+Format
-+------
-+:ber: footnote:[This is the format used by the `w` pack format in Perl and Ruby.]
-+
-+An extended tree format consists of an entry that has mode 130000.
-+
-+A modified BER-encoded integer is a BER-encoded integer{ber} with the top bits
-+of each byte flipped.  That is, values 0x00 through 0x7f are encoded as 0x80
-+through 0xff, and larger values are encoded such that the bottom 7 bits of each
-+byte include the value and the top bit is 0 if there is a subsequent byte of
-+data and 1 if this is the last byte.  The shortest possible encoding must be
-+used.  Note that the byte 0x00 is not valid in the encoded value.
-+
-+The first part of what is traditionally the file name consists of a modified
-+BER-encoded integer representing the number of bytes in the extended
-+information section not including this length itself; that is, the number of
-+bytes which must be skipped to reach the file name.  This allows parsing
-+unknown values in a graceful way.
-+
-+Following that is a modified BER-encoded integer representing the type of
-+object and a modified BER-encoded integer consisting of flags.
-+
-+The object type is one of the following:
-+
-+0:: invalid
-+1:: conflict tree (only valid at top level)
-+2:: extended submodule
-+
-+The following flags are defined:
-+
-+1 (bit 0):: This entry is critical and failure to handle this object should be fatal.
-+2 (bit 1):: Flags in this entry are critical and failure to understand them should be fatal.
-+
-+A conflict tree then has a modified BER-encoded integer representing the stage.
-+
-+Conflict trees are used to store a conflicted state.  The top-level tree
-+contains only entries called stageN, where N is a decimal representation of the
-+stage integer.  Resolved entries are always stored as stage 0.  The contents of
-+each tree are those of the root tree at that stage.
-+
-+An extended submodule then has a 32-bit format ID representing the algorithm in
-+question, followed by a nonzero byte called an offset.  If the object ID for
-+the selected algorithm is longer than the algorithm for the tree, the remaining
-+bytes of the object ID are encoded such that each one is XORed with the offset.
-+The offset must be the smallest nonzero byte value such that all of the encoded
-+bytes are also nonzero; an entry is malformed if this value is incorrect.
-+
-+If the object ID for the selected algorithm is shorter than the algorithm for
-+the tree, the main object ID field is padded with zeros.
-+
-+Examples
-+--------
-+
-+An extended submodule of a SHA-256 submodule in a SHA-1 repository might look
-+like this if the submodule object name is
-+deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef and the name
-+is `submodule`:
-+
-+----
-+130000 \x91\x82\x80s256\x01\xdf\xac\xbf\xee\xdf\xac\xbf\xee\xdf\xac\xbf\xeesubmodule\x00\xde\xad\xbe\xef\xde\xad\xbe\xef\xde\xad\xbe\xef\xde\xad\xbe\xef\xde\xad\xbe\xef
-+----
-diff --git a/Documentation/meson.build b/Documentation/meson.build
-index e34965c5b0..e2257050e8 100644
---- a/Documentation/meson.build
-+++ b/Documentation/meson.build
-@@ -172,6 +172,7 @@ manpages = {
-   'gitformat-bundle.adoc' : 5,
-   'gitformat-chunk.adoc' : 5,
-   'gitformat-commit-graph.adoc' : 5,
-+  'gitformat-extended-tree.adoc' : 5,
-   'gitformat-index.adoc' : 5,
-   'gitformat-pack.adoc' : 5,
-   'gitformat-signature.adoc' : 5,
+How Git maintainers use to check diffs and review the code? I mean,
+sometimes I see that there are some large PATCHES that is hard or
+probably impossible to review only using e-mail client.
+
+Do you use some syntax highlight in client e-mail; any pipeline that
+automatically download e-mails and apply to a local branch; or for each
+PR you save the e-mail file then "git apply" to review / test the diff?
+
+This isn't a technical question, I'm just curious about how you do it.
+
+-- Henrique
