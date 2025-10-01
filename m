@@ -1,117 +1,158 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00603019B6
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 15:08:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72B62153ED
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 15:32:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759331305; cv=none; b=pqReyIXTzE0xt7zFdRIVa+zTOffjZ++Yw6HqFMSty3qNrjHCamaFBARRDomm4f1j5325nrykcM2Lykfc9+LkEtNmuAoaxTSkVDiEltdpXX4WyyWhSxmuqoMdFoav4fMeb1ofDNQSfwUcq2/W7/oex8ImUw6JLzlcL805t9a6aBI=
+	t=1759332738; cv=none; b=opeerYHvn6JVpXVVIdRCbUxw6k4oJ07PxtLfhu0aZ+pYB/fxywzYriXEoe+vCbM7kItYQwrwMHxDaTNYMjR6sj7W6TkS1IYclcgt0cJ+W6uzMc+HZZPZxbCWaMIS6ebw9IzGhi2EzYV8WlM9sFslnBTsBJGyUkRLMYuEY5oQvgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759331305; c=relaxed/simple;
-	bh=tD+Mtd109w2U8IY0TULaYmKZq5O1J8o5F8B/XBYGnuo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pegaXM93VM9IsCHgMqAly51pQEVx5Pn0KJSBD5adOFjAw+4Dd4shP7PCZOTBc+RyO0AjR8uwXCl2+ikAXKpiN1XvyvY/LDQ6Ew2yFcFsllxZ52UHPgmqU/cRDVWAKGMtna4sXRdYLpqPUW7ZEnzPP/Aur/FzmUL9PpwrBPpl2w0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=kQvOm9/0; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	s=arc-20240116; t=1759332738; c=relaxed/simple;
+	bh=9V8hmonQ72REPVJprEHnBljDHoSMlWTLDxtQALZWTFE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZWC4P+GdyzXZ8omH7KlouQcggbvE4+1bU8yPAKu3nrxRRDzNbar7XEjnTzkbIN95M6rGHRLHBwyo+yNVCMNtVfcnh5LyHe2HlFuD78NzdqQ+4Y6Qh+Tr17jQIs1zxq4aslu4/gwqjJTrTst+Bcp0BlPkkclzlsTHmqBTeUDt5gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KzlQnITB; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="kQvOm9/0"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-27eed7bdfeeso16555915ad.0
-        for <git@vger.kernel.org>; Wed, 01 Oct 2025 08:08:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KzlQnITB"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-63667e8069aso7500a12.1
+        for <git@vger.kernel.org>; Wed, 01 Oct 2025 08:32:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1759331303; x=1759936103; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1759332735; x=1759937535; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4KmEulphrGB2CFsdL/ua7PCSQ0xfm2/8Q7T9EsFZi44=;
-        b=kQvOm9/0i5T6tHv4+w6Lck0dPH98XbrHsW2i3rJsxKefCQCpQiwnTiH5rVnkuk2H++
-         WTrxxrHNyua6+HG+nVCWVqehL3A57XNyJTpESWUzSl939RRJIKwNOgP3Q0R64OVwJO00
-         AezPBNjbwxlWSHhdfnG7fu9hGo/lPnu3Zn7TOUx2McEsRwQ2yLzlH+26J9+QyuCevshB
-         oOxmofxrPL2eCZdGjWEolaMQ+BzFLN+jkXWUoy/Gh4usRlt2tz9DIuDwfKVu88LjFBzF
-         V6J7awhn0njS1t1x1Po8RGYcNvWNmrzkzryaqKO8OwmDXnk/gq6xehZRpKZoBIL2CXDi
-         eVmA==
+        bh=9V8hmonQ72REPVJprEHnBljDHoSMlWTLDxtQALZWTFE=;
+        b=KzlQnITB1lj0crIFYYSEvI8s5N+g/cYoIFSOtFLfggW0l0Mdf9W0xnPf13PwNzg4R+
+         utYU6zrqxkdwlutg+iGyyBt+R6nU5N62II7NZgx71s86pVwb0fieJEqm1T553aaIQIBC
+         f9V1aiDbZalaZ8KiZFMes5qDsRi5pgBTNCHG+2oQcuonc9p0CEIKSDnfnBhXvxbDv1/q
+         nppAcDfpMMM4sTlE8XlM4lgDce7jGFWc5LLht/5KBH5El8m/z/b+lbYLxtYc9V7B2/13
+         iWtffOn3peLjermNwzLh1r0i7NhT2h0+RQdaawodb1Yc5W/mWcxER1xFLOaX/FVFAMXh
+         nHWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759331303; x=1759936103;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1759332735; x=1759937535;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4KmEulphrGB2CFsdL/ua7PCSQ0xfm2/8Q7T9EsFZi44=;
-        b=qL+xhTadyOdnTjiwetLfjlxibvVaWi4WPCsPRCzplo0Fx2rnYzKTZrMUcBjEzxD+Tn
-         OhFWQnI8vyhSKjXO9iAnjkFr8fFOeDniO3sb6xRBVtMnRtmZ4SxSUXKaQ2S3VHEakTcQ
-         fGQz2jhkEaZPAZ0l+85O+QLUrMkjNdxIdT2YIga6Yqx3AJQDunv5cqHb1rjYDNPrhVTt
-         ga/boW644/YmvLXAYmNrjgK7UQRTbPCP7ggl+wBcTVa3kLyPlEx3MZpLEpz01hh2X6UR
-         2a9VS0v2Yj8DB+bcFdZQ+0h0Ct0yylKyenA7177tlaRiKN6vD/GAGDGa/qWsIYXR6LJG
-         dFOA==
-X-Gm-Message-State: AOJu0YxljDoj4Gp5HVcyCF3C6aDC03Pbz3NQEendgcwgj/ScXyrTsMx4
-	UoUauha2gK614XR97YiOg02RHSAuXeyB/10O6fgcSznHppOBJ9McG0MJdmhXlHaDyhlMRq7uQm/
-	Ykm6L
-X-Gm-Gg: ASbGncty9Y8UfzFX7VHYjXE521YfJzl9GCUPuGCwyGC9APOyql++puQYeAbL4RXDAbj
-	Kc9u7EBW7M2ucGpTWSMBeMCWVKTX+P8NzBRrFhVgcB1G+0A4Ls56Y+gErSWoj6kCmQQSyUl/SfJ
-	SIya/eXuNFnn7EEN4sIr0ltFXJ6OPQ7CiZJqpS6SEWDmXm61vsQEg2K0iRsj9CFUQFU9At9QVuX
-	7WxbZKwcgEsGRY4EAqWn+5d7NyfcXvW3n2s/5Sv1IPj9C50tr1dT59TxK6SqAktyMmwas9E2xZc
-	8s3xR2DsJbdqyjtnt1xU6ZTUQaUDvOEDNKen/a+OB46rGZBYbkIacLVCh8p0Tgrivlt7inby2oN
-	i13P/4qQDZuWTqc/89K34qh71A1aI22YEgjzwJt867PiaABbPaubBifnGjYbgYqh1bBQHaqzBob
-	IFWl2M4VUFTth2228=
-X-Google-Smtp-Source: AGHT+IGhjhyyzYUleQENdR8DDJjj4Qk3uD+SScWcF4sMYRRxLSB9mzNwppOHqb1M6ZKWf+Ga4ORL8w==
-X-Received: by 2002:a17:903:3c48:b0:265:b60f:d18 with SMTP id d9443c01a7336-28e7e9e6884mr43559075ad.1.1759331302699;
-        Wed, 01 Oct 2025 08:08:22 -0700 (PDT)
-Received: from LTY2K703JV.bytedance.net ([139.177.225.245])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-27ed68821f8sm187106925ad.73.2025.10.01.08.08.20
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 01 Oct 2025 08:08:22 -0700 (PDT)
-From: Han Young <hanyang.tony@bytedance.com>
-To: git@vger.kernel.org
-Cc: karthik.188@gmail.com,
-	Han Young <hanyoung@protonmail.com>,
-	Sigma <git@sigma-star.io>
-Subject: [PATCH 1/1] files-backend: check symref name before update
-Date: Wed,  1 Oct 2025 23:08:05 +0800
-Message-ID: <20251001150805.9652-2-hanyang.tony@bytedance.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251001150805.9652-1-hanyang.tony@bytedance.com>
-References: <20251001150805.9652-1-hanyang.tony@bytedance.com>
+        bh=9V8hmonQ72REPVJprEHnBljDHoSMlWTLDxtQALZWTFE=;
+        b=GV7p92+rfk8YOVRMqFKnr6xDx7oClHn8WzihvYJ457o1oNPFh1k/ecjUjdwZ6DmzRP
+         hcekOkKc4GT535wN8TMtLiIeSGsvPCKSAu353qqSyhRhmZdyb90avMPefo6i5ia+Bv4J
+         Kev3R4kS3fWR0Eukwo2eYfDRGMsZ0U4rFyrvgZsbBvvSDNhCLMGxdjq4mrxxA3rAfv/1
+         Dd078p/woRSiGIcAqRCa4YsLEhh/kLmgbeHZzQsy0BQihc9z0p717ktGrsFPzMEqpi9B
+         63NaOx0Exaf+SJOfgLUIu7fyDuz7dKM8Olqd5b/6xLEOsEwIw0EXL7DIKXlXfEc/WbND
+         +lFQ==
+X-Gm-Message-State: AOJu0YywZo1b7ectPwPjIioGo7bEoDpSDDDkFWyS3a0cyyD/ma0VeXFy
+	v28x4tPp6093ixXNhl7x1obBp+soQFrr9MBjYiY5Re94DUvQkSF52ysWraydY8WfDlURs1H1Pf7
+	ssBK8x7pfXNWmiVWp4bOveC0IdCiBl+/T25Vqi4A=
+X-Gm-Gg: ASbGnctvqYxuK8KeDTAFHUo53MUhyy8lKac/QI3XSRTZIxFNuaqsBosIl7U3eLNHrGD
+	eMTI63avEme85dTudy86Za0vW99mnkApW5Wx/1gMBbOzyuSgnHZbHq0UK21bTtxDgoAO/Fh//5G
+	GUwSfGf9Rby2eZj1wPf1wVDkRcqb0nhK636GIng1hx2j4t5qz7BhWWzKGasYEzHt+m+Ww01IWJy
+	tOLJBJvx/W+3svncPKHDuF++cC+uZw=
+X-Google-Smtp-Source: AGHT+IFH5HREnEE2RSGuk/2oq5TGAYdp9aGT6xmYL49tByZzNUzUN2mAQxygsHWBlRpGfKPIv9hjtoDtgRcUW9ki88E=
+X-Received: by 2002:a05:6402:26cb:b0:62e:dd2b:b700 with SMTP id
+ 4fb4d7f45d1cf-63678c06132mr4715217a12.2.1759332735005; Wed, 01 Oct 2025
+ 08:32:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <aNblfuTDdtxLdImC@nand.local>
+In-Reply-To: <aNblfuTDdtxLdImC@nand.local>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 1 Oct 2025 17:32:02 +0200
+X-Gm-Features: AS18NWCqife6MXjaRlN7mGUtDdqq-OWm5yJIJpuPIATiF6XqF5p3J-QC23PpNe4
+Message-ID: <CAP8UFD1jCRyhN3XH_-WxtCz7sixt+Js_XDFZxkxH9zX2-vZVNw@mail.gmail.com>
+Subject: Re: Git / Software Freedom Conservancy status report (2025)
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Han Young <hanyoung@protonmail.com>
+On Fri, Sep 26, 2025 at 9:12=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
 
-In the ref files backend, the symbolic reference name is not checked
-before an update. This could cause reference and lock files to be created
-outside the refs/ directory. Validate the reference before adding it to
-the ref update transaction.
+> ## Expenses
+>
+> More interesting is where we spent money. Like last year, the biggest
+> chunk of our expenses went towards conference travel. We spent more in
+> that category than last year (where we spent only $675.96).
 
-Reported-by: Sigma <git@sigma-star.io>
-Signed-off-by: Han Young <hanyoung@protonmail.com>
----
- refs/files-backend.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+I think the $1,846.90 we spent towards conference travel was likely
+compensated by Google giving to the project for mentors travelling to
+the GSoC mentor Summit. It looks like what Google gives likely goes
+into the "Donations" account, so it's not easy to match to the
+corresponding expenses.
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index bc3347d18..d47a8c392 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2516,6 +2516,16 @@ static enum ref_transaction_error split_symref_update(struct ref_update *update,
- 	struct ref_update *new_update;
- 	unsigned int new_flags;
- 
-+	/*
-+	 * Check the referent is valid before adding it to the transaction.
-+	 */
-+	if (!refname_is_safe(referent)) {
-+		strbuf_addf(err,
-+			    "reference '%s' appears to be broken",
-+			    update->refname);
-+		return -1;
-+	}
-+
- 	/*
- 	 * First make sure that referent is not already in the
- 	 * transaction. This check is O(lg N) in the transaction
--- 
-2.51.0.373.gaf4ee0e35.dirty
+Outside of the GSoC Mentor Summit, I must say that we have tried to
+sponsor people to come to the Git Merge 2025, but the effort we have
+made, and we made significantly more effort than previous years on
+this, have all failed due to visa issues.
 
+> ## Future expenses?
+>
+> The project continues to take in a modest but quite healthy amount of
+> money, and has very few expenses.
+>
+> I continue to wonder if there are other ways that we should be spending
+> our money. If others have thoughts about what the project should do with
+> its money, please feel free to share them.
+
+It has been suggested several times (including last year and this year
+during the Contributor's Summit) that we give a good chunk of what we
+have (for example 50%) on our bank account to Outreachy's general
+fund. This will soon fund contributions to other open source projects
+(and perhaps one day to Git if the companies that are currently
+donating for the Outreachy interns working on Git stop donating).
+
+In https://lore.kernel.org/git/CAP8UFD2OcOaSsumKGZ-oVVWzttc48CvmQZD8tQaWTGQ=
+R7wR1EA@mail.gmail.com/
+I have mentioned that Outreachy is navigating significant financial
+challenges these days. Here are related links (again):
+
+https://www.outreachy.org/blog/2025-08-14/december-2025-call-for-mentoring-=
+organizations/
+https://www.outreachy.org/blog/2024-08-14/outreachy-needs-your-help/
+
+Outreachy is part of the Conservancy (https://sfconservancy.org/) like
+Git, so I think we should help them as we have no need in the
+foreseeable future for the $100k USD we have on our account.
+
+> ### Outreachy
+>
+> The Git project participates in Outreachy, which is a program that
+> provides internships in open-source to anyone from any background who
+> faces under-representation, systemic bias, or discrimination in the
+> technical industry where they are living.
+>
+> Outreachy suggests that companies to donate $10k USD per internship they
+> want to sponsor (previously this was $8k USD).
+
+On https://www.outreachy.org/docs/community/#funding-requirements they
+say it's between $8k and $10k USD per internship:
+
+- $7,000 USD donation towards the Outreachy internship stipend
+- $1,000 to $3,000 USD donation towards the Outreachy program activities fu=
+nd
+
+> The Git project has
+> historically benefited from GitHub and/or GitLab covering these costs
+> for us. We may want to consider budgeting for this in the future
+> ourselves, in case we want to take on more interns than those companies
+> are willing to sponsor.
+
+Let's try again to ask GitLab and GitHub. It has always worked in the
+past, so it makes sense to try again. But yeah, if it doesn't work,
+the Git project can then donate for the internships. And if we have
+donated to the general fund, then we can always ask to benefit from it
+instead of donating again.
+
+Note that this year we are likely to have only at most one intern, as
+it looks like few people are willing to mentor. This means the average
+number of interns we mentor per year is likely to stay close to 1. So
+the risk of Git running out of money in the long run due to Outreachy
+interns is very low.
+
+Thanks for your hard work on this report!
