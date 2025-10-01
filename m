@@ -1,98 +1,183 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CE42D373E
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 17:22:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0AF017AE1D
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 17:31:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759339379; cv=none; b=hWqt1NM9WQBfT4eNf0tiT11MMAXwYSxqPPRa1fWAvkOjKuINmIqAkLzeQktmbjjsCQ1lKn0WAXsqZv/j9jIm9ZzaFjNdHlf1H777ZPq1CkAfhoF3kKTxp+oh9UfZgEaZNk5NouVbh1cGUiDQv9gzHC/kC4oOOJ6y8TAwywOPZac=
+	t=1759339881; cv=none; b=JQgzb8lnaes3Td4YeQiPyyPGYg1oU/R4oJwKTdG3ndHisaapnuHZ9rFl252A6eTgcCLBiFvJvBUGnXr2U30DjJPLXzTPSUuCw/9QtrAHTQ0so1S5iMFcgOyOGra2Vyw7Gy7AveYdlUZpotSNOa6d8ncXzxo2fM5u9uNz/A3qMyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759339379; c=relaxed/simple;
-	bh=Jo4wscY6Gv4ZwmDi811Yn13gU2kB502RuPMv6L1JwiM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ogJIXHTkoSCcnTVgg5D+E2EJgIiN/nuEEvLiUvmGk/iiZIcvKU1SZ+47MYGaISdAC5DkfznhywHVhGp8CZat04zSX0TIuk9saLVeyl8D0jz36z6WATN20YXH7vaJgGe//dLwv5pCWolb/RRRsnzXSwtBJo3ZTrAED4mTFT0Ldoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ts1uN+xr; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759339881; c=relaxed/simple;
+	bh=kf51B6zDTuijL5ckfYO7/2iXi1Y1uox5Lbqkc79uBrI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Dec863l7vLLosE0sX8dKsKt9E2JtK/mixe8xOTxAuYAWAJlvkXWdXBDlM+xim8kxgAFlo6PwuLnEoMRL6DI4Xp4qkmdVXhc42pIosV3gNb705bNtBnz3i3/DkItzlEBcSm6jAwduhwSXbmiuXD/tABTJVNwjxoIq7knq+YiuwpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=pEegFDS3; arc=none smtp.client-ip=212.27.42.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ts1uN+xr"
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-58984c363ceso1181620e87.0
-        for <git@vger.kernel.org>; Wed, 01 Oct 2025 10:22:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759339376; x=1759944176; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Jo4wscY6Gv4ZwmDi811Yn13gU2kB502RuPMv6L1JwiM=;
-        b=Ts1uN+xrv3mXp1Cwa62lPH+W1XTtKKoASnGzUlJzH2ko5NtF3C+qinAzYCJ5L2CV4+
-         xYK+UwiFbIbWY54GU9WPlsbyKDpn4B7pd8EqnKyykNJ+2iHOBQJGLo10f1kSkKTSbrmg
-         93cnEN+bw4MrVNVcbKAB+djD5EszQeOaoRFios84VqYfUK9wI6smdMMENqGnu1Q7GsPD
-         cdU3VEEiiUF02iBaINHdhk2O/XO74Cv2B2bHVe2rDPI6k3hFHFv28+uyBFKDJWIiWrdk
-         AKQ/n3K7CyqsfmJt52E/9H0jLUSISE4Nhy7vrffVo0EWI56RrxlwJephiVhDGuo1tvg0
-         n0rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759339376; x=1759944176;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Jo4wscY6Gv4ZwmDi811Yn13gU2kB502RuPMv6L1JwiM=;
-        b=ah8WNHmKlRnHwrHBjEr5pcNWkaoXCvIIfHFflcxM21ZhergY6ogmyx8eo+gECBrdgD
-         LiWRK99Lr8itbujKcPsfLPiyP4jf8rzcacUD3u+STyiHnGrmdki8Sv0UJo9pDCG48z3f
-         2jL99WZX5INRUypyeq4zsfIFeEggZaU0FvrFmnXE/CZz93IUpiRP/2yMLoODcsaQGwyH
-         37Sq6nwU+SVdHEvNkgIPCPRrxnWZyKSocOuh3GHqArC6v0ren7y3K2c+osZUVpOjaL7j
-         EbF0D9UpkRpljPbP3TgQtbsFEVzBk1TbRegtSev4mXCA2yK/nUtvh8qnC1O9I3wk+QHH
-         tujA==
-X-Forwarded-Encrypted: i=1; AJvYcCXu8Y8jNOYSAgAARRCdbVzeDfpLNpZ8arLSBHYBoBvWof92PE2f8mcCgqJhTDabISfQX1U=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx7skHSWx/t933jyf9gRcKVa+/uBLS5Q+k722nK3M19krYET77E
-	0jlDuX1fHKkLX5lqZ+waWZmJRH7ufWTiw+gJcrxr9kAiHf2DWe9HXZwAKAJaoyJQcPz0nms/jJ1
-	9m12TCGqETLLxEUDdRtVsKWXUqEtCsIQ=
-X-Gm-Gg: ASbGncvdw+tr8pFEaqQAGy9OboNn5EwB3/swxFkt1uPPRUSusB603iRPPTPIz26gr8S
-	UcwKIvCFYee1t7bTHjRhC9q6z9Eme1Amgw/7UGlo0A1/oW2S/XsHOobFMddi+llwYrQmhaPmb3o
-	QiFxVTgIzl0xSwivEG1LqSoT6HgY2ASTBT7Fd1hDeuCR3kwBo6sOVHjEjBTWA7IzQXq0Rf0SdVb
-	RIYEUU8CgWi22D9fb1Oj+BL7TC3DPWh6avvfvunAgU=
-X-Google-Smtp-Source: AGHT+IHlVsDVgxbSuhfrdjfA3HdCcRr4iGhxq/AIhhOyEmfBT/1mO5BQ9yRMFEQBbbiHzx5ZNv9rAGqqCOzBxSPOOZs=
-X-Received: by 2002:a05:6512:3e2a:b0:58a:f7da:6f70 with SMTP id
- 2adb3069b0e04-58b00bc721cmr103750e87.23.1759339375769; Wed, 01 Oct 2025
- 10:22:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="pEegFDS3"
+Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
+	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 5C2BC4D24A
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 19:31:07 +0200 (CEST)
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:f5ae:5744:1198:6c76])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 6366B13F8CE;
+	Wed,  1 Oct 2025 19:30:55 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1759339860;
+	bh=kf51B6zDTuijL5ckfYO7/2iXi1Y1uox5Lbqkc79uBrI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=pEegFDS3NJ72sFK5g0iGSlWwWzJHPrGu4Z4lhPSTLFb6hiLfAm2fEI/k5Wyej8zQn
+	 4YaOpzIDWWKpugJcQ+jaPbWKhe8rjrHwBWvTjC2OtpPRZHyiYC3wH8MfL3AeJm1RWa
+	 Msm6MepEkZMcjA9ryNhS15Fs5okwJ8XIbv6h+LqVQGA1wVDnZrgcodNwXGq7Hs/Vtx
+	 wPalpbOXogqZXcb/GWn9ozvaDnsOzNPyOo1ceewaYHa6kpswgv8eclVmEyanc64Xbe
+	 xVHFuZ4I3z/L1RaxvmbmqjjMl2QADQ6GRaJuHHNaYsnMRdw8Cws0YXPp5bvQOl0p3p
+	 YCxic3LrTeRwA==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To: git@vger.kernel.org, Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Julia Evans <julia@jvns.ca>, Julia Evans <julia@jvns.ca>
+Subject:
+ Re: [PATCH v4 2/5] doc: add an UPSTREAM BRANCHES section to pull/push/fetch
+Date: Wed, 01 Oct 2025 19:30:55 +0200
+Message-ID: <5044672.31r3eYUQgx@cayenne>
+In-Reply-To:
+ <69825d46349e55dd1b17444ab4e6d542fd44f371.1759262314.git.gitgitgadget@gmail.com>
+References:
+ <pull.1964.v3.git.1758649472.gitgitgadget@gmail.com>
+ <pull.1964.v4.git.1759262314.gitgitgadget@gmail.com>
+ <69825d46349e55dd1b17444ab4e6d542fd44f371.1759262314.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250925-b4-pks-rust-breaking-change-v7-0-4e49dcb904d5@pks.im>
- <20250925-b4-pks-rust-breaking-change-v7-5-4e49dcb904d5@pks.im> <037d8685-6521-4ac1-8251-d93e8a1d7081@app.fastmail.com>
-In-Reply-To: <037d8685-6521-4ac1-8251-d93e8a1d7081@app.fastmail.com>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Wed, 1 Oct 2025 11:22:44 -0600
-X-Gm-Features: AS18NWBiOdixE8sG_CYz7tByZBK81ve-kFAOhiT0CZPTYqn2D42Quc5PsXO5tB0
-Message-ID: <CAH=ZcbBQk9xmTF-m6tX6F+PRmnUSoevyFFvK-fAc3uzL3NvqSQ@mail.gmail.com>
-Subject: Re: [PATCH v7 5/9] varint: use explicit width for integers
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
-	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	"D. Ben Knoble" <ben.knoble@gmail.com>, Christian Brabandt <cb@256bit.org>, 
-	Collin Funk <collin.funk1@gmail.com>, Eli Schwartz <eschwartz@gentoo.org>, 
-	Elijah Newren <newren@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>, Sam James <sam@gentoo.org>, 
-	Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
-On Tue, Sep 30, 2025 at 7:34=E2=80=AFAM Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
->
-> On Thu, Sep 25, 2025, at 08:30, Patrick Steinhardt wrote:
-> > The varint subsystem currently uses implcit widths for integers. On the
->
-> s/implcit/implicit/
->
-> > one hand we use `uintmax_t` for the actual value. On the other hand, we
-> > use `int` for the length of the encoded varint.
-> >
-> > Both of these have known maximum vaules, as we only support at most 16
->
-> s/vaules/values/
+On Tuesday, 30 September 2025 21:58:31 CEST Julia Evans via GitGitGadget 
+wrote:
+> From: Julia Evans <julia@jvns.ca>
+> 
+> From user feedback: one user mentioned that they don't know what the
+> term "upstream branch" means. As far as I can tell, the most complete
+> description is under the `--track` option in `git branch`. Upstreams
+> are an important concept in Git and the `git branch` man page is not an
+> obvious place for that information to live.
+> 
+> There's also a very terse description of "upstream branch" in the
+> glossary that's missing a lot of key information, like the fact that the
+> upstream is used by `git status` and `git pull`, as well as a
+> description in `git-config` in `branch.<name>.remote` which doesn't
+> explain the relationship to `git status` either.
+> 
+> Since the `git pull`, `git push`, and `git fetch` man pages already
+> include sections on REMOTES and the syntax for URLs, add a section on
+> UPSTREAM BRANCHES to `urls-remotes.adoc`.
+> 
+> In the new UPSTREAM BRANCHES section, cover the various ways that
+> upstreams branches are automatically set in Git, since users may
+> mistakenly think that their branch does not have an upstream branch if
+> they didn't explicitly set one.
+> 
+> A terminology note: Git uses two terms for this concept:
+> 
+> - "tracking" as in "the tracking information for the 'foo' branch"
+>   or the `--track` option to `git branch`
+> - "upstream" or "upstream branch", as in `git push --set-upstream`.
+>   This term is also used in the `git rebase` man page to refer to the
+>   first argument to `git rebase`, as well as in `git pull` to refer to
+>   the branch which is going to be merged into the current branch ("merge
+>   the upstream branch into the current branch")
+> 
+> Use "upstream branch" as a heading for this concept even though the term
+> "upstream branch" is not always used strictly in the sense of "the
+> tracking information for the current branch". "Upstream" is used much
+> more often than "tracking" in the Git docs to refer to this concept and
+> the goal is to help users understand the docs.
+> 
+> Signed-off-by: Julia Evans <julia@jvns.ca>
+> ---
+>  Documentation/urls-remotes.adoc | 43 +++++++++++++++++++++++++++++++--
+>  1 file changed, 41 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/urls-remotes.adoc b/Documentation/urls-
+remotes.adoc
+> index 9b10151198..dba5adeb58 100644
+> --- a/Documentation/urls-remotes.adoc
+> +++ b/Documentation/urls-remotes.adoc
+> @@ -92,5 +92,44 @@ git push uses:
+>  ------------
+> 
+> 
+> -
+> -
+> +UPSTREAM BRANCHES[[UPSTREAM-BRANCHES]]
+> +--------------------------------------
 
-Other than the typos this looks good.
+Please do not put anchors on the same line as the paragraph. The anchor is 
+attached to the paragraph (the block in asciidoc terminology) if it is not 
+attached to an inline element. So it can appear just before the block with the 
+same effect.
+
+Additionally, this clears up the text from the anchor, which is safer for 
+translation.
+
+[[UPSTREAM-BRANCHES]]
+UPSTREAM BRANCHES
+
+> +
+> +Branches in Git can optionally have an upstream remote branch.
+> +Git defaults to using the upstream branch for remote operations, for 
+example:
+> +
+> +* It's the default for `git pull` or `git fetch` with no arguments.
+> +* It's the default for `git push` with no arguments, with some exceptions.
+> +  For example, you can use the `branch.<name>.pushRemote` option to push
+> +  to a different remote than you pull from, and by default with
+> +  `push.default=simple` the upstream branch you configure must have
+> +  the same name.
+> +* Various commands, including `git checkout` and `git status`, will
+> +  show you how many commits have been added to your current branch and
+> +  the upstream since you forked from it, for example "Your branch and
+> +  'origin/main' have diverged, and have 2 and 3 different commits each
+> +  respectively".
+> +
+> +The upstream is stored in `.git/config`, in the "remote" and "merge"
+> +fields. For example, if `main`'s upstream is `origin/main`:
+> +
+> +	[branch "main"]
+> +	   remote = origin
+> +	   merge = refs/heads/main
+> +
+
+Please mark the code block with a dedicated fence:
+
+----
+[branch "main"]
+   remote = origin
+   merge = refs/heads/main
+----
+
+using tabs may lead to issues if the text is modified later.
+
+> +You can set an upstream branch explicitly with
+> +`git push --set-upstream <remote> <branch>` or `git branch --track`,
+> +but Git will often automatically set the upstream for you, for example:
+> +
+> +* When you clone a repository, Git will automatically set the upstream
+> +  for the default branch.
+> +* If you have the `push.autoSetupRemote` configuration option set,
+> +  `git push` will automatically set the upstream the first time you push
+> +  a branch.
+> +* Checking out a remote-tracking branch with `git checkout <branch>`
+> +  will automatically create a local branch with that name and set
+> +  the upstream to the remote branch.
+> +
+> +[NOTE]
+> +Upstream branches are sometimes referred to as "tracking information",
+> +as in "set the branch's tracking information".
+
+Thanks
+
+
