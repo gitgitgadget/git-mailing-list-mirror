@@ -1,163 +1,162 @@
-Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07085288DB
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 17:36:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298F51DA0E1
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 17:41:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759340178; cv=none; b=oKIQeBIumwiNJ8740j2gWres+xDy9nkDDvDLgwAEYwyBZFV098FcZckB5+wJUo649faAbYt8dHo+T6E6hpG+qcKv2oH/N8KfCsbymScn3/qA3Rb7/8SYMVJfqkPU1QKu3A4i/Pakw58eYPDJXD62UggokVIxgID6geH5gtmhrm8=
+	t=1759340480; cv=none; b=QDbbhzs5SLPgncS4Yo/tC3YJNs8td/mIKhXXS2EbraWoSZ2rUBl3dSA6591/tuZoy0G0x2zGCBAEyt38cyAq0rGCUZJPUMEqFVsodqnhstvpAdFwtHb6/35hq0IwyUBkCeT6iFJqqAeoGDivODlJe9Psk9ZJ8rG3yTwbdH0sXD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759340178; c=relaxed/simple;
-	bh=282pDPnsPSTPkwSDFeC2JVPtOUCZTTbbklX5PvfEymE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=roh6+BJKf7X58WZjtIoilfj7ongi8jwWJiwp/NHefzcEVKCSjBFWjRj//VT55VDUkJ2llG+Nsu0RUHVQcmQaDq2ka6N4J7C6R0acRsoaeBF516cN54jlmTlQkY++LhPJWKsOzHUXqNewTeuaOVyFI8fcOem4S3XzUht3uFgBPI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=dUR/tEO8; arc=none smtp.client-ip=212.27.42.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1759340480; c=relaxed/simple;
+	bh=JSrOGHSiI/PQWIYm1Y321VlBtBCB/hOu/MJbrjlxhbs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HsHEnqpyR1gHzaVwFIwZQN5cGf6dgS1dDEP0cOfC90qAB9lLMqhFi5ASo53bEyzrI8nPK8HiNaxTd8lLHkTwIJiwlEqiwc7EaZ9f4L96IreirKG2rPHnZtTt2LSTtxxqSLnYs3B3ff1rQvwkMFIu1Q8ZMvTXrzngeIOshVHQqJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=DZsIZ36x; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="dUR/tEO8"
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:f5ae:5744:1198:6c76])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 4E09113F89A;
-	Wed,  1 Oct 2025 19:36:09 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1759340174;
-	bh=282pDPnsPSTPkwSDFeC2JVPtOUCZTTbbklX5PvfEymE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dUR/tEO8XetTTt8x/E0k9AYbY/5RM6Wor25YSlVEXeIrx95B/7JoL4Az/IxxH+eXF
-	 IriEVln+6ulCWoeBXvqm6uALb1ccAWQSiLTkw4xt4HtFv3h8l4tlT7Yvf/uDd8gL/a
-	 eik0UMoGS0Av1sas80SUnhs+1n4WyaKxn87Cc5ar5DLZUDwxGPLRtTm2iyLhyf2CZA
-	 Gn5l3K65CtVM3TH3zI1n2FQYoi3BlQjTAfCbUZzBXLOv4K7m5Zamu9nBchulbwaNC/
-	 ZaBzLezom4fWcmVqsPzH7qC/KEPeg0yN2IeWMFnUiHFBvW63dpnvIeZo2PDYf61ual
-	 OSngMtwtT9zaA==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: git@vger.kernel.org, Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Julia Evans <julia@jvns.ca>, Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH v4 4/5] doc: git-push: clarify "what to push"
-Date: Wed, 01 Oct 2025 19:36:09 +0200
-Message-ID: <5015949.GXAFRqVoOG@cayenne>
-In-Reply-To:
- <c1d4ea8d27ff037fcc40c2c6dc1c4f0bd9000b1b.1759262314.git.gitgitgadget@gmail.com>
-References:
- <pull.1964.v3.git.1758649472.gitgitgadget@gmail.com>
- <pull.1964.v4.git.1759262314.gitgitgadget@gmail.com>
- <c1d4ea8d27ff037fcc40c2c6dc1c4f0bd9000b1b.1759262314.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="DZsIZ36x"
+Received: (qmail 97685 invoked by uid 109); 1 Oct 2025 17:41:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=JSrOGHSiI/PQWIYm1Y321VlBtBCB/hOu/MJbrjlxhbs=; b=DZsIZ36xl91fpgP7eQZMxhoDDR48xQoEgv/2k+b8bR2MvRXyn+4/Tud7ZIBlsS3nm3jV7bXWqMTQ5iBE838FKvfFPKom7zCNYaRocJeC2LorVQ81wROk7xTsddPvL6GiqCrIAMTZq/HhLioYGag9ATn8zcuIaCApxHhyTMoCKDgpiczSw4pE+0rvwA0Kk2Y3dIchiXJuetLC4zRo0n8pzHYhPNiSnV4eYDd2uwscUS2oskiA2ADJ81jMrOTLC9n3XdndAenx4GkQ/ifOyPWDFIMR2CnIRySfPeX+13zoM2hmGmbQral3rq+kOBEtWJHVRuvaWag/2mo64fZu9p6Irg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Oct 2025 17:41:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 137848 invoked by uid 1000); 1 Oct 2025 17:41:10 -0000
+Date: Wed, 1 Oct 2025 13:41:10 -0400
+From: Jeff King <peff@peff.net>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/1] Define an extended tree format
+Message-ID: <20251001174110.GA137600@peff.net>
+References: <20251001005814.846992-1-sandals@crustytoothpaste.net>
+ <20251001005814.846992-2-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251001005814.846992-2-sandals@crustytoothpaste.net>
 
-On Tuesday, 30 September 2025 21:58:33 CEST Julia Evans via GitGitGadget 
-wrote:
-> From: Julia Evans <julia@jvns.ca>
-> 
-> From user feedback: 6 users says they found the "what to push"
-> paragraphs confusing, for many different reasons, including:
-> 
-> * what does "..." in <refspec>... mean?
-> * "consult XXX configuration" is hard to parse
-> * it refers to the `git-config` man page even though the config
->   information for `git push` is included in this man page under
->   CONFIGURATION
-> * the default ("push to a branch with the same name") is what they use
->   99% of the time, they would have expected it to appear earlier instead
->   of at the very end
-> * not understanding what the term "upstream" means in Git
->   ("are branches tracked by some system besides their names?"")
-> 
-> Also, the current explanation of `push.default=simple` ("the
-> current branch is pushed to the corresponding upstream branch, but
-> as a safety measure, the push is aborted if the upstream branch
-> does not have the same  name as the local one.") is not accurate:
-> `push.default=simple` does not always require you to set a corresponding
-> upstream branch.
-> 
-> Address all of these by
-> 
-> * using a numbered "in order of precedence" list
-> * giving a more accurate explanation of how `push.default=simple` works
-> * giving a little bit of context around "upstream branch": it's
->   something that you may have to set explicitly
-> * referring to the new UPSTREAM BRANCHES section
-> 
-> The default behaviour is still discussed pretty late but it should be
-> easier to skim now to get to the relevant information.
-> 
-> In "`git push` may fail if...",  I'm intentionally being vague about
-> what exactly `git push` does, because (as discussed on the mailing list)
-> the behaviour of `push.default=simple` is very confusing, perhaps broken,
-> and certainly not worth trying to explain in an introductory context.
-> `push.default.simple` sometimes requires you to set an upstream and
-> sometimes doesn't and the exact conditions under which it does/doesn't
-> are hard to describe.
-> 
-> Signed-off-by: Julia Evans <julia@jvns.ca>
-> ---
->  Documentation/git-push.adoc | 28 +++++++++++++++-------------
->  1 file changed, 15 insertions(+), 13 deletions(-)
-> 
-> diff --git a/Documentation/git-push.adoc b/Documentation/git-push.adoc
-> index acdf25e5cd..2848cf2e1f 100644
-> --- a/Documentation/git-push.adoc
-> +++ b/Documentation/git-push.adoc
-> @@ -26,18 +26,20 @@ that isn't already on the remote.
->  The `<repository>` argument defaults to the upstream for the current 
-branch,
->  or `origin` if there's no configured upstream.
-> 
-> -When the command line does not specify what to push with `<refspec>...`
-> -arguments or `--all`, `--mirror`, `--tags` options, the command finds
-> -the default `<refspec>` by consulting `remote.*.push` configuration,
-> -and if it is not found, honors `push.default` configuration to decide
-> -what to push (See linkgit:git-config[1] for the meaning of `push.default`).
-> -
-> -When neither the command-line nor the configuration specifies what to
-> -push, the default behavior is used, which corresponds to the `simple`
-> -value for `push.default`: the current branch is pushed to the
-> -corresponding upstream branch, but as a safety measure, the push is
-> -aborted if the upstream branch does not have the same name as the
-> -local one.
-> +To decide which branches, tags, or other refs to push, Git uses
-> +(in order of precedence):
-> +
-> +1. The `<refspec>` argument(s) (for example `main` in `git push origin 
-main`)
-> +   or the `--all`, `--mirror`, or `--tags` options
-> +2. The `remote.*.push` configuration for the repository being pushed to
-> +3. The `push.default` configuration. The default is `push.default=simple`,
-> +   which will push to a branch with the same name as the current branch.
-> +   See the <<CONFIGURATION,CONFIGURATION>> section below for more on
+On Wed, Oct 01, 2025 at 12:58:14AM +0000, brian m. carlson wrote:
 
-Good: using the cross-reference with custom label is translator's friendly.  
-Thank you.
+> There are some cases in which we want to encode additional information
+> in a tree but there is currently no possible way to do so.  Define a
+> format for extended trees that uses mode 130000 plus some additional
+> nonzero bytes in the file name to encode additional data in a mostly
+> backwards compatible way.
+
+Thanks for writing this up. This was along the lines I was thinking, but
+I have a few variant suggestions to consider.
+
+Your proposal here covers a very general extension format which can be
+used for solving several possible problems. But if we constrain
+ourselves just to the gitlink question, it does open up some more
+possibilities. Here you're using a custom mode to mark the entry, and
+the downside is that the mode will be somewhat confusing to old versions
+of Git. They won't recognize a gitlink as such, and their fsck will
+complain about it. It also leaves the question of what goes into the
+hash/object-id field of the entry. We can't represent the true hash
+(that is the whole problem we are trying to solve). You could put in the
+null sha1, but that is another fsck landmine. So probably we have some
+dummy hash. But old versions, not knowing it's a submodule, will expect
+that hash to be reachable and will complain that it's missing!
+
+What if instead, we leave the mode as S_IFGITLINK, but use a dummy hash
+to recognize the extended submodule? Let's say 0000...1. We risk
+colliding with a real hash, but the chances are quite unlikely, and it's
+a risk we already take with the null oid. With this scheme, the old
+versions will still realize it's a submodule, and that we do not need to
+have access to that hash. If an old version checks it out without
+submodule recursion, we'll never even try to access that hash. And if it
+does, it will try to clone the appropriate gitmodule and say "oops, we
+don't have that hash". Which is probably the best outcome we can hope
+for.
+
+The obvious downside is that this does nothing to help the
+stored-conflict case. _If_ we are going to come up with a solution for
+that, I agree it might make sense to piggy-back on it for submodules.
+But I do think what I outlined above degrades a bit more gracefully. And
+the compatibility scenarios for these two use cases may be different.
+Alternate-hash submodule entries will be buried in old history and seen
+many people. Conflict markers are probably shorter-lived and less likely
+to be seen by people who aren't using modern versions of Git to work
+with them.
 
 
-> `push.default`. +
-> +`git push` may fail if you haven't set an upstream for the current branch,
-> +depending on what `push.default` is set to.
-> +See the <<UPSTREAM-BRANCHES,UPSTREAM BRANCHES>> section below for more
-> +on how to set and use upstreams.
-> 
->  You can make interesting things happen to a repository
->  every time you push into it, by setting up 'hooks' there.  See
-> @@ -696,7 +698,7 @@ a `git gc` command on the origin repository.
-> 
->  include::transfer-data-leaks.adoc[]
-> 
-> -CONFIGURATION
-> +CONFIGURATION[[CONFIGURATION]]
->  -------------
+The other way in which your proposal differs from what I was thinking is
+in the use of BER in the filename. It is nice that it can unambiguously
+encode a chunk of data, but the fact that it contains binary bytes makes
+me worried about a few things:
 
-Same remark concerning anchors.
+  1. When users see it, does it look like junk? It is nice, IMHO, if the
+     name does leak out to the user for it to be a bit more
+     self-explanatory.
 
-Otherwise, LGTM
+  2. When a filesystem sees it, can it handle it? I didn't think hard on
+     it, but I'd guess BER generally isn't valid UTF-8. What will HFS+
+     do with such a filename?
+
+  3. To what degree can BER encoded bytes conflict with meaningful
+     path names? In particular I wonder if "/" can appear, which will
+     cause confusion (both in git-fsck, but also when we try to work in
+     a directory that does not exist). Or worse, if you can sneak
+     ".git/" into a name in a way that is interpreted by _some_ versions
+     of Git but not others.
+
+So I was thinking instead of something more ASCII-ish. Something like
+"<link_type>-<link_data>-<pathname>". So in a sha256 tree, an entry for
+a sha1 submodule might look like (as shown by ls-tree):
+
+  160000 00000000000000000000000000000001 sha1-12345abcde12345abcde12345abcde12345abcde-the-real-path
+
+The sentinel sha256 oid "000...1" would be binary in the tree, of
+course, but the sha1 in the filename would be hex. It's not as
+efficient, but I don't think that submodules are common enough for this
+to be a real issue.
+
+I was vague about "link_data" above. But I think if it is interpreted in
+a manner specific to link_type, then this scheme could also eventually
+enable non-git submodules. E.g., for the true masochist, you could
+imagine svn-<url>-foo (with <url> percent-encoded to avoid dashes and
+slashes). I'm not sure if anyone would ever find that useful, and it's
+not something I'd plan to look into myself, but maybe it's a bonus?
 
 
+The other issue of concern is sorting. If sha1-...-foo sorts as "foo",
+then older versions will complain the tree is wrongly sorted. And
+probably will produce slightly wrong diffs. I think modern Git would
+Just Work in most spots, though, provided the handling is done in
+decode_tree_entry() or similar.
 
+Sorting the other way, as "sha1-", is mostly going to be a nightmare for
+modern Git. If we want it to truly show "foo" in a diff, for example, it
+would have to scan forward for any instance of "sha1-...-aaa" before
+showing "aab". Yuck.
 
+But what if we accepted that these entries were a bit more user-visible?
+That is, the diff itself would not do anything special at all, and you
+really would get a delete/add for:
+
+  -sha1-12345abcde12345abcde12345abcde12345abcde-foo
+  +sha1-67890fedcb67890fedcb67890fedcb67890fedcb-foo
+
+instead of the more correct path-changing diff. And then either we
+accept that ugliness, or we fix up the diff for display via diffcore or
+similar (dropping those ugly entries and replacing them with a single
+diff_filepair of "foo").
+
+And likewise the submodule code would leave these ugly entries until the
+moment it is ready to act on them, when it would realize that we want to
+touch "foo" in the checkout (and both here and in a diff, obviously it
+is an error if there is a "foo" already, but that is true already for
+any tree with duplicate entries).
+
+My gut feeling is that would keep the gross-ness confined to a few bits
+of code, and you could still operate on these natively with tools like
+mktree, ls-tree, and so on. The ugly names will leak out to the user
+sometimes, but most porcelain flows would do the right thing.
+
+-Peff
