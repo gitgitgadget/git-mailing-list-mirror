@@ -1,85 +1,84 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397BD286D7B
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 15:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FEB246BF
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 15:58:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759334290; cv=none; b=lJCOeU27UaGfAVu4JTknNL5E/XVWFk3NfsYQzoNToY2xvN2YGw+JErJ3tr8rEd0vr5W2b9bl48PRXZmCzlf7Gl1iQ+TnLabhKYQOZJcjz//VTaY5RBcV1KbPiYN0fnudqUoAKqqqkjStXYWLPfen1+rr+PQiJtOKxnwcGC++4/o=
+	t=1759334296; cv=none; b=Vi/Ze8yNUYvM+mFDSpj+gYrbd548ClD64ZrvtrRILdcVcblgOJahZxp+udVXBiYH4jF9tnJ1IgkwBM4zaGCIJAmYyuqQbz+8D7ULPnfvIwjxnKOiDQRbKrnV6MeIVM3ffOsSdWF58an0d0EBpxtdtec+SOfpJmm1O1JutudQMo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759334290; c=relaxed/simple;
-	bh=26xY9c31TN2MYUpc1OZq234iEBEpHUd1WQOthCi8lbQ=;
+	s=arc-20240116; t=1759334296; c=relaxed/simple;
+	bh=e7g090szpsK0PS7YXJ7Tqw6ayDGHQV1I11oJFNnEFbI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZJHGtWejZw2fOTuq8PzKzOPSNaFMO6LpwPa9vOSaANvHrfRwYPUhFcJJT0pwx5SHeiojWiba82sdbRXQ7nc35XTJEWzb7nMVMQ6Y9BnFEo+bJ0YXetokBe5hJcSON5nLYLnQfR45j6DasIEaxyhWWlCcl8fNTC3/afLgYIXMsYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CN+C/dWP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gTHFsTq3; arc=none smtp.client-ip=202.12.124.146
+	 In-Reply-To:To:Cc; b=kUriqC1YXOYqPZkQK7+O2u72KMNcB0nF402PVUuoH/T3mxx8wzxm7KVw/etmoOzW2c7dQXbd172Gyff4w76/SkYQ7/wt4yuUr3dz9/QHvkaW3m/lgKS5EBS9FL4OJ4E5pf2CXR5lwmbo7wVkJr7k3YdJokWQNwfniF9ul0MrMJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GcGFM+5K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hpZcjolq; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CN+C/dWP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gTHFsTq3"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2B14F1D00471;
-	Wed,  1 Oct 2025 11:58:08 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GcGFM+5K";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hpZcjolq"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 590D41D003E1;
+	Wed,  1 Oct 2025 11:58:12 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 01 Oct 2025 11:58:08 -0400
+  by phl-compute-02.internal (MEProxy); Wed, 01 Oct 2025 11:58:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759334288;
-	 x=1759420688; bh=O4bTKxy2SU1o067RsirRXk4IowTwiXB/YxEfx+xbxvw=; b=
-	CN+C/dWPStE4OGl/POU1PTO9uxY/lkhG/L6Mbz8OgkVhS9sqIvRz+H1kygdPddQV
-	XyAsSpFdNmQ+4vxsEwgFVfvwNlqvaCFNJibPpzUbtZ0hp5CTO9sMoYzNSnRgCO/E
-	nRgNTLrddlj5zfBdD1Wmz1NdWy+7bAaQoZRqNp8gHIPe0fObYnr5Nrqihwcs0p9T
-	tcb0IM7h9lZ3Rin0Ao1qz6bzPjyN0w5CvghDBC2eqPAAxFmGZxEIhX8ORvoxcEH7
-	rCy6TOob99I/tE31I6EA/1s2Uki8Pg5bTDQX9+QJxMa/Ize5VTRVz9q75RyxcdCb
-	4E3KxHWOB4RZjZHV/Cyf5g==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759334292;
+	 x=1759420692; bh=4lHaNUcpXvr7ULs2nwp+gNHr2Cd8wimqJeTJnOvkVuU=; b=
+	GcGFM+5KJkUrlNH0WDa66ioPSyqNVR4v1q7oWQiNSZIclo7VWOIxw6fhq1i68l47
+	FNFeYHpzOjXsfrnkOKwEh8RuY5q7Zd5DvyHD/eUf8RkPXZvH3rDNkgsTLzXKQQaY
+	6ztVsBKXNCJoM80UbTORqTjDwdpQU6wYGTgCbOvxw519O4wwJkfgexDubFj0OKL4
+	OCn6K4msOB4L3nmGvSGq0WSa+UOF+L4iNgMBfO0f1YQt7uedJwJ/x3YTtJULOtwi
+	1JWhJFeqfl+Pv3XIcEyKUgzQcKuzV16Gx1Rsmnf2lw7x3suYQSsW+RJXesZxiHAd
+	M4y1Gd7d/CqbVvsmr+x03A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759334288; x=
-	1759420688; bh=O4bTKxy2SU1o067RsirRXk4IowTwiXB/YxEfx+xbxvw=; b=g
-	THFsTq30pL1aMQzLAEiXXh4jhvWbO/nRr/ljgeg/CptRuUK94iIo4CjP20XkOy00
-	9LzVS+awCn3EYlP4GIKiU4AvLsGVoguP077T91s/Imkijzq4P/mm5jP7pgX23BSf
-	88rppT3jaGhrtjwATNIXhDGOpVDqMNzvl8PtFe1yBfzpdEHb9K+hHx+xcOuym6Kj
-	qSpRTi6lO7n0vcvk00SUH4/aPyagZSpQ6YRwrAiX+sMOT0OK/3MyY63JJ4F9jDe6
-	pDaG0aWTi5OrAUShSHNo0fd30zBhMrMCiFHj2BYe8Y4AG1aVppIDkgqdUsex1P6Q
-	i1pSIYQkgdNwCNesY62AA==
-X-ME-Sender: <xms:j0_daNL8MhQsOdVHXIzykTjeuyYd7zLCbWMo2WGbKaXiMYMzHfPD-g>
-    <xme:j0_daINM2yRDYHsP4ujprdEAdvbrMlrydqCYepmfgwYvJYShWYEo30EBTU2i-4V_D
-    b4-3MEi8ci-DABV0VBGD4L8lrhV625ebGyn96i_VKH5AsUdOP6u>
-X-ME-Received: <xmr:j0_daL4Dbm4gF3DbGzZt5TWc_IpVJEJJ_CmlbMibLZx9YoEpv8O6siKa9GpEBIX_2X2NNAR8RDIivp68M6Rdi2u7etCMLh8P4TqzJLSOIQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759334292; x=
+	1759420692; bh=4lHaNUcpXvr7ULs2nwp+gNHr2Cd8wimqJeTJnOvkVuU=; b=h
+	pZcjolqkBIitheqUjRnBHIsAtC7k5A9DDKtOJ6H3wShC9oH5qmPEOLxDaE8e1Rg+
+	DZecfml52ZupPe41LzH+dDntZ5DBJTdw/SuhLJQAs9sQfUuyauaxo+skpZQaVX8Q
+	XeABIPQ9YmU8zYBKv+mr40nKKZGtdxUREZ48v4vfTgUXh9L2FZGyNOIuweRCYled
+	TnHm+hLZTqsWw8FKuC7ny/cHjD09HX3HO2okGpNRMvtaJc7O0KS7hTjgeGfufuGA
+	PVyYd7Pg7/067epO2E7h+5BsL0UpSERkLlrjft4uoB53iajC6oR5WzZtvME6GNtO
+	af5KyvaCYboeG1ZmPmXTg==
+X-ME-Sender: <xms:k0_daDj5n5GXNa6ADM_PIDPBNk0fY5aVtA3gx7B-zklvG6mbyFi8ug>
+    <xme:k0_daPFnDplsQiXHde-ScbMq6CmBqnArwDAw0yYcjqqam8spp-NmYyZu3hcCkZ3X3
+    Girq6Fx43BtwmOQxJgVX62mppj7-G5PGSfddrDeO2NCcrSEsBYxmA>
+X-ME-Received: <xmr:k0_daJSFPYCIiLkwuRQNqH2gurEbffL4_u5TIw-o-6iJnZy44rhK9q8yQEjQF5ulxJQlp0JF4lO3x8N5uujEBGO9ss70L0CFofzNoermCg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekfeehiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepmhgrrhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkh
-    hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgv
-    vgdrfhhrpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhorhhgrghnohhvsehgmhgr
-    ihhlrdgtohhm
-X-ME-Proxy: <xmx:j0_daK5pRYgJ66ttwWO6hHhnOZMIulLivc5_VFPZG36HRtY-6mroIA>
-    <xmx:j0_daJHhJtu5mkP69Xi2y9EsL8BtGcy8M1pRgQWCSLtWh2YGcJmb3w>
-    <xmx:j0_daKVOms4Nyg7BkI01OeIBJNxXodmb-Yn8Zv-WlE8ADAZp4p4pjw>
-    <xmx:j0_daNUKO7OceNG9sNx15Clc67lzxTg-49gBotgYLvJcCc7z9YUeqA>
-    <xmx:kE_daPn0L6UG0I7ZPIqjICMF4jmcC_OoFZRHP9V6QdpbOvbEJe7MLszO>
+    epgffhtdevvdekteegueetvdelgffgjedtkefguedtveehheevhfetiefggfelveeinecu
+    ffhomhgrihhnpegtfhhgrdhhvghlphenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeekpdhm
+    ohguvgepshhmthhpohhuthdprhgtphhtthhopehmrghrthhinhhvohhniiesghhmrghilh
+    drtghomhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthho
+    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepsggvnhdr
+    khhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepshhorhhgrghnohhvsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:lE_daMz1jdFYlZehBmq6kxyTNhjgUQObSW-XFgiliTP759_cJ7qiDQ>
+    <xmx:lE_daFd-lWxWjQH_qRk2nmRUhTwoujZM-iXRIpYM4Y9Bb1H66OE7Rw>
+    <xmx:lE_daPPyFFa0p9jD2wwQ_VlU9IyXNSJw-Wsw2qqMzERfor1RtgEndA>
+    <xmx:lE_daAsU-a2kCwoRWxvPhSGYYEsHZlKjk5Vw4xIXsOacolCxkHPTzw>
+    <xmx:lE_daM_fcqcV4kADsWhCymzHvb0Ho22qqIFG74z7K4HKqJbCBroev4Tq>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Oct 2025 11:58:06 -0400 (EDT)
+ 1 Oct 2025 11:58:10 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8f298b2b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 1 Oct 2025 15:58:06 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 31dfcec3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 1 Oct 2025 15:58:09 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 01 Oct 2025 17:57:33 +0200
-Subject: [PATCH v4 07/12] add-patch: split out header from
- "add-interactive.h"
+Date: Wed, 01 Oct 2025 17:57:34 +0200
+Subject: [PATCH v4 08/12] add-patch: split out `struct interactive_options`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,7 +87,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251001-b4-pks-history-builtin-v4-7-8e61ddb86317@pks.im>
+Message-Id: <20251001-b4-pks-history-builtin-v4-8-8e61ddb86317@pks.im>
 References: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im>
 In-Reply-To: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im>
 To: git@vger.kernel.org
@@ -100,109 +99,1108 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  Elijah Newren <newren@gmail.com>
 X-Mailer: b4 0.14.2
 
-While we have a "add-patch.c" code file, its declarations are part of
-"add-interactive.h". This makes it somewhat harder than necessary to
-find relevant code and to identify clear boundaries between the two
-subsystems.
+The `struct add_p_opt` is reused both by our the infra for "git add -p"
+and "git add -i". Users of `run_add_i()` for example are expected to
+pass `struct add_p_opt`. This is somewhat confusing and raises the
+question which options apply to what part of the stack.
 
-Split up concerns and move declarations that relate to "add-patch.c"
-into a new "add-patch.h" header.
+But things are even more confusing than that: while callers are expected
+to pass in `struct add_p_opt`, these options ultimately get used to
+initialize a `struct add_i_state` that is used by both subsystems. So we
+are basically going full circle here.
+
+Refactor the code and split out a new `struct interactive_options` that
+hosts common options used by both. These options are then applied to a
+`struct interactive_config` that hosts common configuration.
+
+This refactoring doesn't yet fully detangle the two subsystems from one
+another, as we still end up calling `init_add_i_state()` in the "git add
+-p" subsystem. This will be fixed in a subsequent commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- add-interactive.h | 23 +++--------------------
- add-patch.c       |  1 +
- add-patch.h       | 26 ++++++++++++++++++++++++++
- 3 files changed, 30 insertions(+), 20 deletions(-)
+ add-interactive.c  | 174 +++++++++++------------------------------------------
+ add-interactive.h  |  23 +------
+ add-patch.c        | 170 +++++++++++++++++++++++++++++++++++++++++++--------
+ add-patch.h        |  36 ++++++++++-
+ builtin/add.c      |  22 +++----
+ builtin/checkout.c |   4 +-
+ builtin/commit.c   |  16 ++---
+ builtin/reset.c    |  16 ++---
+ builtin/stash.c    |  46 +++++++-------
+ commit.h           |   2 +-
+ 10 files changed, 270 insertions(+), 239 deletions(-)
 
+diff --git a/add-interactive.c b/add-interactive.c
+index 6ffe64c38d..f2d971818e 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -3,7 +3,6 @@
+ #include "git-compat-util.h"
+ #include "add-interactive.h"
+ #include "color.h"
+-#include "config.h"
+ #include "diffcore.h"
+ #include "gettext.h"
+ #include "hash.h"
+@@ -20,119 +19,18 @@
+ #include "prompt.h"
+ #include "tree.h"
+ 
+-static void init_color(struct repository *r, enum git_colorbool use_color,
+-		       const char *section_and_slot, char *dst,
+-		       const char *default_color)
+-{
+-	char *key = xstrfmt("color.%s", section_and_slot);
+-	const char *value;
+-
+-	if (!want_color(use_color))
+-		dst[0] = '\0';
+-	else if (repo_config_get_value(r, key, &value) ||
+-		 color_parse(value, dst))
+-		strlcpy(dst, default_color, COLOR_MAXLEN);
+-
+-	free(key);
+-}
+-
+-static enum git_colorbool check_color_config(struct repository *r, const char *var)
+-{
+-	const char *value;
+-	enum git_colorbool ret;
+-
+-	if (repo_config_get_value(r, var, &value))
+-		ret = GIT_COLOR_UNKNOWN;
+-	else
+-		ret = git_config_colorbool(var, value);
+-
+-	/*
+-	 * Do not rely on want_color() to fall back to color.ui for us. It uses
+-	 * the value parsed by git_color_config(), which may not have been
+-	 * called by the main command.
+-	 */
+-	if (ret == GIT_COLOR_UNKNOWN &&
+-	    !repo_config_get_value(r, "color.ui", &value))
+-		ret = git_config_colorbool("color.ui", value);
+-
+-	return ret;
+-}
+-
+ void init_add_i_state(struct add_i_state *s, struct repository *r,
+-		      struct add_p_opt *add_p_opt)
++		      struct interactive_options *opts)
+ {
+ 	s->r = r;
+-	s->context = -1;
+-	s->interhunkcontext = -1;
+-
+-	s->use_color_interactive = check_color_config(r, "color.interactive");
+-
+-	init_color(r, s->use_color_interactive, "interactive.header",
+-		   s->header_color, GIT_COLOR_BOLD);
+-	init_color(r, s->use_color_interactive, "interactive.help",
+-		   s->help_color, GIT_COLOR_BOLD_RED);
+-	init_color(r, s->use_color_interactive, "interactive.prompt",
+-		   s->prompt_color, GIT_COLOR_BOLD_BLUE);
+-	init_color(r, s->use_color_interactive, "interactive.error",
+-		   s->error_color, GIT_COLOR_BOLD_RED);
+-	strlcpy(s->reset_color_interactive,
+-		want_color(s->use_color_interactive) ? GIT_COLOR_RESET : "", COLOR_MAXLEN);
+-
+-	s->use_color_diff = check_color_config(r, "color.diff");
+-
+-	init_color(r, s->use_color_diff, "diff.frag", s->fraginfo_color,
+-		   diff_get_color(s->use_color_diff, DIFF_FRAGINFO));
+-	init_color(r, s->use_color_diff, "diff.context", s->context_color,
+-		   "fall back");
+-	if (!strcmp(s->context_color, "fall back"))
+-		init_color(r, s->use_color_diff, "diff.plain",
+-			   s->context_color,
+-			   diff_get_color(s->use_color_diff, DIFF_CONTEXT));
+-	init_color(r, s->use_color_diff, "diff.old", s->file_old_color,
+-		   diff_get_color(s->use_color_diff, DIFF_FILE_OLD));
+-	init_color(r, s->use_color_diff, "diff.new", s->file_new_color,
+-		   diff_get_color(s->use_color_diff, DIFF_FILE_NEW));
+-	strlcpy(s->reset_color_diff,
+-		want_color(s->use_color_diff) ? GIT_COLOR_RESET : "", COLOR_MAXLEN);
+-
+-	FREE_AND_NULL(s->interactive_diff_filter);
+-	repo_config_get_string(r, "interactive.difffilter",
+-			       &s->interactive_diff_filter);
+-
+-	FREE_AND_NULL(s->interactive_diff_algorithm);
+-	repo_config_get_string(r, "diff.algorithm",
+-			       &s->interactive_diff_algorithm);
+-
+-	if (!repo_config_get_int(r, "diff.context", &s->context))
+-		if (s->context < 0)
+-			die(_("%s cannot be negative"), "diff.context");
+-	if (!repo_config_get_int(r, "diff.interHunkContext", &s->interhunkcontext))
+-		if (s->interhunkcontext < 0)
+-			die(_("%s cannot be negative"), "diff.interHunkContext");
+-
+-	repo_config_get_bool(r, "interactive.singlekey", &s->use_single_key);
+-	if (s->use_single_key)
+-		setbuf(stdin, NULL);
+-
+-	if (add_p_opt->context != -1) {
+-		if (add_p_opt->context < 0)
+-			die(_("%s cannot be negative"), "--unified");
+-		s->context = add_p_opt->context;
+-	}
+-	if (add_p_opt->interhunkcontext != -1) {
+-		if (add_p_opt->interhunkcontext < 0)
+-			die(_("%s cannot be negative"), "--inter-hunk-context");
+-		s->interhunkcontext = add_p_opt->interhunkcontext;
+-	}
++	interactive_config_init(&s->cfg, r, opts);
+ }
+ 
+ void clear_add_i_state(struct add_i_state *s)
+ {
+-	FREE_AND_NULL(s->interactive_diff_filter);
+-	FREE_AND_NULL(s->interactive_diff_algorithm);
++	interactive_config_clear(&s->cfg);
+ 	memset(s, 0, sizeof(*s));
+-	s->use_color_interactive = GIT_COLOR_UNKNOWN;
+-	s->use_color_diff = GIT_COLOR_UNKNOWN;
++	interactive_config_clear(&s->cfg);
+ }
+ 
+ /*
+@@ -285,7 +183,7 @@ static void list(struct add_i_state *s, struct string_list *list, int *selected,
+ 		return;
+ 
+ 	if (opts->header)
+-		color_fprintf_ln(stdout, s->header_color,
++		color_fprintf_ln(stdout, s->cfg.header_color,
+ 				 "%s", opts->header);
+ 
+ 	for (i = 0; i < list->nr; i++) {
+@@ -353,7 +251,7 @@ static ssize_t list_and_choose(struct add_i_state *s,
+ 
+ 		list(s, &items->items, items->selected, &opts->list_opts);
+ 
+-		color_fprintf(stdout, s->prompt_color, "%s", opts->prompt);
++		color_fprintf(stdout, s->cfg.prompt_color, "%s", opts->prompt);
+ 		fputs(singleton ? "> " : ">> ", stdout);
+ 		fflush(stdout);
+ 
+@@ -431,7 +329,7 @@ static ssize_t list_and_choose(struct add_i_state *s,
+ 
+ 			if (from < 0 || from >= items->items.nr ||
+ 			    (singleton && from + 1 != to)) {
+-				color_fprintf_ln(stderr, s->error_color,
++				color_fprintf_ln(stderr, s->cfg.error_color,
+ 						 _("Huh (%s)?"), p);
+ 				break;
+ 			} else if (singleton) {
+@@ -991,7 +889,7 @@ static int run_patch(struct add_i_state *s, const struct pathspec *ps,
+ 				free(files->items.items[i].string);
+ 			} else if (item->index.unmerged ||
+ 				 item->worktree.unmerged) {
+-				color_fprintf_ln(stderr, s->error_color,
++				color_fprintf_ln(stderr, s->cfg.error_color,
+ 						 _("ignoring unmerged: %s"),
+ 						 files->items.items[i].string);
+ 				free(item);
+@@ -1013,9 +911,9 @@ static int run_patch(struct add_i_state *s, const struct pathspec *ps,
+ 	opts->prompt = N_("Patch update");
+ 	count = list_and_choose(s, files, opts);
+ 	if (count > 0) {
+-		struct add_p_opt add_p_opt = {
+-			.context = s->context,
+-			.interhunkcontext = s->interhunkcontext,
++		struct interactive_options opts = {
++			.context = s->cfg.context,
++			.interhunkcontext = s->cfg.interhunkcontext,
+ 		};
+ 		struct strvec args = STRVEC_INIT;
+ 		struct pathspec ps_selected = { 0 };
+@@ -1027,7 +925,7 @@ static int run_patch(struct add_i_state *s, const struct pathspec *ps,
+ 		parse_pathspec(&ps_selected,
+ 			       PATHSPEC_ALL_MAGIC & ~PATHSPEC_LITERAL,
+ 			       PATHSPEC_LITERAL_PATH, "", args.v);
+-		res = run_add_p(s->r, ADD_P_ADD, &add_p_opt, NULL, &ps_selected);
++		res = run_add_p(s->r, ADD_P_ADD, &opts, NULL, &ps_selected);
+ 		strvec_clear(&args);
+ 		clear_pathspec(&ps_selected);
+ 	}
+@@ -1063,10 +961,10 @@ static int run_diff(struct add_i_state *s, const struct pathspec *ps,
+ 		struct child_process cmd = CHILD_PROCESS_INIT;
+ 
+ 		strvec_pushl(&cmd.args, "git", "diff", "-p", "--cached", NULL);
+-		if (s->context != -1)
+-			strvec_pushf(&cmd.args, "--unified=%i", s->context);
+-		if (s->interhunkcontext != -1)
+-			strvec_pushf(&cmd.args, "--inter-hunk-context=%i", s->interhunkcontext);
++		if (s->cfg.context != -1)
++			strvec_pushf(&cmd.args, "--unified=%i", s->cfg.context);
++		if (s->cfg.interhunkcontext != -1)
++			strvec_pushf(&cmd.args, "--inter-hunk-context=%i", s->cfg.interhunkcontext);
+ 		strvec_pushl(&cmd.args, oid_to_hex(!is_initial ? &oid :
+ 			     s->r->hash_algo->empty_tree), "--", NULL);
+ 		for (i = 0; i < files->items.nr; i++)
+@@ -1084,17 +982,17 @@ static int run_help(struct add_i_state *s, const struct pathspec *ps UNUSED,
+ 		    struct prefix_item_list *files UNUSED,
+ 		    struct list_and_choose_options *opts UNUSED)
+ {
+-	color_fprintf_ln(stdout, s->help_color, "status        - %s",
++	color_fprintf_ln(stdout, s->cfg.help_color, "status        - %s",
+ 			 _("show paths with changes"));
+-	color_fprintf_ln(stdout, s->help_color, "update        - %s",
++	color_fprintf_ln(stdout, s->cfg.help_color, "update        - %s",
+ 			 _("add working tree state to the staged set of changes"));
+-	color_fprintf_ln(stdout, s->help_color, "revert        - %s",
++	color_fprintf_ln(stdout, s->cfg.help_color, "revert        - %s",
+ 			 _("revert staged set of changes back to the HEAD version"));
+-	color_fprintf_ln(stdout, s->help_color, "patch         - %s",
++	color_fprintf_ln(stdout, s->cfg.help_color, "patch         - %s",
+ 			 _("pick hunks and update selectively"));
+-	color_fprintf_ln(stdout, s->help_color, "diff          - %s",
++	color_fprintf_ln(stdout, s->cfg.help_color, "diff          - %s",
+ 			 _("view diff between HEAD and index"));
+-	color_fprintf_ln(stdout, s->help_color, "add untracked - %s",
++	color_fprintf_ln(stdout, s->cfg.help_color, "add untracked - %s",
+ 			 _("add contents of untracked files to the staged set of changes"));
+ 
+ 	return 0;
+@@ -1102,21 +1000,21 @@ static int run_help(struct add_i_state *s, const struct pathspec *ps UNUSED,
+ 
+ static void choose_prompt_help(struct add_i_state *s)
+ {
+-	color_fprintf_ln(stdout, s->help_color, "%s",
++	color_fprintf_ln(stdout, s->cfg.help_color, "%s",
+ 			 _("Prompt help:"));
+-	color_fprintf_ln(stdout, s->help_color, "1          - %s",
++	color_fprintf_ln(stdout, s->cfg.help_color, "1          - %s",
+ 			 _("select a single item"));
+-	color_fprintf_ln(stdout, s->help_color, "3-5        - %s",
++	color_fprintf_ln(stdout, s->cfg.help_color, "3-5        - %s",
+ 			 _("select a range of items"));
+-	color_fprintf_ln(stdout, s->help_color, "2-3,6-9    - %s",
++	color_fprintf_ln(stdout, s->cfg.help_color, "2-3,6-9    - %s",
+ 			 _("select multiple ranges"));
+-	color_fprintf_ln(stdout, s->help_color, "foo        - %s",
++	color_fprintf_ln(stdout, s->cfg.help_color, "foo        - %s",
+ 			 _("select item based on unique prefix"));
+-	color_fprintf_ln(stdout, s->help_color, "-...       - %s",
++	color_fprintf_ln(stdout, s->cfg.help_color, "-...       - %s",
+ 			 _("unselect specified items"));
+-	color_fprintf_ln(stdout, s->help_color, "*          - %s",
++	color_fprintf_ln(stdout, s->cfg.help_color, "*          - %s",
+ 			 _("choose all items"));
+-	color_fprintf_ln(stdout, s->help_color, "           - %s",
++	color_fprintf_ln(stdout, s->cfg.help_color, "           - %s",
+ 			 _("(empty) finish selecting"));
+ }
+ 
+@@ -1151,7 +1049,7 @@ static void print_command_item(int i, int selected UNUSED,
+ 
+ static void command_prompt_help(struct add_i_state *s)
+ {
+-	const char *help_color = s->help_color;
++	const char *help_color = s->cfg.help_color;
+ 	color_fprintf_ln(stdout, help_color, "%s", _("Prompt help:"));
+ 	color_fprintf_ln(stdout, help_color, "1          - %s",
+ 			 _("select a numbered item"));
+@@ -1162,7 +1060,7 @@ static void command_prompt_help(struct add_i_state *s)
+ }
+ 
+ int run_add_i(struct repository *r, const struct pathspec *ps,
+-	      struct add_p_opt *add_p_opt)
++	      struct interactive_options *interactive_opts)
+ {
+ 	struct add_i_state s = { NULL };
+ 	struct print_command_item_data data = { "[", "]" };
+@@ -1205,15 +1103,15 @@ int run_add_i(struct repository *r, const struct pathspec *ps,
+ 			->util = util;
+ 	}
+ 
+-	init_add_i_state(&s, r, add_p_opt);
++	init_add_i_state(&s, r, interactive_opts);
+ 
+ 	/*
+ 	 * When color was asked for, use the prompt color for
+ 	 * highlighting, otherwise use square brackets.
+ 	 */
+-	if (want_color(s.use_color_interactive)) {
+-		data.color = s.prompt_color;
+-		data.reset = s.reset_color_interactive;
++	if (want_color(s.cfg.use_color_interactive)) {
++		data.color = s.cfg.prompt_color;
++		data.reset = s.cfg.reset_color_interactive;
+ 	}
+ 	print_file_item_data.color = data.color;
+ 	print_file_item_data.reset = data.reset;
 diff --git a/add-interactive.h b/add-interactive.h
-index da49502b76..2e3d1d871d 100644
+index 2e3d1d871d..eefa2edc7c 100644
 --- a/add-interactive.h
 +++ b/add-interactive.h
-@@ -1,14 +1,11 @@
- #ifndef ADD_INTERACTIVE_H
+@@ -2,37 +2,20 @@
  #define ADD_INTERACTIVE_H
  
-+#include "add-patch.h"
- #include "color.h"
+ #include "add-patch.h"
+-#include "color.h"
  
--struct add_p_opt {
--	int context;
--	int interhunkcontext;
--};
--
--#define ADD_P_OPT_INIT { .context = -1, .interhunkcontext = -1 }
-+struct pathspec;
-+struct repository;
+ struct pathspec;
+ struct repository;
  
  struct add_i_state {
  	struct repository *r;
-@@ -35,21 +32,7 @@ void init_add_i_state(struct add_i_state *s, struct repository *r,
- 		      struct add_p_opt *add_p_opt);
+-	enum git_colorbool use_color_interactive;
+-	enum git_colorbool use_color_diff;
+-	char header_color[COLOR_MAXLEN];
+-	char help_color[COLOR_MAXLEN];
+-	char prompt_color[COLOR_MAXLEN];
+-	char error_color[COLOR_MAXLEN];
+-	char reset_color_interactive[COLOR_MAXLEN];
+-
+-	char fraginfo_color[COLOR_MAXLEN];
+-	char context_color[COLOR_MAXLEN];
+-	char file_old_color[COLOR_MAXLEN];
+-	char file_new_color[COLOR_MAXLEN];
+-	char reset_color_diff[COLOR_MAXLEN];
+-
+-	int use_single_key;
+-	char *interactive_diff_filter, *interactive_diff_algorithm;
+-	int context, interhunkcontext;
++	struct interactive_config cfg;
+ };
+ 
+ void init_add_i_state(struct add_i_state *s, struct repository *r,
+-		      struct add_p_opt *add_p_opt);
++		      struct interactive_options *opts);
  void clear_add_i_state(struct add_i_state *s);
  
--struct repository;
--struct pathspec;
  int run_add_i(struct repository *r, const struct pathspec *ps,
- 	      struct add_p_opt *add_p_opt);
+-	      struct add_p_opt *add_p_opt);
++	      struct interactive_options *opts);
  
--enum add_p_mode {
--	ADD_P_ADD,
--	ADD_P_STASH,
--	ADD_P_RESET,
--	ADD_P_CHECKOUT,
--	ADD_P_WORKTREE,
--};
--
--int run_add_p(struct repository *r, enum add_p_mode mode,
--	      struct add_p_opt *o, const char *revision,
--	      const struct pathspec *ps);
--
  #endif
 diff --git a/add-patch.c b/add-patch.c
-index b0389c5d5b..9d0890fc49 100644
+index 9d0890fc49..29c15695dd 100644
 --- a/add-patch.c
 +++ b/add-patch.c
-@@ -3,6 +3,7 @@
- 
- #include "git-compat-util.h"
+@@ -5,6 +5,8 @@
  #include "add-interactive.h"
-+#include "add-patch.h"
+ #include "add-patch.h"
  #include "advice.h"
++#include "config.h"
++#include "diff.h"
  #include "editor.h"
  #include "environment.h"
+ #include "gettext.h"
+@@ -279,6 +281,122 @@ struct add_p_state {
+ 	const char *revision;
+ };
+ 
++static void init_color(struct repository *r,
++		       enum git_colorbool use_color,
++		       const char *section_and_slot, char *dst,
++		       const char *default_color)
++{
++	char *key = xstrfmt("color.%s", section_and_slot);
++	const char *value;
++
++	if (!want_color(use_color))
++		dst[0] = '\0';
++	else if (repo_config_get_value(r, key, &value) ||
++		 color_parse(value, dst))
++		strlcpy(dst, default_color, COLOR_MAXLEN);
++
++	free(key);
++}
++
++static enum git_colorbool check_color_config(struct repository *r, const char *var)
++{
++	const char *value;
++	enum git_colorbool ret;
++
++	if (repo_config_get_value(r, var, &value))
++		ret = GIT_COLOR_UNKNOWN;
++	else
++		ret = git_config_colorbool(var, value);
++
++	/*
++	 * Do not rely on want_color() to fall back to color.ui for us. It uses
++	 * the value parsed by git_color_config(), which may not have been
++	 * called by the main command.
++	 */
++	if (ret == GIT_COLOR_UNKNOWN &&
++	    !repo_config_get_value(r, "color.ui", &value))
++		ret = git_config_colorbool("color.ui", value);
++
++	return ret;
++}
++
++void interactive_config_init(struct interactive_config *cfg,
++			     struct repository *r,
++			     struct interactive_options *opts)
++{
++	cfg->context = -1;
++	cfg->interhunkcontext = -1;
++
++	cfg->use_color_interactive = check_color_config(r, "color.interactive");
++
++	init_color(r, cfg->use_color_interactive, "interactive.header",
++		   cfg->header_color, GIT_COLOR_BOLD);
++	init_color(r, cfg->use_color_interactive, "interactive.help",
++		   cfg->help_color, GIT_COLOR_BOLD_RED);
++	init_color(r, cfg->use_color_interactive, "interactive.prompt",
++		   cfg->prompt_color, GIT_COLOR_BOLD_BLUE);
++	init_color(r, cfg->use_color_interactive, "interactive.error",
++		   cfg->error_color, GIT_COLOR_BOLD_RED);
++	strlcpy(cfg->reset_color_interactive,
++		want_color(cfg->use_color_interactive) ? GIT_COLOR_RESET : "", COLOR_MAXLEN);
++
++	cfg->use_color_diff = check_color_config(r, "color.diff");
++
++	init_color(r, cfg->use_color_diff, "diff.frag", cfg->fraginfo_color,
++		   diff_get_color(cfg->use_color_diff, DIFF_FRAGINFO));
++	init_color(r, cfg->use_color_diff, "diff.context", cfg->context_color,
++		   "fall back");
++	if (!strcmp(cfg->context_color, "fall back"))
++		init_color(r, cfg->use_color_diff, "diff.plain",
++			   cfg->context_color,
++			   diff_get_color(cfg->use_color_diff, DIFF_CONTEXT));
++	init_color(r, cfg->use_color_diff, "diff.old", cfg->file_old_color,
++		diff_get_color(cfg->use_color_diff, DIFF_FILE_OLD));
++	init_color(r, cfg->use_color_diff, "diff.new", cfg->file_new_color,
++		diff_get_color(cfg->use_color_diff, DIFF_FILE_NEW));
++	strlcpy(cfg->reset_color_diff,
++		want_color(cfg->use_color_diff) ? GIT_COLOR_RESET : "", COLOR_MAXLEN);
++
++	FREE_AND_NULL(cfg->interactive_diff_filter);
++	repo_config_get_string(r, "interactive.difffilter",
++			       &cfg->interactive_diff_filter);
++
++	FREE_AND_NULL(cfg->interactive_diff_algorithm);
++	repo_config_get_string(r, "diff.algorithm",
++			       &cfg->interactive_diff_algorithm);
++
++	if (!repo_config_get_int(r, "diff.context", &cfg->context))
++		if (cfg->context < 0)
++			die(_("%s cannot be negative"), "diff.context");
++	if (!repo_config_get_int(r, "diff.interHunkContext", &cfg->interhunkcontext))
++		if (cfg->interhunkcontext < 0)
++			die(_("%s cannot be negative"), "diff.interHunkContext");
++
++	repo_config_get_bool(r, "interactive.singlekey", &cfg->use_single_key);
++	if (cfg->use_single_key)
++		setbuf(stdin, NULL);
++
++	if (opts->context != -1) {
++		if (opts->context < 0)
++			die(_("%s cannot be negative"), "--unified");
++		cfg->context = opts->context;
++	}
++	if (opts->interhunkcontext != -1) {
++		if (opts->interhunkcontext < 0)
++			die(_("%s cannot be negative"), "--inter-hunk-context");
++		cfg->interhunkcontext = opts->interhunkcontext;
++	}
++}
++
++void interactive_config_clear(struct interactive_config *cfg)
++{
++	FREE_AND_NULL(cfg->interactive_diff_filter);
++	FREE_AND_NULL(cfg->interactive_diff_algorithm);
++	memset(cfg, 0, sizeof(*cfg));
++	cfg->use_color_interactive = GIT_COLOR_UNKNOWN;
++	cfg->use_color_diff = GIT_COLOR_UNKNOWN;
++}
++
+ static void add_p_state_clear(struct add_p_state *s)
+ {
+ 	size_t i;
+@@ -299,9 +417,9 @@ static void err(struct add_p_state *s, const char *fmt, ...)
+ 	va_list args;
+ 
+ 	va_start(args, fmt);
+-	fputs(s->s.error_color, stdout);
++	fputs(s->s.cfg.error_color, stdout);
+ 	vprintf(fmt, args);
+-	puts(s->s.reset_color_interactive);
++	puts(s->s.cfg.reset_color_interactive);
+ 	va_end(args);
+ }
+ 
+@@ -424,12 +542,12 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+ 	int res;
+ 
+ 	strvec_pushv(&args, s->mode->diff_cmd);
+-	if (s->s.context != -1)
+-		strvec_pushf(&args, "--unified=%i", s->s.context);
+-	if (s->s.interhunkcontext != -1)
+-		strvec_pushf(&args, "--inter-hunk-context=%i", s->s.interhunkcontext);
+-	if (s->s.interactive_diff_algorithm)
+-		strvec_pushf(&args, "--diff-algorithm=%s", s->s.interactive_diff_algorithm);
++	if (s->s.cfg.context != -1)
++		strvec_pushf(&args, "--unified=%i", s->s.cfg.context);
++	if (s->s.cfg.interhunkcontext != -1)
++		strvec_pushf(&args, "--inter-hunk-context=%i", s->s.cfg.interhunkcontext);
++	if (s->s.cfg.interactive_diff_algorithm)
++		strvec_pushf(&args, "--diff-algorithm=%s", s->s.cfg.interactive_diff_algorithm);
+ 	if (s->revision) {
+ 		struct object_id oid;
+ 		strvec_push(&args,
+@@ -458,9 +576,9 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+ 	}
+ 	strbuf_complete_line(plain);
+ 
+-	if (want_color_fd(1, s->s.use_color_diff)) {
++	if (want_color_fd(1, s->s.cfg.use_color_diff)) {
+ 		struct child_process colored_cp = CHILD_PROCESS_INIT;
+-		const char *diff_filter = s->s.interactive_diff_filter;
++		const char *diff_filter = s->s.cfg.interactive_diff_filter;
+ 
+ 		setup_child_process(s, &colored_cp, NULL);
+ 		xsnprintf((char *)args.v[color_arg_index], 8, "--color");
+@@ -693,7 +811,7 @@ static void render_hunk(struct add_p_state *s, struct hunk *hunk,
+ 				   hunk->colored_end - hunk->colored_start);
+ 			return;
+ 		} else {
+-			strbuf_addstr(out, s->s.fraginfo_color);
++			strbuf_addstr(out, s->s.cfg.fraginfo_color);
+ 			p = s->colored.buf + header->colored_extra_start;
+ 			len = header->colored_extra_end
+ 				- header->colored_extra_start;
+@@ -715,7 +833,7 @@ static void render_hunk(struct add_p_state *s, struct hunk *hunk,
+ 		if (len)
+ 			strbuf_add(out, p, len);
+ 		else if (colored)
+-			strbuf_addf(out, "%s\n", s->s.reset_color_diff);
++			strbuf_addf(out, "%s\n", s->s.cfg.reset_color_diff);
+ 		else
+ 			strbuf_addch(out, '\n');
+ 	}
+@@ -1103,12 +1221,12 @@ static void recolor_hunk(struct add_p_state *s, struct hunk *hunk)
+ 
+ 		strbuf_addstr(&s->colored,
+ 			      plain[current] == '-' ?
+-			      s->s.file_old_color :
++			      s->s.cfg.file_old_color :
+ 			      plain[current] == '+' ?
+-			      s->s.file_new_color :
+-			      s->s.context_color);
++			      s->s.cfg.file_new_color :
++			      s->s.cfg.context_color);
+ 		strbuf_add(&s->colored, plain + current, eol - current);
+-		strbuf_addstr(&s->colored, s->s.reset_color_diff);
++		strbuf_addstr(&s->colored, s->s.cfg.reset_color_diff);
+ 		if (next > eol)
+ 			strbuf_add(&s->colored, plain + eol, next - eol);
+ 		current = next;
+@@ -1227,7 +1345,7 @@ static int run_apply_check(struct add_p_state *s,
+ 
+ static int read_single_character(struct add_p_state *s)
+ {
+-	if (s->s.use_single_key) {
++	if (s->s.cfg.use_single_key) {
+ 		int res = read_key_without_echo(&s->answer);
+ 		printf("%s\n", res == EOF ? "" : s->answer.buf);
+ 		return res;
+@@ -1241,7 +1359,7 @@ static int read_single_character(struct add_p_state *s)
+ static int prompt_yesno(struct add_p_state *s, const char *prompt)
+ {
+ 	for (;;) {
+-		color_fprintf(stdout, s->s.prompt_color, "%s", _(prompt));
++		color_fprintf(stdout, s->s.cfg.prompt_color, "%s", _(prompt));
+ 		fflush(stdout);
+ 		if (read_single_character(s) == EOF)
+ 			return -1;
+@@ -1522,15 +1640,15 @@ static int patch_update_file(struct add_p_state *s,
+ 		else
+ 			prompt_mode_type = PROMPT_HUNK;
+ 
+-		printf("%s(%"PRIuMAX"/%"PRIuMAX") ", s->s.prompt_color,
++		printf("%s(%"PRIuMAX"/%"PRIuMAX") ", s->s.cfg.prompt_color,
+ 			      (uintmax_t)hunk_index + 1,
+ 			      (uintmax_t)(file_diff->hunk_nr
+ 						? file_diff->hunk_nr
+ 						: 1));
+ 		printf(_(s->mode->prompt_mode[prompt_mode_type]),
+ 		       s->buf.buf);
+-		if (*s->s.reset_color_interactive)
+-			fputs(s->s.reset_color_interactive, stdout);
++		if (*s->s.cfg.reset_color_interactive)
++			fputs(s->s.cfg.reset_color_interactive, stdout);
+ 		fflush(stdout);
+ 		if (read_single_character(s) == EOF)
+ 			break;
+@@ -1687,7 +1805,7 @@ static int patch_update_file(struct add_p_state *s,
+ 				err(s, _("Sorry, cannot split this hunk"));
+ 			} else if (!split_hunk(s, file_diff,
+ 					     hunk - file_diff->hunk)) {
+-				color_fprintf_ln(stdout, s->s.header_color,
++				color_fprintf_ln(stdout, s->s.cfg.header_color,
+ 						 _("Split into %d hunks."),
+ 						 (int)splittable_into);
+ 				rendered_hunk_index = -1;
+@@ -1705,7 +1823,7 @@ static int patch_update_file(struct add_p_state *s,
+ 		} else if (s->answer.buf[0] == '?') {
+ 			const char *p = _(help_patch_remainder), *eol = p;
+ 
+-			color_fprintf(stdout, s->s.help_color, "%s",
++			color_fprintf(stdout, s->s.cfg.help_color, "%s",
+ 				      _(s->mode->help_patch_text));
+ 
+ 			/*
+@@ -1723,7 +1841,7 @@ static int patch_update_file(struct add_p_state *s,
+ 				if (*p != '?' && !strchr(s->buf.buf, *p))
+ 					continue;
+ 
+-				color_fprintf_ln(stdout, s->s.help_color,
++				color_fprintf_ln(stdout, s->s.cfg.help_color,
+ 						 "%.*s", (int)(eol - p), p);
+ 			}
+ 		} else {
+@@ -1764,7 +1882,7 @@ static int patch_update_file(struct add_p_state *s,
+ }
+ 
+ int run_add_p(struct repository *r, enum add_p_mode mode,
+-	      struct add_p_opt *o, const char *revision,
++	      struct interactive_options *opts, const char *revision,
+ 	      const struct pathspec *ps)
+ {
+ 	struct add_p_state s = {
+@@ -1772,7 +1890,7 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
+ 	};
+ 	size_t i, binary_count = 0;
+ 
+-	init_add_i_state(&s.s, r, o);
++	init_add_i_state(&s.s, r, opts);
+ 
+ 	if (mode == ADD_P_STASH)
+ 		s.mode = &patch_mode_stash;
 diff --git a/add-patch.h b/add-patch.h
-new file mode 100644
-index 0000000000..4394c74107
---- /dev/null
+index 4394c74107..a4a05d9d14 100644
+--- a/add-patch.h
 +++ b/add-patch.h
-@@ -0,0 +1,26 @@
-+#ifndef ADD_PATCH_H
-+#define ADD_PATCH_H
+@@ -1,15 +1,45 @@
+ #ifndef ADD_PATCH_H
+ #define ADD_PATCH_H
+ 
++#include "color.h"
 +
-+struct pathspec;
-+struct repository;
+ struct pathspec;
+ struct repository;
+ 
+-struct add_p_opt {
++struct interactive_options {
+ 	int context;
+ 	int interhunkcontext;
+ };
+ 
+-#define ADD_P_OPT_INIT { .context = -1, .interhunkcontext = -1 }
++#define INTERACTIVE_OPTIONS_INIT { \
++	.context = -1, \
++	.interhunkcontext = -1, \
++}
 +
-+struct add_p_opt {
-+	int context;
-+	int interhunkcontext;
++struct interactive_config {
++	enum git_colorbool use_color_interactive;
++	enum git_colorbool use_color_diff;
++	char header_color[COLOR_MAXLEN];
++	char help_color[COLOR_MAXLEN];
++	char prompt_color[COLOR_MAXLEN];
++	char error_color[COLOR_MAXLEN];
++	char reset_color_interactive[COLOR_MAXLEN];
++
++	char fraginfo_color[COLOR_MAXLEN];
++	char context_color[COLOR_MAXLEN];
++	char file_old_color[COLOR_MAXLEN];
++	char file_new_color[COLOR_MAXLEN];
++	char reset_color_diff[COLOR_MAXLEN];
++
++	int use_single_key;
++	char *interactive_diff_filter, *interactive_diff_algorithm;
++	int context, interhunkcontext;
 +};
 +
-+#define ADD_P_OPT_INIT { .context = -1, .interhunkcontext = -1 }
-+
-+enum add_p_mode {
-+	ADD_P_ADD,
-+	ADD_P_STASH,
-+	ADD_P_RESET,
-+	ADD_P_CHECKOUT,
-+	ADD_P_WORKTREE,
-+};
-+
-+int run_add_p(struct repository *r, enum add_p_mode mode,
-+	      struct add_p_opt *o, const char *revision,
-+	      const struct pathspec *ps);
-+
-+#endif
++void interactive_config_init(struct interactive_config *cfg,
++			     struct repository *r,
++			     struct interactive_options *opts);
++void interactive_config_clear(struct interactive_config *cfg);
+ 
+ enum add_p_mode {
+ 	ADD_P_ADD,
+@@ -20,7 +50,7 @@ enum add_p_mode {
+ };
+ 
+ int run_add_p(struct repository *r, enum add_p_mode mode,
+-	      struct add_p_opt *o, const char *revision,
++	      struct interactive_options *opts, const char *revision,
+ 	      const struct pathspec *ps);
+ 
+ #endif
+diff --git a/builtin/add.c b/builtin/add.c
+index 4cd3d183f9..08e2ef98b0 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -30,7 +30,7 @@ static const char * const builtin_add_usage[] = {
+ 	NULL
+ };
+ static int patch_interactive, add_interactive, edit_interactive;
+-static struct add_p_opt add_p_opt = ADD_P_OPT_INIT;
++static struct interactive_options interactive_opts = INTERACTIVE_OPTIONS_INIT;
+ static int take_worktree_changes;
+ static int add_renormalize;
+ static int pathspec_file_nul;
+@@ -159,7 +159,7 @@ static int refresh(struct repository *repo, int verbose, const struct pathspec *
+ int interactive_add(struct repository *repo,
+ 		    const char **argv,
+ 		    const char *prefix,
+-		    int patch, struct add_p_opt *add_p_opt)
++		    int patch, struct interactive_options *interactive_opts)
+ {
+ 	struct pathspec pathspec;
+ 	int ret;
+@@ -171,9 +171,9 @@ int interactive_add(struct repository *repo,
+ 		       prefix, argv);
+ 
+ 	if (patch)
+-		ret = !!run_add_p(repo, ADD_P_ADD, add_p_opt, NULL, &pathspec);
++		ret = !!run_add_p(repo, ADD_P_ADD, interactive_opts, NULL, &pathspec);
+ 	else
+-		ret = !!run_add_i(repo, &pathspec, add_p_opt);
++		ret = !!run_add_i(repo, &pathspec, interactive_opts);
+ 
+ 	clear_pathspec(&pathspec);
+ 	return ret;
+@@ -255,8 +255,8 @@ static struct option builtin_add_options[] = {
+ 	OPT_GROUP(""),
+ 	OPT_BOOL('i', "interactive", &add_interactive, N_("interactive picking")),
+ 	OPT_BOOL('p', "patch", &patch_interactive, N_("select hunks interactively")),
+-	OPT_DIFF_UNIFIED(&add_p_opt.context),
+-	OPT_DIFF_INTERHUNK_CONTEXT(&add_p_opt.interhunkcontext),
++	OPT_DIFF_UNIFIED(&interactive_opts.context),
++	OPT_DIFF_INTERHUNK_CONTEXT(&interactive_opts.interhunkcontext),
+ 	OPT_BOOL('e', "edit", &edit_interactive, N_("edit current diff and apply")),
+ 	OPT__FORCE(&ignored_too, N_("allow adding otherwise ignored files"), 0),
+ 	OPT_BOOL('u', "update", &take_worktree_changes, N_("update tracked files")),
+@@ -399,9 +399,9 @@ int cmd_add(int argc,
+ 	prepare_repo_settings(repo);
+ 	repo->settings.command_requires_full_index = 0;
+ 
+-	if (add_p_opt.context < -1)
++	if (interactive_opts.context < -1)
+ 		die(_("'%s' cannot be negative"), "--unified");
+-	if (add_p_opt.interhunkcontext < -1)
++	if (interactive_opts.interhunkcontext < -1)
+ 		die(_("'%s' cannot be negative"), "--inter-hunk-context");
+ 
+ 	if (patch_interactive)
+@@ -411,11 +411,11 @@ int cmd_add(int argc,
+ 			die(_("options '%s' and '%s' cannot be used together"), "--dry-run", "--interactive/--patch");
+ 		if (pathspec_from_file)
+ 			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--interactive/--patch");
+-		exit(interactive_add(repo, argv + 1, prefix, patch_interactive, &add_p_opt));
++		exit(interactive_add(repo, argv + 1, prefix, patch_interactive, &interactive_opts));
+ 	} else {
+-		if (add_p_opt.context != -1)
++		if (interactive_opts.context != -1)
+ 			die(_("the option '%s' requires '%s'"), "--unified", "--interactive/--patch");
+-		if (add_p_opt.interhunkcontext != -1)
++		if (interactive_opts.interhunkcontext != -1)
+ 			die(_("the option '%s' requires '%s'"), "--inter-hunk-context", "--interactive/--patch");
+ 	}
+ 
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index f9453473fe..d230b1f899 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -546,7 +546,7 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 
+ 	if (opts->patch_mode) {
+ 		enum add_p_mode patch_mode;
+-		struct add_p_opt add_p_opt = {
++		struct interactive_options interactive_opts = {
+ 			.context = opts->patch_context,
+ 			.interhunkcontext = opts->patch_interhunk_context,
+ 		};
+@@ -575,7 +575,7 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 		else
+ 			BUG("either flag must have been set, worktree=%d, index=%d",
+ 			    opts->checkout_worktree, opts->checkout_index);
+-		return !!run_add_p(the_repository, patch_mode, &add_p_opt,
++		return !!run_add_p(the_repository, patch_mode, &interactive_opts,
+ 				   rev, &opts->pathspec);
+ 	}
+ 
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 0243f17d53..640495cc57 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -123,7 +123,7 @@ static const char *edit_message, *use_message;
+ static char *fixup_message, *fixup_commit, *squash_message;
+ static const char *fixup_prefix;
+ static int all, also, interactive, patch_interactive, only, amend, signoff;
+-static struct add_p_opt add_p_opt = ADD_P_OPT_INIT;
++static struct interactive_options interactive_opts = INTERACTIVE_OPTIONS_INIT;
+ static int edit_flag = -1; /* unspecified */
+ static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorship;
+ static int config_commit_verbose = -1; /* unspecified */
+@@ -356,9 +356,9 @@ static const char *prepare_index(const char **argv, const char *prefix,
+ 	const char *ret;
+ 	char *path = NULL;
+ 
+-	if (add_p_opt.context < -1)
++	if (interactive_opts.context < -1)
+ 		die(_("'%s' cannot be negative"), "--unified");
+-	if (add_p_opt.interhunkcontext < -1)
++	if (interactive_opts.interhunkcontext < -1)
+ 		die(_("'%s' cannot be negative"), "--inter-hunk-context");
+ 
+ 	if (is_status)
+@@ -407,7 +407,7 @@ static const char *prepare_index(const char **argv, const char *prefix,
+ 		old_index_env = xstrdup_or_null(getenv(INDEX_ENVIRONMENT));
+ 		setenv(INDEX_ENVIRONMENT, the_repository->index_file, 1);
+ 
+-		if (interactive_add(the_repository, argv, prefix, patch_interactive, &add_p_opt) != 0)
++		if (interactive_add(the_repository, argv, prefix, patch_interactive, &interactive_opts) != 0)
+ 			die(_("interactive add failed"));
+ 
+ 		the_repository->index_file = old_repo_index_file;
+@@ -432,9 +432,9 @@ static const char *prepare_index(const char **argv, const char *prefix,
+ 		ret = get_lock_file_path(&index_lock);
+ 		goto out;
+ 	} else {
+-		if (add_p_opt.context != -1)
++		if (interactive_opts.context != -1)
+ 			die(_("the option '%s' requires '%s'"), "--unified", "--interactive/--patch");
+-		if (add_p_opt.interhunkcontext != -1)
++		if (interactive_opts.interhunkcontext != -1)
+ 			die(_("the option '%s' requires '%s'"), "--inter-hunk-context", "--interactive/--patch");
+ 	}
+ 
+@@ -1742,8 +1742,8 @@ int cmd_commit(int argc,
+ 		OPT_BOOL('i', "include", &also, N_("add specified files to index for commit")),
+ 		OPT_BOOL(0, "interactive", &interactive, N_("interactively add files")),
+ 		OPT_BOOL('p', "patch", &patch_interactive, N_("interactively add changes")),
+-		OPT_DIFF_UNIFIED(&add_p_opt.context),
+-		OPT_DIFF_INTERHUNK_CONTEXT(&add_p_opt.interhunkcontext),
++		OPT_DIFF_UNIFIED(&interactive_opts.context),
++		OPT_DIFF_INTERHUNK_CONTEXT(&interactive_opts.interhunkcontext),
+ 		OPT_BOOL('o', "only", &only, N_("commit only specified files")),
+ 		OPT_BOOL('n', "no-verify", &no_verify, N_("bypass pre-commit and commit-msg hooks")),
+ 		OPT_BOOL(0, "dry-run", &dry_run, N_("show what would be committed")),
+diff --git a/builtin/reset.c b/builtin/reset.c
+index ed35802af1..088449e120 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -346,7 +346,7 @@ int cmd_reset(int argc,
+ 	struct object_id oid;
+ 	struct pathspec pathspec;
+ 	int intent_to_add = 0;
+-	struct add_p_opt add_p_opt = ADD_P_OPT_INIT;
++	struct interactive_options interactive_opts = INTERACTIVE_OPTIONS_INIT;
+ 	const struct option options[] = {
+ 		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
+ 		OPT_BOOL(0, "no-refresh", &no_refresh,
+@@ -371,8 +371,8 @@ int cmd_reset(int argc,
+ 			       PARSE_OPT_OPTARG,
+ 			       option_parse_recurse_submodules_worktree_updater),
+ 		OPT_BOOL('p', "patch", &patch_mode, N_("select hunks interactively")),
+-		OPT_DIFF_UNIFIED(&add_p_opt.context),
+-		OPT_DIFF_INTERHUNK_CONTEXT(&add_p_opt.interhunkcontext),
++		OPT_DIFF_UNIFIED(&interactive_opts.context),
++		OPT_DIFF_INTERHUNK_CONTEXT(&interactive_opts.interhunkcontext),
+ 		OPT_BOOL('N', "intent-to-add", &intent_to_add,
+ 				N_("record only the fact that removed paths will be added later")),
+ 		OPT_PATHSPEC_FROM_FILE(&pathspec_from_file),
+@@ -423,9 +423,9 @@ int cmd_reset(int argc,
+ 		oidcpy(&oid, &tree->object.oid);
+ 	}
+ 
+-	if (add_p_opt.context < -1)
++	if (interactive_opts.context < -1)
+ 		die(_("'%s' cannot be negative"), "--unified");
+-	if (add_p_opt.interhunkcontext < -1)
++	if (interactive_opts.interhunkcontext < -1)
+ 		die(_("'%s' cannot be negative"), "--inter-hunk-context");
+ 
+ 	prepare_repo_settings(the_repository);
+@@ -436,12 +436,12 @@ int cmd_reset(int argc,
+ 			die(_("options '%s' and '%s' cannot be used together"), "--patch", "--{hard,mixed,soft}");
+ 		trace2_cmd_mode("patch-interactive");
+ 		update_ref_status = !!run_add_p(the_repository, ADD_P_RESET,
+-						&add_p_opt, rev, &pathspec);
++						&interactive_opts, rev, &pathspec);
+ 		goto cleanup;
+ 	} else {
+-		if (add_p_opt.context != -1)
++		if (interactive_opts.context != -1)
+ 			die(_("the option '%s' requires '%s'"), "--unified", "--patch");
+-		if (add_p_opt.interhunkcontext != -1)
++		if (interactive_opts.interhunkcontext != -1)
+ 			die(_("the option '%s' requires '%s'"), "--inter-hunk-context", "--patch");
+ 	}
+ 
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 948eba06fb..3b50905233 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1306,7 +1306,7 @@ static int stash_staged(struct stash_info *info, struct strbuf *out_patch,
+ 
+ static int stash_patch(struct stash_info *info, const struct pathspec *ps,
+ 		       struct strbuf *out_patch, int quiet,
+-		       struct add_p_opt *add_p_opt)
++		       struct interactive_options *interactive_opts)
+ {
+ 	int ret = 0;
+ 	struct child_process cp_read_tree = CHILD_PROCESS_INIT;
+@@ -1331,7 +1331,7 @@ static int stash_patch(struct stash_info *info, const struct pathspec *ps,
+ 	old_index_env = xstrdup_or_null(getenv(INDEX_ENVIRONMENT));
+ 	setenv(INDEX_ENVIRONMENT, the_repository->index_file, 1);
+ 
+-	ret = !!run_add_p(the_repository, ADD_P_STASH, add_p_opt, NULL, ps);
++	ret = !!run_add_p(the_repository, ADD_P_STASH, interactive_opts, NULL, ps);
+ 
+ 	the_repository->index_file = old_repo_index_file;
+ 	if (old_index_env && *old_index_env)
+@@ -1427,7 +1427,8 @@ static int stash_working_tree(struct stash_info *info, const struct pathspec *ps
+ }
+ 
+ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_buf,
+-			   int include_untracked, int patch_mode, struct add_p_opt *add_p_opt,
++			   int include_untracked, int patch_mode,
++			   struct interactive_options *interactive_opts,
+ 			   int only_staged, struct stash_info *info, struct strbuf *patch,
+ 			   int quiet)
+ {
+@@ -1509,7 +1510,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+ 		untracked_commit_option = 1;
+ 	}
+ 	if (patch_mode) {
+-		ret = stash_patch(info, ps, patch, quiet, add_p_opt);
++		ret = stash_patch(info, ps, patch, quiet, interactive_opts);
+ 		if (ret < 0) {
+ 			if (!quiet)
+ 				fprintf_ln(stderr, _("Cannot save the current "
+@@ -1595,7 +1596,8 @@ static int create_stash(int argc, const char **argv, const char *prefix UNUSED,
+ }
+ 
+ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int quiet,
+-			 int keep_index, int patch_mode, struct add_p_opt *add_p_opt,
++			 int keep_index, int patch_mode,
++			 struct interactive_options *interactive_opts,
+ 			 int include_untracked, int only_staged)
+ {
+ 	int ret = 0;
+@@ -1667,7 +1669,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+ 	if (stash_msg)
+ 		strbuf_addstr(&stash_msg_buf, stash_msg);
+ 	if (do_create_stash(ps, &stash_msg_buf, include_untracked, patch_mode,
+-			    add_p_opt, only_staged, &info, &patch, quiet)) {
++			    interactive_opts, only_staged, &info, &patch, quiet)) {
+ 		ret = -1;
+ 		goto done;
+ 	}
+@@ -1841,7 +1843,7 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 	const char *stash_msg = NULL;
+ 	char *pathspec_from_file = NULL;
+ 	struct pathspec ps;
+-	struct add_p_opt add_p_opt = ADD_P_OPT_INIT;
++	struct interactive_options interactive_opts = INTERACTIVE_OPTIONS_INIT;
+ 	struct option options[] = {
+ 		OPT_BOOL('k', "keep-index", &keep_index,
+ 			 N_("keep index")),
+@@ -1849,8 +1851,8 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 			 N_("stash staged changes only")),
+ 		OPT_BOOL('p', "patch", &patch_mode,
+ 			 N_("stash in patch mode")),
+-		OPT_DIFF_UNIFIED(&add_p_opt.context),
+-		OPT_DIFF_INTERHUNK_CONTEXT(&add_p_opt.interhunkcontext),
++		OPT_DIFF_UNIFIED(&interactive_opts.context),
++		OPT_DIFF_INTERHUNK_CONTEXT(&interactive_opts.interhunkcontext),
+ 		OPT__QUIET(&quiet, N_("quiet mode")),
+ 		OPT_BOOL('u', "include-untracked", &include_untracked,
+ 			 N_("include untracked files in stash")),
+@@ -1907,19 +1909,19 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 	}
+ 
+ 	if (!patch_mode) {
+-		if (add_p_opt.context != -1)
++		if (interactive_opts.context != -1)
+ 			die(_("the option '%s' requires '%s'"), "--unified", "--patch");
+-		if (add_p_opt.interhunkcontext != -1)
++		if (interactive_opts.interhunkcontext != -1)
+ 			die(_("the option '%s' requires '%s'"), "--inter-hunk-context", "--patch");
+ 	}
+ 
+-	if (add_p_opt.context < -1)
++	if (interactive_opts.context < -1)
+ 		die(_("'%s' cannot be negative"), "--unified");
+-	if (add_p_opt.interhunkcontext < -1)
++	if (interactive_opts.interhunkcontext < -1)
+ 		die(_("'%s' cannot be negative"), "--inter-hunk-context");
+ 
+ 	ret = do_push_stash(&ps, stash_msg, quiet, keep_index, patch_mode,
+-			    &add_p_opt, include_untracked, only_staged);
++			    &interactive_opts, include_untracked, only_staged);
+ 
+ 	clear_pathspec(&ps);
+ 	free(pathspec_from_file);
+@@ -1944,7 +1946,7 @@ static int save_stash(int argc, const char **argv, const char *prefix,
+ 	const char *stash_msg = NULL;
+ 	struct pathspec ps;
+ 	struct strbuf stash_msg_buf = STRBUF_INIT;
+-	struct add_p_opt add_p_opt = ADD_P_OPT_INIT;
++	struct interactive_options interactive_opts = INTERACTIVE_OPTIONS_INIT;
+ 	struct option options[] = {
+ 		OPT_BOOL('k', "keep-index", &keep_index,
+ 			 N_("keep index")),
+@@ -1952,8 +1954,8 @@ static int save_stash(int argc, const char **argv, const char *prefix,
+ 			 N_("stash staged changes only")),
+ 		OPT_BOOL('p', "patch", &patch_mode,
+ 			 N_("stash in patch mode")),
+-		OPT_DIFF_UNIFIED(&add_p_opt.context),
+-		OPT_DIFF_INTERHUNK_CONTEXT(&add_p_opt.interhunkcontext),
++		OPT_DIFF_UNIFIED(&interactive_opts.context),
++		OPT_DIFF_INTERHUNK_CONTEXT(&interactive_opts.interhunkcontext),
+ 		OPT__QUIET(&quiet, N_("quiet mode")),
+ 		OPT_BOOL('u', "include-untracked", &include_untracked,
+ 			 N_("include untracked files in stash")),
+@@ -1973,20 +1975,20 @@ static int save_stash(int argc, const char **argv, const char *prefix,
+ 
+ 	memset(&ps, 0, sizeof(ps));
+ 
+-	if (add_p_opt.context < -1)
++	if (interactive_opts.context < -1)
+ 		die(_("'%s' cannot be negative"), "--unified");
+-	if (add_p_opt.interhunkcontext < -1)
++	if (interactive_opts.interhunkcontext < -1)
+ 		die(_("'%s' cannot be negative"), "--inter-hunk-context");
+ 
+ 	if (!patch_mode) {
+-		if (add_p_opt.context != -1)
++		if (interactive_opts.context != -1)
+ 			die(_("the option '%s' requires '%s'"), "--unified", "--patch");
+-		if (add_p_opt.interhunkcontext != -1)
++		if (interactive_opts.interhunkcontext != -1)
+ 			die(_("the option '%s' requires '%s'"), "--inter-hunk-context", "--patch");
+ 	}
+ 
+ 	ret = do_push_stash(&ps, stash_msg, quiet, keep_index,
+-			    patch_mode, &add_p_opt, include_untracked,
++			    patch_mode, &interactive_opts, include_untracked,
+ 			    only_staged);
+ 
+ 	strbuf_release(&stash_msg_buf);
+diff --git a/commit.h b/commit.h
+index 1d6e0c7518..7b6e59d6c1 100644
+--- a/commit.h
++++ b/commit.h
+@@ -258,7 +258,7 @@ int for_each_commit_graft(each_commit_graft_fn, void *);
+ int interactive_add(struct repository *repo,
+ 		    const char **argv,
+ 		    const char *prefix,
+-		    int patch, struct add_p_opt *add_p_opt);
++		    int patch, struct interactive_options *opts);
+ 
+ struct commit_extra_header {
+ 	struct commit_extra_header *next;
 
 -- 
 2.51.0.700.g236ee7b076.dirty
