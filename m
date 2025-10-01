@@ -1,104 +1,140 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD2D17A2FC
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 08:15:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3830A1E8331
+	for <git@vger.kernel.org>; Wed,  1 Oct 2025 10:15:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759306560; cv=none; b=vCw+kIjlu9AlTJHc7BziwpQr8c4I54Z0hlxuYUqwv9MjRzS//lPkLtc7xsFcoN1HdZInDhA94bjRjIWeTaot7MSkFjDgOJ9ecQZo156eens/ZVdCudNS7R3ktyMv/huB8frPVQoVomO2uBTIQO0Xd47CINIM7r0LEJnXoOpOe8Y=
+	t=1759313734; cv=none; b=aF9Q6gA9t7tT2WIrlsfCtYlZeO28NhWCZsax4IydY323iHCliVyhW6yUrvt3IWlqBiqJJl83xZrWPjuJBxIMYpUpw8j3KBxIZEf9vad2we4Jv7FHkAYQHqCQgXVyq+/cI5zbzEuy+Nl1zz4uLFX5oGrK0IfRqGPPnjHSN9inVGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759306560; c=relaxed/simple;
-	bh=SqP7W8shkY2ogiC7sRWYuRh8Db97n0tmvsvlRRQpcI0=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=azlYg7W6OrDGccZqJR72cVQNho9oP5voRu8r8w6CESa8PMa7xqtfIbRzsQrjYY/Wwv1Fw5r6H3uuBz/f8fJKua14/dwh+xA9QrtXusdikm8sMIaU7HiX9rkEC4/FFPE2FPcg3j+FrrXqi+ngnWSx9Exvj8dG+IiAtQGvATPyywQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=bSwAcIAo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Sa/YwoP8; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1759313734; c=relaxed/simple;
+	bh=6rTB/ECEeWEMocZVToEXw0ia34VRaiLvBiQ7YMTLs1Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ekm9es7DwNkjTbwCsAtAsgQLDeVrsoQj9DtIVtTcN1u+iXAFwJFdAcWkfFGtIBP7+O6PPj733LjxC8+d2EvIHxf94C/aslnc33RzRh67Ss7jXzPeQ90a851aL04BW4yJlyHEwsblnnsCXIl4i9FgprP3I7xqWrbw3saa7OERSwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JAFq4Q8J; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="bSwAcIAo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Sa/YwoP8"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id BA967EC0184;
-	Wed,  1 Oct 2025 04:15:56 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Wed, 01 Oct 2025 04:15:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759306556;
-	 x=1759392956; bh=SqP7W8shkY2ogiC7sRWYuRh8Db97n0tmvsvlRRQpcI0=; b=
-	bSwAcIAoopjeGN762SQVjQ+VQ+QT8IDdEnawh4fL3q6pBUTCydWzyMHTc+ctQmQQ
-	zW5QWsonQRHaO70S0e/V1rrcA3fDheZIRSCmmkmJHAxjEvCF6PhDaB7bReFFgTek
-	Z0YvhigkghO1dKzwzVzhDfHdcY3ehUiPy3xF/2x+2wa709UmjYjKzJn6G+SDiKAb
-	s5irBaUiavEGqrkRuwlcC60XgaNp9hWaSE7AkMLf5nnxbAW1rIxWZntn5x83DNmi
-	3yJ8QHX9HuJ42y/xK7Z8zO1tL6ra+SbWlMr4TFcLSgqmy5kD8N8f1+CAkUlJkHN9
-	lLqZp5NPEJFytOLUrF1+vQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1759306556; x=1759392956; bh=S
-	qP7W8shkY2ogiC7sRWYuRh8Db97n0tmvsvlRRQpcI0=; b=Sa/YwoP8zySqfLKmk
-	/3ftxiv740+H/fSZUltAkBEwUZqgqhPvu9AoJFYskkCQkHxw9uzqhpkVclLbDLUN
-	aCISdQw5FCU9bGJxQJFW3ItDmor9Ku2Z71smL883YRHDp1rhgRZHROoQfpPFDCEf
-	eugwx2xplKykYU8V3XIeOlvpv6sQMqNLD+6JklCPdA96fDOjFiX+dO8VEzgztyNO
-	Z+iHaA1Dr5iwlYJQ90HpyUEDS/b7kl1T8RSF/XXVmqtxJnrUekJJGwuqNREcGCLZ
-	WeveCnw/K2ckeQzSx3Fbjbp7gCMs5G4RJgSoBAt/MXQUuiNizhFdSuABqOsaNeo2
-	0kQqQ==
-X-ME-Sender: <xms:POPcaF-ZV9pfu82Qf-yJLlEjE_gwO6MZI3h05wwx6e0wDIM7aqsPhZs>
-    <xme:POPcaEh7OkwlGERsIzs_yA_LVJ2jI6E5AVBGNTIxeExapSX3Km3MA7dEsmFth630i
-    meXMegepIJcFno_ZtOLmGKGAf57qh1xwO0v6QiEYrJAA6C1oWjy>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekvdeifecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkjghfufgtgfesthejredtre
-    dttdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhr
-    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtf
-    frrghtthgvrhhnpefftdffhfefffejfeffteetvdettdevfeetheegtdehtdeiudefffdu
-    leffleeljeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
-    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvg
-    epshhmthhpohhuthdprhgtphhtthhopehhvghnrhhiqhhuvghgohhgohesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:POPcaEoWxzktU1_SmG2aHax7ryRAQdoIBc7ef-RfBNComX2_IFv5NQ>
-    <xmx:POPcaIlC3VenoLjGC2SlQb8eNUfbe6zr5p8oyNqw81ubrYFNhm7-3g>
-    <xmx:POPcaAzoDkGImXbfXhq7sWdy2CW4je7hd9-r8svgUWlSN_IoVRMFiQ>
-    <xmx:POPcaImAewhGtAEPJRJLbWsHxiq3QoheHEPYaF4uk1CVN1VQ359swQ>
-    <xmx:POPcaJQleOYicbDERetGcLyHMawNl6CN-LB2FeGq6MCakNa4VzBcogzi>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 64B3F1EA0068; Wed,  1 Oct 2025 04:15:56 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JAFq4Q8J"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3ee1381b835so5878224f8f.1
+        for <git@vger.kernel.org>; Wed, 01 Oct 2025 03:15:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759313730; x=1759918530; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZjY7syn7TCiT7JjIZAy9X0xyaJi7yQyRerENNneiHCQ=;
+        b=JAFq4Q8JLFTJxRUnETGHdP6nd0gWlaezKn0JOCUh8I/0pdpkyGfjbrF5rYFYqxjaCS
+         J8850lD2HpVxsziy/hAO7aOce1fvEQKPNYUeTRw2QlF3eI+Gs44b/LFPzbpKfhxWstXA
+         yZZMpNzoEhIkqjvtE6OaCBXlv+mYNQEXf6UgBU+uoy9L0bHxU0K0zNTiosg4KAzFw423
+         FT0awf0t8izFZFTDkiQQgoQ5vJz5addstntpZdUfPfE6BUeZ4ISqa0jmOucz4KLAsV/G
+         6d92wWzPs1pJSahK57AFAaBAoxHu9mr5tMVx+CBINeHbF0dJCzlvL7rBo7APF5MMJDKg
+         ljnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759313730; x=1759918530;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZjY7syn7TCiT7JjIZAy9X0xyaJi7yQyRerENNneiHCQ=;
+        b=b8AS07iwRtJ5rb4sRQH3nzx1mHgQqUC8aTvvljrYOub3ZW+6OyBU36Gk7bHxOl0WAr
+         fmWr9irnyTKR/qsT80nyBmbBVfkPbrJnysvMkCN5NH5FFM5MwCcfyoHSG6mIJYj/pAni
+         9dhJpseQgPyF8vGtNBlysiqrZHmocFYb/uVD5N6FxO22Q0CDhjW3LCjUaUQzH2VgY4Sc
+         yIorH8Fx/bzwLQPCU6ogGoHWumDUp3YLvIue1OdQfllF+ypGcogrvsteOCmt2ubfx1W/
+         upkGhyE7rGGy2g35MXLZqFHvBfUXahT/RFrFjHTYU3DHi0+nsL7V+LDpNkV3wK8CI/tK
+         N66w==
+X-Forwarded-Encrypted: i=1; AJvYcCVNV1VlXvuBXf0c8L2/pr++rOdVuaHrPoZo2DM8+0MfPaKCuvQS3+ylxSMdkifJhx95tMg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwJ3irNXKHy1gygRaYjgnMEY7vP5wfvSNG5QMs7iVhKYQkKCj+j
+	zSl6gmv7O2K5S9RWXICN3qqGestAfQVYGaWKdQfOtCvc9hm3B/EObun6
+X-Gm-Gg: ASbGncvVmosR0PwKeRHThvjH9wSKV2Kk6CIPcYkLpfiQ09/u+Lh2n1d6uBwQCmxuXN7
+	o/k7NT5hQZk1lwU9kz9BZFk2QBxk4mCMGQIfpZUMfRVD6DnM0etxp/ensYL4BxlDEnVocpkLZ60
+	4LxECP+LAYQhGTcKnaSo/nXy2aLGpTu6cnKx95lQ0XgeFFSpsJK6B7QXpjdHFJX3vt6zP6e+MlQ
+	bHujlGDG/fr0Hreu9r+K4p/fs4G4tDV+4IUOxSaNfgIgYEdevbBS3+IXsd3VNenaq8mZUOPXW+e
+	AAn1l0wmZC+vdBr3aoakRv4UBkfwwJP+jAEvqQkmaqAnYE9G1aaaIB2I9FCCjA4iPcHG78t9Plx
+	ZYHL2shsuiDG0kuAzNiYdysF/W/Pcldo6sl5y6rDsrtJgtRQXocEphIy3h+1V6Qu20h0VRejYxn
+	2DoqWDm2z80R9EFy20/IYon+0=
+X-Google-Smtp-Source: AGHT+IFTdHRneg824VTZ/Ez7nn/cszfcKktqmHMR2kE0gFB+DqzuGt63KWspQYAPKnwigOdGMY/Ihw==
+X-Received: by 2002:a05:6000:43c5:10b0:425:58d0:4834 with SMTP id ffacd0b85a97d-42558d049f0mr1269464f8f.39.1759313730241;
+        Wed, 01 Oct 2025 03:15:30 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-40fb9d26ef7sm26663927f8f.26.2025.10.01.03.15.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Oct 2025 03:15:29 -0700 (PDT)
+Message-ID: <0cb55558-a48e-42ac-a80e-a24ee2be55ee@gmail.com>
+Date: Wed, 1 Oct 2025 11:15:28 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AM38Qt76lGbZ
-Date: Wed, 01 Oct 2025 10:15:35 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Henrique Soares" <henriquegogo@gmail.com>, git@vger.kernel.org
-Message-Id: <ba6b9a5e-72b5-4d66-a484-37140438702a@app.fastmail.com>
-In-Reply-To: <aNygY8Cm7LEaBzV6@localhost>
-References: <aNygY8Cm7LEaBzV6@localhost>
-Subject: Re: How mantainers check Git diffs and patches?
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4] libgit-rs: add get_bool(), get_ulong(), and
+ get_pathname() methods
+To: ions via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: ions <zara.leonardo@gmail.com>,
+ "brian m . carlson" <sandals@crustytoothpaste.net>
+References: <pull.1977.v3.git.1758945111.gitgitgadget@gmail.com>
+ <pull.1977.v4.git.1759221968318.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.1977.v4.git.1759221968318.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On Wed, Oct 1, 2025, at 05:30, Henrique Soares wrote:
-> This is a simple question I have related to the PR diff review process.
->
-> How Git maintainers use to check diffs and review the code? I mean,
-> sometimes I see that there are some large PATCHES that is hard or
-> probably impossible to review only using e-mail client.
->
-> Do you use some syntax highlight in client e-mail; any pipeline that
-> automatically download e-mails and apply to a local branch; or for each
-> PR you save the e-mail file then "git apply" to review / test the diff?
->
-> This isn't a technical question, I'm just curious about how you do it.
+[I've cc'd brian to sanity check my suggestion for handling c_ulong in 
+rust 1.63 which lacks std::ffi::c_ulong]
 
-Here is a relevant message (2016).
+On 30/09/2025 09:46, ions via GitGitGadget wrote:
+> From: ionnss <zara.leonardo@gmail.com>
+> 
+> Expand ConfigSet API with three new configuration value parsers:
+> 
+> - get_bool(): Parse boolean values using git_configset_get_bool()
+> - get_ulong(): Parse unsigned long values
+> - get_pathname(): Parse file paths, returning PathBuf
 
-https://lore.kernel.org/git/20160809113703.57irthzzpg6j3dmv@sigill.intra.peff.net/
+I would be nice to explain in the commit message why we require paths to 
+be utf-8 encoded. I've left one comment below, apart from that I think 
+this looks good.
+> --- a/contrib/libgit-sys/src/lib.rs
+> +++ b/contrib/libgit-sys/src/lib.rs
+> @@ -1,7 +1,7 @@
+>   use std::ffi::c_void;
+>   
+>   #[cfg(has_std__ffi__c_char)]
+> -use std::ffi::{c_char, c_int};
+> +use std::ffi::{c_char, c_int, c_ulong};
+>   
+>   #[cfg(not(has_std__ffi__c_char))]
+>   #[allow(non_camel_case_types)]
+> @@ -11,6 +11,10 @@ pub type c_char = i8;
+>   #[allow(non_camel_case_types)]
+>   pub type c_int = i32;
+>   
+> +#[cfg(not(has_std__ffi__c_char))]
+> +#[allow(non_camel_case_types)]
+> +pub type c_ulong = u64;
+
+As I said before this wont work because C's ulong type is platform 
+dependent so you cannot assume it 64 bits wide. Looking at the previous 
+discussion[1] the reason we have these fallback definitions is because 
+std::ffi::c_int etc were only added in rust 1.64 and we want to support 
+rust 1.63 as that is the version shipped by Debian oldstable. I think it 
+would be better to have a separate preparatory patch that changes the 
+existing fallbacks to
+
+#[cfg(not(has_std__ff__c_char))]
+use std::os::raw::{c_char, c_int};
+
+and then this patch can add "c_ulong" to the list.
+
+Thanks
+
+Phillip
+
+[1] 
+https://lore.kernel.org/git/ZtivGeDZ_MZDEDB_@tapette.crustytoothpaste.net/
+
+
