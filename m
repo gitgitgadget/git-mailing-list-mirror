@@ -1,131 +1,133 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DC8221264
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 15:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46471221555
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 15:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759419042; cv=none; b=ongq0ShA1YNiLWJhK2joPFDZUannZlnr0hTUj9OblroJzWyS2ItjUEXQDvYUXhGheNnbOH/EJtCr1DDIF29g7XRYJYWxuBDgJxhsLPeEuDBy+Edmz0rBGYmrtsQinTouIWwsXvGXYca8LtL1rSAKYavLGWUFWX9JB58puxhNlkc=
+	t=1759419163; cv=none; b=gNdzXU84jAfoAo4svUv1kw5Hd8XUDhTBLSyiQuuy7snfxH4m2XXM17j2ZjUuJSkiegdhIvZyZVjKjzyLYQV7xN3IjO6EAtYmr98Tv44LF7KksTEXjsgr9weDKNgNkVaenyv8KdOiGtH9JGp/VIyttAxGqM/24+2UFOSrsFPDjiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759419042; c=relaxed/simple;
-	bh=+nvQKbl+ER9gBpqOGmCVNukln1kosFiDnIkKp8bujeQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BdBkxyKH3c/PhZq7IiZUjnkhxPgc6sr6943TRSATqJEJr48aHrDNArMaTMM4eABra3pEPrP2k2DYjWeQxo5wuyPLIjwsAAwm3p/r3RnUPLh6yE7v4pr4PXelFC8hXkT1J/gOhRKomHkTEtSKidvel9rfftTVMb7rfhw6n/GJIek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TADZ7F+1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MhTTBdHI; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1759419163; c=relaxed/simple;
+	bh=ROq9LwF9GNcq85+TrPf1Gvkn+9Fy+bgcM7fZQatHPpQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FtfF9HB6Tfm1tCl1Lf3Ri7hBw+yTpAqSFqGmOgR5I9TvjCU+yLNUZYSdf6MgHaCj+n/2iy25AGl2hE9AVhSeBbZajBnY00ag2wPauDHg9gb6aER8ByRR7zV7KveCTFMljXR0cVtrMNYfKmqXnaHPj2QIESXAEBFI1OfQ+Ec4WE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eWWGp3LA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EcgFqtmX; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TADZ7F+1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MhTTBdHI"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 71A041D000F4;
-	Thu,  2 Oct 2025 11:30:39 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 02 Oct 2025 11:30:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eWWGp3LA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EcgFqtmX"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 68C421D00082;
+	Thu,  2 Oct 2025 11:32:40 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Thu, 02 Oct 2025 11:32:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759419039; x=1759505439; bh=CjEtwbGRyv
-	e159m9mBwiNBiBGkb6nKTOqRo/KesxM4o=; b=TADZ7F+11wsXB+IDxAvJL2RtsQ
-	0C4uiEAJn9eOB5O41cXCIpvI7XTL2XDoDlZ5F38MyjF9W5oqoeNXRXn7lZa0ufzP
-	oiKJqz1bx+URH6tpL3DmwE01PQ/+B31m6VYd/TWRuTG6hIUtqs75vPxgFLSd9pt7
-	zgY9B8lsksMOkNckt8kFe+Qx6/nT5ho9C+rqFcCMP80WV5mlg1FzpwH5vc33cfFH
-	RuS9mljqTTm7RsB/m845aKD9sZ905zZDR2t3MVIe0CRh8cTJ6FPRs1KOmMDP/jqi
-	kxzzAPhhEsrGtxNRWqCT3KFuH97ykwAKydW8FV5M97ZDnaZyDhgPDmhtGi9g==
+	:subject:to:to; s=fm1; t=1759419160; x=1759505560; bh=AlxMEL5qD5
+	d/UHcPG6uI2yOTOTMVIUMxS3sOk/lt9jE=; b=eWWGp3LAWcjWtGieIFJI4RTdWM
+	mEKpE3aP8bfk/ZVH/1jhbLSECY97yS7T8UUMQZWODQUiDf7HmK83fCM33UBk6/1R
+	HcGOGyoEKYA98YPs7xrC3xcQftMWj8XKYmP1b6EDQvscWFtwQLXldcpdYFAPh+fW
+	zifNrf8wThOxfZboD2LvWP47Fk0XBQ5SFJiNXBYOiPWoWPmH0ywLe+J+MMuz1mWz
+	xXqP+GATOX8YOCBzY8wUzYm3nTGPrRWYkxzEJeYqS+K7aExU/RiDxT2EWxORvUyl
+	B+bQL1OUOM87JiwmQ5U2eMC6PtUwnfLyvof+p0IWLM2797hRsmvIoGbXoGFQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759419039; x=1759505439; bh=CjEtwbGRyve159m9mBwiNBiBGkb6nKTOqRo
-	/KesxM4o=; b=MhTTBdHIcNgIA++9HXH+J6mQ4Lu6uKjaVf5nXAdq8CxoyjX0EJV
-	TbOpmXb47ON/CrDjFBGS36YRWag/q7PNLTphSfWJw/s2s31ht8dAnrB1M8KxSGF4
-	fv1+jEaK9H1UkGGHYV3dAtyzYcxnek7SLNOchRT2eT2nqXfGFHTvAnzi9N6BqfN8
-	TPSGVQbBcJ0oWuZE1b65w0VaIyA6V5ZzLQ790vfka91hR2BOSAC5MtWfe3LUu7MD
-	bReqhAsbmA+y7lyFN8mPYoYQst0juc81sN96fWV0iULVYqi6dLa2rG3TEj1J28gP
-	aDboGVkh9HySis1CPzy4GERNcSnaCX05hfw==
-X-ME-Sender: <xms:npreaAlDXQbmuOreihkov41oXc9Cei_6dM7eLl5T2MpwtCqlI60dNQ>
-    <xme:npreaDjirBHEti-6eTPGXmq2FwcZnzkptfDuvmFnwiBbL-lE9KxtfNmTwsaBdsd1y
-    8lusmNX2nakFKiKp6mh7Vb5XnfZMJsbBuWVKfIlqzTyNh3kpyHcCA>
-X-ME-Received: <xmr:npreaIf8PT4faL2ybCIsnd_q_bIiUoppG4X2ATX-SNNwWOUYK6LnDc31RA2VBiyrfUDAC8hrmDQns-AIVr7VgBWcJW2CkPGk-fPZznM68Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekieefkecutefuodetggdotefrod
+	1759419160; x=1759505560; bh=AlxMEL5qD5d/UHcPG6uI2yOTOTMVIUMxS3s
+	Ok/lt9jE=; b=EcgFqtmX5XlhQBNJDZpIGPDzbnw6YA+nyKasGfdfBx7y7x4wxwp
+	0bWLHkd0tuSFTnaFSSFoigYWZGIhyY1xYu2CMnCXtxlKrLkTbUBbdYhF/NCINAFn
+	oqUh7g4nu6EhLy4rINeRr+A7s0rJa2MzLqBVD6VUXMHS0CbLFiPAfkeZ8yZKqdv+
+	TFQ9wDjH/BzrUfwQZymFgIoNEMPLM8cJPcgzq07JvOCi4uI2vGc6DGdmG+WBA6aY
+	BZ/12R2kBLOT4oP67hvlKDdgaKbPg3fQIE0e3ynI0BLba76r7ClWtpmQU88lIxLB
+	w7PZxj5MTaojHJdW+APlByX58UEra46fCTg==
+X-ME-Sender: <xms:F5veaEIk1mdcHdDcMs0CXlF1EEizshJlWKjR4Wd4S89HnnlAMm-PXA>
+    <xme:F5veaLCixV4gMWfqAaxH85I_xhumkSqy4_dlxEEV7DM3ML_Fixfc4k3uEGfJHcFiQ
+    FKXoFeCnCHThyH7kse44_Fe6Q0XkAAp4_5jqLDFObI6QtVUqaOLZA>
+X-ME-Received: <xmr:F5veaND3oifj3Y3BzdqPvvldEZ2hFFScE0yr8JniXu7MWNnviEp0DNoouh5A4WygMFUvIEl8f1cZsijjBBuJj9sTuBeAadOj4NXm>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekieeflecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehsihhgmhgrqdhsthgrrhdrihhopdhrtghpthhtohepkhgrrhhthhhikhdrud
-    ekkeesghhmrghilhdrtghomhdprhgtphhtthhopehhrghnhihouhhnghesphhrohhtohhn
-    mhgrihhlrdgtohhmpdhrtghpthhtohephhgrnhihrghnghdrthhonhihsegshihtvggurg
-    hntggvrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:npreaDg_p_Nwxb0JWb1ZmL2twXw5bY9BnEFwsmuuolsOwnhQIAIpfg>
-    <xmx:npreaAwKGD-uJgHZQkhQcIH9z7TbWcIxQra6ozhjIvcA5pDwosrxzQ>
-    <xmx:npreaPMtg7Beg42kt0TI2GUnlZ3721gs1cIjMSyXNV_tfJ8voLEnuw>
-    <xmx:npreaBVZLycYalrpAY6rUjEwMvL0uHfAOl4xbyks3aMGNoAfuyqzmQ>
-    <xmx:n5reaPCrUv5zthVWPiwi1wZj6yaqij0UXfh7BBHo5Om1madaEpa75Nld>
-Feedback-ID: i197146af:Fastmail
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsehtth
+    grhihlohhrrhdrtghomhdprhgtphhtthhopehluhgtrgdrmhhilhgrnhgvshhiohesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:GJveaNCNaaQ7x-Jh_SCLDXs8-THjcEESrnbmmwle-JkFhK28cBAo8Q>
+    <xmx:GJveaIr-LycerXGO7J8namtRO61NWZPihSpoYDHN1ZFpOaDUaOe0pg>
+    <xmx:GJveaHm2UyVzlfnBqeUx48gCfPO-0XMDYFHWwgvhq15ctkubNe9P7w>
+    <xmx:GJveaIyvWpYAhfaeiN6SPXHI-HbI50gmCZJNnKm7cT5tcX04Yt_lYg>
+    <xmx:GJveaJbFpFcTek9G8jPAFTUsgA8E00nv0Ybtvg0B5KLU2mmUFYPhYtly>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Oct 2025 11:30:37 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3d21d46f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 2 Oct 2025 15:30:35 +0000 (UTC)
-Date: Thu, 2 Oct 2025 17:30:32 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>,
-	Han Young <hanyang.tony@bytedance.com>, git@vger.kernel.org,
-	Han Young <hanyoung@protonmail.com>, Sigma <git@sigma-star.io>
-Subject: Re: [PATCH 1/1] files-backend: check symref name before update
-Message-ID: <aN6amIG2Sp3W500K@pks.im>
-References: <20251001150805.9652-1-hanyang.tony@bytedance.com>
- <20251001150805.9652-2-hanyang.tony@bytedance.com>
- <xmqqv7ky1l70.fsf@gitster.g>
- <CAOLa=ZTnHQbg9ocdA1omqER6CJH-w30G14-F2JAQMtueXENWew@mail.gmail.com>
- <aN5mOTbGBcr355E6@pks.im>
- <xmqqo6qpxw6w.fsf@gitster.g>
+ 2 Oct 2025 11:32:39 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Taylor Blau <me@ttaylorr.com>,  Luca Milanesio
+ <luca.milanesio@gmail.com>,  git@vger.kernel.org
+Subject: Re: When should we release Git 3.0?
+In-Reply-To: <aN5-n_ArhQqaQZgt@pks.im> (Patrick Steinhardt's message of "Thu,
+	2 Oct 2025 15:31:11 +0200")
+References: <aNxivuJEnSHbQNdr@fruit.crustytoothpaste.net>
+	<E03F997F-1738-4CF6-B7D5-206183FA5BD1@gmail.com>
+	<aN1RFvz7uGPnepxe@nand.local> <aN5-n_ArhQqaQZgt@pks.im>
+Date: Thu, 02 Oct 2025 08:32:38 -0700
+Message-ID: <xmqqfrc1xqsp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo6qpxw6w.fsf@gitster.g>
+Content-Type: text/plain
 
-On Thu, Oct 02, 2025 at 06:36:07AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > Agreed! Overall, the goal is that all logic to verify references should
-> > be contained in `git refs verify`, so that git-fsck(1) only needs to
-> > shell out to that command to perform the full check.
-> >
-> > So if this logic isn't yet part of `git refs verify`, we should migrate
-> > it over.
-> 
-> Absolutely.  As "git refs verify" is a way to do the sanity check of
-> the ref part (presumably without incurring cost to sanity check
-> other aspect, like fsck does?  why is it a separate command in the
-> first place?), it should learn how to do so.
+Patrick Steinhardt <ps@pks.im> writes:
 
-We have the same pattern in other command:
+> Once we have roadmaps, we should set a strict deadline that takes them
+> into account. Any hosting provider or implementation of Git that doesn't
+> provide a roadmap will not be taken into account in our planning.
 
-    - git commit-graph verify
-    - git multi-pack-index verify
-    - git bundle verify
+Works fine as long as we assume everybody that matters will
+eventually want to move away from SHA-1.
 
-So `git refs verify` is following the same direction.
+ - If a stakeholder gives a roadmap that has no SHA-256 in their
+   future, in other words, if they are content to serve only the
+   SHA-1 projects, what's the impact to them?  We are not dropping
+   the support for SHA-1 in the sense that if you clone from an
+   existing SHA-1 repository you'll get an SHA-1 repository and you
+   can push and fetch between them just fine, so presumably that is
+   fine as well.
 
-I think it's a nice pattern to have this encapsulated functionality so
-that it's easy to exercise certain subsystems in isolation. git-fsck(1)
-then becomes a thin wrapper around these commands and is the one that
-ties it all together, if desired.
+ - If a stakeholder gives a roadmap with SHA-256 so far into the
+   future that we cannot wait, what's the impact to them?  Their
+   customers that want SHA-256 earlier than they can supply could
+   move to other hosting or implementation, but not really.  Both
+   hosting providers and Git implementations have components that
+   are move than Git that are hard to migrate, like issue trackers,
+   CI services, workflow tools, etc., that make their customers
+   captive audience [*].
 
-> "git fsck" should keep complaining about the failure as before,
-> whether it is done natively or by delegating to "git refs verify".
+ - If a stakeholder has a roadmap with SHA-256 in line with our
+   timeframe, do we still need to assess the impact to them, or as
+   long as we and they work hard to stick to the plan, we all will
+   be happy?
 
-Yup.
+> We should of course actively reach out to the projects that we're aware
+> of so that they have a chance to provide such a roadmap in the first
+> place.
 
-Patrick
+
+[Footnote]
+
+ * Issue trackers and review logs that are federated, possibly using
+   Git database for storage and transfer, may allow projects and
+   users to freely roam across hosting sites, but there is no strong
+   incentive for the hosting sites to fund such an effort X-<.
