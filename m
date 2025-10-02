@@ -1,53 +1,53 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82B82797AF
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 11:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF602D8362
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 11:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759405478; cv=none; b=Q2cCzCgSYemX0QPF/nYv+CFP+DtC1IMuwq3k0EVLXdiCeGuXk3WwRn5EguHwN3FCASNDOdMveCkdcDIwIJvg/uHowN7EkvqWsWnl5Vs6Ot/O48+77dEun9pHf/fQbB9jvP1kqDmZaRXWXuYV3HO8So3FaLVU7VoufPBOUXUSdTE=
+	t=1759405494; cv=none; b=b4uAclgys7PaVqeCdpfvFgsHErPWJ0D6x642G50GXXEqbOmMGhmbWNRSlqAxcWYQ7FymNmM5iSyej66dfMb37qUXuO+ghr/QB+UcAnUo+n9cicJa5ZBGMzwjDjssexQT+Ac8x9bNQwntmKTHdVy+Cq7cN+XXHA3+1wMDN0RO6eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759405478; c=relaxed/simple;
-	bh=jdNSbzSJbwVNMbpO5SUfIw5WQsADHW0LafVNY99IBuQ=;
+	s=arc-20240116; t=1759405494; c=relaxed/simple;
+	bh=vmAcMFj/tnkv062C/aC1EY/ff2ijp3GBrA7hFDqFuEk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qEjFVsMNq9VGVwqxBlb8MEekfPoYmw++Lkl2QmV4x+dhpHI97ELuSNr4Vf3aITy3UMkt/LyOcvqAE0I/lfg6ytHQfHAeiE9OoSxLUpJ7zZc7UmCgXGys4TZEtrjhnCSdtEsv0epVrDDoAKBwuuuoiruxBDufKATkIiPffHwHYno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XzMwO4Oz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BJbc/Zb8; arc=none smtp.client-ip=202.12.124.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=TunQU69f+VJGZAs2CiAZo6JBrgl10GCe6SY2deH7EPlNEaR+CuFz9F5xBLKBOBlTrl6rSc42TmEpZthizT532Nopun2TF4H73iXG/V6mEHs2kaUjDlZNnA0WHobSz6aTI8q8H+C0EbIYQrcxYc6Roi1xD6n7PEttzAGFq4D5kPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FsH0z3xs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MJIp0Zet; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XzMwO4Oz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BJbc/Zb8"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E8CA67A0173;
-	Thu,  2 Oct 2025 07:44:35 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FsH0z3xs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MJIp0Zet"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EE2367A0158;
+	Thu,  2 Oct 2025 07:44:51 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 02 Oct 2025 07:44:36 -0400
+  by phl-compute-10.internal (MEProxy); Thu, 02 Oct 2025 07:44:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759405475; x=1759491875; bh=CAxT2LuTTN
-	6IPUhFo+4T3QvtzL0ZLU0kVgfGZeBz5aI=; b=XzMwO4OzYnTx9nKeJMbWENkjL0
-	9kBhAeKuoZYu5Yi/m+apetuxARquuvHzTPdlrKqZorB7LtWnQs3v95R8mzg7wV1a
-	I7/c5gA/C+u5c1gPxEn5DVVBk0gq4mfxExP0s4dJZCpO1zyrgOngtbF/ReZ7YjEM
-	nwVrmtZimX3sWbc8gJO2+FnsqFOtDlVNAUYWUiCgFc0ngttMqBvAtGdgkofAd9b4
-	00gJ3Z4w5g6fmL+vPXWLm8FnC1XSSPsP8PM1HLLhD4RCHmn+hWVCak00738IA0Qx
-	1RXV7QYzVo/Z6VH6rTyY8ZwIJreQ9z/UX1o8ScReZlfvA6hUF10KfA4jkzzQ==
+	:subject:to:to; s=fm2; t=1759405491; x=1759491891; bh=DqZDjf6mr9
+	jXKN7wT6McOCviuMMAxnnQO+NmW5sEKmY=; b=FsH0z3xsGCxBILiFs31sal+Ebu
+	PruZxIMn2qJKya6xzsiloVl09xiu6bW2cU3J6zJebTnYvCqiEgfg8HBQ5AlwJb52
+	8Y2JT61KyN644aFBFZdbkMvRuIVSxa0D3bsPfOfkEl8STDPjT/Xsn9n8Z0h3+SzQ
+	9fgViF6pLFOhiRvwfJNO75VATIR46n+Kh0PByAxxq43ROvy0JrROePGaGdzvyPo3
+	z2h2b1TBCynuV2A5aUvxugYBqxblHkVNawmojOCY/qZ5PnFx+Di1eTZF3i+EZICe
+	fQf37wryp55/CfMlDgjwhh/UW64FwRlHow+qSAA2pPV91d5a10AbcYKuYc8A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759405475; x=1759491875; bh=CAxT2LuTTN6IPUhFo+4T3QvtzL0ZLU0kVgf
-	GZeBz5aI=; b=BJbc/Zb8vSVYS9EQtfa/GbaxmMoJLi3uDGQ9u7JS+PvhYyN20go
-	jJzCqyYykBnSX4il7mIPlRSkXwO4UUconvCiIzVdUeZD3aseawE6sK+AgQHM5+Kp
-	R/dvgXKFqRxCxCdZYVX9sMR8LQa9m5NteLc9EXvfEWaZGJhOnJZDEhvQQYwFvTnv
-	Tvp+GSuBB8nlkZOVB2hjDc9RqhSsOQlPVWZ7KT29R7NtZBqgGGI3BAPyj3FFfhuu
-	jSFLbgdiFx9psqFas7MgEP4gyZxe2coFN6JlS8gCPwhrGGOmpzea9+zw8cK0Gqn3
-	Whls1+iv3cRUxHwxZNOyzTUmMqUt/sn+bbg==
-X-ME-Sender: <xms:o2XeaLdmzHAqfPFDxy3XpH4oXGVen5rn6gHk7pBr8LusQ15KaYboMw>
-    <xme:o2XeaIPmMnEMzoFXgB2AtAy5WK5IO0_YpRdC0uCeT9PMO2sohgSOXxMqBRg7iAtIA
-    vyN--Nox55P_BwpCTTgu6zIN316yKrUOFNGlGu_0bvyGIGFCuPR-g>
-X-ME-Received: <xmr:o2XeaJjlc3a89-sxfQTNkZ6tEt_Qd5MMYPe1RVKEIdGgESLP0MBLAeFGpZ3fFt-qOYmDLfTYBg7gM3TTKz8D8U5p9ctD4xfGpHXh2vm9cg>
+	1759405491; x=1759491891; bh=DqZDjf6mr9jXKN7wT6McOCviuMMAxnnQO+N
+	mW5sEKmY=; b=MJIp0ZetXdTHl1Un8GsFOAIaNVbtGJ3+pbKrbsf5Kv3YplsFUJa
+	5QXIjlNTp5bH4N2ye8i8I4i/O0oxKZRngklzbJK66EUpQDqllYmKOxTiMHz9Z88i
+	Vk+/HpAq79NrkwqaC4N9RMQhjgipm8s0AjBK041dXFUFd4xYxIMSvmOYWPR6eV+/
+	CcCaA94qdxexS+RgHgONd0QvokSJtGbkUilUNQzOwmDPI2lJaSnj6BrgN4G0q7bc
+	aRWv7GupnlgKsCY+k46+0Mq5irdZnLRfLnURVSMrGFagA2CkK6NSFhTZk6hPijoV
+	JeH133415jYaWc12ZLBacapoLFuA/PKYfBA==
+X-ME-Sender: <xms:s2XeaCE67LsisiArmS-1U76pCbjCRlbCKKXjFN-JhH2OFiZppZ81PA>
+    <xme:s2XeaKUmaddMKUq3WM2BnFKCnoGEqaj8I2vxKuTYuGanvLJsHcYPGxk1WrzRya71a
+    yu6crez891BE0VC-OmzeeVGifMPfJ_vfut4UeHoHKwRWdUobr9RCg>
+X-ME-Received: <xmr:s2XeaBLAg1T0qsJol_5yjhNhXyqE9vaM1cr2_I575VbnHk2BJq8vv-r9FmIfxXiZKJjr1-2WFDAMBjxcN6LqsFQbuG2jiWzrdqjjvB4-eA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekheelfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -56,29 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekheelfecutefuodetgg
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhvghjihgrlh
-    huohesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:o2XeaL1f3-Dd7mhQ8tzji6K8IN1PsYRL95L7SoUNi3QFcT0inq0L5A>
-    <xmx:o2XeaDjHnER5G1rrQ_qr_9AjQLrgBLZryf_XesATYwnzt9LQ60Tlxw>
-    <xmx:o2XeaLdw85emriHpemI6O7Bds2D51tgG1rsLo2rdip6aqM64iT1Glg>
-    <xmx:o2XeaGl7iow4Ol_ggq3DJnFl7aV2EXG6r4yl27cvYGwc-Dhwob5nVw>
-    <xmx:o2XeaND5PF5Q2un5HgnY9_gCgl4lHXEq6jqsJHDleDjzUwp9ZLoE_hpL>
+    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:s2XeaK8BYeB9_dbyHEcpXGYPViDNmwVJwEu75dfTYYBsrFsRoaGtLw>
+    <xmx:s2XeaEInZq2CcrEC_rgn53F0LvKZflpWndZ12v6ek-8iMRz5AS14Rg>
+    <xmx:s2XeaPlQMlevRfxU-zHzqz1sfoZ52k-JNJ6W_kjlF-WdT3j4mRaLFA>
+    <xmx:s2XeaINDo3CS0k7rA8mhotpAXVhi4l-2FTL20Dfpn47i57uUehyVww>
+    <xmx:s2XeaMrw_mGdkkI4_1zNGKgNwbgV63LPiN3DZadtZQ_7TbUlPbkTS8dY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Oct 2025 07:44:34 -0400 (EDT)
+ 2 Oct 2025 07:44:50 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 19cab7ce (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 2 Oct 2025 11:44:34 +0000 (UTC)
-Date: Thu, 2 Oct 2025 13:44:30 +0200
+	by mail (OpenSMTPD) with ESMTPSA id f83caee6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 2 Oct 2025 11:44:49 +0000 (UTC)
+Date: Thu, 2 Oct 2025 13:44:46 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, gitster@pobox.com, shejialuo@gmail.com
-Subject: Re: [PATCH v4 6/7] reftable: add code to facilitate consistency
- checks
-Message-ID: <aN5lngvE39JGwGSx@pks.im>
+Subject: Re: [PATCH v4 7/7] refs/reftable: add fsck check for checking the
+ table name
+Message-ID: <aN5lrhCLQFnw7qUB@pks.im>
 References: <20250926-228-reftable-introduce-consistency-checks-v4-0-c96fd8551c0d@gmail.com>
- <20250926-228-reftable-introduce-consistency-checks-v4-6-c96fd8551c0d@gmail.com>
+ <20250926-228-reftable-introduce-consistency-checks-v4-7-c96fd8551c0d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,35 +87,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250926-228-reftable-introduce-consistency-checks-v4-6-c96fd8551c0d@gmail.com>
+In-Reply-To: <20250926-228-reftable-introduce-consistency-checks-v4-7-c96fd8551c0d@gmail.com>
 
-On Fri, Sep 26, 2025 at 09:25:49AM +0200, Karthik Nayak wrote:
-> diff --git a/reftable/fsck.c b/reftable/fsck.c
-> new file mode 100644
-> index 0000000000..26b9115b14
+On Fri, Sep 26, 2025 at 09:25:50AM +0200, Karthik Nayak wrote:
+> diff --git a/t/t0614-reftable-fsck.sh b/t/t0614-reftable-fsck.sh
+> new file mode 100755
+> index 0000000000..250d244e66
 > --- /dev/null
-> +++ b/reftable/fsck.c
-> @@ -0,0 +1,100 @@
-[snip]
-> +static int table_checks(struct reftable_table *table,
-> +			reftable_fsck_report_fn report_fn,
-> +			reftable_fsck_verbose_fn verbose_fn UNUSED,
-> +			void *cb_data)
-> +{
-> +	table_check_fn table_check_fns[] = {
-> +		table_check_name,
-> +		NULL,
-> +	};
-> +	int err = 0;
+> +++ b/t/t0614-reftable-fsck.sh
+> @@ -0,0 +1,38 @@
+> +#!/bin/sh
 > +
-> +	for (size_t i = 0; table_check_fns[i]; i++)
-> +		err |= table_check_fns[i](table, report_fn, cb_data);
+> +test_description='Test reftable backend consistency check'
 > +
-> +	return err;
-> +}
+> +GIT_TEST_DEFAULT_REF_FORMAT=reftable
+> +export GIT_TEST_DEFAULT_REF_FORMAT
+> +
+> +. ./test-lib.sh
+> +
+> +for TABLE_NAME in "foo-bar-e4d12d59.ref" \
+> +	"0x00000000zzzz-0x00000000zzzz-e4d12d59.ref" \
+> +	"0x000000000001-0x000000000002-e4d12d59.abc" \
+> +	"0x000000000001-0x000000000002-e4d12d59.refabc"; do
+> +	test_expect_success "table name $TABLE_NAME should be checked" '
+> +		test_when_finished "rm -rf repo" &&
+> +		git init repo &&
+> +		(
+> +			cd repo &&
+> +			git commit --allow-empty -m initial &&
+> +
+> +			git refs verify 2>err &&
+> +			test_must_be_empty err &&
+> +
+> +			EXISTING_TABLE=$(head -n1 .git/reftable/tables.list) &&
+> +			mv ".git/reftable/$EXISTING_TABLE" ".git/reftable/$TABLE_NAME" &&
+> +			sed "s/${EXISTING_TABLE}/${TABLE_NAME}/g" .git/reftable/tables.list > tables.list &&
+> +			mv tables.list .git/reftable/tables.list &&
+> +
+> +			git refs verify 2>err &&
+> +			cat >expect <<-EOF &&
+> +			warning: ${TABLE_NAME}: badReftableTableName: invalid reftable table name
+> +			EOF
+> +			test_cmp expect err
+> +		)
+> +	'
+> +done
+> +
+> +test_done
 
-Okay, good. We now only verify individual table names part of the stack,
-and don't scan the directory anymore. Furthermore, it is easy to add
-more tests by adding to the function array.
+Nit: we don't have any test that verifies that `git refs verify` doesn't
+complain with a well-formed stack.
+
+Other than that this series looks good to me, thanks! I think we might
+want to have one final reroll, but once that's out I think this should
+be ready to be merged down.
 
 Patrick
