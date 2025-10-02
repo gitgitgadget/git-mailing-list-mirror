@@ -1,98 +1,89 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC941E3DCF
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 16:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A07186284
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 16:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759423106; cv=none; b=k42FQUHqV8I3AGBY6gG4S5lIqrvIEk0YCT9B09Pildv+kPH6oaA1CJawGey4awD8cvsgrqOVU074BF9UJzRm7Gpj1iADcLYT+nZDFTj4A2LZvqzcXwZZoSQah/C3DeEpePZCf0gVaF76zkZGokMEp2LrgNdw4fHRaf6UxgN3B+w=
+	t=1759423789; cv=none; b=mULijuJU6nyPjmOP3MmSh9loLe6hXVZTL1GPwQ9PP60qbKvFMbVEbfoKKZZk4pilL5W65f3SQ9JMuFEk/IBUhtK9zCVmxFTQXXSspww3xdezmRjpJpGwcA5Zl/9HehaJXcVDaPXBnG+QYdEAdnInhQDpqTTTzjJntri4RuTtquU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759423106; c=relaxed/simple;
-	bh=Nrm5cngmJ9UkZAyk2ZwNlMlutj5RVhgXeSlltzQ6z7I=;
+	s=arc-20240116; t=1759423789; c=relaxed/simple;
+	bh=oJgp1Tq+tqsHAJN8Z8gyOkv/3GYT3Q5OBRZ/YexWBa8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qoDElwKdI/1uBoiMpRCaijwI1aN07qEMBWNsjDvK5VfO0aZ1f1jIMHLtdUf0lB9QUkpM9mWQeJm3wQTcGZkdM0FzwRayn/IfoSaeq2Pd9mi/qWFaX2P2B2JVii9/hoVR6h/k5wGhwQ4ajAWMtfpnLsvjtYlHYyaIgq83XMyH3T0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FRXfhqnX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IN1mzRiV; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=sVVcxvjbf64dFO6R+zFdk2MPjXf/XbpOIJt0uYjQjMDwSEje7kbwC9b0u8KQHmH3l8rTrFmhDbzas2aY3BA6RUIuhbjfVWT0ktGO3r/StI82FF1Pp8L0toLQFugXIfX3QA49ro6x2m6Nppo2nAyKXgdg2EY2InQAoGMX4mxIwZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=amCRiQo3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OS22dQ6D; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FRXfhqnX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IN1mzRiV"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 97AFB1D00169;
-	Thu,  2 Oct 2025 12:38:22 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="amCRiQo3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OS22dQ6D"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 90FCF1D0023D;
+	Thu,  2 Oct 2025 12:49:45 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 02 Oct 2025 12:38:23 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 02 Oct 2025 12:49:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1759423102; x=1759509502; bh=mPeJgBNHoV
-	bgIYAWwlPv29XgG4AGqWKg6ljB1Jkrukc=; b=FRXfhqnXAqY9ThH074DxVjkzQ9
-	xOCswvWXCEjryttcYPjqyTwnrtwgOpPqG4i/UfrkTBdkq3+uFwv4QHdTNfcTiLlR
-	a5TseO6M3syeBJ/hqkGpgsFl91Sfo5euk0vf1ShP90Jkz0SFFOu1dQGw8e31GuDU
-	p5j0HWeaVKbzlbIxkp0S3P16jVjt6fS9qclSPDh9fZ2LQadlx4YKdiWQlXi+V0PP
-	KEZxD2wtfZDoqBssvobArOszBqxi+adIYpSQ8Ip7yrz7rGWCsJQFfCZ7h8jSHNFd
-	nYoTi3HKJnZwCiZwXwAJsix31C1hxyhqxBWZql/e5LtsIsdib043JwtzYbOQ==
+	:subject:to:to; s=fm1; t=1759423785; x=1759510185; bh=C78+0HPObs
+	wHBVVJAJos3dfLP+KPxOm4kplvwqVsR58=; b=amCRiQo3XCtU28cCTgEGv0qtas
+	jhdXEX2SpC38xFkV2SPIX25ErFAA2/OqH2MKM1ZXifCnqB+BnoS/9HS+y8CdUxBD
+	Bvv7WcZBVeN9+u4yIaSu1rz9nAau3d7IiczlzTHFxuJH6bwq9UMD2NhzxvjNZyGv
+	AtzQvykBP5/draCfwyDoh5QGFUemwj+4gtBSM35QNBkrgvQQU18UMekK3yfqIv0+
+	Ro6tetF7fmA3p0qELiDNkLNW0ZSa4e5ws5U8kN+nTaaVYPrf4woj+JdiQkcOYw0U
+	UI9qp2gDAIfQbWi6kwEbkchdFrSCu5g5CSvDtmSOu7aWdj5JIvhKz40H/DAg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759423102; x=1759509502; bh=mPeJgBNHoVbgIYAWwlPv29XgG4AGqWKg6lj
-	B1Jkrukc=; b=IN1mzRiV0o6/rXTuIu7il8TJ8mANiTAIsne26jQBQdhvmWSWFVR
-	eMSt53hD1ixt3fPN3UEp8KE/nJUBzsnwb1uOoijhAHbzxX3x30Y7VKPOEvLvgLS0
-	W6vMpMDzu2ILwSr70u+KHFOD9I2zjL8EQ6487cJzCTeMYp6BZtx/lX/MQu2HoUy+
-	6v56lh7p4citEEd5uUUCOuB/pRyeozXcZs5MNKk4WTt/aTOglEnH0RY9wKQXf4XG
-	fPxJEdWgBdDIMFGH5oWXjXev8iAMu52nWxPgipxM9RhHIKMae4vIATrDUsJll/QJ
-	3tJqHLyk0drjAiZ9aFv30xKOEkkW0T8e9eA==
-X-ME-Sender: <xms:fareaAGcuDWjZh4uKQskTMfehPGqk7j8YdApBm6ZmYIeZJJM6aOz2g>
-    <xme:fareaH2QNUoamdwJn_9xy-Jl5L5Q0tWnrK65qGSXmJcTsxa5-Zbin8mUP7gZDsKkC
-    yCK5KOBPufD851I1JsoXuA03hcr5jhvYY-eM_EPvWsvsKYaJtWqEP0>
-X-ME-Received: <xmr:fareaA_v1sda33DRCxPOGtdIjgp4Eyn2meQRHNckQBZxZVyoCIMHORbKZi4AEFiQl0lAaZVOks3Rs_81LnBpUhrB7Ybi7o-3YO1y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekieehvdcutefuodetggdotefrod
+	1759423785; x=1759510185; bh=C78+0HPObswHBVVJAJos3dfLP+KPxOm4kpl
+	vwqVsR58=; b=OS22dQ6DBJN5FxwmgJ/IKVzB1k3sv/y/coFo4XEOSVxOJP1NuGZ
+	0l6j1trW6Ge76kYfXayfba+mblWNQbA37ljC7tzAtlYVIrRyIrM6myJ0vcB2zfMG
+	BPFuATPZe9vjIjEVGmvvVuh0CSYWbXWZtaM1c8ajRzdFexLB87HAvQtLl7aotf7O
+	6a6+sDfqrCB54EYuLuXpRXvbiN3V3/TiNv1OwkxgVC8cS0N7ksLQLwOqQ61gkiEb
+	gxJ+GBCn/r7ju2b+lavw0GP0Vm2uPJxm6AnZHu2y5+PA2WVxkm6Aqnun2rUH//yb
+	Y+Dd2zQpJqs0uiCSAp1D4bo3X8avedGkflg==
+X-ME-Sender: <xms:Ka3eaD4rfxUvWmHFe3mKyCwR4xUg7GiWzp2AjSJkK__WQGWCDhRMjw>
+    <xme:Ka3eaPwDVCSSuKMojfd7MadUPtifM3mQgULpUZTp4Acoc5BxP7126BysN4Dw6lu8x
+    aClAuEplCjojT4ajB8l_peK0VVYW1zvUdtNjjq31Xs07qSHWSJeNo0>
+X-ME-Received: <xmr:Ka3eaCytvMrHufneYFyHbjdfDvvxVhN4FY_e45j2U_GVTD6Zx2X8LRU7L6HmI7pPY4ggeh9pJG7CMnZW61_E5HOofo1Tc6RfzFEb>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekieehgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
-    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohepudejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpsh
-    esphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopegtohhnthgrtghtsehhrggtkhhtihhvihhsrdhmvgdprhgtphhtthhope
-    hsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthho
-    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopegtsgesvdehie
-    gsihhtrdhorhhgpdhrtghpthhtoheptgholhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpth
-    htohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:fareaCGPhWa7vtPY0s8LaHpq4VSMCPhYOshwzHFhCRYXl5jbN_SVTQ>
-    <xmx:fareaOjU4AW9HIdnpuLT7wxdu-xSYfxLxf8VGkDK13ykiKBHF6BqrQ>
-    <xmx:fareaP-UGzK2KkrvAtZ2Fv6LB85RG5diUBirmTduAC_vxiqtoEtS3g>
-    <xmx:fareaGaQXHkNUUAdL541SEBjPLDwR29bQh7JvAJckX7K-a3S8TVW0Q>
-    <xmx:fqreaBniLA7cX06IL-_B96Z5pKTxhfQ9hQI7N5dIo3TwEX6dM__To8Qn>
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshhtohhlvg
+    gvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Ka3eaPxtHCiTs2Vk4hg7PYxKVSUlpFvMQT9yvlIGZ0n3Agf95iindQ>
+    <xmx:Ka3eaEb5UMBMock7dhhmEf2Pnz_jDjdSOngdiPYl0WGV7CKifdESNg>
+    <xmx:Ka3eaIVg8yb4rBdqiph77uy5IminMrHkC7ahtjFaPrRiWfh_Xp-Vcw>
+    <xmx:Ka3eaKjeLOUO1kvFJAF17GKDslK5Mta4HOwhFoPam1v_h9H01btLSg>
+    <xmx:Ka3eaMU-7RtiGrTqawAYDxnsnBrtm-atSBR4fHPJH-A6SOynVax3ne36>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Oct 2025 12:38:21 -0400 (EDT)
+ 2 Oct 2025 12:49:44 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  "Haelwenn (lanodan) Monnier"
- <contact@hacktivis.me>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  Ben Knoble <ben.knoble@gmail.com>,
-  Christian Brabandt <cb@256bit.org>,  Collin Funk
- <collin.funk1@gmail.com>,  Eli Schwartz <eschwartz@gentoo.org>,  Elijah
- Newren <newren@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>,
-  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Pierre-Emmanuel Patry
- <pierre-emmanuel.patry@embecosm.com>,  Sam James <sam@gentoo.org>,  Taylor
- Blau <me@ttaylorr.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v8 0/9] Introduce Rust and announce that it will become
- mandatory
-In-Reply-To: <20251002-b4-pks-rust-breaking-change-v8-0-3a89fd5b1ce7@pks.im>
-	(Patrick Steinhardt's message of "Thu, 02 Oct 2025 09:29:25 +0200")
-References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
-	<20251002-b4-pks-rust-breaking-change-v8-0-3a89fd5b1ce7@pks.im>
-Date: Thu, 02 Oct 2025 09:38:19 -0700
-Message-ID: <xmqq4ishxnr8.fsf@gitster.g>
+Cc: Derrick Stolee <stolee@gmail.com>,  git@vger.kernel.org,  Taylor Blau
+ <me@ttaylorr.com>
+Subject: Re: [PATCH 0/6] odb: track commit graphs via object source
+In-Reply-To: <aN5gPoPC4WEYw9CF@pks.im> (Patrick Steinhardt's message of "Thu,
+	2 Oct 2025 13:21:34 +0200")
+References: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
+	<xmqq5xdx7qx4.fsf@gitster.g>
+	<cf7aeda1-297a-4805-b0ae-e379ce11bbcf@gmail.com>
+	<aL67U0-tw7O-y6_X@pks.im>
+	<4e67fb02-bbbb-4cd8-9892-6f65b4f82b26@gmail.com>
+	<aMFjGoPhGsRCTihO@pks.im> <xmqqo6qyfijl.fsf@gitster.g>
+	<aN5gPoPC4WEYw9CF@pks.im>
+Date: Thu, 02 Oct 2025 09:49:43 -0700
+Message-ID: <xmqqy0ptw8ns.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -104,72 +95,37 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> this small patch series introduces Rust into the core of Git. This patch
-> series is designed as a test balloon, similar to how we introduced test
-> balloons for C99 features in the past. The goal is threefold:
+> My intent here is mostly to allow us to swap out how exactly the data is
+> being cached. During the Git Merge I heard from some JJ developer (I
+> think) that they also have a pluggable cache, but they approach the
+> issue differently: instead of making the cache a property of the object
+> backend, they instead make the cache itself pluggable.
 >
->   - Give us some time to experiment with Rust and introduce proper build
->     infrastructure.
->
->   - Give distributors time to ease into the new toolchain requirements.
->     Introducing Rust is impossible for some platforms and hard for
->     others.
->
->   - Announce that Git 3.0 will make Rust a mandatory part of our build
->     infrastructure.
->
-> The test balloon itself is quite uninteresting: I've chosen to convert
-> the "varint.c" subsystem, mostly because it is trivial and does not have
-> any dependencies. But it does allow us to verify that C to Rust interop
-> works as expected, and to play around with tooling. All tests pass with
-> the "varint.rs" implementation.
->
-> For now, the series only contains support for Meson. If we agree to go
-> down this route I'll also introduce support for Rust into our Makefiles
-> at a later point in time.
+> I think that's a worthwhile angle to explore. The cache would still sit
+> on the repository level, and it wouldn't have to care at all whether we
+> use loose objects/packfiles or any other backend. But in theory, we can
+> still swap it out for a different representation as desired.
 
-Keeping the initial part of the cover letter verbatim is a bit
-confusing for those who have forgotten what they read in previous
-iterations ;-) I think a more recent iterations did have Makefile
-support, and this (hopefully final) one, too.
+The idea to allow these "caches" being pluggable to the system
+independently from object store or reference store backends does
+make quite a lot of sense.  If there is only one that is plugged,
+that degenerates into the "side data like commit-graph and
+reachability bitmaps do not belong to a specific object store
+backend, but are defined over the objects known to the repository" I
+was talking about in the message you are replying to, I think.
 
-> Furthermore missing is additional tooling:
+> Which overall means that we can defer this to a later point in time, as
+> we can make it pluggable independent from making the object database
+> itself pluggable.
 >
->   - At least one CI job to verify that Rust builds and works as
->     expected.
+> So I'd propose to merge the first six patches, as everyone seemed to
+> agree that they improve the status quo, but drop the last patch that
+> moves the commit-graph into the ODB sources.
 >
->   - Tooling and CI jobs to ensure that we have consistent formatting via
->     `cargo format`.
->
-> And probably lots more. As said, the entire goal is for us to have an
-> easy playground that we can experiment on and develop the infrastructure
-> incrementally without yet having to commit to anything.
->
-> I'm mostly splitting out the topic of introducing Rust from the larger
-> series that introduce it into xdiff so that we can focus more on the
-> actual process of introducing Rust into Git and less on the potential
-> features that we want to build on top of it.
+> Does that seem reasonable to everyone? If so, I don't really see a
+> reason to reroll at this point. But please let me know in case I miss
+> anything that needs addressing.
 
-OK.
-
-> Changes in v2:
-> ...
-> Changes in v3:
-> ...
-> Changes in v4:
-> ...
-> Changes in v5:
-> ...
-> Changes in v6:
-> ...
-> Changes in v7:
-> ...
-> Changes in v8:
->   - Some final typo fixes.
->   - Link to v7: https://lore.kernel.org/r/20250925-b4-pks-rust-breaking-change-v7-0-4e49dcb904d5@pks.im
-
-Indeed.  I have a slight preference to see these "deltas" in reverse
-order but it may be just me.  I can read backwards, especially if
-each item is small ;-)
+I am fine with that, but let's hear from everyone ;-).
 
 Thanks.
