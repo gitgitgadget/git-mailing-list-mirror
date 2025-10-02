@@ -1,77 +1,80 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0FD30B530
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 11:04:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B45C30CB42
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 11:04:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759403090; cv=none; b=WiiYdHi1zs5LJUud2bzrCiAbpUKlfLc9sxDogi3Meq8pbDTq10vfQGPPZ1KGKcbVBhOFvPin7A9d/ex4yCemEKEGSa7QlTF/k06/wO98MQQqv/aCtB2rEugEShokx/dxqr0ARayW9Q8hzjwhhC8qb3DUVGVk+LlEWY6sxmUmH7I=
+	t=1759403092; cv=none; b=Fuy7bxg2shl8QI9SfKQ0sFlr+DFiJ5zFFDhCtNwcoUncqbO4AOHlFEoJlOVvPdeyNfcAj/+K2KEGpS8baLLP4TxtYnR2rUOGFb0rnwSTFEiVmfn+w9yDPS/IkJGmTezFh+o0fLq2hOeUKqkQLJYDS3nzVBRc0VqbL1S4PAPKNvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759403090; c=relaxed/simple;
-	bh=UbSogNnZ5LOaqUGzhxuST3FOy7ukb8POQyN5VUwH/3E=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=KyXkSyZO+96DpvPuJQnI6CMH8Yx1uQ260QNqu5prPnwLDnyG5c1HuXW1J6AWf+fG7YMqvBD/Ye7HB7NkivLYoyKmOytBfFW1TnBpCq5CwlcAl1+r2elWVd4Gn1aI0r9ZozgWfcSYpyb75tFu4mq53ZxDKoq6M80nAwRCmSlf4uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CkPALn0Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QChNF2nG; arc=none smtp.client-ip=202.12.124.158
+	s=arc-20240116; t=1759403092; c=relaxed/simple;
+	bh=uVZOhA9KhisRAlBLs32LwRtJlTDf5zmFlnE91eM8ZFQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=jNn72x1gvdYo6NM1Wy7sLNMSA/Zyj11JdgiKek+RZQ//Czx5DFmbj7aCK2Xsmu673jADnCC/WRsWYpwW8ErfKeQhrVjMN2GRX/+bRFhfQpOFJ8qMMxRnsVxitIfQVam3lxqgpXx7FO7Piesc815RFhl4QqreMLth6kz6wHuf0uQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XK5pP2P/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rkxsosdR; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CkPALn0Z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QChNF2nG"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 92AD07A0152;
-	Thu,  2 Oct 2025 07:04:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XK5pP2P/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rkxsosdR"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id D32151D0018C;
+	Thu,  2 Oct 2025 07:04:49 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 02 Oct 2025 07:04:47 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 02 Oct 2025 07:04:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1759403087; x=1759489487; bh=tO7DkU3+C5
-	CwWTUA0rMyapFDWGSe0aEj7SLA+hXAKo8=; b=CkPALn0Ztf9olsfJkqi7rUCAq0
-	8kWG/5zalN2ZJ5rl7DxiGs/4JNObwUlvsFOGunna6GlL8NOVOCKjBZJruP1PWMHj
-	YZUCEWMuH0QbFfQEaxaZBr1xO+dxHI3gzeNYdiDNUjueb6RCQGTUQ351FoXPfgkp
-	SOgYD/OvY7pJiGQJ2PInuIyKU8qBtZrUwK29o3ryaMVtitFasHbZlw3PUC6ojTaJ
-	QSXnyNZWVzlCzYM4P3eZKIMq4PhkEgPWZM8UtcwPLoCDuQj+u/HVbF1QVx/lHRCY
-	qokKLwKddSrVa+xJ569GB6KFA2z6n+9Gydp8t3Zja/3xkKJYlLvCoIkXf7zA==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759403089;
+	 x=1759489489; bh=/J2byL2Xt1DZXDgm9HZguKLNQ7AIYe48fJLM6NOpVKQ=; b=
+	XK5pP2P/fv8ggC4APFNWoyzdCA4mSWoi7vA7tOyAb2BZ+MICSqcwbpEVeENL/EHi
+	D4anUIH4D0rx/UXN2lM+nr4kxPaTlTAnFW7Fuk/FRmyCaOUIrelG1h0DS4E0G2oP
+	N/AaMJtsh5GaQ696j+chPW+NzdBoJdubMhxU7bp046ehGLSgTJ+qfSkCPwj6WsV9
+	xL07GIbjw3UYuacvdRPX63fnfi84zMZjKrdiC6gAzsQKOwiX6KDqJUjEuM9NamFW
+	LS5n4ISFe2CugqqqfP5P8sO23mJMzDP/J9q3xDIV4LyNgWOF8v1NfHKWa+ytaz/Y
+	KfE6l8KuCqXEzQkBri/poA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1759403087; x=1759489487; bh=tO7DkU3+C5CwWTUA0rMyapFDWGSe
-	0aEj7SLA+hXAKo8=; b=QChNF2nGjTiBZarYHnQYRWjW1AAqukpMiSfyx0zTKe1p
-	onReb7C/Hkq+1DoVg1DYwBX1+eXJa6ghYENoenwCSH3koOIoybSUbEVRyZtL8+E4
-	PONnlVu67AgoYeL3ldXcOa7Dl4tb+uMgQlLBAfqsUXohmwcnNfhh3DRllteZSvZD
-	VitKUdNYSlEec6b0aO9DLF71RfbMP4HB1V3nHhgNlgsxl37SCTNBIVJKXk/dbDwI
-	pAym6LhhQkdYEdPySNLWSyywAK9mlyQ1Po+ZkCVWlLs2g+EimHrngnuvixjeVIo5
-	pJnjK7K0XVQN2XcFF+goaWkPPR6hsd/qMbIqdQ+bug==
-X-ME-Sender: <xms:TlzeaHTTgtz54oLVeiCXcUu2xx1FtkvWronGyLro3D2tbuWKppsWwA>
-    <xme:TlzeaOzfMc0-5iGldQDERcfQlLIG7JsAPOZOdRX9gt8J6aD53XpjNThLbbUVxzDwo
-    yEnjRodVDqYmrNW79Br0sWRvbBPY5hK8gP09kqRAMGyVyionQ_PYA>
-X-ME-Received: <xmr:TlzeaKdVQ3c-2d4jD5yEskSQm5HjhFz3VwTagCuBtdnau9mNbz-VFpmqwOBZXPr678PczY8IEeBgo0p8zRXxj7KTFXRMRtDCSKsI8IpX8Q>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759403089; x=
+	1759489489; bh=/J2byL2Xt1DZXDgm9HZguKLNQ7AIYe48fJLM6NOpVKQ=; b=r
+	kxsosdRwyQj0IW99U2B5hwOgMqogyYD/WIxPscaB6O+PW/b3Vc9A80a+ge6lOdqw
+	MjkftOMCoQCVzvU/odf2B6B1ubPAo2x/eJisTd0GoVTBcbwaBtT/YnQ1ltWPcA2j
+	fUz0I3NNzTXg9dG3ZjF3GwtmfQ3TnQLwCwlAnhWDLFlYXf/DTDqmWMSsmOUfppL0
+	uog+aC4YgeKHGr51KJ/C2laevmsp0OYPFBcHa040TYmNUuBmCUOtQ2PoMtrThEAy
+	GDD0KQiKrFEheK8eQz6WtPiMOpGpHBQERnHBF1M8YgrW7BVFuu33Urp/EWEYX6Zu
+	8lDa9mIB9PaKcUVVgSWXA==
+X-ME-Sender: <xms:UVzeaHe73d75Rc8Am8hbT-S8DRxIdx8s9eL0hHkC0B9MLq8DyFa1-w>
+    <xme:UVzeaDNbHffEQPiDsCvqxEBJUHkET5aCWveZfCVnWX30IWLINjAOlBQrTio7XwOVP
+    KxILs_X_nz7WHL9kQxCjcjwUAUNPWqRgdr_JE5yTTOrv00keSE30Q>
+X-ME-Received: <xmr:UVzeaOKcvBirTsTXbNhrUgGqyZLx1rWuFIn7AqzvI3tX5A5_lnlP3g3l1PbkC9K8oYsle1E24jY6-ZY7vLpv6jHrOqbieFpQZfiT8gTh-Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekheekhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhufffkfggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcu
-    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepfe
-    ekledvgffgudefhffhudfglefhfeelheeufedtkefgffffvedtgeduveetheeinecuffho
-    mhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:TlzeaCLLbTbClJoaxwfsJxe_LY9-SudWb8DZnTTWaKd4765G6qXRzA>
-    <xmx:TlzeaDGHXnpSoP1TG396qPodADCuPCJlNzmCtVya6vBLsCtt7vP-aQ>
-    <xmx:TlzeaEqBecSf0LRe6GE1pu-CaBYo_F-f2obU18PrbGqUUiAAlyNvOA>
-    <xmx:TlzeaEQ7sQm31FjFL9_qT4mY72ksoRh1c8oZdd4jJOWIboU7KAhhHg>
-    <xmx:T1zeaKqrKkfZnOhior7ym1r8mQzu_7hWRbfzbZBkTv7iAq8WQAEI5SCx>
+    hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhonhesih
+    hothgtlhdrtghomh
+X-ME-Proxy: <xmx:UVzeaEEhdMEpp1E72ST7by4bIJZ7kIJxuXqL5piffPnmDJcFLpwJcA>
+    <xmx:UVzeaGQMBaSz9ge1z9VGWBumBUqQrJIYTvTo8YMKCBkfkqHpBguS6w>
+    <xmx:UVzeaAEKECFe4mLRNUN8AgHVGZaR9SSxxMUMnN2Pb5JvQK9iL51QmA>
+    <xmx:UVzeaC_bUW9idEWgKn59pFvQukVi_Z_0tGbn77cs0DGCLlw2jB9Ozg>
+    <xmx:UVzeaC3R4Lkxxiod82DkzMJTlYvjd59HKA_O2522V04EFrEuKNyDSL2j>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Oct 2025 07:04:46 -0400 (EDT)
+ 2 Oct 2025 07:04:48 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f01419e7 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 2 Oct 2025 11:04:44 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 418dc128 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 2 Oct 2025 11:04:47 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/5] gitlab-ci: some fixes for failures on Windows
-Date: Thu, 02 Oct 2025 13:04:35 +0200
-Message-Id: <20251002-pks-gitlab-ci-windows-improvements-v1-0-6a8b6b45d728@pks.im>
+Date: Thu, 02 Oct 2025 13:04:36 +0200
+Subject: [PATCH 1/5] gitlab-ci: dedup instructions to disable realtime
+ monitoring
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,43 +83,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAENc3mgC/x3NQQqDMBBG4avIrDuQsVRsr1K6sGa0P61JyIgK4
- t0NXX6b93YyzVCjR7VT1gWGGArkUlH/6cKoDF9Mtatv4pxw+hqPmH/dm3vwiuDjaowp5bjopGE
- 2lsb763AXadqWSihlHbD9J8/XcZypCJ0adAAAAA==
-X-Change-ID: 20251001-pks-gitlab-ci-windows-improvements-16dd3f911688
+Message-Id: <20251002-pks-gitlab-ci-windows-improvements-v1-1-6a8b6b45d728@pks.im>
+References: <20251002-pks-gitlab-ci-windows-improvements-v1-0-6a8b6b45d728@pks.im>
+In-Reply-To: <20251002-pks-gitlab-ci-windows-improvements-v1-0-6a8b6b45d728@pks.im>
 To: git@vger.kernel.org
 Cc: Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.14.2
 
-Hi,
+The instruction to disable realtime monitoring are shared across all of
+our Windows-based jobs. Deduplicate it so that we can more readily
+iterate on it.
 
-this small patch series fixes some intermittent failures we have
-observed with our Windows CI runners. Furthermore, it fixes one
-persistent test failure in one of the Windows runners that was
-introduced recently via tests for git-last-modified(1).
-
-The pipeline at [1] shows that tests succeed now.
-
-Thanks!
-
-Patrick
-
-[1]: https://gitlab.com/gitlab-org/git/-/merge_requests/426
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (5):
-      gitlab-ci: dedup instructions to disable realtime monitoring
-      gitlab-ci: ignore failures to disable realtime monitoring
-      gitlab-ci: drop workaround for Python certificate store on Windows
-      gitlab-ci: upload Meson test logs as JUnit reports
-      t8020: fix test failure due to indeterministic tag sorting
+ .gitlab-ci.yml | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
- .gitlab-ci.yml           | 29 +++++++++++++++++------------
- t/t8020-last-modified.sh | 34 +++++++++++++++++++---------------
- 2 files changed, 36 insertions(+), 27 deletions(-)
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index cf122e706f..552c033fb0 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -112,6 +112,9 @@ test:osx:
+       - t/failed-test-artifacts
+     when: on_failure
+ 
++.windows_before_script: &windows_before_script
++  - Set-MpPreference -DisableRealtimeMonitoring $true
++
+ build:mingw64:
+   stage: build
+   tags:
+@@ -119,7 +122,7 @@ build:mingw64:
+   variables:
+     NO_PERL: 1
+   before_script:
+-    - Set-MpPreference -DisableRealtimeMonitoring $true
++    - *windows_before_script
+     - ./ci/install-sdk.ps1 -directory "git-sdk"
+   script:
+     - git-sdk/usr/bin/bash.exe -l -c 'ci/make-test-artifacts.sh artifacts'
+@@ -136,7 +139,7 @@ test:mingw64:
+     - job: "build:mingw64"
+       artifacts: true
+   before_script:
+-    - Set-MpPreference -DisableRealtimeMonitoring $true
++    - *windows_before_script
+     - git-sdk/usr/bin/bash.exe -l -c 'tar xf artifacts/artifacts.tar.gz'
+     - New-Item -Path .git/info -ItemType Directory
+     - New-Item .git/info/exclude -ItemType File -Value "/git-sdk"
+@@ -150,7 +153,7 @@ test:mingw64:
+   tags:
+     - saas-windows-medium-amd64
+   before_script:
+-    - Set-MpPreference -DisableRealtimeMonitoring $true
++    - *windows_before_script
+     - choco install -y git meson ninja openssl
+     - Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+     - refreshenv
 
-
----
-base-commit: 821f583da6d30a84249f75f33501504d597bc16b
-change-id: 20251001-pks-gitlab-ci-windows-improvements-16dd3f911688
+-- 
+2.51.0.700.g236ee7b076.dirty
 
