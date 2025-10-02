@@ -1,148 +1,145 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A45B29ACC5
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 13:09:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E52313276
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 13:31:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759410597; cv=none; b=gXjB1iMsf/85KnssbCTWWCtWpB8NsHyZ3xq6cD2BUAc7FDRttzgO2Lful1UKb9G0x+b8oUnyMnoEoMRfExx93eq/UrScok+fOkl/aArCjHuaXAq+u/lAERGoZhM0cYYjw5Ls6iosEuH2UPqDEhM0wXMaR4Bx7fWgZgK/DXHYZHc=
+	t=1759411885; cv=none; b=N7dp/YC4W9w+jZGEXwUY+8wtg2lZct1D3OK8oBpUtuHxRIox5Ot3khaXDsBbqOSwZ4u1JLWtnRZ18uyZa2rmye57q5XjzHdZDjP89rvfIBQE545IYI2yAOw/3Mq518tWRQ9/YDS9hwcVFmjkfn2q/A3njb/R/7tUYVgsa1xtTyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759410597; c=relaxed/simple;
-	bh=Pi3dPuKISw1/8JRtFNH0mDnkb1A9C+klPHuJDCPfwGk=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jom/d60LUkNUZXn5KmHGaSi62GD9c+U887MKSDtzRKWODszTYu/0DW2T4br+M97ehHKXl7c68PDMQ/dzWlhcw5/2CFfbc8h2r7b4K5Nf5Z6yALvFE1C4+frWTgjtekMQrsFw4hGbzVM0+onPDN8jD/JBvyP1LslaeYVfAYIBoM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=PDnSa7Jq; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=T5Ifyk7X; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=PDnSa7Jq; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=T5Ifyk7X; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1759411885; c=relaxed/simple;
+	bh=N5wErHgr2crnOVnuome2+AUhjVh6gbhdrVYu0r6eehU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ywb52ztm/2UB6RRooGnbtF4czo1Lo4VCcHS4pqRVaMGJ4UfytOWmSSIwU9+Bxp7Jvm3s7HWFe6YlhvYkPZ21vJgv1472aGAQ20rlKQ1Qi+4TYYfrZj12rd7ba/XrTrUPJkFHahbGOlgEWOri61FjcO3HZrlsrbHm/es0T/9wuwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kWKBzvHi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DtSV2s8h; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="PDnSa7Jq";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="T5Ifyk7X";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="PDnSa7Jq";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="T5Ifyk7X"
-Received: from kitsune.suse.cz (unknown [10.100.12.127])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 7535C222B5;
-	Thu,  2 Oct 2025 13:09:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1759410593; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+HrJrdSiRZowVbo1+VjujDemz3WYlGJmfsQ4/P27/eI=;
-	b=PDnSa7Jq4UoahBpIvofegAZijjtwT3774j6RsK1q/ZrF6B8OBfxEMl/lXN950nwYeDCFgC
-	ML/hQyJ/g6mibrwNILMNd+QEc9tPCBFu6emlU+Rb3fMMjKg0bb6el9heRf1TiMP6gAMpFc
-	J+4Y+BmMOpIToDsINlhhJ4zi9gYpa1E=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1759410593;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+HrJrdSiRZowVbo1+VjujDemz3WYlGJmfsQ4/P27/eI=;
-	b=T5Ifyk7X6ZsnpS8BFylFJedXWb4ubYU8fHHZBgmUvB3EfjshWq0hoBGyy4okN1OiLV2xTn
-	eG1ucSBHKbJY5QBw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1759410593; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+HrJrdSiRZowVbo1+VjujDemz3WYlGJmfsQ4/P27/eI=;
-	b=PDnSa7Jq4UoahBpIvofegAZijjtwT3774j6RsK1q/ZrF6B8OBfxEMl/lXN950nwYeDCFgC
-	ML/hQyJ/g6mibrwNILMNd+QEc9tPCBFu6emlU+Rb3fMMjKg0bb6el9heRf1TiMP6gAMpFc
-	J+4Y+BmMOpIToDsINlhhJ4zi9gYpa1E=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1759410593;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+HrJrdSiRZowVbo1+VjujDemz3WYlGJmfsQ4/P27/eI=;
-	b=T5Ifyk7X6ZsnpS8BFylFJedXWb4ubYU8fHHZBgmUvB3EfjshWq0hoBGyy4okN1OiLV2xTn
-	eG1ucSBHKbJY5QBw==
-Date: Thu, 2 Oct 2025 15:09:52 +0200
-From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kWKBzvHi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DtSV2s8h"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id A1F251D007C8;
+	Thu,  2 Oct 2025 09:31:21 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Thu, 02 Oct 2025 09:31:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759411881;
+	 x=1759498281; bh=IoMnmkbFDOprjca1sTK3Xq/boEL2OzCqpVwomDhwn0w=; b=
+	kWKBzvHiMBXiIMtSPmCaZoMfCCUycowqIVGRFAQJf3JWjA7dpWrdSTHGy2X2zt6Q
+	S1waDwYgvDtDebhyW8P0UhnP/NK/Z0HKg1Ljgp6ZdKdPGkEEfNrBRR7dmL9biUqB
+	HyXjU1CzYjEwx516QxzBYUuChPLXS1G6Lx4PP2aVXgK5cGE/ygwh39B4xdTV/RDR
+	cte1KY9oQ8HbLRdFKsTyCs7MH4GQDGm4LESTWKZTcJBpnCl2Con9nAw564AtHVjc
+	QZv/LyvnHUGH6Lg/Cp7QW089L9NIuUU1Jsj93hCw6HHQNOjbV90hWbdszUn3dFyn
+	iU3JycklOtDHwXgWJAMCRQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759411881; x=
+	1759498281; bh=IoMnmkbFDOprjca1sTK3Xq/boEL2OzCqpVwomDhwn0w=; b=D
+	tSV2s8hEd4YsWfR82z92Yc81Eip+LppeUlyVXkYBXx9rHRnRV7MDB1brfjxCT7Vs
+	ZISGOOXriSByWiEIpaS8ckDNuOXSSvM6ttlQVlvCBuOZUQkpmJvWAlT2ePdiD4ns
+	hU0bW6gD6JCA2AZ3QIwms/drUK0syS05U70B/D4yJblPIP1TGnxVKmJRUZmCQPB+
+	5TewrQZ2/q/lfxTwt8+SASlsPsPiiw/a5Pb8uJWKlBE+cTV4AhpWazr5boL98J0E
+	QycRGgRj/JQdUtFpSaR/r0DK7zOUMxAKrQolADkGYO2nWGDa7JNgQFfQlKT9oTZo
+	5+28BbMaH4bQG5wj6q0Rg==
+X-ME-Sender: <xms:qX7eaN10gDGDUoH_qmSzICL9KqdXSLCWa2eoB4P0VqOWE3ADImIvJA>
+    <xme:qX7eaLhHPpC4YC0waTW7yA8GgKsOSu8RMyoknVdZvreOHZKHTPjEJA4pO_Tps9giK
+    PIR19e8epo9gMQaeKT6CxYgrSuWhuOd7DWDNsxt7EkD6aTE4F5jwg>
+X-ME-Received: <xmr:qX7eaLThEUGk0MGk-yc3TaTds3ebTHnWt5HMY9W4dU1ilH3ZY4IvzohqHOdKU7mUB973AY3BFSY-JYiNewinPFnD9gAnA1-9ZohbWlaspg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekieduhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhutggrrdhmihhlrghnvghsihhosehgmhgr
+    ihhlrdgtohhm
+X-ME-Proxy: <xmx:qX7eaEhVH9jopS2mXuTDpfVencs_f1CK6Zt5nDosPdpG3Kvc6-nQ3Q>
+    <xmx:qX7eaD57t6QVsHIsw95Y5lC0EiG2ndX7VyZhMusRSNb9NTHROMRMAg>
+    <xmx:qX7eaJCukmZkxdeg6syY9NLwgA7M2FLffjfZ4T1oddUUPxii0SKp0A>
+    <xmx:qX7eaCa93K9qU0FfZ9hlqr-sjriOuah_3Db2-CUeT_iR0WdxBV9HLg>
+    <xmx:qX7eaH8eb3kavJJiHGkv0fajlR1NFK8hPHS8LBG2R-zYsnJc-x2neApm>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 2 Oct 2025 09:31:20 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 36e6ed69 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 2 Oct 2025 13:31:18 +0000 (UTC)
+Date: Thu, 2 Oct 2025 15:31:11 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Luca Milanesio <luca.milanesio@gmail.com>, git@vger.kernel.org
 Subject: Re: When should we release Git 3.0?
-Message-ID: <aN55oCWX1l_VUuNh@kitsune.suse.cz>
+Message-ID: <aN5-n_ArhQqaQZgt@pks.im>
 References: <aNxivuJEnSHbQNdr@fruit.crustytoothpaste.net>
- <aN1QUDzYli0GsGy9@nand.local>
- <aN1UtbJRIhgvMmaF@kitsune.suse.cz>
- <aN2oSBz8s_hSBMPq@fruit.crustytoothpaste.net>
- <aN5sVXNdW8-GSMAE@kitsune.suse.cz>
+ <E03F997F-1738-4CF6-B7D5-206183FA5BD1@gmail.com>
+ <aN1RFvz7uGPnepxe@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aN5sVXNdW8-GSMAE@kitsune.suse.cz>
-X-Spamd-Result: default: False [-3.30 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUBJECT_ENDS_QUESTION(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-0.983];
-	MIME_GOOD(-0.10)[text/plain];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCPT_COUNT_THREE(0.00)[3];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_COUNT_ZERO(0.00)[0];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[kitsune.suse.cz:helo,kitsune.suse.cz:mid]
-X-Spam-Flag: NO
-X-Spam-Level: 
-X-Spam-Score: -3.30
+In-Reply-To: <aN1RFvz7uGPnepxe@nand.local>
 
-On Thu, Oct 02, 2025 at 02:13:09PM +0200, Michal Suchánek wrote:
-> On Wed, Oct 01, 2025 at 10:16:40PM +0000, brian m. carlson wrote:
-> > On 2025-10-01 at 16:20:05, Michal Suchánek wrote:
-> > > From my very limited point of view as a user the interop is the major
-> > > planned feature currently missing in git, and I do not see much point
-> > > without it. Then again I do not know how useful it will be in practice.
-> > 
-> > It is the major planned feature which was missing.
-> > 
-> > The primary use cases are converting repositories and working with
-> > repositories using a different algorithm.  The latter might be useful if
-> > you're using a SHA-256 repository that someone else has created but your
-> > tooling cannot handle longer object IDs or otherwise has some limitation
-> > of that sort.
+On Wed, Oct 01, 2025 at 12:04:38PM -0400, Taylor Blau wrote:
+> On Wed, Oct 01, 2025 at 08:13:12AM +0100, Luca Milanesio wrote:
+> > I am worried that if we rush into Git 3.0 with breaking changes that
+> > would make other â€œforgesâ€ (e.g. JGit) incompatible, we would be in a
+> > difficult situation with the other Git ecosystem that isnâ€™t based on
+> > the C-Git implementation.
 > 
-> It cannot, and the compat will not help with that because it's using
-> pygit which will not get that compat code. Presumably some baroque
-> scheme that re-exports the repository as sha1 might be possible but it's
-> not clear if that would be practical.
+> That's a good point. I am not familiar enough with JGit (or really any
+> non-standard Git implementations) to know where SHA-256 support is in
+> those respective implementations.
 > 
-> Another problem people are comlaining about is that with a mix of sha1
-> and sha256 repositories submodules and subtrees don't work. For that the
-> compat might actually help but the repository will then be
-> unintelligible to tooling that does not have compat code, which probably
-> includes all forges at this point.  Again, some baroque scheme that
-> re-exports the repository in the other hash using the compat code might
-> help but it's not clear if that would be practical.
+> But regardless of whether we're talking about a forge that is based on
+> git.git or some other implementation, there is very likely lots of other
+> work to be done to support SHA-256 outside of flipping the hash function
+> within Git.
+> 
+> (I'm thinking here about database migrations for columns that may store
+> 40-character SHA-1 hashes, for example, which can take a potentially
+> significant amount of time to migrate depending on the size of the
+> database, etc.)
+> 
+> So my feeling here is that we should take into account not just the
+> readiness of the underlying Git implementation used by hosting providers
+> in the Git ecosystem, but also the readiness of the hosting providers
+> themselves to do the work necessary to facilitate that transition
+> outside of their Git implementation.
 
-I would assume the compat client could upload the same repository to
-both sha256 forge repository and sha1 forge repository. With some
-scripting it's possible to publish twice making both hashes available.
-People that have a compat-capable client then would see the repositories
-as identical again on their end.
+We definitely should take into account the readiness. But what I think
+we'll need is a roadmap from impacted Git implementations and hosting
+providers so that we can answer the question when they plan to have
+SHA256 support ready.
 
-Not usable in every situation but for cases when mirroring is already
-done anyway plugging this in sounds fairly straightforward.
+Without such a roadmap it's basically impossible for us to set up any
+realistic date. In that case, we only have one of two options:
 
-Thanks
+  - We just wait until eventually everyone has SHA256 support. This has
+    the effect that there is no pressure on anybody, and thus it is more
+    likely than not that it'll just never happen.
 
-Michal
+  - We set a strict, "uninformed" deadline that may be too ambitious and
+    unrealistic.
+
+Once we have roadmaps, we should set a strict deadline that takes them
+into account. Any hosting provider or implementation of Git that doesn't
+provide a roadmap will not be taken into account in our planning.
+
+We should of course actively reach out to the projects that we're aware
+of so that they have a chance to provide such a roadmap in the first
+place.
+
+Patrick
