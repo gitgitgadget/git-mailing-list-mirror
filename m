@@ -1,130 +1,160 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B91239E9A
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 16:54:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74297125A9
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 17:15:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759424067; cv=none; b=f8cn7H+zVqGxMI0ur8xReJlRv+SWFfSC1axhL9ClWi+3QtS0ayx8YHxJngRRnixa6EYdy8uyyZkYuMQyzWLG7tyGKgamOBRSerWbEywa3xHl3bZ6rsKXQ9WCwh8UHRjU/FwTNDRt/QZXNDOKRdoZAlPkHSUkJCmYzuJQosFrwO4=
+	t=1759425311; cv=none; b=MQWcqh2XtGywDD0czCsGKvMQUyQAXfe5isjNoD92N7rQoTNm28ncxBydoJBUXbLyosUblfZZtyiA94AIUIV0c2wZhrpjuC5a8BuAEv3AhNhQDHCfPuSrpBRkRvoaoF/VbRxjmKln7cbE8q1Up6cFiOB8TKS5t/TFyAst9ZGMPek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759424067; c=relaxed/simple;
-	bh=oeebH3u3LzBsfgs+TqgbrRgnCv8zF+Znoh4/LblPIv0=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=jlzHaV3lN7AMku3E0sfnEa6S6uoopqeR5j5LAbiV0OpdeuIdjwxX57D1MRbwNb6zB/IOTSgEltAZzUxUCWn4s8sYXEKNw5ovKgCjgzguhgjr/arw8xGAHS0TUzyRXqmNoEVRbJ32QiuLch8mY9IX1uvtIYFHCbuMSnVHp6IAGVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mor6Mu7Y; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759425311; c=relaxed/simple;
+	bh=4qeVeMm7TZ9xtxCMEci3tY+kNT7OFqH4L2RlnZpGYD8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=S4nfODXT/+LQUlvTnrsk/L7hSWMp/jHJHg9PREMxWLca6WZ5MEfUimhoqnTBiBA7VQPsreAAr1glKOSgV6aQFFpB8kT+YwmXQuTlZpBwAOiYZ8o5zOhbZ5T+vM+lkWRxyz2eU3eJVZiZSnaPQOdjRa4o5khN4PDQ1k0d/fb51LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=hrLdUCQI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hRbfmwtC; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mor6Mu7Y"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-73b4e3d0756so14839487b3.3
-        for <git@vger.kernel.org>; Thu, 02 Oct 2025 09:54:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759424064; x=1760028864; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=J6Nm8okrfdkJq8ECxBi1ZJoOMEnig9nyNx17vV4EpGo=;
-        b=Mor6Mu7YDhGiO3k7GEc8TqpDGyjxFbbc9eX4b39BdTTDa0kXXnk4hVBxbhf0xW0WJn
-         Ujzf6nyYo/wLnBPEq4ehUw7Em8JKcpljKVGDhuDPJQNRcvOAzJWOc/UJ0vEoMQet8T0Q
-         WMN4KLrAW9DnEgGI891lPe0EZ50o/69DywM94GngkCNLbZknEcN3JqjsCPSxrbA1pdAj
-         /B4G2SIEC4Oga7id8rYS6WpHwByzqWhRViunrqk85ihveuh3jX7HZ1rI2CdbaX7hgLOh
-         OVqU0roVdzpC84UKblTyLf//dWzffxdh1Ct5elQtEIE9s6HrLk0e59NHvZDUbO44Hsig
-         5kdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759424064; x=1760028864;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=J6Nm8okrfdkJq8ECxBi1ZJoOMEnig9nyNx17vV4EpGo=;
-        b=edC0S7SZRW6OlHnYG6VAaSzUNroCLICTwq2hKFODOyWq0xkRT7QcOEs5m4ZDbG/Cmx
-         vMXtZWmryFj5+a2M1Zubvy8S6vs0GQ4+yuy1xgpTXqk607oSAo+7LDN7SQ/brWFYnPDB
-         zNH0Ff7cpxBYcilvR+cgch6zSOFZthUYJp+DSOj8l2l3w3rGEkDC88TLqYpRILiC0s/h
-         /L8TJoHh3Ncz6nJi6ytXeniTyZJil5Xb2YEWTuDpD5sbLxO9ZxwSIzAK1PAIrYEBM2D8
-         P4j5E3l4j/qG2owzsLkWt5+SNbQ4/w8/VopsjjCYIRF0GsCevMy5/996vMdAizH7Kk6P
-         Np/w==
-X-Forwarded-Encrypted: i=1; AJvYcCUeha5TWbwi2W2raHoTdLi24wqnPrLGatLUiU2m8NZGxw2uTBkujiCpMhQ+VjC11Hha1N8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YytUGYtHehaPFA4YRbMd04KNLOgep0XaBUzurt580J15R7f8jTl
-	mW5WEQcrIrhKRotXdMrZLaKNQCIKXCNFTqVEuzbKo5XxrHtul6cW9QDOQjFi+T8T
-X-Gm-Gg: ASbGnctyJs7YoumR8pYVqHjlhR7UjU7t3ovSrnhwjyp9kAg8xjIQ7sEsKpUT3lJb8MB
-	EXPYAlKnyI0QNfe09b/jDAvAEqBjRcHIvUcPR7GXiEntlQH/+r/rlbvkIBsuFXo8QnBtpJRJWw8
-	c0zRfoR2ImJOPA7XDXTlgZXBJ8kTeWzbbGOMWAuRPxi4GcVw9uAQNJp4zvsXC/vhiCwd6OChEd8
-	0AwJ+jQXJQgAaozcAi2bTpkCFZRleO9700iGJpnXyiljWpG3fOD68NS45jhhhob0gI8sFLTF6mv
-	xKFFGbAAscOP0hbivVclgHAah+GkeLchfiMrOq8+4qB7Qw4FfQlRgRJ+yYBxbnE77pfaiHu8A2g
-	rg6hkUr64UtblDIt72ahjZ/QosmYHtEbnLl8a0HXahxMIX9jyAl/TClvRxWiE1T+301Fcs2Bwuk
-	M=
-X-Google-Smtp-Source: AGHT+IHyys4DYsG6hPWB/AQ9Lj66q/JjyJ2/QcIBk4lcVrky1tGw2l2kO8i0ageeCIN8tFOCbhrkeA==
-X-Received: by 2002:a05:690e:2504:20b0:635:4ecf:bdca with SMTP id 956f58d0204a3-63b6ff24ebfmr10080209d50.44.1759424064310;
-        Thu, 02 Oct 2025 09:54:24 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:f1f9:be9d:3ccc:ffd9])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-63b846ca862sm878708d50.32.2025.10.02.09.54.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Oct 2025 09:54:23 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="hrLdUCQI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hRbfmwtC"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 351EA7A01E3;
+	Thu,  2 Oct 2025 13:15:07 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Thu, 02 Oct 2025 13:15:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+	 t=1759425307; x=1759511707; bh=NHM6RTPWlpeZtyD9tdT9VqE9boM8p2Iq
+	cu8SR4tp0hc=; b=hrLdUCQIi1p0AzZXarviG2NfissiuTmzEHVYNoMrxe3VowPl
+	Vj5ncrZvytEMcmdWe3+BGw7M/YV+h/GixOyXmN+3V+eDMyL1JrqdW3r7nsEXecN9
+	nCesEYxC+QOcFOjQSHDO5LcrffilTyLs2t0FfACW5AKIibVVdzUvQXEXRnkXK8R3
+	v08llJQWufQjbumSe+XpW/HkTS0vz2chWFoNXb9Mb9bFt7HtXKAskZ/6vu5voH+i
+	LjDqS+2Z4RkaLh93ozTdTO71fPlekk2avKG4IEj+fVBWABwmvM5okuqMOuK0+E4W
+	+fiftF3vn/HeqeLE49FCWofLi4zyjfs44nGROQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759425307; x=
+	1759511707; bh=NHM6RTPWlpeZtyD9tdT9VqE9boM8p2Iqcu8SR4tp0hc=; b=h
+	RbfmwtCxqhk6f+x5x4NC+eUSG7gZkDYRbajh+1HqAyQDyTnUNy8TtWa66UdFW4ZN
+	NzdCGjKGm2Ht0uSlRLL4T9cHN/MkQsNr2hqu9vCuHdNDlV5H1M3dpAktVP8git6x
+	sGH8MupL1pgu7ZxzHkixGDwsTZfwmP4RRrzV7/dHZqRkzt2qlSVutVXgtMbm/FUS
+	oma0ixr4yJe9OZp0KW98P4LW0/ZQi0/Tpp1Skou+yraX1amNTtlHKS2+3VCA3pze
+	MoVpcihcc+YutaaqTxBGS1gDEBn+u6Gp4x+Xr7BAR372Q4DfZXr2SWRt0Daicstq
+	SrRfqFo+pwtX+qWqG8kPA==
+X-ME-Sender: <xms:GrPeaAAmuT6okXlEGawrbtR15WRrjhP2izOpjWcHrIiB882NMrm3f4M>
+    <xme:GrPeaNUBiPCHEJEH-1SucUZQSB5uFpBxd8agGTk6_887M0guHDHaG9VK4kNpP9ZRD
+    thVUZ1ZXNRZqBZC4LKds6o1zb2P7kX2fGFisD59KNxonOFyR2y5EvM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekieehlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnh
+    grmhgvqeenucggtffrrghtthgvrhhnpeefteeghfegfeevleeguddvkeetheeiveffudej
+    lefgudffffejleffffeludekjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghr
+    tghpthhtohepuddvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhsth
+    hirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgv
+    rhesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgt
+    phhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehrhigsrghkrd
+    grrdhvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgr
+    nhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhih
+    hnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhm
+X-ME-Proxy: <xmx:GrPeaAkzFI6WyOXvM5N6KmDPIv1pJ92O_QxD-A2WVk2XmB2L7MBRXg>
+    <xmx:GrPeaBYObrFXVZAjla_Rh2VLk38ozdeDFrzui8I0JKh1dkLzWiB1uA>
+    <xmx:GrPeaN5ZVsOAhZ1si-M5UWEjNOeunkbxTIXNChuGI7CAAMGcLO2qXQ>
+    <xmx:GrPeaDCJKEjwjthrC3O0Y-P5i6z7FUwjyVHOB4hnaf0d41KpcdpYGQ>
+    <xmx:G7PeaGMfoB-0iwgJil7i-OS7-IJlO-plspZizo1dBhE-P0wS0wVa-Dbw>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 3E44D1EA006B; Thu,  2 Oct 2025 13:15:06 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: When should we release Git 3.0?
-Date: Thu, 2 Oct 2025 12:54:13 -0400
-Message-Id: <D59D0576-63C9-4144-B49E-54D43A80E0B0@gmail.com>
-References: <aN5-n_ArhQqaQZgt@pks.im>
-Cc: Taylor Blau <me@ttaylorr.com>,
- Luca Milanesio <luca.milanesio@gmail.com>, git@vger.kernel.org
-In-Reply-To: <aN5-n_ArhQqaQZgt@pks.im>
-To: Patrick Steinhardt <ps@pks.im>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+X-ThreadId: AzP7wyaVJMbJ
+Date: Thu, 02 Oct 2025 19:14:44 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Siddharth Asthana" <siddharthasthana31@gmail.com>, git@vger.kernel.org
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+ "Christian Couder" <christian.couder@gmail.com>,
+ "Patrick Steinhardt" <ps@pks.im>, "Elijah Newren" <newren@gmail.com>,
+ "Andrei Rybak" <rybak.a.v@gmail.com>,
+ "Karthik Nayak" <karthik.188@gmail.com>,
+ "Justin Tobler" <jltobler@gmail.com>, "Toon Claes" <toon@iotcl.com>,
+ "John Cai" <johncai86@gmail.com>,
+ "Johannes Schindelin" <johannes.schindelin@gmx.de>
+Message-Id: <f0abdc27-6850-4b9d-b4eb-a1c92f731142@app.fastmail.com>
+In-Reply-To: <20250926230838.35870-1-siddharthasthana31@gmail.com>
+References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
+ <20250926230838.35870-1-siddharthasthana31@gmail.com>
+Subject: Re: [PATCH v2 0/1] replay: make atomic ref updates the default behavior
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+On Sat, Sep 27, 2025, at 01:08, Siddharth Asthana wrote:
+> This is v2 of the git-replay atomic updates series.
+>
+> Based on the extensive community feedback from v1, I've completely red=
+esigned
+> the approach. Instead of adding new --update-refs options, this versio=
+n makes
+> atomic ref updates the default behavior of git replay.
+>
+> Why this change makes sense:
+> - git replay is explicitly marked as EXPERIMENTAL with behavior changes
+> expected
+> - The command is primarily used server-side where atomic transactions
+> are crucial
+> - Current pipeline approach (git replay | git update-ref --stdin)
+> creates
+>   coordination complexity and lacks atomic guarantees by default
+> - Patrick Steinhardt noted performance issues with individual ref
+> updates
+>   in reftable backend
+> - Elijah Newren and Junio Hamano endorsed making the better behavior
+> default
+>
+>[snip]
 
-> Le 2 oct. 2025 =C3=A0 09:33, Patrick Steinhardt <ps@pks.im> a =C3=A9crit :=
+On the topic of changing experimental commands: I really like the
+git-for-each-ref(1) (git-FER) output format design.  It just outputs ref=
+s and
+related data.  It=E2=80=99s not a command for =E2=80=9Cbulk delete refs=E2=
+=80=9D or =E2=80=9Ccheck for
+merge conflicts between these refs and upstream (git-merge-tree(1)=E2=80=
+=9D=E2=80=94it
+just supports all of that through `--format` and its atoms.
 
->=20
-> =EF=BB=BFOn Wed, Oct 01, 2025 at 12:04:38PM -0400, Taylor Blau wrote:
->>=20
->>=20
->> So my feeling here is that we should take into account not just the
->> readiness of the underlying Git implementation used by hosting providers
->> in the Git ecosystem, but also the readiness of the hosting providers
->> themselves to do the work necessary to facilitate that transition
->> outside of their Git implementation.
->=20
-> We definitely should take into account the readiness. But what I think
-> we'll need is a roadmap from impacted Git implementations and hosting
-> providers so that we can answer the question when they plan to have
-> SHA256 support ready.
->=20
-> Without such a roadmap it's basically impossible for us to set up any
-> realistic date. In that case, we only have one of two options:
->=20
->  - We just wait until eventually everyone has SHA256 support. This has
->    the effect that there is no pressure on anybody, and thus it is more
->    likely than not that it'll just never happen.
->=20
->  - We set a strict, "uninformed" deadline that may be too ambitious and
->    unrealistic.
+And for this command it seems to, at the core, output a mapping from old
+to new commits.
 
-This seems like a false dichotomy to me. Of course we can forever debate opt=
-ions to go forward, too, so at some point we must have a decision :)
+Now, I=E2=80=99ve thought that a =E2=80=9Cclient-side=E2=80=9D[1] in-mem=
+ory rebase-like command
+would need to support outputting data for the `post-rewrite` hook.  And
+is that not straightforward if you can use `--format` with `from` and
+`to` atoms?  (I ask because I have never called hooks with git-hook(1).)
 
-Anyway, what about establishing a strong but adjustable (=E2=80=9Cproposed=E2=
-=80=9D) timeline now, based on informed opinions from folks who have already=
- provided estimates of what=E2=80=99s required? Then we can shop around for i=
-nput on the proposed deadline while still taking into account new informatio=
-n.=20
+I just think that (naively maybe) a `--format` command like git-FER with
+all the quoting modes might be a good fit for this command.  Then you
+can compose all the steps you need yourself:
 
-It also provides impetus: =E2=80=9Csans input, we will go forward with the p=
-roposal, so let us know if you need more time=E2=80=9D might motivate folks t=
-o firm up their own timelines and provide said input.
+1. Call the exact git-update-ref(1) `--batch`/`--stdin` or whatever mode
+   you need
+2. Write a message to each reflog if you want
+3. Call the `post-rewrite` hook
 
-> Once we have roadmaps, we should set a strict deadline that takes them
-> into account. Any hosting provider or implementation of Git that doesn't
-> provide a roadmap will not be taken into account in our planning.
+=E2=80=A0 1: c.f. server-side which I get the impression only wants to d=
+o cheap
+     rebases
 
-Btw, I=E2=80=99ve often wondered since I see representatives from GitHub/Git=
-Lab (and JGit/Gerrit to a lesser extent) often prominently identified as suc=
-h: do we have folks from GitTea/SourceHut/other smaller forges around on the=
- mailing list to weigh in? I assume we=E2=80=99d also like to include their i=
-nput.=
+--=20
+Kristoffer
