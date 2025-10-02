@@ -1,131 +1,130 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A07186284
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 16:49:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B91239E9A
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 16:54:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759423789; cv=none; b=mULijuJU6nyPjmOP3MmSh9loLe6hXVZTL1GPwQ9PP60qbKvFMbVEbfoKKZZk4pilL5W65f3SQ9JMuFEk/IBUhtK9zCVmxFTQXXSspww3xdezmRjpJpGwcA5Zl/9HehaJXcVDaPXBnG+QYdEAdnInhQDpqTTTzjJntri4RuTtquU=
+	t=1759424067; cv=none; b=f8cn7H+zVqGxMI0ur8xReJlRv+SWFfSC1axhL9ClWi+3QtS0ayx8YHxJngRRnixa6EYdy8uyyZkYuMQyzWLG7tyGKgamOBRSerWbEywa3xHl3bZ6rsKXQ9WCwh8UHRjU/FwTNDRt/QZXNDOKRdoZAlPkHSUkJCmYzuJQosFrwO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759423789; c=relaxed/simple;
-	bh=oJgp1Tq+tqsHAJN8Z8gyOkv/3GYT3Q5OBRZ/YexWBa8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sVVcxvjbf64dFO6R+zFdk2MPjXf/XbpOIJt0uYjQjMDwSEje7kbwC9b0u8KQHmH3l8rTrFmhDbzas2aY3BA6RUIuhbjfVWT0ktGO3r/StI82FF1Pp8L0toLQFugXIfX3QA49ro6x2m6Nppo2nAyKXgdg2EY2InQAoGMX4mxIwZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=amCRiQo3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OS22dQ6D; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1759424067; c=relaxed/simple;
+	bh=oeebH3u3LzBsfgs+TqgbrRgnCv8zF+Znoh4/LblPIv0=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=jlzHaV3lN7AMku3E0sfnEa6S6uoopqeR5j5LAbiV0OpdeuIdjwxX57D1MRbwNb6zB/IOTSgEltAZzUxUCWn4s8sYXEKNw5ovKgCjgzguhgjr/arw8xGAHS0TUzyRXqmNoEVRbJ32QiuLch8mY9IX1uvtIYFHCbuMSnVHp6IAGVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mor6Mu7Y; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="amCRiQo3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OS22dQ6D"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 90FCF1D0023D;
-	Thu,  2 Oct 2025 12:49:45 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 02 Oct 2025 12:49:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1759423785; x=1759510185; bh=C78+0HPObs
-	wHBVVJAJos3dfLP+KPxOm4kplvwqVsR58=; b=amCRiQo3XCtU28cCTgEGv0qtas
-	jhdXEX2SpC38xFkV2SPIX25ErFAA2/OqH2MKM1ZXifCnqB+BnoS/9HS+y8CdUxBD
-	Bvv7WcZBVeN9+u4yIaSu1rz9nAau3d7IiczlzTHFxuJH6bwq9UMD2NhzxvjNZyGv
-	AtzQvykBP5/draCfwyDoh5QGFUemwj+4gtBSM35QNBkrgvQQU18UMekK3yfqIv0+
-	Ro6tetF7fmA3p0qELiDNkLNW0ZSa4e5ws5U8kN+nTaaVYPrf4woj+JdiQkcOYw0U
-	UI9qp2gDAIfQbWi6kwEbkchdFrSCu5g5CSvDtmSOu7aWdj5JIvhKz40H/DAg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759423785; x=1759510185; bh=C78+0HPObswHBVVJAJos3dfLP+KPxOm4kpl
-	vwqVsR58=; b=OS22dQ6DBJN5FxwmgJ/IKVzB1k3sv/y/coFo4XEOSVxOJP1NuGZ
-	0l6j1trW6Ge76kYfXayfba+mblWNQbA37ljC7tzAtlYVIrRyIrM6myJ0vcB2zfMG
-	BPFuATPZe9vjIjEVGmvvVuh0CSYWbXWZtaM1c8ajRzdFexLB87HAvQtLl7aotf7O
-	6a6+sDfqrCB54EYuLuXpRXvbiN3V3/TiNv1OwkxgVC8cS0N7ksLQLwOqQ61gkiEb
-	gxJ+GBCn/r7ju2b+lavw0GP0Vm2uPJxm6AnZHu2y5+PA2WVxkm6Aqnun2rUH//yb
-	Y+Dd2zQpJqs0uiCSAp1D4bo3X8avedGkflg==
-X-ME-Sender: <xms:Ka3eaD4rfxUvWmHFe3mKyCwR4xUg7GiWzp2AjSJkK__WQGWCDhRMjw>
-    <xme:Ka3eaPwDVCSSuKMojfd7MadUPtifM3mQgULpUZTp4Acoc5BxP7126BysN4Dw6lu8x
-    aClAuEplCjojT4ajB8l_peK0VVYW1zvUdtNjjq31Xs07qSHWSJeNo0>
-X-ME-Received: <xmr:Ka3eaCytvMrHufneYFyHbjdfDvvxVhN4FY_e45j2U_GVTD6Zx2X8LRU7L6HmI7pPY4ggeh9pJG7CMnZW61_E5HOofo1Tc6RfzFEb>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekieehgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshhtohhlvg
-    gvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Ka3eaPxtHCiTs2Vk4hg7PYxKVSUlpFvMQT9yvlIGZ0n3Agf95iindQ>
-    <xmx:Ka3eaEb5UMBMock7dhhmEf2Pnz_jDjdSOngdiPYl0WGV7CKifdESNg>
-    <xmx:Ka3eaIVg8yb4rBdqiph77uy5IminMrHkC7ahtjFaPrRiWfh_Xp-Vcw>
-    <xmx:Ka3eaKjeLOUO1kvFJAF17GKDslK5Mta4HOwhFoPam1v_h9H01btLSg>
-    <xmx:Ka3eaMU-7RtiGrTqawAYDxnsnBrtm-atSBR4fHPJH-A6SOynVax3ne36>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Oct 2025 12:49:44 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Derrick Stolee <stolee@gmail.com>,  git@vger.kernel.org,  Taylor Blau
- <me@ttaylorr.com>
-Subject: Re: [PATCH 0/6] odb: track commit graphs via object source
-In-Reply-To: <aN5gPoPC4WEYw9CF@pks.im> (Patrick Steinhardt's message of "Thu,
-	2 Oct 2025 13:21:34 +0200")
-References: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
-	<xmqq5xdx7qx4.fsf@gitster.g>
-	<cf7aeda1-297a-4805-b0ae-e379ce11bbcf@gmail.com>
-	<aL67U0-tw7O-y6_X@pks.im>
-	<4e67fb02-bbbb-4cd8-9892-6f65b4f82b26@gmail.com>
-	<aMFjGoPhGsRCTihO@pks.im> <xmqqo6qyfijl.fsf@gitster.g>
-	<aN5gPoPC4WEYw9CF@pks.im>
-Date: Thu, 02 Oct 2025 09:49:43 -0700
-Message-ID: <xmqqy0ptw8ns.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mor6Mu7Y"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-73b4e3d0756so14839487b3.3
+        for <git@vger.kernel.org>; Thu, 02 Oct 2025 09:54:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759424064; x=1760028864; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=J6Nm8okrfdkJq8ECxBi1ZJoOMEnig9nyNx17vV4EpGo=;
+        b=Mor6Mu7YDhGiO3k7GEc8TqpDGyjxFbbc9eX4b39BdTTDa0kXXnk4hVBxbhf0xW0WJn
+         Ujzf6nyYo/wLnBPEq4ehUw7Em8JKcpljKVGDhuDPJQNRcvOAzJWOc/UJ0vEoMQet8T0Q
+         WMN4KLrAW9DnEgGI891lPe0EZ50o/69DywM94GngkCNLbZknEcN3JqjsCPSxrbA1pdAj
+         /B4G2SIEC4Oga7id8rYS6WpHwByzqWhRViunrqk85ihveuh3jX7HZ1rI2CdbaX7hgLOh
+         OVqU0roVdzpC84UKblTyLf//dWzffxdh1Ct5elQtEIE9s6HrLk0e59NHvZDUbO44Hsig
+         5kdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759424064; x=1760028864;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=J6Nm8okrfdkJq8ECxBi1ZJoOMEnig9nyNx17vV4EpGo=;
+        b=edC0S7SZRW6OlHnYG6VAaSzUNroCLICTwq2hKFODOyWq0xkRT7QcOEs5m4ZDbG/Cmx
+         vMXtZWmryFj5+a2M1Zubvy8S6vs0GQ4+yuy1xgpTXqk607oSAo+7LDN7SQ/brWFYnPDB
+         zNH0Ff7cpxBYcilvR+cgch6zSOFZthUYJp+DSOj8l2l3w3rGEkDC88TLqYpRILiC0s/h
+         /L8TJoHh3Ncz6nJi6ytXeniTyZJil5Xb2YEWTuDpD5sbLxO9ZxwSIzAK1PAIrYEBM2D8
+         P4j5E3l4j/qG2owzsLkWt5+SNbQ4/w8/VopsjjCYIRF0GsCevMy5/996vMdAizH7Kk6P
+         Np/w==
+X-Forwarded-Encrypted: i=1; AJvYcCUeha5TWbwi2W2raHoTdLi24wqnPrLGatLUiU2m8NZGxw2uTBkujiCpMhQ+VjC11Hha1N8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YytUGYtHehaPFA4YRbMd04KNLOgep0XaBUzurt580J15R7f8jTl
+	mW5WEQcrIrhKRotXdMrZLaKNQCIKXCNFTqVEuzbKo5XxrHtul6cW9QDOQjFi+T8T
+X-Gm-Gg: ASbGnctyJs7YoumR8pYVqHjlhR7UjU7t3ovSrnhwjyp9kAg8xjIQ7sEsKpUT3lJb8MB
+	EXPYAlKnyI0QNfe09b/jDAvAEqBjRcHIvUcPR7GXiEntlQH/+r/rlbvkIBsuFXo8QnBtpJRJWw8
+	c0zRfoR2ImJOPA7XDXTlgZXBJ8kTeWzbbGOMWAuRPxi4GcVw9uAQNJp4zvsXC/vhiCwd6OChEd8
+	0AwJ+jQXJQgAaozcAi2bTpkCFZRleO9700iGJpnXyiljWpG3fOD68NS45jhhhob0gI8sFLTF6mv
+	xKFFGbAAscOP0hbivVclgHAah+GkeLchfiMrOq8+4qB7Qw4FfQlRgRJ+yYBxbnE77pfaiHu8A2g
+	rg6hkUr64UtblDIt72ahjZ/QosmYHtEbnLl8a0HXahxMIX9jyAl/TClvRxWiE1T+301Fcs2Bwuk
+	M=
+X-Google-Smtp-Source: AGHT+IHyys4DYsG6hPWB/AQ9Lj66q/JjyJ2/QcIBk4lcVrky1tGw2l2kO8i0ageeCIN8tFOCbhrkeA==
+X-Received: by 2002:a05:690e:2504:20b0:635:4ecf:bdca with SMTP id 956f58d0204a3-63b6ff24ebfmr10080209d50.44.1759424064310;
+        Thu, 02 Oct 2025 09:54:24 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:f1f9:be9d:3ccc:ffd9])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-63b846ca862sm878708d50.32.2025.10.02.09.54.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Oct 2025 09:54:23 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: When should we release Git 3.0?
+Date: Thu, 2 Oct 2025 12:54:13 -0400
+Message-Id: <D59D0576-63C9-4144-B49E-54D43A80E0B0@gmail.com>
+References: <aN5-n_ArhQqaQZgt@pks.im>
+Cc: Taylor Blau <me@ttaylorr.com>,
+ Luca Milanesio <luca.milanesio@gmail.com>, git@vger.kernel.org
+In-Reply-To: <aN5-n_ArhQqaQZgt@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: iPhone Mail (21F90)
 
-Patrick Steinhardt <ps@pks.im> writes:
 
-> My intent here is mostly to allow us to swap out how exactly the data is
-> being cached. During the Git Merge I heard from some JJ developer (I
-> think) that they also have a pluggable cache, but they approach the
-> issue differently: instead of making the cache a property of the object
-> backend, they instead make the cache itself pluggable.
->
-> I think that's a worthwhile angle to explore. The cache would still sit
-> on the repository level, and it wouldn't have to care at all whether we
-> use loose objects/packfiles or any other backend. But in theory, we can
-> still swap it out for a different representation as desired.
+> Le 2 oct. 2025 =C3=A0 09:33, Patrick Steinhardt <ps@pks.im> a =C3=A9crit :=
 
-The idea to allow these "caches" being pluggable to the system
-independently from object store or reference store backends does
-make quite a lot of sense.  If there is only one that is plugged,
-that degenerates into the "side data like commit-graph and
-reachability bitmaps do not belong to a specific object store
-backend, but are defined over the objects known to the repository" I
-was talking about in the message you are replying to, I think.
+>=20
+> =EF=BB=BFOn Wed, Oct 01, 2025 at 12:04:38PM -0400, Taylor Blau wrote:
+>>=20
+>>=20
+>> So my feeling here is that we should take into account not just the
+>> readiness of the underlying Git implementation used by hosting providers
+>> in the Git ecosystem, but also the readiness of the hosting providers
+>> themselves to do the work necessary to facilitate that transition
+>> outside of their Git implementation.
+>=20
+> We definitely should take into account the readiness. But what I think
+> we'll need is a roadmap from impacted Git implementations and hosting
+> providers so that we can answer the question when they plan to have
+> SHA256 support ready.
+>=20
+> Without such a roadmap it's basically impossible for us to set up any
+> realistic date. In that case, we only have one of two options:
+>=20
+>  - We just wait until eventually everyone has SHA256 support. This has
+>    the effect that there is no pressure on anybody, and thus it is more
+>    likely than not that it'll just never happen.
+>=20
+>  - We set a strict, "uninformed" deadline that may be too ambitious and
+>    unrealistic.
 
-> Which overall means that we can defer this to a later point in time, as
-> we can make it pluggable independent from making the object database
-> itself pluggable.
->
-> So I'd propose to merge the first six patches, as everyone seemed to
-> agree that they improve the status quo, but drop the last patch that
-> moves the commit-graph into the ODB sources.
->
-> Does that seem reasonable to everyone? If so, I don't really see a
-> reason to reroll at this point. But please let me know in case I miss
-> anything that needs addressing.
+This seems like a false dichotomy to me. Of course we can forever debate opt=
+ions to go forward, too, so at some point we must have a decision :)
 
-I am fine with that, but let's hear from everyone ;-).
+Anyway, what about establishing a strong but adjustable (=E2=80=9Cproposed=E2=
+=80=9D) timeline now, based on informed opinions from folks who have already=
+ provided estimates of what=E2=80=99s required? Then we can shop around for i=
+nput on the proposed deadline while still taking into account new informatio=
+n.=20
 
-Thanks.
+It also provides impetus: =E2=80=9Csans input, we will go forward with the p=
+roposal, so let us know if you need more time=E2=80=9D might motivate folks t=
+o firm up their own timelines and provide said input.
+
+> Once we have roadmaps, we should set a strict deadline that takes them
+> into account. Any hosting provider or implementation of Git that doesn't
+> provide a roadmap will not be taken into account in our planning.
+
+Btw, I=E2=80=99ve often wondered since I see representatives from GitHub/Git=
+Lab (and JGit/Gerrit to a lesser extent) often prominently identified as suc=
+h: do we have folks from GitTea/SourceHut/other smaller forges around on the=
+ mailing list to weigh in? I assume we=E2=80=99d also like to include their i=
+nput.=
