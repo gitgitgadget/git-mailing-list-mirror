@@ -1,140 +1,90 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B2A7D098
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 02:49:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A9C29A2
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 02:52:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759373371; cv=none; b=e7lhHGOnc6VkEwLttTIP0JtGhuJxxScLE01hTKTpjsDAANVWgujaw4R+t+S68w/IIiHwN65TKEYLFyCYAEZ0XBN63p3HpZq0Ph2f6HFN+huCUCrqGAB+ZFdnmUl8E16L4kA16K5/DofdT0D7XhlxGEQoKZIMR9GKcnQw3P4rv0k=
+	t=1759373526; cv=none; b=fsZupPZqogVfHFifRIHwN8QFMYzxyiE3LqlvFFEo9s+OM8SBSKMlPFtV3MQPtV7QiweJCod79PaWCEd3rU+vL7uqUamLCLLyLxFEQ1v1hahWTblAMsfJOgUfUhAEpUpoQpITYZ1s+FXSts+M2e8W4r2IcHSRy0I/XLZKg72rJzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759373371; c=relaxed/simple;
-	bh=RVxfcoGII+Rogl7N4VAL3pOWs5wGpZuiILww3fWVqg0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NDU9BTBcS/vKMUSRDd/Ovl32oJHgYiDGR4zxz3/v3GSjD209sULFdEln0ygVZ1ucJkVS5ok7U17wPoVodDa4vk6x3zwiojtWb9o8yGEKFNSxmyEDZxiIjKld1Z9q4L44hFAepdhTfrtNTLAvxnrY9IisnoAjR7a/r6p1xnRw/5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KK4wd40c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uQGOWLTK; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1759373526; c=relaxed/simple;
+	bh=saqudHbFOm0xEykzWaQgw9GNLspSh3W7ZZvxgCwCrDE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jl6/bxlp6+kR7t+TjCdckNJA8Q4PZeXgO64gsMNp58yTmKwRaPSIFF1CTlengpK6ZNLIq34nOE+pIAl5yEcmBZmMeZJun5vd13oSbfmxNX9V/wFVk9cBMVtD75VNjQ3RYs0B9xLDwbNytznjoWR5cBMbnlfMpAsDc7TKL/f/cz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DjezdIHy; arc=none smtp.client-ip=209.85.215.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KK4wd40c";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uQGOWLTK"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 049247A0101;
-	Wed,  1 Oct 2025 22:49:27 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Wed, 01 Oct 2025 22:49:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1759373367; x=1759459767; bh=ABnw892LBx
-	R/jS1G2CBgiDSkbENwkB+7ObJO2NmOTlo=; b=KK4wd40cyw56S2viz1sza7zrUj
-	gJZcWD1scMKjrrTh3kOiB1zFkm1c2wo0OhEvRkfuE0K5G2YgX8mFGtkZhssUsEG3
-	Gvl15knS6XMBPpYwsa0nH5PT5Je7kpHuObwCTOVMzDn0ctvhxH105cuhX6sd0eLr
-	0w9gcAi1WeCHFGTyoXk7AbmuaLyfxGgHl1DtwUwaK9V3Tx2bwOQfxWwuEVr/N9W+
-	/sfZHZzGFZPpFladj5wHNuN3+z46KDZyHmtEswCw+uWZurSdTG1eYdx0j4syqKyo
-	8GOlJJwSpSu6+Tr5K174yrWRugjod1B2fUyb1s4SBFdX9Ta6G9xW0F13iyDA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759373367; x=1759459767; bh=ABnw892LBxR/jS1G2CBgiDSkbENwkB+7ObJ
-	O2NmOTlo=; b=uQGOWLTKolM3ZpeT8MIcOUNmK1inP2yiwkCWcswmL9R9zA2ZOaq
-	WKjzsXESMqLd9j7d7v4TosJykR5A85GU0I6PnXMP5LggRadMGDEUjSak3XXJh9dR
-	5nxId74v59DC4ugzm4TkOwpzRXr2XXLPR3jVUeBLTqN1DMhEuv/Gf9KFwM3RbGCb
-	MufkDDmWJ/O6lQADu1WQE/u5PCACmp6mIeeFPRhqFQj+Dd05VYzyolH1qNVZpxaZ
-	A+rPZ9QC34iD8wyX9EW13aCtDW5knOkHd/DYlEHSPPEZh3NBBLgUociDf4PtssPf
-	Jy3aeWAgqSvquiCCIoYw1aU/s+3hvIAAW9g==
-X-ME-Sender: <xms:N-jdaGd8tbwJoSIQ3pm9NYNEhhxcWiVtSr31Chcb97aXZ0IjA8vvhg>
-    <xme:N-jdaHNCLcsqmVYzz9-oNhuiKF5PT42-brc1FrYEVebQot5sYdkqV4OmvGbpTOxSZ
-    4iMGC8UmixHkN6RdsS5wdP8zQyWyRwF5xYJ3RxWFCKp-NaaUEyRvA>
-X-ME-Received: <xmr:N-jdaMiq5pX511xD5JnB7b3q5kJ_2CDHTYRY51aEp-ZTsimdjrAjOP7v68nF4yaEpQ5neX29MhKZOnC4ytSNAIgg-hD-5e4TOCsj>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekgeekiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehoshifrghlugdrsghuugguvghnhhgrghgvnhesghhmgi
-    druggvpdhrtghpthhtoheprhgrvhhisehprhgvvhgrshdrughkpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:N-jdaC11Jso-pgOVdWsDmfjK13ojQOajCT2k6xH0xQZ89H0zox7anA>
-    <xmx:N-jdaOiHY1j5bZO8CHh8EegIQ1uoqdTh0tUa4Hh05S-vNM8F55673Q>
-    <xmx:N-jdaKeb8dYCeX-71h4uULP3ZDP9kvTiqIfDjb1LgRgEIQVEpe96HA>
-    <xmx:N-jdaJljlm7It36ZWxqpd3UF_aCd2-jc8t6wKyzRMJRH5Ei8DP1YIA>
-    <xmx:N-jdaFoMqJdLjxYdcET0O-hDfPQJdcJ24ZDj3Wm3axCjOHLEp9yzlZNB>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Oct 2025 22:49:26 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: Rasmus Villemoes <ravi@prevas.dk>,  git@vger.kernel.org
-Subject: Re: customizing "cherry picked from commit abcd" comment
-In-Reply-To: <aN0TVmEMXOyDZEwR@ugly.lan> (Oswald Buddenhagen's message of
-	"Wed, 1 Oct 2025 13:41:10 +0200")
-References: <87v7l18nnt.fsf@prevas.dk> <aNus0ulSTb4rAYdF@ugly.lan>
-	<xmqq5xd054r2.fsf@gitster.g> <aN0TVmEMXOyDZEwR@ugly.lan>
-Date: Wed, 01 Oct 2025 19:49:25 -0700
-Message-ID: <xmqqa52ayq4q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DjezdIHy"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-b55197907d1so355981a12.0
+        for <git@vger.kernel.org>; Wed, 01 Oct 2025 19:52:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759373522; x=1759978322; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=K6CSTJikdHW91wsolaAxmkLkYyk7Kyi4DXV3EKo4E+o=;
+        b=DjezdIHyd2bEmrfU1lpc8PwnDGC+UHdnEx9ka3BDVXw/GV/tU7imkHjH71WmfmopjF
+         VE88rIu0Gfdrw1++K30LKG5OsuYxlxCPlsiqe94qzwCkFTV+qQsbtTZu/o3inN45lbpv
+         LkTNLrHCvfUYmMa+82jaoIEPt1LOvu6Wz6hq2JV4WMPVLEG0LrVdZixVg7A/4jlBtRD2
+         ovMJZc3NDTy0CMj7pk7vDd65zuOg8ZDFH4vAzy3oVLQ4N2SSGMR5G8EiL79Lc/nn8NxU
+         GLRI20fUDzPPeaPC4tSemy2aBqI9qeA91Ptmab+rijEfy1cB/XKyFZqleRjnYGpHqznX
+         4Gqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759373522; x=1759978322;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=K6CSTJikdHW91wsolaAxmkLkYyk7Kyi4DXV3EKo4E+o=;
+        b=IrKSX6S5/SqFpuVjxKPUqsZdaOkSUXE1VugDk6xYCmqjWzmls4ehYYZhEf1XXLppjc
+         xjmhrGFA99+mqt8hMdV1Rs6jCY61eP1Ee3v+8gAftL50XDQQv+plBsYBrNHZXE35zIZL
+         rQMg23/rrxTLCbnDSTEmV4XD/y1JaoZq+9xHIaxc0tt68QnQSXlKxSpYqsnUZjcXzqEy
+         pNcFIFNPM+mlUkmVDGsMDGssPwOH0Fx58C/WoIemXFlu8jhblcHkLFxL2wAenjuCJbQg
+         HOVv/MUp9PKEJq0tdPKokUHtvUVT7wWoXre9E60zTmbwoGXyZy/ZVBTGXUgLp2UkmUUE
+         x9cw==
+X-Gm-Message-State: AOJu0YxEYHPZVE8jdkyCyaIZBHd0EnBsS/J/QYKDEpA1GE3///YgCev+
+	FJj+H3v5aEkTvyN4sh9CrosJTmLl7frsyI8QosY8+q6UpRfg4f/VpXlP7IVQgi0M
+X-Gm-Gg: ASbGncuacpBIHq7xuBEaKRPdZ141xH0LAIKpO+xQ4D/zGAzG1maY+0itWuEVCAXrliT
+	vX+DraihvUEC0xrTftoHN22HMggSOb4c5UHmvz2yX3WRKMHmfY3WANsYZdbeGqFIgz8Ix9ClFQK
+	xKjB0rtL852AOFdpMGNGqzbHw5qjMc+kFgE0mS20GVI0qLHU4wDGnppXWfGL4XzTXkDY6ABYlcp
+	R92489rkOFMzLyNtUnV1WwhR4C7qts60pvWBYwI/nRz9gJdHxaXHEi6rYJbgPJcn0xOrYhP/vkA
+	5VxRbf2QcX9pO1717YqTi0l6BgoedQLm3f97I8PB84vUxndXEfh6n3KtuuKnowmnAbA7p8iRgDP
+	vGKLoUMLgK4Ev4PoJe4jGJfqTjiXpMV4uoNQ1n5tEkvxOa64mYcgsPgJG
+X-Google-Smtp-Source: AGHT+IHg/fmSNhnV/gmw8s/+LSp0DFjPxr7YeUDMprU3plJ3QvM5nBETHYaCWSX0g5fpeJwpqEIzyg==
+X-Received: by 2002:a17:903:1a2e:b0:277:9193:f2da with SMTP id d9443c01a7336-28e7f27dab1mr75984885ad.5.1759373522497;
+        Wed, 01 Oct 2025 19:52:02 -0700 (PDT)
+Received: from localhost ([2804:248:fd27:1700:3748:9d8c:286:76f])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-28e8d1280c9sm10484165ad.53.2025.10.01.19.52.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Oct 2025 19:52:02 -0700 (PDT)
+Date: Wed, 1 Oct 2025 23:51:58 -0300
+From: Henrique Soares <henriquegogo@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: How mantainers check Git diffs and patches?
+Message-ID: <aN3ozlH_pPnvdWPn@localhost>
+References: <aNygY8Cm7LEaBzV6@localhost>
+ <xmqqh5wi3779.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqh5wi3779.fsf@gitster.g>
 
-Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
+On Wed, Oct 01, 2025 at 09:41:46AM -0700, Junio C Hamano wrote:
+> Patches are medium for reliable transmission.  Once you apply the
+> patch to your tree (perhaps giving it its own topic branch, perhaps
+> to a detached HEAD with the full intention that you will discard it
+> after you are done inspecting the change the patch brings in), you
+> can use any regular tools you use while developing and reviewing
+> your own code.
 
->>I do not know what "an ideological commitment" refers to in this
->>context,
->>
-> it refers to the general notion "don't cherry-pick, but merge", which
-> relegates cherry-picks to being a 2nd-class workflow.
+It makes totally sense. So I suppose you avoid to review the code just
+checking the e-mail patch in e-mail client, but first applying locally
+and then check it in your code editor in a separate branch, worktree or
+whatever, then back to e-mail thread and comment the code, right?
 
-Ah, that is not ideological at all, but aversion against
-cherry-picking is purely technical.  With only "cherry picked from"
-trailer, there is no structural link between the commit that
-introduced the original change and the resulting commit.  It would
-make it impossible to automatically and reliably take previous
-cherry picks into account when merging back a side branch or older
-maintenance track that are riddled with cherry picks.  Compared to
-that, a more disciplined approach to (1) fork a topic from the
-oldest potential target of eventual cherry pick and develop your
-solution there, (2) merge the result to the mainline first, per
-trunk-first philosophy, (3) then merge the same down to the older
-targets, is always preferrable.  That way, the fact that your
-solution is applicable even down to the "oldest potential target" is
-structually encoded in the history even at step (1) by the choice of
-the fork point, and with (2) and (3), it is obvious from the history
-structure that the mainline and the older target both have the same
-solution applied.
-
->>The intention was for the original commit to be also be public and
->>in the same project (e.g., you cherry-pick a commit from the main
->>branch developing towards the next great version, down to a
->>maintenance branch for the previous release), [...]
->>
-> yes, exactly. this trunk-first development model is quite common, and
-> has been strongly pushed by some big players in recent years. this
-> makes it really surprising that git still does not provide
-> well-integrated support for it out-of-the-box.
-
-So, I am not sure exactly what you refer to "well-integrated
-support" in this context.  Not cherry-picking and instead building
-on the oldest potential target for your solution does take some
-discipline, and there may not be a strong tool support to help
-people pick the right fork point and merge up/down the fixes.
-
-Making that easier would be a great addition and that would be very
-much welcome, I would think.   
-
-But I do not think I would approciate the vague "well, this is not
-parent-child ancestry relation at all, but this commit and the other
-commit that is totally unrelated in the history space are somehow
-related, so let's add a random commit header to record such a vague
-ill defined notion that they are somehow related, and force the tool
-to pay attention to it somehow via magic."
+-- Henrique
