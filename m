@@ -1,157 +1,111 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28AF930FC00
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 11:21:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE2E1514DC
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 11:24:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759404102; cv=none; b=Toe9cd7bwvbqrCZrxwURfn3obOB6OFD8GInIT4RN9VShY0eL1fCf4Bwur7We4CX6cASsnrjOdW60N2v+IjWpURaeQQUV9be8Xp1ZMmpt7SNMuYJmjukzzfh3JwFllKSDW8rQQZdfV1cFBYQM1eJfCNI5T+ihf/8lITcWdCbmCaE=
+	t=1759404299; cv=none; b=YsDFxlXw8j6+kle/GTf5G4PQX+x4CYiSf3shxOdEVAiP41EGJUWhUesQ5z9uiBfPpthGotRL/uqDInGytSy3kC0c2mzDuCpoyLspt27vvOCeITeFJuOmV5PYq9LFAYRsppJhl5jFosiGWYYONzhWK9AuxoSAFr5Em2gYVWKcnc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759404102; c=relaxed/simple;
-	bh=MPWTbvb5ts9IpxygY2m9UWkRwTw9Qm/3SFgsK8e5lpk=;
+	s=arc-20240116; t=1759404299; c=relaxed/simple;
+	bh=gBe2/7gSXRFGOhJ+NAUbwlMPI1vCdi+3gnWfGBvl1F4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ohES4sROHaKWILBYalHnu9KvF8z2j6uax6QQv7s2csIYK5RpekVUZ15vJd2H8LeHOFvPf0qtH3PxZWKUbq2iHRGeFuFxzSfAlviHAMru2szqOBxvZX1n0AAfJt/WrI2AmjLkicZ/j3+PCCPZcBSH66OtTj4ypHXydn1MWqWN/B0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Nz0qLxiQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rwvMSrsH; arc=none smtp.client-ip=202.12.124.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=EnCQoOy18LNpv9b6G0nqye7djIv/C6K+MrNDo2DXiLHTIy+FvxL0QCIhf+p8WRIDNGJ443UJMfwqiQrUUoKTIVEzm9qLo3MejrbuRoJJN5uCeMvwMyFRHH9kyNpLnO/UaB2vClvPqk4RCEFjJbO3mcc+RO51H1ryLsBwOFWB/Vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JTeFjO7Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jS4LZDwt; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Nz0qLxiQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rwvMSrsH"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 570207A00EC;
-	Thu,  2 Oct 2025 07:21:40 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 02 Oct 2025 07:21:40 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JTeFjO7Q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jS4LZDwt"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 95A941D0012C;
+	Thu,  2 Oct 2025 07:24:57 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Thu, 02 Oct 2025 07:24:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759404100; x=1759490500; bh=VxNLHNBqYy
-	g5tSAV7AroDmj4Od/qmy6E3KiF3CJxLw0=; b=Nz0qLxiQg1CfEkfE24AX2mz+Fa
-	xyhTOGgd3I5yhNNrzozSVaVUUpjRrlffJzdMYFwYU37mZESbYjmxmgd8SUDCDNeU
-	zqAe/YvzS2PbOIYyEU0huCzclkrWsB/NO6Uts+ywhaGSo75JHec/MxKXd2GwYgWw
-	zmPJL2HolDpZx+/rRNP3To9YYhjZk1VgGsVy6G6pzonC7v0kAga7ee5bDktkvVvS
-	lCSOjhNob4vBUMlgMmBxluT+fqEgUa8eS3Y8SBkNN8PVJRQPBQpD/+RM8F0ITlaL
-	afiJB5jqBS96CASm93nGt3UyVROw+kl5PslmPOEX4u1OAyEgXYkb/GWILqMg==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759404297;
+	 x=1759490697; bh=2o3dG865JU/U3Y1E8pt1JuSu/zpxpCh+H/rzLpamtKE=; b=
+	JTeFjO7Q/HhH3eEV5+TiT4vnINO92659SLZIPJjVm114TMrxRpIbAl8OaAuj2Vd7
+	q3nvhDxGGTTXzITvh3gk4caux3hi+IifaDmp7Bpe3yyrLbE7fbgnRnhd8+i0eaqZ
+	WvpREqRkTm8PFol6lXdt3yCGHYzVjLu8p0mpTGSWr1kHyO1DZj7i/SDbIYNMKVLe
+	f9XK5+8esUPqCKxF01d9is9ZIBU+A6kMZIoc94z1OXsMIaO3aODaA3jTThBD6/2w
+	N680V4E7XOvGa5828TGUjCE8x+heL1Ecod7FXiWqrXrEJ6N1oDiKTKfhpjVTScqi
+	PqcF6h23QyKHZE/Zuyjxag==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759404100; x=1759490500; bh=VxNLHNBqYyg5tSAV7AroDmj4Od/qmy6E3Ki
-	F3CJxLw0=; b=rwvMSrsHqA+I7HLWM5tSuTzRcM29ufPdOuLAfCnYw0IewYwEJZv
-	UB7U+zAmbZGR5y3WQW0T4MvSIQh3L8JkgX5yZwyj0eMhsPwkvsOTeHme76m8nRaL
-	j1jX9qKUmvANe5KYnS50kJNR4YIJ1G0TKUPpATKlYnx33vfb4dkQNm9yHBYZKZGe
-	gbtfReCTSlF7ZBBGGAG7pw5jqBYIOKKLUHpHG6h35oQMLM5bKwC1eosqidVBZ5k5
-	GcTSJQ9y0dwss1Oe5R3tQZ+WbpfL+UuxjdkLfYkQsD4Z6/WFYXji4Wr4Xcf+ohJD
-	0HJv/8W/1UB8RUbTk96H5SXefXqkVkedvBA==
-X-ME-Sender: <xms:Q2DeaBjH1EWFQ6jxQVg7UBu2X4jPSSzG7Zd9vgZqDfwqhowaPlyA9A>
-    <xme:Q2DeaNAVx6NCNJu0y0VV8ViF_Q--OOe_I3KqYb5ofpb9hUOxe6QeX4wObqzw5cry1
-    7eR1Gysb8iAa50Aq53N1aLR-q9lEjzBINtrnXhwRuxr6dZb--gNhtY>
-X-ME-Received: <xmr:Q2DeaGE3B4NudZdCUilH--xtIfWlRQUaBuommAonpbitMeegWU7k7Hnw8RiD0tROpx4LeXE2UnemltKGelK4q4-E7LyrDuaDBlMyvmQu6A>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759404297; x=
+	1759490697; bh=2o3dG865JU/U3Y1E8pt1JuSu/zpxpCh+H/rzLpamtKE=; b=j
+	S4LZDwtU+iLHH2WQzoT4nkU3o8r4jiFq7FrLtl+lejxxUngslWZ6swG7hxWNClXI
+	zMEC/SpPVDxgyUyYiuHyrmYNNO3zjiHJOp0rIqEn1+VL2N9RxHn2C5HYA9r3TwUu
+	k2HhFF7BjDLm2guA69U1UPvbk4m5mkfMBKE8seTrboiVwpGl0ZNaRLw1u9TqsWcN
+	9GJ3wJaXgyO9dZiN5wlgnom0xjwGjjkJ8DLtjof2SwNAbylYEzxVQb4TJAfnzH7e
+	dc4iyw1XVUcVUFnO4pBDTun11VDDE6LctYuCAy/FiI8X6ILLVQjl49yd5072gwJS
+	rqlKui9e1DYlr/P6UD7OA==
+X-ME-Sender: <xms:CWHeaBd2B6yy9oTmtAFIRPnQ2cHJ1ceYgDQ4ZP0EFy_QFwahH9Qr6A>
+    <xme:CWHeaGrpS3Q_ky9M9-BLODDhhZGyAn4cY9B6kubqR320ubuX8GED8JqPj54jCla2_
+    tNmwp82CBrru6_1RhQ852SsiI5e0B1BtDYuqBFL3A_uwr0SZFw3>
+X-ME-Received: <xmr:CWHeaH6mPQbvtKAI_IJtuUBCiU_1fRmZIJOQYxF0iIZbqCXcFyo72IsUUXgplLwkc8HyUbz1hj-qB41QT7ubS_axQ1Of_L1-hT0st7FRow>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekheeklecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihloh
-    hrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:Q2DeaFLIX0oKdpXhPDJH4w1yjPEGI5fB7qibYLF5MEAeyFXCrPCSXA>
-    <xmx:Q2DeaKksmy3CwOqhIydqKM9C8tDmvlmWYLjlOJv4dBKJFM36okrOog>
-    <xmx:Q2DeaNQnlN0Brk1qJjgvxFnRq56HBHPLbodwFjsrtSviuDgOBVcOBw>
-    <xmx:Q2DeaMKAOIu6aX4JinVtsCl-sy8pDBQSlcqf5fw4_3haIO96hetuNw>
-    <xmx:RGDeaLddhwNkwj0huP_-mVcrdwNd_yIrNP-mGIi6wG3yrzvVSjs4bg-R>
+    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhonhesih
+    hothgtlhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhk
+    sehfrghsthhmrghilhdrtghomh
+X-ME-Proxy: <xmx:CWHeaEqbx7T-OofEH5iSYh1cdSI_ipqVjWcyEjKG1mow8Maj0_je4w>
+    <xmx:CWHeaBgWGw18e56nnuyr7AMR2ja_4LDyVn3jRd_X1xmFC0bBsqJKOg>
+    <xmx:CWHeaGJ5EyNES8agdIzJHD2dhTa4b5Fl7iveISLjJxpfM7xoUJAH_g>
+    <xmx:CWHeaJDEg75L5_ZoP31KgBdtpDCWo0MD0nOLIggGKhMBMhQm1WfgLQ>
+    <xmx:CWHeaCSg3YCwLOtNL01N94Oij3285TpWkYTKmRVLdC6iySbOx7DTgOTG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Oct 2025 07:21:39 -0400 (EDT)
+ 2 Oct 2025 07:24:56 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6c366c8b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 2 Oct 2025 11:21:37 +0000 (UTC)
-Date: Thu, 2 Oct 2025 13:21:34 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 464bd7c3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 2 Oct 2025 11:24:55 +0000 (UTC)
+Date: Thu, 2 Oct 2025 13:24:51 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-	Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 0/6] odb: track commit graphs via object source
-Message-ID: <aN5gPoPC4WEYw9CF@pks.im>
-References: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
- <xmqq5xdx7qx4.fsf@gitster.g>
- <cf7aeda1-297a-4805-b0ae-e379ce11bbcf@gmail.com>
- <aL67U0-tw7O-y6_X@pks.im>
- <4e67fb02-bbbb-4cd8-9892-6f65b4f82b26@gmail.com>
- <aMFjGoPhGsRCTihO@pks.im>
- <xmqqo6qyfijl.fsf@gitster.g>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>
+Subject: Re: [PATCH 5/5] t8020: fix test failure due to indeterministic tag
+ sorting
+Message-ID: <aN5hA1inMQojbnXq@pks.im>
+References: <20251002-pks-gitlab-ci-windows-improvements-v1-0-6a8b6b45d728@pks.im>
+ <20251002-pks-gitlab-ci-windows-improvements-v1-5-6a8b6b45d728@pks.im>
+ <50aa008e-1cbf-4e77-8e51-6f2c32b6c12a@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqo6qyfijl.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <50aa008e-1cbf-4e77-8e51-6f2c32b6c12a@app.fastmail.com>
 
-On Thu, Sep 25, 2025 at 12:17:50PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Thu, Oct 02, 2025 at 01:10:53PM +0200, Kristoffer Haugsbakk wrote:
+> On Thu, Oct 2, 2025, at 13:04, Patrick Steinhardt wrote:
+> > [snip]
+> >
+> > But why do both of these tags point to the same commit? "km2" really is
+> > supposed to be a merge, but due to the way the test is constructed the
+> > merge turns into a fast-forward merge. Which means that the resulting
+> > does not even contain a criss-cross merge in the first place! A quick
 > 
-> > There is no inherent reason why a new backend would not be able to use
-> > the existing commit-graph infrastructure indeed. But there are reasons
-> > that specific backends may not want to do so. If objects are already
-> > stored in a database table, then it may make way more sense to store
-> > additional metadata that is currently stored in the commit-graph in a
-> > secondary database table instead of in the commit graph.
-> > ...
-> > This is roughly what I have in my head right now. And I realize that
-> > this information really should be sitting in a design document. I'm
-> > working on that, but still need to land two more patch series before I
-> > want to send such a patch series to the list.
-> 
-> So is everybody happy with this line of thought that makes it
-> mandatory for each backend to decide and implement the commit-graph
-> support if they want to?
-> 
-> My reading of the later part of Taylor's message[*] tells me that at
-> least Taylor does not agree with that position, and I am not sure
-> about this design choice, either.  Surely, each backend can have its
-> own optimization, but looking at the way data from the commit-graph
-> and other auxiliary data files are used to optimize real operations
-> (like populating the essential fields of the commit object first
-> from the graph, only to read other things lazily from the object
-> database, or switching to completely different traversal machinery
-> when reachability bitmap is available), we cannot say that each
-> backend can store whatever side data they please and leave it at
-> that.  The code paths that are supposed to be generic need to be
-> aware of these side data used for optimization to some degree, so
-> conceptually it is much cleaner (well, at least to my eyes, that is)
-> to declare that the auxiliary data files like commit-graph and
-> reachability bitmaps are defined on the objects in the repository,
-> no matter what backend is used to store them.
+> “the resulting <noun>”
 
-My intent here is mostly to allow us to swap out how exactly the data is
-being cached. During the Git Merge I heard from some JJ developer (I
-think) that they also have a pluggable cache, but they approach the
-issue differently: instead of making the cache a property of the object
-backend, they instead make the cache itself pluggable.
-
-I think that's a worthwhile angle to explore. The cache would still sit
-on the repository level, and it wouldn't have to care at all whether we
-use loose objects/packfiles or any other backend. But in theory, we can
-still swap it out for a different representation as desired.
-
-Which overall means that we can defer this to a later point in time, as
-we can make it pluggable independent from making the object database
-itself pluggable.
-
-So I'd propose to merge the first six patches, as everyone seemed to
-agree that they improve the status quo, but drop the last patch that
-moves the commit-graph into the ODB sources.
-
-Does that seem reasonable to everyone? If so, I don't really see a
-reason to reroll at this point. But please let me know in case I miss
-anything that needs addressing.
+Ah, right. What's missing here is "commit graph". Fixed locally, will
+send out with the next iteration.
 
 Thanks!
 
