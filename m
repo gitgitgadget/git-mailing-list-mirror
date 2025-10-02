@@ -1,87 +1,86 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A8F2D193B
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 07:30:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186422D3A9C
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 07:30:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759390236; cv=none; b=loSyX6Y4eW9RFKgvcuMvqiWYVK891qWXvo2Xbc5+6p6/1WI5oLu1cfN9SmCsLUcwf0rlC6SqzdDG1qv4DEtaH7rNAjczMCLIpWQdPvnkKkhGpaFx/ucTUARdAaFAx4VpFAR7d0bHyTGJZdxcU/RCTfsPhQT2Va+aXzXi1EyShx4=
+	t=1759390239; cv=none; b=ZMnMl5cZjHBLD+tfhO2U5KXM7x965484AODdOmBg+4Wc0G5di+M0aHrd0f251BdP5e8mG488//eV69+3BTK+qKpfv7DRQpUEFegSJcyl0x3OBnKqgxEgRNjTexfk4DLBqklFj5Wiiy5UYoBLvEp5CvHv3hRwWkmaKS3TY66f8Uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759390236; c=relaxed/simple;
-	bh=4UIQ1TgDfGvW7FYwRb8/bHooS1Myn7l4OPwQMNxgBqs=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=Ir5dUrb2RzAFi5+soYbb2l4I/8pwrESofg7xJXcmWUKzsPLQjd1ayMlX6R0uIt6uVFlmVJ3tfREAecghfqv5Og2OUKzl9R+w5cgk08Lau9LySqNb3HoQebgkkALoZxe0MkbeCo4rWRWWWAmegqysCdu1LLrF6hsNEewlaj8ZUo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GG74PAiQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hv6A+GI1; arc=none smtp.client-ip=202.12.124.156
+	s=arc-20240116; t=1759390239; c=relaxed/simple;
+	bh=UNiEHbKKq304R4A/mz4Usr3SzpnsuZoU9uAQmU5MXPc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=dl1gPusTBvtkl23HT6+8xtw578mwxk276InFGy/Nx3GmVHnC4JhFjjecir3nB3ZkhTp3l4w4OzwESOXWl1T5r1dO9mXf+xml4ga0jyeawlRSuA8rys0p+ARK4puQTa10A436SGu/JyQLVVYvHxrAyA6KBT5KYd+sV1DpqPrWyl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XEGzem9y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p6MDD04u; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GG74PAiQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hv6A+GI1"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 46CDD7A0146;
-	Thu,  2 Oct 2025 03:30:33 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XEGzem9y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p6MDD04u"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id EBD9B1D0012B;
+	Thu,  2 Oct 2025 03:30:36 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 02 Oct 2025 03:30:33 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 02 Oct 2025 03:30:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759390233;
-	 x=1759476633; bh=BezQewBSTeAU0R132epSYnG8e3NVdJfsV08iK4zTigk=; b=
-	GG74PAiQf0fbzqudY9lVWE/XGTdvAOMNOiyM4cI6IIQ21BTPKI8FMpEHcss0t6vl
-	kIoG+4lkAhheoT71t1yIRiCWdBNniqOl2wbpefZiCmglwB6rvY0DbSXT8U+xx9me
-	qWSsFTzJZNbvkHq/KOhuNjWVl5rmicI3B96zFAMgjRN/Za8dqY3uaCiRxPbn6rwy
-	jaNGC2ViaTSHQKYhF1ZWhq8YSpxefJUF1SRk5eUd2J4yJS0o+IqjAoyHr7dkG3nY
-	PmtA4A+xSHv79Zp0PF11KbO0VrBwbhMjo7CYZsf4Fc5S3Ywlt9qENspQzFWnCoby
-	832W6ICeSTZ3Sf4WTEpuaQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759390236;
+	 x=1759476636; bh=W/k+iBsL/+fQ5rADI6+7FF69+ix+ittv1yUp1ut6eNY=; b=
+	XEGzem9yUgTV4fbZCYnZ8aNx+HKMaZzI7mFl2da7w9iodedH9vrx4r7HQWwwI1FM
+	CqJ4Y2zZouGooYjF2xr/LRQJBhASaRNRw8OcTKJXsKw42pztUo43Z6aq3LPfZBso
+	K4tgX6vm5cNYTWYbufI62Hoz0rrYHucrRoX+7bp07kthpziAmjSO1JsaRkXrUEAz
+	l0eNpOXMWXNIx9mUbCQ1NbgiG80N9JBO/XzknosnrwwhA10d5rZU9PRupq8y4nwa
+	ti7BiHYsONty8fEkoxj4SCCkMdyihVxet/WLp4r1qQni29J/DKpsai47vbcALgEs
+	8ZFmr0jb0HGj1tnPDAZtYg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759390233; x=
-	1759476633; bh=BezQewBSTeAU0R132epSYnG8e3NVdJfsV08iK4zTigk=; b=H
-	v6A+GI1SQ9YofXaM97ZKLwxS7Zah9BQyvNUiUWdUYtaaroXukUnA46NMqRL+BBq1
-	VxzQJQKgZ9t7+MqD0XYF/AM5C7/jO5eth1zFZqXGoacHZN9lF3+D2xsTwZZqie5g
-	6qgTpyvAzpoj/HEXzTc/yxt6S184PXC4TS1E1oGXbIhNS8Xm+kodHp+UKlh51Tbe
-	N50Uj0eUX8mY8G6FAgKHdVXbC5oWnXGrTBaqZvPjjDbEJrW+CUvWE1XaNmpBJ7Pv
-	hocWAwSk5addStP7EI09aMzPRIfLJKfeRDiACpg6qkj3ibYPXWFg11U9c99oERY+
-	Pj07B+MJO1Wi00+xYNTwg==
-X-ME-Sender: <xms:GCreaJky4HAeEubgRjH--097ra7duEefnKLnlYBYZYUcOihaK174PQ>
-    <xme:GCreaFR0oQPJo4jokBv77c9SwDpQph98HYRpEzHa76AyauNdWE9KnF22LXh3uqLUI
-    rjzM4iWCLmo6BogzmSo0lHBy1irK9YdomCEEPtG_viJ0-d_gzxrhgI>
-X-ME-Received: <xmr:GCreaPZvlRDynmIvELhcd6FCe9b4tGnvA9u9w8mlyFA5c7tlKTNKkNa7SRJGL2lsWczXRfehomRzktw_-ZdhfYgx_f6MlU96aKqjUJWhgg>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759390236; x=
+	1759476636; bh=W/k+iBsL/+fQ5rADI6+7FF69+ix+ittv1yUp1ut6eNY=; b=p
+	6MDD04ualGi2CZsES/O/qrXdiqseA6HAT+9Ta9oCv4lqSfDRW5Z+U2t5QLGhnNGq
+	oWR3VWQsqAJt2fM5FsgkDmP2baBYsQzD5SK1YIywsaGX0qQg+npK5dJOxytp00yd
+	MPdjktQ9upddEPqC2lpmLMEA1aHR4g1MkhmBTyhi1FSqWpTiZ+OzfmwGCCFMdy6u
+	uzIWydiR13Yy4/IPJyZHtZ+IkARc8CmCHTjEYyzp+KU4UWZT9Ndvf0Q8N/PE2aws
+	w/apx0vXDPV9Kuhmbx6iWm5w1zKx7Sfj/bS9GzTFH3fHjNoy8P9rzDo5XI2nF//9
+	mn3HhbmEsHeZ3gH6hT7xQ==
+X-ME-Sender: <xms:HCreaOXjtbmz5mbaFRjZiPl17WsQFr734prDLsn5Hqvs2Rw-XcVbjQ>
+    <xme:HCreaLM2MYsM-5uUU1PXdkh1YO1RjxDCs8Nd4O8KPxnRjGzeTT-7g9TkP1PmOKyIz
+    MXazUExK88TfjogrtPwwRWxPjMdYV5PnrbjcDhXbMF-Bde_gHWD>
+X-ME-Received: <xmr:HCreaNjrrnih84YHmYIYcBip01ywA_YnHfMP-dgtlBYk-4xWcTv0numLbGSxY9CADdJk1Uv9p5Wy45N1Wi2SdCrtumr84NdkwTHRiU_tCA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekheegvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhufffkfggtgfgjghfvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
+    hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epteeuueehhffhiedtueehtddtieekfedtudehtdehfefhgeffveeggedthfehuedvnecu
-    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
+    epfefgvedtvedufedutedugffhjefgleegheehffelgfegffehieegvdfgfeehuefgnecu
+    ffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
     grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedu
-    iedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguud
-    dvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegtsgesvdehiegsihht
-    rdhorhhgpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomh
-    dprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthho
-    pehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhope
-    hsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
-X-ME-Proxy: <xmx:GCreaF9_kTPxKHPzVxCvosbw3L5P71F_B1lIneYR8U9KYh0IIb5yfg>
-    <xmx:GCreaBmgoZXgX8Cj7yl53TD3ICDrw-ZLNg1qXsvqe1zIr-FiIwWLEg>
-    <xmx:GCreaCYAZ-TBRioYaG3VAAD-RDJkAJr1R3v8UYh8ADPKEs7ASING_w>
-    <xmx:GCreaBO8VvUfFKexB09bJKF2odYBP7VwA6lBgH1hr5OCQWYiFtm-LA>
-    <xmx:GSreaMefHiyJLsgyqT-HJG1TOtCOed2KuysLMQ1l-UV8vcpFTPhnJKtV>
+    iedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdr
+    tghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrd
+    guvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepshgrnhgurg
+    hlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepshgrmhes
+    ghgvnhhtohhordhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+    dprhgtphhtthhopegtohhnthgrtghtsehhrggtkhhtihhvihhsrdhmvg
+X-ME-Proxy: <xmx:HCreaJ6FKWCVLJuaByNqn-pNFa827Er4vcGpAAbd2HKcir85eU67qA>
+    <xmx:HCreaMc3FSWFIVjz4FNNPDG4_dI9yhj0-fsbwknJtFCLR-yRYFU1aw>
+    <xmx:HCreaKAR6-ueK0XLwB4hFO7UQzfx-A07tg5CocATXqBfohI7DHJU7g>
+    <xmx:HCreaDB_8oNF0NYcc46xx2FDy125DbHllhU_ZKuQ2cZSH854_56B2w>
+    <xmx:HCreaDGlHLNeHqergFxdw3BM1PyRFajqBwDIv8AXoHtrjh6Ne1Pg93RE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Oct 2025 03:30:30 -0400 (EDT)
+ 2 Oct 2025 03:30:33 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e15ba0d6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 2 Oct 2025 07:30:29 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 28f04e27 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 2 Oct 2025 07:30:32 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v8 0/9] Introduce Rust and announce that it will become
- mandatory
-Date: Thu, 02 Oct 2025 09:29:25 +0200
-Message-Id: <20251002-b4-pks-rust-breaking-change-v8-0-3a89fd5b1ce7@pks.im>
+Date: Thu, 02 Oct 2025 09:29:26 +0200
+Subject: [PATCH v8 1/9] meson: add infrastructure to build internal Rust
+ library
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,14 +89,9 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIANYp3mgC/43RS2oDMQwG4KsEr+vi96Or3qN0YVtyYkKTYKdDS
- 5i71xNK8WwmXf5CfJLQjTSsBRt52d1Ixam0cj714J52JB3CaY+0QM9EMKGZZ4pGRS/HRutnu9J
- YMRzLaU9/Wy03FjxIlBZIFy4Vc/m662/vPR9Ku57r933YxJfq/9yJU0ZlyByERhbRv/bW5/JBF
- nQSI6S3IdEh46VPMavAoltBcoTcNiQ7xBNY7nxGkHEFqQHibBtSHVLByJyMF9bBCtIj9OA03SF
- IMkiRYxTcrCAzQEJuQ6ZD2jNrMqJyJqwgO0IPNrLLaag8pNg/DPoPmuf5B08qyOp5AgAA
-X-Change-ID: 20250904-b4-pks-rust-breaking-change-7167d9d3e37d
-In-Reply-To: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
-References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
+Message-Id: <20251002-b4-pks-rust-breaking-change-v8-1-3a89fd5b1ce7@pks.im>
+References: <20251002-b4-pks-rust-breaking-change-v8-0-3a89fd5b1ce7@pks.im>
+In-Reply-To: <20251002-b4-pks-rust-breaking-change-v8-0-3a89fd5b1ce7@pks.im>
 To: git@vger.kernel.org
 Cc: "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>, 
  "brian m. carlson" <sandals@crustytoothpaste.net>, 
@@ -112,186 +106,197 @@ Cc: "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 X-Mailer: b4 0.14.2
 
-Hi,
+Add the infrastructure into Meson to build an internal Rust library.
+Building the Rust parts of Git are for now entirely optional, as they
+are mostly intended as a test balloon for both Git developers, but also
+for distributors of Git. So for now, they may contain:
 
-this small patch series introduces Rust into the core of Git. This patch
-series is designed as a test balloon, similar to how we introduced test
-balloons for C99 features in the past. The goal is threefold:
+  - New features that are not mission critical to Git and that users can
+    easily live without.
 
-  - Give us some time to experiment with Rust and introduce proper build
-    infrastructure.
+  - Alternative implementations of small subsystems.
 
-  - Give distributors time to ease into the new toolchain requirements.
-    Introducing Rust is impossible for some platforms and hard for
-    others.
+If these test balloons are successful, we will eventually make Rust a
+mandatory dependency for our build process in Git 3.0.
 
-  - Announce that Git 3.0 will make Rust a mandatory part of our build
-    infrastructure.
+The availability of a Rust toolchain will be auto-detected by Meson at
+setup time. This behaviour can be tweaked via the `-Drust=` feature
+toggle.
 
-The test balloon itself is quite uninteresting: I've chosen to convert
-the "varint.c" subsystem, mostly because it is trivial and does not have
-any dependencies. But it does allow us to verify that C to Rust interop
-works as expected, and to play around with tooling. All tests pass with
-the "varint.rs" implementation.
+Next to the linkable Rust library, also wire up tests that can be
+executed via `meson test`. This allows us to use the native unit testing
+capabilities of Rust.
 
-For now, the series only contains support for Meson. If we agree to go
-down this route I'll also introduce support for Rust into our Makefiles
-at a later point in time.
+Note that the Rust edition is currently set to 2018. This edition is
+supported by Rust 1.49, which is the target for the upcoming gcc-rs
+backend. For now we don't use any features of Rust that would require a
+newer version, so settling on this old version makes sense so that
+gcc-rs may become an alternative backend for compiling Git. If we _do_
+want to introduce features that were added in more recent editions of
+Rust though we should reevaluate that choice.
 
-Furthermore missing is additional tooling:
-
-  - At least one CI job to verify that Rust builds and works as
-    expected.
-
-  - Tooling and CI jobs to ensure that we have consistent formatting via
-    `cargo format`.
-
-And probably lots more. As said, the entire goal is for us to have an
-easy playground that we can experiment on and develop the infrastructure
-incrementally without yet having to commit to anything.
-
-I'm mostly splitting out the topic of introducing Rust from the larger
-series that introduce it into xdiff so that we can focus more on the
-actual process of introducing Rust into Git and less on the potential
-features that we want to build on top of it.
-
-Changes in v2:
-  - Introduce support for building the Rust library via our Makefile.
-  - Introduce a '-DWITH_RUST' define. This define is used to print
-    whether or not Git is built with Rust via `git version
-    --build-options`.
-  - Adjust Meson to not depend on v1.9.0 and newer anymore.
-  - Introduce a roadmap into our BreakingChanges document to explain how
-    we'll iterate towards mandatory Rust support.
-  - Rework the Fedora job to do a full compile-and-test run with Meson
-    and breaking changes enabled.
-  - Adapt our breaking-changes jobs to enable Rust support.
-  - Link to v1: https://lore.kernel.org/r/20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im
-
-Changes in v3:
-  - Reorder all uses of `WITH_RUST` after the include of "config.mak".
-  - Add a test to verify overflow behaviour in Rust and explicitly use
-    `add_wrapping()`.
-  - Use explicit dependencies for the Rust library in our Makefile.
-  - Fix Alma Linux CI job.
-  - Stop tying maintenance of our LTS release to the availability of
-    gcc-rs.
-  - Add a fallback to Meson to use cargo directly.
-  - I've fixed the Rust edition to 2018 for now. This is intentionally
-    conservative so that we might be able to use Rust 1.49. For now, we
-    don't have any reason to use a newer edition, either. So let's take
-    the oldest version we can live with for now and then bump it as
-    required.
-  - Link to v2: https://lore.kernel.org/r/20250905-b4-pks-rust-breaking-change-v2-0-6939cbf4a0b8@pks.im
-
-Changes in v4:
-  - Convert "varint.c" to use explicit integer width so that we don't
-    need to use C types in Rust.
-  - Adapt Meson to unconditionally use Cargo.
-  - Don't use the unstable `--out-dir` option in Cargo. Instead, we
-    resort to a wrapper script in Meson.
-  - Shorten the timeline a bit to drop the extra step that ties Rust
-    support to `-Dbreaking_changes=true`. This accelerates the timeline
-    until distros are made forcibly aware of the upcoming changes in
-    Rust.
-  - Link to v3: https://lore.kernel.org/r/20250908-b4-pks-rust-breaking-change-v3-0-1cd7189fed3b@pks.im
-
-Changes in v5:
-  - Fix indentation in the BreakingChanges document.
-  - Fix a commit message typo.
-  - Include "Cargo.lock" in the `make clean` target again.
-  - Link to v4: https://lore.kernel.org/r/20250910-b4-pks-rust-breaking-change-v4-0-4a63fc69278d@pks.im
-
-Changes in v6:
-  - Give attribution to Ezekiel for kickstarting the Rust adoption
-    again. I'm happy to change how I do the attribution.
-  - Fix "varint.rs" to use `u64` instead of `usize`. Issues like these
-    will eventually be catched by cbindgen.
-  - Adapt the breaking changes document to mention that we already have
-    Rust in our tree starting with Git 2.49.
-  - Mention that we won't blindly make Rust mandatory, but consider the
-    impact on downstream distributions.
-  - Slightly reword how we'll handle LTS maintainership. This probably
-    still is an ongoing discussion.
-  - Link to v5: https://lore.kernel.org/r/20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im
-
-Changes in v7:
-  - Rename "git" crate to "gitcore".
-  - Some word smithing for the breaking changes doc.
-  - Punt on the exact details of how we hand over maintenance of the LTS
-    release to the community. This is something we can decide on in the
-    future.
-  - Link to v6: https://lore.kernel.org/r/20250923-b4-pks-rust-breaking-change-v6-0-59076fee486a@pks.im
-
-Changes in v8:
-  - Some final typo fixes.
-  - Link to v7: https://lore.kernel.org/r/20250925-b4-pks-rust-breaking-change-v7-0-4e49dcb904d5@pks.im
-
-Thanks!
-
-Patrick
-
+Inspired-by: Ezekiel Newren <ezekielnewren@gmail.com>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (9):
-      meson: add infrastructure to build internal Rust library
-      Makefile: reorder sources after includes
-      Makefile: introduce infrastructure to build internal Rust library
-      help: report on whether or not Rust is enabled
-      varint: use explicit width for integers
-      varint: reimplement as test balloon for Rust
-      BreakingChanges: announce Rust becoming mandatory
-      ci: convert "pedantic" job into full build with breaking changes
-      ci: enable Rust for breaking-changes jobs
+ Cargo.toml         |  9 +++++++++
+ meson.build        | 10 +++++++++-
+ meson_options.txt  |  2 ++
+ src/cargo-meson.sh | 32 ++++++++++++++++++++++++++++++++
+ src/lib.rs         |  0
+ src/meson.build    | 40 ++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 92 insertions(+), 1 deletion(-)
 
- .github/workflows/main.yml         |   4 +-
- .gitignore                         |   2 +
- .gitlab-ci.yml                     |   4 +-
- Cargo.toml                         |   9 ++
- Documentation/BreakingChanges.adoc |  45 ++++++++
- Makefile                           | 214 ++++++++++++++++++++++---------------
- ci/install-dependencies.sh         |   8 +-
- ci/run-build-and-tests.sh          |  31 ++----
- dir.c                              |  18 ++--
- help.c                             |   6 ++
- meson.build                        |  15 ++-
- meson_options.txt                  |   2 +
- read-cache.c                       |   6 +-
- shared.mak                         |   1 +
- src/cargo-meson.sh                 |  32 ++++++
- src/lib.rs                         |   1 +
- src/meson.build                    |  41 +++++++
- src/varint.rs                      |  92 ++++++++++++++++
- varint.c                           |   6 +-
- varint.h                           |   4 +-
- 20 files changed, 410 insertions(+), 131 deletions(-)
+diff --git a/Cargo.toml b/Cargo.toml
+new file mode 100644
+index 00000000000..45c9b34981a
+--- /dev/null
++++ b/Cargo.toml
+@@ -0,0 +1,9 @@
++[package]
++name = "gitcore"
++version = "0.1.0"
++edition = "2018"
++
++[lib]
++crate-type = ["staticlib"]
++
++[dependencies]
+diff --git a/meson.build b/meson.build
+index e8ec0eca165..234a9e9d6fd 100644
+--- a/meson.build
++++ b/meson.build
+@@ -220,7 +220,7 @@ project('git', 'c',
+   # learned to define __STDC_VERSION__ with C11 and later. We thus require
+   # GNU C99 and fall back to C11. Meson only learned to handle the fallback
+   # with version 1.3.0, so on older versions we use GNU C99 unconditionally.
+-  default_options: meson.version().version_compare('>=1.3.0') ? ['c_std=gnu99,c11'] : ['c_std=gnu99'],
++  default_options: meson.version().version_compare('>=1.3.0') ? ['rust_std=2018', 'c_std=gnu99,c11'] : ['rust_std=2018', 'c_std=gnu99'],
+ )
+ 
+ fs = import('fs')
+@@ -1702,6 +1702,13 @@ version_def_h = custom_target(
+ )
+ libgit_sources += version_def_h
+ 
++cargo = find_program('cargo', dirs: program_path, native: true, required: get_option('rust'))
++rust_option = get_option('rust').disable_auto_if(not cargo.found())
++if rust_option.allowed()
++  subdir('src')
++  libgit_c_args += '-DWITH_RUST'
++endif
++
+ libgit = declare_dependency(
+   link_with: static_library('git',
+     sources: libgit_sources,
+@@ -2239,6 +2246,7 @@ summary({
+   'pcre2': pcre2,
+   'perl': perl_features_enabled,
+   'python': target_python.found(),
++  'rust': rust_option.allowed(),
+ }, section: 'Auto-detected features', bool_yn: true)
+ 
+ summary({
+diff --git a/meson_options.txt b/meson_options.txt
+index 1668f260a18..143dee9237c 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -71,6 +71,8 @@ option('zlib_backend', type: 'combo', choices: ['auto', 'zlib', 'zlib-ng'], valu
+ # Build tweaks.
+ option('breaking_changes', type: 'boolean', value: false,
+   description: 'Enable upcoming breaking changes.')
++option('rust', type: 'feature', value: 'auto',
++  description: 'Enable building with Rust.')
+ option('macos_use_homebrew_gettext', type: 'boolean', value: true,
+   description: 'Use gettext from Homebrew instead of the slightly-broken system-provided one.')
+ 
+diff --git a/src/cargo-meson.sh b/src/cargo-meson.sh
+new file mode 100755
+index 00000000000..99400986d93
+--- /dev/null
++++ b/src/cargo-meson.sh
+@@ -0,0 +1,32 @@
++#!/bin/sh
++
++if test "$#" -lt 2
++then
++	exit 1
++fi
++
++SOURCE_DIR="$1"
++BUILD_DIR="$2"
++BUILD_TYPE=debug
++
++shift 2
++
++for arg
++do
++	case "$arg" in
++	--release)
++		BUILD_TYPE=release;;
++	esac
++done
++
++cargo build --lib --quiet --manifest-path="$SOURCE_DIR/Cargo.toml" --target-dir="$BUILD_DIR" "$@"
++RET=$?
++if test $RET -ne 0
++then
++	exit $RET
++fi
++
++if ! cmp "$BUILD_DIR/$BUILD_TYPE/libgitcore.a" "$BUILD_DIR/libgitcore.a" >/dev/null 2>&1
++then
++	cp "$BUILD_DIR/$BUILD_TYPE/libgitcore.a" "$BUILD_DIR/libgitcore.a"
++fi
+diff --git a/src/lib.rs b/src/lib.rs
+new file mode 100644
+index 00000000000..e69de29bb2d
+diff --git a/src/meson.build b/src/meson.build
+new file mode 100644
+index 00000000000..c8d874b2106
+--- /dev/null
++++ b/src/meson.build
+@@ -0,0 +1,40 @@
++libgit_rs_sources = [
++  'lib.rs',
++]
++
++# Unfortunately we must use a wrapper command to move the output file into the
++# current build directory. This can fixed once `cargo build --artifact-dir`
++# stabilizes. See https://github.com/rust-lang/cargo/issues/6790 for that
++# effort.
++cargo_command = [
++  shell,
++  meson.current_source_dir() / 'cargo-meson.sh',
++  meson.project_source_root(),
++  meson.current_build_dir(),
++]
++if get_option('buildtype') == 'release'
++  cargo_command += '--release'
++endif
++
++libgit_rs = custom_target('git_rs',
++  input: libgit_rs_sources + [
++    meson.project_source_root() / 'Cargo.toml',
++  ],
++  output: 'libgitcore.a',
++  command: cargo_command,
++)
++libgit_dependencies += declare_dependency(link_with: libgit_rs)
++
++if get_option('tests')
++  test('rust', cargo,
++    args: [
++      'test',
++      '--manifest-path',
++      meson.project_source_root() / 'Cargo.toml',
++      '--target-dir',
++      meson.current_build_dir() / 'target',
++    ],
++    timeout: 0,
++    protocol: 'rust',
++  )
++endif
 
-Range-diff versus v7:
-
- 1:  3f916bebd4 =  1:  bf7b33291d meson: add infrastructure to build internal Rust library
- 2:  ed849dcfed =  2:  59e7879c63 Makefile: reorder sources after includes
- 3:  955f262ef5 =  3:  635cebc0a6 Makefile: introduce infrastructure to build internal Rust library
- 4:  7a90192b5a =  4:  43b50563cc help: report on whether or not Rust is enabled
- 5:  9365a78efd !  5:  37d03d7774 varint: use explicit width for integers
-    @@ Metadata
-      ## Commit message ##
-         varint: use explicit width for integers
-     
-    -    The varint subsystem currently uses implcit widths for integers. On the
-    +    The varint subsystem currently uses implicit widths for integers. On the
-         one hand we use `uintmax_t` for the actual value. On the other hand, we
-         use `int` for the length of the encoded varint.
-     
-    -    Both of these have known maximum vaules, as we only support at most 16
-    +    Both of these have known maximum values, as we only support at most 16
-         bytes when encoding varints. Thus, we know that we won't ever exceed
-         `uint64_t` for the actual value and `uint8_t` for the prefix length.
-     
- 6:  e7e0621b68 =  6:  0d265f9675 varint: reimplement as test balloon for Rust
- 7:  8d8e9cb8a8 =  7:  a6e0d668f0 BreakingChanges: announce Rust becoming mandatory
- 8:  07dc8171ac =  8:  79470835fd ci: convert "pedantic" job into full build with breaking changes
- 9:  708a0d3c67 =  9:  67f8dea13f ci: enable Rust for breaking-changes jobs
-
----
-base-commit: 2462961280690837670d997bde64bd4ebf8ae66d
-change-id: 20250904-b4-pks-rust-breaking-change-7167d9d3e37d
+-- 
+2.51.0.700.g236ee7b076.dirty
 
