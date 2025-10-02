@@ -1,149 +1,61 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from smtp-out.dialtelecom.cz (smtp-out.dialtelecom.cz [195.250.128.75])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CFC13AF2
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 06:34:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9496FA59
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 07:06:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.250.128.75
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759386885; cv=none; b=GaP5ceHEntxZTbz/zdE9txPQGn8Mj6Svf3raTb+9sHqJanuF8cJarzBT/fmUsiJH0gCb5JQUy/p2wiaWu1ypYPd4dzrF4VGfO2fR7DJALo87g9ly7c54KvkHOFzFsEePpApg1/9T5NvgMJbVxqV6k6FvWWc+xI/AclmyH4i+MMg=
+	t=1759388807; cv=none; b=Hks1bcvxfKxtpzs9wCcoeEz7cbaZtq+J4nE02GH7BprBrw1RJsdTE5jJunP5wMzN9GOTaOTVaXgdzsxsNlDMQupR5sR1qwqBsfDktnW3pkwJTjEMmqAemXy0o8osGpGb1p6cSMMVjgGq7tAyzkzXpx035scoxR1G6Bb/AqB2yog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759386885; c=relaxed/simple;
-	bh=Fzi2f2gapiqTJPOTu3Rxio3fhALZ9ff2nQXDVM5yFUQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Vyg6vJ7W+NDDSIeSbGtulHERQ8AnMFBtbonpqZUD1c4GhKNmYD//ZDpRzf5cA5uGRZLkNS2T40teyWopaGnhuQszQPP0b+LYLi7kSLt+YGbSZY+qP4plUdPE16bVwKThb9BoLO2fkEx2SSZjs3PoOBDPif1IboiJfoB7zcNa44Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YbQtndmM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IeazIjR/; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1759388807; c=relaxed/simple;
+	bh=NhVhT2B4UKiS43mYhY/aWx5Y0RuS7Xqk9Lx6l8dJSlA=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=QN8HV1iavnuvmk+HE72UM3pUW7huwMZaSPMFOwAbz5c1e1BJ7YJqzY625DUK9hpDuRmsQnvyex6Akn888d1HhMKdA2emTZHNVgPqt1ae7Jt3rtU76zVVAksQjIf97QHrOiJsWTqPS+96YA3k1IY/44J/JEn4PZjRO8e4B+qaPkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aveco.com; spf=pass smtp.mailfrom=aveco.com; dkim=pass (1024-bit key) header.d=aveco.com header.i=@aveco.com header.b=LCl6TZ3n; arc=none smtp.client-ip=195.250.128.75
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aveco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aveco.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YbQtndmM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IeazIjR/"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 517FD1D001C8;
-	Thu,  2 Oct 2025 02:34:42 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 02 Oct 2025 02:34:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759386882; x=1759473282; bh=khAN/faz6t
-	8TktFivFBm6uWvO07UOubEYpXR9T/woto=; b=YbQtndmMWbczTb3JgWIica2esh
-	Q4hFhBvoWuojGboX/7tq+VXE12ivW+KSx+L4CikaFJBO+VD7BRTVWVnfxq3lx9wl
-	Od+oyIri7dUcO4cdINO5KKe5DSKtXHmcwJQOYx3I60Xva7FcNJvLqY46BWowb3Y6
-	zeupOn4wsfeVZc0nhXmtAQPfsFW7Nh4OkDII2jfDq+YKjSSiMLpyM9d4HZVu4YWL
-	2ah6dER4w/aT2lxkkbQJuqxnGrIQ2LkFGGP3Q8dMBDHpJxV41bJOG2XTvPP5l1Su
-	AyyNEUz91GlGvvp/OTWoOhl6v3DAew9VQY9/y06sR+GKPpwtDa5p7wsV7Wfw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759386882; x=1759473282; bh=khAN/faz6t8TktFivFBm6uWvO07UOubEYpX
-	R9T/woto=; b=IeazIjR/fm6GzIgJPYECePzyes8VWM1qvoTY/PKpf8SA2Cr3frI
-	Q8J3n0TMQ6C7u2QIYiQ5RAwZEELb8J0Ru72JtJl0aOq+CTt8oHqxXSK8//qIUyqU
-	LE2CG8gQQCUW3gHAKmSWcHy0IfOCKL2IKP/eThsaCQW08Jk/fvgPvTG3O10KZwwv
-	q3BYBMQYsI/jYYTFbtHxOOqL+wbTvVDTcF351mFNsoVvmNM6fiviuAS6kTXzkYGW
-	RnxmeJd/jztCBS4PgPmx9kGyhPTLY4CmVslj3OryiH9Rf5wJ1XERuYbRC8/2nOLo
-	Yq/ducG99FqaT3VWyKLIBbXBv1podrULosQ==
-X-ME-Sender: <xms:Ah3eaMVTO6k98Tq5a89U6SiWr8nLXAoOI8r4QNu9ke0ivsOowK2szQ>
-    <xme:Ah3eaC2t72mG9mzaKdbQUt4hcyvlZ0MfKlhSofnwN8qAtlUDVpg_yXEn5dS7Hv3i3
-    2ibtqAl9-Lj95M98yfwV6oUzx7cZ2FhOcUX50QtEdO8vUc3bhTG8g>
-X-ME-Received: <xmr:Ah3eaCoGYweKM5Zt9A_OtRKNW2Xtu9er9f9Hw__2pu3BadDDwMeTnVeC-ftvxkOfVKBoRsi-jHx7aV2TP-9kSFBw5EY7Y-lxTd5y2WlVjQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekheefudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtgho
-    mhdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhlrggsohhrrgdrtghomh
-    dprhgtphhtthhopehruggrmhgriihiohesghhoohhglhgvrdgtohhmpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegvmhhilhihshhhrghffh
-    gvrhesghhoohhglhgvrdgtohhm
-X-ME-Proxy: <xmx:Ah3eaBXKGsaXtDhm1DOzjjIDrckQe8yOTomF_Z9d6yumsX3GNOo86Q>
-    <xmx:Ah3eaFa9BzTRkS7rW87EVa_iDZ-xQqmr0d48xA5zqAkmBY_SPDX4ZA>
-    <xmx:Ah3eaGdB_IxM5w9cO6U5R2_EN4XNefVlzm0JLBdiNxgzoDXODcpBDQ>
-    <xmx:Ah3eaH2--Lpg7-ERv8qrnJG7e0xY-kBAOJO_EMZCaoxrviG9VG8bvg>
-    <xmx:Ah3eaGFY6eNnnBpTrE5TIHU2uXbhpm7YqIUZMZIuwZCxG5sd-IoYM-jT>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Oct 2025 02:34:40 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f9e04f87 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 2 Oct 2025 06:34:39 +0000 (UTC)
-Date: Thu, 2 Oct 2025 08:34:36 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-	Rodrigo Damazio Bovendorp <rdamazio@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Josh Steadmon <steadmon@google.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 05/10] reference-transaction: use hook.h to run hooks
-Message-ID: <aN4c_DWtqBBScKEh@pks.im>
-References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
- <20250925125352.1728840-6-adrian.ratiu@collabora.com>
+	dkim=pass (1024-bit key) header.d=aveco.com header.i=@aveco.com header.b="LCl6TZ3n"
+Received: from mail.aveco.com (mail.aveco.com [88.208.95.60])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out.dialtelecom.cz (Postfix) with ESMTPS id 4843F5A3F51E
+	for <git@vger.kernel.org>; Thu, 02 Oct 2025 08:48:55 +0200 (CEST)
+DKIM-Signature: a=rsa-sha256; t=1759387728; x=1759992528; s=major; d=aveco.com; c=relaxed/relaxed; v=1; bh=0uLZFGMJIyK6nPQVHq1CeHihbbgMibc3wBIsoQmzaJE=; h=From:Subject:Date:Message-ID:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+   b=LCl6TZ3no8IcOQ3FI4DCkzQdf+OgsBMiNzOQnauh79KrTVKlarFdRG4bkZ0mqt99CkmcpARZVVhlnq8noVindCGpnFN/MbK86OXEsxr4Jpqc1q2RY2RgIX5g6Ii8pKCmvbax/b9snofBJR0fHiHde8ZTyiucOFLUU1vz4vVx1zc=
+Received: from JBLDDVDXQX3
+        by mail.aveco.com (13.0.3 build 10 RHEL7 x64) with ASMTP (SSL) id 202510020848483812
+        for <git@vger.kernel.org>; Thu, 02 Oct 2025 08:48:48 +0200
+From: =?iso-8859-2?B?Smn47SBCYbllaw==?= <jiri.basek@aveco.com>
+To: <git@vger.kernel.org>
+Subject: git whatchanged
+Date: Thu, 2 Oct 2025 08:48:47 +0200
+Message-ID: <003601dc3368$9ac8f9b0$d05aed10$@aveco.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250925125352.1728840-6-adrian.ratiu@collabora.com>
+Content-Type: text/plain;
+	charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdwzaHfRJslEV3m2SSm6/6idXeFKmQ==
+Content-Language: cs
+X-CTCH: RefID="str=0001.0A2D034B.68DE2050.0036,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0"; Spam="Unknown"; VOD="Unknown"
 
-On Thu, Sep 25, 2025 at 03:53:48PM +0300, Adrian Ratiu wrote:
-> diff --git a/refs.c b/refs.c
-> index 4ff55cf24f..5a2b6ad1fc 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2377,31 +2377,16 @@ static int ref_update_reject_duplicates(struct string_list *refnames,
->  	return 0;
->  }
->  
-> -static int run_transaction_hook(struct ref_transaction *transaction,
-> -				const char *state)
-> +static int transaction_hook_feed_stdin(int hook_stdin_fd, void *pp_cb, void *pp_task_cb UNUSED)
->  {
-> -	struct child_process proc = CHILD_PROCESS_INIT;
-> +	struct hook_cb_data *hook_cb = pp_cb;
-> +	struct run_hooks_opt *opt = hook_cb->options;
-> +	struct ref_transaction *transaction = opt->feed_pipe_ctx;
->  	struct strbuf buf = STRBUF_INIT;
-> -	const char *hook;
-> -	int ret = 0, i;
-> -
-> -	hook = find_hook(transaction->ref_store->repo, "reference-transaction");
-> -	if (!hook)
-> -		return ret;
-> -
-> -	strvec_pushl(&proc.args, hook, state, NULL);
-> -	proc.in = -1;
-> -	proc.stdout_to_stderr = 1;
-> -	proc.trace2_hook_name = "reference-transaction";
-> -
-> -	ret = start_command(&proc);
-> -	if (ret)
-> -		return ret;
-> -
-> -	sigchain_push(SIGPIPE, SIG_IGN);
->  
-> -	for (i = 0; i < transaction->nr; i++) {
-> +	for (int i = 0; i < transaction->nr; i++) {
->  		struct ref_update *update = transaction->updates[i];
-> +		int ret;
->  
->  		if (update->flags & REF_LOG_ONLY)
->  			continue;
+Hi, 
+I am still using this very convenient command.
 
-Hm. In the "pre-push" hook you converted the callback to process one ref
-per invocation. Why don't we do the same over here, with one transaction
-per invocation?
+Best regards,
+Jiri Basek
 
-Not saying that either one of these is better, but it left me puzzled
-why we use two different patterns now.
+> 'git whatchanged' is nominated for removal.
+If you still use this command, please add an extra
+option, '--i-still-use-this', on the command line
+and let us know you still use it by sending an e-mail
+to <git@vger.kernel.org>.  Thanks.
+fatal: refusing to run without --i-still-use-this
 
-Patrick
+
