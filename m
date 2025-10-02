@@ -1,150 +1,155 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C584501A
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 17:44:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C7B1DB54C
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 17:51:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759427051; cv=none; b=L8uWVnt/pNVgV/Aeiu6qZhn/+VJiDwWHbumbbxofs7E3cuNhVACy4gGOLcA+Md/07WQ1GefXyDFHGm8kuWlpb2ppxObqtGFc5M/Z9KCh02yV+Smmw57auAGBRaXvTkd97V0RqMobx7MOAgVZk/GeDxNeyUbF5aieXKbwk48ZDio=
+	t=1759427504; cv=none; b=n1BvBglDqMWKLArwWKGMylQJWPShGQkD514O3uCDiq8nJg5aMWw18bkuX5/70GhB5UkqXf6pgVTaInBj3tpsMsl4Uwd1x+1+rhGW+/23twFsD4g8v8/dDI0kz9HcQCJM6ieObUJEvA9EVSP0i5S/avs5xoVpTNIdfIN5TI4Kg08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759427051; c=relaxed/simple;
-	bh=5gm1IieC+R+UGZEQTckl0T9ZV6e/9/1U5X4Uk6yvoso=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=V0oAGc26pNsVcsohw3kk54APIZqv0nvyBfXUHUjN3SDPjT6bYbNcwLL7hFMVBvkYfOHRspHEE3iYWk4L3CSLg4LCq2lUKLcAgTk6st3aPvzK4wvK04eCik3u4OL+NjulYxyT5Wg7FBY7BvkvgAfGoiGFiAuhqzsGVlIvlxT2wWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ecA7V4XP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JCo1e3nN; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1759427504; c=relaxed/simple;
+	bh=DBZ7TvUKXJ8T/OaPVXOPs+mgomRVAFpGadgAsmTP3NA=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=p087Of2lDgS5c3sje2GC7oOzQPrUlmI6apYO3AfZQYaySf6qzvj4P0tR0ZwRz6/WCc8Zf+KIRo5BPBqUOrupPNNOMZFT5iqTuXPvhYKd3PI0dd2VbuRFDH2PUrTVsZrku7mVuj3fqaNyPLWkz6VAt10k9rdooHoR2RZz+EaI4JM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=sv76RkUy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mNo4Ah7D; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ecA7V4XP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JCo1e3nN"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 58DB67A0096;
-	Thu,  2 Oct 2025 13:44:08 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 02 Oct 2025 13:44:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1759427048; x=1759513448; bh=JNurvijAu9
-	8SwBuRUHoax57LxAfMkPFQo7a12y6U83c=; b=ecA7V4XPA+vsbQn9zGj6Os4hjr
-	cczMia71Fo9/sRB5tPXJiPnpAXbYFIkl34IQFOnZf3JecdlSvRBfh0njHr32Z/h4
-	h5/gxFyhadksxpeSxkzINOE7una6m8pnlWmsn7JFtzkF2K/GQQ28lc1tQCNNYF8p
-	8o7Sz/iEicQcMTCA2VR6VNKcsbDKgv+MMAcGEwi/ERBqVb/C9b74tH7VthlZurGM
-	+A1UkuKFXA7vilp3XCnbgSiNq+5jlCG50F2WkYgAGxnxH6fQZfQYGfNhqAjlvnti
-	CKATUZujK4PAWiqWwBj0N4fIDve//hefhbsJmtXK026aUWFjzqVrzL/OxxXQ==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="sv76RkUy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mNo4Ah7D"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C342F7A003E;
+	Thu,  2 Oct 2025 13:51:41 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Thu, 02 Oct 2025 13:51:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759427501;
+	 x=1759513901; bh=eAWEH2y2WgWorqVw0B1JzQeNuhbMVXhfIOFpZHY3MZo=; b=
+	sv76RkUy/FuqZ/nRNOPCxYNDCHu+9EGAy5U6i1+skHuU1ZB2ZV9hjS+3SEV6GKvc
+	90VdqlW4Hb4jhdIKZgQM67K/aObq5+QcANtqHzsDiHW/S45kKPWGZPYoE0+83zFv
+	/3HIo7Xo0s3AxPbDqyMbdZI753IUMA0EHVAy3D9eps+fUlr5V6CWtoiaD7Lii52O
+	k9Z4J8bTKuTwK6DpRESg1rOsTE2+uJ10XIp1X9hJxAhgDJ/5bO6+F6G08juetrS+
+	1HeH4Q2IsWCs5BxTkg71NDK4URF+L3Gyth+bwtoTNLfToSJVE7aG47pzh/iEOlmP
+	Kto+dm6MfDTDISRKOTB0jA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759427048; x=1759513448; bh=JNurvijAu98SwBuRUHoax57LxAfMkPFQo7a
-	12y6U83c=; b=JCo1e3nN5VqeMeuaT29wlrKMouQJNCeEYEXZ4gfulNiL/2fd3dj
-	qlDHfrgS06WPqhUM2/Zujo5inW0kEre64xwxj1s1ssSB9Dcqp7YGUHK5wOE9QK52
-	Zwb5DVejQqlYi+Odbq8G4BGlGmsC8lcJ9J9bDxEgGuBQ6qetowHFon0yOY+VFlq0
-	xyHm4mkxDMlnt9/RMjTdvu0TTZR2sBxr7oFySiHD9FlbqdyXkjW6LapIc+9sxlwC
-	3R8mWranSly3zvMYmmC4ShMg2abaRbxB45PB/CrtCXRR6MXsK62tZ4pJZA7dUm/W
-	l+Ah/v0+BEnn2fpVY+/LuSGr9w6d+n9guRg==
-X-ME-Sender: <xms:57neaIUoGKvf4bZgFh-_Eg7p3BwfMCn_UoQIDCNY70zq2vVeM5Hn_w>
-    <xme:57neaLq5tcywadcic4TT5wSvAzsv5lIWyL15H6njjSGMfu7j0_jT84baf0AvvI52j
-    Ed3NhSwbDCFhuPWnBBn78iJz8ovbkjq3KI2BEiUNdGf46wSK0E_Ig>
-X-ME-Received: <xmr:57neaCnuQYUhrqQTfDsYJ3QdZ18Z5qcjgIh-Jh5KnLIlZAJdxJ58OjDSBI3OA-76IjZSIvi4V5TS06_XkyYhI-Qrkzx7mEJwF9PQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekieeihecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759427501; x=
+	1759513901; bh=eAWEH2y2WgWorqVw0B1JzQeNuhbMVXhfIOFpZHY3MZo=; b=m
+	No4Ah7DXA7qVwPrjkrFmEuiSmVFe/YVcFl75/VD12iusqLW1c1QED3+wSQzO+T5Q
+	zZY/tbBdz/OK8ukwqVA9jxqA4xYOp+tR60MDoNQR8e5t0OryjrIEvfQ4Q91LtE39
+	1Md+53gri99ACD0ayxhC+diUwKRGI2DSzpTVOqJ8rAHZizp0lJ2kVlWRNxYOkh1g
+	zgc8ZBez7tkUhvJHcpE9Jusj42YeiXZSnGRs/6bUrdBP1UAbSDwCKctECEnrzxDq
+	w7qndjwhzZiIrHtEDkwOgqRLyAuSFdSkYuS494/ClNdbkbjldpxu+y9xsgOTa1VW
+	i0DL82FS4ZsTIBMCvVO2A==
+X-ME-Sender: <xms:rbveaBerPM6QCIKOYjoU-EE54EuhXEsFKSpK7jTNFymM6n_O7bDoKG4>
+    <xme:rbveaKBWTtg6Dbq-KGBQDc1SbprcIiZOt6N1rRAqJmx3zuZyrOMoTzNfiPZAmUyVd
+    tSdhdJ72IyVEc-Zl2pHGsKt30t4ro2dexBBc-omYdmFhogsdtMXeg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekieeiiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
-    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhhsuh
-    gthhgrnhgvkhesshhushgvrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtg
-    homhdprhgtphhtthhopehsohhrghgrnhhovhesghhmrghilhdrtghomhdprhgtphhtthho
-    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehjrghsohhnud
-    dutghhohgtrgesphhrohhtohhnrdhmvgdprhgtphhtthhopehjtghusghitgesjhgtuhgs
-    ihgtrdhplhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:57neaD1bwIktAKHioMInm8vO8RR60PhZv0o9_qK7VbVsF2XTZFlRug>
-    <xmx:57neaHQ1WqNOzTm1JGw9zn2J7Q6zYs9UlKgb82efouyhiUYhzs12dg>
-    <xmx:57neaEz4Flk2pVTMIXsDo--eF8xU4ODLp3gDQT4pKib9sRN7AtD8aQ>
-    <xmx:57neaPBQr-KQv5Z3TqWPNsUeLVgi4OSDIwyCH2CRWy9uddjllOD8Eg>
-    <xmx:6LneaEtVW7g1tZFAprqz43RdWmQT409TXmg1zgg6VQsoVgEr33_oCbz4>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Oct 2025 13:44:07 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Michal Suchanek <msuchanek@suse.de>
-Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Sergey
- Organov <sorganov@gmail.com>,  Ben Knoble <ben.knoble@gmail.com>,  Jason
- Cho <jason11choca@proton.me>,  "Jakub T. Jankiewicz" <jcubic@jcubic.pl>
-Subject: Re: [PATCH 1/2] doc: git-worktree: Link to examples
-In-Reply-To: <a203b35538847f3c9358a5ae26fb4ebea5734cfc.1759420102.git.msuchanek@suse.de>
-	(Michal Suchanek's message of "Thu, 2 Oct 2025 17:51:34 +0200")
-References: <xmqqseg1xwc1.fsf@gitster.g>
-	<a203b35538847f3c9358a5ae26fb4ebea5734cfc.1759420102.git.msuchanek@suse.de>
-Date: Thu, 02 Oct 2025 10:44:06 -0700
-Message-ID: <xmqqo6qpw655.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
+    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepkedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepshhorhhgrghnohhvsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epjhgtuhgsihgtsehjtghusghitgdrphhlpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomhdprhgtphhtthhopehjrghsohhnuddutghhohgtrgesphhrohhtohhnrd
+    hmvgdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhr
+    tghpthhtohepmhhsuhgthhgrnhgvkhesshhushgvrdguvgdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:rbveaOx2vMJ05BFsYS4IkoOIBxnrqI7X67tOp9rpMjD1C7yForbsUg>
+    <xmx:rbveaETIj_v7GdG0Am46r8NzDInVP3EugX9DS0D3SEofnEHJ5Z84Ew>
+    <xmx:rbveaG_rEwlgQnCEOuZ3iRYZZzVk107iEfPh8bF9IPQy3gWy4cu2_Q>
+    <xmx:rbveaCv2DPCXBhVS46vtxwk-mn0J2kIXu0A0nAgWhdEs8SY9bu3jPg>
+    <xmx:rbveaAzk7EllMW4bNUGNYoeT5YRELFp1n8q5XX-1YYM4XBoBiBeMiY9G>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 2BBC01EA0068; Thu,  2 Oct 2025 13:51:41 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: A98-iMmoqE87
+Date: Thu, 02 Oct 2025 19:51:20 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Michal Suchanek" <msuchanek@suse.de>, git@vger.kernel.org
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+ "Eric Sunshine" <sunshine@sunshineco.com>,
+ "Sergey Organov" <sorganov@gmail.com>,
+ "D. Ben Knoble" <ben.knoble@gmail.com>, "Jason Cho" <jason11choca@proton.me>,
+ "Jakub T. Jankiewicz" <jcubic@jcubic.pl>
+Message-Id: <dd4027d1-4148-4171-bf17-b5c33881a446@app.fastmail.com>
+In-Reply-To: 
+ <1d5b41562937d83be261d054989b04db6cb94a86.1759420102.git.msuchanek@suse.de>
+References: <xmqqseg1xwc1.fsf@gitster.g>
+ <1d5b41562937d83be261d054989b04db6cb94a86.1759420102.git.msuchanek@suse.de>
+Subject: Re: [PATCH 2/2] doc: git-worktree: Add side by side branch checkout example
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Michal Suchanek <msuchanek@suse.de> writes:
-
-> Also add advice to put new worktrees outside of existing ones.
->
+On Thu, Oct 2, 2025, at 17:51, Michal Suchanek wrote:
 > Signed-off-by: Michal Suchanek <msuchanek@suse.de>
+
+I think this could do with more setup and motivation.
+
+I=E2=80=99ve seen a lot of questions on worktrees where they introduce t=
+he
+problem with =E2=80=9CI use a bare repository with worktrees=E2=80=9D.  =
+And I was
+puzzled that they kept using bare repositories all the time.  I=E2=80=99=
+ve
+forgotten some of those details but I do seem to remember that they were
+motivated to go all-in on making a ton of worktrees, and using the the
+=E2=80=9Cproject root=E2=80=9D to do it.
+
+Is that what the bare-setup is getting at? ;)
+
 > ---
->  Documentation/git-worktree.adoc | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
+>  Documentation/git-worktree.adoc | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 >
-> diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree.adoc
-> index 389e669ac0..ec31863aec 100644
+> diff --git a/Documentation/git-worktree.adoc b/Documentation/git-workt=
+ree.adoc
+> index ec31863aec..122b191ff9 100644
 > --- a/Documentation/git-worktree.adoc
 > +++ b/Documentation/git-worktree.adoc
-> @@ -79,6 +79,9 @@ with a matching name, treat as equivalent to:
->  $ git worktree add --track -b <branch> <path> <remote>/<branch>
+> @@ -525,6 +525,16 @@ $ popd
+>  $ git worktree remove ../temp
 >  ------------
->  +
-> +For best results it is advised to specify <path> outside of the repository and
-> +existing worktrees - see <<EXAMPLES>>
-> ++
+>
+> +Side by side branch checkouts for a repository using multiple worktre=
+es
+> +
+> +------------
+> +mkdir some-repository
+> +cd some-repository
+> +git clone --bare gitforge@someforge.example.com:some-org/some-reposit=
+ory .git
+> +git --git-dir=3D.git worktree add some-branch
+> +git --git-dir=3D.git worktree add another-branch
+> +------------
 
-I am wondering if we cram more information in "For best results", by
-adding the "otherwise...".  Here is my (failed) attempt.
+This works for me.  But why not this?
 
-    Use <path> outside of your working tree and existing worktrees
-    (see <<EXAMPLES>>); otherwise your new worktree will appear as
-    an untracked directory.
+    git clone --bare <repo> some-repository
+    cd some-repository
+    git worktree add some-branch
+    git worktree add another-branch
 
-I say "failed" as the above phrasing makes it sound as if that
-untracked-ness is the only downside, and also by omitting "advised",
-it makes it sound as if there is no upside (other than inertia) in
-doing so.
-
-So, I'll (atleast tentatively) queue yours as-is.
-
->  If the branch exists in multiple remotes and one of them is named by
->  the `checkout.defaultRemote` configuration variable, we'll use that
->  one for the purposes of disambiguation, even if the `<branch>` isn't
-> @@ -502,8 +505,8 @@ locked "reason\nwhy is locked"
->  ...
->  ------------
->  
-> -EXAMPLES
-> ---------
-> +[[EXAMPLES]]EXAMPLES
-> +--------------------
-
-cf. https://lore.kernel.org/git/5044672.31r3eYUQgx@cayenne/
-
-IOW, we probably should write this more like ...
-
-        +[[EXAMPLES]]
-         EXAMPLES
-         --------
-
-Thanks.
+> +
+>  BUGS
+>  ----
+>  Multiple checkout in general is still experimental, and the support
+> --
+> 2.51.0
