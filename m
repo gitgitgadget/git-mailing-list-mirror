@@ -1,48 +1,48 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749DA277003
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 22:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7490E273D9F
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 22:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759444750; cv=none; b=JuHwDyWGwfc2oaMsPy8MCAh2KjHVufv3OHy1ONaoYhK1YZHlbMd4mW3ZxsyKdB6Hzdyj3IoteLchxK17vYM07Pblj2npGVgcdKOVr72HutSzP+Q1sYmjZ6r++os+PLWImng2GCDVYuB0jrt46wv5yiiEF23B8FstT49b8/v/srg=
+	t=1759444750; cv=none; b=eXdpUs//oUZt/0X/LHQEyQrMpNmlk5AFmUdqAYURwxpQmF8rgZWHqKurC5/VoumlZ2ktbmNN+9OnT6iVxiNxnnwzJG1bAiamDmhy7VQKdHnVX7vnl/u3RnjKWGJ7IpGZ7LiLDVgeTrkjKkIZjF5d4IyharIpkIsayQLoNe2sQ24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1759444750; c=relaxed/simple;
-	bh=s2oI1s/wTLtsUuMZ3fT2aXUiT4ghHJ0Zb0rkPQwITaE=;
+	bh=KTB6yX3WfOYLpAKs3QhqvOGz6nAMaHsvHGVaj+Ps2B4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gU8XDUPyGqDtrW6p3fL1cMBUTFH3NiTzd21UaZBVO7yRCbmzoHDrW9uu/GDKwiSngzhkbhcTB6Sf15Vl1SFbGqlPyINfZZXWlHO0QABSV6z66GbAWilL0toc6D/BkO3fWnoaVclGPqU0DCTyq82KRn5mOZ2wP6vc/clk6Np/llI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=bReTDz4a; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=s9YTj/in8KoxOHVb9d0Ay7ZnVrJVNLePg5X5RDK+Y7Et8HHXQH7XP1BVCc0+iVXgquV8lCp1A6w/RgNLDiNrRvuCCyFK07jyNMq5D8PqneEvOTIF+22yF0vsTZGVb3KaJsmYyNalPQn3W1q1MYQO1L/5csU6Kta/CbQjmlsUe7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=nav61Dyt; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="bReTDz4a"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="nav61Dyt"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1759444746;
-	bh=s2oI1s/wTLtsUuMZ3fT2aXUiT4ghHJ0Zb0rkPQwITaE=;
+	bh=KTB6yX3WfOYLpAKs3QhqvOGz6nAMaHsvHGVaj+Ps2B4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=bReTDz4aapeBJIVvRQC8SFDLfwBqV7LuoRNmwf6rmz2Y/z54EwF3V0vfyatxyyAvD
-	 2+u8GQR3OhuGVL9e/MMOVIbbHJdXkQs2+8emxfiNVvINfbVgsIiue/d+nirgBhl4E7
-	 +eumDtUcvOlzoqzbk4IenUUEL6w7a9tspVbCPEdebfTL/iKhGwF0w/GIj293i+Fmga
-	 la/LoXL7zyAvoiFUM37Att9nhE5ccwBM4uBa2ZpdLpKDUwXWjV/d0MLQ3IdBIXRvys
-	 q2L5J3MTOtLloxY9ZWpZr3MR6qm4vpVL9BcrvK3Y9MSempnVTOFD5ZRkMyc84L61NM
-	 FU/AiN4KBD9LLsehg1j2BYriHcXRevxwQ1xE/RdfthUnU60opEkE3jq2qyxqguT4wh
-	 b92+JY8znFvce+eYGgdzr0EzY4FazEyCVt0JgaU0LQpDLw+97OiXTtsaKUbwCen+iO
-	 M15B9uT3mkD6LaGaqacn0H2OlGXZtIjMovwLlCNvdVsGag/Abk7
+	b=nav61DytOiOcdCPgUsM4Vv+eQ9jMFAOJFWoemLKDjYEap1bQYLPtfl46iNO0y+sfP
+	 rezr2x5WrOOP+7eXhPeA002pjbSkf4qCFFSz7+e9DTnHUhHfJHtoCy+Bf7ZM4YffH8
+	 kvMpPRGmu/qgVlaKqXlaeqnnXQ56BpN2+Ct7tRb8M6fIoUV8EP0O2mNmpjGrUNJ1wi
+	 p3zT1w1WQqOIJwLSjGzW2qZ9m9yKw89XKasDc752taQUgX7/lDi3aQ4KRZeCdZIUC/
+	 kGRs7VKroCoaGr/3krZzuJN/7DIz7KecwHr/ckrZJ9KU4C5RfY5nAaN/2h92Rlv8xr
+	 6s/m/DLTbB/kPN4XoQFRAgMOaogF6I6TBjzl2Hq5Q2j7xEM0IcLgVFXjHfyWTzK77p
+	 OMuPMK/HL4lyR96lX60xqoVKpaE6Vmb+GNZPnUH/GCW3b3xgyOd5UWDwmIOjxSaIcS
+	 KcRbTWcvMUrQlh/+hSZy1pyeWHatnf9EB4zxVKTzAuXHUzVTXCi
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:b8e7:3022:3f31:478d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2DB2D2011B;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 48B772019A;
 	Thu,  2 Oct 2025 22:39:06 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 1/9] docs: update pack index v3 format
-Date: Thu,  2 Oct 2025 22:38:47 +0000
-Message-ID: <20251002223855.1022847-2-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 4/9] docs: improve ambiguous areas of pack format documentation
+Date: Thu,  2 Oct 2025 22:38:50 +0000
+Message-ID: <20251002223855.1022847-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
 In-Reply-To: <20251002223855.1022847-1-sandals@crustytoothpaste.net>
 References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
@@ -55,74 +55,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Our current pack index v3 format uses 4-byte integers to find the
-trailer of the file.  This effectively means that the file cannot be
-much larger than 2^32.  While this might at first seem to be okay, we
-expect that each object will have at least 64 bytes worth of data, which
-means that no more than about 67 million objects can be stored.
+It is fair to say that our pack and indexing code is quite complex.
+Contributors who wish to work on this code or implementors of other
+implementations would benefit from clear, unambiguous documentation
+about how our data formats are structured and encoded and what data is
+used in the computation of certain values.  Unfortunately, some of this
+data is missing, which leads to confusion and frustration.
 
-Again, this might seem fine, but unfortunately, we know of many users
-who attempt to create repos with extremely large numbers of commits to
-get a "high score," and we've already seen repositories with at least 55
-million commits.  In the interests of gracefully handling repositories
-even for these well-intentioned but ultimately misguided users, let's
-change these lengths to 8 bytes.
+Let's document some of this data to help clarify things.  Specify over
+what data CRC32 values are computed and also note which CRC32 algorithm
+is used, since Wikipedia mentions at least four 32-bit CRC algorithms
+and notes that it's possible to use different bit orderings.
 
-For the checksums at the end of the file, we're producing 32-byte
-SHA-256 checksums because that's what we already do with pack index v2
-and SHA-256.  Truncating SHA-256 doesn't pose any actual security
-problems other than those related to the reduced size, but our pack
-checksum must already be 32 bytes (since SHA-256 packs have 32-byte
-checksums) and it simplifies the code to use the existing hashfile logic
-for these cases for the index checksum as well.
+In addition, note how we encode objects in the pack.  One might be led
+to believe that packed objects are always stored with the "<type>
+<size>\0" prefix of loose objects, but that is not the case, although
+for obvious reasons this data is included in the computation of the
+object ID.  Explain why this is for the curious reader.
 
-In addition, even though we may not need cryptographic security for the
-index checksum, we'd like to avoid arguments from auditors and such for
-organizations that may have compliance or security requirements.  Using
-the simple, boring choice of the full SHA-256 hash avoids all possible
-discussion related to hash truncation and removes impediments for these
-organizations.
-
-Note that we do not yet have a pack index v3 implementation in Git, so
-it should be fine to change this format.  However, such an
-implementation has been written for future inclusion following this
-format.
+Finally, indicate what the size field of the packed object represents.
+Otherwise, a reader might think that the size of a delta is the size of
+the full object or that it might contain the offset or object ID,
+neither of which are the case.  Explain clearly, however, that the
+values represent uncompressed sizes to avoid confusion.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- .../technical/hash-function-transition.adoc          | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ Documentation/gitformat-pack.adoc | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/Documentation/technical/hash-function-transition.adoc b/Documentation/technical/hash-function-transition.adoc
-index f047fd80ca..274dc993d4 100644
---- a/Documentation/technical/hash-function-transition.adoc
-+++ b/Documentation/technical/hash-function-transition.adoc
-@@ -227,9 +227,9 @@ network byte order):
-     ** 4-byte length in bytes of shortened object names. This is the
-       shortest possible length needed to make names in the shortened
-       object name table unambiguous.
--    ** 4-byte integer, recording where tables relating to this format
-+    ** 8-byte integer, recording where tables relating to this format
-       are stored in this index file, as an offset from the beginning.
--  * 4-byte offset to the trailer from the beginning of this file.
-+  * 8-byte offset to the trailer from the beginning of this file.
-   * Zero or more additional key/value pairs (4-byte key, 4-byte
-     value). Only one key is supported: 'PSRC'. See the "Loose objects
-     and unreachable objects" section for supported values and how this
-@@ -276,10 +276,14 @@ network byte order):
-   up to and not including the table of CRC32 values.
- - Zero or more NUL bytes.
- - The trailer consists of the following:
--  * A copy of the 20-byte SHA-256 checksum at the end of the
-+  * A copy of the full main hash checksum at the end of the
-     corresponding packfile.
+diff --git a/Documentation/gitformat-pack.adoc b/Documentation/gitformat-pack.adoc
+index d6ae229be5..9b7af5c184 100644
+--- a/Documentation/gitformat-pack.adoc
++++ b/Documentation/gitformat-pack.adoc
+@@ -32,6 +32,10 @@ In a repository using the traditional SHA-1, pack checksums, index checksums,
+ and object IDs (object names) mentioned below are all computed using SHA-1.
+ Similarly, in SHA-256 repositories, these values are computed using SHA-256.
  
--  * 20-byte SHA-256 checksum of all of the above.
-+  * Full main hash checksum of all of the above.
++CRC32 checksums are always computed over the entire packed object, including
++the header (n-byte type and length); the base object name or offset, if any;
++and the entire compressed object.  The CRC32 algorithm used is that of zlib.
 +
-+The "full main hash" is a full-length hash of the main (not compatibility)
-+algorithm in the repository.  Thus, if the main algorithm is SHA-256, this is
-+a 32-byte SHA-256 hash and for SHA-1, it's a 20-byte SHA-1 hash.
+ == pack-*.pack files have the following format:
  
- Loose object index
- ~~~~~~~~~~~~~~~~~~
+    - A header appears at the beginning and consists of the following:
+@@ -80,6 +84,15 @@ Valid object types are:
+ 
+ Type 5 is reserved for future expansion. Type 0 is invalid.
+ 
++=== Object encoding
++
++Unlike loose objects, packed objects do not have a prefix containing the type,
++size, and a NUL byte. These are not necessary because they can be determined by
++the n-byte type and length that prefixes the data and so they are omitted from
++the compressed and deltified data.
++
++The computation of the object ID still uses this prefix, however.
++
+ === Size encoding
+ 
+ This document uses the following "size encoding" of non-negative
+@@ -92,6 +105,11 @@ values are more significant.
+ This size encoding should not be confused with the "offset encoding",
+ which is also used in this document.
+ 
++When encoding the size of an undeltified object in a pack, the size is that of
++the uncompressed raw object. For deltified objects, it is the size of the
++uncompressed delta.  The base object name or offset is not included in the size
++computation.
++
+ === Deltified representation
+ 
+ Conceptually there are only four object types: commit, tree, tag and
