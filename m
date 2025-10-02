@@ -1,95 +1,113 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14034335C7
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 02:59:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2E4199BC
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 05:19:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759373981; cv=none; b=kzSHWPepZ2J1qQTHut98OlCxq7O9xhL6vcdl4mTmdlTuJ6ALpIO6ddjrz4FXyg7zZBvAwF11/ZA9QpdEWlAI6PFgXrn+pIStnKFgZ7/xv8hQPNa9QcI0K3LPIQDO4Dv8EcIlkF7c8lOEftmSRaGAZtFOWexLq3vcRsWb8vLxcg8=
+	t=1759382395; cv=none; b=HpvIeTqMUOCPXeJoHIBWvPFJJpYa5Bkl/kmDF9T/xaH4ZQNe2Mtwjq+rmqmp+f4s2e6OpFRri5C9mkBTHo867Bee+RzFwe6eFiEc1B/hsGInW0WJDjkmTDFIpJTdJfk3ltB+8beKCaLiVacdp6a0JlXY0eU8RM5NnRwcMYoS+kQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759373981; c=relaxed/simple;
-	bh=acdJd8rcNg46uKE3jKPxUMWt5RWl42u4NTABWcedFF0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gAtFzTRP5l3tYig8wMPO8djl9bHGJ6L3sDjz3RJpeZ4/HSFJ8Jr+dimlAAY8mgOncl0NmbQ8C3GwUqYMWwO7kyep/6fQi6riO510GGci/3IIyTAROcvKIwunIXr/LM30S6mVTdSZtg2o2UKzFPQ5M6gX9fCkSB5x7WqVJMdIHwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e+JA4ByZ; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759382395; c=relaxed/simple;
+	bh=Udtb2/5N+C7zh+mhyo7icJafc3AZhlPYue7StGYccgo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QF3c8IcSkKU/WDxllrFpLLtfXYG28uCvOndtGUk2Ta1jwSckoPGCA2hvfos7/gVyyjNqFoe/1PNjVvBgXWcx70n6m604Ez3q3ErCq4oyqxMqq3Byfrikl/wOCaJinUkKVnxYCwnQMVmpSZFt6C7eD0MPLx8j7/jRBMioHpT/Lj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZLDC4hfA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yaf9uTJP; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e+JA4ByZ"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-32eb45ab7a0so685507a91.0
-        for <git@vger.kernel.org>; Wed, 01 Oct 2025 19:59:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759373979; x=1759978779; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=TAIlQ38Zi/zYlz6G5rTXqjln6CXSTtwe+/iSDMqpYJ8=;
-        b=e+JA4ByZTMmoGWnMQyUHnLbv+dVa38AN7MDsHAK2Hq24sn6MO7GiU4NG3Oh/Rma3bV
-         8P0lWe2ctEs+AK9n8okuZ2C+Kz0aOtluZFTwId/HU4tRfy+hoi95QBXMkJZU65qvQsAd
-         E/tXG1p4a+awmKDEtmtzexAe+tiFhavAq0z8j+KYdpgqbu/G2zH5CGT06eqR55E8wFv+
-         97ie367PTm0DL6nYK0lDhXK5yoOM0h8UyYrNaivpjsPDcroTCVlCVKf/wcKgVT6FRHgw
-         PANtPu9rPZ91E8GXTPupu0UP9zDYaN3qN0iihfApxrLj+m6GxnUgfP+HOZzWAKbZL85B
-         Hsag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759373979; x=1759978779;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TAIlQ38Zi/zYlz6G5rTXqjln6CXSTtwe+/iSDMqpYJ8=;
-        b=UBwCaVMzBJbwFoPEfwf2oAUj7HYs1JAiXRhLPJaaYykJPPmQFDGMq2fZOEOPpXzR26
-         aGE128TTw5M8tizNqmHa9IloQVyNOFKhRovhojFTStgWGTpD51/ue5YKNeDj3xhOFFEW
-         FoHDTFspEQo1hZZqZEsbJv6qSCBkbr2eD3NeV8P57najIuczaInvkhydt248zSabAhou
-         +N/QHlVMwpCKHqXJozmFyVHElVern4G1wKU+bk2P8pLU229CfLEfMhhTRjbTeJ3tLQHt
-         Ar13Wg7aiCAGVu/BMPqavlDrCTuUoKGsI1eMZqNIE4Myj5BjQXLY71OtwpGyu/TOLx7Y
-         50hw==
-X-Gm-Message-State: AOJu0Yw6VRVGWHdiTJkVtNgQOEuXhnO6XntgWJXE7gtSA6MOyfi7Kmpn
-	FOcuIMkEJPO2vdP9MVT2noNHTUpGA+l9qZEcG155jljh4+Oi7g7dkuv5dMSycM9X
-X-Gm-Gg: ASbGncuUxA9DIdHPw3MaN1yaNfI9HNQTuJYlWg8QxZ+aadw9XFe4Sj8UogzwX1oS7Y1
-	X9ryWi2O/UtMrosOxjJtoBeHWIS+3DSp610ri5otTlJEh+06K0ciMyeS4dCCNwULi3Ux7Z+HRiK
-	jMa4Zmija3c5tCj2It1tlS71HUCfJhRYIxVAzWpIf0NN3JqtizwD0zzPQoQFTaN2QJqadg8istl
-	qXp01Xokl1DMJbV6hiVJ7YWN/bKJaoKNRjk4K4WrhzHkYgHoAivqu7vX8Bf5nx1rM8KnwWd/OGm
-	5PVJC6ynt/sRjOgOCEB1dVKK/e6CzWnS/8aH2cY7/q8zYLA0XJXgzieqcAH3VRuALi593oyxdri
-	b/Bz3VDuS006vRa6Sb0piDC3y6xmMfrFcJhSEx6vuy5J4YTXrt5UVjCjy
-X-Google-Smtp-Source: AGHT+IE8KodKsWQJwJZJzXaGYUtwZf2fjpNUuJGH4qvWVsSdFyVnTmZ0+VsCzMgLYn3Ehi/lsN3KEg==
-X-Received: by 2002:a17:90b:4b8d:b0:329:e4d1:c20f with SMTP id 98e67ed59e1d1-339a6e9551cmr6259389a91.9.1759373979239;
-        Wed, 01 Oct 2025 19:59:39 -0700 (PDT)
-Received: from localhost ([2804:248:fd27:1700:3748:9d8c:286:76f])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b6099f7ab4fsm860213a12.44.2025.10.01.19.59.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Oct 2025 19:59:38 -0700 (PDT)
-Date: Wed, 1 Oct 2025 23:59:35 -0300
-From: Henrique Soares <henriquegogo@gmail.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZLDC4hfA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yaf9uTJP"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3C9801D00126;
+	Thu,  2 Oct 2025 01:19:51 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Thu, 02 Oct 2025 01:19:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759382391; x=1759468791; bh=Mjc/f/3tVB
+	P/6r9jJ8tqkl6fdWlgxAsKIShkQ4HplTQ=; b=ZLDC4hfAi4K7GHjdPTx7EWaXti
+	Fz1HbrvYGpfsD6sIhuMNZHwVnEUY6Z+IhlI1YDDjkPc3U8yqFYhKAnmgJPcs9lZP
+	+B0YbTfKJVqUznjGELMptSkBB6fN4pVX+YDtWvsc5dJrsmnmi8noTZdsMu2EQKcz
+	uT1zAY9p58Dvo1+R/32QbohNIrXitZa5DBQvUpUUr6hZIP9+2H66imQYLdoykNS5
+	oX4qYgDW/FyK6em/p87iWX0OLKj3dZPLytXFna9uXx/bV8hwSmv7hjFoRVkwHr1Y
+	MkVYoAl666xv9DIEvK/CqlTK6e4echqzl1mcRoESa0DFBarm2/JAt97M6FbQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759382391; x=1759468791; bh=Mjc/f/3tVBP/6r9jJ8tqkl6fdWlgxAsKISh
+	kQ4HplTQ=; b=Yaf9uTJPizo66Kb7PYLF4pMgytWaDlOFu7bF2dDoDAEmfr2PbXI
+	y9+6YCGIvE+HZOsLru16IoEbMKDB5F65nNbPoSOu5wi0CcwIxe0EO7RQY6W9RpV1
+	rMe/nB/HAi8447CA2DTYL2PBUqeO6fFKqbjy2QsoJycSguYLmm+uLDcwL4trpOuH
+	RG856H6KlnDCh8diRyJSFi19vfONKeDmjivuw393mUI48WFyB0QOhKxRQkT26egN
+	qm+RP41Oyv94V41GjyyBXZXTghc6r9Orl7vIswPdd3zM0w19E5LnT0MN6TU5a4O7
+	pGveXuDrrvGrBLckcBiV3a1BUX173WlIXQg==
+X-ME-Sender: <xms:dgveaIiPHCcP7LoUh9Yo-onFP_yGf-0SWhE0eTfD_k963XHEuo9m9A>
+    <xme:dgveaIdET0OHITRlvMQ7q_eDdYlozQSCuIIMFT2NN74QaIJvzCEBmCtEuN9dCaplH
+    KhMCLCSspGi3_jiTAcDJCUoRRbM2XScP2T4daAHORRZjA5QWKOc9A>
+X-ME-Received: <xmr:dgveaNd_Q1P4lStoaMFxGBoQV2UwaI44Xzop5Kkz07NPj93ezKgi9GZ7VrRuo6hoJnVTbYDQvwG883rLufODUf7Xw-F3rN9-y2pJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekheduiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
+    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
+    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
+    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
+    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohephhgvnhhrihhq
+    uhgvghhoghhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:dgveaC8cl01TVcfxPcvTCIF4G33AZhcCxis7PjFBrtngGH-oD7jIoQ>
+    <xmx:dgveaJm1XvQC-GNkVDq5xKbrHtgDGkSfblqYpFPZynv5hvO5d4VmRg>
+    <xmx:dgveaE9JGEUE1WPKrcWCLaTBOnC8Dho9GAozsuy52IgDRsO2OKZ_Ig>
+    <xmx:dgveaHk628EcJOPtj5zc6T07w_U1aZ6ENGMKbouW6IZUmH-w1oTABw>
+    <xmx:dwveaIc9ptD6WCN0t4TI45xVHd7zKHhr12SOQsTXm9LGH6mYalLn8aLJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 2 Oct 2025 01:19:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Henrique Soares <henriquegogo@gmail.com>
 Cc: git@vger.kernel.org
 Subject: Re: How mantainers check Git diffs and patches?
-Message-ID: <aN3ql-r3Hj9Z5oHO@localhost>
-References: <aNygY8Cm7LEaBzV6@localhost>
- <20251001-pastoral-frisky-seahorse-cd5bdf@lemur>
+In-Reply-To: <aN3ozlH_pPnvdWPn@localhost> (Henrique Soares's message of "Wed,
+	1 Oct 2025 23:51:58 -0300")
+References: <aNygY8Cm7LEaBzV6@localhost> <xmqqh5wi3779.fsf@gitster.g>
+	<aN3ozlH_pPnvdWPn@localhost>
+Date: Wed, 01 Oct 2025 22:19:48 -0700
+Message-ID: <xmqq5xcxzxqj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251001-pastoral-frisky-seahorse-cd5bdf@lemur>
+Content-Type: text/plain
 
-On Wed, Oct 01, 2025 at 09:37:34AM -0400, Konstantin Ryabitsev wrote:
-> This will apply it on top of the current HEAD:
-> 
->     b4 shazam https://lore.kernel.org/git/20250919010911.649831-1-sandals@crustytoothpaste.net
-> 
-> This will fetch it into FETCH_HEAD, making it behave pretty identical to a
-> pull request:
-> 
->     b4 shazam -H https://lore.kernel.org/git/20250919010911.649831-1-sandals@crustytoothpaste.net
+Henrique Soares <henriquegogo@gmail.com> writes:
 
-I just didn't know about b4, and this is probably the tool I was looking for.
-Basically what I was doing was `git apply` patch-by-patch manually (with
-a little scripting), but b4 seems the right tool for the job.
+> On Wed, Oct 01, 2025 at 09:41:46AM -0700, Junio C Hamano wrote:
+>> Patches are medium for reliable transmission.  Once you apply the
+>> patch to your tree (perhaps giving it its own topic branch, perhaps
+>> to a detached HEAD with the full intention that you will discard it
+>> after you are done inspecting the change the patch brings in), you
+>> can use any regular tools you use while developing and reviewing
+>> your own code.
+>
+> It makes totally sense. So I suppose you avoid to review the code just
+> checking the e-mail patch in e-mail client, but first applying locally
+> and then check it in your code editor in a separate branch, worktree or
+> whatever, then back to e-mail thread and comment the code, right?
 
-> Hope this helps,
-
-Yes, a lot! Thanks.
-
--- Henrique
+The other way around.  With experience with the codebase, you'd
+learn to tell if a small-looking patch is truly small and only need
+the patch text to judge, would be helped if I have another window
+and have the code that would be modified if I were to apply the
+patch without actually applying, or its ramification is deep enough
+that I better apply it before making the final decision.  For a
+truly complex patch series I'd first apply them and then read with
+"git log --reverse -p" with wider context (e.g., -W or -U8),
+occasionally looking at the entire file at the step in question with
+something like "git show HEAD~4:path/to/that/file".  It does not happen
+all that often, but it is not so rare.
