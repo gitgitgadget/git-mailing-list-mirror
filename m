@@ -1,215 +1,119 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3C83594A
-	for <git@vger.kernel.org>; Wed,  1 Oct 2025 23:32:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBA5278754
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 02:30:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759361558; cv=none; b=OmrHbQ+izrSqmoXNtftz0AiF2sORhYj6ElyCm13ehjUxRj0U4qixrBz3hjd9Z5t/wJMe5479ew7gbqiBK7gTQgGM0rLtVehJT45z7WFguWobRdAyBEMOcgWBvts15qLrPPck9K/xCMAqKGXgAyFluMX4tkQctP7Egt1Nr4s3cLQ=
+	t=1759372256; cv=none; b=cTrmfW+NNJdOR5hVDFYB2n4JLnFF9/oZAQmfp2RAcpJ7C7zWFEavZKLvaaReKggJnz6o8UktiKPC7uF8T6qJb6gHu8Ar8Scok2OFj58KB84+RWemOcevrPMaWNyX9fRW0zR2+5jdW0/PTr47e7mNnaACUpbUyncp7p5YKQijMAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759361558; c=relaxed/simple;
-	bh=n3DO7XUN9F5LefVPmklbqmUNwjnYUJyPTb51DBXgqHs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BTM6fX3Qar8SOdiw4jYw9xp4cZz8mRl50Zuoa4msCBoXxdyFVGd0A/L9oo715t4Yyzt5TnR8M3y5X8jRFFIzJY9PAoq0GezsRt2VahgZLYiGldI62bQOo2YQ/qEig7bC/bnC7sDFtkNJVIma6CqGScRdmvRF5BgB3cOk3j0s73g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Ihog01nA; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1759372256; c=relaxed/simple;
+	bh=7p7e9Fn8aS73yJd8qdslnErz4YawjtSYEB0Pwq5/cs4=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=iPKwdTqR9qqcMn8ByRZdC76+zJ2+2RDfBc4rzdbMhP9QHDy0JzazxL6sGapnBcA4k92rdRyU10Lckc29ySlqfmyEfaNBUabYgSSNfXmwEQNNWo/yZ1NQc31kBZCDwFEcqbLieviy4G6xZtsyWsCwZn5RN1xKbC421+KQkg9fnfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nsE1M5K3; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Ihog01nA"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1759361548;
-	bh=n3DO7XUN9F5LefVPmklbqmUNwjnYUJyPTb51DBXgqHs=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=Ihog01nAScTGVP8uDvkRHrACxw12fkXAam0xtcJW6poPUJdwEYfSKo2ixI8sXHAdo
-	 kIPBPutC7igTEWFbdp/oAat2DLqv4gqDZk43tugR49TsHRf6rLRD5L3eAFdPqvBGQD
-	 7WlMBCtcslYuoqlIkidrqsXestCDhCxmNrxf5ewACKm3EkDyjR2T2j/EEZSMDM9lMx
-	 FRq7O6AXzq2J95CdKwZ9KOuAFepSy3LXGKkNIemUeO6imY1nLukZiNds/LAA2C+GqQ
-	 7IL1XlHpfeBvAIFb/S8FhhsZIo9YZUyxHAPc5V9bnP4DkAiqM9b3uDEm57Z5F1WJzn
-	 vSGn37epQOmuRBF2vmUd2hdAJIpTosv2+FbIVPgHp3UFy/pkCs8fRsDInyscRv8rMh
-	 IDI6rBg7uX8hiJZK+JsV7BQoIbbZ+Df0jXyae68XKaFkpKMk1SViAFwu7j3L9OBMqt
-	 32RRBYFaX0mi+odX4UGlx2eYvBj4l0TjmkILk5cQmeXK0Z7FNyL
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:eb6:3c64:95b3:ebcf])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id BDEDC20113;
-	Wed,  1 Oct 2025 23:32:28 +0000 (UTC)
-Date: Wed, 1 Oct 2025 23:32:27 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Chuck Wolber <chuck@wolber.net>
-Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-	Rick Sanders <rick@sfconservancy.org>,
-	Git at SFC <git@sfconservancy.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Patrick Steinhardt <ps@pks.im>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2] SubmittingPatches: add section about AI
-Message-ID: <aN26C68pxi-eJgn8@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Chuck Wolber <chuck@wolber.net>,
-	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-	Rick Sanders <rick@sfconservancy.org>,
-	Git at SFC <git@sfconservancy.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Patrick Steinhardt <ps@pks.im>,
-	Christian Couder <chriscool@tuxfamily.org>
-References: <xmqqcyalm0mh.fsf@gitster.g>
- <20251001140310.527097-1-christian.couder@gmail.com>
- <DD77TA1H1OOO.351R9WDH93UZ5@wolber.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nsE1M5K3"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-71d605c6501so6340427b3.3
+        for <git@vger.kernel.org>; Wed, 01 Oct 2025 19:30:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759372254; x=1759977054; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5tH0YR4TWXOx6DK6Bss2vvIFa+tfhIULMEBVsPnV4ZE=;
+        b=nsE1M5K3i4RIwFcec6J5AQGq44u8QRRMF6Sd8aZtaNJ35bfjknDhGLvwFQW58meEN+
+         +IHpTw5plIn0YKD9uzOHQv1v5OdX6TNVqXiXLAt0mjEPpsw6Lu/UJV8hpLngkh831q8t
+         YDobRvJrfj6My3gYqYb6OklGLjiha+K2XzhCGvrKpRgfO7tI6JN5fNm4gqmwCm3fue5D
+         UcANV74PjcnoYP3//ilLZbrbBtIyIYM0uJNU2jhSIphniiganXtoGyS3zAVdLjFJ7Cmm
+         Gu+5mpV+eLcWYvMzvzy4qTTdRQ5UNpgrqI73lotJMLvh9o5voOtKSjP58N+M22mccYDn
+         nA7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759372254; x=1759977054;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5tH0YR4TWXOx6DK6Bss2vvIFa+tfhIULMEBVsPnV4ZE=;
+        b=NLOzg9Z534tRj3qK6D3vppj4hnF3bKfqmB3VZots6HCtM99NsrNDVVrU3E8NdRuZvO
+         bkXf5CGPP6UgQ16aDxaul2CZLwVSMsJwF84mOLkTIC76YDSNlTMBR/56oaiJ9EeFDI6m
+         5HcSK5lLnKwwWYECFzvXvZHg2QVR0n5b9A5gikSEtDPHADHdSgNAtquLS6LihwyCyNVH
+         wVXw3qabYk0OIRDWGODbLXbwi5/Lz032rvPf0cArwds4SefSfNcsfXnPRurzZsqvLHvg
+         DldEwKmcJQqm+pRLGka35KZ3Vro2T8649ARvF1mVM38SMqFNptGx/91I7FIJRDY8ZPHX
+         ZAQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU4VbucjdocWUN9LZU9At3YZMicJR9Gj8XBHNTgtTn5WeeocT+Qj5ADhPs3LaHn3fTPAkc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yws7A9zLd2d+NJQixuZXOvczSPcFPTsjG/JejQ+9nXDLZiFkQY3
+	iYEQ/7JB9XI3zF/M7+6X4HSrfXGTkF4WTZarCVLrYc2cbdLeo0l1To7A
+X-Gm-Gg: ASbGnctzk7lTsFbfW/+3ExKx374DOMnyqHynQT7U9BxUaDMT69jTFit66X5mMmYaDlK
+	OQFemCiKN0duziNYTsNZ6Zx8MBbgJYBScqqqq1NeFaLZhSW7xzdDtDObysBzOlAeTcOzE5VLD/y
+	x2bEWzCHiSpdQWv3Nr6yo1b+cZ5DK+E2TmhzHsyToJ2RiGkob+0aDoECiUrzIVO068ZpeKHM7q6
+	G85IEvjbiduCav6mJw6nA8b9asZh9UGt/kV+vBwMDTa+GnuX4LG+OVXXknXDza1TW6sH9oo7t2Z
+	4mldhZ5Jm5uWDw9ib+6pIiN+e7GLiQmqktOXjphlTkCaWFhhr3qMo8OJ4C0fdpsEaim/1TpjwwV
+	kb9ycWvWznTJYJz4Z4nR3wxYN0ruwL8DzFRFwla2vi20Nd4axNbd5jz3ARAfYKwyTpz6bESdp1U
+	V/BE05YBHhPw==
+X-Google-Smtp-Source: AGHT+IHtWgOf29shIKur9rbSHxccOutQlwjfEQfOt3Chn6qRZ4BMrQFwP1BC7wSXxOTMf6ByquAVEA==
+X-Received: by 2002:a05:690c:6813:b0:720:bb3:ec14 with SMTP id 00721157ae682-77f6f2c23f7mr90717637b3.25.1759372253451;
+        Wed, 01 Oct 2025 19:30:53 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:45e0:b917:39c0:e808])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-77f81c303d1sm4527227b3.20.2025.10.01.19.30.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Oct 2025 19:30:53 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="8YwF7zvAgwkIyZOt"
-Content-Disposition: inline
-In-Reply-To: <DD77TA1H1OOO.351R9WDH93UZ5@wolber.net>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v2] SubmittingPatches: add section about AI
+Date: Wed, 1 Oct 2025 22:30:42 -0400
+Message-Id: <41F7B31F-1CED-4A74-A69C-1C3D61B10A42@gmail.com>
+References: <aN26C68pxi-eJgn8@fruit.crustytoothpaste.net>
+Cc: Chuck Wolber <chuck@wolber.net>,
+ Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+ Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+ Rick Sanders <rick@sfconservancy.org>, Git at SFC <git@sfconservancy.org>,
+ Johannes Schindelin <johannes.schindelin@gmx.de>,
+ Patrick Steinhardt <ps@pks.im>, Christian Couder <chriscool@tuxfamily.org>
+In-Reply-To: <aN26C68pxi-eJgn8@fruit.crustytoothpaste.net>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-Mailer: iPhone Mail (21F90)
 
 
---8YwF7zvAgwkIyZOt
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2025-10-01 at 18:59:31, Chuck Wolber wrote:
-> 1. It repeats what is said just a few paragraphs earlier in the document.=
- I
-> understand _why_ it does this, but moving the essence of this topic up to=
- the
-> DCO section avoids the repetition and avoids diluting the project's legal
-> guidance.
+> Le 1 oct. 2025 =C3=A0 19:44, brian m. carlson <sandals@crustytoothpaste.ne=
+t> a =C3=A9crit :
 >=20
-> 2. What am I supposed to do with "It's not yet clear"? This is worse than
-> telling me nothing. It introduces a vague question with no clear guidance=
-=2E It
-> is _true_ that no clear guidance exists, but what are the consequences wh=
-en it
-> _does_ exist? The worst case scenario is that we have to go back and
-> rework/remove AI generated patches. So why not just require something lik=
-e a
-> declaration of AI content like the one proposed at declare-ai.org?
-
-I agree that this is unclear, which is why I suggested we be more
-definitive.
-
-Many of the companies that develop LLMs are headquartered in the United
-States.  Many of the people that contribute to Git or distribute Git are
-not.  For instance, I am located in Canada, which has different
-copyright laws (we have the more limited fair dealing like the UK,
-instead of the US's fair use) and has moral rights.  It is entirely
-possible that the use of an LLM could be legal in one country or
-jurisdiction but not another.
-
-By accepting code that is written using LLMs into Git, we expose our
-contributors (who implicitly distribute Git code by uploading it to
-servers) and distributors (such as Linux distros or their distributors)
-to potential liability if the use of a particular LLM or LLMs in general
-are found to be illegal in their jurisdiction.  Unlike most of the
-companies that develop LLMs, most contributors and distributors of Git
-are individuals or non-profits with limited resources.  Even as someone
-who works in the tech industry and is paid accordingly, defending a
-copyright claim would be extremely expensive and probably financially
-devastating for me and I really do not want to take that risk.
-
-That's why simply declaring LLM use is not acceptable: because it
-exposes others who have limited resources to legal risk.  Note that
-ripping it out afterwards would require rewriting the Git history and
-would not solve the problem of all of the people who are distributing or
-using older versions (which would have been judged to violate copyright
-law) or relieve them of the fact that they would have been exposed to
-legal liability for their distribution.
-
-The avoidance of legal problems is why we require sign-off.  If
-Developer X signs off a patch that was later judged to violate copyright
-law, then they have made a legally binding statement to that effect and
-they have effectively accepted the entire legal liability for that[0].  If
-we don't believe people can legally make certain types of contributions,
-then we should explicitly tell people that they should not make that
-legal statement to avoid any ambiguity.
-
-This is very different from situations where companies make a decision
-to incorporate LLM-generated code into their own codebases.  They can
-hire lawyers to determine whether LLM-generated code is legal in their
-given jurisdiction and obtain whatever legal necessities are required to
-operate in compliance with the law.  They also usually have substantial
-resources to address any problems that come up.  We, on the other hand,
-are effectively a global project, must engage in behaviour that is legal
-in all or nearly all jurisdictions, and have very limited resources.
-
-> That reads like a full stop rejection of all AI generated patch content.
+> =EF=BB=BFOn 2025-10-01 at 18:59:31, Chuck Wolber wrote:
 >=20
-> What if AI were to generate a great patch whose technical quality is exem=
-plary
-> in every way? How is that any different from a great patch of exemplary
-> technical quality submitted by a person who is unambiguosly evil?
-
-There are a couple of problems here: one, some AI code (including
-documentation or other text) is of poor quality; two, regardless of the
-quality, many people submit AI-generated code they do not understand;
-and three, AI-generated code is a legal minefield.
-
-A technically great patch solves the first but not the other two.  We
-still need people who submit code to be able to explain their changes
-and respond to questions about the code.  What decisions were made?  Why
-were they made?  What are the tradeoffs and downsides?
-
-> Taking your words at face value, the prior paragraph reads as if the Git
-> project is declaring an outright ban on _all_ AI generated content (and I=
- am
-> nearly certain that is _not_ what you intended to say). If so, why bother
-> continuing on with a PSA (Public Safety Announcement)? It reads like a
-> non-alcoholic drink that has the words, "Drink Responsibly" printed on th=
-e side
-> of the can.
-
-I think this is actually what they intended to say, but did so poorly.
-I agree clarification would be valuable.
-
-> AI is not going away, and we need to find a way to use it productively
-> _without_ losing our sense of self-reliance. If we fail to develop this a=
+>> AI is not going away, and we need to find a way to use it productively
+>> _without_ losing our sense of self-reliance. If we fail to develop this a=
 bility
-> when AI is hardly more skilled than an above average intern, full of hubr=
+>> when AI is hardly more skilled than an above average intern, full of hubr=
 is and
-> zero real world experience, imagine how unqualified we will be when AI be=
+>> zero real world experience, imagine how unqualified we will be when AI be=
 comes
-> competent enough to manipulate and mislead us?
+>> competent enough to manipulate and mislead us?
+>=20
+> I think you assume LLMs can have intelligence.  They are glorified
+> prediction engines, effectively fancy Markov chains.  In some cases,
+> that can be useful and valuable and we can do interesting things with
+> them, but they cannot actually have intelligence, creativity or reason.
+>=20
+> And LLMs already manipulate and mislead people.  They have been
+> implicated in goading teenagers to suicide or leading people into
+> conspiracy theories.  Some LLMs espouse racist, anti-Semitic, or
+> otherwise hateful views.  That's a good reason to be wary of them and
+> how they're incorporated to our lives, at least until such a time that
+> they have appropriate safety measures and regulation in place (if that
+> ever happens).
 
-I think you assume LLMs can have intelligence.  They are glorified
-prediction engines, effectively fancy Markov chains.  In some cases,
-that can be useful and valuable and we can do interesting things with
-them, but they cannot actually have intelligence, creativity or reason.
+A tangent, and one I=E2=80=99m happy to continue but off-list (I=E2=80=99m h=
+appy to continue publicly, but this is not the forum): I=E2=80=99d encourage=
+ folks to give the LLMentalist Effect [1] a read. Regardless of where you fa=
+ll on =E2=80=9Cintelligence vs stochastic parrot,=E2=80=9D I think you=E2=80=
+=99ll find some interesting conclusions.
 
-And LLMs already manipulate and mislead people.  They have been
-implicated in goading teenagers to suicide or leading people into
-conspiracy theories.  Some LLMs espouse racist, anti-Semitic, or
-otherwise hateful views.  That's a good reason to be wary of them and
-how they're incorporated to our lives, at least until such a time that
-they have appropriate safety measures and regulation in place (if that
-ever happens).
-
-[0] I refer you to the common-law doctrine of promissory estoppel.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---8YwF7zvAgwkIyZOt
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaN26CgAKCRB8DEliiIei
-ga5zAQD5kJpZrbI4WPhMQZOmSG8/9uQVIJ7FKijGpxTRXkBbVQEAzXrAK9Ib4MZn
-C+sBglqfvpAAwGtXsm9cFbpO9sLpxgI=
-=Ps1L
------END PGP SIGNATURE-----
-
---8YwF7zvAgwkIyZOt--
+[1]: https://softwarecrisis.dev/letters/llmentalist=
