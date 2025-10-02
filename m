@@ -1,112 +1,92 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4482BE62B
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 02:34:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3A524CEE8
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 02:43:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759372450; cv=none; b=qoLHYVGAFsiujT3CrbA9yHu/Hlo1ZUclpd/WlcfLUD/gRESpQOfVXw/stkyrPK+DvWq9N22alet6+2j6vYXCcnqirdM1SgS9YVr21Bsh9sWIiTVNgfm115XXmyarKVpdBf2SdWKTSPkP5tlVZB0Xk9bt8/AGle/xcwYFeZTGurU=
+	t=1759373019; cv=none; b=E5KgKhEYifYgSs19CJwON+kEsOR1JDV5YSwk6+gAhKe7o/avZRuFekfGnkePUrmuX9tW2BlBUjnhqUInv05BB9ELkaw9m048HUlg8rhWQr+K7CSk/nmeIm0ppE2OWtW1ZE8iqW8xzvO6HHmzgWb4OKic9B0bD2Fuh5I77Nweezs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759372450; c=relaxed/simple;
-	bh=R9mAMCQmmYe7KiimQ8m54mmDMAAOn5UyVuXWPQyDRkQ=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=FsJfWxzRpTQCp9uArm2hbYXwgP0kf/2/AHCU1Fi8NeIc9gNpJdkzsWeWJ1mxlzsHMWcoY0rMQEw+l48bxzjdF2995Zg4R0D574j7GTN1ZM50bc0645WgOEyKmBnqruIh2DM1asDyCal83Lnu9+sIM+PHrdlbvc6NQkKE8V3ldxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GMlobn1b; arc=none smtp.client-ip=209.85.128.182
+	s=arc-20240116; t=1759373019; c=relaxed/simple;
+	bh=KIDV4b6xjxwklOxIFRGicbEQ9qGuBBxUlI33UTT0pSs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bSEJ6oHqJvJDkW3AQSEwAaGUQ02BkW3eik4RRf4LzRzlIEKs6Cpf3Wls5CuntU0EpxNkgl4P4lkXnle0HtrVCZTtdQsNF88nQQCf+B5mwsCpvwJR9ntrnB3g6LlToeX1WaRxrhViQx/0orTVfRNlkw//ViguxV5D+plMVv1OTCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ik2/zzDQ; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GMlobn1b"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-71d71bcab69so6407037b3.0
-        for <git@vger.kernel.org>; Wed, 01 Oct 2025 19:34:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ik2/zzDQ"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-27edcbbe7bfso6562835ad.0
+        for <git@vger.kernel.org>; Wed, 01 Oct 2025 19:43:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759372447; x=1759977247; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=R9mAMCQmmYe7KiimQ8m54mmDMAAOn5UyVuXWPQyDRkQ=;
-        b=GMlobn1boOg10GWkcHbVPuxI2b0Rujk5u4NHB8b0Vq1lmUgX1INRzLyj8oTlSDF9ij
-         Jpc3yZWfqfh67hrFLh2AqVZkbYsImqEgDMEPKPCfarLgPMyvSsQCl6DXtBKuivGmL3vE
-         aRJ9XJe9zqPvzQGiyHv+EkOEZhMIYB8pxp7PKcsYLk1SoQ0kNZ5eh6v8xsJNn5IVtP0a
-         9Kr4NSBUeI3Gg5n8mPJ03XKkmDlJNubYZ253LG37+XqvogIyKIKDEh6qxMAz4YGQc0jG
-         SLx9mCSbDt4AS3SH1dkdTRzDj/UA9tWEQuSkIObu7BYpLTXXpmi8/Qj2vCpsmY2re7wj
-         JUEQ==
+        d=gmail.com; s=20230601; t=1759373017; x=1759977817; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=mebHahjC4pj6pEr98UClDJGQFI2iOLu59vwbVswIY34=;
+        b=ik2/zzDQGD2C5qkXh+QnE6l2Wdxi0MRXoCZxjdA00/SD/rgyto7knNGA1CRP8QDI25
+         lAYTsmNQJjRQLdfFmiZMhygavyoen3V5TRxUNFhlBj6+EVavLz7ifVBsEBvZINMdXbTJ
+         rX0Lf88cCuNNjts48D0osOXF91cFcD3D+VST84xeg113bBa/kEsXJrwGYZeuNtHnRmvl
+         B3U601tf0GpHM860W9vIEzxM/xK8XDG/+5gJTLbZYZTcLqMr06otOk/4vy6KIiK71Qvt
+         BSnegjBdcPdTlH+aKgeqsItMsuIR8WNY30ALfb/tXcR51m5NCGO0lPf8Vr12bbOFlstk
+         sltw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759372447; x=1759977247;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=R9mAMCQmmYe7KiimQ8m54mmDMAAOn5UyVuXWPQyDRkQ=;
-        b=jw5J6D9fUQ5BLmrQWwxvs6cwjps+js9U8LqY3zRD/ZSCk9ISO4TYtdapBFC8VGzfnZ
-         0xssmRQDgFkNwY6sotJs3FDYZfWhnl66MJXeiqNmGi2xrqJGNcucBoNsWwZToDCerfEm
-         Tr7viVBZ7ao+MY+tsZ1PvJ+aXt4IH1TYtFm+4PApiWo0R2hofuLWq1LFL9nW3jbBNteB
-         PvspdaJsy+DXV1pBdakEWiZxKh3MhftO1Qx6CEZ2JdegnigO0Xdhnf5vgoNjji5Xq9d0
-         8IcRRN3ckrrvwWe2S7B88UE6KUUTcvSqORxiPvrRv7oxvV1n0+WuHDHGO/JWo/hHIeGz
-         H+lA==
-X-Forwarded-Encrypted: i=1; AJvYcCXkB0IHNUlBsKefOXBI9gIR1tOA1yms1if8oJuLEygnuoSu8A7C+3SWNAb8XxfR27LgJrg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwyWGEEPjwPysdwSr3TD3PMbQXjcwOmLyyY5dXZZfRfCviqPVOZ
-	NnjVMk8c+m7NRLDuu3tsZvnAF6DQDlGh8FBo7Vobn40yDFx8HNllHN3ZkgRUbGfH
-X-Gm-Gg: ASbGncuX2ufEuwS1ZUsIIDsp8v6IPPt4fwbNWVMcS/B742V8lyNF3KOOnmTnQaT5Ptc
-	3nxpiJO5hpEKirVSFuKvG4lLFCkFesYWMSsCGYFA4WceYedjC5DghFujRW+Ag7TIWJNs/KIQPrv
-	YcR+HzWQj6wuhbjPmiCp/zkrg9EYx6Ij8FoWQizNnHccEInxae0iLvSnx33utSwEXFw2KWEVkD9
-	VUKWPRDh/iYCd+RPMJR17na5Xk6njeNto4q39qzEm/hI7L1I5tdaa+EqJnb7qU3PonLIRoJZKIc
-	eMLx6Tv0xoaIil16PuhKafxj5zUrIdBZdNi5r9ooBxe5WEbhuuehdD69x3FIyy1V1hjx/VisIuF
-	GLxRFZkUt96q6xTtda+CggjPSt757WtuOPJPSfR0a8azB3uA+Is4KJy1r9rldrjvH2sZhQ2jDii
-	A=
-X-Google-Smtp-Source: AGHT+IEOS1lYZBYjze0xSwFdc5FYuKOdPZD+I2K7LswHtTGKmNEi9jkhQNPB6PFZpFDf8EK19rY3nA==
-X-Received: by 2002:a05:690c:d0d:b0:735:4c38:34 with SMTP id 00721157ae682-77f6f398cdfmr87308337b3.27.1759372447459;
-        Wed, 01 Oct 2025 19:34:07 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:45e0:b917:39c0:e808])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-63b845c3a35sm378837d50.14.2025.10.01.19.34.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Oct 2025 19:34:07 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        d=1e100.net; s=20230601; t=1759373017; x=1759977817;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mebHahjC4pj6pEr98UClDJGQFI2iOLu59vwbVswIY34=;
+        b=H75nWpeWB0KVnuKUsHRMLczsalPLF0SaH2cY+RXvK2GTlmfWA9dAeiKVZc39GocvVc
+         kKFlD3FjMiL1aJjJ1Xs8fP4LLQIIqc7CJHVGJuypcxzRHDy2EmFUbQ/CdLnKFxbIvy05
+         e24+9cljF4/ibwgxEpxV86syElMnFa8A7WZwRKesmderhnHdBDBTjDbIYBECR8cqJeoa
+         SWL353KiEEeSY9jWJkfB+EDC37fjqRj5ljg4YKOhrBMJqpbh2KrVKghh0jqUDMeZt02C
+         gf/i3LbgofBzIrScbuoeo0JkwB5n4OXmO4W9pVCwK6thY2+m2KfrmyaRYQMjLW7RqeWG
+         yRRQ==
+X-Gm-Message-State: AOJu0YxJ5tO9A9wU4Z53I8UU5n951KF9Zj8U8cEGnQN8dAP/F5ic6aaA
+	BZqdh49dO68XSGr18OzB53Diba4mhn7HVr4n0bOLHMq9jl0KELAX8XXBLHiR5ZQ0
+X-Gm-Gg: ASbGnctaSsA651ZR+XCIlHoK6fzopHqp+waucUzkgsOhcm+nDkzXIhTOXOFSa3zxfok
+	Y5w8lD0gZbXPlBJ9eg4aB5dHiaf9ulCcnOQtX2B1scaAh+0anCG/cranLBrSNCw5rl7pBTEMld6
+	PwSCjAUMF/d1h2TN7CXO/adPZrbRy4SuUTTSWY1SxT8wgIepzR8m86UqrOTadClJfZwaJchLPod
+	3e+hBoZUtBIG+dHalAU2noHMklAguPxHYsXLCRp8hy8BvZmRyOpjINkqE1ClgKTi34LkQqDvgLg
+	PZte0sl7ogb7zI6hi9mnKHPOqHQW/TH5sAUl2g8phrFOLsMWd8wh571wDiHjxRqfBvejm1pXZK+
+	ivwIwxfjg0QdLVP9o9SSQwvhVqP/1ZAJsVlKO1829Bi0bDg==
+X-Google-Smtp-Source: AGHT+IGlPA/fISvgW5D+f1asxpUFb4LazWZRGOVYhMNDo/cL41mrHnJzfNln/q6Rx6z50feb4osIWg==
+X-Received: by 2002:a17:903:15ce:b0:264:70da:7a3b with SMTP id d9443c01a7336-28e7f441e97mr72125085ad.49.1759373016984;
+        Wed, 01 Oct 2025 19:43:36 -0700 (PDT)
+Received: from localhost ([2804:248:fd27:1700:3748:9d8c:286:76f])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-28e8d1108b8sm10236175ad.26.2025.10.01.19.43.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Oct 2025 19:43:36 -0700 (PDT)
+Date: Wed, 1 Oct 2025 23:43:33 -0300
+From: Henrique Soares <henriquegogo@gmail.com>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: How mantainers check Git diffs and patches?
+Message-ID: <aN3m1dvc5yh0CGTG@localhost>
+References: <aNygY8Cm7LEaBzV6@localhost>
+ <ba6b9a5e-72b5-4d66-a484-37140438702a@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: What is the reason behind not hiding git worktrees from git?
-Date: Wed, 1 Oct 2025 22:33:56 -0400
-Message-Id: <9052874F-AC8B-4321-9762-78FCCE498D8E@gmail.com>
-References: <xmqq3482312r.fsf@gitster.g>
-Cc: =?utf-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>,
- Jason Cho <jason11choca@proton.me>,
- "Jakub T. Jankiewicz" <jcubic@jcubic.pl>, git@vger.kernel.org
-In-Reply-To: <xmqq3482312r.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ba6b9a5e-72b5-4d66-a484-37140438702a@app.fastmail.com>
 
+On Wed, Oct 01, 2025 at 10:15:35AM +0200, Kristoffer Haugsbakk wrote:
+> Here is a relevant message (2016).
+> 
+> https://lore.kernel.org/git/20160809113703.57irthzzpg6j3dmv@sigill.intra.peff.net/
 
-> Le 1 oct. 2025 =C3=A0 14:54, Junio C Hamano <gitster@pobox.com> a =C3=A9cr=
-it :
->=20
-> =EF=BB=BFBen Knoble <ben.knoble@gmail.com> writes:
->=20
->>> The impact is that the list of worktrees would have to be read to get
->>> status. As status is not particularly cheap operation in any case I
->>> would expect the problem to be minor.
->>=20
->> I believe status information is used for the shell prompt info, so
->> performance hits there have a cost.
->=20
-> Sure, but an embedded git-controlled working tree _should_ be
-> flagged as an untracked entity, _unless_ it is ignore'd, no?
+Hey, this thread is pure gold.
 
-Sorry, I=E2=80=99m not disagreeing with that here? Merely pointing out if th=
-at proposed changes affect git-status performance for the worse I will be di=
-sappointed :)
+There are a lot of comparisons with GitHub PRs (BTW, that wasn't my
+motivation), but besides this, it's pretty nice to see the review
+process in "e-mail flow". 
 
-> That is how you would add a new submodule to your project after all.
-> So, if you want to ignore them, just add them to .git/info/exclude
-> or something, perhaps?
->=20
-> Why do people even want to have such a layout, unless they want to
-> make it a submodule (or deliberate subdirectory that is unrelated)?
+E-mail threads are really great for discussions but before I follow Git
+mailing list I did never realize how useful they are to PR reviews as
+well.
 
-[snip: a better way]
-
-Yep, I agree that=E2=80=99s easier, but I shouldn=E2=80=99t judge other=E2=80=
-=99s workflows (I do it all the time =F0=9F=98=85).=
+-- Henrique
