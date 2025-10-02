@@ -1,155 +1,167 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C7B1DB54C
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 17:51:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B8027703D
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 18:07:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759427504; cv=none; b=n1BvBglDqMWKLArwWKGMylQJWPShGQkD514O3uCDiq8nJg5aMWw18bkuX5/70GhB5UkqXf6pgVTaInBj3tpsMsl4Uwd1x+1+rhGW+/23twFsD4g8v8/dDI0kz9HcQCJM6ieObUJEvA9EVSP0i5S/avs5xoVpTNIdfIN5TI4Kg08=
+	t=1759428423; cv=none; b=LiM3xymJDrOzBgn1oo2IxgWY91295mQ9y/rgX+2t6qGd+H7L32+UlLa0sG1h2fEuccZZ+fU9HTRq6ncpzn3VSWOR4LCvHfMPrYdMjjvAC9by2iWn5azucADQpj5eDMJr2EY9wQvqH1SBn+m9g5cN26mtZews1PBYk4mBlYipy24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759427504; c=relaxed/simple;
-	bh=DBZ7TvUKXJ8T/OaPVXOPs+mgomRVAFpGadgAsmTP3NA=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=p087Of2lDgS5c3sje2GC7oOzQPrUlmI6apYO3AfZQYaySf6qzvj4P0tR0ZwRz6/WCc8Zf+KIRo5BPBqUOrupPNNOMZFT5iqTuXPvhYKd3PI0dd2VbuRFDH2PUrTVsZrku7mVuj3fqaNyPLWkz6VAt10k9rdooHoR2RZz+EaI4JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=sv76RkUy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mNo4Ah7D; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1759428423; c=relaxed/simple;
+	bh=+ioz7jSIQeLZ3K9ZfRUGGsoXh15zEBCklQJrEjz6UVs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YoxJbvMxXDg+2AqNPoIGsp0AderSA7E5BBrP1JkDbnWlg2psUy0VL7bdsc0HYboeNpXldjhaRcE1/LzCepkoWeYAkQUAtd6DJn5Zr/RmGjaJ/VTwUNpRnY1vHEzpfM+eFC6JiUHzeB+izOhi9I3n4b06hwp2NDpjs7XqGqOOAkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DGCBl2AV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qngQCH7B; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="sv76RkUy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mNo4Ah7D"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C342F7A003E;
-	Thu,  2 Oct 2025 13:51:41 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Thu, 02 Oct 2025 13:51:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759427501;
-	 x=1759513901; bh=eAWEH2y2WgWorqVw0B1JzQeNuhbMVXhfIOFpZHY3MZo=; b=
-	sv76RkUy/FuqZ/nRNOPCxYNDCHu+9EGAy5U6i1+skHuU1ZB2ZV9hjS+3SEV6GKvc
-	90VdqlW4Hb4jhdIKZgQM67K/aObq5+QcANtqHzsDiHW/S45kKPWGZPYoE0+83zFv
-	/3HIo7Xo0s3AxPbDqyMbdZI753IUMA0EHVAy3D9eps+fUlr5V6CWtoiaD7Lii52O
-	k9Z4J8bTKuTwK6DpRESg1rOsTE2+uJ10XIp1X9hJxAhgDJ/5bO6+F6G08juetrS+
-	1HeH4Q2IsWCs5BxTkg71NDK4URF+L3Gyth+bwtoTNLfToSJVE7aG47pzh/iEOlmP
-	Kto+dm6MfDTDISRKOTB0jA==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DGCBl2AV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qngQCH7B"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id F3D0B1D00109;
+	Thu,  2 Oct 2025 14:07:00 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Thu, 02 Oct 2025 14:07:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759428420; x=1759514820; bh=/91Gja7Fzr
+	KYHXJUM+LbdKTJluxlSRennkAUywtN2v8=; b=DGCBl2AVB6tAxQMN/EF8GYApyL
+	3/2pN0oEje6aGkv+vhZR9bOGHh/8gO95lxkobDQTkn/B2iCqnYVdpnHdAakX73mg
+	7UdOzPWjtiYPfu5x7tQcJr+HpmnE7i9gzDgDt9oxXWO1Aosnibn+Ieg3I92AwmXB
+	vBNsJAc2QSENEHdJqor7coU7e868GxRNg4LTvM7xeZwtnQ7jnDdY7fRfLWwgusN5
+	2IqbbhEhqRnfqEoweMn6Dsxx+cvurjHmMYhBOqAwB0R+9sIrqo0nMHHWe2MYLYjc
+	z9l/nlLaJegI+TMVZr148xLGzmKI/0Ww3y1zNc6eFb/gxBLuEOGI6HBP1CGg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759427501; x=
-	1759513901; bh=eAWEH2y2WgWorqVw0B1JzQeNuhbMVXhfIOFpZHY3MZo=; b=m
-	No4Ah7DXA7qVwPrjkrFmEuiSmVFe/YVcFl75/VD12iusqLW1c1QED3+wSQzO+T5Q
-	zZY/tbBdz/OK8ukwqVA9jxqA4xYOp+tR60MDoNQR8e5t0OryjrIEvfQ4Q91LtE39
-	1Md+53gri99ACD0ayxhC+diUwKRGI2DSzpTVOqJ8rAHZizp0lJ2kVlWRNxYOkh1g
-	zgc8ZBez7tkUhvJHcpE9Jusj42YeiXZSnGRs/6bUrdBP1UAbSDwCKctECEnrzxDq
-	w7qndjwhzZiIrHtEDkwOgqRLyAuSFdSkYuS494/ClNdbkbjldpxu+y9xsgOTa1VW
-	i0DL82FS4ZsTIBMCvVO2A==
-X-ME-Sender: <xms:rbveaBerPM6QCIKOYjoU-EE54EuhXEsFKSpK7jTNFymM6n_O7bDoKG4>
-    <xme:rbveaKBWTtg6Dbq-KGBQDc1SbprcIiZOt6N1rRAqJmx3zuZyrOMoTzNfiPZAmUyVd
-    tSdhdJ72IyVEc-Zl2pHGsKt30t4ro2dexBBc-omYdmFhogsdtMXeg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekieeiiecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759428420; x=1759514820; bh=/91Gja7FzrKYHXJUM+LbdKTJluxlSRennkA
+	UywtN2v8=; b=qngQCH7Bnit7YOAJgsbt39XBBYzxxj4UVEoRWoZQS8+NczTc2L6
+	TyQ4GvizlhinIOFPNjrQJRrG6BvFNkvA9ZUzjOI7maBsrVYDDbbOD+tMcUA1bX/v
+	RSJSMjVa0kOT/mw4srzVaIcQN7sHyULrC+Y64OF64WbyyqRR+doGyUmesxm5Ljpu
+	4q9ivy4V/CpJJJI34pg80JeVl6UT3XvTkIL3rdpEYHm03TB5mlp7tMsABBMmvXXT
+	VwHKUXN7pGlMhgPMgPNICx7biHYnUIvv8L8iNTj7WuJU6rMYQKOwDKNeeIkH5kJa
+	OsydMTBsNBTjJGZSESwPAQwUWtxO4eVnxag==
+X-ME-Sender: <xms:RL_eaMfLY9OPedU8dqlR96v5W0T8hQqj3X0Lux_RpiAK4fCTQNmo6g>
+    <xme:RL_eaNSIb6YBB0oIXeGQOtnt4HSZRZILnLw4B13ZZFls3seRLirHGmNvpmcL2RtWN
+    xu6UghM2OThVgS3oNItAAsfH1-ESSMHzcS86WvalrfPOHzHr45v1f8>
+X-ME-Received: <xmr:RL_eaDt4aKFBcp2lqs_PbDPVztTRy57qSkIG633hLr9Cs0BffYmx7-5VtMlTZ4JqRn2Z-r0M2GMU6zsM2PfbA99khbjd5EU0fA2u>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekieeilecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
-    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepkedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepshhorhhgrghnohhvsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epjhgtuhgsihgtsehjtghusghitgdrphhlpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomhdprhgtphhtthhopehjrghsohhnuddutghhohgtrgesphhrohhtohhnrd
-    hmvgdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhr
-    tghpthhtohepmhhsuhgthhgrnhgvkhesshhushgvrdguvgdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:rbveaOx2vMJ05BFsYS4IkoOIBxnrqI7X67tOp9rpMjD1C7yForbsUg>
-    <xmx:rbveaETIj_v7GdG0Am46r8NzDInVP3EugX9DS0D3SEofnEHJ5Z84Ew>
-    <xmx:rbveaG_rEwlgQnCEOuZ3iRYZZzVk107iEfPh8bF9IPQy3gWy4cu2_Q>
-    <xmx:rbveaCv2DPCXBhVS46vtxwk-mn0J2kIXu0A0nAgWhdEs8SY9bu3jPg>
-    <xmx:rbveaAzk7EllMW4bNUGNYoeT5YRELFp1n8q5XX-1YYM4XBoBiBeMiY9G>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 2BBC01EA0068; Thu,  2 Oct 2025 13:51:41 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehmshhutghhrghnvghksehsuhhsvgdruggvpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhh
+    ihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepshhorhhgrghnohhvse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepjhgrshhonhduudgthhhotggrsehprhhothhonhdrmhgvpdhrtg
+    hpthhtohepjhgtuhgsihgtsehjtghusghitgdrphhlpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:RL_eaOdQzQqWKkyG8GP_ZE5YStK_hBkJrrD81K_jkf80or3g74UHRA>
+    <xmx:RL_eaNaKTR9hxDpdCzJiyOLtMrlsQeI5HBZF_0hxMT76Ex2uHQRn2A>
+    <xmx:RL_eaAZfwHDJpHC5NefpzXEd1eo2NX87PVNFesdWQuX1Goyaczf2aA>
+    <xmx:RL_eaCIqkyft-QAH0avNhfQAq8QOGmxPKKkxQQZiJNIig7Ltojs7ZQ>
+    <xmx:RL_eaI0c7XbYn3kgfb9L7WhtqUqacVvxav9iNzCegF8mgr7_f92Ovlcd>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 2 Oct 2025 14:06:59 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Michal Suchanek <msuchanek@suse.de>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Sergey
+ Organov <sorganov@gmail.com>,  Ben Knoble <ben.knoble@gmail.com>,  Jason
+ Cho <jason11choca@proton.me>,  "Jakub T. Jankiewicz" <jcubic@jcubic.pl>
+Subject: Re: [PATCH 2/2] doc: git-worktree: Add side by side branch checkout
+ example
+In-Reply-To: <1d5b41562937d83be261d054989b04db6cb94a86.1759420102.git.msuchanek@suse.de>
+	(Michal Suchanek's message of "Thu, 2 Oct 2025 17:51:35 +0200")
+References: <xmqqseg1xwc1.fsf@gitster.g>
+	<1d5b41562937d83be261d054989b04db6cb94a86.1759420102.git.msuchanek@suse.de>
+Date: Thu, 02 Oct 2025 11:06:58 -0700
+Message-ID: <xmqqcy75w531.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A98-iMmoqE87
-Date: Thu, 02 Oct 2025 19:51:20 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Michal Suchanek" <msuchanek@suse.de>, git@vger.kernel.org
-Cc: "Junio C Hamano" <gitster@pobox.com>,
- "Eric Sunshine" <sunshine@sunshineco.com>,
- "Sergey Organov" <sorganov@gmail.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>, "Jason Cho" <jason11choca@proton.me>,
- "Jakub T. Jankiewicz" <jcubic@jcubic.pl>
-Message-Id: <dd4027d1-4148-4171-bf17-b5c33881a446@app.fastmail.com>
-In-Reply-To: 
- <1d5b41562937d83be261d054989b04db6cb94a86.1759420102.git.msuchanek@suse.de>
-References: <xmqqseg1xwc1.fsf@gitster.g>
- <1d5b41562937d83be261d054989b04db6cb94a86.1759420102.git.msuchanek@suse.de>
-Subject: Re: [PATCH 2/2] doc: git-worktree: Add side by side branch checkout example
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Oct 2, 2025, at 17:51, Michal Suchanek wrote:
+Michal Suchanek <msuchanek@suse.de> writes:
+
 > Signed-off-by: Michal Suchanek <msuchanek@suse.de>
-
-I think this could do with more setup and motivation.
-
-I=E2=80=99ve seen a lot of questions on worktrees where they introduce t=
-he
-problem with =E2=80=9CI use a bare repository with worktrees=E2=80=9D.  =
-And I was
-puzzled that they kept using bare repositories all the time.  I=E2=80=99=
-ve
-forgotten some of those details but I do seem to remember that they were
-motivated to go all-in on making a ton of worktrees, and using the the
-=E2=80=9Cproject root=E2=80=9D to do it.
-
-Is that what the bare-setup is getting at? ;)
-
 > ---
 >  Documentation/git-worktree.adoc | 10 ++++++++++
 >  1 file changed, 10 insertions(+)
 >
-> diff --git a/Documentation/git-worktree.adoc b/Documentation/git-workt=
-ree.adoc
+> diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree.adoc
 > index ec31863aec..122b191ff9 100644
 > --- a/Documentation/git-worktree.adoc
 > +++ b/Documentation/git-worktree.adoc
 > @@ -525,6 +525,16 @@ $ popd
 >  $ git worktree remove ../temp
 >  ------------
->
-> +Side by side branch checkouts for a repository using multiple worktre=
-es
+>  
+> +Side by side branch checkouts for a repository using multiple worktrees
 > +
 > +------------
 > +mkdir some-repository
 > +cd some-repository
-> +git clone --bare gitforge@someforge.example.com:some-org/some-reposit=
-ory .git
-> +git --git-dir=3D.git worktree add some-branch
-> +git --git-dir=3D.git worktree add another-branch
+> +git clone --bare gitforge@someforge.example.com:some-org/some-repository .git
+> +git --git-dir=.git worktree add some-branch
+> +git --git-dir=.git worktree add another-branch
 > +------------
 
-This works for me.  But why not this?
+It is a good example to have a bare clone and get worktrees attached
+to it, but I do not think that it is a great idea to call that bare
+clone ".git".  It makes it confusing if that some-repository/
+directory that has a ".git" directory is a non-bare clone with no
+working tree files, or if it is a directory that Git has no
+knowledge about, that happens to have a single bare repository plus
+worktrees.  The answer is the latter, but I suspect that Git itself
+would probably be confused (i.e. "cd some-repository && git status"
+---if you try it, what does it say?).
 
-    git clone --bare <repo> some-repository
-    cd some-repository
-    git worktree add some-branch
-    git worktree add another-branch
+Naming it after the project may make it more apparent what is going
+on when the user goes into that top-level shell directory, perhaps
+like this, if we were working with a "bunny" project:
+
+    mkdir bunny
+    cd bunny
+    git clone --bare gitforge@someforge.example.com:some-org/bunny bunny.git
+    git --git-dir=bunny.git worktree add some-branch
+    git --git-dir=bunny.git worktree add another-branch
+
+Then when you "cd bunny && ls", you'd see the bare repository
+bunny.git with two checkouts.
+
+Having said all that.
+
+I know some folks like such a layout for some (perhaps ideological)
+reason (i.e. no checkout is more special than others, everybody is
+equal), but I am not absolutely sure if it works better in a larger
+workflow in practice than having a primary worktree that is not a
+bare repository.  If you do the above with a non-bare repository in
+the center, it would look like this:
+
+    mkdir bunny-project
+    cd bunny-project
+    git clone gitforge@someforge.example.com:some-org/bunny main
+    cd main
+    git worktree add ../my-topic-1
+    git worktree add ../my-topic-2
+
+and have my interaction with the upstream project only from inside
+the primary worktree, i.e., "main".  Additional worktrees are more
+or less ephemeral, and can go away.
 
 > +
 >  BUGS
 >  ----
 >  Multiple checkout in general is still experimental, and the support
-> --
-> 2.51.0
