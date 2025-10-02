@@ -1,52 +1,51 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748B22737E0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74973274FCE
 	for <git@vger.kernel.org>; Thu,  2 Oct 2025 22:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759444749; cv=none; b=dEDvA4YyCK9SPp7lUP39qTBYB/Hv+lSVRoMhNvNKdH+P6emQGwBd61y3ZdK8+5K1F1fKTHXsd9Mw0QcdfwHw8cjNomGjfQK0GLHZtOZOr0ySGwo5AWjcUPi36CIvttTVARt52nRpNt9DEtGi0Ry9GwP3nC0l/b/6SKt49G+VSFw=
+	t=1759444749; cv=none; b=CPYOKl8YM7jxb+FLuT/bAfuSio7ofsB3p21QIDX9nzA/sBc7Yh8B/EYZO2zgqaWYapkxdocdTAwAhDoWn0ZR58+R+dCRTkCE2gGvGAuL3WjueKY1BjqaHvhlWCJoEBr36wSyo9qSoKBAn2kAbmE8nCoK50G2YH2hq9hPI1Ld4UQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1759444749; c=relaxed/simple;
-	bh=nvdTVKSNT3WaRh05WUOIi1Gg49VraFI0PjaBVvMPPpY=;
+	bh=FyFByfTw8WE10vq1ZaQ4M7jzM14USMjGzvMpvW0eDHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ladsI7aUqeTlxzSUSgbJ5jNSxiiTWNbNHWUNZ5OqRGgT3NSE2b9Hxm2avPxPpNQ6uO0jrGXH+fA8mI4RE/x8Xq9oGUPQ/boU8VXLxWNXceeD2g0zzg7SGlRal3icQzOt/D1HkSewtzHXSHG/cGeFoi2IWcSCzFqwmtdTMgSBNGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=DF7lzEu0; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=SoUcJCwG3z2xWpm8CiiJg6mPbEEg4bdqSrfHxGqDSGo8F07t+QG6lE65g4gLltJOVBUYMdyimYJ6Z//t0aJrmWYMwm2jNcvlAFuD449Ue8nJ9bHhWgu4NnabdqYvXFAD35O6HXRAbsyY2Cs+NtKPSCzktGTpeH8mRy3VRXGyTIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=tX6xNI3T; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="DF7lzEu0"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="tX6xNI3T"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1759444746;
-	bh=nvdTVKSNT3WaRh05WUOIi1Gg49VraFI0PjaBVvMPPpY=;
+	bh=FyFByfTw8WE10vq1ZaQ4M7jzM14USMjGzvMpvW0eDHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=DF7lzEu0UdjOjhQrxsoxfqTQXlb6qan67zaNirpnd65yE6gzfIECId2LSmpz0aqXI
-	 uVBNu87af25rH35+QQdeiaucbdx+Mz6BSNkkWMNoVbe2Khicuj/7iARGIigLZOMgu8
-	 e8WrBWJvJ/vJm4p0W1+0EX+plMBTZH47+i3qfda0rAWHfVfQFE8U3VNjgM4tf92rz/
-	 fecOIOxj1/qpXFbKDtFzn96v/+zt3Kc3OSjBH42CMY3LNLrcCt5H1YEIxZbqToOLG5
-	 2qbiSGj3o4eKdKK+TocsPcwRzsyxB+fUgNLXrzoXFG0pDfQBSnE+wzhXrlkoE462cL
-	 jAW/cy5Ck/dspKWiU4dWWRnvGNfweGMkhETYYRHscLcGiJs0lLe6m0PttCAwRsEMr/
-	 ed1BX4Xn4TzAb0/xA3H8ugEFKMzMNju89lKHbYJtQKFENjUuKlCL6L9wX1abh0uMxG
-	 OubCr/YgXmM/4SenMjRZBgmRdjYfIuK47PenhfQ8QaL8T+d63fx
+	b=tX6xNI3TRAUJUV/ApWNvmkBD54aDSRGsYUtmCDfWId0UfJ5/NbfvKDWgO5aDGVC7d
+	 VRFWyhd9p7RhON1DRHuiM1SdCTFTkWawl2ySwNixiScAlF2jgluWzY5lQ8d3H/sCN2
+	 T3tv+71LH1XNi6KaEnCzkiRwah22nRk450ABmreU8lWIERlJsrVkVZhm4QtjRhpMDY
+	 bzHIuw5cxlxezNqbGJj1jAfcxmmJTgfVTIuENTwB4UCPUZJBofwsfDgZy4k9MEXbB3
+	 qVKshf+KMz1IN0d21sEC3fG804aSCUhtnZOKSs7lThvCYhDEH2roPSE3FpS0EUVFut
+	 GUBzuG9T+Ag1h0x+SVQzH4dyvtVAkeb5dA7yArDJmBdUkahW5Jvyg7qALWRw76n2AM
+	 m6RbvoOv420j7GI+l7OtaedwnmmcPi7hYuGhPeY0zdY6kqIzPx8iDQd8Xs5w2vO+gf
+	 L3m/HW+SC+kV6AVTOks5p+znK7jG82yYPjsX10TvCFCdzEj9Izg
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:b8e7:3022:3f31:478d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 36EA620158;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 246E820113;
 	Thu,  2 Oct 2025 22:39:06 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 2/9] docs: update offset order for pack index v3
-Date: Thu,  2 Oct 2025 22:38:48 +0000
-Message-ID: <20251002223855.1022847-3-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 0/9] SHA-1/SHA-256 interoperability, part 1
+Date: Thu,  2 Oct 2025 22:38:46 +0000
+Message-ID: <20251002223855.1022847-1-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
-In-Reply-To: <20251002223855.1022847-1-sandals@crustytoothpaste.net>
+In-Reply-To: <20250919010911.649831-1-sandals@crustytoothpaste.net>
 References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
- <20251002223855.1022847-1-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -55,49 +54,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The current design of pack index v3 has items in two different orders:
-sorted shortened object ID order and pack order.  The shortened object
-IDs and the pack index offset values are in the former order and
-everything else is in the latter.
+This is the first of several series for SHA-1 and SHA-256
+interoperability, all of which will hopefully land in Git 3.0.
 
-This, however, poses some problems.  We have many parts of the packfile
-code that expect to find out data about an object knowing only its index
-in pack order.  With the current design, to find the pack offset after
-having looked up the index in pack order, we must then look up the full
-object ID and use that to look up the shortened object ID to find the
-pack offset, which is inconvenient, inefficient, and leads to poor cache
-usage.
+The first set of commits here is documentation updates for documentation
+which was incorrect, missing, or simply wrong.  I have spent more time
+than I'd like in the pack code and felt our documentation there could be
+more helpful.  I also am correcting some things about the
+interoperability formats that I've found are not correct or efficient in
+terms of implementation and thus I will be implementing differently.
 
-Instead, let's change the offset values to be looked up by pack order.
-This works better because once we know the pack order offset, we can
-find the full object name and its location in the pack with a simple
-index into their respective tables.  This makes many operations much
-more efficient, especially with the functions we already have, and it
-avoids the need for the revindex with pack index v3.
+The loose object documentation will be updated with the loose object
+mapping in a future commit, but I felt I should send a basic loose
+object document first, so here it is.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Documentation/technical/hash-function-transition.adoc | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+The remaining commits are for expected gpgsig headers in tags, which
+causes some tests which use strict fsck to fail, as well as for
+prerequisites for compatibility hashes in the testsuite.  Actually using
+this configuration is not possible since the tests are still very broken
+using it, but declaring these prerequisites allows me and others to send
+in patches that use them and thus make our testsuite more resilient.
 
-diff --git a/Documentation/technical/hash-function-transition.adoc b/Documentation/technical/hash-function-transition.adoc
-index 274dc993d4..adb0c61e53 100644
---- a/Documentation/technical/hash-function-transition.adoc
-+++ b/Documentation/technical/hash-function-transition.adoc
-@@ -260,12 +260,10 @@ network byte order):
-     compressed data to be copied directly from pack to pack during
-     repacking without undetected data corruption.
- 
--  * A table of 4-byte offset values. For an object in the table of
--    sorted shortened object names, the value at the corresponding
--    index in this table indicates where that object can be found in
--    the pack file. These are usually 31-bit pack file offsets, but
--    large offsets are encoded as an index into the next table with the
--    most significant bit set.
-+  * A table of 4-byte offset values. The index of this table in pack order
-+    indicates where that object can be found in the pack file. These are
-+    usually 31-bit pack file offsets, but large offsets are encoded as
-+    an index into the next table with the most significant bit set.
- 
-   * A table of 8-byte offset entries (empty for pack files less than
-     2 GiB). Pack files are organized with heavily used objects toward
+For example, in interoperability mode we cannot write objects that
+are not valid since we cannot convert them into the other hash
+algorithm.  Thus, when we're testing in a mode that has a compatibility
+algorithm, we skip these tests.
+
+The goal is to run the tests in a full compatibility mode where
+everything is dual-hash as well as introduce some specific tests for
+interoperability that run in all configurations of the tests.
+
+Changes from v1:
+* Squash the two test changes into one commit.
+* Include a new commit showing the use of the BROKEN_OBJECTS prereq.
+* Mention using main algorithm hash in pack index v3.
+* Hopefully clarify signed tags.
+* Improve text for pack format documentation.
+* Wire up build of loose object documentation.
+* Remove loose object map documentation.
+* Rephrase text about loose objects.
+* Remove needless RUST prerequisite.
+* Wrap overly long line.
+* Reject invalid signature algorithms in tag headers.
+* Fix if/whether problem in test comment.
+
+brian m. carlson (9):
+  docs: update pack index v3 format
+  docs: update offset order for pack index v3
+  docs: reflect actual double signature for tags
+  docs: improve ambiguous areas of pack format documentation
+  docs: add documentation for loose objects
+  rev-parse: allow printing compatibility hash
+  fsck: consider gpgsig headers expected in tags
+  t: allow specifying compatibility hash
+  t1010: use BROKEN_OBJECTS prerequisite
+
+ Documentation/Makefile                        |  1 +
+ Documentation/fsck-msgids.adoc                |  6 +++
+ Documentation/git-rev-parse.adoc              | 11 ++--
+ Documentation/gitformat-loose.adoc            | 53 ++++++++++++++++++
+ Documentation/gitformat-pack.adoc             | 18 +++++++
+ Documentation/meson.build                     |  1 +
+ .../technical/hash-function-transition.adoc   | 42 ++++++++-------
+ builtin/rev-parse.c                           | 11 +++-
+ fsck.c                                        | 18 +++++++
+ fsck.h                                        |  2 +
+ t/t1010-mktree.sh                             | 13 +++--
+ t/t1450-fsck.sh                               | 54 +++++++++++++++++++
+ t/t1500-rev-parse.sh                          | 34 ++++++++++++
+ t/test-lib-functions.sh                       |  9 +++-
+ t/test-lib.sh                                 | 13 +++++
+ 15 files changed, 254 insertions(+), 32 deletions(-)
+ create mode 100644 Documentation/gitformat-loose.adoc
+
