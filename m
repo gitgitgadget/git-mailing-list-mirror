@@ -1,168 +1,136 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7611256C6C
-	for <git@vger.kernel.org>; Thu,  2 Oct 2025 11:47:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8963B248F47
+	for <git@vger.kernel.org>; Thu,  2 Oct 2025 12:13:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759405634; cv=none; b=HSUblYADDgn6OcPd4u5bmeNUuIcrceA0ASpzUYNF0hYMJqvuFYUcGAC+ySQIWV1w1+deluKpSbbFZ77ciATSN8JjQOXI24CCi9hjdGeUX5b7KHU5X9v71JLa5s8ako2n8upfM19B6qbsN9cE2FJuCOySctKT/VFrCYujAGDyku0=
+	t=1759407195; cv=none; b=FQmuNaE+fPCraKFvTCyAt+LCp3+VCHPq8ziZinozXc0fbssPhdn5wNLErIC7vXLcvXM9ZqaLmCVu+LjH61gPCy1rJmujx7UT7lW69ZRWWgoj/PEchUZAq25TFkvWG9OAkd06gn9nAQYBfYIoTa0PA++E25+FjwD4atjVEwbEZi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759405634; c=relaxed/simple;
-	bh=AraM7w2GEJj4IUD/JJ1Xj5Tb9yfEDdLOD0ZzHLy4p+c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PWGEyIRwvXBnwMCapsRj3SVwjxDFGVvZsM4k7d2zBGI0GQFVokJGDUu0j4vJMAaV+4K4TzTd79IVhggYFoF/bQPcBHjg1Sra6VncZTqyNmL+ZIi+Y9ZnbgDDpjSzuH7YB2+/eaTr2t5hM+TmkK6BOn1HVPKMQ10eXYb6DMAwIgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ekDiiTRq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n37gkKww; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1759407195; c=relaxed/simple;
+	bh=k+CR8oRao9fN5FSNnRspq+w4QfRKDfxDkthpoJxcKs4=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q0ApMy6cKy1JOFhRWNOiPBNWjpnPLhZl8NrVzgT7lM7uEhuQsyJlNLrkpbhnRt5UNzIY7XiDbZSXfJNxYQnSofiX5H1wV6kr0H1aKRsV+eLCCCQxHdpJVGzTlM2gkTMzvYePNk9fmq9oFItaum6XKZ1SlC9qgZ5MXTbNVqFkCLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=a44haCql; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=3HCGuEsK; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=a44haCql; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=3HCGuEsK; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ekDiiTRq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n37gkKww"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id E6F061D00139;
-	Thu,  2 Oct 2025 07:47:11 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 02 Oct 2025 07:47:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759405631; x=1759492031; bh=OO0b75CBFF
-	GkmqicMtJcm2kK+X0JPBD6b9Jt2Bc9zuI=; b=ekDiiTRqFkH5y7b5xDMChCuzyc
-	771bqZmWRa0VBt7keBblh5pgswnVA2l9GIvVUblc2DicacbXNzAudQIbdlB0MfBU
-	0xmvl5WwSb1ZNLgJbwrTNZmlsjEsGIHOoaREyzWUty5wGqq+JcfltHDmZPT0clyz
-	NeZwJZ7JV58PYMaUwa/8HAA8QZkXGZyZwLOYausZ/ziTBxLJhCXkNKp/CPDsbomT
-	joNlP0mw5XnO6T/rKKoINsEdYIssTIRL/UndMUDV4/eQoFDHkjT/Xzk6ATk1jCJ2
-	DeRBasdPwI3MxIYGOaC7OYpFsQ+3JtHqbtsKq6ROsxklnQB36Khv+KxN/Izg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759405631; x=1759492031; bh=OO0b75CBFFGkmqicMtJcm2kK+X0JPBD6b9J
-	t2Bc9zuI=; b=n37gkKwwVeXifoUopO9QkH0J3KQksxFi6HTiaQcohro0hd57WjB
-	5J6msgDv8A/+NGnj+JgXR6ZiSyuPALD6RYUyENCuZ92bXqXgmPH8qBkDdChLQeK3
-	llX3yU+iR53qs34gdSp+xBwycWGeOiGhkVRHxp9aFwOQm0shivrE8eJ0U8nWeh4V
-	+MBPU+4CbrNccMhYPKnlCaCo8de7YBFp/3wy10CMRplXTQJCmR8oV1Irw9d27W7k
-	6FkY4GE8h9SusbQGkbwD9aFWKX0HuE1ofOz6vx10YeqnnsyIbbGYj7nQjA6lA4bD
-	H0x2dYvej7Cal4BabRp5VzBpr2lV1ZxVy5g==
-X-ME-Sender: <xms:PmbeaC6LQjOZAUFljpXbAA2HURPq-Ks11-o1Fcf25HjIe-RKu3ubyg>
-    <xme:PmbeaPnXOcYbpqUpARGuV8ahU_f28QGw680sLpSd5_Jh729tTzg32LAZ9izDSt5fP
-    tot9U0lYRslP2o_hXRXBTxPQiTu7XhoQ-H_XzBSp2ay6PDXmuFBMyM>
-X-ME-Received: <xmr:PmbeaLQF-q5aitOV5qG8gdC_oSjc-ZxCgs3-dzpPmd_CYdhhoXODtJqV0IgaqX8N_1RvKnYZsZcyYd3mGg90d2QUhTGKkRCC4ywlH0rxzQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekheelgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehsihhgmhgrqdhsthgrrhdrihhopdhrtghpthhtohepkhgrrhhthhhikhdrud
-    ekkeesghhmrghilhdrtghomhdprhgtphhtthhopehhrghnhihouhhnghesphhrohhtohhn
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehhrghnhigrnhhgrdhtohhnhiessgihthgvuggrnhgtvgdrtghomhdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:PmbeaGGVcV8GzaUHMbbw46KqYPa_tv7wpmUfMmyUWxbH-Xp3jyMw9A>
-    <xmx:PmbeaIGPc-n1Y97fFXj8mpZTuCz-S8eifEtke7LMksCsJPnThOJP8Q>
-    <xmx:PmbeaMQePvHF6I2aXQ1dihBrRd1KcFfAdn51IWG-XFo_uQKSRo_51g>
-    <xmx:PmbeaBKoz-mdA5In4JXEzl4viW3XOhaZD2GZBvGfu5nsIExYTuA9uw>
-    <xmx:P2beaGUrGaMuti08Ob-0GfLGyk-UvM156snzeEAQsq-tKmTVROT8Saag>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Oct 2025 07:47:09 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c57e0f53 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 2 Oct 2025 11:47:08 +0000 (UTC)
-Date: Thu, 2 Oct 2025 13:47:05 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Han Young <hanyang.tony@bytedance.com>, git@vger.kernel.org,
-	Han Young <hanyoung@protonmail.com>, Sigma <git@sigma-star.io>
-Subject: Re: [PATCH 1/1] files-backend: check symref name before update
-Message-ID: <aN5mOTbGBcr355E6@pks.im>
-References: <20251001150805.9652-1-hanyang.tony@bytedance.com>
- <20251001150805.9652-2-hanyang.tony@bytedance.com>
- <xmqqv7ky1l70.fsf@gitster.g>
- <CAOLa=ZTnHQbg9ocdA1omqER6CJH-w30G14-F2JAQMtueXENWew@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="a44haCql";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="3HCGuEsK";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="a44haCql";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="3HCGuEsK"
+Received: from kitsune.suse.cz (unknown [10.100.12.127])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id C10C11F853;
+	Thu,  2 Oct 2025 12:13:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1759407190; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hGyh4h2Etc7PqdgOJVlmAyEVzH4bdd5AjXMpMQLk0k0=;
+	b=a44haCqlsx0ssWlnzvTSVgELYI0NGTaKmqP+xyGgqpY8tS/BwHwM4EibQYURlnKN9Ghhz2
+	PhVzzx0HWOfDlk85azXL/3r3KDPE9O/YBLBStZEGmHG+WNXnJtOO9KanvV9S/VHiUyLZpZ
+	KXEGf8nopX/ouD5vmdob4z7g4pCkJjA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1759407190;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hGyh4h2Etc7PqdgOJVlmAyEVzH4bdd5AjXMpMQLk0k0=;
+	b=3HCGuEsKICLwovM1D2hgdcumDzXIvUet/gN8gg9Wt5IzTupscggDOAFNdA2bu6IbwBmbaT
+	g28V20lc1t6VHhCQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1759407190; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hGyh4h2Etc7PqdgOJVlmAyEVzH4bdd5AjXMpMQLk0k0=;
+	b=a44haCqlsx0ssWlnzvTSVgELYI0NGTaKmqP+xyGgqpY8tS/BwHwM4EibQYURlnKN9Ghhz2
+	PhVzzx0HWOfDlk85azXL/3r3KDPE9O/YBLBStZEGmHG+WNXnJtOO9KanvV9S/VHiUyLZpZ
+	KXEGf8nopX/ouD5vmdob4z7g4pCkJjA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1759407190;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hGyh4h2Etc7PqdgOJVlmAyEVzH4bdd5AjXMpMQLk0k0=;
+	b=3HCGuEsKICLwovM1D2hgdcumDzXIvUet/gN8gg9Wt5IzTupscggDOAFNdA2bu6IbwBmbaT
+	g28V20lc1t6VHhCQ==
+Date: Thu, 2 Oct 2025 14:13:09 +0200
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: When should we release Git 3.0?
+Message-ID: <aN5sVXNdW8-GSMAE@kitsune.suse.cz>
+References: <aNxivuJEnSHbQNdr@fruit.crustytoothpaste.net>
+ <aN1QUDzYli0GsGy9@nand.local>
+ <aN1UtbJRIhgvMmaF@kitsune.suse.cz>
+ <aN2oSBz8s_hSBMPq@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTnHQbg9ocdA1omqER6CJH-w30G14-F2JAQMtueXENWew@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aN2oSBz8s_hSBMPq@fruit.crustytoothpaste.net>
+X-Spam-Level: 
+X-Spamd-Result: default: False [-3.30 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	SUBJECT_ENDS_QUESTION(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.983];
+	MIME_GOOD(-0.10)[text/plain];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCVD_COUNT_ZERO(0.00)[0];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	RCPT_COUNT_THREE(0.00)[3]
+X-Spam-Flag: NO
+X-Spam-Score: -3.30
 
-On Thu, Oct 02, 2025 at 02:54:54AM -0700, Karthik Nayak wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Oct 01, 2025 at 10:16:40PM +0000, brian m. carlson wrote:
+> On 2025-10-01 at 16:20:05, Michal Suchánek wrote:
+> > From my very limited point of view as a user the interop is the major
+> > planned feature currently missing in git, and I do not see much point
+> > without it. Then again I do not know how useful it will be in practice.
 > 
-> > Han Young <hanyang.tony@bytedance.com> writes:
-> >
-> >> From: Han Young <hanyoung@protonmail.com>
-> >>
-> >> In the ref files backend, the symbolic reference name is not checked
-> >> before an update. This could cause reference and lock files to be created
-> >> outside the refs/ directory. Validate the reference before adding it to
-> >> the ref update transaction.
-> >>
-> >> Reported-by: Sigma <git@sigma-star.io>
-> >> Signed-off-by: Han Young <hanyoung@protonmail.com>
-> >> ---
-> >>  refs/files-backend.c | 10 ++++++++++
-> >>  1 file changed, 10 insertions(+)
-> >>
-> >> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> >> index bc3347d18..d47a8c392 100644
-> >> --- a/refs/files-backend.c
-> >> +++ b/refs/files-backend.c
-> >> @@ -2516,6 +2516,16 @@ static enum ref_transaction_error split_symref_update(struct ref_update *update,
-> >>  	struct ref_update *new_update;
-> >>  	unsigned int new_flags;
-> >>
-> >> +	/*
-> >> +	 * Check the referent is valid before adding it to the transaction.
-> >> +	 */
-> >> +	if (!refname_is_safe(referent)) {
-> >
-> > Shouldn't this new condition share the logic with what is done by
-> > fsck?  IOW, after doing this
-> >
-> >   $ echo ref: refs/../HEAD > .git/HEAD
-> >
-> > "git fsck" or "git refs verify" should barf (if not, we should make
-> > them barf), and this code should use the same logic to notice that
-> > the target of the symbolic ref is bogus.
-> >
+> It is the major planned feature which was missing.
 > 
-> Good point. I see that 'git fsck' does complain about this:
-> 
->   $ git fsck
->   Checking ref database: 100% (1/1), done.
->   Checking object directories: 100% (256/256), done.
->   error: invalid HEAD
->   dangling commit ccd1771e44a18887197d3ee26ca37c2e892b9fb6
->   dangling commit f99d68ea2c378218e2360dee4e24115c404f6a66
-> 
-> However 'git refs verify' doesn't...
-> 
->   $ git refs verify --verbose
->   Checking references consistency
->   Checking refs/heads/master
->   Checking packed-refs file .git/packed-refs
-> 
-> Okay, so this seems like because fsck also parses all references to mark
-> reachability and also parses 'HEAD' via `refs_resolve_ref_unsafe()`
-> which fails.
-> 
-> This symref checks and checking root refs is definitely something we
-> should consider adding to 'git refs verify'.
+> The primary use cases are converting repositories and working with
+> repositories using a different algorithm.  The latter might be useful if
+> you're using a SHA-256 repository that someone else has created but your
+> tooling cannot handle longer object IDs or otherwise has some limitation
+> of that sort.
 
-Agreed! Overall, the goal is that all logic to verify references should
-be contained in `git refs verify`, so that git-fsck(1) only needs to
-shell out to that command to perform the full check.
+It cannot, and the compat will not help with that because it's using
+pygit which will not get that compat code. Presumably some baroque
+scheme that re-exports the repository as sha1 might be possible but it's
+not clear if that would be practical.
 
-So if this logic isn't yet part of `git refs verify`, we should migrate
-it over.
+Another problem people are comlaining about is that with a mix of sha1
+and sha256 repositories submodules and subtrees don't work. For that the
+compat might actually help but the repository will then be
+unintelligible to tooling that does not have compat code, which probably
+includes all forges at this point.  Again, some baroque scheme that
+re-exports the repository in the other hash using the compat code might
+help but it's not clear if that would be practical.
 
-Patrick
+Thanks
+
+Michal
