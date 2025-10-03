@@ -1,110 +1,153 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA0D21B1BC
-	for <git@vger.kernel.org>; Fri,  3 Oct 2025 21:06:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2C71F63FF
+	for <git@vger.kernel.org>; Fri,  3 Oct 2025 21:18:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759525588; cv=none; b=YJrJLpuTXOQpUtqATERqnVQgQxnCK26P5tdK2uE2ncuH70TY9LVuTAot4PeW80ZaGIPmdz0tO1vZWgusTQP4E1WqYGs3IylGpk3jtX7586CjiiaOXSkB1XCVbYllEBa4KLd2RcsKAX8eeldC3T1ikyDLgUhGOufeDyLAWjLrqkc=
+	t=1759526330; cv=none; b=uCQ9uMe0wCOtoH7bQaON/Vd8Z50qkiHTxv+jHakWV7EDc0niZ9XzbQSGAAD2R0s0JVQsaDzEtiNhr5RvB+h42Ppu9JT0JjkAUZoBHah/Bb1vlpBtfQFEDjfZeWBuv0h08grpX2nyY8i4dI0KoSZ9KrycULNOwuuoSqAQJtXK1h0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759525588; c=relaxed/simple;
-	bh=118U0GfJwxgsUGFsp5OCkB/mVv/bp5C27mgS5NqBhqk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dyWzL5ghJYnRTtB5O4g6Hye31pI1hXqqe7CkwH7iJF/jdo12Yn+DisriyjYg0eu18jA6bJp8vR1gs/oyfHDciO+jILNuWtPCctx8fb7aMEHO8LymnknXxe1tHWAmt5uJQK5gC3G4zBr8z1Mmbwg+HKXQ2pc3swLTjI3IHeFSJqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=mBDk//y7; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1759526330; c=relaxed/simple;
+	bh=MhyQ2OuDxSFl5Jo6x4rA2fW2NDHG96AUUcH2NyTYxoY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eJIgxUGUmT9kZ0Rt0nMH4PMLNfl0CyAmcNhibiLh6sCu/8Xp2GtvjCwnIFegvoGb+OyhbbS4M2WrbQtfrEhlz5Bzgrgb0GLDx5KcAI7HUf1C6JiVw8Hn4VbaKR4cAz3HTrN3RrJag4fAUKS0bsI/3MVzjZv29bdqDoffXSFJlmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cpe46xaP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iq8hYRzg; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="mBDk//y7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1759525584;
-	bh=118U0GfJwxgsUGFsp5OCkB/mVv/bp5C27mgS5NqBhqk=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=mBDk//y7AoCQd/bJbEYJCk1rwEbohgBRQnoV7fk3hRL7MMBE/ziIplhZIkxxHGq/N
-	 Rs32zTYcWrWeblR12BRkFxZFdi4cRuEblwtKEOVz0NsfjYz3lc7+tQC+SB71roV+Nn
-	 AjtZEa8L9mp6aLdi0pXNaLR3XBJ8ludVqYOlyy3vSQLWlPD8/b+ZejzbOb/EqTfNoY
-	 kZ1SwfN9rgTKey7MUSXtq2xJGXNDCToy0TtPw4KWhf6PzPsrl/vR5mMZIu8VzenuTu
-	 lpmBrZgv3aFpbmkTNZwNrhq2+bt/djQv1/ljeZwinu4BHcEt5duXBJ6WCNpijt4QRf
-	 5tQouNg1Ng4T8bCKHKt+SQ1rn4kDNXnRj5I9E/03h/5I15TrAgVr2SuqgSFhJMu7yO
-	 TcvYfqSlKNE+p5Ty65tlNJ1s4RhxnkdTfneUCiP5X5OmVqcJJEhbZ59lRb6NJw7vFS
-	 +oDzMWusprWB0i5VA1+4a45o4vQMQJVX+OhhzGVu3MyltkSzO5b
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9a85:b88c:5160:2148])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C0D7720119;
-	Fri,  3 Oct 2025 21:06:24 +0000 (UTC)
-Date: Fri, 3 Oct 2025 21:06:23 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 4/9] docs: improve ambiguous areas of pack format
- documentation
-Message-ID: <aOA6z-kFCd78XtxX@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>
-References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
- <20251002223855.1022847-1-sandals@crustytoothpaste.net>
- <20251002223855.1022847-5-sandals@crustytoothpaste.net>
- <xmqqv7kvud5o.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cpe46xaP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iq8hYRzg"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D12C21400215;
+	Fri,  3 Oct 2025 17:18:47 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Fri, 03 Oct 2025 17:18:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1759526327;
+	 x=1759612727; bh=HHe90f2AkxiT8XqcXTw0gcLGGaFJpIw9Dq6z/bM/CJ8=; b=
+	cpe46xaPxrCQ8wP2/0idx3nnyeEUHTndEUFG5WCZA8+q39Ac39yWbgExIl0jWK2T
+	kKqsV/2SbIMhzosl/IGgab9mXdIf+8ygZhgZzVb/FcZiJI5a5T8UIkC8QM2yNGAJ
+	E5jCOiWYWBbe7+Qe7UeuSmOBjII5OhS/+dPXdBkexTVav8u/xYAsVG1VL7rgt2hl
+	ViwpS7YuW7FbDJ103vccMWULpQUpQjpfD8u3bUCYI2n2UmA8lJTGsimNgRZZbNf+
+	Yb1NXL+AJzgi6nL+TUSWv0GOYGuPOJ5OllCU1QkG3tyqbCcN9Jupt6VeS4Q7PLSC
+	Hvmj7AM7BJVuYo4St1k7vw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759526327; x=
+	1759612727; bh=HHe90f2AkxiT8XqcXTw0gcLGGaFJpIw9Dq6z/bM/CJ8=; b=i
+	q8hYRzgz4yJAkUrgHLkQfpAOCQaZKwPoPnHjOX5Qp1Rb5r+mQPuSKzwXZUKEyLzv
+	aOvxKFCnuV6iwlpRqwTYcJ5R+Mgg9voivFUNttyEpJ2TzS+0sNCxxyibwjYmtKeu
+	kRQDVAZxhRnGxbjTpq1eX6UKXksHy14xFj8TEKdM+IgZOD8f2g3ZIeiezLwpqqTi
+	L9r1m9e1rQlVUUnXNHIxENs5hBx9MeBlIS+AxSV3HutgSGc0cL0HuGpCY427h8wV
+	08btrBVAQRBZ/b/rmCQKW98jFp+idEvw42jZRkyCnMm1w8LAbfztgDq6OTnDnT51
+	Wz+ZXElI9VNh9Q/DaZFBA==
+X-ME-Sender: <xms:tz3gaKXMU2BVwjIiF83csylk0132BokWMTNXzeS7iXtUqbDjT66J3g>
+    <xme:tz3gaNkg1W7ME1fpV6aWaxwehIT1wuLDjaOnhGzm20aNzjQOMvY8kquSEV0cmqqbP
+    7oo7OZQFdugq1xRCfBzqD-LePki5mUrex-lSaVZ5cg88gKAohVJlg>
+X-ME-Received: <xmr:tz3gaDYAOJCHGE9BremAeW5pYd-7HMtoMH_l8KpCbBmo6RGeIGT-BSi3tLCNyEn_Y4f5tlgkDOv_0H09VAy2W_BXEC1Wwi9tVeu4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekleelhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepuh
+    drfihinhgulhesuhhkrhdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:tz3gaAOp8JatX3-eHA1rWZeAb9d8wEQFCqP096TbCTmpWtg4dk_VnA>
+    <xmx:tz3gaAbeVZJO45ubbD6DJQQ2CSbwqHut4gpNeSsk_inSumKLFvmWaQ>
+    <xmx:tz3gaG06J6SnXPut-qJawXon2xl1h39T5bER8IHHxrb2O_1Eh7zkZg>
+    <xmx:tz3gaOfhmA3Zkuv3zaCwIeQ6O9mRwx8fEILEcXV-KSOBYfRnMIDXCQ>
+    <xmx:tz3gaI2NROmKkaJZOmTyWbUbMafgprAnbcFKamuzKpte5vOfwQCvbF3v>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 3 Oct 2025 17:18:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: "Windl, Ulrich" <u.windl@ukr.de>,  "git@vger.kernel.org"
+ <git@vger.kernel.org>
+Subject: Re: [PATCH] add-patch: roll over to next undecided hunk
+In-Reply-To: <76665b6f-cb92-4694-bc89-5eb21197df34@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Fri, 3 Oct 2025 14:16:44 +0200")
+References: <c72518099a3b465c8761e41210fe3fcb@ukr.de>
+	<76665b6f-cb92-4694-bc89-5eb21197df34@web.de>
+Date: Fri, 03 Oct 2025 14:18:45 -0700
+Message-ID: <xmqq1pnju1je.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="4g61hGM6g2xX7cB3"
-Content-Disposition: inline
-In-Reply-To: <xmqqv7kvud5o.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---4g61hGM6g2xX7cB3
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On 2025-10-03 at 17:07:47, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > +=3D=3D=3D Object encoding
-> > +
-> > +Unlike loose objects, packed objects do not have a prefix containing t=
-he type,
-> > +size, and a NUL byte. These are not necessary because they can be dete=
-rmined by
-> > +the n-byte type and length that prefixes the data and so they are omit=
-ted from
-> > +the compressed and deltified data.
-> > +
-> > +The computation of the object ID still uses this prefix, however.
->=20
-> "however" -> "by reconstructing it from the type/length data as
-> needed"?
->=20
-> Other than that, the new text reads very well.
+René Scharfe <l.s.r@web.de> writes:
 
-I've already squashed in a very similar change.  I'll wait to see if
-Patrick or anyone else has more comments and then send v3.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+> git add --patch presents diff hunks one after the other, asking whether
+> to add them.  If we mark some as undecided, e.g. with J, then it will
+> start over after reaching the last hunk.  It always starts over at the
+> very first hunk, though, even if we already decided on it.  Skip
+> decided hunks when rolling over instead.
 
---4g61hGM6g2xX7cB3
-Content-Type: application/pgp-signature; name="signature.asc"
+Wait a bit.  With 'J', the user wants to walk the list of hunks,
+both decided and undecided ones, no?  So ...
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
+> diff --git a/add-patch.c b/add-patch.c
+> index b0389c5d5b..42a8394c92 100644
+> --- a/add-patch.c
+> +++ b/add-patch.c
+> @@ -1436,8 +1436,15 @@ static int patch_update_file(struct add_p_state *s,
+>  	render_diff_header(s, file_diff, colored, &s->buf);
+>  	fputs(s->buf.buf, stdout);
+>  	for (;;) {
+> -		if (hunk_index >= file_diff->hunk_nr)
+> +		if (hunk_index >= file_diff->hunk_nr) {
+>  			hunk_index = 0;
+> +			for (i = 0; i < file_diff->hunk_nr; i++) {
+> +				if (file_diff->hunk[i].use == UNDECIDED_HUNK) {
+> +					hunk_index = i;
+> +					break;
+> +				}
+> +			}
+> +		}
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaOA6zwAKCRB8DEliiIei
-gWAzAP0ULR+WVii83QyNgg099sHxQEjBxLmM1yFdq5aJJ3gG6AD/Zbz+VzBlw0uU
-O6HBXjDsTOs8VYgk0V7BvQ+cVDvu3Ag=
-=HGGK
------END PGP SIGNATURE-----
+... why is it a good idea to skip decided ones?
 
---4g61hGM6g2xX7cB3--
+With 'j', the story is probably different, but I didn't dig deep
+enough.
+
+With 'K', we seem to do
+
+		} else if (s->answer.buf[0] == 'K') {
+			if (permitted & ALLOW_GOTO_PREVIOUS_HUNK)
+				hunk_index--;
+			else
+				err(s, _("No previous hunk"));
+
+and there is *no* guard around here to say "hey, hunk_index has gone
+negative, so we must move back to the last hunk", similar to what is
+happening here that does "hunk_index has gone beyond the end, so
+let's wrap around to the first one".
+
+This is another bug that is maked by the fact that hunk_index is
+measured in size_t (even though there is no reason to do so).  Using
+unsigned hunk_ix is simply crazy here, especially for a code that
+wants "just do hunk_index++ and adjust if it goes beyond the end"
+and similarly "just do hunk_index-- and adjust if it goes beyond the
+beginning".
+
+In any case, as the result, going back with 'K' when we are on the
+first hunk is broken with the current code because we'd stay there,
+and with this patch, we'd move to the first undecided hunk.  Neither
+is correct---we should move to the last hunk, I would think.
+
