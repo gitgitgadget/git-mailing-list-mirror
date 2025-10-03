@@ -1,59 +1,58 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE5D2222B4
-	for <git@vger.kernel.org>; Fri,  3 Oct 2025 07:05:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2F623CE
+	for <git@vger.kernel.org>; Fri,  3 Oct 2025 07:30:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759475143; cv=none; b=Ieclcf7Bw/1/tHx82Vd1W33tLD6Y3l/sigcQ4P08YU8GYm3mWB9oqdX4KiLbJzj45j5MpA5P+uGK1Hfv8/8eBg7s27MRQSwtFOo5kOu5obsB316sc3gdpZfbyKivpdB6++jZqCNtTXskOpq40g9LD446sZKSB2YLSsT/mUFUWlM=
+	t=1759476635; cv=none; b=N3nqOlliQBLAsh95IbkyrEBwDaUFmfKB33iI8JnIz1+9kKc0/epoP7S6eIj6juddemZNQ/srb1sorh1OaOXJ3DKSdUDPLIeVhKXcboUKECSXzVn5OW7aoLZvo7pGBmXhTMVX2HEvjevyakw/68wMWZvnhGtXWBeUj3iBua8deWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759475143; c=relaxed/simple;
-	bh=z8BpO7A4LXVQO2c2exKRUisFASUw+ZC+1M1FtHZgLXc=;
+	s=arc-20240116; t=1759476635; c=relaxed/simple;
+	bh=NPUpOqGve9r+gkBuddat6AYaq9By1QP13VhNlAIlur4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OOFCAhLJVkEvzBRYL92gtLAUspM1cFeroO/en8nA3FnNcAnt37Lf4S95VzDEp0ACY7xsjIM0lSBsbi6ajvZbbgFlgfsoLrjZK9oKKYV2lHnAJ3m8Brdj91FYULvy/eiYkSVlLAg8IvfXBpKddWkpObdqvho4K552RfB7w+uvdMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gs4MwswM; arc=none smtp.client-ip=209.85.208.44
+	 To:Cc:Content-Type; b=XA2pwPwv4ILEuuthfDRf0oTmMhLdAIm4z3ANXwMCn01CUBv6YzMRlvQHXyTrU5qcu2hkB0GYiMYU7khiKNGg/rjOJAhVTtEFFvtzvSW2GmBmOc6oxNi5vDWbQ82ZlpqoGswqEdgY9luf6pPTPlTUI+vnixBYQIUHKsNDIa8uXtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OxURf+Mm; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gs4MwswM"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-62fca216e4aso4408072a12.0
-        for <git@vger.kernel.org>; Fri, 03 Oct 2025 00:05:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OxURf+Mm"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b48d8deaef9so234490166b.2
+        for <git@vger.kernel.org>; Fri, 03 Oct 2025 00:30:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759475140; x=1760079940; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1759476632; x=1760081432; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8/8/tR4eCyw2SW5WO9h4jEQfA8lzIQZ9mUVjbmv98r4=;
-        b=Gs4MwswM0UIs7zpIckRnD3wp+thD76VObIYUU0o8qqouCg5f7wIBy1PepjpY1uNUXE
-         O7Wd3FBwNpCXWVT+8vdRHbV4ONcjV3o8gAN85FpCX6Yu1naJVe7JW2AZ7044XWn/3L3I
-         rx5immhZa7xp1AyKEpX4rU3bxMMbFd7dOAra2KIwppDaXILzpf1RZVPCdS8FXvghCnyL
-         SW/76g8Be7Rm8+DPoBSJzqR+sFdgKKAs5vIho1ygJO1C3EXskn/urImxiwfbPJYfu7W+
-         Wdsb9cP28YVd7n6dEYkwHyplBL1jIZvxiFpwGWExL5Fg6EKFj1RB0v7FbR9wPfkKF/4U
-         1BCw==
+        bh=NPUpOqGve9r+gkBuddat6AYaq9By1QP13VhNlAIlur4=;
+        b=OxURf+MmnN8wIw5PfsD4m9bqfn7W3KDpehvYALaOusu2mM/XWu+2N01RT5CKfKxV4C
+         0hxiaojxcKAB/kCZ6rvbeTkHNNGYF/EYuM6XvSyY2Ll4Ag+vxAVnbRoOdW37JD0HTkUP
+         JY6Tup0J4XOVA0eMR6rIHGpa7ICnB30bMD+7uvYV1g8Idd67+yXFWLBXMvIT84zRPEym
+         NNxsj98/m3/viYXP/eUIifO5Nlld2DiVjq/0rPEc1zItHm4ENMUeVX2PxUM5BMKwW2Si
+         ANk6ZtZxp/emOwyhVm2nZG6pxKo8+ItQlaTu5OLJ+daNLUsHHsZDC19AECdxrdacFOiO
+         J52Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759475140; x=1760079940;
+        d=1e100.net; s=20230601; t=1759476632; x=1760081432;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8/8/tR4eCyw2SW5WO9h4jEQfA8lzIQZ9mUVjbmv98r4=;
-        b=ru6SKt8vMZYMUI0YctTxTbE5dmp9wB/PmVn6uni8kBCwFuR8KgngZX68QYFmJebjIG
-         SzybiS3cg56nzEVN56TiN4r0nE61l0uG/gADz+ayY6jRZHzfSZD3NY6xFp59LyqDO1H3
-         do03AjnebVi7s4z4xjKGrJmToDx7xmDwx57DSWjJnosfDcdiy66CKIhk5PNeyxDqNN0Z
-         +bzM4yQuiHao51pJkWbYS1buijDw5u2vpmJ5NqF4qx5nYj5OAgg9O0mQn6MXA4+6pFzR
-         Kspqf4y+KL6NJXFS3nqOPXU5WDlkFjmZyLvHeBNxuPeLffKvGJjVgkT0tLGz133gzuqV
-         PkzA==
-X-Forwarded-Encrypted: i=1; AJvYcCV0a8TGvKATbkWgjkUMQMoyat2pd01Fi4p8ELj2tY46NALgQtqiGj/rtAXqAS8mK0zV75k=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw+pP/I+9Q8nu0DJimhNK61FaypRe9S00wzYWU15AxRDdVpPKbw
-	62qMwOsakcleZI2Qr2y59+FUPK6O6KW69q15oH3y2nBzO74mO7eKT/qMkxuGd+gA378iU7IO2J6
-	N+/paNquwIL2Ek6yo328SsnJIIAWN3nrZb3kYz2w=
-X-Gm-Gg: ASbGncuQoMfcxIOArmGQfx5PDu9M7PPB9pHFWY8oX1cLuf5tyQda/+KstQyPLbgDlC3
-	7IRvsy1rvb+3BB0R8Mv1CW7zsTBapTBPJE5Dtyuu7jVQmMbQFzt6eFzZDUj9oGU7LJMlH/GP90c
-	Fe7jvv6M6JGHL8qXU7FipXpmGahDT9vldISf9M6TG7lDsI4GJzh5tzxTDW+fQQl0xNT943jnNj3
-	d9FcgaTyKv7j5o+RwA0FXWa3Pp60CEuhwpyjXF0NQ==
-X-Google-Smtp-Source: AGHT+IHy8swUfKR9F5x/r3GAfseUNzej+yY4XGAjwe6w38GGaVo4Hnms1FRBFyBYS4z5Lq/vCz8N2jiS/07ryj1qw/A=
-X-Received: by 2002:a50:ec95:0:b0:62f:4828:c7d5 with SMTP id
- 4fb4d7f45d1cf-63904eac1f4mr1847345a12.16.1759475139736; Fri, 03 Oct 2025
- 00:05:39 -0700 (PDT)
+        bh=NPUpOqGve9r+gkBuddat6AYaq9By1QP13VhNlAIlur4=;
+        b=X+UAHrFzQqaAYr3z7vtmn2/fqR3rQdHOUirF1Gp6U4rVY49rAiZve7fwB9akiNcJZJ
+         98NSIuXySqSUnQXsR//cbagjUg1GgMRl4m95sNBZ2nUkRGi9YpJMaYJSP0UrBpQsa84M
+         tA9kGbiRUkpKWGVUEGuV8StBO5h55PeRTZkMwAlw9B4VuegOqSPWhxAcaHc3U1eo0ib3
+         A1nBWV5h6kxiFGXlaZ5mtArdU9r8haX1AYfUauVmx+3bZfG+qKGd6XhC68yQR4M7dkyc
+         VL19RRytEXrJge07pkxkwETPbQ/6Ln+h5SZViJhd1AGWpe80hzh4PDU5U9KvKchrie5C
+         8mww==
+X-Gm-Message-State: AOJu0YwElfB4OfmczSyEWTeRdwECF6CD1CmsVIJeXb+5h+iTljyyjirz
+	2c0bqBL4mfk3pTIkcw/da1k/hGg68eGIhKUthmkeT1FlEKI+QjfVZCOqG/GVcNbqFLibzwdfMCA
+	Re5OsWlqOiZSv8pHcff4F4VQKq3xFzws=
+X-Gm-Gg: ASbGncsulxfNNz2Mqd9h+agI0bkAQcsuYbyKTcXTaXrrJMVdRTLOM4gV2DZkUB0dXrW
+	yJAqp7zDrt0ArZmvkwE7nQLvQvmCK4+h9Eu6wizIghdK71QD15CR18aKg21Z2RAsnTx6C/IRP+B
+	rLOOnMk/haH3UaAjvNigQQBnDztFa8HDIdOErcCRrMk2qAowyOpNBwI1QN35vOjkv4Y6lpSbJp5
+	A/VcMBiy3n6InUwMptWOteiMROTiWo=
+X-Google-Smtp-Source: AGHT+IGnZVvqeugXi8AU2k/PQeIlyQjAj01UyPvt8FIdzm1eYe3CJYfeJcuSg3XBhl+hgls3tjpS6sq5Os6+7EClVbg=
+X-Received: by 2002:a17:907:3f8a:b0:b2c:fa41:c1be with SMTP id
+ a640c23a62f3a-b49c408771fmr228781766b.61.1759476632026; Fri, 03 Oct 2025
+ 00:30:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,68 +61,78 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
  <20250926230838.35870-1-siddharthasthana31@gmail.com> <20250926230838.35870-2-siddharthasthana31@gmail.com>
- <CAP8UFD0POvYDgGtEx8GBhvKkd8XzzWQsy8XxAKL9M3+uz3ka+w@mail.gmail.com> <CABPp-BGcbdygEjndAjXo9utUhTac7JTHscX4iiwk4UZcHonXvg@mail.gmail.com>
-In-Reply-To: <CABPp-BGcbdygEjndAjXo9utUhTac7JTHscX4iiwk4UZcHonXvg@mail.gmail.com>
+ <CAP8UFD0POvYDgGtEx8GBhvKkd8XzzWQsy8XxAKL9M3+uz3ka+w@mail.gmail.com> <4a5eaefb-79cd-4b7b-ab3a-cbab648280f6@gmail.com>
+In-Reply-To: <4a5eaefb-79cd-4b7b-ab3a-cbab648280f6@gmail.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 3 Oct 2025 09:05:27 +0200
-X-Gm-Features: AS18NWC5irXReN-zt4rvHS-vSuAK9Va0QOabjj-YvEtip9E7Yk3zSs_OwQXhIpI
-Message-ID: <CAP8UFD294t9qhQBjRS5cun4fwga0BseRHFmOapG0gpKS3r-6UQ@mail.gmail.com>
+Date: Fri, 3 Oct 2025 09:30:19 +0200
+X-Gm-Features: AS18NWAcmyN09fTsdxj6pxXg_24B0otZBJyfRN6dLT5Y8H5GwZ7SpmCyXFmDGjQ
+Message-ID: <CAP8UFD1Z1waDT6jxYrfzxuEVz1Jnb2uwP7YbB4a6=AhmtLKcLg@mail.gmail.com>
 Subject: Re: [PATCH v2 1/1] replay: make atomic ref updates the default behavior
-To: Elijah Newren <newren@gmail.com>
-Cc: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org, gitster@pobox.com, 
-	ps@pks.im, code@khaugsbakk.name, rybak.a.v@gmail.com, karthik.188@gmail.com, 
+To: Siddharth Asthana <siddharthasthana31@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im, newren@gmail.com, 
+	code@khaugsbakk.name, rybak.a.v@gmail.com, karthik.188@gmail.com, 
 	jltobler@gmail.com, toon@iotcl.com, johncai86@gmail.com, 
 	johannes.schindelin@gmx.de
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 3, 2025 at 12:55=E2=80=AFAM Elijah Newren <newren@gmail.com> wr=
-ote:
->
-> Hi Christian,
->
-> Excellent review, I just have one tangential question for you...
->
-> On Tue, Sep 30, 2025 at 1:24=E2=80=AFAM Christian Couder
-> <christian.couder@gmail.com> wrote:
-> >
-> > On Sat, Sep 27, 2025 at 1:09=E2=80=AFAM Siddharth Asthana
-> > <siddharthasthana31@gmail.com> wrote:
-> > >
-> > > The git replay command currently outputs update commands that must be
-> > > piped to git update-ref --stdin to actually update references:
-> > >
-> > >     git replay --onto main topic1..topic2 | git update-ref --stdin
-> > >
-> > > This design has significant limitations for server-side operations. T=
-he
-> > > two-command pipeline creates coordination complexity, provides no ato=
-mic
-> > > transaction guarantees by default, and complicates automation in bare
-> > > repository environments where git replay is primarily used.
-> >
-> > Yeah, right.
->
-> I'm unsure if you are expressing disbelief, or agreeing when you use
-> this phrase.
+Hi Siddharth,
 
-I was agreeing with the general idea that having to pipe the output
-into `git update-ref --stdin` to actually update references has
-significant limitations (in particular for the server side use of the
-command I am interested in).
+On Fri, Oct 3, 2025 at 12:16=E2=80=AFAM Siddharth Asthana
+<siddharthasthana31@gmail.com> wrote:
 
-I didn't check every point, especially the "provides no atomic
-transaction guarantees by default", my bad.
+> Thanks for the detailed commit message review. You are absolutely right -=
+ I
+> was mixing the patch rationale with v1=E2=86=92v2 changelog, which belong=
+s in the
+> cover letter.
+>
+> Your suggested framing about considering an --atomic-update option but
+> rejecting it in favor of making it default is much clearer than my
+> approach. I will use that structure.
+>
+> For v3:
+> - Move all "since v1" discussion to cover letter
+> - Use imperative mood ("Let's change" not "This patch changes")
+> - Be explicit that --output-commands and --allow-partial are new options
+> - Add full stops to the implementation details list
+> - Will add Helped-by trailers for Elijah, Patrick and you ofcourse as
+> suggested.
 
-> Most commonly when I see it, I assume the former (see
-> https://dictionary.cambridge.org/us/dictionary/english/yeah-right and
-> https://www.merriam-webster.com/dictionary/yeah for example), but I
-> think you've consistently used this with the opposite connotation.  Am
-> I correct on that?  (This is a particular phrase where tone of voice
-> used would be really helpful, which doesn't get included in emails
-> unfortunately.)
+Great, I am looking forward to v3.
 
-Yes, you are correct. I knew that it could be used to express
-disbelief, but I thought that use was mostly a familiar oral one, and
-the context would make it clear that I was agreeing. I will be more
-careful when using it.
+> Quick question: for the C89 compliance mention, should I drop it entirely
+> or briefly note "uses 'int' instead of 'bool' for C89 compatibility"? I
+> want to acknowledge the bool=E2=86=92int change but not belabor it.
+
+There are 2 ways to look at this.
+
+1) If you think it's a significant design decision to not use the
+'bool' type, you should talk about it in the commit message, saying
+something like:
+
+"Using the 'bool' type for X was considered but rejected because Y."
+
+where you replace "X" by the reasons why it could have been used, and
+"Y" by the reasons why that was rejected.
+
+My opinion is that it's not a significant design decision but only a
+minor one, so I think it's better and simpler to just not talk about
+it in the commit message.
+
+2) The other way to look at this is that it was a change from v1 to
+v2. In this case it belongs to the cover letter in the section about
+changes from v1 to v2 if any.
+
+You don't necessarily need to include a section about changes from v1
+to v2 in the cover letter for v3. Some do it, some don't. My opinion
+is that it's not very often useful, and readers can relatively easily
+refer to the cover letter for v2 (where it definitely should be) in
+the rare cases they really want to see it. So I would suggest talking
+only about the changes from v2 to v3 in the cover letter for v3.
+
+To summarize, yeah, you can talk about it both in the commit message
+and in the cover letter if you really want to, but my opinion is that
+it's just not worth it.
+
+Thanks for working on this!
