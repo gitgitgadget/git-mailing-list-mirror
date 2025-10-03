@@ -1,92 +1,88 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB241DEFE7
-	for <git@vger.kernel.org>; Fri,  3 Oct 2025 16:20:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733D52BD03
+	for <git@vger.kernel.org>; Fri,  3 Oct 2025 16:29:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759508441; cv=none; b=ghpJOPs1eWojKPTvAlqvZWHGRFmJ6EmTLVzbCFQ5qIpk+KH+2fyYpEGWD6kkXuoKHvSVi52oES4LdcT94yxYEFp8Jd6gB0/dS/TGcP3Nxiqwe9Mu29EH1bHenN3YEaVrzIMXtfkc/wmjTfzy6iizWj3uSyWtyOryPRQnzoEVYmE=
+	t=1759509000; cv=none; b=fLbUZ0nvaKJk1Cn3jNNbtDkY/4jHSbu18O0r/ArPCwgbhZeUFr4laYEFr2o9aApVE7v2/VyTT17XpHy3OAwyqrv3cSupxjNuv+BmnJbrZUdEgFaKWwXrq7ozu3Ugi2For1ptS3CES6A6hgOIbTVwI6lkNJrbVvn5m2du5ugGvOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759508441; c=relaxed/simple;
-	bh=EByCztbuakdlUF06Pk2Dy41ZFprbuy9nItHVYR1AfB8=;
+	s=arc-20240116; t=1759509000; c=relaxed/simple;
+	bh=4gjSTadApCT0SeLE5rADRDZTvXlcFM58tOcv9hadejo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CTX0LGp50RSh9pDpeU7gIvWVsvoFgt6Twzph5dntufgcmmfJUrOeByLILQqQ+P4dWYhrKjzONTBMTSqVLnuEpoAwKFZcRFgTSN9dLxM5z+Wj2wm8aDe50iGW0d2XD9f8C8gUb5S2Sr6eAbibVwib5xjTM9p0UYXeZpAg9qG3CK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GwtW4JDB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wdZmCmbp; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=j2hS9CYbkGhOmvtzjuYMmKVxede2nGWIHq7WLIPAC4/BiCyjgGqjNGcy1yTJxHJ3bc9Gsf6H2yxCz72TPfEkUOTgkOh7qcZitrSc2FORv4hxZ4s+4apJ7LHsjZiYzKnKjECt0hB/EBxx+gnqu1aG5GELxY2Ys9y8G67NVifTTdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c6yr7vIY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K2UJtORt; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GwtW4JDB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wdZmCmbp"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id C6E6EEC0281;
-	Fri,  3 Oct 2025 12:20:37 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 03 Oct 2025 12:20:37 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c6yr7vIY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K2UJtORt"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9FA561400192;
+	Fri,  3 Oct 2025 12:29:57 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Fri, 03 Oct 2025 12:29:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1759508437; x=1759594837; bh=gZdIXo4WkT
-	y9nZBOLlAepcOVNRrwXMLXp1s9F9ARJno=; b=GwtW4JDBwPQvyCYg0aqzXzfxzZ
-	3IYd4z0PojJxAjwZu+6GdRxJGPIkeq2blOAJMBixJckgkcHPdFxJpQ++y8ahN3sQ
-	lVK2521ptO5HTaHrip/T/t8lXFZP+7FdT0M7s/+/IZNyB6+tzdG8hLWmbSH8CdTx
-	EmmWcDb55ss6valJliLrekPla1XJ2/qst8OBU5j877fPp00Lkqc8e4mxpC7OIKpM
-	BTUisi+d4jhGtYo56W64k4zVeApGKYuDwpIFudQr6F91xo2O82p0627gv+qEnJlw
-	Ld89OrGCbbPPMXNMA+8YrOlEdxvjTkfGzTROAiB997ELKJ/wnwNNEoOjZmLw==
+	:subject:to:to; s=fm1; t=1759508997; x=1759595397; bh=oQ8h+bBIKW
+	qWw5+GJEorsFer2+rkx6QtCxXhh6YAD8w=; b=c6yr7vIYwlhpqXPIQAw8Jghitm
+	uLvpSUlweq3fWqG7Q4rbuAU39NCbZjl+5GNZPe1VseF4MFsglNVH6U+wItrGCAxo
+	iCL6esyvxugUf3KwELfcHWApl/8U3NLflphQAFkYRbLdvo/uznXSaHZzBZ2BHTti
+	PbcExtCBWJamtH2W+w4a8bl+nAF7ReVB0cmsYtnS4R8HeQLojfo0lJzFwFE3vUth
+	s/vd+CBIad1yQBlZHO3Cx7YmDVLgpSInNCy689Idx6WPyHSnCe8EOSSi/GHrUPG1
+	4xHqyX+M8ncRswZmK7zMXf37DpNbTo7YreECVSI/qEnBqF+pS7Czc0RwF47g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759508437; x=1759594837; bh=gZdIXo4WkTy9nZBOLlAepcOVNRrwXMLXp1s
-	9F9ARJno=; b=wdZmCmbpwZ3LC5hTp0DG/7kDlOd06XQ5q7SEHE06DSGbt38SSrq
-	X/6D1hC5fv7IoIOr8az5FySyv1P0R70L3UOAqtL9WeF6M0A2JdLROu/+ksSU8aUX
-	l3aLi44N9BDWfzfxibD+0oomYKRl4SO9GVSjZFRiQgpEDO7f9ba9+a9DBXLTxmB0
-	XPjzw5TQZGi+oIfW1FXc4Z3WMt+htPM1Po4irgosnV5fABnxM8U7w9re4r2bHir0
-	+J8pQnsA4f/3PSwGVyO2rFvCIrn+hJQ7B101eroiM8yjIrAK/uxNhOV1y70d68Q5
-	HRxsdq5SU92BASUyhZHozvqNLqv2tyKLkCQ==
-X-ME-Sender: <xms:0_ffaPWA8wv1HPxLzjsqUtpm1DXGw8-W5Mk2AVqdA0H8RQ6Bw3qfsg>
-    <xme:0_ffaEfbg7u0riXj5hYNcmBYrYfcPJ-2o_HQV_jraaZOeolhb0B0pVw9qyY_mve4e
-    7izKcizZis0r8RC_tYKhk30z31XAus69sAJlBNB_TktLQTJYC3_sw>
-X-ME-Received: <xmr:0_ffaLLcJhNhOmbyZbtunNWBkgWVUOlYLCBH_BKSDiXPerpHyq8iO-ubEss8_Ai-9NaQTfEOsMGxbi8G2iaNB_gyl6zDbX0sxl90>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekleefiecutefuodetggdotefrod
+	1759508997; x=1759595397; bh=oQ8h+bBIKWqWw5+GJEorsFer2+rkx6QtCxX
+	hh6YAD8w=; b=K2UJtORt52eDNbaZvu6gIZwwvoFBMPjPgm9ExL+G1aYnes6R1Dm
+	l0Y6s1rpVpEol0EfDO1Yr4VuJ7/Nl+wH1+0TnAAGEw+NGXg0QSqGPRjq6Gzp7Ydv
+	z8/qV07YGOqnTuxa68tXHHyZCHj5Nbu3loTGy+P9xiKtd9u+igiHVp79Z4WPSp1/
+	+d/SU7DVRyF0goMCtUh0MIjoUbznIae2blpyekpKQOJ76ATBppEV7bKpojnOBXZG
+	Naun2EGNlXlApEJz66rNH8SZRMCMZk0Q3xrYy6ERGrR4Yb60JhbfVh6w+Lzt3fmk
+	n1BLkcBBWVuaiHZyGQAVD7CUbCu8Vgl9Stg==
+X-ME-Sender: <xms:BfrfaCtuLvUuXl9ImxoclvpK_N5IRprOKKJfwss3RTkHPeSt_KvJYw>
+    <xme:BfrfaOVwkBC3R60PFzQ8rOWH7l5Hcpmk6eqrKUq-u7WJ3RQuGPXA8TKd8bshQ-im9
+    zQ5mk8wKU5ucey01rxfFYNWrPKWLBhP6mRP8A66EK5pwa7kFw1zyg>
+X-ME-Received: <xmr:BfrfaGFiHB-mZwNWp4DQY6Gq5ZvZn7YmKenEkREkj0-N9K9NH0oh5NV-zowvurQ1b4s0BeAk1ci9kO1A2R0jnqJgZh2b9Q7sbf8P>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekleefkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehrihgtkhesshhftg
-    honhhsvghrvhgrnhgthidrohhrghdprhgtphhtthhopehgihhtsehsfhgtohhnshgvrhhv
-    rghntgihrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinh
-    esghhmgidruggvpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopegthhhr
-    ihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:0_ffaJwTbGPMzGdpHX311AZUICncTVCUpr9XHx3AAhoUlhWOSD8hww>
-    <xmx:0_ffaJs3FNz9GupIhyyZ8dydsOYnSnYCHyl3Vb-gvFVVz4rt_FCS_A>
-    <xmx:0_ffaEDre1S7Z_o1o6uZeZTonZ9mGrjKKlU5WUUcsCBdH4c2E8I2ZQ>
-    <xmx:0_ffaDGR6iSgumd1TdobGMXEatvu5MgfDwrwgrc7gucI4xoT9GXg6Q>
-    <xmx:1fffaKP-gGGsG6LOPE5i9eqGjmkRkqdAZ1B8jf0AZ5HFSkA3fTn6mvnS>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjh
+    hnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:BfrfaI0zhhS9PoIL6fcNtfqAVvU0ppcDsxPRKLshGpu9vwC5LQZwxg>
+    <xmx:BfrfaANehlA3haGo-C66NYArd6PkL83jajPaM24YGjEvoC0HoN3VrA>
+    <xmx:BfrfaP4SbUogVI3ZK_fgCS73VzINDTboUc08aXMeax4vQNh6rC3xrg>
+    <xmx:BfrfaC2S4svuUr4FDwZ8Lba8U6BDL5eqVs9C076vrhatoS0N6zGC1g>
+    <xmx:BfrfaA8M5Oi25yv9dyqzibn_xzyUkrtJcURq6ogxpwcgr4rc00-m_L2M>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Oct 2025 12:20:35 -0400 (EDT)
+ 3 Oct 2025 12:29:56 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Rick Sanders
- <rick@sfconservancy.org>,  Git at SFC <git@sfconservancy.org>,  Johannes
- Schindelin <Johannes.Schindelin@gmx.de>,  Patrick Steinhardt <ps@pks.im>,
-  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2] SubmittingPatches: add section about AI
-In-Reply-To: <CAP8UFD3wc-aj27Q_kFXvknJrpa-ySWbZiPmNCTMboA08=HP+xw@mail.gmail.com>
-	(Christian Couder's message of "Fri, 3 Oct 2025 10:51:13 +0200")
-References: <xmqqcyalm0mh.fsf@gitster.g>
-	<20251001140310.527097-1-christian.couder@gmail.com>
-	<xmqq4isi1gpm.fsf@gitster.g>
-	<CAP8UFD3wc-aj27Q_kFXvknJrpa-ySWbZiPmNCTMboA08=HP+xw@mail.gmail.com>
-Date: Fri, 03 Oct 2025 09:20:34 -0700
-Message-ID: <xmqqjz1cufcd.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+  git@vger.kernel.org,  Kristoffer
+ Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH v2] doc: change the markup of paragraphs following a
+ nested list item
+In-Reply-To: <20251003034134.GA625140@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 2 Oct 2025 23:41:34 -0400")
+References: <xmqq5xd5aqa5.fsf@gitster.g>
+	<20250927195032.37223-1-jn.avila@free.fr>
+	<20251003031113.GA6381@coredump.intra.peff.net>
+	<20251003034134.GA625140@coredump.intra.peff.net>
+Date: Fri, 03 Oct 2025 09:29:55 -0700
+Message-ID: <xmqqfrc0uews.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,30 +92,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Christian Couder <christian.couder@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> A milder way to phrase this would be to jump directly to "we reject
->> what the sender cannot explain when asked about it".  "How does this
->> work?"  "Why is this a good thing to do?"  "Where did it come from?"
->> instead of saying "looks AI generated".
->>
->> It would sidestep the "who decides if it looks AI generated?" question.
+> I think to appease both systems we need to put the inner bulleted list
+> inside a block. I think that is OK in this case because there is no
+> inner block marker to worry about. So:
 >
-> I don't think the "who decides if it looks AI generated?" question is
-> very relevant. If someone says that a patch looks mostly AI generated
-> and gives a good argument supporting this claim, it's the same as if
-> someone gives any other good argument against the patch. In the end,
-> the community and you decide if the argument is good enough and if the
-> patch should be rejected based on that (and other arguments for and
-> against the patch of course).
+> diff --git a/Documentation/config/extensions.adoc b/Documentation/config/extensions.adoc
+> index 49a7598ca5..aaea8c107f 100644
+> --- a/Documentation/config/extensions.adoc
+> +++ b/Documentation/config/extensions.adoc
+> @@ -55,8 +55,9 @@ For historical reasons, this extension is respected regardless of the
+>  refStorage:::
+>  	Specify the ref storage format to use. The acceptable values are:
+>  +
+> +--
+>  include::../ref-storage-format.adoc[]
+> -
+> +--
+>  +
+>  Note that this setting should only be set by linkgit:git-init[1] or
+>  linkgit:git-clone[1]. Trying to change it after initialization will not
+>
+> on top of your patch seems to do the right thing (no change in asciidoc,
+> and eliminating the regression from your patch). It's a little gross
+> because we are reaching across the include to realize that
+> ref-storage-format.adoc contains a list that needs to go into its own
+> block. I wonder if asciidoc implicitly opens a new block for an include
+> but asciidoctor doesn't. But at any rate, this is the only way I could
+> come up with for both to render correctly.
 
-And then who plays the final arbiter?  One can keep insisting on a
-patch that looks to me an apparent AI slop that it was what one
-wrote oneself, but you may find it a plausible that it was a human
-creation.  Then what?
+Sounds good.  Thanks.
 
-It is very much relevant to avoid such argument, because the point
-is irrelevant.  We are trying to avoid accepting something the
-submitter has no rights to claim theirs, and requesting them to
-explain where it came from, how it works, etc. would be a better
-test than "does it look AI generated?  to everybody?", wouldn't it?
