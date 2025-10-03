@@ -1,76 +1,179 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D0D2475CB
-	for <git@vger.kernel.org>; Fri,  3 Oct 2025 07:56:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759478209; cv=pass; b=i9L/McuAe6NuVA34YjZKz6DVWOvYFneuP0hP139Tjm/jE5cwuHeZqLY4g2D3pFVELr9SV63ATxOe30AjGjFdmcZgTSc1PhvY6a6uBAASJuouBRrUf9RgohEX4LdnmZzlXYfotTF4nUd1nCknoB7FLIvCXT4WRydnk/IQowqwczE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759478209; c=relaxed/simple;
-	bh=8CKa8uZzreXIuceZDZhNjLn4L3oUMIBrNUMxuTnzJvQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TK3w/UaH3zuboHub6Fc6AxBEuhCgfIfQLO1vlXyG5YqsUCtolyGroOu/xIkqoDOJiIePuaGc2MMFCScDgToJA4VTiT6mTqCUXBwenAaP/vOn1DemO6iaHWUPmNyPffzYlcfVbDInzRM+brkd1HfAYYa7hIA6wEyYVkx2YL4GuvU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=MRDqlUeS; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884CD25F994
+	for <git@vger.kernel.org>; Fri,  3 Oct 2025 08:00:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759478404; cv=none; b=c46gXalLIxa+XfetC8Yh64hBQuN+X1P1mPWMkorF+Zcv/bjtuooSJwxB+FcXffnl63wPcDw1LHvEQoNWjqGrCVQB6QhQOwGTFTg2vLGidZCLLU2wD8ilDjRyAYgtsB/qpgGms9On6R//GlFA9LVdU8kB7lPH+r4x+j+GhpFtEkA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759478404; c=relaxed/simple;
+	bh=Rwf/CuKVjRaFxzx1YkCekHPZZesj9sp9Omgcw60mF38=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Tz/dNZBVSWxrRZaTwxE0214GKFRev2WJb4oToZfjQizD4HhxVxLLKAtKBpHK2nCaMCAyZBk8BOmnfhGOBK2p+yDLzIULukNz7L5nAeb8XocFbRyDDDCItjr4Y1Ar8Rfz+6Pm4hprrW97rlIHsIBICb0E19zeRcWzIhUn7NLsoEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fvj4UXAM; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="MRDqlUeS"
-ARC-Seal: i=1; a=rsa-sha256; t=1759478187; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=jljsc590tLDHYNUgS9QyDd/LR7YyH+loWh4XeGObv/5GezBJyXIB1crI8pFO8fl0lu6SoPp9xObZsudQGzPYhtFXPAyUDONkYlu4kJf6Hmq1EAHgi7U6mIOEp4tUFjwXB6KrpLE2gDNvYGEYXK8Xd47bDCB8QWBLMWB7zwGhpb0=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1759478187; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=EUZKTsrZRuW/2SXjT/3d5KtX17sWxrXC3dEjp0ZuhMk=; 
-	b=B2jgB9VwGk4ifOJGvKwWjO9pMOyrLFFfp/2GzhIbz9mrEYSBsxv5q0xMXqz06lyraTkxTfhmug3enC7vspz57Gnd1aIlM5ECo1l4E0351PJ6+i58yaZK9oIokvFguHj60QugdyEIsyRhFsQVIEp6K0dqTIRfuV6bdvIY6otsrz8=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759478187;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=EUZKTsrZRuW/2SXjT/3d5KtX17sWxrXC3dEjp0ZuhMk=;
-	b=MRDqlUeSneSrcACpXC63+JBZwenPV+FOPQ6UI9R2XoycyR0OlnuB4+AfCKLZGqpc
-	VLdYme8mvzVuSr3p6QT58ZN06/+IWOeQTvkz+KL52J3O++ASiiQl6iCjFXukau185S/
-	scsfegrBkJPctLTAtPnb9oXyyqV1FeFWNRnZWKTg=
-Received: by mx.zohomail.com with SMTPS id 1759478185098682.0390298360945;
-	Fri, 3 Oct 2025 00:56:25 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- git@vger.kernel.org
-Cc: Emily Shaffer <emilyshaffer@google.com>, Rodrigo Damazio Bovendorp
- <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio C Hamano
- <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>, Jonathan Nieder
- <jrnieder@gmail.com>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon
- <steadmon@google.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
-Subject: Re: [PATCH v2 08/10] submodule: remove validate_submodule_git_dir()
-In-Reply-To: <9c313e46-805e-4b10-b8f9-6e2d5bf0ccf1@app.fastmail.com>
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
- <20250908140117.262205-1-adrian.ratiu@collabora.com>
- <20250908140117.262205-9-adrian.ratiu@collabora.com>
- <9c313e46-805e-4b10-b8f9-6e2d5bf0ccf1@app.fastmail.com>
-Date: Fri, 03 Oct 2025 10:56:20 +0300
-Message-ID: <87wm5cbeqj.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fvj4UXAM"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6394938e0ecso811355a12.1
+        for <git@vger.kernel.org>; Fri, 03 Oct 2025 01:00:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759478401; x=1760083201; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H/cI1HyidHYVHZvC3ZxiDQ7QNlczYGS9xq7HbhthMgg=;
+        b=Fvj4UXAM/l581wUP2eVRVyfN9OGvzkAuj6OYJ+vFaAKhImolMpOVE6PILC5hm6jRzw
+         4v6Cmr3WYUt8j8jkoDrLMcovNviJ2LzMLivIj3gU/uvOLwvNk52tvCRn0EQqZIIWOTr3
+         NfkLNhkXP904PAKt5byEDTjZjzJI1MeHOiqQCobEy+yJlK4mXEe3t5bNhuZleot7Rz0T
+         qmycmBCH9gk4nl3QBPLqqW2ijEJwkXHVbk2NQzzepQp7XUeWyzabncKdZXMJg3l1eT9v
+         1PPIPArRliXWvG7nuQegRd0gO2YyCybap+Q+jyx3rHkkZgeDXggOGHNQZ9RBZBa2PJky
+         27Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759478401; x=1760083201;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=H/cI1HyidHYVHZvC3ZxiDQ7QNlczYGS9xq7HbhthMgg=;
+        b=PLOxyvstC8oCTlIdKu7z2/RZJchGrLjDlKMGmk806awheeonp+RPUnCrjHSzK0US6H
+         F1FDjDmF47XCoVU1J9bnbKRjZqme2TCWiJ8/oOMraauR+51YL07GgVwWsF7GJC8aaLFF
+         6jlsnVaoN/4YvloIx4v1+qy/RlZYTmSme8CW06o/uBf7SEZ35yIy/L6p4nHE0j3TSgZa
+         FD27lKIyiUkwWbVZfa5IpoX58iGUyDJNfTGosfpiB4hTZ1H0nT0CB1SHDHAAUyvbOZHI
+         jXxpXmiOgjl47VULcGAmqLmT72DjcNAbM6MNPvfGPNAmpgjN8/ZsY8mh/3FpuVaUCH9V
+         khHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVZxje0368uTXPutgMyMKweJcIK+dclWrejTSyUtb0rKD29F+nYMLHtHy96VZpB+HttPu4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzOOzNbZvehh3Sj5eufxr1RIJzOq8ffhbwVuPDHspl5KpohUyHt
+	TXJnfA5FMHbSB5MgO1OBVnP8GXSQx29UyYAEQBRU/6jr/4GepiD96T7EmhEizZ7CyEJRkuzvrjL
+	GYfb9u5he9SlttBeoOnpeJZbF3yfEiXtCk0OvAkg=
+X-Gm-Gg: ASbGnctYOrhN0T/z9EtDLPbutdgY1VY4SV7VTzU8M70TaXlhYw9eZFpsA5DtojKVA5p
+	3/q+Mgq673Vc6cwQzxHzXQLMhI2Dq6aOCCIHy0ckmGRAcvpd04GFwplsy3Sx+z2HIgPOeDeRS1S
+	9bIQiCdUJlaSKW34Ww1XyOg3PY/RI0+HkDOIRf0IyoSkZ3MQzyMaHMh8gQ1axZxNm3RO4OBjzMk
+	AgpQD4LKldnA9iNHlt5nUEvKavs5gk=
+X-Google-Smtp-Source: AGHT+IG5vbO95jvFbxFHMHezlcNOiYxH2G6Itb7QkW+9pIJ+SXxTgqUZXYsHZmb79bSAsOHfZmpu+51Tf2Wib009OZI=
+X-Received: by 2002:a17:906:c149:b0:b40:9dbe:5b68 with SMTP id
+ a640c23a62f3a-b49c1280693mr250187666b.5.1759478400796; Fri, 03 Oct 2025
+ 01:00:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed
-X-ZohoMailClient: External
+References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
+ <20250926230838.35870-1-siddharthasthana31@gmail.com> <20250926230838.35870-2-siddharthasthana31@gmail.com>
+ <CABPp-BEh7VEM6UQjkK3CxJcv54vEmueTmh9+-SyTKUxgy7Mkcg@mail.gmail.com> <0fba2f5e-03cd-439b-90bd-f613fcc4ae23@gmail.com>
+In-Reply-To: <0fba2f5e-03cd-439b-90bd-f613fcc4ae23@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 3 Oct 2025 09:59:48 +0200
+X-Gm-Features: AS18NWDzIGfnU3vCkWKoNraz1l0jD5OI33I4cizxaARnw48XTYenIn1epJxz2PA
+Message-ID: <CAP8UFD1JBeGxV65DFCs9dSkYwMpSBhWCZoj6dXCwmKgZnR_=KA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] replay: make atomic ref updates the default behavior
+To: Siddharth Asthana <siddharthasthana31@gmail.com>
+Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org, gitster@pobox.com, ps@pks.im, 
+	code@khaugsbakk.name, rybak.a.v@gmail.com, karthik.188@gmail.com, 
+	jltobler@gmail.com, toon@iotcl.com, johncai86@gmail.com, 
+	johannes.schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 30 Sep 2025, "Kristoffer Haugsbakk" 
-<kristofferhaugsbakk@fastmail.com> wrote:
-> On Mon, Sep 8, 2025, at 16:01, Adrian Ratiu wrote: 
->> The validate_submodule_git_dir test is not very useful anymore, 
->> after submodule names are encoded to resolve gitdir path 
->> conflicts. 
->> 
->> In other words, the purpouse of gitdir path encoding is 
->> precisely to 
-> 
-> s/purpouse/purpose/ 
+On Fri, Oct 3, 2025 at 1:27=E2=80=AFAM Siddharth Asthana
+<siddharthasthana31@gmail.com> wrote:
 
-Thanks, I'll send v3 with these typos fixed very soon.
+> >> For users needing the traditional pipeline workflow, --output-commands
+> >> preserves the original behavior:
+> >>
+> >>      git replay --output-commands --onto main topic1..topic2 | git upd=
+ate-ref --stdin
+> > This is good.  Did you also add a config option so that someone can
+> > just set that option once and use the old behavior?  (as per the
+> > suggestion at https://lore.kernel.org/git/xmqq5xdrvand.fsf@gitster.g/
+> > ?)
+>
+>
+> I didn't, but I should have. I will add a config option for v3.
+
+You don't need to add that configuration option in the main patch. I
+would suggest adding it in a separate patch after the main one (which
+changes the default behavior of the command).
+
+Note that in the commit message of the main patch, it's nice to say
+that a following commit will add a configuration option for users who
+prefer the previous default behavior.
+
+> For naming, I am thinking either:
+>    - replay.updateRefs (boolean: true =3D update, false =3D output-comman=
+ds)
+>    - replay.defaultOutput (string: "update" | "commands")
+
+If the command line option is called `--output-commands` then I would
+suggest naming it "replay.outputCommands" and making it a boolean.
+
+> >> @@ -330,9 +361,12 @@ int cmd_replay(int argc,
+> >>                  usage_with_options(replay_usage, replay_options);
+> >>          }
+> >>
+> >> -       if (advance_name_opt && contained)
+> >> -               die(_("options '%s' and '%s' cannot be used together")=
+,
+> >> -                   "--advance", "--contained");
+> >> +       die_for_incompatible_opt2(!!advance_name_opt, "--advance",
+> >> +                                 contained, "--contained");
+> > Broken indentation.  Also, should this have been done as a preparatory
+> > cleanup patch?
+>
+>
+> Good catches. I will fix the indentation.
+>
+> On making it a preparatory patch: should I split it out as a separate
+> cleanup commit, or is it minor enough to fold into the main change? I am
+> leaning toward folding it in since it's directly related to the option
+> handling changes
+
+If there is only this additional small cleanup change in the main
+commit, and this small cleanup change is clearly mentioned in the
+commit message as a "while at it small cleanup change", I think it's
+OK.
+
+If you find out that other additional small cleanup changes would be
+nice too, then they should definitely all go into a preparatory patch
+before the main patch.
+
+
+> >> +
+> >> +       /* Handle empty ranges: if no commits were processed, treat as=
+ success */
+> >> +       if (!commits_processed)
+> >> +               ret =3D 1; /* Success - no commits to replay is not an=
+ error */
+> >> +       else
+> >> +               ret =3D result.clean;
+> > The change to treat empty ranges as success is an orthogonal change
+> > that I think at a minimum belongs in a separate patch.  Out of
+> > curiosity, how did you discover the exit status with an empty commit
+> > range?  Why does someone specify such a range, and what form or forms
+> > might it come in?  And is merely returning a successful result enough,
+> > or is there more that needs to be done for correctness?
+>
+>
+> I was thinking about automated scripts that compute ranges dynamically -
+> they might generate A..B where it turns out A=3D=3DB, and treating that a=
+s
+> "no work needed, success" seemed reasonable for scripting.
+>
+> But you raise a good point: A..A seems like obvious user error (why would
+> anyone do that intentionally?), and B..A where B contains A is likely a
+> mistake that maybe should error rather than silently succeed.
+>
+> I am inclined to drop it entirely from this series. If there's real deman=
+d
+> for specific empty-range handling, we can add it later with proper
+> discussion of the actual use cases. Does that sound reasonable?
+
+Yeah, I think dropping it from this series is fine.
+
+What happens in those cases should be documented if it isn't already
+though. Those documentation changes should probably be in a separate
+patch.
+
+Thanks.
