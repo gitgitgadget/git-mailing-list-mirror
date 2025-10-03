@@ -1,86 +1,87 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2C71F63FF
-	for <git@vger.kernel.org>; Fri,  3 Oct 2025 21:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADAF219A89
+	for <git@vger.kernel.org>; Fri,  3 Oct 2025 21:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759526330; cv=none; b=uCQ9uMe0wCOtoH7bQaON/Vd8Z50qkiHTxv+jHakWV7EDc0niZ9XzbQSGAAD2R0s0JVQsaDzEtiNhr5RvB+h42Ppu9JT0JjkAUZoBHah/Bb1vlpBtfQFEDjfZeWBuv0h08grpX2nyY8i4dI0KoSZ9KrycULNOwuuoSqAQJtXK1h0=
+	t=1759526654; cv=none; b=RblQbgTexrytdC79vgwiapXxGVFA2Nm/HIBt6mvL9p5LDVm+o1VOeSh/42pYVIYwt2T4iwBQ/LXybj0GXl1jhDYbcAroUGDRtcKY0mDRo0kYdifgj3nzXhW6nItClczGfN89crQwB2UgY3yky8WVLuRm2ioyCyAohL1qP8hI/50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759526330; c=relaxed/simple;
-	bh=MhyQ2OuDxSFl5Jo6x4rA2fW2NDHG96AUUcH2NyTYxoY=;
+	s=arc-20240116; t=1759526654; c=relaxed/simple;
+	bh=ptipkd2k7GOhQx0VSn/ZZta7T+0sp03izzr4NNXY9xI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eJIgxUGUmT9kZ0Rt0nMH4PMLNfl0CyAmcNhibiLh6sCu/8Xp2GtvjCwnIFegvoGb+OyhbbS4M2WrbQtfrEhlz5Bzgrgb0GLDx5KcAI7HUf1C6JiVw8Hn4VbaKR4cAz3HTrN3RrJag4fAUKS0bsI/3MVzjZv29bdqDoffXSFJlmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cpe46xaP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iq8hYRzg; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=Ldbya06pCC9lh/p2w9tenybpdIPB04+Xkqfcirh59ciq0noqyGfg5AnjAD6b6C6QbwqIZirZRSSab7aNy/Sy9otLNXNEOuHZRmukT754FioJ9sD7TW3y7sldfPPP3eFk1nI1hEDs4AmZB2zW0znyvlAtVwVUj7uRyvfmdDkodKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SZ6ufp+Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UMkxRYCl; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cpe46xaP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iq8hYRzg"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D12C21400215;
-	Fri,  3 Oct 2025 17:18:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SZ6ufp+Y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UMkxRYCl"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CEAC5140013C;
+	Fri,  3 Oct 2025 17:24:09 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Fri, 03 Oct 2025 17:18:47 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 03 Oct 2025 17:24:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1759526327;
-	 x=1759612727; bh=HHe90f2AkxiT8XqcXTw0gcLGGaFJpIw9Dq6z/bM/CJ8=; b=
-	cpe46xaPxrCQ8wP2/0idx3nnyeEUHTndEUFG5WCZA8+q39Ac39yWbgExIl0jWK2T
-	kKqsV/2SbIMhzosl/IGgab9mXdIf+8ygZhgZzVb/FcZiJI5a5T8UIkC8QM2yNGAJ
-	E5jCOiWYWBbe7+Qe7UeuSmOBjII5OhS/+dPXdBkexTVav8u/xYAsVG1VL7rgt2hl
-	ViwpS7YuW7FbDJ103vccMWULpQUpQjpfD8u3bUCYI2n2UmA8lJTGsimNgRZZbNf+
-	Yb1NXL+AJzgi6nL+TUSWv0GOYGuPOJ5OllCU1QkG3tyqbCcN9Jupt6VeS4Q7PLSC
-	Hvmj7AM7BJVuYo4St1k7vw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759526649; x=1759613049; bh=r4M52bX/M+
+	0TafhUGoUm/GMaSo/YTHm5k8hGHutf7L0=; b=SZ6ufp+YIl89nyRtiJXZN+/vyS
+	5IJI6N+CTlBQGuuFVZL3B1KwokCIVP/QXcEUX3svqQASxzfyT+gDZvPOvFP4uWXS
+	X7sqnoW2uGZtxHVGZd6cpGjh340vEz/xvvCHSEZVyYliZDWFu2gI1hpcju/lGDMJ
+	iQqr4S++HXtPJ81ONb45pZXxVxoqb+T5K0qknZN8mNBC/DXzVFXeO7uJDjKEQDeS
+	ASHCYyein93sfq7ammSWFpfdf1HYTVkAkmAmL4A8eUhW/uMfWimQwtgQ58jwUQta
+	MqNOYYKFNXUQ5t2pomqcMQpeOph04MJ6PJYPDC5A8g4yDlcwTjdwPzRNlemw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759526327; x=
-	1759612727; bh=HHe90f2AkxiT8XqcXTw0gcLGGaFJpIw9Dq6z/bM/CJ8=; b=i
-	q8hYRzgz4yJAkUrgHLkQfpAOCQaZKwPoPnHjOX5Qp1Rb5r+mQPuSKzwXZUKEyLzv
-	aOvxKFCnuV6iwlpRqwTYcJ5R+Mgg9voivFUNttyEpJ2TzS+0sNCxxyibwjYmtKeu
-	kRQDVAZxhRnGxbjTpq1eX6UKXksHy14xFj8TEKdM+IgZOD8f2g3ZIeiezLwpqqTi
-	L9r1m9e1rQlVUUnXNHIxENs5hBx9MeBlIS+AxSV3HutgSGc0cL0HuGpCY427h8wV
-	08btrBVAQRBZ/b/rmCQKW98jFp+idEvw42jZRkyCnMm1w8LAbfztgDq6OTnDnT51
-	Wz+ZXElI9VNh9Q/DaZFBA==
-X-ME-Sender: <xms:tz3gaKXMU2BVwjIiF83csylk0132BokWMTNXzeS7iXtUqbDjT66J3g>
-    <xme:tz3gaNkg1W7ME1fpV6aWaxwehIT1wuLDjaOnhGzm20aNzjQOMvY8kquSEV0cmqqbP
-    7oo7OZQFdugq1xRCfBzqD-LePki5mUrex-lSaVZ5cg88gKAohVJlg>
-X-ME-Received: <xmr:tz3gaDYAOJCHGE9BremAeW5pYd-7HMtoMH_l8KpCbBmo6RGeIGT-BSi3tLCNyEn_Y4f5tlgkDOv_0H09VAy2W_BXEC1Wwi9tVeu4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekleelhecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759526649; x=1759613049; bh=r4M52bX/M+0TafhUGoUm/GMaSo/YTHm5k8h
+	GHutf7L0=; b=UMkxRYClIt/Z2XjNOGnfyhM7Ji6KRQCu4g/fw6KaINJYPlll3qV
+	YNpRnr9cZ83PtiOcLmnPASM17oSiEaA9nSJlG3PcBYI73lGC0iujQfEFNoL7pOmj
+	wHrk9nOQxzA7mL1K1mTuOI4hpTELcGjrAD3szsZoIFXcRQejKQaiqn4F2gU40yfH
+	/Gt6wE5vY5dlWTkA7D8+3LvzzBsxOS7CZZNVosrr01dHJZY0kDGEl/904tsDO2dL
+	MFfNtzkNN5yCfGTcuVja9+cECeLXXZsHX8IwpMoU7LEv5tdIKx1x7SEfzXwtvA3R
+	N/LMWYWW38R8+D0xhHZFntFDU5oamQ5WJLg==
+X-ME-Sender: <xms:-T7gaFub-LTrhEUToBuwZsXZVdZ_Q_ySO1DKv2gf0uDVmp2QL-9uAA>
+    <xme:-T7gaCIpw4Jtb3koA4vhssaGpRq76bPEoUShaO1Ftf9l8qbXWw3RSVlAbeOB7ws2e
+    fxcmIZTsU6Y-5bfDORP8BAXzg5OzV4D1x2IEnGz5z1boyLWgh5HPQ>
+X-ME-Received: <xmr:-T7gaClqKLTNB-Nwr5yKhTLRIxDqEmzrtcqdHAgDfWJKoKOokpjDBhhMdvW1i-lGHtQRhHv8y7tvKVjJ-NwivZZ1xbpDIChpB2jx>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekleeljecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepuh
-    drfihinhgulhesuhhkrhdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:tz3gaAOp8JatX3-eHA1rWZeAb9d8wEQFCqP096TbCTmpWtg4dk_VnA>
-    <xmx:tz3gaAbeVZJO45ubbD6DJQQ2CSbwqHut4gpNeSsk_inSumKLFvmWaQ>
-    <xmx:tz3gaG06J6SnXPut-qJawXon2xl1h39T5bER8IHHxrb2O_1Eh7zkZg>
-    <xmx:tz3gaOfhmA3Zkuv3zaCwIeQ6O9mRwx8fEILEcXV-KSOBYfRnMIDXCQ>
-    <xmx:tz3gaI2NROmKkaJZOmTyWbUbMafgprAnbcFKamuzKpte5vOfwQCvbF3v>
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    shgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtoh
+    epjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohep
+    mhhirhhthhdrhhhitghkfhhorhgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:-T7gaDJ5T1Re7W69hSYUagyXJuaa36emGLRflUqfSuOKUz266zzeyg>
+    <xmx:-T7gaH5VR8mtZ7p87TNyLjT4YBcWGuQ96wctIVjvaLW2IeYCMYFlLw>
+    <xmx:-T7gaH25hm05k4QRfhLYkmV0BfFdzMi_lIPCENV0KDYO7I2-tv2PeA>
+    <xmx:-T7gaNe-RyCsmVpajEXaA8gDnMUoycOaNUNVISdfvTbB9NSVzyAoTg>
+    <xmx:-T7gaPsV8A1SLqacoO2wXHJNPuzKlIWi6fZvZbP864bP04Hd-b1DXShR>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Oct 2025 17:18:47 -0400 (EDT)
+ 3 Oct 2025 17:24:09 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: "Windl, Ulrich" <u.windl@ukr.de>,  "git@vger.kernel.org"
- <git@vger.kernel.org>
-Subject: Re: [PATCH] add-patch: roll over to next undecided hunk
-In-Reply-To: <76665b6f-cb92-4694-bc89-5eb21197df34@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Fri, 3 Oct 2025 14:16:44 +0200")
-References: <c72518099a3b465c8761e41210fe3fcb@ukr.de>
-	<76665b6f-cb92-4694-bc89-5eb21197df34@web.de>
-Date: Fri, 03 Oct 2025 14:18:45 -0700
-Message-ID: <xmqq1pnju1je.fsf@gitster.g>
+To: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  sandals@crustytoothpaste.net,
+  Johannes.Schindelin@gmx.de,  M Hickford <mirth.hickford@gmail.com>
+Subject: Re: [PATCH v2] docs/gitcredentials: describe URL prefix matching
+In-Reply-To: <pull.1979.v2.git.1759525133638.gitgitgadget@gmail.com>
+	(M. Hickford via GitGitGadget's message of "Fri, 03 Oct 2025 20:58:53
+	+0000")
+References: <pull.1979.git.1759352209657.gitgitgadget@gmail.com>
+	<pull.1979.v2.git.1759525133638.gitgitgadget@gmail.com>
+Date: Fri, 03 Oct 2025 14:24:08 -0700
+Message-ID: <xmqqwm5bsmpz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,66 +89,23 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-René Scharfe <l.s.r@web.de> writes:
+"M Hickford via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> git add --patch presents diff hunks one after the other, asking whether
-> to add them.  If we mark some as undecided, e.g. with J, then it will
-> start over after reaching the last hunk.  It always starts over at the
-> very first hunk, though, even if we already decided on it.  Skip
-> decided hunks when rolling over instead.
+> From: M Hickford <mirth.hickford@gmail.com>
+>
+> Documentation was inaccurate since 9a121b0d226 (credential: handle
+> `credential.<partial-URL>.<key>` again, 2020-04-24)
+>
+> Add tests for documented behaviour.
+>
+> Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+> ---
+>     docs/gitcredentials: describe URL prefix matching
 
-Wait a bit.  With 'J', the user wants to walk the list of hunks,
-both decided and undecided ones, no?  So ...
+Hmph, v1 was merged to 'next' already yesterday, so a replacement
+patch is not what I was expecting to see.  Can you make an
+incremental update instead?
 
-> diff --git a/add-patch.c b/add-patch.c
-> index b0389c5d5b..42a8394c92 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -1436,8 +1436,15 @@ static int patch_update_file(struct add_p_state *s,
->  	render_diff_header(s, file_diff, colored, &s->buf);
->  	fputs(s->buf.buf, stdout);
->  	for (;;) {
-> -		if (hunk_index >= file_diff->hunk_nr)
-> +		if (hunk_index >= file_diff->hunk_nr) {
->  			hunk_index = 0;
-> +			for (i = 0; i < file_diff->hunk_nr; i++) {
-> +				if (file_diff->hunk[i].use == UNDECIDED_HUNK) {
-> +					hunk_index = i;
-> +					break;
-> +				}
-> +			}
-> +		}
-
-... why is it a good idea to skip decided ones?
-
-With 'j', the story is probably different, but I didn't dig deep
-enough.
-
-With 'K', we seem to do
-
-		} else if (s->answer.buf[0] == 'K') {
-			if (permitted & ALLOW_GOTO_PREVIOUS_HUNK)
-				hunk_index--;
-			else
-				err(s, _("No previous hunk"));
-
-and there is *no* guard around here to say "hey, hunk_index has gone
-negative, so we must move back to the last hunk", similar to what is
-happening here that does "hunk_index has gone beyond the end, so
-let's wrap around to the first one".
-
-This is another bug that is maked by the fact that hunk_index is
-measured in size_t (even though there is no reason to do so).  Using
-unsigned hunk_ix is simply crazy here, especially for a code that
-wants "just do hunk_index++ and adjust if it goes beyond the end"
-and similarly "just do hunk_index-- and adjust if it goes beyond the
-beginning".
-
-In any case, as the result, going back with 'K' when we are on the
-first hunk is broken with the current code because we'd stay there,
-and with this patch, we'd move to the first undecided hunk.  Neither
-is correct---we should move to the last hunk, I would think.
-
+Thanks.
