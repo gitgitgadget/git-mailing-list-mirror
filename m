@@ -1,179 +1,159 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884CD25F994
-	for <git@vger.kernel.org>; Fri,  3 Oct 2025 08:00:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8877267729
+	for <git@vger.kernel.org>; Fri,  3 Oct 2025 08:51:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759478404; cv=none; b=c46gXalLIxa+XfetC8Yh64hBQuN+X1P1mPWMkorF+Zcv/bjtuooSJwxB+FcXffnl63wPcDw1LHvEQoNWjqGrCVQB6QhQOwGTFTg2vLGidZCLLU2wD8ilDjRyAYgtsB/qpgGms9On6R//GlFA9LVdU8kB7lPH+r4x+j+GhpFtEkA=
+	t=1759481488; cv=none; b=Owy6QkgY1DLJYkWVf1P/CsY306zIo3bRnsqTxqr/rdlwepSztjS9cdwegpk0fDNLn0PDU9se/UlYu6joO0fYPZw0gzQ8wo1sE7B51xLaA4XpTHkgVQzHXQxC4lXIjqSIvavT8PdOVGLLt0ktjDrGPCOVq2zgdxWzc/6idIS/UDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759478404; c=relaxed/simple;
-	bh=Rwf/CuKVjRaFxzx1YkCekHPZZesj9sp9Omgcw60mF38=;
+	s=arc-20240116; t=1759481488; c=relaxed/simple;
+	bh=2x8/6CV9at/8HQQh1X6TbaLlNbnlABKg4aMw1A3Zckg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Tz/dNZBVSWxrRZaTwxE0214GKFRev2WJb4oToZfjQizD4HhxVxLLKAtKBpHK2nCaMCAyZBk8BOmnfhGOBK2p+yDLzIULukNz7L5nAeb8XocFbRyDDDCItjr4Y1Ar8Rfz+6Pm4hprrW97rlIHsIBICb0E19zeRcWzIhUn7NLsoEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fvj4UXAM; arc=none smtp.client-ip=209.85.208.50
+	 To:Cc:Content-Type; b=ZcQ9XS2ycvOB1318hebV/oHoDpT9M1FXQan/rpWRd2lSFbt8rKbkPnfZ7p6qAbA3Oh+wdkJuPlZCJe8qpUtAHsxAaqlbugmcsTpFDgjku0LfpSkY32/im1r1wqrOOGNkXC6tlDrpfOKBnlOVtqMEBWHHDxDIfkC4p4Uln7Nk2Bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h/V9Zt8T; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fvj4UXAM"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6394938e0ecso811355a12.1
-        for <git@vger.kernel.org>; Fri, 03 Oct 2025 01:00:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h/V9Zt8T"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b3f5e0e2bf7so381177266b.3
+        for <git@vger.kernel.org>; Fri, 03 Oct 2025 01:51:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759478401; x=1760083201; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1759481485; x=1760086285; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=H/cI1HyidHYVHZvC3ZxiDQ7QNlczYGS9xq7HbhthMgg=;
-        b=Fvj4UXAM/l581wUP2eVRVyfN9OGvzkAuj6OYJ+vFaAKhImolMpOVE6PILC5hm6jRzw
-         4v6Cmr3WYUt8j8jkoDrLMcovNviJ2LzMLivIj3gU/uvOLwvNk52tvCRn0EQqZIIWOTr3
-         NfkLNhkXP904PAKt5byEDTjZjzJI1MeHOiqQCobEy+yJlK4mXEe3t5bNhuZleot7Rz0T
-         qmycmBCH9gk4nl3QBPLqqW2ijEJwkXHVbk2NQzzepQp7XUeWyzabncKdZXMJg3l1eT9v
-         1PPIPArRliXWvG7nuQegRd0gO2YyCybap+Q+jyx3rHkkZgeDXggOGHNQZ9RBZBa2PJky
-         27Iw==
+        bh=IG5StTOowRs4AXqOouzsXKlfCW7P139c4YhORlNZ3fI=;
+        b=h/V9Zt8T184a3ko9m88hMWXAlWGgeCvnLNm3uEHOdTatOlw6igpg8WhcfYKQDw6F3Z
+         JMjksejBwHXMgtAo0QolrR18JqQH2GEbAwG+YaFXT+q2uyGuXTpGE7ZEa0AojxFp5Qab
+         Gsuiefl664uhlWODY8nmD5Givs6YEk2dmmHLnwzhkBZsBzNgkVB01AmN0zpNsRxCQHdR
+         LME7qtnJ7vUXhTGxhasmRyoAN+EW26a+bqw4L43ftsHGhoH19t2MFxeLAfDkMzvJw3w3
+         mrL2QzRa2+LWd1QzxV3rLGqL1c3rBNTwg50pGlrs/Oc1IqSKi7NLc8yUK+mp4H6yDfTr
+         OCrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759478401; x=1760083201;
+        d=1e100.net; s=20230601; t=1759481485; x=1760086285;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=H/cI1HyidHYVHZvC3ZxiDQ7QNlczYGS9xq7HbhthMgg=;
-        b=PLOxyvstC8oCTlIdKu7z2/RZJchGrLjDlKMGmk806awheeonp+RPUnCrjHSzK0US6H
-         F1FDjDmF47XCoVU1J9bnbKRjZqme2TCWiJ8/oOMraauR+51YL07GgVwWsF7GJC8aaLFF
-         6jlsnVaoN/4YvloIx4v1+qy/RlZYTmSme8CW06o/uBf7SEZ35yIy/L6p4nHE0j3TSgZa
-         FD27lKIyiUkwWbVZfa5IpoX58iGUyDJNfTGosfpiB4hTZ1H0nT0CB1SHDHAAUyvbOZHI
-         jXxpXmiOgjl47VULcGAmqLmT72DjcNAbM6MNPvfGPNAmpgjN8/ZsY8mh/3FpuVaUCH9V
-         khHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVZxje0368uTXPutgMyMKweJcIK+dclWrejTSyUtb0rKD29F+nYMLHtHy96VZpB+HttPu4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOOzNbZvehh3Sj5eufxr1RIJzOq8ffhbwVuPDHspl5KpohUyHt
-	TXJnfA5FMHbSB5MgO1OBVnP8GXSQx29UyYAEQBRU/6jr/4GepiD96T7EmhEizZ7CyEJRkuzvrjL
-	GYfb9u5he9SlttBeoOnpeJZbF3yfEiXtCk0OvAkg=
-X-Gm-Gg: ASbGnctYOrhN0T/z9EtDLPbutdgY1VY4SV7VTzU8M70TaXlhYw9eZFpsA5DtojKVA5p
-	3/q+Mgq673Vc6cwQzxHzXQLMhI2Dq6aOCCIHy0ckmGRAcvpd04GFwplsy3Sx+z2HIgPOeDeRS1S
-	9bIQiCdUJlaSKW34Ww1XyOg3PY/RI0+HkDOIRf0IyoSkZ3MQzyMaHMh8gQ1axZxNm3RO4OBjzMk
-	AgpQD4LKldnA9iNHlt5nUEvKavs5gk=
-X-Google-Smtp-Source: AGHT+IG5vbO95jvFbxFHMHezlcNOiYxH2G6Itb7QkW+9pIJ+SXxTgqUZXYsHZmb79bSAsOHfZmpu+51Tf2Wib009OZI=
-X-Received: by 2002:a17:906:c149:b0:b40:9dbe:5b68 with SMTP id
- a640c23a62f3a-b49c1280693mr250187666b.5.1759478400796; Fri, 03 Oct 2025
- 01:00:00 -0700 (PDT)
+        bh=IG5StTOowRs4AXqOouzsXKlfCW7P139c4YhORlNZ3fI=;
+        b=lVPzKhU0pDncVKyYy0WZTbEkU0lfS4s+2G4Is1VVKk2UAIrQmodW0AiDzXivk+La+o
+         zrCY/LIPFzhvo24Bm1Vmyibzam9R8jGeXVM0nJSZejJx30vpAGRt+f5MiuyrE963hduH
+         bK76c+yjUvnkjc9g0EFnrnpUV4WJ1FaflAwnvbvCFXe/I5jI5Mov7/3aowdrO7UrJxd3
+         LEQzJPDFMyZuk/9JJYeiVXzQor2Cx1i8Mu7K2hwXOjg5sspvQisrwUA5vePxGWiHgQpN
+         aOmdd8Ymq0HvwuLs8jRlrwGi8wa9II3yAb2/C7IilApFIhoMwCirnGk3fnFaAfRMPS7Y
+         3dvQ==
+X-Gm-Message-State: AOJu0YxLGt4fJZb2dlYcq9FUUY4K2nluUquu2zs98x2WQMz1RRI0jOJ7
+	cckDfiMx/GdZbE0nVVqZ50mPQAzhY+zMZABvEPt7KthYM8dzhb11PN1MiqxYzmfEgEOhqAZIKQE
+	nGJeD4XzCbwnhikcqCzK0tfOWPl0MWv4=
+X-Gm-Gg: ASbGnctBRtPl6EHQEAlPVCWhlfFR570YlT0M+0WngfTTDPXFFkHsGN/Kb3jkHzw3086
+	GC+FVkgNZ9g4zQw3seNcqswKbpAAIv3TTYubD04upFqaUauimMU3Scy+nnyjsCVW2C/FBXWv3/v
+	Qg3QHE4H2Kl+FkMjynvx7V6CuqqOmUQ7s0yrSYhccFHG+i8CzKR/IQ1/E9u4g2eJHWlRWKyDlol
+	I/bV3/36PAeSXevnjuuY88v7WSgZ5o=
+X-Google-Smtp-Source: AGHT+IFz2MK5nFVnjkbVmtcpokP313kRDJOrZ5xscNQRvadRPzOCKmfP1NOJjinXVvoJ5NMWpWazVuPYV5xDUoV28eU=
+X-Received: by 2002:a17:906:9f96:b0:b3b:206f:23f6 with SMTP id
+ a640c23a62f3a-b49c3935b6fmr275291766b.40.1759481484935; Fri, 03 Oct 2025
+ 01:51:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
- <20250926230838.35870-1-siddharthasthana31@gmail.com> <20250926230838.35870-2-siddharthasthana31@gmail.com>
- <CABPp-BEh7VEM6UQjkK3CxJcv54vEmueTmh9+-SyTKUxgy7Mkcg@mail.gmail.com> <0fba2f5e-03cd-439b-90bd-f613fcc4ae23@gmail.com>
-In-Reply-To: <0fba2f5e-03cd-439b-90bd-f613fcc4ae23@gmail.com>
+References: <xmqqcyalm0mh.fsf@gitster.g> <20251001140310.527097-1-christian.couder@gmail.com>
+ <xmqq4isi1gpm.fsf@gitster.g>
+In-Reply-To: <xmqq4isi1gpm.fsf@gitster.g>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 3 Oct 2025 09:59:48 +0200
-X-Gm-Features: AS18NWDzIGfnU3vCkWKoNraz1l0jD5OI33I4cizxaARnw48XTYenIn1epJxz2PA
-Message-ID: <CAP8UFD1JBeGxV65DFCs9dSkYwMpSBhWCZoj6dXCwmKgZnR_=KA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] replay: make atomic ref updates the default behavior
-To: Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org, gitster@pobox.com, ps@pks.im, 
-	code@khaugsbakk.name, rybak.a.v@gmail.com, karthik.188@gmail.com, 
-	jltobler@gmail.com, toon@iotcl.com, johncai86@gmail.com, 
-	johannes.schindelin@gmx.de
+Date: Fri, 3 Oct 2025 10:51:13 +0200
+X-Gm-Features: AS18NWA-KlTf8Ll0KPfoRR6CYVeZ1aKHrV2YiX9NPtnDwCaHTjOjMxb-oeGkyPs
+Message-ID: <CAP8UFD3wc-aj27Q_kFXvknJrpa-ySWbZiPmNCTMboA08=HP+xw@mail.gmail.com>
+Subject: Re: [PATCH v2] SubmittingPatches: add section about AI
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
+	Rick Sanders <rick@sfconservancy.org>, Git at SFC <git@sfconservancy.org>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Patrick Steinhardt <ps@pks.im>, 
+	Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 3, 2025 at 1:27=E2=80=AFAM Siddharth Asthana
-<siddharthasthana31@gmail.com> wrote:
-
-> >> For users needing the traditional pipeline workflow, --output-commands
-> >> preserves the original behavior:
-> >>
-> >>      git replay --output-commands --onto main topic1..topic2 | git upd=
-ate-ref --stdin
-> > This is good.  Did you also add a config option so that someone can
-> > just set that option once and use the old behavior?  (as per the
-> > suggestion at https://lore.kernel.org/git/xmqq5xdrvand.fsf@gitster.g/
-> > ?)
+On Wed, Oct 1, 2025 at 10:59=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> I didn't, but I should have. I will add a config option for v3.
-
-You don't need to add that configuration option in the main patch. I
-would suggest adding it in a separate patch after the main one (which
-changes the default behavior of the command).
-
-Note that in the commit message of the main patch, it's nice to say
-that a following commit will add a configuration option for users who
-prefer the previous default behavior.
-
-> For naming, I am thinking either:
->    - replay.updateRefs (boolean: true =3D update, false =3D output-comman=
-ds)
->    - replay.defaultOutput (string: "update" | "commands")
-
-If the command line option is called `--output-commands` then I would
-suggest naming it "replay.outputCommands" and making it a boolean.
-
-> >> @@ -330,9 +361,12 @@ int cmd_replay(int argc,
-> >>                  usage_with_options(replay_usage, replay_options);
-> >>          }
-> >>
-> >> -       if (advance_name_opt && contained)
-> >> -               die(_("options '%s' and '%s' cannot be used together")=
-,
-> >> -                   "--advance", "--contained");
-> >> +       die_for_incompatible_opt2(!!advance_name_opt, "--advance",
-> >> +                                 contained, "--contained");
-> > Broken indentation.  Also, should this have been done as a preparatory
-> > cleanup patch?
+> > As more and more developer tools use AI, we are facing two main risks
+> > related to AI generated content:
+> >
+> >   - its situation regarding copyright and license is not clear,
+> >     and:
+> >
+> >   - more and more bad quality content could be submitted for review to
+> >     the mailing list.
+> >
+> > To mitigate both risks, let's add an "Use of Artificial Intelligence"
+> > section to "Documentation/SubmittingPatches" with the goal of
+> > discouraging its blind use to generate content that is submitted to
+> > the project, while still allowing us to benefit from its help in some
+> > innovative, useful and less risky ways.
+> >
+> > Helped-by: Rick Sanders <rick@sfconservancy.org>
+> > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> >
+> > ---
+> > This is inspired by the "AI guidelines" section we already have for
 >
->
-> Good catches. I will fix the indentation.
->
-> On making it a preparatory patch: should I split it out as a separate
-> cleanup commit, or is it minor enough to fold into the main change? I am
-> leaning toward folding it in since it's directly related to the option
-> handling changes
+> A more important thing to mention is that Rick is a lawyer at SFC
+> helped us to draft the wording used in this one.
 
-If there is only this additional small cleanup change in the main
-commit, and this small cleanup change is clearly mentioned in the
-commit message as a "while at it small cleanup change", I think it's
-OK.
+Yeah, right, I will mention it in a v3 if there is one.
 
-If you find out that other additional small cleanup changes would be
-nice too, then they should definitely all go into a preparatory patch
-before the main patch.
-
-
-> >> +
-> >> +       /* Handle empty ranges: if no commits were processed, treat as=
- success */
-> >> +       if (!commits_processed)
-> >> +               ret =3D 1; /* Success - no commits to replay is not an=
- error */
-> >> +       else
-> >> +               ret =3D result.clean;
-> > The change to treat empty ranges as success is an orthogonal change
-> > that I think at a minimum belongs in a separate patch.  Out of
-> > curiosity, how did you discover the exit status with an empty commit
-> > range?  Why does someone specify such a range, and what form or forms
-> > might it come in?  And is merely returning a successful result enough,
-> > or is there more that needs to be done for correctness?
+> > +[[ai]]
+> > +=3D=3D=3D Use of Artificial Intelligence (AI)
+> > +
+> > +The Developer's Certificate of Origin requires contributors to certify
+> > +that they know the origin of their contributions to the project and
+> > +that they have the right to submit it under the project's license.
+> > +It's not yet clear that this can be legally satisfied when submitting
+> > +significant amount of content that has been generated by AI tools.
+> > +
+> > +Another issue with AI generated content is that AIs still often
+> > +hallucinate or just produce bad code, commit messages, documentation
+> > +or output, even when you point out their mistakes.
+> > +
+> > +To avoid these issues, we will reject anything that looks AI
+> > +generated, that sounds overly formal or bloated, that looks like AI
+> > +slop, that looks good on the surface but makes no sense, or that
+> > +senders don=E2=80=99t understand or cannot explain.
 >
+> A milder way to phrase this would be to jump directly to "we reject
+> what the sender cannot explain when asked about it".  "How does this
+> work?"  "Why is this a good thing to do?"  "Where did it come from?"
+> instead of saying "looks AI generated".
 >
-> I was thinking about automated scripts that compute ranges dynamically -
-> they might generate A..B where it turns out A=3D=3DB, and treating that a=
-s
-> "no work needed, success" seemed reasonable for scripting.
->
-> But you raise a good point: A..A seems like obvious user error (why would
-> anyone do that intentionally?), and B..A where B contains A is likely a
-> mistake that maybe should error rather than silently succeed.
->
-> I am inclined to drop it entirely from this series. If there's real deman=
-d
-> for specific empty-range handling, we can add it later with proper
-> discussion of the actual use cases. Does that sound reasonable?
+> It would sidestep the "who decides if it looks AI generated?" question.
 
-Yeah, I think dropping it from this series is fine.
+I don't think the "who decides if it looks AI generated?" question is
+very relevant. If someone says that a patch looks mostly AI generated
+and gives a good argument supporting this claim, it's the same as if
+someone gives any other good argument against the patch. In the end,
+the community and you decide if the argument is good enough and if the
+patch should be rejected based on that (and other arguments for and
+against the patch of course).
 
-What happens in those cases should be documented if it isn't already
-though. Those documentation changes should probably be in a separate
-patch.
+For example, let's suppose that in the future someone knows that
+ChatGPT7 is very likely to use double dash ("--") and the word
+"absolutely" a lot in its sentences, and notices that a contributor
+sent a long documentation patch that is full of them. I would say that
+it would be a good argument to reject that patch. We could be wrong in
+rejecting the patch because of that argument, because maybe the
+writer's style happens to be similar to ChatGPT7's style, but I think
+we should have the possibility to reject such patches based on the
+fact that they definitely look AI generated. Otherwise I don't think
+we can seriously claim that we try to uphold the DCO as well as we
+can.
+
+So I think we definitely need to say something like "we will reject
+anything that looks AI generated" or maybe "we will reject anything
+that looks significantly AI generated". In the v3 if there is one, I
+will change the wording to the latter.
 
 Thanks.
