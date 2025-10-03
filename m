@@ -1,54 +1,54 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8412D738B
-	for <git@vger.kernel.org>; Fri,  3 Oct 2025 17:05:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CEFA1C84BD
+	for <git@vger.kernel.org>; Fri,  3 Oct 2025 17:07:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759511119; cv=none; b=d/9nx0MynUGxax6c+UEddibUS2bDcsS6WENBzbUMnMQM8BiQPgzJepu42Zc61fBLWU3c9fIb+X3lILfX/xy4KF2QB6wBQ5NF/2CYu3BxrZXbn3ymA7w4if2e4aAYrF/crt0Y0KbZHqjZD6dSjqnIVF9Ctjbm2d9HVFiByI13RoM=
+	t=1759511271; cv=none; b=UhOh99m105ZHX+/ODz84+a2dpqzyfjXsm3sC1GZY3d3Ct0U+ShgAy2dv/THVCTycdKoM8M+j6x5zrkDwhYItR/1QInqFuED2LyjYn6reHKtTJAwiUfTu4yfykTPOFddo+Upu/yefMu8kDNUx8ylbwSubvkGVl+HA38PTNn0Pxbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759511119; c=relaxed/simple;
-	bh=pJ7A3pGFqqXjYOIh+tfl64rxH1EaNPQICFssvFJeRyY=;
+	s=arc-20240116; t=1759511271; c=relaxed/simple;
+	bh=x9DMP55DcqaBivn5bw9JZdYg1WMxXByiM9ERBP1bTFQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WSlXlXxPIMwiFgdsVoFQxTYVAFm6za++0nsPj+9jPPn5/HAEJ+vDG3RvQDstSRzwq5hDVCV4Iq7uvsSlEAadIeK/9NhNOXeIxiS3xsV34IIHbcccJETCtIy1RjVbFqlroOdY1+dIiNjt4hE4MFxjwdDaF1TQUDoxx69aAMhXMaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hO4hTBG9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Eot/0QO8; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=JHg+FulTp+41sadPMi/UOahSfCdIXnGOya9L8d7d+/5gZ7BWexSlAjvsD4tQ+KXchgtOLLypUBQDSGaq9nT81olUEJmZCkm6KIsvUEVBZ0nPHdO0CNuivQckxVOdrsAEGjjD8JFOQ58ZVBBGiaNgHRixmFCJszHhije+8m5h/gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=M1XQubGZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p8ShBEOD; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hO4hTBG9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Eot/0QO8"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 692EEEC025F;
-	Fri,  3 Oct 2025 13:05:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Fri, 03 Oct 2025 13:05:14 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="M1XQubGZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p8ShBEOD"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 16BFA1400127;
+	Fri,  3 Oct 2025 13:07:49 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Fri, 03 Oct 2025 13:07:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1759511114; x=1759597514; bh=ofE1+XmrSX
-	veWrHwiiUQSgQ9R+aE/WKh7dM1fhTu9Pc=; b=hO4hTBG9PHFvSS7zeUQ3GrK0vo
-	qos6VZnSVSl6ackKTgqzv+9JtL28MQA58VJvWhdZLHyMicIwTtK/YWOyHeYSEr4r
-	bbGGLnEKIGuHxaCFWrndKBR6u2NLLe9EDNXZXaN/396M4LP+jDiHzqABx5G9cEPZ
-	EIAL6Nl/2On6lvLttTuUSt427Ml/UHWNxlZNyNqddI9aehRW82CeuwfrKjcPnewy
-	1FJbbVJ797wDqgAd8LKCBZLG7qHa/J5BZy+sWfvJ8Ztgy8vzpogyDzmWkS0IX08Y
-	dfWh0AUfaIXXFzzEnFPLVHQFfTlupdlvj0+vtDRrdUxg+/CIk+I1T2Q/fJsw==
+	:subject:to:to; s=fm1; t=1759511269; x=1759597669; bh=x9DMP55Dcq
+	aBivn5bw9JZdYg1WMxXByiM9ERBP1bTFQ=; b=M1XQubGZ21MHnLWaWrQsBOaAsK
+	jBJCSue+2v3IzzARsKOiTM3NkSWQDOgFB8gP/EkNJpiQlhKqpeCuKvXYfuhe2cuH
+	0xqhQ71uLVJJpKLc7pG/NGmvUipO4XbE7bgn+oG/c5GbYUgbWO1F0CmwyaSi2qno
+	DykLCMq2TLvoWam1gkYI5ZWss5vz1k/ET18IpgzPjihGzd2FLyS0IAsSwcYP2aqg
+	3nF59jvolPBCnWGkAM/1UR/T/vsR4FAOJStlWTLVTWfVG9KngGpbb8od9fMrJSmc
+	ezrPb+4JWvd6orCzmH4JFBoAzRMYah/9HzFmik4Q5BVJj6u4HiufqWhyQ1sg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759511114; x=1759597514; bh=ofE1+XmrSXveWrHwiiUQSgQ9R+aE/WKh7dM
-	1fhTu9Pc=; b=Eot/0QO8kFcpQUqnWE/AJwos/vqiOrwqKPZzR9Fxi94jQZqRmun
-	PPphXRkGPsVmuxykAMNtDPO/fjXACIZhGcNz9hhJ/qF2E3eWba6PS0iAVdjMBRTZ
-	p/BgyVNt0P24VW9A/uUKUTu0b9fduzo3ttoW8/Oconng7Mi7Bq9MfH6k5VkqiGYB
-	CHksnriliebYfDfUmXxstVKGlGoAG+JjyFZTxx+o3vuxlurP7IJpwMUaKmyK74wF
-	kxD/AUCnJuCJMWQxeNLKm0etWTnjquqyE9Pu3YWOccMIfVkyRskTyGM6mj+FRW7i
-	CcGpmDCw6hAR63wVF7ONZbYO0Xw0i29aJFA==
-X-ME-Sender: <xms:SQLgaEOg6atzSi4UyE-RbQdGJtKDbsKOwqG97e8d2YhLXNzeUWS05A>
-    <xme:SQLgaB8vaFPCauwPxlI6uvU6LrAKd0vC6Y1L8AjkcdqfitI9Mp4nGeMmRJsaUqiil
-    w3CZTga--R0NjtOQuUP9ydVrJCnfTrAxt3OxVG9BF6xJxjsgkCbBg>
-X-ME-Received: <xmr:SQLgaAT4L94NbzL8ftp89suGKSg0ps3ygtMLuxUkFZrcgE2SnwOHi-_6-34jDi64MuzU1p0d0ny1VMaWuqrm8dc5D147h2ubQ6Zv>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekleeghecutefuodetggdotefrod
+	1759511269; x=1759597669; bh=x9DMP55DcqaBivn5bw9JZdYg1WMxXByiM9E
+	RBP1bTFQ=; b=p8ShBEODQmupJAP4j2s21NgYrgpRucgyk+H29SwuzSKqmSCapX4
+	oUff1LqJLVPstLkcxzpFAoNo/L4cB1tZvoeKGLDh0kM/5/cs5lQmPYi3RpvCoJO5
+	WBn0C38o2ZVo7cOxMJuDjQ0bpYbWwSqydMfamNaAMUcAB/ysOin4M2HnTpymBfdV
+	5xs7tLJyVSsJA/jNe15Zqqrk0rs93Yn6Vku4lEisVQqR43oS2bUw+IfR7/05NoXh
+	+HNwOxLzJYq97h3ywXbxEaNXkPSLsTnXWTO3m79Tb4GQ1jmMR1BJVQvltM3SSvyS
+	V0amCLz/E3hT7PssDKlj4OIUDNxD00+Jf/w==
+X-ME-Sender: <xms:5ALgaMbFEEVk4H-PD7VvhYWgzmVPiaO70G7uh4cr4ExBI5v6ZABauA>
+    <xme:5ALgaObZiuOrzRY3OLQgT-hvvXlceyklatEvLVexLxV1r32SDWOvU32amWMIdEql2
+    T9WAW68GOgd7v5xb_cqvllHrUQbdZStQPf7EYgWbYuF9YzT6kwgtA>
+X-ME-Received: <xmr:5ALgaL941WOYxo-aePqUMCnNM-8L70QZWPDPsnWqN5B9quQTO5P2PG2dZW3fVH4iOhnR_Rb_qQs5DKcPYIjJIwIPNEXiiUw2X50V>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekleegiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
@@ -60,25 +60,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekleeghecutefuodetgg
     htvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
     tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
     igrdgtohhm
-X-ME-Proxy: <xmx:SQLgaLk_EKgrUFtnRv2RBQy9qinPI8F0qvmE5VIwXOzZGEqxUXdgGQ>
-    <xmx:SQLgaISN-AHhum97buk2ENv2wLXz-CXHh7_FlMG3oSi9u3W8ghmoqw>
-    <xmx:SQLgaBMnP2L-iuitWXbkyvf6mrAOz4X31iRpF2_FkEwd38RpomBjNQ>
-    <xmx:SQLgaJXIbZnhCqbI45mBlV2DWjtpFwGUvAMvgZcalZdAtI1q0is09w>
-    <xmx:SgLgaAk-Rs8kKrYJ7k41mWpMMmBqN9f0YhvF1FeVeCwh2-I2hFQv8qtN>
+X-ME-Proxy: <xmx:5ALgaFgRlBdk7QdfBYliaAddLVW0O-iaskMRFYGHTEVtmt_Dt5tECQ>
+    <xmx:5ALgaDeoAQzJPYgVGM9mzs-SridySQHHR0To2RJDhl_64kPod6p9bw>
+    <xmx:5ALgaEpXIK3vmVepCjgSkOEt3x_wbzGxCubX6CCx0D__yWvaKcbMug>
+    <xmx:5ALgaAC6VPFOgjaLf0UskISg-cDRr9cYddaFa9kmgOmnJeW7BGiP-Q>
+    <xmx:5QLgaEhExbjn2Q9yKClhEs5jNC9GjS9O18JSVn3WNP9_5j3AsrVokdro>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Oct 2025 13:05:13 -0400 (EDT)
+ 3 Oct 2025 13:07:48 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc: <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 5/9] docs: add documentation for loose objects
-In-Reply-To: <20251002223855.1022847-6-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Thu, 2 Oct 2025 22:38:51 +0000")
+Subject: Re: [PATCH v2 4/9] docs: improve ambiguous areas of pack format
+ documentation
+In-Reply-To: <20251002223855.1022847-5-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 2 Oct 2025 22:38:50 +0000")
 References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
 	<20251002223855.1022847-1-sandals@crustytoothpaste.net>
-	<20251002223855.1022847-6-sandals@crustytoothpaste.net>
-Date: Fri, 03 Oct 2025 10:05:12 -0700
-Message-ID: <xmqqzfa7ud9z.fsf@gitster.g>
+	<20251002223855.1022847-5-sandals@crustytoothpaste.net>
+Date: Fri, 03 Oct 2025 10:07:47 -0700
+Message-ID: <xmqqv7kvud5o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,60 +91,18 @@ Content-Type: text/plain
 
 "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> +DESCRIPTION
-> +-----------
+> +=== Object encoding
 > +
-> +Loose objects are how Git stores individual objects, where every object is
-> +written as a separate file.
+> +Unlike loose objects, packed objects do not have a prefix containing the type,
+> +size, and a NUL byte. These are not necessary because they can be determined by
+> +the n-byte type and length that prefixes the data and so they are omitted from
+> +the compressed and deltified data.
 > +
-> +Over the lifetime of a repository, objects are usually written as loose objects
-> +initially.  Eventually, these loose objects will be compacted into packfiles
-> +via repository maintenance to improve disk space usage and speed up the lookup
-> +of these objects.
+> +The computation of the object ID still uses this prefix, however.
 
-Much easier to follow relative to v1.  Very much appreciated.
+"however" -> "by reconstructing it from the type/length data as
+needed"?
 
-> +== Loose objects
-> +
-> +Each loose object contains a prefix, followed immediately by the data of the
-> +object.  The prefix contains `<type> <size>\0`.  `<type>` is one of `blob`,
-> +`tree`, `commit`, or `tag` and `size` is the size of the data (without the
-> +prefix) as a decimal integer expressed in ASCII.
-> +
-> +The entire contents, prefix and data concatenated, is then compressed with zlib
-> +and the compressed data is stored in the file.  The object ID of the object is
-> +the SHA-1 or SHA-256 (as appropriate) hash of the uncompressed data.
-> +
-> +The file for the loose object is stored under the `objects` directory, with the
-> +first two hex characters of the object ID being the directory and the remaining
-> +characters being the file name.  This is done to shard the data and avoid too
-> +many files being in one directory, since some file systems perform poorly with
-> +many items in a directory.
+Other than that, the new text reads very well.
 
-Additional explanation new in v2 look quite sensible.
-
-> +As an example, the empty tree contains the data (when uncompressed) `tree 0\0`
-> +and, in a SHA-256 repository, would have the object ID
-> +`6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321` and would be
-> +stored under
-> +`$GIT_DIR/objects/6e/f19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321`.
-> +
-> +Similarly, a blob containing the contents `abc` would have the uncompressed
-> +data of `blob 3\0abc`.
-> +
-> +GIT
-> +---
-> +Part of the linkgit:git[1] suite
-> diff --git a/Documentation/meson.build b/Documentation/meson.build
-> index 41f43e0336..64f70ac724 100644
-> --- a/Documentation/meson.build
-> +++ b/Documentation/meson.build
-> @@ -172,6 +172,7 @@ manpages = {
->    'gitformat-chunk.adoc' : 5,
->    'gitformat-commit-graph.adoc' : 5,
->    'gitformat-index.adoc' : 5,
-> +  'gitformat-loose.adoc' : 5,
->    'gitformat-pack.adoc' : 5,
->    'gitformat-signature.adoc' : 5,
->    'githooks.adoc' : 5,
-
+Thanks.
