@@ -1,112 +1,100 @@
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC791DFDB8
-	for <git@vger.kernel.org>; Fri,  3 Oct 2025 16:38:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876C71DF25C
+	for <git@vger.kernel.org>; Fri,  3 Oct 2025 16:43:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759509532; cv=none; b=oTXAPzbe9NC4bPz6O2Im+hNRJ7PfPEbAuoBDvdfc5OqP59dqUaGxSNTliuFomf2KhfApGTwRCU6Oi87mF2nqZhThGJTi2a88wzaiEohiucuZaok08c4SVNBNjRPIjMIcKWyZ2DGiB7iqS+UF7A61b3XlBL2ONcCn3bBuEOGh1Qc=
+	t=1759509794; cv=none; b=J0Uu1Pqvg0TPMxMCAPXdigJeK5+deFu8EFTb6sZzw+D7jzWJDRXpJ/cmzt1L/5qm/ND/Ba8ulHTzXZGSDCFKNEPmp3cN8M6XyzXa1a9FPJ5Ak0baLC0hwQ1Ptf1RtR+cH4kzlb3yRiTpKS3N6C8ZF3fz13mCUrUJhSE6Yc/ioyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759509532; c=relaxed/simple;
-	bh=bMb2nz416HMSI0/R9cJlAK/wCqlx0vZVlqopnS4PcIc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tUxRnnvLS1sdhs8A7W+uNYezzbgJBVNjM2bZZxzaqY2F5OoHpPW3oLysouN1nu6Cfo1oTmIk9PkUQeORImsDaA7nb3Nk31MLS5gHT8itwd+Ouql0w+yzWSmPjQjXLzSgdjli6RQ7PkNiBUuFz+5Svq8tPORPctYPivDHHYOc4OY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YsWk5oGn; arc=none smtp.client-ip=209.85.208.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759509794; c=relaxed/simple;
+	bh=G6CKvh95PheE21wWw6p2klUUrNEyN7rWGvkuPemMi0w=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=L67flX4V03jINHLT8e69xIi2k6biX8JVQR7IygDOsUa0hc0cgY00EoFIg6Ky8yQO+QaRoKESe1WvEg7J3L67uf9VYoAQ/VkEztPUq3rq9UjSmZQhuoRwSz7Hoj/lwGqw0Xfbi0WU48fkbS1Y1rHaCBuVobYpTllHylleh4ep8MY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HpX9SSnd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v0NAew9Z; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YsWk5oGn"
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-363cb0cd8a1so30831741fa.2
-        for <git@vger.kernel.org>; Fri, 03 Oct 2025 09:38:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759509526; x=1760114326; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wgay4+ZMsPsMzFhOOif6qkI3FoliIOcvGnXFXMM++j0=;
-        b=YsWk5oGnfBzasKY9Jkeg4YmJeR13zHrTV3GCWoNBiQ9gIjTk/iOKpXqV8GMtNz2kiO
-         7+OPiPacXMHgd8knygWbSdv5Zawzg+N848feVoxYgLSptyp/UZZ5dUyw576xQNI82n5g
-         VJC6/pRIZt5LrAW6fD6V44yQauxAyvXASk07ON+q89tgVjvrP1HLNA/VNMbv+/umAxzw
-         pDnRdOsoFsyu8+3ec5FJEwu0sQ5Cx2xQRZ/i3Xnp02DEzcPRF1SR41LKzPwqJvBVsxPG
-         V9TsAPJTv7SyVZlTS+oOfvWUwiN7PBao8OSIMV+8AO2lIySU6ojh10tY7Jz89tUv8BCX
-         T2jA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759509526; x=1760114326;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wgay4+ZMsPsMzFhOOif6qkI3FoliIOcvGnXFXMM++j0=;
-        b=CIFLcYf4OM+UQ0KC5ygddoMdU7f421/inwo6Kb6RF+wyRcwkFV+t5qsYEexSPi8dHk
-         kyT6KTe2rsStnwS4AKSU3AYdM9ls+2O3zYSPk7Oe/HrE8fTk2phtNCe92QnRustTLcxc
-         9zL7DqXzVhmJB7Mg7PqFX0oa0KniXCAcUFE05Cx44QuKyo+oiXj2fJnIHJL8BLhLricq
-         W/gQXlvE2/rm32tt7vs+GQZsd8guU9JT+Nc2bgtwnnMNffXwjw8BmqPxm2C7MzBU02z1
-         13MYNCaidC4aAEYVUl1Ps2zzzxXMqMTPyy5yq3dNUCDVZ21FGy339UWjjhNzT3tvZYuf
-         MNxQ==
-X-Gm-Message-State: AOJu0YzULHeGT3AbOMYPv8tVet11JJVgwRWeqexZVWRyhTrJg4xiWXxC
-	n1ecKwyvW/evr/WpAvRZPL00HBVBhI51HTxHPRuOgJXYfYK7/eTP5zNYyFoA29izT9fCuyBbkxR
-	8aUVhdolIBRL/Dv3etlkCC8klW940zdbZXg==
-X-Gm-Gg: ASbGncsHtvLWd4HQ3wM1yvbVUlQlkTyT2u9wgfQP2IDfkrZ7GfaEcd5gT4YO/AdXVBq
-	wjLdP3dcQE3MzKxg2EYKhBdC/ipsKfJ2liClGI4evHVCqaIbJG0pnjLTTXBDwMDs+o5nK4Nayj1
-	3/01XyQqeb/fre4cA5Sbyo1ruQJ99cYELMtn6+BzegPhhHAraEQdcV0RhFjbNt8i8AMYDFh0zkY
-	vOnqLxm9Js35/i/tSY78MdfHRpsoV3jRE9TuADyTDptL3ddUsndoNP7X1NOG0j1vcjKbD+6a9XF
-X-Google-Smtp-Source: AGHT+IF/nmPWBtw2vlz4BQs1V0aAFNFAtQAOHp0Q3RN8L6TY3dHA+dN0cgaXdPPCNgCaD2YVn3zBCJz9CGdZuVIeLjc=
-X-Received: by 2002:a2e:be21:0:b0:36a:6c51:18b5 with SMTP id
- 38308e7fff4ca-374c386ed00mr13541251fa.33.1759509525607; Fri, 03 Oct 2025
- 09:38:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HpX9SSnd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v0NAew9Z"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 95408EC028D;
+	Fri,  3 Oct 2025 12:43:11 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Fri, 03 Oct 2025 12:43:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759509791; x=1759596191; bh=qhprI0oqUN
+	pyEXE2fEq2iigH7oUdP8XpVWe7vC2Xbow=; b=HpX9SSnd2Y3RHbCrsEY3GfXo/3
+	ucEhvzJePz5DKfq8gTxBEi88sOc0PzHmprqW5Mh9jLZ7u/N82l55zYf/OEaozddS
+	0fQpTUQuKSVvOcg2n7zbkz2xONyxmI07fKnBsfT/jBZhzjur+D/aCpDOWAh59374
+	+ezkcb3ApGKKssoDotyhgMOzjB0v6st3LZatDJAPkiXoKiWA2wJJ0Fb5UheqrxfF
+	VwhezAwMsJ91WWoHwIQU3s83iQ5v72MtFE7o3K2MJN/Ew9NwCovXTHSZrzfH4tER
+	2Sk/DnxzjJ+kOEm7/GQf/xLbultmXpvHvLYOWrX9hZJaWCRiE68AZQgdreXQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759509791; x=1759596191; bh=qhprI0oqUNpyEXE2fEq2iigH7oUdP8XpVWe
+	7vC2Xbow=; b=v0NAew9ZD8i3413gA6ouAOeKyvwIRG/BQp+yljyguG6WPQyptA/
+	8QyD2WNjuc2RSdZSk4/D90y5rYDs+YVHMrtlLeqXomW62LYFMKUZ+VdIDoH6+9OS
+	BUTsm4dHoJ+inF0L9gpb6Eic+9oSNFaFKRnDa/LmMP1X1MQxFesTGvZpWWbE4wuj
+	bLPvBObceOuak3Z0olGwho7lJvcnUZGwff3epVjMGNQDojDL7Mg2PTftg5gX2Iyo
+	f619a/KY+OlBe4QiesLrYhuNVmRwR1lSNlCD7nULz7qF/6E/Ev4YJAnxIUVehPCb
+	HK+o0Qe1o/Hm65rhysVBQFH0E9P7N4hvG2A==
+X-ME-Sender: <xms:H_3faCBVRhCzw-1Tnma4bvOS_qaPR863qaE5BFwGHWieKPZO6LuAEQ>
+    <xme:H_3faDblGXMMcJ9dX5vqyUB9p3GWGvxmGwU0ahSQZEYChCSFErkFFRAHa9kJgNaU-
+    Xlc_rv5H8Y2d5mI8n5Q1ws50aElC7Dem9boL1Q3rwpX7YGaJFcooQ>
+X-ME-Received: <xmr:H_3faN6uzwpcaiYIb5RXuYQK61iMxjmEKHdmeJ537X-PUUrHvOLnaoJpVes9UiU2-h1MKmNVzkaioe5pXPQa0VyMj7UIc3om-ni->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekleegtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
+    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    phhssehpkhhsrdhimhdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:H_3faMYS0m-LOrHmSVihx2gZRNnN8c8zybNzXevPMxPEl8f7H8Lvhg>
+    <xmx:H_3faEif7ZBH-Tg0I_CoyX9wg7eONlFOTADEP6xjvrqEBs-UkXf86A>
+    <xmx:H_3faF_bo3zzLMrhdOZfok7l__YnBdqkmOEnI1XCicjl8E3c_DnHjg>
+    <xmx:H_3faHoJqTw3y72E4BKacv1JZjxgq4Q5i96BawyHeg3_2R2jvpBNBw>
+    <xmx:H_3faHpos8Qm1v8RAGpuIRflPHVqTF-I_d9eOFI66g7cp8GcagoB-Fbb>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 3 Oct 2025 12:43:10 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Ezekiel Newren
+ <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v2 0/2] Makefile update libgit.a: Include xdiff and
+ reftable in libgit.a
+In-Reply-To: <pull.2065.v2.git.git.1759447647.gitgitgadget@gmail.com> (Ezekiel
+	Newren via GitGitGadget's message of "Thu, 02 Oct 2025 23:27:25
+	+0000")
+References: <pull.2065.git.git.1759341748.gitgitgadget@gmail.com>
+	<pull.2065.v2.git.git.1759447647.gitgitgadget@gmail.com>
+Date: Fri, 03 Oct 2025 09:43:09 -0700
+Message-ID: <xmqqbjmoueaq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAKu9fqx-fkOmKLby0mWU8D-T9vL1oY49kVLN2zWwhyfTUKSPsw@mail.gmail.com>
- <xmqqldlv4skm.fsf@gitster.g>
-In-Reply-To: <xmqqldlv4skm.fsf@gitster.g>
-From: Stephen Harding <stharding@gmail.com>
-Date: Fri, 3 Oct 2025 10:38:34 -0600
-X-Gm-Features: AS18NWAKfDX2LRuAvm19rJjz--wBcsop1nio2VtgTrfvB6mG4isjnXdxsbQQdM8
-Message-ID: <CAKu9fqysTdO5Q_K68pR=QwdTpaL=tkx94Vmu3jSvbWb0dt6h8Q@mail.gmail.com>
-Subject: Re: I still use this!
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Thanks for the tip!
+"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Tue, Sep 30, 2025 at 2:02=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+> Changes in v2:
 >
-> Stephen Harding <stharding@gmail.com> writes:
->
-> > I just encountered this:
-> >
-> > 'git whatchanged' is nominated for removal.
-> > If you still use this command, please add an extra
-> > option, '--i-still-use-this', on the command line
-> > and let us know you still use it by sending an e-mail
-> > to <git@vger.kernel.org>.  Thanks.
-> > fatal: refusing to run without --i-still-use-this
-> >
-> >
-> > I use oh-my-zsh and I rely on the git aliases. I used this today:
-> >
-> > which gwch
-> > gwch: aliased to git whatchanged -p --abbrev-commit --pretty=3Dmedium
-> >
-> > and apparently you want me to send you an email to prove that I, an
-> > actual human really do use that ...
->
-> It is not about proving, and sending an email will not change our
-> plan, but it gives users an opportunity to tell us a use case where
-> no possible workaround exists, which we haven't anticipated.
->
-> You can change your alias to
->
->     git log --no-merges -p --abbrev-commit --pretty=3Dmedium
->
-> and should get output identical to what you are getting.  Also, I
-> think "--pretty=3Dmedium" is the default.
->
->
->
+>  * Add xdiff and reftable objects directly to LIB_OBJS.
+>  * Explain why xdiff-objs is removed.
+
+Both changes look sensible.  Will queue.  Thanks.
