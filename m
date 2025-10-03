@@ -1,144 +1,104 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754B92DECBD
-	for <git@vger.kernel.org>; Fri,  3 Oct 2025 09:51:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1099283680
+	for <git@vger.kernel.org>; Fri,  3 Oct 2025 11:05:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759485114; cv=none; b=jVjvkLn1nhcUm5thOguIydj3ScGxQvkp6YPrZmdEt94qjSw8uodOI5SN496gccBw4w3HQBbPoGQJAtpYYJClTzH7YolsCVj5/hy0MNghKkpLjanPA57ugVtbqXPD3pkY2Zs9Y+kDRnVszBh8bSHX9iYasFDIehewVGdztMDUKH8=
+	t=1759489534; cv=none; b=oMi7tZws4YMZ9QSGJW/h2iSf1I3jyCQOd/nQfG9rO44hqHNZPVaX7EtYtySg1E0QeE38qCCO63ZcYuCqMrJLIEhqIExsl/9AFOsRLbOF3SSM1V4X7YngbTkr/cEoaYqiQi804azzgj38JTQ/w/BR83HDAMqR8Mj7Usmim5gjKes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759485114; c=relaxed/simple;
-	bh=OjiptpeOPZ6jlWnSXS6zjksp6SSPOF0ug55P7VOBca0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NLSCDEuFkOoW4gaIjQT+pvm4dJzWdWh5I5zi44nRQYqR7xGrUpFojUyEHO9vhXoehvexjWYU0MZ+Vu9iqrgcIhQ5Ph/wIHRLfI6idBcqHpVAEJHCBw0RQ1CE9iVAfUcftdL9oBmTHn3Q+QnJYZOTxZNGc8p2q0MNg/WUcThxD5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HJmfttap; arc=none smtp.client-ip=209.85.128.49
+	s=arc-20240116; t=1759489534; c=relaxed/simple;
+	bh=Y4gorFfgMR/2mEaW357+PfSO4MrjeERVTaZqLIIKysQ=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=XpkYIBkKgdXW3UCl/XQR72xh5Owg7TG2fivrmj0M3EBrJM0cnP3OG/kpFg+va84nEwiCF8iKrb5epncy2J9M7DdEk0OrXOmdxYf9chQtcYjTGPuap7LOFP1QIpx28mwagX7kOF9SZFFSlFSSTNhkz+k19ueS2qZ1qrsPU3axxPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SH7oShry; arc=none smtp.client-ip=209.85.208.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HJmfttap"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-46e6a689bd0so15003065e9.1
-        for <git@vger.kernel.org>; Fri, 03 Oct 2025 02:51:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SH7oShry"
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-3717780ea70so22432731fa.1
+        for <git@vger.kernel.org>; Fri, 03 Oct 2025 04:05:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759485111; x=1760089911; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=/95gw8vkXM6mUDPiKwVuibqbu4R+dlnNQqrSqXcOysA=;
-        b=HJmfttapiwfm7nLWYH3kBhvs+v35o75LvL41++kls2XV+tNzyGPsmBMdgmGvNYTJp/
-         UIZ+SOCXZf06ka6xt1mjhcsP+Bu2toBCBKam+VO/Mr8iMZxc1qvbo9ZRlNLTg3FvDoKp
-         8tVqnq76VnQxpW4iV58YZ22kCFcemPjXrgvqctaSZtHUd7LOGFkYdtWx5wtU45L4D9MM
-         fgwNuarRnYb6mOwANWJohvlXcKks9HJWEUDGXqzuXXgZmEyFK3FrMAHDU2OaD2bX9s6j
-         0FHPflu4RcE0VgW1zlojrXhrYWTWFrfve1Jo1edrCLzPSY2ObrQlk0RdqdRMT9aF+TjR
-         EEFg==
+        d=gmail.com; s=20230601; t=1759489529; x=1760094329; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=E61p/M3e5HQw/peyKJaXD1uBmBBjBy5zB3Go05kCKsI=;
+        b=SH7oShryBi6Z30aIb7BZXde6XmzJdE5BxEuPF4skF9q401EF4nFz6JUfVTygYKIECU
+         OOyFp+kygTeXb54ElRpapCUWo64mSB/nD2bUMfR+GesZSY2j6wti6YROi7kMg2GUMBKf
+         kgV1v71Vt4aTaOpmcolJzMMKCE/hPyYszMki63J5IfbpH/52+SIQy4J1N4W6Vmua7l6a
+         mmd8xEgjMcPqKUa0s/UoHefgXvzd+x8/XCKKzG/2/2U9npf2E8VfLTTlE84MpV48hsYv
+         Fy5mTLmO40ivmavzMOAKGKoRYOGX8V+9yOrmfkWe49lEithBOfBje8zs1PVMHaUJOroO
+         1M6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759485111; x=1760089911;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/95gw8vkXM6mUDPiKwVuibqbu4R+dlnNQqrSqXcOysA=;
-        b=gs1gjyEkoTjfdybFQhxncNf1UG9hsSkPyl8t94Sy0Yqa17JT8fUrRCgnCgEepLbXOc
-         LXQVCIUQU8m2pAUHrSG/2NHUPnDCCfR6ab76aRR5SGYOXLoTiyxxicSMgIR9nn0S3kUA
-         867nklWaiBQ8aKFzoNrXo5gwPsliCIOEcf7TgMPycDCDCnR98aq30RWH+Z0eNbvZPpYQ
-         YcnGkdHrhMpj3LDgmnhjR2ctJCAp/UTSZ9ea60cN3MesziTCv8H4tqhoqZA2hsu2IjaJ
-         LizyvZnvO8xo8IETQKgFOZdCJm9B8PRc7sk0H5qtJ1bE70KAXuXfJHDG4t8/11i9Q1gq
-         KSxg==
-X-Forwarded-Encrypted: i=1; AJvYcCV5T6zvaD5Xq3mADXKWQOC7hx1G06TkSyY1Ao2LsteYG5TFdyfbldx4CvyM2Nr3Ws6LlPI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXtI5Zbxkb4OuxT0gIZXcBxUCKamyIg6z5iECmM9cRuZWopesV
-	v4FmXRPmaLL8KuaOSK83qGHILw0Wdm+SJI/YcaGFmatPzHv4VXO22X7E
-X-Gm-Gg: ASbGncsQzQNdAgWA16Ny3yib09NUXaejcK4HbfExyM+vk6G22IAglMCpkdN/4/hKLFv
-	RjMgTaIM2RjPCAiq2DiNppGRel4fPWXdw++milUhMyaTo2cniPPOc9AjWigtH2euu2OxJDIP89Z
-	MFi0oPR3kSVfwz0d92CnXEfwfKcxU9YCzSuTV7XClUxRy6MnbRJAtCnocstd7BX3cEDognViYSp
-	jIaE4X9oN5l+JIVIy9Ow9O5zcClrLiGIrRyihLSEYT3atFNFHnvkLrx6a4NI9hkYALdd3OTnXD7
-	8iwhBBDBsOU1PAr4hopUHQcuS6cmo9ZBkwILMPqSXBL6IoO97xMIAL4Vv1OxOM5Lv/LfXxAlbHm
-	wMQdg2PKTqyRZaeTK7v3xyTDMNFvHym7vpFQG+LmvrkSls8yVQbjIU7pnDxZk3hNO4bl9Ttnn1t
-	9u3Y5XZwTt/aCIWayF+dH9uso=
-X-Google-Smtp-Source: AGHT+IEhmEgS7TFkXrhNNWlBWSt6iXs5Esc0Mp7frNpvn1Wlwz9j07LcVWpbvRNR7XWd6TiiCQEq2A==
-X-Received: by 2002:a5d:5885:0:b0:3ee:13b1:d70e with SMTP id ffacd0b85a97d-425671aa0b6mr1720312f8f.40.1759485110370;
-        Fri, 03 Oct 2025 02:51:50 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e723624b3sm22954335e9.17.2025.10.03.02.51.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Oct 2025 02:51:49 -0700 (PDT)
-Message-ID: <ea27273a-378e-4f75-90f2-6615ce297a43@gmail.com>
-Date: Fri, 3 Oct 2025 10:51:47 +0100
+        d=1e100.net; s=20230601; t=1759489529; x=1760094329;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=E61p/M3e5HQw/peyKJaXD1uBmBBjBy5zB3Go05kCKsI=;
+        b=c+r/q+gkz7NE04/M009PZq28WQ6dKS8J8+frC4TfAKZMFRF1AXtU0QPhbM6nTXo8Ok
+         RUhOXXuNa8Bg0kY2XFX71MBLfzbtkYBItXFrq+ZH7liGolry4EYa2bd5XL0acRPMiGYm
+         ur5eA8EnMhVokOGanGHDrBHqgR+wqCcaZUvL7jSFTgJ9m76hOb7Oud3oUtNfiGsTNCa3
+         RhDRf1wAJnunJuc+Kc6xSobOfRGQJz5YOJsFD40R07GCJuILSSstu86hDXudCvEzy5rk
+         6dyr1F2nEpfU638J0g1jUOfgNt9C8JglFtX+oRkTOSPnTvmz52HglYoaj6Xf9KeRjb7h
+         HLdw==
+X-Gm-Message-State: AOJu0YyswTlDUVeRJCJYgH+Dti4iR+HpZc2SkJuugprIhcdh1BFNempq
+	P+ViFhri/pXcrx/JWze1flE2JSZdD5M7FWThIuSTWcOmXiv+DXjrpXQilvRjX2A2bsHXDHtHjW6
+	F3hnelX5g+HMrldIv8itxEudyzLX6atEjFfEUQUybfg==
+X-Gm-Gg: ASbGncsmc35dw3kYukKd0KZiWbV7TxOP0x5M5QmXYPpwpnprBKmKUUpxctBpwioioK+
+	jM4KwHvFKwm1XXcaEceiZDOu1je4dfOHhIAXkWbC7nvkjzt2le2Kyn3tYNA3o6N/LLO3TauKoTS
+	3AhlwkpnbCb6RF7zlZwGv8TgY6DCpDzL1Vg4jhLz5aOVhZYuV/VtO+82aTd30MZzhkdGdqRVs6e
+	0S84woenULKNK3kHH3bd64nbQUD
+X-Google-Smtp-Source: AGHT+IFUKf7LLni/R929f6ymnRZ6sjSbQRgglN9UCwKWYaJ3ozCwTUXzyH7h2OMLrX6rz+1oLThe+jbaDGDKSbCaQEg=
+X-Received: by 2002:a05:651c:220a:b0:372:932f:4656 with SMTP id
+ 38308e7fff4ca-374c37d620emr8066871fa.29.1759489529044; Fri, 03 Oct 2025
+ 04:05:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: gitoxide-compatible licensing of Git's Rust code, was Re: [PATCH
- 6/7] xdiff: conditionally use Rust's implementation of xxhash
-To: Jeff King <peff@peff.net>
-Cc: phillip.wood@dunelm.org.uk,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
- Ezekiel Newren <ezekielnewren@gmail.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>
-References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
- <5a959c9bdad79cf972b95dcf4324135dd7c94dac.1752784344.git.gitgitgadget@gmail.com>
- <5596e569-6632-c2b1-37af-a978de5408cd@gmx.de>
- <dd3a7ab0-947b-4592-a086-8c7028f02ffd@gmail.com>
- <9818dc92-3569-3e6f-0252-245c2bf0bf84@gmx.de>
- <20250923174825.GB1136654@coredump.intra.peff.net>
- <bfaaf26f-5759-4812-9057-b3e0bf7c7949@gmail.com>
- <20250925022555.GA3202669@coredump.intra.peff.net>
- <20140030-6bf1-4393-a941-bfdbc69c79fb@gmail.com>
- <20251003031805.GB6381@coredump.intra.peff.net>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20251003031805.GB6381@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Devste Devste <devstemail@gmail.com>
+Date: Fri, 3 Oct 2025 13:05:17 +0200
+X-Gm-Features: AS18NWB8tFmWjdrsOv8XFeGZXN3Nmid6GKg0bKQiwDKLebVmTrXlP2zEEXvGIwY
+Message-ID: <CANM0SV3+4k5tsgRw0g8-HoVSFGb1AwZr+2hCUXLriFGSd33WQQ@mail.gmail.com>
+Subject: Untracked files cache not used when --untracked-files is used
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 03/10/2025 04:18, Jeff King wrote:
-> On Fri, Sep 26, 2025 at 11:06:38AM +0100, Phillip Wood wrote:
-> 
->>> If I understand the suggestion correctly, it's not to license it
->>> specifically to GitOxide. It's to use a permissive license (like GPL
->>> with linking exception) that would make it compatible with other
->>> projects with similar licenses (like GitOxide).
->>
->> I was responding to this paragraph in Johannes' message
->>
->>      Note the exception? For new Rust code (and of course excluding code
->>      that has been ported verbatim from GPLv2-licensed code), GPL v2
->>      could be used with an exception along these lines: This file is
->>      licensed under the GPL v2, with the exception that it can be freely
->>      used in the Gitoxide project.
->>
->> That suggestion is pretty close to what libgit2 has in its git.git-authors
->> file[1]. I'm not sure how practical it is to special case just one project
->> though.
-> 
-> Ah, yeah, I may have misunderstood the proposal then.
-> 
-> I don't think that really changes much with respect to my concern, which
-> is for existing code.
+I am using:
+git version 2.51.0.windows.1
 
-I agree it doesn't change anything with regard to that, I think it just 
-adds more potential problems.
-> That probably needs to be explicitly granted
-> permission to relicense, whether to a specific project or not, and it is
-> hard to pinpoint a definitive author for a lot of it (even if many
-> authors have agreed to relicensing) because it has been touched by so
-> many people over the years.
-> 
-> So there are probably two separate legal issues to consider:
-> 
->    - how the explicit re-licensing grant is worded
-> 
->    - what problems may came up with porting existing code that has been
->      touched by many people
+Run:
+time git status --untracked-files
 
-If we want to seriously consider this we should probably reach out to 
-Conservancy for some advice. Did this end up being discussed at the 
-Contributor's Summit?
+I get:
+It took 2.75 seconds to enumerate untracked files,
+but the results were cached, and subsequent runs may be faster.
+See 'git help status' for information on how to improve this.
 
-Thanks
+real    0m2.959s
+user    0m0.000s
+sys     0m0.000s
 
-Phillip
+---
+
+when I run it again, I get the same thing again
+
+However, when I run it again WITHOUT --untracked-files its much faster now:
+real    0m0.753s
+user    0m0.000s
+sys     0m0.015s
+
+which means that the untracked cache does work (bc deleting the
+untracked cache, it will be slow and also show the message)
+per the docs:
+>When -u option is not used, untracked files and directories are shown (i.e. the same as specifying normal)
+
+Which I can confirm also with:
+git update-index --test-untracked-cache
+>Testing mtime in 'C:/Foo/bar' ...... OK
+
+It seems that using --untracked-files(=all) causes it to either not
+use the untracked files cache (or untracked files are not stored in
+the untracked files cache if they are in an untracked directory?)
+Since various tools and IDEs use that hardcoded, fixing this would be
+a massive performance boost for many users
