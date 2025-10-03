@@ -1,121 +1,202 @@
-Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522BF3987D
-	for <git@vger.kernel.org>; Fri,  3 Oct 2025 20:48:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02A9221264
+	for <git@vger.kernel.org>; Fri,  3 Oct 2025 20:58:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759524533; cv=none; b=U+PJ5NVGUiNxMKS9P9ayp5Ej3RGwTtk5SJleRnnxEvfKKTzLdY5E3emTaBdDyWpjDIJ0pV1Z+ucLlnwONz3R0KMcDDty8VbRoptbYBkiAlXNXkCuHADUlkx2j++jSsNQVzP+E7safrPz+tgZ/RrCxjD7XyiDMiKRtZmBp6fnFk8=
+	t=1759525140; cv=none; b=Dm0kGBAv9KsxBtzvoBIfMVtMkdIh+wLMcziiuoc0bETBvccCF8XUYOFTQfb3C68UALavJix7VXUr6zK4qm71bzBTWXVj9kQx1SSKmzj+plHj17RxD0oBU1XT+ITFFiUKJd74kdB2ps4Nr9jurUTZIz3A28Hk8RNN10BTl8AfA7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759524533; c=relaxed/simple;
-	bh=HOksW3lIg+I6Q9xBiHsJADHd8E8xVC48dU47UdT5nz4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=q3J9QiwyWm29UqXQbShILpKks+5HRfveAzS+qHzaiR51hovp6U9sxdfLIPwxJMP1H0ddar/7g5Ci/uNMSDNzyBK2nvOysXbPrW6tIJS4zd+XMu1Ttl+7k7Iuw9EtfWM4ZrDbCQr/c2XTSEIT1aWVCE5OV5nKJ1435EpgOIg4nSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Elfsm9Ni; arc=none smtp.client-ip=209.85.166.171
+	s=arc-20240116; t=1759525140; c=relaxed/simple;
+	bh=jyKdzgnGa4wiwrw5HcHZzMyu0spPuI8LZYIhAVKedfk=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=PBKIsKzhh3km3Rrsq0blKuNWAlGWPUSRSzilhAMLLZJKdFMR7m9qbEYO5rQCf4oELYSaHxq9VhS0xuVsbH/xn+KQiYCTGCOnXjN4aVO6WbgFvWDbUXOLVt1uPNosJsM7BcJL2KFnmeGe2W5XQ760jtgYb/D+cYp1Gi0RDp5TapA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TcPKo0xu; arc=none smtp.client-ip=209.85.166.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Elfsm9Ni"
-Received: by mail-il1-f171.google.com with SMTP id e9e14a558f8ab-42594fb2fe9so7518695ab.3
-        for <git@vger.kernel.org>; Fri, 03 Oct 2025 13:48:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TcPKo0xu"
+Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-90a0b3ddebeso108778839f.0
+        for <git@vger.kernel.org>; Fri, 03 Oct 2025 13:58:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759524531; x=1760129331; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1759525136; x=1760129936; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HmeaDF8OQByqaTZ69yLCqxIz4AeZOwNqbVcszggbksQ=;
-        b=Elfsm9Ni3zhO5mgTrL/w8wmFeOY+l4Efrfay8xp3SFm1W2J+4eWoygysh5SjzPViNz
-         KnyxKFd1/MmRnr9q71aNgXRr/5hGt3DFG/W4W02KYysJGCllegQsXo1raO9oelRQffGL
-         YtcFKlJ7URuWa0CNlWB6f0b7BCY+SPLhYqHF4jjLLyMzCDO79AgpPf3kFPv39nGRJSl2
-         eV1LDEy2flWEF1eeCGph2MwjDZIzoOuwY9pVADz3QeK3WOKK3GbYNCmfON8B3HyD2NMi
-         SJWzVAiVXPZSDlfLnZG2HOep2064NIxicmjo6mFnxWqOL5EhecCr1H/OCiC9G/sYvA4X
-         UgIg==
+        bh=qFdv0cHgOZtkdYU1HsK3ruUFD4odEC7vFeqQKe3SyeU=;
+        b=TcPKo0xuFeqzNPDV1xuZJB25ScfpOUuZjIhM9cBOxMeSnu7jL9skHeQO0JjyAw4PBv
+         lNzFIOuikDSGO0tYmTOv5MSI20miVwprLUA1BEPWsnIGphdVEvPWFj/wuhvAmyJ6sP8x
+         yLYjW8i3Skx0uStpFO+RVdXwJjRp6xfDmr9P1CZMBlaoR8WkvKdCFOq4GNg5CMdN7IMq
+         p7xu45H2lS3bRVRw8t3XIDplhlT/te16WSDPGpI6pKx9YMQypdb7jit50EOcNNvrBV2x
+         hANiyBTzCxQ7xaiX0EuCPjMK8pRGMzFtMI/WnJCGqP2GudAGIRnE+g0EfuXJ0XRokR0w
+         qu7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759524531; x=1760129331;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1759525136; x=1760129936;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HmeaDF8OQByqaTZ69yLCqxIz4AeZOwNqbVcszggbksQ=;
-        b=hHmAjLm/HEshKtTwzy12QfJkus1xqIMZyt6r/44aoO8zCOSQ9VucROXEFQp7AA3Fql
-         QYQixXDyG6xlxOyQZfqWdIuJUnZI+rYm/NGYmGWOUq5rFbbCqhDC9vUvfWQ8qfaX7ser
-         WXyyz0yz0fCNQzGrOuiGKickd3QqXvQGZYpF7sX/kpzUiVyHCDOXEgyGV/JQWBZSxBKE
-         8zezF9IFBFmtBh1X18p2hRBqbE0Ohyj5jk16IPR/4v4v/3ZSoPbUpE5c0jnlZ31Oea2I
-         bkz3wvwnEusABDquixzuOqGdOZvkGX1XdMzD3p9Vgh7oJAErd+387LMNIdOerZIXxzOY
-         gL9A==
-X-Forwarded-Encrypted: i=1; AJvYcCVteg+bvD2rDrYHklas3/58+nQWS8Ctdr+fwbfnK61vbgDFNQR9p6+Ic0a9LSUn4oOM30Q=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzEZ5y8j96wnbfTdfqw8vmTBIiSQAMhqmnff1MdOnj9zFehKs8F
-	muGGz/SVOkxWXOL8N8bNRXuYB++eatkSx1L2yPbuXKKqyy+72PkpgdYamP+/zwnKtOBlQYgES2K
-	TE/2fDYeNZg10vapFaBiHcogjWUjxmP0=
-X-Gm-Gg: ASbGncsdLAsBy/NyZxUKgFILT4z8ggyGx63FHenM0Q5GxCI0K9Druidnm5BVZJ7TnXJ
-	zf/I4gpzjwGRJgVDeBnC2IMujJkyHU34I0vfRY7ol5ZzQ1oCXbofjoDBPlqv8+KEL3p+tLSipFN
-	0ctD4c4QzbpcYblALYt1WJa02iMrtaPmP27fHGOic97/YJK82wPSCPjlEWt8pomq4kkiGquX+D+
-	QTj+sfU51rDLeKxqTlLAsbzc8K+wB2OUO4XwLeecBDjWUOqPi0MfQvAPfALpGfCGmgNK7sbvQ==
-X-Google-Smtp-Source: AGHT+IHlWfNubewFLQIr5yH0AH5DMlqg9NzTdvUt0fR7a0JBoYh2lCfHXAm9uzWzedk4n3nMnIGEJfKTQO5EKDdCU1Q=
-X-Received: by 2002:a05:6e02:1a69:b0:42e:731c:a07c with SMTP id
- e9e14a558f8ab-42e7ad2e73cmr62262655ab.12.1759524531321; Fri, 03 Oct 2025
- 13:48:51 -0700 (PDT)
+        bh=qFdv0cHgOZtkdYU1HsK3ruUFD4odEC7vFeqQKe3SyeU=;
+        b=FhDYRtymjAabQbjOT8JkmAx9H7fDcTNvTfQVQtwuS7LuXqaYVcyRLGfnUDmx35iFGE
+         REaHSioU0wvJDMjuvG0jKmnLh9h/0PmiRTndNSA2fp/okBvwz0jzp4xSjR/EBKyvL3ah
+         esLJp+WnqxhiIQQdBV3YwLrEMToh/0wqmi/PneKKpM5Ftdu3hI5BxwXbFRSAHkXsmxPE
+         Jp0H/p6rEspmWZTmnaP8JIoL31tW8QOA3hC7ixAQZDsH4aPDgrI1NQY+IC6zfUrMzAfT
+         KHzB5y4WZhn8XjeuLVgRgbaNFvJkjHJn6HCiLqhywa+NOeaV4vNT8sNe8SofVkP3sC++
+         IymQ==
+X-Gm-Message-State: AOJu0Yy9AAhBQsjsrfduzadJbaKG1TtMn+SNdztYzIPhovere6IT+DzE
+	I7R6DX/0sfQTLL3nbTQuGXfYd/66NYA7QCUucqDOpuSXv3daLAE+rrY6D0+MDg==
+X-Gm-Gg: ASbGnctFb9f9sFs5sTwo5cQAc/yVpMc+5V0qtF733+XWAJQryDyhx3bIMQQcHhICqhE
+	h1YwqsIBKFK5w8aVCkflVWScuzrVXuS7pAdjAIKTqja+m/QzbgRDAbs7pJk5qf2WGCX+0eWmug9
+	oJtfex0ZoTBcccXY7t2A1pnujLpwzhO2xBi8fXXvRg7uZjSGziFXKq0vXWuxGNFtV7NV4+PTflo
+	zcC86UI5C3GPV6lMJjzBMzbHXw+PsdLAVgoFZ6vsGIRuYQjHcGpfT/lraMKfBCWpAze82+NMA+1
+	OGOHlQdeHusVNLM5Gjm+8IWreUWGimRk+kUzoakelb9qwdKXzOLlunADJQ/6vwMO64dLu/sWlT7
+	Jnrg4yUT5jZ6n2/icQ0d4eh4kfz1QvKTQRxKmzE/pu6oFyND6vak=
+X-Google-Smtp-Source: AGHT+IEgHaZQ34YNgrL5LRS3JyDfmW2GOBL4K/h5sgz1/HtUQ0r5uTINAaFeJ+iQMWHqNJq/uKNkqg==
+X-Received: by 2002:a05:6e02:1fe9:b0:425:7466:624d with SMTP id e9e14a558f8ab-42e7ada91abmr57026325ab.26.1759525136294;
+        Fri, 03 Oct 2025 13:58:56 -0700 (PDT)
+Received: from [127.0.0.1] ([172.212.169.147])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-42f05c4578esm9911895ab.22.2025.10.03.13.58.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Oct 2025 13:58:55 -0700 (PDT)
+Message-Id: <pull.1979.v2.git.1759525133638.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1979.git.1759352209657.gitgitgadget@gmail.com>
+References: <pull.1979.git.1759352209657.gitgitgadget@gmail.com>
+From: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 03 Oct 2025 20:58:53 +0000
+Subject: [PATCH v2] docs/gitcredentials: describe URL prefix matching
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqcyalm0mh.fsf@gitster.g> <20251001140310.527097-1-christian.couder@gmail.com>
- <aN2fG-nS9fE5-2jD@fruit.crustytoothpaste.net>
-In-Reply-To: <aN2fG-nS9fE5-2jD@fruit.crustytoothpaste.net>
-From: Elijah Newren <newren@gmail.com>
-Date: Fri, 3 Oct 2025 13:48:40 -0700
-X-Gm-Features: AS18NWB9SPq_tcw8ut1C2Wsp7YLbw87qly1cTszQClDF7ZF5W6SBE9RHfRDsVJw
-Message-ID: <CABPp-BFcg9M=XjqGPd+akrUOqJqREBmE9+NvO1Q05r4pUcOmEQ@mail.gmail.com>
-Subject: Re: [PATCH v2] SubmittingPatches: add section about AI
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>, 
-	Rick Sanders <rick@sfconservancy.org>, Git at SFC <git@sfconservancy.org>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Patrick Steinhardt <ps@pks.im>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: sandals@crustytoothpaste.net,
+    Johannes.Schindelin@gmx.de,
+    M Hickford <mirth.hickford@gmail.com>,
+    M Hickford <mirth.hickford@gmail.com>
 
-On Wed, Oct 1, 2025 at 2:37=E2=80=AFPM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2025-10-01 at 14:02:50, Christian Couder wrote:
-> > +[[ai]]
-> > +=3D=3D=3D Use of Artificial Intelligence (AI)
-> > +
-> > +The Developer's Certificate of Origin requires contributors to certify
-> > +that they know the origin of their contributions to the project and
-> > +that they have the right to submit it under the project's license.
-> > +It's not yet clear that this can be legally satisfied when submitting
-> > +significant amount of content that has been generated by AI tools.
->
-> Perhaps we'd like to write this:
->
->   It's not yet clear that this can be legally satisfied when submitting
->   significant amount of content that has been generated by AI tools,
->   so we cannot accept this content in our project.
->
-> If we're going to have a policy, we need to be direct about it and not
-> let people draw their own conclusions.  Many people don't have English
-> as a first language and we don't want people trying to language lawyer.
->
-> We could say something like this:
->
->   Please do not sign off your work if you=E2=80=99re using an LLM to cont=
-ribute
->   unless you have included copyright and license information for all the
->   code used in that LLM.
+From: M Hickford <mirth.hickford@gmail.com>
 
-Would this mean that you wanted to ban contributions like d12166d3c8bb
-(Merge branch 'en/docfixes', 2023-10-23), available on the list over
-at https://lore.kernel.org/git/pull.1595.git.1696747527.gitgitgadget@gmail.=
-com/
-?   We don't need to go theoretical, I've already contributed such a
-patch series before -- 2 years ago -- and it was merged.  Granted,
-that was entirely documentation, and I called out the usage of AI in
-the cover letter, and I manually checked every change (discarding many
-of them) and split it into commits on my own, could easily explain any
-change and why it was good, etc.  And I was upfront about all of it.
+Documentation was inaccurate since 9a121b0d226 (credential: handle
+`credential.<partial-URL>.<key>` again, 2020-04-24)
 
-If any use of AI is bad, do we need to revert that series?
+Add tests for documented behaviour.
+
+Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+---
+    docs/gitcredentials: describe URL prefix matching
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1979%2Fhickford%2Furl-prefix-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1979/hickford/url-prefix-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1979
+
+Range-diff vs v1:
+
+ 1:  15f44a2ac5 ! 1:  4b64cf47e9 docs/gitcredentials: describe URL prefix matching
+     @@ Documentation/gitcredentials.adoc: match: Git compares the protocols exactly.  H
+      -entry for `https://example.com`) but will not match a config entry for
+      -`https://example.com/bar`.
+      +If the "pattern" URL does include a path component, then this must match
+     -+as a prefix path: the context `https://example.com/bar` will match a config
+     ++as a path prefix: the context `https://example.com/bar` will match a config
+      +entry for `https://example.com/bar/baz.git` but will not match a config entry for
+      +`https://example.com/other/repo.git` or `https://example.com/barry/repo.git`
+     -+(even though it is a string prefix).
+     ++(even though it is a string prefix). To match as a prefix, the pattern
+     ++must include protocol and host.
+       
+       
+       CONFIGURATION OPTIONS
+
+
+ Documentation/gitcredentials.adoc | 16 ++++++++--------
+ t/t0300-credentials.sh            | 19 +++++++++++++++----
+ 2 files changed, 23 insertions(+), 12 deletions(-)
+
+diff --git a/Documentation/gitcredentials.adoc b/Documentation/gitcredentials.adoc
+index 3337bb475d..bf595f7918 100644
+--- a/Documentation/gitcredentials.adoc
++++ b/Documentation/gitcredentials.adoc
+@@ -150,9 +150,8 @@ pattern in the config file. For example, if you have this in your config file:
+ 	username = foo
+ --------------------------------------
+ 
+-then we will match: both protocols are the same, both hosts are the same, and
+-the "pattern" URL does not care about the path component at all. However, this
+-context would not match:
++then we will match: both protocols are the same and both hosts are the same.
++However, this context would not match:
+ 
+ --------------------------------------
+ [credential "https://kernel.org"]
+@@ -166,11 +165,12 @@ match: Git compares the protocols exactly.  However, you may use wildcards in
+ the domain name and other pattern matching techniques as with the `http.<URL>.*`
+ options.
+ 
+-If the "pattern" URL does include a path component, then this too must match
+-exactly: the context `https://example.com/bar/baz.git` will match a config
+-entry for `https://example.com/bar/baz.git` (in addition to matching the config
+-entry for `https://example.com`) but will not match a config entry for
+-`https://example.com/bar`.
++If the "pattern" URL does include a path component, then this must match
++as a path prefix: the context `https://example.com/bar` will match a config
++entry for `https://example.com/bar/baz.git` but will not match a config entry for
++`https://example.com/other/repo.git` or `https://example.com/barry/repo.git`
++(even though it is a string prefix). To match as a prefix, the pattern
++must include protocol and host.
+ 
+ 
+ CONFIGURATION OPTIONS
+diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
+index cb3a85c7ff..07aa834d33 100755
+--- a/t/t0300-credentials.sh
++++ b/t/t0300-credentials.sh
+@@ -991,18 +991,24 @@ test_expect_success 'url parser not confused by encoded markers' '
+ 
+ test_expect_success 'credential config with partial URLs' '
+ 	echo "echo password=yep" | write_script git-credential-yep &&
+-	test_write_lines url=https://user@example.com/repo.git >stdin &&
++	test_write_lines url=https://user@example.com/org/repo.git >stdin &&
+ 	for partial in \
+ 		example.com \
++		example.com/org/repo.git \
+ 		user@example.com \
++		user@example.com/org/repo.git \
+ 		https:// \
+ 		https://example.com \
+ 		https://example.com/ \
++		https://example.com/org \
++		https://example.com/org/ \
++		https://example.com/org/repo.git \
+ 		https://user@example.com \
+ 		https://user@example.com/ \
+-		https://example.com/repo.git \
+-		https://user@example.com/repo.git \
+-		/repo.git
++		https://user@example.com/org \
++		https://user@example.com/org/ \
++		https://user@example.com/org/repo.git \
++		/org/repo.git
+ 	do
+ 		git -c credential.$partial.helper=yep \
+ 			credential fill <stdin >stdout &&
+@@ -1012,7 +1018,12 @@ test_expect_success 'credential config with partial URLs' '
+ 
+ 	for partial in \
+ 		dont.use.this \
++		example.com/o \
++		user@example.com/o \
+ 		http:// \
++		https://example.com/o \
++		https://user@example.com/o \
++		/o \
+ 		/repo
+ 	do
+ 		git -c credential.$partial.helper=yep \
+
+base-commit: 821f583da6d30a84249f75f33501504d597bc16b
+-- 
+gitgitgadget
