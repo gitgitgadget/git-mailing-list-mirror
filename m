@@ -1,74 +1,74 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D965C23E356
-	for <git@vger.kernel.org>; Fri,  3 Oct 2025 20:39:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B0823DEB6
+	for <git@vger.kernel.org>; Fri,  3 Oct 2025 20:42:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759523953; cv=none; b=cX/qYEjdA03u1XQNjwvaQSZGA+BSJ8IqZX4VnUcIdGBteJo31evFPH0rKh3BH77kYboEc/ETtHhsk9ybjcbL0Gdgm9w2noYxh+kpV+SmGaIMBvr/8xID+c9wKWD02i6ItNhJPmCrP+do5ebmVA9N4LNKbZ3hPc+1tpGjnVnIRkw=
+	t=1759524173; cv=none; b=WA1JiGbWYrmQNZbjLtH2WOGZH/kHZl89Owy5sgQRMOmbe7fOmkPuK/fI1ycjlb0exbU4gnRz4A8TOREAKLvrtyC2dUlpAP72xt77JMLYC2hItWNX9qmqvQEV2U4jmuIDj0ITDZYNRF8hmQl99mmHp6ly1idl+R/JDtSN6H7hp2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759523953; c=relaxed/simple;
-	bh=WPhcJ32Al4g8fBmsA7B42FMCruHOyLs/jhdz5WhmuQg=;
+	s=arc-20240116; t=1759524173; c=relaxed/simple;
+	bh=HoZ/lS1oUaJpkiNWQOdpQPZZq33ybp0Z6hqDZ5ZdRdo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=t/6A5FJaKmVlxF7w6gO1pR32dRvovHU0gFsTvScRqWuH6L7jCVesCAXvVY5qAwMP0VTIbW+lBomfj4Wj0nX7iRUvvlgMAn3pfMZUQGCFFc7HmRKnjBKqU7Ib1sdZMBWdN6GL16/yQLAzY0G9SF+wow8xTKDTI0Hs2K9OJr+bs/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PezxMS1k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ScJoZ8tc; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=BXJ5RP4OYLc3N3zD0sTSQK+VauNdCeKT1b86U1mGiE26xJak4omedxALJLRgBM7X8w5O6Zou7AGE9Ql8xC7yvNLqsn+u4xNFlX7WA+Fqd08YrgZVkhdtS4Q4m/sS5gf3XBdbHFUs3vNMZVnAvR93afa2jhHbjjbwwXXHqeIeViE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E+XWlFiL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EtrxyyjA; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PezxMS1k";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ScJoZ8tc"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E+XWlFiL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EtrxyyjA"
 Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 07227EC0689;
-	Fri,  3 Oct 2025 16:39:11 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Fri, 03 Oct 2025 16:39:11 -0400
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0C261140011F;
+	Fri,  3 Oct 2025 16:42:51 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Fri, 03 Oct 2025 16:42:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1759523951;
-	 x=1759610351; bh=ZMS7Y9UDtUUt24dVPcisVm2DbjuzFEhtyAyDgG63smQ=; b=
-	PezxMS1kr3DA2x0ELlX2mDLVU2aSV862zxVuEREmLPY9yNyg8LacgFYSj0tOqBts
-	Ut8UNRdg95v93A918QQIEVPUSYXzXQt8BUlg1WbsJw3ip9cUZm20BE4h/5+a3EAk
-	ZYJpcPa4gE7PhJOaic7785nfZjjZGXJiE3f9VoqAQx+1pWmzN5Pl4lYjonBhIVUE
-	FEYnyUnbH+WtgLC/x4wViE8b9E+v25mQI5+UB2bU0b3WE/tbder0FhUQAgKpALZS
-	f8GrXXPz9I5Cco6jbrHqO3DX/H34trWa0uDgpQgGjMAEkJ9sZjrxMtJh7sKddR70
-	3Q8ZgB7uv2rg5lyPlpO7Tw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1759524171;
+	 x=1759610571; bh=HUQxDDomveCmrdJtruIbl2YG7oZUmLC6g8JKrXanspI=; b=
+	E+XWlFiLxQkGIF3iP1AEh0IAwHHjtvhgHmJrX2hqMvBf43taY6Kxr9o/fSdgutNG
+	O8EVNNTex8GimRo6jX8ho874Ph6G+UxFRteoeUNNOMalntXLYx6+m0ImBJ+7ASZa
+	piL0KOdc3baargiwqpoUAQdegJED7uQzxGmS3tXNX3bg/Z374YDcHzjviNgvl9WM
+	w4cHQhgjvNvQvwEKYe9cI0mqgsIg5+oHJckChlKR5YWxuVCVPLdodMqhfQoX1JQX
+	7pM3BMqvZ1poTE7ZFt+QtVS6TQhrljvZAjKXpIKbb+xqn8uPvgAuOfmYYuUrPW41
+	EGgoxLeJMs35AK6/0OjIlA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759523951; x=
-	1759610351; bh=ZMS7Y9UDtUUt24dVPcisVm2DbjuzFEhtyAyDgG63smQ=; b=S
-	cJoZ8tc/zlg37UZo1KOPBLJcSLR9B4TLGt1FV0Jdcrf+dcJ5WsVKsxQXc9iOU1u2
-	3JEgHxp8DB8rS/VlADkygVp1Twse2AgZF4AhsWU+AbGJ0vzCPpn8ogqnOH4+8T3p
-	A+vxCfQY8Thr7SJXWuagOFNaG/bs3xR7qjzXF/sAUibXes/1/4icEt2QhAghq87u
-	ehiZFy3fBXH5hfIsj3vUP8Uatml1oRdSUU1y8QtAyJBj92MBpZyyBVyh0znLXUE2
-	4qmE9vz1Y93iigJDbG4nm/y6VjLKmctVg3dqAH5GhnEkRvEDt1FQG7hWMkXvp1T+
-	CIdDNfgmflxtnwVn3TB3g==
-X-ME-Sender: <xms:bjTgaIn5Re41TpHienYAQf6WPM2LGIrtnyItsq2_HqPPg0iZcGewAw>
-    <xme:bjTgaO0Vd400KdlE_mwvqP0ougqij2IOtjyK-OCM4mo-VBJYcWOHo-UCAqqPOP3JK
-    6NRB0RxasYRaMoJwlB5AwdUQdyJnVKK6jCojoZzBSfRRQ7K-R_Plv0>
-X-ME-Received: <xmr:bjTgaLpRzWMMR9RUmxe7SbXdf20LPVguZonD-TLAGa4Iz757y0WwNKhkmPfjXyrBTMcB7rkpzk7Q8DtOQxDUGqi528eMhbGlxaI5>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759524171; x=
+	1759610571; bh=HUQxDDomveCmrdJtruIbl2YG7oZUmLC6g8JKrXanspI=; b=E
+	trxyyjAn41DqZWSYnOHFGGcB097K4QcYFMMrlCfxMcgomTMUuOzf0/arkSEC54tn
+	Ma2mbde7CurJX1Cawa+4Mw/4hbKYh2axq8PvMNYPlNOvctjI2lXk2TPLdj9kNLCd
+	KU7FW2IgY8l0Hfs5LpmUNjXpYCo48LBxiXBFVrwBa2LDlVTHmej1HRl+mDTmf/tS
+	CtvegUhWhF1QgdTKMkdehkDozgTliLDJBwoemPQ3qFL41qgFrWLc7Zi/QwKZxRWA
+	GoGMazAbZABqIC/KjrgOiPuDm0kUVLbDKjquLJzLtCJgVBHXZ8Z0NnP07177LHik
+	S7xm/uVjWSqy8s4kP6x2A==
+X-ME-Sender: <xms:SjXgaDSLQtIiGBVdIADknjrE1YKNsE_usoIGpgU3uPC9TJM1hhk9zw>
+    <xme:SjXgaLy9hB6DtkepxvCJovFxjErawJq-Q38a9hDbB1rEb-7GFR75L8bZx5qLrJMXd
+    x6KOMlsoEK63Qku-vi3_FMx50qzooIljC6ZyWzDw0hELHVTROytDZY>
+X-ME-Received: <xmr:SjXgaN2-NaDH27A_3OBo65rlhGxJIq6uOMFNktpTlxszC7HwHkSECC6pBk5c4NHzMR0QwawZpuzcAASOxADqafpycSgMnNhhsVp6>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekleekkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    tdehnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepgh
     hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepuh
     drfihinhgulhesuhhkrhdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
     lhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:bjTgaDf2cHKtdSgzQZXZlsqpLEKZRHU8HQvGX3ieKS8lZxFDH1CdRA>
-    <xmx:bjTgaCp1Q5E5a0xxLdmE5PTNu__m5pmphJlChHQbzgaVupnt3jaNSQ>
-    <xmx:bjTgaMHsSjLTgJGqy29oTr3HNoCSzkQqCfvw03d1Ve3LjYjunxmWOQ>
-    <xmx:bjTgaKtHc-Ik9vY8v3-i57vIX2waoqUnRMmlQfA5i7qt6VFW8zPf-w>
-    <xmx:bjTgaDGpIiFZ_lOnaGw2LNhtacHnV3ewmJIh6Cff_fPEonoNWsO-9FlL>
+X-ME-Proxy: <xmx:SjXgaB7gOPMoaAWC17XP82jbdLwXsUexeI8Ruo6VkTatFD6yGgh9Vw>
+    <xmx:SjXgaIWWe_VyXIffau4Y3lz76PeGqboUEXRhbXdo4-5oAjliwDKZUg>
+    <xmx:SjXgaIDiDPYd9yaMwv649lFhgFUxfSdGBJ-sGOa9eARUj4AWNCM4aQ>
+    <xmx:SjXgaP6D5qxAfwOEw8bnqVivjH4KcS18hnvtLXNFaQTiKFJB-iptrA>
+    <xmx:SzXgaOwtTb7OR5_0Cj5twVpn6s_-_CbWL_Got056AAyVyqtZjePsWlzb>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Oct 2025 16:39:10 -0400 (EDT)
+ 3 Oct 2025 16:42:50 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
 Cc: "Windl, Ulrich" <u.windl@ukr.de>,  "git@vger.kernel.org"
@@ -81,8 +81,8 @@ References: <c72518099a3b465c8761e41210fe3fcb@ukr.de>
 	<76665b6f-cb92-4694-bc89-5eb21197df34@web.de>
 	<xmqqo6qoufqp.fsf@gitster.g>
 	<737e78f5-6337-4964-8385-9c35897f5dff@web.de>
-Date: Fri, 03 Oct 2025 13:39:09 -0700
-Message-ID: <xmqqcy73u3de.fsf@gitster.g>
+Date: Fri, 03 Oct 2025 13:42:49 -0700
+Message-ID: <xmqq8qhru37a.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,45 +95,46 @@ Content-Transfer-Encoding: 8bit
 
 René Scharfe <l.s.r@web.de> writes:
 
+> On 10/3/25 6:11 PM, Junio C Hamano wrote:
+>> René Scharfe <l.s.r@web.de> writes:
+>> 
+>>> git add --patch presents diff hunks one after the other, asking whether
+>>> to add them.  If we mark some as undecided, e.g. with J, then it will
+>> 
+>> Perhaps "mark" -> "leave".
+>> 
+>> I somehow find it awkward to say "mark as undecided", as I have
+>> always viewed J/K as a way to skip a hunk, leaving it undecided.
+>> 
+>> Besides, "J" lets you revisit a hunk that you earlier have decided
+>> to use of hold off, and it leaves your last decision on that hunk.
+>> A statement that implies "J marks as undecided" is misleading.
+>
+> Right, j/J/k/K leave the use/skip/undecided status of the current hunk
+> unchanged.
+
+Yes.  If the one you are walking away with 'J' were already
+selected, the scenario you describe in the proposed log message
+would not work, so "mark" -> "leave" is the right thing to do in
+that context.  But ...
+
+> "leave this hunk undecided" in the documentation is
+> misleading as well, because these options will not leave a hunk
+> undecided if we made a decision on it before:
+
+... as you say, I agree that your updated version
+
+>                j - go to next undecided hunk
+>                J - go to next hunk
+>                k - go to previous undecided hunk
+>                K - go to previous hunk
+
+in the documentation or help would be a good change.
+
 > Weird that one can switch between use and skip, but there's no
 > way to revert back to undecided.
 
-Yes, but Phillip's "if you split the resulting hunks will revert to
-undecided" topic, together with "you can split one hunk into one"
-bug that is caused by the "permitted is never reset" bug, if you can
-navigate back to what you already decided to use or skip, you can
-say "split" to revert it undecided ;-).
-
-> This should be easy to fix by resetting permitted at the start of the
-> loop, no?  Patch below.
->
->> With this bug, however, we have gained a bit of useful feature, I
->> think.  Even though j/J should not be offered when we are at the
->> last hunk for a file, we do wrap-around to the first hunk.  I just
->> checked the original code before the C rewrite, and even though it
->> were written defensively so that incrementing the current hunk
->> number to 5 when you have only 4 hunks would take you back to the
->> initial hunk (instead of barfing), because we did not have this
->> "permitted is never reset" bug, it actually did not allow you to go
->> beyond the end with j/J.  Today's code seems to have inherited this
->> defensive adjustment to stay within the available hunks, and with
->> the "permitted is never reset" bug, we are taken back to the first
->> hunk.
-> y/n/e on the last hunk roll over, which makes sense to me.  Their
-> movement part is not mentioned in the documentation, by the way.
->
-> With the patch below j/J are stopped by the floor, as seemingly
-> intended.  Not sure if the (now accidental) roll-over behavior is
-> better for them.
-
-Yes.  Even if it is accidental, people are too used the roll-over
-behaviour.  So at least we should always allow J/K and probably
-allow j/k as long as there at least is a single undecided hunk, if
-we were to do this fix, and make the prompt string to match.
-
-I only am aware of this bugginess in "j,k,J,K,s" but that is only
-because I did not look at others.  I wouldn't be surprised if they
-were even buggier.
-
-Thanks.
-
+Another thing that is missing (and these two are not a regression in
+the C version, but the same in my scripted original) is that once
+you decided on _all_ hunks of a file, there is no way to come back
+and tell the tool that you changed your mind.
