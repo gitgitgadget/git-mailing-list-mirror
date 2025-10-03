@@ -1,67 +1,41 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BAC234BA50
-	for <git@vger.kernel.org>; Fri,  3 Oct 2025 13:47:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC0D1C6B4
+	for <git@vger.kernel.org>; Fri,  3 Oct 2025 14:10:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759499277; cv=none; b=ZVb2EAl0Vs5ayD1SJsVpDu4kdFi8I3WlMKpF0fX1GkjsEwGcLfbfsKQ6gm+aQM/jWXWknNF4tPVjef+AgdR5vFQgGhXhW6mJwaxtOTpfdUcccumoUlXRFysRan94wmBWb0kY2ezZQlu+YCuEblbHXFErru7NR624QBdnDKDaMRE=
+	t=1759500636; cv=none; b=u75UKcgPOQjCxtIkRUwApwn5VWSgOS5lNAzW2jmfxeL3KEv+FY7puzAOZ3DF4I4po95qBujLq7p1mBtTDpIeO3yXcrgU3asJRgt8Hz56bxi6n3+vTe/b4gE4ob0hFdpxAEXp1mod026DyBSn9v0kdM2mW9NJqb6kVUf+NC1dN+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759499277; c=relaxed/simple;
-	bh=y2MY2JhljzdeeLNlLii4shyPyH2VB/R47E27dfX6Kjc=;
+	s=arc-20240116; t=1759500636; c=relaxed/simple;
+	bh=8G+FwwgLk+12KgZR2zn9vf9lzRWtru6SPXGoF2mtxMU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Cj2cdXvctji+TWRcQ96Bdqk7gAfzsHZh/h6zuYDtg/j5rJbyU6GTBP0BATrMxndH1Zu1XObVPrPXTBJL7AMDmh2JoTO0S0E94uvk1Biv5i0Beof7aiD7C0usomqG+D7eIcapjqjim3iH4gwq2f7u4icGrVGSRH4+O6frWDuFKqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HUv6Pvzj; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=VEQ5bC3IUpcQ1u6YKAEcakfo8JX3kuug1EejNeusfCVnNdrMCKK97s0JCzTlRdSwKyLZCGTxSGwwds9HeBa3AALGaI9Xh1+9QjKlBd+lNw6K7m2SdWWCA5+uAu0VOUyu9ml3ek7Ppa5Rz0Dw/CyrgS89lZV1tPwal/G5edZq5CY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=v8bnO9P1; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HUv6Pvzj"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-46e542196c7so19487355e9.0
-        for <git@vger.kernel.org>; Fri, 03 Oct 2025 06:47:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759499273; x=1760104073; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=dGccFQfZMquzZ2IpFcJrNrYLnHzrcAlMq8TPcJWVsnw=;
-        b=HUv6PvzjbdNvBN9Y82fPoRusiG+AUcQKHWD/M4Exism2WqodzFSECkOG8MXiQk1udc
-         zcGTtLJ2Mkcw67qyk2RMkavbplEvXnDu9lXecegiG6Do042/PSejArd8uDVE+rky/qtZ
-         oqCkjnOvT4PDtGrVuz56Nq8rMpC+JoszELNKLOgQMSHCWRjel76jrAbLPwWKc8EoRje0
-         aMJPToTbrMKwgbuhtIK/NJQtlgwaNQVz6xIIOHaiOs7Q8moIKCT5kcTRMgpPmxcGdl8i
-         mdtQEaYfDiaNMg/GylhLURiApiSFuC40U4QeININ9kQ8vd0TMcuxa1PM4ZaRPbVkhcee
-         n0lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759499273; x=1760104073;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dGccFQfZMquzZ2IpFcJrNrYLnHzrcAlMq8TPcJWVsnw=;
-        b=WknFKzXmIU+J8lbMXmbHB/hJIkK6HQJ6mJdQF3+Bh18yVqSQ4omJURG2kIP+DpCL3U
-         svbikq6XuOrLmp8jakjrBugxZibo3fq2wtv6tguVL3tVpqgiTTcfAKEcHQMtTZgu1ey3
-         RnwAimIVuxdYv6xLPzhOk/rqH9a5spDZHLTUvodLe8OfaprjwWmlHUsDBIcy0Dxn0z4g
-         CHGEuk6q3Yovk3kr1CYR71B/3yPHHjbkt9bkwNHJXRMV0Zjuj8M4vdfxpvZjJFFVCIqs
-         m+TEwXMSmUeubTjRuoUfZ669IY+MH/4OvXeGp6FsJRUe3xFuQUgR4Yeroh448+axqaNT
-         +SsA==
-X-Forwarded-Encrypted: i=1; AJvYcCXrTkTdxAaMgXaBroXMHjJiVfDXtOghQ/VEDg5qQEaukgcHV2lYWpAXLLCsMdg+ISTXC5w=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzU4oYzz8iOXc+a/5ijpr0soyW3Qjsu92QvEkv5dvCWtOwgbzRP
-	D0gc9jYdTSRNJTQgv2MDnWFdfOicmblnwdExYhLKdtuKfPqDyIUAOVVr
-X-Gm-Gg: ASbGncv6VD5DXEx28jDd7t+TMO7/c50974xxK2TNlQ63VUaPDtrFE4EWc8cdRhWGYyA
-	ddwIo7IDRp4kjz5O+D4KOVEJXvtq6d3jTFDaaD4eCRLulrUir/ZLmGyiF8wedmK+DYBhMuYtAB0
-	AUxBzWyZl/M4YO6uIrdL0qLA0QzCJZZcBeE3xMjDuK5Yt6eN/oYpWoMvsxNoXyMpKaG7Bhw3D7i
-	gnRRYPVGHD9opcHMXN1T7yedKkvbQc2gcj34VEwq5BjfgQ2sz9hy07D/8Mf8bpDLE5W8OgbwLu2
-	ozhIx5Md5u3O7llTAVG6YWMq9vwY8/mZ4hQhb4v1ah9fNDiT/+LFQjNC4ky4gJlOPpjqe79Dv7J
-	3R06zSgvCI2CfT00JkF2HBpHjaNiFkUZovXDC50wtREkNWuACvh2A6fxMTGcvUaLxV7DwrNWttv
-	11d8nRj08HD9d2VhjeileXLzkQcJb4FuHPxw==
-X-Google-Smtp-Source: AGHT+IHKpLDul57m3VLLigpQbGr6cRizlemJzaXeTB7At5d96QsJHLAOHjsM5lVm8f0wWybkYMcGMQ==
-X-Received: by 2002:a05:600c:1d05:b0:46e:477a:f3e3 with SMTP id 5b1f17b1804b1-46e70cb75c3mr21563445e9.18.1759499273002;
-        Fri, 03 Oct 2025 06:47:53 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4255d8f4abcsm8008415f8f.53.2025.10.03.06.47.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Oct 2025 06:47:52 -0700 (PDT)
-Message-ID: <01959215-3cb5-4c12-91eb-1b28e18addf9@gmail.com>
-Date: Fri, 3 Oct 2025 14:47:49 +0100
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="v8bnO9P1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1759500628; x=1760105428; i=l.s.r@web.de;
+	bh=8G+FwwgLk+12KgZR2zn9vf9lzRWtru6SPXGoF2mtxMU=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=v8bnO9P1cqj4fvq5Yd++/6csVNawBZBCuGI83huLoTyYL2+KvnTE4jSJaIcFjFPQ
+	 oghcxTW71L7ATAErNgpsanRQMcAqvjaLtfx0x09YQpOrSBqhAoibJcREJ2xOtqYx8
+	 1YwpO/p17BpET3VdHjK7Din1R0ErLxcxs2tw2Roewd/F2nRjCgg6NtVmXChcGoa6A
+	 SEXEEFjIA+JYMNfGURUsDEk3H+xOYP14HU54y6rDvF+OqjCRURbyYTTKJoe8bnZ9y
+	 HoSuSmZ8d8y0FSjJ4aw85/OxiP50KsceI3QVMXXc11wF7ayDg1Vw+VpMkvELWba4a
+	 +8dUxHTpG7/JmPbvTA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.2.31] ([79.203.16.132]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MiMEW-1uPHzW0MHW-00iTr7; Fri, 03
+ Oct 2025 16:10:28 +0200
+Message-ID: <fcc003d6-c71f-4c41-a3a1-c9364d3bca9c@web.de>
+Date: Fri, 3 Oct 2025 16:10:27 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,388 +43,129 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 00/12] Cleanup xdfile_t and xrecord_t in xdiff.
-To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Ben Knoble <ben.knoble@gmail.com>,
- Jeff King <peff@peff.net>, Ezekiel Newren <ezekielnewren@gmail.com>
-References: <pull.2048.v5.git.git.1758662670.gitgitgadget@gmail.com>
- <pull.2048.v6.git.git.1758926520.gitgitgadget@gmail.com>
+Subject: Re: [PATCH] add-patch: roll over to next undecided hunk
+To: phillip.wood@dunelm.org.uk, "Windl, Ulrich" <u.windl@ukr.de>,
+ "git@vger.kernel.org" <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+References: <c72518099a3b465c8761e41210fe3fcb@ukr.de>
+ <76665b6f-cb92-4694-bc89-5eb21197df34@web.de>
+ <8fdfb03a-6bbc-46a0-a8fe-9ad75aba555a@gmail.com>
 Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <pull.2048.v6.git.git.1758926520.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <8fdfb03a-6bbc-46a0-a8fe-9ad75aba555a@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+X-Provags-ID: V03:K1:+hZUlsMNWeIJ03LG4U0wIdl7eq1eiUr3uAEKZ7+OKmChCgDmwXE
+ HEYEQmYIhFHrBYVnziceOPwu7aVh1bfUKAv2e8fxhJBPGr8uobJgk68AXIv8hzDvFKqveeX
+ Zmay09TcNjb/ZqZ9bH1fI3khReF572i7dkz9TOkFK8UM2ULOlypTlO8EKlyv8NIiFEFD3a5
+ iuAPtjrmDVepjkdT4q9aw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:+x/xPugOwbE=;qMckIZwDxhF+6e7WvOqAdEY8sLW
+ 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
+ uzBNA==
 
-Hi Ezekiel
-
-On 26/09/2025 23:41, Ezekiel Newren via GitGitGadget wrote:
-> Changes since v5.
-> 
->   * Address review feedback on commit messages.
->   * Drop commit "xdiff: delete rchg aliasing"
->   * Use DISCARD/KEEP/INVESTIGATE instead of NONE/SOME/TOO_MANY
->   * Fix the word wrapping in the comments of xprepare.c
-
-Thanks for expanding the commit messages, I think the range diff looks 
-good. There's a typo in patch 12 (see below) but its not worth 
-re-rolling just for that.
-
-> Range-diff vs v5:
-> [...] 
->   12:  08a0fceb72 ! 11:  f08782a977 xdiff: use enum macros NONE(0), SOME(1), TOO_MANY(2) in xprepare.c
->       @@ Metadata
->        Author: Ezekiel Newren <ezekielnewren@gmail.com>
->        
->         ## Commit message ##
->       -    xdiff: use enum macros NONE(0), SOME(1), TOO_MANY(2) in xprepare.c
->       +    xdiff: add macros DISCARD(0), KEEP(1), INVESTIGATE(2) in xprepare.c
->        
->       -    Rename dis1, dis2 to matches1, matches2.
->       +    This commit is refactor-only; no behavior is changed. A future commit
->       +    will use bool literals for changed[i].
->        
->       -    Define macros NONE(0), SOME(1), TOO_MANY(2) as the enum values for
->       -    matches1 and matches2. These states will influence whether changed[i]
->       -    is set to 1 or kept as 0.
->       +    The functions xdl_clean_mmatch() and xdl_cleanup_records() will be
->       +    cleaned up more in a future patch series. The changes to
->       +    xdl_cleanup_records(), in this patch, is just to make it clear why
-
-Not worth a re-roll on its own s/is/are/
-
-Thanks for working on this
-
-Phillip
-
->       +    `char rchg` is refactored to `bool changed`.
->       +
->       +    Rename dis* to action* and replace literal numericals with macros.
->       +    The old names came from when dis* (which I think was short for discard)
->       +    was treated like a boolean, but over time it grew into a ternary state
->       +    machine. The result was confusing because dis* and rchg* both used 0/1
->       +    values with different meanings.
->       +
->       +    The new names and macros make the states explicit. nm is short for
->       +    number of matches, and mlim is a heuristic limit:
->       +
->       +      nm == 0       -> action[i] = DISCARD     -> changed[i] = true
->       +      0 < nm < mlim -> action[i] = KEEP        -> changed[i] = false
->       +      nm >= mlim    -> action[i] = INVESTIGATE -> changed[i] = xdl_clean_mmatch()
->       +
->       +    When need_min is true, only DISCARD and KEEP occur because the limit
->       +    is effectively infinite.
->        
->            Best-viewed-with: --color-words
->            Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
->       @@ xdiff/xprepare.c
->         #define XDL_GUESS_NLINES1 256
->         #define XDL_GUESS_NLINES2 20
->         
->       -+#define NONE 0
->       -+#define SOME 1
->       -+#define TOO_MANY 2
->       ++#define DISCARD 0
->       ++#define KEEP 1
->       ++#define INVESTIGATE 2
->         
->         typedef struct s_xdlclass {
->         	struct s_xdlclass *next;
->       @@ xdiff/xprepare.c: void xdl_free_env(xdfenv_t *xe) {
->         
->         
->        -static int xdl_clean_mmatch(char const *dis, long i, long s, long e) {
->       -+static bool xdl_clean_mmatch(uint8_t const *matches, long i, long s, long e) {
->       ++static bool xdl_clean_mmatch(uint8_t const *action, long i, long s, long e) {
->         	long r, rdis0, rpdis0, rdis1, rpdis1;
->         
->         	/*
->        -	 * Limits the window the is examined during the similar-lines
->        -	 * scan. The loops below stops when dis[i - r] == 1 (line that
->       +-	 * has no match), but there are corner cases where the loop
->       +-	 * proceed all the way to the extremities by causing huge
->       +-	 * performance penalties in case of big files.
->        +	 * Limits the window that is examined during the similar-lines
->       -+	 * scan. The loops below stops when matches[i - r] == SOME (line that
->       - 	 * has no match), but there are corner cases where the loop
->       - 	 * proceed all the way to the extremities by causing huge
->       - 	 * performance penalties in case of big files.
->       ++	 * scan. The loops below stops when action[i - r] == KEEP
->       ++	 * (line that has no match), but there are corner cases where
->       ++	 * the loop proceed all the way to the extremities by causing
->       ++	 * huge performance penalties in case of big files.
->       + 	 */
->       + 	if (i - s > XDL_SIMSCAN_WINDOW)
->       + 		s = i - XDL_SIMSCAN_WINDOW;
->        @@ xdiff/xprepare.c: static int xdl_clean_mmatch(char const *dis, long i, long s, long e) {
->         
->         	/*
->         	 * Scans the lines before 'i' to find a run of lines that either
->        -	 * have no match (dis[j] == 0) or have multiple matches (dis[j] > 1).
->        -	 * Note that we always call this function with dis[i] > 1, so the
->       -+	 * have no match (matches[j] == NONE) or have multiple matches (matches[j] == TOO_MANY).
->       -+	 * Note that we always call this function with matches[i] == TOO_MANY, so the
->       - 	 * current line (i) is already a multimatch line.
->       +-	 * current line (i) is already a multimatch line.
->       ++	 * have no match (action[j] == DISCARD) or have multiple matches
->       ++	 * (action[j] == INVESTIGATE). Note that we always call this
->       ++	 * function with action[i] == INVESTIGATE, so the current line
->       ++	 * (i) is already a multimatch line.
->         	 */
->         	for (r = 1, rdis0 = 0, rpdis0 = 1; (i - r) >= s; r++) {
->        -		if (!dis[i - r])
->       -+		if (matches[i - r] == NONE)
->       ++		if (action[i - r] == DISCARD)
->         			rdis0++;
->        -		else if (dis[i - r] == 2)
->       -+		else if (matches[i - r] == TOO_MANY)
->       ++		else if (action[i - r] == INVESTIGATE)
->         			rpdis0++;
->        -		else
->       -+		else if (matches[i - r] == SOME)
->       ++		else if (action[i - r] == KEEP)
->         			break;
->        +		else
->       -+			BUG("Illegal value for matches[i - r]");
->       ++			BUG("Illegal value for action[i - r]");
->         	}
->         	/*
->       - 	 * If the run before the line 'i' found only multimatch lines, we
->       +-	 * If the run before the line 'i' found only multimatch lines, we
->        -	 * return 0 and hence we don't make the current line (i) discarded.
->       -+	 * return false and hence we don't make the current line (i) discarded.
->       - 	 * We want to discard multimatch lines only when they appear in the
->       +-	 * We want to discard multimatch lines only when they appear in the
->        -	 * middle of runs with nomatch lines (dis[j] == 0).
->       -+	 * middle of runs with nomatch lines (matches[j] == NONE).
->       ++	 * If the run before the line 'i' found only multimatch lines,
->       ++	 * we return false and hence we don't make the current line (i)
->       ++	 * discarded. We want to discard multimatch lines only when
->       ++	 * they appear in the middle of runs with nomatch lines
->       ++	 * (action[j] == DISCARD).
->         	 */
->         	if (rdis0 == 0)
->         		return 0;
->         	for (r = 1, rdis1 = 0, rpdis1 = 1; (i + r) <= e; r++) {
->        -		if (!dis[i + r])
->       -+		if (matches[i + r] == NONE)
->       ++		if (action[i + r] == DISCARD)
->         			rdis1++;
->        -		else if (dis[i + r] == 2)
->       -+		else if (matches[i + r] == TOO_MANY)
->       ++		else if (action[i + r] == INVESTIGATE)
->         			rpdis1++;
->        -		else
->       -+		else if (matches[i + r] == SOME)
->       ++		else if (action[i + r] == KEEP)
->         			break;
->        +		else
->       -+			BUG("Illegal value for matches[i + r]");
->       ++			BUG("Illegal value for action[i + r]");
->         	}
->         	/*
->       - 	 * If the run after the line 'i' found only multimatch lines, we
->       +-	 * If the run after the line 'i' found only multimatch lines, we
->        -	 * return 0 and hence we don't make the current line (i) discarded.
->       -+	 * return false and hence we don't make the current line (i) discarded.
->       ++	 * If the run after the line 'i' found only multimatch lines,
->       ++	 * we return false and hence we don't make the current line (i)
->       ++	 * discarded.
->         	 */
->         	if (rdis1 == 0)
->        -		return 0;
->       @@ xdiff/xprepare.c: static int xdl_clean_mmatch(char const *dis, long i, long s, l
->         	xdlclass_t *rcrec;
->        -	char *dis, *dis1, *dis2;
->        -	int need_min = !!(cf->flags & XDF_NEED_MINIMAL);
->       -+	uint8_t *matches1, *matches2;
->       -+	int status = 0;
->       ++	uint8_t *action1 = NULL, *action2 = NULL;
->        +	bool need_min = !!(cf->flags & XDF_NEED_MINIMAL);
->       ++	int ret = 0;
->         
->        -	if (!XDL_CALLOC_ARRAY(dis, xdf1->nrec + xdf2->nrec + 2))
->        -		return -1;
->        -	dis1 = dis;
->        -	dis2 = dis1 + xdf1->nrec + 1;
->       -+	matches1 = NULL;
->       -+	matches2 = NULL;
->       -+
->        +	/*
->        +	 * Create temporary arrays that will help us decide if
->        +	 * changed[i] should remain 0 or become 1.
->        +	 */
->       -+	if (!XDL_CALLOC_ARRAY(matches1, xdf1->nrec + 1)) {
->       -+		status = -1;
->       ++	if (!XDL_CALLOC_ARRAY(action1, xdf1->nrec + 1)) {
->       ++		ret = -1;
->        +		goto cleanup;
->        +	}
->       -+	if (!XDL_CALLOC_ARRAY(matches2, xdf2->nrec + 1)) {
->       -+		status = -1;
->       ++	if (!XDL_CALLOC_ARRAY(action2, xdf2->nrec + 1)) {
->       ++		ret = -1;
->        +		goto cleanup;
->        +	}
->         
->        +	/*
->       -+	 * Initialize temporary arrays with NONE, SOME, or TOO_MANY.
->       ++	 * Initialize temporary arrays with DISCARD, KEEP, or INVESTIGATE.
->        +	 */
->         	if ((mlim = xdl_bogosqrt(xdf1->nrec)) > XDL_MAX_EQLIMIT)
->         		mlim = XDL_MAX_EQLIMIT;
->       @@ xdiff/xprepare.c: static int xdl_clean_mmatch(char const *dis, long i, long s, l
->         		rcrec = cf->rcrecs[recs->ha];
->         		nm = rcrec ? rcrec->len2 : 0;
->        -		dis1[i] = (nm == 0) ? 0: (nm >= mlim && !need_min) ? 2: 1;
->       -+		matches1[i] = (nm == 0) ? NONE: (nm >= mlim && !need_min) ? TOO_MANY: SOME;
->       ++		action1[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
->         	}
->         
->         	if ((mlim = xdl_bogosqrt(xdf2->nrec)) > XDL_MAX_EQLIMIT)
->       @@ xdiff/xprepare.c: static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *
->         		rcrec = cf->rcrecs[recs->ha];
->         		nm = rcrec ? rcrec->len1 : 0;
->        -		dis2[i] = (nm == 0) ? 0: (nm >= mlim && !need_min) ? 2: 1;
->       -+		matches2[i] = (nm == 0) ? NONE: (nm >= mlim && !need_min) ? TOO_MANY: SOME;
->       ++		action2[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
->         	}
->         
->        +	/*
->       @@ xdiff/xprepare.c: static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *
->         	     i <= xdf1->dend; i++, recs++) {
->        -		if (dis1[i] == 1 ||
->        -		    (dis1[i] == 2 && !xdl_clean_mmatch(dis1, i, xdf1->dstart, xdf1->dend))) {
->       -+		if (matches1[i] == SOME ||
->       -+		    (matches1[i] == TOO_MANY && !xdl_clean_mmatch(matches1, i, xdf1->dstart, xdf1->dend))) {
->       ++		if (action1[i] == KEEP ||
->       ++		    (action1[i] == INVESTIGATE && !xdl_clean_mmatch(action1, i, xdf1->dstart, xdf1->dend))) {
->         			xdf1->rindex[nreff++] = i;
->       -+			/* changed[i] remains 0 */
->       ++			/* changed[i] remains 0, i.e. keep */
->         		} else
->         			xdf1->changed[i] = 1;
->       ++			/* i.e. discard */
->         	}
->       -@@ xdiff/xprepare.c: static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
->       + 	xdf1->nreff = nreff;
->         
->         	for (nreff = 0, i = xdf2->dstart, recs = &xdf2->recs[xdf2->dstart];
->         	     i <= xdf2->dend; i++, recs++) {
->        -		if (dis2[i] == 1 ||
->        -		    (dis2[i] == 2 && !xdl_clean_mmatch(dis2, i, xdf2->dstart, xdf2->dend))) {
->       -+		if (matches2[i] == SOME ||
->       -+		    (matches2[i] == TOO_MANY && !xdl_clean_mmatch(matches2, i, xdf2->dstart, xdf2->dend))) {
->       ++		if (action2[i] == KEEP ||
->       ++		    (action2[i] == INVESTIGATE && !xdl_clean_mmatch(action2, i, xdf2->dstart, xdf2->dend))) {
->         			xdf2->rindex[nreff++] = i;
->       -+			/* changed[i] remains 0 */
->       ++			/* changed[i] remains 0, i.e. keep */
->         		} else
->         			xdf2->changed[i] = 1;
->       ++			/* i.e. discard */
->         	}
->         	xdf2->nreff = nreff;
->         
->        -	xdl_free(dis);
->        +cleanup:
->       -+	xdl_free(matches1);
->       -+	xdl_free(matches2);
->       ++	xdl_free(action1);
->       ++	xdl_free(action2);
->         
->        -	return 0;
->       -+	return status;
->       ++	return ret;
->         }
->         
->         
->   13:  975e845bfa ! 12:  83e1ace5bd xdiff: change type of xdfile_t.changed from char to bool
->       @@ Commit message
->            xdiff: change type of xdfile_t.changed from char to bool
->        
->            The only values possible for 'changed' is 1 and 0, which exactly maps
->       -    to a bool type. It might not look like this is the case because
->       -    matches1 and matches2 (which use to be dis1, and dis2) were also char
->       -    and were assigned numerical values within a few lines of 'changed'
->       -    (what used to be rchg).
->       +    to a bool type. It might not look like this because action1 and action2
->       +    (which use to be dis1, and dis2) were also of type char and were
->       +    assigned numerical values within a few lines of 'changed' (what used to
->       +    be rchg).
->        
->       -    Using NONE, SOME, TOO_MANY for matches1[i]/matches2[j], and true/false
->       +    Using DISCARD/KEEP/INVESTIGATE for action1[i]/action2[j], and true/false
->            for changed[k] makes it clear to future readers that these are
->            logically separate concepts.
->        
->       @@ xdiff/xdiffi.c: static int group_slide_up(xdfile_t *xdf, struct xdlgroup *g)
->         
->         		while (xdf->changed[g->start - 1])
->         			g->start--;
->       +@@ xdiff/xdiffi.c: int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->       +
->       + int xdl_build_script(xdfenv_t *xe, xdchange_t **xscr) {
->       + 	xdchange_t *cscr = NULL, *xch;
->       +-	char *changed1 = xe->xdf1.changed, *changed2 = xe->xdf2.changed;
->       ++	bool *changed1 = xe->xdf1.changed, *changed2 = xe->xdf2.changed;
->       + 	long i1, i2, l1, l2;
->       +
->       + 	/*
->        
->         ## xdiff/xhistogram.c ##
->        @@ xdiff/xhistogram.c: redo:
->       @@ xdiff/xprepare.c: static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *
->        -	 * changed[i] should remain 0 or become 1.
->        +	 * changed[i] should remain false, or become true.
->         	 */
->       - 	if (!XDL_CALLOC_ARRAY(matches1, xdf1->nrec + 1)) {
->       - 		status = -1;
->       + 	if (!XDL_CALLOC_ARRAY(action1, xdf1->nrec + 1)) {
->       + 		ret = -1;
->        @@ xdiff/xprepare.c: static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
->         
->         	/*
->       @@ xdiff/xprepare.c: static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *
->         	 */
->         	for (nreff = 0, i = xdf1->dstart, recs = &xdf1->recs[xdf1->dstart];
->         	     i <= xdf1->dend; i++, recs++) {
->       - 		if (matches1[i] == SOME ||
->       - 		    (matches1[i] == TOO_MANY && !xdl_clean_mmatch(matches1, i, xdf1->dstart, xdf1->dend))) {
->       + 		if (action1[i] == KEEP ||
->       + 		    (action1[i] == INVESTIGATE && !xdl_clean_mmatch(action1, i, xdf1->dstart, xdf1->dend))) {
->         			xdf1->rindex[nreff++] = i;
->       --			/* changed[i] remains 0 */
->       -+			/* changed[i] remains false */
->       +-			/* changed[i] remains 0, i.e. keep */
->       ++			/* changed[i] remains false, i.e. keep */
->         		} else
->        -			xdf1->changed[i] = 1;
->        +			xdf1->changed[i] = true;
->       + 			/* i.e. discard */
->         	}
->         	xdf1->nreff = nreff;
->       -
->        @@ xdiff/xprepare.c: static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
->       - 		if (matches2[i] == SOME ||
->       - 		    (matches2[i] == TOO_MANY && !xdl_clean_mmatch(matches2, i, xdf2->dstart, xdf2->dend))) {
->       + 		if (action2[i] == KEEP ||
->       + 		    (action2[i] == INVESTIGATE && !xdl_clean_mmatch(action2, i, xdf2->dstart, xdf2->dend))) {
->         			xdf2->rindex[nreff++] = i;
->       --			/* changed[i] remains 0 */
->       -+			/* changed[i] remains false */
->       +-			/* changed[i] remains 0, i.e. keep */
->       ++			/* changed[i] remains false, i.e. keep */
->         		} else
->        -			xdf2->changed[i] = 1;
->        +			xdf2->changed[i] = true;
->       + 			/* i.e. discard */
->         	}
->         	xdf2->nreff = nreff;
->       -
->        
->         ## xdiff/xtypes.h ##
->        @@ xdiff/xtypes.h: typedef struct s_xdfile {
-> 
-
+T24gMTAvMy8yNSAzOjQxIFBNLCBQaGlsbGlwIFdvb2Qgd3JvdGU6DQo+IA0KPj4gQEAgLTE0MzYs
+OCArMTQzNiwxNSBAQCBzdGF0aWMgaW50IHBhdGNoX3VwZGF0ZV9maWxlKHN0cnVjdCBhZGRfcF9z
+dGF0ZSAqcywNCj4+IMKgwqDCoMKgwqAgcmVuZGVyX2RpZmZfaGVhZGVyKHMsIGZpbGVfZGlmZiwg
+Y29sb3JlZCwgJnMtPmJ1Zik7DQo+PiDCoMKgwqDCoMKgIGZwdXRzKHMtPmJ1Zi5idWYsIHN0ZG91
+dCk7DQo+PiDCoMKgwqDCoMKgIGZvciAoOzspIHsNCj4+IC3CoMKgwqDCoMKgwqDCoCBpZiAoaHVu
+a19pbmRleCA+PSBmaWxlX2RpZmYtPmh1bmtfbnIpDQo+PiArwqDCoMKgwqDCoMKgwqAgaWYgKGh1
+bmtfaW5kZXggPj0gZmlsZV9kaWZmLT5odW5rX25yKSB7DQo+PiDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoCBodW5rX2luZGV4ID0gMDsNCj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGZvciAo
+aSA9IDA7IGkgPCBmaWxlX2RpZmYtPmh1bmtfbnI7IGkrKykgew0KPj4gK8KgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCBpZiAoZmlsZV9kaWZmLT5odW5rW2ldLnVzZSA9PSBVTkRFQ0lERURf
+SFVOSykgew0KPj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGh1bmtf
+aW5kZXggPSBpOw0KPj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGJy
+ZWFrOw0KPj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB9DQo+PiArwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCB9DQo+PiArwqDCoMKgwqDCoMKgwqAgfQ0KPj4gwqDCoMKgwqDCoMKgwqDC
+oMKgIGh1bmsgPSBmaWxlX2RpZmYtPmh1bmtfbnINCj4+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqAgPyBmaWxlX2RpZmYtPmh1bmsgKyBodW5rX2luZGV4DQo+IA0KPiBJZiB0aGVy
+ZSB3ZXJlIG5vIHVuZGVjaWRlZCBodW5rcyB0aGVuIHRoaXMgd2lsbCBiZSBvdXQgb2YgYm91bmRz
+DQo+IGJlY2F1c2UgaHVua19pbmRleCA+PSBmaWxlX2RpZmYtPmh1bmtfbnIuIEFyZSB3ZSBhYnNv
+bHV0ZWx5IGNlcnRhaW4NCj4gdGhhdCB3ZSBjYW5ub3QgcmVhY2ggdGhpcyBwb2ludCB3aXRob3V0
+IGF0IGxlYXN0IG9uZSBodW5rIGJlaW5nDQo+IHVuZGVjaWRlZD8NCg0KVGhlIG5ldyBsb29wIG9u
+bHkgc2V0cyBodW5rX2luZGV4IGlmIGkgPCBmaWxlX2RpZmYtPmh1bmtfbnIuICBJZg0KaXQgZmlu
+ZHMgbm8gdW5kZWNpZGVkIGh1bmsgdGhlbiBpdCBkb2VzIG5vdGhpbmcuDQoNCj4+ICt0ZXN0X2V4
+cGVjdF9zdWNjZXNzICdyb2xsIG92ZXIgdG8gbmV4dCB1bmRlY2lkZWQgKDEpJyAnDQo+PiArwqDC
+oMKgIHRlc3Rfd3JpdGVfbGluZXMgYSBiIGMgZCBlIGYgZyBoIGkgaiBrIGwgbSBuIG8gcCBxID5m
+aWxlICYmDQo+PiArwqDCoMKgIGdpdCBhZGQgZmlsZSAmJg0KPj4gK8KgwqDCoCB0ZXN0X3dyaXRl
+X2xpbmVzIFggYiBjIGQgZSBmIGcgaCBYIGogayBsIG0gbiBvIHAgWCA+ZmlsZSAmJg0KPj4gK8Kg
+wqDCoCB0ZXN0X3dyaXRlX2xpbmVzIEogeSB5IHEgfCBnaXQgYWRkIC1wID5hY3R1YWwgJiYNCj4+
+ICvCoMKgwqAgdGVzdF93cml0ZV9saW5lcyAxIDIgMyAxID5leHBlY3QgJiYNCj4+ICvCoMKgwqAg
+c2VkIC1uZSAicy0vLiotLSIgLWUgInMtXigtLXAiIDxhY3R1YWwgPmh1bmtzICYmDQo+PiArwqDC
+oMKgIHRlc3RfY21wIGV4cGVjdCBodW5rcw0KPj4gKycNCj4gDQo+IEknbSBub3Qgc3VyZSB3aGF0
+IHRoaXMgZmlyc3QgdGVzdCBhZGRzLCB0aGUgb25lIGJlbG93IGNoZWNrcyB0aGF0IHdlDQo+IGZp
+bmQgdGhlIGZpcnN0IHVuZGVjaWRlZCBodW5rIHdoaWNoIHNlZW1zIHRvIGJlIHRoZSBpbXBvcnRh
+bnQgdGhpbmcNCj4gdG8gY2hlY2suDQoNCkl0J3MgYSByZWdyZXNzaW9uIHRlc3QgZm9yIHRoZSBj
+YXNlIHRoYXQgdGhlIG9yaWdpbmFsIGNvZGUgZ290DQpyaWdodCBieSBhY2NpZGVudC4gIEl0IG1h
+eSBzZWVtIHN1cGVyZmx1b3VzLCBidXQgSSBhY3R1YWxseQ0KdHJpZ2dlcmVkIGl0IGluIG15IGZp
+cnN0IGF0dGVtcHQgYXQgYSBmaXguDQoNClJlbsOpDQoNCg==
