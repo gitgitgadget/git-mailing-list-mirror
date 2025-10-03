@@ -1,171 +1,199 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC0D1C6B4
-	for <git@vger.kernel.org>; Fri,  3 Oct 2025 14:10:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6076C11CA9
+	for <git@vger.kernel.org>; Fri,  3 Oct 2025 14:25:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759500636; cv=none; b=u75UKcgPOQjCxtIkRUwApwn5VWSgOS5lNAzW2jmfxeL3KEv+FY7puzAOZ3DF4I4po95qBujLq7p1mBtTDpIeO3yXcrgU3asJRgt8Hz56bxi6n3+vTe/b4gE4ob0hFdpxAEXp1mod026DyBSn9v0kdM2mW9NJqb6kVUf+NC1dN+4=
+	t=1759501544; cv=none; b=UIGC5g7wMYFaHu2xe0UJDMJ4uYv82nPHlnCg3n+gpkle50oOJ7T06tw8f+i9pHix3DQPuXAwBhd9XLe+RyZ4K88+GB0qPncABopfbmuyzx9QF4Ci1WgF3DG6tgAWdpTMyoBwVSJm0+RmyLI51kM4iqypAtn7JqoehFWmKplR+jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759500636; c=relaxed/simple;
-	bh=8G+FwwgLk+12KgZR2zn9vf9lzRWtru6SPXGoF2mtxMU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VEQ5bC3IUpcQ1u6YKAEcakfo8JX3kuug1EejNeusfCVnNdrMCKK97s0JCzTlRdSwKyLZCGTxSGwwds9HeBa3AALGaI9Xh1+9QjKlBd+lNw6K7m2SdWWCA5+uAu0VOUyu9ml3ek7Ppa5Rz0Dw/CyrgS89lZV1tPwal/G5edZq5CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=v8bnO9P1; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1759501544; c=relaxed/simple;
+	bh=rZb142CR/ZjMPv70YL2n8UPx+e+xs6kCPKKot7soHh0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=B8yh1wWUG8OmjXKlOMq0vsS0lm+SYnrqXsOY1xkO3JQFkzqxtMspW8/JAPKcSDI5fbwOBLjPTYNs7AdJq7Gbk/QYsJOA9tJlhePSKPWaes5nBJCZ+fooZ0HCM746aJMhIoos1U88SgvfkpIw7pUHE/8vLppgbGBMZntxFqCem7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NzUtRfNA; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="v8bnO9P1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1759500628; x=1760105428; i=l.s.r@web.de;
-	bh=8G+FwwgLk+12KgZR2zn9vf9lzRWtru6SPXGoF2mtxMU=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=v8bnO9P1cqj4fvq5Yd++/6csVNawBZBCuGI83huLoTyYL2+KvnTE4jSJaIcFjFPQ
-	 oghcxTW71L7ATAErNgpsanRQMcAqvjaLtfx0x09YQpOrSBqhAoibJcREJ2xOtqYx8
-	 1YwpO/p17BpET3VdHjK7Din1R0ErLxcxs2tw2Roewd/F2nRjCgg6NtVmXChcGoa6A
-	 SEXEEFjIA+JYMNfGURUsDEk3H+xOYP14HU54y6rDvF+OqjCRURbyYTTKJoe8bnZ9y
-	 HoSuSmZ8d8y0FSjJ4aw85/OxiP50KsceI3QVMXXc11wF7ayDg1Vw+VpMkvELWba4a
-	 +8dUxHTpG7/JmPbvTA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.16.132]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MiMEW-1uPHzW0MHW-00iTr7; Fri, 03
- Oct 2025 16:10:28 +0200
-Message-ID: <fcc003d6-c71f-4c41-a3a1-c9364d3bca9c@web.de>
-Date: Fri, 3 Oct 2025 16:10:27 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NzUtRfNA"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-628f29d68ecso5412220a12.3
+        for <git@vger.kernel.org>; Fri, 03 Oct 2025 07:25:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759501541; x=1760106341; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i9Au/18oakqHurcsRtPQXCvdWYO+1oFw/EaGZ4rnXOE=;
+        b=NzUtRfNAE3RtfqYIbERMap8Z9/yhaSwGt2TVoeoxafV7atKG8PSM9I9aHjjQEz8LcG
+         uaR0M6CUqC/TUuLfvPWnsfPrMQmHGj1OwE1gHv3zlfOGHiXIe5FvIFQdphpWwBqFydnb
+         DGfHGcbgJ/WN0ceb7uWs77gfXQAGIHHm4GzfRX3lmdxq0quwv0VnZg2zxWzeln3UjxXX
+         o/XMSFoVNkEgVaQuKay9tNyIGODDmIV8VXX+ty9VhETrR/+4zP7E2geIGU7Av3eK5+kR
+         y+ReEATRgFbh3uLvO8AvdWlV241gwJD04tqHJP+gUfhchENurYni3rE+Vn/czT+4ZUtI
+         DAuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759501541; x=1760106341;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=i9Au/18oakqHurcsRtPQXCvdWYO+1oFw/EaGZ4rnXOE=;
+        b=APYhnhJ/Jh6Zc5AxmnwCRe/HgW/KOvudS0i67gx3QbVsSXwQeiIrh6de2dHIzt32gT
+         B4D1NbLmOqpwGhJftzO2K08mpL+EzgDFnEVW1ZPcf5qqrNB6sHBsp641D/Ym2AuJk7Ga
+         LDh+KhaRwSR/bGX9GvWVa3AxGs7p5DTEc3ZceMBw8otiF6oWKKotpShPxV9acaiaPtPz
+         6mjJ5lNZkahR7YcMEiWa6ra+c2gR00KoeezADLVvGKQOv+cktqM8gtP+4JYyw4XslLtj
+         XKnWeJ84rUKcNB435vosqWJRynME1VknCL43qrMBO3cXESMt1BLbkQBHncCQec8ybLJs
+         MvHw==
+X-Forwarded-Encrypted: i=1; AJvYcCVw6qH693gqlHSgBQuGK5CRL5bGgSQ61AiKl4vNIID/A/Tt9dkYCksq2ByxTB/vLUzDR+k=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzC/Ra9onXDxxehlCaqiL84R+LBhs2NKG39AspKA30/qsauGM4B
+	w7F7OgbTp4EGQySh/rsAERtDkPlQ8ZKvYWU9UfNDcCyxh/Oh+Ixuo9I4kPwDkff89ZMxTEC0xHb
+	58fmAMsiM2oToKittKIWMh17nmAV46DQ=
+X-Gm-Gg: ASbGncshBAzPV8USNCFJq+SO6s4ILUMix8Ahqc8pkpDDquBw14b/75y+WHvuYUSDOiK
+	Hywq1VaStj9wbjZnntRcy3dwm0BiixrDwl96mBwN+jHBRmrz2BGXo+yT8cwxt2+UFnTXH3q50sR
+	MQrwd9qz/kfsczR9joC2ehw4c3sgWyj6IcAfB6U80yoYjqxj6Wo8DfNtnS3NQNEpg3eEYrnGBef
+	sezhmTNQ5fmc2WBSqdKZF2WJbZ0irs=
+X-Google-Smtp-Source: AGHT+IE5px+ePQEzIQQ+fjHM1SDKAFH3m+xeD910yT2lyiLNLk6zqDcplMTQCJXsWgn63VdkfhY+j5aWxilYJK4ScHw=
+X-Received: by 2002:a17:907:724e:b0:b48:29ce:5dd6 with SMTP id
+ a640c23a62f3a-b49c39330d6mr426579366b.40.1759501540583; Fri, 03 Oct 2025
+ 07:25:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] add-patch: roll over to next undecided hunk
-To: phillip.wood@dunelm.org.uk, "Windl, Ulrich" <u.windl@ukr.de>,
- "git@vger.kernel.org" <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-References: <c72518099a3b465c8761e41210fe3fcb@ukr.de>
- <76665b6f-cb92-4694-bc89-5eb21197df34@web.de>
- <8fdfb03a-6bbc-46a0-a8fe-9ad75aba555a@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <8fdfb03a-6bbc-46a0-a8fe-9ad75aba555a@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-X-Provags-ID: V03:K1:+hZUlsMNWeIJ03LG4U0wIdl7eq1eiUr3uAEKZ7+OKmChCgDmwXE
- HEYEQmYIhFHrBYVnziceOPwu7aVh1bfUKAv2e8fxhJBPGr8uobJgk68AXIv8hzDvFKqveeX
- Zmay09TcNjb/ZqZ9bH1fI3khReF572i7dkz9TOkFK8UM2ULOlypTlO8EKlyv8NIiFEFD3a5
- iuAPtjrmDVepjkdT4q9aw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:+x/xPugOwbE=;qMckIZwDxhF+6e7WvOqAdEY8sLW
- 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
- uzBNA==
+References: <xmqqcyalm0mh.fsf@gitster.g> <20251001140310.527097-1-christian.couder@gmail.com>
+ <aN2fG-nS9fE5-2jD@fruit.crustytoothpaste.net>
+In-Reply-To: <aN2fG-nS9fE5-2jD@fruit.crustytoothpaste.net>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 3 Oct 2025 16:25:28 +0200
+X-Gm-Features: AS18NWDldX3chEVcIu2WTl1SIM-nUmoD-RBxmiyXE-0POYd0sSIpA3Gf9SfATGU
+Message-ID: <CAP8UFD0=W3Mn8FQBmWFPN+3G9V73iorK-Y9Hs-LQ69hWCBeDOw@mail.gmail.com>
+Subject: Re: [PATCH v2] SubmittingPatches: add section about AI
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>, 
+	Rick Sanders <rick@sfconservancy.org>, Git at SFC <git@sfconservancy.org>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Patrick Steinhardt <ps@pks.im>, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-T24gMTAvMy8yNSAzOjQxIFBNLCBQaGlsbGlwIFdvb2Qgd3JvdGU6DQo+IA0KPj4gQEAgLTE0MzYs
-OCArMTQzNiwxNSBAQCBzdGF0aWMgaW50IHBhdGNoX3VwZGF0ZV9maWxlKHN0cnVjdCBhZGRfcF9z
-dGF0ZSAqcywNCj4+IMKgwqDCoMKgwqAgcmVuZGVyX2RpZmZfaGVhZGVyKHMsIGZpbGVfZGlmZiwg
-Y29sb3JlZCwgJnMtPmJ1Zik7DQo+PiDCoMKgwqDCoMKgIGZwdXRzKHMtPmJ1Zi5idWYsIHN0ZG91
-dCk7DQo+PiDCoMKgwqDCoMKgIGZvciAoOzspIHsNCj4+IC3CoMKgwqDCoMKgwqDCoCBpZiAoaHVu
-a19pbmRleCA+PSBmaWxlX2RpZmYtPmh1bmtfbnIpDQo+PiArwqDCoMKgwqDCoMKgwqAgaWYgKGh1
-bmtfaW5kZXggPj0gZmlsZV9kaWZmLT5odW5rX25yKSB7DQo+PiDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCBodW5rX2luZGV4ID0gMDsNCj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGZvciAo
-aSA9IDA7IGkgPCBmaWxlX2RpZmYtPmh1bmtfbnI7IGkrKykgew0KPj4gK8KgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoCBpZiAoZmlsZV9kaWZmLT5odW5rW2ldLnVzZSA9PSBVTkRFQ0lERURf
-SFVOSykgew0KPj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGh1bmtf
-aW5kZXggPSBpOw0KPj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGJy
-ZWFrOw0KPj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB9DQo+PiArwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoCB9DQo+PiArwqDCoMKgwqDCoMKgwqAgfQ0KPj4gwqDCoMKgwqDCoMKgwqDC
-oMKgIGh1bmsgPSBmaWxlX2RpZmYtPmh1bmtfbnINCj4+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgPyBmaWxlX2RpZmYtPmh1bmsgKyBodW5rX2luZGV4DQo+IA0KPiBJZiB0aGVy
-ZSB3ZXJlIG5vIHVuZGVjaWRlZCBodW5rcyB0aGVuIHRoaXMgd2lsbCBiZSBvdXQgb2YgYm91bmRz
-DQo+IGJlY2F1c2UgaHVua19pbmRleCA+PSBmaWxlX2RpZmYtPmh1bmtfbnIuIEFyZSB3ZSBhYnNv
-bHV0ZWx5IGNlcnRhaW4NCj4gdGhhdCB3ZSBjYW5ub3QgcmVhY2ggdGhpcyBwb2ludCB3aXRob3V0
-IGF0IGxlYXN0IG9uZSBodW5rIGJlaW5nDQo+IHVuZGVjaWRlZD8NCg0KVGhlIG5ldyBsb29wIG9u
-bHkgc2V0cyBodW5rX2luZGV4IGlmIGkgPCBmaWxlX2RpZmYtPmh1bmtfbnIuICBJZg0KaXQgZmlu
-ZHMgbm8gdW5kZWNpZGVkIGh1bmsgdGhlbiBpdCBkb2VzIG5vdGhpbmcuDQoNCj4+ICt0ZXN0X2V4
-cGVjdF9zdWNjZXNzICdyb2xsIG92ZXIgdG8gbmV4dCB1bmRlY2lkZWQgKDEpJyAnDQo+PiArwqDC
-oMKgIHRlc3Rfd3JpdGVfbGluZXMgYSBiIGMgZCBlIGYgZyBoIGkgaiBrIGwgbSBuIG8gcCBxID5m
-aWxlICYmDQo+PiArwqDCoMKgIGdpdCBhZGQgZmlsZSAmJg0KPj4gK8KgwqDCoCB0ZXN0X3dyaXRl
-X2xpbmVzIFggYiBjIGQgZSBmIGcgaCBYIGogayBsIG0gbiBvIHAgWCA+ZmlsZSAmJg0KPj4gK8Kg
-wqDCoCB0ZXN0X3dyaXRlX2xpbmVzIEogeSB5IHEgfCBnaXQgYWRkIC1wID5hY3R1YWwgJiYNCj4+
-ICvCoMKgwqAgdGVzdF93cml0ZV9saW5lcyAxIDIgMyAxID5leHBlY3QgJiYNCj4+ICvCoMKgwqAg
-c2VkIC1uZSAicy0vLiotLSIgLWUgInMtXigtLXAiIDxhY3R1YWwgPmh1bmtzICYmDQo+PiArwqDC
-oMKgIHRlc3RfY21wIGV4cGVjdCBodW5rcw0KPj4gKycNCj4gDQo+IEknbSBub3Qgc3VyZSB3aGF0
-IHRoaXMgZmlyc3QgdGVzdCBhZGRzLCB0aGUgb25lIGJlbG93IGNoZWNrcyB0aGF0IHdlDQo+IGZp
-bmQgdGhlIGZpcnN0IHVuZGVjaWRlZCBodW5rIHdoaWNoIHNlZW1zIHRvIGJlIHRoZSBpbXBvcnRh
-bnQgdGhpbmcNCj4gdG8gY2hlY2suDQoNCkl0J3MgYSByZWdyZXNzaW9uIHRlc3QgZm9yIHRoZSBj
-YXNlIHRoYXQgdGhlIG9yaWdpbmFsIGNvZGUgZ290DQpyaWdodCBieSBhY2NpZGVudC4gIEl0IG1h
-eSBzZWVtIHN1cGVyZmx1b3VzLCBidXQgSSBhY3R1YWxseQ0KdHJpZ2dlcmVkIGl0IGluIG15IGZp
-cnN0IGF0dGVtcHQgYXQgYSBmaXguDQoNClJlbsOpDQoNCg==
+On Wed, Oct 1, 2025 at 11:37=E2=80=AFPM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2025-10-01 at 14:02:50, Christian Couder wrote:
+> > +[[ai]]
+> > +=3D=3D=3D Use of Artificial Intelligence (AI)
+> > +
+> > +The Developer's Certificate of Origin requires contributors to certify
+> > +that they know the origin of their contributions to the project and
+> > +that they have the right to submit it under the project's license.
+> > +It's not yet clear that this can be legally satisfied when submitting
+> > +significant amount of content that has been generated by AI tools.
+>
+> Perhaps we'd like to write this:
+>
+>   It's not yet clear that this can be legally satisfied when submitting
+>   significant amount of content that has been generated by AI tools,
+>   so we cannot accept this content in our project.
+>
+> If we're going to have a policy, we need to be direct about it and not
+> let people draw their own conclusions.  Many people don't have English
+> as a first language and we don't want people trying to language lawyer.
+
+I understand why you want to be direct, but unfortunately (or
+fortunately depending on your point of view) some generated content is
+acceptable if it is not too big, or if it is specific enough or if a
+human has been involved enough. In a number of cases like for example
+translated or reworded content, wrapping lines, refactored code, or
+renamed variables, it is likely that a significant amount of content
+is acceptable because a human has already been involved and the
+content is specific enough. If we say right away that we cannot accept
+it, we might prevent interesting and useful use cases.
+
+> We could say something like this:
+>
+>   Please do not sign off your work if you=E2=80=99re using an LLM to cont=
+ribute
+>   unless you have included copyright and license information for all the
+>   code used in that LLM.
+
+For now I don't think we want or need to be involved in checking or
+trying to check what code and/or training data has been/is used in an
+LLM, what LLM(s) are used in which AI tools, all the AI tools that a
+user might have used, etc. See my reply to Chuck Wolber's review
+related to declare-ai.org.
+
+> This allows the possibility that, say, Google trains an LLM entirely on
+> their own code, such that there is only one copyright holder and they
+> can license it as they see fit.  I don't think we _need_ to consider
+> that case if we don't want to allow that (say, for code quality
+> reasons), but we could if we wanted to.
+
+I agree it would be nice if some LLMs were trained only on specific
+code (or on no existing code at all) so that we could alleviate the
+legal issue with them, but for now I don't think they exist. We can
+always adapt later if/when they ever appear.
+
+> > +Another issue with AI generated content is that AIs still often
+> > +hallucinate or just produce bad code, commit messages, documentation
+> > +or output, even when you point out their mistakes.
+> > +
+> > +To avoid these issues, we will reject anything that looks AI
+> > +generated, that sounds overly formal or bloated, that looks like AI
+> > +slop, that looks good on the surface but makes no sense, or that
+> > +senders don=E2=80=99t understand or cannot explain.
+>
+> I've definitely seen this.  LLMs also typically do not write nice,
+> logical, bisectable commits, which I personally dislike as a reviewer.
+>
+> > +We strongly recommend using AI tools carefully and responsibly.
+>
+> I think this is maybe not definitive enough.  If we don't believe it's
+> possible to sign-off when code is generated using LLMs, then we should
+> say definitively, "Contributors may not use AI to write contributions to
+> Git," or something similarly clear.
+
+I think it's far too restrictive for no good reason. See above and see
+my discussion about this with Junio on the first version of this patch
+he sent last July.
+
+> Right now, this sounds too ambiguous and it might allow someone to write
+> substantial code that they think is of good quality using an LLM because
+> in their view that's careful and responsible, when we don't think that
+> users can sign off on that and therefore that's not possible.  Telling
+> people to use tools "carefully and responsibly" is like telling people
+> to drive "a reasonable and prudent speed" without further qualification
+> and then being surprised when they go 200 km/hr down the road.
+
+The sentence ("We strongly recommend using AI tools carefully and
+responsibly.") is designed to make people pause and think a bit when
+they are reading machinally or just skimming the doc. It's not
+designed to set a clear limit on what is acceptable and what is not.
+And in fact it couldn't do so because there is no such clear limit.
+
+> I'd like to see the language be more like our code of conduct in that it
+> is broad and covers a wide variety of behaviour but also explicitly
+> states what is and is not acceptable to avoid ambiguity, confusion, or
+> argument.
+
+Feel free to make more suggestions. I don't think your goal is easy to
+achieve though.
+
+> > +Contributors would often benefit more from AI by using it to guide and
+> > +help them step by step towards producing a solution by themselves
+> > +rather than by asking for a full solution that they would then mostly
+> > +copy-paste. They can also use AI to help with debugging, or with
+> > +checking for obvious mistakes, things that can be improved, things
+> > +that don=E2=80=99t match our style, guidelines or our feedback, before=
+ sending
+> > +it to us.
+>
+> This kind of use I feel is less objectionable.  I think it might be
+> acceptable to use an LLM as a guide, a linter, or a first-pass code
+> review.
+
+Yeah, it looks like we all agree on that. The issue is that the limit
+between these acceptable kinds of use and other problematic ones is
+fuzzy.
+
+Thanks.
