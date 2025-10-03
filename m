@@ -1,121 +1,123 @@
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FE52D3EE0
-	for <git@vger.kernel.org>; Fri,  3 Oct 2025 16:56:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F7E9460
+	for <git@vger.kernel.org>; Fri,  3 Oct 2025 17:00:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759510617; cv=none; b=ZR+kLJqC82engosVn8CfiH7FlklE4w7Eop83Dbl0fi6rSf6uWfKkbFHMx3u68H8D0R4bGXkM0dKDDGd0tdq7S/5uPrDB53nITyS0VIYLvjrFL+huFgGoRGvCrqEwHcg2oWn2JP/ZmC4WXnNBX9sNsXBcXqpUQpyDouRtnVGHIGM=
+	t=1759510857; cv=none; b=Bj5nmyM6myUD36xH38HYCnJF6V0WbSMzN6BYi8Hif3M7p1u0Z4TNTgm/btLVaq4AjBQLfywk4KCJ9bs6GRGTfR2A902CW8OvWVw0r1Q7o1zvBiUcJ1+oIz6pTvVhJoNHSA2/aNZwdePYlR/4GkwkMk8tIozjw2aQq66wC9tfbzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759510617; c=relaxed/simple;
-	bh=A5pe4Khli19wpguQx212M29uk5MFvrlt0Q7iM93PWA4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Gpe6wAlmlw63y0p8PNEikAdoV1BDhkUwm3szR+Iou0Ib0K1kgeSE2MkRqsK1cCgvkpyc2FlpvxDO6/kJ4AbFwTKGxxfyTOXgJiYo5zF3LLAtslNPwVGt7RhB9duYoK2lyoObGQ/qbsxH2LlTDkBc4/SGAiHcaG+8Dr6n/wpZpug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h8mmPCU2; arc=none smtp.client-ip=209.85.222.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759510857; c=relaxed/simple;
+	bh=z3N9w8SOggJI3PHSI9paehiLid8kD3PTeBYQ8zr0pE4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tiaDgSiQ+RE7W6bZE5oyExnv9AM3rabGyK1i8NJnSD14q16h8StzM0AFNvdk82Y1QYxSyIBlUYsGqDDgeHe9r7W15oHj2inATrAEiccYhAPjWiv1XYFW9rnZetRNYPayTEJNubLmYrTSd9/cxarNP7XAPPvfHeDMyEs/UsCzTdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IH4Qrsg8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Rr6zRxXk; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h8mmPCU2"
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-85d5cd6fe9fso232144285a.0
-        for <git@vger.kernel.org>; Fri, 03 Oct 2025 09:56:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759510615; x=1760115415; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4Z6q63xYcFLxyvxtCpfUT54zXjFAP0xk6ZfWsPxdh/0=;
-        b=h8mmPCU2PRxxRmVEUzWKS7zgnPDXZv5fOScyQlpPunffqWZzA01lClD4ELHD7hkGOn
-         ayHURBmrvJJFTOfOEvah1/1jxZxUIUsf0EAucbaF/C6HNSxwGmqLSKaH7IHf9PIdLxTR
-         RT5/7ZPzVxjRBqBOgJGx6IznFT9E2rjR6Gvbgzl6/qVhO4AhvwgX6iKqP2u7CSc2/pbI
-         3AMF76UUqaSW3Sdd3sDuiZOATZ8U25aZ441XQwpxLzJtkF6cSR5uZwsoQRNC+P6e3D5N
-         QPUDZ2gmAR1v3zmiKEdxRVx9skAB8+eCsaH8ebCjnkSjQ9OZGl0RYsV2j9t68yZKzOCY
-         JsJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759510615; x=1760115415;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4Z6q63xYcFLxyvxtCpfUT54zXjFAP0xk6ZfWsPxdh/0=;
-        b=rd3GjO4cQsrpm5Q+udYAhXHbBCEheDi7Rbu/wVWJ2zzENMu2OJBiTnpZf0/KHVXNBJ
-         Pc4qCcohKFUNsXPydJlZGw9ezTjMMpOcR9Q2x/V27gQ85kmCwk+4svkeMRTxxGk6kX9m
-         ft0y41iJIMRCDBosUsZVyy9dr7iggiP375W3GYsfmczK8m1bZHg1H5bRNSmoPB2YRx14
-         J1p3z3w4NojK6xZQUe2N7fooGTt2JDwKrpikRoacvhF7nZlNpF0CteruyNE8oVAMKivH
-         ukVHmGLuT1ILsWUIC+aMzi/X2rFLn+4pPuYrFfLZU1SGTMaOGZEhM1D9n1G/W5jIcz0C
-         zuwg==
-X-Gm-Message-State: AOJu0YzW6U70B+uBz3I0JPNBoy5ws10wd8EIPuYRyINE2/t5HHCKh49z
-	ugJNUwADY6Mluypc3HB5e6jEL640CSbOu39z4k5fBzErJwKhLwIa5liW
-X-Gm-Gg: ASbGncscR9mC6CaihdNWWZYZYIFast4Kfy8hMi22SFZ/JW+8t40nWmJGw9HnReBEBnM
-	06D+IpbYDc22GqeNqINwPfOXjWF3asmejHU15iCq/wGrNJ6ISDLwfbI5+oXYhXVmvR0L5NHPLrU
-	42sNUzNdWP6aiAOSC2SvFiPAhLy7CseeVfoED/CtXKIp3yEvPqcw3Ic+lwh89qrcwgiIrjLIfNN
-	1MM3Uo+bVCt4uAJQxwXWHCQymz2HFauTq7Xqea3nQqHhxalAcv40wKD3yfUOrcYRaL6xYxz3H7O
-	RqGYxDS92M7LZSUVvZJmey7EOsgochyk1dvfxpsYXREeTOBgaQk1kwEdm456C8GDLEKS8RVZ2Yg
-	mT++PIDHDcRjEzuZPMstOuseTYVUk2eZgb1asdgnRFEKZc9+4aF4YRGbXFPegOzjgBkU4UPKwG7
-	3fu6Vmz22deEeT5Yc7rqm7uw==
-X-Google-Smtp-Source: AGHT+IFDcNk7jx1BVG2J/D8n3o8cvNN5kJFjbNVTv5OciIVINTV5paEuhEbSiqFxixTsNOVGqezZLg==
-X-Received: by 2002:a05:620a:2a15:b0:878:4b36:bd2e with SMTP id af79cd13be357-87a3adf1dd0mr483427085a.59.1759510614729;
-        Fri, 03 Oct 2025 09:56:54 -0700 (PDT)
-Received: from ?IPV6:2605:a601:a6b1:2f00:91d0:6b02:c27a:d0c8? ([2605:a601:a6b1:2f00:91d0:6b02:c27a:d0c8])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-87778650910sm456951885a.40.2025.10.03.09.56.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Oct 2025 09:56:50 -0700 (PDT)
-Message-ID: <f9b2235f-5043-47af-907f-9c9ab3f22a51@gmail.com>
-Date: Fri, 3 Oct 2025 12:56:49 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IH4Qrsg8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Rr6zRxXk"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id ADB73EC01F9;
+	Fri,  3 Oct 2025 13:00:54 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Fri, 03 Oct 2025 13:00:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759510854; x=1759597254; bh=zC/JwjDWFN
+	8g0IqJ/Lm6lLFsezMax2egoMXFycSJ1SA=; b=IH4Qrsg8+D7s+Vh+22SQhQoKAr
+	gHouUs2KzisCIKfCei3iZOHAAxtvQjSgxEs6RkXsMGe2K6vEELocFW2vT8q9pisd
+	WCEoomM43VaxgDQbwKXLXBl4jrJ9ccZ9eopazdTX8P7zDSWGDDHM7iZ07Yfu2f1B
+	VAXgKPWNyd5hbGSRAdnyR/Bfx0k2xOzUOxKtu4jboYM+0LGVCVubDxbi3Sfvrhqm
+	uplc+6ZyJPrRM/HjjQcdqeZnKLNSq89QDjXvseZ0W8sNldYFZ1CqmryhQPHCQNXK
+	ZqJOAfh/28B80E5GPDq8h0TIKz7UpG+QmYjjeyROtXseU+Ic6HGA+buEe4FQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759510854; x=1759597254; bh=zC/JwjDWFN8g0IqJ/Lm6lLFsezMax2egoMX
+	FycSJ1SA=; b=Rr6zRxXkVHSmFffJrPG+85RFw3yQR/gY5cPzTGyIs1a0GXumtWE
+	3YwP1EKosEZoqV9UBG7P2sWrt1d3CzxFlgDtmcQU1dReR9Zfp2CN7qDpjQulpag6
+	8d9ZaxJRvjsgBmZpbRsYDnIeu2Sukv/GyzdXaYsnj3ChQAz0DE7oceuqUk9xUVil
+	PQ+U1JG9vH2WhIqZIDfc6dGmFiUmYebDpB8sKqde9KCjh1BtCfUgfon0eo1Ketwn
+	LrYRixAMRdd1y6UepHOLExVuPfNZqpIVQiNbrI/aslZ1ZN86elgVtAuOqh18Y3mD
+	TPAfCszBjShT8+00BoJFTjdnGrDZH7iXKuw==
+X-ME-Sender: <xms:RgHgaErgj00vmjYl4e7L5kvcnf9tH_hsiJRKBGnKEsSuPuvb8NtbTQ>
+    <xme:RgHgaBq8K53U9b90MKAGTs9qnKv5sVakvGheUa3DJm9RfVYHDQ96yyXEafcJYVlhj
+    RGaZ_HVSNlM8FQ2n-jXj2mR7aUHR_FHNo9dqSTBn1yUa-5nBTDP6Qk>
+X-ME-Received: <xmr:RgHgaOOAgJiF3prcAu8gBJjbP09fKN5oQ4Nc-TqtmkmDsHrXt9IpaZbai6lD8MP46cCvZ2DgFveHtYv_NXELqtAAG95qdNuxKr0V>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekleeggecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
+    htvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhm
+X-ME-Proxy: <xmx:RgHgaKzg5uaNu_Jn67aXWpg51uW2H_CJzC5yU5PZod55XqcoXWbL2A>
+    <xmx:RgHgaPtm-bE8JSkTyq-lGBVJ5MS7vdDq6edBUWDSc1oGLIdEzjTz6w>
+    <xmx:RgHgaL6osMGvLEjxwjT3u8t3yG1mXGyKiLkjC0QPSpwSgZ6pcAMw-w>
+    <xmx:RgHgaGSg5QrcEBBxyOS9pLrOjAubn8rkudr23Nz8zobMCWWAMppKBA>
+    <xmx:RgHgaEx9pzH_ZWgiD17dmNrj1ynukNsfmFGcCSnj-AmHQIVTNpbYcvKZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 3 Oct 2025 13:00:53 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 1/9] docs: update pack index v3 format
+In-Reply-To: <20251002223855.1022847-2-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 2 Oct 2025 22:38:47 +0000")
+References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
+	<20251002223855.1022847-1-sandals@crustytoothpaste.net>
+	<20251002223855.1022847-2-sandals@crustytoothpaste.net>
+Date: Fri, 03 Oct 2025 10:00:52 -0700
+Message-ID: <xmqq7bxbvs1n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] odb: track commit graphs via object source
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-References: <20250904-b4-pks-commit-graph-via-source-v1-0-d932c2481e1a@pks.im>
- <xmqq5xdx7qx4.fsf@gitster.g> <cf7aeda1-297a-4805-b0ae-e379ce11bbcf@gmail.com>
- <aL67U0-tw7O-y6_X@pks.im> <4e67fb02-bbbb-4cd8-9892-6f65b4f82b26@gmail.com>
- <aMFjGoPhGsRCTihO@pks.im> <xmqqo6qyfijl.fsf@gitster.g>
- <aN5gPoPC4WEYw9CF@pks.im> <xmqqy0ptw8ns.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqy0ptw8ns.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 10/2/2025 12:49 PM, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
->> My intent here is mostly to allow us to swap out how exactly the data is
->> being cached. During the Git Merge I heard from some JJ developer (I
->> think) that they also have a pluggable cache, but they approach the
->> issue differently: instead of making the cache a property of the object
->> backend, they instead make the cache itself pluggable.
->>
->> I think that's a worthwhile angle to explore. The cache would still sit
->> on the repository level, and it wouldn't have to care at all whether we
->> use loose objects/packfiles or any other backend. But in theory, we can
->> still swap it out for a different representation as desired.
-> 
-> The idea to allow these "caches" being pluggable to the system
-> independently from object store or reference store backends does
-> make quite a lot of sense.  If there is only one that is plugged,
-> that degenerates into the "side data like commit-graph and
-> reachability bitmaps do not belong to a specific object store
-> backend, but are defined over the objects known to the repository" I
-> was talking about in the message you are replying to, I think.
-> 
->> Which overall means that we can defer this to a later point in time, as
->> we can make it pluggable independent from making the object database
->> itself pluggable.
->>
->> So I'd propose to merge the first six patches, as everyone seemed to
->> agree that they improve the status quo, but drop the last patch that
->> moves the commit-graph into the ODB sources.
->>
->> Does that seem reasonable to everyone? If so, I don't really see a
->> reason to reroll at this point. But please let me know in case I miss
->> anything that needs addressing.
-> 
-> I am fine with that, but let's hear from everyone ;-).
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-I am also fine with that approach. Thanks!
--Stolee
+> diff --git a/Documentation/technical/hash-function-transition.adoc b/Documentation/technical/hash-function-transition.adoc
+> index f047fd80ca..274dc993d4 100644
+> --- a/Documentation/technical/hash-function-transition.adoc
+> +++ b/Documentation/technical/hash-function-transition.adoc
+> @@ -227,9 +227,9 @@ network byte order):
+>      ** 4-byte length in bytes of shortened object names. This is the
+>        shortest possible length needed to make names in the shortened
+>        object name table unambiguous.
+> -    ** 4-byte integer, recording where tables relating to this format
+> +    ** 8-byte integer, recording where tables relating to this format
+>        are stored in this index file, as an offset from the beginning.
+> -  * 4-byte offset to the trailer from the beginning of this file.
+> +  * 8-byte offset to the trailer from the beginning of this file.
+>    * Zero or more additional key/value pairs (4-byte key, 4-byte
+>      value). Only one key is supported: 'PSRC'. See the "Loose objects
+>      and unreachable objects" section for supported values and how this
+> @@ -276,10 +276,14 @@ network byte order):
+>    up to and not including the table of CRC32 values.
+>  - Zero or more NUL bytes.
+>  - The trailer consists of the following:
+> -  * A copy of the 20-byte SHA-256 checksum at the end of the
+> +  * A copy of the full main hash checksum at the end of the
+>      corresponding packfile.
+> -  * 20-byte SHA-256 checksum of all of the above.
+> +  * Full main hash checksum of all of the above.
+> +
+> +The "full main hash" is a full-length hash of the main (not compatibility)
+> +algorithm in the repository.  Thus, if the main algorithm is SHA-256, this is
+> +a 32-byte SHA-256 hash and for SHA-1, it's a 20-byte SHA-1 hash.
+
+I see a nice improvement over v1 here.  Very good.
