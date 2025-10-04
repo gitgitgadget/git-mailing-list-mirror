@@ -1,138 +1,155 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC7B223DDA
-	for <git@vger.kernel.org>; Sat,  4 Oct 2025 14:42:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0B122FE10
+	for <git@vger.kernel.org>; Sat,  4 Oct 2025 17:31:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759588962; cv=none; b=O728l/BJoF7G+YFNkyMF1UAjiaFTrDKv8PpvjDTaYYI48Jseq0rHZ9eVb/q/eL5S4BEAmEf4cUywbStqcjGmN0GfWS19pTyr2LI/d85y/vE4O/Hmka4GYwMaELKWiSFmufat8XQjdBU/okxOliYW8ek0fwDPIokx+u89SevC7L0=
+	t=1759599098; cv=none; b=AkGXAxu9E7Yqs7ySaOIq9Nh1q3VI20Fpv3tCcHY9WmLe4t04xvWEbBkcBNR1fp46egtbXZwcknyjFtxEnyA6FPw5jLUN7KtG05e9TH5bUfM2fflimmYcVwxvWIFtekPoPzTkwQCPDPaj5bSkchcg+vDPl3r90KB8GJLZYhdpLNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759588962; c=relaxed/simple;
-	bh=w9D3k9efVybhw3KejWB9Yr9jFeexYaUzrmNbUettmkI=;
+	s=arc-20240116; t=1759599098; c=relaxed/simple;
+	bh=KsMLYPgc2/yLFXWW/ge6UTp/n4VO/N6M5Uyzc3K3bTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bT0ZRuCJVgHNY/3aH9WJi+WAIv5rge6ct2KTKQGeyTM7pjnyZqu5BJoOOhGF1BuXjzI2Sg0vEjlPl5djS6knxc0egwAayy6JY7/Cf1BKCvATkyemgIaR9Y16RBmDI9xc/ptmhY4YqxeXASdly0DIzsISx9YTDKaeXzcaOI6ob+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=TGNTFWkO; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	 MIME-Version:Content-Type; b=p036QXUeTwa/KvM0X4feOVhG9XWQtOU0vicavD8Tj3R35YY/SP3qFqIehzAQIMYzHKv+ok1Vm1CLEDRe/1vmHZrrJVfRyWjiGwHHBveSBI2/aNeo0eOZW+HlDzJ4bJQQSy/hm+4zJND9CtVSpKS8nym8R4l209w2Ca5NnP75X4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=S1Z7aMix; arc=none smtp.client-ip=212.27.42.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="TGNTFWkO"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-27eceb38eb1so33160705ad.3
-        for <git@vger.kernel.org>; Sat, 04 Oct 2025 07:42:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1759588960; x=1760193760; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=GkH0ee2BTav4xUsA15sZ/GLvpRec27BKm9SBk4ND3oM=;
-        b=TGNTFWkO8P0/43VGe0F7qOMkaYBf0v+TtlcO2dHkQL9tFSfZdMYTmtGWP1Ar3Hy6Vh
-         6acp/mj8u4QUGDLQ1g99BlhMX3VjL05D8SOP6GUYyFEnhocWseltRsSuaWUp+7zAZbJW
-         FKgVkt7BE3qZI31eYxUhfJmdW22Ia5Z/wrIny9bYeje/YMnw7WcMNY5EnsCUvU12ronA
-         uhYmCr267dNTdAjBlfNxYIO8XBe9cWMCMAzyPwlm8svudpAcXtFZ8jeECwHrTjt2uFa3
-         GPGugSj7D/2eeAmxRrd+jdlMbGnT2k1FsKbvzyzijIHwSTUx283+5hcC14l2Z6EG7YeJ
-         WBVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759588960; x=1760193760;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GkH0ee2BTav4xUsA15sZ/GLvpRec27BKm9SBk4ND3oM=;
-        b=s1SPsYmUhIlSmHomDjL4DIgiyI34W5soVMVEcrX5E6kro6wvfpKH7EpBGfa866pPtU
-         iRscpqXW1SjuPlj1RYZEp3tTML4WKVnSY0nyRcQVSBljKT/J/CyIb40RSh9j6a3DN3wg
-         kuSDg7Xe4Zc/RtP/mZM5/CZacpLZNf4Zj53lk57lQU4ikdcA+GJmOZKdAXER4VJQLhyb
-         rvhwzekeJ0HbqA6xHZQUpP4QzDXN9GEmVXVHdME9U6giyMGj7tc61j2kA6M489bV0c9s
-         l4dgjRu3oQuCnis8Td9vvZ8kBF8vOIiDDqEbj0JWzCIXoeg8V6Y+leEFz/JnnIG0UyPV
-         1PpQ==
-X-Gm-Message-State: AOJu0YyO1otJx6sYkNO+p3dLXpfv9HSXq+Ho1dP0+uWUVA+HWhC9r+IC
-	SrOquKzyT7ZrD6EWve2uP+qQk6jogrQZlHoGEk1aplEFiPZcjwa8mo9IrAJjO1lzhUwsEbU+mEV
-	7zVDZ
-X-Gm-Gg: ASbGnctbTVdw0F5IeszobA846TQ5o8FAEQfprwbnaZrnRO2OSiyLDLIbOTbG9Laer9F
-	kUjCZ3q1Xm/DPNzigeRQSgfnElsaLSlSKnnk3Rw21MCy1gh9sSMQ0xvRx/lT+Z0UBG1k+p4e2Hs
-	9wdhM6ibKuVc39b3GGu23gTyte4qqqgtOfaeyP1K2y6zVb1mxrNqwjCtbmT0iwsca170P9L33LZ
-	yXNm802eFZKh3E8OdMZpDpdbVOEDDUA6e9XBsG4vJTx+zgUGz1OGPDgesdLTI1/aEAQbh+YEU84
-	UJevUQX/2IeraKzVC2SQidgWEyWLs+o5vc9UkuQsUpJAeXr0T0ZZ684QZKYX53aNmVr71D81/w0
-	9DU00pzcO2kq51Fr1kx6vyrwxlSRbXA2rfA6gsyWRNxupLp5e5CXEW4Evx3NJRhzohXJy4iMhaw
-	uUPdrta+511HrNdZoCoLbDZNXB1w==
-X-Google-Smtp-Source: AGHT+IEyvXjWgLe1l9AZdNrnYA21hwdkzcR9mGqGzb+ryrhgE8+ps//+3Hp/8z7XTVuqRxdhk+DjuQ==
-X-Received: by 2002:a17:902:ebd2:b0:277:9193:f2ca with SMTP id d9443c01a7336-28e9a5135c2mr64486085ad.9.1759588959745;
-        Sat, 04 Oct 2025 07:42:39 -0700 (PDT)
-Received: from LTY2K703JV.bytedance.net ([139.177.225.232])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-28e8d1dc00esm80477475ad.117.2025.10.04.07.42.36
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 04 Oct 2025 07:42:39 -0700 (PDT)
-From: Han Young <hanyang.tony@bytedance.com>
-To: git@vger.kernel.org
-Cc: karthik.188@gmail.com,
-	gitster@pobox.com,
-	ps@pks.im,
-	Han Young <hanyoung@protonmail.com>,
-	Sigma <git@sigma-star.io>
-Subject: [PATCH v=2 1/1] files-backend: check symref name before update
-Date: Sat,  4 Oct 2025 22:42:23 +0800
-Message-ID: <20251004144223.23436-2-hanyang.tony@bytedance.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251004144223.23436-1-hanyang.tony@bytedance.com>
-References: <20251004144223.23436-1-hanyang.tony@bytedance.com>
-Reply-To: 20251001150805.9652-1-hanyang.tony@bytedance.com
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="S1Z7aMix"
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:aa96:44a8:d440:4f40])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp2-g21.free.fr (Postfix) with ESMTPSA id 23B172003E8;
+	Sat,  4 Oct 2025 19:31:30 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1759599093;
+	bh=KsMLYPgc2/yLFXWW/ge6UTp/n4VO/N6M5Uyzc3K3bTQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=S1Z7aMixB2fQGUTVkj37YgkEI5IYiJb0AXLcXfaeKKl+f/mR0UESRo2LTMwwWW3ja
+	 sXNM1bHBBwViR/Lk6IGntPNBmjz75aGDID0YTLzl5FifIF97IFDz7T54pL/sGDx7Jw
+	 rmUvguZ8i8lLNc6JAj0zaxHZlDCN2q1ZmUIb+jtW5pGJ12NJKI0QhmOUcrvTPYHE8B
+	 l/tG5uGVwh8ZWQdrRHNQHiwH7PESpXcp/QTK9Lp56nyHHg3EK/mmR6ReOTCgotXyub
+	 09kZ09kEM8fiV/XKkJe3okfX1PP++wtp8ppKZGlKhhMMQGAB1x3aMN4T4HkQ9imywK
+	 bVIu1B1gpWrnw==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+ Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject:
+ Re: [PATCH v2] doc: change the markup of paragraphs following a nested list
+ item
+Date: Sat, 04 Oct 2025 19:31:29 +0200
+Message-ID: <2239952.irdbgypaU6@cayenne>
+In-Reply-To: <20251003034134.GA625140@coredump.intra.peff.net>
+References:
+ <xmqq5xd5aqa5.fsf@gitster.g> <20251003031113.GA6381@coredump.intra.peff.net>
+ <20251003034134.GA625140@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-From: Han Young <hanyoung@protonmail.com>
+On Friday, 3 October 2025 05:41:34 CEST Jeff King wrote:
+> On Thu, Oct 02, 2025 at 11:11:14PM -0400, Jeff King wrote:
+> > which I think is wrong? Looking at the end result with more context, it
+> >=20
+> > is:
+> >              refStorage
+> >             =20
+> >                  Specify the ref storage format to use. The acceptable
+> >                  values are:
+> >                 =20
+> >                  =E2=80=A2   files for loose files with packed-refs. Th=
+is is the
+> >                 =20
+> >                      default.
+> >                 =20
+> >                  =E2=80=A2   reftable for the reftable format. This for=
+mat is
+> >                 =20
+> >                      experimental and its internals are subject to
+> >                      change.
+> >             =20
+> >              Note that this setting should only be set by git-init(1) or
+> >              git-clone(1). Trying to change it after initialization will
+> >              not work and will produce hard-to-diagnose issues.
+> >=20
+> > So that "Note that..." paragraph is attached to the refStorage
+> > definition, and should be indented to the same level as "Specify...".
+> >=20
+> > Even more interesting, I think asciidoc gets this wrong both before and
+> > after your patch!
+>=20
+> Sorry, this is incorrect. Rendering with regular asciidoc does produce
+> the right output already.
+>=20
+> The patch I showed to drop the extra newline turns that final paragraph
+> into a continuation of the second bullet point. So it is wrong for both
+> asciidoc (which is already correct) and for asciidoctor (which indents
+> too little, but after my proposed patch indents too much).
+>=20
+> That's a little hard to parse, so here's my attempt at showing visually.
+> The rendered output before that final paragraph looks something like
+> this, with markers 1-3 showing possible indentation levels:
+>=20
+>   refStorage
+>       Specify ...
+>=20
+>       =E2=80=A2   files ...
+>=20
+>       =E2=80=A2   reftable ...
+>=20
+>   (1) a peer of "refStorage" in the definition list
+>       (2) a continuation paragraph in the "refStorage" definition
+>           (3) a continuation paragraph in the second bullet point
+>=20
+> The paragraph "Note that..." should be at indentation level 2, and
+> currently is for both asciidoc and asciidoctor. After your patch it is
+> unchanged in asciidoc and at indentation level 1 in asciidoctor.
+>=20
+> My proposed patch (which is garbage) moves it to indentation level 3 in
+> both.
+>=20
+> I think to appease both systems we need to put the inner bulleted list
+> inside a block. I think that is OK in this case because there is no
+> inner block marker to worry about. So:
+>=20
+> diff --git a/Documentation/config/extensions.adoc
+> b/Documentation/config/extensions.adoc index 49a7598ca5..aaea8c107f 100644
+> --- a/Documentation/config/extensions.adoc
+> +++ b/Documentation/config/extensions.adoc
+> @@ -55,8 +55,9 @@ For historical reasons, this extension is respected=20
+regardless of
+> the refStorage:::
+>  	Specify the ref storage format to use. The acceptable values are:
+>  +
+> +--
+>  include::../ref-storage-format.adoc[]
+> -
+> +--
+>  +
+>  Note that this setting should only be set by linkgit:git-init[1] or
+>  linkgit:git-clone[1]. Trying to change it after initialization will not
+>=20
+> on top of your patch seems to do the right thing (no change in asciidoc,
+> and eliminating the regression from your patch). It's a little gross
+> because we are reaching across the include to realize that
+> ref-storage-format.adoc contains a list that needs to go into its own
+> block. I wonder if asciidoc implicitly opens a new block for an include
+> but asciidoctor doesn't. But at any rate, this is the only way I could
+> come up with for both to render correctly.
+>=20
+> -Peff
 
-In the ref files backend, the symbolic reference name is not checked
-before an update. This could cause reference and lock files to be created
-outside the refs/ directory. Validate the reference before adding it to
-the ref update transaction.
 
-Reported-by: Sigma <git@sigma-star.io>
-Signed-off-by: Han Young <hanyoung@protonmail.com>
----
- refs/files-backend.c | 10 ++++++++++
- t/t7102-reset.sh     |  8 ++++++++
- 2 files changed, 18 insertions(+)
+Thank you for cross-checking. This is indeed almost impossible to mechanize=
+=20
+such testing at the moment.
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index bc3347d18..d47a8c392 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2516,6 +2516,16 @@ static enum ref_transaction_error split_symref_update(struct ref_update *update,
- 	struct ref_update *new_update;
- 	unsigned int new_flags;
- 
-+	/*
-+	 * Check the referent is valid before adding it to the transaction.
-+	 */
-+	if (!refname_is_safe(referent)) {
-+		strbuf_addf(err,
-+			    "reference '%s' appears to be broken",
-+			    update->refname);
-+		return -1;
-+	}
-+
- 	/*
- 	 * First make sure that referent is not already in the
- 	 * transaction. This check is O(lg N) in the transaction
-diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index 0503a64d3..1dc314474 100755
---- a/t/t7102-reset.sh
-+++ b/t/t7102-reset.sh
-@@ -634,4 +634,12 @@ test_expect_success 'reset handles --end-of-options' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'reset should fail when HEAD is corrupt' '
-+	head=$(cat .git/HEAD) &&
-+	hex=$(git log -1 --format="%h") &&
-+	echo "ref: refs/../foo" > .git/HEAD &&
-+	test_must_fail git reset $hex &&
-+	echo $head > .git/HEAD
-+'
-+
- test_done
--- 
-2.51.0.373.g2c26b26d9
+JN
+
+
 
