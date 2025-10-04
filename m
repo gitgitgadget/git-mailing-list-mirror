@@ -1,96 +1,222 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dcvr.yhbt.net (public-inbox.org [173.255.242.215])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1015619882B
-	for <git@vger.kernel.org>; Fri,  3 Oct 2025 22:22:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59AB02AF1D
+	for <git@vger.kernel.org>; Sat,  4 Oct 2025 01:09:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759530167; cv=none; b=E7RfkIvwQfB6HXRXJK9SSQT+iOgT8Ah4G+l+6ixozo/PplFdFXi/xIBcQ7PB7lmAOCrXkLgBYvlcUgbEkPn5lUntAb9NGvd5olzOzsW4BYkJbXS/zaqSFytbKhzpk1N88LLbJz40LKbX/s/KWL7fgwOZy4G6eLPAia/r/rkdhw0=
+	t=1759540177; cv=none; b=nqjfPfPRz6iZaTxEd8fj42RycZHEeNV34G5ibmrYC59eWe1XxC4BhqbIigtV9cP26mKJZ5WFG4Abq2bzAiB9c6mgk21iwBqDmXAdDr17PR+P31pVbJ5T31aGdpKQnzRjkNISawZk+kiRbBG9qoPl0OE2Ta8WBjHxXf0RfY83rDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759530167; c=relaxed/simple;
-	bh=EeTZucsruLmbnS46OegqcEW63N2+49fdeAYyZfBWL2o=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=PoDg4F5m44IIbOVBtTr4/xqW+3ay/FqOdyIrzkMcDw3NMeJ3Pjsc2GgsnrC+oy0InPEK2nh2mbNlwY+m+kWAe8XxpWcrI7wh2ZZQhv3LbInJxg9M5KBM9F/WHZtDvptmZPiIG/uuJi09/WN/RmGcFLbLRRD4GLXqrDgUNX+cFZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J0AdCYeS; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759540177; c=relaxed/simple;
+	bh=d0V67bQTn2royw5DVIDApaPhPdA5KOY16mjGZIbHJ/M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=T/wsUJQqXEeSBM1n0tfj7m72ui1aYT1qSCsLrxePxslF+PoHeWFxbgylVJn0aBcYJZYCZwT+avWvV2X+gouPx4rBQJL5vrwj0Z4ixz1dWxlIJ7lwjNkUoT5TnLM2VO61UZrKQad7pn7kUQsbIR3tPRD6eHlLQFTBp1YIU9uksJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=q3l3WHZm; arc=none smtp.client-ip=173.255.242.215
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J0AdCYeS"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b07d4d24d09so502063866b.2
-        for <git@vger.kernel.org>; Fri, 03 Oct 2025 15:22:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759530164; x=1760134964; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=FnSM1B4GjpBPL7wrnYSwOr/LyDeT4iqtd1HEajzDxmE=;
-        b=J0AdCYeSJ4Hf13ZDu+h8mDXLkzkeS0pK+buD5aYcc2/wqVvGK3tHAOsLhxjBmQYgqt
-         n3pBA+IDV6do6O3atdoupGWN9w4cHdckWQ9rttHGTmBw93FqxhAGruZb0kHSGYVZbhzF
-         QbUIVd6cDzaScGRoX/jdx5nliK1SLU4uLWlkiRXMP5OBaFWUVo/MiqpXE4oxwPcEWrR9
-         L1EGwGt8xxTyPZt5nqJuXKy3J7A6MXG9ZmGCX28NOsK/N3V4a9JsGERJwhgLKR1y1IbA
-         TRc05xYoNHNZtUcidryqG+uRXRgECnEqzakX5AKEJ0gQQ0/AI4K/Cc/57zaRw/2AyOBv
-         Vh9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759530164; x=1760134964;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FnSM1B4GjpBPL7wrnYSwOr/LyDeT4iqtd1HEajzDxmE=;
-        b=qCQhBxvRt2dG7iBdzhluQQOj8THVB+O4D2rD9V9EYdqRSrp4jWdD4d1yBM93KPMoPE
-         i/c2KIpT5DQg+Lf++dGjQLb0mie6xvOzvHEU+DzeuxvlEphJ2YBBgnqykUVOlDdKLMoF
-         iRKC4LQx7SBRmIBKVnKxtDh9NNbovthnzJgffmClksJ13e07CEstQYiDm4tS3ZpBHpN3
-         Mkv021owVPtQRX/mTCpJ6EoYDCmVrDMrlnjWLEJdZyN3G2K860fm/HoX0fvFaBx9l0iA
-         AIrqp7OjyKKQ8yeRucOQ/wBrGUOEuLPy/KaSusKGU83pl81dFjSst8GeyEyG6Zn1zOVt
-         /nMg==
-X-Gm-Message-State: AOJu0YzE37TNcvk/hbmn8SPIxAerUv0y4FMmkPUiqj1n77LcoX63YsOK
-	ZAmLt45IgTqySnakp3HV5FMaggEK2zRAnc9U4UG6OrUWiRaK9z5iNsVwlSAwcOzobcbOXKaVFhb
-	XjwMnt6F2ey0YV065XrSR/Xuqa5k4mBy2YiONOUI=
-X-Gm-Gg: ASbGnctUHa+MGti2i5C31/RnU5Tufi0xYN1kUlcEQqkK8JNAapDz+HEF4oe5FMujM5m
-	E7EujaKBfrXvsv5tR8m3wXuqq1TLMKMu7Y2PftQ4BxLo2jinyBHK1X5+x2PXoYb1uXknca7avRU
-	mSSZyW8QnRE/L5+I93mUAOZhFzYtdVyJ+8dz58aNN9GeukrY/IqStkZnjqetCuNBbvUSW6KpTGh
-	P81xPyx6WxliRYeQbcvW3tgGdI82JM=
-X-Google-Smtp-Source: AGHT+IGLLCrZ84WeZQXt/XhJOHvTNAx6GfIBrWHO9cC+ElEoA9i7kLL3FpeXjeQsiKECebXdYOt+usfkVdxGaaU9jUE=
-X-Received: by 2002:a17:907:3ea1:b0:b24:3412:7cfe with SMTP id
- a640c23a62f3a-b49c4299dfcmr577571266b.63.1759530163399; Fri, 03 Oct 2025
- 15:22:43 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="q3l3WHZm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
+	s=selector1; t=1759539721;
+	bh=d0V67bQTn2royw5DVIDApaPhPdA5KOY16mjGZIbHJ/M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=q3l3WHZmY8Dg7c3fM5BNIwMZz0p+FZiqHMBLAEFZDvsZiuvxd0da0vE8DPM399Cbi
+	 uPIO9UJ9qjFkxJC/25lMG6xqXbymp+YGyLWZ+s8OkeFp4S4K4P3qqbLjOAELLjoc0g
+	 SYnyz77lpPu7qreh3PT6S4I5/xGAfFryDDue9jLk=
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5AF041F513;
+	Sat,  4 Oct 2025 01:02:01 +0000 (UTC)
+Date: Sat, 4 Oct 2025 01:02:01 +0000
+From: Eric Wong <e@80x24.org>
+To: Ezekiel Newren <ezekielnewren@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	"Haelwenn (lanodan) Monnier" <contact@hacktivis.me>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Christian Brabandt <cb@256bit.org>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Elijah Newren <newren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Pierre-Emmanuel Patry <pierre-emmanuel.patry@embecosm.com>,
+	Sam James <sam@gentoo.org>, Taylor Blau <me@ttaylorr.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: what's missing from newer C? [was: [PATCH v5 0/9] Introduce Rust
+ ....]
+Message-ID: <20251004010201.M85772@dcvr>
+References: <20250904-b4-pks-rust-breaking-change-v1-0-3af1d25e0be9@pks.im>
+ <20250915-b4-pks-rust-breaking-change-v5-0-dc3a32fbb216@pks.im>
+ <20250925011043.M401827@dcvr>
+ <CAH=ZcbCEioNGaksTKnYyakABWGwTWv4WQZCnOtARydtLrx11MQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Sat, 4 Oct 2025 00:22:31 +0200
-X-Gm-Features: AS18NWCWUk_hiH34_fo4vrsyRGq6j0EpKBPyzHuU2SQeKxX71QsZ6RGv1dBj2eA
-Message-ID: <CAP8UFD2Dr8jd-_3Se6-3PDBFUd7tp05W2pc6pzxHsCgLctPFQQ@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 127
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	"D. Ben Knoble" <ben.knoble@gmail.com>, 
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>, Patrick Steinhardt <ps@pks.im>, 
-	Derrick Stolee <stolee@gmail.com>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
-	=?UTF-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= <dilyan.palauzov@aegee.org>, 
-	Toon Claes <toon@iotcl.com>, Gerard Murphy <gjmurphy1@icloud.com>, 
-	Jack Lot <jack@themoderncoder.com>, lwn@lwn.net, Bruno Brito <bruno@git-tower.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAH=ZcbCEioNGaksTKnYyakABWGwTWv4WQZCnOtARydtLrx11MQ@mail.gmail.com>
 
-Hi everyone,
+Ezekiel Newren <ezekielnewren@gmail.com> wrote:
+> On Wed, Sep 24, 2025 at 7:10 PM Eric Wong <e@80x24.org> wrote:
+> > What else is missing from C?
+> 
+> 1. Checked Arithmetic
+>   * C23: <stdckdint.h> for checked integer operations.
+>   * Rust: built-ins like checked_add, wrapping_add.
+> 2. __counted_by__ attribute
+>   * Clang 18 / GCC 15: experimental, helps catch buffer overflows.
+>   * Rust: slices already carry length, preventing out-of-bounds by design.
+> 3. __cleanup__ attribute
+>   * GCC, Clang, TinyCC: long-standing extension for RAII-like cleanup.
+>   * Rust: Drop trait ensures deterministic cleanup.
+> 4. RCU / concurrency libraries
+>   * Userspace RCU, ConcurrencyKit, etc. available in C.
+>   * Rust: crossbeam, Arc, lock-free crates.
+> 5. Format string checking
+>   * GCC/Clang/MSVC check format strings at compile time.
+>   * Rust: format! macros type-check arguments.
+> 6. Regex and parsing
+>   * C: POSIX regex, PCRE2, re2c, wuffs.
+>   * Rust: regex crate (safe, no unchecked buffer access).
+> 7. Dynamic analysis
+>   * C: Valgrind, ASan, TSan, UBSan, MSan.
+>   * Rust: Miri, LLVM sanitizers.
+> 
+> What else is missing in C?
+> 
+> Compared to Rust, here's where C still falls short at the language
+> level (not just tooling):
+> 
+> 1. Ownership and lifetimes
+>   * No borrow checker; compiler can't prevent use-after-free, double
+> free, or aliasing bugs.
 
-The 127th edition of Git Rev News is now published:
+As I understand it, the borrow checker is a big part of the slow
+compile times which makes it impractical for poor (and/or
+anti-consumerist) folks to contribute.  At least Rc/Arc exists
+but we can also rely on __cleanup__ to do RC in C.
 
-  https://git.github.io/rev_news/2025/09/30/edition-127/
+RCU also has GC-like properties for resource management
+with less overhead than a full-blown GC.
 
-Thanks a lot to Toon Claes, Johannes Schindelin, Bruno Brito, Gerard
-Murphy, Jack Lot, Ben Knoble and =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec who helpe=
-d this month!
+> 2. Async/await coroutines
+>   * No language support. Async requires threads, callbacks, or libraries.
+>   * Rust: async fn / .await integrated into the language.
 
-Enjoy,
-Christian, Jakub, Markus and Kaartic.
+As someone who's worked on implementing async/green threads for
+a VM; I find myself disagreeing with async/green-threads these
+days because stacks end up eating large amounts of memory in
+less-than-obvious ways.  Memory used by a pure event loop (or
+event loop combined w/ native threads|processes) is a sunk cost
+in either design.  However, (last I checked,) even Golang ends
+up growing stacks in giant 2KB increments whereas event systems
+only need dozens or hundreds of bytes (not KB) per FD.
 
-PS: An issue for the next edition is already opened and contributions
-are welcome:
+> 3. Explicit numeric conversions
+>   * C silently promotes between ints/floats/signed/unsigned.
+>   * Rust requires explicit casts (down and up), reducing surprises.
 
-  https://github.com/git/git.github.io/issues/805
+I think the "new" -Wconversion switch can help
+<https://gcc.gnu.org/wiki/NewWconversion>, but I haven't tried it.
+Using C23 ckd_* functions and wrappers can also help, of course.
+
+> 4. Sum types with exhaustiveness checks
+>   * C: enum + union is manual, compiler won’t enforce full handling.
+>   * Rust: enum + match requires covering all variants.
+
+Not sure what you mean by "full handling" (banning the
+`default:' label?), but C switch + enums do a pretty good job
+of warning, already.
+
+I certainly wish enums were more widely used in C projects.
+
+> 5. Safer error handling
+>   * C: errno, return codes, ad hoc conventions.
+>   * Rust: Result<T, E> + ? operator, forcing handling.
+
+It's down to coding style, yes, but it's not bad.  Linux kernel
+uses __attribute__((__warn_unused_result__)) (aka
+`__must_check') to force error checking.
+
+> 6. Concurrency safety by design
+>   * C11 added atomics, but race conditions are unchecked.
+>   * Rust: Send / Sync traits enforce thread-safety at compile time.
+
+I assume you mean "parallelism" safety? (referencing our
+terminology below).  It's never been a big problem to me
+with RCU and proper understanding of POSIX semantics.
+
+> 7. Namespaces / modules
+>   * C: relies on foo_bar() prefixes and headers.
+>   * Rust: mod and crate system.
+
+I don't miss namespaces; it seems to be mainly dealing with
+colons vs underscores. (Side note: underscores tend to be
+cheaper for Xapian (and presumably other search engines)
+to deal with :>).
+
+AFAIK, Rust modules + crates are centrally controlled and
+publishing requires an account on a proprietary service owned
+and operated by a convicted monopolist.  That doesn't fly with
+some folks such as myself.
+
+> 8. Default immutability
+>   * C: everything mutable unless marked const.
+>   * Rust: immutable by default, opt into mut. You have a choice of 1
+> mutable reference xor many immutable references to something.
+
+Sure mistakes were made ~50 years ago, but const exists and we
+can enforce that via coding style.
+
+> 9. Package management
+>   * C: out of scope for the language
+>   * Rust: built in with Cargo dependencies
+
+As a Perl user who has avoided CPAN for ~25 years, I prefer
+to let distros manage packages and ignore language-specific
+managers.  This seems out-of-scope for this discussion,
+so more in footnote[1]
+
+> In Rust there is a difference between concurrency and parallelism.
+> Concurrency in Rust is about running multiple tasks with a single
+> system thread. Whereas parallelism is about assigning tasks to
+> multiple threads. I highly doubt that C will ever get coroutines
+> because it requires the compiler to create a state machine out of each
+> function that uses async or await keywords. The C language just isn't
+> robust enough for that in my opinion.
+
+Your terminology matches mine even outside of Rust (IOW,
+"ConcurrencyKit" probably should've been named "ParallelismKit").
+
+There's certainly been attempts at coroutines for C.  From what
+I've seen in headlines, it certainly seems async + function
+coloring in Rust has its fair share of problems and growing
+pains.  Again, I really don't think async is worth the problems
+and surprises, especially in a low-level(?) language.
+
+> And there's probably more that I haven't covered here.
+
+Again, I would've been much happier if git used more very
+high-level language(s) instead of rewriting things to C years
+ago.  Given that ship has long sailed, an evolutionary approach
+towards improving C would be less exclusionary than a
+revolutionary one such as Rust.
+
+Rust seems to try to be a replacement for C++ (with even slower
+build times) rather than a thin layer to interface with the OS +
+hardware.  C++ mixes high-level and low-level concepts too much
+for my liking (and Rust the same).  This is down to personal
+taste, but I prefer a good distinction between high and
+low-level languages.
+
+
+[1] - I strongly prefer to only use distro package managers due
+      to multi-language projects, distro-specific quirks, extra
+      review, ethics/license checks, etc.  I also strongly prefer
+      NOT having a central entity affecting users across all
+      distros.
