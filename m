@@ -1,68 +1,68 @@
-Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D1829AAF3
-	for <git@vger.kernel.org>; Sun,  5 Oct 2025 21:11:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8845E29AB02
+	for <git@vger.kernel.org>; Sun,  5 Oct 2025 21:11:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759698711; cv=none; b=ZYYPYB9562NAWP1FQ6WTNVgnl7jIxIWkoHnRiJQspgEJBU7+Db5BJvbx1S2VkHwPSEqEicRfqrTRiEr8SQC2GwZrmJS4X+M2WYgPZtSIdk0PFto+swUriuwzr5EbtmJLS8m7pBbml+qcTwuEcvE+Bw4as7dTCcyF1tToNWfEkks=
+	t=1759698712; cv=none; b=Tf7Xh47QZUjNHOMDQXwiJ5s4eyNTuVQ+7DngQrMyvbtWFZgr6BaN5yZHIy6F95shpNCG1iWMGEBFYfiYKkLpwm51PgMNRCElI8BnBSk30Oh8EV9TzzJ8s5IxMNcx9n8OYmAJoqFyP6SjD0lUs4d8czGQvxqrKJKwTZs+rTYOX7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759698711; c=relaxed/simple;
-	bh=YCVYDs8kXcjER8AtwLkrVUqErUGxTbKDYzLCCK1T8CQ=;
+	s=arc-20240116; t=1759698712; c=relaxed/simple;
+	bh=inaX5fsgJabGHOMfUPW9Qm+fvCOEt+P0/XG02WgCI1c=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=Xrps6xzrP2iDQQnoar5RPJybffstJuATeV7cskaIX0ghNS0W8M4p4QEwtlzmWdbs/sbZHVYCTP+4WkO+YXUqzyvIqQURSKp5x0pGCH+TGWvg/YdNJER56uxIqZ9Ok7vph9wa9kx5hjDjTNlQjLH+Ofjd7aAwSXjh7iTBbtn0oSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GkSpem9M; arc=none smtp.client-ip=209.85.166.169
+	 Content-Type:To:Cc; b=Z53Ph9uYWa/M8V38n84VhftUjNpH94PgzS+UY9NQfVYQ94PKxScs5PCp7mCsxpMB5gLn0K5CKi99DuOYyQPShX3lRptn+OfKqfKwMSNfODLVhXvE+IP/9fQuneXwn9/Nbp2QJYEmeJ07ydtwmDcgCeELZkI/FAbzP3dgUTSyDU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KUWPOy1I; arc=none smtp.client-ip=209.85.166.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GkSpem9M"
-Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-42f67e91ae7so15528865ab.0
-        for <git@vger.kernel.org>; Sun, 05 Oct 2025 14:11:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KUWPOy1I"
+Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-90926724bceso361126039f.1
+        for <git@vger.kernel.org>; Sun, 05 Oct 2025 14:11:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759698708; x=1760303508; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1759698709; x=1760303509; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cHpdDT1jLNfHw8iweh3SFnIFNq05xOkGQnC+/STmiuc=;
-        b=GkSpem9MNm/RdLOrvcrEklpvze5TwMLSTGiLzHtafqTFZMUrcNocdnGi4pqdZYBrk7
-         8Ejwt5rm6b9lXhZn5MtUcsIq+pyK+bq8vKYYPK5CZwNS0LnHfx4Kh85e9ERzHXtZVYAX
-         pjZmTPE3eyglkMy9dWVPUkEEs0tNsHB1HCfPMrawZ2ayxRT1pUejdNGoMoy+QKw1nAUF
-         heYcremby2uD4CNCCCDpp/hgW3JGgoEsO+8CIc029Ak1xK1eMSj9z/OW8KUVpcEy9rHF
-         AZD5Ywn3CvBXqckqE09jcqfDyEh0+/656buqOLcNDLEe+MFxuR+OfpjsU0KsCL1WktQz
-         up8g==
+        bh=diYTBvMAPkL487mbvITlpBUW0JOmhpnS8u2WCbFi0OQ=;
+        b=KUWPOy1Igav+jEU4LYFatNt97fOePlpDeeFUyXyFmvLfJlb23DU36uDGSKt+XUh3de
+         63D0Ha9qmjgzq1QhHwhXKcAhIJn2JvNYRi5SUWgua3jeSF+3DA3N0pT13lpaA+VSUUWP
+         IjyJIf30mbF7ZaWItOYR8yS7iMF2Xa0lwkwHHGdkk3/Gxrom+hrfycemoZdBq2iNwUR7
+         seqUbZlzG6hps0+4YRgkCdQCkHohPvIq6NjQJpZs9HYmhtH3d0pjg/A7Yr2vPYXqp9Hm
+         cgom5mjKP2VbYzTh47URnJA3vW+bPGQR50Fsnn+cUus79d0zfp58no3P5xOS+EQxuCaS
+         7gOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759698708; x=1760303508;
+        d=1e100.net; s=20230601; t=1759698709; x=1760303509;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cHpdDT1jLNfHw8iweh3SFnIFNq05xOkGQnC+/STmiuc=;
-        b=qyEC4K+tGdlV0IxDBKI08fiXzbIWm/sAnKQ4HaCRTtQUOpC69dOx3MDoerxB5112ba
-         aQHR92w9w28PC2E4f+7Y55+LR4DNhjAv3hItudQ4K29h6rS4uCo1/Jj5wk4m2+nzFxtu
-         HKJQgeZzy+I4PW5R9BUwjIoLS3NHUvcTX1KY6vWV+DLbYzbMCdBP9Qc5jGrLhpslyH7P
-         8LOYd/6oCxeW9XdCB74672PdJKMXsQdpHS2PKU7ZPm/TdUa6//C96yH27MCKAhghpaSS
-         MnMmWZhTCVlZsWPj6DoimY8+cXZr3zSwN7ZHnLtNP5a7sJTNQ59vcOp+EAIgRQ11HekS
-         mjyA==
-X-Gm-Message-State: AOJu0YxuXBzRHFGo/XOjPkmBvGxswTPvq85fBUt1hqKsOOABzdaasRGe
-	jww9m1R8mUFv1Wjl5uidm9ZiAXcSqYp8rcoglhx0R7nFCab8Wb+q9iRpOXEEbD5Z
-X-Gm-Gg: ASbGncsOfEtsG7DxFzxWuHCS0AW4BZxx7fYxOS0lsmVutG5OWfRZjdlKz3ztibR8wZF
-	Ct1MOzregA34nEz7vUEAfElnDhTHtYpljA8RUBeuLgHxfeFhliBAPftiFH6jbGtC+8dXm694Bpn
-	Jg8+CZ4reKCofvSwfuMAEtNj/Tsg06CGHDfIBS1AFRkVCUT3YwDpK09dNaOXgOxn+gtnAhGQ9iG
-	CbboaHHa4R0hFehfm8JsWYaR6EXcCYHwx3onJqXegHIMUe1H08doWFUL9o2IzMOug1Lq9QfmH4i
-	I3G2sdyzDpfMAeS79JPiaq0+w7GvSCEnlUci/cRmg434CuLy1b6hWHOgCgdU5Cy8pIVfhBsN+kd
-	UDQ+Ob2r6uFOA3Qy5DWhP4TborE2VAZa3JmF0BjQG+sa6zRR9m402NrgpmrA=
-X-Google-Smtp-Source: AGHT+IGXB1TieYerK3M1b2qoroSySq4/E6ElHVAV7zyoOElvYj+Wl16zVeXBXBnddObo5GfLnrJBSQ==
-X-Received: by 2002:a05:6e02:1aa7:b0:42b:2a51:f50a with SMTP id e9e14a558f8ab-42e7adb9792mr144918245ab.31.1759698707854;
-        Sun, 05 Oct 2025 14:11:47 -0700 (PDT)
+        bh=diYTBvMAPkL487mbvITlpBUW0JOmhpnS8u2WCbFi0OQ=;
+        b=gkvPz0A6QkL/BhgjjF8rQu4ISGXE8jHW4nkR1cu14aVRKwv+9f7nzvOVSWoINQACCr
+         3bhW9ny78445P2ha3GkVGfQ/wlZfdMFUtElJhqD04xPTw7UByK7z3cfc8pYEsdwcPl9r
+         u301avcwBq0Kf1BqQbwDx/5GDeBHkQF6lz3wX6TV3rydSA46Jih4tWtp5UMut8hl0jFu
+         HETDYF3S/4w8E3rTiVetwcSf5inin2927Hb5/6gw9uq0KHFKJU9jRr+Mi/7xJ+0UHy+y
+         NEue4spNJpLQlVaq6vnRhm8OwImMh9EqUG0aAwf9pShfS8XWrbs+6N5IKvvSHRlEmlaW
+         e8cQ==
+X-Gm-Message-State: AOJu0YyVdHxOD6FfRVIqiJw6xYsBChheq//CsLhQDOlqZadoqJp1yc8M
+	iPjNuSTVPNqS32cZ96YKptp8UX6NNvxE5Fimp4TmUziRf1Q1SC3jO1JGg5D1p3Y2
+X-Gm-Gg: ASbGnctHM0bsPF8XbM6l0HHrsVHDNBhHKB1/8A2s37YefHrKF/Z/ethnTLMJLzOYIzS
+	at7+Hl+7OMk2IdY2F0yZws28RxmCbXLdt2imUyWm6DlzrjBfYzXQeK8YnOJaZ/dW4h+a0lbYdHs
+	V38v8DXQW2csV9Sq8vOM9/mXV6I20NgwsMlN3vjssUP5WViXaBxDt2emAlnFPl2ksa8lu0AgLvz
+	SsWs6b4iMeObvQ56SyWqAlByz7eImn9nEWTUIL26mr/klq6W+IV02rywgrUjhajEaBBf+XCuB1j
+	TezCGV5m5gyvFqqbVDGsTtBPYVvIoM3P/ZXMG2vsMvB/labkajcgWLkShBZ2bOkzKa0R+Z8YzZd
+	DpJak9gJUBiFqfs58Q1gN1IWf2gKSB6QVuR2yNsSZeHbYDHht8dBYp48tqHc=
+X-Google-Smtp-Source: AGHT+IFicsevkAILr2keIqhlX/NRNKPf4LTyQt1igJeFKxfiHkojnbfSrPVbBwZ6P0c1Ua2jbfworw==
+X-Received: by 2002:a92:cda3:0:b0:42d:89b9:5d30 with SMTP id e9e14a558f8ab-42e7ad887d6mr147562415ab.19.1759698709156;
+        Sun, 05 Oct 2025 14:11:49 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.193.20])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-42d8b294f91sm45132135ab.34.2025.10.05.14.11.45
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-57b5f8c432esm4182240173.58.2025.10.05.14.11.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Oct 2025 14:11:46 -0700 (PDT)
-Message-Id: <3f3e5a87e834a6cd1d5d7769bdd2c0dcfaa4b6ae.1759698702.git.gitgitgadget@gmail.com>
+        Sun, 05 Oct 2025 14:11:48 -0700 (PDT)
+Message-Id: <9d231428eaf45c131a5caddad510d86c5f22fe9b.1759698702.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1969.git.1759698702.gitgitgadget@gmail.com>
 References: <pull.1969.git.1759698702.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 05 Oct 2025 21:11:40 +0000
-Subject: [PATCH 1/3] doc: convert git-stash.adoc to synopis style
+Date: Sun, 05 Oct 2025 21:11:41 +0000
+Subject: [PATCH 2/3] doc: convert git tag to synopsis style
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,395 +85,380 @@ From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 descriptions. The new rendering engine will apply synopsis rules to
 these spans.
 
-Also do not refer to the man page in the description of settings when this
-description is already in the man page.
+Also add the config section in the manual page and do not refer to the man
+page in the description of settings when this description is already in the
+man page.
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/config/stash.adoc |  29 ++++---
- Documentation/git-stash.adoc    | 134 ++++++++++++++++----------------
- 2 files changed, 85 insertions(+), 78 deletions(-)
+ Documentation/config/tag.adoc |  22 +++--
+ Documentation/git-tag.adoc    | 173 ++++++++++++++++++----------------
+ 2 files changed, 104 insertions(+), 91 deletions(-)
 
-diff --git a/Documentation/config/stash.adoc b/Documentation/config/stash.adoc
-index e556105a15..7fc32027f7 100644
---- a/Documentation/config/stash.adoc
-+++ b/Documentation/config/stash.adoc
-@@ -1,19 +1,28 @@
--stash.index::
-+ifndef::git-stash[]
-+:see-show: See the description of the 'show' command in linkgit:git-stash[1].
-+endif::git-stash[]
-+
-+ifdef::git-stash[]
-+:see-show:
-+endif::git-stash[]
-+
-+`stash.index`::
- 	If this is set to true, `git stash apply` and `git stash pop` will
--	behave as if `--index` was supplied. Defaults to false. See the
--	descriptions in linkgit:git-stash[1].
-+	behave as if `--index` was supplied. Defaults to false.
-+ifndef::git-stash[]
-+See the descriptions in linkgit:git-stash[1].
-+endif::git-stash[]
+diff --git a/Documentation/config/tag.adoc b/Documentation/config/tag.adoc
+index 5062a057ff..d878da98d4 100644
+--- a/Documentation/config/tag.adoc
++++ b/Documentation/config/tag.adoc
+@@ -1,17 +1,23 @@
+-tag.forceSignAnnotated::
++`tag.forceSignAnnotated`::
+ 	A boolean to specify whether annotated tags created should be GPG signed.
+ 	If `--annotate` is specified on the command line, it takes
+ 	precedence over this option.
  
--stash.showIncludeUntracked::
-+`stash.showIncludeUntracked`::
- 	If this is set to true, the `git stash show` command will show
--	the untracked files of a stash entry.  Defaults to false. See
--	the description of the 'show' command in linkgit:git-stash[1].
-+	the untracked files of a stash entry. Defaults to false. {see-show}
+-tag.sort::
+-	This variable controls the sort ordering of tags when displayed by
+-	linkgit:git-tag[1]. Without the "--sort=<value>" option provided, the
+-	value of this variable will be used as the default.
++`tag.sort`::
++ifdef::git-tag[]
++This variable controls the sort ordering of tags when displayed by `git-tag`.
++endif::git-tag[]
++ifndef::git-tag[]
++This variable controls the sort ordering of tags when displayed by
++linkgit:git-tag[1].
++endif::git-tag[]
++Without the `--sort=<value>` option provided, the value of this variable will
++be used as the default.
  
--stash.showPatch::
-+`stash.showPatch`::
- 	If this is set to true, the `git stash show` command without an
- 	option will show the stash entry in patch form.  Defaults to false.
--	See the description of the 'show' command in linkgit:git-stash[1].
-+	{see-show}
- 
--stash.showStat::
-+`stash.showStat`::
- 	If this is set to true, the `git stash show` command without an
- 	option will show a diffstat of the stash entry.  Defaults to true.
--	See the description of the 'show' command in linkgit:git-stash[1].
-+	{see-show}
-diff --git a/Documentation/git-stash.adoc b/Documentation/git-stash.adoc
-index e2300a19a2..235d57ddd8 100644
---- a/Documentation/git-stash.adoc
-+++ b/Documentation/git-stash.adoc
-@@ -7,24 +7,24 @@ git-stash - Stash the changes in a dirty working directory away
+-tag.gpgSign::
++`tag.gpgSign`::
+ 	A boolean to specify whether all tags should be GPG signed.
+ 	Use of this option when running in an automated script can
+ 	result in a large number of tags being signed. It is therefore
+-	convenient to use an agent to avoid typing your gpg passphrase
++	convenient to use an agent to avoid typing your GPG passphrase
+ 	several times. Note that this option doesn't affect tag signing
+-	behavior enabled by "-u <keyid>" or "--local-user=<keyid>" options.
++	behavior enabled by `-u <keyid>` or `--local-user=<keyid>` options.
+diff --git a/Documentation/git-tag.adoc b/Documentation/git-tag.adoc
+index a4b1c0ec05..0f7badc116 100644
+--- a/Documentation/git-tag.adoc
++++ b/Documentation/git-tag.adoc
+@@ -8,21 +8,21 @@ git-tag - Create, list, delete or verify a tag object signed with GPG
  
  SYNOPSIS
  --------
 -[verse]
--'git stash' list [<log-options>]
--'git stash' show [-u | --include-untracked | --only-untracked] [<diff-options>] [<stash>]
--'git stash' drop [-q | --quiet] [<stash>]
--'git stash' pop [--index] [-q | --quiet] [<stash>]
--'git stash' apply [--index] [-q | --quiet] [<stash>]
--'git stash' branch <branchname> [<stash>]
--'git stash' [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
+-'git tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]
 +[synopsis]
-+git stash list [<log-options>]
-+git stash show [-u | --include-untracked | --only-untracked] [<diff-options>] [<stash>]
-+git stash drop [-q | --quiet] [<stash>]
-+git stash pop [--index] [-q | --quiet] [<stash>]
-+git stash apply [--index] [-q | --quiet] [<stash>]
-+git stash branch <branchname> [<stash>]
-+git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
- 	     [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]
- 	     [--pathspec-from-file=<file> [--pathspec-file-nul]]
- 	     [--] [<pathspec>...]]
--'git stash' save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
--	     [-u | --include-untracked] [-a | --all] [<message>]
--'git stash' clear
--'git stash' create [<message>]
--'git stash' store [(-m | --message) <message>] [-q | --quiet] <commit>
--'git stash' export (--print | --to-ref <ref>) [<stash>...]
--'git stash' import <commit>
-+git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
-+           [-u | --include-untracked] [-a | --all] [<message>]
-+git stash clear
-+git stash create [<message>]
-+git stash store [(-m | --message) <message>] [-q | --quiet] <commit>
-+git stash export (--print | --to-ref <ref>) [<stash>...]
-+git stash import <commit>
++git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]
+ 	[(--trailer <token>[(=|:)<value>])...]
+ 	<tagname> [<commit> | <object>]
+-'git tag' -d <tagname>...
+-'git tag' [-n[<num>]] -l [--contains <commit>] [--no-contains <commit>]
++git tag -d <tagname>...
++git tag [-n[<num>]] -l [--contains <commit>] [--no-contains <commit>]
+ 	[--points-at <object>] [--column[=<options>] | --no-column]
+ 	[--create-reflog] [--sort=<key>] [--format=<format>]
+ 	[--merged <commit>] [--no-merged <commit>] [<pattern>...]
+-'git tag' -v [--format=<format>] <tagname>...
++git tag -v [--format=<format>] <tagname>...
  
  DESCRIPTION
  -----------
-@@ -38,7 +38,7 @@ The modifications stashed away by this command can be listed with
- `git stash list`, inspected with `git stash show`, and restored
- (potentially on top of a different commit) with `git stash apply`.
- Calling `git stash` without any arguments is equivalent to `git stash push`.
--A stash is by default listed as "WIP on 'branchname' ...", but
-+A stash is by default listed as "WIP on '<branchname>' ...", but
- you can give a more descriptive message on the command line when
- you create one.
  
-@@ -47,16 +47,16 @@ stashes are found in the reflog of this reference and can be named using
- the usual reflog syntax (e.g. `stash@{0}` is the most recently
- created stash, `stash@{1}` is the one before it, `stash@{2.hours.ago}`
- is also possible). Stashes may also be referenced by specifying just the
--stash index (e.g. the integer `n` is equivalent to `stash@{n}`).
-+stash index (e.g. the integer `<n>` is equivalent to `stash@{<n>}`).
+-Add a tag reference in `refs/tags/`, unless `-d/-l/-v` is given
++Add a tag reference in `refs/tags/`, unless `-d`/`-l`/`-v` is given
+ to delete, list or verify tags.
  
- COMMANDS
- --------
- 
--push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [(-m|--message) <message>] [--pathspec-from-file=<file> [--pathspec-file-nul]] [--] [<pathspec>...]::
-+`push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-u | --include-untracked] [ -a | --all] [-q | --quiet] [(-m|--message) <message>] [--pathspec-from-file=<file> [--pathspec-file-nul]] [--] [<pathspec>...]`::
- 
- 	Save your local modifications to a new 'stash entry' and roll them
--	back to HEAD (in the working tree and in the index).
--	The <message> part is optional and gives
-+	back to `HEAD` (in the working tree and in the index).
-+	The _<message>_ part is optional and gives
- 	the description along with the stashed state.
- +
- For quickly making a snapshot, you can omit "push".  In this mode,
-@@ -65,14 +65,14 @@ subcommand from making an unwanted stash entry.  The two exceptions to this
- are `stash -p` which acts as alias for `stash push -p` and pathspec elements,
- which are allowed after a double hyphen `--` for disambiguation.
- 
--save [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
-+`save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-u | --include-untracked] [-a | --all] [-q | --quiet] [<message>]`::
- 
- 	This option is deprecated in favour of 'git stash push'.  It
- 	differs from "stash push" in that it cannot take pathspec.
- 	Instead, all non-option arguments are concatenated to form the stash
- 	message.
- 
--list [<log-options>]::
-+`list [<log-options>]`::
- 
- 	List the stash entries that you currently have.  Each 'stash entry' is
- 	listed with its name (e.g. `stash@{0}` is the latest entry, `stash@{1}` is
-@@ -88,7 +88,7 @@ stash@{1}: On master: 9cc0589... Add git-stash
- The command takes options applicable to the 'git log'
- command to control what is shown and how. See linkgit:git-log[1].
- 
--show [-u|--include-untracked|--only-untracked] [<diff-options>] [<stash>]::
-+`show [-u | --include-untracked | --only-untracked] [<diff-options>] [<stash>]`::
- 
- 	Show the changes recorded in the stash entry as a diff between the
- 	stashed contents and the commit back when the stash entry was first
-@@ -96,12 +96,12 @@ show [-u|--include-untracked|--only-untracked] [<diff-options>] [<stash>]::
- 	By default, the command shows the diffstat, but it will accept any
- 	format known to 'git diff' (e.g., `git stash show -p stash@{1}`
- 	to view the second most recent entry in patch form).
--	If no `<diff-option>` is provided, the default behavior will be given
-+	If no _<diff-option>_ is provided, the default behavior will be given
- 	by the `stash.showStat`, and `stash.showPatch` config variables. You
- 	can also use `stash.showIncludeUntracked` to set whether
- 	`--include-untracked` is enabled by default.
- 
--pop [--index] [-q|--quiet] [<stash>]::
-+`pop [--index] [-q | --quiet] [<stash>]`::
- 
- 	Remove a single stashed state from the stash list and apply it
- 	on top of the current working tree state, i.e., do the inverse
-@@ -112,19 +112,19 @@ Applying the state can fail with conflicts; in this case, it is not
- removed from the stash list. You need to resolve the conflicts by hand
- and call `git stash drop` manually afterwards.
- 
--apply [--index] [-q|--quiet] [<stash>]::
-+`apply [--index] [-q | --quiet] [<stash>]`::
- 
- 	Like `pop`, but do not remove the state from the stash list. Unlike `pop`,
- 	`<stash>` may be any commit that looks like a commit created by
- 	`stash push` or `stash create`.
- 
--branch <branchname> [<stash>]::
-+`branch <branchname> [<stash>]`::
- 
--	Creates and checks out a new branch named `<branchname>` starting from
--	the commit at which the `<stash>` was originally created, applies the
--	changes recorded in `<stash>` to the new working tree and index.
--	If that succeeds, and `<stash>` is a reference of the form
--	`stash@{<revision>}`, it then drops the `<stash>`.
-+	Creates and checks out a new branch named _<branchname>_ starting from
-+	the commit at which the _<stash>_ was originally created, applies the
-+	changes recorded in _<stash>_ to the new working tree and index.
-+	If that succeeds, and _<stash>_ is a reference of the form
-+	`stash@{<revision>}`, it then drops the _<stash>_.
- +
- This is useful if the branch on which you ran `git stash push` has
- changed enough that `git stash apply` fails due to conflicts. Since
-@@ -132,54 +132,51 @@ the stash entry is applied on top of the commit that was HEAD at the
- time `git stash` was run, it restores the originally stashed state
- with no conflicts.
- 
--clear::
-+`clear`::
- 	Remove all the stash entries. Note that those entries will then
- 	be subject to pruning, and may be impossible to recover (see
--	'Examples' below for a possible strategy).
--
--drop [-q|--quiet] [<stash>]::
-+	'EXAMPLES' below for a possible strategy).
- 
-+`drop [-q | --quiet] [<stash>]`::
- 	Remove a single stash entry from the list of stash entries.
- 
--create::
--
-+`create`::
- 	Create a stash entry (which is a regular commit object) and
- 	return its object name, without storing it anywhere in the ref
- 	namespace.
- 	This is intended to be useful for scripts.  It is probably not
- 	the command you want to use; see "push" above.
- 
--store::
-+`store`::
- 
- 	Store a given stash created via 'git stash create' (which is a
- 	dangling merge commit) in the stash ref, updating the stash
- 	reflog.  This is intended to be useful for scripts.  It is
- 	probably not the command you want to use; see "push" above.
- 
--export ( --print | --to-ref <ref> ) [<stash>...]::
-+`export ( --print | --to-ref <ref> ) [<stash>...]`::
- 
- 	Export the specified stashes, or all of them if none are specified, to
- 	a chain of commits which can be transferred using the normal fetch and
- 	push mechanisms, then imported using the `import` subcommand.
- 
--import <commit>::
--
-+`import <commit>`::
- 	Import the specified stashes from the specified commit, which must have been
- 	created by `export`, and add them to the list of stashes.  To replace the
- 	existing stashes, use `clear` first.
+ Unless `-f` is given, the named tag must not yet exist.
+@@ -58,129 +58,129 @@ lightweight tags by default.
  
  OPTIONS
  -------
 --a::
----all::
+---annotate::
 +`-a`::
-+`--all`::
- 	This option is only valid for `push` and `save` commands.
++`--annotate`::
+ 	Make an unsigned, annotated tag object
+ 
+--s::
+---sign::
++`-s`::
++`--sign`::
+ 	Make a GPG-signed tag, using the default e-mail address's key.
+ 	The default behavior of tag GPG-signing is controlled by `tag.gpgSign`
+ 	configuration variable if it exists, or disabled otherwise.
+ 	See linkgit:git-config[1].
+ 
+---no-sign::
++`--no-sign`::
+ 	Override `tag.gpgSign` configuration variable that is
+ 	set to force each and every tag to be signed.
+ 
+--u <key-id>::
+---local-user=<key-id>::
++`-u <key-id>`::
++`--local-user=<key-id>`::
+ 	Make a GPG-signed tag, using the given key.
+ 
+--f::
+---force::
++`-f`::
++`--force`::
+ 	Replace an existing tag with the given name (instead of failing)
+ 
+--d::
+---delete::
++`-d`::
++`--delete`::
+ 	Delete existing tags with the given names.
+ 
+--v::
+---verify::
++`-v`::
++`--verify`::
+ 	Verify the GPG signature of the given tag names.
+ 
+--n<num>::
+-	<num> specifies how many lines from the annotation, if any,
+-	are printed when using -l. Implies `--list`.
++`-n<num>`::
++	_<num>_ specifies how many lines from the annotation, if any,
++	are printed when using `-l`. Implies `--list`.
  +
- All ignored and untracked files are also stashed and then cleaned
- up with `git clean`.
+ The default is not to print any annotation lines.
+ If no number is given to `-n`, only the first line is printed.
+ If the tag is not annotated, the commit message is displayed instead.
  
---u::
----include-untracked::
----no-include-untracked::
-+`-u`::
-+`--include-untracked`::
-+`--no-include-untracked`::
- 	When used with the `push` and `save` commands,
- 	all untracked files are also stashed and then cleaned up with
- 	`git clean`.
-@@ -187,12 +184,12 @@ up with `git clean`.
- When used with the `show` command, show the untracked files in the stash
- entry as part of the diff.
- 
----only-untracked::
-+`--only-untracked`::
- 	This option is only valid for the `show` command.
+--l::
+---list::
++`-l`::
++`--list`::
+ 	List tags. With optional `<pattern>...`, e.g. `git tag --list
+ 	'v-*'`, list only the tags that match the pattern(s).
  +
- Show only the untracked files in the stash entry as part of the diff.
- 
----index::
-+`--index`::
- 	This option is only valid for `pop` and `apply` commands.
+-Running "git tag" without arguments also lists all tags. The pattern
+-is a shell wildcard (i.e., matched using fnmatch(3)). Multiple
++Running `git tag` without arguments also lists all tags. The pattern
++is a shell wildcard (i.e., matched using `fnmatch`(3)). Multiple
+ patterns may be given; if any of them matches, the tag is shown.
  +
- Tries to reinstate not only the working tree's changes, but also
-@@ -200,15 +197,15 @@ the index's ones. However, this can fail, when you have conflicts
- (which are stored in the index, where you therefore can no longer
- apply the changes as they were originally).
+ This option is implicitly supplied if any other list-like option such
+ as `--contains` is provided. See the documentation for each of those
+ options for details.
  
---k::
----keep-index::
----no-keep-index::
-+`-k`::
-+`--keep-index`::
-+`--no-keep-index`::
- 	This option is only valid for `push` and `save` commands.
+---sort=<key>::
++`--sort=<key>`::
+ 	Sort based on the key given.  Prefix `-` to sort in
+-	descending order of the value. You may use the --sort=<key> option
+-	multiple times, in which case the last key becomes the primary
+-	key. Also supports "version:refname" or "v:refname" (tag
+-	names are treated as versions). The "version:refname" sort
+-	order can also be affected by the "versionsort.suffix"
++	descending order of the value. You may use the `--sort=<key>` option
++	multiple times, in which case the last _<key>_ becomes the primary
++	key. Also supports "`version:refname`" or "`v:refname`" (tag
++	names are treated as versions). The "`version:refname`" sort
++	order can also be affected by the "`versionsort.suffix`"
+ 	configuration variable.
+ 	The keys supported are the same as those in `git for-each-ref`.
+ 	Sort order defaults to the value configured for the `tag.sort`
+ 	variable if it exists, or lexicographic order otherwise. See
+ 	linkgit:git-config[1].
+ 
+---color[=<when>]::
++`--color[=<when>]`::
+ 	Respect any colors specified in the `--format` option. The
+-	`<when>` field must be one of `always`, `never`, or `auto` (if
+-	`<when>` is absent, behave as if `always` was given).
++	_<when>_ field must be one of `always`, `never`, or `auto` (if
++	_<when>_ is absent, behave as if `always` was given).
+ 
+--i::
+---ignore-case::
++`-i`::
++`--ignore-case`::
+ 	Sorting and filtering tags are case insensitive.
+ 
+---omit-empty::
++`--omit-empty`::
+ 	Do not print a newline after formatted refs where the format expands
+ 	to the empty string.
+ 
+---column[=<options>]::
+---no-column::
++`--column[=<options>]`::
++`--no-column`::
+ 	Display tag listing in columns. See configuration variable
+ 	`column.tag` for option syntax. `--column` and `--no-column`
+-	without options are equivalent to 'always' and 'never' respectively.
++	without options are equivalent to `always` and `never` respectively.
  +
- All changes already added to the index are left intact.
+ This option is only applicable when listing tags without annotation lines.
  
---p::
----patch::
-+`-p`::
-+`--patch`::
- 	This option is only valid for `push` and `save` commands.
- +
- Interactively select hunks from the diff between HEAD and the
-@@ -224,8 +221,8 @@ The `--patch` option implies `--keep-index`.  You can use
+---contains [<commit>]::
+-	Only list tags which contain the specified commit (HEAD if not
++`--contains [<commit>]`::
++	Only list tags which contain _<commit>_ (`HEAD` if not
+ 	specified). Implies `--list`.
  
- include::diff-context-options.adoc[]
+---no-contains [<commit>]::
+-	Only list tags which don't contain the specified commit (HEAD if
++`--no-contains [<commit>]`::
++	Only list tags which don't contain _<commit>_ (`HEAD` if
+ 	not specified). Implies `--list`.
  
---S::
----staged::
-+`-S`::
-+`--staged`::
- 	This option is only valid for `push` and `save` commands.
- +
- Stash only the changes that are currently staged. This is similar to
-@@ -234,49 +231,49 @@ of current branch.
- +
- The `--patch` option has priority over this one.
+---merged [<commit>]::
+-	Only list tags whose commits are reachable from the specified
+-	commit (`HEAD` if not specified).
++`--merged [<commit>]`::
++	Only list tags whose commits are reachable from
++	_<commit>_ (`HEAD` if not specified).
  
----pathspec-from-file=<file>::
-+`--pathspec-from-file=<file>`::
- 	This option is only valid for `push` command.
- +
--Pathspec is passed in `<file>` instead of commandline args. If
--`<file>` is exactly `-` then standard input is used. Pathspec
-+Pathspec is passed in _<file>_ instead of commandline args. If
-+_<file>_ is exactly `-` then standard input is used. Pathspec
- elements are separated by LF or CR/LF. Pathspec elements can be
- quoted as explained for the configuration variable `core.quotePath`
- (see linkgit:git-config[1]). See also `--pathspec-file-nul` and
- global `--literal-pathspecs`.
+---no-merged [<commit>]::
+-	Only list tags whose commits are not reachable from the specified
+-	commit (`HEAD` if not specified).
++`--no-merged [<commit>]`::
++	Only list tags whose commits are not reachable from
++	_<commit>_ (`HEAD` if not specified).
  
----pathspec-file-nul::
-+`--pathspec-file-nul`::
- 	This option is only valid for `push` command.
- +
- Only meaningful with `--pathspec-from-file`. Pathspec elements are
- separated with NUL character and all other characters are taken
- literally (including newlines and quotes).
+---points-at <object>::
+-	Only list tags of the given object (HEAD if not
++`--points-at [<object>]`::
++	Only list tags of _<object>_ (`HEAD` if not
+ 	specified). Implies `--list`.
  
---q::
----quiet::
-+`-q`::
-+`--quiet`::
- 	This option is only valid for `apply`, `drop`, `pop`, `push`,
- 	`save`, `store` commands.
- +
- Quiet, suppress feedback messages.
+--m <msg>::
+---message=<msg>::
+-	Use the given tag message (instead of prompting).
++`-m <msg>`::
++`--message=<msg>`::
++	Use _<msg>_ (instead of prompting).
+ 	If multiple `-m` options are given, their values are
+ 	concatenated as separate paragraphs.
+ 	Implies `-a` if none of `-a`, `-s`, or `-u <key-id>`
+ 	is given.
  
----print::
-+`--print`::
- 	This option is only valid for the `export` command.
- +
- Create the chain of commits representing the exported stashes without
- storing it anywhere in the ref namespace and print the object ID to
- standard output.  This is designed for scripts.
+--F <file>::
+---file=<file>::
+-	Take the tag message from the given file.  Use '-' to
++`-F <file>`::
++`--file=<file>`::
++	Take the tag message from _<file>_.  Use `-` to
+ 	read the message from the standard input.
+ 	Implies `-a` if none of `-a`, `-s`, or `-u <key-id>`
+ 	is given.
  
----to-ref::
-+`--to-ref`::
- 	This option is only valid for the `export` command.
- +
- Create the chain of commits representing the exported stashes and store
- it to the specified ref.
+---trailer <token>[(=|:)<value>]::
+-	Specify a (<token>, <value>) pair that should be applied as a
++`--trailer <token>[(=|:)<value>]`::
++	Specify a (_<token>_, _<value>_) pair that should be applied as a
+ 	trailer. (e.g. `git tag --trailer "Custom-Key: value"`
+ 	will add a "Custom-Key" trailer to the tag message.)
+ 	The `trailer.*` configuration variables
+@@ -190,46 +190,45 @@ This option is only applicable when listing tags without annotation lines.
+ 	The trailers can be extracted in `git tag --list`, using
+ 	`--format="%(trailers)"` placeholder.
  
--\--::
-+`--`::
- 	This option is only valid for `push` command.
- +
- Separates pathspec from options for disambiguation purposes.
+--e::
+---edit::
+-	The message taken from file with `-F` and command line with
+-	`-m` are usually used as the tag message unmodified.
+-	This option lets you further edit the message taken from these sources.
++`-e`::
++`--edit`::
++	Let further edit the message taken from file with `-F` and command line with
++	`-m`.
  
--<pathspec>...::
-+`<pathspec>...`::
- 	This option is only valid for `push` command.
- +
- The new stash entry records the modified states only for the files
-@@ -286,11 +283,11 @@ too, leaving files that do not match the pathspec intact.
- +
- For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
+---cleanup=<mode>::
+-	This option sets how the tag message is cleaned up.
+-	The  '<mode>' can be one of 'verbatim', 'whitespace' and 'strip'.  The
+-	'strip' mode is default. The 'verbatim' mode does not change message at
+-	all, 'whitespace' removes just leading/trailing whitespace lines and
+-	'strip' removes both whitespace and commentary.
++`--cleanup=<mode>`::
++	Set how the tag message is cleaned up.
++	The  _<mode>_ can be one of `verbatim`, `whitespace` and `strip`.  The
++	`strip` mode is default. The `verbatim` mode does not change message at
++	all, `whitespace` removes just leading/trailing whitespace lines and
++	`strip` removes both whitespace and commentary.
  
--<stash>::
-+_<stash>_::
- 	This option is only valid for `apply`, `branch`, `drop`, `pop`,
- 	`show`, and `export` commands.
- +
--A reference of the form `stash@{<revision>}`. When no `<stash>` is
-+A reference of the form `stash@{<revision>}`. When no _<stash>_ is
- given, the latest stash is assumed (that is, `stash@{0}`).
+---create-reflog::
++`--create-reflog`::
+ 	Create a reflog for the tag. To globally enable reflogs for tags, see
+ 	`core.logAllRefUpdates` in linkgit:git-config[1].
+ 	The negated form `--no-create-reflog` only overrides an earlier
+ 	`--create-reflog`, but currently does not negate the setting of
+ 	`core.logAllRefUpdates`.
  
- DISCUSSION
-@@ -419,6 +416,7 @@ CONFIGURATION
+---format=<format>::
++`--format=<format>`::
+ 	A string that interpolates `%(fieldname)` from a tag ref being shown
+ 	and the object it points at.  The format is the same as
+ 	that of linkgit:git-for-each-ref[1].  When unspecified,
+ 	defaults to `%(refname:strip=2)`.
  
- include::includes/cmd-config-section-all.adoc[]
+-<tagname>::
++_<tagname>_::
+ 	The name of the tag to create, delete, or describe.
+ 	The new tag name must pass all checks defined by
+ 	linkgit:git-check-ref-format[1].  Some of these checks
+ 	may restrict the characters allowed in a tag name.
  
-+:git-stash: 1
- include::config/stash.adoc[]
+-<commit>::
+-<object>::
++_<commit>_::
++_<object>_::
+ 	The object that the new tag will refer to, usually a commit.
+-	Defaults to HEAD.
++	Defaults to `HEAD`.
  
+ CONFIGURATION
+ -------------
+-By default, 'git tag' in sign-with-default mode (-s) will use your
++By default, `git tag` in sign-with-default mode (`-s`) will use your
+ committer identity (of the form `Your Name <your@email.address>`) to
+ find a key.  If you want to use a different default key, you can specify
+ it in the repository configuration as follows:
+@@ -252,7 +251,7 @@ On Re-tagging
+ What should you do when you tag a wrong commit and you would
+ want to re-tag?
+ 
+-If you never pushed anything out, just re-tag it. Use "-f" to
++If you never pushed anything out, just re-tag it. Use `-f` to
+ replace the old one. And you're done.
+ 
+ But if you have pushed things out (or others could just read
+@@ -268,12 +267,12 @@ the old tag. In that case you can do one of two things:
+ 
+ . The insane thing.
+   You really want to call the new version "X" too, 'even though'
+-  others have already seen the old one. So just use 'git tag -f'
++  others have already seen the old one. So just use `git tag -f`
+   again, as if you hadn't already published the old one.
+ 
+ However, Git does *not* (and it should not) change tags behind
+ users back. So if somebody already got the old tag, doing a
+-'git pull' on your tree shouldn't just make them overwrite the old
++`git pull` on your tree shouldn't just make them overwrite the old
+ one.
+ 
+ If somebody got a release tag from you, you cannot just change
+@@ -325,7 +324,7 @@ private anchor point tags from the other person.
+ 
+ Often, "please pull" messages on the mailing list just provide
+ two pieces of information: a repo URL and a branch name; this
+-is designed to be easily cut&pasted at the end of a 'git fetch'
++is designed to be easily cut&pasted at the end of a `git fetch`
+ command line:
+ 
+ ------------
+@@ -403,6 +402,14 @@ FILES
+ 	user in an editor session will be available in this file, but
+ 	may be overwritten by the next invocation of `git tag`.
+ 
++CONFIGURATION
++-------------
++
++include::includes/cmd-config-section-all.adoc[]
++
++:git-tag: 1
++include::config/tag.adoc[]
++
+ NOTES
+ -----
  
 -- 
 gitgitgadget
