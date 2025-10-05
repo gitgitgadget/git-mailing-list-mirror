@@ -1,71 +1,74 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B4225A2A2
-	for <git@vger.kernel.org>; Sun,  5 Oct 2025 13:31:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A193C25A65B
+	for <git@vger.kernel.org>; Sun,  5 Oct 2025 14:06:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759671111; cv=none; b=Wal1hXwv1saU7y+rOozQX5Dvcevkwkr9om5oV0Cl3h3elYcxbcdYtcM+qo7f/pjwemd3KyooHUYKNLNPG94txPaw+pERRHvLjezXOOdu2W9kx46ukSwObC3jpvKlimNqATsCxgiWQwvqbp5VxSSbEoUPFvzEinMBbD14mm+RkNE=
+	t=1759673177; cv=none; b=aYOr+k+stcsP9zfC8+w3wUxXIuh5QizKnW4N3j8o5dj4LrJHC/M2cBYCYLcKfOdhK2oeXEposxnYD8NjUMstilfXYYXSIMi33zALnoMKAWx2u4yZ1eiIL2Ek20ZdTULIYQzbl/Vf0UMgIX1bCnjqRJ5qJk/X2zfUiqladOePybM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759671111; c=relaxed/simple;
-	bh=kjFOgnplf7PAhleacFRYkZhLLn9jl5Lrd7dny8dRCMM=;
+	s=arc-20240116; t=1759673177; c=relaxed/simple;
+	bh=hSllAhRsWNnoSS7pblCo6z5neIKziyKWAKq4r2SDcAE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LykjydlEWOi7jkGdaPYSSI4vdR0C8PVosmbH1U7mqumNz9vMKdqDZGWwxrXwZIOlXpInkUGjsdwQm5/K24Ztk1WG4v26OojKHTDkx1sFUpwXtmXCDp7WMMv+jAnYZOeMj24cnmDMOT6zfj9luj+m2sV8gysqKQbhvZV4R8fNEhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AQX7em20; arc=none smtp.client-ip=209.85.214.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=mFLmud8JGsnJtqpl3OQGTECsBAqbsr0FDftAScoyreKyL6e9zg1vXQWCNWckw4Wtejr0fjceMOxt1vzHPdWsg+O4dUY6ypRCH1pjaaImEwiLoNcKZHt7Ppi3caE4qsMrZTSk4PQ4+bAlCLy1jee4t+UJxySfGiNwJAeYe0AVZMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h1rXVdYD; arc=none smtp.client-ip=209.85.215.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AQX7em20"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-267f0fe72a1so30464615ad.2
-        for <git@vger.kernel.org>; Sun, 05 Oct 2025 06:31:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h1rXVdYD"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-b5579235200so2798149a12.3
+        for <git@vger.kernel.org>; Sun, 05 Oct 2025 07:06:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759671109; x=1760275909; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1759673175; x=1760277975; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wAr2ZAQHTAoCFN+u7x82kT7pygQM59v/pLgxM1bppSg=;
-        b=AQX7em20sRIwQxaFcAUIflmjY1xFPuzC2N+HYJSxlLv766HeR+cAJX5MPZjnjlJPR6
-         WtZ25To/czy+p/ndBB3rUqCkY1d4ccmCaHrR+/LlmARZq5L8ag5lrhPucZlcRUUmtzeo
-         w6iqqVouTbr7Z6Gs62fXTQyaHwd6wDVGT/1hVNLVK3aCk1U0YSmKjcEBTbl7hYuaK3hu
-         /2uQZMeMlV+tte9R4n4dFK1govCylnxDgT97Ty86k3h7aZsArhCtwwSEvW1N3mu8RR3z
-         0Cg2RPgPeMtao2bvDP221AHC4uhGjLo0Nhzcn8I+huAbpsM+XBMi89K6OH37jAeJRWOG
-         Sw7g==
+        bh=oE9TBUDAat9BjdSn3hGBBbQEVSy7rxD9Ghl93irQ5NU=;
+        b=h1rXVdYDMXiPybjxWLNXBe6oukxTk2+K1Bddh83iNcuV9FcdcAaYF6lLaG6VRkJOrf
+         wEI6Sh8JJDmAhiHw/Zr6+y3lCRf7r58bBC8VYkB2ZiIUQCE7uwvowqEIcPkTQgzPJa23
+         L+qUVsQwa6l4PURQxllN4oKOQC803LrjkVpyP8eiU9M5T+xX3G5daWr0ApbfWF/9AZBB
+         mTl9Usg5xSQv8yTi0P+Ye98rzxLaiayEaSwZhfFp9Nq1+n2KMlFKeo22s3C7BCEYhcEZ
+         jlPUb02/ZX0LfagmAMbLxY55lOJktcV2FfdLtsJh7YIn5kSSiso/f/QqV9ZR0xDMZL3+
+         4lFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759671109; x=1760275909;
+        d=1e100.net; s=20230601; t=1759673175; x=1760277975;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wAr2ZAQHTAoCFN+u7x82kT7pygQM59v/pLgxM1bppSg=;
-        b=JQ75AiTMNRm3yDNzS4ufv017CnFsKTAcPZM6omhnRkqYdG0MQz5uyw5Z/yA/yjuwL0
-         Rx3KgBQEH23uEo1jjjJpjX255UPFUQZgyba6pmTdj8eeltwR5zTqWLR2yEULImD7EUuI
-         Ngh0377O5rL3hsUkln9xBag1Jyv66/4zltQY+RLG/HgJrSDBUNLHOtGLSCJCnzlmzl9o
-         EbQWyo1NfhXbFfegwZ+NVuorHtp9oVUX8Yux9cmKPw8xgQ0J9V/z2ZrlWXDrfKVgpNdM
-         s038jcMt7xJscVvH4h/wvZvCKIEqZtZYK2OUnUlerJX7uGaUFHgaNc71mta+oCTS2+/3
-         vpIQ==
-X-Gm-Message-State: AOJu0YwaxCr8xZL0v3feSGtlsJC7hLzSZpideWMeikfeR2skkSa9J+b0
-	Kftlqx//fDCIZmo90LrhmgsVQGWhUk4ho75t7oMf9IpvDcwn6jBi3hNXFtWyHQ==
-X-Gm-Gg: ASbGncvV4bw1EKRmpxsosorZeMCCAAUPvGqGu7CpCFaJWYr0iIjx7RKiIDCz9lmp21d
-	tpM04UTuMHAWUNYrbdlMxESO9Jji7jxfHc1QyLJfg5PwFoY/MYnqGjTf7GVoBe8sD1LR8zjiYdq
-	tevZFEWyXhUiBATXIFSOwqsS/Vf6h8jGuhcK3S78A8MjfsQW2+6SyNYKeLnefUxwoA2gPgUcaN4
-	v9019YJrRp3ZFINf5hK8xSwHd1FgCvcn2R1iXqugO+MGo95akQ8lybLXglt9Do/mUxoRB8lznjx
-	59YNa/LEc5xQZJBIrx8QR8VYT2XJwTCZ5MOA2D+o04hl3zVt7ydShsXbCg+3jFe1xRD727RnM8h
-	FwdS06p6Ge3+7V+fECZjICBFYpF1YpwaWaJwzavvx4Q==
-X-Google-Smtp-Source: AGHT+IEFB5ZzH5f6atBy4yKvr3Lb+kVa7ttfIBs6a8h934q3ltdCuwF1rDAN1EjCWQM/dnvreis6gQ==
-X-Received: by 2002:a17:903:1210:b0:266:64b7:6e38 with SMTP id d9443c01a7336-28e9a6dc994mr102837075ad.46.1759671108916;
-        Sun, 05 Oct 2025 06:31:48 -0700 (PDT)
+        bh=oE9TBUDAat9BjdSn3hGBBbQEVSy7rxD9Ghl93irQ5NU=;
+        b=XYpGKB8LI3hY9lDJjyCjAq0t7VdDPKCDLGacMJ2l5gLfWlyV03FH3finvb1Eh2EabY
+         K5pH8G+BueapMfhLfTrnAB5KE9K9d7hzehE6WybEsBCi8B+vaxqDAGDfM/6iF2vDmi/e
+         WYLfr+kPDgu9fpDhMtrqk4QqvnQIKgQx23iG5ANEJHW5N6sGCuZDejstAGCDrC1iTseU
+         RbiWfnV8wagdZb2AAyGU6gmqDZqVFiTbN2/K8uNsi8xmPpdtRpcLkMGJnQqCQU5iBr+u
+         qbP/F7/hqFgfDExe2a2iHZVjbScEdTXZYVmq3rKYIBetlwpRMZpOXHzOabMVEykkA15C
+         t/lQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWuu6IS6qB4sKfkHFRA+0FfvmL9T8sGGUI+QxaT3ht1uYfEqJANNBAvHO0gPUkv8L0xssM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy7bqRbklhvqWSPc7lCw+jsLmKK0wcHH1Ox+KR1Akv1KPxvv55T
+	dSPLI7A9c99iIGcPNehMPnL5uafjxK7FGxwS8oP4FpY0/+3mDz6XWv9e
+X-Gm-Gg: ASbGncvkb/8fdU8LRwtrDwhhZRIABffoxUFvDDQjJ22FXTyyIRqO06hIsdNUeUfZ6pq
+	JegoRrLMbzwEzXw7uIGjwHJCgBaPcbj4XE/fxU3/kPAyM6gqtj+UJzbomozTjX/uziPl2IGJPTh
+	rnmHcedWbAVnZFU86x50oLOfUPH6HGJzo7QNGOH2Z9OPO8HnpduQyKHHYTeA06+YktAoEH3eqSY
+	0BnaN3xLTZFm8Y+RMh55hzg2SuoMo9tPTZtzJkmymrCU5rkviGEu753MYze0z0EYjYB94A4lvFx
+	2UINrzv3NRIgiW83Q4IhytBKSo9YQsIOiNw//RZAwXJxyRILGBhBiWf9DQQytHYkLZbFUnFeRns
+	vYN+GRbadaPqewy8O0ljuM/7nfjaRZcHEVLGupMQ9wV6DAZzODmc3LlmfWFKRcQk=
+X-Google-Smtp-Source: AGHT+IHRMb2ENIPTTxPeQe3SKy/WkUl3AJMeuIPGk6wOy8zW9oF/2PCsKFZAFqKuZGExonHHBm77hg==
+X-Received: by 2002:a17:902:fc4c:b0:261:cb35:5a0e with SMTP id d9443c01a7336-28e9a64a97bmr103910565ad.57.1759673174777;
+        Sun, 05 Oct 2025 07:06:14 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-28e8d1ba25asm104069505ad.87.2025.10.05.06.31.47
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-28e8d12c07asm104313795ad.56.2025.10.05.07.06.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Oct 2025 06:31:48 -0700 (PDT)
-Date: Sun, 5 Oct 2025 21:31:47 +0800
+        Sun, 05 Oct 2025 07:06:13 -0700 (PDT)
+Date: Sun, 5 Oct 2025 22:06:13 +0800
 From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
 Subject: Re: [PATCH v2 2/4] string-list: replace negative index encoding with
  "exact_match" parameter
-Message-ID: <aOJzQ1cnUr3WhTSF@ArchLinux>
+Message-ID: <aOJ7VTkmFgtuCjvf@ArchLinux>
 References: <aMp8yNFiXDyk2hP4@ArchLinux>
  <aMp9OtXLfRw7dEwA@ArchLinux>
- <aNJW_z-BD1eDttec@pks.im>
+ <CAOLa=ZShms1D-cq=x04dtT2ULTVE3ZDo8DODFnJRP2wcJz0EgQ@mail.gmail.com>
+ <xmqq348dovi3.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,36 +77,84 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aNJW_z-BD1eDttec@pks.im>
+In-Reply-To: <xmqq348dovi3.fsf@gitster.g>
 
-On Tue, Sep 23, 2025 at 10:14:55AM +0200, Patrick Steinhardt wrote:
-> On Wed, Sep 17, 2025 at 05:19:54PM +0800, shejialuo wrote:
-> > We would return negative index to indicate exact match by converting the
-> > original positive index to be "-1 - index" in
-> > "string_list_find_insert_index", which requires callers to decode this
-> > information. This approach has several limitations:
-> > 
-> > 1. It prevents us from using the full range of size_t, which is
-> >    necessary for large string list.
+On Tue, Sep 23, 2025 at 11:48:36AM -0700, Junio C Hamano wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 > 
-> I guess this is more of a theoretical concern. We probably wouldn't
-> handle it well when our list had 2 billion entries anyway.
+> > shejialuo <shejialuo@gmail.com> writes:
+> >
+> >> We would return negative index to indicate exact match by converting the
+> >> original positive index to be "-1 - index" in
+> >> "string_list_find_insert_index", which requires callers to decode this
+> >> information. This approach has several limitations:
+> >>
+> >
+> > Nit: It would be nice to start by explaining what
+> > "string_list_find_insert_index" does and then talking about the negative
+> > index. Perhaps something like:
+> >
+> >   The `string_list_find_insert_index()` function is used to determine
+> >   the correct insertion index for a new string within the string list.
+> >   The function also doubles up to convey if the string is already
+> >   existing in the list, this is done by returning a negative index
+> >   "-1 -index". Users are expected to decode this information.
+> 
+> Yeah, such an introductory statement would help those who are not
+> familiar with the convention.  Thanks for suggesting it.
+> 
+> >> 1. It prevents us from using the full range of size_t, which is
+> >>    necessary for large string list.
+> 
+> It is a disease to think that countable things must be counted in
+> size_t and it needs to be somehow cured.
+> 
+> It is a type to count the size of memory allocations, nothing more.
+> If you are holding 1000-bytes per the stuff you are counting, you
+> would not need the full range of size_t --- you'll ran out your
+> memory way before you fill size_t with the things you are counting.
 > 
 
-That's right. From the discussion, I would update the commit message in
-the next version.
+Make sense. We don't need the full range of size_t. I would improve
+commit message later.
 
-> > 2. Using int for indices while other parts of the codebase use size_t
-> >    creates signed comparison warnings when these values are compared.
+> When there is no external constraints (like you need to specify
+> exact size to describe a file format to be interoperable), the most
+> appropriate type to count things in is a platform natural "int".
+> You wouldn't be handling billions of strings in string-list anyway
+> (and that is smaller than half of 32-bit size_t; 64-bit size_t is
+> much larger).
 > 
-> Yup.
+> >> 2. Using int for indices while other parts of the codebase use size_t
+> >>    creates signed comparison warnings when these values are compared.
 > 
-> I think that the required juggling around negative indices is another
-> factor here. It's somewhat weird, and while existing callers all handle
-> this correct I think that it makes for a suboptimal interface.
+> The other thing may be (mis)using size_t when it should not be.  If
+> they were also using "int" that would also squelch the warnings from
+> "-Wsign-compare".
 > 
 
-That's right, I would improve this in the next version.
+At first, I feel quite hard to understand above. After reading below
+mail and the blog
 
-Thanks,
+    https://staticthinking.wordpress.com/2023/07/25/wsign-compare-is-garbage/
+
+I get your point. For sign compare warnings, the most intuitive way is
+change all `int`s to `unsigned int`s or change all `unsigned int`s to
+`int`s. However, this is a bad way as it does not solve the problem (and
+it might cause other problems). Instead of simply making the type match,
+we should check the value range.
+
+For some cases, it is always ok to compare `size_t with `int` as long as
+`size_t` does not cause overflow. Sign warnings might be a hint. And my
+commit message is bad as I just want to express because others are
+`unsigned`, so we should change. But the true point is that at now, the
+returned index may overflow. Because we may have index that is greater
+than what `int` could count. I would improve commit message later.
+
+> For an amusing read:
+> 
+>   https://lore.kernel.org/lkml/CAHk-=wg+_6eQnLWm-kihFxJo1_EmyLSGruKVGzuRUwACE=osrA@mail.gmail.com/
+
+Really thanks for this insightful hint.
+
 Jialuo
