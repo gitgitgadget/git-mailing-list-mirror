@@ -1,56 +1,56 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494964502A
-	for <git@vger.kernel.org>; Sun,  5 Oct 2025 21:30:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C425B4502A
+	for <git@vger.kernel.org>; Sun,  5 Oct 2025 21:30:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759699829; cv=none; b=s4ORGFhRGrZJANvm3qK6pCX/S3Do/zlxs87JI1g8ofl0isYZ1dJGd4ihaSxFq5uaLJbdgJQLUQa/cAYsgecZ79NYZ6RDvo3yGjGz0G+dAaBhBUr2cBkgcXTEXk7MSS3L3cH98geJMBMAFq1TYnb3Y9xJkPFe8zE87znPKfjlsDw=
+	t=1759699847; cv=none; b=PbDxgLK0ey0p6QoFN0vLX04tsyjeXZhuc/D1c5l9joAE+GJDjY64WqqRpQz9Bui2uv23SuOTa1Jp8zqwfyYJs+iS0JlAEMP76EfRR5+iZ85YyPhJomR4RgEk17aUkjKUBGTXBnX9yMrU/bUYHh3d2usUV5+H59VrKpedKjDcoqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759699829; c=relaxed/simple;
-	bh=nwL1YH6eqRTPrgiLyJZ+dClBtD65CtYX/ERD3vlhNaw=;
+	s=arc-20240116; t=1759699847; c=relaxed/simple;
+	bh=ix+N0YMS0NaQv/rbZDPjiGFrHsAlB5QOTI6nQBYJous=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tUijPZGKnoLxjQU293dpxbRrrR5RhnL30XVITBhIKeB60o4zxAOOn+VNIOfVnOobMVTpD7izoYTQDRvpK/cNyHCCYO87GHQKsSMh9/Ws0cOG/awcZT/ousIJmpYFmT2UK9tT2PjCyZ4gRtnWQa/CEiXZXDDzRYhgeGRweHWmF3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Kehjxyp6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dSQR4l2e; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=FBX8BJR1dftBBZ+h5sxK7QqL9r0qRNwD1bYDn+9Wqz8V/JmEwPTau6T/uXh3uFsvqaxI0vqeF/azHZqs1hCMPqo1dkYHA9lsinQmd/E8Ige3FDIQUF35an7D5ljFzWhbz0ZOAA072F1ZpWdqXoTiW52zyFbq8U1XW77TxWccmlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WCDdG2tP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wcUoOOAq; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Kehjxyp6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dSQR4l2e"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 677E31D0003A;
-	Sun,  5 Oct 2025 17:30:26 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WCDdG2tP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wcUoOOAq"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B7B407A009A;
+	Sun,  5 Oct 2025 17:30:44 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Sun, 05 Oct 2025 17:30:26 -0400
+  by phl-compute-09.internal (MEProxy); Sun, 05 Oct 2025 17:30:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1759699826;
-	 x=1759786226; bh=Mf8lQwYaiC+JQgnDP0tZKe08f976nWgJCyIAlsGjfdo=; b=
-	Kehjxyp6f4zJo58x1Dgc9EZgIoiPPqC/GTcoFCu6QaC0qN8ouE1gCrdtIIaZANkr
-	PiSHobVyzoLqL9a5kRi8BVKQ36Wv6uPS+Ag0E6YS+izSXkJjbk3bHcEaRb1Hc7Lj
-	LBsOlHm/RWDnLZtTKOjaOSihWMiTtZqv088nejaOoWUlVGgSMfhYp3sFt8j7mE7g
-	deqX6DnJXO/p523Oon75QD2FutfkwT4bSLOQmIUCh7E9S+VdFqP4GrU2qIkVIrvo
-	gwYl3zg02KFrylq1b/gphHYaA2SAWMUN1hghKFfHeF/xtmwXKMW0wqHzZPnnkCE/
-	RkBrsS7bjYy9+bmPCs4NHg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1759699844;
+	 x=1759786244; bh=baoTpVvHa9Xy/TDG7knklF9N8hJJJfu5JoSuFIa/sXc=; b=
+	WCDdG2tPByltt4hYZ33ofHAe8njTI6pqbaP1eMD37vH914oZt2upBOeu2nskGIQM
+	IyYRy3kPzQ2eRpSArsK6oD8uCw4pgRD94SsFxEGiSb+pRX7qmVQRf9q13WsVxbbk
+	FmFYiEbuiCHlA7fpQw5QH7LQtW8zPvGPr4Ef/VGeawK8BjoAQfS/nCeeZmrPiVo8
+	QVG77alE12qZl9NyES6ztF9XU77G92MpKyRohO3VTAHD3yRnuDPomDK9wqqWujWY
+	ifV4T9ZC4miSpnIBco3OYVZseC47CQzuxOfEqBMdeGalKKyzHVnz/f9si8wrMFdL
+	Curol7bG3os2Whs6k5h+gQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759699826; x=
-	1759786226; bh=Mf8lQwYaiC+JQgnDP0tZKe08f976nWgJCyIAlsGjfdo=; b=d
-	SQR4l2e1Q6hBbYS6xezhWYQaBJ1Vwf7/+wsdQYZ7M7PvD4i2ilqnFtnYkG4z/l8C
-	MqIjB/fYIZWBjdeobNl1MvJ9EaIv62GN0a/hhYmBM+jxy6D6+OQK+qIaOzX6ciK0
-	AyFJ0UudWpzJs17Q2uk6Lp/wRLEQqC5Pr7ABMY6tyU7Kv7O++Arw1Qqdn7bUz8vL
-	4FBKCcHXc7VxdPY3vgwtWdPFLCKouMGXiQLITq5lKXoyeBOn2CM7teYPnapY/FfW
-	ZN9868m2MKGIndDcBGyiRbM3WbhY6FMAzH2ZhAGgKdI3JiaeTYkW0mHgY2OWjncK
-	9QAcvNC3ANQqHxDqAiP9A==
-X-ME-Sender: <xms:cePiaEVJschkHN9gc_Ik4OhMbEl7qZfLtRuHfNRE1gs6mye0IsrC6g>
-    <xme:cePiaFvtAVKQ7GaJg4HqWbR8T2TJ9NjDAZuuVbf7Rk4Niht0nC14WDIjirPL49WU3
-    2XaUnvGoeEXKDLgwrxvYrQdS5B9xJR4x-0i-6vLFXlqSBlPV5xr-Q>
-X-ME-Received: <xmr:cePiaHYr8mNUXpCtQx5sMxFS9D6KhENkOArBvC0kbuvqYSYaYb1t5V8kL3hqCB0Vj6hZ7qrqshp21qGxcJJdWnGVYp8mIvZuaCRf>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdelheejgecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759699844; x=
+	1759786244; bh=baoTpVvHa9Xy/TDG7knklF9N8hJJJfu5JoSuFIa/sXc=; b=w
+	cUoOOAqf6G2s73BmjMsV5+5nfbxxtLlTqBu5ppTyPxsNZDkxwWKBfBJC4oq2dJLp
+	A+bI5fI6myKfT01wJbbDUAzfzT7JOSuMc9AskMH/CJ0SHsOcCweqzqvrKmRiDoxC
+	RE4bIWW/QAYTzYWqTT2BL6+aRIsyAW5dkgvDqC2v66aPLky1VEQklCpEFkmxnCpt
+	qxPndRU6Pib5vlyNKHt7vHam+Uk88z+/cwm2DFzclayM8Y+LQOeEG2d4I2yMQmFY
+	4rnZzjgQktoeJw5iD0jfDZat97GMiqo2g86cdTtlx2qM7aFu69jf/7tTu4SE3X6M
+	0xbMFDkDBD5+CSF5QxSxQ==
+X-ME-Sender: <xms:hOPiaGmv-iIGIgdajn1QlJEEy_A-DwC6x7ZHZLAHl8Dj55wTOxfGqA>
+    <xme:hOPiaPUvwmZKcP8oObpuF9Dv-s8-1OhqTBFthovNJEe3qNB87x5zAbF-gP716sWXE
+    zMZR8XW-TzFJrLnrnz7j7wUz8TSLfW3PsnooNu--svpkL_m4q_krg>
+X-ME-Received: <xmr:hOPiaEtGthhqoJDtJcEuczOG6BT7LZ8n8HojVuFtfcdP6MH1jcUsbYQZQefIwBUt_0jachXdykWgeQHZsf9lT63sF5P1X6GJA32j>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdelheejhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
@@ -62,27 +62,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdelheejgecutefuodetgg
     hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehurdifihhnughlsehu
     khhrrdguvgdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorh
     hgrdhukhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:cePiaEXNKdxnF-R9RedTQ_ye3GSc6aUM7Ax7SbZ2YwQ752EUc_O6Ug>
-    <xmx:cePiaMSlRVV4vBnmSV7sWa0foWmv4hsU-OY-2Q6vTAO-ezf_DRz_pA>
-    <xmx:cePiaCMHCfPjO2k-bwBI4zUGUc2gixCzj5sN6gifb3ilE06d9oPPJQ>
-    <xmx:cePiaKTrcmkFgKUZYIjZEyRllotqF4qIQKXUMRSXtlfT9VTskijlag>
-    <xmx:cuPiaFJoyS_8B_QIvLVbNhuRrwYCjn41pY13IDtccRAt3YC26hIq4yea>
+X-ME-Proxy: <xmx:hOPiaKap4yPeOuGNU2wkzVJYQFRIvo_coHVq5r10ZXgxLpnBOkn5xA>
+    <xmx:hOPiaLWnm4E7b_wmJLS0RHRUKR4A-MHr4EejWYnhWYQJaZ0dKv3JUQ>
+    <xmx:hOPiaHRHQJCHPArkIoMvnKuD8b2-pABB-jmHFFd2809hRfcI6ZXjNg>
+    <xmx:hOPiaBP_Q-tmf4uJBy_Uam57vOqa1smIiC78ThfZ6x5TTuLQTzVomw>
+    <xmx:hOPiaNs1LkMqoI40CfrwzbFjuicZeM11f9-MEj9lk33kEGQ6xaSo4r8l>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 5 Oct 2025 17:30:25 -0400 (EDT)
+ 5 Oct 2025 17:30:43 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  "Windl, Ulrich"
  <u.windl@ukr.de>,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 1/5] add-patch: improve help for options j, J, k, and K
-In-Reply-To: <75b08ed6-4f0f-4ede-b84a-c2f1c3d15734@web.de> (=?utf-8?Q?=22R?=
+Subject: Re: [PATCH v2 2/5] add-patch: document that option J rolls over
+In-Reply-To: <187aac4d-18b6-41df-a181-7f42e3cbc0d4@web.de> (=?utf-8?Q?=22R?=
  =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Sun, 5 Oct 2025 17:55:10 +0200")
+	message of "Sun, 5 Oct 2025 17:55:24 +0200")
 References: <c72518099a3b465c8761e41210fe3fcb@ukr.de>
 	<17ef29a7-5214-4729-82eb-92a2af33e465@web.de>
-	<75b08ed6-4f0f-4ede-b84a-c2f1c3d15734@web.de>
-Date: Sun, 05 Oct 2025 14:30:23 -0700
-Message-ID: <xmqqbjmlrq8g.fsf@gitster.g>
+	<187aac4d-18b6-41df-a181-7f42e3cbc0d4@web.de>
+Date: Sun, 05 Oct 2025 14:30:43 -0700
+Message-ID: <xmqq7bx9rq7w.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,36 +95,110 @@ Content-Transfer-Encoding: 8bit
 
 René Scharfe <l.s.r@web.de> writes:
 
-> The options j, J, k, and K don't affect the status of the current hunk.
-> They just go to a different one.  This is true whether the current hunk
-> is undecided or not.  Avoid misunderstanding by no longer mentioning
-> the current hunk explicitly in their help texts.
+> The variable "permitted" is only not reset after moving to a different
+
+"only not" -> "not".
+
+> hunk, so it only accumulates permission and doesn't necessarily reflect
+> those of the current hunk.  This may be a bug, but is actually useful
+> with the option J, which can be used at the last hunk to roll over to
+> the first hunk.  Make this particular behavior official.
 >
+> Suggested-by: Junio C Hamano <gitster@pobox.com>
 > Signed-off-by: René Scharfe <l.s.r@web.de>
 > ---
->  Documentation/git-add.adoc | 8 ++++----
->  add-patch.c                | 8 ++++----
->  2 files changed, 8 insertions(+), 8 deletions(-)
+>  Documentation/git-add.adoc |  2 +-
+>  add-patch.c                |  4 ++--
+>  t/t3701-add-interactive.sh | 18 ++++++++++++++----
+>  3 files changed, 17 insertions(+), 7 deletions(-)
 >
 > diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
-> index ad629c46c5..3266ccf105 100644
+> index 3266ccf105..5c05a3a7f9 100644
 > --- a/Documentation/git-add.adoc
 > +++ b/Documentation/git-add.adoc
-> @@ -342,10 +342,10 @@ patch::
->         d - do not stage this hunk or any of the later hunks in the file
+> @@ -343,7 +343,7 @@ patch::
 >         g - select a hunk to go to
 >         / - search for a hunk matching the given regex
-> -       j - leave this hunk undecided, see next undecided hunk
-> -       J - leave this hunk undecided, see next hunk
-> -       k - leave this hunk undecided, see previous undecided hunk
-> -       K - leave this hunk undecided, see previous hunk
-> +       j - go to the next undecided hunk
-> +       J - go to the next hunk
-> +       k - go to the previous undecided hunk
-> +       K - go to the previous hunk
-
-These obviously make sense, but I wonder if y/n should also say that
-they not just make a decision on the current hunk, but after doing
-so they move you forward (and if so, that may fall within the theme
-of this step, which is to improve the help text on options).
-
+>         j - go to the next undecided hunk
+> -       J - go to the next hunk
+> +       J - go to the next hunk, roll over at the bottom
+>         k - go to the previous undecided hunk
+>         K - go to the previous hunk
+>         s - split the current hunk into smaller hunks
+> diff --git a/add-patch.c b/add-patch.c
+> index 912266a3f8..bef2ba7a25 100644
+> --- a/add-patch.c
+> +++ b/add-patch.c
+> @@ -1398,7 +1398,7 @@ static size_t display_hunks(struct add_p_state *s,
+>  
+>  static const char help_patch_remainder[] =
+>  N_("j - go to the next undecided hunk\n"
+> -   "J - go to the next hunk\n"
+> +   "J - go to the next hunk, roll over at the bottom\n"
+>     "k - go to the previous undecided hunk\n"
+>     "K - go to the previous hunk\n"
+>     "g - select a hunk to go to\n"
+> @@ -1493,7 +1493,7 @@ static int patch_update_file(struct add_p_state *s,
+>  				permitted |= ALLOW_GOTO_NEXT_UNDECIDED_HUNK;
+>  				strbuf_addstr(&s->buf, ",j");
+>  			}
+> -			if (hunk_index + 1 < file_diff->hunk_nr) {
+> +			if (file_diff->hunk_nr > 1) {
+>  				permitted |= ALLOW_GOTO_NEXT_HUNK;
+>  				strbuf_addstr(&s->buf, ",J");
+>  			}
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index d9fe289a7a..d5d2e120ab 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -334,7 +334,7 @@ test_expect_success 'different prompts for mode change/deleted' '
+>  	cat >expect <<-\EOF &&
+>  	(1/1) Stage deletion [y,n,q,a,d,p,?]?
+>  	(1/2) Stage mode change [y,n,q,a,d,j,J,g,/,p,?]?
+> -	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,p,?]?
+> +	(2/2) Stage this hunk [y,n,q,a,d,K,J,g,/,e,p,?]?
+>  	EOF
+>  	test_cmp expect actual.filtered
+>  '
+> @@ -521,7 +521,7 @@ test_expect_success 'split hunk setup' '
+>  test_expect_success 'goto hunk 1 with "g 1"' '
+>  	test_when_finished "git reset" &&
+>  	tr _ " " >expect <<-EOF &&
+> -	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,p,?]? + 1:  -1,2 +1,3          +15
+> +	(2/2) Stage this hunk [y,n,q,a,d,K,J,g,/,e,p,?]? + 1:  -1,2 +1,3          +15
+>  	_ 2:  -2,4 +3,8          +21
+>  	go to which hunk? @@ -1,2 +1,3 @@
+>  	_10
+> @@ -550,7 +550,7 @@ test_expect_success 'goto hunk 1 with "g1"' '
+>  test_expect_success 'navigate to hunk via regex /pattern' '
+>  	test_when_finished "git reset" &&
+>  	tr _ " " >expect <<-EOF &&
+> -	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,p,?]? @@ -1,2 +1,3 @@
+> +	(2/2) Stage this hunk [y,n,q,a,d,K,J,g,/,e,p,?]? @@ -1,2 +1,3 @@
+>  	_10
+>  	+15
+>  	_20
+> @@ -805,7 +805,7 @@ test_expect_success 'colors can be overridden' '
+>  	<YELLOW>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? <RESET><MAGENTA>@@ -3 +3,2 @@<RESET>
+>  	<CYAN> more-context<RESET>
+>  	<BLUE>+<RESET><BLUE>another-one<RESET>
+> -	<YELLOW>(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,p,?]? <RESET><MAGENTA>@@ -1,3 +1,3 @@<RESET>
+> +	<YELLOW>(2/2) Stage this hunk [y,n,q,a,d,K,J,g,/,e,p,?]? <RESET><MAGENTA>@@ -1,3 +1,3 @@<RESET>
+>  	<CYAN> context<RESET>
+>  	<BOLD>-old<RESET>
+>  	<BLUE>+new<RESET>
+> @@ -1354,4 +1354,14 @@ do
+>  	'
+>  done
+>  
+> +test_expect_success 'option J rolls over' '
+> +	test_write_lines a b c d e f g h i >file &&
+> +	git add file &&
+> +	test_write_lines X b c d e f g h X >file &&
+> +	test_write_lines J J q | git add -p >out &&
+> +	test_write_lines 1 2 1 >expect &&
+> +	sed -n -e "s-/.*--" -e "s/^(//p" <out >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
