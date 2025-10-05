@@ -1,81 +1,80 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79372773D8
-	for <git@vger.kernel.org>; Sun,  5 Oct 2025 11:27:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0795B1E990E
+	for <git@vger.kernel.org>; Sun,  5 Oct 2025 11:31:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759663651; cv=none; b=bl72KLweGD5Nu0kZMgd9+IGLe54SZHVpPDJUHGMooyGQExzzg2uF6v78rGUcSPMWDQmTTbHGwwXFtg/6Yqj5LrzDX5iboNKhLpn8L88vVKr8hXIie3DAmrulEXCK9lTtq87KYYiUpg/bKDlWvDwSe1ahgDGuxoAjm+Bjba4bVXU=
+	t=1759663920; cv=none; b=eRE8psKBsz7Esjsbg2L9JDP4yoJLare0aDtSHImQ3qWMbp4UnafVbvnyMvoZvHqHkUr6nkzxtUNYJOjGh1kfy2lx4QkM+sLaQEb1MhD+7wxgBHhGAy3Z4B1eiSc274et8eZOhGMVbb8XlURZS3oSSPNnf2ip+Dsk0g3Vgdwq+OY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759663651; c=relaxed/simple;
-	bh=2vyNNcBeDHiaI6sQzgNEMxSPiZ7jy/a8mdbQZ2Be8/s=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=UZcwXHjCyxPIO2ORGCyUyyjzB0bThWNVyT4mfI9N63H3dxLDPQp8gb2pRWNFtogGhdhhx1YcsRuJq53uTZs3jpT/TBjDGS1J+MUnEI81xxrkjlil3RGw61nWBclzg93mhJNzFxovLKcosAMiBAXMUPBxuu+1coHL0kH4DjZrdVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BD16xC6T; arc=none smtp.client-ip=209.85.208.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BD16xC6T"
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-36527ac0750so37288261fa.3
-        for <git@vger.kernel.org>; Sun, 05 Oct 2025 04:27:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759663647; x=1760268447; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=2vyNNcBeDHiaI6sQzgNEMxSPiZ7jy/a8mdbQZ2Be8/s=;
-        b=BD16xC6T4mEvnHGt9CV/BHSK/La0SEXLLGuMEeD4vRmgkFECyUUs+5loMa6JisLfb+
-         Hqeo1QHAGRezkCkkigeeo+qIyOKmBbggcQ9lUgpRFF8hEoz+HqiKABPhxhaY8ILz5H61
-         PtxJPxyX54CYfMDMh1YLXPSdt36c0Jr1flSvJ32mMj2yITtb4ZHWevBsuKlHDpJXBLnH
-         s6qJwC9MqnNPGdvJu9mhSRhCro8SZwG2Gp7Q5hJ3FhB1h+RH+Z8w7+vV7GTgngy4ymQt
-         Ouj0l3iQCsggUhyBPnlo/UWqpn8Ks2xpKxek5ya8cEu6AioFr7VFZHeYPo0aZ5Jt4qr6
-         EdEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759663647; x=1760268447;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2vyNNcBeDHiaI6sQzgNEMxSPiZ7jy/a8mdbQZ2Be8/s=;
-        b=E7oI9qUTAQ8iL7+rmxUc+cX2dsrcKRS0RlEz6o0BYqA5GuFChAXIPspXoN6Iza920G
-         8y0get+Aa5plRFagy212pEm3J6Cv84WUwPusgrE5BYR/IYkCJzTRwb345YZ4mIOAn+vX
-         4AxR+xd6tBWzPxyJqD+1BJaSoQ+JvPfQ7Oh4P37vZZNd3h3kLspW50l63Q0l2ijakoAE
-         66EVbn7Lj/UQ1ezsqFWw0T+3AptGAJzkcZuVfLF4nFNeis8HZ8TZp/AA+0ruwKAZkAI0
-         yHSIi2t6QDLkNEMbtK8Xle5/uN/vIWbxGaxs7yUht8zjZ3a35T2KA63McnrMlqtgUdaj
-         EEYg==
-X-Gm-Message-State: AOJu0YxbYafk31GI3Lyed4QU6VoasWVpINEAM185NVBXAymQ5XgdHK8F
-	edyDaIxN1640/+r0KS+2/sdQd97962P68Pu4R4SsdnpS0yd6fQ9N5YcgDAtR9C3lYsjrKJPXoga
-	FXjN1LyREjHKDd32Qu/UvQ+lBhnq9KQNRnxDR5RE=
-X-Gm-Gg: ASbGncsvbYber0ZjKC1uTRM1kX20FthjimDUEQ9hW0sxyt7leoJSbO3DNmK1jXTcjLw
-	vpcqNK5NRVVxUkELkYGk/mKmiZtO0gjmspnualjimZ5rwkt9n+MK9RShVnKRXbR55sw68RrVO/n
-	95Lkl2eh9yZLj8qqfYolJiKLiKvvI7/EsdyRYzB6EEsX1NXGm59phWpPDaQ3IfCx8frSmsNNmsH
-	iWPOTmNdL6hKzbWSoz6pR/nCwka7F3EMtcjjiE=
-X-Google-Smtp-Source: AGHT+IH54xpxX0fNrd8Lb4LRxrFw606gPWox/dJ2wsDgiNFAaJ9RvnkLVD80CVFecmWJ5+aSufswo8TY2oxJCcgH5qE=
-X-Received: by 2002:a05:651c:2226:b0:36d:9ea0:e164 with SMTP id
- 38308e7fff4ca-374c36c4a13mr28942321fa.1.1759663647172; Sun, 05 Oct 2025
- 04:27:27 -0700 (PDT)
+	s=arc-20240116; t=1759663920; c=relaxed/simple;
+	bh=0nISw42WsEEWghne4cvuKxkh/CzydQbU5loZ3Xz66po=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=S7L0WlWJp5acpTvutoyyQvS7mSWGVCjFQInX3haqB3W8uBfNFcVXy+zRwaiIkZgnXIuUmYNc7OGN5bXV7QyLlDKsL4Ivrn2ITSZHfn8/hnuSFHBNxRGs4R5RZOtR4WVsWOWhyo4NVT6URNfwRbgcXfWa7UOjR5lM/Wtjdq0Zfgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp.bon.at (unknown [192.168.181.101])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4cfgGg666Vz7QgGt
+	for <git@vger.kernel.org>; Sun,  5 Oct 2025 13:31:55 +0200 (CEST)
+Received: from [192.168.0.104] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4cfgGV4BwfzRnQP;
+	Sun,  5 Oct 2025 13:31:46 +0200 (CEST)
+Message-ID: <91ef957d-2acf-4d74-9427-e2eac5316067@kdbg.org>
+Date: Sun, 5 Oct 2025 13:31:46 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Devste Devste <devstemail@gmail.com>
-Date: Sun, 5 Oct 2025 13:27:15 +0200
-X-Gm-Features: AS18NWBVKkRdlziiyle7uq5xrpZZIX2nsmHyXNRMZDtWlTbbCyArn4CCHtcoI6U
-Message-ID: <CANM0SV0R7OYJKeBAs5-WY2Wqp7VxhKv5=LQ4cuDd6MaQwNqGNw@mail.gmail.com>
-Subject: git clean deletes negated pathspec if directory causing data loss
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [GIT PULL] gitk: UI themes, osascript fix on macOS, fix absent remote
+ tracking branches
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-I am using:
-git version 2.51.0.windows.1
+The following changes since commit ac8fec7d8de265e56441713faaf4e08f11c31469:
 
-Run:
-echo .idea/dictionaries >> .gitignore
-mkdir -p .idea/dictionaries
-touch .idea/dictionaries/foo.xml
-git clean -f -f -d -X --dry-run -- ':!/.idea/dictionaries' ':*.rej' ':/*/*.log'
+  gitk: add README with usage, build, and contribution details (2025-08-28 19:51:31 +0200)
 
-Outputs:
-Would remove .idea/dictionaries/
+are available in the Git repository at:
 
-No matter how you specify the pathspec (':!.idea',...) it always wants
-to delete the .idea/dictionaries directory, even though it does not
-contain any .rej or .log files and is explicitly set to excluded
+  https://github.com/j6t/gitk.git master
+
+for you to fetch changes up to c435c515dad872532705d45d9ff81d3f4af22d6d:
+
+  Merge branch 'ml/themes' (2025-10-05 13:09:49 +0200)
+
+----------------------------------------------------------------
+Eric Sunshine (1):
+      gitk: fix MacOS 10.14 "Mojave" crash on launch
+
+Johannes Sixt (3):
+      Merge branch 'mr/sort-refs-by-type'
+      Merge branch 'es/ignore-osascript-failure'
+      Merge branch 'ml/themes'
+
+Mark Levedahl (13):
+      gitk: use themed spinboxes
+      gitk: make sha1but a ttk::button
+      gitk: use config variables to define and load a theme
+      gitk: do not invoke tk_setPalette
+      gitk: use text labels for commit ID buttons
+      gitk: use text labels for next/prev search buttons
+      gitk: eliminate Interface color option from gui
+      gitk: eliminate unused ui color variables
+      gitk: add proc run_themeloader
+      gitk: add theme selection to color configuration page
+      gitk: make configuration dialog resizing useful
+      gitk: separate code blocks for configuration dialog
+      gitk: set minimum size on configuration dialog
+
+Michael Rappazzo (1):
+      gitk: fix error when remote tracking branch is deleted
+
+ gitk | 283 +++++++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 164 insertions(+), 119 deletions(-)
