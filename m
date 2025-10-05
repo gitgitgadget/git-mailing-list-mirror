@@ -1,91 +1,109 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182AC1E990E
-	for <git@vger.kernel.org>; Sun,  5 Oct 2025 11:33:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B4225A2A2
+	for <git@vger.kernel.org>; Sun,  5 Oct 2025 13:31:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759664018; cv=none; b=UGufC45EneAfpb3LnL33Eoxcg258jFmYOlqu69DbA4C/huzgayIpOR+CiTXT834w5KTEFwNgjswaOtqrwPPYbaPSJS14RyHb+of0GAnsk/p7ciIxqCWjse1+331u3JXi6U+EO5syXUyLXFTPIYoWN11StLIsxKqF7dRcvhDnuhE=
+	t=1759671111; cv=none; b=Wal1hXwv1saU7y+rOozQX5Dvcevkwkr9om5oV0Cl3h3elYcxbcdYtcM+qo7f/pjwemd3KyooHUYKNLNPG94txPaw+pERRHvLjezXOOdu2W9kx46ukSwObC3jpvKlimNqATsCxgiWQwvqbp5VxSSbEoUPFvzEinMBbD14mm+RkNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759664018; c=relaxed/simple;
-	bh=ebZ61whLT62EteYw+jw9rdtV6aC2UynTe1LkzO1p2HM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=tyJ3QiTuo0ZQ/AH8DmCJaEqDURgt2pp8mH3uJ21aAFlnOkoSY/gkZhEQdAkls3+Y+DzL+eubfFAjfZBYclkFt7KmfBeakVmz1ABx6tdxYnECaD85nsxHv6HpdmZVQk8X3WHHLFwdsEUV31wpyRUI4A/UPLB1JM6c5lx+ef0YFWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wik4BPR4; arc=none smtp.client-ip=209.85.208.172
+	s=arc-20240116; t=1759671111; c=relaxed/simple;
+	bh=kjFOgnplf7PAhleacFRYkZhLLn9jl5Lrd7dny8dRCMM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LykjydlEWOi7jkGdaPYSSI4vdR0C8PVosmbH1U7mqumNz9vMKdqDZGWwxrXwZIOlXpInkUGjsdwQm5/K24Ztk1WG4v26OojKHTDkx1sFUpwXtmXCDp7WMMv+jAnYZOeMj24cnmDMOT6zfj9luj+m2sV8gysqKQbhvZV4R8fNEhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AQX7em20; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wik4BPR4"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-3717780ea70so42477201fa.1
-        for <git@vger.kernel.org>; Sun, 05 Oct 2025 04:33:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AQX7em20"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-267f0fe72a1so30464615ad.2
+        for <git@vger.kernel.org>; Sun, 05 Oct 2025 06:31:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759664015; x=1760268815; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ebZ61whLT62EteYw+jw9rdtV6aC2UynTe1LkzO1p2HM=;
-        b=Wik4BPR4LBTrVmCIGm41Ka57XNvcmZe0IeM7jGMK5oxnzarViUahzVsBPXevjrzv0r
-         SCUGXK+jGIWrhTfntJ7Bvs6WccOu5oJpCMhT909nQjtEGlK3xhFTmQKBNZnNkh//Rrzx
-         839uc9ATAAdxzDqp1LgP6WOA0mdYTp6bziriY1IlUVOVt/y/3fxQFtDDXeIbw1WhjbK/
-         Q/OXPZr6OgslBDscEO0UjBR5zYeb8iNPEUQuvq9F62pqtCkoVaddFPearEvVROHqJdwE
-         H+yb6GlM+frfCHcXaHC6UxMxsY/15baDmTbXcy4/t8gIm7djAm05UyaA+TTa6fF9W8Yy
-         donw==
+        d=gmail.com; s=20230601; t=1759671109; x=1760275909; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wAr2ZAQHTAoCFN+u7x82kT7pygQM59v/pLgxM1bppSg=;
+        b=AQX7em20sRIwQxaFcAUIflmjY1xFPuzC2N+HYJSxlLv766HeR+cAJX5MPZjnjlJPR6
+         WtZ25To/czy+p/ndBB3rUqCkY1d4ccmCaHrR+/LlmARZq5L8ag5lrhPucZlcRUUmtzeo
+         w6iqqVouTbr7Z6Gs62fXTQyaHwd6wDVGT/1hVNLVK3aCk1U0YSmKjcEBTbl7hYuaK3hu
+         /2uQZMeMlV+tte9R4n4dFK1govCylnxDgT97Ty86k3h7aZsArhCtwwSEvW1N3mu8RR3z
+         0Cg2RPgPeMtao2bvDP221AHC4uhGjLo0Nhzcn8I+huAbpsM+XBMi89K6OH37jAeJRWOG
+         Sw7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759664015; x=1760268815;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ebZ61whLT62EteYw+jw9rdtV6aC2UynTe1LkzO1p2HM=;
-        b=F3RfBNdWdJzGMLykNAOqGCcPfcK8xvM0h8JgROqTldcDUB2+rfUI1mg2tkTjN0AjKv
-         FAYSv/SyP7Zok7RfnJ3jEpD+LJ6wtpH5g8lr2jfsd6+9PfEq5YVVWupr7JBNjdNUG9nQ
-         n4GMi19Cz2ABJL778rRtpkhizx0ae3qLuf+BkReidRgz4wFw0mkU5C9Vb/Di+WB695Ga
-         9695Z4TTvtt+SUmSmLsu7e0gVR8cRU5eNEzW5fu+nQXIu23lX6U11gjzw8/LY09FjDLl
-         PIdgXTgFCXw57o4xQ/mxDtpcHOgPVbQU3KiRf63gHq7hm9vgEezt+WOIWgSUoDmQ7MOZ
-         LFww==
-X-Gm-Message-State: AOJu0YxoJLEX1eOhUlVq9sA9EPJqSKX03OOgac7LU4KhAsJO/vP44cVc
-	oZlwSG+oKVTvKB6w0ujWkV4zRKr+deRVuwjOdRwOmFjZJ3mnVa50xOTxgivswqJ0Lu0oAMmFfLV
-	cCuArkI2Q0neXf1ZialTyqs4/wZYWW/OqFF5e
-X-Gm-Gg: ASbGncuBAHVG6ZL0QG7yUeU8fdHQvmzWkbrp67ZpNFgGHI0ucIGGPqGMjK7lDATuDFG
-	AIuz3FIA3PiNFyvp1ycRrioCsMDQ+McpQsjV+sfc+ekqbYnSfaUpicKaDL81d3TNN4RQlZlsXsm
-	TkiyexMGq11JuhRj+AwssXd2kJgcBXnlZt3svCXV4VZkKInYgHSSYZy9e8cMpVCVpkzvGXzTOoo
-	a0/97ALCRR242YAXUYokJrRwBW2
-X-Google-Smtp-Source: AGHT+IF64e3un5vvX8kTEzCqHkleQqVOaZQLDyJj2HvhxtIFmuUCTYRrXgV3FRBta9YBtWaJ0lq2oFZRzajLfOvZirg=
-X-Received: by 2002:a2e:a545:0:b0:36a:6540:3ba3 with SMTP id
- 38308e7fff4ca-374c3823217mr23348441fa.39.1759664014565; Sun, 05 Oct 2025
- 04:33:34 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1759671109; x=1760275909;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wAr2ZAQHTAoCFN+u7x82kT7pygQM59v/pLgxM1bppSg=;
+        b=JQ75AiTMNRm3yDNzS4ufv017CnFsKTAcPZM6omhnRkqYdG0MQz5uyw5Z/yA/yjuwL0
+         Rx3KgBQEH23uEo1jjjJpjX255UPFUQZgyba6pmTdj8eeltwR5zTqWLR2yEULImD7EUuI
+         Ngh0377O5rL3hsUkln9xBag1Jyv66/4zltQY+RLG/HgJrSDBUNLHOtGLSCJCnzlmzl9o
+         EbQWyo1NfhXbFfegwZ+NVuorHtp9oVUX8Yux9cmKPw8xgQ0J9V/z2ZrlWXDrfKVgpNdM
+         s038jcMt7xJscVvH4h/wvZvCKIEqZtZYK2OUnUlerJX7uGaUFHgaNc71mta+oCTS2+/3
+         vpIQ==
+X-Gm-Message-State: AOJu0YwaxCr8xZL0v3feSGtlsJC7hLzSZpideWMeikfeR2skkSa9J+b0
+	Kftlqx//fDCIZmo90LrhmgsVQGWhUk4ho75t7oMf9IpvDcwn6jBi3hNXFtWyHQ==
+X-Gm-Gg: ASbGncvV4bw1EKRmpxsosorZeMCCAAUPvGqGu7CpCFaJWYr0iIjx7RKiIDCz9lmp21d
+	tpM04UTuMHAWUNYrbdlMxESO9Jji7jxfHc1QyLJfg5PwFoY/MYnqGjTf7GVoBe8sD1LR8zjiYdq
+	tevZFEWyXhUiBATXIFSOwqsS/Vf6h8jGuhcK3S78A8MjfsQW2+6SyNYKeLnefUxwoA2gPgUcaN4
+	v9019YJrRp3ZFINf5hK8xSwHd1FgCvcn2R1iXqugO+MGo95akQ8lybLXglt9Do/mUxoRB8lznjx
+	59YNa/LEc5xQZJBIrx8QR8VYT2XJwTCZ5MOA2D+o04hl3zVt7ydShsXbCg+3jFe1xRD727RnM8h
+	FwdS06p6Ge3+7V+fECZjICBFYpF1YpwaWaJwzavvx4Q==
+X-Google-Smtp-Source: AGHT+IEFB5ZzH5f6atBy4yKvr3Lb+kVa7ttfIBs6a8h934q3ltdCuwF1rDAN1EjCWQM/dnvreis6gQ==
+X-Received: by 2002:a17:903:1210:b0:266:64b7:6e38 with SMTP id d9443c01a7336-28e9a6dc994mr102837075ad.46.1759671108916;
+        Sun, 05 Oct 2025 06:31:48 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-28e8d1ba25asm104069505ad.87.2025.10.05.06.31.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 05 Oct 2025 06:31:48 -0700 (PDT)
+Date: Sun, 5 Oct 2025 21:31:47 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/4] string-list: replace negative index encoding with
+ "exact_match" parameter
+Message-ID: <aOJzQ1cnUr3WhTSF@ArchLinux>
+References: <aMp8yNFiXDyk2hP4@ArchLinux>
+ <aMp9OtXLfRw7dEwA@ArchLinux>
+ <aNJW_z-BD1eDttec@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CANM0SV0R7OYJKeBAs5-WY2Wqp7VxhKv5=LQ4cuDd6MaQwNqGNw@mail.gmail.com>
-In-Reply-To: <CANM0SV0R7OYJKeBAs5-WY2Wqp7VxhKv5=LQ4cuDd6MaQwNqGNw@mail.gmail.com>
-From: Devste Devste <devstemail@gmail.com>
-Date: Sun, 5 Oct 2025 13:33:23 +0200
-X-Gm-Features: AS18NWCensWv5usmZcavIo8XXfbqZ-MZo7Iuw7ypIuYMAusS1w_6QCd4T07fNx0
-Message-ID: <CANM0SV3iRF=jVAFj=+rrgOC_nXEJ=_v1bUG88n3T9+PQD=a2-A@mail.gmail.com>
-Subject: Re: git clean deletes negated pathspec if directory causing data loss
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aNJW_z-BD1eDttec@pks.im>
 
-Just to clarify: it's not about the negation not working, but clean
-ignores the pathspec for ignored directories completely. I only want
-to delete .rej and .log files, but it will also delete gitignored
-directories (that may or may not contain any .rej or .log files)
+On Tue, Sep 23, 2025 at 10:14:55AM +0200, Patrick Steinhardt wrote:
+> On Wed, Sep 17, 2025 at 05:19:54PM +0800, shejialuo wrote:
+> > We would return negative index to indicate exact match by converting the
+> > original positive index to be "-1 - index" in
+> > "string_list_find_insert_index", which requires callers to decode this
+> > information. This approach has several limitations:
+> > 
+> > 1. It prevents us from using the full range of size_t, which is
+> >    necessary for large string list.
+> 
+> I guess this is more of a theoretical concern. We probably wouldn't
+> handle it well when our list had 2 billion entries anyway.
+> 
 
-On Sun, 5 Oct 2025 at 13:27, Devste Devste <devstemail@gmail.com> wrote:
->
-> I am using:
-> git version 2.51.0.windows.1
->
-> Run:
-> echo .idea/dictionaries >> .gitignore
-> mkdir -p .idea/dictionaries
-> touch .idea/dictionaries/foo.xml
-> git clean -f -f -d -X --dry-run -- ':!/.idea/dictionaries' ':*.rej' ':/*/*.log'
->
-> Outputs:
-> Would remove .idea/dictionaries/
->
-> No matter how you specify the pathspec (':!.idea',...) it always wants
-> to delete the .idea/dictionaries directory, even though it does not
-> contain any .rej or .log files and is explicitly set to excluded
+That's right. From the discussion, I would update the commit message in
+the next version.
+
+> > 2. Using int for indices while other parts of the codebase use size_t
+> >    creates signed comparison warnings when these values are compared.
+> 
+> Yup.
+> 
+> I think that the required juggling around negative indices is another
+> factor here. It's somewhat weird, and while existing callers all handle
+> this correct I think that it makes for a suboptimal interface.
+> 
+
+That's right, I would improve this in the next version.
+
+Thanks,
+Jialuo
