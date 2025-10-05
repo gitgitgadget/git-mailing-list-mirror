@@ -1,40 +1,40 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from mout.web.de (mout.web.de [217.72.192.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930E02628D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F13259C80
 	for <git@vger.kernel.org>; Sun,  5 Oct 2025 15:55:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759679738; cv=none; b=tw+xROBtvZ6RUcH1PfktLyzYXntBUVYfdYliHOeLPOqAqvKOTOfbSlNmkqCloyvEEOadOl8O9zTzojkkbMkowbe2IdoEfT+CQT+XzfGhiHcUDRfulay9Cty8l48PM5T1FdvsESxlGg8BuRRgBhaANN70qsnukAv0BPqxwurLJoI=
+	t=1759679739; cv=none; b=bPMBdHGy7LfXfre11Hle2q/aCHweTv0tzREKzhvQk5cdbJZVDj8ss8iQ/uC05Xh0RhGPD895BDFuKsxtObyWYbJPBJDbQWYlo8wLF11Wah1G5U7geh+e84GS/X85/oogp7CkHXPYWbSs6xLIme/THTT8pR5BToWrEjqVymav9PM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759679738; c=relaxed/simple;
-	bh=BS2Yq+8ySEXLZI1PzDFqihuraHXby891I/3+ZFzh+bw=;
+	s=arc-20240116; t=1759679739; c=relaxed/simple;
+	bh=sh6KK1Ttd3lch5RhvclIv6lKvuoDuvFDFnnrR9Yusuo=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Nm8eg/kNZ4Q0VX+28lU376YUnvtjeLMROlI6JO1aKWnaub9FjdiXr7kfN8h5D9xPC0ohyA6EHhqT2MPRy35OXsFkiHZ5xry5JqXBPVmAtnLzuNVsKLZ5oJpb2OxxuAIQ2AlguRQBTkEvNKBsziuInMwrW3y2f9Zc2XsznpLAgT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=BJoYTeL0; arc=none smtp.client-ip=212.227.17.11
+	 In-Reply-To:Content-Type; b=L8uWE+FenkJv2rLXYQvM/FbomqMtFgMQy31WS4jB75fFy13JHPBmvThx6lm7bVgdus51gq7vkh75ZTcZSX5qhcSILzMgx04GscAzz9Wrcx3ydIlAXI/tnwDDxpst7+9QCxWVDos5cwPlfmheoBDpZZcdLllaJ6KJQJ7eqd5UIfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=R5OOm/Qd; arc=none smtp.client-ip=217.72.192.78
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="BJoYTeL0"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="R5OOm/Qd"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1759679734; x=1760284534; i=l.s.r@web.de;
-	bh=owW8uEPVe2kayWNXHBUNidyyzRE2NVNmclCeke0Vuck=;
+	s=s29768273; t=1759679725; x=1760284525; i=l.s.r@web.de;
+	bh=Zka/wKbEMyoN0eeYGbyXyT09La5nwUCDz7lAXtCo8zY=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
 	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=BJoYTeL0Q14XFCAY6eolmjYJv4vlvI9dUc9vbsHoQDKqi6pVkmHXwTvHsOUUGoVy
-	 J7F8uhPf/RY5JOn297xIfkSqF0YN7yMT/1o1lu2YfOuguWaDn2s1WKDdeGbRDyX2n
-	 cPPveNLIQAlQUGemSvYITC+KUuV6iixii6h2798m7ityJSh8LqvA2mufAOAXIV/qE
-	 PnysCVXfnhdJkidq5KldV6QYIO8vLEZnP+rktVcWdkFwh9zZk00h+SuSTH3UDLapF
-	 Fr+i80SaECDJ/8IiZcoUDVNTNZ9yep4Y8btDN8XomJhMtj1aI5SJZ5yH4n+KmSjpt
-	 GKe4OlNB6I6jfWAIuA==
+	b=R5OOm/Qd4X/RDT2fu7Rk9LmEfqZGqlEpT4+SDh3ZTQ+qJ+DeXDctD4IXxL60oyO/
+	 WIPqMMOQx+0eCP1vIGTiphuAxSbhfY+1t4T2e1GiAW4xGn31gwV3mcWQJUmLVRYGc
+	 QF9Kvdt9wPgXRSBVPIHYEIfvudvvCjnt2hp+LIw/6N8wVDTMCy+iScJrFAgvjuhZM
+	 TWiNLa2Q6WYL8m4cWDvSewohi931fnVF27jvYDil9B5H3htfb1rqJx/w6v+pS5sXS
+	 8qJE1cNUihOXuQRzpDvPrLAZkH+SDIa/5Xjt5xrS1PEr7p3Hb7257DMExj73x3Y4F
+	 1Z0RBEHAU6rvneOuMg==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.16.132]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MsaW1-1uGVSP2n4V-016aMo; Sun, 05
- Oct 2025 17:55:34 +0200
-Message-ID: <3e1f51b4-b654-4fec-9774-8a76ee6f6cc3@web.de>
-Date: Sun, 5 Oct 2025 17:55:34 +0200
+Received: from [192.168.2.31] ([79.203.16.132]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MIyeG-1upZ9b1vEA-00YOpC; Sun, 05
+ Oct 2025 17:55:25 +0200
+Message-ID: <187aac4d-18b6-41df-a181-7f42e3cbc0d4@web.de>
+Date: Sun, 5 Oct 2025 17:55:24 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,8 +42,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2 3/5] add-patch: let options y, n, j, and e roll over to
- next undecided
+Subject: [PATCH v2 2/5] add-patch: document that option J rolls over
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 To: "git@vger.kernel.org" <git@vger.kernel.org>
 Cc: "Windl, Ulrich" <u.windl@ukr.de>, Junio C Hamano <gitster@pobox.com>,
@@ -54,186 +53,189 @@ Content-Language: en-US
 In-Reply-To: <17ef29a7-5214-4729-82eb-92a2af33e465@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:/3LwKJuof+3qg2nEGYVo4BkFb+GrgDy1/lZ0uMNmnDtHldQkl9C
- nU2vgkUEgC1j0+Q/KNprDHKQI2REKfey5O6NpP2eApFsDp/Wq/c3LeGRLWu8XVEXM7Q+Ubk
- 4CZSqZx71Janehx35TmPlTsM2mn3VrP3rrMEG5Rrpmmq4AwcRWKIBQ/Ro1npQQLBkHlwVgM
- NMBw2xSFsJhjuvIT8VdmQ==
+X-Provags-ID: V03:K1:wKpbKiFYJKUpm2IZsXrDqn5C9hkexmXb90NDQs/3a6G3gjZrCEM
+ JmTZSxkKS/VPgRaIdwGKRccv4CxtbQJK3iFVKL3JE5DlJ06somYVW4sFrzjsyWjCllBTBne
+ YM9TWYrLrkdmF43QTcYH0Jy0CZDNozY6ZX+cKnnqdOnEqhWvyVr3pPlrbPONJvuxpfhZB0A
+ rXs3genCcLL/FNFnA0yrg==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:z0gL0xME9As=;9Xgg0I2PgC1zVTD/WNEkOPT9kH5
- 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
- 5RPdidm74sSd8EAI714Y3m364s=
+UI-OutboundReport: notjunk:1;M01:P0:i8coB/DSVdY=;KLC4XUaUM1srnNQ+bKHfI1Y5nJM
+ 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
 
-The options y, n, and e mark the current hunk as decided.  If there's
-another undecided hunk towards the bottom of the hunk array they go
-there.  If there isn't, but there is another undecided hunk towards the
-top then they go to the very first hunk, no matter if it has already
-been decided on.
+The variable "permitted" is only not reset after moving to a different
+hunk, so it only accumulates permission and doesn't necessarily reflect
+those of the current hunk.  This may be a bug, but is actually useful
+with the option J, which can be used at the last hunk to roll over to
+the first hunk.  Make this particular behavior official.
 
-The option j does basically the same move.  Technically it is not
-allowed if there's no undecided hunk towards the bottom, but the
-variable "permitted" is never reset, so this permission is retained
-from the very first hunk.  That may a bug, but this behavior is at
-least consistent with y, n, and e and arguably more useful than
-refusing to move.
-
-Improve the roll-over behavior of these four options by moving to the
-first undecided hunk instead of hunk 1, consistent with what they do
-when not rolling over.
-
-Reported-by: Windl, Ulrich <u.windl@ukr.de>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
  Documentation/git-add.adoc |  2 +-
- add-patch.c                | 11 +++++++++--
- t/t3701-add-interactive.sh | 22 ++++++++++++++++++++++
- 3 files changed, 32 insertions(+), 3 deletions(-)
+ add-patch.c                |  4 ++--
+ t/t3701-add-interactive.sh | 18 ++++++++++++++----
+ 3 files changed, 17 insertions(+), 7 deletions(-)
 
 diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
-index 5c05a3a7f9..596cdeff93 100644
+index 3266ccf105..5c05a3a7f9 100644
 =2D-- a/Documentation/git-add.adoc
 +++ b/Documentation/git-add.adoc
-@@ -342,7 +342,7 @@ patch::
-        d - do not stage this hunk or any of the later hunks in the file
+@@ -343,7 +343,7 @@ patch::
         g - select a hunk to go to
         / - search for a hunk matching the given regex
--       j - go to the next undecided hunk
-+       j - go to the next undecided hunk, roll over at the bottom
-        J - go to the next hunk, roll over at the bottom
+        j - go to the next undecided hunk
+-       J - go to the next hunk
++       J - go to the next hunk, roll over at the bottom
         k - go to the previous undecided hunk
         K - go to the previous hunk
+        s - split the current hunk into smaller hunks
 diff --git a/add-patch.c b/add-patch.c
-index bef2ba7a25..da75618dcb 100644
+index 912266a3f8..bef2ba7a25 100644
 =2D-- a/add-patch.c
 +++ b/add-patch.c
-@@ -1397,7 +1397,7 @@ static size_t display_hunks(struct add_p_state *s,
- }
+@@ -1398,7 +1398,7 @@ static size_t display_hunks(struct add_p_state *s,
 =20
  static const char help_patch_remainder[] =3D
--N_("j - go to the next undecided hunk\n"
-+N_("j - go to the next undecided hunk, roll over at the bottom\n"
-    "J - go to the next hunk, roll over at the bottom\n"
+ N_("j - go to the next undecided hunk\n"
+-   "J - go to the next hunk\n"
++   "J - go to the next hunk, roll over at the bottom\n"
     "k - go to the previous undecided hunk\n"
     "K - go to the previous hunk\n"
-@@ -1408,6 +1408,11 @@ N_("j - go to the next undecided hunk\n"
-    "p - print the current hunk, 'P' to use the pager\n"
-    "? - print help\n");
-=20
-+static size_t inc_mod(size_t a, size_t m)
-+{
-+	return a < m - 1 ? a + 1 : 0;
-+}
-+
- static int patch_update_file(struct add_p_state *s,
- 			     struct file_diff *file_diff)
- {
-@@ -1451,7 +1456,9 @@ static int patch_update_file(struct add_p_state *s,
- 					break;
- 				}
-=20
--			for (i =3D hunk_index + 1; i < file_diff->hunk_nr; i++)
-+			for (i =3D inc_mod(hunk_index, file_diff->hunk_nr);
-+			     i !=3D hunk_index;
-+			     i =3D inc_mod(i, file_diff->hunk_nr))
- 				if (file_diff->hunk[i].use =3D=3D UNDECIDED_HUNK) {
- 					undecided_next =3D i;
- 					break;
+    "g - select a hunk to go to\n"
+@@ -1493,7 +1493,7 @@ static int patch_update_file(struct add_p_state *s,
+ 				permitted |=3D ALLOW_GOTO_NEXT_UNDECIDED_HUNK;
+ 				strbuf_addstr(&s->buf, ",j");
+ 			}
+-			if (hunk_index + 1 < file_diff->hunk_nr) {
++			if (file_diff->hunk_nr > 1) {
+ 				permitted |=3D ALLOW_GOTO_NEXT_HUNK;
+ 				strbuf_addstr(&s->buf, ",J");
+ 			}
 diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index d5d2e120ab..8086d3da71 100755
+index d9fe289a7a..d5d2e120ab 100755
 =2D-- a/t/t3701-add-interactive.sh
 +++ b/t/t3701-add-interactive.sh
-@@ -1364,4 +1364,26 @@ test_expect_success 'option J rolls over' '
- 	test_cmp expect actual
+@@ -334,7 +334,7 @@ test_expect_success 'different prompts for mode change=
+/deleted' '
+ 	cat >expect <<-\EOF &&
+ 	(1/1) Stage deletion [y,n,q,a,d,p,?]?
+ 	(1/2) Stage mode change [y,n,q,a,d,j,J,g,/,p,?]?
+-	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,p,?]?
++	(2/2) Stage this hunk [y,n,q,a,d,K,J,g,/,e,p,?]?
+ 	EOF
+ 	test_cmp expect actual.filtered
  '
+@@ -521,7 +521,7 @@ test_expect_success 'split hunk setup' '
+ test_expect_success 'goto hunk 1 with "g 1"' '
+ 	test_when_finished "git reset" &&
+ 	tr _ " " >expect <<-EOF &&
+-	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,p,?]? + 1:  -1,2 +1,3          =
++15
++	(2/2) Stage this hunk [y,n,q,a,d,K,J,g,/,e,p,?]? + 1:  -1,2 +1,3        =
+  +15
+ 	_ 2:  -2,4 +3,8          +21
+ 	go to which hunk? @@ -1,2 +1,3 @@
+ 	_10
+@@ -550,7 +550,7 @@ test_expect_success 'goto hunk 1 with "g1"' '
+ test_expect_success 'navigate to hunk via regex /pattern' '
+ 	test_when_finished "git reset" &&
+ 	tr _ " " >expect <<-EOF &&
+-	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,p,?]? @@ -1,2 +1,3 @@
++	(2/2) Stage this hunk [y,n,q,a,d,K,J,g,/,e,p,?]? @@ -1,2 +1,3 @@
+ 	_10
+ 	+15
+ 	_20
+@@ -805,7 +805,7 @@ test_expect_success 'colors can be overridden' '
+ 	<YELLOW>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]? <RESET><MAGENTA=
+>@@ -3 +3,2 @@<RESET>
+ 	<CYAN> more-context<RESET>
+ 	<BLUE>+<RESET><BLUE>another-one<RESET>
+-	<YELLOW>(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,p,?]? <RESET><MAGENTA>@=
+@ -1,3 +1,3 @@<RESET>
++	<YELLOW>(2/2) Stage this hunk [y,n,q,a,d,K,J,g,/,e,p,?]? <RESET><MAGENTA=
+>@@ -1,3 +1,3 @@<RESET>
+ 	<CYAN> context<RESET>
+ 	<BOLD>-old<RESET>
+ 	<BLUE>+new<RESET>
+@@ -1354,4 +1354,14 @@ do
+ 	'
+ done
 =20
-+test_expect_success 'options y, n, j, e roll over to next undecided (1)' =
-'
-+	test_write_lines a b c d e f g h i j k l m n o p q >file &&
++test_expect_success 'option J rolls over' '
++	test_write_lines a b c d e f g h i >file &&
 +	git add file &&
-+	test_write_lines X b c d e f g h X j k l m n o p X >file &&
-+	test_set_editor : &&
-+	test_write_lines g3 y g3 n g3 j g3 e q | git add -p >out &&
-+	test_write_lines 1  3 1  3 1  3 1  3 1 >expect &&
-+	sed -n -e "s-/.*--" -e "s/^(//p" <out >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'options y, n, j, e roll over to next undecided (2)' =
-'
-+	test_write_lines a b c d e f g h i j k l m n o p q >file &&
-+	git add file &&
-+	test_write_lines X b c d e f g h X j k l m n o p X >file &&
-+	test_set_editor : &&
-+	test_write_lines y g3 y g3 n g3 j g3 e q | git add -p >out &&
-+	test_write_lines 1 2  3 2  3 2  3 2  3 2 >expect &&
++	test_write_lines X b c d e f g h X >file &&
++	test_write_lines J J q | git add -p >out &&
++	test_write_lines 1 2 1 >expect &&
 +	sed -n -e "s-/.*--" -e "s/^(//p" <out >actual &&
 +	test_cmp expect actual
 +'
