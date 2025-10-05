@@ -1,119 +1,108 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f66.google.com (mail-pj1-f66.google.com [209.85.216.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E5E156230
-	for <git@vger.kernel.org>; Sun,  5 Oct 2025 10:31:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370DA34BA22
+	for <git@vger.kernel.org>; Sun,  5 Oct 2025 10:38:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759660301; cv=none; b=ryJ5jGfR7TxMcz+mgz6v/NP9GXPfwoHR/PFw9TSLE0+VwFR13KWLH62uxtfwE2uu8bQzpVzRkGMrDPhVNFBYDMBj+KX8KBfazlwJoMLdLhsSUfMDq0jF6TrMmKdCjivWgu3Ih/Zxi5Dq91iCyeHr6K+GqWpwyYyH3MdCc1/jKZA=
+	t=1759660717; cv=none; b=raYwNVnu2dbGp2gIy+b/n4gDq/qnrVfuXGf/7hUjf5FSJj+fACH+z6PUB5ECWH3KRqtCFxq/fFCXWQcIJyIs14XjQ3Pxc4KscNMt2FLwvcnzEKT0iGPSfu2Q4M0Ny7vISp+9D1siCC5uvMMOUVoJBGTr1RtLInLMLRFTWjL/aeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759660301; c=relaxed/simple;
-	bh=xGXROBLEVPJmditIFaYFuHOS55R8CTbMKM3VGHaYpBA=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=ZxNwxZViHoCfgz1wIU6UqOtwjCYN7NOL7lIOQmSnZ7OUPxLo9Eywxg96gAYNci3vkxR/jtqNJd2vhz7rJcrE6RnvOge1CsZYzeB1kHg0NDYeTEkI92ehrr/LXh+2LIbzjuOhaYuV80MOV51ZrucWAU/eiKx4d7eaoFcdjpMzFiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=QsAmJRxN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fe5+h+Fl; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1759660717; c=relaxed/simple;
+	bh=GmvNauz0fjt4klOI7XMd3X5JQ0KSl03b/tF2G3QDocs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UF5pnbbxuP/PyeRE76IojUVERJkCxIeMY0kgEnTAiizBPfmgrdoeTdlG1KglPwXUp/S6aMgbs7sAOGT0SLChP+nMrD+Vgjyn+6SGMGP/ohBmu+J3f6AElQ+9K9v+XTQqDoBs4bHn0Tbz2HgQyyWm8uIcUgmHR4ORxKnekxVv424=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L6pat59D; arc=none smtp.client-ip=209.85.216.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="QsAmJRxN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fe5+h+Fl"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id AC628EC0122;
-	Sun,  5 Oct 2025 06:31:37 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Sun, 05 Oct 2025 06:31:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759660297;
-	 x=1759746697; bh=YXi76n7He9xMfpeCur3btRseKV6MWAFtqfkeiCM336c=; b=
-	QsAmJRxNsZ9mEFpZl8Z3iWVWDw561IWqumJnhbJ+4I47sOcJha2ffCaK7W93Lr9I
-	aRgdD0rgxvZrDT7rslRt2iSeRiZDm+uxEpbulWN03X8JQjauX5P88U6xwDDbNfZT
-	BHjg2PZtvztxGx+7VUpNka4qxcoG09bEVkPoK0ZIYHh472xRUBqC4Cn6XCrUvHsi
-	6FUD6iF0enH174nt5dMDtv6J8lTdyu/5qNg0/AuANJcRVx+GWnNSz8OoSV9ND6JQ
-	krm8EIRaJ4BkZ09JHQx2cO3VKLd9TNS4AgZt97WqoHeDTlyDdSRb7KqIL7iLo2wC
-	Cx8b5KzMdhPz6OEMXyOe9w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1759660297; x=1759746697; bh=Y
-	Xi76n7He9xMfpeCur3btRseKV6MWAFtqfkeiCM336c=; b=Fe5+h+Fl/n9f1X5c+
-	jEFEAWYGwTSFScSXCaU8oiqyLXkhPGL7eEJH5FLCWjCncQX8nMfgddg8Xj7DF3F4
-	jmFqdTXqqqd1B1gunQHL+e9uB/L1odcPBPO/ijTjArKf7EZsghsGPVCvdnjZ+Kgj
-	6M7534xfomUMWztIU5J8EjYoOjWDkxQBE6xklyJUu1dHrqZZxUEh5qjpPkENBsBv
-	5Q2jEUpmdqM6io+LFOxGEIJwQZ8p32/ul0I5Hgwz2T6BQGPmjnyMSv38Zon/OhYi
-	zfwgpcEqik/sQOjan6nbHPvKqa+w+a6Su+goSzICdZXzLDGSi8/IRbockENUilVm
-	qpA1A==
-X-ME-Sender: <xms:CUniaNpDPx9ZCEExyLgZlsckbTJsbuY32yFJQsmrz6hHmRbsipV3oGU>
-    <xme:CUniaKeTbJnVMKAVxRwufsxayyK30ejS8rYI3DtJUWWmTwt-VvwqgI_wC0Wb3m0bO
-    1Lk0QjkNn6NOsx3OAE10c-0nyGly2vByebToJGnMyuF-zEXnZvjki8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdelgeegfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkjghfufgtgfesthhqredtre
-    dtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhr
-    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtf
-    frrghtthgvrhhnpedtgfffteetudelhfefkeehtefggeefjeevieekfeefieekkefhveei
-    ledtkefgueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
-    hmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
-    nhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggrsh
-    hilhgrrhgthhhirgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:CUniaIVVquf1NV0YJAwc00os10UeESTuBDCGPQ_kLVq3oF6vh9z_Vg>
-    <xmx:CUniaKgw0gC02ulKz2hC20o6oz0TjQUw-MijvM7bSTgeUXJZl2sqBg>
-    <xmx:CUniaD8l3KW13p2ezEEuLVqYJ9JnSHzc0MQkyfWJs6aNoycdsHvI8Q>
-    <xmx:CUniaEBh3v126PKJU1NQj3QRsSr_sU9p2vNcl44GovPAgwhaYcNKpA>
-    <xmx:CUniaLPKWSy7S1_Q6gPc-lEG_6BmvCFpLK8OrqizBT4_C8MS1TpK0fnA>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 5EBBD1EA0068; Sun,  5 Oct 2025 06:31:37 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L6pat59D"
+Received: by mail-pj1-f66.google.com with SMTP id 98e67ed59e1d1-330b4739538so3866743a91.3
+        for <git@vger.kernel.org>; Sun, 05 Oct 2025 03:38:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759660715; x=1760265515; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zs3KlzpTJOfms9XLnkOpwJnYN291Otea32OZjaQgs9I=;
+        b=L6pat59DP20+EQXlYwM32YrgPtI4W/Ghb/1TQtP9HrcCvk1S/tK2h5/DDXurD0TodP
+         Qvt1xg4iTaxmk87K1siO5DKaZJN6bI21rR6Sh2E5ovCwvx3+1VNrN/ynwyPW1ZQLTeME
+         HbMfDOf/Lk9HxzVP6CzxwDHmcEbE263IK6iiasFh36/L9jp2eREqhdIZqfH7wMJIdQp+
+         9VWB1VSGxFab8iIxrsAiQ/cB66zjWFunZxRC6V0QsBURL31bx8olEgVYfMMwckkru6ab
+         NCF1AhZfuX09lGSMQu3+/FWfF/2dwLml3yWUNXV0wyjgqwiMNp6NkZ488VNu9pdcalSg
+         KE0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759660715; x=1760265515;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zs3KlzpTJOfms9XLnkOpwJnYN291Otea32OZjaQgs9I=;
+        b=k3ZuRj5oG9SJTV8pMAYcjOpjE0TNtYilxwvALQmTfl9rXZOI54zgLD0hN2WHnQRHA7
+         EBF3zJyRFi9KGPGqULYqiKNH2o8w7YBq/o0DGYMxngNy3MWLkMcvRpQIAfNEAUrWtEAf
+         ID4IosjEgY8h/q7810/Qh2WYM0ufXAmwAlLSyVTJ2/pbQZU2BeLzGrHF6wZZ2hs0Urx6
+         zc2GI3h+2jV2w6ip0xpvYeGjcw0hVZMs9m9tedGM4hJRIuxFU2wR8y+ygYktOSr8C/7v
+         V86LNG+7XS68TxndeL4JNrAR4kBMUbJknRZrM7L9kpYr/EPeWwTIykCmb204ATvl2TOR
+         WqLA==
+X-Gm-Message-State: AOJu0YwvaLweod5f38s6v7t4BpF+zqmWYt8LKOge4DLsAFiGP4jlfPxt
+	0dbUbs/6yd5tTyxqIdx8ulvXHmKdb4EOnoeY27tjNWaXXn0nWl1pOoQxlNYugDIg3YOZfqJpIGH
+	+rQSuD/BNA92Q0cjXVXKUWmR3dZ2AKoAJuatVF68=
+X-Gm-Gg: ASbGncuSZpZo1XFJaQbjNbBs9ZQEWbGigPAs+kfB4wpN83htTyJMRD2d+E+ZoQRrPwZ
+	aGeHGqFSE5t8NOavUh/lgqYFVspKuBHfhGtBFhCXMeosBXDyTDTa4fxsdEOiPjUBuQ+mDCVrEBH
+	pZuaXmi42qOW3EXvjzTtNPb3vYDDOvEz29MYZnYHaevBIOacZfpjOwvs2UuIlk6WaZNVxyGK18n
+	EyuHhHbvvfGozqMXVFh1pubRYTRMhs2iPMagY6RxHiAPDMlBJinu/75wICTwmI82wNvWmbX
+X-Google-Smtp-Source: AGHT+IH5eZFj3YIHgq5yq/k3p8TyY1vn7g6fKazacRq8ORRWi2wxZ3TrrLwUzbZ0jHfo6MZZ4X7UueaMxoi+MhVC1sY=
+X-Received: by 2002:a17:902:b092:b0:26c:5c03:6781 with SMTP id
+ d9443c01a7336-28e9a564e7bmr69293945ad.11.1759660715442; Sun, 05 Oct 2025
+ 03:38:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AKp_x5_8Y8vk
-Date: Sun, 05 Oct 2025 12:31:16 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Jeffery Carr" <basilarchia@gmail.com>, git@vger.kernel.org
-Message-Id: <b3a8dd87-fdab-41cc-b221-b62aa7f74387@app.fastmail.com>
-In-Reply-To: 
- <CA+Hr9go-jyDeau8HVi+fUuiTTgAS_SNgyGL9x660+GzGJZJBEQ@mail.gmail.com>
-References: 
- <CA+Hr9go-jyDeau8HVi+fUuiTTgAS_SNgyGL9x660+GzGJZJBEQ@mail.gmail.com>
-Subject: Re: git whatchanged -- yes, I still use this
-Content-Type: text/plain; charset=utf-8
+References: <CAMWvevL03vRzX35tiRCkoU6CKucKim+GfacEVuN6wwm9r+1a6Q@mail.gmail.com>
+ <CAPSxiM-veMq2TRJwzbRPpewrpCPYdieTjs3uR2L4e3ORQDsWgg@mail.gmail.com>
+In-Reply-To: <CAPSxiM-veMq2TRJwzbRPpewrpCPYdieTjs3uR2L4e3ORQDsWgg@mail.gmail.com>
+From: Vedansh singh <vedh2o2@gmail.com>
+Date: Sun, 5 Oct 2025 16:08:24 +0530
+X-Gm-Features: AS18NWCAu76D1ozDjhSzJJQMqcVKUu33wC4T3PTRq--IoYkjTB9_Kpc6Na5GHG4
+Message-ID: <CAMWvevLjSiL=9kHzke8oWBSfXycmz7hyHbjaiZza+x-DfoVWNA@mail.gmail.com>
+Subject: Re: [Outreachy]Microproject: modernize path checks in t1410-reflog.sh
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Oct 5, 2025, at 04:14, Jeffery Carr wrote:
-> If you are going to remove it, "alias" it to something.
+> I have successfully built Git from source on Ubuntu (via WSL2) and run
+> the test suite. All tests pass.
+>Good.
+Thanks
 
-Git doesn=E2=80=99t have built-in aliases, if you mean Git aliases more
-literally.  If not then it already acts as a sort of alias, I guess.
+> Firstly, you do not need to take permission before sending patches to the=
+ GIt community.
+I tried to send patch using GitGitGadget but got Error: User Imvedansh
+is not yet permitted to use GitGitGadget
 
-> alternatively, I guess I'll make "git-whatchanged" binary to do it.
+>The main point of micro project is to get you familiar with the Git workfl=
+ow.
+Yes, couldn't agree more.
 
-This command is being removed because git-log(1) supplanted it over 12
-years ago. Both commands use the same machinery, just with different
-defaults.
+> This is a good micro project for both GSoC and Outreach but, the
+> Outreachy contribution stage
+> has not started yet,  so it might not be considered as your
+> microproject for Outreachy.
+I wanted to start a little early and get a better hold on the
+contribution workflow. I=E2=80=99ll try to pick up more issues that need wo=
+rk,
+which will help me integrate better with the community.
 
-Here=E2=80=99s how to replace it with git-log(1):
+>I will advise you to send the patch to get you familiar with the Git
+> contribution workflow. The Outreachy contribution
+> hopefully is starting soon and you can send another patch for that.
+Thank you for the guidance! Yes, I=E2=80=99ll go ahead with the patch now s=
+o I
+can get familiar with the Git contribution workflow. Once the
+Outreachy contribution period begins, I=E2=80=99ll pick another issue and
+prepare a fresh patch for that.
 
-=E2=80=A2 Given: `git whatchanged <opts>`
-=E2=80=A2 Replace with: `git log <opts> --no-merges --raw`
-
-Additionally for the sake of readability, you might have more
-use for `--stat` or `--name-only` rather than `--raw` if you are only
-reading the output (not feeding the output to another program).
-
-> I'd also suggest, instead of the message:
->
->[snip]
-> add to the message:
->
-> <run this instead>
-
-This is coming in the next versions.
+Regard,
+Vedansh
