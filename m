@@ -1,89 +1,84 @@
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from s700.sureserver.com (s700.sureserver.com [195.42.142.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156F0BA45
-	for <git@vger.kernel.org>; Sun,  5 Oct 2025 02:15:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B812282F1
+	for <git@vger.kernel.org>; Sun,  5 Oct 2025 05:03:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.42.142.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759630525; cv=none; b=RMvIhygdomun9Zk8ytFp3NpsuVLxOQ+8fQLBi2XFrSY9+5oKuCe7FUm/DeK/5xTcJuJuKaZp5fUMMRodazd7nYjFIWLa7KAd9IwzWeTVH8aoV9Q/YD021tN+mIbfC2DsPA/q8dz9kzzlzCZ+v3CWrFhTW5/Zuqa411GXqcf3DEw=
+	t=1759640630; cv=none; b=SM6+tp16WDCgIEAGrS4IJCQLwjkzqq3NSeNBhINdnRfk9UZQ1PuoAs+9NOyIo0fRziqrZB0JdO49R8/EvN5o0jqnAQGkbgRq3Z+aX+Nr0pO9qSs/oYEDf445yV0unaxIQTK3ZL3HPyN5ikf6tvQ3Wod3K5Nm3Rcu6kUMfHn+res=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759630525; c=relaxed/simple;
-	bh=czU59HqMUJCDtUtPZru+ssC0cqohnv3VAF4JkkAjTdU=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=TKq6LhuXqc8Gtl1KUQjadnw2PxPWxFJxINOsHnhKgK62+MhE13uepaZ4bBTk3Qu0uNaWjqTONWF2eAPS5oXystlq33aGdkN/s8iwcyZ0IjA6L2ik7XnA+VoMkmlBVWRfRqtB6xKOS2ahFmWzpSSvmGVIeBmnYdA1PPZyNno9rA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NVr8xSKs; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759640630; c=relaxed/simple;
+	bh=zplJ9Z3pQCDbs+84KGkm3D1Ms+muwIqH3BwNOEo6Cos=;
+	h=MIME-Version:Date:From:To:Subject:Message-ID:Content-Type; b=U9TIwZ8zGroyda9Ux4g2VvLEiqm5+YuAO/9Z8I+OOzTMoJmUK5St674Fg59hruebEgisb91+ko3FzBasacE4Wh1Wt2TUQYaCjtw4SES/6M+HzFIIc3FZ4g7TkM4JioRAAv7E5bHFBtDZAZR8rFFNkqZwBwehhRk+HN17ZBoGlvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=robdavies.net; spf=pass smtp.mailfrom=robdavies.net; dkim=pass (1024-bit key) header.d=robdavies.net header.i=@robdavies.net header.b=IcTm1xlx; arc=none smtp.client-ip=195.42.142.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=robdavies.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=robdavies.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NVr8xSKs"
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-57b7c83cc78so3509271e87.1
-        for <git@vger.kernel.org>; Sat, 04 Oct 2025 19:15:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759630521; x=1760235321; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=AmYxJ0nzTclkolRUCMFvkvpceigF+5nCHx2S2127tBs=;
-        b=NVr8xSKs/T+uRbC/7lRjoZP9zpXIpAdsXqJmV+9C7mEF6+Y7moW8BxnUox8E1J6+wI
-         fgt0cw1m/0K0CHT9Cwo9AzOzFa1FDCSth6SZb4UxKPXBbv9YG4utKjLLeXEZ0hZzukAI
-         J4Zn34fBxyOz1y6NYH+2IMhF4Oq/Jt/REpifErcXmZWseXWPHwLNdIpE1+AIlYyj9ZpY
-         b0MbLdppNHCEjzIQMP82P3e8BLewNbxK9+ftUt1ZVVt+iFoSrLtYQZip/W+M/QPtiUDj
-         gzSA4/+FjUCN8li8nucRULNaQWBMBr6mU4yeIfd/wmjRpoQaEzgbMeJ9lEsGNERfEj3r
-         DMHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759630521; x=1760235321;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AmYxJ0nzTclkolRUCMFvkvpceigF+5nCHx2S2127tBs=;
-        b=jtqb9flh/vbEE3foJLTyfiwmDzbdxI2LpgdpOEmkEWr0Uc/aZxvnaWUh2Ilpp15SWi
-         GvvrCN4Wr2dgaisTiZehThbrS3FomT8pjZdMio5MsedVTLjZ78ShgDJpRVEzpk2WmV1U
-         xIEwrKJTGGqymWDAuDzH1sBJtXruU5/4rlD8OI4pi9WGCs/kS+4zFfwAd9fboKXerdXZ
-         jajkeajiyFYUs/5Egp7iPTSUViQhbT2x+Uqn1rcH67zYlizvNeQB5Gwl25Dx/V6tunsh
-         jgOUQHOYwIJfcwQbIOq+yk23ja44C5NKUbVJmtSd/+7sZS6mr1GJlWfGlq7e5WGFamSM
-         E3hQ==
-X-Gm-Message-State: AOJu0Yz+TUlWIRelHw9C0EHE+HPEOiNiEum6bQw4OKIEZQZ0WrCu/qeK
-	dKEOxnKSwyeB7uTCbtniyRXXoyPIIQ7jfKbvizalgHBIr1MQsoRneIca3zVrBd5ALg7bzA0Zf2b
-	e8H3lonozydzq1o7RlYYhK0fzhur5qKkUL05c
-X-Gm-Gg: ASbGnculV6Sglvy9ehVpuWTVL+SZ/ru2ppIUokqHU+kAGq6jCYlKsTUKCDATDD2Pfzl
-	Nf2XwOliguX0mJtdR1E8iHEkLcrAuNwYSy5slAa0aQoK59lMH9XeJtBUYS3g+67xBisUm1fA6D3
-	h5RFa4TBJBv+VCiz5Qj4b35TO8U5mbtSvc4FY3RQinAqsjnSUqcBR+RiJ5FRxy/wZOFvEJWEDB+
-	HV3HKeHmERR2K76sEKpQwWjUBs25KRI4h+WUE2M0JwaCMptevwTXuZiKniHXG/1+lVuvVhBKxqh
-	1jMl+fAXpHQ=
-X-Google-Smtp-Source: AGHT+IHBEzE/OtglKBOQPm+frFqUvT6YLVmcvFIGIYBBiLSR+xzPcSmr6BvC/6G9weDTv47HzBVcslNKZmj2NzGwO1o=
-X-Received: by 2002:a05:6512:3a85:b0:55f:6cc3:45a6 with SMTP id
- 2adb3069b0e04-58b00b9590emr3738429e87.13.1759630521147; Sat, 04 Oct 2025
- 19:15:21 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=robdavies.net header.i=@robdavies.net header.b="IcTm1xlx"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=robdavies.net; h=
+	mime-version:date:from:to:subject:message-id:content-type
+	:content-transfer-encoding; s=dkim; bh=zplJ9Z3pQCDbs+84KGkm3D1Ms
+	+muwIqH3BwNOEo6Cos=; b=IcTm1xlxjhjEvmqStdOw9mVjHfmB2I7k+bgzF8/5E
+	b24aZdyGMlf4IBPc0GqV0eACNP0UmX6N5LtzpCa9cPRp55yAnqjRYV/tXUTIcQbo
+	e4qySirPucDvt/xhb6IzHaXpuqr/dVXjT7GxXuGOrBRqOHwUean4DF7l6LIhRjKC
+	gY=
+Received: (qmail 58389 invoked by uid 1002); 5 Oct 2025 04:57:02 -0000
+Received: from unknown (HELO mbox.s700.sureserver.com) (rob@robdavie.user@127.0.0.1)
+  by 127.100.1.1 with ESMTPA; 5 Oct 2025 04:57:02 -0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Jeffery Carr <basilarchia@gmail.com>
-Date: Sat, 4 Oct 2025 21:14:44 -0500
-X-Gm-Features: AS18NWBIqd88zYani5cx26YvvVo2JC4TQ3APkJ7r4m6jUzyic0LDgHUAIEXhgmo
-Message-ID: <CA+Hr9go-jyDeau8HVi+fUuiTTgAS_SNgyGL9x660+GzGJZJBEQ@mail.gmail.com>
-Subject: git whatchanged -- yes, I still use this
+Date: Sun, 05 Oct 2025 05:57:02 +0100
+From: rob@robdavies.net
 To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: gitweb and gitweb_config.perl problem
+User-Agent: Roundcube Webmail
+Message-ID: <4f19f3b21d3db8d7cdb962089910839c@robdavies.net>
+X-Sender: rob@robdavies.net
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
 
-If you are going to remove it, "alias" it to something.
+Hi
 
-alternatively, I guess I'll make "git-whatchanged" binary to do it.
+I found a bug in gitweb when using gitweb_config.perl
 
-Can I ask what the problem is with it? The code is a mess I'm guessing.
+I downloaded and installed gitweb from source, it worked at this point. 
+I configured using a gitweb_config.perl file, it was at this point I got 
+an error :
+500 - Internal Server Error No such file or directory at gitweb.cgi line 
+734.
 
-I'd also suggest, instead of the message:
+I ran gitweb.cgi from the command line and got this error as well as the 
+error above :
+[Sun Oct  5 04:53:37 2025] gitweb.cgi: do "gitweb_config.perl" failed, 
+'.' is no longer in @INC; did you mean do "./gitweb_config.perl"? at 
+./gitweb.cgi line 732.
 
-'git whatchanged' is nominated for removal.
-If you still use this command, please add an extra
-option, '--i-still-use-this', on the command line
-and let us know you still use it by sending an e-mail
-to <git@vger.kernel.org>.  Thanks.
-fatal: refusing to run without --i-still-use-this
+I then changed line 744 in gitweb.cgi from :
+	our $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "gitweb_config.perl";
+to
+	our $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "./gitweb_config.perl";
+and it worked
 
+I have seen this same error on
+https://bugs.gentoo.org/675864
 
-add to the message:
+Solution :
+I changed the file git/gitweb/Makefile line 14 from :
+GITWEB_CONFIG = gitweb_config.perl
+to
+GITWEB_CONFIG = ./gitweb_config.perl
 
-<run this instead>
+when I built it this time using :
+make gitweb
+make gitwebdir=~/www/www/gitweb install-gitweb
 
-love & respect,
-jcarr
+It now worked when I configured using the file gitweb_config.perl.
+
+Kind regards,
+Rob Davies
+
