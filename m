@@ -1,68 +1,70 @@
-Received: from mail-io1-f68.google.com (mail-io1-f68.google.com [209.85.166.68])
+Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5741D63D3
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 19:16:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15271DF254
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 19:18:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759778174; cv=none; b=Pt0mTCTrwJasW2smNaVnm4BC5suRA3kpe4QHndoJGyS0axHyse6lK3WN5AvvoAyKVECrAbKZdyTM1MNqsVDEqhCRI69efnSnS3hCjRVTiUaiRNHQg2/WYvGQhmZS+HbZkFQueJ2Le963Gp1crVYooqO50ZbEVI4D1ORNiDsjfvc=
+	t=1759778287; cv=none; b=ahXFyyT02gb5N/ebyGWdUtlKj6NRQK+4U/jpSClvN5o7WsGM4saOYYivMaY424mJtNKRQzonBiepMu/8uFqyuTXNCMB437vXbrRr5NhMBNsdkTKYC6zi2bQYNgLcMgfI6IoZ0LLtv7hhW+a6K2D6nKj/QbqeeMeAHQKxxKGulSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759778174; c=relaxed/simple;
-	bh=ELSnnEijs3vNiiA7tOxZgrCnHcvuOTgTMtprYnX4wcM=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=k1nhU6u1tDcRePpZ+MuHEhZdLo7v1O1vMSnd+r8mmuWMCzJPvvR9xHQeZur97yE9YAYHu48TUcELMPQ53XMAF4G9ZvnouM5irjVXQeTnV6BYliEzENdg/eIlk0LL4qBqYKsG87MtN7tYb2S1WX5NPjA5y7QPEX9DKTBkNwftQew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=cyoG32Yg; arc=none smtp.client-ip=209.85.166.68
+	s=arc-20240116; t=1759778287; c=relaxed/simple;
+	bh=cXIco8r3Rqpwo5tjWiJtvVJIvgqfY+MwQzXyvRBHrnA=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rWzDbhJLCcKdwyUVlmjy4Sl0fPgx30qWpc700VHNT2/v2j/Mz0oWFu5Vi5WJthxrV7nY8hj5u/cPqsl7wVmtYwhAHYyRLA8WhZbeFV/+z22iIfUgYDt1PGUodhDt2jZ1vCzERq8udzT+8sOpojadFgw4NLO4qlqsUCussQcKVx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=VYMYihFH; arc=none smtp.client-ip=209.85.166.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="cyoG32Yg"
-Received: by mail-io1-f68.google.com with SMTP id ca18e2360f4ac-930a6c601b3so462359939f.3
-        for <git@vger.kernel.org>; Mon, 06 Oct 2025 12:16:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="VYMYihFH"
+Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-92aee734485so231900039f.1
+        for <git@vger.kernel.org>; Mon, 06 Oct 2025 12:18:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759778171; x=1760382971; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=m1l3JdzX1P2nAHHp78YgwOHIGRoPyy0yoUwqB+O97i4=;
-        b=cyoG32Yg7z1RqQGRXxIJVf+U1fZt4XWc2heAaMlXft/B7lzfwj/vgk4eTbe1RYCmQy
-         s15tMjTPSKtlFW4qTc04u5pXHpyyf2kI2ifLBLVSZjP8LgDyvA+ETrlGFK5AXQw/kS1B
-         QMge0YvsyLmir3dIzBJoJ2AUO9qMHkwgxgohc3F2IuBwyIJ280QXHWsHSVSpDfM/JjXL
-         MkOQ10F323CxKRB15qjsnh1YFGUKN2n22Aku84BAetiwo2tqG2yc6HSFajUwJXfaHQd4
-         m8TfarLqctjWXiZMedPVnT6wuRN1fbmXygIjPR1yJyyKbU0VpIctezqDNitq64BK3ChP
-         QDNg==
+        d=ttaylorr.com; s=google; t=1759778285; x=1760383085; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fbLvOahRh7H/MvxkyZXfAa94ATaDF0afxhwKerMGu8Y=;
+        b=VYMYihFHzyGKnb9q+yQ2zpVdb6X39uuxHsWEyEuuhTLCyrssbnUZTEwIeFTWelWaoz
+         SXPWKpXFwSSec9dl0W2/Y1x3vjOPq8cwZdRg2/jQaRxk6jwE9DdUmcv8qZr7hDvXYDYc
+         PWofbc0UFz9UaL1SjB65hl4ZihQgO2sLGMx7cTiye/aYFRBhNJ9DMhv9ILhSYP1y228s
+         7FzmXX7AuC0YNHUm7iK9WOBv7BSGvCpTeHqekUf+96V4HIzFGfZqIdDpx2k3qXPAK1O4
+         VZ7k7zYZny9mHAuoqGzK05zr9uKF9D23DqHU+HIPxDvg8jZS7jpLnhhew+2sAJ63tBza
+         r39A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759778171; x=1760382971;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=m1l3JdzX1P2nAHHp78YgwOHIGRoPyy0yoUwqB+O97i4=;
-        b=iDT5NukLcMQtKQXRL5W6+VvtCHG4h+ZxLiArsBoqPs1flmoQXCN/2Rp1nMmO8fjTXZ
-         wjP9OzOIPX7BK2s8jr1eBr4NnA9OWYeG0jx/dE9KP5wD0ug1DcDGeFaoo7krXEtSIenQ
-         VulzYlP1P/aCINd9W5A3JNLrKiTFTteyYdZlHJEqw1YTGE/N2zdqz5LBhmtpLzY6eMu1
-         EGO0nrSdVC9lgTbzRIvkttPkKD+KLAId0iqoyTsACUG9/hATFz90cBjyaUSafLrGVk5J
-         q3AjMIwYZCHWyQemWSKl1SDP8E2GMT0dRkcHTiOIkSKKJiYmcXQR5uDxF+oT3cxnQG2J
-         JmqA==
-X-Gm-Message-State: AOJu0YzgaeelQFNfiM3cWTfq72Hs6105qJnslTsHTbCmzjGT8yKutrMI
-	XDHhCbFoNyFaj9iJzX1+UM8aiKzDuojxv2RtjpG3e6nx3UbwihTYoXMHePJYJct9vAJdqX5P47Z
-	SBdaco91XP70e
-X-Gm-Gg: ASbGnctWTlwE7yI14e81ePPiC7RXwR5x3tFnIFbpw3Fj/aVevAr1gqkiXn4zRMJ62UR
-	m5EUmF2Xox03A5UoBOUDU5DqLir5eTtsbInfj+70oPOt0fbl8oJSBH3mZuCqQoN9h/CMI9WnDtk
-	98UYYVh/YKg7aX/CLNAajU3XusoQ33LmGnevWOde4DHg91Vhrrg7WFESCfWcXr8Ly2vlrlmFLkJ
-	TdCdUr+Fevjh21oUxrn2TFBLtVFuyqQABu+12ZG/aHIxtr166Z5OUdy0KYEVGLPdTBtO40yriPw
-	ia0KhUG8gVdUqSpys7VIiU2TRoGlNApw6RfO4AY1UlVfV01Jd4w/b/VsJoxHmvvU9VF22jLBTnI
-	sD/F+Oc7rf19I6Nve4RB+5NyysJ3F6v6bFRsZmAb4P3/k6jjhqMwwCbxvjrj1penUI5ox/iz8aW
-	wPWjWwgTMeZ0XN8nuLdogbiHJrfFcS8S6aNG9UTWmy5rIKles103s2Ts/ejqyc
-X-Google-Smtp-Source: AGHT+IEoi2PddITVoSQpQ2nBtXAf+clBeax/uh9Euag6sBJFUzw77vzhKSv7Ed0Tm+EWc/r6JFNEAw==
-X-Received: by 2002:a05:6e02:1809:b0:42e:2c30:285b with SMTP id e9e14a558f8ab-42e7ad86806mr181321375ab.20.1759778170490;
-        Mon, 06 Oct 2025 12:16:10 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1759778285; x=1760383085;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fbLvOahRh7H/MvxkyZXfAa94ATaDF0afxhwKerMGu8Y=;
+        b=hKitot/16/NOIK4zrCE9Wxfw5/ELGiXmw746Paj7AKLPDQ7ZyilycOsXNbmVTUlj3I
+         2fZMKH6kvPEhU5UNiasiXJlLsSBlzRfmJXFN3xV23GeqEha7Wno7Tr8DHMWd5eYSolL/
+         Vhu+917ZIorvlC3k8egPxUIVRMNicR/0n5d5NIqLstIcS9a+iqcys5zCY7YwT0p+R6i7
+         g2NCccLS5b54vvPhUlDbvHNlbDTy+okC7SOhFPomhZyLmNmPI/BOmwh11s5qzKn803dX
+         1hBLlTNthojoE109nJAy0+PuC6305yPjMMzQX1WQw7qDmQjXTD/LqVz/GC6rj5V4XDQA
+         KFJg==
+X-Gm-Message-State: AOJu0Yzg6ZQtmuy05CYD4OKbsRIWz9dUkxKjZWjGgeLtGyiLuzDPRvVH
+	pqLIkdzlCJtwuLTcuKyP11sNa5rV7lMwt8LllQtSUz5QSoAOw4LwKKU1JnqgNTjAZMXp2AqmCPO
+	qkgCtTpMnyw==
+X-Gm-Gg: ASbGnct5n1x6PFh8zfkuqYe2qCnPBM5pPYu3df/h3pKADnWzScpNbzKfxGDFvRfKs6v
+	dsvqhNgES6NmFOlLOZ5YSYNJVj/vXlR65wiwnyWulgrgJtc5ewHeyvg3hjIX6RTIpdLwEnEfQQK
+	rHDijukGQq3RWAZ2Z+nL1/Lxgk09YIyFdzFLK+bJ/8nNNkEhcsYzRwn7343uiqJvf0ez0kZDWYW
+	WENjhpT1hrNeC7gaOmf+xvXHnoC9m4rxeqzpQ7j4dC2PEiuyZQrLZI0AIgYq5gjibNFbzEG8B5d
+	W8NYbLJFZe5shRI9gVtf6xYYJ5csm9DwB/qEJf+FYWmiI9RURdxOBJv/RuCcLMM/fbFDITnPCjk
+	q6Rnp2vlaICCnIM1j4WpFgCvbTO+gKdephz2v6DU3HPwpKLSliBvflZw5ySfm+gSP6tMSQoV4HW
+	tA2HZttvxaeaopYimOe1+DOPdB4EE5s75Gmb2t2s7IqTu2EU3irg==
+X-Google-Smtp-Source: AGHT+IGusxS5i7EA08MkC3tnjTP/0oUa2l0sGCTKRaKZYSITFPzGRYoobIQ1G/aViJGQDITBUuCfVg==
+X-Received: by 2002:a05:6602:6d06:b0:93b:b891:d6e1 with SMTP id ca18e2360f4ac-93bb891fff8mr761189739f.5.1759778284306;
+        Mon, 06 Oct 2025 12:18:04 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-57b5ea2b6bdsm5269902173.27.2025.10.06.12.16.10
+        by smtp.gmail.com with UTF8SMTPSA id ca18e2360f4ac-93a7e3a5cd5sm502375439f.11.2025.10.06.12.18.03
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Oct 2025 12:16:10 -0700 (PDT)
-Date: Mon, 6 Oct 2025 15:16:09 -0400
+        Mon, 06 Oct 2025 12:18:03 -0700 (PDT)
+Date: Mon, 6 Oct 2025 15:18:02 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
-Subject: Notes from the Git Contributor's Summit, 2025
-Message-ID: <aOQVeVYY6zadPjln@nand.local>
+Subject: [NOTES 01/11] SHA-256 and interoperability work
+Message-ID: <aOQV6iM49QDhcC+C@nand.local>
+References: <aOQVeVYY6zadPjln@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,51 +73,96 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <aOQVeVYY6zadPjln@nand.local>
 
-It was great to see folks both virtually and in person last week at the
-Contributor's Summit!
+Topic: SHA256 and interoperability work
+Leader: brian
+10:15am-10:45am PT
 
-After travelling back home and catching up on things that I missed while
-at Git Merge, I had a chance to polish up the notes we took during the
-Contributor's Summit to share with the list.
-
-The notes are available (as read-only) in Google Docs, too, for folks
-who prefer to view them there are the following link:
-
-    https://docs.google.com/document/d/1arvvXP8DrF3F8PCKQOmGvYh5jUg8P9Clx9m-FgDD4EI
-
-At the Contributor's Summit, we discussed the following topics (with
-topic leaders in parentheses):
-
- - SHA-256 and interoperability work (brian m. carlson)
- - First-class conflicts in Git? (Martin von Zweigbergk)
- - The future of history rewriting - rebase, replay and history
-   (+Change-IDs) (Phillip Wood / Scott Chacon)
- - Rust (Patrick Steinhardt)
- - Pluggable object databases (Patrick Steinhardt)
- - Repository maintenance long-term goals (Taylor Blau)
- - Change-ID Header in Git (Philip Metzger)
- - Resumable fetch / push (Scott Chacon)
- - Git 3.0 (Patrick Steinhardt)
- - How can companies respectfully engage contractors to work on Git?
-   (Emily Shaffer)
- - Conservancy 2025 updates (Taylor Blau)
-
-The list of all topics proposed (and the number of votes they received)
-are here:
-
-    https://docs.google.com/spreadsheets/d/1mSyAvvpYTIuR7JIm7J0H0IQQEUt5y8zq8Bo53nl8yCY
-
-I'll send the broken-out notes for each topic in a response to this
-message for posterity, and so folks can continue the discussion on the
-list.
-
-Like in previous years, if you have any feedback on how the
-Contributor's Summit went, please feel free to share it with me here, or
-off-list.
-
-I look forward to seeing everyone at future Contributor's Summit events
-in the future!
-
-Thanks,
-Taylor
+* lot of work to do
+* brian is working on it
+* it's progressing, not sure if we can get everything done by 3.0
+* how to deal with submodules
+	 * you can produce a split history
+	 * accept, document, ?
+	 * we need to have mapping on server or client
+	 * if someone pushed one commit in sha1 and a different in 256, we can end up
+		 with divergent histories that could produce security issues
+	 * some private repos for open-core type submodules make this difficult with
+		 submodules
+	 * could have the server query, client derive mapping
+	 * server could also be malicious
+* if you're converting, how does that work in gpg signatures?
+	 * we have a way to map both signatures
+	 * if you're in compatibility mode, it will produce signatures for both
+	 * what about for older histories, how can it be verified if it's only valid
+		 for sha1?
+			* it can be verified but can't be resigned
+	 * for converting, can that work?
+			* converting will retain the sha1 signature
+* what is the simplest user journey?
+	 * I have a clone of a repo in sha1, am I expected to run a conversion locally
+		 and then I can talk to GH in 256 protocol?
+			* you will create a new repo with 256 with sha1 compatibility and clone
+				into that, which will convert it into both algo
+			* download the data again?
+				 * clone it to another directory locally
+				 * it will preserve the sha1 repo and create the compatibility layer
+			* let's say the local one has a submodule, clone locally including the
+				submodule?
+				 * yes, the conversion script will convert the submodule as well and
+					 you'll have both ids
+			* if I do a fetch, which do I need
+				 * you need a mapping if you're talking to a server with the other algo
+			* the mapping is only needed for the server if it wants to be forward
+				facing?
+			* with mapping, its only commits or all objects
+				 * all objects
+			* if someone trusts github, they can just consume it's mapping?
+				 * the server and client will do their own mapping
+* what happens if nobody has the submodule anymore? commit from 10 years ago but
+	nobody has that submodule anymore, how do you make a 256 tree out of that
+	 * pick one at random it doesnt matter
+			* but you can't match everyone else
+	 * we've chosen to use divergent history in this case
+	 * Same issue exists with LFS objects
+* if you have the old submodules,
+* recursive/cyclic submodules?
+	 * it's something we need to handle, don't have a great plan but it could be
+		 done
+	 * plan is to maybe have some pool
+			* you have to convert the submodule up until that point, then convert them
+				piecewise
+* have you thought about mix/match where one uses sha1 and the other uses 256
+	 * we can't distinguish the size of the object id vs filename
+* right now you're doing the work, are you thinking of allowing another hash
+	algo without having these issues again?
+	 * the way the design works now is that we have two algos - main and
+		 compatibility, but designed to accept multiple algos. if we switch to 3512
+		 at some point for example, we could add another compat algo - it's some
+		 work but the approach doesn't assume much about the specific algorithm
+* steiny thought it could be useful to add a third algo not for security but
+	speed
+	 * gh has the insecure non crypto varients
+	 * problem is always client support
+	 * corporate controlled repo often also has control of the clients - so maybe
+		 less of a security issue but depends
+* can you put a sha1 link inside a 256 tree
+	 * maybe an extra bit in the mode, some other interesting horrible thoughts
+	 * would it make submodule problems go away if you could just carry the other
+		 forever until the downstream decides to switch
+	 * solves the submodule problem but not LFS problem?
+			* LFS might be easier, you don't need to have the object to convert yours
+			* assuming you have the object still
+	 * brian not 100% against it
+			* if I could do a 256 repo with a 256 submodule, you could parse it back,
+				but if you do that, it's a different size and not usable by older
+				versions of git
+	 * if we were clever, sha1 trees hold sh1, 256 holds 256 and only when you
+		 have a sha1 tree inside a 256 that we would use some new format
+			* the problem is you still end up with stuff that doesn't work with older
+				versions
+			* degrades gracefully like a mode bit, worse case is that it checks out
+				weird filenames?
+			* write it out, take it to the list
+	 * we discussed upgrading the tree object format, but it's so tight
