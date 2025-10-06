@@ -1,69 +1,69 @@
-Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A15E1DF254
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 19:19:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F4A1DF254
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 19:19:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759778362; cv=none; b=u3deG4YyEXHfH8SrpBo494VGzUXkTkL3BfZLw9vJL3Yv6iPIx6b2PlNTCw+FSlhTX+TBjLp9nZJ2LeUIxL33gsPPh1xwW00UkCK5des5h6Ay/mUYuVMXh+KYrzEl2ENLbO2SNOY6FKbv9Oz9SpDD+tZ4FHO0D5fiAzj/j11etkQ=
+	t=1759778383; cv=none; b=UCPc82t7Hy6pYt7neTPUwn8V5fIKrSzv0a0Xp/rmPnwoIA0pmLp7MzGRBgI2xZrWMaz5YqQeAJyp6/T1Wz+PW5ePfYS8TZwoK/AE5CidkUPHNiB2nxwJm95F5QwUF+hICWsVcY94BrhtpkC3DfBRF4NzS/XMMdIs+lxdk+kp3rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759778362; c=relaxed/simple;
-	bh=dil+GcMFv+oX7neozZmG8LcnBws4yDbkl7c8AsmXHNk=;
+	s=arc-20240116; t=1759778383; c=relaxed/simple;
+	bh=2vJyJ2VHPn9H0xmyimj6+jJaLTaBkqP0MzTMmzR8muY=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OZ7LcOrXUh3H0XaOqN562nGSS6dBDaRV4CYTU2oNtqrKEotRB0pVoPXMTvowFIrNIrgH/seJGayMDLjBvnCGHFzA7WSjfpx51i3VE1ovsoQvZKDqXdPv+Pfa08M5X3KznfeHDjXt80+WomqKTbJ8dODtCl0yE+islUY5yDk/Dwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=lxClFop2; arc=none smtp.client-ip=209.85.166.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=kBnv4qCNhb3CtjM8QHzK1wN9Bn/ccvdt7iNjRr5J8Dz+GeczVl9ABzPxy/kbNmESuA8GaHDq7bu5w+dcF3vABqzfsq9JTlpM7BloZYWdRrSWypmysUtW6dR5qTax2vnvNohQHZ5CjOwDuCOWRpQzfpYaPPDJNKdX2pFSaXWbDFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=IfQLMQqf; arc=none smtp.client-ip=209.85.166.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="lxClFop2"
-Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-93607aec358so127128739f.0
-        for <git@vger.kernel.org>; Mon, 06 Oct 2025 12:19:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="IfQLMQqf"
+Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-8c3414ad279so203787139f.2
+        for <git@vger.kernel.org>; Mon, 06 Oct 2025 12:19:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759778360; x=1760383160; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1759778381; x=1760383181; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vyn3suVSRdJuzeBElz/Gpy8hed05GbQdxGFsUcFmNFc=;
-        b=lxClFop2kFiok+07U9eaZtsqN9p57RLDU7cz9eAlDHtEbBpZRj5YSB0+CmqHJc8lhG
-         HpIX1zTWdRcSUNje/LB/Q4EutS4Win/ZoQrkcKbrKzmOdwZap1ShUgWtDZeZpZb99WKZ
-         j9/gyI6tFd/EQ66p2MKCGcRDc5sgPUiMtIZu+dXcQS9V3FcXzh45TrFXh/G7432NicZc
-         +k3rdR6EVOfTsNz7RsaLVHLo1m/I0dlvnf1nn1qT0ICY43rhP7Jl518mG7WZlL1l27Wh
-         FkneT3+Cx5l+xPKzXBg3aQB8iBg/WmDQzHl9DSaCRUX3nDEk03XW69JtP6AVhvP53y8k
-         BiJw==
+        bh=gV9ije84M7D77lqr9JHW+19KqgoDiT7OvbXvXHV3fZg=;
+        b=IfQLMQqfv+0u1KR2m+bBgnklV08kVGZ5CvkzuRP+zIKd0VNSk+6w8DwSJm7wfOok+B
+         dwSLu6xBqMarVmla/UIIg/FeLeqirwe6bSayrwVVKxmt42vgXT+QuExzNISnh8Du4Fhv
+         VhrOC/9z7zn25/T5kHtpuy90C5QEsUy+ZeZV3zFRVnDaxthJeIXWGAa3H3l7NYe+G44L
+         uuSEbQOF0utTtD/f/eRggHV6Qbjp4QXsFGeG8ttaiDfqRK5uYI3FkQc1DmcaZ/3GQFJV
+         Wsx/JyoWVZ8uWqnyUGkFB33y29bS0e1yMmxSXk4cL+kn2LxOtZkrRi/J/TneAyf1coK5
+         bQlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759778360; x=1760383160;
+        d=1e100.net; s=20230601; t=1759778381; x=1760383181;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Vyn3suVSRdJuzeBElz/Gpy8hed05GbQdxGFsUcFmNFc=;
-        b=YsfXicfbuCljXLngvD/elz+HQSudiFt6SY5FNOhmjdJh0eUiW/ZFDYbYovb7NQytxO
-         esN0G+HOR6e3fRpop2O3K1bjX+KXTugalewnxII/aLIoplasIPlz6X7hciQU5g8Xu00L
-         SJVEgoP4j4ZbyDm7Ac1Ai/3PNktVD+O9LI78/ScjI2GTZp1SrS/bZkTb66wxYlcl4ZtF
-         G3Fi1qd7ERuWBz36CKOT2eYOiqfYqHUh4vx3IY96JwTe1VUOmiuVWet1pFA9h0C1dn8k
-         ZiOLfQ3f2ebpm/hXJIlbFYnzC/KpJmVmde+uXbxhAJFHgSCxK3H/t8dRrUNMsspg5iwU
-         B/OA==
-X-Gm-Message-State: AOJu0YzdcAD46okjrS642TZDfyL3IRwyMiW0GB5cS9ZJGend06hRiIhe
-	RUeiEm1Q0X1aJO6Wk9JIHC4Fmlt0IGYldnIwOWUlN+Lrm/HxCInCpKXNS1bgZqiLCpKnZQlAWPu
-	0x5YGns9b9A==
-X-Gm-Gg: ASbGncsGRTljNt/3jh4u738E1ReQUXZ8QHur2plhr4/pGkqW6SGQjwQCj71yvu4PY2Y
-	4F+6FSmf94vW91u1tNsv1S0FrDM8YWMEk3OqqKZZjNVZqNT9P0GVsrb7V+NWTW5wzr7siflT70Y
-	1NbMGAaeCKIWEx4rwuk21KNsIUc8WWyTtE9SHOrydZkvCEDTLyUe4SHCPHn2hEMIfr63+E//oLJ
-	1gNZt38TLH7Vpmb0xmVRYwbuujG3kbmQ1QmIuzoJzL2u2O1eVdm9guENbpMP3oco5VqQKahPbOf
-	U5M5VdNgJwqmyLyf5BnMctew4rBYiftng8RBl6ZlVOMzXzs5bh5R9aP58vcITjsfKdvZkbwzcug
-	Z4GK1Bzv/ChOKp0K98u8+ABFL+NYOd9gZEK0jOvZKT/amy5v/D/uogfw2IxpeK+KnUV+/bs+FTL
-	GaCVJyPUc0GP8cMgRikT3TekM3L9Po6BqcWRIFrj2GU0kIOKPPFA==
-X-Google-Smtp-Source: AGHT+IHjD+Tc1ktzbmqWC1cposRNYQZtCz1FCDD9N2nwSuAOxCBx00VymfchZ5MAnyexCmzMvu9ryQ==
-X-Received: by 2002:a05:6e02:3c02:b0:426:f365:b55a with SMTP id e9e14a558f8ab-42e7ad8e7d0mr206343095ab.30.1759778360133;
-        Mon, 06 Oct 2025 12:19:20 -0700 (PDT)
+        bh=gV9ije84M7D77lqr9JHW+19KqgoDiT7OvbXvXHV3fZg=;
+        b=VNwUMEusvFTdzD9Do2P67AxhLQVXlzP2PNqbhvhRL0Z0lYQsSKX2vwtpfMD1UK85BO
+         WMVJvM4Trb9dii6UEOnQZBDVSmyTfVwK7FHXlD7FkIgpy4+woHgEVro00roSM2yR34eD
+         Z1aTH/SgIZ8OlNg5A4XWRYl3I8Usm2jnrp+iLmiC7vKzcR0zvEulh8AVqBv3zcl/3pn2
+         TGlVkFiSxPa19MbV3qhffltd+ozrZzcU9Wllt/2PDbHTYA6mNavh3k3cfSFzfrxyB4MW
+         ax7niDqeCrnHsX7xVNiU31J/iGtSXGYZb9oRLeH5tTos2+ihSnf+ZYh+lQKLId8mUeX1
+         8HhA==
+X-Gm-Message-State: AOJu0Yzn7AhPIekvlHmsHu7Vlsnz5wwJoeMpVlRW78Xo2oWEMIaHWxK9
+	hG//IyPzwdKKY1mPS2gEmDNrQuQH3tKMcmSe+j0+r4OjngaXv6zZ9SgSXzNb9EfsZ5GgJMzkE4V
+	r9cr/rWEaNw==
+X-Gm-Gg: ASbGncsa8/Tm9G1wxe0jBpN7Y7M7ZkvM/RkQrLbknG/HWC7VwP7fqzqQSN7QQNU58vo
+	UNLUt/+qHErFt7gtJD+d6dVNrA7MIwykcVwrkh0++/8yS2DDgojKbz5G2EpzgUXOvz/qfpEpCh2
+	WLpK6g9sB7P3YzZhvcI6vO2CM6dxG3gKO5j706Bg5bwjJoOZUX9nIZ/uqWd1ffuB9PXtlQy3Bb4
+	4GhHgp/j8GtZE5QhSowRQWYC3KPZYvJkwGhbNZLhSophSbmiCdafuYbZy6B/UKOQWuYb8VJM28h
+	lmxnotlleQE5o74SE2a5x1+HuNxDyCNf/ZFO279ZvXh7utKE/vurh0AHBzn20oxefSUlFJXlkC+
+	MraQb7JyCMnJOl6pcyP6+TBTRnjWvbz4PJEXV/DLiLEluOnLJj/rroNTIzoRfn6PkXu/lww68it
+	Q2oEpAKaksk+YMTxOyVLSHcPZPFkATEU++lPDEOAHvEzxvoAaD0Q==
+X-Google-Smtp-Source: AGHT+IEg00B/vlf/8/fBuB2w4eRZ/KfhDAo6g79WVPTvzr78Cu25vt3t2q5a1F9NXmLqGkNPDgqh6g==
+X-Received: by 2002:a05:6602:4148:b0:917:1d3a:d29b with SMTP id ca18e2360f4ac-93b96acf46emr1773337239f.19.1759778380692;
+        Mon, 06 Oct 2025 12:19:40 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id e9e14a558f8ab-42d8b1f3474sm56322945ab.9.2025.10.06.12.19.19
+        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-57b5ea31448sm5262377173.29.2025.10.06.12.19.40
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Oct 2025 12:19:19 -0700 (PDT)
-Date: Mon, 6 Oct 2025 15:19:18 -0400
+        Mon, 06 Oct 2025 12:19:40 -0700 (PDT)
+Date: Mon, 6 Oct 2025 15:19:39 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
-Subject: [NOTES 05/11] Pluggable object databases
-Message-ID: <aOQWNrIDSTTZtbnG@nand.local>
+Subject: [NOTES 06/11] Repository maintenance long-term goals
+Message-ID: <aOQWS+ZJdXr73PE0@nand.local>
 References: <aOQVeVYY6zadPjln@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -75,58 +75,29 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <aOQVeVYY6zadPjln@nand.local>
 
-Topic: Pluggable object databases
-Leader: Patrick Steinhardt
+Topic: Repository maintenance long-term goals
+Leader: Taylor Blau
 
-* Already working towards, since git 2.50.
-* Allow innovation on the server side on large binary.
-* The design will soon be up for discussion.
-* Allow migration between different object format, and allow to be picked later
-	by the implementer.
-* The planned work is to make the new db more pluggable, right now the work is
-	still about refactoring. 2.53 will have a proof of concept. Might take into
-	the second half of 2026 to be done.
-* Blocker1: The current db format is still not clear. Particularly latency perf
-	related issues.
-	 * Might be using content chunking hashing, might be using existing db impl
-		 like cassandra.
-* Blocker2: Second problem is how to generate the packfile.
-* Taylor wonder whether we can reuse the current object db, but patrick thinks
-	the current impl is too large/complex to adopt. The current refactoring effort
-	with better abstraction might speed up future changes.
-* Gitster wonders whether we can just use the hash of the chunks' hashes.
-* Taylor also thinks a new obj db might become just as complex.
-* Patrick thinks the new obj db can be more maintainable. Starting off with a
-	brand new abstraction allows faster iteration.
-* Rewriting obj db in a new world might be challenging because the pack obj is
-	so intimate to so many usage and optimizations (e.g. bitmap), also the need to
-	identify big binary obj over the wire.
-* Taylor thinks maybe we don't need to rewrite pack obj, but abstracting the
-	packfile could make it worse and more verbose.
-* Patrick mentions there's already many other adjacent projects abstract away
-	from the pack format; e.g. jgit, libgit2. Jgit initially already identified
-	Casadra's perf would never work due to latency overhead.
-* Taylor suggests we identify a proof of concept with comparable latency to
-	existing obj db before doing additional refactoring.
-* Ezekiel is refocusing the discussion on targeting large binary files. Maybe
-	with large binary files, latency degradation is not as important.
-* In git, we already have a divergent code path for large binary files, we just
-	chose to store them in the packfile, technically people can change the storage
-	selection without refactoring.
-* Patrick still thinks having sub-system abstraction would make code more
-	maintainable.
-* Taylor is supportive about some objects can use the current db vs only have
-	the large binary files to use the new db; at least we don't impose the
-	overhead over all objects.
-* The obj chunk design Patrick proposing is meant to benefit both client side
-	storage and server side.
-* We should resume this discussion with more concrete usage, right now we are
-	still talking about potential scenarios.
-* The premisor feature from server side cannot satisfy all clients, since some
-	clients don't want to use premisor, so the server side might still be expected
-	to have the large binary files on disk.
-* The packfile url might still be the main direction we can use to fix the large
-	binary issue without doing exploding obj chunking.
-* Another benefit of obj chunking is to reduce hash time for large binary files.
-	Gerrit currently sees 50% of clone time is due to hashing. Parallel hashing is
-	also possible with obj chunking.
+* Taylor's talk was limited towards the end. Could expand on that future work.
+* Constant repacking into a single pack was historically the major problem.
+* Doing that less (because of geometric repacking) helps, but it's still a
+	potential issue when it does occur. Gets them 98% of the way.
+* Future items were geometric reachability, ?, best effort gc
+* Previously during geometric, used to accumulate loose objects too. 6 months
+	ago they changed to an approach where the big cruft pack could be excluded
+	from the midx.
+* Challenge would be to do a full complete repack without rewriting all of the
+	midx chain.
+* Because bitmap is tied to object order in a pack, need something like
+	tombstones to not break the bitmaps. Need the tombstone to know that we don't
+	have the data.
+
+* Unitary midx idea - Taylor designed the chained midx before he figured out the
+	repacking strategy. MIDX and pack index duplicate the data. No reason to
+	de-dup other than for space saving. Could even skip having idx, but plenty of
+	old git versions can't read midx.
+* brian - there may be other implementations, such as git lfs, that don't use
+	midx and object id mappings in pack idx v3 aren't supported in midx either.
+
+* Nothing preventing you from having two parallel repacks, one that's geometric
+	and one that's trying to do an all-into-one.
