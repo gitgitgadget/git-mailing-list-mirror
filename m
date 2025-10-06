@@ -1,113 +1,102 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68799A932
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 21:20:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D5C184524
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 21:45:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759785615; cv=none; b=TaSodEUSt3k5hmIU+FZtbE5H130wzzya2Ns1BsTTwnO5gzliL+td1Pckn88AwHBMwqSKqRZea8THg3G5NdIlvJXLO6itQqwvJB/8EMQo90GtTVCWMCGeWnCthimq5+64Zgkq7ovV8bWCAjXUfAARvuhCP4+yAAgseH4gy8rGnGQ=
+	t=1759787102; cv=none; b=K8D0BZ+ceLMhos9E8D/SvyiuwOEXXQ778sV9Wi+3HED4uxAfZ0D2OCX64Svg0nK+XkQ+pPaBN/O5Nt8FLvmJl0W/ife7JD+Zmg4czpxIyGn3LOERHVYHOWCYmwtxQVdp4QWqA40YaOYHmPcTI97e9jsFyJhwjaLxEd87aNP0Yjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759785615; c=relaxed/simple;
-	bh=//T1xKp47gEC1dykaeMkqzZ2o2ESvOpA/cbbEkHBRuU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Zq6qMtVju0ogVrDRn5GsCZyVGxSwjId1VtJOfqS55inA2EC6tlnQLVDj4qZu/UxUGzdrQ5w3c8cLf77nkhE3983vRFwRIMIIh9GOQhbvxcL3Vw58UcTWY03C7rN0WLB3fJG1Oa5hG6oxyyRHL5zholi4IyTOZayhxqbTFR/RK2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=AZWrHPVc; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1759787102; c=relaxed/simple;
+	bh=QYF3qJmOVPKA0pfNBR87Bd1uo7d1g8XfXilAYDyJXEk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sGxVpLs2zuKdZwiZc8z6vMfZzD2rYjtvvVwd3PBfOwc7Kt5QpBOuVYJPRxqggHqyOShEgOeczKTH9z0Y0S1/tXsUhAAHJjvFuHNIJm76XzawqNdD036+rJdyHjDJ1Z+4zgz76Y0pqFr24ipbDkyVCl0m6orMaF3D3ovo6qZZqpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D2tYiZ1Z; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="AZWrHPVc"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1759785611;
-	bh=//T1xKp47gEC1dykaeMkqzZ2o2ESvOpA/cbbEkHBRuU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=AZWrHPVcgQcP+V65WiRzr5bEM3F36a969mt8Dfy3aIKPMhafU2QjhsObIZflNzfT4
-	 hNaA67CW3kF5STY3oYQNCqzeMPbuEHJ1MrSWvE6Al++TJIGmhtfwMPeqfTHVXRO25j
-	 oBqTv7uNk7hbjZtHMu5pppiCtsLWUhGVwa0G2N4o6SS8qVh8kAnZ+ueAyoOY+TYfbM
-	 EiYEfPj87IbFxP0FIiZGW0LQgEACdH550Fqf6pKbx9Ghko/RZaC7our8IqblGSUxuc
-	 6Y17a0ICh2YyNKkNjlL4PqHsPXqyupUumrBb4YybekshUZdTONyGwjAb5JCoiCzC+S
-	 uzzrPutXTeP7xfY6cMtR1h2IfrwA8qkwBLjzoyY4C3eo5gtCIlgjo8P0Vakb/AsG20
-	 s9OfEn9M5+HpgPAfzxQ389Dyt3cqAshI6gXX5e2Xo8qtgVmbglwJlhNalU/qu8MOXv
-	 UnZYSlkmK1eLLjGjmrF1t6p62hfA7ltTwrbLM8Ph6+hul4rRrTo
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:1cc7:db20:f4a5:abef])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C3A56200C6;
-	Mon,  6 Oct 2025 21:20:11 +0000 (UTC)
-Date: Mon, 6 Oct 2025 21:20:10 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: phillip.wood@dunelm.org.uk
-Cc: ions via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
-	ions <zara.leonardo@gmail.com>
-Subject: Re: [PATCH v4] libgit-rs: add get_bool(), get_ulong(), and
- get_pathname() methods
-Message-ID: <aOQyioJChUkJOXRb@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	phillip.wood@dunelm.org.uk,
-	ions via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
-	ions <zara.leonardo@gmail.com>
-References: <pull.1977.v3.git.1758945111.gitgitgadget@gmail.com>
- <pull.1977.v4.git.1759221968318.gitgitgadget@gmail.com>
- <0cb55558-a48e-42ac-a80e-a24ee2be55ee@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D2tYiZ1Z"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-631787faf35so9925399a12.3
+        for <git@vger.kernel.org>; Mon, 06 Oct 2025 14:45:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759787099; x=1760391899; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=33r+LESdz3yvVGv6qz4rjsDnDAzwOf5IbTMs/AiDg10=;
+        b=D2tYiZ1ZuZE5sf2i9Y19N7B7nnYHw6rbgVfv77jcbO9LFez05jYUeXs37vz0LCH9sn
+         WhLgWptlrlLxtaXRPQt+Lf7MhcfY12ANU+qntWO3s3mjHrIQaYate+dO2f25xX6uwNRl
+         yOmArTpRqFx9XXgNmJnn/Y1+LMHCEnlqCTAt7b8avYhKDB1M9scHrOpLCjyDorCpxPkx
+         9/W64HEtC0EZ6qtPzsJ8tKmKge6jntTRNUpQGWWniB+/j5axG40o4RLGGEnU6WsukjZ5
+         VVIu/4AHrhVzfiU+G0bOCQnjvGQsTpdL4wbVf96uOtV8cWFTz/Yl8vLg+CM50etp1axY
+         Abug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759787099; x=1760391899;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=33r+LESdz3yvVGv6qz4rjsDnDAzwOf5IbTMs/AiDg10=;
+        b=bRLqU4uuVg5WbmEOkYiLp1NsJ6IlBP1gGIOh51O8GDW0gJmmFr12QkyBR0ifxth4jl
+         SAudNMPdj/baAK8/BC9OxpFWXJ8+wKKc7/tK+giSpGmZ3hNuCyRG1WlZBFQFl0/4iS5u
+         rfzAs67abpnjf80xfgO/ojiVw9CsWIJZycXZbJ7jfuQMVh8xdD3/gNSJ10qgJdzTe+wT
+         htybc9yEoPyESxm8jkyUmchYPYpdZhDxi7rpVKGolMAItSjgD8zINoUuYrl/5RzKeeUS
+         R5fvDI3pueD8sNWsZlj2F3e9XpiJajXm52IlV8urtnsP03ZK4hzniv0ntrRBrvaV8iD2
+         5eYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXotQ+oe9AHsTYxsXD5VZP/kBDkvfZO7XOseGz7o/3SsorcOmphWR/+Vlda+5ztD0Ix0ng=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwN/dhr9UjkUyU+1ur/zrai7h1RwlQ0O7UppAG1D04Tt1ZElBWW
+	PFUIWcfXJxXXmHwme/DwblAybVHL8E2eDY/ITD/NCTL61jDTcglchCCHNfEUGohToJ7EkUssG6U
+	gi4sE2XtT9bW/lLwT3b9Ojoih85Ao3pk=
+X-Gm-Gg: ASbGncsQop5+GGr/1+4NiIXWhfwun3/073tSlNe2sOwnXhPyUdSbetI6F6gfmiBaecT
+	D0uGsEjI73EHgDlsKcMNm/54hu9TNDRibnthKRmySvX0pcCi0MdeEZY4F8dOMIikP2JnP90fb+Z
+	kdyPj3O5Kfjn+2IkBG9dwYVp0vwruCOgKFS0EgzIfPj6/ia4VxHvH7BmuhNc+zjMHH7stXFXspP
+	QtuHij01ghEvSBGR81YXJwUySO607ANXxokLq+A7tWz8CvUEj5TLeHa6VeEPs0j2A==
+X-Google-Smtp-Source: AGHT+IG+AFq8Y3jm1im6W9/ipUjbM14lCv+7okUP3OwNhWDO8cQ81eGL3ln1nMSpBKTz+aAreE3mOk/YXoLjNLY7MX0=
+X-Received: by 2002:a05:6402:354c:b0:632:67ba:f9a7 with SMTP id
+ 4fb4d7f45d1cf-639346c7d6cmr14739473a12.2.1759787099349; Mon, 06 Oct 2025
+ 14:44:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ShvnO/rbFKqEE0Lp"
-Content-Disposition: inline
-In-Reply-To: <0cb55558-a48e-42ac-a80e-a24ee2be55ee@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---ShvnO/rbFKqEE0Lp
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <pull.1981.git.1759512876284.gitgitgadget@gmail.com>
+ <8df4c59c-4d27-4f36-a231-f7af32ddf149@app.fastmail.com> <51e0a55c-1f1d-4cae-9459-8c2b9220e52d@app.fastmail.com>
+In-Reply-To: <51e0a55c-1f1d-4cae-9459-8c2b9220e52d@app.fastmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 6 Oct 2025 17:44:47 -0400
+X-Gm-Features: AS18NWCg0hALzXYgWNId3h1FRAwvKm40N9q_MGyyEHP816Gd_Iix4oCULOwNmuI
+Message-ID: <CALnO6CA29HA_FOQAJp_bkskKF-6Vy0_SKVL_OyJASByvKEZTqQ@mail.gmail.com>
+Subject: Re: [PATCH] doc: add a explanation of Git's data model
+To: Julia Evans <julia@jvns.ca>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Julia Evans <gitgitgadget@gmail.com>, 
+	git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2025-10-01 at 10:15:28, Phillip Wood wrote:
-> [I've cc'd brian to sanity check my suggestion for handling c_ulong in ru=
-st
-> 1.63 which lacks std::ffi::c_ulong]
->=20
-> As I said before this wont work because C's ulong type is platform depend=
-ent
-> so you cannot assume it 64 bits wide. Looking at the previous discussion[=
-1]
-> the reason we have these fallback definitions is because std::ffi::c_int =
-etc
-> were only added in rust 1.64 and we want to support rust 1.63 as that is =
-the
-> version shipped by Debian oldstable. I think it would be better to have a
-> separate preparatory patch that changes the existing fallbacks to
->=20
-> #[cfg(not(has_std__ff__c_char))]
-> use std::os::raw::{c_char, c_int};
->=20
-> and then this patch can add "c_ulong" to the list.
+On Mon, Oct 6, 2025 at 3:37=E2=80=AFPM Julia Evans <julia@jvns.ca> wrote:
+>
+> Thanks for the review!
+>
+> >> 2. Don't mention that the full name of the branch `main` is
+> >>    technically `refs/heads/main`. This should likely change but I
+> >>    haven't worked out how to do it in a clear way yet.
+> >
+> > I think this is worth getting into.  This is a pretty
+> > user-facing concept.
+>
+> I think I'll see if I can figure out a way to mention this and at the
+> same time remove most of the rest of the references to the `.git`
+> directory when explaining references (which you talked about
+> further down), including packed refs.
 
-It's just fine to use `std::os::raw` in general without needing to use
-`std::ffi` conditionally.  I'd just default to that until we move away
-=66rom Rust 1.63.  That's what I do myself.
+A colleague will be explaining reflog for an audience tomorrow, and
+decided to briefly explain refs, too=E2=80=94which tells me this is
+much-needed.
+
+For refs themselves, perhaps "git for-each-ref" is a reasonable place
+to start? Since it tells you the refs you have and how to spell them
+explicitly regardless of how they are stored?
+
 --=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---ShvnO/rbFKqEE0Lp
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaOQyigAKCRB8DEliiIei
-gWm2AQCM8qfM5XN66M3efxke853KucPbx7naKvbindqBfDroNgEAj2JUOwFAz+43
-IA0NRd60pBRA9eeF/dEdVdqTJy+JXw8=
-=7g7q
------END PGP SIGNATURE-----
-
---ShvnO/rbFKqEE0Lp--
+D. Ben Knoble
