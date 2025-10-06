@@ -1,128 +1,187 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526B3221FA0
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 17:06:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B595F23F42D
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 17:18:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759770408; cv=none; b=Ir2sysbGOKg6l2I7yKvhibXGEi3+WmugW4tVeH2PJVfGqOWjEcNMwsmBrFUUQ0fZ7A0FSpkrSqDYe/vYkoBGnT5SJGNi0IP49p3vW3dkQuT2H9PGqQoIsWx+1XdOX4cR+PjMlCMwdLXzNw/IALXnlvgLfFCZYfbGZ6GCoRWCTlE=
+	t=1759771084; cv=none; b=ZI4L7PJlqF03vqbyNszXzazE3XvxXgzf2lmnlYL3LvpM800YEsEYts+b+WR/Ta+vUFIQHwW8vV++2ArdlSv33phht8SNN3uqSngyD8PCSsiwT3aEkitdn52fmamnbbNpEUjHH2sIxDc7eiJe5b5Efp0FHiYCNKAhejT+3of71Xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759770408; c=relaxed/simple;
-	bh=M6J3+p5/e1QLMScec1rdDlhvSs6wZkc2lzl567M0v8g=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AKX4jJmwnmGICHPN+irG6Xex9YgiUWU/fw+r2qG7Fmva3UGF59uWR8PdYARbGF5U1WHPVWnov4fjBQ9tPLZmRt2X17H09/hxRm16n49I/nJo4NcvpYRfOkXjeTbb5mGhwS/kHXlD75/egddju0P8uQ3kgS7cFZHmk343u+CHEEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I7WonGch; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZwIba+hY; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1759771084; c=relaxed/simple;
+	bh=Xvbppr2hm5tpYp+BTigb60r0OrtmW9i7oMOBI61EK6A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Xh2acWQClogyM7kwQYLOe13GMQ5TvDomS8KJImheO3bQ3DAZi5igxTAf1Byv1mNtqS8zDPOcRdnsvJOLwsuLq0qQAoNl4Tby4xR/woaMSO6gcs4bGxMTFS9s1cH5hrqK4i+Cb8n0aQvC3d32YbbmUMKNstS3XrcnpNrNyTGivzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=XU5SfEGE; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I7WonGch";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZwIba+hY"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 598337A0102;
-	Mon,  6 Oct 2025 13:06:45 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Mon, 06 Oct 2025 13:06:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1759770405; x=1759856805; bh=pHLWQCHWH3
-	QC0KWURImwFcTDd66bDpiLCPu0JEdNigM=; b=I7WonGchvOmam7lUUaU3Pva/XJ
-	acPMOjuAxHYIwpE69Fno7kBMrM5vrg3wee7ut6JI+CpCOPA/+rhSCBtvK50o9O72
-	djuWqj7Ca0ZYnQV4k76JSQx9O4tFyHj2gK+27VzEVAREVFtXX/ZqyNQJ9OZd/XiQ
-	PtsVvcLuu70xZyh7xufQFK0cmk5vXTkE8Z0S3/gzdzVsWCCp21l6AVTfyU0NxoWF
-	uN0dgWA4pUHvGTMEV4g3l5avVWwS4jq942M5EpblisOOSWO0Iyb4joNAtUzeNpJi
-	Z611F2vZGPlVWvPy1dfyJlL3/XkDoXw1YVigXSY4iAphVj9pCLz56f7j4VkA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759770405; x=1759856805; bh=pHLWQCHWH3QC0KWURImwFcTDd66bDpiLCPu
-	0JEdNigM=; b=ZwIba+hYtMkFWi1N1//CEUa6hKxYwpI0TvK70dllLZ1/IHPUREM
-	5BMvq3MYzhGRPZQC05mM6Rh1qlshaMJ/4nhYXf2bPiaIdF0ZRhrDuTQrSXSGgJo9
-	Gm36lAbcuVFd+tPBULqf/3fOneFGmVlzdjlg7o65yMMOQHbyqV63juR9Exq8ViaD
-	VT5rreJ1pmGHk9INcGH4/U+Ics9uCBRGm97Bxd5vzsIWfiuvim7g8Yr2VKwvQo3Y
-	CEb+XjbLB9cJg6UfWKG5PJSDn2TC8ry09clVBBSxWd+zuO0IssEDJvFnK6hS4eA4
-	BRFFDc3R1W8ytpZu4cGCg2GCu4XnUy53nDA==
-X-ME-Sender: <xms:JPfjaHWUKM2IJe7TTEWh6DQZ2texMSFy8mILU7-dIE6jhaJZeMN26w>
-    <xme:JPfjaLa-td6CkT-GeA31aikxGKXEuIoRGI6KcHU1syYg5BMuj2vfvMoYE7M8pvXK0
-    SCLAIGnNbq9Q_68LU5Shf9T2v0bI7FChZwanLiSZP0FBam-8bjtAg>
-X-ME-Received: <xmr:JPfjaOzw0ojUs-EVuU4_FLycM8wxN6o_vHOsi_QESR8DyWlP1BRAP_GRyRPUWB2HElFMNJ6wdHDOsXqqS7ynClzef5h_SFpvRrvq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdelkedtlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorh
-    grrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopegvmhhilhihshhhrghffhgvrhesghhoohhglhgvrdgtohhmpdhrtghpthhtoh
-    eprhgurghmrgiiihhosehgohhoghhlvgdrtghomhdprhgtphhtthhopehpvghffhesphgv
-    fhhfrdhnvghtpdhrtghpthhtoheprggrrhhonhesshgthhhrrggsrdgtohhmpdhrtghpth
-    htohepjhhrnhhivgguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhs
-    rdhimhdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhm
-X-ME-Proxy: <xmx:JPfjaL3ZgrqvG-AErRO7SthXeZGyqtNla9xwNehXis6-_ruEiBySZg>
-    <xmx:JPfjaPkZHeBDD8631NQI9c5xQsvdLVXJD__SJmWoFSkHDBpiPVHo7g>
-    <xmx:JPfjaK-WRJx5fzGstC-zw8f9rhsHu95Ufd10gfqJoXTvEV7h3FRBjA>
-    <xmx:JPfjaFJwgp3gd-bak61gjUrr0EWweIGy9DL8A7drVYYz_lnm0g-NnQ>
-    <xmx:JffjaFxBIzCyxiH4BD9ktCIIwxGsfPeUSe_dVR65iKV3B44lom0ojigk>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Oct 2025 13:06:44 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org,  Emily Shaffer <emilyshaffer@google.com>,  Rodrigo
- Damazio Bovendorp <rdamazio@google.com>,  Jeff King <peff@peff.net>,
-  Aaron Schrab <aaron@schrab.com>,  Jonathan Nieder <jrnieder@gmail.com>,
-  Patrick Steinhardt <ps@pks.im>,  Josh Steadmon <steadmon@google.com>,
-  Ben Knoble <ben.knoble@gmail.com>,  Phillip Wood
- <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 5/5] submodule: error out if gitdir name is too long
-In-Reply-To: <20251006112518.3764240-6-adrian.ratiu@collabora.com> (Adrian
-	Ratiu's message of "Mon, 6 Oct 2025 14:25:18 +0300")
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
-	<20251006112518.3764240-1-adrian.ratiu@collabora.com>
-	<20251006112518.3764240-6-adrian.ratiu@collabora.com>
-Date: Mon, 06 Oct 2025 10:06:43 -0700
-Message-ID: <xmqqy0poot7g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="XU5SfEGE"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1759771074; x=1760375874; i=l.s.r@web.de;
+	bh=5eO6afJORU5ivj43ecu3ALiC3Bf61HbaJvOjWNwNMNk=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=XU5SfEGEjd6TicwSEMtsg7c9pW6UwwRmjZLtqoGBKTk1ennmMhI5kcSScMn3e3bN
+	 i6B59PHpH+3ubj47iRDKvqJUFJUey/NRFjK7YjM2p4ZoY9nrS3acS2uu90GeCFu2A
+	 3lxsUABfKQSUkre4cTbDCBBA4dozyOiGeKz9bsQZKYa9vh7/1/gFcsf6Kdc+alkAi
+	 Rp3et2tsmssCkMqrmmHc1ad7etb0rcY51XBt/DaR38EMaEm9jdTHE6HdmJzjIjrnu
+	 8GMwzX6naw9kp875Im35xa4+/aAUdXZh8FY+W9p3R2BvJKwqas29wQp1MTZcVxkM0
+	 oPutnHtiHWLM8JeQ4w==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.2.31] ([79.203.16.132]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N62uQ-1uCYVm1BJw-00temO; Mon, 06
+ Oct 2025 19:17:54 +0200
+Message-ID: <16d5908b-bed6-4ad2-bb27-9c6523f904d0@web.de>
+Date: Mon, 6 Oct 2025 19:17:53 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/5] add-patch: improve help for options j, J, k, and K
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+ "Windl, Ulrich" <u.windl@ukr.de>, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <c72518099a3b465c8761e41210fe3fcb@ukr.de>
+ <17ef29a7-5214-4729-82eb-92a2af33e465@web.de>
+ <75b08ed6-4f0f-4ede-b84a-c2f1c3d15734@web.de> <xmqqbjmlrq8g.fsf@gitster.g>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqbjmlrq8g.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:QqUaH+r1jpFp6wKxjQWauRYhaBlL4gbOM3GDLqUmYkfiCN3oSKP
+ U6iQ/3kwjKqFLw4yLrc0TZ14u3YPN0UQfXSEbi4EIEMbOtgmBsiORjVfdoPSPjT/Ly2U0db
+ QJp9l+Ghj46L1jAUtARE9SxfDBi4GAG0bUBfSGFxtf/G6LYNOxZih9Eop3HACwK9CAeaXEx
+ iNYlnjtpbP/VNORupFU8Q==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:we45SR2unqU=;LcnziR0IXH979w31Uxo0ciQU5HZ
+ WX7UX6ZaV7mNk8ECc2mpoWD/rAhW4RAYv20WdbpjZ3zRkwtrUusFrF/2+A3JMVZhfaoL7QvJI
+ TxeUVwZVnHXNEYlHGEVUaWt3J+B83tuM2OKlktPX/UZjw/eJwg1ZmpmHwLfK1+IG1bo70EC8K
+ 6fLBmT8M06O0e51+dXArXP/qXCuZWJ2YdJ3s3d0Y8sFYBIdGVIL+KEnW6gPfGqRj6eIO3OiN+
+ Det/NU0h+E31xFsDq7keZjxN1lJu+D7f+t+iQeBQ31AQfJnPjjzYAKiklXL4HUTeYqPORvZs8
+ C5rUlm7+NDrCXXncotRv3KreWyE9Aboxun0KF9eNgorUYwZurXXKk1K2R70D6qZEKTqtTFZ02
+ X5sLauwXLaAdX7DjU3ey+DFwAjB9jA4ZffnIGpcfiPcIfIVA/YkeYjWsknVC2GfVgCKunO/zF
+ miU8sI80MhDEleXX4Xifjjh1QRR4ngNQKoH17MwCTm2Y+471h6CvGVEjbf/l45y15lrjn15GW
+ SYbBdUwB/MJ2vbeRDIThkPC3Y1BXjphnmBFVmfGgSDNSbkEQD2zqZ4NswCckk5ktTwu3vJroQ
+ JxfnRhJoxWmVWGAVRs4NoNpAeeVgGoSPAo/Q3fAFvfghw5LTG02eD5VFeKOOT9fG+OlSjS0C0
+ Bjc2CBSLu/ZvcJZSqMANyRVbkL2+F/kdNIibaqZbiQ/id0TtWzYRxKf8Cgk1zEP5huIP1KDdT
+ hKaKTV3ERa9Uwcof0XwQP9FAUOZ5l7+4qWHm9flfLkZ1vBpHEPDMDvJ2uRE2O1+xtPqUBsPny
+ +KExngA2nC8xdvE3qhbrkysVWrZBCHNJav49X1YI56r7YB6beWLe0LLEsD8zicHKHUtFKVeOu
+ m4Yaeyfhpj5NSaFEVQTCMriBMKc88DhKTUMuLmt45bKtediPXBVGV8dilcWpXkojN6LgUD36I
+ GDtIVlUK/pKk41+I6J6jRTJ5IbrUI4muJYdwbDE2sldo+8+d/h1QfslYHq2dDR8wLBjGPVVCQ
+ CVLXlOXxCBQZFuoordaUDMSONg5SoVp2L4Rsib4NixthKROLnKSrqFaCmWa7V2oQCUiOiKU83
+ L2GzEj+PiVGCxV9j0FUXKg/l2KqmFyTVaGQ0LCop0lZCBUAkxlBqQhtfwsRST+uNGFKDgarU/
+ KFoaHh9Cs7yNdk/oAGUf6d46Rg7Rec26ncHSiq5sgLNQ6TPiRYrCsl3FzFUDSYL5F8cXO6seV
+ QEo57mHwcVId6/rNg7vxcSHPzDR5lFW+MNSZhzH/asknGSVqh4rcmpEV6827pRAHKuYUORsFq
+ TJskN3sr+vde0A86uw6sFld6d7gDz32vCUqdqU4ekrQUIKzJUlSi4ETYmjETwSi1W3yvkxhdA
+ xtxMh9fqGI+Q7ARmwK5eHHNpLpxtn4t7T9nPj1diWLGiUxqgwYmU3jFoumelCecZjhzZJzSWq
+ x0QHgS5ArGj4iF7RtCC25IxqvYU8IXbk14sGYa9ekwFpX9k7aT8B2ZXxm8C+X/I73UWBAAfV8
+ tZfqvnDC4dJ7pmF7LKqfmuVNe32qm95NxpgSQytevfVTx6OkAbIbVrZzKGCC7p5Nc4EekjvsZ
+ ENAPFatz0A0HoHxfT9g5s41narpvN2zxCcPoPk7TFxOraoJC9K1IL1CJc9Cd1F78dNFHG7zz3
+ 6zYuHPp3Ch7Pv5p8mRa3PsgcvaHnFK7mqMfS4vuQ8phN2sMBby5dWl7ZixvnGpVNbBb0wssyW
+ V2ddMNAv7xHx9M+HAA2UpDjLwtTnGJLRh7C7/7383JBdWiB/4Sa+xFl1KbW8WxdwGICOU5wcT
+ +CK85rLjinlKwuB/ke7JTDj8KirEjCtlHwcgK0UmkMgjkdkifMSXLZIoNgRPzBOrpTXPdcoJZ
+ zTbKER56fm9sv0/8iUa/jzIkylSOSRM8njfo8AAer03JgpU5pHgW6OpVyQh2iJqmR98RnECIs
+ 0olzL8hGfgLXbV2tXZnmtjDkmjJTuGyqox9T9JLR2qHlFR4H2/uvLDr0v9b2PYnFztzhYu06n
+ 8AWbmiJddSyfIIhUTirr7fg9RQPEs2k3xbcZu9xXLB3mZS8ITRWluUdUc9YdIboJFhtbrKIPS
+ NbApLKKSShm/QuWdjqJrL8UaHTMwFhTAAIK7uGVphzLNCPvDClMWtODPtZHjyLV+gQMINam4C
+ 4p5gaoJZTd8sOXAFlfJej9ae3qm7kiV6VoOq+oEAFLzQWQ5D+mSfXVOSn6xzd3oEcanvvllMd
+ /XY7tsfI5d9l22TlS8/T8n015G+HrMnMkIdUWfFqGWzpvMYEJwnGWBpw6i2OZ5e0Rlxq92uLe
+ u+8tNqiSebyDZb+6Ei/uHgaPXXjcndYBDlWlykBlH1tA5HPygmtTjZVqFtATS6cx3QZDaVM79
+ RVwV+peecOyzF07s2Cf+EtjZrDdt/rrZts7qEVl0X0ibmWSiUk+eLjxJVZcAY7vhZf3UgDtVy
+ guc2MkNrgOuJdG+yAkzHNf9EQdNG8ONWl9h92U+sYfDC9u6fKIS7DtdVmhOSvYlIdSkxHtmX6
+ +uCC1LuwBfcaMM5xHAOLaU6Rc998aVowvt7oPdI54CULb/BpaOS0WD+gQ5rfml/LcalyFXLK7
+ hNaLUEHvUOgDoOXuYWmJkqiWXoZUhgVuj5jOYEF0hPKAxodpXPkagTThgHb0kq6XdXSGr8ypO
+ AlM8qSiK/ibLt0iLRC/rdgq1V8ed1hWvt3e4OrLc+REH35MKP8UgPMZJdjD9sgGFQk79Ft1aa
+ R/8YRXLP3rGE+bcAA7h7Y39RDHOdke5fcEI74Uqy3UQpzMqWJI7vum+8qEtv9qdSm/69lXGy+
+ xU4yESXkGQkkRHVND/3MK8pJu4v+B11ixDuxJtANKlSGHY9bbnza+rRB0p9DQiQu9EgWYD3gk
+ bec04e4jNASPojKtZnaIrQbdII69vjj4yflEizUkH9tfNQkfxIsY9ZUPyvPif7OQd+UBZo8v6
+ 7/2iDzzqJdUN4AzPZx/MnNGk/jePlwT6xILvpBxMYKxOnewBmeTBsM9O/MlrFThpDWCIljoEJ
+ Ipq7ZjVj5/jAQAPGTHjcaDAigeJ2fW0bf4pxnVktLq61emiYEIUE+b2MzaoCimh0VVwAETTY/
+ CLtT9h7orvF80gCKDPZdEijyAZ8Dv9Mgtf1BTx1Mnp1XqKUcS904jRfaVmBNf2H7wyIaSj6GR
+ fk6qcWmSbyW6lgQvaQ0azotZxhN/CVgsObz7cnSnVtpjRUlykrG3S/5QLd6hbj4IFhwn7JrJt
+ 4P4SRD8JNv9Tw4c9JHn9aMqGVsOqGh9x3By1Rfb38EMkHrzHJ/y6tDfZbpMwthYTSOMO/fR3n
+ 5CRpp7veVw9eXDH9w83aTUwkgttnJoirZIVmzoZYx2qs95al4vsE4Wir4II7HTuQCmOvFhmr3
+ pIuzwbKwF0knJHEQ5fkt5phCuerPx43Na4QcLU0efhEouFol5zppSoKHSuH02gkiAh2pXL8Q8
+ GIBFzAC8l9R7UrwN/U40EaWajCl/ysebZKSWNB/QgJLT+xjeQOibXt7vE9a16MYN+jqeh+FB8
+ IutgTKnElhFnD5D77dR8J/zb0rzco/X4BQmTISO6sQHapvDT13guNTDBd4SnMITDkrL2d8qKA
+ pBZss0HYDvurc3k+ZMoy7IKnfy46N8D43wA6aiFtKkWS813cpz/MV+BnCxqOOExBSb4DtBAGx
+ TEb9y+4BmZCUIdDEU92rX4pFLf/DSDTisAJDRBr8awPVMIuXAQycIFlkj1G791FUZAu46e/iB
+ w5INrHhlTjjMMHUyQDYR4wQRj+Z8xbRKlSr7PfsGpbTqYf05fXu6LeW83IJ0FcETXXOcVJv/T
+ HZWJwMIF+59GgOOlGQKz+ab+ADiG47T7koksh0tu/eO+5QqdeQ71R8wfnjTPv6CsmKw0iSBoO
+ zEJMZd0foPwtMoAnsLE8C3EucOfaKiaUTDkkdnibTNachskW6rK7COvJbbg7xfPccbhE4Zpl5
+ uuM/AeTmqEUhLqfimeJ3330E9NUgg45M143QGe2/p28Pb5MdE6vYjwpXt11JSkuNNzkx+TMFo
+ 0sjLXTfPiUO3HQZsTL4WNudKQagUrNiknvfwdvPDR+6hVaTKrlCH84KdMAfD+mqvpte5WWPM+
+ KqYzP7AkDOYamvIXkyunTPOCZAXxEvwMuXhlXd5l0wywkbx1+E9fMEeFSnuKhrZnDH9ffKJ6A
+ o3AGWz+Zke9NL4ZI217BOcxyiP4YblFm9PkD2lN0sVfDg2AJL1mZVHhLi04GiNnE+n7Tp4jAF
+ 3Fvy458qTHu6V+itaYzf/CB40qmSY2KRp/5jWuokq6lWIaH80CbbRw9yqV8Knhz/6YGGrJXbg
+ JeEuDO4uxAoE0MfwHUjMic9PMzNqRk//eTPLi/pH3SK4rlBOq6cKvjUXQ+CeU/HNESZV2vLf1
+ /qtEGC5/B8p+aJ0B0X7H38RKvf4mxwJIf1WQEk5TipTBYlWlvQ/HDnFzPVfukaufAS9LU7N3V
+ oSWLex9shs01IEX93vwMFkP4YY2698gV6y+moo90aVbmLulPuPIz0VUOkHOTnlCgUOL+ppZRC
+ tRMk+jNo5G7Z5m4fAt4PhmZgKee76B2ckQn5l6hRiJXlmzx6AUjBX5KsomQrWSh0tfxCqYyvZ
+ sC++cwVKfKfHzHacfeqMdx9cQ7sC+zyiVCloPb0IJs0GbniBnS+A5GTKksjY1Iqv7IybKPWA/
+ J6vO3IDxosWcG5kE0eYbBFlkQyrH+EzPklHm6rJ+qjt+96mpSG2g+69NPdJD88/WnPJMb7pQS
+ ASq1N+tSlImvVCStn3muUldJtGxyCz8fSaoCMjhXbI5uZKBttmeUf6CJb85woJBwntppFdtW4
+ qbhbNITgZcn886kITa2Ll+FM3Pw6MNi5PUFD8QMdMqIJRosl9F+IENdDvhrpMoLo72bIFB+UJ
+ EKUSNA+trmF0jN+nGqSvXSEHb3q9/sF+WhEPWeyONMUg46+M48323HWj9eIzt+vijUL6mQ6xa
+ 3US4aso29J0nkzB5Y9NroRn/wUHEseglCRUXhZ/uhOl0s43z0pgVjpnu5ZOQY2Dbd/wKKc4lE
+ U90R23XVxMSTBshx0zP64QkO/k67OlTbpGb+dRGNhRGZcE/6tdI9L/y+bbo0adcVjPQ7vsYxL
+ BLqflU1XF3aazT2Ys=
 
-Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+On 10/5/25 11:30 PM, Junio C Hamano wrote:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>=20
+>> The options j, J, k, and K don't affect the status of the current hunk.
+>> They just go to a different one.  This is true whether the current hunk
+>> is undecided or not.  Avoid misunderstanding by no longer mentioning
+>> the current hunk explicitly in their help texts.
+>>
+>> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+>> ---
+>>  Documentation/git-add.adoc | 8 ++++----
+>>  add-patch.c                | 8 ++++----
+>>  2 files changed, 8 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
+>> index ad629c46c5..3266ccf105 100644
+>> --- a/Documentation/git-add.adoc
+>> +++ b/Documentation/git-add.adoc
+>> @@ -342,10 +342,10 @@ patch::
+>>         d - do not stage this hunk or any of the later hunks in the fil=
+e
+>>         g - select a hunk to go to
+>>         / - search for a hunk matching the given regex
+>> -       j - leave this hunk undecided, see next undecided hunk
+>> -       J - leave this hunk undecided, see next hunk
+>> -       k - leave this hunk undecided, see previous undecided hunk
+>> -       K - leave this hunk undecided, see previous hunk
+>> +       j - go to the next undecided hunk
+>> +       J - go to the next hunk
+>> +       k - go to the previous undecided hunk
+>> +       K - go to the previous hunk
+>=20
+> These obviously make sense, but I wonder if y/n should also say that
+> they not just make a decision on the current hunk, but after doing
+> so they move you forward
 
-> Encoding submodule names increases their name size, so there is an
-> increased risk to hit the max filename length in the gitdir path.
-> (the likelihood is still rather small, so it's an acceptable risk)
+Yes.
 
-If it is acceptable, can we ignore it?
+> (and if so, that may fall within the theme
+> of this step, which is to improve the help text on options).
 
-Just stepping back a bit, how are we keeping track of the mapping
-between submodule names vs locations in .git/modules/?  Don't we
-always go through that mapping and would a half-clever code that
-says "heh, that is url encoded and I know how to decode it" and
-bypass the mapping a bug?
+I see it more narrowly: This patch removes unnecessary references to the
+hunk's status, while a y/n doc patch would add missing pieces.
 
-If we keep track of the mapping ourselves, then the names under
-.git/modules/ do not have to be "decodable" by themselves.  They can
-even be sequence numbers and that would not hit any maximum filename
-length before you fill your disk.
+Hmm, would the help text need to adapt to whether the current hunk is
+the last undecided one?  E.g., "stage this hunk, implies 'j'" if j is an
+allowed option and "stage this hunk and quit" otherwise?  Stuff for a
+separate series, I think.
 
-No, no I am not suggesting to use sequence numbers; something
-remotely readable by humans is better.  But my point is that just
-like you have to make sure that the encoded name you give to a new
-thing does not collide with existing names (you know with "ls
-.git/modules/" what names are taken), you can notice your mkdir()
-would not error with name-too-long, truncate and twiddle with suffix
-to make it unique and retry, without giving a failure to the end
-user.
-
-
+Ren=C3=A9
 
