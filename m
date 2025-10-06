@@ -1,71 +1,70 @@
-Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1054A1DF254
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 19:18:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A771DF254
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 19:19:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759778321; cv=none; b=bJt5zqMb+KfR8aeaePRzXVmCGbt0MmrjEGCsuvmHTQkzd5bTRkyy5+nL3kl/4PI/MWgr/Yw8gH4TUVVqWvCUv3W2Xhdt+RDEPBKFRQyWcwUNcnRfsmhOc7LV+HjiAMl4uDiY9stlAZurp6iRP0l+xFT3IZkkVBqQsMzryEiYJNo=
+	t=1759778343; cv=none; b=QCfXrrJY37j+rhzqrKRfv4jdamz0jj7d/nWa/EPv9JCdBY4c3Y/rPzGtcDVauOJN99LzBr96GOOpfk5mSuolwsuAjfat8CaaB+R9snhAP+JIVYrT6DX/mzXj37PUPI1lmk/iXEZ3g0TVB3AhLi7si7GrAR6+Vdm78OdrUB/2SZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759778321; c=relaxed/simple;
-	bh=InwNyXEdW0kUQoD7ZDfRD5QT1sB07cezAjbQp7EDZ2g=;
+	s=arc-20240116; t=1759778343; c=relaxed/simple;
+	bh=eCVxT1v6xZhvpPBv7qa9Pdm4/RGdz5vZaDuiDOS0/0Y=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fOvVB18YuaqYzabOrozNg+XURDUqe7ASeWaAnCiyFYf6GAAQ4IdZ+OPeWPcVBr8zDDbL/rT74xcA3unKGCLRpjSbo55/hyZguUZVUGZutPod38HVtnp3+04/8CaXei1xtJXYG7SHy0Q/ukHHDBZUZM/1AVeFew3hkG4gr+gyjaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=X2h3NHYT; arc=none smtp.client-ip=209.85.166.44
+	 Content-Type:Content-Disposition:In-Reply-To; b=n8+EqhaD8VUj18KcXr5DeH7aScCqn4X2C+BCHCuELFESeyPACKmlI9bKWsjLgbUxKZju9CwAGQ9PJMlzFuslpRI4A1QBE+RVASVVrCIlEg9OFv2s7hKTuFbxEl0Z9z5l20Ag8OksiSUmT1onoD+cq4Mq53+oK1RzsE7Y6xdO28Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=cryeRtiP; arc=none smtp.client-ip=209.85.166.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="X2h3NHYT"
-Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-91fbba9a8f5so436068139f.0
-        for <git@vger.kernel.org>; Mon, 06 Oct 2025 12:18:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="cryeRtiP"
+Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-93ba2eb817aso255137939f.2
+        for <git@vger.kernel.org>; Mon, 06 Oct 2025 12:19:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759778319; x=1760383119; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1759778341; x=1760383141; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=y6OO2WWxosP3JSAe4B+/csN87ZZFI/Pvope4jzhMMX0=;
-        b=X2h3NHYTsqAI0mCNuoa3+noIQguMrXRu+wRR5nr8kBlAHXf/KHXuaWRKr6mpm5HvHQ
-         MW1tbVCReHvDnZxJD9bRUuEtLLKJTB5Otb7ftDDtocdq0s+fwPHj31/jhnFs2yvq2K3K
-         gIXITWM5GD6xg9kmPl7wd2upNv4GOfpb8lF6z265iRanO8PfvjpBrblA3ip8mxe0mUMb
-         PhPpkoqbp6WasVZT5gV4RO4Z8lwAN0BdCoA+AEB9poBKTCWPPfN+z+O8DeSOwpnFpX/H
-         KNsWYIRNr43n3jUgZP+A2hUI/lrftUPliKIEmZAF9Xqv0aGNCws/MWRQJNb7ImiHg4DU
-         18Fw==
+        bh=5/oTvV8bK6ME0E7FKiEcDkdaHtyehnRVhiYI+9GQr5Q=;
+        b=cryeRtiPXe7ttqQpa5+obF+rltTVsPedwnmMkL42kNN7UIe8ICqGuioqab2mT4uAP2
+         tajjO2gW+XopmYEVIHvrcv/NaanlnENkQ0yZCw7TFnow0R4hry92NoqFOE4A5s3MmdaZ
+         rUxgnEqykyjcxYmQHvAXjvZOvoqytze8/aMHoOF9j9BQ2y2MR07MpxwAHA6U6FrB7dkI
+         htt0t17UYnq3aeKQ9zLJ5cvNPKITog7geRs0+Vfh8XHHBzvUEDUtiSLPnqlgAAcSMLp8
+         5ia9jNm1eZi/5WmpercEUOlKnppjS5AgV/dyzkF1jHP8J5Ld1f3h19JAmHm9H1lOwJ4X
+         2e8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759778319; x=1760383119;
+        d=1e100.net; s=20230601; t=1759778341; x=1760383141;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=y6OO2WWxosP3JSAe4B+/csN87ZZFI/Pvope4jzhMMX0=;
-        b=remPhb4DbX8WnL3RvVwNqLRoc6zWyz/heZZh8PoImlf/b6QRrFbRUiYNiH9qItPxKF
-         SBGvAdcvmxiJo+GbuntNV5luf2d0Gc750/AAPDNbhlkpAc3Dy3b/NwNbjOSq/2HvISIY
-         B/B+X8nOXOiRVdCJiPTMfCPiwvrdAsyvjH5QSzLEaakE6aIlw4PVKo8utwKemNW7xsJK
-         52jYx0ChI2INWqCT+KiiJUyY9FC7xASD/zAC2nWbk2nX4rWAu7XgqjLFqAcWw7su9BlS
-         FtFZGs4/8z3KRpTyhSh99iT7Rc3dYR67y5CinO4/5S/5Wf4xBbt1uk1X9TaAbOeCPhqV
-         a0dQ==
-X-Gm-Message-State: AOJu0Yx3oFAOg84sLYkh+1W1/U63QT9VueA0IHth3cDEGQNtDC+Nxdbg
-	a6xnFJBTAm0MzWk8A+RO7urSUrsevNc5RH9A1hRPLdyN3XWVJlFhCrTvuYtlrEN/ZMrQZJYEVgq
-	k6QX29QEOPg==
-X-Gm-Gg: ASbGncuUMRzy0KqZLiQp1Lrtr0Ew1TB7nimpnMo30u1H8m56AOEjmHE2Mb3oAnuaQ7V
-	r8gJsEijBN3rIr5Lw+Y6Ou4O2yB9054zGAzzNhkUloacBlFP2HwrkNa1XqVGpLQXNRv5dqU9gPL
-	oP5TU8bq5QjjXMXmT78+gGlYfAhcA5SxrFDW6959vItqdVQRgDqvlFqAb9J9I71OoifxZKDXP/F
-	0L7pkkUe5jS6yUcm0GDmkez0UXGv4hayvySAQzKSxWQO2+YmD0gilUR30jCw4ZNfYRZJUtHgsTJ
-	USxPDVaVGfcMvmLa57bRwtaZzjGqIhm3SbfpC7TDulKYm3lnTTxyZWUuFzxPsYJGCfxTMxKO3fu
-	ZQBtemjjiuHRVNfJ/rAbkehycecC+SKyNW2sA5me3o7XGx95guix+v38ghjb+MfiuyTULAQ5Ur6
-	qrHU/25zxEXjsXwaomly7HMmIhAnH1ejtVJkL9+5S3LBaCqhw2iCR1JO2KI2V08Rf8YMksqHw=
-X-Google-Smtp-Source: AGHT+IHcOqd104jDqTd3FgehRFXlvXsjSi4oyKLaO86GVoe8ZSNnvmoM3REyMB1QH2Z/ywHeE1ADRw==
-X-Received: by 2002:a05:6602:6404:b0:911:c5f7:e4e with SMTP id ca18e2360f4ac-93b9695dbb2mr1706370739f.2.1759778318883;
-        Mon, 06 Oct 2025 12:18:38 -0700 (PDT)
+        bh=5/oTvV8bK6ME0E7FKiEcDkdaHtyehnRVhiYI+9GQr5Q=;
+        b=U9q+yANOCApUaGQ0PpFYZI9jXemrJrKJc3hl1f6jbt2HXyncRG8M2KQWrdvRPojjQv
+         oFn7GQz1PJ7CLf6rV12axXt/liQeKfPV1hUOtvGD1dfemwWu+N7TRqJ7tHhRorLbivkM
+         KMYn4D93Ztsj23JTgar3dCtc8A8lnoMH5Ny4pcj1PSLKowViNyTDFLZ2xUx7DSA7yb9F
+         gt/fQB7Y2GzrYwLg5XvNSEdsYpRncnl/vbH18M6y5y9OgggAlmRUFJNt0naig+e/ZOSF
+         UHGY/EMUvGA3CPYnLyvTbOLbb8EDEPcQrHZi2hG7PM+oEHW2Hjymj9MgDcgG+T3bxLOe
+         vrdA==
+X-Gm-Message-State: AOJu0YwbZ8Kb/ayPP+3tqi5eUrrSCWfUdbG+NNHACy7sOS+fUWHWvfLX
+	z4658hBYXo390F7WJTxD9IuBw63lkh1HS5LmbxILKYwQQfgSTDMRrer7PtR9HhO+CbQAsjAfz96
+	9Tt6UDk3Xuw==
+X-Gm-Gg: ASbGncs0Yhj6V43DqVfDJCXTXdmf73u/6F2ppDmkmgEjCHxnYVN1T7h9wkyEz0XDHd3
+	XmLYTtO7BWNtvegLuRjk4gng5IBVnVxOwvrCnSv8EauCowkd0rfAaAWba0qYryYCTHWgqlGjfUV
+	XRAKR+e2CMNQQPyef3EQJl4svepsgOqfWGAD/CJq+Tcsm8SisnmS9AcUKFyUyd1mHUfeKc+CXZc
+	zWBsv3bCSvNVWpjbfsWfYpLwfBy0BG5kGBwwLJwzswMN/xjDdTIJbGDGODPXyiElhNujyzv6TcT
+	aL3o7/FNp/l7fIcz+2O8rkU2qU+pPP/rOfu3ZQQrQOr1M2pfiu7LVsWEGC7IEbRSGdSuDDqK7U3
+	A4ZBLYOHVbArZ6qqIs6MzEgSDV1MUCoJlz4n4xjxr2BoximKrvRzkIGvzEWkgA2HiUEHYmwjjqP
+	Mf0BdoDmxi+f41zzfaktoKxSAGC0SiO94Po6NotSTz3X2gG320Cm2xc7NndCox
+X-Google-Smtp-Source: AGHT+IEcqqp/Je/JzgXivZdSrQiKBfCw+H0iCUBiX8o142J96E51JbVKaE/Yur34OhqKMN3lyH73mg==
+X-Received: by 2002:a05:6e02:168e:b0:424:14a4:5064 with SMTP id e9e14a558f8ab-42e7ac437a1mr172038135ab.0.1759778340953;
+        Mon, 06 Oct 2025 12:19:00 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id ca18e2360f4ac-93a88961d74sm513607539f.22.2025.10.06.12.18.38
+        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-57b660fd5cdsm4814708173.5.2025.10.06.12.19.00
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Oct 2025 12:18:38 -0700 (PDT)
-Date: Mon, 6 Oct 2025 15:18:37 -0400
+        Mon, 06 Oct 2025 12:19:00 -0700 (PDT)
+Date: Mon, 6 Oct 2025 15:18:59 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
-Subject: [NOTES 03/11] The future of history rewriting - rebase, replay and
- history (+Change-IDs)
-Message-ID: <aOQWDdVn4wDeZtlH@nand.local>
+Subject: [NOTES 04/11] Rust
+Message-ID: <aOQWI+hsbZhl9MPj@nand.local>
 References: <aOQVeVYY6zadPjln@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -78,85 +77,52 @@ Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 In-Reply-To: <aOQVeVYY6zadPjln@nand.local>
 
-Topic: The future of history rewriting
-Leader: Phillip Wood
-11:30am-12:00pm PT
+Topic: Rust
+Leader: Patrick Steinhardt
+13:05am-13:30pm PT
 
-* Number of methods of history rewriting
-* What do we want the future UI and operations to look like and be easy
-	 * Want good commit histories
-* JJ always in Elijah's edit mode demo, always interactive rebase.
-	 * Always easy to rewrite commits.
-	 * Always rebase descendants
-	 * Use commands instead of verbs on rebase command
-	 * Git would have a hard time adopting the ‘always rebasing' model
-* For new users, git rebase is too complicated for simple use cases.
-	 * Top level commands to easily do common operations
-			* ‘Git history'?
-	 * Git history vs git replay
-			* Replay is plumbing used by server.
-			* History is porcelain used by user.
-* Elijah - Building on rebase depends on sequencer
-	 * Underpinnings more important than naming
-	 * Lots of backwards compatibility assumptions
-	 * Hooks and dependencies are pervasive, hard to clean up.
-	 * When update-refs was added, it broke hooks
-			* Don't want to keep doing that.
-	 * Wants to move beyond sequencer (git history uses sequencer)
-	 * Sequencer frequently updates the work tree, not desirable
-	 * Git history can move to use Git replay
-* A cleaner version of git history would be nice so others can try it out
-	 * Git replay is lacking features needed for git history
-	 * Trying landing experimental version with sequencer underpinnings
-			* No promise of compatibility
-* Phillip - users noticed when he broke Sequencer Hooks
-	 * Disable hooks with flags?
-* Way forward - land UI then iterate on underpinnings?
-* Sequencer depends on shell parseable state files
-	 * Lots to cleanup
-* Minh - does this help solve problem of server rewriting history (ie force
-	push), leaving clients with incompatible forks?
-	 * Out of scope
-	 * Maybe change id is the more relevant conversation
-			* Conversation ended up on ChangeID
-	 * Change ID loses predecessor tracking, which is more precise
-			* Hard to propagate without Mercurial style logs
-			* Mercurial predecessor graphs are independent of commits
-	 * Change IDs would also help with first class conflicts
-			* Finding range-diffs is cheaper
-	 * Range-diffs used fairly widely
-			* Git, rust, most mailing list flows
-	 * Change IDs useful for tracking across repos, bugs, etc.
-* Why are change IDs stalled in the mailing list?
-	 * Disagreement on tracking predecessors
-	 * Requires a protocol change
-	 * Sending predecessors over protocol has lots of implications
-	 * Gitster - disagreement on what it means to be a predecessor
-			* Parent? Cherrypick?
-	 * Brian - changeId should be deterministic. Reject non-well formed ids
-			* Workflows rely on repetition
-			* ChangeIds should be optional, disableable.
-			* May track too much information unintentionally across commits, projects.
-			* Gitster - needs to be possible to expose changeId, predecessor without
-				exposing private information about private repos.
-			* ChangeID exposes less than predecessors do
-	 * JJ can't access predecessors from ChangeID
-			* When rewriting commits, maybe we don't want the predecessor to be
-				viewable (eg secret keys)
-			* JJ can bump changeId when rewriting
-	 * Gerrit keeps ChangeID in commit body
-			* Rebase and Cherrypick don't support arbitrary key:value pairs in commit
-				body
-	 * ChangeID should propagate to be useful
-			* Eg across mailing list
-			* Can Git more generally and globally support headers in the commit?
-			* ChangeID should be more 1st class than other headers.
-				 * Hard for client to tell when a ChangeID should change.
-	 * Recent JJ commits were pushed with ChangeIDs
-			* Colleague branched off. Rewriting ids would have been useful.
-			* Squashes, amends etc lead to ambiguity about which ChangeID to keep.
-				 * JJ keeps the parent.
-			* Gitster thinks it would be nicer for ChangeIDs to be kept even when
-				there are 2.
-			* When commits split, the children get 2 new ChangeIDs instead of keeping
-				old one.
+
+* Recurring topic from past years, but sparked again by Ezekiel's contributions
+	on xdiff
+* We're favorable towards it, but we haven't previously agreed on a timeline
+* Platforms that don't have Rust support: NonStop, Alpha, Cygwin, and some
+	others brought up by Gentoo
+* Patrick has a series up to let us provide notification to users that Git will
+	start depending on Rust
+* Led to lots of discussion both on the mailing list and outside, which had the
+	good effect of making more people aware of the upcoming change
+* Ezekiel is trying to pass some of the blame to a big brother – he's happy to
+	take it ;-)
+* Ezekiel is more interested in the technical details than the policy details,
+	though we need the policy details figured out
+* Having Rust be optional leads to code being written twice and increasing the
+	maintenance support; having mandatory Rust support is needed to avoid that
+* brian wrote sha256 interop code in Rust
+* Would be nice to hand over maintenance for some kind of (Rust-optional) LTS
+	release to someone else in the community
+* We have lots of global state that we need to get rid of, and lots of other
+	cleanup
+* Long term goal may be to eventually replace all of C, though it's not clear if
+	we should take that whole goal or just start with pieces that make sense.
+	Also, we've got a learning process ahead of us, so our goalposts may need to
+	change as we learn.
+* Rust might be helpful for libification reasons, but tying libification to an
+	already big change might make it too big
+* Rust rewrite could mean implementing new subcommands (as discussed earlier) in
+	Rust instead of rewriting bug-for-bug existing code
+* There are lots of updating that can be done before switching to Rust, e.g.
+	switching to unambiguous types
+* Rust can be used to replace things at an individual function level
+* Just rewriting in Rust doesn't turn the existing system into nice abstraction
+	boundaries or reusable modules.  We have existing efforts to try to clean
+	those up in various ways, e.g. the pluggable object store work.
+* Rust makes unit tests much easier and ergonomic, and starting by writing tests
+	of existing C code makes a lot of sense as a way to begin a migration.
+* Large organizations and governments are going to start pushing for people to
+	move away from C for security reasons.
+* Major reason(s) to adopt Rust
+	 * Threading
+	 * Error propagation
+	 * Difficult to know who owns what in C - Rust improves maintainability
+	 * Attracting more contributors (it's the most popular according to
+		 StackOverflow)
