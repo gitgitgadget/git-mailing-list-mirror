@@ -1,129 +1,142 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9021C07C4
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 06:32:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947B71BC5C
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 09:00:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759732371; cv=none; b=FK49DJSzMAMI3MX6GRSYYzpjsnobJjMbg9i2U/tohslXXdfW2m/2vHz5Q9qUffnzK8YXoCCiSs6fxT8S33JaPWW1cV/xoVA1gnnYCvNXRUr+ApTgkMomeIMSQrLM1K1K4uCqMIzC9SP2LC9d7OGf3uee/uPyg2CMuHowL93bFb0=
+	t=1759741258; cv=none; b=Qt3CQzqMoogJT65AugsNAx5xqKqXT12yLY67Uu5iFlWfetOhZVx0X7ZmerefqsYx08cD8EJTukU545+HWVCRA2lNu/+Bmx0CFkmFnhTc05yL3ROwVhDHWYTCuRfpEjIuPBJP6J+EWEt3/VfeoC6guQMPHTuzP3hEsMUL89LyUNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759732371; c=relaxed/simple;
-	bh=SKvYG7lj9VN6KMWRj5xmZZn9QLY7sOs5fIYNnPNfX3U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X/XFxzuctVU2sCInuV+nBbwokY4I4kmsn+0k2wenoTBlCJm3bIybkQdHZ4K8Bt5Lx5T5+T1vSl6p4+/7DQF3ttUkX5FdGd9kseAJOX7eSBiXJsMr5NUEqyqe+e4vCp90owOBuRjsQuPb7fM55wOXMDgTufV2p003kN8cfkGteMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YgrSZjvX; arc=none smtp.client-ip=209.85.215.179
+	s=arc-20240116; t=1759741258; c=relaxed/simple;
+	bh=ly2QFdyZ1kSCtl9gViJzxGHxd0og161ytDC3Ju36sI0=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=jtIXenRLAGrFZyXbZQI9JAtwaq37AN6bARpAjoTJLKfD/VP5fVcuD/zmIvNOGZa5JBTgbZfVVVu9cgivisQv2L7xwFm/Mxionrtv2uCLiB8J7VErq7QCp+JhjkT+qlwaJD8kQ7ysMzuOJ0gCSqzy8HQXf+44PZOEGgLswTbvKsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j0vHEnRP; arc=none smtp.client-ip=209.85.166.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YgrSZjvX"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-b5d80f5a23eso4225184a12.1
-        for <git@vger.kernel.org>; Sun, 05 Oct 2025 23:32:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j0vHEnRP"
+Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-42d857dcf92so18080785ab.1
+        for <git@vger.kernel.org>; Mon, 06 Oct 2025 02:00:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759732369; x=1760337169; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=nxhdb8ROMgRv+mumCV+jhCN5MrumblcRLd2hzRRKtyM=;
-        b=YgrSZjvXUjEWfaCpEl26AnEmn/9os0bU/LW2dLRcRGXK+KR9vgudgpHo4mUVadfzpf
-         3obBQC0SJHggnCbIvCYEBJWqgNE2LeTCgiSZBNeL0UEtu+BELWrf06iEPNrS/dD5ePQ8
-         DPU7HRE6IBi/xp+DdQkp4Hk/mAeUV6gqdRVk2fT9L6miBsos84yrmby9Cx5pzlOpE4sP
-         wkP8sBEhoP3JJG8DxMxls0CcXcrUl4UAQOUHd28Tr1YCghTqpkHTsF4yYDa4vjB57c8N
-         qUXTZDVuCXhNQ8SMryruM+FsDfBuDhLPbc7oLGLSzGqw8esVKcCEc73DDwMr0bdRz4o3
-         yadA==
+        d=gmail.com; s=20230601; t=1759741255; x=1760346055; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=TtitBU40uwDndfBz4eT4vaLr7GUAeMlrFPgM0G8PIv0=;
+        b=j0vHEnRPXjltlLYhdxGoPW6a2LnNDyVdkanE5UyUb+PPm6S2DeKC9ql+0TZS92e8hR
+         IUFEmhjNrOYjqGMp2E4G0WulSUseI2ynepYOcHLlXLegSLwcnecn1/2Mi6Pq7eM9eicu
+         BsluDXRYhx+LN/7AbtwGVSUYGm7is3ofLcJEIuzKlV0ep4lkWWLC6ft9XvAE5OvDUGQ4
+         4CGDF2Z24hImAqPsPQ8yP/w624Ulsupa/HYwu9brRcZRpQUEHfdKs6km9zC5djBiJen8
+         bPGIz1KCHpIh37UaJsTLk+a9Tvkps1TAP2/Hn+bTFRQMY8jrfVPAWJ1Rvy9bJek61xMv
+         ggTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759732369; x=1760337169;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nxhdb8ROMgRv+mumCV+jhCN5MrumblcRLd2hzRRKtyM=;
-        b=v0L1l+GUuPGQtmqtLXnMa534/lb3TUnTnZWgSvt4Y8J2Znv4fYfMXrRQamHy1LiD9l
-         VOsm5QZ+nuarvvUtsnEQOXVtYlRnMVdHbc1n2VpraRjhU4CFciWKKGd7CZMBfY1H5NHG
-         j46Bpi8s92ezFcEaqnM22KrS4mQescxtFQepZTZyzyQhcMbDapFO4qmLVHHKGAajgWYl
-         Qb9TRwWep/1n1SJ2B3AThYQZjMAXqtCy5cOvhmrr6Q11pwx9ILyY0oQyvBxLOUnMhA9C
-         CpDsvECXIWcCt77Q98icV35pnzI36unbY2gXZWAkY7Qw7HQxggV3p6PkOp7dDf6yu5UK
-         jE5A==
-X-Gm-Message-State: AOJu0Yyv3Xipcd2Lvp2zxgmrN5+y+or/z57Y7Pcf2oaqsP3M8o+U/V1l
-	p/W4Wnfh3H0LMTgSaeBmLbWqEiRIeS6PW1gThKN6i+M4pS1rBJY2a5bjlOckcQ==
-X-Gm-Gg: ASbGncteAlS9pC7MgGoBq5cQJmaHAcqDNVbY2+Wmt77hFvPQ2a9TL1qeH9xdsj1Yb4R
-	B6zEDNpOckaEXGO4UqinnLBlFd5N9bAL9ou//vtuctjx3RiFq/+EaR8Vc0WGmALPVbrYH3xk4BD
-	kbJLMbsjQkyEwp9ROofFHcKVDTglZcfEW3P7Yyq3+U19QlmnbiJuG9A7eBoNigJsMeM0ghOsZU+
-	wQbtfg4Ml9CFu4WQnf5SRi4zWp/Vasc7QM53L1JCjTekN9WEjyYiAWZhOCC4GnJZH9u4I24F/7r
-	X8pFAH+CIA2NnLpysUwQxZMk+iRBpmG2N84jYS5/7XX88fcixi0FIlmT5BGByQ/itC2daTHG3ka
-	w6ERjS+nocUUPgZHiMClagstdXZebCSzmxarTtakuagUNIiwk7TJS
-X-Google-Smtp-Source: AGHT+IEmyEdznQ5XyMllOlp47zpFSUxLG7sN6kxUwRLYtIuEY8CmhDmTuuAAhQqMWoRLd6s6xfzVsw==
-X-Received: by 2002:a17:903:1a0d:b0:267:44e6:11d6 with SMTP id d9443c01a7336-28e99bab52emr140584605ad.6.1759732369315;
-        Sun, 05 Oct 2025 23:32:49 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-28ea1d99ab1sm82968185ad.9.2025.10.05.23.32.48
+        d=1e100.net; s=20230601; t=1759741255; x=1760346055;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TtitBU40uwDndfBz4eT4vaLr7GUAeMlrFPgM0G8PIv0=;
+        b=vpZpcBsVg3/7/wHfXyQE4VhGKITzEKjwjOtgseEWbGIux4wk6CZeEh8JtrjVBgMjI5
+         LHSpFHWR8ggZ+hi+g5PqaqxGTehvwF1Vg3KksEUulZujO6NBo1Mh5bl1nMwtJdw9MZg2
+         aSh6urIFFeo7EubhWbp+G7Os71JOqlN4dSIIIq/r+TEzkCruqcWEzKtciJI1zbMysy2m
+         Gv8Q5/QLSQjvA+pz+ZiRR8NjOLyxuLTZpnJrrsapoWdmC1Oxz34m/OVbW70kHPqJIwP/
+         NONoH+KqKnS2WpUaFayCaAxTk6cCv1i656dLws7C8WVCJkBDjuRkqz/jpZfPmjHWVnSl
+         6K6w==
+X-Gm-Message-State: AOJu0Yxsn5svRN9BjSi9UDtKsvqf9fTaA4A9wTB94mmJfxDLteNJcHdt
+	T5FhkqwthVeCh3m0u/V8CZhvLLbFZhpgORUBwgGfRnvNBonkmLAjtcuzkE3jDQ==
+X-Gm-Gg: ASbGnctF1nub1ObAo2lHi56nvr+Rn1Uqy6sNPWiFeENfuKzmCN8QipjpIKVCHs0GAgy
+	hGxb1fv0ztHEeFCIyxhGyMZsZRb4L1VNChXna68mSHJ+Krqu/AWgnytLkQt9KjosQ2UKQNaJpb9
+	w6b/VPhf19EX62ZCdX99/H7lqVVqUOQDRVEdc9z7WfQQUrUBTUZdq4T4FSPO1A2/YCEitVTT28Q
+	uKJN8Km/89msh+aSQ7f9sImoq2dv94tG3hoS+ejR7tb2K76da3gEmxP4HOcXGmFfLwKxwfMOL/j
+	VvUfxE2RcvJE0KaSDW/wtfmO8o1Uhpjt3fD4IQB+onIzJdWTczWueqFsYkA7ntA+I/Rd5is2htl
+	cqxWJm1UlCY8KuhlnG/iPfedBEiL8glCgtQ+NRvlmpxQk2E0jRq1ytPRenz6o
+X-Google-Smtp-Source: AGHT+IGG4pV8sGSZEua5XG97IIFmS+tw2zE+nYGj3YzTGNO/lml9b5/UeScHdW5FOwj4CCW4uDQSog==
+X-Received: by 2002:a05:6e02:b24:b0:42e:7589:6290 with SMTP id e9e14a558f8ab-42e7ad34712mr184214785ab.12.1759741254923;
+        Mon, 06 Oct 2025 02:00:54 -0700 (PDT)
+Received: from [127.0.0.1] ([64.236.169.132])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-57b5ea2dd8asm4701570173.22.2025.10.06.02.00.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Oct 2025 23:32:48 -0700 (PDT)
-Date: Mon, 6 Oct 2025 14:32:48 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 4/4] refs: enable sign compare warnings check
-Message-ID: <aONikOiigJ2aBtdB@ArchLinux>
-References: <aONhmrE0otiyZ16f@ArchLinux>
+        Mon, 06 Oct 2025 02:00:53 -0700 (PDT)
+Message-Id: <pull.2066.git.git.1759741252581.gitgitgadget@gmail.com>
+From: "Imvedansh via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 06 Oct 2025 09:00:52 +0000
+Subject: [PATCH]  t1410: modernize test path checks
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aONhmrE0otiyZ16f@ArchLinux>
+To: git@vger.kernel.org
+Cc: Imvedansh <veds17007@gmail.com>,
+    Imvedansh <veds17007@gmail.com>
 
-After fixing the tricky compare warning introduced by calling
-"string_list_find_insert_index", there are only two loop iterator type
-mismatches. Fix them to enable compare warnings check.
+From: Imvedansh <veds17007@gmail.com>
 
-Signed-off-by: shejialuo <shejialuo@gmail.com>
+Convert old-style "test -f" and "! test -f" checks to use the
+modern helper functions 'test_path_is_file' and
+'test_path_is_missing' in t/t1410-reflog.sh.
+
+This improves readability and consistency in the test suite.
+
+Signed-off-by: Imvedansh <veds17007@gmail.com>
 ---
- refs.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+    t1410: modernize test path checks
+    
+    Hello,
+    
+    I'm Vedansh and I'm interested in contributing to Git through Outreachy
+    2025.
+    
+    I have successfully built Git from source on Ubuntu (via WSL2) and run
+    the test suite. All tests pass.
+    
+    For my microproject, I'd like to modernize the path checking in
+    t/t1410-reflog.sh by replacing 'test -f' with test_path_is_file in lines
+    133-136 (in the 'rewind' test).
+    
+    I found 4 instances that are assertions (part of && chains):
+    
+     * test -f C
+     * test -f A/B/E
+     * ! test -f F
+     * ! test -f A/G
+    
+    I've verified these are test assertions, not flow control statements,
+    and the test currently passes on my system.
+    
+    Is this appropriate for a microproject?
+    
+    Thanks, Vedansh
 
-diff --git a/refs.c b/refs.c
-index b7c0aff85e..668c8ae632 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3,7 +3,6 @@
-  */
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2066%2FImvedansh%2Fmodernize-t1410-reflog-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2066/Imvedansh/modernize-t1410-reflog-v1
+Pull-Request: https://github.com/git/git/pull/2066
+
+ t/t1410-reflog.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index e30f87a358..ce71f9a30a 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -130,10 +130,10 @@ test_expect_success 'pass through -- to sub-command' '
  
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
+ test_expect_success rewind '
+ 	test_tick && git reset --hard HEAD~2 &&
+-	test -f C &&
+-	test -f A/B/E &&
+-	! test -f F &&
+-	! test -f A/G &&
++	test_path_is_file C &&
++	test_path_is_file A/B/E &&
++	test_path_is_missing F &&
++	test_path_is_missing A/G &&
  
- #include "git-compat-util.h"
- #include "advice.h"
-@@ -2408,7 +2407,7 @@ static int run_transaction_hook(struct ref_transaction *transaction,
- 	struct child_process proc = CHILD_PROCESS_INIT;
- 	struct strbuf buf = STRBUF_INIT;
- 	const char *hook;
--	int ret = 0, i;
-+	int ret = 0;
+ 	check_have A B C D E F G H I J K L &&
  
- 	hook = find_hook(transaction->ref_store->repo, "reference-transaction");
- 	if (!hook)
-@@ -2425,7 +2424,7 @@ static int run_transaction_hook(struct ref_transaction *transaction,
- 
- 	sigchain_push(SIGPIPE, SIG_IGN);
- 
--	for (i = 0; i < transaction->nr; i++) {
-+	for (size_t i = 0; i < transaction->nr; i++) {
- 		struct ref_update *update = transaction->updates[i];
- 
- 		if (update->flags & REF_LOG_ONLY)
-@@ -2818,9 +2817,7 @@ void ref_transaction_for_each_queued_update(struct ref_transaction *transaction,
- 					    ref_transaction_for_each_queued_update_fn cb,
- 					    void *cb_data)
- {
--	int i;
--
--	for (i = 0; i < transaction->nr; i++) {
-+	for (size_t i = 0; i < transaction->nr; i++) {
- 		struct ref_update *update = transaction->updates[i];
- 
- 		cb(update->refname,
+
+base-commit: 821f583da6d30a84249f75f33501504d597bc16b
 -- 
-2.51.0
-
+gitgitgadget
