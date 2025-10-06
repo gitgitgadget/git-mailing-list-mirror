@@ -1,116 +1,130 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E242DF122
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 18:59:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E5EE55A
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 19:00:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759777144; cv=none; b=ZEMjpnQy/E9MkQKAc+vJdlC8LMtE0S8ORMsU9I3JmU+cs9MtSIdtuzt/l21qiVkMkp+KT5rF/SudRf7dqra/64XP7RAoyqsxkMZ8JR0Hf43eg78E+F1Rx73XptOmnKeA6I4n3i2d1R6kcfzyXGWoGzNliDwBLuuAFytQJqCgjtU=
+	t=1759777231; cv=none; b=n1CHo2lJkiMfBhQp7fvJ9HscgLMYEHkanLPFcI1luGx5EHhzQF53J4cZ+5aol6jXCJ6vLyjZlTYi9Xtxvo2jhiPCMiRj3N1Y+Hk1lJZE4yDsTPkUALTHtlxTKIkCP3Q0AUIJgVN+3dmzFgQt1ebWwf7k5on/nHa2x9olanUJbeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759777144; c=relaxed/simple;
-	bh=MMA0hRQeD+iN0bSx3DM4Fg0KU5k7YLFYM4VSKxBACfE=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ER/UFhLy96LLsg+DVeEuUG1cR00LIZnpOKaL8+KjP+3t2UReELfuzLGtTiANQGNyfDJyajXSxPZBOydoHCCRSbG5eoGdeMze+LfjK6a0oTFBsU8UaIIE4tfURphXtO0AtltR9zcjoEfVWMTwunssKEolVwGzc/tuzqE4vMezmw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hXmlMB50; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759777231; c=relaxed/simple;
+	bh=Mqa7LWqisizyBr7bdAbf7sRKW4Vbs+dbSQ+tGw8Y80U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Pjz+tYDU1K8hBioc0hEEmvcBQBYOY0rYF8A6XJAA8HuNl4hu3t9i43zJkkyqMy7wLXqiJhF/n9Zl3VzebB9Ibvf87Cro/II5wp6LyJ+3qE1DuZOBlfEGr1qmxiEbTNqdqZrEHz2jmft6N2jii9q4di2Ef80UNsY6YA4SesVOJZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HuWCFHMx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RiQGby67; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hXmlMB50"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-32ee4817c43so4376985a91.0
-        for <git@vger.kernel.org>; Mon, 06 Oct 2025 11:59:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759777142; x=1760381942; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WnWH9lfduIO7nFOcteVZe2W2IGrslz3ucmj5+/plwkM=;
-        b=hXmlMB50KJHtqGZmgCJjP8FTjLquM7ysBwBDabu8kFdQC3rFJLpZeEm3PgpUKV7k82
-         +wLnDGCuLK2lUfcIcYYID59xVXXLf/j30cF/pqTD1YcOXtUlM+JqbfFM7ciZygxtX2yg
-         2sIwWwklaLH9+njDT2B1fRQtY6j9CZxtka5607I5z+am4q1mwfPFzrYg898bFjDyzzx0
-         g4D1hMhp/SIwFSQkPFVOUxb91duhdjvz+p9Uzd5Na79tQLSU5KtuIT2eGYwvFoR094Ro
-         g4QNfjhhZebzC0KShDcR1aB3eeg1YpU3Az9K68IkAk5LVzGUlCo5kH0hl03Ae7eFiDYG
-         0L4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759777142; x=1760381942;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WnWH9lfduIO7nFOcteVZe2W2IGrslz3ucmj5+/plwkM=;
-        b=TRM8xq1us1AEnCOu1rvafGA294erRfa6eYqkBv+rcWJsAeHyrd+7mQnDwfQ/M9h/rg
-         9Ac6PlS6HLMqKbNPO0yDg0o41+BA1PulM3Nl1cU01Xla4FuFDltHAhoVwjz2oj6hht9U
-         Db+UiUwmFsfuMkKidLH/4HDXSMmLvUze79PxI1Px/EAXL8b5Fo7JchFnBejQYWQf7KMz
-         uq8ZBk6YjMYT65v/sqCUJXMwldbcWJ5OtWBSh86y3APT1uZ441dxAFdJx/DVOBoKNr88
-         Ym0hu/JxX0NQTvq+byXZlbb5Fqp03jhqux1BF8/YwQXdiB1UMW90KsyXvsARDEt1z9rm
-         Nh4w==
-X-Gm-Message-State: AOJu0YymdTL8yAXC5PyypFBwPEUd4blylhqzBisW4cHK+vzQeWvk9HBV
-	Idh2j6k8VpH2Fxs5Z7bdXWk2qB+elSQKIHKfUFPHej9g9Wzm3IB0b9FblmuJ8UE2
-X-Gm-Gg: ASbGnct45dmqs+fWocmtcgYB6wiuXIzhP+vfaCPEL5RmweyCgcAEyiZe09CJuxumhbw
-	lJ9kJo856CfMnccScGCHBlbO8aZt5Ms8ElC0/frDisXXPD2c0rFc9xUbzrLk7v0scV5CyckP+0a
-	aUZ7IbxdJNZHWa0cAZZqe9T5ssiIoztgwLHjlIPlg22iay3E63uFbKncfXwTF8QHQi08t09AKUC
-	6bQ4wtN92wY54VkqZaywiVyMEB8bpZoWKbA82HvFLcNs32D0p7XMHW8iaxFDbAN2b6YmOs1Tt36
-	nPNofM0gMgJLbNWBUmpPHUjTZ2kkMAUk1wwPsUx0X9fZ/HAb2NP8QcIEhE1l5KZnF5Rkq0cP+Hl
-	MfhsKi3AeN9RVnuuy6FAI/OEMOpD6BzsC8y+OzWcIER6kBLlnCQ==
-X-Google-Smtp-Source: AGHT+IEaxFki+bysjyjRHO4CenbeoI3fZF5POKhBIIVyaZ+CrTRC/GwDECmwu2vbA82JebBvyvaVOQ==
-X-Received: by 2002:a17:90b:3a81:b0:32b:7d35:a7e6 with SMTP id 98e67ed59e1d1-339edab9316mr803432a91.18.1759777141997;
-        Mon, 06 Oct 2025 11:59:01 -0700 (PDT)
-Received: from [127.0.0.1] ([172.215.217.96])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-339edf4f0fesm113698a91.0.2025.10.06.11.59.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Oct 2025 11:59:01 -0700 (PDT)
-Message-Id: <ddeb8ecabe4ab30111b749dab3cb898ef41b4383.1759777131.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1964.v5.git.1759777131.gitgitgadget@gmail.com>
-References: <pull.1964.v4.git.1759262314.gitgitgadget@gmail.com>
-	<pull.1964.v5.git.1759777131.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 06 Oct 2025 18:58:51 +0000
-Subject: [PATCH v5 5/5] doc: git-push: Add explanation of `git push origin
- main`
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HuWCFHMx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RiQGby67"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9B55AEC0178;
+	Mon,  6 Oct 2025 15:00:28 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 06 Oct 2025 15:00:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759777228; x=1759863628; bh=x18ii6Usbf
+	kfNGaHqCgoa8DRBI1oZVoRps8sVl64Qs8=; b=HuWCFHMxzg+z4zC3Eh1jdNF/Qm
+	W/t9BWAB2Q9z3XxfarMVK1VrbM0Z+R/ab2Ge1odfeZRt2qetRMcUqRgeEbKwhdpc
+	qM5FuMmI12+F+36VcyXfzSMFXdfKjxTqZh27ylHtiy6Se3TFgN708b8mt+VMFjrU
+	v4f6B5RkYU9VPb0so518csGVgoylhF83qwaUUnv2uAevbAaTgBTphUTf5yNI1LWY
+	oxthkMSijd4rTbYgao+z6tfyzk3DUKOUObhkiVnAva/mgSAJwoEz+hsHp7j9wB0L
+	X1s3muiqn2amM8zPJ4ST5pMqpeq/vdPG0TE28hUgSxF94wRZaIBGy9eLmdyw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759777228; x=1759863628; bh=x18ii6UsbfkfNGaHqCgoa8DRBI1oZVoRps8
+	sVl64Qs8=; b=RiQGby677CuQtNAXkjGgiKAmsN7ONz3FbG6ukWljvQC8b5PNHey
+	TJJ/mNNaIrD6OG1sAbO0sCXOGLx7j754PtMGJ+Nuh+AJpctIg2011pSe2YT/81v3
+	PUMoKc693dFG/Mdt035wJD69l5zXmoS+86RUhQHBF25t6jbJCmeAnC4gosz14EM7
+	l9TqB3XsJfn4SrG5YcbPVA4PZePN2PuYtF/0g1tpDVVZh0HRRRAOPlGgfpOy9IVS
+	LtecR+hhLK0nxmpOlJqqWkDAr73NesTEPaz/W0GU+UBgi64a4KEeyKktgYle/6r/
+	isV8xTvHhdAHQCcHbAZpmoZpY/5osN2aM8A==
+X-ME-Sender: <xms:zBHkaCe2wWMA6rrFFJE3Q0yk2m83tkZOL6_1SZWrOSyvQVVhWJIblw>
+    <xme:zBHkaIkY9oHvr_MSACt2SkiUJkyKC_mwfVzC7aHX2Vt908rCucPJCjMc0yD3C6z1E
+    G1DIHVp2wjFmTHwATI1E7nTGDwdexj4w-HVG2l3QmymkNe4LJVJxQ>
+X-ME-Received: <xmr:zBHkaH8Z2x4G8vVJIckTIVY5Jkjd3pR-lRNmeDoyNfl5kTsDRzfRGqW-TN63cWQ3U2lCQAwWxE1G-_-zo6FBVmu7ZfyBYjXh2_j8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdelkeefvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduhedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhithhhuhgssehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehnohgrhhdrphgvnhgulhgvthhonhesghhmrghilhdrtghomhdprhgtphhtthho
+    pehpshesphhkshdrihhmpdhrtghpthhtohepthhhrhgrnhhurhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgrhhoshhsvghrrdhmihgthhgrvghlsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtth
+    hopehmvgesthhtrgihlhhorhhrrdgtohhm
+X-ME-Proxy: <xmx:zBHkaOEJeyYtYlNc-A9pCzGxd3NNrSYRS3ch6QP_7SwbC9DwIPIGlQ>
+    <xmx:zBHkaLL6ddOEVGsdalu-8jWQWrIPl8Z9VemHUXrJvQVhjSA2tj7riQ>
+    <xmx:zBHkaOnN9pt5U6yztv9694UPv6aMA0xaIcvlOxOV2W1vQvqP9k2iBA>
+    <xmx:zBHkaEwHDJqJNsn-qTXEqTNzXsoj-XdTbjfYjnNKZ80STe-hAwxnlQ>
+    <xmx:zBHkaGDd8bhGX2TM3Jq4LXTIGGRuVXKFaNogWjs2nJTHF6jIm1p6vmSU>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 Oct 2025 15:00:27 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,  git@vger.kernel.org,
+  Noah Pendleton <noah.pendleton@gmail.com>,  Patrick Steinhardt
+ <ps@pks.im>,  Thranur Andul <thranur@gmail.com>,  Michael Grosser
+ <grosser.michael@gmail.com>,  Eric Sunshine <sunshine@sunshineco.com>,
+  Taylor Blau <me@ttaylorr.com>,  Matheus Tavares <matheus.tavb@gmail.com>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Calvin Wan
+ <calvinwan@google.com>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Martin =?utf-8?Q?=C3=85gren?=
+ <martin.agren@gmail.com>
+Subject: Re: [PATCH v2 2/3] config: values of pathname type can be prefixed
+ with :(optional)
+In-Reply-To: <a687ec17-8ee4-428e-bae5-063716d59a08@gmail.com> (Phillip Wood's
+	message of "Tue, 30 Sep 2025 16:26:36 +0100")
+References: <20250501214057.371711-1-gitster@pobox.com>
+	<cover.1759094936.git.ben.knoble+github@gmail.com>
+	<5c97f580a9e77c464bc6bf4ed9ea8546711c6637.1759094936.git.ben.knoble+github@gmail.com>
+	<a687ec17-8ee4-428e-bae5-063716d59a08@gmail.com>
+Date: Mon, 06 Oct 2025 12:00:26 -0700
+Message-ID: <xmqqzfa3onxx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    =?UTF-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
-    Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+Content-Type: text/plain
 
-From: Julia Evans <julia@jvns.ca>
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-What happens if you run `git push` without any arguments is actually
-extremely complex to explain, as discussed in the previous commit.
+>> +	test_config commit.template ":(optional)$PWD"/notexist &&
+>> +	(
+>> +		GIT_EDITOR="echo hello >\"\$1\"" &&
+>
+> when git runs the editor this will be expanded to
+>
+>     sh -c 'echo hello >"$1" "$@"' 'echo hello >"$1"' path/to/file
+>
+> I think it should be
+>
+>     GIT_EDITOR="echo hello >"
+>
+> instead
 
-But it's very easy to explain what `git push <remote> <branch>` does, so
-start the man page by explaining what that does.
+That's interesting in that I find it unusual.  Fine as long as it
+works ;-)
 
-The hope is that someone could just stop reading the man page here and
-never learn anything else about `git push`, and that would be fine.
+> Maybe I'm missing something but don't we want to ensure that we have a
+> non-empty message here? Also as it is a single command we can avoid
+> the subshell with
+>
+>     GIT_EDITOR="echo hello >" git commit
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
- Documentation/git-push.adoc | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/Documentation/git-push.adoc b/Documentation/git-push.adoc
-index aa01efcc0a..36bf1cc438 100644
---- a/Documentation/git-push.adoc
-+++ b/Documentation/git-push.adoc
-@@ -23,6 +23,10 @@ Updates one or more branches, tags, or other references in a remote
- repository from your local repository, and sends all necessary data
- that isn't already on the remote.
- 
-+The simplest way to push is `git push <remote> <branch>`.
-+`git push origin main` will push the local `main` branch to the `main`
-+branch on the remote named `origin`.
-+
- The `<repository>` argument defaults to the upstream for the current branch,
- or `origin` if there's no configured upstream.
- 
--- 
-gitgitgadget
+Yeah, that does sound better.
