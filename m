@@ -1,41 +1,41 @@
 Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B595F23F42D
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 17:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E596239E9B
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 17:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759771084; cv=none; b=ZI4L7PJlqF03vqbyNszXzazE3XvxXgzf2lmnlYL3LvpM800YEsEYts+b+WR/Ta+vUFIQHwW8vV++2ArdlSv33phht8SNN3uqSngyD8PCSsiwT3aEkitdn52fmamnbbNpEUjHH2sIxDc7eiJe5b5Efp0FHiYCNKAhejT+3of71Xc=
+	t=1759771097; cv=none; b=iyBe7wnlp09BOihySctZGhNp75/z1ICXvHEpaOMMMInW+FtAzDeJHmK66Fs5jtjeqrcAJ3YXqOpwB43wm8VM7R67ok7oB6ys059SZUNJxj/agtyTE50Bo2yn/jbCmXnmsO9nxLWxnnHqV2zOg94cztU8NSUAl4bRqajfvbKpWZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759771084; c=relaxed/simple;
-	bh=Xvbppr2hm5tpYp+BTigb60r0OrtmW9i7oMOBI61EK6A=;
+	s=arc-20240116; t=1759771097; c=relaxed/simple;
+	bh=CdhomoK3VA4CAV5gva+u017ILpVaqsIJCV53R+r5QQU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Xh2acWQClogyM7kwQYLOe13GMQ5TvDomS8KJImheO3bQ3DAZi5igxTAf1Byv1mNtqS8zDPOcRdnsvJOLwsuLq0qQAoNl4Tby4xR/woaMSO6gcs4bGxMTFS9s1cH5hrqK4i+Cb8n0aQvC3d32YbbmUMKNstS3XrcnpNrNyTGivzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=XU5SfEGE; arc=none smtp.client-ip=212.227.17.12
+	 In-Reply-To:Content-Type; b=WUmYGOng4/TTDCYnrBC6pCuyPFWhDB21tVBB4pqm/bxWv8OX9OZ+nIcZREu/sgNzokm1GabmRmfLr+HT7plHO4PlTSfM+NOjwp5B+xprdpGT7NtEq1xCPjKsAB57wTYmiEx8ptTjjLwe2MP2qp4VYZTdprnMOq1OHe81aWxeaZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=ezM/Xxd8; arc=none smtp.client-ip=212.227.17.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="XU5SfEGE"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="ezM/Xxd8"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1759771074; x=1760375874; i=l.s.r@web.de;
-	bh=5eO6afJORU5ivj43ecu3ALiC3Bf61HbaJvOjWNwNMNk=;
+	s=s29768273; t=1759771085; x=1760375885; i=l.s.r@web.de;
+	bh=WKLyjGrc42psdo26Jhx7Yyu2iTzODSfDLT0sw0yaisU=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
 	 References:From:In-Reply-To:Content-Type:
 	 Content-Transfer-Encoding:cc:content-transfer-encoding:
 	 content-type:date:from:message-id:mime-version:reply-to:subject:
 	 to;
-	b=XU5SfEGEjd6TicwSEMtsg7c9pW6UwwRmjZLtqoGBKTk1ennmMhI5kcSScMn3e3bN
-	 i6B59PHpH+3ubj47iRDKvqJUFJUey/NRFjK7YjM2p4ZoY9nrS3acS2uu90GeCFu2A
-	 3lxsUABfKQSUkre4cTbDCBBA4dozyOiGeKz9bsQZKYa9vh7/1/gFcsf6Kdc+alkAi
-	 Rp3et2tsmssCkMqrmmHc1ad7etb0rcY51XBt/DaR38EMaEm9jdTHE6HdmJzjIjrnu
-	 8GMwzX6naw9kp875Im35xa4+/aAUdXZh8FY+W9p3R2BvJKwqas29wQp1MTZcVxkM0
-	 oPutnHtiHWLM8JeQ4w==
+	b=ezM/Xxd88aDlcUtElit1V3y4v8fi7I9EY3yspNr7NHTXDPXHw8i138BAz9VscLTk
+	 h58rw0y5GpqeOtMMWsx9akHYhJY+a7r+BcbC0CJyvfg9G0Xsg+RnHcW517Slw+9SX
+	 Q5HKKx/subvuKZKPbbo5zRL5Fle6+e0MZ63KHJfUOrhfxYjHks8o5l7NXcmitr5pg
+	 1sGv+JP1kvrKjwCJmUtjeTMhlMXB5v8qtsbsYmOZaGw+5vE2DB7x/DpltuivSYR2K
+	 iZw5VuRy6Sk5erEMVISrM3/tWVMO8s34sK4PtSkBjbXihvf3ViBeZpZWWHmGbApgu
+	 hbXdUzl1IlFk/3dyMA==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.16.132]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N62uQ-1uCYVm1BJw-00temO; Mon, 06
- Oct 2025 19:17:54 +0200
-Message-ID: <16d5908b-bed6-4ad2-bb27-9c6523f904d0@web.de>
-Date: Mon, 6 Oct 2025 19:17:53 +0200
+Received: from [192.168.2.31] ([79.203.16.132]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1M4KJX-1v5XjR43nt-00Ew26; Mon, 06
+ Oct 2025 19:18:05 +0200
+Message-ID: <0ea56923-2041-43bd-8c35-cc93c3c95c70@web.de>
+Date: Mon, 6 Oct 2025 19:18:04 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,145 +43,189 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/5] add-patch: improve help for options j, J, k, and K
+Subject: Re: [PATCH v2 4/5] add-patch: let options k and K roll over like j
+ and J
 To: Junio C Hamano <gitster@pobox.com>
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
  "Windl, Ulrich" <u.windl@ukr.de>, Phillip Wood <phillip.wood@dunelm.org.uk>
 References: <c72518099a3b465c8761e41210fe3fcb@ukr.de>
  <17ef29a7-5214-4729-82eb-92a2af33e465@web.de>
- <75b08ed6-4f0f-4ede-b84a-c2f1c3d15734@web.de> <xmqqbjmlrq8g.fsf@gitster.g>
+ <f99b93d5-3de2-4077-8818-9272e812c289@web.de> <xmqqh5wdrrub.fsf@gitster.g>
 Content-Language: en-US
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqbjmlrq8g.fsf@gitster.g>
+In-Reply-To: <xmqqh5wdrrub.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:QqUaH+r1jpFp6wKxjQWauRYhaBlL4gbOM3GDLqUmYkfiCN3oSKP
- U6iQ/3kwjKqFLw4yLrc0TZ14u3YPN0UQfXSEbi4EIEMbOtgmBsiORjVfdoPSPjT/Ly2U0db
- QJp9l+Ghj46L1jAUtARE9SxfDBi4GAG0bUBfSGFxtf/G6LYNOxZih9Eop3HACwK9CAeaXEx
- iNYlnjtpbP/VNORupFU8Q==
+X-Provags-ID: V03:K1:HVq8c2EPxxvUdC7XZHhVaSRPrjbf+mo3D82nNGckduseldM3/LZ
+ L15wmuPeLobtvXcr5ThsRPnS97XZBdWkWh0mAyvJ+OPhjAUnycwXMLM56ELheFVEaaDuVJV
+ N9GvWYZ4w2xOKEDyApwL697vNMltb3X3quIwfl6FRsPcNJNbFCpKe8J4hNriKnCdbLPpJaq
+ w+GYsNImU5rnqUtxs1hDQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:we45SR2unqU=;LcnziR0IXH979w31Uxo0ciQU5HZ
- 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
- BLqflU1XF3aazT2Ys=
+UI-OutboundReport: notjunk:1;M01:P0:7Xwy7PBHKlM=;nILVCVuH43tQdWf+xxX16Pj4OE4
+ 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
+ 1UXpTlaJ0G7RzJepzqv3l9Y7I4=
 
-On 10/5/25 11:30 PM, Junio C Hamano wrote:
+On 10/5/25 10:55 PM, Junio C Hamano wrote:
 > Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 >=20
->> The options j, J, k, and K don't affect the status of the current hunk.
->> They just go to a different one.  This is true whether the current hunk
->> is undecided or not.  Avoid misunderstanding by no longer mentioning
->> the current hunk explicitly in their help texts.
->>
->> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
->> ---
->>  Documentation/git-add.adoc | 8 ++++----
->>  add-patch.c                | 8 ++++----
->>  2 files changed, 8 insertions(+), 8 deletions(-)
->>
->> diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
->> index ad629c46c5..3266ccf105 100644
->> --- a/Documentation/git-add.adoc
->> +++ b/Documentation/git-add.adoc
->> @@ -342,10 +342,10 @@ patch::
->>         d - do not stage this hunk or any of the later hunks in the fil=
-e
->>         g - select a hunk to go to
->>         / - search for a hunk matching the given regex
->> -       j - leave this hunk undecided, see next undecided hunk
->> -       J - leave this hunk undecided, see next hunk
->> -       k - leave this hunk undecided, see previous undecided hunk
->> -       K - leave this hunk undecided, see previous hunk
->> +       j - go to the next undecided hunk
->> +       J - go to the next hunk
->> +       k - go to the previous undecided hunk
->> +       K - go to the previous hunk
+>> @@ -1584,7 +1591,8 @@ static int patch_update_file(struct add_p_state *=
+s,
+>>  			}
+>>  		} else if (s->answer.buf[0] =3D=3D 'K') {
+>>  			if (permitted & ALLOW_GOTO_PREVIOUS_HUNK)
+>> -				hunk_index--;
+>> +				hunk_index =3D dec_mod(hunk_index,
+>> +						     file_diff->hunk_nr);
+>>  			else
+>>  				err(s, _("No previous hunk"));
 >=20
-> These obviously make sense, but I wonder if y/n should also say that
-> they not just make a decision on the current hunk, but after doing
-> so they move you forward
+> I was wondering if we want to always allow J and K; even when you
+> have only one hunk, you can still wrap around to come back to the
+> current hunk, and that we can do without any extra checking logic.
+>=20
+> But it is also OK to require 2 or more hunks to "switch" to the
+> other hunk, which is what you do with
+>=20
+> 			if (file_diff->hunk_nr > 1) {
+> 				permitted |=3D ALLOW_GOTO_PREVIOUS_HUNK;
+> 				strbuf_addstr(&s->buf, ",K");
+> 			}
+>=20
+> to require more than 1.  But the error message "No previous hunk"
+> sounds somewhat awkward.  If user accepts the circular nature of how
+> we decide what "previous" is, then when we have a single hunk, the
+> current hunk itself _is_ the previous hunk, but because we insist
+> that there are at least 2, that interpretation would not work.  With
+> "wraparound" semantics, "No other hunk(s)", would be a better way to
+> give the error, no?  The same comment applies to 'J'.
 
-Yes.
+OK.
+>>  		} else if (s->answer.buf[0] =3D=3D 'J') {
+>=20
+> This makes perfect sense, but then, after this post-context we have this=
+:
+>=20
+> 			if (permitted & ALLOW_GOTO_NEXT_HUNK)
+> 				hunk_index++;
+> 			else
+> 				err(s, _("No next hunk"));
+>=20
+> and it sticks out that the post-increment of hunk_index here is not
+> using inc_mod() for symmetry.
 
-> (and if so, that may fall within the theme
-> of this step, which is to improve the help text on options).
+This symmetry _is_ tantalizing.  Had the call originally, removed it
+because it was unnecessary and didn't fit the narrative.
+> I am wondering if with that updated (I would not say "fixed"), if we
+> can lose the "oops we overflowed so let's wrap around" belt-and-suspende=
+r
+> code at the beginning of the loop, i.e.
+>=20
+> 	for (;;) {
+> 		enum {
+> 			ALLOW_GOTO_PREVIOUS_HUNK =3D 1 << 0,
+> 			...
+> 			ALLOW_EDIT =3D 1 << 6
+> 		} permitted =3D 0;
+>=20
+> 		if (hunk_index >=3D file_diff->hunk_nr)
+> 			hunk_index =3D 0;
+>=20
+> or if there still are other code that rely on this "oops we
+> overflowed" adjustment?
+Good question, gave me the idea that a and d should roll over as well.
 
-I see it more narrowly: This patch removes unnecessary references to the
-hunk's status, while a y/n doc patch would add missing pieces.
+Other than that there's just the so-called soft_increment, which would
+need something like this:
 
-Hmm, would the help text need to adapt to whether the current hunk is
-the last undecided one?  E.g., "stage this hunk, implies 'j'" if j is an
-allowed option and "stage this hunk and quit" otherwise?  Stuff for a
-separate series, I think.
+diff --git a/add-patch.c b/add-patch.c
+index b0389c5d5b..59a9eb586d 100644
+=2D-- a/add-patch.c
++++ b/add-patch.c
+@@ -1546,8 +1546,7 @@ static int patch_update_file(struct add_p_state *s,
+ 		if (ch =3D=3D 'y') {
+ 			hunk->use =3D USE_HUNK;
+ soft_increment:
+-			hunk_index =3D undecided_next < 0 ?
+-				file_diff->hunk_nr : undecided_next;
++			hunk_index =3D undecided_next < 0 ? 0 : undecided_next;
+ 		} else if (ch =3D=3D 'n') {
+ 			hunk->use =3D SKIP_HUNK;
+ 			goto soft_increment;
+
+Or undecided_next could be set to 0 before the if/else cascade, then
+this becomes a simple assignment and we can get rid of the goto.
+
+Couldn't find a way to remove the back-to-square-1 check that would be
+significantly better overall and thus worth the hassle, though.
 
 Ren=C3=A9
 
