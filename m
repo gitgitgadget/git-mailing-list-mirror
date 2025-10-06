@@ -1,109 +1,116 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254C834BA36
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 00:46:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC984EEDE
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 03:32:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759711612; cv=none; b=VhQ43PEeuxLxpOULtHGM7LCqHBtn2N54KuRiTsrI+98hcOkUPVPtLeAF7MTaD3FcKesJEQl6fqaU09vk3pEFHQnLvhjcnRv7gdbSOZkwMskcly9vV8J0mQD18i+u9vs2MBPSgDE4v6RPVE/7/kRpg4FXsNFa452/9Iqtumq3uxA=
+	t=1759721582; cv=none; b=DuX6nTjZC6XgTfb/r8OeeHoZLlEe5IJ7PhwT70ky+1FiX28/Oor6kJP/z5ZnpEnuyrIy//xDCP9+6JRGcpnDc/eEgoespmH1yD9lmJbmGAjzNOHRe0emHLlrCYfSu/fwiDMlHzNLQ3fH5pnyHL788aaVQGft7DdFcI6RjyHMzT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759711612; c=relaxed/simple;
-	bh=DukFEuhZprX8JeDhsGhkzNeTzHDxTKxPlWkMl/w+dOM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W95DPS5+ekrXiSChBOafK1vH/bSb37ovdRWc8qqhZNGxfQ4uANBfBkOiwdN90h0fIh7HrUFBDCXVgDQy4Yr5LmXmc2hrYKx3YaONsw00mUCGnSH9vDSn/Yg1I5B5UuHoYxZE/6DG8tSK/tFBozIVpcKtnFEdLj9zbtW06MmNibE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=MTTqfE0Q; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1759721582; c=relaxed/simple;
+	bh=HFu10VlFiBEV6EzK9D/Ge1FeT1rvzH9P3jOTgDV1hNU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HGt1S0iSsnZYFzlTCSOP/OUH0idKaXTOLfE4B31Hy0MO+eynL9AgBXcVl+J/K3b5vyYF/1XleDK//6o8Y12gS4TJHbDvIRNLx0akg8cDFi6BESsm5s3KBSw3jqNFX146nIfvukRmdqj4dSC/yPmldUXbGUybsSKb+CVZomgUg/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BDTVXzgA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UzPTAIH7; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="MTTqfE0Q"
-Received: (qmail 140148 invoked by uid 109); 6 Oct 2025 00:46:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=DukFEuhZprX8JeDhsGhkzNeTzHDxTKxPlWkMl/w+dOM=; b=MTTqfE0Q82YD0RMK6fzCgXFMm7xpAlZIdNvpWX2LDvXpPVTSNOJye/tZHYGtU2ciDSbaQrARurRXsW3+BEr+0b72LGWYGezaEmfliD32NGzXZ82s3ZXqZJkhaKwLtnqRX3H7rSNfWeOfKbnJbj353yvhQn7gywiJFUSwrzuU2WJM0fNtBDs/W3Znw3rXM9H0LMLA+kkS+yimwE3ctyuQ+M2ICRr1+ijLeEeRfYwrnQIdg/Mi3Emk3+kNWcCLvjQA1wR1cjEAdeFWb9UtBbuoXVHhMqhMDLNvO+eKJ/epACTWF8RtxJpPtyEKAl7m1JiZ0gINCCPlJCY9Xx1AiWIKuA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 06 Oct 2025 00:46:43 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 209640 invoked by uid 111); 6 Oct 2025 00:46:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 05 Oct 2025 20:46:40 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sun, 5 Oct 2025 20:46:39 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Han Young <hanyang.tony@bytedance.com>, git@vger.kernel.org,
-	karthik.188@gmail.com, ps@pks.im,
-	Han Young <hanyoung@protonmail.com>, Sigma <git@sigma-star.io>
-Subject: Re: [PATCH v=2 1/1] files-backend: check symref name before update
-Message-ID: <20251006004639.GA1462753@coredump.intra.peff.net>
-References: <20251004144223.23436-1-hanyang.tony@bytedance.com>
- <20251004144223.23436-2-hanyang.tony@bytedance.com>
- <xmqq347xrp5o.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BDTVXzgA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UzPTAIH7"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id BEB961D0007B;
+	Sun,  5 Oct 2025 23:32:58 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Sun, 05 Oct 2025 23:32:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759721578; x=1759807978; bh=+T3b2XEcPp
+	TZ5hE6qlmZFM5R32TLd+L90Phf8vn0v3c=; b=BDTVXzgA0WSGMMfHfX9X+eGQNy
+	uJJiYrEc15d+Tr9851TGgeF2fhHQwOs4yXeF+CbD5iNll+HO5fBxqX21g/tf9i6y
+	wc4hjh95zO7il4c/5aNqFyeynRlPcbNuxkIBVLsHX0rgmhCUQn6rpfh40F4e2P/P
+	fQq78v7XoeDbHBS8vcjl18zWQu4JXTQjXi3Kw6i8wDX293xpzM/LcgRMU0sHVe8/
+	13YiIeZVuFHH+1V50DtVyKZU3JOXAzriEo88IZHFcH9QKHNoOlcwIuQvqrTKHmXM
+	l3Qlvmd1Y2S2/xFl60krrwlT3KOe5wGdabP90u+7y8IFKOILGnYIO/g7O+1A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759721578; x=1759807978; bh=+T3b2XEcPpTZ5hE6qlmZFM5R32TLd+L90Ph
+	f8vn0v3c=; b=UzPTAIH7oh8mMcAmr+JePbWo/j1x6foSOlM7+l17JV/5zOK6ATc
+	vM6UteU/HoEktyCTWpSCRBKcbP1gv72xJ7ylc31F+7wN1HTN4FQgKD41wc27akii
+	vSuMcmvCmqeI7Dud3bRimhKM5+VIqNLUtPJJiPKATurMed97XIMKb69GeDiJxvT5
+	CYGjsZEAVsC426/6RUn8XYM/aJbX6X26h5jLG25ZRQwhGOsTCUluxKeRXldX0zLE
+	mqtKPXRxG0l+EUeLdU6cehmw+/wWFTeH/3hcMtgNbg3SynkWPc/6gstBXxNxG9wg
+	R7p1n2vi00f0jTbP2gV8m7LmqvyQqMkDSog==
+X-ME-Sender: <xms:ajjjaJr8FJ9-qwh_nQkfeIta8Q4uTyGcSwgF0V9JDk80niOFDf0L2w>
+    <xme:ajjjaCqqCGRwsmFY4y7Xjv35MjKoLE4KzvLBSCJFciPNGY88hgPWJlM-j7r0TrpsI
+    0AG1TWzfU1zBk5uL7tK4oD_ono5aeUPdaI4dTezNSNS2Pc-sTJ-mw>
+X-ME-Received: <xmr:ajjjaLM9NBlx0Rb63X7DhTcyR4lG3mFI4qgTFrSvKp0E_z2Cx4zoiiT4x-RxZb1OScsPlEtgjdsEFQ0eEu8NlGN6VCXdu3iIR89i>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdelieegiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeehtdeggeejffeuieegheethefhieevteekffefgfekkeelgfduudeigfegheeu
+    hfenucffohhmrghinhepghhithhhuhgsrdgtohhmpdegleekrdgsuhhilhgunecuvehluh
+    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhes
+    phhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpd
+    hrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjuhhlihgrse
+    hjvhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:ajjjaDwl0Z5l_lEA2kUx1zVuLhEvFTlqkgbdO2FBlsVIz0SB704i5w>
+    <xmx:ajjjaEv4EY8_CEg_9cPvCVLo36bNYqMKSP_Vdvfcxq8mEMTC6-F91w>
+    <xmx:ajjjaM5ndE16VtjyULu34lzGgViViTiDIe2hAigFMgi3QmYOxcd00A>
+    <xmx:ajjjaDRapm0y5OaEB83GU-bGIraYWwGa-wueDpSpHYEtIt0akU4r-g>
+    <xmx:ajjjaKth1xTFx8DEsdKw2NNc9E8dIwwl724DkM9CVNjVGbeKwj-lZzmQ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 5 Oct 2025 23:32:58 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH] doc: add a explanation of Git's data model
+In-Reply-To: <pull.1981.git.1759512876284.gitgitgadget@gmail.com> (Julia Evans
+	via GitGitGadget's message of "Fri, 03 Oct 2025 17:34:36 +0000")
+References: <pull.1981.git.1759512876284.gitgitgadget@gmail.com>
+Date: Sun, 05 Oct 2025 20:32:56 -0700
+Message-ID: <xmqqy0por9g7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq347xrp5o.fsf@gitster.g>
+Content-Type: text/plain
 
-On Sun, Oct 05, 2025 at 02:53:39PM -0700, Junio C Hamano wrote:
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Han Young <hanyang.tony@bytedance.com> writes:
-> 
-> > From: Han Young <hanyoung@protonmail.com>
-> >
-> > In the ref files backend, the symbolic reference name is not checked
-> > before an update. This could cause reference and lock files to be created
-> > outside the refs/ directory. Validate the reference before adding it to
-> > the ref update transaction.
-> 
-> This leaves the readers wondering why refname_is_safe(), which has
-> no direct callers other than "git show-ref verify", is sufficient
-> for the purpose of this particular validation.  All other callers of
-> refname_is_safe() seem to use it only as a sanity check combined
-> with other criteria.
-> 
-> For example, refs.c::transaction_refname_valid() calls
-> refname_is_safe() as a small part of its validation, together with
-> check_refname_format().  It also refuses to touch anything that
-> satisfies is_pseudo_ref().
+> +MAN7_TXT += gitdatamodel.adoc
+>  MAN7_TXT += gitdiffcore.adoc
+> ...
+> +gitdatamodel(7)
+> +===============
+> +
+> +NAME
+> +----
+> +gitdatamodel - Git's core data model
+> +
+> +DESCRIPTION
+> +-----------
 
-Yes, if we wanted to add a check here, it should be doing the usual
-check for a syntactically valid refname and falling back to
-refname_is_safe() only for deletions.
+The above causes doc-lint to barf.
 
-But I'm not sure if this check is that valuable. We are in
-split_symref_update(), which takes an update to some symref and splits
-it into an update to that symref's reflog and a real update to the
-underlying target ref. So we are not checking input to the transaction
-here, but the existing state of the symref on disk. And in theory we
-should have checked that target already when we wrote it.
+https://github.com/git/git/actions/runs/18265502271/job/51999236907#step:4:655
 
-Do we want to check it again? I dunno. I can see an argument for being
-overly paranoid (garbage snuck in somehow, but we prefer not to act on
-it). We do already check sanity within resolve_ref_unsafe(), for
-example.
+gitdatamodel.adoc:226: has no required 'SYNOPSIS' section!
+    LINT MAN SEC giteveryday.adoc
+make[1]: *** [Makefile:498: .build/lint-docs/man-section-order/gitdatamodel.ok] Error 1
 
-I do think there are also some gaps in our symref target checks (as well
-as a few other spots). I have a series to fix those that just needs a
-little bit of polishing, and hopefully can send out this coming week.
 
-> > diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-> > index 0503a64d3..1dc314474 100755
-> > --- a/t/t7102-reset.sh
-> > +++ b/t/t7102-reset.sh
-> > @@ -634,4 +634,12 @@ test_expect_success 'reset handles --end-of-options' '
-> >  	test_cmp expect actual
-> >  '
-> >  
-> > +test_expect_success 'reset should fail when HEAD is corrupt' '
-> > +	head=$(cat .git/HEAD) &&
-> > +	hex=$(git log -1 --format="%h") &&
-> > +	echo "ref: refs/../foo" > .git/HEAD &&
-> > +	test_must_fail git reset $hex &&
-> > +	echo $head > .git/HEAD
-> > +'
+You can check locally with "make check-docs" without waiting for my
+integration cycle to push to GitHub CI.
 
-This test won't work against the reftable backend.
-
--Peff
+Thanks.
