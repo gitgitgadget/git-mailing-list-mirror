@@ -1,40 +1,40 @@
 Received: from mout.web.de (mout.web.de [212.227.17.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF214221F1A
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 17:23:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0109D221F1A
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 17:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759771423; cv=none; b=CyJFbdDrinREcvK2sqZH9Ulf2J3A/7G2na0XH+wmnLQ/r1AAtcmNBfA1KLIz/i+X3lhno3qo1kW2tYgTh0xjBw4xXMkwd3K1LdkqrHjrhUfsJw85oRTMRENoFmjZpjQ1MeHGdKoC0FApHP/mUyHq/lmRF4B6cyEvTRifC2elZM4=
+	t=1759771474; cv=none; b=tmPO1qhgqQn0qgB9GZyY4jcsISKsEtBnTWGsWSKWF0FdtQ9Q7vyvaKqz0vqzayHCMEiLbPZliJwXKsfdT7oG3CF2ECA6G+Ahttwj7mMhESziDORUDNvE2Bt99ow3WRrStUcMALQioUffvRAd3t/W6tQer2XVH5vIpAj6uhI5CAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759771423; c=relaxed/simple;
-	bh=EE7UyOTuwzWa0kb00vQPy8pCwbwkGQXYxI/J5DiNTV4=;
+	s=arc-20240116; t=1759771474; c=relaxed/simple;
+	bh=bdBjbqhx23uwd3V/9ocNznnF6MuLNhLEjO/Z8qlmqW4=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=QMbO5PmhFPjls+OzxvXNOOt00DVwK91waAFVoJhwHRVn8AT8YzKv+pLVHmonATi44cldj9tI8AWQ1J9na2iBkRowLclgHIYDsj5zKN2XZ9U5jtHcZkHJMha7dxWdeVg/vWKSgN84w3eYgSCP3KoDvRJw4u5fqOwS6EuC8a3yeJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=l7mM4bpH; arc=none smtp.client-ip=212.227.17.11
+	 In-Reply-To:Content-Type; b=D5RiS9eRcefh/+5kEcYCgLqTDpmroI2a2NHFIEvZAD6bocUOZuD49xEzeLbSOMeg1aq9UvH7ll0iFWkTAqsdPZllsskAB58I+9V7MukyMggxcIy2yX/UI6WOauiCEWRgQxFMxrC1lXAX71K7uRoese9q3jPDE15SxoigafBAY/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=YSwASaR4; arc=none smtp.client-ip=212.227.17.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="l7mM4bpH"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="YSwASaR4"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1759771415; x=1760376215; i=l.s.r@web.de;
-	bh=E6x2tUGW5RIC6P2MSATTonU9fWv1jF8b/erwcmnJh7Q=;
+	s=s29768273; t=1759771469; x=1760376269; i=l.s.r@web.de;
+	bh=bfzuUPA4de2YXYIpfDcEzsRIsgAZ/b8WUs/Np3sFnCg=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
 	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=l7mM4bpHmdn2NAOMjvaBLvHoyaWs2GpNlt2uykdTuIlX5jIcQTh+6Zpaled9vmn6
-	 hlrwTa+vOgW0GpjLuDvJ+SsaqrKNQ/mh86EQEYNhCSceuYCmDGj5qCdeuTher8thf
-	 hjVW0L7ER/UvB1nO6ol1nkJUB7fIMq2Z49sL0yfbUQDRguac0ekOumZzbzCLKiNk1
-	 XYqfkkpgwQNMCF8/s+kQFUym5T9sjr1KNBISHw6d10nfaSm+MhOThQWSkJq0rwlEE
-	 7wFp6k5NF0rm9c+xYPYB+G71qgFOh5VluXS8S0/Io4eMY2obLuJeBIbYXHIlE1et4
-	 KlJiOdzLTHLMZVkutA==
+	b=YSwASaR4c0H4aPOmmze8cIzCmQLChnOTbOu7uVFD3PK/b+An688ij90pPa2XP+vL
+	 Y+bP6S654Piyhf1zZlHNFcBxnono6HdEwvqjIs/hl6+3GdqaBlqJp5exI7TCNXLfI
+	 cydzjogqn/58uawpEz/HjIsbrn+JFXdMzIjMaG1WRsHCjxRbEL5BBeNR0yXLKbN+/
+	 zoJJXl3yuAg3L2NPjvuMjEX/Q1ZhXcVCGBWhH5Jl30esQlqtFaSlqRBWpXkOUce5+
+	 KOoo2KcQy2WFvq0bzo2sv2BkNS4vHieBGUU0GFaVVR99KhPp+BJLGLkqlJBiiBsR+
+	 wl3szPqW54mKJKwVyw==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.2.31] ([79.203.16.132]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MTfol-1uiL4k0xlV-00QLJB; Mon, 06
- Oct 2025 19:23:35 +0200
-Message-ID: <a00f7c63-0d29-4a7c-bef1-bd7bf94d3420@web.de>
-Date: Mon, 6 Oct 2025 19:23:34 +0200
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MYcpt-1uisE21GkN-00I6DT; Mon, 06
+ Oct 2025 19:24:29 +0200
+Message-ID: <ed73a585-5074-4e36-9f41-228909513237@web.de>
+Date: Mon, 6 Oct 2025 19:24:28 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,7 +42,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v3 5/6] add-patch: let options a and d roll over like y and n
+Subject: [PATCH v3 6/6] add-patch: reset "permitted" at loop start
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 To: "git@vger.kernel.org" <git@vger.kernel.org>
 Cc: "Windl, Ulrich" <u.windl@ukr.de>, Junio C Hamano <gitster@pobox.com>,
@@ -53,176 +53,156 @@ Content-Language: en-US
 In-Reply-To: <fe8e8097-2b05-4dd2-a754-f59e4ba5f95a@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:csmBDQxQp6pDOqIOHvmaKINjULaIoYGANs4fPoL5KLenfpOIlNB
- 7cicZhTtujePypidUhHLoE3LUYOCNfSqjxbqIZ5CsUvbXXN+2iAauf38VKaijTphNWFrW6i
- Ut3slyc7CozJEp/OmXUDNlA5Ae6y128Taq9RaHEvtA59Zi8pz97HYCncjLMDwQWwzUtJXoQ
- XhZvxc6egyKC4Fvl5+GiQ==
+X-Provags-ID: V03:K1:x2OX+mq1/ccwMviFvogFMtmwmHn7dG+IZCSJslMG/u3OpVDF1pB
+ 7WINHCabP4WceotwvcTZ3NV80ILsQODUxJvIhEJ0csz/H8xg8qjSBPKrzmyBVB2v5usOcmA
+ NcH6tQhSInkAFjSejbZEKdCk28mU8MHzbdwDT8aiNgoo2wpNf8XCe3C5ZRipeZ4gQL1xsVD
+ Nw6BUUcHmKFvx7ljw7XNA==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:FZNvo7YblmE=;RoDf64bITMM5FsZm9w96wDMWY4p
- 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
+UI-OutboundReport: notjunk:1;M01:P0:w8ytGStl9gM=;AAWxASPW9lXZMQpQbUD2whg1mn8
+ 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
 
-Options a and d stage and unstage all undecided hunks towards the bottom
-of the array of hunks, respectively, and then roll over to the very
-first hunk.  The first part is similar to y and n if the current hunk is
-the last one in the array, but they roll over to the next undecided
-hunk if there is any.  That's more useful; do it for a and d as well.
+Don't accumulate allowed options from any visited hunks, start fresh at
+the top of the loop instead and only record the allowed options for the
+current hunk.
 
+Reported-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- add-patch.c                | 15 +++++++++++++++
- t/t3701-add-interactive.sh | 12 ++++++------
- 2 files changed, 21 insertions(+), 6 deletions(-)
+ add-patch.c                | 19 ++++++++++---------
+ t/t3701-add-interactive.sh | 14 ++++++++++++++
+ 2 files changed, 24 insertions(+), 9 deletions(-)
 
 diff --git a/add-patch.c b/add-patch.c
-index 4f314c16ec..6da13a78b5 100644
+index 6da13a78b5..45839ceac5 100644
 =2D-- a/add-patch.c
 +++ b/add-patch.c
-@@ -1418,6 +1418,17 @@ static size_t inc_mod(size_t a, size_t m)
- 	return a < m - 1 ? a + 1 : 0;
- }
+@@ -1439,15 +1439,6 @@ static int patch_update_file(struct add_p_state *s,
+ 	struct child_process cp =3D CHILD_PROCESS_INIT;
+ 	int colored =3D !!s->colored.len, quit =3D 0, use_pager =3D 0;
+ 	enum prompt_mode_type prompt_mode_type;
+-	enum {
+-		ALLOW_GOTO_PREVIOUS_HUNK =3D 1 << 0,
+-		ALLOW_GOTO_PREVIOUS_UNDECIDED_HUNK =3D 1 << 1,
+-		ALLOW_GOTO_NEXT_HUNK =3D 1 << 2,
+-		ALLOW_GOTO_NEXT_UNDECIDED_HUNK =3D 1 << 3,
+-		ALLOW_SEARCH_AND_GOTO =3D 1 << 4,
+-		ALLOW_SPLIT =3D 1 << 5,
+-		ALLOW_EDIT =3D 1 << 6
+-	} permitted =3D 0;
 =20
-+static bool get_first_undecided(const struct file_diff *file_diff, size_t=
- *idx)
-+{
-+	for (size_t i =3D 0; i < file_diff->hunk_nr; i++) {
-+		if (file_diff->hunk[i].use =3D=3D UNDECIDED_HUNK) {
-+			*idx =3D i;
-+			return true;
-+		}
-+	}
-+	return false;
-+}
+ 	/* Empty added files have no hunks */
+ 	if (!file_diff->hunk_nr && !file_diff->added)
+@@ -1457,6 +1448,16 @@ static int patch_update_file(struct add_p_state *s,
+ 	render_diff_header(s, file_diff, colored, &s->buf);
+ 	fputs(s->buf.buf, stdout);
+ 	for (;;) {
++		enum {
++			ALLOW_GOTO_PREVIOUS_HUNK =3D 1 << 0,
++			ALLOW_GOTO_PREVIOUS_UNDECIDED_HUNK =3D 1 << 1,
++			ALLOW_GOTO_NEXT_HUNK =3D 1 << 2,
++			ALLOW_GOTO_NEXT_UNDECIDED_HUNK =3D 1 << 3,
++			ALLOW_SEARCH_AND_GOTO =3D 1 << 4,
++			ALLOW_SPLIT =3D 1 << 5,
++			ALLOW_EDIT =3D 1 << 6
++		} permitted =3D 0;
 +
- static int patch_update_file(struct add_p_state *s,
- 			     struct file_diff *file_diff)
- {
-@@ -1572,6 +1583,8 @@ static int patch_update_file(struct add_p_state *s,
- 					if (hunk->use =3D=3D UNDECIDED_HUNK)
- 						hunk->use =3D USE_HUNK;
- 				}
-+				if (!get_first_undecided(file_diff, &hunk_index))
-+					hunk_index =3D 0;
- 			} else if (hunk->use =3D=3D UNDECIDED_HUNK) {
- 				hunk->use =3D USE_HUNK;
- 			}
-@@ -1582,6 +1595,8 @@ static int patch_update_file(struct add_p_state *s,
- 					if (hunk->use =3D=3D UNDECIDED_HUNK)
- 						hunk->use =3D SKIP_HUNK;
- 				}
-+				if (!get_first_undecided(file_diff, &hunk_index))
-+					hunk_index =3D 0;
- 			} else if (hunk->use =3D=3D UNDECIDED_HUNK) {
- 				hunk->use =3D SKIP_HUNK;
- 			}
+ 		if (hunk_index >=3D file_diff->hunk_nr)
+ 			hunk_index =3D 0;
+ 		hunk =3D file_diff->hunk_nr
 diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 385e55c783..9d81b0542e 100755
+index 9d81b0542e..403aaee356 100755
 =2D-- a/t/t3701-add-interactive.sh
 +++ b/t/t3701-add-interactive.sh
-@@ -1364,24 +1364,24 @@ test_expect_success 'options J, K roll over' '
+@@ -1386,4 +1386,18 @@ test_expect_success 'options y, n, a, d, j, k, e ro=
+ll over to next undecided (2)
  	test_cmp expect actual
  '
 =20
--test_expect_success 'options y, n, j, k, e roll over to next undecided (1=
-)' '
-+test_expect_success 'options y, n, a, d, j, k, e roll over to next undeci=
-ded (1)' '
- 	test_write_lines a b c d e f g h i j k l m n o p q >file &&
- 	git add file &&
- 	test_write_lines X b c d e f g h X j k l m n o p X >file &&
- 	test_set_editor : &&
--	test_write_lines g3 y g3 n g3 j g3 e k q | git add -p >out &&
--	test_write_lines 1  3 1  3 1  3 1  3 1 2 >expect &&
-+	test_write_lines g3 y g3 n g3 a g3 d g3 j g3 e k q | git add -p >out &&
-+	test_write_lines 1  3 1  3 1  3 1  3 1  3 1  3 1 2 >expect &&
- 	sed -n -e "s-/.*--" -e "s/^(//p" <out >actual &&
- 	test_cmp expect actual
- '
-=20
--test_expect_success 'options y, n, j, k, e roll over to next undecided (2=
-)' '
-+test_expect_success 'options y, n, a, d, j, k, e roll over to next undeci=
-ded (2)' '
- 	test_write_lines a b c d e f g h i j k l m n o p q >file &&
- 	git add file &&
- 	test_write_lines X b c d e f g h X j k l m n o p X >file &&
- 	test_set_editor : &&
--	test_write_lines y g3 y g3 n g3 j g3 e g1 k q | git add -p >out &&
--	test_write_lines 1 2  3 2  3 2  3 2  3 2  1 2 >expect &&
-+	test_write_lines y g3 y g3 n g3 a g3 d g3 j g3 e g1 k q | git add -p >ou=
-t &&
-+	test_write_lines 1 2  3 2  3 2  3 2  3 2  3 2  3 2  1 2 >expect &&
- 	sed -n -e "s-/.*--" -e "s/^(//p" <out >actual &&
- 	test_cmp expect actual
- '
++test_expect_success 'invalid option s is rejected' '
++	test_write_lines a b c d e f g h i j k >file &&
++	git add file &&
++	test_write_lines X b X d e f g h i j X >file &&
++	test_write_lines j s q | git add -p >out &&
++	sed -ne "s/ @@.*//" -e "s/ \$//" -e "/^(/p" <out >actual &&
++	cat >expect <<-EOF &&
++	(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,s,e,p,?]?
++	(2/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,?]? Sorry, cannot split=
+ this hunk
++	(2/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,?]?
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
 =2D-=20
 2.51.0
