@@ -1,132 +1,131 @@
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF93C2D7D47
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 15:30:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A942D7814
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 15:52:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759764604; cv=none; b=byN8pFGhuneO/F0pcj67sGf8BUpnJT2cMcxC/MO3QQ54iJHGzMPXKtc0dPjzyNXDo731xw7MSFEJzNU/7mVmmIr3gqQykREa9Tbigvsvz7kmdAkfAiHBRe7TwSzA6qe39QaPZwKsDVhEcav3VarI7f1QXLWaeqqU680OgQkx1Vg=
+	t=1759765961; cv=none; b=go17aclSSucki85XJZRCR5YG9RTLLiIO2Fd4plM/XXLMFrtiEB40UdZQnzr3WPzhPVsTd/E5+4aW7VXoLt3h3awtrzvf9KWTLsS0W0HbtEUN+IFskjoXF6HzSy8oxq3lbfzySJI0zkpSq+CzvBaXwvFvVkZd9QsM9D3rn1PsqgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759764604; c=relaxed/simple;
-	bh=h/a276hT2sfliIT5QAmbYCBNqjq2dTRSaZ1/deZn/ps=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=hAhdoY5sfR1XkuTtdlnzPjz17Sgcxj7D8LJf4RZm1tT3mNDhCPNXEmMjbK1a2uCcywUYKSn4c+wQqow7Uh9fReuguwl8LmMuOH3iKcT8gJTQZuRD/z+q0wOywMQs6ORGf+HhrNM4hzDuo2oNmGe7NW8o8O4iQi97fZRYhSPwpTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.104] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4cgNVn2m0PzRpWS;
-	Mon,  6 Oct 2025 17:29:53 +0200 (CEST)
-Message-ID: <e999c9d2-01d2-4569-ab32-2922ded29dcf@kdbg.org>
-Date: Mon, 6 Oct 2025 17:29:53 +0200
+	s=arc-20240116; t=1759765961; c=relaxed/simple;
+	bh=ZrQ/LeGcRvNHWXK+Amn8oa0sUv8C/tKhGVikrDWsiJU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=onR609k0O/Re/lw3N6TGCWMhjTtfNd94hUXHrKwcZB0N6m54qQ8YrEyG1ZPwlSQeDl7sbNtFQf6i9xb4lY2n8/KK9rJn8gUbeZ6r5D6MGuvCDxXeUvtFA9oe2N0bN/D30WNmTBsEeIU6qU2g9SYwk9thj4QhT2txGhpYGO+DtfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PZieGaJ/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QyaZ5pp2; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PZieGaJ/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QyaZ5pp2"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0F5297A0120;
+	Mon,  6 Oct 2025 11:52:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Mon, 06 Oct 2025 11:52:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759765957; x=1759852357; bh=0wApmaO4we
+	UF4SrVEc+o0sylAwzRzAekkzvpF639G4s=; b=PZieGaJ/tKyhqx22BpojV9dO1m
+	Ksb1OJ1Pjfz6pkLPyDfzk4eantdCezV0NN3u/hq3pPEyo5817xFYIYhqgb+P6wio
+	vANrjwPqIWC90iKxTWonEHy9/qpvwsgWYJj3eqD3yf1lRL2/jhT4kAJ6Sb1HOnIO
+	5BIUZOIcW2F+OOrjZEqkzJJKHmGkalv1M6wM9MbrFYszS6Hd6mhT6eBdVLFIcgQY
+	rr8ZKcCi4GN+MAs+H5oR/cOLg1fs1L/dM9JpcZfrfOf7Xw1tUPRtO05+ca0h0Xkv
+	tSzf/cDFMSKK0O+wWXYq7RoB0XN91BOrfZHIlPUjiqWLHIuu5Iui7wVnwJiA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759765957; x=1759852357; bh=0wApmaO4weUF4SrVEc+o0sylAwzRzAekkzv
+	pF639G4s=; b=QyaZ5pp2w4nUYkSdTgu6cuS16XLG9aKgG+xBlcIMjM34YWByIXg
+	wKITaqNzUpFZ3pPH4YMlymaV4Dpr0sOJ6mfSWrOTtlBwdIr0I0zuOVkQ2KfqZ30q
+	oXbCcfXWRq4+w30gglr1CclxnuNa3yAkMeB/toPHrWFVrTjavhAGtO+VRAFZITbv
+	txk6nWdNNGo3+EYMPVw2OfJen3UjMttFlmCxJ5BdRcv0bu72ekkjP7vJlC8b6yRQ
+	5sbzM2zv2behW27dSAU7+3dYfHqhRgS+EL67eydE702zBkv90tjjRWASy/AtmAni
+	cBv53xmKIrUgHr5kNVvXo+HY0MFzU7OSdlQ==
+X-ME-Sender: <xms:xOXjaAvpTWrHdseZq41IYpIES1uu0fMqYpjKelOTM8QLrAZK0nOmMg>
+    <xme:xOXjaMgWGTFlNhVA43F2JKS903eLfViKStMIgCo3Ew_k2XfBeKHWp0eV8s6sN5B3B
+    VSAtx1x70WQSe7kovAHgkcay2eh8ukSvr9eyPexM-R-w5Axaw5IJQ>
+X-ME-Received: <xmr:xOXjaB8hE3bOKZJLJSppn4iOh4Xfxhwi5x2v27OUXITVSiOG68AVvGe7mNVBEUU2w0v-7NqePb5KFlajTiFndWGXr7Z1qsCuDMQ4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeljeelhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohephh
+    grnhihrghnghdrthhonhihsegshihtvggurghntggvrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrdduke
+    eksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthho
+    pehhrghnhihouhhnghesphhrohhtohhnmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    esshhighhmrgdqshhtrghrrdhiohdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:xOXjaPsRZFWcloBSml8yejAK5yiKkIB08bDG7_3cCe0-twR0PDkJrw>
+    <xmx:xeXjaFq4ZalOtByIKUhqXXFxewxyK1_ZxYtPlIL4bw47dKgqQzAyWw>
+    <xmx:xeXjaDpYoGOKnIS_bb6jydURodZFno4LGpTY5sWZV5hHUuGEyxTDhg>
+    <xmx:xeXjaEb9xJ5S0BrqoIPYRnB9Ny_04Aa5yu9nKHJtmhHN5NOkGGvNig>
+    <xmx:xeXjaMywy2jRfyImhb5yo6CwIgHKhcqqr3wLP58HgiJfeLBQbkG5JEim>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 Oct 2025 11:52:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Han Young <hanyang.tony@bytedance.com>,  git@vger.kernel.org,
+  karthik.188@gmail.com,  ps@pks.im,  Han Young <hanyoung@protonmail.com>,
+  Sigma <git@sigma-star.io>
+Subject: Re: [PATCH v=2 1/1] files-backend: check symref name before update
+In-Reply-To: <20251006004639.GA1462753@coredump.intra.peff.net> (Jeff King's
+	message of "Sun, 5 Oct 2025 20:46:39 -0400")
+References: <20251004144223.23436-1-hanyang.tony@bytedance.com>
+	<20251004144223.23436-2-hanyang.tony@bytedance.com>
+	<xmqq347xrp5o.fsf@gitster.g>
+	<20251006004639.GA1462753@coredump.intra.peff.net>
+Date: Mon, 06 Oct 2025 08:52:35 -0700
+Message-ID: <xmqqtt0cqb7g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2] gitk: persist position and size of the Tags and Heads
- window
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-To: Michael Rappazzo <rappazzo@gmail.com>
-Cc: git@vger.kernel.org
-References: <20250928135435.59623-1-rappazzo@gmail.com>
- <20250928135435.59623-3-rappazzo@gmail.com>
- <fd6450e2-cf56-4b99-b0ed-37a174d7ce9c@kdbg.org>
- <941180e0-d8a1-4f2b-a0d8-2128428b36d8@kdbg.org>
-In-Reply-To: <941180e0-d8a1-4f2b-a0d8-2128428b36d8@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-The Tags and Heads window always opens at a default position and size,
-requiring users to reposition it each time. Remember its geometry
-between sessions in the config file as `geometry(showrefs)`.
+Jeff King <peff@peff.net> writes:
 
-Note that the existing configuration is sourced in proc savestuff
-right before new settings are written. This makes the old settings
-available as local variables(!) and does not overwrite the current
-settings. Since we need access to the global geometry(showrefs), it
-is necessary to unset the local variable.
+>> This leaves the readers wondering why refname_is_safe(), which has
+>> no direct callers other than "git show-ref verify", is sufficient
+>> for the purpose of this particular validation.  All other callers of
+>> refname_is_safe() seem to use it only as a sanity check combined
+>> with other criteria.
+>> 
+>> For example, refs.c::transaction_refname_valid() calls
+>> refname_is_safe() as a small part of its validation, together with
+>> check_refname_format().  It also refuses to touch anything that
+>> satisfies is_pseudo_ref().
+>
+> Yes, if we wanted to add a check here, it should be doing the usual
+> check for a syntactically valid refname and falling back to
+> refname_is_safe() only for deletions.
+>
+> But I'm not sure if this check is that valuable. We are in
+> split_symref_update(), which takes an update to some symref and splits
+> it into an update to that symref's reflog and a real update to the
+> underlying target ref. So we are not checking input to the transaction
+> here, but the existing state of the symref on disk. And in theory we
+> should have checked that target already when we wrote it.
 
-Helped-by: Michael Rappazzo <rappazzo@gmail.com>
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
-Changes since v1:
-- On Windows, only the size was restored, but not the position. There is
-  special logic for Windows that positions popup windows. Now we take
-  this into account.
+Yes, it was Karthik, I think, who pointed out in the ealier round
+that the set-up procedure used to demonstrate the issue indicated
+that it was essentially a corrupt repository doing an unexpected
+thing, and I tend to agree.  What you wrote in the previous
+paragraph matches the reason why I questioned "is this enough?"
 
- gitk | 25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+> I do think there are also some gaps in our symref target checks (as well
+> as a few other spots). I have a series to fix those that just needs a
+> little bit of polishing, and hopefully can send out this coming week.
 
-diff --git a/gitk b/gitk
-index 275f353..ed61661 100755
---- a/gitk
-+++ b/gitk
-@@ -2131,12 +2131,14 @@ proc ttk_toplevel {w args} {
-     return $w
- }
- 
--proc make_transient {window origin} {
-+proc make_transient {window origin {geometry ""}} {
-     wm transient $window $origin
- 
--    # Windows fails to place transient windows normally, so
--    # schedule a callback to center them on the parent.
--    if {[tk windowingsystem] eq {win32}} {
-+    if {$geometry ne ""} {
-+        after idle [list wm geometry $window $geometry]
-+    } elseif {[tk windowingsystem] eq {win32}} {
-+        # Windows fails to place transient windows normally, so
-+        # schedule a callback to center them on the parent.
-         after idle [list tk::PlaceWindow $window widget $origin]
-     }
- }
-@@ -3106,6 +3108,11 @@ proc savestuff {w} {
-         puts $f "set geometry(pwsash1) \"[.tf.histframe.pwclist sashpos 1] 1\""
-         puts $f "set geometry(botwidth) [winfo width .bleft]"
-         puts $f "set geometry(botheight) [winfo height .bleft]"
-+        unset -nocomplain geometry
-+        global geometry
-+        if {[info exists geometry(showrefs)]} {
-+            puts $f "set geometry(showrefs) $geometry(showrefs)"
-+        }
- 
-         array set view_save {}
-         array set views {}
-@@ -10193,6 +10200,7 @@ proc rmbranch {} {
- proc showrefs {} {
-     global showrefstop bgcolor fgcolor selectbgcolor
-     global bglist fglist reflistfilter reflist maincursor
-+    global geometry
- 
-     set top .showrefs
-     set showrefstop $top
-@@ -10203,7 +10211,11 @@ proc showrefs {} {
-     }
-     ttk_toplevel $top
-     wm title $top [mc "Tags and heads: %s" [file tail [pwd]]]
--    make_transient $top .
-+    if {[info exists geometry(showrefs)]} {
-+        make_transient $top . $geometry(showrefs)
-+    } else {
-+        make_transient $top .
-+    }
-     text $top.list -background $bgcolor -foreground $fgcolor \
-         -selectbackground $selectbgcolor -font mainfont \
-         -xscrollcommand "$top.xsb set" -yscrollcommand "$top.ysb set" \
-@@ -10239,6 +10251,9 @@ proc showrefs {} {
-     bind $top.list <ButtonRelease-1> {sel_reflist %W %x %y; break}
-     set reflist {}
-     refill_reflist
-+    # avoid <Configure> being bound to child windows
-+    bindtags $top [linsert [bindtags $top] 1 bind$top]
-+    bind bind$top <Configure> {set geometry(showrefs) [wm geometry %W]}
- }
- 
- proc sel_reflist {w x y} {
--- 
-2.51.0.431.g0f99086cdf
-
+Thanks, looking forward to reading them.
