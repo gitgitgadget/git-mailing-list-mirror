@@ -1,185 +1,131 @@
-Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD422264AA
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 10:21:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759746066; cv=none; b=uOOTNItX3rOUHBVPSnxfcaQKgH9kEdbzkLDVtguRyRK/uMuIKWdrsw0O6XVxehZvdebLtid7Ny7DRC1DNVFECx3kFKeIYArHvn5ao5bDzk0E5tGfTGpWudfPf1AsOfdDXzTzVrvqV+MiKAUMY47GIyzq/v+TIrmPw459hksdNcg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759746066; c=relaxed/simple;
-	bh=emKcIayUPzDExMNmGiklSQojmDtYl00Nj2uzbCdzt6Q=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KNnGq8tL/Zf/a1UK5g5PEsppUFyr7QOGBUZi9WYQjB9UM9pVzPz7iJw3PkW2I27q37kjK0ljsekdTe4FxLq8EYokcqgJ/ZMpYk6mLj180gW8ku0qPLRhm09WC6RPx65te9LkOboXiV2W8UBERbCQUOvNvaDD6cIXHQEZh6BCgZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=FeHdleZd; arc=none smtp.client-ip=95.215.58.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E480E21576E
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 11:26:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759749964; cv=pass; b=fBxhf+L9r3d+IFn4Wb+2K69DrdjnymDngHq6lZGtk7oK357E06kMc188vow85MeG98ObOmb/kPTj7I0yaiXPqrukVDrVZ5pdax3NeoZV7i7EBGVqmKW5yShTf7r1v8Y9GeUtUwUxiD183YYoyOxP/+EojsPMfT6EtL0abI5CcrY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759749964; c=relaxed/simple;
+	bh=qpsxrOriRWG62LU7GyeWpjGYMvkHS/6joyUt3nwY+c0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ixO0V/p7ilc6VJRbZCHnKkDXglx1BmRWWRtbXEhUvYILw9utCRz8ON/60qKp8TwGEjI2nBCxS5EuXU/J3+k8JDbFVQBiEmWmp7uitYUFjRoNPIR8NIOK7ZF/q3FDPcD7+vJrbvK2YG/bqL0VjOt/Jkc+Iom++cp3UWBXEm3cBBI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=QvWBsFE9; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="FeHdleZd"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1759746059;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Kn/sPsfMw3SoY39R5uAhlvYlRhv3HZ1QlOYDSVOGHAU=;
-	b=FeHdleZdRqW1538gEaBoasAWxfhZiv2SFNaPR+9+pM2OnPhnFQ6hcJ7x1KvJyzx06M2He0
-	EZbXXhvHAoVBaUTQMw0z1l0SJ0w8CG0iqKNF1DocZZRYG4SfCW0v2oaVsHlRYmVTVMbkzZ
-	VG2VvbwLiiqLTfhooqP09fHT6M8iGwQ=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 5/5] t8020: fix test failure due to indeterministic tag
- sorting
-In-Reply-To: <20251002-pks-gitlab-ci-windows-improvements-v1-5-6a8b6b45d728@pks.im>
-References: <20251002-pks-gitlab-ci-windows-improvements-v1-0-6a8b6b45d728@pks.im>
- <20251002-pks-gitlab-ci-windows-improvements-v1-5-6a8b6b45d728@pks.im>
-Date: Mon, 06 Oct 2025 12:20:37 +0200
-Message-ID: <874iscbabu.fsf@iotcl.com>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="QvWBsFE9"
+ARC-Seal: i=1; a=rsa-sha256; t=1759749944; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=gObTrRnq9PrXG0LQSjKf1EegcTlkZx+kdO2wqUl5qfF0MqPzQy7IFTjCa7F1DRLhEnZqYkeB5VAtz21zRiKwvC94qZ3N5S+kGv81IvoffZexjivyMjx78fQ6EVtRChYC5WUZW+9P+nuK2EUM+TiGig8iJbSgEnb1vAiMVdFF8I0=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1759749944; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=ryjnfdWy4+wL5oakM1ZPixaJNQgteOt7FN3oxxLwe34=; 
+	b=MdEfHJLXwq7fyhT5ADFbXpp6YIKR9fcFvIeWuAP/CyLU9XNXcKbu5y0FlM/frRJkmlT8baoXENG75x2Mtrm5rAb/48s3Nu5x9/Pc1QoSfasNgDdJFleHMsVmiQTJX7hdmNHvAVlQF/5CKK88YwxthxGR1cQcnYNbjNO2ZxdH2GI=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759749944;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=ryjnfdWy4+wL5oakM1ZPixaJNQgteOt7FN3oxxLwe34=;
+	b=QvWBsFE9C8EgUAgRDBEn3L6piryPA4iRRPdK+dPOA+tRqjhkawr6YUXNKyikh1it
+	i4TkQImu7awB31THd0sdvgZPuGJ84IcIuWvxfrS4NfZhQmEhGVsMByn5ALejnWS1q63
+	AxMWZVMJJ6Dp5VX2ondhLa9x+q3gQNbm4IExdE8E=
+Received: by mx.zohomail.com with SMTPS id 1759749941478627.0703226998246;
+	Mon, 6 Oct 2025 04:25:41 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org
+Cc: Emily Shaffer <emilyshaffer@google.com>,
+	Rodrigo Damazio Bovendorp <rdamazio@google.com>,
+	Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Aaron Schrab <aaron@schrab.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Josh Steadmon <steadmon@google.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH v3 0/5] Encode submodule gitdir names to avoid conflicts
+Date: Mon,  6 Oct 2025 14:25:13 +0300
+Message-ID: <20251006112518.3764240-1-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.49.1
+In-Reply-To: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hello everyone,
 
-> In e6c06e87a2 (last-modified: fix bug when some paths remain unhandled,
-> 2025-09-18), we have fixed a bug where under certain circumstances,
-> git-last-modified(1) would BUG because there's still some unhandled
-> paths. The fix claims that the root cause here is criss-cross merges,
-> and it adds a test case that seemingly exercises this.
->
-> Curiously, this test case fails on some systems because the actual
-> output does not match our expectations:
->
->     diff --git a/expect b/actual
->     index 5271607..bdc620e 100644
->     --- a/expect
->     --- b/actual
->     @@ -1,3 +1,3 @@
->      km3 a
->     -k2 k
->     +km2 k
->      1 file
->     error: last command exited with $?=1
->     not ok 15 - last-modified with subdir and criss-cross merge
->
-> The output we see is git-name-rev(1) with `--annotate-stdin`. What it
-> does is to take the output of git-last-modified(1), which contains
-> object IDs of the blamed commits, and convert those object IDs into the
-> names of the corresponding tags. Interestingly, we indeed have both "k2"
-> and "km2" as tags, and even more interestingly both of these tags point
-> to the same commit. So the output we get isn't _wrong_, as the tags are
-> ambiguous.
+v3 is much simplified from v2, starting from the design idea that submodule gitdir
+name encoding is to be put behind an extensions.submoduleEncoding.
 
-Ahha, I see...
+This allowed removal of the modules vs submodules directories split and simplified
+our logic quite a lot. Tests have been been squashed in the smaller commits as well.
 
-> But why do both of these tags point to the same commit? "km2" really is
-> supposed to be a merge, but due to the way the test is constructed the
-> merge turns into a fast-forward merge.
+Many thanks to all who provided feedback, especially Patrick and Phillip who
+suggested the extension idea.
 
-Ohw :o
+This is based on the latest master branch and I've also merged and tested against next.
 
-> Which means that the resulting
-> does not even contain a criss-cross merge in the first place! A quick
-> test though shows that the test indeed triggers the bug, so the initial
-> analysis that the behaviour is triggered by such merges must be wrong.
+I pushed the patches to github [1] and also did a CI run [2] which passed (the lone
+Win+Meson CI failure seems to be unrelated because it reproduces without the patches).
 
-I've tried various things, this felt like the simplest case to
-reproduce. Apparantly not realizing it was wrong.
+[1] https://github.com/10ne1/git/tree/dev/aratiu/encoding-v3
+[2] https://github.com/10ne1/git/actions/runs/18276914867
 
-> And it is: seemingly, the issue isn't with criss-cross merges, but
-> rather with a graph where different files in the same directory were
-> modified on both sides of a merge.
+Changes between v2 -> v3:
+* Put submodule encoding behind an extension (Phillip & Patrick).
+* Removed the submodules vs modules directory split (Patrick).
+* Undeleted validate_submodule_git_dir() because it still needs to check the default.
+* Undeleted tests from t7450-bad-git-dotfiles.sh because they are still required.
+* Moved new tests to a new file which enables the extension.
+* Moved unused variables to commit which uses them (Szeder Gabor).
+* Squashed commits to reduce their number (e.g. tests are together with new logic).
+* Fixed a small bug passing the module repo instead of the_repo to the gitdir helper.
+* Small commit msg rewording improvements, typos (Kristoffer & Phillip).
 
-Well yes, it felt like it was something like this. But like said, it
-_seemed_ I needed a criss-cross merge.
+Adrian Ratiu (5):
+  submodule--helper: use submodule_name_to_gitdir in add_submodule
+  submodule: add gitdir path config override
+  strbuf: bring back is_rfc3986_unreserved
+  submodule: encode gitdir paths to avoid conflicts
+  submodule: error out if gitdir name is too long
 
-> Refactor the test so that we explicitly test for this specific situation
-> instead of mentioning the "criss-cross merge" red herring.
-
-Well, thanks for this cleanup!
-
-> As the test
-> is very specific to the actual layout of the repository we also adapt it
-> to use its own standalone repository.
-
-I should have done that in the first place. Trying to shoe horn this
-test in the existing repo might have guided me to take incorrect
-conclusions.
-> Note that this requires us to drop the `test_when_finished` call in
-> `check_last_modified` because it's not supported to execute that
-> function in a subshell.
-
-This is not an issue because these files are always overwritten before
-comparing, so this the `rm` wasn't strictly needed.
-
-> This refactoring also fixes the original tag ambiguity that caused us to
-> fail on some platforms.
-
-Awesome! 
-
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  t/t8020-last-modified.sh | 34 +++++++++++++++++++---------------
->  1 file changed, 19 insertions(+), 15 deletions(-)
->
-> diff --git a/t/t8020-last-modified.sh b/t/t8020-last-modified.sh
-> index e13aad1439..61f00bc15c 100755
-> --- a/t/t8020-last-modified.sh
-> +++ b/t/t8020-last-modified.sh
-> @@ -33,7 +33,6 @@ check_last_modified() {
->  	done &&
->  
->  	cat >expect &&
-> -	test_when_finished "rm -f tmp.*" &&
->  	git ${indir:+-C "$indir"} last-modified "$@" >tmp.1 &&
->  	git name-rev --annotate-stdin --name-only --tags \
->  		<tmp.1 >tmp.2 &&
-> @@ -128,20 +127,25 @@ test_expect_success 'only last-modified files in the current tree' '
->  	EOF
->  '
->  
-> -test_expect_success 'last-modified with subdir and criss-cross merge' '
-> -	git checkout -b branch-k1 1 &&
-> -	mkdir -p a k &&
-> -	test_commit k1 a/file2 &&
-> -	git checkout -b branch-k2 &&
-> -	test_commit k2 k/file2 &&
-> -	git checkout branch-k1 &&
-> -	test_merge km2 branch-k2 &&
-> -	test_merge km3 3 &&
-> -	check_last_modified <<-\EOF
-> -	km3 a
-> -	k2 k
-> -	1 file
-> -	EOF
-> +test_expect_success 'subdirectory modified via merge' '
-> +	test_when_finished rm -rf repo &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		test_commit base &&
-> +		git switch --create left &&
-> +		mkdir subdir &&
-> +		test_commit left subdir/left &&
-> +		git switch --create right base &&
-> +		mkdir subdir &&
-> +		test_commit right subdir/right &&
-> +		git switch - &&
-> +		test_merge merge right &&
-> +		check_last_modified <<-\EOF
-> +		merge subdir
-> +		base base.t
-> +		EOF
-> +	)
->  '
-
-Looks good to me.
+ Documentation/config/extensions.adoc  |   9 ++
+ Documentation/config/submodule.adoc   |   7 ++
+ Makefile                              |   5 +
+ builtin/credential-store.c            |   6 -
+ builtin/submodule--helper.c           |  30 ++++-
+ compat/pathconf.c                     |  10 ++
+ compat/posix.h                        |   8 ++
+ config.mak.uname                      |   2 +
+ meson.build                           |   1 +
+ repository.h                          |   1 +
+ setup.c                               |   7 ++
+ setup.h                               |   1 +
+ strbuf.c                              |   6 +
+ strbuf.h                              |   2 +
+ submodule.c                           |  84 +++++++++----
+ t/lib-verify-submodule-gitdir-path.sh |  20 ++++
+ t/meson.build                         |   1 +
+ t/t7400-submodule-basic.sh            |   9 ++
+ t/t7425-submodule-encoding.sh         | 162 ++++++++++++++++++++++++++
+ t/t9902-completion.sh                 |   1 +
+ 20 files changed, 340 insertions(+), 32 deletions(-)
+ create mode 100644 compat/pathconf.c
+ create mode 100644 t/lib-verify-submodule-gitdir-path.sh
+ create mode 100755 t/t7425-submodule-encoding.sh
 
 -- 
-Cheers,
-Toon
+2.49.1
+
