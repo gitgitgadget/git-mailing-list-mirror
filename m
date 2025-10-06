@@ -1,65 +1,66 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6618F2D5C83
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1073B2D63FF
 	for <git@vger.kernel.org>; Mon,  6 Oct 2025 14:23:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759760593; cv=none; b=hF5snGbPz8Ibe6YLbylxy23n8LUgSzrRWoCmUdWRVTOJh1SuW1xZskmSMGkHjAl4a/0Aq0GEH4J28Bv3fuLXDu0U/NRfY9WwzO8j5w61B+l3c09Ei6uRsgZwX9JE7BVIsn9OugKXPC5ZBwpLOwDVM+Oo22zL+8WLxcZCUJo7Vz8=
+	t=1759760594; cv=none; b=Ql0fvDr1tfhzksE5fufCtTl7q5G675/L2O+q3D5AEVIidvx1BQHZcdNIq1O2v3PZrCIQJmZ4X/F/styTQSDlJ8iYb8v4KFTp6WffnOCd12UtuM0RkP2BqdEfcf6TC0meps1q1Y4PPEQGPkNIo4wwQA9Gvn3DFA1cH/jVUWb9v5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759760593; c=relaxed/simple;
-	bh=SOrVFR/i+LcNfGKOPb2LImIUukjLiMfxrysbYO9PRBo=;
+	s=arc-20240116; t=1759760594; c=relaxed/simple;
+	bh=JxnDDcb2Wno8TzizsxTtRdbzlz0tC4g1+xYYPjCM68k=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=OXJzOXa8zPjgZ3qsSckKXKLbXCnnrMNhgCKQHaMXprv9PKSKGKdO+Y2dNYJ/NxFb93/TxGvwrfgKxb7Q7Rewuarty/3KmfhDbwQbJMy0HADGGfVQisy1K8JCESQtS1ZH0Nosk7GV32c4wn5SSI392/3v1mom43C/HIBM0l/sd/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AA1mIQdr; arc=none smtp.client-ip=209.85.221.43
+	 In-Reply-To:To:Cc; b=U7nNXYHi7bQm0HvFQx94mzDcQ3m3Hu0jSjTJluatszHOgRe4d8RmmK1yB1IhLodtkVrUXQK27JphUCxrIF54bAi82d1NkdJoJ3yChK09umc4T2/uWSqpn1+40EE/0YLeZrS5TdpV0cqI2gZoiewU1EZIOwAXpK2TV7dj8cd4I3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bDA9dxSN; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AA1mIQdr"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3ece0e4c5faso3697057f8f.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bDA9dxSN"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-46e33b260b9so48604685e9.2
         for <git@vger.kernel.org>; Mon, 06 Oct 2025 07:23:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759760589; x=1760365389; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1759760590; x=1760365390; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dCM3lPPIgcnor7XGOXKw0QxQegyDi6R6fH9F+G4IR3M=;
-        b=AA1mIQdrCTQ8K756TOpOKsm+5foLOEpJSPNxIAZHgkAON6YRmNCcFXZEoo9juuorFK
-         ksTUIYSDxMZ3wXlrQQGttHxkOgeV4jUoEsTzi35FeAtdwohKGlCssvrmrQtsETUzYF3O
-         UKOxKe7xi6BNpTCB8xeZiJ4umYT+2orn6PAvQcsCaxKvtn+Py+v5+pF/9eJ8f1sryrN3
-         /xnEsm31jOQBR/cPPzV9bqe31cHQ9Qde6qfPi2s5ILQtDrNJrUnjYusmr6UTWHtCoPoK
-         c1qu3Y4MHpRVfZhSyM14D4Y7f9byYrfP9fl+gkYtASYHXNToFD1D9K6563Yr+TeveTcg
-         iPGA==
+        bh=grk0++9sVmx+MhvarhXpKR4HB8c9qw4j/iIH3dyyO8Y=;
+        b=bDA9dxSNaGu4/7lr7CxQoI+i0NpcPv6s3MyuDrUh3ZAFm3kROi4g/71cc7eVbbAkhC
+         vcYVnnVaGCet0CO/uCwBFpfVjvEceo8P7Vdz9efMxTWbZLy+c3NqOh6GUUDqqq1amuI4
+         bFLKM/qsbNcNg5NkSkcxiB7cM+ZhPE/imHuDQSKykLpp27C/NR4TGOlIwn4cGCal1Ejv
+         e4NMgFoBg/2erDal5NM9E/bIVYY46jr4mRxgEQTEA7d81W8ui/DQN06g4FIeOuAw03fS
+         WmceyJBz64PyV2FV5rHFTgTktfaDpJUnxeIsH151zwuLxuhgmWSUzYT5CfncYsIIO5SX
+         GsyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759760589; x=1760365389;
+        d=1e100.net; s=20230601; t=1759760590; x=1760365390;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dCM3lPPIgcnor7XGOXKw0QxQegyDi6R6fH9F+G4IR3M=;
-        b=QQEoFrwKY325u/Ly9FvZl/ih4VeaVtDavQOpTi7gTbxCSCFxFIMaYeT/lbt/CzJHLT
-         N/7OC4jACR5bKzz12d+T8P+c6nqIk8tBjuRbaWPnI23Ydl2HyU5zSn4EMXVtC0SAg+3C
-         Lbe19210N+NtlIkhWoeSwfCbojs9r3gJNNp5SZLSMeKLJSmED+l7l9JgUXWgXVM1jB3z
-         jpC3Jk9clUxfzFVEot7F945pRY/pYbgJv2InXXj7pofS6AEAWgm+VpAtCn84mEQFo/Y1
-         2KNqBzRYZbr4SRdg7GsqXIF952sowtJ/4TyAcmC8rpFxQA6igyahraEmJdREvEUNOtb+
-         8hgA==
-X-Gm-Message-State: AOJu0Ywg2ogv7czwtgDxF4vBxGPjBnTnUYSBU3WWWRgMPjSzb/zMT1bx
-	PPNZ4noBMZJ9jvqnVBcAoUHrXJMAjOpfcYkfAAQwYaBFJH+Yzv640+Pi8d+gjVlo
-X-Gm-Gg: ASbGncvhAuVHRb1tNTW0POb9eql0dqHeEJOoAFx9ZmIAZ8m1X2X2nijRuli1ExenwgK
-	pmjVXyepdG68orLv+gZM0YawRi5CUWshPROEbyU+i7wNYgCkB/+7Qbcmr4fZMIWFbE/dkpnbt1K
-	PNK9j6jpgAOcYAzrXXdJCCBTaPlmkmOdKD225ozFXxvclmG9y8aXzZUYfJ/CfLiuDWhZa8mi0vj
-	wVQC5jNjpLJgon6Dn0LMMvtLDKXn54lHDP7hDB/J4kjWmCNrV1/6H3ONHEziXwg19u8r6NLcmAU
-	k7SFKxsCU3dUuCd0Hierxn9TE9/lofqEIPMzN+ftEbanT0jvRqsgz2FTIR+MUn9OtKWJYt0C3/O
-	9b75bNf1OvcnkzQrTXsYcb2OxHbT9VPaTm+XxfKEJGLUnP5tss5iNihw5rgQLr9Rh9/o=
-X-Google-Smtp-Source: AGHT+IHpsKAnKfXz/xPhFbG3yiH8IBqGUFBc6G+f3TjpHUqASeM3OApTxNBpYDieslDf7KjvjVe1hQ==
-X-Received: by 2002:a05:6000:43c6:10b0:415:7c56:30d9 with SMTP id ffacd0b85a97d-4256714d65dmr7124525f8f.23.1759760589065;
+        bh=grk0++9sVmx+MhvarhXpKR4HB8c9qw4j/iIH3dyyO8Y=;
+        b=l2Q2Xz42pYSiC+JZ0rgG/n72p7zytX3hsrKZrfsQQl7NTDfxbzFZtyi3XMqQcwfCqj
+         wOuJajHfWE21VZzSDk2oWMjRM9QyHBbYxWjF0I72ANOLsxvnhoF7J9kmo9TmRasa55zz
+         tSIMA7+H5Zb87ZgixOUng2Oz6HhYMCZ3dkdrzsF+ravFwWRLQWOTHEB8UWyRMfKNYByC
+         VcGUWDDB+olwo/8oNUFyfM8QEZyemSatRhyATDevMfCCXY/G72nEAFGNS1oqY3eiEAbT
+         VCzX13+ptV780pgAz/9aWm8+37NXudA5L/GFkep1JR0NvhINuDmELdScWCF18qyYA/eq
+         q9iA==
+X-Gm-Message-State: AOJu0YyLs8Q5Nl66ErxNQIx2Z6voCsGu0+H8971sKjehJ8WVLho7uRaU
+	vVjkqr/ibV5oCQwV9aqIbAL3yhj0kdERu6Oyk5WM2l/HiyG8+rwJupdUI4hNcvYu
+X-Gm-Gg: ASbGncuAWbGSiTNr2l8uiOavgn0KmJwwh0+6jNFGZ/82IfMBbziRnYYknubGtbGdjqJ
+	7vcm7eXJpGAZR3MvJkYWrLGrhiHtwPLHEJxP/m7PURha0ej+1KjtL32E5xwB1uE0+Qy6JMUgymV
+	l4RpHHzqk062Ayns49WLzIjt+OVu6JXZ/jTujKnS3wB8JVtDX6OLgBXrPCC31fC9LQLvcHbqxpz
+	/3rkE/ceU279cTAOuzQAyEaZZgcyya+UnNAVbz6dFNa/EkA/C5QUGhW1vzwVI1qiu3z+xVNuM4X
+	FKJHr8Hsfe7XGt1/ty3hzZcgGdeDxlAwg5vfHeKuizPDd7NCYnBdCj4ayhOURks2NustUiRXxKe
+	lig9RfH/aTN3DqAvNPNQgS4pKB2G7BJnMQJQ45ghqQXa6RQ==
+X-Google-Smtp-Source: AGHT+IH7Y0brIbtpe5Cu/UTEFHbUpiYNY9Zys/khqy9iUcM6HYxzgSTsPgJ/CWx4E/S3d6AFqcBSfQ==
+X-Received: by 2002:a05:600c:8b64:b0:46e:652e:168f with SMTP id 5b1f17b1804b1-46e710fe30fmr97458675e9.6.1759760589855;
         Mon, 06 Oct 2025 07:23:09 -0700 (PDT)
 Received: from [127.0.0.2] ([82.163.201.2])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e7234f547sm171237555e9.9.2025.10.06.07.23.08
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e7234f547sm171237555e9.9.2025.10.06.07.23.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Oct 2025 07:23:08 -0700 (PDT)
+        Mon, 06 Oct 2025 07:23:09 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Mon, 06 Oct 2025 16:23:04 +0200
-Subject: [PATCH v5 6/7] reftable: add code to facilitate consistency checks
+Date: Mon, 06 Oct 2025 16:23:05 +0200
+Subject: [PATCH v5 7/7] refs/reftable: add fsck check for checking the
+ table name
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,235 +69,241 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251006-228-reftable-introduce-consistency-checks-v5-6-f196d386214f@gmail.com>
+Message-Id: <20251006-228-reftable-introduce-consistency-checks-v5-7-f196d386214f@gmail.com>
 References: <20251006-228-reftable-introduce-consistency-checks-v5-0-f196d386214f@gmail.com>
 In-Reply-To: <20251006-228-reftable-introduce-consistency-checks-v5-0-f196d386214f@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, gitster@pobox.com
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6090; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=SOrVFR/i+LcNfGKOPb2LImIUukjLiMfxrysbYO9PRBo=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGjj0MbQqqDqqDvsnSoOEQxfmq5y7pX+p2LQk
- 0k79KvFsk/wuIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJo49DGAAoJED7VnySO
- Rox/AgUMAJs1wDoFwgfxGf1RvaijBY1aYU5RxVTOG5jix1SLYCaTmguDl+rewlwCgtzBK/JpyjJ
- SamUtquQacf8SQgLc6S1q8R2K7qvaqRjoKOEwm5JchXADNETCKXi9YKFmtDqukoRCu7eDcRd9Vr
- 2KJs19U98od8iLxXgnc4p7y07sQtQXRa+q4vPz8+y4wta7S4f86Hq5Uhn1Quo+o0Lt8yeD2YSGI
- tRWUOcFhaqZ+zr3wyPPRZh+jO9dYCOOBzYlJYcIsYeJgFkcRELUk3Gp6AlafWQMraUSFPCHKVu7
- DYjrgEq0XzShKDCFieQJ+7caSzleYSJ3fBVtsvR2TALFt5jesKxphI7W5vtQeEkvv/P4+WGvIHb
- d9lbUNVAZF4Z9VrT/BT9pixKeY4w/tZUD8cBDmtmw8ZIxvqD0H2pm2uMyMnjY/zUUYEEIF1dnuG
- KdazJYX9I0uPDJh14ibuchndGSUxRaB8BNX0x/aLuQsz3ko3rreOgnvPPPhuXwNkQSPujCuDrf7
- pk=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6726; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=JxnDDcb2Wno8TzizsxTtRdbzlz0tC4g1+xYYPjCM68k=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGjj0MbYQIPx7dgqqfwXiw/Gv7dCzxHBWA68o
+ oCSEP38i/l36IkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJo49DGAAoJED7VnySO
+ Rox/6UQL/A9/1+FfbRLGIz7smWXUIKuFxwKymC2lQGVyg76tU/Xy/lRSI5ZjVNeusykQJoI+G+Z
+ luNiRa/48GBAmUloeBjvsHaAA5EbcW0RyZ5Oa+PTuhn4GLDDda5+THUgf5TnTRbyymnCIHKYykm
+ /Hr1UGnOvUTrjc4ga+6BsoxWJNwYWX1mryj+DOuTcHS+CEfdaYcx7tDM6V7FSW4SPI4BALqrMAx
+ zRsp7s48T34woQpsfIssmOWMXI6L8bbEei9IenUgZ1XKJuyBnk48w0/29X4DMXKN2iOSIU7PyO+
+ uDHK7qz54hHCTHTZxAwgs/V6H87WfpMRp9zsZEdNUMeh+3l7sEH9YeucPw6+KHqeAKJ+4SM5Q+0
+ S2dzJzjV0CFfTPVX4LhRqcLjtAfRAOCtzSSrG5tyslfVHxq5dV+P5ytRs/Q9mKlkfeQ+Gt1qgXP
+ SNfsUQd0tLpd9/8epD3kPav7QolDkEyq82a3GJqL7aHZkift9KT4TdjZfaFzcS+cxP1VGDfQ758
+ vI=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The `git refs verify` command is used to run consistency checks on the
-reference backends. This command is also invoked when users run 'git
-fsck'. While the files-backend has some fsck checks added, the reftable
-backend lacks such checks. Let's add the required infrastructure and a
-check to test for the files present in the reftable directory.
+Add glue code in 'refs/reftable-backend.c' which calls the reftable
+library to perform the fsck checks. Here we also map the reftable errors
+to Git' fsck errors.
 
-Since the reftable library is treated as an independent library we
-should ensure that the library code works independently without
-knowledge about Git's internals. To do this, add both 'reftable/fsck.c'
-and 'reftable/reftable-fsck.h'. Which provide an entry point
-'reftable_fsck_check' for running fsck checks over a provided reftable
-stack. The callee provides the function with callbacks to handle issue
-and information reporting.
+Introduce a check to validate table names for a given reftable stack.
+Also add 'badReftableTableName' as a corresponding error within Git. The
+reftable specification mentions:
 
-The added check, goes over all tables in the reftable stack validates
-that they have a valid name. It not, it raises an error.
+  It suggested to use
+  ${min_update_index}-${max_update_index}-${random}.ref as a naming
+  convention.
 
-While here, move 'reftable/error.o' in the Makefile to retain
-lexicographic ordering.
+So treat non-conformant file names as warnings.
+
+While adding the fsck header to 'refs/reftable-backend.c', modify the
+list to maintain lexicographical ordering.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Makefile                 |   3 +-
- meson.build              |   1 +
- reftable/fsck.c          | 100 +++++++++++++++++++++++++++++++++++++++++++++++
- reftable/reftable-fsck.h |  40 +++++++++++++++++++
- 4 files changed, 143 insertions(+), 1 deletion(-)
+ Documentation/fsck-msgids.adoc |  3 +++
+ fsck.h                         |  1 +
+ refs/reftable-backend.c        | 57 +++++++++++++++++++++++++++++++++++++----
+ t/meson.build                  |  1 +
+ t/t0614-reftable-fsck.sh       | 58 ++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 115 insertions(+), 5 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 4c95affadb..03fbaf2b21 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2732,9 +2732,10 @@ XDIFF_OBJS += xdiff/xutils.o
- xdiff-objs: $(XDIFF_OBJS)
+diff --git a/Documentation/fsck-msgids.adoc b/Documentation/fsck-msgids.adoc
+index 1c912615f9..81f11ba125 100644
+--- a/Documentation/fsck-msgids.adoc
++++ b/Documentation/fsck-msgids.adoc
+@@ -38,6 +38,9 @@
+ `badReferentName`::
+ 	(ERROR) The referent name of a symref is invalid.
  
- REFTABLE_OBJS += reftable/basics.o
--REFTABLE_OBJS += reftable/error.o
- REFTABLE_OBJS += reftable/block.o
- REFTABLE_OBJS += reftable/blocksource.o
-+REFTABLE_OBJS += reftable/error.o
-+REFTABLE_OBJS += reftable/fsck.o
- REFTABLE_OBJS += reftable/iter.o
- REFTABLE_OBJS += reftable/merged.o
- REFTABLE_OBJS += reftable/pq.o
-diff --git a/meson.build b/meson.build
-index b3dfcc0497..8914252910 100644
---- a/meson.build
-+++ b/meson.build
-@@ -452,6 +452,7 @@ libgit_sources = [
-   'reftable/error.c',
-   'reftable/block.c',
-   'reftable/blocksource.c',
-+  'reftable/fsck.c',
-   'reftable/iter.c',
-   'reftable/merged.c',
-   'reftable/pq.c',
-diff --git a/reftable/fsck.c b/reftable/fsck.c
-new file mode 100644
-index 0000000000..26b9115b14
---- /dev/null
-+++ b/reftable/fsck.c
-@@ -0,0 +1,100 @@
-+#include "basics.h"
-+#include "reftable-fsck.h"
-+#include "reftable-table.h"
-+#include "stack.h"
++`badReftableTableName`::
++	(WARN) A reftable table has an invalid name.
 +
-+static bool table_has_valid_name(const char *name)
+ `badTagName`::
+ 	(INFO) A tag has an invalid format.
+ 
+diff --git a/fsck.h b/fsck.h
+index 6b0db235e0..759df97655 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -73,6 +73,7 @@ enum fsck_msg_type {
+ 	FUNC(UNKNOWN_TYPE, ERROR) \
+ 	FUNC(ZERO_PADDED_DATE, ERROR) \
+ 	/* warnings */ \
++	FUNC(BAD_REFTABLE_TABLE_NAME, WARN) \
+ 	FUNC(EMPTY_NAME, WARN) \
+ 	FUNC(FULL_PATHNAME, WARN) \
+ 	FUNC(HAS_DOT, WARN) \
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 2152349cb9..b106fd8b53 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -6,6 +6,7 @@
+ #include "../config.h"
+ #include "../dir.h"
+ #include "../environment.h"
++#include "../fsck.h"
+ #include "../gettext.h"
+ #include "../hash.h"
+ #include "../hex.h"
+@@ -15,10 +16,11 @@
+ #include "../path.h"
+ #include "../refs.h"
+ #include "../reftable/reftable-basics.h"
+-#include "../reftable/reftable-stack.h"
+-#include "../reftable/reftable-record.h"
+ #include "../reftable/reftable-error.h"
++#include "../reftable/reftable-fsck.h"
+ #include "../reftable/reftable-iterator.h"
++#include "../reftable/reftable-record.h"
++#include "../reftable/reftable-stack.h"
+ #include "../repo-settings.h"
+ #include "../setup.h"
+ #include "../strmap.h"
+@@ -2707,11 +2709,56 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
+ 	return ret;
+ }
+ 
+-static int reftable_be_fsck(struct ref_store *ref_store UNUSED,
+-			    struct fsck_options *o UNUSED,
++static void reftable_fsck_verbose_handler(const char *msg, void *cb_data)
 +{
-+	const char *ptr = name;
-+	char *endptr;
++	struct fsck_options *o = cb_data;
 +
-+	/* strtoull doesn't set errno on success */
-+	errno = 0;
-+
-+	strtoull(ptr, &endptr, 16);
-+	if (errno)
-+		return false;
-+	ptr = endptr;
-+
-+	if (*ptr != '-')
-+		return false;
-+	ptr++;
-+
-+	strtoull(ptr, &endptr, 16);
-+	if (errno)
-+		return false;
-+	ptr = endptr;
-+
-+	if (*ptr != '-')
-+		return false;
-+	ptr++;
-+
-+	strtoul(ptr, &endptr, 16);
-+	if (errno)
-+		return false;
-+	ptr = endptr;
-+
-+	if (strcmp(ptr, ".ref") && strcmp(ptr, ".log"))
-+		return false;
-+
-+	return true;
++	if (o->verbose)
++		fprintf_ln(stderr, "%s", msg);
 +}
 +
-+typedef int (*table_check_fn)(struct reftable_table *table,
-+			      reftable_fsck_report_fn report_fn,
-+			      void *cb_data);
-+
-+static int table_check_name(struct reftable_table *table,
-+			    reftable_fsck_report_fn report_fn,
-+			    void *cb_data)
-+{
-+	if (!table_has_valid_name(table->name)) {
-+		struct reftable_fsck_info info;
-+
-+		info.error = REFTABLE_FSCK_ERROR_TABLE_NAME;
-+		info.msg = "invalid reftable table name";
-+		info.path = table->name;
-+
-+		return report_fn(&info, cb_data);
-+	}
-+
-+	return 0;
-+}
-+
-+static int table_checks(struct reftable_table *table,
-+			reftable_fsck_report_fn report_fn,
-+			reftable_fsck_verbose_fn verbose_fn UNUSED,
-+			void *cb_data)
-+{
-+	table_check_fn table_check_fns[] = {
-+		table_check_name,
-+		NULL,
-+	};
-+	int err = 0;
-+
-+	for (size_t i = 0; table_check_fns[i]; i++)
-+		err |= table_check_fns[i](table, report_fn, cb_data);
-+
-+	return err;
-+}
-+
-+int reftable_fsck_check(struct reftable_stack *stack,
-+			reftable_fsck_report_fn report_fn,
-+			reftable_fsck_verbose_fn verbose_fn,
-+			void *cb_data)
-+{
-+	struct reftable_buf msg = REFTABLE_BUF_INIT;
-+	int err = 0;
-+
-+	for (size_t i = 0; i < stack->tables_len; i++) {
-+		reftable_buf_reset(&msg);
-+		reftable_buf_addstr(&msg, "Checking table: ");
-+		reftable_buf_addstr(&msg, stack->tables[i]->name);
-+		verbose_fn(msg.buf, cb_data);
-+
-+		err |= table_checks(stack->tables[i], report_fn, verbose_fn, cb_data);
-+	}
-+
-+	reftable_buf_release(&msg);
-+	return err;
-+}
-diff --git a/reftable/reftable-fsck.h b/reftable/reftable-fsck.h
-new file mode 100644
-index 0000000000..007a392cf9
---- /dev/null
-+++ b/reftable/reftable-fsck.h
-@@ -0,0 +1,40 @@
-+#ifndef REFTABLE_FSCK_H
-+#define REFTABLE_FSCK_H
-+
-+#include "reftable-stack.h"
-+
-+enum reftable_fsck_error {
-+	/* Invalid table name */
-+	REFTABLE_FSCK_ERROR_TABLE_NAME = 0,
-+	/* Used for bounds checking, must be last */
-+	REFTABLE_FSCK_MAX_VALUE,
++static const enum fsck_msg_id fsck_msg_id_map[] = {
++	[REFTABLE_FSCK_ERROR_TABLE_NAME] = FSCK_MSG_BAD_REFTABLE_TABLE_NAME,
 +};
 +
-+/* Represents an individual error encountered during the FSCK checks. */
-+struct reftable_fsck_info {
-+	enum reftable_fsck_error error;
-+	const char *msg;
-+	const char *path;
-+};
++static int reftable_fsck_error_handler(struct reftable_fsck_info *info,
++				       void *cb_data)
++{
++	struct fsck_ref_report report = { .path = info->path };
++	struct fsck_options *o = cb_data;
++	enum fsck_msg_id msg_id;
 +
-+typedef int reftable_fsck_report_fn(struct reftable_fsck_info *info,
-+				    void *cb_data);
-+typedef void reftable_fsck_verbose_fn(const char *msg, void *cb_data);
++	if (info->error < 0 || info->error >= REFTABLE_FSCK_MAX_VALUE)
++		BUG("unknown fsck error: %d", (int)info->error);
 +
-+/*
-+ * Given a reftable stack, perform consistency checks on the stack.
-+ *
-+ * If an issue is encountered, the issue is reported to the callee via the
-+ * provided 'report_fn'. If the issue is non-recoverable the flow will not
-+ * continue. If it is recoverable, the flow will continue and further issues
-+ * will be reported as identified.
-+ *
-+ * The 'verbose_fn' will be invoked to provide verbose information about
-+ * the progress and state of the consistency checks.
-+ */
-+int reftable_fsck_check(struct reftable_stack *stack,
-+			reftable_fsck_report_fn report_fn,
-+			reftable_fsck_verbose_fn verbose_fn,
-+			void *cb_data);
++	msg_id = fsck_msg_id_map[info->error];
 +
-+#endif /* REFTABLE_FSCK_H */
++	if (!msg_id)
++		BUG("fsck_msg_id value missing for reftable error: %d", (int)info->error);
++
++	return fsck_report_ref(o, &report, msg_id, "%s", info->msg);
++}
++
++static int reftable_be_fsck(struct ref_store *ref_store, struct fsck_options *o,
+ 			    struct worktree *wt UNUSED)
+ {
+-	return 0;
++	struct reftable_ref_store *refs;
++	struct strmap_entry *entry;
++	struct hashmap_iter iter;
++	int ret = 0;
++
++	refs = reftable_be_downcast(ref_store, REF_STORE_READ, "fsck");
++
++	ret |= reftable_fsck_check(refs->main_backend.stack, reftable_fsck_error_handler,
++				   reftable_fsck_verbose_handler, o);
++
++	strmap_for_each_entry(&refs->worktree_backends, &iter, entry) {
++		struct reftable_backend *b = (struct reftable_backend *)entry->value;
++		ret |= reftable_fsck_check(b->stack, reftable_fsck_error_handler,
++					   reftable_fsck_verbose_handler, o);
++	}
++
++	return ret;
+ }
+ 
+ struct ref_storage_be refs_be_reftable = {
+diff --git a/t/meson.build b/t/meson.build
+index 7974795fe4..ec1fc0b2a1 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -146,6 +146,7 @@ integration_tests = [
+   't0611-reftable-httpd.sh',
+   't0612-reftable-jgit-compatibility.sh',
+   't0613-reftable-write-options.sh',
++  't0614-reftable-fsck.sh',
+   't1000-read-tree-m-3way.sh',
+   't1001-read-tree-m-2way.sh',
+   't1002-read-tree-m-u-2way.sh',
+diff --git a/t/t0614-reftable-fsck.sh b/t/t0614-reftable-fsck.sh
+new file mode 100755
+index 0000000000..a5be279ab3
+--- /dev/null
++++ b/t/t0614-reftable-fsck.sh
+@@ -0,0 +1,58 @@
++#!/bin/sh
++
++test_description='Test reftable backend consistency check'
++
++GIT_TEST_DEFAULT_REF_FORMAT=reftable
++export GIT_TEST_DEFAULT_REF_FORMAT
++
++. ./test-lib.sh
++
++test_expect_success "no errors reported on a well formed repository" '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		git commit --allow-empty -m initial &&
++
++		for i in $(test_seq 20)
++		do
++			git update-ref branch-$i HEAD || return 1
++		done &&
++
++		# The repository should end up with multiple tables.
++		test_line_count ">" 1 .git/reftable/tables.list &&
++
++		git refs verify 2>err &&
++		test_must_be_empty err
++	)
++'
++
++for TABLE_NAME in "foo-bar-e4d12d59.ref" \
++	"0x00000000zzzz-0x00000000zzzz-e4d12d59.ref" \
++	"0x000000000001-0x000000000002-e4d12d59.abc" \
++	"0x000000000001-0x000000000002-e4d12d59.refabc"; do
++	test_expect_success "table name $TABLE_NAME should be checked" '
++		test_when_finished "rm -rf repo" &&
++		git init repo &&
++		(
++			cd repo &&
++			git commit --allow-empty -m initial &&
++
++			git refs verify 2>err &&
++			test_must_be_empty err &&
++
++			EXISTING_TABLE=$(head -n1 .git/reftable/tables.list) &&
++			mv ".git/reftable/$EXISTING_TABLE" ".git/reftable/$TABLE_NAME" &&
++			sed "s/${EXISTING_TABLE}/${TABLE_NAME}/g" .git/reftable/tables.list > tables.list &&
++			mv tables.list .git/reftable/tables.list &&
++
++			git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			warning: ${TABLE_NAME}: badReftableTableName: invalid reftable table name
++			EOF
++			test_cmp expect err
++		)
++	'
++done
++
++test_done
 
 -- 
 2.51.0
