@@ -1,41 +1,41 @@
 Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E480E21576E
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 11:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009E021576E
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 11:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759749964; cv=pass; b=fBxhf+L9r3d+IFn4Wb+2K69DrdjnymDngHq6lZGtk7oK357E06kMc188vow85MeG98ObOmb/kPTj7I0yaiXPqrukVDrVZ5pdax3NeoZV7i7EBGVqmKW5yShTf7r1v8Y9GeUtUwUxiD183YYoyOxP/+EojsPMfT6EtL0abI5CcrY=
+	t=1759749969; cv=pass; b=YrxL0b0SJQWbS+6JLfg04tL89tclvwK3DysM1kIY8l3TBZOnSAqZ6qBUNRCJRbYzYrXM2H9tAGTqcjD2NOrlHOV5ttE1OS+ysSuxWmmbKcBcG7I5Yqf2qjtevbzqF/FizNnvZTMf3kdHMeKNcl817pM8SPVSDZT2qV6OxAYfmhM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759749964; c=relaxed/simple;
-	bh=qpsxrOriRWG62LU7GyeWpjGYMvkHS/6joyUt3nwY+c0=;
+	s=arc-20240116; t=1759749969; c=relaxed/simple;
+	bh=ZI3uH21+sts0BwP+u4e8HojHwGK7zHw3dO4KgrL5chk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ixO0V/p7ilc6VJRbZCHnKkDXglx1BmRWWRtbXEhUvYILw9utCRz8ON/60qKp8TwGEjI2nBCxS5EuXU/J3+k8JDbFVQBiEmWmp7uitYUFjRoNPIR8NIOK7ZF/q3FDPcD7+vJrbvK2YG/bqL0VjOt/Jkc+Iom++cp3UWBXEm3cBBI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=QvWBsFE9; arc=pass smtp.client-ip=136.143.188.112
+	 MIME-Version; b=D1CD/4H/Tv/KoCEPL4HjL/eblLWRY7X53Yoiy4kLsozkuzyG3vO1hTbWn54dAi2g2mZHDb+BB+G1FVhotZcQxv6CcJ+Ww/E7EoaO7aXrTOc47e6B9frRAAhJdwBfzppCWBn3t5zhQExfyKCjxVW19zXU68vJ/NyC+4bobfmZB6c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=kaJzrWc2; arc=pass smtp.client-ip=136.143.188.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="QvWBsFE9"
-ARC-Seal: i=1; a=rsa-sha256; t=1759749944; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="kaJzrWc2"
+ARC-Seal: i=1; a=rsa-sha256; t=1759749952; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=gObTrRnq9PrXG0LQSjKf1EegcTlkZx+kdO2wqUl5qfF0MqPzQy7IFTjCa7F1DRLhEnZqYkeB5VAtz21zRiKwvC94qZ3N5S+kGv81IvoffZexjivyMjx78fQ6EVtRChYC5WUZW+9P+nuK2EUM+TiGig8iJbSgEnb1vAiMVdFF8I0=
+	b=YxGqykosnZlcUNWToua5AXFm5HLcIV6dA2I7+vQsigC/TRw5xMjiGEcCRHxhezlludT+bs9ebyYZv+mKprFunnMbnjmd6sUbjwcD1hb3pIFiX8OOg9v3CdKyZbW7VPVbuHuptVk9+6PikDaKQtvrQezEGh9ORzxi7vu2R3P/+ig=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1759749944; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=ryjnfdWy4+wL5oakM1ZPixaJNQgteOt7FN3oxxLwe34=; 
-	b=MdEfHJLXwq7fyhT5ADFbXpp6YIKR9fcFvIeWuAP/CyLU9XNXcKbu5y0FlM/frRJkmlT8baoXENG75x2Mtrm5rAb/48s3Nu5x9/Pc1QoSfasNgDdJFleHMsVmiQTJX7hdmNHvAVlQF/5CKK88YwxthxGR1cQcnYNbjNO2ZxdH2GI=
+	t=1759749952; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=Sjd+26LSv4yJUIlDroCeVEJ7BHzJC6CRw/BIRSQV0Do=; 
+	b=Oxd0q4/MnhtwpCgMqKQKW+SWrPbJr6I9pOIr80D1381koN4KKlEA8NyLrBgI0R+wbAjxqJtaFMhtDOgMIFP6gtj2DZsNfWQv1FFAgh/7xnYwteDsjwyZ6/M5kD7ZcUwjZnqqo4rlGwAfNRuNGvMYulD9dcidPGsAiDni01ZGvvQ=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759749944;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759749952;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=ryjnfdWy4+wL5oakM1ZPixaJNQgteOt7FN3oxxLwe34=;
-	b=QvWBsFE9C8EgUAgRDBEn3L6piryPA4iRRPdK+dPOA+tRqjhkawr6YUXNKyikh1it
-	i4TkQImu7awB31THd0sdvgZPuGJ84IcIuWvxfrS4NfZhQmEhGVsMByn5ALejnWS1q63
-	AxMWZVMJJ6Dp5VX2ondhLa9x+q3gQNbm4IExdE8E=
-Received: by mx.zohomail.com with SMTPS id 1759749941478627.0703226998246;
-	Mon, 6 Oct 2025 04:25:41 -0700 (PDT)
+	bh=Sjd+26LSv4yJUIlDroCeVEJ7BHzJC6CRw/BIRSQV0Do=;
+	b=kaJzrWc2ShKW/3vRBbT56Xn4JXEfCadlTKl6yZRAnqNwdm9BIOIejwlUVegthBuq
+	ivEj928oop+3YFgy0x53jCxEuW5KUU9jeX4zMzOpKji5nyJ8k94fpSffgujBB5Ikvb4
+	arEeiQ5U5OtLG8EPHdTLKNqkOzhIslnzXvRlTS2A=
+Received: by mx.zohomail.com with SMTPS id 1759749949295819.1646806214911;
+	Mon, 6 Oct 2025 04:25:49 -0700 (PDT)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Emily Shaffer <emilyshaffer@google.com>,
@@ -48,13 +48,15 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Josh Steadmon <steadmon@google.com>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v3 0/5] Encode submodule gitdir names to avoid conflicts
-Date: Mon,  6 Oct 2025 14:25:13 +0300
-Message-ID: <20251006112518.3764240-1-adrian.ratiu@collabora.com>
+	Adrian Ratiu <adrian.ratiu@collabora.com>,
+	Brandon Williams <bmwill@google.com>
+Subject: [PATCH v3 2/5] submodule: add gitdir path config override
+Date: Mon,  6 Oct 2025 14:25:15 +0300
+Message-ID: <20251006112518.3764240-3-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.49.1
-In-Reply-To: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+In-Reply-To: <20251006112518.3764240-1-adrian.ratiu@collabora.com>
 References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20251006112518.3764240-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -64,68 +66,165 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Hello everyone,
+This adds the ability to override gitdir paths via config files
+(not .gitmodules) such that the encoding scheme (or plain text
+name if the encoding extension is disabled) can be changed via
+config entries.
 
-v3 is much simplified from v2, starting from the design idea that submodule gitdir
-name encoding is to be put behind an extensions.submoduleEncoding.
+These entries are not added by default for all submodules: they
+should be used on an as-needed basis.
 
-This allowed removal of the modules vs submodules directories split and simplified
-our logic quite a lot. Tests have been been squashed in the smaller commits as well.
+A new test and a helper are added. The helper will also be used
+in further tests exercising gitdir encoding functionality.
 
-Many thanks to all who provided feedback, especially Patrick and Phillip who
-suggested the extension idea.
-
-This is based on the latest master branch and I've also merged and tested against next.
-
-I pushed the patches to github [1] and also did a CI run [2] which passed (the lone
-Win+Meson CI failure seems to be unrelated because it reproduces without the patches).
-
-[1] https://github.com/10ne1/git/tree/dev/aratiu/encoding-v3
-[2] https://github.com/10ne1/git/actions/runs/18276914867
-
-Changes between v2 -> v3:
-* Put submodule encoding behind an extension (Phillip & Patrick).
-* Removed the submodules vs modules directory split (Patrick).
-* Undeleted validate_submodule_git_dir() because it still needs to check the default.
-* Undeleted tests from t7450-bad-git-dotfiles.sh because they are still required.
-* Moved new tests to a new file which enables the extension.
-* Moved unused variables to commit which uses them (Szeder Gabor).
-* Squashed commits to reduce their number (e.g. tests are together with new logic).
-* Fixed a small bug passing the module repo instead of the_repo to the gitdir helper.
-* Small commit msg rewording improvements, typos (Kristoffer & Phillip).
-
-Adrian Ratiu (5):
-  submodule--helper: use submodule_name_to_gitdir in add_submodule
-  submodule: add gitdir path config override
-  strbuf: bring back is_rfc3986_unreserved
-  submodule: encode gitdir paths to avoid conflicts
-  submodule: error out if gitdir name is too long
-
- Documentation/config/extensions.adoc  |   9 ++
- Documentation/config/submodule.adoc   |   7 ++
- Makefile                              |   5 +
- builtin/credential-store.c            |   6 -
- builtin/submodule--helper.c           |  30 ++++-
- compat/pathconf.c                     |  10 ++
- compat/posix.h                        |   8 ++
- config.mak.uname                      |   2 +
- meson.build                           |   1 +
- repository.h                          |   1 +
- setup.c                               |   7 ++
- setup.h                               |   1 +
- strbuf.c                              |   6 +
- strbuf.h                              |   2 +
- submodule.c                           |  84 +++++++++----
- t/lib-verify-submodule-gitdir-path.sh |  20 ++++
- t/meson.build                         |   1 +
- t/t7400-submodule-basic.sh            |   9 ++
- t/t7425-submodule-encoding.sh         | 162 ++++++++++++++++++++++++++
- t/t9902-completion.sh                 |   1 +
- 20 files changed, 340 insertions(+), 32 deletions(-)
- create mode 100644 compat/pathconf.c
+Based-on-patch-by: Brandon Williams <bmwill@google.com>
+Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+---
+ Documentation/config/submodule.adoc   |  4 ++++
+ builtin/submodule--helper.c           | 17 +++++++++++++++++
+ submodule.c                           | 12 ++++++++++++
+ t/lib-verify-submodule-gitdir-path.sh | 20 ++++++++++++++++++++
+ t/t7400-submodule-basic.sh            |  9 +++++++++
+ t/t9902-completion.sh                 |  1 +
+ 6 files changed, 63 insertions(+)
  create mode 100644 t/lib-verify-submodule-gitdir-path.sh
- create mode 100755 t/t7425-submodule-encoding.sh
 
+diff --git a/Documentation/config/submodule.adoc b/Documentation/config/submodule.adoc
+index 0672d99117..8f64adfbe3 100644
+--- a/Documentation/config/submodule.adoc
++++ b/Documentation/config/submodule.adoc
+@@ -52,6 +52,10 @@ submodule.<name>.active::
+ 	submodule.active config option. See linkgit:gitsubmodules[7] for
+ 	details.
+ 
++submodule.<name>.gitdir::
++	This option sets the gitdir path for submodule <name>, allowing users
++	to override the default path or change the default path name encoding.
++
+ submodule.active::
+ 	A repeated field which contains a pathspec used to match against a
+ 	submodule's path to determine if the submodule is of interest to git
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 2873b2780e..abd20eee53 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1208,6 +1208,22 @@ static int module_summary(int argc, const char **argv, const char *prefix,
+ 	return ret;
+ }
+ 
++static int module_gitdir(int argc, const char **argv, const char *prefix UNUSED,
++			 struct repository *repo)
++{
++	struct strbuf gitdir = STRBUF_INIT;
++
++	if (argc != 2)
++		usage(_("git submodule--helper gitdir <name>"));
++
++	submodule_name_to_gitdir(&gitdir, repo, argv[1]);
++
++	printf("%s\n", gitdir.buf);
++
++	strbuf_release(&gitdir);
++	return 0;
++}
++
+ struct sync_cb {
+ 	const char *prefix;
+ 	const char *super_prefix;
+@@ -3591,6 +3607,7 @@ int cmd_submodule__helper(int argc,
+ 		NULL
+ 	};
+ 	struct option options[] = {
++		OPT_SUBCOMMAND("gitdir", &fn, module_gitdir),
+ 		OPT_SUBCOMMAND("clone", &fn, module_clone),
+ 		OPT_SUBCOMMAND("add", &fn, module_add),
+ 		OPT_SUBCOMMAND("update", &fn, module_update),
+diff --git a/submodule.c b/submodule.c
+index 35c55155f7..7a2d7cd592 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -2604,6 +2604,18 @@ void submodule_name_to_gitdir(struct strbuf *buf, struct repository *r,
+ 	 * administrators can explicitly set. Nothing has been decided,
+ 	 * so for now, just append the name at the end of the path.
+ 	 */
++	char *gitdir_path, *key;
++
++	/* Allow config override. */
++	key = xstrfmt("submodule.%s.gitdirpath", submodule_name);
++	if (!repo_config_get_string(r, key, &gitdir_path)) {
++		strbuf_addstr(buf, gitdir_path);
++		free(key);
++		free(gitdir_path);
++		return;
++	}
++	free(key);
++
+ 	repo_git_path_append(r, buf, "modules/");
+ 	strbuf_addstr(buf, submodule_name);
+ }
+diff --git a/t/lib-verify-submodule-gitdir-path.sh b/t/lib-verify-submodule-gitdir-path.sh
+new file mode 100644
+index 0000000000..3a83f2d975
+--- /dev/null
++++ b/t/lib-verify-submodule-gitdir-path.sh
+@@ -0,0 +1,20 @@
++# Helper to verify if repo $1 contains a submodule named $2 with gitdir path $3
++
++# This does not check filesystem existence. That is done in submodule.c via the
++# submodule_name_to_gitdir() API which this helper ends up calling. The gitdirs
++# might or might not exist (e.g. when adding a new submodule), so this only
++# checks the expected configuration path, which might be overridden by the user.
++
++verify_submodule_gitdir_path() {
++	repo="$1" &&
++	name="$2" &&
++	path="$3" &&
++	(
++		cd "$repo" &&
++		cat >expect <<-EOF &&
++			$(git rev-parse --git-common-dir)/$path
++		EOF
++		git submodule--helper gitdir "$name" >actual &&
++		test_cmp expect actual
++	)
++}
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index fd3e7e355e..11c84a7bdf 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -13,6 +13,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-verify-submodule-gitdir-path.sh
+ 
+ test_expect_success 'setup - enable local submodules' '
+ 	git config --global protocol.file.allow always
+@@ -1505,4 +1506,12 @@ test_expect_success 'submodule add fails when name is reused' '
+ 	)
+ '
+ 
++test_expect_success 'submodule helper gitdir config overrides' '
++	verify_submodule_gitdir_path test-submodule child modules/child &&
++	test_config -C test-submodule submodule.child.gitdirpath ".git/modules/custom-child" &&
++	verify_submodule_gitdir_path test-submodule child modules/custom-child &&
++	test_unconfig -C test-submodule submodule.child.gitdirpath &&
++	verify_submodule_gitdir_path test-submodule child modules/child
++'
++
+ test_done
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 964e1f1569..ffb9c8b522 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -3053,6 +3053,7 @@ test_expect_success 'git config set - variable name - __git_compute_second_level
+ 	submodule.sub.fetchRecurseSubmodules Z
+ 	submodule.sub.ignore Z
+ 	submodule.sub.active Z
++	submodule.sub.gitdir Z
+ 	EOF
+ '
+ 
 -- 
 2.49.1
 
