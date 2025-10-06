@@ -1,205 +1,113 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112E835972
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 21:17:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68799A932
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 21:20:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759785428; cv=none; b=KPQO+S1RHWMzuIL4Htl7sL4qbXGStfMvDqZR2cFaC0dCkhJGZbpdjCi3KA/yArECIVe/supBRkHZ6xoE1uev1H6NinrimE6dYRPlA/Fb7OH2Unmw9YgB227TgpvctaNGkhtBalSiBXZtB6yecgtQh4MjNcef7i1mhrI21wMioN4=
+	t=1759785615; cv=none; b=TaSodEUSt3k5hmIU+FZtbE5H130wzzya2Ns1BsTTwnO5gzliL+td1Pckn88AwHBMwqSKqRZea8THg3G5NdIlvJXLO6itQqwvJB/8EMQo90GtTVCWMCGeWnCthimq5+64Zgkq7ovV8bWCAjXUfAARvuhCP4+yAAgseH4gy8rGnGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759785428; c=relaxed/simple;
-	bh=g5XdgvE9Yva16lsCYovWZ5uFnubQwnKDKJjqGj2i8w8=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=UGOlY0vKDe0jsaIHWVpkeLf69ZYkJR8Kqmsky7tjJC1GYR7o78ulxjHj5IO0InbM7zQ12zp4w/EH6khAxpxQmqNnpDsteiASLIOPVNqs+/znyuNhZQABRw5rUVryBeoPs/aaGlTdcEJzDb3bfiHuz2dm1BSnv4I6jHSbLwxy5mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=JIKeTbRK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mmHkPsA8; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1759785615; c=relaxed/simple;
+	bh=//T1xKp47gEC1dykaeMkqzZ2o2ESvOpA/cbbEkHBRuU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zq6qMtVju0ogVrDRn5GsCZyVGxSwjId1VtJOfqS55inA2EC6tlnQLVDj4qZu/UxUGzdrQ5w3c8cLf77nkhE3983vRFwRIMIIh9GOQhbvxcL3Vw58UcTWY03C7rN0WLB3fJG1Oa5hG6oxyyRHL5zholi4IyTOZayhxqbTFR/RK2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=AZWrHPVc; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="JIKeTbRK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mmHkPsA8"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1580B1D00450;
-	Mon,  6 Oct 2025 17:17:05 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Mon, 06 Oct 2025 17:17:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759785424;
-	 x=1759871824; bh=/fj1Qh+eWs1x2mgJ06DOxWxg2bvtHLy9rL4GfCn1DaY=; b=
-	JIKeTbRKfixCm4qhqyxTM2Qd3IHho89wXzKval7YXpZymseyMnNkOrFMcZ+Pab3B
-	x5HVIfZUvGPGEoLafjFvz1sYRFjCOHUIrLad2h2VYeoiiv8rDMR/Ve0fMaMynJpB
-	jqU0sfeAwVSV2Sr+lZdEl148LdSjusp9nmwf475HXQtZkeuZwOuwsLXJnpSXCzDV
-	vi8n1/tcekESK/3hIZVkeVDvDFpHWIF3g5m1q5PD/k22b9dZWfnnB7mtO3DS/Nxu
-	Mj8oht4FsUNimsnc5gJ3JZkYRl1vd4n6gsF7A7WH/+9avPYTnbKljt2ZCh3173IK
-	5bk8QS25hKD/VZ/drD+L5g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759785424; x=
-	1759871824; bh=/fj1Qh+eWs1x2mgJ06DOxWxg2bvtHLy9rL4GfCn1DaY=; b=m
-	mHkPsA8ANEpb5+tyvtWeGCcfrsOa2O9Dpy7nph7TYdH0mb3uwy21OsefQ8s61bsK
-	OVdwhjEMZ4jnUuIwFFSmXNylGJ7LxJKyGurj6C7fj3dy4HCjFyhUvCmRFcejuzCO
-	2GDBrXc1hdwYQKrH4eyBMr1f/K+ZN8g7zs+Z1JdiaokoYp465x0e9N+IA+QNhrdn
-	yZr4V/fIdtYpZ97OE/rDfbNvhC6J2nXfCmgbSc6s5YdX9AMj486z9+TF40KH8gQP
-	jWIJp7i04hOl0Ht5QdbEJrS4t0+F2vHHMsY/hOVRWnZwTi2IPIWpGTNDXahZfa3M
-	e/63/43rStWjlg5ws2OfQ==
-X-ME-Sender: <xms:0DHkaAWhGHkvFiPNThlKqAmQ_T7JBgvZJax8yZhaSoJhLFCiuXaMLw>
-    <xme:0DHkaPbgUVJN_yuRxnH9PIiwbLJQRQhzoEdG5_SdTglmlD2X_hRbRotd7Dq_QilOM
-    Se9-cpSCe3RfDKfO9aR7uM025of5NFE1IoM_0Dzze4yqGXy9CHydEI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdelkeeitdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfluhhlihgr
-    ucfgvhgrnhhsfdcuoehjuhhlihgrsehjvhhnshdrtggrqeenucggtffrrghtthgvrhhnpe
-    efieeigeegtdefkeejgfdvteejfffhveeuuddttedvjefggeevfffhleegvddvudenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjuhhlihgrse
-    hjvhhnshdrtggrpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgt
-    phhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopegthh
-    hrihhsrdhtohhrvghksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgr
-    ughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrgh
-X-ME-Proxy: <xmx:0DHkaN8eJ2hPctDtZfd77Gpv-8Dn--LeL45ISxrnPKkUOjpIfmec1A>
-    <xmx:0DHkaPiMGC9MuYuddglbWzDdDyuystPiiIG_Rzud9515wKbJtSQhJQ>
-    <xmx:0DHkaFcL_M0fY_QaZ0vozRefGo5-EuY6FLWE3c-lWY5C_WMJPQBTPg>
-    <xmx:0DHkaOpLS1v_088G4MjTEEmyDe92zUdDyze6emJDq0JLPUObR70fOA>
-    <xmx:0DHkaHsdpvMyUGQv7O_BV2e6DsX09m_PjCbXMX6AWDAAC-SfBYE6SwEv>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 9A32B780054; Mon,  6 Oct 2025 17:17:04 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="AZWrHPVc"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1759785611;
+	bh=//T1xKp47gEC1dykaeMkqzZ2o2ESvOpA/cbbEkHBRuU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=AZWrHPVcgQcP+V65WiRzr5bEM3F36a969mt8Dfy3aIKPMhafU2QjhsObIZflNzfT4
+	 hNaA67CW3kF5STY3oYQNCqzeMPbuEHJ1MrSWvE6Al++TJIGmhtfwMPeqfTHVXRO25j
+	 oBqTv7uNk7hbjZtHMu5pppiCtsLWUhGVwa0G2N4o6SS8qVh8kAnZ+ueAyoOY+TYfbM
+	 EiYEfPj87IbFxP0FIiZGW0LQgEACdH550Fqf6pKbx9Ghko/RZaC7our8IqblGSUxuc
+	 6Y17a0ICh2YyNKkNjlL4PqHsPXqyupUumrBb4YybekshUZdTONyGwjAb5JCoiCzC+S
+	 uzzrPutXTeP7xfY6cMtR1h2IfrwA8qkwBLjzoyY4C3eo5gtCIlgjo8P0Vakb/AsG20
+	 s9OfEn9M5+HpgPAfzxQ389Dyt3cqAshI6gXX5e2Xo8qtgVmbglwJlhNalU/qu8MOXv
+	 UnZYSlkmK1eLLjGjmrF1t6p62hfA7ltTwrbLM8Ph6+hul4rRrTo
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:1cc7:db20:f4a5:abef])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C3A56200C6;
+	Mon,  6 Oct 2025 21:20:11 +0000 (UTC)
+Date: Mon, 6 Oct 2025 21:20:10 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: phillip.wood@dunelm.org.uk
+Cc: ions via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
+	ions <zara.leonardo@gmail.com>
+Subject: Re: [PATCH v4] libgit-rs: add get_bool(), get_ulong(), and
+ get_pathname() methods
+Message-ID: <aOQyioJChUkJOXRb@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	phillip.wood@dunelm.org.uk,
+	ions via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
+	ions <zara.leonardo@gmail.com>
+References: <pull.1977.v3.git.1758945111.gitgitgadget@gmail.com>
+ <pull.1977.v4.git.1759221968318.gitgitgadget@gmail.com>
+ <0cb55558-a48e-42ac-a80e-a24ee2be55ee@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: ATtqAgZ0pDEJ
-Date: Mon, 06 Oct 2025 17:16:44 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Chris Torek" <chris.torek@gmail.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Message-Id: <6c8790b7-2b8c-4452-bcc6-2fa17d08ec86@app.fastmail.com>
-In-Reply-To: 
- <CAPx1GvfK5ZKUG86n=DR8LeO_STwO5FAkDzzD9t6d9R22KdOySg@mail.gmail.com>
-References: <pull.1976.git.1758656702.gitgitgadget@gmail.com>
- <ffbb9d7c6aff77f9a1caed86a20bcc6b9afe66e7.1758656702.git.gitgitgadget@gmail.com>
- <CALnO6CCkWaxZKGseHR7dk20erFPAvGMqO+OYr3Np+y+=1Y34HA@mail.gmail.com>
- <CAPx1GvfK5ZKUG86n=DR8LeO_STwO5FAkDzzD9t6d9R22KdOySg@mail.gmail.com>
-Subject: Re: [PATCH 2/4] doc: git-pull: clarify options for integrating remote branch
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ShvnO/rbFKqEE0Lp"
+Content-Disposition: inline
+In-Reply-To: <0cb55558-a48e-42ac-a80e-a24ee2be55ee@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--ShvnO/rbFKqEE0Lp
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
+On 2025-10-01 at 10:15:28, Phillip Wood wrote:
+> [I've cc'd brian to sanity check my suggestion for handling c_ulong in ru=
+st
+> 1.63 which lacks std::ffi::c_ulong]
+>=20
+> As I said before this wont work because C's ulong type is platform depend=
+ent
+> so you cannot assume it 64 bits wide. Looking at the previous discussion[=
+1]
+> the reason we have these fallback definitions is because std::ffi::c_int =
+etc
+> were only added in rust 1.64 and we want to support rust 1.63 as that is =
+the
+> version shipped by Debian oldstable. I think it would be better to have a
+> separate preparatory patch that changes the existing fallbacks to
+>=20
+> #[cfg(not(has_std__ff__c_char))]
+> use std::os::raw::{c_char, c_int};
+>=20
+> and then this patch can add "c_ulong" to the list.
 
+It's just fine to use `std::os::raw` in general without needing to use
+`std::ffi` conditionally.  I'd just default to that until we move away
+=66rom Rust 1.63.  That's what I do myself.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-On Wed, Sep 24, 2025, at 6:38 PM, Chris Torek wrote:
-> On Wed, Sep 24, 2025 at 1:23=E2=80=AFPM D. Ben Knoble <ben.knoble@gmai=
-l.com> wrote:
->> > +First, `git pull` runs `git fetch` with the same arguments to fetch
->>
->> Hm. Is it worth saying "similar" rather than "same" since we don't
->> pass e.g. `--rebase` to `git fetch`? Or is that detail unimportant in
->> this context?
->
-> I would suggest "equivalent" or (perhaps better) "appropriate".
-> Perhaps even:
->
->     First, `git pull` runs the equivalent of `git fetch` with the
->     arguments needed to fetch necessary branches from
->     the remote ...
->
-> Definition of these arguments can be deferred (perhaps
-> even indefinitely); but:
->
->> > +remote branch(es). Then it integrates the remote branch into the c=
-urrent
->> > +branch.
->>
->> Plural-singular here leaves me wondering how Git decides which of
->> multiple fetched branches to integrate.
->
-> here we'd need something along the lines of:
->
->     Then it integrates the appropriate remote branch ...
->
-> and here we *do* have to define "appropriate".
+--ShvnO/rbFKqEE0Lp
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I like the idea of adding "appropriate" here. The question of how to def=
-ine
-it is a little messy.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
 
-We do define "appropriate" below under <refspec>, like this:
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaOQyigAKCRB8DEliiIei
+gWm2AQCM8qfM5XN66M3efxke853KucPbx7naKvbindqBfDroNgEAj2JUOwFAz+43
+IA0NRd60pBRA9eeF/dEdVdqTJy+JXw8=
+=7g7q
+-----END PGP SIGNATURE-----
 
-> See <refspec> below under "Options related to fetching" for the full s=
-yntax,
-> and DEFAULT BEHAVIOUR below for how `git pull` uses this argument to
-> determine which remote branch to integrate.
-
-Like I mentioned in another reply I think deferring the question of what=
- "the
-appropriate branch" is to the DEFAULT BEHAVIOUR section like this does i=
-s not
-a "good" long-term solution because  that section is so confusing, but I=
- think
-it's not worse than the current state and I don't want to expand the sco=
-pe of
-this patch series too much.
-
-However! I think there's a question of what behaviour to "encourage".
-Over on the `git push` side, we decided to highlight using
-`git push origin main` to push, because the behaviour of `git push origi=
-n main`
-is simple to explain ("it pushes the local main branch to the main on th=
-e `origin`
-remote").
-
-So a natural next question is: should we equivalently highlight
-"git pull origin main", to mirror the `git push` man page?
-Then it would be easy to say what "the appropriate branch" is, because i=
-n that
-case the branch is "whatever branch you specified"
-
-My initial instinct is "no":  `git push origin main` also feels sort of =
-"foolproof" to me,
-in the sense that if you accidentally run it while on the wrong branch, =
-nothing
-really bad will happen, since it doesn't matter what your current branch=
- is.
-
-But `git pull` is not the same, since running `git pull origin <wrong-br=
-anch>` will
-integrate <wrong-branch> into your current branch, which could get confu=
-sing if
-you accidentally pulled while on the wrong branch. Personally I use `git=
- pull`
-without any arguments, and it feels safer to me that way because I know =
-that I'm
-likely to have set my upstream to something reasonable.
-
-I also did some extremely informal and low-sample-size Mastodon polling
-and my sense so far is that folks tend to run `git pull` with no argumen=
-ts in
-practice. So I think it makes sense to highlight the no-arguments versio=
-n.
-
-And in any case if you want to get really specific about what you're pul=
-ling I
-think going straight to "manually fetch and then run `git merge` yoursel=
-f" is
-a safer approach instead of passing arguments to `git pull`.
-
-All of that is to say: my best idea for how to resolve all of this is as=
- follows:
-
-> First, `git pull` runs `git fetch` with the same arguments
-> (excluding merge options) to fetch remote branch(es).
-> Then it decides which remote branch to integrate: if you run `git pull`
-> with no arguments this defaults to the upstream for the current branch.
-> Then it integrates that branch into the current branch.
-
-This explains what the "appropriate branch" is in (I think) the most com=
-mon
-use case and deals with the "same arguments" issue.
+--ShvnO/rbFKqEE0Lp--
