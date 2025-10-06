@@ -1,120 +1,120 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F151C7E0E4
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 21:55:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F28013B5AE
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 22:01:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759787735; cv=none; b=EIkWkbBI3bwT8lKJxwebTde7qcnghVWIFCYnCf2xzxO5L4Dde2yC57Z6g0DYw9ZPIfW0aSzmwjHB+mho2Ad7jfJXT+cewKAJ4RPGHnJOaJMIYTfXn6mSdxQzbSmyot+HvDAonW2GE5sYI/0wlTrW2xAmPXFGbTcVgFYAXGnMhB8=
+	t=1759788114; cv=none; b=SZijeuMJmxeOiAmcy2MhgE9iFYQVwaYyUROMgEIq1uXQEI7BIG6/mhCZp8NVaHE9qrOKUNRb5WiXTiPIDgFYJkC23nPSaKvUEopuqb3AEdPWdRQ5SeWYFBb4vDExhpvm82jP2xazz2zNtSQ4eqJObxV5bU721ZqFq+xt9Zsd828=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759787735; c=relaxed/simple;
-	bh=nPwRItWvkTUEY5fDwSDzhiSOyl9oaPPzCD66sc7Xqh8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oDu7bubVyZgs5uEaRk0sbOmk9TU7zuxl6KhNTqip0TD/StJhMC31Tc+uummdB9qXGugpXHWt2WFBS+QLmgOpb2IB3ui8Lb6o3wumIft2gyRWrhvzNSC2ADcCrUIRq6eIgpV7GS1QCVUJjrxTXD0ypuxxktDZTt/HS0GHKHZaIgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mNST3pIZ; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759788114; c=relaxed/simple;
+	bh=7VLEOozb3TEQATjBvaLYmHTBM6usfYOOFN6k367hJFY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PFIWQyw+6nsa/BfbMLVHG2PICmv8i2ps+LKIT3+yEiiCU8cT+V0W2KCV5J7j7dr5E7Cjhh1Y50oomUAvGuvmQeO7v9RRRVB34gavvPycVbxouBlj8ZwLvQQzwTzmbXOh8eiC+4k9BEesNVJr5CDDvFz5WP9viEh26rUAOjVk54M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=a6Mjje1o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=majpcgXK; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mNST3pIZ"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6318855a83fso11330630a12.2
-        for <git@vger.kernel.org>; Mon, 06 Oct 2025 14:55:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759787732; x=1760392532; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CQs/O36ggQklw0zUSauUiUtl3x2Jqg69RjadNSont+0=;
-        b=mNST3pIZJc8oyaUO8FNdf9eMmrMysnDp5ZOcJrLB+L11yjlYmGhczXGTIStNUQ5ZIg
-         vUfR4Fsw26qlYoGXddeFl5uh8eGR7DS9wpj0puflimcDtpREzYWMMtUEboLv/BjoyRCA
-         qGHtA+H8SvAp0aq/lVDbB9dhgKX0X2Lrw6PqvjIbBqcvHsJlsLRIlyvJlATFBX7aqWaX
-         isOPP+Ud2WoZ0t0dlZWYcTR5XaJsbX9iWojup982bTK7wvIa0R8y4wDsWNOgGeLHr0uA
-         QKi/Yny/8mt3A8AQ1unmegKCj80GB+pAhfqUjrRzkfnm0kiWlmwAyEDrbK7nB1JhaGvu
-         wlVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759787732; x=1760392532;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CQs/O36ggQklw0zUSauUiUtl3x2Jqg69RjadNSont+0=;
-        b=fm5ttN0TutgwpV4q/WnmBjb6jFpUxtUUbvFVGPdOK/Jxot2DuzBCqmISzVZ3KlC7Qm
-         IG5aeycIOjlZ+KdlQLAYoaPF8iQKhrJpjG+ZAW01mrXZVo+wu6Ue0xewbnl4izHV/8Xg
-         jrtD9WXeDqToqswITN98ETDEOc2pLNzYEAxh5B68vowdL5lZn3aFyj9VFieeUeZ5kM9S
-         oabQijk39heO03t7C/Akf7SAFCAv9OVob86ALlTa8fle7RDMouukzLYwNdUA1SVx2f8l
-         Qns9a8dSuquomCzkkCYS4QYvHijz9qNq7Z0kbArhCyPJC/O65RKOKDxp63in6LUXOVcy
-         ZuLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWoFj+yUubtLg2tJFSQ0mL8Aa5DeGXkqS/5LMRJbVmVvKh9QPDviqwswY5zkm6Os5SLi1M=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzs97erhPXGCBcC02WVIf8Zvogc+qBJA+tgB4jP+r4AU4opt7WT
-	oKEJsTkpdrRGAU+ygYTJW8Sigtzvt38vPpNUu/Ko+6Q3QyHNkl8rDVIiuP0B+3DOEooFaOgBYzI
-	cHeV4p4i+rGg3IEUEgH12wnYyExlcGvB2uFof
-X-Gm-Gg: ASbGnctwgVOPJvbWc+qPrKHGzOe5V+XkKZNgIuHoJec6GwmG3kTP38/9qsN95efqgFR
-	n/Td1eSnhCMKjh+cQOL45D7UceDFEQoX3jwq5ivHNcHce5k6Bz0PgR+3OjDNt590GfJ608LwUxB
-	R2MpB9Hvz/t6AQ6iff6TttxCLI7AAI3k7AU3oIhkZXEIDpk6M4rHgf+uI1mny2RWv3JL6ShGDN+
-	DHQtnbbIFnOH+UE4P6+qcAoIR5clz88Q8dZtiP6RbNkiHawkAGtw7Hc5jO9DXD3pQ==
-X-Google-Smtp-Source: AGHT+IHVwZiQgmwYR9Hnr9xg8z7SFsSis/a6+VgCl86OpSzlSV0js7q+Hoa576WWbBoXgtD0UxPisdLHkXtkXEGeZZs=
-X-Received: by 2002:a17:906:9fca:b0:b45:913d:f523 with SMTP id
- a640c23a62f3a-b49c1977591mr1843963366b.18.1759787731782; Mon, 06 Oct 2025
- 14:55:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="a6Mjje1o";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="majpcgXK"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AD770140015E;
+	Mon,  6 Oct 2025 18:01:51 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Mon, 06 Oct 2025 18:01:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1759788111;
+	 x=1759874511; bh=J2F2aIcq+r+3y8pG7pj3N8COk9m/6o91GlHmoXO3F3o=; b=
+	a6Mjje1oaiB2ptoa7Pv7/oso3V0jU30ilO7UuM7PZM9PbujmQehJw+1ughmwKvuT
+	cZqYSfTwwR9JqPwXK8jD9gTZ9i/9R+usyuBuiExUebwbbsdye/BISjacxadxYAu+
+	nBbZlBitkcVbeKeDr3n8P2v5M+os7LsZs+Qhjj5QF6DUdhuX2E5Fi2BodOaArP57
+	+JzwSevqkya/yFa/f8Awzw7gjxDwtZCNJKxapV9EWQQIAaqp/cwKbr8PZlU4I005
+	GgSw+SW/L3Cvy/bAjYbiapVfg4f42RcNILMdxM71bM8J97Ij1YP5rseB9x47jhnP
+	EqX3QRqJ3Dvub1bVOGdnfA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759788111; x=
+	1759874511; bh=J2F2aIcq+r+3y8pG7pj3N8COk9m/6o91GlHmoXO3F3o=; b=m
+	ajpcgXK4laNuKr4yVweLBCdvCyg3iLuo1veTSuTDg1Im1OYrnkqjQOk+ATugcn1j
+	yUkKCARCKtx9x2yehORHyq7kk9zdFQozB1Q7Gq39CDB7Xi9pNEcITR/uu1nCGrbI
+	xhF5TTfJaE9PUoa3JQAkFJuMI5eYyiOa45YxzSXHsVfudDRNGv//7tJBtJOofg4V
+	DsQ+aYrRNHKCwlv3YZbAUzV+/0xG3PiCBFVRiAb7QvYhcZ76wcm8bixEx9qKM2k3
+	i8dHxnRhRbYE8MtPuFXoOcDVjKrYS7vMxhQX1Bh2N0a8p7iriovvdQeaeyryOkQj
+	GsGD1Tgi637Hd679jL9gQ==
+X-ME-Sender: <xms:TjzkaI8IvCgKxFeUxI7-_cNDZLB5npnO5-s4PgoT_iH8a0DWGIUeng>
+    <xme:TjzkaCNJNbNE5S4uVCLb6u94pHlKWgQfvsMKxS3op_DsJ3GaUvxHoWZWJ3Xku0pQ7
+    mdkbVzhZ9eC8Izqx7C4oTEEBjqFCnZqbP2tJW3jcUyvJmjFJqqILVI>
+X-ME-Received: <xmr:TjzkaOFSvyiAADqtDbOn0erCMSP9quI6XQM0n5ajB3_wrjsh8WvmtP2MsTvfx_fBYQGZexYKRjEdPh77PBdUPp2BVNL3Nr0Ag6EW>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdelkeeikecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekofdttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepkefgtdeuvdejfffgheeufeeugefhtdejhffgkefhhfetieffteehleehtdfg
+    hedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehurdifihhnughlsehu
+    khhrrdguvgdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorh
+    hgrdhukhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:TjzkaITJVMc4qZfDB--qVH2-IVg60Tq7moBYf934olMkKAJuVWl02Q>
+    <xmx:TjzkaDutD6CtsPlAwE3eqM1hKh4Sub0mialAfw0SRJ1sPDVHpb9bFg>
+    <xmx:TjzkaIIFJRDzpIKms6bO-I2IUIYXoLUTuG-D6v8JS0Su1NgDbDIqPQ>
+    <xmx:TjzkaAl_UTu2e-YqQOdJUTzkKoqW5jAfVqQNrqzmsKcFyWpgLuitFw>
+    <xmx:TzzkaAlc-gPz9-4x3eDr4mwId6IHaCuIMaBYSmIVISPAsIpt6TTchzF2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 Oct 2025 18:01:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  "Windl, Ulrich"
+ <u.windl@ukr.de>,  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v3 0/6] add-patch: roll over to next undecided hunk
+In-Reply-To: <4f4e5627-0804-4194-98ae-3345c992862d@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Mon, 6 Oct 2025 22:05:25 +0200")
+References: <c72518099a3b465c8761e41210fe3fcb@ukr.de>
+	<fe8e8097-2b05-4dd2-a754-f59e4ba5f95a@web.de>
+	<xmqq4isbq59z.fsf@gitster.g>
+	<4f4e5627-0804-4194-98ae-3345c992862d@web.de>
+Date: Mon, 06 Oct 2025 15:01:48 -0700
+Message-ID: <xmqqecrfofjn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1981.git.1759512876284.gitgitgadget@gmail.com>
- <8df4c59c-4d27-4f36-a231-f7af32ddf149@app.fastmail.com> <51e0a55c-1f1d-4cae-9459-8c2b9220e52d@app.fastmail.com>
- <CALnO6CA29HA_FOQAJp_bkskKF-6Vy0_SKVL_OyJASByvKEZTqQ@mail.gmail.com> <1241cb86-9adf-4c52-87fb-028406ccd8f0@app.fastmail.com>
-In-Reply-To: <1241cb86-9adf-4c52-87fb-028406ccd8f0@app.fastmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 6 Oct 2025 17:55:20 -0400
-X-Gm-Features: AS18NWD2lv2V5fVIB4ubB6m2ah6Nftcre68aNSjlmBDVgfAj1jO3TpJ_QaeTKi8
-Message-ID: <CALnO6CCsGtjcWBkjV0vsJHDCwiwt9eO2CsA1zFgwFiwJ-KLhew@mail.gmail.com>
-Subject: Re: [PATCH] doc: add a explanation of Git's data model
-To: Julia Evans <julia@jvns.ca>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Julia Evans <gitgitgadget@gmail.com>, 
-	git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Oct 6, 2025 at 5:47=E2=80=AFPM Julia Evans <julia@jvns.ca> wrote:
->
->
->
-> On Mon, Oct 6, 2025, at 5:44 PM, D. Ben Knoble wrote:
-> > On Mon, Oct 6, 2025 at 3:37=E2=80=AFPM Julia Evans <julia@jvns.ca> wrot=
-e:
-> >>
-> >> Thanks for the review!
-> >>
-> >> >> 2. Don't mention that the full name of the branch `main` is
-> >> >>    technically `refs/heads/main`. This should likely change but I
-> >> >>    haven't worked out how to do it in a clear way yet.
-> >> >
-> >> > I think this is worth getting into.  This is a pretty
-> >> > user-facing concept.
-> >>
-> >> I think I'll see if I can figure out a way to mention this and at the
-> >> same time remove most of the rest of the references to the `.git`
-> >> directory when explaining references (which you talked about
-> >> further down), including packed refs.
-> >
-> > A colleague will be explaining reflog for an audience tomorrow, and
-> > decided to briefly explain refs, too=E2=80=94which tells me this is
-> > much-needed.
-> >
-> > For refs themselves, perhaps "git for-each-ref" is a reasonable place
-> > to start? Since it tells you the refs you have and how to spell them
-> > explicitly regardless of how they are stored?
->
-> Interesting, do you use git for-each-ref?
-> What do you use it for?
+René Scharfe <l.s.r@web.de> writes:
 
-Ah, yes, but primarily for scripting.
+> On 10/6/25 8:00 PM, Junio C Hamano wrote:
+>> René Scharfe <l.s.r@web.de> writes:
+>> 
+>>> Changes since v1:
+>>> - added patch 5 for a and d
+>>> - made error messages direction-neutral
+>>> - removed stray "only" from commit message of patch 2
+>>>
+>>>   add-patch: improve help for options j, J, k, and K
+>>>   add-patch: document that option J rolls over
+>>>   add-patch: let options y, n, j, and e roll over to next undecided
+>>>   add-patch: let options k and K roll over like j and J
+>>>   add-patch: let options a and d roll over like y and n
+>>>   add-patch: reset "permitted" at loop start
+>> 
+>> Will queue.  Should we mark it for 'next'?
+>
+> Oh, already?  Fine with me.
 
-What I should have clarified is that "the tool (I know of) to
-interrogate the refs you currently have is git-for-each-ref" (like how
-git-ls-remote is the tool to interrogate a remote's refs). It avoids
-the issues with assuming "tree .git/refs" or similar will capture the
-actual data.
+Was just double-checking if there are things you wanted to imrpove.
 
---=20
-D. Ben Knoble
+Thanks.
