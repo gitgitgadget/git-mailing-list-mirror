@@ -1,69 +1,70 @@
-Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15271DF254
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 19:18:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE631DF254
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 19:18:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759778287; cv=none; b=ahXFyyT02gb5N/ebyGWdUtlKj6NRQK+4U/jpSClvN5o7WsGM4saOYYivMaY424mJtNKRQzonBiepMu/8uFqyuTXNCMB437vXbrRr5NhMBNsdkTKYC6zi2bQYNgLcMgfI6IoZ0LLtv7hhW+a6K2D6nKj/QbqeeMeAHQKxxKGulSw=
+	t=1759778306; cv=none; b=EXMD13p4rO2wKUFYIq2ZF40k+ECdCmCzomUSQdi6BoHq+9OweHDp0AP2vPALAViuhdvOCoFOxIAtN0VEfBFVhu5XraRuRTqWjd1w+b3Uy9363obsQz2N3FMgZkJcje6TPCIq4F3y4OzPtgJUTm1glFP+tBFbbN8SkjSAKxCzfzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759778287; c=relaxed/simple;
-	bh=cXIco8r3Rqpwo5tjWiJtvVJIvgqfY+MwQzXyvRBHrnA=;
+	s=arc-20240116; t=1759778306; c=relaxed/simple;
+	bh=/PaOrD7iqA70VLyy6j/NwFzXKD29e/Ag02WRuQ74tFA=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rWzDbhJLCcKdwyUVlmjy4Sl0fPgx30qWpc700VHNT2/v2j/Mz0oWFu5Vi5WJthxrV7nY8hj5u/cPqsl7wVmtYwhAHYyRLA8WhZbeFV/+z22iIfUgYDt1PGUodhDt2jZ1vCzERq8udzT+8sOpojadFgw4NLO4qlqsUCussQcKVx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=VYMYihFH; arc=none smtp.client-ip=209.85.166.52
+	 Content-Type:Content-Disposition:In-Reply-To; b=qxcuIk0x2fuqABnilBZjhp0Lea9swI4oy2H04e745QrutI7nCJSV1p2duI2wxwoXsfXcFwG3bjiYr4mwWObdqfj7AkQi92xOdp1PUv8/QJsnMvTD1oYYFSeYKvk1kJCbJy9ZH9LI+yMx1B9WOkSUxcgqaYQWOLWDnXXZ9AYnYZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=hIka+27b; arc=none smtp.client-ip=209.85.166.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="VYMYihFH"
-Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-92aee734485so231900039f.1
-        for <git@vger.kernel.org>; Mon, 06 Oct 2025 12:18:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="hIka+27b"
+Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-92aee734585so208554239f.3
+        for <git@vger.kernel.org>; Mon, 06 Oct 2025 12:18:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759778285; x=1760383085; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fbLvOahRh7H/MvxkyZXfAa94ATaDF0afxhwKerMGu8Y=;
-        b=VYMYihFHzyGKnb9q+yQ2zpVdb6X39uuxHsWEyEuuhTLCyrssbnUZTEwIeFTWelWaoz
-         SXPWKpXFwSSec9dl0W2/Y1x3vjOPq8cwZdRg2/jQaRxk6jwE9DdUmcv8qZr7hDvXYDYc
-         PWofbc0UFz9UaL1SjB65hl4ZihQgO2sLGMx7cTiye/aYFRBhNJ9DMhv9ILhSYP1y228s
-         7FzmXX7AuC0YNHUm7iK9WOBv7BSGvCpTeHqekUf+96V4HIzFGfZqIdDpx2k3qXPAK1O4
-         VZ7k7zYZny9mHAuoqGzK05zr9uKF9D23DqHU+HIPxDvg8jZS7jpLnhhew+2sAJ63tBza
-         r39A==
+        d=ttaylorr.com; s=google; t=1759778304; x=1760383104; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zvcoRZ3Jtz2fmLfCr4g3pCozSdYYLLDcGOerOsFozVo=;
+        b=hIka+27bm8kKfehuZOHKzOzPbMlJ1YO8RCbAyseGNSZyLrc2slgFlR5uEtUIPIHEZU
+         cPjGsNSsmIiMqOeqMUkU/9yoradzF/HYOsvcegNj2oLlD+cN4hBd1HGZpxB+oq/LOp+K
+         4hEMWNc9t5cjpy6aTLGvUNawo+PlsRUr3qXDkIgtptJ3ixfkPoZdK6VGrGCAKRLGFNnu
+         Ibx1G5Z+XbMIOXBxhCDuInhNZ8B5KIB0AFBJXU9mHlCKjKjdWYLa35ckwHKExH1Vdkg+
+         Pqdv55Eq23UL1OAe7bVm3tS3KP+Tj76yiv3PKwCFUn9IdjF1/gzoVVIFLCy6wOD3dnK9
+         DS6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759778285; x=1760383085;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fbLvOahRh7H/MvxkyZXfAa94ATaDF0afxhwKerMGu8Y=;
-        b=hKitot/16/NOIK4zrCE9Wxfw5/ELGiXmw746Paj7AKLPDQ7ZyilycOsXNbmVTUlj3I
-         2fZMKH6kvPEhU5UNiasiXJlLsSBlzRfmJXFN3xV23GeqEha7Wno7Tr8DHMWd5eYSolL/
-         Vhu+917ZIorvlC3k8egPxUIVRMNicR/0n5d5NIqLstIcS9a+iqcys5zCY7YwT0p+R6i7
-         g2NCccLS5b54vvPhUlDbvHNlbDTy+okC7SOhFPomhZyLmNmPI/BOmwh11s5qzKn803dX
-         1hBLlTNthojoE109nJAy0+PuC6305yPjMMzQX1WQw7qDmQjXTD/LqVz/GC6rj5V4XDQA
-         KFJg==
-X-Gm-Message-State: AOJu0Yzg6ZQtmuy05CYD4OKbsRIWz9dUkxKjZWjGgeLtGyiLuzDPRvVH
-	pqLIkdzlCJtwuLTcuKyP11sNa5rV7lMwt8LllQtSUz5QSoAOw4LwKKU1JnqgNTjAZMXp2AqmCPO
-	qkgCtTpMnyw==
-X-Gm-Gg: ASbGnct5n1x6PFh8zfkuqYe2qCnPBM5pPYu3df/h3pKADnWzScpNbzKfxGDFvRfKs6v
-	dsvqhNgES6NmFOlLOZ5YSYNJVj/vXlR65wiwnyWulgrgJtc5ewHeyvg3hjIX6RTIpdLwEnEfQQK
-	rHDijukGQq3RWAZ2Z+nL1/Lxgk09YIyFdzFLK+bJ/8nNNkEhcsYzRwn7343uiqJvf0ez0kZDWYW
-	WENjhpT1hrNeC7gaOmf+xvXHnoC9m4rxeqzpQ7j4dC2PEiuyZQrLZI0AIgYq5gjibNFbzEG8B5d
-	W8NYbLJFZe5shRI9gVtf6xYYJ5csm9DwB/qEJf+FYWmiI9RURdxOBJv/RuCcLMM/fbFDITnPCjk
-	q6Rnp2vlaICCnIM1j4WpFgCvbTO+gKdephz2v6DU3HPwpKLSliBvflZw5ySfm+gSP6tMSQoV4HW
-	tA2HZttvxaeaopYimOe1+DOPdB4EE5s75Gmb2t2s7IqTu2EU3irg==
-X-Google-Smtp-Source: AGHT+IGusxS5i7EA08MkC3tnjTP/0oUa2l0sGCTKRaKZYSITFPzGRYoobIQ1G/aViJGQDITBUuCfVg==
-X-Received: by 2002:a05:6602:6d06:b0:93b:b891:d6e1 with SMTP id ca18e2360f4ac-93bb891fff8mr761189739f.5.1759778284306;
-        Mon, 06 Oct 2025 12:18:04 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1759778304; x=1760383104;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zvcoRZ3Jtz2fmLfCr4g3pCozSdYYLLDcGOerOsFozVo=;
+        b=ulxBvgWyiLjvn7Ve7Fyj1YDIKKVM7ENS6Kobe5B3Be5PBnOT9bb69OBQ9dcs2Ul85Y
+         hHjTzXtpJKZkV3zOhP9aty7HacakTCH/pYEVVD4+oJULghZwJVDJfzH03lbcUvd9F/yo
+         aNrcns2K8wDw6cZKIn9sYaUxvMIshIExHkHOAY4SnwybYT0S/x2L37B2F7+PSSFriqFH
+         ar0cXXUBxUBsm2QKZrRFS6hJw/IHjCWx+KXljXDiOhAaz5ezzickh+MBrRn0lFKjZcmO
+         UNe1ZHAmS7FCN69JK6gIAkrJlVwTkstMt7vL1xct3dC3EGrBebwD41GdWvI1vqRrbb2S
+         sSWA==
+X-Gm-Message-State: AOJu0Yy4D88eUGNapVGM2Sau41Hne4hpC7srOKtGLnsJQYWaP0FaspHL
+	rrpsV4Z5Yz9UeDWwLEyNDH9hGVy1yX8Uw55zJr3ZC4BuhHsTNwbcjYa/qyTaE4mY7v0vA7QfWYp
+	5UFA5NZdZkQ==
+X-Gm-Gg: ASbGnctoAxs7zVPXxaQ5y3KE7KNBot4m373Zo4TNcANlI9+4dmoIWpHR/h/9XyuI8fU
+	rvU3ujEYB9A4hpMMrFpfe7h6vvP1Dpp6zOCrs27zJiSzhLHRi5Kw+LSoIykkRJsuP1L4YUyD+hP
+	G6L2c5QiWL51aMsEMkZYR3ZntNQFRfIg9tiZm4mcaRhJ2kotDCZCQ7+4Cgdq7Efkkb2ZObsFxlR
+	5mO7NLsufOJcND+/f1jTfgW9BZ7K4B8zjUhSGvT+XByhMWEkq7sMOEchDK+vHDujXfEMy80ZxJt
+	7c/7XWA1XnWq7NV15OdWhcZM7FONT5ci0S7ukL//q+xqLHBWRcA2DgrMKkqzflbKH1aCnrRZ6sh
+	5t7l/yALFkPqKfQjx05xfcPeqQsZExQxa9HnEnKhZOSr6vHuKIZOSexs5KHq2QI+9JBNDwWIAKe
+	xFU/SSFBaWTWtfcK5WY+uL3R+eIYWBRmZlNQhr9OcQDIzTSo0MnA3xjjg4bYrr
+X-Google-Smtp-Source: AGHT+IEXVhpQI0jYP0xNYgM/wU8xEYTkFeK0S2BPApwYU900+6ahQEibiMGVyljEdTq13kLl22B1rA==
+X-Received: by 2002:a05:6602:6425:b0:8d4:2004:ce3 with SMTP id ca18e2360f4ac-93b96937ad8mr2146641539f.4.1759778303731;
+        Mon, 06 Oct 2025 12:18:23 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id ca18e2360f4ac-93a7e3a5cd5sm502375439f.11.2025.10.06.12.18.03
+        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-57b5ebc8169sm5313547173.40.2025.10.06.12.18.23
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Oct 2025 12:18:03 -0700 (PDT)
-Date: Mon, 6 Oct 2025 15:18:02 -0400
+        Mon, 06 Oct 2025 12:18:23 -0700 (PDT)
+Date: Mon, 6 Oct 2025 15:18:22 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
-Subject: [NOTES 01/11] SHA-256 and interoperability work
-Message-ID: <aOQV6iM49QDhcC+C@nand.local>
+Subject: [NOTES 02/11] First-class conflicts in Git?
+Message-ID: <aOQV/ja9Ltw/bTP3@nand.local>
 References: <aOQVeVYY6zadPjln@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -73,96 +74,121 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <aOQVeVYY6zadPjln@nand.local>
 
-Topic: SHA256 and interoperability work
-Leader: brian
-10:15am-10:45am PT
+Topic: First class conflicts
+Leader: Martin Z
+10:50am-11:15am PT
 
-* lot of work to do
-* brian is working on it
-* it's progressing, not sure if we can get everything done by 3.0
-* how to deal with submodules
-	 * you can produce a split history
-	 * accept, document, ?
-	 * we need to have mapping on server or client
-	 * if someone pushed one commit in sha1 and a different in 256, we can end up
-		 with divergent histories that could produce security issues
-	 * some private repos for open-core type submodules make this difficult with
-		 submodules
-	 * could have the server query, client derive mapping
-	 * server could also be malicious
-* if you're converting, how does that work in gpg signatures?
-	 * we have a way to map both signatures
-	 * if you're in compatibility mode, it will produce signatures for both
-	 * what about for older histories, how can it be verified if it's only valid
-		 for sha1?
-			* it can be verified but can't be resigned
-	 * for converting, can that work?
-			* converting will retain the sha1 signature
-* what is the simplest user journey?
-	 * I have a clone of a repo in sha1, am I expected to run a conversion locally
-		 and then I can talk to GH in 256 protocol?
-			* you will create a new repo with 256 with sha1 compatibility and clone
-				into that, which will convert it into both algo
-			* download the data again?
-				 * clone it to another directory locally
-				 * it will preserve the sha1 repo and create the compatibility layer
-			* let's say the local one has a submodule, clone locally including the
-				submodule?
-				 * yes, the conversion script will convert the submodule as well and
-					 you'll have both ids
-			* if I do a fetch, which do I need
-				 * you need a mapping if you're talking to a server with the other algo
-			* the mapping is only needed for the server if it wants to be forward
-				facing?
-			* with mapping, its only commits or all objects
-				 * all objects
-			* if someone trusts github, they can just consume it's mapping?
-				 * the server and client will do their own mapping
-* what happens if nobody has the submodule anymore? commit from 10 years ago but
-	nobody has that submodule anymore, how do you make a 256 tree out of that
-	 * pick one at random it doesnt matter
-			* but you can't match everyone else
-	 * we've chosen to use divergent history in this case
-	 * Same issue exists with LFS objects
-* if you have the old submodules,
-* recursive/cyclic submodules?
-	 * it's something we need to handle, don't have a great plan but it could be
-		 done
-	 * plan is to maybe have some pool
-			* you have to convert the submodule up until that point, then convert them
-				piecewise
-* have you thought about mix/match where one uses sha1 and the other uses 256
-	 * we can't distinguish the size of the object id vs filename
-* right now you're doing the work, are you thinking of allowing another hash
-	algo without having these issues again?
-	 * the way the design works now is that we have two algos - main and
-		 compatibility, but designed to accept multiple algos. if we switch to 3512
-		 at some point for example, we could add another compat algo - it's some
-		 work but the approach doesn't assume much about the specific algorithm
-* steiny thought it could be useful to add a third algo not for security but
-	speed
-	 * gh has the insecure non crypto varients
-	 * problem is always client support
-	 * corporate controlled repo often also has control of the clients - so maybe
-		 less of a security issue but depends
-* can you put a sha1 link inside a 256 tree
-	 * maybe an extra bit in the mode, some other interesting horrible thoughts
-	 * would it make submodule problems go away if you could just carry the other
-		 forever until the downstream decides to switch
-	 * solves the submodule problem but not LFS problem?
-			* LFS might be easier, you don't need to have the object to convert yours
-			* assuming you have the object still
-	 * brian not 100% against it
-			* if I could do a 256 repo with a 256 submodule, you could parse it back,
-				but if you do that, it's a different size and not usable by older
-				versions of git
-	 * if we were clever, sha1 trees hold sh1, 256 holds 256 and only when you
-		 have a sha1 tree inside a 256 that we would use some new format
-			* the problem is you still end up with stuff that doesn't work with older
-				versions
-			* degrades gracefully like a mode bit, worse case is that it checks out
-				weird filenames?
-			* write it out, take it to the list
-	 * we discussed upgrading the tree object format, but it's so tight
+
+* how interested is Git in adopting first-class conflicts?
+* can rebase descendants easily
+* maybe we can use it only internally during rebasing merge commits?
+* could mean you don't have to do rebase --continue etc if we expose it to users
+	in the future. is it appealing?
+* taylor: what's the goal of having first-class conflicts in git? do we want to
+	enable certain jj-like workflows or is there another reason?
+* elijah: would like first-class conflicts so i can save context while editing
+	changes in a stack, to handle later or hand off conflict resolution to
+	collaborators.
+	 * really helpful to be able to divide and conquer when dealing with a massive
+		 merge conflict
+	 * so we want to be able to publish conflicts to the server for exchange? ->
+		 eventually, yes
+* first-class conflict means - it's a separately stored commit header that is
+	understood more deeply by git (e.g. fsck). jj uses a special header on trees +
+	OS-hidden dirs, it's a convention to store conflicts into .left/ .right/ etc.
+	has some human-readable warnings in the commit that stores the conflicts.
+	 * then the client refuses to push the special header
+	 * jj puts it into this special tree because the conflict needs to not get
+		 GC'd, if Git learned how to not GC those conflict objects on its own jj/but
+		 would have less magic to do
+* should the conflict objects really live forever?
+	 * They should live as long as the commit referencing them lives
+* what about adding a non-tree object for the conflict markers? e.g. add it to
+	the commit header as a confict object instead
+	 * having the conflicts in the commit header is nice because you don't have to
+		 walk the whole commit tree to find whether there are conflicts
+	 * the commit object just then starts having 3+ trees instead of 1 tree
+* brian: what about a special tree object with file mode that indicates it's a
+	weird special thing, then treat that specially in clients that are aware of
+	what it's for?
+	 * does this fit into the way we might extend the tree for storing weird
+		 gitlink sha256 things also?
+* what does it look like for merge commits? "i meant to merge commits aaa and
+	bbb and it didn't work, try me again"
+	 * then just hang onto that conflicted state, other tools could resolve it, or
+		 a rebase later could resolve it
+	 * partial resolution - apply as much as possible, then only write down the
+		 still-unresolved parts
+* how to keep people from submitting conflicts? conflicts as a first-class
+	object makes it easier to prevent (or to render correctly on the client if it
+	was submitted)
+* would including this in git make so many git commands obsolete?
+	 * elijah already working on dropping rebase and starting over with replay
+	 * new commands means we can also make the UX not suck this time around
+	 * patrick: same thing for git history
+	 * junio: clapping emoji 🙂
+* any concerns with first-class conflicts?
+* is it possible to commit those in history and work on top of them
+	incrementally, so subsequent commits fix only part of the original first-class
+	conflicts?
+	 * that's how jj works already
+	 * with binary files it's hard to do conflict markers, that's not an issue
+		 inherent to the conflict marker storage method though
+			* in jj we stick conflict markers inside the binary. it's…. not great….
+	 * for many-sided conflicts we use more types of conflict markers, even on
+		 binaries
+			* iteratively removing one side of the multi-side conflict until there's
+				only a simple conflict or no conflict at all
+			* this requires you to have an appropriate merge tool to resolve binary
+				conflicts 🙂
+* sounds like no broad opposition
+	 * should we aim for 3.0?
+	 * is it possible for people using git without the first-class conflicts to
+		 keep using it the same way, if the git binary supports it?
+			* not having these conflict objects be pushable makes this much easier
+			* could mean that initially we can't mail those conflicts around and we
+				use a major release to make it possible to ship them
+	 * patrick: please be careful putting too many things onto 3.0 gating, so we
+		 can actually finish 3.0 🙂 should we stick to things that are already ready
+		 or at least underway?
+			* taylor: i think it depends on if we think it can land in the next <10
+				months
+			* local-only means it probably doesn't need to be behind a major/breaking
+				release
+	 * people can share conflicts via continuous sync (not through git protocol)
+		 in the meantime, with other tooling
+	 * would be nice to get branch-level acceptance of conflict objects from the
+		 server side
+* helps to understand what the target format should be. if we did it, what would
+	it look like? then we can start working on it
+	 * on the list let's figure out what it should look like, and then we can
+		 start working on it but not in a breaking way. then we could start to
+		 notice places where it breaks old commands
+	 * but how do we know the format is right before we start developing tooling
+		 against it?
+	 * is the object format a reversible decision?
+			* maybe we can depend on jj / git butler having forged the path already a
+				bit
+	 * interesting to think about how tools like jj and git butler would ideally
+		 want to store conflicts if they didn't have to worry about wedging it into
+		 git's current formats
+			* is the path to getting first-class to start by wedging it into git? that
+				seems to be what jj and git butler have been doing already; are we ready
+				to move into git first class?
+			* "first-class" is in the eye of the client, so we're talking about the
+				way to make them first class to git, not first class to wrappers (who
+				already know how to do their own first class thing)
+	 * needs to store the tree and not gc it, any other reqs?
+* how does the plan work?
+	 * lock in data format, then only git replay can work with it, everybody else
+		 ignores it?
+	 * would be very difficult to teach rebase/cherrypick to understand these
+		 without breaking for people who use git the way they do now
+	 * or could put a flag to fork rebase into a different handler if it sees a
+		 conflict object
+	 * cherry-pick already has(?) a replay mode (or maybe just in elijah's tree)
+	 * scripting support becomes weird if you're using config flags to change
+		 behavior of porcelain that already exists
