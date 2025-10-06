@@ -1,70 +1,70 @@
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
+Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2261DF254
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 19:19:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC8824E016
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 19:20:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759778398; cv=none; b=WZf3Cf8Egwe8TknipQ50htyIGVo2/eikqjEaF9pi+zqIsCJ5WmU9CDzMQxXGOdps39KtxFNw1Qj9fJ+7C7GwgNrpZcFLb1WRtAj+U+Gm309P3LyZTdhtjPqWSsLns5+4ZqhV+hjoXclrgQuJn8uhDLm/TJkmBuImtNSvP6514IM=
+	t=1759778416; cv=none; b=i64eeVAw6gSSg5erfVTyG47NFZzN30RCTWx1E8ir0rWARdNhX4yUWjNhZlCFrzwYJzJLN/YKHHppIxwp4RhekhtseYtXJtccJSoU//vuQv7xuy160C+0XTRfkSku0OpKgxCxZiWojVv791jGX8EpHS9o9QmCh2Lc47yy0jZCkPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759778398; c=relaxed/simple;
-	bh=KmwSN1QeYxH62HZvEguJZYwECXvAGUkdMKkkNL4uOLU=;
+	s=arc-20240116; t=1759778416; c=relaxed/simple;
+	bh=6/tTMddyvOYV6ShVTvbxdYObdP7oIkeJDNzxYyTB8Sk=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ijuMsAJGtQZ03/xEvJPnQilYsKUrCo5cjCpCLyqdZ+tz0NtHK9KGWi4KPe6+sn65EcYxD5RecEpz+Kat44hpbvNwCjhmp+fph9jVTwBBFpP0tdmEbPZw+hVlOIdDrq62NNpy1wseBPzNUJ9ZdU/q7f3vhlmISjCj1n8HpqBWB/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=T0rQEP6G; arc=none smtp.client-ip=209.85.166.47
+	 Content-Type:Content-Disposition:In-Reply-To; b=Eo1yPT8lKiDUNttYRKWkqKs6HlsFbTp4G6XdZ+p72ynaRzF2kvUhdeO/PdWzv0QLdody1KI9TK5KMxq5is8HA1gPuOZLfXzctQvbLulWDWC+NqqkgorMWfxybcgh5T1c8i4lBYuQ69YvZ8DJb1URfs3c0IqR6UXGBPHvkFbYX9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=MWb6ENDj; arc=none smtp.client-ip=209.85.166.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="T0rQEP6G"
-Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-93607aec358so127141639f.0
-        for <git@vger.kernel.org>; Mon, 06 Oct 2025 12:19:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="MWb6ENDj"
+Received: by mail-io1-f42.google.com with SMTP id ca18e2360f4ac-91179e3fe34so265537839f.1
+        for <git@vger.kernel.org>; Mon, 06 Oct 2025 12:20:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759778396; x=1760383196; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1759778414; x=1760383214; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yYr4UhpkFqYWl6D4MTW9tLsLg5T4mDUmhMu7IWg7gIs=;
-        b=T0rQEP6Gh+y0M2OIFR5t+wetdK9rIsjPbYmDG1wg2zRZ7zitkX0Z1544MZ1hBp/D9q
-         IRhR4FDRozt3OVpCyn8U/5v+QAfMFFJFMbHbSXh97elN/lCugPYhq+FuYhQRJ3Qz+PPX
-         LHSOQZ4ii8qnJE3g1ACbMh0YyMivMMpf22F9OF1hIMDNBL09haQKTSwZluX6U8SVSNzN
-         lgXPmusU7RmxDNik67c412IFM7mGFmToNlk4RKqipqV1T+G8sL53wR49QKC6WpB1GLE3
-         Zjw1jepJkZW++Rv00Lz+BwGWPvWb1dWkjgHOqWpLRxRIizeGHno6BMOFgOnC/IyGtQ2d
-         0Kwg==
+        bh=4Hb/MyOywy13rbRAea26eUdvF3C0TvacyCCjn3H3yGM=;
+        b=MWb6ENDjP6G294F5Vsuh03qkPD5qLLW3i5XJt8tK51NvoBaXdGFOHGKX4KqRXRce3Z
+         jv6peMNOpmhFKbHuTIyn12QzouS61gaMp+Uydk/mATBX//TvlyEIH7xt2Lt72VNjhtE8
+         6+a+MIfCvGYq0SVCS6cCVAmDSr7zO8u7DfSmisqzj4FkA/PHtkkhk+kVp30rk+YIdURp
+         +bfBCxIMrEgYTvz5CDs7PXkoAE/saiJio7u4s44+5hsnfvn0nQO63RJ3TW9GrVsctYfn
+         d7DjNV8COqU7t+H7oSq9V3hM68X5H7YgkOK8FADHs/QwrEIbDzDKK18fzoEL4TN8d0j7
+         m53A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759778396; x=1760383196;
+        d=1e100.net; s=20230601; t=1759778414; x=1760383214;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yYr4UhpkFqYWl6D4MTW9tLsLg5T4mDUmhMu7IWg7gIs=;
-        b=n/pK2qa7fjlSdhIeyK26plygzAdKrHcT0QN+M2HEmiDADosqGGYW/L5HxO4iKrclTA
-         17m7O2ah0RTMnnvcPMp6C+zq2fe0oExT3g5VVPYRBYDJanEuVkvtJX9B6dw7bse2j4cq
-         zwPF/8MBhPrt8DH1yTzhMzzU1Cs4K6lUs9lQoAnouU6ZM506srndrDE94IY2gkhfQ+LC
-         FZx+kBHX51EZCHjHCGfG+BvPdGn4Ao9mzm4tormMv3ZwFVjR2vxx3V5MEpB2myLep/xP
-         pmztpV/KUFetds6r/oCiECS7LWJRz2VRVrsxKP3P3fOv80y+eaBM4au2JPTuWLMoacYs
-         Jp8Q==
-X-Gm-Message-State: AOJu0YyddW7h+VpgiK/Vh3pim3gN9MdU60BMn2QROczLjvh0dEmk78qO
-	hEiUXd/2NLqVhKI25RLHjR1UcmDLcuvLbL+vrQGIfhnxGK3CSNJrIZhIjLF6guAIHS4oUs+YiXV
-	VjbP9p+T0Pg==
-X-Gm-Gg: ASbGncsN1lNx3sbjK3y6E/P/eZqiloXJaJ2zrjqzNzVs3x/uyo5lWLTQw8WU7IO8+Ib
-	2OMVrJywS2XCySbBpLQMwJacpfgGu+a8BsYmOwuKljs9egxXdOgVJ8guAVyvnGT8YpSd2QqkHTh
-	DIv9yovFf9C4ux22WjQ7dTjK1u2nnavsYPqkA/zOTkKjdVD9ziwpNEixKlDh5JkCbBdyYfSoRP4
-	G7Z53XBDASFUM4c5cPPHiKVKwfJyAmtg13Z+Z9aYTgc9lygO1MrqYCCHiUG+2fbn01vcImYmRCi
-	SeqE9+KxX0/B4spXshPq7S+pRC+fJuy7cl7w6nQx6X00ra0IsV+o4R+He40WsIZBhgbIKmN8kAU
-	Mo4WSrY0HZ/SDuxwtt0zlFrrg/ib4YVqvl8TREh2gQTH4DgplKcq6mG+yeo9kCWm2U8OOVdo3Em
-	SStqSxzoh2NMRzCfxbYLk0gVJLpF3JDNFBAyig3Dr5Ti1aaBQCcYfJqCSunr+T
-X-Google-Smtp-Source: AGHT+IGx0ZPw9PaJZTngTrD/T+sZDR9vuVa9i3uv3ukI8oigWmb7KsporObzjqjU4WrDfz67qDCJsw==
-X-Received: by 2002:a05:6e02:1527:b0:42e:7426:7cca with SMTP id e9e14a558f8ab-42e7acd27edmr159939495ab.7.1759778396217;
-        Mon, 06 Oct 2025 12:19:56 -0700 (PDT)
+        bh=4Hb/MyOywy13rbRAea26eUdvF3C0TvacyCCjn3H3yGM=;
+        b=rzcXkD+IS7pNCgrvgYgg1kRFFfnsRmITcCr9Kofd1sm5wrYIWck15Me4M/+sOb6Pip
+         NLD2BE3grNi3xhh5YfyatFTZEBKjObL9O+YwwTijxvGYre4zw7+l8WtRn1BYtBW+2EOM
+         bajwRVwv/p0SpqvouoAyKd91oijluqY7kZGNWFXgqBOkrTmSAuL/w2rXhvJBNTDW1y0g
+         Zv1nUqgiaX+xkGxxcamDdxsj+/d2VzCm5XTfARIx1+tpe9CGds7mn8IWg+u7tX2LxgZF
+         nLwNTqq5BtrXqT52bLGyyI3N6Y1jRv87sFOHBLywoCJT8WGeYzLWVrix/z5Qvmb8tJmJ
+         97IA==
+X-Gm-Message-State: AOJu0Yz+sf7pDO4+596L5zb2k1/eRLAp6wXXZaQ/hl/jgBIfTxpLX9Yx
+	MBWExW6xFYk1a+DqtuEd89hOSkqhRRCbqK3AffHO7oF58wYcTnh3hJsrk98qbb+0HfBhBC/xvCj
+	vRJphsYjWGg==
+X-Gm-Gg: ASbGncukc4TU1EkX57nib1EGOPho/GcmGUWD6u74JXjOPEFihG0Icq5uzWTNQ2R5sCh
+	brApbXmU8C52ESaCc5+r/gd+Lj8JzYgHHvZszk6jg9q8uw8Lm2D/RROO/BpTTni+GDODgf9u/ZV
+	B+OkTVZ+Oa9abY5ducoL57YDMtGnahoMVtQFXUD6nsda/AHTdcXgO2LpSuGVGUa6hbrEmDPgPEr
+	nTpyB2ucOjoVkU9vynwM+ZG8C7ia8O8IpVevCybrkQMVe4QUg79088X4QVYdfu1JkgqDsB+u/Vw
+	l5d2TADPwsztvYEcxWejKY4/rHS3AH8raD8zfGsJEMRS+sWcyu7o7N0hVN+dRUs2iLXL0lXlza8
+	xvjPcdEQFBdDV7QDvnXKrOwr44kplX80MNRGy/arzQDhm6zqsNAZZW4lNyfsZQfo2fRgpXXqa/G
+	K7W++h/X6eh0ySsxWOxXgGy3/dunGWDmcUkJRA2zvPHw/B0pU9Z6vLIyFSdgdW
+X-Google-Smtp-Source: AGHT+IGmx2SayFO2L4l4fiomiIxbyHEJGfb+L9tr5pR0xIVavPsdHMTvjABDacaQC95mb9LhoelNjw==
+X-Received: by 2002:a05:6602:2b8d:b0:91b:605f:1f0f with SMTP id ca18e2360f4ac-93bc40ca19dmr127390539f.2.1759778413914;
+        Mon, 06 Oct 2025 12:20:13 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id e9e14a558f8ab-42ea782d1a3sm44325655ab.16.2025.10.06.12.19.55
+        by smtp.gmail.com with UTF8SMTPSA id ca18e2360f4ac-93a7d81c1easm508989039f.1.2025.10.06.12.20.13
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Oct 2025 12:19:55 -0700 (PDT)
-Date: Mon, 6 Oct 2025 15:19:54 -0400
+        Mon, 06 Oct 2025 12:20:13 -0700 (PDT)
+Date: Mon, 6 Oct 2025 15:20:12 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
-Subject: [NOTES 07/11] Change-ID Header in Git
-Message-ID: <aOQWWkj/q7GfKZY7@nand.local>
+Subject: [NOTES 08/11] Resumable fetch / push
+Message-ID: <aOQWbHzstGKiPUnc@nand.local>
 References: <aOQVeVYY6zadPjln@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,44 +77,80 @@ Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 In-Reply-To: <aOQVeVYY6zadPjln@nand.local>
 
-Topic: Change-ID Header in Git
-Leader: Philip Metzger
+Topic: Resumable fetch/push
+Leader: Caleb (was Scott, but he's not here)
+
+* Is this only client side or server side too?
+	* Applies to both as GitButler has a forge too. Would be nice to have protocol
+		improvements.
+* Both bundle-uris and packfile-uris exist and at least packfile-uris are
+	resumable. Both are fetch-only, so push is unsolved.
+* Could use single-threaded output or server-side caching to make pushing work.
+* Maybe make it so servers could receive a bundle and make that resumable.
+* Use cases: Pushing a repo for the first time to a new server, once there's
+	good large file support, android/chromium. Also a problem that's independent
+	of size in environments with poor connectivity (some countries, Caltrain, …).
+* Servers could hand out some kind of opaque data with the fetch to indicate
+	what it has cached, clients can re-share that when attempting to resume and
+	the server can choose to do something with it or not.
+* GitHub support has told people to create a branch with N commits at a time to
+	fetch.
 
 
-* How do we store the Change-ID? Store it in a header? Some auxiliary metadata
-	store?
-* Happens to work in a header for GitHub because they survive rebases since
-	GitHub uses replay, not all forges do this.
-* Want a standard interoperable way to associate Change-IDs with commits.
-* Storage discussion has largely been covered.
-* Taylor: what's less clear to me is the semantics of when we keep Change-IDs
-	across operations, when we assign new ones.
-	 * Cherry-picking equivalent assign a new Change-ID
-	 * Almost everything else retains that Change-ID
-* Taylor: we need to agree on the storage, but not necessarily on the semantics
-	of when we keep versus assign new Change-IDs.
-* Caleb: Assigning a new Change-ID when cherry-picking is interesting, since we
-	(GitButler) retain those.
-* Philip: Gerrit does the same thing, but JJ does something differently. Their
-	approach was to have an optional header that describes the “origin” (in some
-	sense) of the commit.
-* Caleb: I wonder if the semantics are important if we are trying to use these
-	in the same sandbox?
-	 * Taylor: we need to understand and agree on them when we are working on the
-		 same repository (regardless of using the same tool), but not in general at
-		 the tool level.
-* What's the next step?
-* Martin: experiment with it, see if we like the semantics. Don't want to
-	emphasize the divergence table.
-* Taylor: do we need a version associated with the change-id? Philip: no, we
-	treat it as an opaque identifier, versioning not necessary.
-* Elijah: given that multiple players want this and have agreed on a common way
-	to represent it, maybe we'll have a more productive discussion on it in a year
-	after they've experienced working with that header for a year
-* Jonathan: does it matter what forges do with automatic squash/rebase?
-	 * Philip: for JJ we don't want to use that information, but we're just
-		 another Git client in the ecosystem, so that's just our perspective.
-* Martin: Should there be agreement on the semantics?
-	 * Elijah: depends on the usage.
-* Elijah: semantics get fuzzy because of splitting and merging, so not clear
-	what to do there. We either need to clarify it, but probably not here.
+Scrambly notes (Jack's notes):
+
+
+* Specific Forge implementation, http based communication -> easier to set up,
+	keen on improvement to protocol that allows large pack files sent between
+	client and server
+* For packfile uris at least the pack file part that is in the uri is already
+	reasonable, for bundle url's may not be the same, might be low handing fruit
+* Taylor: push side more interesting: server -> already sent you first m bytes
+	of x, need something to send the resumable push
+* Consider implications as an attack vector
+* Brian: git's pack implementation is deterministic if you don't do
+	multithreading, could use returnable mode like gzip has unsyncable mode, for
+	client side pack a temporary file, this is resumable with an offset, and since
+	pack is cached locally should be something you could resume with push. Some
+	possibilities if we cache on the server side or use single threaded output
+* an idea from pack file ui which could help solve fetch problem, server provide
+	url to the client, let the server be the fetcher
+* Emily: that would work pretty ok using a commit cloud server, already serving
+	those objects. The server side can resume necessarily.
+* Servers don't receive bundles, so would be adding support for server to
+	receive bundles. What's the real use case for this? It's worth it's own
+	protocol, not just a push protocol. When we try to mirror things in Gerrit it
+	fails due to large number of refs - would need an enhancement to handle large
+	numbers of refs.
+* Caleb: So you suggest some sort of TCP protocol for handling these transfers?
+* We have user stored binary and timeout uploading to server, it's not just
+	migration path
+* Having some way of guaranteeing forward progress on a push or a pull as long
+	as you can get some smaller unit of data transfer, don't know how small to go,
+	but would be very useful
+* We talked about chunk format before, would introducing chunk format, small
+	enough chunks help?
+* If it's small enough and reproducible
+* Elijah: Even if you have small chunks, if they are part of the same
+	communication, if they're small enough you'll need to restart it
+* If you have to resume now say you have sent X chunks then you have N - X left
+* Peff: All you need to know is the byte offset.
+* Elijah: Take the objects that you have received and say "I have these objects"
+* What if you hash what you got, "I asked for this", the hash was this length,
+	give me the rest
+* Peff: Has to be able to regenerate everything from scratch, are you caching
+	it? Kindof wasteful
+* Doesn't need to be cached, just needs to be stable, so if there was a way to
+	ask for it in a specific order
+* Disable multithreading
+
+
+* Peff: Looked into this with resumable clones, server can pass out some cache
+	tag, here's an opaque tag that may or may not be valid in the future, I got X
+	bytes of this tag can you send the rest. Becomes a heuristic on the server
+	"I'll choose how much to cache", git doesn't need to know about that it's an
+	implementation issue
+* With a pack file uri you stop what you're doing talking to the server
+* If you were trying to brute force it today, you would brute force sending a
+	ref
+* Peff: GitHub support has told people to do that
