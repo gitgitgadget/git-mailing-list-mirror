@@ -1,132 +1,112 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B367320FA9C
-	for <git@vger.kernel.org>; Mon,  6 Oct 2025 11:26:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759749986; cv=pass; b=OXdLETXVzKnsooQfDjNe5VXVl3xsOfUmh7zHvPNQr+IQuFv349h5uOFA73nYNpg6yIBYfeRLJrfmgEbRk7CppCIuHO20FFmHu7B6hBiwhBP20PQD/LqjywCSayaBrs6c54ez1Nqm0vvySmfCNxpZc1p77hGekRQyqe/De94G7wU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759749986; c=relaxed/simple;
-	bh=PXYQZOmaelFWhn3OHDCXrCCL7jT1QH+ExbUWK2DxVPY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J7QmoywvecFa7+L9a+rftTQ+4OUqWgnhTayKNYI1hxfv2zN8uNn91wGuG6gwriT3DmAWSemuiNtvuxKNKaO628q+MjiMRb0OQCCfhi0pyTxbhJ4jjZc9qwsAqB5kgw9y4ZGYVZr0NeyOyZoantpU4HDknxWjbC8wXa3c9D7kc18=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=OK3je8qw; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1538421E0AF
+	for <git@vger.kernel.org>; Mon,  6 Oct 2025 11:35:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.53
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759750543; cv=none; b=sCvhMxRGsbL87j58SD1w85fQKTjub8groQZbKqvc8Vtz32m9Mdsg4n30wBoPC0Yj8ympENzBUVtOk2bxTZuropq/CLA7OE5MOfEBSux5qlA0LsKG5mMJKbPX73Dg5EXIlBaVtR1Hr6UbgXFJ3sFrvaEfddgNbQYvYlpCakl9aqg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759750543; c=relaxed/simple;
+	bh=TLhH9bIUTp3Z8LQH9GiwLX1W+npC6qwfLBSwvDcpPx4=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=tlrVrhiPhHks0MXWYYYtjQF8r6BZXxawG9ZNX8znJD7IPTzLqcyebGlIPcvDS61ibGGMnjma4N2z+RIR6VmGXqeqNFaYwIH0qNMuQx8Ym3MEUJ6ErgS4WodM2/xqnmPNElJWd9DhDf3jmCT28FMntUdI25aaCgoWy7gCSvjXpmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fa72QVmL; arc=none smtp.client-ip=209.85.166.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="OK3je8qw"
-ARC-Seal: i=1; a=rsa-sha256; t=1759749954; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=cDo5h1NwrUWd2wd0WCUR/PM5ypa5hKIp+GzaOC+Ip5DnXO8VoOCoTCjYOhS0hk47uNXn/7wgE25tUOwAJIRH5zSngPT8/u9iwPg9+m5dMGYJfgH/wcS588vHZeY2nEfPOGe4K4eQBfxVTn8Xlr1UU3PwfJXFOXtBDXyMkf9BmV8=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1759749954; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=VUFc5W8AuopZYeOjNl1USuByrYiLvQfn2wvP8Y3sahU=; 
-	b=nC+J87RgJmzwSGd/cDiGUP9PXlO29oO9njHr5B4ghFjt8R9IRk9KsWk4fpcVbXlj/Q2s5DmYbzP7+qTRtVHTGx8b+XB15tgpaNj694ucvOf65QhTaQBPa0GDApWJrEvOvmxv3m15+njGI/ohjCByhnMcw1BLRb88rvdbXxuePO4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759749954;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=VUFc5W8AuopZYeOjNl1USuByrYiLvQfn2wvP8Y3sahU=;
-	b=OK3je8qwEVU6xMf/twO9gXuW3hw37u2E+R+76SNWCjdZ5ymsG6H3GMnJDtFiMx4Z
-	sYw8MhV7QrJA6tFhVXWbLYTQ8suQ6UEJfoKNuqUTCH18qlirWnSCMiW0QkQ7N38bIMG
-	UkNEPck6PJVt6ggglYg8Tcwnl3NZQ1G0cYLp96iY=
-Received: by mx.zohomail.com with SMTPS id 1759749952778781.6059057101666;
-	Mon, 6 Oct 2025 04:25:52 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: git@vger.kernel.org
-Cc: Emily Shaffer <emilyshaffer@google.com>,
-	Rodrigo Damazio Bovendorp <rdamazio@google.com>,
-	Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Aaron Schrab <aaron@schrab.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Josh Steadmon <steadmon@google.com>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v3 3/5] strbuf: bring back is_rfc3986_unreserved
-Date: Mon,  6 Oct 2025 14:25:16 +0300
-Message-ID: <20251006112518.3764240-4-adrian.ratiu@collabora.com>
-X-Mailer: git-send-email 2.49.1
-In-Reply-To: <20251006112518.3764240-1-adrian.ratiu@collabora.com>
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
- <20251006112518.3764240-1-adrian.ratiu@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fa72QVmL"
+Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-92aee734585so184858339f.3
+        for <git@vger.kernel.org>; Mon, 06 Oct 2025 04:35:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759750541; x=1760355341; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=60+AYGipJSXKHrCUg9zKjfc4wXNkBSoQb12EtGKq4zs=;
+        b=fa72QVmLXVsLYRa9k7NnkzB+mi2iW3hrPK64JSxNZdRoUHd5gYFbyuQQQsFEaO7mI2
+         S8ihZa/H0/FEXN2+YWHdHZNBEu5BLCKZpimhSSSyx9Kp+YxhJFb4UV57WxFUy5r9W0Yl
+         lyK3k8CsxwIHPkAw57LIeZ2gdXwtqcqOlETQYwxuYqogsLHjPVjLwTXyO1GOz3HHpMXB
+         RM3q/bBTavN1zmRRw51etYcxwukqYuQ3QID10pHm0Izd5WwWbgboG7SKBMyH90Wj16GC
+         8D+ZiXCLzIe3N9nuC9Pxyk7wdIU9z7sZB2mrL+jEr6TrpedbvK5pm/hFsJ1OV1yVbjJj
+         NdpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759750541; x=1760355341;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=60+AYGipJSXKHrCUg9zKjfc4wXNkBSoQb12EtGKq4zs=;
+        b=aIXn6ihqVu8Crusp/hX73jCRhxOr9cbfFNUQ/ls9CsGFUA+mQLj/IBntrCtnAhPkFH
+         OuFOXuNyB+MGJhrn1/y16XgnQkcyWcshqiA7SfO+fWSK5h/O8EE5hLzYixYLs7S3mMqF
+         ISU/yOERwrOA868g5q0GS67L/0ZrS1IqSH7ReKpVpOrZZ5Fk1OtG2GnxcIMe344Ixf0n
+         /IaOs7Bn4rh0YwEDZmAvwFR0vx56KFcgn6aTCNVhqFfN3eXPVlfez66xTFUc0B2llZQq
+         tUVh67E+Uf4t1mzb0iiW2DaPNCbXoRCS27lcJIRoBtqk3/JBmV/4GJQcUkzKRTrz1jFo
+         QFmw==
+X-Gm-Message-State: AOJu0Yyvk1m/goas281nenxrPxtQwxzudvmm5xSr5wq4ZYzY3zSTOZcH
+	Fr1K7ntFjxNPXMj5i1WYULxsSpKedo7RoC2iso6fAxkW/W2X7gLHeFPRl9dt6Q==
+X-Gm-Gg: ASbGnct8ucfkMucjAb9egDf6D9J4Xmz+3hzVuEsmPTrb+4uQxlKclbXsuoaOSw3Htgc
+	hgMaUNmYhEUCkzTwFdyKzQrXyVAvp9/gFFvzGc9o2yE92rysxMiFSpHe124swilwziYyFce+EXH
+	Kjs4nu+Bd8JIb97N/p29z8q46fRjKzMGFswgBJ48XXBh3D+vOfV+hfo4Q4CMjESP3afTTLwH3Fr
+	6vpM7M257DLxCpOwJrJSzSiHHUBWwkdRsj3n+aknluZhkP8pQLmMZDT7JbmRR/QwXwYLKBbvhES
+	bPdDi9iWIPUPJfEpL2hdUR8ZSkJ+IIbepaAkQh44ea3+SlX4EYGUBXiydDhqB/6Fvsa6L3Z/xmg
+	1czaaoLSo3fMDKyXTwyUW5QMeXMxCkpcctFw4uTNsh3ZvhU2Cmjc=
+X-Google-Smtp-Source: AGHT+IE2eExViK+OxQc7OL2YWhgKeybdWNr8BYU4sbYKdvoHRbCHxaKXzdEf7n61NHoYQVjuTcyUDw==
+X-Received: by 2002:a05:6e02:1527:b0:42e:7426:7cca with SMTP id e9e14a558f8ab-42e7acd27edmr142637785ab.7.1759750540774;
+        Mon, 06 Oct 2025 04:35:40 -0700 (PDT)
+Received: from [127.0.0.1] ([135.232.208.147])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-57b5ea300f7sm4755860173.16.2025.10.06.04.35.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Oct 2025 04:35:40 -0700 (PDT)
+Message-Id: <pull.2067.git.git.1759750539721.gitgitgadget@gmail.com>
+From: "Miroma via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 06 Oct 2025 11:35:39 +0000
+Subject: [PATCH] stash: don't show irrelevant entry count in status
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+To: git@vger.kernel.org
+Cc: Miroma <its.miroma@proton.me>,
+    Miroma <its.miroma@proton.me>
 
-is_rfc3986_unreserved() was moved to credential-store.c and was made
-static by f89854362c (credential-store: move related functions to
-credential-store file, 2023-06-06) under a correct assumption, at the
-time, that it was the only place using it.
+From: Miroma <its.miroma@proton.me>
 
-However now we need it to apply URL-encoding to submodule names when
-constructing gitdir paths, to avoid conflicts, so bring it back.
+Currently, when status.showStash is set, 'stash pop' shows the
+following, confusing, output:
 
-Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+    ...
+    Your stash currently has 1 entry
+    Dropped refs/stash@{0} (abc123...)
+
+Signed-off-by: Miroma <its.miroma@proton.me>
 ---
- builtin/credential-store.c | 6 ------
- strbuf.c                   | 6 ++++++
- strbuf.h                   | 2 ++
- 3 files changed, 8 insertions(+), 6 deletions(-)
+    stash: don't show irrelevant entry count in status
 
-diff --git a/builtin/credential-store.c b/builtin/credential-store.c
-index b74e06cc93..0acaf1cc82 100644
---- a/builtin/credential-store.c
-+++ b/builtin/credential-store.c
-@@ -76,12 +76,6 @@ static void rewrite_credential_file(const char *fn, struct credential *c,
- 		die_errno("unable to write credential store");
- }
- 
--static int is_rfc3986_unreserved(char ch)
--{
--	return isalnum(ch) ||
--		ch == '-' || ch == '_' || ch == '.' || ch == '~';
--}
--
- static int is_rfc3986_reserved_or_unreserved(char ch)
- {
- 	if (is_rfc3986_unreserved(ch))
-diff --git a/strbuf.c b/strbuf.c
-index 6c3851a7f8..e8d84cbb6d 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -817,6 +817,12 @@ void strbuf_addstr_xml_quoted(struct strbuf *buf, const char *s)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2067%2Fits-miroma%2Fstash-no-status-showStash-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2067/its-miroma/stash-no-status-showStash-v1
+Pull-Request: https://github.com/git/git/pull/2067
+
+ builtin/stash.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 1977e50df2..2bd4b7d753 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -705,6 +705,9 @@ restore_untracked:
+ 			     absolute_path(repo_get_work_tree(the_repository)));
+ 		strvec_pushf(&cp.env, GIT_DIR_ENVIRONMENT"=%s",
+ 			     absolute_path(repo_get_git_dir(the_repository)));
++		strvec_push(&cp.env, "GIT_CONFIG_COUNT=1");
++		strvec_push(&cp.env, "GIT_CONFIG_KEY_0=status.showStash");
++		strvec_push(&cp.env, "GIT_CONFIG_VALUE_0=false");
+ 		strvec_push(&cp.args, "status");
+ 		run_command(&cp);
  	}
- }
- 
-+int is_rfc3986_unreserved(char ch)
-+{
-+	return isalnum(ch) ||
-+		ch == '-' || ch == '_' || ch == '.' || ch == '~';
-+}
-+
- static void strbuf_add_urlencode(struct strbuf *sb, const char *s, size_t len,
- 				 char_predicate allow_unencoded_fn)
- {
-diff --git a/strbuf.h b/strbuf.h
-index a580ac6084..5139269039 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -640,6 +640,8 @@ static inline void strbuf_complete_line(struct strbuf *sb)
- 
- typedef int (*char_predicate)(char ch);
- 
-+int is_rfc3986_unreserved(char ch);
-+
- void strbuf_addstr_urlencode(struct strbuf *sb, const char *name,
- 			     char_predicate allow_unencoded_fn);
- 
--- 
-2.49.1
 
+base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+-- 
+gitgitgadget
