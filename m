@@ -1,448 +1,113 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170B62D97B7
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 10:59:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759834779; cv=none; b=MNjr0Kjn3hm/Vq56cON0HYVKCHg5z+iQjYyQQHB3K63dv0hzMH/LI6kn/jKlCFWVm8ZddDNr5FsuqQf71xr4p99yCMpNQRNxmZllShoJFmqq9A4SNn4D2WOedwhnnIOO3Tn/1kRSKNxNWancVymruaLxYy/wW+ycVedY3UhL5C8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759834779; c=relaxed/simple;
-	bh=qF+gIbM1nUKIYg5Bbx3liuWWI1bO545fYTS2Q61xwa8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=utGQ3G3lrDTmxSBsFIe9MWR/ZRyzycsoGa0RFR9ofg9fUrbJLKlrpEMT4o3A6hrtDbriChW0WPrjGU8/B/aia6vJqkTE5d1AXYBOtj8AKLUpXri7lDVYUWN4uvqlnivtXTLYuW7ZJopq0XjcCfak16gtFD6aFWoVUKVc1cVMyGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QSyWn3zN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gnD3kFHO; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712A6E55A
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 11:13:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759835614; cv=pass; b=rVFaq7SrHrlHVy/xsfMz3pD0xnKPmLoFcmA85BwJtmCqm/kqDAUhwoTNBbB51l01QNzW/kAV9xFtptaKllDLYOtikjA7cjxKtbeomJIevK5DSV9zQnQfJbLl1U0hRZoSdnpA4FEbvvmRC+EYbTqOv9MAEfLBCFoC9DE4vLBEoIc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759835614; c=relaxed/simple;
+	bh=kw85vHn/2ud/UQs/t76BVB/7Pvhrx3o/aKgTlgolBU4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VRBGgbhcq7RW0eQo7c7Z64WXFpPhqzymqEuNt6tpTrrcrkFGbRkELaWUTD9hDF8uxJMd1Tn9XNHnuI+18NwPKwW4/a1tvZ8ry7tPu1zWZfRvk87yv+T/rESuKZvzPFJVyJQ4Jlqzh4n72hrxg2ZeuxZiEnzeXOdXxsXCaY6Dr1Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=itoaWNS/; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QSyWn3zN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gnD3kFHO"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8B6AA7A008D
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 06:59:36 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 07 Oct 2025 06:59:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759834776;
-	 x=1759921176; bh=5QtNgdH7VEAVMtN3aEjYlE1d8/QzFO0ZtGmIBR05nwU=; b=
-	QSyWn3zNwNXM4AlqMvRv3OSAS0KaSg5fL43PCofaBLNeSFge8oY/uwUP0sD9UFVP
-	j5mf72zy2IB4VH4w+3lvZUnPm5tRE+LTeaybYF03FM43QFf+gCRxe8C462phQhRg
-	6lXi8Hy1LEl/ofgHQfcCiIx07oHQS7hklHGYEdXso0ZY0aKaQavuthybN7CQQXvC
-	xv6ThokRhIYLo505cvi04aQ5LDKZtfkPiaraVBZAAH8dEP1b687Gwpi1SxGam/9L
-	ecyz2rQQsk2gZ72rjCJIZSzI8zw/a7mFmk+vguMnlsTzExsxkA26YRUhh03cdQkR
-	w5rtV4LX7YiCa2cXKqzuQA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759834776; x=
-	1759921176; bh=5QtNgdH7VEAVMtN3aEjYlE1d8/QzFO0ZtGmIBR05nwU=; b=g
-	nD3kFHOJsnUShwEg2zr2PAhitlh6zrstjUl5jF7gSt2tqoDfJ2mUUowlzgGHnNMn
-	UpHYzyyVzPo9Qt/jf8YZNrknlCwk5eNtfGJbjVkvUT7yvgHfQb31l0MgliFkyRQ6
-	AS366w+LgzGiss0Y7S+ojxlpZieJsDRVtHKSTvPw7UKcvT6OFcJdQcuU4OGFXN1D
-	Lw+7iWzXWV258qPtgX/0AjUpGN+bbK3S8mGCKQC8DIN7ZrGfzhQy/kzmd9abcpyM
-	srd2WW4UZrMskxiuQf36hshNrs09iWAN3W8JnKmbCHzBGKFbm+YUjr8yzpfDzaxj
-	mp/EtWiNkdkjjVEV3Ux0Q==
-X-ME-Sender: <xms:mPLkaBoD0CxzB-GD23h-EN8GrN3VM1m1xn4YVBBe8vM4tApsn7aLyA>
-    <xme:mPLkaKnC8gXz0ki_rY8Zq_0YuFuP25oE7Qc4r-L0fyk6z2oTqVl7nrlswB_NVBYub
-    IX8t5_7IbulSIZsbNjrFCS6zLEImhq8-UyueWagVc70BfyBAYyM>
-X-ME-Received: <xmr:mPLkaD0jLyFtn6qj1m2Nj_7Jid5igTnHNuzfHJ1sexlNMAH9-y4AlzEl4ImTVh0RZU8eRM7xklFnzBUdI2f-Jen2qVc_hPLLYevBhTMjVzA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddtvdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthekre
-    dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepfefhueegleehfeejkedtffehvdfhvdetfe
-    fgtdduffduveevteegueeutdekhfegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrgh
-X-ME-Proxy: <xmx:mPLkaCBQbEW_Tip3z8A_Sc5S4jQRYfHLtcLVjJbkrGM_RgPO1sr4zw>
-    <xmx:mPLkaAzTvx2wwzkxCuCwzgC7Lw7Hbrhzg4sRw5WGeTLyK0rsuRlQMg>
-    <xmx:mPLkaAmRBLuwk9Ljj2kzu1y0iJWSCs_KagiZCPBCWYA8CsnirOMHUQ>
-    <xmx:mPLkaFHgikyfPmGISGuFoF8_D0dxo-zk7SVd1sONm3pNQBE-JlMqiw>
-    <xmx:mPLkaJLnlClgNMZKDCefdjwr1G4lS3Cf7hOAwGBLBkfZWqBjs6_ejRrn>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 7 Oct 2025 06:59:35 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 866eeea8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
-	for <git@vger.kernel.org>;
-	Tue, 7 Oct 2025 10:59:35 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 07 Oct 2025 12:58:50 +0200
-Subject: [PATCH 13/13] ref-filter: parse objects on demand
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="itoaWNS/"
+ARC-Seal: i=1; a=rsa-sha256; t=1759835589; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=e1FknFomDcAT3fK0wBQbdSMZMkAQkWV8raiOYI/NiJC5AFp4mF+x0vI4Pb2wtikSjXUoLqxwhCqJQUyUMy6VXEO2rQAlkUR5zkiGQklJqAOiCwt5jDRZZzap+QvkJVnxzSzMHcpRa9hx92GcQ7WhSU89YM4LkdwAsTeISSkQbA0=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1759835589; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=RvZTX+ZVGMQlhjippMngUetV24QW81IPjTqHg2mGaTk=; 
+	b=a7xmE+IM5+UQJyjmOmXxH3fSevvPCeYubLkvPplpqRtwjEXmYXF2j6xmWRs4N8kr/WbPNwXYZlE0GU0UlFcg5WNWcKfY8ZhDVuarN/sHF6RUQQeXMbLnW0WcyDKi+NsvxVBp19e5b1VHAvm0ohH5xO0g7xemQAfJ1j62V7sOIpc=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759835589;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=RvZTX+ZVGMQlhjippMngUetV24QW81IPjTqHg2mGaTk=;
+	b=itoaWNS/aF9MIUXfzwFR/KQwK3dQnj86walXpMUELBh+L6IEHx52RL3WeW7cex3f
+	EsMO0lzgU/ccxZjrqcI+DQhdtUu43RXUznce+ideyO9g6UIFSi4G39A9jiedcW2/Wyu
+	DFvbLm6ny909vG6htKg+Seezh4KbJymoSvZ3yZB8=
+Received: by mx.zohomail.com with SMTPS id 1759835587444982.1804024734927;
+	Tue, 7 Oct 2025 04:13:07 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Aaron
+ Schrab <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, Patrick
+ Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>, Ben Knoble
+ <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 0/5] Encode submodule gitdir names to avoid conflicts
+In-Reply-To: <xmqqo6qkq9vm.fsf@gitster.g>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20251006112518.3764240-1-adrian.ratiu@collabora.com>
+ <xmqqo6qkq9vm.fsf@gitster.g>
+Date: Tue, 07 Oct 2025 14:13:00 +0300
+Message-ID: <87frbv3qyr.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-13-916cc7c6886b@pks.im>
-References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
-In-Reply-To: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.14.3
+Content-Type: text/plain; format=flowed
+X-ZohoMailClient: External
 
-When formatting an arbitray object we parse that object regardless of
-whether or not we actually need any parsed data. In fact, many of the
-atoms we have don't require any.
+On Mon, 06 Oct 2025, Junio C Hamano <gitster@pobox.com> wrote:
+> Adrian Ratiu <adrian.ratiu@collabora.com> writes: 
+> 
+>> Hello everyone, 
+>> 
+>> v3 is much simplified from v2, starting from the design idea 
+>> that submodule gitdir name encoding is to be put behind an 
+>> extensions.submoduleEncoding. 
+> 
+> This design decision to make it an extension makes a repository 
+> with a new-style submodule incompatible with older Git, which 
+> may not matter all that much unless you use third-party tools 
+> that come with their own version of Git embedded (which by 
+> definition can become stale). 
+> 
+> If you already have submodules creted under the original scheme, 
+> then add a new submodule that needs this extension, do you 
+> enable this new extension and write the new submodule under 
+> encoded name, and move the existing submodules under their 
+> encoded names? 
 
-Refactor the code so that we parse the data on demand when we see an
-atom that wants to access the objects. This leads to a small speedup,
-for example in the Chromium repository with around 40000 refs:
+Excellent observation! We could do that (it's not being done in 
+v3).
 
-    Benchmark 1: for-each-ref --format='%(raw)' (HEAD~)
-      Time (mean ± σ):     388.7 ms ±   1.1 ms    [User: 322.2 ms, System: 65.0 ms]
-      Range (min … max):   387.3 ms … 390.8 ms    10 runs
+Currently any existing submodule gitdir names are left untouched 
+and are used as-is (unencoded) after the extension is enabled.
 
-    Benchmark 2: for-each-ref --format='%(raw)' (HEAD)
-      Time (mean ± σ):     344.7 ms ±   0.7 ms    [User: 287.8 ms, System: 55.1 ms]
-      Range (min … max):   343.9 ms … 345.7 ms    10 runs
+It's been done like this for backwards compatibility, to eliminate 
+any potential risk of breakage by having to move/update gitdirs, 
+however maybe we've been overly cautious and we can attempt a 
+"migration" once the extension is enabled, to move the submodule 
+gitdirs.
 
-    Summary
-      for-each-ref --format='%(raw)' (HEAD) ran
-        1.13 ± 0.00 times faster than for-each-ref --format='%(raw)' (HEAD~)
+> 
+>> This allowed removal of the modules vs submodules directories 
+>> split and simplified our logic quite a lot. Tests have been 
+>> been squashed in the smaller commits as well. 
+> 
+> By this statement, I am guessing that the answer is yes?  That 
+> would make it consistent.  The last thing we want here is the 
+> code that needs to guess which ones are encoded and which ones 
+> are not. 
 
-With this change, we now spend ~90% of the time decompressing objects,
-which is almost as good as it gets regarding git-for-each-ref(1)'s own
-infrastructure.
+No, not yet, though you do raise a fair point.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- ref-filter.c | 156 ++++++++++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 117 insertions(+), 39 deletions(-)
+We could do a migration of existing gitdirs to the new encoding to 
+ensure consistency when the extension is enabled.
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 72cf85c8c6..537c7babac 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -91,6 +91,7 @@ static struct expand_data {
- 	struct object_id delta_base_oid;
- 	void *content;
- 
-+	struct object *maybe_object;
- 	struct object_info info;
- } oi, oi_deref;
- 
-@@ -1475,11 +1476,28 @@ static void grab_common_values(struct atom_value *val, int deref, struct expand_
- 	}
- }
- 
-+static int get_or_parse_object(struct expand_data *data, const char *refname,
-+			       struct object **object, struct strbuf *err, int *eaten)
-+{
-+	if (!data->maybe_object) {
-+		data->maybe_object = parse_object_buffer(the_repository, &data->oid, data->type,
-+							 data->size, data->content, eaten);
-+		if (!data->maybe_object)
-+			return strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
-+					       oid_to_hex(&data->oid), refname);
-+	}
-+
-+	*object = data->maybe_object;
-+	return 0;
-+}
-+
- /* See grab_values */
--static void grab_tag_values(struct atom_value *val, int deref, struct object *obj)
-+static int grab_tag_values(struct atom_value *val, int deref,
-+			   struct expand_data *data, const char *refname,
-+			   struct strbuf *err, int *eaten)
- {
--	int i;
--	struct tag *tag = (struct tag *) obj;
-+	struct tag *tag = NULL;
-+	int i, ret;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
- 		const char *name = used_atom[i].name;
-@@ -1487,6 +1505,17 @@ static void grab_tag_values(struct atom_value *val, int deref, struct object *ob
- 		struct atom_value *v = &val[i];
- 		if (!!deref != (*name == '*'))
- 			continue;
-+
-+		if (!tag) {
-+			struct object *object;
-+
-+			ret = get_or_parse_object(data, refname, &object, err, eaten);
-+			if (ret < 0)
-+				return ret;
-+
-+			tag = (struct tag *) object;
-+		}
-+
- 		if (deref)
- 			name++;
- 		if (atom_type == ATOM_TAG)
-@@ -1496,22 +1525,38 @@ static void grab_tag_values(struct atom_value *val, int deref, struct object *ob
- 		else if (atom_type == ATOM_OBJECT && tag->tagged)
- 			v->s = xstrdup(oid_to_hex(&tag->tagged->oid));
- 	}
-+
-+	return 0;
- }
- 
- /* See grab_values */
--static void grab_commit_values(struct atom_value *val, int deref, struct object *obj)
-+static int grab_commit_values(struct atom_value *val, int deref,
-+			      struct expand_data *data, const char *refname,
-+			      struct strbuf *err, int *eaten)
- {
--	int i;
--	struct commit *commit = (struct commit *) obj;
-+	int i, ret;
-+	struct commit *commit = NULL;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
- 		const char *name = used_atom[i].name;
- 		enum atom_type atom_type = used_atom[i].atom_type;
- 		struct atom_value *v = &val[i];
-+
- 		if (!!deref != (*name == '*'))
- 			continue;
- 		if (deref)
- 			name++;
-+
-+		if (!commit) {
-+			struct object *object;
-+
-+			ret = get_or_parse_object(data, refname, &object, err, eaten);
-+			if (ret < 0)
-+				return ret;
-+
-+			commit = (struct commit *) object;
-+		}
-+
- 		if (atom_type == ATOM_TREE &&
- 		    grab_oid(name, "tree", get_commit_tree_oid(commit), v, &used_atom[i]))
- 			continue;
-@@ -1531,6 +1576,8 @@ static void grab_commit_values(struct atom_value *val, int deref, struct object
- 			v->s = strbuf_detach(&s, NULL);
- 		}
- 	}
-+
-+	return 0;
- }
- 
- static const char *find_wholine(const char *who, int wholen, const char *buf)
-@@ -1759,10 +1806,12 @@ static void grab_person(const char *who, struct atom_value *val, int deref, void
- 	}
- }
- 
--static void grab_signature(struct atom_value *val, int deref, struct object *obj)
-+static int grab_signature(struct atom_value *val, int deref,
-+			  struct expand_data *data, const char *refname,
-+			  struct strbuf *err, int *eaten)
- {
--	int i;
--	struct commit *commit = (struct commit *) obj;
-+	int i, ret;
-+	struct commit *commit = NULL;
- 	struct signature_check sigc = { 0 };
- 	int signature_checked = 0;
- 
-@@ -1790,6 +1839,16 @@ static void grab_signature(struct atom_value *val, int deref, struct object *obj
- 			continue;
- 
- 		if (!signature_checked) {
-+			if (!commit) {
-+				struct object *object;
-+
-+				ret = get_or_parse_object(data, refname, &object, err, eaten);
-+				if (ret < 0)
-+					return ret;
-+
-+				commit = (struct commit *) object;
-+			}
-+
- 			check_commit_signature(commit, &sigc);
- 			signature_checked = 1;
- 		}
-@@ -1843,6 +1902,8 @@ static void grab_signature(struct atom_value *val, int deref, struct object *obj
- 
- 	if (signature_checked)
- 		signature_check_clear(&sigc);
-+
-+	return 0;
- }
- 
- static void find_subpos(const char *buf,
-@@ -1920,9 +1981,8 @@ static void append_lines(struct strbuf *out, const char *buf, unsigned long size
- }
- 
- static void grab_describe_values(struct atom_value *val, int deref,
--				 struct object *obj)
-+				 struct expand_data *data)
- {
--	struct commit *commit = (struct commit *)obj;
- 	int i;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
-@@ -1944,7 +2004,7 @@ static void grab_describe_values(struct atom_value *val, int deref,
- 		cmd.git_cmd = 1;
- 		strvec_push(&cmd.args, "describe");
- 		strvec_pushv(&cmd.args, atom->u.describe_args.v);
--		strvec_push(&cmd.args, oid_to_hex(&commit->object.oid));
-+		strvec_push(&cmd.args, oid_to_hex(&data->oid));
- 		if (pipe_command(&cmd, NULL, 0, &out, 0, &err, 0) < 0) {
- 			error(_("failed to run 'describe'"));
- 			v->s = xstrdup("");
-@@ -2066,24 +2126,36 @@ static void fill_missing_values(struct atom_value *val)
-  * pointed at by the ref itself; otherwise it is the object the
-  * ref (which is a tag) refers to.
-  */
--static void grab_values(struct atom_value *val, int deref, struct object *obj, struct expand_data *data)
-+static int grab_values(struct atom_value *val, int deref, struct expand_data *data,
-+		       const char *refname, struct strbuf *err, int *eaten)
- {
- 	void *buf = data->content;
-+	int ret;
- 
--	switch (obj->type) {
-+	switch (data->type) {
- 	case OBJ_TAG:
--		grab_tag_values(val, deref, obj);
-+		ret = grab_tag_values(val, deref, data, refname, err, eaten);
-+		if (ret < 0)
-+			goto out;
-+
- 		grab_sub_body_contents(val, deref, data);
- 		grab_person("tagger", val, deref, buf);
--		grab_describe_values(val, deref, obj);
-+		grab_describe_values(val, deref, data);
- 		break;
- 	case OBJ_COMMIT:
--		grab_commit_values(val, deref, obj);
-+		ret = grab_commit_values(val, deref, data, refname, err, eaten);
-+		if (ret < 0)
-+			goto out;
-+
- 		grab_sub_body_contents(val, deref, data);
- 		grab_person("author", val, deref, buf);
- 		grab_person("committer", val, deref, buf);
--		grab_signature(val, deref, obj);
--		grab_describe_values(val, deref, obj);
-+
-+		ret = grab_signature(val, deref, data, refname, err, eaten);
-+		if (ret < 0)
-+			goto out;
-+
-+		grab_describe_values(val, deref, data);
- 		break;
- 	case OBJ_TREE:
- 		/* grab_tree_values(val, deref, obj, buf, sz); */
-@@ -2094,8 +2166,12 @@ static void grab_values(struct atom_value *val, int deref, struct object *obj, s
- 		grab_sub_body_contents(val, deref, data);
- 		break;
- 	default:
--		die("Eh?  Object of type %d?", obj->type);
-+		die("Eh?  Object of type %d?", data->type);
- 	}
-+
-+	ret = 0;
-+out:
-+	return ret;
- }
- 
- static inline char *copy_advance(char *dst, const char *src)
-@@ -2292,38 +2368,41 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
- 	return show_ref(&atom->u.refname, ref->refname);
- }
- 
--static int get_object(struct ref_array_item *ref, int deref, struct object **obj,
-+static int get_object(struct ref_array_item *ref, int deref,
- 		      struct expand_data *oi, struct strbuf *err)
- {
--	/* parse_object_buffer() will set eaten to 0 if free() will be needed */
--	int eaten = 1;
-+	/* parse_object_buffer() will set eaten to 1 if free() will be needed */
-+	int eaten = 0;
-+	int ret;
-+
- 	if (oi->info.contentp) {
- 		/* We need to know that to use parse_object_buffer properly */
- 		oi->info.sizep = &oi->size;
- 		oi->info.typep = &oi->type;
- 	}
-+
- 	if (odb_read_object_info_extended(the_repository->objects, &oi->oid, &oi->info,
--					  OBJECT_INFO_LOOKUP_REPLACE))
--		return strbuf_addf_ret(err, -1, _("missing object %s for %s"),
--				       oid_to_hex(&oi->oid), ref->refname);
-+					  OBJECT_INFO_LOOKUP_REPLACE)) {
-+		ret = strbuf_addf_ret(err, -1, _("missing object %s for %s"),
-+				      oid_to_hex(&oi->oid), ref->refname);
-+		goto out;
-+	}
- 	if (oi->info.disk_sizep && oi->disk_size < 0)
- 		BUG("Object size is less than zero.");
- 
- 	if (oi->info.contentp) {
--		*obj = parse_object_buffer(the_repository, &oi->oid, oi->type, oi->size, oi->content, &eaten);
--		if (!*obj) {
--			if (!eaten)
--				free(oi->content);
--			return strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
--					       oid_to_hex(&oi->oid), ref->refname);
--		}
--		grab_values(ref->value, deref, *obj, oi);
-+		ret = grab_values(ref->value, deref, oi, ref->refname, err, &eaten);
-+		if (ret < 0)
-+			goto out;
- 	}
- 
- 	grab_common_values(ref->value, deref, oi);
-+	ret = 0;
-+
-+out:
- 	if (!eaten)
- 		free(oi->content);
--	return 0;
-+	return ret;
- }
- 
- static void populate_worktree_map(struct hashmap *map, struct worktree **worktrees)
-@@ -2376,7 +2455,6 @@ static char *get_worktree_path(const struct ref_array_item *ref)
-  */
- static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- {
--	struct object *obj;
- 	int i;
- 	struct object_info empty = OBJECT_INFO_INIT;
- 	int ahead_behind_atoms = 0;
-@@ -2564,14 +2642,14 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 
- 
- 	oi.oid = ref->objectname;
--	if (get_object(ref, 0, &obj, &oi, err))
-+	if (get_object(ref, 0, &oi, err))
- 		return -1;
- 
- 	/*
- 	 * If there is no atom that wants to know about tagged
- 	 * object, we are done.
- 	 */
--	if (!need_tagged || (obj->type != OBJ_TAG))
-+	if (!need_tagged || (oi.type != OBJ_TAG))
- 		return 0;
- 
- 	/*
-@@ -2589,7 +2667,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 		}
- 	}
- 
--	return get_object(ref, 1, &obj, &oi_deref, err);
-+	return get_object(ref, 1, &oi_deref, err);
- }
- 
- /*
+This will simplify our logic and assumptions a lot, at the cost of 
+the initial up-front migration.
 
--- 
-2.51.0.764.g787ff6f08a.dirty
-
+Will do this in v4 if nobody has any objections.
