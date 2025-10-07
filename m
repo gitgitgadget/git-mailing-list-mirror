@@ -1,132 +1,147 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1732E717C
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 15:58:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504992E7647
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 16:18:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759852687; cv=none; b=IFMGOGeQ8b+NiiDenAGTV+GiLCTeFKwMQsOqLIveHyAdNWNL+yr3d8PPoidFKvMsHyLWranzajnd309FACUQUT+VixqjGCMK6QZp3AsLrsxXP163U75V1RbQLCR83i0mq1mGIeLIqNIBD1+raw45gLMQKGEaukle6rmoD43iRBE=
+	t=1759853936; cv=none; b=YJYLIm1ItW0ImOfbB+SrJliio1xYgIosMnk3eZwh9kTXekVoHs0+2DV30LVNOpPZIOHu5kf8gtdoWxIpcILFiqaGj2wuGvp0FNMc7/Rasl1XhG7L/NueS/2EzEvPxw/lqfvh8s3ML9kxhED/ykYKdTk2+V9Byk+2tfcsqJOlpk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759852687; c=relaxed/simple;
-	bh=UsbzLN5XQnFUUOR16Tlm0o1iL+RVibTFurLanPJra7c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nMTbBEwkxgKYsBTo4pr2MzbxXyr2TVMamB7sgDPlxAAE2p0gRlxnxmcLvAyDziwkvvZu+EXw6phcaujKbUhKWEvZq7C4yNqgicXKFYvDV+A9FikVesWimz+dKQT2vuNhYir3HghwcB9Vy3Sg3nn7vosAzY/6Fki1Rhr3ACllWLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cDJ2Bvv3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B9yyqZ1Q; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1759853936; c=relaxed/simple;
+	bh=RbjAomyNqzHnQBD+kuOKcwLHQhPW5YcTVI8tr6wRYRQ=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=KJUxiOG413ousR/6mp3TPb0nmydtbt8ykLYDWY/u/8pI1UAzjI6UBxgEzbAcqeD4/HEtCtJ/QLA5BGpIW+ZaQ1u90rMUPR9PkWF/GWUg6RguPosky/lItq2vPnPCt83F/Rhpp8uSiTgvrY5QS/CaopPUCT7MtOIgn3Mw9WJVVmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KEEq2d+O; arc=none smtp.client-ip=209.85.222.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cDJ2Bvv3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B9yyqZ1Q"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2576A7A0248;
-	Tue,  7 Oct 2025 11:58:03 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Tue, 07 Oct 2025 11:58:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1759852683; x=1759939083; bh=DqRcyH3xbw
-	wlY9kITB9jOVCGhV3PVCwj2WZyd+dnn1s=; b=cDJ2Bvv3cR27YczssZWtCdDiCW
-	HUBagqONzqr9of6OiI5uD+oCUNi/mxS6Yt3rH/vFYa0tP/juYKGuEdPwgoYFC7pc
-	KVuKTEPfLxQN7w4sHAuNaatTXoSmvJDxdOEz4O3d5YWQGJ1AGb/zTz5u+qahaF+Z
-	2pj6bvtN/E4io482YZMXCv5+qgSkeaSJZh3gW6F6Z3mVEQ+cWHk5+NmCHSSeOh1X
-	LgqrFTzgG6ZmwFvN1edquQ7s1zQM6PJyqmiX7i5OCDbAYFk4Y879x7Ei+UnA/PXE
-	VEzNZc+koK/dO199KQPBzyxQMYnx72omFBcQN6ycKReV2anZ7qy/f43A/oig==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759852683; x=1759939083; bh=DqRcyH3xbwwlY9kITB9jOVCGhV3PVCwj2WZ
-	yd+dnn1s=; b=B9yyqZ1QJ9Y2evof+M8/v4OzCgaw2HOL8DR8W0WbtidWQrOkEvA
-	HIvTs6giWCOufGp+xCZge8+rCAYeaSmUZ9T/aE7ub9tl/FKpfzZ4JNa6ZmDinc1l
-	KwIT/YnJRXqwwv6FxxRBqSAzwq7zRdavOEspPM0UbKgIPTm4Xw+xwiLxNxVluqir
-	SFwNlHS5zhjdE5yUG69/YjiH6O5aV4VY30uwvY/1BN97xUGg0eY+2Xvm+/T5WSLX
-	mBM0Tqf8nVwa8QAz3W0vhxbdEW60bBL3SATYZlvW7TX2XUwekl807/F/l7kSC2Od
-	/8DduQVbH/beBfL+0qjbJymx2YvaYVmCXsQ==
-X-ME-Sender: <xms:ijjlaIlBVNxzEzFWxlXZFM2CWcyWoVRiK0OisVozQLNFLFMjThyrTQ>
-    <xme:ijjlaDpoPniO30ySTyQucG-BiOVSostAjAc4G4MR-82qyluD0SoshM874Xs9qsV4r
-    AP9eW33mA-YYD0AOSMPswIGK1e0MbJ9L9nykRbbUlQa-2lzwzjNsg>
-X-ME-Received: <xmr:ijjlaCC2_21xhPloP7A7aMb8vt_KR9_eeQWVTu51j3h70m3_xM9rpw_UfKnggzFM7a5gLmabna5RFUQw6fuKcyB25BHvbJ9Z7sRb>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddtkeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhlrggsoh
-    hrrgdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvmhhilhihshhhrg
-    hffhgvrhesghhoohhglhgvrdgtohhmpdhrtghpthhtoheprhgurghmrgiiihhosehgohho
-    ghhlvgdrtghomhdprhgtphhtthhopegrrghrohhnsehstghhrhgrsgdrtghomhdprhgtph
-    htthhopehjrhhnihgvuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhk
-    shdrihhmpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomh
-X-ME-Proxy: <xmx:ijjlaOGIr2vp6tg1KGzExR-ZbHDs7uNPnt3usiSE2arScpMWLi6NfQ>
-    <xmx:ijjlaE0EriKBR6l85x8FWfGnLT3Q9Hp8lyBo7-ut5CzPc-zEGFAiuQ>
-    <xmx:ijjlaHPU7wMgeE-qJo9TUH1JpyCjKC0drYoQPvKzGkjkYOsYiEPBbg>
-    <xmx:ijjlaMbUmYP2csbec4yiSm5ArxlL_K4i3vKjgS-HdiERLmguQfFbaw>
-    <xmx:ijjlaDj7Er51QBLNneenyW-nGlSWYPi8UvA1IDc7JcS_reJeOlcxFV4l>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Oct 2025 11:58:02 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Emily Shaffer
- <emilyshaffer@google.com>,  Rodrigo Damazio Bovendorp
- <rdamazio@google.com>,  Aaron Schrab <aaron@schrab.com>,  Jonathan Nieder
- <jrnieder@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  Josh Steadmon
- <steadmon@google.com>,  Ben Knoble <ben.knoble@gmail.com>,  Phillip Wood
- <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 5/5] submodule: error out if gitdir name is too long
-In-Reply-To: <87jz173tih.fsf@collabora.com> (Adrian Ratiu's message of "Tue,
-	07 Oct 2025 13:17:58 +0300")
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
-	<20251006112518.3764240-1-adrian.ratiu@collabora.com>
-	<20251006112518.3764240-6-adrian.ratiu@collabora.com>
-	<xmqqy0poot7g.fsf@gitster.g> <87jz173tih.fsf@collabora.com>
-Date: Tue, 07 Oct 2025 08:58:00 -0700
-Message-ID: <xmqqqzveln5j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KEEq2d+O"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-8c0e2d1efd5so2227311241.3
+        for <git@vger.kernel.org>; Tue, 07 Oct 2025 09:18:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759853934; x=1760458734; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GXA0d58D5b+mEULe1PnK5/W7sekEHwrB9VarsKiR4Ag=;
+        b=KEEq2d+O97rRss5O57/0NHzGqz6wrfzLiIwDno7+dcP8KZnRdB4BagwaYLUP2Dm5Lp
+         CAbNRQgS9bbnnR2aSwuo8S1GqhEt/C1Eusu0C5Sohk8otMRyHXkTHqudWBnssHDeloR0
+         fXov+vfUKNaJmPaB49J7tQEU2PEZbkExyD/UegQqgwvpcQgGYxMnovZZdu+3t6wx3VrE
+         Q5pAps0GYqPMiCTFYIcU+3ZrdL15zj2+XZAxC3+hYsysWij+mw+cXi7mPLP3kHP1OUj4
+         RAu3K4qnUUqnK2hNJBQ+GCSQS0F5UEdQCRA+tztpnH5OK8pqWT8G9FJ0KdaXvKTwUQ2C
+         iL3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759853934; x=1760458734;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GXA0d58D5b+mEULe1PnK5/W7sekEHwrB9VarsKiR4Ag=;
+        b=XQgibCuECUNaVMrgT+pY/bnmCLWk2fjxMsW7DkLbNd89An19FuF4UpX6QEayH5oGf4
+         Wnw2H3k+eY53elcHYoEjufoM7yPGfBtqdLU1JEceQ7LzLVkFHPVqICl/eFk53H6OevQi
+         sttmlrIBPMofhkzPM13rZxE/bqnJOvHTK73zW4z1AKOTByEmUZFVdPFZm5zG+1GN3Ydy
+         3OrkxCodwv8rybeIirr6fJsJSZGbd/0GsNJXaQpXu8jdrRd0w/V0e5ld5W7ZjtdoI1FR
+         f9k8bYlThsDsQv0kBm3S/qyky+V3q2XwVW8n56mAAYijnPflzKvZKzT9tcfDpmjqFHsM
+         33sg==
+X-Forwarded-Encrypted: i=1; AJvYcCWl92oVHUsadQpPVbkaaf6gTwm7s9E+G5amFwatLF/Uz+J3VJuW7sFRkF8MuZfKiys4ElY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YynhdxNs3vI5yYVyVwNmgbs/le6NjZMiaADai9E6BLTQfs/b/4Q
+	YiMVB/igec0jm7CHp7EFi62KwA9txyriydY13Rr1uNAy6mTjiFCW8l0Y8U8IsQdsBi/6VWdonmJ
+	Nj5qh3IrEZZDySDpjnvKtk5u97RQUYz4etIcT
+X-Gm-Gg: ASbGnctNDWtytUWFilfWQ4Op/1nR9PEFoIkExUXn9MuCc4MLsBK4wkXauax5NWAqbxX
+	JnVw1GkCYhUNAO0L9uUDWYMp26MBHpJgTEJe1E1JbLaM9DMzKXpvGNWNMKdUQdizgLOjPkLt3cv
+	uLRceL9VzcpzsnzhjRyT//j3xcL2N9sdc/ByR3fzaQdC6GAs8xXl2hp85ur6YqPjTmCIhyYo8bu
+	oxNtzUaiy3j9kEtR/7NDj+Ko5L9YHQ1JLTmYLv8rMEmTvUJglelKfq4qKmJ41RWEg==
+X-Google-Smtp-Source: AGHT+IGYiT2DCkIEEyBuu4etyNpEQld4h5BWb5sa7NZzzp0lGaN5U79RmwRmldZHhO4qPt8eZIA0rbjKxo3IAKAsxxk=
+X-Received: by 2002:a05:6122:1795:b0:545:eb6c:c6bb with SMTP id
+ 71dfb90a1353d-554b8cef2a2mr22353e0c.12.1759853933972; Tue, 07 Oct 2025
+ 09:18:53 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 7 Oct 2025 09:18:52 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 7 Oct 2025 09:18:52 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-5-916cc7c6886b@pks.im>
+References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
+ <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-5-916cc7c6886b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Tue, 7 Oct 2025 09:18:52 -0700
+X-Gm-Features: AS18NWDS7EHCuUi3YXq-08oH0NqaWKmA2eBZ6wZl3_UaeS0C16hk0kMtKlIg8Q8
+Message-ID: <CAOLa=ZRdcXUQLXK1s1JLgZAcEYx=kT-eS6CMzCocJ9Oenia_Jw@mail.gmail.com>
+Subject: Re: [PATCH 05/13] upload-pack: convert to use `reference_get_peeled_oid()`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000976fba064093ec27"
 
-Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+--000000000000976fba064093ec27
+Content-Type: text/plain; charset="UTF-8"
 
-> IIRC the consensus was to avoid keeping such a mapping due to 
-> complexity, risk of desynchronizing with the filesystem layout and 
-> so on, so simple rules like the above, or even a simple hash_name 
-> might be better (see below).
+Patrick Steinhardt <ps@pks.im> writes:
 
-I do not quite see a merit in the above argument.
-
-You have submodule.<name>.gitdir that you need to make sure your
-"risk of desynchronizing" is managed anyway.  By making sure
-name-to-directory always goes through the single mapping, you reduce
-the complexity and concentrate the choice of the path to a single
-place, i.e. where it is assigned by munging the name and registered
-to the mapping.
-
-> Someone suggested we use something like .git/modules/<hash>_<name> 
-> when the extension is enabled, so we have a simple, unique and 
-> recognizable pattern.
+> The `write_v0_ref()` callback is invoked from two callsites:
 >
-> What do you think of that?
 
-If there are letters in <name> that you cannot use there (e.g.,
-slash, or perhaps <name> is overly long), you have to munge the
-<name> part in <hash>_<name> in order to fit the filesystem
-constraints.  And prefixing random string "<hash>_" would be one way
-to make sure two <name>s that happen to collide after munging can
-still be differentiated.  So I have no problem with prefixing or
-suffixing, but I do not think that syntax alone is sufficient to
-solve other issues that come from the fact that some names are not
-filesystem friendly and can collide with names of other submodules.
+Okay so this function does multiple things based on whether the
+capabilities are already advertised or not.
 
-Thanks.
+- If not, we propagate the capabilities and set the static variable
+  `capabilities` to NULL and also set `data->sent_capabilities = 1;`.
+  - We receive `ref->oid` as a zero oid for the hash algorithm being
+    used, we convert it to the hex format with `oid_to_hex()`.
+- If already advertised, we simply propagate the reference and if it can
+  be peeled, also propagate the peeled reference.
+
+Not for your series: but this feels like the capabilities should be an
+independent function.
+
+>   - Once via `send_ref()` which is a callback passed to
+>     `for_each_namespaced_ref_1()`.
+>
+
+and passed to `refs_head_ref_namespaced()`
+
+>   - Once manually to announce capabilities.
+>
+> When sending references to the client we also send the peeled value of
+> tags. As we don't have a `struct reference` available in the second
+> case, we cannot easily peel by calling `reference_get_peeled_oid()`, but
+> we instead have to depend on on global state via `peel_iterated_oid()`.
+>
+> We do have a reference available though in the first case, it's only the
+> second case that keeps us from using `reference_get_peeled_oid()`. But
+> that second case only announces capabilities anyway, so we're not really
+> handling a reference at all here.
+>
+
+Yup, this was my inference above as well.
+
+> Adapt that case to construct a reference manually and pass that to
+> `write_v0_ref()`. Start to use `reference_get_peeled_oid()` now that we
+> always have a `struct reference` available.
+>
+
+This is a fair solution for now. I think this also shows that these two
+operation modes should definitely be separated out.
+
+[snip]
+
+--000000000000976fba064093ec27
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 91fd7a25904a9737_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qbFBXc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meEtIREFDUC8rSGFHTmF3MlRvbFozdlNCaThXYjR2ZwozdDVldFM3dnp2
+SWg0UTVmU2pkcFBZMGRsVm5xOVU5dU5zVmNmTXpocGxlZFVZMUVleVlQaEtHVEpxZnd3U1gxCnZJ
+b1N1aDBUOVo5M0ZNdnlUVzVpRkN6SE9NUnVYVVd4aWJkTlhTVEFSOHJZci9LYWphMDBLRGk3UlJm
+eSsxVXYKMUR1dkVtYW9CV3FDZTl5b2EzRjR1T2Z0NW9wTitGQWlMQmF6U0FzRmltS0RYOTNpeC8v
+bVgrZG1laTF4QUVDbApyRmpoK0ExdGI4ZERpUkd4cFdpVDBxcEJVWk5FUzVzYmMxQWxXSjlmdnNG
+cGZHMGtTTmMxa3dRU3RBNUVaUkdECjRLS1VNUVdiQ3MvYVUxUFpvNlRJYzlJOEs2UDZscU16YjF5
+NFBDWE9hMGxMaHF4cTRIVWVUSG9rUXl4TElUSmgKOTExL2tZbnV6UkFqUUlXRTdqd0hxMG1hYmhP
+UWx4Z1pHZEhkQXplTFYzVGxJY1BWWlBTaytRb3FLdWxZWXg1KwpnYU5rMllIMU10WmxEUkl5ZnRs
+U3VZWnR0YXZkSGJFY0kyU00yak15dk9lYnhXQWJVVHBNQ3hVWFVmTW5weWRBCmMxem1SeXhzRTNY
+WElmNkxLN0d0R1BOcjVIY3licVYvTmJtNkRtWT0KPUw5S3gKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000976fba064093ec27--
