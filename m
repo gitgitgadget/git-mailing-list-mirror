@@ -1,129 +1,147 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD072556E
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 13:35:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3B72E03EF
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 13:40:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759844161; cv=none; b=IP0mTfd1ga8MSgkN+HGAJeonfE9mi/5l/fGX7gRcxPJSuUe3QvmT9kHxoNtzqnAyotzj05wBk8CR8NPIndQZ693rgfNBN+IBUbOFjVyFSxIJkuwKv0xJ2cEWACLGjHY14xEEuMLWbrjGq20idoXoZBoIZ2KwTybrHIcoFiMcTDU=
+	t=1759844408; cv=none; b=HMKKUl9FbcfxcZzyD+f6ePD1Tfm3TpDyfn8VWdNC4BXkDJB93SXjX5aHwmQ2j/RH1io8tIPGZdkoz9AkIG6hGaokAWlNCp+op8tFvmTE6kSiw36ksoJX5oxqXCjRP91pdh4dK0z1uRiOS4VX2LmR8eGDBc4DEBnJuhAWaJWLuTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759844161; c=relaxed/simple;
-	bh=6H5RB0E9tnhQx/sR110q5cjQDwChAC6188Ut8dPge4s=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=AFmOOI0Dxh5pR4Acd0FiCHOCgdLgdU5Qz36LBQDv0BnsDqbazXtT8BiFX0xs4T0h1p+QhCi/2izNZ0cSoqljvLXteswb502k0YAB4MVbEUxTv7tw/KQj6AWWDuyCEshhha2x62i3E1p/KLh9tzCzEQkvrX3Z19ivhA4FhJGs6zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=Y2H5F4Fu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k7xFGy4v; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1759844408; c=relaxed/simple;
+	bh=IrvX/WcJ6dj567vKop2JGcVQFbieDdcx76gDSPaDTnY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SJ5XP7xtmrZ1ndH3Lyn04SmHb4SOhaaOc2uF0jaG7eK4t1+jl2C+GfDCX35pEHAAtESYrs8GwDdcm+iMURYAnFlQoRu+cYXg5hx5QNOHjmDr7Avx4fuBm8mEkqCrcjfOeXe6piUhxuNeVbicfpQ8IXyiWI0ixCdDzfgG13KlXqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=yQy/A2cJ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=21+9K5Zx; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=yQy/A2cJ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=21+9K5Zx; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="Y2H5F4Fu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k7xFGy4v"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 87F147A0207;
-	Tue,  7 Oct 2025 09:35:58 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Tue, 07 Oct 2025 09:35:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759844158;
-	 x=1759930558; bh=6H5RB0E9tnhQx/sR110q5cjQDwChAC6188Ut8dPge4s=; b=
-	Y2H5F4FuO+vG9FTi3ObzAsk3NeQhHnzY3+Xov4X39s8DOXCUWjYDYtH+XT/Mpzqz
-	e5RrEb/9q08RSpILXHKpn8CrNWfB5gyPqYNDQSBsQrEotvCSdI79UxNCNZYIVm8z
-	qPRemu6GTsGxr3EIrky9h8qCsqtiLN+2oTrcIdEI+9ej0AuDmUmuTJUMmEU1Pwas
-	RJM9Lv78pPOtFay7BJOJZGnIi85UnHlciCQPrTQSzY7wT39/f2Js406/d3KWVhOK
-	hHJ7u5WDn5qOXWUwGvpMJ23upCf/XIESP34uvGfYrqkg0uDwCyjY2SviWvBaLqv/
-	ILmwFCFCTzB5pyPzbgRMSA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759844158; x=
-	1759930558; bh=6H5RB0E9tnhQx/sR110q5cjQDwChAC6188Ut8dPge4s=; b=k
-	7xFGy4v/j8DpoQ/IEzFbBmPCG/5hqqTsHC4rbCTHZ30MwHQ16JprhGSfFmi2XcR0
-	Z/9eXtTZAndoSWoDqgadPDvt6EbhEogkd0lMpuIJS/KnjMEQuGpPJLOmyPg2NxCa
-	MwRa2wHfG1bKGK8IyJECqeVTLg2U1Tl3ON0Uv/Ya1Sbl69DHZitFYyBK1DAxsOUF
-	uxmUohYT05klVFxLObETsqFAtK3EPZAOpE7sDtUjPknk8/lDE8Scxh4FfpBFFjH7
-	YCylph4/T6LuQHsCAjviwlaAltDMcH7Q5DLoS9EajkN1hhAVMNGFJuHcUwsaoGCf
-	DixbXBJv2Hp/glDCych/Q==
-X-ME-Sender: <xms:PhflaNWZqUfy5_X4QRIuafUw0hbH4ZrpdfuRkGyvMNzeXMFQ6CeCjw>
-    <xme:PhflaIaxVkXHOHICoAa_4BDB7iyxJ5xqJYuuhtDTLVjzEg1uJTSbwROYkh76hW5Sr
-    7Xcof3tnVm0JwIPzMY7Zk5XhCKwNaAeN4G-UTiFt4QmhwGtYekwSQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddtheehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfhulhhi
-    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
-    eplefhtdfhudeujeejkeelgffhgeeuheejjeeitefgtdeuveevgefhtdfgffevueetnecu
-    ffhomhgrihhnpegrughotgdrihhnnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepjhhulhhirgesjhhvnhhsrdgtrgdpnhgspghrtghpthhtohep
-    hedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruh
-    hgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgr
-    sehfrhgvvgdrfhhrpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:PhflaC5ZcCqafW2dRITOmzoklpsdsvQQQaGa8dnjILTY6mC2mMtSkw>
-    <xmx:PhflaNZ2_qEeLLVsY6rmiNNBmmr52seEHpVcFQou6mW-Bf6Xdi1-eA>
-    <xmx:PhflaBiaeu4Tp-dFoy1JesnhSzBoc6PEwLIjcu3ZnUTpjqWFnDMzVg>
-    <xmx:PhflaO-FwZI05lNyScpAfMR6Bjid16IbjoMPzRTDiRPGVrs31TmDQA>
-    <xmx:PhflaHPwcUWy7paMvUmszsXbtruUDAbPnXkbB0l1Jagh9eHY_TW9XhNg>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 1774B780171; Tue,  7 Oct 2025 09:35:58 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="yQy/A2cJ";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="21+9K5Zx";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="yQy/A2cJ";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="21+9K5Zx"
+Received: from kitsune.suse.cz (unknown [10.100.12.127])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 4360A33703;
+	Tue,  7 Oct 2025 13:40:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1759844405; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=jnizUh8+Xq98P+aGA/DMjaiUBGTAPH/iz2GKcoJ7s44=;
+	b=yQy/A2cJv3B228RYgvMvq6Hj2vhJePbrUCor8NMLNH6H1+EtHgnwfseTm1uHfOM7NLvkEa
+	GIBPOXoUkBmfUsz0Zn3M/uhYonZSLzzl5zbo3E6Ywk0PLhHutYLBIFpXpBxv/YQ/03TcpW
+	QTbx9VunPkxA+io5Y8r1ofTgSoIJLos=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1759844405;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=jnizUh8+Xq98P+aGA/DMjaiUBGTAPH/iz2GKcoJ7s44=;
+	b=21+9K5Zx3NtDduocsVGlSxaCIrhCF8ddz3SofLK+peHnpALc9qpfJqCIJGDHVcMDmU5duz
+	Oug3hQ1RV3B9lkBw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1759844405; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=jnizUh8+Xq98P+aGA/DMjaiUBGTAPH/iz2GKcoJ7s44=;
+	b=yQy/A2cJv3B228RYgvMvq6Hj2vhJePbrUCor8NMLNH6H1+EtHgnwfseTm1uHfOM7NLvkEa
+	GIBPOXoUkBmfUsz0Zn3M/uhYonZSLzzl5zbo3E6Ywk0PLhHutYLBIFpXpBxv/YQ/03TcpW
+	QTbx9VunPkxA+io5Y8r1ofTgSoIJLos=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1759844405;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=jnizUh8+Xq98P+aGA/DMjaiUBGTAPH/iz2GKcoJ7s44=;
+	b=21+9K5Zx3NtDduocsVGlSxaCIrhCF8ddz3SofLK+peHnpALc9qpfJqCIJGDHVcMDmU5duz
+	Oug3hQ1RV3B9lkBw==
+Date: Tue, 7 Oct 2025 15:40:04 +0200
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+	Luca Milanesio <luca.milanesio@gmail.com>, git@vger.kernel.org
+Subject: Re: When should we release Git 3.0?
+Message-ID: <aOUYNPD1o2_d0xYy@kitsune.suse.cz>
+References: <aNxivuJEnSHbQNdr@fruit.crustytoothpaste.net>
+ <E03F997F-1738-4CF6-B7D5-206183FA5BD1@gmail.com>
+ <aN1RFvz7uGPnepxe@nand.local>
+ <aN5-n_ArhQqaQZgt@pks.im>
+ <xmqqfrc1xqsp.fsf@gitster.g>
+ <aN6j7giOosGreKUW@kitsune.suse.cz>
+ <aOTrC8CRZm5hERgr@pks.im>
+ <aOTtPxsdzJLPCruk@kitsune.suse.cz>
+ <aOUT2Phklc_ZDhy9@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AiyWxa7EEqz3
-Date: Tue, 07 Oct 2025 09:35:05 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
- "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
- =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
-Message-Id: <80f61c1e-8e0d-4a7b-868e-876091595e3d@app.fastmail.com>
-In-Reply-To: <48224822-9f8f-4230-97db-a7fdefa557a3@app.fastmail.com>
-References: <pull.1964.v4.git.1759262314.gitgitgadget@gmail.com>
- <pull.1964.v5.git.1759777131.gitgitgadget@gmail.com>
- <10a9718421aa842573a2ba1ecf58d2cc46b5edd9.1759777131.git.gitgitgadget@gmail.com>
- <48224822-9f8f-4230-97db-a7fdefa557a3@app.fastmail.com>
-Subject: Re: [PATCH v5 2/5] doc: add an UPSTREAM BRANCHES section to pull/push/fetch
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aOUT2Phklc_ZDhy9@pks.im>
+X-Spam-Level: 
+X-Spamd-Result: default: False [-1.80 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	SUBJECT_ENDS_QUESTION(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.999];
+	MIME_GOOD(-0.10)[text/plain];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	MISSING_XM_UA(0.00)[];
+	ARC_NA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_RCPT(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[pobox.com,ttaylorr.com,gmail.com,vger.kernel.org];
+	RCVD_COUNT_ZERO(0.00)[0];
+	FROM_HAS_DN(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[5]
+X-Spam-Flag: NO
+X-Spam-Score: -1.80
 
-On Tue, Oct 7, 2025, at 8:23 AM, Kristoffer Haugsbakk wrote:
-> On Mon, Oct 6, 2025, at 20:58, Julia Evans via GitGitGadget wrote:
->>[snip]
->>
->> There's also a very terse description of "upstream branch" in the
->> glossary that's missing a lot of key information, like the fact that the
->> upstream is used by `git status` and `git pull`, as well as a
->> description in `git-config` in `branch.<name>.remote` which doesn't
->> explain the relationship to `git status` either.
->
-> nit: s/either/, either/ ?
->
-> I think that would flow better given the long distance between the last
-> punctuation/comma and the end of the sentence.
+On Tue, Oct 07, 2025 at 03:21:28PM +0200, Patrick Steinhardt wrote:
+> On Tue, Oct 07, 2025 at 12:36:47PM +0200, Michal Suchánek wrote:
+> > On Tue, Oct 07, 2025 at 12:27:23PM +0200, Patrick Steinhardt wrote:
+> > > The question of course is how to get such roadmaps. The easiest way to
+> > > do it is probably to gather a list of known projects that would be
+> > > impacted and just shoot maintainers or representatives of those an
+> > > email? From the top of my head, that would include:
+> > > 
+> > >   - Implementations
+> > >       - libgit2
+> >           - pygit2
+> > >       - JGit
+> > >       - Gitoxide
+> > >       - go-git
+> 
+> pygit2 is merely a binding for libgit2, so I didn't include it in this
+> list. Same for other bindings like git2go or git2-rs.
 
-Is it the norm in this project to provide detailed copy editing feedback
-on commit messages like this? Of course it's important for commit
-messages to be accurate and to explain the motivation behind the
-changes, but I'm surprised by the attention to commas.
+Unfortunately, bindings do not automatically get the features of the
+library they wrap. AFAIK libgit2 has experimental sha256 support and
+pygit2 has none whatsoever. Altering the bindings to include sha256
+support may involve significant design work. The native API may differ
+significantly from the C API.
 
->>
->> Since the `git pull`, `git push`, and `git fetch` man pages already
->> include sections on REMOTES and the syntax for URLs, add a section on
->> UPSTREAM BRANCHES to `urls-remotes.adoc`.
->>
->> In the new UPSTREAM BRANCHES section, cover the various ways that
->> upstreams branches are automatically set in Git, since users may
->
-> nit: s/upstreams branches/upstream branches/
+Both API may get broken as a result. That is pygit2 and libgit2 may
+never get support, and we would need libgit3/pygit3 instead, or it may
+vary depending on the language.
 
-Will fix this typo if there's anything else to address (or if folks think that this
-is worth a re-roll on its own, not sure what the norms are).
+Thanks
 
+Michal
