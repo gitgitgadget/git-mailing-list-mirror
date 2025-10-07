@@ -1,112 +1,142 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06B2244671
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 22:07:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966F6246BA8
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 22:15:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759874832; cv=none; b=rjY3koK0LKzAX2PmI7MuU+yaSDsbWie0NGbEMKfCqPJJ1NZwax1SjE3AKyv10qywvJ8YCHYwxwsDAJk7sAYRj8qcoT9Wm4TsjjBUvcVwhqZqBtY5qKF7+cRbSZwFeT2870f0BwzXDSTmYX8rw6Hh+T3YfUjeDF9qiT+Ot4C0lsk=
+	t=1759875318; cv=none; b=ABdUUZRw9cVB4FSYhR/eDbzTWidjLPxY5aqRgXpU9boHlfTUzMVomcb2LP8pRc8zB+eK5frmeHxV1Qn163QTXnS2V/BWQisKEecWzRmMudeM4zyssNx5MjJTFeHWXvEtbatFnHNYAPTeKyQEXPzim0h9rrkrOevQtjlBR5K5rSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759874832; c=relaxed/simple;
-	bh=R40wMZm2p+nhIwAXyICSoTIPKjuwvzfrF6G7Afrvrq4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ubzhuWYZS+dlMwQH3AHATQwRSjj+3HQFRojtmShcPEqldzsV+QHJca76UMbKrTZk10AyMtAaSua+t5NOTabzByiJtA/DAKDj7F6sQ50eI7EezgfcMVXflSPGId8XPXG/DrEcRVDHOpoKSj0hcv/C/PAZkjncsnqLLfX/75xoBF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=LaExbL5B; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1759875318; c=relaxed/simple;
+	bh=t2pU5e5DMPXAMAjXKufNKpv1CNrEoJpDB3ETZ3EVleQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nnu+WgSfOFshzq/xSm7yfXZQTHr60lqyw9iUvGbpigK795Gtt6Gru7YhOq0c1Z4KB/z4I+sChZus81yDHap9DR+KD1Dvq4ZrohPGiK38Z+19sJRx8clldKJcRUBqv0unXgcNmwTPpS9sAkwC72KhcSuvhQDs03T0xUWsFzcDjss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gg9Ue0yI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZewWqafZ; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="LaExbL5B"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1759874822;
-	bh=R40wMZm2p+nhIwAXyICSoTIPKjuwvzfrF6G7Afrvrq4=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=LaExbL5BxNjgBJwUC1H2QytysOgGkljkESzv8AIWpGhTJQwNTJz2MTEi8w0fpryMF
-	 9TeewSBTPXmCcRxZCZilBjNzfjIZYSZ2cXoM8yeDSEDVNw4jgye9iL7vkVQvrT3Fjq
-	 LggAX09VjJ5pSBGN5j0Fg18jm6w8RNgY/0/KQg4WWKRW+3+oHYWFAY8MI8Pqqb+z0b
-	 JPWOSlhX+32kEFdhbb//oVpjzUX7fS1XAWHbNaBfHtXe6rPw3/u7pEB4asqT8xfRhP
-	 tFr3SF+WDPjiYgOCAQB5AJHocv+YJzTu+toleaHEnQkAJLY8r7iJfx2ehxvPblPEsV
-	 iGJKITtui+B8ZB3r/dCxL7WAoR5pyUI0+OEjgoOFWVv1Fb+Yh+tokoydZY/PfVwf40
-	 Tcw3ffuUf9E08mAWuYlZ7IT0F9L+I5uaPtblg9Pdq0qahetdEgWN4JVJHgeflsWFHj
-	 1MgGtR/b9+iejWDBUGEdRvz2M80suSG1f4dnd2UxgNH/cVbtB2r
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:225c:7da:a6d4:350c])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id B8B54200C6;
-	Tue,  7 Oct 2025 22:07:02 +0000 (UTC)
-Date: Tue, 7 Oct 2025 22:07:01 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/6] ci: check formatting of our Rust code
-Message-ID: <aOWPBZg5MXzGcNmU@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im>
- <20251007-b4-pks-ci-rust-v1-2-394502abe7ea@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gg9Ue0yI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZewWqafZ"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id A439F1D002E8;
+	Tue,  7 Oct 2025 18:15:15 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 07 Oct 2025 18:15:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759875315; x=1759961715; bh=HETnxAsvgu
+	N+VvBgm/sH9JJ+j4lk1ti+r240yV8Tebw=; b=Gg9Ue0yIXCTA0KZUCK8HCNdjxk
+	k4B4YTTGKFobTM5W/DQzuvX34aVN539qkEZX5CPZPIPLy5UUcqJOKdRZhP69L0v5
+	quhtGHMLJXY0C5G8/6I667RktHQwk+vJnNRkS+pQYWGnyqq/xI+ASUw+Wc4WzgCF
+	yUPsXIbwSiwQGEeIGcsnJL3DkHPX3aa1OkNr5VD3ZSjHvo+5ntQMls8Ldhi6GVfv
+	cYVH6Onghdt/MCplufam77rxDBR/N2chl2JdJyrHHdEdr5goVAydJI5ZL9sxsohD
+	uXorhX5CHOG7ShvLQuddOhSAOd9rEK+gxfc9InJyftI+grMq39AdspBd43dA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759875315; x=1759961715; bh=HETnxAsvguN+VvBgm/sH9JJ+j4lk1ti+r24
+	0yV8Tebw=; b=ZewWqafZtas5uyD0kfw7Y4oJMTRby/W3dWGBWboc6fQ96alN82c
+	+2CuxPHWdP4e4H54wEKL02zHaDwOx/qhydRkxc9821cyn/RMnaxI8SNseRHTmQhS
+	3xvYfKODaB6hkogjhtvgK6/1Au4wlYzYng+2dGiRI477qO4seQw8932Yu3dZCa1J
+	yZwwwDNV+V/8pv5VOz8rv67fIMIQoKASdsdw/BnoCKEeedv14whm3up2ZUk9TW75
+	NeSHUfGyu8JlKafHeQZQ/76DiWDjWUEXryIXD2cFMQMFa5p90RN7DZKRa4B8CDib
+	7B3guNLEQRBK8rpn2vV0eQKb9K8NuBR6rGg==
+X-ME-Sender: <xms:85DlaFeu8LEd7JOJpcPEp0XH7FymEKGg1B2ca6jg2PAOp81c00JbPg>
+    <xme:85DlaKpcItyfE_4iN9MgO_Glgm8jm5svwOLKH-9j-yRcoce-9fewmH5zBVdujtMRN
+    ExX8uszHTsh-8RmJPxRobTxwuaiaV9eAXwpod4tKdEakzoOlHi6cw>
+X-ME-Received: <xmr:85DlaL44GKco1Yrxh3MrngKswjKC9RwpY62oGqLa1j0PnP45-DkflXAsxkIcCm9nYOW3PIKPF9ZpE-PB_cQiVusRoceeCwyYIiqw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdduheelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprghhrghrmhhonhesshhighhnrghlqhhuvghsthdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:85DlaIpgPeTDkJY79Ay-9fAecVhhUfFnbc8c5yVl2i5gjvKE2QHidg>
+    <xmx:85DlaFiSd2jHPtBBh23vUHdxXZpZkY-01YKu_kL5VoxgjOd1iyX9Cg>
+    <xmx:85DlaKLgFSy4lBsAniIhzpqHJj7d4wcW4yft6v-qZIklc-GaF-lkFA>
+    <xmx:85DlaNA6TWzNFTD7CUCRdogIU3f9L7v8uzVJ3a4rqFEspb9cXqxyJg>
+    <xmx:85DlaMRzxjCnN2mMqa2iJdJSfyeYqkrnZmIfYVB9DAjVlsW5PSfpWd0V>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Oct 2025 18:15:14 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Andrew Harmon <aharmon@signalquest.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [BUG] git clone from bundle with --all does not fetch all refs
+In-Reply-To: <BL3PR13MB5209A87037FC19CBB9B2916EBBE0A@BL3PR13MB5209.namprd13.prod.outlook.com>
+	(Andrew Harmon's message of "Tue, 7 Oct 2025 21:11:43 +0000")
+References: <BL3PR13MB5209A87037FC19CBB9B2916EBBE0A@BL3PR13MB5209.namprd13.prod.outlook.com>
+Date: Tue, 07 Oct 2025 15:15:13 -0700
+Message-ID: <xmqqa522icjy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="elc+gQ9sMWR/fw4+"
-Content-Disposition: inline
-In-Reply-To: <20251007-b4-pks-ci-rust-v1-2-394502abe7ea@pks.im>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Andrew Harmon <aharmon@signalquest.com> writes:
 
---elc+gQ9sMWR/fw4+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> # Problem with git bundle --all and git clone for air-gapped
+> transfer to offline environments
+>
+> ## Description
+>
+> When creating a bundle using `git bundle create --all`, all refs
+> including `refs/remotes/origin/*` are included in the
+> bundle. However, when cloning from this bundle using `git clone`,
+> these remote refs are not automatically fetched, making many
+> branches inaccessible.
+>
+> ## Steps to Reproduce
+>
+> 1. In a repository with multiple branches and remote tracking branches (e.g., after cloning from GitLab/GitHub)
+> 2. Create a bundle: `git bundle create repo.bundle --all`
+> 3. Verify bundle contents: `git bundle list-heads repo.bundle` (shows both `refs/heads/*` and `refs/remotes/origin/*`)
+> 4. Clone from bundle: `git clone repo.bundle cloned-repo`
+> 5. Check available branches: `cd cloned-repo && git branch -a`
 
-On 2025-10-07 at 12:36:30, Patrick Steinhardt wrote:
-> Introduce a CI check that verifies that our Rust code is well-formatted.
-> This check uses rustfmt(1), which is the de-facto standard in the Rust
-> world.
->=20
-> The rustfmt(1) tool allows to tweak the final format in theory. In
-> practice though, the Rust ecosystem has aligned on style "editions".
-> These editions only exist to ensure that any potential changes to the
-> style don't cause reformats to existing code bases. Other than that,
-> most Rust projects out there accept this default style of a specific
-> edition.
->=20
-> Let's do the same and use that default style. It may not be anyone's
-> favorite, but it is consistent and by making it part of our CI we also
-> enforce it right from the start.
+> ## Expected Behavior
+>
+> All refs included in the bundle (both `refs/heads/*` and `refs/remotes/origin/*`) should be accessible after cloning. Users should be able to see and checkout all branches that were in the original repository.
 
-Yes, I think this is the right decision.  We _can_ customize it if we
-want, but I never do, even though I don't love some of the policies
-(like the cuddled elses), since having a fixed standard avoids all of
-the argument.  The Rust code I'll be sending in within the next few
-weeks already uses rustfmt.
+If I am not misreading the scenario presented, then this expectation
+is wrong.
 
-Even if we did decide to customize it, I think there's enormous value in
-just being able to run the tool and accept what it outputs, saving us
-enormous amounts of time not having to discuss style nits.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+> ## Actual Behavior
+>
+> Only refs under `refs/heads/*` in the bundle become remote tracking branches. Refs stored as `refs/remotes/origin/*` in the bundle are not fetched during clone, making these branches inaccessible without manual intervention.
 
---elc+gQ9sMWR/fw4+
-Content-Type: application/pgp-signature; name="signature.asc"
+This is totally expected.  Think of cloning from a bundle is just
+like cloning from the original remote (limited to the refs included
+in the bundle, of course).  Local branches of the remote (i.e. the
+ones that corresponds to refs/heads/* you saw in your bundle) become
+your remote-tracking branches.  Their remote-tracking branches are
+not even visible, unless you explicitly ask "clone" to.  Which means ...
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
+> ## Workaround
+>
+> After cloning, manually fetch the remote refs:
+>
+> ```bash
+> git fetch origin 'refs/remotes/origin/*:refs/remotes/origin/*'
+> ```
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaOWPBAAKCRB8DEliiIei
-gVdpAQDMu8+QazjQ+O3LjUqjSHDOg5r3LEfBC+yP3EWDzS9MnAEAoK1DRZOf2nyr
-MSkDoz1s4tx99RvwarqStAnMXzdOfgc=
-=PFly
------END PGP SIGNATURE-----
+... this is not even a workaround, but how you would ask for their
+remote-tracking branches.
 
---elc+gQ9sMWR/fw4+--
+Or 
+
+    $ git init && git fetch repo.bndl "refs/*:refs/*"
+
+which is like doing a mirror clone ("git clone --mirror").
