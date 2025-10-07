@@ -1,117 +1,115 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92202155389
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 17:41:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759858887; cv=pass; b=FXw4SmQYQCTFY7RtqcllfFjmmAOJ4AuVJgo8mXqyAGCXNdexNEfHQRBw3xGHoEFm5QO6tD9Ed5sZwWUB9lURqWF3nXjh7DEbE3zg2YInuI9OtgT7bZiiJPFoIIYRIWjb8cz2GRb8dyo1zU3LN9xYhKqcboy8Zz2OiFVqK4/zv/s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759858887; c=relaxed/simple;
-	bh=AhcJ2lFZcgrg021Hvo1x7tSIasbAR+p8JV+UYjNEWME=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qE3Apm/M7hoik+s0TthVSrtRBwDLWIgVPqw5gVT0YX8/A2rz/HKKdsA0U4cKkUcLWPC1XIBFmjNoYAtsMBg7g9AwINAPBRaRQejQeesHBABVqAiJZ6Ao44oC1ArmWbYc5wqhCnVeIE8/3RSevarGXRO83rNnsrS0U4Mo4yl/mbI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=dk2M2gG8; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EACE1662E7
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 18:03:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759860217; cv=none; b=ZgmPJ0lv1uDmIZvcKi7kVy7BHECK7MjWbEypFvp6qC0nlKW9TWfXCS/t3MIADG2yKawNUhXoa14rVtrJ4Rl+OEVmRyWPZNroXGDR8orlsArmZ22kvM7K6V6K5kkC1ge2MDOanDIjV4T1t6nrA++OLxFLhXBMm4PxET0tdug8hYQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759860217; c=relaxed/simple;
+	bh=l4EOzJJA2MLZysUGYrMJtYx7wiT3ufbvZN36nstTLkQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FKvWDcg1JA2nxjzkXexgzRV0vIddgf/Rx4f+T3D2AnPbhDW8gd0LbrV2a3WikAQ+NwUNrQlQc1jsqOEy29s38o7OvhK5/AN3At2M5mRmO8QJPwGtfDjW691aX3iB6rZ5VL5HHT0VYa+9EQw53N1LpQzcGMV9l2b9QPpfYIiy+VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YU34drd3; arc=none smtp.client-ip=209.85.217.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="dk2M2gG8"
-ARC-Seal: i=1; a=rsa-sha256; t=1759858869; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=dzrR6lHHsSsRoCKPM04boaRmEYhpXE3xe1J579muMCkJ+n6C9HzJjPRMIBLNxfMr0kp+3rmhR9MZdaU+6UXh4Av29j1ggOmHCpbUFKCJRDBG2SAUo3m5rxXTrkW/ZLg+Y7+P7UmstvrLOYhTyZntIgs851diLAUR8sTOr4wn2+s=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1759858869; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=ZMywTciLpqLK9vh8eR56SVtQRmBKaHFqfXhtrQegIMY=; 
-	b=UbkdlRSZhZg++Yh0jHoBgQxc2XDE6uuKL1jTy6f8ArZXT3IKp7qjktf89T71Oy/jGMjOoLSkEWOacya2BWgRtzjJuux0Q5DaDhAE/ofT3AVp+w/bvTQo3YfuxiEcvEtal3aYIdBhC1oH0EDkR4BFPnPvj/3LoQpQhHDt3iW8O1w=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759858869;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=ZMywTciLpqLK9vh8eR56SVtQRmBKaHFqfXhtrQegIMY=;
-	b=dk2M2gG8cJSXX4G6TtG5HkDNzxwc5hCdI265kWHZpB/ILFVv1+tNvF3wH4aSwuW4
-	5BrnYwuz4D/WTynWmtVNwtG/3FT+TqZ2LFP0WN5H9WZhVfWAOfC17s5GJAydDl/ciCN
-	0aueXyzGnPMADVewaM5NQZxVZcpnA+nEQvEk0BSU=
-Received: by mx.zohomail.com with SMTPS id 1759858866498781.0752848622795;
-	Tue, 7 Oct 2025 10:41:06 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
- Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Aaron
- Schrab <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, Patrick
- Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>, Ben Knoble
- <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 4/5] submodule: encode gitdir paths to avoid conflicts
-In-Reply-To: <xmqqo6qik4r9.fsf@gitster.g>
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
- <20251006112518.3764240-1-adrian.ratiu@collabora.com>
- <20251006112518.3764240-5-adrian.ratiu@collabora.com>
- <xmqq347wq87s.fsf@gitster.g> <87cy6y4xb4.fsf@collabora.com>
- <xmqqo6qik4r9.fsf@gitster.g>
-Date: Tue, 07 Oct 2025 20:41:02 +0300
-Message-ID: <87347u4nkh.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YU34drd3"
+Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-5521a6c6af1so525520137.2
+        for <git@vger.kernel.org>; Tue, 07 Oct 2025 11:03:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759860214; x=1760465014; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Nz5k0NTZ4axG2nIBAIsXyeNI6i0WY4Kbqy7AaFmAB0I=;
+        b=YU34drd3IoiUSauDGY/8OZYtsmH3dmvJtb33yR4bVGR5MOk+OSDN4l6J5NAghEuTYn
+         30HlL0sMqyDpIvCLTiJqngZAlbRdiny9m/rbzZilPXN3XPERpg2xNEtTUG57IepH1owW
+         AYD8EvJ121XIax+7FvVRd2TBAKJWinWjq4uXYVAp7MYOZs7vPe9T0vVr7Lowdo4NY4Jm
+         V1M9wkrRg+6fohCSj+I9YXXTDitVqvyJgxbTr35pvVB2iLHmDGBiRr+wwX/hrapNoO3G
+         nv1CzyQEMYoNbxVTcMnSxkzeGwLLtZVc75fugi9O6OTHHLbRiQ38lT4O6efCcLPQZEpp
+         F6Jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759860214; x=1760465014;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Nz5k0NTZ4axG2nIBAIsXyeNI6i0WY4Kbqy7AaFmAB0I=;
+        b=gsQewLrNHQ4nVPwawmN6OVeYmjstsnzx9RlNpQj4dPMtZ1471/Low1lLosHZuOu4jD
+         tUYvRIhYJrQJ4SKzRg4ODBPT76LZYx+B4FaUgCS4E6N66vfeuw4Is8PvxThbHYssjNvr
+         L7xJ+wriYvGRg0Uek3DifZjmiX04BhhnQOHP4A1TqF0/oL3PbIKQMgqlR3kFMJtU6FA/
+         UNijML8jLiqzEHAoW2v4AqtDzrRFHsEt6izCUhOFgo2g8AWikbInd4LxJ79tIhrgv5AD
+         Sn2CdNzbqx7XWQvE0YELp/KIdZRycIli9dufD8m0BcczRYOe15k/k1xn7NcivICGcjkJ
+         8rcQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVELrazv1BVH2QyIGKQv0Q4YC+MP3VHGG2eCKJipCPqHs8NaQO3wLgly4rri9Mmu0PhWh8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwOXmuMHu1W2qhLyQWr7Yijyn9KKx8Y4EgE+P6Lei+npPaXiJNa
+	O/7h0ShfveXdgDuWJQPl/5TAY7bTPjtON151hT66olpUvcu10wOpbCof/T3RZqtbeh+evsTU/aV
+	sXMCCGppx5K/3ccVJQ08t2Sximo7HKOk=
+X-Gm-Gg: ASbGncvYzv+EO5g+adEbzR583QoKMPkfI6DaUCGCeDTorjRjMv5wH+lYh5Ey7hg0q9O
+	kXnu7PRkP8aIgjMhgrJ3MUTbjgrJjZ0XFioXkZakhO2rZoia1psLrIOzKqC/Hl2QJJciYzh0HPy
+	r2BzUD6W2VbYzUWTscW3RfJOYuiSYofMn2285+7paFH8VKSJNF1kCDkr9umyBf1/yolSrCO4KoF
+	xJafMrWntDNLCDX3fGSKtycSg4S4ysHuLOrW6NyvXz7fqEz46uGlmY5q7zVgfq/hAT3OtlPPt4=
+X-Google-Smtp-Source: AGHT+IFmV+BiepC3D4vVL1yTMdnHb9r4s/0W2lLgfdvmqwe8QmWgmAzfEXjEH3E4M770QKTbH7mcsIq3ZK0j6TbqdNE=
+X-Received: by 2002:a05:6102:3a0c:b0:4e9:c913:2c9e with SMTP id
+ ada2fe7eead31-5d5e22152edmr74932137.1.1759860214052; Tue, 07 Oct 2025
+ 11:03:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed
-X-ZohoMailClient: External
+References: <20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im>
+ <20251007-b4-pks-ci-rust-v1-2-394502abe7ea@pks.im> <CAPig+cQ7xJky+F=g=NMrN6BQfP+ZV2KF4RF2eLqtULKgMTR5_g@mail.gmail.com>
+ <xmqqbjmik3y9.fsf@gitster.g>
+In-Reply-To: <xmqqbjmik3y9.fsf@gitster.g>
+From: Eric Sunshine <ericsunshine@gmail.com>
+Date: Tue, 7 Oct 2025 14:03:21 -0400
+X-Gm-Features: AS18NWB6hDU4yYiWeCBUUabaQayv2Ylq52cxAKVcLhxoxpKFGcM4nQzrz3Jd5sU
+Message-ID: <CAPig+cRvugLP63CYUXw7pf-7obErQYenrVvNeSYhegQ57PQ8KA@mail.gmail.com>
+Subject: Re: [PATCH 2/6] ci: check formatting of our Rust code
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	Ezekiel Newren <ezekielnewren@gmail.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 07 Oct 2025, Junio C Hamano <gitster@pobox.com> wrote:
-> Adrian Ratiu <adrian.ratiu@collabora.com> writes: 
-> 
->> I will percent encode the upper case by modifying 
->> is_rfc3986_unreserved(). 
-> 
-> Again, do we really need to encode everything?  We need to only 
-> when (1) there are other submodules that would collide with us 
-> (e.g., by being only case-different, or by having our name plus 
-> a slash as the prefix of their name, make us overlap with them) 
-> or (2) our name is not filesystem friendly and needs munging.  A 
-> letter being in an upper case is not a crime. 
+On Tue, Oct 7, 2025 at 1:38=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+> Eric Sunshine <ericsunshine@gmail.com> writes:
+> > Later in the same thread, I wrote[2]:
+> >
+> >     Project guidelines have long suggested 80 columns as a desirable
+> >     maximum not only for C code, but for pretty much all other
+> >     resources, including shell code, Perl code, and documentation
+> >     files. This suggested maximum works well for adherents of
+> >     80-columns and (presumably) hasn't been too onerous for developers
+> >     who use wider windows; at least we haven't heard people clamoring
+> >     to increase the suggested maximum column limit. As such, it does
+> >     not seem far-fetched to expect that the project guidelines
+> >     should/could/would also apply to Rust code.
+>
+> I do not see a particular reason to lift the 80-column limit for a
+> specific language, whether it is Rust or AsciiDoc. [...]
+>
+> Will it inconvenience wider Rust ecosystem when we get big (meaning,
+> they have to work with our code) and we as the project norm use
+> different line-length setting from others, perhaps by looking too
+> different from everybody else, or something?
 
-Right, I see what you mean now.
+As a general answer, I would assume that third-party projects wanting
+to use Rust code from the Git project would do so by importing one or
+more "crates" that the Git project publishes rather than importing raw
+code directly from the Git project. In this case they never deal
+directly with Git's Rust code itself, but instead interact via the Git
+crate's public API.
 
-The problem becomes how to detect (1) and (2), for example: a 
-specific name is filesystem-friendly or is case-folding happening 
-or not?
-
-(ext4 for example can be mounted with casefolding on/off)
-
-This is not a trivial problem, however I think it is solvable. We 
-can write a few runtime tests to detect things like case-folding, 
-to decide if encoding is required or not (better ideas welcome).
-
-On the other hand, by always encoding everything we avoid the (1) 
-(2) detection problems. :)
-
-> 
->>>> For now url-encoding is the only option, however in the 
->>>> future  we may add alternatives (other encodings, hashes or 
->>>> even  hash_name).  
->>>  Let's not say "For now".    Choose a single encoding that we 
->>> can use forever so that we do  not have to upgrade 
->>> extensions.encodeSubmoduleName with suffixes  like 
->>> extensions.encodeSubmoduleNamev2, 
->>> extensions.encodeSubmoduleNamev3, etc. to cover our earlier 
->>> mistakes and force renaming on users.  
->> 
->> Understood. Will drop that idea. 
-> 
-> If we are to consistently use submodule.<name>.gitdirpath as the 
-> authoritative collection of name-path mapping, then the exact 
-> algorithm to derive path from name can be improved over time 
-> without having to worry about an old submodule whose path was 
-> computed by older iteration of the algorithm colliding with a 
-> new submodule whose path is derived by the more modern 
-> algorithm.  So I do not mind to make ourselves aware of the 
-> possibility that we can tweak and improve.  But as I said 
-> elsewhere, I do not think we need to even say what exactly 
-> algorithm is used to the end-users. 
-
-Got it. I'll do the submodule.<name>.gitdirpath centric design in 
-v4 and will not mention the encoding algorithm to users.
+If a third-party project does want/need to import some raw Git Rust
+code directly but has no plans to actually edit the code, then there
+should be no problem. If the project does plan to edit the imported
+code and periodically update it from upstream Git, then it's a bit
+more onerous, though perhaps not so much so; running the Git upstream
+code through `rustfmt` before import into the project is one simple
+step which can easily be automated.
