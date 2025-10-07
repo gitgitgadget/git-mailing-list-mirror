@@ -1,136 +1,116 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A381B2DEA90
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 17:20:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759857647; cv=none; b=sOQhcnNhnIiusMgZ2iiakAVJmcGN0AJLaTCpwymUpKV/MHC0ghJFoqJyF8SmC98mx6UyjBqVaCRa4QFOAQyb19zoT/NBthPmwptg/LdszF794++TVviVs/1h1wa1X9EJjAR5j7V/k2jOAfnfn4JvcXBDrk5t4CfiQhWZ1K7GW8k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759857647; c=relaxed/simple;
-	bh=XuNCLIMEauFE68NejCFeA6JTnuOE5YVSe04F+OEBR24=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DD52E1EFD
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 17:21:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759857716; cv=pass; b=hqJoaRKb13YrxS1mvJj27i+EuCMkkK9qsVcKG4nqlfZkOEEavAlrw5DyVnS0mhpA0bycYUAiTVNL5QnTGRzRngNh8E3NrWC0B0YPIFy7yhPcaVNULtbXd5fRBsoKfipcjZWIQePwwxBX7sqJluHL44FVdbX30e4HTzfLSVzlSm0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759857716; c=relaxed/simple;
+	bh=5/4CzbUx31XJXs4GtLc7lZyyyPuRpoiKDfpRrQuZT14=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hpKLntK+ynrQYAMyvnChN8owCgtReO4mJO6sgo8q8Sgn/OPdjK9ADy6x9iWYyNKnf2Sqoj8sfvb5ebz11hfspbE63IEycIayN+du7jnoeCyEBl1prbF6MBVYFx9/HYJFAGV5tBI1rmQt4ReuVtElZDHnfI2Rty/2b2StQWyALSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BCKPem8I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YTncXtX5; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=NZkNpDXsMTIzaFTFLR2y8GgUJ2SwcKBUhorkQXBobwzbbtXGPuQt3RbZF+QMAScr+ST9sNA2Gd06RYFfSAwFrUOVA8lEozJ5AkpAJil873fMZcIHUf0BJMw04b0O+vs6YnMlQ2aSzBJ1ceniL0PcRqv+Pn9bdKSfXYcmVqZw42o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=e0pty22/; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BCKPem8I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YTncXtX5"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 824121D00233;
-	Tue,  7 Oct 2025 13:20:44 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 07 Oct 2025 13:20:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1759857644; x=1759944044; bh=UfC4pA/FS6
-	QnRifiJMj5T1oOpbip/v119VFIl36QMKk=; b=BCKPem8INXdosP6w3ywbd66gQI
-	QAPmaO3yr7PK+4bQqYnVueVJLVpM+xzh1pRxWYZwNikC6Gdego87+taSKOdFIWHQ
-	9NGCIUx0N7JtKVYrWKUWrobF3nAxo4QxHMm+LHkNwxzEFPXOYn9dGqxQcymcRErg
-	cGJSsToG2bXu0tdwrnOemewi0a+g8mDBN1nVzDceOlsHQ74WUNU0GAr53a2WqfYg
-	E0t1QF8UchM+8LfzYvy1BpsxxLuA78y/m7gyl0e4b34qqKpnJlo3VGFUunWYYqiv
-	aM4EEGqe6nj5cDOqlUSnt9ZTxffIizarO9T0Kls392RPLBzgZ0wAqMKwFCUQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759857644; x=1759944044; bh=UfC4pA/FS6QnRifiJMj5T1oOpbip/v119VF
-	Il36QMKk=; b=YTncXtX5ZDsfEP643M9pEHqFGAlAevwLbuqTZfVmgvttlmTu01e
-	q88O2dUdFdktnwYq3m581qsbuKp537QWAt9p8x5BIQCU/qA4xxJHh+j2+q0VGKpz
-	92xSc/hGxzpIMICluYXZxeJYQi7scdBkw9hrEEta1anWIbH5AlGdhqnQ61V7z1OV
-	ooM7NdPdaqqIWuTvQeT54biLPIewtsXrELTeNexPD5xqkv80IbCXT7KX/vdG3P1H
-	xGjbyKPXYWAjvrDav9y6exNttZuP93HNh5goEZUqlVaaSGpgfzGeU1tZMH2DVvL6
-	oNz2IE0NHOV9Uer0r2sZvyx9Cs8lHMQmHoQ==
-X-ME-Sender: <xms:7EvlaJ4vm-EW2cp1hLkjKxZXUqoMiV68rXEnQ1v30TAd-NYcmvFUzQ>
-    <xme:7EvlaCultCIPdA2MeDcjKcjitTP2HyEmJfgPTssNnNi4M_K95-rqXn4puhjoL7fUp
-    lMLed6d4NWNxbe8__GAC4ooRwLNqZc-haoq4nhD5EQzbseqbqyV>
-X-ME-Received: <xmr:7EvlaL0uRGmGpOEtwg2vaMrGp4ztUCO_f_CTCTU2K6k2BY7tAYCOGucUOKs44tV8ljknsc0vO_2W1nSnICPa_wsYy3RDFGKDwGgR>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddutddtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhlrggsoh
-    hrrgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtphhtth
-    hopehruggrmhgriihiohesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphgvfhhfsehp
-    vghffhdrnhgvthdprhgtphhtthhopegrrghrohhnsehstghhrhgrsgdrtghomhdprhgtph
-    htthhopehjrhhnihgvuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhk
-    shdrihhmpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomh
-X-ME-Proxy: <xmx:7EvlaLrx70LMEqv6jIHDrYks2F767g5B71ZlForkwJ7uX7xrg7TrVw>
-    <xmx:7EvlaLKeWX1Vk8LqPmhED71hV0Eu36MMLfWWO7WhrX-Ov4ao0CPa7A>
-    <xmx:7EvlaHRP07bkPPMDEWs1P_G9w5aTTtaGUwLiyDOWH7b6v_4kgXoXHQ>
-    <xmx:7EvlaDMa5FF-2a4xjUyFqNAmjyxcQ0jydAHmGIIXdcWoUyFA_Fgnnw>
-    <xmx:7EvlaA2sYBE_wWtfl4FysI58xkMn0vCuGeVgQ0tDJIkreZww0j8b_2Sz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Oct 2025 13:20:43 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org,  Emily Shaffer <emilyshaffer@google.com>,  Rodrigo
- Damazio Bovendorp <rdamazio@google.com>,  Jeff King <peff@peff.net>,
-  Aaron Schrab <aaron@schrab.com>,  Jonathan Nieder <jrnieder@gmail.com>,
-  Patrick Steinhardt <ps@pks.im>,  Josh Steadmon <steadmon@google.com>,
-  Ben Knoble <ben.knoble@gmail.com>,  Phillip Wood
- <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 4/5] submodule: encode gitdir paths to avoid conflicts
-In-Reply-To: <87cy6y4xb4.fsf@collabora.com> (Adrian Ratiu's message of "Tue,
-	07 Oct 2025 17:10:39 +0300")
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="e0pty22/"
+ARC-Seal: i=1; a=rsa-sha256; t=1759857692; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=I5l3IQkR1PzSxJaWVBjs8h6iR1BzMlN7S6BGrGQESXZ3RdheQalyeT7PWHe9WKqUZGkN9FfmjLgzxW9l1apQKV4TLUIAJqSf0OoPt+39AvXDzd9IT2ygozBoHQ5CYePQYpvwXjMOjyxt7tZdxKdEHAwtIyOGrPPSrnBL0Q+a64E=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1759857692; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=L5cKrDEU72ONtjHK7xzc/iIxhflgvOf++3rfss3LdPk=; 
+	b=oLMqGeyq74Yseb0rjM8NNt2aPpSC17Wwop6KxH/P1mQB7VR9+B4ehOFoRyI7lmSX79+CB3H1IbHsODk7WdFfbdVZV27sSiBbTLQq+DHUX9gifafnNNfU56A2oq1Dvsv5RJ+KE5bqDC7+tSX9OIEIGC/0U9X2fnZ3xOklR9ctO3A=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759857692;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=L5cKrDEU72ONtjHK7xzc/iIxhflgvOf++3rfss3LdPk=;
+	b=e0pty22/HUyYV9jS6NlKGUR8bW6X3hmhxI6hjcTHIpM5sZfuV18EHTRc1EN9PDe8
+	N5Qr5NCANke+LJ1C73qFcaPFKVOkR7bOFgacfe6s6x6hkJZRTlFIvEBmTNNBBc0zfV7
+	lFzX62tUebW0q2acPpUHmTQnrgUv+zDnOJ/eALps=
+Received: by mx.zohomail.com with SMTPS id 1759857687985170.35216116976846;
+	Tue, 7 Oct 2025 10:21:27 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Aaron
+ Schrab <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, Patrick
+ Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>, Ben Knoble
+ <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 0/5] Encode submodule gitdir names to avoid conflicts
+In-Reply-To: <xmqqldlmlm1n.fsf@gitster.g>
 References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
-	<20251006112518.3764240-1-adrian.ratiu@collabora.com>
-	<20251006112518.3764240-5-adrian.ratiu@collabora.com>
-	<xmqq347wq87s.fsf@gitster.g> <87cy6y4xb4.fsf@collabora.com>
-Date: Tue, 07 Oct 2025 10:20:42 -0700
-Message-ID: <xmqqo6qik4r9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20251006112518.3764240-1-adrian.ratiu@collabora.com>
+ <xmqqo6qkq9vm.fsf@gitster.g> <87frbv3qyr.fsf@collabora.com>
+ <xmqqldlmlm1n.fsf@gitster.g>
+Date: Tue, 07 Oct 2025 20:21:21 +0300
+Message-ID: <875xcq4oha.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; format=flowed
+X-ZohoMailClient: External
 
-Adrian Ratiu <adrian.ratiu@collabora.com> writes:
-
-> I will percent encode the upper case by modifying 
-> is_rfc3986_unreserved().
-
-Again, do we really need to encode everything?  We need to only when
-(1) there are other submodules that would collide with us (e.g., by
-being only case-different, or by having our name plus a slash as the
-prefix of their name, make us overlap with them) or (2) our name is
-not filesystem friendly and needs munging.  A letter being in an upper
-case is not a crime.
-
->>> For now url-encoding is the only option, however in the future 
->>> we may add alternatives (other encodings, hashes or even 
->>> hash_name). 
+On Tue, 07 Oct 2025, Junio C Hamano <gitster@pobox.com> wrote:
+> Adrian Ratiu <adrian.ratiu@collabora.com> writes: 
+> 
+>>> If you already have submodules creted under the original 
+>>> scheme,  then add a new submodule that needs this extension, 
+>>> do you  enable this new extension and write the new submodule 
+>>> under  encoded name, and move the existing submodules under 
+>>> their  encoded names?  
+>> ...  We could do a migration of existing gitdirs to the new 
+>> encoding to  ensure consistency when the extension is enabled. 
 >> 
->> Let's not say "For now". 
+>> This will simplify our logic and assumptions a lot, at the cost 
+>> of  the initial up-front migration. 
 >> 
->> Choose a single encoding that we can use forever so that we do 
->> not have to upgrade extensions.encodeSubmoduleName with suffixes 
->> like extensions.encodeSubmoduleNamev2, 
->> extensions.encodeSubmoduleNamev3, etc. to cover our earlier 
->> mistakes and force renaming on users. 
->
-> Understood. Will drop that idea.
+>> Will do this in v4 if nobody has any objections. 
+> 
+> Let's not. 
+> 
+> You have support for submodule.<name>.gitdirpath already, so it 
+> is far safer to use that mechanism to etch-in-stone-fix the 
+> existing submodules and their gitdirs without touching the 
+> directories for migration. 
 
-If we are to consistently use submodule.<name>.gitdirpath as the
-authoritative collection of name-path mapping, then the exact
-algorithm to derive path from name can be improved over time without
-having to worry about an old submodule whose path was computed by
-older iteration of the algorithm colliding with a new submodule
-whose path is derived by the more modern algorithm.  So I do not
-mind to make ourselves aware of the possibility that we can tweak
-and improve.  But as I said elsewhere, I do not think we need to
-even say what exactly algorithm is used to the end-users.
+Ack. I'll follow this design path in v4.
 
-Thanks.
+I was actually preparing to do the opposite :) i.e. drop the 
+"override" and do the migration, thanks for clarifying before I 
+did a re-roll. :)
+
+Will leave this a week or two on the ML in case others want to 
+review or have more feedback.
+
+> 
+> One case you might want to really move directories when 
+> migrating is when two existing submodules' gitdirs are already 
+> overlapping, e.g., .git/modules/A and .git/modules/A/B are used 
+> for submodule A and submodule A/B.  Depending on what "B" is, a 
+> project with such a layout may not be able to upgrade to 
+> versions of Git that newly starts using .git/B directory for a 
+> new feature.  Introduction of a new directory or a new file 
+> directly underneath $GIT_DIR is rare but does happen 
+> (.git/reftable/ is a relatively recent addition, for example). 
+
+Yes, though I don't think this is a big concern because 
+submodule.c already has the validate_submodule_git_dir() check 
+which prevents users from creating overlapping / nested dirs.
+
+When the rare, deliberate clash does happen (like with 
+.git/reftable) it can be treated like before: do nothing, let the 
+user fix the repo, or we could add a small one-time migration at 
+that point in time.
+
+I really like avoiding any kind of automated blanket migration btw,
+thank you so much for your feedback Junio, it's really appreciated.
