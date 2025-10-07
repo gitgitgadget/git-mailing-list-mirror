@@ -1,147 +1,123 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3B72E03EF
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 13:40:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D33EACD
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 13:50:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759844408; cv=none; b=HMKKUl9FbcfxcZzyD+f6ePD1Tfm3TpDyfn8VWdNC4BXkDJB93SXjX5aHwmQ2j/RH1io8tIPGZdkoz9AkIG6hGaokAWlNCp+op8tFvmTE6kSiw36ksoJX5oxqXCjRP91pdh4dK0z1uRiOS4VX2LmR8eGDBc4DEBnJuhAWaJWLuTY=
+	t=1759845061; cv=none; b=YknjgWbFy9AnTz8Qe/HCIJsbSHfgzHGYfcGbj62m+a1Ra7XRqG+lhl14j9qKKJZl47FODNKey1R7Ew4Xh5I0OR2nf7vdzNdgQA6efK7snLml5s0ruYAKWI5NN+lIjNLH32QMUiemgfGZA/lsaXRYansQrxUWi9ShwGrd08+e53E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759844408; c=relaxed/simple;
-	bh=IrvX/WcJ6dj567vKop2JGcVQFbieDdcx76gDSPaDTnY=;
+	s=arc-20240116; t=1759845061; c=relaxed/simple;
+	bh=mruW9CUk7g3uBzyT+bmvDXrkOKOG/Ccwz2G2f0Jsu/M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SJ5XP7xtmrZ1ndH3Lyn04SmHb4SOhaaOc2uF0jaG7eK4t1+jl2C+GfDCX35pEHAAtESYrs8GwDdcm+iMURYAnFlQoRu+cYXg5hx5QNOHjmDr7Avx4fuBm8mEkqCrcjfOeXe6piUhxuNeVbicfpQ8IXyiWI0ixCdDzfgG13KlXqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=yQy/A2cJ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=21+9K5Zx; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=yQy/A2cJ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=21+9K5Zx; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=KcNPI3M9fFLch5CYzS3NaW7H5VJBbNspuFuX6GWVM9x7yHaNfYi8GrUHB5M13s+gbOpHBz9f9hdu5kjBIhd4yjbHW2tVu0ur84YfYyU2CqJYUYt+Sds8QVV5UiUrpLpJlh326FUmw/pw1DbEhahmek0dRAnAxN/nur7qY8RjSRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nmovzSRV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CbxTQrUZ; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="yQy/A2cJ";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="21+9K5Zx";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="yQy/A2cJ";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="21+9K5Zx"
-Received: from kitsune.suse.cz (unknown [10.100.12.127])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 4360A33703;
-	Tue,  7 Oct 2025 13:40:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1759844405; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jnizUh8+Xq98P+aGA/DMjaiUBGTAPH/iz2GKcoJ7s44=;
-	b=yQy/A2cJv3B228RYgvMvq6Hj2vhJePbrUCor8NMLNH6H1+EtHgnwfseTm1uHfOM7NLvkEa
-	GIBPOXoUkBmfUsz0Zn3M/uhYonZSLzzl5zbo3E6Ywk0PLhHutYLBIFpXpBxv/YQ/03TcpW
-	QTbx9VunPkxA+io5Y8r1ofTgSoIJLos=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1759844405;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jnizUh8+Xq98P+aGA/DMjaiUBGTAPH/iz2GKcoJ7s44=;
-	b=21+9K5Zx3NtDduocsVGlSxaCIrhCF8ddz3SofLK+peHnpALc9qpfJqCIJGDHVcMDmU5duz
-	Oug3hQ1RV3B9lkBw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1759844405; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jnizUh8+Xq98P+aGA/DMjaiUBGTAPH/iz2GKcoJ7s44=;
-	b=yQy/A2cJv3B228RYgvMvq6Hj2vhJePbrUCor8NMLNH6H1+EtHgnwfseTm1uHfOM7NLvkEa
-	GIBPOXoUkBmfUsz0Zn3M/uhYonZSLzzl5zbo3E6Ywk0PLhHutYLBIFpXpBxv/YQ/03TcpW
-	QTbx9VunPkxA+io5Y8r1ofTgSoIJLos=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1759844405;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jnizUh8+Xq98P+aGA/DMjaiUBGTAPH/iz2GKcoJ7s44=;
-	b=21+9K5Zx3NtDduocsVGlSxaCIrhCF8ddz3SofLK+peHnpALc9qpfJqCIJGDHVcMDmU5duz
-	Oug3hQ1RV3B9lkBw==
-Date: Tue, 7 Oct 2025 15:40:04 +0200
-From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-	Luca Milanesio <luca.milanesio@gmail.com>, git@vger.kernel.org
-Subject: Re: When should we release Git 3.0?
-Message-ID: <aOUYNPD1o2_d0xYy@kitsune.suse.cz>
-References: <aNxivuJEnSHbQNdr@fruit.crustytoothpaste.net>
- <E03F997F-1738-4CF6-B7D5-206183FA5BD1@gmail.com>
- <aN1RFvz7uGPnepxe@nand.local>
- <aN5-n_ArhQqaQZgt@pks.im>
- <xmqqfrc1xqsp.fsf@gitster.g>
- <aN6j7giOosGreKUW@kitsune.suse.cz>
- <aOTrC8CRZm5hERgr@pks.im>
- <aOTtPxsdzJLPCruk@kitsune.suse.cz>
- <aOUT2Phklc_ZDhy9@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nmovzSRV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CbxTQrUZ"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6D48F14007CD;
+	Tue,  7 Oct 2025 09:50:58 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Tue, 07 Oct 2025 09:50:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1759845058; x=1759931458; bh=g0qB6aYRIs
+	klY9IiVlFFavrXt32ZfwL1UNSYkhrj3fw=; b=nmovzSRVjePUdHC0L+HE4ZdUMG
+	vKDgrixRbP/DmRwXTY8iI9JsBJNGLUAqwFBvQ9rCdbnCjf8HagOixtWuJ5vYgSqu
+	6ILaoASb7j8ugz5svI1E0PuxIpIJRyWJ6LG/x6Q3lyj4/AsRvumd/6H+QsmOf6m0
+	m0/kQYgHMbOLo59OVFdcbaxFdrQQTfRabeOSxZCMsbFuF0V+YwOhwdR38r6/udZR
+	2DGXRhf5jSZESA7hwEVkWPWafNYi2ZxB1ccpxMx7lbsNcmHDrROJiq9ikW0cEIGj
+	X273ri6NKKgarLmkhma4mOua8HElXY0q6IAvvT9szC000nwAv5YHglGWyKTg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759845058; x=1759931458; bh=g0qB6aYRIsklY9IiVlFFavrXt32ZfwL1UNS
+	Ykhrj3fw=; b=CbxTQrUZz0QQFEwANUqBaJEGX/Tbj1CxX2vA4KqqUltdFz+T4Qi
+	rb2Vqa0mizBgHlEaQ9YgM6imB9ZCFp6iJaFzvDvPvjMeyiweOsWOBoF7qgWqMZV5
+	mxAePicEKD42vz06sIdoxapD3WNuSQOKD94ajTjTOf4NQLM0Wv/qfOF0B8GOSVRX
+	m8suo6J/ZAKrrSejNYi7/6r+NT1YSOKwryV7XOoENx3b3lWeMu4jMqyWGLvh10DS
+	s7/JhhcXv0KJYeSBRKUNGJ2geuZxQWYIB7aSK6Kp+Ykl15LO/JcQ2YZdjrh1YPgK
+	yd7Xv9zYl6gQoKJLg+Q5leYr6oKWkCS9mIQ==
+X-ME-Sender: <xms:whrlaKdznBJS7IePlDDX52-mAeuspTgR-z6pb3HWC3GMLehjxDtATw>
+    <xme:whrlaLEupgcRlC-Ff4BDhkma1yJyKAp20O5MBBJmHd3NhgDvsRlltjAClWEcJ95Uk
+    SWqSp9Qnu-YRJ3Ft7Bt56n39ZFIkSgcEfeW_3SyNqE4z2x0lsUCKQ>
+X-ME-Received: <xmr:whrlaD1687tljZ-UgdMFK0C7QOeQ9jUEdtTizji9_kkic6B6LNjWyRLgcXUMbniLoopmOVEZQ-6Gu2DmMFaSSPmn1GKZXym5VQiYSvgqvCw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddtheelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoh
+    epvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehsrghn
+    uggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehkrg
+    hrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:whrlaDkEW-L7xBB-IrrupUeSMONQb6Ki9WwZfl5BWjr8iwdNTbSEdw>
+    <xmx:whrlaD-_La7APc1Vsg4Y7CZZ40tCzGSdl4gt-w-ZMPYK0xs2SW2OlA>
+    <xmx:whrlaIphXTd32uxp9LsD8kTZV9X6mECoraRzRyeQICgbz8NoSyAaCA>
+    <xmx:whrlaMnL1WUdjc4R38ZvxiArSrP3RONG8-wQNeeWAYvLrICLTJBHVg>
+    <xmx:whrlaPgfbwIJaFdWyfqRGnYxrPQr_G0v8S63c81FfcIbjzLfYSN9Wi4f>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Oct 2025 09:50:57 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 48ab2dd7 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 7 Oct 2025 13:50:55 +0000 (UTC)
+Date: Tue, 7 Oct 2025 15:50:52 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/6] ci: check formatting of our Rust code
+Message-ID: <aOUavBJ6kipuYcr5@pks.im>
+References: <20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im>
+ <20251007-b4-pks-ci-rust-v1-2-394502abe7ea@pks.im>
+ <CAOLa=ZT8TDiA=1cAsnS6RkHL-5J2+3YBorBjKsKWm38oaXt0Fg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aOUT2Phklc_ZDhy9@pks.im>
-X-Spam-Level: 
-X-Spamd-Result: default: False [-1.80 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	SUBJECT_ENDS_QUESTION(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-0.999];
-	MIME_GOOD(-0.10)[text/plain];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	MISSING_XM_UA(0.00)[];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_RCPT(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[pobox.com,ttaylorr.com,gmail.com,vger.kernel.org];
-	RCVD_COUNT_ZERO(0.00)[0];
-	FROM_HAS_DN(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[5]
-X-Spam-Flag: NO
-X-Spam-Score: -1.80
+In-Reply-To: <CAOLa=ZT8TDiA=1cAsnS6RkHL-5J2+3YBorBjKsKWm38oaXt0Fg@mail.gmail.com>
 
-On Tue, Oct 07, 2025 at 03:21:28PM +0200, Patrick Steinhardt wrote:
-> On Tue, Oct 07, 2025 at 12:36:47PM +0200, Michal Suchánek wrote:
-> > On Tue, Oct 07, 2025 at 12:27:23PM +0200, Patrick Steinhardt wrote:
-> > > The question of course is how to get such roadmaps. The easiest way to
-> > > do it is probably to gather a list of known projects that would be
-> > > impacted and just shoot maintainers or representatives of those an
-> > > email? From the top of my head, that would include:
-> > > 
-> > >   - Implementations
-> > >       - libgit2
-> >           - pygit2
-> > >       - JGit
-> > >       - Gitoxide
-> > >       - go-git
+On Tue, Oct 07, 2025 at 06:04:41AM -0700, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> pygit2 is merely a binding for libgit2, so I didn't include it in this
-> list. Same for other bindings like git2go or git2-rs.
+> > Introduce a CI check that verifies that our Rust code is well-formatted.
+> > This check uses rustfmt(1), which is the de-facto standard in the Rust
+> > world.
+> >
+> > The rustfmt(1) tool allows to tweak the final format in theory. In
+> > practice though, the Rust ecosystem has aligned on style "editions".
+> > These editions only exist to ensure that any potential changes to the
+> > style don't cause reformats to existing code bases. Other than that,
+> > most Rust projects out there accept this default style of a specific
+> > edition.
+> >
+> > Let's do the same and use that default style. It may not be anyone's
+> > favorite, but it is consistent and by making it part of our CI we also
+> > enforce it right from the start.
+> >
+> > Note that we don't have to pick a specific style edition here, as the
+> > edition is automatically derived from the edition we have specified in
+> > our "Cargo.toml" file.
+> 
+> One small nit: We should mention that `cargo fmt` is simply a wrapper
+> around `rustfmt`, which also handles file discovery.
 
-Unfortunately, bindings do not automatically get the features of the
-library they wrap. AFAIK libgit2 has experimental sha256 support and
-pygit2 has none whatsoever. Altering the bindings to include sha256
-support may involve significant design work. The native API may differ
-significantly from the C API.
+Good idea, I'll include this in the next version. Thanks!
 
-Both API may get broken as a result. That is pygit2 and libgit2 may
-never get support, and we would need libgit3/pygit3 instead, or it may
-vary depending on the language.
-
-Thanks
-
-Michal
+Patrick
