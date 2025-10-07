@@ -1,63 +1,63 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E392DECA3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0BC2DF150
 	for <git@vger.kernel.org>; Tue,  7 Oct 2025 12:30:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759840248; cv=none; b=MNReR/jWDpv9rC1m/lx4M8ZXicRTFbHtov/czPbWU1i9EXssNFoOkMtGk3y3FB/5mvnxR7LjDp5dJ2RLMDSxt5IyhzNYflZeGNj20xvs4o1EwFNdKBMA+IVZQBSig994gwH+zsgNosVujFNAibe3SrSAqHQKgvrUQr4x5EN7W+A=
+	t=1759840251; cv=none; b=qwR5WqbxuUttNW4hpI2+JMyBSNpkDFD7GNtFFWSojtlXXl/E7VPtn8seJIplazRj8AhGyS/x3X3LvK+alGBLYqroc5DrDQYBfV9yZm0rpwa4nOrHJFPOmQGzGE3CKFMyyf3Gu+4vFexVM3IplYmMiYbF//dnJiozF5KqnvjeHQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759840248; c=relaxed/simple;
-	bh=WcsiyAIC8+Y4Tn9WjVaE4q5LWlLf9ItbAMPhL0QoPOM=;
+	s=arc-20240116; t=1759840251; c=relaxed/simple;
+	bh=GXSMq2JpRGaP04jK5oGV5B5yklLdhdR9GHGK+8N68CQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k3PV/5qal7M0rFwNExUdjwRnfZE4ZLfsFwziq8o8/f0ZITew9d27q3dCRiMCyS4Zl4hGLHqAi1Y4l2Dd9XUfEeSX97KZXlxdS4ccqD3aGrNL1B29H9oTMohU0KlBXKcZ3sdNFhS9Ap0Vb1oFVfLHrh8pVCn/hA0DdrYO+O13qZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FPIy0P7h; arc=none smtp.client-ip=209.85.221.47
+	 MIME-Version; b=d8Qz4Yh2O4QU8r5SyZxiAVeZaPx0qHUAISsRr5glFQv/3ub5sPdy1RvbbBBb75jlNy9QdvI0Lbn8PdO7gD3nCZautN1i3kLE9zo592tKvz3pO2f8ZZGk6E3i1fTQ0IfWTFYrx8OY5h20cA7aTk8FNsNuIM/hmNtsjDkztzV8iFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZnXtldAH; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FPIy0P7h"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3ee12807d97so5252288f8f.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZnXtldAH"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3c68ac7e18aso670121f8f.2
         for <git@vger.kernel.org>; Tue, 07 Oct 2025 05:30:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759840244; x=1760445044; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1759840245; x=1760445045; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BCO/olEVzo3/nEey0kBvphEVlcGSTxPAxEnVLXNsaq0=;
-        b=FPIy0P7hljII9B12uC+20PFCSGdEhqfwHtyMC9rGnjfLsfwaG9LQsO4NAwzsXUp8ow
-         a/CiXweRtUog9fu6HjWR9DHP/G/aVKGjVUiY/w5QY68F6R1wXEPaNuZm6MFCyVIp0iZB
-         nQq5Lxhm88Ws1qrppl/Nzyv569os/QMvByWDQSxJ+1ic4ZP7pbxa+gkFg7VzEc1cLYRz
-         sJggptm09Tdr3CUz79S7R/OmOzZALBJsXFBDOiG2HrM/7j0+BGqC3PDc1BpuxG63/oNA
-         70JQzsWp9/vRtnFKT09yJa5ReRm/+/bPKxdkwJkdf+76vb3ExNpPAd/ucBwkygFOMVZz
-         diVQ==
+        bh=hwI713T4WixKxAtDpn3baE2CYTkvqRGJbIA5Bsrysuw=;
+        b=ZnXtldAHcy7NGkt7aRvn7WkaJjHrTHAOFnGKihnYnihdj0AqUYBqxk7/vizxzib3ca
+         HOlb4ztCM2HqnbvnS60le6qxD3HmJRDlJ3EwpFz28CBa9NuP4pQr3ItQmAJB4JYKCLsw
+         9NYN2CIxdVoiyXnEnanzgNacUNfAvNC3MzQ8l89CCTpijp2nWtyENyqtuhBiZ1mlkPX2
+         CJldirpK9sRi+Zm76hHpdQdSPgwgekUuV2ejwVS4xrQ4PP2ex0kSbSudK2Fa+xHKbukK
+         +eofoRuDwylB0AyX3EypHieqhNpg9MFpWSVEebjiQYYcg9WIdJ70se2iztyHIgNTRcxM
+         5EuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759840244; x=1760445044;
+        d=1e100.net; s=20230601; t=1759840245; x=1760445045;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BCO/olEVzo3/nEey0kBvphEVlcGSTxPAxEnVLXNsaq0=;
-        b=IiazXS7cBgVFL4WjB2ilueiZWH/xm/hX/c32jarOUQECl0Axzf1tY8RXuQtsQ3J/Pn
-         VaN2gRH5I6O+NhWqGVABDz3lORlYbDUITrP3Fgnv6A3FrFhRuAgG2wvcZ1WamQIyJNhB
-         WLYMbIWRZhrMVBpFHq+sApw7gICUe1MISxlgKhwq1mypONVlpPRO0QIQJFhk+kQ+Dl/b
-         M9oz60NW98OwOMe8swVGoUEGon3AH08y2h7VZSHSpgslb2OTxoygc8PAGfW3pH4TGbwJ
-         xi+q4jYbF3vhE+TylIdKUWAspf8oh49EyNhLAnIk+f9g8PcUNeDiyD+U+mh4TtGbwHhL
-         2Amw==
-X-Gm-Message-State: AOJu0YwDFXvSJ8hWq9aFtammJ98DVkE/21Uyaf71/rCpqjbJIH/l6wHE
-	6sqG62aTRuDYabKNkfe5ZVEnOexfSrAtBLCgrhoXWIAiM9igsMEiqEhR2d4l8k43
-X-Gm-Gg: ASbGncuJeLrkjkDgisszVqiGYCtTS+nsTHzmjbqkKDbcfVsK34U8585hjMuHOCBF8IR
-	zjZ+plOhyWo5ghmuoQ27sA9f9aqyPhHAg+756vlv/Szq4eaFQWXahqqc2kEg8yvBa+U5o96LmvM
-	/nvetqteB693NbfdziGvNdAQebc2ftjvDo1gVilzY+KT2I2LMN0Z/zziPDFPU5AhwjjiUZ4cq4T
-	LV/iFKrkFkky/ZonicOVguj2mzanP8jB4I75XI1A+KAp4FGieHmHp4Cpx+dle9PVHkDRlF6Qwvh
-	+sJSVCzg9yA7gQo0flY+t/kc22JW+6zMx8ovg9TYP3dNeCv03PDW1oTF4xXUm56uggdyBO5ea2U
-	ll/3URhongb8P7GiRrmcdaH0H0rZp4r3h2R2KSR3Y/H7mnBU9M/RbiCABpdLfKwIW8098TOdywg
-	==
-X-Google-Smtp-Source: AGHT+IGVLmn5qRlr79f6lNFiL7TllLNllzI4Z/tlYlu4U2rqWplK4253A3ZtHKC3my5uZm8JJQsoog==
-X-Received: by 2002:a05:6000:310d:b0:3eb:a237:a051 with SMTP id ffacd0b85a97d-425671c1ba2mr10034405f8f.58.1759840243954;
-        Tue, 07 Oct 2025 05:30:43 -0700 (PDT)
+        bh=hwI713T4WixKxAtDpn3baE2CYTkvqRGJbIA5Bsrysuw=;
+        b=Vk8aY10xtW2auwv8roLcCAD/GNgGxAYzG/05i6ojO/++9KRZKcNySNuv8sF+vzHl7V
+         zF0sYrxHy9kYdOvXOYKrFSslWSF4Kh6gCv/MUXnXb4wNUoaXSWGQ1uNcSmxoktp2NZty
+         kStrCn/iMyR25/g2m51VhPR8s4dr7+aTcQ2jn5F8UuRtE7ZT3zYdr3SgWiMe8NshiXvz
+         7RuW3Kp7sCbZHnotnxcmcA0/RoUbMerwBryUQsMiO8VHNzlojxQ366wwQc/6YJtk8iFo
+         KJsUOPsQ0oVa/6DqYOh0CCoraR514IkN8nTzeS6O8GAHIpCC8AWdgbX0bGICYLi6WyZt
+         lcdQ==
+X-Gm-Message-State: AOJu0Yx24olqQJ3K7Fr98vFzk9iUPcRnuYMF5E6dUWtKJcFnJlUyF9dP
+	JmuEd/jPb9WEXLR/Ooo8EtKbYw9DbKf8vQK5cZt17G/4KjUdxRVPx6rU4Fgu94Uj
+X-Gm-Gg: ASbGncvjWoZb2ymVir51VA1BnRLFFg91JlotF7UmF62Y8JUT85GOLOz8X7jJ1abgYnc
+	oH6C1QOaZONPp8nsr1xyAycOZzR6Sy97eUpbXDvvgv/+AxqtXj3ieeTl14eK+YlzuHtSbyAAZCq
+	FbpbF31l8z8zFvGYsubvSvpfBCSvRlTXrwQo99zmADnTk/1lcrKo52+lXlws4/gCRNzbmnQ9RBZ
+	HHi00sL/YQcfasHVmBFI0YR9A2Ds3gqEUwYgmWE+HV5bPl88Zub3RSUgIEpQurpW8hpDD3iDs95
+	qw7wj5Lx3Bi1YTH6XksaUBW6ZjTXfnkOAmEDKuJYhMI+r5rrtrx9Lqu83sDuukS2swfKWIkMwA2
+	wbVd4KSzkJMwO/GsTTSu53nzVjziLYcLtZw4nWyocX+3fpMrpXs9nI61Gc5rcYnhr1wR3i7ngdE
+	reMcjUKwZl
+X-Google-Smtp-Source: AGHT+IEzD25FndBNJErjj0hW/dxZxqETU9yynXzU0yBXIVKgFu4ZL/7ih/JBXq8nXEDl9ZYPq5gUZA==
+X-Received: by 2002:a05:6000:2087:b0:3ec:d80d:e59b with SMTP id ffacd0b85a97d-4256713ee4bmr11333172f8f.10.1759840244833;
+        Tue, 07 Oct 2025 05:30:44 -0700 (PDT)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4255d8f083asm25476185f8f.43.2025.10.07.05.30.42
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4255d8f083asm25476185f8f.43.2025.10.07.05.30.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Oct 2025 05:30:42 -0700 (PDT)
+        Tue, 07 Oct 2025 05:30:44 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -68,9 +68,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 4/5] fast-export: handle all kinds of tag signatures
-Date: Tue,  7 Oct 2025 14:29:57 +0200
-Message-ID: <20251007122958.1089680-5-christian.couder@gmail.com>
+Subject: [PATCH 5/5] fast-import: add '--signed-tags=<mode>' option
+Date: Tue,  7 Oct 2025 14:29:58 +0200
+Message-ID: <20251007122958.1089680-6-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.51.0.438.g6987fc0bae
 In-Reply-To: <20251007122958.1089680-1-christian.couder@gmail.com>
 References: <20251007122958.1089680-1-christian.couder@gmail.com>
@@ -82,109 +82,216 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Currently the handle_tag() function in "builtin/fast-export.c" searches
-only for "\n-----BEGIN PGP SIGNATURE-----\n" in the tag message to find
-a tag signature.
+Recently, eaaddf5791 (fast-import: add '--signed-commits=<mode>'
+option, 2025-09-17) added support for controlling how signed commits
+are handled by `git fast-import`, but there is no option yet to
+decide about signed tags.
 
-This doesn't handle all kinds of OpenPGP signatures as some can start
-with "-----BEGIN PGP MESSAGE-----" too, and this doesn't handle SSH and
-X.509 signatures either as they use "-----BEGIN SSH SIGNATURE-----" and
-"-----BEGIN SIGNED MESSAGE-----" respectively.
+To remediate that, let's add a '--signed-tags=<mode>' option to
+`git fast-import` too.
 
-To handle all these kinds of tag signatures supported by Git, let's use
-the parse_signed_buffer() function to properly find signatures in tag
-messages.
+With this, both `git fast-export` and `git fast-import` have both
+a '--signed-tags=<mode>' and a '--signed-commits=<mode>' supporting
+the same <mode>s.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/fast-export.c  |  7 +++---
- t/t9350-fast-export.sh | 48 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+), 4 deletions(-)
+ Documentation/git-fast-import.adoc |  5 ++
+ builtin/fast-import.c              | 43 ++++++++++++++++
+ t/meson.build                      |  1 +
+ t/t9306-fast-import-signed-tags.sh | 80 ++++++++++++++++++++++++++++++
+ 4 files changed, 129 insertions(+)
+ create mode 100755 t/t9306-fast-import-signed-tags.sh
 
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index dc2486f9a8..7adbc55f0d 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -931,9 +931,8 @@ static void handle_tag(const char *name, struct tag *tag)
+diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-import.adoc
+index 85ed7a7270..b74179a6c8 100644
+--- a/Documentation/git-fast-import.adoc
++++ b/Documentation/git-fast-import.adoc
+@@ -66,6 +66,11 @@ fast-import stream! This option is enabled automatically for
+ remote-helpers that use the `import` capability, as they are
+ already trusted to run their own code.
  
- 	/* handle signed tags */
- 	if (message) {
--		const char *signature = strstr(message,
--					       "\n-----BEGIN PGP SIGNATURE-----\n");
--		if (signature)
-+		size_t sig_offset = parse_signed_buffer(message, message_size);
-+		if (sig_offset < message_size)
- 			switch (signed_tag_mode) {
- 			case SIGN_ABORT:
- 				die("encountered signed tag %s; use "
-@@ -950,7 +949,7 @@ static void handle_tag(const char *name, struct tag *tag)
- 					oid_to_hex(&tag->object.oid));
- 				/* fallthru */
- 			case SIGN_STRIP:
--				message_size = signature + 1 - message;
-+				message_size = sig_offset;
- 				break;
- 			}
- 	}
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 21ff26939c..5a46608f65 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -279,6 +279,54 @@ test_expect_success 'signed-tags=warn-strip' '
- 	test -s err
- '
- 
-+test_expect_success GPGSM 'setup X.509 signed tag' '
++--signed-tags=(verbatim|warn-verbatim|warn-strip|strip|abort)::
++	Specify how to handle signed tags.  Behaves in the same way
++	as the same option in linkgit:git-fast-export[1], except that
++	default is 'verbatim' (instead of 'abort').
 +
+ --signed-commits=(verbatim|warn-verbatim|warn-strip|strip|abort)::
+ 	Specify how to handle signed commits.  Behaves in the same way
+ 	as the same option in linkgit:git-fast-export[1], except that
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index 2010e78475..668c926db5 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -188,6 +188,7 @@ static int global_argc;
+ static const char **global_argv;
+ static const char *global_prefix;
+ 
++static enum sign_mode signed_tag_mode = SIGN_VERBATIM;
+ static enum sign_mode signed_commit_mode = SIGN_VERBATIM;
+ 
+ /* Memory pools */
+@@ -2961,6 +2962,43 @@ static void parse_new_commit(const char *arg)
+ 	b->last_commit = object_count_by_type[OBJ_COMMIT];
+ }
+ 
++static void handle_tag_signature(struct strbuf *msg, const char *name)
++{
++	size_t sig_offset = parse_signed_buffer(msg->buf, msg->len);
++
++	/* If there is no signature, there is nothing to do. */
++	if (sig_offset >= msg->len)
++		return;
++
++	switch (signed_tag_mode) {
++
++	/* First, modes that don't change anything */
++	case SIGN_ABORT:
++		die("encountered signed tag; use "
++		    "--signed-tags=<mode> to handle it");
++	case SIGN_WARN_VERBATIM:
++		warning(_("importing a tag signature verbatim for tag '%s'"), name);
++			/* fallthru */
++	case SIGN_VERBATIM:
++		/* Nothing to do, the signature will be put into the imported tag. */
++		break;
++
++	/* Second, modes that remove the signature */
++	case SIGN_WARN_STRIP:
++		warning(_("stripping a tag signature for tag '%s'"), name);
++			/* fallthru */
++	case SIGN_STRIP:
++		/* Truncate the buffer to remove the signature */
++		strbuf_setlen(msg, sig_offset);
++		break;
++
++	/* Third, BUG */
++	default:
++		BUG("invalid signed_tag_mode value %d from tag '%s'",
++		    signed_tag_mode, name);
++	}
++}
++
+ static void parse_new_tag(const char *arg)
+ {
+ 	static struct strbuf msg = STRBUF_INIT;
+@@ -3024,6 +3062,8 @@ static void parse_new_tag(const char *arg)
+ 	/* tag payload/message */
+ 	parse_data(&msg, 0, NULL);
+ 
++	handle_tag_signature(&msg, t->name);
++
+ 	/* build the tag object */
+ 	strbuf_reset(&new_data);
+ 
+@@ -3544,6 +3584,9 @@ static int parse_one_option(const char *option)
+ 	} else if (skip_prefix(option, "signed-commits=", &option)) {
+ 		if (parse_sign_mode(option, &signed_commit_mode))
+ 			usagef(_("unknown --signed-commits mode '%s'"), option);
++	} else if (skip_prefix(option, "signed-tags=", &option)) {
++		if (parse_sign_mode(option, &signed_tag_mode))
++			usagef(_("unknown --signed-tags mode '%s'"), option);
+ 	} else if (!strcmp(option, "quiet")) {
+ 		show_stats = 0;
+ 		quiet = 1;
+diff --git a/t/meson.build b/t/meson.build
+index 11376b9e25..cb8c2b4b30 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -1036,6 +1036,7 @@ integration_tests = [
+   't9303-fast-import-compression.sh',
+   't9304-fast-import-marks.sh',
+   't9305-fast-import-signatures.sh',
++  't9306-fast-import-signed-tags.sh',
+   't9350-fast-export.sh',
+   't9351-fast-export-anonymize.sh',
+   't9400-git-cvsserver-server.sh',
+diff --git a/t/t9306-fast-import-signed-tags.sh b/t/t9306-fast-import-signed-tags.sh
+new file mode 100755
+index 0000000000..363619e7d1
+--- /dev/null
++++ b/t/t9306-fast-import-signed-tags.sh
+@@ -0,0 +1,80 @@
++#!/bin/sh
++
++test_description='git fast-import --signed-tags=<mode>'
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++
++. ./test-lib.sh
++. "$TEST_DIRECTORY/lib-gpg.sh"
++
++test_expect_success 'set up unsigned initial commit and import repo' '
++	test_commit first &&
++	git init new
++'
++
++test_expect_success 'import no signed tag with --signed-tags=abort' '
++	git fast-export --signed-tags=verbatim >output &&
++	git -C new fast-import --quiet --signed-tags=abort <output
++'
++
++test_expect_success GPG 'set up OpenPGP signed tag' '
++	git tag -s -m "OpenPGP signed tag" openpgp-signed first &&
++	OPENPGP_SIGNED=$(git rev-parse --verify refs/tags/openpgp-signed) &&
++	git fast-export --signed-tags=verbatim openpgp-signed >output
++'
++
++test_expect_success GPG 'import OpenPGP signed tag with --signed-tags=abort' '
++	test_must_fail git -C new fast-import --quiet --signed-tags=abort <output
++'
++
++test_expect_success GPG 'import OpenPGP signed tag with --signed-tags=verbatim' '
++	git -C new fast-import --quiet --signed-tags=verbatim <output >log 2>&1 &&
++	IMPORTED=$(git -C new rev-parse --verify refs/tags/openpgp-signed) &&
++	test $OPENPGP_SIGNED = $IMPORTED &&
++	test_must_be_empty log
++'
++
++test_expect_success GPGSM 'setup X.509 signed tag' '
 +	test_config gpg.format x509 &&
 +	test_config user.signingkey $GIT_COMMITTER_EMAIL &&
 +
-+	git tag -s -m "X.509 signed tag" x509-signed $(git rev-parse HEAD) &&
-+	ANNOTATED_TAG_COUNT=$((ANNOTATED_TAG_COUNT + 1))
-+
++	git tag -s -m "X.509 signed tag" x509-signed first &&
++	X509_SIGNED=$(git rev-parse --verify refs/tags/x509-signed) &&
++	git fast-export --signed-tags=verbatim x509-signed >output
 +'
 +
-+test_expect_success GPGSM 'signed-tags=verbatim with X.509' '
-+
-+	git fast-export --signed-tags=verbatim x509-signed > output &&
-+	test_grep "SIGNED MESSAGE" output
-+
-+'
-+
-+test_expect_success GPGSM 'signed-tags=strip with X.509' '
-+
-+	git fast-export --signed-tags=strip x509-signed > output &&
-+	test_grep ! "SIGNED MESSAGE" output
-+
++test_expect_success GPGSM 'import X.509 signed tag with --signed-tags=warn-strip' '
++	git -C new fast-import --quiet --signed-tags=warn-strip <output >log 2>&1 &&
++	test_grep "stripping a tag signature for tag '\''x509-signed'\''" log &&
++	IMPORTED=$(git -C new rev-parse --verify refs/tags/x509-signed) &&
++	test $X509_SIGNED != $IMPORTED &&
++	git -C new cat-file -p x509-signed >out &&
++	test_grep ! "SIGNED MESSAGE" out
 +'
 +
 +test_expect_success GPGSSH 'setup SSH signed tag' '
-+
 +	test_config gpg.format ssh &&
 +	test_config user.signingkey "${GPGSSH_KEY_PRIMARY}" &&
 +
-+	git tag -s -m "SSH signed tag" ssh-signed $(git rev-parse HEAD) &&
-+	ANNOTATED_TAG_COUNT=$((ANNOTATED_TAG_COUNT + 1))
-+
++	git tag -s -m "SSH signed tag" ssh-signed first &&
++	SSH_SIGNED=$(git rev-parse --verify refs/tags/ssh-signed) &&
++	git fast-export --signed-tags=verbatim ssh-signed >output
 +'
 +
-+test_expect_success GPGSSH 'signed-tags=verbatim with SSH' '
-+
-+	git fast-export --signed-tags=verbatim ssh-signed > output &&
-+	test_grep "SSH SIGNATURE" output
-+
++test_expect_success GPGSSH 'import SSH signed tag with --signed-tags=warn-verbatim' '
++	git -C new fast-import --quiet --signed-tags=warn-verbatim <output >log 2>&1 &&
++	test_grep "importing a tag signature verbatim for tag '\''ssh-signed'\''" log &&
++	IMPORTED=$(git -C new rev-parse --verify refs/tags/ssh-signed) &&
++	test $SSH_SIGNED = $IMPORTED
 +'
 +
-+test_expect_success GPGSSH 'signed-tags=strip with SSH' '
-+
-+	git fast-export --signed-tags=strip ssh-signed > output &&
-+	test_grep ! "SSH SIGNATURE" output
-+
++test_expect_success GPGSSH 'import SSH signed tag with --signed-tags=strip' '
++	git -C new fast-import --quiet --signed-tags=strip <output >log 2>&1 &&
++	test_must_be_empty log &&
++	IMPORTED=$(git -C new rev-parse --verify refs/tags/ssh-signed) &&
++	test $SSH_SIGNED != $IMPORTED &&
++	git -C new cat-file -p ssh-signed >out &&
++	test_grep ! "SSH SIGNATURE" out
 +'
 +
- test_expect_success GPG 'set up signed commit' '
- 
- 	# Generate a commit with both "gpgsig" and "encoding" set, so
++test_done
 -- 
 2.51.0.438.g6987fc0bae
 
