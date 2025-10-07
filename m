@@ -1,141 +1,136 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88EB2E8B63
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 17:13:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A381B2DEA90
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 17:20:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759857216; cv=none; b=sj+GrL87UpsuVqmkScT9Ojm6LYmxCEXP/WU0GP4Zx5eZ4RS/DfXB2BMFzGlcY02/k1KpmxB1QYxR+WxoKjIlafFUEzTGMI0DhztAcKrmKuXsjGJq7/5HDf8JVWMDNrCI+GNkGycy9ZhbyNhRqBJ0h1T08oJHKMSXZOEpGiAvFPc=
+	t=1759857647; cv=none; b=sOQhcnNhnIiusMgZ2iiakAVJmcGN0AJLaTCpwymUpKV/MHC0ghJFoqJyF8SmC98mx6UyjBqVaCRa4QFOAQyb19zoT/NBthPmwptg/LdszF794++TVviVs/1h1wa1X9EJjAR5j7V/k2jOAfnfn4JvcXBDrk5t4CfiQhWZ1K7GW8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759857216; c=relaxed/simple;
-	bh=/Cpe69cUfAM491rp1h9fvSqGFzL0RanqDYoNIxTcMdE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=T3TDZnh7B1eW3wd7iPAZWwvlTzPAaS503uXz5K4lUx3jK2gzMDnCMe0lqvtUu4kMSJkR6aRWXKaCAXb3HosgweY9OKn+0u+Co4tijjbHGUWDs9JOWkFv7f9S2ChjT1olVDMfUvApr1gLElSy5tCGjvgdSP9VSCePf9Jl2eovzWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A+BRjuh7; arc=none smtp.client-ip=209.85.222.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759857647; c=relaxed/simple;
+	bh=XuNCLIMEauFE68NejCFeA6JTnuOE5YVSe04F+OEBR24=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hpKLntK+ynrQYAMyvnChN8owCgtReO4mJO6sgo8q8Sgn/OPdjK9ADy6x9iWYyNKnf2Sqoj8sfvb5ebz11hfspbE63IEycIayN+du7jnoeCyEBl1prbF6MBVYFx9/HYJFAGV5tBI1rmQt4ReuVtElZDHnfI2Rty/2b2StQWyALSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BCKPem8I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YTncXtX5; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A+BRjuh7"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8625f8624d8so92181585a.3
-        for <git@vger.kernel.org>; Tue, 07 Oct 2025 10:13:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759857209; x=1760462009; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WxBEQwoddGQ3Ohw/1HVe86GwjVdZLUK2Xk5s4m5MIDg=;
-        b=A+BRjuh7a0bJv6Xby9IvI14CLhZlVhhp9GtZIa9XkAmHwd5wKCSSn6VGV7G/YWaadj
-         5Am/9SAxdnF0f7eV9Xwl/ey/aIOoPudXizjHJNA/IjSZy9erXxDdvPFvicTYU5Ko6RbP
-         kXYLDkgh42ujHFfiPHaE2Y3O163FAjh3TwBhP4BBtTEm/obY84d1MZqXlpSAv7Buv8jp
-         Gl8dj8yOsYEkAAlTxQtSbXHTmvGbq+smY6ACaurHRksaGP+8CBDyoU+ccdWTXYsEwPVU
-         6hk544FEI4TkQvjW/rvbVeQw9ulTi+aZdfeEuBjtkO+3078rEv4eRswFCwPf82wigXOV
-         BO5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759857209; x=1760462009;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WxBEQwoddGQ3Ohw/1HVe86GwjVdZLUK2Xk5s4m5MIDg=;
-        b=eYe4IMzkkx3TR/1DvQUhZSE0is0g3VkL16cjSX4SazbCBzBjKdbFTAHrsDLS+yPrfX
-         yVusqDSFFzmhBrouwqxmxRafHzXYVlYeiVfAmOeKsYUCU5eFd3e07uGnJAwEVEsIF3nb
-         iAgAN6p0hqOCEUer2h0yKy+ySEvLQfysAKaVyJZ1dqYOHngrc2PIKqbg+x7J0vNmpVJg
-         lEKwYw4jVNBrVijpxSNeFiYVCAiOnoclHUq1ZG7wxDW457yI8WAnP44FSeH3zkIxoli6
-         +z786iTlEGDz+xXmgH5kI9CR+xttIlvDzutHYvQc1BJv7f6tz2bWCVCEG/xXAs8Z09kV
-         MCJQ==
-X-Gm-Message-State: AOJu0Yw6Xd9bcN90hwW7oepETcByLpqJAxEbdSkpsqz62JnA8CooSQXB
-	p20My2a7hQTMVcIi99v3cNm24Fhe4ZtFyJVD5oyclngXktEbWmt3JPtt8cRIwDU5krSH/iXqyAH
-	XL164QUO0FiBspqpP3BX/cZhrHg3T/UI=
-X-Gm-Gg: ASbGncshQed6iSHtx0lwEqA/6lIekYfKC6icrFbowFfWK3PEYWv6QMGYq85P9Atdcc+
-	Tf117XRVcCVpwenlhDjjDVFE5vB6GerEjU/5luJPdPpDgF8JVEuCP7IG1zKkbMYo+aFoQJ8iOr1
-	AHoyAZ/XQFBN3UqD+PKuWrv0vCD84QIB0J+YRTcOLeeIr9y3NZufDpiBmb0sQWQMGzvTfvCk1b7
-	vgrKtA2XNc32N42dWFgAbW9qXi97o0Bm8kYVHXH8jnkhB9g2oN6nAf9AjvGAvbo
-X-Google-Smtp-Source: AGHT+IHmPG173C/7yaT2AVb/twkAAdmNz37KLe0tFhVQQRcLehzlqMtY9i3o7tA3TY1EDNf+2p9GNNfVEzYo6BAYZrY=
-X-Received: by 2002:a05:6214:d61:b0:795:c55c:87de with SMTP id
- 6a1803df08f44-87b2ef7fa91mr1686896d6.5.1759857209402; Tue, 07 Oct 2025
- 10:13:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BCKPem8I";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YTncXtX5"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 824121D00233;
+	Tue,  7 Oct 2025 13:20:44 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 07 Oct 2025 13:20:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759857644; x=1759944044; bh=UfC4pA/FS6
+	QnRifiJMj5T1oOpbip/v119VFIl36QMKk=; b=BCKPem8INXdosP6w3ywbd66gQI
+	QAPmaO3yr7PK+4bQqYnVueVJLVpM+xzh1pRxWYZwNikC6Gdego87+taSKOdFIWHQ
+	9NGCIUx0N7JtKVYrWKUWrobF3nAxo4QxHMm+LHkNwxzEFPXOYn9dGqxQcymcRErg
+	cGJSsToG2bXu0tdwrnOemewi0a+g8mDBN1nVzDceOlsHQ74WUNU0GAr53a2WqfYg
+	E0t1QF8UchM+8LfzYvy1BpsxxLuA78y/m7gyl0e4b34qqKpnJlo3VGFUunWYYqiv
+	aM4EEGqe6nj5cDOqlUSnt9ZTxffIizarO9T0Kls392RPLBzgZ0wAqMKwFCUQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759857644; x=1759944044; bh=UfC4pA/FS6QnRifiJMj5T1oOpbip/v119VF
+	Il36QMKk=; b=YTncXtX5ZDsfEP643M9pEHqFGAlAevwLbuqTZfVmgvttlmTu01e
+	q88O2dUdFdktnwYq3m581qsbuKp537QWAt9p8x5BIQCU/qA4xxJHh+j2+q0VGKpz
+	92xSc/hGxzpIMICluYXZxeJYQi7scdBkw9hrEEta1anWIbH5AlGdhqnQ61V7z1OV
+	ooM7NdPdaqqIWuTvQeT54biLPIewtsXrELTeNexPD5xqkv80IbCXT7KX/vdG3P1H
+	xGjbyKPXYWAjvrDav9y6exNttZuP93HNh5goEZUqlVaaSGpgfzGeU1tZMH2DVvL6
+	oNz2IE0NHOV9Uer0r2sZvyx9Cs8lHMQmHoQ==
+X-ME-Sender: <xms:7EvlaJ4vm-EW2cp1hLkjKxZXUqoMiV68rXEnQ1v30TAd-NYcmvFUzQ>
+    <xme:7EvlaCultCIPdA2MeDcjKcjitTP2HyEmJfgPTssNnNi4M_K95-rqXn4puhjoL7fUp
+    lMLed6d4NWNxbe8__GAC4ooRwLNqZc-haoq4nhD5EQzbseqbqyV>
+X-ME-Received: <xmr:7EvlaL0uRGmGpOEtwg2vaMrGp4ztUCO_f_CTCTU2K6k2BY7tAYCOGucUOKs44tV8ljknsc0vO_2W1nSnICPa_wsYy3RDFGKDwGgR>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddutddtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddvpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhlrggsoh
+    hrrgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtphhtth
+    hopehruggrmhgriihiohesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphgvfhhfsehp
+    vghffhdrnhgvthdprhgtphhtthhopegrrghrohhnsehstghhrhgrsgdrtghomhdprhgtph
+    htthhopehjrhhnihgvuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhk
+    shdrihhmpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomh
+X-ME-Proxy: <xmx:7EvlaLrx70LMEqv6jIHDrYks2F767g5B71ZlForkwJ7uX7xrg7TrVw>
+    <xmx:7EvlaLKeWX1Vk8LqPmhED71hV0Eu36MMLfWWO7WhrX-Ov4ao0CPa7A>
+    <xmx:7EvlaHRP07bkPPMDEWs1P_G9w5aTTtaGUwLiyDOWH7b6v_4kgXoXHQ>
+    <xmx:7EvlaDMa5FF-2a4xjUyFqNAmjyxcQ0jydAHmGIIXdcWoUyFA_Fgnnw>
+    <xmx:7EvlaA2sYBE_wWtfl4FysI58xkMn0vCuGeVgQ0tDJIkreZww0j8b_2Sz>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Oct 2025 13:20:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org,  Emily Shaffer <emilyshaffer@google.com>,  Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>,  Jeff King <peff@peff.net>,
+  Aaron Schrab <aaron@schrab.com>,  Jonathan Nieder <jrnieder@gmail.com>,
+  Patrick Steinhardt <ps@pks.im>,  Josh Steadmon <steadmon@google.com>,
+  Ben Knoble <ben.knoble@gmail.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 4/5] submodule: encode gitdir paths to avoid conflicts
+In-Reply-To: <87cy6y4xb4.fsf@collabora.com> (Adrian Ratiu's message of "Tue,
+	07 Oct 2025 17:10:39 +0300")
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+	<20251006112518.3764240-1-adrian.ratiu@collabora.com>
+	<20251006112518.3764240-5-adrian.ratiu@collabora.com>
+	<xmqq347wq87s.fsf@gitster.g> <87cy6y4xb4.fsf@collabora.com>
+Date: Tue, 07 Oct 2025 10:20:42 -0700
+Message-ID: <xmqqo6qik4r9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im> <20251007-b4-pks-ci-rust-v1-2-394502abe7ea@pks.im>
-In-Reply-To: <20251007-b4-pks-ci-rust-v1-2-394502abe7ea@pks.im>
-From: Eric Sunshine <ericsunshine@gmail.com>
-Date: Tue, 7 Oct 2025 13:13:18 -0400
-X-Gm-Features: AS18NWDDrG4eI33kTulModfXI5pI73yW9n1it_OWDlpt--v8BPuXrFoagHrLaIw
-Message-ID: <CAPig+cQ7xJky+F=g=NMrN6BQfP+ZV2KF4RF2eLqtULKgMTR5_g@mail.gmail.com>
-Subject: Re: [PATCH 2/6] ci: check formatting of our Rust code
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Oct 7, 2025 at 8:37=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
-:
-> Introduce a CI check that verifies that our Rust code is well-formatted.
-> This check uses rustfmt(1), which is the de-facto standard in the Rust
-> world.
+Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+
+> I will percent encode the upper case by modifying 
+> is_rfc3986_unreserved().
+
+Again, do we really need to encode everything?  We need to only when
+(1) there are other submodules that would collide with us (e.g., by
+being only case-different, or by having our name plus a slash as the
+prefix of their name, make us overlap with them) or (2) our name is
+not filesystem friendly and needs munging.  A letter being in an upper
+case is not a crime.
+
+>>> For now url-encoding is the only option, however in the future 
+>>> we may add alternatives (other encodings, hashes or even 
+>>> hash_name). 
+>> 
+>> Let's not say "For now". 
+>> 
+>> Choose a single encoding that we can use forever so that we do 
+>> not have to upgrade extensions.encodeSubmoduleName with suffixes 
+>> like extensions.encodeSubmoduleNamev2, 
+>> extensions.encodeSubmoduleNamev3, etc. to cover our earlier 
+>> mistakes and force renaming on users. 
 >
-> The rustfmt(1) tool allows to tweak the final format in theory. In
-> practice though, the Rust ecosystem has aligned on style "editions".
-> These editions only exist to ensure that any potential changes to the
-> style don't cause reformats to existing code bases. Other than that,
-> most Rust projects out there accept this default style of a specific
-> edition.
->
-> Let's do the same and use that default style. It may not be anyone's
-> favorite, but it is consistent and by making it part of our CI we also
-> enforce it right from the start.
+> Understood. Will drop that idea.
 
-In a different thread, I wrote[1]:
+If we are to consistently use submodule.<name>.gitdirpath as the
+authoritative collection of name-path mapping, then the exact
+algorithm to derive path from name can be improved over time without
+having to worry about an old submodule whose path was computed by
+older iteration of the algorithm colliding with a new submodule
+whose path is derived by the more modern algorithm.  So I do not
+mind to make ourselves aware of the possibility that we can tweak
+and improve.  But as I said elsewhere, I do not think we need to
+even say what exactly algorithm is used to the end-users.
 
-    There are more than a few developers on this project (including
-    myself) who still use 80-column editors and terminals. As a
-    general style guideline, this project does recommend wrapping code
-    to fit within 80 columns (except in cases when doing so would
-    severely hurt readability). I imagine that the same sort of
-    guideline would be appreciated in Rust code, as well, by those who
-    still stick with 80 columns.
-
-    I bring this up because, although it hasn't been such a big deal
-    with the existing C code, assuming that developers run `rustfmt`
-    on the code before sending a patch series, then this may become an
-    issue if different developers have `rustfmt` configured to enforce
-    different maximum column width, especially since `rustfmt` is
-    likely to reformat the entire file rather than just the region
-    that has just been edited.  So, if this code gets checked in as-is
-    with these very wide lines, and then someone else, who has
-    `rustfmt` configured for 80-columns edits the file, then it
-    becomes a problem.
-
-    As such, can we also add a project-wide `rustfmt.toml` which, at
-    minimum, sets the maximum line width to 80? For instance:
-
-        max_width =3D 80
-
-Later in the same thread, I wrote[2]:
-
-    Project guidelines have long suggested 80 columns as a desirable
-    maximum not only for C code, but for pretty much all other
-    resources, including shell code, Perl code, and documentation
-    files. This suggested maximum works well for adherents of
-    80-columns and (presumably) hasn't been too onerous for developers
-    who use wider windows; at least we haven't heard people clamoring
-    to increase the suggested maximum column limit. As such, it does
-    not seem far-fetched to expect that the project guidelines
-    should/could/would also apply to Rust code.
-
-Unfortunately, what little discussion there was petered out quickly
-without resolution, but it seems that it would be a good idea to make
-some sort of decision earlier (while there is still very little Rust
-code committed to the project) rather than later.
-
-[1]: https://lore.kernel.org/git/CAPig+cTZch_pvfurtjBTNphMeRQL6jSBSjNY-4mff=
-joXZ4eqcw@mail.gmail.com/
-[2]: https://lore.kernel.org/git/CAPig+cTdJAjuekz6YXDkxTjTRxsPEzSUxhoD8nK9k=
-7uA4s=3DrHQ@mail.gmail.com/
-
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Thanks.
