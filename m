@@ -1,83 +1,81 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3204F2DC322
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 12:36:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800F92DF718
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 12:36:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759840617; cv=none; b=S45zlzZ976Mhiwxmu3/Kdxc0fyBi3p3q9qx9lnUnYS04VjxZyVJyjex2zUzQ+Q0VqdJ4Seo70DPquZEbBbDzJAZzTmNu4k2vbVFxQeU4/ytdGoGfB1YicPLGaEgTTArtuZ4zIn4aV8ZuW9QAdbzoKLLPno3hTOtHpiK1gMu6ZZw=
+	t=1759840621; cv=none; b=SnZM8rV4Wec3VeIXQieu/K2UUyFaRYGos/++fOmQSMQHX5svxpfY0AzAExEJ0Mj6by3pHdMvF6Is8Ma+q6tH4SahZJoPP+ykVKX/IAFP37SQftKj21UHuTx04zWRB/8OO6kSCu/aqwU4323UqRWArVB+xS3/dk9nLiPD4wW5qU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759840617; c=relaxed/simple;
-	bh=RDCjA3ClOkzsQHgoDs0J2xHi3hyw4iZBJN37tfrevQ0=;
+	s=arc-20240116; t=1759840621; c=relaxed/simple;
+	bh=OHrav56wnnpr2WmGA40My6eS/QFUFV4UXJSXzYxCFYg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=GHJyaLJVc6uRw6+CM4ZmozrkqhVLdHT5KxNVtcxS8unWeNV6ihdu4RBx2EiC6Wqfl3zxHT/7cG/2MFvzccqGoBIS4rGjDIGPgEwf31viZjJg2xqjIfRnQ/iiALblv4056B4qWMKUho3JlUktwPMjbVFRCLgqmJG4bDuFNF3iHD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T59oNXAN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iey0DRna; arc=none smtp.client-ip=103.168.172.154
+	 In-Reply-To:To:Cc; b=ZmODHfzYzaxAUSkTHiGqFvRCmLcS9WG9undmHhanI4E8ji3M+DbWyJZX6L0oZOTRlq6w426UCX/QpJKYpQ0ddN0nwOZSMAt1wdstL21gWq7ZliyhFcc0JvNvvskPyrbtCMeihFSgVychjti8kiGU+XZNqBseonWCZJtOR9vS1jA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H/mVDXU2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gYLC5ClN; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T59oNXAN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iey0DRna"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 82B23140009D;
-	Tue,  7 Oct 2025 08:36:55 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H/mVDXU2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gYLC5ClN"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C20811400306;
+	Tue,  7 Oct 2025 08:36:58 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 07 Oct 2025 08:36:55 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 07 Oct 2025 08:36:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759840615;
-	 x=1759927015; bh=xsI4cfS/H4EeLFApealE2vDRyp9PaD53gtK2lSMPW08=; b=
-	T59oNXAN3QVS3F1m8VrZViqSGEQk3QQ42LG6SoX/sCJTwAz+3ILfJCB4JfVREnBh
-	YezWyyCbJctu84SMUYs1cQoWqXni/Mh3qfvsCwxGP+aNCzG9IocjfuiryzKczJBq
-	f8tS09y2ZO5x0RKJvY/+0I5vlCUum/GSdG+sOacU3z/5snyqH/o+PCdxS4NADEJU
-	0B/JpMD/rIWjoo6rSMWlWXXd/QJmsQ6l9vA0J82DjNEg0F6IuQXxWQKes4CCnnLJ
-	TMFScq8jYJXBVn2MDK2IZPJS12kMOwyO8YnyeuzzKHFFAg4BZTMgM8qUZqX4oCHJ
-	2ynxyacuSVP5NCoJTB3t3g==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759840618;
+	 x=1759927018; bh=sDFyuOKuxRlo6LwyuIgr9w0jRfb/AzRoQMLQa1PYSeE=; b=
+	H/mVDXU2nwJsV6PNZLWFn3+hQyTeb0bhc6vTSJlyO1AXb8o5wpvEprgHTzCrGVjG
+	yZSxYuTEqTz8LsEF7SpAV1PTCxGuepajaqk4JiT/hfRtB3+jG6xQfCM7wWrEYb8K
+	oSKy1JeSDlqoUv5s8wqSlQm1D3MvcM3PzluOsDpTSYTtVVfPDqGLF5r9KY6RFgvD
+	Q3YdCysXKHQ+g1AHj+x4D1ksTCVIJCkv6NTqZZNY+eemNk9czTzVs78IebcQcBpJ
+	vxzBiIq5pYk4bOaICUcI5vO0AWF7oWnmjMJ8FSgkVHZpl+HzgwlaWso7Ooclt9x5
+	q1/qOJNBM++79Q0xVLcqoQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759840615; x=
-	1759927015; bh=xsI4cfS/H4EeLFApealE2vDRyp9PaD53gtK2lSMPW08=; b=i
-	ey0DRnaLNJhF66dcIR3AMJjQVB6yMk05GBcx6NJoSJyDkIv7JZfL+zYTP2SQRTL7
-	NLVjqgB0FN/QYU5w/o3kze/4va2qwPBWWTb40wDbI+kv1swdnga9ALG7V+ecp7FR
-	vvJBeJMRODJL07DcPolxZyic374GhrH1b4FiTRHxwuCCw0eJujebGz3SeC782a91
-	tQkeCHGp9UJiqdMa8jRk99DSwHo94QcPfDffLsBSwvDajyj1dLLDOo6esh01qj4Z
-	0ifwD3FG5WntXFhUjDR3309T/gr6bA2qxTgm6XeCSqTO1g7h866hQqi15IMK4lsD
-	8+/j+pIMdW7U3wPUIHUtQ==
-X-ME-Sender: <xms:ZwnlaE_E5CawiOGblvGlEuG9hejoY8L0gDV2GnGkKu1VHHksJKq6eQ>
-    <xme:ZwnlaHSdhAA1qEwk4tZHsd3-lQRGYk0di6JfObV8R6l9HqUkoCV6LPXMdDNvYo4lP
-    OY1NbnEQG6G2E7w-_zON0ZGkDG0SNbAo0WHytWORV8ILZE4kuUQ>
-X-ME-Received: <xmr:ZwnlaGlQ_fV0o5fXhocyWUp_7ScXxI3HQlGOUd83au08cTWXUtDrAHTN4b-Ug9XUQpKHpMgt0qWwYoeLfs-_30eTIHwohFOCsO_sR1-oAns>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddtgeefucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759840618; x=
+	1759927018; bh=sDFyuOKuxRlo6LwyuIgr9w0jRfb/AzRoQMLQa1PYSeE=; b=g
+	YLC5ClNMBftXlafpAk8N7iccGs/4K3sAkqAqGdvdaESH1k27qYidBBFZf70jIFR9
+	jjJZZiYaYlQKiocs4evdB2LZUtz0tM4G1VLk+pXdPdN1wAK4q0s6hKhU4tBH9/Of
+	RL5lcIcgT66fo9Tf+LpkQS0Nr4kLJ3tKG5Nm8W7HXEZtcN2VFR901P/Vd5QEC+6u
+	KNgyXZ7O5k2Co+2ZFopg78GbjCouvx+t2aZJI5iDrD1Ywi1e0A3Xl1PLJM2xx1wy
+	EnU3Z04uf3QEDd9Ou1aq3qGGbqGl5Yy3azMNnk93W80Ud/9wRcVlK+4k4Iq0PT8J
+	3NhNZA4+C7a2MZhZh62/g==
+X-ME-Sender: <xms:agnlaHHFbmJdrehk2GmXtsLpaMNhTcVBzH-TKkpnpxyphDJJT02abA>
+    <xme:agnlaLVX6NNFfBkn_1Drvj49F5JFIobe2u8Z8nUlmU4INCKky1t5U4NdlSnMMaDpy
+    JntgD98XA32piZIoGAu0ZJiWBk-zyJbsff4QJV91Z8noKitZIpX>
+X-ME-Received: <xmr:agnlaOIDgDcu8eZdTS_tmkayh4cBjYGRHJ4TdTTnkXun7X9rxksi9DfceEYexIM7rzybC-ykfuCgvI7xnkxNJQ5WuMR8R1vVAsF01pyT8Mc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddtgeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeegffeihfetieejjeelhfejveeigeehfeelteejtdeijedtvefgheeghedvleffteen
-    ucffohhmrghinhepphgvrhhfohhrtggvrdgtohhmpdhgihhthhhusgdrtghomhdpmhgrvh
-    gvnhdrohhrghdpvddtvdefudduvdeludeghedtqdhrrdhshhenucevlhhushhtvghrufhi
-    iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprh
-    gtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegviigvkhhivghl
-    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruh
-    hsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlih
-    hnsehgmhigrdguvg
-X-ME-Proxy: <xmx:ZwnlaHTIJi9UwzKRtLeydutVyNGZiDkeXRJs3HBa4OKvOCxYsWQidw>
-    <xmx:ZwnlaEPfIZ2434_fyYmNSGvwSGdFmDQk2VavXa_xW1n9UDW6BDtnHA>
-    <xmx:ZwnlaAVVscke3WMM6SgQ1s4blGCTvExsRj_LssyvK55i44D1so-3FQ>
-    <xmx:ZwnlaLeXrAQye4c0pKCpHE65FQCgMLLlWsnXE-UibUm885kwQ0VaTQ>
-    <xmx:ZwnlaKHtDqFckkP0sXvBrj1Hb_whcy80CZ1VRzi80xcfVt1y9om7MOBX>
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtph
+    htthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvgiivghkih
+    gvlhhnvgifrhgvnhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:agnlaD_Bdg6goZ3ACVszm2bB3Q9LM-uzficoJLiScdgQFG5rpSZ8oQ>
+    <xmx:agnlaJIXhE8DgXac4qzoEM4t9cVdZShaDVNmO56l-NhlNFwvEnQE4A>
+    <xmx:agnlaAmDmS05oW4yDNs4WYQwKrUfelhUaUPxt59-KGF1Cad8eTapYg>
+    <xmx:agnlaFP0TXiTII8FWKKUDDItSwVaj3XWscbUWTphPeMlJayw8xs1iA>
+    <xmx:agnlaG3EupleO7ybo57tzEHnRmfWJrN6VLLgYZGc69m9fZ82xH087PQT>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Oct 2025 08:36:54 -0400 (EDT)
+ 7 Oct 2025 08:36:57 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 381ac76b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 7 Oct 2025 12:36:53 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 86f6f592 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 7 Oct 2025 12:36:56 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 07 Oct 2025 14:36:33 +0200
-Subject: [PATCH 5/6] ci: verify minimum supported Rust version
+Date: Tue, 07 Oct 2025 14:36:34 +0200
+Subject: [PATCH 6/6] rust: support for Windows
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251007-b4-pks-ci-rust-v1-5-394502abe7ea@pks.im>
+Message-Id: <20251007-b4-pks-ci-rust-v1-6-394502abe7ea@pks.im>
 References: <20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im>
 In-Reply-To: <20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im>
 To: git@vger.kernel.org
@@ -95,84 +93,118 @@ Cc: Ezekiel Newren <ezekielnewren@gmail.com>,
  Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.14.3
 
-In the current state of our Rust code base we don't really have any
-requirements for the minimum supported Rust version yet, as we don't use
-any features introduced by a recent version of Rust. Consequently, we
-have decided that we want to aim for a rather old version and edition of
-Rust, where the hope is that using an old version will make alternatives
-like gccrs viable earlier for compiling Git.
+The initial patch series that introduced Rust into the core of Git only
+cared about macOS and Linux. This specifically leaves out Windows, which
+indeed fails to build right now due to two issues:
 
-But while we specify the Rust edition, we don't yet specify a Rust
-version. And even if we did, the Rust version would only be enforced for
-our own code, but not for any of our dependencies.
+  - The Rust runtime requires `GetUserProfileDirectoryW()`, but we don't
+    link against "userenv.dll".
 
-We don't yet have any dependencies at the current point in time. But
-let's add some safeguards by specifying the minimum supported Rust
-version and using cargo-msrv(1) to verify that this version can be
-satisfied for all of our dependencies.
+  - The path of the Rust library built on Windows is different than on
+    most other systems systems.
 
-Note that we fix the version of cargo-msrv(1) at v0.18.1. This is the
-latest release supported by Ubuntu's Rust version.
+Fix both of these issues to support Windows.
 
+Note that this commit fixes the Meson-based job in GitHub's CI. Meson
+auto-detects the availability of Rust, and as the Windows runner has
+Rust installed by default it already enabled Rust support there. But due
+to the above issues that job fails consistently.
+
+Install Rust on GitLab CI, as well, to improve test coverage there.
+
+Based-on-patch-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Based-on-patch-by: Ezekiel Newren <ezekielnewren@gmail.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Cargo.toml                 | 1 +
- ci/install-dependencies.sh | 8 ++++++++
- ci/run-rust-checks.sh      | 5 +++++
- 3 files changed, 14 insertions(+)
+ .gitlab-ci.yml     |  2 +-
+ Makefile           | 14 ++++++++++++--
+ meson.build        |  4 ++++
+ src/cargo-meson.sh | 11 +++++++++--
+ 4 files changed, 26 insertions(+), 5 deletions(-)
 
-diff --git a/Cargo.toml b/Cargo.toml
-index 45c9b34981..2f51bf5d5f 100644
---- a/Cargo.toml
-+++ b/Cargo.toml
-@@ -2,6 +2,7 @@
- name = "gitcore"
- version = "0.1.0"
- edition = "2018"
-+rust-version = "1.49.0"
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index a47d839e39..b419a84e2c 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -161,7 +161,7 @@ test:mingw64:
+     - saas-windows-medium-amd64
+   before_script:
+     - *windows_before_script
+-    - choco install -y git meson ninja
++    - choco install -y git meson ninja rust-ms
+     - Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+     - refreshenv
  
- [lib]
- crate-type = ["staticlib"]
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index dcd22ddd95..29e558bb9c 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -10,6 +10,8 @@ begin_group "Install dependencies"
- P4WHENCE=https://cdist2.perforce.com/perforce/r23.2
- LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VERSION
- JGITWHENCE=https://repo1.maven.org/maven2/org/eclipse/jgit/org.eclipse.jgit.pgm/6.8.0.202311291450-r/org.eclipse.jgit.pgm-6.8.0.202311291450-r.sh
-+CARGO_MSRV_VERSION=0.18.4
-+CARGO_MSRV_WHENCE=https://github.com/foresterre/cargo-msrv/releases/download/v$CARGO_MSRV_VERSION/cargo-msrv-x86_64-unknown-linux-musl-v$CARGO_MSRV_VERSION.tgz
- 
- # Make sudo a no-op and execute the command directly when running as root.
- # While using sudo would be fine on most platforms when we are root already,
-@@ -130,6 +132,12 @@ RustAnalysis)
- 	sudo apt-get -q -y install rustup
- 	rustup default stable
- 	rustup component add clippy rustfmt
+diff --git a/Makefile b/Makefile
+index 7ea149598d..366fd173e7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -929,10 +929,17 @@ TEST_SHELL_PATH = $(SHELL_PATH)
+ LIB_FILE = libgit.a
+ XDIFF_LIB = xdiff/lib.a
+ REFTABLE_LIB = reftable/libreftable.a
 +
-+	wget -q "$CARGO_MSRV_WHENCE" -O "cargo-msvc.tgz"
-+	sudo mkdir -p "$CUSTOM_PATH"
-+	sudo tar -xf "cargo-msvc.tgz" --strip-components=1 \
-+		--directory "$CUSTOM_PATH" --wildcards "*/cargo-msrv"
-+	sudo chmod a+x "$CUSTOM_PATH/cargo-msrv"
- 	;;
- sparse)
- 	sudo apt-get -q -y install libssl-dev libcurl4-openssl-dev \
-diff --git a/ci/run-rust-checks.sh b/ci/run-rust-checks.sh
-index fb5ea8991b..b5ad9e8dc6 100755
---- a/ci/run-rust-checks.sh
-+++ b/ci/run-rust-checks.sh
-@@ -14,4 +14,9 @@ then
- 	RET=1
+ ifdef DEBUG
+-RUST_LIB = target/debug/libgitcore.a
++RUST_TARGET_DIR = target/debug
+ else
+-RUST_LIB = target/release/libgitcore.a
++RUST_TARGET_DIR = target/release
++endif
++
++ifeq ($(uname_S),Windows)
++RUST_LIB = $(RUST_TARGET_DIR)/gitcore.lib
++else
++RUST_LIB = $(RUST_TARGET_DIR)/libgitcore.a
+ endif
+ 
+ # xdiff and reftable libs may in turn depend on what is in libgit.a
+@@ -1538,6 +1545,9 @@ ALL_LDFLAGS = $(LDFLAGS) $(LDFLAGS_APPEND)
+ ifdef WITH_RUST
+ BASIC_CFLAGS += -DWITH_RUST
+ GITLIBS += $(RUST_LIB)
++ifeq ($(uname_S),Windows)
++EXTLIBS += -luserenv
++endif
+ endif
+ 
+ ifdef SANITIZE
+diff --git a/meson.build b/meson.build
+index ec55d6a5fd..a9c865b2af 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1707,6 +1707,10 @@ rust_option = get_option('rust').disable_auto_if(not cargo.found())
+ if rust_option.allowed()
+   subdir('src')
+   libgit_c_args += '-DWITH_RUST'
++
++  if host_machine.system() == 'windows'
++    libgit_dependencies += compiler.find_library('userenv')
++  endif
+ else
+   libgit_sources += [
+     'varint.c',
+diff --git a/src/cargo-meson.sh b/src/cargo-meson.sh
+index 99400986d9..3998db0435 100755
+--- a/src/cargo-meson.sh
++++ b/src/cargo-meson.sh
+@@ -26,7 +26,14 @@ then
+ 	exit $RET
  fi
  
-+if ! group "Check for minimum required Rust version" cargo msrv verify
-+then
-+	RET=1
-+fi
+-if ! cmp "$BUILD_DIR/$BUILD_TYPE/libgitcore.a" "$BUILD_DIR/libgitcore.a" >/dev/null 2>&1
++case "$(cargo -vV | sed -s 's/^host: \(.*\)$/\1/')" in
++	*-windows-*)
++		LIBNAME=gitcore.lib;;
++	*)
++		LIBNAME=libgitcore.a;;
++esac
 +
- exit $RET
++if ! cmp "$BUILD_DIR/$BUILD_TYPE/$LIBNAME" "$BUILD_DIR/libgitcore.a" >/dev/null 2>&1
+ then
+-	cp "$BUILD_DIR/$BUILD_TYPE/libgitcore.a" "$BUILD_DIR/libgitcore.a"
++	cp "$BUILD_DIR/$BUILD_TYPE/$LIBNAME" "$BUILD_DIR/libgitcore.a"
+ fi
 
 -- 
 2.51.0.764.g787ff6f08a.dirty
