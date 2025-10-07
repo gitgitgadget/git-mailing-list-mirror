@@ -1,71 +1,71 @@
-Received: from mail-io1-f68.google.com (mail-io1-f68.google.com [209.85.166.68])
+Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F271C27
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 21:56:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF94023AE62
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 21:57:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759874169; cv=none; b=J7S/QEQaAkKVe3S9ZStPsYdcBKImzliwkQWI9UYap97jceg7JxJIlyy4UQNgKRam2FFa9cmgINgWvUvm5dQVI/gRpC4oF6XEHmKJLwq+nTU4peaXDXPOsUOQbJu+sm1NlBmd1uTXPigNKzT5LxM8bbYewVtP5/9XkiAM3CIUoAE=
+	t=1759874279; cv=none; b=lFsreOCKvysD8o5VC/85HCDP6lpKl9Ykn0MwdklDJWZf5eiZrf/c2sJhXyGPKWkVFFjQAATckoGeTPnwDt8Egcc8wKG/p1btJ833cvqDT+g+cexvm2ESTGBqdAnEeE2Kl15YoGt9ZM7jW7WG0HrpGmJfVRHGxUoBUZNFDty7rtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759874169; c=relaxed/simple;
-	bh=CooHQDioWjplVSllQUNyE4yCu4wsWyPA5qWnDYSy9y0=;
+	s=arc-20240116; t=1759874279; c=relaxed/simple;
+	bh=2xr6QcZM5NwHiPEbLsm/2qNWeYGOhhoo76W+KuW9ee0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B9QKjqwJHqB4nuiqAh2Mu+uLD8mu63+TQh+KCb8YoHZnZmPeZmoMF6zg/oRxfOHQRM3UfgtWwoZosRNuQuMzt4Jpb2iDsuWda8iCjNXxJFlZNE38ruEahH19mQpNC7/O25C09owZKjt7aTYAaDRccb6C5J4mWgYl4shS1SZLrfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=i4HSzSSa; arc=none smtp.client-ip=209.85.166.68
+	 Content-Type:Content-Disposition:In-Reply-To; b=i1nIMBoMrlh9NJGPbQ/RKA5pymLbTxDiblO7kAIev39n4Uf/npPLiDxmJVbIOUcpZMLCBRwo9BtUoDl7NqrAAPyXv7g1+SPexhuRgKbEMkq1WBVlYOOUw0kNK4M5gF33mOHbmpDYVcSE/a7jpU/auFwDiMMLb6FKFG9uzYNU4uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=PMONUUEz; arc=none smtp.client-ip=209.85.166.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="i4HSzSSa"
-Received: by mail-io1-f68.google.com with SMTP id ca18e2360f4ac-92790f12293so324950739f.2
-        for <git@vger.kernel.org>; Tue, 07 Oct 2025 14:56:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="PMONUUEz"
+Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-42f5e9e4314so50511785ab.0
+        for <git@vger.kernel.org>; Tue, 07 Oct 2025 14:57:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759874165; x=1760478965; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1759874277; x=1760479077; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CooHQDioWjplVSllQUNyE4yCu4wsWyPA5qWnDYSy9y0=;
-        b=i4HSzSSaUZWGi9A3ZBqGifunp8DnuW8gsy8yOe9VRhXrPCBmMd8jA6KqabSloSWc2M
-         3K46R0V/8DRQRqYOcuW5u0W4YZr66UPEVN+lCfLoUSbvgUvcbTxzULXJt8q3dJoF8vEq
-         5StgCML0TOQRKiCtk19joN3q/YDKP2HzkWcQsJaktznva6GfjdASfzwrivPd6+Fxx7tU
-         jSbI6puOoZq1VVcXVPzCcrfMUHKtf2QzUw5N97T4WhWFaYtYYe1DRCFJfB+dWuL6wa6r
-         RGcMslBk7Qg3gfp+FRBrEpIyDjw8eFUQU94RuLQybjPjum5JqxEFWfUZLiJ0O0jjOU+r
-         Zi/w==
+        bh=vAEs4eiJpEcrG/vPMlh/Ip7Gxnd8H1ocQsWxtrCsaJw=;
+        b=PMONUUEzYZk60eRhW5asnJLIlmvkehWiVQtVh8b0CGp8xDAourfGKBnW0kScaZ/BXL
+         lWngBxds199wC4Pj947utiACKqPwF8ZEIlu4jm73+o+jZExB92xqPkYWk5cLPSb78BOa
+         5wVI2b73mVgO4Vkudc43ruT8zLqzh+UaHfz5XuVLtknnGrh+iVD8kQGrF7UJY8reYIIQ
+         WsUBNOXJIAkYk4NxPydccyuSX6TWJ74xoweOI0oZMmrl4N6lME/p1kqTNum6S/ED7FKk
+         YjFD/cXflUV0a5j2o6ZgR96gZWJwYWc8ROC0WoM2sRYizR2g3OSCR3Mo5hEEVEFn74Aq
+         itfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759874165; x=1760478965;
+        d=1e100.net; s=20230601; t=1759874277; x=1760479077;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CooHQDioWjplVSllQUNyE4yCu4wsWyPA5qWnDYSy9y0=;
-        b=T7WgbVzprkmrV0YR3huU1c1YzKvKCLoSlsCV6f4DpayY2HkHo0EB71wOgclNXLS71U
-         eTI3aW2+SN2MOUKTBpVUPHrZLFUmu18f+H5HNcLXtyuaCKYfjDzjXFha6Hwi4ArqS3dc
-         UedEKM1CSVx6yi9GicEBLhV3/u2nhaPVlijxUtm/1OYwMJ3H19Db68keFNeIJsXhuUSa
-         buosRPTMbvvFsPjw/oaErjwriQ+YdkkVIF8UYH2UOpGkgnv/JCh7Fqzpkzd0rr8VQ3ei
-         asRnpOJSY2o363DHetxdXfH4T/jSGwmufmfyVIxeANFeTe6FIymKGeet1gnVitLS7MII
-         GJ/g==
-X-Gm-Message-State: AOJu0YweJqMj8gG6mGgEoU27f93nW6lBXKD3nEV/IwSJKWFFkvpgNI/+
-	I1ZHWpoxiqnkAbPvcuRpRV7ReNogjmxZRkDWXfrWL1qRr9Ema70WmaAViuQLlAiApOAEJqhUyT8
-	y3NLDJC7OToXN
-X-Gm-Gg: ASbGnctTQ3v3fTNjUHNhE40znAobmvJjtJAxmjoFEV3ngS14WOdZYJVaJN4iX95xSTE
-	iJOw6sQN89L3gtftfMCB0IrxSsbeOuUdOAw1weu1OfUDPsOuYjy/otcJY9WdBZeJvodA+/DA5gS
-	tY/XBqi4fWBzxq6WMI/oG95CPKK6W8T7mY3ocghv3J9oQFJauuvJd9GTXAfRU22dxyRey1ZMhta
-	52DcnFFjgaMQUEGVlpwPUy0EoR/CDxfpGVALdlnpJHwqJcEMooBeRKZ+RnHs1I2K0VuMvK+4PwR
-	JTvB2RUGsuHYPWydZGbyMBa4rXRVvsir2qLWYntKao47Vq/UG7Yis/QqnsdFPAccaYqBev1tYt3
-	CNL2RO+tWRXBgfq8o9uM7XbtNob6dDZz9mY4ppf/Ja+3qfVj1azJe3HeAuY6/ScF/UIcal3RcEp
-	IJmQxJiFkieARB5x31CCCnznldu7ZhOBX7EI4VBzQczM8hnQqWig==
-X-Google-Smtp-Source: AGHT+IGIqsdDsIqpsiHBllKQnrUl9QzDE4egXhzsZTJJe5qI48JY9h0y/LxdEpYA4N4PuZfmbmGu8w==
-X-Received: by 2002:a05:6602:6b08:b0:93b:b799:460b with SMTP id ca18e2360f4ac-93bd1831b33mr109543139f.3.1759874165624;
-        Tue, 07 Oct 2025 14:56:05 -0700 (PDT)
+        bh=vAEs4eiJpEcrG/vPMlh/Ip7Gxnd8H1ocQsWxtrCsaJw=;
+        b=T0d8e+PgYnNI4U1hUDxRjLSFHVGW/7uDwiyYvEOsYXtgOUMNO+Fzd6QD/QVYVxBhp/
+         K5EmnxGl+mxxEDOnlPdCCei0viI1t7IDgK9BQ14zJ3ish5MTgVd3fkA1UOPETb9Y3/Ni
+         BOKQT8H0+hxmze1Slraynd4e650PklqqvOdf8+mUqLenlN+8Sku1oVBi0pcBJyNrz0Rv
+         H4kOTNyJEJIxzggw0H7bt7qHwdVMlYVUtlQqbbR/PP45QBy0zHUkDl4wKX2twMphKnRh
+         Rwsa2qZAvGwKLljBtkITF0fZCLawCHX20+8d7Lc+zVwACj2yki//TbNx8T2D/KebLkuN
+         mk2Q==
+X-Gm-Message-State: AOJu0Yz9Ito7FZDnRlXK5pi9D7za9Xa8ksJGJNJafXE2wX7eEfViK/jA
+	4ljjO1Xo4tPMlPKR23oCnf70zGrAMcsJk2dhyH3QwuHXTUK8skrifdOa0TQTGq6bahn150EV/IK
+	B3X5Ct/sp1Q==
+X-Gm-Gg: ASbGncvlEuvYCJO4idoElfC77On6TeaevTpFBgbs6GZFf5Zjge8ozegp4QwQRN7zOMZ
+	dSDlRGMmHdlmKJ9h6Yr0a6I5l2Eu0nrWy3FpOjnrJk7sztkubE3it7Y+BYYVFvkjVNul4LPpU50
+	kGPuWN9/R13c5F03EKiSMZT4oYVLayJJ3zFsEh4qn0TCWgHQGvCagEpvWHuKHJaAWoG/M5QE/iG
+	5YX/3yQ27UOhPZ8/LWttP3F4toMJQU/OvjeQhbBkHwDlR7see34vh6p/KcbnlXkpSqfL3WLszTj
+	6p/6TCxZIn9apCcr92JvLBxfwas1V1nzx9dh9oiGelDN5U691UdJa4IBMqbKOP1c8GtIEbSLaKi
+	Qmiodytlj8CUw3ZSETzUYaHFVU9+/6p9QWDD0ZFrmEJrkjarNUJM4hEF3HVqOggOfdZiaiatPA2
+	lenx743WsLwByTz91O1q+Ll0hYqm6QdNlXhXI5ij84QMiUOSkpaA==
+X-Google-Smtp-Source: AGHT+IGnLaUO2JSwrmzOCgpuKxSov2XEBDgZuRFoE1u1cM4fvS9w+fqmZU/vXNooIJLtcvDUh0ce3g==
+X-Received: by 2002:a05:6e02:180e:b0:42d:86f3:a2d1 with SMTP id e9e14a558f8ab-42f873fa208mr9490705ab.25.1759874276717;
+        Tue, 07 Oct 2025 14:57:56 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id ca18e2360f4ac-93b9e8966a5sm459270839f.10.2025.10.07.14.56.04
+        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-57b5ebc83basm6503056173.49.2025.10.07.14.57.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Oct 2025 14:56:05 -0700 (PDT)
-Date: Tue, 7 Oct 2025 17:56:04 -0400
+        Tue, 07 Oct 2025 14:57:56 -0700 (PDT)
+Date: Tue, 7 Oct 2025 17:57:55 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 01/13] refs: introduce wrapper struct for `each_ref_fn`
-Message-ID: <aOWMdG/vxXy6bLKZ@nand.local>
+Subject: Re: [PATCH 02/13] refs: introduce `.ref` field for the base iterator
+Message-ID: <aOWM48xFTql8OkNR@nand.local>
 References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
- <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-1-916cc7c6886b@pks.im>
+ <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-2-916cc7c6886b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,18 +74,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-1-916cc7c6886b@pks.im>
+In-Reply-To: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-2-916cc7c6886b@pks.im>
 
-On Tue, Oct 07, 2025 at 12:58:38PM +0200, Patrick Steinhardt wrote:
-> [1]: <ZmarVcF5JjsZx0dl@tanuki>
+On Tue, Oct 07, 2025 at 12:58:39PM +0200, Patrick Steinhardt wrote:
+> ---
+>  refs.c                  |  8 ++++----
+>  refs/debug.c            |  8 +++-----
+>  refs/files-backend.c    | 47 +++++++++++++++++++++--------------------------
+>  refs/iterator.c         | 39 ++++++++++++---------------------------
+>  refs/packed-backend.c   | 46 +++++++++++++++++++++++-----------------------
+>  refs/ref-cache.c        | 10 +++++-----
+>  refs/refs-internal.h    |  5 +----
+>  refs/reftable-backend.c | 12 ++++++------
+>  8 files changed, 75 insertions(+), 100 deletions(-)
 
-I agree with Junio's follow-up[2] there that the benefit of dropping
-peel_iterated_oid() is worth the one-time blast radius of this change.
-
-I reviewed it as closely as I could, and everything here looks good to
-me. I'm excited about the direction that this patch is taking us in :-).
+Besides the couple of typos that Justin and Karthik mentioned in their
+respective replies to this message, this change makes sense and looks
+good to me.
 
 Thanks,
 Taylor
-
-[2]: https://lore.kernel.org/git/xmqqy17c3c1v.fsf@gitster.g/
