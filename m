@@ -1,115 +1,91 @@
-Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC44E2475CE
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 22:53:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EB0258CFA
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 22:58:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759877616; cv=none; b=PZofj83PlKVzN2BAL02hw3wBO3CLW36lBARMEDKLiBMIb/0vvJgIWda/K1rUNe2lnSPpBTrKM8KehDTceOztEwIq4WKiIuse4bc+SeKtc6LZo7LCQ/VQ/0oyF5840j5O+2UCBmoGxyeAlWeUdQ/T4sD3WH0nwfCe70MF4Wwggtg=
+	t=1759877902; cv=none; b=hGdofDz6Zu91vUpmMlSQNdBGtK0ifLvh4Ght+T2nipGKAEOKYsHHOifvZsct8lOz8gx7NYRg4wGiP8qqZS5mw/E+Imu7CMMuI2fdlm2ejBQSLmL/A3bNMJajbgyQt0X1iRoJ1AUrYJQ+OpdeAuQ5xM3iZECwl73X24LS+2fgRXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759877616; c=relaxed/simple;
-	bh=i9NmB2nzZCZv7dWgjC+gfydl2M4AnbzjobFPWO6S06Q=;
+	s=arc-20240116; t=1759877902; c=relaxed/simple;
+	bh=BZrS9NaCvYpaTf/usPAbQaqy/mJVexU9GjLS3tdbYCc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fF82Vvjbg1kej25Q9dS8c5TH6GKCpnSGSb2tHHHA0MTJU9M0rOMWakOBqK70/IElHrhtoX9JRWq0ZMe5PD+nUP36hn1rviURf8bb9XVvOEDNuWU93HJBcPfHQvE2wUycb6jmkWVZbDHBCkfVvJaFo3+NOxrsTVBE48j+wB8X9fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cTL7i2uJ; arc=none smtp.client-ip=209.85.166.44
+	 To:Content-Type; b=WhnSujvZKPXLWQaQXXvaHa4ZXVWyEVdy0CYfW95B0cc/KR7Xwegi+V75Wt+S8qSLVyQezr7h8VIhIcnZKO0PJDlECja5vI9AuilZmOk2A0FzjxnFl+cTtlXfuzcQ9t09bEr7lQ/Jinjk7H7ylfqI78ZgAHUb9pFMKtVXuhc8W/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dSq9Kd9J; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cTL7i2uJ"
-Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-91f6ccdbfc8so378387439f.1
-        for <git@vger.kernel.org>; Tue, 07 Oct 2025 15:53:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dSq9Kd9J"
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-57a960fe78fso7712123e87.2
+        for <git@vger.kernel.org>; Tue, 07 Oct 2025 15:58:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759877614; x=1760482414; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+        d=gmail.com; s=20230601; t=1759877898; x=1760482698; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TiTGdaYZ+MQhGWYmfqk77u5muL+jItQ+pZjC83DeGdA=;
-        b=cTL7i2uJuGq2sqG5TIpflG4G7IKx9DU8lx6i+F274KzYBmHQbTc+HHIuQFjnHCsqxI
-         xCWqbhCZl3kMrQU/wwgHoHJs3+SjCBESBedDFZN+3Z3WBbBWfaPUspYr+Zn9l43LTa5p
-         mvL0G141k7Yp/65e3ugCvx9PekGp+RkDQg874+M+zbGL/U+7DngdGUy/q1cqmXn0MrDh
-         0OK++S3siQYvim9JSu0uLEOVgX2z6ZXwHF6VzmvqKPSnNPYB0wk9PhQ/kHtaZSVEoA9Z
-         DsPFtpuQ0g2umeLdvAxSCu4Itk1l166NIBKseaSgQgxek9uAHvTMeSbTeLTcjv2teUfm
-         UeyA==
+        bh=VQmdBFyi9N86wAuvYDlu5dcnEu0751qfbksQLF2J1z4=;
+        b=dSq9Kd9J8hsaR3uly67HtYjcqcjTClBbeIqe93ePMLYOYv12ayvqdxems2eakulS7V
+         zaeNbc4ad4Dw2s4jUCFagWe4tofaaX/rF8+2FY+MmWLYP9CbPbDxd4McCWUwxcZgKjnl
+         FQ3JOi6Ng7EUzTkLP31K9qG39pJSao5sr6wMJOyg8LjEP/+7x/0gwSbNqk9apjjpD0rL
+         68wmMJOnNM3sEMHhcVDXZwksti0wbl+9U21QgL3C0WFz8TEKLOKQDm1z9bnVbYNovYI/
+         sl9IG4uvU8luBOUk/I3S1Iwwf3nmio3ZhW0QvKOFvB/36aN4DhxtFubJACXQKidp3lCb
+         VrHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759877614; x=1760482414;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+        d=1e100.net; s=20230601; t=1759877898; x=1760482698;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TiTGdaYZ+MQhGWYmfqk77u5muL+jItQ+pZjC83DeGdA=;
-        b=mHwc6sgtjgeobwbd6M9k3wzSn5ioJ+9tRlXgDXWMPoj3GNJTDAxFWtLSLhPNCrdKGf
-         4QS2+m6CRc4HbJnm6HZqfMo5GvQBd3pOJztXD+aisszLAAy/s4nHHUVLWKKpp/H2Z94e
-         9lZPgIExh5zY2JMIOfigavh2EnEMrkPxzRCNRyohHIbuA1qHtfSxXgjEU7i2hUEX5JoX
-         owUj8sO7x0sA3umzmMdygqm8n+Nb3wwd/DQB3H/KMQTOYMIBdQksrmCC4aeeD1spLa9t
-         AsxaG5A8drj2JgHmDdTcQu4NunsGLIKkNMEMqRnTbgZwz7lj9Tm5fec0Rj9xDhxGbYJg
-         jLcg==
-X-Gm-Message-State: AOJu0YyxooIV2cKO4a7UOGKcVqb/KnYpBB/uaS4ftMg+PMqgbLqjYHma
-	kAJ4u4Cb9/FYxs5KV2bYYHM7dMZvGTKSMKfOpQWZ+tNeWwu6k1KKZwcQAr7WFDzECek6M2pgkp0
-	+tqP7ARtaaM678pYn4Jv3dCNpBQlWlIM=
-X-Gm-Gg: ASbGnctTNuMfbOG453Bq6GRTU2SbBepUrexAV6XNYYTLlTfdCjytNk3tFlueReSZvkG
-	xt/wxEiuXtUAHpo0GFC3Z9m+obk7ay9CiLe5hnPzAYtHcVgetbiYl/YsKwhNQ2zsfAO7zAjOS5h
-	cFPW9DhE6JdkdHRmYl4TSOXHrgDCEAsO5eX2nZm5rLiI0PYjlQvKXGRVmO55ugdapfLmppsPwo6
-	YnS59/O53kmSwmUOlOl17y1YoZJUeTa/s9AWJ7Z+miDFb0d261sbME1qn2pgKTi
-X-Google-Smtp-Source: AGHT+IHGwxZteo5Kc6r8OCQMGL8zSYjexfQpKUTWtHxLLJ0xpr2f84fjoBOSC9mdtRbHsYbiZsTfIWHBGd7T+Zi7s2E=
-X-Received: by 2002:a05:6e02:2503:b0:427:72f3:f537 with SMTP id
- e9e14a558f8ab-42f8736ba25mr10907405ab.11.1759877613761; Tue, 07 Oct 2025
- 15:53:33 -0700 (PDT)
+        bh=VQmdBFyi9N86wAuvYDlu5dcnEu0751qfbksQLF2J1z4=;
+        b=QpAR4MdEZ6eJmzScYGHTNHrukvDtzd57ZBM4APQdWFZb1RoKfFgu2IG/YUYc3MGVDS
+         Qk5WAbOSPueLWXjVMidU0OPmfLNLq5L1wyI858fYbArLKXms12DxeSMEt2orjL40H/Nj
+         MylHiaDytSxIEzfqbxbqt8kNsA0cAk47sRsE6woi85U/p73KPO1u5S8MJ5pfmcg0bKy+
+         uFt22uUgVZFIEFxM0rxyrs8d2xTc9MI31Eqjx4+BQxFKjGi1cotp3glicqgqXdGIOLyw
+         P2E/Mx87ZL67qbiimcQJc7GVwQMdIv5YgY4Kl86xolP5GXm0TAQ7R0uRqb4usyNS2dRe
+         MQqA==
+X-Forwarded-Encrypted: i=1; AJvYcCWJEO79MzLAR5aP7YWw820ZIwfu200xQspYqI5RwvsvkQi5BEcV66yceUs6YEboeuHK96Q=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz/huXrAJyA1TQVbHYMkQSF9Xbho20CtOgm3F17mPIbT1RKnTZ2
+	h+6OqAHUnUVpaWCwV5xm2y9IKiAgHBDfb0EmXGrXdKPKNfoEJa8i4/qg1jTygL09IO+KjiYjNmK
+	QTG/FdAkhoqlOKhFdGYjjXckRGbqv38g=
+X-Gm-Gg: ASbGncuBG197q4yedx0dvXI4XMIuKqA3YWgAD+taBQD/LuTy0D0CdjE5/lyV0SBVsFV
+	wVMntAToZtvy3ZZZ+XBAbHqjtQYuVrLV6kS6LETc8Mx4T85fVQQQc8g7ZyG4mcyaYlq+YR3iA2u
+	I8WFsg9566TGq7G+qpXEMwjxOAuFYJO1qVJyN2mV+ccHS8aCN1wVtIrauBVaCUAiZ+G7PfSJsRy
+	Drxe79wbS3Xah4DTruzjMCMECIxEEOP
+X-Google-Smtp-Source: AGHT+IE2r23gmuxVCNBW7wtRTQas4HJrJknhxBpkXPVYKO7XsthmwI67iUaBzgnZqv/YU8KDFM6YN1dRkyHSJ7hSh24=
+X-Received: by 2002:a05:6512:1387:b0:567:ef90:f519 with SMTP id
+ 2adb3069b0e04-5906db0364bmr350183e87.12.1759877898305; Tue, 07 Oct 2025
+ 15:58:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
- <pull.1941.v3.git.1757673011.gitgitgadget@gmail.com> <460e5e8157fc87a4246c49f53e34495bc33d4432.1757673011.git.gitgitgadget@gmail.com>
-In-Reply-To: <460e5e8157fc87a4246c49f53e34495bc33d4432.1757673011.git.gitgitgadget@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 7 Oct 2025 15:53:22 -0700
-X-Gm-Features: AS18NWCCjSJB6GKpV_HtAEdqER_kn82nXvYR1-g4I2_DXcP96NUnI-42Gh0_MdI
-Message-ID: <CABPp-BG_TwQRcCp4iCpcDngb3W7rprnX4FHLs4A884BXQVk_eQ@mail.gmail.com>
-Subject: Re: [PATCH v3 6/7] sparse-index: point users to new 'clean' action
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, Patrick Steinhardt <ps@pks.im>, 
-	Derrick Stolee <stolee@gmail.com>
+References: <20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im>
+ <20251007-b4-pks-ci-rust-v1-2-394502abe7ea@pks.im> <CAPig+cQ7xJky+F=g=NMrN6BQfP+ZV2KF4RF2eLqtULKgMTR5_g@mail.gmail.com>
+ <aOWXSO5GInJI8-NZ@fruit.crustytoothpaste.net>
+In-Reply-To: <aOWXSO5GInJI8-NZ@fruit.crustytoothpaste.net>
+From: Chris Torek <chris.torek@gmail.com>
+Date: Tue, 7 Oct 2025 15:58:06 -0700
+X-Gm-Features: AS18NWB4lrFSf3O3IFncNkkM9mT33s_Skge0Ukmo3ontyAClYY7Gobe3Vd0Fhf8
+Message-ID: <CAPx1GveBE5mi7R3kOwYM2ER7rmVyS3Hwbe4o-m7UzdtFutouZw@mail.gmail.com>
+Subject: Re: [PATCH 2/6] ci: check formatting of our Rust code
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Eric Sunshine <ericsunshine@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 12, 2025 at 3:30=E2=80=AFAM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <stolee@gmail.com>
->
-> In my experience, the most-common reason that the sparse index must
-> expand to a full one is because there is some leftover file in a tracked
-> directory that is now outside of the sparse-checkout. The new 'git
-> sparse-checkout clean' command will find and delete these directories,
-> so point users to it when they hit the sparse index expansion advice.
->
-> Signed-off-by: Derrick Stolee <stolee@gmail.com>
-> ---
->  sparse-index.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/sparse-index.c b/sparse-index.c
-> index 5634abafaa..5d14795063 100644
-> --- a/sparse-index.c
-> +++ b/sparse-index.c
-> @@ -32,7 +32,8 @@ int give_advice_on_expansion =3D 1;
->         "Your working directory likely has contents that are outside of\n=
-"     \
->         "your sparse-checkout patterns. Use 'git sparse-checkout list' to=
-\n"   \
->         "see your sparse-checkout definition and compare it to your worki=
-ng\n" \
-> -       "directory contents. Running 'git clean' may assist in this clean=
-up."
-> +       "directory contents. Running 'git sparse-checkout clean' may assi=
-st\n" \
-> +       "in this cleanup."
+On Tue, Oct 7, 2025 at 3:42=E2=80=AFPM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> My preference is actually that we stick with the default.  I use (and
+> for a long time have used) a 132-character editor window and I find it
+> quite useful to have the extra space. [mass snip]
 
-Given that you dropped patch 8 and explicitly call out in the
-documentation of `git sparse-checkout clean` that it alone is not
-sufficient to do the cleanup, should this advice be calling out a
-combination of `git sparse-checkout clean` and `git sparse-checkout
-reapply` ?  (Should it also suggest an order for running those two; I
-seem to recall that the order mattered, but can't recall which one
-needs to run first or if it is situation dependent.)
+Since I started doing some Go programming (which I still do far more
+than Rust) I do the same. I actually let it go to 140 or more sometimes,
+with vim settings to put shadow marks at 80 and 132.
+
+I still use my trusty 80x50 windows for holding a lot of individual
+windows at a time though. :-)
+
+Chris
