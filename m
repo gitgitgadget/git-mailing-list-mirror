@@ -1,91 +1,116 @@
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EB0258CFA
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 22:58:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93492C9D
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 23:01:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759877902; cv=none; b=hGdofDz6Zu91vUpmMlSQNdBGtK0ifLvh4Ght+T2nipGKAEOKYsHHOifvZsct8lOz8gx7NYRg4wGiP8qqZS5mw/E+Imu7CMMuI2fdlm2ejBQSLmL/A3bNMJajbgyQt0X1iRoJ1AUrYJQ+OpdeAuQ5xM3iZECwl73X24LS+2fgRXo=
+	t=1759878099; cv=none; b=ZNdaLRuNvfDoL97AuoZIQDX0JcSnUN6ZrPURDW81/KKdTbqGnsxtabdRDvs4GT4p5/zd6Dt7D1Gw1vSVpF+MYyu9wPqnPr9q1+lYxZCRTlBFRysO6d9jEfAyBhNVCWtxoYNdpIXxOfmHHk/hMKMYsa8DZConbpsJA6yPjh/lZXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759877902; c=relaxed/simple;
-	bh=BZrS9NaCvYpaTf/usPAbQaqy/mJVexU9GjLS3tdbYCc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=WhnSujvZKPXLWQaQXXvaHa4ZXVWyEVdy0CYfW95B0cc/KR7Xwegi+V75Wt+S8qSLVyQezr7h8VIhIcnZKO0PJDlECja5vI9AuilZmOk2A0FzjxnFl+cTtlXfuzcQ9t09bEr7lQ/Jinjk7H7ylfqI78ZgAHUb9pFMKtVXuhc8W/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dSq9Kd9J; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759878099; c=relaxed/simple;
+	bh=QjRtDoP/CmRb5KJc69Fj6UIWsT3T72spWXTxi1iYuFI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OTDdyHiQ891xzPsu2E3y/VHKNiGO6nCOTIJyZq62A5apSAnzZL3/C33G81OitGWTZrES2/rWwqes8UgR0IamgDe/VVo/+0fkUoisxYbAAqwHTIFujz9k3WV+E5fe7Sq49GA9Oxp/0sVvAMFCK9w16hZf0k3TX7Pt4Sm56YKaxTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GaSuoSBY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dFWdiGPw; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dSq9Kd9J"
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-57a960fe78fso7712123e87.2
-        for <git@vger.kernel.org>; Tue, 07 Oct 2025 15:58:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759877898; x=1760482698; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VQmdBFyi9N86wAuvYDlu5dcnEu0751qfbksQLF2J1z4=;
-        b=dSq9Kd9J8hsaR3uly67HtYjcqcjTClBbeIqe93ePMLYOYv12ayvqdxems2eakulS7V
-         zaeNbc4ad4Dw2s4jUCFagWe4tofaaX/rF8+2FY+MmWLYP9CbPbDxd4McCWUwxcZgKjnl
-         FQ3JOi6Ng7EUzTkLP31K9qG39pJSao5sr6wMJOyg8LjEP/+7x/0gwSbNqk9apjjpD0rL
-         68wmMJOnNM3sEMHhcVDXZwksti0wbl+9U21QgL3C0WFz8TEKLOKQDm1z9bnVbYNovYI/
-         sl9IG4uvU8luBOUk/I3S1Iwwf3nmio3ZhW0QvKOFvB/36aN4DhxtFubJACXQKidp3lCb
-         VrHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759877898; x=1760482698;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VQmdBFyi9N86wAuvYDlu5dcnEu0751qfbksQLF2J1z4=;
-        b=QpAR4MdEZ6eJmzScYGHTNHrukvDtzd57ZBM4APQdWFZb1RoKfFgu2IG/YUYc3MGVDS
-         Qk5WAbOSPueLWXjVMidU0OPmfLNLq5L1wyI858fYbArLKXms12DxeSMEt2orjL40H/Nj
-         MylHiaDytSxIEzfqbxbqt8kNsA0cAk47sRsE6woi85U/p73KPO1u5S8MJ5pfmcg0bKy+
-         uFt22uUgVZFIEFxM0rxyrs8d2xTc9MI31Eqjx4+BQxFKjGi1cotp3glicqgqXdGIOLyw
-         P2E/Mx87ZL67qbiimcQJc7GVwQMdIv5YgY4Kl86xolP5GXm0TAQ7R0uRqb4usyNS2dRe
-         MQqA==
-X-Forwarded-Encrypted: i=1; AJvYcCWJEO79MzLAR5aP7YWw820ZIwfu200xQspYqI5RwvsvkQi5BEcV66yceUs6YEboeuHK96Q=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz/huXrAJyA1TQVbHYMkQSF9Xbho20CtOgm3F17mPIbT1RKnTZ2
-	h+6OqAHUnUVpaWCwV5xm2y9IKiAgHBDfb0EmXGrXdKPKNfoEJa8i4/qg1jTygL09IO+KjiYjNmK
-	QTG/FdAkhoqlOKhFdGYjjXckRGbqv38g=
-X-Gm-Gg: ASbGncuBG197q4yedx0dvXI4XMIuKqA3YWgAD+taBQD/LuTy0D0CdjE5/lyV0SBVsFV
-	wVMntAToZtvy3ZZZ+XBAbHqjtQYuVrLV6kS6LETc8Mx4T85fVQQQc8g7ZyG4mcyaYlq+YR3iA2u
-	I8WFsg9566TGq7G+qpXEMwjxOAuFYJO1qVJyN2mV+ccHS8aCN1wVtIrauBVaCUAiZ+G7PfSJsRy
-	Drxe79wbS3Xah4DTruzjMCMECIxEEOP
-X-Google-Smtp-Source: AGHT+IE2r23gmuxVCNBW7wtRTQas4HJrJknhxBpkXPVYKO7XsthmwI67iUaBzgnZqv/YU8KDFM6YN1dRkyHSJ7hSh24=
-X-Received: by 2002:a05:6512:1387:b0:567:ef90:f519 with SMTP id
- 2adb3069b0e04-5906db0364bmr350183e87.12.1759877898305; Tue, 07 Oct 2025
- 15:58:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GaSuoSBY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dFWdiGPw"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id EC3641D00108;
+	Tue,  7 Oct 2025 19:01:36 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Tue, 07 Oct 2025 19:01:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759878096; x=1759964496; bh=wBNzkjialQ
+	0eILLAbaHgLlN+VvTDMFWTQctUccZxcJg=; b=GaSuoSBYeyLjyjBAoHzLcXkskR
+	GLAnfDBPt0aRK5Z0P0MaCfeO0QUuxaUMMNxVv1avEeS5v/PUlmDZOtM1LfGJuF3V
+	tfV2zrgpD/ehYxKYRLpgRaE5ujWlI3DeVxWQMWZciTHNqSDNAah2ieo/Mmlb/Zs6
+	0WzlE0I/926FqRhUMLdmdgz2pinCQVVawqsVvf9UN5XaWYNkvVMPqN5itSnhkfvy
+	o6FxbxC6Ry+U4ATanL9rmLbNIv+uetSJKsea5jC5Y+WMWOcvDDRhD03bdUf5i0lb
+	kiISoLrpZFqQgZwueAUZfjRHcwS/wIiW8Q0seKTu5sP9Ln0S3lOsmulBFHig==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759878096; x=1759964496; bh=wBNzkjialQ0eILLAbaHgLlN+VvTDMFWTQct
+	UccZxcJg=; b=dFWdiGPwN0nkeG7VhKy2ZWKMtpZ0liytinhCPYAwytPZjeA+A6P
+	HkuQD8i+aufoObw26fdu0z69RoMpx4QqLJ0L4E6J3DxW3yt4uHW4t+nyapAc+VhI
+	XUMwszTQ2a7n7uco5wtkVpLDbIjL5Lm/uI0a6yk2LkSE+StTfi2egzdYMpkjFILL
+	LsbcpHAODqmtXB2QciqkB8bUjqkhckTxLtGqo9oaBM6vAqrgGO8QcnE1+T3iRyV2
+	4jldWeUzRYrpcW08I7BkmsBxvu1tHEZN4j63QLIOa6M7xOHC436VdCUkbgeo9Hle
+	CBXZzSpF/XoAuvWt4ryBTcl8G+pilYeCffw==
+X-ME-Sender: <xms:0JvlaBYNFooA8xH3FXyzJLF2i9mZTOiY1eZ2SAZwOyFw9k9tda3OJg>
+    <xme:0JvlaP1NP3EuVLpYA_p5F2eOfbU8YHbcTKVlxctpeglQfleaz5iGYlmEVjqKKyw_Y
+    3eDs1nTR_MWUyKCN3TSLi7LpdxlNNR38mwGOcKrF84p08uDTnkkLA>
+X-ME-Received: <xmr:0JvlaBWLv5cp_nNvX-gTcavvsADz00YCujKwmQrcEP3R-Yr65sWQr0uRTQc2ViHr_YqLgL7duhvALu2oip1ddXF_AkOp96GBdgeq>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdduieelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:0JvlaJWZqQnvn0hI6KXK9P4DC77AXf9PT9aky9dHDicJ4j2nhPNxjw>
+    <xmx:0JvlaAe-77IQH8DuGWvmvior9ChzGpAaK0zrIj3lwf9kath9WRSvCQ>
+    <xmx:0JvlaCW009_VLPmoZ4JlW2XABTINPtn_KdIfeP0ihqzKdcugpFLL5Q>
+    <xmx:0JvlaJf76xaMgcCkf8pY6WLMAGmjMF5eak21N0B03l1J813JiygaNQ>
+    <xmx:0JvlaH9-cnx2KOziScUZvX8GiCQNvzusZqpjmy3WfEo758UIZ5fRyv3r>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Oct 2025 19:01:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 00/13] refs: improvements and fixes for peeling tags
+In-Reply-To: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
+	(Patrick Steinhardt's message of "Tue, 07 Oct 2025 12:58:37 +0200")
+References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
+Date: Tue, 07 Oct 2025 16:01:34 -0700
+Message-ID: <xmqqzfa2gvu9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im>
- <20251007-b4-pks-ci-rust-v1-2-394502abe7ea@pks.im> <CAPig+cQ7xJky+F=g=NMrN6BQfP+ZV2KF4RF2eLqtULKgMTR5_g@mail.gmail.com>
- <aOWXSO5GInJI8-NZ@fruit.crustytoothpaste.net>
-In-Reply-To: <aOWXSO5GInJI8-NZ@fruit.crustytoothpaste.net>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Tue, 7 Oct 2025 15:58:06 -0700
-X-Gm-Features: AS18NWB4lrFSf3O3IFncNkkM9mT33s_Skge0Ukmo3ontyAClYY7Gobe3Vd0Fhf8
-Message-ID: <CAPx1GveBE5mi7R3kOwYM2ER7rmVyS3Hwbe4o-m7UzdtFutouZw@mail.gmail.com>
-Subject: Re: [PATCH 2/6] ci: check formatting of our Rust code
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Eric Sunshine <ericsunshine@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Oct 7, 2025 at 3:42=E2=80=AFPM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> My preference is actually that we stick with the default.  I use (and
-> for a long time have used) a 132-character editor window and I find it
-> quite useful to have the extra space. [mass snip]
+Patrick Steinhardt <ps@pks.im> writes:
 
-Since I started doing some Go programming (which I still do far more
-than Rust) I do the same. I actually let it go to 140 or more sometimes,
-with vim settings to put shadow marks at 80 and 132.
+> Hi,
+>
+> originally, all I wanted to do was the last patch: a small performance
+> optimization that stops parsing objects in git-for-each-ref(1) unless we
+> really need to parse them. But that fix cause one specific test to fail,
+> and only with the reftable backend. So this led me down the rabbit hole
+> of tag peeling, ending up with this patch series.
+>
+> The series is structured like follows:
+>
+>   - Patches 1 to 7 refactor our codebase so that we don't have the
+>     `peel_iterated_object()` hack anymore. I just found it hard to
+>     follow and thought it shouldn't be too hard to get rid of it.
 
-I still use my trusty 80x50 windows for holding a lot of individual
-windows at a time though. :-)
+I've only read up to here, and found all of them welcome
+improvements.  Will continue reading later.
 
-Chris
+>   - Patches 8 and 9 remove infrastructure that we don't need anymore
+>     after the first couple of patches.
+>   - Patches 10 to 12 fix a couple of issues with peeled tags that I
+>     found. The underlying issue is that tags store both the tagged
+>     object and their type, but this information may not match. We never
+>     verify the actual object type though when allocating the tagged
+>     object, so this only blows up much later.
+>
+>   - Patch 13 was my original motivation, a small performance
+>     optimization.
