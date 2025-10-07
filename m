@@ -1,116 +1,204 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93492C9D
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 23:01:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7102C9D
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 23:07:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759878099; cv=none; b=ZNdaLRuNvfDoL97AuoZIQDX0JcSnUN6ZrPURDW81/KKdTbqGnsxtabdRDvs4GT4p5/zd6Dt7D1Gw1vSVpF+MYyu9wPqnPr9q1+lYxZCRTlBFRysO6d9jEfAyBhNVCWtxoYNdpIXxOfmHHk/hMKMYsa8DZConbpsJA6yPjh/lZXY=
+	t=1759878443; cv=none; b=kji2EhDQ0Bzst7ChYqqnBTzAyqcSR8jyql/jFGEVI3LNNG0fykyI7pcdaWl7fg5gulLg589sTarJI2Qhh25YJwm3t8OEF0G/vABhC9BsyS2rKZ51NwCE6FJqL6QKLnvTKAoy9NYW/hU7ablhOXqyOItCtrwN3exQuxCAajD0/TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759878099; c=relaxed/simple;
-	bh=QjRtDoP/CmRb5KJc69Fj6UIWsT3T72spWXTxi1iYuFI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OTDdyHiQ891xzPsu2E3y/VHKNiGO6nCOTIJyZq62A5apSAnzZL3/C33G81OitGWTZrES2/rWwqes8UgR0IamgDe/VVo/+0fkUoisxYbAAqwHTIFujz9k3WV+E5fe7Sq49GA9Oxp/0sVvAMFCK9w16hZf0k3TX7Pt4Sm56YKaxTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GaSuoSBY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dFWdiGPw; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1759878443; c=relaxed/simple;
+	bh=+BDL3UOrv3WFXCwR9K0N2ZihNR3by1OGnprxPt6KZAg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PrC3DDKbS6JTpO6f4++nsNYVT33JHwk29D0K42/K2fS2LSFH2oFlMeMw+pGksOEakOesRlTb38T8kxYXI/GjzrbAMl1k+tMvgkbzB8BINMbLZMsjvOpIEywJtuJ2ij71a1EIIpUjNancT+qSMXqTF+8JV0Vpg11nkw1rCjdPg7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hZwplT2H; arc=none smtp.client-ip=209.85.166.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GaSuoSBY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dFWdiGPw"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id EC3641D00108;
-	Tue,  7 Oct 2025 19:01:36 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Tue, 07 Oct 2025 19:01:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1759878096; x=1759964496; bh=wBNzkjialQ
-	0eILLAbaHgLlN+VvTDMFWTQctUccZxcJg=; b=GaSuoSBYeyLjyjBAoHzLcXkskR
-	GLAnfDBPt0aRK5Z0P0MaCfeO0QUuxaUMMNxVv1avEeS5v/PUlmDZOtM1LfGJuF3V
-	tfV2zrgpD/ehYxKYRLpgRaE5ujWlI3DeVxWQMWZciTHNqSDNAah2ieo/Mmlb/Zs6
-	0WzlE0I/926FqRhUMLdmdgz2pinCQVVawqsVvf9UN5XaWYNkvVMPqN5itSnhkfvy
-	o6FxbxC6Ry+U4ATanL9rmLbNIv+uetSJKsea5jC5Y+WMWOcvDDRhD03bdUf5i0lb
-	kiISoLrpZFqQgZwueAUZfjRHcwS/wIiW8Q0seKTu5sP9Ln0S3lOsmulBFHig==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759878096; x=1759964496; bh=wBNzkjialQ0eILLAbaHgLlN+VvTDMFWTQct
-	UccZxcJg=; b=dFWdiGPwN0nkeG7VhKy2ZWKMtpZ0liytinhCPYAwytPZjeA+A6P
-	HkuQD8i+aufoObw26fdu0z69RoMpx4QqLJ0L4E6J3DxW3yt4uHW4t+nyapAc+VhI
-	XUMwszTQ2a7n7uco5wtkVpLDbIjL5Lm/uI0a6yk2LkSE+StTfi2egzdYMpkjFILL
-	LsbcpHAODqmtXB2QciqkB8bUjqkhckTxLtGqo9oaBM6vAqrgGO8QcnE1+T3iRyV2
-	4jldWeUzRYrpcW08I7BkmsBxvu1tHEZN4j63QLIOa6M7xOHC436VdCUkbgeo9Hle
-	CBXZzSpF/XoAuvWt4ryBTcl8G+pilYeCffw==
-X-ME-Sender: <xms:0JvlaBYNFooA8xH3FXyzJLF2i9mZTOiY1eZ2SAZwOyFw9k9tda3OJg>
-    <xme:0JvlaP1NP3EuVLpYA_p5F2eOfbU8YHbcTKVlxctpeglQfleaz5iGYlmEVjqKKyw_Y
-    3eDs1nTR_MWUyKCN3TSLi7LpdxlNNR38mwGOcKrF84p08uDTnkkLA>
-X-ME-Received: <xmr:0JvlaBWLv5cp_nNvX-gTcavvsADz00YCujKwmQrcEP3R-Yr65sWQr0uRTQc2ViHr_YqLgL7duhvALu2oip1ddXF_AkOp96GBdgeq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdduieelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:0JvlaJWZqQnvn0hI6KXK9P4DC77AXf9PT9aky9dHDicJ4j2nhPNxjw>
-    <xmx:0JvlaAe-77IQH8DuGWvmvior9ChzGpAaK0zrIj3lwf9kath9WRSvCQ>
-    <xmx:0JvlaCW009_VLPmoZ4JlW2XABTINPtn_KdIfeP0ihqzKdcugpFLL5Q>
-    <xmx:0JvlaJf76xaMgcCkf8pY6WLMAGmjMF5eak21N0B03l1J813JiygaNQ>
-    <xmx:0JvlaH9-cnx2KOziScUZvX8GiCQNvzusZqpjmy3WfEo758UIZ5fRyv3r>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Oct 2025 19:01:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 00/13] refs: improvements and fixes for peeling tags
-In-Reply-To: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
-	(Patrick Steinhardt's message of "Tue, 07 Oct 2025 12:58:37 +0200")
-References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
-Date: Tue, 07 Oct 2025 16:01:34 -0700
-Message-ID: <xmqqzfa2gvu9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hZwplT2H"
+Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-911520e43edso272982839f.0
+        for <git@vger.kernel.org>; Tue, 07 Oct 2025 16:07:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759878440; x=1760483240; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ATMTyff7bJxjMM35xlWfY2zEKo3liUJXFpeGS4tSOzk=;
+        b=hZwplT2HaE/ZE0GMwm2HM1Z7ONjY+S4LaskhynhWOPgFiA9qhPJu5MxEc7vVsbh4ui
+         IuMocHP0TqdIzVeuQNrpUMfmJ+dU8UO/mY+aGogvoLmiB5cSU4cpYWyo90q+DP/Yl9yg
+         aYViMZXWKBgbtXZblKRuZugvhb3M3/Xaxw7moOuCQPuZwfWm0GxErRrqxcKldhCk+Erk
+         p/TFlWP/CatEmpOFNfJtz8Ie8A3mkrV+mjzy8ZmI4McdcOMIL3k9RRVad9KtVP0VGS33
+         /Vb8T4+eTZ7ljDCunvjSyjKttHMooNGSAc+T1zrbGj+Ox/7N4pZnaWBspYSvB7sW0jlt
+         y5vA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759878440; x=1760483240;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ATMTyff7bJxjMM35xlWfY2zEKo3liUJXFpeGS4tSOzk=;
+        b=I3Wc3wL5rswBKoAxfck616XMUi/BPM34WOYqRO8kpfWJ4JZo3iJ1RhzDO0huxmvbWW
+         8arfXvHdunfuZslg8KfVB6PMdyptCrISZv1T3Oqx+QgBWpYKfiiRg2NmisnJcSlGadSE
+         qpus15KrkjdbHQjA14VgvWdmWVTgCgJP07wReKACL4z9sBuBsnZyzH/YVO+Omh5HWhz6
+         C+Yz3byqd/OStpNAEu02FudC9CgF73t6vzZVACJprya32INb7Hfk9uPA1FkduI1edM4M
+         YZq10hy4nSQlNFHUeS3e6sIZnQt/lgcmZgPvB650NaObL62ir7XC8qPDM2c3j9usgbt6
+         tbog==
+X-Gm-Message-State: AOJu0YynOYygTcswewTR7unBoxSjUpdJJfST6BS0Z/ACRXQroBFkV+EE
+	+eYb5SokfHs6Djy34d0qk4QZAE3xf6iI0tlWkUCq21W22d2fXGUNOhIp9+secapgyI61M2qVHoF
+	A4xLYEm2K+cKsOI+f3LCxMkyWiYgalKHcYimS
+X-Gm-Gg: ASbGnctfT5//nZLz+0KWQ/DjIbBf9uqm0eUHM19NpUANGXbwRL3r/FJSyuuuPubvLko
+	Nv00Uwd+wy0BLaE/2Y4SkJAu3mmzxkvGurhIAizU4bFLkF/XbUvc2BmmkKMMt8c8wsAqtAxqsKP
+	NdDXcv0T+dzJiuG2fViY1xzxqMrVpBYQYQGuZF+ZFo6fdfZ87piia5jtkMhIGy/1hlf1pDbcjMf
+	e7Jz1zpE1aQmg6AXOQF8fwzun2KrX0+O9C5vAojo3FTqgFxHzh1H9dAJSp+f1Hp
+X-Google-Smtp-Source: AGHT+IFmbft3QDVC445FHaF2v0cBMKe39i9rzKVXBoWUWvvaYVEDv8DS4CglYsf1SjgTM8/Udw/jmMCfW79TPKn57N8=
+X-Received: by 2002:a05:6e02:12c1:b0:42d:7e2c:78b8 with SMTP id
+ e9e14a558f8ab-42f8736cdfcmr11304945ab.2.1759878440380; Tue, 07 Oct 2025
+ 16:07:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com> <pull.1941.v3.git.1757673011.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1941.v3.git.1757673011.gitgitgadget@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 7 Oct 2025 16:07:09 -0700
+X-Gm-Features: AS18NWDdumtqF24hsdoPtFxou2Nm6kLDPgCsHiZ4sJ3qLCLrQI8nksmUlKYHOZQ
+Message-ID: <CABPp-BEEHsFwE-bDjcUoDtAYm9pvVN0tGUaoh0KPEJu23LywOQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/7] sparse-checkout: add 'clean' command
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, Patrick Steinhardt <ps@pks.im>, 
+	Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Fri, Sep 12, 2025 at 3:30=E2=80=AFAM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> NEW: This series is rebased on a recent master to remove dependence on th=
+e
+> updates to the global variables used by the sparse-checkout system.
+>
+> When using cone-mode sparse-checkout, users specify which tracked
+> directories they want (recursively) and any directory not part of the par=
+ent
+> paths for those directories are considered "out of scope". When changing
+> sparse-checkouts, there are a variety of reasons why these "out of scope"
+> directories could remain, including:
+>
+>  * The user has .gitignore or .git/info/exclude files that tell Git to no=
+t
+>    remove files of a certain type.
+>  * Some filesystem blocker prevented the removal of a tracked file. This =
+is
+>    usually more of an issue on Windows where a read handle will block fil=
+e
+>    deletion.
+>
+> Typically, this would not mean too much for the user experience. A few ex=
+tra
+> filesystem checks might be required to satisfy git status commands, but t=
+he
+> scope of the performance hit is relative to how many cruft files are left
+> over in this situation.
+>
+> However, when using the sparse index, these tracked sparse directories ca=
+use
+> significant performance issues. When noticing that the index contains a
+> sparse directory but that directory exists on disk, Git needs to expand t=
+hat
+> sparse directory to determine which files are tracked or untracked. The
+> current mechanism expands the entire index to a full one, an expensive
+> operation that scales with the total number of paths at HEAD and not just
+> the number of cruft files left over.
+>
+> Advice was added in 9479a31d603 (advice: warn when sparse index expands,
+> 2024-07-08) to help users determine that they were in this state. However=
+,
+> the advice doesn't actually recommend helpful ways to get out of this sta=
+te.
+> Recommending "git clean" on its own is incomplete, as typically users
+> actually need 'git clean -dfx' to clear out the ignored or excluded files=
+.
+> Even then, they may need 'git sparse-checkout reapply' afterwards to clea=
+r
+> the sparse directories.
+>
+> The advice was successful in helping to alert users to the problem, which=
+ is
+> how I got wind of many of these cases for how users get into this state.
+> It's now time to give them a tool that helps them out of this state.
 
-> Hi,
->
-> originally, all I wanted to do was the last patch: a small performance
-> optimization that stops parsing objects in git-for-each-ref(1) unless we
-> really need to parse them. But that fix cause one specific test to fail,
-> and only with the reftable backend. So this led me down the rabbit hole
-> of tag peeling, ending up with this patch series.
->
-> The series is structured like follows:
->
->   - Patches 1 to 7 refactor our codebase so that we don't have the
->     `peel_iterated_object()` hack anymore. I just found it hard to
->     follow and thought it shouldn't be too hard to get rid of it.
+...in v2, I found some cases where the tool doesn't help them get out
+of this state.  In v3, you documented those cases, and didn't attempt
+to provide a combined tool.  I'm a little disappointed at the
+end-state, because it means we tell users to use a combination of
+commands, and they may have to figure out the order to run those
+commands in.  However, I think with the documentation you've got,
+we've at least improved on the status quo, so we could always make
+further improvements later.
 
-I've only read up to here, and found all of them welcome
-improvements.  Will continue reading later.
+There was an error message and an advice message that I think could be
+touched up to improve on this (commented on both in v3), otherwise I
+think this series is good enough to merge down.
 
->   - Patches 8 and 9 remove infrastructure that we don't need anymore
->     after the first couple of patches.
->   - Patches 10 to 12 fix a couple of issues with peeled tags that I
->     found. The underlying issue is that tags store both the tagged
->     object and their type, but this information may not match. We never
->     verify the actual object type though when allocating the tagged
->     object, so this only blows up much later.
+[...]
+> This option would be preferred to something like 'git clean -dfx' since i=
+t
+> does not clear the excluded files that are still within the sparse-checko=
+ut.
+> Instead, it performs the exact filesystem operations required to refresh =
+the
+> sparse index performance back to what is expected.
+
+This paragraph is the same from v2 of the cover letter, but we know
+this paragraph to be false -- the new command only works in a subset
+of applicable cases, otherwise an additional command (sparse-checkout
+reapply) is also needed.  So, it feels like this paragraph should be
+updated.
+
+> Updates in V3
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 >
->   - Patch 13 was my original motivation, a small performance
->     optimization.
+> Huge thanks to Elijah for such a detailed review. Apologies for the delay=
+ in
+> responding.
+
+Likewise...it's nearly been a month since you sent this.  :-(
+
+>  * Removed dependency on stalled series around updating the sparse-checko=
+ut
+>    globals.
+>  * Commit message and documentation is updated to better describe the
+>    conditions that qualify a file or directory for removal.
+>  * Tests are expanded significantly to include special cases and
+>    aftereffects.
+>  * A note is added around possible future expansion of the --verbose opti=
+on
+>    to include more detailed status information on the files that would be
+>    deleted.
+
+All much appreciated.
+
+>  * Due to a situation where a file appears as "modified and deleted" afte=
+r
+>    the more aggressive updating of the tree, the previous patch 8 is remo=
+ved
+>    (for now). I may reconsider and send a version in the future that avoi=
+ds
+>    this issue. Tests from the earlier patches are more expanded in such a
+>    way that the aggressive implementation requires test changes that reve=
+al
+>    this problem. See [1] for a copy of this change and how it impacts the
+>    latest tests.
+
+Yeah, I think I was hoping that patch 8 would instead be modified to
+handle the additional cases (or more patches added to make it all work
+out), but punting that for future work seems viable too.
+
+In summary, I think this series is close to ready to merge, but I
+think a couple wording improvements to an error message and advice
+message that I called out in separate emails on this series makes
+sense to fix up first.
+
+Thanks for working on this!
