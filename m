@@ -1,111 +1,114 @@
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51DC31991CA
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 09:14:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759828463; cv=none; b=M7FKx6O27QlgK6n5v+Ng5QexoR6RoQkyRKTwLtNNmQHUpHbumCOBwkBWHGkeYi9om92MyKyWfZwtuZwLy7KcVPuj9dPhtW2qweTDVKqUaAix2TIBnTibM0mNaCoZUaFEvaVXrHtzc62CzwPbUMI+YJclBpTxKGp9VxufsuH4YCI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759828463; c=relaxed/simple;
-	bh=1Bgdj08FYzh3rq866zik6EAq9OwBk3Uw+fnf4qpSN/o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mpovxlmYmU3PtdAJAOgF9BhroYVG6YGl0+wW2jjVOzlRrBzEZ5VKb6Y0M1ITS22HVoYL7TtKbjGE5HrdnOmXjmlPzYO0M8ONeZBMWVXjTOx+fuMQxkyGNkIvYECL12IDtOOhwG1SoVIX5uTbxv8DNUn4/fHu+dv15OiNMj+GtYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XOups2eN; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5C02D47F4
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 09:24:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759829056; cv=pass; b=sMVlWegVYlcC0b09guS2K1ptmIjndo4DuMoaC6iur2QSHrH5pnThmYJVePRGIC7Irf/vJOUy9qLEyt31LpWBY6d45uHbt/RPu5LGIY8iCRNWhBAsErqaKF1v/sEzLaMYlM/4w5xtyQ+Y/Y/9tFH8VikTdf2ik5tyDv0xpChSQIc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759829056; c=relaxed/simple;
+	bh=mhk1wvSK4yeh13JfM70bEKYpteDDNWPZ9poJbSiSPPs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BAGrZibYmHXJ0jL/qG0DfZhCi2inFgVrYnCUppbftL2nqhHErlUztjeiF+RZcs1kSzW3lLw/3Fgp33rIlCe3UgF2O7nsfqKVZVjSKXZDJb/OMDxRc3mSWu23ZSelKTw4fzGsPHpCVljslYojgxUiXE3Fxc8qGGUK3wysLa0/+x8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=ATgI0m7j; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XOups2eN"
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-57bb7ee3142so7145322e87.0
-        for <git@vger.kernel.org>; Tue, 07 Oct 2025 02:14:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759828459; x=1760433259; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xp0035EhU8391WFjZz4//EXr3sTzQuFlFSutyZ2jHwc=;
-        b=XOups2eNPqsBsPG4fJptuvjf7W6mPxf8xAsQuBDiI2mQeahw3x/Iy9r07anAx3hP4s
-         unCPQ2p/DDH+Rq/KWdSKizoXnomqcBfvJj4I/c7pxVyTuXraWD59r0V5KuhnVimkzoBk
-         YuSzwtC8Th4cSn7zL9WP9WsMRRfEaYSk/f41BnTDebAJrmhQuaiRP1M1cc6TSmuwhUek
-         ag7RjMoJuORus9Fdg5J2lFltGBPaws1sXwrMjd0o3iihCekFzFrHDuWf8M1nH0j/WMeh
-         UIiA76v2QLv5ouYnHy7mH3cnBPpLBaJUBbkpfu/5JcW7tyL83W865v9yuRcVX63Stp7o
-         nGBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759828459; x=1760433259;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Xp0035EhU8391WFjZz4//EXr3sTzQuFlFSutyZ2jHwc=;
-        b=FSfqDSUEtikAXXf8k2Q3OM2E93jdAKP1+aNNIXKKA29Q4pVXfHt1hh0lvblxn8LL+s
-         jnlJgXwenTWmXaNmiDwF911Gh+KMp8RstduRz/3nkW3OlgytH9AQEtWL8MQZMY+I8WTR
-         F6TgOfd4Mr4Yk5GiXGM0BppYO6/myOFq1sbK16ixzPYNtVkHypIujorA881fdsKLLZtZ
-         TQzSTBZxgg1XDRZOcgFvZ4r0H66Skg2jh1ICzyIxnKpAbTnUImO8QxpBPV5ETyAUc55O
-         9NGorlXIFPvdpH8Sf6gShQGxTgqfsX/DYm4NB0TFeKMiJ0lWE8IDHk5LenSLZogLgVbD
-         isPw==
-X-Gm-Message-State: AOJu0Yzk+8icmahp3Tk2CTukZ7Vd2SxDDDWvgmV2IGQU95Hd+xrQmJen
-	5v0I1c/6wCjRVIzvWuami9m1lcP9CBoVrjxgT8sRFRiItpmUtV+Yvo0SlhIpz/RhSvxXdJvABqR
-	llVwo3nTiPv1DncyjWqVne3jqixqUYn3/6llcvQw=
-X-Gm-Gg: ASbGnctnxIs4CcWbMKqyDdZbf6hLPKsulVYYSP5zWO5a+wJ57x56mwCDq0vkbi3FUN8
-	QoGO9G84cGVS5KeFn39xpL8Ef+NZEBCQq+Faz6+S+ctggSRi73FvYphM9mJXgzKome3Dr2KOQBs
-	9p+HBBwOD4TjBXJW6mq+2pI3r0RWhb0Vfl1FBGEK1Ty6Q124uf6B97DWAixVXE1BydTuHQHhtHM
-	GA9fNVPlh8eV4SDpOLDZUzSaeFP
-X-Google-Smtp-Source: AGHT+IHR+b5iDN48UmTWQHBW1+MzrEkTy2rAOsvplA1qXFzmuim/UaXKLc78/cepveVrnCU3woYUlzMsyqXjTVhmWPw=
-X-Received: by 2002:a05:6512:6193:b0:562:d04d:fa06 with SMTP id
- 2adb3069b0e04-58cbb4419d8mr5252570e87.32.1759828459168; Tue, 07 Oct 2025
- 02:14:19 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="ATgI0m7j"
+ARC-Seal: i=1; a=rsa-sha256; t=1759829037; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=fxxiAKDC+ZqniwrzZKea1RyXzsT2DKHB2c9GJaR1I7JVNzaMDhFPNbBI8YPAg+2zA/QoxVq3zFw2EFglIScWGvZ7LN9HJH6WoQ9fo/yddIZ7uwH0Z1A81EK+Tqx2418I4t90va5LU0JJdnssNLNL0n8YOtatDoOPpZBig0nEhIc=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1759829037; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=WGcfKFyWEMXl4XlNgr9m+Ulro2rQXJOjLrQu9pPPtCU=; 
+	b=LobBJy6s7+FKm+z8f28809g4JhUuCs9Es4YSANWRnJdQkQm0dJTzveAdnEavhVQ/5yA19URJ/5Vp3mMrBzZB9cAdAb3GUXVMyZbe118ql+r+f4EvnOD79wQ1HXD7cxaM/xOHtl/wOfho6DuNmqaFZtFz6evO5XQ0cP+CceZlvJg=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759829037;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=WGcfKFyWEMXl4XlNgr9m+Ulro2rQXJOjLrQu9pPPtCU=;
+	b=ATgI0m7jFMfKc10SVQWU247eXQ19Er+fUv04qG0eFiD4jBkFFvd+Q9qMMd/WgiOi
+	v5Z8zQ43xZIAknh0Pv4cYj9uejtJCw1LeLWneYJSbQsVm4oLK1pyWGV2LzAW3+oDgqm
+	2cmi8o81HVu3lfWsfHCwKKvy8WOdx4TIDKvSqnM8=
+Received: by mx.zohomail.com with SMTPS id 1759829034457346.8256216688667;
+	Tue, 7 Oct 2025 02:23:54 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Aaron
+ Schrab <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, Patrick
+ Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>, Ben Knoble
+ <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 1/5] submodule--helper: use submodule_name_to_gitdir
+ in add_submodule
+In-Reply-To: <xmqqh5wcq94v.fsf@gitster.g>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20251006112518.3764240-1-adrian.ratiu@collabora.com>
+ <20251006112518.3764240-2-adrian.ratiu@collabora.com>
+ <xmqqh5wcq94v.fsf@gitster.g>
+Date: Tue, 07 Oct 2025 12:23:43 +0300
+Message-ID: <87plaz3w0w.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CANM0SV3+4k5tsgRw0g8-HoVSFGb1AwZr+2hCUXLriFGSd33WQQ@mail.gmail.com>
- <lrahpvp3nj4rtewf3zbf67qsvwhc4mg6irbmrhklbizxbhqwom@cc25oeqex4il>
- <CANM0SV38YcQ+THbAyTR5cnaX3iDfb92qG8gyAzUaJ5jMK7FfYQ@mail.gmail.com> <l62blkvi5ouzhkbfmimumhzdkv6tmszsxuxhlfkmu2lkspyihy@75466fqmo6ez>
-In-Reply-To: <l62blkvi5ouzhkbfmimumhzdkv6tmszsxuxhlfkmu2lkspyihy@75466fqmo6ez>
-From: Devste Devste <devstemail@gmail.com>
-Date: Tue, 7 Oct 2025 11:14:07 +0200
-X-Gm-Features: AS18NWB6-uw-QhsPlQokPN1jlZ3IPcn5DsuZ_EzUvwrM2PtX_pONn0o-Q-MjkoM
-Message-ID: <CANM0SV1p3auirRoHTfh2r=JuP-QU7uyK4o1+PZNVPT1mCVSqXw@mail.gmail.com>
-Subject: Re: Untracked files cache not used when --untracked-files is used
-To: Matthew Hughes <matthewhughes934@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; format=flowed
+X-ZohoMailClient: External
 
-Which means essentially, I have to run git status --untracked-files
-once a day to keep the untracked cache up to date, since I can't
-change the git commands SourceTree uses
+On Mon, 06 Oct 2025, Junio C Hamano <gitster@pobox.com> wrote:
+> Adrian Ratiu <adrian.ratiu@collabora.com> writes: 
+> 
+>> While testing submodule gitdir path encoding, I noticed 
+>> submodule--helper is still using a hardcoded name-based path 
+>> leading to test failures, so convert it to the common helper 
+>> function introduced by commit ce125d431a (submodule: extract 
+>> path to submodule gitdir func, 2021-09-15)  and used in other 
+>> locations across the source tree. 
+> 
+> OK.  To me during my first reading, the above read as if you 
+> found an open coded logic here in add_submodule(), made it into 
+> a new common helper function, and made this part as well as 
+> other locations call that new common helper function.  Of course 
+> that is not the case. 
+> 
+> Perhaps replacing everything after ", so convert it" with 
+> something simpler like 
+> 
+>     ... to test failures.  Call submodule_name_to_gitdir() 
+>     helper instead, which was invented exactly for this purpose 
+>     and everybody else uses.  
+> might have helped me to avoid such a confusion.  I dunno. 
 
-On Mon, 6 Oct 2025 at 19:25, Matthew Hughes <matthewhughes934@gmail.com> wrote:
->
-> > One of --no-optional-locks --porcelain --ignore-submodules=dirty
-> > --no-ahead-behind causes it to not update the cache it seems.
-> > Unfortunately, I cannot tell which exactly, because now, even when
-> > unsetting status.showUntrackedFiles it uses the cache for
-> > --untracked-files=all
-> > This means, that if the untracked cache was created with
-> > status.showUntrackedFiles all, it will always use the untracked-files
-> > cache for --untracked-files
->
-> You can disable the untracked cache with `git update-index
-> --no-untracked-cache`. Experimenting with that, on my machine the culprit looks
-> to be `--no-optional-locks`:
->
->     time GIT_CONFIG_GLOBAL=/dev/null git \
->         --no-optional-locks \
->         -c 'diff.mnemonicprefix=false' \
->         -c 'core.quotepath=false' \
->         -c 'core.untrackedCache=true' \
->         -c 'status.showUntrackedFiles=all' \
->         status \
->         --porcelain \
->         --ignore-submodules=dirty \
->         --no-ahead-behind \
->         --untracked-files=all  >/dev/null
->
-> Will consistently, on repeated runs, take >1s. After removing
-> `--no-optional-locks` one more run is still slow, but after that it drops to
-> ~300ms.
->
-> Glancing at the code: the likely cause is the `repo_update_index_if_able` call
-> in `cmd_status` is only called when `use_optional_locks` returns a truthy
-> value.
+Ack, I'll reword as you suggested to make it clearer.
+
+ 
+>> diff --git a/builtin/submodule--helper.c 
+>> b/builtin/submodule--helper.c index fcd73abe53..2873b2780e 
+>> 100644 --- a/builtin/submodule--helper.c +++ 
+>> b/builtin/submodule--helper.c @@ -3187,13 +3187,13 @@ static 
+>> void append_fetch_remotes(struct strbuf *msg, const char 
+>> *git_dir_path) 
+>>   static int add_submodule(const struct add_data *add_data) { 
+>> -	char *submod_gitdir_path; 
+>>  	struct module_clone_data clone_data = 
+>>  MODULE_CLONE_DATA_INIT; struct string_list reference = 
+>>  STRING_LIST_INIT_NODUP; int ret = -1;  /* perhaps the path 
+>>  already exists and is already a git repo, else clone it */ if 
+>>  (is_directory(add_data->sm_path)) { 
+>> +		char *submod_gitdir_path; 
+> 
+> This hunk is not related to the theme of the change and not 
+> explained?  I think the variable becomes used only within this 
+> block after the patch that loses the use of it on the "else" 
+> side, so in that sense it is not strictly unrelated, but is a 
+> fallout of this change.  If we were to mention the change in the 
+> log message, something like "Also narrow the scope of a variable 
+> that is no longer used in the updated code" would suffice.
+
+Your understanding is correct, yes. I'll add it to the log msg.
