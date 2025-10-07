@@ -1,96 +1,112 @@
-Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF94023AE62
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 21:57:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06B2244671
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 22:07:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759874279; cv=none; b=lFsreOCKvysD8o5VC/85HCDP6lpKl9Ykn0MwdklDJWZf5eiZrf/c2sJhXyGPKWkVFFjQAATckoGeTPnwDt8Egcc8wKG/p1btJ833cvqDT+g+cexvm2ESTGBqdAnEeE2Kl15YoGt9ZM7jW7WG0HrpGmJfVRHGxUoBUZNFDty7rtg=
+	t=1759874832; cv=none; b=rjY3koK0LKzAX2PmI7MuU+yaSDsbWie0NGbEMKfCqPJJ1NZwax1SjE3AKyv10qywvJ8YCHYwxwsDAJk7sAYRj8qcoT9Wm4TsjjBUvcVwhqZqBtY5qKF7+cRbSZwFeT2870f0BwzXDSTmYX8rw6Hh+T3YfUjeDF9qiT+Ot4C0lsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759874279; c=relaxed/simple;
-	bh=2xr6QcZM5NwHiPEbLsm/2qNWeYGOhhoo76W+KuW9ee0=;
+	s=arc-20240116; t=1759874832; c=relaxed/simple;
+	bh=R40wMZm2p+nhIwAXyICSoTIPKjuwvzfrF6G7Afrvrq4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i1nIMBoMrlh9NJGPbQ/RKA5pymLbTxDiblO7kAIev39n4Uf/npPLiDxmJVbIOUcpZMLCBRwo9BtUoDl7NqrAAPyXv7g1+SPexhuRgKbEMkq1WBVlYOOUw0kNK4M5gF33mOHbmpDYVcSE/a7jpU/auFwDiMMLb6FKFG9uzYNU4uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=PMONUUEz; arc=none smtp.client-ip=209.85.166.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=ubzhuWYZS+dlMwQH3AHATQwRSjj+3HQFRojtmShcPEqldzsV+QHJca76UMbKrTZk10AyMtAaSua+t5NOTabzByiJtA/DAKDj7F6sQ50eI7EezgfcMVXflSPGId8XPXG/DrEcRVDHOpoKSj0hcv/C/PAZkjncsnqLLfX/75xoBF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=LaExbL5B; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="PMONUUEz"
-Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-42f5e9e4314so50511785ab.0
-        for <git@vger.kernel.org>; Tue, 07 Oct 2025 14:57:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759874277; x=1760479077; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vAEs4eiJpEcrG/vPMlh/Ip7Gxnd8H1ocQsWxtrCsaJw=;
-        b=PMONUUEzYZk60eRhW5asnJLIlmvkehWiVQtVh8b0CGp8xDAourfGKBnW0kScaZ/BXL
-         lWngBxds199wC4Pj947utiACKqPwF8ZEIlu4jm73+o+jZExB92xqPkYWk5cLPSb78BOa
-         5wVI2b73mVgO4Vkudc43ruT8zLqzh+UaHfz5XuVLtknnGrh+iVD8kQGrF7UJY8reYIIQ
-         WsUBNOXJIAkYk4NxPydccyuSX6TWJ74xoweOI0oZMmrl4N6lME/p1kqTNum6S/ED7FKk
-         YjFD/cXflUV0a5j2o6ZgR96gZWJwYWc8ROC0WoM2sRYizR2g3OSCR3Mo5hEEVEFn74Aq
-         itfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759874277; x=1760479077;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vAEs4eiJpEcrG/vPMlh/Ip7Gxnd8H1ocQsWxtrCsaJw=;
-        b=T0d8e+PgYnNI4U1hUDxRjLSFHVGW/7uDwiyYvEOsYXtgOUMNO+Fzd6QD/QVYVxBhp/
-         K5EmnxGl+mxxEDOnlPdCCei0viI1t7IDgK9BQ14zJ3ish5MTgVd3fkA1UOPETb9Y3/Ni
-         BOKQT8H0+hxmze1Slraynd4e650PklqqvOdf8+mUqLenlN+8Sku1oVBi0pcBJyNrz0Rv
-         H4kOTNyJEJIxzggw0H7bt7qHwdVMlYVUtlQqbbR/PP45QBy0zHUkDl4wKX2twMphKnRh
-         Rwsa2qZAvGwKLljBtkITF0fZCLawCHX20+8d7Lc+zVwACj2yki//TbNx8T2D/KebLkuN
-         mk2Q==
-X-Gm-Message-State: AOJu0Yz9Ito7FZDnRlXK5pi9D7za9Xa8ksJGJNJafXE2wX7eEfViK/jA
-	4ljjO1Xo4tPMlPKR23oCnf70zGrAMcsJk2dhyH3QwuHXTUK8skrifdOa0TQTGq6bahn150EV/IK
-	B3X5Ct/sp1Q==
-X-Gm-Gg: ASbGncvlEuvYCJO4idoElfC77On6TeaevTpFBgbs6GZFf5Zjge8ozegp4QwQRN7zOMZ
-	dSDlRGMmHdlmKJ9h6Yr0a6I5l2Eu0nrWy3FpOjnrJk7sztkubE3it7Y+BYYVFvkjVNul4LPpU50
-	kGPuWN9/R13c5F03EKiSMZT4oYVLayJJ3zFsEh4qn0TCWgHQGvCagEpvWHuKHJaAWoG/M5QE/iG
-	5YX/3yQ27UOhPZ8/LWttP3F4toMJQU/OvjeQhbBkHwDlR7see34vh6p/KcbnlXkpSqfL3WLszTj
-	6p/6TCxZIn9apCcr92JvLBxfwas1V1nzx9dh9oiGelDN5U691UdJa4IBMqbKOP1c8GtIEbSLaKi
-	Qmiodytlj8CUw3ZSETzUYaHFVU9+/6p9QWDD0ZFrmEJrkjarNUJM4hEF3HVqOggOfdZiaiatPA2
-	lenx743WsLwByTz91O1q+Ll0hYqm6QdNlXhXI5ij84QMiUOSkpaA==
-X-Google-Smtp-Source: AGHT+IGnLaUO2JSwrmzOCgpuKxSov2XEBDgZuRFoE1u1cM4fvS9w+fqmZU/vXNooIJLtcvDUh0ce3g==
-X-Received: by 2002:a05:6e02:180e:b0:42d:86f3:a2d1 with SMTP id e9e14a558f8ab-42f873fa208mr9490705ab.25.1759874276717;
-        Tue, 07 Oct 2025 14:57:56 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-57b5ebc83basm6503056173.49.2025.10.07.14.57.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Oct 2025 14:57:56 -0700 (PDT)
-Date: Tue, 7 Oct 2025 17:57:55 -0400
-From: Taylor Blau <me@ttaylorr.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="LaExbL5B"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1759874822;
+	bh=R40wMZm2p+nhIwAXyICSoTIPKjuwvzfrF6G7Afrvrq4=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=LaExbL5BxNjgBJwUC1H2QytysOgGkljkESzv8AIWpGhTJQwNTJz2MTEi8w0fpryMF
+	 9TeewSBTPXmCcRxZCZilBjNzfjIZYSZ2cXoM8yeDSEDVNw4jgye9iL7vkVQvrT3Fjq
+	 LggAX09VjJ5pSBGN5j0Fg18jm6w8RNgY/0/KQg4WWKRW+3+oHYWFAY8MI8Pqqb+z0b
+	 JPWOSlhX+32kEFdhbb//oVpjzUX7fS1XAWHbNaBfHtXe6rPw3/u7pEB4asqT8xfRhP
+	 tFr3SF+WDPjiYgOCAQB5AJHocv+YJzTu+toleaHEnQkAJLY8r7iJfx2ehxvPblPEsV
+	 iGJKITtui+B8ZB3r/dCxL7WAoR5pyUI0+OEjgoOFWVv1Fb+Yh+tokoydZY/PfVwf40
+	 Tcw3ffuUf9E08mAWuYlZ7IT0F9L+I5uaPtblg9Pdq0qahetdEgWN4JVJHgeflsWFHj
+	 1MgGtR/b9+iejWDBUGEdRvz2M80suSG1f4dnd2UxgNH/cVbtB2r
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:225c:7da:a6d4:350c])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id B8B54200C6;
+	Tue,  7 Oct 2025 22:07:02 +0000 (UTC)
+Date: Tue, 7 Oct 2025 22:07:01 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 02/13] refs: introduce `.ref` field for the base iterator
-Message-ID: <aOWM48xFTql8OkNR@nand.local>
-References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
- <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-2-916cc7c6886b@pks.im>
+Cc: git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/6] ci: check formatting of our Rust code
+Message-ID: <aOWPBZg5MXzGcNmU@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im>
+ <20251007-b4-pks-ci-rust-v1-2-394502abe7ea@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="elc+gQ9sMWR/fw4+"
+Content-Disposition: inline
+In-Reply-To: <20251007-b4-pks-ci-rust-v1-2-394502abe7ea@pks.im>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--elc+gQ9sMWR/fw4+
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-2-916cc7c6886b@pks.im>
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 07, 2025 at 12:58:39PM +0200, Patrick Steinhardt wrote:
-> ---
->  refs.c                  |  8 ++++----
->  refs/debug.c            |  8 +++-----
->  refs/files-backend.c    | 47 +++++++++++++++++++++--------------------------
->  refs/iterator.c         | 39 ++++++++++++---------------------------
->  refs/packed-backend.c   | 46 +++++++++++++++++++++++-----------------------
->  refs/ref-cache.c        | 10 +++++-----
->  refs/refs-internal.h    |  5 +----
->  refs/reftable-backend.c | 12 ++++++------
->  8 files changed, 75 insertions(+), 100 deletions(-)
+On 2025-10-07 at 12:36:30, Patrick Steinhardt wrote:
+> Introduce a CI check that verifies that our Rust code is well-formatted.
+> This check uses rustfmt(1), which is the de-facto standard in the Rust
+> world.
+>=20
+> The rustfmt(1) tool allows to tweak the final format in theory. In
+> practice though, the Rust ecosystem has aligned on style "editions".
+> These editions only exist to ensure that any potential changes to the
+> style don't cause reformats to existing code bases. Other than that,
+> most Rust projects out there accept this default style of a specific
+> edition.
+>=20
+> Let's do the same and use that default style. It may not be anyone's
+> favorite, but it is consistent and by making it part of our CI we also
+> enforce it right from the start.
 
-Besides the couple of typos that Justin and Karthik mentioned in their
-respective replies to this message, this change makes sense and looks
-good to me.
+Yes, I think this is the right decision.  We _can_ customize it if we
+want, but I never do, even though I don't love some of the policies
+(like the cuddled elses), since having a fixed standard avoids all of
+the argument.  The Rust code I'll be sending in within the next few
+weeks already uses rustfmt.
 
-Thanks,
-Taylor
+Even if we did decide to customize it, I think there's enormous value in
+just being able to run the tool and accept what it outputs, saving us
+enormous amounts of time not having to discuss style nits.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--elc+gQ9sMWR/fw4+
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaOWPBAAKCRB8DEliiIei
+gVdpAQDMu8+QazjQ+O3LjUqjSHDOg5r3LEfBC+yP3EWDzS9MnAEAoK1DRZOf2nyr
+MSkDoz1s4tx99RvwarqStAnMXzdOfgc=
+=PFly
+-----END PGP SIGNATURE-----
+
+--elc+gQ9sMWR/fw4+--
