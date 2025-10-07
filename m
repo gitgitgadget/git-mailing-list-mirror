@@ -1,127 +1,128 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCC11C27
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 19:31:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097D31DAC95
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 19:55:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759865477; cv=none; b=Kh4x1zLiff/wPiS1EuHmTuAkrbJ2Q50mKvEAaJeOws+knJfbZTX8GWvZ89oI6ctW3dq40XhdOVHlK9xjeK8jkP/ZZN8FYsq51C9xdk+DmfpPK79sn3ZV4jUQ8oumGn9E2y8Q+a0L+Z+oSvPSEaq2yU+IrnbiTBJk041gVeZIvvg=
+	t=1759866932; cv=none; b=gAv32SzrngHwK/hZsnqBvvxYBL+IGyzlDYCg4k23xgzYIE5zNjVlohboRX6dZ16BER1ymtl6kVQt/D8mpaSaVDkhAnvVL6avmDlbHKksiFPDwmwy02PYwUSPmnQdo7+qpKo54rjHZ+eod3I/EZtIAmEKYVxkPClee1fsh2y/Njo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759865477; c=relaxed/simple;
-	bh=y/Xznz3uuxx6GPY4fixP2RfVC4e3Bn0upM+QfN1OtUE=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=lQwRI+dwDGTpO75l2mveaxbHE9YL7xYYTCXFvYmzNI3/+pKWW99+fNpLitCZZvLubDoYT5HHpxzISg4WzRFCPb5So2S77FrhG6HZKU2+fwY9eEle05VoU4NZPzuW7/gTQuwOfBMutFxIXhHoRTtl4+DJms+hcTGa5VGzsiyMGjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=PuZADTVA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eC5BzN3j; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1759866932; c=relaxed/simple;
+	bh=By9UHhrIWWGosvgfeboKOi8RG5hbT5cfYn2njKT6KnQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TbfUJy8AHy9pNNe8e+vgjmxygxU1rriLDaso+4tUWlRr3queysuiJb1wFcMH9HkwVl9INW+1OK2qRXbulpVJ5IXa3wmia/ZSQ8enXUUim7SfAGSfi9gW/z74AalwdqYfHHlgxgHOvfbrRnVc3oaYCL+dtnXMrqUAOzYVZAB5PS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AogXkXl8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NKODBoT9; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="PuZADTVA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eC5BzN3j"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 101B91400016;
-	Tue,  7 Oct 2025 15:31:14 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Tue, 07 Oct 2025 15:31:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759865474;
-	 x=1759951874; bh=o4Ip0mb+MYA2mz3yyJwTqLIKncV62ACEndoy/R/61uk=; b=
-	PuZADTVAfhkAoMpvMPEPjVUeYN/2ULjftg6qAoFvDdRbeoecAzn2JxgENtOEfT2e
-	1LVzpAIvB8ZQRwRkl6QDDgSjmcY5SOnucWCFTlMydweOLTRvz1NW9IGFPViZZMI0
-	jfR3LXru3iYfZB/unT/aM8O6TpZsSJSUvXwHIrEGaip6hkOexCAQJM6GUy/oh6Qx
-	Xyuf5b8uVEaynZub0aaSsHw+wSIE8PQWZP+cV8VdTMUOvR12lw3rHemq8gO3T4FE
-	CuHfGP15qMz8hdqPqe/SEaqvuZRMtrH+f01kV/2AkMuWQyo6wdBbctdHpGs0mkIl
-	CbIG0dUdh7oTDXG2ebrx9g==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AogXkXl8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NKODBoT9"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 99C1F7A012F;
+	Tue,  7 Oct 2025 15:55:28 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 07 Oct 2025 15:55:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759866928; x=1759953328; bh=1SX1Qn0nWN
+	6g4RyJbGyXuXHfQWiEzCigEY/l+HWVy0M=; b=AogXkXl8d4Lf5HsgWtz6TKTSTz
+	/MypRO9EzIezO3eJH8DN5DIYO+eMDGr7nQSDplduYhQy0icS/CFGwqHNGe0oeALL
+	veG8b1LbVXSzAJ+ox8J9A96OWsi/1O3yFyAxIVUm/ghgkTIthagxvd5nEFxWNmPv
+	vr7MzPNFIGQlYPlFbehfwLQn6WkzKrWvcHVLw6+W69Eg7Jne1f3YEj+VTbbB2MoM
+	hQBVTBuiyRbrY+PcUpe8s8yNVBKBQtJ6vKwXtJLo7F54ogphpHYBL60j+XF2jw03
+	M9Arnl3TUrhlpwJkISTNpA8LTraG6ppnL9mewZrqPAB6CKgnXZ6bgVVaMibg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759865474; x=
-	1759951874; bh=o4Ip0mb+MYA2mz3yyJwTqLIKncV62ACEndoy/R/61uk=; b=e
-	C5BzN3jxdP3P+31//F55FrBK4fn86Nwu/3VU6HiacBXDKS1LJrM5HkBWgPd5gdYv
-	niLggwOjohOyLPM0hpRkTRCQiYqFOmeOIQKbFN5Ah+WhXecB0OOS+3KDA7Ty8yyn
-	jr9CKWoFiq679iaJEmX+MLpo6JbeP9hHArXod+zlZ38rozfz/5w/upP1KQ36/OI0
-	LAB7takAZQijWwYKQDMDq1stxXdN47M3mXykDGoYRTHcshr5y7NFAHIRlmq/6UCF
-	KeENr7ytN3MG28gWgwwzSw/oBAiG95ZFUjhl4gPgabzrTPpOiA2yxicxZZdImGSe
-	VCJT3JHmSQMNUvIMBz9uQ==
-X-ME-Sender: <xms:gWrlaEuJPmCEjZvLkN1lP-Ftgg-SMZVaKBQ29naRwPc-d-we47Z1lA>
-    <xme:gWrlaMSqrKA7Sn2kzBFsTrmL_1cxCiMx-rewU6HFjcwt6SK_rEljnFVMce5pHWJwl
-    h59ixKvViypnWrCnxOksAWAXYLg8mLNB-VqogzD3AnrCh5gSG1Mig>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdduvdeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759866928; x=1759953328; bh=1SX1Qn0nWN6g4RyJbGyXuXHfQWiEzCigEY/
+	l+HWVy0M=; b=NKODBoT9DZdr78Da5FqsEEBBq2XOkZZVZuDxDlvmgTTo9x4oMug
+	iqy+RwTcpvh5zimQcTPlTzl2GNnFF4pGL1+BDYREw85GIro4/fc/u3LPhOn4tR+l
+	zqo4n7UX8sF9nNZ2IlhT6K1EZUiOViG+ThoSbdTGGNcfMEoCzrZIba3aX+AtT7hr
+	igMM4ZDL6vXHKf6TUsqmMowJBm9SPvC1ZhaOAfGT/8dv+hxSOfzb51exsfh1661J
+	RajsfZ+GPyuCdZEqbUqFjYW68r7cE5zaJ8K2fEj/FTM4IcFMfV2s+4DmxR1ZNn4/
+	SHSJRzOCGVcwiP7kqYuRDnzlgyGuDpsHi8Q==
+X-ME-Sender: <xms:MHDlaE0BA5OFpc14XsY0gTkkZ2MaWwhvDD32U3_X-iC43acN1vvLpw>
+    <xme:MHDlaK4moAHeQC2B6H7z1vgSvvvj50CsAO0gVcagAgLysbmtRIql1fRzueX7hrb4J
+    a8jSM8QYKSIbUKNCIZIesixYh06iNGnEjgSi8OgpG8a8GdwPWqk>
+X-ME-Received: <xmr:MHDlaIQFqujZL2D0QC5dxEBKSc2vPsuaceEhs2akl1LXXrJtwfpF7_NxTHAwLoTQSoni6xS1RiyNkk0WKHePCf3c2R0ootiFeLrI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddufeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfhulhhi
-    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
-    epgfevkeduveeivdevueehhfdvteeggfffudefgedutdekgedtledtvefhtddutddtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirg
-    esjhhvnhhsrdgtrgdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:gWrlaMWZ6atxhVMQ-k5boA-TWX0VElIkHZffgzbU33wcnqXbkic36A>
-    <xmx:gWrlaOaEWYMj2CviI4e9L3Llo0FZmfi5Wp2F-unbGv-AMD13lO-qYg>
-    <xmx:gWrlaK1vzf9bT2A_jv580b-AoAZbc7kUhe9lNam8frBFOketdTJ7RQ>
-    <xmx:gWrlaIhI4MRSxmd-RTj16Pv0bbgfdSnRL4mItdaRoDOxXMOaj2CVDw>
-    <xmx:gmrlaKreMebRkei-aX3TKnq26sewq-hv0gBwgfihijtLs4bNLd0cfK3u>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id B2FDE78016F; Tue,  7 Oct 2025 15:31:13 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddvpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhlrggsoh
+    hrrgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtphhtth
+    hopehruggrmhgriihiohesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphgvfhhfsehp
+    vghffhdrnhgvthdprhgtphhtthhopegrrghrohhnsehstghhrhgrsgdrtghomhdprhgtph
+    htthhopehjrhhnihgvuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhk
+    shdrihhmpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomh
+X-ME-Proxy: <xmx:MHDlaHUut5EeeP_-PcUqXqEx7mc7aQxeXIinOzZNoVcRntsQm4hcZA>
+    <xmx:MHDlaFF8Ii_SzsJqphZ_CHINDwKqIAGmL6YNtwLQ3X7sJL0oliJAtA>
+    <xmx:MHDlaCeGChEnJFgryhr8MndnuJyP7O42ugHgbP9zO1vdOnmDuum7HQ>
+    <xmx:MHDlaGo2j_3a-UWLyv3u_oKKk0h2v1L7DDXMC8WF5HsPLSg4aA_85A>
+    <xmx:MHDlaPRqpJatyh7N_G7R5sCahRvWN45hU37njsliKi8Ix05KdyHszuL_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Oct 2025 15:55:27 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org,  Emily Shaffer <emilyshaffer@google.com>,  Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>,  Jeff King <peff@peff.net>,
+  Aaron Schrab <aaron@schrab.com>,  Jonathan Nieder <jrnieder@gmail.com>,
+  Patrick Steinhardt <ps@pks.im>,  Josh Steadmon <steadmon@google.com>,
+  Ben Knoble <ben.knoble@gmail.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 4/5] submodule: encode gitdir paths to avoid conflicts
+In-Reply-To: <87347u4nkh.fsf@collabora.com> (Adrian Ratiu's message of "Tue,
+	07 Oct 2025 20:41:02 +0300")
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+	<20251006112518.3764240-1-adrian.ratiu@collabora.com>
+	<20251006112518.3764240-5-adrian.ratiu@collabora.com>
+	<xmqq347wq87s.fsf@gitster.g> <87cy6y4xb4.fsf@collabora.com>
+	<xmqqo6qik4r9.fsf@gitster.g> <87347u4nkh.fsf@collabora.com>
+Date: Tue, 07 Oct 2025 12:55:26 -0700
+Message-ID: <xmqq347ujxld.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AfAzQvnzmZPw
-Date: Tue, 07 Oct 2025 15:30:47 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>, "Patrick Steinhardt" <ps@pks.im>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Message-Id: <ede082ad-5031-4b55-8576-0a6315f16b70@app.fastmail.com>
-In-Reply-To: <xmqq4isalk5g.fsf@gitster.g>
-References: <pull.1981.git.1759512876284.gitgitgadget@gmail.com>
- <aOUkZa4_fq1hho7Q@pks.im> <xmqq4isalk5g.fsf@gitster.g>
-Subject: Re: [PATCH] doc: add a explanation of Git's data model
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
->> I think this needs to be adapted to not single out SHA-1 as the only
->> hashing algorithm. We already support SHA-256, so we should definitely
->> say that the algorithm can be swapped. Maybe something like:
+Adrian Ratiu <adrian.ratiu@collabora.com> writes:
+
+> The problem becomes how to detect (1) and (2), for example: a 
+> specific name is filesystem-friendly or is case-folding happening 
+> or not?
 >
-> Good point.  Also officially they are called "object name".
+> (ext4 for example can be mounted with casefolding on/off)
 
-I hadn't realized that "object name" was the official name, it does
-seem to be used a lot in the docs. I'm going to try something like this:
+core.ignorecase is dynamically probed upon reposiory creation, if I
+am not mistaken.
 
-1. an *ID* (aka "object name"), which is a cryptographic hash of its
-  type and contents.
+But other things like "I have this name, transformed to avoid
+slashes and other problematic letters and the result got this long,
+would it fit or would I get ENAMETOOLONG?", I think the code may
+have to be prepared to try-fail-adjust-retry.  We come up with a
+proposed "munged" name, try to mkdir() with that name, see that it
+fails with ENAMETOOLONG, shorten the munged name and retry.  And we
+ensure the name we propose is unique among submodule.<name>.gitdirpath
+paths in use, then hopefully we find a good name that fits, recognisable
+by human, acceptable by the filesystem and unique among submodules.
 
-I think it's useful to refer this as an "ID", because usually we call it a
-"commit ID" or "tag ID" and not a "commit name" or "tag name"
-and it makes it more clear that "object name" and "commit ID"
-refer to the same identifier.
-
->>> +tree 1b61de420a21a2f1aaef93e38ecd0e45e8bc9f0a
->>> +parent 4ccb6d7b8869a86aae2e84c56523f8705b50c647
->>> +author Maya <maya@example.com> 1759173425 -0400
->>> +committer Maya <maya@example.com> 1759173425 -0400
->>> +
->>> +Add README
->>> +----
->>
->> In practice, commits can have other headers that are ignored by Git. But
->> that's certainly not part of Git's core data model, so I don't think we
->> should mention that here.
->
-> Third-party software can add truly garbage ones that do not have any
-> meaning, and Git tolerates by ignoring them.  But there are others
-> that Git does pay attention to, like encoding, gpgsig, etc., which
-> may worth mention (in the form that "these four are what you typically
-> see, but there may be others" without even naming any).
-
-I didn't realize that there were other optional fields,
-will try to communicate this somehow.
+Even without consulting core.ignorecase, I suspect that the code can
+do a similar try-fail-adjust-retry for case-insensitive or NFC/NFD
+clashes.  We try to mkdir() with a munged name, and if we get
+EEXISTS and submodule.<name>.gitdirpath would not have the path we
+tried already registered, then we are seeing another path that is
+not byte-for-byte identical to ours conflicting, so we can adjust
+ours and retry, for example.
