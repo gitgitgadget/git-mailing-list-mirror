@@ -1,115 +1,183 @@
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EACE1662E7
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 18:03:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA40835957
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 18:05:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759860217; cv=none; b=ZgmPJ0lv1uDmIZvcKi7kVy7BHECK7MjWbEypFvp6qC0nlKW9TWfXCS/t3MIADG2yKawNUhXoa14rVtrJ4Rl+OEVmRyWPZNroXGDR8orlsArmZ22kvM7K6V6K5kkC1ge2MDOanDIjV4T1t6nrA++OLxFLhXBMm4PxET0tdug8hYQ=
+	t=1759860320; cv=none; b=riuyyd7taPnbc/iykuuLYpbF4FdO0snSjoir3Kke7hDEP46gqIx/+sPqWrC8Vza2ZyoDwYOGF0+FwsATmQ47U9jnJ0CiQDSX+ObZ/6YHcc8z5bd+pr7rNjquQgaJ7vDwPJJmt0RZjXf9f9MkaAhB5JpnG8o4tZ5pfToR7cZ9pso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759860217; c=relaxed/simple;
-	bh=l4EOzJJA2MLZysUGYrMJtYx7wiT3ufbvZN36nstTLkQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FKvWDcg1JA2nxjzkXexgzRV0vIddgf/Rx4f+T3D2AnPbhDW8gd0LbrV2a3WikAQ+NwUNrQlQc1jsqOEy29s38o7OvhK5/AN3At2M5mRmO8QJPwGtfDjW691aX3iB6rZ5VL5HHT0VYa+9EQw53N1LpQzcGMV9l2b9QPpfYIiy+VY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YU34drd3; arc=none smtp.client-ip=209.85.217.48
+	s=arc-20240116; t=1759860320; c=relaxed/simple;
+	bh=2nXc8AMWp+lLgdEaDpT644mNJXNKLb3j2kG85jVprTs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FjDzxzKmK7wWB9FaxX0I/umn4VE9Mxob+oz/z30alukAs66ObmHGpah1/e8wJODOkgZPdQtYwz41HTC59LJI0sojFFWTm5xhUrHoXAmBWX0jhTw6pB+iPKo1Xl/VEv4FN1O9TdXFRWjzfrNqNlHJzkUIbwQ7KWgbMbZqrBSECfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ceMLIYva; arc=none smtp.client-ip=209.85.210.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YU34drd3"
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-5521a6c6af1so525520137.2
-        for <git@vger.kernel.org>; Tue, 07 Oct 2025 11:03:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ceMLIYva"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7a7d79839b2so5165682a34.3
+        for <git@vger.kernel.org>; Tue, 07 Oct 2025 11:05:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759860214; x=1760465014; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Nz5k0NTZ4axG2nIBAIsXyeNI6i0WY4Kbqy7AaFmAB0I=;
-        b=YU34drd3IoiUSauDGY/8OZYtsmH3dmvJtb33yR4bVGR5MOk+OSDN4l6J5NAghEuTYn
-         30HlL0sMqyDpIvCLTiJqngZAlbRdiny9m/rbzZilPXN3XPERpg2xNEtTUG57IepH1owW
-         AYD8EvJ121XIax+7FvVRd2TBAKJWinWjq4uXYVAp7MYOZs7vPe9T0vVr7Lowdo4NY4Jm
-         V1M9wkrRg+6fohCSj+I9YXXTDitVqvyJgxbTr35pvVB2iLHmDGBiRr+wwX/hrapNoO3G
-         nv1CzyQEMYoNbxVTcMnSxkzeGwLLtZVc75fugi9O6OTHHLbRiQ38lT4O6efCcLPQZEpp
-         F6Jg==
+        d=gmail.com; s=20230601; t=1759860317; x=1760465117; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=tCeG3z+IV8KZI3TXhZhgvobekHjpyJh7P5/qom6TnEc=;
+        b=ceMLIYvaoj0m/e0YxxxuVt+Cnd3kp69gBvl2OPS6Dt64t6tkLWvoYbiLcyG/Xb5tZi
+         klciOf9gbBlRpAVl5CQww0eHIBwxj3QFFRSWA49WYAR5JymqQ2nB6D1apI7xhss+mbSP
+         DfedjMUwf1lWbnkRBcJ/mvupNbahfkzXwGJ3TbzyxnYy1Oxio/y7DQFHXuN/2NQIoDE7
+         sKtPg6XPv/kzCVLdsQfL+iCy4A+BTcoZFRyc2epZ4Y8x1jjeEIDWuyLmZVlbsy+RSapk
+         QyCMxu4VzGnompYeWAr9rlQ181TYoJmsW3jCNLOEt5j0qDgCEnhUHxxaFMqw8Klc8tYW
+         rV0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759860214; x=1760465014;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Nz5k0NTZ4axG2nIBAIsXyeNI6i0WY4Kbqy7AaFmAB0I=;
-        b=gsQewLrNHQ4nVPwawmN6OVeYmjstsnzx9RlNpQj4dPMtZ1471/Low1lLosHZuOu4jD
-         tUYvRIhYJrQJ4SKzRg4ODBPT76LZYx+B4FaUgCS4E6N66vfeuw4Is8PvxThbHYssjNvr
-         L7xJ+wriYvGRg0Uek3DifZjmiX04BhhnQOHP4A1TqF0/oL3PbIKQMgqlR3kFMJtU6FA/
-         UNijML8jLiqzEHAoW2v4AqtDzrRFHsEt6izCUhOFgo2g8AWikbInd4LxJ79tIhrgv5AD
-         Sn2CdNzbqx7XWQvE0YELp/KIdZRycIli9dufD8m0BcczRYOe15k/k1xn7NcivICGcjkJ
-         8rcQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVELrazv1BVH2QyIGKQv0Q4YC+MP3VHGG2eCKJipCPqHs8NaQO3wLgly4rri9Mmu0PhWh8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwOXmuMHu1W2qhLyQWr7Yijyn9KKx8Y4EgE+P6Lei+npPaXiJNa
-	O/7h0ShfveXdgDuWJQPl/5TAY7bTPjtON151hT66olpUvcu10wOpbCof/T3RZqtbeh+evsTU/aV
-	sXMCCGppx5K/3ccVJQ08t2Sximo7HKOk=
-X-Gm-Gg: ASbGncvYzv+EO5g+adEbzR583QoKMPkfI6DaUCGCeDTorjRjMv5wH+lYh5Ey7hg0q9O
-	kXnu7PRkP8aIgjMhgrJ3MUTbjgrJjZ0XFioXkZakhO2rZoia1psLrIOzKqC/Hl2QJJciYzh0HPy
-	r2BzUD6W2VbYzUWTscW3RfJOYuiSYofMn2285+7paFH8VKSJNF1kCDkr9umyBf1/yolSrCO4KoF
-	xJafMrWntDNLCDX3fGSKtycSg4S4ysHuLOrW6NyvXz7fqEz46uGlmY5q7zVgfq/hAT3OtlPPt4=
-X-Google-Smtp-Source: AGHT+IFmV+BiepC3D4vVL1yTMdnHb9r4s/0W2lLgfdvmqwe8QmWgmAzfEXjEH3E4M770QKTbH7mcsIq3ZK0j6TbqdNE=
-X-Received: by 2002:a05:6102:3a0c:b0:4e9:c913:2c9e with SMTP id
- ada2fe7eead31-5d5e22152edmr74932137.1.1759860214052; Tue, 07 Oct 2025
- 11:03:34 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1759860318; x=1760465118;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tCeG3z+IV8KZI3TXhZhgvobekHjpyJh7P5/qom6TnEc=;
+        b=qE/UZd1lfP4pHm8IZmv+VND91D2xoC9kec8vvMI/XKcs9+b1r1SWXW8S0U6vXXJfz+
+         Mad9p5EZF6xg7KINS3ExsEktkwg+DayEaz3b7h/+YdjdvbLWelq7bYYPD7M0fBcdxNtq
+         d0uS+1gGgJuEtL8Phn7bVrJfZm8FXe6T4oSnJC7wFTtGlHYn3hBfmkkeeUEG4FiyNEaJ
+         ftm16YInp02IIUhmcS89vtqTbHERjBQn/E1L0K2mTK/IYW4ENA+NUYygwuEwsCQf6FHi
+         dO3XQkvjjgSFObPYX2nzuOM+3oa2uKx62DTkWWeIFb4AJSYlfbmk9gaZHDZq5Z4A67gm
+         xzWg==
+X-Gm-Message-State: AOJu0YzzuQpvBAa5r53JHtrCCdd+gjeQ1lpfGIMdTgelxzYRRgmxfAOy
+	URfomQCSVdTas1KPYilx3MCXj9zPyBX5Sgkn1nb0DlAhSNp1XmHCKD7cxSnvRA==
+X-Gm-Gg: ASbGncsoGa8fGmiB01q8Nvz2uQnUEhwI0smuilJHg7IS3g3Se8SBjum8ICfViWc+pg9
+	1mOz1UBVNTZdWVCodx61Cfj8E9KrRa+ykhwM5WfSRFoORdboYTIyzxoKsb0pLatQT8ZBGLGX5r+
+	G7C5riW2QqvvDbA0dW6HlTAeGfphLfeUveH/kqy08BwMwiZA+AukmyHUdn5AMRbFP1A7hzo/pyP
+	MheRx2hNFfF9hXsb/KIfguYrOlff/I3oasW+LYs+X6lWdEy9BOZoBeTr8UuhZbLb5NVBcQo0ri3
+	jOhbi09zEkxdVwE1Oh5OvTgFFr1+p0u/C6V3Ey+wKBH5pdQDlWDadBTpfcfnn0riAbPaL3LJsEy
+	53KFDwt+TZ6AVD/gwaZntdLgLNsZEEqdmOA0+7ZNpA5xKQ7qPLqE=
+X-Google-Smtp-Source: AGHT+IEYM10ldFKzS5Yulm+mpYcGzq1y1akkYuicwYf/3NXw/PQARPDPRN33e3sSCM0PiD2zpMT9Hw==
+X-Received: by 2002:a05:6830:d8d:b0:744:f0db:a19d with SMTP id 46e09a7af769-7c0df816f02mr508341a34.33.1759860317539;
+        Tue, 07 Oct 2025 11:05:17 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-64e5b04ccabsm3060807eaf.22.2025.10.07.11.05.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Oct 2025 11:05:17 -0700 (PDT)
+Date: Tue, 7 Oct 2025 13:05:15 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 01/13] refs: introduce wrapper struct for `each_ref_fn`
+Message-ID: <jrst5hft3o7ee72hrmswhrnz46rgvjihdxgfsougg5u5vs6os4@2prgx3uw6qp7>
+References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
+ <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-1-916cc7c6886b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im>
- <20251007-b4-pks-ci-rust-v1-2-394502abe7ea@pks.im> <CAPig+cQ7xJky+F=g=NMrN6BQfP+ZV2KF4RF2eLqtULKgMTR5_g@mail.gmail.com>
- <xmqqbjmik3y9.fsf@gitster.g>
-In-Reply-To: <xmqqbjmik3y9.fsf@gitster.g>
-From: Eric Sunshine <ericsunshine@gmail.com>
-Date: Tue, 7 Oct 2025 14:03:21 -0400
-X-Gm-Features: AS18NWB6hDU4yYiWeCBUUabaQayv2Ylq52cxAKVcLhxoxpKFGcM4nQzrz3Jd5sU
-Message-ID: <CAPig+cRvugLP63CYUXw7pf-7obErQYenrVvNeSYhegQ57PQ8KA@mail.gmail.com>
-Subject: Re: [PATCH 2/6] ci: check formatting of our Rust code
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
-	Ezekiel Newren <ezekielnewren@gmail.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-1-916cc7c6886b@pks.im>
 
-On Tue, Oct 7, 2025 at 1:38=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
-> Eric Sunshine <ericsunshine@gmail.com> writes:
-> > Later in the same thread, I wrote[2]:
-> >
-> >     Project guidelines have long suggested 80 columns as a desirable
-> >     maximum not only for C code, but for pretty much all other
-> >     resources, including shell code, Perl code, and documentation
-> >     files. This suggested maximum works well for adherents of
-> >     80-columns and (presumably) hasn't been too onerous for developers
-> >     who use wider windows; at least we haven't heard people clamoring
-> >     to increase the suggested maximum column limit. As such, it does
-> >     not seem far-fetched to expect that the project guidelines
-> >     should/could/would also apply to Rust code.
->
-> I do not see a particular reason to lift the 80-column limit for a
-> specific language, whether it is Rust or AsciiDoc. [...]
->
-> Will it inconvenience wider Rust ecosystem when we get big (meaning,
-> they have to work with our code) and we as the project norm use
-> different line-length setting from others, perhaps by looking too
-> different from everybody else, or something?
+On 25/10/07 12:58PM, Patrick Steinhardt wrote:
+> The `each_ref_fn` callback function type is used across our code base
+> for several different functions that iterate through reference. There's
+> a bunch of callbacks implementing this type, which makes any changes to
+> the callback signature extremely noisy. An example of the required churn
+> is e8207717f1 (refs: add referent to each_ref_fn, 2024-08-09): adding a
+> single argument required us to change 48 files.
+> 
+> It was already proposed back then [1] that we might want to introduce a
+> wrapper structure to alleviate the pain going forward. While this of
+> course requires the same kind of global refactoring as just introducing
+> a new parameter, it at least allows us to more change the callback type
+> afterwards by just extending the wrapper structure.
+> 
+> One counterargument to this refactoring is that it makes the structure
+> more opaque. While it is obvious which callsites need to be fixed up
+> when we change the function type, it's not obvious anymore once we use
+> a structure. That being said, we only have a handful of sites that
+> actually need to populate this wrapper structure: our ref backends and
+> "refs/iterator.c".
 
-As a general answer, I would assume that third-party projects wanting
-to use Rust code from the Git project would do so by importing one or
-more "crates" that the Git project publishes rather than importing raw
-code directly from the Git project. In this case they never deal
-directly with Git's Rust code itself, but instead interact via the Git
-crate's public API.
+It looks like we also populate `stuct reference` in a couple other spots
+where we invoke the callback explicitly.
 
-If a third-party project does want/need to import some raw Git Rust
-code directly but has no plans to actually edit the code, then there
-should be no problem. If the project does plan to edit the imported
-code and periodically update it from upstream Git, then it's a bit
-more onerous, though perhaps not so much so; running the Git upstream
-code through `rustfmt` before import into the project is one simple
-step which can easily be automated.
+> Introduce this wrapper structure so that we can adapt the iterator
+> interfaces more readily.
+> 
+> [1]: <ZmarVcF5JjsZx0dl@tanuki>
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+[snip]
+> diff --git a/refs.h b/refs.h
+> index 4e6bd63aa86..2b24a3d9974 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -355,14 +355,32 @@ struct ref_transaction;
+>   */
+>  #define REF_BAD_NAME 0x08
+>  
+> +/* A reference passed to `for_each_ref()`-style callbacks. */
+> +struct reference {
+> +	/* The fully-qualified name of the reference. */
+> +	const char *name;
+> +
+> +	/* The target of a symbolic ref. `NULL` for direct references. */
+> +	const char *target;
+> +
+> +	/*
+> +	 * The object ID of a reference. Either the direct object ID or the
+> +	 * resolved object ID in the case of a symbolic ref. May be the zero
+> +	 * object ID in case the symbolic ref cannot be resolved.
+> +	 */
+> +	const struct object_id *oid;
+> +
+> +	/* A bitfield of `REF_` flags. */
+> +	int flags;
+
+I was considering for a little while whether it would make sense for all
+the arguments to be moved here, or if ones such as flags should remain.
+Since all these fields directly relate to the reference though, I think
+it does make sense to relocate all of them.
+
+> +};
+
+Ok, so now all the explicit callback arguments are contained in `struct
+reference` here. Going forward this certainly would reduce churn if need
+need to add additional fields here. Overall, this seems sensible to me.
+
+> +
+>  /*
+>   * The signature for the callback function for the for_each_*()
+>   * functions below.  The memory pointed to by the refname and oid
+>   * arguments is only guaranteed to be valid for the duration of a
+>   * single callback invocation.
+>   */
+
+Should we update this comment now that these fields are contained the
+wrapper struct?
+
+[snip]
+> diff --git a/refs/iterator.c b/refs/iterator.c
+> index 17ef841d8a3..7f2e718f1c9 100644
+> --- a/refs/iterator.c
+> +++ b/refs/iterator.c
+> @@ -476,7 +476,14 @@ int do_for_each_ref_iterator(struct ref_iterator *iter,
+>  
+>  	current_ref_iter = iter;
+>  	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
+> -		retval = fn(iter->refname, iter->referent, iter->oid, iter->flags, cb_data);
+> +		struct reference ref = {
+> +			.name = iter->refname,
+> +			.target = iter->referent,
+> +			.oid = iter->oid,
+> +			.flags = iter->flags,
+> +		};
+
+Now we wire up the new wrapper struct instead of passing explicit
+arguments. Looks good.
+
+> +
+> +		retval = fn(&ref, cb_data);
+>  		if (retval)
+>  			goto out;
+>  	}
+
+-Justin
