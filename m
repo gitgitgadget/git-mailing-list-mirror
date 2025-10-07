@@ -1,133 +1,135 @@
-Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCDD19D082
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 20:44:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00548182B4
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 21:00:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759869849; cv=none; b=EPhua8N9qPOBqHKbstPCHWRa34u1mUd2IOMq8u5wGi/voOleUl0BZS3jkta9Q+4ndpLKe68xI2Vd0OkZ6rlSIxmrv9yhPMnv8bikDUf3lTcdScmpVwGXSQi6KHOq54mCfx0Vomj84Zg5phWZm6ePaOq/HiqjNzy1+jrOIHeOwLY=
+	t=1759870830; cv=none; b=mosxQ35phC+1a7wTfNgqSWez1a8qmT00j/RuJlegBVttYpVzyYNRDdHKT6VTtxdhk4PFxXo2qzRoHhEkJarnZE+CQkNWLEJ2PSbFQf/17ThUYbMQleNQhOKdir6IzNob0KGtBums21dXPcsKTTBZ6/NrdaTaJFbgPZpC3CLCp38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759869849; c=relaxed/simple;
-	bh=Bt1VyW/1jFTtQu7Wym6O8AHCKerMlUGbVsVe2OM44Lc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NyuK1Mf5UIMBbZ1GaDTUUKBcvKzVVAsctvbSylD0+mcThVoin3fNaEDbw9UydC6yFG7DEvs+yuoNT9C6Kpn1q0G651G16CKsYcjKg58TwZVCZfDlb+gIau6fdWzIu3qJbAoRKOjcIqtOa9S0+7XPPDiM0wEcS/1X6IxBmA4sVpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=TQ28luDT; arc=none smtp.client-ip=209.85.166.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1759870830; c=relaxed/simple;
+	bh=2tfoVbbK2SDeffjqj+QP5NWLf9s9J8cBDnj47+KTPjg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=A9dNxkMP2bYwdLQjAYWhP3EmHZrXkUo9J20VooQgIrnimfJrkQn/GDGOgi8mWJymB7EEPa8OQXPPaU0KFhYJ58qlJWY7gJ/74/3r3kpQh1WReU958NVBlgxy139NAFAOCynOuyzz7QJFOffePjtTe6Wpg9Mw+KHHkhBb0KX+mu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GUyF+kcd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fodtmz2/; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="TQ28luDT"
-Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-42f5f2d238fso18185785ab.0
-        for <git@vger.kernel.org>; Tue, 07 Oct 2025 13:44:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759869845; x=1760474645; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=nHjUdN23KCZxnlMLa5/nPMMDbVxOTzSaP3vGtmz4J7w=;
-        b=TQ28luDTFiKRgM6H3jtd6b7SRQTrHqPTBQdQEq4MoUYEodR40e5CwOjVFUMYNZxmzF
-         y95/u9/9p6tRxn1TpDN/L1BNlo05jQX0i0/zOcoksBkO7TWD5+WS/SSzvRqGk1Gjc+yY
-         ZHg5bWNi+ycANEqxKrquHDyazik3RopBSZjATL29aLDHop58OIoM5fgHDicWb1meE9sG
-         0MQjDjF6QDxa/lnQ3oNUFtr2Waz82Oql6WtqM4huKaoP6rBPSA2QD6+9LNTux/WgLvq1
-         it+hkkNQylAy7pRohVPlFS995feerMQjK0mIK3iUxjqwu70sl2l/K+80bDhTBE5Jivw7
-         dYTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759869845; x=1760474645;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nHjUdN23KCZxnlMLa5/nPMMDbVxOTzSaP3vGtmz4J7w=;
-        b=FMuZ6GVkg4qZFkeyCuDqOVi5Akn228iSHfkl43AxNqXPR290rKwRLTSbohggnQI1n0
-         T0mjE66L3cUeCtlqWqBtigU52u2YXHXx5PcHw9mZ41ybv1h9UbeUf39R6WTSUPeb1CxJ
-         plPwrn04ETCLQSmKOqlDYzcsMz1UaK6lT0/seE0ldpJiUmJsY64t1cI/yoK/LbweGqNJ
-         xEmMqjwQL6RxLZidw4LSXyamKuxrL/SUVdHch+5tCC3/gclJL2ZihjMum10iED6F4MAV
-         d/jQIcn5GA1RnohFBTK5XsdDSWFtjn35OsQPf1IxwA0FqCygD4CpowPx0/URvAmZ53In
-         D9Zg==
-X-Gm-Message-State: AOJu0YwK+44enMZfSPsgDxpR6JlePDyu8q48wWFDT8XaYwIGRoYv/32m
-	NTN4T2lC6Hwxg1Wi8NuBvfi00a2mu+g3kKFgfGk1qTmH7ipoRG6f5ApBxraAKz19OGY=
-X-Gm-Gg: ASbGnctWTfItC6txMr9qoopBjux61tRrv9jSTvPtJL0lN5az56CJAZDjwbdVftJdxUg
-	zYuO1CVnxnGzRsH6ObWSgElnDGmKOlf3CboQSW5tHcyVf+2aGfhlOo2PUvxwCYlHEm32G517l+0
-	NYReyg/kmDnca968m9O6BkGzgIFiEtc+y75dJsmT7JI7DfDst26Shqt+oUOLvTgkc4h8DeIrHRO
-	yxKWu4JCVWZSaW2pnDOgha9IW+drjneMPwN6i/bXvuMjesEjpj6XQBjCLjJkxAvKC8RcJewDqD8
-	BTtdcs23JabAMSBW7adDZGeaKsyac2usj6ipnvqwf9IGhyRXLKqGiNotQKPjraBOPl9+txeCUSZ
-	Q4cr8PYBea8o4QPjea4dNmGbbIst6yNjS22+/tzB90pMfJBeyTJ//F0KBR8T3PVtF5nm/Td/0wh
-	d+hteEyA+dEpw65qj3JOr4kNWHBFn1MBM22azdul7i9/hmF2+kcg==
-X-Google-Smtp-Source: AGHT+IExwONU9hpWxpZ2zfW/2IvfRa0kfeuumAI5jMu6z11slUqPReRaA1sG7uiPE4iSKZBkZg+6PQ==
-X-Received: by 2002:a05:6e02:12c1:b0:42d:7e2c:78b8 with SMTP id e9e14a558f8ab-42f8736cdfcmr8008145ab.2.1759869844983;
-        Tue, 07 Oct 2025 13:44:04 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id e9e14a558f8ab-42d8b28153asm70154785ab.20.2025.10.07.13.44.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Oct 2025 13:44:04 -0700 (PDT)
-Date: Tue, 7 Oct 2025 16:44:03 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 00/49] repack: prepare for incremental MIDX-based
- repacking
-Message-ID: <aOV7k4cPcuhC4Mzz@nand.local>
-References: <cover.1759097191.git.me@ttaylorr.com>
- <xmqqcy7a5gnb.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GUyF+kcd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fodtmz2/"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id 34E0B1D000B7;
+	Tue,  7 Oct 2025 17:00:27 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Tue, 07 Oct 2025 17:00:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759870827; x=1759957227; bh=Si74gThj+K
+	UhZFvqmQZLykN33NgGKzDzFbymqBZZNCQ=; b=GUyF+kcdK/urCVlsOOAkAT8Cd9
+	RfqN0CfEspwQA5TjMwcZkGEZoPIlE3Tkb9lczW5YlxWwVEVnc3ZWWZFbyuu1zkGo
+	aLmxL3xWarSz//X6ZCVYd6ffVDr/lBiSmdxZUAz4fW2iGofmlYeSPiCtfXoq7Fwi
+	Rf5d05fX44Hf1FUENpyhnVzxVH6W6Dk1SWUYM7tfel93OMyWfixUXCNWu5VCH5/v
+	geAEgpzTvuz0gPOpR2xA5l8+XqWjT43JEbeG0VNrih0dTfrM5yr21d9t0uFn6tNd
+	YJoScbAN85355fTNMvzcYqg1Ct6FcFP76uF7T/xnILSdhlW1yWB4aX97eCFQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759870827; x=1759957227; bh=Si74gThj+KUhZFvqmQZLykN33NgGKzDzFby
+	mqBZZNCQ=; b=Fodtmz2/diG9R0DgKoKtWxhyPcFLnywlIQXRMut+mdWK3+Ae/sC
+	qJ9242MFA30JO3kZK2BmJS/LU3eX/VI2EaPiFfZHLoqh4ZQd00sk01YtO2qNVwQz
+	6R04VTXZ+DYjZWcC3LNdDKsReaBfqkUTVYv5Hdi643Stq4pWBVfmUwmFGO3KWnfL
+	ChUVC7i8UgxChhRs4wMrAJUSynYuP4BSarcP+jp2h42Qw+/SHOMzxyp0PBF1yjER
+	BHAnnKfZ5AE3ozxT+9NQR6pN2zf9vpDNaTcdVTkhnojfy/nO/SN+OxKuCyKzlqbD
+	9j5nibVPno82JrZAyC1PNEF/B6ZCqAzEfyw==
+X-ME-Sender: <xms:an_laAfgX9_DWLfVH_imtPShXPNAX5VpeI04tJsF5j6vW9JgBskT8g>
+    <xme:an_laJqkXomcMck2z2bX3evS2JN9QPqscnm7ConJgiJFLIs35luzKx5dKKWQCyOKE
+    Zx77myb_8idM7UXGWK0_I3jmg2lJWbk19SaaX1Ct98NB2CEnY1H>
+X-ME-Received: <xmr:an_laO55pAN1JVZjze97ULmdcHOexnhbhNzmVrfWXv7bRenCBR2DgQInTpfGB_ZuplbJwqDHgcmZMQISkISrMx_ZfOz7pkK0XwfR>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddugeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:an_laPpBxgadsFWcaTA_ONV369LRbmZMhM-uuTDk0evgbCM1ndxqGg>
+    <xmx:an_laAgvigpHdDcOXVpW-7aQG-0VpekDxUTaALmCd9slHzLI32Xr0w>
+    <xmx:an_laJK3CPnhsvgPq-UBX8WefwkMRYzBxGmtiAwvTe_EgwOL8MbqKw>
+    <xmx:an_laABfDiKK5A_m-M0VI4D9Btzu2mi9ELMBDhpwHIKgJ3qMX5ePMw>
+    <xmx:a3_laJxnWihA6s0FpL-j9n__KtqaIRhK5_G8VSDzCzP8Mbt9daXSfFlZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Oct 2025 17:00:26 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 00/13] refs: improvements and fixes for peeling tags
+In-Reply-To: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
+	(Patrick Steinhardt's message of "Tue, 07 Oct 2025 12:58:37 +0200")
+References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
+Date: Tue, 07 Oct 2025 14:00:24 -0700
+Message-ID: <xmqqsefuig0n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqcy7a5gnb.fsf@gitster.g>
+Content-Type: text/plain
 
-On Sun, Sep 28, 2025 at 03:58:00PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> >  * This series depends on ps/packfile-store at dd52a29b78 (packfile:
-> >    refactor `get_packed_git_mru()` to work on packfile store,
-> >    2025-09-23).
-> >
-> >  * This series is split out of my local copy of
-> >    tb/incremental-midx-part-3. I suggest queueing it as
-> >    tb/incremental-midx-part-3.1 ;-).
->
-> Both of these comments are very much appreciated.  Do we say
-> something to encourage these in our developer-facing documentation?
+Patrick Steinhardt <ps@pks.im> writes:
 
-Thanks.
+> diff --cc builtin/repack.c
+> index 873e21c35d,ad60c4290d..0000000000
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> diff --git a/repack-midx.c b/repack-midx.c
+> index 6f6202c5bc..74bdfa3a6e 100644
+> --- a/repack-midx.c
+> +++ b/repack-midx.c
+> @@ -16,25 +16,23 @@ struct midx_snapshot_ref_data {
+>  	int preferred;
+>  };
+>  
+> -static int midx_snapshot_ref_one(const char *refname UNUSED,
+> -				 const char *referent UNUSED,
+> -				 const struct object_id *oid,
+> -				 int flag UNUSED, void *_data)
+> +static int midx_snapshot_ref_one(const struct reference *ref, void *_data)
+>  {
+>  	struct midx_snapshot_ref_data *data = _data;
+> +	const struct object_id *maybe_peeled = ref->oid;
+>  	struct object_id peeled;
+>  
+> -	if (!peel_iterated_oid(data->repo, oid, &peeled))
+> -		oid = &peeled;
+> +	if (!reference_get_peeled_oid(data->repo, ref, &peeled))
+> +		maybe_peeled = &peeled;
+>  
+> -	if (oidset_insert(&data->seen, oid))
+> +	if (oidset_insert(&data->seen, maybe_peeled))
+>  		return 0; /* already seen */
+>  
+> -	if (odb_read_object_info(data->repo->objects, oid, NULL) != OBJ_COMMIT)
+> +	if (odb_read_object_info(data->repo->objects, maybe_peeled, NULL) != OBJ_COMMIT)
+>  		return 0;
+>  
+>  	fprintf(data->f->fp, "%s%s\n", data->preferred ? "+" : "",
+> -		oid_to_hex(oid));
+> +		oid_to_hex(maybe_peeled));
+>  
+>  	return 0;
+>  }
 
-> The points to stress are:
->
->  - If you are not building directly on top of the recent tip of
->    'master', mention what topics that are not yet in 'master' your
->    patches depend on.
+This seems to match the manual resolution I just made, except that I
+line wrapped overly wide line ;-).  
 
-I think that this one is covered in general by 0a02ca2383
-(SubmittingPatches: simplify guidance for choosing a starting point,
-2023-07-14). The language added there is a little more generic, since it
-suggests mentioning how you constructed a base branch when a new topic
-depends on >1 other topics.
-
-I would imagine it's clear to readers there that "if I am describing how
-to build a base branch which merges in multiple topics, I should
-likewise list the topic branch by name if I am building on top of a
-single one already in the maintainer's tree."
-
->  - If your series is a part of a larger effort, briefly describe
->    what your overall direction and grand vision is, and state where
->    in that grand picture the current series fits.
-
-Not covered.
-
->  - If you have a short one-line summary for the topic to be used as
->    a topic branch name in mind, do suggest it.
-
-Sort of covered by your d255105c99 (SubmittingPatches: release-notes
-entry experiment, 2024-03-25), but that talks more about the summary for
-RelNotes purposes, not the topic branch name.
-
-I'll send out a short series to add some more guidelines to cover the
-above in our Documentation/SubmittingPatches.
-
-> Thanks.
-
-Thanks,
-Taylor
+Queued.
