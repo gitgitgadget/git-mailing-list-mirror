@@ -1,85 +1,103 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300DB28F5
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 17:02:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6C52DF130
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 17:04:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759856576; cv=none; b=eoEp+Ow2tlpXu7sY5N+NS4czhzBOoxrixrhgfRfmdcBy25BJFYuqsIwQ24DIiadqLl77vZlPMehNHbHZ++ODOEZXZdnp+shWAMaoucreHpxziQYzjvRUfNsve7+u2c0HYB2x60+rQWyE7Y1/W7WwAWgwI8sWCrMLWHqM4H3Z81U=
+	t=1759856662; cv=none; b=kA2v8zneWxJxKilmsSrq6q1US5HKPx2sdpx9CHp9U9oVwOjpwwxyPBTT9klm6BJSJb00TTwO7l1TZ/IZZUVSn6fk7JyrYGKeENbNdGpUFYexJvS4re7Smlm5oLcoLPZ9nFbfdcac46kVQe6q7LQB2OLc8c/C8gCWzNDcdTgH8Tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759856576; c=relaxed/simple;
-	bh=1oF2gVl298yShlgcBaK9iTceluzAqEEZspNqSewMTbo=;
+	s=arc-20240116; t=1759856662; c=relaxed/simple;
+	bh=6noyxQgBOZCyTog4bQansO9TB9udX0R8pParfv1Fi/8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qmj5OoiWSIhnsStsFyMrvMObDXHUOUVGfSVrHFnqOwp1VEAeXQXGs5LViTa8BNXyXVZCmMlQRe77tK9Fpdy6HaGOGdC3lMJIKSmVzJq9IxNIFvCQI0Gz0Ti4ef/M0e0KfmURlyfli941lbyUzw1obJvKysNbmlBZxtM9nc+xzEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EScB44sD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QNwbGdrB; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=ddb1BUyd87BpjW7fKH6HLUbkqSa6f/41WS7RoHn2K3sJbWq1c7WAtLujy4H7mJz27Uhs1mB4pvT7lRNoTNh43RvZp8oh3uQ6+r+VCiGINLyNHzVrLlRcal+tVY26SWRo3W0BipPRWxGBEJ0Z7FEhSnuxh5pF++e+LZ5RDlsj2D0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZUb1VO4E; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PlPBt2YP; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EScB44sD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QNwbGdrB"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 20A401D00192;
-	Tue,  7 Oct 2025 13:02:53 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 07 Oct 2025 13:02:53 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZUb1VO4E";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PlPBt2YP"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 88AD97A01D4;
+	Tue,  7 Oct 2025 13:04:19 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 07 Oct 2025 13:04:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1759856572; x=1759942972; bh=CfUweJX7Gc
-	TaL5WqXXApUcIlnKyaVBzZ/R00/tHUXT4=; b=EScB44sDdY4xLC89GTOdfkiMY4
-	CD0qr2+w1pJpJVrrWRwMWBHMFp+WqfUNEbZEQt/ka79iIoKXiTPYH1C97io626Aj
-	dcSbE+wsVyg8blILh1U4LI+FktKnZOMhyga+61X3QOdJb662MIUbcy+6SIEwSzsm
-	XMh9t2zuXN/dwaJ2V6EIytvmqoq45ZkbHxxXEwaBqYpTP4tKjbfgkS/R1/DqzjpP
-	k5te4Dccayy4QK7pfdWDIIk7GL9JCr6d1qVL1Z24+PtB/U3ReEeL/cniAz7WTxYz
-	XH1xwaH49nngW0PZRlK72GnOR0FjvXIu81Qy6e7oq90cjRS8GBrrQvvQis/w==
+	:subject:to:to; s=fm1; t=1759856659; x=1759943059; bh=3XDh+pZwOG
+	6B7NY86W6FLPaMxwzNyIQje3wyh1Igujo=; b=ZUb1VO4EGOIdOtvpmNrTuaAY4V
+	WVurNZkrUi4BxT8VDttfcWJ8/d3hL7v9c8zd4kbUBIkraJpJS/RW9HBpD32sK/OF
+	bvYV/CRwE1hTQX0qxhGTAa5uaWxB69Yzq1ENzkQpUeyJltx7oMUS3Y3HLoNsUgRQ
+	mbY3B/eHzv9U2vq0JbOmYo5t2PDJ6c0bQMnJ0EjijlfJeRXEkUcghX6oG46f1clE
+	aQZhsokfEseFWgXH7vMp3Ov8qXMR17XHwAIo+LVMNrqrjpO9+/Ukx6SlMZaQMPDL
+	5ZE9tkRMbezJ36mEqoKZYH6+0wz13CuVz0afpzY7ONOkCyOe2+E33hhgoobg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759856572; x=1759942972; bh=CfUweJX7GcTaL5WqXXApUcIlnKyaVBzZ/R0
-	0/tHUXT4=; b=QNwbGdrBm3+8U8pF8apXzxsQQ9w0TgbHiJdxkQd/d3khJVz2dgx
-	VDZMzPZbRQb+ckmG9hve0CM3T2SohauzmQbBHoth+dsKPXkdwT1VXOrXcm6XWKXu
-	Bkql91PZQuNAXlL1g82oJtAO6xxQFh9qmNTJPQSG9Bcn9AB166IcJnbPStnk/sAr
-	RChgZEpS1YTYuwAxdqT25QKX+GR76WkQjv6oin23g4/wNTdAJLE2cCzFoIdG9x0c
-	b2XuPA2Wk7wBgliH139eVrvmCEzBlKa84MFzQO2DXbP0GT6O9fddIrNtpcmpvWOw
-	ui1SbEOsutizWmM3kJiCPk2cQaLdR+i8tZg==
-X-ME-Sender: <xms:vEflaHGfeLGwyIOzA2cG0J4-BjZHMfAOSj-8sCEhmTZTgU_lrMOsmQ>
-    <xme:vEflaLNP9AR8TyMQFGLgykxiX37nvD9A9K7A8CyB3j6q8tag7Y_mR2-Pcy5PftXCg
-    Keth3fZjIsN2xuVID5DF7E4EwnneV7i4UgX8iJlJx5fQjOxjKpB>
-X-ME-Received: <xmr:vEflaBdUt_Hj8NOTb_1z5fY_sNZfxCVCQ2U0LbShshOmbD4W4lpi5BWWdi1FCom6GTwxuhXAIahgnEFLEA9YBxQnzOijy-6yQsRs>
+	1759856659; x=1759943059; bh=3XDh+pZwOG6B7NY86W6FLPaMxwzNyIQje3w
+	yh1Igujo=; b=PlPBt2YPMOjfloFb5+bAhAJBifxKBths5edrDkLIMqgVY08ytne
+	K8a1yUC4gqbzC4Tdv81wa2WUJ5jbhIdxm/UfLAbtKet+eFV8CHYDMD6/LA1Hd3ad
+	SOLc1+n4SfDtOUUSmW2Sm0D2EzuEeiOwov9XirLTIqkFMRrjoOA1DGa3GN0/eAUn
+	z6IwmKpdklNxk7lWU5li8NpJpLpG36DGj5rEFEMD4l9pIgsAqI7ivpn2KYpAMGi7
+	WHTojFTIIScaw8v4v9YSMBqKMJ2UqJ3YMWN3oPMCf8MEpaqgomJNhVNpPtuu7z3k
+	GmNVZ1ypARpRAAMT/X3Tj6ksoM02Fp116tA==
+X-ME-Sender: <xms:E0jlaPQK54qho3Ig084DyoBvXehI8N8fGCP3X1Dz9VnYiWwFIOv4Eg>
+    <xme:E0jlaBNV0ZzNDQHqnLSl4hL_sqg-rnob_VZtrPJ0JMRGoop5xhdCtzy6sQzPp7G1N
+    rHNMrYzE0khA_dxtO2gmYM1Xw7-hPXU057Gw1qjAz1wf91fLa5q>
+X-ME-Received: <xmr:E0jlaEm79x8xAG_Rnf545fha79m8ti4ojVILXsGIpp4pvVUw-iOu5jmDmiJfAfyn6mKo-31nl_nw4Mxr8sBJ5PEoxAXEL1eMz5Ut>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddtleejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghfkgffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeetleevffeggfelveeujeeiiefgiefhveelgeefudelkeettedvleffudeg
-    ffdtfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhith
-    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjuhhlihgrsehjvhhnshdrtggrpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:vEflaAuicJ04Z6LHuAQHeAFUj0natgAQLI38FheQxWCtTkIgCHiCow>
-    <xmx:vEflaKmdxFuTnLvx-w1H3L9irmXaj2Fd94EdmA3eY4rW7QWdTVZj6A>
-    <xmx:vEflaKxQJaLfsg5rbvEttW8Mc962oIhXcX0aGv6T0eFH9QPam2s-hw>
-    <xmx:vEflaEMpJ21ZBG7js3jCRaov3dsniah9V-aR2_89Z_nlzj18F-u46g>
-    <xmx:vEflaP_f_i9ZA8cZUB-e7to072-O8V95BuXkkxm7qWmDIeWJJzuADzVK>
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudeipdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
+    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdef
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvodhgihhthhhusg
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepnhhorghhrdhpvghnughlvghtohhnsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehthhhrrghnuhhrsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepghhrohhsshgvrhdrmhhitghhrggvlhesghhmrghilh
+    drtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhm
+X-ME-Proxy: <xmx:E0jlaLYjnHpo2gvkbXkGCyjJvnNnB_NOCM9uq0Z2bnW318d3vPms3Q>
+    <xmx:E0jlaCTDA1cDwHr6bmlLvv6FZUwI_ige8cy73AELcGLL0hZDPpG4JQ>
+    <xmx:E0jlaNXNzz4vwSrRBkoo6DCkHzgke7OtnMnDDGl2vCCnTpnyZHjC9Q>
+    <xmx:E0jlaJaJFfx7Fh8iPruUBDYdoBGqZQv0CwNC5r2VjybR1GrOzyWOAw>
+    <xmx:E0jlaO6MLr533zWWnpn3a-pSjQpehmMoex0N_LtytKudyHVeHZOjipeC>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Oct 2025 13:02:52 -0400 (EDT)
+ 7 Oct 2025 13:04:18 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH] doc: add a explanation of Git's data model
-In-Reply-To: <aOUkZa4_fq1hho7Q@pks.im> (Patrick Steinhardt's message of "Tue,
-	7 Oct 2025 16:32:05 +0200")
-References: <pull.1981.git.1759512876284.gitgitgadget@gmail.com>
-	<aOUkZa4_fq1hho7Q@pks.im>
-Importance: high
-Date: Tue, 07 Oct 2025 10:02:51 -0700
-Message-ID: <xmqq4isalk5g.fsf@gitster.g>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: "Phillip Wood" <phillip.wood123@gmail.com>,  "D. Ben Knoble"
+ <ben.knoble+github@gmail.com>,  git@vger.kernel.org,  "Noah Pendleton"
+ <noah.pendleton@gmail.com>,  "Patrick Steinhardt" <ps@pks.im>,  "Thranur
+ Andul" <thranur@gmail.com>,  "Michael Grosser"
+ <grosser.michael@gmail.com>,  "Eric Sunshine" <sunshine@sunshineco.com>,
+  "Taylor Blau" <me@ttaylorr.com>,  "Matheus Tavares"
+ <matheus.tavb@gmail.com>,  "Johannes Schindelin"
+ <Johannes.Schindelin@gmx.de>,  "Calvin Wan" <calvinwan@google.com>,
+  "brian m. carlson" <sandals@crustytoothpaste.net>,  Martin
+ =?utf-8?Q?=C3=85gren?=
+ <martin.agren@gmail.com>
+Subject: Re: [PATCH v2 2/3] config: values of pathname type can be prefixed
+ with :(optional)
+In-Reply-To: <18d9eef5-a1dc-4d9d-957b-ae630f0a2b12@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Tue, 07 Oct 2025 14:24:38 +0200")
+References: <20250501214057.371711-1-gitster@pobox.com>
+	<cover.1759094936.git.ben.knoble+github@gmail.com>
+	<5c97f580a9e77c464bc6bf4ed9ea8546711c6637.1759094936.git.ben.knoble+github@gmail.com>
+	<a687ec17-8ee4-428e-bae5-063716d59a08@gmail.com>
+	<xmqqzfa3onxx.fsf@gitster.g> <xmqqsefvol7s.fsf@gitster.g>
+	<xmqqms63ok7g.fsf@gitster.g>
+	<18d9eef5-a1dc-4d9d-957b-ae630f0a2b12@app.fastmail.com>
+Date: Tue, 07 Oct 2025 10:04:17 -0700
+Message-ID: <xmqqzfa2k5im.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,85 +107,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
->> +Git's core operations use 4 kinds of data:
->> +
->> +1. <<objects,Objects>>: commits, trees, blobs, and tag objects
->> +2. <<references,References>>: branches, tags,
->> +   remote-tracking branches, etc
->> +3. <<index,The index>>, also known as the staging area
->> +4. <<reflogs,Reflogs>>
+> On Mon, Oct 6, 2025, at 22:21, Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> We'd probably need a preliminary clean-up patch to fix all of these
+>>> in the vicinity.
+>>
+>> So, here is the preliminary clea-up step that should come before
+>> [2/3]
+>>
+>> --- >8 ---
+>> Subject: [PATCH] t7500: fix GIT_EDITOR shell snippet
+>>
+>> 2140b140 (commit: error out for missing commit message template,
+>> 2011-02-25) defined
+>>
+>>     GIT_EDITOR="echo hello >\"\$1\""
+>>
+>> for thest two tests, with the intention that 'hello' would be
 >
-> This list makes sense to me. There's of course more data structures in
-> Git, but all the other data structures shouldn't really matter to users
-> at all as they are mostly caches or internal details of the on-disk
-> format.
->
-> There's potentially one exception though, namely the Git configuration.
-> I'd claim that Git "uses" the Git configuration similarly to how it uses
-> the others, but I get why it's not explicitly mentioned here.
+> s/thest/these/
 
-The core operations do not use Git configuration any more than they
-use what is specified by the command line arguments.
-
->> +[[objects]]
->> +OBJECTS
->> +-------
->> +
->> +Commits, trees, blobs, and tag objects are all stored in Git's object database.
->> +Every object has:
->> +
->> +1. an *ID*, which is the SHA-1 hash of its contents.
->
-> I think this needs to be adapted to not single out SHA-1 as the only
-> hashing algorithm. We already support SHA-256, so we should definitely
-> say that the algorithm can be swapped. Maybe something like:
-
-Good point.  Also officially they are called "object name".
-
->   An *object ID*, which is the cryptographic hash of its contents. By
->   default, Git uses SHA-1 as object hash, but alternative hashes like
->   SHA-256 are supported.
-
-I'd avoid "object name is the result of hashing X" which historically
-was a source of question: "why does 'sha1sum README.md' give different
-hash from 'git add README.md && git ls-files -s README.md'?"
-
-It is an irrelevant implementation detail (and you'd eventually end
-up having to say "X is <type> SP <length> NUL <contents>").
-
-    An object name, which is derived cryptographically from its
-    type, size and contents.  All versions of Git can use SHA-1 hash
-    function, but more recent versions of Git can also use SHA-256
-    hash function.
-
->> +commits::
->> +    A commit contains:
->> ++
->> +1. Its *parent commit ID(s)*. The first commit in a repository has 0 parents,
->> +  regular commits have 1 parent, merge commits have 2+ parents
->
-> I'd say "at least two parents" instead of "2+ parents".
-
-Yup, that reads much better.
-
->> +tree 1b61de420a21a2f1aaef93e38ecd0e45e8bc9f0a
->> +parent 4ccb6d7b8869a86aae2e84c56523f8705b50c647
->> +author Maya <maya@example.com> 1759173425 -0400
->> +committer Maya <maya@example.com> 1759173425 -0400
->> +
->> +Add README
->> +----
->
-> In practice, commits can have other headers that are ignored by Git. But
-> that's certainly not part of Git's core data model, so I don't think we
-> should mention that here.
-
-Third-party software can add truly garbage ones that do not have any
-meaning, and Git tolerates by ignoring them.  But there are others
-that Git does pay attention to, like encoding, gpgsig, etc., which
-may worth mention (in the form that "these four are what you typically
-see, but there may be others" without even naming any).
-
-
+Thanks.  Will modify locally.
