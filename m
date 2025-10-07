@@ -1,120 +1,200 @@
-Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884043FC2
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 20:17:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06E223A9B0
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 20:20:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759868244; cv=none; b=cSXa/Hu3zJqAx6bphKMnwMnH19GNzyoN2nXU9Did50s4CK40SyCOLzy9Yi0yvk56flcx3mP5smbWfT4/zwv2pGSpaqUt0vzrk+6jMt5J3YrwMfgRpHeGRwly2IZO6VjEVQQ5hv9AleM4nNngeq669oB4MXNYq/rJ1FD5sEVwhX8=
+	t=1759868405; cv=none; b=D0Ny5YCD5BELg5zmgshVYTCUtG6HHr2r+yOJKNrC9DFfDonPJo0kvJ9GgVGC46FXbYa/nj15JQroFO07uRyjoRR5VlRJvcRKTzfXZb4YYhugCuMtWPu4W4Usti4WOilDkQaTGXGrtSV9HtcAU3YtA0C2M3UqzUyDGtVVXivpSIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759868244; c=relaxed/simple;
-	bh=0JiLjldCoA6BvcPbZLOT8hakHlwjKAnrBXGyg4c+VCY=;
+	s=arc-20240116; t=1759868405; c=relaxed/simple;
+	bh=Sbi97id44FFhm45ztwxyc+m1IvrrMa8vTDrz/iK8+no=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dPt5UNSFDtC/plOxlqIF2UT6+5iP8JIfqZiu1F4QDXqvPtD7FQOW8Uo6V9lp+f1wl/mGjqDdptJyUgSX8dRlbrxtuPMs6XWy7F3h+nAGYMtuPd0jv6/DZptE7v16zXfGgkckuSJMhIAMEIB9av8NBHVtv85mpY6ZCVfO5ZzgJ20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=dbCuBn11; arc=none smtp.client-ip=209.85.166.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=D3xzMW2c1/ma7pC30inyMXGjxlhwGcJTowgdxRBK36j+0+aF/3TIOjeYGZh1gNpUlLwwWJepTPv+anotyl/zh3B/4JV6SEyuDnEYvsAYXxtePCxlDe/b7qyjpfF3fyUqn0QOTJmHQPfAjfPI3lAeTojYWs01VPZnG3gjc5ZjC0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A6eIfCpA; arc=none smtp.client-ip=209.85.160.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="dbCuBn11"
-Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-42d8ad71a51so78359595ab.1
-        for <git@vger.kernel.org>; Tue, 07 Oct 2025 13:17:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A6eIfCpA"
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-30ccec928f6so2233941fac.3
+        for <git@vger.kernel.org>; Tue, 07 Oct 2025 13:20:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759868241; x=1760473041; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1759868399; x=1760473199; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=nWRAai6mP5pmKtUS40coUdJk63VIz2kCCyMNzmPE5iA=;
-        b=dbCuBn11UZNsWNTFLytixoquXmz9dV6rW3FA5h9vIMUGnCkzjhS0zP+l+AGD1KADow
-         4bBFo2kwP2pPBdBsA6R19ykRA7IQtCxPODUHgA9VcTFXXdb4Hs/ZM0DnOZWv/1MSXz3K
-         TJVgSltKNae6ht/A8FCQvZEmVuw5VC26yfbKLU1WoYstcBkQKu4pHb0cZo5VBaHI23U+
-         zO2LGFD34LZYMuQl2/5AjuvrnB0ZoA3qDOI061KUaIxcK35a5XGcTFNM7eUWO62Nx83U
-         Wb4DULNN/EBYrk7Mrb1aq5upwCLfnWsOf+8dCkycsh9/Tf8qHhwbsAoQK52bRL/HrmPA
-         o7mA==
+        bh=T4Ni113UV0NgSXVbJS1lUFXmxmkvhjzvUgyn8AQaupg=;
+        b=A6eIfCpAECqBq8GYeaLtJ+rwzVGGYjqY9Gf979ACTytUbDy2yVRPXz6rs1YcAvz1k2
+         iafR0L0BSsFkzQwU7D2Tv9kI20VzhQfdZ4+zfDlO3f9yHGbPC6M/NBQbiB2syZ+LcSZ7
+         3/2zY6gIsI4kaj+FQTI3kxDNb547e1YPq/9V53OEVPMNcs4edPMT5fSH7dQly3B+/j97
+         TdKOJEppS8pWXSquLvwT821pH4PdQRiPikUdMWgakU3KfJ0QM8Uc/CxWsUjPjm0L2fyy
+         vLxulM4GTYf3T4ddsNzksq1+DlAuhua+FIKSN4vz1+Fo1VjHWKIGfIx/yYGTuF+Oolsz
+         5tXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759868241; x=1760473041;
+        d=1e100.net; s=20230601; t=1759868399; x=1760473199;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nWRAai6mP5pmKtUS40coUdJk63VIz2kCCyMNzmPE5iA=;
-        b=UubqQT/faEde8h2OofqmELv2kLiboGkYLo96CgyVCF8jrsSSUNpdlueIOqWz7NQetq
-         zcVZe9MFfEQ1HVk5b+fqTKxk0kSbSggm0ai+2eDZfjrp8uFgAZemEDiZVa8cWK+mU6eq
-         IBn158APHelUhlUiHne0GBPtA4tsBJ9BcOo0zv1CF0kXOtffhmIkoz45lk19eieFC5Ku
-         f+MAGndMVt2LaFAqxLLTRUp3v5q+53IYicXw0ZV42skRrafNQeUYAiVr9RBIHyh6+Ffk
-         9cVTGZv9RF7QFRvQeOd+jdDug6q73Ez7qLpiumV2UcifvmGYYaflt7FxP+O9gysoHIb1
-         NYog==
-X-Gm-Message-State: AOJu0YzDVgW80oHq76GpSyeJC1L0QhknonJXS83HddEATNmOEPol3Qik
-	IdXVUa2L5hFp13qnqFMpeivRJ3hWkkTaHGHaD+eZh3eksLRAQvi4b7GWykbpEoweoWrtyVwJexN
-	zYdVDUCOF9Q==
-X-Gm-Gg: ASbGncvKAr0kAcvKSYA0Gv0Zuy7WcbhMYrjlG6tn55JDZuL/+bP5Uug7b0efuR/KlWC
-	aZ+D6RvnFCYU7ywoR+L8P4E0gvdg6WKsqtNkNqg7DDh48kLvHE2EO+QLd9uSkJj9gWD3H/Vip90
-	r4sa1gwuniNgX6wEB5MNSX0Pl2xQTS9Ti8M5dAfTRk8zZ+k/ce9i4TEL9oyiQsOyYL2TH5DS7Uh
-	Ov+/78+HAOaBbYbp3lmTexGDN9i34C1wt4yqvECnx+bYfU+yu5UJhDyKBLRevsH9OtZ/G6RTzHH
-	GPjY3g+E7dLnM/xrK2skZSWjc1hiCpEP2i8Uq6+ZVZJabVCub8trxwFJIOhFEC8bCTLxj4nmIk0
-	EVm6JFY9KD8oxCrIiFtT6lnZq7li81F3vl8BIZlEKPSvlXDriqDB4lymstJFf3UMiXMPBLsHa6y
-	pUBdMjXq2F2JBXhVbr1T8yshFcljGX+5GuRjQJ5pR+bxEh4cnqIA==
-X-Google-Smtp-Source: AGHT+IG5ARqkfWPZZLUfCVC7zmSYZ9Kk6T+3hi7sDftoFJtZxjLeHGeosuF7UKslHnKviQc8CeXBkw==
-X-Received: by 2002:a05:6e02:3c88:b0:42e:23e8:66f6 with SMTP id e9e14a558f8ab-42f8735bacfmr8892145ab.10.1759868241364;
-        Tue, 07 Oct 2025 13:17:21 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-57b5ea4b312sm6239826173.30.2025.10.07.13.17.20
+        bh=T4Ni113UV0NgSXVbJS1lUFXmxmkvhjzvUgyn8AQaupg=;
+        b=mrST0elZR7Y0XnWOBWp5LemxieDq97Sw7Nq1qMGimyT+LHUPwwt5QxCTMN7jV6XzSi
+         JXFT4DzpfG56tHWE/xZ4Q/ba0MKRPv7NxzKXF3zT23E0NuUgC6MpyWphzOxVpYMjT/CL
+         3SC7Gwl4xguVz64bAmFWw73xOtc3kYYxbtkCVrxGVrMOzDpFoaB6bVsFV95OhaGmfkjq
+         EvVyL/dzWv5/2VtqNldtnZXtbPXbEhRE4ENRD3D7OLb3iMh2AXDIro0mkx/k9KBa9mlY
+         mRCUN6WT3XInkc3benlRWr3vJ/6v3m1SWjC1/BTrN9mDj7wbR0krCSZDSIsIG5LWcegp
+         npcQ==
+X-Gm-Message-State: AOJu0Yy78LfP/k3/wATRb+yu3Qosa7cicwGOX1lCTFpBr2dOpRcPw98H
+	d3ybpHLlPBDZkG5as1VirVmQ8iVmoHVmK/YJvMS8kKY4DK9CNh6GH/wCmMtJpw==
+X-Gm-Gg: ASbGncvllM32zbKlgYR32Zp7lTDJ1YpqO1mYdvFKF3iJ8gz6BtA9rFmnPmGuMjTBGDg
+	V9jnkH8pXDvGNo8JQfwu2J3yB5qYLei3NlSGKlu2+TVXm6kBBojXEob1+T4civluuTPB48MEiEu
+	GWqdcF0y0+8nZSs2G6dZMh2WgzwpK5t3YBqrww/3iEqXAFjxVZqLvfi6/tpQcoC7kkkp7OLiIVA
+	BckLmnn5dhQfDqX0xjsA2kco3b6vw2qCM7h5J1A5WOJdu3ydxrX0hD2tKrSl6jasR3NknVXsaOm
+	U8EruBvlocDkm/XzDMwb67zABFwMTmi8spFFuD7i/+UrMrbT2nHI0MdhkFMT+6+nKJBzA9IXKUX
+	0P1Tj62R/x8O8/fx79ilSjClgsEjKIWmjGPfj3URC
+X-Google-Smtp-Source: AGHT+IGfsFSRB0R3mAvnef/jBF3n5J/1Kmgsz3lfZGGL3n2DOTefFFZy2a9IpUfaIG43hNnvGhxWpQ==
+X-Received: by 2002:a05:6870:5594:b0:3a6:bcc8:8043 with SMTP id 586e51a60fabf-3c0f988655cmr512242fac.47.1759868399482;
+        Tue, 07 Oct 2025 13:19:59 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-3ab794be731sm5543135fac.8.2025.10.07.13.19.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Oct 2025 13:17:20 -0700 (PDT)
-Date: Tue, 7 Oct 2025 16:17:19 -0400
-From: Taylor Blau <me@ttaylorr.com>
+        Tue, 07 Oct 2025 13:19:59 -0700 (PDT)
+Date: Tue, 7 Oct 2025 15:19:58 -0500
+From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 07/49] builtin/repack.c: avoid "the_hash_algo" in
- `write_oid()`
-Message-ID: <aOV1TzXOizrK3d4Q@nand.local>
-References: <cover.1759097191.git.me@ttaylorr.com>
- <37a7dea848f9618f7243fd9ff8ed704adfb3cf4e.1759097191.git.me@ttaylorr.com>
- <aNsUZtGst4MguEXq@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 02/13] refs: introduce `.ref` field for the base iterator
+Message-ID: <q6ti6bevxr4kbsi7pe7slwmvyqhc2sslma3tk3xshohnqadtuv@canofgr644do>
+References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
+ <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-2-916cc7c6886b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aNsUZtGst4MguEXq@pks.im>
+In-Reply-To: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-2-916cc7c6886b@pks.im>
 
-On Tue, Sep 30, 2025 at 01:21:10AM +0200, Patrick Steinhardt wrote:
-> On Sun, Sep 28, 2025 at 06:07:37PM -0400, Taylor Blau wrote:
-> > diff --git a/builtin/repack.c b/builtin/repack.c
-> > index 094f5a0cc2..7d62959dc2 100644
-> > --- a/builtin/repack.c
-> > +++ b/builtin/repack.c
-> > @@ -413,6 +419,7 @@ static void repack_promisor_objects(struct repository *repo,
-> >  				    const struct pack_objects_args *args,
-> >  				    struct string_list *names)
-> >  {
-> > +	struct write_oid_context ctx;
-> >  	struct child_process cmd = CHILD_PROCESS_INIT;
-> >  	FILE *out;
-> >  	struct strbuf line = STRBUF_INIT;
-> > @@ -427,7 +434,9 @@ static void repack_promisor_objects(struct repository *repo,
-> >  	 * {type -> existing pack order} ordering when computing deltas instead
-> >  	 * of a {type -> size} ordering, which may produce better deltas.
-> >  	 */
-> > -	for_each_packed_object(repo, write_oid, &cmd,
-> > +	ctx.cmd = &cmd;
-> > +	ctx.algop = repo->hash_algo;
-> > +	for_each_packed_object(repo, write_oid, &ctx,
-> >  			       FOR_EACH_OBJECT_PROMISOR_ONLY);
->
-> As this one is essentially new code, and we have all of the info
-> available right at the start of the problem. Do we maybe want to use
-> designated initializers?
+On 25/10/07 12:58PM, Patrick Steinhardt wrote:
+> The base iterator has a couple of fields that tracks the name, target,
+> object ID and flags for the current reference. Due do this design we
 
-I considered it, but ultimately decided against it here because I find
-it clearer to initialize "ctx" right before it is used to avoid
-ambiguity.
+s/Due do/Due to/
 
-Alternatively, you could accomplish this with a compound literal, but
-that's (a) still a test balloon and (b) more verbose than necessary.
+> have to create a new `struct reference` whenever we want to hand over
+> that reference to the callback function, which is tedious and not very
+> efficient.
+> 
+> Convert the structure to instead contain a `stuct reference` as member.
+> This member is expected to be populated by the implementations of the
+> iterator and is handed over to the callback directly.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+[snip]
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 0ddcf22aed..d34fbe55d6 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -962,26 +962,23 @@ static int files_ref_iterator_advance(struct ref_iterator *ref_iterator)
+>  
+>  	while ((ok = ref_iterator_advance(iter->iter0)) == ITER_OK) {
+>  		if (iter->flags & DO_FOR_EACH_PER_WORKTREE_ONLY &&
+> -		    parse_worktree_ref(iter->iter0->refname, NULL, NULL,
+> +		    parse_worktree_ref(iter->iter0->ref.name, NULL, NULL,
+>  				       NULL) != REF_WORKTREE_CURRENT)
+>  			continue;
+>  
+>  		if ((iter->flags & DO_FOR_EACH_OMIT_DANGLING_SYMREFS) &&
+> -		    (iter->iter0->flags & REF_ISSYMREF) &&
+> -		    (iter->iter0->flags & REF_ISBROKEN))
+> +		    (iter->iter0->ref.flags & REF_ISSYMREF) &&
+> +		    (iter->iter0->ref.flags & REF_ISBROKEN))
+>  			continue;
+>  
+>  		if (!(iter->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
+> -		    !ref_resolves_to_object(iter->iter0->refname,
+> +		    !ref_resolves_to_object(iter->iter0->ref.name,
+>  					    iter->repo,
+> -					    iter->iter0->oid,
+> -					    iter->iter0->flags))
+> +					    iter->iter0->ref.oid,
+> +					    iter->iter0->ref.flags))
+>  			continue;
+>  
+> -		iter->base.refname = iter->iter0->refname;
+> -		iter->base.oid = iter->iter0->oid;
+> -		iter->base.flags = iter->iter0->flags;
+> -		iter->base.referent = iter->iter0->referent;
+> +		iter->base.ref = iter->iter0->ref;
 
-Thanks,
-Taylor
+Ok, so here we already have a `struct reference` setup and thus we
+directly propagate to the base when advacing the iterator. Makes sense.
+
+>  
+>  		return ITER_OK;
+>  	}
+> @@ -1368,30 +1365,29 @@ static void prune_refs(struct files_ref_store *refs, struct ref_to_prune **refs_
+>   * Return true if the specified reference should be packed.
+>   */
+>  static int should_pack_ref(struct files_ref_store *refs,
+> -			   const char *refname,
+> -			   const struct object_id *oid, unsigned int ref_flags,
+> +			   const struct reference *ref,
+>  			   struct pack_refs_opts *opts)
+
+This hunk is simplifies the arguments required by should_pack_ref() by
+using `struct reference`. The change seems sensible, it might be worth
+mentioning in the commit message though.
+
+>  {
+>  	struct string_list_item *item;
+>  
+>  	/* Do not pack per-worktree refs: */
+> -	if (parse_worktree_ref(refname, NULL, NULL, NULL) !=
+> +	if (parse_worktree_ref(ref->name, NULL, NULL, NULL) !=
+>  	    REF_WORKTREE_SHARED)
+>  		return 0;
+>  
+>  	/* Do not pack symbolic refs: */
+> -	if (ref_flags & REF_ISSYMREF)
+> +	if (ref->flags & REF_ISSYMREF)
+>  		return 0;
+>  
+>  	/* Do not pack broken refs: */
+> -	if (!ref_resolves_to_object(refname, refs->base.repo, oid, ref_flags))
+> +	if (!ref_resolves_to_object(ref->name, refs->base.repo, ref->oid, ref->flags))
+>  		return 0;
+>  
+> -	if (ref_excluded(opts->exclusions, refname))
+> +	if (ref_excluded(opts->exclusions, ref->name))
+>  		return 0;
+>  
+>  	for_each_string_list_item(item, opts->includes)
+> -		if (!wildmatch(item->string, refname, 0))
+> +		if (!wildmatch(item->string, ref->name, 0))
+>  			return 1;
+>  
+>  	return 0;
+[snip]
+> @@ -476,14 +468,7 @@ int do_for_each_ref_iterator(struct ref_iterator *iter,
+>  
+>  	current_ref_iter = iter;
+>  	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
+> -		struct reference ref = {
+> -			.name = iter->refname,
+> -			.target = iter->referent,
+> -			.oid = iter->oid,
+> -			.flags = iter->flags,
+> -		};
+> -
+> -		retval = fn(&ref, cb_data);
+> +		retval = fn(&iter->ref, cb_data);
+
+Now we propagate `struct reference` directly when invoking the for each
+callback. Makes sense.
+
+>  		if (retval)
+>  			goto out;
+>  	}
+
+-Justin
