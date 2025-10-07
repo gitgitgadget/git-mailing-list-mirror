@@ -1,38 +1,37 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A742D29D6
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 08:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293E6255E34
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 08:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759825350; cv=none; b=nOGmyAbkAceaiSQNkOAHWU1vNYM03Ygwc1fvwwGIMIN107bW0pu0AS6k12nV7P4bjZLl0GcoMI6UG162idnULQ5sZ/Skf3CVEBVK0OY+BeaHOdufshCO9LB+fSRbcevTF/99N0u4cAijyHViUd0Q7+dROzdBL5XdhM6WU0BPTzc=
+	t=1759825764; cv=none; b=a5WPFvvcoXyR72EdqutXQeBw1NhsoF6MGJC8Yvqgzdo0s/efPQ2q3EtF9zeQm12Zo+atdCPuROAxlhIV02jh5JT8zq2UUObPAKhcq1yKSx7sANLwAxcKb4JKAfujexZ5rcZ0pwLIcBtL+R+JzKipUaeXLV3+lMXv9d5iSYyLmK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759825350; c=relaxed/simple;
-	bh=tUI++zUHQivUKLDni0lCmoe/Ym1337WitqsyJGN6xhk=;
+	s=arc-20240116; t=1759825764; c=relaxed/simple;
+	bh=rf1RG0DMDa/UYS13ed8DP0qiEsLXDUQIOSXtpUatB4Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bkHoCP4tyWl7kzZLFKHlJaQhx0JbYDDuX+dn2zWCvanzliSHF/4m+jdi/8wvV3md7wwj9Gt7Et0FU4nQt8ePB6EjeWehhu0He+TvKK673htQ2L4mMcuuJcQDRSoFME/xjeD3CzTGMDb2K+Xt1k3sa8v72CKdSlGTh42dn/UgoGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ITdtrYkB; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=XDRNbo6PlSKnBNONquE0ojYlz7cdCxqEB6B1/9uVTOioP+GMnCcaoEn4gZ89pPxdeKZhAiwPhdA1oryQU9gfNkEgWL4a1+vn/TRmBZNUPhdk4wVbHUB477SYkbN4Ibw1kuJqO1/6DS9M6MLwD4IwEO7k9yhaDjOlkvujjFuqJgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=HyG6+aid; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ITdtrYkB"
-Received: (qmail 156299 invoked by uid 109); 7 Oct 2025 08:22:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=tUI++zUHQivUKLDni0lCmoe/Ym1337WitqsyJGN6xhk=; b=ITdtrYkBDnWmYlOh7Xb2gdiyLJRTcM313hgQ76JXEs8CsZyoAsKYb/RtmUUdoAq3guPXcJbb5QZvDG987UQYV1U9C3y4Q53tQ1iSWY6n2hn0Z4pca48Se4lUaXPrW4NgGT4QraxV9nAv3UTlBqUYOI2ZGPwFUGjKfVj2ugxKGVMZOe6MyB9RaoLsM5DXLMNIuxQgI5xaci7C/p4tqe8qWw2nup4lvJkWfdoX2BWgX2CygxBz1D5NDW/Wh4BZ1m3lVT2x9vrw9Z0MnWx7TiBYcHWbYJq8fOhpkemusV5Nak6i//LGISUjQlcZulnUKlWBpuC60AcPPgvyUdTqVMrgqA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="HyG6+aid"
+Received: (qmail 156327 invoked by uid 109); 7 Oct 2025 08:29:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=rf1RG0DMDa/UYS13ed8DP0qiEsLXDUQIOSXtpUatB4Y=; b=HyG6+aid0GcXe75oQ5F41jBakjSDRN9Pi3+1RS+dq4iZPVAXTgnsffTyB2P8+UNnZJ1VbxTTSuIN1u+JUu6K7I53MJXBmns+0i0ZSHoGZgYU/SDWmz6Xe+RPV1hZ3NqgRcAL8KZTU2HJ5VtGVd6ta5CU8dOFbzROH3PPku0Z24h03osPyPmyZH4GHvNxmmTPT5nVdZkEtIX1BM+KncdgTyPlCmT+wDgUFi0oTm6lf94q1afxouKhqQly/QvqR7kfkG+G6ssZD8+agbSjT0NiPIHvOEy2m72Dy9OlWpvTgGI08DIxtyxtFmZqiJsErMmEpCylKMsz9B2INV+wO8z37Q==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Oct 2025 08:22:26 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Oct 2025 08:29:21 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 230848 invoked by uid 111); 7 Oct 2025 08:22:24 -0000
+Received: (qmail 230897 invoked by uid 111); 7 Oct 2025 08:29:21 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Oct 2025 04:22:24 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Oct 2025 04:29:21 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 7 Oct 2025 04:22:23 -0400
+Date: Tue, 7 Oct 2025 04:29:20 -0400
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-	git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2025, #02; Mon, 6)
-Message-ID: <20251007082223.GA3336685@coredump.intra.peff.net>
-References: <xmqqqzvfmwcx.fsf@gitster.g>
+To: Langbart <Langbart@protonmail.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Git Status Short Output Color Inconsistency with -z Flag
+Message-ID: <20251007082920.GA3349249@coredump.intra.peff.net>
+References: <XCDlwEkTlgoZIyIf_8BfOGl1C3C63Ioxeib4BRNJ9Jm_CtYWKT3qu-pDaeXVtS1Ifq6E4pT9G0yDbIS_nSwN-uiBuBNAlMyrOv0R1RyM7oc=@protonmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,84 +40,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqqzvfmwcx.fsf@gitster.g>
+In-Reply-To: <XCDlwEkTlgoZIyIf_8BfOGl1C3C63Ioxeib4BRNJ9Jm_CtYWKT3qu-pDaeXVtS1Ifq6E4pT9G0yDbIS_nSwN-uiBuBNAlMyrOv0R1RyM7oc=@protonmail.com>
 
-On Mon, Oct 06, 2025 at 04:41:34PM -0700, Junio C Hamano wrote:
+On Sun, Oct 05, 2025 at 12:48:43AM +0000, Langbart wrote:
 
-> * ja/doc-markup-attached-paragraph-fix (2025-09-27) 1 commit
->   (merged to 'next' on 2025-09-30 at a91ca5db03)
->  + doc: change the markup of paragraphs following a nested list item
+> What did you do before the bug happened? (Steps to reproduce your issue)
 > 
->  Documentation mark-up fix.
+> 1. Create an untracked file and modify an existing tracked file
+> 2. Run: git status --short -z
 > 
->  Expecting an incremental follow-up to avoid regerssion.
->  cf. <2239952.irdbgypaU6@cayenne>
->  source: <20250927195032.37223-1-jn.avila@free.fr>
+> What did you expect to happen? (Expected behavior)
+> 
+> All status markers have colors disabled
+> 
+> What happened instead? (Actual behavior)
+> 
+> - Modified marker (`M`) appears colored
+> - Untracked marker (`??`) appears *uncolored*
 
-Ah, I didn't realize it was in 'next', and just assumed we'd get a
-re-roll with the fix squashed in. Here it is as a separate patch.
+There is a bug here, but I don't think your expectation matches the
+documentation. In the --short output, we do still respect color. We do
+not for the machine-readable --porcelain output, which is also implied
+by "-z" without another format.
 
--- >8 --
-Subject: [PATCH] doc: fix indentation of refStorage item in git-config(1)
+So either of:
 
-Commit 5a12fd2a8c (doc: change the markup of paragraphs following a
-nested list item, 2025-09-27) converted the list of items in
-config/extensions.adoc into a definition list. This caused a small
-regression in the indentation of one item, but only when built with
-AsciiDoctor. You can see the problem with:
+  git status -z --porcelain
 
-  $ ./doc-diff --asciidoctor 5a12fd2a8c^ 5a12fd2a8c
-  --- a/c44beea485f0f2feaf460e2ac87fdd5608d63cf0-asciidoctor/home/peff/share/man/man1/git-config.1
-  +++ b/5a12fd2a8c850df311aa149c9bad87b7cb002abb-asciidoctor/home/peff/share/man/man1/git-config.1
-  @@ -3128,9 +3128,9 @@ CONFIGURATION FILE
-                  •   reftable for the reftable format. This format is
-                      experimental and its internals are subject to change.
+  # this implies --porcelain=v1
+  git status -z
 
-  -               Note that this setting should only be set by git-init(1) or git-
-  -               clone(1). Trying to change it after initialization will not work
-  -               and will produce hard-to-diagnose issues.
-  +           Note that this setting should only be set by git-init(1) or git-
-  +           clone(1). Trying to change it after initialization will not work and
-  +           will produce hard-to-diagnose issues.
+will do what you expected. Asking for "-z --short" is a bit unusual,
+since "--short" is meant to be human-readable and "-z" generally is not.
+So I'd expect it to be used only for relaying colorized information to a
+human over another channel or something.
 
-              relativeWorktrees
-                  If enabled, indicates at least one worktree has been linked with
+But back to the bug. As you noticed, one item is colorized and the other
+is not. I think the fix is probably this:
 
-(along with many other changes which are correctly fixing what
-5a12fd2a8c intended to fix). The "Note" paragraph should remain aligned
-with the bullet points, as they are left-aligned with the rest of the
-definition text.
+diff --git a/wt-status.c b/wt-status.c
+index 8ffe6d3988..e12adb26b9 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -2042,13 +2042,13 @@ static void wt_shortstatus_status(struct string_list_item *it,
+ static void wt_shortstatus_other(struct string_list_item *it,
+ 				 struct wt_status *s, const char *sign)
+ {
++	color_fprintf(s->fp, color(WT_STATUS_UNTRACKED, s), "%s", sign);
+ 	if (s->null_termination) {
+-		fprintf(s->fp, "%s %s%c", sign, it->string, 0);
++		fprintf(s->fp, " %s%c", it->string, 0);
+ 	} else {
+ 		struct strbuf onebuf = STRBUF_INIT;
+ 		const char *one;
+ 		one = quote_path(it->string, s->prefix, &onebuf, QUOTE_PATH_QUOTE_SP);
+-		color_fprintf(s->fp, color(WT_STATUS_UNTRACKED, s), "%s", sign);
+ 		fprintf(s->fp, " %s\n", one);
+ 		strbuf_release(&onebuf);
+ 	}
 
-The confusion comes from a paragraph following a list item (ironically,
-the same case that 5a12fd2a8c was solving!). We can solve it by adding
-"--" block markers around the nested list. We couldn't have done that
-before 5a12fd2a8c because before then our list was nested inside another
-set of block markers, something that AsciiDoctor has trouble with. But
-now that we are a top-level definition list, it is OK to do so (and in
-fact, you can see that commit already made a similar adjustment for the
-worktreeConfig entry).
+which matches how other output functions like wt_shortstatus_unmerged()
+behave (handling color before hitting the null_termination conditional).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/config/extensions.adoc | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/config/extensions.adoc b/Documentation/config/extensions.adoc
-index 49a7598ca5..aaea8c107f 100644
---- a/Documentation/config/extensions.adoc
-+++ b/Documentation/config/extensions.adoc
-@@ -55,8 +55,9 @@ For historical reasons, this extension is respected regardless of the
- refStorage:::
- 	Specify the ref storage format to use. The acceptable values are:
- +
-+--
- include::../ref-storage-format.adoc[]
--
-+--
- +
- Note that this setting should only be set by linkgit:git-init[1] or
- linkgit:git-clone[1]. Trying to change it after initialization will not
--- 
-2.51.0.717.g1fc658c4b9
-
+-Peff
