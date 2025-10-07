@@ -1,108 +1,120 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983261E32A3
-	for <git@vger.kernel.org>; Tue,  7 Oct 2025 20:02:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884043FC2
+	for <git@vger.kernel.org>; Tue,  7 Oct 2025 20:17:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759867325; cv=none; b=kS8gs0uYozHg7e4PZNqYbicjt7i4Y5Br5y0CtO5Qz4W0VzvStCEklr8n9CjFQ0xN2tX9EnaaK/igJ1T/cS8VdLBaG60NiZ7UBvrVpfajUS9fJomhdiGIUA6jFTaOEClb5hBUZb+pYUrYAfH/3/0xWYNBDC/GZ9ElkLYKmgZIGfY=
+	t=1759868244; cv=none; b=cSXa/Hu3zJqAx6bphKMnwMnH19GNzyoN2nXU9Did50s4CK40SyCOLzy9Yi0yvk56flcx3mP5smbWfT4/zwv2pGSpaqUt0vzrk+6jMt5J3YrwMfgRpHeGRwly2IZO6VjEVQQ5hv9AleM4nNngeq669oB4MXNYq/rJ1FD5sEVwhX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759867325; c=relaxed/simple;
-	bh=Cm4mO2lyCNhoeFJW7tFiy75sUuzsqYkQvCQu+VN5H8c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NF7Lb1vjONTMULFM5qZJRMIqkOh7iTcMKRhPdYCUnOQ3DNREeY7eMP/aEzGTnY2uvGXsabf4sdYhc5oNWZu8EzbDJmS+Xy1gd8WRrpfQ6TRYwxISxgySkbFEGeOLUDvL/IyHAmgSy6wU6kyDVf2bcn38lCh7d97dsFIfEF/D7lI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=K8U9X69I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RE3zz23c; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1759868244; c=relaxed/simple;
+	bh=0JiLjldCoA6BvcPbZLOT8hakHlwjKAnrBXGyg4c+VCY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dPt5UNSFDtC/plOxlqIF2UT6+5iP8JIfqZiu1F4QDXqvPtD7FQOW8Uo6V9lp+f1wl/mGjqDdptJyUgSX8dRlbrxtuPMs6XWy7F3h+nAGYMtuPd0jv6/DZptE7v16zXfGgkckuSJMhIAMEIB9av8NBHVtv85mpY6ZCVfO5ZzgJ20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=dbCuBn11; arc=none smtp.client-ip=209.85.166.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="K8U9X69I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RE3zz23c"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9E66A1D000C4;
-	Tue,  7 Oct 2025 16:02:00 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 07 Oct 2025 16:02:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1759867320; x=1759953720; bh=eNtEY4ucpd
-	LfLkPstVf+dZRDzRKnjAzxan2EnbjC0EI=; b=K8U9X69I/3N0J0fGGDLVjvPzDp
-	4uybeKahVBiXSuN81RkFaDPcTP9/C5zt7YGDvU1Qu7XwqCe0BRGkCG39GZsv419z
-	IYH0d/UjElVN2P8PQ8gR86mT8bEwY0u/2T92uxVXoi32B6DrmF4LN6Da3RlMVW7x
-	tWOAzCPN5qaQ8OUONEMahTqwZIU3yehtPnAS//Dc0XR69kzgzh26DU1NmBGSvbjm
-	Hf8OaoQHLH50m1YkMla7UajTWWNDphhPp1OT9cM+ekwGmZLAqph+1IA0rNZcki/v
-	HoNND4UluY08xnPFATuW7n4S6EKfxpCPnWujI+Jl1XlB/fY1DvrspV2zUASQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759867320; x=1759953720; bh=eNtEY4ucpdLfLkPstVf+dZRDzRKnjAzxan2
-	EnbjC0EI=; b=RE3zz23cyr+3FEaz7tPHEIKdX2M+epz/3oYmNf1iqkt1Fe5AoB1
-	AR3UedS4woltfuCKXwd2ZRf9Ihnsrb0Aa+qpZyDR9S8vuLkyBRClv8nfd9rBPf79
-	AbjkFyvW6ucGxL2YfZWdLDNqiM+1WpY2xSAGoGKU1na0o+1y2i03AFHUr+5+aEab
-	N3o9Wp2K9Kw6fIWLGcviVYljIJjEpN1ZnkzTOJzig07wkm3sC9B3nPYRESokA7p7
-	gMcFl0v5EHHvDFttq6M3cZXr3wwwXx8zCs7zxGqPkQO5IwenOPC5YT7qPobkYfr/
-	xfjHUS/+U0nTrdQz/t6NnrdVLh37KoQgmDg==
-X-ME-Sender: <xms:uHHlaADvXxuBPKev-H0Kg1pLBx7uUfL8IE1-PAftnmJ2HUzVrfmVPw>
-    <xme:uHHlaJapv0eQ6DbqY5wcCod1pxADg6xLPXPozHV-CYk4KRoEgtfQ6nU9nTBJ0sijk
-    7SIDQM81iDgYK-e3jWAJEClwnZ0jhplqIhFIrpZH-WEsOh4T5Z9>
-X-ME-Received: <xmr:uHHlaL6LUsz4wbmMTzMaH0RtGyvms0sTCuRi3LyGZzPZCypEueJUrza1sjRB1YAfYQ1OpCG6wlDCPkTSYmnwOHvptxfjKITZvMvC>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddufeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhope
-    hpshesphhkshdrihhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:uHHlaCZee0V2M0JZ5AXxbWYerIe-wAjawoYcGq_uG-NeZ3t2AWZyRg>
-    <xmx:uHHlaCj3OmAjUtHLo307JJOvEy-FKTO7_jTD-whr1ZItQ1uwNPVbjw>
-    <xmx:uHHlaL-FBYDF_x_VdOF6KgZpKP35MtHLN9ELgUGA9QuiX8ff3cO8fA>
-    <xmx:uHHlaFrU0LysMEIHEYmWfVpsElySh-g_XR_qFRvA2kJOSxTkYH1Mmw>
-    <xmx:uHHlaNqrSKdC0HaMo8cg_NM1zZxRri-cdUB0zI5bhA8geqWzXC9NNaf4>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Oct 2025 16:01:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Patrick Steinhardt" <ps@pks.im>,  "Julia Evans"
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] doc: add a explanation of Git's data model
-In-Reply-To: <ede082ad-5031-4b55-8576-0a6315f16b70@app.fastmail.com> (Julia
-	Evans's message of "Tue, 07 Oct 2025 15:30:47 -0400")
-References: <pull.1981.git.1759512876284.gitgitgadget@gmail.com>
-	<aOUkZa4_fq1hho7Q@pks.im> <xmqq4isalk5g.fsf@gitster.g>
-	<ede082ad-5031-4b55-8576-0a6315f16b70@app.fastmail.com>
-Date: Tue, 07 Oct 2025 13:01:58 -0700
-Message-ID: <xmqqwm56iiq1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="dbCuBn11"
+Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-42d8ad71a51so78359595ab.1
+        for <git@vger.kernel.org>; Tue, 07 Oct 2025 13:17:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1759868241; x=1760473041; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=nWRAai6mP5pmKtUS40coUdJk63VIz2kCCyMNzmPE5iA=;
+        b=dbCuBn11UZNsWNTFLytixoquXmz9dV6rW3FA5h9vIMUGnCkzjhS0zP+l+AGD1KADow
+         4bBFo2kwP2pPBdBsA6R19ykRA7IQtCxPODUHgA9VcTFXXdb4Hs/ZM0DnOZWv/1MSXz3K
+         TJVgSltKNae6ht/A8FCQvZEmVuw5VC26yfbKLU1WoYstcBkQKu4pHb0cZo5VBaHI23U+
+         zO2LGFD34LZYMuQl2/5AjuvrnB0ZoA3qDOI061KUaIxcK35a5XGcTFNM7eUWO62Nx83U
+         Wb4DULNN/EBYrk7Mrb1aq5upwCLfnWsOf+8dCkycsh9/Tf8qHhwbsAoQK52bRL/HrmPA
+         o7mA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759868241; x=1760473041;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nWRAai6mP5pmKtUS40coUdJk63VIz2kCCyMNzmPE5iA=;
+        b=UubqQT/faEde8h2OofqmELv2kLiboGkYLo96CgyVCF8jrsSSUNpdlueIOqWz7NQetq
+         zcVZe9MFfEQ1HVk5b+fqTKxk0kSbSggm0ai+2eDZfjrp8uFgAZemEDiZVa8cWK+mU6eq
+         IBn158APHelUhlUiHne0GBPtA4tsBJ9BcOo0zv1CF0kXOtffhmIkoz45lk19eieFC5Ku
+         f+MAGndMVt2LaFAqxLLTRUp3v5q+53IYicXw0ZV42skRrafNQeUYAiVr9RBIHyh6+Ffk
+         9cVTGZv9RF7QFRvQeOd+jdDug6q73Ez7qLpiumV2UcifvmGYYaflt7FxP+O9gysoHIb1
+         NYog==
+X-Gm-Message-State: AOJu0YzDVgW80oHq76GpSyeJC1L0QhknonJXS83HddEATNmOEPol3Qik
+	IdXVUa2L5hFp13qnqFMpeivRJ3hWkkTaHGHaD+eZh3eksLRAQvi4b7GWykbpEoweoWrtyVwJexN
+	zYdVDUCOF9Q==
+X-Gm-Gg: ASbGncvKAr0kAcvKSYA0Gv0Zuy7WcbhMYrjlG6tn55JDZuL/+bP5Uug7b0efuR/KlWC
+	aZ+D6RvnFCYU7ywoR+L8P4E0gvdg6WKsqtNkNqg7DDh48kLvHE2EO+QLd9uSkJj9gWD3H/Vip90
+	r4sa1gwuniNgX6wEB5MNSX0Pl2xQTS9Ti8M5dAfTRk8zZ+k/ce9i4TEL9oyiQsOyYL2TH5DS7Uh
+	Ov+/78+HAOaBbYbp3lmTexGDN9i34C1wt4yqvECnx+bYfU+yu5UJhDyKBLRevsH9OtZ/G6RTzHH
+	GPjY3g+E7dLnM/xrK2skZSWjc1hiCpEP2i8Uq6+ZVZJabVCub8trxwFJIOhFEC8bCTLxj4nmIk0
+	EVm6JFY9KD8oxCrIiFtT6lnZq7li81F3vl8BIZlEKPSvlXDriqDB4lymstJFf3UMiXMPBLsHa6y
+	pUBdMjXq2F2JBXhVbr1T8yshFcljGX+5GuRjQJ5pR+bxEh4cnqIA==
+X-Google-Smtp-Source: AGHT+IG5ARqkfWPZZLUfCVC7zmSYZ9Kk6T+3hi7sDftoFJtZxjLeHGeosuF7UKslHnKviQc8CeXBkw==
+X-Received: by 2002:a05:6e02:3c88:b0:42e:23e8:66f6 with SMTP id e9e14a558f8ab-42f8735bacfmr8892145ab.10.1759868241364;
+        Tue, 07 Oct 2025 13:17:21 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-57b5ea4b312sm6239826173.30.2025.10.07.13.17.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Oct 2025 13:17:20 -0700 (PDT)
+Date: Tue, 7 Oct 2025 16:17:19 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH 07/49] builtin/repack.c: avoid "the_hash_algo" in
+ `write_oid()`
+Message-ID: <aOV1TzXOizrK3d4Q@nand.local>
+References: <cover.1759097191.git.me@ttaylorr.com>
+ <37a7dea848f9618f7243fd9ff8ed704adfb3cf4e.1759097191.git.me@ttaylorr.com>
+ <aNsUZtGst4MguEXq@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aNsUZtGst4MguEXq@pks.im>
 
-"Julia Evans" <julia@jvns.ca> writes:
+On Tue, Sep 30, 2025 at 01:21:10AM +0200, Patrick Steinhardt wrote:
+> On Sun, Sep 28, 2025 at 06:07:37PM -0400, Taylor Blau wrote:
+> > diff --git a/builtin/repack.c b/builtin/repack.c
+> > index 094f5a0cc2..7d62959dc2 100644
+> > --- a/builtin/repack.c
+> > +++ b/builtin/repack.c
+> > @@ -413,6 +419,7 @@ static void repack_promisor_objects(struct repository *repo,
+> >  				    const struct pack_objects_args *args,
+> >  				    struct string_list *names)
+> >  {
+> > +	struct write_oid_context ctx;
+> >  	struct child_process cmd = CHILD_PROCESS_INIT;
+> >  	FILE *out;
+> >  	struct strbuf line = STRBUF_INIT;
+> > @@ -427,7 +434,9 @@ static void repack_promisor_objects(struct repository *repo,
+> >  	 * {type -> existing pack order} ordering when computing deltas instead
+> >  	 * of a {type -> size} ordering, which may produce better deltas.
+> >  	 */
+> > -	for_each_packed_object(repo, write_oid, &cmd,
+> > +	ctx.cmd = &cmd;
+> > +	ctx.algop = repo->hash_algo;
+> > +	for_each_packed_object(repo, write_oid, &ctx,
+> >  			       FOR_EACH_OBJECT_PROMISOR_ONLY);
+>
+> As this one is essentially new code, and we have all of the info
+> available right at the start of the problem. Do we maybe want to use
+> designated initializers?
 
-> I think it's useful to refer this as an "ID", because usually we call it a
-> "commit ID" or "tag ID" and not a "commit name" or "tag name"
-> and it makes it more clear that "object name" and "commit ID"
-> refer to the same identifier.
+I considered it, but ultimately decided against it here because I find
+it clearer to initialize "ctx" right before it is used to avoid
+ambiguity.
 
-It is a bit funny that they do not exactly align.
+Alternatively, you could accomplish this with a compound literal, but
+that's (a) still a test balloon and (b) more verbose than necessary.
 
-    "object name" aka "object ID"
-    "$type object name" aka "$type ID" for type in (commit, blob, tree, tag)
-
-In any case, we should add "object ID" and other "$type ID" to the
-glossary, if you are going to use it very often.  We have entries
-for spelled out "identifier" but I do not think "ID" is there yet.
-
-Thanks.
+Thanks,
+Taylor
