@@ -1,115 +1,147 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F0E1799F
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 04:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B0829BD9B
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 04:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759897715; cv=none; b=YpGkwAMlaIQo0/5cpgGFHVZ21AtsEuPbb0nK5YNcwZtSa58EzHWyzHqOSBzLOs5Du848t6Dz8CkyAMFS9z6IBC1Xk2VJOJdoDId7QOZYGNVAtTYs6kPiKbN+RjkAcJ2n5RYzJqvr18ya6M2/DxZRh32LyN+59Kd3AZS/nFLaYas=
+	t=1759898776; cv=none; b=n3kNeHD/cK5/cQu6qjzStqsW6XHv4Zdj98a2TAgu3frLeQdnzNbJubTQilt5SZJO5mpoqMt23OTCgPD5bfiBShwfeksRZvVqA+s3j8TnhgBkZ6ZQuo4Wd/d0DAdrMe5IqIMgfTVa/mgBEAjUk41ufQPxkdl/KAzdNMzco5ZDkXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759897715; c=relaxed/simple;
-	bh=DnwWIHadH8pODn7axAY4NtwDoxEGMXb8L9XeRkozn3I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UOTTklLsnA+fChKlOAF2kte7y+k1KD3EokigvYKDQAhKNL4cEKjwsTMaXwlGYGqx0dBuYNt4ufx9D57FlN84st7zDjMfAcZvbhnaR5eVzDceUWyU2CwPR3WrsQME0THZSczVbd5tT/N3R/p/yb+2jJhXfelGAih6mhI1/BbsE5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bwSznurr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SfazEBUZ; arc=none smtp.client-ip=202.12.124.154
+	s=arc-20240116; t=1759898776; c=relaxed/simple;
+	bh=djCA838lECLtQRF7X+bW7fooB5fJ3Vymc+Yse87UGT8=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QVu/S1X9vu8dCD0iifViIZvhc4fWCfjksMwP60uJJ5u9+LpQygpw/QHiRcWXyS1zbtqx1BI7yARSxCEyWauM97qJqIN+Hr45A8lNPjCvsSG9XskbSHf0AvoImo5j+h7RfEf9duadXaIvkkX9uC1O0qAryHhRkc8zcKb4q8WhBGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=My7SLgD6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZPIA1mDs; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bwSznurr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SfazEBUZ"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CB20D7A0134;
-	Wed,  8 Oct 2025 00:28:30 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Wed, 08 Oct 2025 00:28:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759897710; x=1759984110; bh=KcEtHu1sH8
-	sASMsr8VueyEPZ/mGd5rsAfAttWqWyoQ0=; b=bwSznurrSjT+o9ohSiY2Wxxy6X
-	kO0c1XMaNOmaAFUq62jhgTm5gy5E94DZKxPRIJIwkGILHanXGOWtsASIdCBQH2dC
-	nhsLU1Ogmz9QYQBsOXAndBpg/gxnTz66X9vCslnEDbQ/NIFZCFHIWI9OYc/tFsq7
-	0trkGNe59IB6AjJTZGq/OPalRGVpQk9Q62mhrJBQW0qdXzeahZTb48RaQijd1ql3
-	5cGEKuDW+DNQ6VWq8V3/bjbatO1yKjf25jSrL1o1TOPe5N/72c+Wgvlpdj/pNuph
-	zY5771YhwtvgDx+ASEKS9up6WMR7RfrJAhpC5aAtMN5fR+uGLYDz7pP8Kg2A==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="My7SLgD6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZPIA1mDs"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 394537A00A1;
+	Wed,  8 Oct 2025 00:46:12 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Wed, 08 Oct 2025 00:46:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759898772;
+	 x=1759985172; bh=w9nZiVDL3Oa8hXvT7pJhCIsU17ir9Jy8fQpHJM/SplE=; b=
+	My7SLgD6IdoB1xf5XXsvLkQEsoZIC0Yq1RKfAcHtKC5wN1kG55+crgIcznftsdYB
+	riAm6n6YLusOr/H0eZI4CeSjzvifY8NxNAvNdsPavb4EJQwTQu+waRl8RqijXPfH
+	1BCedblFk252jhbus3wxXAd5FydA3xQaHWDX+nWtrGiVZmNteLv2237l43BJ5uzA
+	BPz+4oKH4WdCgd5S8Wmv7ebVtfBUdhndYKH5yBly0liqKWaAa5QuOuQutc88QgRh
+	m+BZkmgWRibu1ogBL5Zg7de6zUyMoETiwYvEzk34pwplJHJ2Mhk8NWShexKUamdC
+	oxHF/1IBuFCo4AgCiUQqvQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759897710; x=1759984110; bh=KcEtHu1sH8sASMsr8VueyEPZ/mGd5rsAfAt
-	tWqWyoQ0=; b=SfazEBUZF9gZRC+mTXtjOctf0zqrRXrxDRO95Bx4uFyT7ZTfVom
-	w7XXuhAlPXGJIjxCkKwvFxxbMWSyi8gdc5oqpMMJfzm0IxHeLANXcZYtJmHgEoLO
-	f55x9naumx04UQJOjRDgq/tw8dx5UWkDGz7rn7n8XmjaclhUQsqiLWIWlC+tHCz+
-	7AK/erSLQHzod1Wmo7G/zMfV6J1hNHH4yY5srnYIWAMVTsanFIg1+oFkvz+24SyU
-	93q4HZ1YnUAmY2TTzMABM6SRZoRyTzjGYgeCjHQX7QIHJ1uDyYURO6k6PeJ4fkUa
-	2gEI4wPu7Ctxn+NoT9eURHKQ+k21ck3WoAg==
-X-ME-Sender: <xms:bujlaCYrz3LL_GKdAjNz7zoeVP6yJwI5wE-0wuPJY9_Xfe4LHuDn-Q>
-    <xme:bujlaJHEcrWTJk3oem6qDXS8MNxXiVNtfNqE2f-h-rlvK7eUziU5SWo6obLY10kcY
-    YqpB3khKpAorzvve3Pup7UEQKWcUim8Pfx1abTbSlnpKte1MyGTbw>
-X-ME-Received: <xmr:bujlaGxS55oIqgBcknmRLubpo37TkCAopik9vdXJUM5dd9dKeBBCZ-AUYLXKxTdEW4Tp-juSeTbsBlWcOLl9OHpDbrrvNkbTloykdgtF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddvfeegucetufdoteggodetrf
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1759898772; x=1759985172; bh=w
+	9nZiVDL3Oa8hXvT7pJhCIsU17ir9Jy8fQpHJM/SplE=; b=ZPIA1mDsMZaKU5/L2
+	9MUmclpZ6qwY3B/FsGZTip/Cd8Vkk18NRzbd+FTPL94XXKE9LY0IXob2OsVnxHed
+	Fl/p2wfFJfmPwSxMuQqbTpfWRJqETvZIpOdG5uKGakS/pAWF3e8ia5eNMYwkpHPq
+	f0/S1e/FR3YZilbT5QfcOvMfjoIwHdUOnpTY7X3YlXR5R64SryhrQ6HfeTFMZ0JE
+	qo7RN0oPJwoUESTV1zU+aZ9NK3doOh+Xs+heV4NEtkDkWqu6ZhJjnevuHTvcj7bX
+	ibdOv5vvuDOEQZQKO+Mtdjw0HIBb+BXA1TDGcYaZXWXt4Jq5OjxAIlpMaXO7k1tI
+	O3EFw==
+X-ME-Sender: <xms:k-zlaMMWa-WAUHsm9tMXCYnE-8T5V8Fq_TRz6R51E0UDpXdzfO9POw>
+    <xme:k-zlaJ3J_BUEQblM99OFWETGpVq28q_TA_NzsvFSJvGjxktPnz24nc_pgeqqh74SB
+    oyvksYmq6YBFdfmBUqmLjxDumJq9PLO59XaXyIGkOPuEU1EDQsn_w>
+X-ME-Received: <xmr:k-zlaLl4kx-MfkduqlqUoxdHm3x2H5FSJvC3NB0pYMYqzOylV6UY3mIqXRzjEdTxQgVCcC_l3lm3pXGrh66kqK0Rv4vXGfVeBQEiohUR>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddvfeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    gurhepfffhvffukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehpvg
-    hffhesphgvfhhfrdhnvghtpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:bujlaLmPCFClXnPcylKYyKw37OrkoC7idQ9k-rs9mpz_7OI8zbjpMQ>
-    <xmx:bujlaPk2xxdvC9dn-VZxNet4kvz45SRw4APMyKleM7WDldsN60VXkQ>
-    <xmx:bujlaNw88kVqn-4bmfjlCHGY2AhjXDCWnVr36ed_HQS1tFO4PbQgFg>
-    <xmx:bujlaEoIqlvv1nT2W2m_2loFlku6oafpljlc1U0pa28osr2nkznmHg>
-    <xmx:bujlaN1C5fHFjDbUE94Ib-y9lndjdwuKfZeTRbzbzBNJIwhe-sr2Z6F2>
+    epleehfffggeeiueefheeitefhgeevjedvvdejtdeuudevvddvtdektdfggeejffeknecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsrghnuggrlhhs
+    segtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopegviigvkhhivg
+    hlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghrihgtshhunhhshhhi
+    nhgvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:k-zlaAXHbS54SB3uZA7tCMTT75nH4xzLmXhuzHjAoEQZguPg5P21VA>
+    <xmx:k-zlaBv4PWnI32-JgzXNVh--vJMFJRblEdAl5IL-4HLH5ir6jPeN-w>
+    <xmx:k-zlaDY_K6N4w5xt7Jrx3ocBYAHuNkPlg-icwZyQRADFGiSgVMtuaQ>
+    <xmx:k-zlaAW2NcQXyZ4h9Mm0Uf9RyfUvsfQ3B0MpYcpmwSjVxO5_0BMfoQ>
+    <xmx:lOzlaCS2bnuZQi-f8gxxf8bhBXI7SeVugN_eKeQ_hm4oWqnxLeRvc5t->
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Oct 2025 00:28:29 -0400 (EDT)
+ 8 Oct 2025 00:46:10 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c500a672 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 8 Oct 2025 04:28:28 +0000 (UTC)
-Date: Wed, 8 Oct 2025 06:28:24 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 6e799531 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 8 Oct 2025 04:46:09 +0000 (UTC)
+Date: Wed, 8 Oct 2025 06:46:06 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 21/49] builtin/repack.c: factor our
- "generated_pack_install"
-Message-ID: <aOXoaNYoauCg0CpV@pks.im>
-References: <cover.1759097191.git.me@ttaylorr.com>
- <96d27261e75fd2ae46d9633b3d4eff243dbcc187.1759097191.git.me@ttaylorr.com>
- <aNsUiho56-S4MQZg@pks.im>
- <aOV3cuZhab7xOdez@nand.local>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Eric Sunshine <ericsunshine@gmail.com>, git@vger.kernel.org,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/6] ci: check formatting of our Rust code
+Message-ID: <aOXsjnWBOt0qFGwc@pks.im>
+References: <20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im>
+ <20251007-b4-pks-ci-rust-v1-2-394502abe7ea@pks.im>
+ <CAPig+cQ7xJky+F=g=NMrN6BQfP+ZV2KF4RF2eLqtULKgMTR5_g@mail.gmail.com>
+ <aOWXSO5GInJI8-NZ@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aOV3cuZhab7xOdez@nand.local>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aOWXSO5GInJI8-NZ@fruit.crustytoothpaste.net>
 
-On Tue, Oct 07, 2025 at 04:26:26PM -0400, Taylor Blau wrote:
-> On Tue, Sep 30, 2025 at 01:21:46AM +0200, Patrick Steinhardt wrote:
-> > On Sun, Sep 28, 2025 at 06:08:31PM -0400, Taylor Blau wrote:
-> > > +	for_each_string_list_item(item, &names)
-> > > +		generated_pack_install((struct generated_pack *)item->util,
-> >
-> > This cast should be unnecessary, right? `item->util` is a void pointer,
-> > so C should do the cast implicitly.
+On Tue, Oct 07, 2025 at 10:42:16PM +0000, brian m. carlson wrote:
+> On 2025-10-07 at 17:13:18, Eric Sunshine wrote:
+> > Later in the same thread, I wrote[2]:
+> > 
+> >     Project guidelines have long suggested 80 columns as a desirable
+> >     maximum not only for C code, but for pretty much all other
+> >     resources, including shell code, Perl code, and documentation
+> >     files. This suggested maximum works well for adherents of
+> >     80-columns and (presumably) hasn't been too onerous for developers
+> >     who use wider windows; at least we haven't heard people clamoring
+> >     to increase the suggested maximum column limit. As such, it does
+> >     not seem far-fetched to expect that the project guidelines
+> >     should/could/would also apply to Rust code.
 > 
-> It's unnecessary, but I dislike implicit casts from 'void*' to any other
-> type. This makes it clearer how we're supposed to interpret the value in
-> item->util, but I'm happy to change it to use the implicit cast if you
-> feel strongly about it.
+> My preference is actually that we stick with the default.  I use (and
+> for a long time have used) a 132-character editor window and I find it
+> quite useful to have the extra space.  The DEC VT100 did 132 columns
+> (available on your local Linux system as `vt100-w`), so I think there's
+> plenty of precedent for that being an acceptable width[0].
+> 
+> I did previously use 80-column terminals when I had a tiny laptop
+> screen, but modern display resolutions over the past decade, even on
+> smaller laptops, have made it entirely possible to get several wider
+> terminal windows (or in my case, tmux panes) on one screen.  One of my
+> current tmux panes is now 213×54 and I really enjoy the extra space.
+> 
+> The default Rust behaviour is 100 characters[1], which I think is a fine
+> default.  I won't be enormously angsty if we say we still absolutely
+> must stick to 80-character lines, but I also think we should take this
+> opportunity to choose the Rust defaults for Rust.  C, Perl, and text
+> formats like AsciiDoc do not have rigid defaults about indentation
+> style, tabs vs. spaces, and line length; Rust does.  We wouldn't use
+> tabs in Rust (the default is four spaces) because we use it everywhere
+> else, so I think we should take the opportunity to use the Rust defaults
+> here as well.
 
-I think it's common practice to not have such an explicit cast in our
-code base. But in any case, I don't feel strongly about this.
+I am also slightly leaning into the direction of sticking with Rust's
+default of 100 characters. It's not substantially more than 80, should
+be reasonable to accommodate for in most modern setups, and sticks with
+what the remainder of the ecosystem is doing.
+
+So for now I'll leave it at 80 characters. But I don't feel strongly
+about this, so if there is a majority in favor of 80 characters I'm
+happy to adjust.
+
+Thanks!
 
 Patrick
