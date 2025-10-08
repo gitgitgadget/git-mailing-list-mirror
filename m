@@ -1,53 +1,53 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A3023ABA1
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 07:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B630123ABA1
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 07:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759907669; cv=none; b=bxUmBWtfHn0ele6znfi3Hyv6eHjvi4h4LtvkxSQ1HybMGqj2Rz47BATfzVMqgJYuRi5QhqYNq8F7jX2Rn3WNd5o92dKZVxO5w+549ON0egY9mP4SXd+4LzL7a0cZeumk/tl0D+ZpbPCB7B32y1Mv2lW9AWRn4nf9Lw5PpaFHKkM=
+	t=1759907675; cv=none; b=RzptnOPzf6wuPiUwfoOq88JsuorzFpVXF+nRQQ9KgkrabaH5H49GHnUvdWs6HVDBB4N4g0wiCvHr5E3oarD3ioeM3ZlxitvZcZ/eHXpYGBYTBIHrPcEMZb1Ey2+Y4glVvF3KWDoglTw1TIz5y2Ta/8CGk8rV1k4CWdtctBK8I2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759907669; c=relaxed/simple;
-	bh=TUyL/dH6yz0U6eZejDcph+0UG5AejDVjLZx0IMSE80w=;
+	s=arc-20240116; t=1759907675; c=relaxed/simple;
+	bh=vFdUQ8YmQgQlHl3i6PM0QanhDG8bxbFUfZ+OY3ZuzJY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LoTxQSnji7yiSMNe5RqMjaV6BC2tRUQskFUHpCNqLYMsChzeLP+kwzqWFTZcfWrFPVTHlo562BWzKW5IhIQHm40LoQztFpR8f8AakGbx+RLWk2y5/iBezaWqtf9s2rYrAacOVcytuzcUXK26czkKYBMuBwQoso14iM2vWp+fDEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KeMh7k1u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q9sbsn3F; arc=none smtp.client-ip=202.12.124.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=asqbWZphoU6n/SwCHiwhtFXoHbvWmv2vJf66K0b8zgB4jxfPBSjbss01LCiqofGDlDligAGVUIjaClCjzl3QNlg9MFbELJfk+DAgOKgQR7OBknd73Zojsqe/6cAvzxOpXbV4Egt3HkBJIC+Q7G5k+xrTfBH8YPZBZEF+2au9tRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DpzxLTDe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YX4myiKw; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KeMh7k1u";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q9sbsn3F"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AEACA7A0775;
-	Wed,  8 Oct 2025 03:14:26 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DpzxLTDe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YX4myiKw"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C41C37A0762;
+	Wed,  8 Oct 2025 03:14:32 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 08 Oct 2025 03:14:26 -0400
+  by phl-compute-10.internal (MEProxy); Wed, 08 Oct 2025 03:14:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759907666; x=1759994066; bh=1fwEO0DdOM
-	3PwzypWlJoHf7arkMtrE+DyQ7Y5TpODAo=; b=KeMh7k1ukTDGQl2U1CCGpiiioi
-	+2OFyX88LSXuy5aqjj87TdD5nyGRrKb7cRuFdAd/J2v09SDtwFGmxGKvpvzp3A0N
-	Z6jVyHyLivBNER9T8mgWoj3wnMWhdDCbiA3joyAxnewdtXGZAdsOvhE3Z7pdpXOs
-	0EvsmocX698bVzWkh4h+801JTNICjQJvvpzipnFs7ZVAi1QVEknA3LCDW+BEheld
-	SX4jddhjn/F2iE69wQ2UjSf8NHIObzumVJTWL0HrgNS5pK9/z2/HrfGM131RS73d
-	/+hfEbWHlg2B/moLQVPsCcKUePmFbjZ/TlZPvzBeHQ4fuKopG69HeRrTNBHQ==
+	:subject:to:to; s=fm2; t=1759907672; x=1759994072; bh=4Y94BOcxug
+	c8Bd6vjpjcU1m674yDf+c2NSOcR/uypvA=; b=DpzxLTDeCWiwJOot7nR+s7h8dg
+	j8x+Sbouy4n0jTgtb+gmN5aPwy7Mpy2FMcXICNjC3CuP/3K/quOfMT5cD1xqz4+4
+	w874qLJhPNO0GcchrnFwe4IJLQogVUdb1ZCYNATwmG1nFFWdyZxxxFAFd/k4QCxO
+	HjainrXmKKm3H3JxfrXUkZquXYPUKfxN55nJGV3hNR9MsujUeteTa9gIuEtAF2Pz
+	laUhTtYbPMNiH2Wr1LKM3foY2FsOmUGLUfNpECV3SI1t8G3jF0tMWLrVqM6HI0v1
+	nXqlmc8h+j7alUCztkwzE6tp+3g8bFo1QrNrQX4Tx4BOiu40SeTo8WuIucbQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759907666; x=1759994066; bh=1fwEO0DdOM3PwzypWlJoHf7arkMtrE+DyQ7
-	Y5TpODAo=; b=q9sbsn3FEqdPESwo2kDKIOZu/gsVW50Mks6Vh3HCxinCgYrZKXc
-	PHs/Jx0s5z6Bxjyl8Pjx/ne9np62iBAzzmh/GvQSp/1XYf9xCZWMUOcE/T36/Fr/
-	0yTB5vJwTFJ0DrQl2Ed/p7h7j/Pjsp0lVfvb965SQFlXPmxWtmK5jECpTegYgNcJ
-	Vl3YHexRZeCbgdwgi0kEDPXxUMQIWILx5eWODvDPXNVMbh4wXlaUNtBxJnoiBTuQ
-	fTGeF3szWKKjo5h4VaF7AtbXxc/7BOjHR0WdXfCXp0gcfey4AY6JGMscmSKqhUAw
-	IeCpaYSPtf5PajJnb8NWg3TXxS9SliSuEvw==
-X-ME-Sender: <xms:Ug_maAiTqo3-fPjp6S-QQ3ZImnNO-H2JgTO-HFxqD-pwGhMhcu56Eg>
-    <xme:Ug_maIHFgpvjFNMhf5L4swP3I1MZAx_qPPS9nyzlP_3OYA0872kxyL369S7_3OuMm
-    xNIosftyvRvImuP0LS_1JynjWQpIL4bJuTteKtzhQCJQz10Iybk0w>
-X-ME-Received: <xmr:Ug_maOS7mDgm_n_mSWWHCKkMvMZ3X9MKGDs6WtPDcpInsnnsReJmoqwfDJ8WbkUBVak5HPyZEVKOhpl2xqXwKUWmtGhlaVYj6LQGN0ah>
+	1759907672; x=1759994072; bh=4Y94BOcxugc8Bd6vjpjcU1m674yDf+c2NSO
+	cR/uypvA=; b=YX4myiKwzK3narLv3Gmi7tO/ET3zXQ7LjG/p+TpIPTaSAWLGGJQ
+	plFZsGczvhO3Cefs9egiABgHWc5MDiIlU0PrEUfvxsRN7iZfof3p7aXmaQTDxC+i
+	CDlfR5+AZvRUE7NsrZnmmNHFHaS2c0u8GPGaigGFHs8L9BdZZtfbcyqYHL6QYAvJ
+	yeuduT2JgtDGAYxxlxJ9Kdn/Y6UWootcytHYD9K6EV4Lz1R6Wi8Akg2t2+ti5Yaj
+	oXW8rjvHPH0gD0Kx+zmgr3RmzDa2uYaLQyVUKHPHyFzqR+xXnfjb2XKcixTDzWoA
+	1/f9zGxROsm3VhIQtZPO0R7y6uT9Me5yKbw==
+X-ME-Sender: <xms:WA_maHU7OQmSKqXzPlxPI5R0kjXmIoWM_i2ZYiu3nzOrGUngSQ0ZSw>
+    <xme:WA_maOppDi070l7SU6BncBUsr7Qe_1ZVEYeITfivv2CZNiJqkrBwP-fSnvKEM1fEd
+    P_BZ_YTH0g6HdlEaIzCEJn0t5DQM_CJy9UnhmCIGe96QhCBMnF9RA>
+X-ME-Received: <xmr:WA_maJkSkEXXKNvie_zaRp96WFeXcIO1LuKFpNRaaKd8meBw3W-6aswNUHE5Gos4d19CMTaKYlMu4d5qqXeDx5ByaCuQ63MU2yIPkaGv>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddvieejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,23 +58,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddvieejucetufdote
     hsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
     oheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
     epshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthht
-    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhstg
-    hoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhs
-    tghhihhnuggvlhhinhesghhmgidruggv
-X-ME-Proxy: <xmx:Ug_maNz177Sc7bIgNh2wMnCLGX9o4M8lUvuN2nyHKP_Wm1cgHUsfGw>
-    <xmx:Ug_maCflHTieeHjiJNfPf1SOOWjInmQj9BwDX184ppnYfWc4zK2MQg>
-    <xmx:Ug_maIOZR7ObHMqKPUhzlQF6Q5r9pvWuAmXRDAHOeNiB3Z-N2HbPTA>
-    <xmx:Ug_maFtf70rORrg5Uh3LkvfGZwU792UTChUqJltWbkd4jhOath8UtA>
-    <xmx:Ug_maM419P4887qV4I1SSnRyBEXxD53_nQr8XrlRSYHS114q0eDmpEaG>
+    oheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgi
+    druggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehpvghffhesphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:WA_maO1-AldBu8HKMT7SAe4Jh80ua_3e1YE1EU1_rYWeZtf1O09PGQ>
+    <xmx:WA_maGSH0_rEDdVaSK4b7kawMy121H0GPG0GHr0XjVA9G16kIPR0lw>
+    <xmx:WA_maHx7nEBouMPR1mjtuhAfkv3nvQ09fbJDmte35SBMItf2faGbrg>
+    <xmx:WA_maGBMpfqPOdtc7EnR0zaQeisU0QZ3oa3uSZ2F6F_qvViIoWFq6g>
+    <xmx:WA_maDtINS49OtcgIYHd7Satgg1r7VGtQZb4DKEJVtz0A64keB_DmDTm>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Oct 2025 03:14:25 -0400 (EDT)
+ 8 Oct 2025 03:14:31 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 005a3073 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 8 Oct 2025 07:14:24 +0000 (UTC)
-Date: Wed, 8 Oct 2025 09:14:20 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 1d7587a1 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 8 Oct 2025 07:14:30 +0000 (UTC)
+Date: Wed, 8 Oct 2025 09:14:27 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -82,10 +82,10 @@ Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/5] lib-gpg: allow tests with the GPGSM prereq first
-Message-ID: <aOYPTKG9t4ZB_Mbi@pks.im>
+Subject: Re: [PATCH 3/5] t9350: properly count annotated tags
+Message-ID: <aOYPUyKJPFyfKD46@pks.im>
 References: <20251007122958.1089680-1-christian.couder@gmail.com>
- <20251007122958.1089680-3-christian.couder@gmail.com>
+ <20251007122958.1089680-4-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,26 +94,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251007122958.1089680-3-christian.couder@gmail.com>
+In-Reply-To: <20251007122958.1089680-4-christian.couder@gmail.com>
 
-On Tue, Oct 07, 2025 at 02:29:55PM +0200, Christian Couder wrote:
-> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-> index 937b876bd0..743985efab 100644
-> --- a/t/lib-gpg.sh
-> +++ b/t/lib-gpg.sh
-> @@ -38,7 +38,7 @@ test_lazy_prereq GPG '
->  		# To export ownertrust:
->  		#	gpg --homedir /tmp/gpghome --export-ownertrust \
->  		#		> lib-gpg/ownertrust
-> -		mkdir "$GNUPGHOME" &&
-> +		mkdir -p "$GNUPGHOME" &&
->  		chmod 0700 "$GNUPGHOME" &&
->  		(gpgconf --kill all || : ) &&
->  		gpg --homedir "${GNUPGHOME}" --import \
+On Tue, Oct 07, 2025 at 02:29:56PM +0200, Christian Couder wrote:
+> In t9350-fast-export.sh, these existing tests:
+> 
+>   - 'fast-export | fast-import when main is tagged'
+>   - 'cope with tagger-less tags'
+> 
+> are checking the number of annotated tags in the test repo by comparing
+> it with some hardcoded values.
+> 
+> This could be an issue if some new tests that have some prerequisites
+> add new annotated tags to the repo before these existing tests. When
+> the prerequisites would be satisfied, the number of annotated tags
+> would be different from when some prerequisites would not be satisfied.
+> 
+> As we are going to add new tests that add new annotated tags in a
+> following commit, let's properly count the number of annotated tag in
+> the repo by incrementing a counter each time a new annotated tag is
+> added, and then by comparing the number of annotated tags to the value
+> of the counter when checking the number of annotated tags.
 
-Okay. I wonder why we even have to create the directory manually. We
-don't do it in the GPGSM prereq either, as gpgsm seems to handle this
-for us. Doesn't `gpg --homedir ... --import` create the home directory
-in a similar way?
+Hm, okay. I think having tests interdepend on one another is bad test
+design in the first place, but it's not a new problem you create. An
+alternative solution could of course be to change the new test so that
+it works in a standalone repository, or to add it towards the end of the
+test suite.
+
+Have you considered these alternatives?
 
 Patrick
