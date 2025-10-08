@@ -1,71 +1,113 @@
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E493C21D3CA
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 19:28:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8084621D3CA
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 19:29:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759951731; cv=none; b=YdHyULfK+EaYPlfmuUTiSWsSjdOvM4Mm7KTJdaCs2CLfR3ql/vUTa73G1lxEdJRfr068Bd2qjkDT4Tdsrtd2b2m/tiwKKm8qTQcqL5yjCeQRbHLebE3cCTD59q1aZ/TPfm5E7xGri369F4ziWey1gQdVAjJ5PFF7d1IL1aZlOGE=
+	t=1759951746; cv=none; b=RkswXXMKAaj9etm2HfANbOsgBDgd1AtaKroPzbdwfYhEdU1lmNnVPXLjcx4Ub6r4bGUgPcJ1Ff3Px6bZaohAX1IqYcW0Wvux2t5PBGV3gJOwdBikkpN8jLJFYMUk9ZAsMyQhOOE2m78CxEEO9XHpFEQPXhtOjMyAvqSL+KAyT7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759951731; c=relaxed/simple;
-	bh=w38nZm/egWdCKo95/DwD/1ig37T/lKSBSh5uKDYCnso=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=uTFFzNlmHTvNB4dqPga5GiChw+H9CqB8/Wfmik9jLuo1mwILMxivmIZ2usR9RgOkCgYcuf/wsVSpnahkGPCIfb+xbRxw1RZtY8FCkFwVF8q/jJXOKsA8ZAWnwQtkdjt7xEemK08FdVwlPyf0n75S225pkkrVmJ+VlIDiqSAJVkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zeroeyes.com; spf=pass smtp.mailfrom=zeroeyes.com; dkim=pass (1024-bit key) header.d=zeroeyes.com header.i=@zeroeyes.com header.b=Ytkbb92Y; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zeroeyes.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zeroeyes.com
+	s=arc-20240116; t=1759951746; c=relaxed/simple;
+	bh=7KStVkAequbvFX6Xt7AY/j3as50KmH2FNe+muqG3b0s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gtUOZXaiE+xycYMQuL7hQZchhbIuEVyMUHNEi6y4DcIaJxA/l1Nm9WQyCtHXao+CeudpHckJ4U+7B+FwYqIY6fcZnBV08hidu2rwP7FMTDj9glW0f8sEf/KhLH0tLl0kfBaPwxRmkYMQQjYqHv32yxNdLg5mgbB0ixdRnUH6PXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=R+a3Zcik; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=zeroeyes.com header.i=@zeroeyes.com header.b="Ytkbb92Y"
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-57e8e67aa3eso1657426e87.1
-        for <git@vger.kernel.org>; Wed, 08 Oct 2025 12:28:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=zeroeyes.com; s=google; t=1759951724; x=1760556524; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=w38nZm/egWdCKo95/DwD/1ig37T/lKSBSh5uKDYCnso=;
-        b=Ytkbb92YIHFw27GD4BaADoqCuUE2ONCNNq4XRpHZJBHApJsAFs/l3/nsU7LjrOaxXZ
-         icQZ5lIZ+vPd3bBHMQX/LFt7i/yc04HvS0jxcysgSdvIayAYPhqWz3+dSBJ8iwCAuKXc
-         WZu1ot9R2h5iWYnVETCQoxxr/gLV1yeIf77pE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759951724; x=1760556524;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=w38nZm/egWdCKo95/DwD/1ig37T/lKSBSh5uKDYCnso=;
-        b=iGQeupoBcFw/bYuFWgwol5FWronMBpsurFW8zOEBwEBT8xRPLp2Zju+mFQIX8j4O3b
-         o18cW3uVnJU6qxonsEJCIHf76Vqn4uAM0/ERQiWrsRSeBk7Rf9RrLj7ZqcXJTArImswT
-         qTgleUiVUoQfpXV727mrHYLmSfVK4ijWvDxNbwZph118qNkEJ3EvGqqf5xK/KO9xUdgq
-         v3UxGn7+0Yy6SMioJXowjSbBKmsp3SHkK7lvPiM7EazXt222cYx2vIDAptWyLNA5kFoe
-         XJiyCXj2L2hkwGOhjCfH0JFKXNc6Y8OIbnIXxe0wvAVKUR4vJZnMb6Y3Igq3K21khPFR
-         MCxw==
-X-Gm-Message-State: AOJu0Yz3tHqOQ36E5QmnA26iOuCmdCcroyfO6MAoOKvATsQjf5g0N0cM
-	LPd3U99Sm/ViWKTflQ06o7Us1Tr7OJMM8nr8W8MoQ20sVt25XDtyjYVzWFhKo611SFzIdbT9+TW
-	RtU/BnN64VR5GDHjH8/2qG9y9qyRSdT4I5Ixb65v3mUyoTTcMP0Y1cCs=
-X-Gm-Gg: ASbGnctl0r9DcMuUWQFP1r4zUOLIBbFtsfVzraJ4ayhwQBbsQ3nBQ4qdWQIwSnLu8CI
-	I6KuzpckvfqaH793v0ZyuQK2LKg9PDWRgQwD229TKEE6/xs7mHbmw1clHJN4DvJS7oil3SCyqDY
-	XLFon5GDesHxXr1wAg9Y6gMnXZ/t6XoVG8HQlFJgy4jocCKvlE0dipT7ojQzJo1BsAPK4XQTu8X
-	zdc5P44OSJf12trOtEX35Y3iyNwrYLZ7enbr7BGY+J/zW+K7FOHkUgkWi8eXe37moDMA0FuSwpT
-	cIWFidkWF+Qcp04pAz4b
-X-Google-Smtp-Source: AGHT+IEomyENA8DxU1cDmMh63535u+05UJxEm/SOcaKt3bVvG0b/PopmzuUlTmAum3Sl88Sho5qEKkI2NHBYPWDx4jk=
-X-Received: by 2002:a05:6512:3d26:b0:586:a95f:cac1 with SMTP id
- 2adb3069b0e04-5906f3107bbmr1423821e87.12.1759951723849; Wed, 08 Oct 2025
- 12:28:43 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="R+a3Zcik"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1759951743;
+	bh=7KStVkAequbvFX6Xt7AY/j3as50KmH2FNe+muqG3b0s=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=R+a3ZcikfSbF2lgrUX4On7b+8+6CZn2llY2efyEKSiHj0LehEo8KvOOsY7e3s/SqI
+	 CEzFHYmKHfmmN6lCw6MP+DmXqoLg65Yj8rLYgU5x33PLDba35pdj9kekNCc4rF1Ut/
+	 yVvATwPeG6pBzbAzW7EUhdiuGTOL8n6/gqf9pZ8GpBjLYTHH1AhCngjhamkSs4NYZ4
+	 dvIY9KQdKfwFnkT2/J6XgGbnz7XF3rbFdsHjn0SRq8OaCQpGPU3pBaZV3weayJrNXQ
+	 n5myvexzfE1r51jTBwvOWMRPKRzVxE1GZjG71lR7eqkqEmwwrnotZnLn87OlshJmUo
+	 KFuCmW1UIVBccswEvjgxYOtF7Z8bM6McZ/wkY13kZFVJs3F8jtzyrufmJg5sXw53RQ
+	 Gfr9gYtV1nYRwEMQRplxHLE2YnNhNyQrlVQPrFhHIwg0d8k/EqkLj2tS34JN0Qw0Bn
+	 eue9euU2ZxqKn4RznMf+wxhzkwwcunTaHn4tt0vWWxji8ZaoHPv
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:225c:7da:a6d4:350c])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0B10220114;
+	Wed,  8 Oct 2025 19:29:03 +0000 (UTC)
+Date: Wed, 8 Oct 2025 19:29:01 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [rfd] a new core.whitespace class "\No newline at end of file"
+Message-ID: <aOa7fWV5RgbyApiq@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqjz15fg3i.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Nick Giampietro <nickgiampietro@zeroeyes.com>
-Date: Thu, 9 Oct 2025 04:28:17 +0900
-X-Gm-Features: AS18NWBBJgbQfKDL8XfP4mUqCvKKiTn_Qe0Uau8QKKDFKPFqbQ-oDuW545F-0YI
-Message-ID: <CAEVYKFcj8kGRAxawwCLLTNiewNUMuFQnZt3-sGPG=kA-AY-6nQ@mail.gmail.com>
-Subject: Subject: Git console output told me to email you about "git
- whatchanged" so I am.
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="m4hsSgqNfRPvvNhy"
+Content-Disposition: inline
+In-Reply-To: <xmqqjz15fg3i.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-This is not a spammy message I promise. I'm trying to do what you requested.
 
-I use git whatchanged regularly, please do not remove it.
+--m4hsSgqNfRPvvNhy
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-...Nick Giampietro
-...Sr. Software Engineer
+On 2025-10-08 at 17:39:13, Junio C Hamano wrote:
+> It would be a good sized internship project to introduce a new
+> core.whitespace class that is about a file that ends in an
+> incomplete line (it would be way too big as a microproject, so I would
+> not add the #leftoverbits tag to this one).
+>=20
+> The student needs to learn quite a lot of things, including
+>=20
+>  - they need to study the diff machinery to learn how existing
+>    whitespace breakages are reported, in order to figure out how to
+>    add a new class of whitespace breakage;
+>=20
+>  - they need to find a good name for this new class;
+>=20
+>  - they need to study the apply machinery to learn how existing
+>    whitespace breakages are reported or corrected, in order to
+>    figure out how to add support for this new class.
+>=20
+> Thoughts?
+
+I think this is a great idea.  I've noticed that many newer developers
+are using VS Code, which I believe leaves off the trailing newline by
+default.
+
+I think most people on this list understand why having a newline at the
+end of the file is valuable and have configured their editors
+accordingly, but for less experienced developers, this kind of lint
+could be useful to help visualize these problems and even catch them in
+CI.  Possibly the documentation (say, the FAQ) could be updated to help
+explain why this kind of whitespace breakage should be avoided as well.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--m4hsSgqNfRPvvNhy
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaOa7fQAKCRB8DEliiIei
+gW2hAQDk+ZyOYeqdrOULuc0q2bIrow0Ht7MvtQsQ7r2Wj5mhVQEAlElegoA/x6cW
+jvokDIpjw+DfXat8a9yg6GnWk84vpAM=
+=6ag3
+-----END PGP SIGNATURE-----
+
+--m4hsSgqNfRPvvNhy--
