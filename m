@@ -1,130 +1,141 @@
-Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373942566E2
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 20:56:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0141E7C12
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 20:59:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759957010; cv=none; b=gMdBliNMhd+ZZ+r5IfUrPFkquQ0Oo7MxxVN44ZkaNrPxljd5cHuyDmvUjk3hQzl8OczNzRaTme+fTa58q9qmNxykEBmFkJg+JV6qz72fjoxDbSVBII+aAQUOAkILW3O4Fd4WMZrsve7SDeidIUIlucpoERes3MQrRMRN4TxqF1w=
+	t=1759957170; cv=none; b=jb5c7ucG6yfZRLGzHL3s0QX3I8TFXMTB6hlAPCiKdJ8uNju5nYgOAw84kjCy2mthW3yibHuFTJ4Du96FHgqHZQDxgeq8KajHUAVhWXmGDp3YSaWZsw09hbPKBNJgoJDMN2FIoT/T92vz3mo+1dobUxOFqf65xKjSwA72txljrUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759957010; c=relaxed/simple;
-	bh=xpPBixSi47B1E1l1h0NDqnaeMAizmxNJIO0mPdfyiMk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dgXWggiD1lLe03+uHiVEWA0aUou5oGhFPwY39zplnO4NrOPWCnt3ertH76eVFbyvuRXiI3NiLO8/6rEslEewllET9jiqqicBeapC8A3vOdJvsYwExpbe04sbwnYgpUGRI9QKMx/Kl1Qo1NjEMIRPfGXGhiE2PrJ+BbzYe8jHr5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OWeDo1Zm; arc=none smtp.client-ip=209.85.166.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759957170; c=relaxed/simple;
+	bh=czKky36sFIYcwgTrn3SDUdlH0hfhQ+9MYzY82fz3BIE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hcZgWQfpai3bH57+3C4aYHCOHYkr+vyhtkV12bwpx5g7x6aqv5TLMcVWxUfW/MOH31GRHhCWktgSR6/vkuFmUKMdScSEPPYmisfe9kd7xX8foiT0lUWq006zskkjesHAqxI7le/QHTZ9ONsVHtOlArOQz/2IlRFzBk8LNdzKej4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gPnexJde; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pfv2xzDG; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OWeDo1Zm"
-Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-9399ddb3ffeso21350939f.3
-        for <git@vger.kernel.org>; Wed, 08 Oct 2025 13:56:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759957007; x=1760561807; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LbwR+uRwByaUQOKeVUmTv6azLmYywRd/kuuJeYPGiZM=;
-        b=OWeDo1Zmg6JO6RVb3UKx8e4nbg50h6AqpQQdMSadYHdyIcXnKUuuYQVYsQ6C0GTD7m
-         rdDKAG6gq+Q4Btq/LY2b47bXV07wcXtujwyEMl/uwmHXhmb7E8hjvCWMWp0qBbwVd60V
-         /4rC/2ZjAC2jsWJDfQAfKzanXDnnjdNfRELdz9y7YY3szvuOofa83rsDd9LRkeYSCysN
-         9vTFioZ6FxbkoEXZ0z0fJR3i7W9vt1fKqC99c5NUG/xP3k58Sa/LHzyKw5reN7/gCzWS
-         47xN45zDzLQ0qNsL//Ch1dRR/OeG/GF/cOouTBA47HFmnQMkVefveoMwUtKEjFHNu7nP
-         lI+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759957007; x=1760561807;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LbwR+uRwByaUQOKeVUmTv6azLmYywRd/kuuJeYPGiZM=;
-        b=RKbFkPfRsKOE68+d5OvsMyWqy2IaIHSRp+VZKWeTW8OxZ6QzTDOXizww52kZbOBtg+
-         KFjSv23yMwnY8d0A1KCTVM0upN2cdpvQwrTb9/180IiZOdjhNcqDnOpZXlieHVji/Hdt
-         hjfpkTGAyUo7qjyyqtZ44k+aYiQurzGfi3RlHo2uAbLZE/AHjvG7DHPoMby1Eld96yRk
-         huMKJZ0guMfT85SZevFoxhhZJ1Qcp9V5O//pPcRD2bi5GKc521QhMrFHVxHse5JujetC
-         QFRTDnCPqDF8m25szPkzEdXkxK3P1W1NMroOpzmZOtEqCITeJpGEv3URiAdLFux8Wid5
-         BOdA==
-X-Forwarded-Encrypted: i=1; AJvYcCW5+5UxNNIyUbaH+sz0TQL9cqH1QFVIVu9AG1BSwpVqFiO2Mi4/l+aUu2whsGdbS+EClM8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwYbLg3fw202f/3k23g8ulZvkauq3PHhaaxvhtV7NCJ8cUzHlIZ
-	NLzhP75RU4dTjpv+0e/yC0xyMq8PNUkAQnh6dvk1u4LJaGoio1LEZWOxI/Ujm1GQjFQ2s8KTJg0
-	ecncNeqpEfA8Hd412y+6VHgiH0lVF8Hk=
-X-Gm-Gg: ASbGnctbGQP9OUaKueobYzJKKvEyWCk5BvT2MPhldxzabR6ux0PbM4QS2LF5x1Es1MJ
-	xUGO12cP56n5S/G8KhPtBi0ycBIYLYZguD3HD+yXtjMmkZ9jBv5a3jFj/wJWbpbjpqIdaUBVrNs
-	FPZjeDOZfQIE9hXEU5wlUhekGiJNKQ8So8IcpZOuT078NWDZJPVg91xd9y15CGuONlWIAxo11xG
-	1m/D3SMa3bBds3xutKQfYheLrMJmLjjAtga4baETNeh/7YSwLqUkhc4witwRvB4HWgI1iGNuCc=
-X-Google-Smtp-Source: AGHT+IH+GVC4DyCrK7RWdkNnmmLco30lnuULTwkrdGpKAlrcVe4RVM7XieiSd2HQHmLqk9gWv12m/q5cXYY64RBXKvg=
-X-Received: by 2002:a05:6e02:3a05:b0:42f:8ee2:1eb8 with SMTP id
- e9e14a558f8ab-42f8ee2204bmr20382765ab.11.1759957007095; Wed, 08 Oct 2025
- 13:56:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gPnexJde";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pfv2xzDG"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3C30B1D003F8;
+	Wed,  8 Oct 2025 16:59:27 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 08 Oct 2025 16:59:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759957167; x=1760043567; bh=9oUVWfEEEh
+	6VnNXPvHRGmH1D7uK8S4ji+XgXvfxdIbA=; b=gPnexJdew9U+P36VEd1nKZQA3y
+	Inn4bO96TZYxs3neWv/ZlVC8vE66B7tVzp5nnGMAhN8sozh7fggQHAfiKNgc7+OS
+	Qc9tRgKzO0Uf0FbLkd5J5fZRkz+nTthNg3MHwHYSd2VpOCbbKEtkkJCzHMMZnQaY
+	Bl05bXCqOzQkNc2w4Hgs8f0HZobpBoWRwproCyu7tqxXati6u1IylG3wkkNKtzBT
+	d87F5moyYlsUvAKE7EdjWTtt/jE8O1dcAxLvPuGFhhwnvjKNnebDts7wMgtyQ5zY
+	Dd0dv2KKLcIwSxM7/Gaj0qoOEs+GB5OzgL8l+7tsBCqLKD2UthPtvnZWudAQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759957167; x=1760043567; bh=9oUVWfEEEh6VnNXPvHRGmH1D7uK8S4ji+Xg
+	XvfxdIbA=; b=Pfv2xzDGX+cGZ+Ebm9Qa6+h+uAc7Uw4z9f6U6KDZHET1URp1pVb
+	HNyX6EK+YePOgboeZOUOTP2xZSMTCUKpWYS2Hrpt/iRJC1NYc+aW+8NWr/XaOABz
+	++XD4imAy5OGlqitrOTyB/wLESAhL22zAI5wVUIvP6i0LbLBOceyk1HTay40571g
+	cOGdMKocpvK/xv5tHpdIdWMXDK8cxrlsXNN3zLZm+K9Xibkx/H9f5yBH+XPaDiez
+	g/BXDe796UWgRJhjubYoigPVJv1fyTudjjmS9lcREt5Lzzs7Cvo/L4Jmtgv24lAO
+	/nf+zqgzDBvZtyi9VXkvBHrfRz4De52q9NQ==
+X-ME-Sender: <xms:rtDmaFZ4kBXqXxxL2xGTCO3FFHyWZFKNRy4ZCEW5dZT1JV1X9ncd1A>
+    <xme:rtDmaCz_UtA2jzDKirJFxvNIwdMHzjduAjd-XvZo-7DHaZhiaU38orTt_U-KbcRjV
+    LlSwqa0Sevxfd9EMfV2ktchN-JsZKPR9Nuy9bE08ZzfCLXoAsMRLg>
+X-ME-Received: <xmr:rtDmaENPGCZKVQhWhqJ2tcRdZNPCan-UWsx-mdfVixlOlZ_-G6VgGDzCX1hmiSRrVveH0E0qaUeMTlZqmuInb9so5gT4eypOVOGH>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdegfedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrghnrgefudesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrh
+    hishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehp
+    khhsrdhimhdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprh
+    gtphhtthhopehrhigsrghkrdgrrdhvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgr
+    rhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrh
+    esghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:rtDmaBeRwaBfIYS5YECtzTielYHH0zPlmL_JAV7As-QEtaO_XAdetQ>
+    <xmx:rtDmaJR746Zzhm-qpCMwLVujaOrlBSxmEhnwe58e6JwmENSqJN6Mzw>
+    <xmx:rtDmaPfh_METypihh6SNmurMwZofTA-Y4kRZjU_PDPTmfLPf5345Qw>
+    <xmx:rtDmaCsDUsdieT34p4fu3C4rHEy6ngwCBhASi3Em-gLVtAjUq5WS-A>
+    <xmx:r9DmaCVq9W43iM5f59UoV54tprLa_lW81S_s9HzDd_wYQh3uXsqPa0jY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 8 Oct 2025 16:59:26 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Siddharth Asthana <siddharthasthana31@gmail.com>
+Cc: Elijah Newren <newren@gmail.com>,  git@vger.kernel.org,
+  christian.couder@gmail.com,  ps@pks.im,  code@khaugsbakk.name,
+  rybak.a.v@gmail.com,  karthik.188@gmail.com,  jltobler@gmail.com,
+  toon@iotcl.com,  johncai86@gmail.com,  johannes.schindelin@gmx.de
+Subject: Re: [PATCH v2 1/1] replay: make atomic ref updates the default
+ behavior
+In-Reply-To: <ea7aa170-400c-47fa-b3f0-2623fcbfcaea@gmail.com> (Siddharth
+	Asthana's message of "Thu, 9 Oct 2025 01:36:40 +0530")
+References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
+	<20250926230838.35870-1-siddharthasthana31@gmail.com>
+	<20250926230838.35870-2-siddharthasthana31@gmail.com>
+	<CABPp-BEh7VEM6UQjkK3CxJcv54vEmueTmh9+-SyTKUxgy7Mkcg@mail.gmail.com>
+	<0fba2f5e-03cd-439b-90bd-f613fcc4ae23@gmail.com>
+	<CABPp-BE9TV58duojhF_+R6bKDF6-L0md6j+1VeRFd8CJWF++LQ@mail.gmail.com>
+	<xmqqh5wfu3o6.fsf@gitster.g>
+	<ea7aa170-400c-47fa-b3f0-2623fcbfcaea@gmail.com>
+Date: Wed, 08 Oct 2025 13:59:24 -0700
+Message-ID: <xmqq4is9f6tv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
- <20250926230838.35870-1-siddharthasthana31@gmail.com> <f0abdc27-6850-4b9d-b4eb-a1c92f731142@app.fastmail.com>
- <61107972-5755-49b9-a126-9442418ddff0@gmail.com> <6d19a0c4-f000-43f5-b2e1-f84f341063a9@app.fastmail.com>
- <38742a2f-5c5b-48f8-a9fd-acea47b7ce71@gmail.com>
-In-Reply-To: <38742a2f-5c5b-48f8-a9fd-acea47b7ce71@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 8 Oct 2025 13:56:35 -0700
-X-Gm-Features: AS18NWCzbc_liiRUD9mF0SPha7Olou9tpPHFN5usRebVboL8qAPpebscHxChadg
-Message-ID: <CABPp-BFHiwTwNmk3DHSQsXocYYbcaQV8TfVs052v9xFE2NYjWA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/1] replay: make atomic ref updates the default behavior
-To: Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Christian Couder <christian.couder@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, Andrei Rybak <rybak.a.v@gmail.com>, Karthik Nayak <karthik.188@gmail.com>, 
-	Justin Tobler <jltobler@gmail.com>, Toon Claes <toon@iotcl.com>, John Cai <johncai86@gmail.com>, 
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Oct 8, 2025 at 1:02=E2=80=AFPM Siddharth Asthana
-<siddharthasthana31@gmail.com> wrote:
->
-> On 04/10/25 00:35, Kristoffer Haugsbakk wrote:
-> > Good evening Siddharth
-> >
-[...]
-> > I have been using git-rebase(1) for a while with a post-rewrite script.
-> > This is used for interactive rebases but also just keeping up with
-> > upstream, i.e. a regular rebase.  Then I was idly thinking that
-> > git-replay(1) would be faster for the plain rebase case=E2=80=94but it =
-doesn=E2=80=99t
-> > support that hook directly.  Okay, but I can get around that: I can
-> > parse the output, yank the commit OIDs, and run git-rev-list(1) on both
-> > of them to get the mapping I want.  But it would be really nice to just
-> > declare the correct post-rewrite format and be done, without having to
-> > parse anything. :)
->
->
-> Ah, that's a concrete use case! You are using post-rewrite hooks with
-> rebase and want git replay to support that workflow without needing to
-> parse output.
->
-> That makes sense for the client-side evolution of the command. Right now
-> the focus is server-side where hooks aren't typically needed, but as this
-> moves toward replacing interactive rebase, proper hook support (including
-> post-rewrite) will be essential.
->
-> I think --format with atoms would work well for that - you could get
-> exactly the format post-rewrite expects without parsing. For now I'll kee=
-p
-> the simple update-ref format, but this is good motivation for adding
-> --format support when we tackle the client-side features.
->
-> Thanks for the concrete example!
+Siddharth Asthana <siddharthasthana31@gmail.com> writes:
 
-Let's be *very* careful before we add any hooks to replay.
-pre-rebase, for example, forced the assumption of only one ref being
-involved.  The early implementation of rebase as a shell script on top
-of other commands forced assumptions that it played with pre-commit,
-post-commit, and post-checkout, and forces us today to continue to
-check out every intermediate commit to the working copy even when the
-rebase could otherwise be done entirely in-memory without touching the
-index or working copy.  post-rewrite seems more sane than most other
-hooks, but I still want to avoid painting ourselves into a corner, and
-hooks are very much about defined and established APIs through which
-we communicate to other processes, which means it's exactly the kind
-of thing that could paint us into a corner.  We'll probably want that
-kind of extensibility eventually, but it's way too early right now.
+> On 04/10/25 02:02, Junio C Hamano wrote:
+>> Elijah Newren <newren@gmail.com> writes:
+>>
+>>>> For naming, I am thinking either:
+>>>>     - replay.updateRefs (boolean: true = update, false = output-commands)
+>>>>     - replay.defaultOutput (string: "update" | "commands")
+>>>>
+>>>> The boolean feels simpler, but the string might be more extensible if we
+>>>> add other output modes later. Which pattern feels more consistent with
+>>>> existing Git config conventions? Looking at rebase.* they're mostly
+>>>> boolean toggles, but am I missing a better example to follow?
+>>> replay.updateRefs sounds better to me.  defaultOutput with "update"
+>>> doesn't make sense to me.
+>> Yup.  Or "replay.defaultAction = (update-ref | show-comamnds)" if we
+>> anticipate that we might have a third option someday.  That would of
+>> course affect the choice of the command line option.
+>
+>
+> That's interesting. Between:
+> - replay.updateRefs (boolean)
+> - replay.defaultAction (enum string)
+>
+> The enum is more extensible, but do we actually anticipate other modes?
+> Elijah's --format idea from Kristoffer might be a third mode eventually,
+> but that seems far off.
+
+What do you exactly mean "far off"?  If it won't happen in 2 weeks,
+but it is likely to come in 2 years, then making sure we have smooth
+upgrade paths is still valuable.  Once you start with "do we update
+refs?" boolean, how would you later accomodate the third option?
+
+No matter what you do then, the end result would be an awkward "if
+you want the command to update the refs, set this Boolean to true,
+if you want the command to show what would happen in the output,
+set this _OTHER_ configuration option to this string, or you can set
+this yet another variable to cause this different action to happen."
