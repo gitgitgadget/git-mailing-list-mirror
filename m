@@ -1,53 +1,53 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94682BE7B8
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 04:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5DE1799F
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 04:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759897599; cv=none; b=U53wi4d/VMwtrQpehhlR2pJNLStjjkaKyUC3D1SF2nTO9rRtPPhwRqPWO1l4NBw6oHCzRPjl6Rf/ssCQD9D7gJ5KSa5BKfMIRZldOQSC7Y03S+nWlf1xvtaxgSnWq0UHbQ6nJpEpg/golmqmE5yii7uifcEzbEZIGLoqrr5hlc0=
+	t=1759897641; cv=none; b=F/XIEmxcGXaBtjTtrkcai9Rw3zaOcbIoqIyyVJMvMW7ni5T8MrIjYat1Dy9K0MHYF+nXcdTtHLnD8YEDigymZLPnAd/U40gBYN8ubxna+SyVT2E6pIs3Zs3GKu28B5ndnMuJuEuMpgLDO/XdynDBY8RbQLib0Qab3tZ4rNtQNDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759897599; c=relaxed/simple;
-	bh=GaNp3iw8VF80FTXH3ovKn3vxm+954BPJweRwwaatm5w=;
+	s=arc-20240116; t=1759897641; c=relaxed/simple;
+	bh=qO9/N3zETLl/sMy3pfGM6HUvy6wm1VsZ6Tm5X3nHsJA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RQvJThGf10Vmx/FzNlsUv6wVE+qJYthQP3owcNQKNap5htm7RpxCjIaKasXora/ST2RSH203rgDrDLdstJfETntsd6jHEMpy0DTxofBa1os2ZIZyutzO8LNkZqzBneHY8fD7RT1A5BP92F6Ur2R4x34jzS+QPgfSGRN/5VIpcSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MBf1WXQh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nOBlAd/K; arc=none smtp.client-ip=202.12.124.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=FZEnQStobVFeVVKHdYHn11SN9reg3WmDGdAqQLDGQ6EbfMDve+EzcnJOQQTIIS/mLlAUZ+jPZMXO3kiioZueH8hdV7U671lJkrG5rjNmKU6Kr6HqU7htetqho10a2pN4s0hj8E+cIrabUjwJX6ZH1S/1/eI/pw2tSy10D6VmGco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XTGC78jc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b5GULJAQ; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MBf1WXQh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nOBlAd/K"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id D52CE1D006D7;
-	Wed,  8 Oct 2025 00:26:35 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XTGC78jc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b5GULJAQ"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2E4631D00219;
+	Wed,  8 Oct 2025 00:27:19 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Wed, 08 Oct 2025 00:26:36 -0400
+  by phl-compute-11.internal (MEProxy); Wed, 08 Oct 2025 00:27:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759897595; x=1759983995; bh=AtXgzZlHiL
-	6K7tKUN3DHKnRv2BYkyG1+m8Hz4PeJNL4=; b=MBf1WXQhI+vnqbCVgQRitLmZoP
-	hsNzYetG0+cefEcht8zIYgkbq4CK+8L73GeRSlcgttWLKFcFyXOPldPlkC48YFz4
-	gLv1KFHzpuAB9LAqFvBOxuvwdU9xErUbmbngRnH4YtkOvTElBpG6NHu0OcRCVwkg
-	JdwZsyF6/tzdmcKFlsolPgNB9Imw572nWGhDhwx45gSvxO91llnjRqXyWjpZSU6N
-	ZL/E3Buhg6KMoZb77jPmgX7PNkrZne77VFcmVLmtFZCcl+NCoow0atmlxnSbQjdU
-	VDFCd99LqM1fyhg8TK8LfuUINhqKD9n5ABn1N/vQLPBQusO2NDEhe7J6LhFg==
+	:subject:to:to; s=fm2; t=1759897639; x=1759984039; bh=9jhlizAzbV
+	Khnzb/RPg14sEBlIKjV2bOVfkd1HaEZ+Q=; b=XTGC78jcHULTNNFj1TJUrimjIQ
+	1mmGMZmmeGgO51ouA2fwVa/7eQreKmui8KsuQOt4z2fpAkgAYNBy7nj/TV6cw6NG
+	RroZQOComCJisKXFum9ap7jTPfryIa2K4xN7RcF3HGhsixk8x1v+Xv3CE9zXD2oJ
+	7DURpDanqbwOZFzwXYblYU0gKS0KxYZ4FUQqABnF3WfkCU8nAkyQKcuX0b4ZPApk
+	ZXxAAuL2bNXdQKJrVNyZuU8t+Hqacbjmz4i0efIJYZ1LU81olQFRVNs998HtEQ/5
+	EnZDFDhqY6f/WuFLObzfNh/Y21r/bKjx/ZyRxE3EHej0ecxfEds+K5GFTpwA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759897595; x=1759983995; bh=AtXgzZlHiL6K7tKUN3DHKnRv2BYkyG1+m8H
-	z4PeJNL4=; b=nOBlAd/Kt+QZTloEVEVto4Cd+xI5QCqrbefi64u9j+7zcev9eR2
-	Qc0iVFK15B2QIfVMf7k1U+ywdq5Bl0hlta1b8tFziEsCRjFLOIT1c29BQ+wVimik
-	WRQrjagQAZk4XPSy3JisEQhV/xEQ3PX7hJvyt+itukFK3F/LsYQOmde8nt1z8RM7
-	hxv53Oo6/88N+KiC98kUEsw+vWcFdY1CAt3iB4FK0EmCjAp5HxGpYXdFrSbtQPnu
-	TMJA85lfYbH/+blNJwys1Ya5K9n+ueX7MIMITIMECGJv/catfSrC9yZ7v9XxKiGS
-	t8imHuM5bbbfbIP5KdxXiTX8zPKrEQujgUg==
-X-ME-Sender: <xms:--flaFdnWzrSZQJPVFydeuT5XcYov_Tqde_VwrDjPE7tqqwCDJG3Xw>
-    <xme:--flaG5raKVInFDx5w1CXRH0MzBG9SRiZXPfRKTUwCXebPhWef-E7weoXH0JDXduf
-    e1apWqRpc8RDmSDy56Y8fQ8oJYOPYEBMKcdmACvCiRcVnyqTq9l>
-X-ME-Received: <xmr:--flaIXsJfRI-mWRF1ra2ySSfUw0w_h-a2pCu8aOm_YnsN7eKL1wW7qwj3a1G8JQAjXKrnNU43E1yGT_ShdjTacFONT4Bu8Y2Y9zKEvt>
+	1759897639; x=1759984039; bh=9jhlizAzbVKhnzb/RPg14sEBlIKjV2bOVfk
+	d1HaEZ+Q=; b=b5GULJAQG/8fB1RXlb8xTsBfgMDNOq4fyX92glQiJp5F4LuQNpo
+	YCFxTsvVo5Gg2CTdfJdsmXclCII9FbFSAdMUQwQtez8wa6Olaw6LoAzckfGFR5dK
+	BTzCT7ZSpe2T5ZWSvt8VZBMJgoP95VZ0oGi9AZ8jmpYY/frexlJFLgnaR6EiSzTV
+	+NdNtXw7LDNCbHgzfHEhCdxA4HeLSyIhFCA1VQjEfTLXsyDeDI87Px9VxCt4CvD/
+	u1hnP118M5gg6MpiZbODgIdICn1V3YBNiGsabMJllulonRdAccDSINW4N6EIHDkW
+	nR5bAFdxTgHZ7kdngeFkY/OCQj0O1bFeqGQ==
+X-ME-Sender: <xms:JujlaO6y2KBIPlbtJu4kk9E52DWdaSte--sTCFsj6MBUVstZidY_0g>
+    <xme:JujlaLlE33tcK9lLNpsfDbYS0yT8i1bWNb1fNF1A65AVMmR-W0ukrVGsbHbz9n0rz
+    5_pbZd8AML8HIDRoDjEY35llPZftNuq3CISBJWynJUbbBWG0OscUQ>
+X-ME-Received: <xmr:JujlaHTTHWeFDRNkX3FfFCAQTnaRv97tI6bVl6ProMLql4UKKBgyYjuhY03AUUnjE_FdErtQ0GDWIE59Htmk3_msmMYPqrJvAvAwO3a0>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddvfeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -56,35 +56,35 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddvfeegucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhlthhosghlvg
-    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:--flaF6iLksgHRgQiBLqQHcc51mEN02ZjRJ52Ku5KF38NJPkpvMCyA>
-    <xmx:--flaDpl2YEacJQn_cgFwyauGT8aG881mqWa0R4GItLoCqwVwT26pw>
-    <xmx:--flaIlUKscxZ1TnWzTXbnwNfVGFD_lRxY-gZ_mFLAFK9iQRPKFT7w>
-    <xmx:--flaPOKTZ-Ro2LIgoq6stHCzAZLM5S8xCG608qH7MXkpScv7yzR1A>
-    <xmx:--flaB7DNT_1BtGqB8B0vA9R2PYTX8ZrihEjNCa6aNAIk5Nu3mmgiilj>
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:JujlaCGwih7n_S7rgLd78jEeBH1p5SYNCPXaXHDmt9kJgWCkalPJfw>
+    <xmx:JujlaEFzLP5nUY4D_XQ5SBLItE5M1jke5s_GdloaD4jh3r3xidXPIQ>
+    <xmx:JujlaISXlVW7gjcpk3sddmCcX3gD21tIo8Ro6knADO3lUNxDjLeIWw>
+    <xmx:JujlaNKRigp7tE0cAUyikMG39_s024ENPBV3-H35eVnZ7FQTh_cW4w>
+    <xmx:J-jlaCWPZfNDb5JZKiWIYPVgXRk-if_vUg_pBXEI70wJGDcfWER6DiZn>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Oct 2025 00:26:34 -0400 (EDT)
+ 8 Oct 2025 00:27:17 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5577ba8f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 8 Oct 2025 04:26:33 +0000 (UTC)
-Date: Wed, 8 Oct 2025 06:26:29 +0200
+	by mail (OpenSMTPD) with ESMTPSA id ad531a23 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 8 Oct 2025 04:27:16 +0000 (UTC)
+Date: Wed, 8 Oct 2025 06:27:13 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 27/49] builtin/repack.c: rename various pack_geometry
- functions
-Message-ID: <aOXn9Vd6t_xOjWpQ@pks.im>
+Subject: Re: [PATCH 22/49] builtin/repack.c: pass "packtmp" to
+ `generated_pack_populate()`
+Message-ID: <aOXoIfG4FyHL03GG@pks.im>
 References: <cover.1759097191.git.me@ttaylorr.com>
- <dd67366476172eb1b5b0d2bb2a4dfe92b96b83ba.1759097191.git.me@ttaylorr.com>
- <aNsUnfRPi8cYwGkm@pks.im>
- <aOV6SaGhyHYsU3Bu@nand.local>
+ <ab0dc6668339f24787dc80d2dc05f0d31cfadae6.1759097191.git.me@ttaylorr.com>
+ <aNsUkenrDY8YHgBn@pks.im>
+ <aOV4QBV8J+71Ikk4@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -93,35 +93,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aOV6SaGhyHYsU3Bu@nand.local>
+In-Reply-To: <aOV4QBV8J+71Ikk4@nand.local>
 
-On Tue, Oct 07, 2025 at 04:38:33PM -0400, Taylor Blau wrote:
-> On Tue, Sep 30, 2025 at 01:22:05AM +0200, Patrick Steinhardt wrote:
-> > On Sun, Sep 28, 2025 at 06:08:54PM -0400, Taylor Blau wrote:
-> > > diff --git a/builtin/repack.c b/builtin/repack.c
-> > > index 18c3df7200..2ce1ae3364 100644
-> > > --- a/builtin/repack.c
-> > > +++ b/builtin/repack.c
-> > > @@ -332,7 +332,7 @@ static void geometry_remove_redundant_packs(struct pack_geometry *geometry,
-> > >  	strbuf_release(&buf);
-> > >  }
-> > >
-> > > -static void free_pack_geometry(struct pack_geometry *geometry)
-> > > +static void pack_geometry_release(struct pack_geometry *geometry)
-> > >  {
-> > >  	if (!geometry)
-> > >  		return;
+On Tue, Oct 07, 2025 at 04:29:52PM -0400, Taylor Blau wrote:
+> On Tue, Sep 30, 2025 at 01:21:53AM +0200, Patrick Steinhardt wrote:
+> > On Sun, Sep 28, 2025 at 06:08:35PM -0400, Taylor Blau wrote:
+> > > In a similar spirit as previous commits, this function needs to know the
+> > > temporary pack prefix, which it currently accesses through the static
 > >
-> > Okay, this function also gets adjusted for the new naming schema we have
-> > around free/release. Good, but it might be worth it to point it out in
-> > the commit message.
+> > s/accesses/accessed/
 > 
-> I wrote the commit message to be generic to cover "various pack_geometry
-> functions". Did you want me to be more specific about which functions
-> were renamed?
+> I think that the original is correct here. "it currently accesses" as
+> opposed to "it currently accessed". I have read it back a couple of
+> times, but it is entirely possible that I'm missing something ;-). LMK.
 
-Not in general, no. But I felt that this method here was somewhat
-special because we not only rename to have `pack_geometry_` as prefix,
-but also to use the correct verb.
+Huh, yeah, no idea what I was thinking here.
 
 Patrick
