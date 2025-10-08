@@ -1,74 +1,72 @@
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4832C0F89
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 21:44:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0380189
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 21:49:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759959900; cv=none; b=m1z/AZgP+AiBtsCVI3GwtXybGJr6A+rknvc3yYc9HnTmFZ5AWNbALY/A8DMr5Pmk+QFBfKz0HZR7CD7nj0sp2mXTvNwx1ybsd8IlHrGmzaD75FPAUVEbPxnJPN3O+sZV2gU5xugqfoSpeSgw9gnmq/txF3llTpOoLjtBwCSJQEk=
+	t=1759960188; cv=none; b=mHJ8yg3BTES1b0KCJE16fRjKUm1p6MYtcFVu+9wTlA5UGeGFLEn4ju6uO3Xzb3OdLlO6QT2xA/heNB/j33XxBQDW6gYG8EJxb2jVJt9VS/4IbznmGqNRMNaGYBsfCdtf0kI5AsFwBo6E6sM3SAZAxNQC2HL2GvBXW1IZwkteh60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759959900; c=relaxed/simple;
-	bh=UizANlV+BwS7s9dzgf/sGt/16xDVutlT0rLwSjsZ9wM=;
+	s=arc-20240116; t=1759960188; c=relaxed/simple;
+	bh=nBgD1yTqcp1T+mafQgAUfg9//0cnY5gR8l1Mbkonzjk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OsDC83bvYl4zr5sbYA1A4QJvlU78erSUM5s3T0aYQyNDd+/zkG9WfBkPnMVkmYo24wOzKHGY8MPYJGZiLVj46MqLLHDygV/UYdsW6E8I4By/ad0qex9wviBmAymeo7pSOpTUX0xaCkGypi9fCwB04SxnDG9KmvGWGehvPnoGh+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=X/NW8V52; arc=none smtp.client-ip=209.85.166.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=FUogJGcj8/XAhT9U1VZIi4g9Ua6Xtk2waTeFtOQtqShF6yPpeJwvsfszGKDS1IsQOk0oIVHCpYskMNVLDuLXQ7PRhzAzzLUbvAUDWX21WGqISF6Dsh//3aEr6va658pEyKm3iuCTrK/XaQscHzwbHO+MQxy2X3zfe6aXKWx3U2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=BWSwph4V; arc=none smtp.client-ip=209.85.166.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="X/NW8V52"
-Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-42f6e0bdcf7so2560225ab.0
-        for <git@vger.kernel.org>; Wed, 08 Oct 2025 14:44:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="BWSwph4V"
+Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-9032edd72c1so28328939f.3
+        for <git@vger.kernel.org>; Wed, 08 Oct 2025 14:49:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759959898; x=1760564698; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=UizANlV+BwS7s9dzgf/sGt/16xDVutlT0rLwSjsZ9wM=;
-        b=X/NW8V52Pt2y+MSR7fHSYT2Q5GVOrQzw8aDtjwoBXwwTQg6sqXSPk8f37AxNjcpspz
-         8JQs+oTjNJBa55Ah3JHNPPPiBwzriGfjgknOnDjAJECk40oNb0IkT3O5ZZ4SK4pNXGNl
-         29Rj7OEtFHsW7KXza+i1DmCb96dFTkF4YF563736XyUF7i8rBf5rvtMKmHkT6qgPvijw
-         mVOfLNlC84uLBOK7p+qnOCr89qmepA/R7Pzi5amaFc0XmyH+tmELPpQBP/kdQ3rWq584
-         MlOWbTdW55VnDh9M9asjYHaUWS733TahxZgT3UqT9GSmkTOiAONlfXLFo+Vk9QBemkOE
-         xhWg==
+        d=ttaylorr.com; s=google; t=1759960186; x=1760564986; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VMKfi49rqPeH2vme640HmzmsrM70380kao3M09abU50=;
+        b=BWSwph4VQcpcq6chyMN05C/GT1w+2qIma8gfKMr9+UdHymUaQBl0SVF0St7RGWczDg
+         2LQUEVxxgnXOp36hi2sX048v9zniGayOsyQgOWn6xAgH63fQOMnTGy61ThVKwTyeejQa
+         KaLUl6/O78uW/UTx2gvUTBnWeiT6SiEcplTzUbT0cQZ7pOG94035hEjrUN7ZbvYJ175n
+         y8IAvZi24UGCgRQlR1JHcNYS2++kQ+FezAWy6oqAxyizkzw2459/BYm2cGXvNCGnEnup
+         hSezNGNX04KoQ5j9a1A0vgXFCL+F+Bqc5fQ6qZGNPm5UQqxWrDIvUYKPKphy8PzgijzE
+         LMAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759959898; x=1760564698;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UizANlV+BwS7s9dzgf/sGt/16xDVutlT0rLwSjsZ9wM=;
-        b=hxb9V88Ejr4kIP52kxyWOC1aw/gNZXL7eUuLqRWF/7SHXVd2n1jq2wo6gb+/VbyMan
-         /c7qTV/RIkV2kNWlLsoGMH2+Ah6mJlrJwpZgFSkOOU1qrOaolEFXCSwkujOd666CSVr7
-         gQ6kRTvah0ADiwwolv4Hd0hQZk7KSvY+1EaNO7DpdOo6aCbdpIHEsQAm+Zo1Ue0rjgiA
-         MSz20FOMYCw34+LOJiKw/uVxKDtLNpxyo8XuZM9mB+Ft9+tvE3usnPjgi3pmJFeF6DKe
-         LLGT+ZbJY1EInAfqf2ZCau/dUE/JAlaSLqE3zYqpkgf2qzsl2ecEx9OTB2a83/XzUMvJ
-         X92w==
-X-Forwarded-Encrypted: i=1; AJvYcCVjI3joWutpUDJp/IJbYfcgj97ybxsXq2haEbhxZYxnl3GfYblfGK/r/BZ70AymPKQSqKE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxqQSr4gt/3CnLvAPRh7uFSmJt4bfi2Rxq5I1nzgEY+V5rog4Du
-	5EwNSf9CqdGIVCmTMqa0/gu38AVxwqIAcBeP40t4OLsyYAbnjgpywdBYf7qZ9x3md04=
-X-Gm-Gg: ASbGncui+w2C2Y/B2+/FjP4eienkI/c9rSuylYDD3No76ABhR3A4edGRKxiQsVXBx2N
-	YkLKcXTXiWtJzDk5oX9fF68QZ0nV0nr5JdJpm04xiU2BQmBW8Xgj3q7rNOkurz3zzvT0R7qlgTE
-	yxCN/z/8KfdxoLqHQpdDAo5GaXDLxqM9AxCdJffVc85ppqhD17hK2Q1RXexIteYe4Vm5m7KvEk3
-	TgLspwsfTdVdZoYXoB72YFqxNoZEf2aJxAImJp305JEbWFRFk72TItUoTQuVY7I/c4raM3GbCgV
-	NvY5wreSSt/64WEslKqVME4OG64Nr1mo8mwnlex2PEIxbYb8U8o7CV2SRbk5SQvDPy8Jj7qhUlq
-	cNZpvR0evY5Namc9WdZUQXtgVHo3eOL5tOWJA9/RnMSj2OPsyP/F7gQ8hrGlSxE7Ngh7uqm3v0A
-	pend3xia9PCUzn/uc02hVUDWwdmw+XbMPES4bSjCBiuDDy93MUwg==
-X-Google-Smtp-Source: AGHT+IFZryPXMIQfbqFKhPf0V2TclBDiQtjKouVc37seTn/A4J0TnXg6F7P2ExpX6s7p3B5tc4IenA==
-X-Received: by 2002:a05:6e02:1805:b0:42f:86a5:5dc1 with SMTP id e9e14a558f8ab-42f873460c2mr50220845ab.3.1759959897813;
-        Wed, 08 Oct 2025 14:44:57 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1759960186; x=1760564986;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VMKfi49rqPeH2vme640HmzmsrM70380kao3M09abU50=;
+        b=WWQb7cuHU7CvT8uXjab95SRPN+gVvZa8Dac9cJaFlhw9wr8oM3pyBJV9RrRjkOZSA1
+         RhoI6+HtLtoIAN7M8vz8W2h0Ax3exth3ivuaegr3e3+OcruG590ANX32wF858OcA3V5D
+         4hwmVzkhAbmOh2jAhjpSJVkGVIa+ichvmGGm+KN/WNVCAV/eW+88itkP+l0zOLJmcWRj
+         39D9gK9PWbn4aQ6YDEnymS4o41KmHIZOCCM7h6TurYBC2vs2OQvXT4eA3RpMXkbhp9dZ
+         HQf9sqJLDLh4RXtYkGuKbStpppFd/zR1WbjIE2vwuiVdlDprUiUGtCqAC3ug8OVANH/v
+         RCJg==
+X-Gm-Message-State: AOJu0Yw29nArgKNMyG9yl/TPuokCjD+tLicvw3QwiNeeFfP0Ccmqekbi
+	NirzjxsRjbl7WmIWocfm/C6pzlDmNAMXMEicUbqQhWLQRUUCplCn+xWhsSmZpr4KzIiZgVuXBCh
+	ASWMXxQ1zpQ==
+X-Gm-Gg: ASbGncsHgETI4NVGA+4t/lA4PQfcDW31msY0qLWg41gtgLafpn6ldHMhk9fk9XT6Ije
+	iFcMg+zhQ1/Bi9msSK98jiYGJb6YsRonNx9auzAJe6nUZxAojYZhHlLgC86NUCwJIBlG5BnxwdS
+	RPr3QgCZQsgJVrsVGWH0qPE4UtfuHdvMZg3lTDvPicqPudjqpwFIIcBuhhu8Ssipb9FL8cRsMGq
+	DauqRMn8Hwe31m9Vg7JQU00Z38TxxsoPiFgWnTYrrZmQpqGhZ/c/nNs5DEW0lLwQMzHkVBhTWd4
+	ks1Zzf2Ve9o4LgTQKp7cFDXNNUHjS0dLfC2hIYbi9Nr7gPALrttNyGp/GfNWSgEV99VLPYLoU5T
+	+pXr5KmO7AZgQ6pR4/HWIWUzppXlOCg3MRtlF75sbe8uY5r4UokOiEz36DTuHp/9HDv+zzvW7+p
+	Dsu5zxoZkBGlzaOqFmL4ze/fkMwXS8HKV/3G8a3RwzTNf27k290g==
+X-Google-Smtp-Source: AGHT+IFnSKesp2uxwOx1zBN6EN1nwBfrJ/DcLLX13iTXNhbZufwXD2xjaWZNjN9uOSTiDIs57hgo5Q==
+X-Received: by 2002:a05:6602:2b82:b0:927:3f:411c with SMTP id ca18e2360f4ac-93bd16b5a83mr612764339f.0.1759960185680;
+        Wed, 08 Oct 2025 14:49:45 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-57b5ec0b026sm7482698173.59.2025.10.08.14.44.57
+        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-57b5ea70054sm7360008173.31.2025.10.08.14.49.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Oct 2025 14:44:57 -0700 (PDT)
-Date: Wed, 8 Oct 2025 17:44:56 -0400
+        Wed, 08 Oct 2025 14:49:45 -0700 (PDT)
+Date: Wed, 8 Oct 2025 17:49:44 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: rsbecker@nexbridge.com
-Cc: 'Luca Milanesio' <luca.milanesio@gmail.com>, git@vger.kernel.org
-Subject: Re: When should we release Git 3.0?
-Message-ID: <aObbWLBCbXsvuajS@nand.local>
-References: <aNxivuJEnSHbQNdr@fruit.crustytoothpaste.net>
- <E03F997F-1738-4CF6-B7D5-206183FA5BD1@gmail.com>
- <aN1RFvz7uGPnepxe@nand.local>
- <04f501dc330a$0ecd3010$2c679030$@nexbridge.com>
+To: Michael Lohmann <git@lohmann.sh>
+Cc: git@vger.kernel.org
+Subject: Re: [RCF] Secure git against involuntary arb. code execution without
+ feature loss
+Message-ID: <aObceC/Ec/TGTEnv@nand.local>
+References: <72F10412-8B0F-4F66-8674-FE194D016DF9@lohmann.sh>
+ <aObX4C7lMHRnjbYq@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,29 +75,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <04f501dc330a$0ecd3010$2c679030$@nexbridge.com>
+In-Reply-To: <aObX4C7lMHRnjbYq@nand.local>
 
-On Wed, Oct 01, 2025 at 03:31:54PM -0400, rsbecker@nexbridge.com wrote:
-> On October 1, 2025 12:05 PM, Taylor Blau wrote:
-> >On Wed, Oct 01, 2025 at 08:13:12AM +0100, Luca Milanesio wrote:
-> >> I am worried that if we rush into Git 3.0 with breaking changes that
-> >> would make other “forges” (e.g. JGit) incompatible, we would be in a
-> >> difficult situation with the other Git ecosystem that isn’t based on
-> >> the C-Git implementation.
-> >
-> >That's a good point. I am not familiar enough with JGit (or really any non-standard
-> >Git implementations) to know where SHA-256 support is in those respective
-> >implementations.
+On Wed, Oct 08, 2025 at 05:30:08PM -0400, Taylor Blau wrote:
+> On Wed, Oct 08, 2025 at 11:02:03PM +0200, Michael Lohmann wrote:
+> > * Proposed solution (keeping all existing features):
+> > - On first use, git generates a secret "token" (e.g. a random string in
+> >   ~/.gitsecret)
+> > - On calling `git init` or `git clone`, the secret is copied into the
+> >   new .git directory and serves as proof that this clone was created by
+> >   this user
 >
-> AFAIK, JGit still depends on some core git functions, including gc. It
-> also depends on LFS for those functions. Interop it fairly important
-> in that space.
+> Sure, but the problem is not with direct clones (at least, not using the
+> --local optimization), but with clones that recursively clone other
+> submodules.
 
-What are "core git functions" here? I'm not at all familiar with JGit,
-but my understanding is that it doesn't use the Git binary directly
-whatsoever, so I am not sure how the presence of interop support or not
-would affect JGit or LFS.
+This is a think-o. I meant to ask whether or not we would respect the
+token from the top-most $GIT_DIR in nested bare repositories. I imagine
+we would not (otherwise this proposal would not provide any additional
+security guarantees), and so...
+
+> > - Editors would no longer need to prompt the user for "Do you trust this
+> >   repository?" in most cases, because git could prove the clone is user
+> >   generated.
+>
+> If the above is true (that Git would not copy the token into recursively
+> cloned submodules), then I admit to struggling a bit to see how this
+> proposal would remove the need to consult the user in this case. Instead
+> of the editor doing it, the user would need to do it themselves?
+
+The rest is the same as before (swapping submodules for nested bare
+repositories).
 
 Thanks,
 Taylor
