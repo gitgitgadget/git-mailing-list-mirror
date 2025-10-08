@@ -1,520 +1,136 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazolkn19010004.outbound.protection.outlook.com [52.103.32.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C622874F2
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 14:01:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759932081; cv=none; b=oz8oz+GfDStPiKBtMfmTseJ3/wWhV/yy6jyz/s061mQwAxBm6/h5JAI0+jB6N9gawUMCXzpi7HyXCZKx1vkFWJWdQ58NmmLrTWxI/H+ZkWXo5TkegxtWOLqngcrbCHOhv1inXttkCN7qxgNOT2DpzfnjMzvbfe7pSrggArqlQw4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759932081; c=relaxed/simple;
-	bh=o3taz4YG/tWobc8Qhr8vy65/KgE2jVxlhHJMsznanMc=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=BwUJha2rvG22uEVx1VlTyo5MkFAHjGw/iMYtLV+VqVo79cXvOPIyhlqN9anv3XsNiuAQ08Y6zRnKbqdcWqSdyDIDmorGJ8KUFT3CmOX2lgrf+DVSIf0OmF47L2gUrAHyHV1sx0GR8qMGtfPPlCQ7nXQjwtR7D312/PwlZ0E4lVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k995Mnk1; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78D5266576
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 14:20:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.32.4
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759933236; cv=fail; b=EP0dNi7SySpRiL2YQnxgbHhXvEYKI7Rf7/zhpeA2KwDTRj4bO9eUpZxIlVWiV7TpE6SjULN4BMLl3gdHPjsU04VJL8niK7JXiUtMPkI1tCV6u+iSi5S38dmvTn0V4S2EK7OYp6WhMtQit418Cv0KsbAllNz8nZEZAKLL1P+j7M0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759933236; c=relaxed/simple;
+	bh=BITBx7MDNUrGd/54LEVfYGRx6QBozVRn9coY3vXDNpg=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=BXNZXkhQR0tUwM0yOXVjGhofCe1Ow+NdfvvA+ZTtGaQfMEZKR1EtD3AYJUb13D+zCtNOPofEnH9E1DmZvoSHJIbOxt7f/1PMPZOJGecBx12EjFazWiDSTJDscPecP0KZ6k7eO7E7nLwT53flUlknt5R+36PuScxwDy9hS9d/pqQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.it; spf=pass smtp.mailfrom=outlook.it; dkim=pass (2048-bit key) header.d=OUTLOOK.IT header.i=@OUTLOOK.IT header.b=jz9NgLmw; arc=fail smtp.client-ip=52.103.32.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.it
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.it
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k995Mnk1"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-46e61ebddd6so70657695e9.0
-        for <git@vger.kernel.org>; Wed, 08 Oct 2025 07:01:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759932077; x=1760536877; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EJepttgYkMs20zhFnY9rvEXZeEqd87tpdxFQbWv7coo=;
-        b=k995Mnk1y2nhZNhyz5BxHjB21mTisYns3PmcP5nklexJpz51nCrr0eiOvRzAdAb0y1
-         vlQ5uR06A2Z6BKWFdOzSMwITQ/gxBIRBv9qKJtFp/VrgydgwoPRNxnpfL19FVaA1+2fI
-         zmfjnndHssbRFXUEz7rk4HCN44DJMWAZEGqbhqWk0y1NC39IZrDPmBNjzqgqVVj97q79
-         7n4kV/fB3icoOmN+qlZwj6NGyETKcBYVa9+ZMO8rZGLroPc28uOQXUXbXcx1x+GqXK17
-         /0pLsB3wkEOhokGMN/RWbDMcH7HKlnOWMgsa91x57C+OdrJ1xkw1stbwgwvG69UD7W+K
-         qzgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759932077; x=1760536877;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EJepttgYkMs20zhFnY9rvEXZeEqd87tpdxFQbWv7coo=;
-        b=kQWEbqVsRfxyGKAoon4wkUm79acZBg/3zxO3hVG3XaCYKdhGnGNrSiRbA6USrhcwvR
-         7W99b4EDeeJfQhyMrmpDpek8mTy6rvLfRceskap+5ZA3yd1B8f560cIDRgU7Py312B/J
-         aP5jxBWUNmyY5h4Od9dvceLevXZuqJe11RvLXxVJQCId6OmyKlAnDuERVveqGu+jNDmg
-         hywHvPeXhdPwU3v3JajAB5xaI4uL0shWZwyKSrKYGAlSdwdz6dRWOeRnBhMPcUDVDvrd
-         5QhEWAGmeIiOSXje//AnxEGBEwS0xHSoZhy7KwxU6llxIXOAecJulMg5Ejt1p7yBPKW8
-         VKcA==
-X-Forwarded-Encrypted: i=1; AJvYcCXow98ZxycBdQIRA36VTOZmxkD/EQsgTCiqEWST45ymOFs/CGSGOHPPMhHWFCJEgLzvv/8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzG0Pyh9aSLQ4igWwk41NNxsxXCKxnga5M2Jq1sGsj/trqNJHdW
-	oL4Ni9QPmgJKsjOF0D0SPwzSMQAchYnCuCK/wxJDbsmCWH665G57um8M
-X-Gm-Gg: ASbGncvFYUrs53h57IQwX0kJHNq8+Br4IawvwRbwQZp0T3dzkxh7PF7eWgzu15Xi4sP
-	RA1RuJq9vv2zQIGQGF5pwmZLULtGfN8JhnHcux95vRmrcypsfNDbvJ6J+mChKEznyPtoSdLEhcS
-	w2t6y0Utq/qtomm6g2Ke7NO0Y+fZDdxFdxBCb3dzM3tLmvT338x/rUFXLH4tTn5ZY++RaNdUYVi
-	ImagZO7fQzUiIhaevifrrSRny5miVcQhGsQfxB/BUQkx+WXM7g9PD2f4sWymjyaJoYyAkUFDQzp
-	QyVrrHKdzxyYcLCry6l0koymM2igWLV+OV1oxHW1GEl9siKk/bThaIW8OAyHC1NdOgkK7do8/uG
-	jMw37NedzLHczYcJkg4PQnGJkohqOKXZEc6kucjPDb2a7AeLyGjxKqvdYjvoQWwx3qRFe9rGQy2
-	HhcleoEhwiRO5BsAEXSmBDp4c=
-X-Google-Smtp-Source: AGHT+IHsjh+A8u7dEoEWIPzBxNRhDy0vXlZEr1cmDnlUc15mPgsYnQFC7T8s3E+hNWk+N6Dbylkh7Q==
-X-Received: by 2002:a05:600c:5492:b0:46e:477a:16cc with SMTP id 5b1f17b1804b1-46fa9af84ecmr28873755e9.24.1759932077173;
-        Wed, 08 Oct 2025 07:01:17 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46faf112fdbsm1296495e9.8.2025.10.08.07.01.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Oct 2025 07:01:16 -0700 (PDT)
-Message-ID: <d9764c7b-8de2-4b54-8c44-a4bd7f5860e8@gmail.com>
-Date: Wed, 8 Oct 2025 15:01:13 +0100
+	dkim=pass (2048-bit key) header.d=OUTLOOK.IT header.i=@OUTLOOK.IT header.b="jz9NgLmw"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RZ1z34Y6Y7PmV/cjaEboYZbLjpYlfDt6VyZUpsN4jHw3U8PXvFzdmw5J84mkf+qFF5FAo/yYO1n2RkJLT65K6z3QuQ+MT1kTlklqkpWP0H7S/nt+tawcqWgRExqaM2zuMjEpi5uaIwquCTAbL/J6sd3PugTmICW1d1zP+XNMG09/pNQPrF8DcLBb9IiXs42tQSPF/gSmFRjhP43YLqL3wQXP6ikfxgMr29iaFO/1VcXwQFWME5kaRHHQocFvR8vYQp+lLsS1B4T2z+KI/yTitV/+qLLbg0dtYctiNiFDZUBSXKJalqCG7gSKSbidkGP2g8rB11zgzFplEg/b8uXm3A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BITBx7MDNUrGd/54LEVfYGRx6QBozVRn9coY3vXDNpg=;
+ b=RaPWROdBxOt5ailA60158drFZREboHWzwMJK7jdzpttFkTMpvqOV5Qmdv7Xg7n4LRQH2/PGwQ1zKoH9jVTHgH+JCRdN1p5dr0PLBFPaCB0We6uGCroAXfJ4d5z1bDc4cEVvL1EDAlQ9uugm7sqJfMW0PXNmDmVIQ+c4VCWEiQx3vdSp+3T4A8n6Nkeiy6blloDtkdw9CNwUsAeFtJmvx9aqMZJfu96aZvi26fyID07t7+R9THdtQAyF72djYEb0AAeXnhknADQN7bgzbsQjavQpPkL1Yp246Q5gQKcvrbIovTcGc30bYhr1FsO5omTXSgUanmbZ6iigsqULYRQAFiw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=OUTLOOK.IT;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BITBx7MDNUrGd/54LEVfYGRx6QBozVRn9coY3vXDNpg=;
+ b=jz9NgLmwKgneovNJh0RIjzAwEeGdJbxaiCBtdlKEB7bHJ2mbJ+2Q7BX/7034B8VYhaNZU1Xvje9NpoOcVSklzHNCDrd9AF3dzD1pBSGolqKS5Y1T4qZQfZtwdgY03vg9i9/tAH/7OXjDT7X1W5r9+rmCW6YBcfiZ8R3EN9ZayVcVHJVtLPQ7sssDEHEmEYkhYWqfFPs+wteGBFDG/0UiKLz+huoUtb46dD8vvL2s35oxOmgxmkRG2IaIeFyFSUCnB0EivAdZ04cb2WeXPX3LjEv8XIp086Nds2KhZOa3Ex8QAmkxLOOC/oe05VA6WBYy0jnb8NUkP3eu5+d4feJqwA==
+Received: from GV2P251MB0993.EURP251.PROD.OUTLOOK.COM (2603:10a6:150:ad::10)
+ by GVXP251MB1056.EURP251.PROD.OUTLOOK.COM (2603:10a6:150:1b5::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9182.16; Wed, 8 Oct
+ 2025 14:20:32 +0000
+Received: from GV2P251MB0993.EURP251.PROD.OUTLOOK.COM
+ ([fe80::f112:6ee9:60e8:fccc]) by GV2P251MB0993.EURP251.PROD.OUTLOOK.COM
+ ([fe80::f112:6ee9:60e8:fccc%5]) with mapi id 15.20.9203.007; Wed, 8 Oct 2025
+ 14:20:32 +0000
+From: Filippo Falezza <filippo.falezza@outlook.it>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Git whatchanged
+Thread-Topic: Git whatchanged
+Thread-Index: AQHcOF60wonNQB0LJkyJnzmJvoK+/w==
+Date: Wed, 8 Oct 2025 14:20:32 +0000
+Message-ID:
+ <GV2P251MB09937AD11689D3148CD342D8F8E1A@GV2P251MB0993.EURP251.PROD.OUTLOOK.COM>
+Accept-Language: it-IT, en-US
+Content-Language: it-IT
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: GV2P251MB0993:EE_|GVXP251MB1056:EE_
+x-ms-office365-filtering-correlation-id: e30fdb3e-17df-4f3d-9d4f-08de0675d717
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|461199028|15080799012|15030799006|19110799012|8060799015|31061999003|8062599012|40105399003|440099028|3412199025|102099032;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?qQl+TDZBonJW5M5PtPJa9toLufgkts6xjtf3o+YFIPl1UVPd4ZyWectAdN?=
+ =?iso-8859-1?Q?lMLR3gRpzUGW9AXG1XQ/bFSPQl5SMf1VLKkYud9bIa1huW1c0hfZ1WHpb4?=
+ =?iso-8859-1?Q?Jls8Zr24HI5k9JBVZuMg6yBsphkKaSyli+ouvHZcJ5uoHn88LdfAgiRAE4?=
+ =?iso-8859-1?Q?lW2JU+oUNP2TrJ7ok+5U4LMUDzW2dVY07isHA3BsR7dTPY1/r3n+orqwaJ?=
+ =?iso-8859-1?Q?3y2EjYa5ZyzVX4wYifB4DLdIoDRZgoEhMdbNVCihA1qEwV4RGZBFy/rEsQ?=
+ =?iso-8859-1?Q?koox93z09DRd3GUYBKqqh6JkipJCSl/irtsl1LSeUgRFG2gukclkx+t0FI?=
+ =?iso-8859-1?Q?As8D/QTCVjegw6kP7tqBdKeV+R+oEQv/CUsQA/TnoxrgAQuIu0M+plTnui?=
+ =?iso-8859-1?Q?vMxBs0KDne9W51nbXGC8tMjTUiyQlMOg/rFUKbGDFA1+ziZrS5Vk0nFF9f?=
+ =?iso-8859-1?Q?epaJZEalPPXlja6kqJVaTGR3m+RdBpjWTZCPTCbYhysKa4ZrcuHHEEPTll?=
+ =?iso-8859-1?Q?GaxNrZDfxFYz9hHNuEI4RgdZCsKRhSzVvFujz+MIw0vULc3OB0UGijfNWQ?=
+ =?iso-8859-1?Q?gfICjfuhSkZE9l36n2PJJAuM2WE26oTlYnWX2ehm+CXBTBGIS8aH4wYGg1?=
+ =?iso-8859-1?Q?8Em7hRoLOqlYfwP3BD3nqfo8bRCJcdkOCmQ6MmA7WmsG6AFGKaRroZD+/p?=
+ =?iso-8859-1?Q?1rDwU1fihb6pD+ujJiO6jghgO2GVzp9z8affgC97re8e7R+Zh49d/bbfq+?=
+ =?iso-8859-1?Q?pux8MkvKPdvZuHy5Xwb5ilaQOM6QYrhTsAYgeX8GOcVoJVU/kkEQXWWhr1?=
+ =?iso-8859-1?Q?zDdWJ62PkBKLbKhTz4jsxjBMffzJiy40nF8f3Cay5gCziyS82+wdNCp8xW?=
+ =?iso-8859-1?Q?6OzAQCIc3kHLDujQBe3wEkUmdRhHj0rxLNEf+Vgt6UXIefDWPiakXF4otj?=
+ =?iso-8859-1?Q?8uaIeV6ZGO8hYUCqpwijEzNG5qRGGh8F8Ux8PFaCJ8Ku6/GkkMe5PvWyc/?=
+ =?iso-8859-1?Q?fxv7T4CO2nEOETLcoOEj73ZO4KfvQAh04nwfKzYpsqriYr85/JMJH1vAQf?=
+ =?iso-8859-1?Q?VXbkvkS5hUutSPSvbLlWkGddwf2c7FAilQnQPJanUfq/qJuRrga3n9xYyz?=
+ =?iso-8859-1?Q?9hxklEd7Kbc3UA8Jo6D9+HWHJDqfG8bXToD3YNAyfwMDRO7U/+Pemgs+qh?=
+ =?iso-8859-1?Q?k56tUxl7sqQ2F42+Z0j5SkPMfUXDdAYXcCo=3D?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?zsF2ddasKulG5Nm3jeiLbjadR7OzK8FkqWmxySgYs8EoeCJABW4EAaH+dp?=
+ =?iso-8859-1?Q?Xr8r2oSJWX0u5nGSWTjfhr2lMI9Mn0CW4FRFzTpa9+qn96CZ67NvrakhzX?=
+ =?iso-8859-1?Q?CKvHTP0xiLYWZGjAbB4JwfY0CcLQilana4zMi4Fqa7g9SAOmFrSOGttel2?=
+ =?iso-8859-1?Q?MLkWL/RzICcnxVSGgE+iBw30aZWTb5bGheqZW/HN2TXOlpqzU7WV1KAMCE?=
+ =?iso-8859-1?Q?EoB63n/XRKphZBp7NbD4E1OgfiuQE/A38wE5zRE/quErB+Tgn3jFEY15//?=
+ =?iso-8859-1?Q?mxf2nZTsMekKXzV6FgHIzMF1iCn0/iQhhjykdD2lyZDt+7D66uODlsu5Aw?=
+ =?iso-8859-1?Q?qwuNc1ykNmH+BPmUlRFW0R8LQbMTC0LTjMEboQGN92ImZxrBcsUYCHOA2B?=
+ =?iso-8859-1?Q?65L25vWXfVBL0VJFLkHMFpCRZiVIrTZrcR18g+dM9dEiJZTuRy3X5Zuq7q?=
+ =?iso-8859-1?Q?eGXUSML6rp791c5CRMZquBuIFg0aTFvUw5GHimw7kI+wiOedzrae5NrzT3?=
+ =?iso-8859-1?Q?Hap5ayn4EPxnaZNhmwjvxUpELbEKTacvc9/TpWymRrQCerP01exbDoqm/m?=
+ =?iso-8859-1?Q?jZUenfTMttwUaWS3ClDTFxnizJzq1zn8xnaYZmlesrjmGyaHJwrezmcEZu?=
+ =?iso-8859-1?Q?31RC9xz5W2r/mITcS56MSlk2kZ+/gmYN/pOWOJi0e4RwRPAMMwfyJbM2t9?=
+ =?iso-8859-1?Q?0P1bMoYgDtGSomAmHdbtqh+WQtGz8TO0Y7SL569pxQw7uBZrVV6B4NMVWC?=
+ =?iso-8859-1?Q?ugKKtIhjvlBnTJjvOqypMYe4OTS+EoY8qF3cLcaBr/TCHCVtcwozLVBhfX?=
+ =?iso-8859-1?Q?MpvWbPg7KNuM47w1UYWHheSLNuv2R1YziTmWpPYCLjaXzFbOPtb+smNBYx?=
+ =?iso-8859-1?Q?AvBId3h9nBtiCXJIiFAZ7o+WituKti7C72dVulq65ZxOZTQron0TtwbVrc?=
+ =?iso-8859-1?Q?JjPt3iyF/HU0Jb76xP5qSFeyH1yNoWzllfVDcDmfGbP9P40vOCH8Un+AHw?=
+ =?iso-8859-1?Q?Kmaauh8pDkppPXiPA9xTbxfXW7YijS9i13tfmLUblwCXfD+oZ0sUX0Ipow?=
+ =?iso-8859-1?Q?qkqzXeuXwUzDaofFrz/zFSAYAXrlAc2QU5A7yIhFiTfYTPM8C4xkr0j9zZ?=
+ =?iso-8859-1?Q?dZ9Gjgd3UEyietihZOC+BdwPBwv3LkZ2SiTEQchSyVBguu76pvpRC0tDam?=
+ =?iso-8859-1?Q?9jgpxAAYlSLRq56zRIDWUGiVL9Gx4zOJooiwkjbAsav9IrcF25M6PeJ7X0?=
+ =?iso-8859-1?Q?ooopn1Gvtcm/LAb+dI3nuYD2tCf2NpIwlcsZfq7y8=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 1/1] replay: make atomic ref updates the default
- behavior
-To: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com, christian.couder@gmail.com, ps@pks.im,
- newren@gmail.com, code@khaugsbakk.name, rybak.a.v@gmail.com,
- karthik.188@gmail.com, jltobler@gmail.com, toon@iotcl.com,
- johncai86@gmail.com, johannes.schindelin@gmx.de
-References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
- <20250926230838.35870-1-siddharthasthana31@gmail.com>
- <20250926230838.35870-2-siddharthasthana31@gmail.com>
- <9052eccc-1121-442f-ad51-4fe9217024a0@gmail.com>
- <9d310bd5-453f-43a4-b477-ba02baa7a664@gmail.com>
-Content-Language: en-US
-In-Reply-To: <9d310bd5-453f-43a4-b477-ba02baa7a664@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: sct-15-20-8880-31-msonline-outlook-8f663.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: GV2P251MB0993.EURP251.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: e30fdb3e-17df-4f3d-9d4f-08de0675d717
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Oct 2025 14:20:32.2573
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXP251MB1056
 
-Hi Siddharth
-
-On 02/10/2025 23:20, Siddharth Asthana wrote:
-> On 30/09/25 15:35, Phillip Wood wrote:
->> On 27/09/2025 00:08, Siddharth Asthana wrote:
->>> The git replay command currently outputs update commands that must be
->>> piped to git update-ref --stdin to actually update references:
-> 
-> The actual advantages of the new default aren't about atomicity (that
-> already exists), but rather:
-> - Eliminating the pipeline for the common case
-> - Better ergonomics for users who just want refs updated
-> - Simpler server-side automation
-> 
-> I will rewrite the commit message to accurately reflect this. Elijah
-> provided a good suggested structure that captures the real trade-offs
-> without false claims.
-
-That's great. I agree that having replay update the refs itself is a 
-useful improvement.
-
->>> +--allow-partial::
->>> +    Allow some ref updates to succeed even if others fail. By default,
->>> +    ref updates are atomic (all succeed or all fail). With this option,
->>> +    failed updates are reported as warnings rather than causing the 
->>> entire
->>> +    command to fail. The command exits with code 0 only if all updates
->>> +    succeed; any failures result in exit code 1. Cannot be used with
->>> +    `--output-commands`.
->>
->> Rather than having two incompatible options perhaps we could have a 
->> single "--update-refs=(yes|print|allow-partial-updates)" argument. I 
->> think the name "--allow-partial" is rather ambiguous as it does not 
->> say what it is allowing to be partial.
-> 
-> After thinking about this and Elijah's feedback, I am leaning toward
-> dropping --allow-partial entirely since I don't have a concrete use case
-> for it. That simplifies things to just: default atomic updates vs
-> --output-commands for the traditional pipeline.
-> 
-> Would you still prefer a --update-refs=<mode> style, or is the simpler
-> --output-commands flag sufficient given that --allow-partial is going away?
-
-The advantage of --update-refs=<mode> is that it allows for future 
-extensions such as adding support for partial in a way that does not 
-add conflicting options.
-
-Thanks
-
-Phillip
-  >
->>
->>> +static int add_ref_to_transaction(struct ref_transaction *transaction,
->>> +                  const char *refname,
->>> +                  const struct object_id *new_oid,
->>> +                  const struct object_id *old_oid,
->>> +                  struct strbuf *err)
->>> +{
->>> +    return ref_transaction_update(transaction, refname, new_oid, 
->>> old_oid,
->>> +                      NULL, NULL, 0, "git replay", err);
->>> +}
->>
->> I'm not sure this function adds much value. I think it would be better 
->> to instead have a helper function that updates refs or prints the ref 
->> updates so that we do not duplicate that code in the two places below.
-> 
-> 
-> ood point. I will extract a helper like:
-> 
->      static int handle_ref_update(int output_commands,
->                                   struct ref_transaction *transaction,
->                                   const char *refname,
->                                   const struct object_id *new_oid,
->                                   const struct object_id *old_oid,
->                                   struct strbuf *err)
-> 
-> This eliminates the duplication and fixes the over-long lines you pointed
-> out at both call sites.
-> 
-> Thanks!
-> 
-> 
->>
->>> @@ -434,10 +481,18 @@ int cmd_replay(int argc,
->>>               if (decoration->type == DECORATION_REF_LOCAL &&
->>>                   (contained || strset_contains(update_refs,
->>>                                 decoration->name))) {
->>> -                printf("update %s %s %s\n",
->>> -                       decoration->name,
->>> - oid_to_hex(&last_commit->object.oid),
->>> -                       oid_to_hex(&commit->object.oid));
->>> +                if (output_commands) {
->>> +                    printf("update %s %s %s\n",
->>> +                           decoration->name,
->>> + oid_to_hex(&last_commit->object.oid),
->>> + oid_to_hex(&commit->object.oid));
->>> +                } else if (add_ref_to_transaction(transaction, 
->>> decoration->name,
->>> + &last_commit->object.oid,
->>> +                                  &commit->object.oid,
->>> +                                  &transaction_err) < 0) {
->>> +                    ret = error(_("failed to add ref update to 
->>> transaction: %s"), transaction_err.buf);
->>> +                    goto cleanup;
->>> +                }
->>>               }
->>
->> The lines here are very long due to the indentation, having a separate 
->> function to update the refs or print the ref updates would be much 
->> more readable.
->>
->>>               decoration = decoration->next;
->>>           }
->>> @@ -445,10 +500,33 @@ int cmd_replay(int argc,
->>>         /* In --advance mode, advance the target ref */
->>>       if (result.clean == 1 && advance_name) {
->>> -        printf("update %s %s %s\n",
->>> -               advance_name,
->>> -               oid_to_hex(&last_commit->object.oid),
->>> -               oid_to_hex(&onto->object.oid));
->>> +        if (output_commands) {
->>> +            printf("update %s %s %s\n",
->>> +                   advance_name,
->>> +                   oid_to_hex(&last_commit->object.oid),
->>> +                   oid_to_hex(&onto->object.oid));
->>> +        } else if (add_ref_to_transaction(transaction, advance_name,
->>> +                          &last_commit->object.oid,
->>> +                          &onto->object.oid,
->>> +                          &transaction_err) < 0) {
->>> +            ret = error(_("failed to add ref update to transaction: 
->>> %s"), transaction_err.buf);
->>> +            goto cleanup;
->>> +        }
->>> +    }
->>
->> Putting the code to update the refs or print the ref updates into a 
->> single function would avoid this duplication and over-long lines.
->>
->> Thanks
->>
->> Phillip
->>
->>> +    /* Commit the ref transaction if we have one */
->>> +    if (transaction && result.clean == 1) {
->>> +        if (ref_transaction_commit(transaction, &transaction_err)) {
->>> +            if (allow_partial) {
->>> +                warning(_("some ref updates failed: %s"), 
->>> transaction_err.buf);
->>> + ref_transaction_for_each_rejected_update(transaction,
->>> +                                     print_rejected_update, NULL);
->>> +                ret = 0; /* Set failure even with allow_partial */
->>> +            } else {
->>> +                ret = error(_("failed to update refs: %s"), 
->>> transaction_err.buf);
->>> +                goto cleanup;
->>> +            }
->>> +        }
->>>       }
->>>         merge_finalize(&merge_opt, &result);
->>> @@ -457,9 +535,17 @@ int cmd_replay(int argc,
->>>           strset_clear(update_refs);
->>>           free(update_refs);
->>>       }
->>> -    ret = result.clean;
->>> +
->>> +    /* Handle empty ranges: if no commits were processed, treat as 
->>> success */
->>> +    if (!commits_processed)
->>> +        ret = 1; /* Success - no commits to replay is not an error */
->>> +    else
->>> +        ret = result.clean;
->>>     cleanup:
->>> +    if (transaction)
->>> +        ref_transaction_free(transaction);
->>> +    strbuf_release(&transaction_err);
->>>       release_revisions(&revs);
->>>       free(advance_name);
->>>   diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
->>> index 58b3759935..8b4301e227 100755
->>> --- a/t/t3650-replay-basics.sh
->>> +++ b/t/t3650-replay-basics.sh
->>> @@ -52,7 +52,7 @@ test_expect_success 'setup bare' '
->>>   '
->>>     test_expect_success 'using replay to rebase two branches, one on 
->>> top of other' '
->>> -    git replay --onto main topic1..topic2 >result &&
->>> +    git replay --output-commands --onto main topic1..topic2 >result &&
->>>         test_line_count = 1 result &&
->>>   @@ -67,9 +67,30 @@ test_expect_success 'using replay to rebase two 
->>> branches, one on top of other' '
->>>       test_cmp expect result
->>>   '
->>>   +test_expect_success 'using replay with default atomic behavior (no 
->>> output)' '
->>> +    # Create a test branch that wont interfere with others
->>> +    git branch atomic-test topic2 &&
->>> +    git rev-parse atomic-test >atomic-test-old &&
->>> +
->>> +    # Default behavior: atomic ref updates (no output)
->>> +    git replay --onto main topic1..atomic-test >output &&
->>> +    test_must_be_empty output &&
->>> +
->>> +    # Verify the branch was updated
->>> +    git rev-parse atomic-test >atomic-test-new &&
->>> +    ! test_cmp atomic-test-old atomic-test-new &&
->>> +
->>> +    # Verify the history is correct
->>> +    git log --format=%s atomic-test >actual &&
->>> +    test_write_lines E D M L B A >expect &&
->>> +    test_cmp expect actual
->>> +'
->>> +
->>>   test_expect_success 'using replay on bare repo to rebase two 
->>> branches, one on top of other' '
->>> -    git -C bare replay --onto main topic1..topic2 >result-bare &&
->>> -    test_cmp expect result-bare
->>> +    git -C bare replay --output-commands --onto main topic1..topic2 
->>> >result-bare &&
->>> +
->>> +    # The result should match what we got from the regular repo
->>> +    test_cmp result result-bare
->>>   '
->>>     test_expect_success 'using replay to rebase with a conflict' '
->>> @@ -86,7 +107,7 @@ test_expect_success 'using replay to perform basic 
->>> cherry-pick' '
->>>       # 2nd field of result is refs/heads/main vs. refs/heads/topic2
->>>       # 4th field of result is hash for main instead of hash for topic2
->>>   -    git replay --advance main topic1..topic2 >result &&
->>> +    git replay --output-commands --advance main topic1..topic2 
->>> >result &&
->>>         test_line_count = 1 result &&
->>>   @@ -102,7 +123,7 @@ test_expect_success 'using replay to perform 
->>> basic cherry-pick' '
->>>   '
->>>     test_expect_success 'using replay on bare repo to perform basic 
->>> cherry-pick' '
->>> -    git -C bare replay --advance main topic1..topic2 >result-bare &&
->>> +    git -C bare replay --output-commands --advance main 
->>> topic1..topic2 >result-bare &&
->>>       test_cmp expect result-bare
->>>   '
->>>   @@ -115,7 +136,7 @@ test_expect_success 'replay fails when both -- 
->>> advance and --onto are omitted' '
->>>   '
->>>     test_expect_success 'using replay to also rebase a contained 
->>> branch' '
->>> -    git replay --contained --onto main main..topic3 >result &&
->>> +    git replay --output-commands --contained --onto main 
->>> main..topic3 >result &&
->>>         test_line_count = 2 result &&
->>>       cut -f 3 -d " " result >new-branch-tips &&
->>> @@ -139,12 +160,12 @@ test_expect_success 'using replay to also 
->>> rebase a contained branch' '
->>>   '
->>>     test_expect_success 'using replay on bare repo to also rebase a 
->>> contained branch' '
->>> -    git -C bare replay --contained --onto main main..topic3 >result- 
->>> bare &&
->>> +    git -C bare replay --output-commands --contained --onto main 
->>> main..topic3 >result-bare &&
->>>       test_cmp expect result-bare
->>>   '
->>>     test_expect_success 'using replay to rebase multiple divergent 
->>> branches' '
->>> -    git replay --onto main ^topic1 topic2 topic4 >result &&
->>> +    git replay --output-commands --onto main ^topic1 topic2 topic4 
->>> >result &&
->>>         test_line_count = 2 result &&
->>>       cut -f 3 -d " " result >new-branch-tips &&
->>> @@ -168,7 +189,7 @@ test_expect_success 'using replay to rebase 
->>> multiple divergent branches' '
->>>   '
->>>     test_expect_success 'using replay on bare repo to rebase multiple 
->>> divergent branches, including contained ones' '
->>> -    git -C bare replay --contained --onto main ^main topic2 topic3 
->>> topic4 >result &&
->>> +    git -C bare replay --output-commands --contained --onto main 
->>> ^main topic2 topic3 topic4 >result &&
->>>         test_line_count = 4 result &&
->>>       cut -f 3 -d " " result >new-branch-tips &&
->>> @@ -217,4 +238,131 @@ test_expect_success 
->>> 'merge.directoryRenames=false' '
->>>           --onto rename-onto rename-onto..rename-from
->>>   '
->>>   +# Tests for new default atomic behavior and options> > 
->>> +test_expect_success 'replay default behavior should not produce 
->> output when successful' '
->>> +    git replay --onto main topic1..topic3 >output &&
->>> +    test_must_be_empty output
->>> +'
->>> +
->>> +test_expect_success 'replay with --output-commands produces 
->>> traditional output' '
->>> +    git replay --output-commands --onto main topic1..topic3 >output &&
->>> +    test_line_count = 1 output &&
->>> +    grep "^update refs/heads/topic3 " output
->>> +'
->>> +
->>> +test_expect_success 'replay with --allow-partial should not produce 
->>> output when successful' '
->>> +    git replay --allow-partial --onto main topic1..topic3 >output &&
->>> +    test_must_be_empty output
->>> +'
->>> +
->>> +test_expect_success 'replay fails when --output-commands and -- 
->>> allow-partial are used together' '
->>> +    test_must_fail git replay --output-commands --allow-partial -- 
->>> onto main topic1..topic2 2>error &&
->>> +    grep "cannot be used together" error
->>> +'
->>> +
->>> +test_expect_success 'replay with --contained updates multiple 
->>> branches atomically' '
->>> +    # Create fresh test branches based on the original structure
->>> +    # contained-topic1 should be contained within the range to 
->>> contained-topic3
->>> +    git branch contained-base main &&
->>> +    git checkout -b contained-topic1 contained-base &&
->>> +    test_commit ContainedC &&
->>> +    git checkout -b contained-topic3 contained-topic1 &&
->>> +    test_commit ContainedG &&
->>> +    test_commit ContainedH &&
->>> +    git checkout main &&
->>> +
->>> +    # Store original states
->>> +    git rev-parse contained-topic1 >contained-topic1-old &&
->>> +    git rev-parse contained-topic3 >contained-topic3-old &&
->>> +
->>> +    # Use --contained to update multiple branches - this should 
->>> update both
->>> +    git replay --contained --onto main contained-base..contained- 
->>> topic3 &&
->>> +
->>> +    # Verify both branches were updated
->>> +    git rev-parse contained-topic1 >contained-topic1-new &&
->>> +    git rev-parse contained-topic3 >contained-topic3-new &&
->>> +    ! test_cmp contained-topic1-old contained-topic1-new &&
->>> +    ! test_cmp contained-topic3-old contained-topic3-new
->>> +'
->>> +
->>> +test_expect_success 'replay atomic behavior: all refs updated or 
->>> none' '
->>> +    # Store original state
->>> +    git rev-parse topic4 >topic4-old &&
->>> +
->>> +    # Default atomic behavior
->>> +    git replay --onto main main..topic4 &&
->>> +
->>> +    # Verify ref was updated
->>> +    git rev-parse topic4 >topic4-new &&
->>> +    ! test_cmp topic4-old topic4-new &&
->>> +
->>> +    # Verify no partial state
->>> +    git log --format=%s topic4 >actual &&
->>> +    test_write_lines J I M L B A >expect &&
->>> +    test_cmp expect actual
->>> +'
->>> +
->>> +test_expect_success 'replay works correctly with bare repositories' '
->>> +    # Test atomic behavior in bare repo (important for Gitaly)
->>> +    git checkout -b bare-test topic1 &&
->>> +    test_commit BareTest &&
->>> +
->>> +    # Test with bare repo - replay the commits from main..bare-test 
->>> to get the full history
->>> +    git -C bare fetch .. bare-test:bare-test &&
->>> +    git -C bare replay --onto main main..bare-test &&
->>> +
->>> +    # Verify the bare repo was updated correctly (no output)
->>> +    git -C bare log --format=%s bare-test >actual &&
->>> +    test_write_lines BareTest F C M L B A >expect &&
->>> +    test_cmp expect actual
->>> +'
->>> +
->>> +test_expect_success 'replay --allow-partial with no failures 
->>> produces no output' '
->>> +    git checkout -b partial-test topic1 &&
->>> +    test_commit PartialTest &&
->>> +
->>> +    # Should succeed silently even with partial mode
->>> +    git replay --allow-partial --onto main topic1..partial-test 
->>> >output &&
->>> +    test_must_be_empty output
->>> +'
->>> +
->>> +test_expect_success 'replay maintains ref update consistency' '
->>> +    # Test that traditional vs atomic produce equivalent results
->>> +    git checkout -b method1-test topic2 &&
->>> +    git checkout -b method2-test topic2 &&
->>> +
->>> +    # Both methods should update refs to point to the same replayed 
->>> commits
->>> +    git replay --output-commands --onto main topic1..method1-test 
->>> >update-commands &&
->>> +    git update-ref --stdin <update-commands &&
->>> +    git log --format=%s method1-test >traditional-result &&
->>> +
->>> +    # Direct atomic method should produce same commit history
->>> +    git replay --onto main topic1..method2-test &&
->>> +    git log --format=%s method2-test >atomic-result &&
->>> +
->>> +    # Both methods should produce identical commit histories
->>> +    test_cmp traditional-result atomic-result
->>> +'
->>> +
->>> +test_expect_success 'replay error messages are helpful and clear' '
->>> +    # Test that error messages are clear
->>> +    test_must_fail git replay --output-commands --allow-partial -- 
->>> onto main topic1..topic2 2>error &&
->>> +    grep "cannot be used together" error
->>> +'
->>> +
->>> +test_expect_success 'replay with empty range produces no output and 
->>> no changes' '
->>> +    # Create a test branch for empty range testing
->>> +    git checkout -b empty-test topic1 &&
->>> +    git rev-parse empty-test >empty-test-before &&
->>> +
->>> +    # Empty range should succeed but do nothing
->>> +    git replay --onto main empty-test..empty-test >output &&
->>> +    test_must_be_empty output &&
->>> +
->>> +    # Branch should be unchanged
->>> +    git rev-parse empty-test >empty-test-after &&
->>> +    test_cmp empty-test-before empty-test-after
->>> +'
->>> +
->>>   test_done
->>
-
+To whom it may concern,=0A=
+=0A=
+I am reaching out as I am still using the whatchanged option in git, which =
+is very useful for my coding and handling merges.=0A=
+Please keep this option and do not break userspace.=0A=
+=0A=
+Thank you=0A=
+kind regards=0A=
+=0A=
+____________=0A=
+Filippo Falezza=0A=
