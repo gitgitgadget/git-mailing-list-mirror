@@ -1,212 +1,157 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E261448E3
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 00:29:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48988298991
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 01:49:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759883383; cv=none; b=iSE1u1JCunl76C//+wg/WI8hdObdICAg4proxF6mZxUsVfUdQe5mmrVVtcr9OfrobPQhrLty0qb0IFDOSBjX/DmA8buMmIqWBe+VDTxmxKIIUJ1TuGvgkaSP8SFVTEHoGQEYfn05uJEy2fb3UN3u8atHphJ1wT8uwHlscTW/TDo=
+	t=1759888186; cv=none; b=qYGErCkSGmonDoxRvZXtRYHZmxQFxcKv5Wu8hmbf92KBCWv19jJGMMpJCWfT1dUwQKMEVjEuwW8Yv5MAENOX8ua+pBev3JC8/GsVXvnX/8GxdmondeC/Ee5wnmpH3TSgwD3j3ib80HBOyT0RSiJsfX+93mj0bwYcbViyE5Xv1VE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759883383; c=relaxed/simple;
-	bh=hE2TYTZyx7LdtUMybhX1o0gOQuvoy6TvwS6k29lg1vg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H93Dd2G0Juko47Qq90oSfBTe+m102BKrd7QYRIUGpSSF7yXdav7lZNaEbxPvkozjxOb1gphsNb6IwrNhL8qjtvMxm7AwTfwdXF6ZFcVu0vB1SIF0C7y7cfwYmbxl82E1Zvzr+BIPX9KZJTQTuczp8rYTZmpHZNfL8HE3U6xrCFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ZQ5bhPIY; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1759888186; c=relaxed/simple;
+	bh=MrLxuNtKszMee/6rHuoGOXcRpe6KIfGTFGOD7cKN0J0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ch/Ta2seidCiftvhAyLRSdtVWq88DOx1HYPbY2ox9otcHpyXo5uPvLdlTu/CRTyu8eVUSNrD4E5ZnjpDA/GyDKovwWR+Q0FjJjW4O1ND90/CgAnikp5Olciwxe4CpTRWb8eJmtbCZP9G6VeNaoVh5ij0J/zqH5+UGXQx08Bcyek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TvsIEnRV; arc=none smtp.client-ip=209.85.210.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ZQ5bhPIY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1759883379;
-	bh=hE2TYTZyx7LdtUMybhX1o0gOQuvoy6TvwS6k29lg1vg=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=ZQ5bhPIY8O82Zul7GfawLBGj2l31aguDinxZ8OOHWzCnnferyRtv1EnznRZtnLwXE
-	 t9yEfrDBSazNwz2r5FNqDjpYxmXEm484KMjVrIPIZjxZg/bE7z64Q0KGsFrRZ6EB+4
-	 9LrPEJZ8buQiDU0tqXufs1fUdNoY2gf9CX2VxzsAR2bBCpN0ffsZswMFzi6WVADLAM
-	 ly7ujs2iQNhNjI2f6F0+MVedt9dEuOTyEVK2HOTYk2OwLUOLvAUeMMFYXHMLxlPsBW
-	 QSqBKFs4DecPrt8j7MipecvH5vUeiT5PcTuH8cmtZgl0e6k1WWEFunp5RWuP4nyiJ3
-	 55xC5vSveoKD2mr+P1PVdAqsuEy+R91OeKE8lP1rhjnL6gzxsJEmeFnvRvnjpk7w53
-	 pjkKG5TYb53hGOT5E3dNT4R3Zg5Cl8VsywX5NXSLdxN54hwUTqkxbCFzNeUEnmTBFi
-	 4y7y8rt0fQM6yxy3IUPjHiOM0L0x6r//oaOAd+/uJNMOxJadU+r
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:225c:7da:a6d4:350c])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id CA82E200C6;
-	Wed,  8 Oct 2025 00:29:39 +0000 (UTC)
-Date: Wed, 8 Oct 2025 00:29:38 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/6] rust/varint: add safety comments
-Message-ID: <aOWwcqyithDKQzVs@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im>
- <20251007-b4-pks-ci-rust-v1-3-394502abe7ea@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TvsIEnRV"
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-793021f348fso1158655b3a.1
+        for <git@vger.kernel.org>; Tue, 07 Oct 2025 18:49:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759888184; x=1760492984; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dauEphiJbb0Ah2UxlQV/qeCH03MnbaLDSHEatmMrjWc=;
+        b=TvsIEnRVTv655DYaNi6uiAQHJeyhKft/f4Ld6WWeuYwkcWJjri52P7jAOlrlMneX9i
+         UdQL1sbBd2NehPQymdH/PRXtrn98pJQ8lnV6iUhNBWOAlO6RyVBs6hSEKTtf/Po6EsJM
+         7mEawdHGFq9MRuIE22c40wiYaHEE56X2YHg5/zJ5Rw9iOnB7RJj0DRKgmxLG+F7QCepy
+         FN192zt2pbkONI4BhqucCCbxqIdjqt5RecBvjPLiMpclyYsVy2tIcrv9nxQCxMVHgvXd
+         AA04hK/sM/UoH0nCymQoXJUr7p/+sZvcrEdAqGWkdwqgxJkW/rXCjLstwRlKfQICug90
+         NtsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759888184; x=1760492984;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dauEphiJbb0Ah2UxlQV/qeCH03MnbaLDSHEatmMrjWc=;
+        b=Pw/naH9/K0eNBl6MspdbmoUVLMcZQgtdFEW9kzgXH45Qcz/+y4K1Ltap33BeW5RvBI
+         8OW/YMnqBVzginh6KEKs218uJMvcdFbX1FmBdhGi+c2UIxpwQ9RFidDF9Vc1BTKY+hwM
+         Jpvr+PTWSJbFcwkhQ4n1iDlTj/8PtDc2ZO3H+HZOPs4mzzhcf5zOubLKh5p6/QkbH/9x
+         EPv3B1gs14+zHv0aaKUlIlpCWT8NTvqF9PjIl0UduwwgYY/ET0Jy/O23XcDknSjnyUhH
+         YgJxnmhVoqzK5u/89SfrrSaNnIBJnW7h+twM0z7XbOYS5iYNS1/VSsoCnKS9IPHjZ56t
+         9vcA==
+X-Forwarded-Encrypted: i=1; AJvYcCWmHflnGxEzA9788LvDC5rnMKfs1M4vNijg7OGMCLd4MuPz1vqcuZW3oThzK2kaGHZX0LU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwEKd3v/FHlVPDJVp63ZionW6LPOVkY7Ua3gFkd4f+zHCLSf2Jr
+	FDxcf0Z/HHVItt/HFsJDfHrc0ed2tjOnRyMnUK+zE9nMsikjv5VHc6Y5
+X-Gm-Gg: ASbGncsLhvcbBp7KGq6GemTttE83RB08bYjdZNACB1ynQ5mQzbSX1FiC8KnzDPItUde
+	0jQu51jSb6sQYRxUw2tiBTzGuP6Kt5nl9ZzSIiXOrQTYID7zy/g7Ny4mlpeU6A7fvduotkdug+5
+	IYnYElStmnD6HmTgykmqdI0OXkQvn8ziyxKVigIMdAE84TOeiY8T4E7CNezwX9p90eGk7B119U0
+	ZOxsISi5wBJSp1Fe/6F+pcrU5hkVh8tZf99dgssWqomzHoY8GGlypPxHGwaWuGPxtxAxyUsNKbQ
+	ngN6raNyQrKwITivHxltUT3HuallwqkVHeOITKr3mOYtLwTDCDy7swjbuMAB7zrugHL7T9ALS2F
+	biQJpttquLcKGRx8G58R9lY0xKySc
+X-Google-Smtp-Source: AGHT+IGeRqokivJdrCpTRH6gJ6bcuXbJsr3/cgNZ6YRljPfND2k9hKTkjL89y/uUcgZ0Wh1KVXaGNg==
+X-Received: by 2002:a17:902:d584:b0:269:6e73:b90a with SMTP id d9443c01a7336-290272aeebemr23221635ad.15.1759888184395;
+        Tue, 07 Oct 2025 18:49:44 -0700 (PDT)
+Received: from fedora ([2601:646:8081:3770::55b7])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-28e8d1eee04sm175330315ad.130.2025.10.07.18.49.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Oct 2025 18:49:43 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>,  Karthik Nayak <karthik.188@gmail.com>,
+  shejialuo <shejialuo@gmail.com>,  git@vger.kernel.org,  Patrick
+ Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 2/4] string-list: replace negative index encoding
+ with "exact_match" parameter
+In-Reply-To: <xmqqwm5om1gy.fsf@gitster.g>
+References: <aMp8yNFiXDyk2hP4@ArchLinux> <aMp9OtXLfRw7dEwA@ArchLinux>
+	<CAOLa=ZShms1D-cq=x04dtT2ULTVE3ZDo8DODFnJRP2wcJz0EgQ@mail.gmail.com>
+	<xmqq348dovi3.fsf@gitster.g>
+	<20250924053601.GC1173044@coredump.intra.peff.net>
+	<xmqqwm5om1gy.fsf@gitster.g>
+Date: Tue, 07 Oct 2025 18:49:42 -0700
+Message-ID: <87jz16dux5.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="PJZcMQ9B2phClY+c"
-Content-Disposition: inline
-In-Reply-To: <20251007-b4-pks-ci-rust-v1-3-394502abe7ea@pks.im>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---PJZcMQ9B2phClY+c
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Jeff King <peff@peff.net> writes:
+>
+>> I agree that size_t is much more than one needs for counting most
+>> things. But the problem is that "int" is much too small, if you are
+>> worried about malicious input causing integer overflows that could cause
+>> memory access errors.
+>
+> Well, a malicious input can cause overflow/wraparound size_t while
+> parsing, so I do not think that is really an argument.
+>
+> The code need to be protected against such overflows either way.
 
-On 2025-10-07 at 12:36:31, Patrick Steinhardt wrote:
-> +/// # Safety
-> +///
-> +/// The provided buffer must be large enough to store the encoded varint=
-=2E Callers may either provide
-> +/// a `[u8; 16]` here, which is guaranteed to satisfy all encodable numb=
-ers. Or they can call this
-> +/// function with a `NULL` pointer first to figure out array size.
->  #[no_mangle]
->  pub unsafe extern "C" fn encode_varint(value: u64, buf: *mut u8) -> u8 {
->      let mut varint: [u8; 16] =3D [0; 16];
+Apologies for jumping into this thread so long after it happened, but I
+wanted to voice my agreement with Junio here and mention another
+consideration.
 
-I'm planning to do something a little different with this code by
-refactoring it out into a Rust function, so at that point it will no
-longer be possible to provide a buffer smaller than 16 bytes.  Note that
-all callers of this function pass a 16-byte buffer, so that should be
-safe.
+In GNU Coreutils and Gnulib we often use 'idx_t', which is a typedef to
+the standard signed type 'ptrdiff_t', when we refer to allocation of
+objects or indexes.
 
-That doesn't mean that you can't send this patch (and I think your patch
-is good), just that we shouldn't tell people we can use a buffer smaller
-than 16 bytes, since that will at some point no longer be true.
+The rational is written in the header file where it is defined [1].
+However, I want to highlight one part that I find most useful:
 
-Here's the current version of the patch I'm planning on sending for
-reference.  I can rebase onto your series once Junio picks it up.
+     * Security: Signed types can be checked for overflow via
+       '-fsanitize=undefined', but unsigned types cannot.
 
--- >% --
-=46rom 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-=46rom: "brian m. carlson" <sandals@crustytoothpaste.net>
-Date: Wed, 8 Oct 2025 00:27:56 +0000
-Subject: [PATCH] varint: write a safe Rust version of encode_varint
+On common platforms, you will never need to allocate more memory than
+PTRDIFF_MAX anyways:
 
-Our original version of encode_varint in Rust used pointers much like
-the C version did.  However, if we end up using this function elsewhere
-in Rust, it would be better to have a safe version that we can use.
+    $ numfmt --to=iec-i `echo $(((1 << 63) - 1))`
+    8.0Ei
 
-In addition, writing our unsafe C-compatible version in terms of a safe
-Rust version makes it obvious what our requirements are.  For instance,
-we do not need buf to actually point anywhere and can accept a null
-pointer if we just want the length, and we can clearly indicate that we
-require 16 bytes worth of memory to encode data by creating an
-appropriate slice.  All of our existing callers always pass a 16-byte
-buffer, so we can safely assume that.
+I think that addresses Jeff's point that 'int' is too small, which I
+agree with.
 
-We can then improve our Rust version by performing normal bounds
-checking to make sure that we don't exceed the buffer size and use the
-standard usize return for lengths, converting as necessary in the
-C-compatible caller.
+In C23 it is also easy to do wraparound arithmetic on signed integers if
+you want to. Here is an example:
 
-Move the C-compatible code to a mod c to keep things tidy and allow us
-to have a different Rust version.
+    $ cat main.c 
+    #include <stdio.h>
+    #include <inttypes.h>
+    #include <stddef.h>
+    #include <stdckdint.h>
+    int
+    main (void)
+    {
+      ptrdiff_t value = PTRDIFF_MAX;
+      if (! ckd_add (&value, value, 1))
+        printf ("No overflow\n");
+      else
+        {
+          /* Or handle overflow.  */
+          printf ("%td\n", value);
+          printf ("%td\n", PTRDIFF_MIN);
+        }
+      return 0;
+    }
+    $ gcc -std=gnu23 main.c 
+    $ ./a.out 
+    -9223372036854775808
+    -9223372036854775808
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- src/varint.rs | 34 ++++++++++++++++++++++++++++------
- 1 file changed, 28 insertions(+), 6 deletions(-)
+Paul Eggert wrote some macros to implement these on old compilers which
+is very helpful [2] [3]. They only assume that signed integers are two's
+complement without padding bits (I would hope that git doesn't have to
+support anything else...).
 
-diff --git a/src/varint.rs b/src/varint.rs
-index 6e610bdd8e..83990afe7a 100644
---- a/src/varint.rs
-+++ b/src/varint.rs
-@@ -22,8 +22,7 @@ pub unsafe extern "C" fn decode_varint(bufp: *mut *const =
-u8) -> u64 {
-     val
- }
-=20
--#[no_mangle]
--pub unsafe extern "C" fn encode_varint(value: u64, buf: *mut u8) -> u8 {
-+pub fn encode_varint(value: u64, buf: Option<&mut [u8]>) -> usize {
-     let mut varint: [u8; 16] =3D [0; 16];
-     let mut pos =3D varint.len() - 1;
-=20
-@@ -37,16 +36,19 @@ pub unsafe extern "C" fn encode_varint(value: u64, buf:=
- *mut u8) -> u8 {
-         value >>=3D 7;
-     }
-=20
--    if !buf.is_null() {
--        std::ptr::copy_nonoverlapping(varint.as_ptr().add(pos), buf, varin=
-t.len() - pos);
-+    let len =3D varint.len() - pos;
-+
-+    if let Some(buf) =3D buf {
-+        buf[0..len].copy_from_slice(&varint[pos..pos + len]);
-     }
-=20
--    (varint.len() - pos) as u8
-+    len
- }
-=20
- #[cfg(test)]
- mod tests {
--    use super::*;
-+    use super::c::encode_varint;
-+    use super::decode_varint;
-=20
-     #[test]
-     fn test_decode_varint() {
-@@ -90,3 +92,23 @@ mod tests {
-         }
-     }
- }
-+
-+mod c {
-+    /// Encode `value` into `buf` as a variable-length integer unless `buf=
-` is null.
-+    ///
-+    /// Returns the number of bytes written, or, if `buf` is null, the num=
-ber of bytes that would be
-+    /// used to encode the integer.
-+    ///
-+    /// # Safety
-+    ///
-+    /// `buf` must either be null or point to at least 16 bytes of memory.
-+    #[no_mangle]
-+    pub unsafe extern "C" fn encode_varint(value: u64, buf: *mut u8) -> u8=
- {
-+        let buffer =3D if buf.is_null() {
-+            None
-+        } else {
-+            Some(std::slice::from_raw_parts_mut(buf, 16))
-+        };
-+        super::encode_varint(value, buffer) as u8
-+    }
-+}
--- >% --
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+Collin
 
---PJZcMQ9B2phClY+c
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaOWwcgAKCRB8DEliiIei
-gdhxAQC/iuspD3YQqAaDYzT+7ZRMqdMAxZLc+svP2fZUlkuy/gEA8qVg1um8A7vu
-RsE5wW5gYBAJwbOXMaMbdtTxoGQJjQo=
-=GOwM
------END PGP SIGNATURE-----
-
---PJZcMQ9B2phClY+c--
+[1] https://github.com/coreutils/gnulib/blob/master/lib/idx.h
+[2] https://github.com/coreutils/gnulib/blob/master/lib/intprops.h
+[3] https://github.com/coreutils/gnulib/blob/master/lib/stdckdint.in.h
