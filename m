@@ -1,113 +1,107 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8084621D3CA
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 19:29:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59ED11E47B7
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 19:32:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759951746; cv=none; b=RkswXXMKAaj9etm2HfANbOsgBDgd1AtaKroPzbdwfYhEdU1lmNnVPXLjcx4Ub6r4bGUgPcJ1Ff3Px6bZaohAX1IqYcW0Wvux2t5PBGV3gJOwdBikkpN8jLJFYMUk9ZAsMyQhOOE2m78CxEEO9XHpFEQPXhtOjMyAvqSL+KAyT7M=
+	t=1759951929; cv=none; b=FP4BiH5SdPVRM1Ur8EdNteAg44J4RBwgKo33BpjpLB3kupGgLQnybtQoT7Hx+uWfJijBmiNaFSucNx1DRfPGvPec+yHW1tCl5obfRGjU6w6cwQX86oe9ijkC1M8pHd8KYEGc8iqpQL3FFM6NnCQWZpzkFkQLD98Jg8kA7Nfmlqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759951746; c=relaxed/simple;
-	bh=7KStVkAequbvFX6Xt7AY/j3as50KmH2FNe+muqG3b0s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gtUOZXaiE+xycYMQuL7hQZchhbIuEVyMUHNEi6y4DcIaJxA/l1Nm9WQyCtHXao+CeudpHckJ4U+7B+FwYqIY6fcZnBV08hidu2rwP7FMTDj9glW0f8sEf/KhLH0tLl0kfBaPwxRmkYMQQjYqHv32yxNdLg5mgbB0ixdRnUH6PXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=R+a3Zcik; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1759951929; c=relaxed/simple;
+	bh=4Lww5tc1EXLYUd2yzLBRIHRIo6v5uETHIaB0rMIuFPE=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=m+bw+LvXJkVv1Qa9OP+rr6NSpODhRmVoYP5Wj7WKrbkStz4mrTNrN9ADhcWWjDjjQVy9C7mMBDHUGbZnG37ahuyB+65d7FpqHEu2Iylr5GI82wadOK0BIx+yBA3W6c0+k2r5aVrhw4frO1tQ0yZOnOt1iXvz4QrQgXhxePeS2iU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=lCwwA6oo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hu2y6XAv; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="R+a3Zcik"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1759951743;
-	bh=7KStVkAequbvFX6Xt7AY/j3as50KmH2FNe+muqG3b0s=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=R+a3ZcikfSbF2lgrUX4On7b+8+6CZn2llY2efyEKSiHj0LehEo8KvOOsY7e3s/SqI
-	 CEzFHYmKHfmmN6lCw6MP+DmXqoLg65Yj8rLYgU5x33PLDba35pdj9kekNCc4rF1Ut/
-	 yVvATwPeG6pBzbAzW7EUhdiuGTOL8n6/gqf9pZ8GpBjLYTHH1AhCngjhamkSs4NYZ4
-	 dvIY9KQdKfwFnkT2/J6XgGbnz7XF3rbFdsHjn0SRq8OaCQpGPU3pBaZV3weayJrNXQ
-	 n5myvexzfE1r51jTBwvOWMRPKRzVxE1GZjG71lR7eqkqEmwwrnotZnLn87OlshJmUo
-	 KFuCmW1UIVBccswEvjgxYOtF7Z8bM6McZ/wkY13kZFVJs3F8jtzyrufmJg5sXw53RQ
-	 Gfr9gYtV1nYRwEMQRplxHLE2YnNhNyQrlVQPrFhHIwg0d8k/EqkLj2tS34JN0Qw0Bn
-	 eue9euU2ZxqKn4RznMf+wxhzkwwcunTaHn4tt0vWWxji8ZaoHPv
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:225c:7da:a6d4:350c])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0B10220114;
-	Wed,  8 Oct 2025 19:29:03 +0000 (UTC)
-Date: Wed, 8 Oct 2025 19:29:01 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [rfd] a new core.whitespace class "\No newline at end of file"
-Message-ID: <aOa7fWV5RgbyApiq@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqjz15fg3i.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="lCwwA6oo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hu2y6XAv"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 61F1A1D00031;
+	Wed,  8 Oct 2025 15:32:06 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Wed, 08 Oct 2025 15:32:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759951926;
+	 x=1760038326; bh=4Lww5tc1EXLYUd2yzLBRIHRIo6v5uETHIaB0rMIuFPE=; b=
+	lCwwA6ooo+L0uS4e6yEW9lc6rTDR8dFfoteR1yPxFghlaxjWDQ6zRT9ai5qt6B0K
+	35a1yj3BhmxM9SCombFemE43QSQEZ/fLZyY8B13NqDZ9LpmLd+Dp1QpYqp4wD0df
+	L3RWbcXJk/z5Q2EQoRC+JuMjuD0TeEO55PP21T7LvYjUCfRYfa4/S6vPmhSK88/2
+	s4ebygBQU0YVIQhlxPdw8MPnPlyUcXXZwb60m4j46W9M2scYYPEuf2nvv55c6z/I
+	+FLNns/f94r0ukCDS0OHCHV/cVGyWtSE9vvoaKR0WdeY7txww8YPYvgxrbjZ//zQ
+	yBaSTm711I/VJvQQ9ysmpA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1759951926; x=1760038326; bh=4
+	Lww5tc1EXLYUd2yzLBRIHRIo6v5uETHIaB0rMIuFPE=; b=Hu2y6XAvJRvvt0HOs
+	ZeE5coG8rPPHwaYV3+jAySj1IO82bcEUHqWXVMzLRCAe4sdKLfy1MN1NcPsG4b9z
+	e5mmKL1NJtMSC7oHwqyNDC00KzwqcCDjwq24M817c8VM+91KhjpBtdxQ1mFW0+fV
+	jzzoup8MBbrNFQk0Wp1CDeLVnULQWdYzvaL2cwT+meh5Je6d/oSuwFR/o2tuXsi6
+	tPlrYPVokM5V/3mntfkpa8c5iiZXCuMUcdiU0wlvLysYxYgW30sptNxfpC1cYsL3
+	hAuauYF/knrFWjxvpDW4Cx+szRl13Bs1tyiPMyv52gYrh8qbPV8W6YYG2LTLp8VT
+	6liAQ==
+X-ME-Sender: <xms:NbzmaPU0I8KosOT601h3j8BHDZVnCskiau_tYfhfVYoNCjTQK9NRGcw>
+    <xme:NbzmaCZ-_G2KWAnM06eIQBrc1jey4druin6SxlbQR1HTeRSfDhFgIXWcjWFDuqnuN
+    aiAFOHOcReFSCmpyyRyH7ShGNxWHxI2ybJuNdfqU-OdJSZz1Oe7ZQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdegudegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtgfffteetudel
+    hfefkeehtefggeefjeevieekfeefieekkefhveeiledtkefgueenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehnihgtkhhgihgrmhhpihgvthhrohesiigvrhhovgihvghsrdgtoh
+    hm
+X-ME-Proxy: <xmx:NbzmaGDDqGuKC3ep7RnjPontvNDWkVbUotHlsiBQkTlvfM7bU093ow>
+    <xmx:NbzmaOe4vfrwyilOQd56pRSC0NR1IL5KZvi1DBt3LZY9PThaFYLAIA>
+    <xmx:NbzmaBLCoeeUrGjOfdS1SRDE6wETwWkbcyevm5DBSandsZIvkPwcNg>
+    <xmx:NbzmaBe5axY3fl6Sm_1mLBmjxi5LrwhJb-GHSM004EltyR4WX55arQ>
+    <xmx:NrzmaPIpKUQ3c-ZXhXdpjMbaQ-opBw2nGoDVXaJ0UqOalrGK1pC2Ayxr>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id D90951EA0062; Wed,  8 Oct 2025 15:32:05 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="m4hsSgqNfRPvvNhy"
-Content-Disposition: inline
-In-Reply-To: <xmqqjz15fg3i.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---m4hsSgqNfRPvvNhy
+X-ThreadId: A1nV81MDJ4tB
+Date: Wed, 08 Oct 2025 21:31:37 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Nick Giampietro" <nickgiampietro@zeroeyes.com>, git@vger.kernel.org
+Message-Id: <725e8ab3-415b-4345-8a6a-57f7ae5474e7@app.fastmail.com>
+In-Reply-To: 
+ <CAEVYKFcj8kGRAxawwCLLTNiewNUMuFQnZt3-sGPG=kA-AY-6nQ@mail.gmail.com>
+References: 
+ <CAEVYKFcj8kGRAxawwCLLTNiewNUMuFQnZt3-sGPG=kA-AY-6nQ@mail.gmail.com>
+Subject: Re: Subject: Git console output told me to email you about "git whatchanged"
+ so I am.
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2025-10-08 at 17:39:13, Junio C Hamano wrote:
-> It would be a good sized internship project to introduce a new
-> core.whitespace class that is about a file that ends in an
-> incomplete line (it would be way too big as a microproject, so I would
-> not add the #leftoverbits tag to this one).
->=20
-> The student needs to learn quite a lot of things, including
->=20
->  - they need to study the diff machinery to learn how existing
->    whitespace breakages are reported, in order to figure out how to
->    add a new class of whitespace breakage;
->=20
->  - they need to find a good name for this new class;
->=20
->  - they need to study the apply machinery to learn how existing
->    whitespace breakages are reported or corrected, in order to
->    figure out how to add support for this new class.
->=20
-> Thoughts?
+On Wed, Oct 8, 2025, at 21:28, Nick Giampietro wrote:
+> I use git whatchanged regularly, please do not remove it.
 
-I think this is a great idea.  I've noticed that many newer developers
-are using VS Code, which I believe leaves off the trailing newline by
-default.
+This command is being removed because git-log(1) supplanted it over 12
+years ago. Both commands use the same machinery, just with different
+defaults.
 
-I think most people on this list understand why having a newline at the
-end of the file is valuable and have configured their editors
-accordingly, but for less experienced developers, this kind of lint
-could be useful to help visualize these problems and even catch them in
-CI.  Possibly the documentation (say, the FAQ) could be updated to help
-explain why this kind of whitespace breakage should be avoided as well.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+You can replace it with `git log`:
 
---m4hsSgqNfRPvvNhy
-Content-Type: application/pgp-signature; name="signature.asc"
+=E2=80=A2 Given: `git whatchanged <opts>`
+=E2=80=A2 Replace with: `git log <opts> --no-merges --raw`
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaOa7fQAKCRB8DEliiIei
-gW2hAQDk+ZyOYeqdrOULuc0q2bIrow0Ht7MvtQsQ7r2Wj5mhVQEAlElegoA/x6cW
-jvokDIpjw+DfXat8a9yg6GnWk84vpAM=
-=6ag3
------END PGP SIGNATURE-----
-
---m4hsSgqNfRPvvNhy--
+Additionally for the sake of readability, you might have more
+use for `--stat` or `--name-only` rather than `--raw` if you are only
+reading the output (not feeding the output to another program).
