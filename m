@@ -1,99 +1,149 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF1B1FF61E
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 13:45:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989082586C5
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 13:47:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759931147; cv=none; b=Mf2w95nQR47XlX6znbWDZ9gxsoEFibG0jZ9TXz6tpRDdkydQSuosY3IJb7JxyhXiRLBmTEMiZJufAJKt+fWPV4iROTfv+GfuBygXATy75YAknMB8H7ZbuIe0IFrE/TkNf+noD5cNkA8/h58Xy8PLGHf+msFml1cpSQnWtJGMSW8=
+	t=1759931249; cv=none; b=SjPdvjOrMnstE7ay3IFBktCU5yQOt1EfSfZHxTMHgV55gLSkMV4bh0ef1JoQcSkjZatJ89qCkGsRzb1EfpUJURIEQc8t851Df5EGI6/yGOtQqyjkLzulP2L/HgohA5NhEmnFKFJxtteX5Mm00p50H6nWKfZjtCo8ZRvz0kEQWvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759931147; c=relaxed/simple;
-	bh=TitNPRJ9j/bwDLN3u9JnNmVoo0mVFQUOJmK9rf0kG+4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lAuhIOGkAbmnqsHyTimqH4CsKPmG4ymjFKHNCcXPNuLVyiCPW5YeYi56BNxFZCalobB6dz3rDpoZ882nML6njoykREigR3plxrQOjvdxvrXcWCCDgtctfLBW0nnBuhELE4bclgcZXJwLqfHt9T7eSbaECmd7137TANC4rn4SO2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nBclzC0x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=frP2N+mO; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1759931249; c=relaxed/simple;
+	bh=jjDm/vefVsyegGkKbQvK7sklKD2xttOEiTNu17DU6nQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=thcRcfK1GuDoLSdf35A4dXWqdg8ypJDY1hVDkz/qUQUQJHc3e1KKFnq04+zKTISwpM4/qBlDA/R0p1EnwY1tnus4dIrMRk/L781x0EWI9jgzBDHWOAt1/Bt/h+49/uTVwQubvKvaQ7qp7I5/3TqSkMiw0MOEo109cUF9T373JzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JazcQVTg; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nBclzC0x";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="frP2N+mO"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2CEF31D000A4;
-	Wed,  8 Oct 2025 09:45:45 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 08 Oct 2025 09:45:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759931145; x=1760017545; bh=EdplRZWk5l
-	avvHgrCeAQFb1SPC6vxSk1DxjYr749Dcs=; b=nBclzC0xqKS8KDfODT2ecOakm+
-	UoBrKLIfMYs1zPTxHtcdZlu7vjx5AZNbYFil3r3cWGMIbsvgKK6uAKRR/VW7MOKG
-	vF7f/0Bv6A2N5BMNQC3nqty+xW9jfNjyHZaXFn4WXuotIjUm4xAgASWZi2XJYIR4
-	ipiS1d7ySym15B9FfZ3cA22/CpX/qS1hv0/HHh84zHTFYf4eYe6avUHTqAZTkONp
-	HPJICEsZtyLgqz3GFKHp6GQF9R1ar1EROwxu4D+q06Z1cueXI+bFr/G9ir68RGV0
-	tt4nc8KVPH6g1DXt1QkgzBcBQjR102xC0QNeqQuWXO6udsXVWEEYb7jbvqjg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759931145; x=1760017545; bh=EdplRZWk5lavvHgrCeAQFb1SPC6vxSk1Dxj
-	Yr749Dcs=; b=frP2N+mOKfraLPdhL3Gc/CwrkBlekoI5r2c7LW+5NBescYFNVei
-	GatPNxVXobPbRfdd723lhB/49ZZmE97CysFxWG1GdT+0BtlUvjxcwkJ9rHlP/FDn
-	up6LSLMgmUDfYcJ6F2sv4SYWR1BMzRpR33i4aJOQMfY1AnMbQT9ewh+rZK0p5Hdb
-	wc9hqBMH8Ga5c3JhR553s31S7FdfwES476O3QiR+HpTmXzfBuelcpJIukGX71Dvp
-	THyfR73ykmylY9wmHwrWXiHdXDt0QUX9hAYVxCW5YxsyaWEwOhmB+/Md3gf2mTtx
-	VtJ9p02rfvJAx+1950RLw2hBUBwn8IcOfRA==
-X-ME-Sender: <xms:CGvmaDbv6Xe_stYL-7EVbA95HktIjIuug44Wip4v2mscDULMXXhwYA>
-    <xme:CGvmaIb94G09alsikLPEHumBTcmJhwtYrmK9lki_4x1AbeyxdualRreHbktSCubRB
-    ygOgO55vts9ivt-aVPCOhhrMUifoloKFfnWAVobD3CXg70-VWx4jK0>
-X-ME-Received: <xmr:CGvmaDlMYwy5s2ooExovjHZjVb2n3m2wiZZNTBpmvX9leMeUIriTljnvQ7gl6Q4qELq-h4U8vxaRDrXqrlgqWInf-hi3y5RU26Rfh5BK>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdefgeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtoh
-    hffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
-X-ME-Proxy: <xmx:CGvmaEzzKFfT6X67ZXAdecloEHkxuCU43c-2fEPqYcPl-7JvwIg4FA>
-    <xmx:CGvmaBNd3AJeIxgv1oY13SReVFua1Xi5v2cUO-WQwRModPHc2bmgAw>
-    <xmx:CGvmaISejhjmkgxH5Xl4pF10OKKyiixg-whe2NtcPyIgBndo-QRqUA>
-    <xmx:CGvmaPbIaAxX8UK84uaWhQC2T7UpoOckodwU7BfURyoNZ5MBm2Py2w>
-    <xmx:CWvmaGzQ5GrWr0Ili4hP8fuoS79CDBaa8hUzjIZKYcCZ63s5hqYnpYMp>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Oct 2025 09:45:44 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 84ec3e54 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 8 Oct 2025 13:45:43 +0000 (UTC)
-Date: Wed, 8 Oct 2025 15:45:40 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 13/13] ref-filter: parse objects on demand
-Message-ID: <aOZrBHSnkBWPw9ma@pks.im>
-References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
- <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-13-916cc7c6886b@pks.im>
- <6e622432-12bd-42ab-95c9-6360fde75377@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JazcQVTg"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-46e6c8bc46eso48464115e9.3
+        for <git@vger.kernel.org>; Wed, 08 Oct 2025 06:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759931244; x=1760536044; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=adudNWS2rn3OV370S1mRNIq4JvYYiAS8oHr6hWa41DE=;
+        b=JazcQVTgUwcVKpvqencXsjJgNSAUvlT3FTY+EXuo4FBWZk5H3dBjVAF809RuAR0LMn
+         kvrgY8noRpwipgkNQB4VlwCZsGlepDdHKx3T64yUqAtczRZSAuRFqiz3EGXt051IedzX
+         mp+vQpgZwDSJNHW5KMVtNoCSzWE1NvwYpffTarDakpJhecOqU5IHYte3GbQNMYGQi5pJ
+         xQtEhquS69Yygiq1UBgPKsbIcCkc+1SLUGAn7rlmo7XIltAobX1cIzDq9YoaXgxmas/c
+         oVloPdEbhALhuD+GlZtBESoBs2DzD9ZbA1p06iMHbQ0pZ0cxH/AE+MBdkLqnXK8ot6bJ
+         aIHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759931244; x=1760536044;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=adudNWS2rn3OV370S1mRNIq4JvYYiAS8oHr6hWa41DE=;
+        b=NFkXIx3oFW7HGjpx4LEgZdfExDuJGAI74o4xjQmHY6kV4o1wrAbu9kwpbB1CPWkq6C
+         4lsazPwBwGKDbqiNhQ12Cc/4+Q2ziKPKnu/xwz1YWfL0Cxh4AeZiWl/J4Q5leNqKYxy4
+         xnNuVWQEtWUQmfjJtXdiKvWV17zoCofwrKTBtmVb0nFpPSKxo+8Hft675tkbogFq6X5h
+         3NWyFeZNvzCYE9qzZZVXVI6C3hkP8AK4OYaFoiMPZfb/DGKkm44xtrbyuhBokbeJQ+TP
+         cx532l9jEhTruSI7oxPsxarUWnTtWpd7qudvlEyBIM7Z2jqPH36+OMcqFEmVSVoNlOex
+         jB7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVKhH8Lhx2kThI9/KtHONXApNB13CeYO9LmMAwBPB7MI4fe8pIqLGckgZaFAwLC+ebvhwI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyWsMpwplzfj+FioL3uSkKdxSCKOhF/F7bX5AyugopmWpeomE0G
+	uHoiQpClq3yz3OKEimNO95i0TQzbCxdO78vtU/upFxVHbx/r2aQAeTHQ
+X-Gm-Gg: ASbGncttmLvl/VYwuWztwOxJBnAGr0orB+mb0DRabVgTuQA8mMLTJmR6xObgP6ihtFA
+	3+DMrqLTQgJezEqSNrLQldGItclaoQcykkGGUYhDrdQx0jhOA2BErqoW2rt8SniSonlx/g2Qg4m
+	X7ZoA8icpm6IQkNA5wZCh/7MK+V2EpWsxKM8oHslq/OJIYVAkHtUdewQOXq5NfoWxBGc9xL1+29
+	YXR2A9/Qs1WvgSvNHCrYlRc+NHeWhKAERmDYoZ+qnT8ASn3wjV0g07g+lnkueYDTB8Owsoiub+r
+	W/a4A+rFTzPA9kX2pfUCk3W4LHWvGTPxLAAiGnzkLju6fyA7IpgobWNvQyKLTpCn6LRZRSdse1O
+	Qn95YcwSjZdIwiOTtQNQIPvlqKj7ie73nrf/BHq+hxf3eE5eTj4WBigc4CdY2hWaw+/cbpOlj/B
+	+rlv97NFucq9x97xLV0WDejMo=
+X-Google-Smtp-Source: AGHT+IFv+CJbS6VtMjEkA5xGZ5bVTv9mYwaq87lxyX8I80K8TqhubxFvcLY6MywS1VirENb/9+glWA==
+X-Received: by 2002:a05:600c:828d:b0:46e:44bf:210 with SMTP id 5b1f17b1804b1-46fa9af8107mr24729115e9.22.1759931243644;
+        Wed, 08 Oct 2025 06:47:23 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46faf112fdbsm832555e9.8.2025.10.08.06.47.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Oct 2025 06:47:23 -0700 (PDT)
+Message-ID: <bd51d7df-f0f2-44f5-8ebc-c95b944994bd@gmail.com>
+Date: Wed, 8 Oct 2025 14:47:21 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6e622432-12bd-42ab-95c9-6360fde75377@app.fastmail.com>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] add-patch: roll over to next undecided hunk
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, phillip.wood@dunelm.org.uk,
+ "Windl, Ulrich" <u.windl@ukr.de>, "git@vger.kernel.org" <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+References: <c72518099a3b465c8761e41210fe3fcb@ukr.de>
+ <76665b6f-cb92-4694-bc89-5eb21197df34@web.de>
+ <8fdfb03a-6bbc-46a0-a8fe-9ad75aba555a@gmail.com>
+ <fcc003d6-c71f-4c41-a3a1-c9364d3bca9c@web.de>
+Content-Language: en-US
+In-Reply-To: <fcc003d6-c71f-4c41-a3a1-c9364d3bca9c@web.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Oct 08, 2025 at 01:05:13PM +0200, Kristoffer Haugsbakk wrote:
-> On Tue, Oct 7, 2025, at 12:58, Patrick Steinhardt wrote:
-> > When formatting an arbitray object we parse that object regardless of
+On 03/10/2025 15:10, René Scharfe wrote:
+> On 10/3/25 3:41 PM, Phillip Wood wrote:
+>>
+>>> @@ -1436,8 +1436,15 @@ static int patch_update_file(struct add_p_state *s,
+>>>        render_diff_header(s, file_diff, colored, &s->buf);
+>>>        fputs(s->buf.buf, stdout);
+>>>        for (;;) {
+>>> -        if (hunk_index >= file_diff->hunk_nr)
+>>> +        if (hunk_index >= file_diff->hunk_nr) {
+>>>                hunk_index = 0;
+>>> +            for (i = 0; i < file_diff->hunk_nr; i++) {
+>>> +                if (file_diff->hunk[i].use == UNDECIDED_HUNK) {
+>>> +                    hunk_index = i;
+>>> +                    break;
+>>> +                }
+>>> +            }
+>>> +        }
+>>>            hunk = file_diff->hunk_nr
+>>>                    ? file_diff->hunk + hunk_index
+>>
+>> If there were no undecided hunks then this will be out of bounds
+>> because hunk_index >= file_diff->hunk_nr. Are we absolutely certain
+>> that we cannot reach this point without at least one hunk being
+>> undecided?
 > 
-> s/arbitray/arbitrary/
+> The new loop only sets hunk_index if i < file_diff->hunk_nr.  If
+> it finds no undecided hunk then it does nothing.
 
-Thanks, I've addressed both of your typo fixes locally.
+Exactly - that's what I was worried about. However I'd missed the fact 
+that we still set hunk_index to zero before the loop so I thought it was 
+unchanged from file_diff->hunk_nr when in fact it is unchanged from zero 
+which is safe.
 
-Patrick
+>>> +test_expect_success 'roll over to next undecided (1)' '
+>>> +    test_write_lines a b c d e f g h i j k l m n o p q >file &&
+>>> +    git add file &&
+>>> +    test_write_lines X b c d e f g h X j k l m n o p X >file &&
+>>> +    test_write_lines J y y q | git add -p >actual &&
+>>> +    test_write_lines 1 2 3 1 >expect &&
+>>> +    sed -ne "s-/.*--" -e "s-^(--p" <actual >hunks &&
+>>> +    test_cmp expect hunks
+>>> +'
+>>
+>> I'm not sure what this first test adds, the one below checks that we
+>> find the first undecided hunk which seems to be the important thing
+>> to check.
+> 
+> It's a regression test for the case that the original code got
+> right by accident.  It may seem superfluous, but I actually
+> triggered it in my first attempt at a fix.
+
+Ah, interesting, I'd assumed it was superfluous but it seems it isn't.
+
+I've had a quick read through of what Junio has in "seen" from the last 
+iteration of this series and it looked like a nice improvement to the 
+usability.
+
+Thanks
+
+Phillip
+
+> René
+> 
+
