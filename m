@@ -1,111 +1,155 @@
-Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988E634BA5C
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 21:30:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E783A1DC1AB
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 21:33:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759959044; cv=none; b=P2/WnS88zUxfmLXCTTlh4hf+PDam0Z8gXLK4UFIgxAp/vM0M72b+fGehM9zPSNv7g74SeWnIsuz5fWwuEilsj/PTuN+lpbTAMtFiz8HSDNEjFtR9wXGnHfMUb3fvguzfatZLX0Pd0hfgpa3qoCVIj0Ak9lnl9XI1eY06Yo5IpFo=
+	t=1759959212; cv=none; b=cfoAueHIhHdqmc9Cq5RVn1fN/A7HKf6RfDwugBwCCAFadq7v2ZmIiO2NiMe7Xi8oSKHmK07kO3tNotXHkvoImFGcTo+hjdmThXOAv2qTEsfCWNjcSSHGU3HDQ/nm88vgxh78hlqJc/60WfAndz+ruSRqLUhKGXjoNJ8gmXwSFkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759959044; c=relaxed/simple;
-	bh=Fa9GbPK41V/k3yQbNu7BsArBziORDwR1A8GET0WVkJc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EJy9MmUWDT52+hfxCQL70+01ijK1xpyvv7w4reoTrfhD12ekk2KReQkogo+C95jY6Zhae9ip5EIRQdNV2JDdk8vN0aUevJeCl965PrkQgyUIHCbo5vJdY1nKLLsx309DdjX7Wo25ARB7hoyElLBTR3ROwLlVjKrOrj6LtWvt2qY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z0vCRWsI; arc=none smtp.client-ip=209.85.166.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759959212; c=relaxed/simple;
+	bh=+EDuSH6dNnw6mUGksTwsiCZH25FcmNK8OHOes0FK0/Q=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Kr2Vsw7JKPzEG3wqqueiCZHHQApuOA+NzaA4mt30ZV4zsKCxLtbySLmb9Rd3q49TRfpaJ7X6R1Ve8oxbQK1xnK1OldnFyOXRnAeVZfLDgqW9oPr2q0RD43bDJO/gqBHP3Jp5XP2TIrO2TRt2hiTK2vxCpuRAB+ZDfTBXkQAoh08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OcH0X2PN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=foIvRDxy; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z0vCRWsI"
-Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-42f788ffec0so1543695ab.0
-        for <git@vger.kernel.org>; Wed, 08 Oct 2025 14:30:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759959042; x=1760563842; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JV4vI5ASHUkNKPoQdjUFxHZg/q9HYC840+9X+voAz7s=;
-        b=Z0vCRWsIVEIRcxj6i3s73D5RaMeni6+l79HTMgSIcNrT4DINQGo5bqpRLLYE3MaE9t
-         2agN0QWcAgcaSGRAcdeNAWSyNq/epkzNZqo21Yss3QsWfW28+HC6oQzTwm/y8BqTD5ep
-         Bv8+B81Run3wLmCKfYLXeY2isW0kni6AWCeTlwTh/JOG9J+MCi4Gss/NTIRMJBn1duLY
-         Mg/eioFN4AsVksyjHzit0qumu89izeu3UZ5cgg/H+eEyixIyZyQHbtKBqMwL8rveINjR
-         uJfjR6uD2T6BwuT3qJ+4C/uGvAJvA05u73Dgp9lGXCSaxmcE0KqyZyNlKu1WBHh4FBMY
-         /hcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759959042; x=1760563842;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JV4vI5ASHUkNKPoQdjUFxHZg/q9HYC840+9X+voAz7s=;
-        b=P8lK6dmPYNBAV82Tvt3I4hMjU1IIWim9+uWKN08tmD6G8DXlHPnKHYf64PEGdmpSCw
-         VBwBvcAe3vbF7EAk+Ho70J5FZz9WwKxtoyTDaVMQI/0w88xboHYIUnz7eBYnuMtLqG8y
-         rLi5ju40Gj7in2eTDgoBIAYTzjnegdsBvVwBGvS5aA/NSXbWajEYYZ8/bhBldW7mp6Dk
-         yn59UpTqvkoUyPsap7EK/LnO1NbzythDi5M1RrXUzzb83uixX7WXyD/T02jeoCc8P0ks
-         iYM+i10YU3UL96zZYjvtyJZRTz7TEXcGIFOoZXtgo1SMHOHxVzD3/7TPUIzMxv5pDzdM
-         4RKw==
-X-Forwarded-Encrypted: i=1; AJvYcCWnTy73xqfHk0Ns97u6cAWHpuCT7kaIoOo1eIg3ldByLCkBeqI5PPNp5lR/CZyxmGr+Fm0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxs2sOuY9peaULHeyAm3fXcc90FJlkkpLgPxVtfrF6Bv40/7GoF
-	7WTqNhNHwhqnQpiK4Sq6USFJ4RlCqZbnD7AOJfz+RDUURYbTzL2JpTm9rh/px+oF891iji2X1xr
-	h9GRVhTv8C0sp1aBpOpiwe1nIoy04+PU=
-X-Gm-Gg: ASbGncsVjZmajyFRgw63/bFFj60v19mEkQ0/AduJtb+jwTkifZaV5J22PNhkccJ/nid
-	RLEoKVSxoIlNFTY+AjWyesgy0FuSwEbOAdLvKiXKS1HyJEyLICHdR+4pnwkszcUKZKdBPdyc28E
-	p3ONktrUNS/UfU/LgJSpKNemvsuGhNrM+UUQBadcWqnQ2IVfH2xvcHxqJhpEciKQWBX3KzeaW7+
-	bzYG1wKyMjoKdUMY6fCQT3DRjQ2j35J7GH/fPtWza2N9GW2gfY7LFG6vxnRhNJw
-X-Google-Smtp-Source: AGHT+IGtBElEhtlrHKD+PQE0FEjGYQSX/Y6Wv1AMoYnvkav6sIOUvuEBlHHxT3wVn4FIZditkDQyWxfK+Gi7ZELs3ao=
-X-Received: by 2002:a05:6e02:12cb:b0:42e:7589:6290 with SMTP id
- e9e14a558f8ab-42f87377de2mr48616875ab.12.1759959041431; Wed, 08 Oct 2025
- 14:30:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OcH0X2PN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="foIvRDxy"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id F1D8A1D000DD;
+	Wed,  8 Oct 2025 17:33:29 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 08 Oct 2025 17:33:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1759959209; x=1760045609; bh=VRmTvMh/RF
+	HLK/AW88ojVJqg3HMvZO1mBCoqeAyu6+E=; b=OcH0X2PN20umG/R/lKboKH4E3O
+	XY9GoOrMpRFSeGbYACSxed/2lR+v133dQKv8PYWEcAABc7HPaEo7tK0k5Lxz8d3V
+	lwQHI6W0mlAc1d51e4saKxuK4ZYMo9YfTmPtOiO2noH6o66/uAutg7weMT7cTxph
+	cSbLCEwl/B8mJw1bXiIrV4WY3kNuBX4LVSyrzy78SEK4eE4i61pJtyC0GmE8X2Ss
+	8s7KCOJ8Xq7SU3y9Mi3ds9JCCERD0C9FsCJmwTkgojxyEg/DR9sS/mFwv9dZ4dqI
+	kN5GbO6e+YlHKazjFecZrKnXGALuKo5bCTQP1nXwbniMktUG88EJbWxZzTEg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759959209; x=1760045609; bh=VRmTvMh/RFHLK/AW88ojVJqg3HMvZO1mBCo
+	qeAyu6+E=; b=foIvRDxyYzKE/3XieFGBdcx1LH5WiOeGi80OturGViCt3a1Q0HF
+	We44D6Ej9iCqHukXva7dVRTnId/eICUzeLtmxlWKpEPeJY9M4LMKa2TUBd+7/WQ/
+	6YJ9zvKA0SMoCnWlORWlYSfBYmpNnzigIexJ5p/7S0k4tmDm5ym1FapgPWZ+gaIp
+	+M5zKNxYLnIFGg2Ic6vy5vy9cdZW+gpjspdbojQmy0p+U6Hr7cdzryH6qwntyrLT
+	uONjW6R/Riqg14E13QFlD8oncEcUOgUJLF/nF/CaB7uiefdiLbtxWf/BWXZM7dUU
+	VDvSESS8V60lc8qMDBuISxqjtjblyZ7DbEw==
+X-ME-Sender: <xms:qdjmaJRFIkiD9vN9dGtSwy2cUEOViErYb2H02QeYyzoT5E-dMq8nXg>
+    <xme:qdjmaGfZ-_RXOIyfWDJFlFDX8sQBPiCHO10Z9U_Mo2iTtsBBWTCwGXknE9vZx3z0U
+    NDVxZYFFdWurGuIyVZzigKEiKOO5XNOV6Bjv1M2Padbq8PA36tYZw>
+X-ME-Received: <xmr:qdjmaIp1RZq8gJCJtACErTJ8-xhcOpcBLnFdikYkQZKWiMhWvdByJWYijAv83x0JXXG3_dOzTxwcSqq0ypjIwExT58K4klblemsi>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdegfeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
+    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsrd
+    htohhrvghksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgt
+    rgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:qdjmaH93UgLrhOlLEMgTERkUelpcGn4AZJYE0zlno_eAr4_qVGmRZA>
+    <xmx:qdjmaEfKAsaUrUIbQ-3whE0-Ta_v0bH7ogKRqilxVhtceK1qZIm56A>
+    <xmx:qdjmaBIJkGv_rDta8SZQTDI8ubNlPpUvtFqNaSgOzq95r3zeXHVtGw>
+    <xmx:qdjmaEh_Gjv3Qd445mrXhgjZrLWA5z6wMkEBDiuGMnzItWvwNhlfmQ>
+    <xmx:qdjmaC1trqnnK0EdRrIH3Yepim_Tb9eRN5ixA0HfH8d7JMOPvh9RVZ5W>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 8 Oct 2025 17:33:29 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Chris
+ Torek <chris.torek@gmail.com>,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v2 2/4] doc: git-pull: clarify options for integrating
+ remote branch
+In-Reply-To: <122774d4cc8fa4e9184a0f82e9b6e562363ea433.1759951536.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Wed, 08 Oct 2025 19:25:34
+	+0000")
+References: <pull.1976.git.1758656702.gitgitgadget@gmail.com>
+	<pull.1976.v2.git.1759951536.gitgitgadget@gmail.com>
+	<122774d4cc8fa4e9184a0f82e9b6e562363ea433.1759951536.git.gitgitgadget@gmail.com>
+Date: Wed, 08 Oct 2025 14:33:28 -0700
+Message-ID: <xmqqqzvddqon.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
- <20250926230838.35870-1-siddharthasthana31@gmail.com> <20250926230838.35870-2-siddharthasthana31@gmail.com>
- <CABPp-BEh7VEM6UQjkK3CxJcv54vEmueTmh9+-SyTKUxgy7Mkcg@mail.gmail.com>
- <0fba2f5e-03cd-439b-90bd-f613fcc4ae23@gmail.com> <CABPp-BE9TV58duojhF_+R6bKDF6-L0md6j+1VeRFd8CJWF++LQ@mail.gmail.com>
- <xmqqh5wfu3o6.fsf@gitster.g> <ea7aa170-400c-47fa-b3f0-2623fcbfcaea@gmail.com>
-In-Reply-To: <ea7aa170-400c-47fa-b3f0-2623fcbfcaea@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 8 Oct 2025 14:30:30 -0700
-X-Gm-Features: AS18NWCmxHrD8Lpi3eTmTWAOhcykKW99_eiRV1LCyJnycJJ8JmllKLXv_4Kj9gM
-Message-ID: <CABPp-BEuK1MWxmRc-a=1aPqLbXEZVF0qgHtYv_Z-1mXm3Ag5_w@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] replay: make atomic ref updates the default behavior
-To: Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, christian.couder@gmail.com, 
-	ps@pks.im, code@khaugsbakk.name, rybak.a.v@gmail.com, karthik.188@gmail.com, 
-	jltobler@gmail.com, toon@iotcl.com, johncai86@gmail.com, 
-	johannes.schindelin@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Oct 8, 2025 at 1:06=E2=80=AFPM Siddharth Asthana
-<siddharthasthana31@gmail.com> wrote:
->
-[...]
-> Elijah's --format idea from Kristoffer might be a third mode eventually
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-?
+> +Integrate changes from a remote repository into the current branch.
+> +
+> +First, `git pull` runs `git fetch` with the same arguments
+> +(excluding merge options) to fetch remote branch(es).
+> +Then it decides which remote branch to integrate: if you run `git pull`
+> +with no arguments this defaults to the <<UPSTREAM-BRANCHES,upstream>>
+> +for the current branch.
+> +Then it integrates that branch into the current branch.
+> +There are 4 main options for integrating the remote branch:
+> +
+> +1. `git pull --ff-only` will only do "fast-forward" updates: it
+> +   fails if the remote branch has diverged. This is the default.
 
-That was in no way my idea; it was all Kristoffer's.
+Technically, you can pretend to be the king, the center of the
+world, and occasionally publish your very latest to the remote by
+pushing there, and it is technically possible that the remote to
+diverge from you by somehow acquiring its own commits, so the above
+is not wrong per-se, but the way it is phrased is a bit awkward.
 
-The --format idea might eventually be useful, but to me the --format
-thing seems like something you'd add to a very stable command, like
-for-each-ref.  I think it wouldn't make sense to add to something like
-replay in its current state since replay is "four times more
-experimental than any other command"[1], where we're changing the
-basic output format, where we bail on any conflicts or merge commits,
-where we recently discussed whether to support first-class conflicts
-and using that for handling conflicts instead of halting upon the
-first one like rebase does, etc.  I feel much the same as when a
-similar flag was suggested for merge-tree (in order to let users
-control the exact output layout of the information it was already
-printing, when it was known that the information provided was
-insufficient to solve the user's problems)[2] -- it's premature.
+The operation fails when _you_ diverged from the remote branch.
 
-[1] that might be slightly over the top, but it's still a fun
-"statistic" of sorts -- see
-https://lore.kernel.org/git/CABPp-BHWjyRv_f_HKkz10Q_cOZKPvpgf=3DSEUR1Thmbtt=
-kQT+Uw@mail.gmail.com/
-[2] https://lore.kernel.org/git/CABPp-BG25_TutatgNmK6vgq3akxpYHQ8QBnz-65_F_=
-3oCA1nJA@mail.gmail.com/
+In other words, you cloned or made yourself in-sync with the remote
+earlier, the remote may or may not have progressed before your
+'pull'.  If you created your own commits on top of the state that
+was in sync with them, you diverged from them and --ff-only is
+stopped in such a case.  If you haven't changed your branch since
+you were in sync with them the last time, --ff-only would
+fast-forward your branch to match what they have.
+
+> +2. `git pull --rebase` runs `git rebase`
+
+This technically does not integrate remote branch into our current
+branch.  Rather, the commits on our current branch are integrated
+on top of their history.  That may be worth noting?  I dunno.
+
+> +3. `git pull --no-rebase` runs `git merge`.
+> +4. `git pull --squash` runs `git merge --squash`
+> +
+> +You can also set the configuration options `pull.rebase`, `pull.squash`,
+> +or `pull.ff` with your preferred behaviour.
+
+This part has two orthogonal things, each of which has its own
+default, which may be a bit confusing.  (1) which branch we get from
+the remote integrates with the current branch.  The default is to
+use the upstream of our current branch.  (2) how the integration
+between the remote thing and our current branch is done.  The
+default is only to accept fast-forward updates.
+
+Perhaps it may help clarify the flow if we said upfront that we
+describe two orthgonal things?  E.g.,
+
+    First it fetches.  Then it decides two things: what to integrage
+    with the current branch, and how to do the integration.  By
+    default, the upstream branch of the current branch is what gets
+    integrated, and by default "pull --ff-only" (described below) is
+    how the integration is done.
+
+or something?  I dunno.
+
