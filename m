@@ -1,84 +1,82 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088542BD029
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 15:50:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88712FA0D4
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 15:50:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759938638; cv=none; b=CsT/XArcMCCrIKjLUJIppdkP3JihGDudA8FymwzxzacmS3KX65OtDz/tENV6/JEjQIoXsaenwAVjDEmcBAVAFFnf0dHl/B0nDpTD5eYaGXgF1txyYJDbMLsCC8iQJUnsTcWebG6iovv7bnECnWxWvPyzUQOSCim7VyK7IR8nzz0=
+	t=1759938641; cv=none; b=IlGfsVHSPFHKEi982VV9gVp14GRA2aKh7ufcpZ3rabX5W3POl+xU4J5BwVcAM47kc1OtCoKSTg+HSuBZQdnz7kGYXQwn9DzsWTFZTmcY0S0qWdBn4pIJ7kx2qAaGgV5o09atjr1MFC2XOtFwU1JLvSbPu+nJLTjLg4S5O6jm4jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759938638; c=relaxed/simple;
-	bh=66FCJEvYqc6Jn17TTlu0WcYnmulP/uN54b11hrH+ORk=;
+	s=arc-20240116; t=1759938641; c=relaxed/simple;
+	bh=vcvMa8wtVyOzYndKQnu2aBcSj2IYsQVvvDCNZ7zSknE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=AR8ZE7slsk8VkJi0TMOKOx3YlBCv64gW+2E3OoXK9HaZuRylzEJsWQh+x6migpFs0c6mb5RUXxRgYTI2/z4jaY7wVVFkz8xXEr032vLK/k5JkCrO85PiHzKmy59yq5OH9exH0qTYMhI8TAO8Atb6tqR64A37kQJdxQ29o4HolrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YNcwgIt+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RVcYwC/Z; arc=none smtp.client-ip=202.12.124.145
+	 In-Reply-To:To:Cc; b=ATVgUnrjEv9d0+lbCa/XzanaGBXV3+V3uP7h1XbosmnGT6wOQDe5GTjzT7FvFHcqEVPwT8JSl5T1P8hgr6rPl1SWWu9IYE2qa9ytdVZ5dvIt73BQ4KrOcRVG8DA+Sh67Zt3d5WYYRYd3iDfSJ66hz3SUqNtLzPnIXCmZIOpdb1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oqljE1hX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=r1/EB5Dx; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YNcwgIt+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RVcYwC/Z"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1ED1F1D00556;
-	Wed,  8 Oct 2025 11:50:36 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oqljE1hX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="r1/EB5Dx"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D9C707A05B5;
+	Wed,  8 Oct 2025 11:50:38 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 08 Oct 2025 11:50:36 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 08 Oct 2025 11:50:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759938635;
-	 x=1760025035; bh=fWG/JdWKg4Nite0P8m0/V3mzl5YOoj6GprAWsLKZiKU=; b=
-	YNcwgIt+37+0rVPxsXjFfAmab+9KmcLa2Z0R5vLhqDwZPM4Onnmy5G+O0g3cNJkG
-	8WFKv02eBxpEj3gimqCtbtploz8NUB2MTtHHN40LAfCOap0BOaa3JBvPVu2+RxM9
-	yZfINOuCc5zSYSG2OYVhfWFq59gEmxI/NOjmBYNLPqs/jrwl6B1x33bc9vIKJJYt
-	CQ5TkVUKSODLOeFqsyX5CzYlGWQPS+t8Ond7jEFRcbAUd5Nmijzyowaw2N7IDe+3
-	J260m2edoh5bBZN+9FB46EHoREj+2/IHfAZgQkqg5K3z+yBPnC1OLoXALpMClfb4
-	NCfkb03p97UnbWcpPVwF0A==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759938638;
+	 x=1760025038; bh=aBZuE8v0KBFOKn07bqyCKbI+69hKgFvVUZFidmmAP0Q=; b=
+	oqljE1hXT/BNzwc8pJKZ1aEf2H/6nSid1yEMioN8N7JlaophEd2PU9qzKGRX0F9I
+	w/ynG2goM0J5rQf8ZoYy3gLzL+niABH420L2sZTWhoH9ZYWcQqtGf13x9c6w5vBp
+	d9oQUiCV+hlvPzR45j9rWD4rEV8RxUl46/jRLO0itYc+kMJ9OFRuFaYuRlG/vlaH
+	+j8JRDVdZi9QAecljDk8Wbcs0Tr61ahoG82gCGRJOQq23jM08WOVmWfVOaWRMT+A
+	M4tXHeiPKLIVr8Q3Qjro6O2l7NUhWj1DL6uwFfZ7FDZToSXnuh55ixS+XIy4xX4L
+	dnG+CNKzBtU45AL8wUWFfA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759938635; x=
-	1760025035; bh=fWG/JdWKg4Nite0P8m0/V3mzl5YOoj6GprAWsLKZiKU=; b=R
-	VcYwC/Zew+ayorgg8qfjozwIzxdlku7WbB8KQZqqykrzFaSKRz5m0C7LzPLDmjfH
-	62ZaKId49mVJtsYBVdha6nJUoGXigMmMPpcW5coMpYXzvqob6+Sbm6B5bmoFBsIw
-	MYSoO/RU8f0PRrgdEfujLwOLXYR+1o0Y1BjoDGOau9bNO7O0kMf2pSPXgFLPHJ1l
-	Nyp8/Dv0wpM0yFEoBPooR8850PEWh+B5D3Bl9PU9M65gAPFT1jLswAWdsMZrV4oS
-	Txb478yLDhAL+9uHx1OeLEnClfImNsUU7vAel/K1aXhywk0r1YsZ86SostEqtSQq
-	Mfz4YAvnjzy0V5NJBjfrg==
-X-ME-Sender: <xms:S4jmaOPWYLp1_8Gq1c45mKqaeT8ATQQKvJji_Nvrg61VPOKHpZo_Zw>
-    <xme:S4jmaAqyAEcXpYE-TPt1QvnlvQ2CVjQShXTDs2am73v2l_7yrZ0YXIzNKlNsXTUUl
-    JZamcKb2w-bDb25Cl1R7InTRLbcvRMl3Cjr4Yx0u99rsH9hg2fz8Q>
-X-ME-Received: <xmr:S4jmaPEkPPHkZJf46lz0tG7LkIapsOypcOsS21_uJlG8HAafuuib4OKib61YvvzGOprc2w4DGcdjv7cN-4hMs5QRKJ6I0669FqcE2BIP>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdefjedtucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759938638; x=
+	1760025038; bh=aBZuE8v0KBFOKn07bqyCKbI+69hKgFvVUZFidmmAP0Q=; b=r
+	1/EB5DxdVRCV8bwJTWV1ggP+DwJSS54Y+hkqfZkjq6tUNqGNCRAAzJ4nTjbn3cyn
+	lkQSO3dDCLgygFPzcqRfmNSWvW4upyt2XEhnVBfPk1oC7EBVHco5Qjr6paVuIcrT
+	sfGcpWpgf1fIYupJoDJhTWYGH/tpDJ+IIJrwBMAi7x2AyXqmkmb5Q+DAh5ddxSp6
+	Ic6DvV6rsbvTNkxa+PHZfk+U5BrctPRYy3YXxwb97LYVa4+lWvRBLL47KnB4X3HT
+	BKaux7kR3YQi39/B5obCDirOy1L/bg2g0FtGTckUUYPCjjbB7b5I04K/8W4S6fod
+	arYa+BIaAb3dRTb6L6H+g==
+X-ME-Sender: <xms:TojmaP_fXjHFyRM5iRcUzQ-UQMxGfRouuoc52XU8pZFEDSwI5jNZ-g>
+    <xme:TojmaPa6KdstE5lqxCfgd9M7yaNiDjfd0jBYfv2tMnf-Hn37qjZiiPc3A7JQTUB4g
+    -gzs_84_WqFjpxMeQPMXWX1UtfzbeLkwLITJ2HVf0vhVXBGB0F_P8o>
+X-ME-Received: <xmr:TojmaG35SMYEC1VvwUv8Bk_7Yuq30KZeXvarOqYdSF26_e-Ve-6ff4dHiiJwKSmwkT5wFFhCitlLj1IdmEkLQ9iEsO763rN5OemX9IcM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdefjeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpefgueduueefheehhfdtvedtudffuddttdetgeevffevieejvdfgfedugefgleeuffen
-    ucffohhmrghinheprhgvfhdrnhgrmhgvpdhrvghfrdhtrghrghgvthenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhn
-    sggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvgesth
-    htrgihlhhorhhrrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:S4jmaFqw5a_Afu5dciddUGqkNAcJeAFvLbWWBuow48i2AaLAfVgGWA>
-    <xmx:S4jmaIbBqkbgI5T-Xnue6Et8ma2YlEULk5XnuPPqRpEnOJcscWmqTQ>
-    <xmx:S4jmaOXoSquv68Unwj3T5-g0oXy2eCOzBhjyMIApEz1tBc690It0Rg>
-    <xmx:S4jmaB9eR5MYfrLps6-0Mif8fMN6KyVnR0gv44V6DfQAsZRjlImeMw>
-    <xmx:S4jmaPNYv8niDrtv7FVCWqN0L-df07QFv53sQMYF8dSXlovsylZ2GaD0>
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrg
+    ihlhhorhhrrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:TojmaCaRk1c2aLIR10IX0hzPCeoYKJOEu5A0s1D6915Xmkn3Qp9mkg>
+    <xmx:TojmaGLAugcZCvdE767Qb-RTaiN6Z7XQKvDsPzA9FukgZwy87r_YBQ>
+    <xmx:TojmaJEU5PjgEKngMtlrLKpd6-b2sKEtJY9Sb6RyJzBZo-z0ElLQIw>
+    <xmx:TojmaFt-S6UhZVhwX_71hHG_TaLzUCSdQgMcBN367yIZz60N_E6N2Q>
+    <xmx:TojmaD7bs10bB4z2OhXPS62JEnVtfPedLgX7ONf5PJWh1QqcV7j_vIze>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Oct 2025 11:50:34 -0400 (EDT)
+ 8 Oct 2025 11:50:37 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0d1b140c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 8 Oct 2025 15:50:33 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 9a056701 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 8 Oct 2025 15:50:37 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 08 Oct 2025 17:50:18 +0200
-Subject: [PATCH v2 03/14] refs: fully reset `struct ref_iterator::ref` on
- iteration
+Date: Wed, 08 Oct 2025 17:50:19 +0200
+Subject: [PATCH v2 04/14] refs: refactor reference status flags
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251008-b4-pks-ref-filter-skip-parsing-objects-v2-3-76e30d5c9542@pks.im>
+Message-Id: <20251008-b4-pks-ref-filter-skip-parsing-objects-v2-4-76e30d5c9542@pks.im>
 References: <20251008-b4-pks-ref-filter-skip-parsing-objects-v2-0-76e30d5c9542@pks.im>
 In-Reply-To: <20251008-b4-pks-ref-filter-skip-parsing-objects-v2-0-76e30d5c9542@pks.im>
 To: git@vger.kernel.org
@@ -96,87 +94,82 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
  Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.3
 
-With the introduction of the `struct ref_iterator::ref` field it now is
-a whole lot easier to introduce new fields that become accessible to the
-caller without having to adapt every single callsite. But there's a
-downside: when a new field is introduced we always have to adapt all
-backends to set that field.
+The reference flags encode information like whether or not a reference
+is a symbolic reference or whether it may be broken. This information is
+stored in a `int flags` bitfield, which is in conflict with our modern
+best practices; we tend to use an unsigned integer to store flags.
 
-This isn't something we can avoid in the general case: when the new
-field is expected to be populated by all backends we of course cannot
-avoid doing so. But new fields may be entirely optional, in which case
-we'd still have such churn. And furthermore, it is very easy right now
-to leak state from a previous iteration into the next iteration.
-
-Address this issue by ensuring that the reference backends all fully
-reset the field on every single iteration. This ensures that no state
-from previous iterations can leak into the next one. And it ensures that
-any newly introduced fields will be zeroed out by default.
-
-Note that we don't have to explicitly adapt the "files" backend, as it
-uses the `cache_ref_iterator` internally. Furthermore, other "wrapping"
-iterators like for example the `prefix_ref_iterator` copy around the
-whole reference, so these don't need to be adapted either.
+Change the type of the field to be `unsigned`. While at it, refactor the
+individual flags to be part of an `enum` instead of using preprocessor
+defines.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/packed-backend.c   | 3 ++-
- refs/ref-cache.c        | 1 +
- refs/reftable-backend.c | 1 +
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ refs.h | 41 +++++++++++++++++++++--------------------
+ 1 file changed, 21 insertions(+), 20 deletions(-)
 
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 7987acdc96..711e07f832 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -882,6 +882,7 @@ static int next_record(struct packed_ref_iterator *iter)
- {
- 	const char *p, *eol;
+diff --git a/refs.h b/refs.h
+index 68d235438c..4f0a685714 100644
+--- a/refs.h
++++ b/refs.h
+@@ -333,27 +333,28 @@ struct ref_transaction;
+  * stored in ref_iterator::flags. Other bits are for internal use
+  * only:
+  */
++enum reference_status {
++	/* Reference is a symbolic reference. */
++	REF_ISSYMREF = (1 << 0),
  
-+	memset(&iter->base.ref, 0, sizeof(iter->base.ref));
- 	strbuf_reset(&iter->refname_buf);
+-/* Reference is a symbolic reference. */
+-#define REF_ISSYMREF 0x01
++	/* Reference is a packed reference. */
++	REF_ISPACKED = (1 << 1),
  
- 	/*
-@@ -916,6 +917,7 @@ static int next_record(struct packed_ref_iterator *iter)
- 	    !isspace(*p++))
- 		die_invalid_line(iter->snapshot->refs->path,
- 				 iter->pos, iter->eof - iter->pos);
-+	iter->base.ref.oid = &iter->oid;
+-/* Reference is a packed reference. */
+-#define REF_ISPACKED 0x02
+-
+-/*
+- * Reference cannot be resolved to an object name: dangling symbolic
+- * reference (directly or indirectly), corrupt reference file,
+- * reference exists but name is bad, or symbolic reference refers to
+- * ill-formatted reference name.
+- */
+-#define REF_ISBROKEN 0x04
++	/*
++	 * Reference cannot be resolved to an object name: dangling symbolic
++	 * reference (directly or indirectly), corrupt reference file,
++	 * reference exists but name is bad, or symbolic reference refers to
++	 * ill-formatted reference name.
++	 */
++	REF_ISBROKEN = (1 << 2),
  
- 	eol = memchr(p, '\n', iter->eof - p);
- 	if (!eol)
-@@ -1194,7 +1196,6 @@ static struct ref_iterator *packed_ref_iterator_begin(
- 	iter->snapshot = snapshot;
- 	acquire_snapshot(snapshot);
- 	strbuf_init(&iter->refname_buf, 0);
--	iter->base.ref.oid = &iter->oid;
- 	iter->repo = ref_store->repo;
- 	iter->flags = flags;
+-/*
+- * Reference name is not well formed.
+- *
+- * See git-check-ref-format(1) for the definition of well formed ref names.
+- */
+-#define REF_BAD_NAME 0x08
++	/*
++	 * Reference name is not well formed.
++	 *
++	 * See git-check-ref-format(1) for the definition of well formed ref names.
++	 */
++	REF_BAD_NAME = (1 << 3),
++};
  
-diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-index 97555fa118..4726de430d 100644
---- a/refs/ref-cache.c
-+++ b/refs/ref-cache.c
-@@ -425,6 +425,7 @@ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
- 			level->prefix_state = entry_prefix_state;
- 			level->index = -1;
- 		} else {
-+			memset(&iter->base.ref, 0, sizeof(iter->base.ref));
- 			iter->base.ref.name = entry->name;
- 			iter->base.ref.target = entry->u.value.referent;
- 			iter->base.ref.oid = &entry->u.value.oid;
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 7fbc77492e..1e047fddae 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -703,6 +703,7 @@ static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
- 					    &iter->oid, flags))
- 				continue;
+ /* A reference passed to `for_each_ref()`-style callbacks. */
+ struct reference {
+@@ -370,8 +371,8 @@ struct reference {
+ 	 */
+ 	const struct object_id *oid;
  
-+		memset(&iter->base.ref, 0, sizeof(iter->base.ref));
- 		iter->base.ref.name = iter->ref.refname;
- 		iter->base.ref.target = referent;
- 		iter->base.ref.oid = &iter->oid;
+-	/* A bitfield of `REF_` flags. */
+-	int flags;
++	/* A bitfield of `enum reference_status` flags. */
++	unsigned flags;
+ };
+ 
+ /*
 
 -- 
 2.51.0.764.g787ff6f08a.dirty
