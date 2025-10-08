@@ -1,70 +1,69 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D052472AE
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 19:25:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C0B25A2C9
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 19:25:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759951542; cv=none; b=EDkEGBKXQ+sQ7zfSbvcQgXZsf+KXwK1cBNA58ITIWO8BeIL4n/0Zj6s1HmZI3i3Q4Ugnvx34sz6fth6QWW8De91sHAGVXtlY2Y9ZSD+XrcDtWKWQegk/F1eBz+uJ29k5h2t/MufKa1NWghxepBV5hDnZk9pZqvoPavS1yiaL0zw=
+	t=1759951544; cv=none; b=OXhyMfPCaQbrsRnrUvO0yI7KfSz3g3aSyoZY+3vf6I1uXxYoJn3IB39c44JG8nO2Wc9W1X18c2B6hlbHLKToiXORgtLUzWGPtPto8CJKrpdpi9fB7YiIJtwccb2UEdVhGnL2fccW1BBCNds3Y6ehbkgYQkgXi9gkB5RG3Dg+Fc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759951542; c=relaxed/simple;
-	bh=xI/oaUFJ87OCGoAV6qKxz46gd5Mj/kifGGtoQH2TLUE=;
+	s=arc-20240116; t=1759951544; c=relaxed/simple;
+	bh=iGOZkxMTSTmY0eE5oM8AQbv/QZfJLqoJgqUrqYgScVQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=AZsqoQ1ud8/SfVkUuhCNlZ85DEz6v5RchxnFfJ8lMLqUKsnICEaBTiK5EDJKGnS8SbEn6TZvN4pWXE9xIJAIZwcc3/uFDbwkF90fK3OqmMjMbwsA1jz8jwG3ymJoaQpmoBlvM0t8djL3qAb9Iz33aLLWEPu7pOa3+3olEqYkMWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dK++1ub5; arc=none smtp.client-ip=209.85.210.174
+	 MIME-Version:To:Cc; b=YXTYoVjrn+zpCqjaW4iMIdwsMkofjyGqt2zNiDIuoWnFnx8LVcJ8o5u9bYLCisrRcVyYhpCwNcCEjEejtDOGI+Tgq3+ZHSOOHH63ghnqEGgTRbC+zdKc+H48OrIuLLbs4AqgcEBBM0v9IEh/mDzMWWTpi+9+d/Wuz7Tr3SdhGwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ca4bwBea; arc=none smtp.client-ip=209.85.215.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dK++1ub5"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-77f68fae1a8so225501b3a.1
-        for <git@vger.kernel.org>; Wed, 08 Oct 2025 12:25:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ca4bwBea"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-b49c1c130c9so97817a12.0
+        for <git@vger.kernel.org>; Wed, 08 Oct 2025 12:25:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759951540; x=1760556340; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1759951541; x=1760556341; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CoeMdqOpMiw1Qo41OfVH4D0qVkj6qtbPQAmjHv9WnNA=;
-        b=dK++1ub5oqiWe2xrGAMa8ISqAdANXf4PDGnwIM21dy5d4lZriqJVCbkPmXAEHqAjdO
-         mtJ0AmbOgyhCeiuRRM98QNMwef2TnhCXrQggK+OZqSyj2ibuimd9DS6LCwDHFgxCKp0h
-         1bb+yWpMYga4tnch8bmxroaZ+pUYl1mdGT9sdvOVQxMrI7/sPIU39uesnCfNEqcuZgg9
-         NmFe7R2lrhlHnkEBAwvXoSIhg0qhVyHFEaSOU59ZwOwycCcmLanLciJcNtcu3IMq6RXp
-         PuliPAw+ptaerFbqAkw49jxWghAHw02WpNVtP5qj6Mfh3nGhzJB0WxDeyp0pD9gjNjcN
-         LtHQ==
+        bh=XPlOMOvjyql9nJxMHMUwxPgTTCb/RP3ym4kIpviEZAY=;
+        b=Ca4bwBeazJU7s4etDfT6b/HPniU23znkDj49C/AaFWQuKSCAjE27ZX2TJl7SpCr0to
+         7PIcK+EBqc5qEPGjHQI2+9/O34Fsxj2g5vV3LknJPqDaYCFwhWZEuQiHhMcIwpaRul+A
+         MSd8mVFv4MrwhlH25LqG+atUq3NtiXpAGJXdieBZcUnUPpap6uenmQ7+sRSrG2u7h9nw
+         ivNf7l357KEIXAi493tL9RFPgH0SI+GBcG8vgUXjSn/4dTw56o9k5Ny8buneXG8aWtm9
+         y1a9tzvxlg2yp1s3DVfnmwFuEMObx7AGIo3FF8PczWoGLBmsmvxQMtNqHqVo25Y3ECyw
+         Vxvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759951540; x=1760556340;
+        d=1e100.net; s=20230601; t=1759951541; x=1760556341;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CoeMdqOpMiw1Qo41OfVH4D0qVkj6qtbPQAmjHv9WnNA=;
-        b=JjXRtEkMaKYsuTybrCT2lmuDFmtbdhFdePX32bhEzMy5vytwdoou3JXRTHYZ/HlTzq
-         PE6ifw/i7eGVV5F80SsgcXDH2cnOon63D6HCPdWS7BbakWsOE+TnbB2kVLdCuwDV9zKl
-         /TgGPVYpPLIKefJ7is9EZ22m+Mq5zikUc2VhygG+pGV5fz0B2hKiSMSSDkgO9gMAMj0b
-         GxCgJrItrkZ9c334A35gYh8JUVv4KV//ZB6stqSwc/YB8QSaP6fkEyN/3stQyzsz1igt
-         mXWC4mNQdQHptY/3gBPslq0/6dK27n6BrABkbAKROJGzilofYVy0otADHUPYWjR0gN13
-         jPPQ==
-X-Gm-Message-State: AOJu0YzZdYRw0fC6WJObB2tzw9hXbw2ZCHui1KV4yB3hF1osV9JeY0+w
-	PrPA8jzCHr1lCd7c5W+0FkfTC7O073cWw8uhf9hii1SYLi8IheaUiaRSblooGg==
-X-Gm-Gg: ASbGncshV9X7ZZUMn6VoxdSF3P8qB0Ugj6Ds7zEGVekUevxGEkpN7NM4tk/UfawD4EE
-	hX1nGutyYEPCO+FcJsrQtAMEkpl9HdBX3Gu1hHe3hvEbbWAPtUgChW0VfKfpq8uqzekx2kFxoGs
-	54GrZfV9ujrG0rcC+aLh9XiylmjTwRLvN1u0cxmIMImoSSxQLQDmf9wUBjwF3QNiXwbczmBmdqV
-	wcSLMIpVxizBUMh8i574eQyoL2HMz7O3zOQW6Hvfd3KI9FvSDh2MwfEOFDuCc4hzzRTYoQYkHQB
-	wR9DmrL9+GAYZ3rOSJkO5P9vPfN3C3V/4AsFlhq0dHT+//ldKXOwccJf2uTtTeMQaGmJV+whzYS
-	baN7s7LWTrZ5M8xfJoaPIfD4EXtA833pfuUxKKMDRiV6H/CCTzkM=
-X-Google-Smtp-Source: AGHT+IF4Rc5ldPTxV2TiHd+Hza4YuZaOkHw8HvMhXjC4CtLAraj+K+adD3sl/LiPruOeE19PElr/0Q==
-X-Received: by 2002:a05:6a20:918b:b0:262:cbbc:3125 with SMTP id adf61e73a8af0-32da8139533mr6477229637.20.1759951540157;
-        Wed, 08 Oct 2025 12:25:40 -0700 (PDT)
+        bh=XPlOMOvjyql9nJxMHMUwxPgTTCb/RP3ym4kIpviEZAY=;
+        b=F1Os+giWemsU5hTtn2YSac5fmOjH3OO6wHPZdXmgRrwNQqHfUeUnib3VDfGaTuxI5H
+         tzUkQz/YANyzW77u97zR6t+bkyfzv4wAYEAhuJQ4IvkylPl30AxMpqW0PNA1KnLGH5B1
+         6UFYaBMX9vWioXY0cT3mSD/ESckFbyl5opitHCDtDUviGJy83W3JqwQ6EiZsJbEYligc
+         lqRnvDGa63hvywatL0NJB5IhkXsmhVLVubsJ8khD8bvMsbgSSHfLGRM4jRKCKneYQqq0
+         HhaelbuCZ/672S73uXTtZnuXT2Hv46DHTN5RYt7ywq4fWvS1qATkFCM0LPJeQXg5cmsK
+         8/iQ==
+X-Gm-Message-State: AOJu0Yzana2mIbXslHAU/48/+p4gXiIPpchDEgi0AaJe0FZ87CuGYWdh
+	O7vy7hmKqWw/YBTGXidya7TR4xacS/1FgGPjOihdKe5g0vtR31ly+X82Dq0VmwLr
+X-Gm-Gg: ASbGncuIZNWmJ0VqNrH084KKkKjeu3BM8Pm98aSJlRk61ULvfHLVVsF/iIUa19bk7Kq
+	qEv/aB3ZIOwFTzaady/j17DE3Rlb70tGHlOjDUnPM4w9JaQ26kwJ+3qLkUXUqR4zSjhpiSSP+0U
+	Iq3HyWRvhoGWku/y0hQ/t/EUQMBY9lkIuxnIa+AaVcgXuneO5Jguk6D+ZNo5Lp7rJId0Y+aBMm2
+	40LhYDbp7Z97NMVjo7jxy/pxeST7F53SvA4RPlOf0/D7kvy7cD/dbS5uHDoQB5ICHYuR/XjQPfP
+	4rag2evbok9juzmeLH2e9qvpNfnLntFNV3zOoIRo4UnQGgJvt3+jH1xJmwGXhkBm0xsakDFcurP
+	ZM+orpiIw9/XwOxOjEpnvIWrTI6Vvb9orr5dha1lvQV21zMeYNBPslJdzQhNlXA==
+X-Google-Smtp-Source: AGHT+IHPA1+gA+VsK3evW2zKtrW6ZH7aICf6LtjjE9YanZASp1oqEkvbRC7Q+RrfzzhIlWRtaz0yNQ==
+X-Received: by 2002:a17:902:d50f:b0:278:9051:8ea9 with SMTP id d9443c01a7336-290272dc4a7mr66728615ad.40.1759951541291;
+        Wed, 08 Oct 2025 12:25:41 -0700 (PDT)
 Received: from [127.0.0.1] ([172.184.220.195])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-794d510f628sm510307b3a.29.2025.10.08.12.25.39
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29034de6e2asm5228495ad.23.2025.10.08.12.25.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Oct 2025 12:25:39 -0700 (PDT)
-Message-Id: <122774d4cc8fa4e9184a0f82e9b6e562363ea433.1759951536.git.gitgitgadget@gmail.com>
+        Wed, 08 Oct 2025 12:25:40 -0700 (PDT)
+Message-Id: <323e81f2fd4efadf21bf5a77fe164d09e12665b6.1759951536.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1976.v2.git.1759951536.gitgitgadget@gmail.com>
 References: <pull.1976.git.1758656702.gitgitgadget@gmail.com>
 	<pull.1976.v2.git.1759951536.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 08 Oct 2025 19:25:34 +0000
-Subject: [PATCH v2 2/4] doc: git-pull: clarify options for integrating remote
- branch
+Date: Wed, 08 Oct 2025 19:25:35 +0000
+Subject: [PATCH v2 3/4] doc: git-pull: delete the example
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,65 +81,56 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
 
 From: Julia Evans <julia@jvns.ca>
 
-From user feedback:
+From user feedback: this example is confusing because it implies that
+`git pull` will run `git merge` by default, but the default is
+`--ff-only`.
 
-- One user is confused about the current default ("I was convinced that
-  the git default was still to merge on pull")
-- One user is confused about why "git fetch" isn't mentioned earlier
-- One user says they always forget what the arguments to `git pull` are
-  and that it's not immediately obvious that `--no-rebase` means "merge"
-- One user wants `--ff-only` to be mentioned
-
-Resolve this by listing the options for integrating the the remote
-branch. This should help users figure out at a glance which one they
-want to do, and make it clearer that --ff-only is the default.
+We could instead show an example of a fast-forward merge, but that may
+not add a lot since fast-forward merges are relatively simple. This lets
+us keep the description short.
 
 Signed-off-by: Julia Evans <julia@jvns.ca>
 ---
- Documentation/git-pull.adoc | 30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ Documentation/git-pull.adoc | 26 --------------------------
+ 1 file changed, 26 deletions(-)
 
 diff --git a/Documentation/git-pull.adoc b/Documentation/git-pull.adoc
-index a3d248dd1d..6e9fa14967 100644
+index 6e9fa14967..dc93e5e6d7 100644
 --- a/Documentation/git-pull.adoc
 +++ b/Documentation/git-pull.adoc
-@@ -15,17 +15,25 @@ SYNOPSIS
- DESCRIPTION
- -----------
+@@ -35,32 +35,6 @@ There are 4 main options for integrating the remote branch:
+ You can also set the configuration options `pull.rebase`, `pull.squash`,
+ or `pull.ff` with your preferred behaviour.
  
--Incorporates changes from a remote repository into the current branch.
--If the current branch is behind the remote, then by default it will
--fast-forward the current branch to match the remote.  If the current
--branch and the remote have diverged, the user needs to specify how to
--reconcile the divergent branches with `--rebase` or `--no-rebase` (or
--the corresponding configuration option in `pull.rebase`).
+-Assume the following history exists and the current branch is
+-"`master`":
 -
--More precisely, `git pull` runs `git fetch` with the given parameters
--and then depending on configuration options or command line flags,
--will call either `git rebase` or `git merge` to reconcile diverging
--branches.
-+Integrate changes from a remote repository into the current branch.
-+
-+First, `git pull` runs `git fetch` with the same arguments
-+(excluding merge options) to fetch remote branch(es).
-+Then it decides which remote branch to integrate: if you run `git pull`
-+with no arguments this defaults to the <<UPSTREAM-BRANCHES,upstream>>
-+for the current branch.
-+Then it integrates that branch into the current branch.
-+
-+There are 4 main options for integrating the remote branch:
-+
-+1. `git pull --ff-only` will only do "fast-forward" updates: it
-+   fails if the remote branch has diverged. This is the default.
-+2. `git pull --rebase` runs `git rebase`
-+3. `git pull --no-rebase` runs `git merge`.
-+4. `git pull --squash` runs `git merge --squash`
-+
-+You can also set the configuration options `pull.rebase`, `pull.squash`,
-+or `pull.ff` with your preferred behaviour.
- 
- Assume the following history exists and the current branch is
- "`master`":
+-------------
+-	  A---B---C master on origin
+-	 /
+-    D---E---F---G master
+-	^
+-	origin/master in your repository
+-------------
+-
+-Then "`git pull`" will fetch and replay the changes from the remote
+-`master` branch since it diverged from the local `master` (i.e., `E`)
+-until its current commit (`C`) on top of `master` and record the
+-result in a new commit along with the names of the two parent commits
+-and a log message from the user describing the changes.
+-
+-------------
+-	  A---B---C origin/master
+-	 /         \
+-    D---E---F---G---H master
+-------------
+-
+-See linkgit:git-merge[1] for details, including how conflicts
+-are presented and handled.
+-
+ In Git 1.7.0 or later, to cancel a conflicting merge, use
+ `git reset --merge`.  *Warning*: In older versions of Git, running 'git pull'
+ with uncommitted changes is discouraged: while possible, it leaves you
 -- 
 gitgitgadget
 
