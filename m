@@ -1,83 +1,84 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1CD1F3B9E
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 06:27:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640E82E8E0B
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 06:27:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759904850; cv=none; b=FHulomil/fq2Oe/DSPtpeUQTlYpHDApoXPkgE1opqonpP68FUQaN59w7s82tsK1KxWuxjDhvo5WxJ6BXgICe5yBomxF7alW0MnCyaiOi1lHqnLPC2DWio5H+2GX1sJbRtXgMtxvhhyHdGb0BV+PsKVvgv+ISkz/UlsQ0YS2rZms=
+	t=1759904852; cv=none; b=JPwefU3jvQmIoW/MqaW3VugWWtM6B+bxTdE0dofcZG2EqicCKKjbk3qVTn+ovZRJGm3uuSuPeyAirXelBWqx+rIJ0SIDV9eV4WYWNobicAtUBwTxoNnDkGiNWFiJYm/B7YTchkKp60luZMfsXDTe3UwjB34jaN0GwIOfThVCdEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759904850; c=relaxed/simple;
-	bh=X2rbnNy5UoAR3lckQc9eQAtHG+WN4+nrFqiOFrCW8R4=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=MfzFrimhmo2E42v6Ht9rPFKi0VhTn4tnZyxqFYHN0O1sOak0/SL/CfRMVTDlvVhkFQs2pYGjh1ovcyqb7SdikXKqpfOJg1A9uhe6UxtVJ0+OEEJm1syRCLEVGmTzOvugbbhACCe6xIeC/lqr+hIgT5CE++rwsaP960Cg0WehY7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mhr4HC6B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fC09fKMG; arc=none smtp.client-ip=202.12.124.147
+	s=arc-20240116; t=1759904852; c=relaxed/simple;
+	bh=X48fVcXeWKLezWR5uO8U7U7OPweTAnWcyK7+CYgwNks=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=o5VPHTX0bX/coq4G2QNqu3ZZuv0CyxHNzKZAkYq1ofM/COOqTxouNHneq6TF/pCSk6TSrUt7ouEHAs0xVV+l4svB4XRPrEInpSO4sCcDJ4f2lxTbd1m+GjY5HbzVD0DOGddNVkPSkj7ur9iSWC3Rbxcc6CDiaJ0Oflvsd4smUnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lrGkOOsJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XbuvPZLG; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mhr4HC6B";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fC09fKMG"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 736FB1D0015D;
-	Wed,  8 Oct 2025 02:27:27 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lrGkOOsJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XbuvPZLG"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 686427A02C1;
+	Wed,  8 Oct 2025 02:27:29 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Wed, 08 Oct 2025 02:27:27 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 08 Oct 2025 02:27:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1759904847; x=1759991247; bh=Yry2yy71UR
-	8A6jnrz9M7zsYM+hZQFVKvovtstd7C4C8=; b=mhr4HC6BZB6ncW68ld4diP6rpo
-	NoO8X98/04LT7phLsqX9VyPX+WNCQHEAqSk4gJAnsOMr6tnknMFDMtsKb0SiGgAf
-	n7RGXRIZtxgbiUm5/azmhvh4RFacQrss2GmoN90XDxJKmEwuLkrWPnXCORMElXAH
-	DgLsHieYgSNkJAXkcgkbO8p6LoWs6l9487gQimDRvMggcrfjy4Assco+VzqxO0tQ
-	SrGotWnU85vRzdIF6wS0K8HqMa0wySI1rR3e4IVXZfD90DQWEpgxXATNG64Ynhjj
-	d15/WqjNkW0nGJPhuaPnrWMwe+AHvXc+4lkHHCfLLKfo8VbsMOPDfiqgizZQ==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759904849;
+	 x=1759991249; bh=m8Rbpp5ZNaIJBLJ8IQzCb1aLUcdUb+V8HPltwOlrYeE=; b=
+	lrGkOOsJvARHxjW+GENjoe7WZjqvoE96lwzVdzXWAKTBVZs8AxjS5kpJPrwziLMu
+	9rz2NAYN3Qqr/ekzPmc2iGGmXCBDIHdjvE9SkJqqIHR4ctzaSOFFOOFTRuZLLC5S
+	/g0oJwrBn39Di6Bd0hR3i6GEvKKf+6V33znpoxDFGiiRHY6UI6P67PrrVzIaF7QN
+	g/5j2k7BT89Fe1TLRi4+wMJKdvjBa263syl/Y+BRhEBn7NvAOS4+U5slqoijx7hO
+	WtImKxKCAaopIp+SOa8XUQnFq7P3Xe/TZiq/OekOgeR9a/efWZDvAHsjGvZ61sHt
+	0eqLQ44VF2+jkWXT6RbDLg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1759904847; x=1759991247; bh=Yry2yy71UR8A6jnrz9M7zsYM+hZQ
-	FVKvovtstd7C4C8=; b=fC09fKMG4wX0d6joa9PxYIpr8oL/U1/QxfPjkHt8MvtS
-	9wK7pKUgWYfPHIc4//sRPa1crF/ybupknRgIIDCrQ1qHJzZl/EEmmswmojeag0wW
-	5/YJWEpl8+R5RFe2XzTCJtqJnEN8bZS9FMsqH2ixByEYDsv197ZY2KC13ahORCY2
-	WZLBeV1LE4JtADRNCXT+s2vZzmunFMZmN1frwhtdVppwS1aGQU1K2qngVMGmPggN
-	rS4AfgRm5tUmXQE1FOs+jEd+l6E/FePEfeysuZuvE4LZ5/DSgXxhSXKWA1WDFzlb
-	oLuoQg8vfnPOtmFcps558ghPy4WWw6CAS7SknowrrQ==
-X-ME-Sender: <xms:TgTmaDmd-qMgQ1VpqxBSSCeH74vBI7k3fWcmmCeoAhuEPl1BvI-QbA>
-    <xme:TgTmaF4i6-dl40XQ2SVzgt9-89obl9CHblW7xrYQF-P-nKdwksEVbUqVEEHLhx4GU
-    BzoF8Dfa-3VgDkRwxtmE6LGHIryOoJ1Ce-XtDmf04eBoQc3yttLkg>
-X-ME-Received: <xmr:TgTmaP3TMsa-Jkgf4G0lPrj-Vg_OnGQjfGFbyx8um_1NdhyJ_ErTyKTUbM950ADadoTYqtJUGb03C1M6DZB-KVf5dEcqpU8nNOYklZyq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddvheekucetufdoteggodetrf
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759904849; x=
+	1759991249; bh=m8Rbpp5ZNaIJBLJ8IQzCb1aLUcdUb+V8HPltwOlrYeE=; b=X
+	buvPZLGXKdW66p5piQ7n5DbhuNisUtkKAzvtZKrbcEYqYDbV9OWEZg1QIBLJaRw9
+	iBT/4i1IM2PpkHOErxAQL2sBdiVfApIvJFdp2wRJZ0KIF6Wn4NAAqUK/NmDV7ri0
+	/4UbBJyjKUb4x85V7pexiYExwsHOFjT8gG89h51vlh/o62r+RIlEimz+1V6tN8Rc
+	pZnazWLlNgSreKJKj3uH6zTWXguE0Hf7v5D4FoeZU3UXLjwbhMnOthDUqZesQhKx
+	gEFl//HFaj2K/fcdismImdArhipJg0EZd40hyR39w6uFQN5Fe9jn1Q26VL0x+Nkj
+	9N5wOIKCmtL9G859VJz/Q==
+X-ME-Sender: <xms:UQTmaG9pwrc0WlPHECoWE7rdyyatBB3zH8n6KYaLm1Vi3j_cl-umaw>
+    <xme:UQTmaFyZPeulI9d_egOC2WmwKXqrOjvHKyiTOmp0wOOkYCfT2jY4YpLve-CCh4ojT
+    OKxyBiL6SZ_KVRB8IjmhY7gR9satmzhp8Fxt5Rgwwzx5mpTLxpk4Q>
+X-ME-Received: <xmr:UQTmaCOyXz3HhM55uuX_HLxxORnsNHkn97nvCMqmUuDECBkCa3e54ycw7GgZtfwB5HU5SWWr4ibh9uLMxHbSVODsSFvteR-GmlaTEdNw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddvheejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffufffkgggtgffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    dvfeefgeevhffgtdevteehueejvefggfelvdfgudekveffueehkefhlefhlefgfeenucff
-    ohhmrghinhepghhithhhuhgsrdgtohhmpdhkvghrnhgvlhdrohhrghenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhn
-    sggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvghrihgtshhunhhshhhinhgv
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishdrthhorhgvkhesghhmrghilh
-    drtghomhdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvg
-    htpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
-    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:TgTmaIGuPlYVitb4PJlc-zZvLbcSMHviz_YU3TtReOUj42ByG-4yng>
-    <xmx:TgTmaGjBou7FAHhyCQTRbAaV-mOdQxhp1OZcftbeIiOPTDsvN5by_w>
-    <xmx:TgTmaDDHpzGaG-5LL_YB1CWzfvNdrINy0IBRDEI9fSL9jAhSdTTQbQ>
-    <xmx:TgTmaARAaKRrqs7t7-YiQcJrpmekaxOeSCcB2VrBrfwO76WN63FKMQ>
-    <xmx:TwTmaF7OXAZzZYmrzyUye415kcM9aOJR4e7jnVUYe6bR-2_oU0ENNEkl>
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtph
+    htthhopegvrhhitghsuhhnshhhihhnvgesghhmrghilhdrtghomhdprhgtphhtthhopegt
+    hhhrihhsrdhtohhrvghksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomhdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
+    hmgidruggvpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:UQTmaK9o9yLiCEmg2PVsoziNc_EtTY1_wJjW0UgIm28GSm8MslXV9w>
+    <xmx:UQTmaP5a95bTlJThRNAf_s-7fqA1r4m2rsi9GDNHun8p66Qo3_N7FQ>
+    <xmx:UQTmaA7w8YnPIhtSUNcwFLV8HeM4xKX5jxg0VPJBqjj6gbhNzpwBag>
+    <xmx:UQTmaIoaWw1vSOMKXby_U2PXPpU0E0IJVq3ygyiZVtvQl8yqGXk6fg>
+    <xmx:UQTmaLTtpqG6k-lnw-D40GC6GUK7xWyRqEJyjyUy0YagJljCfQlBOPRr>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Oct 2025 02:27:25 -0400 (EDT)
+ 8 Oct 2025 02:27:27 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 20ddd1ae (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 8 Oct 2025 06:27:23 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id ab9df59b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 8 Oct 2025 06:27:27 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 0/6] ci: improvements to our Rust infrastructure
-Date: Wed, 08 Oct 2025 08:27:11 +0200
-Message-Id: <20251008-b4-pks-ci-rust-v2-0-d556ee83c381@pks.im>
+Date: Wed, 08 Oct 2025 08:27:12 +0200
+Subject: [PATCH v2 1/6] ci: deduplicate calls to `apt-get update`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,10 +87,9 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAEAE5mgC/3WMyw6CMBBFf4XM2jHtWJ4r/8OwKDjKxAikg0RD+
- u9W9i7PvTlnA+UgrNBkGwReRWUaE9Ahg37w451RromBDOXWmBI7h/NDsRcML12wckRc+MrWBUO
- S5sA3ee/BS5t4EF2m8Nn7q/2tf1OrRYOn2uWGfMcl+3N6j/KENsb4BXVp+4ipAAAA
-X-Change-ID: 20251007-b4-pks-ci-rust-8422e6a8196e
+Message-Id: <20251008-b4-pks-ci-rust-v2-1-d556ee83c381@pks.im>
+References: <20251008-b4-pks-ci-rust-v2-0-d556ee83c381@pks.im>
+In-Reply-To: <20251008-b4-pks-ci-rust-v2-0-d556ee83c381@pks.im>
 To: git@vger.kernel.org
 Cc: Ezekiel Newren <ezekielnewren@gmail.com>, 
  "brian m. carlson" <sandals@crustytoothpaste.net>, 
@@ -99,87 +99,50 @@ Cc: Ezekiel Newren <ezekielnewren@gmail.com>,
  Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.14.3
 
-Hi,
+When installing dependencies we first check for the distribution that is
+in use and then we check for the specific job. In the first step we
+already install all dependencies required to build and test Git, whereas
+the second step installs a couple of additional dependencies that are
+only required to perform job-specific tasks.
 
-this small patch series introduces some improvements for our Rust
-infrastructure. Most importantly, it introduces a couple of static
-analysis checks to verify consistent formatting, use Clippy for linting
-and to verify our minimum supported Rust version.
+In both steps we use `apt-get update` to update our repository sources.
+This is unnecessary though: all platforms that use Aptitude would have
+already executed this command in the distro-specific step anyway.
 
-Furthermore, this series also introduces support for building with Rust
-enabled on Windows.
+Drop the redundant calls.
 
-The series is built on top of 45547b60ac (Merge branch 'master' of
-https://github.com/j6t/gitk, 2025-10-05) with ps/rust-balloon at
-e425c40aa0 (ci: enable Rust for breaking-changes jobs, 2025-10-02) and
-ps/gitlab-ci-windows-improvements at 3c4925c3f5 (t8020: fix test failure
-due to indeterministic tag sorting, 2025-10-02) merged into it.
-
-Changes in v2:
-  - Adjust comments for `encode_varint()` and `decode_varint()` based on
-    brian's feedback.
-  - Some small improvements to commit messages.
-  - Not changed is the default column limit used by Rust. I think using
-    the column limit of 100 used by the Rust ecosystem is sensible, but
-    if there is a majority advocating for a limit of 80 I'll adapt this.
-  - Link to v1: https://lore.kernel.org/r/20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (6):
-      ci: deduplicate calls to `apt-get update`
-      ci: check formatting of our Rust code
-      rust/varint: add safety comments
-      ci: check for common Rust mistakes via Clippy
-      ci: verify minimum supported Rust version
-      rust: support for Windows
+ ci/install-dependencies.sh | 4 ----
+ 1 file changed, 4 deletions(-)
 
- .github/workflows/main.yml | 15 +++++++++++++++
- .gitlab-ci.yml             | 13 ++++++++++++-
- Cargo.toml                 |  1 +
- Makefile                   | 14 ++++++++++++--
- ci/install-dependencies.sh | 17 +++++++++++++----
- ci/run-rust-checks.sh      | 22 ++++++++++++++++++++++
- meson.build                |  4 ++++
- src/cargo-meson.sh         | 11 +++++++++--
- src/varint.rs              | 15 +++++++++++++++
- 9 files changed, 103 insertions(+), 9 deletions(-)
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 0d3aa496fc..645d035250 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -120,21 +120,17 @@ esac
+ 
+ case "$jobname" in
+ ClangFormat)
+-	sudo apt-get -q update
+ 	sudo apt-get -q -y install clang-format
+ 	;;
+ StaticAnalysis)
+-	sudo apt-get -q update
+ 	sudo apt-get -q -y install coccinelle libcurl4-openssl-dev libssl-dev \
+ 		libexpat-dev gettext make
+ 	;;
+ sparse)
+-	sudo apt-get -q update -q
+ 	sudo apt-get -q -y install libssl-dev libcurl4-openssl-dev \
+ 		libexpat-dev gettext zlib1g-dev sparse
+ 	;;
+ Documentation)
+-	sudo apt-get -q update
+ 	sudo apt-get -q -y install asciidoc xmlto docbook-xsl-ns make
+ 
+ 	test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
 
-Range-diff versus v1:
-
-1:  26bd2c3713 ! 1:  fa3ba52997 ci: deduplicate calls to `apt-get update`
-    @@ Commit message
-         only required to perform job-specific tasks.
-     
-         In both steps we use `apt-get update` to update our repository sources.
-    -    This is unecessary though: all platforms that use Aptitude would have
-    +    This is unnecessary though: all platforms that use Aptitude would have
-         already executed this command in the distro-specific step anyway.
-     
-         Drop the redundant calls.
-2:  5116c20fd1 ! 2:  89e7b67d5c ci: check formatting of our Rust code
-    @@ Commit message
-         ci: check formatting of our Rust code
-     
-         Introduce a CI check that verifies that our Rust code is well-formatted.
-    -    This check uses rustfmt(1), which is the de-facto standard in the Rust
-    -    world.
-    +    This check uses `cargo fmt`, which is a wrapper around rustfmt(1) that
-    +    executes formatting for all Rust source files. rustfmt(1) itself is the
-    +    de-facto standard for formatting code in the Rust ecosystem.
-     
-         The rustfmt(1) tool allows to tweak the final format in theory. In
-         practice though, the Rust ecosystem has aligned on style "editions".
-3:  5b4c3303b7 < -:  ---------- rust/varint: add safety comments
--:  ---------- > 3:  3c91ec55dc rust/varint: add safety comments
-4:  68925b41c0 = 4:  481500d7b8 ci: check for common Rust mistakes via Clippy
-5:  c3f0943066 = 5:  09e73796ec ci: verify minimum supported Rust version
-6:  0f968950a8 = 6:  acd460fac5 rust: support for Windows
-
----
-base-commit: 8c8e270f2aba359479c4c2b4ab3c62726e5dac9d
-change-id: 20251007-b4-pks-ci-rust-8422e6a8196e
+-- 
+2.51.0.764.g787ff6f08a.dirty
 
