@@ -1,76 +1,107 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from avasout-peh-002.plus.net (avasout-peh-002.plus.net [212.159.14.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9DE720296E
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 21:55:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B08D20296E
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 21:56:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759960515; cv=none; b=LtGWSS7SUTUO9PrEAS3qxQKgfxfTKj8zb/yGOMz+z/ttOzfLY9lduARi16zZnSXsp0WcPDiBAomjhca2s4nTnQt/hIMqTNtROU5zrM6/abs6IIq2r9OpoNSjejKfhaLDU7lMGl35BfedVsNtBDSW/5ipFd2OwEquYl4T2E8S4ws=
+	t=1759960612; cv=none; b=MjSFbvdPPfpuBUJqQhyOc2qaWLrbd4iUzddWm+/EJb8qCckpxQrknmpPH2ntO/Yf0u9bVhBy4itdbWwp3CPU9f6dDgaWic9icDCL0GdbulrORLOVGkYKsWOiA5ClrnT6fj2Gt3K6Hv19bPm+wD/dbY/CKhhDjPt/BJ/j8nZijxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759960515; c=relaxed/simple;
-	bh=HMthtNjyBOol/LtsIEiYPP7KcMQx6FBr6XMF/pEaOzs=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nqT8zkmsP2Z4WIw+/AVTr6BbLK3Z79zePKKA++iLaN+sGUmlPW8Wl/1q5B38u9M7F4pqCHx7CI1EZfBdGNZNA85+As0g6+ReCwwzb2xtEdb2y7QASu2X7cZJdZsuUHBOyOS+gQ1zRSbsc/qwHdXcoT+GPjj9BmVBfVuNfFCs4Uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 598Lt9EN1728668
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Oct 2025 21:55:09 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Taylor Blau'" <me@ttaylorr.com>
-Cc: "'Luca Milanesio'" <luca.milanesio@gmail.com>, <git@vger.kernel.org>
-References: <aNxivuJEnSHbQNdr@fruit.crustytoothpaste.net> <E03F997F-1738-4CF6-B7D5-206183FA5BD1@gmail.com> <aN1RFvz7uGPnepxe@nand.local> <04f501dc330a$0ecd3010$2c679030$@nexbridge.com> <aObbWLBCbXsvuajS@nand.local>
-In-Reply-To: <aObbWLBCbXsvuajS@nand.local>
-Subject: RE: When should we release Git 3.0?
-Date: Wed, 8 Oct 2025 17:55:03 -0400
-Organization: Nexbridge Inc.
-Message-ID: <020a01dc389e$370c3f50$a524bdf0$@nexbridge.com>
+	s=arc-20240116; t=1759960612; c=relaxed/simple;
+	bh=9dsCqLtyEyFH6tO/cyo0FbCkkYI189s3N8VnQ3IbK5U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bP3uj2/bdESmQ3Byzf8AZJlLkqtX56R7A8osDapMqgmarndm1asdv7WbnnInT48ZO6gUygDdBlzuj9gE9DyQmbjawTS6qaNhFjpTh1AP8tU7CwMtUETayQ3Cvxh8f+zmV6YfSMDaoUIr0o/d+RENXPuHrluoRLIUA7KUoNVyTNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=qOVmllMt; arc=none smtp.client-ip=212.159.14.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="qOVmllMt"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id 6c9NvheGrIjCT6c9Ov9H4K; Wed, 08 Oct 2025 22:56:46 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1759960606; bh=eclV0xZ30b7j6hkLhHaEAX4DbGqev9A7/vawRXkM9lE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=qOVmllMtQtEsUaHSJKNyqlN3pRPMYUApUOnJH8X6QfTw2akzYIB68lpPUJqvjLm9B
+	 htgdIJK+5Tjb/dpJlguGomQCoSGRn6Xku7znS4XFbXkDMGz88dgvQVMQWkM+91cPbn
+	 34trdJtlqOcRHVY5E+mUzmGQJo5nkkpLeay8OTHbGvtyCRPR7+h/wmBznvbiQMfZ7U
+	 0RsD7DkTw+6/l9E/YvIiQZfA8bQl6Jlx1WfyS8bL5ksa8oa/ysqFhW6iVVVkBZTNnn
+	 REZHFACEoXeYTYIMoqqiUvmr+sNp0aTjO/INMTHe5CHp2Ub2njlHKxVA1jj39vRKqF
+	 dZ5dr3ai61uug==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=VvaAAP2n c=1 sm=1 tr=0 ts=68e6de1e
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=-TWQbYnkkKoubXSScKsA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <8e3aba11-90d7-4336-9cd4-b1fb4144bf69@ramsayjones.plus.com>
+Date: Wed, 8 Oct 2025 22:56:45 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQDc5ElCUINr1BANOCKnX9gjum1mMAHWZFQOAjM1ZSIBrBaUWQIERMz4tnmkACA=
-Content-Language: en-ca
-X-Antivirus: Norton (VPS 251008-6, 10/8/2025), Outbound message
-X-Antivirus-Status: Clean
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] doc: add some missing technical documents
+To: Patrick Steinhardt <ps@pks.im>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+ Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>
+References: <https://lore.kernel.org/git/bcb3b3a3-bb13-4808-9363-442b5f9be05f@ramsayjones.plus.com/>
+ <20251002221233.541844-1-ramsay@ramsayjones.plus.com>
+ <20251002221233.541844-2-ramsay@ramsayjones.plus.com>
+ <aOYImjMXcFkdwar5@pks.im>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <aOYImjMXcFkdwar5@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfMPVw6a/EcJ8HD1cDungtJD9ZuDs+jgq7dVFl8RapCj4xNFqvuxCrxeRXfg0AVPld5pq5BQxFA6T2UYp7WKa7AecooyecHJ28/ObX6+iv2nnl/f4wUJS
+ IDyKrz9eb/HFbOJzr/n5Z51e8dsiuK0eLP6xKnZhJnycgxDjw2p3hWgk+1L9ihx2o3ZflBKCJ7GX+Rlh5XOEcKt5k+YMq332210=
 
-On October 8, 2025 5:45 PM, Taylor Blau wrote:
->On Wed, Oct 01, 2025 at 03:31:54PM -0400, rsbecker@nexbridge.com wrote:
->> On October 1, 2025 12:05 PM, Taylor Blau wrote:
->> >On Wed, Oct 01, 2025 at 08:13:12AM +0100, Luca Milanesio wrote:
->> >> I am worried that if we rush into Git 3.0 with breaking changes
->> >> that would make other =E2=80=9Cforges=E2=80=9D (e.g. JGit) =
-incompatible, we would
->> >> be in a difficult situation with the other Git ecosystem that =
-isn=E2=80=99t
->> >> based on the C-Git implementation.
->> >
->> >That's a good point. I am not familiar enough with JGit (or really
->> >any non-standard Git implementations) to know where SHA-256 support
->> >is in those respective implementations.
->>
->> AFAIK, JGit still depends on some core git functions, including gc. =
-It
->> also depends on LFS for those functions. Interop it fairly important
->> in that space.
->
->What are "core git functions" here? I'm not at all familiar with JGit, =
-but my
->understanding is that it doesn't use the Git binary directly =
-whatsoever, so I am not
->sure how the presence of interop support or not would affect JGit or =
-LFS.
 
-I tried doing a JGit gc. It delegates to git. There are other functions.
+
+On 08/10/2025 7:45 am, Patrick Steinhardt wrote:
+> On Thu, Oct 02, 2025 at 11:12:13PM +0100, Ramsay Jones wrote:
+[snip]
+
+> This builds on our existing linting rule and would catch any discrepancy
+> in man pages that we have in "Documentation/technical/" that isn't
+> listed in Meson.
+> 
+> This check isn't quite complete, there's two things missing:
+> 
+>   - We have an equivalent check in "Documentation/meson.build" that we
+>     might want to extend to also cover articles.
+> 
+>   - We don't have a check to ensure that our Makefile and Meson are in
+>     sync.
+> 
+> But regardless of that, the above check surfaces one more missing
+> article:
+> 
+>     $ make lint-docs-meson
+>         GEN doc.dep
+>     make: *** Deleting file 'doc.dep'
+>     tmp-meson-diff/meson.adoc tmp-meson-diff/actual.adoc differ: byte 3877, line 206
+>     Meson man pages differ from actual man pages:
+>     --- tmp-meson-diff/meson.adoc	2025-10-08 08:42:49.864991169 +0200
+>     +++ tmp-meson-diff/actual.adoc	2025-10-08 08:42:50.072988794 +0200
+>     @@ -203,6 +203,7 @@
+>      git-worktree.adoc
+>      git-write-tree.adoc
+>      hash-function-transition.adoc
+>     +large-object-promisors.adoc
+>      long-running-process-protocol.adoc
+>      multi-pack-index.adoc
+>      packfile-uri.adoc
+>     make: *** [Makefile:526: lint-docs-meson] Error 1
+
+So, it has already paid for itself!
+
+Thanks.
+
+ATB,
+Ramsay Jones
+
 
