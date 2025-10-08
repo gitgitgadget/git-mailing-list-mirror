@@ -1,117 +1,194 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7947F1FF1AD
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 15:56:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F151C1A3166
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 16:15:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759938990; cv=none; b=g+H3cEgMsvOceOTss/3VgZV5Os0MDf5OdnF86gWWKRcbW9Gr/4qoiAfqe0/QuEob3sveh636MdO8rduPR2wlu3VrgmSm4cT6RmvVW+NUsmgQWD9KcYn00/ozBdUMLQQgtnybNCUt0qsdmg9xb6IEQn2RpofrV00WhJQ+drcg6kk=
+	t=1759940116; cv=none; b=sI8uxssgduB/pt1njgiPB248N+3cBduLWDspt6nFzd6HTbYnDgySlZaXR5hPtnRvkCrh1B25IOGsIfHtrKMdWsGE+IGn4RS7miSPN7ZdHl6SM5BDzPHnaCL2ZctqDagtfupTCf4Ji+1tybpK/mZa0dgDge/BpyNcnRVSlMqhNIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759938990; c=relaxed/simple;
-	bh=Dzd2UMksxh3swf9kExwm8JRdCEdfPWy4nq3AwIUXmBQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=f51LxiMWwy3XyLls2Lu8xOoyUmR0i11X9ZsHO7aJpZmScrl5+LKuivAarV2k4O7D4tnqBUh/lp4rOcH0ZHMefBVHGvIHNyMcCwIqB43GS/IVgIC3WCO9fTZTlf39nU/seM6sxAfHNlm9Goqtheg8xxLW2ziZJxgE3YSkod/0gZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bs9fD1Uh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cojZ3oaB; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1759940116; c=relaxed/simple;
+	bh=jn7ujGaN9G1OByZbS6Gi/iyBMkC9dL6rFApMvf15r9U=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=R+fcEGwbjUnnWXslmYrpvsa8reANstt8/j4dpGXG0X27CphuUZoxvWVAUxZ/NHSZTA3UJ+I9Pi29/p6sK7U3Ca7OMqFO7W/ly7McvsnOxgym+kUDRxx2uSxmsBFSGmJAMbse853h+ZO38RXe104oEy3fyoexY6xu7RUz8bxWrGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=StvDpdoU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xf9Img9F; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bs9fD1Uh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cojZ3oaB"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7E9B01D000DE;
-	Wed,  8 Oct 2025 11:56:26 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 08 Oct 2025 11:56:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1759938986; x=1760025386; bh=JAlvFCVyg1
-	A9ObyW67YvsehQ6/86wHgf1+n+5dWX4SU=; b=bs9fD1UhAO/8409fNaHYMsHGoW
-	R9deu3zTTxKyBpv4oPWyJbNVUEH6scigab5XF1lnTZQBeSrh+WRiG/Tapw50bi4p
-	VgWOhggfKnA65y8yvsgO8ZQcOVggMKC+UAR2XGOB0+AhSmGqjC5o0prrQYZMjUVu
-	hfr0q9tAQgZWc6Ut+RQPnbgWfzL2kum2K4ftfXF5hsNBB7CMHaTKZ+P8iRaviknl
-	B7EPud/VrPr7mdmi6W7crkemVfFR0ibuhb+b9824LCEqSywAa8WpShsrlCF15c7z
-	3D2jIBnp2J5UN4NUQl3ciYTJO3/Z4zHeLKWF+lhvT1kOM5YsAA7Jgj5G4STQ==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="StvDpdoU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xf9Img9F"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 04DE9140023E;
+	Wed,  8 Oct 2025 12:15:14 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Wed, 08 Oct 2025 12:15:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759940114;
+	 x=1760026514; bh=J6V3sMiqdjf6cxv3gmNAHv8qe42v9wcSgaMBh4qHEIc=; b=
+	StvDpdoU3OQLYZ1nchr2REnTlQvJUVcXa1lZulIRPfW+ZB1W/2CGYbDXF/6AM4NX
+	OLCUgHhp7Wx6FOwivXApyf7efgYTxbQ1/aQkLx3J6E0PDZe81gkoziP2O0/Al1tL
+	FrRTmNvBL5/E7QZI2gha0KEEDmhJ4VRUnNDDek1mk08O8niP2tBRjmtkRjSmpayA
+	MUCkqyT9A95NB/gFGX7vC4S7I01aoTwTDbKQroxVbB8wMh51+ozh3Dk23liob+mI
+	F6vNcFCr9HaiIqCkmmJ4orZ4aXeLicUktl6dLH5g8EeQk1o1+kPwwXGhepbXr/os
+	GPo4SnhU2t9Jvp1sW9m63w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759938986; x=1760025386; bh=JAlvFCVyg1A9ObyW67YvsehQ6/86wHgf1+n
-	+5dWX4SU=; b=cojZ3oaBXqlZSYAtsVM9LCG8lxR1VXKK/G7jaelUrjyNovXtIhU
-	H11ZDTQEogf1vtoHy4DjJosovTdR6AOfn3OcICoxVndss0rpq5eLBSId7JXs1H4U
-	cLkYVUKUiGlEx3hTg0TKTtiT09dRmCl2JWWSdUt+LpPndGpQr6Yop23WH8l35kVU
-	/hWvGrQk1FHlai0pvBp1L3ddDvrTGM+3qlZJJ2XuSuE6JgIXYaln8XKQdvY5DMut
-	7gaobnvUT3zwq7tDnSK3C/2UFsvr7p5Q1Kx22PoQw0cNji/4QIzeKJ8dhBIPbtY2
-	EynJj+jCjApcl1Gn6XHqlECyXlQiWb1dbtA==
-X-ME-Sender: <xms:qonmaCuYZ58p8Eij6fOw4QyWkWdJlSZxk6LPb0oWKokhwsZsL2NI1w>
-    <xme:qonmaJtwRILWo7w05rZJCaPZfm0uplKRd-obr4xBQ05JGEu1C0UpCBvw35jcuTJpt
-    ivUDkkmt_x6WSw5YIBYLQga7Css2lLaYx-RMqWZPkWN1KK6VWYakg>
-X-ME-Received: <xmr:qonmaAAQdxj2Wb61O3jmRHulO8xN-naNhKgeMgh3J3lIw3siZjdXhOAtMYLBs_jxLN2POkjVYjlsqOs9b3fAfrPZCMR1h7iC3ARx>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdefjeduucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759940114; x=
+	1760026514; bh=J6V3sMiqdjf6cxv3gmNAHv8qe42v9wcSgaMBh4qHEIc=; b=x
+	f9Img9FSt6kecj0cd7WvXo05V+TlmrQkdPOG4Lg7VM+Zh+gAxs3qQWhC54DuyIbW
+	rGqrKZyfX8GMd9Zfg+9QuHEQ5MU4DI7+kJ8O6Uk+2DtlQmInibOLQrQp9xy5s6H1
+	9HsaXu2rX/YtEFkc74CLYzW8/oGNbnQ3IZ/x4lHdWzYq2R+bgFdppH4+IGN0AoUM
+	R0Jf/T34BrEi7xwRN5x7XuQCESRw6byKiweu/dakfhZXL4X6ewP0B6Jq9IxTHlF0
+	RIsna+uA3s/sVbhwZ1LiFLgbg2EbTk+VqtShzyZN8hL6qWjBZi+nu6EJYdCBfbct
+	Lq5OBpjMxYk3Y/8VA7+2A==
+X-ME-Sender: <xms:EY7maJMWreG3b5sAanMJBm4fyD-Q1vvxir1oc0YpcF5tgYrOEajbKXo>
+    <xme:EY7maGyCDb4l2ezxzfZ8fOBXWiKtmq1hNHnG-SN_FgDqSnZDVL1EOBR4px4sLD7P6
+    NTOw4Dt6W2DhqvDc026EEQixBtpAqaA4OhYSiB0SkCUYaLDXLDMbA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdefjeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptgholhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:qonmaDM-wbEQNuf6uyAziwHE9EBJhkfKZDsClOdp6mQgW_qYglDPrA>
-    <xmx:qonmaBwi4iWBRS-FTca4qHIKcncOqVdEivnS3qd_x4CWPcWE7CGL7g>
-    <xmx:qonmaLUNC1hZmn35nkl3U3jQUn4ZT-GyrC2Ek_0qWqzA56NeU300wA>
-    <xmx:qonmaLPPu3ehQtErWE86AavxIQk_QS6qyorZANd-6zSbreAeKpbXdg>
-    <xmx:qonmaAzOXa6YP3d0O-x22Aed2fmO1nPWfE3WR69zLbZsWmDKesXC8XWc>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Oct 2025 11:56:25 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Collin Funk <collin.funk1@gmail.com>
-Cc: shejialuo <shejialuo@gmail.com>,  git@vger.kernel.org,  Patrick
- Steinhardt <ps@pks.im>,  Karthik Nayak <karthik.188@gmail.com>,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH v3 0/4] enhance string-list API to fix sign compare
- warnings
-In-Reply-To: <87frbudusr.fsf@gmail.com> (Collin Funk's message of "Tue, 07 Oct
-	2025 18:52:20 -0700")
-References: <aMp8yNFiXDyk2hP4@ArchLinux> <aONhmrE0otiyZ16f@ArchLinux>
-	<xmqq1pnfof71.fsf@gitster.g> <87frbudusr.fsf@gmail.com>
-Date: Wed, 08 Oct 2025 08:56:24 -0700
-Message-ID: <xmqqa521gzfb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhephedugfevgfef
+    gfffvdfhffdvveevgeehhedutedvgfeuffejveejudegveefvdefnecuffhomhgrihhnpe
+    hkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
+    ihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
+    drtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:EY7maI1mNWMVWEGpxZmJB_-qndGhTRYwy9TenteI4yrSLkWVGHOboQ>
+    <xmx:EY7maA5m--BhIxqobWB1Vczw0I3i2SvmJId_5O4Ex8Wt71AyPfZcKQ>
+    <xmx:EY7maLU95I6NEsfd9upsv6NJTk6nb9sHqdHn1c013oSCQ6ekSKU_qA>
+    <xmx:EY7maPAxEQ5lDIXvoPmb6C7iOGbEFai1G5sSZjzA7IQ1uXmuPaExig>
+    <xmx:EY7maHNsXktRoCy8QIHs5lip3CNNMfFpSyQN7u_JAhtTFLwBfBnNisZw>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 902781EA0062; Wed,  8 Oct 2025 12:15:13 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: AtAKOKhqNxG3
+Date: Wed, 08 Oct 2025 18:14:42 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Taylor Blau" <me@ttaylorr.com>, git@vger.kernel.org
+Cc: "Junio C Hamano" <gitster@pobox.com>, "Elijah Newren" <newren@gmail.com>
+Message-Id: <85dbe67e-f252-4548-910d-4af29939806a@app.fastmail.com>
+In-Reply-To: 
+ <d7931dcc4380757cfd4c6f24b5d746da2294f40b.1759873165.git.me@ttaylorr.com>
+References: <cover.1759873165.git.me@ttaylorr.com>
+ <d7931dcc4380757cfd4c6f24b5d746da2294f40b.1759873165.git.me@ttaylorr.com>
+Subject: Re: [PATCH 1/2] SubmittingPatches: extend release-notes experiment to topic
+ names
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Collin Funk <collin.funk1@gmail.com> writes:
+On Tue, Oct 7, 2025, at 23:39, Taylor Blau wrote:
+> In d255105c99 (SubmittingPatches: release-notes entry experiment,
+> 2024-03-25), we began an experiment to have contributors suggest a top=
+ic
+> description to appear in our RelNotes and "What's cooking?" reports.
+> Extend that experiment to also welcome suggested topic branch names in
+> addition to descriptions.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Thanks.  I didn't see anything glaringly wrong in this round.
->>
->> Shall we mark the topic for 'next' now?
->
-> These look good to me if you want to add:
->
-> Reviewed-by: Collin Funk <collin.funk1@gmail.com>
->
-> I wrote a bit about the signed vs. unsigned integer for object/indexes
-> in another mail. Because of my opinion on that, I usually just ignore
-> these warnings. But my impression is that my opinion is in the minority
-> regarding that. :)
+This is a nice idea for keeping track of the upstream topic.
 
-Well I probably am in the minority who thinks that it is a disease
-or superstition to think that things must be counted in size_t,
-which is often unnecessarily big (which I do not mind too much on
-modern architectures) and unsigned (which I do mind for the same
-reasons as you do) and those infected by it should be somehow cured
-;-).
+>[snip]
+> diff --git a/Documentation/SubmittingPatches b/Documentation/Submittin=
+gPatches
+> index 86ca7f6a78a..f48688e3700 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -579,14 +579,19 @@ line via `git format-patch --notes`.
+>  [[the-topic-summary]]
+>  *This is EXPERIMENTAL*.
+>
+> -When sending a topic, you can propose a one-paragraph summary that
+> -should appear in the "What's cooking" report when it is picked up to
+> -explain the topic.  If you choose to do so, please write a 2-5 line
+> -paragraph that will fit well in our release notes (see many bulleted
+> -entries in the Documentation/RelNotes/* files for examples), and make
+> -it the first paragraph of the cover letter.  For a single-patch
+> -series, use the space between the three-dash line and the diffstat, as
+> -described earlier.
+> +When sending a topic, you can optionally propose a topic name and/or a
+> +one-paragraph summary that should appear in the "What's cooking"
+> +report when it is picked up to explain the topic.  If you choose to do
+> +so, please write a 2-5 line paragraph that will fit well in our
+> +release notes (see many bulleted entries in the
+> +Documentation/RelNotes/* files for examples), and make it the first
+> +(or second, if including a suggested topic name) paragraph of the
+> +cover letter.  If suggesting a topic name, use the format
+> +"XX/your-topic-name", where "XX" is a stand-in for the primary
+> +author's initials, and "your-topic-name" is a brief, dash-delimited
+
+Is there a precedent for =E2=80=9Cprimary=E2=80=9D author? Why not just =
+=E2=80=9Cauthor=E2=80=9D?
+
+This seems to be referring to the fact that patches might have
+co-authors (trailers) and similar, or that it could be sent from someone
+else but the author, but I don=E2=80=99t think this adjective makes it c=
+lear
+that the topic name should stick to the author (in the Git model=E2=80=99s
+sense) name only.
+
+> +description of what your topic does.  For a single-patch series, use
+> +the space between the three-dash line and the diffstat, as described
+> +earlier.
+>
+>  [[attachment]]
+>  Do not attach the patch as a MIME attachment, compressed or not.
+> --
+> 2.51.0.435.gf7a65e208c7
+
+I like the format in the cover letter:
+
+     * tb/submitting-patches
+
+       Extend the experimental protocol used by contributors to propose a
+       topic branch name in addition to a description, and describe how =
+to
+       name multi-series efforts.
+
+     ---
+
+Everything is nicely *delimited* so to speak.
+
+But it was noted[1] that the-topic-summary doesn=E2=80=99t seem to have =
+been
+used much. That=E2=80=99s not surprising given that the instruction makes
+the-topic-summary blend in with the rest of the cover letter and doesn=E2=
+=80=99t
+signal that the author intends for the first paragraph to be used as
+such. This patch shares the same problem.
+
+I think it would be nice to distinguish these things with some initial
+paragraph text.  In the case of the-topic-summary:
+
+    1. Start a paragraph with `Topic summary:`
+    2. Then continue the paragraph with an explanation that would fit we=
+ll
+       in our release notes (see many bulleted entries in the
+       Documentation/RelNotes/* files for examples). Aim for 2-5 lines.
+
+In the case of topic-name:
+
+    - Add a paragraph with `Topic name: XX/your-topic-name` where XX is
+      the author's initials.
+
+Then it might be possible to drop =E2=80=9Cat the start of=E2=80=9D *if*=
+ the aim of that
+part is to be able to pick up the intended paragraphs reliably. (Maybe
+the intent is for the maintainer to be able to read the cover letter in
+a predictable order.)
+
+=F0=9F=94=97 1: https://lore.kernel.org/git/xmqqv7kqgs4x.fsf@gitster.g/
