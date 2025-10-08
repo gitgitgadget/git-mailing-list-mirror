@@ -1,140 +1,113 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1959F1E25F9
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 22:04:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC811E25F9
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 22:05:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759961054; cv=none; b=OQUOvegUCIgmNStvOhDpAwf2HzmD+3xRzq+uXopZDKUmtsVZLW4LuJG7l9+1DZ3tl4yEOSJeBIriw9Xxq3sJvKdq6QW9x84gl7DkildM9TWPN7ZPWkUvYeCT7ba8TvOuUr+KS47Rm3EDIZxz8z2DSJTj/SIlpWKbHa2tCMwgoxs=
+	t=1759961109; cv=none; b=EzTgXrdMeBaPAb/fy9qvyewgniCU7bqDE6QDcmXbgKD8llEXVYBO72aPxFAXEfxKAjHIAOMimSBMmZSo2+xh8Eq0uuvUYSiFmdW4H4obpxjPTzlB4YsUNHOnxVSR5kmG1n+QQjZhQ2n/6QPHaMQQP/A85dx8hnj+5GomFMretds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759961054; c=relaxed/simple;
-	bh=wQ28f/Yzofn+zqHPlBZ8wkq9IfOpdgAFbz9CJruehck=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=b9Ke0MDML6ysejgcDTk7UVRmBxLEHXx8QsP1oofB4B9sf1n6IDUJZphWogxYijpI3FjC5qK98+b+wHmByNzn0tpCxnys1ZmLQTZg15Tq9TbGhG5N8Trr03buYScJ8byktxk948g1t0GJeD37JDzYw0Cl2g7Kt8EY5C3u7lR1YVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=nBsPrtLr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VfNJf43k; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1759961109; c=relaxed/simple;
+	bh=ALMsOK8+2dSfBRhnWyjcWEvJo4J5eKPIJPNWoze1IdA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ss7eWzS2tjQHpK9QDR8CCsPkf60c3PHdFpS9pbxTRK+wN87QZQMz2wwgTC538RZbD++psFmWNGU/ADunTYwHehMgmQ38qtB/u62cfTJ51hrToUanFh3UErkdbmhke08+jQu0XjYiFSnQo3fqOIajpq6lJewU4X2LIS1pmu93nZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ktS4Kwqu; arc=none smtp.client-ip=209.85.166.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="nBsPrtLr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VfNJf43k"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1B03B7A00E6;
-	Wed,  8 Oct 2025 18:04:12 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Wed, 08 Oct 2025 18:04:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759961051;
-	 x=1760047451; bh=iYP6XaTAWF0UGWdd6Oqxup9rsJH0INzJ5KiICuR8Mzc=; b=
-	nBsPrtLrTaPTBLc7I8tJ6tKHDNqvq/7zL8z6xlQabPicUq6ccv4KH2gznmjkdcTn
-	K9QzgzlsOvY/gHGkKXMjhUKcL5ufeXBBk95KPggHH110G9jxwAzD910EFhJFirOv
-	fmhKLGAM7yA671seZ2TaEz3U/Ldag4BxS+5TDCny4CJaNCjvZBSxnuAe1WiFqPIX
-	nvKbEl8EPq7wuxVhv3/n6bSNffSLpspI1lK0Bu7wk9JJ3AGVxiZEGjAMj74kzHjD
-	K2r1ZDhzUbLz90jUGoULPGzeEGGM7GHR8oFOqJdgb1WTSF3iLuRocotoBtTSq0yA
-	XQwHVOXZ/7H7dsYsmNzkQQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759961051; x=
-	1760047451; bh=iYP6XaTAWF0UGWdd6Oqxup9rsJH0INzJ5KiICuR8Mzc=; b=V
-	fNJf43kfe/zttfJPpyH6/niviqa1/c/HvhN/COzCZwwCm33FbSSCrzM7Cs9U1Z1b
-	41mk7KpRncTzARmWh52IwDhaXEYOKeEO0+1YcBNTC8eHk5K0EZ6x0DzntzgKBEzU
-	lufqwljAL45UhFGCQoqpxHE6ROZIVdIW+VHC3DrFQ+6RCRq5eX/0g6hK6EglY5Cx
-	TDCEHGuYhbPlYzzbn+yTddYT+I2p08r9I+/yHISZMU/YcJIe85ajw732uZxelrtQ
-	LR46svgrMMsATi0BbhC1dwhewR3r4vf+MTj+ANNYTXG4xO9vNtlPqzWc5oeCvuKX
-	bg+UzY5jlrnzUwvOwCWuQ==
-X-ME-Sender: <xms:29_maCL2oO_eB2q2a0GltgZXnIaIBgPK_YEi87XvjIDLDTHW8xw5Xho>
-    <xme:29_maE8skuO_Kqr151NT-qtoDvCaJiub3Cl88m5sJbB2FxIPW0hdePZoJY44-8qA0
-    ku-zqgJHupQ9YHsbCnVq42uJYSgeJDlo4wi_7f1LAQoQr0jnwhmCw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdeggeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhephedugfevgfef
-    gfffvdfhffdvveevgeehhedutedvgfeuffejveejudegveefvdefnecuffhomhgrihhnpe
-    hkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
-    ihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
-    drtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:29_maKy2TtEKlhewp0I6CDDUYFp2fC29XFrXUoX4_v5xn-6xYgvNzA>
-    <xmx:29_maEFdUj4YjarniiN-f2LyO4Bl4COGxXYFBRQrq69CXlH5Cb--SQ>
-    <xmx:29_maGxQB4wKbg3boAXrU3xXR4RpEdd7m0Zk1-AcEO2Bj6F82WoaKA>
-    <xmx:29_maNuThEuKQaJjvGM3vEx-9cddlzTT-7QrzKtBTcB5ixWcw1nlcA>
-    <xmx:29_maE7b5FwLnxNFMqHb9cmcGiDnMnMl03-FI08vRk_TFOjTOxHiVhMV>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 8F4BA1EA0062; Wed,  8 Oct 2025 18:04:11 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ktS4Kwqu"
+Received: by mail-io1-f42.google.com with SMTP id ca18e2360f4ac-90926724bceso24573439f.1
+        for <git@vger.kernel.org>; Wed, 08 Oct 2025 15:05:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1759961106; x=1760565906; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WlO907U+PJCDdNdqvKs1bRjrHB0A/ZgIg3gVB6kkNGQ=;
+        b=ktS4KwquYUqstZGgb9cHgoZV2p4a19nob2+x+flXuiRHAGMrqtI5A1LcwDv8epQnR+
+         BlQefw3wR54ylO2ZxVdvPUXilxez/RK9ZF5tYiIJ6FMm+Ac5u8+3o38bCrCTWVo0O3il
+         XmfjTy3/9L0zVOi0ZGOKY2e3zMMQRuAzJ3SpwhxM2/1sxvBQsW840+PGY6e26DNYmNjX
+         Foz4VmXJe6CLeV4r2122qcPYxJ9JyKJorKeJY+lN3qYqXseACqZl/pGii00coZJ8y+Ct
+         QpfQqEFuFkHBTGIeB50Z92gQHmhorEYmlcDWChoSP0I7WP1pIX8LkuaLjveTMSJPuiOz
+         ar/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759961106; x=1760565906;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WlO907U+PJCDdNdqvKs1bRjrHB0A/ZgIg3gVB6kkNGQ=;
+        b=AR0rJevhqGpNy1Gc+DeEXScsNhEPpTgZjCqNvM08eECvadlFmcIt3/3+adeopZ5xVj
+         HrQ+zfu6RSi6g3Bj1X1GK50JAMxSqKlKWsUjaq8g1ybTtRWIp7tvt8Sty2pdwAtFoN7g
+         S0rgVjE51mGG9LhqF1deWQ/msw90GQyNOHEzuVP/xacDB1N9g/jCohfGkuyBIadcdXlF
+         6WK+qFa3THgEmqC2JVhk8KSMwHEDyMafUHLh+b0mmQM6oGkwYy3DOxIvrQ0KX2AFuBUB
+         7ZVZJixW1mzE6izTp3xaENdNoKD6bVvMrK8yn1mqLD1c015mOG+S8uoaT+GtNFHjfmqN
+         5dQA==
+X-Forwarded-Encrypted: i=1; AJvYcCVp0EVf1sUYY95znrsj+g3hFl6nuAIJhFOg8mu6U7hUF3mfjd7ntaaS47yHGAvMHPeK9ZQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzysMs8V6Z8z8tNSx/BO75Tn29/g0zQPgH/hCA6hAnXIU3IlTR3
+	cPDTuiLM2ghac6t2PY/bHLIUOH6pFVWs2WvN7Nb4zZ9NMQMTqH91b2/6mA8GUZJBTj1g/CVybpP
+	t4wsBj9+f9A==
+X-Gm-Gg: ASbGncveaUE0vvL63V8Yt3xPzSs2kiSVpj8T0hJV/vHExExWDZJuFxIwW665epX46H4
+	YNzQDW8qc6PZ0kmiSdJJSuiElTvyxuzsEe4POAbk77l3R3oL4yHuuRxnIFmP5ZyIpAeuWpyu7n7
+	fGTNmUE/77W+Ell3d+MS03ebit6dYqWAABDRfZ2XzGTVPuDMtKlMeZy/TfYmmbEyC45Uei/87n8
+	1nG6+/lxOd5co84wLcbXhd7lJ4pmUeBhzYur+e78VPOuk05OtG9QaxbNDv4Hpu82yTJN3bjSN9Z
+	WTUCokiLLRs5FAE5ib3C1VJ8WvxjU8rRjBYyKwvJ0wiEQSfBwweExgmYGp0ES/zDHL36jPYbQmJ
+	2hXyohflEgQ4mN2nU1AwBFptrR/RODFScBwTt0DXIfG9ykxg/3p1iKaHqhtnsgisAXlEPNzO/lv
+	VMh0qW+zk36Vfu85zEoq8ZlmZ+x33PlYDFVCdmOU5EBFvXcl4Z2Q==
+X-Google-Smtp-Source: AGHT+IH822WCn/QUDM3ZLLuxFw9yoUfMVeNDd/O0gDbpQg4eUHlhLzZQe2BPfYePHZZcJWO8Jf+IQQ==
+X-Received: by 2002:a05:6602:26c8:b0:887:131c:dada with SMTP id ca18e2360f4ac-93bd18a1eafmr603062439f.5.1759961106485;
+        Wed, 08 Oct 2025 15:05:06 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id ca18e2360f4ac-93bdb306b65sm33163839f.16.2025.10.08.15.05.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Oct 2025 15:05:05 -0700 (PDT)
+Date: Wed, 8 Oct 2025 18:05:04 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Ben Knoble <ben.knoble@gmail.com>,
+	Luca Milanesio <luca.milanesio@gmail.com>, git@vger.kernel.org
+Subject: Re: When should we release Git 3.0?
+Message-ID: <aObgEGjcou06nP68@nand.local>
+References: <aN5-n_ArhQqaQZgt@pks.im>
+ <D59D0576-63C9-4144-B49E-54D43A80E0B0@gmail.com>
+ <aOTrBAXhKF4iYzQB@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AtAKOKhqNxG3
-Date: Thu, 09 Oct 2025 00:03:51 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Taylor Blau" <me@ttaylorr.com>, "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Elijah Newren" <newren@gmail.com>
-Message-Id: <f201f901-0816-4d13-81b5-8e0470bd823d@app.fastmail.com>
-In-Reply-To: <aObWkRSU5TO9Yvcr@nand.local>
-References: <cover.1759873165.git.me@ttaylorr.com>
- <d7931dcc4380757cfd4c6f24b5d746da2294f40b.1759873165.git.me@ttaylorr.com>
- <85dbe67e-f252-4548-910d-4af29939806a@app.fastmail.com>
- <xmqq8qhlf777.fsf@gitster.g> <aObWkRSU5TO9Yvcr@nand.local>
-Subject: Re: [PATCH 1/2] SubmittingPatches: extend release-notes experiment to topic
- names
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <aOTrBAXhKF4iYzQB@pks.im>
 
-On Wed, Oct 8, 2025, at 23:24, Taylor Blau wrote:
->[snip]
->> > But it was noted[1] that the-topic-summary doesn=E2=80=99t seem to =
-have been
->> > used much. That=E2=80=99s not surprising given that the instruction=
- makes
->> > the-topic-summary blend in with the rest of the cover letter and do=
-esn=E2=80=99t
->> > signal that the author intends for the first paragraph to be used as
->> > such. This patch shares the same problem.
->>
->> Oh, that's a new theory.  So you are saying that authors may have
->> tried but I (and others) failed to notice?  It cetainly is possible.
+On Tue, Oct 07, 2025 at 12:27:16PM +0200, Patrick Steinhardt wrote:
+> Yeah, it's definitely my goal here to do exactly that: reach out to
+> folks and take everyone's input into account. Once we've got it, propose
+> a timeline.
 >
-> Certainly possible indeed, but I am not so sure this is happening. At
-> least from the series that I have looked at since this experiment was
-> introduced, I have seen vanishingly few examples of contributors
-> following the process suggested here.
->
+> I guess as part of that initial communication with the stakeholders we
+> can also mention that the current plan is to release roughly towards the
+> end of next year, which may help to put things into perspective.
 
-I had a look and found one cover letter where I definitely tried to use
-the-topic-summary:
+I am not sure what our proposal would be other than max(proposed_dates),
+clamped to some reasonable range that we are comfortable with so as not
+to delay the transition to use SHA-256 by default too far into the
+future.
 
-    The documentation for git-bundle(1) now prominently covers `--all`, =
-the
-    option from git-rev-list(1) that can be used to package all refs.  A
-    "Discussion" section has also been added to address the naive backup
-    strategy of copying a Git repository manually with cp(1) or some oth=
-er
-    non-Git tool.
+I think a more interesting question is:
 
-    ---
+ - What do we do for implementations that do not have a roadmap, or
+   whose roadmap is too far into the future?
 
-    The part above was for the-topic-summary.
+ - What do we do for implementations that have a roadmap, have a date
+   that is palatable to the project, but end up slipping and are unable
+   to meet that date?
 
-https://lore.kernel.org/git/cover.1731768344.git.code@khaugsbakk.name/
+I generally agree that we have to draw a line in the sand *somewhere*,
+but I don't think we should be so inflexible as to say "if you don't
+have SHA-256 done by X date, you are out of luck". Of course, if the
+amended timeline is too far beyond the initial deadline that's one case.
+But if someone is a release cycle or so behind, I think it's reasonable
+that the project should be flexible enough to accommodate that.
 
-The merge commit message and the release note entry:
-
-     Documentation for "git bundle" saw improvements to more prominently
-     call out the use of '--all' when creating bundles.
-
-Contrasted with no judgement.
-
-> [snip]
+Thanks,
+Taylor
