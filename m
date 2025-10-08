@@ -1,67 +1,67 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F892750E6
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 19:59:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B59223DCE
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 20:02:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759953587; cv=none; b=aCwXRfvLifN60pOUPOA/Qe2ToV+YphZF8JCQdxlkzwP48cAB1z2tlhfBfvaF4yET3vlJm1PA5esRNgXUwzKd393ax3KXxwmbQUEYosNvllhvw5+eNh3i+vM+ZrUv6ETitHfS4IPXmEkFpnvVrhiba3p9ijw7A/sfx/0/XHEK14E=
+	t=1759953735; cv=none; b=I84omIe+tPW9gj69J+jUn+BlD2Chzyjy70er+Iwddpie/ohKjuL6AdWFzyoDratOKkKdD+KCS97C6Yr67BIwFtL2JW2ThRC0anvq2sfNYzs8r6rVJgVZ65KN2J/PnXDV3ZyYGPx7ntQVVsN/Ud9pW9H49nlxlVV0mz8H9twZsiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759953587; c=relaxed/simple;
-	bh=A/tUJmO2QDJCuHYglpJ24G88UUqDWuEZ1eY+Y1mxNpg=;
+	s=arc-20240116; t=1759953735; c=relaxed/simple;
+	bh=IAFevB92oTYCdqJedc54/ba0VejQJhdlqf/rdf9Bqyo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nToonyx7ZczxUvHqobXxadWBoBsuesZvQIcbQZmK608sQfEYpxPA0ejvrtIu4cqFqoQZhZddJ8drqm+5pVl05F13S4BLj7VGrDUjaIL3ESU5k9l8fbTtrb4l839Bla5sEk6BKxic7rdiNSPJ8b+6+DXxA4iLzOjYZRg6dSj+54k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GUhKsxgd; arc=none smtp.client-ip=209.85.216.52
+	 In-Reply-To:Content-Type; b=IVFPRHL4fIFtcf67RTf+wYiTlQn7tZKYjGhEH4soHNklNMGM2QWpU8GwC4NBfMKUoeTqtv7dO//DeHe6QCf9wnoC8wGbCzWd3qZ2inDp6mqxCjcHkp2Tyu+vl+ISf929cew3RQ/gI0fWZ+OZVgcEfpfAQWBQw7AZvHQsKn+3cHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F1AoFnvg; arc=none smtp.client-ip=209.85.215.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GUhKsxgd"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-3383ac4d130so240794a91.2
-        for <git@vger.kernel.org>; Wed, 08 Oct 2025 12:59:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F1AoFnvg"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-b63148d25c3so221628a12.1
+        for <git@vger.kernel.org>; Wed, 08 Oct 2025 13:02:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759953585; x=1760558385; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20230601; t=1759953729; x=1760558529; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=H+Slx5AQKjtdgdxM/hAxKkqI5HbzR3UvpBtp5gMVHkU=;
-        b=GUhKsxgdixhEzu1IIg18iuFX5C1L2gPexQbqX0aHSv4j2U/1vpbet1Q+NGqm41txMx
-         1II+dtk/9HJGsOKyxlBRWxxO20qk643ONZVL6qa5G0W7i8BwMHwh2la1afpWv6dXUclI
-         3M55xc/SyET6/aZa/ab2ybNUaRepHSVhT04hrnBIr/yGHoSkFFBEM8ovXDxLCLilLz6f
-         sb5fPYYXJxpCQjarfkZiCuYPaNiLkQqsI+NU6wSVQ1E5uz6RYtOmkR16FLpN04nr650x
-         VFKRFUujNuE6Ek4AdmsB90y2VQdo6YEPYbod9x21T6Wt4r0NxY47QvZx3xc6exoADJQL
-         qoAQ==
+        bh=HTXUZDEQaTe1WiH32EjXMIGDfZISI+K0ZVh+VoKJdf4=;
+        b=F1AoFnvg+J40HCjOhv6x9xVLgV15wXnvQt5SAke74wA6027DNw+DdshjDv4eXnT3zO
+         voJDOVLFLvynewP3E4WvR2ZSwTpaaT3tvALqm46ZOF1N3V95OsX/H4j5To/Rz2uo7TfT
+         hn9c++J24HrE/JlBxWPbiie7Ksq7n0wfMLV5mO9JjIp99RF7cNwRJg85yQDdtRAAdYaO
+         dAjb02m7Eza03EaQHA3s7PF9HKJkFEeWRJFWi4yLU/el/B3ANPqfsoFy7A7cI6RNTvrs
+         +OORY3SRhPks4mx1Xc3VfEOMt0PusqAbrN+xH9dDhU9Kw2Iwd9HFjUle3F2InE71J8hL
+         JsPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759953585; x=1760558385;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1759953729; x=1760558529;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=H+Slx5AQKjtdgdxM/hAxKkqI5HbzR3UvpBtp5gMVHkU=;
-        b=VWAQ1P/mV+ojuo79QbCTw9oJp9WodVnUiZ6lqLm9a/Y9GfFQT4p8q2A6TaQcp6bsk3
-         DNzps9KoOQeE/q3o19f3PdM/WLjS5Xhym5UYkJJkiqWM2LAy5NfsShOYtXHNTIJ314my
-         PkU755Dhci4GI/lNe8+HOYvwtFZCRBQ2y4Suw2T1DAHmjWoKdhGL2t7M6NL74Np8UUlX
-         JQyIJvy1SEQFrYiT327ByHTyQ1ENZQw8qveYD3O02VXItUTjkIrRSHgJWEkoblrFgLz8
-         jrWVbirB8MyP/CzzHnRUUczkXQZbK9Gxuk7liUQGgX3+xc/1O7yECmT82YQHcl5/papT
-         6NzA==
-X-Forwarded-Encrypted: i=1; AJvYcCUH8xUKYhutiOG3o0K3/AoknkPiu+PgKh1Mx7HjK3ZA5HWryyrx7Wb5wp8jC1RBmCRAXdk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyWmBSFlJqZRlxRxVsAG6HEOb0EtRM1Q7PqZNKG6myqjwo5VQcc
-	1G4oZ/hxlirG6Y/ifp0eC+eIf06RBYVJT5AANmc7Ov/y/xU6hOXKskgT
-X-Gm-Gg: ASbGnctqpM0wLf1mc7zolbOpDgHakzfEeZE8PLeB/TTuvR+ALRQlYfUhx+/nsGLC2c6
-	jEd8LsQIX12K3VFngDgh84wVVLkoh2/Lp5/6+8wAM3mHqq/Kh3KNc+gW4kC9RsxMfPUZqtqGpwo
-	Cj+qqwo8T0M/5mOKrCdFENcffSZq8ZcD9rGV8MOMwsfGpAdEPG3dG3PJ3J92BDNC5m4Jbk95cBx
-	DEWvc4W3Swj+/TgeaVnhnhNM6FbO5E1MvYA3CZCRggoR5AjoH2gCgFcuA4Xda2I56VqG/b7p4sv
-	PFVNM1KoE11IWsLwUTQuNR9lXXUvfTHNqlzgs6po6JtYVq81vpc+VQcUvD5OmRGmXsq2wzULn49
-	UU3/YC3nTDufGTQnYKbd1J26o7cnyiQlh6mVQwO/uoFx/hEytdwWVpAnFqaPQETJqTTe569P0PP
-	AJqt2AvFnzQSVmJn2PAEu6TBYmMnySeiWpY+8MFKgekCmlid19I6SSJLhJLSjsyWfC916WeiSB/
-	8tKOUdFKfuuXHeUtTkhUI05ZybYP5LYGw==
-X-Google-Smtp-Source: AGHT+IGSHNOele2Nq8aU9qI4yUwbyPphgCkhnHK74YodmS2OqdCk82WjyYAxQQkAYQt0gICOKEjPYA==
-X-Received: by 2002:a17:90b:1809:b0:335:2934:e217 with SMTP id 98e67ed59e1d1-33b511150f4mr6069468a91.10.1759953584960;
-        Wed, 08 Oct 2025 12:59:44 -0700 (PDT)
+        bh=HTXUZDEQaTe1WiH32EjXMIGDfZISI+K0ZVh+VoKJdf4=;
+        b=AM6yDq6M95rSa5qKSnPi6SWAeiINuQ75xfoSf8Ct5dmCQTPh/NXzA2J5m039YoxRWF
+         nFg0w+z6ccBHHdjv/22U9EAxN485CYkYuPyn+BRSxycyOBIovmIZCFQD2T42CdnzFVk7
+         uS/8OcgspUJ/EdXg9yxFVZ1sWkAVejThSs/FTyCYTuktcirOuKGZHr/7AsCzO37JM2zy
+         98gu09SPWoUS1955ji4hXOFgymnC78eK07Cuq5dKp2B2IJwi+Wnqp8/5PkC5ml7lBly3
+         qYVynWbFnXKJzyFz/v8ShCcdqH4paMUS6J998kKtqZvvXPe4hY18x3h8CqtzP70IdatH
+         ljdg==
+X-Forwarded-Encrypted: i=1; AJvYcCWiiQ7CmIUGyejgb6cQSANq5hDNqz0eNnHq48CIEL7LR0ZmZVYOy62SHfZpQJRv4hctz7E=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yylorv8OufnQbCkFQfzIAylgRvyAun+vsR/lB5EdP/x1LshzJy+
+	/1yoypeFV7Foqq8wDBP4V26H/pz5p1fqRNdAFwqWB+jF9pfGqfgqs5vW
+X-Gm-Gg: ASbGncutFib/XvDEh5ZjzW0I86fDHdXafn4gnaI1ixJYaokh/VXoymxDseclSGvKqr9
+	J9jUeT1I0DVZ8CF2KhjbTjwjz1UTcvzrAvgmtVwAomQyEyxe8ZZcSYXrEAiTURE5B0mnMYOBQa+
+	fp63Y3A44sMcjI5bhmJ5DNLVTF5YknZcRnhgWon6aLUP8/bHuGZUQuQfQtwS6Qrz1MOuJjofLmE
+	xgChkXaoAQkt+rlvF9jHaN+YeP3C0ZzEv6vMiq5oAfrBmr/Izx/udeBfiRfIoDBe/J9QYLNoWpx
+	uaaNDRYFbsVADzgxnHgXnBbFvn8BX6f8j+ToxwEJrYRkAWsRM+/Z/WQwq/9gVq2yx3s+rx8QJ8u
+	8816KJyTVEXdZsLpCkA+i0tqAUv6yu0wglSj1ZOoDxX7STdyB/iAP3DtSHWgEZFLEUoIW0mYuXP
+	wESoVqNCzd0r86cbaYSYrhMuaiV2zLFLDqJYIsIRtKAfPEFvrEw6bYqQZa2VDxkf0PS2pBl+82W
+	DAqiD8ez0i3/xz/fhTww62++1Va0pwOlA==
+X-Google-Smtp-Source: AGHT+IFM/TM/U2ZgW+tRl79G2L8XU+2HNenHhc2cTLxBWOysZFcKopT7qImqotRU+w0/mG40BaeCew==
+X-Received: by 2002:a17:903:1448:b0:27e:eea6:dff7 with SMTP id d9443c01a7336-28ec9cd6942mr96038245ad.27.1759953728945;
+        Wed, 08 Oct 2025 13:02:08 -0700 (PDT)
 Received: from ?IPV6:2406:7400:56:dc83:454e:4cd8:e34b:b52a? ([2406:7400:56:dc83:454e:4cd8:e34b:b52a])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33b51113776sm4389621a91.14.2025.10.08.12.59.40
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29034f35382sm5491055ad.85.2025.10.08.13.02.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Oct 2025 12:59:44 -0700 (PDT)
-Message-ID: <b3369f52-5391-4b00-8051-57617f998734@gmail.com>
-Date: Thu, 9 Oct 2025 01:29:38 +0530
+        Wed, 08 Oct 2025 13:02:08 -0700 (PDT)
+Message-ID: <38742a2f-5c5b-48f8-a9fd-acea47b7ce71@gmail.com>
+Date: Thu, 9 Oct 2025 01:32:02 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,144 +69,131 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] replay: make atomic ref updates the default
+Subject: Re: [PATCH v2 0/1] replay: make atomic ref updates the default
  behavior
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org, gitster@pobox.com,
- ps@pks.im, code@khaugsbakk.name, rybak.a.v@gmail.com, karthik.188@gmail.com,
- jltobler@gmail.com, toon@iotcl.com, johncai86@gmail.com,
- johannes.schindelin@gmx.de
+Content-Language: en-GB
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Christian Couder <christian.couder@gmail.com>, Patrick Steinhardt
+ <ps@pks.im>, Elijah Newren <newren@gmail.com>,
+ Andrei Rybak <rybak.a.v@gmail.com>, Karthik Nayak <karthik.188@gmail.com>,
+ Justin Tobler <jltobler@gmail.com>, Toon Claes <toon@iotcl.com>,
+ John Cai <johncai86@gmail.com>,
+ Johannes Schindelin <johannes.schindelin@gmx.de>
 References: <20250908043620.57848-1-siddharthasthana31@gmail.com>
  <20250926230838.35870-1-siddharthasthana31@gmail.com>
- <20250926230838.35870-2-siddharthasthana31@gmail.com>
- <CABPp-BEh7VEM6UQjkK3CxJcv54vEmueTmh9+-SyTKUxgy7Mkcg@mail.gmail.com>
- <0fba2f5e-03cd-439b-90bd-f613fcc4ae23@gmail.com>
- <CAP8UFD1JBeGxV65DFCs9dSkYwMpSBhWCZoj6dXCwmKgZnR_=KA@mail.gmail.com>
-Content-Language: en-GB
+ <f0abdc27-6850-4b9d-b4eb-a1c92f731142@app.fastmail.com>
+ <61107972-5755-49b9-a126-9442418ddff0@gmail.com>
+ <6d19a0c4-f000-43f5-b2e1-f84f341063a9@app.fastmail.com>
 From: Siddharth Asthana <siddharthasthana31@gmail.com>
-In-Reply-To: <CAP8UFD1JBeGxV65DFCs9dSkYwMpSBhWCZoj6dXCwmKgZnR_=KA@mail.gmail.com>
+In-Reply-To: <6d19a0c4-f000-43f5-b2e1-f84f341063a9@app.fastmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
 
-On 03/10/25 13:29, Christian Couder wrote:
-> On Fri, Oct 3, 2025 at 1:27 AM Siddharth Asthana
-> <siddharthasthana31@gmail.com> wrote:
+On 04/10/25 00:35, Kristoffer Haugsbakk wrote:
+> Good evening Siddharth
 >
->>>> For users needing the traditional pipeline workflow, --output-commands
->>>> preserves the original behavior:
->>>>
->>>>       git replay --output-commands --onto main topic1..topic2 | git update-ref --stdin
->>> This is good.  Did you also add a config option so that someone can
->>> just set that option once and use the old behavior?  (as per the
->>> suggestion at https://lore.kernel.org/git/xmqq5xdrvand.fsf@gitster.g/
->>> ?)
+> On Fri, Oct 3, 2025, at 01:36, Siddharth Asthana wrote:
+>> On 02/10/25 22:44, Kristoffer Haugsbakk wrote:
+>>>> [snip]
+>>> On the topic of changing experimental commands: I really like the
+>>> git-for-each-ref(1) (git-FER) output format design.  It just outputs refs and
+>>> related data.  It’s not a command for “bulk delete refs” or “check for
+>>> merge conflicts between these refs and upstream (git-merge-tree(1)”—it
+>>> just supports all of that through `--format` and its atoms.
+>>>
+>>> And for this command it seems to, at the core, output a mapping from old
+>>> to new commits.
+>>>
+>>> Now, I’ve thought that a “client-side”[1] in-memory rebase-like command
+>>> would need to support outputting data for the `post-rewrite` hook.  And
+>>> is that not straightforward if you can use `--format` with `from` and
+>>> `to` atoms?  (I ask because I have never called hooks with git-hook(1).)
+>>>
+>>> I just think that (naively maybe) a `--format` command like git-FER with
+>>> all the quoting modes might be a good fit for this command.  Then you
+>>> can compose all the steps you need yourself:
+>>>
+>>> 1. Call the exact git-update-ref(1) `--batch`/`--stdin` or whatever mode
+>>>      you need
+>>> 2. Write a message to each reflog if you want
+>>> 3. Call the `post-rewrite` hook
+>>>
+>>> † 1: c.f. server-side which I get the impression only wants to do cheap
+>>>        rebases
 >>
->> I didn't, but I should have. I will add a config option for v3.
-> You don't need to add that configuration option in the main patch. I
-> would suggest adding it in a separate patch after the main one (which
-> changes the default behavior of the command).
->
-> Note that in the commit message of the main patch, it's nice to say
-> that a following commit will add a configuration option for users who
-> prefer the previous default behavior.
->
->> For naming, I am thinking either:
->>     - replay.updateRefs (boolean: true = update, false = output-commands)
->>     - replay.defaultOutput (string: "update" | "commands")
-> If the command line option is called `--output-commands` then I would
-> suggest naming it "replay.outputCommands" and making it a boolean.
-
-
-That makes sense - replay.outputCommands matches the command line option
-name directly. Much clearer than my replay.defaultOutput idea.
-
-So the pattern would be:
-- replay.outputCommands = false (default): atomic ref updates
-- replay.outputCommands = true: traditional pipeline output
-
-I will implement this in a separate patch after the main one, as you 
-suggested.
-
-
->
->>>> @@ -330,9 +361,12 @@ int cmd_replay(int argc,
->>>>                   usage_with_options(replay_usage, replay_options);
->>>>           }
->>>>
->>>> -       if (advance_name_opt && contained)
->>>> -               die(_("options '%s' and '%s' cannot be used together"),
->>>> -                   "--advance", "--contained");
->>>> +       die_for_incompatible_opt2(!!advance_name_opt, "--advance",
->>>> +                                 contained, "--contained");
->>> Broken indentation.  Also, should this have been done as a preparatory
->>> cleanup patch?
+>> Hi Kristoffer,
 >>
->> Good catches. I will fix the indentation.
+>> That's an interesting perspective on using --format for composability,
+>> similar to git-for-each-ref's design.
 >>
->> On making it a preparatory patch: should I split it out as a separate
->> cleanup commit, or is it minor enough to fold into the main change? I am
->> leaning toward folding it in since it's directly related to the option
->> handling changes
-> If there is only this additional small cleanup change in the main
-> commit, and this small cleanup change is clearly mentioned in the
-> commit message as a "while at it small cleanup change", I think it's
-> OK.
-
-
-Got it. Since it's just the one die_for_incompatible_opt2() change and
-it's directly related to option handling, I will fold it into the main 
-patch
-with a "while at it" note in the commit message.
-
-
+>> The constraint right now is that git replay's output needs to work
+>> directly with update-ref --stdin, which has a specific format. Adding
+>> --format would let users customize the output, but then they'd need to
+>> transform it to the update-ref format anyway for the most common case,
+>> which seems like extra work.
+> git-FER has a default format and could still use that (either the
+> current one or your proposal).
 >
-> If you find out that other additional small cleanup changes would be
-> nice too, then they should definitely all go into a preparatory patch
-> before the main patch.
+> git-replay(1) could also concievably support ready-made formats, similar
+> to “pretty” formats that git-log(1) & co.
 >
->
->>>> +
->>>> +       /* Handle empty ranges: if no commits were processed, treat as success */
->>>> +       if (!commits_processed)
->>>> +               ret = 1; /* Success - no commits to replay is not an error */
->>>> +       else
->>>> +               ret = result.clean;
->>> The change to treat empty ranges as success is an orthogonal change
->>> that I think at a minimum belongs in a separate patch.  Out of
->>> curiosity, how did you discover the exit status with an empty commit
->>> range?  Why does someone specify such a range, and what form or forms
->>> might it come in?  And is merely returning a successful result enough,
->>> or is there more that needs to be done for correctness?
+>> Your point about post-rewrite hook support is well-taken though. As this
+>> command evolves toward client-side interactive rebase (which was Elijah's
+>> original design goal), we will definitely need hook integration. At that
+>> point, a --format approach with atoms like %(old) and %(new) could make
+>> sense for letting users extract the commit mapping in whatever form they
+>> need for hooks or other tooling.
 >>
->> I was thinking about automated scripts that compute ranges dynamically -
->> they might generate A..B where it turns out A==B, and treating that as
->> "no work needed, success" seemed reasonable for scripting.
+>> For this iteration I am focusing on the simpler atomic update case, but
+>> I will
+>> keep the --format idea in mind for future work.
 >>
->> But you raise a good point: A..A seems like obvious user error (why would
->> anyone do that intentionally?), and B..A where B contains A is likely a
->> mistake that maybe should error rather than silently succeed.
+>> [replying to this part
 >>
->> I am inclined to drop it entirely from this series. If there's real demand
->> for specific empty-range handling, we can add it later with proper
->> discussion of the actual use cases. Does that sound reasonable?
-> Yeah, I think dropping it from this series is fine.
+>> Do you see a specific use case right now where --format would help, or
+>> is this more about future-proofing the design for when we add
+>> client-side features?
+> I have been using git-rebase(1) for a while with a post-rewrite script.
+> This is used for interactive rebases but also just keeping up with
+> upstream, i.e. a regular rebase.  Then I was idly thinking that
+> git-replay(1) would be faster for the plain rebase case—but it doesn’t
+> support that hook directly.  Okay, but I can get around that: I can
+> parse the output, yank the commit OIDs, and run git-rev-list(1) on both
+> of them to get the mapping I want.  But it would be really nice to just
+> declare the correct post-rewrite format and be done, without having to
+> parse anything. :)
 
 
-Thanks Christian. I will drop the empty range handling from this series.
+Ah, that's a concrete use case! You are using post-rewrite hooks with
+rebase and want git replay to support that workflow without needing to
+parse output.
 
-On documenting the current behavior for empty ranges: should that go in
-this series or separately? If the current behavior is just "returns
-failure for empty ranges", maybe a simple doc note is enough. But if we
-want to discuss what the behavior *should* be, that probably deserves its
-own focused series.
+That makes sense for the client-side evolution of the command. Right now
+the focus is server-side where hooks aren't typically needed, but as this
+moves toward replacing interactive rebase, proper hook support (including
+post-rewrite) will be essential.
 
-What do you think?
+I think --format with atoms would work well for that - you could get
+exactly the format post-rewrite expects without parsing. For now I'll keep
+the simple update-ref format, but this is good motivation for adding
+--format support when we tackle the client-side features.
+
+Thanks for the concrete example!
 
 
 >
-> What happens in those cases should be documented if it isn't already
-> though. Those documentation changes should probably be in a separate
-> patch.
+> Beyond that though I’ve been thinking about more hypothetical “client-
+> side” concerns.  I mentioned writing to the reflog.  I imagine that
+> server programs that just want to be able to efficiently “rebase”
+> branches to the upstream don’t need that.  But client-side programs
+> might want to write to the reflog because they want to mark what the
+> update is for; you could have many kinds of client-side “update ref”
+> programs and want to leave breadcrumbs about what was done.  There is
+> more experimentation.  Whereas I imagine that a forge has maybe a small
+> set of “update branch” commands.  I don’t know, maybe I’m rambling at
+> this point.
 >
-> Thanks.
+>> Thanks for the thoughtful feedback!
+> Thanks for the consideration and reply!
