@@ -1,166 +1,202 @@
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A3D29DB6E
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 07:04:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759907092; cv=pass; b=UU8uuY3SJic92lS1vKPU1F5gAUXXhkWhguDBwoNY4Zo6bw7d6WXQac8tNrcf4rHhAY9nzGaPJCl951H+mtIa2gCHleAh3A3i88MTb3ODh7XzgaNW76bxgQQaZv5GbCOFaXnPqc/1quOmgCJoDRvSEDHo1w8kI+5jo4LVRDqPQfY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759907092; c=relaxed/simple;
-	bh=8LEueoGFP1x1ZdVjEObOiirjfT9AhwBsd/3A/qoLqQA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gkxyXHZtRtgT95yfB5OZKpjLDYZnkksf0e8sdJEY5X8TRj29HNc/dTfPQsyiDs91QnRACM3WnaYoUD8xd7wdMEzyDKvKEmliHTL4nRiOHuuQ9ffqWdHwr9KNdwYWJv7Yjrh4fYVemOiRWn3RzjvVpuHIYIVGrwUWH/URA5a2TXE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=WFawblQL; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC9D23ABA1
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 07:14:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759907662; cv=none; b=XO41+hOiFcEQXqcHqH7c7pqeZFtvSCivCxKNA218c2oIfDM6en4CMpK1iZmfJeYzn8mOQHM8G3qUwxzTu9gJ7GxRfl+Jtpc4QUicJK9zLfuNOPbv3RKh/IJ2aK1E7TcFQj3Sl+Mq4ZUUUr2pGE3uQMRNlwJRWIGRypNU9ropduc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759907662; c=relaxed/simple;
+	bh=Tu9HNa2z6gmxqLwsv24rfNV5ZSU/gXM0YBByF/z5uv4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nnlj7CFK4CIvSV1rVSwPelXC9HNYunD5N4wc72jv69RT72UbWBwV39xL5iaQJZfDFuoPVZ/jL96MaJzNfh5XiZ8BoQWtFEKMZsVHfRJ/2gFWRUchnH2F45Ub5Pd4rHVdXd99UyHLU9ZbCLLze9WzWX0tGUOZE9cN7tLEBRxlqsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mxfach0z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bABjZuWV; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="WFawblQL"
-ARC-Seal: i=1; a=rsa-sha256; t=1759907069; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=HHv5YiWkqIDQbSujEl7LSP2oIFfWzwKmEXi3UQoK+b9spiFyc6VGbAscn4Xi2mqzz+W61HRv2jWeIMdeTEE5L0txnLFjcbOggpqFJhyyzNcrBgjhMOsfImgQDwlJEyQ5iio1EYYRimgC47LflpDVq7XQ4AykAjZfCP7dBbcmcE8=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1759907069; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=cboupzNUt4Le/A/VxouiOXXCz2Y3rt7ViJ7z0mOSAqw=; 
-	b=FQGikGGJYAVh4nFd2d5ygSK0wGvIeKXr0wpbOAFTcDFb1eABAosxSd5NrpiE6xIL63/GqkGUWVVTCqS4elY7cyv/mcB4AjhLyzZI5vm12Hh55vAa5YzlgRNOFXJ3+03P1DSldokqqgQs7fVZbndMHMWiIxpTvVc/8jCOVlyAT4w=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759907069;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=cboupzNUt4Le/A/VxouiOXXCz2Y3rt7ViJ7z0mOSAqw=;
-	b=WFawblQLCqAua6tI9RnF5Gs5H99Zq0hKgLzwQaycQlE0/OwYblWOFMrR0QfaIvpQ
-	1bMQhgSp/ELEhxBrJpTfVVufdD67PzmDS12MsFyRqjXrVQQUOC1oK3fuey7blljWiso
-	0Xksl9zp2sBJ6W144P55kcWSYKUW3JWGWlEzupEE=
-Received: by mx.zohomail.com with SMTPS id 1759907062562757.7911832257449;
-	Wed, 8 Oct 2025 00:04:22 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
- Damazio Bovendorp <rdamazio@google.com>, Junio C Hamano
- <gitster@pobox.com>, Josh Steadmon <steadmon@google.com>, =?utf-8?B?w4Z2?=
- =?utf-8?B?YXIgQXJuZmrDtnLDsA==?=
- Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 03/10] hook: convert 'post-rewrite' hook in sequencer.c
- to hook.h
-In-Reply-To: <aN4c9sqHTgn2wot7@pks.im>
-References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
- <20250925125352.1728840-4-adrian.ratiu@collabora.com>
- <aN4c9sqHTgn2wot7@pks.im>
-Date: Wed, 08 Oct 2025 10:04:18 +0300
-Message-ID: <87y0pl3mdp.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mxfach0z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bABjZuWV"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id AE2827A075A;
+	Wed,  8 Oct 2025 03:14:19 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Wed, 08 Oct 2025 03:14:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1759907659; x=1759994059; bh=kEmxwzgfM/
+	bMwOSCrZvKTBJzL8EQEV6Xoh5PjbKq74w=; b=mxfach0zhYqc5d37OgI23fA7hn
+	lKBTmcFaXLQmbmrxv/yxsx6f5vIFcByWq4KqZjS/aSno3KRSAuB40MAHXo+krPll
+	r0yf2epBpHcJJMZyQGmeUJKeri/XIhN7H8RYdvoaV/JOCLVzW22LxAhl0fDtj9Bu
+	JsMDWSz9GL/qBvT9MEvXmY8Ax+I/MW8YAUGjrWBiweMfgUxekEVkLLjNtebs6net
+	lD/stSNc6XG6fkrZmMU7oZbuNt8CZFfjGlpJrqQGvXFJSThhP8MLghGFSCGZ+GLs
+	8CdJOILUNmOjJhiUG/28RpKHVoPfb+ArAwLMrRmItZa4mnxNh9OlzQHwMS+A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759907659; x=1759994059; bh=kEmxwzgfM/bMwOSCrZvKTBJzL8EQEV6Xoh5
+	PjbKq74w=; b=bABjZuWV745tzRIOf83qpptM1cGv2fhC0GrnyfELgFYD9V1h5OM
+	qGgJ4dH15dn9kr4sZzMiJdMmEIwFHsAQgU87OTUTe/DyyB+S7vHDQkqNKeG2zMl5
+	ld0HLVrAvCoouBdE1B66d9o1ymEKCu2wOXcn3Sqd7PsCkbXMB18kNnfMO5cjEqLV
+	oJw+kGPQguF1tXmn6PrRXPUrQstyEf+6NdKeS6irRurWosY53cqINnm7juauajg8
+	g03K1qiRtak5Nsvrvr4bF4+VuHkerUBbKtxd0NcgWQQSwg+vR8QO7LNnhwmxseUP
+	eWI3fz/gKsfud2Ba1HM7kgiXqEVgVAriOcw==
+X-ME-Sender: <xms:Sg_maDRHGX7Ebuj73-vUqtOnJcYxhyuP_8z3BQMORHjxEewieFTSnw>
+    <xme:Sg_maD0EFbFOdqsZ9EdkwKoFHCluodkYndvqJVhuNcpBS5SL8-qoAuCUKY_h5V1Y8
+    KthJ8-A4P6IY373o-v8-AvDNqPct0MQ6VEOoRyaEocLWgDURW_U_g>
+X-ME-Received: <xmr:Sg_maPBZiqlwDR1kmZo6K47N4mJLyftsmbfQdTIwGqWrnhuuyRtKqedX33uk-TeDQviy73Aw3n9GF6BTvc4EVTb_R_KblxRtTy3T4zVr>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddvieekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    oheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehpvg
+    hffhesphgvfhhfrdhnvghtpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghr
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlh
+    hinhesghhmgidruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnh
+    gvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
+    nhgvfihrvghnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:Sg_maPgI3_rHt9n9dOkv88rZZHZtu7R5Jpjv6uVUIaw5l2xJGd-oEw>
+    <xmx:Sg_maBMw5K_4Yoq1p4m1ObHz_L6lRK0BD0YpMefgBcvrkear6nMAcw>
+    <xmx:Sg_maP-HlZO4hsvCPxRgwCxNQfRG7IFInkmKmikqzJkq-dBRXN63Bw>
+    <xmx:Sg_maCdSsTIbGi8qMTeP-4Wp_MW9TWGqoqvB0auTXBefEMZUVMwdhg>
+    <xmx:Sw_maPoBa2WKg0ACIZZ8FenysgqdGL1p0WWkPBA4qkYW1qtOazSdoCme>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 8 Oct 2025 03:14:17 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ae1b0962 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 8 Oct 2025 07:14:16 +0000 (UTC)
+Date: Wed, 8 Oct 2025 09:14:12 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 1/5] doc: git-tag: stop focussing on GPG signed tags
+Message-ID: <aOYPRKoexRtYUDsh@pks.im>
+References: <20251007122958.1089680-1-christian.couder@gmail.com>
+ <20251007122958.1089680-2-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251007122958.1089680-2-christian.couder@gmail.com>
 
-Hi Patrick!
+On Tue, Oct 07, 2025 at 02:29:54PM +0200, Christian Couder wrote:
+> diff --git a/Documentation/git-tag.adoc b/Documentation/git-tag.adoc
+> index a4b1c0ec05..9117754ffb 100644
+> --- a/Documentation/git-tag.adoc
+> +++ b/Documentation/git-tag.adoc
+> @@ -3,7 +3,7 @@ git-tag(1)
+>  
+>  NAME
+>  ----
+> -git-tag - Create, list, delete or verify a tag object signed with GPG
+> +git-tag - Create, list, delete or verify tags
 
-On Thu, 02 Oct 2025, Patrick Steinhardt <ps@pks.im> wrote:
-> On Thu, Sep 25, 2025 at 03:53:46PM +0300, Adrian Ratiu wrote: 
->> diff --git a/sequencer.c b/sequencer.c index 
->> 9ae40a91b2..93cd6ab1f2 100644 --- a/sequencer.c +++ 
->> b/sequencer.c @@ -1298,32 +1298,46 @@ int 
->> update_head_with_reflog(const struct commit *old_head, 
->>  	return ret; }  
->> +static int pipe_from_strbuf(int hook_stdin_fd, void *pp_cb, 
->> void *pp_task_cb UNUSED) +{ +	struct hook_cb_data 
->> *hook_cb = pp_cb; +	struct strbuf *to_pipe = 
->> hook_cb->options->feed_pipe_ctx; +	int ret; + +	if 
->> (!to_pipe || !to_pipe->len) +		return 1; /* 
->> nothing to feed */ + +	ret = write_in_full(hook_stdin_fd, 
->> to_pipe->buf, to_pipe->len); 
-> 
-> One thing I wondered in previous patches was whether we now have 
-> the potential for deadlocks. If we feed data to a child that 
-> exceeds the buffered I/O size, and that child writes data that 
-> is consumed by Git larger than the buffered I/O size, as 
-> well. Wouldn't that mean that we may now not make any progress 
-> at all? 
-> 
-> I guess that's no different compared to before though, as we 
-> also used `write_in_full()` there.
+This is an obvious improvement.
 
-That is correct, yes, it's the same as before.
+> @@ -38,17 +38,18 @@ and `-a`, `-s`, and `-u <key-id>` are absent, `-a` is implied.
+>  Otherwise, a tag reference that points directly at the given object
+>  (i.e., a lightweight tag) is created.
+>  
+> -A GnuPG signed tag object will be created when `-s` or `-u
+> -<key-id>` is used.  When `-u <key-id>` is not used, the
+> -committer identity for the current user is used to find the
+> -GnuPG key for signing. 	The configuration variable `gpg.program`
+> -is used to specify custom GnuPG binary.
+> +A cryptographically signed tag object will be created when `-s` or
+> +`-u <key-id>` is used. The signing backend (GPG, X.509, SSH, etc.) is
+> +controlled by the `gpg.format` configuration variable, defaulting to
+> +OpenPGP. When `-u <key-id>` is not used, the committer identity for
+> +the current user is used to find the key for signing. The
+> +configuration variable `gpg.program` is used to specify a custom
+> +signing binary.
+>  
+>  Tag objects (created with `-a`, `-s`, or `-u`) are called "annotated"
+>  tags; they contain a creation date, the tagger name and e-mail, a
+> -tagging message, and an optional GnuPG signature. Whereas a
+> -"lightweight" tag is simply a name for an object (usually a commit
+> -object).
+> +tagging message, and an optional signature. Whereas a "lightweight"
 
-Deadlocks can happen, however they are the result of bugs, for 
-example a hook child waits for stdin, the parent doesn't feed 
-anything and decides to wait for the child to finish. :)
+Nit: let's rather say "cryptographic signature" here.
 
-I hit quite a few of these during development, however they should 
-all be fixed (deadlocks are usually easily fixed once detected).
+> +tag is simply a name for an object (usually a commit object).
+>  
+>  Annotated tags are meant for release while lightweight tags are meant
+>  for private or temporary object labels. For this reason, some git
+> @@ -64,10 +65,12 @@ OPTIONS
+>  
+>  -s::
+>  --sign::
+> -	Make a GPG-signed tag, using the default e-mail address's key.
+> -	The default behavior of tag GPG-signing is controlled by `tag.gpgSign`
+> -	configuration variable if it exists, or disabled otherwise.
+> -	See linkgit:git-config[1].
+> +	Make a signed tag, using the default signing key. The signing
 
-Related, but also important, is thoroughtput when feeding the 
-pipes: sending input too granularly (e.g. by calling the callback 
-on each line when we send many lines) can add unnecessary 
-latencies / delays due to the run-command ppoll mechanism.
+Same here, let's say "cryptographically signed tag".
 
-It's a balance we must find: for most hooks it doesn't matter 
-because the input is small (in this case it's a single write), 
-however hooks like post-receive get large amount of data, so there 
-I had to batch 300-500 lines to get simliar performance as before 
-the callback.
+> @@ -75,7 +78,9 @@ OPTIONS
+>  
+>  -u <key-id>::
+>  --local-user=<key-id>::
+> -	Make a GPG-signed tag, using the given key.
+> +	Make a signed tag using the given key. The format of the
 
-So yes, it's improtant to have no deadlocks and it's also 
-important to have roughly the same throughtput through the pipes.
- 
->> +	if (ret < 0) { +		if (errno == EPIPE) { + 
->> return 1; /* child closed pipe, nothing more to feed */ + 
->> } 
-> 
-> Style: let's drop the curly braces around single-line 
-> statements. 
+Same.
 
-Ack, will do, others pointed it out as well.
- 
->> +		return ret; +	} + +	/* Reset the input buffer 
->> to avoid sending it again */ +	strbuf_reset(to_pipe); 
-> 
-> Is this really necessary? I would've expected that we return a 
-> positive value from this callback, and as a consequence the 
-> run-command subsystem should notice that we're done with writing 
-> stdin and close the file descriptor for us. Afterwards, it 
-> shouldn't invoke this callback ever again, shouldn't it?
+> +	<key-id> and the backend used depend on the `gpg.format`
+> +	configuration variable. See linkgit:git-config[1].
+>  
+>  -f::
+>  --force::
+> @@ -87,7 +92,7 @@ OPTIONS
+>  
+>  -v::
+>  --verify::
+> -	Verify the GPG signature of the given tag names.
+> +	Verify the signature of the given tag names.
 
-That is correct: it is not necessary. Phillip already made me 
-aware that I can significantly simplify this function, which I 
-will do in v2 shortly. :)
- 
-> 
->> @@ -5140,16 +5154,16 @@ static int pick_commits(struct 
->> repository *r, 
->>  		flush_rewritten_pending(); if 
->>  (!stat(rebase_path_rewritten_list(), &st) && st.st_size > 0) { 
->> -			struct child_process child = 
->> CHILD_PROCESS_INIT; +			struct 
->> child_process notes_cp = CHILD_PROCESS_INIT; 
->>  			struct run_hooks_opt hook_opt = 
->>  RUN_HOOKS_OPT_INIT;  
->> -			child.in = 
->> open(rebase_path_rewritten_list(), O_RDONLY); - 
->> child.git_cmd = 1; -			strvec_push(&child.args, 
->> "notes"); -			strvec_push(&child.args, "copy"); 
->> -			strvec_push(&child.args, 
->> "--for-rewrite=rebase"); +			notes_cp.in = 
->> open(rebase_path_rewritten_list(), O_RDONLY); + 
->> notes_cp.git_cmd = 1; + 
->> strvec_push(&notes_cp.args, "notes"); + 
->> strvec_push(&notes_cp.args, "copy"); + 
->> strvec_push(&notes_cp.args, "--for-rewrite=rebase"); 
->>  			/* we don't care if this copying failed */ 
->> -			run_command(&child); + 
->> run_command(&notes_cp); 
->>   hook_opt.path_to_stdin = rebase_path_rewritten_list(); 
->>  strvec_push(&hook_opt.args, "rebase"); 
-> 
-> This change looks completely unrelated to me? 
+Same.
 
-Yes, Phillip pointed this out as well, I will drop it in v2.
+> @@ -236,12 +241,25 @@ it in the repository configuration as follows:
+>  
+>  -------------------------------------
+>  [user]
+> -    signingKey = <gpg-key-id>
+> +    signingKey = <key-id>
+>  -------------------------------------
+>  
+> +The signing backend is controlled by the `gpg.format` configuration
+> +variable, which defaults to `openpgp` for GPG signing. To sign tags
+> +using other technologies like X.509 or SSH, set this variable to
+> +`x509` or `ssh` respectively.
+> +
 
-Thanks!
+It might make sense to use a bulleted list here to list the different
+available formats. On the other hand, we could just as well refer to
+git-config(1) so that we don't have to repeat any of the information
+here, but instead have it at a central place.
+
+That might not be worth it though. In the end there aren't too many
+different commands that write signed objects.
+
+Overall this change makes a lot of sense to me, thanks!
+
+Patrick
