@@ -1,171 +1,142 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA17E23ABA1
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 07:14:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85132F1FE6
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 07:22:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759907689; cv=none; b=h36WJiEDJdNLlGxsenG7AY6kUsbXFU2A7fJMaNgZx8RHMQR0mLsulaBHzoomzwMwW3cL1gTZEjOsLhn47KpbWvzZNKl7n+KlaEUI9IeqmRyeBk6fFx3RSz6XbvlevhCxOQ1kqqldjcWI+M27bBmmqYF6SwxZ4x/f2Z+8ThqntUg=
+	t=1759908171; cv=none; b=rRABN8CX5BjtZIdv2jayMREdyLY09LFA7d38XaZKw+AZHG4sQ4oBWV14tVPkgw3yag8R+uoGHlDWkLCcFORAe28ZesmYMWVF8a8hfGjBxtG9eoDT126ZV74och+x8wHJZjvfVZaaExuWp0dAHqhMTd3QHNeN5FkU/RI+D0bEVss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759907689; c=relaxed/simple;
-	bh=S2TC6A8omlq68oyyDj1Jfa3VyuMAILZsa5gMzjIAjpc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Oiv38ji0z55uwcS0sHkkXUTkH0TAgiaobaRVftLCPB2gqxgSY8jEUAimsSPuMOVnG1dPxdz4KZpqAPjd7th7oWlGWQJcfLU6swL5Nx0fdQf4cDCylDBdGZHpTTnPtvfGDKvCOTLCh4s+7hWiOihWLd+7G/puo0CmVAHuXiUXG/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LSpNyvs9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g9Gjj0n0; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1759908171; c=relaxed/simple;
+	bh=qzTxzwSNDxXZC1B9zQ46Y9a5ppNJdNWnFJrs79Ja8N4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oG0hdY4q7HBtbqBVG7/I1i8wrG7A15d6Nn4nkWGOEmaxuOaJbnQ0Ql0FhUFOck66MTRfKsBWyCKkpZpxKaTK7U1X9GYPobBn/FdGwXzqp3ZkT2siE3W7IOgMGAGICzYi0w9PSjUTbA48fwCap0+FuGcq46h7DuplK/Wn9vzUpkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z+6F+vri; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LSpNyvs9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g9Gjj0n0"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id DD3E51D00050;
-	Wed,  8 Oct 2025 03:14:45 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Wed, 08 Oct 2025 03:14:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759907685; x=1759994085; bh=ow8GOLDJXW
-	N5zNIFAzrSxKetgW+c+oicMdyhcjGQ7Hc=; b=LSpNyvs9tPHdUpGLbPTILt/hQ6
-	tuQOxjl2T+mMcGzoNeEQlU5Ux+rQSz3tyxGCoiHS58XJFPiBejn0bGAUVmeSxsSk
-	Snv1LM12HB+ep+Q5tixxfhUGw5/xZjARsV62dUx8e9SAL41tYyoQDm9jLcqJNHpN
-	ejjBsL8WNN93ah3zqMATfSeFdf9d81CAWZHsHW+Gt2GJDxbBGS/v31c9vdWqQITt
-	vXT07zmLL2W8ZrgMI7Pke8R98K2hz5y+y3yuIDxxD05we1vh5sIWPg6YGtYkDXYq
-	Fe2YSZzL9URITPdLfmdVuOfHSHJ5vWS/nT7Djo72fQ6/TdF6VFCHvGpXspVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759907685; x=1759994085; bh=ow8GOLDJXWN5zNIFAzrSxKetgW+c+oicMdy
-	hcjGQ7Hc=; b=g9Gjj0n0U4O5RttLvY0WwQvWq/1pIRtCU4ov5/MXiBI+i9tcXk/
-	3mmmGAKWNvqUyAQhHmzZB6Quz0LqChsu3o0fOnUNPbt8UUGpfXeKMtwOa0VeD6dg
-	7HBUsRmcsZAxhB6xxDKxA8PaCKeHPMmajIItxkUg77YFiBOeBOkDAxxzEV+50u/e
-	0phPXd0kBmhgzbctCC1OUoG6SawJxD6cX1GfKDir7e05wkdz0of9H4xjrhpTKP1T
-	Dz5wt4jRpI0uxh7gqT+BhdVOIpgau2tg7TxRQJfpOw4r9nZGtFCOHO4xUqS79TKU
-	xM15R0tj0qZQhCcrvgsj04SsMC+wFUNE48Q==
-X-ME-Sender: <xms:ZQ_maIyQk-h2tdQblEWsj9Nu7n___H7h7oT0KNJNanXuzpyGwUmMRQ>
-    <xme:ZQ_maJMRT9d80scUa7o-v69FBUY4DWlXwCX-kiCrU-zStcAl9iGcQh3hTIafrPnRE
-    i0ELDliZBPh3egZbu9yqzCldpuAwOjIWwqH_V-hZJZxXeELnQJTd48>
-X-ME-Received: <xmr:ZQ_maF-r4dgC46AJyR4F1cZj9zF_5MkxIT19D7EYc6qQArbl0jgualrF-EWPzcbw7d6aylrDxF6bz7t1UgS8fvkFBFs-VK2uCHDZ5Vez>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddvieejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehnvgifrhgvnhesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsrghnuggrlhhs
-    segtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopegthhhrihhstg
-    hoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhs
-    tghhihhnuggvlhhinhesghhmgidruggv
-X-ME-Proxy: <xmx:ZQ_maO7f353DgQcoJvxvjZLe86Xf0R_qCuzQVus24oyj9qhUZYuxhw>
-    <xmx:ZQ_maD4qog_3kjMZfIkYwVblT4Wpw77p9G82HFoz0dgkZMQZObWhiw>
-    <xmx:ZQ_maPoA65EWoeh16u8ZDFdsiKcDo74Pu5gJj8hFtT8_WrUlEhKXcA>
-    <xmx:ZQ_maMPmGymEzSobXdt8Y7OZjzAcvMLIezRv_yqYgJCr65-OKrJVGw>
-    <xmx:ZQ_maAgJmCkzqfsz0PoznoufB0F0q0kAstl4I94qrkeDSQlLY7x_H-LD>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Oct 2025 03:14:44 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 61ed6a4d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 8 Oct 2025 07:14:43 +0000 (UTC)
-Date: Wed, 8 Oct 2025 09:14:40 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 5/5] fast-import: add '--signed-tags=<mode>' option
-Message-ID: <aOYPYEk5sT6b1kuS@pks.im>
-References: <20251007122958.1089680-1-christian.couder@gmail.com>
- <20251007122958.1089680-6-christian.couder@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z+6F+vri"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-b2e0513433bso1101885166b.1
+        for <git@vger.kernel.org>; Wed, 08 Oct 2025 00:22:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759908168; x=1760512968; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=N/9OD7YgdCCTNdLSA4996mS0IWvFqZ6eYd0OpM/P0AY=;
+        b=Z+6F+vriQmTTRS7l6rK9l06Hp5b/3Z+7srjN0TGkV2sCUnLory5yEu5g2DNb4X/e91
+         Jd8QAvbrMPbWBUCbyS4knwy91hic0tqnfDv4z/l15euLBXQ0pl/SPkWL4y34JeUymJG/
+         3zmZPsuVw+sDz02q8lvLN6X14k1iLnz3aM+clxm2Ki/T455kFufTW2Y18fLwKnB0Y1oY
+         eU4vuqDZ2wDkekBm5LH01T7GZ5Tb2Qq/wvg6wPveiFaqxXajOLRN6e0Drx2V99lQbo0O
+         od9y+fCFsEythGBeTAoMmLhjSNXJTCPcrN9xD9w4yFn5O3m7GEaMdZsrSOVrSt+zs+gu
+         2ahQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759908168; x=1760512968;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=N/9OD7YgdCCTNdLSA4996mS0IWvFqZ6eYd0OpM/P0AY=;
+        b=YtI5KWbzd0WySRl0VyCpTP2/Swm9t72qzj0Q09Jyq58nE9h3MopM94u/xVKg5yLEUB
+         0Mds93Nll4V0QgbwpNYa/Y7MPRAaD6usTMPTgqGUFn2rnWk+8ScpQwyw0BGX7EPIHRzl
+         HKqpPPbaPhmRJXiu+wUq4OqGAhJqW8UT/R2wpgB/Auxs1owIy9K+7Up5JShzpNkRG077
+         PJSw9neP37nFt6l/ZUZjx9Sz++U/CoGQlq91EREdEGjrmtMj1AJcIoTflRnS97BeNkR1
+         jb/7Fupxw6EZs6WhogmUPBRc1TZLdGeoWJ5ABuzzwHZh5+fortwS8N3eRy0d0n/2zjRE
+         16zw==
+X-Gm-Message-State: AOJu0YyRssljd/+UJCHQ+R/1FA5A4z3atGQAUcK2VfO31cpTPxvCKlW/
+	7gr0vSJ1abgRlNZbfhgqsJY1z07ESAIz6A3/OpNM7ieajSnq3uX6x2tp2WcVGmFv8k6b8bau80V
+	ZpFpDUYBZLpSbXw99LS+rL/7itp2ALuo=
+X-Gm-Gg: ASbGncuaMuoANTm8+ICfBjp+oXJ33lAeQ9du12usF8qvNvT5iuT/hWHwupHdtO72Z3A
+	5KGy4gkFMzwQ+pIzA3eQuT6GutS//GWuH+2qjiNVK0POZQEu2VhnWVstc33tjqTp+XhHEQdC6Pz
+	C8uBEVstGV+ro+psZDvjC+dUCFVd+TZg4p/1M0TE7rCcfNg+hC28Asb321k/Wf2vQDPRK4fnolV
+	/sUqPxGrEAZzvUcAhUCpOUv8DX7E+g=
+X-Google-Smtp-Source: AGHT+IErORGkOsB8EuGTV2nITPGscJFPvi0Tvcl56rtpVhpGdids77UNEFXrU2x2LuWp8tClB+QDmVw7rF1/FDS9CjE=
+X-Received: by 2002:a17:907:9628:b0:b46:abad:430f with SMTP id
+ a640c23a62f3a-b50ac5d0873mr216832366b.52.1759908167742; Wed, 08 Oct 2025
+ 00:22:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251007122958.1089680-6-christian.couder@gmail.com>
+References: <xmqqcyalm0mh.fsf@gitster.g> <20251001140310.527097-1-christian.couder@gmail.com>
+ <xmqq4isi1gpm.fsf@gitster.g> <CAP8UFD3wc-aj27Q_kFXvknJrpa-ySWbZiPmNCTMboA08=HP+xw@mail.gmail.com>
+ <xmqqjz1cufcd.fsf@gitster.g>
+In-Reply-To: <xmqqjz1cufcd.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 8 Oct 2025 09:22:35 +0200
+X-Gm-Features: AS18NWCtWq2yJtcZwBsjhwM2xLA0VZL18Rc6lQdwHakcguFQ7HLveIFZBz332fY
+Message-ID: <CAP8UFD0Nrc-ENbjhP_eBmqe9jGyAd4kmp3Bw8b18JbxdC6neVQ@mail.gmail.com>
+Subject: Re: [PATCH v2] SubmittingPatches: add section about AI
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
+	Rick Sanders <rick@sfconservancy.org>, Git at SFC <git@sfconservancy.org>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Patrick Steinhardt <ps@pks.im>, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 07, 2025 at 02:29:58PM +0200, Christian Couder wrote:
-> diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-import.adoc
-> index 85ed7a7270..b74179a6c8 100644
-> --- a/Documentation/git-fast-import.adoc
-> +++ b/Documentation/git-fast-import.adoc
-> @@ -66,6 +66,11 @@ fast-import stream! This option is enabled automatically for
->  remote-helpers that use the `import` capability, as they are
->  already trusted to run their own code.
->  
-> +--signed-tags=(verbatim|warn-verbatim|warn-strip|strip|abort)::
-> +	Specify how to handle signed tags.  Behaves in the same way
-> +	as the same option in linkgit:git-fast-export[1], except that
-> +	default is 'verbatim' (instead of 'abort').
-> +
+On Fri, Oct 3, 2025 at 6:20=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> >> A milder way to phrase this would be to jump directly to "we reject
+> >> what the sender cannot explain when asked about it".  "How does this
+> >> work?"  "Why is this a good thing to do?"  "Where did it come from?"
+> >> instead of saying "looks AI generated".
+> >>
+> >> It would sidestep the "who decides if it looks AI generated?" question=
+.
+> >
+> > I don't think the "who decides if it looks AI generated?" question is
+> > very relevant. If someone says that a patch looks mostly AI generated
+> > and gives a good argument supporting this claim, it's the same as if
+> > someone gives any other good argument against the patch. In the end,
+> > the community and you decide if the argument is good enough and if the
+> > patch should be rejected based on that (and other arguments for and
+> > against the patch of course).
+>
+> And then who plays the final arbiter?
 
-Nit: I would've ordered this after "--signed-commits", mostly so that
-these two are ordered alphabetically.
+You, like for any other discussion about a patch when there are
+different opinions.
 
->  --signed-commits=(verbatim|warn-verbatim|warn-strip|strip|abort)::
->  	Specify how to handle signed commits.  Behaves in the same way
->  	as the same option in linkgit:git-fast-export[1], except that
-> diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-> index 2010e78475..668c926db5 100644
-> --- a/builtin/fast-import.c
-> +++ b/builtin/fast-import.c
-> @@ -2961,6 +2962,43 @@ static void parse_new_commit(const char *arg)
->  	b->last_commit = object_count_by_type[OBJ_COMMIT];
->  }
->  
-> +static void handle_tag_signature(struct strbuf *msg, const char *name)
-> +{
-> +	size_t sig_offset = parse_signed_buffer(msg->buf, msg->len);
-> +
-> +	/* If there is no signature, there is nothing to do. */
-> +	if (sig_offset >= msg->len)
-> +		return;
-> +
-> +	switch (signed_tag_mode) {
-> +
-> +	/* First, modes that don't change anything */
-> +	case SIGN_ABORT:
-> +		die("encountered signed tag; use "
-> +		    "--signed-tags=<mode> to handle it");
+> One can keep insisting on a
+> patch that looks to me an apparent AI slop that it was what one
+> wrote oneself, but you may find it a plausible that it was a human
+> creation.  Then what?
 
-This message needs to be marked for translation.
+You decide if the arguments on one side are better than those on the
+other side, again like for any other discussion about a patch when
+there are different opinions.
 
-> +	case SIGN_WARN_VERBATIM:
-> +		warning(_("importing a tag signature verbatim for tag '%s'"), name);
-> +			/* fallthru */
+Why should the process be different? It could be different if we think
+that such behavior is similar to the bad behavior we talk about in our
+code of conduct, but I don't think we want to go there and have some
+special procedures, right?
 
-This comment is misindented.
+> It is very much relevant to avoid such argument, because the point
+> is irrelevant.  We are trying to avoid accepting something the
+> submitter has no rights to claim theirs, and requesting them to
+> explain where it came from, how it works, etc. would be a better
+> test than "does it look AI generated?  to everybody?", wouldn't it?
 
-> +	case SIGN_VERBATIM:
-> +		/* Nothing to do, the signature will be put into the imported tag. */
-> +		break;
-> +
-> +	/* Second, modes that remove the signature */
-> +	case SIGN_WARN_STRIP:
-> +		warning(_("stripping a tag signature for tag '%s'"), name);
-> +			/* fallthru */
+The sender can ask the AI where it came from, how it works, etc, and
+copy-paste the AI's answers. The sender could also prompt the AI or
+modify its answers so that they look human generated as much as
+possible. So just asking those questions might not help much in some
+cases. In the end, whatever the answers to some questions, we have to
+be able to decide if the suspicious content looks too much like it has
+been AI generated or not.
 
-Same here, the comment is misindented.
+It doesn't mean that asking those questions couldn't help in some
+cases. It means that we just don't want to enter into the details of
+which questions we can ask and if we should judge based on the answers
+to those questions or something else. For example our code of conduct
+says that we will take action "in response to any behavior that they
+deem inappropriate, threatening, offensive, or harmful." It doesn't
+tie us to asking some questions and taking action based on the
+answers.
 
-> +	case SIGN_STRIP:
-> +		/* Truncate the buffer to remove the signature */
-> +		strbuf_setlen(msg, sig_offset);
-> +		break;
-
-I'm not familiar with the signature format, so it's probably a dumb
-question: does the signature always extend until the end of the tag
-message? Doesn't the tag message come after it?
-
-Patrick
+Thanks.
