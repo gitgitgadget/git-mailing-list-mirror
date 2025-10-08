@@ -1,85 +1,101 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCAB1E32D3
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 17:10:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E55B1F462D
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 17:21:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759943414; cv=none; b=qhiC9TggKZpIgTK9XCUhzvxHZjM6jdoUi+/P9fZuXq/vCxO+Nv9+mmQoALFXiiZYXrgeIbWL9i5y/DSd0hWXMUhCs7J7prDf8SgL1NZCrv/ZPmemY5a9O0UNwt9NJIK4gtGWTwyEsclppmqNlMnIK6eLMT/JolMkoGhPLauPLuQ=
+	t=1759944118; cv=none; b=C8dxyxTca70ciisH7w2k/hYiZTwrrF6jn3i68eSoRpdsOqQ4v04+U60jE+vFJ2Krs2hnKo7VOg9yD278JRwJTm/wuH6o6xBzb+0M58e9iQPDx/5GQdMROEUNUALfIK3P7KyAyvkqxrmqADO7sGs468I1jZ1H7Gn71h+3aPaGYXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759943414; c=relaxed/simple;
-	bh=Z1iprDSpIb1UxkJEUIh40VJ98S9vYZy7x52k7aZshWY=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=iBWR49EEiPtYUnXIvdS4hbFj97TYqTzTFF5XToCX/rjt1VCVL/aO+Lj+x0Gl8cSrMf/ecsVihocLfoy/6jKOTIpbmIZrDS8XwNBOIt18X5Quyh2WD7oAQ/F5UKPjpfv86K61iIKmX47zcm6iAIrX61/WhX2AQliD10FPFWi2vqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=crateandbarrel.com; spf=pass smtp.mailfrom=crateandbarrel.com; dkim=pass (2048-bit key) header.d=crateandbarrel.com header.i=@crateandbarrel.com header.b=hfL+DLzg; arc=none smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=crateandbarrel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crateandbarrel.com
+	s=arc-20240116; t=1759944118; c=relaxed/simple;
+	bh=EngqRgHdaV70fXzQScwqKcym/LxMUzFh54rTvv8HR9Q=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=OkXK0mVd0u0K6IBedbobONmbNXrEIcKHV/kyiUMvSMK0oUJXBlQNOMAL6E9BBAmQKiHW6bXsEtc74F1eHdT0AZh6FZYUHDUDtI2OaDT+BhGDe0+/mfEVHS1SnxR7epn+73k6YbA7LehGSyVrsIj1F737bY7cnDPPEnPao6A9PHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=lQdu3Fjb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=y/IYr7IB; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=crateandbarrel.com header.i=@crateandbarrel.com header.b="hfL+DLzg"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-b551350adfaso1753a12.3
-        for <git@vger.kernel.org>; Wed, 08 Oct 2025 10:10:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=crateandbarrel.com; s=google; t=1759943412; x=1760548212; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=G8Jq5Jk7k4H9xVWpfLjVY6T7/W8IDu7bnQcMeMPDnHQ=;
-        b=hfL+DLzg5BFF5fNjpT4LdGMdDhEp7ZztctJxu8mKBRpTMUmbGjcIuMbsb+oh2JnNUo
-         Pv0iKWzPRhVAsDcQBUkt/6u00qzQaaR4Ney1Zvwh5Y6HJhs55S4ArPvURah2x8HP7Scq
-         MbyKcxW4xnngXPiBd54lDb3fPkn5Y0JE7hhQazpQWXgS7qfAidpfahYVFbW2O6CfzHjI
-         RPS9hO6i1R7EVW6LW9SJBRK33VAyLXbqg+sL+zotYTacu3r8i2g/X7xFsAyEQ8Z/e/m2
-         AgIgvMvCfjXVIGjreHUM6qvXUXn5ACwNJ+HqXYzCOKpzPAFiPEKZc0NClx3nUvqXu4oT
-         dqUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759943412; x=1760548212;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=G8Jq5Jk7k4H9xVWpfLjVY6T7/W8IDu7bnQcMeMPDnHQ=;
-        b=XgQWqQ8wTHTtSfY3xPKVJSMY70xRhSq4iLGbrzWlZSQlo+NqOq44YBjbp+zbva7i6L
-         XsXDyr6MBoIOhPxpZcH7YkhbfoafLx5BB3AeXx3UwumwknpkHr0YM6X1ExppJgtn5vn+
-         +4VzhZmJOEGaHsGvaqgxN4aMwMqHHixCQ2lyZQeAWgBZmBTihlii8wsjk6DYhcGs/aZ2
-         +qjv+kM1U9TRjemT0koxszcnED7D6BI4aHjDq4n+H6GSsS6pRlty7I6sUyZRpMAhsbiY
-         vz2Jmo95q6BqU4Li1onkxakHonf8ZMmOi0onotmlmP+2gU/BsIIbtfD4sUvFO25Ox2Ib
-         ZTng==
-X-Gm-Message-State: AOJu0YwU5NkCgkj6Z03eC7bkIu8Qn85PnyUZueSjtwTFevGbcnyUk+B9
-	ybBf0H0oIlsuOvKEJIJbtYMHxn6SbjPaZx2KUIRkPeEpMjQ0ertQQ59W5QgAYbBpMAnxroLkCo8
-	7K/z4QRh4SHJPvW20p52FrsA5UtMDG6PMauXSmsETU5M9gC+/8F9tOg==
-X-Gm-Gg: ASbGncsYoqcak2vO5rGCgp8v/Q2SQbWe5kfvhHhvxnywn7UFL53Hl6Dy2yjwUtXFYcZ
-	OO6FrVregSyB1srAfMq5SAgfiZC6O3orDl5J0lvK1cqHFS2JGyC+tIHdohw0N00U27FT10aEp9Y
-	TCnRorUgtOrOGQQtCd8dURKXbdGlJqc+mJDZg5RvzRztyFAQiVambI60JV9tiMXqVrJzS9JugIT
-	jTe4WqIL83u7e9WSXwr0nWOs6arj/o=
-X-Google-Smtp-Source: AGHT+IFpC703l/7GlacpPW5BwED8eI+Kna6CyT9sDoSOGWWNWenO2Vq76/kO1wP1UWWSfX66AnfSBWXE4eaEwuHA5Mg=
-X-Received: by 2002:a17:902:f60c:b0:25d:1640:1d59 with SMTP id
- d9443c01a7336-290273564d2mr49847845ad.8.1759943411832; Wed, 08 Oct 2025
- 10:10:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="lQdu3Fjb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="y/IYr7IB"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 57FD6EC02A0;
+	Wed,  8 Oct 2025 13:21:55 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Wed, 08 Oct 2025 13:21:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759944115;
+	 x=1760030515; bh=A3dKhbEm/71P/qB65yH/z+V5Fh2kds3DafWc27ifnnY=; b=
+	lQdu3FjbUN2jY/Rs+4uLIWHgn/NLK9M7swPuCscDjixPoAbh+dF1mLSz1oBBg++C
+	9MDQWXR07h9Z5iyaiPYeYMDs6HF6/zBN8rYUJft9576WKi3wyTCj+J7ea4j2J/yH
+	+DhQIsW43c93jiNq+hlayyMBHs1458NJ3J0ZqpAgPm/s4hd+eWMARNpMD/9Xyr0k
+	PIdukYOdwOcCKl3o7T/eLcnyYzrpL3Kw19jRKM2Gw6YupWpKhnHBAcP0ArmptxXC
+	mXvceJ9VfHccj4iTI6GVV/rE1fcCobqAN8gQ+f16tAe2YxOmS67ZBJt3zkepmmYa
+	/n+osdiX5ZpGSuAL972Vsw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1759944115; x=1760030515; bh=A
+	3dKhbEm/71P/qB65yH/z+V5Fh2kds3DafWc27ifnnY=; b=y/IYr7IBsqj/+M0X1
+	Y87WJbh3JrR6yo2LE6J4p0Xcb7CZKZDi5zd0WhmKsH4orx6YR8bCk0qpcqenhrwS
+	arK2cHligIvFoEqKI4D1VNVklrdXox0EL5L1K0YJhbuUNA1tbnTEwesjEHXCaCNZ
+	bjgNuPtGtOtJtiG+RT064skHx9q8YMq6McrlHUM4GKLqL4Ug4kzLUF/+7dsCyfdU
+	uLKTpjHIVJwyKnd5oI7X/YlffOg6l2IPJRH2UvT2LPhD1wDieUTIpTiHVZ9h8Fbx
+	UmtqvWutljJQXtPMKlx+bAuvqEpa4oAwsg7zyVi+JtPr87dZtiRKE21uMvif+Tuu
+	35yVw==
+X-ME-Sender: <xms:sp3maHcyHoq-p-8LYNJfxeIwFh9BPUxXlhZSlHztWiyA38qfnM29Pkg>
+    <xme:sp3maIA6dYP0FmHafn4FSIKKOiBPdRtuB_ApLsxN-lMvSqfgJI6ombWyTFoMYcc22
+    lujYZUMtaI4bd_UgIMhUDj7qTwCgnmwjbDgRrYgBXKjOpTheO_25g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdefkeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvffkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeffgffhheetveej
+    leehheelueffjeevgfdujeeuuddtffehtdettedvfedvudevudenucffohhmrghinhepjh
+    gvnhhkihhnshdrihhonecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
+    lhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
+    gtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehtphgrthhtohhnsegtrhgrthgvrghnuggsrghrrhgvlhdrtghomhdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:s53maGIlRsf0aJcLRLOSn3bBqngDEUHeHeGpYPHKYE_T0tJeIBU1dA>
+    <xmx:s53maME_pni1Q2BVA6NUQBcpEh2TIRmqhIikVd3tJhjqpSakQjStXQ>
+    <xmx:s53maOQIw8n9K0YwXf2S1LLSceryy6GC6cC4BlpIi_8rBNZeu7eskw>
+    <xmx:s53maIGMz6lYnCZpBAPAZ3y9MEMD8-iI8qoAq6D4BBe_9kRprFzCzQ>
+    <xmx:s53maFYl00SAts14JIH7czNmvZ12LYDWw9OpuKN0pi8Xe1ogvAIjfKxE>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id E61FA1EA0066; Wed,  8 Oct 2025 13:21:54 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Patton, Timothy" <tpatton@crateandbarrel.com>
-Date: Wed, 8 Oct 2025 12:10:00 -0500
-X-Gm-Features: AS18NWBFCD349D8S0GgPFjVwjweQD0LXcsbtoFia7jmGp2DDo_ikiU442xrfK7A
-Message-ID: <CAMnRnOWm8iV+JNcVReczh79pNX2zwsPcJm2z4a+8Uj3E1xcq5Q@mail.gmail.com>
-Subject: Jenkins Git Plugin
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: AksBUo9997Gg
+Date: Wed, 08 Oct 2025 19:21:11 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Patton, Timothy" <tpatton@crateandbarrel.com>, git@vger.kernel.org
+Message-Id: <cf26c684-b5e5-4f54-a93f-85913e582a94@app.fastmail.com>
+In-Reply-To: 
+ <CAMnRnOWm8iV+JNcVReczh79pNX2zwsPcJm2z4a+8Uj3E1xcq5Q@mail.gmail.com>
+References: 
+ <CAMnRnOWm8iV+JNcVReczh79pNX2zwsPcJm2z4a+8Uj3E1xcq5Q@mail.gmail.com>
+Subject: Re: Jenkins Git Plugin
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-I recently started seeing the following in build console output when
-pulling global shared libraries from Git.  I need to see the change
-history part of the build being performed.  How can I restore the
-previous behavior of retrieving the changelog when the shared
-libraries are pulled from Git?
+On Wed, Oct 8, 2025, at 19:10, Patton, Timothy wrote:
+> I recently started seeing the following in build console output when
+> pulling global shared libraries from Git.  I need to see the change
+> history part of the build being performed.  How can I restore the
+> previous behavior of retrieving the changelog when the shared
+> libraries are pulled from Git?
+>
+>[snip command output]
 
-Commit message: "updated getChangeset to include 5 history entries"
- > D:\git\bin\git.exe rev-list --no-walk
-d30fad4563120956426e48bdfe1cbdb450bf932d # timeout=10
-'git whatchanged' is nominated for removal.
-If you still use this command, please add an extra
-option, '--i-still-use-this', on the command line
-and let us know you still use it by sending an e-mail
-to <git@vger.kernel.org>.  Thanks.
-fatal: refusing to run without --i-still-use-this
-ERROR: Unable to retrieve changeset
-hudson.plugins.git.GitException: Error: D:\git\bin\git.exe whatchanged
---no-abbrev -M "--format=commit %H%ntree %T%nparent %P%nauthor %aN
-<%aE> %ai%ncommitter %cN <%cE> %ci%n%n%w(0,4,4)%B" -n 1024
+This is fixed in https://issues.jenkins.io/browse/JENKINS-76017
