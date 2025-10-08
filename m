@@ -1,131 +1,122 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129812F7479
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 12:04:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759925060; cv=none; b=jgRuznyLlv+1QcijYpyh2lANoeL4hKmGoDHJ/z3J2/a4wb+/WtJPlBbxvTY0YI1FwN8WLmyucx3MlVHASeyCJnSmg0cdf/ni5KylIH7xroF/NLLx5dJfvdOMpY1XFeKUVXttiHyA2ahCQIqKoGyyZRMLTtT7wRSl7UA9tiu23LY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759925060; c=relaxed/simple;
-	bh=65ZpKwbuw6m6voUfDAvRQ//lRhYzqhPtDc8/GmDh0s0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IBzXQU148WdkU/UvZs3IwaGvy9BJuQfa2sHcrerXr5QkbxaSQJr/m2MBj3eBUkJmaZm8p9dnjL7sw/4Z9mQor6Xc0FVwVtneyrMghes3WgLb0sCZpe0EF8PJO8QHJrFD24SuGT75dG1IeveHMX8afVSF9SSaZYxndmtYoC9NjFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EQrJwoBJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZiSaMY0p; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471BE23F42D
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 12:26:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759926417; cv=pass; b=qHwt/8QAVQDwXa07Ra5iZxHNUEyhCoP7+vnA+ugbBCu73rzteeNBUiAwbuMrqj1MG59N+jncBEtQ20vvmV91f2YDAXTFSS+YrTiLDGEwYdYNAYnrOZy4diQ35sOGKHdeRlA/a+IQIwkJbyY5Q1EfL1n0NKM+g4a/RyyKo2I+wkY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759926417; c=relaxed/simple;
+	bh=1HZNzukepkC1A30TofVbehkNNwOfKjHK3eQDbn1QOWI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=r0hmPM5jUp9AJ1oBPbBhnB3M76VPb7LO0U24c0Hn1VOL43NrvbSb0lhXo63PPYBbBG1u+Sl11IAwyO8gZ1+8pxtqAf78RJfoqY9xP8/amKmmFkjQtnR08g0Oc/IENpVr7aPctp61/f2021JMEdPwARBbppCzeg7gsmMuWhIvVXE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Smj+YI04; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EQrJwoBJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZiSaMY0p"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 005601D00029;
-	Wed,  8 Oct 2025 08:04:16 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 08 Oct 2025 08:04:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759925056; x=1760011456; bh=EXsjQtVpWV
-	ELgYpMjPzWBr3slYLkfBPcfVTDIaAqMUc=; b=EQrJwoBJeceBwnbvQ8nuZyeCxe
-	xQDp91dQSaVg9lROWIV6Q5d40fCZfe2jb74XzdSzcY7dUfRzfFDpXjCgh4+b4FiE
-	KRZvPxdKj2AZWcblUZQdg/YZS5oQzXgpIc6C+UbbZp8dIXQX28dQ+uUbFqHoAwXM
-	7n7X5daAUN6lsuuozNLTZ4f33fH3/1rOa8qaNNYh3nq+gzRqxAELAwmsLXgD1HbR
-	YskgrrSwqLY6LdMcMhSgWW93A4P6CAksTN0ZRTawcJIoBLRo2ZNN3f80509XPQ+/
-	uzj9DdiWR+QsS3/GVWOVbPZMWeJES707sl80On5bHBZHQJbFDzOfqoQIPPdQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759925056; x=1760011456; bh=EXsjQtVpWVELgYpMjPzWBr3slYLkfBPcfVT
-	DIaAqMUc=; b=ZiSaMY0pXybvDaZ1QXmxK2OsIVgXAAGXVi+RdOTdy5YzZAjZdGW
-	120dl0lBfO1cSE3+iQ/nRfTK+mYiGvgR5rOIW6xobnfmL1ANzIfm/HegB83U0i1H
-	usRPwhwQqgTGUjC2okQPWabxncfgzQ6tEONYVIfWkzUZkdXaSgJnznPtNqh6JBj2
-	R0WEY3mhzZlw7LP1OZ3tlMmb5OcClKA6nKNjRIpbZcfxYDVj8uF1SBU8jbfAXSwF
-	+9AlRACd6FGQBJR/eZ6DnhuXcouyPxiEnY2dQKEcnOCIZch2Hsl6v5/oWjApgnx6
-	T8HDH7K0IXPg8ePr8BCs8iBd8Spl0B88LBQ==
-X-ME-Sender: <xms:QFPmaMJQI7tOCxyQ_EOjVpOjJN9T30X0QHnaERGoEBDN97XscSLdUg>
-    <xme:QFPmaLOp2KX99qCiKMWL9T-tIapc-fgBUaJCIF4bqgLzdpGivM_xh8Fz1nA5uoKja
-    nxaaRJtX39i91CwD3ZbN09UFArf0l7bLSA6JGnKtQaqmK7LuUOIjw>
-X-ME-Received: <xmr:QFPmaC7RR4SsYsAPUa0QUV4MhJU5x19W4tnXQBSbt6CWH_Wq2z1DxGE9DoGpp0U_AoP-KXtqPDxawjs4HF3xfIVaM9IKE43xj5IHb-yt>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdefvdehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epgeejieelffdvudfgleeuveevkeffjeelhedttdeuleetvdffvdefledtleekveegnecu
-    ffhomhgrihhnpehgihhthhhusgdrtghomhdpkhgvrhhnvghlrdhorhhgnecuvehluhhsth
-    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdp
-    nhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushht
-    hihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopegthhhrihhsrdhtohhrvghkse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdr
-    tghomhdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehj
-    ohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopegvrh
-    hitghsuhhnshhhihhnvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:QFPmaF6C1Ac2cGSVJr9yW-0skvCUGvqycEHyIWOymzL1y77MUQpyww>
-    <xmx:QFPmaIGEgh1q116ElXiwS8_Skq0m1ixEh6VTzpqVr-fnpcvFb4w9Dg>
-    <xmx:QFPmaNVOQrlVN7zGspoSjH9RfxF4EYB10QB5pW0vjpAdPMSoNnmc2Q>
-    <xmx:QFPmaEU_LllbckjIjTkBL9vUnmyJqtk1666F0Fqn0U_Lv-yR7nGHvQ>
-    <xmx:QFPmaBdtAbcmSuJeifmmAJXjqNg2iBG002zaeopBpQpBCrWG9wga6H0S>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Oct 2025 08:04:15 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d2b72b88 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 8 Oct 2025 12:04:13 +0000 (UTC)
-Date: Wed, 8 Oct 2025 14:04:10 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Ezekiel Newren <ezekielnewren@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Eric Sunshine <ericsunshine@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Chris Torek <chris.torek@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 0/6] ci: improvements to our Rust infrastructure
-Message-ID: <aOZTOs5Z9QyfRXYO@pks.im>
-References: <20251008-b4-pks-ci-rust-v2-0-d556ee83c381@pks.im>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Smj+YI04"
+ARC-Seal: i=1; a=rsa-sha256; t=1759926403; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=fGi8xUTpotRYf/QgWKd3qQDWKYKoibA9YWpSylYDJ3RJF9ZoSEx0J9WFlWmFpcQADgiS5EhnqdDbYeQDJor8R6G4kPIPB9Qf1MMPuKFh1OplbffeXJIKkFefExnT6RE/fGIr4jSowOBs0LpCFS307Ig2We2dU/0nKiIbOF0bzvc=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1759926403; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=iL2QPD7ggojnFqxi3jFkshTBrkgovVzFcWSXK00IL5Y=; 
+	b=BPJPjplMyP42hj66LUWs4V5WBTv8VIb5yShtHZbZb4NoCAtDBFwASzrUxqkgAX1TT5YYMdE9E/aHwe8kDcLxZJQSSlPamFhlQ0Fbvpn2L5WLp7rzbIJb0coIqq0Mkpi3KAd6cbYq43n7Ul89hIPuTinrK729J0aQilHjdSqCEGM=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759926403;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=iL2QPD7ggojnFqxi3jFkshTBrkgovVzFcWSXK00IL5Y=;
+	b=Smj+YI04Ax6AiV6T/WCx7FA1rmNL65f52D9X3UE1/5D0k/VxezoTHFNm5bfOwJRM
+	HzxnMhAWLmdov1de7lI9/cijgRzdO8NycdGL2IYfHweQa1+GUfKq5RUvlJLV9x0jTlA
+	bWCoJ0v3frVG4otXEtMkb8D9tuAVmFNYH6fPDB6w=
+Received: by mx.zohomail.com with SMTPS id 1759926400999313.21511931070654;
+	Wed, 8 Oct 2025 05:26:40 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Junio C Hamano
+ <gitster@pobox.com>, Josh Steadmon <steadmon@google.com>, =?utf-8?B?w4Z2?=
+ =?utf-8?B?YXIgQXJuZmrDtnLDsA==?=
+ Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 05/10] reference-transaction: use hook.h to run hooks
+In-Reply-To: <aN4c_DWtqBBScKEh@pks.im>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20250925125352.1728840-6-adrian.ratiu@collabora.com>
+ <aN4c_DWtqBBScKEh@pks.im>
+Date: Wed, 08 Oct 2025 15:26:32 +0300
+Message-ID: <87v7kp37gn.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251008-b4-pks-ci-rust-v2-0-d556ee83c381@pks.im>
+Content-Type: text/plain; format=flowed
+X-ZohoMailClient: External
 
-On Wed, Oct 08, 2025 at 08:27:11AM +0200, Patrick Steinhardt wrote:
-> Hi,
-> 
-> this small patch series introduces some improvements for our Rust
-> infrastructure. Most importantly, it introduces a couple of static
-> analysis checks to verify consistent formatting, use Clippy for linting
-> and to verify our minimum supported Rust version.
-> 
-> Furthermore, this series also introduces support for building with Rust
-> enabled on Windows.
-> 
-> The series is built on top of 45547b60ac (Merge branch 'master' of
-> https://github.com/j6t/gitk, 2025-10-05) with ps/rust-balloon at
-> e425c40aa0 (ci: enable Rust for breaking-changes jobs, 2025-10-02) and
-> ps/gitlab-ci-windows-improvements at 3c4925c3f5 (t8020: fix test failure
-> due to indeterministic tag sorting, 2025-10-02) merged into it.
-> 
-> Changes in v2:
->   - Adjust comments for `encode_varint()` and `decode_varint()` based on
->     brian's feedback.
->   - Some small improvements to commit messages.
->   - Not changed is the default column limit used by Rust. I think using
->     the column limit of 100 used by the Rust ecosystem is sensible, but
->     if there is a majority advocating for a limit of 80 I'll adapt this.
->   - Link to v1: https://lore.kernel.org/r/20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im
+Hi Patrick and sorry for the delayed reply!
 
-Sorry, I noticed that threading is broken here. An update of b4 made me
-lose my custom patches that implement shallow threading by accident. The
-next version will connect back to the original thread again.
+On Thu, 02 Oct 2025, Patrick Steinhardt <ps@pks.im> wrote:
+> On Thu, Sep 25, 2025 at 03:53:48PM +0300, Adrian Ratiu wrote: 
+>> diff --git a/refs.c b/refs.c index 4ff55cf24f..5a2b6ad1fc 
+>> 100644 --- a/refs.c +++ b/refs.c @@ -2377,31 +2377,16 @@ static 
+>> int ref_update_reject_duplicates(struct string_list *refnames, 
+>>  	return 0; }  
+>> -static int run_transaction_hook(struct ref_transaction 
+>> *transaction, -				const char *state) 
+>> +static int transaction_hook_feed_stdin(int hook_stdin_fd, void 
+>> *pp_cb, void *pp_task_cb UNUSED) 
+>>  { 
+>> -	struct child_process proc = CHILD_PROCESS_INIT; + 
+>> struct hook_cb_data *hook_cb = pp_cb; +	struct 
+>> run_hooks_opt *opt = hook_cb->options; +	struct 
+>> ref_transaction *transaction = opt->feed_pipe_ctx; 
+>>  	struct strbuf buf = STRBUF_INIT; 
+>> -	const char *hook; -	int ret = 0, i; - -	hook = 
+>> find_hook(transaction->ref_store->repo, 
+>> "reference-transaction"); -	if (!hook) -		return 
+>> ret; - -	strvec_pushl(&proc.args, hook, state, NULL); - 
+>> proc.in = -1; -	proc.stdout_to_stderr = 1; - 
+>> proc.trace2_hook_name = "reference-transaction"; - -	ret = 
+>> start_command(&proc); -	if (ret) -		return 
+>> ret; - -	sigchain_push(SIGPIPE, SIG_IGN); 
+>>   
+>> -	for (i = 0; i < transaction->nr; i++) { +	for (int i 
+>> = 0; i < transaction->nr; i++) { 
+>>  		struct ref_update *update = 
+>>  transaction->updates[i]; 
+>> +		int ret; 
+>>   if (update->flags & REF_LOG_ONLY) continue; 
+> 
+> Hm. In the "pre-push" hook you converted the callback to process 
+> one ref per invocation. Why don't we do the same over here, with 
+> one transaction per invocation? 
+> 
+> Not saying that either one of these is better, but it left me 
+> puzzled why we use two different patterns now. 
 
-Patrick
+Good catch! It's a good idea to make them consistent.
+
+We should do it here like we did for pre-push, to avoid processing 
+all data at once and risk blocking on the write side (one 
+extreme).
+
+However, writing just once/one-line per callback (the other 
+extreme) might add unnecessary delay/waiting on the hook child 
+side.
+
+So I'll modify both to batch let's say 50-100 in one call, to 
+ensure a good balance.
+
+This ties into my previous message about how much data should we 
+write in one batch to ensure good throughtput while also not 
+blocking for too long. Hope it makes sense.
+
+Will improve this in v2.
+
+Again, many thanks for your careful review, really appreciate it.
