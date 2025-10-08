@@ -1,80 +1,80 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC9D23ABA1
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 07:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A3023ABA1
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 07:14:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759907662; cv=none; b=XO41+hOiFcEQXqcHqH7c7pqeZFtvSCivCxKNA218c2oIfDM6en4CMpK1iZmfJeYzn8mOQHM8G3qUwxzTu9gJ7GxRfl+Jtpc4QUicJK9zLfuNOPbv3RKh/IJ2aK1E7TcFQj3Sl+Mq4ZUUUr2pGE3uQMRNlwJRWIGRypNU9ropduc=
+	t=1759907669; cv=none; b=bxUmBWtfHn0ele6znfi3Hyv6eHjvi4h4LtvkxSQ1HybMGqj2Rz47BATfzVMqgJYuRi5QhqYNq8F7jX2Rn3WNd5o92dKZVxO5w+549ON0egY9mP4SXd+4LzL7a0cZeumk/tl0D+ZpbPCB7B32y1Mv2lW9AWRn4nf9Lw5PpaFHKkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759907662; c=relaxed/simple;
-	bh=Tu9HNa2z6gmxqLwsv24rfNV5ZSU/gXM0YBByF/z5uv4=;
+	s=arc-20240116; t=1759907669; c=relaxed/simple;
+	bh=TUyL/dH6yz0U6eZejDcph+0UG5AejDVjLZx0IMSE80w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Nnlj7CFK4CIvSV1rVSwPelXC9HNYunD5N4wc72jv69RT72UbWBwV39xL5iaQJZfDFuoPVZ/jL96MaJzNfh5XiZ8BoQWtFEKMZsVHfRJ/2gFWRUchnH2F45Ub5Pd4rHVdXd99UyHLU9ZbCLLze9WzWX0tGUOZE9cN7tLEBRxlqsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mxfach0z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bABjZuWV; arc=none smtp.client-ip=202.12.124.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=LoTxQSnji7yiSMNe5RqMjaV6BC2tRUQskFUHpCNqLYMsChzeLP+kwzqWFTZcfWrFPVTHlo562BWzKW5IhIQHm40LoQztFpR8f8AakGbx+RLWk2y5/iBezaWqtf9s2rYrAacOVcytuzcUXK26czkKYBMuBwQoso14iM2vWp+fDEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KeMh7k1u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q9sbsn3F; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mxfach0z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bABjZuWV"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AE2827A075A;
-	Wed,  8 Oct 2025 03:14:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KeMh7k1u";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q9sbsn3F"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id AEACA7A0775;
+	Wed,  8 Oct 2025 03:14:26 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 08 Oct 2025 03:14:19 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 08 Oct 2025 03:14:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759907659; x=1759994059; bh=kEmxwzgfM/
-	bMwOSCrZvKTBJzL8EQEV6Xoh5PjbKq74w=; b=mxfach0zhYqc5d37OgI23fA7hn
-	lKBTmcFaXLQmbmrxv/yxsx6f5vIFcByWq4KqZjS/aSno3KRSAuB40MAHXo+krPll
-	r0yf2epBpHcJJMZyQGmeUJKeri/XIhN7H8RYdvoaV/JOCLVzW22LxAhl0fDtj9Bu
-	JsMDWSz9GL/qBvT9MEvXmY8Ax+I/MW8YAUGjrWBiweMfgUxekEVkLLjNtebs6net
-	lD/stSNc6XG6fkrZmMU7oZbuNt8CZFfjGlpJrqQGvXFJSThhP8MLghGFSCGZ+GLs
-	8CdJOILUNmOjJhiUG/28RpKHVoPfb+ArAwLMrRmItZa4mnxNh9OlzQHwMS+A==
+	:subject:to:to; s=fm2; t=1759907666; x=1759994066; bh=1fwEO0DdOM
+	3PwzypWlJoHf7arkMtrE+DyQ7Y5TpODAo=; b=KeMh7k1ukTDGQl2U1CCGpiiioi
+	+2OFyX88LSXuy5aqjj87TdD5nyGRrKb7cRuFdAd/J2v09SDtwFGmxGKvpvzp3A0N
+	Z6jVyHyLivBNER9T8mgWoj3wnMWhdDCbiA3joyAxnewdtXGZAdsOvhE3Z7pdpXOs
+	0EvsmocX698bVzWkh4h+801JTNICjQJvvpzipnFs7ZVAi1QVEknA3LCDW+BEheld
+	SX4jddhjn/F2iE69wQ2UjSf8NHIObzumVJTWL0HrgNS5pK9/z2/HrfGM131RS73d
+	/+hfEbWHlg2B/moLQVPsCcKUePmFbjZ/TlZPvzBeHQ4fuKopG69HeRrTNBHQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759907659; x=1759994059; bh=kEmxwzgfM/bMwOSCrZvKTBJzL8EQEV6Xoh5
-	PjbKq74w=; b=bABjZuWV745tzRIOf83qpptM1cGv2fhC0GrnyfELgFYD9V1h5OM
-	qGgJ4dH15dn9kr4sZzMiJdMmEIwFHsAQgU87OTUTe/DyyB+S7vHDQkqNKeG2zMl5
-	ld0HLVrAvCoouBdE1B66d9o1ymEKCu2wOXcn3Sqd7PsCkbXMB18kNnfMO5cjEqLV
-	oJw+kGPQguF1tXmn6PrRXPUrQstyEf+6NdKeS6irRurWosY53cqINnm7juauajg8
-	g03K1qiRtak5Nsvrvr4bF4+VuHkerUBbKtxd0NcgWQQSwg+vR8QO7LNnhwmxseUP
-	eWI3fz/gKsfud2Ba1HM7kgiXqEVgVAriOcw==
-X-ME-Sender: <xms:Sg_maDRHGX7Ebuj73-vUqtOnJcYxhyuP_8z3BQMORHjxEewieFTSnw>
-    <xme:Sg_maD0EFbFOdqsZ9EdkwKoFHCluodkYndvqJVhuNcpBS5SL8-qoAuCUKY_h5V1Y8
-    KthJ8-A4P6IY373o-v8-AvDNqPct0MQ6VEOoRyaEocLWgDURW_U_g>
-X-ME-Received: <xmr:Sg_maPBZiqlwDR1kmZo6K47N4mJLyftsmbfQdTIwGqWrnhuuyRtKqedX33uk-TeDQviy73Aw3n9GF6BTvc4EVTb_R_KblxRtTy3T4zVr>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddvieekucetufdoteggodetrf
+	1759907666; x=1759994066; bh=1fwEO0DdOM3PwzypWlJoHf7arkMtrE+DyQ7
+	Y5TpODAo=; b=q9sbsn3FEqdPESwo2kDKIOZu/gsVW50Mks6Vh3HCxinCgYrZKXc
+	PHs/Jx0s5z6Bxjyl8Pjx/ne9np62iBAzzmh/GvQSp/1XYf9xCZWMUOcE/T36/Fr/
+	0yTB5vJwTFJ0DrQl2Ed/p7h7j/Pjsp0lVfvb965SQFlXPmxWtmK5jECpTegYgNcJ
+	Vl3YHexRZeCbgdwgi0kEDPXxUMQIWILx5eWODvDPXNVMbh4wXlaUNtBxJnoiBTuQ
+	fTGeF3szWKKjo5h4VaF7AtbXxc/7BOjHR0WdXfCXp0gcfey4AY6JGMscmSKqhUAw
+	IeCpaYSPtf5PajJnb8NWg3TXxS9SliSuEvw==
+X-ME-Sender: <xms:Ug_maAiTqo3-fPjp6S-QQ3ZImnNO-H2JgTO-HFxqD-pwGhMhcu56Eg>
+    <xme:Ug_maIHFgpvjFNMhf5L4swP3I1MZAx_qPPS9nyzlP_3OYA0872kxyL369S7_3OuMm
+    xNIosftyvRvImuP0LS_1JynjWQpIL4bJuTteKtzhQCJQz10Iybk0w>
+X-ME-Received: <xmr:Ug_maOS7mDgm_n_mSWWHCKkMvMZ3X9MKGDs6WtPDcpInsnnsReJmoqwfDJ8WbkUBVak5HPyZEVKOhpl2xqXwKUWmtGhlaVYj6LQGN0ah>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddvieejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    oheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehpvg
-    hffhesphgvfhhfrdhnvghtpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghr
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlh
-    hinhesghhmgidruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnh
-    gvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
-    nhgvfihrvghnsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:Sg_maPgI3_rHt9n9dOkv88rZZHZtu7R5Jpjv6uVUIaw5l2xJGd-oEw>
-    <xmx:Sg_maBMw5K_4Yoq1p4m1ObHz_L6lRK0BD0YpMefgBcvrkear6nMAcw>
-    <xmx:Sg_maP-HlZO4hsvCPxRgwCxNQfRG7IFInkmKmikqzJkq-dBRXN63Bw>
-    <xmx:Sg_maCdSsTIbGi8qMTeP-4Wp_MW9TWGqoqvB0auTXBefEMZUVMwdhg>
-    <xmx:Sw_maPoBa2WKg0ACIZZ8FenysgqdGL1p0WWkPBA4qkYW1qtOazSdoCme>
+    oheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthht
+    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhstg
+    hoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhs
+    tghhihhnuggvlhhinhesghhmgidruggv
+X-ME-Proxy: <xmx:Ug_maNz177Sc7bIgNh2wMnCLGX9o4M8lUvuN2nyHKP_Wm1cgHUsfGw>
+    <xmx:Ug_maCflHTieeHjiJNfPf1SOOWjInmQj9BwDX184ppnYfWc4zK2MQg>
+    <xmx:Ug_maIOZR7ObHMqKPUhzlQF6Q5r9pvWuAmXRDAHOeNiB3Z-N2HbPTA>
+    <xmx:Ug_maFtf70rORrg5Uh3LkvfGZwU792UTChUqJltWbkd4jhOath8UtA>
+    <xmx:Ug_maM419P4887qV4I1SSnRyBEXxD53_nQr8XrlRSYHS114q0eDmpEaG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Oct 2025 03:14:17 -0400 (EDT)
+ 8 Oct 2025 03:14:25 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ae1b0962 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 8 Oct 2025 07:14:16 +0000 (UTC)
-Date: Wed, 8 Oct 2025 09:14:12 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 005a3073 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 8 Oct 2025 07:14:24 +0000 (UTC)
+Date: Wed, 8 Oct 2025 09:14:20 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -82,10 +82,10 @@ Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 1/5] doc: git-tag: stop focussing on GPG signed tags
-Message-ID: <aOYPRKoexRtYUDsh@pks.im>
+Subject: Re: [PATCH 2/5] lib-gpg: allow tests with the GPGSM prereq first
+Message-ID: <aOYPTKG9t4ZB_Mbi@pks.im>
 References: <20251007122958.1089680-1-christian.couder@gmail.com>
- <20251007122958.1089680-2-christian.couder@gmail.com>
+ <20251007122958.1089680-3-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,109 +94,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251007122958.1089680-2-christian.couder@gmail.com>
+In-Reply-To: <20251007122958.1089680-3-christian.couder@gmail.com>
 
-On Tue, Oct 07, 2025 at 02:29:54PM +0200, Christian Couder wrote:
-> diff --git a/Documentation/git-tag.adoc b/Documentation/git-tag.adoc
-> index a4b1c0ec05..9117754ffb 100644
-> --- a/Documentation/git-tag.adoc
-> +++ b/Documentation/git-tag.adoc
-> @@ -3,7 +3,7 @@ git-tag(1)
->  
->  NAME
->  ----
-> -git-tag - Create, list, delete or verify a tag object signed with GPG
-> +git-tag - Create, list, delete or verify tags
+On Tue, Oct 07, 2025 at 02:29:55PM +0200, Christian Couder wrote:
+> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+> index 937b876bd0..743985efab 100644
+> --- a/t/lib-gpg.sh
+> +++ b/t/lib-gpg.sh
+> @@ -38,7 +38,7 @@ test_lazy_prereq GPG '
+>  		# To export ownertrust:
+>  		#	gpg --homedir /tmp/gpghome --export-ownertrust \
+>  		#		> lib-gpg/ownertrust
+> -		mkdir "$GNUPGHOME" &&
+> +		mkdir -p "$GNUPGHOME" &&
+>  		chmod 0700 "$GNUPGHOME" &&
+>  		(gpgconf --kill all || : ) &&
+>  		gpg --homedir "${GNUPGHOME}" --import \
 
-This is an obvious improvement.
-
-> @@ -38,17 +38,18 @@ and `-a`, `-s`, and `-u <key-id>` are absent, `-a` is implied.
->  Otherwise, a tag reference that points directly at the given object
->  (i.e., a lightweight tag) is created.
->  
-> -A GnuPG signed tag object will be created when `-s` or `-u
-> -<key-id>` is used.  When `-u <key-id>` is not used, the
-> -committer identity for the current user is used to find the
-> -GnuPG key for signing. 	The configuration variable `gpg.program`
-> -is used to specify custom GnuPG binary.
-> +A cryptographically signed tag object will be created when `-s` or
-> +`-u <key-id>` is used. The signing backend (GPG, X.509, SSH, etc.) is
-> +controlled by the `gpg.format` configuration variable, defaulting to
-> +OpenPGP. When `-u <key-id>` is not used, the committer identity for
-> +the current user is used to find the key for signing. The
-> +configuration variable `gpg.program` is used to specify a custom
-> +signing binary.
->  
->  Tag objects (created with `-a`, `-s`, or `-u`) are called "annotated"
->  tags; they contain a creation date, the tagger name and e-mail, a
-> -tagging message, and an optional GnuPG signature. Whereas a
-> -"lightweight" tag is simply a name for an object (usually a commit
-> -object).
-> +tagging message, and an optional signature. Whereas a "lightweight"
-
-Nit: let's rather say "cryptographic signature" here.
-
-> +tag is simply a name for an object (usually a commit object).
->  
->  Annotated tags are meant for release while lightweight tags are meant
->  for private or temporary object labels. For this reason, some git
-> @@ -64,10 +65,12 @@ OPTIONS
->  
->  -s::
->  --sign::
-> -	Make a GPG-signed tag, using the default e-mail address's key.
-> -	The default behavior of tag GPG-signing is controlled by `tag.gpgSign`
-> -	configuration variable if it exists, or disabled otherwise.
-> -	See linkgit:git-config[1].
-> +	Make a signed tag, using the default signing key. The signing
-
-Same here, let's say "cryptographically signed tag".
-
-> @@ -75,7 +78,9 @@ OPTIONS
->  
->  -u <key-id>::
->  --local-user=<key-id>::
-> -	Make a GPG-signed tag, using the given key.
-> +	Make a signed tag using the given key. The format of the
-
-Same.
-
-> +	<key-id> and the backend used depend on the `gpg.format`
-> +	configuration variable. See linkgit:git-config[1].
->  
->  -f::
->  --force::
-> @@ -87,7 +92,7 @@ OPTIONS
->  
->  -v::
->  --verify::
-> -	Verify the GPG signature of the given tag names.
-> +	Verify the signature of the given tag names.
-
-Same.
-
-> @@ -236,12 +241,25 @@ it in the repository configuration as follows:
->  
->  -------------------------------------
->  [user]
-> -    signingKey = <gpg-key-id>
-> +    signingKey = <key-id>
->  -------------------------------------
->  
-> +The signing backend is controlled by the `gpg.format` configuration
-> +variable, which defaults to `openpgp` for GPG signing. To sign tags
-> +using other technologies like X.509 or SSH, set this variable to
-> +`x509` or `ssh` respectively.
-> +
-
-It might make sense to use a bulleted list here to list the different
-available formats. On the other hand, we could just as well refer to
-git-config(1) so that we don't have to repeat any of the information
-here, but instead have it at a central place.
-
-That might not be worth it though. In the end there aren't too many
-different commands that write signed objects.
-
-Overall this change makes a lot of sense to me, thanks!
+Okay. I wonder why we even have to create the directory manually. We
+don't do it in the GPGSM prereq either, as gpgsm seems to handle this
+for us. Doesn't `gpg --homedir ... --import` create the home directory
+in a similar way?
 
 Patrick
