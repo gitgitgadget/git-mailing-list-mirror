@@ -1,75 +1,71 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED7427A103
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 20:41:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A3B2750E6
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 20:43:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759956089; cv=none; b=qZKr9876xBCg9mgDfMZ3aD2q65gfwy8kMCknwpu5AMSh0qx07qvR0ZVlVwwl9Od+u3rPyBYviXMpiDDyBKGClD6rBPYwGCG4TNqaQ8CY1jdVy8XHniiph3lgBMoAVASOArfeldvP2Jf/Tgrt3wZuSrr9YTnIHHKTC1ynddLylPU=
+	t=1759956241; cv=none; b=lI2+hIqaHt30yLroHTHeUVETRvGa3DbWcAF6lsxLd7ukfAilcaSIPMF78a/Tf9CvaF7w2sgEqQcPfXWSeXY0aHR+mSMx7QLni7VY7Oco9glNgOo3boDMfE/vtySqAMZ/z6irBdC/OJu2dQBvOBRuHCtbZY3RvtL0wtpxTnQ/ONg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759956089; c=relaxed/simple;
-	bh=gOcQnLyUHhNOoo/xSdJ5zfhv/8yIKfWMzbpUsYUlEfw=;
+	s=arc-20240116; t=1759956241; c=relaxed/simple;
+	bh=t4Kxlktu6IQNbE9EVKNFq+MwLX6Ev0kFXVBEQykq558=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JA2kFyyq83WEp5rlwAoTpgIhrjZgoEqwExnEiNlFpjQadrCzDILAyriJH/TLjgMW0H26IjnU29sWqzlbV7JKcsBqDFHZrzIhS8SbYV0mg/XCC664XvPArPNlh8PCF/ROtqsz4ViSROTb2NuMALMJzIw/ipPn/GNszTlzrkIWR0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TTgEKQc0; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=LBsgyxDQawbnAS7DLBOLUoLyqQPGtraA01em7H2z/yd3d2sGBXF+iiHGAUMXIvIFEMMhlxE4U2cbhCqHCLztm5pHKIRf9j3rJHlBQ0olHnhWRSwdlPDYjaG8QdE6OXAdf6Iow3MXT/UPLPghuUKqlBJq8T2ufUCFTKCoU3JwoxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=GWMsqUsT; arc=none smtp.client-ip=209.85.166.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TTgEKQc0"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-46e3af7889fso1494905e9.2
-        for <git@vger.kernel.org>; Wed, 08 Oct 2025 13:41:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="GWMsqUsT"
+Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-42f91f09a6aso40255ab.1
+        for <git@vger.kernel.org>; Wed, 08 Oct 2025 13:43:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759956086; x=1760560886; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Uvn2RDCYaNis5470LRWzhoAQfrClI08PoyZQD742kMY=;
-        b=TTgEKQc040BklrgYZ5CU6xWVxah9TzPx2voAifqH1KKDsPrC00CQnEs6GyQHtTedxO
-         a6YRZgBkPRQ8KWWrnyQS+j31GzFxXPIB+jOPKaF3hFjsIIpN4W5dLGF/mPq/r7KXdnQK
-         P0WzHcZvNQpVV//u5aK8ymbfQXLqKLqLCXReMnfpKwyybvuUeTpqUKyuqqKGDROePU+4
-         bc5m7RoAo7m6QYP+77S/g6RqSiH1Wa9BBzUPaPyXG5gtn2eto1hJwSyk/aK+ygAZ64Jj
-         LRn8n12G4iez8ga9afrl95KA2lQ6874oVpzcDyOdewIE+Xz8PNt1/LNsTjgBkZY5UtkQ
-         9HxA==
+        d=ttaylorr.com; s=google; t=1759956239; x=1760561039; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sx0vm2Wl69Zg6IGbInRww+oewCA9ZshxAxkXxIPwkc0=;
+        b=GWMsqUsTbynrQXuhvSSamI3Ir8GWH+Lolm1y4gcQ4hYhA/k6ZPJDHz8zlCkB5ZLQZU
+         2k3EoGTkV2nsoC6GTQ3T9jgfnc2YCVLbwxeTS7H8kg+WUBIJevVqm36fq2zhpo4bzAYJ
+         7SfCbwhn24FRDfCf9I7cv35UhRFtKrHAbHAkkl/8JSCR1ndpTf+BMQEbDyyT2h9fbW+y
+         fXOGq5ExE+61rqgoV5okmvwCllMCDusPJtQTtx2KytrTrj0zD32Lpr+R3H5Eewr/CJYY
+         JT7Ym4P6HFbyCWJKY9iM4aEKyOK1sRQpFbtFVIP2Z+3MeSEiwEpw0Ndf6nPhrl7MBfa+
+         LSyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759956086; x=1760560886;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Uvn2RDCYaNis5470LRWzhoAQfrClI08PoyZQD742kMY=;
-        b=NTy0g84rpqaFaQ2VhYcq25uGiGArhuPXM1NcNJw7K/g3+p/Vv9zN/CGyL0Efqdm7sm
-         ySxZIkj+VajSbXU7GDgI0I+TyX845Ospf72Gg+ikYYqfwV3+KM8PGftUWeLGvyZZ4d87
-         lMlQV20YLjgkTVjjvW+JxCtbQWFgNf7mZICkDYNeoMu0FXSCpnx+EGfoYbBYVFg2GEyn
-         3Xgc8qja+DIxCyukmXIR8WrCnEkxL1t6eJoz0+whXjM6p9OhfOWW2fe7unrdp7CED/rd
-         f/vN6IXrGKu4zTgfpwHpOZZfTLQ6+r5jAxb4zVwXM7EchgP719W2KJNtC6a+loyU1QYm
-         6Fow==
-X-Forwarded-Encrypted: i=1; AJvYcCW7Vzdg7VeUzbrnUIclKflgRdrEJqbWeFpMD9YZcGgDxA+7mX7iKOzcZi6dLwXmgEiok40=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzBkjn2zstlSz1wRx9uwV0HwuBvopqRj6YLFnsbtNQymCFvx3V2
-	T1pdKvI75iQY2oZYg7uMaR+vwECEX57Qf5gqElG9paRTZtJAmmAYCPx+
-X-Gm-Gg: ASbGnctc7gMmUNsSzymZk/LsP3hvRQafX1HaVwM0y2MkLLY9MY2HckfR8lUvwZlKMgE
-	kfIJGihp+TfnlG7GfzNnxH/q6JYEa6RgvyHJ6bvdaCJ4PIo5S4G7JDDoIXWmueK1aZxIj3b9RQD
-	fvG1LYSdvguv6YO3sGg7HqG0plSAnAXvXS6O9rgYw0ieMuYCBXStHihMug5K5difVNyMSwgZvLr
-	T6jLi5d80FhAvmCcBTAeASjfZuTS0MN2hwFHjmcPx3wSOUqVDhnO3LfsE0bTnpVMnNc6ZtIsIGS
-	URgIK9ydkehUObIQavg59++srzs4E5AUybXRqLp/TFYYM+5+6qAG76I8jPsyCURv+3vJRbQSAYq
-	Sd5Tv7EfdnmC8Yd26fNkxUUarBP4u3xac43hMhyczquytjgepp4ZrPDjHKgyQO2mVyjQXKCGRiP
-	t8
-X-Google-Smtp-Source: AGHT+IER+TuWMnbv6S7tdfI8uxp6VhxZUVqcMCVWp5UHmk2Df3jf7hNyy8VnyXBssd4c5xUB8dqIfA==
-X-Received: by 2002:a05:600c:1d18:b0:46e:3901:4a25 with SMTP id 5b1f17b1804b1-46fa9aef67bmr35343685e9.20.1759956085884;
-        Wed, 08 Oct 2025 13:41:25 -0700 (PDT)
-Received: from localhost (94-21-146-170.pool.digikabel.hu. [94.21.146.170])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4255d8f01a0sm31220769f8f.48.2025.10.08.13.41.24
+        d=1e100.net; s=20230601; t=1759956239; x=1760561039;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Sx0vm2Wl69Zg6IGbInRww+oewCA9ZshxAxkXxIPwkc0=;
+        b=sjXjT6yk6A3Jme+2ME4cSR8Pzqh1HauddCCAca2HJLekukfNgR/JmAoIjJgau6fYxJ
+         eeFoRkH/QmHGQzpNnEV4i/RrYaSZTVUxOBze3tnjxuS7fh+Si9GdYpLICA80rlBu4qC7
+         14sTZa5tcHL/wlwlDEAucciFXabMwpruPJW17PV4Ho8xntzamB4euawinWB+lzT6Tmko
+         As5JZZohNTixBHOo5Gxf14Pxk/EioibeZbKJn2Ua5p7EqJMdx6ooXoF/63v/sy5t0lr9
+         uS1MnmXrJ7ee+dgUiZVqjwURg8V06hx8nNwCAC6rFsU3vQYRVa5BYn5ef+ZEyb6raNZq
+         P/Rg==
+X-Gm-Message-State: AOJu0YweK/iXAKbm6KJnlqclsI/4/orFSTOlixtDHLFSEA6IJl9iZJro
+	9wOlOMFFQL1YF/c1sleNOgfNodg2q30Pfczqu2uBi6u8ysed991DBjT0VkJMtBv0JTWsPjjf1HA
+	pL9jOqlSOKQ==
+X-Gm-Gg: ASbGnctpFwHCyOc8n3iItwS4hhd4lkuClg1pNAW7rsuRHQvCF5v0BCXKhvKTrQKnWqd
+	VGrSnkk9ZruO88/nUs93CMJQav8S8zFikP7XkG4htp1ij18u/hHBSQ424ZL0/3QHK8KwezYADk2
+	25IFf8M4LLeReChlVqE9dcqj2ESkqOQc89KIu3ZnL3LhD9Sn4Xq9lk4lBy2g+Urx2VO4fgj1LKT
+	5FThwiZoFIg2q0rFBF4DKkaOX0KZ4Cc0WHuysir6zegswcj39Gd7PRzh9tCcJdLRmezkuPgLug+
+	uqATkhYrEMS6Ivrajw0uq9RwZxwcjsyupwQh8aaFTVr3fB3WgEsRLBemF0kn7pk+GiEXS9RJQZm
+	lUiL5DHvs1JiJAZT6Yvt/VBbwqSdEHx0/H5vu7ePkQtLIhBr8VYHqGKdsL6CVFSd0Z59mvdl0md
+	wb7EBhxeJVBbC1IUoXHbgXxfKWFEfTV2zmQ6dk0nQ3A1Uu3dVQCA==
+X-Google-Smtp-Source: AGHT+IEXvdt6XRb8jrWSR8jAWazzvdddoJXGHSUhS1WzPN3TUzHZ9DetOwhWLiPyw4OtTNoMWzqlsg==
+X-Received: by 2002:a05:6e02:2782:b0:428:9913:509c with SMTP id e9e14a558f8ab-42f87403c6cmr45379885ab.18.1759956239123;
+        Wed, 08 Oct 2025 13:43:59 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-57b5e9edfd6sm7437506173.9.2025.10.08.13.43.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Oct 2025 13:41:25 -0700 (PDT)
-Date: Wed, 8 Oct 2025 22:41:23 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>, Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: How dangerous is --committer-date-is-author-date these days?
-Message-ID: <aObMc2GV8fAE9IX2@szeder.dev>
-References: <6af09726-e3bf-4903-87ae-9524ad334678@kdbg.org>
- <aa981bb7-dd3b-4e63-9769-0fc2559983e6@gmail.com>
- <6d6b2ff0-b4e4-4442-a3be-9b31742db280@gmail.com>
- <93041214-4774-49eb-b8bd-24648134cded@app.fastmail.com>
+        Wed, 08 Oct 2025 13:43:58 -0700 (PDT)
+Date: Wed, 8 Oct 2025 16:43:57 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/6] builtin/grep: simplify how we preload packs
+Message-ID: <aObNDRTffcWsYGZ4@nand.local>
+References: <20251007-pks-packfiles-convert-get-all-v1-0-428227657a89@pks.im>
+ <20251007-pks-packfiles-convert-get-all-v1-3-428227657a89@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,21 +74,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <93041214-4774-49eb-b8bd-24648134cded@app.fastmail.com>
+In-Reply-To: <20251007-pks-packfiles-convert-get-all-v1-3-428227657a89@pks.im>
 
-On Mon, Sep 30, 2024 at 04:49:32PM +0200, Kristoffer Haugsbakk wrote:
-> As a Git user, I don’t understand why some people want to fiddle with
-> this field in rewrite operations.  It’s very hidden (apparently you have
-> to use something like `git log --format=fuller` to reveal it).
+On Tue, Oct 07, 2025 at 02:41:09PM +0200, Patrick Steinhardt wrote:
+> When using multiple threads in git-grep(1) we eagerly preload both the
+> gitmodules file as well as the packfiles so that the threads won't race
+> with one another to initialize these data structures.
+>
+> For packfiles, this is done by calling `packfile_store_get_packs()`,
+> which first loads our packfiles and then returns a pointer to the first
+> such packfile. This pointer is ignored though, as all we really care
+> about is that `packfile_store_prepare()` was called.
+>
+> Historyically, that function was file-local to "packfile.c", but that
 
-FWIW, GitHub and similar sites display only the committer date.
+s/Historyically/Historically
 
-> I can’t speak for power users.  But regular users?  Well I see questions
-> about being very deliberate about setting this field on rewrite
-> operations on StackOverflow (at least one time).  But I can only guess
-> *why* they are particular about it (this part is often not explained).
+> changed with 4188332569 (packfile: move `get_multi_pack_index()` into
+> "midx.c", 2025-09-02). We can thus simplify the code by calling that
+> function directly.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/grep.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 13841fbf00..53cccf2d25 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -1214,7 +1214,7 @@ int cmd_grep(int argc,
+>  		if (recurse_submodules)
+>  			repo_read_gitmodules(the_repository, 1);
+>  		if (startup_info->have_repository)
+> -			(void)packfile_store_get_packs(the_repository->objects->packfiles);
+> +			packfile_store_prepare(the_repository->objects->packfiles);
 
-Perhaps they prefer to see the author date even on GitHub, and try to
-work around its shortcomings.
+Makes sense. That function literally calls packfile_store_prepare() on
+its argument, and then returns store->packs. Since we don't care about
+the result as you note, calling packfile_store_prepare() directly makes
+sense.
 
+Thanks,
+Taylor
