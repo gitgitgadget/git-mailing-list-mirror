@@ -1,74 +1,76 @@
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DD9208994
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 21:20:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8594C2BF017
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 21:24:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759958431; cv=none; b=eE9AosViR43Mze5c4jsj4niaEM7QIz94rMiT6P3uq24oP1I7x9m79PNQqhGTtovITwpmK3LjSK/EZF29CLMASZGKTOCp0OnBcArjUL7iYsjODXYC6ThONap3DfAF9OF3IhitQ7yqYukaaI3lePnnmbM752+Y4z/pcOrP1abSpDw=
+	t=1759958677; cv=none; b=JPf1hMe4kVd8qSuI9NMJvuZhMsjb1OB1qQ2TvOg8OAS1vU/jMs1cBpGDuxkFjls9FdAfe75llvk9LaZuemmQ2qLthQ9bDT73Rg8kVz02Ikr/MpMSKnlwg3IfZox4lL+bGoKQVdZfVTPBKDmkSEW3gWPGiwP1VWfhh+UxKLaQZcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759958431; c=relaxed/simple;
-	bh=XeIneWNudEOMOzjtrZA5PsEdtqheK07kmVOE9AbTuL0=;
+	s=arc-20240116; t=1759958677; c=relaxed/simple;
+	bh=3jcFZxUomRTJMNzrQXMHukXdnfn/LItmufszuvi2W48=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t37H59t6nriMC6RoPJZ10kxCuK1iB1gL3OYaxTiLGICxpLgJG/+v9GEbnEjApbi86PhiBX5PtPxiyivmpcyo+zVmwVt4j/93iVt9GTACJOpfc/eTGiDSUIqfjtz1vHQFJyQb4R3dPmnl1lS10FGt/ksZkBPB5ocoXaAeyIHpxO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ZGCXkUWz; arc=none smtp.client-ip=209.85.166.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=koNvR+twZkzLq9en9PyVIg8xmUbGWmiPAnvz+Ea8vn1I3Pxcxp+sxUUbAuJ/vJ6H9netss+cFPQC1Y1niz5YxXpTitCv4MOrwKuiRGv9F76vBzx1yn0FNb8DH1ficKAb2HnCfbis7BTjKNJPmRxlPcrSoVIYzqnAwZfn2ibczoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=U8h4COkh; arc=none smtp.client-ip=209.85.166.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ZGCXkUWz"
-Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-90926724bceso21453039f.1
-        for <git@vger.kernel.org>; Wed, 08 Oct 2025 14:20:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="U8h4COkh"
+Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-93607aec358so5415739f.0
+        for <git@vger.kernel.org>; Wed, 08 Oct 2025 14:24:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1759958427; x=1760563227; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1759958674; x=1760563474; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=27BANmIZlQlj0pWAvCXGHXjqzsvtZ/em0ssWrbrlqzY=;
-        b=ZGCXkUWzm4pgSYm+Ho7DoLGfivTKEYViP33bXxiNxyxPsXhpoDBMUaUQkhIFGa2XMw
-         Diw08XkYFIUr5mrHreOCQwbUUza5NJ72tkr2yND6vRoDm+SpnHnc4T2xj7XlOkyFqm9f
-         i4rupfohU8dis8GYHHy3IWsV6llGKlEae7goAXd4NuSDVOYL4fJ2boK+kK0L0v4LqZnd
-         CM8AY2pcuryDii0scKrzTZEvIIdydyITDl+1culQPG01K1XReX96/OTOnaRpgmIp1r4j
-         75gnAmlhRGPdIabNifi+zBL8wEtmKnhpc5xZVHNTUGP51+DB3CoViQ+aeHEfamzXPKVk
-         vp2w==
+        bh=er9oMGaa6aSnKCIikqvjpLuGOM4OZaVnC1Mpwf45cis=;
+        b=U8h4COkhS4mzrP22+n/ySweiCKeJj/MuLaPbe1zE8+6OrkQ3AnBrbcDoyOCETRYUMO
+         RGPCXLXmcgLz012VBmVTfDbC7Xnm6SAROhyzi2S6CenEv/D1ts8EyRxwjjd9nmIHhHFi
+         k88qDa69lktyFAn+zj3w2J29ufOsO4EEN2sBAD1euCIyPzxSK0pFUzrt/c+bmz5BSeeG
+         Weg2lbMcfcLzzGCTP44wXgtSFiiJfxxjlqlSAmnkOuD+/g5/Rmxan9t/+ZS9UVvcRdTQ
+         l2pv3Iz2wsU/4+Mkum8BYkyl6qe0ve1+wb6WDxByfnE/YXwP51bUxkDLJVMQC2zhgnps
+         3EaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759958427; x=1760563227;
+        d=1e100.net; s=20230601; t=1759958674; x=1760563474;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=27BANmIZlQlj0pWAvCXGHXjqzsvtZ/em0ssWrbrlqzY=;
-        b=t+Mjit0ziWp+a8fbC4hodiktO4lnx0vmGKKcmfLNstffVHx/nbCZadcA05J+TK14qh
-         EO7LbtnXzNtjbDeI+5ADhN0gZks9rWrHNoMkcQpV729MzQY4l6OrWalCH7+/myFnKzLe
-         zoG+OjV34E5D0ZLVD3YLvenXNzmbg7PdbNesM5AVdVsbgazmRFWXAkJxYewE95hOTi5+
-         7ch0YNbGRrIf4zZQzVuTgdY61nseb9hMvgwzE0gh8fJ+C7ai6pjq8k6ixKW2d/CGWpVd
-         S9OoLq18Aco2a9Zytd22zKgOCVGsNXSQyI37Va1E5td2M2hZQoakDA9PLJ0UhlEQHfZ0
-         DGWA==
-X-Gm-Message-State: AOJu0Yw0st67ORQF3VK9YhM76FT6LoQP7NBBrRr/PvLYAzcBZgscV/db
-	3PG3h2Ss/A5lqmdT/89v0fOsWTbjpwNwF/2aM+4ZHKjGPtZFlGoHe8+/1xNU2k6/ks0=
-X-Gm-Gg: ASbGncthgnTe4Wv08UBsnBuSADFpuf4iyrF+rEEL7glTz7HXgVJYH8Y+nJiWuc6/B0j
-	ZcaN+XhszKNb3C5Qp+PYOo3JXimhbso3aZ4BajKmhMmSTx8RLCRnW+3cakP3NEpQLpaL30oWmwG
-	GyRj8q3tXpazJXF8luq4vOalK/Usy49AJ0C09QlVDkUypLTzlGOehPwUptidMLeLkA52AuHpnhk
-	Do3uSjYPVtIfvcDxO0LDHYaQY1i5rstD+CWkcZXVxsNYbB2emCTobAXgZnqN4m8MYOX74EU0Fho
-	1LT6fv4Asxkc1nJcP4nO0G0AXp+LVHTzNla2zP/QvVIy+UWq0HjkqUCQRINc391QH4wReXQbtJB
-	UUp7SaUVT4/fnV6J7YqI7TjMqkKyL0+OOme5qMms1OL+Mt1LQRO1+jJjuzf5Zwh6ysRWheL12EE
-	7l4FoT5mtCLHju+NL0gQ1soWCqGCVvXNe2r1Go1anPu9tqRZQKOhS2aO1krryC
-X-Google-Smtp-Source: AGHT+IGvLwDl5jgityjiCpGXDH++O6pguw+cORoCeGohG3U6HIL02zhvzC/HXaZ9me52DHZDlE9xag==
-X-Received: by 2002:a05:6e02:18c7:b0:42f:81ab:1813 with SMTP id e9e14a558f8ab-42f8734fb58mr55784255ab.4.1759958427059;
-        Wed, 08 Oct 2025 14:20:27 -0700 (PDT)
+        bh=er9oMGaa6aSnKCIikqvjpLuGOM4OZaVnC1Mpwf45cis=;
+        b=rEXYajkvV8+UzpjSnucsJNXYVvLO5RN6QzilTzSbXZFOrM84g5GOoTbHM0OGwuEjOF
+         mWy++0pfDmyWoUAOJRVEd4pEw0BVmQWOU/yoLsdXuX7Ehaium5aC3CEKKfbIyFxOQm/i
+         UHoPKkqRAWMh1JLD3m1f0G5DE3bZ2xmAiUNu2vOwT/eO6PSFMB83pnFBe98+3WNVZZDV
+         ou0VooduiMHFbTUqP5tp2AnR7RwFRMv18anQo/55co25o4xLunVXtT4Ap1G/a0iiMBa8
+         FOOwIFDxbyk2AoFnEmGDssgMtz3k4comOvdTxW6Cg18Ph1VJhp29Hkth1JP9xEf7EiOd
+         yeuA==
+X-Forwarded-Encrypted: i=1; AJvYcCXVxwR4eIexNXAfFBfn3/u54CNz7ZRXeDwB6/hPgljxhHRCxJYrkgYaTgmJ0YIpoTC7gDQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxMjzzlHEQiQlfHTJ6zmR3+HodMpWnZ5bWO3e6LBb34Ld2RoHav
+	eBA98Rrx37KLdYF1Qhaxf+g3kTXLM8EJtqNlz1qdQHFCSnXUr+1ruWKbLsbRMGJolKQ=
+X-Gm-Gg: ASbGnctfJDNL7SXTFd8i74QT2XG+vPDNNF8vehMXrzhuQn/2HvtboqLW7pI7YPhN/Yl
+	fDqZ4NC7YA+3IwNXk4TZPgUUS5CoExgt6SkYklj2FweQJe8C7oLgahtsFmgIy+iJC6VYbICc6if
+	Q8QqtBoQyRCFWuGV6MJ4fu+xt2d/zbkj58ElbHbWpb7f9KH6hbC1+ezX8M3pGV9JAHe/7Up2jMO
+	VFebN+H20b4oTXR/Q1XvLk+ue2YlQZQ2THFNWE6s2dHtKDD/8z1Ddc0vPtx3dGNVmPhJK/BCKir
+	cThN++DQVOsiSQLs1cRZItAdDQT3/RV0i9I4mskURS0EI9P7ry6vdOY1EJaPKfFFK39dYCASc/5
+	ABGRlDmyFhoUnLObGIYD/c4daLeSUZ9/hBD+e77nt7tW++mIGZfV4GFCh1cyxInl0xPZAoOuU4/
+	PpjKRq+cn+ti/183ctpgecleR5HTGRjJcGnMfQ6EZEVCkGbi0axw==
+X-Google-Smtp-Source: AGHT+IEwxArsbQLvmEK1pdvQtflApH5OeNONCR6yiBv0WDCNS5VcN6gDGj+vgahx50dbZEh2JCbxtA==
+X-Received: by 2002:a05:6602:2cc3:b0:8d4:2004:ce3 with SMTP id ca18e2360f4ac-93bd189035bmr539045539f.4.1759958674423;
+        Wed, 08 Oct 2025 14:24:34 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-57b5ec10511sm7383826173.63.2025.10.08.14.20.26
+        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-57b5ea31397sm7372813173.17.2025.10.08.14.24.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Oct 2025 14:20:26 -0700 (PDT)
-Date: Wed, 8 Oct 2025 17:20:25 -0400
+        Wed, 08 Oct 2025 14:24:34 -0700 (PDT)
+Date: Wed, 8 Oct 2025 17:24:33 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>
 Subject: Re: [PATCH 1/2] SubmittingPatches: extend release-notes experiment
  to topic names
-Message-ID: <aObVmU7m4PahMsEN@nand.local>
+Message-ID: <aObWkRSU5TO9Yvcr@nand.local>
 References: <cover.1759873165.git.me@ttaylorr.com>
  <d7931dcc4380757cfd4c6f24b5d746da2294f40b.1759873165.git.me@ttaylorr.com>
  <85dbe67e-f252-4548-910d-4af29939806a@app.fastmail.com>
+ <xmqq8qhlf777.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,61 +80,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <85dbe67e-f252-4548-910d-4af29939806a@app.fastmail.com>
+In-Reply-To: <xmqq8qhlf777.fsf@gitster.g>
 
-On Wed, Oct 08, 2025 at 06:14:42PM +0200, Kristoffer Haugsbakk wrote:
-> > diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-> > index 86ca7f6a78a..f48688e3700 100644
-> > --- a/Documentation/SubmittingPatches
-> > +++ b/Documentation/SubmittingPatches
-> > @@ -579,14 +579,19 @@ line via `git format-patch --notes`.
-> >  [[the-topic-summary]]
-> >  *This is EXPERIMENTAL*.
+On Wed, Oct 08, 2025 at 01:51:24PM -0700, Junio C Hamano wrote:
+> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+>
+> > I like the format in the cover letter:
 > >
-> > -When sending a topic, you can propose a one-paragraph summary that
-> > -should appear in the "What's cooking" report when it is picked up to
-> > -explain the topic.  If you choose to do so, please write a 2-5 line
-> > -paragraph that will fit well in our release notes (see many bulleted
-> > -entries in the Documentation/RelNotes/* files for examples), and make
-> > -it the first paragraph of the cover letter.  For a single-patch
-> > -series, use the space between the three-dash line and the diffstat, as
-> > -described earlier.
-> > +When sending a topic, you can optionally propose a topic name and/or a
-> > +one-paragraph summary that should appear in the "What's cooking"
-> > +report when it is picked up to explain the topic.  If you choose to do
-> > +so, please write a 2-5 line paragraph that will fit well in our
-> > +release notes (see many bulleted entries in the
-> > +Documentation/RelNotes/* files for examples), and make it the first
-> > +(or second, if including a suggested topic name) paragraph of the
-> > +cover letter.  If suggesting a topic name, use the format
-> > +"XX/your-topic-name", where "XX" is a stand-in for the primary
-> > +author's initials, and "your-topic-name" is a brief, dash-delimited
+> >      * tb/submitting-patches
+> >
+> >        Extend the experimental protocol used by contributors to propose a
+> >        topic branch name in addition to a description, and describe how to
+> >        name multi-series efforts.
 >
-> Is there a precedent for “primary” author? Why not just “author”?
+> Hmph, but the paragraphs that eventually go into RelNotes are not
+> commit log messages.  "Extend the protocol A to achieve X" is what
+> we would write in our proposed log messages, but after such a patch
+> achieves X by extending the protocol A, we'd report it in our
+> release notes by saying something ike "The protocol A was extended
+> in such and such way to achieve X".
+
+Fair, though I think the existing documentation suffers from the same
+issue. It says both:
+
+  you can propose a one-paragraph summary that should appear in the
+  "What's cooking" report
+
+and:
+
+  Please write a 2-5 line paragraph that will fit well in our release
+  notes.
+
+I think that's a separate issue that we should clarify as a prerequisite
+to the two patches proposed here.
+
+> > But it was noted[1] that the-topic-summary doesn’t seem to have been
+> > used much. That’s not surprising given that the instruction makes
+> > the-topic-summary blend in with the rest of the cover letter and doesn’t
+> > signal that the author intends for the first paragraph to be used as
+> > such. This patch shares the same problem.
 >
-> This seems to be referring to the fact that patches might have
-> co-authors (trailers) and similar, or that it could be sent from someone
-> else but the author, but I don’t think this adjective makes it clear
-> that the topic name should stick to the author (in the Git model’s
-> sense) name only.
+> Oh, that's a new theory.  So you are saying that authors may have
+> tried but I (and others) failed to notice?  It cetainly is possible.
 
-I wrote it this way to account for individuals listed under the
-Co-authored-by trailer. I'm not entirely sure that I'm following the
-latter half of this sentence. Could you clarify what you mean?
+Certainly possible indeed, but I am not so sure this is happening. At
+least from the series that I have looked at since this experiment was
+introduced, I have seen vanishingly few examples of contributors
+following the process suggested here.
 
-> But it was noted[1] that the-topic-summary doesn’t seem to have been
-> used much. That’s not surprising given that the instruction makes
-> the-topic-summary blend in with the rest of the cover letter and doesn’t
-> signal that the author intends for the first paragraph to be used as
-> such. This patch shares the same problem.
+Perhaps I am missing them too, but my sense is that it's likelier that
+contributors just simply aren't doing this rather than doing it and both
+of us are not noticing it.
 
-That's fair, though I admittedly dislike the idea of prescribing a
-format for the cover letter. It should be clear to those (such as the
-maintainer) who are reading the cover letter closely whether or not the
-first paragraph (or two) are meant to be used as the topic name/summary.
-
-Perhaps I am in the minority in thinking that, though, in which case I
-am happy to continue to discuss/explore other options.
+That may be an argument for dropping this section entirely and declaring
+the experiment as having failed?
 
 Thanks,
 Taylor
