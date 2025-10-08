@@ -1,107 +1,131 @@
-Received: from avasout-peh-002.plus.net (avasout-peh-002.plus.net [212.159.14.18])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B08D20296E
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 21:56:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C721D20296E
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 21:58:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759960612; cv=none; b=MjSFbvdPPfpuBUJqQhyOc2qaWLrbd4iUzddWm+/EJb8qCckpxQrknmpPH2ntO/Yf0u9bVhBy4itdbWwp3CPU9f6dDgaWic9icDCL0GdbulrORLOVGkYKsWOiA5ClrnT6fj2Gt3K6Hv19bPm+wD/dbY/CKhhDjPt/BJ/j8nZijxY=
+	t=1759960713; cv=none; b=lNv2mD0xuIsxvQGbvsrgd52pfTRb2Y3ufuJ4S/xMbEyWkBEwLK/Br04jdxTOKcZ0nhUpdciJSEhaCglSLRNoyyw4uyFtBfN6BaGe1fyd7TPl+ZTVn+Vv4QKJeaaAoOKiT7QoiVgdCxprXJuhCk819C3MO43cN62pRX3ffBFjUJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759960612; c=relaxed/simple;
-	bh=9dsCqLtyEyFH6tO/cyo0FbCkkYI189s3N8VnQ3IbK5U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bP3uj2/bdESmQ3Byzf8AZJlLkqtX56R7A8osDapMqgmarndm1asdv7WbnnInT48ZO6gUygDdBlzuj9gE9DyQmbjawTS6qaNhFjpTh1AP8tU7CwMtUETayQ3Cvxh8f+zmV6YfSMDaoUIr0o/d+RENXPuHrluoRLIUA7KUoNVyTNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=qOVmllMt; arc=none smtp.client-ip=212.159.14.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1759960713; c=relaxed/simple;
+	bh=t7NwvUbdma1igQvPfNd8ICZffZwRDF73X/wBdu8GlQg=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=jEXlTBE2jfo1YDMNxXXZvXgaNPXwAZZxjweAfp2DIztcDrNCYKmADcUbKNzURbfqcsT2LZyvuuQlJSbizn/sJ1vXxwYhysSSj+ipdaT4u7MfGTd11/QKRyp0kAx111+jxCjI4NtSyYFzVN2Gpudm+PAgY0601AYPVnopVxNTjmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=IiHlQAmM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ufFk2ZP5; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="qOVmllMt"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id 6c9NvheGrIjCT6c9Ov9H4K; Wed, 08 Oct 2025 22:56:46 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1759960606; bh=eclV0xZ30b7j6hkLhHaEAX4DbGqev9A7/vawRXkM9lE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=qOVmllMtQtEsUaHSJKNyqlN3pRPMYUApUOnJH8X6QfTw2akzYIB68lpPUJqvjLm9B
-	 htgdIJK+5Tjb/dpJlguGomQCoSGRn6Xku7znS4XFbXkDMGz88dgvQVMQWkM+91cPbn
-	 34trdJtlqOcRHVY5E+mUzmGQJo5nkkpLeay8OTHbGvtyCRPR7+h/wmBznvbiQMfZ7U
-	 0RsD7DkTw+6/l9E/YvIiQZfA8bQl6Jlx1WfyS8bL5ksa8oa/ysqFhW6iVVVkBZTNnn
-	 REZHFACEoXeYTYIMoqqiUvmr+sNp0aTjO/INMTHe5CHp2Ub2njlHKxVA1jj39vRKqF
-	 dZ5dr3ai61uug==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=VvaAAP2n c=1 sm=1 tr=0 ts=68e6de1e
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=-TWQbYnkkKoubXSScKsA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <8e3aba11-90d7-4336-9cd4-b1fb4144bf69@ramsayjones.plus.com>
-Date: Wed, 8 Oct 2025 22:56:45 +0100
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="IiHlQAmM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ufFk2ZP5"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EEDF57A0038;
+	Wed,  8 Oct 2025 17:58:30 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Wed, 08 Oct 2025 17:58:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759960710;
+	 x=1760047110; bh=t7NwvUbdma1igQvPfNd8ICZffZwRDF73X/wBdu8GlQg=; b=
+	IiHlQAmM1Cnd//K2YSzU/6HNPSyqDBa/BArX4Y5iBYdSXqS3+KdrrEYxF2MjIZOp
+	Ol+GpTMoyQBpLXx9bcX7RjxawiJ/mVQjsmhVrykdYGtmrKuvQOWVqErts+yz7a1D
+	J1/MXbpy8eKQmk7s9fY4HjYbNaBZKhFx6s9G05PlgChvrfXg74ud3+lOtYdsPvZ9
+	h6AYEe+TLBkgNYn4ILUIyLDr1TNKBh9S+o96riTmwgajU7n2eN3UupGRYP+0IsPX
+	o2ElwOVlssr9P3f9aTIbzU0FMvurSjfVSm8wBLsnvFOSgcLb7wIofGcHzI1cBbGE
+	78GPvw9gNsVL8+qzefWZgw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759960710; x=
+	1760047110; bh=t7NwvUbdma1igQvPfNd8ICZffZwRDF73X/wBdu8GlQg=; b=u
+	fFk2ZP5h9ukBiaKCST6Jz85QMQ2uqvNqSuTbpMR6qTJMsGV4zq1GdJ4Ij8Fglxhh
+	nqFsPzZ52bo2Xfxuqom3AxmJg6SCj+hSB030J2FD8Mn8Hww8s7ULMqy94bop4jjT
+	TFTe+S7zAwIB7Lpb1k/8lXvCJshZY2cqJRAAdFX5B2bBs2EsqCIHdDCLtnoarTxE
+	JEPv26J7BT7rMzHr1MwAWjv29hi02TUIfeaijYEToXWx/53FhT6+fk0b40qq5mWt
+	NowEiy9xnnhZcGehXQ3nyz+mqEewrjb5+qfjIr4gb8c5kMJdgNQC2bqNA/Vj/WY7
+	mnslSuLcW4Op3iQ/beybg==
+X-ME-Sender: <xms:ht7maB7wse4uKd_lzUfpX8D3pu80cPH2y_AHEv6B933GgrDUuc86WAM>
+    <xme:ht7maJsEtbovoSs3V_yagR8LvWUv7G3cmJSiGKJUddFIjc_2m_OKWPSVhOFxmRurV
+    rz4IvyUSyhjpQI_mtgMV6FeWf9yNIziSbYF0UoS8VxHKLlIQjf6XaQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdeggeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
+    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgvse
+    htthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhg
+X-ME-Proxy: <xmx:ht7maOgWVEU3p_LHj9RZL-Zt2uUiJmlF9V-nhckFPJngYR5ko2Jg8w>
+    <xmx:ht7maM0-YjjkNcjZiIJR4I9K0VjbxdIxf3Jf3aJ7uI1jjIEILr83iw>
+    <xmx:ht7maAghfp67qH6GBhbCc7z8zHcj2i0jinwY-vvWDdbAGRteO2iL7w>
+    <xmx:ht7maEeOV3_4lgLCdbEDTDFkE7o9of1U3TPbXt7KFT1CvqLXNQZWjQ>
+    <xmx:ht7maHrFgOQe3cE4MUF6dXjkJ9NOOUSWP7dDvnHw3JYBLNNuuL-pj5QI>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 78B341EA0062; Wed,  8 Oct 2025 17:58:30 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] doc: add some missing technical documents
-To: Patrick Steinhardt <ps@pks.im>
-Cc: GIT Mailing-list <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
- Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <https://lore.kernel.org/git/bcb3b3a3-bb13-4808-9363-442b5f9be05f@ramsayjones.plus.com/>
- <20251002221233.541844-1-ramsay@ramsayjones.plus.com>
- <20251002221233.541844-2-ramsay@ramsayjones.plus.com>
- <aOYImjMXcFkdwar5@pks.im>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <aOYImjMXcFkdwar5@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfMPVw6a/EcJ8HD1cDungtJD9ZuDs+jgq7dVFl8RapCj4xNFqvuxCrxeRXfg0AVPld5pq5BQxFA6T2UYp7WKa7AecooyecHJ28/ObX6+iv2nnl/f4wUJS
- IDyKrz9eb/HFbOJzr/n5Z51e8dsiuK0eLP6xKnZhJnycgxDjw2p3hWgk+1L9ihx2o3ZflBKCJ7GX+Rlh5XOEcKt5k+YMq332210=
+X-ThreadId: AtAKOKhqNxG3
+Date: Wed, 08 Oct 2025 23:58:09 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Taylor Blau" <me@ttaylorr.com>
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>,
+ "Elijah Newren" <newren@gmail.com>
+Message-Id: <75d82bb5-f2ce-449b-8387-fc1d63ce4e78@app.fastmail.com>
+In-Reply-To: <aObVmU7m4PahMsEN@nand.local>
+References: <cover.1759873165.git.me@ttaylorr.com>
+ <d7931dcc4380757cfd4c6f24b5d746da2294f40b.1759873165.git.me@ttaylorr.com>
+ <85dbe67e-f252-4548-910d-4af29939806a@app.fastmail.com>
+ <aObVmU7m4PahMsEN@nand.local>
+Subject: Re: [PATCH 1/2] SubmittingPatches: extend release-notes experiment to topic
+ names
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, Oct 8, 2025, at 23:20, Taylor Blau wrote:
+>[snip]
+> I wrote it this way to account for individuals listed under the
+> Co-authored-by trailer. I'm not entirely sure that I'm following the
+> latter half of this sentence. Could you clarify what you mean?
+>
 
+Sorry. I tried to say that: I don=E2=80=99t think =E2=80=9Cprimary=E2=80=
+=9D makes it more clear
+that one should use the Git author compared to just =E2=80=9Cauthor=E2=80=
+=9D.
 
-On 08/10/2025 7:45 am, Patrick Steinhardt wrote:
-> On Thu, Oct 02, 2025 at 11:12:13PM +0100, Ramsay Jones wrote:
-[snip]
+>> But it was noted[1] that the-topic-summary doesn=E2=80=99t seem to ha=
+ve been
+>> used much. That=E2=80=99s not surprising given that the instruction m=
+akes
+>> the-topic-summary blend in with the rest of the cover letter and does=
+n=E2=80=99t
+>> signal that the author intends for the first paragraph to be used as
+>> such. This patch shares the same problem.
+>
+> That's fair, though I admittedly dislike the idea of prescribing a
+> format for the cover letter. It should be clear to those (such as the
+> maintainer) who are reading the cover letter closely whether or not the
+> first paragraph (or two) are meant to be used as the topic name/summar=
+y.
+>
 
-> This builds on our existing linting rule and would catch any discrepancy
-> in man pages that we have in "Documentation/technical/" that isn't
-> listed in Meson.
-> 
-> This check isn't quite complete, there's two things missing:
-> 
->   - We have an equivalent check in "Documentation/meson.build" that we
->     might want to extend to also cover articles.
-> 
->   - We don't have a check to ensure that our Makefile and Meson are in
->     sync.
-> 
-> But regardless of that, the above check surfaces one more missing
-> article:
-> 
->     $ make lint-docs-meson
->         GEN doc.dep
->     make: *** Deleting file 'doc.dep'
->     tmp-meson-diff/meson.adoc tmp-meson-diff/actual.adoc differ: byte 3877, line 206
->     Meson man pages differ from actual man pages:
->     --- tmp-meson-diff/meson.adoc	2025-10-08 08:42:49.864991169 +0200
->     +++ tmp-meson-diff/actual.adoc	2025-10-08 08:42:50.072988794 +0200
->     @@ -203,6 +203,7 @@
->      git-worktree.adoc
->      git-write-tree.adoc
->      hash-function-transition.adoc
->     +large-object-promisors.adoc
->      long-running-process-protocol.adoc
->      multi-pack-index.adoc
->      packfile-uri.adoc
->     make: *** [Makefile:526: lint-docs-meson] Error 1
+I think saying that the cover letter should start with them is just as
+much of a prescription as saying that they should be marked with some
+paragraph-prefix (and be somewhere in the cover letter). Some people
+might prefer to start the letter with what they think are important
+call-out information and get to the topic summary later. For example.
 
-So, it has already paid for itself!
-
-Thanks.
-
-ATB,
-Ramsay Jones
-
-
+>[snip]
