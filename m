@@ -1,53 +1,53 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987CA2F0C73
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 07:14:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA17E23ABA1
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 07:14:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759907682; cv=none; b=IV5WB7PnduUD1pMMX4KXS0g/D+5HkhkR2HGIbcMmPfeiP19IhPrKwAvwDibwvmgC1ltuEfdlNNHsOvwNEGjsK8Tm654NNDybLytVFcXaMmEKXHxvcQAJDlMkEYWWHOwa+LBS5zFCmNWZSo7aAY+uigRHey/d1Z0q2qRlS8Jk/xM=
+	t=1759907689; cv=none; b=h36WJiEDJdNLlGxsenG7AY6kUsbXFU2A7fJMaNgZx8RHMQR0mLsulaBHzoomzwMwW3cL1gTZEjOsLhn47KpbWvzZNKl7n+KlaEUI9IeqmRyeBk6fFx3RSz6XbvlevhCxOQ1kqqldjcWI+M27bBmmqYF6SwxZ4x/f2Z+8ThqntUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759907682; c=relaxed/simple;
-	bh=Dp9h6MTAxmCqPzrjKKalCxYvwv7kkG1AF+/PD+KoMAQ=;
+	s=arc-20240116; t=1759907689; c=relaxed/simple;
+	bh=S2TC6A8omlq68oyyDj1Jfa3VyuMAILZsa5gMzjIAjpc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EeTdtSHulhE0DWwem/3HHu8v1gvK49AtPo5lzVy9cDJPfoHwyA20ImZqpnqdes3505v7bh6XC62jylR8BfcsvReAKdSFJoP3KJEiXS2RmNQT8qTv/2dmG57mxassAzJMYVPTK6i3bLmLx7Dq7ig4MqnbMS3fqEK/eb6RXcSCWSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VaP2FScG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q25UbvA7; arc=none smtp.client-ip=202.12.124.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=Oiv38ji0z55uwcS0sHkkXUTkH0TAgiaobaRVftLCPB2gqxgSY8jEUAimsSPuMOVnG1dPxdz4KZpqAPjd7th7oWlGWQJcfLU6swL5Nx0fdQf4cDCylDBdGZHpTTnPtvfGDKvCOTLCh4s+7hWiOihWLd+7G/puo0CmVAHuXiUXG/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LSpNyvs9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g9Gjj0n0; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VaP2FScG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q25UbvA7"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D60B07A078A;
-	Wed,  8 Oct 2025 03:14:39 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LSpNyvs9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g9Gjj0n0"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id DD3E51D00050;
+	Wed,  8 Oct 2025 03:14:45 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 08 Oct 2025 03:14:40 -0400
+  by phl-compute-05.internal (MEProxy); Wed, 08 Oct 2025 03:14:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759907679; x=1759994079; bh=zxYDslGlh/
-	44VYw1BSFuQxdjwOwexIBxh+K4mKeNbk0=; b=VaP2FScGmgx2USdbhVSnB3wNrE
-	syDNVr78qtMN6DxGZfvtZDMuDN1bZG4MVo4eGrhbklHXQD/Z8EmJ+kOtcKaNdNAM
-	6q7UBS9PSMayVUWBnv8mIXSoelD2BJF9TtA3+15j2MiKapknILTcYWVzbkKzhbzr
-	N0UPpJg7Z1kSZTLguEjbWTFCj/4IRyjIPhQkN6DtjZsvYPgGLkgkbWNmTFzdlnNT
-	wKfz6n4KSwH+9X2tNuobHVmuES4nxQ/hJHCVXPiMOsdanQjoPl7JLRQpfVhNm4Xd
-	rMpLVUvXBGd8qC/ek+64BL1Ogtzga/wEPZ4kFkbw9/1SWc0nFoCjrwzzFVlA==
+	:subject:to:to; s=fm2; t=1759907685; x=1759994085; bh=ow8GOLDJXW
+	N5zNIFAzrSxKetgW+c+oicMdyhcjGQ7Hc=; b=LSpNyvs9tPHdUpGLbPTILt/hQ6
+	tuQOxjl2T+mMcGzoNeEQlU5Ux+rQSz3tyxGCoiHS58XJFPiBejn0bGAUVmeSxsSk
+	Snv1LM12HB+ep+Q5tixxfhUGw5/xZjARsV62dUx8e9SAL41tYyoQDm9jLcqJNHpN
+	ejjBsL8WNN93ah3zqMATfSeFdf9d81CAWZHsHW+Gt2GJDxbBGS/v31c9vdWqQITt
+	vXT07zmLL2W8ZrgMI7Pke8R98K2hz5y+y3yuIDxxD05we1vh5sIWPg6YGtYkDXYq
+	Fe2YSZzL9URITPdLfmdVuOfHSHJ5vWS/nT7Djo72fQ6/TdF6VFCHvGpXspVQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759907679; x=1759994079; bh=zxYDslGlh/44VYw1BSFuQxdjwOwexIBxh+K
-	4mKeNbk0=; b=q25UbvA7yR0/1mE6fQJ1WspBa7UuV9NPh3aYJMKdEacJlD8N80z
-	24i9En1EmcWA1y85FMVfis4Q6jCqkUt6fnJ6zHa1vIY4h+mtnRpvP4YolhtLMw5q
-	7TLs1qza+Vepg8/1L+9ExEcc1YTs9qGDNtHe7EjtHA0aV+WyA6Zit+fUiulI5CAq
-	uqjUYHAo8FYlNQ4nBdUUWyQVCIdG7CjFYgzvYfh5y0eigt7Ui+uWWVyDBUlcOtZR
-	EYjyiswJpykI53Z5WwgahiMQkwDQLlTnp8PhHXw5ApaRac4jB3zfHwg/oSxisgxO
-	THxKZn5Fmm0NoXo+jVw9GhlV6xkysQQLJ4w==
-X-ME-Sender: <xms:Xw_maERDKreKRgH8jTSDZz2AWI5_TqZvOkIUehvdwldFsUmrF6a29g>
-    <xme:Xw_maA23hn4fDsBF2YiUJyRwaQEeSECKE0tFqH5bINk9zQ3xMJRD1u-fFINJFZk3J
-    4GGheOvMcES9L01BNPToOXm6bvrVGRKdN4P4F0uUZtXDfWlIzjRtA>
-X-ME-Received: <xmr:Xw_maIBcWoGJyMUGyco0UK090YJEhICfWLJJhk6Ef8rnVYA-VNqQ0D5MAMlR76y5fy42jC_bAKCwjGc6ehrPQ_BAtzgQ_qLDAN4FPEEU>
+	1759907685; x=1759994085; bh=ow8GOLDJXWN5zNIFAzrSxKetgW+c+oicMdy
+	hcjGQ7Hc=; b=g9Gjj0n0U4O5RttLvY0WwQvWq/1pIRtCU4ov5/MXiBI+i9tcXk/
+	3mmmGAKWNvqUyAQhHmzZB6Quz0LqChsu3o0fOnUNPbt8UUGpfXeKMtwOa0VeD6dg
+	7HBUsRmcsZAxhB6xxDKxA8PaCKeHPMmajIItxkUg77YFiBOeBOkDAxxzEV+50u/e
+	0phPXd0kBmhgzbctCC1OUoG6SawJxD6cX1GfKDir7e05wkdz0of9H4xjrhpTKP1T
+	Dz5wt4jRpI0uxh7gqT+BhdVOIpgau2tg7TxRQJfpOw4r9nZGtFCOHO4xUqS79TKU
+	xM15R0tj0qZQhCcrvgsj04SsMC+wFUNE48Q==
+X-ME-Sender: <xms:ZQ_maIyQk-h2tdQblEWsj9Nu7n___H7h7oT0KNJNanXuzpyGwUmMRQ>
+    <xme:ZQ_maJMRT9d80scUa7o-v69FBUY4DWlXwCX-kiCrU-zStcAl9iGcQh3hTIafrPnRE
+    i0ELDliZBPh3egZbu9yqzCldpuAwOjIWwqH_V-hZJZxXeELnQJTd48>
+X-ME-Received: <xmr:ZQ_maF-r4dgC46AJyR4F1cZj9zF_5MkxIT19D7EYc6qQArbl0jgualrF-EWPzcbw7d6aylrDxF6bz7t1UgS8fvkFBFs-VK2uCHDZ5Vez>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddvieejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -56,25 +56,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddvieejucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthht
-    ohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpth
-    htohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthht
-    oheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    eptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:Xw_maEiAff30Ai9N1ukjxz1obCaTmnG83kNFpLqLbbh3gCi6TLFA-Q>
-    <xmx:Xw_maCPdTopzH3A0d-eqG5k-leowe6pO7cl3g4J8h3BaomxYfFmeUw>
-    <xmx:Xw_maM-XPdU2MzmOOdvHkaD2O8u24o8nUrJXVbj7PTZr9uIPmwT10A>
-    <xmx:Xw_maLftNBk4mavTqb6Hs51KMlJx_nGn-0FHcIKpASqpQPp-TtEgAg>
-    <xmx:Xw_maAoeEVrShFKq6Isby5CEecXwGiJddBxQgzmptjF5bYQZt0raJCdp>
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehnvgifrhgvnhesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsrghnuggrlhhs
+    segtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopegthhhrihhstg
+    hoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhs
+    tghhihhnuggvlhhinhesghhmgidruggv
+X-ME-Proxy: <xmx:ZQ_maO7f353DgQcoJvxvjZLe86Xf0R_qCuzQVus24oyj9qhUZYuxhw>
+    <xmx:ZQ_maD4qog_3kjMZfIkYwVblT4Wpw77p9G82HFoz0dgkZMQZObWhiw>
+    <xmx:ZQ_maPoA65EWoeh16u8ZDFdsiKcDo74Pu5gJj8hFtT8_WrUlEhKXcA>
+    <xmx:ZQ_maMPmGymEzSobXdt8Y7OZjzAcvMLIezRv_yqYgJCr65-OKrJVGw>
+    <xmx:ZQ_maAgJmCkzqfsz0PoznoufB0F0q0kAstl4I94qrkeDSQlLY7x_H-LD>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Oct 2025 03:14:38 -0400 (EDT)
+ 8 Oct 2025 03:14:44 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 91629f2d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 8 Oct 2025 07:14:37 +0000 (UTC)
-Date: Wed, 8 Oct 2025 09:14:34 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 61ed6a4d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 8 Oct 2025 07:14:43 +0000 (UTC)
+Date: Wed, 8 Oct 2025 09:14:40 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -82,10 +82,10 @@ Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 4/5] fast-export: handle all kinds of tag signatures
-Message-ID: <aOYPWvdE4VnL8T7z@pks.im>
+Subject: Re: [PATCH 5/5] fast-import: add '--signed-tags=<mode>' option
+Message-ID: <aOYPYEk5sT6b1kuS@pks.im>
 References: <20251007122958.1089680-1-christian.couder@gmail.com>
- <20251007122958.1089680-5-christian.couder@gmail.com>
+ <20251007122958.1089680-6-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,66 +94,78 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251007122958.1089680-5-christian.couder@gmail.com>
+In-Reply-To: <20251007122958.1089680-6-christian.couder@gmail.com>
 
-On Tue, Oct 07, 2025 at 02:29:57PM +0200, Christian Couder wrote:
-> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-> index dc2486f9a8..7adbc55f0d 100644
-> --- a/builtin/fast-export.c
-> +++ b/builtin/fast-export.c
-> @@ -931,9 +931,8 @@ static void handle_tag(const char *name, struct tag *tag)
+On Tue, Oct 07, 2025 at 02:29:58PM +0200, Christian Couder wrote:
+> diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-import.adoc
+> index 85ed7a7270..b74179a6c8 100644
+> --- a/Documentation/git-fast-import.adoc
+> +++ b/Documentation/git-fast-import.adoc
+> @@ -66,6 +66,11 @@ fast-import stream! This option is enabled automatically for
+>  remote-helpers that use the `import` capability, as they are
+>  already trusted to run their own code.
 >  
->  	/* handle signed tags */
->  	if (message) {
-> -		const char *signature = strstr(message,
-> -					       "\n-----BEGIN PGP SIGNATURE-----\n");
-> -		if (signature)
-> +		size_t sig_offset = parse_signed_buffer(message, message_size);
-> +		if (sig_offset < message_size)
+> +--signed-tags=(verbatim|warn-verbatim|warn-strip|strip|abort)::
+> +	Specify how to handle signed tags.  Behaves in the same way
+> +	as the same option in linkgit:git-fast-export[1], except that
+> +	default is 'verbatim' (instead of 'abort').
+> +
 
-Yup. The function either returns `message_size` in case there is no
-signature, or it returns the offset at which the signature starts.
+Nit: I would've ordered this after "--signed-commits", mostly so that
+these two are ordered alphabetically.
 
->  			switch (signed_tag_mode) {
->  			case SIGN_ABORT:
->  				die("encountered signed tag %s; use "
-
-I was afraid at first that we're now open-coding all these different
-signature formats. But this implementation makes me quite happy, as we
-even remove the existing check instead of using a central function.
-Nice.
-
-> @@ -950,7 +949,7 @@ static void handle_tag(const char *name, struct tag *tag)
->  					oid_to_hex(&tag->object.oid));
->  				/* fallthru */
->  			case SIGN_STRIP:
-> -				message_size = signature + 1 - message;
-> +				message_size = sig_offset;
->  				break;
->  			}
->  	}
-
-Makes sense.
-
-> diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-> index 21ff26939c..5a46608f65 100755
-> --- a/t/t9350-fast-export.sh
-> +++ b/t/t9350-fast-export.sh
-> @@ -279,6 +279,54 @@ test_expect_success 'signed-tags=warn-strip' '
->  	test -s err
->  '
+>  --signed-commits=(verbatim|warn-verbatim|warn-strip|strip|abort)::
+>  	Specify how to handle signed commits.  Behaves in the same way
+>  	as the same option in linkgit:git-fast-export[1], except that
+> diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+> index 2010e78475..668c926db5 100644
+> --- a/builtin/fast-import.c
+> +++ b/builtin/fast-import.c
+> @@ -2961,6 +2962,43 @@ static void parse_new_commit(const char *arg)
+>  	b->last_commit = object_count_by_type[OBJ_COMMIT];
+>  }
 >  
-> +test_expect_success GPGSM 'setup X.509 signed tag' '
+> +static void handle_tag_signature(struct strbuf *msg, const char *name)
+> +{
+> +	size_t sig_offset = parse_signed_buffer(msg->buf, msg->len);
 > +
-> +	test_config gpg.format x509 &&
-> +	test_config user.signingkey $GIT_COMMITTER_EMAIL &&
+> +	/* If there is no signature, there is nothing to do. */
+> +	if (sig_offset >= msg->len)
+> +		return;
 > +
-> +	git tag -s -m "X.509 signed tag" x509-signed $(git rev-parse HEAD) &&
-> +	ANNOTATED_TAG_COUNT=$((ANNOTATED_TAG_COUNT + 1))
+> +	switch (signed_tag_mode) {
 > +
-> +'
+> +	/* First, modes that don't change anything */
+> +	case SIGN_ABORT:
+> +		die("encountered signed tag; use "
+> +		    "--signed-tags=<mode> to handle it");
 
-Nit for this test and all of the below ones: our modern style does not
-have empty lines at the beginning and end of a test case.
+This message needs to be marked for translation.
+
+> +	case SIGN_WARN_VERBATIM:
+> +		warning(_("importing a tag signature verbatim for tag '%s'"), name);
+> +			/* fallthru */
+
+This comment is misindented.
+
+> +	case SIGN_VERBATIM:
+> +		/* Nothing to do, the signature will be put into the imported tag. */
+> +		break;
+> +
+> +	/* Second, modes that remove the signature */
+> +	case SIGN_WARN_STRIP:
+> +		warning(_("stripping a tag signature for tag '%s'"), name);
+> +			/* fallthru */
+
+Same here, the comment is misindented.
+
+> +	case SIGN_STRIP:
+> +		/* Truncate the buffer to remove the signature */
+> +		strbuf_setlen(msg, sig_offset);
+> +		break;
+
+I'm not familiar with the signature format, so it's probably a dumb
+question: does the signature always extend until the end of the tag
+message? Doesn't the tag message come after it?
 
 Patrick
