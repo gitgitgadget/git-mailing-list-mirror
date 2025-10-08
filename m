@@ -1,131 +1,140 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C721D20296E
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 21:58:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73FB20296E
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 21:59:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759960713; cv=none; b=lNv2mD0xuIsxvQGbvsrgd52pfTRb2Y3ufuJ4S/xMbEyWkBEwLK/Br04jdxTOKcZ0nhUpdciJSEhaCglSLRNoyyw4uyFtBfN6BaGe1fyd7TPl+ZTVn+Vv4QKJeaaAoOKiT7QoiVgdCxprXJuhCk819C3MO43cN62pRX3ffBFjUJE=
+	t=1759960747; cv=none; b=XUUkKGRaaPVAOu5iD5u8sPvffCw5216NaMalX6FPPxqmKSUKpQR8CxWwcgiPHRqP3lmqKd1/53Qt9idIzVYh7f/9URzsDFqYqzaQjH2KHFw0Lf67sHui7cE+8X1l73eTyempVcT3uRJWzAH1iCWtOnqhKUdaaQBVU1hlmt1+TP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759960713; c=relaxed/simple;
-	bh=t7NwvUbdma1igQvPfNd8ICZffZwRDF73X/wBdu8GlQg=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=jEXlTBE2jfo1YDMNxXXZvXgaNPXwAZZxjweAfp2DIztcDrNCYKmADcUbKNzURbfqcsT2LZyvuuQlJSbizn/sJ1vXxwYhysSSj+ipdaT4u7MfGTd11/QKRyp0kAx111+jxCjI4NtSyYFzVN2Gpudm+PAgY0601AYPVnopVxNTjmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=IiHlQAmM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ufFk2ZP5; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1759960747; c=relaxed/simple;
+	bh=tKL/MBbTB/LDybjMCQzsYC83y6MEHLXDhUK1ttY6JrI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Lz2IADEFmtJYKfAqrFWTKKTbqSuwqTeySp9jjimLZ6wXsOcMOtJ2vRSB/5Yh25EBkP1MllxlvC+H+J+6W54HXU5OR7T3dfB3po3XIPtFjsWr4vlpDeAHDriUs+DcbriP93Y6s/UZ9Oo5SxnX6QLpO0/2ycqnUgSqTrF/z3KQ6O4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=N054cp+M; arc=none smtp.client-ip=209.85.166.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="IiHlQAmM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ufFk2ZP5"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id EEDF57A0038;
-	Wed,  8 Oct 2025 17:58:30 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Wed, 08 Oct 2025 17:58:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759960710;
-	 x=1760047110; bh=t7NwvUbdma1igQvPfNd8ICZffZwRDF73X/wBdu8GlQg=; b=
-	IiHlQAmM1Cnd//K2YSzU/6HNPSyqDBa/BArX4Y5iBYdSXqS3+KdrrEYxF2MjIZOp
-	Ol+GpTMoyQBpLXx9bcX7RjxawiJ/mVQjsmhVrykdYGtmrKuvQOWVqErts+yz7a1D
-	J1/MXbpy8eKQmk7s9fY4HjYbNaBZKhFx6s9G05PlgChvrfXg74ud3+lOtYdsPvZ9
-	h6AYEe+TLBkgNYn4ILUIyLDr1TNKBh9S+o96riTmwgajU7n2eN3UupGRYP+0IsPX
-	o2ElwOVlssr9P3f9aTIbzU0FMvurSjfVSm8wBLsnvFOSgcLb7wIofGcHzI1cBbGE
-	78GPvw9gNsVL8+qzefWZgw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759960710; x=
-	1760047110; bh=t7NwvUbdma1igQvPfNd8ICZffZwRDF73X/wBdu8GlQg=; b=u
-	fFk2ZP5h9ukBiaKCST6Jz85QMQ2uqvNqSuTbpMR6qTJMsGV4zq1GdJ4Ij8Fglxhh
-	nqFsPzZ52bo2Xfxuqom3AxmJg6SCj+hSB030J2FD8Mn8Hww8s7ULMqy94bop4jjT
-	TFTe+S7zAwIB7Lpb1k/8lXvCJshZY2cqJRAAdFX5B2bBs2EsqCIHdDCLtnoarTxE
-	JEPv26J7BT7rMzHr1MwAWjv29hi02TUIfeaijYEToXWx/53FhT6+fk0b40qq5mWt
-	NowEiy9xnnhZcGehXQ3nyz+mqEewrjb5+qfjIr4gb8c5kMJdgNQC2bqNA/Vj/WY7
-	mnslSuLcW4Op3iQ/beybg==
-X-ME-Sender: <xms:ht7maB7wse4uKd_lzUfpX8D3pu80cPH2y_AHEv6B933GgrDUuc86WAM>
-    <xme:ht7maJsEtbovoSs3V_yagR8LvWUv7G3cmJSiGKJUddFIjc_2m_OKWPSVhOFxmRurV
-    rz4IvyUSyhjpQI_mtgMV6FeWf9yNIziSbYF0UoS8VxHKLlIQjf6XaQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdeggeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
-    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgvse
-    htthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhg
-X-ME-Proxy: <xmx:ht7maOgWVEU3p_LHj9RZL-Zt2uUiJmlF9V-nhckFPJngYR5ko2Jg8w>
-    <xmx:ht7maM0-YjjkNcjZiIJR4I9K0VjbxdIxf3Jf3aJ7uI1jjIEILr83iw>
-    <xmx:ht7maAghfp67qH6GBhbCc7z8zHcj2i0jinwY-vvWDdbAGRteO2iL7w>
-    <xmx:ht7maEeOV3_4lgLCdbEDTDFkE7o9of1U3TPbXt7KFT1CvqLXNQZWjQ>
-    <xmx:ht7maHrFgOQe3cE4MUF6dXjkJ9NOOUSWP7dDvnHw3JYBLNNuuL-pj5QI>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 78B341EA0062; Wed,  8 Oct 2025 17:58:30 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="N054cp+M"
+Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-42d8bf52325so1561145ab.3
+        for <git@vger.kernel.org>; Wed, 08 Oct 2025 14:59:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1759960744; x=1760565544; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=uOolZRnb7/s2S0b0XOYrgRXsCwIKQsZrHWqzxKSdxLA=;
+        b=N054cp+MuBv9AfPp0tUGrzqMgHB8A3UdwCqaEJwKRniDG//TcrSc2aullFJ/SzHma3
+         H5b92VxJed+W7g6MkYgH6GKoXI52Zj3xTpXS53B0/o/B7FuAwwDWRCaZ1W/e63CT/ww6
+         /8xHQStJ+KdcZWaBCTDxHnDZp5swQhHw59S6wMyMXrgxazID8rY4A4Cm/P1y8rkhCK4O
+         oa3Y59KfbHpitvQXy8Qlqayftl5NZSFbFY4gPUVz3rd9eZRm5HoLkKTVsUKzc1p/abMc
+         u4Zh9VsbQoN6DkAedE//SgbrC2svDh27JsrF/cv6zM/41wriQt+zvxIIlasGqhKWyhWA
+         zhCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759960744; x=1760565544;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uOolZRnb7/s2S0b0XOYrgRXsCwIKQsZrHWqzxKSdxLA=;
+        b=ZdHftHtt/lnqpVfT6vk4E0yFCo7xUFuATei4qBuThmFo1zXNelCVYO9QOsuTCgJrfh
+         E1OWd6/yZqnMZ9fZvWNLEWMqzMyLUGGxwOR5t9m7E2seU4fZ0smzj8pIJGVmTAk/65dg
+         MD1pz4Fyp4YaWreGtE/tX34jn3LZNjlJ3VJkJwjqjPZAmdsuWCvIanaeidpyKxZ+ffOG
+         hfB+h7bFcob43HdHHyL42x08DihMvIcTc0BKJMW+uRpYXy32ZOcHgmCUPv5RqgUgo/Tv
+         w5Bqa5hbeN1Wto4MidztjDExR/GXHKtt95tmDKNiY53ggzSiLitHimveo3xUx2zK/fky
+         U/lg==
+X-Forwarded-Encrypted: i=1; AJvYcCV05Zowx7Qh9lmy1M79APZZBXrgOgL6VBIQYXkXYBTid77Ei7cANU5WXg5dOKb7NOADz5M=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNFEPqJC1d9VCo+NXeyEAUqJ9NIYZfx/hAiv8HpfC/mLsUk0PA
+	kuIqxD+y2+wvbdNqqitDgTkhwMRwFXw0fjYy0aGFrt+G9kb+k65ayDA+WducGiD5vX0=
+X-Gm-Gg: ASbGnctX3EoeAGH/G/0RSdOW2Eqxh1Kx9Bvn5I6LwZqfETOlFVuZr0ohrFa8DraJYGV
+	BYhJeKDYbY9Xpt5i5KbVx5apaOnX147ATo7BFdIhb6GOFwEYIb5/DcygUzfJgRlNeikdbkPI2jT
+	+d3/lNOVFd9ZtncVtgP48xj/LOoONSztYxwsl2H69EMtv5BXWNRNQroK6FZJYbBe7IZCq2g4sTC
+	Y64DLWv1P7Oi4d//qgqMCqqOWg+Y6O74gBF8PtE4+sOZz1eKvdF3wnrgq8vsSnDFISmwUhet5ZA
+	vgGql++Ca5ArO/e74vwE/nOpEl40OtSdnYNCiK7mjc6/BMoWzaeuEeyQkNX46QoNpKy/di4xJmw
+	kTC4I0I1uzEyE4z97DdaCYVrcBwxcVs0yoOe5rdK2FwOX05T3Mxheb5Br1wQQA43UdqCgMWGsSr
+	D78EVgp1l3eIY4TBKB4IOrYoM+smXmgPpOcTWo3IJX2YHESgUvCQ==
+X-Google-Smtp-Source: AGHT+IGmNG0QORIVMZZwCyXlvLv1OEbopqlBi2vfvnC7XF9+60W27KK2bGuEgGU3CvOiS1ZeJHZ7QA==
+X-Received: by 2002:a05:6e02:2186:b0:42e:7273:a370 with SMTP id e9e14a558f8ab-42f87354820mr41303595ab.5.1759960744446;
+        Wed, 08 Oct 2025 14:59:04 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-57b5e9eba46sm7455008173.15.2025.10.08.14.59.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Oct 2025 14:59:04 -0700 (PDT)
+Date: Wed, 8 Oct 2025 17:59:03 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Luca Milanesio <luca.milanesio@gmail.com>, git@vger.kernel.org
+Subject: Re: When should we release Git 3.0?
+Message-ID: <aObep4lUP8hcWXxG@nand.local>
+References: <aNxivuJEnSHbQNdr@fruit.crustytoothpaste.net>
+ <E03F997F-1738-4CF6-B7D5-206183FA5BD1@gmail.com>
+ <aN1RFvz7uGPnepxe@nand.local>
+ <aN5-n_ArhQqaQZgt@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AtAKOKhqNxG3
-Date: Wed, 08 Oct 2025 23:58:09 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Taylor Blau" <me@ttaylorr.com>
-Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>,
- "Elijah Newren" <newren@gmail.com>
-Message-Id: <75d82bb5-f2ce-449b-8387-fc1d63ce4e78@app.fastmail.com>
-In-Reply-To: <aObVmU7m4PahMsEN@nand.local>
-References: <cover.1759873165.git.me@ttaylorr.com>
- <d7931dcc4380757cfd4c6f24b5d746da2294f40b.1759873165.git.me@ttaylorr.com>
- <85dbe67e-f252-4548-910d-4af29939806a@app.fastmail.com>
- <aObVmU7m4PahMsEN@nand.local>
-Subject: Re: [PATCH 1/2] SubmittingPatches: extend release-notes experiment to topic
- names
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aN5-n_ArhQqaQZgt@pks.im>
 
-On Wed, Oct 8, 2025, at 23:20, Taylor Blau wrote:
->[snip]
-> I wrote it this way to account for individuals listed under the
-> Co-authored-by trailer. I'm not entirely sure that I'm following the
-> latter half of this sentence. Could you clarify what you mean?
+On Thu, Oct 02, 2025 at 03:31:11PM +0200, Patrick Steinhardt wrote:
+> On Wed, Oct 01, 2025 at 12:04:38PM -0400, Taylor Blau wrote:
+> > On Wed, Oct 01, 2025 at 08:13:12AM +0100, Luca Milanesio wrote:
+> > > I am worried that if we rush into Git 3.0 with breaking changes that
+> > > would make other “forges” (e.g. JGit) incompatible, we would be in a
+> > > difficult situation with the other Git ecosystem that isn’t based on
+> > > the C-Git implementation.
+> >
+> > That's a good point. I am not familiar enough with JGit (or really any
+> > non-standard Git implementations) to know where SHA-256 support is in
+> > those respective implementations.
+> >
+> > But regardless of whether we're talking about a forge that is based on
+> > git.git or some other implementation, there is very likely lots of other
+> > work to be done to support SHA-256 outside of flipping the hash function
+> > within Git.
+> >
+> > (I'm thinking here about database migrations for columns that may store
+> > 40-character SHA-1 hashes, for example, which can take a potentially
+> > significant amount of time to migrate depending on the size of the
+> > database, etc.)
+> >
+> > So my feeling here is that we should take into account not just the
+> > readiness of the underlying Git implementation used by hosting providers
+> > in the Git ecosystem, but also the readiness of the hosting providers
+> > themselves to do the work necessary to facilitate that transition
+> > outside of their Git implementation.
 >
-
-Sorry. I tried to say that: I don=E2=80=99t think =E2=80=9Cprimary=E2=80=
-=9D makes it more clear
-that one should use the Git author compared to just =E2=80=9Cauthor=E2=80=
-=9D.
-
->> But it was noted[1] that the-topic-summary doesn=E2=80=99t seem to ha=
-ve been
->> used much. That=E2=80=99s not surprising given that the instruction m=
-akes
->> the-topic-summary blend in with the rest of the cover letter and does=
-n=E2=80=99t
->> signal that the author intends for the first paragraph to be used as
->> such. This patch shares the same problem.
+> We definitely should take into account the readiness. But what I think
+> we'll need is a roadmap from impacted Git implementations and hosting
+> providers so that we can answer the question when they plan to have
+> SHA256 support ready.
 >
-> That's fair, though I admittedly dislike the idea of prescribing a
-> format for the cover letter. It should be clear to those (such as the
-> maintainer) who are reading the cover letter closely whether or not the
-> first paragraph (or two) are meant to be used as the topic name/summar=
-y.
+> Without such a roadmap it's basically impossible for us to set up any
+> realistic date. In that case, we only have one of two options:
 >
+>   - We just wait until eventually everyone has SHA256 support. This has
+>     the effect that there is no pressure on anybody, and thus it is more
+>     likely than not that it'll just never happen.
+>
+>   - We set a strict, "uninformed" deadline that may be too ambitious and
+>     unrealistic.
+>
+> Once we have roadmaps, we should set a strict deadline that takes them
+> into account. Any hosting provider or implementation of Git that doesn't
+> provide a roadmap will not be taken into account in our planning.
 
-I think saying that the cover letter should start with them is just as
-much of a prescription as saying that they should be marked with some
-paragraph-prefix (and be somewhere in the cover letter). Some people
-might prefer to start the letter with what they think are important
-call-out information and get to the topic summary later. For example.
+I would imagine that the definition of "roadmap" here is fairly
+lightweight, since I imagine that some organizations may not want to
+share details beyond "we will have it done by X date".
 
->[snip]
+I think I generally agree with you, but I would say that while I think
+the project should take a firm stance on when it will release Git 3.0, I
+do not think that we should entirely disregard the readiness of
+forges/implementations by making the deadline so strict.
+
+Thanks,
+Taylor
