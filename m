@@ -1,108 +1,124 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F8D4A01
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 07:30:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4CA34BA3C
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 08:11:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759908638; cv=none; b=tPWb0KnAo81jDeIq+aX7hxmSaiawwBGY9nqMAuhO4/7cs87B/x8nOS/EdqcLUGqKs/vk8u++UhWggNsIawW6uBaX9xzTybJd5QyaCSBW6j+w7DpVfO1EdAbP7dTO+XkLXKKY31eWN/hiEeg0Dr0FAVgC3IEKgjEbpWnF1kb47Oo=
+	t=1759911070; cv=none; b=jXoxaJcnEV3L9FbM0/RGk/FzAyRgg2NdP5KtHLk5Ls974Ke8DoG6ASZmpVgXAOHFXhy7s+lCjrHrQXREwn1TX9t2tiGaZkLOFLKCpEN+MzdtlPuoNT4UraPUh0WBSAX9RYm5m5OFoJChTJ/R3gAYKS1c2OdhHGPRdev1I4piX20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759908638; c=relaxed/simple;
-	bh=BJVlKN7kWM6CPxehVnk+404JD8/tXRM1UW6JCXcdilQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Iub7o6tzQSQH0XPGp77lFWbsyYyLOO7WPAuhHX+g7j/P/5JXUQsCyT4wOjlhfP64G8EGaW5IHDS/sdBNGuhTNvmd1R6lhT7cAskKr5YVhmXpkbcp6J0rV9OmjvaIlFv130CLo2fU6VbUu6rt2fvZ4+UOMGcBrPY7LvXvjszYwfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X3yF4vg4; arc=none smtp.client-ip=209.85.208.52
+	s=arc-20240116; t=1759911070; c=relaxed/simple;
+	bh=j57CvxgoWIcUiLPr5+Hd8y34pSSH8rHiU7jFrISHF9w=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PXNjWzvP++jwpcQi792yhHGWx9kVXlyi3bX2qvj81znFFhcnY3HH5HTVrLt6drajx1E1HI8OPRBfP90vI9OS++SSAuHaWtv5vKlpFhupQBbUc/n9FRJoTUG6hgBZIO6XdwtpElOeO2iaQ/8bTbpaZC6zRQXa3yw1odcfo58O7qA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LdINAysW; arc=none smtp.client-ip=209.85.222.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X3yF4vg4"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-62fa062a1abso13182296a12.2
-        for <git@vger.kernel.org>; Wed, 08 Oct 2025 00:30:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LdINAysW"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-9000129f2bcso5190235241.2
+        for <git@vger.kernel.org>; Wed, 08 Oct 2025 01:11:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759908635; x=1760513435; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jhmh9xOKafQUoGVqeyv6Ra2NuY+LTVWh2pVU6xmbCFI=;
-        b=X3yF4vg4GsKqJOd3+9IjlJroIqVps66kSuaS1LviG1UbEve3t7NI8cP0qQ8RaQMopw
-         +AzKdyl9M6sYbRUsOojKKcLNlOim06vmQaKlkpa9dvmVvmPMydVKdnXpqmPGoVM3HaM6
-         FYwo1Mm8zF7y90amSxqOH5jVOviXIb7nr9NA20M4Rb83HIvaoOv3FThrBscPBYDJmR4n
-         UTgWKpEereNlYP8/MoN8f1eogHQhSoi/2aqie6r+E670e6aZ7vCJx7/CNWa2yYw+rfTS
-         WudFFrH7rzr1wUsiQs0Fn6Eb71t7PkXcpijB/CZJJ7khTen8CqNWsSu8MTPE6EkMk0KG
-         2igw==
+        d=gmail.com; s=20230601; t=1759911067; x=1760515867; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RVrBlU98D4FjQ7n8j3821tOf9wq8RLrK5k2HT40uXPI=;
+        b=LdINAysW+odkbkRUkAxCJt/kECXOHWogKKAO+oGFImj/kxu0TLlRTL5X1j2i861+eq
+         QiyuryCNYsoR/HH/enUwTJkETMHNQFEuOTqNFCeB/6FWfXyjBcETEIL9+q1gtXpMFhtX
+         n97Jxrja6hYZ/J7cHkmBrRHnieIksJ0jv/vJXBRyctaPVY6BpfG4cpA4I1c2MUpl6hde
+         UOJ5O9ofdy8hBwn4mdyPCz3NqKP8BHRkxX7Drj3NBnt5fgkYtyMB3p9qG5RzCe5kRMvj
+         0J/HtqtOtpCeFAsrOwpJXV6P4Dutralepch4t2qFU8bLbwwJOJYXaZNK9NaR2bNuoLGR
+         FL3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759908635; x=1760513435;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jhmh9xOKafQUoGVqeyv6Ra2NuY+LTVWh2pVU6xmbCFI=;
-        b=BW0LyOlJw6wGy34dMYkEVwa0DyPrKuP1MFSi7OxoEUQ+3MegYupt4lFMGdORwiEufm
-         /NQc3D5wwdMQzYyrWgFBcFMepFioN91rBWA48EK3nAj7nPx7kkBpJ4yA7d3P0rq5511H
-         jnmcmir8vQ6n2O7OoNPGFUbjs8pjDhiQtgS0K9oPtAgBPEjwLFR+Z5QgmKLWNmlqxDE5
-         t4EbNyXTarGFKzn3Rb6VyoFeJzWZxTnWvSz9dzZx9KrZaTndJIQPyKZViPiQ4aaCbCI0
-         xToda9D5kgxzNGajCxhJGaiT+BAru8Wa29Y1kNJMQ+ZE0YEivMHHPXACw4x8Rlzxj0O9
-         ZeWA==
-X-Forwarded-Encrypted: i=1; AJvYcCX3Li+aEChDJe8MrGr0ASV+4G26uN4YkOlJjzzs4TgwRQ6ldsjx22SUDVcsC/UYSF0Vye4=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz4lzGpEul219ImqgcUD89BrrkFEG8KYcAjaW04vUhMvudXplg4
-	nNa9MnFhIHIRtDH26Km0x9Rzj0oqP7+ClfFNBkjmBM2WL5ZeM5UWNGA+ZNGO02xLSI8k6ad6d+y
-	3xygdENYZSm0Ru1SjCeDaP4pmkSgVpl8=
-X-Gm-Gg: ASbGncs/x5aFu51+x6BhVmYnN8VR33nl9ZP+5ZzCl1yhHEIxYYjT79ehYZh0VT17hgk
-	qcoRTgYPPAFM14/Xbzgt2ouwzNnPBJH0kh3lRN0SmbT5tGdG/1uzEsdHNVFxnx/Mpk3eAF0PUhv
-	Z4R/i0EUKADpTxxiuBTU7mbHTv2pebMN/wyP5nSxACZd5dj4BDpcD8eaokSxJ4tAch7MxiB4iLu
-	cJF+LLE5eZ73UtwQ0utSGzRiXCDQDE=
-X-Google-Smtp-Source: AGHT+IEjNEUUxx4M0ZpCooHGZEL9qD8Qkz2ARIk1u5z61m0R3CHIhJjZw8Zq43NeSt8WAnqZ97P6eSgdJy513o2E2+U=
-X-Received: by 2002:a17:907:3f21:b0:b3e:8252:cd53 with SMTP id
- a640c23a62f3a-b50ab27f351mr276783166b.27.1759908634861; Wed, 08 Oct 2025
- 00:30:34 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1759911067; x=1760515867;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RVrBlU98D4FjQ7n8j3821tOf9wq8RLrK5k2HT40uXPI=;
+        b=q1IA1DYUBMPCx2zY1zNkZhVXMhoUluz6facO146eSMsf29uH+mNmM+BBb8w5r64B9q
+         vGq9BPQPPFLAvU1xEVM5rmCrKKch1/2h84/Y9vWioRhIovD09rel6QCyuVOmrHwkmYbq
+         DwluqBQzC+BJGIOf2Blwr7v2salkZVTIgkBBahOrYq98C6G4H058sowBepzBkPzNB/Cv
+         zCOOceThgsU9xS0xUMAXvsIS/NWSHFYPUWdEK8o+EYrJoWfTgMZypjfj+3M6fzYkf7xp
+         SX+ZMSiq5FY7E8lIyhBA3ufk/sGYxpY8Ht/TNdpyKqfTcPgRqIP/gSvcLzK0mvkb4lTD
+         WTLA==
+X-Gm-Message-State: AOJu0Ywha+0rBvpQ4SR6mwIxveAryD4dl/91zzHzYYNIH9ZHXEz50hpk
+	PfOuzvwk+6eQNEkGEh6kqbeANTBWsckyDd5Y8x+VAMnjohZnq/9UkXSzX9QpNXUpA5/MVDGwjG4
+	rm1QGbZimSeGPXg+ewlL1C7gmiwVRvgM=
+X-Gm-Gg: ASbGncvMWPA8A+gZ4zAU0KbZvyVD0w9Wkw/9rH8uz4yMH4SJY3auiRBmgcECnowqji/
+	rFfSdgDVmvI2sU7dK/w31qOwcfPtzrafo3dszH/PRO5/2JSUb1R+aXpFm68FVlLyOso5zR9Ee6o
+	uQ1iBWL+rCPTDhP8TN3anK3Nl+RxeWxd5PKKfuBH1ULwPJAw0yiXVJ4k6bSmZO1QqSus1tcj9lp
+	eG6ISb9yrNiNDZK81VYdasqv4SGnqBCxiZS5PcVciABGLg9zgDv6GdkmfPy8eS7/GmgrM5S5WtE
+X-Google-Smtp-Source: AGHT+IEWD+3+dAlMCDMvXVtqw8I1HD7EfXtI/UETQN0qK7fzTltlbMkcb0aD3vFn6uDaG/3MpcTQeXva2/IwqX+cRTk=
+X-Received: by 2002:a05:6122:209e:b0:54a:a048:45ae with SMTP id
+ 71dfb90a1353d-554b8a82a73mr995025e0c.1.1759911067122; Wed, 08 Oct 2025
+ 01:11:07 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 8 Oct 2025 01:11:05 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 8 Oct 2025 01:11:05 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqq1pnfof71.fsf@gitster.g>
+References: <aMp8yNFiXDyk2hP4@ArchLinux> <aONhmrE0otiyZ16f@ArchLinux> <xmqq1pnfof71.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqcyalm0mh.fsf@gitster.g> <20251001140310.527097-1-christian.couder@gmail.com>
- <aN2fG-nS9fE5-2jD@fruit.crustytoothpaste.net> <CABPp-BFcg9M=XjqGPd+akrUOqJqREBmE9+NvO1Q05r4pUcOmEQ@mail.gmail.com>
-In-Reply-To: <CABPp-BFcg9M=XjqGPd+akrUOqJqREBmE9+NvO1Q05r4pUcOmEQ@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 8 Oct 2025 09:30:21 +0200
-X-Gm-Features: AS18NWBEyeVsdYI1lf1vX5BqYy2_eX3GGVLW3oDP3HBHYfBD-2vFUMEa8Cfh1SM
-Message-ID: <CAP8UFD3QUQpnUYGS1qtfGbxOynJrZ-Q5aPPyjb7oij-6YSx7Wg@mail.gmail.com>
-Subject: Re: [PATCH v2] SubmittingPatches: add section about AI
-To: Elijah Newren <newren@gmail.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>, 
-	Rick Sanders <rick@sfconservancy.org>, Git at SFC <git@sfconservancy.org>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Patrick Steinhardt <ps@pks.im>, 
-	Christian Couder <chriscool@tuxfamily.org>
+Date: Wed, 8 Oct 2025 01:11:05 -0700
+X-Gm-Features: AS18NWB3h0F8rDOmOSx_YKyzNY25smMAC0Rph8FN_YdGiqAFG4P6JYUizzkcgsc
+Message-ID: <CAOLa=ZQzfzRkzK5qkg+rJWqZ4mE9fn06tx9njGzGt4YNi3kDwg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/4] enhance string-list API to fix sign compare warnings
+To: Junio C Hamano <gitster@pobox.com>, shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
+Content-Type: multipart/mixed; boundary="000000000000fe284e0640a1393d"
+
+--000000000000fe284e0640a1393d
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 3, 2025 at 10:48=E2=80=AFPM Elijah Newren <newren@gmail.com> wr=
-ote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> shejialuo <shejialuo@gmail.com> writes:
 >
-> On Wed, Oct 1, 2025 at 2:37=E2=80=AFPM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-
-> > We could say something like this:
-> >
-> >   Please do not sign off your work if you=E2=80=99re using an LLM to co=
-ntribute
-> >   unless you have included copyright and license information for all th=
-e
-> >   code used in that LLM.
+>> Hi All:
+>>
+>> This is a small PATCH to enhance string-list API
+>> "string_list_find_insert_index" which has introduced sign compare
+>> warnings.
+>>
+>> ---
+>>
+>> Changes since v2:
+>>
+>> 1. Enhance [PATCH v2 2/4] commit message to express the motivation is
+>>    avoid overflow.
+>> 2. Add comments for `string_list_find_insert_index` function.
 >
-> Would this mean that you wanted to ban contributions like d12166d3c8bb
-> (Merge branch 'en/docfixes', 2023-10-23), available on the list over
-> at https://lore.kernel.org/git/pull.1595.git.1696747527.gitgitgadget@gmai=
-l.com/
-> ?   We don't need to go theoretical, I've already contributed such a
-> patch series before -- 2 years ago -- and it was merged.  Granted,
-> that was entirely documentation, and I called out the usage of AI in
-> the cover letter, and I manually checked every change (discarding many
-> of them) and split it into commits on my own, could easily explain any
-> change and why it was good, etc.  And I was upfront about all of it.
+> Thanks.  I didn't see anything glaringly wrong in this round.
+>
 
-This is a good example why we don't want to ban any use of generated AI. Th=
-anks.
+Same, the range-diff looks good to me!
 
-> If any use of AI is bad, do we need to revert that series?
+Thanks
+
+> Shall we mark the topic for 'next' now?
+
+--000000000000fe284e0640a1393d
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 48f146ced9ab4060_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qbUhKY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOEpRQy80OUs1SlRHQyt3N25aaUp4MC9HSGZTbExzOApsT3VmaGFkOGph
+WEVHUHBQUzRmUWdpcmFoSjAzUWJhWkpYU2drTGZCZGxST3dTRjlQd1JZTjRiaStlNVBIUGNlCmtQ
+MHZVOHpIbmJKYWgwTTVQdm1YK2ptS09USXhMZXZFWG9DaDhQOU1MOUF0a3F3TVkrbzE5Zi9DTlI4
+eGQ0YXIKbnhmOU9TbnJtakxTU0RMUVhScVRBVVhtWjJnRTNDU05KUzNhMndpa2VVYnBzUml6c1k3
+aWZyOThvNXFTVCtyRApxSTd2cHJKTWloZmtaS2dLQXFyeGgwVklVc0tyMzFZQmxhUzZxN1l0ZlI2
+MXRrUnJSOHk4eFNEQjh6Tm5Ea0pwCmsva0xNNENhcGl4Q3JKUVMyVzVHbWY1NXZRMHZYRUhUZTh1
+WFhGVmZZclJ5UmtzMkxLSUxBYXlmT1pYTUdnaU0KZDhINkhtYU96V2lRTGNZWmtsZzE1ck5LZjRw
+ajR3OE42bUZZMkh0MGU4SVdQVzVwVWZBRE8zdXhnYkFTZ3lxegpUUHpxNktuY016RGZHUDkzWEZQ
+Z0VMVG45Q3d3UTBjU3dsUThzeUZ4OC8vVUxCRWZyemJ0T1NmZVhtOS94NjVkCnlwdnh5ek5GZlFQ
+NDhVcWIzMTFFVlgyM2VBV2JaQ2VuQmtGT05Pbz0KPVRlR08KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000fe284e0640a1393d--
