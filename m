@@ -1,84 +1,151 @@
-Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4074119E98C
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 08:43:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DD72BEC52
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 09:28:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759913037; cv=none; b=kJ4SA4p7lwhvhJptjhCUHJRrGgn1oW1G+MFFs833df04qSCJDxuJYDPEgwFQHycuZHVdsRIO5BP9Hd5CVR4Cbx2hwkzudy6oh/PfWnmk8+nErrYzJ3AfHSGOcYP/7cwlHl/xBnGfv7MmQCGfVioMnXZ23BnVk1NIU4m/4Ylzl3o=
+	t=1759915713; cv=none; b=I027prbHaML1IuyrprzkSi48oskgMad2VRND1SF8xNg3LqnX8L/JUfLsy5FtfX0vNiC7b/A3BrX61J4ogjKlF0Vpgsi/vwnFT6NB99ugEwtAbqPd1UQPFrUeuOnL6L1FC9Xye2/RbnxqIBSuaGKbbpt7sr1+YcyN9rYDg95GT0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759913037; c=relaxed/simple;
-	bh=nhBiqgk3cyBzAAaFxOaF1y3pKO3X/yqZFKvMMXWufyc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uwxDe4uq9/+0cJyWsJIXJEiC0XaqzodtFhLaOM5HxdCfoD55vJZwSLw2E0nOBrirDOdr1fA4oOH3Q1A4Yd2A5enut1uaqXs1vdh4V250nzOyvhb49DgfcaK01Ryyvh7Qj4x38EwQm5RjxhAr29ihYeUTa+mA87QEj7aFy/NGSEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZE3/MIVv; arc=none smtp.client-ip=209.85.222.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759915713; c=relaxed/simple;
+	bh=nEsTk6IDNp9as8lSCWiz+/+i6ZwyRrlR7gWnYMnxWHM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CBNsn9HOrIm5g30ZZotzg5Y5D6F9MRDCcWgKGyhULIUua7jn8IjjyVDQX/acDjZvTWyHpysQ+cQuqujc9488wGQfIH423q+htWFEZ4q4A/RRJs5kdJPQb4bw05RxyaovkZ4LhiJfDtuX90J6RDSDW7wi769f2H5yX3CwuhTbCHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=JCa9u0ZB; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=JWGcoyZn; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=JCa9u0ZB; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=JWGcoyZn; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZE3/MIVv"
-Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-890190a3579so1412818241.2
-        for <git@vger.kernel.org>; Wed, 08 Oct 2025 01:43:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759913035; x=1760517835; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nhBiqgk3cyBzAAaFxOaF1y3pKO3X/yqZFKvMMXWufyc=;
-        b=ZE3/MIVvazXBnTxp+m0vjjNKYbTElbuNsoU6PaM5528QpalojRDy0D5zOFSUqm+WX/
-         AQZxmC7P08xzKPgYQ2xDQ5xxM77qKwMgFhOK9DiqtVt14MAtLGuMZQOyByrk9JcuhrXh
-         kN071b4c/2VxPBnCmIf/AaiR8IAIM+Ys5lEZ8+9+ENvz9lr7DKxR/Z3NCsGbOCRxkWIx
-         Me/pIH0qEp0csHqe07ycfiVFifS48UWKNTSrNATRw540eehsYwNNX0PYNwmemVI881nk
-         +7ulqrQY634lwl/z5IHMR1pPYbB3BPuayRABMeUqV6+SVgPDFwSswkYrz8i/3TRFsour
-         PR0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759913035; x=1760517835;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nhBiqgk3cyBzAAaFxOaF1y3pKO3X/yqZFKvMMXWufyc=;
-        b=XUuYQGiBKnU4RmCvB/tsiQFsEe+Yju8qaZULqdTjbGtG4Cj6VYL5Rs32zYr/kbV7Nx
-         EuxNRmsoVN23x/amHCN1Kl1R0hRt0BIpJ+aYhvVNtlNMzZgDG0v4TWFHSTvrcvPflGZo
-         5nXe070aLtkQbAGNUE8ZsCdmtwmZrjo17HkxHHfMfMmjFdedDS0M2NZx6PaVjW+CM+Kz
-         89UEJnxYdwX1kXiwOeBFY8H7ilF9Yw9eki4RH2OhJ+98lBb3RB2uEV2j9iUewITDwi23
-         cgr5HsbfCoM92SKsw/mFZWQy44hB8Nz3HvcRi5mXD7pKzxf+X4ppCSyG438XEfdR/Okv
-         Witg==
-X-Gm-Message-State: AOJu0Yxtyo3gDPXnerFSYcryECDOwRHAYB4k9Hle3CugWWYzjG6ubShj
-	TgnwqOBGgTo4fdltBLXDzJnQziPguoKFX6S1BTcxSEKsEA4Y61KGPG42wmpfIYvB9sGB++5qeIk
-	bNWgyeOHb4dcLmX/I/wJmQ5RHXtpNEd1xdPw2LFPBsQ==
-X-Gm-Gg: ASbGncvi5ePWAK6nv2/W0gtQUhsvG8bMEm0+DUbWye7Jo6xpH/azVm5v6FPPi9e0nzj
-	3pbFctIuO0sZWoEhv4CVcLhr6OowgXq1ehHCt81j5eoCbE4otJNsMXFY0hWVKNOkE+AmNXKCypz
-	rF42Za2/NoohqHM/6Yb/UFaF3EnJMHmOC5nzKuzE7T/waaN/lpNiGKA4ROhA3cvzD1GQNNk3APx
-	Mg2VWEuPlEYFSrWG1s5dSxguUV4iRl51lOhJB0NW7HxS71W7+k2s99TYdKochvCj53HiQQSoA==
-X-Google-Smtp-Source: AGHT+IFmPA3pXzs2HcNN9hUXmXK8H6feteXKLB0AyQFnq7LFZYB13k00GRShZSfDC2Jaq3c/WkYr7qPV24+3YjL4sd0=
-X-Received: by 2002:a05:6102:dcb:b0:5a3:acb7:55c5 with SMTP id
- ada2fe7eead31-5d5e23ae048mr911304137.26.1759913034977; Wed, 08 Oct 2025
- 01:43:54 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="JCa9u0ZB";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="JWGcoyZn";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="JCa9u0ZB";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="JWGcoyZn"
+Received: from kitsune.suse.cz (unknown [10.100.12.127])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id BCFFB33682;
+	Wed,  8 Oct 2025 09:28:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1759915709; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=tAuEMimsxA1lXdosiUl8rMmAa05uFaOuJYYekyqd/xc=;
+	b=JCa9u0ZBFXqAYcRc4kzPYsYztfThikqe57O/DU0zNwhUN5k3GwMcBARzRbrVZcuONkR5XQ
+	pkOnMCSL8oLJuJv5pHmHL6zoc+37TFwxWz2pQcDo00XuTqOGMukr8CzgyxIuMM6C115dwy
+	Ub4h+G5Y0dkZo1Z1u/JM3EiR5rxzu+8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1759915709;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=tAuEMimsxA1lXdosiUl8rMmAa05uFaOuJYYekyqd/xc=;
+	b=JWGcoyZnHrFOR7Imn80kd0u14QixzOdAdTbiUhUnwMVrXjufod7Kh0t25+WcwPVjBZkw3D
+	Y5PuYXZb7OW6NoAg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1759915709; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=tAuEMimsxA1lXdosiUl8rMmAa05uFaOuJYYekyqd/xc=;
+	b=JCa9u0ZBFXqAYcRc4kzPYsYztfThikqe57O/DU0zNwhUN5k3GwMcBARzRbrVZcuONkR5XQ
+	pkOnMCSL8oLJuJv5pHmHL6zoc+37TFwxWz2pQcDo00XuTqOGMukr8CzgyxIuMM6C115dwy
+	Ub4h+G5Y0dkZo1Z1u/JM3EiR5rxzu+8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1759915709;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=tAuEMimsxA1lXdosiUl8rMmAa05uFaOuJYYekyqd/xc=;
+	b=JWGcoyZnHrFOR7Imn80kd0u14QixzOdAdTbiUhUnwMVrXjufod7Kh0t25+WcwPVjBZkw3D
+	Y5PuYXZb7OW6NoAg==
+Date: Wed, 8 Oct 2025 11:28:28 +0200
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+	Rick Sanders <rick@sfconservancy.org>,
+	Git at SFC <git@sfconservancy.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Patrick Steinhardt <ps@pks.im>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2] SubmittingPatches: add section about AI
+Message-ID: <aOYuvGkQglLOEu-V@kitsune.suse.cz>
+References: <xmqqcyalm0mh.fsf@gitster.g>
+ <20251001140310.527097-1-christian.couder@gmail.com>
+ <aN2fG-nS9fE5-2jD@fruit.crustytoothpaste.net>
+ <CABPp-BFcg9M=XjqGPd+akrUOqJqREBmE9+NvO1Q05r4pUcOmEQ@mail.gmail.com>
+ <aOBMHqLxNd86vgjH@fruit.crustytoothpaste.net>
+ <CAP8UFD34TrBa-GV1wUpvhO9K+qjHpXF4gr=afY2nsXiNL_-S+Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFpMFfDMmvbKMNGbmqA=d_+x48kiefT_SGQ3M9m8ST9871UE2A@mail.gmail.com>
- <CAPSxiM9PPHuMfje5zvM7U_rE5TRoB+=PUGCGO_k-5ZCtvQ8Q8Q@mail.gmail.com> <CAFpMFfAGbqWe8mDN3Yw+nPmLT10RXnf-4T-a9b_WWN=-aQaWaA@mail.gmail.com>
-In-Reply-To: <CAFpMFfAGbqWe8mDN3Yw+nPmLT10RXnf-4T-a9b_WWN=-aQaWaA@mail.gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Wed, 8 Oct 2025 14:13:43 +0530
-X-Gm-Features: AS18NWChWv7TM2NvULEcycH7KPmfAvHYlYvQnXot1U2dXNAonYyuDPsGiFnM2CE
-Message-ID: <CAPSxiM_V1gxh4h-9e5iYs2RzgTUJ5yv6YaKffLQmk05GBRE6qw@mail.gmail.com>
-Subject: Re: [Outreachy] Introduction - Rosemary Ajayi
-To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD34TrBa-GV1wUpvhO9K+qjHpXF4gr=afY2nsXiNL_-S+Q@mail.gmail.com>
+X-Spamd-Result: default: False [-2.80 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	FREEMAIL_TO(0.00)[gmail.com];
+	RCVD_COUNT_ZERO(0.00)[0];
+	ARC_NA(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	TAGGED_RCPT(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[crustytoothpaste.net,gmail.com,vger.kernel.org,pobox.com,ttaylorr.com,sfconservancy.org,gmx.de,pks.im,tuxfamily.org];
+	MIME_TRACE(0.00)[0:+];
+	FROM_EQ_ENVFROM(0.00)[];
+	URIBL_BLOCKED(0.00)[kitsune.suse.cz:helo,kitsune.suse.cz:mid,crustytoothpaste.net:email];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	TO_DN_SOME(0.00)[]
+X-Spam-Flag: NO
+X-Spam-Level: 
+X-Spam-Score: -2.80
 
-On Wed, Oct 8, 2025 at 2:09=E2=80=AFPM Okhuomon Ajayi <okhuomonajayi54@gmai=
-l.com> wrote:
->
-Hi Ajayi
-> Thank you, I will check it out.
+Hello,
 
-One very important thing at Git when replying
-to email is that we do not do top-posting to email, we only do inline repli=
-es.
-It is very important to keep in mind.
+On Wed, Oct 08, 2025 at 10:37:53AM +0200, Christian Couder wrote:
+> On Sat, Oct 4, 2025 at 12:20 AM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> >
+
+> 
+> > I remember the SCO situation with Linux and how it really created a lot
+> > of uncertainty with Linux because SCO created FUD around Linux licensing
+> > and how that led to the DCO being created.  I am aware of the fact that
+> > many open source contributors are very unhappy that their code has been
+> > used to train LLMs without retaining credits and copyright notices or
+> > honouring the license terms[2].
+> 
+> I don't think it's very relevant for your position on this. On the
+> contrary, if LLMs have been trained mostly with open source code, then
+> if they produce copyrighted output, that output is more likely to be
+> compatible with the GPL. It has even been suggested (and discussed in
+> this thread) that some AIs should be trained only with open source
+> material (for example MIT licensed material?) so that we could stop
+> worrying about including it. If that happens, there would be no reason
+> to outright ban AI generated content, right?
+
+even MIT license requires attribution. As most current day LLMs fail to
+provide that their output is legally dubious even when trained on fairly
+permissively licensed code.
+
+Thanks
+
+Michal
