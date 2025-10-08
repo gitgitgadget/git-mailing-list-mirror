@@ -1,56 +1,56 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9262FAC0E
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 15:50:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970E52FAC14
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 15:50:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759938647; cv=none; b=vBllUmjpBDClZ7NqWwsWk8h3ozf4HHD9P6fYf4uTVMyFo2VaoWnH//p6zN8pc2P/krrPUJUHZF0XxSOfM0d0ZQXERppOsbHPRlPLRTTYyDqQa/E1eY0c8foLJCuWRg8KQwT7hzkA6tlzgHp0wojCaOZZ4kikRQ0QkfloigZgk0I=
+	t=1759938650; cv=none; b=LVSkfXx8BLwEXCUQARSHGVyJhlQRgoHkFiFcjOHC2bQ+1mHwX/ZLhMgJmbYLfx5OKkEAx3sEjytgrM6Rv/Aeyb/SYuajHsQDSfqVhodaGakQvLsb57dw46trsDusO/avixX1hMb0SXNdHbyurY/pPWCeB02LAYySqUZdg1AJYc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759938647; c=relaxed/simple;
-	bh=51iGbW17dseEntjFwy++TbHQnmiSd5okWwgqef/PCnM=;
+	s=arc-20240116; t=1759938650; c=relaxed/simple;
+	bh=MFLcw+HEZSRkwBdV0mFI4/0mAUb37kxWNnWhzCnwxM0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=C+irJVntdCFPgg6x01TH+GIbAGN3sDYmcYyhKJWf6kG9o0I/MfiWb9P5g3vkSjooKKA8X86iCYQEhIQS/dJEP94eNnuriwwRNBgw7Z7eq33Bo/77SSfcUCY0nqGHkx2D3Pw6qvSmF0ToKNiOTMYO8zQIvmNxsIhPwZTH1XbUXL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=p+pE4uq4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jNhopzQ3; arc=none smtp.client-ip=103.168.172.154
+	 In-Reply-To:To:Cc; b=FJn5cOZefgez0BE1mwEXpJmeWh/dtholE6iEa+AYDMkxgYFeTgtYPV5UuOzrq/eAhyZjVZi9H8L+xworNx6sDP8V3kGi5IcCORL7InP4v7iSoNG2hUNtxjsIfmlk46EnAO0p8rpm3mMCr0FhaM8v3t3jMnHgc8xGTYNeLkDNpoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=o4EOJOPh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qLL0jO+x; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="p+pE4uq4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jNhopzQ3"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3A560140022C;
-	Wed,  8 Oct 2025 11:50:45 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="o4EOJOPh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qLL0jO+x"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id B360B1D0054F;
+	Wed,  8 Oct 2025 11:50:47 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Wed, 08 Oct 2025 11:50:45 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 08 Oct 2025 11:50:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759938645;
-	 x=1760025045; bh=a8QVS3fuMw2p0jh8Ruxuqza9P59TayqHrr0XrATVDKw=; b=
-	p+pE4uq4dseVzd5jSZ6C9F8cwXpu7jgJ6EodRaIbOXzU25gWb4cwhlTKT/2M9cNs
-	6b85wVgLvtnHmEDVkkw+vKh7vrDWDJiMkLmTsP8R/btUfKD2R9Rr144+OFVNmbZG
-	95FZXhEwktL1T8vDo66+iaE1McGESo7vtmVonDepU06ZzgOVIN1eUnatOiQEwBcL
-	8ysvUbTzNMkR/uvIZEpXZs+KBmdfgR4BtJhFzyITZfgUZEao7KXmzd32D9zpWczw
-	62tSS7ospcBbrvwhuZZF8+mE5+4l/InP7etftPmCKrlQnA+uFjTtq1dz6dy5e8rO
-	BYC1akY4vtdW/JuhhJZFBA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759938647;
+	 x=1760025047; bh=nXDyldTODghOzCvoqpgQnHZdAfBXRZe3+4ktnnpVIt0=; b=
+	o4EOJOPh/ney/4uB3YADoXkOGr+OO/9TM67gjBU0jJaoxnsdVtsd7aRRubhdzQrs
+	q7iE7/8dC9Yk5BZPMAQl8sc7JkOPA+MPl0P4Vl5aSMK4O37Mn/4jsrFFt4a2HSxe
+	6Ca6gcmXO3oTC8eFeDfV+A7BFxWW4qzzxJ9c8Vo/AlAk2UeOdS0+QvirLvte3hfB
+	DsnlKxw11b6EzHcubsrzRAlFhHB3Ju+2OhdfMNNKbDAK1S955tQD37Om1LL8Khzw
+	n0Z2XFxtyRErLbOZXIYMO/1R48XrfWEzjnV5O/BHM9MOrz0MTvA5uPksW29rm9eD
+	Hv0/cdsKH7DT8Fjna2/LsQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759938645; x=
-	1760025045; bh=a8QVS3fuMw2p0jh8Ruxuqza9P59TayqHrr0XrATVDKw=; b=j
-	NhopzQ3ClbI/r2sVpT7pjnV10CIc9PpHSPXAAHtHniJ/eBi2j58wS+c/ZASIRvo5
-	1DAVe2wKTUo2DRKS+qxvsPrUMBg1rwmESZwQgWVrVBcwdJXriYSO+8VUeLFyzbrn
-	CkHEYoG9Zinyyr/ARvhJoVEv+dpY7UNDvA9No+RFwx0NmWGTxhrAZqwB4DJ7tBdi
-	vNWG6o6zs4Va1FyboOuwRlUqXipRO3k9ANEZ4S43PvH2nGDtqoMauvrF1rkBo4/i
-	izyHvZWd6jOndpeCNao82uajqnkl5RLOleejpVxs7mKDDHxT2gx43VqUrpSmMOlO
-	+YyLlEvQFop6pPMH+Nh0Q==
-X-ME-Sender: <xms:VIjmaAYQuNoCXRD8h442Cal4auqlvfDlffdh4mM-_ahBNYbBAafqQg>
-    <xme:VIjmaPF3vW_iF-ub9kMLWHPuXDRy4nhuls3LfQ-uXKun7zqicKA9DrIWVa_ZtcbWc
-    WWPoLjwX0O8XBCTAM1OApEX5s6H-qkfMZC9FORbXk6r8G5YGs9MCA>
-X-ME-Received: <xmr:VIjmaEzyXaZlBq3jgLe77rLnniDr36TbfQwSEhq0od3MzpYc0lotpq5VcT0a_PE48crvMFTi9naqI4Zbx5tS763OpS0UR3bWbdfTdao2>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdefjeduucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759938647; x=
+	1760025047; bh=nXDyldTODghOzCvoqpgQnHZdAfBXRZe3+4ktnnpVIt0=; b=q
+	LL0jO+xmWrTdNVCwaPMgG8n3r2tbbM4IUCBgcMs5OMlrT2PF5GwYoveWrK1Vn+p8
+	ph/HR4kBW0zBbfqBT4Ql+W1IJsGan/DRo0s96IUXBgqA69nOL5879Jmf3v6rwH0R
+	dY5JX4brk5QPnodqstMfv0QhsqUPxPdZCV3tncX+d2NagU/86HlEpdE/xSFrSuwx
+	AOgvRpFMCd1o3+vfN5K792JkB8sSEa/MeUVROJmQIxCI27RW3HG2OV0osDU0v1q0
+	b/1EEL+SpRwygwZlwOTVupR+MDljGN6QPblP+wnknS2Ok3Dkcgmm8Vk+JJDbIDGg
+	w9LGdGV15giMZGWvW49iQ==
+X-ME-Sender: <xms:V4jmaJoqM72MRAohtXPu9zrePhYPARvBdhCL_2k4QS3MJOsaGRKmlQ>
+    <xme:V4jmaPXAeFCSZF0ZjYEgJWFqlIv4UdsCl9v-piukB-SJhSJlelv_lH6a1sCsTEr5m
+    8ZYWWUfxTBcWwJPd2MtaOHl4hDVMZv1jud0mU7xIrEYL7oxkUAY6g>
+X-ME-Received: <xmr:V4jmaAChZWHwHP03IBQeBQFirE5rV-zmY4QyXnD1QOIgBePXUTRNHep-yQotPipTEJbV2zvBvRLy7aLh9RnTnTHmnd_jEK1ZD16tDJ3U>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdefjedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
@@ -58,26 +58,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdefjeduucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtoh
-    hffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrh
-    drtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:VIjmaBnirWdPHOqygLL1lBfzohA15QFfQvqr4d3dNd8uWgIQkzsPMg>
-    <xmx:VIjmaNmJreEguSDM5lsUGBMFpzHP0nmgw4OESLUuDSTM9CgE10rlPA>
-    <xmx:VIjmaDzG-NHVzoF6tEWNwe_UcA5B4x-lGvpNcMygHCl-9eDqgelwzA>
-    <xmx:VIjmaCrGXr4xsDoG7s5uWZGv0wa88e69G6WUX0SHJrEn9zKmn5_4Xg>
-    <xmx:VYjmaPlw8Ad1TuzkCncHJHpk9jIYEWPzG83rzZ4wNmqgkKXar39oZAng>
+    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhh
+    rghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdp
+    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:V4jmaL382Bafsgo2He4X5tfH4UiyMUG5ej2PBYGp4PxY1A7p6a7kkw>
+    <xmx:V4jmaK05J_iH6SJ3oXrfWLqxxxRzXwHiRrB86uITuxwYDuuPu2JJFg>
+    <xmx:V4jmaIAbMae0ASZC903UQtSBdx8MmtVumt5QQb44kS89zcHRvaj7rg>
+    <xmx:V4jmaB4sprauGfcGtH6RWK1tC_ksjs50iHWH3oycfxiDEbtWv84Y1w>
+    <xmx:V4jmaClIxOmGzFeDvO7oDVURkaCG-_4iBiAPoJNvgmuDZ8og4K95LVbm>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Oct 2025 11:50:42 -0400 (EDT)
+ 8 Oct 2025 11:50:46 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cb472a3a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 8 Oct 2025 15:50:42 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 7493dae6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 8 Oct 2025 15:50:45 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 08 Oct 2025 17:50:21 +0200
-Subject: [PATCH v2 06/14] upload-pack: convert to use
- `reference_get_peeled_oid()`
+Date: Wed, 08 Oct 2025 17:50:22 +0200
+Subject: [PATCH v2 07/14] ref-filter: propagate peeled object ID
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251008-b4-pks-ref-filter-skip-parsing-objects-v2-6-76e30d5c9542@pks.im>
+Message-Id: <20251008-b4-pks-ref-filter-skip-parsing-objects-v2-7-76e30d5c9542@pks.im>
 References: <20251008-b4-pks-ref-filter-skip-parsing-objects-v2-0-76e30d5c9542@pks.im>
 In-Reply-To: <20251008-b4-pks-ref-filter-skip-parsing-objects-v2-0-76e30d5c9542@pks.im>
 To: git@vger.kernel.org
@@ -95,100 +94,261 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
  Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.3
 
-The `write_v0_ref()` callback is invoked from two callsites:
+When queueing a reference in the "ref-filter" subsystem we end up
+creating a new ref array item that contains the reference's info. One
+bit of info that we always discard though is the peeled object ID, and
+because of that we are forced to use `peel_iterated_oid()`.
 
-  - Once via `send_ref()` which is a callback passed to
-    `for_each_namespaced_ref_1()` and `refs_head_ref_namespaced()`.
-
-  - Once manually to announce capabilities.
-
-When sending references to the client we also send the peeled value of
-tags. As we don't have a `struct reference` available in the second
-case, we cannot easily peel by calling `reference_get_peeled_oid()`, but
-we instead have to depend on on global state via `peel_iterated_oid()`.
-
-We do have a reference available though in the first case, it's only the
-second case that keeps us from using `reference_get_peeled_oid()`. But
-that second case only announces capabilities anyway, so we're not really
-handling a reference at all here.
-
-Adapt that case to construct a reference manually and pass that to
-`write_v0_ref()`. Start to use `reference_get_peeled_oid()` now that we
-always have a `struct reference` available.
+Refactor the code to propagate the peeled object ID via the ref array,
+if available. This allows us to manually peel tags without having to go
+through the object database.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- upload-pack.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ builtin/ls-remote.c  |  2 +-
+ builtin/tag.c        |  2 +-
+ builtin/verify-tag.c |  2 +-
+ ref-filter.c         | 66 ++++++++++++++++++++++++++++++----------------------
+ ref-filter.h         |  5 +++-
+ 5 files changed, 45 insertions(+), 32 deletions(-)
 
-diff --git a/upload-pack.c b/upload-pack.c
-index 0d563ae74e..2d2b70cbf2 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1249,15 +1249,15 @@ static void format_session_id(struct strbuf *buf, struct upload_pack_data *d) {
- }
- 
- static void write_v0_ref(struct upload_pack_data *data,
--			const char *refname, const char *refname_nons,
--			const struct object_id *oid)
-+			 const struct reference *ref,
-+			 const char *refname_nons)
- {
- 	static const char *capabilities = "multi_ack thin-pack side-band"
- 		" side-band-64k ofs-delta shallow deepen-since deepen-not"
- 		" deepen-relative no-progress include-tag multi_ack_detailed";
- 	struct object_id peeled;
- 
--	if (mark_our_ref(refname_nons, refname, oid, &data->hidden_refs))
-+	if (mark_our_ref(refname_nons, ref->name, ref->oid, &data->hidden_refs))
- 		return;
- 
- 	if (capabilities) {
-@@ -1267,7 +1267,7 @@ static void write_v0_ref(struct upload_pack_data *data,
- 		format_symref_info(&symref_info, &data->symref);
- 		format_session_id(&session_id, data);
- 		packet_fwrite_fmt(stdout, "%s %s%c%s%s%s%s%s%s%s object-format=%s agent=%s\n",
--			     oid_to_hex(oid), refname_nons,
-+			     oid_to_hex(ref->oid), refname_nons,
- 			     0, capabilities,
- 			     (data->allow_uor & ALLOW_TIP_SHA1) ?
- 				     " allow-tip-sha1-in-want" : "",
-@@ -1283,17 +1283,17 @@ static void write_v0_ref(struct upload_pack_data *data,
- 		strbuf_release(&session_id);
- 		data->sent_capabilities = 1;
- 	} else {
--		packet_fwrite_fmt(stdout, "%s %s\n", oid_to_hex(oid), refname_nons);
-+		packet_fwrite_fmt(stdout, "%s %s\n", oid_to_hex(ref->oid), refname_nons);
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index df09000b30..fe77829557 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -156,7 +156,7 @@ int cmd_ls_remote(int argc,
+ 			continue;
+ 		if (!tail_match(&pattern, ref->name))
+ 			continue;
+-		item = ref_array_push(&ref_array, ref->name, &ref->old_oid);
++		item = ref_array_push(&ref_array, ref->name, &ref->old_oid, NULL);
+ 		item->symref = xstrdup_or_null(ref->symref);
  	}
- 	capabilities = NULL;
--	if (!peel_iterated_oid(the_repository, oid, &peeled))
-+	if (!reference_get_peeled_oid(the_repository, ref, &peeled))
- 		packet_fwrite_fmt(stdout, "%s %s^{}\n", oid_to_hex(&peeled), refname_nons);
- 	return;
- }
  
- static int send_ref(const struct reference *ref, void *cb_data)
- {
--	write_v0_ref(cb_data, ref->name, strip_namespace(ref->name), ref->oid);
-+	write_v0_ref(cb_data, ref, strip_namespace(ref->name));
+diff --git a/builtin/tag.c b/builtin/tag.c
+index f0665af3ac..01eba90c5c 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -153,7 +153,7 @@ static int verify_tag(const char *name, const char *ref UNUSED,
+ 		return -1;
+ 
+ 	if (format->format)
+-		pretty_print_ref(name, oid, format);
++		pretty_print_ref(name, oid, NULL, format);
+ 
  	return 0;
  }
- 
-@@ -1442,8 +1442,12 @@ void upload_pack(const int advertise_refs, const int stateless_rpc,
- 					 send_ref, &data);
- 		for_each_namespaced_ref_1(send_ref, &data);
- 		if (!data.sent_capabilities) {
--			const char *refname = "capabilities^{}";
--			write_v0_ref(&data, refname, refname, null_oid(the_hash_algo));
-+			struct reference ref = {
-+				.name = "capabilities^{}",
-+				.oid = null_oid(the_hash_algo),
-+			};
-+
-+			write_v0_ref(&data, &ref, ref.name);
+diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
+index cd6bc11095..558121eaa1 100644
+--- a/builtin/verify-tag.c
++++ b/builtin/verify-tag.c
+@@ -67,7 +67,7 @@ int cmd_verify_tag(int argc,
  		}
- 		/*
- 		 * fflush stdout before calling advertise_shallow_grafts because send_ref
+ 
+ 		if (format.format)
+-			pretty_print_ref(name, &oid, &format);
++			pretty_print_ref(name, &oid, NULL, &format);
+ 	}
+ 	return had_error;
+ }
+diff --git a/ref-filter.c b/ref-filter.c
+index 7740f35e93..b18a032e57 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2578,8 +2578,15 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+ 	 * If it is a tag object, see if we use the peeled value. If we do,
+ 	 * grab the peeled OID.
+ 	 */
+-	if (need_tagged && peel_iterated_oid(the_repository, &obj->oid, &oi_deref.oid))
+-		die("bad tag");
++	if (need_tagged) {
++		if (!is_null_oid(&ref->peeled_oid)) {
++			oidcpy(&oi_deref.oid, &ref->peeled_oid);
++		} else if (!peel_object(the_repository, &obj->oid, &oi_deref.oid)) {
++			/* We managed to peel the object ourselves. */
++		} else {
++			die("bad tag");
++		}
++	}
+ 
+ 	return get_object(ref, 1, &obj, &oi_deref, err);
+ }
+@@ -2807,12 +2814,15 @@ static int match_points_at(struct oid_array *points_at,
+  * Callers can then fill in other struct members at their leisure.
+  */
+ static struct ref_array_item *new_ref_array_item(const char *refname,
+-						 const struct object_id *oid)
++						 const struct object_id *oid,
++						 const struct object_id *peeled_oid)
+ {
+ 	struct ref_array_item *ref;
+ 
+ 	FLEX_ALLOC_STR(ref, refname, refname);
+ 	oidcpy(&ref->objectname, oid);
++	if (peeled_oid)
++		oidcpy(&ref->peeled_oid, peeled_oid);
+ 	ref->rest = NULL;
+ 
+ 	return ref;
+@@ -2826,9 +2836,10 @@ static void ref_array_append(struct ref_array *array, struct ref_array_item *ref
+ 
+ struct ref_array_item *ref_array_push(struct ref_array *array,
+ 				      const char *refname,
+-				      const struct object_id *oid)
++				      const struct object_id *oid,
++				      const struct object_id *peeled_oid)
+ {
+-	struct ref_array_item *ref = new_ref_array_item(refname, oid);
++	struct ref_array_item *ref = new_ref_array_item(refname, oid, peeled_oid);
+ 	ref_array_append(array, ref);
+ 	return ref;
+ }
+@@ -2871,25 +2882,25 @@ static int filter_ref_kind(struct ref_filter *filter, const char *refname)
+ 	return ref_kind_from_refname(refname);
+ }
+ 
+-static struct ref_array_item *apply_ref_filter(const char *refname, const char *referent, const struct object_id *oid,
+-			    int flag, struct ref_filter *filter)
++static struct ref_array_item *apply_ref_filter(const struct reference *ref,
++					       struct ref_filter *filter)
+ {
+-	struct ref_array_item *ref;
++	struct ref_array_item *item;
+ 	struct commit *commit = NULL;
+ 	unsigned int kind;
+ 
+-	if (flag & REF_BAD_NAME) {
+-		warning(_("ignoring ref with broken name %s"), refname);
++	if (ref->flags & REF_BAD_NAME) {
++		warning(_("ignoring ref with broken name %s"), ref->name);
+ 		return NULL;
+ 	}
+ 
+-	if (flag & REF_ISBROKEN) {
+-		warning(_("ignoring broken ref %s"), refname);
++	if (ref->flags & REF_ISBROKEN) {
++		warning(_("ignoring broken ref %s"), ref->name);
+ 		return NULL;
+ 	}
+ 
+ 	/* Obtain the current ref kind from filter_ref_kind() and ignore unwanted refs. */
+-	kind = filter_ref_kind(filter, refname);
++	kind = filter_ref_kind(filter, ref->name);
+ 
+ 	/*
+ 	 * Generally HEAD refs are printed with special description denoting a rebase,
+@@ -2902,13 +2913,13 @@ static struct ref_array_item *apply_ref_filter(const char *refname, const char *
+ 	else if (!(kind & filter->kind))
+ 		return NULL;
+ 
+-	if (!filter_pattern_match(filter, refname))
++	if (!filter_pattern_match(filter, ref->name))
+ 		return NULL;
+ 
+-	if (filter_exclude_match(filter, refname))
++	if (filter_exclude_match(filter, ref->name))
+ 		return NULL;
+ 
+-	if (filter->points_at.nr && !match_points_at(&filter->points_at, oid, refname))
++	if (filter->points_at.nr && !match_points_at(&filter->points_at, ref->oid, ref->name))
+ 		return NULL;
+ 
+ 	/*
+@@ -2918,7 +2929,7 @@ static struct ref_array_item *apply_ref_filter(const char *refname, const char *
+ 	 */
+ 	if (filter->reachable_from || filter->unreachable_from ||
+ 	    filter->with_commit || filter->no_commit || filter->verbose) {
+-		commit = lookup_commit_reference_gently(the_repository, oid, 1);
++		commit = lookup_commit_reference_gently(the_repository, ref->oid, 1);
+ 		if (!commit)
+ 			return NULL;
+ 		/* We perform the filtering for the '--contains' option... */
+@@ -2936,13 +2947,13 @@ static struct ref_array_item *apply_ref_filter(const char *refname, const char *
+ 	 * to do its job and the resulting list may yet to be pruned
+ 	 * by maxcount logic.
+ 	 */
+-	ref = new_ref_array_item(refname, oid);
+-	ref->commit = commit;
+-	ref->flag = flag;
+-	ref->kind = kind;
+-	ref->symref = xstrdup_or_null(referent);
++	item = new_ref_array_item(ref->name, ref->oid, ref->peeled_oid);
++	item->commit = commit;
++	item->flag = ref->flags;
++	item->kind = kind;
++	item->symref = xstrdup_or_null(ref->target);
+ 
+-	return ref;
++	return item;
+ }
+ 
+ struct ref_filter_cbdata {
+@@ -2959,8 +2970,7 @@ static int filter_one(const struct reference *ref, void *cb_data)
+ 	struct ref_filter_cbdata *ref_cbdata = cb_data;
+ 	struct ref_array_item *item;
+ 
+-	item = apply_ref_filter(ref->name, ref->target, ref->oid,
+-				ref->flags, ref_cbdata->filter);
++	item = apply_ref_filter(ref, ref_cbdata->filter);
+ 	if (item)
+ 		ref_array_append(ref_cbdata->array, item);
+ 
+@@ -2997,8 +3007,7 @@ static int filter_and_format_one(const struct reference *ref, void *cb_data)
+ 	struct ref_array_item *item;
+ 	struct strbuf output = STRBUF_INIT, err = STRBUF_INIT;
+ 
+-	item = apply_ref_filter(ref->name, ref->target, ref->oid,
+-				ref->flags, ref_cbdata->filter);
++	item = apply_ref_filter(ref, ref_cbdata->filter);
+ 	if (!item)
+ 		return 0;
+ 
+@@ -3585,13 +3594,14 @@ void print_formatted_ref_array(struct ref_array *array, struct ref_format *forma
+ }
+ 
+ void pretty_print_ref(const char *name, const struct object_id *oid,
++		      const struct object_id *peeled_oid,
+ 		      struct ref_format *format)
+ {
+ 	struct ref_array_item *ref_item;
+ 	struct strbuf output = STRBUF_INIT;
+ 	struct strbuf err = STRBUF_INIT;
+ 
+-	ref_item = new_ref_array_item(name, oid);
++	ref_item = new_ref_array_item(name, oid, peeled_oid);
+ 	ref_item->kind = ref_kind_from_refname(name);
+ 	if (format_ref_array_item(ref_item, format, &output, &err))
+ 		die("%s", err.buf);
+diff --git a/ref-filter.h b/ref-filter.h
+index 81f2c229a9..1126826201 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -41,6 +41,7 @@ enum ref_sorting_order {
+ 
+ struct ref_array_item {
+ 	struct object_id objectname;
++	struct object_id peeled_oid;
+ 	const char *rest;
+ 	int flag;
+ 	unsigned int kind;
+@@ -185,6 +186,7 @@ void print_formatted_ref_array(struct ref_array *array, struct ref_format *forma
+  * name must be a fully qualified refname.
+  */
+ void pretty_print_ref(const char *name, const struct object_id *oid,
++		      const struct object_id *peeled_oid,
+ 		      struct ref_format *format);
+ 
+ /*
+@@ -193,7 +195,8 @@ void pretty_print_ref(const char *name, const struct object_id *oid,
+  */
+ struct ref_array_item *ref_array_push(struct ref_array *array,
+ 				      const char *refname,
+-				      const struct object_id *oid);
++				      const struct object_id *oid,
++				      const struct object_id *peeled_oid);
+ 
+ /*
+  * If the provided format includes ahead-behind atoms, then compute the
 
 -- 
 2.51.0.764.g787ff6f08a.dirty
