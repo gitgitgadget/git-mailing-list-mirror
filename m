@@ -1,150 +1,300 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1C21DE3C7
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 11:48:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3157F2B9A8
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 11:49:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759924097; cv=none; b=jL7j3rqBbajR/9f7wQTW8AZomtLZ8CEsTe9k2xbfPWBq6GSp3v/uSYnxO0iMjar5s2BMjiEJWcDoOhC+ssDtGhL8FkM8DtwR71wN9rC1wSZn73lCxwdT5+wb+wUq+3x7IPgnZ7L0r/SF1Ja1v0/1vYCx+VB2YNCXrXZtsxXe6TY=
+	t=1759924170; cv=none; b=GsEi5LO8Hp+5B2gqf51DhGTsm0aWanG+wlXr6DLWSFHb1xmeX1t3+PUNYUObwah9bp2bV2LL1mKe1A1xSR+HAemXF4QQGXT43qiY1Y0nAJEw7RJdnVbzVKnUpSXJ1Wx1StBIQ4FTBbSD/QCVi6h5Gm8CRCyMZq6Z70LNcElhYlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759924097; c=relaxed/simple;
-	bh=ktbizW0FXyHySvhdfuOmXCcitVYdRSlzBxtZCCjlH60=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jSFrC0BCFAYarorKnsZuAlQVr4UvLPKKK8bL/EScNWRB13yyVaJtjqWycJgd2QysE4Nma2NYmPLE9aFXx50ERYOJQOWPOxqsXwH9bj7Ptw3C41VkbQDI4M275CVBTTDHP/nCYdLppVqksysOhq0UsfKEq/fvfu+agceh8VZMnBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=M8/tjKRe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lMG9jPjl; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1759924170; c=relaxed/simple;
+	bh=ZZUv/ELZNv8xOO0DBAFPDCs4tJYUnygMuYc0gALR/gc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=fQVtR8nROZXGDTXCow/PS/AKrctYjCTu0pHLIPBQ3kMmR3UWUSL6UMkxCj9DM5zOt3WInufMVgrSiDlW1dr38fkv5ypCYKe/6NYvzv0I9l4XfOgFXQM5Ux3TzLIHJGqL/ej0yITIghlJEeOrFwXeG5kxZFlRD5A83pCbvPZ8xeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=nSmOvRLC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lYgy9ym7; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="M8/tjKRe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lMG9jPjl"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 97BD67A00C8;
-	Wed,  8 Oct 2025 07:48:14 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Wed, 08 Oct 2025 07:48:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759924094;
-	 x=1760010494; bh=jR/bczK87KMuThX8FF2HAns6C4gjE5LJGS1KmQCUKI8=; b=
-	M8/tjKRe2ZTAGdFiEos9Pz29UuCMTTpiKjX7T9LEYFDMoQsPcC8RXU2WKcWf1hrO
-	+GUztzWCvd9zVGIoiJNK6qqltDt4l3bGLcNbWnNeMdVQQ74eJEGUoDQTfL/GAFyk
-	IBGFWj4+e3tVb2L8g1AApSN3XQ9xjEPyaBRROF0pOn2byRBsz+DH3nOsWw/t2jOt
-	AoyqXwaY0/d11274W5g5zUWeOW1LvKItQPWqltcADHCRGTTHnSgetCFUKQxVwy6U
-	SDP75mg+me828Eu/UFfxfmqwgZIhdx9wTPR1PHIZ2pnU9jm+p5XmWE7RPc5UR0eE
-	MOHB0KqH+AszD9eidzp13A==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="nSmOvRLC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lYgy9ym7"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 506421D005DF;
+	Wed,  8 Oct 2025 07:49:27 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Wed, 08 Oct 2025 07:49:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm2; t=1759924167; x=1760010567; bh=5e
+	Lh9JyMzcjVog4F1b5hf2zVHEFTw9904W2ThE6nuj8=; b=nSmOvRLCjXcimjjOd6
+	hKiA8r0MIbxDpqmbq2KzDVRpD81XjUomPian7V8Yey0maaVCBBvTa7MTiXj/+iiH
+	GQTMBiyKEtowj4xBrrBcTFr5e+0+22Ongd/6a4jExZTyhT5E60cJju3LAcXCtanV
+	xxEsmJ9BtI47zSATqBjb5eS7AVG7GJYqY99l7aiJAe46PgdBGyBUa3Dzd4Ce5AdA
+	L13vSGVnRsqdFoJGsoZMjVd7qohxC4CBaDQiBvWgKfuKWW/li6eIjfrBpiy1+iWO
+	ncrTUc7GJYrAJdumIXODyCDhSZTWFxDBtm6vKvOXjtJ5w5teJDaNJJPaZZvIIq6T
+	RGfw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759924094; x=
-	1760010494; bh=jR/bczK87KMuThX8FF2HAns6C4gjE5LJGS1KmQCUKI8=; b=l
-	MG9jPjljeBg6D3NgcWQIb9JbhOMy+zs0joiIaSpBQhD4LTHNSppN+q6qDm7pH3YF
-	H3a15ByddUSYPD2SxM78cT181+Q5m2a+N/RSTT9T8nE8Dj5zm7tai0ZqqfivKivu
-	8/Hi0o882Ft/uY7PBapSjcvxXxjC0wS1iVMFhsZvmzbSzZFQyqFravCSlpwW3Px/
-	p+ifrEZ4eOUvfF4bgkUjUxItl1kOf8OIBbbZUHcQUrYyBnH2BbDX02pKNJMPFCLh
-	jdLs7DnJBQVEi5Y4nOcIahVcwkUtc76B+aPRm2QLB9TiFW/wRe5fDfjOiccwPmD3
-	aWUqUzIhjSsKYWN2n6qow==
-X-ME-Sender: <xms:fU_maLJjWIQhfZKQjEYIHsLGl3E4mc8kXiLpU8BAmAPJNgR2KiAGTA>
-    <xme:fU_maONZtZU-fuKl-RC6AKt9FS57eY1Y0NNHLCt8bx8kfZcoxbDkb6old3tJItd_a
-    MsC89oZ2DCKb0TODKdSZyumaeMBlyebTEKFlfn8raprU-lkw17z>
-X-ME-Received: <xmr:fU_maJ71yfcxp3215X6bFn7OqpDm5E0nW3-EMCr6zIYY2oMjNGkmQ2Z6Xs2febA2sZVBVIU7CsYbDUMgKPEVGoGK0BOIAE5fj0cRExBp>
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1759924167; x=1760010567; bh=5eLh9JyMzcjVog4F1b5hf2zVHEFT
+	w9904W2ThE6nuj8=; b=lYgy9ym7GeTcuNP6gODnvCd6Cs/DQgwwFHv1RF2lRXyx
+	v7maBlhMpMwpDaTJSdvVh7qVYdim4q3vo4sDtnyCDiQNWx7ShzHS7joUagLm+qhG
+	Bq9W7LDL6fdw1C1kyZ6c6oBqDT1O3tGTz90ZaKgI68yOYNvuITunYxESfP4ROysX
+	rfRBEM8WE3QcDlwDgIA+p7xrhp4GyRiPMDb5vz/VLhJbI0jbAdzohvzG7Q4FC7t3
+	ZZdgOxC+8DYEFIGFcMeB+1mjeyz+El6i/DGfNxeFRlKv2Hpx8PJcMsGiQ+f61lic
+	Y7ByHDBUfrnbMzoOTIgjpASqEh93Lb8tUWTDutRSpg==
+X-ME-Sender: <xms:xk_maLAaji6yDcIB5kB3mK_cez22PCwOfc7XqYr2itNpObFBnsTiznM>
+    <xme:xk_maHgcT5HGh2FdvQEnvl4ynlxSjVxR6Ev-dYupSTpT4K5UT1IUCGOi8cYn7jVYV
+    M6Y_XdEFe7Ci_jjnqmLhjBi0RlknhnjdvOL4KGXTaofXvzwd1OopQ>
+X-ME-Received: <xmr:xk_maEPlK3Vom3ua2PxA9_Ns1vD20t_KAu-oDaoJ-ad1k5v8RTL5WKkKJhxzIzCGSmK_oFWtqDYkBLRJ3jQmiKoPEdJ8OHo5m_GPfK1WZfXMg59QKBuKVw-20Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdefvddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhohhgrnhhn
-    vghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoheptghhrhhishhtih
-    grnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmh
-    hilhihrdhorhhgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepphgvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:fU_maA6mOtpWdB6kCcqI06yagS-JE_KgeTHZlsAuQC38LAGZg9BPhw>
-    <xmx:fU_maHHWT_02rn8nxEHKsFg25H_B1bulj6A26WitEohM1fA2Eg7SWg>
-    <xmx:fU_maAXSiySHV-zL5aBEkPKVptNqFJyTi35d29wftBDGKwJFbyPpQw>
-    <xmx:fU_maLU6mKOlHJYFhfUfCS71f9QePH6OCIuFp7dGoZotFUerLRn5NQ>
-    <xmx:fk_maNP-z8SPXrclRqQ5KUmIlLDFcN932tz2Spbc3Wvu36L_07rMc8Cx>
-Feedback-ID: i197146af:Fastmail
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffogggtgfesthekgidtre
+    dtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgr
+    ihhlrdgtohhmnecuggftrfgrthhtvghrnhepffffheetgeekfeeijeffveekheefhfetud
+    eugffgheekfeekuefgvdehudekjeeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
+    htmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptg
+    houggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:xk_maI4YSe_e0vPm_VuyBbVRNf6YWOGhFmOg-7mfy7QBaOiMhh8Uug>
+    <xmx:xk_maC2G3T4XvKz4SnI74D7Kklrex7szFB931F3Z4D3SPFBabVJTxA>
+    <xmx:xk_maJZ68h_QOI8grl47a_1B0IqDDTJE-i-OceTujjuR0Ecetvry7g>
+    <xmx:xk_maKCoPWYfnSbtngcdMnINTHTW-KY4o8svwWxz73FQCIi3URYshg>
+    <xmx:x0_maOZA9srE9pRSM_HkKakaEuJrcULG9qiW4TCEhGYdrZ6bZQSIte8y>
+Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Oct 2025 07:48:12 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9eb97230 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 8 Oct 2025 11:48:10 +0000 (UTC)
-Date: Wed, 8 Oct 2025 13:48:07 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 1/5] doc: git-tag: stop focussing on GPG signed tags
-Message-ID: <aOZPd0VqdulySIGi@pks.im>
-References: <20251007122958.1089680-1-christian.couder@gmail.com>
- <20251007122958.1089680-2-christian.couder@gmail.com>
- <aOYPRKoexRtYUDsh@pks.im>
- <CAP8UFD0UJt+L9Ri4VyWJ-1M4Si2q=i5xG_=a315G9m1NFvXnQA@mail.gmail.com>
+ 8 Oct 2025 07:49:25 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH] doc: fix accidental literal blocks
+Date: Wed,  8 Oct 2025 13:48:46 +0200
+Message-ID: <7a955ecb1b5.1759923933.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.51.0.352.g356bc2d8d49
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD0UJt+L9Ri4VyWJ-1M4Si2q=i5xG_=a315G9m1NFvXnQA@mail.gmail.com>
 
-On Wed, Oct 08, 2025 at 11:52:44AM +0200, Christian Couder wrote:
-> On Wed, Oct 8, 2025 at 11:21 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > On Tue, Oct 07, 2025 at 02:29:54PM +0200, Christian Couder wrote:
-> > > diff --git a/Documentation/git-tag.adoc b/Documentation/git-tag.adoc
-> > > index a4b1c0ec05..9117754ffb 100644
-> > > --- a/Documentation/git-tag.adoc
-> > > +++ b/Documentation/git-tag.adoc
-> > > @@ -236,12 +241,25 @@ it in the repository configuration as follows:
-> > >
-> > >  -------------------------------------
-> > >  [user]
-> > > -    signingKey = <gpg-key-id>
-> > > +    signingKey = <key-id>
-> > >  -------------------------------------
-> > >
-> > > +The signing backend is controlled by the `gpg.format` configuration
-> > > +variable, which defaults to `openpgp` for GPG signing. To sign tags
-> > > +using other technologies like X.509 or SSH, set this variable to
-> > > +`x509` or `ssh` respectively.
-> > > +
-> >
-> > It might make sense to use a bulleted list here to list the different
-> > available formats.
-> 
-> What should we say about each format though?
-> 
-> > On the other hand, we could just as well refer to
-> > git-config(1) so that we don't have to repeat any of the information
-> > here, but instead have it at a central place.
-> >
-> > That might not be worth it though. In the end there aren't too many
-> > different commands that write signed objects.
-> 
-> I think this CONFIGURATION section should talk only briefly about the
-> most important config options and refer to the git-config(1) doc for
-> details and less important config options. So I am not sure what you
-> suggest exactly about this.
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Yeah, I'm fine with referring to git-config(1). I mostly want to avoid
-that we have N locations that we need to update every time something
-changes here, as those are bound to become stale.
+Make sure that normal paragraphs in most user-facing docs[1] don’t
+use literal blocks. This can easily happen if you try to maintain
+indentation in order to continue a block; that might work in
+e.g. Markdown variants, but not in AsciiDoc.
 
-Maybe a solution would be to only point out the config keys without
-going into much detail what the respective values are? In that case we
-woulds imply refer to git-config(1) and call it a day.
+The fixes are straightforward, i.e. just deindent the block and maybe
+add line continuations. The only exception is git-sparse-checkout(1)
+where we also replace indentation used for *intended* literal blocks
+with `----`.
 
-Patrick
+† 1: These have not been considered:
+     • `Documentation/howto/`
+     • `Documentation/technical/`
+     • `Documentation/gitprotocol*`
+
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
+
+Notes (series):
+    I have noticed and sent patches for these things in the past because I
+    randomly spotted them, more or less.  This time though I have tried to
+    go through the docs and actively look for them.  These should be the
+    only ones if my hunting approach was sound.
+    
+    About not considering those other docs:
+    
+    In general, the *technical* documentation has worse HTML output than the
+    more user-facing docs, to the point where it looks like they might not
+    have been written with output formats/publishing in mind. So there might
+    not be a point to fixing them.
+    
+    I could have fixed one paragraph in gitprotocol-v2 but then that raises
+    the question of what about the other paragraphs? That in turn made the
+    commit message too long just for that point so I dropped it.
+
+ Documentation/config/core.adoc         |  4 +-
+ Documentation/git-config.adoc          | 18 +++----
+ Documentation/git-rev-parse.adoc       | 14 ++---
+ Documentation/git-shortlog.adoc        |  4 +-
+ Documentation/git-sparse-checkout.adoc | 72 ++++++++++++++++----------
+ 5 files changed, 64 insertions(+), 48 deletions(-)
+
+diff --git a/Documentation/config/core.adoc b/Documentation/config/core.adoc
+index 3fbe83eef16..8866ed27714 100644
+--- a/Documentation/config/core.adoc
++++ b/Documentation/config/core.adoc
+@@ -75,8 +75,8 @@ The built-in file system monitor is currently available only on a
+ limited set of supported platforms.  Currently, this includes Windows
+ and MacOS.
+ +
+-	Otherwise, this variable contains the pathname of the "fsmonitor"
+-	hook command.
++Otherwise, this variable contains the pathname of the "fsmonitor"
++hook command.
+ +
+ This hook command is used to identify all files that may have changed
+ since the requested date/time. This information is used to speed up
+diff --git a/Documentation/git-config.adoc b/Documentation/git-config.adoc
+index 511b2e26bfb..a633ab8ec3a 100644
+--- a/Documentation/git-config.adoc
++++ b/Documentation/git-config.adoc
+@@ -117,15 +117,15 @@ OPTIONS
+ 
+ --comment <message>::
+ 	Append a comment at the end of new or modified lines.
+-
+-	If _<message>_ begins with one or more whitespaces followed
+-	by "#", it is used as-is.  If it begins with "#", a space is
+-	prepended before it is used.  Otherwise, a string " # " (a
+-	space followed by a hash followed by a space) is prepended
+-	to it.  And the resulting string is placed immediately after
+-	the value defined for the variable.  The _<message>_ must
+-	not contain linefeed characters (no multi-line comments are
+-	permitted).
+++
++If _<message>_ begins with one or more whitespaces followed
++by "#", it is used as-is.  If it begins with "#", a space is
++prepended before it is used.  Otherwise, a string " # " (a
++space followed by a hash followed by a space) is prepended
++to it.  And the resulting string is placed immediately after
++the value defined for the variable.  The _<message>_ must
++not contain linefeed characters (no multi-line comments are
++permitted).
+ 
+ --all::
+ 	With `get`, return all values for a multi-valued key.
+diff --git a/Documentation/git-rev-parse.adoc b/Documentation/git-rev-parse.adoc
+index cc32b4b4f0f..18383e52af7 100644
+--- a/Documentation/git-rev-parse.adoc
++++ b/Documentation/git-rev-parse.adoc
+@@ -174,13 +174,13 @@ for another option.
+ 
+ 	Allow oids to be input from any object format that the current
+ 	repository supports.
+-
+-	Specifying "sha1" translates if necessary and returns a sha1 oid.
+-
+-	Specifying "sha256" translates if necessary and returns a sha256 oid.
+-
+-	Specifying "storage" translates if necessary and returns an oid in
+-	encoded in the storage hash algorithm.
+++
++Specifying "sha1" translates if necessary and returns a sha1 oid.
+++
++Specifying "sha256" translates if necessary and returns a sha256 oid.
+++
++Specifying "storage" translates if necessary and returns an oid in
++encoded in the storage hash algorithm.
+ 
+ Options for Objects
+ ~~~~~~~~~~~~~~~~~~~
+diff --git a/Documentation/git-shortlog.adoc b/Documentation/git-shortlog.adoc
+index d8ab38dcc1f..aa92800c69c 100644
+--- a/Documentation/git-shortlog.adoc
++++ b/Documentation/git-shortlog.adoc
+@@ -44,8 +44,8 @@ OPTIONS
+ 	describe each commit.  '<format>' can be any string accepted
+ 	by the `--format` option of 'git log', such as '* [%h] %s'.
+ 	(See the "PRETTY FORMATS" section of linkgit:git-log[1].)
+-
+-	Each pretty-printed commit will be rewrapped before it is shown.
+++
++Each pretty-printed commit will be rewrapped before it is shown.
+ 
+ --date=<format>::
+ 	Show dates formatted according to the given date string. (See
+diff --git a/Documentation/git-sparse-checkout.adoc b/Documentation/git-sparse-checkout.adoc
+index 529a8edd9c1..b5fe5da0416 100644
+--- a/Documentation/git-sparse-checkout.adoc
++++ b/Documentation/git-sparse-checkout.adoc
+@@ -264,34 +264,50 @@ patterns in non-cone mode has a number of shortcomings:
+     inconsistent.
+ 
+   * It has edge cases where the "right" behavior is unclear.  Two examples:
+-
+-    First, two users are in a subdirectory, and the first runs
+-       git sparse-checkout set '/toplevel-dir/*.c'
+-    while the second runs
+-       git sparse-checkout set relative-dir
+-    Should those arguments be transliterated into
+-       current/subdirectory/toplevel-dir/*.c
+-    and
+-       current/subdirectory/relative-dir
+-    before inserting into the sparse-checkout file?  The user who typed
+-    the first command is probably aware that arguments to set/add are
+-    supposed to be patterns in non-cone mode, and probably would not be
+-    happy with such a transliteration.  However, many gitignore-style
+-    patterns are just paths, which might be what the user who typed the
+-    second command was thinking, and they'd be upset if their argument
+-    wasn't transliterated.
+-
+-    Second, what should bash-completion complete on for set/add commands
+-    for non-cone users?  If it suggests paths, is it exacerbating the
+-    problem above?  Also, if it suggests paths, what if the user has a
+-    file or directory that begins with either a '!' or '#' or has a '*',
+-    '\', '?', '[', or ']' in its name?  And if it suggests paths, will
+-    it complete "/pro" to "/proc" (in the root filesystem) rather than to
+-    "/progress.txt" in the current directory?  (Note that users are
+-    likely to want to start paths with a leading '/' in non-cone mode,
+-    for the same reason that .gitignore files often have one.)
+-    Completing on files or directories might give nasty surprises in
+-    all these cases.
+++
++First, two users are in a subdirectory, and the first runs
+++
++----
++git sparse-checkout set '/toplevel-dir/*.c'
++----
+++
++while the second runs
+++
++----
++git sparse-checkout set relative-dir
++----
+++
++Should those arguments be transliterated into
+++
++----
++current/subdirectory/toplevel-dir/*.c
++----
+++
++and
+++
++----
++current/subdirectory/relative-dir
++----
+++
++before inserting into the sparse-checkout file?  The user who typed
++the first command is probably aware that arguments to set/add are
++supposed to be patterns in non-cone mode, and probably would not be
++happy with such a transliteration.  However, many gitignore-style
++patterns are just paths, which might be what the user who typed the
++second command was thinking, and they'd be upset if their argument
++wasn't transliterated.
+++
++Second, what should bash-completion complete on for set/add commands
++for non-cone users?  If it suggests paths, is it exacerbating the
++problem above?  Also, if it suggests paths, what if the user has a
++file or directory that begins with either a '!' or '#' or has a '*',
++'\', '?', '[', or ']' in its name?  And if it suggests paths, will
++it complete "/pro" to "/proc" (in the root filesystem) rather than to
++"/progress.txt" in the current directory?  (Note that users are
++likely to want to start paths with a leading '/' in non-cone mode,
++for the same reason that .gitignore files often have one.)
++Completing on files or directories might give nasty surprises in
++all these cases.
+ 
+   * The excessive flexibility made other extensions essentially
+     impractical.  `--sparse-index` is likely impossible in non-cone
+
+base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
+-- 
+2.51.0.352.g356bc2d8d49
+
