@@ -1,186 +1,166 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD6B2D8363
-	for <git@vger.kernel.org>; Wed,  8 Oct 2025 06:45:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759905955; cv=none; b=jlbOp9RXbQ5qNUqOWnAVGm2tH5tt9HoGZcq3M0YgHTcFxHok6q03u78jYp/o88Y2G6VPMaWwpQPjOtfyOOBLiDZDvNULYfAlNxLyj9dLFJvaLcBdI2sgTbKyUG+6+j41eu+JZJMMwGDEvtbbHNyMbQw23P3LE0B4agimazwIHOo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759905955; c=relaxed/simple;
-	bh=J8OOyWyk5Y2xDNzOaMXcYl4ZaIxCDKiwvWYC1/gGl4g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r6htoMKnKnJj+n2BHBiwr0O6PeI1bPMUNb/2m+9RARJHiQkEND7XanTcT3jk4mmPTLYopx8y2Fgu9BAVGFW22IOUx0QbqoXPuHK1nJtBrtr4F58uWh+YIlvp3SyCl90Kdr9unmhpocYn4ezmy/VDLVs1pI2Iu34sw47uLXFTw8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZPXZyUeb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JyeHmr0F; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A3D29DB6E
+	for <git@vger.kernel.org>; Wed,  8 Oct 2025 07:04:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759907092; cv=pass; b=UU8uuY3SJic92lS1vKPU1F5gAUXXhkWhguDBwoNY4Zo6bw7d6WXQac8tNrcf4rHhAY9nzGaPJCl951H+mtIa2gCHleAh3A3i88MTb3ODh7XzgaNW76bxgQQaZv5GbCOFaXnPqc/1quOmgCJoDRvSEDHo1w8kI+5jo4LVRDqPQfY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759907092; c=relaxed/simple;
+	bh=8LEueoGFP1x1ZdVjEObOiirjfT9AhwBsd/3A/qoLqQA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gkxyXHZtRtgT95yfB5OZKpjLDYZnkksf0e8sdJEY5X8TRj29HNc/dTfPQsyiDs91QnRACM3WnaYoUD8xd7wdMEzyDKvKEmliHTL4nRiOHuuQ9ffqWdHwr9KNdwYWJv7Yjrh4fYVemOiRWn3RzjvVpuHIYIVGrwUWH/URA5a2TXE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=WFawblQL; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZPXZyUeb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JyeHmr0F"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id CAED71D0025D;
-	Wed,  8 Oct 2025 02:45:52 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 08 Oct 2025 02:45:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759905952; x=1759992352; bh=ZgJTBGjPh7
-	IYnAMLP9nAZCuuswsc0gbqBUIFx+gZCC0=; b=ZPXZyUebvQGwqa2vBl26w9dfR+
-	9sk7JDnktiYmHy4/dTob4OJ0qHPEyGKBGrOSMUI8Cy8cxoIDOeaPXXT4nr1vz/fj
-	opQ+vDktN7zBCTdNyoAFR0yGv8Kb6tfrPCLBrSBqOXH9ICCni4jtTjvcpnOO3Wwd
-	TK/HcFvf4N63XtNJnSQC46xLR4iS9XOnh0pmxDWcoAyV2B1k54pqXf2SSsBViioZ
-	+odS/Itj9xKGYAT8BTa02UYSQNuRXhHmUZm1LlUDOIzIEodQSGqD7IkanOBrttdN
-	g3I1mwvwLVJiQ4i1HKLT40mcEPo+FnBYUtqW7VY1JS9fehPkkQHBCEoWyy0w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759905952; x=1759992352; bh=ZgJTBGjPh7IYnAMLP9nAZCuuswsc0gbqBUI
-	Fx+gZCC0=; b=JyeHmr0FtNNSUwb+8Fz6tBzKDXL5w2FENLn3suWbYRQuzQwl+Pk
-	J33Ok21kyDLk108Y1C8lSP3CDZNYRNL+K3juqG3cPbtwnh8PoN2CYCu0drkm9YDX
-	1kvwBadsmIHN5tMUT1F1y1rAhByRMWw1u+Qv+V97gspTue9aqGLW/tBYaYh9Jx9+
-	+IujjK8fyEA4J/gCZvHzUlkwCEecZyJNSaWhPGPhprCGw8/It+qm+25yiL69h7rP
-	sulD+RwfCmYYLUakCyA13GAh7/jzEFBf4O12W824WIgu2opo/uabhL34pub3eU2T
-	VInSGtjq6bvBi9vuhFsb5vI/ToIWtgehZcw==
-X-ME-Sender: <xms:oAjmaKgwKVDQG7uwQFefel09tWBeb_hYpD4aGH-qg7AtLGPw_m5o9A>
-    <xme:oAjmaMjRwTMPmIjKdV9JUVNRYsv3peXy6Fucm7gB2X2U3OAC1ZXAYtHN5uTcXOJvt
-    n79Q08w6wwtYWKsoGnvtbNjiFUehJP7lCcFB9HqjMqGt10eXA3FjA>
-X-ME-Received: <xmr:oAjmaCK_dTX697mUznc-sSwlwhEax-eo7KQbhaU1Rp7sJHcwCLH7o5XGx3Z68bFGZJ1hQg3d8WstOGWcvJGMzatP_cAjBWBY1XDowtMB>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutddviedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehrrghmshgrhiesrh
-    grmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:oAjmaDFHL0ADS1EEwLH7bLBW6CzeLcH7AjkZvqfirN6mG5DUJVdWog>
-    <xmx:oAjmaOSdfEPaEJuCakT_x3lATqg3wuzMfsAPDLZ6VzJJ8i3XFcHpew>
-    <xmx:oAjmaHdTi--WJZS8CA7YKUW-s9t0dX_Woe-YCfa4RxU_C0OEe274nA>
-    <xmx:oAjmaFrOxpcHqMejLPtv-XEKtMjIZEMMw2lNFi8NECRMvEZwFAD2bw>
-    <xmx:oAjmaD-CtWxaNATVJkRuZVieEQ08dOk-34oeChmA8CtFwkaQk-98rZhG>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Oct 2025 02:45:51 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8bf2c457 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 8 Oct 2025 06:45:50 +0000 (UTC)
-Date: Wed, 8 Oct 2025 08:45:46 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/4] doc: add some missing technical documents
-Message-ID: <aOYImjMXcFkdwar5@pks.im>
-References: <https://lore.kernel.org/git/bcb3b3a3-bb13-4808-9363-442b5f9be05f@ramsayjones.plus.com/>
- <20251002221233.541844-1-ramsay@ramsayjones.plus.com>
- <20251002221233.541844-2-ramsay@ramsayjones.plus.com>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="WFawblQL"
+ARC-Seal: i=1; a=rsa-sha256; t=1759907069; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=HHv5YiWkqIDQbSujEl7LSP2oIFfWzwKmEXi3UQoK+b9spiFyc6VGbAscn4Xi2mqzz+W61HRv2jWeIMdeTEE5L0txnLFjcbOggpqFJhyyzNcrBgjhMOsfImgQDwlJEyQ5iio1EYYRimgC47LflpDVq7XQ4AykAjZfCP7dBbcmcE8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1759907069; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=cboupzNUt4Le/A/VxouiOXXCz2Y3rt7ViJ7z0mOSAqw=; 
+	b=FQGikGGJYAVh4nFd2d5ygSK0wGvIeKXr0wpbOAFTcDFb1eABAosxSd5NrpiE6xIL63/GqkGUWVVTCqS4elY7cyv/mcB4AjhLyzZI5vm12Hh55vAa5YzlgRNOFXJ3+03P1DSldokqqgQs7fVZbndMHMWiIxpTvVc/8jCOVlyAT4w=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759907069;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=cboupzNUt4Le/A/VxouiOXXCz2Y3rt7ViJ7z0mOSAqw=;
+	b=WFawblQLCqAua6tI9RnF5Gs5H99Zq0hKgLzwQaycQlE0/OwYblWOFMrR0QfaIvpQ
+	1bMQhgSp/ELEhxBrJpTfVVufdD67PzmDS12MsFyRqjXrVQQUOC1oK3fuey7blljWiso
+	0Xksl9zp2sBJ6W144P55kcWSYKUW3JWGWlEzupEE=
+Received: by mx.zohomail.com with SMTPS id 1759907062562757.7911832257449;
+	Wed, 8 Oct 2025 00:04:22 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Junio C Hamano
+ <gitster@pobox.com>, Josh Steadmon <steadmon@google.com>, =?utf-8?B?w4Z2?=
+ =?utf-8?B?YXIgQXJuZmrDtnLDsA==?=
+ Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 03/10] hook: convert 'post-rewrite' hook in sequencer.c
+ to hook.h
+In-Reply-To: <aN4c9sqHTgn2wot7@pks.im>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20250925125352.1728840-4-adrian.ratiu@collabora.com>
+ <aN4c9sqHTgn2wot7@pks.im>
+Date: Wed, 08 Oct 2025 10:04:18 +0300
+Message-ID: <87y0pl3mdp.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251002221233.541844-2-ramsay@ramsayjones.plus.com>
+Content-Type: text/plain; format=flowed
+X-ZohoMailClient: External
 
-On Thu, Oct 02, 2025 at 11:12:13PM +0100, Ramsay Jones wrote:
-> Commit bcf7edee09 ("meson: generate articles", 2024-12-27) added the
-> generation of the 'howto' and 'technical' documents to the meson build.
-> At this time those documents had a '*.txt' file extension, but they were
-> renamed with an '*.adoc' extension by commit 1f010d6bdf ("doc: use .adoc
-> extension for AsciiDoc files", 2025-01-20), for the most part. For the
-> meson build, commit 87eccc3a81 ("meson: fix building technical and howto
-> docs", 2025-03-02) fixed the meson.build files, which had not been
-> updated when the files were renamed.
+Hi Patrick!
+
+On Thu, 02 Oct 2025, Patrick Steinhardt <ps@pks.im> wrote:
+> On Thu, Sep 25, 2025 at 03:53:46PM +0300, Adrian Ratiu wrote: 
+>> diff --git a/sequencer.c b/sequencer.c index 
+>> 9ae40a91b2..93cd6ab1f2 100644 --- a/sequencer.c +++ 
+>> b/sequencer.c @@ -1298,32 +1298,46 @@ int 
+>> update_head_with_reflog(const struct commit *old_head, 
+>>  	return ret; }  
+>> +static int pipe_from_strbuf(int hook_stdin_fd, void *pp_cb, 
+>> void *pp_task_cb UNUSED) +{ +	struct hook_cb_data 
+>> *hook_cb = pp_cb; +	struct strbuf *to_pipe = 
+>> hook_cb->options->feed_pipe_ctx; +	int ret; + +	if 
+>> (!to_pipe || !to_pipe->len) +		return 1; /* 
+>> nothing to feed */ + +	ret = write_in_full(hook_stdin_fd, 
+>> to_pipe->buf, to_pipe->len); 
 > 
-> However, the 'Documentation/Makefile' has not been updated to include
-> all of the recently added technical documents. In particular, the
-> following are built by meson, but not by the Makefile:
+> One thing I wondered in previous patches was whether we now have 
+> the potential for deadlocks. If we feed data to a child that 
+> exceeds the buffered I/O size, and that child writes data that 
+> is consumed by Git larger than the buffered I/O size, as 
+> well. Wouldn't that mean that we may now not make any progress 
+> at all? 
 > 
->     commit-graph.adoc
->     directory-rename-detection.adoc
->     packfile-uri.adoc
->     remembering-renames.adoc
->     repository-version.adoc
->     rerere.adoc
->     sparse-checkout.adoc
->     sparse-index.adoc
+> I guess that's no different compared to before though, as we 
+> also used `write_in_full()` there.
+
+That is correct, yes, it's the same as before.
+
+Deadlocks can happen, however they are the result of bugs, for 
+example a hook child waits for stdin, the parent doesn't feed 
+anything and decides to wait for the child to finish. :)
+
+I hit quite a few of these during development, however they should 
+all be fixed (deadlocks are usually easily fixed once detected).
+
+Related, but also important, is thoroughtput when feeding the 
+pipes: sending input too granularly (e.g. by calling the callback 
+on each line when we send many lines) can add unnecessary 
+latencies / delays due to the run-command ppoll mechanism.
+
+It's a balance we must find: for most hooks it doesn't matter 
+because the input is small (in this case it's a single write), 
+however hooks like post-receive get large amount of data, so there 
+I had to batch 300-500 lines to get simliar performance as before 
+the callback.
+
+So yes, it's improtant to have no deadlocks and it's also 
+important to have roughly the same throughtput through the pipes.
+ 
+>> +	if (ret < 0) { +		if (errno == EPIPE) { + 
+>> return 1; /* child closed pipe, nothing more to feed */ + 
+>> } 
 > 
-> In order to ensure that both build systems format the same technical
-> documents, add the above documents to the TECH_DOCS variable in the
-> Documentation/Makefile.
+> Style: let's drop the curly braces around single-line 
+> statements. 
 
-I was wondering whether we also want to have a change like the
-following:
+Ack, will do, others pointed it out as well.
+ 
+>> +		return ret; +	} + +	/* Reset the input buffer 
+>> to avoid sending it again */ +	strbuf_reset(to_pipe); 
+> 
+> Is this really necessary? I would've expected that we return a 
+> positive value from this callback, and as a consequence the 
+> run-command subsystem should notice that we're done with writing 
+> stdin and close the file descriptor for us. Afterwards, it 
+> shouldn't invoke this callback ever again, shouldn't it?
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 6fb83d0c6e..666b0b6fbd 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -524,15 +524,20 @@ lint-docs-manpages:
- lint-docs-meson:
- 	@# awk acts up when trying to match single quotes, so we use \047 instead.
- 	@mkdir -p tmp-meson-diff && \
--	awk "/^manpages = {$$/ {flag=1 ; next } /^}$$/ { flag=0 } flag { gsub(/^  \047/, \"\"); gsub(/\047 : [157],\$$/, \"\"); print }" meson.build | \
-+	{ \
-+		awk "/^manpages = {$$/ {flag=1 ; next } /^}$$/ { flag=0 } flag { gsub(/^  \047/, \"\"); gsub(/\047 : [157],\$$/, \"\"); print }" meson.build && \
-+		awk "/^articles = \[$$/ {flag=1 ; next } /^\]$$/ { flag=0 } flag { gsub(/^  \047/, \"\"); gsub(/\047,$$/, \"\"); print }" technical/meson.build; \
-+	} | \
- 		grep -v -e '#' -e '^$$' | \
- 		sort >tmp-meson-diff/meson.adoc && \
--	ls git*.adoc scalar.adoc | \
-+	ls git*.adoc scalar.adoc technical/*.adoc | \
-+		xargs -n1 basename | \
- 		grep -v -e git-bisect-lk2009.adoc \
- 			-e git-pack-redundant.adoc \
- 			-e git-tools.adoc \
- 			-e git-whatchanged.adoc \
--			>tmp-meson-diff/actual.adoc && \
-+			-e api-.*.adoc | \
-+			sort >tmp-meson-diff/actual.adoc && \
- 	if ! cmp tmp-meson-diff/meson.adoc tmp-meson-diff/actual.adoc; then \
- 		echo "Meson man pages differ from actual man pages:"; \
- 		diff -u tmp-meson-diff/meson.adoc tmp-meson-diff/actual.adoc; \
+That is correct: it is not necessary. Phillip already made me 
+aware that I can significantly simplify this function, which I 
+will do in v2 shortly. :)
+ 
+> 
+>> @@ -5140,16 +5154,16 @@ static int pick_commits(struct 
+>> repository *r, 
+>>  		flush_rewritten_pending(); if 
+>>  (!stat(rebase_path_rewritten_list(), &st) && st.st_size > 0) { 
+>> -			struct child_process child = 
+>> CHILD_PROCESS_INIT; +			struct 
+>> child_process notes_cp = CHILD_PROCESS_INIT; 
+>>  			struct run_hooks_opt hook_opt = 
+>>  RUN_HOOKS_OPT_INIT;  
+>> -			child.in = 
+>> open(rebase_path_rewritten_list(), O_RDONLY); - 
+>> child.git_cmd = 1; -			strvec_push(&child.args, 
+>> "notes"); -			strvec_push(&child.args, "copy"); 
+>> -			strvec_push(&child.args, 
+>> "--for-rewrite=rebase"); +			notes_cp.in = 
+>> open(rebase_path_rewritten_list(), O_RDONLY); + 
+>> notes_cp.git_cmd = 1; + 
+>> strvec_push(&notes_cp.args, "notes"); + 
+>> strvec_push(&notes_cp.args, "copy"); + 
+>> strvec_push(&notes_cp.args, "--for-rewrite=rebase"); 
+>>  			/* we don't care if this copying failed */ 
+>> -			run_command(&child); + 
+>> run_command(&notes_cp); 
+>>   hook_opt.path_to_stdin = rebase_path_rewritten_list(); 
+>>  strvec_push(&hook_opt.args, "rebase"); 
+> 
+> This change looks completely unrelated to me? 
 
-This builds on our existing linting rule and would catch any discrepancy
-in man pages that we have in "Documentation/technical/" that isn't
-listed in Meson.
+Yes, Phillip pointed this out as well, I will drop it in v2.
 
-This check isn't quite complete, there's two things missing:
-
-  - We have an equivalent check in "Documentation/meson.build" that we
-    might want to extend to also cover articles.
-
-  - We don't have a check to ensure that our Makefile and Meson are in
-    sync.
-
-But regardless of that, the above check surfaces one more missing
-article:
-
-    $ make lint-docs-meson
-        GEN doc.dep
-    make: *** Deleting file 'doc.dep'
-    tmp-meson-diff/meson.adoc tmp-meson-diff/actual.adoc differ: byte 3877, line 206
-    Meson man pages differ from actual man pages:
-    --- tmp-meson-diff/meson.adoc	2025-10-08 08:42:49.864991169 +0200
-    +++ tmp-meson-diff/actual.adoc	2025-10-08 08:42:50.072988794 +0200
-    @@ -203,6 +203,7 @@
-     git-worktree.adoc
-     git-write-tree.adoc
-     hash-function-transition.adoc
-    +large-object-promisors.adoc
-     long-running-process-protocol.adoc
-     multi-pack-index.adoc
-     packfile-uri.adoc
-    make: *** [Makefile:526: lint-docs-meson] Error 1
-
-Patrick
+Thanks!
