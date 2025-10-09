@@ -1,48 +1,48 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C457283695
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 21:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A63283FCE
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 21:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760046999; cv=none; b=iOoEPSflKphA9QbMJ44oIAEyy4L8pxMCS3L1LEwAvMKaYh9RMfF7bL9y3wZO8GytojvTvc+m2DlsBIupZVeebsBUVtJOqbZUpFgPQe04SwWVXsbZeJZZ8CrNq4Ynv34cTwOBYDF1WOwlIQhz1a++y1vhm4cETCHmRtVDr6ab0e0=
+	t=1760047000; cv=none; b=ZBYkg430/FSpvJbEU97/ObeHSf1fb3sBg3nOpyr1PJwRhIzOUEkZyRvfEpNYiDMz8SOgwOnd53op9W1OJEawFIivnC7eqceY76W3JeMGyiYpThNFmJq9fslz8KwVPsVJrsATBdcJ0kLpby0R27755bhAYZ9olVQM96RQHpzqsJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760046999; c=relaxed/simple;
-	bh=s2oI1s/wTLtsUuMZ3fT2aXUiT4ghHJ0Zb0rkPQwITaE=;
+	s=arc-20240116; t=1760047000; c=relaxed/simple;
+	bh=q5X3ffswJA8ylTddczm2gtyR2qhvtjcr9VM3Ct/6mmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V7/HAOHHh81ajhKFlSVDwNHPPJAQkONxm+546lAI4RvASY53EFdjlazWa+JHipTcO17fm29CPvJ4TA9YdkRA6w3KPXNrG2UfrNAcaetJFHGMILkBjPIObhFnj6IT6tcGC7+/LJKjZwROKdjcbK9ychk8WnVjNfPqAHBXsZG3rg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=0bxiiXEg; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=U1yBO/+oemmaUhCaDpJPNwzpiESe+CUHxHIvR9jj1gBfd9be4A2o1PxvNA0X7yWCXka19QwYcksIXHhubHTFGmitT77KbsUtz7dz70UnkZ8a/gMiJIeTh5G7fKWQJVMFXr3ndJ96ctrj21JbxR3clSffJWld9JwwC5YU4Er/0YM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=IGvwdC4X; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="0bxiiXEg"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="IGvwdC4X"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1760046989;
-	bh=s2oI1s/wTLtsUuMZ3fT2aXUiT4ghHJ0Zb0rkPQwITaE=;
+	bh=q5X3ffswJA8ylTddczm2gtyR2qhvtjcr9VM3Ct/6mmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=0bxiiXEgR/wYuMWopjoXHZFyqC23Jdit8wMbPZPJepM+XtlztX9r8jBhoHRNo1rvO
-	 3iVzmwY+8D14hsj3CvEqfctpgD1QBbExUryX2wXumTgSLXIxd6bHdxctZToLKADt4Z
-	 pLaDjWn2tQylxo14y1JgvkyMlhSPSw0GOqgysKDa10LiefCjA/KikTuG9VeLW5QpCf
-	 HlOvJ5H3jX2dwb643CR0TCOQzpHG/XofJ9Yjq/oFcGEApf0XBjaS76D9X+4MXQJqIT
-	 3BIxLvwUeq1GiQi6yoIHI2VtL0nedSfx58nVTmr2IwDHgO6yXoGlkkd7vZmc9zL72C
-	 VmBSu1XoKyfWdAI+tnUMDD04Mue/OU+Jz8yfv8niIdIT6XqPYZem9yO4UbMFYsD/II
-	 /g0OYTtPkN5dwq5Ips3V3j3AkuOsLfMHh/KPLDg1ojW+/Rrfiy0fPJkvFGssiOP8EG
-	 +qdS0jf1dHii2pZBMcpQ1dW3YNhiadWvUYLROz+bxS0DD8AJ5SH
+	b=IGvwdC4XssaZa3at73DHATVcG2fiwRIsZZXeLDgotWxKozkowlp041Zd74RCkDUEW
+	 vo9gnIcoQ9TsaBQ31WNwqSCOq6tOYtmyyrEPM2mWZjnN6SFhMNbpJEw8LdcCUp+fiQ
+	 8xzxmwjJd/92sKsEBrABkX+KzHlWnQVIVFyHwOYm82IYxdUL6F6IC3eg7ngNirZCS5
+	 cGcq4zb3yLX1MnzkYlKiuQrGC+6yGpcFTRa/O/vqv7ebL04M1az3024E/Si37R/icT
+	 NJtuiFvhAYdYU2A5Qh3TsZfTc1eU6aceHYIzkik5bOnvuOYDvX8Ufuo8MmPwBlSa1V
+	 ohq/KZZLkFkaW+0AaJqydIJZ67pqrK6jJy8Ki92S6ozCqodPteucTyBCdHlu1DVaO5
+	 MWucnDTfl4vwfNpDlUkRHYWsYY0S8mso2UVM/YNhzHU9HdvElhZZlXcYi3H41AQ8ZW
+	 8G4W+D+c84S3bTOkW8wXnkxLvt4fntfhAhwPaqoUQ/W4kn+AY39
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:d7d2:5118:6dfb:100f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 646E620123;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 81D222019E;
 	Thu,  9 Oct 2025 21:56:29 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 1/9] docs: update pack index v3 format
-Date: Thu,  9 Oct 2025 21:56:18 +0000
-Message-ID: <20251009215626.3089287-2-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 5/9] docs: add documentation for loose objects
+Date: Thu,  9 Oct 2025 21:56:22 +0000
+Message-ID: <20251009215626.3089287-6-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
 In-Reply-To: <20251009215626.3089287-1-sandals@crustytoothpaste.net>
 References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
@@ -55,74 +55,98 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Our current pack index v3 format uses 4-byte integers to find the
-trailer of the file.  This effectively means that the file cannot be
-much larger than 2^32.  While this might at first seem to be okay, we
-expect that each object will have at least 64 bytes worth of data, which
-means that no more than about 67 million objects can be stored.
-
-Again, this might seem fine, but unfortunately, we know of many users
-who attempt to create repos with extremely large numbers of commits to
-get a "high score," and we've already seen repositories with at least 55
-million commits.  In the interests of gracefully handling repositories
-even for these well-intentioned but ultimately misguided users, let's
-change these lengths to 8 bytes.
-
-For the checksums at the end of the file, we're producing 32-byte
-SHA-256 checksums because that's what we already do with pack index v2
-and SHA-256.  Truncating SHA-256 doesn't pose any actual security
-problems other than those related to the reduced size, but our pack
-checksum must already be 32 bytes (since SHA-256 packs have 32-byte
-checksums) and it simplifies the code to use the existing hashfile logic
-for these cases for the index checksum as well.
-
-In addition, even though we may not need cryptographic security for the
-index checksum, we'd like to avoid arguments from auditors and such for
-organizations that may have compliance or security requirements.  Using
-the simple, boring choice of the full SHA-256 hash avoids all possible
-discussion related to hash truncation and removes impediments for these
-organizations.
-
-Note that we do not yet have a pack index v3 implementation in Git, so
-it should be fine to change this format.  However, such an
-implementation has been written for future inclusion following this
-format.
+We currently have no documentation for how loose objects are stored.
+Let's add some here so it's easy for people to understand how they
+work.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- .../technical/hash-function-transition.adoc          | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ Documentation/Makefile             |  1 +
+ Documentation/gitformat-loose.adoc | 53 ++++++++++++++++++++++++++++++
+ Documentation/meson.build          |  1 +
+ 3 files changed, 55 insertions(+)
+ create mode 100644 Documentation/gitformat-loose.adoc
 
-diff --git a/Documentation/technical/hash-function-transition.adoc b/Documentation/technical/hash-function-transition.adoc
-index f047fd80ca..274dc993d4 100644
---- a/Documentation/technical/hash-function-transition.adoc
-+++ b/Documentation/technical/hash-function-transition.adoc
-@@ -227,9 +227,9 @@ network byte order):
-     ** 4-byte length in bytes of shortened object names. This is the
-       shortest possible length needed to make names in the shortened
-       object name table unambiguous.
--    ** 4-byte integer, recording where tables relating to this format
-+    ** 8-byte integer, recording where tables relating to this format
-       are stored in this index file, as an offset from the beginning.
--  * 4-byte offset to the trailer from the beginning of this file.
-+  * 8-byte offset to the trailer from the beginning of this file.
-   * Zero or more additional key/value pairs (4-byte key, 4-byte
-     value). Only one key is supported: 'PSRC'. See the "Loose objects
-     and unreachable objects" section for supported values and how this
-@@ -276,10 +276,14 @@ network byte order):
-   up to and not including the table of CRC32 values.
- - Zero or more NUL bytes.
- - The trailer consists of the following:
--  * A copy of the 20-byte SHA-256 checksum at the end of the
-+  * A copy of the full main hash checksum at the end of the
-     corresponding packfile.
- 
--  * 20-byte SHA-256 checksum of all of the above.
-+  * Full main hash checksum of all of the above.
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 6fb83d0c6e..e1d38fbfe6 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -34,6 +34,7 @@ MAN5_TXT += gitformat-bundle.adoc
+ MAN5_TXT += gitformat-chunk.adoc
+ MAN5_TXT += gitformat-commit-graph.adoc
+ MAN5_TXT += gitformat-index.adoc
++MAN5_TXT += gitformat-loose.adoc
+ MAN5_TXT += gitformat-pack.adoc
+ MAN5_TXT += gitformat-signature.adoc
+ MAN5_TXT += githooks.adoc
+diff --git a/Documentation/gitformat-loose.adoc b/Documentation/gitformat-loose.adoc
+new file mode 100644
+index 0000000000..947993663e
+--- /dev/null
++++ b/Documentation/gitformat-loose.adoc
+@@ -0,0 +1,53 @@
++gitformat-loose(5)
++==================
 +
-+The "full main hash" is a full-length hash of the main (not compatibility)
-+algorithm in the repository.  Thus, if the main algorithm is SHA-256, this is
-+a 32-byte SHA-256 hash and for SHA-1, it's a 20-byte SHA-1 hash.
- 
- Loose object index
- ~~~~~~~~~~~~~~~~~~
++NAME
++----
++gitformat-loose - Git loose object format
++
++
++SYNOPSIS
++--------
++[verse]
++$GIT_DIR/objects/[0-9a-f][0-9a-f]/*
++
++DESCRIPTION
++-----------
++
++Loose objects are how Git stores individual objects, where every object is
++written as a separate file.
++
++Over the lifetime of a repository, objects are usually written as loose objects
++initially.  Eventually, these loose objects will be compacted into packfiles
++via repository maintenance to improve disk space usage and speed up the lookup
++of these objects.
++
++== Loose objects
++
++Each loose object contains a prefix, followed immediately by the data of the
++object.  The prefix contains `<type> <size>\0`.  `<type>` is one of `blob`,
++`tree`, `commit`, or `tag` and `size` is the size of the data (without the
++prefix) as a decimal integer expressed in ASCII.
++
++The entire contents, prefix and data concatenated, is then compressed with zlib
++and the compressed data is stored in the file.  The object ID of the object is
++the SHA-1 or SHA-256 (as appropriate) hash of the uncompressed data.
++
++The file for the loose object is stored under the `objects` directory, with the
++first two hex characters of the object ID being the directory and the remaining
++characters being the file name.  This is done to shard the data and avoid too
++many files being in one directory, since some file systems perform poorly with
++many items in a directory.
++
++As an example, the empty tree contains the data (when uncompressed) `tree 0\0`
++and, in a SHA-256 repository, would have the object ID
++`6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321` and would be
++stored under
++`$GIT_DIR/objects/6e/f19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321`.
++
++Similarly, a blob containing the contents `abc` would have the uncompressed
++data of `blob 3\0abc`.
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/meson.build b/Documentation/meson.build
+index 41f43e0336..64f70ac724 100644
+--- a/Documentation/meson.build
++++ b/Documentation/meson.build
+@@ -172,6 +172,7 @@ manpages = {
+   'gitformat-chunk.adoc' : 5,
+   'gitformat-commit-graph.adoc' : 5,
+   'gitformat-index.adoc' : 5,
++  'gitformat-loose.adoc' : 5,
+   'gitformat-pack.adoc' : 5,
+   'gitformat-signature.adoc' : 5,
+   'githooks.adoc' : 5,
