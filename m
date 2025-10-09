@@ -1,161 +1,164 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D977E0E8
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 02:37:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D839173
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 05:23:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759977427; cv=none; b=BhCRhu/KxFHmMTtLK4CcvOHwTppwwUQ2DKkh8iIkiYqIMx0umYQXMtEOBNouFChrD+kY5K9k+XzGNdNY08D4vgb8c0tMGuLXTxbJ+d6S1mKQ5PWeCFk7aovWe/wxazbUdrmYWKMvvZqX6T1qGSdyO7HSdHmAgohoPKWrOhDKmuA=
+	t=1759987388; cv=none; b=Ft1dPbygSvAXmRRLnwoe5M/LDQ/BmZ8b0SA8SDTwMHbAAyap3LZGq6viIYgMz+IzWIO385tjRUxplq59yfuvyD/S2NPPojs34BLkxOpRa11cMOMgaLqDDM1VYxYOVNWdEdknN0CGg+whTxw1FLN2lpijpDVSCK8BXKDbaUkdvy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759977427; c=relaxed/simple;
-	bh=mhCZWZegOQPr/fMbdObMBd/yx5rsCVZcRauL7v/xcNo=;
+	s=arc-20240116; t=1759987388; c=relaxed/simple;
+	bh=mbCkcdUnzzZKmfHMTjIX/b2NunoY98yALBEOY63FiBs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BupKx4iS+7oTgTcnEiuulQPjiFjHNOMmdr8PIDRAwT7a7P8fjTa0cV4CP5KqyoCwsnWU8OIQlvIav25dV3pDHl9PRnRVHwXwXQDEYK9G+8jINk+AeJu3OsZxU3NrM5RgYA5ilLsb0GQNyEhKfax19lSgmVvqoJUrSy6A4DrbSYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SLG0LVht; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LzweW2e1; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=uAyV9n+yVSuQ7tiY/g16jXojMZS64sR349sNnvdlt7CJI63Z7WJXAK4LPji285sknAoRKnkCek4c09bofm6fLYSm7vNa6TQYsbYTB7eb041gSFHxHU0Or5Gmo338OdIjF5sA0ZHCiRRwDw+G6dADpudpgbdsFL9xMbyzxSgIClE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KJbGYRVk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZUXnxGab; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SLG0LVht";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LzweW2e1"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 603B9EC0176;
-	Wed,  8 Oct 2025 22:37:04 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KJbGYRVk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZUXnxGab"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A81AB1400077;
+	Thu,  9 Oct 2025 01:23:04 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Wed, 08 Oct 2025 22:37:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1759977424;
-	 x=1760063824; bh=4ioI67u4fXH4DP//tMj+7obyL8tLSWvYmhGDJgWKPBs=; b=
-	SLG0LVhtliJvQXUW0ZhJibErumnznF/bEtC9S8TifL2JIz68A+mOzbrN9l08EZ7X
-	W3GsTAK+em2TP8+8HJZLso8vWwqpvPwnHW9oj+kYez9AOF7UA8737ms9yUba1vGW
-	uJHrbcIUbKOOfUjdCIaGhtTNVkcgc6SWUutA4ExJjZjEKSTCTBGDL1/jAgF43GOs
-	xfFvazKonuzIFYg+PSZhK7ARfHb1GoFlJYXFgHUT+hnylg/fG6MOeuS+kBx+6oLL
-	V/w44Dwnqu1xcx1SxveKvGBEa77Mmbg6C7E766pSbXaek+T8KNssx2rbgz0uySF6
-	PmNYsbVZrcfYaVgxt4kPrw==
+  by phl-compute-01.internal (MEProxy); Thu, 09 Oct 2025 01:23:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1759987384; x=1760073784; bh=74EJ0fTnNv
+	74bkrPCeGA9gN0uCD+XSv90Q+c+V9YYQw=; b=KJbGYRVkkJ8wwv4F3MegkZDhVP
+	N/UDyhTfuwoZ9g8d75a06eygYrOLoQ0esjC17XQSjV/uh8QPP854mITv39qbLywh
+	CKxuvoTQWx//rN3rb6L/g2DEZmwp1HOeFIo7dqF78gqCYrDsjMa6yP0DYI9GEsgN
+	Z+v+mBZYo5P7sMhlrwJ1ObkGbMtGV0uL/xZVbafwRUqlh4r3ZVK1DCkqaOTlFR1q
+	yDkQDHkl/RK4vrTlRLUU6oTIOH8GQKFPIoy4A/Fp5c4m3Kokk4LFllBVlaXO0uPY
+	r33JLLHlMCBg4/hYxzB7BqO6Q/sUvdOFGt7w9Qmp0mT1CipjGrwRTdqZBmWg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759977424; x=
-	1760063824; bh=4ioI67u4fXH4DP//tMj+7obyL8tLSWvYmhGDJgWKPBs=; b=L
-	zweW2e1W4LQg/+8CxARKDsmAVDJ6YpqARQO/qU9YsZxvS1Lm2SNojNGVA67t93OJ
-	K01H7D80qGG4lLF+MQxM09Op0WbXqzyCd/ea4qVUaTXMyKw36Sx04s9lYKxhrNQW
-	rrQNaIykrJyx6IrJo06TgO52Eoh1KwYBnGs8+3gnXQjc6Vqp2IV2jxeCAqDjcejc
-	vEm39+OXBpGIuG/n6WWtMR3MsYuzLApLzpYebw00ZiMoSQsTfG9BZxdVJUGPDCYa
-	di52Rwn2kTn5nPt8SsBPuni27WdoBat6/e2Ty/KP23LBIc/vmAYFbZnZvF9tlcWX
-	9MsWlei/4G1fa/i2alrhw==
-X-ME-Sender: <xms:zx_naIk2odCP_GxTjUlr5OGtzoHVeJDQ1T2ZSCmJZbx9TMm5uh8gug>
-    <xme:zx_naEY1uzekxE6OY0k7KRNRCQvOgpYyYgVIEVRD2OTrw7gAxbZ_Iwmuuha2iGScI
-    XC9NfMmw4G8V-WmA2yRgQdHyWDHwwx8lQuq19ZWa4QVYagT_GHalAQ>
-X-ME-Received: <xmr:zx_naLHLwDBvuiWXOrcnvBhtM_gDsJYWqPtzk3rKXStyNPmVpDpJCa-PaIk1-eWPoXC5vtNyHjGqpvb3EuRzWXVpISfVsbM_sW_ktdscBOgbi99hdb9W>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdehtddtucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1759987384; x=1760073784; bh=74EJ0fTnNv74bkrPCeGA9gN0uCD+XSv90Q+
+	c+V9YYQw=; b=ZUXnxGabux1ZPHfSpW8dRHxz9jfaJrVju7hZw80/8mbCy8vP+v9
+	DNTJ+tqneBJV+1hBM3tKsOJlDjwtTPzbJ+XOswmIJlk3LjXMJFpTAieICZnH1eAe
+	xuwziC6MiWkfW0BtvVTy0uHdmChqooGRosrqdYmJscOR+XCgA4Td97ADuHL/Pgpe
+	iurV1K0iUQuNBp6slD/c4YF1qJgEAm09xJ9JakpAVEIxkKFb+fRKdOMsX2sFOtL1
+	yUsqztzGX7R2pM4y3YIVLS6Mx2KIMrFmy9sphBCXxYr9cGCdD1II2Nonw7798ezU
+	8yaHPLdB09d+fG0o3kvReQYyT2qUZ8XtbFQ==
+X-ME-Sender: <xms:uEbnaNMU2roBReam0pHx6VORNZ5T2CaYxJIyasmabWXpUryQ3lYuPQ>
+    <xme:uEbnaCN04qiqu50I8pyJ6BNz2hu6ZcdL--QHikxgs9j7S2idkTDqKJCDxOiRlH-vP
+    6kbSCdvhZSD58SwoUrFMdTht8Q-iI607gQHa9CJCbeCJ1UHieNdFg>
+X-ME-Received: <xmr:uEbnaOjASrLRoJgpb4qdP2lhvvKJl9emQXurDqfXuH4tLb9QfP6NUnTwiOcvFMqupxPl8xNMPBYDW6vs57eKM32agBo8Uy0BxvcUk7CWuXw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdehfeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeortddttddunecuhfhrohhmpefvohguugcu
-    kghulhhlihhnghgvrhcuoehtmhiisehpohgsohigrdgtohhmqeenucggtffrrghtthgvrh
-    hnpeeigfeggeelvdeiteeggeeihfffjeekleelfeegiefgffefveefgeejkeeffeefgfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehtmhiise
-    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtoheptgholhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpth
-    htoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthho
-    pehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrd
-    hnvghtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgv
-    rdhnvghtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgi
-    druggv
-X-ME-Proxy: <xmx:zx_naLbBuG7Xdl_FkFEZcvVaF424Pvb3KCcRLWV2AxKmr4e0PaptIQ>
-    <xmx:zx_naHzWmeaylefZUSn1kZdy6xIteUuTSDEM8ASD1GvJq7cSGvRWlg>
-    <xmx:zx_naFQyhoE7lW-ylrFDJOxYhQ0LYQHNxDbOIOdI5OYCUomxiD4oPw>
-    <xmx:zx_naMJOi4jlqBpWEv-n2mcSO_aDwdD57Z_2iiMm9BHud8EXXgUF8A>
-    <xmx:0B_naFzj7vEQBOCJLstySQAWqzUrKXboqPv-o1DV4S6Hx3GR2Qx8E4hC>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Oct 2025 22:37:03 -0400 (EDT)
-Date: Wed, 8 Oct 2025 22:37:02 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: Collin Funk <collin.funk1@gmail.com>
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/5] lib-gpg: allow tests with the GPGSM prereq first
-Message-ID: <aOcfzgxOwGemReNm@teonanacatl.net>
-References: <20251007122958.1089680-1-christian.couder@gmail.com>
- <20251007122958.1089680-3-christian.couder@gmail.com>
- <aOYPTKG9t4ZB_Mbi@pks.im>
- <CAP8UFD2VRfZuaycCdWt4kpVpRv_UhNHdzqJ2vL8uyKJusUttnA@mail.gmail.com>
- <871pncdfrw.fsf@gmail.com>
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhr
+    tghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehkrg
+    hrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhf
+    vghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:uEbnaPsAtKdDX8ooIx6JyvwCbzCMqDjpAA7DuceBO0Ln0kg4wPlGGg>
+    <xmx:uEbnaETBnvmU2F-jDUVzLphiNXjDWMEdiQqyCKa86sJTiuAi1Z_L6Q>
+    <xmx:uEbnaL3BOF8qqzhrM1yaRNZNhDx5jBXOe0iJBlaRwO33Cdqe9PywGg>
+    <xmx:uEbnaBunUH3tFLDXjP7VSYds3akScf63zUgy8lEw01_1Q1DXxHyiHw>
+    <xmx:uEbnaB0ccf85p1rw8Rw_IBjXz-kj2u2_QR76uFG4rIMonCV20HM_2ih_>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 9 Oct 2025 01:23:03 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 99f1610f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 9 Oct 2025 05:23:01 +0000 (UTC)
+Date: Thu, 9 Oct 2025 07:22:58 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v2 12/14] refs: don't store peeled object IDs for invalid
+ tags
+Message-ID: <aOdGsqgyy5K6Lynu@pks.im>
+References: <20251008-b4-pks-ref-filter-skip-parsing-objects-v2-0-76e30d5c9542@pks.im>
+ <20251008-b4-pks-ref-filter-skip-parsing-objects-v2-12-76e30d5c9542@pks.im>
+ <aOaRDhwZ0YkPdjkd@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <871pncdfrw.fsf@gmail.com>
+In-Reply-To: <aOaRDhwZ0YkPdjkd@ArchLinux>
 
-Collin Funk wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
+On Thu, Oct 09, 2025 at 12:27:58AM +0800, shejialuo wrote:
+> On Wed, Oct 08, 2025 at 05:50:27PM +0200, Patrick Steinhardt wrote:
+> > Both the "files" and "reftable" backend store peeled object IDs for
+> > references that point to tags:
+> > 
+> >   - The "files" backend stores the value when packing refs, where each
+> >     peeled object ID is prefixed with "^".
+> > 
+> >   - The "reftable" backend stores the value whenever writing a new
+> >     reference that points to a tag via a special ref record type.
+> > 
+> > Both of these backends use `peel_object()` to find the peeled object ID.
+> > But as explained in the preceding commit, that function does not detect
+> > the case where the tag's tagged object and its claimed type mismatch.
+> > 
+> > The consequence of storing these bogus peeled object IDs is that we're
+> > less likely to detect such corruption in other parts of Git.
+> > git-for-each-ref(1) for example does not notice anymore that the tag is
+> > broken when using "--format=%(*objectname)" to dereference tags.
+> > 
+> > One could claim that this is good, because it still allows us to mostly
+> > use the tag as intended. But the biggest problem here is that we now
+> > have different behaviour for such a broken tag depending on whether or
+> > not we have its peeled value in the refdb.
+> > 
+> > Fix the issue by verifying the object type when peeling the object. If
+> > that verification fails we simply skip storing the peeled value in
+> > either of the reference formats.
+> > 
 > 
->>> Okay. I wonder why we even have to create the directory manually. We
->>> don't do it in the GPGSM prereq either, as gpgsm seems to handle this
->>> for us.
->>
->> Yeah, the GPGSSH prereq does `mkdir -p "$GNUPGHOME"`, but not the GPGSM prereq.
->>
->>> Doesn't `gpg --homedir ... --import` create the home directory
->>> in a similar way?
->>
->> I am not sure. It might depend on the gpg version. Or maybe gpgsm
->>  does it but not gpg. I will check.
-> 
-> If $GNUPGHOME or --homedir is the default (usually ~/.gnupg) gets
-> created by 'gpg' and 'gpgsm':
-> 
->     $ ls ~/.gnupg
->     ls: cannot access '/root/.gnupg': No such file or directory
->     $ gpgsm
->     gpgsm: directory '/root/.gnupg' created
->     gpgsm: invalid command (there is no implicit command)
->     $ rm -rf ~/.gnupg && gpg
->     gpg: directory '/root/.gnupg' created
->     [...]
-> 
-> If it is not the default then it will not be created:
-> 
->     $ GNUPGHOME=$HOME/test gpgsm
->     gpgsm: keyblock resource '/root/test/pubring.kbx': No such file or directory
->     $ GNUPGHOME=$HOME/test gpg
->     gpg: keyblock resource '/root/test/pubring.kbx': No such file or directory
-> 
-> Collin
-> 
+> I have a design question here: should we just report an error to the
+> user or just die instead of skipping storing the peeled value? If the
+> annotated tag is corrupted in the first place, it means the refdb is
+> also corrupted. And "git-fsck(1)" would definitely report an error to
+> the user. But here we just ignore the problem and give an illusion that
+> everything is fine.
 
-I sent a series long ago to fix this issue¹, but it wasn't
-picked up.
+The question is whether the user can do anything about it. The tag may
+exist due to whatever reason, and it may not be prunable from the repo's
+references.
 
-Fixing the issue exposes broken tests which use the gpg2
-prereq.  That breakage turns up in our CI and other build
-environments, like Fedora's, but I was never able to
-reliably trigger it locally and track down what was broken
-about those test.
+Tools like git-fsck(1) should definitely complain about this, and they
+in fact already do:
 
-I believe I asked about it again a few months later and it
-did not gain any attention.
+    $ git fsck
+    Checking ref database: 100% (1/1), done.
+    error: object d10476e1da82e779f64cfa12bd655b579c3fddbe is a commit, not a blob
+    error: bad tag pointer to d10476e1da82e779f64cfa12bd655b579c3fddbe in ef5b01be3c1ad24fae2181040ced5776456a197a
+    error: ef5b01be3c1ad24fae2181040ced5776456a197a: object could not be parsed: .git/objects/ef/5b01be3c1ad24fae2181040ced5776456a197a
+    Checking object directories: 100% (256/256), done.
+    error: object d10476e1da82e779f64cfa12bd655b579c3fddbe is a commit, not a blob
+    error: bad tag pointer to d10476e1da82e779f64cfa12bd655b579c3fddbe in ef5b01be3c1ad24fae2181040ced5776456a197a
+    error: refs/tags/tag-2: invalid sha1 pointer ef5b01be3c1ad24fae2181040ced5776456a197a
 
-I simply apply the patches locally and then disable those
-tests -- tests which don't run reliably are not worth
-running IMO. :)
+But for operations like optimizing references it is not as clean-cut
+from my perspective. We definitely don't want to error out, as it would
+mean that the user cannot have their reference optimized as long as such
+a broken reference exist. And other operations should make sure that
+they don't return invalid data in face of such a corrupted repository,
+too.
 
-¹ <20240703153738.916469-1-tmz@pobox.com>
+We may want to add a warning in such cases though? I'd like to have some
+more opinions on this.
 
--- 
-Todd
+Patrick
