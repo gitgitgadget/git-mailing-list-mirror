@@ -1,47 +1,95 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B5CAD4B
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 05:55:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C9F23909F
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 05:57:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759989357; cv=none; b=SSQ9Y3/chWGLaEXaA2K0NjJfjGe8LRhnEIkKYSDQdtR+WnPQMexgLtaRp1c9lW7dLfLxW5VarmJjz3cFjx8uBlDaK/QkGRmzUE6auV/OjRzLgtAfbWLh2gQythgLK3jYAfYjvZ23Mfx4hQQ4U0nKZ26KuoS3q0pJHg9E+aqdJKc=
+	t=1759989431; cv=none; b=hqReOfLT8Hj7487eubkZmvKzjjK68vjtqiP07yJ1dIl5ipKfQG6iIYMFelBuEpYCXGVObOm7svulpCekSbN2N5wTjY7kXQ48sAJB1gnHVRVU/IcZi91H/JV2Jq9DXVSOSkx+2h/HU4d/80wlKUb8B+zv5uXPCnXUERa07tP+h80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759989357; c=relaxed/simple;
-	bh=HR9tdft0Ox/NHzpLn6CujefXLg6jWplDqg28KwXez2Q=;
+	s=arc-20240116; t=1759989431; c=relaxed/simple;
+	bh=oDJMRKoxcJgNMiCUmJXNvsc0m28/g/eTfMCeMytAqd8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jLZmNVRfwlkA6K63k1S5eIkyiV3QZNi9GMfMXtPCcLvUvqhoR1MgeHSV6nX3fY0v8x+i9Y4rGntEWhteSGwQzr1kyA/nPOlTw6YK2TE5hzWmvIqgIR7YJxRZ1sOcw/yR4PXOhbMNYnEYU10LMsGYO91yiH/mr+K/iqBkf4Y2Hsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=H0evl0MB; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=nbRe811VOP03HhXuDtbabkk0F+t1s5qztN2LXE3rUNljp/gXJFsuic1JzqwugKjKTLVSXhM2q8zF7YHcQBq0ki6Ea+grSqLvHDoZtmfT9cD0dqDGBuqnN+pscorV1w0X+0eqiMzQI0kgFUjIfGSLpr8Kbr5NM58fdNrZr+weN+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GSEG4ndw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wq+0rEzU; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="H0evl0MB"
-Received: (qmail 174588 invoked by uid 109); 9 Oct 2025 05:55:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=HR9tdft0Ox/NHzpLn6CujefXLg6jWplDqg28KwXez2Q=; b=H0evl0MBCb30rU4116IM0vs0gn9Pe/sQ6jN7+sJ8Ex9qrAsYSE934DE4f/3Ojg+pM0ZSUvyxryJi1QKYd1qb7BFNjZx1vZX0zqPLA7jlSoRUOkDG1QMfHnL6np/I7qKUt9+eqSVhI9BG6gNi+hTnYsO5WfbqbZKqmgUTdzJp96Fw9808mre/Nx0kcZQrjfijcR6BBQcR06kCCuiJgu/XgXZq/T88IhNo5hdkySpm9rKyM0iavJsVZygImbSWSkUKvXorfmuhggNlFG3unl+NNj7zPMNW1H2gLQ0uxu7TS8QdApFFmsX12ame+DE1t0F4tluMBfl1O53SeEi2gIwt2A==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Oct 2025 05:55:55 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 265741 invoked by uid 111); 9 Oct 2025 05:55:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Oct 2025 01:55:54 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 9 Oct 2025 01:55:54 -0400
-From: Jeff King <peff@peff.net>
-To: Collin Funk <collin.funk1@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	shejialuo <shejialuo@gmail.com>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 2/4] string-list: replace negative index encoding with
- "exact_match" parameter
-Message-ID: <20251009055554.GD1614343@coredump.intra.peff.net>
-References: <aMp8yNFiXDyk2hP4@ArchLinux>
- <aMp9OtXLfRw7dEwA@ArchLinux>
- <CAOLa=ZShms1D-cq=x04dtT2ULTVE3ZDo8DODFnJRP2wcJz0EgQ@mail.gmail.com>
- <xmqq348dovi3.fsf@gitster.g>
- <20250924053601.GC1173044@coredump.intra.peff.net>
- <xmqqwm5om1gy.fsf@gitster.g>
- <87jz16dux5.fsf@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GSEG4ndw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wq+0rEzU"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1C25FEC00A9;
+	Thu,  9 Oct 2025 01:57:09 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Thu, 09 Oct 2025 01:57:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1759989429;
+	 x=1760075829; bh=CH2yFhsbABueNmu5/ftBzsZd3cymL24Yjw+sc6aQgl8=; b=
+	GSEG4ndwriQ2tEfbn+EKr0o0LI57Bp7Xhs7459ZRPFNn4kB8Dx/cnTYz9KHUMwvM
+	89Gyn6NvgYNFQlxbLwrwWf/faD8RcAEzbtbrY0bXFCEgsd0vqYH7BZp/9NjpCDb2
+	rin2pCkp5YKhdO/5/alOHD/hx4XhtMu8jByQH/KDnuADjrZYgMRrPV6o2Cm/mt3e
+	RVIVNQonYfWnWFKhASMVesionXKVQEUI9M7Wi91fPqQ7SBzus9wx6DKVwyFXjgTt
+	zwr+b45qVcCg2C2FoTcBzA9AqeIJpjYFOau0sVEka4xcHsSHtR3uWBmdwXnpJ/yW
+	ydUXSX5JGYUi8BFgUN8aIg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759989429; x=
+	1760075829; bh=CH2yFhsbABueNmu5/ftBzsZd3cymL24Yjw+sc6aQgl8=; b=W
+	q+0rEzUHg+pcT1ZOjchR3ZJFBDPOiltCzmI5WPCpsou18QhvlKI46WbmED3DjsE4
+	H4bByiIThLw84BRXJybGcWUwmzyA98MMqx6mAgMFhK11fwN/0UOIx6DsX2Gj8eUo
+	U2w/hMqCaDOLKBluYNavrlYi6J7F02Izzd5vsQVU/PHP1vsfbE77PViZ7RJgLbHs
+	TWdYleHxQ27uWFdd71A/4j84iRdmN0JFbHlqNVjLFtbuYIuGVHT54a2SvpPBMLvK
+	sJaQjLhNLQz2Uv+Odc/dVk8GbNU9iI8JP6nEhYUXA62Nwv/8prWT0S4DPn2rbuk0
+	B24cJAwfHRYlIPELRJ02w==
+X-ME-Sender: <xms:tE7naJyaeinxmHYECu9nPgC0Jd5JUGioLDdeyppbB646sJND5_atUQ>
+    <xme:tE7naM89XZcbQeo9v9n4J7gEh3MDF6wX4gfWRbpayczjvfSmlofDASXsPhLKAVwXA
+    goBUvu-bKAOyblveHF3FrqczH5krxjk1wkRJRZgYQ3dUFEnClMI8Q>
+X-ME-Received: <xmr:tE7naNKl0v06zU5PMI0zC6WydzEasDm4XuTSXD-LzdUVsf9J2NEBMztcVO9WV3Xc8UOHqWZY-HKmqPqgTaIz5S2hvyMPTRNgqTG0cwquWX8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdehgedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehluhgtrgdrmhhilhgrnhgvshhiohesghhmrghilhdrtghomhdprhgtphhtthhope
+    hmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepmhhsuhgthhgrnhgvkhesshhu
+    shgvrdguvgdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:tE7naCe2MDEy6-KNP0lyAfS11jM2wy8vQD0u86DWtldBLvZ-7ugXQQ>
+    <xmx:tE7naM9nztlxIGy5tDpArK1Dxox2bo9hondrDK8H99viQdtkJDgiTg>
+    <xmx:tE7naPpLKvL_vO_uPEdT2NAq-w6EBHzUAkah2RIacSCJSLWJCpKW4g>
+    <xmx:tE7naBBsxQAHHGQiNBpLWThliLP1qswYKDQKxcSn7R60LxEmUQtTeg>
+    <xmx:tU7naFjoZTwl2NZrBnCFWMjuvseCHjmePmHFxW5AiCwqpcD9bMrQTbUJ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 9 Oct 2025 01:57:07 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ae60f2e6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 9 Oct 2025 05:57:06 +0000 (UTC)
+Date: Thu, 9 Oct 2025 07:56:57 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc: Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
+	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+	Luca Milanesio <luca.milanesio@gmail.com>, git@vger.kernel.org
+Subject: Re: When should we release Git 3.0?
+Message-ID: <aOdOqX45_uvsDXTL@pks.im>
+References: <aNxivuJEnSHbQNdr@fruit.crustytoothpaste.net>
+ <E03F997F-1738-4CF6-B7D5-206183FA5BD1@gmail.com>
+ <aN1RFvz7uGPnepxe@nand.local>
+ <aN5-n_ArhQqaQZgt@pks.im>
+ <xmqqfrc1xqsp.fsf@gitster.g>
+ <aN6j7giOosGreKUW@kitsune.suse.cz>
+ <aOTrC8CRZm5hERgr@pks.im>
+ <aObNPk8ily0EFNxM@szeder.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -50,33 +98,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87jz16dux5.fsf@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aObNPk8ily0EFNxM@szeder.dev>
 
-On Tue, Oct 07, 2025 at 06:49:42PM -0700, Collin Funk wrote:
+On Wed, Oct 08, 2025 at 10:44:46PM +0200, SZEDER Gábor wrote:
+> On Tue, Oct 07, 2025 at 12:27:23PM +0200, Patrick Steinhardt wrote:
+> > The question of course is how to get such roadmaps. The easiest way to
+> > do it is probably to gather a list of known projects that would be
+> > impacted and just shoot maintainers or representatives of those an
+> > email? From the top of my head, that would include:
+> > 
+> >   - Implementations
+> >       - libgit2
+> >       - JGit
+> >       - Gitoxide
+> >       - go-git
+> >   - Forges
+> >       - GitHub
+> >       - GitLab
+> >       - Bitbucket
+> >       - Forgejo
+> >       - SourceHut
+> 
+> codeberg.org
 
-> In GNU Coreutils and Gnulib we often use 'idx_t', which is a typedef to
-> the standard signed type 'ptrdiff_t', when we refer to allocation of
-> objects or indexes.
-> 
-> The rational is written in the header file where it is defined [1].
-> However, I want to highlight one part that I find most useful:
-> 
->      * Security: Signed types can be checked for overflow via
->        '-fsanitize=undefined', but unsigned types cannot.
-> 
-> On common platforms, you will never need to allocate more memory than
-> PTRDIFF_MAX anyways:
-> 
->     $ numfmt --to=iec-i `echo $(((1 << 63) - 1))`
->     8.0Ei
-> 
-> I think that addresses Jeff's point that 'int' is too small, which I
-> agree with.
+Isn't Codeberg essentially the one driving Forgejo? They (or a
+representative of them) would have been my primary contact point there.
 
-Yeah, absolutely. I do not love size_t (and certainly switching signed
-"int" to unsigned "size_t" is an easy way to introduce bugs when you
-cross the "0" boundary). I'd be very happy with everything using
-something like ptrdiff_t, and even hiding it behind idx_t or count_t or
-whatever.
+Thanks!
 
--Peff
+Patrick
