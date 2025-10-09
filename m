@@ -1,53 +1,53 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B861524501C
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 06:36:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6B724501C
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 06:36:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759991773; cv=none; b=i+rL8k+qo4luhZ3nOgVXP1CGmlL3O4+2UOFt2iTTOHgJ/4/36PVNhah+Cn/4knqI9rol8ASJkyY/EeDFsg+0ldOlCMk59aewFmmkQTSSb2TUGRvg2mf+rk+RnaU5T4kqOfssBkGwI4sPna+KAc+Y095LkoZsDmlKGoNq91JAEzQ=
+	t=1759991780; cv=none; b=L4HRwlQYIpN3KQfNaJ3V6zgG2gUuouiJt/qgRqH5S7Ip+n0WIq7rIJU2RnvLNzT3kpy2SaSGQsGzgqa/Je+GlffrofvRic9pmscnP3/APO8l7bXpNRATYzDQx5G4mzg5oVu1QueHQKzHadby0dNn7rZ6NzP4cKIe68mbD5XoCyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759991773; c=relaxed/simple;
-	bh=HjzTlcEl2rz/icncsNlPBlsAxW1nlKQfTxf1MFLsE2c=;
+	s=arc-20240116; t=1759991780; c=relaxed/simple;
+	bh=BxkcYFnfo598hs5O2qtvs2LhdkwMSNMzb1QKplHcTv0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZhtfZNPV1BCaUaG5lYjl+GjUUuqjKjhoI6Cb1/hWUGbn46Bh8CGpksKJO54f/9vnbXsNEmLn+n6X9AFCDZJmvkMibMb/lTFPV8kMIMDAPM/JmrM6CFWTu/p8ycbudo6HRa4MENC1cnmXIZzcmC72ospII06J1IUxeuI+N6ZiNnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FMmHnTjS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NwxwQjvn; arc=none smtp.client-ip=202.12.124.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=SwKOwRIhZzV98ve9MrerZ6zQMtNEm27njoepZ5VJOUVGUXXEBIgB0v3p8nUinlRhlTfgUukKDHmpd9jWcVF39Fq0rsaJYyss735nOoaGKoVTb6Mj0LWMM/b8YAvzhiu0wNe0h/KVGFVstaYhkWEMqte1vA/1asVvkWh+T7I1+kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bKm9b2gr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PtpOCBty; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FMmHnTjS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NwxwQjvn"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CB4507A015D;
-	Thu,  9 Oct 2025 02:36:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bKm9b2gr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PtpOCBty"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0D4FA1D00041;
+	Thu,  9 Oct 2025 02:36:18 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Thu, 09 Oct 2025 02:36:09 -0400
+  by phl-compute-12.internal (MEProxy); Thu, 09 Oct 2025 02:36:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759991769; x=1760078169; bh=Iy+GSKk7J9
-	9wduBJ7f+JBR3y5VYv4nmYMav4KkMH2/0=; b=FMmHnTjStaEZzz5GkDJWFWD71E
-	QLWvBh578zMCGkd77XmwoBJx21V6NH/RGaDg82aLJ9DehHtxzKyZIveRv9+JhBIA
-	qyN+00FI3dVBfNYMv58XPgmHoxcCOhNcUqo03uufI9hsDInRZZtGS+QHSiyCmdmO
-	QZQS21mwxU3DNSIyUFqnMivGZwddSQYNBSm9twBqBTJcik6vllW/8/OYiQURWC/T
-	L2j17HWyDiYfr9UJ/SuYKDmmyJenYlqrrqPQGBW2O1XilyiH6lPtUFMbOat+VZn7
-	rbzLFs6qZE2XAtyPJFD1FE78cGm4RcDFSP8sdw5L+QxNWq4wl9RE4eXKTUCw==
+	:subject:to:to; s=fm2; t=1759991777; x=1760078177; bh=PoracYGJth
+	EE+FT9I9pSZiXQctWjFsDqrZHYZ/2pVis=; b=bKm9b2grEPahjpVyiNDAInX+pw
+	P7vLMvqODNNweevE65qo9LUs4cgvaNx+pHHVIKGdLH9IWMq+o5dUNn5HeGUwRfkJ
+	5g2PxKRcYHjQiw7NF/0JW3fUEpEjIZC8YlALzXp+fDKw9J0wc/y8VDPkA93K+RmP
+	fgLXFbgnExzT7WOAQ02rUgHEzFDAsr/bno0FJpcozSVfxKijkgSJ3BvslUQWiRVg
+	3+nAfWZpK9cAvU0ex918YlHPoigc5L40dT1HjLHHg6EwZRmfr3i8guCK7VnlBQ0q
+	kIyQfw5pi7rTWPbV5JRHGpAa254mdt8PI5QdfJtwsOYCiGC+J0yu8GxwsIUQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759991769; x=1760078169; bh=Iy+GSKk7J99wduBJ7f+JBR3y5VYv4nmYMav
-	4KkMH2/0=; b=NwxwQjvnnSz88Z+k2yKtfmS2cqv5+sHiNMknrNe7E+hKxgwKqj/
-	GW9iIN/1a4pmMiitoVhfcZwdxCiJhnXDPVBArA4w89JGCBHcExVSLYmJ/vsFHUQq
-	qLKtRN4sQOQ8kzvsDQEOR0PGfzx0RgnD8zSw0nNCE7JGROHxUrR5y4sDbcZC2cAe
-	j4Z4XzYdY2j9BL5scLdUha0fdW65aRTpzr99Bcny5dGLfJvc9zkbKxto43p8wdAq
-	LD5IjSvafXDbTrkcyV1Us3cMfEbIQxRVUzszpQQJqE/MvWTVqF7Jd25qC5QZ567G
-	adSmH0VylyRhg0FRQrUmyPik3gS6n6VCJNA==
-X-ME-Sender: <xms:2VfnaDES-XtHKzVtDf2yoYyne0RnIzSPLw1mBN2s8UWY1g4iCzs2Gg>
-    <xme:2VfnaGVkJKs1mzobHtrBvwCEQYMNse-gVgYYszJa9zvE2Cp88Eo288O1ykYVvSVtw
-    UegfqH_Wd3_PCLJQAhtPeun1-vCY6vnuWYrS49hNveq0ZiNX-Loiw>
-X-ME-Received: <xmr:2VfnaCxzFui2H-J4ikLHQJiq0alk2Qb1-1N5esHdOexJGg8mWnuf1d5ojzpgbSVnhUwqNacPXt6t1F9_aFFCGp-XEVO6wHRplfh1jNNd2q0>
+	1759991777; x=1760078177; bh=PoracYGJthEE+FT9I9pSZiXQctWjFsDqrZH
+	YZ/2pVis=; b=PtpOCBtyaOeaTvSTo8mmU80Eki3D1uSYPJHXCj0vf15v8j75B2M
+	LNwHLBdq+YAECHVqCWwN6+SyYklEPaXKkHyO8LZKEFrzmnE4mKGcCH3G+aRDAdYM
+	Mqtm4LbzWS7MDcgklddmg7n76saJkMOQaXn4adzdJj8M2PeYphGhWfkxLNdev1nb
+	pAdIvyt4SP51vIuk1vKTUn+fJhTxMBZeAQW4sEXhFyYsBE4TGOKhJMWL+5KA2myZ
+	EsX2jFocCbxaHCRcxzdD9FVHhe5FggfnQYFJMG3sYlMeG+WOK7cR46Ywa3D2buJA
+	fapBHtQ6oZUUmrk+XoZcVuCZp/jNNTCHe5w==
+X-ME-Sender: <xms:4VfnaJaBsptyZ9zgYXuqO78_jLnltp5034uJ72UaS_v5mfvGQ6G4sg>
+    <xme:4VfnaGaQSQ5wxF-Rnee_dQllsb7C5re1l2gOxLAjfm7X2a1pKpSlhGJ84MKN08Ah0
+    KrvZ6RveWhbMHS0j2VhS1sEHXWdBL9QRQ8x8RvBUOlD-7I8e4WBCQ>
+X-ME-Received: <xmr:4VfnaJkVX_NVETDGvYP2LGYiNwKZhHWXLqe7410AZlKS-XSryHBe9vYtMSCfJBfkEEEPMgXCE82Uq4CKAy_aPtyXIMx9NLWdUCEybiiM8gQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdehgeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
@@ -55,29 +55,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdehgeekucetufdote
     shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
     ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
-X-ME-Proxy: <xmx:2VfnaMPacnnUJyfUsjHiYk0zrPKAIwdCEB8C1tx_pV5b6A7nteRPcA>
-    <xmx:2VfnaL7U_JXKEfMDgU9dNiWhAI-WPkZXDdQwEPvLhALJvKjKutb89Q>
-    <xmx:2VfnaFM0iYSbQYCOSMbUM1R0tYSOGMPVgvhh4K7iIrVIZwyIoQxhyw>
-    <xmx:2VfnaBmMhsXJRI8_VvIq5mCA77zNerWO1JMdJ4b-qGPVjH1oz3uaaQ>
-    <xmx:2VfnaFNB4sk703ohvWCx1Uh1VsPt4nBcU0KIpgtqEdRP-aIURu3FJkV_>
+    guvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:4VfnaCzxyctHN2pkLnxwb5-9-MW2Un31KCzVQfT_bEhUNJQgokV0lQ>
+    <xmx:4VfnaHO1_5nXcL6FNr_1htAN19UcS5kpdqofZBGuOdlT69wVoYJHTw>
+    <xmx:4VfnaGR_gex1BO6Afxpmw3bCG5wFBNdEkmpXzfNbuFsxVIzg6Hs88g>
+    <xmx:4VfnaFbIWw_VJtQetQn-hhDhwT9IYltxel3AU40J0f0oi1v4xGlPTA>
+    <xmx:4VfnaGhRvUi3Ptf--efrTEcyqnVEnjnDSrq-60qXPKz2QpFZmBdJ8xL5>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Oct 2025 02:36:08 -0400 (EDT)
+ 9 Oct 2025 02:36:17 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9be21b15 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 9 Oct 2025 06:36:07 +0000 (UTC)
-Date: Thu, 9 Oct 2025 08:36:03 +0200
+	by mail (OpenSMTPD) with ESMTPSA id b0118958 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 9 Oct 2025 06:36:16 +0000 (UTC)
+Date: Thu, 9 Oct 2025 08:36:13 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/6] builtin/gc: convert to use
- `packfile_store_get_all_packs()`
-Message-ID: <aOdX01_MrVkDKu9D@pks.im>
+Subject: Re: [PATCH 5/6] packfile: introduce macro to iterate through packs
+Message-ID: <aOdX3ZmITr0FVq4b@pks.im>
 References: <20251007-pks-packfiles-convert-get-all-v1-0-428227657a89@pks.im>
- <20251007-pks-packfiles-convert-get-all-v1-2-428227657a89@pks.im>
- <aObIw/et7DxB/NrZ@nand.local>
+ <20251007-pks-packfiles-convert-get-all-v1-5-428227657a89@pks.im>
+ <aObUivWiMdtprQSu@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,36 +85,82 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aObIw/et7DxB/NrZ@nand.local>
+In-Reply-To: <aObUivWiMdtprQSu@nand.local>
 
-On Wed, Oct 08, 2025 at 04:25:39PM -0400, Taylor Blau wrote:
-> On Tue, Oct 07, 2025 at 02:41:08PM +0200, Patrick Steinhardt wrote:
-> > When running maintenance tasks via git-maintenance(1) we have a couple
-> > of auto-conditions that check whether or not a specific task should be
-> > running. One such check is for incremental repacks, which essentially
-> > use `git multi-pack-index repack` to repack a set of smaller packfiles
-> > into one larger packfile.
+On Wed, Oct 08, 2025 at 05:15:54PM -0400, Taylor Blau wrote:
+> On Tue, Oct 07, 2025 at 02:41:11PM +0200, Patrick Steinhardt wrote:
+> > We have a bunch of different sites that want to iterate through all
+> > packs of a given `struct packfile_store`. This pattern is somewhat
+> > verbose and repetitive, which makes it somewhat cumbersome.
 > >
-> > The auto-condition for this task checks how many packfiles there are
-> > that aren't indexed by any multi-pack index. If there is a sufficient
-> > number then we execute the above command to combine those into a single
-> > pack and add them to the MIDX.
+> > Introduce a new macro `packfile_store_for_each_pack()` that removes some
+> > of the boilerplate.
 > 
-> s/them/that pack/
+> Makes sense.
 > 
-> > As we don't care about MIDX'd packs we use `packfile_store_get_packs()`,
-> > which knows to not load any packs that are indexed by a MIDX. But as
-> > explained in the preceding commit, we want to get rid of that function.
+> Since we're talking about adding a convenience macro, I wonder if it
+> might make sense to name/treat this one slightly differently. I would
+> imagine something like:
+> 
+>     repo_for_each_pack(the_repository, p) { ... }
+> 
+> I understand that packfile_store_for_each_pack() is trying to operate on
+> a single packfile_source. In practice, would someone ever want to
+> iterate over the packfiles in some source but not another one? It's hard
+> to know the answer to that question right now without any other
+> implementations.
+
+I don't think so, so I'm fine with this direction. In fact, it might
+even make my life easier. See further down.
+
+> Perhaps in the meantime you could imagine doing something similar to
+> your macro, but instead of reading from the store directly, it could
+> read from the repository's store _and_ BUG() if there is more than one
+> store to choose from.
+
+I don't think we should BUG() when there's multiple different packfile
+stores, as it is mostly likely the intent of the caller anyway to
+iterate through all of them.
+
+But that being said, there is a different reason why we may want to
+BUG() eventually: if we get pluggable ODBs, then one of the object
+sources may not be a source that uses packs in the first place. And in
+_that_ case we definitely should alert the developer that something is
+wrong and BUG().
+
+So I'll adapt this series to use your proposed `repo_for_each_pack()`
+solution.
+
+> > diff --git a/builtin/fsck.c b/builtin/fsck.c
+> > index 8ee95e0d67..5462c442dc 100644
+> > --- a/builtin/fsck.c
+> > +++ b/builtin/fsck.c
+> > @@ -869,18 +869,19 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
+> >  {
+> >  	struct packfile_store *packs = r->objects->packfiles;
+> >  	struct progress *progress = NULL;
+> > +	struct packed_git *p;
+> 
+> I wondered if this needed to be in scope for the whole function, and
+> looking just at the first portion of this hunk it seems like it does
+> not. But continuing to read further down shows other spots where it is
+> beneficial to have "p" defined at the scope of the whole function.
+> 
+> >  	uint32_t pack_count = 0;
+> >  	int res = 0;
 > >
-> > We already handle packfiles that have an MIDX alright by the very nature
+> >  	if (show_progress) {
+> > -		for (struct packed_git *p = packfile_store_get_all_packs(packs); p; p = p->next)
+> > +		packfile_store_for_each_pack(packs, p)
+> >  			pack_count++;
 > 
-> s/an/a/, s/alright//
+> This conversion looks obviously correct. Though I wonder, as an aside,
+> do you think it makes sense to have a packfile_store_num_packs()
+> function or similar that does this for us?
 
-Heh, I guess the first s/an/a/ depends on how you pronounce MIDX. I
-typically say "em ei di ex", and in that case it's correct to say "an".
-But I think I heard you pronounce it as a single word like "midex",
-where it's indeed correct to say "a".
+We probably could, but I don't think we have enough callsites to warrant
+it now.
 
-In any case, I don't care, let's just say "a midex".
+Thanks!
 
 Patrick
