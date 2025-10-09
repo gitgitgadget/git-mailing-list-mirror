@@ -1,119 +1,91 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CDF2BDC23
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 06:36:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6031EA7D2
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 06:39:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759991786; cv=none; b=kUvq++0gAfn43AwlnUuAxQ6qA49WDWb2KQMyzApO3QSNNfVEIdpCSBTmQ54kNrZCSEvXqCN7T4cQ0rUYxWl/n2o90XUwWdFXLWx3m5EIrO0MqE0ySoEZ+FW1vyvJr1ncNsG12qASRRywpXlnMsgWUDfACmr9b6vsbohwT3NvYHw=
+	t=1759992000; cv=none; b=K4ds+q9W1+B+eTe4Il5VtBjQ/4/htyMFaxoekgRzPyqn4PLHXMtPylUHhGjbERioY5Sq7REgSa7srOuOvXNZaeSBcdkfPRh/GJN3RrQFbRDdEXge8mtqFupq7sFYCQta9cmcyJzV2+8tTjLy2dIoRDCbHmFgPrF1LQIeX4Ycjlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759991786; c=relaxed/simple;
-	bh=R7EAbNLflB/yGcAdbbABwlDELvJhXH+fywG19cNU4hI=;
+	s=arc-20240116; t=1759992000; c=relaxed/simple;
+	bh=6d8JId6/QMmpwRUnVsJt8WIpZB0rCad0mtbqRijm97w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d57E+L5yf/0Brh3BSfmYWnpCDHQkDg+AvXlNkT9ewBARY956u5iO5hhXHwda/ZNdWqpg34qNo5H5HSDT5lhLsIEPrEelIiZl+H5wf+hxRwLsOC00RRkOUBOv7Rh48R6stXuUD9nV8QjKiViyJ3Sanl8MohhVmxjkbI6J7Ca9xMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nI2atbuZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZyrPlxm/; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=WlRROyRt78RsEwiI0YAgv1OF8c+VfR8JTnqeRq/xNxTM213xkz8wNkx38jmiYTep8qKk/PWvDonZJeJeR1/f6WENJ3UkMD21owRzpiXeG8bWWZYRTZ1EFi+g1uK9XqwkT0FeiyAtpEKJU6RQdVO9amqktyyfVacJEi+iHgfnHzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ESDIiiCt; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nI2atbuZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZyrPlxm/"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2A23F7A0091;
-	Thu,  9 Oct 2025 02:36:24 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 09 Oct 2025 02:36:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759991784; x=1760078184; bh=MGKmMVUq4c
-	/s8XDMR84lIpj9P1p4WbcIXzlTLTZxyGY=; b=nI2atbuZeV/px4/bHja9WjUMDD
-	JeWFMT74XIr3T1QjN/uTBMv1jxgBjOnvt/tG265M5rgr8HMhfWZA99GdarFgWPq+
-	4u1E0JdrB4lvbZP+rFwQeeHOdJ5uV4R2SrYGjOsfM4/fm3CcDJwJxBDw/iMC9Zmk
-	r9lBv+KomjjiSGzcChmgk2WyzuGspOIYRpbUuZX3LI45/AULqJVx282synjjIc/L
-	WMk27IVIlmMUZ1ICZsmm3o0ZyLRxmZXPrCY1tn2t5B/fjbTSvlWLtHpWo68YNUlz
-	sCFCr/nN7w0sbzXZH8qlQx0FOHPPNzxCnE/LTuF9PZs3TGDzwhOSS+PLxOKg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759991784; x=1760078184; bh=MGKmMVUq4c/s8XDMR84lIpj9P1p4WbcIXzl
-	TLTZxyGY=; b=ZyrPlxm/ZTxcLpervzEiJJqx6XVfvAf2LOhO04BC/F2WYyrPzOb
-	tqJq4SOnrnOHScsAIKc24lhUOR+E8jUwEPOupnqCRzHOJl1TAp3HDO5xxXZ5EF9g
-	duT0CpkbrVnh+kLpUl2TVkNlJiGnonQ3BvKQXbr16rvhJJ4LQiFgp9uwt0Pg/6rS
-	5ao4Lf6EI6FvyjeZKUKfXVrFbXL27XNJSmX1wm57qYiaQ9XeE63H3J+6rhRTYBPi
-	fkkxagW4uUja4I1viD96/02QqnGfLQnXv+68Qn2vvV3ZpN3Dq4qcV6WJ/EC93YSu
-	XZTP1/zuZw2PdB8Nw6omZpXS+afD+gasQUw==
-X-ME-Sender: <xms:51fnaGT9sJuYXhUA88guuWjIbIcH9pKUJQ4ccy7nJUyX23US3GeTnw>
-    <xme:51fnaBxbx3bsGfsNfWJM1Z-czHPa_zYiczIxrU4LSM4uo6X-FO3UM2m7M6Aa1fefn
-    JXbOcUfiYjQjYgAx5RZI9D71hmbO7y7AbNyJ8We_RqVLqk18OTQpQ>
-X-ME-Received: <xmr:51fnaBfp1SibIlsqSEeGPzV72NNe8IfvOKe2bxMv2aUKgPlBj36U1z0iPCfX4keKWz-fB6G57cZ1yioZVoIH9O6A-EDoyTULI_zouVDIYLo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdehgeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
-X-ME-Proxy: <xmx:51fnaNIxjY3jyx83giom1t50LEqq0mK_tq6zqN7AwggIgP5i2it8fQ>
-    <xmx:51fnaCFgPxOud1DwozYbPKpsMrlwPA7-UA2Ztr7OdePAPFs_WAwX5A>
-    <xmx:51fnaHp_XfziDDIjj67HprLrXD35Qz8VxciOsSgTV5HiY6BqaAiYnQ>
-    <xmx:51fnaLSVY6CXDtAcEvDFI5LhylfDZMKxwafPZGD6WjqRdvQyEeib-A>
-    <xmx:6FfnaFZqvQzhDZTQNbNDk1T7z0hA-qI_Q5cF5Wht_kCqHyOA7E3FQ1de>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Oct 2025 02:36:23 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fcf512d6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 9 Oct 2025 06:36:22 +0000 (UTC)
-Date: Thu, 9 Oct 2025 08:36:19 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 6/6] packfile: rename `packfile_store_get_all_packs()`
-Message-ID: <aOdX4_e9K_1p1pyv@pks.im>
-References: <20251007-pks-packfiles-convert-get-all-v1-0-428227657a89@pks.im>
- <20251007-pks-packfiles-convert-get-all-v1-6-428227657a89@pks.im>
- <aObOFciwYsvTWT0e@nand.local>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ESDIiiCt"
+Received: (qmail 174824 invoked by uid 109); 9 Oct 2025 06:39:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6d8JId6/QMmpwRUnVsJt8WIpZB0rCad0mtbqRijm97w=; b=ESDIiiCt6dcBwrta+yldjXiFBFjgqzH6jJZnawsoUMzheGSdrW+Quo9IGeiInPvfTi9aVDL1QV2qkZ2cDe4VxeyJVll+/gkeYTQBYXk3S+qS07RZ6GlhKX0Ysd5x7PGRrEq4BYqCL9d9CFVptz0EKAkSToi8EjUv2uw6jmU5+st343IWEcDBw6hy0/0oPbKQX8KrTr8bYq12qdw66cZjOYUbvTfeyGQIFT3LJQBMWvAL97qWfo4uHNgkgUWhqaVrDGyb48rZpmYgS3/tC2aOuuN9gX3xj3hJc0g2lt+lOWqbDVU9bOmFa/bT2UHqx1zibxofFuSL8Yn/beirycqkFQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Oct 2025 06:39:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 266310 invoked by uid 111); 9 Oct 2025 06:39:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Oct 2025 02:39:56 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 9 Oct 2025 02:39:56 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v2 00/14] refs: improvements and fixes for peeling tags
+Message-ID: <20251009063956.GA1622884@coredump.intra.peff.net>
+References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
+ <20251008-b4-pks-ref-filter-skip-parsing-objects-v2-0-76e30d5c9542@pks.im>
+ <20251009053825.GB1614343@coredump.intra.peff.net>
+ <aOdRsR-k77uTWJRb@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aObOFciwYsvTWT0e@nand.local>
+In-Reply-To: <aOdRsR-k77uTWJRb@pks.im>
 
-On Wed, Oct 08, 2025 at 04:48:21PM -0400, Taylor Blau wrote:
-> On Tue, Oct 07, 2025 at 02:41:12PM +0200, Patrick Steinhardt wrote:
-> > ---
-> >  builtin/fast-import.c  | 4 ++--
-> >  builtin/pack-objects.c | 4 ++--
-> >  packfile.c             | 2 +-
-> >  packfile.h             | 4 ++--
-> >  4 files changed, 7 insertions(+), 7 deletions(-)
+On Thu, Oct 09, 2025 at 08:09:53AM +0200, Patrick Steinhardt wrote:
+
+> > I do have one minor complaint, though: the name of that struct. I have a
+> > feeling that the name "struct reference" may cause confusion down the
+> > road because it's so generic, and because "references" and "refs" are so
+> > common in the code. From the names, when would I know when to use
+> > "struct reference" and when "struct ref"?
+> > 
+> > Could we give it a name that ties it to the iteration interface?
+> > Something like iterated_ref, each_ref_data, etc?
+> > 
+> > I know this is minor (and will be annoying to adjust your series), but
+> > I'd rather raise the point now than realize later that it's confusing
+> > and try to change it then.
 > 
-> Hmm. I wonder if we should perform this step at a later date. My fear is
-> that another topic in fight might introduce a new use of the "get_packs"
-> assuming the old semantics.
+> It is puzzling indeed. I would claim that in this case it is not `struct
+> reference` that is misnamed: what it contains is as close as you get to
+> a representation of a reference. It's rather `struct ref` that is
+> misnamed, as it carries a lot of data that is only valid in the context
+> of a remote.
 > 
-> Merging this topic and that hypothetical one together wouldn't produce a
-> textual conflict, but it could introduce bugs where the hypothetical new
-> code expects the old behavior.
-> 
-> Perhaps I'm overthinking this, but figured I'd write down the concern
-> nonetheless.
+> Another approach could thus be to rename `struct ref` to `struct
+> remote_ref`, which I would claim would be a clear win for better semantics.
+> It's used in lots of places though, which is a valid counter argument.
 
-I think that in many cases, a callsite that doesn't handle MIDX'd packs
-specifically with `get_packs()` is almost guaranteed to be wrong in some
-cases anyway due to `get_packs()` and `get_all_packs()` influencing each
-other's results. In this series we already saw that the callsites handle
-this correctly even though they use `get_packs()`, and any new callsites
-would probably have to do the same.
+I am not so much arguing that "struct reference" is misnamed, as that it
+is sufficiently generic that people will reach for it when it is not the
+appropriate tool. It is for passing the ref data to the iterator
+callback, but it probably doesn't make sense in other contexts. Would we
+ever expect anybody to declare their own "struct reference" in a local
+function? I don't think so.
 
-So I don't think this is too worrisome overall.
+And yes, "struct ref" suffers somewhat from the same problem. It is
+mostly about using refs in one specific space, but the name does not
+really help clarify that. I wouldn't mind seeing that improved, but yes,
+it would be a noisy patch. I don't know if remote_ref is the right name,
+though (the "peer_ref" links mean we store both local and remote refs in
+it, IIRC).
 
-Patrick
+-Peff
