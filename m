@@ -1,48 +1,48 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A63283FCE
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39F4283CB0
 	for <git@vger.kernel.org>; Thu,  9 Oct 2025 21:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760047000; cv=none; b=ZBYkg430/FSpvJbEU97/ObeHSf1fb3sBg3nOpyr1PJwRhIzOUEkZyRvfEpNYiDMz8SOgwOnd53op9W1OJEawFIivnC7eqceY76W3JeMGyiYpThNFmJq9fslz8KwVPsVJrsATBdcJ0kLpby0R27755bhAYZ9olVQM96RQHpzqsJc=
+	t=1760047000; cv=none; b=axhCNcwWDXPCqrobSOBEzeDkzbMNreDDFcwSvo3u0GYJZBwqCp7vz8lNRf61cuVr4ReWDBWFdP+xU6THenqzfCaLFEK2PoEs9s/Z1i/ZeQNNc5T6z8Gb011geRaWLasUUtl0Td+o4OHtzdUDX/TVGuKBlo6pq/nyIjRsTuA9HkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1760047000; c=relaxed/simple;
-	bh=q5X3ffswJA8ylTddczm2gtyR2qhvtjcr9VM3Ct/6mmM=;
+	bh=rjocp6SKYoQ3akGR8BtPfs/eHyoE05EMA21Ud60sg00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U1yBO/+oemmaUhCaDpJPNwzpiESe+CUHxHIvR9jj1gBfd9be4A2o1PxvNA0X7yWCXka19QwYcksIXHhubHTFGmitT77KbsUtz7dz70UnkZ8a/gMiJIeTh5G7fKWQJVMFXr3ndJ96ctrj21JbxR3clSffJWld9JwwC5YU4Er/0YM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=IGvwdC4X; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=T6KFb0PXWD4dcO0nEwVK6juH3BJrnfr5jufYSUpQ7acRkR8E16wsCSm56j6EsqeUPykSY0EnB9RZAqvDN18TvL4E0KD8QoS2Y7QpkZXOeC1SvVQoBI70v2ks4FzZuAPT/15RphJWk7ituRJdw8DeXvTlj7el2NILaeE5G62/LBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=YoOdxEHK; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="IGvwdC4X"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="YoOdxEHK"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1760046989;
-	bh=q5X3ffswJA8ylTddczm2gtyR2qhvtjcr9VM3Ct/6mmM=;
+	bh=rjocp6SKYoQ3akGR8BtPfs/eHyoE05EMA21Ud60sg00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=IGvwdC4XssaZa3at73DHATVcG2fiwRIsZZXeLDgotWxKozkowlp041Zd74RCkDUEW
-	 vo9gnIcoQ9TsaBQ31WNwqSCOq6tOYtmyyrEPM2mWZjnN6SFhMNbpJEw8LdcCUp+fiQ
-	 8xzxmwjJd/92sKsEBrABkX+KzHlWnQVIVFyHwOYm82IYxdUL6F6IC3eg7ngNirZCS5
-	 cGcq4zb3yLX1MnzkYlKiuQrGC+6yGpcFTRa/O/vqv7ebL04M1az3024E/Si37R/icT
-	 NJtuiFvhAYdYU2A5Qh3TsZfTc1eU6aceHYIzkik5bOnvuOYDvX8Ufuo8MmPwBlSa1V
-	 ohq/KZZLkFkaW+0AaJqydIJZ67pqrK6jJy8Ki92S6ozCqodPteucTyBCdHlu1DVaO5
-	 MWucnDTfl4vwfNpDlUkRHYWsYY0S8mso2UVM/YNhzHU9HdvElhZZlXcYi3H41AQ8ZW
-	 8G4W+D+c84S3bTOkW8wXnkxLvt4fntfhAhwPaqoUQ/W4kn+AY39
+	b=YoOdxEHKmrGT2YExNSkN5MaPyWCOdqTLTtbtsFlzZPZH9+Cv6akoVmL/YA1kgsWx6
+	 NZ80GrJsDnl/1XYaEDNxHxtYW6Gz0w0n9o9MNwu7yGZxzIr393gCg2AHdJ7udGtxJi
+	 uJ4QdubGdEQOC+J82pHzEMPYSLU18QXeGSsFRB7oXLqX7pWz6bf//S2q+p8n3f5i91
+	 25diNc1fW4BCjonr3rsjPMXEurdqfKqNy2bUlnfWPsG4MZQsBpgSAV4c0sJ/1YesNf
+	 lVXzTXXM7SIqr+fozmIU+v19aL4ul225kH+hCvq/4eiB9006/TLeulGaO1vLdhSWr6
+	 8XQ+gfK8hJaZE9W4hSXc1nWpk/jfsIklLwyvuE8zvV/ro0VMWeSznBarm/4OZLLBP2
+	 RYtuvlx/euivVUMe2gLTn2hzLO1KjmVmlYuoUGLjzRPFxs7lyc5rqTV1V7lT4J6kaK
+	 fmsXcsClIqwxqqWRgfL/6q9KCR+FiQVFxScxxDY3QDlxB3M9zPs
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:d7d2:5118:6dfb:100f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 81D222019E;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 88E522019F;
 	Thu,  9 Oct 2025 21:56:29 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 5/9] docs: add documentation for loose objects
-Date: Thu,  9 Oct 2025 21:56:22 +0000
-Message-ID: <20251009215626.3089287-6-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 6/9] rev-parse: allow printing compatibility hash
+Date: Thu,  9 Oct 2025 21:56:23 +0000
+Message-ID: <20251009215626.3089287-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
 In-Reply-To: <20251009215626.3089287-1-sandals@crustytoothpaste.net>
 References: <20250919010911.649831-1-sandals@crustytoothpaste.net>
@@ -55,98 +55,111 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-We currently have no documentation for how loose objects are stored.
-Let's add some here so it's easy for people to understand how they
-work.
+Right now, we have a way to print the storage hash, the input hash, and
+the output hash, but we lack a way to print the compatibility hash.  Add
+a new type to --show-object-format, compat, which prints this value.
+
+If no compatibility hash exists, simply print a newline.  This is
+important to allow users to use multiple options at once while still
+getting unambiguous output.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/Makefile             |  1 +
- Documentation/gitformat-loose.adoc | 53 ++++++++++++++++++++++++++++++
- Documentation/meson.build          |  1 +
- 3 files changed, 55 insertions(+)
- create mode 100644 Documentation/gitformat-loose.adoc
+ Documentation/git-rev-parse.adoc | 11 ++++++-----
+ builtin/rev-parse.c              | 11 ++++++++++-
+ t/t1500-rev-parse.sh             | 34 ++++++++++++++++++++++++++++++++
+ 3 files changed, 50 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 6fb83d0c6e..e1d38fbfe6 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -34,6 +34,7 @@ MAN5_TXT += gitformat-bundle.adoc
- MAN5_TXT += gitformat-chunk.adoc
- MAN5_TXT += gitformat-commit-graph.adoc
- MAN5_TXT += gitformat-index.adoc
-+MAN5_TXT += gitformat-loose.adoc
- MAN5_TXT += gitformat-pack.adoc
- MAN5_TXT += gitformat-signature.adoc
- MAN5_TXT += githooks.adoc
-diff --git a/Documentation/gitformat-loose.adoc b/Documentation/gitformat-loose.adoc
-new file mode 100644
-index 0000000000..947993663e
---- /dev/null
-+++ b/Documentation/gitformat-loose.adoc
-@@ -0,0 +1,53 @@
-+gitformat-loose(5)
-+==================
+diff --git a/Documentation/git-rev-parse.adoc b/Documentation/git-rev-parse.adoc
+index cc32b4b4f0..465ae3e29d 100644
+--- a/Documentation/git-rev-parse.adoc
++++ b/Documentation/git-rev-parse.adoc
+@@ -324,11 +324,12 @@ The following options are unaffected by `--path-format`:
+ 	path of the current directory relative to the top-level
+ 	directory.
+ 
+---show-object-format[=(storage|input|output)]::
+-	Show the object format (hash algorithm) used for the repository
+-	for storage inside the `.git` directory, input, or output. For
+-	input, multiple algorithms may be printed, space-separated.
+-	If not specified, the default is "storage".
++--show-object-format[=(storage|input|output|compat)]::
++	Show the object format (hash algorithm) used for the repository for storage
++	inside the `.git` directory, input, output, or compatibility. For input,
++	multiple algorithms may be printed, space-separated. If `compat` is
++	requested and no compatibility algorithm is enabled, prints an empty line. If
++	not specified, the default is "storage".
+ 
+ --show-ref-format::
+ 	Show the reference storage format used for the repository.
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 44ff1b8342..187b7e8be9 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -1108,11 +1108,20 @@ int cmd_rev_parse(int argc,
+ 				const char *val = arg ? arg : "storage";
+ 
+ 				if (strcmp(val, "storage") &&
++				    strcmp(val, "compat") &&
+ 				    strcmp(val, "input") &&
+ 				    strcmp(val, "output"))
+ 					die(_("unknown mode for --show-object-format: %s"),
+ 					    arg);
+-				puts(the_hash_algo->name);
 +
-+NAME
-+----
-+gitformat-loose - Git loose object format
++				if (!strcmp(val, "compat")) {
++					if (the_repository->compat_hash_algo)
++						puts(the_repository->compat_hash_algo->name);
++					else
++						putchar('\n');
++				} else {
++					puts(the_hash_algo->name);
++				}
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--show-ref-format")) {
+diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+index 58a4583088..7739ab611b 100755
+--- a/t/t1500-rev-parse.sh
++++ b/t/t1500-rev-parse.sh
+@@ -207,6 +207,40 @@ test_expect_success 'rev-parse --show-object-format in repo' '
+ 	grep "unknown mode for --show-object-format: squeamish-ossifrage" err
+ '
+ 
 +
++test_expect_success 'rev-parse --show-object-format in repo with compat mode' '
++	mkdir repo &&
++	(
++		sane_unset GIT_DEFAULT_HASH &&
++		cd repo &&
++		git init --object-format=sha256 &&
++		git config extensions.compatobjectformat sha1 &&
++		echo sha256 >expect &&
++		git rev-parse --show-object-format >actual &&
++		test_cmp expect actual &&
++		git rev-parse --show-object-format=storage >actual &&
++		test_cmp expect actual &&
++		git rev-parse --show-object-format=input >actual &&
++		test_cmp expect actual &&
++		git rev-parse --show-object-format=output >actual &&
++		test_cmp expect actual &&
++		echo sha1 >expect &&
++		git rev-parse --show-object-format=compat >actual &&
++		test_cmp expect actual &&
++		test_must_fail git rev-parse --show-object-format=squeamish-ossifrage 2>err &&
++		grep "unknown mode for --show-object-format: squeamish-ossifrage" err
++	) &&
++	mkdir repo2 &&
++	(
++		sane_unset GIT_DEFAULT_HASH &&
++		cd repo2 &&
++		git init --object-format=sha256 &&
++		echo >expect &&
++		git rev-parse --show-object-format=compat >actual &&
++		test_cmp expect actual
++	)
++'
 +
-+SYNOPSIS
-+--------
-+[verse]
-+$GIT_DIR/objects/[0-9a-f][0-9a-f]/*
-+
-+DESCRIPTION
-+-----------
-+
-+Loose objects are how Git stores individual objects, where every object is
-+written as a separate file.
-+
-+Over the lifetime of a repository, objects are usually written as loose objects
-+initially.  Eventually, these loose objects will be compacted into packfiles
-+via repository maintenance to improve disk space usage and speed up the lookup
-+of these objects.
-+
-+== Loose objects
-+
-+Each loose object contains a prefix, followed immediately by the data of the
-+object.  The prefix contains `<type> <size>\0`.  `<type>` is one of `blob`,
-+`tree`, `commit`, or `tag` and `size` is the size of the data (without the
-+prefix) as a decimal integer expressed in ASCII.
-+
-+The entire contents, prefix and data concatenated, is then compressed with zlib
-+and the compressed data is stored in the file.  The object ID of the object is
-+the SHA-1 or SHA-256 (as appropriate) hash of the uncompressed data.
-+
-+The file for the loose object is stored under the `objects` directory, with the
-+first two hex characters of the object ID being the directory and the remaining
-+characters being the file name.  This is done to shard the data and avoid too
-+many files being in one directory, since some file systems perform poorly with
-+many items in a directory.
-+
-+As an example, the empty tree contains the data (when uncompressed) `tree 0\0`
-+and, in a SHA-256 repository, would have the object ID
-+`6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321` and would be
-+stored under
-+`$GIT_DIR/objects/6e/f19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321`.
-+
-+Similarly, a blob containing the contents `abc` would have the uncompressed
-+data of `blob 3\0abc`.
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/meson.build b/Documentation/meson.build
-index 41f43e0336..64f70ac724 100644
---- a/Documentation/meson.build
-+++ b/Documentation/meson.build
-@@ -172,6 +172,7 @@ manpages = {
-   'gitformat-chunk.adoc' : 5,
-   'gitformat-commit-graph.adoc' : 5,
-   'gitformat-index.adoc' : 5,
-+  'gitformat-loose.adoc' : 5,
-   'gitformat-pack.adoc' : 5,
-   'gitformat-signature.adoc' : 5,
-   'githooks.adoc' : 5,
+ test_expect_success 'rev-parse --show-ref-format' '
+ 	test_detect_ref_format >expect &&
+ 	git rev-parse --show-ref-format >actual &&
