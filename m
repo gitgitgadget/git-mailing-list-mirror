@@ -1,68 +1,68 @@
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
+Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8432D12F5
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 07:46:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C23125F78F
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 07:46:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759995971; cv=none; b=dkHAQAuvcq+qBzjgTzjP5btM4/bkVV47VsIBpgPjYpbxvGtV6i+zlMW3Za0478RtZR9XFJuY1v+Qhi9zVfo1MksmfZUM+BsUHjFOGX/aEmNjxGE0l/1o7Xtr5pdsFrfSXQn0/sfh8dCwIRWCZJc2tmh5Ii0u5bpfNr9YYfRxoA4=
+	t=1759995972; cv=none; b=Kjb79Rg3RUHxJhIwMJGSLTdB7mJ/AATUlT4KJAFxDOj+/mB1ruzp3Gjv2lsw9WklsbPTfkukIpvdZfys/fq1wRzc0UChiBRaVJo23gwBf4cjw0xhjRfuviGWc999XKWEUAgMHU+lLLQuf5vlqfs7yebaK73Ci4eBKsaqgiBu4no=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759995971; c=relaxed/simple;
-	bh=PgmdkJTzM09p6ogyBArizoajE92hkqHMqYrknpycNbc=;
+	s=arc-20240116; t=1759995972; c=relaxed/simple;
+	bh=dOzpa7zun8YofuOdKiTq5SjT0br+PqDEN2eknT97wQM=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=PGFvsdCphGWkalsHSsoSxt4YXBlWNZGbcbEQCcrgxnnv0R4aZhMvAJGOZOYgiO/7sRGzvfh4jGt+qdd9CuPcbtKVO8a+wFe7pvZQ+3UN8eXjEELB/8mL9jPoMZzyZjG16l1IaBnsPD3sZDcaQdZu4X99vg6mcL6N3kjUBhWeAI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GvVsWhke; arc=none smtp.client-ip=209.85.166.173
+	 MIME-Version:To:Cc; b=PwXp1kl9ENxeHVQ3cBmdJiiTlqt42kexezu1zEyZfQlmYJlkUpLL4YBkfnu1oY5OSFHXPKiC9tBwlIJJKlEZezdNI5xqR/zuGZRVpcYi4SYgCJoIN2WFK9dxmeu8oHzO+I5Rh4yPrhcT4Eojjy0Tl+40ccbz+Dk7R5svcvu7rSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YwtgBKx1; arc=none smtp.client-ip=209.85.166.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GvVsWhke"
-Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-42f95010871so690795ab.2
-        for <git@vger.kernel.org>; Thu, 09 Oct 2025 00:46:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YwtgBKx1"
+Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-42f8e93c54eso6067745ab.1
+        for <git@vger.kernel.org>; Thu, 09 Oct 2025 00:46:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759995967; x=1760600767; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1759995968; x=1760600768; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=f+3kUncL/VwIsZcCGKpsKDMCtDcC1ek7zjlM74D8Neo=;
-        b=GvVsWhke5VflTbYQlnM3gaCedHutLw8KvRZX518+i9MOQwuaUWF/a3gs72pEKXYhk0
-         KJaq9LlOe4Wj+t5n9MTynDWk7qCj0G1oWyWWPnNWYpoAcLv+EMh7dgW9Nkw9ke7jbkSE
-         S4SaKASTlcMR9ssHOa6xHQBEJxqkJHDA5Fb1K7Tz1ZjPCWdLta7Q+PrRmePZGkFraJe3
-         GlBp6nFwHmK33sscThpJwcVc3LGzvMr5nAh1ay2EyIctqDcA7/sVl6iFY/AmXZWHoiJR
-         yVcuYro00DzGu4nCJvTd7VVdPgLq8THOOa4/QnuuNhSMyQB4sp+rSzVjSvOU4d5YiVcF
-         m3PQ==
+        bh=tirXb8qgcpqFGA3bBp0RZvF71FQvIFw80b6f85b4xpQ=;
+        b=YwtgBKx1jb0CvoKpydOJed2rSa18+++p05jGBAVSZ7QbpVEiSuX5VIZ4BeP8sL0RgO
+         MnxHPwiJTd1bQjDcYnYw2B7wV7LCOBzMxMiRBTyMZCtSgXYop26HteM5F6iGkh6KFFrw
+         WTYHXrx8eSM6RHH46snu+CzWpRP7ZUskXR0mPeV5XeBVNpmUC25P2WtEucUADBrtgLiE
+         Wbt4JMRvKw7NJRhJuedM1e1f7TCFYQxRQEe/hYgaCSDnF+iuPFrlk34AaUjFje4Nnjn4
+         uAExH9RWZ1iQ3HPtcMuzUHMFGW4bvRr02djJUqR/Z6tGQQdv9gMNHY50HBhjTQJHCzr0
+         aT6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759995967; x=1760600767;
+        d=1e100.net; s=20230601; t=1759995968; x=1760600768;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=f+3kUncL/VwIsZcCGKpsKDMCtDcC1ek7zjlM74D8Neo=;
-        b=WbFZx64QYzkyACEjJ0zLv+S8ayCAiJV68RXmavjKfq+ZAqhxzDELk+5ZYhiB5BCPCr
-         Ng/fTJj4ttYXfTdn8RWjGU+eDupv2mtGFBX8cPPQWqaM8OHpGEAkzuQmICR2NNPVPMnl
-         azmBFFs9yIqD86xkLpOOJ2CCwpc0Y0Fi725BJ5E43LG8ZD+udkTyLL3sBSeGlk14/LcN
-         fPZI1H+fvYpQCpbSGSQXikJ8zZ39MUiGv1i4RQ5dXy/xupKfNnHOHa0u57BxHBVhu1Qo
-         NckiImLczq/RpidAimQiL3y4WQzr+MsuHIe3esH+FJ/fGgnZqCEXzcj8hJ3RjzPaVFl+
-         TQWA==
-X-Gm-Message-State: AOJu0Yz2a/g7ROpdlnH50P/WUs4enmUsvpHCgfFcdnCBPrGBI+Ym8uqf
-	PKqncJPONfc3V0kXktxd9AN/vc72ugmP/L6dyJTTPiIYH7Dku1MEdN9SIUOUwQ==
-X-Gm-Gg: ASbGnculmRU5AeHJe+6XScm+HUtSbgCnXcjr8EOdXq2Ek7n/ZCawqLkBYsuTSsXMgOq
-	GVuyh8lyyZCGic4kRrnzQN6NU4B12hiNZeEk1Btu9jbbFvrl0prc98J4jAzXp2ozHpR8SaLKEuV
-	/Xmfw+Ir2VRB5p+9pU7fiNHwRVBc/zFX2Hms80kUWeARbwEA8Cg8zFm1oeAtUYG48RZubQv1iJs
-	BqMkttkmRM1EdsaMLYi6fXdWe5TapAAsSYMzGNlvW60+hp+u62kYVkBc1C5tOekPpTTLYAQ16gL
-	zUPyJyPSFuJ4nafqCrmJe4HDBNZ1J3ZYObEdYBZ25IU7Htcus4VLhwddkJkb98Ua1fLw5G77zd8
-	ZV2EBV1HONo2Ym7ywYYVVErtUN5AIrPRCguINySOuKk6IzVF7zQ==
-X-Google-Smtp-Source: AGHT+IGUxqSk0S8rF6NnEasfvk1fVMtu6X3iHv3zRUmLFEV9zm139J1KIJwuorlrEUVBCuMXTgyN2Q==
-X-Received: by 2002:a05:6e02:1a22:b0:424:bec:4a01 with SMTP id e9e14a558f8ab-42f873d6985mr53329805ab.16.1759995966669;
-        Thu, 09 Oct 2025 00:46:06 -0700 (PDT)
+        bh=tirXb8qgcpqFGA3bBp0RZvF71FQvIFw80b6f85b4xpQ=;
+        b=UpWKw0w8S86ggHmu+82Jeuc79kAuv6+AWngmCwQ4BXEnNs8bbDwmeOo6kLHZgBg/Lk
+         jcqX8GjzyIyCZaS2AN3IhQi+rsdG1Dnkfn5EL/raQiVt4mX32o3+sXxCwomFFjHyaZxC
+         k3W6UemQZeU4hbOyn8A+Momg3khN8RIQgbwOqC7SZauUSRg15bmpil4BklV578muLehr
+         6RNuFdwIZz27UlZKgTcOZ2pk6PempYQLN5k+r5SuRR1Dw15X8ZNThR8FPh9JtGtBBAAo
+         mj4N2OHrbgdl8usEZEw+qOcZmzjteb7dtixTdTAsSIBr2BfTVLPQx5UyBzdO8TgumQgj
+         TWpw==
+X-Gm-Message-State: AOJu0YwWNftaKwjN23wCv51TJTEL3rra++MBVNrS8mNJ7/XM5ZGcfgPy
+	VQATez7q3rg0xqfJiQjszS+MYaoDDkJhlTFmaO0MactwZIhTya7YJcprN+aeHg==
+X-Gm-Gg: ASbGnct/HwZuS8sFmhaYhYbrY4GqCcHf9NAhD+32ZfTLnUIk10kXwi/h67bjc+Ai/qy
+	qA2vOH2JfGv3XLPeMb6qXzHZxP7U0Ck7X/p54P6GeXY/JfUoDMdDBMWX/lwlrKTZGx/7t05wrXw
+	IppNt01L1RkGAWsM1ZXWH9KQcQCBDmy08A28sl06J8esz3VjUET0K4tt78qaTrwJVGz1oFRlB6e
+	F7q0VWgkPsVOScJ30gvXKCxXs2h7mqQcNRa8Egg4BbfEtdfSJkD+3w05+RA1h2eg00UXN4vZnRt
+	hybut6zaGTVbQhAuDDOVSwoCb7sDFiYgFRwROjn2xt+HqMUzcBsgqx4FgF0lvwnBfgtLOaGvbP/
+	UALmLHWf9KUvDbf1UjiluzNvT0d4rMj7/M/LLaqzN4upZS9Nrly5zyeZN8LGj
+X-Google-Smtp-Source: AGHT+IGumtS3j1RwmZAa1ZuqlSZVVp+IStZtegd7GitetXgsazI9HnNWHIepWg9rquuVvr38J2FGkA==
+X-Received: by 2002:a05:6e02:470c:b0:42f:8ab5:828d with SMTP id e9e14a558f8ab-42f8ab5843fmr40558435ab.27.1759995967948;
+        Thu, 09 Oct 2025 00:46:07 -0700 (PDT)
 Received: from [127.0.0.1] ([135.232.201.67])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-42f90346b89sm8021065ab.23.2025.10.09.00.46.04
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-57b5ea80655sm7772638173.34.2025.10.09.00.46.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Oct 2025 00:46:05 -0700 (PDT)
-Message-Id: <484ef8b825e5d1d68a61f0f8cc2520457e8f4f3a.1759995961.git.gitgitgadget@gmail.com>
+        Thu, 09 Oct 2025 00:46:07 -0700 (PDT)
+Message-Id: <5303aa57c4e5aa8e88b4a3d553ff3a69dbe54871.1759995961.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1985.git.1759995961.gitgitgadget@gmail.com>
 References: <pull.1985.git.1759995961.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 09 Oct 2025 07:46:00 +0000
-Subject: [PATCH 1/2] mingw: avoid relative `#include`s
+Date: Thu, 09 Oct 2025 07:46:01 +0000
+Subject: [PATCH 2/2] mingw: order `#include`s alphabetically
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,50 +78,53 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We want to make them relative to the top-level directory.
+It allows for more consistent patches that way.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ compat/mingw.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index 8538e3d172..da99473f56 100644
+index da99473f56..736a07a028 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -1,22 +1,22 @@
- #define USE_THE_REPOSITORY_VARIABLE
+@@ -2,25 +2,25 @@
  #define DISABLE_SIGN_COMPARE_WARNINGS
  
--#include "../git-compat-util.h"
-+#include "git-compat-util.h"
- #include "win32.h"
- #include <aclapi.h>
- #include <sddl.h>
- #include <conio.h>
- #include <wchar.h>
--#include "../strbuf.h"
--#include "../run-command.h"
--#include "../abspath.h"
--#include "../alloc.h"
-+#include "strbuf.h"
+ #include "git-compat-util.h"
+-#include "win32.h"
+-#include <aclapi.h>
+-#include <sddl.h>
+-#include <conio.h>
+-#include <wchar.h>
+-#include "strbuf.h"
+-#include "run-command.h"
+ #include "abspath.h"
+ #include "alloc.h"
+-#include "win32/lazyload.h"
+ #include "config.h"
++#include "dir.h"
+ #include "environment.h"
+-#include "trace2.h"
++#include "gettext.h"
 +#include "run-command.h"
-+#include "abspath.h"
-+#include "alloc.h"
- #include "win32/lazyload.h"
--#include "../config.h"
--#include "../environment.h"
--#include "../trace2.h"
--#include "../symlinks.h"
--#include "../wrapper.h"
-+#include "config.h"
-+#include "environment.h"
++#include "strbuf.h"
+ #include "symlinks.h"
 +#include "trace2.h"
-+#include "symlinks.h"
-+#include "wrapper.h"
- #include "dir.h"
- #include "gettext.h"
++#include "win32.h"
++#include "win32/lazyload.h"
+ #include "wrapper.h"
+-#include "dir.h"
+-#include "gettext.h"
++#include <aclapi.h>
++#include <conio.h>
++#include <sddl.h>
  #define SECURITY_WIN32
+ #include <sspi.h>
++#include <wchar.h>
+ #include <winternl.h>
+ 
+ #define STATUS_DELETE_PENDING ((NTSTATUS) 0xC0000056)
 -- 
 gitgitgadget
-
