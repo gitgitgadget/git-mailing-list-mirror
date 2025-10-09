@@ -1,136 +1,182 @@
-Received: from relay2-o.mailbaby.net (relay2-o.mailbaby.net [68.168.211.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74824286400
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 22:15:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=68.168.211.170
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760048114; cv=pass; b=g13tY99gbcxt942OPMMYsssuHggjfojWhWO4w9Ighq3QJprxSQhKQvuGUOcULl/cwkQdGRrZ9oQLOTAlWnUxE8lLC+v9d2Z8xCSkGPSCKlA14va06omdiEgrWw7Aqlxwie78aECRKbk0sWXAJZycekkKiJlEz5jgJOUVAo4q7zA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760048114; c=relaxed/simple;
-	bh=EKKclTstahvIlmrxzipharrRpW+1asBXietDT1C+zJM=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=Q6UhPFb0DF1llwsPwpkGqsppHhJDvh/284lNU74We7Zc1hfdSiKe0BxfxmmDK2K2mfORMEVkBRNEyNbumn36WgFW8rlDnQ13hHZdGnwST3Hdlzya3SVpVV1f0ZK2P059PXehO4cmlHBPvpPUJolHu2T/R5mxfOKQ5g5PQuGsnW4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=agatha.dev; spf=fail smtp.mailfrom=agatha.dev; dkim=pass (1024-bit key) header.d=mailbaby.net header.i=@mailbaby.net header.b=XY7an04C; dkim=pass (2048-bit key) header.d=agatha.dev header.i=@agatha.dev header.b=YJV5qoLI; arc=pass smtp.client-ip=68.168.211.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=agatha.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=agatha.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6832C2848BA
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 22:21:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1760048464; cv=none; b=ch9TjIdkf4OSKQjropcqvyTd/iEKS2rasOhMFbTDaVlSPjS0UflfJiRQ20EKxtCdqWWHdFoy6T/rnKJcEqcmNs4Mc5TykOCBqbziMwAOOL7bIuhVVhOyYeed/D/5MCqMhUCz0W+OhFOtnQ4JseCJpAGTK5YA9DbWYHuHSLdVtZE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1760048464; c=relaxed/simple;
+	bh=BueN0BOVTYSH0coCwTX+eZotulZbxQa6bP6wvM8flpk=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=OXUxkXRoOF7LwTgCeTUn98YuvaLjfQngUg1y3E8Jp3eZCOJ1gE3aIX5nc1Up+yoWAj8laqMPNA4Ke2gqU/qfYxByZb5EB0wU61MC98RpR92w6Q9aH9z8U9/wxugECVLlxjp4jaDU4rsuRUB1HFVUijAiU4y9nS4iJiiotYdwF44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=SCt7vaIO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bp7DBhjD; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mailbaby.net header.i=@mailbaby.net header.b="XY7an04C";
-	dkim=pass (2048-bit key) header.d=agatha.dev header.i=@agatha.dev header.b="YJV5qoLI"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbaby.net;
- q=dns/txt; s=bambino; bh=EKKclTstahvIlmrxzipharrRpW+1asBXietDT1C+zJM=;
- h=from:subject:date:message-id:to:mime-version:content-type:content-transfer-encoding:feedback-id;
- b=XY7an04Cx716iGuArrIJhGnuAU167RboLyDuGi8bxmaSnbFpjwdeA2kfPT42P6V8C7KczqgtF
- JYpass8Nya0RJ/Jq/Q9vU5QSYJriUv5lwcVFOkdYwKMXk/o/aHyDEG+9wqUiSh2NN4mUfxSwxbY
- 1/YLwz0WeLHOKSG/v8Xjou4=
-Received: from mb-nj-kvm1.internal (mb-nj-kvm1.internal [10.10.2.10])
- (Authenticated sender: mb6724)
- by relay2-o.mailbaby.net (MailBabyMTA) with ESMTPSA id 199cb060f55000610d.001
- for <git@vger.kernel.org>
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
- Thu, 09 Oct 2025 22:09:56 +0000
-X-Zone-Loop: 158114afb10eac248cdf6577f94273425980e7fcd951
-ARC-Authentication-Results: i=1;	rspamdcluster17.mailbaby.net;	auth=pass
- smtp.auth=mb6724 smtp.mailfrom=code@agatha.dev
-ARC-Seal: i=1; s=detka; d=mailbaby.net; t=1760047796; a=rsa-sha256;
-	cv=none;
-	b=xGCwKWvbPIKVwXmNPJsXU38250zX33r2FZRQFJ9XF5hhRA1sG4oeqgJ5amJwGlADNFt9iu
-	152Za7htzJBg4MVxfQwkBDBALTOIKhxiwTUQbEy4CRbqG/1vTw/gZHyhal+RaZkDJ6wYmd
-	wwJpkQzeYXYEFlVbv2y5vq/XILs58RFqdQedPjg77YYtMsMj2/htwIKX0u3HXbcWpwZ+M3
-	DbjXeO/PHouNSPstGavcz2u5TNvPIwzgjJfePC8p29qlaKAp+rzINKeLmkGpawS2qD0bX1
-	eiJgzt7F2FC7nywoPzvotQG/SO4eCS4BfjmBM2KniPAupI7rZeU3i9nYhu94oA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailbaby.net;	s=detka; t=1760047796;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:dkim-signature;
-	bh=EKKclTstahvIlmrxzipharrRpW+1asBXietDT1C+zJM=;
-	b=k2pr/m4GPNyq8uPEPbxFkd/JrtD+4jpBupjxI/tQvo9lrv3njat22k+NeugWkMZ6a7nwI0
-	bjIRJBigVV2CqGHi52r8p2lD+l3bcjPw4QZ54NXSWLYTMfTFzAy6Sm5LTz8/JH4jgGYe7/
-	666noHEZLkRRNdNKNiR+xmJbYF26cO/s6fADepgd7M6w+Zcgd7YTFrVm7kTrHK9yQJgqwH
-	UuaG5I+Fm/YH4vlAdwdZVt4qWoZ07J9yZjyaaKwPeE+z+fdr+0Q9HBW9p3IjbOFvBpfAYm
-	vNN5TtkIQtI/nVp50AqF7Y81YmQkde+FXMQ1bNS7trx561/dNYYJ2FxmOI5z3A==
-X-MB-ID: mb6724|me@agatha.dev
-X-SPFOrigin: SoftFail
-Feedback-ID: mb6724:199cb060f55000610d:96.47.167.18:mbaby
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=agatha.dev;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:
-	Subject:To:From:Date:Sender:Reply-To:Cc:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=EKKclTstahvIlmrxzipharrRpW+1asBXietDT1C+zJM=; b=YJV5qoLIpvopTXK+R+EkgHfnxa
-	dezh7BpKoQeSh8+1Ko5yshOXYbdO0WBrCk4uOn/1VzS6qoEHCcf2Sb5Xr1S/myIZtloBxGOq2F1xd
-	zcv5CYFfae7U8XqEYLVp6gxJ0LsMc8LeM66iZzSI9VhXWxEOn0wVALH2wz4CWp54MX06A5gRubrCE
-	IZ/B1VFQpbAq2vzak5jU6RyUXi+Z+kN6CQZ3bE+7sNKPxN3dEXjkx0g0GmVYSHY4EZXYuLvUqFf82
-	V8f76kyx3NDNmHgraFZDxfYKofsXXsyjuAw2LVo7PRtp0xRQF0gFu+Rk6W3i1TsUs2hBaLopjBMnb
-	BPBirhfg==;
-Received: from [23.94.14.143] (port=58062 helo=lavender.agatha.dev)
-	by nyc3000-r.dnsiaas.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <code@agatha.dev>)
-	id 1v6ypi-00000009KO6-27B5;
-	Thu, 09 Oct 2025 18:09:55 -0400
-Date: Thu, 9 Oct 2025 17:09:54 -0500
-From: Agatha <code@agatha.dev>
-To: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
-	Christian Couder <christian.couder@gmail.com>
-Subject: [Outreachy] Introduction =?utf-8?B?KMOBZ2F0aGEp?=
-Message-ID: <qbehd3whkgrofsmvkrtgbfo3tiqhyv3friz56xrehkgduld3ou@e4ck6nfloaq3>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="SCt7vaIO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bp7DBhjD"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id A2035EC01DC;
+	Thu,  9 Oct 2025 18:21:01 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Thu, 09 Oct 2025 18:21:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1760048461;
+	 x=1760134861; bh=rd8r0ROPeuPDUoLmpek5FerhOT9DAITH4L+jeFNmw6k=; b=
+	SCt7vaIOGtTiQ0jWc8kAnKfSEJo3B1WVPmAqUXg98HbSLMWO8hsT/gPsUGRiEDjq
+	/gU6LzDWPS7OOkW+cQm8UEuI3s2QdGygYoH+u1BugUht3tuKHOusMnWo6HHw70hY
+	OqZUjsOpKsXvhiXzU+empGiNp/tbNXF3jcbSVtGy0rjR0pDCYQFkX9TcdVakdz+o
+	ORkCLOGZVTLaXTg6XsymO/S58ezF+4ele0X0GyyYdCjMittnxdzwNigZg7if0IUJ
+	u4M4x6LUSYW5ouYjqsdIBpttkPUIVRan0YGv/g88ylSf0spq6Kdxbsya7962IcL/
+	ZFD6Tkdbe69+AwbWwm82kg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760048461; x=
+	1760134861; bh=rd8r0ROPeuPDUoLmpek5FerhOT9DAITH4L+jeFNmw6k=; b=b
+	p7DBhjDJdnowBOu5+q4C0FEKgUqXr7kel9OXm4f96ZIbzVa9myA5nTieufF6qXmt
+	IK2G6BWhrhWfoShNQXtph3P5uDrYOyaztMMb/Bpz4Zqt8sEbVx57RasbXRF4D5T4
+	s1LCxOYOuGHhRVzDb2v5Xa1HkSFUa+R1okYOqQfmu1WABnwPIku/4t8y/8WbijYe
+	8hFDQxIyhT4Bc9n9zmJpgYhGfckiPiRDg4v6smKa7Dahe+YuyyIrzD17MdkcgkAM
+	Dw4+7rMZIzw5WEcR8k4J+y/IgWVdxDwv/QM8vpGphMqrzAU7cH1W/26ZyuK6gksl
+	2cqlmGb3GpPrZgdTRovvg==
+X-ME-Sender: <xms:TTXoaDzKEGlew9Yu06mEmNXcP5CX68IP6It2TRMOvLAIgEzRDrhn4eU>
+    <xme:TTXoaGHXtiQE0E0DTqwlDrlzTQFyYjH8IJubGxJzCIibUSzIQQ8W2-YYfUGYNQgjn
+    uUlVtPPb-ZA53T60aE8n514t4pj-qNnl4CDbB-KsQNzk84JO8abktE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdejfeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptefhgfejudff
+    iedugedtffejfeekfeetfeevvdejkeeljeetvdfgfeevieeutddunecuffhomhgrihhnpe
+    hmrghrthhinhhfohiflhgvrhdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
+    hsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    eptghhrhhishdrthhorhgvkhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhi
+    thhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehjuhhlihgrsehjvhhnsh
+    drtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:TTXoaHeI9vHiTD8PDH9ksCyzYu31kC4Ib7GYjYgLXsvUWPIjEcHFYg>
+    <xmx:TTXoaGh0NGj48AS54d0DG_9o66t584cg9r7lf7EA4Rp9nkPSEpQglQ>
+    <xmx:TTXoaHzPQGWVL6R9M2e_cq1trTqZFZzrgjx0rFo6A6gbTaxmhY-yJg>
+    <xmx:TTXoaKPegbRkKxJI_lHwuW_2zCOJl8dyf1XVMLbnq1kN0bfd2_A22w>
+    <xmx:TTXoaLW6Rgx0TiSj6D4i74s1iwIRuKokyBr5TD_DhfJmDPIqWIL6Tfi0>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 3C40D1EA0062; Thu,  9 Oct 2025 18:21:01 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: AfozKx6wiI6s
+Date: Fri, 10 Oct 2025 00:20:40 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Julia Evans" <julia@jvns.ca>, "Junio C Hamano" <gitster@pobox.com>,
+ "Josh Soref" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Chris Torek" <chris.torek@gmail.com>
+Message-Id: <bf769259-af30-4b13-aa0d-36c244e7502c@app.fastmail.com>
+In-Reply-To: <b432f1b9-804d-4249-bc1a-4f3629aff50c@app.fastmail.com>
+References: <pull.1976.git.1758656702.gitgitgadget@gmail.com>
+ <pull.1976.v2.git.1759951536.gitgitgadget@gmail.com>
+ <122774d4cc8fa4e9184a0f82e9b6e562363ea433.1759951536.git.gitgitgadget@gmail.com>
+ <xmqqqzvddqon.fsf@gitster.g>
+ <b432f1b9-804d-4249-bc1a-4f3629aff50c@app.fastmail.com>
+Subject: Re: [PATCH v2 2/4] doc: git-pull: clarify options for integrating remote
+ branch
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-AuthUser: me@agatha.dev
+Content-Transfer-Encoding: quoted-printable
 
-Hello!
+On Thu, Oct 9, 2025, at 23:31, Julia Evans wrote:
+> On Wed, Oct 8, 2025, at 5:33 PM, Junio C Hamano wrote:
+>>>[snip]
+>>> +2. `git pull --rebase` runs `git rebase`
+>>
+>> This technically does not integrate remote branch into our current
+>> branch.  Rather, the commits on our current branch are integrated
+>> on top of their history.  That may be worth noting?  I dunno.
+>
+> At least 2 users who read this also commented that they find the word
+> "integrate" using, for perhaps a similar reason. Specifically, one com=
+ment
+> was "unclear if 'integrate' is a technical/specific term or just gener=
+ic".
 
-My name is Ágatha Isabelle (pronouns she/her) and I'm (yet another)
-outreachy applicant for this cohort. I have some experience with C,
-developing mostly device drivers, a couple of patches in the mainline
-linux kernel, etc. I also do some assembly (x86/x64 & riscv a little)
-and C++. My goal at outreachy is to regain experience to work in
-software development again after some personal setbacks took me out for
-some years, while also contributing to an interesting open source
-software project like git.
+(confusing)
 
-I'm looking forward to interacting with the git community once again
-within the next few weeks during the application period.
+>
+> My assumption was that the word "integrate" was meant to be a generic
+> way to communicate "combine the changes in the two branches in
+> some unspecified way", and that's how I was using it. I'm not sure what
+> you mean when you say "integrate" (is it "merge"?).
 
-Currently I'm looking through the documentation to get a better grasp of
-what is expected of us during this period. The doc says I'm supposed to
-send an introduction e-mail, so here I am. But I don't want to just do
-that, I would like to let you know I'm also working on choosing a
-microproject -- right now I am exploring some intersections between
-git's object model where objects are immutable and tightly linked to
-author metadata, and possible privacy concerns. Especially for people
-who would like to exercise their right to be forgotten and transgender
-individuals who might fear former name exposure in places where this
-information is protected by laws, tackling cases where a simple mailmap
-entry won't be enough and rewriting history would be way too disruptive.
+I wonder if =E2=80=9Cintegration=E2=80=9D is like =E2=80=9Cupstream=E2=80=
+=9D; frequently used but not
+really explained? (see gitworkflows(7); one mention in gitglossary(7)).
 
-I want to see if I can work on a microproject that helps to tackle those
-privacy concerns while keeping objects immutable and preserving git's
-design principles. As it's supposed to be a "micro" project, I plan to
-explore a small, concrete first step rather than attempting a full
-solution. Yet I would appreciate any input on that. I have a couple of
-ideas in mind to check if they are applicable too.
+I think Martin Fowler has the correct (useful) view on branches:[1]
 
-I think this would be of actual significance for several groups of
-individuals, especially for transgender software developers who face a
-lot of challenges to get in the tech industry, even when they have years
-of experience. While in some places linking their current names to their
-former names might even be dangerous, or at least lead to embarrassment,
-losing credit for their contributions to avoid exposing deadnames could
-also be a limiting factor towards obtaining employment in tech.
+    In thinking about these patterns, I find it useful to develop two
+    main categories. One group looks at integration, how multiple
+    developers combine their work into a coherent whole. The other looks
+    at the path to production, using branching to help manage the route
+    from an integrated code base to a product running in production.
 
-I’d be happy to discuss whether similar ideas have been explored before,
-or hear pointers to related prior discussions.
+Specifically the first category.
 
-Best,
-Ágatha Isabelle
+Then later:
+
+    Branching is about managing the interplay of isolation and
+    integration. Having everyone work on a single shared codebase all
+    the time, doesn't work because I can't compile the program if you're
+    in the middle of typing a variable name. So at least to some degree,
+    we need a notion of a private workspace that I can work on for a
+    while. Modern source code controls tools make it easy to branch and
+    monitor changes to those branches. At some point however we need to
+    integrate. Thinking about branching strategies is really all about
+    deciding how and when we integrate.
+
+=F0=9F=94=97 1: https://martinfowler.com/articles/branching-patterns.html
+
+The point of *most* branches ought to be this: you need isolation, but
+you also want to eventually integrate with upstream, the trunk, or
+whatever else.
+
+=E2=80=A2 Everyone working on everything at the same time is chaos
+=E2=80=A2 Everyone working on their own thing in isolation forever is
+  Balkanization
+=E2=80=A2 Forking a private space to integrate later in a timely manner =
+strikes
+  the right balance
+=E2=80=A2 (Then there are the dozens of variations of long-living forks,=
+ private
+  forks for the changes that you want to make but few others want...)
+
+So I don=E2=80=99t think that
+
+> "combine the changes in the two branches in some unspecified way"
+
+is quite it, because the direction is towards one integration branch,
+one upstream, one trunk, main branch (not whichever one).
+
+> way to communicate "combine the changes in the two branches in
+> some unspecified way", and that's how I was using it. I'm not sure what
+
+... and regarding =E2=80=9Cunspecified=E2=80=9D: I suspect the contentio=
+n might be
+distinction between integrating the branchy itself (with those commits)
+with replaying fresh commits (rebase). But I don=E2=80=99t know.
+
+>
+>[snip]
