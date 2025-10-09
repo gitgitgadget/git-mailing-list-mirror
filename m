@@ -1,68 +1,64 @@
-Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C23125F78F
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 07:46:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2BE2BE648
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 07:46:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759995972; cv=none; b=Kjb79Rg3RUHxJhIwMJGSLTdB7mJ/AATUlT4KJAFxDOj+/mB1ruzp3Gjv2lsw9WklsbPTfkukIpvdZfys/fq1wRzc0UChiBRaVJo23gwBf4cjw0xhjRfuviGWc999XKWEUAgMHU+lLLQuf5vlqfs7yebaK73Ci4eBKsaqgiBu4no=
+	t=1759995986; cv=none; b=rV5sk4k6L/TAg2uKd70CSp44UPO5VLjxAnyqoawA4FRN0X9f/5YQKyRDTTJhC4K2JA2lPd0IC+NJ+Vr+0ZxOVZzUVrDYmNTowhQYRXKLLLMLoPGv8Ym/R5U9quSr6xFWMptT4JaELaeN8hgOCIuSn3uld5xu1JZ4zTgOcTXDEcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759995972; c=relaxed/simple;
-	bh=dOzpa7zun8YofuOdKiTq5SjT0br+PqDEN2eknT97wQM=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=PwXp1kl9ENxeHVQ3cBmdJiiTlqt42kexezu1zEyZfQlmYJlkUpLL4YBkfnu1oY5OSFHXPKiC9tBwlIJJKlEZezdNI5xqR/zuGZRVpcYi4SYgCJoIN2WFK9dxmeu8oHzO+I5Rh4yPrhcT4Eojjy0Tl+40ccbz+Dk7R5svcvu7rSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YwtgBKx1; arc=none smtp.client-ip=209.85.166.176
+	s=arc-20240116; t=1759995986; c=relaxed/simple;
+	bh=yZAW5wxmxvnBU+IPS3tTNEA3OydtIIY5uY617oQiPs8=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=W0BDd0HC5GvCTQoIzH6q2YmHMUD+6XgW/aWAL3tAcaE/xMRGrclDUrgon/upnO3qGfVr7C17FBonJMVFgRTna+87iq4IQkSxZrRm59WfbKvxjv1OcdhxMbyrC7JnkL/1c79cgt7eV+Ci9hW94nhG68Wycc2qIBtNilAbREfgFBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DFck9Ips; arc=none smtp.client-ip=209.85.215.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YwtgBKx1"
-Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-42f8e93c54eso6067745ab.1
-        for <git@vger.kernel.org>; Thu, 09 Oct 2025 00:46:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DFck9Ips"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-b57bffc0248so576715a12.0
+        for <git@vger.kernel.org>; Thu, 09 Oct 2025 00:46:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759995968; x=1760600768; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1759995983; x=1760600783; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tirXb8qgcpqFGA3bBp0RZvF71FQvIFw80b6f85b4xpQ=;
-        b=YwtgBKx1jb0CvoKpydOJed2rSa18+++p05jGBAVSZ7QbpVEiSuX5VIZ4BeP8sL0RgO
-         MnxHPwiJTd1bQjDcYnYw2B7wV7LCOBzMxMiRBTyMZCtSgXYop26HteM5F6iGkh6KFFrw
-         WTYHXrx8eSM6RHH46snu+CzWpRP7ZUskXR0mPeV5XeBVNpmUC25P2WtEucUADBrtgLiE
-         Wbt4JMRvKw7NJRhJuedM1e1f7TCFYQxRQEe/hYgaCSDnF+iuPFrlk34AaUjFje4Nnjn4
-         uAExH9RWZ1iQ3HPtcMuzUHMFGW4bvRr02djJUqR/Z6tGQQdv9gMNHY50HBhjTQJHCzr0
-         aT6w==
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=9egseDC6WgRrSq12IQIoM8T+Ns/AVVtDlL7crCez2a8=;
+        b=DFck9IpsuE16UtGSOaGKG3NHUZUrb6WvK6W2weQ7n4Y7ZQ4J2gb1bICywCzXjKW9ht
+         qE78FLZ2P19a1DZ62hxTuGxmuxAB0esMYivmhPwQXD4/5zCACFtY5QoLCfj6B4PlvO6J
+         yZ6vspqKFK04/2GlHx62OVgpJiweaEyfuWYPJF8Gh0iPFGOrU7DS4m7javqQQQwIr7Ab
+         60i1aYB2DCTyWF6NceNHT9KKKPy/Cyl4MGaUV3EJpWP4LebZpsIgank1DDSoslaibShv
+         ULh+jLUmQvo8LVOd+fQiIcSjXHkS28ijQUQFp/2poJA8Z5v918m3R/OW41+NPmcERXuR
+         zaXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759995968; x=1760600768;
+        d=1e100.net; s=20230601; t=1759995983; x=1760600783;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tirXb8qgcpqFGA3bBp0RZvF71FQvIFw80b6f85b4xpQ=;
-        b=UpWKw0w8S86ggHmu+82Jeuc79kAuv6+AWngmCwQ4BXEnNs8bbDwmeOo6kLHZgBg/Lk
-         jcqX8GjzyIyCZaS2AN3IhQi+rsdG1Dnkfn5EL/raQiVt4mX32o3+sXxCwomFFjHyaZxC
-         k3W6UemQZeU4hbOyn8A+Momg3khN8RIQgbwOqC7SZauUSRg15bmpil4BklV578muLehr
-         6RNuFdwIZz27UlZKgTcOZ2pk6PempYQLN5k+r5SuRR1Dw15X8ZNThR8FPh9JtGtBBAAo
-         mj4N2OHrbgdl8usEZEw+qOcZmzjteb7dtixTdTAsSIBr2BfTVLPQx5UyBzdO8TgumQgj
-         TWpw==
-X-Gm-Message-State: AOJu0YwWNftaKwjN23wCv51TJTEL3rra++MBVNrS8mNJ7/XM5ZGcfgPy
-	VQATez7q3rg0xqfJiQjszS+MYaoDDkJhlTFmaO0MactwZIhTya7YJcprN+aeHg==
-X-Gm-Gg: ASbGnct/HwZuS8sFmhaYhYbrY4GqCcHf9NAhD+32ZfTLnUIk10kXwi/h67bjc+Ai/qy
-	qA2vOH2JfGv3XLPeMb6qXzHZxP7U0Ck7X/p54P6GeXY/JfUoDMdDBMWX/lwlrKTZGx/7t05wrXw
-	IppNt01L1RkGAWsM1ZXWH9KQcQCBDmy08A28sl06J8esz3VjUET0K4tt78qaTrwJVGz1oFRlB6e
-	F7q0VWgkPsVOScJ30gvXKCxXs2h7mqQcNRa8Egg4BbfEtdfSJkD+3w05+RA1h2eg00UXN4vZnRt
-	hybut6zaGTVbQhAuDDOVSwoCb7sDFiYgFRwROjn2xt+HqMUzcBsgqx4FgF0lvwnBfgtLOaGvbP/
-	UALmLHWf9KUvDbf1UjiluzNvT0d4rMj7/M/LLaqzN4upZS9Nrly5zyeZN8LGj
-X-Google-Smtp-Source: AGHT+IGumtS3j1RwmZAa1ZuqlSZVVp+IStZtegd7GitetXgsazI9HnNWHIepWg9rquuVvr38J2FGkA==
-X-Received: by 2002:a05:6e02:470c:b0:42f:8ab5:828d with SMTP id e9e14a558f8ab-42f8ab5843fmr40558435ab.27.1759995967948;
-        Thu, 09 Oct 2025 00:46:07 -0700 (PDT)
-Received: from [127.0.0.1] ([135.232.201.67])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-57b5ea80655sm7772638173.34.2025.10.09.00.46.07
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9egseDC6WgRrSq12IQIoM8T+Ns/AVVtDlL7crCez2a8=;
+        b=dJBZEPBWqAtq0NKeNzWKB2t0VX2BdHjJ0v8ucNNHi4sgQ+NWx40VMnm0liYYxcxjYs
+         pgP/KPDH8dY9UUOTIp6Zem8TNzNt/2H9zmvpfg1ACvtDm7G5h8jNT/EMKz63p1UWB+rB
+         yB1ulrgLSCtvIItoC40B0lYJm6YdBFu12S0zsGZ24RiRmnQR7M8VJjFv7rEt4rreeU7M
+         74mYWM2mSem+uslEN/jaldqce2l/Vk3P98fdqgGO7mm3pagyEYioCaRRT/mhuOyYbrbx
+         dV3FmDYJrJvq8vA+5sdsXyOlTPuSmjcxBlxUDC/sVJVutoKrWfanyf1ZwhlMJfzUgQWB
+         izIA==
+X-Gm-Message-State: AOJu0Yy0XPOWKBYyfA0g/yJzN3Ez9aptNEnWiNjuiLg2dHt7XxG2uY2e
+	ogOoncKOnUCGt0T7/5WCKgvyfHM2NVP1XF4pTeLnpMJcd5SGhMdcR9yyEVsiKQ==
+X-Gm-Gg: ASbGncvOFNXd/qjjy0HAcdNWcnC1JkP3djlFFLmxthXdEJf2XsPguvLJ4MGjM6Wp9yZ
+	FmE6YPVwsPrmuqmhLYYkw21j89yaK8qTlV4kwvhS3NRtcKjKOFjefSG94yJt5mV69cir6cfN7XH
+	RZ8PBgEEOFJ3jurzAoUOtFb2TxQ4/KYX8UN7S+JE1c7cOAQOn/APR7JBfxrhKojHwr6OcUkrZMY
+	zf0PXwoFlr5iAXitlhLqv2lOziW0vZ9DGAI5fEDXBrE7hTbvkx8BZdOsVwo5DZzE3Uxj4gJCjm3
+	acI05tYw9dLx/By0FlbpB2b/jYxtj51MEWOsM/xf+VdVcBKwi8Xi/2HAHC0gsSmDUHM9/yPJuqT
+	S4B0MD0t+HRkghO2DjDWPOpUkZ1U3F7AkXQpknMSGM0cCs07md5uJoeajV+j49A==
+X-Google-Smtp-Source: AGHT+IHWv+o2bHYMkkPUe5RR59QtFS8eKB50zE1IsByMNPRZ7fIp4aRmLtMH8Q3NTd88aVuC9aejCQ==
+X-Received: by 2002:a17:903:1a2e:b0:271:9b0e:54c7 with SMTP id d9443c01a7336-28ec9c281aemr136716105ad.11.1759995983393;
+        Thu, 09 Oct 2025 00:46:23 -0700 (PDT)
+Received: from [127.0.0.1] ([172.184.209.146])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29034f93ea2sm19343885ad.126.2025.10.09.00.46.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Oct 2025 00:46:07 -0700 (PDT)
-Message-Id: <5303aa57c4e5aa8e88b4a3d553ff3a69dbe54871.1759995961.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1985.git.1759995961.gitgitgadget@gmail.com>
-References: <pull.1985.git.1759995961.gitgitgadget@gmail.com>
+        Thu, 09 Oct 2025 00:46:22 -0700 (PDT)
+Message-Id: <pull.1984.git.1759995982220.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 09 Oct 2025 07:46:01 +0000
-Subject: [PATCH 2/2] mingw: order `#include`s alphabetically
+Date: Thu, 09 Oct 2025 07:46:22 +0000
+Subject: [PATCH] refs: forbid clang to complain about unreachable code
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,53 +74,54 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-It allows for more consistent patches that way.
+When `NO_SYMLINK_HEAD` is defined, `create_ref_symlink()` is hard-coded
+as `(-1)`, and as a consequence the condition `!create_ref_symlink()`
+always evaluates to false, rendering any code guarded by that condition
+unreachable.
+
+Therefore, clang is _technically_ correct when it complains about
+unreachable code. It does completely miss the fact that this is okay
+because on _other_ platforms, where `NO_SYMLINK_HEAD` is not defined,
+the code isn't unreachable at all.
+
+Let's use the same trick as in 82e79c63642c (git-compat-util: add
+NOT_CONSTANT macro and use it in atfork_prepare(), 2025-03-17) to
+appease clang while at the same time keeping the `-Wunreachable` flag
+to potentially find _actually_ unreachable code.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+    refs: forbid clang to complain about unreachable code
+    
+    Just upstreamin'
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index da99473f56..736a07a028 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2,25 +2,25 @@
- #define DISABLE_SIGN_COMPARE_WARNINGS
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1984%2Fdscho%2Frefs-clang-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1984/dscho/refs-clang-fix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1984
+
+ refs/files-backend.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 088b52c740..814decf323 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3186,7 +3186,13 @@ static int files_transaction_finish(struct ref_store *ref_store,
+ 		 * next update. If not, we try and create a regular symref.
+ 		 */
+ 		if (update->new_target && refs->prefer_symlink_refs)
+-			if (!create_ref_symlink(lock, update->new_target))
++			/*
++			 * By using the `NOT_CONSTANT()` trick, we can avoid
++			 * errors by `clang`'s `-Wunreachable` logic that would
++			 * report that the `continue` statement is not reachable
++			 * when `NO_SYMLINK_HEAD` is `#define`d.
++			 */
++			if (NOT_CONSTANT(!create_ref_symlink(lock, update->new_target)))
+ 				continue;
  
- #include "git-compat-util.h"
--#include "win32.h"
--#include <aclapi.h>
--#include <sddl.h>
--#include <conio.h>
--#include <wchar.h>
--#include "strbuf.h"
--#include "run-command.h"
- #include "abspath.h"
- #include "alloc.h"
--#include "win32/lazyload.h"
- #include "config.h"
-+#include "dir.h"
- #include "environment.h"
--#include "trace2.h"
-+#include "gettext.h"
-+#include "run-command.h"
-+#include "strbuf.h"
- #include "symlinks.h"
-+#include "trace2.h"
-+#include "win32.h"
-+#include "win32/lazyload.h"
- #include "wrapper.h"
--#include "dir.h"
--#include "gettext.h"
-+#include <aclapi.h>
-+#include <conio.h>
-+#include <sddl.h>
- #define SECURITY_WIN32
- #include <sspi.h>
-+#include <wchar.h>
- #include <winternl.h>
- 
- #define STATUS_DELETE_PENDING ((NTSTATUS) 0xC0000056)
+ 		if (update->flags & REF_NEEDS_COMMIT) {
+
+base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
 -- 
 gitgitgadget
