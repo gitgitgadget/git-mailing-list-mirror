@@ -1,144 +1,104 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D63283C93
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 21:57:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88678215077
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 21:58:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760047054; cv=none; b=rb1GfFJXGJqhAEKrf7vbjCaZfqVvSfZ2Ioby4K9/Lodh4JYROqOuw1oYhwWD9Oucpv5aEgcJNohNnu7Uj+2nmRWMFTi/tESrOU0FsZ7u401nVHOgGCbCpZLhccfJetsgwyXLOAh42CZwhdBIiN8SnwwcT9db6kCQ4u1n93TOrE0=
+	t=1760047084; cv=none; b=NqJG7YnbFosyfSq1+hucRPrPS0Ud0wRm5PImyDJlkOzU4UpQpu9TSniBLLIhOX4+ENuwA/2tFGQjs+IWj3D+CGIy3BiFuzIkcbuLI4aOMnIDIR7PL7JQokF/5m5DkzlNXiG77n6I8kCQvckI8LU1B5OEtLzKCAJ/r+bNAB0lnsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760047054; c=relaxed/simple;
-	bh=PZQhS5Sz+QvjB5ZWz9Du5j1N1akDw/3cLRKdZOtfqV0=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=JQJ8oVMnmh65SPo9BG3/qKc5v03UO58DsNLq0UxH1lr2i+gwIZSTCGLH9TEG/WGHJcRMkDqc1gcB0n4UssyUUDySeyyCy+cF6KBurkkYRbHt4fx2ayEpsGIhxpRLVLsozRlJp1D/9Z6CVlWjC55a32q4VZp1EF//W6AWtdnpMBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ctlhjne8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l8b4aP1s; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1760047084; c=relaxed/simple;
+	bh=b/5FfmW+qs1frX41vLUkyXCEbh50ZiKJIhGnhiu2R7Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=kB3tBrV4alCNdMUnolKbUm5T+A5kHfP4QJNYowKfhVEqRTbXXXtE3sFgKBDir7oYNtw0qaRYruHaBOaxlVh3F3bzXATanRWykzEfzdpwrQ1gbEJKj4eTKqUa68XzSisJPghy5wXKEhlxaNcFjReHxOGpGlHRxQ8RxrILh5dzKNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EYSaryeU; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ctlhjne8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l8b4aP1s"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0CF7BEC0018;
-	Thu,  9 Oct 2025 17:57:31 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Thu, 09 Oct 2025 17:57:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1760047051;
-	 x=1760133451; bh=J3exVR3BkT+iLR0RmAKgyJmbi/U+NdPiV3wQTAW96BY=; b=
-	ctlhjne8ev86Y/L/0/Gnt5r+CrEbSJVDilalbxEqvxL/ekNsjm2dDP+lWIIazQuZ
-	zJ1PV3dyzOMGORNWqE7ceNXrwJEXYCAGDbMeulHUCAn6N8XGGT1FfTBaEYTL565e
-	Hzjxr/J89JFAklFc1PN72+69FP0taYRrNaOjH/9aUz808kRQVekmoGMko63uZjAr
-	PSnuXrUv+OhhvEj5MYcI8ENZRrdkWhe5dCS0EkGWsvsNn4xPLdhPkJc2rTdsQHUd
-	sQmgU3fa9GZUw9CD3QXFjePWK6lkR0hFQQmxmw8+sjJRnU7CWuZ0Ylm126ojh6rW
-	2QYbuZiLcHs74VhpQ/AuDw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760047051; x=
-	1760133451; bh=J3exVR3BkT+iLR0RmAKgyJmbi/U+NdPiV3wQTAW96BY=; b=l
-	8b4aP1sGSLpL0Mj7MxXSmIH6X0UdweWeL1UVPkqsYBD3y9Bsags+23ot/k3z2Ue0
-	konrjYI/IGJL5d8bfFPRm7+oG5uxUd4sw0tM/J0YUiIG2fmY6d7d9Ye+4f2DEU5k
-	Y5pqVTyu9upZCYV6BBxpj8YIqAWhkoMdEJEhZC0gwfHX78CpJuJFvOuFu6l82I+o
-	GTuenbKoiVLWiv+URutf8MK4fkKMjIyiTNCW8ruEYm/5PHrtVlGCFgXZhcd7hsDU
-	5/LbVRLUHI/XiSMngDvkp3W1UlEFk4waRJUm/ofF7/yvYoBZ6LIHjRUAJoVH4+qJ
-	7xHNtINMpTh/SODyYGKrA==
-X-ME-Sender: <xms:yi_oaKbzD4qZ3tbzLX8dVmfNQa-v31V1SWnt1zQHchJU9FHK4trmgDo>
-    <xme:yi_oaIO1SIp1VaaKpAP1jJpIM2LJbOHCFTc-xqjAY3L0uWCJwy8CdmjdGmo-4Gjf9
-    Z8cxlGqRgfwWyr85a9V-ysCkEf2Ni6qLUUd9WpFVyIoZAY0r109HQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdejfeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhephedugfevgfef
-    gfffvdfhffdvveevgeehhedutedvgfeuffejveejudegveefvdefnecuffhomhgrihhnpe
-    hkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
-    ihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
-    drtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtoh
-    epphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehj
-    iehtsehkuggsghdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrd
-    hnrghmvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:yi_oaDYqOKhoTXsiZKxQwudlUjBGSJF5RENENBTqMmsygtUUGp_Nug>
-    <xmx:yi_oaNWbzmKG_eZcNOBVEIwMnkVPbq4WtRcnh7h3KEFP3XSYL3w1PA>
-    <xmx:yi_oaE8uXh6rJ6smnmzzdm4HKXB6xV1x4rpu2T5hmBuCCadvEH7UAg>
-    <xmx:yi_oaO-1Vr0XAvhvsAQVD6VncOqwhdde1QQoTEGjOCf3sApCCOyGoQ>
-    <xmx:yy_oaOQpL0D5V0cARLl26xkW5elS0PmWu0vZlM6y_bm9Rn8A4-p72eOU>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 0DD9D1EA0062; Thu,  9 Oct 2025 17:57:30 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EYSaryeU"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-46e29d65728so8652815e9.3
+        for <git@vger.kernel.org>; Thu, 09 Oct 2025 14:58:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760047081; x=1760651881; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ACtBqHSBcK/DyoNIhoRuQIEgXk+gYvMZKRxF71if784=;
+        b=EYSaryeUw0xhg+hDWU7ab8wStZiRlR0bv2RzqNzLlqR5JraoMD6f5Sk1xF1VYZ4lhU
+         cMYu24AVlUZaDsI0WMrJVkhhBanV3VaVtn2L3MvJcBf3wX9TRRIHQ7ND8IAY/zQvGr9d
+         8GxuqsDMKu3zgr0eFnFBU+GaUVTHUuy2/+RwkQtssyN8VQHmg2wxn4rJvuNjLQpjWP7g
+         dJawx8JpHxFBZSf8MpZwosrwXjyuvsZCW7oNMhp1KFVXlTERuq26KatLp/G2erBc/Nhb
+         vJs8+dosotI3NCuWnq/tC0tSfnpHnqmPVBK3rNgQwDZUzlscdORoHR6uGx5sK/PgqsPi
+         b/vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760047081; x=1760651881;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ACtBqHSBcK/DyoNIhoRuQIEgXk+gYvMZKRxF71if784=;
+        b=tC9W4H9lfD9Lv+OFwOpBqiBmkx5UZ5KDzvbxYJJR39w5hNNmaT8GfcWGD8yrk0uah9
+         iTdl4i5pGXysDtkm2h8QvoOYjHuvimdlX+DkYgqNGGgn9Cu61NbTlb0PxXY+ly+FwXju
+         /9jtTF7xovUWub+YkawTLq7lbGA4LtTcii35O4bYU7mpGe7wXVM2Xw1/PIKnvVJmbMcD
+         W1GtadIXpfyYsm0QnjCkN9t4exrtJIRzrplm56oflqLsMTpKRgHOgpgv8R4RdJxKJI4T
+         9ZwVwO7XPor3LtLxh5ss/p42tBCTTUUaOs+jHygQLod2irLUs60lkxfmxzoHkbCF54Wc
+         kPnw==
+X-Gm-Message-State: AOJu0YxAoaSpE0XtYP4Xcux9dj2EXPfO/r9lOe3hVYAxyfMzhvq3vO/2
+	sjP1bxZLBFBHLR+hUxmaTSnK9hgHxGRqK0JCx2h2NfDwzdbWqsPDkvJh
+X-Gm-Gg: ASbGncsCAWA6mIFMeMIjvj0fzvqJ87VY/Ktp0GJiIFSS0pWJqsPROB634UDJ1btFMde
+	WVmMntY1rLlUjf3AaCaNzsl+yrDADm4KLNwV9P0oymQjZQzX1tbJiWVHfuxjXh3a1JbcloBglwn
+	2g9cHgiJ6MOHgj4cxmAz3cFZZWL30KFMiC8NcjrCEsuf64iApCcuwJolexkoAcVZzvWDlR0Yx3U
+	DSUtp1Epbd+1usjWUcJgluwXfM9aN3YuNWjOkZJ6WkuvctwNBtlqmGih+SWptv1VXhhCB1Us+rm
+	IPkZRxXqfoLsq8P4CsxuJg9qw35F/ikmctGs1S/lHva859p8r90eJzvJbFlxWEKxwjX2gFxKfiF
+	9MkqgR5Bm2bQXNNWeAvG8JK1AVUXXSA87qcv+ckAYB7yh9R4O/tLPQHIt6ZHZceB8NY9Jamd57X
+	gvHcKdutcQRpvL+9/7MAkL1U+V9U1sqK3RqVN6LQ==
+X-Google-Smtp-Source: AGHT+IGaCPvjFa5OSYKRRc+1GFdlB9hDEMNp/9R2abXVqFqDZ8Xmb5ETho0q4W+6dNb412+CuuUf0Q==
+X-Received: by 2002:a05:600d:416b:b0:46e:4922:6855 with SMTP id 5b1f17b1804b1-46fa9a86398mr66995525e9.3.1760047080751;
+        Thu, 09 Oct 2025 14:58:00 -0700 (PDT)
+Received: from localhost.localdomain ([105.113.99.251])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426ce5e8a06sm934604f8f.55.2025.10.09.14.57.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Oct 2025 14:57:59 -0700 (PDT)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,
+	okhuomonajayi54@gmail.com
+Subject: [PATCH] [Outreachy] patch-ids: fix const correctness
+Date: Thu,  9 Oct 2025 22:57:20 +0100
+Message-ID: <20251009215737.1196464-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251009214445.1190274-1-okhuomonajayi54@gmail.com>
+References: <20251009214445.1190274-1-okhuomonajayi54@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: And9clSpnOi7
-Date: Thu, 09 Oct 2025 23:57:09 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Phillip Wood" <phillip.wood123@gmail.com>
-Cc: "Johannes Sixt" <j6t@kdbg.org>,
- "Kristoffer Haugsbakk" <code@khaugsbakk.name>, git@vger.kernel.org,
- "Phillip Wood" <phillip.wood@dunelm.org.uk>
-Message-Id: <6a921119-6fba-4f82-916f-d80d3f46d54d@app.fastmail.com>
-In-Reply-To: <xmqqo6qfda78.fsf@gitster.g>
-References: <6af09726-e3bf-4903-87ae-9524ad334678@kdbg.org>
- <d17060d9b72.1759952528.git.code@khaugsbakk.name>
- <3a8dfd13-982d-4c83-b675-1e9a63bb6ab0@gmail.com> <xmqqo6qfda78.fsf@gitster.g>
-Subject: Re: [PATCH] doc: warn against --committer-date-is-author-date
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, Oct 9, 2025, at 23:41, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
->>>  You should only use
->>> +	this option to lie about the committer date when applying
->>
->> s/lie/override/ ?
->
-> It cannot be "fixing an earlier mistake by overriding the correct
-> data".  It is deliberately using a data that does not match the
-> reality to replace what was recorded, so in this case, "lie" would
-> be the proper characterization, I would think.
+Fix const correctness warning in patch_id_neq() in patch-ids.c.
 
-Okay. I don=E2=80=99t think he was saying =E2=80=9Cfix=E2=80=9D but just=
- the more neutral
-=E2=80=9Coverride=E2=80=9D.
+Changes in v2:
+- Removed NEEDSWORK comment
+---
+ patch-ids.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I was more confused last year[1] about the use-case here, in turn more
-dismissive; I thought that it was just a vanity thing. I=E2=80=99m all f=
-or
-dictating what the author date is since that=E2=80=99s my judgement to m=
-ake, and
-moreover such fiddling is naturally tempered by common sense. (Did I
-author this between one month ago and now: yes, because I originally
-wrote it one month ago and then amended it three times in this
-timestamp. Did I author this *three months* ago: No, I hadn=E2=80=99t ev=
-en
-thought about it at that point. That=E2=80=99s just a lie).
+diff --git a/patch-ids.c b/patch-ids.c
+index a5683b462c..b6b808332f 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -41,8 +41,8 @@ static int patch_id_neq(const void *cmpfn_data,
+ 			const struct hashmap_entry *entry_or_key,
+ 			const void *keydata UNUSED)
+ {
+-	/* NEEDSWORK: const correctness? */
+-	struct diff_options *opt = (void *)cmpfn_data;
++	
++	const struct diff_options *opt = (void *)cmpfn_data;
+ 	struct patch_id *a, *b;
+ 
+ 	a = container_of(eptr, struct patch_id, ent);
+-- 
+2.43.0
 
-It=E2=80=99s easy to have a common sense for the authoring date because =
-everyone
-knows of =E2=80=9Cauthoring=E2=80=9D. It=E2=80=99s more difficult for pe=
-ople to have common
-sense for the commit date if they don=E2=80=99t know what =E2=80=9Ccommi=
-tter=E2=80=9D is for.
-
-I guess I like the pointed =E2=80=9Clie=E2=80=9D in this case because un=
-careful lying
-can cause technical issues. So you better sharpen your senses and have a
-real reason for doing it.
-
-=F0=9F=94=97 1: https://lore.kernel.org/git/93041214-4774-49eb-b8bd-2464=
-8134cded@app.fastmail.com/
-
->
->[snip]
