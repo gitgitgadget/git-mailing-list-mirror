@@ -1,267 +1,136 @@
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+Received: from relay2-o.mailbaby.net (relay2-o.mailbaby.net [68.168.211.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38C61A9FAE
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 22:09:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760047791; cv=none; b=ZlWjD/nW2h1ZO3aW6yUxJr6oZ6cQEhOdlqtdxZ0443bB6Aihzkfjt7DCr1ZQNdvGg/Fa8MYgc/pZw5MeMzL9VLfAObvKQiUn7arvzOrixGswjuQuNFtGkLiW86zaxptfAMZBZ/qnLd2DFcLXFwDMvOy/zwn/ykJS9dkkw9U2/ZU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760047791; c=relaxed/simple;
-	bh=R+TQZHhWDWogOvtu6aQRamwmqLr6edKPXJ7tMzmTZR4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nkpXfsH7r3VcgJ2ZfvmWqsX02hKZI/YjhihXI15FFV09MiGOoAe8sSg+uApVv0bhJMzzpcDvSdNJkE4QSGwT9VujBUm+KIS8UKefZEuVWYe9bj2qH87roAX+P5GpPicA7thIiGQvQ1uoG6siU27RWUmgGMtgObWKaN9mVxzA/XA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A2M21J/y; arc=none smtp.client-ip=209.85.160.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74824286400
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 22:15:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=68.168.211.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1760048114; cv=pass; b=g13tY99gbcxt942OPMMYsssuHggjfojWhWO4w9Ighq3QJprxSQhKQvuGUOcULl/cwkQdGRrZ9oQLOTAlWnUxE8lLC+v9d2Z8xCSkGPSCKlA14va06omdiEgrWw7Aqlxwie78aECRKbk0sWXAJZycekkKiJlEz5jgJOUVAo4q7zA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1760048114; c=relaxed/simple;
+	bh=EKKclTstahvIlmrxzipharrRpW+1asBXietDT1C+zJM=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Q6UhPFb0DF1llwsPwpkGqsppHhJDvh/284lNU74We7Zc1hfdSiKe0BxfxmmDK2K2mfORMEVkBRNEyNbumn36WgFW8rlDnQ13hHZdGnwST3Hdlzya3SVpVV1f0ZK2P059PXehO4cmlHBPvpPUJolHu2T/R5mxfOKQ5g5PQuGsnW4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=agatha.dev; spf=fail smtp.mailfrom=agatha.dev; dkim=pass (1024-bit key) header.d=mailbaby.net header.i=@mailbaby.net header.b=XY7an04C; dkim=pass (2048-bit key) header.d=agatha.dev header.i=@agatha.dev header.b=YJV5qoLI; arc=pass smtp.client-ip=68.168.211.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=agatha.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=agatha.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A2M21J/y"
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-3544c64380eso1949274fac.3
-        for <git@vger.kernel.org>; Thu, 09 Oct 2025 15:09:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760047787; x=1760652587; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2zX8z8gKLlLFmTXPwMkSM4bJ6phVD1wWvr3Uzsk8Prs=;
-        b=A2M21J/ygzakkMqN7MrJxeYCQndZO6ZBdyC6Brh7XekkygtcmX/tycYN/fvotfOd7x
-         3+Cn3TlpnkSQobLBbyGxb26y7FeQ+LvAXO7XXq+y8e2IIhhx13yBWXK05YBAFBQ+p2j6
-         7O5S5mldDMt4jj7oTRhZBpeNN7Bytp7smgEImwrV2++nR7eQCABfvVI1zUW1ssLava2/
-         EF/O0Zdz4YPBpvr7WyH59ZW+4ljGpD5ORC2eGDYQn2rQ1YLF73rEgpFdOuBUwlan4xok
-         VgOyYmoUXUx5HlhhPjy2Sve/vZFlT0JMnriyphzYCi5iQms9nvoKOj5gLk13u/WnbDFY
-         OBMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760047787; x=1760652587;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2zX8z8gKLlLFmTXPwMkSM4bJ6phVD1wWvr3Uzsk8Prs=;
-        b=E3MJtv09rDY0XrWtPpp7JAAhHtLMT+7iVmcWa0CyicIFIQr+bP+K3x4cu9FPGayEAy
-         vhcFzpdn6szwn0h1HMPfhgYg5W4kTnwSYMZr8C49a9FxgtBMK+y8b+uzNsNE5oXriUJw
-         DDvTfp31650KlmfFSkX77Yek4MagwOI/ZaJx5D30xk+o/dkO8V3NRdYjIi+LrOhavpFj
-         TtMxTGAm2l1Ie/RmjXRjbvU4FZBryj+cfyJUILhWgYjFgUC95GKPmwEnCdhH1XqHqu28
-         bx8ir5VhPk2TEJdjnJ6iC6EIns792GTm03NOLCMnTGzylMltuBCYuDGY3evt0S+CBiBf
-         OU5A==
-X-Gm-Message-State: AOJu0YxNWGTm52/1RoStxNGeJg/jtYoUD98RMEM94F+/1pDXcTMJO6Fr
-	77PFRyM/Ret3LeetpxTnXYEWfsLNyEBLd9tHQq9oW9/B+Z4a9Nut3f0l17aD8g==
-X-Gm-Gg: ASbGncvpyYwEnQIV2oaMgk+eHfTVPCXeKl2XWSrFqaUFJW2aQjtuW63z7YODPyXGpW0
-	/R0/uOSdO+QnIyLzfB9F0wbc4HMUKLXPV/uGSFGOtLQKrsd/5yNKk7+wYGR8fobz2E9EL9STD6b
-	0QGVNrxcNtfvhm+9MdokQql6qEx9nqfVU7IVdWoGveGFOzpvf1odMlZCU74ShaC0F7PZyYbVowG
-	LAzemyyjDbJnBUcxX6gMbA+G84yzqoGNQEen2V85mBUkTp3stOQSZc6CBxlS31/SWZO3MCZbnOd
-	F7qmxvPXWm3fYZDZifgpJcgC0Xk/CIj3QlrQ33SDws3ulO/6Fjwu94+cqBHjytu+Q7vI3lpFhpa
-	PYy+yGbJoncVHBXoT8YBbtKFAsS5uZzFiHjBpLxPU
-X-Google-Smtp-Source: AGHT+IFBQid4ee0zwXycpbsYx/ldsG7fxvQFrIcUzlJRU5J9E44xcSGMTBbfryQk240Cg8V9qzTANw==
-X-Received: by 2002:a05:6870:31b2:b0:387:3c81:ee9 with SMTP id 586e51a60fabf-3c0fbd378ffmr4242816fac.51.1760047786794;
-        Thu, 09 Oct 2025 15:09:46 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-3c8c8682138sm303201fac.0.2025.10.09.15.09.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Oct 2025 15:09:45 -0700 (PDT)
-Date: Thu, 9 Oct 2025 17:09:45 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im, karthik.188@gmail.com, 
-	sunshine@sunshineco.com, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v4 4/7] builtin/repo: introduce stats subcommand
-Message-ID: <qdot36lscj2jzuej2zixdlgocubiimh54dkxzl2xgcy3g2n42m@gpdi7jwc2oyd>
-References: <20250925232928.3846-1-jltobler@gmail.com>
- <20250927145049.723341-1-jltobler@gmail.com>
- <20250927145049.723341-5-jltobler@gmail.com>
- <xmqqfrc797pk.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=mailbaby.net header.i=@mailbaby.net header.b="XY7an04C";
+	dkim=pass (2048-bit key) header.d=agatha.dev header.i=@agatha.dev header.b="YJV5qoLI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbaby.net;
+ q=dns/txt; s=bambino; bh=EKKclTstahvIlmrxzipharrRpW+1asBXietDT1C+zJM=;
+ h=from:subject:date:message-id:to:mime-version:content-type:content-transfer-encoding:feedback-id;
+ b=XY7an04Cx716iGuArrIJhGnuAU167RboLyDuGi8bxmaSnbFpjwdeA2kfPT42P6V8C7KczqgtF
+ JYpass8Nya0RJ/Jq/Q9vU5QSYJriUv5lwcVFOkdYwKMXk/o/aHyDEG+9wqUiSh2NN4mUfxSwxbY
+ 1/YLwz0WeLHOKSG/v8Xjou4=
+Received: from mb-nj-kvm1.internal (mb-nj-kvm1.internal [10.10.2.10])
+ (Authenticated sender: mb6724)
+ by relay2-o.mailbaby.net (MailBabyMTA) with ESMTPSA id 199cb060f55000610d.001
+ for <git@vger.kernel.org>
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+ Thu, 09 Oct 2025 22:09:56 +0000
+X-Zone-Loop: 158114afb10eac248cdf6577f94273425980e7fcd951
+ARC-Authentication-Results: i=1;	rspamdcluster17.mailbaby.net;	auth=pass
+ smtp.auth=mb6724 smtp.mailfrom=code@agatha.dev
+ARC-Seal: i=1; s=detka; d=mailbaby.net; t=1760047796; a=rsa-sha256;
+	cv=none;
+	b=xGCwKWvbPIKVwXmNPJsXU38250zX33r2FZRQFJ9XF5hhRA1sG4oeqgJ5amJwGlADNFt9iu
+	152Za7htzJBg4MVxfQwkBDBALTOIKhxiwTUQbEy4CRbqG/1vTw/gZHyhal+RaZkDJ6wYmd
+	wwJpkQzeYXYEFlVbv2y5vq/XILs58RFqdQedPjg77YYtMsMj2/htwIKX0u3HXbcWpwZ+M3
+	DbjXeO/PHouNSPstGavcz2u5TNvPIwzgjJfePC8p29qlaKAp+rzINKeLmkGpawS2qD0bX1
+	eiJgzt7F2FC7nywoPzvotQG/SO4eCS4BfjmBM2KniPAupI7rZeU3i9nYhu94oA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailbaby.net;	s=detka; t=1760047796;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:dkim-signature;
+	bh=EKKclTstahvIlmrxzipharrRpW+1asBXietDT1C+zJM=;
+	b=k2pr/m4GPNyq8uPEPbxFkd/JrtD+4jpBupjxI/tQvo9lrv3njat22k+NeugWkMZ6a7nwI0
+	bjIRJBigVV2CqGHi52r8p2lD+l3bcjPw4QZ54NXSWLYTMfTFzAy6Sm5LTz8/JH4jgGYe7/
+	666noHEZLkRRNdNKNiR+xmJbYF26cO/s6fADepgd7M6w+Zcgd7YTFrVm7kTrHK9yQJgqwH
+	UuaG5I+Fm/YH4vlAdwdZVt4qWoZ07J9yZjyaaKwPeE+z+fdr+0Q9HBW9p3IjbOFvBpfAYm
+	vNN5TtkIQtI/nVp50AqF7Y81YmQkde+FXMQ1bNS7trx561/dNYYJ2FxmOI5z3A==
+X-MB-ID: mb6724|me@agatha.dev
+X-SPFOrigin: SoftFail
+Feedback-ID: mb6724:199cb060f55000610d:96.47.167.18:mbaby
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=agatha.dev;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:
+	Subject:To:From:Date:Sender:Reply-To:Cc:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=EKKclTstahvIlmrxzipharrRpW+1asBXietDT1C+zJM=; b=YJV5qoLIpvopTXK+R+EkgHfnxa
+	dezh7BpKoQeSh8+1Ko5yshOXYbdO0WBrCk4uOn/1VzS6qoEHCcf2Sb5Xr1S/myIZtloBxGOq2F1xd
+	zcv5CYFfae7U8XqEYLVp6gxJ0LsMc8LeM66iZzSI9VhXWxEOn0wVALH2wz4CWp54MX06A5gRubrCE
+	IZ/B1VFQpbAq2vzak5jU6RyUXi+Z+kN6CQZ3bE+7sNKPxN3dEXjkx0g0GmVYSHY4EZXYuLvUqFf82
+	V8f76kyx3NDNmHgraFZDxfYKofsXXsyjuAw2LVo7PRtp0xRQF0gFu+Rk6W3i1TsUs2hBaLopjBMnb
+	BPBirhfg==;
+Received: from [23.94.14.143] (port=58062 helo=lavender.agatha.dev)
+	by nyc3000-r.dnsiaas.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <code@agatha.dev>)
+	id 1v6ypi-00000009KO6-27B5;
+	Thu, 09 Oct 2025 18:09:55 -0400
+Date: Thu, 9 Oct 2025 17:09:54 -0500
+From: Agatha <code@agatha.dev>
+To: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
+	Christian Couder <christian.couder@gmail.com>
+Subject: [Outreachy] Introduction =?utf-8?B?KMOBZ2F0aGEp?=
+Message-ID: <qbehd3whkgrofsmvkrtgbfo3tiqhyv3friz56xrehkgduld3ou@e4ck6nfloaq3>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqfrc797pk.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+X-AuthUser: me@agatha.dev
 
-On 25/09/27 09:32AM, Junio C Hamano wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
-> 
-> > The shape of a repository's history can have huge impacts on the
-> > performance and health of the repository itself. Currently, Git lacks a
-> > means to surface key stats/information regarding the shape of a
-> > repository via a single command.
-> 
-> Talking about "shape of a repository's *history*" may negatively
-> affect your goal here.  If a project is overly mergy with many
-> octopus merges, it would have huge impacts on the performance to run
-> "git bisect" over its history, so it may be interesting to know the
-> ratio of the merge commits in the total commits, and also the
-> average number of merge parents.  But after you obtain such numbers,
-> you cannot do anything about it, as you cannot afford to rewrite its
-> history only to improve the "performance and health".
+Hello!
 
-The above example is actually something I would like to add in a future
-series. From my perspective, if a certain repository operation is
-performing poorly, it is still valuable to have insight into the reason
-why, regardless of whether it is realistically actionable or not for the
-user.
+My name is Ágatha Isabelle (pronouns she/her) and I'm (yet another)
+outreachy applicant for this cohort. I have some experience with C,
+developing mostly device drivers, a couple of patches in the mainline
+linux kernel, etc. I also do some assembly (x86/x64 & riscv a little)
+and C++. My goal at outreachy is to regain experience to work in
+software development again after some personal setbacks took me out for
+some years, while also contributing to an interesting open source
+software project like git.
 
-I will try to better clarify the command's intent in the log message.
+I'm looking forward to interacting with the git community once again
+within the next few weeks during the application period.
 
-> And that is what makes "key stats" relative to your goal.  If your
-> goal is to give stats on the things you can control (e.g., how long
-> a typical delta chain is, how many loose objects there are that can
-> be moved to a packfile, how small would your object database would
-> become if you prune all the unreachable objects), that would cut off
-> some stats that may still be interesting but may not contribute to
-> address "huge impacts on the performance and health".
+Currently I'm looking through the documentation to get a better grasp of
+what is expected of us during this period. The doc says I'm supposed to
+send an introduction e-mail, so here I am. But I don't want to just do
+that, I would like to let you know I'm also working on choosing a
+microproject -- right now I am exploring some intersections between
+git's object model where objects are immutable and tightly linked to
+author metadata, and possible privacy concerns. Especially for people
+who would like to exercise their right to be forgotten and transgender
+individuals who might fear former name exposure in places where this
+information is protected by laws, tackling cases where a simple mailmap
+entry won't be enough and rewriting history would be way too disruptive.
 
-I would say the main goal of this command is to surface interesting
-information about the repository and its object graph structure.
-Something that may make a stat "interesting" is if its value could be a
-potential indicator of poor repository performance. Like the max number of
-parents a commit has, or the max number of entries a tree has. I don't
-think the actual stat value needs to be concerning itself for it to be
-displayed though.
+I want to see if I can work on a microproject that helps to tackle those
+privacy concerns while keeping objects immutable and preserving git's
+design principles. As it's supposed to be a "micro" project, I plan to
+explore a small, concrete first step rather than attempting a full
+solution. Yet I would appreciate any input on that. I have a couple of
+ideas in mind to check if they are applicable too.
 
-If there is actionable recourse a user can take to remediate a
-concerning stat that would be ideal, but I see the primarly goal being
-to just surface the information regardless.
+I think this would be of actual significance for several groups of
+individuals, especially for transgender software developers who face a
+lot of challenges to get in the tech industry, even when they have years
+of experience. While in some places linking their current names to their
+former names might even be dangerous, or at least lead to embarrassment,
+losing credit for their contributions to avoid exposing deadnames could
+also be a limiting factor towards obtaining employment in tech.
 
-> With Devil's advocate hat on, a single command that gives a set of
-> stats that are "key" to a goal of a single use case may not be as
-> useful as a collection of commands, each of which gives stats on one
-> aspect of the repository, that can be combined to help you address
-> various different goals.
+I’d be happy to discuss whether similar ideas have been explored before,
+or hear pointers to related prior discussions.
 
-Good points. From my perspective, the benefit of having a single command
-here is to provide a simple means to generate a report of the general
-repository shape. In this context, "key stats" reflect certain
-charactistics about the repository that may be concerning performance
-wise for typical repository operations or just of interest in general.
-
-One of the motivations here is to enable a user to easily generate such
-a report and be able to share it with others that may not have access to
-the underlying repository.
-
-I think this still could leave room for more fine-grained commands that
-can surface more targeted information about a repository with other
-goals in mind in the future though.
-
-> > To allow users to more readily identify potential issues for a
-> > repository, introduce the "stats" subcommand in git-repo(1) to output
-> > stats for the repository that may be of interest to users. The goal of
-> > this subcommand is to eventually provide similar functionality to
-> > git-sizer(1), but natively in Git.
-> 
-> So, it is needless to say that the kind of "stats" obtained by such
-> a single tool needs to be chosen carefully, but more importantly,
-> its output should give users actionable output, as whoever designed
-> such a tool and chose what "key stats" are has a clear idea on
-> various aspects of repository.  "stats" measure the health of the
-> repository against certain yardstick, but it should come with a
-> clear instruction to make use of that measurement.  The tool may say
-> "the stats indicate that you have commits that touch too many paths
-> at the same time".  The users need to be know what consequence of
-> that finding is, and what they can do about it.
-
-As mentioned above, from my perspective, the git-repo-stats command
-itself is not about specifically targeting and diagnoising actionable
-issues that a repository has. It's primary focus should be to provide
-insight about the repository structure that may be helpful when trying
-to understand certain repository performance characteristics in general.
-
-In the next version I'll rework this log message to better clarify the
-intent of this command.
-
-> For example, what would the user do with the new knowledge that the
-> repository has 100x as many local branches as there are
-> remote-tracking branches?  Without breaking down these numerous
-> local branches into those that are still used in active development
-> (hint: peek into their reflog), kept as historical landmarks, past
-> development that has already been merged (hint: "git branch --list
-> --merged origin/master"), or abandoned cruft that hasn't been
-> touched with some changes that are not merged anywhere, the users
-> would not know what to do.
-
-In a future series, I would like to introduce a "level of concern" meter
-for the outputted stats. As you mentioned earlier, this could provide a
-measure of health for a repository stat against a certain yardstick. At
-that point in time, I think it would also make sense to provide
-documentation on actions that a user could potentially take to address
-specific stats that are marked with a higher level of concern. Certain
-stats that get identified as concerning may not be realistically
-actionable though.
-
-For now, I think it's fine to omit this though because the outputted
-stats are presented agnostically without any concern level.
-
-> > +`stats`::
-> > +	Retrieve statistics about the current repository. The following kinds
-> > +	of information are reported:
-> > ++
-> > +* Reference counts categorized by type
-> > +
-> > ++
-> > +The table output format may change and is not intended for machine parsing.
-> 
-> Do we eventually want to give another format that is intended for
-> machine parsing?
-
-Yes, and we introduce a key-value and NUL format later in this series. I
-will mention this in the log message.
-
-> In a format meant for human consumption, is it still sensible to
-> target fixed-column terminals these days?  Rather, would they want
-> prettier-formatted html, or csv that they can easily import to
-> spreadsheet?  (these are not objections but genuine questions).
-
-From my perspective, having an output format that can be immediately
-viewed in the same place the command is run is still quite valuable and
-is still common in similar tooling.
-
-I think there may also be value in additional formats, such as the ones
-mentioned above, but I think those should be implemented as a separate
-series if demand presents itself.
-
-> > +static void stats_table_print(const struct stats_table *table)
-> > +{
-> > +	const char *name_col_title = _("Repository stats");
-> > +	const char *value_col_title = _("Value");
-> > +	size_t name_title_len = utf8_strwidth(name_col_title);
-> > +	size_t value_title_len = utf8_strwidth(value_col_title);
-> > +	struct string_list_item *item;
-> > +	int name_col_width;
-> > +	int value_col_width;
-> > +
-> > +	name_col_width = cast_size_t_to_int(
-> > +		max_size_t(table->name_col_width, name_title_len));
-> > +	value_col_width = cast_size_t_to_int(
-> > +		max_size_t(table->value_col_width, value_title_len));
-> 
-> If table->name_col_width and table->value_col_width were int to
-> begin with, none of these casts would have been necessary.  Aren't
-> we overusing size_t to count things that are not memory allocations?
-
-Yes. Storing the column widths as size_t in this scenario doesn't make
-much sense because they need to be an int for the format string anyways.
-Furthermore, the number of columns will always be a relatively small
-number.
-
-I'll fix this in the next version. :)
-
-> > +	printf("| %-*s | %-*s |\n", name_col_width, name_col_title,
-> > +	       value_col_width, value_col_title);
-> > +	printf("| ");
-> > +	for (int i = 0; i < name_col_width; i++)
-> > +		putchar('-');
-> > +	printf(" | ");
-> > +	for (int i = 0; i < value_col_width; i++)
-> > +		putchar('-');
-> > +	printf(" |\n");
-> 
-> I wonder if people want to use unicode "Box Drawing" block and other
-> fancier things, as we assume utf8 for names and values, in which
-> case these printf would need to be "translatable", but locale
-> administrators should not have more say than others what kind of
-> line drawing elements are to be used, so perhaps the above is good
-> enough at least for now.
-
-I think the current table is probably sufficient for now. I do forsee
-iteration on this format in future series though.
-
--Justin
+Best,
+Ágatha Isabelle
