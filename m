@@ -1,126 +1,119 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from mail.lohmann.sh (mail.lohmann.sh [23.88.42.106])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691D0286883
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 22:41:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0402836A3
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 22:43:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.88.42.106
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760049667; cv=none; b=CU9RwCWLs5uCeKQHI/jN1OxfzyZhYF/Qeus7jhqzWKCDyC1b+BIrbqY4A27D/wD7Sm5hzF5fKosfZQmjNnKONdMhWJUO/xv6vD3JA1wChlJBhuN+Thz1wYGhKPGSCowsXegYu0iJkHq0n/4yZ/gfc+CTv+iasorfZjwtYQjAMH4=
+	t=1760049839; cv=none; b=aD7Qb2hf0r3OJZ0MwX6Rc9tkcJPIcaSBbF1sweWArgJ55A3TqeiDfFmdRg2X/KuNAh6NI7O2AlWmm4SvJWje4245jg2uToufwRqQcqT0AdWJMyBoAAEkwd82yKMm3vo5DDkUrifze1fIGXmX3VTuQ2lmDWqQhcjlcfmNnZk2eME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760049667; c=relaxed/simple;
-	bh=p88IOaugc0PczzQNuubnAKpFcCus58Pb6wnV2CXwcN0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HyXH8YXD9IJqJVO5rMmmjy45SqYceNIUMiVJG9Gh3TdjBlOmv7MyLFIYKRS7CD6ykPodd49NZnlPdd94TqPp9qEzQ9vLX7g210T/HgFmz+iulnmqvjVSmnWnXuVwrCzP5lYQlYhUmS1aEBsEAbfOpJtxSSbzbC9AG+YkgA2HmzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OyrgkiPp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j9dj3t7U; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1760049839; c=relaxed/simple;
+	bh=NsKbKRbfdcQpNPCd2hWteeo2SQyXw0B9pzGxxTGoCNE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=WFEXdpXKohADzm3GYwO5IsycgA9XWxYlXSKcBCkj434qdoRAlgE7Bq05IwvmowrzXRCvqSp35p5N/4CG0mdVZGxJUZ2W83RfQwhztrEsLipqY+9fYoKij6P3nf0i9TFr2aPPU/CUdYKFPKPGgkqn3K5y5gPVQRjUxrRXIp32dSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lohmann.sh; spf=pass smtp.mailfrom=lohmann.sh; dkim=pass (2048-bit key) header.d=lohmann.sh header.i=@lohmann.sh header.b=N9wK0xV/; arc=none smtp.client-ip=23.88.42.106
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lohmann.sh
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lohmann.sh
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OyrgkiPp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j9dj3t7U"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6AD30EC0272;
-	Thu,  9 Oct 2025 18:41:03 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 09 Oct 2025 18:41:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760049663; x=1760136063; bh=Xr4JXnl3ns
-	m4R4i3D0WIER3Q4sBC5j2WWUpAhHkrT3A=; b=OyrgkiPpWs5YCW3HYIVE/PMT3P
-	CRdcF/fbPX/Szay1aGaw/y45+PyCVHH02DOfU4TNFfwM2td1NdxbIudVvfg+dt2O
-	EGu7hPg1ihf1jdY84ev0T8mcamB9t51QpEs5aLKSNJU1gyzAfenhLedg5JfYUz3O
-	Fio1nUEVdUdbLM4XnACQOZT1zm0On/OsWM7ool+b9dbXAO74uA9f2ZOnVVttLCSJ
-	mBOeF4WYi/uwk8m88NK6HmUjqi+R6WmuFhytFqrEVNWPQznmDQMyZUd9QM0RkzV0
-	bnWL57I+ATuuMm1GzoChs32/QOpfK6l/MHARjZjlj5gX7l7RRBjJgK9/ftnw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760049663; x=1760136063; bh=Xr4JXnl3nsm4R4i3D0WIER3Q4sBC5j2WWUp
-	AhHkrT3A=; b=j9dj3t7UtO0hT0YDl/iRRnkN1DWLOok3cVqgZ5RX8yRPY62sXeb
-	9iKnqytP7ESJAFqdxquQwb0z4TwiKUaalTGGh8D5aZt7x4cXn/nMHEfBTLjxcwgj
-	wIBiXq0h8P2BzHEk2Y8qKwDLUv6uB1AbYoI1C0ZKIiDsiiNRjY540dGnjL5KWkZs
-	iwrBDJOMdYGtoeR4V9RPNK4xIld4SCZVbUgJ79+ZYjMB5sPzrL0fz57nLo6jP5PE
-	OUEQHaJSLtm6n69QHNp9Pg4iB7j31bXJmotAQUvAhfPHtO6PlgF2nOnmeJCODivr
-	nKFfixSQzfUh3/5JDF5+OYjZ0nSC7tocbFA==
-X-ME-Sender: <xms:_znoaIycAd9oAvPMLWWdqicYuR38lLpo7XAFlCucR-4a2Eg9LxDZrQ>
-    <xme:_znoaP-w1ha5nkqQNHcSBv3BGi5xmQr-HkWjj_JoLl5UB67qo-rwAXa3Hpb-sRxir
-    73uzocN97iuFE9fdTGCN0vGE68yIZICnw_9H4heMO5M0bsKpAKTufE>
-X-ME-Received: <xmr:_znoaELRRTIxXSbHpJLoW5XxWssMOLrqhqd8VjpWiutS_g4EmzfeNY3_q6y8nVptPZevGkGtGgFE8S_Uiallj5bBKEmu47OqYAua>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdejgeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhope
-    hgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmh
-    grihhlrdgtohhmpdhrtghpthhtoheptghhrhhishdrthhorhgvkhesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:_znoaNfUgCpJrUMuAneqTrK3n7D-A7oEqAB0JW0zHWHJbszXkgl-LQ>
-    <xmx:_znoaL-YvebDdpuR5Zu353S6Eiap1hw1iKd6-z3HrFqUkxSD70Cstg>
-    <xmx:_znoaCrCOZfVxAVyPOa-YAb1YabAYyHwVHhanHyYrLyCTKt8UwsQbw>
-    <xmx:_znoaIDeycC2r5AipcSkvRp4kqrUFD_vwA0L-OQ3lj3o4sjYObjnVQ>
-    <xmx:_znoaKUBFymF0YA3kqJeMuozwZtrlqK3sKjeVBRKvtO2q3qvlR4da1HN>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Oct 2025 18:41:02 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  "Chris Torek" <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 2/4] doc: git-pull: clarify options for integrating
- remote branch
-In-Reply-To: <b432f1b9-804d-4249-bc1a-4f3629aff50c@app.fastmail.com> (Julia
-	Evans's message of "Thu, 09 Oct 2025 17:31:30 -0400")
-References: <pull.1976.git.1758656702.gitgitgadget@gmail.com>
-	<pull.1976.v2.git.1759951536.gitgitgadget@gmail.com>
-	<122774d4cc8fa4e9184a0f82e9b6e562363ea433.1759951536.git.gitgitgadget@gmail.com>
-	<xmqqqzvddqon.fsf@gitster.g>
-	<b432f1b9-804d-4249-bc1a-4f3629aff50c@app.fastmail.com>
-Date: Thu, 09 Oct 2025 15:41:01 -0700
-Message-ID: <xmqqa51zd7gi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=lohmann.sh header.i=@lohmann.sh header.b="N9wK0xV/"
+From: Michael Lohmann <git@lohmann.sh>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lohmann.sh; s=mail3;
+	t=1760049823;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6u02fQeG6CdtVx10QeEHiditAt7QCmV5a+B4q9OYmco=;
+	b=N9wK0xV/KRFadJoHjcJgi2561/rfOrfSkbTTjcRirZZ9InGKZ8si1xLyK+3xrcfaqPi9yY
+	Wzx48UESHEpztlfx4VOAt0dAJ2o3AJdZRx6STqfrPH1caRcKl0ZXyx2QN3cu7Qe455FMMf
+	gEqRw3mfAD1YQeek3TfQ70PywlLxUlUhKMPz0s0kVvRuwPFfDIWeuMGdVabjCG/fyvfUzI
+	7Q9Ww/jIw+del+9Fziq+8DvxgVmU4V34UwPUMFrhJ0aTcfFW96GFSlYPbuPKIqTQ7fNG0D
+	gDDEFA4WmoTwu/3Kc9yZW6kHIWmZZoWIdPJFKgMFT8vNw6K5sRxQTEAz7U/vaw==
+To: peff@peff.net
+Cc: git@lohmann.sh,
+	git@vger.kernel.org
+Subject: Re: [RCF] Secure git against involuntary arb. code execution without feature loss
+Date: Fri, 10 Oct 2025 00:43:17 +0200
+Message-ID: <20251009224317.77565-1-git@lohmann.sh>
+In-Reply-To: <20251009052422.GA1614343@coredump.intra.peff.net>
+References: <20251009052422.GA1614343@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Julia Evans" <julia@jvns.ca> writes:
+TL;DR: Thanks to all peoples input I just mentally untangeled/refactored
+a few things about the discusion for myself:
 
-> My assumption was that the word "integrate" was meant to be a generic
-> way to communicate "combine the changes in the two branches in
-> some unspecified way", and that's how I was using it.
+* Current situation:
+    git assumes an unsafe repo, if neither
+        a) the user owns it, nor
+        b) it is included in "safe.directory" config
+    and then refuses any operation.
 
-It is how I was using it, too.
+* Suggestions from the discussion:
+1) The suggested "token" approach is just an additional way to set the
+   current state of allow "safe.directory" for repos _created_ by this
+   user
+2) The suggested --assume-(un)safe / GIT_ASSUME_(UN)SAFE are additional
+   ways of setting the same state temporarily
+3) There are suggested improvements on not blankly refusing operation at
+   all if assumed to be unsafe
+4) The _enforcement_ part of the RFC is about dropping the check for the
+   owner of the repo to assume if safe or not
 
-> I'm not sure what
-> you mean when you say "integrate" (is it "merge"?).
+I think 1)-3) are relatively independent of one another to discuss,
+whereas 4) probably requires all others to be viable.
 
-Not limited to "merge", but I view it more as between two parties,
-one side supplies changes while the other side serves as a base.  A
-merge looks as if the changes of a side branch gets incorporated
-into the trunk.  A rebase looks as if the changes you have created
-gets incorporated into the trunk by replaying them onto the trunk.
 
-> 1. Try to find a different word that communicates "combine the two
->    branches in a way that you have to specify". I'm not sure how
->    likely this is to succeed.
 
-I am not particularly good at finding verbs, sorry.
+And now for the long answer:
 
-> 2. Instead of using the word "integrate", instead always say something
->    like "merge or rebase". I tried this but I found it a bit unwieldy, and
->    I think it might also be confusing for users who aren't familiar with
->    both merge and rebase, they might worry "do I need to understand
->    rebase to use `git pull`?", when of course you don't.
+> We've discussed this a few times over the years. The most recent one I
+> can remember is:
+>
+>   https://lore.kernel.org/git/ZZr-JLxubCvWe0EU@tapette.crustytoothpaste.net/
+>
+>   1. How does Git behave differently in an "unsafe" context?
+>      In the thread above, I propose that it should skip loading config
+>      from the repo-level $GIT_DIR/config file, and turn off hooks
+>      inside the repo.
 
-Very true.
+Indeed it would be a lot nicer, if git still worked and only showed a
+(maybe hideable) warning. As mentioned in the above conversation, the
+config parser could only extract the minimum required fields in the
+assumed unsafe state and the hooks would be disabled, too.
 
+>   2. How does the user tell Git which repos are safe or unsafe? You've
+>      got a scheme here for marking user-created repositories with a
+>      secret token. I think that could work, but there are other simpler
+>      methods. E.g., we could pass down information through the
+>      environment
+
+I am not sure I can follow you. Just as an overwrite like you mentioned
+below / as in suggestion 2)?
+
+>      or mark a list of safe directories in user- or system-level
+>      config (like we have already with safe.directories).
+>      It's perhaps even reasonable to have multiple such mechanisms, as
+>      they have different tradeoffs in convenience and security.
+
+Indeed! E.g. for "automated trusting" on init/clone the path based
+approach is probably not the best, since
+a) if the user runs `git init /trusted && mv /trusted /elsewhere`, all
+   of the sudden git would no longer work in that repo and
+b) now the path "/trusted" is vulnerable, unknown to the user.
+
+> So in some sense I think talking about this token scheme and Git 3.0
+> compatibility is putting the cart before the horse. We need (1) first.
+
+IMHO, an option on how to _detect_ if this repo is a "safe.directory"
+would not depend on improvements on how to _act_ upon it (or the other
+way around). Yes - to _enforce_ not whitelisting all user owned repos by
+default any more, both are probably needed. So indeed this part is more
+speculative.
+
+-Michael
