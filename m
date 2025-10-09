@@ -1,119 +1,178 @@
-Received: from mail.lohmann.sh (mail.lohmann.sh [23.88.42.106])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0402836A3
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 22:43:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.88.42.106
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB51572625
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 22:55:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760049839; cv=none; b=aD7Qb2hf0r3OJZ0MwX6Rc9tkcJPIcaSBbF1sweWArgJ55A3TqeiDfFmdRg2X/KuNAh6NI7O2AlWmm4SvJWje4245jg2uToufwRqQcqT0AdWJMyBoAAEkwd82yKMm3vo5DDkUrifze1fIGXmX3VTuQ2lmDWqQhcjlcfmNnZk2eME=
+	t=1760050509; cv=none; b=g09ACwU9HQcbsuMQwmR4N+AcawuzurwAwAf/5rWZX6B1NErogy3s+zTJN8QlkWam7HSQD3/twCIHWXWO9v3asPvfFQV+dMANDWz2RdKeFFbAJShrHi86tJIhv9eMdmovIQ9fhGlLzbTEsG4XXNXhJB9xOyI0dR3sQhiFPbADfi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760049839; c=relaxed/simple;
-	bh=NsKbKRbfdcQpNPCd2hWteeo2SQyXw0B9pzGxxTGoCNE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WFEXdpXKohADzm3GYwO5IsycgA9XWxYlXSKcBCkj434qdoRAlgE7Bq05IwvmowrzXRCvqSp35p5N/4CG0mdVZGxJUZ2W83RfQwhztrEsLipqY+9fYoKij6P3nf0i9TFr2aPPU/CUdYKFPKPGgkqn3K5y5gPVQRjUxrRXIp32dSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lohmann.sh; spf=pass smtp.mailfrom=lohmann.sh; dkim=pass (2048-bit key) header.d=lohmann.sh header.i=@lohmann.sh header.b=N9wK0xV/; arc=none smtp.client-ip=23.88.42.106
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lohmann.sh
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lohmann.sh
+	s=arc-20240116; t=1760050509; c=relaxed/simple;
+	bh=D5J0keMyQFpX5jtfiZnRBWDysTPBq6R+HqPD0H6QBGk=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=c2Vgfyk5d3aPP8L0LOE+/Ir4jaLoWr0pOVx46RuWg94qTUr18VtZY3pWFM5Arkv8At+qaPzcwEWoeJMz2E92Yv3TfY1JLVq7EucQZweI8Q37n7Pq++GuPvOXgO2bErNyc2N2cfysj3ZvXp9qSYFzTIa5tbvVQplnVVjuHELeRug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=H/GWjFFa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jbwzF6tl; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lohmann.sh header.i=@lohmann.sh header.b="N9wK0xV/"
-From: Michael Lohmann <git@lohmann.sh>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lohmann.sh; s=mail3;
-	t=1760049823;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6u02fQeG6CdtVx10QeEHiditAt7QCmV5a+B4q9OYmco=;
-	b=N9wK0xV/KRFadJoHjcJgi2561/rfOrfSkbTTjcRirZZ9InGKZ8si1xLyK+3xrcfaqPi9yY
-	Wzx48UESHEpztlfx4VOAt0dAJ2o3AJdZRx6STqfrPH1caRcKl0ZXyx2QN3cu7Qe455FMMf
-	gEqRw3mfAD1YQeek3TfQ70PywlLxUlUhKMPz0s0kVvRuwPFfDIWeuMGdVabjCG/fyvfUzI
-	7Q9Ww/jIw+del+9Fziq+8DvxgVmU4V34UwPUMFrhJ0aTcfFW96GFSlYPbuPKIqTQ7fNG0D
-	gDDEFA4WmoTwu/3Kc9yZW6kHIWmZZoWIdPJFKgMFT8vNw6K5sRxQTEAz7U/vaw==
-To: peff@peff.net
-Cc: git@lohmann.sh,
-	git@vger.kernel.org
-Subject: Re: [RCF] Secure git against involuntary arb. code execution without feature loss
-Date: Fri, 10 Oct 2025 00:43:17 +0200
-Message-ID: <20251009224317.77565-1-git@lohmann.sh>
-In-Reply-To: <20251009052422.GA1614343@coredump.intra.peff.net>
-References: <20251009052422.GA1614343@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="H/GWjFFa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jbwzF6tl"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D712E14001A9;
+	Thu,  9 Oct 2025 18:55:04 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Thu, 09 Oct 2025 18:55:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+	 t=1760050504; x=1760136904; bh=xZPgAWZo6mJwd2Mp6P5FPxzbV7EZNNSC
+	M8lAAFvmkEw=; b=H/GWjFFa1AwMTBun79vswt/kieQndbGAvpwKsmDnLYhK9GUC
+	rcaQr8l1S0ZZhM9MyCO40l57LH7ms0rwZ9XETcsP3YTtSqy3sv90RGR940we29Mb
+	xcKvsWR17ZEiT+s5YPNPj8hRFUNPOi0YY0o9pduCKvV8H0PSmdS35MtYLVQi04sM
+	rDnn8xCvNSmc92ko6kfkn6V/HVifGvBs0LiLLkKPCHF+YeLC0z5/nZ5ZVcwSTZ7h
+	mtoxH4F0lwzo9fatSAceZmgvLKk3VYauZ8xTqGVOwrG6oQVSbuk9i3mxUPciRZIM
+	YOs/y4snf6sykPxqGCnlQKJYxjFsa/ywsgff7A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760050504; x=
+	1760136904; bh=xZPgAWZo6mJwd2Mp6P5FPxzbV7EZNNSCM8lAAFvmkEw=; b=j
+	bwzF6tl0bCTv9RqpPPhePKnd89GKdQgA66LQ+TIUIN+Hy80GjOBiQUR8exSk0vGj
+	JW7W8wIV8YJCqoV5OWgsp4Dgz4NokgVg3iCiG+0UkPDohKSify3lmqkKPcSCkHMm
+	CQ1soBiNAzspQSHVHuvLCqm0em0zRxMdtt7Y7X6yHQyZgBvrtJJ6FG6bhsyCsX2G
+	GfP6aD6Uqy/+Uv1ltCtnHz4jaFpujL5OYSRpC4vLsX7QYBQMZksqV69Oo0a7uLYt
+	3VizpW1u8XCt1yvDjYwnL/Gbh845JaDu6kVd2LPWCtyQDGSBOjmPLF/9II+jDpN2
+	rd4GjV+TUG/gcMPuJtLYQ==
+X-ME-Sender: <xms:Rz3oaOFrcklKs_F5plHW8C_rIytXRmHPU-jOLcW8s5ktz5zg05XN9c8>
+    <xme:Rz3oaKLonn_maZUxAPAQQRlFNAdTN3swCT9Pstpg4xOc9FjOM2B6HMdqB1rINXt8O
+    SpHwfULO_Uf4hc_e-Or6aj2J7qTX_kCtv810I5bGCSA1e_hg6iW7A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdejgeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkhhkrd
+    hnrghmvgeqnecuggftrfgrthhtvghrnheptdfgkeetvddtgfdtgeeuieeuleejkeduvdeh
+    tddvvdeviedtvdfhieejudevjeeknecuffhomhgrihhnpehgihhthhhusgdrtghomhenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvges
+    khhhrghughhssggrkhhkrdhnrghmvgdpnhgspghrtghpthhtohepuddupdhmohguvgepsh
+    hmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdho
+    rhhgrdhukhdprhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtth
+    hopegsvghnrdhknhhosghlvgdoghhithhhuhgssehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhlvghntggsiiesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrd
+    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoheplhhiuhdruggvnhhtohhnsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepmhhothhishgukeesghhmrghilhdrtghomhdprhgtph
+    htthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:SD3oaNrMWGxzso9OQ9ZFukh_yrwQYoyfSPdLr9CJudtW_vqDajZgiA>
+    <xmx:SD3oaLjnt8WxPprBEuL9DLz1ofah6OKHcNYGu0xjVB1pAJ4NO44q3g>
+    <xmx:SD3oaHMU6Gbz0bKGVCD-PnPW0q4amrfaHb65crOYJI9kkJI_8cUdlg>
+    <xmx:SD3oaNxxZaR1lmQ0MwFPqnODtpkpQLn6I1lyyCjtkH70l7Mgg9tS_g>
+    <xmx:SD3oaPDhANRzIVFNmVL_hJOntCCtPend1qpm45rFb9-pSCQIYnrHYf7k>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id DF8631EA0062; Thu,  9 Oct 2025 18:55:03 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-ThreadId: AiL_X_pxFJps
+Date: Fri, 10 Oct 2025 00:54:36 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org,
+ "Phillip Wood" <phillip.wood123@gmail.com>
+Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>,
+ "Junio C Hamano" <gitster@pobox.com>, "Glen Choo" <glencbz@gmail.com>,
+ "Karthik Nayak" <karthik.188@gmail.com>, "Denton Liu" <liu.denton@gmail.com>,
+ motisd8@gmail.com, "Phillip Wood" <phillip.wood@dunelm.org.uk>,
+ "Patrick Steinhardt" <ps@pks.im>
+Message-Id: <e77d07d0-c26e-4d91-9777-ebaffffd764c@app.fastmail.com>
+In-Reply-To: 
+ <d4a277b6b0695d86636562f4c07efae17f9249f9.1759755379.git.ben.knoble+github@gmail.com>
+References: <b36d2dbf-7cf4-46cd-81bb-b502e0eed380@gmail.com>
+ <d4a277b6b0695d86636562f4c07efae17f9249f9.1759755379.git.ben.knoble+github@gmail.com>
+Subject: Re: [PATCH] doc: explain the impact of stash.index on --autostash options
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-TL;DR: Thanks to all peoples input I just mentally untangeled/refactored
-a few things about the discusion for myself:
+This follow-up patch makes sense.
 
-* Current situation:
-    git assumes an unsafe repo, if neither
-        a) the user owns it, nor
-        b) it is included in "safe.directory" config
-    and then refuses any operation.
+=E2=80=A2 It reads like a logical continuation of the previous commit 98=
+42c0c749
+=E2=80=A2 The log message is clear (and with no spelling mistakes)
+=E2=80=A2 The markup is correct (list continuation, links)
+=E2=80=A2 `make lint-docs` passes
+=E2=80=A2 `./ci/check-whitespace.sh @^` passes
 
-* Suggestions from the discussion:
-1) The suggested "token" approach is just an additional way to set the
-   current state of allow "safe.directory" for repos _created_ by this
-   user
-2) The suggested --assume-(un)safe / GIT_ASSUME_(UN)SAFE are additional
-   ways of setting the same state temporarily
-3) There are suggested improvements on not blankly refusing operation at
-   all if assumed to be unsafe
-4) The _enforcement_ part of the RFC is about dropping the check for the
-   owner of the repo to assume if safe or not
+On Mon, Oct 6, 2025, at 14:59, D. Ben Knoble wrote:
+> With 9842c0c749 (stash: honor stash.index in apply, pop modes,
+> 2025-09-21)
 
-I think 1)-3) are relatively independent of one another to discuss,
-whereas 4) probably requires all others to be viable.
+Curiously, since this is also the base commit, referring to =E2=80=9Cthe
+previous commit=E2=80=9D would also work if this patch is indeed applied=
+ on top
+of that one. But maybe that contextual reference is a bad idea?
 
+> merged in a5d4779e6e (Merge branch 'dk/stash-apply-index',
+> 2025-09-29),
 
+This is over-specified IMO. Like mentioned this patch could be applied
+on top of commit 9842c0c749. Then that merge commit will not be
+reachable from this resulting commit.
 
-And now for the long answer:
+I also don=E2=80=99t see the point of mentioning when things were merged=
+ in in
+the commit message.
 
-> We've discussed this a few times over the years. The most recent one I
-> can remember is:
+> we did not advertise the connection between the new config
+> option stash.index and the implicit use of git-stash via --autostash
+> (which may also be configured). Do so.
 >
->   https://lore.kernel.org/git/ZZr-JLxubCvWe0EU@tapette.crustytoothpaste.net/
+> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+> ---
 >
->   1. How does Git behave differently in an "unsafe" context?
->      In the thread above, I propose that it should skip loading config
->      from the repo-level $GIT_DIR/config file, and turn off hooks
->      inside the repo.
+> This builds on dk/stash-apply-index from gitster/git and is published =
+at
+> https://github.com/benknoble/git/tree/stash-apply-index-doc
+>
+>  Documentation/config/stash.adoc | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/Documentation/config/stash.adoc b/Documentation/config/st=
+ash.adoc
+> index e556105a15..fcb9a4a7a0 100644
+> --- a/Documentation/config/stash.adoc
+> +++ b/Documentation/config/stash.adoc
+> @@ -2,6 +2,10 @@ stash.index::
+>  	If this is set to true, `git stash apply` and `git stash pop` will
+>  	behave as if `--index` was supplied. Defaults to false. See the
+>  	descriptions in linkgit:git-stash[1].
+> ++
+> +This also affects invocations of linkgit:git-stash[1] via `--autostas=
+h` from
+> +commands like linkgit:git-merge[1], linkgit:git-rebase[1], and
+> +linkgit:git-pull[1].
 
-Indeed it would be a lot nicer, if git still worked and only showed a
-(maybe hideable) warning. As mentioned in the above conversation, the
-config parser could only extract the minimum required fields in the
-assumed unsafe state and the hooks would be disabled, too.
+According to these
 
->   2. How does the user tell Git which repos are safe or unsafe? You've
->      got a scheme here for marking user-created repositories with a
->      secret token. I think that could work, but there are other simpler
->      methods. E.g., we could pass down information through the
->      environment
+=E2=80=A2 `git grep -- --autostash`
+=E2=80=A2 `git grep merge-options.adoc`
 
-I am not sure I can follow you. Just as an overwrite like you mentioned
-below / as in suggestion 2)?
+This text exhaustively covers all commands which have this option.
 
->      or mark a list of safe directories in user- or system-level
->      config (like we have already with safe.directories).
->      It's perhaps even reasonable to have multiple such mechanisms, as
->      they have different tradeoffs in convenience and security.
+... which might mean that =E2=80=9Clike=E2=80=9D is an unneeded hedge? (=
+it=E2=80=99s probably
+not intended to be a hedge)
 
-Indeed! E.g. for "automated trusting" on init/clone the path based
-approach is probably not the best, since
-a) if the user runs `git init /trusted && mv /trusted /elsewhere`, all
-   of the sudden git would no longer work in that repo and
-b) now the path "/trusted" is vulnerable, unknown to the user.
-
-> So in some sense I think talking about this token scheme and Git 3.0
-> compatibility is putting the cart before the horse. We need (1) first.
-
-IMHO, an option on how to _detect_ if this repo is a "safe.directory"
-would not depend on improvements on how to _act_ upon it (or the other
-way around). Yes - to _enforce_ not whitelisting all user owned repos by
-default any more, both are probably needed. So indeed this part is more
-speculative.
-
--Michael
+>
+>  stash.showIncludeUntracked::
+>  	If this is set to true, the `git stash show` command will show
+>
+> base-commit: 9842c0c7492d2858d64ef81128f7b1f0b38e326b
+> --
+> 2.48.1
