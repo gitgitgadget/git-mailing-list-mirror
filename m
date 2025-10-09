@@ -1,122 +1,145 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E7E70830
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 21:09:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFE5212568
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 21:35:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760044175; cv=none; b=ainWKLAWom8L20X8LVwC3L2p0pRaZWnRzRzt7fCoxK0Svyn0EXfJ5iZs8l1tfnOIEQ17/pKehiiX2eaN+O91DZvHljUsKZ/dMq2Pu8XtdHoaqv8KZCzUwTK1+qLb5a5bBGEy2RLl6n6cLpVpz7dqJKgNkUMwjp5jM+R1nx0Q8Xk=
+	t=1760045718; cv=none; b=cNsxUbMmwaPvzpjGSbP8a0VEXFZmw2NnBS4trSf2HzGTXUZEyMlkvs3fWdd5kObwvbynC9zFhuJhtuZUjKPHraEfliuS7yWp7IlsRc+G65GoBekTtRtgsQVVyXB5xP1PYQIJfJRMgYcVDKwYR3VvYbxzHC6KPnEyNRI8ai0or8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760044175; c=relaxed/simple;
-	bh=EMx88qo1BPhaalhAsMQ2vxAJ/EOfwVXRtBjBqM9VzQ4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=JcLc0DlumobgrgbgXATxL8iAnO8Y08kRxe7BqHu+Me9GNV86gRI2b3Pyz3gdUjgf795zZcXR6EBOJaYq54CMBNx5ruKSi77W41JpgPoEXn6NJiJgcyTa/6A0JeBkwofUjhFeuGQBZ8JmgaK4IDFtaL1UtgPc7JS4xDetKZ33XnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=X+oEkGj5; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1760045718; c=relaxed/simple;
+	bh=rnOCL0zEpQEVcKjRBO9MdQbDHMX48yGe5j/QoG5TuoE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eAqkSKDs6lLZPDnyFubn6mnxidNav28yP2uP5NTtZqtxwQ6Wanbq+hwSP+3fHhnofHq5HB7D5h0J6fbwYmy+e/GO1nGgTghMMTncEVtfdUxmg4GjwawHdjXzQt45O6Z8LCwPDOkOxaM45AtFAm9kHqcTIQ0x6PfwpKiNE+kjftI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I14zsyZM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gs1JyDT4; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="X+oEkGj5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1760044171;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=CeVfMWLyalpTT34mX0mA+hs2M+re289FhYXudsjyF1g=;
-	b=X+oEkGj5QSbK/3e1l0xL0KAPFNq/9oKNiAzOY1aBj2wRcvxTDMrzVwyXyy68xL8gKJ9kMy
-	KFdTpnUQOsa4iT3Qp05KF25ruigdKfnbivyMk9Ana3TGMgbsXlIymUIRRemRyvuLcDLYBS
-	7j+BWFA+t9KolX6rYUxt2xlcV9HOAPc=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-528-N2LG0I7EPpKS0igNZKokLg-1; Thu, 09 Oct 2025 17:09:30 -0400
-X-MC-Unique: N2LG0I7EPpKS0igNZKokLg-1
-X-Mimecast-MFC-AGG-ID: N2LG0I7EPpKS0igNZKokLg_1760044169
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-85adb6a349cso495041785a.1
-        for <git@vger.kernel.org>; Thu, 09 Oct 2025 14:09:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760044169; x=1760648969;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CeVfMWLyalpTT34mX0mA+hs2M+re289FhYXudsjyF1g=;
-        b=D7i6xCnCkAiKwUzLQtE04DfaCQQfOsOOxA9RSqxlXNsC7u8Q2yECKGZL/Yur9kxvfp
-         3slvdLRA8Bct/pawp6TKQ4yiZ0gYYEL68aX0NeOj6tFNi6swQfFdq67kod8FKN4JVXDO
-         0GW+RXosEgl5fjR7vVypAYS0BWpKU1J8Yypqez23KpCEPogAgk2YkzC3f6pNOiKF6qUw
-         3wjaTZ8nGamXjEWSdfLztj9hRgcekOLVY57sdWZuBZwOu0ERgYHGHPu590FxbWo01nc0
-         nKGuQ4SCpbGZ+wg+rqzP82jrxlTsz8XR64ClpE54HIW7r3OZ6mp728xMSXRMbC342JZI
-         fG3Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUYRY+xd8ao/CDcFO6KmJ6dSJrxTXAdn8O/ALPZNdtvJ49TtFQ08cOVH1122m8A35sYWhw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxwuFeGuRD9giYyFiSLmqe2buPGqG76jLfLmHaB9aZ3OXT3A3Xk
-	IguhH9PUlUh1g4yVaQT6lQvnah2QB7G5CObwiscye+gb/PK/nhb5T2GbNMVHuNtFlQZCFTGBv2S
-	thj8Fb2Jfff1m3IQCLvSwG9PZTIDgfjZz9gocaPr6RCJbFyCTaO/G3b9L7mkeKw==
-X-Gm-Gg: ASbGncuGDDCL94xTNAK05AsZlqp8VwYsnf0ZnPKuUPNHDbaJE/PIgrFqfKIF1QiqMHo
-	AhLwSWcNvxT60opyyuASi+Ox9Ul3FdeYTVdWz4uHX51khSJMLcCt2RCankIFZ62FkNOSYewhsoo
-	ugx+cOUn+vBEellAWYyTbd++sAWn1/xFb5Q+u0msVbo+lrONNPczeAjsou08m9ANDZ73RfwuaHN
-	h3h3Qfwdi+tiu23iW+rh0NfJv8ItutopreQf68aMPZEn8gOVqCTVphA+SKAfOMVveXPaxodYXua
-	OKx+685YVj+3PznarDeWtgq7dD0lrLfDhvqf5Z6Ybw9bUVcPaolv13QFpcLtWjcb69LN1PA2iby
-	SCQLH1yImy/ee1mVSbg==
-X-Received: by 2002:a05:620a:3710:b0:82e:ce61:f840 with SMTP id af79cd13be357-88355a557e0mr1148838285a.84.1760044169081;
-        Thu, 09 Oct 2025 14:09:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGagvhb9L2LRoUUbSH/qzn3ECLACg3Mdh1ie0u7SRafJuHBZtH0v7c6I19upromKf37riKFWA==
-X-Received: by 2002:a05:620a:3710:b0:82e:ce61:f840 with SMTP id af79cd13be357-88355a557e0mr1148835085a.84.1760044168594;
-        Thu, 09 Oct 2025 14:09:28 -0700 (PDT)
-Received: from ?IPV6:2603:6080:b00:79e7:5442:2825:33b4:f35c? ([2603:6080:b00:79e7:5442:2825:33b4:f35c])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-884a2274482sm268404485a.46.2025.10.09.14.09.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Oct 2025 14:09:28 -0700 (PDT)
-Message-ID: <bf5f59df-b390-411f-a187-c1da6cbfc1da@redhat.com>
-Date: Thu, 9 Oct 2025 17:09:27 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I14zsyZM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gs1JyDT4"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D73A614001D3;
+	Thu,  9 Oct 2025 17:35:14 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 09 Oct 2025 17:35:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1760045714; x=1760132114; bh=B5GRwKmG5c
+	Zs4BZLABmsQiiD5WpI1VjD7onghaAs40o=; b=I14zsyZMxPFK3aYCdP8uh9HMZU
+	8/a6iShAQoTlLKryn2HNXPk5J5cS7sWDCcItOuDpDBigQJQioNvH/0sK6PqV7Pq7
+	ujviPbUlKNOlJDPb6JbeUOC4Ts0YhPfTWZeCerFeMjnV3fE2OwSfvELyWrCwQlWC
+	bNtKNAwB3K8r3VU38Dxh1i9MbchSx+loU0Kv0oOwP9RzP7Ircd0LzNmSiCAPCPUd
+	4jMam9UJzbq4pFaXQNL1Y7LZ2FVciRspgKO6eJJYUpAKThIYOWGW23Dhe7cJ5MnL
+	N5EeYZkIzFGr+mBD20lDC11w+ciimkq/nqFAAC3JdHlPEWbcAULTliM1my1A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760045714; x=1760132114; bh=B5GRwKmG5cZs4BZLABmsQiiD5WpI1VjD7on
+	ghaAs40o=; b=gs1JyDT43Gu6nBWtCR9RF10eXsKCtC/mFkxB1uumV3/k7oFFze4
+	wTipNx728/EjoNDUj8quXj55nwyJiXE6wMKpcO3lq2WrV4na/jOpLuxRnH81iU33
+	5wMR26hK78aSeNBuFvnlAKTmI5gdUyZNmtIlguaZ6a97LqO8x/NfdbJz80jG3Rob
+	g90U+gvjjj1ZdTgBMMylSTh60S5Ni9OFgWrCNPRiFb5KOwSHCDD0+CfjqNYr9xhw
+	41DZuNdZoupPjLi903vZZCo6X41gUDt4CC64MnysWQDwlonlywJFJR523PC9Gnau
+	RbQ64caX8euG7IHnNzTuuteYVVQEjxyzppg==
+X-ME-Sender: <xms:kiroaL-yeqIu7VZHonfR4I5E1IvjUIE4FQxNu20IpxgPrapxi-rOxw>
+    <xme:kiroaESctUw32RQCm8QiQLo_LO-BCw7H8MNK7sN0L1X128fIIS19-Q_vMXfbQYUI_
+    r5Xs1WGhzQjjSPa2gZ8Zr9Mp1lbZWRA78uK6mzFcXBx4zNiFl_EpQ>
+X-ME-Received: <xmr:kiroaNfZDk4ocvM_EI7thS_PIdvCHavfr7Jjf-_miSfVyp2mH5T3WYuXBmJ4IR2HJWRspQti9YP78HTS1Va9AgW6DffkJICAnQm2>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdejvdejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepgfetjeegudevueetieduhffhgedutdejhfejvdffleetlefhtdevjeeuhedu
+    ffeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptg
+    hhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpd
+    hrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhf
+    sehpvghffhdrnhgvthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhoth
+    hhphgrshhtvgdrnhgvthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghl
+    ihhnsehgmhigrdguvgdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhmpdhrtghpth
+    htoheptgholhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:kiroaOTrsgiLF2AxMkZ0OqQZwYQHQF67BR83USpppaJWFkj9oB0s9A>
+    <xmx:kiroaBIga_7Wk-mnzae0ksxxgCCvpvjM4MAmGjpbV4vYEiO3YnOXKQ>
+    <xmx:kiroaDJLB5hYetrxL51mcA7f8COvxZBZFoigo20jYX8T-DAqylWJfA>
+    <xmx:kiroaEhZgopcsejTKhgu6CGxQ4z6ebU3NLmeBkcwYdXFPJeYlkX-zA>
+    <xmx:kiroaOmi6cpVsgoCkCiuWm_GD8aW0W_JAqy2RU7hOMIL6xj-lTBLJRfZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 9 Oct 2025 17:35:14 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
+ <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m . carlson"
+ <sandals@crustytoothpaste.net>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Todd Zullinger <tmz@pobox.com>,  Collin
+ Funk <collin.funk1@gmail.com>
+Subject: Re: [PATCH v2 0/5] fast-import: start controlling how tag
+ signatures are handled
+In-Reply-To: <20251009122457.1273701-1-christian.couder@gmail.com> (Christian
+	Couder's message of "Thu, 9 Oct 2025 14:24:52 +0200")
+References: <20251007122958.1089680-1-christian.couder@gmail.com>
+	<20251009122457.1273701-1-christian.couder@gmail.com>
+Date: Thu, 09 Oct 2025 14:35:07 -0700
+Message-ID: <xmqqsefrdaic.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: 'git whatchanged' is nominated for removal.
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- git@vger.kernel.org
-References: <a6067200-a7cf-4632-85f0-8c6bcd00a5c1@redhat.com>
- <dc5de1b6-db24-499a-bee3-3eb2208ae08b@app.fastmail.com>
-Content-Language: en-US
-From: Justin Sherrill <jsherril@redhat.com>
-In-Reply-To: <dc5de1b6-db24-499a-bee3-3eb2208ae08b@app.fastmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-PERFECT!!! thank you :)
+Christian Couder <christian.couder@gmail.com> writes:
 
-On 10/9/25 4:59 PM, Kristoffer Haugsbakk wrote:
-> Good evening
+> Changes since v1
+> ----------------
 >
-> On Thu, Oct 9, 2025, at 22:53, Justin Sherrill wrote:
->> i recently got this message in my friendly git client:
->>
->> $ git wcp data/aws/insights-prod/account.yml
->> 'git whatchanged' is nominated for removal.
->> If you still use this command, please add an extra
->> option, '--i-still-use-this', on the command line
->> and let us know you still use it by sending an e-mail
->> to <git@vger.kernel.org>.  Thanks.
->> fatal: refusing to run without --i-still-use-this
->>
->> This is just me raising my hand as I still use this feature :)
-> This command is being removed because it was supplanted by git-log(1) a
-> long while ago. Both commands use the same machinery, just with
-> different defaults.
+> Thanks to Patrick Steinhardt, Todd Zullinger and Collin Funk who
+> reviewed or commented on the v1.
 >
-> You can replce it with `git log`:
+> - In patch 1/5, in the commit message:
 >
-> • Given: `git whatchanged <opts>`
-> • Replace with: `git log <opts> --no-merges --raw`
+>   - "focussing" and "focussed" have been replaced with "focusing" and
+>     "focused" respectively as the former is UK Eglish while the latter
+>     is US English,
 >
-> Additionally for the sake of readability, you might have more
-> use for `--stat` or `--name-only` rather than `--raw` if you are only
-> reading the output (not feeding the output to another program).
+>   - the missing "section" word has been added.
 >
--- 
-Justin Sherrill
-Content Sources Product Owner
-Senior Principal Software Engineer
+> - In patch 1/5, in the git-tag doc:
+>
+>   - "cryptographic" or "cryptographically" has been added to number of
+>     places,
+>
+>   - the changes to the CONFIGURATION section have been shortened by
+>     not mentioning the supported signing backend (X.509 and SSH) other
+>     than OpenPGP, and by referring to git-config(1) more.
+>
+> - In patch 2/5, the approach taken is now the one previously used by
+>   Todd Zullinger in:
+>
+>   https://lore.kernel.org/git/20240703153738.916469-2-tmz@pobox.com/
+>
+>   so this patch looks like a completely different patch in the range
+>   diff.
+>
+> - In patch 3/5, in the commit message:
+>
+>   - t9350-fast-export.sh has been quoted,
+>
+>   - some explanations about alternative solutions that have been
+>     considered have been added.
+>
+> - In patch 4/5, the added tests are now written in a modern style,
+>   instead of the old style used elsewhere in the script.
+>
+> - In patch 5/5, a die() message has been marked for translation and
+>   some "/* fallthru */" comments have been properly indented.
 
+Looking good.  Thanks, will queue.
