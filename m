@@ -1,145 +1,137 @@
-Received: from relay3-v.mailbaby.net (relay3-v.mailbaby.net [205.209.127.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C19128850F
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 23:55:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=205.209.127.13
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760054117; cv=pass; b=ahtm7JODcFOPm+nxWjOWUQXmlMgKuwbVd6RfL5Og3GidCACGE2tU11GpKeCAo93v/D9fRVj9umbIw3Ybe1VH8NafB4IJqzZsD/2981xU/V/bS8RRvvpnkjb19wWLOEuDhecNWmSz+NtqkHc5qlhWes1NP0uJIyyqVi9buwEGz8U=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760054117; c=relaxed/simple;
-	bh=47W5dRkrCc2xCmj1TXGfAWTG940LuMfldwcBBXKbKXw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dbBPIQUt8bId/pFgI3iIdpLtl+89dTtHAEQ9yoyZy4O7zC7Wvl0lg92BrRw5L1JBO9xlV1PBfB02aSColb2hVtwWKKckb3xMFc3UUC2yQRLU7ac1gq9HWUt/lGy3wmKW3hDZIHFIrfzZuFWM0ytXRtvME8Z4Y8o7nB52atWh09U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=agatha.dev; spf=fail smtp.mailfrom=agatha.dev; dkim=pass (1024-bit key) header.d=mailbaby.net header.i=@mailbaby.net header.b=Iu78oOgG; dkim=pass (2048-bit key) header.d=agatha.dev header.i=@agatha.dev header.b=lNtV31Mm; arc=pass smtp.client-ip=205.209.127.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=agatha.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=agatha.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266A219EED3
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 23:57:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1760054263; cv=none; b=SYLPIxx3+uc6yKa3ssAVKLi/H0EVRxeemM3BTTRnQ6gohuyGFPimot25raa562zJr417Q/WyUo9e8fTLMeGOqhxjC4/1aUjd1NS47m0wxBn8foWsZdYWTX/uENqj4Dol6/Wula5RuN/oiOKkKGWj2q6SRyjRYOupiF5cwOn8G2Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1760054263; c=relaxed/simple;
+	bh=lxNLSxjy8/bU7ljPdZwd3sVvQNRD5Lzr3u7Uk7ILB4k=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=jxaRe57VXrzmOpN0RE6lbwvsvDG5h1DE4EAWECyfOVtqGuUvuKexP8OpaYeVh5JAimxFtNBn6EOH8HJaf/vlm1IyIEwQ/AhvwOXWf9mhhBm9IJVXiaAZsjGxi6EoHSe2bXe8vntEfjHmDU50zGlOW3SSWRKj17HsWm5yoFYuQKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=lvF9kfLv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S7/neuKp; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mailbaby.net header.i=@mailbaby.net header.b="Iu78oOgG";
-	dkim=pass (2048-bit key) header.d=agatha.dev header.i=@agatha.dev header.b="lNtV31Mm"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbaby.net;
- q=dns/txt; s=bambino; bh=SQvrR5ekSi5jCrttXEGHdTOvJp6MQnJxQq/AY8MiFQQ=;
- h=from:subject:date:message-id:to:cc:mime-version:content-type:content-transfer-encoding:in-reply-to:references:feedback-id;
- b=Iu78oOgGY/FP88xYxoxiEC155V4Nm4KLqGhv6isNb+1RdhALLmitp2++ZLqPjbyLGTMIWkU4S
- pc2uJwJEZuU8fDnuxAGpRI14m3xWaikD0q8DAz/+nSQ87OR6DMSTtEhY00cKdMRJ087OnHVxHBm
- a6V09Gj2r/pOpyqKoQ1hvmY=
-Received: from nyc3000-r.dnsiaas.com ([96.47.167.18] nyc3000-r.dnsiaas.com)
- (Authenticated sender: mb6724)
- by relay3-v.mailbaby.net (MailBabyMTA) with ESMTPSA id 199cb6187370009dc1.001
- for <git@vger.kernel.org>
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
- Thu, 09 Oct 2025 23:49:50 +0000
-X-Zone-Loop: 1fdac5a438b769f37e8c453cb4442d38f3eee2a9f692
-ARC-Authentication-Results: i=1;	rspamdcluster9.mailbaby.net;	auth=pass
- smtp.auth=mb6724 smtp.mailfrom=code@agatha.dev
-ARC-Seal: i=1; s=detka; d=mailbaby.net; t=1760053790; a=rsa-sha256;
-	cv=none;
-	b=j9zj8UCb9uJ7s9cIW1KBx4G46q9EzP4/T8f3p8x/R+rF9IqW1s/TXOI/6T84CMjHw+OpYJ
-	VR0Hf0oTX8WiOJuAmeYaVQU+NFD1jMTJYe1ukp4YFxRF1s6J7rGuYFpS1ELgQY3JBQBpIj
-	qkIIVRYStPNdcSAlqvISDSsR1KhcmL1Sw0yVXQczFwtWVAaaqz52a1OeDBF3Jhfv2BqGXe
-	F65ovw2UdfI5v/yT0+fX625q58zAuXOwkZLalmnS2f1fvuaV4tEG2KTk0XCtdynBo2lWVP
-	85FlzIlM8kfQKwnqPkvXWQ+89N0eLdyXM5TbzMwZ/CQmRW8qo++CbOCMS/jIWA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailbaby.net;	s=detka; t=1760053790;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=SQvrR5ekSi5jCrttXEGHdTOvJp6MQnJxQq/AY8MiFQQ=;
-	b=kyXL8+mYKf1tmQB82vB+Ro4jzIi1JlgnUE/bdmMs+5ESAYrQwrXxTRbAaxtpzdkBdxU5b0
-	Q1dRm9b5DpgXppfRvYEL3fiTY4XrnMwPSoUbX9Nhwxvm/Pc7joFdcIf5FH+wsPeK+fggDP
-	eGrj+IlKvpHfGd2LpWuAStXOHRm6o6W4Ie55VNmf/084BIXz1faUvAQyru7VQ+9+8Wh6y/
-	731Z10+oT1i4RqhJXFr4a6LDC85RKkbm2D4sEkvDeHQ5HrWvt35qu/Zo9ibP72vHhiSuIR
-	/ycJ56AP/VLd5bIAuqBatU1uqyXOrT0RLMG5DsyORo+9BxbCzbAbMjabarESew==
-X-MB-ID: mb6724|me@agatha.dev
-X-SPFOrigin: SoftFail
-Feedback-ID: mb6724:199cb6187370009dc1:96.47.167.18:mbaby
-X-NS-SCAN: PASS
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=agatha.dev;
-	s=default; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=SQvrR5ekSi5jCrttXEGHdTOvJp6MQnJxQq/AY8MiFQQ=; b=lNtV31MmR6994Gzj1dvfsMYlxR
-	pa3HEPs2nrAyMA7eCDXN3q4ldVl2IBfuiSnC3Yav0yvbk7lXUkiAe1QQJIePzBH/EjaMTW0x508cy
-	XLM3hi9pvCHZHHdcvOBWiAA93O6vxUoWqinRXI/yE85jS3M4mvR34BDQmeNjt37IsnDfw62m9KMhG
-	GwEI/nD1uxtcIygspvSUqgtLDth8e8jw4/RM6tz+dmCorWyloObM/FiTIN4noQ9d9WEFx/k96tDFB
-	eCtQA4ENXVVBZlC9MxTV17p2TzzAzhV71fevJOYsllr2DYptE29eKk5q+v07EITM/C/Z7uQkzJ8dv
-	h5FcS7NA==;
-Received: from [23.94.14.143] (port=41616 helo=lavender.agatha.dev)
-	by nyc3000-r.dnsiaas.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <code@agatha.dev>)
-	id 1v70OO-0000000FJiz-4A5F;
-	Thu, 09 Oct 2025 19:49:50 -0400
-Date: Thu, 9 Oct 2025 18:49:48 -0500
-From: Agatha Isabelle <code@agatha.dev>
-To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Cc: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org
-Subject: Re: [PATCH] [Outreachy] patch-ids: fix const correctness
-Message-ID: <6n5vp3vkmk6gota27baejwu2mkuqppy65efsiimvjqnhjjqecz@uud5yaetl5l2>
-References: <20251009214445.1190274-1-okhuomonajayi54@gmail.com>
- <20251009215737.1196464-1-okhuomonajayi54@gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="lvF9kfLv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S7/neuKp"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 508CAEC01B0;
+	Thu,  9 Oct 2025 19:57:40 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Thu, 09 Oct 2025 19:57:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1760054260;
+	 x=1760140660; bh=9FwoCp6bnnhcaREM0ht1p/RZSYSTA6tO5KkZD1lBR4I=; b=
+	lvF9kfLvHGfWgd0UEkUFZsgaJu2+hWTnvn3EsvOBbO0tJvh7U1V/0emZpeMzweFc
+	k0E9luA6A4q/P4QeohPYv8SHxKN+jc3ltDAucJjxNmvXdVu4lT60+15xhY54gAHi
+	SuHuQyex3WeiHYlPBLjTjUEjeg6KF23oW9tEeLjdT5OBKYcFhAd+BBLajO3ZN4Gd
+	dZ+lSrzZd0aFDiNn1PyUE/15kyub9hjGW3zzjTlX2ns3hlBCVd7+xem5OFG0TpfZ
+	RTTV+wWmCGTV4gcSb4iz5WfYc+FEVuBGVILwGHuayIz4GHKT/po2XKinQm0Phqnz
+	SncI2UO4T4D52lUT97HIZw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1760054260; x=1760140660; bh=9
+	FwoCp6bnnhcaREM0ht1p/RZSYSTA6tO5KkZD1lBR4I=; b=S7/neuKpxc7lu/eQ4
+	ocY5hI9mrJNOpYd0dMzDlMNo1gq9OGZgzHpgvfHkN1udEDtjrgfdd4DfuFlLYBBo
+	4OCwqmxFVFdOOFkP5PLnCzvAasOkiMq1DjJWbORPeKwF6zAALgYQyQVBcayfKcKf
+	VrbKtlR3CI5MVnnkJ5Mr8brk0e7SbMfxMmYC5yKAkoVqhzcwJoO83C3o99ZbLiRL
+	EkhMicxDOlDs077rGUrMwSJoodMm5p0EbjUfnlu6jidTE1srtprI/77138mqMeWl
+	Y+BrN38nMm32kVqMB/OdsmK00CEMGStT2Mi1S+f4hanbX92+SZN5KDY2dyRC5eZQ
+	nEcPg==
+X-ME-Sender: <xms:9EvoaOnMZFMJgT8zBDo1FkKxo7wkI2XeDczkJSJeJ9V5inpOndi84O8>
+    <xme:9EvoaAppX-J5H9kT8f66aJDPSBC7_Wbi5QlSWhNifps46mC5ya2QvuQJhNAqOoIVC
+    B_r0_k4d4kc72q5OQ6v0PSuvF28Q7iCO9TSL76YSDvqpQGAibKZgg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdejheehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtgfffteetudel
+    hfefkeehtefggeefjeevieekfeefieekkefhveeiledtkefgueenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepohhkhhhuohhmohhnrghjrgihihehgeesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:9EvoaMskAT0ZYTN03Dqs6Lp-uOy6vO0gDkG0z-S6oQ5I9H6u4tjrPA>
+    <xmx:9EvoaCaKdd9SJSBNRAPaM9nbFD6ny50V0Y7UZuppEzP8-WxG3DC0NQ>
+    <xmx:9EvoaJvhyasHVvfEU5PAhdnf6Olh2BxyskmAUH4hpuyVi027gAjSiQ>
+    <xmx:9EvoaMEDH8ZQ1MEGyTCBTOm4L6fuv-KwnIBYtxxUqqHNIDBuxuetcA>
+    <xmx:9EvoaMZ9PgrIb-9aRMm-cUfhB16xfBWkZwTVciyqUzrGIZfvbtOFtNpZ>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 037E71EA0062; Thu,  9 Oct 2025 19:57:39 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251009215737.1196464-1-okhuomonajayi54@gmail.com>
-X-AuthUser: me@agatha.dev
+X-ThreadId: AN133Pc3AQ0w
+Date: Fri, 10 Oct 2025 01:57:18 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Okhuomon Ajayi" <okhuomonajayi54@gmail.com>, git@vger.kernel.org
+Message-Id: <3fa266f2-2376-4497-9d36-966fbdb4ca0e@app.fastmail.com>
+In-Reply-To: <20251009234957.1789543-1-okhuomonajayi54@gmail.com>
+References: <20251009234957.1789543-1-okhuomonajayi54@gmail.com>
+Subject: Re: [PATCH] [Outreachy] patch-ids: fix NEEDSWORK timezone parsing in
+ fast-import.c
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hello!
-
-Nice patch!
-
-One detail I would add, though, I think the correct way to submit a v2
-patch is to prefix it with the `[PATCH v2]` prefix.
-
-See:
-https://git-scm.com/docs/SubmittingPatches
-https://git-scm.com/docs/MyFirstContribution
-
-On Thu, Oct 09, 2025 at 10:57:20PM +0100, Okhuomon Ajayi wrote:
-> Fix const correctness warning in patch_id_neq() in patch-ids.c.
-> 
-
-Before the changes, I think there must be the `Signed-off-by:` line.
-
-> Changes in v2:
-> - Removed NEEDSWORK comment
-
-And this part of the message, the changelog, I think it's supposed to be
-in the email message but not as part of the commit log.
-
+On Fri, Oct 10, 2025, at 01:49, Okhuomon Ajayi wrote:
+> Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
 > ---
->  patch-ids.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/patch-ids.c b/patch-ids.c
-> index a5683b462c..b6b808332f 100644
-> --- a/patch-ids.c
-> +++ b/patch-ids.c
-> @@ -41,8 +41,8 @@ static int patch_id_neq(const void *cmpfn_data,
->  			const struct hashmap_entry *entry_or_key,
->  			const void *keydata UNUSED)
->  {
-> -	/* NEEDSWORK: const correctness? */
-> -	struct diff_options *opt = (void *)cmpfn_data;
-> +	
-> +	const struct diff_options *opt = (void *)cmpfn_data;
->  	struct patch_id *a, *b;
->  
->  	a = container_of(eptr, struct patch_id, ent);
-> -- 
+>  builtin/fast-import.c | 15 ++++++++-------
+>  1 file changed, 8 insertions(+), 7 deletions(-)
+>
+> diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+> index 606c6aea82..695e1a0ae1 100644
+> --- a/builtin/fast-import.c
+> +++ b/builtin/fast-import.c
+> @@ -1959,14 +1959,15 @@ static int validate_raw_date(const char *src,
+> struct strbuf *result, int strict)
+>  		return -1;
+>
+>  	num =3D strtoul(src + 1, &endp, 10);
+> -	/*
+> -	 * NEEDSWORK: check for brokenness other than num > 1400, such as
+> -	 *            (num % 100) >=3D 60, or ((num % 100) % 15) !=3D 0 ?
+> -	 */
+> -	if (errno || endp =3D=3D src + 1 || *endp || /* did not parse */
+> -	    (strict && (1400 < num))             /* parsed a broken timezone=
+ */
+> -	   )
+> +
+> +
+
+These two new blank lines should probably not be here.
+
+> +        unsigned int hours =3D num / 100;
+> +        unsigned int minutes =3D num % 100;
+> +
+
+You=E2=80=99re mixing spaces-for-indentation right here with tabs (next)=
+.  The
+project uses tabs for indentation.
+
+Try to run `./ci/check-whitespace.sh @^`
+
+> +	if (errno || endp =3D=3D src + 1 || *endp ||
+> +	    (strict && (num > 1400 || minutes >=3D60 || minutes % 15 !=3D 0)=
+)){
+>  		return -1;
+> +	}
+>
+>  	strbuf_addstr(result, orig_src);
+>  	return 0;
+> --
 > 2.43.0
-> 
-
-I hope it was helpful.
-
-Best,
-Ágatha Isabelle
