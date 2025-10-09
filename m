@@ -1,46 +1,47 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8329AAD4B
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 05:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B5CAD4B
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 05:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759989161; cv=none; b=DOF35QqIIZZHPWSHvaz9mFcH16bmEDKwO7zum4H1YdAG6XS9pOQQ6cc9vEzyucPDUUzBs7T+4xfTPKGTXmts3A+yG1etEDKL9iFiTFjajAzfOpVd5GvNm/0g2RUjqJ9haxoLbuAKDIdYNSQp6Q972uY0vZCngx2BHMCm0gzHQMc=
+	t=1759989357; cv=none; b=SSQ9Y3/chWGLaEXaA2K0NjJfjGe8LRhnEIkKYSDQdtR+WnPQMexgLtaRp1c9lW7dLfLxW5VarmJjz3cFjx8uBlDaK/QkGRmzUE6auV/OjRzLgtAfbWLh2gQythgLK3jYAfYjvZ23Mfx4hQQ4U0nKZ26KuoS3q0pJHg9E+aqdJKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759989161; c=relaxed/simple;
-	bh=corcgbk0jkWJYSZO2kMWxRrFSSVgtq4przFYid8TmYE=;
+	s=arc-20240116; t=1759989357; c=relaxed/simple;
+	bh=HR9tdft0Ox/NHzpLn6CujefXLg6jWplDqg28KwXez2Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n5olsbl1EPRgBIuTyExIbI9w+p9zZgGz1YC2QwLSCrFTId552qETBJvFQGMGIuxIf1qGrhZOUP2XypqTnhKxX9rYWfFwGTWcqIyPL5NQgfmwpwa6dq54uylpkKNStNupsoSr/058X6cow8yZ7OTYln2h8tqQ03pRrpn5HP5GkVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=FNpoA4Sg; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=jLZmNVRfwlkA6K63k1S5eIkyiV3QZNi9GMfMXtPCcLvUvqhoR1MgeHSV6nX3fY0v8x+i9Y4rGntEWhteSGwQzr1kyA/nPOlTw6YK2TE5hzWmvIqgIR7YJxRZ1sOcw/yR4PXOhbMNYnEYU10LMsGYO91yiH/mr+K/iqBkf4Y2Hsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=H0evl0MB; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="FNpoA4Sg"
-Received: (qmail 174562 invoked by uid 109); 9 Oct 2025 05:52:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=corcgbk0jkWJYSZO2kMWxRrFSSVgtq4przFYid8TmYE=; b=FNpoA4SgdRFixA8p0uGmQMa7htV498mq2l89pqUpwQCVEAnGiBtk0CjR9cNpgLWbueEdive6xuc4NpgkMJunpImOtMoPRvO9dKr0lMne2a6LrAPvbG1yoU2yTWZQMNzu5n166fa1ntPiGfS4abwQpY4XXRCl1XYEPvHvfIAlu18/HNAF+rhFthwAc5qCD7iAsIopIEIMbjsVRn+nh4kYSn8Clycf8p4Dmp3v+nyuRzWneaywBCUnCpVyssblqXEL5hFvVLGtCpIoeP6IlPuZ99XnnQKGQp2wDkBn8YPw1agV4GFnkrO4Z204NuNDLMF0GIbGRz0SD838lasqzwO2Lw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="H0evl0MB"
+Received: (qmail 174588 invoked by uid 109); 9 Oct 2025 05:55:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=HR9tdft0Ox/NHzpLn6CujefXLg6jWplDqg28KwXez2Q=; b=H0evl0MBCb30rU4116IM0vs0gn9Pe/sQ6jN7+sJ8Ex9qrAsYSE934DE4f/3Ojg+pM0ZSUvyxryJi1QKYd1qb7BFNjZx1vZX0zqPLA7jlSoRUOkDG1QMfHnL6np/I7qKUt9+eqSVhI9BG6gNi+hTnYsO5WfbqbZKqmgUTdzJp96Fw9808mre/Nx0kcZQrjfijcR6BBQcR06kCCuiJgu/XgXZq/T88IhNo5hdkySpm9rKyM0iavJsVZygImbSWSkUKvXorfmuhggNlFG3unl+NNj7zPMNW1H2gLQ0uxu7TS8QdApFFmsX12ame+DE1t0F4tluMBfl1O53SeEi2gIwt2A==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Oct 2025 05:52:39 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Oct 2025 05:55:55 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 265663 invoked by uid 111); 9 Oct 2025 05:52:38 -0000
+Received: (qmail 265741 invoked by uid 111); 9 Oct 2025 05:55:54 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Oct 2025 01:52:38 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Oct 2025 01:55:54 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 9 Oct 2025 01:52:37 -0400
+Date: Thu, 9 Oct 2025 01:55:54 -0400
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, shejialuo <shejialuo@gmail.com>,
-	git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	shejialuo <shejialuo@gmail.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
 Subject: Re: [PATCH v2 2/4] string-list: replace negative index encoding with
  "exact_match" parameter
-Message-ID: <20251009055237.GC1614343@coredump.intra.peff.net>
+Message-ID: <20251009055554.GD1614343@coredump.intra.peff.net>
 References: <aMp8yNFiXDyk2hP4@ArchLinux>
  <aMp9OtXLfRw7dEwA@ArchLinux>
  <CAOLa=ZShms1D-cq=x04dtT2ULTVE3ZDo8DODFnJRP2wcJz0EgQ@mail.gmail.com>
  <xmqq348dovi3.fsf@gitster.g>
  <20250924053601.GC1173044@coredump.intra.peff.net>
  <xmqqwm5om1gy.fsf@gitster.g>
- <20250925025040.GB3202669@coredump.intra.peff.net>
- <xmqq5xd6irmu.fsf@gitster.g>
+ <87jz16dux5.fsf@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -49,59 +50,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq5xd6irmu.fsf@gitster.g>
+In-Reply-To: <87jz16dux5.fsf@gmail.com>
 
-On Thu, Sep 25, 2025 at 06:33:13AM -0700, Junio C Hamano wrote:
+On Tue, Oct 07, 2025 at 06:49:42PM -0700, Collin Funk wrote:
 
-> Jeff King <peff@peff.net> writes:
+> In GNU Coreutils and Gnulib we often use 'idx_t', which is a typedef to
+> the standard signed type 'ptrdiff_t', when we refer to allocation of
+> objects or indexes.
 > 
-> > Yes, but it's much harder to wrap a size_t, especially if the code is
-> > allocating as it goes (e.g., a loop expanding an array). Because if
-> > expanding your allocation from "n" to "n+k" items will overflow, then
-> > that implies the current allocation is within "k" items of filling up
-> > the entire memory space.
+> The rational is written in the header file where it is defined [1].
+> However, I want to highlight one part that I find most useful:
 > 
-> We'd be protecting ourselves by noticing that n+k wraps around with
-> st_add() and friends, and relying on malloc() and realloc() to
-> notice and signal an error.  Use of size_t to count the number of
-> things that are getting allocated is not making these any easier to
-> do compared to the case you were counting in "int", no?  Either way
-> we'd need to be careful.
+>      * Security: Signed types can be checked for overflow via
+>        '-fsanitize=undefined', but unsigned types cannot.
+> 
+> On common platforms, you will never need to allocate more memory than
+> PTRDIFF_MAX anyways:
+> 
+>     $ numfmt --to=iec-i `echo $(((1 << 63) - 1))`
+>     8.0Ei
+> 
+> I think that addresses Jeff's point that 'int' is too small, which I
+> agree with.
 
-Yes and no. I agree it is probably good to check for overflow as a
-general principle, even if using size_t. But it is also easy to miss
-such spots, and I do think using size_t (or something similarly large)
-can provide some backup safety.
-
-If you are getting values "foo" and "bar" from the user and computing a
-length like "size_t len = foo * bar", then the size of the type will not
-help you, and you need to do checked arithmetic. But I think those cases
-are relatively easy to spot. The much more insidious ones are those that
-append to a data structure one item at a time. With a type that is close
-to the practical size of memory, you will fail to grow your data
-structure before you hit the overflow. With a much smaller type like
-int (on an LP64 platform), it is much easier for malicious input to
-cause funky wrapping[1].
-
-If your position is "it would not matter if we were properly checking
-for overflow", then I agree. I just think it's hard to catch all of the
-spots. But maybe I am being overly pessimistic. _Most_ of that should go
-through ALLOC_GROW() or similar, so the checks could be centralized-ish[2].
+Yeah, absolutely. I do not love size_t (and certainly switching signed
+"int" to unsigned "size_t" is an easy way to introduce bugs when you
+cross the "0" boundary). I'd be very happy with everything using
+something like ptrdiff_t, and even hiding it behind idx_t or count_t or
+whatever.
 
 -Peff
-
-[1] We have had (and I'd wager probably still have) bugs where an
-    attacker can wrap around to negative int. We get saved from a
-    vulnerability here because the negative value is eventually cast to
-    a gigantic size_t to allocate, which fails. In that sense I think
-    "unsigned int" is the _most_ dangerous type to use.
-
-[2] I think there are some practical implementation questions here, too.
-    If we use st_add() etc in ALLOC_GROW(), then we may get caught by
-    accidental type promotions, where those functions say "sure, it is
-    OK to increase this len", but then return a size_t which is
-    truncated when we try to stuff it back in an "int". So to make
-    ALLOC_GROW() type independent, we probably need to do some more
-    macro hackery with our checked arithmetic to make sure we are
-    operating with the same size type that the caller is using. Not
-    impossible, but something we'd have to be careful to get right.
