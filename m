@@ -1,64 +1,68 @@
 Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A93D25F78F
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 07:46:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8432D12F5
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 07:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759995968; cv=none; b=Wl3uQPol7+sH/06vZAQ7OzlEYwyode9QAQAX9cqcJMpQjDXmKXQMHLpCS7si+0EvAvqjDUraIQv35nXENYtgRGhlaKwQOOHAcNgGA3wPcInsrl/PqrreXSlI1SogvmHuQLDOw+mJytITYGMuNiA1lBGxDfWYen3oIdu6aemRsmY=
+	t=1759995971; cv=none; b=dkHAQAuvcq+qBzjgTzjP5btM4/bkVV47VsIBpgPjYpbxvGtV6i+zlMW3Za0478RtZR9XFJuY1v+Qhi9zVfo1MksmfZUM+BsUHjFOGX/aEmNjxGE0l/1o7Xtr5pdsFrfSXQn0/sfh8dCwIRWCZJc2tmh5Ii0u5bpfNr9YYfRxoA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759995968; c=relaxed/simple;
-	bh=Fp0/AV8LbtAQvnH0ncSDBolGa2NHFIv54XIDIIZ/xCw=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=j+ZiOc5F7/AgA06xVc5FvHqrhgjKgZXcz13Vu+8KzYJ2v0Q5idsIkuwnklITDyNaUZXthAdThgBxtabOmT58DZLZW5N/JWoHDfpnPAHZ8KL9HZeFJmaHju1jhkRYoJFeMEQC7PKJynNcEJLAltufuNmrFK+msRXT4KmyI8yMLvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JH5xPs2G; arc=none smtp.client-ip=209.85.166.173
+	s=arc-20240116; t=1759995971; c=relaxed/simple;
+	bh=PgmdkJTzM09p6ogyBArizoajE92hkqHMqYrknpycNbc=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=PGFvsdCphGWkalsHSsoSxt4YXBlWNZGbcbEQCcrgxnnv0R4aZhMvAJGOZOYgiO/7sRGzvfh4jGt+qdd9CuPcbtKVO8a+wFe7pvZQ+3UN8eXjEELB/8mL9jPoMZzyZjG16l1IaBnsPD3sZDcaQdZu4X99vg6mcL6N3kjUBhWeAI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GvVsWhke; arc=none smtp.client-ip=209.85.166.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JH5xPs2G"
-Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-4242bb22132so6968015ab.3
-        for <git@vger.kernel.org>; Thu, 09 Oct 2025 00:46:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GvVsWhke"
+Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-42f95010871so690795ab.2
+        for <git@vger.kernel.org>; Thu, 09 Oct 2025 00:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759995964; x=1760600764; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1759995967; x=1760600767; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=xXxT77HFsdKEEvpJhGeCMIQ1F188ufil0bET5mCCtiQ=;
-        b=JH5xPs2GA1jBu8mjU62FAOK91ww0Gamwg7tWZLXY36Pr9Cupdssmdtkv2+XzGoFweg
-         IHtLAbXcSvhRJSPH7qad53cUsFiuLNHll8fSmnENKd9tLtHdCmcmG7K7MtcFdth7IitT
-         8LWMc9Fima5N8mq4stlKbKwE/QjSXsDuiDDTWQngOQ9d6DjjcifzzogGc/kG5vLvdzMH
-         8DB96bk0VCafQANuDvJ1dI3W12tAOWnCBZfyY9CALbWSBKLNqiV/sL0kY9owR+pWKdZR
-         dHIRdPeFv4kOCxx4h0QMHnTbCEDr/r0pmwxmDcWOVrhfSCO0y6KIPMI21eDu+Y8qAJRn
-         Y2Aw==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=f+3kUncL/VwIsZcCGKpsKDMCtDcC1ek7zjlM74D8Neo=;
+        b=GvVsWhke5VflTbYQlnM3gaCedHutLw8KvRZX518+i9MOQwuaUWF/a3gs72pEKXYhk0
+         KJaq9LlOe4Wj+t5n9MTynDWk7qCj0G1oWyWWPnNWYpoAcLv+EMh7dgW9Nkw9ke7jbkSE
+         S4SaKASTlcMR9ssHOa6xHQBEJxqkJHDA5Fb1K7Tz1ZjPCWdLta7Q+PrRmePZGkFraJe3
+         GlBp6nFwHmK33sscThpJwcVc3LGzvMr5nAh1ay2EyIctqDcA7/sVl6iFY/AmXZWHoiJR
+         yVcuYro00DzGu4nCJvTd7VVdPgLq8THOOa4/QnuuNhSMyQB4sp+rSzVjSvOU4d5YiVcF
+         m3PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759995964; x=1760600764;
+        d=1e100.net; s=20230601; t=1759995967; x=1760600767;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xXxT77HFsdKEEvpJhGeCMIQ1F188ufil0bET5mCCtiQ=;
-        b=M0dDY2M3iQQfZXztulA/Ok67WAxiwt3QaL9rGfjWpXBclP8gsv0QD4MJZ24exsVqcp
-         xMscxTFwp3VJYOAxLciUxTQ4JQYzecT6BmX5rU9IlbvjbHm9Wm/z2ijrlHQtCSrgZpIm
-         DqZUDUg3eY9BeEwapT8k8FeU80Tjhlv6tEu6p9PHBqYLJ1Sqhf7m0HCQ+RSB0f1ffxwe
-         Uq1hXSKklNTAPC4fjzt8kXUctjXsGtTnSBK4tj3bSiDdHM5SbTxl+PzjlpXfyCbkCt8W
-         bCmOwEG7ExZgkcm2dU8budtiw4We307LCrdR7tBnZjGdt8Bs6eqeUEFWuiNwmWHUS2zh
-         Mo9w==
-X-Gm-Message-State: AOJu0YxneOnLdcjEB3UdiIbxFBZe3sbI8X2nf6jGKLstq0xyvzfRqW+G
-	d0cTu6fPvGTTxIS0i05Cj0PLTvRLyz7hMEWrdn1PO8EioNrfyRHnPSBUVXSIIw==
-X-Gm-Gg: ASbGnctzt0O/AKYNrECOoJV3CtzX/83/8jrSLu3kS4KbD+yX2rO+viXf7o8tTWGQ5SF
-	HubJjbA8mwFfEAxJZ8kSQEhc3hmmYps+j7JwVXNdOEz/g9ImQnXhqg2I83hTiqa3jpKvTw9mbb3
-	J7TBOrEj22tB6YdkkqJLy2t1HXt791G2bzupiRFjUCUaybLpIv0kvhy89TtN6oTsRTPP0rsnJO0
-	QUU4jmdYQydQFJNcLf9MHgBGyz2QFmp7VbwEL4yQ4BYm2zp3t7wc9u5A67DOjRPU3wllDMbfXfY
-	Z+5ojZVQLWtWvRa05cym3lITyAEOOugWRH5B/nIBE3xe3Xto2vzKGKJo2QHfwJXJLpz0X3tpYDv
-	GXX18TWgPg7vGcb4pHz9DMs+Aa9FUEq54Lei9z4sdsUhZJdeoJQ==
-X-Google-Smtp-Source: AGHT+IF8IDBB9QfzPQx+QJcDEJ2B7djVhfOYAumKbErwcqHVXD5hGPONjK9VqpnTWcC5nsGuPnOEyg==
-X-Received: by 2002:a92:c241:0:b0:424:85b0:e1cb with SMTP id e9e14a558f8ab-42f8740330amr66104685ab.31.1759995963914;
-        Thu, 09 Oct 2025 00:46:03 -0700 (PDT)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=f+3kUncL/VwIsZcCGKpsKDMCtDcC1ek7zjlM74D8Neo=;
+        b=WbFZx64QYzkyACEjJ0zLv+S8ayCAiJV68RXmavjKfq+ZAqhxzDELk+5ZYhiB5BCPCr
+         Ng/fTJj4ttYXfTdn8RWjGU+eDupv2mtGFBX8cPPQWqaM8OHpGEAkzuQmICR2NNPVPMnl
+         azmBFFs9yIqD86xkLpOOJ2CCwpc0Y0Fi725BJ5E43LG8ZD+udkTyLL3sBSeGlk14/LcN
+         fPZI1H+fvYpQCpbSGSQXikJ8zZ39MUiGv1i4RQ5dXy/xupKfNnHOHa0u57BxHBVhu1Qo
+         NckiImLczq/RpidAimQiL3y4WQzr+MsuHIe3esH+FJ/fGgnZqCEXzcj8hJ3RjzPaVFl+
+         TQWA==
+X-Gm-Message-State: AOJu0Yz2a/g7ROpdlnH50P/WUs4enmUsvpHCgfFcdnCBPrGBI+Ym8uqf
+	PKqncJPONfc3V0kXktxd9AN/vc72ugmP/L6dyJTTPiIYH7Dku1MEdN9SIUOUwQ==
+X-Gm-Gg: ASbGnculmRU5AeHJe+6XScm+HUtSbgCnXcjr8EOdXq2Ek7n/ZCawqLkBYsuTSsXMgOq
+	GVuyh8lyyZCGic4kRrnzQN6NU4B12hiNZeEk1Btu9jbbFvrl0prc98J4jAzXp2ozHpR8SaLKEuV
+	/Xmfw+Ir2VRB5p+9pU7fiNHwRVBc/zFX2Hms80kUWeARbwEA8Cg8zFm1oeAtUYG48RZubQv1iJs
+	BqMkttkmRM1EdsaMLYi6fXdWe5TapAAsSYMzGNlvW60+hp+u62kYVkBc1C5tOekPpTTLYAQ16gL
+	zUPyJyPSFuJ4nafqCrmJe4HDBNZ1J3ZYObEdYBZ25IU7Htcus4VLhwddkJkb98Ua1fLw5G77zd8
+	ZV2EBV1HONo2Ym7ywYYVVErtUN5AIrPRCguINySOuKk6IzVF7zQ==
+X-Google-Smtp-Source: AGHT+IGUxqSk0S8rF6NnEasfvk1fVMtu6X3iHv3zRUmLFEV9zm139J1KIJwuorlrEUVBCuMXTgyN2Q==
+X-Received: by 2002:a05:6e02:1a22:b0:424:bec:4a01 with SMTP id e9e14a558f8ab-42f873d6985mr53329805ab.16.1759995966669;
+        Thu, 09 Oct 2025 00:46:06 -0700 (PDT)
 Received: from [127.0.0.1] ([135.232.201.67])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-57b5ec0741csm7729936173.51.2025.10.09.00.46.02
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-42f90346b89sm8021065ab.23.2025.10.09.00.46.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Oct 2025 00:46:02 -0700 (PDT)
-Message-Id: <pull.1985.git.1759995961.gitgitgadget@gmail.com>
+        Thu, 09 Oct 2025 00:46:05 -0700 (PDT)
+Message-Id: <484ef8b825e5d1d68a61f0f8cc2520457e8f4f3a.1759995961.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1985.git.1759995961.gitgitgadget@gmail.com>
+References: <pull.1985.git.1759995961.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 09 Oct 2025 07:45:59 +0000
-Subject: [PATCH 0/2] Organize mingw includes
+Date: Thu, 09 Oct 2025 07:46:00 +0000
+Subject: [PATCH 1/2] mingw: avoid relative `#include`s
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,22 +73,55 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Following in the footsteps of the many, many recent #include refactorings,
-this patch series orders the #include statements in compat/mingw.c.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Johannes Schindelin (2):
-  mingw: avoid relative `#include`s
-  mingw: order `#include`s alphabetically
+We want to make them relative to the top-level directory.
 
- compat/mingw.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/mingw.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-
-base-commit: 79cf913ea9321f774da29b2330b5781d5ff420ef
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1985%2Fdscho%2Forganize-mingw-includes-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1985/dscho/organize-mingw-includes-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1985
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 8538e3d172..da99473f56 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1,22 +1,22 @@
+ #define USE_THE_REPOSITORY_VARIABLE
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
+ #include "win32.h"
+ #include <aclapi.h>
+ #include <sddl.h>
+ #include <conio.h>
+ #include <wchar.h>
+-#include "../strbuf.h"
+-#include "../run-command.h"
+-#include "../abspath.h"
+-#include "../alloc.h"
++#include "strbuf.h"
++#include "run-command.h"
++#include "abspath.h"
++#include "alloc.h"
+ #include "win32/lazyload.h"
+-#include "../config.h"
+-#include "../environment.h"
+-#include "../trace2.h"
+-#include "../symlinks.h"
+-#include "../wrapper.h"
++#include "config.h"
++#include "environment.h"
++#include "trace2.h"
++#include "symlinks.h"
++#include "wrapper.h"
+ #include "dir.h"
+ #include "gettext.h"
+ #define SECURITY_WIN32
 -- 
 gitgitgadget
+
