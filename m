@@ -1,91 +1,83 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5452D17A2EB
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 06:10:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B861524501C
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 06:36:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759990202; cv=none; b=YKoa9swFWGXQ8N8YwHZNCOkyYqRZYyjFqkq9fViqOs158MlNXj1ne3pxjFKs9CXzzvU1BZv8s4+0mUWu+qfS77vIWAyBuxvOisiMxkprZQGxIGmBH6dpUHSdxFk3k5QniJrXYlZTr4vqIHe4IyKLdmoZW7FXUgKiPEu7qTKoUMc=
+	t=1759991773; cv=none; b=i+rL8k+qo4luhZ3nOgVXP1CGmlL3O4+2UOFt2iTTOHgJ/4/36PVNhah+Cn/4knqI9rol8ASJkyY/EeDFsg+0ldOlCMk59aewFmmkQTSSb2TUGRvg2mf+rk+RnaU5T4kqOfssBkGwI4sPna+KAc+Y095LkoZsDmlKGoNq91JAEzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759990202; c=relaxed/simple;
-	bh=vz+kZevn85TFbjkfG9ItasJ0sDUW9yySinyl4hA9el8=;
+	s=arc-20240116; t=1759991773; c=relaxed/simple;
+	bh=HjzTlcEl2rz/icncsNlPBlsAxW1nlKQfTxf1MFLsE2c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k1dNHEBCxEsqLa+EIGMsiEW4k73tzKOK7yPGjDBtlIIyw+d8F01fipXYN9T2FqN2/ilBzdCNALbclIiN90jrqxYb3rxX29m2l2XnzO4s0mXuALUyQSwAzj7YzDIRN7LksTn2kbVnrxs7b276yspgni1HEqwUsfH79AX/CwMhWjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jFPCu+W3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kyqvdcmh; arc=none smtp.client-ip=202.12.124.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZhtfZNPV1BCaUaG5lYjl+GjUUuqjKjhoI6Cb1/hWUGbn46Bh8CGpksKJO54f/9vnbXsNEmLn+n6X9AFCDZJmvkMibMb/lTFPV8kMIMDAPM/JmrM6CFWTu/p8ycbudo6HRa4MENC1cnmXIZzcmC72ospII06J1IUxeuI+N6ZiNnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FMmHnTjS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NwxwQjvn; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jFPCu+W3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kyqvdcmh"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 66C731D00132;
-	Thu,  9 Oct 2025 02:10:00 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Thu, 09 Oct 2025 02:10:00 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FMmHnTjS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NwxwQjvn"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CB4507A015D;
+	Thu,  9 Oct 2025 02:36:09 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Thu, 09 Oct 2025 02:36:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759990200; x=1760076600; bh=airNIFoYcj
-	ZH7YLSiLHtzbF5Ux+sZsj5/hkSVvMzymw=; b=jFPCu+W3DLRZodaQoHi+DeRYgO
-	6j62zSI4VREAUfRp7ZqIip4SIrX7m4b1awL8r+HXnSuJVvwz7MNtzOO9k03ZEVn7
-	TcRGXfvHR3Tct8UsQfdPoCvat1IIC9srpud9sKEDyz9l9uIP/orpnP/EYWNppMyM
-	6SSEKmWUWmP3qEL6Jb7zr63qDD+NenGG9+8CRy9/OYHaKN0Cw2ug3LfW2iS7EAlX
-	KwH6qCG5xP4+9fPkL6JNZ5NEnEe5DUGf/1T6rBG7QaYFMs0aJfE7x7xO9SFp0m5i
-	AI2CuYphy2qZM8TnLnTjFUsqGxeb/Wo6UpfZBFI05d9aLF32tKwACO5JgsYA==
+	:subject:to:to; s=fm2; t=1759991769; x=1760078169; bh=Iy+GSKk7J9
+	9wduBJ7f+JBR3y5VYv4nmYMav4KkMH2/0=; b=FMmHnTjStaEZzz5GkDJWFWD71E
+	QLWvBh578zMCGkd77XmwoBJx21V6NH/RGaDg82aLJ9DehHtxzKyZIveRv9+JhBIA
+	qyN+00FI3dVBfNYMv58XPgmHoxcCOhNcUqo03uufI9hsDInRZZtGS+QHSiyCmdmO
+	QZQS21mwxU3DNSIyUFqnMivGZwddSQYNBSm9twBqBTJcik6vllW/8/OYiQURWC/T
+	L2j17HWyDiYfr9UJ/SuYKDmmyJenYlqrrqPQGBW2O1XilyiH6lPtUFMbOat+VZn7
+	rbzLFs6qZE2XAtyPJFD1FE78cGm4RcDFSP8sdw5L+QxNWq4wl9RE4eXKTUCw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759990200; x=1760076600; bh=airNIFoYcjZH7YLSiLHtzbF5Ux+sZsj5/hk
-	SVvMzymw=; b=kyqvdcmh0vmpIuUHZe8/YjPojyDdJoJw2syzZPPOqagXOcoRDSk
-	rldFU1fMVP+1h8UJVPbCHXpv8bhPM5FBQTIAsflKEk3fzGuOA0G+PX6dthnS53GP
-	5AKU/2YtWp6rmLMEmAR8Z3gKoidQg62QYqIWjgiGTcY9gyWCNhesHvetiM1LVMHH
-	r/whUOUcJvR1FzJEXQvRaZHV/1W962gRlsUzVvJpC1M96jx5WjosPPBKktgVhX7H
-	OnrPBqGal5Mn55uTJc1hjcMbyRLIUPW21n+E6GplsEl3CmWaOr0c2Q7aFulKo6qz
-	UQsQdNVc4Ivoh3P5Ie7nN3GicI+cq4GXspg==
-X-ME-Sender: <xms:t1HnaEz20Npq0TmydCnWCb8JqFQhAM-oOe_2HNPEM2kQgbSePfcRXw>
-    <xme:t1HnaKgqH92y3UH48P8lae84T3PcRol_IcfHOlpZnAbTc7PVmZ-ZY1J4A_aL6q3Vb
-    RGd0G7WHIkB_NHjvjPxvDbHFtR4jbpBxIW_ox9zk02MoOA6FLukxqA>
-X-ME-Received: <xmr:t1HnaIn1uxS4jdwEA7Eyp3VByd0KEkZXEEPhlK9rOONxW1D9_8DlpEgD_KcKDZ3MC3iFPwkAQXWewNK4c9K2aYR0nPkqTfm1w3azBbu03W0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdehgedvucetufdoteggodetrf
+	1759991769; x=1760078169; bh=Iy+GSKk7J99wduBJ7f+JBR3y5VYv4nmYMav
+	4KkMH2/0=; b=NwxwQjvnnSz88Z+k2yKtfmS2cqv5+sHiNMknrNe7E+hKxgwKqj/
+	GW9iIN/1a4pmMiitoVhfcZwdxCiJhnXDPVBArA4w89JGCBHcExVSLYmJ/vsFHUQq
+	qLKtRN4sQOQ8kzvsDQEOR0PGfzx0RgnD8zSw0nNCE7JGROHxUrR5y4sDbcZC2cAe
+	j4Z4XzYdY2j9BL5scLdUha0fdW65aRTpzr99Bcny5dGLfJvc9zkbKxto43p8wdAq
+	LD5IjSvafXDbTrkcyV1Us3cMfEbIQxRVUzszpQQJqE/MvWTVqF7Jd25qC5QZ567G
+	adSmH0VylyRhg0FRQrUmyPik3gS6n6VCJNA==
+X-ME-Sender: <xms:2VfnaDES-XtHKzVtDf2yoYyne0RnIzSPLw1mBN2s8UWY1g4iCzs2Gg>
+    <xme:2VfnaGVkJKs1mzobHtrBvwCEQYMNse-gVgYYszJa9zvE2Cp88Eo288O1ykYVvSVtw
+    UegfqH_Wd3_PCLJQAhtPeun1-vCY6vnuWYrS49hNveq0ZiNX-Loiw>
+X-ME-Received: <xmr:2VfnaCxzFui2H-J4ikLHQJiq0alk2Qb1-1N5esHdOexJGg8mWnuf1d5ojzpgbSVnhUwqNacPXt6t1F9_aFFCGp-XEVO6wHRplfh1jNNd2q0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdehgeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrg
-    hughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgih
-    lhhorhhrrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhl
-    thhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekke
-    esghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:t1HnaIgPnGnh1MixdfklUNAsuKapmHSaC7B3TvbTsei6B5dl4uFwWw>
-    <xmx:t1HnaE2he7bSTUcj2yoE6CIpEhVxvNo2qzS0H-MV_YVcaIbrAP8tmw>
-    <xmx:t1HnaJI72JDE313aFNiziWcfBT9V2edKRhRHX-opvqT3rUAm1w6aJg>
-    <xmx:t1HnaMzkCOyn9itnkebGSnOi2hlpyGhSMWAy4yhppIyU1fdncAkCxA>
-    <xmx:uFHnaHhOxCVc_CkSRVuC8mqsLoHYlVN3GkC0s35_z5Ur4P_OiMr1LKuk>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:2VfnaMPacnnUJyfUsjHiYk0zrPKAIwdCEB8C1tx_pV5b6A7nteRPcA>
+    <xmx:2VfnaL7U_JXKEfMDgU9dNiWhAI-WPkZXDdQwEPvLhALJvKjKutb89Q>
+    <xmx:2VfnaFM0iYSbQYCOSMbUM1R0tYSOGMPVgvhh4K7iIrVIZwyIoQxhyw>
+    <xmx:2VfnaBmMhsXJRI8_VvIq5mCA77zNerWO1JMdJ4b-qGPVjH1oz3uaaQ>
+    <xmx:2VfnaFNB4sk703ohvWCx1Uh1VsPt4nBcU0KIpgtqEdRP-aIURu3FJkV_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Oct 2025 02:09:58 -0400 (EDT)
+ 9 Oct 2025 02:36:08 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5c833923 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 9 Oct 2025 06:09:56 +0000 (UTC)
-Date: Thu, 9 Oct 2025 08:09:53 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 9be21b15 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 9 Oct 2025 06:36:07 +0000 (UTC)
+Date: Thu, 9 Oct 2025 08:36:03 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 00/14] refs: improvements and fixes for peeling tags
-Message-ID: <aOdRsR-k77uTWJRb@pks.im>
-References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
- <20251008-b4-pks-ref-filter-skip-parsing-objects-v2-0-76e30d5c9542@pks.im>
- <20251009053825.GB1614343@coredump.intra.peff.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/6] builtin/gc: convert to use
+ `packfile_store_get_all_packs()`
+Message-ID: <aOdX01_MrVkDKu9D@pks.im>
+References: <20251007-pks-packfiles-convert-get-all-v1-0-428227657a89@pks.im>
+ <20251007-pks-packfiles-convert-get-all-v1-2-428227657a89@pks.im>
+ <aObIw/et7DxB/NrZ@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,43 +86,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251009053825.GB1614343@coredump.intra.peff.net>
+In-Reply-To: <aObIw/et7DxB/NrZ@nand.local>
 
-On Thu, Oct 09, 2025 at 01:38:25AM -0400, Jeff King wrote:
-> On Wed, Oct 08, 2025 at 05:50:15PM +0200, Patrick Steinhardt wrote:
+On Wed, Oct 08, 2025 at 04:25:39PM -0400, Taylor Blau wrote:
+> On Tue, Oct 07, 2025 at 02:41:08PM +0200, Patrick Steinhardt wrote:
+> > When running maintenance tasks via git-maintenance(1) we have a couple
+> > of auto-conditions that check whether or not a specific task should be
+> > running. One such check is for incremental repacks, which essentially
+> > use `git multi-pack-index repack` to repack a set of smaller packfiles
+> > into one larger packfile.
+> >
+> > The auto-condition for this task checks how many packfiles there are
+> > that aren't indexed by any multi-pack index. If there is a sufficient
+> > number then we execute the above command to combine those into a single
+> > pack and add them to the MIDX.
 > 
-> >   - Patches 1 to 8 refactor our codebase so that we don't have the
-> >     `peel_iterated_object()` hack anymore. I just found it hard to
-> >     follow and thought it shouldn't be too hard to get rid of it.
+> s/them/that pack/
 > 
-> I'm really happy to see this hack go away. I've wanted to fix it for
-> ages, but didn't want to bite the bullet on changing all of the
-> each_ref_fn callbacks. The approach you used here to pass through a
-> struct looks good to me.
+> > As we don't care about MIDX'd packs we use `packfile_store_get_packs()`,
+> > which knows to not load any packs that are indexed by a MIDX. But as
+> > explained in the preceding commit, we want to get rid of that function.
+> >
+> > We already handle packfiles that have an MIDX alright by the very nature
 > 
-> I do have one minor complaint, though: the name of that struct. I have a
-> feeling that the name "struct reference" may cause confusion down the
-> road because it's so generic, and because "references" and "refs" are so
-> common in the code. From the names, when would I know when to use
-> "struct reference" and when "struct ref"?
-> 
-> Could we give it a name that ties it to the iteration interface?
-> Something like iterated_ref, each_ref_data, etc?
-> 
-> I know this is minor (and will be annoying to adjust your series), but
-> I'd rather raise the point now than realize later that it's confusing
-> and try to change it then.
+> s/an/a/, s/alright//
 
-It is puzzling indeed. I would claim that in this case it is not `struct
-reference` that is misnamed: what it contains is as close as you get to
-a representation of a reference. It's rather `struct ref` that is
-misnamed, as it carries a lot of data that is only valid in the context
-of a remote.
+Heh, I guess the first s/an/a/ depends on how you pronounce MIDX. I
+typically say "em ei di ex", and in that case it's correct to say "an".
+But I think I heard you pronounce it as a single word like "midex",
+where it's indeed correct to say "a".
 
-Another approach could thus be to rename `struct ref` to `struct
-remote_ref`, which I would claim would be a clear win for better semantics.
-It's used in lots of places though, which is a valid counter argument.
-
-WDYT?
+In any case, I don't care, let's just say "a midex".
 
 Patrick
