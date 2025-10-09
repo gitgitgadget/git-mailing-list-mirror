@@ -1,91 +1,90 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E855257448
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 19:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448211B423B
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 19:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760038176; cv=none; b=UzlNKLDcH9vVu5bzGH1rC/iENJwxHfX3RK/7obu9nqh2Ut+MlyifthC0feRAFKF9bshFY15xbeYEwCv6oCdluVZHbnM0f9vuBI/THCwDAXIgfTXWJ3M3LyvqQnSQwJfru42EHwPKpjdQf3b/YwrUc9y7/CQjUEyxtKJWZqpqNBg=
+	t=1760038654; cv=none; b=rLzaaSxudQzPSh4L8Eg2m/tzd377R4Ag/LRyAylhUAlRoZFpR82BjSLCGYpN9qRDHw+WPmx2sT70+7yXikRUVr9CcMNIOYYyFB+9Ro1WwbVR8tXWJ+GRDAUMitBF4r48ADurVZS4goHcdpm9sgYHV182/aNpus8Dz4G+IEufHzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760038176; c=relaxed/simple;
-	bh=4KnDV+FO6qeTLkPltI6Css1nVfonnwKYOg1FutgkKhQ=;
+	s=arc-20240116; t=1760038654; c=relaxed/simple;
+	bh=S0adhpMwbpBhQKPkEgHOrYsWMsPaMhwZoh0wgBGvbYM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ilUFbIVFSRqj0hid07oJbklWOWU30knN58+Ml1m83de9M4MvvYTeKpxa7EQBr9ugSWxxoQCmWpmFsdALVTacJOeJcALqDkO8q77SFyhDHMxYMqOrS6s+yNx1x7IkGE37tJhlCJ+a3XvfWhG6VPDCGwUQ1XwxP7P7ZAnSjEjLX74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Xaad4vbm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I9XY+o6v; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=k14/YgR/5A+BZF2FK8IJSWjS0robOn1Bm3V/6FPUkP7T66Ia3zyWji8rkK1eAkUhxXu1Dtb/vFEsBx9p+gnms3q9RVVMToWol8tYAezwvhsrwAYHWEeCG1WQSCsiQ4ZK3PvXJxOrKsjeLHmyCnadVNYhrTayDEoI9DS9vwRKvbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ltc+Hjer; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rgvCBa/r; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xaad4vbm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I9XY+o6v"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2F821EC00E7;
-	Thu,  9 Oct 2025 15:29:33 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ltc+Hjer";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rgvCBa/r"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4C538EC00DD;
+	Thu,  9 Oct 2025 15:37:31 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 09 Oct 2025 15:29:33 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 09 Oct 2025 15:37:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760038173; x=1760124573; bh=mYJWYjPqg2
-	iiyuKczAkxHPH4so/HHJTQSdc+CB1GVCg=; b=Xaad4vbmrIdBuPi6VY4A00qCWL
-	VgaLMDua6ir0wh1z34MMb6bgTZjE97UjbctT5Qf/evPukFFuSSyyN85HeceFGlDk
-	41Umo4+WByp/O1RThTh2EkjXOIwL7FZKOZu5R+/kTQvXOxQx1QKS5su02OG+cyqK
-	VZe/e7Ye3oJkcvV0E8Gzvw5xxo3MmFbhx4niOHLh2dp6wS2Ec96Jy6bos6P5Nidb
-	G7X28z9xiv0XWJNlDL7qAXglCYywQvICQhHbCT3gP4fdtGO3Y2T8Ec8Yr/r2ICfe
-	7ABVNqXqaaVStlyEbdyP0DPu0hBreCBBhS8epmTq9k1atSxvScDpdMNIMpWg==
+	:subject:to:to; s=fm1; t=1760038651; x=1760125051; bh=yB5wZN17rL
+	IYGOXMndqItq9fPVmnb/h/5wHoam5uUE0=; b=Ltc+HjerVlKw99p1tEnVYv2CHE
+	sC+LjCVktZsDwfFwB9neI5KiaInTHIUYLetDxay621aa7uTPtiC1zEAtazYDkh1b
+	yAD0qjJm3QD9e3szmEMYbrWX+o8ENGJh8qK/FBShNrfyy1gjdxGH7i3kO2sida1W
+	623OeCvmnJDKj081fVDfUaIRQnhYQnD/auMOtj+EB6uuxGJmD5Wk7Ql3jjwRDJb9
+	KqUfU83dSVzeBp5WlyhcvbZ4O2CjF3E4VbHzi94w9E9ICyzAINBP/39cCL/+6Ag8
+	EBji5NyT54GtztR2Hah7LjKeQZ1pXJJucxrtbSVoIAh2t1TpYN3bbpB2cYkQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760038173; x=1760124573; bh=mYJWYjPqg2iiyuKczAkxHPH4so/HHJTQSdc
-	+CB1GVCg=; b=I9XY+o6vdIm0jvHm8unNKzLlDISJyGdexkhxIoWBfOgJ7ZlkS/8
-	b3SG2ewk4DLzfYtQ7ct+LUtD+x6aqXRCJOkrA8cgk9cTPUY1LQ4yKPx518qm2tFJ
-	+IfPNwLhJqY18MLBV3jxG0HLQqQhm7KlES7nZq3GyPwKta/BKFO4GeYjs2L3WRzN
-	ThV93NBE8Qkj4KXUhJI+7/vFk2WC4/kRpPfjPIJS+SGJcqxkfA6W15fPdqLDT43S
-	MvkaTjmoQya65G2dvVof25XwAU/GaqS4i728XWplUbpKjIL5sIFTuuy5GZoPTmSt
-	o+troYQ3TDPjzA4Syb61eEMBEzxsE+zQKqg==
-X-ME-Sender: <xms:HA3oaOZqCYkCm_RkZ4_EjqSsjOfjfyW7wV63VsAgrHatJAXVIaym_A>
-    <xme:HA3oaD8IyQGJa5vkmglN0PkeQs66jlqIf98AL76tLK_3Sc_pHLUz2ZLx6z7ddMDqc
-    MUHEvTJNOCz8897N5cN3JzO9WLvCdft9kFLqa2vpg3S-_cnqbiW2Q>
-X-ME-Received: <xmr:HA3oaMnxMiO-JWU9oUL3RfctjaNIU_FdUQX30APTIS6QAI2mLo-MFz9LVH1uAGZbydjNShnPTnUquVsmmmnxLaOAnLyLnnNtlVNt>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdejtddvucetufdoteggodetrf
+	1760038651; x=1760125051; bh=yB5wZN17rLIYGOXMndqItq9fPVmnb/h/5wH
+	oam5uUE0=; b=rgvCBa/r9U6p3RuOMrVMZw0o+m6LoTR7rAV1AO6IEgSltv+LADf
+	gA9oAnqW8EqF1rN8b0foLsOlqCjJHiTpG8kDTCEJxv1DGgcU6BisQ8IujgowLhyv
+	728QDkSUveoilJGgx0APGCh7h882e9YgIe7T0YXmQysHYGbVTHw8B9gYOl27+JOF
+	2/ciH7Vw+27mWQF951mO/fXdY5I+DoPV0tDIgNooIOWLqns6hCTKI5A9VZhvyXuq
+	LsBMLvSLClQZVZv06NmRthx56RCQJCHhjeDrlqGbwmMMbYVZJAZxbp4D9IqbZrCh
+	2aoFAmWUg/WZ25nqy5Qc4vhwaEix/119iwg==
+X-ME-Sender: <xms:-g7oaNbk61iOGBGZ6QR2rc8i0QAtLFZQ_qfttNLcVW4UKNMhQ3FM5Q>
+    <xme:-g7oaDeuueMrRvAxu30V6t7hJbyqlOgMXiXPrVtL3e4OFhE0DWH41G7sgS6v7Mtth
+    -yiApJP65bB27KoCCO-Zl0CHROyE3stvZPAHDzpHi8RNClIFNJO-g>
+X-ME-Received: <xmr:-g7oaGJV1ajH4jijrzFj8_VG665bxklQz0qGSsnNaz0Scva1uz2MdSwGd3Br4D4S8P_CGXPu9KJnon_H_BBBEmHISD7FlkBQkqOD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdejtdefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpsh
-    esphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghp
-    thhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopegvrh
-    hitghsuhhnshhhihhnvgesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsrdht
-    ohhrvghksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhih
-    hnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:HA3oaAw-xAILU44smspEDkfTzABY5A2CQthquuFwr9uaaRlFL6v12Q>
-    <xmx:HA3oaO5i3ZkXAuFCm_qFhNxYW_H_YKbYtu2tXV0VtC5wlWX9nG6ZsA>
-    <xmx:HA3oaIWpLhPvi62mKzkjv-UAz14XnaxlCrLnnZW5bEMspemGbNAE-w>
-    <xmx:HA3oaOKnznwA6SC25UnNecYyfoFV8ATS7noEj1fuaqDjHyThXopSFw>
-    <xmx:HQ3oaM45m4VpU5GjY8puF-cteRGn5Ktyh3CxQMdukXRTOCtSJgJqd1eL>
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    hpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrg
+    hilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehjlhhtoh
+    gslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:-w7oaIKEzLSm68VBZVJduAUIfCatQZSvoabX2v3rRayd9o8XRPCzSQ>
+    <xmx:-w7oaNXFN8ZK4qYgp12SUrlDnThLEdhXc8kbcNqrknYCybSfU-noHg>
+    <xmx:-w7oaJmXkHjHNavJ58UwmAUaraA9-tYDbQqLhayW2HA3VbYgEjUhMg>
+    <xmx:-w7oaLlSky_MsFEDBYwpftoYZ9Cj-9_-qMYh0-8HupjFGok6N8sg0w>
+    <xmx:-w7oaPe0MYKkJHPH_FrqCxETjxxhPkhjYR2k4R3ZV0u36HDxxxt0-4z6>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Oct 2025 15:29:32 -0400 (EDT)
+ 9 Oct 2025 15:37:30 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Ezekiel Newren <ezekielnewren@gmail.com>,  "brian
- m. carlson" <sandals@crustytoothpaste.net>,  Karthik Nayak
- <karthik.188@gmail.com>,  Eric Sunshine <ericsunshine@gmail.com>,  Chris
- Torek <chris.torek@gmail.com>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 0/6] ci: improvements to our Rust infrastructure
-In-Reply-To: <20251008-b4-pks-ci-rust-v2-0-d556ee83c381@pks.im> (Patrick
-	Steinhardt's message of "Wed, 08 Oct 2025 08:27:11 +0200")
-References: <20251008-b4-pks-ci-rust-v2-0-d556ee83c381@pks.im>
-Date: Thu, 09 Oct 2025 12:29:31 -0700
-Message-ID: <xmqqa51zeuw4.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Kristoffer
+ Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Karthik Nayak
+ <karthik.188@gmail.com>,  Taylor Blau <me@ttaylorr.com>,  Justin Tobler
+ <jltobler@gmail.com>
+Subject: Re: [PATCH v2 00/14] refs: improvements and fixes for peeling tags
+In-Reply-To: <20251009053825.GB1614343@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 9 Oct 2025 01:38:25 -0400")
+References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
+	<20251008-b4-pks-ref-filter-skip-parsing-objects-v2-0-76e30d5c9542@pks.im>
+	<20251009053825.GB1614343@coredump.intra.peff.net>
+Date: Thu, 09 Oct 2025 12:37:29 -0700
+Message-ID: <xmqq5xcneuiu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,18 +94,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Jeff King <peff@peff.net> writes:
 
-> Changes in v2:
->   - Adjust comments for `encode_varint()` and `decode_varint()` based on
->     brian's feedback.
->   - Some small improvements to commit messages.
->   - Not changed is the default column limit used by Rust. I think using
->     the column limit of 100 used by the Rust ecosystem is sensible, but
->     if there is a majority advocating for a limit of 80 I'll adapt this.
->   - Link to v1: https://lore.kernel.org/r/20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im
+> On Wed, Oct 08, 2025 at 05:50:15PM +0200, Patrick Steinhardt wrote:
+>
+>>   - Patches 1 to 8 refactor our codebase so that we don't have the
+>>     `peel_iterated_object()` hack anymore. I just found it hard to
+>>     follow and thought it shouldn't be too hard to get rid of it.
+>
+> I'm really happy to see this hack go away. I've wanted to fix it for
+> ages, but didn't want to bite the bullet on changing all of the
+> each_ref_fn callbacks. The approach you used here to pass through a
+> struct looks good to me.
+>
+> I do have one minor complaint, though: the name of that struct. I have a
+> feeling that the name "struct reference" may cause confusion down the
+> road because it's so generic, and because "references" and "refs" are so
+> common in the code. From the names, when would I know when to use
+> "struct reference" and when "struct ref"?
+>
+> Could we give it a name that ties it to the iteration interface?
+> Something like iterated_ref, each_ref_data, etc?
+>
+> I know this is minor (and will be annoying to adjust your series), but
+> I'd rather raise the point now than realize later that it's confusing
+> and try to change it then.
 
-OK.  I am ambivalent on the column limit one, but otherwise, this
-topic looks quite well done already.
+Thanks for saving me from saying the above ;-) My feeling exactly,
+both on the happiness of finally see the hack go, and also the
+naming.
 
-Thanks.
