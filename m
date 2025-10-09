@@ -1,81 +1,77 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822A634BA42
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 01:13:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3E617BA6
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 01:29:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759972428; cv=none; b=BNHNMJg0JYA9KJPunE0hr2re8xGG+idrMKAPtVaejYDbCzZ4rDazRIumuusEOjh5zSOKX0LKB2PJ3kcb2UWg9nMQCdQB4oRcRz3qC9EeWeVdDY7ZA6GKmMENpOOLjjTeEvDw27GR4b0Ga9RRxtqScCuWH4dHu8GSIyax8dLWEj4=
+	t=1759973352; cv=none; b=dAuuAKeOamA5RYMhO6Hb1BRlwMQm8xNQlA27vGjB4PK7sUceXVT+HQq4eSo6zfAMTIwvJLpx5nUDXtSTjTPI22KZ7zVCYBg4Aj9oVtaLBHao7hCPSBlgKgshOPPmtL7iWxzFMSZejZdQDK66NCJ59n0pTA+eNzUL2OglG+BCBVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759972428; c=relaxed/simple;
-	bh=gRqzL/nnWIYfaXKzOtnLeNPXTee7nWOURYyDtiz+ZIw=;
+	s=arc-20240116; t=1759973352; c=relaxed/simple;
+	bh=DE75jolDT2MHEyZGFEFBJee+9DmHhG6LqZDuf4PG9H8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=f2FGQm16teh1QaEtYv8REY4IKqJhzM5XpqWaIlSq8q+5tSErAYiowDn64DM7bjNdit7flzkoc29O39u3jBUgwXOQvjz0UcrnH979a2XmKcBZf8WQIt47HasUkuC4J/pwGnh1NyB0YvObrg19vd7VwEAUSNUMC1B6jSvyXeMN7W8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TttGuGA3; arc=none smtp.client-ip=209.85.210.179
+	 MIME-Version:Content-Type; b=BW1Q9qv57lzUwsVqDiV4GKHHgqKgxftZGoZlbYuEty0niVjppIfQN5cbycFG3AyM3dOMxyOfRJKO7AcnO8ksiuif/+tSH+4gmfHgSqmwbeWb6WK6aoAsUS4VNP44XUtp+2VQn0In9vp0bqxAfs5YcP4xI2KQHTdc0rjuOKMNPaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OLOqCVjz; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TttGuGA3"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-781ea2cee3fso412392b3a.0
-        for <git@vger.kernel.org>; Wed, 08 Oct 2025 18:13:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OLOqCVjz"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-796f9a8a088so66003b3a.1
+        for <git@vger.kernel.org>; Wed, 08 Oct 2025 18:29:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759972426; x=1760577226; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Vf2jSM0UA419PPHBx0vrRG0JoenBGTu8xG8fsTYx9Os=;
-        b=TttGuGA30lftVZvxJNofEM//DMDEoOxjq66wYYmpZ+w6O2/yf/TRonyjBAJaQRHUsy
-         9Cegh5OpM2rmy6vRzlZDaiNQcuHcttJ4toO9hl8eIDk+ig9o2QavUauQIRKDwnVqJOgX
-         +X0OqZ1PQNOMhiQv/dg3Rgu/N1fUksnEnVKitbv9f5NQCTz84xmABOZbQaGeDoYnQa7Z
-         IRZz0tcE7VB6gqLOana9C0C4CaF4ugoiPjGZ5cUQB7oi8KkfyFxcZbQN6DmOqxWxPlpN
-         TW76SuUMSveyJaQUKCyuzaggEoWkq7LvAB/kGdD+t4ZBl67ffpOAPbemRnEl4b+QO9fJ
-         TYGg==
+        d=gmail.com; s=20230601; t=1759973349; x=1760578149; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=U9bE56lo9o6gRry9DE+Bs59RQdYNBsYNt0RgmwY0x4g=;
+        b=OLOqCVjzD1VBIuvnS20fBvbKQGFg0dT1pEdiwgv6tnGJOAUNsykaR1p4+GTdJ3bcl0
+         WvQvQNghl74SygThlPYcrTl7SktldKfDdD8d9tcL7/wwo0KWFVOYz/Wtt2ODOGEt8pnF
+         VrR0CECkTQggAQZQx6eb+Y0LhTtoEIJPOPB+bTtxiJC2CsQoeFFbpDWDV6ghiHUZ42Tx
+         e3vHNFvZ9LCc4D4tut4ZrbTCn7Fp2SqoPqIGynabLa3tByZyyPDHEI4QqzygDIO6aw79
+         cRwCXd2YEdK4Nf4y2soxBh5D5YL/eY0E0rIZ+MEZP2z8LN/rwQ1EZaLIbejd0KG0Bbt1
+         Ow+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759972426; x=1760577226;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Vf2jSM0UA419PPHBx0vrRG0JoenBGTu8xG8fsTYx9Os=;
-        b=fluvYPpa9xfiMLlDPmlFkJDXy6H483vE9V7jt0ezwOavwjwpN9PEnAaiq0O2ppq9Md
-         gHGe7nhNTGoa4zRc7uxlq1rONJm0cOFx9GnZ3Y5o2YYxBwlpsyJf8QpBhAR+MTGsMrvx
-         +T4/CZi/zdXMcwCNDHX//kgCt13OnnqFzXoI3hKzKBye36MuH6oeQ25FcMeGDj80nZW3
-         ZMnsXeGpsWd0eqpp/UMpDG0u2G9pVWb+gmaL55iFmD1miE+emtM5vpEbWxiOc2g5mEEE
-         MW0Oj9Udc5aewJsqLQPTxTVkaE9/8tfnrYTgi5NWJu+Q15oc37maGOuk4WL89LjnD2ZK
-         rfsA==
-X-Forwarded-Encrypted: i=1; AJvYcCUedvNcWDM6yVpENJ9ZMAlddVce7M3NiZEjBZ/fVqAMm4OPprONiQjbwfyeLP4aZqUPz+k=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyw0DXgc8t2QxzyzqQH9Qd08DXMe6U6P5GUVMS5SOv7fDnPU0GH
-	u8zEejmQCzoHb6QFTIwtmYB0H3oul8IOVjQjH2ER6BK5qrCZTHilHJaV
-X-Gm-Gg: ASbGncsie6Ceu4H5ERm1nfasdEyex6CDRYDcDHQhjBDwkIyMOHmnaJS2NA/ad4cB3Jf
-	GUCHlNkFWIdH6sOwDM8wLAJR1e2Fc7LpvkmrW+Wcmp+TItdWBR4KyI8GNqLC4GMuj6QH8+mEWpB
-	Orkn0kY7oYVsck1XahEzjo18BmNImv4NxYAH1s4u9EKhXCPbTEPEeL/qtjm9bIyupVlzSYr26+k
-	FzOjRR2qorKXPr1LMU7tG7D+rGkgFequk4rG2AiF2244lbDlds6nLVZg5J9FCN65WwRGTm+4RWH
-	o7AbbzmjDwFbW5YQ9jdS1Jz/xF1BnCFoyAv8hp832Za3z0h3jvn9sce4Jbu+r+8+Tf0Wb7nKSsk
-	Z6Q3r/Lc8K88iOB/+w5b35/UFt0bZ2kWL0DdoNvc=
-X-Google-Smtp-Source: AGHT+IFhB9qq9gj7R5FqFm2YGBVKlbmA5oUj+VlizhH1e/Fg8AHzKRlOUIdYoEewmQ4Unw/rTd58ow==
-X-Received: by 2002:a05:6a00:4b01:b0:77f:1550:f3c9 with SMTP id d2e1a72fcca58-793859f34b3mr6725352b3a.12.1759972425618;
-        Wed, 08 Oct 2025 18:13:45 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1759973349; x=1760578149;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=U9bE56lo9o6gRry9DE+Bs59RQdYNBsYNt0RgmwY0x4g=;
+        b=dCN9Avhl47wyhv6CCzVfothaFs00iioTRXJvrLd9eNjGd5mw804BGUXj7quY8zHOBY
+         5vjLmVdgL4zuwSgAIjjRA1/WLPuw1/DasiMBGtI1sAJiLUQLCio8WtAWcsciUJY3SHTW
+         wWqbdD0f02KB3bcGFpedGob7irR0iMfWgv9fHnaaxlBJgvc5V7TljRyiRUmElMeXQ8n/
+         bPj6+pEf7isw0pjckFvzoI0FX+yXTZXQFMb48Hbmxi2kAwTkN0BJN4ZZC3Wn8XVu04w1
+         VLHJHXkmOca3EFxpKZc6pruUUbORQgIOWWMwIiAX9+IbQiAh4Oi0Sdn6e+zKGLcdSh0y
+         GqYA==
+X-Forwarded-Encrypted: i=1; AJvYcCXgP14f600EW5benK8cM518jBoQDVleLYR/zpO96brHwcf5W1o+IiNXD9YVPXyQDpTKTgU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyO0ABuIS4ncG2ZI+Kj883DFrlcMRXBIJfiYuXZW38kUZDKsgOe
+	Bc9QxfS2MoEnSJtLQMA3C4KL3mi/Jv536et27yeTc1QCP4NK3Tbf7flN
+X-Gm-Gg: ASbGncsKt2Mv0ILt55nDmxbRSy2LolNu1U/GCO+7LU5kaxPboyTfEQbVyhFhQUMsoRt
+	nllo7OUGC+ET+2Dm93+SK8MI31laXGQzjqSY2TcHd8gkSWZQQRRZpHw6jv8WiLuHFvN3nOnWFKc
+	R8DwZwTlo8bNPtWTZfhT9HhRkcpegsZAmT1z27xuwzBeLu/O3tThQsChvszmOJ3fLwF4BnwYz5d
+	tL+Impfvtlne4xL3xKi1QWgNnj0GakTHMxVAJobNX6EbofkVvSlhqKthn/0QtV91WVLiXaoXwNX
+	o6avU/eaoTvZzyL+JSPz3BxKxvKp7Gzq/CeqhFNKLXtmeSrENxYfR0Xe3hAPLy8p9cuCEv1PEZr
+	GxXZ9kxVViv19kyy3+h37lExfc9Ax/85utLFwrU23T8ZF1lgNig==
+X-Google-Smtp-Source: AGHT+IFPAZYOShK1plX5ue4QIH9mU3wjPpyyxIL7NNr5MCa2vGPurBCnuYv9X9bWj9vsip7Qvc/efQ==
+X-Received: by 2002:a05:6a00:1741:b0:781:17ee:610 with SMTP id d2e1a72fcca58-79386e51022mr7580692b3a.17.1759973349094;
+        Wed, 08 Oct 2025 18:29:09 -0700 (PDT)
 Received: from fedora ([2601:646:8081:3770::e735])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-794e1fc9c97sm1017057b3a.62.2025.10.08.18.13.44
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-794e34e57bcsm1023429b3a.85.2025.10.08.18.29.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Oct 2025 18:13:45 -0700 (PDT)
+        Wed, 08 Oct 2025 18:29:08 -0700 (PDT)
 From: Collin Funk <collin.funk1@gmail.com>
 To: Christian Couder <christian.couder@gmail.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Elijah Newren
- <newren@gmail.com>,  git@vger.kernel.org,  Junio C Hamano
- <gitster@pobox.com>,  Taylor Blau <me@ttaylorr.com>,  Rick Sanders
- <rick@sfconservancy.org>,  Git at SFC <git@sfconservancy.org>,  Johannes
- Schindelin <Johannes.Schindelin@gmx.de>,  Patrick Steinhardt <ps@pks.im>,
-  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2] SubmittingPatches: add section about AI
-In-Reply-To: <CAP8UFD34TrBa-GV1wUpvhO9K+qjHpXF4gr=afY2nsXiNL_-S+Q@mail.gmail.com>
-References: <xmqqcyalm0mh.fsf@gitster.g>
-	<20251001140310.527097-1-christian.couder@gmail.com>
-	<aN2fG-nS9fE5-2jD@fruit.crustytoothpaste.net>
-	<CABPp-BFcg9M=XjqGPd+akrUOqJqREBmE9+NvO1Q05r4pUcOmEQ@mail.gmail.com>
-	<aOBMHqLxNd86vgjH@fruit.crustytoothpaste.net>
-	<CAP8UFD34TrBa-GV1wUpvhO9K+qjHpXF4gr=afY2nsXiNL_-S+Q@mail.gmail.com>
-Date: Wed, 08 Oct 2025 18:13:43 -0700
-Message-ID: <87cy6wdghk.fsf@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Junio C Hamano
+ <gitster@pobox.com>,  Elijah Newren <newren@gmail.com>,  Jeff King
+ <peff@peff.net>,  "brian m . carlson" <sandals@crustytoothpaste.net>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Christian Couder
+ <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 2/5] lib-gpg: allow tests with the GPGSM prereq first
+In-Reply-To: <CAP8UFD2VRfZuaycCdWt4kpVpRv_UhNHdzqJ2vL8uyKJusUttnA@mail.gmail.com>
+References: <20251007122958.1089680-1-christian.couder@gmail.com>
+	<20251007122958.1089680-3-christian.couder@gmail.com>
+	<aOYPTKG9t4ZB_Mbi@pks.im>
+	<CAP8UFD2VRfZuaycCdWt4kpVpRv_UhNHdzqJ2vL8uyKJusUttnA@mail.gmail.com>
+Date: Wed, 08 Oct 2025 18:29:07 -0700
+Message-ID: <871pncdfrw.fsf@gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -83,60 +79,39 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
 Christian Couder <christian.couder@gmail.com> writes:
 
-> On Sat, Oct 4, 2025 at 12:20=E2=80=AFAM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
->>
->> On 2025-10-03 at 20:48:40, Elijah Newren wrote:
->> > Would this mean that you wanted to ban contributions like d12166d3c8bb
->> > (Merge branch 'en/docfixes', 2023-10-23), available on the list over
->> > at https://lore.kernel.org/git/pull.1595.git.1696747527.gitgitgadget@g=
-mail.com/
->> > ?   We don't need to go theoretical, I've already contributed such a
->> > patch series before -- 2 years ago -- and it was merged.  Granted,
->> > that was entirely documentation, and I called out the usage of AI in
->> > the cover letter, and I manually checked every change (discarding many
->> > of them) and split it into commits on my own, could easily explain any
->> > change and why it was good, etc.  And I was upfront about all of it.
->>
->> I think the main problem here is that we don't know the copyright
->> status of LLM outputs.
+>> Okay. I wonder why we even have to create the directory manually. We
+>> don't do it in the GPGSM prereq either, as gpgsm seems to handle this
+>> for us.
 >
-> It's very unlikely that whatever is decided about the copyright status
-> of LLM outputs will fundamentally change copyright law. So for example
-> small changes, or changes where a human has been involved a lot, or
-> changes that are very specific, and so on, are very likely acceptable.
-
-The issue is lack of law, from my understanding. There has been zero
-political will in the US for copyright legislation with respect to the
-output of AI. Therefore, we are left with case law that is still
-ongoing, that is, no precedent.
-
->> I remember the SCO situation with Linux and how it really created a lot
->> of uncertainty with Linux because SCO created FUD around Linux licensing
->> and how that led to the DCO being created.  I am aware of the fact that
->> many open source contributors are very unhappy that their code has been
->> used to train LLMs without retaining credits and copyright notices or
->> honouring the license terms[2].
+> Yeah, the GPGSSH prereq does `mkdir -p "$GNUPGHOME"`, but not the GPGSM prereq.
 >
-> I don't think it's very relevant for your position on this. On the
-> contrary, if LLMs have been trained mostly with open source code, then
-> if they produce copyrighted output, that output is more likely to be
-> compatible with the GPL. It has even been suggested (and discussed in
-> this thread) that some AIs should be trained only with open source
-> material (for example MIT licensed material?) so that we could stop
-> worrying about including it. If that happens, there would be no reason
-> to outright ban AI generated content, right?
+>> Doesn't `gpg --homedir ... --import` create the home directory
+>> in a similar way?
+>
+> I am not sure. It might depend on the gpg version. Or maybe gpgsm
+>  does it but not gpg. I will check.
 
-Not all open source code is compatible with other open source code. If
-you use the output of a model trained on GPLv3+ code in a GPLv2-only
-project, then the creator of the GPLv3+ code could claim that you
-violated the license since they are not compatible. Whether they would
-win in court or not, I have no clue, but it is probably best to avoid
-that situation.
+If $GNUPGHOME or --homedir is the default (usually ~/.gnupg) gets
+created by 'gpg' and 'gpgsm':
+
+    $ ls ~/.gnupg
+    ls: cannot access '/root/.gnupg': No such file or directory
+    $ gpgsm
+    gpgsm: directory '/root/.gnupg' created
+    gpgsm: invalid command (there is no implicit command)
+    $ rm -rf ~/.gnupg && gpg
+    gpg: directory '/root/.gnupg' created
+    [...]
+
+If it is not the default then it will not be created:
+
+    $ GNUPGHOME=$HOME/test gpgsm
+    gpgsm: keyblock resource '/root/test/pubring.kbx': No such file or directory
+    $ GNUPGHOME=$HOME/test gpg
+    gpg: keyblock resource '/root/test/pubring.kbx': No such file or directory
 
 Collin
