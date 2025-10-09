@@ -1,133 +1,201 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88572E7F2A
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 13:21:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B863D76
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 13:46:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760016077; cv=none; b=VlYtrfkEZuCv8RE/eBtxvNZFEg26UY4QXo5Pl/hK2Sr8JGCwHWPKff+luv2iTROKsiQty7DRo4B2qh8qtWmvQzCq/jumQcbpw1pDJPmH0qSgBpR7qY1ksbetQ4WWFcTqx4jLh9OJ4U4Uphlev4LiwcRkwKXAJshe4Hr3G/TSbkE=
+	t=1760017609; cv=none; b=qVRTmrdbbk8+FP+fuOaX64ZYaoqztu2LxDShnzsfGzXMHCkblH+xU1RCpPPbr9otab/e+XJgCsFMFCPzAOjEI9+nVqqf7Z1xuDa0cGDYapAu+qXYvMo9KIyn2ibP4COcwUx8Ta9X6659d5GAyICWAcncrlbcQs6+VSrO7bOrjnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760016077; c=relaxed/simple;
-	bh=VXUon1as6+0JgV1Ta0ke9QK3fbAv6gi7Egx1HbAqN30=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=hZWhPWB/yxFo+pvv1fP8FQCxtMjn/CAmuLgXj7ykWqHVgxdOCPObuFNSZ+zLKpaf2IBU8mYrBs2wb1fWTJfB5g/fbBnEaH4ZsLSC9n85fNoUzq8TqdKz+wKHzFz6ya+sxzBjflSwBWxUVFLQzWaSzwl/KRZju1U+IH2uEGTkXYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=PT9aXh4y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=shKwL67W; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1760017609; c=relaxed/simple;
+	bh=ESFgYgJ0oFJfKUcs1cpTxsFHQycsJePXzG/bunR/9DY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=dBFTqYAJDayYbEtvdK+LvDks1bOmsFdY9kpFysEFUrvt/6zGsnCsOmFE1zu+RtrlJCoQubwMjQD59Nsp9El4egeLEykgj6+gNhRNF1SL97u8/Ld6PZxqxk4QH4+147tVRcavsiMrVVeW7o7c/dsmfyoIqRBBvfbZcZh3mCE/8Bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R9uX9Ipu; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="PT9aXh4y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="shKwL67W"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id DBEADEC001C;
-	Thu,  9 Oct 2025 09:21:13 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-04.internal (MEProxy); Thu, 09 Oct 2025 09:21:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1760016073;
-	 x=1760102473; bh=msApsahZ+gB0GthdpVsoG8spMIWOpPn3efqJW8QNDKE=; b=
-	PT9aXh4y0WqSDIYaHewefZIUFPunydbUDne0y2pJesOc0/4sqwbC8VDemFDjUL8+
-	B91YGPCASCkPDy1keVsbpy3Rv/O2xh+FfNypkIsErOHri7CVNA0MxvA6k2WG7ozW
-	mPElnqmZiD3AvAIAcqM0DRYOPCxDRI1a9J3xcIsmUraZc5oIBpT9hzMzVzKGQZWj
-	jhhZ2Wf/a3otTTa3qu7cCtxYzz2a92kklr5yJ4qJ2LABc3x4ZguFB1jyAvmT1sWI
-	YYKHJnemI7zuGOPyLxNJyr+qcBD5YAr3xOUfBPx4NeoRvGeT0lHkS1l2qAvRx3vS
-	oajyEcnldm903xta9V8DoA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760016073; x=
-	1760102473; bh=msApsahZ+gB0GthdpVsoG8spMIWOpPn3efqJW8QNDKE=; b=s
-	hKwL67WqUGZTIKTlQ/7iLcA+vlcsFFc4amHf2Jw7TgI81G2X7lvf7g5BzFyph5Df
-	z1+QUKtC+vTeuZz1xr7zEN/mCyVBUb9O88ZDerBDRzUTYgtDl9/W1TJre6dGoJub
-	IRP5DkzKgJThdumewINNu79n4whzyESAJzwb4QC7ACVIGgrV0NVbXteSDaD66hXn
-	WbFsDVIVGdbqL5TCUZTSW9KiLO9iobENYaJlZhsKnPaH6T+ocVG9wPFzFoT4EZYn
-	N3xjx/SJ0L6NZsB9SjZIDIgwjwawnwCCO2iXuIiO6YW9HoKoKnl9wQ+WBO3h/p/v
-	X/RqS3XUbk50kgmbsnPJw==
-X-ME-Sender: <xms:ybbnaDo_Hp2H5Mh3laP9tbnZTOtBc53i1JAmaX-X79v7-BT6Lh5eRQ>
-    <xme:ybbnaIfbtYM8BLQmXJtdG95rRxpgyMalIaZrzAtmq9V4aHjEu7GBP7s-V7hv1wF-w
-    tR2AVb_G7u4TuvHS2OQ9G2f2x5YDKmXeJ09FG8rd7x5Axk_M8lorpo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdeivdekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedflfhulhhi
-    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
-    epfeeiieeggedtfeekjefgvdetjeffhfevuedutdetvdejgfegveffhfelgedvvddunecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirg
-    esjhhvnhhsrdgtrgdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
-    gtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:ybbnaETKZ5zOfL9mUGMFfB34dlZiuNlV5L9Vu6cQ04xgW9y83qtcDw>
-    <xmx:ybbnaPlEuh9xigr-HGVor6Uf2RATb-oxodigzFSvfOIAM5R8oaFxig>
-    <xmx:ybbnaMRJFA3mVZp16MECNCOswDL86tH9nlToFPvcT59yYwERSAMr8A>
-    <xmx:ybbnaFPOLxMZfOhXIJZoSsGY2kJfMm6Pz-ssiwFkRoQdys-cWP0rMw>
-    <xmx:ybbnaIU9rtwYaMN25bxKOFJc6Ujy7UBJ2K4SXCKK-2QD5WAKlxdQc61Z>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 8D4D27800DA; Thu,  9 Oct 2025 09:21:13 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R9uX9Ipu"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-46e430494ccso6073745e9.1
+        for <git@vger.kernel.org>; Thu, 09 Oct 2025 06:46:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760017605; x=1760622405; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5kMjKJlJHczunz+7xZwmBDQ21GQusHWS+1xdG2y74XY=;
+        b=R9uX9IpukV45hLBsHq7+j54o+DuSfRrJUIEkmIhaPj1vW+fpH6bXeXE+KtD1SprOPO
+         ugOmK2c8G9AUm0tcR61rRZfO5mn1SaeNFujn2SQpuXl3czy3oR3S7xWAw/FGLfAzcogf
+         yiPPg2w0zROXEhe7pcMDFo0OR7xpeAqtFuwMaUN0r2rZ05bOhU9H/4+pNpWj4VMjZhS9
+         RGIGy93TENqYtvRzLzHtNg7Wc15mUDZNqcj8jK6+ovAWgr0qxxABEU1OxDIjKIX5Ntjx
+         ficNUHgIUSSUXXg//mtNw3CK08qU2dCqAv9DihtHpqepH7v6lhz1im77jF4Q47Dw9P1R
+         SWDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760017605; x=1760622405;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5kMjKJlJHczunz+7xZwmBDQ21GQusHWS+1xdG2y74XY=;
+        b=gtkZBkAJ7XSAJ86Jlx6ONz2jHdVOi7/P2stE3NmebF07yrhr+a3RCIF2qebhv/7odk
+         nYD/nWOVeTz2QJhv16qcNYZkSCK93sr0ZvpMMoOu7WY0l70v3hRvmDOlj6ix4PVLn5PH
+         8MhHfoX8tvWwe7cmqW40azxG9pgCWR8GONbsfwUkus7vEoObqOVT6J9BPok331lAH3mP
+         yHhYGl4yCXj0AcCVVot7gXMPDbcj9ACPEk4pLADABy0HZj3ekiI9FZdkRVw3lvxSStii
+         geRwS2S8hqsg++P0xj0qkmFvuzYmoSicT3i6A0Gad3dZ+d4m3VLLAdjWUoPBNZvqWqbA
+         WBCA==
+X-Forwarded-Encrypted: i=1; AJvYcCWA5XW/fm9gad07+mzeAUidOR0l26JoP1KM/AgWC/XwR42s0icgmsKWgTeTtUKVxOqxRuY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzs1+J5lbijIZ3PIFU5XIs1griLhnHCCXveKS/sMJN5WA2Vu1xA
+	EPlvP2d2/M1BqerMj39Sd2EQ5C1rz2uOE5KKurfSS/o7LxfBxPqV6g97
+X-Gm-Gg: ASbGncsfWOZSLhBxDIWeU0CM9eZzS94r2VaHxCtGe+BnECm1+sHrHO4GodQnXCQQcDx
+	ITOIPKIdn4xE724ndzb59WfwZtda3VvpPjUlqQEure3Ua9cEUPeFytWWFRVZ+NJ6ORvfXINjrhj
+	hw4VFuHdvUAiO/2CqC5TbVU/eVpA5lVn4PadsAqZ1aqp5LsBAaLg70iNikJHz2vFlzUYkPAfpa6
+	Vp9lU+sblhPUkjRxr9KdKm2Y1229L9zSK5zDqq2oRVCLf21n7r4SG54Kwjm8ni75jXY6wus8zbc
+	jcuXedrasQKpkdxObxybgD9wAaA3vQygBg14rCcQG9JszO9pN1knquNnf8Mqp8lZa8g7zgJUusQ
+	ZQ+/Cjur6pop1QwQXTtpr8gkI8xyXs/ZwlwKnmke8D3JZWywijp6voi3G3FSDYjWaPEiiY5MT8i
+	RhUtTuSkIM5OymoVT+SdFD038o7aLUIODieg==
+X-Google-Smtp-Source: AGHT+IGT/Uppu5ptfs0pPjV6uMipAoUHszU7V33Ipe9LlkYSGPd1CWeP1almNri+ZQbiY8K5ICARsA==
+X-Received: by 2002:a05:600c:5490:b0:46e:4744:add7 with SMTP id 5b1f17b1804b1-46fae33db7amr36419975e9.7.1760017604436;
+        Thu, 09 Oct 2025 06:46:44 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fab656554sm37541525e9.11.2025.10.09.06.46.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Oct 2025 06:46:43 -0700 (PDT)
+Message-ID: <3a8dfd13-982d-4c83-b675-1e9a63bb6ab0@gmail.com>
+Date: Thu, 9 Oct 2025 14:46:41 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AfAzQvnzmZPw
-Date: Thu, 09 Oct 2025 09:20:53 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
- "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Message-Id: <d1bd63d4-3ac7-458c-86e0-a4f7aac300d9@app.fastmail.com>
-In-Reply-To: 
- <CALnO6CCsGtjcWBkjV0vsJHDCwiwt9eO2CsA1zFgwFiwJ-KLhew@mail.gmail.com>
-References: <pull.1981.git.1759512876284.gitgitgadget@gmail.com>
- <8df4c59c-4d27-4f36-a231-f7af32ddf149@app.fastmail.com>
- <51e0a55c-1f1d-4cae-9459-8c2b9220e52d@app.fastmail.com>
- <CALnO6CA29HA_FOQAJp_bkskKF-6Vy0_SKVL_OyJASByvKEZTqQ@mail.gmail.com>
- <1241cb86-9adf-4c52-87fb-028406ccd8f0@app.fastmail.com>
- <CALnO6CCsGtjcWBkjV0vsJHDCwiwt9eO2CsA1zFgwFiwJ-KLhew@mail.gmail.com>
-Subject: Re: [PATCH] doc: add a explanation of Git's data model
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] doc: warn against --committer-date-is-author-date
+To: kristofferhaugsbakk@fastmail.com, j6t@kdbg.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org,
+ phillip.wood@dunelm.org.uk
+References: <6af09726-e3bf-4903-87ae-9524ad334678@kdbg.org>
+ <d17060d9b72.1759952528.git.code@khaugsbakk.name>
+Content-Language: en-US
+In-Reply-To: <d17060d9b72.1759952528.git.code@khaugsbakk.name>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
->> >> I think I'll see if I can figure out a way to mention this and at =
-the
->> >> same time remove most of the rest of the references to the `.git`
->> >> directory when explaining references (which you talked about
->> >> further down), including packed refs.
->> >
->> > A colleague will be explaining reflog for an audience tomorrow, and
->> > decided to briefly explain refs, too=E2=80=94which tells me this is
->> > much-needed.
->> >
->> > For refs themselves, perhaps "git for-each-ref" is a reasonable pla=
-ce
->> > to start? Since it tells you the refs you have and how to spell them
->> > explicitly regardless of how they are stored?
->>
->> Interesting, do you use git for-each-ref?
->> What do you use it for?
->
-> Ah, yes, but primarily for scripting.
->
-> What I should have clarified is that "the tool (I know of) to
-> interrogate the refs you currently have is git-for-each-ref" (like how
-> git-ls-remote is the tool to interrogate a remote's refs). It avoids
-> the issues with assuming "tree .git/refs" or similar will capture the
-> actual data.
+Hi Kristoffer
 
-Ah, that makes sense! I spent a little while trying to come up with
-something that would give a "similar result" to running
-`cat .git/<refname>` and I came up with this:
+On 08/10/2025 20:45, kristofferhaugsbakk@fastmail.com wrote:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> 
+> This option has legitimate uses but could create a commit history which
+> violates the assumption that commits are strictly increasing in terms of
+> commit timestamps. Warn against that in both git-am(1) and git-rebase(1).
+> 
+> ❦
 
-git for-each-ref <ref-name> --include-root-refs  --format=3D"%(refname) =
-  %(if)%(symref)%(then)%(symref)%(else)%(objectname:short)%(end)"
+What's this?
 
-I hoped to find a simple equivalent to that `cat` command
-(kind of the equivalent of `git cat-file -p`) that would work with
-other ref backends but couldn't find one.
+> The genesis of this option is 3f01ad66 (am: Add --committer-date-is-
+> author-date option, 2009-01-22). The commit message doesn’t give us an
+> example of a use case, but the thread starter does:[1]
+> 
+>      I've a big set of patches in a mbox file: there's sufficient info
+>      inside for git-am to work.
+> 
+>      Yet, each time I do import these, my sha1sums are changing because of
+>      different commit dates.
+> 
+>      I'd like to force the commit date to match the info/date from the time
+>      I received the email (and therefore always get back the right
+>      sha1sums).
+> 
+> So the motivation was to treat git-am(1) as an import command that
+> creates the same commit IDs given the same base and committer.
+
+That seems like a reasonable thing for "git am" to do. I'd be interested 
+to know what the rationale was for adding it to "git rebase". In 
+retrospect I feel it was a mistake to port this option over to the 
+sequencer just to match what the am based rebase did.>
+> [1]: https://lore.kernel.org/git/46d6db660901221441q60eb90bdge601a7a250c3a247@mail.gmail.com/
+> 
+>      I thought about marking it as deprecated but eventually found out why it
+>      was added. And it wasn’t for some (still unknown) dedication or
+>      not-explained *want* to keep the committer date and author date in synch
+>      just-because (as I thought[1]).
+
+We should maybe think about deprecating it for "git rebase" though as it 
+is a lot less clear that it is sensible there. If you're rebasing a 
+branch then there is a very high likely hood that the upstream committer 
+dates of the commits the branch is being rebased onto will be newer that 
+the author dates of the commits in your branch.
+
+I've left a couple of comments below
+> diff --git a/Documentation/git-am.adoc b/Documentation/git-am.adoc
+> index 221070de481..c36ae679cfb 100644
+> --- a/Documentation/git-am.adoc
+> +++ b/Documentation/git-am.adoc
+> @@ -156,11 +156,18 @@ Valid <action> for the `--whitespace` option are:
+>   	See also linkgit:githooks[5].
+>   
+>   --committer-date-is-author-date::
+> -	By default the command records the date from the e-mail
+> -	message as the commit author date, and uses the time of
+> -	commit creation as the committer date. This allows the
+> -	user to lie about the committer date by using the same
+> -	value as the author date.
+> +	NOTE: The history walking machinery assumes that commits have
+> +	strictly increasing commit timestamps, with some tolerance for
+> +	clock skew (see linkgit:git-rev-list[1]).
+
+Is there a particuaar section of the rev-list man page you had in mind 
+here? I had a quick look and I couldn't see anything about clock skew.
+
+>  You should only use
+> +	this option to lie about the committer date when applying
+
+s/lie/override/ ?
+
+> +	commits on top of a base which commit is older (in terms of the
+> +	commit date) than the oldest patch you are applying.
+> ++
+> +By default the command records the date from the e-mail
+> +message as the commit author date, and uses the time of
+> +commit creation as the committer date. This allows the
+> +user to lie about the committer date by using the same
+> +value as the author date.
+>   
+>   --ignore-date::
+>   	By default the command records the date from the e-mail
+> diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
+> index 956d3048f5a..336ee90f7e3 100644
+> --- a/Documentation/git-rebase.adoc
+> +++ b/Documentation/git-rebase.adoc
+> @@ -504,9 +504,17 @@ merge backend;;
+>   See also INCOMPATIBLE OPTIONS below.
+>   
+>   --committer-date-is-author-date::
+> -	Instead of using the current time as the committer date, use
+> -	the author date of the commit being rebased as the committer
+> -	date. This option implies `--force-rebase`.
+> +	NOTE: The history walking machinery assumes that commits have
+> +	strictly increasing commit timestamps, with some tolerance for
+> +	clock skew (see linkgit:git-rev-list[1]). You should only use
+> +	this option to lie about the committer date when applying
+> +	commits on top of a base which commit is older (in terms of the
+
+The comments above apply here as well. In addition s/applying 
+commits/rebasing commits/ for this command I think.
+
+> +	commit date) than the oldest commit you are applying (in
+> +	terms of the author date).
+
+We should also warn against using this option when rearranging commits 
+with "git rebase -i" as well.
+
+Thanks for working on this, it is a very good idea to add a warning to 
+the documentation for this option. I'm going to be off the list for the 
+next 10 days or so, I'll look at any re-roll when I return.
+
+Thanks
+
+Phillip
+
