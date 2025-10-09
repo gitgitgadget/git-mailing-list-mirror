@@ -1,53 +1,53 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6B724501C
-	for <git@vger.kernel.org>; Thu,  9 Oct 2025 06:36:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CDF2BDC23
+	for <git@vger.kernel.org>; Thu,  9 Oct 2025 06:36:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759991780; cv=none; b=L4HRwlQYIpN3KQfNaJ3V6zgG2gUuouiJt/qgRqH5S7Ip+n0WIq7rIJU2RnvLNzT3kpy2SaSGQsGzgqa/Je+GlffrofvRic9pmscnP3/APO8l7bXpNRATYzDQx5G4mzg5oVu1QueHQKzHadby0dNn7rZ6NzP4cKIe68mbD5XoCyQ=
+	t=1759991786; cv=none; b=kUvq++0gAfn43AwlnUuAxQ6qA49WDWb2KQMyzApO3QSNNfVEIdpCSBTmQ54kNrZCSEvXqCN7T4cQ0rUYxWl/n2o90XUwWdFXLWx3m5EIrO0MqE0ySoEZ+FW1vyvJr1ncNsG12qASRRywpXlnMsgWUDfACmr9b6vsbohwT3NvYHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759991780; c=relaxed/simple;
-	bh=BxkcYFnfo598hs5O2qtvs2LhdkwMSNMzb1QKplHcTv0=;
+	s=arc-20240116; t=1759991786; c=relaxed/simple;
+	bh=R7EAbNLflB/yGcAdbbABwlDELvJhXH+fywG19cNU4hI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SwKOwRIhZzV98ve9MrerZ6zQMtNEm27njoepZ5VJOUVGUXXEBIgB0v3p8nUinlRhlTfgUukKDHmpd9jWcVF39Fq0rsaJYyss735nOoaGKoVTb6Mj0LWMM/b8YAvzhiu0wNe0h/KVGFVstaYhkWEMqte1vA/1asVvkWh+T7I1+kk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bKm9b2gr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PtpOCBty; arc=none smtp.client-ip=202.12.124.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=d57E+L5yf/0Brh3BSfmYWnpCDHQkDg+AvXlNkT9ewBARY956u5iO5hhXHwda/ZNdWqpg34qNo5H5HSDT5lhLsIEPrEelIiZl+H5wf+hxRwLsOC00RRkOUBOv7Rh48R6stXuUD9nV8QjKiViyJ3Sanl8MohhVmxjkbI6J7Ca9xMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nI2atbuZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZyrPlxm/; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bKm9b2gr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PtpOCBty"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0D4FA1D00041;
-	Thu,  9 Oct 2025 02:36:18 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nI2atbuZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZyrPlxm/"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2A23F7A0091;
+	Thu,  9 Oct 2025 02:36:24 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Thu, 09 Oct 2025 02:36:18 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 09 Oct 2025 02:36:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1759991777; x=1760078177; bh=PoracYGJth
-	EE+FT9I9pSZiXQctWjFsDqrZHYZ/2pVis=; b=bKm9b2grEPahjpVyiNDAInX+pw
-	P7vLMvqODNNweevE65qo9LUs4cgvaNx+pHHVIKGdLH9IWMq+o5dUNn5HeGUwRfkJ
-	5g2PxKRcYHjQiw7NF/0JW3fUEpEjIZC8YlALzXp+fDKw9J0wc/y8VDPkA93K+RmP
-	fgLXFbgnExzT7WOAQ02rUgHEzFDAsr/bno0FJpcozSVfxKijkgSJ3BvslUQWiRVg
-	3+nAfWZpK9cAvU0ex918YlHPoigc5L40dT1HjLHHg6EwZRmfr3i8guCK7VnlBQ0q
-	kIyQfw5pi7rTWPbV5JRHGpAa254mdt8PI5QdfJtwsOYCiGC+J0yu8GxwsIUQ==
+	:subject:to:to; s=fm2; t=1759991784; x=1760078184; bh=MGKmMVUq4c
+	/s8XDMR84lIpj9P1p4WbcIXzlTLTZxyGY=; b=nI2atbuZeV/px4/bHja9WjUMDD
+	JeWFMT74XIr3T1QjN/uTBMv1jxgBjOnvt/tG265M5rgr8HMhfWZA99GdarFgWPq+
+	4u1E0JdrB4lvbZP+rFwQeeHOdJ5uV4R2SrYGjOsfM4/fm3CcDJwJxBDw/iMC9Zmk
+	r9lBv+KomjjiSGzcChmgk2WyzuGspOIYRpbUuZX3LI45/AULqJVx282synjjIc/L
+	WMk27IVIlmMUZ1ICZsmm3o0ZyLRxmZXPrCY1tn2t5B/fjbTSvlWLtHpWo68YNUlz
+	sCFCr/nN7w0sbzXZH8qlQx0FOHPPNzxCnE/LTuF9PZs3TGDzwhOSS+PLxOKg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1759991777; x=1760078177; bh=PoracYGJthEE+FT9I9pSZiXQctWjFsDqrZH
-	YZ/2pVis=; b=PtpOCBtyaOeaTvSTo8mmU80Eki3D1uSYPJHXCj0vf15v8j75B2M
-	LNwHLBdq+YAECHVqCWwN6+SyYklEPaXKkHyO8LZKEFrzmnE4mKGcCH3G+aRDAdYM
-	Mqtm4LbzWS7MDcgklddmg7n76saJkMOQaXn4adzdJj8M2PeYphGhWfkxLNdev1nb
-	pAdIvyt4SP51vIuk1vKTUn+fJhTxMBZeAQW4sEXhFyYsBE4TGOKhJMWL+5KA2myZ
-	EsX2jFocCbxaHCRcxzdD9FVHhe5FggfnQYFJMG3sYlMeG+WOK7cR46Ywa3D2buJA
-	fapBHtQ6oZUUmrk+XoZcVuCZp/jNNTCHe5w==
-X-ME-Sender: <xms:4VfnaJaBsptyZ9zgYXuqO78_jLnltp5034uJ72UaS_v5mfvGQ6G4sg>
-    <xme:4VfnaGaQSQ5wxF-Rnee_dQllsb7C5re1l2gOxLAjfm7X2a1pKpSlhGJ84MKN08Ah0
-    KrvZ6RveWhbMHS0j2VhS1sEHXWdBL9QRQ8x8RvBUOlD-7I8e4WBCQ>
-X-ME-Received: <xmr:4VfnaJkVX_NVETDGvYP2LGYiNwKZhHWXLqe7410AZlKS-XSryHBe9vYtMSCfJBfkEEEPMgXCE82Uq4CKAy_aPtyXIMx9NLWdUCEybiiM8gQ>
+	1759991784; x=1760078184; bh=MGKmMVUq4c/s8XDMR84lIpj9P1p4WbcIXzl
+	TLTZxyGY=; b=ZyrPlxm/ZTxcLpervzEiJJqx6XVfvAf2LOhO04BC/F2WYyrPzOb
+	tqJq4SOnrnOHScsAIKc24lhUOR+E8jUwEPOupnqCRzHOJl1TAp3HDO5xxXZ5EF9g
+	duT0CpkbrVnh+kLpUl2TVkNlJiGnonQ3BvKQXbr16rvhJJ4LQiFgp9uwt0Pg/6rS
+	5ao4Lf6EI6FvyjeZKUKfXVrFbXL27XNJSmX1wm57qYiaQ9XeE63H3J+6rhRTYBPi
+	fkkxagW4uUja4I1viD96/02QqnGfLQnXv+68Qn2vvV3ZpN3Dq4qcV6WJ/EC93YSu
+	XZTP1/zuZw2PdB8Nw6omZpXS+afD+gasQUw==
+X-ME-Sender: <xms:51fnaGT9sJuYXhUA88guuWjIbIcH9pKUJQ4ccy7nJUyX23US3GeTnw>
+    <xme:51fnaBxbx3bsGfsNfWJM1Z-czHPa_zYiczIxrU4LSM4uo6X-FO3UM2m7M6Aa1fefn
+    JXbOcUfiYjQjYgAx5RZI9D71hmbO7y7AbNyJ8We_RqVLqk18OTQpQ>
+X-ME-Received: <xmr:51fnaBfp1SibIlsqSEeGPzV72NNe8IfvOKe2bxMv2aUKgPlBj36U1z0iPCfX4keKWz-fB6G57cZ1yioZVoIH9O6A-EDoyTULI_zouVDIYLo>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdehgeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
@@ -55,28 +55,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdehgeekucetufdote
     shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
     ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:4VfnaCzxyctHN2pkLnxwb5-9-MW2Un31KCzVQfT_bEhUNJQgokV0lQ>
-    <xmx:4VfnaHO1_5nXcL6FNr_1htAN19UcS5kpdqofZBGuOdlT69wVoYJHTw>
-    <xmx:4VfnaGR_gex1BO6Afxpmw3bCG5wFBNdEkmpXzfNbuFsxVIzg6Hs88g>
-    <xmx:4VfnaFbIWw_VJtQetQn-hhDhwT9IYltxel3AU40J0f0oi1v4xGlPTA>
-    <xmx:4VfnaGhRvUi3Ptf--efrTEcyqnVEnjnDSrq-60qXPKz2QpFZmBdJ8xL5>
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:51fnaNIxjY3jyx83giom1t50LEqq0mK_tq6zqN7AwggIgP5i2it8fQ>
+    <xmx:51fnaCFgPxOud1DwozYbPKpsMrlwPA7-UA2Ztr7OdePAPFs_WAwX5A>
+    <xmx:51fnaHp_XfziDDIjj67HprLrXD35Qz8VxciOsSgTV5HiY6BqaAiYnQ>
+    <xmx:51fnaLSVY6CXDtAcEvDFI5LhylfDZMKxwafPZGD6WjqRdvQyEeib-A>
+    <xmx:6FfnaFZqvQzhDZTQNbNDk1T7z0hA-qI_Q5cF5Wht_kCqHyOA7E3FQ1de>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Oct 2025 02:36:17 -0400 (EDT)
+ 9 Oct 2025 02:36:23 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b0118958 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 9 Oct 2025 06:36:16 +0000 (UTC)
-Date: Thu, 9 Oct 2025 08:36:13 +0200
+	by mail (OpenSMTPD) with ESMTPSA id fcf512d6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 9 Oct 2025 06:36:22 +0000 (UTC)
+Date: Thu, 9 Oct 2025 08:36:19 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/6] packfile: introduce macro to iterate through packs
-Message-ID: <aOdX3ZmITr0FVq4b@pks.im>
+Subject: Re: [PATCH 6/6] packfile: rename `packfile_store_get_all_packs()`
+Message-ID: <aOdX4_e9K_1p1pyv@pks.im>
 References: <20251007-pks-packfiles-convert-get-all-v1-0-428227657a89@pks.im>
- <20251007-pks-packfiles-convert-get-all-v1-5-428227657a89@pks.im>
- <aObUivWiMdtprQSu@nand.local>
+ <20251007-pks-packfiles-convert-get-all-v1-6-428227657a89@pks.im>
+ <aObOFciwYsvTWT0e@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,82 +85,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aObUivWiMdtprQSu@nand.local>
+In-Reply-To: <aObOFciwYsvTWT0e@nand.local>
 
-On Wed, Oct 08, 2025 at 05:15:54PM -0400, Taylor Blau wrote:
-> On Tue, Oct 07, 2025 at 02:41:11PM +0200, Patrick Steinhardt wrote:
-> > We have a bunch of different sites that want to iterate through all
-> > packs of a given `struct packfile_store`. This pattern is somewhat
-> > verbose and repetitive, which makes it somewhat cumbersome.
-> >
-> > Introduce a new macro `packfile_store_for_each_pack()` that removes some
-> > of the boilerplate.
+On Wed, Oct 08, 2025 at 04:48:21PM -0400, Taylor Blau wrote:
+> On Tue, Oct 07, 2025 at 02:41:12PM +0200, Patrick Steinhardt wrote:
+> > ---
+> >  builtin/fast-import.c  | 4 ++--
+> >  builtin/pack-objects.c | 4 ++--
+> >  packfile.c             | 2 +-
+> >  packfile.h             | 4 ++--
+> >  4 files changed, 7 insertions(+), 7 deletions(-)
 > 
-> Makes sense.
+> Hmm. I wonder if we should perform this step at a later date. My fear is
+> that another topic in fight might introduce a new use of the "get_packs"
+> assuming the old semantics.
 > 
-> Since we're talking about adding a convenience macro, I wonder if it
-> might make sense to name/treat this one slightly differently. I would
-> imagine something like:
+> Merging this topic and that hypothetical one together wouldn't produce a
+> textual conflict, but it could introduce bugs where the hypothetical new
+> code expects the old behavior.
 > 
->     repo_for_each_pack(the_repository, p) { ... }
-> 
-> I understand that packfile_store_for_each_pack() is trying to operate on
-> a single packfile_source. In practice, would someone ever want to
-> iterate over the packfiles in some source but not another one? It's hard
-> to know the answer to that question right now without any other
-> implementations.
+> Perhaps I'm overthinking this, but figured I'd write down the concern
+> nonetheless.
 
-I don't think so, so I'm fine with this direction. In fact, it might
-even make my life easier. See further down.
+I think that in many cases, a callsite that doesn't handle MIDX'd packs
+specifically with `get_packs()` is almost guaranteed to be wrong in some
+cases anyway due to `get_packs()` and `get_all_packs()` influencing each
+other's results. In this series we already saw that the callsites handle
+this correctly even though they use `get_packs()`, and any new callsites
+would probably have to do the same.
 
-> Perhaps in the meantime you could imagine doing something similar to
-> your macro, but instead of reading from the store directly, it could
-> read from the repository's store _and_ BUG() if there is more than one
-> store to choose from.
-
-I don't think we should BUG() when there's multiple different packfile
-stores, as it is mostly likely the intent of the caller anyway to
-iterate through all of them.
-
-But that being said, there is a different reason why we may want to
-BUG() eventually: if we get pluggable ODBs, then one of the object
-sources may not be a source that uses packs in the first place. And in
-_that_ case we definitely should alert the developer that something is
-wrong and BUG().
-
-So I'll adapt this series to use your proposed `repo_for_each_pack()`
-solution.
-
-> > diff --git a/builtin/fsck.c b/builtin/fsck.c
-> > index 8ee95e0d67..5462c442dc 100644
-> > --- a/builtin/fsck.c
-> > +++ b/builtin/fsck.c
-> > @@ -869,18 +869,19 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
-> >  {
-> >  	struct packfile_store *packs = r->objects->packfiles;
-> >  	struct progress *progress = NULL;
-> > +	struct packed_git *p;
-> 
-> I wondered if this needed to be in scope for the whole function, and
-> looking just at the first portion of this hunk it seems like it does
-> not. But continuing to read further down shows other spots where it is
-> beneficial to have "p" defined at the scope of the whole function.
-> 
-> >  	uint32_t pack_count = 0;
-> >  	int res = 0;
-> >
-> >  	if (show_progress) {
-> > -		for (struct packed_git *p = packfile_store_get_all_packs(packs); p; p = p->next)
-> > +		packfile_store_for_each_pack(packs, p)
-> >  			pack_count++;
-> 
-> This conversion looks obviously correct. Though I wonder, as an aside,
-> do you think it makes sense to have a packfile_store_num_packs()
-> function or similar that does this for us?
-
-We probably could, but I don't think we have enough callsites to warrant
-it now.
-
-Thanks!
+So I don't think this is too worrisome overall.
 
 Patrick
