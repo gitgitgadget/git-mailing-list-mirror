@@ -1,130 +1,109 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E1F247284
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 12:29:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE62E748F
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 12:32:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760099348; cv=none; b=dRycxAr1qL2UJ3cl10G/qzpKQxKrOee1hkGIhsD6xuEb4Ow1Lq8Ty508tTv3Flzxx+pRxqECw/d5ONro9k62UoYMIYstP0umtkjqjeqDLtUecUepxaV8Zj+hWWIXAi1N5I3t414D5RWLOZ6UHuaK9JjKoM7TIW31AgvD+FqWvOs=
+	t=1760099547; cv=none; b=CZHA7X0v3aPmKd0iuhq5DURb6cilxhYxcWAO2ElSwKHkEVxe9Eg9bzHdKc0AcsD4zPxfyiCkj1CpT3InCr7ToZjQljq6EdtFp88mjnQ2UKm4SLkAw6gs9qxtdZP/NPv+bkDjsCTvIskQE+Nqv22IaksKj66sOrK3xyDh546HjLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760099348; c=relaxed/simple;
-	bh=DQziKhQqyAwS+mtD+OElx9nY3vilUUsuInJ5GakAZ9g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z9cdQIs/lb/9YmFHorIGCzzVAZY9pVkOvyIG57SbLX70a0zI2SJiO1VkJm7u0vY4iBlU4k8acCJcNfb6Zj0+hbh/rE+fBBOXryfYDs56+17t9QZm98lxskSWGYUKHUe/QnjfyanBQUQAXdV8QlHnkS9vXU/XPMqbrJI6KKDlSg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UDSMiQlB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XgB4LUA4; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1760099547; c=relaxed/simple;
+	bh=P/uxj4DgCm74iUe24cd2yZkGtSycF/jn7diuMiz77/s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RhUDps9Uk4Hwa904kR5vVuKX/BoUQZIcJjIMNTYC8v4W+w2SszGLAO+zQ+8FYeyffVnwn0fks+oQqs6MBep+K+22Fy5+9Ta7yUrJ6lisMdX44mRGVpeDD9zynlz0MeG+qD8xdXtMPI6BbkN7j32lv69nGjoElAQ5VmbCcMwAPco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eqM1wpAO; arc=none smtp.client-ip=209.85.160.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UDSMiQlB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XgB4LUA4"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3F893EC025D;
-	Fri, 10 Oct 2025 08:29:03 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Fri, 10 Oct 2025 08:29:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1760099343; x=1760185743; bh=ph9b3BH2e1
-	tZcpGaAjgooq8GEPdUJ3Ls1qTFW7hwMLE=; b=UDSMiQlByMWyaT6ePvRtG+bjkX
-	OhTgFTHGDwFMQyY61YA2928Rlx8Sa45zmtYjtYMjH18xfzIOUV3HrP6bqxZEObhY
-	RalkYy43K0iZv2U7k55WMiLOeE9cy7aBM0UhcuQ6bPIu2rFiE9sZ5xFmKF/P2GVU
-	qcrT6XBm5GI36xSoq3onYY3ntYvyBgZfipuNzuAmQxtoh/5pWcH6zOFrvfLSWnnH
-	tNIvAxxjP5P3qEsaT8GsPtha7rpILGNG3Ab+tvvLMGpccUnZNgP7pnbBUGMu6vAx
-	qCgMP5l2tlQbfm6e/+gg+5aw1FVZ4Dwj4JDLTqXRn5z+11tAsqgu7oC4uQ9Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760099343; x=1760185743; bh=ph9b3BH2e1tZcpGaAjgooq8GEPdUJ3Ls1qT
-	FW7hwMLE=; b=XgB4LUA4VKbaHgE084SYiVX7ZlT6HeXrQ0Ia8/EErnKjDfiyP5h
-	CIAfucpTMCUOB5AysCsvroDYfSsvoHa/SDpvyCb8aUe1Bn+3PvTheu9RZ6TN33rZ
-	jyCsWelSL42vQskfONZOD/oOjvc9L+nNsu4qD27fW/zbqukT5ZYPEZP+txT/kD6x
-	IdD8UOTMtrpmJKRydyxdDthMaJ+GjzVGA8rsimFMiJyjWBwJZIVusIYauiPoDB0y
-	NEt8d1DktFWcRnBW1nuLKyTXZdsWScBv5TfUQxO7BaHfAi1mwfOwQUf39h0wOPcJ
-	MvbnlzV9eIwdDkFnZPVejFK2ie5vfci7JmQ==
-X-ME-Sender: <xms:DvzoaJSsY0-RY7nyymR3rnLw4vRJxi2GXrXD9vLzwomePAZWaDmIeg>
-    <xme:DvzoaGe0XsKFat-3NmP0zEkKgtLeTUjqBZX2TRoqhZBK7EoAKeDjLQp_0VHT80Cm5
-    AhEBq6c01GTSCxKASEjlLb5qLfum4Bce3TOYE3xJUY8AnJAfz86kQ>
-X-ME-Received: <xmr:DvzoaIq0HsKRuqgeexqXczjXE0sYMxtSoUEQ7aPlTiYUqyeqEP7IfrfFqbXuKW10fhs9_hgpQAUxJHiuZtl1N4zMlnsvKHyy5X2M9VmAHQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdeltdeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgt
-    phhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:D_zoaH9KbDz74qkVkPv8Hp7IWCmGJKnTRzr4dHt0BNtCDhxLfuTepA>
-    <xmx:D_zoaEehkzrIT5xQq9KTWV1V5mXcQ_OgSXDZdJlIjAmjoBn-HSHL3g>
-    <xmx:D_zoaBKUZWKVJ7O3TMjswxfwE2Tia6xXs5Fy6LDDb16Gnr-XeJUypw>
-    <xmx:D_zoaEiu6FIk8l5fB7AUkPQa7FeHfXMIvFpVJTE4BELjmlwJU4kY0g>
-    <xmx:D_zoaCup2-l7LVW8B8fcCb2f4U0nCg7r9JHQ6CI0TkyK8JD_wsVMvG0S>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Oct 2025 08:29:01 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 678e49a9 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 10 Oct 2025 12:29:01 +0000 (UTC)
-Date: Fri, 10 Oct 2025 14:28:57 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 43/49] repack: extract `write_pack_opts_is_local()`
-Message-ID: <aOj8CUgapqZEhnlK@pks.im>
-References: <cover.1759097191.git.me@ttaylorr.com>
- <1fbe3d0d7f37840b2d9faf6f62e94abd6a664ded.1759097191.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eqM1wpAO"
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-4e70609e042so6977171cf.1
+        for <git@vger.kernel.org>; Fri, 10 Oct 2025 05:32:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760099545; x=1760704345; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=erLg+Z5CVEhl5GOqXYYKe1WG1SexRem3EUi0qO4uHb8=;
+        b=eqM1wpAOOYVKreXHNhxYjOwHtneVZFUz+GWqTIcrq5pUJewfdrtYfkvcluYTYceE+A
+         fVzXVMnRU1YDhahkKCzv8rtPOBK6Y2IMxbpS+oNYGtWkah7mYHfyKTd4cJedP+WioLUK
+         yPzIsM5TxeS0y/Jj9EldCPLw97nSeBB/zTqKa8TR+Kav+1QocDRdVbf8xC4+FUetm0e8
+         NheCKzLqqOVqTK3o0mw3Si7YOhE/c0OjLlGzXnc95hEsWvqasWAUmiGbZBUVBW8syH+k
+         8azKm3IzFFuCtpd2+Z30oLMvNQ2NSLFWtlMwO6Y0cxTDOyxGleh/kl15n/RTf5vKlh34
+         YuLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760099545; x=1760704345;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=erLg+Z5CVEhl5GOqXYYKe1WG1SexRem3EUi0qO4uHb8=;
+        b=NT0VTD0edvIyfllhRW0sPuPysHCtaF6G8oITBDisoq7XZStykaRPPR61WbE/D7ydli
+         OvZsGhorNDWl1EtQGpBYeRoVgi3TG9NAW9zVugV/FYbuA7g0bjbtMCH8fHHi/5VYqXgS
+         yjGmcR1yheFKN7DBPXydgZRdCRqoAIM/gEjBcte2BkrNiSaHUjnlAVXVhdc9lS4fuE7+
+         LBhtf91L57HzgdfAC7NpsAznWZcKTknCLhGrgEfoWxvh3M4uXa+ZLOqWDpLEsXe6okjc
+         5egdQW9XhTQolU6Q2bjEeLxWokArOivyr3lbI3ZwaWF5MfIDZfZcugGLbeck5RHZwLFk
+         FLzQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXKN+vVYdCqxhkAcJrA4dvrf58NRNoEO8FB4yloN2E4fpc6h9q7YG5zpWbWq8MJW8+1wdY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwuOxzl/fDemQSutwH5tG12+x6De1xHSw4WQwDGvFdfsT42QRve
+	3ZVqEMPvPdQuSa3wsfcqr7bSjfx4SrSW7xwGiQTdsuc1S1R9yUeKCSt0
+X-Gm-Gg: ASbGnctc2IXAgmy5x4VXWIHhMpI5QXGe6TAnAOeCzfW1K7TQ8EcqDlkG26qVlXVrG9M
+	DGRzMmPKBfL7w8BTCmF8ebaGLAYOdG9MDUA8iwiga/l96/tqbITtjO5bX6dkInyaZRjzvc6/Dmd
+	LBHYcD4UBKiw9f6pFEoMHXBf02lGn/JZLGX7lqffoBgQtmB4O1YwGJinxXlj7WZ8AU5JQQOmc4r
+	2fSJBLKAGUdGQZkYn+4V7MY7dq4kppny7FOh+BQSBC7zDLlACKo2fuPzc4C5Rb/hv0KgMBJbyAm
+	Qe95hD2unTh3BTPofZMuviICAHhGmsUHcDPjSEah5hc6QAjYnet1rxH0La9ByqV+qUcTi+pR/jl
+	tcIu5VWKgjMokfrbsK1slHMP4mAEvJNYAqvfm6M9kpnCcTbk/wEGeKv84NjStdiFOd3HePb7/n8
+	TrqhqtkBCWvGw=
+X-Google-Smtp-Source: AGHT+IFK6R/rslZKUQNHnWBYJ3Sam9RUkbIM+Oo1ptzyzlLZRyS03b0MAc0qMVpneB+D55UPMPVw0Q==
+X-Received: by 2002:a05:622a:89:b0:4cf:c058:96f8 with SMTP id d75a77b69052e-4e6ead83c54mr154575211cf.75.1760099544469;
+        Fri, 10 Oct 2025 05:32:24 -0700 (PDT)
+Received: from [192.168.1.109] ([136.56.76.110])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-87bc359377asm15151616d6.48.2025.10.10.05.32.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Oct 2025 05:32:23 -0700 (PDT)
+Message-ID: <80ab806c-1a53-408b-9120-cae4faae0491@gmail.com>
+Date: Fri, 10 Oct 2025 08:32:23 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1fbe3d0d7f37840b2d9faf6f62e94abd6a664ded.1759097191.git.me@ttaylorr.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] commit-graph: add new config for changed-paths &
+ recommend it in scalar
+To: Emily Yang via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, me@ttaylorr.com, ps@pks.im, newren@gmail.com,
+ Emily Yang <emilyyang.git@gmail.com>
+References: <pull.1983.git.1760043710502.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <pull.1983.git.1760043710502.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sun, Sep 28, 2025 at 06:10:08PM -0400, Taylor Blau wrote:
-> diff --git a/repack.c b/repack.c
-> index c4326a532d..7af297ae48 100644
-> --- a/repack.c
-> +++ b/repack.c
-> @@ -77,6 +77,12 @@ const char *write_pack_opts_pack_prefix(struct write_pack_opts *opts)
->  	return pack_prefix;
->  }
->  
-> +int write_pack_opts_is_local(struct write_pack_opts *opts)
-> +{
-> +	const char *scratch;
-> +	return skip_prefix(opts->destination, opts->packdir, &scratch);
-> +}
-> +
->  #define DELETE_PACK 1
->  #define RETAIN_PACK 2
->  
+On 10/9/2025 5:01 PM, Emily Yang via GitGitGadget wrote:
+> From: Emily Yang <emilyyang.git@gmail.com>
+>     Hello,
+>     
+>     I'm Emily and I'm interested in contributing to Git. This is my first
+>     contribution to Git, super excited!
+>     
+>     I'm from Microsoft and spend most of my time working in the Office
+>     MonoRepo (OMR, one of the largest repos in the world). Recently I've
+>     been working with Derrick Stolee on Git performance related topics. We'd
+>     love to propose a small enhancement on the existing changed-paths Bloom
+>     filters feature to benefit large repos like OMR. Please kindly review
+>     the code and provide your feedback!
 
-Now that we accept booleans in our codebase, should this function return
-a `bool` instead?
+Congratulations on your first Git submission, Emily!
 
-> diff --git a/repack.h b/repack.h
-> index 46d2312fa9..16f2de2ea9 100644
-> --- a/repack.h
-> +++ b/repack.h
-> @@ -40,6 +40,7 @@ struct write_pack_opts {
->  };
->  
->  const char *write_pack_opts_pack_prefix(struct write_pack_opts *opts);
-> +int write_pack_opts_is_local(struct write_pack_opts *opts);
+For the rest on the list, Emily and I work together in support of engineering
+systems at Microsoft, and her team is particularly interested in Git
+performance for the Office monorepo. This first patch is hopefully one of
+many to follow as we build up more people with the right expertise to make
+changes to Git, especially at our boundaries of scale.
 
-It would be good if all of these these new library functions could come
-with some documentation what they actually do.
+I've already done a "pre-review" of this patch as part of mentoring Emily in
+her journey to Git contribution.
 
-Patrick
+Thanks,
+-Stolee
