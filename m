@@ -1,43 +1,74 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8FE2749CA
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 22:23:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E012459C8
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 22:49:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760134992; cv=none; b=CSZzkw299oIkx74WbC2pZjVPHTnO2b4UdmgHuSmqPmE1St0wemhnnNJm/U7YUEIqn0A/RCdHeZgLrRKqw47Rhe8CrdjaZTugplJVjGa+3Vhfp9tvVgteTsr+QjPEcWJ4Dl7sTrF5T60ZUHUz8ElalG86inl7HovuU45MpUASc9s=
+	t=1760136542; cv=none; b=Ymgt6LfWItNvolAIrdpHybWR+ej2MsmpHW5FE+PBh8RnGOVwM6grot/x/czajr+JMIiyA/5nVcW8KWUnyVrVRl76rHI+ktY/n8Mst3gg2NR7rF+dZNGOKAW4c98QIJFg4FDC6AtpkOtYjjyiFFTyIfeeOgBdQsUhQM0LysePukY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760134992; c=relaxed/simple;
-	bh=ShZhPjV7e3kPJra2E6yYBii8FqTFBPdw4pTd8bpDL1c=;
+	s=arc-20240116; t=1760136542; c=relaxed/simple;
+	bh=g42z+fNdG6f2dnKIpusIYNUw9Gky4mLmHTTvv4uB0yM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u+vA0bqAtnA+HjKWp3twuOQtZEFX+6MEy9hlhGqBDUqY+BTMF1B6aoWiPyy6la5YhGuyKwXUfbDBYCPBUWd8gg1opzWHe9fxaln8qNMk8n0QME0ld6t5ENPfGoihkSyAjsZQbrM/pXuhjVjAMKGsoQNc9zfipwv8PYKo/UZPamQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CFykM0I5; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=e0SMt6kwlqefmlkPKxCHDyEBmAuSQIvWhegqfDDogwxM2CHvH7JB/mE0TV9kSBWofDVsP194kd/7F9tqOf1u1b+Dl+ee/6nmJeyFUxhcm8b/X+d/VXqg9GBgKimvVd05Hq0oqkhfNnpA58dNsHN4brR4EUEutKUz4eLpuozWnfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=LuzQWvsJ; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CFykM0I5"
-Received: (qmail 187015 invoked by uid 109); 10 Oct 2025 22:23:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ShZhPjV7e3kPJra2E6yYBii8FqTFBPdw4pTd8bpDL1c=; b=CFykM0I5jyPF5k5HkyeN7eKn1Vlj8HfNjajWuLQFRZRWMP/ghrMq4Xn1ScpHhknCjn19tQtElsMnGYcv1/+iU7cDlfXuwML6G7GdTfhNSKeksJA004eYAhs4zi+kNkOMK9PYNufX8IMYbbhs2Dvk3Kt3BZceDdmvpeAc8CG5M/3Y0X1n1QBXUluXG7H42rmlbYLMF/cES7pLe7+Q3dNXuC9feoVcbBOUqMLro65f0enWM9mYBFj7HRDSwm4FYDnnslff+qK73YGUqlADH2t52db/3frz8F6KA6bmQmVZaqKjrE49vXaDV/epuIS5vy4s73sfeggdFOOVhe9Nsp3EDA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 10 Oct 2025 22:23:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 294605 invoked by uid 111); 10 Oct 2025 22:23:04 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Oct 2025 18:23:04 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 10 Oct 2025 18:23:04 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
-	git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH v2] doc: change the markup of paragraphs following a
- nested list item
-Message-ID: <20251010222304.GA2007405@coredump.intra.peff.net>
-References: <xmqq5xd5aqa5.fsf@gitster.g>
- <20251003031113.GA6381@coredump.intra.peff.net>
- <20251003034134.GA625140@coredump.intra.peff.net>
- <2239952.irdbgypaU6@cayenne>
- <xmqqo6qeag9n.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="LuzQWvsJ"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-71d71bcab69so23935337b3.0
+        for <git@vger.kernel.org>; Fri, 10 Oct 2025 15:49:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1760136540; x=1760741340; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=MJlpnYcl2erlOE3fp5SLM+lwaHj/xkTKCOXQY6M/CJ0=;
+        b=LuzQWvsJktv2Pc8NZd1lcow8rmT+s3pjhOmlHScksTbFlZqY/BjTU3MSnsFQ98JD2B
+         z0PlrJlrTEVLp6++F+CbVjmWQdp4xch7F4JuhSTbwDPtSe3CekLuaD3Nzlv+/1jLa4r5
+         Y2+cyZhaFBeO3mthqifp7hJ+wyEXKZeaRn3t/cuvd108isOGQ2xh53wuld8qPEKSFsfG
+         EFEfyJbT5hDyzgs+Ku6Hm/Vz8MApPdX4whQeIbV5XIfsTJ5ECkq3iiYFi1UCjgloxPZq
+         qjsAhnp4ZCipIjneZubYSTDMJm2nENoR1v7BlfVACyUreXlVdsGF84JPR6aqE+ki6fXz
+         rYSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760136540; x=1760741340;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MJlpnYcl2erlOE3fp5SLM+lwaHj/xkTKCOXQY6M/CJ0=;
+        b=OiodWEhXhRPzefEZ6wIUwYBPAwBNMPWzHG2Sz0M7qvjZGsojvoCQSFAxSHi04Pgudm
+         T/Er7YYqHPa9/NsKan2VDqV+T2o5q7BsimDRQcE79n+OgOj+1prd2vq+t3+n7TbZAJ8J
+         pcCDwG8HAmc+g6O0jPoSiL4ihZ06yMZGnhal93Tpmv3taKn9CQh0G8KXx+JAAqa2lJRU
+         9IoRoWoyx90Ax9JV1VBrjOonvVzjy7aZwUfUL0wA1xjwQ+B0eG3c5oziYR+iPCP3+iG8
+         Eul4L/+BrekWFIAIj0BalM2rKtJVDZqJ/d0t7Zed11JQu4kcfFZBeq4eEWv6WCjBR1t9
+         1GsA==
+X-Gm-Message-State: AOJu0Yx9a6Pc5ioAs8i9HsSdn+S8e+sJrqo7ac7bjccGEoBI8Ag9HF+x
+	X7mQoFGC0PXRblR1rLB6eYm5ZE7IKZDh84MIHLuZbGiSvd6xmX0o5UEuJjn3dNEoNB4=
+X-Gm-Gg: ASbGncuC4uKTytWkdBCfKO59K7SOAFliziy3UB+sueYuRtsg4OqjFO00mZSJRT36YKo
+	SWq5SAr0xqaSIDDNseDdNPcEgWiDGobRDaQCOgzGprMu+WKnhaX/jkXEIE0g34JA9tHrNlvLsST
+	WbzSIVm447YoIAUh1NNavtINfL9VCmdMJWLPNPG7quEigmhGNrPag3xceTXOsjurf/gL1BVl3q2
+	Z5ZmWD+93DAXNU/1K/BU3Gc+kqxVZcF6vE547HaxMj8dTif3Zv4atBDd24lzlGzKteXlImRL+o6
+	JbA4kBZSz//6zgFjt1nQe2PFoX42K/ySMdYADJTR/8eqNrWt+5TJFqgL0bEgavUeGNk8VNGfkXf
+	nXfXtmZGwNS0qdusPvkhQkmzuqAeOSha41uKfSxMkv4zHO6G58DLGoIDlUdjYexEPyuZl+JiheZ
+	qv2BsNW3Bcs4Dr6bnUs/Ulsr6tUocJMaxMFwCBbK3kZotJhaU+s/MORc0=
+X-Google-Smtp-Source: AGHT+IGoWhYFNiMzH0NwKdTHeaqsvGdPvaxMZDjW53NTMlaxql/RYoWyaDsuwlQ1fCxrp3kUrSnkhw==
+X-Received: by 2002:a05:690c:6b89:b0:781:64f:2b08 with SMTP id 00721157ae682-781064f3436mr51972317b3.58.1760136539834;
+        Fri, 10 Oct 2025 15:48:59 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78106e1b58fsm8982817b3.18.2025.10.10.15.48.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Oct 2025 15:48:59 -0700 (PDT)
+Date: Fri, 10 Oct 2025 18:48:58 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH 02/49] builtin/repack.c: avoid "the_repository" in
+ existing packs API
+Message-ID: <aOmNWlwG3WPNChKi@nand.local>
+References: <cover.1759097191.git.me@ttaylorr.com>
+ <664a67c93620edf6727f0617f4dddce99901fcde.1759097191.git.me@ttaylorr.com>
+ <20251010051955.GA1965904@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -46,47 +77,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqo6qeag9n.fsf@gitster.g>
+In-Reply-To: <20251010051955.GA1965904@coredump.intra.peff.net>
 
-On Fri, Oct 10, 2025 at 09:11:16AM -0700, Junio C Hamano wrote:
+On Fri, Oct 10, 2025 at 01:19:55AM -0400, Jeff King wrote:
+> On Sun, Sep 28, 2025 at 06:07:18PM -0400, Taylor Blau wrote:
+>
+> >  struct existing_packs {
+> > +	struct repository *repo;
+> >  	struct string_list kept_packs;
+> >  	struct string_list non_kept_packs;
+> >  	struct string_list cruft_packs;
+> > @@ -265,7 +266,7 @@ static void existing_packs_release(struct existing_packs *existing)
+> >  static void collect_pack_filenames(struct existing_packs *existing,
+> >  				   const struct string_list *extra_keep)
+> >  {
+> > -	struct packfile_store *packs = the_repository->objects->packfiles;
+> > +	struct packfile_store *packs = existing->repo->objects->packfiles;
+>
+> I found it a little funny to pass around a repository struct as part of
+> existing_packs, since they're not directly related. But I think it is
+> mostly just a convenience to do so, and "existing_packs" is really
+> storing an overall context.
 
-> >> diff --git a/Documentation/config/extensions.adoc
-> >> b/Documentation/config/extensions.adoc index 49a7598ca5..aaea8c107f 100644
-> >> --- a/Documentation/config/extensions.adoc
-> >> +++ b/Documentation/config/extensions.adoc
-> >> @@ -55,8 +55,9 @@ For historical reasons, this extension is respected 
-> > regardless of
-> >> the refStorage:::
-> >>  	Specify the ref storage format to use. The acceptable values are:
-> >>  +
-> >> +--
-> >>  include::../ref-storage-format.adoc[]
-> >> -
-> >> +--
-> >>  +
-> >>  Note that this setting should only be set by linkgit:git-init[1] or
-> >>  linkgit:git-clone[1]. Trying to change it after initialization will not
-> >> 
-> >> on top of your patch seems to do the right thing (no change in asciidoc,
-> >> and eliminating the regression from your patch). It's a little gross
-> >> because we are reaching across the include to realize that
-> >> ref-storage-format.adoc contains a list that needs to go into its own
-> >> block. I wonder if asciidoc implicitly opens a new block for an include
-> >> but asciidoctor doesn't. But at any rate, this is the only way I could
-> >> come up with for both to render correctly.
-> >
-> > Thank you for cross-checking. This is indeed almost impossible to mechanize 
-> > such testing at the moment.
-> 
-> Thanks, both.  
-> 
-> So we'd see an update to this (I think this is already in 'next')?
+Yeah, the patch as-is suggests that we could have gotten away with just
+adding a pointer to the packfile_store within existing_packs. I tried to
+do that locally, and it works up until "builtin/repack.c: rename many
+'struct existing_packs' functions", where we start to want to use
+"repo", or "repo->hash_algo" :-<.
 
-I think we already did, in:
+> It could probably be scoped down to pass around an object_database
+> instead, or maybe even a packfile store, which somehow feels a little
+> more "correct" to me as context. But I have trouble imagining that being
+> helpful to any new code (why would it have an object_store but a not a
+> repo object?). And I can easily imagine having the repo available being
+> useful for future refactorings.
+>
+> So I think what you've written here is probably a good path forward. I
+> wanted to outline my thinking because I suspect the same will apply to
+> other patches in this series (i.e., they don't always need a repo
+> object, but it's simplest to pass them one).
 
-  https://lore.kernel.org/git/20251007082223.GA3336685@coredump.intra.peff.net/
+Yeah, exactly. In general for this series I am trying to do as few
+changes to the actual functions as possible. There are some (like the
+renaming in the later patch I mentioned above), but only in service of
+trying to have a clean repack.h (at least from a naming standpoint).
 
-and you queued that on the topic (and merged it to next already). Or am
-I misunderstanding the question?
+There is lots of opportunity to clean up the repack code further. I
+agree it would be nice to have existing_packs only take a
+packfile_store, and pass around the repository in other places as
+needed. I'm happy to investigate that, but as a follow-up to this
+series, since I want to change as few things as possible here.
 
--Peff
+Thanks,
+Taylor
