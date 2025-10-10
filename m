@@ -1,74 +1,74 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309E41A9FAE
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 22:49:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643EF1A9FAE
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 22:51:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760136598; cv=none; b=asoY8EmaQ8RU+ZwFpAD2t+PhYYDvgoA4SHzyZ0gFavtbuT+qCZszE86yeyJeqrExrPKxnzfTAUMWQRzQF5L7r17MNpBlZ2RB1vYZwx3smYPIM4o/9/vxV1CsXcNolLSX5jti4z6dqoS7cPp4fixlzXTh5lmy+O/SspcCvTGUV4U=
+	t=1760136680; cv=none; b=NJUwVthpNVs2Oz/OAtJVL2NW3b0vG5VdniWfo8s/r68BOsK8XymsVQuuNz/V3pq+3D6dblhI+wg3AKtAABburt7/UCrkMLDZcneLz2uK1kS+VY1vVDMrBpoIeNmfvNgcxWXnNKHwi+QoFM8Mdu7BwId2x5qbN9AHEcSuTDzQl3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760136598; c=relaxed/simple;
-	bh=r/M8R0VZfJFu4WN0yE/M7JDlPAFEwmuUwibNFUtXJGI=;
+	s=arc-20240116; t=1760136680; c=relaxed/simple;
+	bh=7EkPce5M+SdaDKylCBmRx/KOZoo7L1tmOQQLECoJUR4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gE1AaUEpRW4xWuDuoNSY8WtXQdiYvbh5lN+xvlgy/hREgUAyZiLqds/bkbrfUnAoS7sXJD9zagf21Brnq+FITEiiVy+Jp4tUlUD1s8qoAYZrmSq6ZEFAmoN//T2th1iqvpaXRMltdXY/UEwxSr36pkO7WdUCwfTqvQ6yS+18AVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ckXLH36h; arc=none smtp.client-ip=209.85.128.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=iPw27F1G49dyNn3iMAcDzbqHunQxPhUhfJWIlSyFekF3yQMugtb8HraLEimxfRotmzvm8IgdmMO8U98duVYItyaZyjR5NFZNQ1GHNsNwoQvl+SuKrxJ7kpk9AORu1u7qWFF0RuNANVNOXnlaVTh4T36fSYk99NfE9mQ2lbbnGBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=KUjmz5I6; arc=none smtp.client-ip=74.125.224.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ckXLH36h"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-72e565bf2f0so26956637b3.3
-        for <git@vger.kernel.org>; Fri, 10 Oct 2025 15:49:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="KUjmz5I6"
+Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-6354af028c6so2684036d50.3
+        for <git@vger.kernel.org>; Fri, 10 Oct 2025 15:51:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1760136596; x=1760741396; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1760136678; x=1760741478; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=r8fXg4zC3wxUwCs+Dsk4EXpq+1EJB5LPWOfLleGsGg8=;
-        b=ckXLH36hYjLYHD5FHPSQk23ZkfI9+weA8GuK2ougxgrR8kbvNP1wmniljsk/w0W9Qq
-         xCmaIDQ27v8VB2PjJHiv73nvbbjha/k1k31vkLYLFSmI+g1jl9+z4M7Kk5ujsHlNk7gd
-         Bp+8dPgmGbUhxcvpUtgudkOrU9B2SwGAWHVh4lPrpsB4iteMdxEWd6sHvdI3hrGGIU0M
-         j0Z67aLFQzXd5IMDHsetiSk6a3mJ0HrbTA8pIvDMfVZxk0gJeB5jPEghcw6FB2/9O+1h
-         pkSWgz4wW9qSmRvhG1/YxGidxd1n9LyO+eOmwvo/3ab64jaIoL8RfFoAvNDo+rzeDSjn
-         DQrw==
+        bh=pmtOV9njyzdEZ8x4mc+6pECRlvqvG4Yq2ALWx82aEnE=;
+        b=KUjmz5I6jBlHMXixLQyrj7QR1z3PK5ZAfUYU4GRySFUROmX82ODDZec4R7Wv9TQCFd
+         QBK4KLOW4U2ZAKEikl2mM46kPPmrb4qwoFmNWETr6YwAeEpITWjgnnZ9B+zeL+5ifsBN
+         bPtI9PGfJLx/Fu9ps0t18h2qzdZujEoFvbSKHiTKcGHeedyp79S4n0LXUbxegHgHua+I
+         rylIXs/w4g9pE35TUqHjvp2T7vwkastk4bJrv2sop247MUb4K+9D/6bYL9i0jBDO2+VG
+         Qya0wF2wCYP56tTwFCXYKJVrmpzkIGIMuNWFow5rJ/sur6PdrjIUnvGguBWTyFmznGnN
+         vK5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760136596; x=1760741396;
+        d=1e100.net; s=20230601; t=1760136678; x=1760741478;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=r8fXg4zC3wxUwCs+Dsk4EXpq+1EJB5LPWOfLleGsGg8=;
-        b=hdH6bGsXNYSlkXwonYVrcM+VzGp5t5VINWy7LhttDpbwDM2iFDu+0uSt3Cw7G7u8Nf
-         kUAMqjXDXZOfgKIKJamYUT7GZ7SZ4s1OkvW4K6stSJp6GKB/fZRJEzHYEMQEMXgt6Z6v
-         YtMRNGAlkfCNhUU+InAhhQj/iDLvzkkV1lrFL1m8xM3DwcCkfmyq/fUUoWYZCH1/hbY9
-         QDZqqw8vl5RrVnM3gtBjYRBqoIIsLmtH8M0e6hGkoh5lYWfGVGnuKIAunkD5kot/z2sk
-         rgzMhiLkA4o8hSpVeBCzv/ZyIvr03VRoqrno6qceZW+apEqB0yV7sJa4zYNtUBP0vICh
-         e0vw==
-X-Gm-Message-State: AOJu0YwsKp7kWwPRonbsFkIrXdJty8IO/KDKZr4FAyVzZcbm4vxOz7sJ
-	cTv6BU6o1WK2A8Uougg55TlGo7YeO3HShElxFbKSHZ2ZHFv4bAjAMZEgC37ZzW7Tpq0=
-X-Gm-Gg: ASbGnctMQM+Kg34dirB4hTCP1qBEezadTWb+LgpRBkRbwPLhaZEzF75a5y3D3N/xPZl
-	uRzIaGCCc9dUvBmoULTK2pYJEj8v6tQDQOPHqxBczf20tkEy88nfaDPeGpTkwpXEXHfm3ndsWIF
-	SBuzdFxljAVD6QLt7V26m4//FJXFZ1V3MNlXBLMFg0SgEEmcUwvikPnK7uqLqOaizWjBFqnRwTg
-	XECBoC7m083f2+6LPvh+oiLvMishT4bC3RIcTLfIDX+rO25FY6yWLYCl/LO/PFreoMTb0aCGBg4
-	ESHRrIyt3C3ZM0UNCkLq1+Irgr39QCqzMebQy7Y2AXPudtz/lYZ+3Uf0MrJVJPUVYWDERD30I8V
-	orfMnUMF51C/0OPOulcenzmQa6Ai/cG4xDi1oaMPyROrz6Rw8p/pmlQ4VLqqmI70xulkXVq1cLI
-	f+J7zVRm4TwFwSRlKdkbpXTHlICVPJCG5SbQpsFRwZYXSS9Fg1c6HPc1UiTaxeqAHZRg==
-X-Google-Smtp-Source: AGHT+IEJ+J+rF3yrOg+5TdOhAWKvjmPgHdhNwv5c9ozRVH85TpqZdwSOefGjkOatEG6Y6OkLYhHOTQ==
-X-Received: by 2002:a05:690c:4809:b0:781:2c5:bf4e with SMTP id 00721157ae682-78102c5c02emr60667087b3.7.1760136596007;
-        Fri, 10 Oct 2025 15:49:56 -0700 (PDT)
+        bh=pmtOV9njyzdEZ8x4mc+6pECRlvqvG4Yq2ALWx82aEnE=;
+        b=NdS4Nizlw0DzSQv0K9YvV5fEJzk9UyP/2J8IFGppyYcpoLVtWHyOHC09RVgTOwPToZ
+         aVwICHjtUinQJ+ZjTbA8d6ygeIKHbd0jF55CvSvSv9SjDZkm0ADy8RU3FOEmBkNnuzfB
+         638DjGK8zYzvDR/xpV6FdLnhHUytachyTL6jyasUPza2C53e+06bn4n/WAHABKIDNh+k
+         mj75BYflIb4AYwtcPTBpbbQth9+V+idz48HkIR0shAdKel57DtLSdr2vK0hUs8I1gKWw
+         3XdtWADAWp0TafFeceEKaSaDgV1IyIZpa9LuhnrFC5RP68azKOxiOJYYAxefymJYUhrL
+         yTdw==
+X-Gm-Message-State: AOJu0Yy+56tMT1gUCr1vies/3aIVlifeZz/OAG7VRJGa2AWybyFV/MWL
+	meEXkRMXqK42KXzaJ6G6/fQRVTObx3xsUJyFj0dFNNg6kbAgf9rKnxDVAU/lFJtuSnM=
+X-Gm-Gg: ASbGnctA/kjDAOp9ZhV7kstNsVPteCOYqupqUkPuJGFVZ4UsylkaxWq9Z3BBBs5m/gp
+	t2I6dRLP7lj3J3cHel4rB4c37pF337Y6BjlMU6sganE1Pcyp8YhfW/c6TrN9cZv2rj2rTHjLAqm
+	uBrfUvxYOz9ctggzaR/KvpaFgsV2bN9ntO8ufCbKtQybp+kQifjoQAQG9SlrYavFXiLm0EbxUpP
+	7/kWdHw3e5hTYNcx5AoRWWPaiz1hsG/8MfpykpDo553l6mIk0QGDTN99w3WJ1rBYVYlVGn8+sf3
+	47m/rD2+gdslT+19msaC232x+oCaEGykT6LyRzCzOMv3Z+6leIHbrrIiQmDYGtFFTEGMO5o2Z+Y
+	qLljbuMlEWqFvdRq1gaRZvwc3wXiDyjv/LoLh6ImXSyvyEUsJLcG3cftIHQXgdmoKK4T9IRQ83U
+	KhNY/9yS6bc0Xi1QWxGmnUg7cjmLBRmoQjuANQ1bY9H7OS
+X-Google-Smtp-Source: AGHT+IEjGawkad9ppkuIylPiEldpZ6DkPg2k3z+kGJvvTrLIok/VG6PwYruodxI3ybgi1k5RqQzN2A==
+X-Received: by 2002:a53:cb48:0:b0:629:acb6:d8a with SMTP id 956f58d0204a3-63ccb8e1528mr9704118d50.26.1760136678094;
+        Fri, 10 Oct 2025 15:51:18 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78106e1ede9sm8972997b3.22.2025.10.10.15.49.55
+        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-63cf31a6109sm426872d50.9.2025.10.10.15.51.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Oct 2025 15:49:55 -0700 (PDT)
-Date: Fri, 10 Oct 2025 18:49:54 -0400
+        Fri, 10 Oct 2025 15:51:17 -0700 (PDT)
+Date: Fri, 10 Oct 2025 18:51:16 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 04/49] builtin/repack.c: avoid "the_repository" when
- removing packs
-Message-ID: <aOmNks8E1wQC7MnS@nand.local>
+Subject: Re: [PATCH 09/49] builtin/repack.c: avoid "the_hash_algo" in
+ `finish_pack_objects_cmd()`
+Message-ID: <aOmN5Hj1xT4Qc6Ed@nand.local>
 References: <cover.1759097191.git.me@ttaylorr.com>
- <f404dfa34f06a882e5ebf0b6ffa01ba365ac866b.1759097191.git.me@ttaylorr.com>
- <20251010052256.GB1965904@coredump.intra.peff.net>
+ <f16dfbf0c7fdb2ff9bbfa8f3cdbc849916a722bd.1759097191.git.me@ttaylorr.com>
+ <20251010053115.GC1965904@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,38 +77,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251010052256.GB1965904@coredump.intra.peff.net>
+In-Reply-To: <20251010053115.GC1965904@coredump.intra.peff.net>
 
-On Fri, Oct 10, 2025 at 01:22:56AM -0400, Jeff King wrote:
-> On Sun, Sep 28, 2025 at 06:07:26PM -0400, Taylor Blau wrote:
+On Fri, Oct 10, 2025 at 01:31:15AM -0400, Jeff King wrote:
+> On Sun, Sep 28, 2025 at 06:07:45PM -0400, Taylor Blau wrote:
 >
-> > -static void remove_redundant_pack(const char *dir_name, const char *base_name)
-> > +static void remove_redundant_pack(struct repository *repo,
-> > +				  const char *dir_name, const char *base_name)
-> >  {
-> >  	struct strbuf buf = STRBUF_INIT;
-> > -	struct odb_source *source = the_repository->objects->sources;
-> > +	struct odb_source *source = repo->objects->sources;
-> >  	struct multi_pack_index *m = get_multi_pack_index(source);
-> >  	strbuf_addf(&buf, "%s.pack", base_name);
-> >  	if (m && source->local && midx_contains_pack(m, buf.buf))
-> > -		clear_midx_file(the_repository);
-> > +		clear_midx_file(repo);
-> >  	strbuf_insertf(&buf, 0, "%s/", dir_name);
-> >  	unlink_pack_path(buf.buf, 1);
-> >  	strbuf_release(&buf);
+> > @@ -1150,7 +1151,8 @@ static int write_filtered_pack(const struct pack_objects_args *args,
+> >  		fprintf(in, "%s%s.pack\n", caret, item->string);
+> >  	fclose(in);
+> >
+> > -	return finish_pack_objects_cmd(&cmd, names, local);
+> > +	return finish_pack_objects_cmd(existing->repo->hash_algo, &cmd, names,
+> > +				       local);
 > >  }
 >
-> Ah, yeah, this is a good example of what I was talking about in the
-> other part of the thread. Probably this function could just take the
-> object_source pointer to find the midx. But then it wouldn't be able to
-> use clear_midx_file(). That function arguably should itself take an
-> object_source pointer and not a repo pointer, but it feels like minimal
-> gain to go around trying to tighten these (and certainly something we
-> could easily do later, even programatically, if we cared).
+> OK, my last musing on which types to pass around, I promise. ;) This is
+> a great counter-example to my initial comment on patch 2: if we had put
+> an object_source into the "existing" struct back then, we wouldn't be
+> able to pull the hash_algo out now.
+>
+> (Well, sort of; object_database does have a pointer back to its
+> containing repo, which itself feels kind of weird. I'd just as soon not
+> rely on that, here, though).
 
-Yup, I agree. The changes to `clear_midx_file()` seem like a good
-candidate for #leftoverbits to me.
+Yeah, that feels like a tinier example of what we're talking about here,
+just within the object_database struct itself ;-). I agree that it does
+not make sense to rely on that, since I think the existence of that
+pointer is equally something that we could consider changing.
+
+> > -static int finish_pack_objects_cmd(struct child_process *cmd,
+> > +static int finish_pack_objects_cmd(const struct git_hash_algo *algop,
+> > +				   struct child_process *cmd,
+>
+> I am mildly surprised at some of these spots that _only_ need a
+> hash_algo and nothing else, but the proof of the pudding is in the
+> compiling. As they say. Well, as I say.
+
+I would like that on a t-shirt, please.
 
 Thanks,
 Taylor
