@@ -1,95 +1,84 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D932B189BB0
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 15:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0959C2FC00C
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 15:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760110178; cv=none; b=JlhXWP48i6jPb8mfNT5hjKuyZL8dNfQ6GCQUj2jkgW4pi0KE1PW1x9n/94Fhw/65T0O/xxW1Thfu7w4qDy3ZMM3uYt9AKa+/GojHmQIX03P0iCEtchyjkr6L1HO7sf0iprvDAsEJNDHR9ZA0wC7OQWsQYpFyxK1Kq13htdw/LQM=
+	t=1760111110; cv=none; b=r4Is/r10Xd/YNqCZlG6rgqOinb4g/0G1SCgMtJ6uTQvLIUisnJeRGdAbuDWrGsrZR+cn8En5sWy8Tvauv3vf23eg7Yf9yx4+XYCI0V0rN16XYNlk+S3pjfogwEt+/uke7K37/WmL/0/7ZdNCUCmDTp5HkX7IXM3qQUsqNN2d5oU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760110178; c=relaxed/simple;
-	bh=H9MGhyXagZUxf/1Cya7Xg1TwxFtKSoAKr7EE1hAitTk=;
+	s=arc-20240116; t=1760111110; c=relaxed/simple;
+	bh=X000sIjjGqjwuFVZrhXdm5FMUQcoxZ5ya6fEPmuArh8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CIjSdkdMUT7sC2Z9z9nFyvJTDsC8ZX/QTCglMsmKoM4kd124ZrRdz4I7trEq0IxQ3BTMe2cJrPbplkM+DwK3s0PpcSWZdqhGp88YXTnpqZeNTtmzntyIVF4h3YdUXTRN86NH3zTLCZmLR4US4aNsYfYnfq/fLMPwrONf0Cktdzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dnEfa951; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VrIIQvLE; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=UXnq7U2AhR0WFXNcz3FP20latqAwJxOi1oiRxxiAdaJmWtSMhc3IT40DkRfoOaE4gN/Boa7YXsgxSHaeVkdhNBwRYjyQAiB1kGpogii8War4yCbEL9m2tCUpS13m+lMTq5nbvcjzDz2pwAHK/aXwyzQbpH/E+Q75p1OR+up0VBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q1mtsqKD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VNWykku+; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dnEfa951";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VrIIQvLE"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D56711400111;
-	Fri, 10 Oct 2025 11:29:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q1mtsqKD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VNWykku+"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2E3351400098;
+	Fri, 10 Oct 2025 11:45:08 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 10 Oct 2025 11:29:34 -0400
+  by phl-compute-11.internal (MEProxy); Fri, 10 Oct 2025 11:45:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760110174; x=1760196574; bh=hLLAvIhtCF
-	4GxBr8rc4I060tyWmRKOy1Pw3n4y6sDxg=; b=dnEfa951rUOaAVt5GJUJphkJXp
-	qgg3IRiSss34liRvRlO04P+CCTumjBOJpM3LMNG2hszRCWxfRi3DqGV4t7jTvXWa
-	p/sqUkbPtYFmpO6koqvQisTJKDGWYjqmZbaOsBiJRn/v17Ej8ptOMO2nJwvOGC0o
-	SBuufufPwOV5xlum6ilY2Fi39hGDLv0vN8cDVo0cQawGXZ3Th02b1nMkRFuFPh/Q
-	mSfcdt81gwtlF17fHgHJx+4QP6JfNp2PhXT9HOBTpfkhOqirBin9xK0a1pj6elFt
-	V4lopKq9nq0HZj8Kg4kr4dbUkrMRISlSuxXCnSqIVG/qW72qPCkXVot6d/uA==
+	:subject:to:to; s=fm1; t=1760111108; x=1760197508; bh=oNqIFTqGSY
+	Y1TdSf0BPj7RoKJRMiXzqXnewZO2cPtpA=; b=Q1mtsqKDbMXi5BfbRaNVjgwzsy
+	wkjHq5Wi1IERKjXdhj2plQfLg5euUi8bdP8EndWNrFNN3KbA6KP/1GVGbc0EqQz+
+	9XSu4RkaESrwdwLLCDFgWBRdvSjyMk3K1wFPLBzox4u0V/pIvVG2Lw3IzsZeP292
+	L53d/ZB1c8T9MuUBU6fOuT5BCg6w+jS19Ptbb/qB5F1xHJT3F8UlIdTRzfgH2Bn/
+	rOOZqN3L8LyX31NINXp1g5Qr/LvXJ6lmezNQ3EOJuB/hc9zxwK1brW2FMCS35KO7
+	KqE2WttjOmrE2QHgzEm61oXVtG/YwcqIPkLszMgQaOSTHqFjsS0RDl4O6S3g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760110174; x=1760196574; bh=hLLAvIhtCF4GxBr8rc4I060tyWmRKOy1Pw3
-	n4y6sDxg=; b=VrIIQvLEfOZHIPkygc1Mr/bySDP7bu/6bBIYloEWiFomwzn04d/
-	H1a88HsDkBhpCMHifU6BY/l304AnQNpGXzuVJ89zFJZCu98kR2FyNYxBbCZ5t8I8
-	oPA2EBJ+J2r0opEywFt3UBJKME+tP5AkZYq/ZTiE9Tibk4Z5NBdIdg3ijNHkMzZT
-	u7sdJ7/qhK8jpkgcs735/u8Y24KIkcaagyWNB5LNzp/Y6ytlhrdut3+lOL82BjTg
-	AXyTYO35Rbql0RtBCe2HrY/H+6TexQoEtvnxdHIRusoTenY3CSXE7oj2lYQHgF4S
-	o+EU1BRsY+hJ45SwkVumsE5b3KFTg1UFo5A==
-X-ME-Sender: <xms:XibpaAU8m5ypZ2184y47K_2eSNYO5qStThF3sM1ZvpyYDNPuyI3BWw>
-    <xme:XibpaDoHCl810aFJrKspByulN96K9BoK_3KGOlDFhCPY9RhK9eNG9oQ2lSt6uhy8P
-    CoN96_9493WAO4uxMXfhHxWzh5mXYukw9aTVLikKSFHSWf1-Tfdcg>
-X-ME-Received: <xmr:XibpaKntxwKFcJaJUBrUZv-B4Tuu4jOGXKLCW3X1ORAXNbuU4A5pxfgfM_gUP80-WNEDLIrPYKr1HIGamwCU94dnmfLSQ7Hd7DzY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdelgedvucetufdoteggodetrf
+	1760111108; x=1760197508; bh=oNqIFTqGSYY1TdSf0BPj7RoKJRMiXzqXnew
+	ZO2cPtpA=; b=VNWykku+BfPu3cuW4ea7KM55JyMD+InozHHPDCQGLsDMucoLDw/
+	tpMB2PUetpSPAQQazFuIzNlor+IH9aLYnoSFQdqkbgz4hIa5iwVVWOvM+oQIra67
+	0Wp9zywA7QQFu6hQdMIWYKdJ3OAYuMJWQozcECQLCtAtdcXJWH3EXlbJXEBUQef6
+	or/+L86KbsesKEGT2MRQzj0uiEerZRQtMIc0K7R/qpY7I0UUXfVdLhPxAbToZoty
+	ehfheEhBYyXmlP4pfQtQ7ou+KPn8yzDVT0fgR1oA/RydyUVsgG+K8BSOV+VTJ6uP
+	USK6dfQzQTktRt0sUKQBsi9r7WvnwmhhbAg==
+X-ME-Sender: <xms:AyrpaElYpEY3y-9q9x1hIoykjTz0BEdCc5Eht-XbmbZIdD-WEnUUDw>
+    <xme:AyrpaK3txc8WmMygQDwt1UP1f9slv39RBeG2P6vwGhQGmt3Z66-P2O9X2ObJG8Ycl
+    G7RG1Q89LcxJD3VzpOw4vDOC4c54xXFhvLiUsuIbkVPmkN4pcbA5A>
+X-ME-Received: <xmr:AyrpaHquNdps5sblgi29yCIQJAFZR1nWaBPGIoExoCtmEqA4vvFPLz_252zTLRZJG2KftGvHC9fQW2WA5yeWhGBNm_KBbrE7MGD9>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdelgeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehpvghffh
-    esphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrg
-    hilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehjlhhtoh
-    gslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:XibpaL0kW-lAvIee2AxWJbEsnZErRn4m6B9o_dLGMkA9CCGLq2TUVQ>
-    <xmx:XibpaPQASysT6RkfPjoYsHp7Xl5JSx6b5OZPTAbM6iOcwzU54_9gXQ>
-    <xmx:XibpaMydciuK79jM_OoCMufxAcdCerE8oU6wWruRorL-M2amOzvYQA>
-    <xmx:XibpaHDIZVyOnYDkPxlB4_rsLkm9WV4I8iKAXH1-XeVBnrTKoMhkXw>
-    <xmx:XibpaK5I362IwZ4HX8hLIQdbzuJzL5LpbYTFmDfwHHzXyuO7ZzQIRgV8>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehokhhhuh
+    homhhonhgrjhgrhihiheegsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhm
+X-ME-Proxy: <xmx:AyrpaPfzNKGxJZoFVdWJuWLOQVKObncM-HxLl-SW9sGPgDQ1HmiGRQ>
+    <xmx:AyrpaOr_sP1iRso8w_GjLuLnA_2Hbx3PH19AClDG5KWBST6ii7Ub_g>
+    <xmx:AyrpaIGAlzAFrRv_uO_XbSNZIL179D70QNTuG-7Kr6VEgoYf8lDhcw>
+    <xmx:AyrpaGuwzKofihiY7XesQaRSidNwctB6sgr9FxW9z5K3CmvqZ3kovA>
+    <xmx:BCrpaDLxm4Atw7Thr1A_eLPuITqsCvpz86Nd1s_EsTJAOgI4UB5Vzf_d>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Oct 2025 11:29:34 -0400 (EDT)
+ 10 Oct 2025 11:45:07 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Karthik Nayak
- <karthik.188@gmail.com>,  Taylor Blau <me@ttaylorr.com>,  Justin Tobler
- <jltobler@gmail.com>
-Subject: Re: [PATCH v2 00/14] refs: improvements and fixes for peeling tags
-In-Reply-To: <aOiYFPTNLL1Fgz5V@pks.im> (Patrick Steinhardt's message of "Fri,
-	10 Oct 2025 07:22:28 +0200")
-References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
-	<20251008-b4-pks-ref-filter-skip-parsing-objects-v2-0-76e30d5c9542@pks.im>
-	<20251009053825.GB1614343@coredump.intra.peff.net>
-	<aOdRsR-k77uTWJRb@pks.im>
-	<20251009063956.GA1622884@coredump.intra.peff.net>
-	<aOdjM8F6WvTEBIo_@pks.im>
-	<20251010051242.GC1897715@coredump.intra.peff.net>
-	<aOiYFPTNLL1Fgz5V@pks.im>
-Date: Fri, 10 Oct 2025 08:29:32 -0700
-Message-ID: <xmqq8qhibwrn.fsf@gitster.g>
+Cc: Okhuomon Ajayi <okhuomonajayi54@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] [Outreachy] patch-ids: fix NEEDSWORK timezone parsing
+ in fast-import.c
+In-Reply-To: <aOiZ_v3bO35oVWf-@pks.im> (Patrick Steinhardt's message of "Fri,
+	10 Oct 2025 07:30:38 +0200")
+References: <20251009234957.1789543-1-okhuomonajayi54@gmail.com>
+	<aOiZ_v3bO35oVWf-@pks.im>
+Date: Fri, 10 Oct 2025 08:45:06 -0700
+Message-ID: <xmqq1pnabw1p.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -101,37 +90,72 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> So to move forward, how about we land this as-is and I promise to follow
-> up with another series that:
+> On Fri, Oct 10, 2025 at 12:49:57AM +0100, Okhuomon Ajayi wrote:
+>> Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+>> ---
 >
->   - Renames `struct ref` as proposed.
+> For a change like this it is important to explain what the problem is,
+> why it is a problem and how your change improves the code for the
+> better. All of this needs to be patr of the commit message so that the
+> reader can understand what you're actually doing.
 >
->   - Introduces `struct reference` into more of our APIs?
+> Also, if this fixes a real issue, is it possible to demonstrate the
+> issue and the fix with a test?
+>
+>> diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+>> index 606c6aea82..695e1a0ae1 100644
+>> --- a/builtin/fast-import.c
+>> +++ b/builtin/fast-import.c
+>> @@ -1959,14 +1959,15 @@ static int validate_raw_date(const char *src, struct strbuf *result, int strict)
+>>  		return -1;
+>>  
+>>  	num = strtoul(src + 1, &endp, 10);
+>> -	/*
+>> -	 * NEEDSWORK: check for brokenness other than num > 1400, such as
+>> -	 *            (num % 100) >= 60, or ((num % 100) % 15) != 0 ?
+>> -	 */
+>> -	if (errno || endp == src + 1 || *endp || /* did not parse */
+>> -	    (strict && (1400 < num))             /* parsed a broken timezone */
+>> -	   )
+>> +	
+>> +
+>> +        unsigned int hours = num / 100;
+>> +        unsigned int minutes = num % 100;
+>> +
+>> +	if (errno || endp == src + 1 || *endp || 
+>> +	    (strict && (num > 1400 || minutes >=60 || minutes % 15 != 0))){
+>>  		return -1;
+>> +	}
+>
+> Despite the formatting issues I also think that this here is becoming
+> hard to read. It may make sense to split this up into multiple
+> conditions.
+>
+> Thanks!
+>
+> Patrick
 
-Sorry, but I am not quite sure why we would want to do so.
+Thanks for a good suggestion.
 
-Does "struct reference" sufficiently cover the things we want to do
-with references and "struct ref" is not sufficient for that?
+There is another thing we should be aware of about these NEEDSWORK
+comments.  Often, the task a NEEDSWORK comment suggests includes and
+starts from assessing if the task indeed is worth doing.  We should
+read a NEEDSWORK comment like above one as its author mumbling to
+themselves: this feels lacking, and we may want to do more here,
+like X and Y and Z.  Maybe not.
 
-Comparing what 'struct ref' caters to its users and what 'struct
-reference' offers to its users and declaring that one set of needs
-is more generic to the 'reference API' than the other set risks
-getting blinded by the area we happened to have been focusing on
-recently.
+Do we need to check even more precisely here?  What's the point of
+doing so, and doing so here at this point in the control flow?  Are
+there better approaches than incrementally adding more of similar
+kinds of checks?
 
-Apparently, the above proposal is not claiming that what one wants
-to do is a subset of what the other wants to do (if so, you'd rather
-not be introducing a new "struct reference" but extending "struct
-ref" to be usable for more things).
+Without being able to answer these questions oneself, one shouldn't
+be blindly following what a NEEDSWORK comment like this floats as
+"ideas to do more".
 
-Or would we add more to it than what we see in this series, such
-that it would no longer be "a subset" of needs various code paths
-would have around the reference API?  If so, is the longer-term plan
-to have callers that use "struct ref" to eventually use "struct
-reference"?
+The current code may turn out to be good enough.  Removing the
+NEEDSWORK comment with a solid answer to the question it poses in
+the proposed log message would be a commit worth making in such a
+case.
 
-If not, they are serving different subset of the problem space, and
-they will continue to do so.  In that case, why wouldn't we rename
-"struct reference" to something that is more focused on what it is
-for?  In the context of this topic, would that be "reference found
-during iteration" or something?
+Thanks.
