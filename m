@@ -1,94 +1,76 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F6A2F5482
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 14:09:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52482367B0
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 14:34:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760105401; cv=none; b=MCLnfiNioLJgHnyfr1rk7N1Y7kP9BlHrfIcKaaaPQdj221G7cBmA5BxZthZFkwtxEjKRM3HRmW3Hn186Oh1kB5O2y1JtAPMkoGWlIdnJWC1KJH5YM82NJ7WpRMJfY2jrOe/aU6qNMNkcxqQmHOLg0iLqrzz05z/48mi3I8ftlHk=
+	t=1760106898; cv=none; b=o/ZWITJHVUybHGUkbhRrRrRnLYuh7ew67oLdceNpLTt8mXQUDs/wMyELSbKsHHV5CLKUCwMmFLhZLuBYZxVh4UA6GamxTCgCjKSS5tQabXgR3qPUn1OYNrglfWw+YRsKC/fXOtv3EaCyhUMMAflTijI6WxmFlND841fljrmhdP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760105401; c=relaxed/simple;
-	bh=C4KJ/HmshPsMLhhyvRiCguJJX4dDdo1KKaSuTsdFLwk=;
+	s=arc-20240116; t=1760106898; c=relaxed/simple;
+	bh=q/IxXNJXUZuj1UmHM5ci907JtuZGhCW6hajVSkbe7pQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U4E1qaPy4A+tPhDlfJgTXRVxS05CKsvsgt5i8abH1+9QqUfJyh1kWqKqWCSFHmturWZDp4slsikQzCxE5Hp61b7TYOXYI+VsdcHrwwXiMPl76bM9WztiwifnNQxFkIafAef2mead05l1dQel1hD11CZV2lMYIbuOLyj9aZhYqHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SkRogRY9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UEjdfPjp; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=r75rDB7M0oREucsUZ2w4+bqtajPbHJkF7/aGRkTVrbRgw6siaIxmVYvkKTyENdvvk0uODrM6inm6vgDmypi6Lxeqoz2q6qeibqAGuhXSCJTnGVMm1bjhh0pkEe9wjYr61ny5LNKLKbBveisKcR0eHbSl3IDixkn0XbMrU0NbsHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RT1pPdKX; arc=none smtp.client-ip=209.85.210.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SkRogRY9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UEjdfPjp"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E81117A002E;
-	Fri, 10 Oct 2025 10:09:57 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 10 Oct 2025 10:09:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760105397; x=1760191797; bh=8IPTGlIhcS
-	JQz3OGUrp4SwGnFS1MkcxZRtbQ0w3JfUo=; b=SkRogRY9rEmPpTps/looHDa24n
-	9jUKMCOmzCQH5ExGXGt6jjLic7XL4JXSk2Lvk5cNdgRijm3Rq4g+JGmhJiGOGmXt
-	yhE+2WYPO4TJVNDn71XcT1Ii4KccT006je8HlIGwaN9DFkvYg9iwaeCMnvRoRrLb
-	6iOzF1rlUmv+5//tVHaQ4cDrq6KcDqN9yFpTdvu+3Zp6GS2COrSvpsp6FWtYEW1f
-	tZ9MAuq8Z+/Vn6YJl7lk5n1/k3X+ulDaBjxcAjWOMwq/MgTov4HjyIIYz/sXtBvQ
-	CdwNotbGmRDUnPOKMxsLheWr/r9iYzeNOlywQXlS2bH/sEqoRoXqH22DHofw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760105397; x=1760191797; bh=8IPTGlIhcSJQz3OGUrp4SwGnFS1MkcxZRtb
-	Q0w3JfUo=; b=UEjdfPjpxN9+pWRDEDcnHOrwUjYCvVAMmXaUFJYAURkqhMLdQYh
-	RFMyXHxOAjWQ2dZ69eTmoC7M8bxip9hXNIskKle/68uZ8H68qaflmmbUWHLAi+1j
-	f84gHzywtnMqabj9Y3JF50kKifWO/w1TTI7zB/3YOcfAxxgTQAQ2tS1vUrR2qLlt
-	0qneqgyPtLe8qydfM4MbV8TYYwc4zd25cdYdAhsdZ0ulzOrfLxpx95OtKR7J6u2L
-	mpZOuR/yxryfR6skwp+HS7CVCnYMnVPVinUIIcV0QF+xJr28EjfNXtSIUUn+zTWq
-	ohoTZ6q0j819CO7lZpaX55m+GM7jbdJBYMQ==
-X-ME-Sender: <xms:tBPpaIuOij9MsxcBWDQqDQ8uWZQs0-PQp3rQyo_LUayYNPyTLUlJUQ>
-    <xme:tBPpaCB6__O2B1nT7pDrp5J9V9za-YH3jzDTWviUMnICnoLV2FN5Rv6jA_dkWWQb6
-    yHS4-fLzs1UV9V3-C9qhuNWSt5H79uZ3iglfy7jRjFSCYm15tHVhw>
-X-ME-Received: <xmr:tBPpaIP4pTQazFXFLL54vdMmLt8m2ahcTDg5CgttxSTXqoFM0f2J5JQl-LamLHPBNloNNcDnPfIeVyaDLzlQL32cC2emAHfO_7a_3rul4aNCTTMm9SMX>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdelvdeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepvfhougguucgk
-    uhhllhhinhhgvghruceothhmiiesphhosghogidrtghomheqnecuggftrfgrthhtvghrnh
-    epiefhudfgueefieeigeetheffieffudejjeekjeetteefvdffvddtjeehtddvudetnecu
-    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehtmhiisehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepsh
-    grnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohep
-    jhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoheptg
-    holhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:tBPpaCCDKWtquyJrXTwTTsVyegikTPLsKld0ShefbAWLgOe3CT43DQ>
-    <xmx:tBPpaJ5sGep8EiPG7poEQlnKZB1nvWk9fDMExYflp2c1ag9vjBiVpw>
-    <xmx:tBPpaM6qE4NqJ77g8heHtx2R5O7sWbeQpA0ApdRM1UKFfdgy3hxhCg>
-    <xmx:tBPpaLQ2fSjXMhkEp8InN_TBdYuhsa98-6JC3ucTPzd03wUK9nY0qQ>
-    <xmx:tRPpaC5UQntE4v1LVekIB88SlV2S8JrW8GozVY1vVaI6SgtHwwga0fgM>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Oct 2025 10:09:56 -0400 (EDT)
-Date: Fri, 10 Oct 2025 10:09:55 -0400
-From: Todd Zullinger <tmz@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RT1pPdKX"
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-7bdfbc6ba5cso869462a34.1
+        for <git@vger.kernel.org>; Fri, 10 Oct 2025 07:34:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760106896; x=1760711696; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5sLGdb8EurxsGHxUm3MckrqGjSirs/4RmqcjL5lHlJU=;
+        b=RT1pPdKXJ0x4w+uWzO5KQSGJscGhrzKvdXT1J6UI5MShlldghMQahiWDUZgYsmJ+jM
+         BpFDSynzaC/EwcofOGgmeL90P0aoEHNeXeUdaw0uvVFlHCfYtSy3T7i7PUlmstiTEdSb
+         eii9JzR/1sUPvyLDv6UTDwbeyl8gFe8fMr59ffIer14AUZbV93O4zTnvaTn17pERFdI1
+         /hXHYWK/59tNNlqILjGg4foDrCkptaFBrVE6BxCbnydNg8wWI5nwIzBaVQGnWuhYx1Pa
+         wBL5KnMCnnERs6VUP+GqQCeOYhbvNsda6MbECGaMXx9m6jAu8Q0Nep4Qj3lKnv1ggMrl
+         pOpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760106896; x=1760711696;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5sLGdb8EurxsGHxUm3MckrqGjSirs/4RmqcjL5lHlJU=;
+        b=GhWFmnEcW6Kx67e9Ll4ebv3o15PH5frwH7O7TCey3buDeEgnaUMMuWI9PoR/84Cxf6
+         wAJBgefkVW0PpQI2AyqFWhi4S/GaFTZhAEmGLwWS2Lp8hJRtE6DtbDY6XQrwOml6kYaD
+         g/hi0H+vcVPQIyxr0eSiWqWJ/JwvN33ae0RQFiXGIM7iPLRaDRMTseHoubg31/qlZ/xn
+         qNvaO06t3ymD+wTH9jtPnfV0XN7h4LceydzetsS0OsnL0Z4VwkcTtueV3UfWOtnrDGLs
+         WR/cPtjl5N4Z9JI7Ohkka/lv/B0Msocr95bap+kuK0KOsiiFhh0KjuI2mcc+ikwFTT3R
+         k2Sg==
+X-Forwarded-Encrypted: i=1; AJvYcCUXzVscWz1tCvmDv8rNTBVChpEDfMQw79s1vkiEiWXTFeco39LBXx/pXTFlP1v0hamxcjI=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy8teZDYl4wemFb7pzrNYlfyEnI+fgXSuCdy3xRW4LoIcdzu0IL
+	MZBmSiNBz4sf5/e2LGmcanq5ciiCjt0hR7PmkbtqL9a+ykKK4St2id56
+X-Gm-Gg: ASbGncv5uF+1cwNktD1lj7j8Q/Q1lbKulrxzPjQ9b8gu2Qb+CJl0yclzCvV8lITuK14
+	pR76yZQY2KNLeJDUm5zvEjAlFv7ZFK0rrqF/AsLZ2Z+nZ1OSke2Ifp3k4nfEfLoEbJPIR604Moq
+	AshSNuw8KD0SYHwEUkR0b1tLySj9lkXWnrAj37eC1UkEdRjzQOvZZqGx4/hehf39tm2DdV4ypdB
+	6CpvrFZ22KRu85pVHk0+njMpzXp0yZaoS/5SDJ5Cn7PhE+R66VLMgtDCHuungY4TPrV9ujV1jm9
+	nEXRK8ay9CcfmlDcs9VgmKJ1wDuONMWqh2nbh/0BKh2mcYB78RN3IfvRWafXUNPrx5djEtjTGeW
+	lPhtN/VXEVE2daEmW2NSUPd5s9AHzAQ1rG54=
+X-Google-Smtp-Source: AGHT+IHarfXSI7CaIIWLFuYd6vs0KG1frb70znx2Q/yiExCN31JCcLYHwcSt2Q9Id3G7e1v+r5l5Aw==
+X-Received: by 2002:a05:6830:2aa5:b0:747:323a:67b9 with SMTP id 46e09a7af769-7c0df7da742mr7120150a34.32.1760106895639;
+        Fri, 10 Oct 2025 07:34:55 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-7c0f8f18f29sm896643a34.0.2025.10.10.07.34.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Oct 2025 07:34:54 -0700 (PDT)
+Date: Fri, 10 Oct 2025 09:34:54 -0500
+From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 2/5] lib-gpg: allow tests with GPGSM or GPGSSH prereq
- first
-Message-ID: <aOkTs7G2GGLKajUf@teonanacatl.net>
-References: <20251007122958.1089680-1-christian.couder@gmail.com>
- <20251009122457.1273701-1-christian.couder@gmail.com>
- <20251009122457.1273701-3-christian.couder@gmail.com>
- <aOisaq-rSdwjwo6b@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	karthik.188@gmail.com, sunshine@sunshineco.com, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v4 4/7] builtin/repo: introduce stats subcommand
+Message-ID: <lnk4zvu5zgokd3p5lxnl2nwbqu3fi3yer753tr2f2jaknrtb3h@fcbjvvu6irtc>
+References: <20250925232928.3846-1-jltobler@gmail.com>
+ <20250927145049.723341-1-jltobler@gmail.com>
+ <20250927145049.723341-5-jltobler@gmail.com>
+ <xmqqfrc797pk.fsf@gitster.g>
+ <qdot36lscj2jzuej2zixdlgocubiimh54dkxzl2xgcy3g2n42m@gpdi7jwc2oyd>
+ <gzjaa3nmv6s44dszregri7kcnfxg6optkycg2wggtib6bxvdgq@elearr6dishf>
+ <aOithKtHf_U9S_m3@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -97,52 +79,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aOisaq-rSdwjwo6b@pks.im>
+In-Reply-To: <aOithKtHf_U9S_m3@pks.im>
 
-Patrick Steinhardt wrote:
-> On Thu, Oct 09, 2025 at 02:24:54PM +0200, Christian Couder wrote:
->> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
->> index 937b876bd0..b99ae39a06 100644
->> --- a/t/lib-gpg.sh
->> +++ b/t/lib-gpg.sh
->> @@ -9,6 +9,16 @@
->> @@ -63,6 +72,14 @@ test_lazy_prereq GPG2 '
->>  		;;
->>  	*)
->>  		(gpgconf --kill all || : ) &&
->> +
->> +		# NEEDSWORK: prepare_gnupghome() should definitely be
->> +		# called here, but it looks like it exposes a
->> +		# pre-existing, hidden bug by allowing some tests in
->> +		# t1016-compatObjectFormat.sh to run instead of being
->> +		# skipped. See:
->> +		# https://lore.kernel.org/git/ZoV8b2RvYxLOotSJ@teonanacatl.net/
->> +
->>  		gpg --homedir "${GNUPGHOME}" --import \
->>  			"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
->>  		gpg --homedir "${GNUPGHOME}" --import-ownertrust \
+On 25/10/10 08:53AM, Patrick Steinhardt wrote:
+> On Thu, Oct 09, 2025 at 07:42:40PM -0500, Justin Tobler wrote:
+> > Thinking about this some more, a single "stats" command is indeed rather
+> > vauge. Furthermore, as Junio mentioned, there could be other aspects of
+> > a repository that we want to display stats for in the future.
+> > 
+> > Since the goal of this command is to surface info about a repositories
+> > structure, may we should instead call this command `git repo structure`?
+> > Or something else along those lines that in more specific and related to
+> > goal of the command?
 > 
-> Interesting. So I assume that these gpg commands here fail because the
-> GPG home doesn't exist, and thus we disable the prereq? Too bad, but I
-> agree that this doesn't necessarily have to be fixed by this patch
-> series.
+> Some alternatives that come to my mind:
+> 
+>   - inspect
+>   - analyze
+>   - scan
+>   - survey
+>   - measure
+> 
+> I don't have any specific preference. What I like though is that those
+> are verbs, which makes it a bit more natural to use them.
 
-I agree.  But it is ugly that any tests we have which rely
-on the GPG2 prereq simply never run.  That should be fixed
-and, if it were me, I'd do so by dropping the flaky tests in
-t1016 initially.  Someone who cares about those tests
-running could debug it more and hopefully fix the problem.
+If we want the theme of this command to be the repository's
+structure/shape and have a name that matches this scope, I'm not sure
+any of the above examples would move us closer to that. Aligning the
+command name to its scope is beneficial if we forsee the potential to
+introduce additional subcommands for git-repo(1) that target other
+aspects of a repository.
 
-As it stands, this breakage blocks tests in t1461-refs-list,
-t6300-for-each-ref, and t7510-signed-commit.  Anyone adding
-a test with a GPG2 prereq should be aware that thoses tests
-just won't be run.
+From my perspective, the main question is: should git-repo-stats be a
+generic command that can eventual provides all sorts of different stats?
+Or should it stick to repository structure/shape information? I think
+I'm currently leaning towards the latter.
 
-The t1016-compatObjectFormat tests have been flaky since
-they were added and no one really noticed.  That's at least
-partly a failure of our CI output, which hides these sort of
-skipped tests that we just presume are running.  I don't
-have any good suggestions for fixing that, unfortunately.
-
--- 
-Todd
+-Justin
