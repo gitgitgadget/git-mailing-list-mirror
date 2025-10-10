@@ -1,56 +1,56 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52F326980E
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 15:53:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF729266595
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 16:11:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760111583; cv=none; b=JhNFQupqcj/xKc+oFkFh8MhBzSD73PbQFkNwgsX3MFIu751Uamly81/svKjof6wlWPBgdmQtKCmJeoj/jre1GjelV7OyYxvJAHmT3fKLfE3OnIf8wMtL30BgjQM6GM4rDQxhb+JqX0D4BWLRoFCXls1KmroYBSFTxUnoVVey5XM=
+	t=1760112681; cv=none; b=cXqvFjk+ECglUyggVwxyNVVQkPVH13T7QM59NNfeRRlWQG/DXF17q5idImpLe1F8xYj078jTJP1Izld+J2VlTvNO1QuxQG0bLwSjz3L8TMERdY8zbR3USrEhkbCH6IgFOlquDYM8U1V2kEhNcQ7Ql/WcQS21dFq+V50skHHa5mI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760111583; c=relaxed/simple;
-	bh=1HNFIBh0fi3gxwapfAjryDKNsSty+4lGfuEyKigu8b4=;
+	s=arc-20240116; t=1760112681; c=relaxed/simple;
+	bh=nbCtNjoWQtm//iE+GqoiucANK5ob3MxszqbORonl83E=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iXha8rrHHMUE9Ng0jU0cy2ze7pUvGQfJtyRettGtfsmZjfc8bBmQVZsxoGxBeAKJjE5KsYY54XGW8cTnNf1fB8UYpFX5H+5bXpNF89cnvVO0NZJx5pw9k9K8vwrMRAdHF65ikh6UF4OQCZFKduM4FHKpNwQ0zlXPiuEgc1FxTYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MeVmpexV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bhnKzvRl; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=JOpQelY9ViknloXDlJt5ydAxb/nPSfZJgyd28tlvy0+P4SAoEC5y9GRM3wtp8XvYFo967tvJKKoPonaZwkIDF5nBRd/IikE8EheyBIVNprVRlSfDifX2Clu4fp321WI+QuDJ/JH82xZHcSXRJQFwzbZfPaysliDNjIP0JM3jyL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=M8wfffl0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xh3bUSYD; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MeVmpexV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bhnKzvRl"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id C72A4EC0209;
-	Fri, 10 Oct 2025 11:53:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="M8wfffl0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xh3bUSYD"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F396D140012B;
+	Fri, 10 Oct 2025 12:11:18 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 10 Oct 2025 11:53:00 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 10 Oct 2025 12:11:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1760111580;
-	 x=1760197980; bh=hHl3TXw3SC8uP3UNUG+EXupQwzdDEwwq6TB+Unkyi8Q=; b=
-	MeVmpexVw7uwpZr3A2xu2Cu4xbacm4P2PN1daPzBxem81tLs1Z4zvORBpBB1Drgd
-	m4MzdZvL+7rjDKECY+hEoJznkiOWjhj/W8deizkFABnj37rUlpppE9FPaDMgq7xB
-	c9uRiV7fRtejhiyofi4TUHd55hdPIdonSQU2FJfDj2yPbajLiczBSoTN7N1iA2zF
-	+QrL6PK68b+Fw4cPMmp4oBubtxiESNcIHU/EgkPHlrxhFbCtxFriOK9ueCVoFDP2
-	a1nXiPXp3ViLi6zXtHb82fGbx9OCaulWENS4NrvpsRFUzViVZbm0cu90FGcsy7Yo
-	1M1As9MTclGx//8L8KnIvg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1760112678;
+	 x=1760199078; bh=DkJNtLKYe1gj5unCMYujCWucL5vjIWepGChLcoIYO3k=; b=
+	M8wfffl0S+/ws+LnJLuZxeWLB0+onIYQNSN/M6eqqpBngNLrC8gbbY+i4zGL2oqQ
+	hlXiYTInE4e4dPNaIgvaRXwSTabto+FF5VZDsAE9JJ/QojffWGXLney2DHvYZXFx
+	Y3uI6/ll1dPyf2Vl8iHZ2TvmCiQ4TtSibr0+HFCzNSlbkGogysrcJMZ8gKD3hApt
+	Bqrd0G8TM1t+89cVCveIwvlKkAFbXGV7DVDHXVzRc4UlQLa1BYO0pp+1rKV0BXYH
+	95VdGp2+dhlzRkVnqilMN5fi4kutsgqCILfl2kUNNK47pSFMClMSlgb7SH7t0yGg
+	ygfK7QzsKr94QZ8lXujopg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760111580; x=
-	1760197980; bh=hHl3TXw3SC8uP3UNUG+EXupQwzdDEwwq6TB+Unkyi8Q=; b=b
-	hnKzvRlWQuF98MmXXaMlOUbR6Bz6Wi/BAnXnVK75uJdgWqW1PiRiz+qxSWKMv+IY
-	Lms23Xl8VZ6ZLHNY9wUg0hBL2/CvNDFRwuSF/tbC94FC5UiaRYR5v3iloBR6A8mo
-	ilW6EloSGcVoEsgCbSaAAJA9Hh1eVJfV8Aif5yzbt8YgtqQrbQsKbA9+jtQTzihI
-	3JU4Ai+NfAQKAAdBi3diCB+Ng7OXFyTLi0RJfiJRBdmkWT/0Ts8R9zvnBdWaQrWy
-	5HS/GRoex7IMunbD8xfkEX1/XA/RZwsSygUKm4zsPcJvb84nqoLCmGj+iya5AIoB
-	vf5YgrixN1mlJG5U9NMyA==
-X-ME-Sender: <xms:3CvpaJTS58wh5H2XYPKcyMWWMe4c6zuvMq_9DkHrg0xkLlqDoP18cg>
-    <xme:3CvpaJqHghkb0fjYYSG0z2N4CrDVfT4NHsAsMM9letx1lcDQ-0UAk0ZyJfMb1sEcp
-    vKdbqHlEeGthhqipRCF7NjRXBi_OQo7MzZbNT-Bickv-4RNAz7Vbw>
-X-ME-Received: <xmr:3CvpaHKrclMoay3R6rROuKEQtQqyvYxLP2ZfRdhuL8cHL3HzVWXR57nf7TZEAUa8NRoJPAuyMK61uX__q5wRf2Wa3Q7x51RHw10p>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdelgeejucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760112678; x=
+	1760199078; bh=DkJNtLKYe1gj5unCMYujCWucL5vjIWepGChLcoIYO3k=; b=x
+	h3bUSYDGmvhDDZUsm8RJYAD0PuHs1ZN2Cm55aUN1pjMdZmP54KVK5GM74Z87WJMV
+	LRn7oeSmb4/Yo5xmGzpJNA5uld4RArCrJHzYQeG36S5jch9+WBpF1oezeix1j/U5
+	oRdiAVpEj/HMtikpXYA0yvuXsPbLWKsjjicGhgN+5RD8fg3x+LbzhB5A69pWm3W6
+	wUb1UvCPBkBqmz9knZwy2hux8CUfqmmjIoJwsz58WgTw232QASPS5AaaUlfS7aRR
+	04ZtW9yMoW4mRFVj3P+niIyq13uX3IK2X6I9ZwwaDHtdDk7+GRt6AplP7EDzfX5e
+	qA7NQ6ZwAEDS2lZFsWtHw==
+X-ME-Sender: <xms:JjDpaAa04LoOH3KBVvfN8HDBYQN7MtodZ9qQcHPQms82o3pfmqDgzA>
+    <xme:JjDpaCTxHrhy0OikSfb6Vqfv48MbfMGTAh7HFDxbhpMtvBTvRC6yktalva1TTQua1
+    SwHaibB_vr6BrNsyR2zhRhVqm7TlPGKAip9JLqtnx8t1vNXtj42KA>
+X-ME-Received: <xmr:JjDpaDSXFVrT55WCxDCrtHOHiKyDfnOp4-OCI429MhliMCv8TAI8QC_B1jdy1L3UIpWpD5zPgqzAd_hrJcawJzEjoYX2vksgX1qD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdelheduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
@@ -59,32 +59,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdelgeejucetufdote
     fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
     hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
     shhmthhpohhuthdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtph
-    htthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:3CvpaMqVlPxwIaFFSItTlRunfxBnYy5a_TlQq_HuipCkp-eDzV6eAQ>
-    <xmx:3CvpaPz_JIHCmIeZfxxG1CJN8K_T9XmoVPUTED1lCZZyukaS6wGW1A>
-    <xmx:3CvpaAPACcNPvmIb2rdH9wLZmBGL1SAuOb8Wj1arJEzIGfi8czVJPA>
-    <xmx:3CvpaE67psAXpIRnCk1RdNgSZh3zHDpG7jbxFSLHZakAI_Tft1c22g>
-    <xmx:3CvpaCEgIphfH51cT53Dc4Ye9JFl3v9kLI_6y1fqR-w-ZFu2pmYhUVso>
+    htthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrg
+    hmvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:JjDpaGRDm8IrLCBtnp8J4OsGEyZdMy4S4w5btgYz684Le1ApVioKsA>
+    <xmx:JjDpaI5G7WevvvsDzn8KQWUk-UpwoVb7gjxZeyIdXQlWbtvI8YsCQA>
+    <xmx:JjDpaC34TqDbGHLtzp_ocTMZ9QxBXx3tLlpC837nghuQbQxHzDyCgA>
+    <xmx:JjDpaDBhTVpzrYGAZRwk2ayVhdAJv8x7RRnvDnooJMkZYxLrFNnDZw>
+    <xmx:JjDpaJaR2xHjL2Ks13z5t9FuMQ0htUUIc7W6mwyVViiafgdTHhcgutmi>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Oct 2025 11:53:00 -0400 (EDT)
+ 10 Oct 2025 12:11:18 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Josh Soref
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/3] doc: convert git-stash.adoc to synopis style
-In-Reply-To: <bb0f530b-96f3-4655-8448-1d322413cd1f@free.fr> (=?utf-8?Q?=22?=
- =?utf-8?Q?Jean-No=C3=ABl?=
-	Avila"'s message of "Fri, 10 Oct 2025 08:40:44 +0200")
-References: <pull.1969.git.1759698702.gitgitgadget@gmail.com>
-	<3f3e5a87e834a6cd1d5d7769bdd2c0dcfaa4b6ae.1759698702.git.gitgitgadget@gmail.com>
-	<02383db0-545a-4f4c-9fa9-30a819a30de2@app.fastmail.com>
-	<bb0f530b-96f3-4655-8448-1d322413cd1f@free.fr>
-Date: Fri, 10 Oct 2025 08:52:59 -0700
-Message-ID: <xmqqsefqah44.fsf@gitster.g>
+To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <code@khaugsbakk.name>
+Subject: Re: [PATCH v2] doc: change the markup of paragraphs following a
+ nested list item
+In-Reply-To: <2239952.irdbgypaU6@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
+ AVILA"'s message of
+	"Sat, 04 Oct 2025 19:31:29 +0200")
+References: <xmqq5xd5aqa5.fsf@gitster.g>
+	<20251003031113.GA6381@coredump.intra.peff.net>
+	<20251003034134.GA625140@coredump.intra.peff.net>
+	<2239952.irdbgypaU6@cayenne>
+Date: Fri, 10 Oct 2025 09:11:16 -0700
+Message-ID: <xmqqo6qeag9n.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,26 +95,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Jean-Noël Avila <jn.avila@free.fr> writes:
+Jean-Noël AVILA <jn.avila@free.fr> writes:
 
->>> diff --git a/Documentation/config/stash.adoc b/Documentation/config/stash.adoc
->>> index e556105a15..7fc32027f7 100644
->>> --- a/Documentation/config/stash.adoc
->>> +++ b/Documentation/config/stash.adoc
->>> @@ -1,19 +1,28 @@
->>> -stash.index::
->>> +ifndef::git-stash[]
->>> +:see-show: See the description of the 'show' command in linkgit:git-stash[1].
+> On Friday, 3 October 2025 05:41:34 CEST Jeff King wrote:
+>> On Thu, Oct 02, 2025 at 11:11:14PM -0400, Jeff King wrote:
+>> ...
+>> I think to appease both systems we need to put the inner bulleted list
+>> inside a block. I think that is OK in this case because there is no
+>> inner block marker to worry about. So:
 >> 
->> Okay, here you use 'show' and not `show` because this conditional
->> attribute will pass on `show` and render it as such, not as
->> inline-verbatim “show”. Bare 'show' is indeed better than bare `show`.
+>> diff --git a/Documentation/config/extensions.adoc
+>> b/Documentation/config/extensions.adoc index 49a7598ca5..aaea8c107f 100644
+>> --- a/Documentation/config/extensions.adoc
+>> +++ b/Documentation/config/extensions.adoc
+>> @@ -55,8 +55,9 @@ For historical reasons, this extension is respected 
+> regardless of
+>> the refStorage:::
+>>  	Specify the ref storage format to use. The acceptable values are:
+>>  +
+>> +--
+>>  include::../ref-storage-format.adoc[]
+>> -
+>> +--
+>>  +
+>>  Note that this setting should only be set by linkgit:git-init[1] or
+>>  linkgit:git-clone[1]. Trying to change it after initialization will not
+>> 
+>> on top of your patch seems to do the right thing (no change in asciidoc,
+>> and eliminating the regression from your patch). It's a little gross
+>> because we are reaching across the include to realize that
+>> ref-storage-format.adoc contains a list that needs to go into its own
+>> block. I wonder if asciidoc implicitly opens a new block for an include
+>> but asciidoctor doesn't. But at any rate, this is the only way I could
+>> come up with for both to render correctly.
 >
-> TBH I did not spot the issue when I did this. I wasn't aware that
-> Asciidoc does not automatically handle inline formatting in attributes.
-> But it seems we can force it. This "show" keyword should definitely be
-> inline verbatim.
->
-> Wil try and reroll.
+> Thank you for cross-checking. This is indeed almost impossible to mechanize 
+> such testing at the moment.
 
-This is already in 'next', isn't it, though?
+Thanks, both.  
+
+So we'd see an update to this (I think this is already in 'next')?
+
+
