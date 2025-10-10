@@ -1,212 +1,133 @@
-Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A1714286
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 06:48:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9395714286
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 06:49:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760078895; cv=none; b=DNNSJ+E7X2NvDxisOalWPP6V6v4srIQZsajVnhQqGALIkMwokDclBSZyl+JQKj1dzYfH4CrESQvz8nWOpkRfqs41hpEZbXwSj3/WeOywVNzltZnSJrgz+AN4wTA0DsoQCz8IxTh1B6ILWTOLncZd1qmlGIgxdfmZTMInaLaR0kE=
+	t=1760078964; cv=none; b=tRv38hz/Wh+DUeEh1tbfLTyQTseQ5vpVA6HwnrC5tpDe7W7IEYmRXxZyaMp+lH6xNvEr6nvwZNLBuij2A0PEIeA2IAofoleMEtu5R1fY/W09Oi+T6GoLPxf5GSVloYRKKH/JHSkunoyhk0CtvUe+1BmkIHIC/HrMGAg7mtp8V0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760078895; c=relaxed/simple;
-	bh=qKayTf18zP+RkMUBmWJaGig1YyKpBkIu6cXNbg3wWF0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Xw2+AW/DIAFlajHiwWFI9OPZgU6TLmp/P8G2y5BmOwFIolgS+NJcMbQ18bDldauosy67un6RJ6bB4xh2ULilg3N4S7jPtQAekDNAmKRGYqUUtaTlfBKqkZcomqt9C2By1ldVDRJeIoUUGltGAxB+jnZki0R2RO42OnYTf+Eb5jA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=phHDNAZK; arc=none smtp.client-ip=212.27.42.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1760078964; c=relaxed/simple;
+	bh=ggGZZ4YDKLODauQtBJQwW0DU4TeIdwDZ015yLAhOTEc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GnRvvvpa85YXDV3KzcHIiV5pXUEvlEhQCkX5fUQdreA6TUXSh87zksMAhzkF25lgFOS4bX0XU5b/Sa1j2F/0/Qvr9/KLdWsGuW91uRVP2Y8l08tbofryZdS2Z5cBzIrBO3xjTlkRCppEQWBGSn/xDkPMq83YXsC572WERrFuwe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eRQnmVU6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MM0qJWRz; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="phHDNAZK"
-Received: from [192.168.43.16] (unknown [37.168.15.219])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp2-g21.free.fr (Postfix) with ESMTPSA id 02ECC2003DA;
-	Fri, 10 Oct 2025 08:48:07 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1760078890;
-	bh=qKayTf18zP+RkMUBmWJaGig1YyKpBkIu6cXNbg3wWF0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=phHDNAZK812jC9GRTHugBv0raFUvn5uIN+GRsI42HBXM5fFk/cKV6hSfmdsOihPYK
-	 uxMJT+xlKqJPbRAxjFvNIY/6En2JNkkIbb+IQT59FlWGCwRNZ4zarZExiSoBWGGvuJ
-	 ZAnlv7NicDlwSXxdWDf7HgW1u5lLLuIS1Qt15vzTaRJDvPLxdx5TEDC19/hJC2r3XI
-	 /5lPkS2dxnINcYkkmDJDNyZ2NDSBkV6O4808uHE+bnS3ClNSLXIgowXWPlfHzArymN
-	 TFuOsTYgzL6MoN6NN+wv300SvWXkXQXuWlec7ELZmlmYDkTMAzEqEs6KgH9etdy3ux
-	 nFy4ej6pCvT1A==
-Message-ID: <d0dcaea3-844f-497a-adca-6241bf39db41@free.fr>
-Date: Fri, 10 Oct 2025 08:48:06 +0200
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eRQnmVU6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MM0qJWRz"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id ABA7B14001DC;
+	Fri, 10 Oct 2025 02:49:21 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Fri, 10 Oct 2025 02:49:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1760078961; x=1760165361; bh=vQvsj4recZ
+	0ekv4HX+377a8QLHeZC5PKNVorRjpLexY=; b=eRQnmVU69vS9tP8ruw+RGRzor/
+	JM122z0xeWVrZ0KOmcaxDA9zHVARQyHqZUpXnbe5kW98R0C+0sE4nsJNrktmGhfr
+	iGs+8qhXSLf/LIh0N5qze20XFkVrJxosPycPy3rFgS1WaZpljR0ECAfrfs3O6EB0
+	Nj4qIbBPe/hNBSI6Dr7L5yUEU8cCKAhQlTltE3Gacy+SYQFobf5/SFmj5pv8nLWW
+	eYkniRVotOr74AkP2r2VMe8IgkbJcpg+B8SubrkdwrLxHPZ6xVeuGKRaRCWmmCNV
+	3P2Ygjgzit6gca7pMWwARr0EQRzMpuolaMUBZCX93Gf/FcK1Ql4U7BRb/BoA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760078961; x=1760165361; bh=vQvsj4recZ0ekv4HX+377a8QLHeZC5PKNVo
+	rRjpLexY=; b=MM0qJWRzdxleeRH0oLjJPF5N6Qm9c9qAh467ys6fcuG66wtLoUI
+	vYTFjQ7sxSPmPg3zz2zxsu2e4IMff27BJkikrERZOaKqoznpe8Vkm0pV085BpUs7
+	oAaj2BUfOT84ghucRPuNNu0FRi6ydceeSE689FqeJJ65wLfxsZCa4UwNIB7xkLqM
+	G8csgYbhhht/HJmoO3zS455gGIHH1JAmjK6BtcOKCCvskx5rijz6zyK9s/XFI8oL
+	yKur9JexnQ9+1fngNACHkzgY+4Vv5OlqFouvFj7w/JyqQ5uzVq11heIFU1RaZgw+
+	W5dYX90roQPpFrGmjVoj3oUZFu4a/JyyJ+g==
+X-ME-Sender: <xms:cazoaEnSeV6kcdKW407wiGRwqYt-b9E_CDARDp1Mgza_F0KGvJD4Rw>
+    <xme:cazoaAYG5E0xo-qSSoNROJlZA7ZzUiOU6xqWhjZjLYNHLgktrnGejru7vr0loq_GI
+    FfB5MXSLMQ3bbItoozHv1S1TdUda6ojh82mrQBpZgI_DoJlR9-0REo>
+X-ME-Received: <xmr:cazoaHEtrjwk_n3r7QsTdN420wpX87JtDjdunaGaH-2Ok3gM_Vd-uYIRSvzrA4N1SX8EQx5xYmKbNAgcTP5G3tizOfL5WElF9WRqDWOkUw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdekfeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epjeevudeggfffffeigeethffgieekveeffeehvedvgeeiteegueejleeihfeitdeunecu
+    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedu
+    tddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprh
+    gtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestg
+    hruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvg
+    hlihhnsehgmhigrdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:cazoaHbgnWUUms_fqAKTT7B54ojZIDzPxPT8lALLpJcaw5SNGniaJQ>
+    <xmx:cazoaDxuyLiyHaxLHcGW2SQVLxevo_UJJKtB9SBVb05L7GRM-FKSlA>
+    <xmx:cazoaBRPs0AiVL3gEsM3CoMzAe_Qc7cWis6zwIvDUwJeYZ3J3aPQpA>
+    <xmx:cazoaIIMlXd0S8nCHoomaodEYyJ1BrLDTxwACjyF73KXltCu7z6KEA>
+    <xmx:cazoaBzFy66dKdvsTnBJFWr0-3FcOakBKjuzmA1vnjPHV_bsb3eFD8cl>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 Oct 2025 02:49:19 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id e5b7e8de (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 10 Oct 2025 06:49:17 +0000 (UTC)
+Date: Fri, 10 Oct 2025 08:49:14 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Todd Zullinger <tmz@pobox.com>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 2/5] lib-gpg: allow tests with GPGSM or GPGSSH prereq
+ first
+Message-ID: <aOisaq-rSdwjwo6b@pks.im>
+References: <20251007122958.1089680-1-christian.couder@gmail.com>
+ <20251009122457.1273701-1-christian.couder@gmail.com>
+ <20251009122457.1273701-3-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] doc: patch-id: convert to the modern synopsis style
-To: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-References: <978261e3be4.1760043036.git.code@khaugsbakk.name>
-From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Language: fr
-In-Reply-To: <978261e3be4.1760043036.git.code@khaugsbakk.name>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251009122457.1273701-3-christian.couder@gmail.com>
 
-Le 09/10/2025 à 22:53, kristofferhaugsbakk@fastmail.com a écrit :
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> 
-> Convert this command documentation to the modern synopsis style based on
-> similar work.[1] Concretely:
-> 
-> • Change the Synopsis section from `verse` to a `synopsis` block which
->   will automatically apply the correct formatting to various elements
->   (although this Synopsis is very simple)
-> • Use backticks (`) for code-like things which will also use the correct
->   formatting for interior placeholders (`<orderfile>`)
-> • Use backticks on options
-> 
-> † 1: E.g.,
->      • 026f2e3b (doc: convert git-log to new documentation format,
->        2025-07-07)
->      • b983aaab (doc: convert git-switch manpage to new synopsis style,
->        2025-05-25)
->      • 16543967 (doc: convert git-mergetool manpage to new synopsis
->        style, 2025-05-25)
-> 
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
-> 
-> Notes (series):
->     Topic name: kh/patch-id-doc-part-one
->     
->     Topic summary: The documentation for "git patch-id" has been converted
->     to the modern "synopsis" style.
->     
->     Update git-patch-id(1) to the new synopsis style.  This is done based on
->     observing what Jean-Noël Avila has done on other documentation pages.
->     
->     I don’t know what high-level plans Jean-Noël and the maintainer have for
->     the rewrite so I don’t know if posting this update is somehow
->     inappropriate in light of that.
->     
->     § Notes to the maintainer[1]
->     
->     This depends on the topic kh/doc-patch-id-markup-fix (39969438 (doc:
->     patch-id: fix accidental literal blocks, 2025-09-29) merged into
->     v2.50.0 (because that’s what the topic is based on).
->     
->     (is there a “reference” convention for mentioning a topic + commit?)
->     
->       † 1: Inspired by
->            • <cover.1759097191.git.me@ttaylorr.com>
->            • SubmittingPatches: guidance for topic names and multi-series efforts
->              • <cover.1759873165.git.me@ttaylorr.com>
->     
->     This is part one of a multi-series effort focusing on this
->     documentation page. Technically that intent started with topic
->     kh/doc-patch-id-markup-fix, but I published that before I learned
->     about the idea presented in <cover.1759873165.git.me@ttaylorr.com>.
->     So this gets named “part one” in the cover letter (and maybe on the
->     topic name).
->     
->     The current plan for parts 2–5:
->     
->     2. Various smaller fixups (many small patches/commits)
->     3. Mention the two config variables in git-config(1)
->     4. Make it more clear that you can feed multiple diffs to this command
->     5. An “Examples” section
->     
->     Why a multi-part series?  It started with the idea of (1) emphasizing
->     that this command can take multiple patches, and (2) making an
->     Examples. But then I saw other things to fix. And they ought to go
->     first... eventually I ended up with many commits or ideas.
->     
->     I wanted to see if this was easier to review.
->     
->     • Focus on uncontroversial changes first
->     • Make all the series either small, simple/trivial, or both
->     • Leave the changes that might spark discussion last; the ones that have
->       to do with authoring new paragraphs/sections
->     
->     (I realize that multi-part series are probably mostly used for
->     super-technical changes that take 50+ patches in total and that only
->     three people on the list have the time and capacity to review at any
->     given point in time.)
-> 
->  Documentation/git-patch-id.adoc | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/Documentation/git-patch-id.adoc b/Documentation/git-patch-id.adoc
-> index 45da0f27acd..bfbf23f49c4 100644
-> --- a/Documentation/git-patch-id.adoc
-> +++ b/Documentation/git-patch-id.adoc
-> @@ -7,8 +7,8 @@ git-patch-id - Compute unique ID for a patch
->  
->  SYNOPSIS
->  --------
-> -[verse]
-> -'git patch-id' [--stable | --unstable | --verbatim]
-> +[synopsis]
-> +git patch-id [--stable | --unstable | --verbatim]
->  
->  DESCRIPTION
->  -----------
-> @@ -21,7 +21,7 @@ the same time also reasonably unique, i.e., two patches that have the same
->  
->  The main usecase for this command is to look for likely duplicate commits.
->  
-> -When dealing with 'git diff-tree' output, it takes advantage of
-> +When dealing with `git diff-tree` output, it takes advantage of
->  the fact that the patch is prefixed with the object name of the
->  commit, and outputs two 40-byte hexadecimal strings.  The first
->  string is the patch ID, and the second string is the commit ID.
-> @@ -30,19 +30,19 @@ This can be used to make a mapping from patch ID to commit ID.
->  OPTIONS
->  -------
->  
-> ---verbatim::
-> +`--verbatim`::
->  	Calculate the patch-id of the input as it is given, do not strip
->  	any whitespace.
->  +
->  This is the default if patchid.verbatim is true.
+On Thu, Oct 09, 2025 at 02:24:54PM +0200, Christian Couder wrote:
+> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+> index 937b876bd0..b99ae39a06 100644
+> --- a/t/lib-gpg.sh
+> +++ b/t/lib-gpg.sh
+> @@ -9,6 +9,16 @@
+> @@ -63,6 +72,14 @@ test_lazy_prereq GPG2 '
+>  		;;
+>  	*)
+>  		(gpgconf --kill all || : ) &&
+> +
+> +		# NEEDSWORK: prepare_gnupghome() should definitely be
+> +		# called here, but it looks like it exposes a
+> +		# pre-existing, hidden bug by allowing some tests in
+> +		# t1016-compatObjectFormat.sh to run instead of being
+> +		# skipped. See:
+> +		# https://lore.kernel.org/git/ZoV8b2RvYxLOotSJ@teonanacatl.net/
+> +
+>  		gpg --homedir "${GNUPGHOME}" --import \
+>  			"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
+>  		gpg --homedir "${GNUPGHOME}" --import-ownertrust \
 
-We also format config names so here `patchid.verbatim`
+Interesting. So I assume that these gpg commands here fail because the
+GPG home doesn't exist, and thus we disable the prereq? Too bad, but I
+agree that this doesn't necessarily have to be fixed by this patch
+series.
 
->  
-> ---stable::
-> +`--stable`::
->  	Use a "stable" sum of hashes as the patch ID. With this option:
->  +
->  --
->  - Reordering file diffs that make up a patch does not affect the ID.
->    In particular, two patches produced by comparing the same two trees
-> -  with two different settings for "-O<orderfile>" result in the same
-> +  with two different settings for `-O<orderfile>` result in the same
->    patch ID signature, thereby allowing the computed result to be used
->    as a key to index some meta-information about the change between
->    the two trees;
-> @@ -50,7 +50,7 @@ This is the default if patchid.verbatim is true.
->  - Result is different from the value produced by git 1.9 and older
->    or produced when an "unstable" hash (see --unstable below) is
+The remaining patches look good to me and address my feedback, thanks!
 
-
-here also "see `--unstable` below"
-
->    configured - even when used on a diff output taken without any use
-> -  of "-O<orderfile>", thereby making existing databases storing such
-> +  of `-O<orderfile>", thereby making existing databases storing such
->    "unstable" or historical patch-ids unusable.
->  
->  - All whitespace within the patch is ignored and does not affect the id.
-> @@ -58,7 +58,7 @@ This is the default if patchid.verbatim is true.
->  +
->  This is the default if patchid.stable is set to true.
-
-`patchid.stable`
-
->  
-> ---unstable::
-> +`--unstable`::
->  	Use an "unstable" hash as the patch ID. With this option,
->  	the result produced is compatible with the patch-id value produced
->  	by git 1.9 and older and whitespace is ignored.  Users with pre-existing
-
-Thanks for jumping in the synopsis squad bandwagon!
+Patrick
