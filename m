@@ -1,169 +1,195 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0226FEEC0
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 19:57:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC5CEEC0
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 19:57:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760126258; cv=none; b=fRoHs7sBDHUCa/l8ERb156ler2N8JFAgOgJSjp50xZqZeSudosVjQSHuQr0u92fyx/jp8PJnjbziWp4KqH5eTv5Xxbu1kX1p07CMMJ4/y4Bq1WulWhIy6PHVShGFJqoyJ7OXJUSkEt/XJ9dO1hEJeoufMwIuzDq94+G8eqFdevw=
+	t=1760126265; cv=none; b=gH+EqZQeTdopIRA+/L5lGyvPH/1oyJOcEkTa/YIjqgSLKFambDjPx/0uR64hVY4pmuyEmIkrkrDVoCrprWkmhXDjhdukrpQGRU5E+Kb+9FSOkyg1IsFSZvaIPu97YdzqdBW3H6yTF+i3y0r7kL2Jj8iyi7hsHCL8LDJT6IwGJ7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760126258; c=relaxed/simple;
-	bh=0a7K372vqQdRbdklXJclxFlk49tEVn2izd6l9Q6cVZ4=;
+	s=arc-20240116; t=1760126265; c=relaxed/simple;
+	bh=cycRgdQ0R5Qv7LXTsyKtHgrV4hM4uzkK0wXZbKhNYSI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X6KDwM9suaXRxu2q3ZwUsK4XegWV6EVMiuYQ9kHFjtUf1MOeZvrHjtvexOa20H9ogKMo2w25QDXcsyGE9nHWeS9EwEU1PxdS9zcwjwpH2TDe0dryRLHxinp3TgGlMEr84lsTutvp4hwWdRGEBqudCkqADQ48iOyCfz6/FvWlU+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=KCMYDhbA; arc=none smtp.client-ip=209.85.214.178
+	 To:Cc:Content-Type; b=lf+xbWcyD16bbGcVBu7Lp7ZJjZKoxNhDycDmYoy6adjOmIjCDNrRdxtyugDDma55gKygz4BxmT7k9l8Ja2020PK3i5AOtH66MpVEZ2wNo50Vou2jGUpowoJp6/rHxa5kGPk5cApUPXxo1g/gqCe97JvBewyHpz6LPwTMQexFsas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=h93LC0I0; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KCMYDhbA"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2731ff54949so4415ad.1
-        for <git@vger.kernel.org>; Fri, 10 Oct 2025 12:57:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="h93LC0I0"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-27eeafd4882so49255ad.0
+        for <git@vger.kernel.org>; Fri, 10 Oct 2025 12:57:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1760126256; x=1760731056; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1760126263; x=1760731063; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WtqklxzyYx1hD/GcjBp9nMayZOdXB6S54PMAY3ibtNw=;
-        b=KCMYDhbAVla2ThEVKIUE1poLm4676Lz5TMLYtB0UEyf3Ew6DySD7xAUe2wssB58VU9
-         vStrxhrGVFNaG7BINsctvbWktaQ6uDNrMIUrxl2Imlk5JPjtjWbnSoI3GUVz79Z2h6rZ
-         0BcZ8vqhjsS3uJIDl/RDvGwhmjKz2m3c1Lq8Ueqbd6zUtn8iBCZtw/si9wweCfWsAM3J
-         cOAe8LRoklncJemoHQDOjStvPefXZLJqekFm060pKcB/ykzBz7xD67kXXvezUoVgVzMs
-         EYy/laHimVhkPkkrXQfJkGM6RqwL/1Mg8QSC+L4JjM0Tr/DOFxaKsUKHlBs6keF5oxf+
-         XMLg==
+        bh=sqcHCtDfqEB7tonyuoU6FpjkhGwolK4mU1mF+DGSXhY=;
+        b=h93LC0I03bPlBibEhcTRX59WbF9Hz5fNMLoonvAwnIIceHWAoynToz8SNLjP6SgEw+
+         YEyQdUOFYJFBJJmKqI5WRryH3WVtnsrVV0vcv4QcDEjKCegRB/4RDlVg0SSgobqWNAhc
+         MGyUztCbQNk+X4Zd+Udum6p+L0Q6GoHWqu0UBRtgK7JUVRVPvHfTf+87sGCT7wYWZSzx
+         9gaKkR6MDmB2UHd9JPK/AOxldUqya7RMapX3RESiob8letRtsdFcf/uo5rKiX+9wkIIv
+         99RML+xpljAYKswCzh3e4ugBYrPY4c7/LaijF06+Jft0t4cmaKzAeYMLtoxp24MnI0NT
+         oEJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760126256; x=1760731056;
+        d=1e100.net; s=20230601; t=1760126263; x=1760731063;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WtqklxzyYx1hD/GcjBp9nMayZOdXB6S54PMAY3ibtNw=;
-        b=wFQfEnhd6TN0MreRt5JCYC8DPgLlma8KyS37SKX9da+GAzyd79xGEDKr5vGsC8kt4q
-         CimBCrik4oTvedri0tUKBgP+S21u5fNBT+4EVkpnOff0Zx0PZb5izzp5sNTR+7etZ/jI
-         G7FisSBdlMLYTqjCPUIMfIvMoRJgk9JbvZlWJOUr5Odeo0THo9X3fwqGzkRrroFDFl5Y
-         00oxTSnsE2gTdsnMeO/YB0jw3Lg5K/wgwjEY6QGkGEdMo0167uVhLBkJI6JJtXdrqr8+
-         RJyIf0Iw2ydzzu6JDUjPhVb2ikxWLIZK2Af+JX2XRB3K7hbh1JfvFMKeMH+lPynblzy8
-         ZDEg==
-X-Gm-Message-State: AOJu0YwKG4wAG9NiJbBWBoCAKWI1GL8GzAwYOWf5p33blK/EM+b+Hf/M
-	fKTbhZcWeDzsBDcyPwxZaLF+xP1bRyyvBxJZT3cR/oeqJ3AACQqqnrDjf3qnHwCxMpPxcnMogqH
-	JimKqJviNPhJJ+qeg2BuP3NCrfi/HL7dyy6NyxnRN
-X-Gm-Gg: ASbGncu6KEpRBh3QbM6c9RBvS4+zX4cSodRg4sWU+pGEPaBeb1lHqB47x/Vs6woRgD+
-	9MLRRcd/4uoCnwGD8Dpmxn8SP1C0cDyccSp78zllNoMc9oGRRWORRGUovQ+plfW5dzYtaQSv4fq
-	XSQ4kGC47Jy/DOMKBMX3RfAE0IZWB5VM+sQIcEso6dC/MNhYS7+Rn8jzzDmh0KC4nVO8OwJJA2g
-	Y+QGngdX6OJJfel/F6l13PwE53GyrbxkEZ0EguLMQNMpYz09gpN5IlpPyFQGzE=
-X-Google-Smtp-Source: AGHT+IFS2mrICaoLlcjOZZ7RxwJ08we8GizvczQxzjUBKR9aMeWoZhiZg/kP6dtfZZOBy58tZ+Vq9hI5RjFhIjoy6R4=
-X-Received: by 2002:a17:903:38cf:b0:248:7b22:dfb4 with SMTP id
- d9443c01a7336-290276dfef2mr15933055ad.16.1760126255771; Fri, 10 Oct 2025
- 12:57:35 -0700 (PDT)
+        bh=sqcHCtDfqEB7tonyuoU6FpjkhGwolK4mU1mF+DGSXhY=;
+        b=lh0ei+FQ2o9OY01tXUdpNEYA0DVJMpOl84NlLXAnC630Shq88VB4fPz61nGPoHPtK7
+         4kkS9li9esJt8P/x6Vz4cQPcQAL9NISNYGjmjGgjHIsFuuxGY7bBSx93CbwXZYTyr8UU
+         A9ob5MSvlqnAcW30C27KIg1DfjFf5DVaYCba8//1TfAkK2iSV3wV4+kMr9Gdw84UuLfX
+         DhL9Hm+XEJCYg9lh0BgGHRKQGxI+vqQtZV7biuQYP00gHefXKwfq1jPY60IviJZymbNv
+         TyMahVAxdEr3RaZF02VDt1SESjqx/LdTxh3mluzUpt7aempvwlgj+3pTHAWJr3Ucll0W
+         GeUQ==
+X-Gm-Message-State: AOJu0Yw5UvK5vHkQd/Gvv/Ax2XtY7o1OQMeM4XO2lnUcf8yutjhqrsCe
+	tmYIwKPePBFvRtZycLKUasKRAQp5/2OII+rHkVkaiZr5yNJNN3ekmxAWY2ExMH0tHWkAx4c+ZvU
+	uaPZzOyhz8NeqwU2pGim62OUbtEHK686mwh0F5nEK
+X-Gm-Gg: ASbGncvRagJQjwFgWMK7q6LlTDgaPnS7vlKtaqAsxhpwwmIaYxUrBZW13rbboX4/IM/
+	xHH6DEioRiVWpfBiNAQvehaPA7uw0K0KMen4rc5cq9Gma5DVlG9kHE4dgs6lZYNsO3xuFZJXrYd
+	OR2SQ+hQxCBXKEcDjFxwqPL6tCNizRIYWBYmMBYvv1E8salvBlPo+bts/lV3w1fciJM0iaM5Mn6
+	ZO/PgRtvZBsecm8kSb3Vf3UWIFhtz54PECzria5WrGbThHU1KLgpshTogwCi0B1uTQ9Aa3pug==
+X-Google-Smtp-Source: AGHT+IHy0CdKBJSR+frqFEU7uhUCMSBbt55toEO/ublkxs0iM5us6QZrZGaq7NtYM750Pk/ogB66x+TX1eChnI0wkR0=
+X-Received: by 2002:a17:902:f687:b0:268:cc5:5e3c with SMTP id
+ d9443c01a7336-29027698f62mr20437055ad.10.1760126262504; Fri, 10 Oct 2025
+ 12:57:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
-In-Reply-To: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com> <20250925125352.1728840-3-adrian.ratiu@collabora.com>
+In-Reply-To: <20250925125352.1728840-3-adrian.ratiu@collabora.com>
 From: Emily Shaffer <nasamuffin@google.com>
-Date: Fri, 10 Oct 2025 12:57:20 -0700
-X-Gm-Features: AS18NWBDBTjgx2lYXVuz4pbMDeD-395YD0cDNWTHhhBJ-Tc2JUpqHcn7ynV4sTk
-Message-ID: <CAJoAoZnHJP_UH8EkJ7==9g51fh6NFfv9dn4LJOThZFTzcSV+yg@mail.gmail.com>
-Subject: Re: [PATCH 00/10] Convert remaining hooks to hook.h
+Date: Fri, 10 Oct 2025 12:57:13 -0700
+X-Gm-Features: AS18NWC8rX_zQrY1L3kRX6lCRtWcw8fcruWPsW6JML3zwE9Vu6ExRNOziVdm378
+Message-ID: <CAJoAoZm6uNtEoo_tdbqjGMSj4OnQuFesxt_iyOTgNHA1LX3iwQ@mail.gmail.com>
+Subject: Re: [PATCH 02/10] hook: provide stdin via callback
 To: Adrian Ratiu <adrian.ratiu@collabora.com>
 Cc: git@vger.kernel.org, Rodrigo Damazio Bovendorp <rdamazio@google.com>, 
-	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 On Thu, Sep 25, 2025 at 5:54=E2=80=AFAM Adrian Ratiu <adrian.ratiu@collabor=
 a.com> wrote:
 >
-> Hello everyone,
+> From: Emily Shaffer <emilyshaffer@google.com>
 >
-> This is a continuation of Emily and Aevar's work to convert remaining hoo=
-ks
-> to the hook.h interface, by adding and using two new run-command/hook API=
-s:
->  * feeding hook stdin via a callback
->  * capturing server-side collated outputs
+> This adds a callback mechanism for feeding stdin to hooks alongside
+> the existing path_to_stdin (which slurps a file's content to stdin).
 >
-> I've tried to keep the implementations as simple as possible and avoid an=
-y
-> unnecessary copying by feeding the data directly to the hook stdin fds an=
-d
-> even batching the writes of pre/post-receive so we achieve similar perf/d=
-ata/
-> syscall efficiency as we had before the callback conversion.
+> The advantage of this new callback is that it can feed stdin without
+> going through the FS layer. This helps when feeding large amount of
+> data and uses the run-command parallel stdin callback introduced in
+> the preceding commit.
 >
-> As suggested by Aevar [1], I've removed the string_list API, the extra co=
-pies
-> and the $'\n' assumptions on the data, however I did not go the full zero=
--copy
-> route with mmap-ing because I think that will break backwards compatbilit=
-y. We
-> could explore that in a future series as an efficientization of the curre=
-nt IPC,
-> this patch series basically aims for parity with the existing implementat=
-ion.
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+> ---
+>  hook.c |  8 ++++++++
+>  hook.h | 22 ++++++++++++++++++++++
+>  2 files changed, 30 insertions(+)
 >
-> This series also unblocks config-based hooks and hooks parallelization wh=
-ich will
-> follow up in a separate series.
+> diff --git a/hook.c b/hook.c
+> index b3de1048bf..54568d5bc0 100644
+> --- a/hook.c
+> +++ b/hook.c
+> @@ -69,6 +69,10 @@ static int pick_next_hook(struct child_process *cp,
+>         if (hook_cb->options->path_to_stdin) {
+>                 cp->no_stdin =3D 0;
+>                 cp->in =3D xopen(hook_cb->options->path_to_stdin, O_RDONL=
+Y);
+> +       } else if (hook_cb->options->feed_pipe) {
+> +               cp->no_stdin =3D 0;
+> +               /* start_command() will allocate a pipe / stdin fd for us=
+ */
+> +               cp->in =3D -1;
+>         }
+>         cp->stdout_to_stderr =3D 1;
+>         cp->trace2_hook_name =3D hook_cb->hook_name;
+> @@ -140,6 +144,7 @@ int run_hooks_opt(struct repository *r, const char *h=
+ook_name,
 >
-> The patch series is based on the master branch, I've pushed it to github =
-[2] and
-> it also passes CI runs. [3]. Also merged and tested against next with no =
-conflicts.
+>                 .get_next_task =3D pick_next_hook,
+>                 .start_failure =3D notify_start_failure,
+> +               .feed_pipe =3D options->feed_pipe,
+>                 .task_finished =3D notify_hook_finished,
 >
-> 1: https://lore.kernel.org/git/230209.86y1p7y4fa.gmgdl@evledraar.gmail.co=
-m/
-> 2: https://github.com/10ne1/git/tree/dev/aratiu/hooks-conversion-v1
-> 3: https://github.com/10ne1/git/actions/runs/18006589297
+>                 .data =3D &cb_data,
+> @@ -148,6 +153,9 @@ int run_hooks_opt(struct repository *r, const char *h=
+ook_name,
+>         if (!options)
+>                 BUG("a struct run_hooks_opt must be provided to run_hooks=
+");
+>
+> +       if (options->path_to_stdin && options->feed_pipe)
+> +               BUG("choose only one method to populate hook stdin");
+> +
+>         if (options->invoked_hook)
+>                 *options->invoked_hook =3D 0;
+>
+> diff --git a/hook.h b/hook.h
+> index 11863fa734..8fdbc8c673 100644
+> --- a/hook.h
+> +++ b/hook.h
+> @@ -1,6 +1,7 @@
+>  #ifndef HOOK_H
+>  #define HOOK_H
+>  #include "strvec.h"
+> +#include "run-command.h"
+>
+>  struct repository;
+>
+> @@ -37,6 +38,24 @@ struct run_hooks_opt
+>          * Path to file which should be piped to stdin for each hook.
+>          */
+>         const char *path_to_stdin;
+> +
+> +       /**
+> +        * Callback to ask for more content to pipe to each hook stdin.
+> +        *
+> +        * If a hook needs to consume large quantities of data (e.g. a li=
+st of all refs received in a
+> +        * client push), feeding data via in-memory strings or slurping t=
+o/from files via path_to_stdin
+> +        * will not be efficient, so this callback allows for piecemeal r=
+eading and writing.
+> +        *
+> +        * Add initalization context to hook.feed_pipe_ctx.
+> +        */
+> +       feed_pipe_fn feed_pipe;
+> +       void *feed_pipe_ctx;
+> +
+> +       /**
+> +        * Use this to keep internal state for your feed_pipe_fn callback=
+.
+> +        * Only useful if you are using run_hooks_opt.feed_pipe. Otherwis=
+e, ignore it.
+> +        */
+> +       void *feed_pipe_cb_data;
+>  };
+>
+>  #define RUN_HOOKS_OPT_INIT { \
+> @@ -44,6 +63,9 @@ struct run_hooks_opt
+>         .args =3D STRVEC_INIT, \
+>  }
+>
+> +/**
+> + * Callback data provided to feed_pipe_fn.
+> + */
 
-Thanks Adrian. For the most part I have only small concerns - not
-surprising as these patches are mostly (not entirely) logically
-equivalent to patches I wrote a few years ago and which we have been
-running for Googlers since that time.
-
-Others covered some of the comments I had to send, but I have a few
-comments of my own too. The only one I'm truly stumped on is the
-`update` hook conversion, we can discuss on that patch.
-
-Otherwise, I'll look forward to the v2.
+It looks like this comment was maybe a note to yourself? (Or a note to
+myself, eons ago?) But hook_cb_data is used in all the parallel hook
+callbacks, not just feed_pipe_fn, so I don't think this is accurate.
 
 
- - Emily
-
->
-> Big warm thank you,
-> Adrian
->
-> Adrian Ratiu (1):
->   reference-transaction: use hook.h to run hooks
->
-> Emily Shaffer (9):
->   run-command: add stdin callback for parallelization
->   hook: provide stdin via callback
->   hook: convert 'post-rewrite' hook in sequencer.c to hook.h
->   transport: convert pre-push hook to hook.h
->   run-command: allow capturing of collated output
->   hooks: allow callers to capture output
->   receive-pack: convert 'update' hook to hook.h
->   post-update: use hook.h library
->   receive-pack: convert receive hooks to hook.h
->
->  builtin/fetch.c             |   2 +-
->  builtin/receive-pack.c      | 310 +++++++++++++++++++-----------------
->  builtin/submodule--helper.c |   2 +-
->  hook.c                      |  11 +-
->  hook.h                      |  30 ++++
->  refs.c                      |  61 ++++---
->  run-command.c               | 115 +++++++++++--
->  run-command.h               |  44 ++++-
->  sequencer.c                 |  62 +++++---
->  submodule.c                 |   2 +-
->  t/helper/test-run-command.c |  67 +++++++-
->  t/t0061-run-command.sh      |  37 +++++
->  transport.c                 |  79 ++++-----
->  13 files changed, 547 insertions(+), 275 deletions(-)
->
+>  struct hook_cb_data {
+>         /* rc reflects the cumulative failure state */
+>         int rc;
 > --
 > 2.49.1
 >
