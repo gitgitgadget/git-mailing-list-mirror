@@ -1,53 +1,53 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B21207A20
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 19:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECFE23D7D2
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 19:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760125537; cv=none; b=vAjD9RgOx4z7JOy0+c9+DtJtN9/YPhMxoXsBb/csYpVfdtbL5TMHILYDQ9aGCdpvpjYY4BYlY+1uMMEaAmFs+nvlDpdki6HSwsCcK50yVqdihI1AIXsDEXQ82uSLGQK8lN6/Ccp8/zk+A/Wl674fwIU4p0mkZGdeZJ4P7teNPi4=
+	t=1760125621; cv=none; b=XAUe+MqlgXfIr5Y3b1SoKvNyxWSGNLUFfwR4MTAmc0iNUDoKpXH0kGtCE/CCnvPz1/JyySXqfIZCar+ZlzmQVvckKpuksUNwv+W+Rtfo0ZjQJ0DKpHFdgTSilkzNDpaig1j6PrROdiWjJV2IiaiQduAD+suPL2Fm3m+3CTECBpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760125537; c=relaxed/simple;
-	bh=mggVNbXOmzNsv8OOpxvRU3CzrDu1+jzDvslsdWmITy0=;
+	s=arc-20240116; t=1760125621; c=relaxed/simple;
+	bh=U04KFcpusYB76nqDOvePQHthCWXXfb5JsvaI64a2AjA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=i1pDUten77umnuu3tddyC8jnpKwevjR3L+ovxrmhYmkL2t9Lw7jbr5WqfY4gWESkoff3Vg3NGPIrHDkst8ldPM1x6Os4XUp+MuGYPUPmyFb8QO2eaAwg0cAiZs8FpOoroYZcyTvlB6ETsnHBZ73F7kynWDK4EN3Y3Et2/tUNSO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OjIMbK5H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zCmVb5D8; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=bElHPVyO5krlyKmUohp7w+wmgQJGi0G1N0uFi5o+1u1WKzmMwhhsMIiwIuJh2oxcjMufRAIwmV/aQQTrtaReGtKDNg2ZUEAhoDCAAsG0v2ZT9B9R/6JG3NHX/6O5Bzkk1wb7BRDEBKn5fhVK0lrQWV50UsGhwOBs3vnW9ct1Sv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ejgHLIWO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W0tUmN17; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OjIMbK5H";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zCmVb5D8"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1D0FE7A01A0;
-	Fri, 10 Oct 2025 15:45:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ejgHLIWO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W0tUmN17"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 990DC7A01A7;
+	Fri, 10 Oct 2025 15:46:58 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Fri, 10 Oct 2025 15:45:34 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 10 Oct 2025 15:46:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760125533; x=1760211933; bh=skdT+RZfex
-	6vYdY6ujcV9/IAeGG2ylUG7tAxg9GSH0I=; b=OjIMbK5HSq0isnm/rUHKoO+T1p
-	EysDMBCKiHpo78n8IfyoFGNxx4rkZgwwp4oPqacN/ZPnYN78zChxSf9Frbxku64n
-	cLVlXqRHG9k3mriG1MXKZMvD7nNjKDCiiRqxPP2tuplL0kIiFTzUa4bOF2EboKP1
-	/ZnWiSr5SeXeQOIdPGTOVYtNur5Z0iZum2GuZpUdaMzc6bY4FuVzHU/UGmT/PfLR
-	Cuu7thl1+L4japq9ebn/dxxPikMVNEk+E2OudQDaub1rQPr9DRhjnxVv3wL3r1Ht
-	+VwryttUoH283FYg3KBSflsxMT6/pteDTN6SF1r1DuLdjQnAUT5+8UdC/NZA==
+	:subject:to:to; s=fm1; t=1760125618; x=1760212018; bh=OLe8Mioqyq
+	QrSib+NdZAZ33hU7mTy+oYKBZYUsoPt8Y=; b=ejgHLIWOgQdsf6oxiV3SqOIHXv
+	ZwRv579eMeaeYB0ZVtoIer4ao9eN11eyfglzSS7wOOghPiaDeDebVnQQYo7QimXc
+	iOD5EqoCjiPSCDZgRW52RB+N/9iERSQSGotmZgYRuFbcXzv5Q8TDr+8E8IHAYpfj
+	Ck3jtD9q0zOBLi2wsEqXvrTNGyjLVhOKDmKqKVMGr7lZyLz+uBK9ez5rcP6NhYfD
+	PvjrAlQ0DI0M+lqRdTBJ1xsLwj2vK+cLOYO5f89XFqXn61lkkd1zgygnoyJUgEKT
+	K/o3Dh/zNGIYFhWRHtg/6K2ZmU13yf40/5EqrPVvsrQomvkdWCvWLtIFNnMA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760125533; x=1760211933; bh=skdT+RZfex6vYdY6ujcV9/IAeGG2ylUG7tA
-	xg9GSH0I=; b=zCmVb5D8jiDYzz+lrhAFEp+lKAfpTvbiS4V9U+40g4UGblAndv4
-	Z3dzqg86204PvQHxWhmOyrBlrI6hmweh/hO014ns18HFhvdKInsA/NJm64xNExEb
-	g5ieC09cKFHrh3kzrOhJe/txkdPSjivvaCpYYcdJ+X+DTdKwDdTkfh+xRQ4XCpRt
-	slD0loyZ/z9MsCsAse6eEGhNc6NPMLOb5jir35yBySwR+oQQ1wIbrzKYDvlCrVMw
-	ZtLJa2AXrWzfCTYhh8b5DDtE8nmkW02yl90rQbh2jWV5PTY0bzCPgoXsOGqS8ZDT
-	KxBXwfBWLl9BESax9vWtH7FBIFqs4mZtm0g==
-X-ME-Sender: <xms:XWLpaLCQynbrKzv1bYsJ_WVi-W980eIfPffHrIDKzXMR3vpkZNJNfA>
-    <xme:XWLpaJQ-SH2jvMXsvfLZzL445idA6lX8-GdWnHT7Y8dynSJjmPH7BgUsndE9olyBz
-    6stPh-eH4rheuR1y7MB4d3h3WzCqQS3nslPRAqN5y2Nd9Rdnsdmkw>
-X-ME-Received: <xmr:XWLpaJoYzbLwywz6XghR8YEmphpaST7WpZU6AFEfxgeD1oadrrgQBf3YZ6dXCyR-CVG1NMRM1s5tyq7RDLwAHKICZyGyxgh75Evj>
+	1760125618; x=1760212018; bh=OLe8MioqyqQrSib+NdZAZ33hU7mTy+oYKBZ
+	YUsoPt8Y=; b=W0tUmN17wyfiK/45UTMwXaui2LAARX1PWaCJ32iw3Qqfiqyj9rn
+	n2/29CxRlOtE0w3BpF3H1QYcn7xn5Bu4OxGfbqeaX5Hm7VoLsBF5by+04brp/H48
+	VmbNniUssU4FopyMoAq28DeHEtf/EY3E5KZjwlngOnM0uAgeHhWY6K/qdzG0PyUf
+	StAecv2wWHmoA5cLyhNOwIMIgtgMA0B/BtDhVqkkmrj3aSrBLgmRQUXMZYSuti6S
+	PZLQfvnClP1i5GJRXawCEWl1luJW/hZtINDGKiJPy3x2SwzmZe5W1cm2c7NFbMjr
+	FKxjP/KuI0KKNOmj+CcvXOPkHeBA2Omw9ZQ==
+X-ME-Sender: <xms:smLpaPDTSCLupdIep5UP-FoiyS92qgGx2XaDihOrWA2daoKZBF7zJA>
+    <xme:smLpaMid2usPyvU7wPXwy_Wjd0cOl2hi0vTzwG0286BydR9j3r2ZzBXs37SFXVhNi
+    L_Omi02dOX2Q6czuWPRg2IX-R0yccARGBMxEduegey_LSKAuv2U>
+X-ME-Received: <xmr:smLpaPnrICgQsddmd-Lfu7JnOqPxydRzZeTwqdUJRQYE7AQnIrDg2hamgAgPVP2TuE0CIsUkwop11RY5gjKHNAC53NtznZmSLHe1>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdelleefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -55,27 +55,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdelleefucetufdote
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthhhohhmrghsrdhuhhhlvgesmhgrihhlsghogidrth
-    huqdgurhgvshguvghnrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:XWLpaLxW96mQt3aALJbAdryn9-UuDhDNqlIOGozpqszWCprDrAmvBQ>
-    <xmx:XWLpaOLfXwGDeO13plFwloMCKHRMrgLRgxrQ55uKllcyHCkl6xrsXA>
-    <xmx:XWLpaNIffnw4HAGmneyIEbYHfGEVJeE5GbS6782waTzrZw9R_rACwA>
-    <xmx:XWLpaDtGzDEes209LN29qVIg7DLIFrCzVMFXH6rtXFsBqP3lDbag7Q>
-    <xmx:XWLpaJnjmaNQ-0QNRSkTNCh8H395kYsUn7wdJR3XQ4f0CLF7Etbn3wx->
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhlihhpseguvggtvghnthhsohhfthifrgdrrh
+    gvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhm
+X-ME-Proxy: <xmx:smLpaAo9svrKtgq0uwoqPTYafGmBgpbm2taJ-cl5BGqsFnWYMQ88sQ>
+    <xmx:smLpaAEvNH8NEO2H7nB29yeMB-7mKxxocAwCyEkeiEcOR1yBWbQ5jg>
+    <xmx:smLpaEw39YxSWTuQj0dy29HQGUeW_L03JH2Z-yfBSh9MwQqdpVX7LQ>
+    <xmx:smLpaNrmEb4C6w1Ou6HBPJC-bUbTJgWtDRPMccBjBW2QZLQ37VaqkQ>
+    <xmx:smLpaHy4CFD-p6C4F9dc7BpUnhvSMnm-o7hRgyGZgEeUIKz0UWt_lULs>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Oct 2025 15:45:33 -0400 (EDT)
+ 10 Oct 2025 15:46:57 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Thomas Uhle <thomas.uhle@mailbox.tu-dresden.de>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH] contrib/credential: Amend and harmonize Makefiles
-In-Reply-To: <48d92664-41af-bb59-1844-7bb57f21924f@mailbox.tu-dresden.de>
-	(Thomas Uhle's message of "Fri, 10 Oct 2025 19:30:22 +0200")
-References: <48d92664-41af-bb59-1844-7bb57f21924f@mailbox.tu-dresden.de>
-Date: Fri, 10 Oct 2025 12:45:31 -0700
-Message-ID: <xmqqbjme8rs4.fsf@gitster.g>
+To: Philip Patsch <philip@decentsoftwa.re>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>
+Subject: Re: [PATCH 1/1] docs/git-blame: describe sourceline and resultline
+In-Reply-To: <xmqqldli8vr5.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	10 Oct 2025 11:19:42 -0700")
+References: <20251010152204.815520-1-philip@decentsoftwa.re>
+	<20251010152204.815520-2-philip@decentsoftwa.re>
+	<xmqqldli8vr5.fsf@gitster.g>
+Date: Fri, 10 Oct 2025 12:46:56 -0700
+Message-ID: <xmqq7bx28rpr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,126 +89,16 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Thomas Uhle <thomas.uhle@mailbox.tu-dresden.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> diff --git a/contrib/credential/libsecret/Makefile b/contrib/credential/libsecret/Makefile
-> index 97ce9c9..8ee6cce 100644
-> --- a/contrib/credential/libsecret/Makefile
-> +++ b/contrib/credential/libsecret/Makefile
-> @@ -1,17 +1,21 @@
->   # The default target of this Makefile is...
->   all::
+> Perhaps this is easier to understand?
 >
-> -MAIN:=git-credential-libsecret
-> -all:: $(MAIN)
-> -
-> -CC = gcc
-> -RM = rm -f
-> -CFLAGS = -g -O2 -Wall
-> -PKG_CONFIG = pkg-config
-> -
->   -include ../../../config.mak.autogen
->   -include ../../../config.mak
+>  - 40-byte SHA-1 of the commit the line is attributed to;
 >
-> +prefix ?= /usr/local
-> +gitexecdir ?= $(prefix)/libexec/git-core
-> +
-> +CC ?= gcc
-> +CFLAGS ?= -g -O2 -Wall
-> +PKG_CONFIG ?= pkg-config
-> +INSTALL ?= install
-> +RM ?= rm -f
-> +
-> +MAIN:=git-credential-libsecret
-> +all:: $(MAIN)
-> +
->   INCS:=$(shell $(PKG_CONFIG) --cflags libsecret-1 glib-2.0)
->   LIBS:=$(shell $(PKG_CONFIG) --libs libsecret-1 glib-2.0)
+>  - the line number in the file in the above blamed commit, where the
+>    line came from;
 >
-> @@ -22,7 +26,13 @@ OBJS:=$(SRCS:.c=.o)
->   	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCS) -o $@ -c $<
->
->   $(MAIN): $(OBJS)
-> -	$(CC) -o $@ $(LDFLAGS) $^ $(LIBS)
-> +	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) $(LIBS)
-> +
-> +install: $(MAIN)
-> +	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
-> +	$(INSTALL) -m 755 $< $(DESTDIR)$(gitexecdir)
->
->   clean:
-> -	@$(RM) $(MAIN) $(OBJS)
-> +	$(RM) $(MAIN) $(OBJS)
-> +
-> +.PHONY: all install clean
+>  - the line number in the file, where the line is found in the
+>    stating <rev>;
 
-
-> diff --git a/contrib/credential/osxkeychain/Makefile b/contrib/credential/osxkeychain/Makefile
-> index 0948297..b1d7c29 100644
-> --- a/contrib/credential/osxkeychain/Makefile
-> +++ b/contrib/credential/osxkeychain/Makefile
-> @@ -1,19 +1,35 @@
->   # The default target of this Makefile is...
-> -all:: git-credential-osxkeychain
-
-Having the primary target name on this line very early in the file
-has documentation value.
-
-> -CC = gcc
-> -RM = rm -f
-> -CFLAGS = -g -O2 -Wall
-> +all::
->
->   -include ../../../config.mak.autogen
->   -include ../../../config.mak
->
-> -git-credential-osxkeychain: git-credential-osxkeychain.o
-> -	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS) \
-> +prefix ?= /usr/local
-> +gitexecdir ?= $(prefix)/libexec/git-core
-> +
-> +CC ?= gcc
-> +CFLAGS ?= -g -O2 -Wall
-> +INSTALL ?= install
-> +RM ?= rm -f
-> +
-> +MAIN:=git-credential-osxkeychain
-> +all:: $(MAIN)
-
-What's the point of an extra $(MAIN) definition (not just here but
-in the other Makefile as well)?  It may be slightly convenient to
-write while the thing is simple and stays one-source-one-binary, but
-programs including Makefiles are more often read than written, so we
-should optimize them for readers.  I personally think this extra
-indirection is hurting readability more than helping.
-
-Other than that, yes, it is great to make these three or four
-Makefiles look similar to allow readers compare and spot
-differences.
-
-Thanks.
-
-> +
-> +SRCS:=$(MAIN).c
-> +OBJS:=$(SRCS:.c=.o)
-> +
-> +%.o: %.c
-> +	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
-> +
-> +$(MAIN): $(OBJS)
-> +	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) \
->   		-framework Security -framework CoreFoundation
->
-> -git-credential-osxkeychain.o: git-credential-osxkeychain.c
-> -	$(CC) -c $(CFLAGS) $<
-> +install: $(MAIN)
-> +	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
-> +	$(INSTALL) -m 755 $< $(DESTDIR)$(gitexecdir)
->
->   clean:
-> -	$(RM) git-credential-osxkeychain git-credential-osxkeychain.o
-> +	$(RM) $(MAIN) $(OBJS)
-> +
-> +.PHONY: all install clean
->
-> base-commit: 60f3f52f17cceefa5299709b189ce6fe2d181e7b
+Sorry; "starting <rev>" was what I meant.
