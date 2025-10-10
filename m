@@ -1,126 +1,99 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88596BA3F
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 23:15:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D916C27FB25
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 23:34:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760138158; cv=none; b=P4uVZJ/tKBWg7rTmDechp+2PinNNDjBbXPc0NaSIoe5Q3W3hIhui6ePvijV7AG0rLkouXKGNK54WgmJfnQYQI6o6FB393MArsm++hsho5a3L0ZAZaEnA59MdzZsU05Zhslc+LW7m8dICUi5E7VHfnVwM75JPaQCCaEchGx9fFMg=
+	t=1760139242; cv=none; b=KADkvhOcuCdzTJ4W8UcZMilZDzDckBXDFD3E293D8IUjg8Uvsn9WsDvc0TisFwge9CiG1anYsEYxS6lqKJeUYcO5YbajLTShb+HgzTT0EBc/Vr+wLRH0KhUzAc96HBf3RHwZeQkNVHq61oRjKFYUir3Ppk/x76/+fXbM2zLwczw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760138158; c=relaxed/simple;
-	bh=AkUCKNyCSzwtQ4+Zq7Gchy1LWFgleBfUP36ZNVvpgUs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NMjDkP68lisufXA1uOXP+8TOz6Y4udlFyXr6wJPMHdie7HZJ1Vdvc+sHutjWnrBrnDAlvx2xx/vrcUl6koCKfZl97EuoiHV0OXcKpGtTQUodJa6rIHtT8z39P3feauSvBUMXV3HPul6aGqdctLU/XDMiP+BH9d8LnGsh9glr1Mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=gcbjvWR6; arc=none smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1760139242; c=relaxed/simple;
+	bh=NBFwnZ6lKqlcWZPTz7PZVgf4TA1b+oG+eomBgktIEKE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=g8fCSUkmYjWLNV8R5BolVK+Gm4a4Xd7/i3yZRE4WYPS2EHa7iK2YTainPth9GFlmty8aT9E/cIDXz/7m8lJLTAKLJ2WyQcMSd1SnwHD+uZwa7pg7SuqWUNaLhT5lqrf/4E3uY51U0YOjzvCHjNjI3jNcv2UE0UKWDH4FfhQ01PU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YYpcBCAs; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="gcbjvWR6"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-72ce9790ab3so26121427b3.1
-        for <git@vger.kernel.org>; Fri, 10 Oct 2025 16:15:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YYpcBCAs"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-46e33b260b9so22671345e9.2
+        for <git@vger.kernel.org>; Fri, 10 Oct 2025 16:34:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1760138155; x=1760742955; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=faVdqdCvuzwRUtOKW8yCPXcEBZaXCV3bQaUcjz7qwXw=;
-        b=gcbjvWR68dzkPKhdfJiV93ELuabGFiG+lku4/OsuEaMRhV58x0oZj1mzyoY7+mJwQA
-         MtIZe6rSbpae+OfHiaPzMCT8r1uwbcRiQ6ygj0QugpaZKGjTvE/LyLsifcNXjIexWyAn
-         REEEC6zNVQcLD0De5hUqOGrNCgvkSdckcRjODjkgiWwpPWTXEDBsyuxJMsS+G3gm9cPD
-         Ygxyh6LTRpmI4V9UtVt+gwareOngYOkcScm4uQ0GnreJJu57hzVTgu4QKZKhNiHGt/mf
-         WuQT3nMRHISAcHdPlM4hOOm71UEcNptfAg2HjAu3JIs0o4tscnPfnuvWO21y3jMJuhQl
-         naIw==
+        d=gmail.com; s=20230601; t=1760139239; x=1760744039; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=a1xA83Yb3oeVEOm8svbxrIh8hDf826ozseOj/YaUSGc=;
+        b=YYpcBCAsllM4G4QUtNFFFSp0dkz0kIcs6jNU0GRBEPt67UchLx5GcwbBgVU12tgq3a
+         cnXpcIG2Pm1PYIKwDxUACZbck9W8vx0RxZfcYc4LUq3JquWw90H79wgxVEo/WFrSIc/e
+         GdFcNzjutCbucUV/KquHhLqUnm5SHsv45xq0cmPBsvTcOr8zcB5spTCuu3n6muYq9bHd
+         KdGATZ3jn3PjNkSz42KlRyOGAjRz+qrpV5IN/Qjr6seRFcTPGbeiM+Dsf1Jrs6ZKTH7b
+         KbLdO6FiDbypqJl5snXclRNUBOdut4B10E7zDULdjE/zkbLRvirSBK3RLqeLOIalTI1g
+         iyXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760138155; x=1760742955;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=faVdqdCvuzwRUtOKW8yCPXcEBZaXCV3bQaUcjz7qwXw=;
-        b=j3JVpBBetc8KQVDhzjt3Qdi8E6RD+A7fKXWONjWZE245ioU+m13j021WRgToHjLmFS
-         bgelbzhaOtIMUrc6Uv9ZanCrIF8m4rvqGfQD/MiViXQt4k8XLEWoaiXoG3uruPZz3+o1
-         2CX9TAt4LFyWOPAJ6SQ6gmMmEA6fRR4y/SWQxiQW+p8gVD4f97t5G3mEsboXtItkV/by
-         0pCrCXbtyUiK+cKB7ZD5x6M7BbiokG+FiEKVWqY0ELfLVthtDa230+gUriTXJaWD+v64
-         6Cm2rfFwxiKWdIpN1p3QzdiDSlV4jn9FXwmR5rxdQ6gxFhm0M6jY+/+26r1je+Rk1EGc
-         3Ijg==
-X-Gm-Message-State: AOJu0YxxaWPVT3+ZaiahztrAPSE6h5P/78HG9qTkHxJmL4cJkRSi6asg
-	xHU9JAGGLklunJxoYPp+/3Pp7axF+Kt/D7nc7glB1cPHnaSK43rveSb+B+yJwyhvfB0=
-X-Gm-Gg: ASbGncsabpLPi9J6YN/9LncqY5z0OwBWQKp/xyvs8ChEUfXr6dsWLsPi96vLK+VYM6q
-	SmAHACPu11U16MUR7AEeQqNkHsvo6ABMZBNBvuUb3t85OvcgvJMG1nz1ibJA2v4DUZwTiDlYY1k
-	VPl6jkfYvtExEr/0Bga0EiYv/S8C9YLv4CsKCNQGr0fev66pZSlT5IHFLjSR9IPAqxDlcwdGZ2f
-	qmdZNCf15bh63nkJNcqkiyPQnVBr7X7U5B6H6IBax+jKQ6mv4TMxY8uY0ARsWUJX7qo44PmczZe
-	QFuG47kDdv8I+XHgFV/Yuk2S2frTJ7N+jkVyyu+YfssEvY9RXtyR7h+Ad9Om/DdCExFTlaijtmn
-	BQgz8VwozQUlQbEb+lc8llcMXHBKVOkVgE0LxRRiJgWSudWZ6cVfzp5vDjgKZdltsli8wt06pgw
-	IHjt+1dcCGg7/90ExZkO5iNi7mMixSVS0OqEssbfKsqdun
-X-Google-Smtp-Source: AGHT+IE1l2qHjhEKmRADTOi6Sffd9ZDWdJJe+bxHNB2IY4RDTyXR1ub76QWmBBGMMy/l14v/ENPICA==
-X-Received: by 2002:a05:690c:930f:10b0:781:64f:2b2c with SMTP id 00721157ae682-781064f34d8mr48634477b3.62.1760138155375;
-        Fri, 10 Oct 2025 16:15:55 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-7810727a16fsm8991937b3.53.2025.10.10.16.15.54
+        d=1e100.net; s=20230601; t=1760139239; x=1760744039;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=a1xA83Yb3oeVEOm8svbxrIh8hDf826ozseOj/YaUSGc=;
+        b=QuKBUI5SwOpj1GiHFp1yk1qKRk/lnu7QfExBmSG2Hd7EftaCrubf+vhEiG8Nfbdenq
+         OazXi2Kyyp6BaiAo3hX2jrERTD3Doy3sCJ/B8RF1ImL6WwMW9LA56imQ14PwLvtS7Wqz
+         n33ZeAUX8AIE2WSDHssZCxcHNYKDZoYXJmhxymuPBza8iLTgAhP0l8HWMikNP5AjacQI
+         xbKufxRKXV84Ki9kxNL9wswe81a+Bj30lo6LfCeORBVaNuhr6Xgp91XzTiCwr8NM0Zw0
+         3AwYIvTfRXTOCKBH6bzm0A8off+bgylJ//NKrUz1t3apwBovWrPNWbJWSi8FCcdnzgC6
+         Svpw==
+X-Gm-Message-State: AOJu0YyxXp4CqRmw7ozHmiAL6TJ4iSv6xEyM2d3vOArJKHkzwhrqTUQp
+	1iO9/AAq0QbSLYuAy02zXAPQqfWEfWH1342uqdtCln2r8U1V5qxPd8NaD9faQEN1v67un9Ig
+X-Gm-Gg: ASbGnctr5b9Awp3+e4o+7Tg1ZII9ooT6LT7EUjFX1++KDQlAHJZxK9mBKoFoeApQ7aQ
+	zaf3oMwmNLYNpJegCJ1GIC0fpe3VG73NKAidhCIexly0ks/UMzujIymcnhwl2CBXhWZ5TSsj+iS
+	MepfA6NrW+SpPekok6pa5qwHa/GVcAl3Y9C3nieGTcXOFMgWAJkOvo+gSya03F1uG2V+G+OaPnv
+	3/BAvf3oohmG1BFOIxwrtKmYwRuwcnnZ1JFuaweFsZI8CQ4mnElXtsDULGCPWDbdNELJlwBRy/2
+	E+48kipO5IEK3wgq5mdTxhUDlnAjdZO+NJSrlQMo1xV6vwWym2WY9QuJKAD04ClUJfgIibL3NZm
+	1Gd6BCQofPfjKLb2w12xLKP3fiJQL/8Cb9WGyJ+Mp3oOqEIibr+K87DNUXVsc1j/89l150ZD+Pf
+	a+XuGVkSEYKRNTY0SDsBQW
+X-Google-Smtp-Source: AGHT+IG3xLvakLwv9EgjiYZsZ7EN7nCIHhBPwrKnGlHCtMnv6OZfyvuitagSgqZ2g8WBbaMrwbCWqQ==
+X-Received: by 2002:a05:600d:41f3:b0:45b:7be1:be1f with SMTP id 5b1f17b1804b1-46fa9b092ddmr96438575e9.32.1760139238716;
+        Fri, 10 Oct 2025 16:33:58 -0700 (PDT)
+Received: from localhost.localdomain ([105.113.65.55])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426ce5cfe74sm6079009f8f.35.2025.10.10.16.33.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Oct 2025 16:15:55 -0700 (PDT)
-Date: Fri, 10 Oct 2025 19:15:54 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 00/49] repack: prepare for incremental MIDX-based
- repacking
-Message-ID: <aOmTqt4m/R/YrOGg@nand.local>
-References: <cover.1759097191.git.me@ttaylorr.com>
- <20251010062913.GJ1965904@coredump.intra.peff.net>
+        Fri, 10 Oct 2025 16:33:29 -0700 (PDT)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+To: git@vger.kernel.org
+Cc: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Subject: [PATCH] [Outreachy] commit.c: remove leftover comment
+Date: Sat, 11 Oct 2025 00:33:03 +0100
+Message-ID: <20251010233303.783212-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251010062913.GJ1965904@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 10, 2025 at 02:29:13AM -0400, Jeff King wrote:
-> On Sun, Sep 28, 2025 at 06:07:10PM -0400, Taylor Blau wrote:
->
-> > This series moves the vast majority of the builtin's functionality into
-> > several new compilation units, all grouped under a new repack.h API:
-> >
-> >  * repack.c
-> >  * repack-cruft.c
-> >  * repack-filtered.c
-> >  * repack-geometry.c
-> >  * repack-midx.c
-> >  * repack-promisor.c
->
-> I've read up through patch 37. My eyes were starting to glaze over at
-> that point, and it looked like the patches were starting to get more
-> interesting, so I've saved the rest for another session.
+Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+---
+ commit.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-Thanks for the review thus far!
+diff --git a/commit.c b/commit.c
+index 16d91b2bfc..af20ca7c3d 100644
+--- a/commit.c
++++ b/commit.c
+@@ -475,10 +475,9 @@ int parse_commit_buffer(struct repository *r, struct commit *item, const void *b
+ 	if (item->object.parsed)
+ 		return 0;
+ 	/*
+-	 * Presumably this is leftover from an earlier failed parse;
+-	 * clear it out in preparation for us re-parsing (we'll hit the
+-	 * same error, but that's good, since it lets our caller know
+-	 * the result cannot be trusted.
++	 * Reset the parent list before re-parsing to ensure a clear
++	 * commit state. This avoids carrying over data from a previous
++	 * incomplete or invalid parse.
+ 	 */
+ 	free_commit_list(item->parents);
+ 	item->parents = NULL;
+-- 
+2.43.0
 
-> From what I read, the changes all look reasonable. I brought up a few
-> small naming and interface questions, but I don't think there's anything
-> incorrect here. And there may be diminishing returns in polishing an API
-> which is realistically only going to be called from one place.
->
-> The split you have seems reasonable. It's not quite as clean as one
-> might hope (e.g., repack's existing_packs gets passed around to some of
-> the other subsystems). But again, diminishing returns on trying to
-> untangle it further.
-
-Yeah, I think we could probably go on for quite a bit longer polishing
-the naming, interfaces, etc. I tried to strike a balance in this series
-to change as little as possible while still ending up with a
-halfway-decent looking repack.h ;-).
-
-As you noted, the repack code is extremely fragile/brittle. That is a
-big part of why I both (a) took such an incremental approach as in this
-series and (b) tried to avoid making too many changes as I moved code
-around.
-
-I think that (b) especially leaves us with an opportunity to clean these
-interfaces up after this series has landed, and I intend on doing so. My
-hope is that this series gives us a solid foundation to make those
-changes on, as opposed to further hacking up builtin/repack.c ;-).
-
-Thanks,
-Taylor
