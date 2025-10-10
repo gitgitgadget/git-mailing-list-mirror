@@ -1,53 +1,53 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBF9247284
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 12:28:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E99215077
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 12:28:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760099304; cv=none; b=eEMCTrhXErNByjEV7GI5brtWGgs9Lz9Z5WK1anxwVb8IM3ItANG8iLcnhoHGXCrKzckDNwSvrT/8nVFEOVWy5MCLleIp/VOE7Tkx6+Ygw2Ep39pEema5JBjrIaYpXlzkKvRks/u64AMWMFZAyQqurjiDhEXbOksifJKif5/9tck=
+	t=1760099310; cv=none; b=sIiiadaqHpxE3TiWUFdHYWcIpovr8FAkpVu2j7L2QBF+tZI2DZjxvoDPX7Qifa4/3fjRzDFTLokrV7B2oGZf9mrY6+Mg8OHnvxFa463k2ZRNcUSiV5FHX7LPy0ASXU/uvkKNXl7eCYETsrl8v70R27mLt3bk2QnbxJz2IbTESFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760099304; c=relaxed/simple;
-	bh=46lg0BVONdLTwptAkoDyvtjjbOMr6Jck9rbVeQy2/6g=;
+	s=arc-20240116; t=1760099310; c=relaxed/simple;
+	bh=wXROZjBvLevcdDb5SkOFJcZ8cM7HJlNEUu9Bn8V5src=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f+7e6EeIsVnKk3Mp+bVF1Kc002qXSRO+DtHXOSkmaYI+iNtJtt08EXXaVCyAOPGYHZQqCF56JCKlSjpXvyF7vA4MHbf8xFL95O2fCxO9nmz3KekOZe76zABKuH2/Ay3KwbdED/G8y+SKsWSjLjtGD1vHmElDTyx4qTkPtPfv95I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=h0hP2uCy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aRL8XvhL; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yum567oPtvvqVcjCLL4vXJXOW8ePgujdnB2bntdqaPEPJrj3Xlw8/r+cHlULi68gnsnnh3nntomyBDD8MOb5WDJJjNXnsGDBKTaEBrmp+J5qPXdff3SoaUpC4Mt467e19654ulCHTibVPNd8eeh0d1CSo8kmv5RHMIOhkXmRtno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nuEfufkG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BecbXjZ5; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="h0hP2uCy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aRL8XvhL"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4A8D814001D6;
-	Fri, 10 Oct 2025 08:28:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nuEfufkG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BecbXjZ5"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id B2223EC0214;
+	Fri, 10 Oct 2025 08:28:27 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 10 Oct 2025 08:28:20 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 10 Oct 2025 08:28:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1760099300; x=1760185700; bh=+27pB8jLbB
-	nf1eLSEQbsvPQk6P7vpQ4BZztR8NhWMTs=; b=h0hP2uCy+zj9wrm0S9pfzCReLl
-	/nSJwgCmHuecd6TDywEBexSH2wLGfGi7tKTZf52wlJVJXuL9hpgVZQzWS3xotsnO
-	3ZXlRRxsh2qP1J6TqPDcw+EIJ684tf3EzUJ4hNgwb5gRpn1ZbivmA5Lze1WeC6OX
-	tUT8dwlt8U/BlEz6wPY7i2ft2jN6LUKMPK8IN9GI2WmR5lxPaioi26T90E+gF1yY
-	tP/yaQt4S3B2RgoVqy4C6TzJzbSUooO06gpcje3N650iFqQhOTN9ICOSPWWpALzt
-	YZxDMvaWBmo6Zs6a4JLDZWTkpvEr2zWjqe2KcAvPgtEzQxh7B8CUGHz32WJg==
+	:subject:to:to; s=fm2; t=1760099307; x=1760185707; bh=GbkqDVCBNb
+	F5tyz/DR0BDAr9n/jrqmOOAO68hNab1/M=; b=nuEfufkGiTTmNIqjC954nUl9pq
+	C7ZJ8vGjZwJ8RGK8PFv+Bdb9BvnqnyVrAiq3jD+xRUEnorQBhaHuLiUxJCgC9y67
+	ZENiWFS3F/0XjYf58T2n338ti45a8ExUgkUFcS2U2LM+INh1Q33/hVCm0fGgkcO5
+	CIRtaL/1XMqhiPKywgymtDhdZoGjJ02QEbJxl5OlNmLVlMJmkONqLDJftnkXoSZe
+	DJU6P7N0rzNmTqS+p05siPYJ+6rBAvqIRUpqUxzelvjBBuJROS3fISs3JnKqoiDQ
+	KUPo9rrkkbzNDQt+D06yA5x4MIadvMM1G7zOUwUdEptwTTK+ppFWUQwS7T6g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760099300; x=1760185700; bh=+27pB8jLbBnf1eLSEQbsvPQk6P7vpQ4BZzt
-	R8NhWMTs=; b=aRL8XvhLz3l5UHoqq87HG1c6sZI53ZtaOuyb82fgl9g+yOkIlVL
-	pZlSFjJfPWsAVg2zzeSMkBL2di6oaJ97fCCXPdGVrEamvWW/VudkNAn0ols+Iwv/
-	m80u0rhzd60VFsWmKGFWrHeczsFFB6iyjt3VKF1cwXwfbb6xkPxfA2geFDQAqxdq
-	eTn/2sr5augVfCS+ztrcwpVyr6oI4ihhCDqxqgfjudrd4sIoEMdOB2L0sJA7PTln
-	1qHDeiz2V67L0/+sa6XZjLfnKS4qhs/2dNg0BFWOX0GXvBXSBXLco6PcsGiccuuz
-	swsobUfD+SmHIs1FmvJHsVXF7oVernD5ZkQ==
-X-ME-Sender: <xms:4_voaPm5j_eNIMoPbQ7EDxI3iyv7n-y9-jpSymWqUvlDB4fek5Q3sA>
-    <xme:4_voaGgmReB2M_usrGYtlviJNfAjENcIH7zgkWZhjuF8-3AzVRmfcHSZUheP4pMLu
-    PYbFEiB9UbKX_ZV_jhOEgDQU6WyHtU3a23fGLweMPYZLMKKxEJd4Q>
-X-ME-Received: <xmr:4_voaPckln6Wcp8g2NbBtzZRJqBmHC8lPoiJeZd_H3Cwna9sSypKFsXp1HB1_ezL_OxLR8GvsB3APaG_A_DBsEAuRyGvqqSaWiGpGR2ydw>
+	1760099307; x=1760185707; bh=GbkqDVCBNbF5tyz/DR0BDAr9n/jrqmOOAO6
+	8hNab1/M=; b=BecbXjZ5Mv1hVC95F28KGpez6KoZuer0MfhwG5ikliKvRjlkufa
+	bV/W+sHzb9yATyCn/yCESY974ieUcZAQ7PcnZy3zrkuI/JB1SujwalOw9ZWUG9/K
+	nmo25If0nvzzmrv2yBwW7UKk2CX6YZNoXARtopIaBP3jLnbfStMzNu79Wk5hQK/d
+	4mzOYnmxZwZztWZH4sjVd9sn/Os+AxAKTlBbg1yXrJgkgm7RqG7+4M4ficox+J4O
+	NjJwzVyDOz1nR3jcDPWR77d56YB9zccRsdbex4x1OafgkkvriRV3Dez4bMT5xvj5
+	k0Kk5/zqgagd64SQ7uzxRQT+gprib72h5Sg==
+X-ME-Sender: <xms:6_voaBS-RVI9OrVGZvnADhMloIsYnxdCN7tmYDzoMXP_nIKhVm2xpA>
+    <xme:6_voaOcnWTrGC60CmbW3nj_63rt-7SNcAdWq5DtPAne-JqE-ZWbFV7exK0zniemgb
+    uJXJyF7cHmT8KL1ps4HM_4ZkTa_J339u3QI1Y2VLV9VeZN2R_H26Q>
+X-ME-Received: <xmr:6_voaArihlX1XPaNXO07SBpiojnVWPjNyUn_fs3usuDoz-8H1yt1K8QLXz-aw511WiNT57a_NOit9dKUepFrCDw1yQ7hye0kNC4HMTa_8Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdeltdeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -56,33 +56,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdeltdeiucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffh
-    drnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
+    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrd
+    hnvghtpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrse
     hpohgsohigrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:4_voaOgWxfTP3ZbXorwdx_AIngyAPIn1pMWCmb_1bQWknGA83W8fbw>
-    <xmx:4_voaPz_1P7Vf4sICuaPA2eI-Eqy17H5wavRkIEYsSXhTYPrjgVDSQ>
-    <xmx:4_voaCOFLfJywkcGKPMe6ZjUarsXy3_1YjVoVdrHnNKYGTpxSf8AMg>
-    <xmx:4_voaIWYSyfoTGNBXi3spBaxA92NgvcRm0kiUsll9cyE5fz1q2WgxA>
-    <xmx:5PvoaOCB_jxaBceUcxX6usFl3FzN-CkEdp6JkOKkUmJC0fgjPlOCwn5s>
+X-ME-Proxy: <xmx:6_voaP-pqIoeLMzWwV6onjBb6mR_O5dil14fAi0pwy9INgcUyVhBkw>
+    <xmx:6_voaMdKFdIHUYIVRZSokPyEE4_y8-oFTEYxrwhAn0fEghNLrqkfVw>
+    <xmx:6_voaJK_46Q8S5ZY_Y8rRJ07Gp6VgmU6mznrAR7MubbT9TQQuyp4_Q>
+    <xmx:6_voaMgzthee349U-6M8V4839VDu6ThOHDUrdwUUsaAJSMr-OVCerA>
+    <xmx:6_voaKtS6Hmzt85Ji4-319rSDcAQJe3i_fBb2kSX5F8Ny_eRhGHGL5ZU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Oct 2025 08:28:18 -0400 (EDT)
+ 10 Oct 2025 08:28:26 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 91ba2e19 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 10 Oct 2025 12:28:17 +0000 (UTC)
-Date: Fri, 10 Oct 2025 14:28:09 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 777b7946 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 10 Oct 2025 12:28:25 +0000 (UTC)
+Date: Fri, 10 Oct 2025 14:28:22 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 38/49] builtin/repack.c: inline packs within
- `write_midx_included_packs()`
-Message-ID: <aOj72bpVTCXuFSHN@pks.im>
+Subject: Re: [PATCH 40/49] builtin/repack.c: introduce `struct
+ write_pack_opts`
+Message-ID: <aOj75uPA6cFW9WhN@pks.im>
 References: <cover.1759097191.git.me@ttaylorr.com>
- <c2c7ca9f9e917392de3819ffffffcf78622972b4.1759097191.git.me@ttaylorr.com>
+ <109109618687efeb932bee7dd5882557ab0576f4.1759097191.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,39 +91,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c2c7ca9f9e917392de3819ffffffcf78622972b4.1759097191.git.me@ttaylorr.com>
+In-Reply-To: <109109618687efeb932bee7dd5882557ab0576f4.1759097191.git.me@ttaylorr.com>
 
-On Sun, Sep 28, 2025 at 06:09:40PM -0400, Taylor Blau wrote:
-> To write a MIDX at the end of a repack operation, 'git repack' presently
-> computes the set of packs to write into the MIDX, before invoking
-> `write_midx_included_packs()` with a `string_list` containing those
-> packs.
-> 
-> The logic for computing which packs are supposed to appear in the
-> resulting MIDX is within `midx_included_packs()`, where it is aware of
-> details like which cruft pack(s) were written/combined, if/how we did a
-> geometric repack, etc.
-> 
-> Computing this list ourselves before providing it to the sole function
-> to make use of that list `write_midx_included_packs()` is somewhat
-> awkward. In the future, repack will learn how to write incremental
-> MIDXs, which will use a very different pack selection routine.
-> 
-> Instead of doing something like:
-> 
->     struct string_list included_packs = STRING_LIST_INIT_DUP;
->     if (incremental) {
->         midx_incremental_included_packs(&included_packs, ...):
->         write_midx_incremental_included_packs(&included_packs, ...);
->     } else {
->         midx_included_packs(&included_packs, ...):
->         write_midx_included_packs(&included_packs, ...);
->     }
-> 
-> in the future, let's have each function which writes a MIDX be
+On Sun, Sep 28, 2025 at 06:09:51PM -0400, Taylor Blau wrote:
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> index 5fed79e826..6df7c88085 100644
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> @@ -138,9 +138,7 @@ static int finish_pack_objects_cmd(const struct git_hash_algo *algop,
+>  	return finish_command(cmd);
+>  }
+>  
+> -static int write_filtered_pack(const struct pack_objects_args *args,
+> -			       const char *destination,
+> -			       const char *pack_prefix,
+> +static int write_filtered_pack(struct write_pack_opts *opts,
+>  			       struct existing_packs *existing,
+>  			       struct string_list *names)
 
-s/writes/that &/
-
-Other than that this patch LGTM.
+Is there any reason why the new argument isn't marked as `const`?
 
 Patrick
