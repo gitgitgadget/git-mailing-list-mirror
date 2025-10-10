@@ -1,53 +1,53 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C931547F2
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 05:34:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93D91E5B88
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 05:36:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760074479; cv=none; b=MNcQW2NIVcbxuGajipP8yP+aXYfNDaE+/p8X5zqcHJxpKC20dueMVDwIyjhk+EzaRwVddpiXNU4QJDtn5brpAfefJ6LIKPKLTvl3EXjiKTbn+NabOBQtqgl5cxZ/XPXLkh1FDQFLoNixEu5eq3HupfuSfP38AHKFK5/5sKZzEBc=
+	t=1760074614; cv=none; b=Db6hSEXvfLf0fRH1quuyL7k9lsQBTi2pWv4tYK8eYmajvazL++nSbsCb2BrhFToCBrkt48Blyq8hVgBDHzk0yyzKRXB0tDOZClvEL4SEQztW0iBR0zaqseUP9e6y4kclKRFHsgzOpkHVbkCEJXu5eAwbibXFWxfs7r+WSFgkbwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760074479; c=relaxed/simple;
-	bh=wRC1kpYBG/Khyn0ph5IlwE6U3Kwwyy8hSrD6Mgr2Bt0=;
+	s=arc-20240116; t=1760074614; c=relaxed/simple;
+	bh=AKlPmtdpffF4spgNVRRbwDzzLVmNFjB0Avk9QnQw3gI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EygyhzGWjn2FlzVUTJlwjZIch49mYwhb1K3q3rOh1tH1Ndv9UnxyNl4KPOeOaz7uvT34CDA3wNteTCaYjfB9L0pVPDnWSnT6/O+/7clxEj91W8MLvz6i7dMgukYs1CaukUtDpup74wAP3j1lyLmNTeOEjHEMSezia50huQwOR4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MohzIp4J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SGw1dDCy; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=UYo4W+eLymy2q//Glm2zuKvDBs1VSu3WpJTAWO+Lz5GxsyxRDyrKWhoEmgT7iyFNVwZI937fNU0s/zz59kE/nEKwE1PRpQQdmJFytklycP76VzmL63dipfpO760a9Vmcp6iPchpHC4U+rF8LC/NbSA8xGqrM0kv4eAB6a7qQlZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kA3X+QGm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qnqTvsEr; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MohzIp4J";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SGw1dDCy"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 91AEC1400210;
-	Fri, 10 Oct 2025 01:34:36 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kA3X+QGm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qnqTvsEr"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id EBC1DEC0214;
+	Fri, 10 Oct 2025 01:36:51 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Fri, 10 Oct 2025 01:34:36 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 10 Oct 2025 01:36:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1760074476; x=1760160876; bh=GTfvVWHON5
-	yeiSmzjoyeP25JWLQwz3RIfYvbGU10jUk=; b=MohzIp4JzmdnVwMwD1MzdxpOLq
-	jonhlJMZl3lhDnAJpalbPpIFxc21lCiWZ9mb8Jrz5VWsc7Hvlr8nQufmiahf+9KE
-	qOtOGGyepNVIozm/Kop5+CWkII8Y8krqd7tuAR73WNWNnB8Wva1cOYetEvWdlPBX
-	NqeDXTpu6IHe011f5nHnSY/1lBK+y+YKvktlB37QHaCubwmO3NCjoeVeUqZl5O8h
-	Dm4wHPIStqZY3glu8DUwrgWQjb0VaeVAmoQZXYeWZis0BmB7EyQfaKsrzOYMYuKw
-	BcFzwMe9hNmPG8JebYrCB3riDP3geYZpNrKWWkTXyoPGhulbEySXbP+X60mg==
+	:subject:to:to; s=fm2; t=1760074611; x=1760161011; bh=b+/US0rGLs
+	WErAOo/tIyJA80q2FEBBvZDK4NJ8u/vc8=; b=kA3X+QGm2DF3HtNyvHTWJz6Kxw
+	RRptf1ZfT5+ohmLwPdddNZAfl6Vuf5h/abzxfMauQ2JBYSWe6OMPblpbkkecGvYX
+	oyF9GsBFz+7o2kHIlzMol3gyKTzqq9FKVOSYo0GZTVCGiHWHIJiDYC30WSilN1Mv
+	omfTuJoN+PEPHjuDxqnGQ4KQQ7sw5/aUYb2COC1Kur746NCkt9WVvtOFl2ltqXch
+	db8t4Q/bF+R6MEKLfufZ4r/0ruC1fufJSsxhcvx/ONZOeq34exrDxEkqeuMlOB5b
+	HXDdvIKOQmQ8qB2ag4PIG8q15OXU/TXqxC7vaaKoZog8qKtqZcEIRM+o95cA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760074476; x=1760160876; bh=GTfvVWHON5yeiSmzjoyeP25JWLQwz3RIfYv
-	bGU10jUk=; b=SGw1dDCyIJBA4ZYqsIZITMCj67zgstHOdYy6xo+gzQQnLEZrxoT
-	v6WqhoMW7Boly3uczIKAAnOvclZ/yvsnZ/DtliAleSGOOO8ZsWTnQwg1QC5eMpVX
-	a7ymhFYwccztGmQyH4iCcXm4RjZgJRbcAIS/Pqw3yYfAXLp/doBN1Oa/cD14N8NH
-	sn+TXAdsSfa+6hXfg/IKsQhGi+O7WzM6kWegr1gxwCwQuEwd38VPBLQFTXGQSj3l
-	ucRka66T+3o0JCBLF8hk19u64d2jYq8uBHR+pKzbEGWsvyBxGUsiVw2svk+KPPl0
-	c2Ngx6efGxE5iEE3iXqenaefWE+0qm5xjfg==
-X-ME-Sender: <xms:7JroaHA5wUZPciavDcxIFyfFDmOFuSKQgbGv6wqyn0VncrrKqHRB-g>
-    <xme:7JroaE8M8n4DbRJFrtpmbyslVJk0FfHQbhJEuLH0sNIwBeaD1EpuS4aDNIzDaFzX8
-    OeaPuEv7kmG_GUct5wLCe7nE68FwnnqWEKEfP7afzVft99bXN50sQ>
-X-ME-Received: <xmr:7JroaP8_cJMxcwQo5MHpczQWYeyY8qUx_e8YzDVoRKtNmzXpf51Np3N071EJhA7PQnf2szEsxnU7cmc0u3J9MBGzutYQuDBs6rfnryFjKw>
+	1760074611; x=1760161011; bh=b+/US0rGLsWErAOo/tIyJA80q2FEBBvZDK4
+	NJ8u/vc8=; b=qnqTvsEri6GfuOgvGvNWvbJBzAlu0K1KJ92xbwJQbsCGNNfmu+c
+	KVtsGLPtz79eB+oWBk0pQUXwFafJY9EEBD5hxeSP9axBcsUnADtnuUDHp7vGDNZR
+	MSqCpxhHNIUSGnL3CtH8riFRD1/UsfaxnyMfOPGR17TL1PJbb7/MjiIDXUspY1Yl
+	5NKsdEWlvyeYU6NKJ1Tz214jC6tBu52ss51dpErKg5hekhkV2zDXz54J31q3zSvW
+	oucjDgJFMloxfKWb+yloW4eTNRuK9zGd1LFht8N8vidpTka6sfiRNrrbyNTW32qE
+	zKHZrUVTYnWfoDPaFpvLJMerCjAEI/3/RsA==
+X-ME-Sender: <xms:c5voaFv2dPgBrcwXZS2i4XE2WLAtKzYYp_eSYBLiMlxAMxzKYeYmOA>
+    <xme:c5voaFdnNUjHUkzi_aMVM5poFtvWTRWkF8_61tLgLiaKubXjDgFiOEmqS7fpuZQzS
+    JDiB0NSftimdvH7ouSMDQlC7bkX0QKKl28aHAZWyf72rYHRTw81sNI>
+X-ME-Received: <xmr:c5voaNw3s90Wgk62EpLQMSQjk9U32pJr_wkr5antnweXij54mNV4igQ5PVa6HYH64GoBCBWHX_9_Svs28KcvMQoZ7eF9R08dfFaR0xw90A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdekvdefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -55,28 +55,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdekvdefucetufdote
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgt
-    hhhinhguvghlihhnsehgmhigrdguvg
-X-ME-Proxy: <xmx:7JroaDfdKKowxoB9vj3tRcLbZx1v1fbxz3i47XIxKCZ2snQIspgZmg>
-    <xmx:7JroaAEWOzWGEPLut5pTl04_EUXsaOR3It6udCHBudXJ8ZmgUKCACA>
-    <xmx:7JroaJfFavGvp-jJvEWJMM4FTSgLmGXmoD8wVJKLLm6TJN2W_zeP7A>
-    <xmx:7JroaCHVAj9x24Enaoj50GH4DNDT-P5WpF6Xo9GcOD0mE5Dz1U9j3g>
-    <xmx:7JroaBeDKCqXYP_m3Cjj6ihipmTVuvshzDbtUHRhdX7qYYvaSr6AQFBD>
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehjohhhrghnnhgvsh
+    drshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtghhithhgrggu
+    ghgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhg
+X-ME-Proxy: <xmx:c5voaLF-bola_bODct98ZpJ7J3FjF2Fj3QU3FPcStXGjFTVCiHbIlA>
+    <xmx:c5voaBwtTMBr0RGFHnVtOeFqt0UFvrMyqAaAKizJjiTtnx2vONswBg>
+    <xmx:c5voaMuqXH1UeCgHcyVdZPap-qaZ2u4FTG-6C5ATzlv121FApafLBA>
+    <xmx:c5voaO0t9qZRHTx7-XwxrtcM-gnIHLgkrgdIyNpM2sjR2kTxxQFlbA>
+    <xmx:c5voaLJQuXpgQbZb3Pk3uCqs0kup0gxPNvLGEJvSFNygywT7o7FRlRIz>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Oct 2025 01:34:35 -0400 (EDT)
+ 10 Oct 2025 01:36:50 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2ef4134f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 10 Oct 2025 05:34:34 +0000 (UTC)
-Date: Fri, 10 Oct 2025 07:34:31 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 0eb2f0df (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 10 Oct 2025 05:36:49 +0000 (UTC)
+Date: Fri, 10 Oct 2025 07:36:45 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
 Subject: Re: [PATCH] refs: forbid clang to complain about unreachable code
-Message-ID: <aOia55_sjFQjw1UQ@pks.im>
+Message-ID: <aOibbUqe-gfal6sd@pks.im>
 References: <pull.1984.git.1759995982220.gitgitgadget@gmail.com>
+ <xmqqzf9zddia.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,47 +89,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <pull.1984.git.1759995982220.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqzf9zddia.fsf@gitster.g>
 
-On Thu, Oct 09, 2025 at 07:46:22AM +0000, Johannes Schindelin via GitGitGadget wrote:
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 088b52c740..814decf323 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -3186,7 +3186,13 @@ static int files_transaction_finish(struct ref_store *ref_store,
->  		 * next update. If not, we try and create a regular symref.
->  		 */
->  		if (update->new_target && refs->prefer_symlink_refs)
-> -			if (!create_ref_symlink(lock, update->new_target))
-> +			/*
-> +			 * By using the `NOT_CONSTANT()` trick, we can avoid
-> +			 * errors by `clang`'s `-Wunreachable` logic that would
-> +			 * report that the `continue` statement is not reachable
-> +			 * when `NO_SYMLINK_HEAD` is `#define`d.
-> +			 */
-> +			if (NOT_CONSTANT(!create_ref_symlink(lock, update->new_target)))
->  				continue;
+On Thu, Oct 09, 2025 at 01:30:21PM -0700, Junio C Hamano wrote:
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+> 
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > When `NO_SYMLINK_HEAD` is defined, `create_ref_symlink()` is hard-coded
+> > as `(-1)`, and as a consequence the condition `!create_ref_symlink()`
+> > always evaluates to false, rendering any code guarded by that condition
+> > unreachable.
+> >
+> > Therefore, clang is _technically_ correct when it complains about
+> > unreachable code. It does completely miss the fact that this is okay
+> > because on _other_ platforms, where `NO_SYMLINK_HEAD` is not defined,
+> > the code isn't unreachable at all.
+> >
+> > Let's use the same trick as in 82e79c63642c (git-compat-util: add
+> > NOT_CONSTANT macro and use it in atfork_prepare(), 2025-03-17) to
+> > appease clang while at the same time keeping the `-Wunreachable` flag
+> > to potentially find _actually_ unreachable code.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >     refs: forbid clang to complain about unreachable code
+> >     
+> >     Just upstreamin'
+> 
+> It may not be a bad idea to deprecate core.preferSymlinkRefs now and
+> remove it at Git 3.0 boundary.  Some platforms may not be able to do
+> symbolic links and use it to represent HEAD, but everybody should be
+> able to create a small text file with a single line.
+> 
+> But until then, this is a very reasonable thing to do.
 
-An alternative could be to fix this at the source, e.g. like the below
-(untested) patch. But I don't mind this too much, especially given that
-this here is the only callsite of that function anyway. So please feel
-free to disregard.
-
-Thanks!
+Agreed. I don't see any reason why anyone would like to use symbolic
+refs for this. The reading side for such symrefs may continue to exist
+for a while. But the writing side can go away.
 
 Patrick
-
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index bb2bec3807..cb402a2a54 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2115,7 +2115,7 @@ static int commit_ref_update(struct files_ref_store *refs,
- }
- 
- #ifdef NO_SYMLINK_HEAD
--#define create_ref_symlink(a, b) (-1)
-+#define create_ref_symlink(a, b) NOT_CONSTANT(-1)
- #else
- static int create_ref_symlink(struct ref_lock *lock, const char *target)
- {
-
