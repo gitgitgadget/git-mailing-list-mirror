@@ -1,136 +1,144 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05F22F7463
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 16:44:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB6F18EAB
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 17:05:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760114689; cv=none; b=V7nEtGInsjGoZyL8XOY3oCJemc+X82r/hUV6c+Kad498ygWpptMLI+QatLjfI9BvGEK6/F/dpJ2E21LKhMXegZ7VBTFzTI0w+lmoquYdqpOLKuAkrT6yKlZwC12cInWPvmgcrN2tW6XE4vmwqeezf9Bn285TBd+knAz7X2sL+6c=
+	t=1760115919; cv=none; b=HE7bl4Cr9+ngYrZkbwZt4g/xQcJCnpvaiS6KvtPUhViNPg1arfPRIuMR9tQWQB4omG33WB7UUvKtGusvLTeqRIKGhRN2mkdiWEwbQvJ1r+encNMkTgt4Da70A4ZE4X0iFU1GOvVXFX0xzrZUWYfcxDaOoOcJxIlVNYkGNRLMPE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760114689; c=relaxed/simple;
-	bh=Qg5NeSrxI3xzTIf3mvRqtOLUMDUaxvTaxqD/lcyfQhM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=V/NpGxheDBMXSNRaC//ZFb4O6CIME6EfbrUG7gSTp5kbcD6ziC19ws1mICue5p+YcuR9FbFSgW1GulIsFSJ3gmPSXLSPYYwY9RGuwpTL3SCcTKD87NWOeuFNDANW5UT5DR7FNEEKZXNlLun6uFwxccosxpzYWOGWq1sm1sEXTsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VMecXcn6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZMitc4B6; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1760115919; c=relaxed/simple;
+	bh=mgc5ZWrj84srkpP4e/D4gr1qoKK+mIZEimb5h0QYU4I=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Mlh9+MPBQJ6JLQm7RPvnIbQLlEanUR1d3wv5jpPpUcoVFfd78oinU/KS9M2iF1hU8PODyUj/dKXHnJBLSy+3FUyJfyMcPvwaWUBaHQcozKwIsnzR2tzLY04rRlImmcSM3eDoUGwkQ+O8+dq1mOlxTl//GwtpVzf6kQFQe9LMc1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=dmElRQ1q; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Fcq1fR/K; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=dmElRQ1q; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Fcq1fR/K; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VMecXcn6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZMitc4B6"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id E33BEEC0209;
-	Fri, 10 Oct 2025 12:44:46 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Fri, 10 Oct 2025 12:44:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760114686; x=1760201086; bh=YelA0sk0D6
-	FdkZt3uq6p4n+XBlBdZP0rAoUSdVuZ9KA=; b=VMecXcn6Ddfn9lTfmvN7nF20Su
-	1Oa0JSDFCzuiZmi7Rck44Mh4VEXeILdPKtF4VXBoO7eOjXTjMyuIhq0k0gYJ4LfT
-	vagEVbQKSAjAk2iD+EKT0lsAcppuAxF0GuCTS2q+ur6f5bW2CrdQp0nBxsEaR8yA
-	1AiMmQfMh+Pa43+bCiduqDcDaoLxVg1vyLLX/Mnuj+4CkalqmYAIxwoLQYSMEYzu
-	2X5GOvP9MNv129Y2SJ94EEqrIvdK8Jydc99W6QHhZs4wyeB8qARiJ5AhLHqcOVzR
-	KWfHWs5ChfIMrLcsKIx+AbAsLwIWU2+bZPkWcb5Pg1+is04qAovDe9HLsjnQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760114686; x=1760201086; bh=YelA0sk0D6FdkZt3uq6p4n+XBlBdZP0rAoU
-	SdVuZ9KA=; b=ZMitc4B6ZuE7r2DQep3uJ/stsqkWZV1zR9cEdYZziPAXqZKpX03
-	k4cbMw6pC5eeWw3QpTeHog/dk6KUNK6moJLRSLi6XuVHEa3ejIvv+T8ggwCpKDzm
-	DtiXhX6JL/aGsoJhY4CAzn3S5PsX8wwvKrBYlvVQU2xRXCCfXzWztJXx8zW55FQw
-	Ss5ip50BBvVeivgYEQ9tnoyYlFXZbgc6R12CsoaLfb3rcCF8vT9tHYOibyNh4nNo
-	MQUK8TCgOQcYwwVttUpNEVybehjZAnJHF+dG97oCSOXQT4+b1Z3J6BGIkVoEs1pu
-	fWqTRKYbYOLNWtrZKB/f4LsKGKy1HKZGvTw==
-X-ME-Sender: <xms:_jfpaGOnAZD7R2KO3QBYe3ng70YmQ1ef4xGdEXv9rTJzQwq8HVPdkA>
-    <xme:_jfpaMYuLaictOSuD8NM8wDKE4iB3LU0kO7LV7WHolSGJZ99a37IRCleFUcpb4QGD
-    niI-stt_Yh8jy0z0vvHzb_xBGtH7_TYPOkAev1tdTlZZr9kFkUrUw>
-X-ME-Received: <xmr:_jfpaKrWSDoQasQz-_CJdecWkUmz12LVjpDbaeM9empQ2JhCkObRQffuXp9M9K_E2h6zrP-SrozLSP7M0aVrVeIoU3PLik0xHNL7>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdelheejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:_jfpaAamYnvnNad8uUfSds7OzlQrg9q5FZA-QA0c682VfikhK_GyaA>
-    <xmx:_jfpaCSQE9bAG8m6xniUGWYzfg4RlBMNrtl5uggLObBErBQgNbNfrw>
-    <xmx:_jfpaH44lt29mtz8xsloTWbNQIkCFTjLDzJlnD-MP_6Uvjp_meq91Q>
-    <xmx:_jfpaHxLshVb0Kw1VqRWHXZUMg8YNL6JgryKDcZsJoj-7e9rgMyoNg>
-    <xmx:_jfpaMh39XNn32YpYJISp11lo26kmfjqa4zSTg_TO5CZ4fZqezhZhM5o>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Oct 2025 12:44:46 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] ci: fix broken jobs on Ubuntu 25.10 caused by switch to
- sudo-rs(1)
-In-Reply-To: <20251010-b4-pks-ci-ubuntu-sudo-rs-v1-1-88cc846d251c@pks.im>
-	(Patrick Steinhardt's message of "Fri, 10 Oct 2025 11:41:14 +0200")
-References: <20251010-b4-pks-ci-ubuntu-sudo-rs-v1-1-88cc846d251c@pks.im>
-Date: Fri, 10 Oct 2025 09:44:44 -0700
-Message-ID: <xmqqzf9y905f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="dmElRQ1q";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Fcq1fR/K";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="dmElRQ1q";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Fcq1fR/K"
+Received: from tenko.suse.cz (unknown [10.100.205.182])
+	by smtp-out1.suse.de (Postfix) with ESMTP id BF53B21AB2;
+	Fri, 10 Oct 2025 17:05:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1760115914; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=M+4Ps5kn7cNDCRoCrNz7z+W3ccvTZU8n3z/q837/Z3o=;
+	b=dmElRQ1qoVF9vX05GMOnwQ/3kBxP73YF9XMGDU1ybaPnqKAOLA43QD6wTITkgHaoLwA41s
+	ltkPT9g8lkamI9howm1dbwrUAamn3WMhE9C3leXngkZNUkPhbEKIgwQ+gTL9dXxRLCB7Gx
+	t53zY9qkJIcDKtSTJePQIOV2TYMGbnM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1760115914;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=M+4Ps5kn7cNDCRoCrNz7z+W3ccvTZU8n3z/q837/Z3o=;
+	b=Fcq1fR/KWnoZQgulFGBjgDJQlhd54tHjvBOFqX/Hzzp16AbGmPbbyl3OIvqf7e90MZ88O9
+	UhIgTNpksuL/DzAA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1760115914; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=M+4Ps5kn7cNDCRoCrNz7z+W3ccvTZU8n3z/q837/Z3o=;
+	b=dmElRQ1qoVF9vX05GMOnwQ/3kBxP73YF9XMGDU1ybaPnqKAOLA43QD6wTITkgHaoLwA41s
+	ltkPT9g8lkamI9howm1dbwrUAamn3WMhE9C3leXngkZNUkPhbEKIgwQ+gTL9dXxRLCB7Gx
+	t53zY9qkJIcDKtSTJePQIOV2TYMGbnM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1760115914;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=M+4Ps5kn7cNDCRoCrNz7z+W3ccvTZU8n3z/q837/Z3o=;
+	b=Fcq1fR/KWnoZQgulFGBjgDJQlhd54tHjvBOFqX/Hzzp16AbGmPbbyl3OIvqf7e90MZ88O9
+	UhIgTNpksuL/DzAA==
+From: Michal Suchanek <msuchanek@suse.de>
+To: git@vger.kernel.org
+Cc: Michal Suchanek <msuchanek@suse.de>,
+	=?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <avila.jn@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Sergey Organov <sorganov@gmail.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Jason Cho <jason11choca@proton.me>,
+	"Jakub T. Jankiewicz" <jcubic@jcubic.pl>
+Subject: [PATCH v2 1/2] doc: git-worktree: Link to examples
+Date: Fri, 10 Oct 2025 19:04:57 +0200
+Message-ID: <6477f32e23e732fdcc5a9585cc945db8f13d736e.1760115862.git.msuchanek@suse.de>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <a203b35538847f3c9358a5ae26fb4ebea5734cfc.1759420102.git.msuchanek@suse.de>
+References: <a203b35538847f3c9358a5ae26fb4ebea5734cfc.1759420102.git.msuchanek@suse.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Spam-Level: 
+X-Spamd-Result: default: False [-1.30 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_MISSING_CHARSET(0.50)[];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	TAGGED_RCPT(0.00)[];
+	ARC_NA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RCVD_COUNT_ZERO(0.00)[0];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[suse.de,gmail.com,pobox.com,sunshineco.com,proton.me,jcubic.pl];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	FROM_HAS_DN(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com]
+X-Spam-Flag: NO
+X-Spam-Score: -1.30
 
-Patrick Steinhardt <ps@pks.im> writes:
+Also add advice to put new worktrees outside of existing ones.
 
-> Ubuntu 25.10 has been released. One prominent change in this version of
-> Ubuntu is the switch to some Rust-based utilities. Part of this switch
-> is also that Ubuntu now defaults to sudo-rs(1).
->
-> Unfortunately, this breaks our CI because sudo-rs(1) does not support
-> the `--preserve-env` flag. Let's revert back to the C-based sudo(1)
-> implementation to fix this.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-> Hi,
->
-> this breaks a bunch of our CI jobs, both for GitHub and GitLab. It would
-> probably make sense to fast-track the fix.
+Signed-off-by: Michal Suchanek <msuchanek@suse.de>
+---
+v2: Improve formatting
+---
+ Documentation/git-worktree.adoc | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-It is curious why this is done outside Ubuntu.  The context is that
-the outermost case "$distro" has this arm
+diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree.adoc
+index 389e669ac0..a580f4c072 100644
+--- a/Documentation/git-worktree.adoc
++++ b/Documentation/git-worktree.adoc
+@@ -79,6 +79,9 @@ with a matching name, treat as equivalent to:
+ $ git worktree add --track -b <branch> <path> <remote>/<branch>
+ ------------
+ +
++For best results it is advised to specify _<path>_ outside of the repository
++and existing worktrees - see <<EXAMPLES,EXAMPLES>>
+++
+ If the branch exists in multiple remotes and one of them is named by
+ the `checkout.defaultRemote` configuration variable, we'll use that
+ one for the purposes of disambiguation, even if the `<branch>` isn't
+@@ -502,6 +505,7 @@ locked "reason\nwhy is locked"
+ ...
+ ------------
+ 
++[[EXAMPLES]]
+ EXAMPLES
+ --------
+ You are in the middle of a refactoring session and your boss comes in and
+-- 
+2.51.0
 
-    ubuntu-*|i386/ubuntu-*|debian-*)
-
-which is where the patched code appears.
-
-> @@ -65,6 +65,15 @@ ubuntu-*|i386/ubuntu-*|debian-*)
->  		libsecret-1-dev libpcre2-dev meson ninja-build pkg-config cargo \
->  		${CC_PACKAGE:-${CC:-gcc}} $PYTHON_PACKAGE
->  
-> +	# Starting with Ubuntu 25.10, sudo can now be provided via either
-> +	# sudo(1) or sudo-rs(1), with the latter being the default. The problem
-> +	# is that it does not support `--preserve-env` though, which we rely on
-> +	# in our CI. We thus revert back to the C implementation.
-> +	if test -f /etc/alternatives/sudo
-> +	then
-> +		sudo update-alternatives --set sudo /usr/bin/sudo.ws
-> +	fi
-
-So at least shouldn't we be limiting ourselves to do this only when
-/usr/bin/sudo.ws exists?  Or do it in the nested case "$distro" that
-immediately follows this one to limit the effect only to Ubuntu
-(which may need to make this into a helper function that is called
-for both ubuntu-* and i386/ubuntu-* arms)?
-
->  	case "$distro" in
->  	ubuntu-*)
->  		mkdir --parents "$CUSTOM_PATH"
-
-Thanks.
