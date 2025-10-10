@@ -1,113 +1,138 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A30C2E0
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 07:07:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FEC221277
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 08:50:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760080032; cv=none; b=VAi8MpdyTFt8NgC47uzj7gGGIxKdUvJRZ3PZsWZVdD0Aryx1fJJ9uMhP8HLh51+79KqzPp6cpRvnnKWouBD2We2rgzAwnsQHePKnIm46q7w4xA9bHDrQChNgMSjZ8wiHGiIvz52R8iTXAXtTz5P4a3CAv4KuzWtCJIIDqRaIulk=
+	t=1760086248; cv=none; b=lGvvZgqc9AgPwjHh2jg30IZ3kqWZyiwMiSXcLEMsxyEYE3iz3V0r60+fDHOdNtWZ/BkQFQlKM7qHn5doyFFac6xt9FLgpIhpIs/w40U0vqPbq5u+HBcg8zmJTcwZmt3di2FD1Be7z7KKYG2GOLLvTMH7FoKSrZSvt3oj/PFJ/LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760080032; c=relaxed/simple;
-	bh=IV6LfGe2vqnjVV2ZMKlbX5CA44rkN6VKRq+GSr3azYE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nmryAL13s4kZr5E7/2oC41ISQBWiOPIQ6qGxBN3auPAIreQfCfwzm3iD9mtsHi2FQVr3eGCtQbbhvrYpyv7y0KNEQ5ysN419ruSa59l+MoYkUw5DYpHiX6QGJknqMpuZapB6JwyjMp72DHy986ZZ4uZKMzQgf6QYql85J8Ma/Sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CFX+i8mT; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760086248; c=relaxed/simple;
+	bh=VmhVg88PlLyrYBz76qRT06Vr+tqaaCW7YdOQgkcL1fA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FGca6xQgyH4pe00vj0NnSZNfuOaTLs4h60anrZ4H8Heu2cAiv2KhXwHi+uSsw0JeQhraHFT9OlcMBacgzc2RhzMsYI0jm5RP/tiB5R3x2MtSJXwqRgTnOyYi/+ygDFI6Ajjlut0c3VM0CCLHhYD5uO8nzSiQLqiwVU85PkuG6Z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YzO17aC6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ClczqsWx; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CFX+i8mT"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-b3da3b34950so282189766b.3
-        for <git@vger.kernel.org>; Fri, 10 Oct 2025 00:07:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760080028; x=1760684828; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1J/FYIPrQKhfSQFCZxc7FRYj8dtZ30o71+AErYESaRM=;
-        b=CFX+i8mT58S+3BMFB9CyVvzj6jTHH8CVsjT2RWfwPOktUtwlot9eWcNVmP5Nen43fM
-         ROQ+f8MOkQVeFXxLrHiH7/Udxqybrf0+LUPpWgZEPAXKXbjw59jQEv5EjIEt8HHQW3Vb
-         U3B/fM1bI2HPKzt5Dprb26ZQLrtdoOTM4CR7TgBbO2i3+M2kC5YBsSivA6SAwoMzN1d2
-         4NmpQISKEyKaOqkKwCCGhQtU+lVFv50G6S087EytRTTnKVmGuX52e349KcgjpUuYHUKO
-         I4/wgCdmVT/BGlP3R6sjLBO/zVYzSGaUqAXlQIBMdcAkcdXn1j/KCRNSjSDe6f7vJPNK
-         2vxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760080028; x=1760684828;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1J/FYIPrQKhfSQFCZxc7FRYj8dtZ30o71+AErYESaRM=;
-        b=rRXHA4t7YxuEniP5JgxqPbMtSoae0YhDF+ola4fo4GF84y1u3sGAnSgYgku6vYiEJK
-         DbSfHbQ+916UIOFtg2jQ56sNtfPFxjCnqmRL7lnBRPQ8zEtXFa9GuM+CGdRmO35OvLZv
-         QDZYNaobSLVv1jblypdazIUKdDaQWfheRcqfyKBtpZzT/C7r3mRrixa2Bo6tPUBcioEo
-         +1kIr5j9RWAZX6CeDaSg4CeEgQPXKW5AU9EUDisHSeRsskxg6qEOIapIRekuOMS1jT4E
-         UXw2Awt/mACk456ju8NJ9dhFkjDeIMhazEj9rzbHqk98H+LifWsAet0h9SmcBZWdEzYO
-         Ylew==
-X-Gm-Message-State: AOJu0YyJTiR+AOCK83LciAQTksyjSTh5/m1x6WntrN7qRqduO0FbE52i
-	TTJT+KlO2GF+37qQlP13vV69uE1N8v7B3AMeFQ1s70ABuKY29bPf4+97KcFuwu0UrMqIcq0D2a0
-	KbC9Rj70CxICiyj7YVAJxCcmkcgfVYVw=
-X-Gm-Gg: ASbGncsZLmni4FT/odqXbvN+KgVsgOZiBwG5mXUTc8FYMkKGXdGuGPCabnjwygp6mSY
-	RMllZzQEVJrpmeCmTmO4YzFojzt2CZXJmKqZRmkodnKXtxg3aN4ZZTeD+7enPraMbqGKNXpNaCr
-	AlCYIRboy06ioMd6MyugSb2krvlW8fP15y/zCnNwn3cDPxoxUefhZnpBGq/kqPpVsnCi7k1Abpd
-	s28y+tpnTN+WzvVFUWPJypbYOmbw6shpSxu
-X-Google-Smtp-Source: AGHT+IG8ZWtQlmmkWz6TD0RiBhuhs6deSPSvjc3o9EFdM/0NULM77XywS/QQ8IgFLAGew8AsbexENsrogpCmnTfP4fg=
-X-Received: by 2002:a17:906:7949:b0:b3c:bb7a:c366 with SMTP id
- a640c23a62f3a-b50a9b62b79mr1013202766b.7.1760080027778; Fri, 10 Oct 2025
- 00:07:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YzO17aC6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ClczqsWx"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 697841D000B5;
+	Fri, 10 Oct 2025 04:50:45 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Fri, 10 Oct 2025 04:50:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1760086245;
+	 x=1760172645; bh=otEXDH7008DmEiMFR7qwMqjjkajPHQuzZKchMJq4PQo=; b=
+	YzO17aC6saMk1MUSpE2vH/HYMWIlpXgGImYB4sClnfFzv8shKtS5X1eLkF8Hc0bw
+	dpHRBuIpCjw+5WMsBh1SSTzAtNBbWuYKGSAkHcFus0JkWKBbIUyShN4GrbnQA7H4
+	/RVuIwBFIqCDOu8b5kB6ljAGZ3HeihYPhjWD4SXKWpPq71HNqIIIG1W6SfjkzeDt
+	A1FKubs3Z3IkLVwrD4zwHZ5M/f4He+mufJsOnRgEUNPntHC1FF9cdTOfFP8qHHkX
+	ku/zbkkthpVNiH72Tljl2A8mQ57+5+nUuCk7Y1FjeWYR122B187huKPc5DjJQaYO
+	1woYJUZUNSj5H26Nq5sLVg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760086245; x=
+	1760172645; bh=otEXDH7008DmEiMFR7qwMqjjkajPHQuzZKchMJq4PQo=; b=C
+	lczqsWx329kkbb0mPa23TVoIWmiejwgEcpyiYTmEFmT8Dbtdnt82QiFMNzyz66XX
+	bbzLf3yONUQAcaWCK93yF+y2pYxjJlTMB7UanKJx0BmfuGJFjShCt7vuJivIrZVb
+	Sou4klbhZUw90yfCW2dH+3hakI6QVbo3IezQssSD56i3VHLlYxYLXPdmQ3hwJ5qz
+	lYgjsG9uwoOmQMMB0rYYJXdgkJXSinGmzhZ8Mn9mYNCmkiqtk3V1woxKcoToik5+
+	oIph5lIQ/QeFFH2Zj9+L0QxsRDGF1UaN/Cl0Y8/QF8NOAnX+pwonKeroy+/bF15v
+	GwcwtKMgOrcxXPr7cL2dQ==
+X-ME-Sender: <xms:5MjoaM3FqfzAKcwbVQfUjK-JjGfkVS5KlHZQ-HkQlnrh9dV2xOUMeQ>
+    <xme:5MjoaN9MKFbi-qnH8Au_pBCIN-iHUHahwpjKJBWGNOnAcmFHYnzzegB02926JHJp8
+    o6gHa483uZdplp7bRoA7iBBc0DaNvuqA_J_BITMiP6PhFkNo_Zh4g>
+X-ME-Received: <xmr:5MjoaNOn38Yv-CRBLFzVi3_pIOv5-AmCeGs5mwEgZiJOXwV1uJzRXaVew529m15-VBlXm85ECkEtELeWo-3GXYdkPi50UOaPmm7G>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdekieefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
+    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtg
+    hpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:5cjoaBcxJ9SQupsviSut56l6mi76imd1QWbtfEchWiqxvHwfp9rwiw>
+    <xmx:5cjoaMVNFPPVaWUbOCVefLSgO1THVQbTe5ZQN_OGTquusUZzWQW0jA>
+    <xmx:5cjoaJh0HElIgmO84zXhDkMiWDl7lzqreJiUbE5DMMkugjQalrNTWA>
+    <xmx:5cjoaL98N1SHZmeg8hgN9nmWVrTAimO_CqyTqwFxljMOEJe_vh1vdQ>
+    <xmx:5cjoaGoTghcTGWs_Yaz7Fbd73PLbqzDW-mItnYhidNmP0omjDpU_JnBM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 Oct 2025 04:50:44 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
+  =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH] doc: patch-id: convert to the modern synopsis style
+In-Reply-To: <978261e3be4.1760043036.git.code@khaugsbakk.name>
+	(kristofferhaugsbakk@fastmail.com's message of "Thu, 9 Oct 2025
+	22:53:53 +0200")
+References: <978261e3be4.1760043036.git.code@khaugsbakk.name>
+Date: Fri, 10 Oct 2025 01:50:43 -0700
+Message-ID: <xmqqcy6vb0nw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251007122958.1089680-1-christian.couder@gmail.com>
- <20251009122457.1273701-1-christian.couder@gmail.com> <20251009122457.1273701-2-christian.couder@gmail.com>
- <xmqqsefrblk5.fsf@gitster.g>
-In-Reply-To: <xmqqsefrblk5.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 10 Oct 2025 09:06:55 +0200
-X-Gm-Features: AS18NWA7TNjSjTHe687OA5ihCNueBSlsSAteU3BmGcHvVa1EL3_FZTaa1-Nhb6A
-Message-ID: <CAP8UFD10eMwKdacEzLumdXUghV2nYZViDT4o44u1qgXVU5Pzew@mail.gmail.com>
-Subject: Re: [PATCH v2 1/5] doc: git-tag: stop focusing on GPG signed tags
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, 
-	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Todd Zullinger <tmz@pobox.com>, 
-	Collin Funk <collin.funk1@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 10, 2025 at 3:19=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> >  -s::
-> >  --sign::
-> > -     Make a GPG-signed tag, using the default e-mail address's key.
-> > ...
-> > +     Make a cryptographically signed tag, using the default signing
-> > ...
-> >  -u <key-id>::
-> >  --local-user=3D<key-id>::
-> > -     Make a GPG-signed tag, using the given key.
-> > +     Make a cryptographically signed tag using the given key. The
->
-> Given the above ...
->
-> >  -v::
-> >  --verify::
-> > -     Verify the GPG signature of the given tag names.
-> > +     Verify the signature of the given tag names.
->
-> ... it would be more consistent to say it with "cryptographic"
-> somewhere.  Also what we verify are "tags", not their names.
-> So, something like
->
->         Verify the cryptographic signature of the given tags.
->
-> perhaps?
+kristofferhaugsbakk@fastmail.com writes:
 
-Yeah, it looks better. I have changed this in my current version, and
-will send it in a v3 in a few days.
+>     This depends on the topic kh/doc-patch-id-markup-fix (39969438 (doc:
+>     patch-id: fix accidental literal blocks, 2025-09-29) merged into
+>     v2.50.0 (because that’s what the topic is based on).
+>     
+>     (is there a “reference” convention for mentioning a topic + commit?)
 
-Thanks.
+The above is perfectly understandable.
+
+>     This is part one of a multi-series effort focusing on this
+>     documentation page. Technically that intent started with topic
+>     kh/doc-patch-id-markup-fix, but I published that before I learned
+>     about the idea presented in <cover.1759873165.git.me@ttaylorr.com>.
+>     So this gets named “part one” in the cover letter (and maybe on the
+>     topic name).
+>     
+>     The current plan for parts 2–5:
+>     
+>     2. Various smaller fixups (many small patches/commits)
+>     3. Mention the two config variables in git-config(1)
+>     4. Make it more clear that you can feed multiple diffs to this command
+>     5. An “Examples” section
+
+Quite honestly, this smells like making a mountain out of a
+molehill.  5-patch topic that focuses on improving a single
+documentation page is nothing unusual, but it is very unusual and
+awkward to handle for a topic that focuses on improving a single
+documentation page is spread across 5 separate topics, each building
+on top of the previous one.
+
+>     Why a multi-part series?  It started with the idea of (1) emphasizing
+>     that this command can take multiple patches, and (2) making an
+>     Examples. But then I saw other things to fix. And they ought to go
+>     first... eventually I ended up with many commits or ideas.
+
+Perhaps then after you built up the final shape, you'd need time to
+ruminate over it and possibly reorganize to find the best order and
+organization to present it as a N-patch single series?  Typically, a
+collection of thoughts presented in the order they came to one's mind
+is much harder to judge, relative to an effort to tell a coherent story
+that moves to a goal.
+
+But we'll see.
