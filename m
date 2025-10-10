@@ -1,78 +1,77 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8838D2798EA
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 22:58:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C377EACD
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 23:00:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760137096; cv=none; b=dgWu63WMwMz3WBvN04nr5rNamE/7CNPId0yvoDnlF2149sDo3o1xPWtuafGqpkUDkD9jA5/lxePb7sorJy9AvlDtFQynOpaQSQoHkRkQv27L4b26nOXGrJxrJEJi3coaCB6CLINN3rlnlw72af7iytH9b9ehf3Wd9GirpPfPfC0=
+	t=1760137255; cv=none; b=AtQFLmGyB0S36dweZKhYdKtVxs0+454MyW7B6hAQE2iCNDEQHyaMPwaHfmfAlvNlg0CwCFLjlL4gz/oz7c6chrnuudMW6DapUIWJokptl0gCZUwRE6K0Wt+jQEngiG9Q5OtBoA5ze6w1DqJhL3mIRvQvBzxrKehZh3/USEre8D4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760137096; c=relaxed/simple;
-	bh=iNGbjJvcXvKmEEOuHUJp30tuB0UXB2Am6T3Sema5114=;
+	s=arc-20240116; t=1760137255; c=relaxed/simple;
+	bh=TOXLJEyP76u9XsdsIFxbS/xbune/hJoQQXxIOeUR0Ks=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jHUTNgQYRCJU9shTRvfJVAb1Jm/cB+i5hr/c3a76iHhYNwRgiGLDvtJ4N2ELAUOTrEiiSbeN4Wpld2EiKW8cALX0g5ONfXIIAyWve4JNKY8+Uqsxg8zGz4OFijfPqsbm28tRPVCmkpv+vG1lsS/vceudwznHp5OfzpvXZE+mLjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=bAfjD+0C; arc=none smtp.client-ip=209.85.128.171
+	 Content-Type:Content-Disposition:In-Reply-To; b=LhMskXRq9Py6LLZsmtr1dkROKb15aP4DX1EiGmo8ecK/bLgrqr5F4ylinPKw1l4vfBDXy0GdK+VFj2bx5bHiQjSJ+5ql2+6mOzm5a/6qPxeFA1QW+CA6kO9iflxeBhklCs7Kb7RFp3QHFSmg4VAY1FuH4DIciSVzcc8sdbRnc7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=glkVBoWZ; arc=none smtp.client-ip=74.125.224.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="bAfjD+0C"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-72ce9790ab3so26020947b3.1
-        for <git@vger.kernel.org>; Fri, 10 Oct 2025 15:58:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="glkVBoWZ"
+Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-6353ff1a78dso2468692d50.0
+        for <git@vger.kernel.org>; Fri, 10 Oct 2025 16:00:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1760137093; x=1760741893; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1760137253; x=1760742053; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=DG+CpT7sk9hQ3SPeqvNU2a/QKUHPdCjjhhtbWNpmlnI=;
-        b=bAfjD+0CiYcfjYTnL8jTsUNWhaN+/baihSMOcQLf6oqeyL5oUCN77XCwtm3rYUtMFH
-         SGv1KO1vOMo51H9BFA2Tstc0Qa7HjwsApu5SssBQ9MfNsy8o1wmDi3l7roamZoPyCdZ8
-         s4/QIAppRKlgT1M66iFE8S6dyQM4aUVSmzi3WReTA5IS7zj5WNTxbLRTS0VFc0T99gDW
-         XHpLfKgZ2378UKeneorRJnGwzGxPCsdFiLxH0SJFtEOpu7imH1cbuELBTnQBa6NR5m3D
-         xvyOUFo817kIEnpAKMeUWKSzMvKSCE8SyC9xEIIEXGDZBgRoXT0HatJU+lqllTEoj2xq
-         4IaA==
+        bh=jTR/KvBhh1/3ZWhqEEm6CDNx/eeYjWMgr6rj41rrI7E=;
+        b=glkVBoWZhu9Frp225NfsN9Cyrhs+bVcHWT3L649oSi98uoxIcm41OEYG69ByH2MRDX
+         Vt1dg/rFfoAxytjEV01Jb3SB7exyK18gk9QSDvL2jV9WNHlvtdShoYOEfxTz5CATWxBV
+         eu8vGsD0sGGdY3Qa11eGmdIQI4YaDrlpwuJJ82LlxDjnwOeywykMy9S4RF6cUcs4bUhO
+         /thZRD/0VRf/WIu1+uXplGFVFE0RFIPR+27/3r2gOxoNjoGiiD11WErdCRHWNabK0mEp
+         s0v8l8rx3YpodbGEKurWW2KUU5eIvwQ83W6dB7qe/Sd7NXLriV4qIQK0nZGCCLFlwren
+         z/PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760137093; x=1760741893;
+        d=1e100.net; s=20230601; t=1760137253; x=1760742053;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DG+CpT7sk9hQ3SPeqvNU2a/QKUHPdCjjhhtbWNpmlnI=;
-        b=S15A4/eDDMyFMogz965eB5RlVHUb3VZrjw98TA9fWVgwgpnkau8mJTou+aSMYkTRyY
-         DHgFlreUrusmKmuXrUMi+PvKh7VMvaiRLb1ackrcjpDjc96dRWWwXZrjM7FRVCz4PzJs
-         IZR8nWkLtUJf3CH+XhCLsyH6AJKh21aAAReQ6NKF4MX77gMFF10C7ItJN7Dei4PaFwxf
-         wDG4Jdt3/zvJJ0iugfxSmvwGwlkocbbQf71B1D0jZ/HycpdMYj5HBU1PlKgPpCGCLcIt
-         46wccH4RORVF/gZipBx6EHYjxi/5k9WUSoX11Cf8NN9AlFKgpdZKdFIa+4pqsM2yJ5Si
-         08sQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVn3tNvIaKw3CYDyUQ81D1r0mdlxX9MUBD5NDnlO9I2Tr/SpjSWE1mnM/5RMbvGHnbcKCg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy4F/ZhXfNeOFoPjAwu11XVZKlDgptVCq9WC7R3mF5Cq4wbCC+v
-	m6BwKzFnvvzzY4cl5GoSNy/fPrXv7rSAf8oVIHqdqV7xA+0sSwJdUsIkeHKW5CSzB+4=
-X-Gm-Gg: ASbGncvc8PMPftGsAkq2AfpmgT3MpErTH0gQBo51Bcx5MeudrFyhO9DGM2pKsL2hzLB
-	5uSo2/pMYmwP1KEVXRDWgtP5+XG2rTbeTudBGeYKQdflFrBb7hSrRV0dnlrxPAxDRmsrkmw4af4
-	+w7oov7zw1/leOdNf1ZeWzz3gW+LBc8I3Sc7UQb0pSPPSMN2ak8p7yb5p9t/WVIKoWszTL7eVwv
-	7jYVA/9m94MsKrpw7bhhDYLUzasS6mvyemqrctBjQlp+dhwPGUlKYoTybeXCpl+6DWHANpAVfNt
-	wTPFYek8gxH3xgtrmCCKJkJ/r48y894WMzK8+Oztxrje6ZDfkgDHp4Dq643EBYnxzhalX7aWBcm
-	XWnS/K39OEBgAOzRRX9gMRWfyISHXzcGLBoQQ3Audkz5K3XlMy1U3mmcr/22J/UM4d5NMVAwE7F
-	5gH0wDP6pOqsDouv/Kg45xWypk19KOJC/XGnTGkxd4CGrA+8njMnGreJTQy4Oc9+AkEg==
-X-Google-Smtp-Source: AGHT+IF0kMm2rKtUawpAC0UFJpwktcFEN/6Q22y90yckZW2TfzMlQv5ZtEceqcVYP2Dw2sHTD15SFw==
-X-Received: by 2002:a05:690e:154d:10b0:63c:e0bb:2e8c with SMTP id 956f58d0204a3-63ce0bb3a7cmr6290808d50.5.1760137093260;
-        Fri, 10 Oct 2025 15:58:13 -0700 (PDT)
+        bh=jTR/KvBhh1/3ZWhqEEm6CDNx/eeYjWMgr6rj41rrI7E=;
+        b=XP+ZsOiuenuZgFFZf2QxCpH1d+pszk0iE6HZ8zlhTM4/jOMRjDl3Lga3Gw/xXR150S
+         FWRJUCbcUvUKlpiiH3fT8Zpy78cYt52fUZu8LDgXtUZfmeq1ZIVcQndGbWM8L/hJdVvY
+         PKHB6xUVb9HxlC9FZLK4CWNF2DQajb1DWPJu2+xTkfDqInjdj1crEguoNevRD0D+kn99
+         3NHHRI+IXFfmBw1JOjQHlyRyYGeRYxFrw+85xpQ+Zo5SBZ3KxhzjGav4EBpxXhBQKSnF
+         nEuI+zJKlz1MmyHT04kxj6fYYxgIqbBJmG02bV8aN8CI1og7q4ABZiMBvck4RRvW533M
+         XPZQ==
+X-Gm-Message-State: AOJu0YyprJzZCl8raq4fc7GQU2snXX8YeB0VIDBVOSBeoT2LybidFiuJ
+	5/f0Q3xlyQ+V8FrEdHXJQ/+9d+yrgC4XQ0XhRS8NF4CGOF8SHuj3weiXU49y92tyGVo=
+X-Gm-Gg: ASbGnctuvqWNEz+k4D1Qeb0uxYn2o5hPUSUJIT7vIXRwf/+sypCiJ1rqB0TpzdiOjvO
+	mzN2E/AVn5ocFqnLAKHherAVSWN5zaz+x3eSpv7LbgoUjExSvlsEQUtWXfJ2GM4jNrjZ7A8DYlD
+	5/kAcLcdNiZ7mkiPLq8tlAaS+v1dd5PrJXZBqe//MXbGyuPn+LhPFepUz2fPZlEu/GmNKU+UkdK
+	YJe9ANoasCMRU8Cl3GGttGOAxI5tVklKQKteVbXIjf/eanbSrcnwWn3whDdGmWSHK3JlO5PHE5r
+	pF89PRuWRr5kUx5c0H5Ctunuom4qe7MoLgF6rW59NbkJN7Cl5nykQe1Yf9Ip/p5/aCz26N0Vmhn
+	oOSJ4KDLwMpUtCb6+9OE8vOYOAMLIdLIS9+oInl8V2Hj9dIUQ7Ou8z1kuL9Zkf9DoMNojzo/ijg
+	aHgakgqL1+iivFbb345r/YyCgesCrG98Ti0+qdeL9NIWIA
+X-Google-Smtp-Source: AGHT+IGaTgDPSqyTs48w8HiItO8rPyCFH/qAu7g3vXLpqsdF62XS8bcEBztbbr1uM/fAlyqW7VWEXA==
+X-Received: by 2002:a53:ccc3:0:b0:635:4ecd:75a4 with SMTP id 956f58d0204a3-63ccb8ef453mr9741214d50.50.1760137253186;
+        Fri, 10 Oct 2025 16:00:53 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-63cf0ee8ccasm564827d50.13.2025.10.10.15.58.12
+        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-63cd95f5485sm2069145d50.30.2025.10.10.16.00.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Oct 2025 15:58:12 -0700 (PDT)
-Date: Fri, 10 Oct 2025 18:58:11 -0400
+        Fri, 10 Oct 2025 16:00:52 -0700 (PDT)
+Date: Fri, 10 Oct 2025 19:00:51 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 21/49] builtin/repack.c: factor our
- "generated_pack_install"
-Message-ID: <aOmPg7Pb9RqOEuZ5@nand.local>
+Subject: Re: [PATCH 27/49] builtin/repack.c: rename various pack_geometry
+ functions
+Message-ID: <aOmQI+hpd9OlN/It@nand.local>
 References: <cover.1759097191.git.me@ttaylorr.com>
- <96d27261e75fd2ae46d9633b3d4eff243dbcc187.1759097191.git.me@ttaylorr.com>
- <aNsUiho56-S4MQZg@pks.im>
- <aOV3cuZhab7xOdez@nand.local>
- <20251010061449.GH1965904@coredump.intra.peff.net>
+ <dd67366476172eb1b5b0d2bb2a4dfe92b96b83ba.1759097191.git.me@ttaylorr.com>
+ <aNsUnfRPi8cYwGkm@pks.im>
+ <aOV6SaGhyHYsU3Bu@nand.local>
+ <aOXn9Vd6t_xOjWpQ@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,43 +80,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251010061449.GH1965904@coredump.intra.peff.net>
+In-Reply-To: <aOXn9Vd6t_xOjWpQ@pks.im>
 
-On Fri, Oct 10, 2025 at 02:14:49AM -0400, Jeff King wrote:
-> On Tue, Oct 07, 2025 at 04:26:26PM -0400, Taylor Blau wrote:
->
-> > > > +	for_each_string_list_item(item, &names)
-> > > > +		generated_pack_install((struct generated_pack *)item->util,
+On Wed, Oct 08, 2025 at 06:26:29AM +0200, Patrick Steinhardt wrote:
+> On Tue, Oct 07, 2025 at 04:38:33PM -0400, Taylor Blau wrote:
+> > On Tue, Sep 30, 2025 at 01:22:05AM +0200, Patrick Steinhardt wrote:
+> > > On Sun, Sep 28, 2025 at 06:08:54PM -0400, Taylor Blau wrote:
+> > > > diff --git a/builtin/repack.c b/builtin/repack.c
+> > > > index 18c3df7200..2ce1ae3364 100644
+> > > > --- a/builtin/repack.c
+> > > > +++ b/builtin/repack.c
+> > > > @@ -332,7 +332,7 @@ static void geometry_remove_redundant_packs(struct pack_geometry *geometry,
+> > > >  	strbuf_release(&buf);
+> > > >  }
+> > > >
+> > > > -static void free_pack_geometry(struct pack_geometry *geometry)
+> > > > +static void pack_geometry_release(struct pack_geometry *geometry)
+> > > >  {
+> > > >  	if (!geometry)
+> > > >  		return;
 > > >
-> > > This cast should be unnecessary, right? `item->util` is a void pointer,
-> > > so C should do the cast implicitly.
+> > > Okay, this function also gets adjusted for the new naming schema we have
+> > > around free/release. Good, but it might be worth it to point it out in
+> > > the commit message.
 > >
-> > It's unnecessary, but I dislike implicit casts from 'void*' to any other
-> > type. This makes it clearer how we're supposed to interpret the value in
-> > item->util, but I'm happy to change it to use the implicit cast if you
-> > feel strongly about it.
+> > I wrote the commit message to be generic to cover "various pack_geometry
+> > functions". Did you want me to be more specific about which functions
+> > were renamed?
 >
-> I tend to avoid casts when possible, because they can mask unexpected
-> conversions. E.g., if item->util's type changed, your cast means we
-> would never notice it.
->
-> But that cuts both ways. If the prototype for generated_pack_install()
-> changes, it is only your cast that would tell the compiler that this
-> caller needs to be updated. Ultimately it is the spot that _sets_
-> item->util that needs to change, but hopefully flagging this spot would
-> point us in the right direction.
->
-> And that does seem more likely than item->util changing away from void.
-> (To be clear, I don't think either is that likely, I'm just musing on
-> whether casts like this are helpful in general).
+> Not in general, no. But I felt that this method here was somewhat
+> special because we not only rename to have `pack_geometry_` as prefix,
+> but also to use the correct verb.
 
-OK, that's a very compelling argument. I'll drop the cast on my local
-version.
-
-(As a side note, it doesn't look like we mention this convention in our
-CodingGuidelines, and we probably should, including the rationale that
-you gave above here. That seems like another good candidate for
-#leftoverbits.)
+Aha, sorry, I see what you're saying. I'll make that clearer in my local
+version, thanks for suggesting it!
 
 Thanks,
 Taylor
