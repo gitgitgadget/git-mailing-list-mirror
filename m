@@ -1,89 +1,82 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4D5266B52
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 16:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05F22F7463
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 16:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760113949; cv=none; b=qMgDQ8mS+ITH8id+SG5TKE/Txmh/lO67vi2HCAfsVVZOOqomrLkzMeNNxKsd+SYYLdVAyJ+1DCecBt4H3QZJGJzB9USYBxpi1+c7ytjS4LsS0cUxYJ/GkOe9KoKHokQFpUll4d28hCfSvEWYkzWOgYAhh3zHhGqShfK9ZEu8hZc=
+	t=1760114689; cv=none; b=V7nEtGInsjGoZyL8XOY3oCJemc+X82r/hUV6c+Kad498ygWpptMLI+QatLjfI9BvGEK6/F/dpJ2E21LKhMXegZ7VBTFzTI0w+lmoquYdqpOLKuAkrT6yKlZwC12cInWPvmgcrN2tW6XE4vmwqeezf9Bn285TBd+knAz7X2sL+6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760113949; c=relaxed/simple;
-	bh=BSBvWyvYIBFOJflVBTnOZkQY/FRT1DiHE54y9dvfVJM=;
+	s=arc-20240116; t=1760114689; c=relaxed/simple;
+	bh=Qg5NeSrxI3xzTIf3mvRqtOLUMDUaxvTaxqD/lcyfQhM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MWjpaZ3p3aixufQ5jSHnYEr0/n+86jBCBPYqSOzZ4uSQPXKP3k0FKWyTudA7dggzdxtI1m9HlW46h2etAIeK3SQG/qfSFykYo3ofXbmh0hkg4oWbF6fGD1iOlIwA1MDl46jfgIWyq6h3d9b8NV74arObwx5i39mE1pBiKb6f1r8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=P282OV/Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iI8oEamg; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=V/NpGxheDBMXSNRaC//ZFb4O6CIME6EfbrUG7gSTp5kbcD6ziC19ws1mICue5p+YcuR9FbFSgW1GulIsFSJ3gmPSXLSPYYwY9RGuwpTL3SCcTKD87NWOeuFNDANW5UT5DR7FNEEKZXNlLun6uFwxccosxpzYWOGWq1sm1sEXTsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VMecXcn6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZMitc4B6; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="P282OV/Y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iI8oEamg"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VMecXcn6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZMitc4B6"
 Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id C8AD7EC005A;
-	Fri, 10 Oct 2025 12:32:25 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id E33BEEC0209;
+	Fri, 10 Oct 2025 12:44:46 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Fri, 10 Oct 2025 12:32:25 -0400
+  by phl-compute-10.internal (MEProxy); Fri, 10 Oct 2025 12:44:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760113945; x=1760200345; bh=k7GLzx77Sw
-	wU2YHh25NXU2KJgD4LR/cDOuX9r7syV6M=; b=P282OV/YP7GYZWTlV3YtoZb4HJ
-	5D498Dt+XVJXGR3rS0lG0V7vK+ix6BCB1qqYvnvd1UwZzF6CHFf/Latt9usIAYa6
-	TlyGMm5JV+oOw29V6TfMUmlDDQaSQHyBXWMgjbwm5RczGuG00/iOpbMMVoz9sxNV
-	cWZ0OFuEiB1BBJ/H/oe4gU8w53kznx198KCL9fekWGHuyvDXp0kjK+COwTlGTKwG
-	pCfimUW4mtNoxIojsBiMZNuAWHzMVBqPlOUjxU+nKZgqOpD/sncNHZHPMfQcmcff
-	gGeZGlIx18I7bj/GWrIRArU+1yDz8h53kenp7GaSgEGX70jPbeNO2EJa6wQg==
+	:subject:to:to; s=fm1; t=1760114686; x=1760201086; bh=YelA0sk0D6
+	FdkZt3uq6p4n+XBlBdZP0rAoUSdVuZ9KA=; b=VMecXcn6Ddfn9lTfmvN7nF20Su
+	1Oa0JSDFCzuiZmi7Rck44Mh4VEXeILdPKtF4VXBoO7eOjXTjMyuIhq0k0gYJ4LfT
+	vagEVbQKSAjAk2iD+EKT0lsAcppuAxF0GuCTS2q+ur6f5bW2CrdQp0nBxsEaR8yA
+	1AiMmQfMh+Pa43+bCiduqDcDaoLxVg1vyLLX/Mnuj+4CkalqmYAIxwoLQYSMEYzu
+	2X5GOvP9MNv129Y2SJ94EEqrIvdK8Jydc99W6QHhZs4wyeB8qARiJ5AhLHqcOVzR
+	KWfHWs5ChfIMrLcsKIx+AbAsLwIWU2+bZPkWcb5Pg1+is04qAovDe9HLsjnQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760113945; x=1760200345; bh=k7GLzx77SwwU2YHh25NXU2KJgD4LR/cDOuX
-	9r7syV6M=; b=iI8oEamgO+Yax5c77Gn1PhvYi4RQBAUBe7wHrinIeaMz43ChTmt
-	pfVOz8Gc0M7SSvVfIYiaF2B4fpo0+/V7sCpe89sE3qJHNrWjOL5f2E07eKbTf/ve
-	vwKch9la274sDSthM5l7EiqRMZ+Wm4BX6A4psUch/uRsty1GwirZt0nCh3Latxvv
-	kIvufai+rqdJqNphHqJfm+kdiJ2nzWuG8/Mi0kIqmSaJxjk0wFF9kDhTIILm0Mio
-	sbKr+tc/elqz1GIdnKv2iLbOyXe9eAVoAF1D0nQ0weO01j7PtgzST1SK5CidFOFE
-	kDwpPsCnGE5NtUBVhfm+I4wVvaTd/BZcc+w==
-X-ME-Sender: <xms:GTXpaNZT_FgX-iiKhG3IbpN0BME5H9dQqkZvVE6u088snD--yCFkiQ>
-    <xme:GTXpaDfxcgKeLXqLn-DQqIgph1CcH5CWybXJGRM8BLn5kmLbZ2fEFuZ-aXk_tqyCO
-    EykzL_5_SiRKJoUYmG_VC1MY7aWb5ILVldFnCvweIOFpaGzir-Vuw>
-X-ME-Received: <xmr:GTXpaGLc6PPiHOPgAWimxArq7nZzx8AdVV_qYLSmUTFrHniPEfIVyfm55oMlbmNOunAR-AAZDfZs1uGJBeX_gnLVA6haM8DXngqK>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdelheehucetufdoteggodetrf
+	1760114686; x=1760201086; bh=YelA0sk0D6FdkZt3uq6p4n+XBlBdZP0rAoU
+	SdVuZ9KA=; b=ZMitc4B6ZuE7r2DQep3uJ/stsqkWZV1zR9cEdYZziPAXqZKpX03
+	k4cbMw6pC5eeWw3QpTeHog/dk6KUNK6moJLRSLi6XuVHEa3ejIvv+T8ggwCpKDzm
+	DtiXhX6JL/aGsoJhY4CAzn3S5PsX8wwvKrBYlvVQU2xRXCCfXzWztJXx8zW55FQw
+	Ss5ip50BBvVeivgYEQ9tnoyYlFXZbgc6R12CsoaLfb3rcCF8vT9tHYOibyNh4nNo
+	MQUK8TCgOQcYwwVttUpNEVybehjZAnJHF+dG97oCSOXQT4+b1Z3J6BGIkVoEs1pu
+	fWqTRKYbYOLNWtrZKB/f4LsKGKy1HKZGvTw==
+X-ME-Sender: <xms:_jfpaGOnAZD7R2KO3QBYe3ng70YmQ1ef4xGdEXv9rTJzQwq8HVPdkA>
+    <xme:_jfpaMYuLaictOSuD8NM8wDKE4iB3LU0kO7LV7WHolSGJZ99a37IRCleFUcpb4QGD
+    niI-stt_Yh8jy0z0vvHzb_xBGtH7_TYPOkAev1tdTlZZr9kFkUrUw>
+X-ME-Received: <xmr:_jfpaKrWSDoQasQz-_CJdecWkUmz12LVjpDbaeM9empQ2JhCkObRQffuXp9M9K_E2h6zrP-SrozLSP7M0aVrVeIoU3PLik0xHNL7>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdelheejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorh
-    hrrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehnvgifrhgv
-    nhesghhmrghilhdrtghomhdprhgtphhtthhopegvmhhilhihhigrnhhgrdhgihhtsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:GTXpaIL_ZqvuvqOdjgae6ORAHB2J6HjbjeV83amG8XZikIJvqHyCTg>
-    <xmx:GTXpaNUkgPTt0Dem-lT7Fuu2x7aeS2Z5KjL_Y7auji9zYzaS33gJxg>
-    <xmx:GTXpaJkKu8YkoDr-j0eg1PjlConDlkU9YdlRlVbn_y3_LOAfaoOxWA>
-    <xmx:GTXpaLlJ-J7mtsWy4ubFTVjojG5FZxOExyGkEEDZNUSR2I2rJwQzYA>
-    <xmx:GTXpaGpf4_U6lCwpTJYv7t8phiRLXFr2iQY0zolRHNe8pgppwfoXmHwt>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:_jfpaAamYnvnNad8uUfSds7OzlQrg9q5FZA-QA0c682VfikhK_GyaA>
+    <xmx:_jfpaCSQE9bAG8m6xniUGWYzfg4RlBMNrtl5uggLObBErBQgNbNfrw>
+    <xmx:_jfpaH44lt29mtz8xsloTWbNQIkCFTjLDzJlnD-MP_6Uvjp_meq91Q>
+    <xmx:_jfpaHxLshVb0Kw1VqRWHXZUMg8YNL6JgryKDcZsJoj-7e9rgMyoNg>
+    <xmx:_jfpaMh39XNn32YpYJISp11lo26kmfjqa4zSTg_TO5CZ4fZqezhZhM5o>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Oct 2025 12:32:25 -0400 (EDT)
+ 10 Oct 2025 12:44:46 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Emily Yang via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  me@ttaylorr.com,  ps@pks.im,  newren@gmail.com,
-  Emily Yang <emilyyang.git@gmail.com>
-Subject: Re: [PATCH] commit-graph: add new config for changed-paths &
- recommend it in scalar
-In-Reply-To: <1a88e577-a808-4815-b390-e5d2253e670c@gmail.com> (Derrick
-	Stolee's message of "Fri, 10 Oct 2025 08:48:23 -0400")
-References: <pull.1983.git.1760043710502.gitgitgadget@gmail.com>
-	<xmqqecrbd7yh.fsf@gitster.g>
-	<1a88e577-a808-4815-b390-e5d2253e670c@gmail.com>
-Date: Fri, 10 Oct 2025 09:32:23 -0700
-Message-ID: <xmqq4is6afag.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] ci: fix broken jobs on Ubuntu 25.10 caused by switch to
+ sudo-rs(1)
+In-Reply-To: <20251010-b4-pks-ci-ubuntu-sudo-rs-v1-1-88cc846d251c@pks.im>
+	(Patrick Steinhardt's message of "Fri, 10 Oct 2025 11:41:14 +0200")
+References: <20251010-b4-pks-ci-ubuntu-sudo-rs-v1-1-88cc846d251c@pks.im>
+Date: Fri, 10 Oct 2025 09:44:44 -0700
+Message-ID: <xmqqzf9y905f.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,47 +86,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Derrick Stolee <stolee@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> One thing that is tricky about --[no-]changed-paths is that it is a
-> "tri-state" argument due to 0087a87ba8 (commit-graph: persist
-> existence of changed-paths, 2020-07-01):
+> Ubuntu 25.10 has been released. One prominent change in this version of
+> Ubuntu is the switch to some Rust-based utilities. Part of this switch
+> is also that Ubuntu now defaults to sudo-rs(1).
 >
->  * --changed-paths : Definitely write the data, even if it didn't
->    exist already.
+> Unfortunately, this breaks our CI because sudo-rs(1) does not support
+> the `--preserve-env` flag. Let's revert back to the C-based sudo(1)
+> implementation to fix this.
 >
->  * --no-changed-paths : Definitely _don't_ write the data, even if
->    it exists already.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> Hi,
 >
->  * (not present) : Update filters that do exist, but don't write them
->    if they don't exist.
+> this breaks a bunch of our CI jobs, both for GitHub and GitLab. It would
+> probably make sense to fast-track the fix.
 
-OK, so "--no-" is not the usual "no"; it is more like "strip
-existing" that implies "even existing ones are getting nuked, there
-is no way we write new ones".  OK, that may explain the construct I
-found funny.  Thanks for clarifying.
+It is curious why this is done outside Ubuntu.  The context is that
+the outermost case "$distro" has this arm
 
-> The situation that I wanted to think about was this:
->
->  * A user sets the config to 'true' in global config.
->  * They then set the config to 'false' in a specific repo.
->
-> In this case, the 'false' _disables the config_ but doesn't cause
-> any existing filters to be deleted.
+    ubuntu-*|i386/ubuntu-*|debian-*)
 
-Ouch, that hurts, as they expected this specific one would drop
-existing filters but that does not happen.
+which is where the patched code appears.
 
-Perhaps we need to strengthen the description of --no-* (if not
-renaming it to --drop-* or something to clarify what it really
-does).
+> @@ -65,6 +65,15 @@ ubuntu-*|i386/ubuntu-*|debian-*)
+>  		libsecret-1-dev libpcre2-dev meson ninja-build pkg-config cargo \
+>  		${CC_PACKAGE:-${CC:-gcc}} $PYTHON_PACKAGE
+>  
+> +	# Starting with Ubuntu 25.10, sudo can now be provided via either
+> +	# sudo(1) or sudo-rs(1), with the latter being the default. The problem
+> +	# is that it does not support `--preserve-env` though, which we rely on
+> +	# in our CI. We thus revert back to the C implementation.
+> +	if test -f /etc/alternatives/sudo
+> +	then
+> +		sudo update-alternatives --set sudo /usr/bin/sudo.ws
+> +	fi
 
-At least the configuration needs to be explained not like: "setting
-it to false is different from --no-changed-paths option".  The
-documentation should not stop at saying what it is not, but should
-also say what it does.  Perhaps "setting it to true is like always
-giving --changed-paths, setting it to false stops writing new
-changed paths filters, but without dropping existing changed paths
-filters" or something along that line.
+So at least shouldn't we be limiting ourselves to do this only when
+/usr/bin/sudo.ws exists?  Or do it in the nested case "$distro" that
+immediately follows this one to limit the effect only to Ubuntu
+(which may need to make this into a helper function that is called
+for both ubuntu-* and i386/ubuntu-* arms)?
+
+>  	case "$distro" in
+>  	ubuntu-*)
+>  		mkdir --parents "$CUSTOM_PATH"
 
 Thanks.
