@@ -1,118 +1,57 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-43166.protonmail.ch (mail-43166.protonmail.ch [185.70.43.166])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52482367B0
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 14:34:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D1E2F619B
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 14:57:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760106898; cv=none; b=o/ZWITJHVUybHGUkbhRrRrRnLYuh7ew67oLdceNpLTt8mXQUDs/wMyELSbKsHHV5CLKUCwMmFLhZLuBYZxVh4UA6GamxTCgCjKSS5tQabXgR3qPUn1OYNrglfWw+YRsKC/fXOtv3EaCyhUMMAflTijI6WxmFlND841fljrmhdP0=
+	t=1760108237; cv=none; b=UsRaBrFUaNEBG5oRScMCifXp38wGqbAgu4k9eXTzTxtjWSablD6AWxtwIGlCnajiSQMI9eCyPWwdd/NFwSmFczj9P80gtVhZ0r6KVxLQiiOZb52vduHL18jZ3BKsEAtnyIBhuF5MiEiNOneyBVnL8jC8NGJpX8uXOf9bAw/cdgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760106898; c=relaxed/simple;
-	bh=q/IxXNJXUZuj1UmHM5ci907JtuZGhCW6hajVSkbe7pQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r75rDB7M0oREucsUZ2w4+bqtajPbHJkF7/aGRkTVrbRgw6siaIxmVYvkKTyENdvvk0uODrM6inm6vgDmypi6Lxeqoz2q6qeibqAGuhXSCJTnGVMm1bjhh0pkEe9wjYr61ny5LNKLKbBveisKcR0eHbSl3IDixkn0XbMrU0NbsHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RT1pPdKX; arc=none smtp.client-ip=209.85.210.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760108237; c=relaxed/simple;
+	bh=q1FB42B1wHWPNFmZlbreqqL5nrXFcBEPk2pYajyFtU8=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=EDyog1gPhX7mNn2Uy4tldO0v8mSOZPzySv5PNdHohJAyf57x6C4Bu7ba7NJeFQVHymF8WrG5YyiNIotqaRonsf81zi9miHU0xGp3kGzUSYx5tT4VKBUyfGTvKYRtoPvmstJZJLk7lyaRz7NCnaVcjUQO+igl2l8ybBYKT1RzVi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=y1qJ3asu; arc=none smtp.client-ip=185.70.43.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RT1pPdKX"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-7bdfbc6ba5cso869462a34.1
-        for <git@vger.kernel.org>; Fri, 10 Oct 2025 07:34:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760106896; x=1760711696; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5sLGdb8EurxsGHxUm3MckrqGjSirs/4RmqcjL5lHlJU=;
-        b=RT1pPdKXJ0x4w+uWzO5KQSGJscGhrzKvdXT1J6UI5MShlldghMQahiWDUZgYsmJ+jM
-         BpFDSynzaC/EwcofOGgmeL90P0aoEHNeXeUdaw0uvVFlHCfYtSy3T7i7PUlmstiTEdSb
-         eii9JzR/1sUPvyLDv6UTDwbeyl8gFe8fMr59ffIer14AUZbV93O4zTnvaTn17pERFdI1
-         /hXHYWK/59tNNlqILjGg4foDrCkptaFBrVE6BxCbnydNg8wWI5nwIzBaVQGnWuhYx1Pa
-         wBL5KnMCnnERs6VUP+GqQCeOYhbvNsda6MbECGaMXx9m6jAu8Q0Nep4Qj3lKnv1ggMrl
-         pOpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760106896; x=1760711696;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5sLGdb8EurxsGHxUm3MckrqGjSirs/4RmqcjL5lHlJU=;
-        b=GhWFmnEcW6Kx67e9Ll4ebv3o15PH5frwH7O7TCey3buDeEgnaUMMuWI9PoR/84Cxf6
-         wAJBgefkVW0PpQI2AyqFWhi4S/GaFTZhAEmGLwWS2Lp8hJRtE6DtbDY6XQrwOml6kYaD
-         g/hi0H+vcVPQIyxr0eSiWqWJ/JwvN33ae0RQFiXGIM7iPLRaDRMTseHoubg31/qlZ/xn
-         qNvaO06t3ymD+wTH9jtPnfV0XN7h4LceydzetsS0OsnL0Z4VwkcTtueV3UfWOtnrDGLs
-         WR/cPtjl5N4Z9JI7Ohkka/lv/B0Msocr95bap+kuK0KOsiiFhh0KjuI2mcc+ikwFTT3R
-         k2Sg==
-X-Forwarded-Encrypted: i=1; AJvYcCUXzVscWz1tCvmDv8rNTBVChpEDfMQw79s1vkiEiWXTFeco39LBXx/pXTFlP1v0hamxcjI=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy8teZDYl4wemFb7pzrNYlfyEnI+fgXSuCdy3xRW4LoIcdzu0IL
-	MZBmSiNBz4sf5/e2LGmcanq5ciiCjt0hR7PmkbtqL9a+ykKK4St2id56
-X-Gm-Gg: ASbGncv5uF+1cwNktD1lj7j8Q/Q1lbKulrxzPjQ9b8gu2Qb+CJl0yclzCvV8lITuK14
-	pR76yZQY2KNLeJDUm5zvEjAlFv7ZFK0rrqF/AsLZ2Z+nZ1OSke2Ifp3k4nfEfLoEbJPIR604Moq
-	AshSNuw8KD0SYHwEUkR0b1tLySj9lkXWnrAj37eC1UkEdRjzQOvZZqGx4/hehf39tm2DdV4ypdB
-	6CpvrFZ22KRu85pVHk0+njMpzXp0yZaoS/5SDJ5Cn7PhE+R66VLMgtDCHuungY4TPrV9ujV1jm9
-	nEXRK8ay9CcfmlDcs9VgmKJ1wDuONMWqh2nbh/0BKh2mcYB78RN3IfvRWafXUNPrx5djEtjTGeW
-	lPhtN/VXEVE2daEmW2NSUPd5s9AHzAQ1rG54=
-X-Google-Smtp-Source: AGHT+IHarfXSI7CaIIWLFuYd6vs0KG1frb70znx2Q/yiExCN31JCcLYHwcSt2Q9Id3G7e1v+r5l5Aw==
-X-Received: by 2002:a05:6830:2aa5:b0:747:323a:67b9 with SMTP id 46e09a7af769-7c0df7da742mr7120150a34.32.1760106895639;
-        Fri, 10 Oct 2025 07:34:55 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-7c0f8f18f29sm896643a34.0.2025.10.10.07.34.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Oct 2025 07:34:54 -0700 (PDT)
-Date: Fri, 10 Oct 2025 09:34:54 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	karthik.188@gmail.com, sunshine@sunshineco.com, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v4 4/7] builtin/repo: introduce stats subcommand
-Message-ID: <lnk4zvu5zgokd3p5lxnl2nwbqu3fi3yer753tr2f2jaknrtb3h@fcbjvvu6irtc>
-References: <20250925232928.3846-1-jltobler@gmail.com>
- <20250927145049.723341-1-jltobler@gmail.com>
- <20250927145049.723341-5-jltobler@gmail.com>
- <xmqqfrc797pk.fsf@gitster.g>
- <qdot36lscj2jzuej2zixdlgocubiimh54dkxzl2xgcy3g2n42m@gpdi7jwc2oyd>
- <gzjaa3nmv6s44dszregri7kcnfxg6optkycg2wggtib6bxvdgq@elearr6dishf>
- <aOithKtHf_U9S_m3@pks.im>
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="y1qJ3asu"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1760108233; x=1760367433;
+	bh=q1FB42B1wHWPNFmZlbreqqL5nrXFcBEPk2pYajyFtU8=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=y1qJ3asuVLCnyXHx6x82dsvSti1ry6f8wDo6yLFC55KgcVg0uzKyp1lIWi45JCcqV
+	 fatbhbKIeYxFMDXwfwO+4WeGIktnkXPPvFz0GP6x7Ctdp+dsoHRFI48rUfIaHBmf+c
+	 7NqEMYGtC2qYHD5v7iruIfsafMMXZg4mtzVHgu7qavklsu7sCVZDefkkwapX1Er0+4
+	 +tN/x13X5FruTU1K+tNQ85ecVj6cWXs8V4hR5aaXTKZPSNpkDrlt5X+1KNAufEkcop
+	 B88uVPSuYRTE71/dXvWNoqals6Ka73/oWvKwYGHG0+r/+ld1+I5IMXP3H9sbvxvKId
+	 s06JM+zwl/k8g==
+Date: Fri, 10 Oct 2025 14:57:07 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: Sruteesh Kumar <sruteesh.oss@protonmail.com>
+Subject: Probable issue with code/documentation
+Message-ID: <n_EjA_jj-d398XOogazunHfOBdh-yoa5P-Prb3b7gjkBODqWMtvKNdhnCLuikthwVcbEy4-ryWTRgyuiShJ3tam93j8S7lmGSlyFjNoxzSo=@protonmail.com>
+Feedback-ID: 82334824:user:proton
+X-Pm-Message-ID: 5aa48996d93099eef69d121eab1b905e49e5778a
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aOithKtHf_U9S_m3@pks.im>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 25/10/10 08:53AM, Patrick Steinhardt wrote:
-> On Thu, Oct 09, 2025 at 07:42:40PM -0500, Justin Tobler wrote:
-> > Thinking about this some more, a single "stats" command is indeed rather
-> > vauge. Furthermore, as Junio mentioned, there could be other aspects of
-> > a repository that we want to display stats for in the future.
-> > 
-> > Since the goal of this command is to surface info about a repositories
-> > structure, may we should instead call this command `git repo structure`?
-> > Or something else along those lines that in more specific and related to
-> > goal of the command?
-> 
-> Some alternatives that come to my mind:
-> 
->   - inspect
->   - analyze
->   - scan
->   - survey
->   - measure
-> 
-> I don't have any specific preference. What I like though is that those
-> are verbs, which makes it a bit more natural to use them.
+Hi Team
 
-If we want the theme of this command to be the repository's
-structure/shape and have a name that matches this scope, I'm not sure
-any of the above examples would move us closer to that. Aligning the
-command name to its scope is beneficial if we forsee the potential to
-introduce additional subcommands for git-repo(1) that target other
-aspects of a repository.
+Someone rightly raised a concern on incompatibility between git and eclipse=
+-jgit related to pattern matching. Please look at https://github.com/eclips=
+e-jgit/jgit/issues/217
 
-From my perspective, the main question is: should git-repo-stats be a
-generic command that can eventual provides all sorts of different stats?
-Or should it stick to repository structure/shape information? I think
-I'm currently leaning towards the latter.
 
--Justin
+Look at the first scenario in the above link. Git is matching the path foob=
+ar with the pattern foo**/bar which is against the git's official documenta=
+tion (Look at the last point in the double asterisk section at the URL http=
+s://git-scm.com/docs/gitignore#_pattern_format).=20
+
+Is this an issue with the code or the documentation?
