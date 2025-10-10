@@ -1,104 +1,183 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECFE23D7D2
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 19:46:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC011EEC0
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 19:57:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760125621; cv=none; b=XAUe+MqlgXfIr5Y3b1SoKvNyxWSGNLUFfwR4MTAmc0iNUDoKpXH0kGtCE/CCnvPz1/JyySXqfIZCar+ZlzmQVvckKpuksUNwv+W+Rtfo0ZjQJ0DKpHFdgTSilkzNDpaig1j6PrROdiWjJV2IiaiQduAD+suPL2Fm3m+3CTECBpg=
+	t=1760126253; cv=none; b=bLcLN0hge5wtWEquYBlAP2RvK6UZPfocnQdC3IPqhih1x7hpVnf5QIGkvC5fCt2EPK5I90H/FcqNwtlkrBgmxnKHcE4awf2r19mSiY4mVjYzXtEjEzAYsKnrIolln41UdtCxZ7yo+wxxlbkBKFwDPVlo4r3sEcfbNVTYPYCtDhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760125621; c=relaxed/simple;
-	bh=U04KFcpusYB76nqDOvePQHthCWXXfb5JsvaI64a2AjA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bElHPVyO5krlyKmUohp7w+wmgQJGi0G1N0uFi5o+1u1WKzmMwhhsMIiwIuJh2oxcjMufRAIwmV/aQQTrtaReGtKDNg2ZUEAhoDCAAsG0v2ZT9B9R/6JG3NHX/6O5Bzkk1wb7BRDEBKn5fhVK0lrQWV50UsGhwOBs3vnW9ct1Sv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ejgHLIWO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W0tUmN17; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1760126253; c=relaxed/simple;
+	bh=BcYHTuOzEpLN0bPXf7yHzycco690FtOfWp8qpChTz9g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cIyeK7mRRXdNa0pV++wmVznceiV5A9CyLBSXIOiRE47Q5bS7Y15oOV4V/wQL7ve7rKnLhlBFy2qjEE8e06iBcVLaL+R45TY2jQf4W2kev0UtRzveRc/lFixkCE2ol7rXNtj8pMLMEYnnA9++ifUhUt/YHgQeTcNzOL/FPXpzBG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=kkOjTNCL; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ejgHLIWO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W0tUmN17"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 990DC7A01A7;
-	Fri, 10 Oct 2025 15:46:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 10 Oct 2025 15:46:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760125618; x=1760212018; bh=OLe8Mioqyq
-	QrSib+NdZAZ33hU7mTy+oYKBZYUsoPt8Y=; b=ejgHLIWOgQdsf6oxiV3SqOIHXv
-	ZwRv579eMeaeYB0ZVtoIer4ao9eN11eyfglzSS7wOOghPiaDeDebVnQQYo7QimXc
-	iOD5EqoCjiPSCDZgRW52RB+N/9iERSQSGotmZgYRuFbcXzv5Q8TDr+8E8IHAYpfj
-	Ck3jtD9q0zOBLi2wsEqXvrTNGyjLVhOKDmKqKVMGr7lZyLz+uBK9ez5rcP6NhYfD
-	PvjrAlQ0DI0M+lqRdTBJ1xsLwj2vK+cLOYO5f89XFqXn61lkkd1zgygnoyJUgEKT
-	K/o3Dh/zNGIYFhWRHtg/6K2ZmU13yf40/5EqrPVvsrQomvkdWCvWLtIFNnMA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760125618; x=1760212018; bh=OLe8MioqyqQrSib+NdZAZ33hU7mTy+oYKBZ
-	YUsoPt8Y=; b=W0tUmN17wyfiK/45UTMwXaui2LAARX1PWaCJ32iw3Qqfiqyj9rn
-	n2/29CxRlOtE0w3BpF3H1QYcn7xn5Bu4OxGfbqeaX5Hm7VoLsBF5by+04brp/H48
-	VmbNniUssU4FopyMoAq28DeHEtf/EY3E5KZjwlngOnM0uAgeHhWY6K/qdzG0PyUf
-	StAecv2wWHmoA5cLyhNOwIMIgtgMA0B/BtDhVqkkmrj3aSrBLgmRQUXMZYSuti6S
-	PZLQfvnClP1i5GJRXawCEWl1luJW/hZtINDGKiJPy3x2SwzmZe5W1cm2c7NFbMjr
-	FKxjP/KuI0KKNOmj+CcvXOPkHeBA2Omw9ZQ==
-X-ME-Sender: <xms:smLpaPDTSCLupdIep5UP-FoiyS92qgGx2XaDihOrWA2daoKZBF7zJA>
-    <xme:smLpaMid2usPyvU7wPXwy_Wjd0cOl2hi0vTzwG0286BydR9j3r2ZzBXs37SFXVhNi
-    L_Omi02dOX2Q6czuWPRg2IX-R0yccARGBMxEduegey_LSKAuv2U>
-X-ME-Received: <xmr:smLpaPnrICgQsddmd-Lfu7JnOqPxydRzZeTwqdUJRQYE7AQnIrDg2hamgAgPVP2TuE0CIsUkwop11RY5gjKHNAC53NtznZmSLHe1>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddutdelleefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhhihhlihhpseguvggtvghnthhsohhfthifrgdrrh
-    gvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:smLpaAo9svrKtgq0uwoqPTYafGmBgpbm2taJ-cl5BGqsFnWYMQ88sQ>
-    <xmx:smLpaAEvNH8NEO2H7nB29yeMB-7mKxxocAwCyEkeiEcOR1yBWbQ5jg>
-    <xmx:smLpaEw39YxSWTuQj0dy29HQGUeW_L03JH2Z-yfBSh9MwQqdpVX7LQ>
-    <xmx:smLpaNrmEb4C6w1Ou6HBPJC-bUbTJgWtDRPMccBjBW2QZLQ37VaqkQ>
-    <xmx:smLpaHy4CFD-p6C4F9dc7BpUnhvSMnm-o7hRgyGZgEeUIKz0UWt_lULs>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Oct 2025 15:46:57 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Philip Patsch <philip@decentsoftwa.re>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
- <jn.avila@free.fr>
-Subject: Re: [PATCH 1/1] docs/git-blame: describe sourceline and resultline
-In-Reply-To: <xmqqldli8vr5.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	10 Oct 2025 11:19:42 -0700")
-References: <20251010152204.815520-1-philip@decentsoftwa.re>
-	<20251010152204.815520-2-philip@decentsoftwa.re>
-	<xmqqldli8vr5.fsf@gitster.g>
-Date: Fri, 10 Oct 2025 12:46:56 -0700
-Message-ID: <xmqq7bx28rpr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="kkOjTNCL"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-27eeafd4882so49195ad.0
+        for <git@vger.kernel.org>; Fri, 10 Oct 2025 12:57:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1760126251; x=1760731051; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gI/5KdUi6dV9X2m69qWeI7AurmXqa1JxFh4E3Isk1m0=;
+        b=kkOjTNCLNDP0lSUs5H9Ko9HyT22khIv4HK8W4SAqdW4MT8lcV6L92Y+vVa2VMi4mKs
+         33Iw7nkddO7MlI1gKMbR4/neRb82LfOhkulqQZOUZfc91vKYu0rLRNsNCGW6U9hVC/mZ
+         eqxHo515Cqz+SS8teqsPxMY2yNCRfYYp9I+o/XFeu322gqLOWMmNwtMiZOmamRMMky60
+         ru+84sXWXZyp6MRxUgN9k0ff8m3zrta56fTFS3BPG/NIX37br9tav5bF2QCWDafIl1Ca
+         dK4rshrtZo8PhxqVI+IIN4jQKGcayinvfRb0o4n70q20G1qAeLRYkNdLTroGZhQZIYXi
+         B+Ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760126251; x=1760731051;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gI/5KdUi6dV9X2m69qWeI7AurmXqa1JxFh4E3Isk1m0=;
+        b=tZeGP4qke0V+29Yj3DcHI5kp/F3IUEEE6Tq3H55QMX6LuwGJXViRho0Q9f+dzoH+Z1
+         VqLJzR1PtfNODw4mzxVTkjdd/UPKQAIQKHP10sM0dyTtUhdgxKKMWpUYLm7QIbr1R0Ii
+         faHIhKqUrsTx3aEqd7k4kafA782THkmY4ZxjVeCjtIBLmsZzgmNaj+VF4rnD0m8CtKCC
+         hSIfs9+mluTFTSeEA+HzHiYpScpBmhVUaD1+KIvfzP2ldCA2nUBl5i2gNrpQFzx4qfbG
+         LMEs0+7MTrYC5iaduTb2D5HO7fwxi/SnQNM98FTpc1OF49e+pP77k/FqRJxJjRkK/X6r
+         82hg==
+X-Gm-Message-State: AOJu0Yz0fILNazlvSsaAlwNhwPiKmcSUR6YnekvZ6y3drfeyJs/IZz8S
+	O/3PHVnUq4YILGwybOZ6XYE6uF79CMU/dySvx/AcYAorMkocjHh0c7jcDJ7OY67kACZznlPMZ8l
+	W65hLFA04lyUE9ZDSNRVSdYY4Krp9/kL3M8bohjVf
+X-Gm-Gg: ASbGnctGDCim1RVoC22pV6bsMlZ88jLVz+l+LovAToZZAM1lEdXMf8ldVQ3L7h7nO+5
+	5VnAcChXDiWp3hgNtYD3TnA1wYPBh5ig5uaqMgXz3PyNmcPlbZ+2wfnww6AsNGCJ+9kqYzlEdFb
+	MZRW+zeLxxFVsFYXUu0w3dOVHkzSONYi2bZougyZstj1CkawLMzfYjipdcfe66ktH3lDn/J+gIG
+	w1i8q7czv1PJTKLz6+UlH3V5A9fguLRmUQh3n6Vz7gOYtnXJvjLgHSXUFbRYJA=
+X-Google-Smtp-Source: AGHT+IE9pnmer53qBm5e7uI8Ro+IKue+K0zVinqina5e7U2lEjE1yB58HqZrQZrCm8/KPEY4BHniB8MEPjJ4TByr2bg=
+X-Received: by 2002:a17:903:904:b0:24b:1741:1a4c with SMTP id
+ d9443c01a7336-290274dd515mr21687115ad.0.1760126250403; Fri, 10 Oct 2025
+ 12:57:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com> <20250925125352.1728840-9-adrian.ratiu@collabora.com>
+In-Reply-To: <20250925125352.1728840-9-adrian.ratiu@collabora.com>
+From: Emily Shaffer <nasamuffin@google.com>
+Date: Fri, 10 Oct 2025 12:57:17 -0700
+X-Gm-Features: AS18NWCP6dDEVUwQJAsq28_5CN7nPZMSzTrQl_sK_fDR8DK45-HHr_dMxvcXHVs
+Message-ID: <CAJoAoZ=HRKjjU-N6y+kHo6vpOY6jN4Q7nDdDRpT=cv0k0PtxGg@mail.gmail.com>
+Subject: Re: [PATCH 08/10] receive-pack: convert 'update' hook to hook.h
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Rodrigo Damazio Bovendorp <rdamazio@google.com>, 
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Sep 25, 2025 at 5:54=E2=80=AFAM Adrian Ratiu <adrian.ratiu@collabor=
+a.com> wrote:
+>
+> From: Emily Shaffer <emilyshaffer@google.com>
+>
+> This makes use of the new sideband API in hook.h added in the
+> preceding commit.
+>
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  builtin/receive-pack.c | 60 +++++++++++++++++++++++++++++-------------
+>  1 file changed, 41 insertions(+), 19 deletions(-)
+>
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index 1113137a6f..d5192ce132 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -939,31 +939,53 @@ static int run_receive_hook(struct command *command=
+s,
+>         return status;
+>  }
+>
+> -static int run_update_hook(struct command *cmd)
+> +static void hook_output_to_sideband(struct strbuf *output, void *cb_data=
+ UNUSED)
+>  {
+> -       struct child_process proc =3D CHILD_PROCESS_INIT;
+> -       int code;
+> -       const char *hook_path =3D find_hook(the_repository, "update");
+> +       int keepalive_active =3D 0;
+>
+> -       if (!hook_path)
+> -               return 0;
+> +       if (keepalive_in_sec <=3D 0)
+> +               use_keepalive =3D KEEPALIVE_NEVER;
+> +       if (use_keepalive =3D=3D KEEPALIVE_ALWAYS)
+> +               keepalive_active =3D 1;
 
-> Perhaps this is easier to understand?
->
->  - 40-byte SHA-1 of the commit the line is attributed to;
->
->  - the line number in the file in the above blamed commit, where the
->    line came from;
->
->  - the line number in the file, where the line is found in the
->    stating <rev>;
+This hook wasn't using the keepalive at all before, right? What's the
+reason to use it now? I am worried it might be going to a sideband
+consumer who wasn't expecting it because it's not documented in
+githooks.
 
-Sorry; "starting <rev>" was what I meant.
+
+>
+> -       strvec_push(&proc.args, hook_path);
+> -       strvec_push(&proc.args, cmd->ref_name);
+> -       strvec_push(&proc.args, oid_to_hex(&cmd->old_oid));
+> -       strvec_push(&proc.args, oid_to_hex(&cmd->new_oid));
+> +       /* send a keepalive if there is no data to write */
+> +       if (keepalive_active && !output->len) {
+> +               static const char buf[] =3D "0005\1";
+> +               write_or_die(1, buf, sizeof(buf) - 1);
+> +               return;
+> +       }
+>
+> -       proc.no_stdin =3D 1;
+> -       proc.stdout_to_stderr =3D 1;
+> -       proc.err =3D use_sideband ? -1 : 0;
+> -       proc.trace2_hook_name =3D "update";
+> +       if (use_keepalive =3D=3D KEEPALIVE_AFTER_NUL && !keepalive_active=
+) {
+> +               const char *first_null =3D memchr(output->buf, '\0', outp=
+ut->len);
+> +               if (first_null) {
+> +                       /* The null bit is excluded. */
+> +                       size_t before_null =3D first_null - output->buf;
+> +                       size_t after_null =3D output->len - (before_null =
++ 1);
+> +                       keepalive_active =3D 1;
+> +                       send_sideband(1, 2, output->buf, before_null, use=
+_sideband);
+> +                       send_sideband(1, 2, first_null + 1, after_null, u=
+se_sideband);
+> +
+> +                       return;
+> +               }
+> +       }
+> +
+> +       send_sideband(1, 2, output->buf, output->len, use_sideband);
+> +}
+> +
+> +static int run_update_hook(struct command *cmd)
+> +{
+> +       struct run_hooks_opt opt =3D RUN_HOOKS_OPT_INIT;
+> +
+> +       strvec_pushl(&opt.args,
+> +                    cmd->ref_name,
+> +                    oid_to_hex(&cmd->old_oid),
+> +                    oid_to_hex(&cmd->new_oid),
+> +                    NULL);
+>
+> -       code =3D start_command(&proc);
+> -       if (code)
+> -               return code;
+>         if (use_sideband)
+> -               copy_to_sideband(proc.err, -1, NULL);
+> -       return finish_command(&proc);
+> +               opt.consume_sideband =3D hook_output_to_sideband;
+> +
+> +       return run_hooks_opt(the_repository, "update", &opt);
+>  }
+>
+>  static struct command *find_command_by_refname(struct command *list,
+> --
+> 2.49.1
+>
