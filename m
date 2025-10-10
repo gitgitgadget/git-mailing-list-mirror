@@ -1,74 +1,74 @@
 Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E012459C8
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 22:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309E41A9FAE
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 22:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760136542; cv=none; b=Ymgt6LfWItNvolAIrdpHybWR+ej2MsmpHW5FE+PBh8RnGOVwM6grot/x/czajr+JMIiyA/5nVcW8KWUnyVrVRl76rHI+ktY/n8Mst3gg2NR7rF+dZNGOKAW4c98QIJFg4FDC6AtpkOtYjjyiFFTyIfeeOgBdQsUhQM0LysePukY=
+	t=1760136598; cv=none; b=asoY8EmaQ8RU+ZwFpAD2t+PhYYDvgoA4SHzyZ0gFavtbuT+qCZszE86yeyJeqrExrPKxnzfTAUMWQRzQF5L7r17MNpBlZ2RB1vYZwx3smYPIM4o/9/vxV1CsXcNolLSX5jti4z6dqoS7cPp4fixlzXTh5lmy+O/SspcCvTGUV4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760136542; c=relaxed/simple;
-	bh=g42z+fNdG6f2dnKIpusIYNUw9Gky4mLmHTTvv4uB0yM=;
+	s=arc-20240116; t=1760136598; c=relaxed/simple;
+	bh=r/M8R0VZfJFu4WN0yE/M7JDlPAFEwmuUwibNFUtXJGI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e0SMt6kwlqefmlkPKxCHDyEBmAuSQIvWhegqfDDogwxM2CHvH7JB/mE0TV9kSBWofDVsP194kd/7F9tqOf1u1b+Dl+ee/6nmJeyFUxhcm8b/X+d/VXqg9GBgKimvVd05Hq0oqkhfNnpA58dNsHN4brR4EUEutKUz4eLpuozWnfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=LuzQWvsJ; arc=none smtp.client-ip=209.85.128.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=gE1AaUEpRW4xWuDuoNSY8WtXQdiYvbh5lN+xvlgy/hREgUAyZiLqds/bkbrfUnAoS7sXJD9zagf21Brnq+FITEiiVy+Jp4tUlUD1s8qoAYZrmSq6ZEFAmoN//T2th1iqvpaXRMltdXY/UEwxSr36pkO7WdUCwfTqvQ6yS+18AVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ckXLH36h; arc=none smtp.client-ip=209.85.128.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="LuzQWvsJ"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-71d71bcab69so23935337b3.0
-        for <git@vger.kernel.org>; Fri, 10 Oct 2025 15:49:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ckXLH36h"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-72e565bf2f0so26956637b3.3
+        for <git@vger.kernel.org>; Fri, 10 Oct 2025 15:49:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1760136540; x=1760741340; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1760136596; x=1760741396; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MJlpnYcl2erlOE3fp5SLM+lwaHj/xkTKCOXQY6M/CJ0=;
-        b=LuzQWvsJktv2Pc8NZd1lcow8rmT+s3pjhOmlHScksTbFlZqY/BjTU3MSnsFQ98JD2B
-         z0PlrJlrTEVLp6++F+CbVjmWQdp4xch7F4JuhSTbwDPtSe3CekLuaD3Nzlv+/1jLa4r5
-         Y2+cyZhaFBeO3mthqifp7hJ+wyEXKZeaRn3t/cuvd108isOGQ2xh53wuld8qPEKSFsfG
-         EFEfyJbT5hDyzgs+Ku6Hm/Vz8MApPdX4whQeIbV5XIfsTJ5ECkq3iiYFi1UCjgloxPZq
-         qjsAhnp4ZCipIjneZubYSTDMJm2nENoR1v7BlfVACyUreXlVdsGF84JPR6aqE+ki6fXz
-         rYSw==
+        bh=r8fXg4zC3wxUwCs+Dsk4EXpq+1EJB5LPWOfLleGsGg8=;
+        b=ckXLH36hYjLYHD5FHPSQk23ZkfI9+weA8GuK2ougxgrR8kbvNP1wmniljsk/w0W9Qq
+         xCmaIDQ27v8VB2PjJHiv73nvbbjha/k1k31vkLYLFSmI+g1jl9+z4M7Kk5ujsHlNk7gd
+         Bp+8dPgmGbUhxcvpUtgudkOrU9B2SwGAWHVh4lPrpsB4iteMdxEWd6sHvdI3hrGGIU0M
+         j0Z67aLFQzXd5IMDHsetiSk6a3mJ0HrbTA8pIvDMfVZxk0gJeB5jPEghcw6FB2/9O+1h
+         pkSWgz4wW9qSmRvhG1/YxGidxd1n9LyO+eOmwvo/3ab64jaIoL8RfFoAvNDo+rzeDSjn
+         DQrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760136540; x=1760741340;
+        d=1e100.net; s=20230601; t=1760136596; x=1760741396;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MJlpnYcl2erlOE3fp5SLM+lwaHj/xkTKCOXQY6M/CJ0=;
-        b=OiodWEhXhRPzefEZ6wIUwYBPAwBNMPWzHG2Sz0M7qvjZGsojvoCQSFAxSHi04Pgudm
-         T/Er7YYqHPa9/NsKan2VDqV+T2o5q7BsimDRQcE79n+OgOj+1prd2vq+t3+n7TbZAJ8J
-         pcCDwG8HAmc+g6O0jPoSiL4ihZ06yMZGnhal93Tpmv3taKn9CQh0G8KXx+JAAqa2lJRU
-         9IoRoWoyx90Ax9JV1VBrjOonvVzjy7aZwUfUL0wA1xjwQ+B0eG3c5oziYR+iPCP3+iG8
-         Eul4L/+BrekWFIAIj0BalM2rKtJVDZqJ/d0t7Zed11JQu4kcfFZBeq4eEWv6WCjBR1t9
-         1GsA==
-X-Gm-Message-State: AOJu0Yx9a6Pc5ioAs8i9HsSdn+S8e+sJrqo7ac7bjccGEoBI8Ag9HF+x
-	X7mQoFGC0PXRblR1rLB6eYm5ZE7IKZDh84MIHLuZbGiSvd6xmX0o5UEuJjn3dNEoNB4=
-X-Gm-Gg: ASbGncuC4uKTytWkdBCfKO59K7SOAFliziy3UB+sueYuRtsg4OqjFO00mZSJRT36YKo
-	SWq5SAr0xqaSIDDNseDdNPcEgWiDGobRDaQCOgzGprMu+WKnhaX/jkXEIE0g34JA9tHrNlvLsST
-	WbzSIVm447YoIAUh1NNavtINfL9VCmdMJWLPNPG7quEigmhGNrPag3xceTXOsjurf/gL1BVl3q2
-	Z5ZmWD+93DAXNU/1K/BU3Gc+kqxVZcF6vE547HaxMj8dTif3Zv4atBDd24lzlGzKteXlImRL+o6
-	JbA4kBZSz//6zgFjt1nQe2PFoX42K/ySMdYADJTR/8eqNrWt+5TJFqgL0bEgavUeGNk8VNGfkXf
-	nXfXtmZGwNS0qdusPvkhQkmzuqAeOSha41uKfSxMkv4zHO6G58DLGoIDlUdjYexEPyuZl+JiheZ
-	qv2BsNW3Bcs4Dr6bnUs/Ulsr6tUocJMaxMFwCBbK3kZotJhaU+s/MORc0=
-X-Google-Smtp-Source: AGHT+IGoWhYFNiMzH0NwKdTHeaqsvGdPvaxMZDjW53NTMlaxql/RYoWyaDsuwlQ1fCxrp3kUrSnkhw==
-X-Received: by 2002:a05:690c:6b89:b0:781:64f:2b08 with SMTP id 00721157ae682-781064f3436mr51972317b3.58.1760136539834;
-        Fri, 10 Oct 2025 15:48:59 -0700 (PDT)
+        bh=r8fXg4zC3wxUwCs+Dsk4EXpq+1EJB5LPWOfLleGsGg8=;
+        b=hdH6bGsXNYSlkXwonYVrcM+VzGp5t5VINWy7LhttDpbwDM2iFDu+0uSt3Cw7G7u8Nf
+         kUAMqjXDXZOfgKIKJamYUT7GZ7SZ4s1OkvW4K6stSJp6GKB/fZRJEzHYEMQEMXgt6Z6v
+         YtMRNGAlkfCNhUU+InAhhQj/iDLvzkkV1lrFL1m8xM3DwcCkfmyq/fUUoWYZCH1/hbY9
+         QDZqqw8vl5RrVnM3gtBjYRBqoIIsLmtH8M0e6hGkoh5lYWfGVGnuKIAunkD5kot/z2sk
+         rgzMhiLkA4o8hSpVeBCzv/ZyIvr03VRoqrno6qceZW+apEqB0yV7sJa4zYNtUBP0vICh
+         e0vw==
+X-Gm-Message-State: AOJu0YwsKp7kWwPRonbsFkIrXdJty8IO/KDKZr4FAyVzZcbm4vxOz7sJ
+	cTv6BU6o1WK2A8Uougg55TlGo7YeO3HShElxFbKSHZ2ZHFv4bAjAMZEgC37ZzW7Tpq0=
+X-Gm-Gg: ASbGnctMQM+Kg34dirB4hTCP1qBEezadTWb+LgpRBkRbwPLhaZEzF75a5y3D3N/xPZl
+	uRzIaGCCc9dUvBmoULTK2pYJEj8v6tQDQOPHqxBczf20tkEy88nfaDPeGpTkwpXEXHfm3ndsWIF
+	SBuzdFxljAVD6QLt7V26m4//FJXFZ1V3MNlXBLMFg0SgEEmcUwvikPnK7uqLqOaizWjBFqnRwTg
+	XECBoC7m083f2+6LPvh+oiLvMishT4bC3RIcTLfIDX+rO25FY6yWLYCl/LO/PFreoMTb0aCGBg4
+	ESHRrIyt3C3ZM0UNCkLq1+Irgr39QCqzMebQy7Y2AXPudtz/lYZ+3Uf0MrJVJPUVYWDERD30I8V
+	orfMnUMF51C/0OPOulcenzmQa6Ai/cG4xDi1oaMPyROrz6Rw8p/pmlQ4VLqqmI70xulkXVq1cLI
+	f+J7zVRm4TwFwSRlKdkbpXTHlICVPJCG5SbQpsFRwZYXSS9Fg1c6HPc1UiTaxeqAHZRg==
+X-Google-Smtp-Source: AGHT+IEJ+J+rF3yrOg+5TdOhAWKvjmPgHdhNwv5c9ozRVH85TpqZdwSOefGjkOatEG6Y6OkLYhHOTQ==
+X-Received: by 2002:a05:690c:4809:b0:781:2c5:bf4e with SMTP id 00721157ae682-78102c5c02emr60667087b3.7.1760136596007;
+        Fri, 10 Oct 2025 15:49:56 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78106e1b58fsm8982817b3.18.2025.10.10.15.48.59
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78106e1ede9sm8972997b3.22.2025.10.10.15.49.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Oct 2025 15:48:59 -0700 (PDT)
-Date: Fri, 10 Oct 2025 18:48:58 -0400
+        Fri, 10 Oct 2025 15:49:55 -0700 (PDT)
+Date: Fri, 10 Oct 2025 18:49:54 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 02/49] builtin/repack.c: avoid "the_repository" in
- existing packs API
-Message-ID: <aOmNWlwG3WPNChKi@nand.local>
+Subject: Re: [PATCH 04/49] builtin/repack.c: avoid "the_repository" when
+ removing packs
+Message-ID: <aOmNks8E1wQC7MnS@nand.local>
 References: <cover.1759097191.git.me@ttaylorr.com>
- <664a67c93620edf6727f0617f4dddce99901fcde.1759097191.git.me@ttaylorr.com>
- <20251010051955.GA1965904@coredump.intra.peff.net>
+ <f404dfa34f06a882e5ebf0b6ffa01ba365ac866b.1759097191.git.me@ttaylorr.com>
+ <20251010052256.GB1965904@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,56 +77,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251010051955.GA1965904@coredump.intra.peff.net>
+In-Reply-To: <20251010052256.GB1965904@coredump.intra.peff.net>
 
-On Fri, Oct 10, 2025 at 01:19:55AM -0400, Jeff King wrote:
-> On Sun, Sep 28, 2025 at 06:07:18PM -0400, Taylor Blau wrote:
+On Fri, Oct 10, 2025 at 01:22:56AM -0400, Jeff King wrote:
+> On Sun, Sep 28, 2025 at 06:07:26PM -0400, Taylor Blau wrote:
 >
-> >  struct existing_packs {
-> > +	struct repository *repo;
-> >  	struct string_list kept_packs;
-> >  	struct string_list non_kept_packs;
-> >  	struct string_list cruft_packs;
-> > @@ -265,7 +266,7 @@ static void existing_packs_release(struct existing_packs *existing)
-> >  static void collect_pack_filenames(struct existing_packs *existing,
-> >  				   const struct string_list *extra_keep)
+> > -static void remove_redundant_pack(const char *dir_name, const char *base_name)
+> > +static void remove_redundant_pack(struct repository *repo,
+> > +				  const char *dir_name, const char *base_name)
 > >  {
-> > -	struct packfile_store *packs = the_repository->objects->packfiles;
-> > +	struct packfile_store *packs = existing->repo->objects->packfiles;
+> >  	struct strbuf buf = STRBUF_INIT;
+> > -	struct odb_source *source = the_repository->objects->sources;
+> > +	struct odb_source *source = repo->objects->sources;
+> >  	struct multi_pack_index *m = get_multi_pack_index(source);
+> >  	strbuf_addf(&buf, "%s.pack", base_name);
+> >  	if (m && source->local && midx_contains_pack(m, buf.buf))
+> > -		clear_midx_file(the_repository);
+> > +		clear_midx_file(repo);
+> >  	strbuf_insertf(&buf, 0, "%s/", dir_name);
+> >  	unlink_pack_path(buf.buf, 1);
+> >  	strbuf_release(&buf);
+> >  }
 >
-> I found it a little funny to pass around a repository struct as part of
-> existing_packs, since they're not directly related. But I think it is
-> mostly just a convenience to do so, and "existing_packs" is really
-> storing an overall context.
+> Ah, yeah, this is a good example of what I was talking about in the
+> other part of the thread. Probably this function could just take the
+> object_source pointer to find the midx. But then it wouldn't be able to
+> use clear_midx_file(). That function arguably should itself take an
+> object_source pointer and not a repo pointer, but it feels like minimal
+> gain to go around trying to tighten these (and certainly something we
+> could easily do later, even programatically, if we cared).
 
-Yeah, the patch as-is suggests that we could have gotten away with just
-adding a pointer to the packfile_store within existing_packs. I tried to
-do that locally, and it works up until "builtin/repack.c: rename many
-'struct existing_packs' functions", where we start to want to use
-"repo", or "repo->hash_algo" :-<.
-
-> It could probably be scoped down to pass around an object_database
-> instead, or maybe even a packfile store, which somehow feels a little
-> more "correct" to me as context. But I have trouble imagining that being
-> helpful to any new code (why would it have an object_store but a not a
-> repo object?). And I can easily imagine having the repo available being
-> useful for future refactorings.
->
-> So I think what you've written here is probably a good path forward. I
-> wanted to outline my thinking because I suspect the same will apply to
-> other patches in this series (i.e., they don't always need a repo
-> object, but it's simplest to pass them one).
-
-Yeah, exactly. In general for this series I am trying to do as few
-changes to the actual functions as possible. There are some (like the
-renaming in the later patch I mentioned above), but only in service of
-trying to have a clean repack.h (at least from a naming standpoint).
-
-There is lots of opportunity to clean up the repack code further. I
-agree it would be nice to have existing_packs only take a
-packfile_store, and pass around the repository in other places as
-needed. I'm happy to investigate that, but as a follow-up to this
-series, since I want to change as few things as possible here.
+Yup, I agree. The changes to `clear_midx_file()` seem like a good
+candidate for #leftoverbits to me.
 
 Thanks,
 Taylor
