@@ -1,65 +1,66 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB612853F9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FC4222587
 	for <git@vger.kernel.org>; Fri, 10 Oct 2025 10:27:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760092040; cv=none; b=YQfbIZbS8wMMrhD4VMhMxeeArXMnxsa4A8fSf178DjrgdFFt/BH1ufbLQ4f8q+7+n4LmdBQIMXgRz9MjkJvfZV/lxmaz71u6tveqbikfvQ2UEV3HR4FBGppjehvLhQ0jkhp13CV1qf5otubnR1BjhRsz7xNn/cjlM0F5BhKqqtU=
+	t=1760092040; cv=none; b=Af/I5pXiwqty1xf+c7fagSmOEBnktrAFp2zYREheHtuOdJ4aMyD6A6/sPCAYL7ogJr0qxKbb7lPLYe2H507Z9F4lkFZ06rbiKXdpvSapWFCEhzPlw8zvuxEZVA4g9W2WySUE/I7xw6UgryspP5r8unEj7ZZ7OSdqhrRHmBLWguU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1760092040; c=relaxed/simple;
-	bh=0Lio97tAyqrT2/b8tgb0DfcfWZ6TB2kMjVrgJkSvkYs=;
+	bh=CGxutGxEL/oXo74jMvLlb8v4yK+INk7Vb4paO1uIpmM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=TTpgZ/cyZLM/hDfWT5o8tul2dOqbclFKGVWUSBHkjyXB8J95FE39WrTY4oX2U9hlUB9r5DXBziVU3jh14AbXXKeRAow5OvfBEMzVrY+DMesKh/1LuUfw/ovZOUZYavEYdEiMp885gUsiNH08m5rIMR2Mw2eSh11OnEM160lEU5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DQJiq6kI; arc=none smtp.client-ip=209.85.208.53
+	 In-Reply-To:To:Cc; b=Kf3Ge9/ZfL6LHYONlmJ65yOVun0OndBNefmf636VTcIiirAa7CJb8lwUriYEf0yI3E/zMNoJEGj+IiaoyKZYFSBTpYejYMvxkfJICfLT9JRBNLzbngu6pWRoPRCE5ErbjlAvOhRTQgXi28HAU/fk5BhuY60ruXv2lWcy5fTi82I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JpmwQl0o; arc=none smtp.client-ip=209.85.208.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DQJiq6kI"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-637e9f9f9fbso3491397a12.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JpmwQl0o"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-631787faf35so3683575a12.3
         for <git@vger.kernel.org>; Fri, 10 Oct 2025 03:27:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760092036; x=1760696836; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760092037; x=1760696837; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1Q7j9mbAvYWAJ52gpHIsUgLRmTS1wJARmgIwGQgMhFg=;
-        b=DQJiq6kIBsSZYlsZcBC9ZnXSfMuNHaIXhg+b8gP1KP89tY4OZg2lbuz5Fv5cTvAvsS
-         ZKzqL8NRMaZy3hiOJPmHek75OInUbdoggJxGysYUgJuAazLgKs31IX+rJ5WB42zkH5E1
-         +qoHY9Cem/fmspfV4E1ffR+Yd2er8d7Q40oJamBwMT17V6dn0b+6B+1o/a8zf4xvuU6D
-         5fmz6ly27R4z+5chD5lFDWJAHxj/jLQRVvFAGY5XQGq/+3N6M1J4i3Da7RtiloMaJ6T7
-         I6achA+Uh2sk5WK8b/2fWtotVUy6THGCtoii0Qlm7lsp2jm3m58WB78OAbbu2wmO2Sxy
-         7Xhg==
+        bh=avqAklbx/7V3zVNAnQnixEi8d10lb/n/Ffro5W+6Kso=;
+        b=JpmwQl0oIL+ztpikkj6/iRPQfAHxvLDmWizIakyYIl87I88Gat/4f2iK7flmN0pc2r
+         Xo2EQNAXk23bTPpo3siSSQTJL7d9Q40xZ0MZwfgSPmzBxxJG8wAXv2JOitvHdF2GS5CA
+         i+FqfVHwnA2dLjiO7bjhetz7VrnrzpE6tlqGGD8fEIhM1ogf+g3cJD4mpygAOrwjRIJa
+         DSZ11k1neJnonWqwWD8IpFYv9cBV1yhysl6+YxfEZD1ULIByeeYpMaQEFutA5HEfbfyP
+         ePjppyMC8WicAlHXEo3SP2x7NxHACggYxosow7Sedgqj2TDVCkl2ktSaY/6WHj752wtt
+         wR0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760092036; x=1760696836;
+        d=1e100.net; s=20230601; t=1760092037; x=1760696837;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1Q7j9mbAvYWAJ52gpHIsUgLRmTS1wJARmgIwGQgMhFg=;
-        b=NM4HVx5P/4p2sXcNWVI3KaY2yxD1sSFpli/l0wbhKVFvVsyprjXXx2yll9/wPKAVuD
-         VYes9LFAbImhfvStxx/fvMMFuUeHl7ejCEhE0VLyk1hIHpCCDUTVsYyA3Qy3rgU0JuUl
-         hHz9ndEuVBYyBsOC53k/JdSE+zScV/GgG06+c+diUCra1l+w3HNVo0Pd0e/iXNnROtSN
-         0sqer91OmQ16wCPqOIdhCc5FiVAvR1tNWrNmiRGkeUQGmm97wCSlMor7TpGS/KuVv8sc
-         7qT+QfS5U86NrceV55f+p85tsCQRcdeAgxPjsvqE6Vzt1MMnKbkKQwzqwH6x3KO+kKWB
-         iqOA==
-X-Gm-Message-State: AOJu0YxXjZu5QTVFZboAyPrijrR7ftVQQXbbF8GJ8v1aCMUGakPNtVKo
-	/TdeDSq05sjWvwEtxfTeAc1/lYr13Q/J9C3R/wWxJ6/Qhshi3sSW4oZtBnECPZ77
-X-Gm-Gg: ASbGncvuuU0Wm4jMnd3440p+GVp1iww+EgiM3AG6mafv69YCyJMaPbQyaBxx+W8HofW
-	K1qtHxQVdVE+7KzljTCHk61NNIoK2MgCcavqU33lWSrhHtHlLMok5BFbZ4VnkB5XyTncv/ElzM/
-	A/ldFoZW5HX3FxvVcN0N14EKdN10kAEG4Ii9jR1Irz+SmQuFVZGwzj9bp0BfisQ9tE1Nb4l7wGN
-	0DIZsZRFeYVGMsPKOEVsYycJ0x38CX+FLcqeZvUZfaTUoVXZQw0e4sEUOcfTdnKT/hv4soyEX0B
-	AH1a+3W/d2yx4fsWoDslsA0N6gK2kKprlJZF00hepPNMBeiVw9gDNteoGhSc+u7ozZxNb3om7k9
-	1OzbNmlEVoqHmmpQ4IhqGxtcIEeTl9JXP7klU06mEOd5miHY=
-X-Google-Smtp-Source: AGHT+IHakjJl7yDwP3W/D+IBf8FF1LANcihxlZow/ZbR+WmVvE3MdApsRLITLXBPd4WlXJHnGwPqAg==
-X-Received: by 2002:aa7:c9d4:0:b0:637:e94a:fb56 with SMTP id 4fb4d7f45d1cf-639d5c71065mr7617732a12.35.1760092036272;
+        bh=avqAklbx/7V3zVNAnQnixEi8d10lb/n/Ffro5W+6Kso=;
+        b=XfLHDkv7k702NXsso3CKDvy5+2nG9fmA5X68huVr61TvL4rkeX/6aSU2K+A5CpNW5z
+         Gn2MuRVSYW+yWRFZsydw/4rNCZEM8mEYCmBTB64zt4q9n9zcpfo3dqmachqXoOPIYem/
+         Ut0XwJmnxca7u8NYdy/0eDQ6Dyp6wwkDEfddyQJ/m1cpe/LzFrtHL8N8eX+eZ7IQcv1i
+         HFeYKp+XRLxeiuwb0pGMDY9tzfS/RYWZH6po0q0+cSGE0OadtslkVW9jqKLAtbiTeq+e
+         dlLcJxneTQiBIbetnNVeup377sD1gcRFZo2iSb01Z6kkI61RY5HIV8+QYsano+Yr8WxL
+         XJeQ==
+X-Gm-Message-State: AOJu0Ywa58wxorj17Xc3jyGU5oO9et+X1QUkmDctOwshASI47kBXdCP9
+	6vBstJVnaugJrF+aWf+UZdTQl7tfNQQhSXMc7i5WEBmVXeye+unUyzJH5ZpBcdbW
+X-Gm-Gg: ASbGncu2T9ZO5nqpbervIPnn7QUPVC8JXGMwgNtenOc4/zUon8bFe7SFkltxvgd/h3w
+	HLOgycKmz5ARg0XXC6h3alI4Aj3m/4uzbKb/9Qx9nmDccSMpwInX61VE69IO1p7CvgnhaBqowF8
+	LBsKZR8Vy0oipfuJQaFZOQjXrKl77NqZoRX3vw10NgNssNxbSp7YAw8j22uCVAg6d+Xn1dPqEFJ
+	vNkrk8hBy9ZiSixHDiiHdHbj9g+oA/bd6zAeiY5emB+IUvrPDJ3SGfaR2f5h5MS3kLILLt/BtJc
+	juN3sYoe3ssZsSp5W+TJ2+BcQeKbPzbA3P29JyMLvG9pUzZcQ4hie9yPimq4WcJ5PU8yi1atvXq
+	WjekUGaYIQC531kER/ZFQ4ohNw/UZ3sjerL0wtOgi/2JKMOw=
+X-Google-Smtp-Source: AGHT+IH2011rQbqbziMIeiYnGhHE9o7H0lp2fIt4bhrsa778ZAcBOpYsPYvL8lv7bWVkx+iUYDD83g==
+X-Received: by 2002:a05:6402:40d1:b0:639:ef26:a01d with SMTP id 4fb4d7f45d1cf-639ef26a47emr6958455a12.11.1760092036907;
         Fri, 10 Oct 2025 03:27:16 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:2455:8268:bc00:70de:2d8a:d550:c37c])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63a52b0f750sm1960729a12.14.2025.10.10.03.27.15
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63a52b0f750sm1960729a12.14.2025.10.10.03.27.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Oct 2025 03:27:15 -0700 (PDT)
+        Fri, 10 Oct 2025 03:27:16 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Fri, 10 Oct 2025 12:27:08 +0200
-Subject: [PATCH 4/9] t/pack-refs-tests: move the 'test_done' to callees
+Date: Fri, 10 Oct 2025 12:27:09 +0200
+Subject: [PATCH 5/9] t/t0450: split whitespace consistency check per
+ subcommand
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,74 +69,108 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251010-562-add-option-to-check-if-reference-backend-needs-repacking-v1-4-c7962be584fa@gmail.com>
+Message-Id: <20251010-562-add-option-to-check-if-reference-backend-needs-repacking-v1-5-c7962be584fa@gmail.com>
 References: <20251010-562-add-option-to-check-if-reference-backend-needs-repacking-v1-0-c7962be584fa@gmail.com>
 In-Reply-To: <20251010-562-add-option-to-check-if-reference-backend-needs-repacking-v1-0-c7962be584fa@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1741; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=0Lio97tAyqrT2/b8tgb0DfcfWZ6TB2kMjVrgJkSvkYs=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGjo338yUtjFua3g/0oLXCi08PHw3wAGGO/Dn
- olaRYRrR2nVSYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJo6N9/AAoJED7VnySO
- Rox/lk0MAJVqdhfqEgDukXZzBhT6e2UbyxsYVbSw6SumwaoCQ+ON9dcX/BXivwoHJTaPQ3uAVL6
- OuHe3BSzIcNTMCdO1VYNdKYagIp7HosomhAu9DZ9NJKIhO+CEIW0nT16EX+tk5CelJNUB7jJB6D
- gcTJVK43mA5sj4B+ZV4IlqKruEA0qiO4aAS9Sw60dJffC71EvM1nKeZVa9h01kK5MUH58vLLJUA
- 5zT2umQdGEphcQO1sIhyub1RLMiJYifQEXf0c9UKEP8gONl1NpX1L85VkGzGgMOtH5yG0FOw0UA
- wGD5jxWXwfiRohses+baRpS5Sl5IczXbHUd+r9ZFBHOH+uN+t8QKV6LHFbvTKPb/rcrfaU5AazB
- aQ0a4MFWQoL+l50yIA+siouSxv2X/fdcKVwJQT1hTQ7TA9lAmC73VIQXd8E4vcBDothlA46mdUd
- vmCuGBKahARBg5FI1R116H+sOLP72OTtOY47Ot7OUg9TBgPlxlRKfKFNEjct1NlbOQFcVsvlim6
- Eo=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3371; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=CGxutGxEL/oXo74jMvLlb8v4yK+INk7Vb4paO1uIpmM=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGjo338n+VqBvKrA0+K34xNGWyWMkA4jTJWnR
+ KpwWEKjqdAWQIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJo6N9/AAoJED7VnySO
+ Rox/W8YL/RFVGtQGthxAhQMLd74zxwHnfN3P5bdwQtg618MZ+J692DjRfLdTfEqx95kjndeoiyh
+ 5ltCGhi4Xs7EF+Nn9Mi/W903+J0kALrjeBv0q5tCr3sNsy8/ee2mlaVXqCJNWuOndnMYA7TJZgp
+ JBvquBAieiVVUM2SnLr8vCE/1ru/ABrI1VtH/dY/egID28IDxgmWDbOxsYCqF5kuG0g7diq9yYM
+ 62TzeX2cT/NxmYVrDwZoCLvqCZVLriWqCfT1u9y+0anpsnzJwIQ9IJR5DABaXX1wEVsgZvZqUu9
+ mBnoffHNEFm+np8jaUp9DbABGlKRrbi202+oHV5zBDCfy9sDQBylx5B5lwIt9554ZkRC3VNl5O1
+ tSev4JPM2NnDkynFn9NyLIdk2fr03KyHu6b9WG9TMtl7K0dGGox+KtpBZekL4XGhLEjRJYPRWI3
+ TOo+qAPl2NtJ1DKlAyMkFPLrqI5PAafiZqwaLvQzT0c74a+SvWb98jd5nbVDZLoMB9idj3IP9M8
+ P4=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-In ac0bad0af4 (t0601: refactor tests to be shareable, 2025-09-19), we
-refactored 't/t0601-reffiles-pack-refs.sh' to move all of the tests to
-'t/pack-refs-tests.sh', which became a common test suite which was also
-used by 't/t1463-refs-optimize.sh'.
+The test t0450 contains a test to ensure that leading whitespaces within
+a commands help text is consistent. This would catch issues such as:
 
-This also moved the 'test_done' directive to 't/pack-refs-tests.sh'.
-Which inhibits additional tests from being added to either of the tests.
-Let's move the directive out to both the tests, so that we can add
-additional specific tests to them. Also the test flow logic shouldn't be
-part of tests which can be embedded in other test scripts.
+  usage: git show-ref [--head] [-d | --dereference]
+                         [-s | --hash[=<n>]] [--abbrev[=<n>]] [--branches] [--tags]
+                      [--] [<pattern>...]
+
+where the second line has inconsistent leading whitespaces. However this
+considers that all lines within a command will be aligned similarly.
+This works for most commands, however when dealing commands which
+include subcommands, this assumption doesn't hold. Consider the help
+text for 'git-refs(1)':
+
+  usage: git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]
+     or: git refs verify [--strict] [--verbose]
+     or: git refs list [--count=<count>] [--shell|--perl|--python|--tcl]
+                                  [(--sort=<key>)...] [--format=<format>]
+                                  [--include-root-refs] [--points-at=<object>]
+                                  [--merged[=<object>]] [--no-merged[=<object>]]
+                                  [--contains[=<object>]] [--no-contains[=<object>]]
+                                  [(--exclude=<pattern>)...] [--start-after=<marker>]
+                                  [ --stdin | (<pattern>...)]
+     or: git refs exists <ref>
+     or: git refs optimize [--all] [--no-prune] [--auto] [--include <pattern>] [--exclude <pattern>]
+
+With the current implementation of this test, any flags added to 'git
+refs optimize' in a newline would require it to be aligned with the
+flags of 'git refs list'. Which is incorrect, since we'd want it to be
+aligned with the flags already added to 'git refs optimize'.
+
+Let's modify the test to work with subcommands. Do this by swapping out
+the old logic. The old logic simply counts the number of spaces for all
+lines with leading spaces and checks to make sure they're equal.
+Instead, now we create a list of (subcommand number, leading space) and
+then ensure that there are only unique values per subcommand.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- t/pack-refs-tests.sh          | 1 -
- t/t0601-reffiles-pack-refs.sh | 2 ++
- t/t1463-refs-optimize.sh      | 2 ++
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ t/t0450-txt-doc-vs-help.sh | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
-index 095823d915..6a71838ffa 100644
---- a/t/pack-refs-tests.sh
-+++ b/t/pack-refs-tests.sh
-@@ -460,4 +460,3 @@ test_expect_success 'pack-refs does not store invalid peeled tag value' '
- 	)
- '
+diff --git a/t/t0450-txt-doc-vs-help.sh b/t/t0450-txt-doc-vs-help.sh
+index e12e18f97f..150655f9f0 100755
+--- a/t/t0450-txt-doc-vs-help.sh
++++ b/t/t0450-txt-doc-vs-help.sh
+@@ -94,19 +94,23 @@ do
+ 		check_dashed_labels "$(help_to_synopsis "$builtin")"
+ 	'
  
--test_done
-diff --git a/t/t0601-reffiles-pack-refs.sh b/t/t0601-reffiles-pack-refs.sh
-index 12cf5d1dcb..3c706978ef 100755
---- a/t/t0601-reffiles-pack-refs.sh
-+++ b/t/t0601-reffiles-pack-refs.sh
-@@ -18,3 +18,5 @@ export GIT_TEST_DEFAULT_REF_FORMAT
- . ./test-lib.sh
- 
- . "$TEST_DIRECTORY"/pack-refs-tests.sh
+-	test_expect_success "$builtin -h output has consistent spacing" '
++	test_expect_success "$builtin -h output has consistent spacing for each subcommand" '
+ 		h2s="$(help_to_synopsis "$builtin")" &&
+-		sed -n \
+-			-e "/^ / {
+-				s/[^ ].*//;
+-				p;
+-			}" \
+-			<"$h2s" >help &&
+-		sort -u help >help.ws &&
+-		if test -s help.ws
+-		then
+-			test_line_count = 1 help.ws
+-		fi
 +
-+test_done
-diff --git a/t/t1463-refs-optimize.sh b/t/t1463-refs-optimize.sh
-index c11c905d79..9afe3c1ed7 100755
---- a/t/t1463-refs-optimize.sh
-+++ b/t/t1463-refs-optimize.sh
-@@ -15,3 +15,5 @@ export GIT_TEST_DEFAULT_REF_FORMAT
- 
- pack_refs='refs optimize'
- . "$TEST_DIRECTORY"/pack-refs-tests.sh
++		# For each subcommand, capture the number of whitespaces
++		# specific to that subcommand.
++		awk "
++		    /^[^ ]/ { subcommand++ } # Count the number of subcommands
++		    /^ / {
++		       match(\$0, /^ */);
++		       print subcommand, RLENGTH;
++		    }
++		" <"$h2s" \
++		| sort -u \
++		| cut -d" " -f1 \
++		| uniq -d > help.inconsistent &&
 +
-+test_done
++		test_must_be_empty help.inconsistent
+ 	'
+ 
+ 	adoc="$(builtin_to_adoc "$builtin")" &&
 
 -- 
 2.51.0
