@@ -1,68 +1,68 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0655C214A6A
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 01:14:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C5F214A8B
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 01:14:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760058855; cv=none; b=B4wiBRcktlyvvPIKfcx6yNw9kJ0Kirik0EfHD1JScI38TM5xmcQpnk98b745sNmqoeT1IYs7cVir0OPnk3T8kFjFTSzzAt+nHlD50lWcYc1Fio+txjqy5/RtUtuRk33u6QXngeVvN+ZsiSln/6dearFv8DFSixX81Sqo0t6lzao=
+	t=1760058855; cv=none; b=nN3lCi0GuiDM3ll1ywxd+iBFC6oslYrHZCXjWMKzXRmZHSLE9c1NaAosK+62byOjoyOWf2cAXUl8vvmE+XsCpmLgMfFlTulEIQK8iVeXG8bOIbfSM1oQWnKq3uz8qHScI5YswGplYeXmo5h+E6n24VRRanCsXsuYvMEbEExV7K8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1760058855; c=relaxed/simple;
-	bh=fYbtVnYKkxilumWO3NPC6bAm2jEEYQQmnsZFZjYwLao=;
+	bh=fuo/O3ro1nnU4v/tk5w49abhtxOwHb4IDzgTMnuZJsU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=A8P2IiN42ypfIziyirm+WjQ1C7BhF7zt1f9FQl2UVKxNjyG+l3O4qLmkgXVkGKbJPtRRmnuGf/+MyYPtKZUOdYCSTtgt7a4llPIDvdVF4VyW2wOT755kulVhit8Nt3bVt+BUrvJPSV3gIhMLcJGmxudR6bJRQqlszDZgxM7T4ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g5w8y2gK; arc=none smtp.client-ip=209.85.219.41
+	 MIME-Version:To:Cc; b=pOjDWfHw074AGxb0HCPZKFu0qV6zOpP9dyAFR+SeIexEUogLwGA//Q8b1EQ2UVhI+t/i3xCptaYCry7tqZYpNUADMRCVETn1fy51wHCJO4h2ufKyWwgn7iT8UdquC0d2mrH5TLpwArXJ4XgPrDAr1nmzQXvEvb/BApRpC8E6JvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dPexq1zE; arc=none smtp.client-ip=209.85.219.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g5w8y2gK"
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-7970e8d1cfeso20456546d6.1
-        for <git@vger.kernel.org>; Thu, 09 Oct 2025 18:14:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dPexq1zE"
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-87bb66dd224so14499956d6.3
+        for <git@vger.kernel.org>; Thu, 09 Oct 2025 18:14:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760058851; x=1760663651; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760058852; x=1760663652; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=w+0CGtNCLUbIeddb0FYDCRDYQXEy5Mudu/UVbaecv3k=;
-        b=g5w8y2gKNgDWhUjbU9+K8skLJwpOMPgbJeqP5KIVlNe7u8Op02lCF6EfulfO5eSG6b
-         9oDbK84fhCjaQfVvgi9uGwzDT/80yCYnOEVyN1IU/U4mDGcGBrSsksdAg06pA7unNGG3
-         eGzVx54nEO9cA9CDK+x9kFcUv2cpO2JdjJg0cmmvvreThFwYzrxc4RKcApvV0w/WbCyW
-         x5ieYvsWp69AprMvj6Qj8wWagT/57rU7XtuqvREUz1EPfDsPYnKLxz2ae/+XUfhNhZX5
-         0/sxcB98xV84suiH4ZIXni7mUL3ten3+KrgsDV0ukTaC5PgMPg6SO9pcltlIqI9QkZth
-         5qEQ==
+        bh=Kr/fXpanbKvKt9ChR4oFkPtwAv0w2yuLwmhHiNIOxWQ=;
+        b=dPexq1zEt9pmej8tcFwpVss1X5KBW18ygn2zqbleTgx4l2PhuM5+E50H+i6oKcizgS
+         cQzdXuOeyVRFRxXPfQ5XTX/Kfa+RuayiLUECmuRq0XiVEo5ivIUABPDfHsEjo2k+vciS
+         BRMnqahxPvuS3ex5EzKyDziXsLZsKuWFkR1DuMEce6Dn6mv/4r3Qe/96dyMojGj/jdXN
+         GiPOdotLzdUEPTFv2vkW9vM958ls+skdurB8Sr8FHR3QEsFBwWvoa+Ogj9c0cltJMmmi
+         FOwVHaWnO/snnDJhZ6kD2pDHKF035yvp40lC49F4xJ7WbDg1nEWk8kXRPYr5WfG0IuXx
+         Gc3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760058851; x=1760663651;
+        d=1e100.net; s=20230601; t=1760058852; x=1760663652;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=w+0CGtNCLUbIeddb0FYDCRDYQXEy5Mudu/UVbaecv3k=;
-        b=Mrca3ZUscXdcA+CnSt8KUUtWwCholZ/nTLQfhb5A72ZRQlo1jMyZzhQl+jbuxrU+MK
-         bTh+0ezByuA71/RylYV/3Cd/2IILeuCm9NgBTyoi4cesZlCN5Gh0N+PwSaOtgZF/8EZZ
-         ACFPlRZ/ZAEVXyWQ1+1jwXt8qsyvOxvxo9a0BYQKH2S+fiZ1+EARFoUN7SOVZMxcAOLq
-         d/PveAeotJ5J9M50v2rEKAJXx0UxcgwGhgU99WDlkLR3jRty8PGU0IeNFwQb1DN9Ki3Y
-         itDlmP9gQib1IvHycTSOrMAck3Aly2hKb/0xT976WofXrpqswcP7KTCpsO8VF4T2J6pO
-         3bDg==
-X-Gm-Message-State: AOJu0YwAHQ9eu9uCxHiQVrmjnOMhzNHI35lRqoAAPEScjHdSTmksvKUv
-	08pgsJ1t/igpTtXmw5EkstgNVy/lyFD+rCNDf5cWCl13JsIxnorMjWZpjCH/uA==
-X-Gm-Gg: ASbGncs879LsiEfAR9RjrW+O8eIKZlhpr85X1dDM0Gjrclmuq6bsVGDirbzWQj+fm+9
-	lVh7xEkdjWuRtUxKFSffjelgGw2vE4SGT7lbTVmBD3G7kU+ZCgH/ybXXOtM/4khQIj0pv5YWw+S
-	282u85NDpruDdE1F8W1DMdjoWLWrlasrBYd5dGAgGmHT7MxPYFzQahClbbbiDXd8xrp+1FisEvv
-	vdtizz15496xQDTAOpsCQlknMnL1w8oqLsUU6geEooJRWqLtgmrYvKwXWYn95GBreLRvNizVIN5
-	3bORF4cLGGiKiRHU6f+fRXhYdB4mGz3JqU8qvWMaOau43Y18RG+YSk+Y4LrAPmpzRvQ9pQt0/Xc
-	084X9zrRyUCkIW6QBlol/w77ts3WOnVZJQlvbCQQ6PTp6/XiZL7R3Pt9KQg==
-X-Google-Smtp-Source: AGHT+IEYZ/9WpbFIh6hWCC/n48MkyoHF7qcG8pn3mgs45GR71t8CIC4dsboLeH7VpSu2MqSM10CUNg==
-X-Received: by 2002:a05:6214:b6d:b0:7f7:708e:4797 with SMTP id 6a1803df08f44-87b2100104bmr129834716d6.12.1760058851452;
-        Thu, 09 Oct 2025 18:14:11 -0700 (PDT)
+        bh=Kr/fXpanbKvKt9ChR4oFkPtwAv0w2yuLwmhHiNIOxWQ=;
+        b=NwDsDFx1mHYnYDSt/6eZN+SYUjrI+BAjLuDVl4QitJnus3bnDhX/HwpUO4OtdvHpTa
+         cv7RWZlP/BmMIpS6Crf2D8HrkBT6pO4N9UzUnUbKD3QnoWsvR3tE/rkRv5twoe2DVuv7
+         6GrhpUm8G7VnNEhxNAviNaEjEFsIqUe+nwNd4g02qAoPjWHHdsv4EZzey6Jc2JGP0GpB
+         bAk9cmZwEKK4SQrcEmjVzP9yY+G+5aPitSuAyhRYItI+kwLmg7kDohDeWFh/5bkJ2dlp
+         5U/BjHQ/A75TwJvAW6tvkdCNNPZlASaUVDy0okr9JZIaKYXU7mmS2ZGN4Htl21nXQamz
+         w5Nw==
+X-Gm-Message-State: AOJu0YycBgqApvnWGOVXSR/AdoK3zEr6hB3ZYKWowSuZY6+7HoElAI+o
+	TFLciBj2A99CF29t8PAje0pryjYjHuQnTlIO9q/DYOfyVYMNSm6A1aCW7lGOVA==
+X-Gm-Gg: ASbGncsNEOk/7zRLNzQ2mZj+zBRWxhFKT+aX54rFpl01ebHyF00OJC3pieskhYJNeC3
+	Rc2tMBEVFVFntGC5gCeSVnxCTKiVG+eEuo5A99N2eI+tkqRGOw59JZgGvgYjijnHCNVt+F8lWtW
+	lt6FkCStfw3N5dbit2jgucprBi2OfupD0O57zKb9xPofP9jHSilgHojwtoPuE68NGN0w9K3qD4e
+	vB1dqPz9MVL0Dh5XM1f+GMksL43JmfpKiuIm5HPoUzEZWBQkYdkCsMDGU0KLBwi/q6jFn+jAce9
+	52H3dUGgKwy6N461ZKXZBXHJfDSr7mdqxhUxouR9X5fkSWaj9zRBbw4LTFtjdWLuu6pJ9O3t0hE
+	Imrw1Y5/vF4WSutgOONQO7yAPesdO2ZVE0VJGHkpJwu2IpyNHgIKVd1cOAQ==
+X-Google-Smtp-Source: AGHT+IEJtRiO/uA9AVuBpRiuBbATccIhpjSpn/XTVQXl1WVobmFLV9y4+DIjo+SvPq+rf4vkpUuG3g==
+X-Received: by 2002:a05:6214:19ee:b0:87b:c1bd:87d with SMTP id 6a1803df08f44-87bc1bd08fbmr32603256d6.63.1760058852491;
+        Thu, 09 Oct 2025 18:14:12 -0700 (PDT)
 Received: from [127.0.0.1] ([20.161.60.18])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-87bc345df08sm6441476d6.10.2025.10.09.18.14.10
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-87bc35951a4sm6212536d6.55.2025.10.09.18.14.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Oct 2025 18:14:10 -0700 (PDT)
-Message-Id: <c8df6a042b9e971f392b2fd2d09a9c3c655dbceb.1760058849.git.gitgitgadget@gmail.com>
+        Thu, 09 Oct 2025 18:14:12 -0700 (PDT)
+Message-Id: <d2167a81d31defddbcdda06726b004e44a192f8d.1760058849.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1938.git.1760058849.gitgitgadget@gmail.com>
 References: <pull.1938.git.1760058849.gitgitgadget@gmail.com>
 From: "Delilah Ashley Wu via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 10 Oct 2025 01:14:06 +0000
-Subject: [PATCH/RFC 1/4] cleanup_path: force forward slashes on Windows
+Date: Fri, 10 Oct 2025 01:14:07 +0000
+Subject: [PATCH/RFC 2/4] config: test home and xdg files in `list --global`
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,66 +82,134 @@ Cc: Delilah Ashley Wu <delilahwu@microsoft.com>,
 
 From: Delilah Ashley Wu <delilahwu@microsoft.com>
 
-Git prefers forward slashes as directory separators across all
-platforms. On Windows, the backslash is the native directory separator,
-but all Windows versions supported by Git also accept the forward slash
-in all but rare circumstances. Our tests expect forward slashes. Git
-generates relative paths with forward slashes. Forward slashes are more
-convenient to use in shell scripts.
+The `git config list --global` output includes `$HOME/.gitconfig` (home
+config), but ignores `$XDG_CONFIG_HOME/git/config` (XDG config). It
+should include both files.
 
-For these reasons, we enforced forward slashes in `interpolate_path()`
-in 5ca6b7bb47b (config --show-origin: report paths with forward slashes,
-2016-03-23). However, other code paths may generate paths containing
-backslashes. For example, `config --show-origin` prints the XDG config
-path with mixed slashes on Windows:
+Modify tests to check the following and expect a failure:
+  - `git config list --global` should include contents from both the
+     home and XDG config locations (assuming they are readable), not
+     just the former.
 
-$ git config --list --show-origin
-file:C:/Program Files/Git/etc/gitconfig         system.foo=bar
-file:"C:\\Users\\delilah/.config/git/config"    xdg.foo=bar
-file:C:/Users/delilah/.gitconfig                home.foo=bar
-file:.git/config                                local.foo=bar
+  - `--show-origin` should print correct paths to both config files,
+    assuming they exist.
 
-Let's enforce forward slashes in all code paths that directly or
-indirectly call `cleanup_path()` by modifying it to use
-`convert_slashes()` on Windows. Since `convert_slashes()` modifies the
-path in-place, change the argument and return type of `cleanup_path()`
-from `const char *` to `char *`. All existing callers of
-`cleanup_path()` pass `char *` anyways, so this change is compatible.
+Also, add tests to ensure subsequent patches do not introduce
+regressions to `git config list`. Specifically, check that:
+  - The home config should take precedence over the XDG config.
 
-The next patch, config: test home and xdg files in `list --global`, will
-assert that the XDG config path uses forward slashes.
+  - Without `--global`, it should not bail on unreadable/non-existent
+    global config files.
 
-Suggested-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+  - With `--global`, it should bail when both `$HOME/.gitconfig` and
+    `$XDG_CONFIG_HOME/git/config` are unreadable. It should not bail if
+    at least one of them is readable.
+
+The next patch, config: read global scope via config_sequence, will
+implement a fix to include both config files when `--global` is
+specified.
+
+Reported-by: Jade Lovelace <lists@jade.fyi>
+Helped-by: Derrick Stolee <stolee@gmail.com>
 Signed-off-by: Delilah Ashley Wu <delilahwu@microsoft.com>
 Reviewed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- path.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ t/t1300-config.sh    | 65 ++++++++++++++++++++++++++++++++++++++++++++
+ t/t1306-xdg-files.sh |  5 ++--
+ 2 files changed, 68 insertions(+), 2 deletions(-)
 
-diff --git a/path.c b/path.c
-index 7f56eaf993..db7b94fcda 100644
---- a/path.c
-+++ b/path.c
-@@ -40,13 +40,17 @@ static struct strbuf *get_pathname(void)
- 	return sb;
- }
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index f856821839..5fa0111bd9 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -2367,6 +2367,71 @@ test_expect_success '--show-scope with --default' '
+ 	test_cmp expect actual
+ '
  
--static const char *cleanup_path(const char *path)
-+static char *cleanup_path(char *path)
- {
- 	/* Clean it up */
--	if (skip_prefix(path, "./", &path)) {
-+	if (skip_prefix(path, "./", (const char **)&path))
- 		while (*path == '/')
- 			path++;
--	}
++test_expect_success 'list with nonexistent global config' '
++	rm -rf "$HOME"/.gitconfig "$HOME"/.config/git/config &&
++	git config ${mode_prefix}list --show-scope
++'
 +
-+#ifdef GIT_WINDOWS_NATIVE
-+	convert_slashes(path);
-+#endif
++test_expect_success 'list --global with nonexistent global config' '
++	rm -rf "$HOME"/.gitconfig "$HOME"/.config/git/config &&
++	test_must_fail git config ${mode_prefix}list --global --show-scope
++'
 +
- 	return path;
- }
++test_expect_success 'list --global with only home' '
++	rm -rf "$HOME"/.config/git/config &&
++
++	test_when_finished rm -f \"\$HOME\"/.gitconfig &&
++	cat >"$HOME"/.gitconfig <<-EOF &&
++	[home]
++		config = true
++	EOF
++
++	cat >expect <<-EOF &&
++	global	home.config=true
++	EOF
++	git config ${mode_prefix}list --global --show-scope >output &&
++	test_cmp expect output
++'
++
++test_expect_success 'list --global with only xdg' '
++	rm -f "$HOME"/.gitconfig &&
++
++	test_when_finished rm -rf \"\$HOME\"/.config/git &&
++	mkdir -p "$HOME"/.config/git &&
++	cat >"$HOME"/.config/git/config <<-EOF &&
++	[xdg]
++		config = true
++	EOF
++
++	cat >expect <<-EOF &&
++	global	xdg.config=true
++	EOF
++	git config ${mode_prefix}list --global --show-scope >output &&
++	test_cmp expect output
++'
++
++test_expect_success 'list --global with both home and xdg' '
++	test_when_finished rm -f \"\$HOME\"/.gitconfig &&
++	cat >"$HOME"/.gitconfig <<-EOF &&
++	[home]
++		config = true
++	EOF
++
++	test_when_finished rm -rf \"\$HOME\"/.config/git &&
++	mkdir -p "$HOME"/.config/git &&
++	cat >"$HOME"/.config/git/config <<-EOF &&
++	[xdg]
++		config = true
++	EOF
++
++	cat >expect <<-EOF &&
++	global	file:$HOME/.config/git/config	xdg.config=true
++	global	file:$HOME/.gitconfig	home.config=true
++	EOF
++	git config ${mode_prefix}list --global --show-scope --show-origin >output &&
++	! test_cmp expect output
++'
++
+ test_expect_success 'override global and system config' '
+ 	test_when_finished rm -f \"\$HOME\"/.gitconfig &&
+ 	cat >"$HOME"/.gitconfig <<-EOF &&
+diff --git a/t/t1306-xdg-files.sh b/t/t1306-xdg-files.sh
+index 40d3c42618..0318755799 100755
+--- a/t/t1306-xdg-files.sh
++++ b/t/t1306-xdg-files.sh
+@@ -68,9 +68,10 @@ test_expect_success 'read with --list: xdg file exists and ~/.gitconfig exists'
+ 	>.gitconfig &&
+ 	echo "[user]" >.gitconfig &&
+ 	echo "	name = read_gitconfig" >>.gitconfig &&
+-	echo user.name=read_gitconfig >expected &&
++	echo user.name=read_config >expected &&
++	echo user.name=read_gitconfig >>expected &&
+ 	git config --global --list >actual &&
+-	test_cmp expected actual
++	! test_cmp expected actual
+ '
+ 
  
 -- 
 gitgitgadget
