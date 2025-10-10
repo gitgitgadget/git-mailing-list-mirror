@@ -1,212 +1,124 @@
-Received: from mailout3.zih.tu-dresden.de (mailout3.zih.tu-dresden.de [141.30.67.74])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7CC1EFF8D
-	for <git@vger.kernel.org>; Fri, 10 Oct 2025 21:03:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.30.67.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6862F6569
+	for <git@vger.kernel.org>; Fri, 10 Oct 2025 21:14:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760130242; cv=none; b=jbSIxkIfdeYeotKc084kN/cAh1hWqbnftUIMWqeaEhe1R0dBBzFbZoD1Z/7ZzjrZc2PoD2xDYANGWROMd2jIOqfPa+4Qvsw23chh71SFP8ecaCyXujpc09gm7oFT7Uer7PbPaenY+eGPCVLoXkFeBPynIyaVfksdqvZAYg6rHsE=
+	t=1760130845; cv=none; b=sXtVfc9RHdLrfFbMAXtHj1YV+J5debF48GGp9bmitwxmZwTH1xvhUjGL62Azj6mTBKolzSaKu7YxtepI3kp7fislFVYy1q4wZ+04vpVESxGgei6ERy9V9DL0Iqu4c+ftc61djOIno0ANekrQ8Rg5donmFVkX71Gd5adB5w/jgxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760130242; c=relaxed/simple;
-	bh=dOvmZIKOBUChl6q6Nd2LaAkOL3wzlxflIfvEdPofu54=;
-	h=Date:From:To:CC:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=eJ88K8jdBmXCVyih0+cncXgqPl27vsrUFZZKe7g7ClSE/oFumyX9+WsJeKQgcWfP38cX5Uo2Z7SNJgHzgKG47OQXIdwG4cJA2LnZzKShO0WcdUotpb7svxLGaALUCjcDJbW/v0qxJHwEx+mQMN4CoE/mXwszVr27J5PyCpjmk9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mailbox.tu-dresden.de; spf=pass smtp.mailfrom=tu-dresden.de; dkim=pass (2048-bit key) header.d=tu-dresden.de header.i=@tu-dresden.de header.b=WOcjGUk/; arc=none smtp.client-ip=141.30.67.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mailbox.tu-dresden.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tu-dresden.de
+	s=arc-20240116; t=1760130845; c=relaxed/simple;
+	bh=blT61OFUpIcnw44WpDbRtOItlCAlKVdhjt6h5sgfpMY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=EpCLO58Ds5eEcmMBYmhImWNVR9L+blTDKDgNgwdQuAZpbp7S1kj8tHL2I359lN1Y5/B1La/nLabVJdcrXV/YAXWseriRRUB2gq2OLkMP2tVspxU4JY7KphNf2eSkwt7vugTfn/rysVkvSoJcBK1WWp7KH5twhSJsSHfQ1b6wCiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UqEfsYxS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RNbmtV3b; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tu-dresden.de header.i=@tu-dresden.de header.b="WOcjGUk/"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=tu-dresden.de; s=dkim2022; h=Content-Type:MIME-Version:References:
-	Message-ID:In-Reply-To:Subject:CC:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=WEpRGxEIj3qWOEjcZ2yV+KKZxJ5l8R5oSDiKdusqK20=; b=WOcjGUk/brqRb/cxJCSksAAtiE
-	PeX8Kf5BTAS1YE1IjrT53mrEAvvzLog2umpXtNjcCtRqMFrvn9A7k6dz972IHS4gd6v1S6N9hnAdX
-	V7LIcnlFvOTtk/0Xqmztndd+c36AVy/VkwF2oZEBgtfNWG/OpbfBEiRgVmE2zkvu6aKdzm5F5911e
-	nzea3v81Jx18dVdK5mQi9RA0Yl9KVjkpWI+l4Y3yyt0KzgmdWW4fGH/lcu0LhCTg2LJ7AEgnscIFN
-	Dhg+OPdeqdZrZUhZPCE7UmaElXZi1qHm+pqDRagL5+E8Co/YFzjnNckxjFEmlMCHr5kQXMOK4lS8l
-	7p8fIaew==;
-Received: from msx-t414.msx.ad.zih.tu-dresden.de ([172.26.35.134] helo=msx.tu-dresden.de)
-	by mailout3.zih.tu-dresden.de with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <thomas.uhle@tu-dresden.de>)
-	id 1v7KHJ-00EAwZ-KM; Fri, 10 Oct 2025 23:03:55 +0200
-Received: from login2 (141.76.13.149) by msx-t414.msx.ad.zih.tu-dresden.de
- (172.26.35.134) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.27; Fri, 10 Oct
- 2025 23:03:47 +0200
-Date: Fri, 10 Oct 2025 23:03:47 +0200
-From: Thomas Uhle <thomas.uhle@mailbox.tu-dresden.de>
-To: Junio C Hamano <gitster@pobox.com>
-CC: <git@vger.kernel.org>
-Subject: Re: [PATCH] contrib/credential: Amend and harmonize Makefiles
-In-Reply-To: <xmqqbjme8rs4.fsf@gitster.g>
-Message-ID: <c7cd0568-8161-205f-7f3e-ce63808dec8e@mailbox.tu-dresden.de>
-References: <48d92664-41af-bb59-1844-7bb57f21924f@mailbox.tu-dresden.de> <xmqqbjme8rs4.fsf@gitster.g>
-User-Agent: Alpine 2.26 (DEB 649 2022-06-02)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UqEfsYxS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RNbmtV3b"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8299A1D000A1;
+	Fri, 10 Oct 2025 17:14:02 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Fri, 10 Oct 2025 17:14:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1760130842; x=1760217242; bh=78leJJFePHsgImvwegmcgmQPKeY73V6P
+	vkhc/R7Y9Ag=; b=UqEfsYxSI9oPSoouXBqedpiE3i9phQIO7RwYwUBAXvM/5Y3S
+	I4B0neE210PFG32Wq7uh/BYiLNbvk4Lf5w7qi136eC/xYUuJEwdpBe9KTzVOJcC5
+	NgfLtlyjdbfcOkKkHeDpKPQMuPO1yHiiHwMj1mpYYC6ix6o1luLqOdP9QSluYwZA
+	qZJ02dmqqX/fPv5nHfa4Q0Pv8EhHdOLPwKXn/dE6MLUdbw+A2COvR0KoQzpi/mOr
+	gnFhPn/vygR0BTREvqK7Sax+YA1iebNY9T8lq8NjlEdcvy+KtDRgV4V13V13D05o
+	ACLgFXiUwPw9xLcdnSY+9hBZAM7hadUaeWoOlg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760130842; x=
+	1760217242; bh=78leJJFePHsgImvwegmcgmQPKeY73V6Pvkhc/R7Y9Ag=; b=R
+	NbmtV3b7HFZNPqFetJ7smrOObnUpqoSmVuwGg5e0dMwVIZlT7ve60zb3jOuw30rG
+	Neofr4ZOWPRZ9LjNiej6lvmGxy3JmQRXAG2b31w2Kf0r7GeaVKH3fpEgyv++5IFs
+	Wf7jQsYa+qgyKD2S4qF3lnpKyVO/FDF7i+LxuaxA44PTgJVD5uDvfNQz1R82Ag/G
+	/qIz+XO/ZdYoKz0wHHMRyVYi73Z6tHU18IF9erU99jfJYLRcyzlb8Qs6Far/BShy
+	/3eYP8jjMO419ceJ0MkhkPyKOdJJMF6ysBZ+1S9ZRy3OSvc1521w7R6sV9KQ9ba4
+	OCnJEEv5ql8dY9zhrFVXg==
+X-ME-Sender: <xms:GnfpaB1hGBa2nNCZpy407meu0GZ_HAlxU0T93OLMfRteTHScvLEPqg>
+    <xme:GnfpaO9Nihdi_2mWRnVrHCQ0_e7lRCxTZOyBuAaTB78hn0bBU-fkBMzW2m5IYVnCx
+    aZMhZUAw1O0jnMgOQJIFC19yKXIq_YC0FbQE6fEwW75wG3F8ptPF7A>
+X-ME-Received: <xmr:GnfpaKN7TgUlRCm7fI9QLS5OTKVW7z3BmNASgp39ZANVnw1idEXagx_4jzjJHZlc9ArivRHx9sc0RMCU_hd6fy0NzPbmVQvoGKE1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduuddtudduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkfgfgggtsehttdertddtre
+    dtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmqeenucggtffrrghtthgvrhhnpeejhffgfedvkeeftdfhjeegffeiveeiie
+    efgeeuiefhjeelueefffejteekffffjeenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
+    gtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprghlghhonhgvlhhlsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopeht
+    mhiisehpohgsohigrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:GnfpaKdAZJ-zhlu4m025yEivoBP7OYH-vFhSvrPEHISfKkmNOO61BA>
+    <xmx:GnfpaBVOz5DnpiLDVAX3bJ8StZ1Qe26YFmeYLakH9KJQECBRYUwxzw>
+    <xmx:GnfpaKh2wx0AElWHl6TkYUrP4EDH1qJFqtSFKLnKw64uie6vsdb2Wg>
+    <xmx:GnfpaI-97bEnsHemOSx8VHA6Ia7YbkSUiWsReijwoHw2Ob84goHnvw>
+    <xmx:GnfpaI1O6Z-Eq2cVLByNAtmqeDJ5UQiya1-N4fj-rB91kda-5JYwVN3i>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 Oct 2025 17:14:01 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Andrew Kreimer <algonell@gmail.com>,
+    Taylor Blau <me@ttaylorr.com>,
+    Todd Zullinger <tmz@pobox.com>
+Subject: [PATCH] t1016: make sure to use specified GPG
+Date: Fri, 10 Oct 2025 14:14:00 -0700
+Message-ID: <xmqqsefq7947.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset="US-ASCII"
-X-ClientProxiedBy: MSX-L421.msx.ad.zih.tu-dresden.de (172.26.34.141) To
- msx-t414.msx.ad.zih.tu-dresden.de (172.26.35.134)
-X-TUD-Virus-Scanned: mailout3.zih.tu-dresden.de
+Content-Type: text/plain
 
-On Fri, 10 Oct 2025, Junio C Hamano wrote:
+c348192a (t1016: clean up style, 2024-10-22) fixed a coding style
+violation that has an extra space between redirection operator ">"
+and the redirection target, but at the same time, replaced the use
+of "git config" to set a configuration variable to be used by the
+remainder of tests with "test_config".  The pattern employed here is
+that the first set-up test prepares the environment to be used by
+subsequent tests, which then use the settings left by this set-up
+test to perform their tasks.  Using test_config in the first set-up
+test means the config setting made by the set-up test is reverted at
+the end of the first set-up test, which totally misses the point.
 
-> Thomas Uhle <thomas.uhle@mailbox.tu-dresden.de> writes:
->
->> diff --git a/contrib/credential/libsecret/Makefile b/contrib/credential/libsecret/Makefile
->> index 97ce9c9..8ee6cce 100644
->> --- a/contrib/credential/libsecret/Makefile
->> +++ b/contrib/credential/libsecret/Makefile
->> @@ -1,17 +1,21 @@
->>   # The default target of this Makefile is...
->>   all::
->>
->> -MAIN:=git-credential-libsecret
->> -all:: $(MAIN)
->> -
->> -CC = gcc
->> -RM = rm -f
->> -CFLAGS = -g -O2 -Wall
->> -PKG_CONFIG = pkg-config
->> -
->>   -include ../../../config.mak.autogen
->>   -include ../../../config.mak
->>
->> +prefix ?= /usr/local
->> +gitexecdir ?= $(prefix)/libexec/git-core
->> +
->> +CC ?= gcc
->> +CFLAGS ?= -g -O2 -Wall
->> +PKG_CONFIG ?= pkg-config
->> +INSTALL ?= install
->> +RM ?= rm -f
->> +
->> +MAIN:=git-credential-libsecret
->> +all:: $(MAIN)
->> +
->>   INCS:=$(shell $(PKG_CONFIG) --cflags libsecret-1 glib-2.0)
->>   LIBS:=$(shell $(PKG_CONFIG) --libs libsecret-1 glib-2.0)
->>
->> @@ -22,7 +26,13 @@ OBJS:=$(SRCS:.c=.o)
->>   	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCS) -o $@ -c $<
->>
->>   $(MAIN): $(OBJS)
->> -	$(CC) -o $@ $(LDFLAGS) $^ $(LIBS)
->> +	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) $(LIBS)
->> +
->> +install: $(MAIN)
->> +	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
->> +	$(INSTALL) -m 755 $< $(DESTDIR)$(gitexecdir)
->>
->>   clean:
->> -	@$(RM) $(MAIN) $(OBJS)
->> +	$(RM) $(MAIN) $(OBJS)
->> +
->> +.PHONY: all install clean
->
->
->> diff --git a/contrib/credential/osxkeychain/Makefile b/contrib/credential/osxkeychain/Makefile
->> index 0948297..b1d7c29 100644
->> --- a/contrib/credential/osxkeychain/Makefile
->> +++ b/contrib/credential/osxkeychain/Makefile
->> @@ -1,19 +1,35 @@
->>   # The default target of this Makefile is...
->> -all:: git-credential-osxkeychain
->
-> Having the primary target name on this line very early in the file
-> has documentation value.
+Go back to use "git config" to fix this.
 
-I understand your point.  I guess it has not been done like this in the 
-other three Makefiles because a variable ($MAIN here) was used instead 
-of the executable file name itself and this variable is yet defined down 
-below.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * The commit in question was from October last year, and I didn't
+   notice it until I looked at how the test script evolved.  It is a
+   bit embarrassing that we didn't catch it during review.
 
+ t/t1016-compatObjectFormat.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->> -CC = gcc
->> -RM = rm -f
->> -CFLAGS = -g -O2 -Wall
->> +all::
->>
->>   -include ../../../config.mak.autogen
->>   -include ../../../config.mak
->>
->> -git-credential-osxkeychain: git-credential-osxkeychain.o
->> -	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS) \
->> +prefix ?= /usr/local
->> +gitexecdir ?= $(prefix)/libexec/git-core
->> +
->> +CC ?= gcc
->> +CFLAGS ?= -g -O2 -Wall
->> +INSTALL ?= install
->> +RM ?= rm -f
->> +
->> +MAIN:=git-credential-osxkeychain
->> +all:: $(MAIN)
->
-> What's the point of an extra $(MAIN) definition (not just here but
-> in the other Makefile as well)?
+diff --git a/t/t1016-compatObjectFormat.sh b/t/t1016-compatObjectFormat.sh
+index 8341a2fe83..cb6d308f1d 100755
+--- a/t/t1016-compatObjectFormat.sh
++++ b/t/t1016-compatObjectFormat.sh
+@@ -116,7 +116,7 @@ do
+ 		git config core.repositoryformatversion 1 &&
+ 		git config extensions.objectformat $hash &&
+ 		git config extensions.compatobjectformat $(compat_hash $hash) &&
+-		test_config gpg.program $TEST_DIRECTORY/t1016/gpg &&
++		git config gpg.program $TEST_DIRECTORY/t1016/gpg &&
+ 		echo "Hello World!" >hello &&
+ 		eval hello_${hash}_oid=$(git hash-object hello) &&
+ 		git update-index --add hello &&
+-- 
+2.51.0-616-gc7d8d4fd8b
 
-I am only guessing.  git-credential-libsecret was renamed from 
-git-credential-gnome-keyring somewhere in the past when the Gnome 
-developers decided to dump libgnome-keyring in favour of libsecret.  So 
-it could have been convenient to change only one line in the Makefile.
-
-
-> It may be slightly convenient to write while the thing is simple and
-> stays one-source-one-binary, but programs including Makefiles are more
-> often read than written, so we should optimize them for readers.  I
-> personally think this extra indirection is hurting readability more
-> than helping.
-
-I was just using $(MAIN) as a variable name because this is the variable 
-used in the other Makefile git-credential-libsecret.  Would 
-$(GIT_CREDENTIAL_HELPER) be a better variable name?
-
-
-> Other than that, yes, it is great to make these three or four
-> Makefiles look similar to allow readers compare and spot
-> differences.
-
-My initial reason was just to add an install target rule because it is 
-obviously missing.  And I wanted it to do in a similar way like the other 
-two Makefiles (for git-subtree and git-contacts).  So I then ended up to 
-reorder the lines.
-
-
-> Thanks.
-
-Thank you for the review.
-
-
->> +
->> +SRCS:=$(MAIN).c
->> +OBJS:=$(SRCS:.c=.o)
->> +
->> +%.o: %.c
->> +	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
->> +
->> +$(MAIN): $(OBJS)
->> +	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) \
->>   		-framework Security -framework CoreFoundation
->>
->> -git-credential-osxkeychain.o: git-credential-osxkeychain.c
->> -	$(CC) -c $(CFLAGS) $<
->> +install: $(MAIN)
->> +	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
->> +	$(INSTALL) -m 755 $< $(DESTDIR)$(gitexecdir)
->>
->>   clean:
->> -	$(RM) git-credential-osxkeychain git-credential-osxkeychain.o
->> +	$(RM) $(MAIN) $(OBJS)
->> +
->> +.PHONY: all install clean
->>
->> base-commit: 60f3f52f17cceefa5299709b189ce6fe2d181e7b
