@@ -1,108 +1,120 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61B5F9C1
-	for <git@vger.kernel.org>; Sat, 11 Oct 2025 09:36:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F4225A2C8
+	for <git@vger.kernel.org>; Sat, 11 Oct 2025 10:49:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760175399; cv=none; b=BaBrl4AWvJOeabLurip6oa8+W80ne83dGSycjLiSeXJGGiT4CvA8wu09wrrNahALkGxbYjKaXA/1c76YAgDwYhrxbKb3FCQ/EKy8OxFUZH3IvlzWdDy7E/rAhoz5mK8NcCLoaRE4OmaupQNYk1O7ikKja0iJwywm+fYP0K5g5ZM=
+	t=1760179785; cv=none; b=D1jMTGiykSjdxxh4CKeGSklUaG9+znsYAkcTrUHOvgK+IkZKTTrdEjptvufv0774Xoc2LLa6FADi6yNqIc3MlmmxsxVuTP+BjRoWisN6ibzjbKS2KIFqtaD5kYlKc6yYsqEulxNkbu1XuIqzHLL7PI7Rn2bw8fgb0JCkJgJFxRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760175399; c=relaxed/simple;
-	bh=nXhmcbBZzIluAzg5UwPZLUFosTd2DdruPGlB7EUKNU0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EOMHJCZopMb+RLpLyvmYcPPbPECvA4p4uGtaNNPoXqQnGEFL5wR1SBAJxEB3d83Oz/RfrsmSU5HZWKe8pdAAAE+OVBtwh3/TukozkEreQ32/53tIb5rb3X9/uBVs8Lfpy6Dn4/YbYco2KP6BHBJcjcdWe2uqhUyNZlyuV0DJVBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=awa47XkW; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760179785; c=relaxed/simple;
+	bh=oL0Go1vl5EhTJ+Uf64c8JJx2AYaecrBRfr7EMTOHHww=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OTrScsLjlX4z/boijlQeS3/DbODKfCmveHff4p8yCO0Ibolsf70n1eLyJLSxVLcSBD0ON7zG/mqGox6Xj5tSYKDOx8/6M5cXm8SepLXkIGqkVIiP19y8oSqvX5WmkLxWv64wOoAofjlWZvRukWHVh4csLWedGcNmqzKbS8UqMFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NbcDgUpB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=x6XhekOZ; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="awa47XkW"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-b3ee18913c0so435508766b.3
-        for <git@vger.kernel.org>; Sat, 11 Oct 2025 02:36:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760175392; x=1760780192; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ksn4qf2w+8na8x6Hw+JkfEXBbdaYQlufGOGPe3J4FNs=;
-        b=awa47XkWasl+qKKfjv1d7ONP49aIhmqf5si92u5MEmwlCW6XyuNdR+iP3mvUoHwVdw
-         HNzmIhDDUKTkL8KRE4IQpkCUOXdVSwESHQYVtwQ8EoSfRtCO82aUt3P3JegqldmLdjNd
-         /Rr9LT1Pbwr6AMIsXR1jEuL7q/36ewqyZ5QI2oGiKP3D5s2R31Q2e/6XM5eAM2Z97r0M
-         VeRymOuRZPOepN4uhzaI3bE7jVXrMlj6uJ4wQcCgLuFkl6+Wk6R804Ak+LVefU4qaYm7
-         JiQWhpdElpl7iNoCWScaoe2QL3CB8aTVkXr98+j2ec1HQHJItUlB73c62SCgCEENJybp
-         uGXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760175392; x=1760780192;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ksn4qf2w+8na8x6Hw+JkfEXBbdaYQlufGOGPe3J4FNs=;
-        b=Kdb37o9NyyjweQM4QuCRAF9cd9mAiLtEkcgiHUonaejHMP0L2Z1ew14qQ8yApzD43a
-         9SkJZiX6uDS12iIrYx9iYqKQi2xq1CvIaPLNHhD5Z+mXTLDMvWNLJZNH21S6f+7nxHLj
-         B4U6fq34vxrV4EiKXIitHYNvKu8S1fFgLoeHdTdfLeK0XD2bSXkiDCWo+MHGlcPJx43r
-         1u4Xq5Z/etwi7iUCSHTmkJTnbLDz7XirGcC4NNSNSVdVC6QmOlK2mFfuZDR4YazdtUBj
-         yrIXwX2mbEJZcEjj/fHxA0m2hEYVHjh9/TFAB/psIRvLan/95E466+9zrGuAi6sWJwQc
-         VSaQ==
-X-Gm-Message-State: AOJu0Yxb3+x51bI76SeROZnMsTgCjZ3iitgA/Nrb6lhnjM4/9K0vBFdM
-	Y/TA/dgNuY43vR2mVWdk6qSKckkeRSxL51e1A/2kRjvhdHefYaB8eoG+ulMwaYTsNG27Mw==
-X-Gm-Gg: ASbGncu/2b2PniiAGZmB4M5B+9k8IYdCqcS9c3i1ZOe7vpHHArgN/WgnCvY2rySaItL
-	m46CRa0kDVQun0wT0eYmLo6y21YLuER9i2bV4EcH0oej7wOfX1AycrQR5wMmfp29oTk6gfkGmSb
-	yExrd4xCCZkuWffrM1kH6Ms+T4Avv5P49kJSUPr2RhWqZCPElCIscjfdm4f5uvSyXZhytyOlV2A
-	AJa3ovOxTYRYuPkqJIRZ1zhLX3zv/GYeUhcPrBhdUEO6rkU6V7C2UTY3cTrc9ckezQo+9mPWEBp
-	otbrRkGHOm4EyCPRi1aMXjvlY1tTd60UTFZHOnOLuNky+uGVcNl5p+I6yplgXnk5yNNSzNIYHLa
-	PmQJPyeDemRP4QQkeRkSvJ4ji+s/dshycat2RPbQ1Q7OcLnhIlj7v88Z17PVGqzeqDKQiE0i23G
-	UZNFyDdtDDjOkDXEHfd+F/DX30IOm4rWHs
-X-Google-Smtp-Source: AGHT+IE5n7Lq5CySgC7UspyWcyL5G7RBlYwprgT1V3QASYhWyIgQksaPhheWMrHiaodn5QkrT9zlMA==
-X-Received: by 2002:a17:907:d0d:b0:b4f:e12e:aa24 with SMTP id a640c23a62f3a-b50aa1862abmr1401130066b.22.1760175391565;
-        Sat, 11 Oct 2025 02:36:31 -0700 (PDT)
-Received: from localhost.localdomain ([105.113.114.97])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b55d5cad896sm452063066b.1.2025.10.11.02.36.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Oct 2025 02:36:25 -0700 (PDT)
-From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-To: git@vger.kernel.org
-Cc: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Subject: [PATCH v2] [Outreachy] commit.c: clarify comment describing commit re-parse behavior
-Date: Sat, 11 Oct 2025 10:36:11 +0100
-Message-ID: <20251011093611.62937-1-okhuomonajayi54@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NbcDgUpB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="x6XhekOZ"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3161DEC0096;
+	Sat, 11 Oct 2025 06:49:38 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Sat, 11 Oct 2025 06:49:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1760179778; x=1760266178; bh=r4SA2C0U6i
+	29jLARqFTVhtQj36VnzRokk0K/PQVUbeU=; b=NbcDgUpBBZoxokMu+B21w/KDy2
+	BbvFTlCFpeKxP4I20DDXnQLj3LHpPuxpGOfQhKgG+JEoq37mq3/KzFUGb2S1GDtM
+	JlNKJdm8cfHJU/sYF60exR3MRlGqQqTiqWSCxbGjCOfyw7rfAt/uLJiyfLQ+tFZw
+	6p7wNGf7zB3KtdI6G/F7qmFjGkdvfUGQPYi1Num7+oXxJ2v24AxITZcGgg5wGuPB
+	5HGy20f2di/eG35tTWYyl95TvtuKjUmRozt4YFPkRTk+vp3TBnWMlykDGt7xDb04
+	AOA5k1XANVws/1CjThmX0XeEC3rKk1BVka7tGdLPoIbeorKRe2DTbYm7tdNQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760179778; x=1760266178; bh=r4SA2C0U6i29jLARqFTVhtQj36VnzRokk0K
+	/PQVUbeU=; b=x6XhekOZbpjVEWf58CtPABf/rhwBHC6BcpMbfbb75ODArwwt2ax
+	0l2y7Z4GCCWypWaPKeOkLTaIJW0xiK1UgiEZeYuhhKT/fS5hFztCUT0fLcZq+yTE
+	5FqYWa6K+fB0lkqGsLpBxVWYj1zNsJJxOKsTl3NUcufIVuow4XwW8FT2yBjgvAVo
+	C1+9e2fI+ERjFlHKkvzSYTY9rIkFJ6mH/8iriDbap2YhdDXtZPSr6ZD0maXROzNR
+	SYMhwotax7hf9aglCuHmAjj0iexKcsqG9keHDBBsocWNeWfmosO19oQse9mZ4cfX
+	Xy+dpi+NAUoNRtE5XuKtDJMSbKnayP2ZJ1w==
+X-ME-Sender: <xms:QTbqaJxHgszuldAkBSgvilBUoUlCUTiKd53bPz-0tDFRkzXNmQPKEQ>
+    <xme:QTbqaAudcB1MG0cGkzbeT3IwXbiSf5LryFcK5UanqqRIoqGfAs7x57fP8_Gr1Rnr7
+    vcs2XjAN2IDh-F2Sd0kYkMgSX8lDWdsbi0puPknPARw4c4NvXRx>
+X-ME-Received: <xmr:QTbqaAvIrDoU9BiMaai-PIQEkqyHNPDtQFIR5oHEHxrSAggotUh7Z8UojNU712ozrINBCXOhOnIVBO3zeH4l4PjyOuKpGQImRrW8cl3x0Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduudduieelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgt
+    hhhinhguvghlihhnsehgmhigrdguvg
+X-ME-Proxy: <xmx:QTbqaFOSORQU6Y_sMa9gAM8IKSWYSjKI9NfqD70dTH1qAqCb_unKXQ>
+    <xmx:QTbqaO1a355bqNuKV7pBbY621-oD112ycDJxsJ6_9RINnyJPnGxsMg>
+    <xmx:QTbqaBMm2LN5z74XPtfcVWXFSpCtsloKxUDXlbE5k0rHob5IGEnwqQ>
+    <xmx:QTbqaO1RlMaA6RVIFjaC7Mr_GFHAuY2IUIp6dakdZ4c6Y-VIsfqbPw>
+    <xmx:QjbqaJPW6BA1efuX9aTFyGlkgPPOpN0FElKE5yT0ZFhDGObJJE5jY01k>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 11 Oct 2025 06:49:37 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b4422008 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Sat, 11 Oct 2025 10:49:35 +0000 (UTC)
+Date: Sat, 11 Oct 2025 12:49:30 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH] refs: forbid clang to complain about unreachable code
+Message-ID: <aOo2Os8Q0X3WaLM0@pks.im>
+References: <pull.1984.git.1759995982220.gitgitgadget@gmail.com>
+ <aOia55_sjFQjw1UQ@pks.im>
+ <2346bcc7-b60e-0ad6-14fe-c0b49e427921@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2346bcc7-b60e-0ad6-14fe-c0b49e427921@gmx.de>
 
-The existing comment in `parse_commit_buffer()` mentioned a "leftover
-from an earlier failed parse", which could be confusing to new readers.
-It implied an error state rather than the intended cleanup before
-re-parsing a commit.
+On Fri, Oct 10, 2025 at 03:49:37PM +0200, Johannes Schindelin wrote:
+> Hi Patrick,
+> 
+> On Fri, 10 Oct 2025, Patrick Steinhardt wrote:
+> 
+> > diff --git a/refs/files-backend.c b/refs/files-backend.c
+> > index bb2bec3807..cb402a2a54 100644
+> > --- a/refs/files-backend.c
+> > +++ b/refs/files-backend.c
+> > @@ -2115,7 +2115,7 @@ static int commit_ref_update(struct files_ref_store *refs,
+> >  }
+> >  
+> >  #ifdef NO_SYMLINK_HEAD
+> > -#define create_ref_symlink(a, b) (-1)
+> > +#define create_ref_symlink(a, b) NOT_CONSTANT(-1)
+> >  #else
+> >  static int create_ref_symlink(struct ref_lock *lock, const char *target)
+> >  {
+> 
+> While this is correct, and "closer to the root", in my experience it is
+> better to have work-arounds closer to where the symptom appears. In this
+> case, it would be directly in the condition of the `if ()` construct.
+> Therefore, I would prefer to keep the proposed patch as-is.
 
-Clarifying the comment makes it explicit that we reset the parent list
-to ensure a clean state before re-parsing, which improves readability
-and avoids misunderstanding during future maintenance.
+As said, I don't feel strongly about it, so this is totally fine with
+me. Thanks!
 
-Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
----
- commit.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/commit.c b/commit.c
-index 16d91b2bfc..af20ca7c3d 100644
---- a/commit.c
-+++ b/commit.c
-@@ -475,10 +475,9 @@ int parse_commit_buffer(struct repository *r, struct commit *item, const void *b
- 	if (item->object.parsed)
- 		return 0;
- 	/*
--	 * Presumably this is leftover from an earlier failed parse;
--	 * clear it out in preparation for us re-parsing (we'll hit the
--	 * same error, but that's good, since it lets our caller know
--	 * the result cannot be trusted.
-+	 * Reset the parent list before re-parsing to ensure a clear
-+	 * commit state. This avoids carrying over data from a previous
-+	 * incomplete or invalid parse.
- 	 */
- 	free_commit_list(item->parents);
- 	item->parents = NULL;
--- 
-2.43.0
-
+Patrick
