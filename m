@@ -1,92 +1,117 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3B51F3FEC
-	for <git@vger.kernel.org>; Sat, 11 Oct 2025 14:25:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E236F11CAF
+	for <git@vger.kernel.org>; Sat, 11 Oct 2025 14:35:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760192702; cv=none; b=ujRaIYW2S4+eKD6RwS/z23R8Qxl326cVAvNRS7EXd+4rpFUm7aCj4Uehw8WKrffE3/h+FeLmzuEyhgx6UegRlotopsTf7mHFUnbfvNNA4pJ/syN7hf3PhllHKmJ9vH5nBx5NmLObTWlx21xTXKdJKSY6pkQlUIzpIUZZ0jPHOnQ=
+	t=1760193324; cv=none; b=CvMykDV++/qi85Me+upryX6iDUas3VrbpOhqw1KQ2/u1AgusZJIcCxUybJbyQePDhGpvGtL+6nC7bvGukqlLuq9fqqRJjhvDfSF2bgZ9yMokVtHNL5UtHzks3vZ07MYIXobcN4ALyWY2dNKK3j8ydhWd0QMjnRLlLzplONInppE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760192702; c=relaxed/simple;
-	bh=1Oh6cxuwUfcin6oUM+f04VqkPcZJ3b/tVq0H/q+ZN08=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=On8lBR/JRAovz2wKZB9L0ocO5PJufTqySlTdtND3J1/5dDoilRJ+PHOewp0SX2PvOlCQpvf5iS4iDFvIG7lzFPjxNrf3BrqOv8A72wyQrZ5uv/uzwWpLlX6Tgzk0cmEWelXd4gk/L/OsYJq5TuLtYjPOhypwX2ZQKrQ9wK40nG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K2nT+CZX; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1760193324; c=relaxed/simple;
+	bh=QD70ylzzA6JrQt7mwx3+a9N4tUpRHNjXuT9e3ant20U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GW6BSIFp/DPvroLKi/5layz1ssMT/TaUM+HZGvsR3sq/oAuOH7gbKcKyMz74xvQ2f/T4IOsF8anrKV8+Emex0jiTOAyU6ZqB9JEY4m5yU6NRCa63gUpbUsRxJd1k76Ia1vtuGSp9woE2UkulYnqwOWBMlLFk+RvMDbZWG41JrFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OLf8V8E9; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K2nT+CZX"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-46b303f7469so18008845e9.1
-        for <git@vger.kernel.org>; Sat, 11 Oct 2025 07:25:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OLf8V8E9"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b3b3a6f4dd4so539905566b.0
+        for <git@vger.kernel.org>; Sat, 11 Oct 2025 07:35:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760192699; x=1760797499; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1Oh6cxuwUfcin6oUM+f04VqkPcZJ3b/tVq0H/q+ZN08=;
-        b=K2nT+CZXTI11oozlDkDXjwEDsLqOMoUWnLJ8y1mSPnn9/s7tvHUtHJ/6e8dHUJqGH9
-         V5XjQ1olVCnbJXl0Swt9b6Z9f6OA8rSamkhfKx4q0JXC3/EIjIA77f6Ly7IeyhnP8Aes
-         5HpSq1DsKTqdUT6o+ezjwOgpYigpG9Cljo/SOPn/2D0lZJ4iRwzsNzrEcPxG+XSF3Rb+
-         fiNJeT8pRhJWZMbmBim1bP8D923wlvdTrfqRxZo3N3SHnFMORJ3uQYK2YnLffvCaXwjU
-         d+M8uATBi/eBfqCCWb6Dv96NJGrzElfZ6RzJSmZaKcLrxlSyVPYqLIBcyi+29zFd/kl9
-         f+gA==
+        d=gmail.com; s=20230601; t=1760193321; x=1760798121; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gQkw7d4l35yyL8O13F8eZXy8tCFT8t7PAVPFHTsB5Qg=;
+        b=OLf8V8E9EzbJTL6UxS718CZEkgKEc794n7kDm7gz6r77fqc8V2xfOGKbNlNk2KXTFS
+         ub0HYX8oybFtNSuq52sD99YKA3lxQn1lSw2E0iK2Sw7/bPB2DU18lwUG4oavtPo5Ioda
+         CGR03bzz7V7Dvh0wB5ZR34W2QhblyL84AmcJPoX8NpNkCxThzZVmMw0y9IqBSQn/Wn+2
+         1aUCxDCVOVA2MdDGCC1Eugs4Ib9zw5P3C6mtiQFcTWvjbTexVlUZqkic1eWagZ9GrIZH
+         wmwJgrcakqC8NucPi2VCG201HqVdBDhrFOOg56NQSJwj/Gidar3r0InEYXk05dPjky7o
+         pyqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760192699; x=1760797499;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1Oh6cxuwUfcin6oUM+f04VqkPcZJ3b/tVq0H/q+ZN08=;
-        b=vVyQzc35VSfYDXFBVrsdWZFrjOu8nlUPCWRCC6Dbo4fGBPmwfu4ARZ4UHq+QQ+zJx7
-         0yO7BtLPbqbJcLxmlODfwZ22i4xGSkUMc8cNZaNczgGJEpwneeQt9ayhZoYtEBYazlL5
-         o/M3ZmoDeFqPD0wy0uRsw3lGtWP3w0ti3VjKzDKsjJyqzqgTWAky4cyllI/Acg+ZJKZA
-         4/2ShCO9BuU64uto6Fo4IZ4WG0FDlhiP0F9EKOmQOTtBEx6RIhg1ZOnl9xjypfw76bCe
-         +CPPJxo2FSu/XRenxC03SWqJ9MfNLZ5Y3TUqzxCC4EeV4lfJSFa0iO31FjZTrr4D6O5X
-         5gyQ==
-X-Gm-Message-State: AOJu0YxG3AIXGOPIQmVPdF8dxgfIecxZq9fv8ClGXxNRQJSpFQVSgyFN
-	tjNSoqn5TroJBZmtCcLi3Eb/VdM8Fwz7FZuwE225XXT3cGPViNaeunya
-X-Gm-Gg: ASbGncsr5qx9FZ0iChLEKZ4E27kIGaWDXOpaWpiRunPB2lrYwj2H6VbaRUhOIXHB0ES
-	6+MI+CJmO9CmocFiGhyJwQ+J6YQnK4UthwJYRxhbORGkypnSlik6JqCB73CpOoXm1DKMW4HcqWk
-	s+0+jfrH4ukZrVTHekANsKDI/4XnIpOpPHGy4xjvqVHj7Ouf2Y/0RcKW9XcgaCwVBgTZvVVt1sx
-	mJtD6ltWo1Qxsgcf7lLsUmEXWNBCYI6fmEOZi+U8qCsM/KQGEo/PoNJv4jEX9GPWpYVBZaq7tO0
-	kEZhP+T+zaeetmAKMdTaGviuX3jNt3PXORTe2PyEzMa/13lL5foy9pJ5f5wlLEMGTUN3jGxRwjP
-	stENzqPGmZpdLGsHic4TrCkURhJklp3RWpvzwY9lan6cvlZE9ff5gAw==
-X-Google-Smtp-Source: AGHT+IHLr0M160MoWHZqMZaqGzX9ovBpqLse0y1kkY6xctU6jk2ShWOepcrjqJHQCNTva2o/A+/J0w==
-X-Received: by 2002:a05:600c:1d1a:b0:46e:3978:ba71 with SMTP id 5b1f17b1804b1-46fa9aefedemr107302835e9.21.1760192698412;
-        Sat, 11 Oct 2025 07:24:58 -0700 (PDT)
-Received: from ubuntu ([102.88.77.5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426ce5cf70fsm8820197f8f.27.2025.10.11.07.24.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Oct 2025 07:24:57 -0700 (PDT)
-Date: Sat, 11 Oct 2025 14:24:45 +0000
-From: Bello Caleb Olamide <belkid98@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com, christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com
-Subject: [RFC Outreachy] Teach ci/check-whitespace to flag incomplete lines
- as an error
-Message-ID: <aOporVVSRRL/v4Lq@ubuntu>
+        d=1e100.net; s=20230601; t=1760193321; x=1760798121;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gQkw7d4l35yyL8O13F8eZXy8tCFT8t7PAVPFHTsB5Qg=;
+        b=DU3yi84+SgwaPuZciUsw2378b8O+IqJfBllLvMGhJThyX4NBx78A2pmK2H6g+mOTWs
+         dffxjUJRI5zInu1+eJjMSJmH868tiAaYSAxYWL7j9+UT4lsTXxvC3+HnNvBVUG7M08aX
+         8QpkX7/e/u51ReoH9kXlr+BAG7RpwgiQg5gLy8EriqU11E8Czg5CIue6KfkmJ+eEDM1W
+         FG/YBhcd1CMppiwfXJRDu7P/eeqmMDQKaJinnaWMEnw7Kw06ctwg7Ncv698aAIbTiAY6
+         MnYpqh/yv2imOeHVjMHXqswUbChlDi40C3xiyul2Esk/9eiZYEn2NiPlqhqLw44JTSmq
+         VklA==
+X-Gm-Message-State: AOJu0YyyPveMgw1XgiwmvIxTrFa0HqU6sQGJKCjDgu7YxNxWrcEaFFmw
+	B/6H88AytPhZoqNgACqk+24RfBK0w0P4WH+pSh8HUXGL90su0n0lC1oALyyZh20cNDBKwQw90xS
+	qDFMmNcJNLxYLEVMP39xb8dAKLMYmE6w=
+X-Gm-Gg: ASbGncunz0wrTUu4Uu373XCXpe/94g5V9jS7CTWxJ90m5vpjA7OdjNpRm7hfBsy4aKP
+	cZlhPuLasOL3q/+9q08eQvv4RHfrQgUnbpqbgkHJYFY6aP8/8zMieJQAM6m9stfXOus2zP3c+xq
+	cAoHGJD0JPdC5Q5vsssSaPJ3OgNwasy4IreIa6T7oZSYbngz2p/lnFegAM3TQM86pqtRDB3jd17
+	nmP15NWlfIcFpJ+BJEW+iv0xt8=
+X-Google-Smtp-Source: AGHT+IE0QJ+tH9SdrYyWYJxD2bvP8EYqoP1pSrJ9BcHWm5HYmDQ+VoYyMQnj7XrCuyU+yMWVdQ7W2/uVwgefZxjG3+Q=
+X-Received: by 2002:a17:907:2683:b0:b50:52a4:8f9a with SMTP id
+ a640c23a62f3a-b50ac7e75f5mr1561333766b.45.1760193320957; Sat, 11 Oct 2025
+ 07:35:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <xmqqecra71ec.fsf@gitster.g>
+In-Reply-To: <xmqqecra71ec.fsf@gitster.g>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Sat, 11 Oct 2025 10:35:09 -0400
+X-Gm-Features: AS18NWBM6cXf_4mtj9diMqH5nNnMIAVYM7eGOb7CUZHU-b718R_9IL3-kCbmY7c
+Message-ID: <CALnO6CBEfzeSDRcVOR5chsHUSj1eM7RvTFJOVZ1h0X7Sqbaj=g@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2025, #04; Fri, 10)
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+On Fri, Oct 10, 2025 at 8:00=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> --------------------------------------------------
+> [New Topics]
+>
+> * dk/stash-apply-index (2025-10-06) 1 commit
+>  - doc: explain the impact of stash.index on --autostash options
+>
+>  Doc update.
+>
+>  Will merge to 'next'.
+>  source: <d4a277b6b0695d86636562f4c07efae17f9249f9.1759755379.git.ben.kno=
+ble+github@gmail.com>
 
-While going through the mailing list for some #leftoverbits, I stumbled on this converation.
-https://public-inbox.org/git/xmqqikla86id.fsf@gitster.g/.
+I think Kristoffer had some feedback about the message=E2=80=94if changes n=
+eed
+made, my understanding is that happens prior to "next" ?
 
-After studying the check-whitespace script, I observed that the script parses each line of the output
-of the command `git log --check --pretty=format:"---% h% s" "${baseCommit}"..` and formats the result.
+I'll send a reply there shortly, at any rate.
 
-But the output of the git command itself does not flag '\no newline at end of file'
-as it is shown in git diff, in a case where the files does not contain a newline at the end of the file.
+> * jc/optional-path (2025-09-28) 4 commits
+>   (merged to 'next' on 2025-10-08 at a1e8af9952)
+>  + parseopt: values of pathname type can be prefixed with :(optional)
+>  + config: values of pathname type can be prefixed with :(optional)
+>  + t7500: fix GIT_EDITOR shell snippet
+>  + t7500: make each piece more independent
+>
+>  Configuration variables that take a pathname as a value
+>  (e.g. blame.ignorerevsfile) can be marked as optional by prefixing
+>  ":(optoinal)" before its value.
+>
+>  Will merge to 'master'.
+>  source: <cover.1759094936.git.ben.knoble+github@gmail.com>
 
-One approach I propose to take is to check the each file changed in each commit and
-check if it has the \n as the last character.
+As I mentioned in <1D9EE7CD-800B-4B70-8D98-79B0C2FB8DBA@gmail.com>, I
+think we might want a slight reroll for some tests and to use the
+correct functions in a few places.
 
-Please, will this be good for a microproject and also I'll appreciate suggestions for the approach.
-Thank you.
+With luck I get that done soon, but in the meantime Philip's comments
+are clear enough to follow for interested parties.
 
-Bello
+--=20
+D. Ben Knoble
