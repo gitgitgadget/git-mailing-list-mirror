@@ -1,82 +1,86 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3941DF985
-	for <git@vger.kernel.org>; Sat, 11 Oct 2025 05:24:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4281E834E
+	for <git@vger.kernel.org>; Sat, 11 Oct 2025 05:41:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760160249; cv=none; b=eEqdyKQxKCIf2wi68IfFQx7PCcsIF62wpVg4mwR+GFQBOBPT6CURA2uft+gmOgHOL8sNQKZQcusvh5alYG1wAXH/mmbuW8YqY+40pTOu9Ft4/VDiLfODchXhjwJikq0POl7Bgmtt03J0M33AzGudyWSMdhv/OJzZ6wiCIuhh94A=
+	t=1760161277; cv=none; b=bZHZAl/ivrixhxlO51Ze/xZQwNOhtjcbubm3Y6Soo7qF5cZpwPVHl5VuW4wBk/i4zmuN7vEzl8/3/k/wgrIvhUB6Am+dLJDRBmU6NvrWm0wnUksF/iV9siwcAFK8Fi0i/4zjQ70ITpAc5UPNHv7VM4Hzdnc2ah97YlrIfflImKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760160249; c=relaxed/simple;
-	bh=p+nQ1SB5ep0CjJEkvKKnfIUBQ8+5vFTqa40c+n7ST1k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jCil/Mk7/FN0OgMkdfsjXIG1vOWz+APXIe0C1bDSo9/vbz9O8dbVEQPJKgQe8yUMmUF6Wan3GD6EIOVQJ9jXTHNiNbvuusUwfxArtC2IRr9cPl2J5OESb9n3BqQW2oCeH8O4mxgZ5STdCMg58KghQlfwEgm3Bma9fPxKpFauF28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1760161277; c=relaxed/simple;
+	bh=3kXToZp3EdTIlI6ek3xO7GRVPh8pWA77WiZx+PrPShc=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=XDMlepulqW8VxX4V4RwHPP75MWzOAAHDx8xkBUrvVbSJiIP7jAvJSDxKto11NPZjNSE2DX6YDBR3KxU7ZnBbLa4jS5aeHl7miolucZ8TqUKGu/mrkIQazJ62bmvjb3d5/h56mngU4PcXRrrCZWQy8pqUYce4JqrsKrcaV4pORBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jf/WrKVb; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-858324954eeso58314885a.3
-        for <git@vger.kernel.org>; Fri, 10 Oct 2025 22:24:07 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jf/WrKVb"
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-57edfeaa05aso3254784e87.0
+        for <git@vger.kernel.org>; Fri, 10 Oct 2025 22:41:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760161274; x=1760766074; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=3kXToZp3EdTIlI6ek3xO7GRVPh8pWA77WiZx+PrPShc=;
+        b=jf/WrKVbHdNiEaoOmuP9bTzH4E+0x+EANwKRdwp/hfrwx7u7yMxdT3MS8LXjUN2foB
+         4p2fZbcTMmx5V3dNzoq/GCkw6bQvtno5FPo39hWAKoqaLQN7VP+VR1euXYOpXpT4aJcJ
+         xZxybn3hQPxoq4OdFKWahyRJSoNoQ/z8K7FM+0baVj94rv2/MyOva1lEANqCEFHUSsGe
+         e/q3C2bFQszZha43CYiXlS0sVAqNZf7LviWEMdbaDU2Y4u+bWAtYK7MBaIPvzPWc7rTj
+         ITHGJQu3tMi9H81oHz+hFLTmQsnoOiPqYPlKi+sT2VBtJSkDRDa84VXF0b5kSbh6SUxS
+         idpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760160246; x=1760765046;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qF6yQJDG9Gr9/UJTbcMyo58JXRLWRjhqTbv9CQwVGHc=;
-        b=o8ttwysb0qgU+frLKNf9uQg9gNkY/IX9gg3RolUkRVyZmPNeKbcxHTwntnOSZ2FHqY
-         RUHHIqIlEVrsmUiF/nUufwpcVvwSZm8QTTjNWijnJ0jjNtDR9A0LDQA8GtaVxCC/Hr32
-         7r/ojno8wb70lFu6k7EkkiH4PjoFusfH1f1CDS4LLPb0RPHDGnDCG/JTozmZCuOM93SF
-         yaZYfTDRuq7OQj+iueVfnkKxYoB2hM4luC1Ike6PWpRrt8ZdWnIHk5g8+l7WJxHkz4sy
-         YeIXCjIjbPpy9PraseTvjSSO5pO57XwZ63LGy/VqlMA2Ti4O4Ru1J8yY/r59xpocpOVJ
-         sl+A==
-X-Gm-Message-State: AOJu0Yzfb1Dh2Wh7SsD73QO9APNt+g14XAMMJb8OwVfoDwMOi5hq3Eg9
-	NakNWc8R2t5xk4wdM03xHhO9/bUNjIj5X4n8W3IfCDsRdduqQWaintMaN4T23iPQS3AM5Lv+IF3
-	00VsZtLHm4NjJJK8AK/gR2mBgf9Oc3hc=
-X-Gm-Gg: ASbGncvI1ruXC7VNn5qezAht0gXZuzErydAcnOPxOXYKHuc1PQIMGVBibb7wjYnqpVX
-	/7Y8n5cLbIh2KcltRvxmO23HZTjWE4bjD71bFvujb2qwPL9LFcLtz9y/S6bWBtB6fT5Cbc8cOOr
-	iqy4zPHTd63JQPqSxSHwNOD+caPV0VDBc4pxOJ/z9mvOm0ZiEO6G8I29AyNRWRSRgWPd+SPdFdm
-	cHRtgJ5qZCB6V0WzWIgvh98dbPqNCHFRoyyf3/MMP8FDwnk6p397JXGJbCMnX8lq6r5AHn3CNdy
-	7xt5
-X-Google-Smtp-Source: AGHT+IHllf9n45VcLQuoSr41muygdMz1PI5nMhojxg5XOA7phvYJ3HOYxtk6lxAPl1EhyMlr7m3yxP3CPs50wFe8sBA=
-X-Received: by 2002:a05:620a:2681:b0:855:b82a:eba5 with SMTP id
- af79cd13be357-8834ff907a4mr1293493885a.2.1760160246154; Fri, 10 Oct 2025
- 22:24:06 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1760161274; x=1760766074;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3kXToZp3EdTIlI6ek3xO7GRVPh8pWA77WiZx+PrPShc=;
+        b=JlFk+l8+/v8qHsKVGEY376K/TA+rD933ELN3VE/q0QQaX5nbWGVsqwpuOW4CJVG/KC
+         oUbJ7iJ2imdWKxMp4Dlr6KdmrazR9exP/2b8RX4W+ZW63XwBKIbclRhOVXlw2RgrnQmn
+         0AeE0DxO9/O4cheFe6hJsxpWUxLi4I1XTs8htlJEskbU1NmbtYkvlqfMoH18jTUzmVcn
+         3HTIxNXQsPVNI9KOleWMh4ESEnteWT2mfx1WQXj0ia8wRad5cCBYeHWihM42Nsc6fljy
+         hGEjKBboQuVkSxNjSP/zvqk+ktQvxbq8nKq2FtGjBFVBRt7FxUJCitzIYgDbEnjOO+nW
+         /DNQ==
+X-Gm-Message-State: AOJu0YwhjJ1Brw90cwupD7Xsneq9Zt6QyzdiN7iBD98t+f9bCB2NdNkb
+	PIiceu7gzW0lHu/rRqnDCCmBmF4N0uFhpFS3Kq+a6ra8E4pc5SqBmgj0Kbb2OwO6EqkAJ7hh5sq
+	wagwxNgt49yTECe/cio/AXPu6iQ0b3zZFj2chepGR5w==
+X-Gm-Gg: ASbGnctQxlcZ1n5+625pa6TGMPCAYBObDR5MQTUyJDEU8u2DqmHV6I4g0dO5/OJ7mmh
+	J7RRtegoukZESAwBGG4JyuhY1rD86eygYXQgz9eDp7bWT8nsonNx1ZQ5DHT4mzcofdWva1/tZFc
+	p4dtNyKFWfzJd7ivC1gdvB0l7KgdrMFmKreKy9j7JJ7TbMrucag1/kgzt16Kxh9PE6AitiZWzEL
+	uR1Eo23sciHY61XGs8e0Nrs/nmZMHBL9dY+hhH+bj/5MstlMwbdRU7ghVb2Bc9rXIh5ZpRL0sjB
+	GcClrA==
+X-Google-Smtp-Source: AGHT+IFUPF5ynkkL41kgZLpurmnAIM9HmMqTLIwKFvjc6tvxX53QxSBJkb+er1hj3bz3ljNfXlpdONJv1gOnelbCVV8=
+X-Received: by 2002:a05:6512:3b9a:b0:57f:6da2:6a1a with SMTP id
+ 2adb3069b0e04-5906db01c1emr3891332e87.48.1760161273860; Fri, 10 Oct 2025
+ 22:41:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqecra71ec.fsf@gitster.g>
-In-Reply-To: <xmqqecra71ec.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sat, 11 Oct 2025 01:23:55 -0400
-X-Gm-Features: AS18NWBraPiPFtc8CzxLUUH0ZYaJLCc7VVN4dW5DkNAzSrWibVCDZI5HY4DnV4o
-Message-ID: <CAPig+cQOAU3J4qmdtjwRCRkwqpO2FfgDThLt6Yoxdx9T6bhTOA@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Oct 2025, #04; Fri, 10)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
+From: areychana <areychana@gmail.com>
+Date: Sat, 11 Oct 2025 11:11:00 +0530
+X-Gm-Features: AS18NWBpXjDo68OckoLZOrSev7H0dP54VWfzi8BN3_AP0HKcsVaxUacZjliW0wA
+Message-ID: <CAJrT3AvkiXFBsfoGypHiXAOY6pDqxbYc5jap2Vn_ONCUh85a+g@mail.gmail.com>
+Subject: [Outreachy] Introduction from Applicant (Archana Kumari)
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 10, 2025 at 8:00=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> * ms/doc-worktree-side-by-side (2025-10-10) 2 commits
->  - doc: git-worktree: Add side by side branch checkout example
->  - doc: git-worktree: Link to examples
->
->  Document "git worktree add" and use of out-of-tree worktrees with
->  examples.
->
->  Will merge to 'next'?
->  source: <a203b35538847f3c9358a5ae26fb4ebea5734cfc.1759420102.git.msuchan=
-ek@suse.de>
+Hello Git community and Outreachy Mentors,
 
-I'd prefer that this not be merged to 'next' in its present form since
-I think the first patch either needs significantly more justification
-or ought to be dropped altogether[1], and because the second patch
-still needs a good deal of work[2].
+My name is Archana Kumari and I am reaching out as an applicant for
+the current Outreachy internship round. I have successfully subscribed
+to the mailing list and am excited to begin contributing.
+I've been using Git for 5 years and am eager to contribute to the core
+project. My primary coding experience is in C and Python. I am also
+familiar with Shell, and I am comfortable setting up the Git source
+code and building/testing it locally.
+I am particularly interested in the microproject idea related to
+'Refactor in order to reduce Git's global state'.
+I look forward to interacting with the community, receiving feedback,
+and submitting my first patch.
+Thank you for the opportunity!
+Best regards,
 
-[1]: https://lore.kernel.org/git/CAPig+cQRHp7A=3DgtSkrVS4_EvZ9PyqBOdGGHcEaj=
-fLPE=3DqU4uDQ@mail.gmail.com/
-[2]: https://lore.kernel.org/git/CAPig+cSNesf0UwS4=3DBxe-Qn+G9y3YYPyOK+7y3q=
-8QJk+o7jaVg@mail.gmail.com/
+Archana Kumari
+areychana@gmail.com
+IST/India
