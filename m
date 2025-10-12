@@ -1,97 +1,83 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23DC2877CB
-	for <git@vger.kernel.org>; Sun, 12 Oct 2025 15:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA40923AB8B
+	for <git@vger.kernel.org>; Sun, 12 Oct 2025 15:11:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760281674; cv=none; b=gRgXuwxsqEvEJG53U2ys6JwS1wX1bdG+9Sc4QhpPk7BI8A/3WhgNrG04t87zTUQjPRQFpn9vOvHIlcyRNC2fJtwkynxBr6n7/kKC4TpuWYRxQhyzOulSJcYyjew/+msRNqMee1gd6L/y0fBb78//CTsXfaA9uE4gIn/TwGTr1kY=
+	t=1760281872; cv=none; b=D+2OYnYgfLwYl/JMkUUUpsZGEi8WMelpaRGWNqpT+V1bFxZ74uDKQnHOoeTLYEmXi+nyUxbkPi54ujrL7pI8RlW2aNhoiboKV2lFu0oweq+xoFQbm6dAWMl5wGf4drArr9yAIh6zPGWWkqv9T/E2F8dvtv783TPl3bhxtUH9FXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760281674; c=relaxed/simple;
-	bh=AjFrX75DmLOXfmqITt5cARBuQFnCCCua2klBx8x34zc=;
+	s=arc-20240116; t=1760281872; c=relaxed/simple;
+	bh=BFYE1fOPjMNMd+bx2TxjbLxZiekksK+GvysCb4NBcVw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SNLT6YJi9epoxQZj8FDVws7oB+yFYeG1HXipAm9q3FWLTvhW8SXYOM+spWbjjfikBv9csg7MLNb99uUOGfesD7ecTyRsLLjDtTIwWYgIMuJR+TSQkVrkM1m1Mfl2A8ZqF6D/s8EUdoXXwiDFJC9ok80etNlbTFd9lLynNGFfOEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MSqgmJc4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UOxwAHZI; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=nmLU0v0qYbVhg3zgS42WcY0SGnnkYMav/58Gc7YngFqVzR1C1Lc6hieIaYd9VAOXT/rtXe3yRy9mxx7UmWYPX+tlM6ygqaMHQGoFYJSUcUSo/dH+zMbpNgNUaPn8R23kAM46q8IrdZ7sORipMb7J7Bmwx0/OoOnJF9n77e57ncg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AsKVEkSb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yo81s9N4; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MSqgmJc4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UOxwAHZI"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2165F140021C;
-	Sun, 12 Oct 2025 11:07:50 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AsKVEkSb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yo81s9N4"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D5F611400279;
+	Sun, 12 Oct 2025 11:11:06 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Sun, 12 Oct 2025 11:07:50 -0400
+  by phl-compute-09.internal (MEProxy); Sun, 12 Oct 2025 11:11:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760281670; x=1760368070; bh=DtKDk/gofi
-	ZCCe3HFvhP0q55DZskTW+XBQTOm7f7Epk=; b=MSqgmJc4rHjf6AaUnMfHKbH8nj
-	Q2dBUdwEddrlEszxGjaHLFA61vpdIKdAULiR/GAWsGcG6Q5PbQ7OKF5Lhx3gl2si
-	Bfyai0QFo/7gPrHKanc+5NQICrapjORcgFCnbnkrJNnAxPOx0iCO6cIPi7venYHc
-	+j5OWs4EmH2dMX/vh4etmQUo/altPapkoZ+8DmCgr+d147DWcUpZe4v/2wUuRpcU
-	izrDdrA7yoSEfswGtz86aWwAGiL+o3DLXpA4+Nq9YWr/80h6slaLApBlnyqmWCVU
-	OvCmYEapCekZLyFj6yp35IXrvF/HoL5kREYqyw9q+LrjY4wfVBEXxsP9IvTA==
+	:subject:to:to; s=fm1; t=1760281866; x=1760368266; bh=p1ZHi3gxJI
+	EjGMIzBM3S9lOeTDn4ev/SifOp7I+Cus0=; b=AsKVEkSb82NPqG8m3RSubcqv0s
+	XxG46ijo4+E40dWZL4oaHd9IOc0NGWGTaGGVaqQMjeuPGZfsBhxbJjZF/pIRyhYr
+	OE0HN6F+nCkPqljgTOPUtgn94vtHQoWZSHm4kDibYZvnIBc+sEJFWOkjex2nfMzR
+	V1tLvTF8yxfVeR2+cnJmOjzauZyJ0xgCVrwUYFLniYnM4RcJOwaC0O1la+hxvlIR
+	GMaxTfcJTLNTMHfHSzmW+ZHK4N6u0gg4R7thO/Rb+xs9nu3zLudp6ytnskE9SLbC
+	BSZMk7wqfIfsgz4gduLkVyXgSENJ2/LmaonCdDU4JbfKx/NZzmY6FZMuxzVg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760281670; x=1760368070; bh=DtKDk/gofiZCCe3HFvhP0q55DZskTW+XBQT
-	Om7f7Epk=; b=UOxwAHZIXg8OJEiLMNAFqo9lDV/2wZB7OL3eTaYc9A5LY0KD/Jf
-	df4IlE7xpQIy2WBIvvtH+gdM6Zhnl/0dFg3BGyr+e0/+HiEyshJUs1Ntg7vsb1Lf
-	KRfkmPuYk+Ub6i3jS3CU6mCyaPxp2OnJTsDZ21BL8rJXbuPkSMQFxwAgEheagUeB
-	nLq4wJQOO2ROIzGikgdeCEkChxbq8gx4FPf6RDz2m0MLzAbmM+bRP1WD5vSZM7Fp
-	ox4e36b9bVQjV2B+HxhmK4e4wK4YPAbRd+i/ki1fp8fFgcBlap5MbXhbEnldW/nT
-	KMkP/dcLV81N2PAHKdiD/rnIEvX75+SjCag==
-X-ME-Sender: <xms:RcTraOzkRqhghLGAErfxPNmeD9NhOBpMBM2Pi34WgO6qs6vlp4OW4A>
-    <xme:RcTraCeR3csqV4UGBPs1-tO7_Sdfk8SHKp6aGNwsIbM86yltdgluzV3lUreAPvEq5
-    hG-uIKAjIa1f_3FLs2VK7mf7ESY0n0CuBdbCA3TDMykCmPYykixjcI>
-X-ME-Received: <xmr:RcTraL6ZLgmih6Dg9Cojle4Bjjm9-t4_pRH3xJRpkCfckEunCy8-08t6nrWEI-EQ8XlLzlErsioXDIN8roX_sUl62m6eMhuDhw3A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduudehtdelucetufdoteggodetrf
+	1760281866; x=1760368266; bh=p1ZHi3gxJIEjGMIzBM3S9lOeTDn4ev/SifO
+	p7I+Cus0=; b=Yo81s9N48qVCrFNgRSsJg2UPKW7nBuTPX+UOA+BAEIU42HI78vR
+	ohpfoq/hvq++XIJfyW7BU6kjsrotlgiSYK01h62vCU8hoPlzOLNnPZctT22D5ijH
+	7B7j1oK4z9HXC8Zrq7GD5lekXAHNy4sDQePESMGZ+wxa82WuiWpaKWBRleGKyDxY
+	5j98NGNHvRobmh6XTZ1cOD6I19SAzn7xaFPstfopAh82i4LmW1/BGhR+dFeDz+xm
+	usWGNqitxxUITKEP9LA89R3N8cPXz4OeZPV9vsn/XM4JQeHScDeyc4roVZGrJI+l
+	tIhjOSNn5nBFgF8GfYNl3/2B5DALIuUu0Dw==
+X-ME-Sender: <xms:CsXraB-0B6UqRUzBIjvsbgfDh-qEtKl85lQNjjKAPri1aiXZCA4euA>
+    <xme:CsXraMlx3Dmjmkmxbm5vOg9E3PI4LBUm_Kj_MhSzXSRdOKszSrjj4ylIfAOwRerxu
+    ZYESNcqDqT07o8NdzCd5Z1wk-R5SrdYygEQBb8FlMS3wzyU5_efig>
+X-ME-Received: <xmr:CsXraHWbdYduLt3WThLS0qKQ7s8lpZaIUbAKUctqIsAjUFlBQ5IVA5j9Pb6HpxlF7SHvCB_njixiuxUcHS9vLGWqzIUss0qRKXH7>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduudehuddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddupdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
-    htthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgt
-    phhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvseht
-    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehrihgtkhesshhftghonhhsvghrvhgrnh
-    gthidrohhrghdprhgtphhtthhopehgihhtsehsfhgtohhnshgvrhhvrghntgihrdhorhhg
-    pdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpd
-    hrtghpthhtohepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:RcTraPKvmKhCLQB991z2TK3Hxu920y4vUYol51sCYJ771r7hGFJNtw>
-    <xmx:RcTraLyZfP2t0G_v05qLi_Wqyqlqx250s3FgsYkqYUwTGm_AgoSrZQ>
-    <xmx:RcTraPIvYZh_FxkZlhjREqN9bk28hvuORzWqhTSuJtHP6pusyQ8p1A>
-    <xmx:RcTraCXxVxGxUnH8Sq8UGLXYAn6LCsNMzarRUXg-VW9k_JUZaUqDog>
-    <xmx:RsTraJz2rbwjNcLMf25p24VZ3ycD99RrZ1n7OYeXWEzsi3fPgkXLm_Mf>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtmhiisehp
+    ohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopegrlhhgohhnvghllhesghhmrghilhdrtghomhdprhgtphhtthhopehm
+    vgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:CsXraBF5O6Kdi2l0D9f-N24J7rvfsRzS-faZkks1xVGEEiyio2VV-g>
+    <xmx:CsXraDeP2RA_s5MM-iYbqb4kBJo8AjlymQ2GrmRZ-hNSSvhzBJypqQ>
+    <xmx:CsXraCK-_V8-X0YOYn3qzzZXy83-WAErZZv5qtoSw7JUMeDRQd98ng>
+    <xmx:CsXraIHIbfHKPlFLpttI9Tk5IEYMPz__IcPdiZprracwQnoUSLHKhQ>
+    <xmx:CsXraLc_sHKPX63PYUINFCk4iNrqxVoZV3SDDvvb19cc1Z0tdnqmslpA>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 12 Oct 2025 11:07:49 -0400 (EDT)
+ 12 Oct 2025 11:11:06 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Christian Couder
- <christian.couder@gmail.com>,  git@vger.kernel.org,  Taylor Blau
- <me@ttaylorr.com>,  Rick Sanders <rick@sfconservancy.org>,  Git at SFC
- <git@sfconservancy.org>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Patrick Steinhardt <ps@pks.im>,  Christian
- Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2] SubmittingPatches: add section about AI
-In-Reply-To: <CABPp-BFf+_8cUc6sWZci9F0voosOQFWQ3x8dNs0YXEZ-uRvhNg@mail.gmail.com>
-	(Elijah Newren's message of "Tue, 7 Oct 2025 21:18:12 -0700")
-References: <xmqqcyalm0mh.fsf@gitster.g>
-	<20251001140310.527097-1-christian.couder@gmail.com>
-	<aN2fG-nS9fE5-2jD@fruit.crustytoothpaste.net>
-	<CABPp-BFcg9M=XjqGPd+akrUOqJqREBmE9+NvO1Q05r4pUcOmEQ@mail.gmail.com>
-	<aOBMHqLxNd86vgjH@fruit.crustytoothpaste.net>
-	<xmqqh5wbq5z8.fsf@gitster.g>
-	<CABPp-BFf+_8cUc6sWZci9F0voosOQFWQ3x8dNs0YXEZ-uRvhNg@mail.gmail.com>
-Date: Sun, 12 Oct 2025 08:07:47 -0700
-Message-ID: <xmqq5xck5fb0.fsf@gitster.g>
+To: Todd Zullinger <tmz@pobox.com>
+Cc: git@vger.kernel.org,  Andrew Kreimer <algonell@gmail.com>,  Taylor Blau
+ <me@ttaylorr.com>
+Subject: Re: [PATCH] t1016: make sure to use specified GPG
+In-Reply-To: <aOu59eVs7tK6pCoF@teonanacatl.net> (Todd Zullinger's message of
+	"Sun, 12 Oct 2025 10:23:49 -0400")
+References: <xmqqsefq7947.fsf@gitster.g> <aOu59eVs7tK6pCoF@teonanacatl.net>
+Date: Sun, 12 Oct 2025 08:11:05 -0700
+Message-ID: <xmqq1pn85f5i.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -101,47 +87,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Elijah Newren <newren@gmail.com> writes:
+Todd Zullinger <tmz@pobox.com> writes:
 
->> ...
->> This policy may evolve as AI tools mature and the legal situation is
->> clarifed. In the meanwhile, requests for exceptions to this policy will be
->> evaluated by the Git project on a case by case basis. To be granted an
->> exception, a contributor will need to demonstrate clarity of the license and
->> copyright status for the tool's output in relation to its training model and
->> code, to the satisfaction of the project maintainers.
+> Interesting.  And well-spotted.
 >
-> I preferred the version Christian sent, but *if* we end up adopting
-> some of the QEMU wording, I've got a logistics question:
+> This _does_ seem to resolve the failures in our CI and in
+> the Fedora build system.  I was able to run a few test
+> builds.  With this fix, the tests were successful where they
+> were not without it.
 >
->     Will we grandfather already accepted series, or proactively revert them?
+> I remember suspecting the gpg calls were not using the
+> wrapper command in gpg.program.  I even tried forcing the
+> --faked-system-time for all the tests to check that theory,
+> unsuccessfully.
+>
+> Oddly, I ran into test failures after fixing the GPG2 prereq
+> long before c348192afe (t1016: clean up style, 2024-10-22)
+> was in place.  Perhaps I was hitting a different issue
+> initially?  Then, when I looked at it again I didn't think
+> about gpg.program again, since I'd already tried to force
+> the gpg wrapper which sets --faked-system-time.
+>
+> It's both annoying and embarrassing if it is that simple and
+> I missed it after looking a few times, to be sure.  But I'll
+> be happy with the end result all the same. :)
 
-Stepping back a bit, can we treat this new guideline element just
-like any other guidelines in SubmittingPatches and also
-CodingGuidelines?
+FWIW, GitHub CI jobs are failing t1016 at the tip of 'seen' (which
+has this change), but only some and not all the jobs, which may
+indicate there are timeing-dependent flakes involved.  I didn't dig
+further, though.
 
-We have certain rules in our SubmittingPatches and CodingGuidelines
-to help us not get into trouble in the future.  We require the log
-messages to follow certain style to give them uniformity as
-otherwise it would become harder to dig the history later to find
-cause of an issue we are having today, and more importantly what the
-design parameters were back when the change we are having trouble
-with was written.  We ask people to follow certain style in the code
-as it would make it more work to understand code if different styles
-are mixed together without reason.
-
-But we also frown upon churning the codebase for the sake of
-strictly match the prescribed coding style.  The rules are mostly to
-control newly written things so that they do not make our codebase
-into worse shape than it currently is.  When we update a part of our
-codebase for some reason, other than "there is no particular reason
-but we want to fix them to match guidelines", we would take existing
-guideline violations the touched part may have into account, of
-course.  And we find no need in our other non-AI guidelines to say
-"we grandfather badness that already exists, but we try our best to
-enforce the guidelines as strictly as possible", and the reason, I
-think, is because that is implicitly what everybody expects.  Should
-the "We tell you again not to blindly add things with unknown
-origin, given the recent proliferation of AI coding product" rule be
-any special and different?
-
+>>  t/t1016-compatObjectFormat.sh | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>> 
+>> diff --git a/t/t1016-compatObjectFormat.sh b/t/t1016-compatObjectFormat.sh
+>> index 8341a2fe83..cb6d308f1d 100755
+>> --- a/t/t1016-compatObjectFormat.sh
+>> +++ b/t/t1016-compatObjectFormat.sh
+>> @@ -116,7 +116,7 @@ do
+>>  		git config core.repositoryformatversion 1 &&
+>>  		git config extensions.objectformat $hash &&
+>>  		git config extensions.compatobjectformat $(compat_hash $hash) &&
+>> -		test_config gpg.program $TEST_DIRECTORY/t1016/gpg &&
+>> +		git config gpg.program $TEST_DIRECTORY/t1016/gpg &&
+>>  		echo "Hello World!" >hello &&
+>>  		eval hello_${hash}_oid=$(git hash-object hello) &&
+>>  		git update-index --add hello &&
