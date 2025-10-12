@@ -1,124 +1,100 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A04288D2
-	for <git@vger.kernel.org>; Sun, 12 Oct 2025 00:15:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2B81A3154
+	for <git@vger.kernel.org>; Sun, 12 Oct 2025 11:45:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760228138; cv=none; b=Q4JiD4z1iFpk6yMeazioZgbpacXyQwnv6pYxflgDaJA0WxI244cPx0D4PABmeyf/uCU8VrOEEVHxAdPP3IAggzp6r74eJss6yzRA/NvAYQRWi48XRRQfpnN8GjxA/xY/eKX6yksMpNlMKZ5h9+EuynrHtmcbVfC21tec9Pro5R8=
+	t=1760269561; cv=none; b=TEBGViGMLIzyMFZGtncjORT+/KBVOhuuX8KK7lkx87Lt3xakipjSyOyZKt39BqFBjFj9or5eoIdsqKFD2tvmLDjWfB1a4kRXtekMh2fPbrQB+CJ7GUKjciyTbRZKkrVKAUn13jKOW60MBZg09fuUH20c6CWaJ9qkwxdDEAf3iME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760228138; c=relaxed/simple;
-	bh=mwx8NJNwSnGHvod545KEenMfjtJgFPrL2wDEHr9T5uo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iWAzuwUA5rHeQd6kUv9qWcBH0e8cOP6WMMjIfOKQuuSsNtz+7P5WMsvnHXjMXANERgHjHY1FT/cYBfB3XtLFpqFDuRwZhQtH/X+AQg6bsd3DGh2QICs6w6nsBsDSBj6qrZR+kMmY+LQovdi3+bY7YQ8CvnmesusXgUe+O2nA68E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aT0b00Xe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ocPL3jJu; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aT0b00Xe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ocPL3jJu"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 783331400068;
-	Sat, 11 Oct 2025 20:15:35 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Sat, 11 Oct 2025 20:15:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760228135; x=1760314535; bh=9F8f2MwtmG
-	16eJ+fwg1b8jep9kt58WRk84mdw2ZbgMM=; b=aT0b00Xeke+yH4zK4GPfE30AMr
-	ABVNpu5CMqkXghNOOXdzw/8s1kIEIf9XEjKHJZ6TWECDnNzVHiXdX6n1sGe47JG1
-	jQHAspo+CzE/TIbxm08mt402BKnVgOzBE26AYcCKZkQBrzuu8XMht/c8TQnX9grl
-	rrNHlUmhwJZhm4UnsIMbICTgFHiucm0Njo8g4YccUH4ZufmdQFoMvDi7ShBbF4bf
-	CGwwOYoiHrXuwnS2QtYHRB1R7d9trXNPMkvPnTA+/3i5fNl8+PD8w6iaerSBoVB9
-	P9XIBhZLXHP7tRYAG1/pz6xY3TJb5SZW2MuK1ZGYUyhozLYGITKIq3OC633Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760228135; x=1760314535; bh=9F8f2MwtmG16eJ+fwg1b8jep9kt58WRk84m
-	dw2ZbgMM=; b=ocPL3jJuyRBvZWaESmDjv/jeXWpp7wz0eBWHzxOmYt3SKAQ9n76
-	ZpcPBLoI+CZATCSnXQl/UgY4AQTo5RpAm7K37wW/4SfEAp+XA0ybKP8IFpcGh72z
-	m7YWJZSDODOfjW4RcPBUWiXMIy5O0Di1IxpYmQMvmbMX1yCt+3XmGQVL514e5SXJ
-	DMaVC77tTvdA1vfsqW+ZY35nqXk7YTeHRGnqRTlue3eb6etaRmI4KA0KS/quGMWI
-	VJNM/D2oZi2eoDwCA0Xd2M+GJMzsQG6oeFxBx8xsg2NVk67moLCtZoePUYtDbWwC
-	vRMSnObcjuFKJ6VuaLIHiUDdwqvTij9Cf3A==
-X-ME-Sender: <xms:JvPqaNOipRB1nrX5KaQsxlWQ8iITlzadSh5aPWmLKhO2HRome5PV3w>
-    <xme:JvPqaIL2xb1ZX6Kpcu-mQPUFxlICZuXyinfqk0WLX1WO9LCE-EPjhZatl_IJmD-TS
-    ShVtdxG5mZbjoGA2y-TVHB58jdYfEMxFl0j7IB3JCT63AxgQXp_5eY>
-X-ME-Received: <xmr:JvPqaH2DFS5_lnShl3QeIjos0W6RoonrbyOTIhMt_2GrlJ6c426orTfNEbf17SDP8JQjQ1HYqt5g-2HzZMwiOBCWDEkUqMmUlBnt>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduudeffeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddupdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhmpdhrtghpthhtoh
-    epphhssehpkhhsrdhimhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgv
-    fhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtoh
-    hothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhgu
-    vghlihhnsehgmhigrdguvgdprhgtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrg
-    hilhdrtghomh
-X-ME-Proxy: <xmx:JvPqaEXQ__KFsLGMoErmURN8Y8inM6Yt41jW9shNhsKQ_WyWqW0_kQ>
-    <xmx:JvPqaBPv8xgwhjeJCdqMpy_4vijsvrfPbAU4gYtZQwV_a0yEbL97sA>
-    <xmx:JvPqaP2vEJ_bZ__44mJZK7Od5OeJSoIUgBxjqRBcjCQnK33LtLPkWQ>
-    <xmx:JvPqaNRXPys5Pqqjr2y7p4EXrDdsMrR1U-Js1yoVQE3JieSixDAeMA>
-    <xmx:J_PqaFT5FpWUJ84H4dMZPKom0rrVA-_pdvt7OSzG1K3HT5MVa6XGSfNW>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 11 Oct 2025 20:15:34 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Todd Zullinger <tmz@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  Christian Couder
- <christian.couder@gmail.com>,  git@vger.kernel.org,  Elijah Newren
- <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Collin Funk <collin.funk1@gmail.com>,
-  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 2/5] lib-gpg: allow tests with GPGSM or GPGSSH prereq
- first
-In-Reply-To: <aOm9fLW-8_oJQZy9@teonanacatl.net> (Todd Zullinger's message of
-	"Fri, 10 Oct 2025 22:14:20 -0400")
-References: <20251007122958.1089680-1-christian.couder@gmail.com>
-	<20251009122457.1273701-1-christian.couder@gmail.com>
-	<20251009122457.1273701-3-christian.couder@gmail.com>
-	<aOisaq-rSdwjwo6b@pks.im> <aOkTs7G2GGLKajUf@teonanacatl.net>
-	<xmqqbjmeafqm.fsf@gitster.g> <aOm9fLW-8_oJQZy9@teonanacatl.net>
-Date: Sat, 11 Oct 2025 17:15:33 -0700
-Message-ID: <xmqqa51x561m.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1760269561; c=relaxed/simple;
+	bh=kEQarWJAph2AWbYDrVbNNNi6xK44dg9Tpdjm+gpvcxw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Uv/4Dd9jYdyhytihe58tHzM2UNGO3eYtYmjQrpxH6qFFEbPsSHYfA9/iI4BrQQjgoCj95rGcsjx6wDNIOh5+08KS+odfJ0U0e21L4tCsse9ZHvT54d1nkLJ3iGeAbZwEKTiM+7Uf3+wSLqLNVoqT/y7pvFL0PjvI2nh+CoAzAS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.104] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4ckzFW0YrtzRnmN;
+	Sun, 12 Oct 2025 13:45:50 +0200 (CEST)
+Message-ID: <e593886e-eeb4-440f-a317-a2959577e1e3@kdbg.org>
+Date: Sun, 12 Oct 2025 13:45:50 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] mingw: avoid relative `#include`s
+Content-Language: en-US
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>, git@vger.kernel.org
+References: <pull.1985.git.1759995961.gitgitgadget@gmail.com>
+ <484ef8b825e5d1d68a61f0f8cc2520457e8f4f3a.1759995961.git.gitgitgadget@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <484ef8b825e5d1d68a61f0f8cc2520457e8f4f3a.1759995961.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Todd Zullinger <tmz@pobox.com> writes:
+Am 09.10.25 um 09:46 schrieb Johannes Schindelin via GitGitGadget:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> We want to make them relative to the top-level directory.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  compat/mingw.c | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
+> 
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 8538e3d172..da99473f56 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -1,22 +1,22 @@
+>  #define USE_THE_REPOSITORY_VARIABLE
+>  #define DISABLE_SIGN_COMPARE_WARNINGS
+>  
+> -#include "../git-compat-util.h"
+> +#include "git-compat-util.h"
+>  #include "win32.h"
+>  #include <aclapi.h>
+>  #include <sddl.h>
+>  #include <conio.h>
+>  #include <wchar.h>
+> -#include "../strbuf.h"
+> -#include "../run-command.h"
+> -#include "../abspath.h"
+> -#include "../alloc.h"
+> +#include "strbuf.h"
+> +#include "run-command.h"
+> +#include "abspath.h"
+> +#include "alloc.h"
+>  #include "win32/lazyload.h"
+> -#include "../config.h"
+> -#include "../environment.h"
+> -#include "../trace2.h"
+> -#include "../symlinks.h"
+> -#include "../wrapper.h"
+> +#include "config.h"
+> +#include "environment.h"
+> +#include "trace2.h"
+> +#include "symlinks.h"
+> +#include "wrapper.h"
+>  #include "dir.h"
+>  #include "gettext.h"
+>  #define SECURITY_WIN32
 
-> In my recollection, they fail all (or nearly all?) of the
-> time in our CI runs and when I was building git for Fedora
-> infrastructure, they failed consistently on the Fedora
-> builders as well.
->
-> They fail rarely (if ever) when I run them locally, even
-> with --stress options.  That made it rather difficult to
-> work out the issue.  I thought that it was a timing problem
-> for a while, but I wasn't able to find a way to demonstrate
-> that.
->
-> Thanks for the willingness to suffer some test breakage to
-> see if it can flush out a fix. :)
+Why is this needed?
 
-Or I can just revert these two patches if nothing happens ;-).
+With #include "foo" it is quite clear that the file is first looked up
+from the directory of the file being processed. The changed code
+requires that the top-level directory is among the -I directives of the
+command lines. Then it would be much more logical to use #include <foo>
+instead. But that I wouldn't regard as desirable, either, because the
+included file isn't from a subordinate module or library.
 
-> I suspect there are folks here who know the test suite and
-> code being tested well enough that it may be really obvious
-> to them.  Whether there is an intersection of those folks
-> and spare "round tuits" is another matter.
+So, IMO, the status quo is perfect and does not need this change.
+
+-- Hannes
+
