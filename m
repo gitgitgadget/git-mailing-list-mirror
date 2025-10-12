@@ -1,149 +1,147 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67089190664
-	for <git@vger.kernel.org>; Sun, 12 Oct 2025 14:23:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23DC2877CB
+	for <git@vger.kernel.org>; Sun, 12 Oct 2025 15:07:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760279034; cv=none; b=Aw9qlyckd2KuPtW1XBKsiile7N/aXX+A1ySsXIniqkVkF/7wzigRwyRS+8nHV5t7zUV5eRuPxslaWOZF/q0ej31STmjMOcBy/sES2mfgTZF4ZDBFItU//e/ZI7faGFzxtCqsUZBbFKl3pB1CrjbFFB7Mi1eCwHgUrmzDY0xGapc=
+	t=1760281674; cv=none; b=gRgXuwxsqEvEJG53U2ys6JwS1wX1bdG+9Sc4QhpPk7BI8A/3WhgNrG04t87zTUQjPRQFpn9vOvHIlcyRNC2fJtwkynxBr6n7/kKC4TpuWYRxQhyzOulSJcYyjew/+msRNqMee1gd6L/y0fBb78//CTsXfaA9uE4gIn/TwGTr1kY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760279034; c=relaxed/simple;
-	bh=j5iDgZXB6IXamJXKOX5TESObulf3z1fF8nS/CKkfUhc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RZOX4ShYy8YcqUMb+ggR3raSLYpi3MyYDbBuVFpgrwL/EEyioNKES/2BIOL27RgxpBLL0IXhoCss1yzfpza59P/xELwT22PGXL23812RoIZt6/k7ElscTAJkatwreP501QNxeREvQH+H9NyktpYh5vgCoD4jarDXOPikk1hzCgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NafXIu/K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V/jGR4qm; arc=none smtp.client-ip=103.168.172.151
+	s=arc-20240116; t=1760281674; c=relaxed/simple;
+	bh=AjFrX75DmLOXfmqITt5cARBuQFnCCCua2klBx8x34zc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SNLT6YJi9epoxQZj8FDVws7oB+yFYeG1HXipAm9q3FWLTvhW8SXYOM+spWbjjfikBv9csg7MLNb99uUOGfesD7ecTyRsLLjDtTIwWYgIMuJR+TSQkVrkM1m1Mfl2A8ZqF6D/s8EUdoXXwiDFJC9ok80etNlbTFd9lLynNGFfOEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MSqgmJc4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UOxwAHZI; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NafXIu/K";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V/jGR4qm"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 835A6EC02E8;
-	Sun, 12 Oct 2025 10:23:51 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Sun, 12 Oct 2025 10:23:51 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MSqgmJc4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UOxwAHZI"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2165F140021C;
+	Sun, 12 Oct 2025 11:07:50 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Sun, 12 Oct 2025 11:07:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760279031; x=1760365431; bh=I/WJ693+sQ
-	j4BPoyQbas+E79Jdc+ChzatS7BJMZU8yw=; b=NafXIu/Kc1jBrKYEY7X+oHxG9g
-	JsPNBRnK1R681qr6q38l8IKi59tJCR5CVVmM83V9x/FJ6uoK8dXwBTsXBBi8KlMY
-	E59Ra4e4PbfEh6XH71q9ug5tr8uI1SQ4Uy0mck4hmZSJCg9D6ku6/5eM/o81pJlL
-	/GiZhG2ITl0gZEvEK2uDaZWHaOpzl/C/3UefRVi0oFjta9hmRtPHgraycg80PUTA
-	+T6LTO8QoAm+Re/ee5cZEfHTeM8SvPA9TmV8bISxeKpXygGywdwnrUPwzjDOsrtd
-	AnQ1i3WCyU2xvvJ7CefAjRlofqATUOJlJqGgceiYUXeC+mjr5RWUiUKjktvw==
+	:subject:to:to; s=fm1; t=1760281670; x=1760368070; bh=DtKDk/gofi
+	ZCCe3HFvhP0q55DZskTW+XBQTOm7f7Epk=; b=MSqgmJc4rHjf6AaUnMfHKbH8nj
+	Q2dBUdwEddrlEszxGjaHLFA61vpdIKdAULiR/GAWsGcG6Q5PbQ7OKF5Lhx3gl2si
+	Bfyai0QFo/7gPrHKanc+5NQICrapjORcgFCnbnkrJNnAxPOx0iCO6cIPi7venYHc
+	+j5OWs4EmH2dMX/vh4etmQUo/altPapkoZ+8DmCgr+d147DWcUpZe4v/2wUuRpcU
+	izrDdrA7yoSEfswGtz86aWwAGiL+o3DLXpA4+Nq9YWr/80h6slaLApBlnyqmWCVU
+	OvCmYEapCekZLyFj6yp35IXrvF/HoL5kREYqyw9q+LrjY4wfVBEXxsP9IvTA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760279031; x=1760365431; bh=I/WJ693+sQj4BPoyQbas+E79Jdc+ChzatS7
-	BJMZU8yw=; b=V/jGR4qm8Tp+ZowTYXHv6ZePlHJhjebE+hLLvizzk9a/fqgPOqR
-	GfzKfACqdbZ1blQ+woyhfBdqFl31eqEnV4AsCckUrDlzk63BOwH93rMLg4kgRNUK
-	8si1XDNS71NAuWulYoHk0vf6LfcrUvqiUWr43ByqhJAbuWKY5z0Vf7QP61NFfWOG
-	kGbP/H3mX7VfFLAUh2W/yPrQqEuW1NsajaDSqwKgSCa1X2EzJ+XP5oqC/4loWb9m
-	aXhq1I22gUi6EezK3UkQlLzdUIMnOnp5GCPAVo6DoDxZo8FiEPM2ZYqtN0REFYuy
-	OHNKi2uDLLuSWVYEbMSRRlV98W2OancagNg==
-X-ME-Sender: <xms:97nraEbCdHkleSW8ymtIG2k5q2ueMh-bvji_FR2QmehvhGbxKZRGDw>
-    <xme:97nraGZc-Mwl4XnaqoYXQOcvkc_bhAOIxKBOZMUe3oZgNlAlMZMt7Q6ul4k4l_Mix
-    dyseZH4ArW0HWHQEMbxqsgSZ1Uqi1EqXHIwM68oKmKwSML68g7Aqg>
-X-ME-Received: <xmr:97nraD8JtXh-608KyudbIDAv4RWjIiywxCTmH7hlkCTe7_T1cLzHEJ45cnilPbT8muX7WVF_004Cag13grrgDdzYErqtCj0bPQCm0VZW-vUD8kGotywN>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduudehtddtucetufdoteggodetrf
+	1760281670; x=1760368070; bh=DtKDk/gofiZCCe3HFvhP0q55DZskTW+XBQT
+	Om7f7Epk=; b=UOxwAHZIXg8OJEiLMNAFqo9lDV/2wZB7OL3eTaYc9A5LY0KD/Jf
+	df4IlE7xpQIy2WBIvvtH+gdM6Zhnl/0dFg3BGyr+e0/+HiEyshJUs1Ntg7vsb1Lf
+	KRfkmPuYk+Ub6i3jS3CU6mCyaPxp2OnJTsDZ21BL8rJXbuPkSMQFxwAgEheagUeB
+	nLq4wJQOO2ROIzGikgdeCEkChxbq8gx4FPf6RDz2m0MLzAbmM+bRP1WD5vSZM7Fp
+	ox4e36b9bVQjV2B+HxhmK4e4wK4YPAbRd+i/ki1fp8fFgcBlap5MbXhbEnldW/nT
+	KMkP/dcLV81N2PAHKdiD/rnIEvX75+SjCag==
+X-ME-Sender: <xms:RcTraOzkRqhghLGAErfxPNmeD9NhOBpMBM2Pi34WgO6qs6vlp4OW4A>
+    <xme:RcTraCeR3csqV4UGBPs1-tO7_Sdfk8SHKp6aGNwsIbM86yltdgluzV3lUreAPvEq5
+    hG-uIKAjIa1f_3FLs2VK7mf7ESY0n0CuBdbCA3TDMykCmPYykixjcI>
+X-ME-Received: <xmr:RcTraL6ZLgmih6Dg9Cojle4Bjjm9-t4_pRH3xJRpkCfckEunCy8-08t6nrWEI-EQ8XlLzlErsioXDIN8roX_sUl62m6eMhuDhw3A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduudehtdelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefvohguugcukghulhhlihhnghgvrhcuoehtmhiisehpohgsohig
-    rdgtohhmqeenucggtffrrghtthgvrhhnpefgveefveeihfehhefhgeethfdvffehfeehue
-    elheeiffeuvddvuefhveffiefgueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehtmhiisehpohgsohigrdgtohhmpdhnsggprhgtphhtthhope
-    egpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopegrlhhgohhnvghllhesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthht
-    rgihlhhorhhrrdgtohhm
-X-ME-Proxy: <xmx:97nraNiXlwxyX8DGhcoMRi-gQHOVxLBeFp2AYezAnV4tAVyGMAIx7w>
-    <xmx:97nraLfsWId08Q_2Oz686in70xOhJq6vfP0yxXKGSSSl14Qybhp5xw>
-    <xmx:97nraMqB075t22nPfks0rl90RALb1gmBK2VsFCgGfrFRlpj_2oakkg>
-    <xmx:97nraIDSzKBnoLjo19ms7eqCf9EGbB-Kq8TJZ0VrzzVElnFRoXH-NQ>
-    <xmx:97nraCftNTR1f0qfd-klHypm7EEPJYO6wm68SHAd9IqgvFFeyUPOUjt0>
-Feedback-ID: ia13843cf:Fastmail
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddupdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
+    htthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgt
+    phhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvseht
+    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehrihgtkhesshhftghonhhsvghrvhgrnh
+    gthidrohhrghdprhgtphhtthhopehgihhtsehsfhgtohhnshgvrhhvrghntgihrdhorhhg
+    pdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpd
+    hrtghpthhtohepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:RcTraPKvmKhCLQB991z2TK3Hxu920y4vUYol51sCYJ771r7hGFJNtw>
+    <xmx:RcTraLyZfP2t0G_v05qLi_Wqyqlqx250s3FgsYkqYUwTGm_AgoSrZQ>
+    <xmx:RcTraPIvYZh_FxkZlhjREqN9bk28hvuORzWqhTSuJtHP6pusyQ8p1A>
+    <xmx:RcTraCXxVxGxUnH8Sq8UGLXYAn6LCsNMzarRUXg-VW9k_JUZaUqDog>
+    <xmx:RsTraJz2rbwjNcLMf25p24VZ3ycD99RrZ1n7OYeXWEzsi3fPgkXLm_Mf>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 12 Oct 2025 10:23:51 -0400 (EDT)
-Date: Sun, 12 Oct 2025 10:23:49 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Andrew Kreimer <algonell@gmail.com>,
-	Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] t1016: make sure to use specified GPG
-Message-ID: <aOu59eVs7tK6pCoF@teonanacatl.net>
-References: <xmqqsefq7947.fsf@gitster.g>
+ 12 Oct 2025 11:07:49 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Christian Couder
+ <christian.couder@gmail.com>,  git@vger.kernel.org,  Taylor Blau
+ <me@ttaylorr.com>,  Rick Sanders <rick@sfconservancy.org>,  Git at SFC
+ <git@sfconservancy.org>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Patrick Steinhardt <ps@pks.im>,  Christian
+ Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2] SubmittingPatches: add section about AI
+In-Reply-To: <CABPp-BFf+_8cUc6sWZci9F0voosOQFWQ3x8dNs0YXEZ-uRvhNg@mail.gmail.com>
+	(Elijah Newren's message of "Tue, 7 Oct 2025 21:18:12 -0700")
+References: <xmqqcyalm0mh.fsf@gitster.g>
+	<20251001140310.527097-1-christian.couder@gmail.com>
+	<aN2fG-nS9fE5-2jD@fruit.crustytoothpaste.net>
+	<CABPp-BFcg9M=XjqGPd+akrUOqJqREBmE9+NvO1Q05r4pUcOmEQ@mail.gmail.com>
+	<aOBMHqLxNd86vgjH@fruit.crustytoothpaste.net>
+	<xmqqh5wbq5z8.fsf@gitster.g>
+	<CABPp-BFf+_8cUc6sWZci9F0voosOQFWQ3x8dNs0YXEZ-uRvhNg@mail.gmail.com>
+Date: Sun, 12 Oct 2025 08:07:47 -0700
+Message-ID: <xmqq5xck5fb0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqsefq7947.fsf@gitster.g>
+Content-Type: text/plain
 
-Junio C Hamano wrote:
-> c348192a (t1016: clean up style, 2024-10-22) fixed a coding style
-> violation that has an extra space between redirection operator ">"
-> and the redirection target, but at the same time, replaced the use
-> of "git config" to set a configuration variable to be used by the
-> remainder of tests with "test_config".  The pattern employed here is
-> that the first set-up test prepares the environment to be used by
-> subsequent tests, which then use the settings left by this set-up
-> test to perform their tasks.  Using test_config in the first set-up
-> test means the config setting made by the set-up test is reverted at
-> the end of the first set-up test, which totally misses the point.
-> 
-> Go back to use "git config" to fix this.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  * The commit in question was from October last year, and I didn't
->    notice it until I looked at how the test script evolved.  It is a
->    bit embarrassing that we didn't catch it during review.
+Elijah Newren <newren@gmail.com> writes:
 
-Interesting.  And well-spotted.
+>> ...
+>> This policy may evolve as AI tools mature and the legal situation is
+>> clarifed. In the meanwhile, requests for exceptions to this policy will be
+>> evaluated by the Git project on a case by case basis. To be granted an
+>> exception, a contributor will need to demonstrate clarity of the license and
+>> copyright status for the tool's output in relation to its training model and
+>> code, to the satisfaction of the project maintainers.
+>
+> I preferred the version Christian sent, but *if* we end up adopting
+> some of the QEMU wording, I've got a logistics question:
+>
+>     Will we grandfather already accepted series, or proactively revert them?
 
-This _does_ seem to resolve the failures in our CI and in
-the Fedora build system.  I was able to run a few test
-builds.  With this fix, the tests were successful where they
-were not without it.
+Stepping back a bit, can we treat this new guideline element just
+like any other guidelines in SubmittingPatches and also
+CodingGuidelines?
 
-I remember suspecting the gpg calls were not using the
-wrapper command in gpg.program.  I even tried forcing the
---faked-system-time for all the tests to check that theory,
-unsuccessfully.
+We have certain rules in our SubmittingPatches and CodingGuidelines
+to help us not get into trouble in the future.  We require the log
+messages to follow certain style to give them uniformity as
+otherwise it would become harder to dig the history later to find
+cause of an issue we are having today, and more importantly what the
+design parameters were back when the change we are having trouble
+with was written.  We ask people to follow certain style in the code
+as it would make it more work to understand code if different styles
+are mixed together without reason.
 
-Oddly, I ran into test failures after fixing the GPG2 prereq
-long before c348192afe (t1016: clean up style, 2024-10-22)
-was in place.  Perhaps I was hitting a different issue
-initially?  Then, when I looked at it again I didn't think
-about gpg.program again, since I'd already tried to force
-the gpg wrapper which sets --faked-system-time.
+But we also frown upon churning the codebase for the sake of
+strictly match the prescribed coding style.  The rules are mostly to
+control newly written things so that they do not make our codebase
+into worse shape than it currently is.  When we update a part of our
+codebase for some reason, other than "there is no particular reason
+but we want to fix them to match guidelines", we would take existing
+guideline violations the touched part may have into account, of
+course.  And we find no need in our other non-AI guidelines to say
+"we grandfather badness that already exists, but we try our best to
+enforce the guidelines as strictly as possible", and the reason, I
+think, is because that is implicitly what everybody expects.  Should
+the "We tell you again not to blindly add things with unknown
+origin, given the recent proliferation of AI coding product" rule be
+any special and different?
 
-It's both annoying and embarrassing if it is that simple and
-I missed it after looking a few times, to be sure.  But I'll
-be happy with the end result all the same. :)
-
->  t/t1016-compatObjectFormat.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/t/t1016-compatObjectFormat.sh b/t/t1016-compatObjectFormat.sh
-> index 8341a2fe83..cb6d308f1d 100755
-> --- a/t/t1016-compatObjectFormat.sh
-> +++ b/t/t1016-compatObjectFormat.sh
-> @@ -116,7 +116,7 @@ do
->  		git config core.repositoryformatversion 1 &&
->  		git config extensions.objectformat $hash &&
->  		git config extensions.compatobjectformat $(compat_hash $hash) &&
-> -		test_config gpg.program $TEST_DIRECTORY/t1016/gpg &&
-> +		git config gpg.program $TEST_DIRECTORY/t1016/gpg &&
->  		echo "Hello World!" >hello &&
->  		eval hello_${hash}_oid=$(git hash-object hello) &&
->  		git update-index --add hello &&
-
--- 
-Todd
