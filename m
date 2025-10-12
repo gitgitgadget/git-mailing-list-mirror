@@ -1,135 +1,102 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from mail-43166.protonmail.ch (mail-43166.protonmail.ch [185.70.43.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA40923AB8B
-	for <git@vger.kernel.org>; Sun, 12 Oct 2025 15:11:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103FA1FDA
+	for <git@vger.kernel.org>; Sun, 12 Oct 2025 16:45:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760281872; cv=none; b=D+2OYnYgfLwYl/JMkUUUpsZGEi8WMelpaRGWNqpT+V1bFxZ74uDKQnHOoeTLYEmXi+nyUxbkPi54ujrL7pI8RlW2aNhoiboKV2lFu0oweq+xoFQbm6dAWMl5wGf4drArr9yAIh6zPGWWkqv9T/E2F8dvtv783TPl3bhxtUH9FXs=
+	t=1760287553; cv=none; b=AH126IH2dP05QKDyzUHtIuOqJjFA88+h1E3bItr0aBoymFOF5HAlTLse9+tKj1cdkFCvaQMDGmN/+vYq7u4/VUFEtIYDf7FleNUUsBasxpI9vytT3rqfa+J7P96ThVGT5j0mTGSPvW2c0k6KQ0IwFMPnhkfXEb/doQ6LlVV45X0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760281872; c=relaxed/simple;
-	bh=BFYE1fOPjMNMd+bx2TxjbLxZiekksK+GvysCb4NBcVw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nmLU0v0qYbVhg3zgS42WcY0SGnnkYMav/58Gc7YngFqVzR1C1Lc6hieIaYd9VAOXT/rtXe3yRy9mxx7UmWYPX+tlM6ygqaMHQGoFYJSUcUSo/dH+zMbpNgNUaPn8R23kAM46q8IrdZ7sORipMb7J7Bmwx0/OoOnJF9n77e57ncg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AsKVEkSb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yo81s9N4; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1760287553; c=relaxed/simple;
+	bh=2Fy93ScysOFQWJeXFroG4s4Er5DofIeT8sZphMZ89NA=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=EjJoy6s1BK0yGFhq/oCmdhRsw6jOV22oBp+Gh0nyBW0G41tLSP9osfC6s6AB48+IgemfwbLVRqR8zP3r8rk5qRXor4LJ5KhGLt6/aRp6se0OamxXPy/LpDcBhDTYYNRHoCuz2WG3lNpAUGD3eRRr/FNmH2QKz7GeuDtnNjlygGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=cfZilggd; arc=none smtp.client-ip=185.70.43.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AsKVEkSb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yo81s9N4"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D5F611400279;
-	Sun, 12 Oct 2025 11:11:06 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Sun, 12 Oct 2025 11:11:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760281866; x=1760368266; bh=p1ZHi3gxJI
-	EjGMIzBM3S9lOeTDn4ev/SifOp7I+Cus0=; b=AsKVEkSb82NPqG8m3RSubcqv0s
-	XxG46ijo4+E40dWZL4oaHd9IOc0NGWGTaGGVaqQMjeuPGZfsBhxbJjZF/pIRyhYr
-	OE0HN6F+nCkPqljgTOPUtgn94vtHQoWZSHm4kDibYZvnIBc+sEJFWOkjex2nfMzR
-	V1tLvTF8yxfVeR2+cnJmOjzauZyJ0xgCVrwUYFLniYnM4RcJOwaC0O1la+hxvlIR
-	GMaxTfcJTLNTMHfHSzmW+ZHK4N6u0gg4R7thO/Rb+xs9nu3zLudp6ytnskE9SLbC
-	BSZMk7wqfIfsgz4gduLkVyXgSENJ2/LmaonCdDU4JbfKx/NZzmY6FZMuxzVg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760281866; x=1760368266; bh=p1ZHi3gxJIEjGMIzBM3S9lOeTDn4ev/SifO
-	p7I+Cus0=; b=Yo81s9N48qVCrFNgRSsJg2UPKW7nBuTPX+UOA+BAEIU42HI78vR
-	ohpfoq/hvq++XIJfyW7BU6kjsrotlgiSYK01h62vCU8hoPlzOLNnPZctT22D5ijH
-	7B7j1oK4z9HXC8Zrq7GD5lekXAHNy4sDQePESMGZ+wxa82WuiWpaKWBRleGKyDxY
-	5j98NGNHvRobmh6XTZ1cOD6I19SAzn7xaFPstfopAh82i4LmW1/BGhR+dFeDz+xm
-	usWGNqitxxUITKEP9LA89R3N8cPXz4OeZPV9vsn/XM4JQeHScDeyc4roVZGrJI+l
-	tIhjOSNn5nBFgF8GfYNl3/2B5DALIuUu0Dw==
-X-ME-Sender: <xms:CsXraB-0B6UqRUzBIjvsbgfDh-qEtKl85lQNjjKAPri1aiXZCA4euA>
-    <xme:CsXraMlx3Dmjmkmxbm5vOg9E3PI4LBUm_Kj_MhSzXSRdOKszSrjj4ylIfAOwRerxu
-    ZYESNcqDqT07o8NdzCd5Z1wk-R5SrdYygEQBb8FlMS3wzyU5_efig>
-X-ME-Received: <xmr:CsXraHWbdYduLt3WThLS0qKQ7s8lpZaIUbAKUctqIsAjUFlBQ5IVA5j9Pb6HpxlF7SHvCB_njixiuxUcHS9vLGWqzIUss0qRKXH7>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduudehuddtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtmhiisehp
-    ohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopegrlhhgohhnvghllhesghhmrghilhdrtghomhdprhgtphhtthhopehm
-    vgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:CsXraBF5O6Kdi2l0D9f-N24J7rvfsRzS-faZkks1xVGEEiyio2VV-g>
-    <xmx:CsXraDeP2RA_s5MM-iYbqb4kBJo8AjlymQ2GrmRZ-hNSSvhzBJypqQ>
-    <xmx:CsXraCK-_V8-X0YOYn3qzzZXy83-WAErZZv5qtoSw7JUMeDRQd98ng>
-    <xmx:CsXraIHIbfHKPlFLpttI9Tk5IEYMPz__IcPdiZprracwQnoUSLHKhQ>
-    <xmx:CsXraLc_sHKPX63PYUINFCk4iNrqxVoZV3SDDvvb19cc1Z0tdnqmslpA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 12 Oct 2025 11:11:06 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Todd Zullinger <tmz@pobox.com>
-Cc: git@vger.kernel.org,  Andrew Kreimer <algonell@gmail.com>,  Taylor Blau
- <me@ttaylorr.com>
-Subject: Re: [PATCH] t1016: make sure to use specified GPG
-In-Reply-To: <aOu59eVs7tK6pCoF@teonanacatl.net> (Todd Zullinger's message of
-	"Sun, 12 Oct 2025 10:23:49 -0400")
-References: <xmqqsefq7947.fsf@gitster.g> <aOu59eVs7tK6pCoF@teonanacatl.net>
-Date: Sun, 12 Oct 2025 08:11:05 -0700
-Message-ID: <xmqq1pn85f5i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="cfZilggd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1760287538; x=1760546738;
+	bh=jJbsxMjkRURMUzVvb5wXn5Bgl92mVoSLiTYRZUlV+nY=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=cfZilggdfTORwHMeOmpnVVMHTeKEkEJ0Gl5NYCrNPlwz/OO0sgdDum7DPJHMhhARo
+	 OWSZyHHpYZwRQwx2UCRpKi39j5vBd4qeygdh8ToO9QjxblpE/w1sUw8fa83Umus+Cj
+	 TYUP64o2vg/lr1S4xggrTRSUzwFs95DljHYAtsST3cqhWaHfi9NzlcUtFPk+PnYaXs
+	 VHbuBlbTz7vNuZHnOltNAEO3+QtoMSkv053HL73EJX89qbzhSNeINwbWKMi3SxioyS
+	 iSozx94OBQ0m3Nvu9uhEMOQCMYHPoeArJdlTJBeZmqKbzcPer57o99RfsArDx4mIMI
+	 5XPe5quFgybxg==
+Date: Sun, 12 Oct 2025 16:45:34 +0000
+To: Miroma via GitGitGadget <gitgitgadget@gmail.com>
+From: Miroma <its.miroma@proton.me>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2] stash: show correct entries count
+Message-ID: <-H8VS7fJi6Nie2ovTiryLWwggMWohoJybAfjf7QjUTBZPojsBZtOnl93jq5cOX8cDRiiNLkHLQQQOGehXLqcOG9fC_V7UUVHfHmY1doks84=@proton.me>
+In-Reply-To: <pull.2067.v2.git.git.1760007783388.gitgitgadget@gmail.com>
+References: <pull.2067.git.git.1759750539721.gitgitgadget@gmail.com> <pull.2067.v2.git.git.1760007783388.gitgitgadget@gmail.com>
+Feedback-ID: 106560626:user:proton
+X-Pm-Message-ID: b4e1de496166bf5c29006e17c081bd66873d8dc6
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------6c439f51153e8f6f711a1eb8efceec85169f7355772356eac7d1f74fc0c5eab9"; charset=utf-8
 
-Todd Zullinger <tmz@pobox.com> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------6c439f51153e8f6f711a1eb8efceec85169f7355772356eac7d1f74fc0c5eab9
+Content-Type: multipart/mixed;boundary=---------------------11ce497ff2de482a80672c4b5940b845
 
-> Interesting.  And well-spotted.
->
-> This _does_ seem to resolve the failures in our CI and in
-> the Fedora build system.  I was able to run a few test
-> builds.  With this fix, the tests were successful where they
-> were not without it.
->
-> I remember suspecting the gpg calls were not using the
-> wrapper command in gpg.program.  I even tried forcing the
-> --faked-system-time for all the tests to check that theory,
-> unsuccessfully.
->
-> Oddly, I ran into test failures after fixing the GPG2 prereq
-> long before c348192afe (t1016: clean up style, 2024-10-22)
-> was in place.  Perhaps I was hitting a different issue
-> initially?  Then, when I looked at it again I didn't think
-> about gpg.program again, since I'd already tried to force
-> the gpg wrapper which sets --faked-system-time.
->
-> It's both annoying and embarrassing if it is that simple and
-> I missed it after looking a few times, to be sure.  But I'll
-> be happy with the end result all the same. :)
+-----------------------11ce497ff2de482a80672c4b5940b845
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
 
-FWIW, GitHub CI jobs are failing t1016 at the tip of 'seen' (which
-has this change), but only some and not all the jobs, which may
-indicate there are timeing-dependent flakes involved.  I didn't dig
-further, though.
+I have a few questions I'd appreciate an input on:
 
->>  t/t1016-compatObjectFormat.sh | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/t/t1016-compatObjectFormat.sh b/t/t1016-compatObjectFormat.sh
->> index 8341a2fe83..cb6d308f1d 100755
->> --- a/t/t1016-compatObjectFormat.sh
->> +++ b/t/t1016-compatObjectFormat.sh
->> @@ -116,7 +116,7 @@ do
->>  		git config core.repositoryformatversion 1 &&
->>  		git config extensions.objectformat $hash &&
->>  		git config extensions.compatobjectformat $(compat_hash $hash) &&
->> -		test_config gpg.program $TEST_DIRECTORY/t1016/gpg &&
->> +		git config gpg.program $TEST_DIRECTORY/t1016/gpg &&
->>  		echo "Hello World!" >hello &&
->>  		eval hello_${hash}_oid=$(git hash-object hello) &&
->>  		git update-index --add hello &&
+- Should 'stash clear' also print "Your stash now has 0 entries"?
+- Why does 'do_push_stack' pass quiet=3D0 to 'do_store_stash' (line 1695)?
+- Why do the following subcommands not support '--quiet'?
+    'branch', 'import', 'export', 'create', 'clear'
+- Is exporting 'count_stash_entries' in "wt-status" a good idea?
+
+-----------------------11ce497ff2de482a80672c4b5940b845
+Content-Type: application/pgp-keys; filename="publickey - its.miroma@proton.me - 0x433A3299.asc"; name="publickey - its.miroma@proton.me - 0x433A3299.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - its.miroma@proton.me - 0x433A3299.asc"; name="publickey - its.miroma@proton.me - 0x433A3299.asc"
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWmhVNnFSWUpLd1lCQkFI
+YVJ3OEJBUWRBUk1JZ3BkbVJjL1gvZGFYemhsM1RhZjNXQmdSNTVMeWkKT2hlaEFXYUhoKy9OSzJs
+MGN5NXRhWEp2YldGQWNISnZkRzl1TG0xbElEeHBkSE11YldseWIyMWhRSEJ5CmIzUnZiaTV0WlQ3
+Q2pBUVFGZ29BUGdXQ1poVTZxUVFMQ1FjSUNaQmVLdkQ1VksrWWZnTVZDQW9FRmdBQwpBUUlaQVFL
+YkF3SWVBUlloQkVNNk1wbFpsQVptTDhKT2dWNHE4UGxVcjVoK0FBQlhsd0QvY3c0bEQwUXAKbjd1
+Q29ldkRmSWM1ZUprUWk4UkV5MW5VaUpRS01zRTRxMnNCQUlFcDVvZnRLSjJPQ1VUSDlvMVRlaEJR
+Cm5VRktNcy95NHpaaHU2R3h4RDRBempnRVpoVTZxUklLS3dZQkJBR1hWUUVGQVFFSFFLSW5ya1pI
+ZHNraAoyVm5BK3VvQmc4aVlhSzdXUGhOdGJoQlAySVpVNjZrNUF3RUlCOEo0QkJnV0NnQXFCWUpt
+RlRxcENaQmUKS3ZENVZLK1lmZ0tiREJZaEJFTTZNcGxabEFabUw4Sk9nVjRxOFBsVXI1aCtBQUFr
+OUFFQWxPcVB2WUloCmNRdE1pRnFpNzh0RXNsRk51UjRSYVhhTkJUcUhPeHFnNlNZQkFNOTdzRWpI
+TUlCNEZoejdCY05XZFFKeQpJVG5JbGxVSUZIS2dVNHRuc0k4TQo9VzRjcAotLS0tLUVORCBQR1Ag
+UFVCTElDIEtFWSBCTE9DSy0tLS0tCg==
+-----------------------11ce497ff2de482a80672c4b5940b845--
+
+--------6c439f51153e8f6f711a1eb8efceec85169f7355772356eac7d1f74fc0c5eab9
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wrsEARYKAG0Fgmjr2x8JEF4q8PlUr5h+RRQAAAAAABwAIHNhbHRAbm90YXRp
+b25zLm9wZW5wZ3Bqcy5vcmdb5h7VWVcdYdsz+HjDYA509WdVZcttwAlfJ7bQ
+UvbEvxYhBEM6MplZlAZmL8JOgV4q8PlUr5h+AACWgQEAmouWzM22khjc5JUL
+y51ssk+H0QWOZIYoKDBkvl4wvCIA/2anOnFxh5nH2hgKPGTNoy4Ne5Tb+fN2
+FPrJ0pMzXCwI
+=13qv
+-----END PGP SIGNATURE-----
+
+
+--------6c439f51153e8f6f711a1eb8efceec85169f7355772356eac7d1f74fc0c5eab9--
+
