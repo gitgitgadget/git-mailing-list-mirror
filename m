@@ -1,64 +1,63 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96E528C864
-	for <git@vger.kernel.org>; Sun, 12 Oct 2025 18:41:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFD925A354
+	for <git@vger.kernel.org>; Sun, 12 Oct 2025 18:41:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760294474; cv=none; b=EXfRRH2tOOHV/uGT70pB7rRtwCh/K4STlbWdtIiWXyZy4URU80yfJms3bBBocmZHAyb/xR1Qe7NWNPFHI2UeFiJYJFrrdZNOgDAZB0MthQ1qnBLUpXKxNWw/udF877m0/F8JsrQd4p3jBHqaADjjE9Skm4RgTMw4ceKuJehQDb0=
+	t=1760294474; cv=none; b=D8nfop2gm/6P3NGPxXBr2o15n/OdWEbBgdml0micjOy2ibAl7gWdXZsUfw7ROnLPiKoxuI8C1RRSibmFpUmeOnq39fowvDP/tK1zIbW8MQupi/YbsLJqhJaaUbELVjkB0uY5e8CJv2mTPYJQjIV8B7p+5Hc+mcFSS7PYO5Wi7MA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1760294474; c=relaxed/simple;
-	bh=fmRMScDAznbi5L34yUFyVgUYb2Yxx8HzpqA0O6le42I=;
+	bh=SR9sIgzn2WVl3FSupacPEfdZzwMVQVGf/UIlaf1g86s=;
 	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=KsjI5fyg7oghbXDU4GJ9z5kr64L7kdJdDRdLb1Ts92VxlngAeu3MT8UhcmZytmresSHybOPYeB+poFKcEZt18ORAnOw4ttgECl1G2b42LuZu4lIxfnqsmKxfZWewpDg0iFvP8IapNjQqbkFIyZIeGYj0G2KpAtiP7KraydYQ5dE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RKtJUrF4; arc=none smtp.client-ip=209.85.128.177
+	 Cc:In-Reply-To:To; b=BN+7OfufQiL3GFmFbV7du0dGC/ERI8ZomNpdqsdDmqZQ4EU6jZhWU1Urf+mj0asgUMmodUaxL8AP6c1T29mSTZvQ6dYFLHfDHCfEF+JrPzpSuUcBHPLBsxbWpgUo1W88I4bqmEhxBXI+upFN6t7bPC/grcumW5MhzbCkFOqGK3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GqEyQkOA; arc=none smtp.client-ip=209.85.128.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RKtJUrF4"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-74f6974175dso36107687b3.3
-        for <git@vger.kernel.org>; Sun, 12 Oct 2025 11:41:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GqEyQkOA"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-71d71bcab69so32170427b3.0
+        for <git@vger.kernel.org>; Sun, 12 Oct 2025 11:41:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760294469; x=1760899269; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760294471; x=1760899271; darn=vger.kernel.org;
         h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
          :from:content-transfer-encoding:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WFAlFVIH+LgVsyP7yAI1WD8lOBSb2pbr4W9MhpMUQXU=;
-        b=RKtJUrF4I5+j3gKFMwWQSl9OvDGTmcOU/bbWlXSppMadxpIhxZxVinsd9hWIKJiLg7
-         aFJ5Y1SnQcOCFMEggTxvdEXzfHXGznIOCqPGrkZu+MgePmjwskDgujFlLiz2VD6VI2JG
-         /xK3+WISctrTEhR3B9ZYKrCfOTM/RPAkvzJjQFAFKI0R+MsrVZ6jHzC9sRbBvoN2+G2E
-         Eg/oqXerzl1LBTQJZJnOnnFcgZbClyiPjp4dkZyRtBVMzGNL2GyylZybGzTGsA/JN+21
-         R019gGK0rwoewpk3GDYn6np0AX76NuETeh5//kD38lplY0hfGFAwU5r7EwzG3mGWy2HJ
-         burQ==
+        bh=d/mMEmelW5ph+eRqu5CsipGgUUKl34adAxLbzLKyeLY=;
+        b=GqEyQkOAbR9RT7UfUiMH9U+ksN0kUOq0qUCWAhepY+wFeWTCj7W45u7IFONO+E5TKs
+         aMamLbrBo56qDdQWIVdhGOiDhPQWIoXtXMHw9Yq0veNuMnMUTR4Fi7vC4BWOlcQT/vSa
+         rPrm3GKqyKk4DpLGJkXL5FfqzVbtUvgiNj1BDqw9TC3V03NjCGHNJPF8uB3T0nhQBZKN
+         9K1YtxgsoJBWV/SvCSgSKETOEmeU0JYOtxCVDcocqb1nmnvIxLidYP/i8yRgQcLVyReC
+         2iPJp+z2keSONh2nqIyn8QXZ5OLoCWYo59k5gO8hSmWf9CzzMggkoEyk2Y8/PtvwYRpK
+         rStw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760294469; x=1760899269;
+        d=1e100.net; s=20230601; t=1760294471; x=1760899271;
         h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
          :from:content-transfer-encoding:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WFAlFVIH+LgVsyP7yAI1WD8lOBSb2pbr4W9MhpMUQXU=;
-        b=bfOkvAII3qPcDQVcmq2R60dB2oMuVkbHCTN67nEussUZ+gDbJhTnXe0C0fsxvDfb+O
-         H0UEfOOhQ+HfxlOSJofS1lJ0+T7hr2DZcMKDtkbwWmjg90m2S3bDPreRwmEoXipMa3RO
-         Ge29ZUdW8rLfyvUCEHCprjldasy1n54DJr35ivAlMyxtK5J2Jmc/Mk7U40MebuqA9W+I
-         95m+lc99j76Z4BKEa1xtA93JXebfHN4Yj0MSTevlFgGBlqNdwKXUdjMD2607Yahsbmur
-         TCASu6oVeo8vPbQNyEjGSo6WftK2RVrc4yPjjyGcMjpHKVX+L3SVBsI++A6T9FvOaLTs
-         NBSA==
-X-Forwarded-Encrypted: i=1; AJvYcCXCAPkZaDMwLg55f0a2p0PghCdC+k9cRRVwjF4y7ihcHXs2aCpr7ovwRhvJ888LRqd51u8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxmhIlqSRNIS4EATx+iiSyWHpzKCO7KzevmFyqm2dEPlbjUUV91
-	jm6XUknZN/RZdP8OERc+P033B4mdB9KGY33kGPb2GtAnFtmh8l6xmeeb
-X-Gm-Gg: ASbGncs61yRc6mmjU2g3yIp+40aR2otL9/+pRYaxvR20CprRa9mhw3xRayawh+N83zY
-	E54ZvZSTNkGVuhvt92z+qfRLrWv2/Umu6FX0NL4OEKwVrz8k/Snn1EIrpQycu/BTtZT1R9H1iUm
-	m005D5A1gJhAWtkKAXqsxLSj118EfGLBz4hEeVUuCxPSNh+iFvoGqm6SC259wtcx7TYN5lXhRWT
-	Ve/aGw1eXvgDfOVXDpYtl8jLSS/hZwklcC5By5Szq2YEDlryt3AvPcKOqnmSpiHvqBHXU+3b6cm
-	paZoMOcrOHP9wAC+rqqFoxSZRbqAtlPNq0Loz5zvlK6yEFYefyvzHUJmee3it4Xewm3cP1r7ZUG
-	rzJmt3yHomsbLxrHgnDIflCPwqjk6jE0Dmk7R2tR2W0zr9mTc24COq1d6O01SFubadyP7uVIFRd
-	8WehqScAq57A==
-X-Google-Smtp-Source: AGHT+IGYCLm7QZYx2xG9zm+dxT92AWKqMaHX3WHirlBgjMNjpy56SjO7d+ckmHg8e4aq1g2L89sKyA==
-X-Received: by 2002:a05:690c:6b11:b0:780:d22d:754e with SMTP id 00721157ae682-780e141bc6amr181294297b3.0.1760294469559;
-        Sun, 12 Oct 2025 11:41:09 -0700 (PDT)
+        bh=d/mMEmelW5ph+eRqu5CsipGgUUKl34adAxLbzLKyeLY=;
+        b=lztc4MTfzKvP1A2jGxuYy1+XuOXYgj6xYIRGJFqYJ4yEFPtBoNDDY78B9/MQ+JSGKg
+         QcBd+vRWlqomOaf/+Zrb3WGNzN3RCvTMCNaDcyk1E3FfJJbuCf17UMwJyLXCRozVhgSV
+         J/QjC37a5dFQiJHZbae3q4EWA5J0mKNTqXA3xOXzBef0Q3xqRpO1/YcejxvqocE+MRdr
+         lFrzwEzb2qtWwgBVhDrixl+AgT1gGU3ULYlqNX8Fiq7WWAB6HQFMuk5LX0wRfu1wvs+a
+         2GN0vFNiLg1nkaWm4Ua1xlVrC8frOe9BMgA6lXnd02wg7wFs7ILJQ0A1FNlcOgXSt1Rm
+         mCkg==
+X-Gm-Message-State: AOJu0Yz1263bDnXCze4V0y/zDGCEoAKJf6gOXVVzadWfUY225pWdm3hn
+	iqJ6LyMkx3H8K4tm2i7wnejNldiEyI/TdXfYz7fvKu2qY18tic/yDXov
+X-Gm-Gg: ASbGncuUL2kaau87rVMYKqv5Ia6xaXT2qO3tBnb1JucYZRjZv3j9mh47ww06M08N2Jp
+	GnOco6i4X7kaiQn8F0O7lw01/NRDVjqdWt9DrcIe53zG86Lz/3+H6fBOjXkML5UEpryApFM4n3+
+	4txWsdaZXt6a8q22wEAnsGvnwtojBvuJfDXslbbqbd6UyBw8uz8PbawDQuRV67AxbL/mqKNliLW
+	WhrXEH5gvw+fiHZtd2G8kgvCq65d6oJfG7APzjbQzdCN3lBpt9dWa1lkU+rS8PifV7/kW3GJ9wK
+	9wtM09EbiIQY0HDZUgJZsM7SNHADclL71U8g1d79DGP19Z03dOdc9VZAH+tKgpCcO8uCU2Jz7q6
+	DCwZ+5Eg2oNgMeDg6p7QddbD1mEYpqgiWgH3eo6jdGec5arAmUbCxvOjtA37J7OfdKQXs79X5Hw
+	UDUFVt/5HkiPcG/kdITg8n
+X-Google-Smtp-Source: AGHT+IEVATyR9PP649om99RgogmcuXCSWVb092A2R4p4DI/QjMfKE/zNL2KAnat5CvyafaCkAFekzw==
+X-Received: by 2002:a53:dcc2:0:b0:632:eae9:5cfb with SMTP id 956f58d0204a3-63ccb8e0aadmr13668583d50.29.1760294471559;
+        Sun, 12 Oct 2025 11:41:11 -0700 (PDT)
 Received: from smtpclient.apple ([2605:a601:90a8:8b00:2564:71f1:92af:6548])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-78106e1e4b8sm21032177b3.17.2025.10.12.11.41.09
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-781113c0a30sm16657687b3.23.2025.10.12.11.41.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 12 Oct 2025 11:41:09 -0700 (PDT)
+        Sun, 12 Oct 2025 11:41:11 -0700 (PDT)
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 From: Ben Knoble <ben.knoble@gmail.com>
@@ -68,46 +67,64 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] doc: explain the impact of stash.index on --autostash options
-Date: Sun, 12 Oct 2025 14:04:22 -0400
-Message-Id: <B78CD1B1-67C1-4EA1-94A7-13AD40C43585@gmail.com>
-References: <xmqqy0ph5ov8.fsf@gitster.g>
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
- Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org,
- Phillip Wood <phillip.wood123@gmail.com>,
- =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>,
- Glen Choo <glencbz@gmail.com>, Karthik Nayak <karthik.188@gmail.com>,
- Denton Liu <liu.denton@gmail.com>, motisd8@gmail.com,
- Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt <ps@pks.im>
-In-Reply-To: <xmqqy0ph5ov8.fsf@gitster.g>
+Subject: Re: What's cooking in git.git (Oct 2025, #04; Fri, 10)
+Date: Sun, 12 Oct 2025 14:02:42 -0400
+Message-Id: <A05E06D4-D27B-4A3E-87E5-26FF6AD8E23D@gmail.com>
+References: <xmqqa51x7449.fsf@gitster.g>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+In-Reply-To: <xmqqa51x7449.fsf@gitster.g>
 To: Junio C Hamano <gitster@pobox.com>
 X-Mailer: iPhone Mail (21F90)
 
 
->=20
-> Le 11 oct. 2025 =C3=A0 13:29, Junio C Hamano <gitster@pobox.com> a =C3=A9c=
+> Le 11 oct. 2025 =C3=A0 13:14, Junio C Hamano <gitster@pobox.com> a =C3=A9c=
 rit :
 >=20
-> =EF=BB=BF"D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
+> =EF=BB=BF"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 >=20
->>> On Thu, Oct 9, 2025 at 6:55=E2=80=AFPM Kristoffer Haugsbakk
->>> <code@khaugsbakk.name> wrote:
+>>> On Fri, Oct 10, 2025 at 8:00=E2=80=AFPM Junio C Hamano <gitster@pobox.co=
+m> wrote:
+>>> --------------------------------------------------
+>>> [New Topics]
 >>>=20
->>> This is over-specified IMO. Like mentioned this patch could be applied
->>> on top of commit 9842c0c749. Then that merge commit will not be
->>> reachable from this resulting commit.
+>>> * dk/stash-apply-index (2025-10-06) 1 commit
+>>> - doc: explain the impact of stash.index on --autostash options
 >>>=20
->>> I also don=E2=80=99t see the point of mentioning when things were merged=
- in in
->>> the commit message.
+>>> Doc update.
+>>>=20
+>>> Will merge to 'next'.
+>>> source: <d4a277b6b0695d86636562f4c07efae17f9249f9.1759755379.git.ben.kno=
+ble+github@gmail.com>
+>>=20
+>> I think Kristoffer had some feedback about the message=E2=80=94if changes=
+ need
+>> made, my understanding is that happens prior to "next" ?
+>>=20
+>> I'll send a reply there shortly, at any rate.
 >=20
-> Yeah, that is less useful to me (there is a tool, given a commit
-> object, to figure out at which merge it got merged to the mainline);
-> I didn't think of a way the information can be useful to general
-> readers.  If the mainline merge was a release or more ago, then it
-> may make sense to say "commit X, which appeared in version Y, was
-> broken in such and such way, and here is to fix its breakage"
+> OK, will wait (I am not sure what needs updated, though).
+>=20
+>=20
+>>> * jc/optional-path (2025-09-28) 4 commits
+>>>  (merged to 'next' on 2025-10-08 at a1e8af9952)
+>>> + parseopt: values of pathname type can be prefixed with :(optional)
+>>> + config: values of pathname type can be prefixed with :(optional)
+>>> + t7500: fix GIT_EDITOR shell snippet
+>>> + t7500: make each piece more independent
+>>>=20
+>>> Configuration variables that take a pathname as a value
+>>> (e.g. blame.ignorerevsfile) can be marked as optional by prefixing
+>>> ":(optoinal)" before its value.
+>>>=20
+>>> Will merge to 'master'.
+>>> source: <cover.1759094936.git.ben.knoble+github@gmail.com>
+>>=20
+>> As I mentioned in <1D9EE7CD-800B-4B70-8D98-79B0C2FB8DBA@gmail.com>, I
+>> think we might want a slight reroll for some tests and to use the
+>> correct functions in a few places.
+>=20
+> If you want to change anything, can you do it with incremental
+> patches on top?  Thanks.
 
-It=E2=80=99s not clear to me if you=E2=80=99d like to see a v2 or not, but g=
-iven you were already happy to merge in the latest what=E2=80=99s cooking, I=
- don=E2=80=99t mind not sending one ;)=
+Sure.=20=
