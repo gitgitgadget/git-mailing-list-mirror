@@ -1,140 +1,150 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B071D201017
-	for <git@vger.kernel.org>; Mon, 13 Oct 2025 06:13:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C622E8DFE
+	for <git@vger.kernel.org>; Mon, 13 Oct 2025 08:18:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760336001; cv=none; b=dxLvlMCX1Bup1EfTBcg+2hmQct95cwXOLNbf21E/EA3gkmRMkDGmyvdyWdnoU9JZitQcQmW8sIrne45b2pyi8U7itbdPB7DOnbsOIeAiOPvjhV7gDcGsYx8EuujFrodIU0VPP+ju0rlXeRYvS/W/s7QSoJrX5WHGMbVjas+M3dk=
+	t=1760343507; cv=none; b=DzYG8dDI4SEBbPwHX8btME9QVXv72lcLYSnVUQ2qEXBZJsQennI9AaExoiKK4zMGlSN2ZB06PStkANoEFX/1ZTcKC7YGl5SERdfkmio5Hws7k4opCBccTcrD2hSapYxGisqtFIo/orajx/AyRMDN+czrm5EQ7nEOP2Q23HIm1tg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760336001; c=relaxed/simple;
-	bh=BgV5iXZa1Ef4BH2ck/EBaQNnDJIzlbnd9EOJDFXkdUc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UPbnWD35aQHkWlgQL0WkYe2BVzD58rRLjZ2slbSzGEyEMwnqIaOlFufaXvaP4BEj/18Qe556AO54PbqaKiaV7BNAJaI3MBGSFmaRthv9TMS3odoH8tJ4PNaNzreaYTpGfCZW9+A7iYTa1qdcEsfx9yWBeGtq1jMN4vFbs5P0vms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jqGHGx/8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aS7Wug2z; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1760343507; c=relaxed/simple;
+	bh=T1IXZVyjYqMfhUlfpxanQW+/uSLfcif00SlUpEuGfKM=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sxgoTjnXp84GbL9CKaswF90SaDG1+c1Y4aT1iUarHIl7BDARA+kPKDVjcF5gCoEcM9aIb8RTh90oDtGLc8AjVMzhMxcsrXmf0HRJNbi4eJHioV6pu/7bTrQbpD8DwCnMhkLQlIsFKeiEC0RpYqhAlSbL1/FiaEnHC06Heb2TJ70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f6t5pYzK; arc=none smtp.client-ip=209.85.222.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jqGHGx/8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aS7Wug2z"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8BF151D00069;
-	Mon, 13 Oct 2025 02:13:17 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 13 Oct 2025 02:13:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1760335997; x=1760422397; bh=le6g90OMol
-	Ij31xttKQl6vgSOe+mCHurr6K7yOZp29Q=; b=jqGHGx/8oZcRZFsrus7vsF/bUk
-	wOR2af2lpZwuHF3CAuBSV/K2C/sPB6gF3ojmzoDjmArP3yEsKOxx7nX7xRAafQRt
-	G4V6v1p8cEalTPf44EXNcxY1TN8mb1CUFnfLoZL2U6wTbAZPdd9u0JIfBWlYoudF
-	9B4vIIbzqg+ZTLOAl6k43YP3mrtKtGk0R4SJAU9ZwTRqtZMDiSAYDYdczAd2jQAw
-	iFSgOjHN41TM14qiL8347Z7JWTyiU0Xax9uBWV6TY6t5GgLTIG/4n0eJlaaBflIC
-	B85NEfrGaJzFgSwW+uyGR7F5utMwfuw+qlaYF+1P+O3hvPpox09/pGuSBWtA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760335997; x=1760422397; bh=le6g90OMolIj31xttKQl6vgSOe+mCHurr6K
-	7yOZp29Q=; b=aS7Wug2zvHeXiJLA/1FLeIcEMYMXQMrA2diI+cZ72Xcf5ilX6f1
-	EsitvRgTZsCd0gY67cD0ZR/iyAbUTPQOWv/bChv39r8uDOsUsk1oAA6UXHbGp94I
-	bEjJUUQWtPwdMuyvFyCVJEyyiMIXdBM9AOBiAGKUHQJCNNtaD7tC7uWzd+d0mNpw
-	TNFVYGaLtkSVNgzKyPW59/ReuEYIM/xr9/0RfQ+RZXk5C/pDJha8bEGNLgrJ6/9E
-	tw6OxDxSYQjp52CYcxfS65S3ngo4yiwFLvX84KdgQNYmmUKZBAVmIqeESXCRVl83
-	HnuyotcyGN0yEwQ7C15OHgsA5+I04rmM9+A==
-X-ME-Sender: <xms:fJjsaC0NEVCBKEE1ORajklVv7f0MPOueUf2A3iCpmD0MfAaxZqQUrQ>
-    <xme:fJjsaIxLBoyfjuO4SMAMQOqowohntTCi4lvTlcV_BvmZwc-DiJbTzFYN9VTc43T5w
-    6JgsKKbNqciH6FuzKgd7c4WvlhH0LMxdi-SZtD0SDGgOrDbawuAwQ>
-X-ME-Received: <xmr:fJjsaEtNYZzXEHjINGgVahnM86q-kGA6MEKCp5HM7TiOEv1I_0Gdgt5eJiPgCFxTANvzm1PxpcC10pY16wp_d4mbFHHsuKUXXptmzU1R-w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduudeiledtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtoh
-    gslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsuhhnshhhihhn
-    vgesshhunhhshhhinhgvtghordgtohhm
-X-ME-Proxy: <xmx:fZjsaKy68C_6oX1SzAXnbgPXVcqG8A4c0sRsHBtMMa7XKqNHQhAqLA>
-    <xmx:fZjsaHDSO1Yb6FzjZRWEOGgmYbWGIPS3lo1LuLH-m5A5zbyTj2G-2Q>
-    <xmx:fZjsaIdY-STzLQo7HWQPwpm919QRQZxjx_oQYFLlaj8syhyJxFJA0A>
-    <xmx:fZjsaBlyMIA0M6vohmrfvBzEl7S7Eh8iEcl6TegiBczoR7qLE7sphQ>
-    <xmx:fZjsaD4weZGrsIAcyzVltI_myCnlw4RpWz0j_L2iqrzyFOD_ej25r711>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Oct 2025 02:13:15 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 648989e5 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 13 Oct 2025 06:13:13 +0000 (UTC)
-Date: Mon, 13 Oct 2025 08:13:03 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	karthik.188@gmail.com, sunshine@sunshineco.com,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v4 4/7] builtin/repo: introduce stats subcommand
-Message-ID: <aOyYWQ5mU4zc1oCH@pks.im>
-References: <20250925232928.3846-1-jltobler@gmail.com>
- <20250927145049.723341-1-jltobler@gmail.com>
- <20250927145049.723341-5-jltobler@gmail.com>
- <xmqqfrc797pk.fsf@gitster.g>
- <qdot36lscj2jzuej2zixdlgocubiimh54dkxzl2xgcy3g2n42m@gpdi7jwc2oyd>
- <gzjaa3nmv6s44dszregri7kcnfxg6optkycg2wggtib6bxvdgq@elearr6dishf>
- <aOithKtHf_U9S_m3@pks.im>
- <lnk4zvu5zgokd3p5lxnl2nwbqu3fi3yer753tr2f2jaknrtb3h@fcbjvvu6irtc>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f6t5pYzK"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-8e3d93c0626so2678003241.0
+        for <git@vger.kernel.org>; Mon, 13 Oct 2025 01:18:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760343505; x=1760948305; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=MP6eM6d84V+KwB7a9C/wFTT7hdJY86x0ZJ1uctyqhqg=;
+        b=f6t5pYzKAs+oaGA7tnZ63JWIywk3VqQpBb5/EMxFtHY/VJzYPGigY6CStuEXbagOQC
+         GwV2mHv3JfBWgreC4A+D7aH9hqAdVux1etPUPRrTcNq+x5uiPlcfnnB2xVTSHp6BrOli
+         0pzAITreXSv43Ov6evv3eYaV7C8plBqrvQShM8sM2OayMX2Gp0UrPbvnxpZmACY7ED3t
+         paCT0is+dE56D3Txdpf/3DktfX+AwnrTC5QfJau8lcQyuKnrHc5rlS5CfCaC29HpgsEW
+         cVXpknGeDQ1/yZfxB7GDZzGtGl1yp7XTxAIhaKgfsa8iOzSjLGZzTLwG/Q6M70ie+Ng3
+         gJUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760343505; x=1760948305;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MP6eM6d84V+KwB7a9C/wFTT7hdJY86x0ZJ1uctyqhqg=;
+        b=rbAu/Rg81Cu8faPxhTezh37dWQIpM79tWosN59f2yyUwb1lWuivJOuPT3kIi3MOw0w
+         LRbxeavB7eq0rDjB0hpbcROlOExjIL1QlkerAmtcmlcAJwH0G18W/5XgLzrdigDKKd65
+         1ZXWFP6x8tEtVACN3XijOBo13I4Xpi1e+SPFQnJsk6IQkaVbRFWeJcFEhGDRdgyJOr/j
+         dUo67+m/9mCFRzgeH/kdTfXRNiQjKqjXes9gfEAXk+7GrNyVkTQpHs4qzsYuAgALhWoG
+         3OYnyjDspOgwaouSG4SkCLhNDVTajmrpmpEeOeldm/cFCT953A2Z0cU9dwiIW5dnGgJ2
+         V/uw==
+X-Gm-Message-State: AOJu0YwinyHA5wyi6qsSIu75s72T86djNuHfcWsnv6fwu5oWqXjuMwTF
+	d4K4WrWmfV2u/55S1lR6+uKVgJ0XZxp+9TjAocVu4XnlFJ22gM/UdBvu2T3u5rPcrdG8z7fFPcZ
+	ye6AKiN+fRQyFwqGvmaELfayK8OnFLQIOn0jf
+X-Gm-Gg: ASbGncvFc4n/GbnD24TmTn6j7h4zdsPDGz54ZmvLxJ+MhWynhHLanR1KZ7xVeOA+h00
+	0cTna6NvtQKvl3Vz5JFPL+1w73tWJzIbvGHkECfJWIPMXkmJ16NyokUvX7UqUE6SmQugWcJCmnv
+	706Vq8sALSxyCfV351h6YiAS7jWSvQyVxZbYkTm4TVECnznPKlIF2u8Sp6JDq0Kjh+RQt3Mnw1M
+	+DH4jeJ7j+vL58+flCDKa9l++qjtbYdwPfxd2Q6BEKVSjejoqCAl/QPdIg=
+X-Google-Smtp-Source: AGHT+IEpM50QdRSFxje49poMuCYPbVF611WHUYk32kRRRP/Vs/cVBk1yvJTvPfO5pksYKvI2H8E0ZwgGp7uPAWOyA/M=
+X-Received: by 2002:a05:6102:4b05:b0:530:f657:c2e with SMTP id
+ ada2fe7eead31-5d5e265d911mr9902112137.13.1760343505107; Mon, 13 Oct 2025
+ 01:18:25 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 13 Oct 2025 01:18:24 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 13 Oct 2025 01:18:24 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <aOjsYoeMkF6-w7G7@pks.im>
+References: <20251010-562-add-option-to-check-if-reference-backend-needs-repacking-v1-0-c7962be584fa@gmail.com>
+ <20251010-562-add-option-to-check-if-reference-backend-needs-repacking-v1-1-c7962be584fa@gmail.com>
+ <aOjsYoeMkF6-w7G7@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <lnk4zvu5zgokd3p5lxnl2nwbqu3fi3yer753tr2f2jaknrtb3h@fcbjvvu6irtc>
+Date: Mon, 13 Oct 2025 01:18:24 -0700
+X-Gm-Features: AS18NWAH17g1PbLdFLe--Rs7tYpoYHKd9yDN_gZGV9OukOpwVxnHHVzsRVG-NYc
+Message-ID: <CAOLa=ZRuZebNnPz9punnHxBqSPNp+CbM4FJ6BG1RwC1D_Fjz0w@mail.gmail.com>
+Subject: Re: [PATCH 1/9] refs: move to using the '.optimize' functions
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000004e1c75064105e9d5"
 
-On Fri, Oct 10, 2025 at 09:34:54AM -0500, Justin Tobler wrote:
-> On 25/10/10 08:53AM, Patrick Steinhardt wrote:
-> > On Thu, Oct 09, 2025 at 07:42:40PM -0500, Justin Tobler wrote:
-> > > Thinking about this some more, a single "stats" command is indeed rather
-> > > vauge. Furthermore, as Junio mentioned, there could be other aspects of
-> > > a repository that we want to display stats for in the future.
-> > > 
-> > > Since the goal of this command is to surface info about a repositories
-> > > structure, may we should instead call this command `git repo structure`?
-> > > Or something else along those lines that in more specific and related to
-> > > goal of the command?
-> > 
-> > Some alternatives that come to my mind:
-> > 
-> >   - inspect
-> >   - analyze
-> >   - scan
-> >   - survey
-> >   - measure
-> > 
-> > I don't have any specific preference. What I like though is that those
-> > are verbs, which makes it a bit more natural to use them.
-> 
-> If we want the theme of this command to be the repository's
-> structure/shape and have a name that matches this scope, I'm not sure
-> any of the above examples would move us closer to that. Aligning the
-> command name to its scope is beneficial if we forsee the potential to
-> introduce additional subcommands for git-repo(1) that target other
-> aspects of a repository.
+--0000000000004e1c75064105e9d5
+Content-Type: text/plain; charset="UTF-8"
 
-Fair.
+Patrick Steinhardt <ps@pks.im> writes:
 
-> From my perspective, the main question is: should git-repo-stats be a
-> generic command that can eventual provides all sorts of different stats?
-> Or should it stick to repository structure/shape information? I think
-> I'm currently leaning towards the latter.
+> On Fri, Oct 10, 2025 at 12:27:05PM +0200, Karthik Nayak wrote:
+>> The `struct ref_store` variable, exposes two ways to optimize a reftable
+>> backend:
+>>
+>>   1. pack_refs
+>>   2. optimize
+>>
+>> The former was specific to the 'files' + 'packed' refs backend. The
+>> latter is more generic and covers all backends. While the naming is
+>> different, both these tend to perform the same functionality.
+>
+> "tend to perform" is a bit of a curious thing to say, as it raises the
+> question when it doesn't.
+>
 
-Yeah, I'm leaning towards the latter, as well.
+Indeed, will rephrase.
 
-Patrick
+>> In the following commit, we will consolidate this code to only maintain
+>> the 'optimize' functions. In preparation, modify the backends to also do
+>> the same, by moving to supporting the 'optimize' function.
+>
+> Maybe: "In preparation, modify the backends so that they exclusively
+> implement the `optimize` callback, only."
+>
+
+This reads better, thanks!
+
+>> diff --git a/refs/files-backend.c b/refs/files-backend.c
+>> index a4cda57981..0b81bd7f74 100644
+>> --- a/refs/files-backend.c
+>> +++ b/refs/files-backend.c
+>> @@ -1445,8 +1445,8 @@ static int should_pack_refs(struct files_ref_store *refs,
+>>  	return 0;
+>>  }
+>>
+>> -static int files_pack_refs(struct ref_store *ref_store,
+>> -			   struct pack_refs_opts *opts)
+>> +static int files_optimize(struct ref_store *ref_store,
+>> +			  struct pack_refs_opts *opts)
+>
+> `struct pack_refs_opts` really should be renamed to
+> `refs_optimize_opts`. Let's read on, maybe you do this in subsequent
+> patches.
+>
+
+Yup, that's handled in a follow up patch!
+
+> Patrick
+
+--0000000000004e1c75064105e9d5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 934bc0f9cefe96a3_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qc3RjNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNUZMQy8wZDVPRXAxb0NGSTUyZUNtTUtnZUhyN3NSdgpRZDFDaDVpRi9K
+WlZMdTA3UkZhMEU3M2hVZjNIVXlXQzg0TW5XcVNhUWg5b2ZoY2tlVkdVcmV5ejRGUnBzK3hICldq
+ZnlEb1E2QkM3R3BCbi9PVHNVODJSOEpkUG4yY2dFQXRpTDFxa3lCS3dwODVVOFE2WXdkSEphN0du
+MHNoOTEKNzNhTldqYk01M3J0MHZZTzYzczRMWDFwTmNIYVBteHNJN29teklyd1Z3UDJ4OURPU0lh
+ajRoQlg3RDN0RW8vUwpwS3c2dlNML0Z3QU51VjVCVi9vV3JLRlpHYmJ3RjlxNFFBTFlRMWExTVds
+cGlyY2lNSkN6ZHRTUE9vSy9naXE0CnozNGRhZExudFVLbEcvYWpaNjBvMVpHclNkV2lEa3huR2Vj
+QlYwV1dhTnNqV05NT3RrVHJlVGRLWXN5Zmcxa3EKdUoyQTN6bmExMU16cENnUjdzQUU4d0NsdlhC
+QWVIbXFzUUlpOVovYlNQbVFXK3lkTC94aFlJMUJ3akN4aHVUdgpVM1NoZERkQ3FrZVBhTE04YnFx
+V0psWHM0VVcyd0lyQXBvcVIwWUVROEpRWDBKUThkU0ROOWU1MFJOdUJVd1owCkg4L3NSenRGVk9a
+Q0ZiWEoycjBxNFBEWDRtc0paNGVzTkp3R1JVRT0KPUlUOWUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000004e1c75064105e9d5--
