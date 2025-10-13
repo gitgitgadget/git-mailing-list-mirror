@@ -1,122 +1,78 @@
-Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0052FB09C
-	for <git@vger.kernel.org>; Mon, 13 Oct 2025 21:56:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A932FB0A5
+	for <git@vger.kernel.org>; Mon, 13 Oct 2025 21:59:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760392566; cv=none; b=nLGuG74kgCA1r831OBjTJ+5+UFOsKErDfr/sXKU9ttTny/tWFTbRnCV2Z5OpOg/PAQrg42MRp7hUVGGIGK5EIuOTuXCLQL7b0C4Q0NFQgTYgqu/mGsWUI2IJKXGnVfGeLBGW4Xkjjp+AOkgrQdlel4TKBQlGD3bNKpK/N4aGprc=
+	t=1760392769; cv=none; b=fZit3WcXT8eXUv4GYCF/sbzkHNSLYKuotoJEBU89CDMOg/cYagrtyyCFTKQh6HXRClmEHfIBOKr2KDZjfiT0+E1u/p+3L2a2nVdXF1bSS1atUtfzzuUN6A+uxhG0whGOeESc7NvPtHiw06ezUviO4iMiCqUdzO1pxmEBcUqKxl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760392566; c=relaxed/simple;
-	bh=lJYCphmkVqqaBXdZfxNzJRxtC2ipPeRJd3wV60on7H4=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=m2kbowbjMbQcBjrQYiROhyjBXBTCl5G1nhay3whGdFmMDZuyX6EqSdihQHOGlx8cV1ap4P4/545BFZPsXhslmu36GMbBLcF2iTP5o43ThMuPV0y080QAbom+YzrvEj0QMwzelN87qFxR2OKjwcpvzzziqMu78V8CGESV9uoAHwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=gRSq8I/9; arc=none smtp.client-ip=209.85.166.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1760392769; c=relaxed/simple;
+	bh=CIkNy2xVErAq6F0E0kmpguqhQ0uoB2cmf44a8t3M6PA=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=gYgo48YgAZnLV4ZyYt8wxfmkHsZbNUSgbFevhhwOhhN5P7O9fjjLd21OECMxyvu5YKaI7TNbTiVb5+kQ2stYPaQVngSjbJVqx6Kqy2yeStu4B4UN24Atz/gA/+Mryw0zhhhJD2mbXQI3LN5IEKvN9gXuHBMTy0cmTZb+qAw22t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PPeYitgu; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="gRSq8I/9"
-Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-93e2d42d9b4so121828539f.2
-        for <git@vger.kernel.org>; Mon, 13 Oct 2025 14:56:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PPeYitgu"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3ee130237a8so3748033f8f.0
+        for <git@vger.kernel.org>; Mon, 13 Oct 2025 14:59:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1760392563; x=1760997363; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=K78896hUe8HxdJeNsaH1wIM2F1haMlDyMjhgV675LXA=;
-        b=gRSq8I/9u2uzSF/zgQlUMXGlxyZrX/z0snooqPo2aHe6lu69gV7A8qej3G78z0iav7
-         3N4eQnTc9OOhzUSYVgtCYXQfriSnnU6lW+etkKRHXt9Bl3bxGrcLxDXr1m40OTiMjJ2d
-         t+Ipq95ttuO9yetkTaBLtYiNzsRgZXxecOXkYJFDxHSRD7lQ8RKNGAPrOVUa6LPHhhvU
-         0CbquhFyCSP4BisFtlt/7+6+7dKCHrKMkTat9ZD7oMgnjzvM5j/qFYTAZJwCwLkUfVbA
-         xXb9cfse5L/h8c6T/hmzbnk7oHrmqdZj/35uQjfRkGUEzC/CqJmhpHRtfwTZYQTegKch
-         DKjA==
+        d=gmail.com; s=20230601; t=1760392766; x=1760997566; darn=vger.kernel.org;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=23XrKSkwxbp0+ytZe5SlamLC8Looj3Q06ptlevOZYsI=;
+        b=PPeYitgun2uTi7NmuYpxdNPqSHXX7edMt/YKHpaAPzi5xzc+PqaVZOOibIc5NEfwn9
+         LtGkGSj1f0HgrpHRYQOumGEykfCCiVYk2DRlJXctlmB7Ps9OjgpPqZ0Jio/yT1VhwWbN
+         IpUTMZ/m2DiWcG4IwQngoXjvXytW7Hbpmui53n9u3SJ+m15m1GoApHkbUnRkFZgtZMcs
+         3WkEva8l6v0O9C3zfV5IGi4wJeffBqOnRju0EN6bcOTLhv+3c08i1BPR5yuXXNzZuLFY
+         tofZla85I6UkGrMJuGKZMAZCD+DBt3v6/OhAAtFruqwrHAsI17/0H8lKvWhv81wjN7hQ
+         p8/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760392563; x=1760997363;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K78896hUe8HxdJeNsaH1wIM2F1haMlDyMjhgV675LXA=;
-        b=mMUq/vl999e/19zJo3DjdLQXeZU2QpFgbFOZg9v06IJvAD8Bvge9RaafkSrurRY+qk
-         V4cSSXhX05UJ/L7PXfc3e14F1oQpAGfMle3LQPi/WFyB+aFtmRpUw+VgoDCxaONy6AgG
-         jt0VhDpRfN8F2i72n52INeJ+pxQQNrJuOMhbYOzdbsbkNL9lvh6sJOPXA2QyObJy34/8
-         U/rtD78G4WCtIRb0yXM6Xdh9mz39cXgvv/cTBc6HYM/4a5n5VjHM5GWNn6sho10+g9bK
-         +v8+VmvgPwenGybvZ6pDgbfMj6XErKWPtEHsmlART5/JOEd4q9Ol7HAfNUaC9hOlrKMi
-         PPmg==
-X-Gm-Message-State: AOJu0Yw8VP+rs+ihOHE0/WyIiDVZd5FcM+RsfSaPVfd9NLTZOadweGoe
-	EjbItQkYVMaw/3T1Ug+zw62Hn9NQVXSMmFrh/Ffv0QJACEfpA8X+NzKD5LFLUtcXkkujpL++g6e
-	tig1NPAPyKQ==
-X-Gm-Gg: ASbGncsIWplEG65srkuTJOb9PaH+kgFAxfCeIDP/lb159S6+1aooPkjOSGXtET78ApX
-	efeyiV7VBfGYktAngkfGzyVmDRODfbEbaHnxqgyz99JIigQ6F1YuIdVKG0WXC/NYXMQrWwBNK/Z
-	x272C1298MB7Gd0M88CvE+Kh7Bqtgx9tSXuHzEwa+SCUyVeA11Ul4VDygX8qXv0l2hCB+bJcm6y
-	fPb8+MhOT0ab0LPTbxHv1eDpon9exDRkrHyT2rF2ZpNq6lyCZwuMMmYPBGKSA3NiTbEjz9JWV6M
-	k1FQQLnqZkR2f6XjforwmcNa8Tx+3ms/Lt1O/4Bkq3g4KbPJ+wYWBR5Aj/YzwVE4NGt+g347p/x
-	UJXXkzAyCrSg8hvMbTrMTc+GU9mw7h5k7GBbOV66PcDCcImtZyknKfKVPLzrg5EBZb2L+9pFlnA
-	dAUkW6LHCAqtuw6UDNCkBSIeZdG/eZuLR4pTk4pSMVL98U
-X-Google-Smtp-Source: AGHT+IFFy+f3PdZ3b8CEzXzejG9uqmtKQ81GFOMyGOlGsC9X9dE2wulWZbhPvK5dlWK9KP4F+7ibmg==
-X-Received: by 2002:a05:6602:3425:b0:90c:8a72:cfd0 with SMTP id ca18e2360f4ac-93bd1950557mr2657285039f.18.1760392563288;
-        Mon, 13 Oct 2025 14:56:03 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-58f6c49b522sm4209526173.1.2025.10.13.14.56.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Oct 2025 14:56:02 -0700 (PDT)
-Date: Mon, 13 Oct 2025 17:56:01 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>
-Subject: [PATCH] builtin/cat-file.c: simplify calling `report_object_status()`
-Message-ID: <9236fa6e654a59337266430a2a8807da21210cd4.1760392502.git.me@ttaylorr.com>
+        d=1e100.net; s=20230601; t=1760392766; x=1760997566;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=23XrKSkwxbp0+ytZe5SlamLC8Looj3Q06ptlevOZYsI=;
+        b=V/g7dp0lOdwZUzrsnTp3R4tJ7THAhPo3jdmH4M4ebnKUrmNB4PfB8ZmLHSXvFxQ1no
+         XWoBmt0FJpf+FKnNX14N/MqdF9OLaVpUhYWXdScg2qdas0CjOTvHAikA1SRdwBnCtpYU
+         kQOE51Ar7jlbskt4Fyx2bXhX67CT/lFGFn6eTMmoUfFgRzbvP9Crx0zGpBDoFE0ueA2S
+         pExVQ2+Vy7KLTlI8+RyyvizRk561+nYOCK5/MwbgDdQPU9YchdqDjIoXs+0psHv9bQkZ
+         9OlBL3Ar/74nAB73HRvHOx5Ij4htn54U0c6d5tkJKnWZzc5zM8n8R3MNFwg9ICFRF+CQ
+         X0OA==
+X-Gm-Message-State: AOJu0Yz1dfq3+7VuYo6GN7HRlhNpEEzGZz9GIrukXzF5GDdvKuXvV+Li
+	ONxqeuJ7HBakHd6X8ExKYiXLZT8lh0TUpLqRKwDQqiqFABSEs9rcUHgjl3T5zw==
+X-Gm-Gg: ASbGncvnGIuoddC8Tx8kFH2Ixt5O+HuaaL5KKLhrjN8cMwgtnkUUxO7aUpPh4P+RzJM
+	mMQ+xAiQbtqv3y3CveXTc+PeUpjGaGSrAf8c5jfiy9vDLWnB7eHDc6MweeuIbLC/0CfTdsHxrSf
+	c4R6dndyrz7MXLxH5UU/c/Mq1t8OoUHCoJ4w1BKP8+wzt3ROhU5dF/uZoPvqUI7QuPHU06BAqWr
+	0FfGePkv/eLcq9WawUbH6eCfud++dqpClWzrx0r010izLlPeBXwI2z11pHe6MuTmoydIv86Olqm
+	+fr/5sz8YkyU92XSGpqbZprz3EBeV8Gfd5qA410xFj2kOvv3z5L47kBymibQuGp9QD9xlJ7p50u
+	ytCNIJcBfXqnd/uesO7Qrf6AQbMI0x+bAohKi2J/pVsUmiJfV11+XtTc3zJ9IpZRGRn6NZijQc/
+	Xr7w==
+X-Google-Smtp-Source: AGHT+IHOPova8MYxWiNtswxB31n0N2aNpKTFRZUalIjokLqcyfxSWch1JL37GvTRjX9kijqqnaCahA==
+X-Received: by 2002:a05:6000:2506:b0:3e9:978e:48fd with SMTP id ffacd0b85a97d-42666ab88fbmr13928677f8f.23.1760392766473;
+        Mon, 13 Oct 2025 14:59:26 -0700 (PDT)
+Received: from smtpclient.apple ([2a01:4b00:ae1d:6000:b8c0:b80:af84:2374])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426ce57d3desm20412887f8f.7.2025.10.13.14.59.25
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 13 Oct 2025 14:59:25 -0700 (PDT)
+From: Samer Abdallah <samer.abdallah.00@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
+Subject: I still use git whatchanged
+Message-Id: <EBCAE8A8-E556-4DE9-9B76-EA4C27EECA01@gmail.com>
+Date: Mon, 13 Oct 2025 22:59:15 +0100
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3731.700.6)
 
-In b0b910e052 (cat-file.c: add batch handling for submodules,
-2025-06-02), we began handling submodule entries specially when batching
-cat-file like so:
-
-  $ echo :sha1collisiondetection | git.compile cat-file --batch-check
-  855827c583bc30645ba427885caa40c5b81764d2 submodule
-
-Commit b0b910e052 notes that submodules are handled differently than
-non-existent objects, which print "<given-name> <type>", since there is
-(a) no object to resolve the OID of in the first place, and as commit
-b0b910e052 notes, (b) for submodules in particular, it is useful to know
-what commit it points at without having to spawn another Git process.
-
-That commit does so by calling report_object_status() and passing in
-"oid_to_hex(&data->oid)" for the "obj_name" parameter. This is
-unnecessary, however, since report_object_status() will do the same
-automatically if given a NULL "obj_name" argument.
-
-That behavior dates back to 6a951937ae (cat-file: add
---batch-all-objects option, 2015-06-22), so rely on that instead of
-having the caller open-code that part of report_object_status().
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
-I noticed this while merging v2.50.1 into GitHub's private fork, and
-thought it was a good opportunity for some light clean-up.
-
- builtin/cat-file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index ee6715fa52..5ca2ca3852 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -495,7 +495,7 @@ static void batch_object_write(const char *obj_name,
- 							    OBJECT_INFO_LOOKUP_REPLACE);
- 		if (ret < 0) {
- 			if (data->mode == S_IFGITLINK)
--				report_object_status(opt, oid_to_hex(&data->oid), &data->oid, "submodule");
-+				report_object_status(opt, NULL, &data->oid, "submodule");
- 			else
- 				report_object_status(opt, obj_name, &data->oid, "missing");
- 			return;
-
-base-commit: 4b71b294773cc4f7fe48ec3a70079aa8783f373d
---
-2.51.0.491.g4b71b294773.dirty
+Hello,
+I still use git whatchanged.
+Thank you.
+Samer 
