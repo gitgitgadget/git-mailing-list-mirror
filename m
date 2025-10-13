@@ -1,149 +1,104 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0252D3724
-	for <git@vger.kernel.org>; Mon, 13 Oct 2025 16:42:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8527A25A64C
+	for <git@vger.kernel.org>; Mon, 13 Oct 2025 16:53:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760373772; cv=none; b=s6/bo9in1ht5vDtfp0UUy/7lumOjGFV4gS3YthdoPB8I9VExgmizNcMGvb3Y0E0wUYVURshXeH44ElNFe3138JQEX/BpTSj6ZnTmG2adp+1xWrJp3ghSnvD0lGxPoJUVXJj0dPONoxbSjUYO7FX8ltHFjXjGf7hMCdjvJetYfxI=
+	t=1760374428; cv=none; b=fPYfp0GYYviQ8QYxsFvXRGifYjQmlnveoyA37dTyT+hUG2yCJ8Sqoxc/Py5nTOemfwe+saw8zPAW/TC0tZ1ZbbUWrMhIExZtq3WaOWBF3HzKhsayDrirfQHpecrbEvMyLoJz0dz3sDbJZBWNScIQF26tr1ciLubhUjhQjP/ciMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760373772; c=relaxed/simple;
-	bh=NLTzMOD+UXRW376VhmEyelZpJgnIzHZBzdg5sp09G78=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=FM2mx++PQZvOEu+l17uENXmgbQU8ZJh/BlIckfeQ7ePYQiB3TwN0/Ub+c35/XAFjQ+RW96WtUVctrpQvHYXhhVyGh4QtyPxOne7WDgxonpLH/vrZMqjSkZpvEtV0Hahq8slJNuE/a54RPT+04/cPPUmjrZ89FgtSxnEBzNccMBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=Pm92EEpq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gtT2aYtP; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1760374428; c=relaxed/simple;
+	bh=rN+7mV2/b8mCrjFVmeKoqJurkM8wdwHx8q+9ZPzZu3A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jEFlPYIDoPLwSrjTgs1BinLrbPcswHHoUPWPdAw4M3cRvkFxZ5CLC0q9qxw0m18AsCAueDsUJHmZaEqQ8zyi9s9aKqPz09tLnn29vzRL0g4Y8kWVPFdIMg4oeo73/nrKADhi/Ujgoh3CM6wUCLCYtkCnHsFA+eYBo7OPZDGGP5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aS55QvX/; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="Pm92EEpq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gtT2aYtP"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BE7657A044E;
-	Mon, 13 Oct 2025 12:42:49 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Mon, 13 Oct 2025 12:42:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
-	 t=1760373769; x=1760460169; bh=6NfeGayrjmytB5QU9cjyJSFu79STJ9xK
-	AfLEFTCM5II=; b=Pm92EEpqXVALNp68zq+rFw/U2vKKt+jVRX6miSK5iuJdCZ/Z
-	8ltzx2mY3Egtci2ocxtGmssJKaOZAV9MYHbXyfxjPutgm7eq4N1LeiXzkYszdBSR
-	yuumR8O5RMjOVPy9S2ypgsfjIrm2Bj4k9glNHKJEzjYzNLVw+ipTeI27pPZUhvzB
-	GI4MBp+5QhaMdv53aKddcz5sj5KqTnzifzTpOKdnfdmpOa0i5O/TRWIQx6a2aCow
-	mv1CQVtyIue6xu4iRvcy5DWP02kXJtRd+orDuoaNNfSw5SQho08Vg4KT/HtVYPPM
-	LBfMx4Zwpwpwfg+S+6rxaD3weG4XirCsC4HILQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760373769; x=
-	1760460169; bh=6NfeGayrjmytB5QU9cjyJSFu79STJ9xKAfLEFTCM5II=; b=g
-	tT2aYtPxlbyjlR0wuGU4Ogjs5IEUkc75o1WINqjDHaTN5bO940o8q3fIvQNCDKNc
-	7FSNlUbIJyhFZBg2URpuVZRNKdPcZ7i+TUIk6GhMm/3yqOhPdChvPplP3TAvDP9Z
-	iCXHtrm+LRffypQ6BXrV0kfnSEgK/kB4f+pqujALB785287eue9a8hehohixQiwo
-	QVrR7g6hU4HpMnT7XMa/KREOHuEWJ76GF7AsZD6q2d2bNTYbN6jQBlhBEAuYcCr/
-	5dufT3yK7r/4CR4RlLDHD6KsrcUB+L4xPYLpn6cDc9JkoXPCo8SupvLP70zo5HlO
-	s02BFOOhd9OlEXkaFI6Xw==
-X-ME-Sender: <xms:CSztaCyJrxTwtopofwmzV9WAFx-5KM_VCefFwzNBrYpfSNRRjcon_4A>
-    <xme:CSztaJHDGfyj-Gw_CEUdDv2B_mS1G6zwAwlmFSX74Lgrjut04kHy7FRcDk32N3NYi
-    NkQ9VAn74bd01M3j7vyDfJqBy7rhvGs0pE3QmKCzYsZPt2lM_REZw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduudekudeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkhhkrd
-    hnrghmvgeqnecuggftrfgrthhtvghrnhepfeetgefhgeefveelgeduvdekteehieevffdu
-    jeelgfduffffjeelffffledukeejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhnsggp
-    rhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrhhishhtoh
-    hffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehj
-    nhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:CSztaBYK5FWW3f6Y6xfTOGKEeEEZRGgrq7cbpl4NWg95I-yDZKO7zg>
-    <xmx:CSztaGMdkKyMu466sfAz4gdRblRlSh7fTmOUv23lVmETmpYMyOh0Bw>
-    <xmx:CSztaOaqSJJN6UUBrfbVWtcHnGLJ-hgYNiq8CueLDg6Ffx8v7Gopvw>
-    <xmx:CSztaM21GeE3aI2d7MPe0LW2PzGXwBWkF4rydj82hk8ltTeqG8p9YA>
-    <xmx:CSztaD-_GzFy7Lw5kPyajnFe1Qz4xg-nT40viypM3awcWKVecKaArRx2>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 4781C1EA0062; Mon, 13 Oct 2025 12:42:49 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aS55QvX/"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-46e2826d5c6so26941285e9.1
+        for <git@vger.kernel.org>; Mon, 13 Oct 2025 09:53:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760374424; x=1760979224; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qpL4HcA+mvaksnl34FeP8KxmYHTrVekCe41gZU+eZq0=;
+        b=aS55QvX/zg6S601C+uAjeF8OrxRfQx5o5sT2uXvegn8LAdoUT+xRBSDR02guV+5xE0
+         Q0O9dGeuqLQXXzlqzcnFwwtTuH0p3VVckWhVyPdb9uFt6kVYVoi4DbAnhDwE96AaoEXe
+         C6pnt04VX80JYxHGTu9Im66ugWhuAsqvqBILD3BGzQ3cR9DlfFx9mUh47l/1ebcz9chq
+         6tUILBm8FMl7rueugM8g/bkI03HdJ8hg4XvvxOQiMujkymN+xglpmp7bUl1E/tN797jb
+         ktrwvx6CnzFu1NO2GwAFmHuvqU2jTV23XN4DsoovoSh+Jyx7gbPEY4/AZOj9+vfgPG2L
+         C6CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760374424; x=1760979224;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qpL4HcA+mvaksnl34FeP8KxmYHTrVekCe41gZU+eZq0=;
+        b=SJ6D9IT6ZSQ14O77BNz5UwjlgxbQyDzJR8gE5mfNeCK5BZkrl2LLPvVhu9sNG8qLHr
+         7qmaZ/ggLcI8SmwhW75/CvkdNC8IcW4WvBZKXLWxgEOyAbcNysYTG7gKwdtiRK7Mm2dD
+         NbgvyxFgoGfSxwYlDBF8HHkZgwPwsPzNuV/knXCwJbFR8U2oPxEQOHgnk5KIqtYgJ3cx
+         7Twf91LhqHnRcp82381NgnV26TaypDIy9a4J98+j7nZsxJ4L3/4X+Jp1LijnqHaCdgML
+         cigF6uljgu2ybm60KAIIyFnHal6LR75x4G+WJmUSHnV9aMnqEZ2rp/d/eGLqCeKsLHt4
+         FS0w==
+X-Gm-Message-State: AOJu0Yy71O5M0ABUBKuSHEArN1rdiEDEYQ0Ecx2fsWLWiD3JXZBVAKqX
+	ZsATHs8Z9rAKyTvRtSPZ9P1Uzk21ogkkKcCaWhhIKR2QGvtGR6VxQWxdD8ijtoWzZ2/73g==
+X-Gm-Gg: ASbGncv3wUdxMaBJTWWA3cy02+EelnA0akZNeVM7pTxpsqo4qOsTm5YkkK2XTWbjoKY
+	ScVeHl0YPV4wxsyhlN4kNn+wt0Wo3uui+NsZthQMR2B7869ZwMqFmkb07RpHi3UIKflfdzevP2b
+	6U0XOC/jOKXQcYLbhQjCE88RPvEogwWCvruWrst6/xWJ9zS+XdrpLrrLD3LskYtwfq33yi8U14B
+	Bcl0wBAMSmcJX6UOd/UUptu1IYe8mAYROuchT3qH62/GKdDBnyCmuqzMpBM5eKOVOeKpAIbqNK1
+	NJoeE1Mi1osxB4GTzghNX3Yei+pxaXxiAihWBeGwmfTCL5O72QqxnPG7bkPxYMjiMkonfP2ewf7
+	YfSX7kSO5wsdyZZ3R0Q31SsoFnmloO8PWwXZu0txTkhWsxzTWcz3H6W9o6kcUe5PZVMxask92JK
+	QIU0j/98kk02pQ2i9tabuzL/AiCM7fTu1aoHxL1ywbOIfA
+X-Google-Smtp-Source: AGHT+IEMfuBp468BJNGTZnJk2xsQ4LFI0Zd4+dv4BnTIVw6XY2J/uGgqucRdkI4qaE6tSx23MURsZQ==
+X-Received: by 2002:a05:600c:890d:b0:46e:32f7:98fc with SMTP id 5b1f17b1804b1-46fa9af3656mr119811335e9.21.1760374424324;
+        Mon, 13 Oct 2025 09:53:44 -0700 (PDT)
+Received: from localhost.localdomain ([105.113.110.199])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fc155143fsm133487885e9.11.2025.10.13.09.53.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Oct 2025 09:53:43 -0700 (PDT)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+To: git@vger.kernel.org
+Cc: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Subject: [PATCH] [Outreachy] patch-ids: fix const correctness
+Date: Mon, 13 Oct 2025 17:53:20 +0100
+Message-ID: <20251013165320.201333-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AvBFpqMSI4bk
-Date: Mon, 13 Oct 2025 18:42:28 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
-Message-Id: <ccbaa98e-7223-4c75-9844-f0025de9f84c@app.fastmail.com>
-In-Reply-To: <xmqqcy6vb0nw.fsf@gitster.g>
-References: <978261e3be4.1760043036.git.code@khaugsbakk.name>
- <xmqqcy6vb0nw.fsf@gitster.g>
-Subject: Re: [PATCH] doc: patch-id: convert to the modern synopsis style
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 10, 2025, at 10:50, Junio C Hamano wrote:
->>     This is part one of a multi-series effort focusing on this
->>     documentation page. Technically that intent started with topic
->>     kh/doc-patch-id-markup-fix, but I published that before I learned
->>     about the idea presented in <cover.1759873165.git.me@ttaylorr.com=
->.
->>     So this gets named =E2=80=9Cpart one=E2=80=9D in the cover letter=
- (and maybe on the
->>     topic name).
->>
->>     The current plan for parts 2=E2=80=935:
->>
->>     2. Various smaller fixups (many small patches/commits)
->>     3. Mention the two config variables in git-config(1)
->>     4. Make it more clear that you can feed multiple diffs to this co=
-mmand
->>     5. An =E2=80=9CExamples=E2=80=9D section
->
-> Quite honestly, this smells like making a mountain out of a
-> molehill.
+The `patch_id_neq()` function received a pointer to diff options via
+`cmpfn_data` but cast it to a non-const type. This caused a const
+correctness warning and could potentially allow unintended modification
+of read-only data.
 
-Got it.
+Fix this by casting to `const struct diff_options *` instead, removing
+the outdated NEEDSWORK comment in the process.
 
-> 5-patch topic that focuses on improving a single
-> documentation page is nothing unusual, but it is very unusual and
-> awkward to handle for a topic that focuses on improving a single
-> documentation page is spread across 5 separate topics, each building
-> on top of the previous one.
+Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+---
+ patch-ids.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-To be sure: I=E2=80=99ll abort the plan if it turns out to be worse for =
-the
-reviewers.
+diff --git a/patch-ids.c b/patch-ids.c
+index a5683b462c..b6b808332f 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -41,8 +41,8 @@ static int patch_id_neq(const void *cmpfn_data,
+ 			const struct hashmap_entry *entry_or_key,
+ 			const void *keydata UNUSED)
+ {
+-	/* NEEDSWORK: const correctness? */
+-	struct diff_options *opt = (void *)cmpfn_data;
++	
++	const struct diff_options *opt = (void *)cmpfn_data;
+ 	struct patch_id *a, *b;
+ 
+ 	a = container_of(eptr, struct patch_id, ent);
+-- 
+2.43.0
 
-I can make the following amemdment right now: after this current topic I
-will wait until it graduates to `master` instead of basing the next
-topic on the merge to `next`.
-
-Either that or everything that I plan to send gets sent in the next
-topic.
-
->
->>     Why a multi-part series?  It started with the idea of (1) emphasi=
-zing
->>     that this command can take multiple patches, and (2) making an
->>     Examples. But then I saw other things to fix. And they ought to go
->>     first... eventually I ended up with many commits or ideas.
->
-> Perhaps then after you built up the final shape, you'd need time to
-> ruminate over it and possibly reorganize to find the best order and
-> organization to present it as a N-patch single series?  Typically, a
-> collection of thoughts presented in the order they came to one's mind
-> is much harder to judge, relative to an effort to tell a coherent story
-> that moves to a goal.
-
-That=E2=80=99s a good point.  I will rather scrap things and recreate th=
-em if I
-come up with a better order rather than committing to the existing one.
