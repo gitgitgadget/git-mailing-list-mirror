@@ -1,62 +1,63 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD162EBDE0
-	for <git@vger.kernel.org>; Mon, 13 Oct 2025 08:49:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434312FB0B7
+	for <git@vger.kernel.org>; Mon, 13 Oct 2025 08:49:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760345357; cv=none; b=q5YIZ6NjitEQSlSvYyXJU5vD1T/9qohEecyiG/XAenP/ew5FId8exi/rXVnp8vIY9ay4NDGUyFV9sMcY3Dgy5GWWQ0GHpds8+V4aDkOrXvPAiDE2rXO5TMrmQK2KKyI9KGv6rXFzhKcoCf3oi4gb6swe0Nkd4+XQMMbe7ec+Zu4=
+	t=1760345359; cv=none; b=f02qDrX80Bd+2dkPXsyXi1bnOiMFssS1MoazlTjMj7IYZgQzuLpkmeOdGPkBFVtBJSovUeD6UocFtVThqY8qV35LsoxA2P8QwjCPbmdNmkpmhqZYhmooZrq2uO5uyLhk3PSNzjJ7hhdIKJlWZWj0jRlQ1mWNgnVgneRtqxM37Ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760345357; c=relaxed/simple;
-	bh=EPlpRLPAt0PvvIT0aymZIM6kjo+83U3hvwn0g3knPDg=;
+	s=arc-20240116; t=1760345359; c=relaxed/simple;
+	bh=Z/ERojsJHXA/6pN0s1OPbO1PCRgxayhgRQ2B8k4IR68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R+YWA6rgVTopWufkIfXif7BXd0kQ59fbfG7F1/BXFHEmmnuy7lzuBTk88aREpQHFnXyTFdcndi7F3bm4eE9gZG8IB9noswDQRot4xGpBJYMdRZE8dsirrBumnu1NgylF3Fl5IQBoYKL4zGH9sfEBkp1knzDl0b6yPOw/P1lcwfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SvnQT35Y; arc=none smtp.client-ip=209.85.221.52
+	 MIME-Version; b=ErD3Dd/fUs/8lIIlwlj5QGFm+FFa9BGq3L1mXZG9itT0GWNKB0i9UmNZwLuwRDlt3cnGFPMiGLd2OINi43DXNcLEl83pJV6pENTccu2nDEg3VrRpeyDk56ju78kgJpuZkEKpTabjDCfCc/NWYObrO0wpNcJhfjAI8d5d9Kj3l8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mv18TmzP; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SvnQT35Y"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-4256866958bso2129407f8f.1
-        for <git@vger.kernel.org>; Mon, 13 Oct 2025 01:49:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mv18TmzP"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3ee12807d97so2451995f8f.0
+        for <git@vger.kernel.org>; Mon, 13 Oct 2025 01:49:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760345353; x=1760950153; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760345355; x=1760950155; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7a4kxchNGrv+P8Kz7zmEbRlyXMSQniu0HjghZJl8fuo=;
-        b=SvnQT35Ye0TFuyJS0lHi3CgEOIMNWHR0ygTHS1XVzVBBqlzl0fcKB/Mbz1SJPJ/qzm
-         GqWT+Yn0CEY4WlNjef0PQmePmsMyeq7u/1DYtULGjxYDMrnNlqi9I3L+4D5uU/yx+8Dz
-         7KOPH8dm0xNBVSHtvZ09gGTt9nsL8fbuQqFmyeTFOmKTatcz2Oz5Q3FfX31psGsYvGxa
-         nNJfaDRT/41JpoORUflBP2Owbsj372Qp2pNPc93DYzRP2yNAh/Ed0rUS6a77qxbJ7TwP
-         CapftiHZe2OuuYq/m42edaYFPTI8ZmBnCAVjlaSknMQNyJ7gFKcwXTeCANrTROoBH8VB
-         b7wQ==
+        bh=Y4xRwZCscrTBPhl4uLdfXTc5v172JGQJzGUtMB7Dy1I=;
+        b=mv18TmzPwJpQtF0HEne7a6hoeAeqyJAaicKuwz/JvZUApvEQK3d5jw5RJmQQ0Feo0E
+         yN7ch9KTslR7x7UlEC4FUqesPi6nR7eCuXdwqFhhTLid7qsKPtrGwNb/xLDT6LFyFSfT
+         wQVIZnkvr5rfXUMIumomTbpWy5vrj4WGf/uur9wLxkteq1CTGvDSiXfqmXV9OfNfspvS
+         8szFPZYzBkFlbNlzlavhilAq3WmCyzlDNaWTykADFi3+yCSji7Ar5TfWSLfr24sllNY9
+         MBDymMfpGgfGQj5lvgVJPeGg1S5nPqWnligDIQ2yyFbC6CfLU2a7KsdwvDXe/3H5Yfy0
+         asnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760345353; x=1760950153;
+        d=1e100.net; s=20230601; t=1760345355; x=1760950155;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7a4kxchNGrv+P8Kz7zmEbRlyXMSQniu0HjghZJl8fuo=;
-        b=tOQtXATL1toQ/1v/tXr5oG66U4SqbRf12xK9hOVcpsWGzgkmx5zSc2SoDZaqEw1DpJ
-         1G5//3RY23DfZznMJLLvR2EjBJfiLJ0+nT+QOEqFipAdC1cWWFo2EMArVixrkwmUQ5xf
-         6ihQQvxY2igcsZ4+9XRU9OtOFaGgSutxpDVHLyWwPI2GI8SbF3EAclQYdzZshXQ/VjxE
-         VBrEO5xJPH3xJOocB3glWHd51NCO0TsueRELPZE1P3LgGLyhrVTKKYRF6oicRlLZMJbS
-         ySzG2ow60OmCQUKWPVou0lI3GK+g/3kOVKDjHcKJiEAmgWFvZ5GGkh8g3Zq8YzucZu2q
-         HiNQ==
-X-Gm-Message-State: AOJu0YzlKdwH1eqjOqy5YE6MR7PZkKeVWxbsizQ6X1Wf6dR2Dhhhc79i
-	NpcLaAulE8WaUDUbDuYUIt9Bck6zKEGUOq/hlHuG9LSEnqpHoAric5sug3o9L1XM
-X-Gm-Gg: ASbGncvFIeXpqSbKXG7T5RKZ8P59Y68mkLwmGVAX0nXttcIjqKXDiDNQpcf09g85OER
-	Q/RVzs6nxW+wKMwUglQZUKb6QfjY9N5QhokfQ2f0x9AaADaUXuE9Xh7aV3D09+7eEAAWeEamQCw
-	n6EHz7J/G6YEO1TtutXWPx/sqDk0u+IC7NsA17UJ+MWvY/LHHKFvVQm+jYNq0N1J+5UYTtOJMa/
-	9JLWvro6121snpYrvftT8p/K2NXLyajHzXYSR1VIKl31z1xFaES2dEe4+Rqg2Pi17DTwVSsUOXc
-	jw+EYFb7bboN0zkOom8DUu+t8O9NRhVF/sf/EHVJwXjflc7uC74t2qx/8EUGKOEH3OY3vDrWk1p
-	RW8juJFY8f/H66YR6m6BMk/EIZDi51TXt+xFB/tIWhGu6XVYAYHyjlngmsyltsAxoWI15
-X-Google-Smtp-Source: AGHT+IG6Q8WbK8eoXjq/SBVVlEjneBHdo4XfZ+l4T7zgy1D7gEq1PIPiewuadrso5V88T/om+jIApA==
-X-Received: by 2002:a05:6000:40db:b0:426:d5a1:572 with SMTP id ffacd0b85a97d-426d5a1058bmr4482038f8f.43.1760345353085;
-        Mon, 13 Oct 2025 01:49:13 -0700 (PDT)
+        bh=Y4xRwZCscrTBPhl4uLdfXTc5v172JGQJzGUtMB7Dy1I=;
+        b=YC7l7a6yLyKrEg6VCV4bG41TtoVaV0Tnsnb3gsZsE7HDwwWydonSx8BYUdcdvL7EQR
+         BQKdlR8sA5plTeBNzwF/3SZWOFWU07eFT1eXjOM1KhXokiVLZdHHIbA3jbAvAEkz5KH0
+         w5wQoWmgXVAvEltm4ORLJguGBSHllwpl24rFa19BJVTU3Af8vubi6ngaTE6fxns8kIiR
+         lElIeT5jxX/62YNTRqPhDFE/wSdtTi1HxMgELqOIR0MIDtKhsnXCrN0qmqDLq64trfQB
+         LVPBHPQlKPMKXcJyFxeVwyVXK+rlN/KDgl2q6keTXYSA+Ij5q1F8zjo9M+vusKQAqeHv
+         hpSQ==
+X-Gm-Message-State: AOJu0Yyu4w5Q0dRmgESQL+FSSJqR4pXIZMrWYgxNR57fN88eD7M/LWbg
+	WkURqg0YbdoM6Ye7ElO3NVbdKsEe+/e10TWCPLSmU+3AU8PhWXCQmj30qtP0NJUV
+X-Gm-Gg: ASbGnctnCspzR8PaSj7d8zCqreb0ByiqZlufJ87qtYOtdH5chNqhXf8LZEIJfjS3rFd
+	MKVUNaZZeVG06QXeZu/SNzBNDd7EbzESlVmTDr4ssFHa9K4RiRAerLk96p8dD3X0H+RDS8ZqT0E
+	RzCnIe7KdEaV9jiy9cQf+KzRm5bt+mbAu4mgKyZJ3ytWwjRs5skJsOJSbUKdtwJBGhc0FRHjkYl
+	r0THc7pogKGorY4IlI0HEgxcTDJMGklh+k1jmOz8Ui56V/0osbWWgUtTUAegqime/HmML4eK8K8
+	r64ov4tOmw1vPy1xLQJ6rw6QK5Xcqk4jk1ica9s4nm5j4n+lFxneiwSV4exHOJYoFTkbyEHS6HF
+	4fxg6tg/YiSe3I0kB8NqGEwbkgSmyjJi/AbgndgQtArQz2KVP9sY4vC0QBV4I/wR/tTov5ddC7Z
+	cSrWU=
+X-Google-Smtp-Source: AGHT+IGVX4lhtOivWgq5ZTP65AOWSpo7cM0p3J+5pE8cCQf6qO7S2WarBV7ezEXvJgHiDEIufSCutA==
+X-Received: by 2002:a05:6000:41cc:b0:426:d56e:124c with SMTP id ffacd0b85a97d-426d56e125dmr4456797f8f.32.1760345354998;
+        Mon, 13 Oct 2025 01:49:14 -0700 (PDT)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426d0d9050bsm15630220f8f.13.2025.10.13.01.49.12
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426d0d9050bsm15630220f8f.13.2025.10.13.01.49.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Oct 2025 01:49:12 -0700 (PDT)
+        Mon, 13 Oct 2025 01:49:13 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -69,9 +70,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Collin Funk <collin.funk1@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 2/5] lib-gpg: allow tests with GPGSM or GPGSSH prereq first
-Date: Mon, 13 Oct 2025 10:48:54 +0200
-Message-ID: <20251013084857.1646783-3-christian.couder@gmail.com>
+Subject: [PATCH v3 3/5] t9350: properly count annotated tags
+Date: Mon, 13 Oct 2025 10:48:55 +0200
+Message-ID: <20251013084857.1646783-4-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.51.0.438.g6987fc0bae
 In-Reply-To: <20251013084857.1646783-1-christian.couder@gmail.com>
 References: <20251007122958.1089680-1-christian.couder@gmail.com>
@@ -84,86 +85,85 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When the 'GPG' prereq is lazily tested, `mkdir "$GNUPGHOME"` could
-fail if the "$GNUPGHOME" directory already exists. This can happen if
-the 'GPGSM' or the 'GPGSSH' prereq has been lazily tested before as they
-already create "$GNUPGHOME".
+In "t9350-fast-export.sh", these existing tests:
 
-To allow the GPGSM or the GPGSSH prereq to appear before the GPG prereq
-in some test scripts, let's refactor the creation and setup of the
-"$GNUPGHOME"` directory in a new prepare_gnupghome() function that uses
-`mkdir -p "$GNUPGHOME"`.
+  - 'fast-export | fast-import when main is tagged'
+  - 'cope with tagger-less tags'
 
-This will be useful in a following commit.
+are checking the number of annotated tags in the test repo by comparing
+it with some hardcoded values.
 
-Unfortunately the new prepare_gnupghome() function cannot be used when
-lazily testing the GPG2 prereq, because that would expose existing,
-hidden bugs in "t1016-compatObjectFormat.sh", so let's just document
-that with a NEEDSWORK comment.
+This could be an issue if some new tests that have some prerequisites
+add new annotated tags to the repo before these existing tests. When
+the prerequisites would be satisfied, the number of annotated tags
+would be different from when some prerequisites would not be satisfied.
 
-Helped-by: Todd Zullinger <tmz@pobox.com>
-Helped-by: Collin Funk <collin.funk1@gmail.com>
+As we are going to add new tests that add new annotated tags in a
+following commit, let's properly count the number of annotated tag in
+the repo by incrementing a counter each time a new annotated tag is
+added, and then by comparing the number of annotated tags to the value
+of the counter when checking the number of annotated tags.
+
+This is a bit ugly, but it makes it explicit that some tests are
+interdependent. Alternative solutions, like moving the new tests to
+the end of the script, were considered, but were rejected because they
+would instead hide the technical debt and could confuse developers in
+the future.
+
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/lib-gpg.sh | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ t/t9350-fast-export.sh | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-index 937b876bd0..b99ae39a06 100644
---- a/t/lib-gpg.sh
-+++ b/t/lib-gpg.sh
-@@ -9,6 +9,16 @@
- GNUPGHOME="$(pwd)/gpghome"
- export GNUPGHOME
+diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+index 8f85c69d62..21ff26939c 100755
+--- a/t/t9350-fast-export.sh
++++ b/t/t9350-fast-export.sh
+@@ -35,6 +35,7 @@ test_expect_success 'setup' '
+ 	git commit -m sitzt file2 &&
+ 	test_tick &&
+ 	git tag -a -m valentin muss &&
++	ANNOTATED_TAG_COUNT=1 &&
+ 	git merge -s ours main
  
-+# All the "test_lazy_prereq GPG*" below should use
-+# `prepare_gnupghome()` either directly or through a call to
-+# `test_have_prereq GPG*`. That's because `gpg` and `gpgsm`
-+# only create the directory specified using "$GNUPGHOME" or
-+# `--homedir` if it's the default (usually "~/.gnupg").
-+prepare_gnupghome() {
-+	mkdir -p "$GNUPGHOME" &&
-+	chmod 0700 "$GNUPGHOME"
-+}
-+
- test_lazy_prereq GPG '
- 	gpg_version=$(gpg --version 2>&1)
- 	test $? != 127 || exit 1
-@@ -38,8 +48,7 @@ test_lazy_prereq GPG '
- 		# To export ownertrust:
- 		#	gpg --homedir /tmp/gpghome --export-ownertrust \
- 		#		> lib-gpg/ownertrust
--		mkdir "$GNUPGHOME" &&
--		chmod 0700 "$GNUPGHOME" &&
-+		prepare_gnupghome &&
- 		(gpgconf --kill all || : ) &&
- 		gpg --homedir "${GNUPGHOME}" --import \
- 			"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
-@@ -63,6 +72,14 @@ test_lazy_prereq GPG2 '
- 		;;
- 	*)
- 		(gpgconf --kill all || : ) &&
-+
-+		# NEEDSWORK: prepare_gnupghome() should definitely be
-+		# called here, but it looks like it exposes a
-+		# pre-existing, hidden bug by allowing some tests in
-+		# t1016-compatObjectFormat.sh to run instead of being
-+		# skipped. See:
-+		# https://lore.kernel.org/git/ZoV8b2RvYxLOotSJ@teonanacatl.net/
-+
- 		gpg --homedir "${GNUPGHOME}" --import \
- 			"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
- 		gpg --homedir "${GNUPGHOME}" --import-ownertrust \
-@@ -132,8 +149,7 @@ test_lazy_prereq GPGSSH '
- 	test $? = 0 || exit 1;
+ '
+@@ -229,7 +230,8 @@ EOF
  
- 	# Setup some keys and an allowed signers file
--	mkdir -p "${GNUPGHOME}" &&
--	chmod 0700 "${GNUPGHOME}" &&
-+	prepare_gnupghome &&
- 	(setfacl -k "${GNUPGHOME}" 2>/dev/null || true) &&
- 	ssh-keygen -t ed25519 -N "" -C "git ed25519 key" -f "${GPGSSH_KEY_PRIMARY}" >/dev/null &&
- 	ssh-keygen -t rsa -b 2048 -N "" -C "git rsa2048 key" -f "${GPGSSH_KEY_SECONDARY}" >/dev/null &&
+ test_expect_success 'set up faked signed tag' '
+ 
+-	git fast-import <signed-tag-import
++	git fast-import <signed-tag-import &&
++	ANNOTATED_TAG_COUNT=$((ANNOTATED_TAG_COUNT + 1))
+ 
+ '
+ 
+@@ -491,8 +493,9 @@ test_expect_success 'fast-export -C -C | fast-import' '
+ test_expect_success 'fast-export | fast-import when main is tagged' '
+ 
+ 	git tag -m msg last &&
++	ANNOTATED_TAG_COUNT=$((ANNOTATED_TAG_COUNT + 1)) &&
+ 	git fast-export -C -C --signed-tags=strip --all > output &&
+-	test $(grep -c "^tag " output) = 3
++	test $(grep -c "^tag " output) = $ANNOTATED_TAG_COUNT
+ 
+ '
+ 
+@@ -506,12 +509,13 @@ test_expect_success 'cope with tagger-less tags' '
+ 
+ 	TAG=$(git hash-object --literally -t tag -w tag-content) &&
+ 	git update-ref refs/tags/sonnenschein $TAG &&
++	ANNOTATED_TAG_COUNT=$((ANNOTATED_TAG_COUNT + 1)) &&
+ 	git fast-export -C -C --signed-tags=strip --all > output &&
+-	test $(grep -c "^tag " output) = 4 &&
++	test $(grep -c "^tag " output) = $ANNOTATED_TAG_COUNT &&
+ 	! grep "Unspecified Tagger" output &&
+ 	git fast-export -C -C --signed-tags=strip --all \
+ 		--fake-missing-tagger > output &&
+-	test $(grep -c "^tag " output) = 4 &&
++	test $(grep -c "^tag " output) = $ANNOTATED_TAG_COUNT &&
+ 	grep "Unspecified Tagger" output
+ 
+ '
 -- 
 2.51.0.438.g6987fc0bae
 
