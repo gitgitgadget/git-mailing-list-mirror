@@ -1,150 +1,142 @@
-Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C622E8DFE
-	for <git@vger.kernel.org>; Mon, 13 Oct 2025 08:18:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1014021FF46
+	for <git@vger.kernel.org>; Mon, 13 Oct 2025 08:22:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760343507; cv=none; b=DzYG8dDI4SEBbPwHX8btME9QVXv72lcLYSnVUQ2qEXBZJsQennI9AaExoiKK4zMGlSN2ZB06PStkANoEFX/1ZTcKC7YGl5SERdfkmio5Hws7k4opCBccTcrD2hSapYxGisqtFIo/orajx/AyRMDN+czrm5EQ7nEOP2Q23HIm1tg=
+	t=1760343749; cv=none; b=uGDtEq5ig7HLecA0Z2igzvZA4/tSWeHJaxepRprlwWTI292q8oLjIcBcwzTD9LEYjOGpIKDC47qjviixYTrkQuq/PA36RiyQ8a/6zFQe4sLP0h7VB3P6ipA29D35hsnCBpGuyaXtpUHrGCdB4u9f7U8aazIvD/0c3APx1CB5n/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760343507; c=relaxed/simple;
-	bh=T1IXZVyjYqMfhUlfpxanQW+/uSLfcif00SlUpEuGfKM=;
+	s=arc-20240116; t=1760343749; c=relaxed/simple;
+	bh=0kJZHjolDQ3GhgdZ7meniWYp38heC/XhxJ8M0Ta6R0Q=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sxgoTjnXp84GbL9CKaswF90SaDG1+c1Y4aT1iUarHIl7BDARA+kPKDVjcF5gCoEcM9aIb8RTh90oDtGLc8AjVMzhMxcsrXmf0HRJNbi4eJHioV6pu/7bTrQbpD8DwCnMhkLQlIsFKeiEC0RpYqhAlSbL1/FiaEnHC06Heb2TJ70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f6t5pYzK; arc=none smtp.client-ip=209.85.222.44
+	 To:Cc:Content-Type; b=vA7qA8RNMW1anGrf1FtR1389qfL8Pb2vRyTM8Sdg6WP21R2aiqCmV0Q1PXRnfXXEe/kNcnY9CC4dRtbdjggTZo98oQp2u5hxtJTUqJZ22Bl7YdZXGtkc3pNNcTmHRum/CdfYUAED1DUpkwbr9kvsfGIrnSCmht38qrNFR40BOso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GUmdAMvy; arc=none smtp.client-ip=209.85.221.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f6t5pYzK"
-Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-8e3d93c0626so2678003241.0
-        for <git@vger.kernel.org>; Mon, 13 Oct 2025 01:18:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GUmdAMvy"
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-551b9d94603so1147188e0c.1
+        for <git@vger.kernel.org>; Mon, 13 Oct 2025 01:22:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760343505; x=1760948305; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760343747; x=1760948547; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MP6eM6d84V+KwB7a9C/wFTT7hdJY86x0ZJ1uctyqhqg=;
-        b=f6t5pYzKAs+oaGA7tnZ63JWIywk3VqQpBb5/EMxFtHY/VJzYPGigY6CStuEXbagOQC
-         GwV2mHv3JfBWgreC4A+D7aH9hqAdVux1etPUPRrTcNq+x5uiPlcfnnB2xVTSHp6BrOli
-         0pzAITreXSv43Ov6evv3eYaV7C8plBqrvQShM8sM2OayMX2Gp0UrPbvnxpZmACY7ED3t
-         paCT0is+dE56D3Txdpf/3DktfX+AwnrTC5QfJau8lcQyuKnrHc5rlS5CfCaC29HpgsEW
-         cVXpknGeDQ1/yZfxB7GDZzGtGl1yp7XTxAIhaKgfsa8iOzSjLGZzTLwG/Q6M70ie+Ng3
-         gJUg==
+        bh=/jMAKgWyJtuNH3uLMtvHA4X3xx8is7LsFncfcmqYN8c=;
+        b=GUmdAMvyF4eLohEwufjoW3vhyu6Oyq4c37zdrjjaZxKxUEilTsRYDiL8ZwzFc1GAuZ
+         73SCRacscKOjFLPr6I3aegVIcOoX7Bv72S0KA4C4LSi/Hg2TvBv8LnoU+KJtQAQYF9db
+         +sopKSMqX2lTbTZ9TBQTaR+X19tZ+USOCQQqz1K/t3Jl1LwWCeDIK39nO28NRI/bq1fl
+         lgPFn5jxrviVvEpzcAts5amH1cED6kS9yeMiPYOjZDVusfu4UcnAINXCGSMJw7HXylsz
+         sc3Hj1G7UtTdSGA0DY7xeUMuaGUepAkfxftsfoFTYyXGL9HPRkj0/cMEfu8Ey/BT1cWA
+         cClQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760343505; x=1760948305;
+        d=1e100.net; s=20230601; t=1760343747; x=1760948547;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MP6eM6d84V+KwB7a9C/wFTT7hdJY86x0ZJ1uctyqhqg=;
-        b=rbAu/Rg81Cu8faPxhTezh37dWQIpM79tWosN59f2yyUwb1lWuivJOuPT3kIi3MOw0w
-         LRbxeavB7eq0rDjB0hpbcROlOExjIL1QlkerAmtcmlcAJwH0G18W/5XgLzrdigDKKd65
-         1ZXWFP6x8tEtVACN3XijOBo13I4Xpi1e+SPFQnJsk6IQkaVbRFWeJcFEhGDRdgyJOr/j
-         dUo67+m/9mCFRzgeH/kdTfXRNiQjKqjXes9gfEAXk+7GrNyVkTQpHs4qzsYuAgALhWoG
-         3OYnyjDspOgwaouSG4SkCLhNDVTajmrpmpEeOeldm/cFCT953A2Z0cU9dwiIW5dnGgJ2
-         V/uw==
-X-Gm-Message-State: AOJu0YwinyHA5wyi6qsSIu75s72T86djNuHfcWsnv6fwu5oWqXjuMwTF
-	d4K4WrWmfV2u/55S1lR6+uKVgJ0XZxp+9TjAocVu4XnlFJ22gM/UdBvu2T3u5rPcrdG8z7fFPcZ
-	ye6AKiN+fRQyFwqGvmaELfayK8OnFLQIOn0jf
-X-Gm-Gg: ASbGncvFc4n/GbnD24TmTn6j7h4zdsPDGz54ZmvLxJ+MhWynhHLanR1KZ7xVeOA+h00
-	0cTna6NvtQKvl3Vz5JFPL+1w73tWJzIbvGHkECfJWIPMXkmJ16NyokUvX7UqUE6SmQugWcJCmnv
-	706Vq8sALSxyCfV351h6YiAS7jWSvQyVxZbYkTm4TVECnznPKlIF2u8Sp6JDq0Kjh+RQt3Mnw1M
-	+DH4jeJ7j+vL58+flCDKa9l++qjtbYdwPfxd2Q6BEKVSjejoqCAl/QPdIg=
-X-Google-Smtp-Source: AGHT+IEpM50QdRSFxje49poMuCYPbVF611WHUYk32kRRRP/Vs/cVBk1yvJTvPfO5pksYKvI2H8E0ZwgGp7uPAWOyA/M=
-X-Received: by 2002:a05:6102:4b05:b0:530:f657:c2e with SMTP id
- ada2fe7eead31-5d5e265d911mr9902112137.13.1760343505107; Mon, 13 Oct 2025
- 01:18:25 -0700 (PDT)
+        bh=/jMAKgWyJtuNH3uLMtvHA4X3xx8is7LsFncfcmqYN8c=;
+        b=W37EiWB5YcktLsbu5PDraaebh6Oj3ANwkdPKfdqMvrd5wE1LixbPsDCSVgc8M9PDXr
+         4ZFjYBENq/U3IWGvn1A85dgh1WV+pY0Sx29wAkeDZJwNCaKUzamxCeTQQKRfwG8AFsNR
+         OTalQlyL/sRcrh/fcp7Hs85EC3tgBEATqAPX3k+b7vivFg/m4rWe/0AVRQyVT9c6s0SU
+         5sphEF+rXscalGFKKAZPPhiIja65k2Ql6l5KpJ3E88sEQGWa1+TM5Jit6u1SlkIm+FIP
+         teZyd0K3PI9r3U6TAj88xgUDxBgPjAhwN6Ql8aIBYQ41Si6q7MBUE52DVUa8NLxm0JrH
+         ixGg==
+X-Gm-Message-State: AOJu0YxgqxT36QDYKaI3V0ROQNx0Ij/kTZTHWLmYkNyDJ/Aq1iAuHkO3
+	YUbQIN9NbAKE7FXkMIuWQmhTDDYgq0KvyB3NGzN97on0w8jJ6uTw22ufdOyapA7sgF+DXQGittX
+	Rt3NWa4BlKRRJxAfDmDenMonRzGqK+/o=
+X-Gm-Gg: ASbGncvBN2oW3sQwPguCA3KB9WdvUYrNSnl1T1bYjwN2NY2aAGF9TP7UUj7UMulAowY
+	rM0R3D2j8ciLRLUKpuvlh0KLjxkd6iBQoDwtZCxQ7HRLoDmg+2HdKGErwCluOeKDktzkgXmJA8O
+	sUO5HmVlzTfxx6ssvllMjWbeYTLn2leCgzseYqXHY5gCEFO+4HILCXoqqGy+lN7Uy5KR8bipdzk
+	omOXfZOJtgicUkw
+X-Google-Smtp-Source: AGHT+IE+XvO9guJJ3iP6e//rpWmbqN4ReEI3v0qJxOTGiskdYI2l8WSvkHf+p8ylfsLgsyrpwVQlrQbe+s2KDUdmfpk=
+X-Received: by 2002:a05:6122:8c5:b0:54a:2600:bf86 with SMTP id
+ 71dfb90a1353d-554b8b97c56mr7157579e0c.7.1760343744949; Mon, 13 Oct 2025
+ 01:22:24 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 13 Oct 2025 01:18:24 -0700
+ HTTPREST; Mon, 13 Oct 2025 01:22:23 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 13 Oct 2025 01:18:24 -0700
+ HTTPREST; Mon, 13 Oct 2025 01:22:23 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aOjsYoeMkF6-w7G7@pks.im>
+In-Reply-To: <aOjsa3UWw3ygo8FU@pks.im>
 References: <20251010-562-add-option-to-check-if-reference-backend-needs-repacking-v1-0-c7962be584fa@gmail.com>
- <20251010-562-add-option-to-check-if-reference-backend-needs-repacking-v1-1-c7962be584fa@gmail.com>
- <aOjsYoeMkF6-w7G7@pks.im>
+ <20251010-562-add-option-to-check-if-reference-backend-needs-repacking-v1-2-c7962be584fa@gmail.com>
+ <aOjsa3UWw3ygo8FU@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 13 Oct 2025 01:18:24 -0700
-X-Gm-Features: AS18NWAH17g1PbLdFLe--Rs7tYpoYHKd9yDN_gZGV9OukOpwVxnHHVzsRVG-NYc
-Message-ID: <CAOLa=ZRuZebNnPz9punnHxBqSPNp+CbM4FJ6BG1RwC1D_Fjz0w@mail.gmail.com>
-Subject: Re: [PATCH 1/9] refs: move to using the '.optimize' functions
+Date: Mon, 13 Oct 2025 01:22:23 -0700
+X-Gm-Features: AS18NWAX7Cqp2XVERGReNkW79xFmjUuGJp8IJ1Ux6-FYUakDNDVrH2SuTTsIbx8
+Message-ID: <CAOLa=ZQC2jd=ZJjnaVEC-obYfBLipenYDFpQjsxcBX4_ULdUcA@mail.gmail.com>
+Subject: Re: [PATCH 2/9] refs: cleanup code around optimization
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000004e1c75064105e9d5"
+Content-Type: multipart/mixed; boundary="00000000000099e6b3064105f7ca"
 
---0000000000004e1c75064105e9d5
+--00000000000099e6b3064105f7ca
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Fri, Oct 10, 2025 at 12:27:05PM +0200, Karthik Nayak wrote:
->> The `struct ref_store` variable, exposes two ways to optimize a reftable
->> backend:
+> On Fri, Oct 10, 2025 at 12:27:06PM +0200, Karthik Nayak wrote:
+>> The previous commit, moved all backends to only use/support the
+>> 'optimize' function within the `ref_store` structure. With this, cleanup
+>> all references to the 'pack_refs' field of the structure and code around
+>> it.
 >>
->>   1. pack_refs
->>   2. optimize
+>> Modify existing documentation in this regard.
+>
+> Makes sense.
+>
+>> diff --git a/refs.h b/refs.h
+>> index 2dd7ac1a16..c6c955d78d 100644
+>> --- a/refs.h
+>> +++ b/refs.h
+>> @@ -514,15 +514,11 @@ struct pack_refs_opts {
+>>  	struct string_list *includes;
+>>  };
 >>
->> The former was specific to the 'files' + 'packed' refs backend. The
->> latter is more generic and covers all backends. While the naming is
->> different, both these tend to perform the same functionality.
->
-> "tend to perform" is a bit of a curious thing to say, as it raises the
-> question when it doesn't.
->
-
-Indeed, will rephrase.
-
->> In the following commit, we will consolidate this code to only maintain
->> the 'optimize' functions. In preparation, modify the backends to also do
->> the same, by moving to supporting the 'optimize' function.
->
-> Maybe: "In preparation, modify the backends so that they exclusively
-> implement the `optimize` callback, only."
->
-
-This reads better, thanks!
-
->> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index a4cda57981..0b81bd7f74 100644
->> --- a/refs/files-backend.c
->> +++ b/refs/files-backend.c
->> @@ -1445,8 +1445,8 @@ static int should_pack_refs(struct files_ref_store *refs,
->>  	return 0;
->>  }
+>> -/*
+>> - * Write a packed-refs file for the current repository.
+>> - * flags: Combination of the above PACK_REFS_* flags.
+>> - */
+>> -int refs_pack_refs(struct ref_store *refs, struct pack_refs_opts *opts);
+>> -
+>>  /*
+>>   * Optimize the ref store. The exact behavior is up to the backend.
+>>   * For the files backend, this is equivalent to packing refs.
+>> + *
+>> + * flags: Combination of the above PACK_REFS_* flags.
+>>   */
+>>  int refs_optimize(struct ref_store *refs, struct pack_refs_opts *opts);
 >>
->> -static int files_pack_refs(struct ref_store *ref_store,
->> -			   struct pack_refs_opts *opts)
->> +static int files_optimize(struct ref_store *ref_store,
->> +			  struct pack_refs_opts *opts)
 >
-> `struct pack_refs_opts` really should be renamed to
-> `refs_optimize_opts`. Let's read on, maybe you do this in subsequent
-> patches.
+> I don't think it makes sense to carry over this documentation here. If
+> not already the case, we should document the `struct opts::flags` field
+> in the structure itself.
 >
-
-Yup, that's handled in a follow up patch!
-
 > Patrick
 
---0000000000004e1c75064105e9d5
+Fair enough, let me remove this extra line added.
+
+--00000000000099e6b3064105f7ca
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 934bc0f9cefe96a3_0.1
+X-Attachment-Id: 47b48f7f075c2033_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1qc3RjNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNUZMQy8wZDVPRXAxb0NGSTUyZUNtTUtnZUhyN3NSdgpRZDFDaDVpRi9K
-WlZMdTA3UkZhMEU3M2hVZjNIVXlXQzg0TW5XcVNhUWg5b2ZoY2tlVkdVcmV5ejRGUnBzK3hICldq
-ZnlEb1E2QkM3R3BCbi9PVHNVODJSOEpkUG4yY2dFQXRpTDFxa3lCS3dwODVVOFE2WXdkSEphN0du
-MHNoOTEKNzNhTldqYk01M3J0MHZZTzYzczRMWDFwTmNIYVBteHNJN29teklyd1Z3UDJ4OURPU0lh
-ajRoQlg3RDN0RW8vUwpwS3c2dlNML0Z3QU51VjVCVi9vV3JLRlpHYmJ3RjlxNFFBTFlRMWExTVds
-cGlyY2lNSkN6ZHRTUE9vSy9naXE0CnozNGRhZExudFVLbEcvYWpaNjBvMVpHclNkV2lEa3huR2Vj
-QlYwV1dhTnNqV05NT3RrVHJlVGRLWXN5Zmcxa3EKdUoyQTN6bmExMU16cENnUjdzQUU4d0NsdlhC
-QWVIbXFzUUlpOVovYlNQbVFXK3lkTC94aFlJMUJ3akN4aHVUdgpVM1NoZERkQ3FrZVBhTE04YnFx
-V0psWHM0VVcyd0lyQXBvcVIwWUVROEpRWDBKUThkU0ROOWU1MFJOdUJVd1owCkg4L3NSenRGVk9a
-Q0ZiWEoycjBxNFBEWDRtc0paNGVzTkp3R1JVRT0KPUlUOWUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qc3RyNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNllTQy80b01DRzJzRHo4TDFhaDAxWGgveE4wWmZsMApiVTVZd2VMc3Mr
+N2FMVko5K01CZ2hKZmtrbWo5VEUyaG96QlJNY1hxZFVIVDRnaFlzOFdOMUh4cGxsem5CR0liCk9G
+RmVSaENvNWRCc3dtMEtRNWtGWXhDUGM0Z2N4RGc4RWpiRnZqUFovQTRWdjIwZUF5OEpjb1RIbWNp
+SU9ZSm4KckN3UTM5UXAxTFJveFB1VytRc1FkM2luVUtNeS9YdC9CamtHZ0VsRjlkejN4Sk9HMGt2
+Q1pZUmNYSGZ1cGwvagp3Q3AxclhpcSs0UVI3QWd2dENOd2tabFVnZEZ6VHJLeDcrV2hKWHBXVTN3
+SDdvNzIwckxHR25kUGpnaXlPVUUxCmJodUxlQjF3cHJ3c3BzcU02Z2FWU3FmcUlGc3JBTVJiMnNo
+eEtBWndUem83N2phazMvODQzVmdjckNSbkVDVXgKY21Ia1lCSERYVVRhcU5qUmJCaGtOYWhGQXFF
+SG9CWXhXL0w4Um1kSnFVNnlyV2RpQU5xdEVha1l6dmsvdUwxZApjN2FGTHF4Y0d0MVpoUzhIRFpa
+RlVQNUFzTy83a25YUy9UWGl2WHNaQUxNL2QvaEFNK3FERTJtZ3lBSC9LejJECnpzL3BPdzh4US9v
+cEZvVFBzaERGWG82TGdyd3JPOWdmejg2anJuaz0KPXhtUW0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000004e1c75064105e9d5--
+--00000000000099e6b3064105f7ca--
