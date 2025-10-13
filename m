@@ -1,141 +1,152 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6211D25783C
-	for <git@vger.kernel.org>; Mon, 13 Oct 2025 19:40:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DE223D7ED
+	for <git@vger.kernel.org>; Mon, 13 Oct 2025 19:51:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760384405; cv=none; b=HtNIV+L7MzoQUFFmQNVRVFJtTtGckj79DvSXSGGcNh8S1JbX0LSWJw95LztXcBKNOEw2IppK3PJKL20gZDBc72atTsgJyEfKmwyMkfifTpOOwJP+xlLBLMmMwiMIaNtsL9IrBcB/WUT/7sKEVLIpKpbSKJc+cVBjGZw3ZfeAblw=
+	t=1760385099; cv=none; b=eGcok7XYOo+2qLokMXjcl9+Cl3Y0I26+EbTafy0Iaa+kH6l+y22yFNvpY3UYZkCrSC3C9i5zDJVRmfvIpfzvWII1R319kxtfhk6J+NsXwSYIYHA7ZHdHtWvMurImBtwkm/aky22BF1XWE/Lb6mdDXTw3+2cStUWVPC/OjJt+9Vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760384405; c=relaxed/simple;
-	bh=WB6BDVXUGUjUI6xyXtNlU/OXJRD2Y4AFfkD0dkyvizA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Bx3GomMgDGk0Efe5G80nnZU5OgG/WEuol4+1L4OClAXrUfEIQTcYha8npmczVwBBIPCvjxuCEtHjbdKWjdtKIEcwlMG6N2W4aod4zGb2lFZDsLQext07OhvMNpY1TshjB2As5Rl0RUCVSDcvhnKq3lrOU5aQl1DKMq5FIY6HSYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gurWoWr8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BHxY1I1J; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1760385099; c=relaxed/simple;
+	bh=vz/yREGy8HbVJ2L2ZCT88hNaoMAbH/TEFOd71tVx71U=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=KlUk/FUEsMPol0YvYaRkqS7rv3FEfv3wO2eopipmc1S5X7chTJ+gC2vSBLRJwEzOXUA7k++zSu6HoPgnhXJG14aJg2xuNZC+gG9Q+jY6G3R3900fE/GbuymJ1t3d44FB3mZrqZHmmHFQFnK2ThA+xBQlL70Sfw21CU28UTh3Cwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=VSlLPRe7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F4AcOLVj; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gurWoWr8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BHxY1I1J"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0D28C7A04D4;
-	Mon, 13 Oct 2025 15:40:01 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Mon, 13 Oct 2025 15:40:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760384400; x=1760470800; bh=reBleRfJ9L
-	Li6J6vvE4WeKANhgvrkZMLTUNSG99TIa0=; b=gurWoWr8blvsD4yTNQ8Si19TQ7
-	dfTSi4PWLIW81O6hslccTmGArMUOePOoMRSO6tKY/hD720TIChP7ZaDfXfP7rVOL
-	3hRjmYKmAevOfeY8z7FibS3Qt+OBsm1bfEnFnvZ6Jh+SuT45ZgPcCpvJlmGD2ewt
-	A4rjYv76nK9t6EF1AEsNkN6RDpoxARMmVzTGmxg1tRBwVL5Qrq9YHnTF6N2gx7dY
-	QyaP7ZxJr3p4iY9MBzrtQRaC4qjCo5xELsCAfd6b7sMMKa3EWaklKUGK7Xcjb8So
-	jJU/Q37PCB1nh6oiI671+fc0aMRg3FBWvlKndmEbyTkNGGZtSMtsUoYBWsdQ==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="VSlLPRe7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F4AcOLVj"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4945314000CE;
+	Mon, 13 Oct 2025 15:51:36 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Mon, 13 Oct 2025 15:51:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1760385096;
+	 x=1760471496; bh=x3E2BNv0RWjmf0jwvAcZBoRGtaUBmiWaGiPQQKHb4EI=; b=
+	VSlLPRe7IkWV0I9ofEJu/UsM/VzgfPGcNyrZrYoAsL2LNRxlbP1gPkg7lRgRmOZz
+	/BMuZ6Bo2gIK4WjFvXVS21uMZEwDgvDHLIu8XahfMAfNwUCqOv2gGNbis81LBlsA
+	uRoaOLCVQ5tIkJQXhLOxCt0GVv88SFGLkWtEJc1jcAQNWWvnY4frwZ2mX0wZcRkc
+	yRs5KgxWdAWSByPZdTFFvzeJpGcqyL1Z53tz68McgJXcib5O6GDpZmYDqtG0dsDD
+	/rQ5upcZH5KV0vzhXJden17c6IZDM+77JJ+6RLnUwEjsPSJYLfu0i6bFOT05ad2I
+	B+AKthfrbcmwmKTh0lbMOQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760384400; x=1760470800; bh=reBleRfJ9LLi6J6vvE4WeKANhgvrkZMLTUN
-	SG99TIa0=; b=BHxY1I1JKFmgcYZuZ3qJOfK3xfrZ5vinMY7C6G9K6co55uA/mUo
-	B4yr82Z1bH8PnXd/NV8iv+WfVtDLoaXBEkImQCB/vTQ79U20Q5tkWUzmtSoba1Zy
-	QFnWCMlYy1HGvZN2ee1U8mbxoWRvkMujXjeqQqGxezhczjBO4l9CbdczmCLg2Urz
-	+js1iRzSp8/+pid97pIBhaSi5Jh73GMm7DpBLCxzeOOfJML9WvT5dA7y6md/I46v
-	5nqLccl8DrSMm90F6G5rSqYtH6aP1XRas0monQIdCde2DrEDeYs1328vKMhquyrd
-	phCRd+WX9WNtZ8hZ9XHBufVU9aVR4RcR6/g==
-X-ME-Sender: <xms:j1XtaMiErE29X0zVEKKc446bci7_YZkRSb_yike6QcwiElN6KKv_OA>
-    <xme:j1XtaPZNVXGHVgYt9f5nyTzWHAnhtepiS4y0wNxUOcoBwLq2Dv31Dx8TcM_0EX2-K
-    9apUw2VFIe_4myk0moWXLnuxCsfzIl0LFJ_Ir-riycoMJX5yXsElg>
-X-ME-Received: <xmr:j1XtaKPV68T5elqUa4RcN0_xgR-XqPz9HrHkKLVga4NhXU_72RndDv8f4CPAAc-R9jv0ltx7FfoZUkkVWwSoCHqzw102v6xZVcoB>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduudekheduucetufdoteggodetrf
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1760385096; x=1760471496; bh=x
+	3E2BNv0RWjmf0jwvAcZBoRGtaUBmiWaGiPQQKHb4EI=; b=F4AcOLVjsjR5BPbya
+	tpSMOHZS4cun6f3CaQ9N95WFi80RMD69Ognl5TLj+7O9FAt1OhwuldXHp55520Ju
+	usKLafWH9W/cqket+UbtZgCAikbVZHCsVkekGYQcxfYrnxl2n9rzgf0X1tPuuDm4
+	eowp6gG7jjLaySidcksMpy2YmyvlWor2obTtXvcM8ESzumElTn7nqJEyOSyFBLpr
+	TsR2gEpVO8dTbqSQu3kZnQbJQniMXHSZfYNThgVtYgMeaLInBLhnwOWHn+iFvBRe
+	FguY3rz4wBl/Uatb8m1kA+63EKJNypRBzOR2XzPnytjnI5LNJ6//xAiVzgL95n2i
+	n8rYQ==
+X-ME-Sender: <xms:SFjtaPGMpweEdqJRlG79mnbUyJ7v5xvbj_PFu6Bn_y_f5KLFiZdXXbA>
+    <xme:SFjtaHJcspKGPiPPVlPutPVgIdEw7Zk14J4TCqHyElQ71bgXCARWl9o3pC1g4njKl
+    ETb4udPh_wR76h6kdp52ptoxYwkqr9cI63M9olRfvDZbk1Q8Ha8zwY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduudekheegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrghnrgefudesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgt
-    phhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtph
-    htthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdr
-    ihhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtph
-    htthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:j1XtaIaMBSLXNaSjsXIVjaoMUpL1Fmou0iCCL5GeJZhfk2ncRk7nIQ>
-    <xmx:j1XtaCU-UMwIu8ix3X2AXhvRoi6tczRM4ANS-N8hbP2f5MpA6YGpXQ>
-    <xmx:j1XtaPAmxqnfHGWBx8DW6U-yY5cO_ZmCMGEGCDIpeoNDZ4QxfCC0_g>
-    <xmx:j1XtaGKkfbZUeoMxw-M1pCR9vylXmZekj3VjDUkxwLZMR_oNUSZIfA>
-    <xmx:kFXtaMfzXXKKf7yK0G8_g1bHamuf0P8pe1l9ULSdpjZQUcnYAvlobgZJ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Oct 2025 15:39:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,
-  phillip.wood123@gmail.com,  phillip.wood@dunelm.org.uk,
-  newren@gmail.com,  ps@pks.im,  karthik.188@gmail.com,
-  code@khaugsbakk.name,  rybak.a.v@gmail.com,  jltobler@gmail.com,
-  toon@iotcl.com,  johncai86@gmail.com,  johannes.schindelin@gmx.de
-Subject: Re: [PATCH v3 0/3] replay: make atomic ref updates the default
-In-Reply-To: <20251013183311.33329-1-siddharthasthana31@gmail.com> (Siddharth
-	Asthana's message of "Tue, 14 Oct 2025 00:03:08 +0530")
-References: <20250926230838.35870-1-siddharthasthana31@gmail.com>
-	<20251013183311.33329-1-siddharthasthana31@gmail.com>
-Date: Mon, 13 Oct 2025 12:39:57 -0700
-Message-ID: <xmqq7bwy1tgy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gurhepofggfffhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeffieeftefgheek
+    geeitedujefgveehvdevieelfeeiiedttedtgfduhfejiefggfenucffohhmrghinhepkh
+    gvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
+    lhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
+    gtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehrlhhomhhitghkrgestghonhgtohhrugdrnhgvthdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:SFjtaFwSI3lP_3C0yoBkhnGs3CmnXi9glSbZOCHlZVwXB_uz0e-AcQ>
+    <xmx:SFjtaDPCF_OIOd54m4UOHEt87ACxJkv0oVayc-S30qKJ_wnwyiKK0Q>
+    <xmx:SFjtaG7_YQQzN7N2w_oyU_8fJ5C5o1fbjEhQL2mnXFpW2SdN_JLnVA>
+    <xmx:SFjtaEOBNmT50bIbFkUeipU9wQGbTFi7b0PbFuplDsBLl5v3EhxdMQ>
+    <xmx:SFjtaDyDiaXtz7POYrjFoxaV7ADcPDRtwPtJKOJ9aQYCG4b5_xTkGWkv>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id DB3421EA0062; Mon, 13 Oct 2025 15:51:35 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: ASBUPAYCqKF7
+Date: Mon, 13 Oct 2025 21:51:15 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Roy Lomicka" <rlomicka@concord.net>,
+ "git@vger.kernel.org" <git@vger.kernel.org>
+Message-Id: <4f213721-4fd5-4073-8be3-99de1ffa4a8a@app.fastmail.com>
+In-Reply-To: 
+ <SJ2PR03MB7043AA590AD8D80DB4EC7B73CFEAA@SJ2PR03MB7043.namprd03.prod.outlook.com>
+References: 
+ <SJ2PR03MB704376284D14F92B54139BFBCFEAA@SJ2PR03MB7043.namprd03.prod.outlook.com>
+ <SJ2PR03MB7043AA590AD8D80DB4EC7B73CFEAA@SJ2PR03MB7043.namprd03.prod.outlook.com>
+Subject: Re: git whatchanged --i-still-use-this
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Siddharth Asthana <siddharthasthana31@gmail.com> writes:
+On Mon, Oct 13, 2025, at 20:55, Roy Lomicka wrote:
+> This is one way I deal with the fact that git has no option to respect=
+ mtime.
 
-> **Removed --allow-partial option**
+The general recommendation is to replace it with `git log` like so:
+
+=E2=80=A2 Given: `git whatchanged <opts>`
+=E2=80=A2 Replace with: `git log <opts> --no-merges --raw`
+
+And I think that should be okay in your case since it seems that commits
+without changes will not affect the result. See longer explanation
+below.
+
+-----
+
+Longer explanation:
+
+See:
+
+https://lore.kernel.org/git/83241BDE-1E0D-489A-9181-C608E9FCC17B@gmail.c=
+om/
+
+   I run an important python script that uses this to set file times to
+   the dates of the actual git commits, so as I browse the files I can
+   see their last modified date, and not the date that the file was last
+   synced.
+
+The recommendation above will give identical output as long as there are
+no empty commits in the Git history.  Where an empty commit is:
+
+=E2=80=A2 A single-parent commit (git-whatchanged(1) does not care about=
+ merges
+  by default, and not in your invocation)
+=E2=80=A2 There are no changes compared to the parent (same tree)
+
+See the explanation for why they give different output in this case:
+
+https://lore.kernel.org/git/20250825085428.GA367101@coredump.intra.peff.=
+net/
+
+Normally I wouldn=E2=80=99t note all of that since it seems unlikely to =
+be
+relevant.  (Certainly shouldn=E2=80=99t be relevant for interactive use.)
+However here the case seems so *scripted* that not being
+output-equivalent might end up mattering.
+
 >
-> After discussion with Elijah and Junio, we couldn't identify a concrete
-> use case for partial failure tolerance. The traditional pipeline with
-> git-update-ref already provides partial update capabilities when needed
-> through its transaction commands. Removing this option simplifies the API
-> and avoids committing to behavior without clear real-world use cases.
-
-Ack.
-
-> **Changed to --update-refs=<mode> for extensibility**
+> powershell use-commit-times.ps1
 >
-> Phillip suggested that separate boolean flags (--output-commands,
-> --allow-partial) were limiting for future expansion. The --update-refs=<mode>
-> design allows future modes without option proliferation:
->   - --update-refs=yes (default): atomic ref updates
->   - --update-refs=print: pipeline output
->   - Future modes can be added as additional values
+> 'git whatchanged' is nominated for removal.
+> If you still use this command, please add an extra
+> option, '--i-still-use-this', on the command line
+> and let us know you still use it by sending an e-mail
+> to <mailto:git@vger.kernel.org>.=C2=A0 Thanks.
+> fatal: refusing to run without --i-still-use-this
 >
-> This API pattern prevents the need for multiple incompatible flags and
-> provides a cleaner interface for users.
-
-Ack.
-
-> **Added replay.defaultAction configuration option**
-
-If a configuration option is added, please consider and think hard
-if its relationship with the command lineoption can be made obvious.
-I do not think it is obvious to anybody that replay.defaultAction is
-somehow tied to "git replay --update-refs" at all.  Either the
-variable should be renamed to include words like "update" and/or
-"ref" to hint its link to the option, or the option should be
-renamed to use the word "action" to hint its link to the variable.
-
-> The command-line --update-refs option overrides the config, allowing users
-> to set a preference while maintaining per-invocation control.
-
-That would follow the standard practice of configuration giving the
-default that can be overriden via the command line option per
-invocation, which would match end-user expectations.  Good.
-
-Thanks.
+> use-commit-times.ps1:
+>
+>[snip]
