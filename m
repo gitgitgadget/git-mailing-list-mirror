@@ -1,114 +1,118 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9512BEFE6
-	for <git@vger.kernel.org>; Mon, 13 Oct 2025 17:29:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8180221DB0
+	for <git@vger.kernel.org>; Mon, 13 Oct 2025 17:47:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760376554; cv=none; b=M9POzcEyM7/ZYc3v4oJs+WvQh9D92Q/mUoU0+Bt9vi19hhAAMmqs5yTSMwt0JnFYR1xud/bB9nt0Y6g12V39PkPJ/3UiHnLThMIPKua0fxlccTXVwDDd+dTymQPQoJkKrIvIsZnyld2NzYZcKMmcNk46tGD5ZRzWXDPM/TM1oAo=
+	t=1760377635; cv=none; b=atpluzXNzVwy0vQEMeyT8ZGtk0IgaZUZoKvdiBQag/0icri0IWZ8r1SwMOUs7inp4gR+G+e3b2N6cKdHgibFZtzbPGn4dFPNkLD0MscybQigspfkpVkx2PDXx3WbHI42vmNcBUvksUm3z5AvWrMu3zuvIymCxj02HAgDfwUbLxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760376554; c=relaxed/simple;
-	bh=Gz8xPCtKGhDUjM0/M4Rm78eSYwXDA/3S13t0jPJ8DRk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HOxSvAO9DeGKq4yrSZRXBu2uWAlyqQ2h80u26PywLNc8y10NeOY+3PJ6vKLymRyTtLqlv9doyrU3Ir7zHUubqYMygC7rRYztuNN2z3banswYwY/UHMjuZG6orDSlZKc9RZ40SdKI2MgBn84M2eIb9NZpveAVzK//9iFufplRF6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cNt4TCw+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EekDy0Vq; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1760377635; c=relaxed/simple;
+	bh=DRKjDru7fBjkO5oLjKOb4dUbQhvMy0OUL1IZCeWNgIA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bvV2oIXeCMK+hL/boWs957GH9JS0WmHi5EmjEeyqiD6ZdWnH3y80mopp8PT72i4kA7HIXYHeCia5Z5RqOAODsYgg1C4OtEShQBSXvy72kpYYuPYGd30Bxnwxpzvv8MN/0KqGh0jYLcqf0jdwvvG9QSBk0PntvuyyY3oocKF0PSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gdTHjSiA; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cNt4TCw+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EekDy0Vq"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E714E140008B;
-	Mon, 13 Oct 2025 13:29:11 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 13 Oct 2025 13:29:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1760376551;
-	 x=1760462951; bh=7it0zaYEnA8gQLjO9xEKPJp7nlb9LMH7PlxuyBy5B+4=; b=
-	cNt4TCw+rgOq4/iPjlI6qbnHZf0ePaCfcs/cGj3lE5IMms2BH4PjnfLZ71T5nD7n
-	8qRoZ4vPfgtH2LVk16qECsPoDAM7Gl6WgPMfe1QHdQB6AwiDXrXOwcqluk5+wRvR
-	QGoFSNS88n1bQmazksDwgH8s/gql2fALYSE215e1xL0JnQ+lSSrJmJdkMaAt0VUd
-	5Gy1PwBB8U1RfrXfXd0zXxuE47U9lciO+xPEaGpieLMBD70K7DyDDtrc2C26AEeG
-	z0OfF9zvuTMhMkYOb+a14brIsCjuuJ8o7oviIWdc06u41Nnzc1Hq14fQ/tcpPL3Z
-	NxcR3b17wuEYqHH9Dxr1pA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760376551; x=
-	1760462951; bh=7it0zaYEnA8gQLjO9xEKPJp7nlb9LMH7PlxuyBy5B+4=; b=E
-	ekDy0Vqc/rYDlbvSeioOiLfK8HK18mUeWlDRsiDKk0aJQe/UtrT+ds9TNRqQdbHx
-	NDo85oB2QQoDmgYGt7hbcYdGkdU7Nut6mGKfgl7O4uT6Nj9T+43WDTsQDoReKzte
-	uYVCrqkIdCt79MAR6OqYQy/KIhYuDJ0eoByCNOYLfEUzveqaz5KfRLwwCoLzHSkd
-	nllTXzJ5eeRws6ZFqlHS6f08yRMIxc/X0AFMYEOdoPV+8vtAxEFKGp4rEFd+m5zo
-	aes1p5TBGH2Fq+yy2SlWXCSGwo4uNw6MkLE+DZynR6vRhL2OtRv5zoDbJd5whby6
-	8eaFfYNZ07FkTvxrrBO9A==
-X-ME-Sender: <xms:5zbtaGldVKXcgCZzyeBXVKMqraElrlM6h9TkHI2cJ10K09Y-w9SKhg>
-    <xme:5zbtaFQTdg04Z8qtd9yTDL-XbNKGaH5NLYtEvsjBdGZEpmh9arWYpA-RWLfJEkCBx
-    Yx2lxrsYlesAY5yWoA-NgxU7N7OLt1GXHs6w7iFsFGlWyjZS-1vmQ>
-X-ME-Received: <xmr:5zbtaCC7ka5XI0CD5VVeCbJXlPmZ-sa_vJZrqAqAwbT7X8SAnk673f0hA9bxyN6iZGluZ7yk3eb6sXBNmiFLorT3F9E54d-KJ5v->
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduudekvdehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehokhhhuhhomhhonhgrjhgrhihiheegsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:5zbtaETwdWyG6Ccpez9i7uK-gBeHBap74K4s8n1Jp8IGDOSFJFH1xg>
-    <xmx:5zbtaIrgJQWi6GbU2COdeWjj7UWsM_2-xJfig_lBc8fbTtoWevXtAA>
-    <xmx:5zbtaOwXpu4n0Ldy_xefW_9WD-005i8os3Hrpq7BQ0wVKCpvP1bNQQ>
-    <xmx:5zbtaFJBmfkPIC_vQNZwFqDxSuwCfXjKX5Dkn5b8T94QqTLbXRet2g>
-    <xmx:5zbtaJSu6bilN9BKfWdmx__fUMM7LLqFvv29phnJz0ur_zH5q-ogdg8N>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Oct 2025 13:29:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] [Outreachy] patch-ids: fix const correctness
-In-Reply-To: <CAFpMFfBXhfy7ecBzR-cnGViivQG3AHGrQ00vSTnVY6OdxZPSLg@mail.gmail.com>
-	(Okhuomon Ajayi's message of "Mon, 13 Oct 2025 18:22:24 +0100")
-References: <20251013165320.201333-1-okhuomonajayi54@gmail.com>
-	<xmqq4is23evz.fsf@gitster.g>
-	<CAFpMFfBXhfy7ecBzR-cnGViivQG3AHGrQ00vSTnVY6OdxZPSLg@mail.gmail.com>
-Date: Mon, 13 Oct 2025 10:29:10 -0700
-Message-ID: <xmqqzf9u1zix.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gdTHjSiA"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3f42b54d1b9so4030865f8f.0
+        for <git@vger.kernel.org>; Mon, 13 Oct 2025 10:47:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760377632; x=1760982432; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VdOCzJICF1lPnWJY+txtSmMJ99t79aiuntF/GE09iNA=;
+        b=gdTHjSiAlnukezRxaJx/xvanwFHnnjqE59UfRR/+VGqRafy9GD5kWUDOCByF29KKTK
+         8X3l+x2X4o7zNpxpD3zy/iAVG+4XNvPIjdrjNXgBnKFE3FhQ834NoUpDxcIUOHAJgaV+
+         DD80igyiDJh/wdTSKBbwkM3ZasGIIqbIHBumAOKvuYYmP7XXDiU9F7+YNqBvSnxR8NfW
+         OrFJ+fOU21RHkTlSB8iuKeUIxQDyBT2DEQEGisykgJQybVLuytQp9BUjK6n+AQt6QY8s
+         wXxoXAZ7dXMaScloKTjKuGb4hJ4ez0YM1hJZjvn1dF0fSXpqjmUNdrs5FV09SNSzBwMp
+         cUlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760377632; x=1760982432;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VdOCzJICF1lPnWJY+txtSmMJ99t79aiuntF/GE09iNA=;
+        b=d/8S8zyq5OBxp6iJrykeFe4AVBpIMSVO+xDmaVLJ8kuYusCVZzE5dejOj8/9R3ZnJG
+         ClQTCyhlc7eAD7ithfGg48NhsN7KdTY2hya7WroCHBNTc6ogCmIxDFQek0mcG51jlbWL
+         10VBXCd4KhIciACeeOZZBWOunaZ5M2hq25KG0YG9h5TQbo8qyZjC+WdPQExdnGH94nGL
+         TmM38hqdJ19DJGzOS/ZNonGKKgKq3WIsxVj6J1NM6gUNUCTgUlEBdS+xtxLOFluAy9uW
+         yy+AN8yQ1xIuS1Gt1HslRstFRmXmcA7Z6m7yRWJBexuuYQ26IzVt43cjDGL9JqohHCK9
+         FhtQ==
+X-Gm-Message-State: AOJu0YxCI3Slq0kF0/DtjQfGJjqZBHNUC3OLxaWx7vdKdIou6qedgPPj
+	fig+o6voptqPGfSANuifgKJwhIxkVUlQNro+M66/BALCP8sD5l4h6luIJNKnsHuiLpUbmA==
+X-Gm-Gg: ASbGncuvoqX3n9A8ZAf5gV9HlhGpT7ulZFFKXJ4K6YAhh2pjXz2hbSfagv9Odv5uW6M
+	7rF7Z06Wf6LYQFyfvkitAdZ6IoyfeaEr7yIR9PWug3pLIY4Y0TsHNVjF4DbYoDvDl4I1Z76PqnI
+	Z86cdGpNBtbJdBgCaTl1jYoICMTdAqzETDA0UxwIWMMXNwCfQ1ZJZEi4i/6/4h1mHrsAPT1Q31e
+	HeVRec8Gcwy+kaW081cjim124waRSwaPO46BciAq+ybjv8XsA5XIAhf9zxfgcQgxjn4Rg5I6viJ
+	W5iqcEbp6SNAcXc+SmSnD02nDrjIXi1T1XuNEJSX5Zg8vi77uuYxLND6AlWbzXDr2p8SFqz6cRk
+	ZGAJn/xRgjGIjwKG1OMvwpBl1bPpl9siQaao/pCwgtgTMYCHg3b40RFiVWYN1BANyk6DX+n9JGf
+	MUSGXrCsgzBuDMTNxNum0+kBQ=
+X-Google-Smtp-Source: AGHT+IEp5xfeK+4fc/jgrkniWuzdsX0aJJ7ITuL6FKJXrfuKycTGBgYi289GBHyDJCgOFUhAIt3ztg==
+X-Received: by 2002:a05:6000:22c5:b0:3fb:bb69:d91b with SMTP id ffacd0b85a97d-42666ac4a07mr13431376f8f.2.1760377631685;
+        Mon, 13 Oct 2025 10:47:11 -0700 (PDT)
+Received: from localhost.localdomain ([105.113.110.199])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426ce57d404sm19596825f8f.3.2025.10.13.10.47.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Oct 2025 10:47:11 -0700 (PDT)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+To: git@vger.kernel.org
+Cc: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Subject: [PATCH] [PATCH] [Outreachy] builtin/patch-id.c: clarify SHA1 usage for patch IDs
+Date: Mon, 13 Oct 2025 18:46:58 +0100
+Message-ID: <20251013174658.236940-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
+Patch IDs in Git must always use SHA1, regardless of the repository's
+object hash. Previously, the code relied on `the_hash_algo` which could
+vary depending on the repository, and included a NEEDSWORK comment
+suggesting this should be fixed.
 
-> I’ll revert my local change, run a build and tests, and then think
-> about safer alternatives (or leave the NEEDSWORK comment in place if
-> changing the hashmap API isn’t appropriate).
-> Thanks for the clarification.
+This patch updates the comment to clearly state that SHA1 is required
+for patch IDs and sets the hash algorithm to SHA1 if it is not already
+set. This ensures consistent computation of patch IDs in accordance
+with git-patch-id(1).
 
-If you can convince readers that changing the hashmap API is not
-appropriate, then I would think that would make a great explanation
-for a commit that removes the needswork comment without doing
-anything else.  "Thinking about const correctness issues around this
-code is no longer needed.  The hashmap API is right to insist that
-the extra data pointer must be const because ....  Which makes
-casting constness away when assigning it to opt, which is what the
-code is, is indeed the only reasonable thing to do, and there is no
-more change necessary around here."  Of course, such a commit log
-message must fill in the "because ..." part with a convincing
-argument ;-).
+No functional behavior is changed, but misleading comments are removed
+and the code now explicitly enforces correct SHA1 usage for patch IDs.
 
-Thanks.
+Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+---
+ builtin/patch-id.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
+diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+index d26e9d0c1e..d47b6f5a3f 100644
+--- a/builtin/patch-id.c
++++ b/builtin/patch-id.c
+@@ -246,16 +246,11 @@ int cmd_patch_id(int argc,
+ 			     patch_id_usage, 0);
+ 
+ 	/*
+-	 * We rely on `the_hash_algo` to compute patch IDs. This is dubious as
+-	 * it means that the hash algorithm now depends on the object hash of
+-	 * the repository, even though git-patch-id(1) clearly defines that
+-	 * patch IDs always use SHA1.
+-	 *
+-	 * NEEDSWORK: This hack should be removed in favor of converting
+-	 * the code that computes patch IDs to always use SHA1.
++	 * Patch IDs must always use SHA1, regardless of the repository's
++	 * object hash, See git-patch-id(1) for details. 
+ 	 */
+ 	if (!the_hash_algo)
+-		repo_set_hash_algo(the_repository, GIT_HASH_DEFAULT);
++		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
+ 
+ 	generate_id_list(opts ? opts > 1 : config.stable,
+ 			 opts ? opts == 3 : config.verbatim);
+-- 
+2.43.0
 
