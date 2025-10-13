@@ -1,62 +1,63 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5A02FB095
-	for <git@vger.kernel.org>; Mon, 13 Oct 2025 08:49:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0422E7BCB
+	for <git@vger.kernel.org>; Mon, 13 Oct 2025 08:49:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760345356; cv=none; b=m5IBvFpG3VxIss6jFfTBWmlEw01ANDzZZYJ9FJjNVQ03sr3VBPWFLa7VSCxbboUmVUQKmsJqrfOqVEdKspovg+xXp6j0wFvrFN9e3dXrnf5b8vGDPf3FVd1LCG67EszJz9wWg3RrlgQlZZI/Sl5dMVnBJsn7waVa4UION35nWSY=
+	t=1760345357; cv=none; b=tmWiuYhJtHHQ1UMYmP0WgGQax81Fuwp6vWGbuRCnzM5xFTZHQd/8QDV7wKOoATWJ3pjSZC3a+CT4U19LK4PM20lsyfK/RxF4Hbp0dfXNe9ZJf1ooRNEwkspud/SONtuBXnOQ+XoxNUi+JMD80FkClA9M6A0vaqgA0R/PUrtpp+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760345356; c=relaxed/simple;
-	bh=5rWvcw5d3szoYtWV3WljeLVsYa92ctV3t2eShpmfs60=;
+	s=arc-20240116; t=1760345357; c=relaxed/simple;
+	bh=ercXuJ6V00OoNG8gYHijAtuGdGJNWYT3pAeJMK2riCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6TYXMQrKbbN4MjMj3ftEZkuynpcESmg4NN/gTSoWH71mx4/IjEd2biewfV43c3WEGhbyStbdbT1GXE99ObhOLxtjazf482IukmBi+VKf8a9ll6dqCXVE9yTk9M/qfBAhJ2dFtEcZZG2NLXfEtGbHQX8tH6RFiHG75aiQHcCRVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mI/5QYgp; arc=none smtp.client-ip=209.85.128.45
+	 MIME-Version; b=WSfU2+w6cCPMJLDkvZCTGsg2vCXUPbGpRxmSa3vYqts+Sa3lJCabTce8WiGQZPSiElKnYqfXm+WKyuB1wnz5Opf8bsO0RTbw69utxOqgGoq998YbTyfcjl4HTw8LVoti3YckXLgvAxKG/uSnc5S2ynlAbzAKWpUWHqg7UXkHqHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b9Rrh8EH; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mI/5QYgp"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-46e61ebddd6so41935025e9.0
-        for <git@vger.kernel.org>; Mon, 13 Oct 2025 01:49:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b9Rrh8EH"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-46e6ba26c50so22863725e9.2
+        for <git@vger.kernel.org>; Mon, 13 Oct 2025 01:49:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760345351; x=1760950151; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760345352; x=1760950152; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OFzuNWXOnKmRWsEUPVnVPzG/v2p75RlPr5T7VnxroZM=;
-        b=mI/5QYgpsZK3zQTy5vYapR/ZzRkfkBhoHrsevW9/3RX+L73S//VjU0YLON1ba/RcJH
-         jcbYarNP/vgcmno1jDsO9aAJVljofFVmPnLeAM4uIW8pfURqr+tBNQOk9I3zJ0r/Dm56
-         BayPKmxcB+RL9Mt95EVak7+xPkO8i9dM6FpP/pz8f9SA2LyUMlQ6DhW9bMz3tMmL5nOU
-         GO3z0EF+WgoC9Cf3daGBMgT8mwepGTnPJhzlBntNL+D3twzW9/FmkhrvjA66qFbDpYEr
-         +xtUH6HS7f7+RXoYkntTlwIet6E4qgJbjh3dAvYoqs77zFtByYbiBYH8FobCjb8HSpb6
-         GVZg==
+        bh=1mUCnsncALG2uFrfsmMSUd+az65HUoNgQEp4nBE2X2Q=;
+        b=b9Rrh8EH14KL8LjSnRN3oCkfyGmXz3WbJK6q6/dRijQiuy3wDNfEjQi8MlaqP9oy8o
+         /2oBAVOz3XxBRT2lGR6xNnZkFMMnKP2pJJLL0K4QIgCH+PLAikyAZWzvoiwSGqdwgkHz
+         CH5tUnhK8XxT8NUI9O/8q3C4LLUVhJCiiCEFWkKSiSglYF5lSKOXOFIMyem3VxGGRgfC
+         lF5NP8RTRqVkb2D71Qs0zvHesO9aa4AVOJPGrDRTcFM5KrLnESDWY9NwKWaka/zbnmaj
+         SUe/o62TAZ2PnhkkTQQkAeJsnb880WXYw20oFC0k4InkIvuqExbaSDkra0hmwPb18cK9
+         Dyog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760345351; x=1760950151;
+        d=1e100.net; s=20230601; t=1760345352; x=1760950152;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OFzuNWXOnKmRWsEUPVnVPzG/v2p75RlPr5T7VnxroZM=;
-        b=MmG6MGFXiMAXctQ3s5iL10Mvbq+m+PGopEdywHV3WIOJwSFJoHuT841bQ+0kbcdCI9
-         dFBHuuM9xlv9SbIAJaOmOn+QxkBsZWc5npLzH4i0J61UmWL8Kh4QBXHJhzjoVYGUT03P
-         ljSs9K7vRzmlEhdrTLDxfasFOTDm+aRGEBD37qnHScAgrU0ZNOTB2a9HojdVNp4kXYUr
-         h/W+B3IEezYDxQ8d8N2Pn73v4gvIi9BngapVaD8F8I9UMoZHjJ+K8kLNR/j3PxT9jzrB
-         Q+b/E362JdgmKdTYj3hFWu7/CkzH7Bf/cUaKHA4odfEuNT1wef4Bn1BihMUSFKmRwXOa
-         ycrA==
-X-Gm-Message-State: AOJu0YyO8Gw49PPiQj6iOML1SuVAZQM6aqNUEkSGdeKXsJa3CAHYz6QC
-	tUXEt2BUg3IScypNlCsidQvgVrhOcJHrjHqANAUM6VHDNVay6R62AkrSligQBxlZ
-X-Gm-Gg: ASbGncuVMmNw0Xki/ZP8FeyQ7HVkbR7+uCTIX9B+4bcwUM5sELEhDOf3ZRFvQMFllFS
-	4YDgbw9rqoyU+nE45oBsBqly8+zkO5ZwMrCAsgE35IEBd5z270eQx0yWFZrgIuMZotGtnIR2RBZ
-	O1N88Iyfz1TNCAME1/JE8TQcNgC2Kj+8PVH4LlwOWSgkXDbo9LIQKAkOGPG9dQxG6zbl0PZ0pII
-	qODkDo2isFWNKexyE8gVz/3tB0htgVgiwdkezqMplisyphV2Qjd9idIn35mvxKcSPsNRpVnWnq6
-	0WeyYLsMtrDB4mU/5x7Js0ZXcfBV6RZ1PDg1W0OXgw6YYimZHox+3T4gnxItP2R0o1DpzYVOgxU
-	VGSPPHGQytXd3leEIWfvLngJfT5VRG1wd5ckMno+eM8OBOEKcDslG3LdwZDyDHePFBdKu
-X-Google-Smtp-Source: AGHT+IEpOAxVfkb8FalrFP5YjQ7cMSU1KIUmANo7PWdh5SLJCZ3fxrDMq8QnHuVh4x12QN54d7N3Og==
-X-Received: by 2002:a05:600c:6212:b0:46e:27f7:80ce with SMTP id 5b1f17b1804b1-46fa9af8f39mr138020235e9.23.1760345351098;
-        Mon, 13 Oct 2025 01:49:11 -0700 (PDT)
+        bh=1mUCnsncALG2uFrfsmMSUd+az65HUoNgQEp4nBE2X2Q=;
+        b=YxfsnpPd6ZmkC1nMeI/h7jHIjqLd1RAEt27gEmKWkS36af/eAp6N7c/WzdaAlv90Kx
+         qjOTX7BA6JIEdFR7N088pcRwKozCayLRxSiAHMoMmQ0fk0fBSZ+DZz2098JHEPbmybic
+         1Kw5ko4eV34D7yULSc7eGInN9AoTwOAp4kl77QJjqpOYMkDRLEjmar+mCvX066CvQI7o
+         r48wf23eVe0y5lKZwW/8i6M1oN98d8zJP17Ggy5W+/3OCNont+P9xFol/SyFI2eZWlVf
+         30V+PPflpo2rIfKuSNfMq7NSGAr2S19fSc7RLB8l54nEXVg4Lg3glc/nlHYhB0KnUKuI
+         HJ+A==
+X-Gm-Message-State: AOJu0YxtuaCmEHChgKHefNo6udWKa3RaInkiNXnjRe8Q5d8E+00LG0sx
+	PuUKU0kKoeaGn25iYS5//wo2abeQCmAgj1aJrC8ptL0h0lSLpfJISY02vUn0Qh/Z
+X-Gm-Gg: ASbGncvEtZSruehzQTfVHBxix8Y+fESvFc7QvqqV4MKnwka2j7BD6Ml6K+tKfWCQD2s
+	7vYfm+rvpdshWJQ7W+UKmb4HrZLNxe8Vkkt2fcuQJBZ39lm+2PPFRHn9KQ7A+WT3mCDwe0lezJ4
+	uLwvYex0pKx40Hs8GgExJl5DmeG1arwtX4rzUpIKIcN+HogGa1W6URQTD8exmT8UZrnmNujTPYM
+	lkCpmR59R/jaE7VQysCyFCD+0X210DLU4R1b8EV/L9WSBhbTtHKnsYT1vaoHu9s5cpB+B780gcn
+	fY/B3lGk/Q6JWJGnQjWZQFz802GIo/WuBXLZlrCwRbx5L4MXHo6joyiP6a8lveqe4nYFXyrEsEL
+	7wGCBfyw12a3jF69HA4fPCwhPCrZlBVbZjySJiBlQT+CE0ZwF/HJL4dVF1bzzNvcQSjtPdKqsSn
+	P0L+o=
+X-Google-Smtp-Source: AGHT+IEpfNCkzYBjLg5rBlXLQ3o+TBlRAeoPmODkfYm7m1TJ/NAeDo2TGna9HM37s2bje5B2KCabTA==
+X-Received: by 2002:a05:600c:3b1f:b0:46e:42cb:d93f with SMTP id 5b1f17b1804b1-46fa9a98ef7mr144063375e9.15.1760345352025;
+        Mon, 13 Oct 2025 01:49:12 -0700 (PDT)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426d0d9050bsm15630220f8f.13.2025.10.13.01.49.09
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426d0d9050bsm15630220f8f.13.2025.10.13.01.49.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Oct 2025 01:49:10 -0700 (PDT)
+        Mon, 13 Oct 2025 01:49:11 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -67,13 +68,15 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Todd Zullinger <tmz@pobox.com>,
 	Collin Funk <collin.funk1@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 0/5] fast-import: start controlling how tag signatures are handled
-Date: Mon, 13 Oct 2025 10:48:52 +0200
-Message-ID: <20251013084857.1646783-1-christian.couder@gmail.com>
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v3 1/5] doc: git-tag: stop focusing on GPG signed tags
+Date: Mon, 13 Oct 2025 10:48:53 +0200
+Message-ID: <20251013084857.1646783-2-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.51.0.438.g6987fc0bae
-In-Reply-To: <20251007122958.1089680-1-christian.couder@gmail.com>
+In-Reply-To: <20251013084857.1646783-1-christian.couder@gmail.com>
 References: <20251007122958.1089680-1-christian.couder@gmail.com>
+ <20251013084857.1646783-1-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,108 +85,142 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Introduction
-------------
+It looks like the documentation of `git tag` is focused a bit too
+much on GPG signed tags.
 
-Tools like `git-filter-repo` should be able to control how tag
-signatures are handled when regenerating repository content after it
-has been filtered. For this purpose, they need a way for `git
-fast-import` to control how tag signatures are handled.
+This starts with the "NAME" section where the command is described
+with:
 
-A previous series [1] added a '--signed-commits=<mode>' option to `git
-fast-import` to control how commit signatures are handled, so this is
-adding a similar '--signed-tags=<mode>' for tag signatures.
+"Create, list, delete or verify a tag object signed with GPG"
 
-For now this new option behaves in a very similar way as the option
-with the same name that already exists in `git fast-export`.
-Especially it supports exactly the same <mode>s and the same aliases
-for these modes. For example "ignore" is a synonym for "verbatim".
+while for example `git branch` is described with simply:
 
-This way, both `git fast-export` and `git fast-import` have both a
-'--signed-tags=<mode>' and a '--signed-commits=<mode>' supporting the
-same <mode>s.
+"List, create, or delete branches"
 
-In the future I want to implement new <mode>s like "strip-if-invalid",
-"re-sign", "re-sign-if-invalid" in `git fast-import` for both tag and
-commit signatures. These might be a bit more complex, so for now I
-prefer to start with the simple modes.
+This could give the false impression that `git tag` only works with
+tag objects, not with lightweight tags, and that tag objects are
+always GPG signed.
 
-[1] https://lore.kernel.org/git/20250917181427.3193500-1-christian.couder@gmail.com/
+In the "DESCRIPTION" section, it looks like only "GnuPG signed tag
+objects" can be created by the `-s` and `-u <key-id>` options, and it
+seems `gpg.program` can only specify a "custom GnuPG binary".
 
-Note about the different patches
---------------------------------
+This goes on in the "OPTIONS" section too, especially about the `-s`
+and `-u <key-id>` options.
 
-Patch 1/5 (doc: git-tag: stop focussing on GPG signed tags) is a
-documentation update for `git tag`. It could go in a separate series
-or be dropped altogether, but while working on this I thought that it
-would be a good thing to do, as the doc is quite outdated.
+The "CONFIGURATION" section also doesn't talk about how to configure
+the command to work with X.509 and SSH signatures.
 
-Patches 2/5, 3/5 and 4/5 are preparatory patches for the main one
-which is patch 5/5 (fast-import: add '--signed-tags=<mode>' option).
+Let's rework all that to make sure users have a more accurate and
+balanced view of what the command can do.
 
-I wanted '--signed-tags=<mode>' to work for all kinds of signature in
-tags (OpenPGP, X.509 and SSH) but soon realized that the
-'--signed-tags=<mode>' option of `git fast-export` worked only for
-OpenPGP signatures, so I fixed that issue in patch 4/5 (fast-export:
-handle all kinds of tag signatures).
+Helped-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Documentation/git-tag.adoc | 48 ++++++++++++++++++++++++++------------
+ 1 file changed, 33 insertions(+), 15 deletions(-)
 
-While working on the tests in patch 4/5, I found a few things to
-improve that could belong to other patches so that's how I came up
-with patches 2/5 and 3/5.
-
-Changes since v2
-----------------
-
-Thanks to Patrick Steinhardt, Todd Zullinger and Collin Funk who
-reviewed or commented on the v1 and v2.
-
-There is a single change in the first patch (doc: git-tag: stop
-focusing on GPG signed tags) where the description of the
-`-v | --verify` option of `git tag` has been improved.
-
-CI tests
---------
-
-I haven't run CI tests because there is a single documentation change
-since v2 that is very unlikely to make things break.
-
-Range diff since v2
--------------------
-
-1:  eb65af631d ! 1:  ac67d927ad doc: git-tag: stop focusing on GPG signed tags
-    @@ Documentation/git-tag.adoc: OPTIONS
-      -v::
-      --verify::
-     -  Verify the GPG signature of the given tag names.
-    -+  Verify the signature of the given tag names.
-    ++  Verify the cryptographic signature of the given tags.
-      
-      -n<num>::
-        <num> specifies how many lines from the annotation, if any,
-2:  640204ef26 = 2:  f0208527ff lib-gpg: allow tests with GPGSM or GPGSSH prereq first
-3:  8f788bafe1 = 3:  e9e3d8c081 t9350: properly count annotated tags
-4:  d62a43905c = 4:  8d318a0046 fast-export: handle all kinds of tag signatures
-5:  9094f37b46 = 5:  962ad96b4a fast-import: add '--signed-tags=<mode>' option
-
-
-Christian Couder (5):
-  doc: git-tag: stop focusing on GPG signed tags
-  lib-gpg: allow tests with GPGSM or GPGSSH prereq first
-  t9350: properly count annotated tags
-  fast-export: handle all kinds of tag signatures
-  fast-import: add '--signed-tags=<mode>' option
-
- Documentation/git-fast-import.adoc |  5 ++
- Documentation/git-tag.adoc         | 48 ++++++++++++------
- builtin/fast-export.c              |  7 ++-
- builtin/fast-import.c              | 43 ++++++++++++++++
- t/lib-gpg.sh                       | 24 +++++++--
- t/meson.build                      |  1 +
- t/t9306-fast-import-signed-tags.sh | 80 ++++++++++++++++++++++++++++++
- t/t9350-fast-export.sh             | 48 ++++++++++++++++--
- 8 files changed, 229 insertions(+), 27 deletions(-)
- create mode 100755 t/t9306-fast-import-signed-tags.sh
-
+diff --git a/Documentation/git-tag.adoc b/Documentation/git-tag.adoc
+index a4b1c0ec05..28d6fe4e1a 100644
+--- a/Documentation/git-tag.adoc
++++ b/Documentation/git-tag.adoc
+@@ -3,7 +3,7 @@ git-tag(1)
+ 
+ NAME
+ ----
+-git-tag - Create, list, delete or verify a tag object signed with GPG
++git-tag - Create, list, delete or verify tags
+ 
+ 
+ SYNOPSIS
+@@ -38,15 +38,17 @@ and `-a`, `-s`, and `-u <key-id>` are absent, `-a` is implied.
+ Otherwise, a tag reference that points directly at the given object
+ (i.e., a lightweight tag) is created.
+ 
+-A GnuPG signed tag object will be created when `-s` or `-u
+-<key-id>` is used.  When `-u <key-id>` is not used, the
+-committer identity for the current user is used to find the
+-GnuPG key for signing. 	The configuration variable `gpg.program`
+-is used to specify custom GnuPG binary.
++A cryptographically signed tag object will be created when `-s` or
++`-u <key-id>` is used. The signing backend (GPG, X.509, SSH, etc.) is
++controlled by the `gpg.format` configuration variable, defaulting to
++OpenPGP. When `-u <key-id>` is not used, the committer identity for
++the current user is used to find the key for signing. The
++configuration variable `gpg.program` is used to specify a custom
++signing binary.
+ 
+ Tag objects (created with `-a`, `-s`, or `-u`) are called "annotated"
+ tags; they contain a creation date, the tagger name and e-mail, a
+-tagging message, and an optional GnuPG signature. Whereas a
++tagging message, and an optional cryptographic signature. Whereas a
+ "lightweight" tag is simply a name for an object (usually a commit
+ object).
+ 
+@@ -64,10 +66,12 @@ OPTIONS
+ 
+ -s::
+ --sign::
+-	Make a GPG-signed tag, using the default e-mail address's key.
+-	The default behavior of tag GPG-signing is controlled by `tag.gpgSign`
+-	configuration variable if it exists, or disabled otherwise.
+-	See linkgit:git-config[1].
++	Make a cryptographically signed tag, using the default signing
++	key. The signing backend used depends on the `gpg.format`
++	configuration variable. The default key is determined by the
++	backend. For GPG, it's based on the committer's email address,
++	while for SSH it may be a specific key file or agent
++	identity. See linkgit:git-config[1].
+ 
+ --no-sign::
+ 	Override `tag.gpgSign` configuration variable that is
+@@ -75,7 +79,10 @@ OPTIONS
+ 
+ -u <key-id>::
+ --local-user=<key-id>::
+-	Make a GPG-signed tag, using the given key.
++	Make a cryptographically signed tag using the given key. The
++	format of the <key-id> and the backend used depend on the
++	`gpg.format` configuration variable. See
++	linkgit:git-config[1].
+ 
+ -f::
+ --force::
+@@ -87,7 +94,7 @@ OPTIONS
+ 
+ -v::
+ --verify::
+-	Verify the GPG signature of the given tag names.
++	Verify the cryptographic signature of the given tags.
+ 
+ -n<num>::
+ 	<num> specifies how many lines from the annotation, if any,
+@@ -236,12 +243,23 @@ it in the repository configuration as follows:
+ 
+ -------------------------------------
+ [user]
+-    signingKey = <gpg-key-id>
++    signingKey = <key-id>
+ -------------------------------------
+ 
++The signing backend can be chosen via the `gpg.format` configuration
++variable, which defaults to `openpgp`. See linkgit:git-config[1]
++for a list of other supported formats.
++
++The path to the program used for each signing backend can be specified
++with the `gpg.<format>.program` configuration variable. For the
++`openpgp` backend, `gpg.program` can be used as a synonym for
++`gpg.openpgp.program`. See linkgit:git-config[1] for details.
++
+ `pager.tag` is only respected when listing tags, i.e., when `-l` is
+ used or implied. The default is to use a pager.
+-See linkgit:git-config[1].
++
++See linkgit:git-config[1] for more details and other configuration
++variables.
+ 
+ DISCUSSION
+ ----------
 -- 
 2.51.0.438.g6987fc0bae
 
