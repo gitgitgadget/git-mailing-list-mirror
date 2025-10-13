@@ -1,92 +1,167 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A751E5B95
-	for <git@vger.kernel.org>; Mon, 13 Oct 2025 11:58:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3331918E20
+	for <git@vger.kernel.org>; Mon, 13 Oct 2025 11:59:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760356685; cv=none; b=l7kD8MaMjUJRM/0Kyn9KCqsg0rEAMiO7VGe21Y39eeXAoJNFVepeVdbDjAEMCqKyQz0R+bZw6Grn+MaZaE6aEpiZB1+/r1/VIS8E8BC9Dz/tYV3Eyy9Cn1pUg8CG72YsTzrUYrb/Bo7dGYZMBnTiv/zqfhIyIvNAP6o7jB6KwHM=
+	t=1760356759; cv=none; b=LbYK6lOwHSzcq5GoqoGs+H7NH3hIP3rS+x0pKHITppn7gK9FkVzHjD2/AhBTDEyygBD4hnfVbT676XSgUWwT8cFwafGR2bJfJVPGDFTlMfROvV2568ed8yCM/srvEHA+TLglhJUwo1i0xtA9HV6oyWVuaFLZ5x75oOkZOXGWZcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760356685; c=relaxed/simple;
-	bh=ldB47h19ze7zUzRD1dbESTNwka+mcJyqk5hhhg5XIag=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=g0xzsVLeL/5i3q9QWDpQmW0JHdsUga9og0pA6j+UtLlWqmemUjEbRVa+uz6VJlMo/L4Sth1X5R76X7737O7S8Yjzje3nqpF7WvYfFd36wa3wLmXU6KLSwqHh/ihTi0Z/pEeL2kjJahwEHRAwLjhCzDkVnv0JSYXc+MXzDtfCamU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yen31ESd; arc=none smtp.client-ip=209.85.214.182
+	s=arc-20240116; t=1760356759; c=relaxed/simple;
+	bh=M5l44AOAwTV2D+iuw0Ucukm1AU+965OcLwPtWhiKQXY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qWrE2Hmkjv1Bvns7Pz6jnU12gsvZusb0ZKnOSClmosjpqVORcD5Ze9Lfu3ZeJUAJCWn2kN7Y3MF5Kz+X+8r217jdo3c16YYYmIChk87RDQw3JNMEugI9mKfgeJtTaFtuqUPI/d50G6GSt39yiEUK7l4Jd7vIpBnUMVNOlkoMbjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W8Nzfzoi; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yen31ESd"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-279e2554c8fso40233095ad.2
-        for <git@vger.kernel.org>; Mon, 13 Oct 2025 04:58:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W8Nzfzoi"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-b403bb7843eso890996366b.3
+        for <git@vger.kernel.org>; Mon, 13 Oct 2025 04:59:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760356683; x=1760961483; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9wJYMbK+eHkc95g1hKVbtW3Lp10AoxsKbcLZFyh00gY=;
-        b=Yen31ESdrxgJIMLpivZfHnEOQBkii3odcEIdpZ28bYSGXhQLAET10zaR+oHQ5ZJ15B
-         lrvoQGqeh0O7glArDArM2a4XfKItmNyxcTqYPYYPe1pqROhPJ8eAbIcpiYsdKa0uLKFj
-         dp9ixiwSguOs5kJab4aiR3f4aUN0V06J0HVm9EVb+5LKQUsHHWXFXcHFe3cXD8NJ/KQy
-         Qq2y8xRbmo9kPaQZBOcnPKZ9V34pe2mk8TbolxwS38VlPa9bWJVLoR8MN/QgeF1yexDR
-         9c9lqkUGrEq/Zj1OjVtxk4Hj42NRfPD+P5DPhHCXpz+GXG6pJNndZEWUexLGoKgcwWvY
-         Sg9Q==
+        d=gmail.com; s=20230601; t=1760356756; x=1760961556; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H4pR2RNhRtD58JD775UNUIFxcUc7UnbY+0FyyHOL57A=;
+        b=W8Nzfzoi//mNCzBi72s4TbXG16mcHJAW30dryCxYPegie2IzTouzM/ImaqgPSE2oeT
+         E9vJ7aoJOCaGH8KyZe2apx52CtZtCcgpIs/SwhEiLaZv6qLXESIYiUdG8oIUxbW17njI
+         xC5QRHX35BgMhgkeSGnWTX3Ofu4ixCkkH0HYq5jfIdxLL4tChAF9M0NwH60D451WaUd6
+         slNjXZ8VBB8ehlaWkLY+9gAIxv4mW87/npJsvJRnMAbKTtAFbcc1s+vyvwp07f8IVK3x
+         mio0d7eTGE/jpjjG1TdBHOX4rQPYiw/fYaMtGiZvZLsG4glih+bneT64PZyJudUj+y8B
+         Ut9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760356683; x=1760961483;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9wJYMbK+eHkc95g1hKVbtW3Lp10AoxsKbcLZFyh00gY=;
-        b=vtPyRx8TeD8yFDJ41Zx2yWxZqCac/3GU1JclxIDjOqSpU6v8sYYBoAbGuprSm2oznk
-         vgci/sxvfVEJf2numyuex+J5HfjYVvIvABSu1QKZI5mbzR1pbTGee5fQGBOxCrqAP3PC
-         snujRhu6ZuSsPokoEkJajaW8tGnS7XZbyrHidsjduNBdYnfSEBzJ4dHaWGlhbBTRBTG+
-         Q2CFrlPL+zo31HNJiKl3r7/KEmH9Pw8q+LeT2cqHaKa87CiSePpYI44D/4OBoQAzTgCC
-         iRNWmMRHBDwJh2hH1MoVlZYc0U/R9WxhVxChxatF5Wxsk8Yom4jyriMFNQnc8/N3o+41
-         rQXQ==
-X-Gm-Message-State: AOJu0YyzHx54YUfBa9Iqu6GTe9nHSLp0ydJD9M0Bftxi2kWNx3eNzXqi
-	JN2B1BWvIV6tcPjVNjpeu///sK9J5gAcM8mpQvF7tNqQb7Wb8XOtWwjDUqoWhufp
-X-Gm-Gg: ASbGncuLIDKDFOKKqccRldR8hWlppDQVgnjnypFkqcxQ6InjI27i/x05hb7Z6qfJCK9
-	vJ6O8xKeEaLYBXd8oooq5VU7D0KuffV3wEX4BUBXP0d+/muV/XackoGYKpIN4gZEVx4B+XYki+U
-	YvpRqx9754y4XORwbTq3ePAMmSIGyi5P7/ZCsPVohRykYc0dLESQKHku8O8pO4sIeD0RE/nFE/W
-	JbV1Zr3MfYvx3DSrNBYfRiB8VOmHKzsJAu3rV0GP4+3rZC6uYrmZN7tzlFYnKveiwZOnYVeHjXl
-	ohOGPs4t1UHlZvArg2zRvTNCwzcABt39wafdXwjAQ6VObC03wBtoj5mBENSbypkBU/ZcBfLNrwk
-	FJfAoC+4G+oZzoc7STRMj79VokU+xltgeZOwHZ2LeyQU=
-X-Google-Smtp-Source: AGHT+IGZ9HfwiVuuoZScJh0xABHS5SndfidnLINhgnC+T1v3P6DOpP/O9r0dmlUwwGe5UPtyORm4Lg==
-X-Received: by 2002:a17:902:fc4c:b0:28e:7841:d437 with SMTP id d9443c01a7336-290272c0474mr292108935ad.38.1760356683338;
-        Mon, 13 Oct 2025 04:58:03 -0700 (PDT)
-Received: from localhost.localdomain ([122.164.83.249])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29034f8f9bbsm131787315ad.121.2025.10.13.04.58.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Oct 2025 04:58:02 -0700 (PDT)
-From: Yukesh0409 <asyukesh@gmail.com>
-X-Google-Original-From: Yukesh0409 <Yukesh0409>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] The seventeenth batch
-Date: Mon, 13 Oct 2025 17:27:36 +0530
-Message-ID: <20251013115736.1793-1-user@Batcomputer>
-X-Mailer: git-send-email 2.41.0.windows.3
+        d=1e100.net; s=20230601; t=1760356756; x=1760961556;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=H4pR2RNhRtD58JD775UNUIFxcUc7UnbY+0FyyHOL57A=;
+        b=Nh9GeGaFe99dVh3hq8ev0h56u8RGLnz+wMT3H7aTxMAAvftlY0UwPEPIo/ABex+H0c
+         jea39GgKBE1jPHIVOyOBgrt7NS65QqLxPlz9I37tVyNTGoOGTJx7nvn75GKLjOt/q5qz
+         aUQttJT+gp2yDOLcESmrPrOq4936Xi2KWsxfEtspuHn7PyGQXeI8t7GL30SuZX4aj53Z
+         utmJtQCEc2K9AqKoO0dBwKhg5jAMarvSpGILzwI9guqrLEEwiqpE88WBOuNrhgnUGWBY
+         dFX1ufAHm0PWl80dugf9Rh2lOyLdzoMvzMF9u2eN+6FLhLse0Nq6wMKVeP6JQqdlssSk
+         S00Q==
+X-Gm-Message-State: AOJu0Yx1A7xwD7RvMJ7ERwUktGsc5AIEkaQogfZ9USxHhMcmwztup1jZ
+	weqN6I4Sy8Cs5B+huSR/SqBnCf1PJ6oRMLMHz3CojAwlfL3duYLwkI7YaZWYkPY/4fLrOChOrtA
+	0Y3/2S/doXDlXT6SEKpup8k5CiQ5sW5gYVbS3
+X-Gm-Gg: ASbGncsIodA0KniBKmH4RIyKV1DgF8zXgaXl8q8xORxU7cUIpJ3BiW+pUEA8Lk1a8Ps
+	QWlW3OoyRBf0FR5wjpP+M0+cu1BIpHZk4Tm8BByeJ5kEBnoxriB4Fm5iGwOgjiq+6fBEteqYK6W
+	yTaR6nfmjzMREggAgCB32CExkoifYMKAbhYZBg+0EXV/Vq1woQxgKgWWUtsDqIvfykfBRft4hqA
+	r7UuswVpD1d+hJkq5+E2Ibq4V+EhO7IgsUhUrtbXnHudDRDA8N6PWusXGB7gLV/y+Tow3EJCX7n
+	xXLZvg==
+X-Google-Smtp-Source: AGHT+IGfM0OnHzFv2145z7jqMa1WhR92BQWfVwmJie37vqDHk8phhSwe6vKqfWzcTLOsjVf4Qp7AApFiDDUOqNWbT2I=
+X-Received: by 2002:a17:907:843:b0:b40:98b1:7457 with SMTP id
+ a640c23a62f3a-b50ac5d0901mr1948307666b.47.1760356755313; Mon, 13 Oct 2025
+ 04:59:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20251013094152.23597-1-git@lohmann.sh> <20251013094152.23597-6-git@lohmann.sh>
+In-Reply-To: <20251013094152.23597-6-git@lohmann.sh>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 13 Oct 2025 07:59:02 -0400
+X-Gm-Features: AS18NWDgEpP1O2vhJ7dSz0b2cVHRKvQcFoLWfm1V8IKAF2jtDpCE7INfuos8CWU
+Message-ID: <CALnO6CBLr2iL0r+ywM4Vjw0=J2DNFv9Nhhq_PHuxt4eK=Z95ww@mail.gmail.com>
+Subject: Re: [PATCH 5/5] setup: allow not marking self owned repos as safe in `ensure_safe_repository()`
+To: Michael Lohmann <git@lohmann.sh>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Junio C Hamano <gitster@pobox.com>
+On Mon, Oct 13, 2025 at 5:43=E2=80=AFAM Michael Lohmann <git@lohmann.sh> wr=
+ote:
+>
+> Git considers all repositories as safe, if they are either
+>  - explicitly set in "safe.directory" config, or
+>  - the user owns the repo
+>
+> Since a user could unzip a folder they downloaded from the internet and
+> unknown to them, it is a repository with malicious hooks/config, an
+> attacker could easily get code execution. Even a command line prompt
+> would automatically trigger this if executing `git status` after
+> entering the malicious directory.
+>
+> Allow not to automatically treat all repos owned by the user as safe.
+> This can either be done by "--assume-unsafe", the environment variable
+> "GIT_ASSUME_UNSAFE" or by setting the configuration "safe.assumeUnsafe"
+> in a safe context (so not the repo config, as it should not be able to
+> allow list itself).
+>
+> Signed-off-by: Michael Lohmann <git@lohmann.sh>
+> ---
+> Question in setup.c: is setting the environment variable inside of
+> safe_directory_cb the best way to "communicate" this result?
+> Alternatively one could add a new member to the struct, but I thought
+> this was not the best either...
+>
+>
+>  Documentation/config/safe.adoc    |  9 +++++++
+>  Documentation/git.adoc            | 14 ++++++++++-
+>  environment.h                     |  1 +
+>  git.c                             |  6 ++++-
+>  setup.c                           |  9 +++++++
+>  t/t0036-allow-unsafe-directory.sh | 42 +++++++++++++++++++++++++++++++
+>  6 files changed, 79 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/config/safe.adoc b/Documentation/config/safe.a=
+doc
+> index 2d45c98b12..2ac5d94762 100644
+> --- a/Documentation/config/safe.adoc
+> +++ b/Documentation/config/safe.adoc
+> @@ -60,3 +60,12 @@ which id the original user has.
+>  If that is not what you would prefer and want git to only trust
+>  repositories that are owned by root instead, then you can remove
+>  the `SUDO_UID` variable from root's environment before invoking git.
+> +
+> +safe.assumeUnsafe::
+> +       Boolean to indicate that the ownership of a repository should not
+> +       be taken into account when checking if the repository is safe. It
+> +       will prevent against accidental arbitrariy code execution
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/RelNotes/2.52.0.adoc | 1 +
- 1 file changed, 1 insertion(+)
+s/arbitrariy/arbitrary. (fix typo + add period)
 
-diff --git a/Documentation/RelNotes/2.52.0.adoc b/Documentation/RelNotes/2.52.0.adoc
-index 7fb1a3ce18..d7ed65f627 100644
---- a/Documentation/RelNotes/2.52.0.adoc
-+++ b/Documentation/RelNotes/2.52.0.adoc
-@@ -325,3 +325,4 @@ including security updates, are included in this release.
-    (merge a66fc22bf9 rs/get-oid-with-flags-cleanup later to maint).
-    (merge e1d062e8ba ps/odb-clean-stale-wrappers later to maint).
-    (merge fdd21ba116 mh/doc-credential-url-prefix later to maint).
-+   (merge 1c573a3451 en/doc-merge-tree-describe-merge-base later to maint).
--- 
-2.41.0.windows.3
+> ++
+> +To temporarily allow git execution in case of an assumed unsafe reposito=
+ry,
+> +run the command with `--allow-unsafe`. To permanently trust this path, a=
+dd
+> +it to the `safe.directory` config.
+> diff --git a/Documentation/git.adoc b/Documentation/git.adoc
+> index 7df51c38f9..162350f3db 100644
+> --- a/Documentation/git.adoc
+> +++ b/Documentation/git.adoc
+> @@ -14,7 +14,7 @@ SYNOPSIS
+>      [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-laz=
+y-fetch]
+>      [--no-optional-locks] [--no-advice] [--bare] [--git-dir=3D<path>]
+>      [--work-tree=3D<path>] [--namespace=3D<name>] [--config-env=3D<name>=
+=3D<envvar>]
+> -    [--allow-unsafe]
+> +    [--allow-unsafe] [--assume-unsafe]
+>      <command> [<args>]
+>
+>  DESCRIPTION
+> @@ -238,6 +238,13 @@ If you just want to run git as if it was started in =
+`<path>` then use
+>         execution by hooks or configuration settings. Equivalent to setti=
+ng
+>         the environment variable `GIT_ALLOW_UNSAFE=3D1`.
+>
+> +--assume-unsafe::
+> +       Prevent arbitrary code execution by hooks or configuration if not
+> +       executed in a "safe.directory". With setting this, filesystem own=
+ership
+> +       of the repository in question no longer satisfies to mark it as s=
+afe.
+> +       Equivalent to setting `GIT_ASSUME_UNSAFE=3D1`. This is overwritte=
+n if
+> +       `--allow-unsafe` is passed as well.
 
+Here and later, I think you mean "overridden" not "overwritten"
+
+--=20
+D. Ben Knoble
