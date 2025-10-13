@@ -1,63 +1,62 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0422E7BCB
-	for <git@vger.kernel.org>; Mon, 13 Oct 2025 08:49:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD162EBDE0
+	for <git@vger.kernel.org>; Mon, 13 Oct 2025 08:49:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760345357; cv=none; b=tmWiuYhJtHHQ1UMYmP0WgGQax81Fuwp6vWGbuRCnzM5xFTZHQd/8QDV7wKOoATWJ3pjSZC3a+CT4U19LK4PM20lsyfK/RxF4Hbp0dfXNe9ZJf1ooRNEwkspud/SONtuBXnOQ+XoxNUi+JMD80FkClA9M6A0vaqgA0R/PUrtpp+o=
+	t=1760345357; cv=none; b=q5YIZ6NjitEQSlSvYyXJU5vD1T/9qohEecyiG/XAenP/ew5FId8exi/rXVnp8vIY9ay4NDGUyFV9sMcY3Dgy5GWWQ0GHpds8+V4aDkOrXvPAiDE2rXO5TMrmQK2KKyI9KGv6rXFzhKcoCf3oi4gb6swe0Nkd4+XQMMbe7ec+Zu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1760345357; c=relaxed/simple;
-	bh=ercXuJ6V00OoNG8gYHijAtuGdGJNWYT3pAeJMK2riCc=;
+	bh=EPlpRLPAt0PvvIT0aymZIM6kjo+83U3hvwn0g3knPDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WSfU2+w6cCPMJLDkvZCTGsg2vCXUPbGpRxmSa3vYqts+Sa3lJCabTce8WiGQZPSiElKnYqfXm+WKyuB1wnz5Opf8bsO0RTbw69utxOqgGoq998YbTyfcjl4HTw8LVoti3YckXLgvAxKG/uSnc5S2ynlAbzAKWpUWHqg7UXkHqHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b9Rrh8EH; arc=none smtp.client-ip=209.85.128.50
+	 MIME-Version; b=R+YWA6rgVTopWufkIfXif7BXd0kQ59fbfG7F1/BXFHEmmnuy7lzuBTk88aREpQHFnXyTFdcndi7F3bm4eE9gZG8IB9noswDQRot4xGpBJYMdRZE8dsirrBumnu1NgylF3Fl5IQBoYKL4zGH9sfEBkp1knzDl0b6yPOw/P1lcwfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SvnQT35Y; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b9Rrh8EH"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-46e6ba26c50so22863725e9.2
-        for <git@vger.kernel.org>; Mon, 13 Oct 2025 01:49:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SvnQT35Y"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-4256866958bso2129407f8f.1
+        for <git@vger.kernel.org>; Mon, 13 Oct 2025 01:49:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760345352; x=1760950152; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760345353; x=1760950153; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1mUCnsncALG2uFrfsmMSUd+az65HUoNgQEp4nBE2X2Q=;
-        b=b9Rrh8EH14KL8LjSnRN3oCkfyGmXz3WbJK6q6/dRijQiuy3wDNfEjQi8MlaqP9oy8o
-         /2oBAVOz3XxBRT2lGR6xNnZkFMMnKP2pJJLL0K4QIgCH+PLAikyAZWzvoiwSGqdwgkHz
-         CH5tUnhK8XxT8NUI9O/8q3C4LLUVhJCiiCEFWkKSiSglYF5lSKOXOFIMyem3VxGGRgfC
-         lF5NP8RTRqVkb2D71Qs0zvHesO9aa4AVOJPGrDRTcFM5KrLnESDWY9NwKWaka/zbnmaj
-         SUe/o62TAZ2PnhkkTQQkAeJsnb880WXYw20oFC0k4InkIvuqExbaSDkra0hmwPb18cK9
-         Dyog==
+        bh=7a4kxchNGrv+P8Kz7zmEbRlyXMSQniu0HjghZJl8fuo=;
+        b=SvnQT35Ye0TFuyJS0lHi3CgEOIMNWHR0ygTHS1XVzVBBqlzl0fcKB/Mbz1SJPJ/qzm
+         GqWT+Yn0CEY4WlNjef0PQmePmsMyeq7u/1DYtULGjxYDMrnNlqi9I3L+4D5uU/yx+8Dz
+         7KOPH8dm0xNBVSHtvZ09gGTt9nsL8fbuQqFmyeTFOmKTatcz2Oz5Q3FfX31psGsYvGxa
+         nNJfaDRT/41JpoORUflBP2Owbsj372Qp2pNPc93DYzRP2yNAh/Ed0rUS6a77qxbJ7TwP
+         CapftiHZe2OuuYq/m42edaYFPTI8ZmBnCAVjlaSknMQNyJ7gFKcwXTeCANrTROoBH8VB
+         b7wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760345352; x=1760950152;
+        d=1e100.net; s=20230601; t=1760345353; x=1760950153;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1mUCnsncALG2uFrfsmMSUd+az65HUoNgQEp4nBE2X2Q=;
-        b=YxfsnpPd6ZmkC1nMeI/h7jHIjqLd1RAEt27gEmKWkS36af/eAp6N7c/WzdaAlv90Kx
-         qjOTX7BA6JIEdFR7N088pcRwKozCayLRxSiAHMoMmQ0fk0fBSZ+DZz2098JHEPbmybic
-         1Kw5ko4eV34D7yULSc7eGInN9AoTwOAp4kl77QJjqpOYMkDRLEjmar+mCvX066CvQI7o
-         r48wf23eVe0y5lKZwW/8i6M1oN98d8zJP17Ggy5W+/3OCNont+P9xFol/SyFI2eZWlVf
-         30V+PPflpo2rIfKuSNfMq7NSGAr2S19fSc7RLB8l54nEXVg4Lg3glc/nlHYhB0KnUKuI
-         HJ+A==
-X-Gm-Message-State: AOJu0YxtuaCmEHChgKHefNo6udWKa3RaInkiNXnjRe8Q5d8E+00LG0sx
-	PuUKU0kKoeaGn25iYS5//wo2abeQCmAgj1aJrC8ptL0h0lSLpfJISY02vUn0Qh/Z
-X-Gm-Gg: ASbGncvEtZSruehzQTfVHBxix8Y+fESvFc7QvqqV4MKnwka2j7BD6Ml6K+tKfWCQD2s
-	7vYfm+rvpdshWJQ7W+UKmb4HrZLNxe8Vkkt2fcuQJBZ39lm+2PPFRHn9KQ7A+WT3mCDwe0lezJ4
-	uLwvYex0pKx40Hs8GgExJl5DmeG1arwtX4rzUpIKIcN+HogGa1W6URQTD8exmT8UZrnmNujTPYM
-	lkCpmR59R/jaE7VQysCyFCD+0X210DLU4R1b8EV/L9WSBhbTtHKnsYT1vaoHu9s5cpB+B780gcn
-	fY/B3lGk/Q6JWJGnQjWZQFz802GIo/WuBXLZlrCwRbx5L4MXHo6joyiP6a8lveqe4nYFXyrEsEL
-	7wGCBfyw12a3jF69HA4fPCwhPCrZlBVbZjySJiBlQT+CE0ZwF/HJL4dVF1bzzNvcQSjtPdKqsSn
-	P0L+o=
-X-Google-Smtp-Source: AGHT+IEpfNCkzYBjLg5rBlXLQ3o+TBlRAeoPmODkfYm7m1TJ/NAeDo2TGna9HM37s2bje5B2KCabTA==
-X-Received: by 2002:a05:600c:3b1f:b0:46e:42cb:d93f with SMTP id 5b1f17b1804b1-46fa9a98ef7mr144063375e9.15.1760345352025;
-        Mon, 13 Oct 2025 01:49:12 -0700 (PDT)
+        bh=7a4kxchNGrv+P8Kz7zmEbRlyXMSQniu0HjghZJl8fuo=;
+        b=tOQtXATL1toQ/1v/tXr5oG66U4SqbRf12xK9hOVcpsWGzgkmx5zSc2SoDZaqEw1DpJ
+         1G5//3RY23DfZznMJLLvR2EjBJfiLJ0+nT+QOEqFipAdC1cWWFo2EMArVixrkwmUQ5xf
+         6ihQQvxY2igcsZ4+9XRU9OtOFaGgSutxpDVHLyWwPI2GI8SbF3EAclQYdzZshXQ/VjxE
+         VBrEO5xJPH3xJOocB3glWHd51NCO0TsueRELPZE1P3LgGLyhrVTKKYRF6oicRlLZMJbS
+         ySzG2ow60OmCQUKWPVou0lI3GK+g/3kOVKDjHcKJiEAmgWFvZ5GGkh8g3Zq8YzucZu2q
+         HiNQ==
+X-Gm-Message-State: AOJu0YzlKdwH1eqjOqy5YE6MR7PZkKeVWxbsizQ6X1Wf6dR2Dhhhc79i
+	NpcLaAulE8WaUDUbDuYUIt9Bck6zKEGUOq/hlHuG9LSEnqpHoAric5sug3o9L1XM
+X-Gm-Gg: ASbGncvFIeXpqSbKXG7T5RKZ8P59Y68mkLwmGVAX0nXttcIjqKXDiDNQpcf09g85OER
+	Q/RVzs6nxW+wKMwUglQZUKb6QfjY9N5QhokfQ2f0x9AaADaUXuE9Xh7aV3D09+7eEAAWeEamQCw
+	n6EHz7J/G6YEO1TtutXWPx/sqDk0u+IC7NsA17UJ+MWvY/LHHKFvVQm+jYNq0N1J+5UYTtOJMa/
+	9JLWvro6121snpYrvftT8p/K2NXLyajHzXYSR1VIKl31z1xFaES2dEe4+Rqg2Pi17DTwVSsUOXc
+	jw+EYFb7bboN0zkOom8DUu+t8O9NRhVF/sf/EHVJwXjflc7uC74t2qx/8EUGKOEH3OY3vDrWk1p
+	RW8juJFY8f/H66YR6m6BMk/EIZDi51TXt+xFB/tIWhGu6XVYAYHyjlngmsyltsAxoWI15
+X-Google-Smtp-Source: AGHT+IG6Q8WbK8eoXjq/SBVVlEjneBHdo4XfZ+l4T7zgy1D7gEq1PIPiewuadrso5V88T/om+jIApA==
+X-Received: by 2002:a05:6000:40db:b0:426:d5a1:572 with SMTP id ffacd0b85a97d-426d5a1058bmr4482038f8f.43.1760345353085;
+        Mon, 13 Oct 2025 01:49:13 -0700 (PDT)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426d0d9050bsm15630220f8f.13.2025.10.13.01.49.11
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426d0d9050bsm15630220f8f.13.2025.10.13.01.49.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Oct 2025 01:49:11 -0700 (PDT)
+        Mon, 13 Oct 2025 01:49:12 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -70,9 +69,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Collin Funk <collin.funk1@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 1/5] doc: git-tag: stop focusing on GPG signed tags
-Date: Mon, 13 Oct 2025 10:48:53 +0200
-Message-ID: <20251013084857.1646783-2-christian.couder@gmail.com>
+Subject: [PATCH v3 2/5] lib-gpg: allow tests with GPGSM or GPGSSH prereq first
+Date: Mon, 13 Oct 2025 10:48:54 +0200
+Message-ID: <20251013084857.1646783-3-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.51.0.438.g6987fc0bae
 In-Reply-To: <20251013084857.1646783-1-christian.couder@gmail.com>
 References: <20251007122958.1089680-1-christian.couder@gmail.com>
@@ -85,142 +84,86 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-It looks like the documentation of `git tag` is focused a bit too
-much on GPG signed tags.
+When the 'GPG' prereq is lazily tested, `mkdir "$GNUPGHOME"` could
+fail if the "$GNUPGHOME" directory already exists. This can happen if
+the 'GPGSM' or the 'GPGSSH' prereq has been lazily tested before as they
+already create "$GNUPGHOME".
 
-This starts with the "NAME" section where the command is described
-with:
+To allow the GPGSM or the GPGSSH prereq to appear before the GPG prereq
+in some test scripts, let's refactor the creation and setup of the
+"$GNUPGHOME"` directory in a new prepare_gnupghome() function that uses
+`mkdir -p "$GNUPGHOME"`.
 
-"Create, list, delete or verify a tag object signed with GPG"
+This will be useful in a following commit.
 
-while for example `git branch` is described with simply:
+Unfortunately the new prepare_gnupghome() function cannot be used when
+lazily testing the GPG2 prereq, because that would expose existing,
+hidden bugs in "t1016-compatObjectFormat.sh", so let's just document
+that with a NEEDSWORK comment.
 
-"List, create, or delete branches"
-
-This could give the false impression that `git tag` only works with
-tag objects, not with lightweight tags, and that tag objects are
-always GPG signed.
-
-In the "DESCRIPTION" section, it looks like only "GnuPG signed tag
-objects" can be created by the `-s` and `-u <key-id>` options, and it
-seems `gpg.program` can only specify a "custom GnuPG binary".
-
-This goes on in the "OPTIONS" section too, especially about the `-s`
-and `-u <key-id>` options.
-
-The "CONFIGURATION" section also doesn't talk about how to configure
-the command to work with X.509 and SSH signatures.
-
-Let's rework all that to make sure users have a more accurate and
-balanced view of what the command can do.
-
-Helped-by: Patrick Steinhardt <ps@pks.im>
+Helped-by: Todd Zullinger <tmz@pobox.com>
+Helped-by: Collin Funk <collin.funk1@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/git-tag.adoc | 48 ++++++++++++++++++++++++++------------
- 1 file changed, 33 insertions(+), 15 deletions(-)
+ t/lib-gpg.sh | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-tag.adoc b/Documentation/git-tag.adoc
-index a4b1c0ec05..28d6fe4e1a 100644
---- a/Documentation/git-tag.adoc
-+++ b/Documentation/git-tag.adoc
-@@ -3,7 +3,7 @@ git-tag(1)
+diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+index 937b876bd0..b99ae39a06 100644
+--- a/t/lib-gpg.sh
++++ b/t/lib-gpg.sh
+@@ -9,6 +9,16 @@
+ GNUPGHOME="$(pwd)/gpghome"
+ export GNUPGHOME
  
- NAME
- ----
--git-tag - Create, list, delete or verify a tag object signed with GPG
-+git-tag - Create, list, delete or verify tags
- 
- 
- SYNOPSIS
-@@ -38,15 +38,17 @@ and `-a`, `-s`, and `-u <key-id>` are absent, `-a` is implied.
- Otherwise, a tag reference that points directly at the given object
- (i.e., a lightweight tag) is created.
- 
--A GnuPG signed tag object will be created when `-s` or `-u
--<key-id>` is used.  When `-u <key-id>` is not used, the
--committer identity for the current user is used to find the
--GnuPG key for signing. 	The configuration variable `gpg.program`
--is used to specify custom GnuPG binary.
-+A cryptographically signed tag object will be created when `-s` or
-+`-u <key-id>` is used. The signing backend (GPG, X.509, SSH, etc.) is
-+controlled by the `gpg.format` configuration variable, defaulting to
-+OpenPGP. When `-u <key-id>` is not used, the committer identity for
-+the current user is used to find the key for signing. The
-+configuration variable `gpg.program` is used to specify a custom
-+signing binary.
- 
- Tag objects (created with `-a`, `-s`, or `-u`) are called "annotated"
- tags; they contain a creation date, the tagger name and e-mail, a
--tagging message, and an optional GnuPG signature. Whereas a
-+tagging message, and an optional cryptographic signature. Whereas a
- "lightweight" tag is simply a name for an object (usually a commit
- object).
- 
-@@ -64,10 +66,12 @@ OPTIONS
- 
- -s::
- --sign::
--	Make a GPG-signed tag, using the default e-mail address's key.
--	The default behavior of tag GPG-signing is controlled by `tag.gpgSign`
--	configuration variable if it exists, or disabled otherwise.
--	See linkgit:git-config[1].
-+	Make a cryptographically signed tag, using the default signing
-+	key. The signing backend used depends on the `gpg.format`
-+	configuration variable. The default key is determined by the
-+	backend. For GPG, it's based on the committer's email address,
-+	while for SSH it may be a specific key file or agent
-+	identity. See linkgit:git-config[1].
- 
- --no-sign::
- 	Override `tag.gpgSign` configuration variable that is
-@@ -75,7 +79,10 @@ OPTIONS
- 
- -u <key-id>::
- --local-user=<key-id>::
--	Make a GPG-signed tag, using the given key.
-+	Make a cryptographically signed tag using the given key. The
-+	format of the <key-id> and the backend used depend on the
-+	`gpg.format` configuration variable. See
-+	linkgit:git-config[1].
- 
- -f::
- --force::
-@@ -87,7 +94,7 @@ OPTIONS
- 
- -v::
- --verify::
--	Verify the GPG signature of the given tag names.
-+	Verify the cryptographic signature of the given tags.
- 
- -n<num>::
- 	<num> specifies how many lines from the annotation, if any,
-@@ -236,12 +243,23 @@ it in the repository configuration as follows:
- 
- -------------------------------------
- [user]
--    signingKey = <gpg-key-id>
-+    signingKey = <key-id>
- -------------------------------------
- 
-+The signing backend can be chosen via the `gpg.format` configuration
-+variable, which defaults to `openpgp`. See linkgit:git-config[1]
-+for a list of other supported formats.
++# All the "test_lazy_prereq GPG*" below should use
++# `prepare_gnupghome()` either directly or through a call to
++# `test_have_prereq GPG*`. That's because `gpg` and `gpgsm`
++# only create the directory specified using "$GNUPGHOME" or
++# `--homedir` if it's the default (usually "~/.gnupg").
++prepare_gnupghome() {
++	mkdir -p "$GNUPGHOME" &&
++	chmod 0700 "$GNUPGHOME"
++}
 +
-+The path to the program used for each signing backend can be specified
-+with the `gpg.<format>.program` configuration variable. For the
-+`openpgp` backend, `gpg.program` can be used as a synonym for
-+`gpg.openpgp.program`. See linkgit:git-config[1] for details.
+ test_lazy_prereq GPG '
+ 	gpg_version=$(gpg --version 2>&1)
+ 	test $? != 127 || exit 1
+@@ -38,8 +48,7 @@ test_lazy_prereq GPG '
+ 		# To export ownertrust:
+ 		#	gpg --homedir /tmp/gpghome --export-ownertrust \
+ 		#		> lib-gpg/ownertrust
+-		mkdir "$GNUPGHOME" &&
+-		chmod 0700 "$GNUPGHOME" &&
++		prepare_gnupghome &&
+ 		(gpgconf --kill all || : ) &&
+ 		gpg --homedir "${GNUPGHOME}" --import \
+ 			"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
+@@ -63,6 +72,14 @@ test_lazy_prereq GPG2 '
+ 		;;
+ 	*)
+ 		(gpgconf --kill all || : ) &&
 +
- `pager.tag` is only respected when listing tags, i.e., when `-l` is
- used or implied. The default is to use a pager.
--See linkgit:git-config[1].
++		# NEEDSWORK: prepare_gnupghome() should definitely be
++		# called here, but it looks like it exposes a
++		# pre-existing, hidden bug by allowing some tests in
++		# t1016-compatObjectFormat.sh to run instead of being
++		# skipped. See:
++		# https://lore.kernel.org/git/ZoV8b2RvYxLOotSJ@teonanacatl.net/
 +
-+See linkgit:git-config[1] for more details and other configuration
-+variables.
+ 		gpg --homedir "${GNUPGHOME}" --import \
+ 			"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
+ 		gpg --homedir "${GNUPGHOME}" --import-ownertrust \
+@@ -132,8 +149,7 @@ test_lazy_prereq GPGSSH '
+ 	test $? = 0 || exit 1;
  
- DISCUSSION
- ----------
+ 	# Setup some keys and an allowed signers file
+-	mkdir -p "${GNUPGHOME}" &&
+-	chmod 0700 "${GNUPGHOME}" &&
++	prepare_gnupghome &&
+ 	(setfacl -k "${GNUPGHOME}" 2>/dev/null || true) &&
+ 	ssh-keygen -t ed25519 -N "" -C "git ed25519 key" -f "${GPGSSH_KEY_PRIMARY}" >/dev/null &&
+ 	ssh-keygen -t rsa -b 2048 -N "" -C "git rsa2048 key" -f "${GPGSSH_KEY_SECONDARY}" >/dev/null &&
 -- 
 2.51.0.438.g6987fc0bae
 
