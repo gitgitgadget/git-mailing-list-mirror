@@ -1,48 +1,48 @@
 Received: from sender3-pp-f112.zoho.com (sender3-pp-f112.zoho.com [136.143.184.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB22B31354B
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 12:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4285031354D
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 12:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.184.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760444879; cv=pass; b=sQR9SlIj7N1GFrwQN9PnAkTKhS4BLXUE71ZVV8+P4sJRXnAIVN6XIzjf2kTBCaYP9Iy0wbF1XXuXZ+oPuFcYBTud7Tdw9BmUou7lzYvvcdUNJLItfHnL45T+1i9Pz/uibNS4OKlvmjL98Guw8yrzlrHZVssnvJgCe2WyRaRIrWs=
+	t=1760444888; cv=pass; b=Yh7Hf4Z/VJcukG/mo7zvtQgKw5VtWGG37Cck8buX/RW9uiV1H2LBsLWrAdVTYVEqV6tzaQceexV/tElHIKMZPJiVWuQ91oIJRfwdBxv0KL+KLdDHawWB9pHBwDLXN6wjZnL8llkB98HMlb7dwoWLgV3nSj0KHFunfzuUJ8cM0hI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760444879; c=relaxed/simple;
-	bh=fajZvQVnIIBWT2+xqsdTG95mJToCFiLH1IPIjOXlP8Y=;
+	s=arc-20240116; t=1760444888; c=relaxed/simple;
+	bh=YP0J1A0EHmRTR6r4jPnjZslF0nLO9OMng19ng3wpu7A=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HCqJ23UEM99+oYb6eau/T63oJrPugXhJ4R3kBOubr/blC0QuS/LNbbcvtay9gwZN/ogHiRk6a62Q2A2k+5gEPUI/nXpcA8anqZoua6B5e27O1LkwmnROXzmeu5M0xDlaujSGoQ8+hMhzAQR/yfw29B8jlYoEFds9T/uwvDgTlOY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=XfF9iSdx; arc=pass smtp.client-ip=136.143.184.112
+	 MIME-Version; b=jWFmIit33DQLcNEywn8GxzhEFp3LHcbFBBCXwGKoQcMfGpx4xtNLOm+2NHIUEL8dQXIMxmwYNwF0AEMEkOi+VklgfRJOMJWrooJeqNQ+IXtYKU2CQLNZxTBq9LDiqMaXmheWBvUUcNlghkK7Vs2k1NAkl3dT/KIeHsn+6gHo39w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=JWkZF+PF; arc=pass smtp.client-ip=136.143.184.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="XfF9iSdx"
-ARC-Seal: i=1; a=rsa-sha256; t=1760444754; cv=none; 
+	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="JWkZF+PF"
+ARC-Seal: i=1; a=rsa-sha256; t=1760444763; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=DzFJbIlaksM7NZ7s18JB4Oi1hofplcV6m5hIXhH4kUKTr4X+S0UldEyuzSeVpRPwSJxkOh/EnP6U3Db6PXrwCW66GGfonogDQMSDYBshczH4Nv0BW4AVmVQB+fD9EQLQKwB0VWmkErpAQwMqjCGr1YlE+h3kWpfMhBkW9SYQzSg=
+	b=PmAc7wAUIsvE1Jn3mmZ6B2eqInyC9TEjj1EMwqwAS/r6HzzH7o5ZRsq55P+U4P1fZlxA0+j9X3KghK8nAZThyTL5e/vCZN/Cx+tNwH2In/5yzt9XU7XY7k9EOWHi/UyXgSmVafKDm68ZHuVmstbzxhnSnM36S2SJoKJn2vpaNCg=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1760444754; h=Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
-	bh=Mzczi8K7D2I06v4+KEO5s5vH7sUZU9ZZveHQc+eX6LM=; 
-	b=Lascfmktw96qsldwwNGncMXVR4gzPVZOUvzJgbXG0MLrFe56Q07OfcW9r9JHTjQucQdH99BcyZM+2adUXWtTkhfmsjLCgFES1j1jFaTFkM8BJZ0DrjqBrDjId0HrzQP+SRaiF1AajlFROmj0DQXsD+gX8nUIrsnOWeJj8B5sBx0=
+	t=1760444763; h=Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
+	bh=bEL/oyLS+z036duVl6pzLscNZMgda9TZshIzv9iNhzw=; 
+	b=P0TPQwfWq49T4yjS/ul+h0Xb8HB9b8bpovWTyG8iOQF+ZGWA1GCeUysUp8xcXN4B2u3PZChzx7orl+S1FACuonKNrCCs1zRCccGt/Xe8m73yZ7Ean3BDJoyd6m836BNij3X8sZy6Kq9ss3TlPL34LF4CgzhZ7Fv7mFFMEG+9Vwk=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=linux.beauty;
 	spf=pass  smtp.mailfrom=me@linux.beauty;
 	dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1760444754;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1760444763;
 	s=zmail; d=linux.beauty; i=me@linux.beauty;
 	h=From:From:To:To:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
-	bh=Mzczi8K7D2I06v4+KEO5s5vH7sUZU9ZZveHQc+eX6LM=;
-	b=XfF9iSdx8pgCigJStYpniPO9nVKe/Z7yxlThWAThH+g7G35OsX/RIBS1ncE61hGa
-	UdEOH6tt1hlBbesIeM1Cd/MvmbP33OzMsjslaiQ/h8CGnwTwHVLBFpKhVg3T6m/89qd
-	HHmBFkfAPYp+YcFytPUbfPbczJlJoeMJxuwSMzSg=
-Received: by mx.zohomail.com with SMTPS id 1760444752438208.42181511545016;
-	Tue, 14 Oct 2025 05:25:52 -0700 (PDT)
+	bh=bEL/oyLS+z036duVl6pzLscNZMgda9TZshIzv9iNhzw=;
+	b=JWkZF+PFGX08H780xZx2htr+KCrGp9FInMOtkAChqCylbvJuONaie+Rl8Tx/b2PB
+	mfIBWGWlRBCZqJTcIR1UeXsxIp0MLM+l1hwXRnf9UTEtG10n6CDpHM9q9KzY6ozhDF0
+	FmHF2bJtVq+jQ32qXd5aLq6veuVAFqjc8wie+Ye0=
+Received: by mx.zohomail.com with SMTPS id 1760444754596432.8800520496393;
+	Tue, 14 Oct 2025 05:25:54 -0700 (PDT)
 From: Li Chen <me@linux.beauty>
 To: "phillipwood" <phillip.wood@dunelm.org.uk>,
 	"git" <git@vger.kernel.org>,
 	"Junio C Hamano" <gitster@pobox.com>
-Subject: [PATCH v4 18/29] tests: t3440: check apply backend error includes option
-Date: Tue, 14 Oct 2025 20:24:31 +0800
-Message-ID: <20251014122452.1851103-19-me@linux.beauty>
+Subject: [PATCH v4 19/29] tests: t3440: use test_commit_message for trailer checks
+Date: Tue, 14 Oct 2025 20:24:32 +0800
+Message-ID: <20251014122452.1851103-20-me@linux.beauty>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251014122452.1851103-1-me@linux.beauty>
 References: <20251014122452.1851103-1-me@linux.beauty>
@@ -55,31 +55,56 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-From: Li Chen <chenl311@chinatelecom.cn>
-
-Updated the rebase trailer test to assert that
-the apply-backend error explicitly includes the
---trailer option in its message while retaining
-the existing backend check.
+Replaced the pipeline-based trailer assertions with
+explicit expectations verified by test_commit_message,
+ensuring the rebase trailer tests catch git command
+failures reliably.
 
 Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
 ---
- t/t3440-rebase-trailer.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t3440-rebase-trailer.sh | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
 diff --git a/t/t3440-rebase-trailer.sh b/t/t3440-rebase-trailer.sh
-index 0c0185d058..6f1a062e8f 100755
+index 6f1a062e8f..16b059c2c3 100755
 --- a/t/t3440-rebase-trailer.sh
 +++ b/t/t3440-rebase-trailer.sh
-@@ -34,7 +34,7 @@ test_expect_success 'apply backend is rejected with --trailer' '
- 	test_expect_code 128 \
- 	git rebase --apply --trailer "Reviewed-by: Dev <dev@example.com>" \
- 				HEAD^ 2>err &&
--	test_grep "requires the merge backend" err &&
-+	test_grep "fatal: --trailer requires the merge backend" err &&
- 	test_cmp_rev HEAD $head_before
+@@ -52,18 +52,28 @@ test_expect_success 'reject trailer with missing key before separator' '
+ 
+ test_expect_success 'CLI trailer duplicates allowed; replace policy keeps last' '
+ 	git reset --hard third &&
+-	git -c trailer.Bug.ifexists=replace -c trailer.Bug.ifmissing=add rebase -m --trailer "Bug: 123" --trailer "Bug: 456" HEAD~1 &&
+-	git cat-file commit HEAD | grep "^Bug: 456" &&
+-	git cat-file commit HEAD | grep -v "^Bug: 123"
++	git -c trailer.Bug.ifexists=replace -c trailer.Bug.ifmissing=add \
++		rebase -m --trailer "Bug: 123" --trailer "Bug: 456" HEAD~1 &&
++	cat >expect <<-\EOF &&
++	third
++
++	Bug: 456
++	EOF
++	test_commit_message HEAD expect
  '
  
+ test_expect_success 'multiple Signed-off-by trailers all preserved' '
+ 	git reset --hard third &&
+ 	git rebase -m \
+-		--trailer "Signed-off-by: Dev A <a@ex.com>" \
+-		--trailer "Signed-off-by: Dev B <b@ex.com>" HEAD~1 &&
+-	git cat-file commit HEAD | grep -c "^Signed-off-by:" >count &&
+-	test "$(cat count)" = 2   # two new commits
++			--trailer "Signed-off-by: Dev A <a@ex.com>" \
++			--trailer "Signed-off-by: Dev B <b@ex.com>" HEAD~1 &&
++	cat >expect <<-\EOF &&
++	third
++
++	Signed-off-by: Dev A <a@ex.com>
++	Signed-off-by: Dev B <b@ex.com>
++	EOF
++	test_commit_message HEAD expect
+ '
+ 
+ test_expect_success 'rebase -m --trailer adds trailer after conflicts' '
 -- 
 2.51.0
 
