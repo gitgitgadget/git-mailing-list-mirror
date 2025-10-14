@@ -1,166 +1,201 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461A4231856
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 12:31:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760445098; cv=pass; b=aQ63GiTnn3WIGIG01b5AWdosS5pl7IkNHApLwO/3LfW9op3DWIVxPUgEW3FCLBvoF/tJkoummOpMkwQNOctwiNxIGb6JsP95Si6YJAyXD7RjyfuD7SGfB7bwPk5DvnmJKze39LtwCvSdCXxFogaqtXyQi+3cARu/tWN75fsgIkM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760445098; c=relaxed/simple;
-	bh=BJtBH8vpKjK1EPaMYdLeBnHT2z85j3+Mfc3DrX1uoAA=;
-	h=Date:From:To:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=phuWnyw8UuO0vYINVd5i+EZSv4OpUmn/XiQde5ImPte37yjvFOsieWXn4mLe475swlAkZrGioHhwKn5B8kSn0x1WZmESMxeJFXRGWU3NDaS/vG4KsTge0eJeREMnqqd+STh64ywgcSEixhJQhAtbOCfpXy5/Ll8QeaYFzc+zbts=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=egaF53ND; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.beauty
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D522FDC53
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 12:35:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1760445343; cv=none; b=asbpmUPlRRcPOCESvhIJJ8D77QV0bJRy3G3oYXcZKO+P1Fp01E3jIrMJN5dpGK34a0zwuf+FBZTpCyTj11AZZo5Qefa09Qt5uObLa6C+5yWV3eFmFdmLWjoCL4qPPSNZJX9STkZJPMZvsx+NbvxlNXEDFiLoe04MaWjv3vCiB9s=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1760445343; c=relaxed/simple;
+	bh=emb5NtCrfsMUhqJqfr3eqypfIVh9X0QCmed4z1uIG/g=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RFetHQLH/e58OBlt7K87n8QKX/PvqH9qq8tfM/oImMLnltuOYd7snz0a7rc+6HzY7ycx5QomYuNeo7GHCNUVnrxDsNs6Za7vdr6dXF/jl/p/cTsfxpxVZpKRBEoKYs3fELNBRnAgBZiHTuAWtINkVXIh/KB9tHBMrncEDF+X0ZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TJfz3+eU; arc=none smtp.client-ip=209.85.217.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="egaF53ND"
-ARC-Seal: i=1; a=rsa-sha256; t=1760445086; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=evJjTD/spFC8PGrZgA/Nyyn50jEFcquduOsoV7EvIfI+cvmHyqwEu9qK/pudy/LDMgfnXUGR2+u7j+le+/Iu3t7KRLmNI+OpOt25NmTUdCrZ6AAIYvLpS6AghUu1RMj+GuI/0uD3aQPzy4L9vRtmsZkcxaqUmtdjpwimz0hisAc=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1760445086; h=Content-Type:Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
-	bh=kAhhTZ2FVYFMud/kfXROszQOF7Nq4IDNUuCl2xafKlE=; 
-	b=ginWLP+zxtNZ5vHggjBieSMgHB4124LeYjkuLjH/1FjvCO6t4e8aOKAkqdzjRMywt/KDH+4A27DFV0wrKJbb3odd1KggdXeN1b3laybhP23GbHWcM4r8TZ2ywHp8V1NK3vmwPd+Y7y8B96p8qONqX4e56yNEeE8wqijh7miiBA8=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=linux.beauty;
-	spf=pass  smtp.mailfrom=me@linux.beauty;
-	dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1760445086;
-	s=zmail; d=linux.beauty; i=me@linux.beauty;
-	h=Date:Date:From:From:To:To:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
-	bh=kAhhTZ2FVYFMud/kfXROszQOF7Nq4IDNUuCl2xafKlE=;
-	b=egaF53NDuKUsV7AwE2W93WhSmaSDdeEXSoojBjIvuiSPStHkwILooik630fKz3Sa
-	II012kYgSJlFyOWYdR5SWpezfwR10f1si8WUdTUjuLsnD4ji8dgxnVYp/rfNhVXW2C6
-	fQNx/96D+4vAx0Gv6nWFHPCyY0hAfQKps02bp3nE=
-Received: from mail.zoho.com by mx.zohomail.com
-	with SMTP id 1760445085084849.4909983893075; Tue, 14 Oct 2025 05:31:25 -0700 (PDT)
-Date: Tue, 14 Oct 2025 20:31:25 +0800
-From: Li Chen <me@linux.beauty>
-To: "phillipwood" <phillip.wood@dunelm.org.uk>, "git" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-Message-ID: <199e2b43582.47bdac39780183.537796020815726330@linux.beauty>
-In-Reply-To: <20251014122452.1851103-1-me@linux.beauty>
-References: <20251014122452.1851103-1-me@linux.beauty>
-Subject: Re: [PATCH v4 00/29] rebase: support --trailer
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TJfz3+eU"
+Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-5a7b2a6b13bso4223376137.3
+        for <git@vger.kernel.org>; Tue, 14 Oct 2025 05:35:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760445341; x=1761050141; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FhD98s0xRcjdLk0SzOTIwFubiTKsdQFpQlb+mNWKJ5E=;
+        b=TJfz3+eUydkflBMlLsHVTzYtDQA862xWGF7g5TTkikSrF/E3IUrW/ZUUHXL/xav6GC
+         59UXa+TX0AQC+ZIOzwcoE5TX/yG0r8f24HH1xH2VDXSuPPRGoVLfrBvk/sbnGyleeetQ
+         GeSLVhYvdJnm+m2OFVZm8f3ujKmXmt2JA3UU9rHThVDrC2sFsTuwhtFRgo01MXFUxiS+
+         v+JcFwo1YCgmPGyvXf0iTwZh1mnk32slv6M0Xe6IYmTUegMR6hhM3Knf9iTcd2vY9ry/
+         Hv7w4R2OGEo2F3Yz4WQgG1vJLhy7b92GfxhDzrIpnvmATblzyT/Cf3zfIfSl9EGi/n5C
+         bXsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760445341; x=1761050141;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FhD98s0xRcjdLk0SzOTIwFubiTKsdQFpQlb+mNWKJ5E=;
+        b=gvk0mgPqvuTXAGcodMWUESx1vW+Q+39DT6Q/cF8jDsBZzkVZfrX7dpUjPJrHOy0r5+
+         0rloT1QJJnp3cVHky3kmR091Bc0vzWJ7KN3EihmmYL9yfdiZM6JTNxiD0zOzQtcC8uif
+         LjfGFfFislXhtH9jb1J7Qu2q8C/AgitfZbuQhMEzhqgta+t/HZ/42LHXNov/imxWPo8j
+         hQ596eyckx79mNoP7L2UwTnkr/UtP0wbv4rI5sMY87UasgnHMB4XLsaibP8f3exy9Ejl
+         e0fZzgUSKKQYiiwPtQVgdB+eIVyQ96vOqsdLstDPniRAvn7XUjNT7xbsPXQF/WnAStgq
+         Kzxg==
+X-Forwarded-Encrypted: i=1; AJvYcCXFUwcSccQ/Xud2ERo1k0sfDCUUZimZrWF8fFs09WPR38AhFBdd4udAsyW0QWxdcvEMoJo=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4w89l3N8mAqb4L5WIN/rapm2DWhF+t78ah4laOEI+e9weh6+0
+	evYJzSBcZltAeYgaL2kJcxjN4VnACkL+91JVBgOGDYIrRyr6x8uJIisWoSuI+JYQgMHdE6pZACp
+	yrlhqpdHY8NsFVnFt87+mdVd7wqK7PrQ=
+X-Gm-Gg: ASbGnctnv66uteR9bZKewJGUueUJUZ2I7572FLwjXSvSHpC2GQ9KZmLltghWLQAV3Gi
+	OYgnKryHjWoJLzvcIO9T7hT07o3EHKcc6j43zv4d+6vTeEehLk45aLfzWSwNpXWyGkf+W1qLAFa
+	kFfpZIwMcFimDhpB7C9V7zdL96+Jk5YutXGOlmls0Ii2kVpTiIxt4hzrxckYQg1wcGwhKIuAGY2
+	UUfCu/lezkZp93o1JGtSbk4XhCzQuow5divkcRN/in9GlMWbaX6YC+kIzCYqef8CFHMAFg=
+X-Google-Smtp-Source: AGHT+IFl4msMX70gBLomMai0dG5MZsl/SKJS5AjytemgjLobgUWCzH22OAC51JGOdz97kzlw+mFIZLk+0QZMbtGGewo=
+X-Received: by 2002:a05:6102:14a2:b0:5d5:dcc4:bf47 with SMTP id
+ ada2fe7eead31-5d5e2202de7mr10032172137.9.1760445340781; Tue, 14 Oct 2025
+ 05:35:40 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 14 Oct 2025 08:35:39 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 14 Oct 2025 08:35:39 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20251001-b4-pks-history-builtin-v4-8-8e61ddb86317@pks.im>
+References: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im> <20251001-b4-pks-history-builtin-v4-8-8e61ddb86317@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Date: Tue, 14 Oct 2025 08:35:39 -0400
+X-Gm-Features: AS18NWC2CYh-Ns6XJ8-Rd-jR40dWjr_cdKDslrpheXGnH39LKMuL5KMx2s0JGv8
+Message-ID: <CAOLa=ZRh8LDu=-PAxiAV9QxFtjuQtC8sOojZm-4=CgN6t4vJFg@mail.gmail.com>
+Subject: Re: [PATCH v4 08/12] add-patch: split out `struct interactive_options`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
+	Sergey Organov <sorganov@gmail.com>, =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
+	Martin von Zweigbergk <martinvonz@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Elijah Newren <newren@gmail.com>
+Content-Type: multipart/mixed; boundary="0000000000002f2eaf06411d9f92"
+
+--0000000000002f2eaf06411d9f92
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
 
-Hi Phillip & Junio,
+Patrick Steinhardt <ps@pks.im> writes:
 
-I apologize for the delay in sending out v4. I will respond to
-and update the code in the following patchset (if needed)
- as soon as possible.=20
+> The `struct add_p_opt` is reused both by our the infra for "git add -p"
+> and "git add -i". Users of `run_add_i()` for example are expected to
+> pass `struct add_p_opt`. This is somewhat confusing and raises the
+> question which options apply to what part of the stack.
+>
 
-My apologies!
+Okay. So seems like `struct add_p_opt` is defined in 'add-patch.h' and
+`struct add_i_state` in 'add-interactive.h'.
 
- ---- On Tue, 14 Oct 2025 20:24:13 +0800  Li Chen <me@linux.beauty> wrote -=
---=20
- > From: Li Chen <chenl311@chinatelecom.cn>
- >=20
- > This patch series teaches git rebase a new
- > --trailer <text> option and, as a prerequisite, moves all trailer
- > handling out of the external interpret-trailers helper and into the
- > builtin code path, as suggested by Phillip Wood.
- >=20
- > Patch 0 switches trailer.c to an in-memory implementation
- > (amend_strbuf_with_trailers()). It removes every fork/exec.
- >=20
- > Patch 1~8 fix all reviewer comments from v3 for patch 0.=20
- >=20
- > Patch 9 builds on that helper to implement
- > git rebase --trailer. When the option is given we:
- > force the merge backend (apply/am backend lacks a message filter),
- > automatically enable --force-rebase so that fast-forwarded
- > commits are rewritten, and append the requested trailer(s) to every
- > rewritten commit.
- > State is stored in $state_dir/trailer so an interrupted rebase can
- > resume safely. A dedicated test-suite (t3440) exercises plain,
- > conflict, --root, invalid-input scenarios and etc.
- >=20
- > The rest patches address all reviewer comments from v3 for patch 9.=20
- >=20
- > All t/*.sh testcases have run successfully.
- >=20
- > v4: fix all reviewer comments in v3. [2]
- > v3: merges the remaining trailer paths into one in-process helper, dropp=
-ing the
- >     duplicate code, as pointed by Junio and Phillip [1]
- > v2: fix issues pointed by Phillip=20
- > RFC link: https://lore.kernel.org/git/196a5ac1393.f5b4db7d187309.2451613=
-571977217927@linux.beauty/
- >=20
- > Comments welcome!
- >=20
- > [1]: https://lore.kernel.org/git/xmqq8qlzkukw.fsf@gitster.g/
- > [2]: https://lore.kernel.org/git/20250803150059.402017-1-me@linux.beauty=
-/
- >=20
- > Li Chen (29):
- >   trailer: append trailers in-process and drop the fork to
- >     `interpret-trailers`
- >   trailer: restore interpret_trailers helper
- >   trailer: drop --trailer prefix handling in amend helper
- >   trailer: move config_head and arg_head to if storage
- >   trailer: use bool for had_trailer_before
- >   interpret-trailers: buffer stdout output
- >   trailer: mirror interpret-trailers output flow
- >   trailer: handle trailer append failures gently
- >   rebase: support --trailer
- >   rebase: inline trailer state paths
- >   rebase: reuse buffer for trailer args
- >   rebase: drop redundant strbuf_release call
- >   rebase: skip stripping of --trailer option prefix
- >   rebase: die on invalid trailer args
- >   rebase: validate trailers with configured separators
- >   sequencer: add trailers to message before writing file
- >   tests: t3440: create expect files at point of use
- >   tests: t3440: check apply backend error includes option
- >   tests: t3440: use test_commit_message for trailer checks
- >   tests: t3440: drop redundant resets and pass branch to rebase where
- >     needed
- >   tests: t3440: assert trailer on HEAD after conflict rebase
- >   rebase: persist --trailer options across restarts
- >   tests: t3440: remove redundant --keep-empty
- >   tests: t3440: use helper for trailer checks
- >   tests: t3440: test --trailer without values
- >   tests: t3440: convert ex.com to example.com
- >   tests: t3440: ensure trailers persist after rebase continue
- >   tests: t3440: exercise trailer config mapping
- >   sequencer: honor --trailer with fixup -C
- >=20
- >  Documentation/git-rebase.adoc |   7 ++
- >  builtin/commit.c              |   2 +-
- >  builtin/interpret-trailers.c  |  94 +++++-------------------
- >  builtin/rebase.c              |  50 +++++++++++++
- >  builtin/tag.c                 |   3 +-
- >  sequencer.c                   |  34 +++++++++
- >  sequencer.h                   |   4 +-
- >  t/meson.build                 |   1 +
- >  t/t3440-rebase-trailer.sh     | 134 ++++++++++++++++++++++++++++++++++
- >  trailer.c                     | 130 ++++++++++++++++++++++++++++++---
- >  trailer.h                     |  23 +++++-
- >  wrapper.c                     |  16 ++++
- >  wrapper.h                     |   6 ++
- >  13 files changed, 411 insertions(+), 93 deletions(-)
- >  create mode 100755 t/t3440-rebase-trailer.sh
- >=20
- > --=20
- > 2.51.0
- >=20
- >=20
+> But things are even more confusing than that: while callers are expected
+> to pass in `struct add_p_opt`, these options ultimately get used to
+> initialize a `struct add_i_state` that is used by both subsystems. So we
+> are basically going full circle here.
+>
+> Refactor the code and split out a new `struct interactive_options` that
+> hosts common options used by both. These options are then applied to a
+> `struct interactive_config` that hosts common configuration.
+>
+> This refactoring doesn't yet fully detangle the two subsystems from one
+> another, as we still end up calling `init_add_i_state()` in the "git add
+> -p" subsystem. This will be fixed in a subsequent commit.
+>
 
-Regards,
+[snip]
 
-Li=E2=80=8B
+> diff --git a/add-patch.h b/add-patch.h
+> index 4394c74107..a4a05d9d14 100644
+> --- a/add-patch.h
+> +++ b/add-patch.h
+> @@ -1,15 +1,45 @@
+>  #ifndef ADD_PATCH_H
+>  #define ADD_PATCH_H
+>
+> +#include "color.h"
+> +
+>  struct pathspec;
+>  struct repository;
+>
+> -struct add_p_opt {
+> +struct interactive_options {
+>  	int context;
+>  	int interhunkcontext;
+>  };
+>
+> -#define ADD_P_OPT_INIT { .context = -1, .interhunkcontext = -1 }
+> +#define INTERACTIVE_OPTIONS_INIT { \
+> +	.context = -1, \
+> +	.interhunkcontext = -1, \
+> +}
+> +
+> +struct interactive_config {
+> +	enum git_colorbool use_color_interactive;
+> +	enum git_colorbool use_color_diff;
+> +	char header_color[COLOR_MAXLEN];
+> +	char help_color[COLOR_MAXLEN];
+> +	char prompt_color[COLOR_MAXLEN];
+> +	char error_color[COLOR_MAXLEN];
+> +	char reset_color_interactive[COLOR_MAXLEN];
+> +
+> +	char fraginfo_color[COLOR_MAXLEN];
+> +	char context_color[COLOR_MAXLEN];
+> +	char file_old_color[COLOR_MAXLEN];
+> +	char file_new_color[COLOR_MAXLEN];
+> +	char reset_color_diff[COLOR_MAXLEN];
+> +
+> +	int use_single_key;
+> +	char *interactive_diff_filter, *interactive_diff_algorithm;
+> +	int context, interhunkcontext;
+> +};
+> +
+> +void interactive_config_init(struct interactive_config *cfg,
+> +			     struct repository *r,
+> +			     struct interactive_options *opts);
+> +void interactive_config_clear(struct interactive_config *cfg);
+>
 
+It feels a little odd that the `interactive_*` code lies in the
+'add-patch.h' and not in the 'add-interactive.h'.
+
+Should we also consider moving this or renaming the structs?
+
+Nit: might be nice to make add the 'add_' prefix to them while we're
+here.
+
+>  enum add_p_mode {
+>  	ADD_P_ADD,
+> @@ -20,7 +50,7 @@ enum add_p_mode {
+>  };
+>
+>  int run_add_p(struct repository *r, enum add_p_mode mode,
+> -	      struct add_p_opt *o, const char *revision,
+> +	      struct interactive_options *opts, const char *revision,
+>  	      const struct pathspec *ps);
+>
+>  #endif
+
+[snip]
+
+--0000000000002f2eaf06411d9f92
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: a5da72048961957_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEpCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qdVE1b1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNWdDQy9qbTY2MjRXR1o3cUR6bDFRZ1RHTzhDcjlSZwp0ellVZS9KN1hB
+ekFEQkhFV2p2RHJrWTRudXJReTkvVkxYenlXN1V1Vlp3ZVpGT3NjdmdSTVZQaVdNZksvZ05sCk9w
+eGVQMXEvSDdxZUxCd2dEZjF6bGxsUFAzUnYvYXpTaHpkblJCVnlraFBxcGRSUXBqc0lsWUR4Q2ZB
+U1RXRVAKTUViRTg1a0NEcGtUcGtYMkUyRUxlejBCaDhqNDZIaEpwU1RHam5oKzNqTFNsR3NLK1dF
+b0ovZUR3NWtMUDNCRwpEWCtsNXJEWjNxMkNTNWpnbnJMT1o4UUpKV3ZpeWpLRjA3cTRPSngwaXNs
+RW56dlFRZHo1Zmo5RFl3SGhHdFErCjlvNm9qMWFxTFQ0Vkp1NUtQU3NuSFlXc3NtMndvcThmTGYv
+Zm5QQnVtL1JsRkVXNWoyNW5uNXM2Wkc0emw0N1MKaEFPR2Q1bGh1Zi9EcXZrQnhtclgxSUhyUTZp
+cVJ5U1ZZaVhKSFNnbnpwZS9UL1BJTkVIN3YrS1E1QzVqczlLaQo1Wk5TS2FnT05kNU9NS3dLcGZ0
+Vkd6c0Nrc0lhcHJOUVNISFFvSE5UU1FuNThEWEY4ZDNZVTNmUVNsNVAxR2lqCktncTlvNHZidkJV
+cXhGYnVkMkdiRTI5QVQyaXpQYm1xbStYRDJ3PT0KPTJZTTgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000002f2eaf06411d9f92--
