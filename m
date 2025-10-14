@@ -1,244 +1,203 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA531DF987
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 08:17:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696622DAFD2
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 08:49:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760429850; cv=none; b=MdL5DCht5HiliZLP4TQTzYtnfXTbzM9D/aZv5CMSaZHaaDBqYUu9Oe28AIMmYmvpZGqmj49iZN1TC0fPFmjLmMSVMujALMJeQM3r1FrNs3PlKtYRvaQ1bZN05MjvqLMV+yT//2RgLS65hUnPX5uh0UTJ7zCn3iqF/qFdgZXkOcA=
+	t=1760431758; cv=none; b=htrXyLYyZEnkxxFoMcrtAxsRLksIScf/uTxb9roFT6FlLe9t+v8rAtcmDVfRFqn39Q5gnZ63AjOMCdrTUlk3gfAB79t782b/SKDZvtfkn/AgDrceXTxhBJzQ4QUc86GP2C2IRtzOg6Si++wfhg4Cbw6SKjzoBh1ryteZJlXONZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760429850; c=relaxed/simple;
-	bh=fl5+HOdTZ4TCdtnkSmPWvxCFIXODAibEZ2kkL8a9uI8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=dcMtcks23bsLqtQFpDVF6i6NOlmYUycZimCA0h68S9LQqKuRVx5isedd7JjSiTr/hwrrPWL3X5kV2wLz6K8P1tnqOXyUUl8tzT1AyHa4L4IQICJDhu0Z1SytUPY91ZoovZparQ766sRMTwR2Y88Mp7lrXRP7Gq9kJV79S9I3JDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VSFh2ofP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C3NtOlIx; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1760431758; c=relaxed/simple;
+	bh=Q4g6T3p75V8hcOsslCUNKr9F3KXy+G1plgoBwgl5CHs=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=M/YjMkmr2zI9AKpwyfL7tWuCOPqsCi0reV3ZBhBG0hielSPuFZqy2y2o9T9GuNUUOlEw3/to5SoN6xXFAfuS5IQkMnOMLgSG5APbYKHSFNfANn2Ss6OL4/+T83JaHAuGEjZPtVzOIeqOu3YJYHdBYDw1fbiuiewmL0uy3rAzJOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QepPJZyL; arc=none smtp.client-ip=209.85.221.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VSFh2ofP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C3NtOlIx"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3C5477A0109;
-	Tue, 14 Oct 2025 04:17:26 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Tue, 14 Oct 2025 04:17:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1760429846; x=1760516246; bh=KHlOztik2H
-	Oa94gE/SWnvoHxZG1BITkD5844nCrRCdw=; b=VSFh2ofPzoKlu9CxZ4PzoOplqB
-	J4q8KLXrBszEWVyqlDyR/SxoYTqIa53D319AHEMWsS4lyGAoUSAo30zHJUy5bmMz
-	RZqNkoInOUWcLjdpjhTIOxjKT2II3bmsXJVKTMR5Josp/R1Jqoh1ckwz1/roSMbi
-	+qfWoB/WNjxkHrqKU+QX60kNiEPNiXirYzWnxvcF1A+pBax+9th8QYg4c7Tq+SON
-	yMK/aLaJJEIzvWmiuvrGirufRa5v8k6hbZrR6fBv4NsWXWWEWACGIrPxzbMUwqsc
-	9pyDITzBhVSfiFZcFLvI9ywEFma3zGud06eMrJlyHffaAwY3ge+Bje+7jhqA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1760429846; x=1760516246; bh=KHlOztik2HOa94gE/SWnvoHxZG1B
-	ITkD5844nCrRCdw=; b=C3NtOlIx3MafYTU5el/IZGeMxkNnzrIFahmOFZeSyZ/3
-	nj77710QAjXWs2NBVlls4LQXZINkYNwwuyqrAIKZsQhPVdoEHV6iPK7Nt54Dptc7
-	NG/lgEVt+hS9luuK6o/r9/5F3KlotrjnBYgJoRBRrBRCceK0IiA3vYhM2bu5Qfo8
-	QPcYlKevbIh6hmgX6FMP1jdH3rNrYP+Coi7dH0iDTLu0rT0bobNSsehNMToSZcWr
-	HDEPkz5lo4VD0Kh9ljkGO2t9m8j0QN/05SiZdb1AWB6WPlRAqEB6wtvv0zbOXEIu
-	2Uda4ZCVWYV7oQzwI83XHmITZY/uQREhxVUN2qv1Lg==
-X-ME-Sender: <xms:FQfuaETndwIBsnanmBVrO4cUgVE-4_T3fiWRn5AcQ2VXkLBZID0OJg>
-    <xme:FQfuaJOHVqNLfb8DcLMpGV52bxV5ST1PPbJW1XtkuqVNz1QQyUpwXRYOdhpnGh4DE
-    6FLDmeUUyRCNhEkQsVihy7Lf2azWaYbzJxpw2ZmVYASPpJqi0VI>
-X-ME-Received: <xmr:FQfuaPPTp_O06cjkVkcSim2v-2QDlhNFNK2dkLirJqXdbn7T_EYsxD-D2Tex7vJyFCen-VaRJHnp9r7bTOLZroOoza3IeGhBJ1xagxLCRw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvddttdefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    eigfeitdffffdvvdeuheehjeehheeludduhfehkeekgeeggfeuffehveegteejfeenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghl
-    ihhnsehgmhigrdguvg
-X-ME-Proxy: <xmx:FQfuaBsUsI3xee1AdVjPL2n2yglWrdtatkv5JkHK4IpA7pawEpn4eQ>
-    <xmx:FQfuaBVNTuMYPbiCZGeMT0FfXd1olI-ErykHw6XKCIpJiZTCtJu0pw>
-    <xmx:FQfuaBsxhXHqsynrQpnipM8R_fUa7a7oGjNdNkDLW6odoWuTtOxxJA>
-    <xmx:FQfuaFU0ixz4DngACrVam6oT5RHYYcNTUqVXjvSEZCWehOUgGauRFg>
-    <xmx:FgfuaHxfx1bb_UcxIjPWSCuD6OJk56DAvwyN_RASTn7luL707Xi-f67B>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Oct 2025 04:17:25 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f9a9f15c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 14 Oct 2025 08:17:23 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 14 Oct 2025 10:17:14 +0200
-Subject: [PATCH] refs/files: deprecate writing symrefs as symbolic links
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QepPJZyL"
+Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-54aa4b86b09so2010139e0c.0
+        for <git@vger.kernel.org>; Tue, 14 Oct 2025 01:49:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760431755; x=1761036555; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ignOfHlZBnIpdrbM80ZQ0racxFfwk7sEvyUQa53KzOw=;
+        b=QepPJZyLrmyOIay2OvJhYaHd1RnuMCVxjzr/FlP719MCizDpvrvaqMjxeh4XFn2cHW
+         fVPhwP5bgKQPDLi1vBYPD1gg0IY1S/k9Bpcqy/+UC9Qa5CWEWWci3oce+6lyel3XOwpT
+         ZNmMhdmipLaiP69qzpawLAzWBeIRkxzzC1e23Po6tt5hp2M2ifHKn10upu1Gpf3tn2ZC
+         gz3U1h8k7TB34MZczTyZeqSFCLcxNH5VS1cSFZaQJVzQyMeKEHlfHSkoP/Qt3vOqZAti
+         6L4DGVl9neThtN7VT3bC3A6gAXtE5RRKq0zOtU5AjxRTja1snwcYzsJDg6xilT7BIKPA
+         cT2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760431755; x=1761036555;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ignOfHlZBnIpdrbM80ZQ0racxFfwk7sEvyUQa53KzOw=;
+        b=RU0rict6DEpAO8wZ7E/O4TG4VlLeTM40f5XrgCbZ31jMYYQSKNrtEmehTqJ6E003bE
+         TaC1enXcov/QiWfp4d1sK5j5A+hG94Lgrr+7UzYSiSkTaD+8rVuY6SmhJTaztAFQ7X1h
+         JpwLa61+dTelCFe9gY5fcXQwUXgy54CzWRhozaHHB4eIjHh/N6NJbCknHfV49gAfWnLk
+         QywuO10x+pPQOmlKdmUoPPpeinhx1cbkCzgfVFLWEcdvfibUlUjGqblEuDOGyRs8bVlQ
+         cMIV0FjwfpeyCN3mlhf2iE6e9Rrild+qFJHMfpg+zIImCQD7yGNswkJ1lTtsMxl1RS5p
+         C20Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUA6CwQGwM/R9revk7fpwCZOBksx+WzrEYvTcDNc453LhaRVsCZv3CJQhPR29EIvdTiknw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw3fNdotOxvvb26CH+h3fU9Q4E0uedy8xltS3iG9Yx+xGnKiigv
+	zBWZ20aoJu8NikH8/TvEV0Y6CrYzT4FF2b3b7hHO2qTWp9YMMC/O/6WAAd1kfBkjnPGZMTiIZMh
+	PjAO68dR2cK6zbZh+T447MEa44DFXefY=
+X-Gm-Gg: ASbGncs5izOrca9xTgyR3t7zW+ko6dOwHknviYzlR5h6eYhcLtoKWEmSe+IoWE7Cc4C
+	k48IJLvZwnqrNOc5mNyoyqoBzfl2tHHWGTxOzxHtubUhepBD0je3EAjoq6j8O07I1iORe83LDX3
+	97YHW2VQCVnKHdyV/ScZa/pGiEThErxM8WLtfoTe24hTp8ALvPMEU6+GFhzQ+BwtSxe8gdS4bMj
+	BWryF/zp3//mBU0ChlG+aZGcMao9OpIUrOtpRh2GdUmsj3gfI0ywHrTy08lxlm2sd3qbx0=
+X-Google-Smtp-Source: AGHT+IEtiXyc5qB5NmqOGK4X1MLBkqTgvGb8mRdZE+Vq4btCRWDL41FL0p9G1lM0/bwZ6Q1Cg22X6S0fu7hnlDYpkfU=
+X-Received: by 2002:a05:6122:3119:b0:544:8830:8e15 with SMTP id
+ 71dfb90a1353d-554b8c92870mr7708019e0c.12.1760431755232; Tue, 14 Oct 2025
+ 01:49:15 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 14 Oct 2025 04:49:14 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 14 Oct 2025 04:49:14 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20251001-b4-pks-history-builtin-v4-1-8e61ddb86317@pks.im>
+References: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im> <20251001-b4-pks-history-builtin-v4-1-8e61ddb86317@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251014-pks-ref-files-deprecate-symbolic-links-v1-1-4bcd6a4ef6f5@pks.im>
-X-B4-Tracking: v=1; b=H4sIAAkH7mgC/x2N0QqDMAwAf0XyvIAVw5y/InuoNZ3Brkozxob47
- wYfD467HZSLsEJf7VD4KyprNnC3CsLs84tRJmNo6oZc7VrcFsXCEaMkVpx4Kxz8h1H/73FNEjB
- JNoW6lh53T9SNBBYzLcrvGg3P4zgBs++fwngAAAA=
-X-Change-ID: 20251014-pks-ref-files-deprecate-symbolic-links-584597a558b5
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, 
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-Mailer: b4 0.14.3
+Date: Tue, 14 Oct 2025 04:49:14 -0400
+X-Gm-Features: AS18NWD3EF8mry2lwX60bUozmmwZYtCEj-tBkZVTI4btz1KUKIS1-NeGOMcHcbc
+Message-ID: <CAOLa=ZTUDOYb1KVUEZY4KFyoaP-PdXjBvUto0vxOtYanEjoOFA@mail.gmail.com>
+Subject: Re: [PATCH v4 01/12] wt-status: provide function to expose status for trees
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
+	Sergey Organov <sorganov@gmail.com>, =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
+	Martin von Zweigbergk <martinvonz@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Elijah Newren <newren@gmail.com>
+Content-Type: multipart/mixed; boundary="0000000000006c3deb06411a7576"
 
-The "files" backend has the ability to store symbolic refs as symbolic
-links, which can be configured via "core.preferSymlinkRefs". This
-feature stems back from the early days: the initial implementation of
-symbolic refs used symlinks exclusively. The symref format was only
-introduced in 9b143c6e15 (Teach update-ref about a symbolic ref stored
-in a textfile., 2005-09-25) and made the default in 9f0bb90d16
-(core.prefersymlinkrefs: use symlinks for .git/HEAD, 2006-05-02).
+--0000000000006c3deb06411a7576
+Content-Type: text/plain; charset="UTF-8"
 
-This is all about 20 years ago, and there are no known reasons nowadays
-why one would want to use symlinks instead of symrefs. Mark the feature
-for deprecation in Git 3.0.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Note that this only deprecates _writing_ symrefs as symbolic links.
-Reading such symrefs is still supported for now.
+> The "wt-status" subsystem is responsible for printing status information
+> around the current state of the working tree. This most importantly
+> includes information around whether the working tree or the index have
+> any changes.
+>
+> We're about to introduce a new command though where the changes in
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-Hi,
+Nit: s/though//
 
-as discussed in [1], this small patch deprecates
-"core.preferSymlinkRefs". Thanks!
+> neither of them are actually relevant to us. Instead, what we want is to
+> format the changes between two different trees. While it is a little bit
+> of a stretch to add this as functionality to _working tree_ status, it
+> doesn't make any sense to open-code this functionality, either.
+>
+> Implement a new function `wt_status_collect_changes_trees()` that diffs
+> two trees and formats the status accordingly. This function is not yet
+> used, but will be in a subsequent commit.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  wt-status.c | 24 ++++++++++++++++++++++++
+>  wt-status.h |  3 +++
+>  2 files changed, 27 insertions(+)
+>
+> diff --git a/wt-status.c b/wt-status.c
+> index 8ffe6d3988..b66edbfca6 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -612,6 +612,30 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
+>  	}
+>  }
+>
+> +void wt_status_collect_changes_trees(struct wt_status *s,
+> +				     const struct object_id *old_treeish,
+> +				     const struct object_id *new_treeish)
+> +{
 
-Patrick
+So, my understanding here is that we want to diff two trees
+`old_treeish` and `new_treeish` and then finally store the status change
+in `wt_status`
 
-[1]: <xmqqzf9zddia.fsf@gitster.g>
----
- Documentation/BreakingChanges.adoc | 18 ++++++++++++++++++
- Documentation/config/core.adoc     |  3 +++
- refs/files-backend.c               | 18 ++++++++++++++++--
- t/t0600-reffiles-backend.sh        | 26 +++++++++++++++++++++++---
- 4 files changed, 60 insertions(+), 5 deletions(-)
+> +	struct diff_options opts = { 0 };
+> +
+> +	repo_diff_setup(s->repo, &opts);
+> +	opts.output_format = DIFF_FORMAT_CALLBACK;
+> +	opts.format_callback = wt_status_collect_updated_cb;
+> +	opts.format_callback_data = s;
+> +	opts.detect_rename = s->detect_rename >= 0 ? s->detect_rename : opts.detect_rename;
+> +	opts.rename_limit = s->rename_limit >= 0 ? s->rename_limit : opts.rename_limit;
+> +	opts.rename_score = s->rename_score >= 0 ? s->rename_score : opts.rename_score;
 
-diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
-index 90b53abcea2..8178d06417b 100644
---- a/Documentation/BreakingChanges.adoc
-+++ b/Documentation/BreakingChanges.adoc
-@@ -295,6 +295,24 @@ The command will be removed.
- +
- cf. <xmqqa59i45wc.fsf@gitster.g>
- 
-+* Support for `core.preferSymlinkRefs=true` has been deprecated and will be
-+  removed in Git 3.0. If set, symbolic refs like "HEAD" would be written as
-+  symbolic links instead of as a plain file using the symref format.
-++
-+Symbolic references were initially always stored as a symbolic link. This was
-+changed in 9b143c6e15 (Teach update-ref about a symbolic ref stored in a
-+textfile., 2005-09-25), where a new symref format was introduced to store those
-+symbolic refs in a plain file. In 9f0bb90d16 (core.prefersymlinkrefs: use
-+symlinks for .git/HEAD, 2006-05-02), the Git project switched the default to use
-+the symref format in favor of symbolic links.
-++
-+The migration away from symbolic links has happened almost 20 years ago by now,
-+and there is no known reason why one should prefer them nowadays. Furthermore,
-+symbolic links are not supported on some platforms.
-++
-+Note that for now, only the writing side for such symbolic links is deprecated.
-+Reading such symbolic links is still supported for now.
-+
- == Superseded features that will not be deprecated
- 
- Some features have gained newer replacements that aim to improve the design in
-diff --git a/Documentation/config/core.adoc b/Documentation/config/core.adoc
-index 08739bb9d42..e9272bbc0bd 100644
---- a/Documentation/config/core.adoc
-+++ b/Documentation/config/core.adoc
-@@ -290,6 +290,9 @@ core.preferSymlinkRefs::
- 	and other symbolic reference files, use symbolic links.
- 	This is sometimes needed to work with old scripts that
- 	expect HEAD to be a symbolic link.
-++
-+This configuration is deprecated and will be removed in Git 3.0. Writing
-+symbolic links for symrefs will not be supported anymore.
- 
- core.alternateRefsCommand::
- 	When advertising tips of available history from an alternate, use the shell to
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 3e46386531d..b14e0af219e 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2114,14 +2114,28 @@ static int commit_ref_update(struct files_ref_store *refs,
- 	return 0;
- }
- 
--#ifdef NO_SYMLINK_HEAD
-+#if defined(NO_SYMLINK_HEAD) || defined(WITH_BREAKING_CHANGES)
- #define create_ref_symlink(a, b) (-1)
- #else
- static int create_ref_symlink(struct ref_lock *lock, const char *target)
- {
-+	static int warn_once = 1;
-+	char *ref_path;
- 	int ret = -1;
- 
--	char *ref_path = get_locked_file_path(&lock->lk);
-+	if (warn_once)
-+		warning(_("'core.preferSymlinkRefs=true' is nominated for removal.\n"
-+			  "hint: The use of symbolic links for symbolic refs is deprecated\n"
-+			  "hint: and will be removed in Git 3.0. The configuration that\n"
-+			  "hint: tells Git to use them is thus going away. You can unset\n"
-+			  "hint: it with:\n"
-+			  "hint:\n"
-+			  "hint:\tgit config unset core.preferSymlinkRefs\n"
-+			  "hint:\n"
-+			  "hint: Git will then use the symref format instead."));
-+	warn_once = 0;
-+
-+	ref_path = get_locked_file_path(&lock->lk);
- 	unlink(ref_path);
- 	ret = symlink(target, ref_path);
- 	free(ref_path);
-diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
-index 1e62c791d97..560cdfe1d66 100755
---- a/t/t0600-reffiles-backend.sh
-+++ b/t/t0600-reffiles-backend.sh
-@@ -477,9 +477,29 @@ test_expect_success SYMLINKS 'symref transaction supports symlinks' '
- 	prepare
- 	commit
- 	EOF
--	git update-ref --no-deref --stdin <stdin &&
--	test_path_is_symlink .git/TEST_SYMREF_HEAD &&
--	test "$(test_readlink .git/TEST_SYMREF_HEAD)" = refs/heads/new
-+	git update-ref --no-deref --stdin <stdin 2>err &&
-+	if test_have_prereq WITH_BREAKING_CHANGES
-+	then
-+		test_path_is_file .git/TEST_SYMREF_HEAD &&
-+		echo "ref: refs/heads/new" >expect &&
-+		test_cmp expect .git/TEST_SYMREF_HEAD &&
-+		test_must_be_empty err
-+	else
-+		test_path_is_symlink .git/TEST_SYMREF_HEAD &&
-+		test "$(test_readlink .git/TEST_SYMREF_HEAD)" = refs/heads/new &&
-+		cat >expect <<-EOF &&
-+		warning: ${SQ}core.preferSymlinkRefs=true${SQ} is nominated for removal.
-+		hint: The use of symbolic links for symbolic refs is deprecated
-+		hint: and will be removed in Git 3.0. The configuration that
-+		hint: tells Git to use them is thus going away. You can unset
-+		hint: it with:
-+		hint:
-+		hint:	git config unset core.preferSymlinkRefs
-+		hint:
-+		hint: Git will then use the symref format instead.
-+		EOF
-+		test_cmp expect err
-+	fi
- '
- 
- test_expect_success 'symref transaction supports false symlink config' '
+Curious, why do we need a '>= 0' check here?
 
----
-base-commit: 5f9d2e334da76ac55790ce4d4ea971a31bcd57fd
-change-id: 20251014-pks-ref-files-deprecate-symbolic-links-584597a558b5
+> +	opts.flags.recursive = 1;
+> +	diff_setup_done(&opts);
+> +
+>
 
+So first we setup the diff options, with the right callbacks so that the
+relevant information is added to the `wt_status`.
+
+> +	diff_tree_oid(old_treeish, new_treeish, "", &opts);
+> +	diffcore_std(&opts);
+> +	diff_flush(&opts);
+
+This is the part which calls the callback function with the relevant
+information and callback data.
+
+> +	wt_status_get_state(s->repo, &s->state, 0);
+> +
+
+Based on the list of diff data in `s->change`, we add the status print
+information. Okay makes sense.
+
+> +	diff_free(&opts);
+> +}
+> +
+>  static void wt_status_collect_changes_worktree(struct wt_status *s)
+>  {
+>  	struct rev_info rev;
+> diff --git a/wt-status.h b/wt-status.h
+> index e40a27214a..924d7a5fa9 100644
+> --- a/wt-status.h
+> +++ b/wt-status.h
+> @@ -153,6 +153,9 @@ void wt_status_add_cut_line(struct wt_status *s);
+>  void wt_status_prepare(struct repository *r, struct wt_status *s);
+>  void wt_status_print(struct wt_status *s);
+>  void wt_status_collect(struct wt_status *s);
+> +void wt_status_collect_changes_trees(struct wt_status *s,
+> +				     const struct object_id *old_treeish,
+> +				     const struct object_id *new_treeish);
+>  /*
+>   * Frees the buffers allocated by wt_status_collect.
+>   */
+>
+> --
+> 2.51.0.700.g236ee7b076.dirty
+
+So this function will be used in an upcoming patch, looks good.
+
+--0000000000006c3deb06411a7576
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 940f9cd3be6c2b4a_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qdURvZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOU1WREFDUXhTMEFJbVRzWmtNMlMvVU95Vm4wOHlneApVdVJGaW5peEpk
+a2RLVzRCY2VENys2dEpBZ2xVblZvTDNhRU9yMHVONUh0cVBPQ0RCYmZBN2hjTmdSOHNmU2RSCi9J
+Z1orcjR1S084NjdiM0wyWlJpS0tYNHJVVGJiUVNZMVlDSzdvOW1NeVRheUQ1aWF2OVI1TWY2MGpw
+aHhPWTUKQ1ErZjVVYU94ZWRTaDdhazVKd0pyTG1XS3g3Q0N0c0pid1RHVTlGWWZUMjJ1M0hmRFl0
+Mm1zcUw0dnN1OUVkNQpLRVF0ZCtkTU1LS2EweWJiaTR0aFRHZFEzQThLaXhJcFY0a2ZOajJZZlYr
+Qyt0T3JtR0FhU2ZlakpuR1krZUwzCjh3TWRRRER0R1lVbXpyZ0NZaXI3VVlYU3RXY1JrSzR1ZG44
+a1k3clBpbzNNMnlmak1zbDUvUE5WSFcrVzgveUsKMzE3a01BTzIvb1d2c1dIYVdydGlxZU1laWlG
+VVFFTFRFbCtKVEoxZ1h1YnJZd3dMaFFtOHZTbzUrOUZkZUNrUQpWeXdvN09nN3hRRHJMLzlmUkhq
+NjZ5MDFZYjI0dlBnQnUzUTlKRkJMazVLMTJ2TlFDeVZSOFJtTzMrRHdiR3BZCmkzU1RQdm9PRnBX
+QmxVdzJZMnBjemEyMmtPM3pCT1NOb21rNXNPQT0KPUNQVEMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000006c3deb06411a7576--
