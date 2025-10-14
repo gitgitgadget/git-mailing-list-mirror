@@ -1,85 +1,80 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8447335948
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 17:46:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6FED2367CE
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 18:19:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760464008; cv=none; b=k3MvokX8DS/bwsnaf/fgTn7ir44+hbXleJ38x1MTPItEuFQDkghVE1UoDHBVUb7OJWxpnUv+ZAxBTgD6y7kn2hPB1VVybqgn0VFv4IbLC3m6t7ePip/x0vO7FNgRjAUVhpzYSy5ufn7kCAkE7cVvzeVSd+EvwxzOTIUApn3X9mI=
+	t=1760465958; cv=none; b=fCBRMuXYNjjeciyc/NdUWUMXngrNcc4JfBY00d8VjQ1Vj9eoPFHT9HJ3NcC8vK9FG7TK+gP2FQU2hQirVV2WIHbe9yPOBeihu8Gqe+Ql09HbC69lexrV+yB4iaGqiNcUNXBdITTZ3C7uJzfCO+mBeHPVU8mJqtNwr8ApuKSYbgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760464008; c=relaxed/simple;
-	bh=h0dsT7vE3bvd1EkDgyTeLShcBnLEV/MUZflDCXH4xos=;
+	s=arc-20240116; t=1760465958; c=relaxed/simple;
+	bh=RIV5XfjGj0J6xgM4w+zYW0NvRM6djzGpP61y06vSREg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qwkT1vsqyxlJtvghTHOQgkPrI4lP1TEZ/Ikx3guQMGgiKIji+Jna1sU/6Qo20QFnVOqGMKSOkNkbNvJ6BCXJ55bzA8PZnSGPYDh67Qpy6VyDKCph9RJmYH6pDefJoNZ/N9kUax6MkPynGqgVKn7bCKfQ3UDSCUAptTGesnq9Ctk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=blOo0sOF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vfFFvZtf; arc=none smtp.client-ip=202.12.124.154
+	 MIME-Version:Content-Type; b=FLgOYcC3umPf3saZ3sgA4Au4ZawPYNkVxOybQNupIY2oxN4mKjj4aKxYLc2bwy3qbWLbcm/5LOmv5msgAJsbd/bbFxC9tXvLJdowIeyr+ISrOB0kBzPuYxg6cGuEY9SeFRwD+9xWSBd37+0L558xxd0kRAsRFcqPHiwWcrygAEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Zk9/pQ33; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BZlzhS+a; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="blOo0sOF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vfFFvZtf"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8D6477A00D1;
-	Tue, 14 Oct 2025 13:46:45 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 14 Oct 2025 13:46:45 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Zk9/pQ33";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BZlzhS+a"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 02CE71D001A7;
+	Tue, 14 Oct 2025 14:19:14 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 14 Oct 2025 14:19:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760464005; x=1760550405; bh=NsFE93OCeY
-	mW/PFx95Oj8npalL7rHACdk7SZZNJEiLY=; b=blOo0sOFdh8YwyWFmM9ty/Aa8p
-	v7hUrPugn4gCqdnMkRd7qSF52Px+q7NOKI6iPPTknM9zW2j+nBr3pZ6XOAODfazK
-	2pq64Py24sD3Nis+ik4NiSD7Y9F41HdcqTyh9E07xV0H8je4jZ1NXAm/6WmqLCSv
-	V9OUTfFvbM9iYVGePo6ETFFTuEbBcIsI59Uc6Soy2rocV8C5Nu1r8rSH09x2A6D6
-	26rJ9+dv5xsdkjvk/0g8Sfl09h8F/e9BeyHfrINJhi+M5g6d+3BA3BXoIaWL2P2b
-	jQXePd59VIFaf7fV68qcczTD5gBUGhPOFAPaQRw7CJNu1dAiHzcgDwW5qOjA==
+	:subject:to:to; s=fm1; t=1760465954; x=1760552354; bh=WXGPqtTmx5
+	i9XzqUIBdoPmElwEdrm+MoCa+rrn+wuOQ=; b=Zk9/pQ33VVlrFsJhl9iA/fBihK
+	xDipUkvei674YBK0bnJY874vrE9ilybrRp/FrwOP6BrPEG8gj6/CHoWPVBUSR246
+	ylTwLBm3lB4hAtUmllw6FDgayLQMeWT62eb1LQ/dgVPCeTA6IOH9qGDjc+pEUWhy
+	nwv09KGJm5hz9NPznHfjkqJIBaAq+SqN/z9fzY3YkQoMZIjXTxXUHuCkvVCcTXtB
+	i5di3oAG4jWpBrVW4HimuqL1ELgfuyHmFPuq8f8lvL8vs5x+o7opPjEdXrXz2BOD
+	UtZneWf3Lh8VcwTJTmDq5URQrfmJRECtaoeQcXeQvH8Fh9hgmlXFHavu354A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760464005; x=1760550405; bh=NsFE93OCeYmW/PFx95Oj8npalL7rHACdk7S
-	ZZNJEiLY=; b=vfFFvZtfsknxff6jv7NNCMXxkCTfpEqNlmiAxlngSTO3wDVdlMj
-	COPf/2r1h0naMkNE22Z3kdRswnpeanOfgIDKu0XKr+wCuS7ZqgX4cHuFRlggw5NB
-	MKTzcRyeQBrzNXoy8ZlsX9DWEw7ml09aWg7gWU7kwfqYqEGlShvLGQDlOQxiz46J
-	aep2HIes0OeUqnnZVB3kZx2f/VPriS+6QL0qkkl60KRZ5nYoy2BO4zkyhUVX1LU4
-	Ubq1LqPFPZWCWYY4w6rJk6Ulu238E80lWixwGWn40LVThkslUipIYYE5rICCOIC4
-	ErmTimWM1Sg9Abk982hjSJghoZo7BwupmlQ==
-X-ME-Sender: <xms:hIzuaMso-LO00QTnPJWFHLyWa_ar4KZKUIFOfk_AjsHZ6t3oB-6teQ>
-    <xme:hIzuaEDOXaicExPKwW4uZOQSnDemzw_cpaLJZCv6ORj0HqZRbINdnGHuM0kG_5hEi
-    lzAe9VwwV8Lk75aeIE0Ugai8qgH71cLsR8Ohy9vuCM4x2oLjjoFuQ>
-X-ME-Received: <xmr:hIzuaEVfXnO0APB1jGlqxa8sZF6qIFXsT3Ox_l4H1kBxowjO0tzSCzhX1BKJbecywJB65hA9IB4GHSkkqKIQvTWZfJ__ErMCasWZ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdduudejucetufdoteggodetrf
+	1760465954; x=1760552354; bh=WXGPqtTmx5i9XzqUIBdoPmElwEdrm+MoCa+
+	rrn+wuOQ=; b=BZlzhS+aJCXGPTg5h0gceW0ydyQqRHETc5VWNBbGTpQ2Xdsfg5i
+	8lMUyLVJT9oBzqKcZ5THm5HNBmNCtjdxw0Zq/oJWmRfTQndh7iTN/4gMyhrnjy8b
+	G699/Mh2W4mXTDACiH59SVrub7QWoeNMeJhayhY4hlHp99P1MoYBlYzL9ZtWBohi
+	GsIPImMXrSnC/V9O/nIyaDOjfpJJcDspabdyn0fZuVkOKYRWhP4bet0XxeS7keFe
+	VLqDx3w4Ap1IZCiQJ4p04Fm36Qi47sJzE3gcJDTyJsJF6MlxLKtBFzci4EfAnbGa
+	bNO+3Ry38qEy8Dhm8OMMLmwP5ov3ljexdcg==
+X-ME-Sender: <xms:IpTuaD9Eg79NGX6QTLQaDiYo0-o8tKZa7J3JDECrc42hJofOMAXEdQ>
+    <xme:IpTuaHKgGrhUMxW2km3WYu3ILfmxmmoMJCqT6uI0kBy28cLn8u8tNDuLH4X-caubY
+    PSDBQ6XeMB6Xig1lygt8ERejg1h0OgNgpmWltEqczWnWCLQCmkiWQ>
+X-ME-Received: <xmr:IpTuaObEEkm8ELTIJsD6gwiZdWAe1wBJVDa2lOgbqg8gAdSWy9ELCfsaaKLju9MbBAlF4p6_kmvZs6_Zh9_LiEo1PMcVM2MnURhj>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdduvdefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:hIzuaCDEoz-4RyYgR5XMImi_Xco2QSD0IZpPLhLsMpPgffYZkB-B1A>
-    <xmx:hIzuaH-PBRdtcvdPP4ln1TnBhVU0vhWjE55fuozsaxln07WYb1nEpg>
-    <xmx:hIzuaJFGSb-3YrxY_EKPADpqXQdqJW0z4pmbjp7bFX1XK3vAYt5duA>
-    <xmx:hIzuaFM4ci5SofPnPE_T9JubfTYe8pF23jojDq-V2PRYrg2B8CVlhg>
-    <xmx:hYzuaE91PhOmS3ZqGqMeWnoLAUCWa0Yln7vBH6rI-XddWDjQ3dQ_Wpqj>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsohhlohgs
+    rghrihhnvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:IpTuaJL9ttpQ1pYTDeK7eR_aktUUVuK4AoPcY998314jk9oiswwrpA>
+    <xmx:IpTuaMCetFBy3AAS9dol6h3f1BeeO3m3NQNqWB9EqnHVTmFn5WHgOA>
+    <xmx:IpTuaOqYGYfpQ2CAyzXSjTb5bZSmzo4Rt6HkAVkzKeGmY1YKoXNmbg>
+    <xmx:IpTuaHhh09ZEecyG4LehpqEQ9KQVKJFTeI3aYOnd7WcIIXZ77ttuQw>
+    <xmx:IpTuaDKN-C374ii4sUPv2aA955nPrvBm25-4YGZs72PXbzbi8O1JmgN2>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Oct 2025 13:46:44 -0400 (EDT)
+ 14 Oct 2025 14:19:14 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH 9/9] refs: add a '--required' flag to 'git refs optimize'
-In-Reply-To: <CAOLa=ZTRG=x5PofmSSfHhJ3Lig2NjhU8buVWAXU=aKom2PDsDg@mail.gmail.com>
-	(Karthik Nayak's message of "Tue, 14 Oct 2025 11:08:56 -0400")
-References: <20251010-562-add-option-to-check-if-reference-backend-needs-repacking-v1-0-c7962be584fa@gmail.com>
-	<20251010-562-add-option-to-check-if-reference-backend-needs-repacking-v1-9-c7962be584fa@gmail.com>
-	<aOjsjpE1vuFUXXbh@pks.im> <xmqqwm4y538p.fsf@gitster.g>
-	<xmqqh5w250lw.fsf@gitster.g>
-	<CAOLa=ZTRG=x5PofmSSfHhJ3Lig2NjhU8buVWAXU=aKom2PDsDg@mail.gmail.com>
-Date: Tue, 14 Oct 2025 10:46:43 -0700
-Message-ID: <xmqqldldxtoc.fsf@gitster.g>
+To: Solly <solobarine@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/1] t: update path checks using test_path helpers
+In-Reply-To: <20251014161446.6135-1-solobarine@gmail.com> (Solly's message of
+	"Tue, 14 Oct 2025 17:14:46 +0100")
+References: <20251014161446.6135-1-solobarine@gmail.com>
+Date: Tue, 14 Oct 2025 11:19:13 -0700
+Message-ID: <xmqqa51txs66.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,39 +84,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Solly <solobarine@gmail.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Perhaps "--check-" followed by a word specific to what we are trying
->>> to achieve (e.g., if we are trying to see if auto-compaction is
->>> necessary, "--check-for-auto" "check for auto compaction")?  I
->>> dunno.
->>
->> After reading what you did in the previou step, I am reasonably sure
->> "required" is a wrong word to use, with or without other words like
->> "check".  Semantically it is similar to the should_pack_refs() check
->> that we use for pack-refs even before "optimize" came.  We expect it
->> to answer this question cheaply: are we better off if we repacked,
->> or can we go on without repacking for now?  It is not about "are we
->> performing so poorly that we MUST optimize now?"
->
-> I agree '--required' isn't the best name, and like we discussed
-> '--dry-run' wouldn't be either since that would imply that the work is
-> being done but not persisted.
->
-> I was leaning towards '--check', which is simple. But It might be nicer
-> to be verbose here and simply add something like '--is-worthwhile'.
->
-> Being verbose here is okay, since it will only be used sparingly and
-> specifically by those who require such a use case.
+> Subject: Re: [PATCH 1/1] t: update path checks using test_path helpers
 
-Nah, "worthwhile" is relative and it would be less meaningful
-without expressing for what goal we are judging how it is worthwhile
-to do.
+Using "t2401:" instead of "t:" would give you a bit more
+information.
 
-Choosing a phrase around "check" is better, I would think.
+> Update old-style shell path checks to use the modern test
+> helpers 'test_path_is_file' and 'test_path_is_dir' for improved
+> readability.
 
+This gives a wrong justification.
 
+For readability, "test -f tested-file" is plenty readable.  The
+point of using test_path_is_file and its friends is to get better
+runtime diagnosis.
+
+Read the helper you are using and understand what it does and why it
+does it (they are found in t/test-lib-functions.sh):
+
+        # debugging-friendly alternatives to "test [-f|-d|-e]"
+        # The commands test the existence or non-existence of $1
+        test_path_is_file () {
+                test "$#" -ne 1 && BUG "1 param"
+                if ! test -f "$1"
+                then
+                        echo "File $1 doesn't exist"
+                        false
+                fi
+        }
+
+And imagine you wrote your test using this, perhaps like this:
+
+        test_expect_success 'ensure hello.c exists' '
+		test_path_is_file hello.c
+        '
+
+What happens when (1) hello.c does exist and (2) hello.c does not
+exist?  If hello.c exists, "if ! test -f" fails, and the control
+does not go inside of "then" part, hence the helper will succeed
+silently.  If hello.c does not exist, it will say "File hello.c
+doesn't exist".  The person who is running the test will be told why
+the test failed (and the helper fails because it runs the 'false'
+after giving the message).  And that is the value these helpers
+offer.
+
+Armed with that knowledge, you can tell that ...
+
+>  	test_cmp expect actual &&
+> -	! test -f .git/worktrees/abc &&
+> -	! test -d .git/worktrees
+> +	! test_path_is_file .git/worktrees/abc &&
+> +	! test_path_is_dir .git/worktrees
+
+... this is a bad rewrite, right?  The original wants to ensure that
+a file .git/worktrees/abc does not exist.  You want the test to
+be silent when the path is not a file (i.e. "as expected, nothing
+interesting to see here"), and complain loudly when it *is* a file.
+
+And your "! test_path_is_file .git/worktrees/abc" would not do that,
+would it?  They report loudly in a wrong case!
+
+In this case, both of them should probably become
+
+	test_path_is_missing .git/worktrees/abc &&
+	test_path_is_missing .git/worktrees
+
+because the _intent_ of the test is NOT that it would be happy as
+long as .git/worktrees/abc is not a file.  Even though the original
+uses "! test -f", seeing a .git/worktrees/abc directory there is an
+unexpected outcome of the test (you need to read what is being
+tested to fully understand this kind of thing).
+
+Hope this helps.
