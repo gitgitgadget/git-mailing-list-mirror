@@ -1,69 +1,69 @@
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE112C0278
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 19:11:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A502823D7D9
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 19:17:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760469109; cv=none; b=OMACjGZRMlULbW1I7doaEi+iyusiXjj2gzyFhDK7TuaaWQR0wVbzz70psTDX4oyLMZN6h9XgtANlc1x7N3ncfHU1dePreiay3F5M3oFvR5418h8hBNpTiHiLZGrQyfHj0ziTBKv986EezvzdHOe+lIZQw1Z+uXJ8MGY5wfmJobU=
+	t=1760469435; cv=none; b=X7xo9NnIufw/rZGYBUqQFkgNxyDKSF8nJrGbU2md8Sc9OySbh0HBw+580Knp2Coh6r6zQpxAIicoHZoNr/aWFE6zaIJHf0Z8s310/gRCjgQSswoeqtTqsiAHvZ+F7pbnFQx3t1+EuS6LGZJgaPKbz1ogAeppib0e4afa6JQGCg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760469109; c=relaxed/simple;
-	bh=3LUBoF2hVKgaTAnp4q9nrP8085pHPv2GXchy3ByxUpY=;
+	s=arc-20240116; t=1760469435; c=relaxed/simple;
+	bh=Eav7pkEnhlbPp9F7Fl3LjHQ6H3ywlcPb18o+E/8F5FY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j42BzA3o8HzInq0cnN3lHP1NFXN/L3ejGmICqTVpldYMWeMijlP7cpJy6uEvnHiZbB6dShSZpsHvwGUu5Wz4jzm1NcYMNgh6ssLSimusTSWBmYUjDnth/7HBFYIFy82a/E3uYpS2nwEZU/srK9g96Wg/EdYRRCM26kDyBkJa+Uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZuwNFrsr; arc=none smtp.client-ip=209.85.210.51
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ou4lQUoPqiL0Eb1EKdFbjSnNQeceIjtXqV4f6yTCvaH3mbKdkzr+mulNgxmH3zjFkeD4p3n4TmFEtHdA7lBPo2dRtXd1VsVAyJSJiQQpot3irTsn/VXLkfsikdplSFKYw9S8UenRS9lhTQ5M/zbEyy1ogHzOpVom2ThH01MRVRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jnh1cvpD; arc=none smtp.client-ip=209.85.210.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZuwNFrsr"
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-79d36a6298dso2016753a34.0
-        for <git@vger.kernel.org>; Tue, 14 Oct 2025 12:11:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jnh1cvpD"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7ae21804971so1995099a34.0
+        for <git@vger.kernel.org>; Tue, 14 Oct 2025 12:17:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760469107; x=1761073907; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760469433; x=1761074233; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/B5ClAFKxd4dyV3WSt9blPy71mrpDUqT9B2/TMlom+I=;
-        b=ZuwNFrsr7WT4GQLFjbzXjoRM70yoo/lrqwH24umqTFo50XLeLRyZLuymrgu8KvDf5O
-         haKTGUunQO5J0zOSEzgfHr7ncGRmISQtVsHhvdPUsqiRoMTmudR9b5hHuOO8DWypzXw2
-         SGsySl4nhd3lSyZxBv/8+wFpcJoT4y4OFCTd1p0XBjDQXifKGUPrU/sroMrgSFTxhREv
-         XlY91HKKoJhG8dbtjGeZStkKC8zZHhhRwuv79Wp+ceC57YW5e3fM7GwZhcW16Y6g+Qxn
-         dfEgy6VxCsk0QVlmqNFseS9NksBeSExhtpgkH+9h4Ukk3IEnZtGWj2PgrYHT6Bc5OVZu
-         0isQ==
+        bh=1zACexkOk30faGAP47ueDL8JpEiSaNW3WaulGe754rM=;
+        b=jnh1cvpDmkigTd3r5Qm+NNw8lbmAYd+DdpawqX/c3gqaaT9dJq8u1Xg7C/z/8l2T1F
+         TbXgCp9LIANezP+81iH+3K/3Kr7fpTUvkSGzXs67muHmEphxdxHJ9rK4WRqm4mzvquK9
+         8mtvyGu5yKxoN12g6HbTeweqNY4ljXELaX88n34HdFbYeLbXMQVQikUKLgyHfbe28cvB
+         2SS2PIz57vlCThhlAbG3wMHYW/jpYx4Djym/1FkdVMV5QRs0RxGiu2UiaeLgbT0XCOtt
+         LU4uo5J2YyfKTDMYUwcKTjv3Uxt7WHp+0Q/4nwWpgO+5sRgpEegjONwIJ6Zbc76HNBwh
+         7QtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760469107; x=1761073907;
+        d=1e100.net; s=20230601; t=1760469433; x=1761074233;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/B5ClAFKxd4dyV3WSt9blPy71mrpDUqT9B2/TMlom+I=;
-        b=ImS803BpLrK6o5QSk9b9Igs/IoNLVcxfr+KaMx8X88mbbJ8uAMWcYLC2ZRniMMzJg2
-         rE/QZeGggStvHutr8IxbhEGCpPMToZPEAGJnBEJLOYFJU5sjfJvsMM9J4XNNyVVW67F9
-         X66slCgWpo33sF7vx5/p7UUsJWZJev+U5Ary7ntkoylHu/KxUFz1ROwo8VNQaQP+sy9m
-         /cEGwcWl5F6Ib/Gqr98EJi+ouwBfkwO/UQdz07/Zkg7Pnf7gEhQPfChdS5lRczYPuOGZ
-         rLkU/UboUMHpoYUkZtZ2KVvNmYjM9bva2mxP/bVSnsGFnke6rncEIDCeTOAuTDsBvT6Y
-         +2Aw==
-X-Gm-Message-State: AOJu0YzrSqhpA50jGs7v/nELhyEFQyzIVzr6qyMQLjGZdkSO2gvgFMVx
-	3s2R/WEo5lk+/KhoG6irTo6YGoz+C9A4tSuLmFu9n4YV92RvxtQbDsfA
-X-Gm-Gg: ASbGncsulussUNSHTBZFdmq6Ua2pHwjFHi/VJcN31uYNXn1RlSMLU8EszUkeXLvSnqU
-	4dNgeAyAZ/NlPq5oeqL7+ObxDwhdbfb3yhGlmFL3nucqyPhYR6QNvzIYyS2CJZuZng7wpzl6PhY
-	tWMgog62vUpAW4fmIGTKkG4VrEfjA8d7+SZ4VaJob7vTuFazPt4A+MkU1C3tDSQQTUFq6otkNYF
-	8fSWUTTX6PtIJRP35k65w3Lt4XWTpRJ3xKGgu4pOGSx0/TxZesvPzJ9p9GnbrQRISvZjMy8sLrV
-	0Uh+Ongdxero5vqE4xF5JK823tSxZ1vdaOOrFAvuZ7Xx7zlBXitiK5UFuge+sJhfs2tvbmh9haE
-	4YrzdR61eZUhzuZ9iq8RY/jWFwcC7C2k0hTU=
-X-Google-Smtp-Source: AGHT+IFTzibBPWbAfPVZTY+tahMhD/FWc4DMBX4Ufxv4+U/TcGJc+0jxTHIxeUd9jIou4g6diLEROA==
-X-Received: by 2002:a05:6830:388c:b0:7bc:626c:3b30 with SMTP id 46e09a7af769-7c0df7bec69mr12774149a34.26.1760469107063;
-        Tue, 14 Oct 2025 12:11:47 -0700 (PDT)
+        bh=1zACexkOk30faGAP47ueDL8JpEiSaNW3WaulGe754rM=;
+        b=sXDRvd8aY859LDGFb9ywDMakTF3Fkk9Yg/FOAnx68j4/tc1P3MN+Fs0C82rfiOvaL1
+         1pCq5/6QUJMtdRDrWfX23yFaxyTbLZ7SB7/4W/2Fpf8V8aRCrbbOUkBIiFlKTVajUuCN
+         dEA2K8TklG+WPmeMqWVDdNvnVTrRTNCJ0OtCMcEr6x6O8aI6ylYgXOtGu22y/EPQ8YtP
+         X1UI8KL1cfKm2Uj6wTWtAuCLbDKtlp8K+KVco4+Pww4a7dR1j6Pl8bl7OJoR/cuEsJ3z
+         GxmX6I9d3pQVZG3/+DnnkYP+YN0WrkkQvq0QXZDnbvOgqZqgcC/J2z+dwqXn2SQtPYwg
+         20kg==
+X-Gm-Message-State: AOJu0YyYfW/eT+WsdVVznckwXZwz1NgKiqU4a8w3VO2cD8o/kDFciL/Z
+	lbokMHGmcra4m9W2uiEc6IYRW7lBVhK8q46LRiqiX7HOT1DdJlF8QDfV
+X-Gm-Gg: ASbGncsx4J9lCyky826GvZzJlAYrUdLX6TUzt1r4a/1tQl3oFxSBujqTToKfj5Ueax5
+	hTlcgJLuM6H00yhE2Jz1zsrnX+fKFaABYVaJTtXaxrwE/s328zFoSBaPbqxLlhPuRfbctX4xsNg
+	SI2pQIcQy2qXVP0YPbHF/1fqKCuQQJpZrCuNrpQ5OS1GMF+7Sa7rzL6yCkEqmn7WgIiFY9iN6LK
+	PlKFnIZ/iYfR+vKa4Syc/dcZ7efXiymL6Laof5dXKDNeYnSEEl9KGnzRzbqDPRB/jjEExzF5QmX
+	khU9e+pezG6WV6nexXvq7+YayH1Jj4kYM9oaTXVZAprJ1XnFdObs4oepOF0uTaKueSsI7HbkpZ0
+	vhKSc4kZybnujNQIqmO6yVWrRSwqwfaGeNzHPwdfLM/gM/g==
+X-Google-Smtp-Source: AGHT+IEzVNv0i6xFRtoM0ZnKEC4YvuPx/PJenIMUadKf1HZHDvxrvalQ39adwkWm88RMZ2+YEO6Eug==
+X-Received: by 2002:a05:6830:61c7:b0:759:55bd:9597 with SMTP id 46e09a7af769-7c0df7ff940mr12338050a34.26.1760469432690;
+        Tue, 14 Oct 2025 12:17:12 -0700 (PDT)
 Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-7c0f915eed4sm4706284a34.36.2025.10.14.12.11.46
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-7c0f9067887sm4708512a34.9.2025.10.14.12.17.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Oct 2025 12:11:46 -0700 (PDT)
-Date: Tue, 14 Oct 2025 14:11:45 -0500
+        Tue, 14 Oct 2025 12:17:12 -0700 (PDT)
+Date: Tue, 14 Oct 2025 14:17:11 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 4/6] packfile: drop `packfile_store_get_packs()`
-Message-ID: <yakvujhjgio2g2ynu5735tov2bmsq6cwtaxksvyxik77mrjiuz@c2rspc2k77iq>
+Subject: Re: [PATCH v2 5/6] packfile: introduce macro to iterate through packs
+Message-ID: <6w2h4qvnwwci65puh6rmluy4br6m3xku3553473rn3k2dqnx2b@fs7gvglg4666>
 References: <20251009-pks-packfiles-convert-get-all-v2-0-0d73b87ce711@pks.im>
- <20251009-pks-packfiles-convert-get-all-v2-4-0d73b87ce711@pks.im>
+ <20251009-pks-packfiles-convert-get-all-v2-5-0d73b87ce711@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,23 +72,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251009-pks-packfiles-convert-get-all-v2-4-0d73b87ce711@pks.im>
+In-Reply-To: <20251009-pks-packfiles-convert-get-all-v2-5-0d73b87ce711@pks.im>
 
 On 25/10/09 10:01AM, Patrick Steinhardt wrote:
-> In the preceding commits we have removed all remaining callers of
-> `packfile_store_get_packs()`, the function is thus unused now. Remove
-> it.
+> We have a bunch of different sites that want to iterate through all
+> packs of a given `struct packfile_store`. This pattern is somewhat
+> verbose and repetitive, which makes it somewhat cumbersome.
+> 
+> Introduce a new macro `repo_for_each_pack()` that removes some of the
+> boilerplate.
 > 
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
 [snip]
-> -/*
-> - * Get packs managed by the given store. Does not load the MIDX or any packs
-> - * referenced by it.
-> - */
-> -struct packed_git *packfile_store_get_packs(struct packfile_store *store);
+> diff --git a/packfile.h b/packfile.h
+> index 3f38c63476..49484a9b09 100644
+> --- a/packfile.h
+> +++ b/packfile.h
+> @@ -136,6 +136,14 @@ void packfile_store_reprepare(struct packfile_store *store);
+>  void packfile_store_add_pack(struct packfile_store *store,
+>  			     struct packed_git *pack);
+>  
+> +/*
+> + * Load and iterate through all packs of the given repository. This helper
+> + * function will yield packfiles from all object sources connected to the
+> + * repository.
+> + */
+> +#define repo_for_each_pack(repo, p) \
+> +	for (p = packfile_store_get_all_packs(repo->objects->packfiles); p; p = p->next)
 
-Nice cleanup. Now with `packfile_store_get_packs()` gone, the confusing
-stateful behavior here is no more. :)
+The added macro here is a nice quality of life improvement and the
+updated call sites all look good.
 
 -Justin
