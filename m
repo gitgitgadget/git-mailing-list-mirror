@@ -1,115 +1,114 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFD719F48D
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 01:06:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840B115E97
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 02:19:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760404005; cv=none; b=Ak6wTJ9BxUHhMGNKnoOX9U/ckjQUiQ+AE9rxhnyTXrdIPYHZJRt2b3CaDHd6zJT10KgfLKOmr0ZicgM8B2KV5VkuMB0FyWiNb1TrVZTlIrT00Bl3i7TokMfL8bpivDfDhG7N/Q7SuEN3pT/sQj92XldN5GI/pv2plfJ86MTSHr8=
+	t=1760408346; cv=none; b=pjM5UX0GmcFisK8eESXsWETbcZHnhvj0vKQpvNG05ogQeazzZcmYCNrV312WpURnSguo3Oa6yofc9zRF1ZE1KvUKhUh9uNWmX4s7bQmT8WJfSPvV2JIpkZeqgE+mWdvz4g8nsKHeBehm4FR/ddL1tCbGHXUoINwDkmHJfpwao3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760404005; c=relaxed/simple;
-	bh=MmX+wpfLgNFhzyb+LRYP7G6ILmpJ0l0cmJeYdKb9Bak=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rLVwfb0f2oH8W0+7jNzM/N+YCwJnw6jEchzMcuf28lEYqD78aCM3Zifjyxori4NXLs7YzKj+KKr4ebkvcb/IyHLTkmbdsQHH9DDVq9Wv/NA37aJi8OTleaqF8pWw2QdLK5khWyJ5AdCHA0t5kaqrH77EAddadgSTMfqVsie6gGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MsSg7AUN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VdYyUql1; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1760408346; c=relaxed/simple;
+	bh=3rGR0+NABVEqySmFYevNsnm6bOEXHIOlRf+OfGO4LYQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eU0xofZhUjWcJe3kETL10KoKYMPhZR5+aG35SxKvGWTwCg4RYKvh1BvfC8sFsNqDt5WmlKG9gOqPV8g2uwG+n6Fiu3KpASJDuYbVr0qjVddmM4gkParGdczCy31NGvnnXKlmZ/9Zs8jtTHTWnP4r50coejxqUUdf4jMTAmvvorE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JfUyf5BH; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MsSg7AUN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VdYyUql1"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A6DD57A00D2;
-	Mon, 13 Oct 2025 21:06:42 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 13 Oct 2025 21:06:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1760404002;
-	 x=1760490402; bh=WWsFAfFqMiG0p8xI++xuWoOT1XG5R/2SCTBqhqHAo9M=; b=
-	MsSg7AUNYp1W0djLAAXp6R3Bo3sLfm6gJINoorzlnvjBGqaCVW32mUWdcORYocCe
-	vaEsjzfsJnPS2r0MXiopcW7ru04CY1+fIcFEz8VZEgmt0ZFWYanaQXatFoowcTWW
-	FbrUh8fgWl/J3zTu7YuMy+iagTI4cEbZt51tjQDOI4SL4BC801QihOFLvZBbokeX
-	Ja4D9sSU7Erb1f9iAkRhg1Bgv1wrFKkiMVnxurRy14gsh+hCUsyaL2tJix9qWCx7
-	r1JyY2CKhY65t3x2nY8zTkZ5a/5dDG/7ms+ZSDMRDDhVaVX4slHtAQvGVbmRaYyL
-	n8EJA8slhdq9ERNoq6Pdcw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760404002; x=
-	1760490402; bh=WWsFAfFqMiG0p8xI++xuWoOT1XG5R/2SCTBqhqHAo9M=; b=V
-	dYyUql1ldv8pqGZVboHDlcH4Mq+mqwJi/1cwSKJrKFcWQpqra40cvPWuYmykYyPf
-	NTwNHf+IrFNTw3lIm5Jqypl6iEOutH9CfL2ffO4kOK/0jSTTr/ShGByGMxu6v41V
-	dyXg8h5Xt5r3SpPc6NjJYuri7tl555gAXVDEUAJ7mjQjVisbQ33MX9AEUxKlikYZ
-	9gzQ9A95/dW73K8GdemwFSF+zT/P7XhSwqL/+fAu9F/yz0z7XYzR/TWLlNRAQd9L
-	WV2fVtOa/vwViGqu+FxU9XLRhX/x2kS4p/01iZmuEeGOa6iqswa5OQ00/h55OFn0
-	Pps7E3IcGCkhPMnydpWzw==
-X-ME-Sender: <xms:IqLtaB-vmLliyQlMeynI0NsBcEB7DyXyFsyzTTsbvsdUSXFdCo_O9w>
-    <xme:IqLtaNJhvjc091r_pu_k51FzHKOoGF3ypfL0PLyiIufahfh4y6dv1Bf3_oOlxuOpZ
-    HucCFNzqhhgKoCEZN_vzYrW8uBzFSMkj-yrNIFTyRTBZ0m5wahltA>
-X-ME-Received: <xmr:IqLtaMZaCEYLgV9WUYPVjsjOEpU3dMnRuJQSIPxHwjVBydJ3hebeaCbSBulZAr9X5SKcgYz9SAYtcS40Yl_P_ag_-XPyjqdeAtNZ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduudeludeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
-    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:IqLtaPINb54HLESCPaT2TX2QRpCiAhBF54SP91tICF-XCOtPXP--Ow>
-    <xmx:IqLtaKDXSV3PU8JcdqChuUp8chahZk_UxLmqm-aokg1eVkskMZYCIA>
-    <xmx:IqLtaEoQPKIP55hgubiSby3qBhrJc_WzqKty8DAdlpo69LAo00HM9A>
-    <xmx:IqLtaFh1QKhSOEZ3Lu1-c94fZOzaxQwrygcS_XiaVnkYDar785cdFA>
-    <xmx:IqLtaNQgOd6uqvciy9eoJM57c4sQjLEZXkl5BckVKnQnWwvsD6JZlrNT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Oct 2025 21:06:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: I still use git whatchanged
-In-Reply-To: <ae47adc7-7393-4994-9aae-e661c0e36b66@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Tue, 14 Oct 2025 00:15:28 +0200")
-References: <EBCAE8A8-E556-4DE9-9B76-EA4C27EECA01@gmail.com>
-	<ae47adc7-7393-4994-9aae-e661c0e36b66@app.fastmail.com>
-Date: Mon, 13 Oct 2025 18:06:40 -0700
-Message-ID: <xmqqikgiz3z3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JfUyf5BH"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-b48d8deafaeso1024480266b.1
+        for <git@vger.kernel.org>; Mon, 13 Oct 2025 19:19:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760408342; x=1761013142; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tlMuih8CtsrlYpu0dlb8Bt+1C7cQf63oUmRqQ8hmvyo=;
+        b=JfUyf5BHnAxcwmPFTVyDSRUwx3vqRU2XRmVaEBOqx8lS+Y0Q/B+CdWOdk4/1B7BjVv
+         glKeArflm4ePcl6FSOAjgpmuZinUEluEGnR/uwnDOrwSnEsRe534MIpXoWnQhXUtbnWa
+         6MXIZq6L+0IkGhz9Gn+WxwdNhuj/JFXVotR/b5wKr3rZR9dNON+5MYA/VsJWfzLb0abM
+         PESzRmJr6IbMu4CWvw6tBtRVn8GkDcN8HFvoRFmvxqAGh0p6saE1xqVNBHdvNFuMSpYG
+         W81QwR/5VKW3YyGvmcEXWo1KNnbcojfBf6UQzoq49szS33yGqIkIJXmXXaukGxA00H7v
+         xOfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760408342; x=1761013142;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tlMuih8CtsrlYpu0dlb8Bt+1C7cQf63oUmRqQ8hmvyo=;
+        b=G/VZI0A1+Y+gbosuMmumdD5nEWi7P4BQHNLbZhJtTsHjOcnxvMo7f8Npbz+OO4G0eh
+         PWgpQfSNN1EYT4pwDa9ACebGBjehV6rKyUy9nYvkQmOMydJdHPiti2eRS5ZshW3P4N+4
+         jKHMh3nbvSaBCNlLvfqn+kzCQh+woa7+ZaT0MupDFKOchS2vEfd44rkkHHmjeegX1e8F
+         h+UYbQeGhKRFjREkPrzHL/bC05LuxHjE9xv9s6e9Q33WLg6mewH0TqIlm2wUtCNuAIe4
+         UmYM+9KriZHN5ATNNqd8KokEB3z8jSOvOFFNHJMqLRn2L9gB4FdA8Jzxk8TrbaD00aZr
+         DhKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV/KAjElE8igpF+Gq/q39efgQ5BZsQCp2MaPGlFeZ5kn72TnoEYgLLbwy12yKGJKLQB8uY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzjj2LEeQzC2dz8T22wbXEePqS62nL2RUujfXLg48ukUXRGeiHy
+	AMmLI9yeDkyWqr3KOgYPo1jXtFxvCAVdYyHSe8+jDJgKv3k8aY6idCiXx3Zs67tIm41kgIPQMFM
+	dqjWfFv2R8J72ji/TmVC0sNkq5Okuq2Y=
+X-Gm-Gg: ASbGncudlWPCCIFOnCg5shUJBAmiDjNXTOmzAfxLGoU6csqbURDdNPG4+PgUAk//1EI
+	sfHfcqmU0Opxw9hC+JyN8E8qTLDcM+U/OBI3Cr6Wgah0fzW9KhR/fRsPa/ezSI4PpTZgCBFhgOU
+	1OC3yIXf6u+mnz+D7ZXU47jF3AFMM4EHAM5lMkADNdXqT1ZCwvGYr0lnJ9UkwZ7kcfJCcMVsSOr
+	cKgqJ8KR78ytY7DwztRgePmnbMrGJpnUoq+4PuPxo4YJLL/Wyk+gpBSm0MM
+X-Google-Smtp-Source: AGHT+IGi2YJFovbQQ+YZ6QOZzsLWEQ8DKtzmIg9KgdZ4Gsx/P+k75DmuQmAecshZ1vrTIea9AKXqLBgQf8x63BWD5lQ=
+X-Received: by 2002:a17:906:ef05:b0:b50:a389:7ab0 with SMTP id
+ a640c23a62f3a-b50aa48d2d7mr2548827666b.4.1760408341475; Mon, 13 Oct 2025
+ 19:19:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <xmqqy0ph5ov8.fsf@gitster.g> <B78CD1B1-67C1-4EA1-94A7-13AD40C43585@gmail.com>
+ <d4dc8042-b996-4889-88cb-f0862a12d09c@app.fastmail.com>
+In-Reply-To: <d4dc8042-b996-4889-88cb-f0862a12d09c@app.fastmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 13 Oct 2025 22:18:50 -0400
+X-Gm-Features: AS18NWBatqH3UkV40il6pzNTMNU3P-PDYGaeJztICa4XwpYq0tiY0q61oYxt1jk
+Message-ID: <CALnO6CDULtw1UmqHfiqLCH4v6U=MuiECHhYwz1-Omkh8x=9yFg@mail.gmail.com>
+Subject: Re: [PATCH] doc: explain the impact of stash.index on --autostash options
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	Phillip Wood <phillip.wood123@gmail.com>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Glen Choo <glencbz@gmail.com>, Karthik Nayak <karthik.188@gmail.com>, 
+	Denton Liu <liu.denton@gmail.com>, motisd8@gmail.com, 
+	Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
-
-> On Mon, Oct 13, 2025, at 23:59, Samer Abdallah wrote:
->> I still use git whatchanged.
+On Mon, Oct 13, 2025 at 8:18=E2=80=AFAM Kristoffer Haugsbakk
+<code@khaugsbakk.name> wrote:
 >
-> You can replace it with `git log` in this way:
+> On Sun, Oct 12, 2025, at 20:04, Ben Knoble wrote:
+> >>>[snip]
+> >>
+> >> Yeah, that is less useful to me (there is a tool, given a commit
+> >> object, to figure out at which merge it got merged to the mainline);
+> >> I didn't think of a way the information can be useful to general
+> >> readers.  If the mainline merge was a release or more ago, then it
+> >> may make sense to say "commit X, which appeared in version Y, was
+> >> broken in such and such way, and here is to fix its breakage"
+> >
+> > It=E2=80=99s not clear to me if you=E2=80=99d like to see a v2 or not, =
+but given you
+> > were already happy to merge in the latest what=E2=80=99s cooking, I don=
+=E2=80=99t mind
+> > not sending one ;)
 >
-> • Given: `git whatchanged <opts>`
-> • Replace with: `git log <opts> --no-merges --raw`
->
-> Additionally for the sake of readability, you might have more
-> use for `--stat` or `--name-only` rather than `--raw` if you are only
-> reading the output (not feeding the output to another program).
+> Sorry.  I misread a What=E2=80=99s Cooking email[1] as asking why a topic=
+ hadn=E2=80=99t
+> been picked up. But you were asking about sending another patch on top
+> of something which was already in `next`.
 
-Thanks for fielding these repeated questions.
+Apologies. That's probably my poor wording.
 
-Let's do a maintenance release Git 2.51.1 very soon with your 
-kh/you-still-use-whatchanged-fix topic, together with other minor
-documentation changes and probably a hdnful of ci related fixes.
+> I wouldn=E2=80=99t have sent that email if I knew it was already in `next=
+` (if I
+> had checked better).
 
-We haven't had non-security maintenance releases for quite a while,
-so I may need to remember and practice the procedure to cut one ;-)
+Anything I can do to make it easier next time? Appreciate the review, btw :=
+)
 
-
+--=20
+D. Ben Knoble
