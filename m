@@ -1,148 +1,116 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6797E270553
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 21:29:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C432EC0AC
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 22:29:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760477363; cv=none; b=Qyuu4bp0i1BIYSsF3stFwaSVzQNkGRNOV0D6onLack/jyJBXzuyE7HadZjcOwX3g7sKfFvgSUHLw1XWWcJqp2yd7dR7MjOjxwEuHSbof9I68e4VQ8Hfau0U8tSmDoxVXIMiacwZYZG9YNr6o5VrFquaCgqYfWIJQGnVAB+KnNfU=
+	t=1760480980; cv=none; b=TpEyQe4R1LW1ptZJEW9VSlxmEBDOXReJbwYLutt577bKlqRjyMqjJrWjgWMtXz/Elcfe9peEPwlwXRYLheGO6DeHe0Nx9EOh4cbR6Jev1s4qFT7MRxUe8XV1SECIJH2WZeYxgBhyLwGTH+vPc0e7n8zBdzECNTmgBQpARzWeaA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760477363; c=relaxed/simple;
-	bh=yHCayDA/JqxMxTxrJHrutS9En1bIIIeVJMoYUpPeqoc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=abROj1xA4jhL/jdWrS8uAmm+vEUuwY/VAVG2XeH9CLrBLYI8D15lq84SLdYK3MzzwbKRMcYyRFGU+RamtYV1gpyFdUgoiD+Ww+kZICj1DaBAK6XTQHYQSdOiCFdwAm2T+DAjsDqQA3WFh7ga0sZe43KvHFzATfJTajSWjCnDJFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=temW5nxL; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1760480980; c=relaxed/simple;
+	bh=Qkm3yeGLQ++VbwiwcOu98pv7IO7Gfb3EW/QVK8iHwY4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=saPlDE8U6xjf84eLSwLQ7zqlKGUcSgOUdlMieXpy7iRw3g8feaq1qzVNfDGs8CjFAEHmRbaP9BwomX7MonNXkmhfziardYdzZ79OdsW+ous1TTOiBEXgr3MOnz9qa6k9DUErPR6+wXB2jaDtwiN02UsDbhUZyTmKHxSvv7eFCEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LdO9uE2x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yh5+9MNn; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="temW5nxL"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1760477355;
-	bh=yHCayDA/JqxMxTxrJHrutS9En1bIIIeVJMoYUpPeqoc=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=temW5nxL/iP5Kyu5IdSEy34QS3GzGZniz5jRlAgt9hAaS5Zk+obt/YrBHomOIxf+c
-	 DUKeA7e6x0CZLCI7xdI8iVxjVJtRToXIH1MPb7lI2rINRvXOY3NcByks8U6DmDorWQ
-	 sqqNtRN1h7CDNQNfJIEzTUa/B1wNI2zDh3UAxKmD1qgJYrzQFHR01KywWMkVqG5Vb/
-	 6BRt6PWfhUTGtvsIh3+w8gm1E4Y2WwJGHfIyBUFgo5SYh8zB80I4bTKHKbuAKLc2Q/
-	 gI5+OMydKN9klU5gYsIrDgsdaulBlWxKFRHE5iWNGZXc/pSj4PADXMh0g/ZqRA2mVk
-	 2pwSvJ4jSo7dJ8RE3gfN3jCZuOQ0ndVW496fWfBBo1mU2D1M9fJo4eBpEeRuxBB8RP
-	 L7XdxBGRTMXlXZ+6shuwfcAsFvDV+R7jwgJW1tLKPKiUSpJniHkUPtwFtza4Q8fP0X
-	 KHwHdIbf6QNQuQjUkTf4KQKcd+63TsdmiEKDUrxR9uuA4TU6H7x
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:dfcf:298c:5ecb:a3c])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5151B200BA;
-	Tue, 14 Oct 2025 21:29:15 +0000 (UTC)
-Date: Tue, 14 Oct 2025 21:29:14 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Ashlesh Gawande <git@ashlesh.me>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] http.c: prompt for username on 403
-Message-ID: <aO7Aqooz-0ppbcMP@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ashlesh Gawande <git@ashlesh.me>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-References: <20251014144354.1457818-2-git@ashlesh.me>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LdO9uE2x";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yh5+9MNn"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id DD0E01D00077;
+	Tue, 14 Oct 2025 18:29:36 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 14 Oct 2025 18:29:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1760480976; x=1760567376; bh=otjp1/94z5
+	mTr/5M5XN4nROiTc3Uwjr3l9/UMx5xyEk=; b=LdO9uE2xPV4ZH0zu6txqFDah7V
+	dokT8pkV7/884w8eInQP2HxUDmDVIdK/WjcgaEfUH/FgtkeEWZLUImf691cIhcJo
+	soTZJdIfOB3Ki+3d7yuOfrdBW/VAcAB31pptCVWMicS7pg2xhFhdk9Wr7e09Rm1w
+	E/H+3nNn1/VgpZLG9FTrrU98UYke42ZejJriCdh2AR8ciAs4sNeIF31kf6HmhU1u
+	frBuDpUROCw+7hqw1eH49gfYzHi1/O7Fo03NifZnel4QBnc104jkChyNAjV0D9sE
+	2F38d1Z5z2fxkl0mgXLM7MDLtDB5ZTutbkk/EJ6BumFZnqdBrXlRiXMTzyVQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760480976; x=1760567376; bh=otjp1/94z5mTr/5M5XN4nROiTc3Uwjr3l9/
+	UMx5xyEk=; b=Yh5+9MNnqBO2805EhUoWk4Cd+DayA/NUvG4CVcsCaAvToQ4lLxe
+	KO2F8eqG5sC6H2ryb8bUTWcpOxzmSsDOrtpq+PEBzpHbixarTQSZm7bAFvTViPEX
+	eiNu/j9fnuMXwLj4XRM7iq6rQE80XCChiAKPuBqXnZY/HmH2D0wYFn7MAdPpmcKa
+	Hz+cWkhYrDzXzP1Xjw8TmtCTBp3z87TrfLL68BR67gCHoo3h2OtAFMXcw1oY7V0y
+	OENaC5BNN4XIb15G12OsvwW6fh9O/hmK7uoCHHbVOoZ/G96WpBEPjD4fhCc9rTM7
+	bTujRyrtzKjECT7rkaBqPZMmj3UfRvuR5yg==
+X-ME-Sender: <xms:0M7uaOJ7nFN9Np71nefD31I74S21HtU8Jso0F1KpeESR4MjgipBYGA>
+    <xme:0M7uaNKLdMQXm0SIn2iY7BuGPfMUOcLa6T6KXmif9gao_V5O33_JzXNOpmfOumo0F
+    XR69Jk2Q20R6wXxSXmlUFa5heOzrNXqFCQyJl3UquZLwqDM8-iSx2g>
+X-ME-Received: <xmr:0M7uaDtCwMrrU0X0XqH82eKBbsUkn3FrC14HFipmfpZAMogSBPovBBeQDdewP4sr5zKp7nTa2oZJvzHUFthIVhtKqB9X735NuGsE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvddujeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
+    hsthgvrdhnvghtpdhrtghpthhtohepohhkhhhuohhmohhnrghjrgihihehgeesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:0M7uaCRD4SC1f8x32lC8RgynTkbAzbwRUsaYa7gsHaLSL0VVF6SrsA>
+    <xmx:0M7uaBMkrSwbO3JbKLiXPI6z_d51wJmWwH_mge1yombcXUwpTxwmww>
+    <xmx:0M7uaPa7O56_VbI8dpYZyDAujjbOEbRxzpd3F1P7E4U_rCkQldBLNA>
+    <xmx:0M7uaDwfAS0TvPqSJAWG60bxLntax_R4jVt4sf41A2kQx7qjnTJYFQ>
+    <xmx:0M7uaF9Cy_rD5JXUUV9pbHATqdddDV6UEqsgoLeVW9zvYivspYrvHKv5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 14 Oct 2025 18:29:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Okhuomon Ajayi <okhuomonajayi54@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] [PATCH] [Outreachy] builtin/patch-id.c: clarify SHA1
+ usage for patch IDs
+In-Reply-To: <aO6-LBqhW87GWD-5@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Tue, 14 Oct 2025 21:18:36 +0000")
+References: <20251013174658.236940-1-okhuomonajayi54@gmail.com>
+	<aO6-LBqhW87GWD-5@fruit.crustytoothpaste.net>
+Date: Tue, 14 Oct 2025 15:29:34 -0700
+Message-ID: <xmqqjz0xw20h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="AmGqV5bgu/H3ofeI"
-Content-Disposition: inline
-In-Reply-To: <20251014144354.1457818-2-git@ashlesh.me>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
---AmGqV5bgu/H3ofeI
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>>  	if (!the_hash_algo)
+>> -		repo_set_hash_algo(the_repository, GIT_HASH_DEFAULT);
+>> +		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
+>
+> Hmmm.  If I run git patch-id in a SHA-256 repository, then I get a
+> SHA-256 output here and it's worked this way since Git 2.29.
+>
+> I know the comment says what it says, but I personally disagree with
+> this approach.  There will be a point in time where SHA-1 is so weak as
+> to be useless and people will want to build a Git version without it.
+> For instance, many government agencies around the world have a 2030
+> deadline for completely stopping all use of SHA-1.  If we continue to
+> use SHA-1 here, then this will have to change anyway in a few years, so
+> we'd be better off keeping the default algorithm for now and adding an
+> option to control which hash is used.
 
-On 2025-10-14 at 14:43:52, Ashlesh Gawande wrote:
-> Scenario:
-> - There are a few pre-production systems that a lot of testers and
->   developers need to time share because of low availability
-> - Devops generates a GitHub token with pull only access
->   and adds it to the netrc file on these systems
->   (Pull only as we don't want testers/others to be able to push)
-> - Testers log in and do a git pull for the latest changes
->   (via netrc credentials - though testers may not be aware)
-> - Developers login to debug issues and may make fixes to the test repo
-> - Now when developers try to push their changes they receive:
->   fatal: unable to access 'https://github.com/<org>/<project>/':
->   The requested URL returned error: 403
-> - The developer is not given the chance to supply an authorized token
->   and either needs to comment the netrc file or copy the changes over
->   to their own machine
->=20
-> Signed-off-by: Ashlesh Gawande <git@ashlesh.me>
-> ---
->  http.c                     |  2 +-
->  t/lib-httpd.sh             |  9 +++++++++
->  t/lib-httpd/apache.conf    |  4 ++++
->  t/lib-httpd/passwd         |  1 +
->  t/t5550-http-fetch-dumb.sh | 24 ++++++++++++++++++++++++
->  5 files changed, 39 insertions(+), 1 deletion(-)
->=20
-> diff --git a/http.c b/http.c
-> index 7e3af1e72f..18959f63b9 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -1852,7 +1852,7 @@ static int handle_curl_result(struct slot_results *=
-results)
->  		return HTTP_NOMATCHPUBLICKEY;
->  	} else if (missing_target(results))
->  		return HTTP_MISSING_TARGET;
-> -	else if (results->http_code =3D=3D 401) {
-> +	else if (results->http_code =3D=3D 401 || results->http_code =3D=3D 403=
-) {
-
-I don't think this is a good idea.  Existing servers send a 401 when no
-credentials are available and 403 if credentials are sent but are not
-valid for a repository.  The former case causes credentials to be
-erased, but the latter does not.
-
-Your proposal will cause someone's credentials to be erased just because
-they don't have access to a repository, which would be bad because it's
-not that the credentials are invalid (that would be a 401) but that the
-credentials are not usable for that repository or for that operation.
-
-So if I attempt to push to https://github.com/git/git.git, then my
-credentials will be erased even though there are no valid credentials
-that could possibly grant me access to that repository (because I'm not
-Junio).  Then _none_ of my pushes work because my token is gone.
-
-I agree that it's inconvenient that netrc credential override other
-credentials, but the proper thing to do would be to (a) not share
-working trees among users (since Git's security model doesn't allow for
-that), (b) not use netrc for this purpose and use a credential helper,
-(c) add functionality to disable netrc via config, or (d) use an SSH
-deploy key for automated systems with `GIT_SSH_COMMAND` and `ssh -i` and
-have developers forward their SSH agent to push.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---AmGqV5bgu/H3ofeI
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaO7AqQAKCRB8DEliiIei
-gUzSAQDY2kYbSMdWx4aQWu54FgCNvcUs1LSopVLOeJVtQgFPxQEAxpGFayhX1iTr
-VEVD4mSSgvckx55TGA64IV9dnQWeYQU=
-=qqj/
------END PGP SIGNATURE-----
-
---AmGqV5bgu/H3ofeI--
+I do not quite agree with that, as SHA-1 in patch-id is merely used
+as "a hash function with good distribution that we happened to have
+handy access to" without any security requirement.  Being able to
+compare patch IDs computed long ago stored somewhere with patch ID
+on a patch that claims to be freshly written and find them the same
+to say "you know, somebody wrote exactly the same patch 7 years ago"
+would be valuable, and we do not want to lose it even when you
+happen to store your payload in a SHA-256 repository.
