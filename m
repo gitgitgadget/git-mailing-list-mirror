@@ -1,126 +1,97 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030BF238C1B
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 20:47:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3CF3081AD
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 20:57:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760474831; cv=none; b=jt5CzcRzhzSFO4dUkf5eHTBrGk8Fb4FdTvyO/85qUHVsLJ8TxmikYDbxY8mZpQBVAMf9CZ2S18HQRXyb0NQ03s0pIMHdFFKKOXA/Zh284h4VyTZ6KuDsVfLbTzp5EGewUq/FdzHSjQl1uzXtw60vLmHF58/BFme7eSntBzCYGDQ=
+	t=1760475422; cv=none; b=tQJ85NaKfu4yytP1QK4E/hqpu1kwO595mGDqYefmXhSmmIQDrxPw7unK//meOdOeYnZoaT+si9yROrGS1kQSP5Qq3ZkCq5vpp2e7Qhp0co3k9y88QUxAbzruAAfJcCnADEH0zY4bgDmewSGZNI4eH9nszlTgMnYM4kGO1QFyRgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760474831; c=relaxed/simple;
-	bh=SKD+GWccwEyWC7kx9zPlI4na0+doh+ya39rPeKZimyA=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=dvisbWdQPplh6OU8e79ayAS8DgsnYDU4/b7E+9kOQDLZKCIp85vfKvTwTK4bKEc+qRzSWRXBcmUKBy1f6paiUeWD+W/d1RBF9wt+WSMjDs/lN0TKIaAzkPhow0OrdoRdsYdwT4QoHATFhSdRA22MYxUJbqLf9eKgQCB8a7RIfoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=prMPU8Zh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ENbqWFyp; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1760475422; c=relaxed/simple;
+	bh=ne//J1YgRzpSydhozPe62Os5rVk65GlWn6eQ+U3okqU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GBInEpjQSh+0A+4pr7bdcu+DR6mtctEmO9PwZnXmLiSc66UwNmuFcm4f/NgOFkdUck0OGpaxWnZSgh9bMqHNptUy46QyZ+M8wx3jcmj4FCEXmr6aEJtdknjsEjlGTCWTXQSFPoRIaBjgsMDi90sHZYVr4R1TnJjkabSJeIfbQ/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BXs0JY8G; arc=none smtp.client-ip=209.85.161.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="prMPU8Zh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ENbqWFyp"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 01A10EC099D;
-	Tue, 14 Oct 2025 16:47:09 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Tue, 14 Oct 2025 16:47:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
-	 t=1760474828; x=1760561228; bh=NitfcqhB+8/I6xYdnf/wD5ZbSMtrVgbL
-	Ioaa3VmOWxc=; b=prMPU8ZhG/MuTjPIeyTXAlAgv43ihVzSpIsf3TzUW33THUn6
-	4Rha52yxxNRVeMTwiVmIAUEmlXOGTC0TTAA5PeqAY69bPp12roZLDb1eTmdWelpx
-	uaTfWQf9PijhiUNUVfaggQn6dhZZjxH0cZWdWkZETVWfIDU8nbV1TwAwWAVBLTJZ
-	wRKZss0PV+VAiOp9PF5OXDbsIwWaf9Li1pWVFe8EpjZk7hCSJ8Da4NCHVDFwErn4
-	IGVtTJOXIplglfm2imASrlMWIkjMjVcSwkVQkoxWKkr+tjhro332a14LZiNPdA6w
-	YM4HocAgOKgzpUmp7xnTK7th07v30XrNXfWnwQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760474828; x=
-	1760561228; bh=NitfcqhB+8/I6xYdnf/wD5ZbSMtrVgbLIoaa3VmOWxc=; b=E
-	NbqWFypXo2PdX9nolvq1NKsN0PU0OHlPiBeK6msNZkGUxaQAKavCCZ+ZOBEQhRK3
-	miAroab3YdyOaF+0DPccWPJcJtV0sgZqctQ162qmxk2s8duABFQLqXcmONT7G8oS
-	/HkEXHH595wyFW3+13oEn3/9Hkz8c1Dhzc0/CwK5WFhFKMMPs5/JCtuf3+QqyS94
-	AKeSEBde9+ZRlsgww8/A2gltYAQDsj4UKMz2mcAe+aewsx+3SCAIL6kf3G1CybvQ
-	Q2KRvWt886r+Cxgi81nLx2YxlNQD91vfrbD9zmHh75vpGSqJuUp1ZLXcapldFZEU
-	32R8Rqbso+268BI40351A==
-X-ME-Sender: <xms:zLbuaEmutlmA3aXjpOjd-os0Kee5iHicL1bRN9ze2F-Cjs-YLvtv6Wg>
-    <xme:zLbuaOqeOCiH0wwho3xEh7bT_Q7_4IfVL1mcxC3SGPcuy5VSmFShivnyIrTiUFi4s
-    N5SnairTX3TY6lcq-C50Z7GzynSwQojDftnYO4N6CPe3o119GYP>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdduhedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkhhkrd
-    hnrghmvgeqnecuggftrfgrthhtvghrnhepfeetgefhgeefveelgeduvdekteehieevffdu
-    jeelgfduffffjeelffffledukeejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhnsggp
-    rhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrhhishhtoh
-    hffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehj
-    nhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvg
-    htpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:zLbuaMKee0vwKQUZQd6EqO5hXgxNV0nt4ibUdBxsY9PQCG6nogmOjQ>
-    <xmx:zLbuaNoOvlBrXNEztgOR0nQctwbN-pFuzHoYQOQIMinDlsyJ1sTS3w>
-    <xmx:zLbuaMzrURSfODUO683br4tvm9VzgpNMCyBziclS3yQF3g2ODq5brQ>
-    <xmx:zLbuaJMHx4wlsJz9HsSnVxsi7IN9XZmystJpJuUNXShkVEh5jVgt2A>
-    <xmx:zLbuaNkIh_Dk6PmB0JHj8YK_5K452iIjkiwaQF72sFLY-LmF9MVWNMop>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 66BFE1EA0062; Tue, 14 Oct 2025 16:47:08 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BXs0JY8G"
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-65043e595a8so817096eaf.0
+        for <git@vger.kernel.org>; Tue, 14 Oct 2025 13:57:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760475420; x=1761080220; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=X0zyr+bWWmHekiuWc60wa3u2/VN78rrVyAzWnejzCfU=;
+        b=BXs0JY8GT3lub+mY8GAQ/7bM1aU0t0UAaw0LCEJrozaupMvks6tZ5TqJB5Po9V/aFC
+         d01pkQUsTvEmz5vtSYB/sZGmQ7OJz6AsjD/rwobc9PtikCKRXhQi057Enmrat8icTaiD
+         SRKQJEYtzvTtalt598QOJGS/8CYDz9n4B77SPtNaX8QUegeOj4h0hajBMhpfvX9QMMTj
+         gOKw8z+TmZe6cdVKvtm1xK5IFu/SQnFwUH8xVgi6hnDMJmDg7fSsp9Egq/ru2lnjGfeQ
+         KCanWkoDNFX5myNuTU69FzdBwGjht1rqRVpHcpPWW6k2/8/FjqOOTFUxwYVBbey7SNuX
+         2pPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760475420; x=1761080220;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=X0zyr+bWWmHekiuWc60wa3u2/VN78rrVyAzWnejzCfU=;
+        b=goxBlB2q0or1GFsqzdRsbOwFjytl0EpHSxTKfnGLnYlhMAhpgwZBa5AahtnehpoiYI
+         GXZb3ZMQafocvqkriv2JqsHEGxYRr1l6uqODs2rH/5wn1YqmHMgwSG9DXFRgHmSVFzki
+         DDMo5KL/yfcSkOAjNwk39HAc65sYCtqARTseYXrPt5lwros9zgI6zxHFK07syCecuvff
+         N27N/xP5YBrUkY8akhW0W6lIbp0UmYwvJf8ewOWT2s+1xtO7WHaZI9Y0dDgcQGIEG67a
+         orSPrbuSOq0AN/OYsBRsdcEnwa9Ykof4O96e0AwY7qFNAJXRcpXLpizuVCHABeEafeQ4
+         2nYA==
+X-Gm-Message-State: AOJu0YwJVbEJXr5OS+sY9whHVB9PRnaDkTClesanMjPRTD3To3mPsORo
+	zcVMWK1hxUht6Pblx0np+MMoiAUW6515t0MFiW8mFGms36maIoEoXXuoNAobXw==
+X-Gm-Gg: ASbGncslOiQGuSUXgHnaFaVr0gou/fBXOK6n7jTFRo5Jir1HPGaMNdEv4ZWf/uAfNJE
+	eonB7lMbmfVji0PdvL2Ukzd5L7A1CPTThziTYxbI0UQar2LAv7YdhDPjAbWL8xNFaJXqHuMlFeY
+	+Eff7EX1TvP+H4wFGmpi5KLzQsWXH8kKkaIqJI3Vq/4VpnxJY/1d4S3OxWTyLBxh7l7AQ0WzEy/
+	G17hUAhhlnuJWVM7z0N0AMMczt3GKqxavQfz6j2OCLxM3QZ9nQu/1zOSwbmeU9p/2NE3Tpic+Zg
+	36Bc/LPEeWsoVk4Uj4qJextPYmf+SwgLfir1YfnCrwGqc68EtnmjdJ5hx670tXX+XMuYlR1IpFC
+	NhyhSAB+So2m4hVsDJiBPw8BLaggvZM7I6XM=
+X-Google-Smtp-Source: AGHT+IHNP+nN57QuXo1xazGcy2NEo6RqQbQcQMFUFjzpYBhBEDkN156jt/xxTbIi0xOOSnY0Fs9/Cw==
+X-Received: by 2002:a05:6820:2ac1:b0:643:f2c6:f834 with SMTP id 006d021491bc7-64fffeb9bc1mr9815991eaf.7.1760475420057;
+        Tue, 14 Oct 2025 13:57:00 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-6501803c449sm3574106eaf.0.2025.10.14.13.56.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Oct 2025 13:56:59 -0700 (PDT)
+Date: Tue, 14 Oct 2025 15:56:59 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/6] ci: deduplicate calls to `apt-get update`
+Message-ID: <rxdwxiokqn2vak4sm7yxzisolbugzr26ygcq4mue3fu5lmmfra@r2pj355wu5mf>
+References: <20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im>
+ <20251007-b4-pks-ci-rust-v1-1-394502abe7ea@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AvBFpqMSI4bk
-Date: Tue, 14 Oct 2025 22:46:48 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Eric Sunshine" <sunshine@sunshineco.com>,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>,
- "Jeff King" <peff@peff.net>
-Message-Id: <c9314e08-e0eb-4de4-8f34-a6b4de69e28f@app.fastmail.com>
-In-Reply-To: 
- <CAPig+cSQB0HbhY2L1Y4mkbaCMiZTH72AtQ+qRg=Z0U9_ggkcug@mail.gmail.com>
-References: <978261e3be4.1760043036.git.code@khaugsbakk.name>
- <v2-38645ea253c.1760369708.git.code@khaugsbakk.name>
- <CAPig+cSQB0HbhY2L1Y4mkbaCMiZTH72AtQ+qRg=Z0U9_ggkcug@mail.gmail.com>
-Subject: Re: [PATCH v2] doc: patch-id: convert to the modern synopsis style
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251007-b4-pks-ci-rust-v1-1-394502abe7ea@pks.im>
 
-On Mon, Oct 13, 2025, at 18:53, Eric Sunshine wrote:
-> On Mon, Oct 13, 2025 at 12:28=E2=80=AFPM <kristofferhaugsbakk@fastmail=
-.com> wrote:
->> Convert this command documentation to the modern synopsis style based=
- on
->> similar work.[1] Concretely: [...]
->>
->> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
->> ---
->> diff --git a/Documentation/git-patch-id.adoc b/Documentation/git-patc=
-h-id.adoc
->> @@ -7,8 +7,8 @@ git-patch-id - Compute unique ID for a patch
->> ---unstable::
->> +`--unstable`::
->>         Use an "unstable" hash as the patch ID. With this option,
->>         the result produced is compatible with the patch-id value pro=
-duced
->>         by git 1.9 and older and whitespace is ignored.  Users with p=
-re-existing
->
-> Is the mix of "patch ID" and "patch-id" intentional? If so, should
-> "patch-id" be wrapped in backticks?
+On 25/10/07 02:36PM, Patrick Steinhardt wrote:
+> When installing dependencies we first check for the distribution that is
+> in use and then we check for the specific job. In the first step we
+> already install all dependencies required to build and test Git, whereas
+> the second step installs a couple of additional dependencies that are
+> only required to perform job-specific tasks.
+> 
+> In both steps we use `apt-get update` to update our repository sources.
+> This is unecessary though: all platforms that use Aptitude would have
+> already executed this command in the distro-specific step anyway.
 
-I originally assumed that =E2=80=9Cpatch-id=E2=80=9D here meant =E2=80=9C=
-patch ID` but now I=E2=80=99m
-not sure (what was intended).
+The distro-specific setup always executes first and does make these call
+redundant. Make sense.
 
-The way I read it then made me change all of these =E2=80=9Cpatch-id=E2=80=
-=9D to =E2=80=9Cpatch
-ID=E2=80=9D for consistency.  That=E2=80=99s a future change/topic.
+Not related to this change, but at a glance it looks like this job
+specific setup relies on using an Aptitude based distro. This does seem
+slightly fragile if a job were to be configured with an unsupported
+distro. Not anything we need to change here though.
+
+-Justin
