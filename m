@@ -1,137 +1,136 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960C8306B32
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 21:13:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3512C1590
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 21:18:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760476408; cv=none; b=PPH7euKTGNajLMRMJoi7W++dgstSD+hnTUArJYgdsMtKdbc9bDoq7hkCGv5dPXhE0Hqd3lQr/ob9jLb5A8zHFLm6BKDGHHiF7EgEZvZkF/PPCzItihWlKsD2dnhTdsnO/S0xVhhl2gcVqEL6kXOPaxieP+QbX2m9xMmtwHmGPec=
+	t=1760476727; cv=none; b=tEF8NG0qtlJFAHgPP0tJ5i8bVZFBFpMy76Drqq0U6S9y3W7xXBcvkeRH5IhPnWRWW+ArDqBSa6KLX2N0B7USp0QJ/gSL3AntO8Nf1NZ3Iob7aUsOCuYqCo3LmWRZ5EUA5OB4j9ZlGfTWOQUAoNAhXF+0YwxIy+4d66FEHw1VBzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760476408; c=relaxed/simple;
-	bh=TKaL2abg/YoCtMW62G1qMFbJb3sXOL3kg4/FRMY5i38=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=r9dX3QaJa526tiKVK+niETG+tQQjscdz5BuObBtZ76KA1bdGOFfqAt58qqnOOipBcEtlb8KfpiMk/Q53FD/Dq3fj3cq9jfCMSQrR/6fuw2/sKjQkh3OC4xrz3Z914ZYLE5BmrpGkJgDA1HViIC9WewuQ9L/DFQvO89rMNNA6oXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fvVGv566; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qpiGlX1g; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1760476727; c=relaxed/simple;
+	bh=W5/WsQ+h9hu5q5nJjkZ91CUP3w91qbLdYyhHlBjWUD4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=r5W0p7+wuTBUiIerciQ+bGa5knMQcTiukCiP5revVF7xRQY0sirsA8Fet0iJ0XMDxg3YLaUBanYFBxGhuVV+I2y3o2tQnn9zGXo7NEnX9VVv5hmOh2MFVSLB6TisO9vjRqWb932BdVwC2Gwz+lz+bUIOLnDhQBth5hQevLQniWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=oQgpXqoI; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fvVGv566";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qpiGlX1g"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 616FF7A0109;
-	Tue, 14 Oct 2025 17:13:25 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 14 Oct 2025 17:13:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760476405; x=1760562805; bh=pCX2aEJjxS
-	tYVEhYjwTZ6XbtpoxS6Awpq4CosQGSDpY=; b=fvVGv566WXNN30J7B0pjGgId4f
-	0Ai/3xGo2GSQvAP9h0BhXtl4Y/8RmirCWo2nymjp8ucVEuPZ5sLdWnRZcVwXbqbM
-	GKekxRNJ9XTBXqoTAk/INq192DO5vV3WPPIJwJSjnEZvnV+CCdrb/rb+cM9YpMAA
-	3pL00CCN4knpZnf2sjs0e/Hon5XXTkmztMuy3rnWtKQQIRNe69ELY4LWO5q5fWsZ
-	tOXVVdqbojQ8T+SWQP5dfmr6Iuykk7zf0YExFv5e6orF3SNZjvF/GQn6ad9C5XN4
-	rn+UQ4XcEiMVZeHCF5+STsOuzhA9zJzvrccnctmiX1DwNw50tkETbA20y7DQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760476405; x=1760562805; bh=pCX2aEJjxStYVEhYjwTZ6XbtpoxS6Awpq4C
-	osQGSDpY=; b=qpiGlX1gzgmYg6Pre+bK8dCkYtm2XncUjzwhSuA2or6NhkN7Es/
-	35U8wrlMvRpylVg7t6PU/7Jh/GIsyWR4Sj7G96cgx7Hjpb3n1+mBRF8XNde0yMlR
-	88dyiHx7h+5A19NhfZ8OJ1LFobgaNT+Dgrsbr12EX0hScCOPwfSw8lecbXRlwf/M
-	374kVxqT9NT+8Ou5EhMOKw87T29SJjeAa+cvJk2OwFK6od0r8jQ6zdOvLcksg/Y2
-	CYK5RCybLwDUj28IIOxBednSZCy+McSzRubeLSjsN+yU691mq+qLeVWnrB9/lztX
-	W1auzIxz75yaNHGDdWb9H/MtkpD1excgT2w==
-X-ME-Sender: <xms:9LzuaKI2FwrJQZeoGqN6AjbDdiyx5pKsZuIhmxYtxdo0dqi-unC5Yg>
-    <xme:9LzuaMjjhIemliuO7q5-6HuDiP6zxgwDwGBuGSHUaBylbfGdwSPHJ7z4i_c8B4uAv
-    MT-UnOJcdew2dWVsGsTP2c-bnu_3ObKfcVXU7QcODXChF4G9oY9jXM>
-X-ME-Received: <xmr:9LzuaA1MYTH_ek9HvJcZ-63pnmXE5BhQhjrHAOk7t259cQNzxNEvh2-FhWD_DBzL8jsMrY5Zw5UqNWYUcoRokJlEf_4HSTw-JGcE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdduheekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptefhudfgvdekgfefheetleevffdtfeeggedtheeviefhueeifeffgfevkefg
-    hfeknecuffhomhgrihhnpehrvghplhgrhidrtgifnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohepudehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsih
-    guughhrghrthhhrghsthhhrghnrgefudesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnh
-    drtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfiho
-    ohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhoug
-    esughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdr
-    tghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthhhikh
-    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopegtohguvgeskhhhrghughhssggr
-    khhkrdhnrghmvg
-X-ME-Proxy: <xmx:9LzuaKgzJO7tOjeTU3qUJlHyThJltCVWxnTM5G3vJZ4N8zsOl6YDUQ>
-    <xmx:9LzuaJ_z3c6Xi1EjDZH9a57BoWrbClwPMHOP1SrmPKJa6EuQ-99BRA>
-    <xmx:9LzuaOIHoCnktmRTaziANMZovEuzJTBH3otfdovhPc-qKWzeX_T_Mg>
-    <xmx:9LzuaGzXcyEsSBdsoKGPCo5FMK8f3g1-ysnVTqno62hAHQhPUdgQTw>
-    <xmx:9bzuaPlEAeg17XGgQ5TCicRe8lvKB5iAlM4uQYAL6kGcqVCLSeDYJtAa>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Oct 2025 17:13:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,
-  phillip.wood123@gmail.com,  phillip.wood@dunelm.org.uk,
-  newren@gmail.com,  ps@pks.im,  karthik.188@gmail.com,
-  code@khaugsbakk.name,  rybak.a.v@gmail.com,  jltobler@gmail.com,
-  toon@iotcl.com,  johncai86@gmail.com,  johannes.schindelin@gmx.de
-Subject: Re: [PATCH v3 0/3] replay: make atomic ref updates the default
-In-Reply-To: <20251013182530.33041-1-siddharthasthana31@gmail.com> (Siddharth
-	Asthana's message of "Mon, 13 Oct 2025 23:55:27 +0530")
-References: <20251013182530.33041-1-siddharthasthana31@gmail.com>
-Date: Tue, 14 Oct 2025 14:13:22 -0700
-Message-ID: <xmqqtt01w5jh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="oQgpXqoI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1760476718;
+	bh=W5/WsQ+h9hu5q5nJjkZ91CUP3w91qbLdYyhHlBjWUD4=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=oQgpXqoIi/KGXn1tSzrCLin69ReTHAwrhhqtG5jzT1PIe8lOhrYwITZJx/0IKhw+W
+	 cMTUoPL5RomIvrXEmJZwAHqIBibElpdQkVeIjb0HCxtw6O6CZpbOn6wbLUVHGt3fKn
+	 XdleYRaJaPoE01wRnnn63uYQ8sgQQ9Bh+ySOBaRqTxGh702Si5TrgaaHrQy4eXoZUL
+	 pD9TQF2SF9aJnUoeQfN4PcPtXSS93cCnZeAardy2GAzRcYlZlkFydCFBEFdRp1Qamc
+	 dn0VyczvX7SQ9sa0gFAKdXeAwNJ8H33huBgZXYjAJIp/9sHAoV8J8Z5P1R8BxCa+zN
+	 YWAqgH1xCNvvw9Srr/c7vgOAo6F5Dy4BZlJCDLcg1TflSSZaNDMI9gqRmmbhPYtYwo
+	 tFEWjIYGoWuh7gc7aMbuyGKzxTNxUuE0mdqX6c5mxNHcM0hqkVEdArScIB1jwHnORn
+	 ryMlscyuyEBV4i9jTvhYtZiX1Q0IVuxgzFPZgs5aFqTdRk7p1Oz
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:dfcf:298c:5ecb:a3c])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 194D3200BA;
+	Tue, 14 Oct 2025 21:18:38 +0000 (UTC)
+Date: Tue, 14 Oct 2025 21:18:36 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] [PATCH] [Outreachy] builtin/patch-id.c: clarify SHA1
+ usage for patch IDs
+Message-ID: <aO6-LBqhW87GWD-5@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Okhuomon Ajayi <okhuomonajayi54@gmail.com>, git@vger.kernel.org
+References: <20251013174658.236940-1-okhuomonajayi54@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-When merged to 'seen', this breaks t0450; from the way the test
-breaks, I suspect that it has the same breakage if the topic gets
-tested standalone.
-
-    $ make
-    $ cd t
-    $ sh t0450-txt-doc-vs-help.sh -i -v
-    ...
-    --- adoc        2025-10-14 21:02:48.680184914 +0000
-    +++ help        2025-10-14 21:02:48.688184867 +0000
-    @@ -1,2 +1 @@
-    -(EXPERIMENTAL!) git replay ([--contained] --onto <newbase> | --advance <branch>)
-    -           [--update-refs[=<mode>]] <revision-range>...
-    +(EXPERIMENTAL!) git replay ([--contained] --onto <newbase> | --advance <branch>) [--update-refs[=<mode>]] <revision-range>...
-    not ok ...
-
-In short, "git replay -h" and the initial part of "git replay --help"
-must match.
-
-Minimally you'd need to squash in something like the following
-patch.  Alternatively, you could match the documentation page (which
-is shown by "git replay --help") to match what "git replay -h" gives.
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="frNJ4OlTNQd3WYIi"
+Content-Disposition: inline
+In-Reply-To: <20251013174658.236940-1-okhuomonajayi54@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
- builtin/replay.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+--frNJ4OlTNQd3WYIi
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git i/builtin/replay.c w/builtin/replay.c
-index 3c618bf100..d0f0492790 100644
---- i/builtin/replay.c
-+++ w/builtin/replay.c
-@@ -330,7 +330,7 @@ int cmd_replay(int argc,
- 
- 	const char *const replay_usage[] = {
- 		N_("(EXPERIMENTAL!) git replay "
--		   "([--contained] --onto <newbase> | --advance <branch>) "
-+		   "([--contained] --onto <newbase> | --advance <branch>)\n"
- 		   "[--update-refs[=<mode>]] <revision-range>..."),
- 		NULL
- 	};
+On 2025-10-13 at 17:46:58, Okhuomon Ajayi wrote:
+> Patch IDs in Git must always use SHA1, regardless of the repository's
+> object hash. Previously, the code relied on `the_hash_algo` which could
+> vary depending on the repository, and included a NEEDSWORK comment
+> suggesting this should be fixed.
+>=20
+> This patch updates the comment to clearly state that SHA1 is required
+> for patch IDs and sets the hash algorithm to SHA1 if it is not already
+> set. This ensures consistent computation of patch IDs in accordance
+> with git-patch-id(1).
+>=20
+> No functional behavior is changed, but misleading comments are removed
+> and the code now explicitly enforces correct SHA1 usage for patch IDs.
+>=20
+> Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+> ---
+>  builtin/patch-id.c | 11 +++--------
+>  1 file changed, 3 insertions(+), 8 deletions(-)
+>=20
+> diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+> index d26e9d0c1e..d47b6f5a3f 100644
+> --- a/builtin/patch-id.c
+> +++ b/builtin/patch-id.c
+> @@ -246,16 +246,11 @@ int cmd_patch_id(int argc,
+>  			     patch_id_usage, 0);
+> =20
+>  	/*
+> -	 * We rely on `the_hash_algo` to compute patch IDs. This is dubious as
+> -	 * it means that the hash algorithm now depends on the object hash of
+> -	 * the repository, even though git-patch-id(1) clearly defines that
+> -	 * patch IDs always use SHA1.
+> -	 *
+> -	 * NEEDSWORK: This hack should be removed in favor of converting
+> -	 * the code that computes patch IDs to always use SHA1.
+> +	 * Patch IDs must always use SHA1, regardless of the repository's
+> +	 * object hash, See git-patch-id(1) for details.=20
+>  	 */
+>  	if (!the_hash_algo)
+> -		repo_set_hash_algo(the_repository, GIT_HASH_DEFAULT);
+> +		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
+
+Hmmm.  If I run git patch-id in a SHA-256 repository, then I get a
+SHA-256 output here and it's worked this way since Git 2.29.
+
+I know the comment says what it says, but I personally disagree with
+this approach.  There will be a point in time where SHA-1 is so weak as
+to be useless and people will want to build a Git version without it.
+For instance, many government agencies around the world have a 2030
+deadline for completely stopping all use of SHA-1.  If we continue to
+use SHA-1 here, then this will have to change anyway in a few years, so
+we'd be better off keeping the default algorithm for now and adding an
+option to control which hash is used.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--frNJ4OlTNQd3WYIi
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaO6+LAAKCRB8DEliiIei
+gXzXAQCGeU5gpuu6UDsRnIsUea5UUzfjnSBScaOH01DQQZzVhgD6Aj1fNTyGWjbC
+h87IDWBGLAG2MMmQ1BRTTTtNHMiF6wg=
+=R9oN
+-----END PGP SIGNATURE-----
+
+--frNJ4OlTNQd3WYIi--
