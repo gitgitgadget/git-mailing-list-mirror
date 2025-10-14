@@ -1,48 +1,48 @@
 Received: from sender3-pp-f112.zoho.com (sender3-pp-f112.zoho.com [136.143.184.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96460313E01
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 12:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34748313E13
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 12:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.184.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760444922; cv=pass; b=O8lZby7Iq7F6Xo5PRCIUfaJ2t1/DqlCxqfGOY8zRAruLbsyUwIdbjkQ0Rj8zmhnXRzPlUlmlzYmIUPDUebrQiTQKqn0+12B/FPn4FzCS91irurWSKhOQa8/XhbwY4eBRxx14XhHIN8pfLbESTooGn4bYKeDOR20RlZBt2LhwSGU=
+	t=1760444930; cv=pass; b=lLCeXbp3X4zH46guCtBvnhLi/yeyK7E0Z2rWXX+fX3TpjJObI2/FhKDTlWpqKVWEO3XzDC811DS/K9KZONT/tEHtBVVrctSLHXwM+zR0yh8ueOMIAImPN0ig2O7IOUcxqE/xjIgUZ4n7yCyflyICA5RMAuwApzQwpUQOUvLXKwE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760444922; c=relaxed/simple;
-	bh=CY7zKJECMLBgYImPNBKbfE7H8CGVdzSc8mnGRGKzpQA=;
+	s=arc-20240116; t=1760444930; c=relaxed/simple;
+	bh=6Rtl/OQBvaUWUruDKPosElnE6R2bz+qk77ghx07u9F8=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rTEubNokvOWOj8CBMA+2g5hg/+ntoVkk4pvOFO00Nd7vxXQVb6M95BBdWdxCXtwpXJLz4urA4FQaAWHEaR8P1nP5yf1XPJFap7xMbmmjJSTqkeFjARukuUJDRib1RqzIHQ+O9RMyXGbgD7MScRRjbSOGjsty4ttqQs+LG2Bch0U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=c4xxH17Q; arc=pass smtp.client-ip=136.143.184.112
+	 MIME-Version; b=NmAT05+06dH+ZmgdGsNbUD1wzZzc+MsF4rzAA/vcjoM21bFFaPAfCa9S0dFbZY4JgV7bndhOYl0v0rouvybXkXdJYmm7RqtwkmZPn4f3JClMWTjuRoPf42YGuvOfYIWQ+2UoYrTPgGeiDNHZaVkaJstty8qBTB9gNqSbuO04j9M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=A+C9bDwq; arc=pass smtp.client-ip=136.143.184.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="c4xxH17Q"
-ARC-Seal: i=1; a=rsa-sha256; t=1760444778; cv=none; 
+	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="A+C9bDwq"
+ARC-Seal: i=1; a=rsa-sha256; t=1760444780; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=i/ieFZ67DS+hs0VryHTw+8SNfSPf9aBsXFQcrv+Syn37EQowiga6Gv1h9B9vS2rn+vys8Z27btk0h4NhlWMBDS5uxWgAMm4+TOAOjkzjULMCDPRF8hJJ8SxvaW7hPDAoXIzCaOYD97XrNfhFs+TTQONcGlYKY4nzXHSuDNR0864=
+	b=jGmThpX74D7j57tfo9ikxrnmXnAnBFks7tsCQV1ZerhIb5luK+LWgstXRs0tCKL7Rqg3zqMuja2K7Yt6lCyuYvuT1qanowmKSbPO7687YKlIOsVJlO+pxpK8F3Z2+NJql3PBTNFX0eTEc9iV/IxaT6AAJR8EgG9uclbo75U5PDg=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1760444778; h=Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
-	bh=PWDhnZq58CDDJAXxw2utmBQsoeaeMzxkR+8xHTw23R8=; 
-	b=KnNXfbgwRN3WEVvTc6PX6rbWAMKehpXckciBIvmrhW7Dki5IiUkq/MMj3rQZKVMY6O98jQ8CY4gg9vw6d0Eo3/hh1y/h0iR0Z4VLcknNMx6n5F2GzXa5MXS+b0Urgk8u2WBdoRr3AzVLKAKkwWIFXti23+g+wUh1JR5WcKihaJk=
+	t=1760444780; h=Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
+	bh=CVr2B+25DjcCXIG+0K7PVWksiGK5OCryGzzdZRaQw5c=; 
+	b=B9sr+Jm9khj1tHfDo1F+fqMwrDMKZfYvnZs62Z4gCPG1L6REASnKSylpmrEcyTmHwB5hqGvgOb66S9NI91ivXWQuSWVJFVzwnZABdju0NhgBGe4qY8QhYBRFDjc6uqSeBhVWpNQ7gp7QXJMWxXToIDiLQ2sjqjzRqw8tfiyQk9Y=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=linux.beauty;
 	spf=pass  smtp.mailfrom=me@linux.beauty;
 	dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1760444778;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1760444779;
 	s=zmail; d=linux.beauty; i=me@linux.beauty;
 	h=From:From:To:To:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
-	bh=PWDhnZq58CDDJAXxw2utmBQsoeaeMzxkR+8xHTw23R8=;
-	b=c4xxH17Qd+2ZZwYm9ciZRdJwzYUhnen1lsRkms6AQA/qYSysvxf6lh1NEn7pgHYW
-	eh8JgdleMa7Vaiv+m2BpRmpfd4ik5NRK1CBSU1X9Nn99YGoyPRs7BqQmoZu++fQdTQU
-	GksW8y14CTxzLFyNrWlY4EtdCLFxw4d/OkJ0DHz0=
-Received: by mx.zohomail.com with SMTPS id 1760444769849591.0790855998941;
-	Tue, 14 Oct 2025 05:26:09 -0700 (PDT)
+	bh=CVr2B+25DjcCXIG+0K7PVWksiGK5OCryGzzdZRaQw5c=;
+	b=A+C9bDwqaCwo5XZ3O5FlHQuEBVkuHMCjm1M0/UbsIuQwMZMS5CmLCiZ2Ef4mVFBJ
+	cW4egx65MiM4rPry6/adNiLlU2ARMrL/5MQlWfvaEOBRkjZ9O7+z34Q9PWcGismJUCY
+	qT1W6uiX04kObFE3E31pURkroO0qrcEh+uFtZvDY=
+Received: by mx.zohomail.com with SMTPS id 1760444772509229.64697258665024;
+	Tue, 14 Oct 2025 05:26:12 -0700 (PDT)
 From: Li Chen <me@linux.beauty>
 To: "phillipwood" <phillip.wood@dunelm.org.uk>,
 	"git" <git@vger.kernel.org>,
 	"Junio C Hamano" <gitster@pobox.com>
-Subject: [PATCH v4 23/29] tests: t3440: remove redundant --keep-empty
-Date: Tue, 14 Oct 2025 20:24:36 +0800
-Message-ID: <20251014122452.1851103-24-me@linux.beauty>
+Subject: [PATCH v4 24/29] tests: t3440: use helper for trailer checks
+Date: Tue, 14 Oct 2025 20:24:37 +0800
+Message-ID: <20251014122452.1851103-25-me@linux.beauty>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251014122452.1851103-1-me@linux.beauty>
 References: <20251014122452.1851103-1-me@linux.beauty>
@@ -55,29 +55,76 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-From: Li Chen <chenl311@chinatelecom.cn>
-
---keep-empty is the default these days so
-we can drop that.
+Introduce expect_trailer_msg() to wrap test_commit_message
+and dedupe the trailer via REVIEWED_BY_TRAILER.
+Drop create_expect and temp files. In the conflict case,
+assert on HEAD (rebased "third") instead of HEAD~2. Update
+--apply rejection and --root tests to use the helper.
 
 Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
 ---
- t/t3440-rebase-trailer.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t3440-rebase-trailer.sh | 23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
 diff --git a/t/t3440-rebase-trailer.sh b/t/t3440-rebase-trailer.sh
-index e1a3d2e3eb..2315a0c86c 100755
+index 2315a0c86c..36f11f579e 100755
 --- a/t/t3440-rebase-trailer.sh
 +++ b/t/t3440-rebase-trailer.sh
-@@ -87,7 +87,7 @@ test_expect_success 'rebase --root --trailer updates every commit' '
- 	create_expect initial-signed "Initial empty commit" &&
- 	create_expect first-signed "first" &&
+@@ -11,11 +11,13 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-rebase.sh # test_commit_message, helpers
+ 
+-create_expect() {
+-	cat >"$1" <<-EOF
++REVIEWED_BY_TRAILER="Reviewed-by: Dev <dev@example.com>"
++
++expect_trailer_msg() {
++	test_commit_message "$1" <<-EOF
+ 		$2
+ 
+-		Reviewed-by: Dev <dev@example.com>
++		${3:-$REVIEWED_BY_TRAILER}
+ 	EOF
+ }
+ 
+@@ -32,7 +34,7 @@ test_expect_success 'setup repo with a small history' '
+ test_expect_success 'apply backend is rejected with --trailer' '
+ 	head_before=$(git rev-parse HEAD) &&
+ 	test_expect_code 128 \
+-	git rebase --apply --trailer "Reviewed-by: Dev <dev@example.com>" \
++	git rebase --apply --trailer "$REVIEWED_BY_TRAILER" \
+ 				HEAD^ 2>err &&
+ 	test_grep "fatal: --trailer requires the merge backend" err &&
+ 	test_cmp_rev HEAD $head_before
+@@ -73,23 +75,20 @@ test_expect_success 'multiple Signed-off-by trailers all preserved' '
+ '
+ 
+ test_expect_success 'rebase -m --trailer adds trailer after conflicts' '
+-	create_expect third-signed "third" &&
+ 	test_must_fail git rebase -m \
+-		--trailer "Reviewed-by: Dev <dev@example.com>" \
++		--trailer "$REVIEWED_BY_TRAILER" \
+ 		second third &&
+ 	git checkout --theirs file &&
+ 	git add file &&
+ 	git rebase --continue &&
+-	test_commit_message HEAD third-signed
++	expect_trailer_msg HEAD "third"
+ '
+ 
+ test_expect_success 'rebase --root --trailer updates every commit' '
+-	create_expect initial-signed "Initial empty commit" &&
+-	create_expect first-signed "first" &&
  	git checkout first &&
--	git rebase --root --keep-empty \
-+	git rebase --root \
- 		--trailer "Reviewed-by: Dev <dev@example.com>" &&
- 	test_commit_message HEAD   first-signed &&
- 	test_commit_message HEAD^  initial-signed
+ 	git rebase --root \
+-		--trailer "Reviewed-by: Dev <dev@example.com>" &&
+-	test_commit_message HEAD   first-signed &&
+-	test_commit_message HEAD^  initial-signed
++		--trailer "$REVIEWED_BY_TRAILER" &&
++	expect_trailer_msg HEAD  "first" &&
++	expect_trailer_msg HEAD^ "Initial empty commit"
+ '
+ test_done
 -- 
 2.51.0
 
