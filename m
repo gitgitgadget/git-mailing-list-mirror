@@ -1,103 +1,144 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0E91C4A17
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 08:57:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C511C4A17
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 08:57:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760432228; cv=none; b=leSV0YTYYmhqxGVThhf1oFul98vib03ChGRJpNaTf0/HzoJrzdXmIyOPOsPV74niX4f8Oea09EsSqCJ0GrlPBOIknKAeY+g7XS7Uy4w/f88LAUGkgWGGUka3UgMVN4JvuNJ0U0F//bIFJ9uuoADj/a4iotX+bUpbuavvfThbwWY=
+	t=1760432240; cv=none; b=POyIIuGkZpQP63or9cNLf/QWXVvdV//uHiOq9oF3Qon1fmr+R7r5ymQsSAkBiBu5WSxW/m1xZClFtIecjfbums1FRewd1X5bo18KneiIxreK+kLcyVRydhrC9k3XlI5WPurUtO73qRmGE5aOddpWq0aLF6iPuBKZYmJBb5r5oMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760432228; c=relaxed/simple;
-	bh=FaGsBM9pprJfTAAPzxWE5LKXCJ8W1T7TUqIBcjfzbns=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PFrgux4pycOR9biXORXRrTXM9yKCCXX2SlvOSPEqTWLVWbOjqx9SW/MWUQdAPoKo6P7+bk6XlVrthBQj3nQMcTPt1iBAbNJ+XQPwuSsGra8IN442K9+F/oGTOECU/ePWWIwwGiYkii+WgC3UKFx5Oo4hwY1rTO1RnRsRegdZ3tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cIofCIqy; arc=none smtp.client-ip=209.85.218.49
+	s=arc-20240116; t=1760432240; c=relaxed/simple;
+	bh=7RBiO11eJ8pvxt9QZY6uBhtC9i6XBsjYPvCFgDhWk68=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=k/iB6wNzkskcB3ybJObCd2rHpcV2DjgsBsmiNzjTQTcXWCOKmm0N9pJFxlYmtLO18f7DadRdbqqixiMrLOPfJ+0LR4K4hMdkbhD8Ht2IWS6I3aCE22NpCnMF3mHDypTESZCWYT0CnLWkGlO3TOP6OGBHiddY7xV1LT8kWYqzTa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GuR7reo5; arc=none smtp.client-ip=209.85.221.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cIofCIqy"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-b3d50882cc2so947154966b.2
-        for <git@vger.kernel.org>; Tue, 14 Oct 2025 01:57:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GuR7reo5"
+Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-5523142df73so3439001e0c.1
+        for <git@vger.kernel.org>; Tue, 14 Oct 2025 01:57:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760432225; x=1761037025; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FaGsBM9pprJfTAAPzxWE5LKXCJ8W1T7TUqIBcjfzbns=;
-        b=cIofCIqyxwLdE7mu3XalTlScemqlUh/PEawKjJIMXCiXhF90QP+TBwuo9hJ9chee9b
-         6MkggolzHghND5aOwUUkzyKcw0+zK+ob/i3qKwcVeGJLmK2GjoDkVO60tu+v3FaSldTK
-         FqKQ2NkNOzrX/4J8/Hti2wmrfxbnxsnfYm2qMf9EgCvAVwdm3v5bjlYUInlhgzfhVlfp
-         wVqytQJwPO48baMtMkUZuLaF4a3rsl3HqX9v/vi0ABHf4yq+5zrXBB73poXFLwTLNt9I
-         TzI4+0x7KRkEQN8e+Vu8+00ABLeKVWjMFe5xbTEuQXNSuGZpxT8M3+MxfE/ypEFKBewY
-         turA==
+        d=gmail.com; s=20230601; t=1760432238; x=1761037038; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=otrUnpRf6hWvZYtT6ETSfCv3cGzX8fiaM+CGjusWGQo=;
+        b=GuR7reo56N0H77fsG4sZbqF9e+uz13XVOLIo6D3zX40BCeafjyyoy6le1EMYyZZquD
+         RoGoIll0V5tmi8LSMcNEvuptEmmgTaguPyFRRJfUevb2h8GEKave6Vyp6fkuhMiFkVR7
+         Nj6bn6XR8Iyw9yB/ugBzW9mGGQzg+2HJxebHfTMNnVld4vZLdm2Gmmqqrz+nunl/3A9e
+         OknVTdhjp1PpNlQbLC6gxNnHC2VHbhRHZeJYbrGHBs8/PRfRrsZON3aR5LqRy3eULC06
+         aZ5LZdj6ean1kIjvLyz2Ia5MInyyeNyglIjQOG/0iu3LATRKrrqDrsmYL9iUgiqovers
+         z9WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760432225; x=1761037025;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FaGsBM9pprJfTAAPzxWE5LKXCJ8W1T7TUqIBcjfzbns=;
-        b=Gwf6ZZqWc92izNxdqiz/LqIxJ3fNHCzxhi1BL7dKihaXMVVNi5uD37SiKUFjIQmUEG
-         IotBcNZ22pDwGj2NT/7nohfihnBE8vuP4HEOeecvTiwQOEzFzXMRnpdY0XxvSeRKur+t
-         eu9BWuUaqvL4lJKpfLoIYlf6EQTfxhI0svsj5K4IsiEPPEyjPuODfb2WpAPZQeQpF+/z
-         kQ3cVrppD3T/9knFZFIqcdlqtY/mF+FN0IFdJ8KviaeOzOxv/0dGPVy3tzhGzvw5TzdO
-         5Kaz8IABrq/4n1VB9g/1+tNV+Dca5UHpTXDW5Ebn9eoD+4+udblowOWL7lgT+jfrAtGq
-         GHRw==
-X-Gm-Message-State: AOJu0YwVytpR69Fgt3J5aDS1E34Vvxjcrs0r4MEH20wxMa0HcHDDBLvk
-	+c538WUHgKwgHevkF8M0llyB/FMZxgE+PnuFwpidM8QckAUnCCzYrjdWqO9sDpI6eMOdrBD+zdL
-	fQcH4ZDVG6LNX7K67tA5EN4q0OAIvSmU=
-X-Gm-Gg: ASbGncvrDOT2UrSSGiynw0o6lUHkRTUHdBTKeQ2we0AvvxVCnbouyLa3Fp4nfz/+vjj
-	Kx81ZTNAbufmDHLAA+ixxZSUR+MgQYj4t0HlkEjIW0beaJGjd6Si1QNXHozug8uIiMcfppSU6lD
-	iGseXn0t+N4bV/XxnhMuLl1iF/n0u5z/bSMfBvfUfD7bjqZaQBo8vzCnjWzaP+fOYWjhrJUpWGd
-	mVY08JEWKUzgRkx2gw59SZL0A==
-X-Google-Smtp-Source: AGHT+IFvu+hG56YiE++CxqN6cJhMkEv7DRcS6cvk8me0xrwq8z7pyqTzCqJmDPL4oim2328eC3bzCQdrL4cklWWiErQ=
-X-Received: by 2002:a17:907:948f:b0:b3d:d6be:4cbc with SMTP id
- a640c23a62f3a-b50aaa97c94mr2361081066b.24.1760432225224; Tue, 14 Oct 2025
- 01:57:05 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1760432238; x=1761037038;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=otrUnpRf6hWvZYtT6ETSfCv3cGzX8fiaM+CGjusWGQo=;
+        b=MdvQtgen6Tn49Ol/fMGllYWWfDPq59EAcIKlaVxSnmqt9u+Z2yzy6URug5FW86wEQ4
+         JNsQ6uIsQn0++tDm2Zeo9WbQjN3FGkg2XqMDYOAM7qfVN7JI+VAr5ciqXtbr622T8OA1
+         5+Irk52F8g5e+7W4NtFC/A1cdZ8uh1D8wLLycfik3Nzti8MC0BnxDwti4GwYkcv3NGqp
+         ijJ6fDL6cqH/tJ27g22D7Wvazfhevr9IoMsa5nArTtlTOoY+SGDm/psatBk6eZlkYfxV
+         GfIMJZJQcABhnWWuevQIzemyfh9WQbiG6jypVxy/SC4tR/8B0jgKGHCrNxQEbTOP29ps
+         KcGA==
+X-Forwarded-Encrypted: i=1; AJvYcCVRrAzLXsZHieAJjJnPMRDAOi0DR/tG34Kcj92hEC0IhwvVNqGfKrI2GLswg+mOv6DCYzY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxmLGbqF24O6ouaLSbX8q1MCCXScMu2jJHJ3G+sUrwjSvV2DOfL
+	1NxfiiK0r8gI57UtEzWTNDb2AieKvz2BNZJmH3WboOGZinGXWSMI8GSz5dRZ3o6Y0b/+8PudDAj
+	COF1jIfCTX38WIzyUvJTg/k/9HHqLN5GE+mYw
+X-Gm-Gg: ASbGncvH2lJVfih6al/wMu+Vc7Np3QdAJCBvWfVH6058j4/9qvYhqdAavf4lk3XWLHe
+	L1HXaWGNstn8W9zncM6dISUzsfIMV1M2CqAAhWMLTVwWOe2YDTXHIs4DXwYrZSoahEvKAqUeMGC
+	fqMpZVW6Ez7Z7BdD+v4pDMOF+ln8yPsjBhoBEJPPhct/zjZ/kDo6DNFqcwkGtSl6HR/QmBcY2vA
+	RvKq0dTh+vE+WQBYo6Gqeu65fPU73KTqR7XsXTc6yCEn20fEtKHPh0XVNna
+X-Google-Smtp-Source: AGHT+IG8BdG845gJLL3HsYGV7GZwXawcvAMs8sjdHxxZbuwIX9pNE3KWxWOEeH8eEQcmvJEXzagq5/pG57Tp7jtMh2U=
+X-Received: by 2002:a05:6122:da0:b0:54b:bc2a:f58d with SMTP id
+ 71dfb90a1353d-554b8aaa08emr8141488e0c.3.1760432237901; Tue, 14 Oct 2025
+ 01:57:17 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 14 Oct 2025 04:57:15 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 14 Oct 2025 04:57:15 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20251001-b4-pks-history-builtin-v4-4-8e61ddb86317@pks.im>
+References: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im> <20251001-b4-pks-history-builtin-v4-4-8e61ddb86317@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAD=f0L9Z2kPWv-=wPbtytbMS7BuUtmAKCv2X_2rq0hB_Wsh=UA@mail.gmail.com>
-In-Reply-To: <CAD=f0L9Z2kPWv-=wPbtytbMS7BuUtmAKCv2X_2rq0hB_Wsh=UA@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 14 Oct 2025 10:56:53 +0200
-X-Gm-Features: AS18NWDOjexr73z2WyWGDx8hjRLsGEZo8elfnIOixNR1TGatVftf7D5eVT-q1x4
-Message-ID: <CAP8UFD2azLtbeMzGhgxHcdnCF=jD5esOs3BjhLWGCXvMmppX4w@mail.gmail.com>
-Subject: Re: [RFC Outreachy] gpg-interface: Replace strbuf_split()* with string_list_split()
-To: Bello Olamide <belkid98@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Tue, 14 Oct 2025 04:57:15 -0400
+X-Gm-Features: AS18NWAvIu6ZBvLMLrEuROnfB1qweIZActy6-O34VsFz5LP6Xtt9lvC3x5K2JK0
+Message-ID: <CAOLa=ZTU7JvqiDqDK0gHbR1KshZ8A_rZgguNZykcHp2i--GQAw@mail.gmail.com>
+Subject: Re: [PATCH v4 04/12] replay: parse commits before dereferencing them
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
+	Sergey Organov <sorganov@gmail.com>, =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
+	Martin von Zweigbergk <martinvonz@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Elijah Newren <newren@gmail.com>
+Content-Type: multipart/mixed; boundary="00000000000031208e06411a92f9"
+
+--00000000000031208e06411a92f9
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Patrick Steinhardt <ps@pks.im> writes:
 
-On Tue, Oct 14, 2025 at 2:44=E2=80=AFAM Bello Olamide <belkid98@gmail.com> =
-wrote:
+> When looking up a commit it may not be parsed yet. Callers that wish to
+> access the fields of `struct commit` have to call `repo_parse_commit()`
+> first so that it is guaranteed to be populated.
 >
-> Hello,
+> We didn't yet care about doing so, because code paths that lead to
+> `pick_regular_commit()` in "builtin/replay.c" already implicitly parsed
+> the commits. But now that the function is exposed to outside callers
+> it's quite easy to get this wrong.
 >
-> In continuation of my search for an appropriate microproject after
-> temporarily moving on from my mail to the list which was about
-> the check-whitespace script check for \No newline, I stumbled on the
-> thread
-> https://public-inbox.org/git/20250731225433.4028872-1-gitster@pobox.com/.
-> After studying the thread and searching the codebase for other
-> instances where strbuf_split()* can be replaced with string_list_split(),
-> I saw some cases in gpg-interface.c where get_ssh_key_fingerprint and
-> get_default_ssh_signing_key functions use the strbuf_split_max to split t=
-he
-> input string and I think they can be good candidates for replacement with
-> string_list_split().
+
+So I was wondering, wouldn't this duplicate the call made to
+`pick_regular_commit()` and end up parsing the commit twice. But seems
+like down the stack in `repo_parse_commit_internal()`, we check for
+`item->object.parsed` and only parse if it hasn't been already parsed.
+So this change is welcome.
+
+> Make the function easier to use by calling `repo_parse_commit()`.
 >
-> Please, will this be good for a microproject?
-> I will also appreciate any guides.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  replay.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/replay.c b/replay.c
+> index 13d75d8054..c3628d2488 100644
+> --- a/replay.c
+> +++ b/replay.c
+> @@ -90,6 +90,9 @@ struct commit *replay_pick_regular_commit(struct repository *repo,
+>  	struct commit *base, *replayed_base;
+>  	struct tree *pickme_tree, *base_tree;
+>
+> +	if (repo_parse_commit(repo, pickme))
+> +		return NULL;
+> +
+>  	base = pickme->parents->item;
+>  	replayed_base = mapped_commit(replayed_commits, base, onto);
+>
+>
+> --
+> 2.51.0.700.g236ee7b076.dirty
 
-Yeah, I think it could be a good microproject.
+--00000000000031208e06411a92f9
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 9eacfa59c43afa94_0.1
 
-The functions you mention don't modify the strings resulting from the
-split, so those strings don't need to be strbufs. This should be noted
-in the commit message (which should provide the reasons why the change
-makes sense).
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qdUVHa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mempzQy8wV3hrZk9CeTVJb2YwbWpldmVaUGd6VFRWMgpyQWhmVnNRWkh6
+NmVJb3R4U3loNFI1eDF0QXFHYk5BcnVXQ2VQVjNoczBrZFUwVXlNQkdQUEtJU0IwWDlNT2F4CnlE
+OEl3d1hwQ3c5dlJ4WWh3YnR6SGxPRzc5eFRUNVZ0Qi9zbitNOSttbW1FQlBMWFlIVytGM1N3RDJE
+dzl2aUUKNHBZenU3ZHNMeUtEalFGOTlHWjJXSyttbjZMVWp6N0VDTG84Qzk0ZHdUQ1pJL0xmSjdS
+MXRxN0pyL0pCVjdoWgpCMG9XVi91Z3dDdE40azhHTkZQZ21qcUhxN1JVLzVIaUlLRkwzUzRDYVEv
+ZDZvbUphQ3ZFdDRmd2NYOVhJQ1k4CmdnV0ZHaS9GblVDRzNCb3NlQlhXODJsMWF2WnIwTlFBemE4
+VnpJYmNUZXhXa2RKRVFaclM0MEJLMTVzSG13SHgKNVVEVFhuUjkxR2RTQXlNZ1lXOHNhOHV0bDVT
+amFlYUh6TDI4RkxkMVcxeEFkRjR4dGhVMm1yQ21udVlIelVFbwpNS2lEcXpRY3pLeWtQUFIzTlVa
+aHB5cVFia3BKNjI5dW5DV3NrT3F6QXFwMk8vbVJMYlNjbXF3OUxFUFhvSGhvCm1SYlVxTmxucHl5
+aHVTQU5TblBNWmhJVDFNS0tHcEIvMWZGZ1BrWT0KPWZPU0gKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000031208e06411a92f9--
