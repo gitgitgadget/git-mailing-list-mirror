@@ -1,126 +1,80 @@
-Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
+Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A5B2BF00B
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 15:08:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B89246BDE
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 15:44:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760454541; cv=none; b=U2nj2i2QMiIABy8B7428Zmbn1uZ6PP9oAvdb4NP8lVj07RuBQ+KVwA0hhTKdXMfyldOORwPeK3OmFJLVkWNKO15ca/XTVnO6UiZnWjx5aOvbW/oxuC1Tq3jihG9iKYsA7pC7GkGiUY76nZykurETU3WNrCVQl11jQOFw6lsI5bA=
+	t=1760456643; cv=none; b=sFPF5Sw79CM0ISCTH7zFFTyrs1K0R0Y+rjWEzG2OWp6TdQbnqUoDrKbR+knMawsi/X3GsvBNrOC7Ao/MnS+c7du6YK9ZJTUiunjn4ixbVULP2lvcI3y10sr9k9EfuGyFfxamj5XBBuUW6a00LPPvKpxRE7PWy0sZAT5RrNxECz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760454541; c=relaxed/simple;
-	bh=hUQhNog4VhUUeKTczUplSnjEx5xI4hB1csVQQXVHF+U=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GA/SlO2kCMi8yjU4uAAjfhB/cYDABzZsaSfnpFE2ikZDdUMRzrSitJY2GmBwCiZHVCVRzHcc/EdNejWTosLG7CyYP7mrcdZ3C+BjenW7PKbr6lsvzxzb2ExBAT45kmXESolE6rjOTbwa6c7MHFjLn7UioQSYbsBRKQQQ7X/HbAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=URA/e6wJ; arc=none smtp.client-ip=209.85.222.42
+	s=arc-20240116; t=1760456643; c=relaxed/simple;
+	bh=fP3kaYzlI67M2ACVgsPX+c7EiHxUdj9iplI/ZoZ2IYA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qidQQe1SPIStt9FojYNoTnjKq2Vx+dbQ6FrrIUmz2Ho5yyV34Xpi5ZXkLIc+rvPFDUott647tHHLT9s+8S3zfPjRHaPzj6LTVV6pji9KnXwgjVq4z99KqkUr9hN4jFXel98voiR3v99Kao47hFSCFCsMDsV5i23lKrvtQvS79nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nr37bwoE; arc=none smtp.client-ip=209.85.222.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="URA/e6wJ"
-Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-89019079fbeso1336332241.2
-        for <git@vger.kernel.org>; Tue, 14 Oct 2025 08:08:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nr37bwoE"
+Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-8e32821b5bcso1486739241.0
+        for <git@vger.kernel.org>; Tue, 14 Oct 2025 08:44:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760454539; x=1761059339; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dKG51n95juYZd6i4fJErJ9JWWrOh/a/SQUxzU3fCFAU=;
-        b=URA/e6wJ6TJwi8XRY2DxuSv7Vd7M8Hc7OC9zDsIgjyYtITlwMEW7FPk3t1a/ehUrD/
-         X3c392bwG6Q4a3Pk9Nmz4oTZv1W7PkWg/lh+y6Amr+SJrZh8aSssABeS1mZK1cvSlrKa
-         2yxyYwMlIWCgN9Kg0+nuInAJJOyDGd2FsRxUDCFU78rhSLKhRVBQkfRsf5L9aJW5XYis
-         VyHdANRBRlNsQhkrNXLMpl2kfhGDZRek9sh6tsI17wClyoPnuMnb6yI1Vijv/UJwt4fg
-         iv5gB5nEv7MAMhO9jqOI+ot5k6dgShoF5nryw9jHuY+h+74cFxMJole3EHISVnZ5hciV
-         FBJw==
+        d=gmail.com; s=20230601; t=1760456641; x=1761061441; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fP3kaYzlI67M2ACVgsPX+c7EiHxUdj9iplI/ZoZ2IYA=;
+        b=nr37bwoEMQwSv2KDPilhGVci47fbQex4E8sUgtiPKnaip5loy1XV65zAkpku+D9CSu
+         XQVZcAFUIdOimlO1eMH2pwaGEj2TlJj1HP/KyJRvnATymekCCUf+v3EGyEXyAvGLm6a/
+         WAQAjIBeySmTJZSzVD4dY7lvgjQ5ex+TOCEF3qYvxh75tFWPeZ2G6CnauDelEZSk8/n5
+         mBU+du1xC31CvQ8jna7Rhupl8IHwAe8MSuc+OEX8oJL4xdXzFQHZ9A5QugA77sIy57Yt
+         X1Zpr9C9I1X6nC6QCDZl8NgCGqtHLcALz290unlTwRIeIgyM6fpT2WvJHgtY0zO/UUVJ
+         lgtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760454539; x=1761059339;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dKG51n95juYZd6i4fJErJ9JWWrOh/a/SQUxzU3fCFAU=;
-        b=YD26UV8UEPNrMPlCrkDqYmRLLVwL893uA5sS7CrxS5JKQ/bwKRlQmwGyljt/KUFKOa
-         mJDO0zPYkvY2gHjm2SU2UG8xTyHIRVwX7gapZcyXbw5As7vU1pNabnkew8WckrFJctd8
-         FNn6d1RVm0+r2x2Cy8iliSOhtZKAmAXSYm3wrnYIW6cJQhphGcN+3O/bZ1ypzm/F0M1L
-         eK/NpKOKtCgw9rposmpUiy7LVC7FAfiUuGYYWKI/gBKzoiEQxf2GbI7B3kpQwbEXAW8b
-         ZDPHAnhdbQSwr80QggNVJAwxsTj9huGTsfeoY632aIcsKoG7eLNeb7UMO7jDY8yzxi8B
-         hXJA==
-X-Gm-Message-State: AOJu0YxWZrcJ+I/Fkbpr++5ETZlX4txeZ7I0toYK4HZ4gcKyHvmkwPv8
-	0UaSyL1OIhjJzw2QagxFBg5O+jOLvd/j3BiSTYSWHVATdBp42TuHPdWz8hNyVl3Cnn2XTimT2k9
-	gemeVurLA5Z/dxo6abfvWssyBMFWSL9Zyn1Rl
-X-Gm-Gg: ASbGncvqUKtq9UyYVmW9Cpm7hhsabevdOKWVfVv9SiysxVgfNGhc00Rf7kQgnEWjMO7
-	Nx/iFfKBnntGmVGtMI5xiCC1qzsf2/fI8PaHttUw04SpinBNPbDKApst/DaHnKavtxsGXBaI9/R
-	ElJuA2fK5Ei1QPuTrspJAtQU6IPlV6wKAcu7BJYXZEJjcvwVaoa6Zn5upwmOyNvjyTQqvpnu9nv
-	aKeCaMlnOJJoU8QkK/eHpaX8lFo+Q0NFi8D4Na936n0/oo6pvRVN8qfTYCOgiCq97pmr7s=
-X-Google-Smtp-Source: AGHT+IE/hnmgw7OIxMl0kSua189bjSlk4JLmzdLaIVmzjnWPln3n5fxj0pYuAzzgkxRt3wGojYiGqY1kaqHnkKefsM4=
-X-Received: by 2002:a05:6122:1e0a:b0:54a:71f6:900f with SMTP id
- 71dfb90a1353d-554b890bc9dmr8464154e0c.0.1760454538616; Tue, 14 Oct 2025
- 08:08:58 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 14 Oct 2025 11:08:56 -0400
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 14 Oct 2025 11:08:56 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqh5w250lw.fsf@gitster.g>
-References: <20251010-562-add-option-to-check-if-reference-backend-needs-repacking-v1-0-c7962be584fa@gmail.com>
- <20251010-562-add-option-to-check-if-reference-backend-needs-repacking-v1-9-c7962be584fa@gmail.com>
- <aOjsjpE1vuFUXXbh@pks.im> <xmqqwm4y538p.fsf@gitster.g> <xmqqh5w250lw.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1760456641; x=1761061441;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fP3kaYzlI67M2ACVgsPX+c7EiHxUdj9iplI/ZoZ2IYA=;
+        b=JCl3BJNyHvJvkekX9SXomLWam14Cef9x5NUfT+KCPVDbkEOGSpF1qM5cC4eao31THR
+         XsdMfEgZss1vPi/150eskKgT9Suo5WkzkJsli8wqtNG3mVx4jGL0VFF6fORNA9YiR4zU
+         SVmH9lBpCaUitioGjO3+0AzFbYJyNcw5sPp1k9+ziYdBzY3JGo8wC24XCaar8g2BHPwy
+         ACvFRBRgFUZXvEw7Rhz2IuRK1LeoXZBwaV+gbjVleNkSxEzo8WV1fQxIVIOYafu4CwuH
+         mKJiEkGCsbRPN+Z3N9ORaRjc0ekxvDWqDAkZLM10+c9xcBrTytetVlDLQx1mbLs4SHtq
+         h4oA==
+X-Gm-Message-State: AOJu0Yx4tno7/IgwToJ4HDsvi/64AFtDFFkm7XVyohI1SDpgPelSgn/X
+	y1WvUlyXnmvfbcY6ji5SrqFb64geJAI5fSp+zaE5G3jxdta6oEjC1A6u84IunMir4UjS61372Kv
+	eWAcOob64811xsUhHLzi476vNBpG2nQbTE+VoJkQ=
+X-Gm-Gg: ASbGncvm4qV/dmoq5NPTApky9tPT/22vBoz88E1v9a9KhtrPRNhd9wT7aSWtbz1fVe1
+	shCpiFOeknTGSdUuhjIjHYKEk5CIW+p/txV3GF376OGbT3ausM7TDMq21WXzrl1mXXZcdu8wp40
+	VjW5ZdCtlRIpqTlCgiCF9hcpiEsyPioYHFzVXO55C10t05/HiIuzRHq05ZJ4ndn2FuyJKZfswgs
+	d1zPFOcffluSj96IYrILnY/7drvvER7QcQDP4yf1klxwsJtxnIyqKDhCg==
+X-Google-Smtp-Source: AGHT+IEVEGGsLcJy7brsv4TGO++O39S+cE+1I6mSzLinMVTIHww4sENr5mj7Ch+LoH30RYzuKPZjZuWXmFLCet06BBA=
+X-Received: by 2002:a05:6102:2928:b0:520:3f1a:c520 with SMTP id
+ ada2fe7eead31-5d5e2215305mr9380281137.7.1760456640698; Tue, 14 Oct 2025
+ 08:44:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 14 Oct 2025 11:08:56 -0400
-X-Gm-Features: AS18NWDunQ58PU2dBojboZ6Pxg9taNr1wW9zC-_2QaSiPkAsYwqkqnSS0H9YGBU
-Message-ID: <CAOLa=ZTRG=x5PofmSSfHhJ3Lig2NjhU8buVWAXU=aKom2PDsDg@mail.gmail.com>
-Subject: Re: [PATCH 9/9] refs: add a '--required' flag to 'git refs optimize'
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+References: <20251013122824.15216-1-solobarine@gmail.com>
+In-Reply-To: <20251013122824.15216-1-solobarine@gmail.com>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Tue, 14 Oct 2025 21:13:48 +0530
+X-Gm-Features: AS18NWBTeYBlrQgCTXW0IDfuB67oHNHS5pbXk9vUqUqGbre_DPvOPjMlggpgDnk
+Message-ID: <CAPSxiM8fJamoTq1sJ6U8GSE8nAeDv5QhNQdThz-8D19_Maz2dw@mail.gmail.com>
+Subject: Re: [PATCH 0/1] *** Update test file path checks ***
+To: Solly <solobarine@gmail.com>
 Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000006afe6b06411fc3e1"
-
---0000000000006afe6b06411fc3e1
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Oct 13, 2025 at 5:58=E2=80=AFPM Solly <solobarine@gmail.com> wrote:
 >
->> Perhaps "--check-" followed by a word specific to what we are trying
->> to achieve (e.g., if we are trying to see if auto-compaction is
->> necessary, "--check-for-auto" "check for auto compaction")?  I
->> dunno.
->
-> After reading what you did in the previou step, I am reasonably sure
-> "required" is a wrong word to use, with or without other words like
-> "check".  Semantically it is similar to the should_pack_refs() check
-> that we use for pack-refs even before "optimize" came.  We expect it
-> to answer this question cheaply: are we better off if we repacked,
-> or can we go on without repacking for now?  It is not about "are we
-> performing so poorly that we MUST optimize now?"
+Hello Solomon,
 
-I agree '--required' isn't the best name, and like we discussed
-'--dry-run' wouldn't be either since that would imply that the work is
-being done but not persisted.
-
-I was leaning towards '--check', which is simple. But It might be nicer
-to be verbose here and simply add something like '--is-worthwhile'.
-
-Being verbose here is okay, since it will only be used sparingly and
-specifically by those who require such a use case.
-
---0000000000006afe6b06411fc3e1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 56dc22e61591c923_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1qdVo0Y1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meHdEQy8wWDdVN1ZPVG85cXV3NEJZeFh4ZXB2bEM5Mwo2UmYzMGFhTzVJ
-RGZvbzJBUHRpTWJQWlBxenp4WnRpVFV6N2l0a3RXQTVjVm9FMlBxTSs1MTVzZUVCMExib3FVCjBq
-MGt4UUhmZXhjb3NjSGZLVm9QeUduN3dPMktzcWtvVWtTZ3lLMk9ubjhpcTU1U01IRkZtbHV1M0g2
-WVlJUEkKb0pPWTl5ZVF6cVpKMFIvMHdKTTA1TEttbjVkOW5hYWFIUzFqWHZSYkRFMUVwT0FIenFm
-KzMyOUVKYmdnQWwyaQpvOHNma3ZJK1J6UHd1YTlVVTdGQkhKeGFEck50VjVjY2lDdFJQMitRNVB4
-ZVFZTUJKczFqM2dVOGpMbzBvbnFUClo2TDFvc2NNS0dZbkM3YjNmVWU2WHlKQUdWTnJEMHI1WmJt
-YjI2Z0QzYlFSQ3piWmtPeFJSMXhiaWw2SFQwTjQKdlhpZVYvV0Uybk5XUlduejZLNWFSMWZudDlu
-emRFYW1VUjYxV2VyN1RWY1A4Smh2SnV3UW90QVI0ZCt4ejhKSQoxQ3phMk9PMFMzR25zenBWUGRy
-RWVqamhMVkNUN0ZDemtmeU0yb2hUWmRpdUpsMkZnZkJ2Z2c3d3lTZGRuUnJ6CnVJU21TWU9vNUpr
-aFRMSWFLNkdKVlRMSVMzSHVWdkRqQXhyQmRJbz0KPVB2S2kKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000006afe6b06411fc3e1--
+I noticed the second patch in this thread did not get to the mailing list,
+you might want to resend it.
+> *** Update old-style shell path checks to use the modern test
