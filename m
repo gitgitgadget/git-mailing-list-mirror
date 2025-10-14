@@ -1,193 +1,122 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD916302154
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 16:15:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377F03002BD
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 16:21:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760458508; cv=none; b=eF55o8n5EB7qDu7vcRK1bHdgJPi6vk7I8QOh7YTOJcMV6wiGcpug7LaWWrSr9seln3qkXaM8mc0UlUQztjfjsJpcybJzqL8DES90qkgK7zOWb58nPx7RB1DG2UOkIdcJX6m2FDpDispsSnOj3byogsBWFABwiiRIyYRHi5oZx/U=
+	t=1760458904; cv=none; b=lpPkb1KfrHbVRCFMfkfGjVa7fSvD1eGq/bA41TvohBAEG+gzruy6MPCRHXnQEgYD/3Gc2NTMuRjQ2A/+rFcEyj14A80ZPAEG0YjtaB4Dg/eOKokPw4PSrG2Reyimih2Pi+fJLe1MPwB2IZOis879iVH46ojlX3CPCFj86BY6qAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760458508; c=relaxed/simple;
-	bh=iCB03mqszEZUYtdqEOQDM/eU8P8TNoGtTFlL5x8eWMI=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=WKJTnuPzcqzMIC8Gk35paobsI/kKgmsbjyisfinvZv6xVlg3Cu7gzTPYAG6oX9pCyWD8x56tjhg48fiGvISpI5AjiCwIv+JmcFye08mU/xZbsiSRuH7UjeTdGsKIlln2vKJq+C1YtlMhiNd2jkztmlRhq5fZU16OkSCuE808g3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NQvE6zDn; arc=none smtp.client-ip=209.85.128.44
+	s=arc-20240116; t=1760458904; c=relaxed/simple;
+	bh=xb/yNzZCWGD4HJSwP1pFXK8Hauisy8AiCD29AUvl/kE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bkd5xfarzDkY8N5SLTzAhyuFqiKwbID8F1NDEQotdw+jRWoHlNfWz4hASJEPTHgGKLY8IkGpV4LBVeoNcYuHTaPLNJcCGky8YuUXspLE9p8hEe8ZCR4wcn0e/ztHh5+WMNIUogEWMCWoaBcNcJ829803Mh9ol7BPVNyob1dCbxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bb+h7COh; arc=none smtp.client-ip=209.85.222.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NQvE6zDn"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-46fc5e54cceso15717105e9.0
-        for <git@vger.kernel.org>; Tue, 14 Oct 2025 09:15:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bb+h7COh"
+Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-8e30a19da78so2991589241.2
+        for <git@vger.kernel.org>; Tue, 14 Oct 2025 09:21:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760458504; x=1761063304; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=SwNYdkNSv6vyLOTB2aUUWO7XxJ02nMoRPg4ryPfwLO8=;
-        b=NQvE6zDn4K0chIp2FPOX2oAHhNAwdnn86AQh4kVX3FPnMNQFpcyD/ruscGQSLPSeY7
-         yeRMZwry6S5Yb+zXPTSF9/09ZnKxm3RNF7tEJ89KTIBa89cSBSIQTE9cp9iiKuk3Gls5
-         A7gb8IWAqSMggG5SSsjbzXpom+4i+dNzv509t2bzgoGutLnAxz2zOOUdZjAbG54jfpTv
-         EwNTDx8o80i/nbh73OyhLK3tBawyUC9dyHxjwKpzrgJCLK8DvYrnBSkrWMG3TNWsGDzg
-         C6f/H7ObnuL8vQoIVB9KPE8Nh/43KWEdxShN74FgOwE6+D6l65aHEBQIuR6xvpCCIBjK
-         1dVw==
+        d=gmail.com; s=20230601; t=1760458902; x=1761063702; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xb/yNzZCWGD4HJSwP1pFXK8Hauisy8AiCD29AUvl/kE=;
+        b=bb+h7COh3KN3zUVBHg8gNxv7fFqEPyz2iepsQSmiY4L+71Lp8ZyXfPVdxCVtQITzKq
+         hlfJgVUaxrgKd1Y5ydJjc4Sfqmwv+sX0AOCVi35Ie7tXqs/8fya8RL9ZkLzzhjJItTFt
+         aBSDksf5TVtj4tm6CtJqVsmcBAbsJRXNMyeRMmW+RFvb5bF9sserpdcZUYxQMIcupQUB
+         eB9KWXXZBdA5GPlrFuxNPLuw+5ox4SeVWVGEApqEtu1kf6PVtwd7QCVy7Crt+l6u5eLG
+         1r/KY3jedZu3Nh4TJ1sqvdHiByqVKJ/JyjZ60/mBeadTm4Rn7Q0rO7KyXGM4HHEIpJyD
+         GRrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760458504; x=1761063304;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SwNYdkNSv6vyLOTB2aUUWO7XxJ02nMoRPg4ryPfwLO8=;
-        b=t7dgbFppTquPLYVWluNB7vkXuHfGBSzA+zK2t6cKjAyqlMeWnTOFKE110Uu6lMLOT4
-         /OvfZF+SHaloaCTqYrUPblffTuwZ0ayouqrwms+dH7nCFKGFA753Nij34KDrEIgmAtOd
-         uJCf4MvxWq99epjVd7evRH0O9iFVz2LvggLLBYX8vykrHfELQk54EaVWpsFl+gmYA+AM
-         Cwxe1Gjadu8YLbCLvlqTH+h/l7eTr4ak/8XH2KZot+8H+IFR5Cvu+DilQNYQON3Ze0AZ
-         4oIo1xE/p7qk5TlnxMwpaf8IKCXlGgHyh0iTu+r5oGkaN+MHcuKsJuxIRftxpTiyIvcW
-         /wCg==
-X-Gm-Message-State: AOJu0YyPI4GnJBr7GEHfZeRHf/XctV+kSJolu5D5R1j1f22GiXb1FdJs
-	XgrCYuJ4RPTjMMK50hRw5o1eGHINX37ynRagNFhUXwWy0jhBAEo1QTCKB0VtRmDtZSU=
-X-Gm-Gg: ASbGncsi+49JXX1bxHFIpoxaKY//fNzZo0H4skaI3p2MYYEqznHrkgjarzpJtBIfqor
-	xvkG8+/Vj8O1+Gl/a3c3S4wTF3QaVzty6dQ6ABxge+uhUHiMzfptMf/qZo3X189cqE1+Xa4KMU+
-	Q0F+mGHot8zunS4Hjdm9dULGVuBTCfAEUbHvgd08NsviGnFACQ8L5Lth6dUBmqXhucF8UcrE7Hn
-	mhinwnQpdIgzq7NOJt1qyP+tIKTMX5iW02koDjRglyY5CHIeQkdB32g/Jl2tHJiXDQlsx/90gZn
-	vUDZlqX8MiBP5B+F3TXDL+Bmq30CSrI30z4AofkOZjR9wvKHpADGsFAw/bKY/QSs2rUHM+C5BHI
-	AOVwNPJggEB7k3mS6QQcTJl6+aV/r/inuO8osIvCi+/PqBw+mC3+s0Ab+CZf0MVhdJnma17lFbm
-	XQVaRoh/Qvk4sgRumlusIuDcuHmZ9vsCGc80BIVnfhVVfssMPwkL0AOtPL9LJPo+ySw9wYx4nI2
-	Agu8gSnWfC6tz0wsPYrpdDx/vM=
-X-Google-Smtp-Source: AGHT+IFUw7599UfJi0vUzeWRftPAOENkpTLInak3odP8zPqnLZW4EXjW57ImVmQSzepWcGRr4IRNdw==
-X-Received: by 2002:a05:600d:41f3:b0:46e:6603:2a84 with SMTP id 5b1f17b1804b1-46fa9b08bd7mr198177155e9.32.1760458503554;
-        Tue, 14 Oct 2025 09:15:03 -0700 (PDT)
-Received: from localhost.localdomain ([102.90.84.168])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426ce582abcsm24426380f8f.17.2025.10.14.09.15.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Oct 2025 09:15:03 -0700 (PDT)
-From: Solly <solobarine@gmail.com>
-To: git@vger.kernel.org
-Cc: Solly <solobarine@gmail.com>
-Subject: [PATCH 1/1] t: update path checks using test_path helpers
-Date: Tue, 14 Oct 2025 17:14:46 +0100
-Message-Id: <20251014161446.6135-1-solobarine@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20230601; t=1760458902; x=1761063702;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xb/yNzZCWGD4HJSwP1pFXK8Hauisy8AiCD29AUvl/kE=;
+        b=ET+52cYnaLOKOJsXj8f5FD8qaMeuQQaCJTSDwY8WFKTVu4ecW2VtaKcG5Q3wYks92F
+         YrdBhMudSDYigsa5qmXIMFqdDucvaoHbSEX/2Fut6xsHhvHtmwQ0iGALiDBCuO6/YERl
+         P6mqwQuDG97g1qPjbY7mDMrTH7Hf3w5I27O7Sz4WGFps3QvtLLVPZ12s/rKuWJKkVNi8
+         eipbmMsQKp7q9ERB2YfMnRLHpqupfq+KdgF8mjCka5HrVXsrUdpDTf/guttDDnU66uPg
+         sM8yVIJSLIy7HfG0GuzrdJwAJXhxxlU65O1l6IcULJnsPYai2eX7bJGt6veMd6KFqueu
+         LLHg==
+X-Gm-Message-State: AOJu0Yw6kTqLpTZ2uMA3Y1xi9YXfJuDyWmTQNEaoZ6Gncp3SOGo4kRya
+	9ZAPlPWhofDhaRCl1dqCYX+m5qJ505XP+KXogOtsBmQgL1q3vfX2pl/UdpcxOCrWskayuCdhQQo
+	cCrzINC/cbX0dmIry/264NW2AVIgpfPZgdvHLseF1kw==
+X-Gm-Gg: ASbGnct8Erm/dxjF9tAReHcsYiKh4z8carhoNR0gcvZygpaLn6/1OzlCWlHxSyNQQ5k
+	RviYhAUM+6CAcmHdnPsL5YlowUTyGn5plhc83VdFSn4FOnO5vq4B9CBIKz9NPMiH1MhAL3HkdWj
+	oSXsDwU0sqIW+r1CeVPhfG1zzzvNCMGVuVi5whLAxtu4tF/zheGT5Us7EENuJVf02vxO6sh3ao+
+	0hAgn3CU9jsaTNsNdQjQDDJOlENje29HzwhoKTFA/8+z2keqm7JBMY5cA==
+X-Google-Smtp-Source: AGHT+IE2NZ12Y4ZpPb5zBvwuVPq17WJohCs5R9i+8/TK1QNz+xM/GtQQDSGyP9VjbnX3gdd+xAFTAn26T3XaHc2SnX4=
+X-Received: by 2002:a05:6102:3a0b:b0:5d5:f6ae:38f1 with SMTP id
+ ada2fe7eead31-5d5f6ae3f4bmr7070453137.40.1760458902084; Tue, 14 Oct 2025
+ 09:21:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CALrKrsRS3ezovHJsPQqeUb=3=uQ65pkxczP35UFnNd4WtXnv8A@mail.gmail.com>
+In-Reply-To: <CALrKrsRS3ezovHJsPQqeUb=3=uQ65pkxczP35UFnNd4WtXnv8A@mail.gmail.com>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Tue, 14 Oct 2025 21:51:30 +0530
+X-Gm-Features: AS18NWDccjbERnI-YVaEyeNPnNUv4T87QahdAnFVoHmw7jnO-QefmGcaxzDSi4Y
+Message-ID: <CAPSxiM8FsjRb=NqtjWagROSC3Gn9iSx=cfnuo0YO2T+jPNeBUw@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_=28Outreachy=29_Introduction_and_plan_to_start_work_?=
+	=?UTF-8?Q?on_=E2=80=9CReduce_Git=E2=80=99s_global_state=E2=80=9D_project?=
+To: Queen Jessa <queenjessa34@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Update old-style shell path checks to use the modern test
-helpers 'test_path_is_file' and 'test_path_is_dir' for improved
-readability.
+On Mon, Oct 13, 2025 at 10:37=E2=80=AFPM Queen Jessa <queenjessa34@gmail.co=
+m> wrote:
+>
+> Hello Everyone,
+>
+> My name is Queen Ediri Jessa, and I=E2=80=99m an Outreachy applicant inte=
+rested in the
+> project =E2=80=9CRefactor in order to reduce Git=E2=80=99s global state.=
+=E2=80=9D
+Hello Queen,
+>
+> I=E2=80=99ve gone through the =E2=80=9CMyFirstContribution=E2=80=9D guide=
+ and explored the codebase.
+Good.
+> As a starting point, I plan to work on a small refactor that replaces a d=
+irect
+> use of the `the_repository` global variable with a function parameter
+> (`struct repository *repo`) in one of the related source files.
+>
+> This will help me get familiar with Git=E2=80=99s development workflow an=
+d contribute
+> incrementally toward reducing global state. Please let me know if anyone =
+is
+> already working on a similar change, or if there=E2=80=99s a specific fil=
+e you=E2=80=99d
+> recommend I start from.
+There are lots of files with Global variables, so your work would most
+likely not affect
+others. As a starting point, you might want to look into any file in
+builtin/. You can also
+look at previous patches around the same issue for reference. One is this [=
+1].
 
-Signed-off-by: Solly <solobarine@gmail.com>
----
- t/t2401-worktree-prune.sh | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+You can also go through [2] to see previous microprojects done by past
+ GSoC/Outreachy
+interns which might be easier to approach than the above.
 
-diff --git a/t/t2401-worktree-prune.sh b/t/t2401-worktree-prune.sh
-index fe671d4197..27127fa5a5 100755
---- a/t/t2401-worktree-prune.sh
-+++ b/t/t2401-worktree-prune.sh
-@@ -24,8 +24,8 @@ test_expect_success 'prune files inside $GIT_DIR/worktrees' '
- Removing worktrees/abc: not a valid directory
- EOF
- 	test_cmp expect actual &&
--	! test -f .git/worktrees/abc &&
--	! test -d .git/worktrees
-+	! test_path_is_file .git/worktrees/abc &&
-+	! test_path_is_dir .git/worktrees
- '
- 
- test_expect_success 'prune directories without gitdir' '
-@@ -36,8 +36,8 @@ Removing worktrees/def: gitdir file does not exist
- EOF
- 	git worktree prune --verbose 2>actual &&
- 	test_cmp expect actual &&
--	! test -d .git/worktrees/def &&
--	! test -d .git/worktrees
-+	! test_path_is_dir .git/worktrees/def &&
-+	! test_path_is_dir .git/worktrees
- '
- 
- test_expect_success SANITY 'prune directories with unreadable gitdir' '
-@@ -47,8 +47,8 @@ test_expect_success SANITY 'prune directories with unreadable gitdir' '
- 	chmod u-r .git/worktrees/def/gitdir &&
- 	git worktree prune --verbose 2>actual &&
- 	test_grep "Removing worktrees/def: unable to read gitdir file" actual &&
--	! test -d .git/worktrees/def &&
--	! test -d .git/worktrees
-+	! test_path_is_dir .git/worktrees/def &&
-+	! test_path_is_dir .git/worktrees
- '
- 
- test_expect_success 'prune directories with invalid gitdir' '
-@@ -57,8 +57,8 @@ test_expect_success 'prune directories with invalid gitdir' '
- 	: >.git/worktrees/def/gitdir &&
- 	git worktree prune --verbose 2>actual &&
- 	test_grep "Removing worktrees/def: invalid gitdir file" actual &&
--	! test -d .git/worktrees/def &&
--	! test -d .git/worktrees
-+	! test_path_is_dir .git/worktrees/def &&
-+	! test_path_is_dir .git/worktrees
- '
- 
- test_expect_success 'prune directories with gitdir pointing to nowhere' '
-@@ -67,8 +67,8 @@ test_expect_success 'prune directories with gitdir pointing to nowhere' '
- 	echo "$(pwd)"/nowhere >.git/worktrees/def/gitdir &&
- 	git worktree prune --verbose 2>actual &&
- 	test_grep "Removing worktrees/def: gitdir file points to non-existent location" actual &&
--	! test -d .git/worktrees/def &&
--	! test -d .git/worktrees
-+	! test_path_is_dir .git/worktrees/def &&
-+	! test_path_is_dir .git/worktrees
- '
- 
- test_expect_success 'not prune locked checkout' '
-@@ -76,23 +76,23 @@ test_expect_success 'not prune locked checkout' '
- 	mkdir -p .git/worktrees/ghi &&
- 	: >.git/worktrees/ghi/locked &&
- 	git worktree prune &&
--	test -d .git/worktrees/ghi
-+	test_path_is_dir .git/worktrees/ghi
- '
- 
- test_expect_success 'not prune recent checkouts' '
- 	test_when_finished rm -r .git/worktrees &&
- 	git worktree add jlm HEAD &&
--	test -d .git/worktrees/jlm &&
-+	test_path_is_dir .git/worktrees/jlm &&
- 	rm -rf jlm &&
- 	git worktree prune --verbose --expire=2.days.ago &&
--	test -d .git/worktrees/jlm
-+	test_path_is_dir .git/worktrees/jlm
- '
- 
- test_expect_success 'not prune proper checkouts' '
- 	test_when_finished rm -r .git/worktrees &&
- 	git worktree add --detach "$PWD/nop" main &&
- 	git worktree prune &&
--	test -d .git/worktrees/nop
-+	test_path_is_dir .git/worktrees/nop
- '
- 
- test_expect_success 'prune duplicate (linked/linked)' '
-@@ -103,8 +103,8 @@ test_expect_success 'prune duplicate (linked/linked)' '
- 	mv .git/worktrees/w2/gitdir.new .git/worktrees/w2/gitdir &&
- 	git worktree prune --verbose 2>actual &&
- 	test_grep "duplicate entry" actual &&
--	test -d .git/worktrees/w1 &&
--	! test -d .git/worktrees/w2
-+	test_path_is_dir .git/worktrees/w1 &&
-+	! test_path_is_dir .git/worktrees/w2
- '
- 
- test_expect_success 'prune duplicate (main/linked)' '
-@@ -116,7 +116,7 @@ test_expect_success 'prune duplicate (main/linked)' '
- 	mv repo wt &&
- 	git -C wt worktree prune --verbose 2>actual &&
- 	test_grep "duplicate entry" actual &&
--	! test -d .git/worktrees/wt
-+	! test_path_is_dir .git/worktrees/wt
- '
- 
- test_expect_success 'not prune proper worktrees inside linked worktree with relative paths' '
--- 
-2.34.1
-
+>
+> Thank you for maintaining such a welcoming community.
+> I=E2=80=99m looking forward to learning and contributing.
+>
+[1]: https://public-inbox.org/git/20250318115912.2978992-7-usmanakinyemi202=
+@gmail.com/
+[2]: https://git.github.io/SoC-2025-Microprojects/
+> Best regards,
+> Queen Ediri Jessa
+Thanks for your interest in contributing to Git!
+>
