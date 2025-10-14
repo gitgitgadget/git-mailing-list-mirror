@@ -1,122 +1,132 @@
-Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377F03002BD
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 16:21:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E225A2FB0BA
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 16:47:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760458904; cv=none; b=lpPkb1KfrHbVRCFMfkfGjVa7fSvD1eGq/bA41TvohBAEG+gzruy6MPCRHXnQEgYD/3Gc2NTMuRjQ2A/+rFcEyj14A80ZPAEG0YjtaB4Dg/eOKokPw4PSrG2Reyimih2Pi+fJLe1MPwB2IZOis879iVH46ojlX3CPCFj86BY6qAw=
+	t=1760460464; cv=none; b=mcTVs8ugYFP+0TTjToNKPyprFEjZ/x9hD43JS+w/FzmfFwYsiw7zw4GWvTEkpgSrc29U9J1LHaRHcQMbQnS15zFQp3/Rg/zQOyDu21HTW45oUWdArMabbnTIZNUX1iwsiuJPg1HSufyxxA8mCi+pyfYpD4AfcWglMEij9G9hSR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760458904; c=relaxed/simple;
-	bh=xb/yNzZCWGD4HJSwP1pFXK8Hauisy8AiCD29AUvl/kE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bkd5xfarzDkY8N5SLTzAhyuFqiKwbID8F1NDEQotdw+jRWoHlNfWz4hASJEPTHgGKLY8IkGpV4LBVeoNcYuHTaPLNJcCGky8YuUXspLE9p8hEe8ZCR4wcn0e/ztHh5+WMNIUogEWMCWoaBcNcJ829803Mh9ol7BPVNyob1dCbxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bb+h7COh; arc=none smtp.client-ip=209.85.222.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760460464; c=relaxed/simple;
+	bh=Kg5zxaGer1l0PXq+GsZFpQcZJCf68bawFUetxuRDoZY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uXwdtWS699Y6FMBkfzK2luxhtCjhk/f0qWo6EOutwu/sksRqndp15Cf5KUvJQRVAc9GCu4N19qXAgA75D1vPvxelRUgWXBkKJdHyovYhjauGIVhg8N2WzzfFIfoLhB9L7LyMKXiuLoO2T41qK+rhJEId5xxF33JidV3/73nUQUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PAew5Gl6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CSZTvSMS; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bb+h7COh"
-Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-8e30a19da78so2991589241.2
-        for <git@vger.kernel.org>; Tue, 14 Oct 2025 09:21:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760458902; x=1761063702; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xb/yNzZCWGD4HJSwP1pFXK8Hauisy8AiCD29AUvl/kE=;
-        b=bb+h7COh3KN3zUVBHg8gNxv7fFqEPyz2iepsQSmiY4L+71Lp8ZyXfPVdxCVtQITzKq
-         hlfJgVUaxrgKd1Y5ydJjc4Sfqmwv+sX0AOCVi35Ie7tXqs/8fya8RL9ZkLzzhjJItTFt
-         aBSDksf5TVtj4tm6CtJqVsmcBAbsJRXNMyeRMmW+RFvb5bF9sserpdcZUYxQMIcupQUB
-         eB9KWXXZBdA5GPlrFuxNPLuw+5ox4SeVWVGEApqEtu1kf6PVtwd7QCVy7Crt+l6u5eLG
-         1r/KY3jedZu3Nh4TJ1sqvdHiByqVKJ/JyjZ60/mBeadTm4Rn7Q0rO7KyXGM4HHEIpJyD
-         GRrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760458902; x=1761063702;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xb/yNzZCWGD4HJSwP1pFXK8Hauisy8AiCD29AUvl/kE=;
-        b=ET+52cYnaLOKOJsXj8f5FD8qaMeuQQaCJTSDwY8WFKTVu4ecW2VtaKcG5Q3wYks92F
-         YrdBhMudSDYigsa5qmXIMFqdDucvaoHbSEX/2Fut6xsHhvHtmwQ0iGALiDBCuO6/YERl
-         P6mqwQuDG97g1qPjbY7mDMrTH7Hf3w5I27O7Sz4WGFps3QvtLLVPZ12s/rKuWJKkVNi8
-         eipbmMsQKp7q9ERB2YfMnRLHpqupfq+KdgF8mjCka5HrVXsrUdpDTf/guttDDnU66uPg
-         sM8yVIJSLIy7HfG0GuzrdJwAJXhxxlU65O1l6IcULJnsPYai2eX7bJGt6veMd6KFqueu
-         LLHg==
-X-Gm-Message-State: AOJu0Yw6kTqLpTZ2uMA3Y1xi9YXfJuDyWmTQNEaoZ6Gncp3SOGo4kRya
-	9ZAPlPWhofDhaRCl1dqCYX+m5qJ505XP+KXogOtsBmQgL1q3vfX2pl/UdpcxOCrWskayuCdhQQo
-	cCrzINC/cbX0dmIry/264NW2AVIgpfPZgdvHLseF1kw==
-X-Gm-Gg: ASbGnct8Erm/dxjF9tAReHcsYiKh4z8carhoNR0gcvZygpaLn6/1OzlCWlHxSyNQQ5k
-	RviYhAUM+6CAcmHdnPsL5YlowUTyGn5plhc83VdFSn4FOnO5vq4B9CBIKz9NPMiH1MhAL3HkdWj
-	oSXsDwU0sqIW+r1CeVPhfG1zzzvNCMGVuVi5whLAxtu4tF/zheGT5Us7EENuJVf02vxO6sh3ao+
-	0hAgn3CU9jsaTNsNdQjQDDJOlENje29HzwhoKTFA/8+z2keqm7JBMY5cA==
-X-Google-Smtp-Source: AGHT+IE2NZ12Y4ZpPb5zBvwuVPq17WJohCs5R9i+8/TK1QNz+xM/GtQQDSGyP9VjbnX3gdd+xAFTAn26T3XaHc2SnX4=
-X-Received: by 2002:a05:6102:3a0b:b0:5d5:f6ae:38f1 with SMTP id
- ada2fe7eead31-5d5f6ae3f4bmr7070453137.40.1760458902084; Tue, 14 Oct 2025
- 09:21:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PAew5Gl6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CSZTvSMS"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id E5E3D1D000DC;
+	Tue, 14 Oct 2025 12:47:40 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 14 Oct 2025 12:47:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1760460460; x=1760546860; bh=2qXNk8WUtE
+	Ezs1qyj6jA7xgD4vYHe/ahnBDKPL2AfcY=; b=PAew5Gl6IU/PH1BIamV3vcp+Oa
+	QW0fCQdyuHIR/ipIBEvz+IXoq0ehaXzl64ByMWa6jjmcqrtRmUkPbO5RGNPOZVaa
+	j2NQCFj81WOcgn6JLCKT29nYWkmeh1OtKslQMpKiLqtIbG2asSdbbNAoPpH/va1i
+	5hUyh7gd/4pjb/bKEaPx1jpT0hdL04mz6vcct8rzXOK1NjF2Fx/OxuxtXU/ZpNRw
+	DSaRfJDlgJLC3pfYfLDaOmcDzC3fc4riPA5SultIE60mLXM8ClY61JACQjiDYEO0
+	FmWPw40QrmQfdIqw6yZix8t3Ek6y8LzMPLGnS9ULODV5Rhj2hmSJWD1wDd6Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760460460; x=1760546860; bh=2qXNk8WUtEEzs1qyj6jA7xgD4vYHe/ahnBD
+	KPL2AfcY=; b=CSZTvSMSO3spUD//8oVRgiDMZwexdz+EanTmQ1t3gMNTlGUyUI5
+	nTJYbf+eutQIfg6L3wfeNip/IcVKY/ckYkcmEb6etpvZafr+i1c0bggcZ5NLqekf
+	ocYQk7DRWx6bPpmDRqoUgIfzRGPgLorWaYVsHMGO4I8sRblA+xnC9huTYeA8RMNK
+	LQDnROuj3VLfjWLYtXVB3flJxgUAMWS6mbVJmj4n43YIpOV8Mv9008nVr55kMs/A
+	WzX2keXavo/RvooNwEduFNcz1JlgH65RSrjoO2RmNqTwbCIiaT+MkO4RFv0lMDcd
+	Fs+YL8aBbGIpiaDuBkesGJv6dRQeDJOKWBA==
+X-ME-Sender: <xms:rH7uaLuxAB1h9osEjZEC3qt5_A35KHL9yEIFP5gueFrn_tKic6kqSQ>
+    <xme:rH7uaPCOES6qKpLdHjiPVax0C7Xi10mQgB_ZKeORWQ9pWPxOlfYQ8FikdfEn4Xi1D
+    -ixi7tmWbi6AFpVhQRws8SHLg_svrkyJFMGwy6p9Gm211qE32Dw>
+X-ME-Received: <xmr:rH7uaCZRQ9Bn2z_c92_nlm5LJUpZ5NFSuSjZA9O_Sat0uwzFxf9XiH5IpLsJt-t3_cOeViTV7KynZlWPmHjAPJd871kZklFR5ptY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvddutdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpsh
+    esphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhope
+    hsohhrghgrnhhovhesghhmrghilhdrtghomhdprhgtphhtthhopehjnhdrrghvihhlrges
+    fhhrvggvrdhfrhdprhgtphhtthhopehmrghrthhinhhvohhniiesghhmrghilhdrtghomh
+    dprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghi
+    lhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:rH7uaKVmJvgT8kKVxoU18fgYiPFnkHu_d12Kn0jCFFLLAykAuz_QVQ>
+    <xmx:rH7uaBMiLmAM8KuEg8UXiYzoaSbT6MSPbZI7OeyFqLp6SoD4YxsVzQ>
+    <xmx:rH7uaEZKZ1u7UseNBiqcPGkuQGKsgKF_ymrNY33-TPeM4dJUTKia_A>
+    <xmx:rH7uaA-ARK2ZFJXxOOB3KLhsbeOm6uhtRRi2NAH5PGqsgk_UMsO5Qg>
+    <xmx:rH7uaP6TQ3MMfGbzhtgJXB9dV6Ig2kb4F-Wu3hhbBM2i_ty4C9YZYdBZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 14 Oct 2025 12:47:40 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Sergey
+ Organov <sorganov@gmail.com>,  =?utf-8?Q?Jean-No=C3=ABl?= AVILA
+ <jn.avila@free.fr>,  Martin
+ von Zweigbergk <martinvonz@gmail.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v4 00/12] Introduce git-history(1) command for easy
+ history editing
+In-Reply-To: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im>
+	(Patrick Steinhardt's message of "Wed, 01 Oct 2025 17:57:26 +0200")
+References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
+	<20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im>
+Date: Tue, 14 Oct 2025 09:47:38 -0700
+Message-ID: <xmqq347lzaz9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALrKrsRS3ezovHJsPQqeUb=3=uQ65pkxczP35UFnNd4WtXnv8A@mail.gmail.com>
-In-Reply-To: <CALrKrsRS3ezovHJsPQqeUb=3=uQ65pkxczP35UFnNd4WtXnv8A@mail.gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Tue, 14 Oct 2025 21:51:30 +0530
-X-Gm-Features: AS18NWDccjbERnI-YVaEyeNPnNUv4T87QahdAnFVoHmw7jnO-QefmGcaxzDSi4Y
-Message-ID: <CAPSxiM8FsjRb=NqtjWagROSC3Gn9iSx=cfnuo0YO2T+jPNeBUw@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=28Outreachy=29_Introduction_and_plan_to_start_work_?=
-	=?UTF-8?Q?on_=E2=80=9CReduce_Git=E2=80=99s_global_state=E2=80=9D_project?=
-To: Queen Jessa <queenjessa34@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Oct 13, 2025 at 10:37=E2=80=AFPM Queen Jessa <queenjessa34@gmail.co=
-m> wrote:
->
-> Hello Everyone,
->
-> My name is Queen Ediri Jessa, and I=E2=80=99m an Outreachy applicant inte=
-rested in the
-> project =E2=80=9CRefactor in order to reduce Git=E2=80=99s global state.=
-=E2=80=9D
-Hello Queen,
->
-> I=E2=80=99ve gone through the =E2=80=9CMyFirstContribution=E2=80=9D guide=
- and explored the codebase.
-Good.
-> As a starting point, I plan to work on a small refactor that replaces a d=
-irect
-> use of the `the_repository` global variable with a function parameter
-> (`struct repository *repo`) in one of the related source files.
->
-> This will help me get familiar with Git=E2=80=99s development workflow an=
-d contribute
-> incrementally toward reducing global state. Please let me know if anyone =
-is
-> already working on a similar change, or if there=E2=80=99s a specific fil=
-e you=E2=80=99d
-> recommend I start from.
-There are lots of files with Global variables, so your work would most
-likely not affect
-others. As a starting point, you might want to look into any file in
-builtin/. You can also
-look at previous patches around the same issue for reference. One is this [=
-1].
+Patrick Steinhardt <ps@pks.im> writes:
 
-You can also go through [2] to see previous microprojects done by past
- GSoC/Outreachy
-interns which might be easier to approach than the above.
+> over recent months I've been playing around with Jujutsu quite
+> frequently. While I still prefer using Git, there's been a couple
+> features in it that I really like and that I'd like to have in Git, as
+> well.
+> ...
+> Changes in v4:
+>   - I've rebuilt the patch series. It is now based on 821f583da6 (The
+>     thirteenth batcn, 2025-09-29) with sa/replay-atomic-ref-updates
+>     at 665c66a743 (replay: make atomic ref updates the default behavior,
+>     2025-09-27) merged into it. This should fix all conflicts with seen.
+>   - I've reworked this patch series to use the same infra as
+>     git-replay(1), as discussed during the Contributor's Summit.
+>   - I've slimmed down the patch series to only tackle those commands
+>     that cannot result in a conflict to keep it simple. I also learned
+>     that Elijah has been working on a "git replay edit" command, so I
+>     dropped that command so that we can instead use his version.
+>   - During the Contributor's Summit we have agreed that for now, we
+>     won't care about hook execution just yet. This may be backfilled at
+>     a later point in time.
+>   - I dropped "commit.verbose" handling for now, as my understanding of
+>     it was wrong at first. This is something we should backfill.
+>   - Link to v3: https://lore.kernel.org/r/20250904-b4-pks-history-builtin-v3-0-509053514755@pks.im
 
->
-> Thank you for maintaining such a welcoming community.
-> I=E2=80=99m looking forward to learning and contributing.
->
-[1]: https://public-inbox.org/git/20250318115912.2978992-7-usmanakinyemi202=
-@gmail.com/
-[2]: https://git.github.io/SoC-2025-Microprojects/
-> Best regards,
-> Queen Ediri Jessa
-Thanks for your interest in contributing to Git!
->
+What is queued near the tip of 'seen' is v4 but rebased on the
+updated version of sa/replay-atomic-ref-updates that came from
+<20251013183311.33329-1-siddharthasthana31@gmail.com>.  The rebase
+only had a slight conflict at [PATCH v4 02/12].
+
+The result based on the same 821f583da6 (The thirteenth batcn,
+2025-09-29) with sa/replay-atomic-ref-updates at a07d37b3 (replay:
+add replay.defaultAction config option, 2025-10-14).
+
