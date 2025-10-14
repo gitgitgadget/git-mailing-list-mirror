@@ -1,148 +1,171 @@
-Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
+Received: from mail-108-mta13.mxroute.com (mail-108-mta13.mxroute.com [136.175.108.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA98A314A73
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 13:41:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575B32877CF
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 14:50:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.175.108.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760449275; cv=none; b=unP84DjZpeiCWQ1OPl5EtsWSeuAADIgMVe0QRHpD0OAEzqs3RDwiv3k9fEaEsQGvzfUKW31v9YFxeo784kYe3vXt9QZPFqbIHG7I8HNuB3TxlUYyQbxFSxPGQZPQkMNFLoKEdf1rPAWuxCHoY8Xnm3mFD0fe+UB2L1rFUQFoZEY=
+	t=1760453461; cv=none; b=nyzOtAYxUnGlCISDX+BmldPWrWhba7fr67yDYkFKnZBVEMpVuF/9gMNgQq7P/NmN/e1Pf27YeH+kCMLOpaapys4XOp2Aa5PNj57aZqd+iKdmX2oA18p/i76gZZ9VJL8nCY72pYUBiNckg4Ncp+Jf8i2udoKXF9LBrTCxuolCKYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760449275; c=relaxed/simple;
-	bh=vnbfbbbNytWCCFQqcoM1jAffS+YnUwMBiTjkMFMebcI=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=s5C79HS5JgzuDXcSouuDUp4kA4JfWwylh0/hmKFhkOHzqcHW1fIvqSCS2psFVFouO7YDVVrVz3rqdXF0+/+/QYxoclq+/Mp7R6oOnGLdDV7TAF2E95k48VCipul8KO/0l1gyvgEW0U7TXPJEwa9aLxgtKsUB3igCakAcgHtXZ6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JW6S1gqa; arc=none smtp.client-ip=209.85.221.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760453461; c=relaxed/simple;
+	bh=00sbYbgbfJ2Lo89buZLkPGnTzsY0JsvIQtBC9SVLJK0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bKUDTR14tzmSQboefsMprB8ptOzEYpwnYuNMCCkY+h3eaEfAmIskCVXHjQ45O2SdeswDf1X8xGMuWE/nuJKgfJQTF/VLSNrzCw98wmujyyFGSbKRgSTfHkipEBPx+RFs/Nm+phvbR0UqXF54xiW/ZrUHOCdNBAlv5lVe0JuhX6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ashlesh.me; spf=none smtp.mailfrom=ashlesh.me; dkim=pass (2048-bit key) header.d=ashlesh.me header.i=@ashlesh.me header.b=dCCuTW7y; arc=none smtp.client-ip=136.175.108.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ashlesh.me
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ashlesh.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JW6S1gqa"
-Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-554e726e5cfso946174e0c.3
-        for <git@vger.kernel.org>; Tue, 14 Oct 2025 06:41:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760449272; x=1761054072; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=33O8gr4bVYigdad5vtM2a3s7z8SywN2qbVsFyQhdR3A=;
-        b=JW6S1gqa5GQJFbDigB5NvgFa7Z4tEUFIsGrqOfOonWwFezreWO3A4KucM2Co2ne6Y4
-         9drA/a1u0RoU7p1pNGhPWAgLxM6eb/BrL0r+TvCtI5RW1G0X5VJUFsLIaVVlV6ymtW08
-         4LLTD4Xjk6Q4GZRHDPF79NPISr+fVTciNdJKuYmOogAb6CIWo3HRASdk8qkOQNFfN4Ny
-         cF9d4pQqCnTVVPNdgJk5S06JN5FhgBPD+3LZZXQvn8mrRJidqnYfEThs9nxwBQHmatnV
-         iEWKeXJtCPDYvd4GqhWlBkNKTsbe3Xm2n3PQ1fVPc77XUJPmn4NZZvHKXCCYmOEmshbC
-         ZLKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760449272; x=1761054072;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=33O8gr4bVYigdad5vtM2a3s7z8SywN2qbVsFyQhdR3A=;
-        b=fOn/F+Xn2mqFrdtYRqO95xeuMm/gcOjbMEgMkT9wdWkGOsSnnJSkQ1rWC5OiTQJASj
-         h9YAUR/sFdKqDQysCuywUtHzUJzAPQY008Yobf1Mv6EZcsT5WSz+I5ICvpQX9GSlymKG
-         quP0GkIE6Gl6pVVO0gCSEB9lRrehiGiBBc49/V4b11MISCShYVsvD2zJdbLH3N62AlUs
-         QfvkRcEQDMzKvRp1CAQgoeQ5qGV76HIiwUDbr8U+BH9bUkf2SNAypltZYzGTlBBCxtYS
-         +vw0VfS05VNVrzZHeTQbjx/y4VlxtjNB6hr4zrV9TcHhYhKuFcmoJuK8cY7EtDkL1Nii
-         uGXw==
-X-Forwarded-Encrypted: i=1; AJvYcCUNSb5U6lcxsrbyovfgv+AKX2anMrEkQLlja7JQRHn87Bif5FFcKOc4igs5tDBSHz0Ezcs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxveIfgqx3F5K5lRMSejXj1/trvpYjMaAfkQkwDZtfgGdJE1cIW
-	9CRfLAuptOzb3z82bna+V1ubAqRj32ARohOiEBLs/lEyEzlHvR91RRdkVFt41SENs59RoYYhZPH
-	/58N8L/Msyf4rmp7JAEu+eYWrA+7YQGI=
-X-Gm-Gg: ASbGncuTvIYQYLfSr9+/C7MYeFmceejCza7XkTguq/9U8BlW39FIrjWYUpGJampvWR4
-	77SQoU7UHmoQUYWu5Aodt9akVBVSVIKAstCpDaJoGA4qlLFeZJfKGZZbzyXOTr4HuHQKY0koNLy
-	XauUBZV3Xd7rlmTLPLp591irF+fZkD1WZaG0yBhqyEqLAKwG9a5SvlGWhHXlxbyPiu0nSzv/+WA
-	BIYzbV76YKCtEuxczVx5XeQV9lsgypvXGDYq8JMNtio5cOLHKD0Uxim5LX/h56xZvbD4vk=
-X-Google-Smtp-Source: AGHT+IGgRX6rIF/O3yzeJoXKEQR5vJNMvQxigvT0CwtMnKPu4vKRpnZuEVidtHKGlbIBQSTJ74OaIKhmBeySjo7yoD8=
-X-Received: by 2002:a05:6122:3c46:b0:54a:1e96:e958 with SMTP id
- 71dfb90a1353d-554b88e4b6emr7639832e0c.0.1760449272524; Tue, 14 Oct 2025
- 06:41:12 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 14 Oct 2025 09:41:11 -0400
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 14 Oct 2025 09:41:11 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im>
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im> <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im>
+	dkim=pass (2048-bit key) header.d=ashlesh.me header.i=@ashlesh.me header.b="dCCuTW7y"
+Received: from filter006.mxroute.com ([140.82.40.27] filter006.mxroute.com)
+ (Authenticated sender: mN4UYu2MZsgR)
+ by mail-108-mta13.mxroute.com (ZoneMTA) with ESMTPSA id 199e32f48f5000d597.005
+ for <git@vger.kernel.org>
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+ Tue, 14 Oct 2025 14:45:50 +0000
+X-Zone-Loop: 5d2d30761eace4b3627ef5f727ed9b3bcdf383e13d2f
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ashlesh.me;
+	s=x; h=Content-Transfer-Encoding:MIME-Version:Date:Subject:Cc:To:From:Sender:
+	Reply-To:Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References;
+	bh=iMH+9hoAsNa9oRxSdkgyvEFej3OdgpqUc+Rm8kkWMQ4=; b=dCCuTW7yAI7wEcYnU1v6M617eZ
+	BrarJC0jz7FIY6LNIH0YpCPD0mVCVFM+fsjnSCwrXyi1oN1w0Kfz1Kq950nCUG7iVh+BN9UEiSPHZ
+	sA8bCzMEKlW134zYgpVEFBDatwc4X5Of1A/QAWbGkdVGr0EmeCTq0WBttQp7KyQ/DUMsz7qESBnWE
+	27NACTgwOlHc+vW1eIthUFRJUlBg4XzQmH7c04bfwbhp6aCNNIrJwhQOFFgb1el8i1xs2r9b4wfBr
+	7H/lNZjFzWOtay7W0+ZFQlYYYUicwQBfWKDt6iAKIXzwllIZGbzf+lizXJtuoHQwZrJkIgFp5x4dx
+	iqVqlrdQ==;
+From: Ashlesh Gawande <git@ashlesh.me>
+To: git@vger.kernel.org
+Cc: Ashlesh Gawande <git@ashlesh.me>,
+	Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH] http.c: prompt for username on 403
+Date: Tue, 14 Oct 2025 20:13:52 +0530
+Message-ID: <20251014144354.1457818-2-git@ashlesh.me>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 14 Oct 2025 09:41:11 -0400
-X-Gm-Features: AS18NWAjbAMN587BpCl2uedTgNkuSKPN8h_wImgCR84zaCMeP5-Wg5bjwC2y-Xs
-Message-ID: <CAOLa=ZRa6s1CMq19Z4GDz2HGsw6TCUQ4eu-nC26P2=qP2Jb6ug@mail.gmail.com>
-Subject: Re: [PATCH v4 00/12] Introduce git-history(1) command for easy
- history editing
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
-	Sergey Organov <sorganov@gmail.com>, =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
-	Martin von Zweigbergk <martinvonz@gmail.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Elijah Newren <newren@gmail.com>
-Content-Type: multipart/mixed; boundary="00000000000088d4ac06411e89a1"
+Content-Transfer-Encoding: 8bit
+X-Authenticated-Id: info@ashlesh.me
 
---00000000000088d4ac06411e89a1
-Content-Type: text/plain; charset="UTF-8"
+Scenario:
+- There are a few pre-production systems that a lot of testers and
+  developers need to time share because of low availability
+- Devops generates a GitHub token with pull only access
+  and adds it to the netrc file on these systems
+  (Pull only as we don't want testers/others to be able to push)
+- Testers log in and do a git pull for the latest changes
+  (via netrc credentials - though testers may not be aware)
+- Developers login to debug issues and may make fixes to the test repo
+- Now when developers try to push their changes they receive:
+  fatal: unable to access 'https://github.com/<org>/<project>/':
+  The requested URL returned error: 403
+- The developer is not given the chance to supply an authorized token
+  and either needs to comment the netrc file or copy the changes over
+  to their own machine
 
-Patrick Steinhardt <ps@pks.im> writes:
+Signed-off-by: Ashlesh Gawande <git@ashlesh.me>
+---
+ http.c                     |  2 +-
+ t/lib-httpd.sh             |  9 +++++++++
+ t/lib-httpd/apache.conf    |  4 ++++
+ t/lib-httpd/passwd         |  1 +
+ t/t5550-http-fetch-dumb.sh | 24 ++++++++++++++++++++++++
+ 5 files changed, 39 insertions(+), 1 deletion(-)
 
-> Hi,
->
-> over recent months I've been playing around with Jujutsu quite
-> frequently. While I still prefer using Git, there's been a couple
-> features in it that I really like and that I'd like to have in Git, as
-> well.
->
-> A copule of these features relate to history editing. Most importantly,
-> I really dig the following commands:
->
->   - jj-abandon(1) to drop a specific commit from your history.
->
->   - jj-absorb(1) to take some changes and automatically apply them to
->     commits in your history that last modified the respective hunks.
->
->   - jj-split(1) to split a commit into two.
->
->   - jj-new(1) to insert a new commit after or before a specific other
->     commit.
->
-> Not all of these commands can be ported directly into Git. jj-new(1) for
-> example doesn't really make a ton of sense for us, I'd claim. But some
-> of these commands _do_ make sense.
->
-> This patch series is a starting point for such a command. I've
-> significantly slimmed it down from the first couple revisions now
-> following the discussions at the Contributor's Summit yesterday. This
-> was my intent anyway, as I already mentioned on the last iteration.
->
+diff --git a/http.c b/http.c
+index 7e3af1e72f..18959f63b9 100644
+--- a/http.c
++++ b/http.c
+@@ -1852,7 +1852,7 @@ static int handle_curl_result(struct slot_results *results)
+ 		return HTTP_NOMATCHPUBLICKEY;
+ 	} else if (missing_target(results))
+ 		return HTTP_MISSING_TARGET;
+-	else if (results->http_code == 401) {
++	else if (results->http_code == 401 || results->http_code == 403) {
+ 		if ((http_auth.username && http_auth.password) ||\
+ 		    (http_auth.authtype && http_auth.credential)) {
+ 			if (http_auth.multistage) {
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index 5091db949b..cdc92b2916 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -325,6 +325,15 @@ set_askpass() {
+ 	echo "$2" >"$TRASH_DIRECTORY/askpass-pass"
+ }
+ 
++set_netrc() {
++	# $HOME=$TRASH_DIRECTORY
++	echo "machine $1 login $2 password $3" > $TRASH_DIRECTORY/.netrc
++}
++
++clear_netrc() {
++	rm "$TRASH_DIRECTORY/.netrc"
++}
++
+ expect_askpass() {
+ 	dest=$HTTPD_DEST${3+/$3}
+ 
+diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+index e631ab0eb5..6b8c50a51a 100644
+--- a/t/lib-httpd/apache.conf
++++ b/t/lib-httpd/apache.conf
+@@ -238,6 +238,10 @@ SSLEngine On
+ 	AuthName "git-auth"
+ 	AuthUserFile passwd
+ 	Require valid-user
++
++	# return 403 for authenticated user: forbidden-user@host
++	RewriteCond "%{REMOTE_USER}" "^forbidden-user@host"
++	RewriteRule ^ - [F]
+ </Location>
+ 
+ <LocationMatch "^/auth-push/.*/git-receive-pack$">
+diff --git a/t/lib-httpd/passwd b/t/lib-httpd/passwd
+index d9c122f348..3bab7b6423 100644
+--- a/t/lib-httpd/passwd
++++ b/t/lib-httpd/passwd
+@@ -1 +1,2 @@
+ user@host:$apr1$LGPmCZWj$9vxEwj5Z5GzQLBMxp3mCx1
++forbidden-user@host:$apr1$LGPmCZWj$9vxEwj5Z5GzQLBMxp3mCx1
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index ed0ad66fad..6c4c1cafb2 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -102,6 +102,30 @@ test_expect_success 'cloning password-protected repository can fail' '
+ 	expect_askpass both wrong
+ '
+ 
++test_expect_success 'using credentials from netrc to clone successfully' '
++	set_askpass wrong &&
++	set_netrc 127.0.0.1 user@host pass@host &&
++	git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-netrc &&
++	expect_askpass none
++'
++clear_netrc
++
++test_expect_success 'netrc unauthorized credentials (prompt after 401)' '
++	set_askpass wrong &&
++	set_netrc 127.0.0.1 user@host pass@wrong &&
++	test_must_fail git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-netrc-401 &&
++	expect_askpass both wrong
++'
++clear_netrc
++
++test_expect_success 'netrc authorized but forbidden credentials (prompt after 403)' '
++	set_askpass wrong &&
++	set_netrc 127.0.0.1 forbidden-user@host pass@host &&
++	test_must_fail git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-netc-403 &&
++	expect_askpass both wrong
++'
++clear_netrc
++
+ test_expect_success 'http auth can use user/pass in URL' '
+ 	set_askpass wrong &&
+ 	git clone "$HTTPD_URL_USER_PASS/auth/dumb/repo.git" clone-auth-none &&
+-- 
+2.43.0
 
-Hello,
-
-I'm jumping in directly to review the fourth version of the patch
-series. As such I might have missed discussions in the prev versions.
-
-Apart from small comments and questions, it looks to be in a good shape.
-I think the addition of changes would perhaps warrant a re-roll but we
-should be close :)
-
-Thanks,
-Karthik
-
-[snip]
-
---00000000000088d4ac06411e89a1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: a6e50ef731efee9a_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1qdVV2VVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meUx3Qy80cTljQjIvTUVSakMraE92VEQrdTRzUlNwSgpXTmg2Wmp2TE1x
-SEI1dzZOVXNwa1Z1bFh5MWxaMVhnNlZzS0wzWnkyWE9CZWZEcFJYWnlrNkNZSG1TdXl4bzJTClhR
-RzlUYmIxYVNIRE5NajFNbHpZS2I4L2JjOEFJNGpjQzdjazZxYmlLLzVJWkFlUGVsQzdhbnNzWjly
-V09iMisKMnlyVThmeFBxMHlQWWxSOVQwb2Vra2RxekJwOU1CbnlWWlVkc3k3RmpTOXRXRnhXNE8r
-QitJMG11Mjl5Vm5mLwpEVzRvbGVjcWYxYSt3T1A3OCtYUXl5enQ4WEF0ODBPQWhva2NUWXgraGNj
-OE9nUGxZbXJMckxYbDMrZUY2SEdiCmxQeGlVdjhuOUc5S0hCczB3L29zUGM4YUZ2cUlZR2Z2UVk5
-amJqSnoyU2prYm1QZUVhemQzVTBHY25aZlZyWm8KZGxmQWwrdjVHYWUxYXZsZkUvOHRxYktSWWND
-NXIxSGNSMGI1UHFVaW9ISEcxQzBFM3c4a2Ewb00vdW9zWURSbgpwV1lHcFNBWVhZNGFTdUJhbXRh
-SUMzalcrbkpybFpZVUl4NzBOc3R1SDk3c01XNzRYaUMzWjk1Y0tIMWlYR1RTCkl6a25abXhsWFlX
-dzFlTGlZNGFacWNoWlhLZGJUenA1L0laamRUaz0KPWdVajcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000088d4ac06411e89a1--
