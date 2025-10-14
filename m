@@ -1,84 +1,146 @@
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0325D18A956
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 18:47:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E14235072
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 19:07:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760467651; cv=none; b=Q7Xm2vbHNnAI7cIT9O2oJPEBUzkUOJKSyNbhZ7O29w7FIo0caJl5VuWhxho6ojVbczbOVZYwdwtY7hgCK2rsKiuRxpjXwGni3bZDTGDfC5TJRA/7c1A0amYfaSDosDzvg/oidjyjYN5mq7ddT6SSWw/7wR55+kUURFGwwwuDceg=
+	t=1760468835; cv=none; b=ZcfFKmnxJsuzqc7nnuSGfUVdF3Tvd4u1ujzcFaelELGuaeSF4z23RpDjPuQ2Sm71kEY2lYNM/GOvS8UYbiqqqNRtDawcZDG/GvlLK9MM/04lKHEfIkAEVPBuInENZOHRmiHP5gWnF4Rr1e6pts6+Sft41Vh+lfECpJYNUFNgwpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760467651; c=relaxed/simple;
-	bh=16aIyG4kTnBJ8JG/NjBia1xAemaCujykdgmt4RJyzGw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pNKpKpMxo3PiERwFS/zpSMnxM05PzrtTw15Klosb0xw+Cl0osm7AoQt6FS3AAzYT24UkU4FcJL3IrwC64tPLAmgHy940by2cAwcG/dJN8TEYZOtxTtyMpIkH9c3Q78Avm0NEQwLZt0m7nfSUoOuETgaHTQv5vCbI37RAnS5nyKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1760468835; c=relaxed/simple;
+	bh=Qv1u4E47Ltxf/MIMt+vTvFIVG/6XQMkmP/Vb/IggolU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fbyu0pXqdl1q/IHCZaCgl5zGMXuohKXKCvq605pnyllEpUDtlQoCJ8aRMkLPEKYZrg9xPfx4n0yjqlEc/O3UBga7XH+ssmj9eoF8XwElWb8Tj8E90XmPn36ocitNqHL/bokgbheXxyxejZsYxAZyim4gUwdwvfNHneLMADNyVgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z7bq8tfO; arc=none smtp.client-ip=209.85.210.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-85e6c623ebaso113797885a.0
-        for <git@vger.kernel.org>; Tue, 14 Oct 2025 11:47:28 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z7bq8tfO"
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-7c0e8367d4eso2072173a34.1
+        for <git@vger.kernel.org>; Tue, 14 Oct 2025 12:07:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760468833; x=1761073633; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=zn7CyR3hATClZo2F+den9st4BY0g90TvaIq2E5DbZas=;
+        b=Z7bq8tfOq2KhxALxvgECnNjHVN11bMXRZLQJG304tk4AoUYtnR8rJnGVUjjaoMppQL
+         4zDelEqrzZrEXORd2ZUW/SFT5oQE3a0Q/RYNOwD+kbfHBaeK2ErtPJgDZKXIkmA0+w5O
+         rWr17A0DRdJp92ORgqXdmC5T3UIhm1GJrhk228KYcRukFWhSzB2oC3/8PUgAgutFmCAr
+         cCvW2GAYHmrJEsNW41YlYNCHMJ4M+OvlL4u3UrvZAUuHzSOQas9X0h9pbq/UnJ/exuaU
+         SGvFgh4nDb13NQWT5ui1aNdYGdDPGRNUph63G8jIxyj5LDWUKvifB44+MCgg6zAVzstP
+         Xmag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760467648; x=1761072448;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=16aIyG4kTnBJ8JG/NjBia1xAemaCujykdgmt4RJyzGw=;
-        b=LJvx5wiHes50v0ffF2bAmHa17TFgIOcHUCF65MzDnEHJWtV0vU9/3Sbq3UmYNpQdtB
-         vNkZV0QbaSfjY6cYE4Ubc3ZnYQx2Z0ghoE4kP+ST5YMCQUG4dfbXKTIyll2wt6vQRN6g
-         dYoB4PszkZ7Mhzq0LxvqSX9x39RrFKebQsqz8JsYrmALDYLd3VXIqYaAp7EY2op7S00l
-         3S16A0s8ID88h9S+4sNj2PAkFYQqjhTCTgaSQQ8DzxDdV2anp+Ik0UCj7ZAz5/4WY6my
-         HgkSufi/ofPwaH91K2O6FVkvUofk5xIUbsv5uccZ942R1qybW5YmvETdPnGAfg7hwJkm
-         QPYg==
-X-Forwarded-Encrypted: i=1; AJvYcCXBSu0yH0nD9F188XpxaFqPBjf80Ub+WzZo4rdzxsZYeNxKwxbjCD6+5ugMmNmRMgvUpsg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzc9NX2rXWb09DvOmifGna+sz+nYIlGd8DG663iVZ2vH/+EDga2
-	6RUiRilH/o7pXKIXQfv9F/kpRtRvLaxjjjw2L2TltKZemyw5wBYyykir7J8ROunIqdjQRI4Aou7
-	lQcwgJXrp5M/z3OMHjB0vymcvVVgyJxcjPFAzOrg=
-X-Gm-Gg: ASbGnctFTe9D4Y44Tudj7PNUdQSgoHHX5Hhfd0TDwFwthnzzZNW6gg67nr2Y9qc1te6
-	qPtKdU4cTZMwfEH5+eT44ShVtqyKlNiQDXSDB6vXnkJL2DJO3AVwteFQ0jb2KxSb8TpLMksSXnP
-	gMMdQ5cQks22BkL1wSsgMiNn6ZwcGFD72INa3cY8xXdi7NduAM+N5F00wac/RJ7gVaTZ7jePrX0
-	Kzntv+Eul6W3deAKEjAzuhzbhuITDLFBEUbeFqyGy3uf8KOsGBAwk/WMduxJOAEvQIiZg==
-X-Google-Smtp-Source: AGHT+IFHuOVHY77+skx2DT3eJMV45MysGdYUMCw66JF5FsjzvbbjZOMxhEtoqfoy81L+4tGEby9yOekpu4TKKO/X0U4=
-X-Received: by 2002:ad4:59ce:0:b0:87b:b662:ea9e with SMTP id
- 6a1803df08f44-87bb662ecdbmr135126386d6.1.1760467647863; Tue, 14 Oct 2025
- 11:47:27 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1760468833; x=1761073633;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zn7CyR3hATClZo2F+den9st4BY0g90TvaIq2E5DbZas=;
+        b=wAAXFWgPL75kqICgw+ubR+cvX5xlZ+9KvFcrSonFOlVHFFCIYL3MENeq5K9bg4+RTE
+         2AD3p4h3tMwmfRNR/qMNRdrbpRaygKohi11y3kM6/hKMeHekh8JJvLDnTPpXTQgcF8lB
+         t8gJ3K0OtkaQAgdGU/F0FqfeBE9xbR8CvGCISrSF0M7Dbxi8w6GRfDjPXhPd9wccOEUc
+         u+EUeHuDakRbNWB5hatMB04iZFhXf3abYzXVbKydYj9Q1ShAe1kMMmTX+ndF8aZuYFvq
+         fddFXN1qN96Phshxabp9jAmMHCAUBlkHMdCa5jTHNOHmkEjDOnDMaUwDny2TTP8NCY1B
+         42Ug==
+X-Gm-Message-State: AOJu0YwASZ/IFt27NaZL2JxZnmpvDb+5jLDg4WcEw9k5/yCMh9o+9176
+	T5vmaS5+AupX3JdzyNR8cLs40wVM1KxNMnPZBh0Bjyp4NfTPYI8b5ZKgP2KvmA==
+X-Gm-Gg: ASbGncsZdQVYgxCQHDD4V42hazZQUucPSueBpVJyEv4OmmrBhYU7k8FOtbSqF2BrTn5
+	qPItpEMIpc0akGcWg4tREUXcfc3lNRfUiksTV60g9e/EfcFfodvvyLjVOvumPK+wqtj+kqYPdRO
+	sYUYvFLgNAPUObfo38LkhmrL73ZL7LN3yPPI4uW05yRyUVPgUq+BNpxxQb84boPFBXs8Xut5eTW
+	VW8S6/3tgSPpCzlUkMg2ttSj1LsIt1ieOroRd47bsCI2zsXOczQTqoDZDLQEIu3SJCSU92a8Lhr
+	zj5Ddh+n4Pgy9IifQrZRHqnDU+nV9HWYg9N/1LkJj/bTkYT6qrMUOM8X6RN6ItZjtheTFr7gkJm
+	vbXA2DddzfPGELPuV89CpP10nsC1KSL1+4xg=
+X-Google-Smtp-Source: AGHT+IF3bzWlGl75/ACmxAJUYHezRFpvKK4r177PbkIge5Gf8fbZO81OkBE4+Cb87GgWbcBNb1eCgA==
+X-Received: by 2002:a05:6830:700e:b0:7af:1367:4f85 with SMTP id 46e09a7af769-7c0df82d758mr12429896a34.36.1760468832545;
+        Tue, 14 Oct 2025 12:07:12 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-7c0f911aacesm4745516a34.27.2025.10.14.12.07.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Oct 2025 12:07:12 -0700 (PDT)
+Date: Tue, 14 Oct 2025 14:07:11 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 1/6] object-name: convert to use
+ `packfile_store_get_all_packs()`
+Message-ID: <j6kcv2zs2k5346mol2ojy6xcrtsszgfrm2dlhy263xxygnqus2@jcw4ppho4cnc>
+References: <20251009-pks-packfiles-convert-get-all-v2-0-0d73b87ce711@pks.im>
+ <20251009-pks-packfiles-convert-get-all-v2-1-0d73b87ce711@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251014161446.6135-1-solobarine@gmail.com> <xmqqa51txs66.fsf@gitster.g>
- <CAPSxiM9Ovkoa18gY=0+5cCHukz6Ah56Q6wLwV-7Hbs0MeWjVng@mail.gmail.com>
-In-Reply-To: <CAPSxiM9Ovkoa18gY=0+5cCHukz6Ah56Q6wLwV-7Hbs0MeWjVng@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 14 Oct 2025 14:47:16 -0400
-X-Gm-Features: AS18NWDdLL7FMn-F75zCWi0ss1sjHoM68tI4d6p_p8b7TRD6dNL6CKKCN_9CsAs
-Message-ID: <CAPig+cRKf9r3UFh9ib19wMe2gF0=0Lhjb6WqCsZ0KMjV2Co0cg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] t: update path checks using test_path helpers
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Solly <solobarine@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251009-pks-packfiles-convert-get-all-v2-1-0d73b87ce711@pks.im>
 
-On Tue, Oct 14, 2025 at 2:27=E2=80=AFPM Usman Akinyemi
-<usmanakinyemi202@gmail.com> wrote:
-> Thanks Junio for the review.
+On 25/10/09 10:01AM, Patrick Steinhardt wrote:
+> When searching for abbreviated or when trying to disambiguate object IDs
+> we do this in two steps:
+> 
+>   1. We search through the multi-pack index.
+> 
+>   2. We search through all packfiles not part of any multi-pack index.
+> 
+> The second step uses `packfile_store_get_packs()`, which knows to skip
+> loading any packfiles that are indexed by an MIDX; this is exactly what
+> we want.
+> 
+> But that function is somewhat problematic, as its behaviour is stateful
+> and is influenced by `packfile_store_get_all_packs()`. This function
+> basically does the same as `packfile_store_get_packs()`, but in addition
+> it also loads all packfiles indexed by an MIDX. The problem here is that
+> both of these functions act on the same linked list of packfiles, and
+> thus depending on whether or not `get_all_packs()` was called the result
+> returned by `get_packs()` will be different. Consequently, all callers
+> of `get_packs()` need to be prepared to see MIDX'd packs even though
+> these should in theory be excluded.
+
+So IIUC, calling packfile_store_get_packs() before
+packfile_store_get_all_packs() has been invoked results in all the packs
+being returned anyways. This is indeed confusing.
+
+> This interface is confusing and thus potentially dangerous, which is why
+> we're converting all callers of `get_packs()` to use `get_all_packs()`
+> instead.
 >
-> I was on this before the email entered.
->
-> Solomon, in addition to this you might also
-> want to check similar review done by Junio and Eric in [1]
->
-> [1]: https://public-inbox.org/git/CAPig+cRfO8t1tdCL6MB4b9XopF3HkZ=3D=3DhU=
-83AFZ38b-2zsXDjQ@mail.gmail.com/
+> Do so for the above functions in "object-name.c". As explained, we
+> already know to skip any MIDX'd packs in both `find_abbrev_len_packed()`
+> and `find_short_packed_object()`, so it's fine to start loading MIDX'd
+> packfiles.
 
-Thanks Junio for saying what I was going to say. And thanks Usman for
-digging up the link to this previous review, thus saving me the effort
-of doing so.
+Ok, converting all the callers to `get_all_packs()` requires them to
+handle receiving MIDX packfiles also. It sounds like these callsites are
+already prepared for this reality though.
 
-For what it's worth, these days, I think we usually point people at
-the lore.kernel.org archive rather than public-inbox.org, so the two
-reviews in questions can be found at [1] and [2].
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  object-name.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/object-name.c b/object-name.c
+> index f6902e140d..4e62bfa330 100644
+> --- a/object-name.c
+> +++ b/object-name.c
+> @@ -213,7 +213,7 @@ static void find_short_packed_object(struct disambiguate_state *ds)
+>  			unique_in_midx(m, ds);
+>  	}
+>  
+> -	for (p = packfile_store_get_packs(ds->repo->objects->packfiles); p && !ds->ambiguous;
+> +	for (p = packfile_store_get_all_packs(ds->repo->objects->packfiles); p && !ds->ambiguous;
+>  	     p = p->next)
+>  		unique_in_pack(p, ds);
+>  }
+> @@ -805,7 +805,7 @@ static void find_abbrev_len_packed(struct min_abbrev_data *mad)
+>  			find_abbrev_len_for_midx(m, mad);
+>  	}
+>  
+> -	for (p = packfile_store_get_packs(mad->repo->objects->packfiles); p; p = p->next)
+> +	for (p = packfile_store_get_all_packs(mad->repo->objects->packfiles); p; p = p->next)
+>  		find_abbrev_len_for_pack(p, mad);
+>  }
 
-[1]: https://lore.kernel.org/git/CAPig+cRfO8t1tdCL6MB4b9XopF3HkZ=3D=3DhU83A=
-FZ38b-2zsXDjQ@mail.gmail.com/
-[2]: https://lore.kernel.org/git/xmqqwmqm8rmr.fsf@gitster.g/
+Looks good.
+
+-Justin
