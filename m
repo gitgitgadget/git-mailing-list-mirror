@@ -1,155 +1,99 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A188625A64C
-	for <git@vger.kernel.org>; Tue, 14 Oct 2025 17:23:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760462616; cv=none; b=hNFuMUT5RCr4ke9VlyHJzNL7wiPglA1i6IJxcHKUip/RNHLNY239Fk31v2csuTx2hWPbCcR/odCTU5iy0YrqHs5i+zt+/2ugEEzUDvrAiQFYMFZZ5ovazCWZfKWdM9g/r4qoxxmnNBdj7Gq057sWFQGcmvuQusf4AZJ9Xoor9DY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760462616; c=relaxed/simple;
-	bh=wBznVvaQfN+fGW+Dm0CgHU17J9s8Y9TSBiA/NfwYshI=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DAB634BA37
+	for <git@vger.kernel.org>; Tue, 14 Oct 2025 17:35:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1760463335; cv=pass; b=B0RdHfxyn7xMBzWBuTIcAcggXZM3C52e/V/64wA6kUX6We41AlMxIC2jrTVMScIrvplijdYM0W12/d4v5fzJbeKRNjk9iC9BR52bpqk+yVnklA6q4Z6QnzebaSE5BNJm1IhjuzSLvJSrcu/9gQGOufWjek3QG7hopHsN7jhQkAs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1760463335; c=relaxed/simple;
+	bh=X1i06504YGtqyYoQ0dOs5aKZGZpc9cjAAc9tmBB7W4k=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Fcd8yovN8K0P8zq+I3DOsWPrTShBYwG0hg2uYw73a875V7iS2PEN6GnvXl6QgoSPYfTkpoVu9vLz8fLn3Nb009QpEm+tRwZ9ud3GDEAZl7+gwW2CmZmb9Idw+hafsdbum00TxdxDe+2e8lJWfKpHL5NUAp+E2XQErGvMRIWboOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VUGCf/Hy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Olh/5C1l; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=WcabAO73yXTZIZkanv5w0IPO9jJ647Rdg1Fg2ZQ9VnJRESz4IpiC4znktvTk9i8SQDxxO3eQ1TFpzNCTgCH4yt459jBeTgikIo8WD7awlrbwhjVjTY4kljhSHbw4wL6BgmkLtJKCJUgs00knu8Xpfde63BNxTlDVqlJlDdaj2sA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=i9IAwNlX; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VUGCf/Hy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Olh/5C1l"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 99B351D00118;
-	Tue, 14 Oct 2025 13:23:33 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 14 Oct 2025 13:23:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760462613; x=1760549013; bh=yuZFBalQij
-	qcRJatL2dDm0irXYlIHJ0P6dsFLZmkRv8=; b=VUGCf/HyKu4b4B1utwSNJ6Qrge
-	BUgUVCDLr8ExDxufNN6gzLFEDOrotBXyG6d38Zk23wtlo1TrzcAqO+Kz4eiO3K9n
-	xk+5nyuutR8EuhcvBKjgMX1xHDKWtZCQii8hJ+59FMrMSmTweyYSz2nNBI8HOhIA
-	PPRqQLBeA8KDuBBb2JbVd+o6g0wfbH1G20bcqPRS5E56559fnmDaZa6ojW9/CFiA
-	+hm3rMK2c0gJy0SOpIAZVP3EALnjQ/3a38u2L9Vdvk9KGZGkdueG84hx8Hr+a/HW
-	z/qblytx6VW9YaF4RtIGER1gvWsOmaYjChbdtW8hRbjaiagU+zmPG+PeIMvQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760462613; x=1760549013; bh=yuZFBalQijqcRJatL2dDm0irXYlIHJ0P6ds
-	FLZmkRv8=; b=Olh/5C1lDBsddcEQ77JHjenajbBuWIg/UNaJwhnUDtS7GY3t0V/
-	/AXdlh/Fm1UtOmOwRSMCQkgMIViKtSpvR6opFN5r+SW2kgpfVizn1QdgwqjTJATk
-	Yw04bZP6hkDLI2z/NQNHLK2fPVCJzCz84K5PcVjk7a3LH04TfmfmdIYTZ5n+/tH/
-	oBIyJ6d9AmzN9t6n4KOH8eNbttKiKWFIQ38ZkMoJmXoJcZwNgvxUgFRGLITvkLY6
-	6Gl5YqHL7QfrTdCyL8uD1jHShoXesA1SozJm/75rJOiRgTtvd3q2guzxiH/MNVk1
-	bUPQkgrZHZnNHB04wzF+PovDWyfMPgj5njg==
-X-ME-Sender: <xms:FYfuaHcRMuFdqrKEPsZubim8FLGKdL1SFo0xvJsjZIBsIBpzJOOSzQ>
-    <xme:FYfuaEMa5YzufE0JLXh8WptOrcDyY4m989aywUIHysc7YVlFWvayFCv9USMJ56pEq
-    NANMBdfKIEhusTSquhQg1fz8fSPXt82BdJlzmRMv94nw17j9ZhcIw>
-X-ME-Received: <xmr:FYfuaFhu0pCC-KKIOImm4ENH15c8hl1xFGgMEx_JFgJNq9iIwl9a4ZAEmz8RkAa7Auw6VqqKdrZzkzRa7fFTKFMP6sJIZjOSH7Wa>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdduuddvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghh
-    ihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:FYfuaH0Z_JrV8OZIo24qwIxN55uWux0Vw12qlz-Lb-iP3-VR2u_xfA>
-    <xmx:FYfuaPhdug6nnL7fSyMNO5MbOIkzca7FGdiK61xWJuZz1hbIkfdogA>
-    <xmx:FYfuaHcg_bSlsNpW2cpuBrpkHa4fFK-87S1-sJwGbKuZq40Ub9autQ>
-    <xmx:FYfuaCnQkCInRhJsFcxU42yAmfL1E_URw07LzkFAlUHRnBzNQRtJtg>
-    <xmx:FYfuaDe8tbhXH1rja4Oujr_aT5tdnl1JBmdehpZuX5iLSYdbDcavBYGp>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Oct 2025 13:23:32 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] refs/files: deprecate writing symrefs as symbolic links
-In-Reply-To: <20251014-pks-ref-files-deprecate-symbolic-links-v1-1-4bcd6a4ef6f5@pks.im>
-	(Patrick Steinhardt's message of "Tue, 14 Oct 2025 10:17:14 +0200")
-References: <20251014-pks-ref-files-deprecate-symbolic-links-v1-1-4bcd6a4ef6f5@pks.im>
-Date: Tue, 14 Oct 2025 10:23:31 -0700
-Message-ID: <xmqqplapxur0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="i9IAwNlX"
+ARC-Seal: i=1; a=rsa-sha256; t=1760463324; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=I1lVwoNNm4O25FFuGRDz7hVXQdHK+iMgMivfBvAsjSHvMfaSRyDGqzC5dStLI+vhed7fWDaHRX1nM4D9J+HwK22VYRBh8rIV+KjSPhXYu8TYG9nabxGJd5BgJn9+u1yizuHk4NkOqlYsVrKRBdZZbBCxWYTkH25fBp1IaQqD8Dw=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1760463324; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=fTIVcp08rF520DSPoqEnEyt6f0hd0c9/5AMvndUWnss=; 
+	b=MviMr9D67hWjDk7S65pV2DdQb8qnA93y+KMtL71V1Y8zYpvknO3dlcNj2HRbnbIl7tRTuNTOO8sqfCBIk31rudrgHPnZhIRvoksivHbpL0HaHbgiUzPUOwiB1pK2ZlxeiDLEy/VSQp4i2cSRvFEaNXP+T4DR8kj48x9LMpmNUPs=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1760463323;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=fTIVcp08rF520DSPoqEnEyt6f0hd0c9/5AMvndUWnss=;
+	b=i9IAwNlX8Rv0Rhtf7sTNPGWZ7YIkqXgtUIA7GDGiqh/9h+oEtH8VDjR+1aqyqNrp
+	13NU860mzaK2s4XFAi2RSHY4jKLUEEAkWQ0kxP29gIgG6j4aco5GpEvWSWUJt12OssT
+	N5RuK25WCB2RGLPtqI7uyH/ztzvcXJpE8QHBxUCk=
+Received: by mx.zohomail.com with SMTPS id 176046331874239.24397659083297;
+	Tue, 14 Oct 2025 10:35:18 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Josh Steadmon
+ <steadmon@google.com>, =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>
+Subject: Re: [PATCH 01/10] run-command: add stdin callback for parallelization
+In-Reply-To: <87v7ks424z.fsf@collabora.com>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20250925125352.1728840-2-adrian.ratiu@collabora.com>
+ <aN4c6l7gRi4auss1@pks.im> <87v7ks424z.fsf@collabora.com>
+Date: Tue, 14 Oct 2025 20:35:14 +0300
+Message-ID: <87jz0xfktp.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; format=flowed
+X-ZohoMailClient: External
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi again Patrick and Junio,
 
-> +* Support for `core.preferSymlinkRefs=true` has been deprecated and will be
-> +  removed in Git 3.0. If set, symbolic refs like "HEAD" would be written as
-> +  symbolic links instead of as a plain file using the symref format.
+On Mon, 06 Oct 2025, Adrian Ratiu <adrian.ratiu@collabora.com> 
+wrote:
+> Hi Patrick and thanks for review! I'll fix in v2 all the issues 
+> you pointed out. 
+> 
+> On Thu, 02 Oct 2025, Patrick Steinhardt <ps@pks.im> wrote: 
+>>> +		 * child input is provided via path_to_stdin when 
+>>> the feed_pipe cb is +		 * missing, so we just 
+>>> signal an EOF.  +		 */ +		if 
+>>> (!opts->feed_pipe) { +			close(proc->in); + 
+>>> proc->in = 0;  
+>>  Hm. It's curious that we use a valid file descriptor 
+>> here. Shouldn't we rather use `-1`? Otherwise I could see that 
+>> we might try to close this seemingly valid file descriptor at a 
+>> later point in time.   
+> 
+> I actually asked myself this while preparing the patches, since 
+> -1  is a better fit. 
+> 
+> I only left = 0 for historical reasons, to not modify these 
+> patches too much. :) However I do 100% agree with both you and 
+> Junio that -1 should be used here. 
+> 
+> Will do in v2. 
 
-The second sentence reads as if we are talking about a newly
-introduced feature, but I cannot quite rephrase it to avoid that
-impression myself.
+This is much harder and riskier than I originally anticipated, so 
+I gave up trying to implement it after a few failed attempts.
 
-> +Note that for now, only the writing side for such symbolic links is deprecated.
-> +Reading such symbolic links is still supported for now.
+In a nutshell, we have to change the < 0, 0 and > 0 semantics 
+defined in run-command.h for .in, .out, and .err fds across the 
+entire source tree.
 
-Double "for now".  Let's start the above with "Note that only the ...".
+It's a massive, error-prone and out-of-scope amount of work.
 
-> diff --git a/Documentation/config/core.adoc b/Documentation/config/core.adoc
-> index 08739bb9d42..e9272bbc0bd 100644
-> --- a/Documentation/config/core.adoc
-> +++ b/Documentation/config/core.adoc
-> @@ -290,6 +290,9 @@ core.preferSymlinkRefs::
->  	and other symbolic reference files, use symbolic links.
->  	This is sometimes needed to work with old scripts that
->  	expect HEAD to be a symbolic link.
-> ++
-> +This configuration is deprecated and will be removed in Git 3.0. Writing
-> +symbolic links for symrefs will not be supported anymore.
-
-Or spinning it a bit positively:
-
-	Symbolic refs will always be written as textual symrefs.
-
-> -#ifdef NO_SYMLINK_HEAD
-> +#if defined(NO_SYMLINK_HEAD) || defined(WITH_BREAKING_CHANGES)
->  #define create_ref_symlink(a, b) (-1)
-
-Perhaps we want to say NOT_CONSTANT(-1) here?
-
->  #else
->  static int create_ref_symlink(struct ref_lock *lock, const char *target)
->  {
-> +	static int warn_once = 1;
-> +	char *ref_path;
->  	int ret = -1;
->  
-> -	char *ref_path = get_locked_file_path(&lock->lk);
-> +	if (warn_once)
-> +		warning(_("'core.preferSymlinkRefs=true' is nominated for removal.\n"
-> +			  "hint: The use of symbolic links for symbolic refs is deprecated\n"
-> +			  "hint: and will be removed in Git 3.0. The configuration that\n"
-> +			  "hint: tells Git to use them is thus going away. You can unset\n"
-> +			  "hint: it with:\n"
-> +			  "hint:\n"
-> +			  "hint:\tgit config unset core.preferSymlinkRefs\n"
-> +			  "hint:\n"
-> +			  "hint: Git will then use the symref format instead."));
-
-I've always called them "textual symref" when I needed to
-differenciate them from symbolic links.  I haven't seen "symref
-format", though.  Do we have an official terminology?
-
-> +	warn_once = 0;
-> +
-> +	ref_path = get_locked_file_path(&lock->lk);
-
-Was there a reason why we want to first warn and then attempt to
-lock?  We are afraid that we may die before we have a chance to
-warn()?
+Can we please just keep the current run-command API which uses 0 
+for "no fd passed"? I'd very much like to avoid changing this 
+run-command API.
