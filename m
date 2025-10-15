@@ -1,73 +1,73 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-yw1-f194.google.com (mail-yw1-f194.google.com [209.85.128.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EB730FC29
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:29:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D325306D52
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:29:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760567348; cv=none; b=aa+WkAOQQhBTyGiamPylMeFm2tIbp12kIb3rVfPQglWBweDNFjaQuagZXovtcipYIW8v9l/gOKRUBeFfV2OS/0twG/8ifgtg1kgC/0sxueWjco1Uzb/9fQI/ERhFm8JF+71c6YshjskHByfEkQxyN9cXwjco+PiOZxUisSOH7lA=
+	t=1760567349; cv=none; b=Cct1szTUSByUFQPAMJMPcIKXMXt6uDbwk4/LVTuqKewFou3FtV7yplOWIz6wWt6RFNYLT0XrSmRwgY1x/068R06J78DiVrvb+6Sf1KsU3S/iwDura4FlmmwNMNS6eLBTRBc1sOPaZ0Jmkr5Ky2nhY989o8FxGa7poypYJ+ikyEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760567348; c=relaxed/simple;
-	bh=7PqDbJMWMMO6q5HA1e1sXV4d4N/XN5U/LXEgvHYpaSc=;
+	s=arc-20240116; t=1760567349; c=relaxed/simple;
+	bh=S2WavbHr5rVRCxZreY31sYpCwGWAlSSM14d79193xh0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uu4Ddv8nZU7OHpLRDGmEWoHJy3avqWgoqsDNw7E/r2D3+6KMyNMgdwPxyI2GntricpWvInBK3a4oMLQADdCjZmTT0AL+2Et9vaNdteBQf2zTfWFMVod4NcSGoP2vVg7TUjqCy4hhYm5CfbGdINfQzeP1aLc+gup2O3mJ8hrRC9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=qqEgeRaz; arc=none smtp.client-ip=209.85.128.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=ppG8Lu+Kg8zWXrDDCBdNxssPnNvMw7Rlbam/2dBzbVu8A0fXHvF+4bjVmtKT6uoa3Td2zxb9T+1YOFmP9gucF4rOEJAG5cnQYRexGeypy9YUnVldroAF4wW9sxf7hiM8hgCl7fifQhJ5Fuv9pWNpW9HeGH+mSyWR6M2egnDKmW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ARWzQlpM; arc=none smtp.client-ip=209.85.128.194
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="qqEgeRaz"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-71d5fb5e34cso930727b3.0
-        for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:29:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ARWzQlpM"
+Received: by mail-yw1-f194.google.com with SMTP id 00721157ae682-781da6c1a37so930547b3.0
+        for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:29:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1760567343; x=1761172143; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1760567346; x=1761172146; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=yaLG12XzN8pDdRgsaHnQo5J+ixGzZr/HseGQoDKWv+I=;
-        b=qqEgeRazL/f3lCktc6eoeqiwoebz9zFPRr/yQQyw3/XqfIdDHjOfuh2EZTIBUOqsH5
-         8zVHmSUM2rwHT1oNhbkNV+aTjiDb+b2qOYUFvtTzrpIxKsokMpEy2wyNfOWxa7oOdT1m
-         H86vT6QhpHRcamjDzMKzeekp1ppLtK1MgFXvMN42VClfYZek5mIHQaOMGL+GtVha3szi
-         bgRGDX5Z4SNzOgWKBu+a/R//WN3XaU1ah0gg/p2dYn8nKb5XLXUg3FO0Bc0hEqZ/BF/+
-         +brDlWSA10H6GrTwBAumrnzb/Ahvn7XHuQPl8+KcClCeIzmochqsIkDHliQmTY1pBrg9
-         FgDA==
+        bh=jtuDD6VEiW8iUtp5I3zzSXgzmMFp0MiNLlIF9k4LzEs=;
+        b=ARWzQlpMvPxjliIjHvbS/V+YfSeW0ISeUYv6lxRWvRHbrhiUYLRJev9ELEJCcsNGIx
+         emNokSbMBb9sYXb+2+QYKGtgdd8TwgYB2HUqRKwMNxA4ht85BwuqopxPhtlJ0mpFjDjU
+         m2pzr5I+ma6cgKcrz3E3gl/PZpkEpNgZRr13Cp0UTgLAZKScPfl6m/+vgGfsqR7igpJe
+         y4aBtUQWSpbKLChUnEQgyd3T7YRj4+m091R6sAZWjYulXyVS3I8G4L2xMXAPqQUNrGDl
+         5vsBv7k5HDhYLY2pGOTrQRf7hLvBtITu1V4q5oIyzaxLzycl/fu1QBp7oDfN/kneZzxj
+         gBgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760567343; x=1761172143;
+        d=1e100.net; s=20230601; t=1760567346; x=1761172146;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yaLG12XzN8pDdRgsaHnQo5J+ixGzZr/HseGQoDKWv+I=;
-        b=BhCJQJnNtIPDaRvDHuxSbv7S5ZXO4kQTkChdwwoY0EbFLT5msDcBbg8dEEYVmcxOmi
-         mPLVUF/D7VJxMyHmT6w1QIcjJYZuYQvKVhgB3NOy9BtSxqL+tA9OvUiVE2D2j1XSOEPx
-         EurMFu8/ecqnRSe60vd39c5xzMub2D85GqxINPKczmNhfInQYq+enGZUcwLkjCv/jNnx
-         8jSzVVGysACBubykBvRtQF0F+3pL2HfAC2RSfnKaJVJDPIdOGnFo73GMe+iVgoseG5Re
-         4Oauyv8QPjJj7jxyNONyI89EJDMFkRBsdteQPMMbYseX8The9fqfVbz+RNsJRQa4m7dp
-         0FCQ==
-X-Gm-Message-State: AOJu0Yxhy07b2LLHEAksbruie2IMm2V+52PAFAtcm7aNgtQ0Y7ZqOgiH
-	EgrR65tJD6djDXhswbptCSkSrSL/HpygKUjRqpPQW99l3BrQS5UUTFhmsj/uSix45iptGTIaAqx
-	Xxzic6dgbnA==
-X-Gm-Gg: ASbGncurRrWImlfubJVF+3j6wTLDmIe8taPUAjKcVd971TpV+0i3HX8tnTBm8EtDO+4
-	oy9kmMBeN2oYNs6tB9FuQf8CJl7JmMBBoG2EdepLicdBCOPfwHzYOFkS4srO240o9LT3rUsfYjC
-	Ic7W5Ab3ono4UHGirmYJJgxTYa4Yq1M1OZ8770Zq7V1FNwfUpel2L9eBLwvv77mTo9z2soFZ6IP
-	/qEYyF/DFUT365S9bAf+n78xyFMyyDuPrA+Lwtmq7YMHsY06+QaJcYrlF/Gda8caqyR+wc1oSYe
-	NtoxS9chDCZpF9QucUENl4zFUvyfWR1JC9UcgPkju2WaUBsOCymt1h4P205QDhCpkVhEVvW6Jxc
-	qZ1iFnHBQglMFLmiKsY+/v/0xveHL3Y4e2QO8bU8+ydlGN4H7tmhq/P4gWD5fgDxB+Olv4l+LpS
-	mI4JerORXCrwTjzos5Cyh3ZhNGBdTt0v7qZn8JA4AhHpLNLWtCLQGDBBqdKVX6f45M2JLoqNwZ6
-	OWVGXXZB+dNEOeGqA==
-X-Google-Smtp-Source: AGHT+IFsCsKqbaluHrALaR8c5Rsdc3sFpq5mEApoOetQVCU/0dVUGfz5xklB8caUpZ8pGPnERWBo/g==
-X-Received: by 2002:a05:690c:4a07:b0:772:495e:56de with SMTP id 00721157ae682-78266674251mr15815297b3.0.1760567343528;
-        Wed, 15 Oct 2025 15:29:03 -0700 (PDT)
+        bh=jtuDD6VEiW8iUtp5I3zzSXgzmMFp0MiNLlIF9k4LzEs=;
+        b=YuZZ8pJZqFCi1542F+cPrnU+oB08vpX3IsAKFXHS1LBmHw+LtVCMHH9PcvEgGGfwx7
+         lKy+9CxifntRrhqQT5+4meJkSVR6CVJHERb0CtbaD9rIgWlSsSHFQAu7GSvmCgjBpTEN
+         i+mtNuJvC2+RJlA7iPk4B0XdFoU5oTtfg1tJe+2HIyC+34NnB1Y1WV3P/8oeg+d3CU70
+         O8Cn2FBgTjClO49g4Phy7YuyzTg2T0ff9VQmvN0bZhLtO3+3OZ4pL6ZNHes1rR5OyFJM
+         xPsjIWqTrjWCIX+4rtuEULSo/91dcHeNQppw/F5Gt7/WfUeqOPXfJx+MSJR5x2yGvZqW
+         iZ1Q==
+X-Gm-Message-State: AOJu0YxzkDpEST32b0y+QJP4UKv6K96H+GO1SO6zWb/Wu7t5w2v29Hhz
+	B5uRz92qaRijuJzDTUHPLnScNewzpigxvpVyhvP0AX2cD0JdXffjudWseNVfu7IUHEgD5n13n5t
+	I5KqoPBa+/vby
+X-Gm-Gg: ASbGncvghVUHqmGqpoaxhohaJfJzG1kHXshERPxsAe+PwlM2Tu6LFk3vd5n1FyXofUz
+	ezvbCUN4slqeXcflLO2IpsOH6MMXgROlmqKnSlk6nzIB34eQ9ryLYMdKHBHSBRUrWGiVXRJ6nfC
+	O/hDJ4nqek+Kbge9EHKwfIc+tmYcM5+mEKhZ0If3UGcqdiBCaaQiigOISLbv9plEPnZBKAbDo/o
+	lFKAnV70v2nob4ac/KlJt6N+8LUogAHxl7DPnnO9MBryY4/HKI4QGoy0Hxi3zsXSSstMwR35mjQ
+	UuJpbe3FocauOGg7ApYZsfECVA9sUEGyZy0j3pkqW5kJ0ypQVMFjIH/4z6jV5gvNZ9xOT+g6tGe
+	69ggThS314dHlngfoHE+ThogyniJH1eadptxSudjxT8L40kUIOa+3CXKqfNnRwLetxKl5JroI/i
+	Mpul0jhXrm1blUq43ewXpopOGiWKDFMVE9Ko+tlwz0gPeTRKRm1HSO4KDJvV+Odk0cj+G5obQow
+	eP89yADkd8IuPHNQQ==
+X-Google-Smtp-Source: AGHT+IFRYV/xchjI7ZuYWZ0aeF53GvZ0teKpMLqlij166smpyHQfvVNz/u2Ly+w4hIE9eaNeZDujUA==
+X-Received: by 2002:a05:690c:260a:b0:77f:a47d:23bd with SMTP id 00721157ae682-780e16d6806mr306273487b3.33.1760567346424;
+        Wed, 15 Oct 2025 15:29:06 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-7828d7b987bsm2741567b3.27.2025.10.15.15.29.03
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78292c149a5sm2586207b3.41.2025.10.15.15.29.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 15:29:03 -0700 (PDT)
-Date: Wed, 15 Oct 2025 18:29:02 -0400
+        Wed, 15 Oct 2025 15:29:06 -0700 (PDT)
+Date: Wed, 15 Oct 2025 18:29:05 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 35/49] builtin/repack.c: reorder
+Subject: [PATCH v2 36/49] builtin/repack.c: inline
  `remove_redundant_bitmaps()`
-Message-ID: <8042860b26230b50c51e98db30960272392a6b12.1760567210.git.me@ttaylorr.com>
+Message-ID: <af06f60e639827038fb9f75e3d884303e9b20416.1760567210.git.me@ttaylorr.com>
 References: <cover.1759097191.git.me@ttaylorr.com>
  <cover.1760567210.git.me@ttaylorr.com>
 Precedence: bulk
@@ -80,91 +80,71 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1760567210.git.me@ttaylorr.com>
 
-The next commit will inline the call to `remove_redundant_bitmaps()`
-into `write_midx_included_packs()`. Reorder these two functions to avoid
-a forward declaration to `remove_redundant_bitmaps()`.
+After writing a new MIDX, the repack command removes any bitmaps
+belonging to packs which were written into the MIDX.
+
+This is currently done in a separate function outside of
+`write_midx_included_packs()`, which forces the caller to keep track of
+the set of packs written into the MIDX.
+
+Prepare to no longer require the caller to keep track of such
+information by inlining the clean-up into `write_midx_included_packs()`.
+Future commits will make the caller oblivious to the set of packs
+included in the MIDX altogether.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c | 58 ++++++++++++++++++++++++------------------------
- 1 file changed, 29 insertions(+), 29 deletions(-)
+ builtin/repack.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/builtin/repack.c b/builtin/repack.c
-index a57a14ef60..865e0af039 100644
+index 865e0af039..271c869268 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -296,6 +296,35 @@ static void midx_included_packs(struct string_list *include,
- 	strbuf_release(&buf);
+@@ -331,10 +331,10 @@ static int write_midx_included_packs(struct repack_write_midx_opts *opts)
+ 	struct string_list_item *item;
+ 	struct packed_git *preferred = pack_geometry_preferred_pack(opts->geometry);
+ 	FILE *in;
+-	int ret;
++	int ret = 0;
+ 
+ 	if (!opts->include->nr)
+-		return 0;
++		goto done;
+ 
+ 	cmd.in = -1;
+ 	cmd.git_cmd = 1;
+@@ -392,14 +392,18 @@ static int write_midx_included_packs(struct repack_write_midx_opts *opts)
+ 
+ 	ret = start_command(&cmd);
+ 	if (ret)
+-		return ret;
++		goto done;
+ 
+ 	in = xfdopen(cmd.in, "w");
+ 	for_each_string_list_item(item, opts->include)
+ 		fprintf(in, "%s\n", item->string);
+ 	fclose(in);
+ 
+-	return finish_command(&cmd);
++	ret = finish_command(&cmd);
++done:
++	if (!ret && opts->write_bitmaps)
++		remove_redundant_bitmaps(opts->include, opts->packdir);
++	return ret;
  }
  
-+static void remove_redundant_bitmaps(struct string_list *include,
-+				     const char *packdir)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+	struct string_list_item *item;
-+	size_t packdir_len;
-+
-+	strbuf_addstr(&path, packdir);
-+	strbuf_addch(&path, '/');
-+	packdir_len = path.len;
-+
-+	/*
-+	 * Remove any pack bitmaps corresponding to packs which are now
-+	 * included in the MIDX.
-+	 */
-+	for_each_string_list_item(item, include) {
-+		strbuf_addstr(&path, item->string);
-+		strbuf_strip_suffix(&path, ".idx");
-+		strbuf_addstr(&path, ".bitmap");
-+
-+		if (unlink(path.buf) && errno != ENOENT)
-+			warning_errno(_("could not remove stale bitmap: %s"),
-+				      path.buf);
-+
-+		strbuf_setlen(&path, packdir_len);
-+	}
-+	strbuf_release(&path);
-+}
-+
- static int write_midx_included_packs(struct repack_write_midx_opts *opts)
- {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
-@@ -373,35 +402,6 @@ static int write_midx_included_packs(struct repack_write_midx_opts *opts)
- 	return finish_command(&cmd);
- }
- 
--static void remove_redundant_bitmaps(struct string_list *include,
--				     const char *packdir)
--{
--	struct strbuf path = STRBUF_INIT;
--	struct string_list_item *item;
--	size_t packdir_len;
--
--	strbuf_addstr(&path, packdir);
--	strbuf_addch(&path, '/');
--	packdir_len = path.len;
--
--	/*
--	 * Remove any pack bitmaps corresponding to packs which are now
--	 * included in the MIDX.
--	 */
--	for_each_string_list_item(item, include) {
--		strbuf_addstr(&path, item->string);
--		strbuf_strip_suffix(&path, ".idx");
--		strbuf_addstr(&path, ".bitmap");
--
--		if (unlink(path.buf) && errno != ENOENT)
--			warning_errno(_("could not remove stale bitmap: %s"),
--				      path.buf);
--
--		strbuf_setlen(&path, packdir_len);
--	}
--	strbuf_release(&path);
--}
--
  static int finish_pack_objects_cmd(const struct git_hash_algo *algop,
- 				   struct child_process *cmd,
- 				   struct string_list *names,
+@@ -1003,9 +1007,6 @@ int cmd_repack(int argc,
+ 
+ 		ret = write_midx_included_packs(&opts);
+ 
+-		if (!ret && write_bitmaps)
+-			remove_redundant_bitmaps(&include, opts.packdir);
+-
+ 		string_list_clear(&include, 0);
+ 
+ 		if (ret)
 -- 
 2.51.0.540.ga7423965ad8
 
