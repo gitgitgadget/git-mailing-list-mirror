@@ -1,124 +1,115 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7DE32C311
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 13:13:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5846A1BC5C
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 13:37:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760534022; cv=none; b=HiJ+aY1PEfTOw9Sz85MgTxReJPgd9FoCJL7VOJbt7klDDKcPBIjNQ+5GqAz2+/331i/hGExbvAPE1PWvPqXnnqSwUtNVLAWMxfCs1vKhKCGUbWJBXeVwqPfpbXcGUj+Ds5l2o32ogdST4yADNVRztT2Rkr8MfoUmNW6TKH42oXI=
+	t=1760535426; cv=none; b=XbsNYqy0cWyfOCPJ4RqgMPCv5KZlBTnTYeRN4IIMvZmG1tUVEzXzaKwS3xGQP50PL8s/v8VANIuttzNyCnmCdeUozy/bQD4bYDKehsA/kB238ZiLq+Ao21ccAQZtsvE/EOyuJMBN/K7SD7j4q1VjF+qGJt4Es4VFrpgra7G+xUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760534022; c=relaxed/simple;
-	bh=63pIc3RIMmX64MyfllCOJ2DxIPVhIvCFyJ/N01f+viU=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=WOryioaEmd9L0wt9j+bHOG+/lbr5JP9JXUzDznoDpHDKcbtbRlBJJO3HeYJaKsUcyfwQAds4ECDrY+EWNubOiGMqI67RIXix7HNGUlQ6zKSd0vhkl5Sc1CEZ9HPX5g6TJKgexQteSxPws1a+NA78reXQcvublLCB+WHCagx/hwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VfQ+mG2H; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760535426; c=relaxed/simple;
+	bh=BUDvRuLKG6tPth0Yr3p6OuBfkZp8qaCUnDYvBfzaecw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hKYoPW2EccAkjw1yqrvrmJiUKLZj8EXy+Ti79C87nqNIo2Vjl4TQotY99xB/1Xycn+fVJ4AR79JvaZTAFY/o4MJkWN2UlzF7QM78YFGeMYR9Bly+Mb4dZawlxX4G8N8Lst9WBMJUQVRenK5SMZS/X1JSi9C2r7ZamXiRfmG0eHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ajHqzKlS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m+2jhyFa; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VfQ+mG2H"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-7811fa91774so5678773b3a.0
-        for <git@vger.kernel.org>; Wed, 15 Oct 2025 06:13:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760534019; x=1761138819; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Elrg2QGy+C+XEK5lmrIuVYJsgcnYNi5sxte5Lq4vkuA=;
-        b=VfQ+mG2Hb7rD4HeBtch5G+qU8+c5RHO/JnYkKHfAeUPMzRPKsuZBCXEUBGLZeLaAud
-         F3WJjXpYPfsSGODPc2DRDu0qzyIxZ/80oByyY0UsiouiV364oxeP9og/10xdchzaYprx
-         ee3hi/gP8bVJGzUZ/k3lXA2sNniBnJN6hMsgizM8meFhV/4+OAAtzK7F7T2N5v9cDB9p
-         TYqNqfeX3/ML5Q81lgu76hhI+wxnjmG5WyD0g4fQ+eyDijU/8m6w42n41GmZmqMZ8bf8
-         MtPx+s/0eVSD1NAscDIKuZBQ+r9xsbja3+BJj9vK5S5hzgFpk3nOEZxE/IB6t3jnHUn2
-         JlCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760534019; x=1761138819;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Elrg2QGy+C+XEK5lmrIuVYJsgcnYNi5sxte5Lq4vkuA=;
-        b=OQHPAQmUq1Z8lbeImj+73j4cNlGxgqvaFTsqQdP3b/I4vmKMcki+g76c5nsIAf7Fv8
-         TShFSsDfC/QIFf4RS4waM/8VWcBKjZLAnEml12r2nNdvXnjI+DL/ZwAB0aTra8+9V+3F
-         Ojm7ObNaRfsQHBo9VxPH7+pZIa0qllD9uT2EC4KpJFvXMT9f+lPZ+02Bt71R37m3ZNVy
-         FKPXp2P4WJrYRjjRGw5navgQadyjFQu8IOg4GeUGVyRwsTqw9FwfoOW0DtWsmu4Jz4cu
-         NvJc+eW6HIrMbrSaTVIp0n00HxruYj22maFm3C/7UhXUDwbJ2vemw4mngOCNV4OTWKi7
-         sqLg==
-X-Gm-Message-State: AOJu0YwWByiirsaEo4UUPpHmZRPXXjF1V/tcbV/Isd8dhLRm7um9cJ4t
-	0CevQJEBDDq1BwT/wpTijbCDRmGv6DJsoIksN5Sg4r67cURxvZ1L/sYT2nhW5R3Z
-X-Gm-Gg: ASbGncu1vum7TtSrlKyxkCyJzcevNz28Sp1X6qlRzqYQIqah2cO6B1eg7NX/IPL8E3y
-	EzNr/+48N/8sulJIkO6c7qJfKTRK6ABPBRYc6zlv+BiXForkX72GURq71AKsvNm58C5oTtZ46A/
-	FqRz+dlp1QFWDo2Gd/lCFH9QTzrbJfEWXDioRt02vsI7iWoohNObXmR/WBU8gmdnMenBg7TGo9W
-	j/0KbWShHd7/9qaeeIRiEQro0kxH5WaacvHLwI5vL6oTrflJbbh7aqXe0CxmPEiaeCK55t9+ISB
-	anP9eZg7ftEMQ7mc9s6elKAeaHMExQdsBZ68EsQF2bx/wsURdvEIhwFYZEQ3q9oWybbCcZHNn9H
-	vKZennCGb/Lj56B95WuQvumvFm8cGXUXT0PAzBk3P
-X-Google-Smtp-Source: AGHT+IEg8LfpcQK4isPEmVnFW0a0mCBcZGEVOV2HT2Jf8eHWRoB9Rp/W02bsgJxshNuw7nVA/bpffA==
-X-Received: by 2002:a05:6a20:729d:b0:266:1f27:a024 with SMTP id adf61e73a8af0-32da8512ce6mr37708195637.41.1760534019165;
-        Wed, 15 Oct 2025 06:13:39 -0700 (PDT)
-Received: from [127.0.0.1] ([68.220.60.2])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b678df24ac2sm15044896a12.22.2025.10.15.06.13.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 06:13:38 -0700 (PDT)
-Message-Id: <2236dac4e469a82813b71e6bc67ec29fcb78752c.1760534011.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1976.v3.git.1760534011.gitgitgadget@gmail.com>
-References: <pull.1976.v2.git.1759951536.gitgitgadget@gmail.com>
-	<pull.1976.v3.git.1760534011.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 15 Oct 2025 13:13:31 +0000
-Subject: [PATCH v3 4/4] doc: git-pull: clarify how to exit a conflicted merge
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ajHqzKlS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m+2jhyFa"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 681FC14001C0;
+	Wed, 15 Oct 2025 09:37:03 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 15 Oct 2025 09:37:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1760535423; x=1760621823; bh=h9ob8kekCk
+	7RkavC/xBIv9R7xe7ZbP/dN/54mlrNX0A=; b=ajHqzKlS/q1o58EeLpEH62MS8o
+	zDAeTtDrPNi181jH4wr4D0Q2C1mTeY3eDLNspTcwblHgLEZEbGwvq7kFy/HV8Fp8
+	bMVHtASi1E7sQT9x7BUSE6vlcxjoyoBNHKfoC2CduFscOl55wPZmguAZTP1q5DlN
+	t1qsoQXhZWvXxiIjPrSzTJyq5sN7GrIydcIdw91yvj3oj1+q2xMe/k1ulS5hQflr
+	e7T/ORYcPfvnTtfSyLGY/N2hmIVrzvKOQROoM4J4W6O4ayReHk3LGKn1xKIaVVXu
+	sdoo2+bKRZ9MK6ovMK24MVh9A5vLu46HphVPJhyPD+xffEYPlAIrhu6bHTOA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760535423; x=1760621823; bh=h9ob8kekCk7RkavC/xBIv9R7xe7ZbP/dN/5
+	4mlrNX0A=; b=m+2jhyFaYOo0Ju99b5/WfJoYX0NblJEA4Oaw1eVc8DBp0Veccjf
+	OgFeyGhYo6nqJJat9o6yhK/VsfDNPen0WwyjHnqizs1xL8AO17p0tZdu20FBOAy7
+	1McjVyyUfLCD6pifyhWmYbHdR+SNorIrxVjS1s1uI5mm1xKsStpS4Espx3JSBqwf
+	tPB+b98yNQSt9oDOeMKvC1SCqOx54dKuCMnMb0o4wgQq+J1i2ujQOkh4WwfIUgfc
+	ON8XRsIvcsKZCflAmlJaEKlAgNFE+dw2dYInV+23XzDWN+MnngTrPKdNQgDcNOTH
+	Emn70IRiTGP0AVbRseQPQ3LMCVhdzTtG8Fg==
+X-ME-Sender: <xms:f6PvaDwPd1UuLVnOfrCjXVMKnetAc6IKtR3ZdqXYBILa8rX4Qdmcmw>
+    <xme:f6PvaCQl4NGN3QqZbk5FLMPDykRntUcFGWJ_qF5cuQSekioDhfX58-tiZHh-mbHrN
+    APxDQ_u71peTKJIDWypGN2b1mJTjam331FLn35VjwouAjgDr1jV7Q>
+X-ME-Received: <xmr:f6PvaCU26KDzZ_47Vrxng2TMywETzxl9T7hng5CepRMRHJFqUbLcmxx8IPHSsZG3Rkg84J-ccba99uVIX868N5WfDVFQLodfJmuh>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdefheehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
+    hsthgvrdhnvghtpdhrtghpthhtohepohhkhhhuohhmohhnrghjrgihihehgeesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:f6PvaMZZwPwsFMfHPGfVItvOnnT7MlEgoWO5iolCGPwtCf1-NUGGUQ>
+    <xmx:f6PvaA1TV5LuKzFstG5eaaUuUw4FlLFuF252zqZZIAO5mm_qOxLI0w>
+    <xmx:f6PvaGhYXui81HCbQgr55s2YMKWC0yK-ucGzW4UN1Qn1hr_3C3Hsug>
+    <xmx:f6PvaMYnZOvwHvLpmdW5PhepkqEyOmzRTZvFF4fSnOEzsyLavi6IFA>
+    <xmx:f6PvaHkrt-QS_xBEPAVQ6_OB9rfdbo9lY-T1TZisjeSNcijVtzTRnkAb>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 15 Oct 2025 09:37:02 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Okhuomon Ajayi <okhuomonajayi54@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] [PATCH] [Outreachy] builtin/patch-id.c: clarify SHA1
+ usage for patch IDs
+In-Reply-To: <aO7Tgj4OJVLhFASW@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Tue, 14 Oct 2025 22:49:38 +0000")
+References: <20251013174658.236940-1-okhuomonajayi54@gmail.com>
+	<aO6-LBqhW87GWD-5@fruit.crustytoothpaste.net>
+	<xmqqjz0xw20h.fsf@gitster.g>
+	<aO7Tgj4OJVLhFASW@fruit.crustytoothpaste.net>
+Date: Wed, 15 Oct 2025 06:37:01 -0700
+Message-ID: <xmqqbjm8waki.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Chris Torek <chris.torek@gmail.com>,
-    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+Content-Type: text/plain
 
-From: Julia Evans <julia@jvns.ca>
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-From user feedback:
+> Given that context, I think allowing the specification of an algorithm
+> would allow people to say, "Yes, I am in a SHA-256 repository, but I
+> want SHA-1," or vice versa, which would work with your use case better.
 
-- One user is confused about why `git reset --merge`
-  (why not just `git reset`?). Handle this by mentioning
-  `git merge --abort` and `git reset --abort` instead, which have a
-  more obvious meaning.
-- 2 users want to know what "In older versions of Git" means exactly
-  (in versions older than 1.7.0). Handle this by removing the warning
-  since it was added 15 years ago (in 3f8fc184c0e2c)
+That is sensible.
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
- Documentation/git-pull.adoc | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+In short, the automatic choice is to use the repository's hash
+inside a repository, or use the then-default algorithm (which comes
+from the preimage of the patch we discussed in this thread) outside
+a repository.  We want a "Use this hash algorithm, ignoring the
+automatic choice" command line option that overrides it.
 
-diff --git a/Documentation/git-pull.adoc b/Documentation/git-pull.adoc
-index 273172aa80..cd3bbc90e3 100644
---- a/Documentation/git-pull.adoc
-+++ b/Documentation/git-pull.adoc
-@@ -36,15 +36,9 @@ There are 4 main options for integrating the remote branch:
- You can also set the configuration options `pull.rebase`, `pull.squash`,
- or `pull.ff` with your preferred behaviour.
- 
--In Git 1.7.0 or later, to cancel a conflicting merge, use
--`git reset --merge`.  *Warning*: In older versions of Git, running 'git pull'
--with uncommitted changes is discouraged: while possible, it leaves you
--in a state that may be hard to back out of in the case of a conflict.
--
--If any of the remote changes overlap with local uncommitted changes,
--the merge will be automatically canceled and the work tree untouched.
--It is generally best to get any local changes in working order before
--pulling or stash them away with linkgit:git-stash[1].
-+If there's a merge conflict during the merge or rebase that you don't
-+want to handle, you can safely abort it with `git merge --abort` or `git
-+--rebase abort`.
- 
- OPTIONS
- -------
--- 
-gitgitgadget
+If we were to do configuration variables, we may need two.  One to
+replace only the fallback part (i.e. outside a repository, instead
+of using whatever then-current algorithm, use this one), and the
+other to act as if the above command line option is always given.
+
+But as always, starting with only a command line option would be a
+prudent way forward.
+
+Thanks.
