@@ -1,94 +1,124 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BEE2FE572
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:40:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4028261588
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 16:15:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760542826; cv=none; b=KArKCir+csweWVSMZcjjEajT+8Ghj30EOfTIp/nEnvlvA8Wv51ikQa1PObT4+x6sb0Y22P0Zu3E5jkb4Dh2GJVMtqY2RcUOLrdKf9lFxvZl3DS6jMrJbfsIrXEtECwmu7nxlCeRXbbLTXjjRawCsYU8OOzrh2AJ7kwnHLttrzoE=
+	t=1760544909; cv=none; b=X2rg4AVafr6IhMS1Tvx2m7rt4Uo8Dk9C6rdBV+ICRxVxUNzdxj5oAExV6H46+WunLbAE09gvr0KBAiUOljoVEcvOJ0qJIE+k9owbWmWHamV5jyUTP8Q0h8TkPeHyBtE2oevnf0zNTM2NMJpuvZNtf3SOQ6fDwGiNPUFbJswEfLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760542826; c=relaxed/simple;
-	bh=Yq5d0eegpRR2GcnvxGO/kVwZ9uCcLezOKNPjvVyCck8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NK6jkLEopVJFH9tGcZJsAtEd4ytEhEy7/+jPM5h7JXbY64klv8EVzE8bu3YK9aWRfZAAvCEfNI1rADX+9XhnxBRE/7nrZAEvPeBDzdepfy68MoVQmQe458e0R0NpjswvEXl0twUWjybBTGRdvVC4rqWeTuHeSkacjp/vI9ZXejw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H81E99Ht; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760544909; c=relaxed/simple;
+	bh=VDYm9QOBudwUWLuz6zYvXVCqe7tc3qCw1ceQTzmPHSI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GGwouEjLn2kdFzoUEviKRKESJCXt6F9q7Cmsk10Uwz+wmMKiTGKXBrD6mgFajGs8NH6S50uxVWoHuCKb7P/dNldLT3vzM8x/mqMYxxMl+o7SW4O5bq3P9ydUb2/0bNDX+owks8vVo5zfrhoXCI96qR6cXaGBj/0c9SZHlU8YWx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bUf2IEiQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wsKKtEj4; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H81E99Ht"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-634cef434beso1888452a12.1
-        for <git@vger.kernel.org>; Wed, 15 Oct 2025 08:40:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760542823; x=1761147623; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Yq5d0eegpRR2GcnvxGO/kVwZ9uCcLezOKNPjvVyCck8=;
-        b=H81E99HtwxAGslZsbFRjLvlJiwgfulpUU67LZzj1Z5HeSo1/kAzA5xF4bYLxz4RY1a
-         rMbdXa15qIUigk6KZo9L2GhYpKEhTmq1MrewwZHo09REPDHvgi/B22wLcGgKE/1xrOK5
-         IyAaXZcVmGj3R/YfGDJetD9nRKcy8SIvD0iDUdYd6Zsknd5uf7e2uO4obow2VuxXnMOo
-         dIV0Dgk1i+ETD+B0SL64dg+Hrka1qKpzf9DlrCN4S+Dc5x09D0XothHeEKR8sW8Rmxks
-         Jl0HdXAukxED2JsPAnvYrNGtIX/yx8R6gPoWz4Z/lIi2ZN3O34XcB5vRx4uLb6kDvx0m
-         VFFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760542823; x=1761147623;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Yq5d0eegpRR2GcnvxGO/kVwZ9uCcLezOKNPjvVyCck8=;
-        b=F5LdLwpQ63e6pltKO4IX/vI1G2pIXOIbspQvkDy/xF/zTkLznswEYo2EkrSCqRldjq
-         damyEZArN/6i8r3mej3lR1sX+3sFcXT/ar4EuhobaBQ7nsDPY0J6XvZ9mTj1t0/y2pmq
-         ebeZJVU6KeAe16vLWeUHh/QrOvUYqxs3AGc8X+x8cdG3WltycR6JM/hzT9wOKNhDUGYe
-         l0SYzomqTT9uoRueZMzOnoHpySy/o4YaRtxKMtcMVzusc2Z9xhkzL2wrMXIAPHY6+tKq
-         PZ3TEfXbwunVuGq1C+CQbDu+bk3dRrb+UaH88oWG6UE4GeULAzrRolp+bzPBD4RV8r5m
-         xLtw==
-X-Gm-Message-State: AOJu0Yz7T5JSR9jupnnKMNe3fSbmK43O0q3zu68upgnNXYe6+3Lr3okX
-	q2qsT7SgWoeEiZz9Qz0xsjn1RmYBZVkBmkbS5RBlNXuDTIAcZdajngfd5BuO/ocGuNCNk+AxKJ+
-	VSFnJxXtRVUKMItkqg0xGQ/5Htjt9VmuFy3TemD8=
-X-Gm-Gg: ASbGncseGZ5tccnr+/PKk+b1uTuTH1bR7jyDwRgle+5CMVZwS+Qi/15IZYv2b3ZNA59
-	xsh39Ltcn59dXqjTrWFCrCMBOCNC3w+1llZmJtmlQ+8U3dLC0inteeEGq2/J7tvg6Mvrw15VxTy
-	+L5EDqgXdCBI4miEQqWtxKa/38cT1eysC1pdvIjkO77A3IyR33WDTMsbU2gL9qSTpg+SOcbikNo
-	jqQf1C5eGwg2VUTea++/6aPVA==
-X-Google-Smtp-Source: AGHT+IEKssciGYqlIRArwwvNMScDDIYj6hgFuEsjPF7ZmavnQin9orSMVFru4EpbGD3rewiKDEXq91ke0oObcaxQXlQ=
-X-Received: by 2002:a17:907:26c5:b0:b46:57fd:8443 with SMTP id
- a640c23a62f3a-b6053915a0fmr68588166b.24.1760542822808; Wed, 15 Oct 2025
- 08:40:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bUf2IEiQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wsKKtEj4"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id B77FEEC0266;
+	Wed, 15 Oct 2025 12:15:06 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 15 Oct 2025 12:15:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1760544906; x=1760631306; bh=XXWwKOKW1G
+	cBQYjVUZXkjfSzf2CrPdhtOhAywTM40GU=; b=bUf2IEiQn8NgGhEP/o9khoBLqR
+	pL4Ls+SonrURb5AsX2pbRGvykBieboCezV0CsbxqHQaFhBuF1BCDAo/BPV3PI7VZ
+	gsoyvA+HxxUazKRVmJODWuksoet5WXEz/BaIB5tTFIWtS4KHc5qytSes7NKPtBJd
+	IAy/LMBzVjn8UN4S7B2feJoNdvhHGH7ZIrqe+CtorgHVxSGkuQcdlOtjkjcGL5nr
+	J29aOzXqSu+yJxLU2Ae7/7gxogi4hHCedAH5ZVp8DC0WX38zcCh1G2LcbEr6cKOm
+	z0mFmL8gYtLGleu/j86LOEivqonGyjR4g06ntkViOtxYmbBGRZzMXPN152VQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760544906; x=1760631306; bh=XXWwKOKW1GcBQYjVUZXkjfSzf2CrPdhtOhA
+	ywTM40GU=; b=wsKKtEj4gJdQXI2UAuYojxiNNKiitfVFppuYuKpqzg9BwkL/kXj
+	dKNjVJFDd7Yxka2qrKNKkXdfzV7/y3E2On9i4VRqIovNgj+Z8GlV7aipa+QZy0Ql
+	M4/132SBxdaOSWLlI0gpzPebLS4/4MVHUDeM1dt0juM344G8Ov3+YmEVEOE/BFGB
+	hDF6Tip3ethJD7CjrgT7KVrHrn80whWMdh5Vj15mvxkeQFL1oAVR1NQ+3X9mUtsu
+	h5VltSkdn+nWqYe4EzOpkBQvsQu/on4EIq4BlcAB9cf8ZQr4qVyLY19Aa1EMD96e
+	gwfq4BE0HEV7B1odVJZpV9B2d3gxX4AXUew==
+X-ME-Sender: <xms:isjvaAYWCKM0SumZS97xUCbOGzsiChEZ1RhpqaA_xZaNGC7OX4zWqw>
+    <xme:isjvaCaF8ZLFDvbN5xvEYwPSZ5qVzhytb-TNdjkeESJNrqIUYDMeNOZguCcM6G2DD
+    pDoStfSNThN9qJLdqSNGSZuwKKO7pK0KNBjkBIzEV0Fj01UKrC6>
+X-ME-Received: <xmr:isjvaP_iZ68xXNg1LV7Y2WQizXkXUNckCVO9ASoaez4zaZ7BofDO5v-E4sO_mXHGZHB9oqb-DVaGpF2GevyFHMU0SPe217qokPKZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdefkeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpsh
+    esphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:isjvaJjOYEOObG_P3U1VzoKzlEj1UZMLdDUZvYtK7UkZFyCoxWgPSw>
+    <xmx:isjvaHe8NZvsZtNv5gpiyzilEzGmZm0Yr9g_mIf2UeEy9nVSsm5dmQ>
+    <xmx:isjvaIp2fpvM9uIKtvOeSRQZm7wq2H3c-nD_NrTMlZGYzZMzKQ7Vig>
+    <xmx:isjvaECIe04cLcrzcEo_94b5fZLlLM0O7BMBZ5keecCtS8EF8EbSjA>
+    <xmx:isjvaB7oBifmqfqaaBpkgUhog5S29ho8Qv-dVVUc_j71Xl0RjrMP1Wwa>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 15 Oct 2025 12:15:05 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] refs/files: deprecate writing symrefs as symbolic links
+In-Reply-To: <20251015-pks-ref-files-deprecate-symbolic-links-v2-1-0529ba48db41@pks.im>
+	(Patrick Steinhardt's message of "Wed, 15 Oct 2025 08:26:08 +0200")
+References: <20251014-pks-ref-files-deprecate-symbolic-links-v1-1-4bcd6a4ef6f5@pks.im>
+	<20251015-pks-ref-files-deprecate-symbolic-links-v2-1-0529ba48db41@pks.im>
+Date: Wed, 15 Oct 2025 09:15:04 -0700
+Message-ID: <xmqqo6q8uoon.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1760490943.git.belkid98@gmail.com>
-In-Reply-To: <cover.1760490943.git.belkid98@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 15 Oct 2025 17:40:10 +0200
-X-Gm-Features: AS18NWCflmy7cN9wCqCmK7N58hk2tPqwPUDXynaoM3LOJ0za96PbXMujf4H8nlw
-Message-ID: <CAP8UFD1paGeMQZ6oOHau4YBiSC8U3csWHFdOx+ro-8xOO+0wTA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] [Outreachy] gpg-interface.c: use string_list_split
- instead of strbuf_split_max
-To: Olamide Caleb Bello <belkid98@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, usmanakinyemi202@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Oct 15, 2025 at 4:19=E2=80=AFAM Olamide Caleb Bello <belkid98@gmail=
-.com> wrote:
->
-> The array of strbufs that calls to strbuf_split_max provides are merely
-> used to store the list of tokens gotten from the split and no edit are
-> done on these resulting splits making the strbuf_split_max unideal
-> for this usecase.
->
-> This patchset replaces these instances with the modern string_list_split
+Patrick Steinhardt <ps@pks.im> writes:
 
-A cover letter like this should be used to provide broad context for
-the changes. So if there are there patch series or merged commits that
-started doing something similar, it would be a good idea to mention
-them or give a link. (To properly mention a commit, you can use
-something like: `git show -s --pretty=3D"tformat:%h (%s, %ad)"
---date=3Dshort <commit>`.) If there are mailing list discussions were
-the topic was discussed, it could be interesting to mention and link
-them too.
+> The "files" backend has the ability to store symbolic refs as symbolic
+> links, which can be configured via "core.preferSymlinkRefs". This
+> feature stems back from the early days: the initial implementation of
+> symbolic refs used symlinks exclusively. The symref format was only
+> introduced in 9b143c6e15 (Teach update-ref about a symbolic ref stored
+> in a textfile., 2005-09-25) and made the default in 9f0bb90d16
+> (core.prefersymlinkrefs: use symlinks for .git/HEAD, 2006-05-02).
+>
+> This is all about 20 years ago, and there are no known reasons nowadays
+> why one would want to use symlinks instead of symrefs. Mark the feature
+> for deprecation in Git 3.0.
+>
+> Note that this only deprecates _writing_ symrefs as symbolic links.
+> Reading such symrefs is still supported for now.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> Hi,
+>
+> as discussed in [1], this small patch deprecates
+> "core.preferSymlinkRefs". Thanks!
+>
+> Changes in v2:
+>   - Tweaks for the deprecation announcement.
+>   - Use "textual symref format" instead of "symref format".
+>   - Warn after having created the symlink so that we don't drown out
+>     messages from `die()` that may have happened in
+>     `get_locked_file_path()`.
+>   - Link to v1: https://lore.kernel.org/r/20251014-pks-ref-files-deprecate-symbolic-links-v1-1-4bcd6a4ef6f5@pks.im
+
+Looking good.  Will replace.
 
 Thanks.
