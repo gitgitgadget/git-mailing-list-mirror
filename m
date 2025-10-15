@@ -1,72 +1,73 @@
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844AE3081C2
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:27:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07BF30C635
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:27:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760567277; cv=none; b=n+BLF3RQHul55gd/zEEI6LoNabkNfadgEjCYbDU5to6MAqS0bzQ83numboNN2oZxFZZJauf3Qckxgq0r7asn3So37Zhbk4P5GqRwPbmexIRr1LQYZOM4IruBnrlHRh6p+zocjgQCeeY3iXEs6Jhv6MtFfObiygDwdUq0qxw2FTY=
+	t=1760567280; cv=none; b=jfeJLqDpVwzbNqg1lu1yKPxj9696F6HQTvhklWSkJN4UYj2rvN/2GQGMgKDr1wufMhgiRp1MdtspMX70fnrAMwZO6QvUneVaycoMmEAOAUZAgUqMcL67Y88ycPQOblDl+/0i9eyrZYtpbye8iH79HwiQvyoExIEfzVY2ZwO9X+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760567277; c=relaxed/simple;
-	bh=MFrj5cLy7+feVcb7u8HLY0fwSKS9ihloSk7F/Rx+eIM=;
+	s=arc-20240116; t=1760567280; c=relaxed/simple;
+	bh=5rjwfKwO76T4FG9TvWGFPKjXa6yGLLZGpeKPj72OznA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pDUhRddC1GHY5Ay73PQynm5ppLOaD1Y7gTvge51AvWpXSqhVGfM9dIIOQqwVqDK8CRqrg0FGvhII76sRJhbKypWOVnExgLSy0+NRygCt7droHIevux8WzW9/8Jmyr6Jyn3Rh/sec9lXkj8Dk0yS3flhWBYq9lytYzMeaiNbdnks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=GnyCqG8A; arc=none smtp.client-ip=209.85.128.174
+	 Content-Type:Content-Disposition:In-Reply-To; b=WULLAEBzeVTDx0JtmiWg0iVGfpMdojFFC3w+JhAKA0Vt2ZZ0KBOvya8RSfkJOmgfIAMmREXp9GERpBlJcfe+RjP/9Z06A5Eoe3KdR7OY5FfrPQ7Kxi/DQBA3TGJqf0b7l/n8x3o6j/JeVIiHZLcJBU4sR8UgnhwXr8Sch66kTnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=iItMFAcN; arc=none smtp.client-ip=74.125.224.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="GnyCqG8A"
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-7815092cd06so920837b3.2
-        for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:27:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="iItMFAcN"
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-63470a6f339so151623d50.0
+        for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:27:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1760567274; x=1761172074; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1760567277; x=1761172077; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vg7yHBnkjuZ01/EIMMDktV7B7AUJ+j8vJ/ax6hsK8/U=;
-        b=GnyCqG8AbQcBqLwqjeg2cxyPEl8t44bIdHRJYRvf5k+bRUj8udDkQhbWXSHf9bXuCB
-         Xk/58nOSm9R87/UPzFAoZV5Xkff+iMXskgM61GNmyoOGXA2Y/uV8RCLipWncHmIbxPE8
-         zPTCb4Z+WwBZbqItHCRjmj+DaTxMHY7TGZlOAFbfl517ryUGj9ucDwIu2jHM2KE7wzCh
-         zE0m2u2DjlyM2DExyO+fM1YQjeO5jQ7nOeWlBeHlqCpJyG1e1cIG3e/XLaRtz7ollvMv
-         TDgL12k4t7JBvu6unK71ka1OMAG+nhb3YPYdn5oHyyI8lnoQg5ZPesLvNYCoNwwOysZx
-         d6fA==
+        bh=Et5yN+v8WCYAnVpEmyVIjMUuBxfJ8Xt+/9v8xKmrB2A=;
+        b=iItMFAcN6ypBjefU9TwCAmpWpPSG0TMwY3tXk0sWs4R68kPH3MBIOv8Zj0qnVsOLWI
+         h/hGkIm3Sclpj4jvhcJ0yDI/qsPdNUamQuSgm6ENl8dkV5BUalZRnjZyDbG/4lGAWZtI
+         ropWcM5KAfOeHo50dQDAS5eB5o3Nr+wipNOYe9jTQO37wFEcoPS1gLClxB/Iqx5sQ688
+         ckDZlH9aE1h6Lx81xqeMbkAugGPGcdyH+sJYa82dZ8Nk0YbJ6Pz8btPZxPjagp9Ucxx1
+         PBR6D6fqWkrqhZCwy+Y7DdcVAhh1yHIa9X182QW5Y0Le1UylDmE2YE1rxA7EcKL9diH/
+         oiiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760567274; x=1761172074;
+        d=1e100.net; s=20230601; t=1760567277; x=1761172077;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Vg7yHBnkjuZ01/EIMMDktV7B7AUJ+j8vJ/ax6hsK8/U=;
-        b=jGgZLfZnCWv3zUceb/CqAC8KwpGaOJIc4fFmUkU4311tf4Tnf8Nyc0eV/ioW8a12jU
-         Q98yVjM95L3BtuqIYBdDsyb839Pi5wSzF9blyuu5lmeJleSshFfyuUxImm8Awl2+Bk/3
-         yBn38dHHkxhie9zIM+BvvH/ktklrVQ/aGp91FQDqkoUNstK546XUPQ/3i/VHrC3nRhKJ
-         Gk3ap7y24emEvjbBc79Dinyk6ohvLemooLHSjz7GjqHrJSCoEmuID1OgZ/yYPpiNZJoW
-         vZjtEX24ImNDK6kaXhpfO394LAg9++1eUvI5CylYomNdyt7HGMGlwuowbpue8a1dnEYm
-         TLVw==
-X-Gm-Message-State: AOJu0YyeMfgetXzOAJVvv3KO/YeXcFxixyoSBEHPgbGxPR/HGPxdsfPC
-	CD2VjU6VtJ+OemR5kVElGBdqZ4lVBNQ9XYP2kxTTPmiIBuJPV9JpAF2GXGRPU8H45hzZF3Ht8cm
-	o0wTRZLszcw==
-X-Gm-Gg: ASbGnctySBDkzqrewVA9CkUriSmwwj34AU+wDhp0UPmmpScTMmPwAJwTrSiPNuNtP7m
-	t4vh0O+6hD8u0FYBk43cCENE826SKdESxKX1KFleKusEAyXXDDoJpZIbslrszgLM0TqxvEEDimk
-	E2SXAY/AGK4ayBGOoaSKE+DL43jWdF+0y3ddA3Lja0WvMIkWAG0lsWJK1VYJKfbVkdQaZ97LNzS
-	eiFtut8ThsJR1JMLl8uslzJeSa3F5hczvtfcDM19L7eB006A5CwdkCYF3ema12pBf/TmyiQPjVt
-	zUaHPR2ZD6dZcdFpdqTj1GcbRtM2dAOdysrufYtB70c5I0xAcL5X7OWy+wcSuHMRwRoaDD2HxO/
-	kLxU6MOjje1OUs+aaWH16IPKogs2cb2RFzo4Koh+w1NMCPvpWPV+7UUMl68IEpkmLTCFp7Dmn04
-	X3JwavndqsStbt8K3bHBEQ52tKiV3mZo/WFsZvLMNYYb/MYTCspwtPF8lBpcf5hyOy4acdVy4YK
-	RX+laQlU0pU3gehlQ==
-X-Google-Smtp-Source: AGHT+IGv4WbFiQIKNR7y9ddE3gNldY1bx3HlszJW9PzJ9TQzyXyxk3EXQvdkeOospt/TDwJhxvWsEw==
-X-Received: by 2002:a05:690c:4b07:b0:77f:aab8:317d with SMTP id 00721157ae682-780e16481d7mr305503287b3.14.1760567274232;
-        Wed, 15 Oct 2025 15:27:54 -0700 (PDT)
+        bh=Et5yN+v8WCYAnVpEmyVIjMUuBxfJ8Xt+/9v8xKmrB2A=;
+        b=herCAftGU9Jhq46sIJckWe3/3w3pQHLrS0FBX/hiBFFCgsDglYtjn/rvjpoe0uZVeA
+         wgveOpjVi3dpc9zvmwUZUtvNv8dLPRCV+c/yubB9blys8DSQK1eQMtGUBmqRmJJGg3+K
+         lyv1hRZsn7LdXO1XqrgatBy7q2Ybr5+2Wbpl/vqQ6LzHtRAJ2JAPdks4r4+Xj7+X/g1h
+         y4A/x9pW0hvcyjbWxnSC5WvtnNbQZrmmBvyPIoS0P4UtIFaijVOLtdxB9Ov+CbhWU3Yj
+         xR2Oc+9kNTV8YEnFGCOUjb+ekYyYDYhhz/qJHxH/7jqQTrytw8jM0qeLfoUWFv2GFXJb
+         wjZw==
+X-Gm-Message-State: AOJu0Yx1e0DNxcdE6b5zZch3BHepF0Ea3BQck1J3SAt4D8hZsLJmQSxt
+	kJofyMlbRI2EFBiAJgB1i9g0rJiWteOgmBn64BijbRFhWJkZyJrX60VMkiFVqRAkpx5w2HBtq5+
+	LzCDq2b7D5A==
+X-Gm-Gg: ASbGncu2o1ArO5OSb6tNAjpoWqmpQkT/KY7AY9r8DFSDS1UMHFoW1NuGqnBQ/ZMgT7H
+	fbXNqiiktP5W2LCUvt9QPzQBmWUAwQp7Suf8mXsbZ3YXlvDGUBj5MDSxUMcQISZh2rZd+YdsVTE
+	zEtiZGC7Lrx/yQlbYjCIpvuC7EeoVWOdU+NJ+u6LJ+mGzaE7cJsm6I6vJe9jciRpi3tEb6Sayit
+	RFjAdH6iQ5j6NU/GXQP6w6lI3Tzor1G2znaqsnwe+qq74WejnLb1Sn6M+OktdwiaQNvOS3uXzB2
+	9addSloxtP15OjEzQHyc4JcqhvO6asmAV2+b8gDsVBVtbkoFGAwW4z8IgEPq3gR48QxZnPUehWj
+	Qf3qdVKQ49dtOVkHjWVjkCK0Y/xue9e6erL2GYbD3u6IDV+8njErBGWKvWBQoYcXQ2CaRorD5YH
+	RERnFz3GwJdkWsltHBIgK0OsW4JZhfUCu5FeFDzHcl/tLZj/j/eEyoSA8pZLYDZQQoPRUdAKJED
+	GRLSSUJDLxafw6RJw==
+X-Google-Smtp-Source: AGHT+IHiKON+zQKC6QSO1c83n2QKzGzPF4B3XiHwFGXjCel0acxoaf743od07NIl80j9to9+kfnC3w==
+X-Received: by 2002:a05:690c:4d0a:b0:781:64f:2b21 with SMTP id 00721157ae682-781064f34bemr339761237b3.67.1760567277512;
+        Wed, 15 Oct 2025 15:27:57 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-782931f7613sm2576727b3.47.2025.10.15.15.27.53
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78292c12888sm2605787b3.31.2025.10.15.15.27.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 15:27:54 -0700 (PDT)
-Date: Wed, 15 Oct 2025 18:27:53 -0400
+        Wed, 15 Oct 2025 15:27:57 -0700 (PDT)
+Date: Wed, 15 Oct 2025 18:27:56 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 11/49] repack: introduce new compilation unit
-Message-ID: <87f2903e757f37cabad073077c9ba177f7418433.1760567210.git.me@ttaylorr.com>
+Subject: [PATCH v2 12/49] builtin/repack.c: pass both pack_objects args to
+ repack_config
+Message-ID: <a812bd3dcb36fe024bb4abc78f40f269c9c04635.1760567210.git.me@ttaylorr.com>
 References: <cover.1759097191.git.me@ttaylorr.com>
  <cover.1760567210.git.me@ttaylorr.com>
 Precedence: bulk
@@ -79,170 +80,63 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1760567210.git.me@ttaylorr.com>
 
-Over the years, builtin/repack.c has turned into a grab-bag of
-functionality powering the 'git repack' builtin. Among its many
-capabilities, it:
+A subsequent commit will remove 'delta_base_offset' as a static variable
+within builtin/repack.c, and reintroduce it as a member of the 'struct
+pack_objects_args'.
 
- - can build and spawn 'git pack-objects' commands, which in turn
-   generate new packs
- - has infrastructure to manage the set of existing packs in a
-   repository
- - has infrastructure to split a sequence of packs into a geometric
-   progression based on object size
- - can manage both generating and combining cruft packs together
- - can write new MIDXs
-
-to name a few.
-
-As a result, this builtin has accumulated a lot of code, making adding
-new functionality difficult. In the future, 'repack' will learn how to
-manage a chain of incremental MIDXs, adding yet more functionality into
-the builtin.
-
-As a prerequisite step, let's first move some of the functionality in
-the builtin into its own repack.[ch].
-
-This will be done over the course of many steps, since there are many
-individual components, some of which will end up in other, yet-to-exist
-compilation units of their own. Some of the code movement here is also
-non-trivial, so performing it in individual steps will make it easier to
-verify.
-
-Let's start by migrating 'struct pack_objects_args' (and the related
-corresponding pack_objects_args_release() function) into repack.h, and
-teach both the Makefile and Meson how to build the new compilation unit.
+As a result, the repack_config callback will need to have both the
+cruft- and non-cruft 'struct pack_objects_args's in scope. Introduce a
+new 'struct repack_config_ctx' to allow the callee to provide both
+pointers to the callback.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Makefile         |  1 +
- builtin/repack.c | 25 +------------------------
- meson.build      |  1 +
- repack.c         | 11 +++++++++++
- repack.h         | 23 +++++++++++++++++++++++
- 5 files changed, 37 insertions(+), 24 deletions(-)
- create mode 100644 repack.c
- create mode 100644 repack.h
+ builtin/repack.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 7ea149598d..58fc05030b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1249,6 +1249,7 @@ LIB_OBJS += refs/packed-backend.o
- LIB_OBJS += refs/ref-cache.o
- LIB_OBJS += refspec.o
- LIB_OBJS += remote.o
-+LIB_OBJS += repack.o
- LIB_OBJS += replace-object.o
- LIB_OBJS += repo-settings.o
- LIB_OBJS += repository.o
 diff --git a/builtin/repack.c b/builtin/repack.c
-index 0d35f15b4b..6dfcb3327e 100644
+index 6dfcb3327e..af6de8d77a 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -19,6 +19,7 @@
- #include "prune-packed.h"
- #include "odb.h"
- #include "promisor-remote.h"
-+#include "repack.h"
- #include "shallow.h"
- #include "pack.h"
- #include "pack-bitmap.h"
-@@ -53,21 +54,6 @@ static const char incremental_bitmap_conflict_error[] = N_(
+@@ -54,10 +54,16 @@ static const char incremental_bitmap_conflict_error[] = N_(
  "--no-write-bitmap-index or disable the pack.writeBitmaps configuration."
  );
  
--struct pack_objects_args {
--	char *window;
--	char *window_memory;
--	char *depth;
--	char *threads;
--	unsigned long max_pack_size;
--	int no_reuse_delta;
--	int no_reuse_object;
--	int quiet;
--	int local;
--	int name_hash_version;
--	int path_walk;
--	struct list_objects_filter_options filter_options;
--};
--
++struct repack_config_ctx {
++	struct pack_objects_args *po_args;
++	struct pack_objects_args *cruft_po_args;
++};
++
  static int repack_config(const char *var, const char *value,
  			 const struct config_context *ctx, void *cb)
  {
-@@ -116,15 +102,6 @@ static int repack_config(const char *var, const char *value,
- 	return git_default_config(var, value, ctx, cb);
- }
+-	struct pack_objects_args *cruft_po_args = cb;
++	struct repack_config_ctx *repack_ctx = cb;
++	struct pack_objects_args *cruft_po_args = repack_ctx->cruft_po_args;
+ 	if (!strcmp(var, "repack.usedeltabaseoffset")) {
+ 		delta_base_offset = git_config_bool(var, value);
+ 		return 0;
+@@ -1260,6 +1266,7 @@ int cmd_repack(int argc,
+ 	size_t midx_pack_names_nr = 0;
  
--static void pack_objects_args_release(struct pack_objects_args *args)
--{
--	free(args->window);
--	free(args->window_memory);
--	free(args->depth);
--	free(args->threads);
--	list_objects_filter_release(&args->filter_options);
--}
--
- struct existing_packs {
- 	struct repository *repo;
- 	struct string_list kept_packs;
-diff --git a/meson.build b/meson.build
-index ec55d6a5fd..4a985ce77e 100644
---- a/meson.build
-+++ b/meson.build
-@@ -462,6 +462,7 @@ libgit_sources = [
-   'reftable/tree.c',
-   'reftable/writer.c',
-   'remote.c',
-+  'repack.c',
-   'replace-object.c',
-   'repo-settings.c',
-   'repository.c',
-diff --git a/repack.c b/repack.c
-new file mode 100644
-index 0000000000..a1f5b796fb
---- /dev/null
-+++ b/repack.c
-@@ -0,0 +1,11 @@
-+#include "git-compat-util.h"
-+#include "repack.h"
+ 	/* variables to be filled by option parsing */
++	struct repack_config_ctx config_ctx;
+ 	int delete_redundant = 0;
+ 	const char *unpack_unreachable = NULL;
+ 	int keep_unreachable = 0;
+@@ -1343,7 +1350,11 @@ int cmd_repack(int argc,
+ 
+ 	list_objects_filter_init(&po_args.filter_options);
+ 
+-	repo_config(repo, repack_config, &cruft_po_args);
++	memset(&config_ctx, 0, sizeof(config_ctx));
++	config_ctx.po_args = &po_args;
++	config_ctx.cruft_po_args = &cruft_po_args;
 +
-+void pack_objects_args_release(struct pack_objects_args *args)
-+{
-+	free(args->window);
-+	free(args->window_memory);
-+	free(args->depth);
-+	free(args->threads);
-+	list_objects_filter_release(&args->filter_options);
-+}
-diff --git a/repack.h b/repack.h
-new file mode 100644
-index 0000000000..421d439d5a
---- /dev/null
-+++ b/repack.h
-@@ -0,0 +1,23 @@
-+#ifndef REPACK_H
-+#define REPACK_H
-+
-+#include "list-objects-filter-options.h"
-+
-+struct pack_objects_args {
-+	char *window;
-+	char *window_memory;
-+	char *depth;
-+	char *threads;
-+	unsigned long max_pack_size;
-+	int no_reuse_delta;
-+	int no_reuse_object;
-+	int quiet;
-+	int local;
-+	int name_hash_version;
-+	int path_walk;
-+	struct list_objects_filter_options filter_options;
-+};
-+
-+void pack_objects_args_release(struct pack_objects_args *args);
-+
-+#endif /* REPACK_H */
++	repo_config(repo, repack_config, &config_ctx);
+ 
+ 	argc = parse_options(argc, argv, prefix, builtin_repack_options,
+ 				git_repack_usage, 0);
 -- 
 2.51.0.540.ga7423965ad8
 
