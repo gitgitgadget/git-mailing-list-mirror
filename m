@@ -1,72 +1,73 @@
-Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0116A30DEDA
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:28:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52D530F928
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:28:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760567332; cv=none; b=C0wxwCgrmUzQi6eVFODeIzDGNB5U8BNKqtcGvCocHGO1tJnIaT4sh6a4/U3o7W5pNbOV6fp0uS4WoAN8k+FdsmXNaeljDpiDHx2tIk+KI/ToT/crLHm+W6x6zob29qCKT5xYCPO1T4Y72tsTp8AlFx9ZN8eVzNZvA+8//KW2crU=
+	t=1760567334; cv=none; b=sHhPOTEiRRf/q36FUl9+JEG7rw+Ukb2FSRIsBnCUWC0BfIZE+zC2XAuN0lRHBZxGBzUrKIN4Ni6dtq4ByZzyg0YjSy5VkfogN4AbOZBV7OJ+eQPw7bEUZg03VKCAUApRQbgiTfP4uJ+2hkp6xAemLBKA9mjpSB8Xh9qgHWpkZ4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760567332; c=relaxed/simple;
-	bh=DGiq22DESV5UvXwpqdgtAY85WTmilr7nMPGz3gVMS28=;
+	s=arc-20240116; t=1760567334; c=relaxed/simple;
+	bh=/LaOf8aIjhbwWHdNDvWe9mSJLfVrKLp+QXFFVZQ+Q2U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oZXQZ4j13aupOZyd7HdczUr1YcMK2RkTSlqHncgR8neRcOTRYBGDqhsMzBgaEfi/ZPZPDMKanS+r/Ha194W2JD8Ic8uz334pmiMPJE2A7TvUUsHkvsomiFD2xCw+xvKPOQOHrzNJnmmo61rpge/10BkQ2owAdJErgRuyHQrDl2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=U1tlqVLh; arc=none smtp.client-ip=74.125.224.44
+	 Content-Type:Content-Disposition:In-Reply-To; b=B0DIwm26/bsk47MqZHGfHIY6BIOZJWanqvWuxHyi4KOCHKrie5Wo07zMfn+vjf+iMNAsjvttejrtYu813okGigim5443wkSqNCbZCNVg+rdueHb8BZzEcMJ4G52cfPTpOJn3I6Tu4EnckgsV10XowdAH1WkDPKH23i65CMkcAzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=J0cfUnDA; arc=none smtp.client-ip=209.85.128.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="U1tlqVLh"
-Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-63bc1aeb427so126341d50.3
-        for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:28:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="J0cfUnDA"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-7815092cd06so928867b3.2
+        for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:28:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1760567329; x=1761172129; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1760567332; x=1761172132; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=COo6IQgQujcy+qcEpO1W1xBY1cF7IfmWQOPWM1YhGYY=;
-        b=U1tlqVLh0arwUfqdbf2wiS/qYsfHNrD0Pwj/L+Xe0fa8Toz/6eIsWPzy5sX1YuvICq
-         /MB3M3Hsghq4Q+DuQEOfbCqVC0Lq9FJI0Mo9ikmmpbc6v0bnlGVEoYrm3+zXMsOK38t1
-         Ku9QDnSYkF2JvGvEYT+IGMjycCom0rJTTfoKghe/JB/rIPppSHwrTkpd5m7KvBq8IXqV
-         PGXYFxStgUeRrC3WlAdiJgLhydZG/rMq6KElmyIsqF76asYLNvpNVAv5nr3kjQsO5NoK
-         ll83r4kcKkPPtRleCqmcxyVFPZfJg7t3xTMbiO5oiUm2Jg48BkfUrotFzfgQgYDScHBY
-         CqWQ==
+        bh=6orxmPUgvDUPe3RaOomRGduAX9wxjNsBOYpWNsXPhZc=;
+        b=J0cfUnDAfSWsRD7ivrc5oAfbi91OHKqpm24cBs7XwYMXs5pWcBkQI8llvAcihyIf7u
+         d084AKYcPPoa1b3oTR369x+WK62SQ018Y+ng+0Q5tJvOtsyA6R0lnxcpfHaXrTm+2TVV
+         ip/Yi0JAP4/Mq8JQAapTTVMydAbUMGwbtn7ilAp0FT3zVc38cYzL2+jGMzxnb2xbPvpz
+         oK3c+XrSLC5c9YSkJDAb20szyb68y1rgTNEbJYles2NQJNzAicXXhDxTb5lf/087nkAn
+         5lf0qBQQuyJcWfrcoK4jp/fOgQjufBfwkrCCmp3mRtnJUBFeJIylJgJWYmWZNxO42dsV
+         zV5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760567329; x=1761172129;
+        d=1e100.net; s=20230601; t=1760567332; x=1761172132;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=COo6IQgQujcy+qcEpO1W1xBY1cF7IfmWQOPWM1YhGYY=;
-        b=fR9og7O+FOv275gv9f1xnMd21k7s1dCg0KveigvRXj08MCYQG61s52dWqeeEcIx1jl
-         YPbJ1k7skQ963xjoP8VhgcbZwZZ2J6iiTwBPeAllfNzWFkGX504yH4/CJZtJqlGVAXM0
-         SBD+9LYH0VgRCJRXs3cTNJLsWPhcdSANlBF5PozfA9ITs3Nirbjqo9++PMfj4G8U/5ar
-         K2+OpmxKNhIJSkEEO9Gd1qZjQiaNUWpUI0RsijrE5o6RHZfJz7retW/w/Taf9L5wzD8V
-         a+heHHjT/+MH6cxF8CpnCKxc5GCr2bNIdmjTBPUhJboMSvJHq/z/439Fxo0CJLYPTCSb
-         q0Eg==
-X-Gm-Message-State: AOJu0YyAe2s4FnbKswWJ8tc4HTSAfhziopHS7sOikJRCyLrhey891d9m
-	Q1IHRQDGBLo80VehGUc1+iaXt+7eAEbBSpU5bHY11VRyjMc8DefSgxDN6FippEdrIH2A7NHg5/8
-	SUhD6J1wHJg==
-X-Gm-Gg: ASbGncthf/DQ6NLib3SdPQ8Iw+ExfGZgpUhFFQMzKbAPLsHctpU16acpIOQhAkf//nd
-	2Q5Jhfa97ag7JOre3Fz44EJMgKVTRVqHwxQZxI2qIl42r03uXsBz6wo+4uO4Fb7tsyVfU7uOaBv
-	vmyzxrRF+YgR1UAoyIA00gp860TSPt9fG1Vuc5o2oV2NowEdu55OlIw578C4L2p9o3e1oS/+gWU
-	5+TQOIrYf3HFm7XcIPzUhBmsXbGFaPiZQULztlIVwg3SN5fyb9q9rZuaUFRFyEo2UzKUnpB+ZaA
-	xLJAavfhFdVey5Yw+QksNxqqUWb4WtZVH7Ilbxd0wH7DX+IvMSyXmXV+uqa8U+flFAxtbB5Jhim
-	1F4OZOZib15nCZa7u+VEU9CeLnrqaTjd/QMjtv3bAe2zotzXmoXqX1MN6JB1I3a5B2noD4p+BN9
-	ROfg5S6IOWnFU8LkZ9oKoaA3wl+jatzWG3CAY5TtffdEec2eQuWlmgRGt4JHYgpgTTnE1+jdjA0
-	2wA63PSsz/jfi1PTg==
-X-Google-Smtp-Source: AGHT+IETpKO5EWzZSgWFTaP2XGhk/iB3L850Soj/rCUe8IIo3Nv6J/xpkGl/LPR5kKF57bLs1jPBvg==
-X-Received: by 2002:a05:690e:155a:20b0:63c:ee51:5cf6 with SMTP id 956f58d0204a3-63cee516112mr14774627d50.15.1760567328686;
-        Wed, 15 Oct 2025 15:28:48 -0700 (PDT)
+        bh=6orxmPUgvDUPe3RaOomRGduAX9wxjNsBOYpWNsXPhZc=;
+        b=a4pzPi6jikCBfh7876CwJsDAZj90R9dTcKeSXW+Jc0lctT1dK0vWbNIRhI1JkGDgKJ
+         bIcJnu/Z6ZsfRIg4iFC5t/G/U3xelKFXgvMDh+HNLOmAqL3emH8a22M9V0nqDP5o2RV3
+         S0AoQ23vuvLcICa2ZKBmevPOOI5r5PjUM4yu3dJ0baIB5zKCJR8sAy+Z9irMFkXxz0yA
+         CUDZLSGWNltXI+7LmrDT13z5pYfdei0K4t24a4tYGm5ocoPNBgs/ROG7176boc9ZiS5o
+         KSM+sGhsCfSrcNGZofFc7WWomMsDlt/4ftpg9HoW0fPHwxvRS2IlyzhEv9ov6kkRipEN
+         Sudw==
+X-Gm-Message-State: AOJu0YwCVRDt1wwMrIcvL0ELvBADxzJjVmiuJ/sCPbUGBTAb8L7154cF
+	vlbbgJuP/IRuhcaNVyNQD7zKvP7jmk/u4npXCjZ92feSg8/dCOxhXS73hOIc4HmID9x105o+vIo
+	BFL0umhHkcg==
+X-Gm-Gg: ASbGnctjEOy44T2jcQTJz5PNgcT2uN31doul3m535NIFaXSRswT97cXKVrn0vcmguFX
+	qFgeIGJbdJdBU8E5QwzXwEoc6801htvWgBL3pRNGO5ap/w5XQfFWaIz9lGD16Znb04KLMs4bwYs
+	KVGcGzUoVdjD8IskedfN0ab+aHxHukQJgesN14D/om0PuNaIGVLwBZE6YaLRa7AZigIaKHyPwNh
+	Y+0FtWiuaowUKRzEZ3w2wLDejZ7W7Zqb+bY2zXXm3OfZQJMK0fVHqVFsaCHZJsqhbH6eo0iPGTw
+	Iea+J7ejJoY2B8hQPCexcCBbhCp1uIhLWfaliQxzF+gKuPii8Orj6N2ai+UDGzJ39drcEk2bCPz
+	2Nk+/OmraFxkbPyKCId7YFNeguew/6dCjaK4Ex/TRziQFavi4V90inLHfrRzf533ukvjJogepHi
+	PRG3mOxvdYIkF7g4smB71lc6pEvvbi1BgUexKp1srYyJa1APeoBdWQNBAkrZvowJfMGN1Mqrb/r
+	YhTT0g=
+X-Google-Smtp-Source: AGHT+IF57+Gm/3L3f+2L1sY3r/VdXdSUlAnviwegbpn3Y26+VpETMWTwRFfuxS1sxKxOY2gMOua/JA==
+X-Received: by 2002:a53:de4d:0:b0:636:1fd9:1bd with SMTP id 956f58d0204a3-63ccb865448mr19789494d50.2.1760567331599;
+        Wed, 15 Oct 2025 15:28:51 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-7828d2c2adesm2763557b3.14.2025.10.15.15.28.48
+        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-63cd9524284sm6021853d50.10.2025.10.15.15.28.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 15:28:48 -0700 (PDT)
-Date: Wed, 15 Oct 2025 18:28:47 -0400
+        Wed, 15 Oct 2025 15:28:51 -0700 (PDT)
+Date: Wed, 15 Oct 2025 18:28:50 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 30/49] repack: remove pack_geometry API from the builtin
-Message-ID: <9172e9a515084a1b513b004d71acefcf3fb68dda.1760567210.git.me@ttaylorr.com>
+Subject: [PATCH v2 31/49] builtin/repack.c: remove ref snapshotting from
+ builtin
+Message-ID: <5b15d83e65b1de52cfa4fad6f39ca707aae72da6.1760567210.git.me@ttaylorr.com>
 References: <cover.1759097191.git.me@ttaylorr.com>
  <cover.1760567210.git.me@ttaylorr.com>
 Precedence: bulk
@@ -79,557 +80,225 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1760567210.git.me@ttaylorr.com>
 
-Now that the pack_geometry API is fully factored and isolated from the
-rest of the builtin, declare it within repack.h and move its
-implementation to "repack-geometry.c" as a separate component.
+When writing a MIDX, 'git repack' takes a snapshot of the repository's
+references and writes the result out to a file, which it then passes to
+'git multi-pack-index write' via the '--refs-snapshot'.
+
+This is done in order to make bitmap selections with respect to what we
+are packing, thus avoiding a race where an incoming reference update
+causes us to try and write a bitmap for a commit not present in the
+MIDX.
+
+Extract this functionality out into a new repack-midx.c compilation
+unit, and expose the necessary functions via the repack.h API.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Makefile          |   1 +
- builtin/repack.c  | 235 ----------------------------------------------
- meson.build       |   1 +
- repack-geometry.c | 234 +++++++++++++++++++++++++++++++++++++++++++++
- repack.h          |  20 ++++
- 5 files changed, 256 insertions(+), 235 deletions(-)
- create mode 100644 repack-geometry.c
+ Makefile         |  1 +
+ builtin/repack.c | 68 ------------------------------------------
+ meson.build      |  1 +
+ repack-midx.c    | 77 ++++++++++++++++++++++++++++++++++++++++++++++++
+ repack.h         |  4 +++
+ 5 files changed, 83 insertions(+), 68 deletions(-)
+ create mode 100644 repack-midx.c
 
 diff --git a/Makefile b/Makefile
-index 01597af359..a1ccac235d 100644
+index a1ccac235d..4b0a122428 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1250,6 +1250,7 @@ LIB_OBJS += refs/ref-cache.o
- LIB_OBJS += refspec.o
+@@ -1251,6 +1251,7 @@ LIB_OBJS += refspec.o
  LIB_OBJS += remote.o
  LIB_OBJS += repack.o
-+LIB_OBJS += repack-geometry.o
+ LIB_OBJS += repack-geometry.o
++LIB_OBJS += repack-midx.o
  LIB_OBJS += repack-promisor.o
  LIB_OBJS += replace-object.o
  LIB_OBJS += repo-settings.o
 diff --git a/builtin/repack.c b/builtin/repack.c
-index f6d04b33a7..e2313c80c3 100644
+index e2313c80c3..7713721826 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -107,241 +107,6 @@ static int repack_config(const char *var, const char *value,
- 	return git_default_config(var, value, ctx, cb);
+@@ -178,74 +178,6 @@ static int midx_has_unknown_packs(char **midx_pack_names,
+ 	return 0;
  }
  
--struct pack_geometry {
--	struct packed_git **pack;
--	uint32_t pack_nr, pack_alloc;
--	uint32_t split;
--
--	int split_factor;
+-struct midx_snapshot_ref_data {
+-	struct repository *repo;
+-	struct tempfile *f;
+-	struct oidset seen;
+-	int preferred;
 -};
 -
--static uint32_t pack_geometry_weight(struct packed_git *p)
+-static int midx_snapshot_ref_one(const char *refname UNUSED,
+-				 const char *referent UNUSED,
+-				 const struct object_id *oid,
+-				 int flag UNUSED, void *_data)
 -{
--	if (open_pack_index(p))
--		die(_("cannot open index for %s"), p->pack_name);
--	return p->num_objects;
--}
+-	struct midx_snapshot_ref_data *data = _data;
+-	struct object_id peeled;
 -
--static int pack_geometry_cmp(const void *va, const void *vb)
--{
--	uint32_t aw = pack_geometry_weight(*(struct packed_git **)va),
--		 bw = pack_geometry_weight(*(struct packed_git **)vb);
+-	if (!peel_iterated_oid(data->repo, oid, &peeled))
+-		oid = &peeled;
 -
--	if (aw < bw)
--		return -1;
--	if (aw > bw)
--		return 1;
+-	if (oidset_insert(&data->seen, oid))
+-		return 0; /* already seen */
+-
+-	if (odb_read_object_info(data->repo->objects, oid, NULL) != OBJ_COMMIT)
+-		return 0;
+-
+-	fprintf(data->f->fp, "%s%s\n", data->preferred ? "+" : "",
+-		oid_to_hex(oid));
+-
 -	return 0;
 -}
 -
--static void pack_geometry_init(struct pack_geometry *geometry,
--			       struct existing_packs *existing,
--			       const struct pack_objects_args *args,
--			       int pack_kept_objects)
+-static void midx_snapshot_refs(struct repository *repo, struct tempfile *f)
 -{
--	struct packfile_store *packs = existing->repo->objects->packfiles;
--	struct packed_git *p;
--	struct strbuf buf = STRBUF_INIT;
+-	struct midx_snapshot_ref_data data;
+-	const struct string_list *preferred = bitmap_preferred_tips(repo);
 -
--	for (p = packfile_store_get_all_packs(packs); p; p = p->next) {
--		if (args->local && !p->pack_local)
--			/*
--			 * When asked to only repack local packfiles we skip
--			 * over any packfiles that are borrowed from alternate
--			 * object directories.
--			 */
--			continue;
+-	data.repo = repo;
+-	data.f = f;
+-	data.preferred = 0;
+-	oidset_init(&data.seen, 0);
 -
--		if (!pack_kept_objects) {
--			/*
--			 * Any pack that has its pack_keep bit set will
--			 * appear in existing->kept_packs below, but
--			 * this saves us from doing a more expensive
--			 * check.
--			 */
--			if (p->pack_keep)
--				continue;
+-	if (!fdopen_tempfile(f, "w"))
+-		 die(_("could not open tempfile %s for writing"),
+-		     get_tempfile_path(f));
 -
--			/*
--			 * The pack may be kept via the --keep-pack
--			 * option; check 'existing->kept_packs' to
--			 * determine whether to ignore it.
--			 */
--			strbuf_reset(&buf);
--			strbuf_addstr(&buf, pack_basename(p));
--			strbuf_strip_suffix(&buf, ".pack");
+-	if (preferred) {
+-		struct string_list_item *item;
 -
--			if (string_list_has_string(&existing->kept_packs, buf.buf))
--				continue;
--		}
--		if (p->is_cruft)
--			continue;
--
--		ALLOC_GROW(geometry->pack,
--			   geometry->pack_nr + 1,
--			   geometry->pack_alloc);
--
--		geometry->pack[geometry->pack_nr] = p;
--		geometry->pack_nr++;
+-		data.preferred = 1;
+-		for_each_string_list_item(item, preferred)
+-			refs_for_each_ref_in(get_main_ref_store(repo),
+-					     item->string,
+-					     midx_snapshot_ref_one, &data);
+-		data.preferred = 0;
 -	}
 -
--	QSORT(geometry->pack, geometry->pack_nr, pack_geometry_cmp);
--	strbuf_release(&buf);
+-	refs_for_each_ref(get_main_ref_store(repo),
+-			  midx_snapshot_ref_one, &data);
+-
+-	if (close_tempfile_gently(f)) {
+-		int save_errno = errno;
+-		delete_tempfile(&f);
+-		errno = save_errno;
+-		die_errno(_("could not close refs snapshot tempfile"));
+-	}
+-
+-	oidset_clear(&data.seen);
 -}
 -
--static void pack_geometry_split(struct pack_geometry *geometry)
--{
--	uint32_t i;
--	uint32_t split;
--	off_t total_size = 0;
--
--	if (!geometry->pack_nr) {
--		geometry->split = geometry->pack_nr;
--		return;
--	}
--
--	/*
--	 * First, count the number of packs (in descending order of size) which
--	 * already form a geometric progression.
--	 */
--	for (i = geometry->pack_nr - 1; i > 0; i--) {
--		struct packed_git *ours = geometry->pack[i];
--		struct packed_git *prev = geometry->pack[i - 1];
--
--		if (unsigned_mult_overflows(geometry->split_factor,
--					    pack_geometry_weight(prev)))
--			die(_("pack %s too large to consider in geometric "
--			      "progression"),
--			    prev->pack_name);
--
--		if (pack_geometry_weight(ours) <
--		    geometry->split_factor * pack_geometry_weight(prev))
--			break;
--	}
--
--	split = i;
--
--	if (split) {
--		/*
--		 * Move the split one to the right, since the top element in the
--		 * last-compared pair can't be in the progression. Only do this
--		 * when we split in the middle of the array (otherwise if we got
--		 * to the end, then the split is in the right place).
--		 */
--		split++;
--	}
--
--	/*
--	 * Then, anything to the left of 'split' must be in a new pack. But,
--	 * creating that new pack may cause packs in the heavy half to no longer
--	 * form a geometric progression.
--	 *
--	 * Compute an expected size of the new pack, and then determine how many
--	 * packs in the heavy half need to be joined into it (if any) to restore
--	 * the geometric progression.
--	 */
--	for (i = 0; i < split; i++) {
--		struct packed_git *p = geometry->pack[i];
--
--		if (unsigned_add_overflows(total_size, pack_geometry_weight(p)))
--			die(_("pack %s too large to roll up"), p->pack_name);
--		total_size += pack_geometry_weight(p);
--	}
--	for (i = split; i < geometry->pack_nr; i++) {
--		struct packed_git *ours = geometry->pack[i];
--
--		if (unsigned_mult_overflows(geometry->split_factor,
--					    total_size))
--			die(_("pack %s too large to roll up"), ours->pack_name);
--
--		if (pack_geometry_weight(ours) <
--		    geometry->split_factor * total_size) {
--			if (unsigned_add_overflows(total_size,
--						   pack_geometry_weight(ours)))
--				die(_("pack %s too large to roll up"),
--				    ours->pack_name);
--
--			split++;
--			total_size += pack_geometry_weight(ours);
--		} else
--			break;
--	}
--
--	geometry->split = split;
--}
--
--static struct packed_git *pack_geometry_preferred_pack(struct pack_geometry *geometry)
--{
--	uint32_t i;
--
--	if (!geometry) {
--		/*
--		 * No geometry means either an all-into-one repack (in which
--		 * case there is only one pack left and it is the largest) or an
--		 * incremental one.
--		 *
--		 * If repacking incrementally, then we could check the size of
--		 * all packs to determine which should be preferred, but leave
--		 * this for later.
--		 */
--		return NULL;
--	}
--	if (geometry->split == geometry->pack_nr)
--		return NULL;
--
--	/*
--	 * The preferred pack is the largest pack above the split line. In
--	 * other words, it is the largest pack that does not get rolled up in
--	 * the geometric repack.
--	 */
--	for (i = geometry->pack_nr; i > geometry->split; i--)
--		/*
--		 * A pack that is not local would never be included in a
--		 * multi-pack index. We thus skip over any non-local packs.
--		 */
--		if (geometry->pack[i - 1]->pack_local)
--			return geometry->pack[i - 1];
--
--	return NULL;
--}
--
--static void pack_geometry_remove_redundant(struct pack_geometry *geometry,
--					   struct string_list *names,
--					   struct existing_packs *existing,
--					   const char *packdir)
--{
--	const struct git_hash_algo *algop = existing->repo->hash_algo;
--	struct strbuf buf = STRBUF_INIT;
--	uint32_t i;
--
--	for (i = 0; i < geometry->split; i++) {
--		struct packed_git *p = geometry->pack[i];
--		if (string_list_has_string(names, hash_to_hex_algop(p->hash,
--								    algop)))
--			continue;
--
--		strbuf_reset(&buf);
--		strbuf_addstr(&buf, pack_basename(p));
--		strbuf_strip_suffix(&buf, ".pack");
--
--		if ((p->pack_keep) ||
--		    (string_list_has_string(&existing->kept_packs, buf.buf)))
--			continue;
--
--		repack_remove_redundant_pack(existing->repo, packdir, buf.buf);
--	}
--
--	strbuf_release(&buf);
--}
--
--static void pack_geometry_release(struct pack_geometry *geometry)
--{
--	if (!geometry)
--		return;
--
--	free(geometry->pack);
--}
--
- static int midx_has_unknown_packs(char **midx_pack_names,
- 				  size_t midx_pack_names_nr,
- 				  struct string_list *include,
+ static void midx_included_packs(struct string_list *include,
+ 				struct existing_packs *existing,
+ 				char **midx_pack_names,
 diff --git a/meson.build b/meson.build
-index b37e3d192d..9afd45ea45 100644
+index 9afd45ea45..0373d5c454 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -463,6 +463,7 @@ libgit_sources = [
-   'reftable/writer.c',
+@@ -464,6 +464,7 @@ libgit_sources = [
    'remote.c',
    'repack.c',
-+  'repack-geometry.c',
+   'repack-geometry.c',
++  'repack-midx.c',
    'repack-promisor.c',
    'replace-object.c',
    'repo-settings.c',
-diff --git a/repack-geometry.c b/repack-geometry.c
+diff --git a/repack-midx.c b/repack-midx.c
 new file mode 100644
-index 0000000000..f58f1fc7f0
+index 0000000000..354df729a5
 --- /dev/null
-+++ b/repack-geometry.c
-@@ -0,0 +1,234 @@
-+#define DISABLE_SIGN_COMPARE_WARNINGS
-+
++++ b/repack-midx.c
+@@ -0,0 +1,77 @@
 +#include "git-compat-util.h"
 +#include "repack.h"
-+#include "repository.h"
++#include "hash.h"
 +#include "hex.h"
-+#include "packfile.h"
++#include "odb.h"
++#include "oidset.h"
++#include "pack-bitmap.h"
++#include "refs.h"
++#include "tempfile.h"
 +
-+static uint32_t pack_geometry_weight(struct packed_git *p)
++struct midx_snapshot_ref_data {
++	struct repository *repo;
++	struct tempfile *f;
++	struct oidset seen;
++	int preferred;
++};
++
++static int midx_snapshot_ref_one(const char *refname UNUSED,
++				 const char *referent UNUSED,
++				 const struct object_id *oid,
++				 int flag UNUSED, void *_data)
 +{
-+	if (open_pack_index(p))
-+		die(_("cannot open index for %s"), p->pack_name);
-+	return p->num_objects;
-+}
++	struct midx_snapshot_ref_data *data = _data;
++	struct object_id peeled;
 +
-+static int pack_geometry_cmp(const void *va, const void *vb)
-+{
-+	uint32_t aw = pack_geometry_weight(*(struct packed_git **)va),
-+		 bw = pack_geometry_weight(*(struct packed_git **)vb);
++	if (!peel_iterated_oid(data->repo, oid, &peeled))
++		oid = &peeled;
 +
-+	if (aw < bw)
-+		return -1;
-+	if (aw > bw)
-+		return 1;
++	if (oidset_insert(&data->seen, oid))
++		return 0; /* already seen */
++
++	if (odb_read_object_info(data->repo->objects, oid, NULL) != OBJ_COMMIT)
++		return 0;
++
++	fprintf(data->f->fp, "%s%s\n", data->preferred ? "+" : "",
++		oid_to_hex(oid));
++
 +	return 0;
 +}
 +
-+void pack_geometry_init(struct pack_geometry *geometry,
-+			struct existing_packs *existing,
-+			const struct pack_objects_args *args,
-+			int pack_kept_objects)
++void midx_snapshot_refs(struct repository *repo, struct tempfile *f)
 +{
-+	struct packfile_store *packs = existing->repo->objects->packfiles;
-+	struct packed_git *p;
-+	struct strbuf buf = STRBUF_INIT;
++	struct midx_snapshot_ref_data data;
++	const struct string_list *preferred = bitmap_preferred_tips(repo);
 +
-+	for (p = packfile_store_get_all_packs(packs); p; p = p->next) {
-+		if (args->local && !p->pack_local)
-+			/*
-+			 * When asked to only repack local packfiles we skip
-+			 * over any packfiles that are borrowed from alternate
-+			 * object directories.
-+			 */
-+			continue;
++	data.repo = repo;
++	data.f = f;
++	data.preferred = 0;
++	oidset_init(&data.seen, 0);
 +
-+		if (!pack_kept_objects) {
-+			/*
-+			 * Any pack that has its pack_keep bit set will
-+			 * appear in existing->kept_packs below, but
-+			 * this saves us from doing a more expensive
-+			 * check.
-+			 */
-+			if (p->pack_keep)
-+				continue;
++	if (!fdopen_tempfile(f, "w"))
++		 die(_("could not open tempfile %s for writing"),
++		     get_tempfile_path(f));
 +
-+			/*
-+			 * The pack may be kept via the --keep-pack
-+			 * option; check 'existing->kept_packs' to
-+			 * determine whether to ignore it.
-+			 */
-+			strbuf_reset(&buf);
-+			strbuf_addstr(&buf, pack_basename(p));
-+			strbuf_strip_suffix(&buf, ".pack");
++	if (preferred) {
++		struct string_list_item *item;
 +
-+			if (string_list_has_string(&existing->kept_packs, buf.buf))
-+				continue;
-+		}
-+		if (p->is_cruft)
-+			continue;
-+
-+		ALLOC_GROW(geometry->pack,
-+			   geometry->pack_nr + 1,
-+			   geometry->pack_alloc);
-+
-+		geometry->pack[geometry->pack_nr] = p;
-+		geometry->pack_nr++;
++		data.preferred = 1;
++		for_each_string_list_item(item, preferred)
++			refs_for_each_ref_in(get_main_ref_store(repo),
++					     item->string,
++					     midx_snapshot_ref_one, &data);
++		data.preferred = 0;
 +	}
 +
-+	QSORT(geometry->pack, geometry->pack_nr, pack_geometry_cmp);
-+	strbuf_release(&buf);
-+}
++	refs_for_each_ref(get_main_ref_store(repo),
++			  midx_snapshot_ref_one, &data);
 +
-+void pack_geometry_split(struct pack_geometry *geometry)
-+{
-+	uint32_t i;
-+	uint32_t split;
-+	off_t total_size = 0;
-+
-+	if (!geometry->pack_nr) {
-+		geometry->split = geometry->pack_nr;
-+		return;
++	if (close_tempfile_gently(f)) {
++		int save_errno = errno;
++		delete_tempfile(&f);
++		errno = save_errno;
++		die_errno(_("could not close refs snapshot tempfile"));
 +	}
 +
-+	/*
-+	 * First, count the number of packs (in descending order of size) which
-+	 * already form a geometric progression.
-+	 */
-+	for (i = geometry->pack_nr - 1; i > 0; i--) {
-+		struct packed_git *ours = geometry->pack[i];
-+		struct packed_git *prev = geometry->pack[i - 1];
-+
-+		if (unsigned_mult_overflows(geometry->split_factor,
-+					    pack_geometry_weight(prev)))
-+			die(_("pack %s too large to consider in geometric "
-+			      "progression"),
-+			    prev->pack_name);
-+
-+		if (pack_geometry_weight(ours) <
-+		    geometry->split_factor * pack_geometry_weight(prev))
-+			break;
-+	}
-+
-+	split = i;
-+
-+	if (split) {
-+		/*
-+		 * Move the split one to the right, since the top element in the
-+		 * last-compared pair can't be in the progression. Only do this
-+		 * when we split in the middle of the array (otherwise if we got
-+		 * to the end, then the split is in the right place).
-+		 */
-+		split++;
-+	}
-+
-+	/*
-+	 * Then, anything to the left of 'split' must be in a new pack. But,
-+	 * creating that new pack may cause packs in the heavy half to no longer
-+	 * form a geometric progression.
-+	 *
-+	 * Compute an expected size of the new pack, and then determine how many
-+	 * packs in the heavy half need to be joined into it (if any) to restore
-+	 * the geometric progression.
-+	 */
-+	for (i = 0; i < split; i++) {
-+		struct packed_git *p = geometry->pack[i];
-+
-+		if (unsigned_add_overflows(total_size, pack_geometry_weight(p)))
-+			die(_("pack %s too large to roll up"), p->pack_name);
-+		total_size += pack_geometry_weight(p);
-+	}
-+	for (i = split; i < geometry->pack_nr; i++) {
-+		struct packed_git *ours = geometry->pack[i];
-+
-+		if (unsigned_mult_overflows(geometry->split_factor,
-+					    total_size))
-+			die(_("pack %s too large to roll up"), ours->pack_name);
-+
-+		if (pack_geometry_weight(ours) <
-+		    geometry->split_factor * total_size) {
-+			if (unsigned_add_overflows(total_size,
-+						   pack_geometry_weight(ours)))
-+				die(_("pack %s too large to roll up"),
-+				    ours->pack_name);
-+
-+			split++;
-+			total_size += pack_geometry_weight(ours);
-+		} else
-+			break;
-+	}
-+
-+	geometry->split = split;
-+}
-+
-+struct packed_git *pack_geometry_preferred_pack(struct pack_geometry *geometry)
-+{
-+	uint32_t i;
-+
-+	if (!geometry) {
-+		/*
-+		 * No geometry means either an all-into-one repack (in which
-+		 * case there is only one pack left and it is the largest) or an
-+		 * incremental one.
-+		 *
-+		 * If repacking incrementally, then we could check the size of
-+		 * all packs to determine which should be preferred, but leave
-+		 * this for later.
-+		 */
-+		return NULL;
-+	}
-+	if (geometry->split == geometry->pack_nr)
-+		return NULL;
-+
-+	/*
-+	 * The preferred pack is the largest pack above the split line. In
-+	 * other words, it is the largest pack that does not get rolled up in
-+	 * the geometric repack.
-+	 */
-+	for (i = geometry->pack_nr; i > geometry->split; i--)
-+		/*
-+		 * A pack that is not local would never be included in a
-+		 * multi-pack index. We thus skip over any non-local packs.
-+		 */
-+		if (geometry->pack[i - 1]->pack_local)
-+			return geometry->pack[i - 1];
-+
-+	return NULL;
-+}
-+
-+void pack_geometry_remove_redundant(struct pack_geometry *geometry,
-+				    struct string_list *names,
-+				    struct existing_packs *existing,
-+				    const char *packdir)
-+{
-+	const struct git_hash_algo *algop = existing->repo->hash_algo;
-+	struct strbuf buf = STRBUF_INIT;
-+	uint32_t i;
-+
-+	for (i = 0; i < geometry->split; i++) {
-+		struct packed_git *p = geometry->pack[i];
-+		if (string_list_has_string(names, hash_to_hex_algop(p->hash,
-+								    algop)))
-+			continue;
-+
-+		strbuf_reset(&buf);
-+		strbuf_addstr(&buf, pack_basename(p));
-+		strbuf_strip_suffix(&buf, ".pack");
-+
-+		if ((p->pack_keep) ||
-+		    (string_list_has_string(&existing->kept_packs, buf.buf)))
-+			continue;
-+
-+		repack_remove_redundant_pack(existing->repo, packdir, buf.buf);
-+	}
-+
-+	strbuf_release(&buf);
-+}
-+
-+void pack_geometry_release(struct pack_geometry *geometry)
-+{
-+	if (!geometry)
-+		return;
-+
-+	free(geometry->pack);
++	oidset_clear(&data.seen);
 +}
 diff --git a/repack.h b/repack.h
-index 19dc4fd738..cea7969ae4 100644
+index cea7969ae4..803e129224 100644
 --- a/repack.h
 +++ b/repack.h
-@@ -78,4 +78,24 @@ void repack_promisor_objects(struct repository *repo,
- 			     const struct pack_objects_args *args,
- 			     struct string_list *names, const char *packtmp);
+@@ -98,4 +98,8 @@ void pack_geometry_remove_redundant(struct pack_geometry *geometry,
+ 				    const char *packdir);
+ void pack_geometry_release(struct pack_geometry *geometry);
  
-+struct pack_geometry {
-+	struct packed_git **pack;
-+	uint32_t pack_nr, pack_alloc;
-+	uint32_t split;
++struct tempfile;
 +
-+	int split_factor;
-+};
-+
-+void pack_geometry_init(struct pack_geometry *geometry,
-+			struct existing_packs *existing,
-+			const struct pack_objects_args *args,
-+			int pack_kept_objects);
-+void pack_geometry_split(struct pack_geometry *geometry);
-+struct packed_git *pack_geometry_preferred_pack(struct pack_geometry *geometry);
-+void pack_geometry_remove_redundant(struct pack_geometry *geometry,
-+				    struct string_list *names,
-+				    struct existing_packs *existing,
-+				    const char *packdir);
-+void pack_geometry_release(struct pack_geometry *geometry);
++void midx_snapshot_refs(struct repository *repo, struct tempfile *f);
 +
  #endif /* REPACK_H */
 -- 
