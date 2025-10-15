@@ -1,217 +1,171 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2260A2C11D1
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 06:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263B8310762
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 06:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760508278; cv=none; b=PNboNg5fFNfxOhz20k+M06t4NxKl5yur1+yK+6lV6gpJDVZOMJtKg8alFtfoKXIVs6USgQWeH04VsVeMJjP73uRMAnlm7Ue1VpMiTDE348FlV85cDxx9FDjcQWOCZJGX8ROi1h2QCy/Nwo9raCcv40cOVAyJ3ZiZ5LsO9qOTpMA=
+	t=1760509509; cv=none; b=ZVHj2EQNY4rZD9Qc0TuZlT23CeGm/bEz9g/ufhiitzxLM6wXyL1tVkEBcoYO92FGhXnnwG3KMzdP4NazNrwuDBMarY0D+gBy6I/z5C+fEoNkh0x8IWYJ2uORSYRwK2PyFZ9l+8wDsPnmXQexmREi3KGMob5PGYIzlrv1sG9SvTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760508278; c=relaxed/simple;
-	bh=AkdgGpeR4b352COsamkXOY+njg5DHkxSGeDi8eXsk6M=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aIVuXTbZJMFE/Ddxkkkj+boSGrmV4Thtz3VRp2SXGminbsOrWorI/4Qo6XKWnDM9nvhwpCAndImd/3rrO8oiX8WvIwBO5kYjLkhqvnStMxk7R0ioOfg+Pdo3bc87zPjyWnsYR4LDIN19WYQMSEM3jWALDOvH3dg56sCYnxNSqG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bkwpQev2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TzeHJYo4; arc=none smtp.client-ip=202.12.124.153
+	s=arc-20240116; t=1760509509; c=relaxed/simple;
+	bh=VDz3z0IbOnf18QjikJVRATHPVbZOgFL/+Mo8jh0Se28=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PF1psAcUpNMAqb4T1SRI9y2RO0q12bddCqiFLOHqhh+p1kLx9V9orv0H/eCX8fHyCs55gfuGLpgQclJEdS53OvUsKYvwjdmPMZ9bcWVGV0VrI55dSXDwCjYVy4anUgb33dg/7n8Me3p5SCLdJMl64mTJ7O3sak8JKaqug+/F6Zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eEH74lqv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c/xAZUgZ; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bkwpQev2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TzeHJYo4"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 404167A01AD;
-	Wed, 15 Oct 2025 02:04:35 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eEH74lqv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c/xAZUgZ"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 74E217A0158;
+	Wed, 15 Oct 2025 02:25:01 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 15 Oct 2025 02:04:35 -0400
+  by phl-compute-12.internal (MEProxy); Wed, 15 Oct 2025 02:25:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1760508275;
-	 x=1760594675; bh=Brw/j4qbMEYFdnrJiw5/P0q16GEqDxmRwaqIQ6n+QQQ=; b=
-	bkwpQev2nZaK5Sun0+wHNejRhfTHx5rUf57QSxAj8nHTYqtkZzyIjvJabcvPvRxq
-	rLlY02APPH5IJauWz4stA9pG64+NWIYLfD7AaegLFYObADH8yZm6g5+gUErK2Mae
-	ImaGsoBpYnb/6riyMFAgtB6ufWgpEs7MMP3iGp5qPoS1QOsd6U+TVDDTqY1zmWmS
-	LkWilLKWUWoy7nVKlN4HLs83Gn2rVAWzwcEcTjc6WDqx8mTbSTDkEXLliIV+mCMx
-	VJA1gVJrF7Hw+gs4JTwubmYSWlC6AAw8Ar3+a5M3nx0Uaq4qQDWBdb77xIXNs2nw
-	VnBc0cd3z2l+Op2QUUlUig==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1760509501; x=1760595901; bh=bYdDxLhfjT
+	Tgv30Kx2iNY9oUaprkqttgzngO/qXUPLA=; b=eEH74lqvH8Oc4lvACgmHPsqvpI
+	RvSfcOYBJi280AV70k9pFr2zPvsZE9gbzDypgk9f1r/W2h6ymO13wcirnL+q0h3s
+	qQ+ESnYBOg9WFqul6A7e+4MvNpTRM1vVbsThl8XxvOYP6RcqHKhExTjImorSiU0A
+	MzeZUghORIktHYhUSSEcbdAOf41iiu5HoW/cE22QLetqDgNW+EoX6qltddKOkFiN
+	biXrstt+0bEA5CwUjMsMeU2Nm+WeBjdFe4Llxz/z3wgYqqrvLWek28wM+wkeAkR7
+	YxHy13WTrgYJEYYXi8S8YeZwyds6n3GZYd2ty+zc19rfE0NBtUwooynZYOHg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760508275; x=
-	1760594675; bh=Brw/j4qbMEYFdnrJiw5/P0q16GEqDxmRwaqIQ6n+QQQ=; b=T
-	zeHJYo4gPRDUbPnm5/jeIfZ86iJmp/c5HiRsCK5g7Q+tbSHlxWoz77AqrN2sWqDR
-	MDhHr1rcUgayn/i4GZrTsPyIl0JUfrEJI0x28PNS9iLnSda5Wwslnz6OtiFBbAyp
-	3VvI/GXyXpACiL6UGsvOXx06fXzpPFJScFy/XCpB/yaNl8kNl2j3rhONyNHNTmiy
-	zcnMEFCIbpppzboA2dIuFfOZM4+3rFkREnHlGDnuPbuL72ZEoIsw8VX4n4id4Y8+
-	uUcibwoz5w2eUOtaNXsqpM4SZOwM3uKyiEN32m70XhFdD4imKeAzwI4sruHz3LN4
-	1gYbLWm/nsQdIpOQxetNw==
-X-ME-Sender: <xms:cjnvaNhJqdwJ_U7Sx2SCN36v2rdq-sLHNv5xMXd0ur6CpIcicPGVAg>
-    <xme:cjnvaBF89f03u6oL-oy9gcOSsKal2tSxbwr2NOJ9tj5QXX4_G8stNo-TY3HDp-G9b
-    DR_Fj4p4pkZBCf9jiBC2WeFPA1Oz-MZ5MUB9NBti_6ovsMeODSNXA>
-X-ME-Received: <xmr:cjnvaDTXNWBUR5THMVgaHw_tj3rYUrrdZ7Q3Ia59Xc9CT7X8f6vyEbv8krTnb6vjVXo56-wezn4XhkEHocquuw9F2GCJWLUEShdTgvNeRZXh>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvddvieegucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760509501; x=1760595901; bh=bYdDxLhfjTTgv30Kx2iNY9oUaprkqttgzng
+	O/qXUPLA=; b=c/xAZUgZhq3rj1ZTY2bCAQNEDfSgfEKgcfq+oe0P5JNU/+O8gL0
+	UTW3fcrbJO0uOejxtEdCHxgyjGsvamHl0Htw3LYhs1MuJOesA/swB5yigJ1sE/qM
+	oVwGQEqJrtKgfZ8lL76fY3XpmyMd55qP1QHcmJUJjh/hbe6FEFdc03ZFmEEYdxW2
+	ykoMagY9siu0+80ZtHmdbIb1j40AjlckEGM33WcBzC3Wtut1B9ExyiEug5/Or9Jr
+	N2tniF++jjGenR7wqYTplljeg2yDeK8CSzMT7rVTVsYN4dHFTNt2ngXgD3qADlJ8
+	2bY+znzKByv9dnlsxOrrsJpw1404pqgRGMw==
+X-ME-Sender: <xms:PT7vaOcnjYhs4Mrp5LpxqrrOmcAPqkziodwEDYEacDPd9DMZGX8TMQ>
+    <xme:PT7vaPFtFCyzQAWSOKhSF5ucP0DFtdxuUPGVrTZ_U8qpFAPixI51K1CkuGxZ-MPae
+    mWz3mqYhNesn6XAmQvSviLC_v6P03oBRSSUCdSgzpCDKAvHrMQD>
+X-ME-Received: <xmr:PT7vaH3otxpiQ8I3OfJqSfV7MpczQ4cKQEBCioxpu1bcImj0M2k_miMqRSOOHR4XVn3ncc8FBnEgKlq-cQYe05sLXm34r23gfpgyN5QRN41v>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvddvieekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvrhhitghsuhhnshhh
-    ihhnvgesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsrdhtohhrvghksehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
-    dprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgv
-    thdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:cjnvaOx2HkcV65yAXaqxg4RYyx5h_7RQl_WvkZvp6tGxNL_SeYVORQ>
-    <xmx:cjnvaPc4nxhbqUFgfHYsfmPXT8MjwziVcZvkYE5Eg8NW-hj6jXN7lw>
-    <xmx:cjnvaBMpZR9H8hIoswHWlgrlgIjiTNg8NTwx1I_6WFHKKFCOwGjHRA>
-    <xmx:cjnvaKvfQBtsWBmP553fifsERra4c-YVFPVXN9A9Lvs5OIczgspqEg>
-    <xmx:cznvaLP0MuONDYFDN1woRYBQa5LsQGXUvkI6IWf8wW0lHkn4aOq3OeLe>
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhulhhirg
+    esjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdr
+    tghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsth
+    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:PT7vaHl1C9rtUnIjmBHrgUljCriAd5a6-iQK4UDxeLXPDCH_PWUmuw>
+    <xmx:PT7vaH93DZEmDXaRXyrZGjqObNMN6shagKhz5ftxKoOLQ2S_7XzHTQ>
+    <xmx:PT7vaMpUKCvyigBRPHb-GtFYaC1ds8jJRssTkwdLyelWqQ39xhIg8w>
+    <xmx:PT7vaAneykhncMgsHs41Ekj-bqoEQXkLGXHMs8EMiij39NaYTxJd9g>
+    <xmx:PT7vaO0I7RYh_h7e-xLqtWljgFZVKdJo6KxBwcbc7OyiA5_5zp08DxTP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Oct 2025 02:04:33 -0400 (EDT)
+ 15 Oct 2025 02:25:00 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a70d1ecb (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 15 Oct 2025 06:04:32 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 848d0b1b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 15 Oct 2025 06:24:58 +0000 (UTC)
+Date: Wed, 15 Oct 2025 08:24:54 +0200
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 15 Oct 2025 08:04:10 +0200
-Subject: [PATCH v3 6/6] rust: support for Windows
+To: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>, Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v3] doc: add a explanation of Git's data model
+Message-ID: <aO8-NtJPNBAM2tVn@pks.im>
+References: <pull.1981.v2.git.1759931621272.gitgitgadget@gmail.com>
+ <pull.1981.v3.git.1760476346040.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251015-b4-pks-ci-rust-v3-6-13810af33bd5@pks.im>
-References: <20251015-b4-pks-ci-rust-v3-0-13810af33bd5@pks.im>
-In-Reply-To: <20251015-b4-pks-ci-rust-v3-0-13810af33bd5@pks.im>
-To: git@vger.kernel.org
-Cc: Ezekiel Newren <ezekielnewren@gmail.com>, 
- "brian m. carlson" <sandals@crustytoothpaste.net>, 
- Karthik Nayak <karthik.188@gmail.com>, 
- Eric Sunshine <ericsunshine@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
- Chris Torek <chris.torek@gmail.com>, 
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-Mailer: b4 0.14.3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1981.v3.git.1760476346040.gitgitgadget@gmail.com>
 
-The initial patch series that introduced Rust into the core of Git only
-cared about macOS and Linux. This specifically leaves out Windows, which
-indeed fails to build right now due to two issues:
+On Tue, Oct 14, 2025 at 09:12:26PM +0000, Julia Evans via GitGitGadget wrote:
+[snip]
+> +[[commit]]
+> +commits::
+> +    A commit contains these required fields
+> +    (though there are other optional fields):
+> ++
+> +1. All the *files* in the commit, stored as the *<<tree,tree>>* ID of
+> +   the commit's base directory.
+> +2. Its *parent commit ID(s)*. The first commit in a repository has 0 parents,
+> +  regular commits have 1 parent, merge commits have 2 or more parents
+> +3. An *author* and the time the commit was authored
+> +4. A *committer* and the time the commit was committed.
+> +   If you cherry-pick (linkgit:git-cherry-pick[1]) someone else's commit,
+> +   then they will be the author and you'll be the committer.
+> +5. A *commit message*
+> ++
+> +Here's how an example commit is stored:
+> ++
+> +----
+> +tree 1b61de420a21a2f1aaef93e38ecd0e45e8bc9f0a
+> +parent 4ccb6d7b8869a86aae2e84c56523f8705b50c647
+> +author Maya <maya@example.com> 1759173425 -0400
+> +committer Maya <maya@example.com> 1759173425 -0400
+> +
+> +Add README
+> +----
+> ++
+> +Like all other objects, commits can never be changed after they're created.
+> +For example, "amending" a commit with `git commit --amend` creates a new
+> +commit with the same parent.
 
-  - The Rust runtime requires `GetUserProfileDirectoryW()`, but we don't
-    link against "userenv.dll".
+Let's say "parents" instead of "parent" here so that it also works for
+root and merge commits.
 
-  - The path of the Rust library built on Windows is different than on
-    most other systems systems.
+[snip]
+> +[[other-refs]]
+> +Other references::
+> +    Git tools may create references anywhere under `refs/`.
+> +    For example, linkgit:git-stash[1], linkgit:git-bisect[1],
+> +    and linkgit:git-notes[1] all create their own references
+> +    in `refs/stash`, `refs/bisect`, etc.
+> +    Third-party Git tools may also create their own references.
+> ++
+> +Git may also create references other than `HEAD` at the base of the
+> +hierarchy, like `ORIG_HEAD`.
+> ++
+> +NOTE: By default, Git references are stored as files in the `.git` directory.
+> +For example, the branch `main` is stored in `.git/refs/heads/main`.
+> +This means that you can't have branches named both `maya` and `maya/some-task`,
+> +because there can't be a file and a directory with the same name.
 
-Fix both of these issues to support Windows.
+Hm. I think mentioning this can help, but it may also creates questions
+when someone has a "main" branch but is unable find it in
+".git/refs/heads/main" because it has either been packed, or because the
+repository uses reftables.
 
-Note that this commit fixes the Meson-based job in GitHub's CI. Meson
-auto-detects the availability of Rust, and as the Windows runner has
-Rust installed by default it already enabled Rust support there. But due
-to the above issues that job fails consistently.
+I don't really know what to do about this. I think the most sensible
+thing would be to introduce two man pages gitformat-reffiles(5) and
+gitformat-reftables(5) that we can reference here for further reading.
 
-Install Rust on GitLab CI, as well, to improve test coverage there.
+[snip]
+> +[[reflogs]]
+> +REFLOGS
+> +-------
+> +
+> +Git stores a history called a "reflog" for every branch, remote-tracking
 
-Based-on-patch-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Based-on-patch-by: Ezekiel Newren <ezekielnewren@gmail.com>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- .gitlab-ci.yml     |  2 +-
- Makefile           | 14 ++++++++++++--
- meson.build        |  4 ++++
- src/cargo-meson.sh | 11 +++++++++--
- 4 files changed, 26 insertions(+), 5 deletions(-)
+I think it's a bit unclear what "history" means here. Maybe:
 
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index a47d839e39..b419a84e2c 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -161,7 +161,7 @@ test:mingw64:
-     - saas-windows-medium-amd64
-   before_script:
-     - *windows_before_script
--    - choco install -y git meson ninja
-+    - choco install -y git meson ninja rust-ms
-     - Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
-     - refreshenv
- 
-diff --git a/Makefile b/Makefile
-index 7ea149598d..366fd173e7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -929,10 +929,17 @@ TEST_SHELL_PATH = $(SHELL_PATH)
- LIB_FILE = libgit.a
- XDIFF_LIB = xdiff/lib.a
- REFTABLE_LIB = reftable/libreftable.a
-+
- ifdef DEBUG
--RUST_LIB = target/debug/libgitcore.a
-+RUST_TARGET_DIR = target/debug
- else
--RUST_LIB = target/release/libgitcore.a
-+RUST_TARGET_DIR = target/release
-+endif
-+
-+ifeq ($(uname_S),Windows)
-+RUST_LIB = $(RUST_TARGET_DIR)/gitcore.lib
-+else
-+RUST_LIB = $(RUST_TARGET_DIR)/libgitcore.a
- endif
- 
- # xdiff and reftable libs may in turn depend on what is in libgit.a
-@@ -1538,6 +1545,9 @@ ALL_LDFLAGS = $(LDFLAGS) $(LDFLAGS_APPEND)
- ifdef WITH_RUST
- BASIC_CFLAGS += -DWITH_RUST
- GITLIBS += $(RUST_LIB)
-+ifeq ($(uname_S),Windows)
-+EXTLIBS += -luserenv
-+endif
- endif
- 
- ifdef SANITIZE
-diff --git a/meson.build b/meson.build
-index ec55d6a5fd..a9c865b2af 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1707,6 +1707,10 @@ rust_option = get_option('rust').disable_auto_if(not cargo.found())
- if rust_option.allowed()
-   subdir('src')
-   libgit_c_args += '-DWITH_RUST'
-+
-+  if host_machine.system() == 'windows'
-+    libgit_dependencies += compiler.find_library('userenv')
-+  endif
- else
-   libgit_sources += [
-     'varint.c',
-diff --git a/src/cargo-meson.sh b/src/cargo-meson.sh
-index 99400986d9..3998db0435 100755
---- a/src/cargo-meson.sh
-+++ b/src/cargo-meson.sh
-@@ -26,7 +26,14 @@ then
- 	exit $RET
- fi
- 
--if ! cmp "$BUILD_DIR/$BUILD_TYPE/libgitcore.a" "$BUILD_DIR/libgitcore.a" >/dev/null 2>&1
-+case "$(cargo -vV | sed -s 's/^host: \(.*\)$/\1/')" in
-+	*-windows-*)
-+		LIBNAME=gitcore.lib;;
-+	*)
-+		LIBNAME=libgitcore.a;;
-+esac
-+
-+if ! cmp "$BUILD_DIR/$BUILD_TYPE/$LIBNAME" "$BUILD_DIR/libgitcore.a" >/dev/null 2>&1
- then
--	cp "$BUILD_DIR/$BUILD_TYPE/libgitcore.a" "$BUILD_DIR/libgitcore.a"
-+	cp "$BUILD_DIR/$BUILD_TYPE/$LIBNAME" "$BUILD_DIR/libgitcore.a"
- fi
+    Git stores a "reflog" for every branch, remote-tracking branch and
+    "HEAD" that contains the annotated history of all updates for a
+    particular reference. This means...
 
--- 
-2.51.0.869.ge66316f041.dirty
+Other than those handful of comments I'm happy with the current version,
+thanks!
 
+Patrick
