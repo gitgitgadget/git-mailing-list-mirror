@@ -1,83 +1,85 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4028261588
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 16:15:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FDF73375CF
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 16:25:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760544909; cv=none; b=X2rg4AVafr6IhMS1Tvx2m7rt4Uo8Dk9C6rdBV+ICRxVxUNzdxj5oAExV6H46+WunLbAE09gvr0KBAiUOljoVEcvOJ0qJIE+k9owbWmWHamV5jyUTP8Q0h8TkPeHyBtE2oevnf0zNTM2NMJpuvZNtf3SOQ6fDwGiNPUFbJswEfLQ=
+	t=1760545513; cv=none; b=qKPXeac2OTBVWPEi8qtkTpM3XglYoP2eo9LstpRixYfUsPDP6MfS6zw/h4YLosqQSf9JMEKHl+YlbcSfbIkbxIRdd8V07rTFpmc56gkcI14I8+4d9vE+K+hnZNS91Knew+9ZaUZdqdXeGJTzLxVT/wteio48t4uNgC9Zwx8qrWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760544909; c=relaxed/simple;
-	bh=VDYm9QOBudwUWLuz6zYvXVCqe7tc3qCw1ceQTzmPHSI=;
+	s=arc-20240116; t=1760545513; c=relaxed/simple;
+	bh=opm1TPqJceyemxJL5CGYa5lrVzDZLFpMl1PpG1YgzgY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GGwouEjLn2kdFzoUEviKRKESJCXt6F9q7Cmsk10Uwz+wmMKiTGKXBrD6mgFajGs8NH6S50uxVWoHuCKb7P/dNldLT3vzM8x/mqMYxxMl+o7SW4O5bq3P9ydUb2/0bNDX+owks8vVo5zfrhoXCI96qR6cXaGBj/0c9SZHlU8YWx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bUf2IEiQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wsKKtEj4; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=nWqZL9Y7WJkxUYkaq79Xw5x3bZzBCVXjime1Jy1KOYPBRoNXT8jAKriXl0kk41uZNkyTccmwQwPllgwnlQYRjWt4s0sEeZ+DimkSnPFFmTb0HdjAUL7pkLE4CvKqL4kmJLtJl+vmGWSAmAo1ytQUE7Ao73WfjZoMUUh3DMx6ork=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XawqmP7W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nJBY2iqE; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bUf2IEiQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wsKKtEj4"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id B77FEEC0266;
-	Wed, 15 Oct 2025 12:15:06 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XawqmP7W";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nJBY2iqE"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 93E5C1400053;
+	Wed, 15 Oct 2025 12:25:10 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 15 Oct 2025 12:15:06 -0400
+  by phl-compute-02.internal (MEProxy); Wed, 15 Oct 2025 12:25:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760544906; x=1760631306; bh=XXWwKOKW1G
-	cBQYjVUZXkjfSzf2CrPdhtOhAywTM40GU=; b=bUf2IEiQn8NgGhEP/o9khoBLqR
-	pL4Ls+SonrURb5AsX2pbRGvykBieboCezV0CsbxqHQaFhBuF1BCDAo/BPV3PI7VZ
-	gsoyvA+HxxUazKRVmJODWuksoet5WXEz/BaIB5tTFIWtS4KHc5qytSes7NKPtBJd
-	IAy/LMBzVjn8UN4S7B2feJoNdvhHGH7ZIrqe+CtorgHVxSGkuQcdlOtjkjcGL5nr
-	J29aOzXqSu+yJxLU2Ae7/7gxogi4hHCedAH5ZVp8DC0WX38zcCh1G2LcbEr6cKOm
-	z0mFmL8gYtLGleu/j86LOEivqonGyjR4g06ntkViOtxYmbBGRZzMXPN152VQ==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1760545510;
+	 x=1760631910; bh=opm1TPqJceyemxJL5CGYa5lrVzDZLFpMl1PpG1YgzgY=; b=
+	XawqmP7WXU1XP33HfWFND0gSEvAs1Z8uqmQGpJHkkZx7yXYSYwk/e3L2/BG/tBkQ
+	Zo19kJE28CVqnaAz1WvV6fkI7SYzN6yR/gjEDMlKZsh3Bod38Bof/d2n0R4esKfI
+	AgWFWBZR6EIg29RXeFxaLSG9jwJenRHLmCyAnKeL6bD1ZQnpVfkkED90mNqEzzyE
+	F2cn/RXlDdqpsfaQc3MDGnDg2CixTDG23AkP5tC70Jbgeu/Ggt9trRgU5BSw6301
+	Dcwl4siRi8gILBbT1YShpDbb9NuAOJj+9fJD0WVdjnbtuBaqQSMvFhncRGMkTiZl
+	df2InYdqy4idmD+MMpPb6A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760544906; x=1760631306; bh=XXWwKOKW1GcBQYjVUZXkjfSzf2CrPdhtOhA
-	ywTM40GU=; b=wsKKtEj4gJdQXI2UAuYojxiNNKiitfVFppuYuKpqzg9BwkL/kXj
-	dKNjVJFDd7Yxka2qrKNKkXdfzV7/y3E2On9i4VRqIovNgj+Z8GlV7aipa+QZy0Ql
-	M4/132SBxdaOSWLlI0gpzPebLS4/4MVHUDeM1dt0juM344G8Ov3+YmEVEOE/BFGB
-	hDF6Tip3ethJD7CjrgT7KVrHrn80whWMdh5Vj15mvxkeQFL1oAVR1NQ+3X9mUtsu
-	h5VltSkdn+nWqYe4EzOpkBQvsQu/on4EIq4BlcAB9cf8ZQr4qVyLY19Aa1EMD96e
-	gwfq4BE0HEV7B1odVJZpV9B2d3gxX4AXUew==
-X-ME-Sender: <xms:isjvaAYWCKM0SumZS97xUCbOGzsiChEZ1RhpqaA_xZaNGC7OX4zWqw>
-    <xme:isjvaCaF8ZLFDvbN5xvEYwPSZ5qVzhytb-TNdjkeESJNrqIUYDMeNOZguCcM6G2DD
-    pDoStfSNThN9qJLdqSNGSZuwKKO7pK0KNBjkBIzEV0Fj01UKrC6>
-X-ME-Received: <xmr:isjvaP_iZ68xXNg1LV7Y2WQizXkXUNckCVO9ASoaez4zaZ7BofDO5v-E4sO_mXHGZHB9oqb-DVaGpF2GevyFHMU0SPe217qokPKZ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdefkeeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760545510; x=
+	1760631910; bh=opm1TPqJceyemxJL5CGYa5lrVzDZLFpMl1PpG1YgzgY=; b=n
+	JBY2iqEfmy/RZobKLkeZ1BMOXC6tAMD7CO6j8mIRUgAUFUjsOsmbCNPx6/2KI3wf
+	JZwWkjDgDeN+BKvKdcdMVPPXfgOy8gkBXaI2dGoy0wQ2Af0XuuvTl+x+efEZ5tRb
+	gb84C8oTGTXVIHYIQ6fqGKLw3RyTtvke9AnkaaLexbUei8yCiZStF2aCbee8eljH
+	S6vXmVbBq0E4jR4+AXfTUYv7vAxfgFiWays1OrQm1ZOuQ/5dV84n9A5O/H8VUBFP
+	4yfDhEy9kGqhLE8Sn66QyTGs3HntPNsiRSUGFvqXrkkOML8AI5XZTEApZ5oWjOM0
+	RpVGfEQqk99r7D8BzawIg==
+X-ME-Sender: <xms:5srvaOhgIX3aB_IAEFVja5HduDEkIdZS-Jxf23sEGupZc5PqFEsytA>
+    <xme:5srvaGBzVS2H37yBLDs9RWzFkcm3-B8S_EgEQtArJxT4RbriW66vFDYN4BU2lFO7M
+    QPn3CNPoKvDdbsjYxGQ52QD5FTweaP-GRYNLjkdmVPGgi5ibkEY5Ek>
+X-ME-Received: <xmr:5srvaLFtdB0QhJATqJ-rMgrxjZHQzbcuwzRtarUB10wE-pXJcqpJTPoykRng72-bTzimyf04fsK6vbp3ltBFfecBJODxUO9OIzG5>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdefkeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpsh
-    esphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:isjvaJjOYEOObG_P3U1VzoKzlEj1UZMLdDUZvYtK7UkZFyCoxWgPSw>
-    <xmx:isjvaHe8NZvsZtNv5gpiyzilEzGmZm0Yr9g_mIf2UeEy9nVSsm5dmQ>
-    <xmx:isjvaIp2fpvM9uIKtvOeSRQZm7wq2H3c-nD_NrTMlZGYzZMzKQ7Vig>
-    <xmx:isjvaECIe04cLcrzcEo_94b5fZLlLM0O7BMBZ5keecCtS8EF8EbSjA>
-    <xmx:isjvaB7oBifmqfqaaBpkgUhog5S29ho8Qv-dVVUc_j71Xl0RjrMP1Wwa>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
+    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
+    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
+    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
+    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhs
+    thhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhh
+    rghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhm
+X-ME-Proxy: <xmx:5srvaGLIa5uFRpUMlqGgxPwJS3bprS728b8xVg1gd4Ssm5iX63gQ9g>
+    <xmx:5srvaHmThWbIyXjZfJOMRZJ4Wjt1JlWYSNBEmMCjXk8M2ffUjtcTrw>
+    <xmx:5srvaGTOgNlt0XqvmfocnDUs8MKW5_NA4jGKcw7rCRC3CxqsCFqEoA>
+    <xmx:5srvaBLMYNkxuooLG6rM-OK9_pwdm2MnhlUlrIBMFTYACURyOjVUvA>
+    <xmx:5srvaJuO98TTfLLBGrYoR76CB_rNeH9HzhXP3sQtbpGbgMgEo7jeD_Cq>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Oct 2025 12:15:05 -0400 (EDT)
+ 15 Oct 2025 12:25:09 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] refs/files: deprecate writing symrefs as symbolic links
-In-Reply-To: <20251015-pks-ref-files-deprecate-symbolic-links-v2-1-0529ba48db41@pks.im>
-	(Patrick Steinhardt's message of "Wed, 15 Oct 2025 08:26:08 +0200")
-References: <20251014-pks-ref-files-deprecate-symbolic-links-v1-1-4bcd6a4ef6f5@pks.im>
-	<20251015-pks-ref-files-deprecate-symbolic-links-v2-1-0529ba48db41@pks.im>
-Date: Wed, 15 Oct 2025 09:15:04 -0700
-Message-ID: <xmqqo6q8uoon.fsf@gitster.g>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH] RelNotes: minor fixups before 2.51.1
+In-Reply-To: <3d36523a1abf82dcb0414fbcdc477db01c399c9d.1760521594.git.code@khaugsbakk.name>
+	(kristofferhaugsbakk@fastmail.com's message of "Wed, 15 Oct 2025
+	11:48:57 +0200")
+References: <3d36523a1abf82dcb0414fbcdc477db01c399c9d.1760521594.git.code@khaugsbakk.name>
+Date: Wed, 15 Oct 2025 09:25:08 -0700
+Message-ID: <xmqqjz0wuo7v.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,40 +87,13 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+kristofferhaugsbakk@fastmail.com writes:
 
-> The "files" backend has the ability to store symbolic refs as symbolic
-> links, which can be configured via "core.preferSymlinkRefs". This
-> feature stems back from the early days: the initial implementation of
-> symbolic refs used symlinks exclusively. The symref format was only
-> introduced in 9b143c6e15 (Teach update-ref about a symbolic ref stored
-> in a textfile., 2005-09-25) and made the default in 9f0bb90d16
-> (core.prefersymlinkrefs: use symlinks for .git/HEAD, 2006-05-02).
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 >
-> This is all about 20 years ago, and there are no known reasons nowadays
-> why one would want to use symlinks instead of symrefs. Mark the feature
-> for deprecation in Git 3.0.
->
-> Note that this only deprecates _writing_ symrefs as symbolic links.
-> Reading such symrefs is still supported for now.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-> Hi,
->
-> as discussed in [1], this small patch deprecates
-> "core.preferSymlinkRefs". Thanks!
->
-> Changes in v2:
->   - Tweaks for the deprecation announcement.
->   - Use "textual symref format" instead of "symref format".
->   - Warn after having created the symlink so that we don't drown out
->     messages from `die()` that may have happened in
->     `get_locked_file_path()`.
->   - Link to v1: https://lore.kernel.org/r/20251014-pks-ref-files-deprecate-symbolic-links-v1-1-4bcd6a4ef6f5@pks.im
-
-Looking good.  Will replace.
+> Grammar and typo fixes. Also change “work it around” to “work around”.
 
 Thanks.
