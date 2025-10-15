@@ -1,132 +1,162 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAD3186E40
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 02:19:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B9328FFFB
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 04:57:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760494803; cv=none; b=aNPoV70GsEOhGNx/ahcwcnGWaEnTF27d98Q8G229Mx+VWXoE+Jk4+5RjB0reHqcMCJaTlytnQCrWDxd/IGNbbO4bjaNHDaJQs9VMnLO3vz+y6QTVu+5O9aS/eIbrBz4AjhEXXnOCr145hnUC1do2/YKeuht0Zz2/I44vT8AwcsU=
+	t=1760504244; cv=none; b=eLE9ZeqtWxUjQfQCgOnPeRjY6nwf6DzHtG3OLUugEEgtL6wtNykWipeoSkCqACwFYXhZpX21Mn1czVW9uzamGUw4niHRRQ8xBecM+nLnm3kTf+KuOw5/A5aOonzG6e3yQMwDdL+pPK+xeL2NlQLlwad66ppBpigWn5thGSsbFKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760494803; c=relaxed/simple;
-	bh=zf/HsrGy1J02SHU1NgkLKTw5eiiGD7oAgz/oD0+g0/g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dja2nMXz200yV9tm2E9ZSP4wk3XGRRsM+g2+HMYBmlIt8BJeAMbVdal1WtUaQfp7kAdwm9idMZYIjc2cS8fhyuIp2uWbz2Tsso+jDZGUAuiCs033raMaX+PhgqTjK7D0xuiMaXKDakT3X2EvuX+Y2HFtJiKxNm8WifnUxuhxj3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iaEkJ3Cx; arc=none smtp.client-ip=209.85.128.49
+	s=arc-20240116; t=1760504244; c=relaxed/simple;
+	bh=fjQjd1t6NcsDS/Ks2Jg2jFQRRRLno4/d3VITPj4taLM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JHgUFK2R23yJQEAEfcQyeTRDKYPJE5ZECr1Xp65oJl9BqC35i39fxkvEykg6fGjzmbzE3ymdsEi+FDiPodUGkuyzfjdfllr1lbYp1/SbNPHGwGtykvw5lTWbcs18fX2eabwEuWQBCPBCmOYzyjtEhEzVOF5cb+Zp6L5wMqXB+hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DLboEk0K; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iaEkJ3Cx"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-46e504975dbso35767885e9.1
-        for <git@vger.kernel.org>; Tue, 14 Oct 2025 19:19:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DLboEk0K"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-7811fa91774so5287556b3a.0
+        for <git@vger.kernel.org>; Tue, 14 Oct 2025 21:57:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760494798; x=1761099598; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AHAtIW1DOdV9Ug1SoR/NQ+ghrmkRCgAMtkd1XiEeqxY=;
-        b=iaEkJ3CxDXcNjcXEf/1q5oHBYew0Z9WGeTR+0l8GR7aDiuvybJQJ7teTbyu9oZTq/V
-         UN19hnoFBcgq/T921MvS71akaqVw5JepoUgVrpi0G237LtbZ+0gi5L7NgpM0anGbulht
-         Onl87L6PqgtW+mbGgw2vAV7vLVqf8vxQAnxKHQkx2T215XjZ7DaOc+Pjcj87xDSGQSvA
-         lkH9fUn1JfSO8VADTlBiqxmVlLv1ALcBLpUrcR6JnhvXmyLBbbMHGPXiod44KQB3DePZ
-         0BCTesjM6S0myiOKbg5lJmTjnvRWeQ3smWYnTRBR90VHgCm+CGAGdMrkkbuaBHPM9QW3
-         06zg==
+        d=gmail.com; s=20230601; t=1760504242; x=1761109042; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5NTqHBFAJSFRb5k83Hjm/07A7Z1Hryuyyo/Igyt4mQg=;
+        b=DLboEk0KiciqJ6mu2mixisgj9LAz8daj81Ydaf96BR3rpzzStEvv2qFOlww8S/zTVk
+         D46Riz0cWmHMiYyqw3No2XN/NZIGn0nuPu6vQIJk9iwpvlCIpbY8LW9hmcJyNqqSshOZ
+         AJ9H9HPXWjglVdFTPRPCveMrueM9IpobCD2lBGRT9DkRpM5xEfYsNHvr9hE2w91DLYUJ
+         f2hAP2o/7UebnyPLo5Olz+glx+AQbI9ia0f41KTO/FuNPJ7JwmSTLOcHitndQ2/mK9d+
+         ubmT5nYRh2sO+iAI5BJBsUMdsy7jB3FJ76kjRooxPVeCn/8yWuqaWzl59chPr62icBKD
+         m0kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760494798; x=1761099598;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AHAtIW1DOdV9Ug1SoR/NQ+ghrmkRCgAMtkd1XiEeqxY=;
-        b=r9eriyl5278Yvuhl7vw1Ii3aeM3dQ21CS8YoKnxlUMCgBIZizoU0JZvd7Ams9WUcm3
-         36ffxhlCyoI0KO2WeU4Fw8cui+9OvyIMfQzKe6tRFOSobZN3V4+tVCB1baXx+ysJvtd9
-         tZrqHYfr6dZzDeBYijGPDPveJQKWsiwaZaD0JfeddpFtmvz8nCav734HbRDEqaoh3jTf
-         fUBxZZAl/h9LLnczrANB5NVgWpX+eL7wDYXTA/DoV0G+mdu2+kjLvZh7HP4fncexNTjK
-         m3cqUUGsMZUDi+x4aUNTDC/5xKtgQhXd8abXSXwL/tjhD2vi3/GT0HJ8cVMsS/bfcTuj
-         tnjA==
-X-Gm-Message-State: AOJu0YzaspmRmQvlP4q5A3ceMMO5XfOMk1ybAekiaBAzrqX73aFbk2Fo
-	9fyaiueeKsB75U8cWdcTxgthfxz5TTy6GeGEs7HH3l1YpZIUdNRnhhOh
-X-Gm-Gg: ASbGncv6Iy1Xj5qlkQ5Ekt3z5dDoBSxq6H4TiksdIZa/lAXwFwUSVCdHL7h+6/frDDy
-	rTCXvJOuA3in8q+sHVAGVmm07bLxiQReqy+zgU6UwiDoj/cR8vpO3Xt/eof328KNJoeHSc2vt4C
-	PH/V42kE2QRzZoBRvQdK1x/gg/iHrP9XLXAJBybhi/AiJUe8gfWxBO0VQdrAxjM9sQixdfZdC+3
-	P+LVMsDZBQ+megaLZE1jgCjoYiNwkz0yGshlj6j4JwWp9SfSXpHJQDA+kR8b2c2Te3u+4buzWMP
-	HST0zH+IQo8GeCvfTFXCf3MKvMQAXDj3BhBmv539lv5BsPFYFd1UISYI5EZlITeI1FgLGtJZ+cz
-	rUbz2FisHiCnKBTWMb0P61leF78iUAx4R+WzOcg==
-X-Google-Smtp-Source: AGHT+IFTPmr/5knFy5Y1RZYkh00hW9vKVSSUSQJPwP396G4H8Gjqnpg8PqV1i/9ddZIF9dInxdGukw==
-X-Received: by 2002:a05:600c:1e28:b0:45b:47e1:ef6d with SMTP id 5b1f17b1804b1-46fa9b11746mr196624075e9.36.1760494798095;
-        Tue, 14 Oct 2025 19:19:58 -0700 (PDT)
-Received: from ubuntu ([105.112.225.162])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-426ce582b39sm26042259f8f.15.2025.10.14.19.19.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Oct 2025 19:19:57 -0700 (PDT)
-From: Olamide Caleb Bello <belkid98@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	gitster@pobox.com,
-	usmanakinyemi202@gmail.com,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH 2/2] [Outreachy] gpg-interface: use string_list_split instead of strbuf_split
-Date: Wed, 15 Oct 2025 02:19:43 +0000
-Message-ID: <d1c20c911637870c3cacfedf763ce508a641710f.1760490943.git.belkid98@gmail.com>
-X-Mailer: git-send-email 2.51.0.463.g79cf913ea9
-In-Reply-To: <cover.1760490943.git.belkid98@gmail.com>
-References: <cover.1760490943.git.belkid98@gmail.com>
+        d=1e100.net; s=20230601; t=1760504242; x=1761109042;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5NTqHBFAJSFRb5k83Hjm/07A7Z1Hryuyyo/Igyt4mQg=;
+        b=C7HV6aEkNUBnD6xjYgFsBbRB9+dObzNtpDr9yaOinxqKGNBrHzBE7a0gzh3WS7SYug
+         IzQDERR5r+84ds7Y6K0sutFa4BJtVLoNZ7Wziva4k6GnBHHOem/t/BNJYkDiYbkA/4gw
+         8Mdh5NO7SV1MvELnfTOagnWvXxZMiK2IGEBMV8Lta4Orj55ZlkhFYf8penu3l/CPkU0P
+         OnLDJfgU92pj5Ty1Mb+iXe5adrEVgwXoM6IfDM/IajjnsnvFb7qoQ9k76fpM0PgYTLIX
+         8DbQz/72TEA+eFs8aqerixdS6A89bQFOcgpnR2JT/9Zpu/FiWywdAv392l2VBdTdYbFo
+         0zLg==
+X-Gm-Message-State: AOJu0YybHl5Kx0TJpRjr/2x9Xh6x08lfaZuuai4HDVEe6WepLU+7ITZS
+	keUvmPOup+Ku0wd+6Ew9DvfWvkTipnXl4k2eG/xu/+I6c5gAMKAlk6WJ
+X-Gm-Gg: ASbGncttc7YhU8XOLOOJA7DZ65AahTPg4I0Yp++wGtYqsmNNkVq5mR9rJV4syWQ/eV7
+	AwBeTOEQFDO3URPTlzFz2/3NeTx0fGGf4muoBPy0fdoCFXaQZg9xX6SUbxNVPb7nMdQNQsgeTG/
+	QmtAB+7w0J/X0Ixbs5fPYRNy32b8ImYI8MkwFQDp3WOfY4cvRrB+hlLgxS71AGqbKFYULTHH8+0
+	82NbUS4OE2i4uyYqoEbwrd1PEl1/FyHgIK+RDH48CYwUW2t/Gk4jTTmZA1B4OiZm7DivFePjaXb
+	4uYWxahNJsXxALqzykxbNGL+6ydeg/uq5b4D64bZfs0Vv57gfpuxExsdGmmNPg0BzjETeUdvSJI
+	g2Aj1BSWC4S6ona2hPpDTWt8szkGr1JlqV75dqXeBPiq1WS3HcI6ED2xzEj9L1qZPxunK8Cm139
+	jChr5AlU3sJhxmfMH5/VzP+Vc9FQh7wcXsLJMmQ9gjFAJLmFcktOemgPwn3dKS3iarWYBHpXYKd
+	nvAMMUeG3MFbkTBjZZbfg1HljrHdDy/5g==
+X-Google-Smtp-Source: AGHT+IHDt2sow45RXilUGK8OhaL2T05/budxCGaN+aiPRJDIS5Luw3ALrEQHKbI6S1njVY8TL3Qzcg==
+X-Received: by 2002:a05:6a00:2e96:b0:781:d163:ce41 with SMTP id d2e1a72fcca58-79385ce7bfcmr30049720b3a.11.1760504241549;
+        Tue, 14 Oct 2025 21:57:21 -0700 (PDT)
+Received: from ?IPV6:2401:4900:4bc5:7e6f:8524:7259:99ff:16ed? ([2401:4900:4bc5:7e6f:8524:7259:99ff:16ed])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7992d09671asm17070420b3a.47.2025.10.14.21.57.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Oct 2025 21:57:20 -0700 (PDT)
+Message-ID: <a72a2d7e-06ec-4275-812a-cb1e20902c90@gmail.com>
+Date: Wed, 15 Oct 2025 10:27:13 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/3] replay: make atomic ref updates the default
+Content-Language: en-GB
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com,
+ phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk, newren@gmail.com,
+ ps@pks.im, karthik.188@gmail.com, code@khaugsbakk.name, rybak.a.v@gmail.com,
+ jltobler@gmail.com, toon@iotcl.com, johncai86@gmail.com,
+ johannes.schindelin@gmx.de
+References: <20250926230838.35870-1-siddharthasthana31@gmail.com>
+ <20251013183311.33329-1-siddharthasthana31@gmail.com>
+ <xmqq7bwy1tgy.fsf@gitster.g>
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+In-Reply-To: <xmqq7bwy1tgy.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-get_default_ssh_signing_key() gets the signing key via the pipe_command and
-stores the output in key_stdout.
-The output string is then split using strbuf_split_max into two tokens at a
-new line and the first token is returned. This makes the function lack the
-use of strbuf API as no edits was performed on the split tokens.
 
-Replace strbuf_split_max with string_list_split for simplicity.
+On 14/10/25 01:09, Junio C Hamano wrote:
+> Siddharth Asthana <siddharthasthana31@gmail.com> writes:
+>
+>> **Removed --allow-partial option**
+>>
+>> After discussion with Elijah and Junio, we couldn't identify a concrete
+>> use case for partial failure tolerance. The traditional pipeline with
+>> git-update-ref already provides partial update capabilities when needed
+>> through its transaction commands. Removing this option simplifies the API
+>> and avoids committing to behavior without clear real-world use cases.
+> Ack.
+>
+>> **Changed to --update-refs=<mode> for extensibility**
+>>
+>> Phillip suggested that separate boolean flags (--output-commands,
+>> --allow-partial) were limiting for future expansion. The --update-refs=<mode>
+>> design allows future modes without option proliferation:
+>>    - --update-refs=yes (default): atomic ref updates
+>>    - --update-refs=print: pipeline output
+>>    - Future modes can be added as additional values
+>>
+>> This API pattern prevents the need for multiple incompatible flags and
+>> provides a cleaner interface for users.
+> Ack.
+>
+>> **Added replay.defaultAction configuration option**
+> If a configuration option is added, please consider and think hard
+> if its relationship with the command lineoption can be made obvious.
+> I do not think it is obvious to anybody that replay.defaultAction is
+> somehow tied to "git replay --update-refs" at all.  Either the
+> variable should be renamed to include words like "update" and/or
+> "ref" to hint its link to the option, or the option should be
+> renamed to use the word "action" to hint its link to the variable.
 
-Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
----
- gpg-interface.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 043a808577..7a78cbd8b2 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -862,7 +862,7 @@ static char *get_default_ssh_signing_key(void)
- 	struct child_process ssh_default_key = CHILD_PROCESS_INIT;
- 	int ret = -1;
- 	struct strbuf key_stdout = STRBUF_INIT, key_stderr = STRBUF_INIT;
--	struct strbuf **keys;
-+	struct string_list keys = STRING_LIST_INIT_DUP;
- 	char *key_command = NULL;
- 	const char **argv;
- 	int n;
-@@ -884,19 +884,15 @@ static char *get_default_ssh_signing_key(void)
- 			   &key_stderr, 0);
- 
- 	if (!ret) {
--		keys = strbuf_split_max(&key_stdout, '\n', 2);
--		if (keys[0] && is_literal_ssh_key(keys[0]->buf, &literal_key)) {
--			/*
--			 * We only use `is_literal_ssh_key` here to check validity
--			 * The prefix will be stripped when the key is used.
--			 */
--			default_key = strbuf_detach(keys[0], NULL);
-+		if (string_list_split(&keys, key_stdout.buf, "\n", 1) > 0 &&
-+			is_literal_ssh_key(keys.items[0].string, &literal_key)) {
-+				default_key = xstrdup(keys.items[0].string);
- 		} else {
- 			warning(_("gpg.ssh.defaultKeyCommand succeeded but returned no keys: %s %s"),
- 				key_stderr.buf, key_stdout.buf);
- 		}
- 
--		strbuf_list_free(keys);
-+		string_list_clear(&keys, 0);
- 	} else {
- 		warning(_("gpg.ssh.defaultKeyCommand failed: %s %s"),
- 			key_stderr.buf, key_stdout.buf);
--- 
-2.51.0.463.g79cf913ea9
+You are absolutely right - the disconnect between `replay.defaultAction` and
+`--update-refs` makes the relationship unclear. I chose `defaultAction` 
+thinking
+it would be more extensible if we add other behaviors in the future, but 
+that
+came at the cost of discoverability.
 
+Looking at how other Git commands handle this, I see a few patterns:
+- `commit.cleanup` ↔ `--cleanup=<mode>`
+- `push.default` ↔ (implicit push behavior)
+- `log.decorate` ↔ `--decorate=<mode>`
+
+Given your feedback in the other thread about `--ref-action` potentially 
+being
+clearer than `--update-refs`, would it make sense to align both?
+
+Option 1: `replay.refAction` ↔ `--ref-action=(update|print)`
+Option 2: `replay.updateRefs` ↔ `--update-refs=(yes|print)`
+
+I am leaning toward Option 1 because:
+- "ref-action" clearly conveys "what action to take on refs"
+- The config name `replay.refAction` directly mirrors the option
+- It's more obvious what the relationship is
+
+What do you think? I am happy to go with either approach or a different 
+naming
+scheme if you have a preference.
+
+Thanks,
+Siddharth
+
+
+>
+>> The command-line --update-refs option overrides the config, allowing users
+>> to set a preference while maintaining per-invocation control.
+> That would follow the standard practice of configuration giving the
+> default that can be overriden via the command line option per
+> invocation, which would match end-user expectations.  Good.
+>
+> Thanks.
