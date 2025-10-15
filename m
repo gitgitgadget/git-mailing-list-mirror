@@ -1,73 +1,73 @@
-Received: from mail-yw1-f193.google.com (mail-yw1-f193.google.com [209.85.128.193])
+Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132CF30B509
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:28:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEE730DECB
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:28:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760567288; cv=none; b=OcZdLECrd2n5nz5IaUJej0Uc47fm6ny6/CaJNJQEwbH2xOnq7hu4pk2mWOexLW976IEx2bAOw4X3+HyoJuKKhVUpwZGL8FQzSgNAdyl0blEnTzTr9i4fXE9Ge919BJmk6MShfOi+Jk8mJ6IZ1ntD9ePJ9Iz3AALR6X9a76OtGbI=
+	t=1760567291; cv=none; b=ntDCdSySxSr4jLsYTaHdxZBEjO5PBF1mjjvS/9sQSxo2ltbHBuoQoXmc6FVR2Kbf+umxo8SHaSHThd+F0JHJbaOYC4lCDdJCAukxC4sLeNaQ+JM2qpbuqAZNj5s1k5l1diqcptZ/eWsCN/rZkG2iqicW/txoRGZYrYpya1wv9VI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760567288; c=relaxed/simple;
-	bh=SexLOk+VIsUTRnfJJkJbwOqi2avFNXV3Ph8uRRF+xrA=;
+	s=arc-20240116; t=1760567291; c=relaxed/simple;
+	bh=Ph0sYgTmLKX++xZdt3i3tIKiFiBax8qscN5hjcLBfQU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V7WH5Vg7lSvxpiSPZ5spA8fmkH7v1E1PZQn4yf6jOb0+FcJkuIe8dkqyuG3VTBMnsp4sBJaWdA5XXlzLaP1KpdUfHA3L3cDX83xtBCW8oEC9gqgKiH7xvWPGGbkTzfGOjkfHYM1VrpR+l65dLbkfO3x9wVbeMikVFjRrCA0zJY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=heykPUD5; arc=none smtp.client-ip=209.85.128.193
+	 Content-Type:Content-Disposition:In-Reply-To; b=NEiPeHNkCGIuGj2PIxkro/R8rZl5byjdwV7/Xde71cmsID5TdDCniqpANEwtoazDlLTjq6L0ZQRtqVahUl2I4nKHU8g1Y1CquaynlLqJ+vEOUp79BFl2N/cHAHiwofxddNmpbGcJ004reqKsPnMeBANQN6I+Dlyz59ucdr0qY0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ZukAXSYT; arc=none smtp.client-ip=74.125.224.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="heykPUD5"
-Received: by mail-yw1-f193.google.com with SMTP id 00721157ae682-74435335177so27412947b3.0
-        for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:28:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ZukAXSYT"
+Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-63d97bcb898so93919d50.0
+        for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:28:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1760567286; x=1761172086; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1760567289; x=1761172089; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LOh6+BfHJePso+ITxWiHJkBXiTBIcbXIXZfta8RzUvI=;
-        b=heykPUD5rI7bmS1FbnDdJEDjDR3f3WrZ0czxR41xnwAkq1A03fYL24Ldxs0oUTf/8q
-         37Gi8HquRfUXgPPuRswE101WbiTdQqxugSgMgbUZdHs93Hm8jAeZnj4Vbm1BwUSvt+k3
-         gH1DMDuoMwP2KNiN93WC0eK7T/M6p+BYKzxUdTogO8arUivXovT/baK81gUXYSUYxd6m
-         sbrRNDDQdxeyBUau6VNbXHbtUaC9J9N5neXbGEpTNolD8mgOvWTCh7Ek+IHzlDthBYtp
-         xoVM9p7GZxhp7xA9W2yTToMBhUFaaWzUEZHer0QdfrdEv6dwb35Hrg2fTxM7+7O1ccHG
-         rdwQ==
+        bh=EjZT+Qw3buwEAlX1MKMSlR4qSd8VRjH5ERXsqV2T11g=;
+        b=ZukAXSYTsFZx+e4PPR/0iL/Xy26NFdbw9Qm1RnlnV+61SIFgEdy/YcB0nvBA07lHwF
+         n6aiN5otz8b6WasuHO1IH2yjgozTiGgkNS0BAK+zBLuP+ecO5P20m9Pxw01wi6mqtOo0
+         Up7bC+cyxVvc2+abMfkmpGgChQHUuhzxLzc0V21Y0GwofG+shujyCJ1xYJLYRyWfM3Ef
+         EEXuzjspeGi+WJfahXH3y4EA46YyL7Z728/SDrtNxjuJ37CGvVT3VIfOMtBRJEELjKb2
+         VIh3UVdFS/C26Qvbhju8tP8da7UFSErEdmB20bWW021mbPndp2wlNUh8gTyVqPDXKgfZ
+         Ri4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760567286; x=1761172086;
+        d=1e100.net; s=20230601; t=1760567289; x=1761172089;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LOh6+BfHJePso+ITxWiHJkBXiTBIcbXIXZfta8RzUvI=;
-        b=JqYI5zNuYy57uMTXnVYyWcPlyEnO4tPM/jbCvKoTZV7NwWhSBoU/O12eYlR4VWc00J
-         Po52s+1kV+eHVl6vFHr8jd4mrbvr/3M4FFxS0DV5y3KhSf59zJPaa0OZ9j6VUmOIIosz
-         mJnBfVMxwpD7bORfuhMAfPenf3NrB4V/O7+W2CEd8m4VnvEJjMzxcP2YgMXMG/RSmxME
-         UvsRi/sYtupr9NCOP2f4jsC6iSFi+YWCJ1oy8bsp4OR20vQ5/XYmUu992bQMrWiYeswZ
-         rNq7HcbdkUAr589YTt4mVfxxIVH6AqD9JzXGTQ6jQ3un9W6X/nAlwp+kFbME7x9DM5qe
-         YTHg==
-X-Gm-Message-State: AOJu0Ywn1tRLGs51k8qvOC8YiLmJGoyYbFLReahyh5Soc80Fcyt7Hww9
-	ig6ASrGMZuc2RAAwcDhRJJp5CKzvLfGqRr0N3rZaOazQ/SCKrafyzmQP5hYsJxbWH1updRmWJ9m
-	SCG3wxG03HV5P
-X-Gm-Gg: ASbGncs2w3XZRmJIW4AC58miuyssAiaChpsBQmrldLU7IYzms+vPT9jkDg4V9BFyq8J
-	cNykW4s2FFOM7dtrcKsdjjpu+jf8YsBVbBdlO1Dj4+ydIePNo+J+PdxBBkfZwNy80eD64Gsz9ct
-	iMRBsq8xaBrAODVwSQyBxtSdqOD1normToR7+9LiEp3LYf6exxBO4rn3Tf8iSzTWHfLsgqB27kC
-	uX8Aac8bVza7ZW7axeuOpOKp/tEsLRmyRGbHdWkE9FhBJbBkHQs2r6EMJ64VRjTzVwJupYbMzgV
-	K1IJcG410vLpAw0vkAGW7aybK09+3fy5dYZTJnuAhpox8722Ye4RTJ3ktqOLUA06Xto/uY4OVBL
-	Gcrx7BukSkoxrYuF3AZ9SZfGepZqfaX1Scd9Q34jhm1M0sjSHOvSeJnoR3akg1eL5W61eFtxjV+
-	f9TSiuIHRgv8CgfoPfbomTFZPpTJFOOv1+CiLbDSdw0s0p96SBf/kLNg7sY2w80ZL6eJCmLOEbm
-	em9E8TesfN7C3hy6Q==
-X-Google-Smtp-Source: AGHT+IFOGmh0PJnZoplG3jmlrgnXkCxosMjvbd1bpAsngIBpf6HPhdhBDpJBMJFj/zJu1b54TxBaVg==
-X-Received: by 2002:a53:c047:0:10b0:636:100c:ab with SMTP id 956f58d0204a3-63e08f699ebmr1235462d50.13.1760567285869;
-        Wed, 15 Oct 2025 15:28:05 -0700 (PDT)
+        bh=EjZT+Qw3buwEAlX1MKMSlR4qSd8VRjH5ERXsqV2T11g=;
+        b=ea9lpI5w76drkVu0+Vrci6+MHm/UfkB/DAaXKz+/eDy/KPpyelkTSFuzY4Gm+gUk1p
+         l8J7i1L7T6xK3tLtq4ebZO5KyYZDlhgoPD3+Vbg7z11RPMAsZ+2MR2/daVKiS01BhMDd
+         AkkBpCuV/MS2bfA8YoHEqz4Oh9ohry1D8+NygTx/XUdxKxTZrKChhPSXLXJD/RfXxWbf
+         6Jsz7q8g4CeBKEo/X42tu6Z/UIxymbVCFnED0QFl/Vj4809EV+jEFYKV9E8VJ8JlCKoy
+         RKC7DrITET3TDrYNk0vItu7+HtDm48WFCQlbWrKBdcmtgVPmvcEx1KnMmqc/MmZ7VRh4
+         R4+Q==
+X-Gm-Message-State: AOJu0YyNXtlLrv/zkR507Nueb4c7ve2m7n6YWXnomBXqywlSFaJ/WpxM
+	WNLQJrQSylVFT8jUnztGGv0NN56bpMeuozjCULkZ0cVwIZ2G5tEsJXwmmzKktHJdl7Q05vVK3Bn
+	CZ3KAg8RELQ==
+X-Gm-Gg: ASbGncsRJA0Y+bXXxLdqrqFrUpN+Q2aUXH/jomaIuXibkTX63K94nHE8fBpVJ8tUUcO
+	+DeLmSx0zcw3rl3qGe2m/scZseouonkuI6FsNDr+oW3FSK9+2wloCpSkL6LuLUUzt9b7FF6cVsY
+	dIgfoUqOJQ+NSXQvylp5QEwpRZFLSR0vaDMVp3jl8Ty8wjp2Q1rBQNetW6vV8sNQcALjtMN7xkW
+	1X6jGpphZ5w6j9/Mm2CUnsuifjrq6EZX+BqNIdlmtuvZEe6y5BnP9v1yCbZs4EyUeVTt+gsfujZ
+	8aI78rFGP94yZ8dlVHpZ7PETKpDA3QGdQOwelB7vl7CVQWnJb+Jg5lZtkEhQfB2vcGCY3OawWoF
+	61HVlXLp87pIUBgyatHv9PwKlbKZ99+4HoBXw1JpXZuVRC3Z8njOzfEo3fbhxNvyWIvUSBZBaUD
+	W7SZud2jIJ2vm0fQZASEkHXmdw/diohcqFhjLE7qDUZuSuvqg7SSrYb9XKjpxJt9/bCe1kCpl5+
+	v2pe9dR2im6iIr53w==
+X-Google-Smtp-Source: AGHT+IEBsTeThxXaW5HKEn4bEvOhmFJZwd+7y/mzZvgTWbB4dwIO17QL9ON266s9XWD5nwfb6jdZQg==
+X-Received: by 2002:a05:690e:4185:b0:636:2079:185d with SMTP id 956f58d0204a3-63e08e4a52emr1310891d50.2.1760567288661;
+        Wed, 15 Oct 2025 15:28:08 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78292d0a7cesm2590627b3.30.2025.10.15.15.28.05
+        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-63cdaf9fa5asm5800232d50.14.2025.10.15.15.28.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 15:28:05 -0700 (PDT)
-Date: Wed, 15 Oct 2025 18:28:04 -0400
+        Wed, 15 Oct 2025 15:28:08 -0700 (PDT)
+Date: Wed, 15 Oct 2025 18:28:07 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 15/49] builtin/repack.c: rename many 'struct
- existing_packs' functions
-Message-ID: <a9767dc42dca66648152d966560cd14699bda81e.1760567210.git.me@ttaylorr.com>
+Subject: [PATCH v2 16/49] repack: remove 'remove_redundant_pack' from the
+ builtin
+Message-ID: <4edbcb5893a927e6c68a981baf8d409e8bc77084.1760567210.git.me@ttaylorr.com>
 References: <cover.1759097191.git.me@ttaylorr.com>
  <cover.1760567210.git.me@ttaylorr.com>
 Precedence: bulk
@@ -80,228 +80,112 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1760567210.git.me@ttaylorr.com>
 
-Rename many of the 'struct existing_packs'-related functions according
-to the convention introduced in and described by 541204aabe
-(Documentation: document naming schema for structs and their functions,
-2024-07-30).
+Extract "remove_redundant_pack()" as generic repack-related
+functionality by moving its implementation to the repack.[ch]
+compilation unit.
 
-Note that some functions which operate over an individual entry in the
-list of existing packs are prefixed with "existing_pack_" instead of the
-plural form.
+This is a prerequisite to moving the "existing_packs" API, which is one
+of the callers of this function. (The remaining caller in the pack
+geometry code will eventually move to its own compilation unit as well,
+and will likewise rely on this function.)
+
+While moving it over, prefix the function name with "repack_" to
+indicate that it belongs to the repack-subsystem.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c | 66 +++++++++++++++++++++++++-----------------------
- 1 file changed, 34 insertions(+), 32 deletions(-)
+ builtin/repack.c | 18 ++----------------
+ repack.c         | 18 ++++++++++++++++++
+ repack.h         |  3 +++
+ 3 files changed, 23 insertions(+), 16 deletions(-)
 
 diff --git a/builtin/repack.c b/builtin/repack.c
-index ff93654cfe..f82e6c3930 100644
+index f82e6c3930..31137cf711 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -121,39 +121,39 @@ struct existing_packs {
- 	.cruft_packs = STRING_LIST_INIT_DUP, \
+@@ -208,20 +208,6 @@ static void existing_packs_mark_for_deletion(struct existing_packs *existing,
+ 					   &existing->cruft_packs);
  }
  
--static int has_existing_non_kept_packs(const struct existing_packs *existing)
-+static int existing_packs_has_non_kept(const struct existing_packs *existing)
+-static void remove_redundant_pack(struct repository *repo,
+-				  const char *dir_name, const char *base_name)
+-{
+-	struct strbuf buf = STRBUF_INIT;
+-	struct odb_source *source = repo->objects->sources;
+-	struct multi_pack_index *m = get_multi_pack_index(source);
+-	strbuf_addf(&buf, "%s.pack", base_name);
+-	if (m && source->local && midx_contains_pack(m, buf.buf))
+-		clear_midx_file(repo);
+-	strbuf_insertf(&buf, 0, "%s/", dir_name);
+-	unlink_pack_path(buf.buf, 1);
+-	strbuf_release(&buf);
+-}
+-
+ static void remove_redundant_packs_1(struct repository *repo,
+ 				     struct string_list *packs)
  {
- 	return existing->non_kept_packs.nr || existing->cruft_packs.nr;
- }
- 
--static void pack_mark_for_deletion(struct string_list_item *item)
-+static void existing_pack_mark_for_deletion(struct string_list_item *item)
- {
- 	item->util = (void*)((uintptr_t)item->util | DELETE_PACK);
- }
- 
--static void pack_unmark_for_deletion(struct string_list_item *item)
-+static void existing_pack_unmark_for_deletion(struct string_list_item *item)
- {
- 	item->util = (void*)((uintptr_t)item->util & ~DELETE_PACK);
- }
- 
--static int pack_is_marked_for_deletion(struct string_list_item *item)
-+static int existing_pack_is_marked_for_deletion(struct string_list_item *item)
- {
- 	return (uintptr_t)item->util & DELETE_PACK;
- }
- 
--static void pack_mark_retained(struct string_list_item *item)
-+static void existing_packs_mark_retained(struct string_list_item *item)
- {
- 	item->util = (void*)((uintptr_t)item->util | RETAIN_PACK);
- }
- 
--static int pack_is_retained(struct string_list_item *item)
-+static int existing_pack_is_retained(struct string_list_item *item)
- {
- 	return (uintptr_t)item->util & RETAIN_PACK;
- }
- 
--static void mark_packs_for_deletion_1(const struct git_hash_algo *algop,
--				      struct string_list *names,
--				      struct string_list *list)
-+static void existing_packs_mark_for_deletion_1(const struct git_hash_algo *algop,
-+					       struct string_list *names,
-+					       struct string_list *list)
- {
- 	struct string_list_item *item;
- 	const int hexsz = algop->hexsz;
-@@ -165,8 +165,8 @@ static void mark_packs_for_deletion_1(const struct git_hash_algo *algop,
- 			continue;
- 		sha1 = item->string + len - hexsz;
- 
--		if (pack_is_retained(item)) {
--			pack_unmark_for_deletion(item);
-+		if (existing_pack_is_retained(item)) {
-+			existing_pack_unmark_for_deletion(item);
- 		} else if (!string_list_has_string(names, sha1)) {
- 			/*
- 			 * Mark this pack for deletion, which ensures
-@@ -175,13 +175,13 @@ static void mark_packs_for_deletion_1(const struct git_hash_algo *algop,
- 			 * will actually delete this pack (if `-d` was
- 			 * given).
- 			 */
--			pack_mark_for_deletion(item);
-+			existing_pack_mark_for_deletion(item);
- 		}
- 	}
- }
- 
--static void retain_cruft_pack(struct existing_packs *existing,
--			      struct packed_git *cruft)
-+static void existing_packs_retain_cruft(struct existing_packs *existing,
-+					struct packed_git *cruft)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct string_list_item *item;
-@@ -193,17 +193,19 @@ static void retain_cruft_pack(struct existing_packs *existing,
- 	if (!item)
- 		BUG("could not find cruft pack '%s'", pack_basename(cruft));
- 
--	pack_mark_retained(item);
-+	existing_packs_mark_retained(item);
- 	strbuf_release(&buf);
- }
- 
--static void mark_packs_for_deletion(struct existing_packs *existing,
--				    struct string_list *names)
-+static void existing_packs_mark_for_deletion(struct existing_packs *existing,
-+					     struct string_list *names)
- 
- {
- 	const struct git_hash_algo *algop = existing->repo->hash_algo;
--	mark_packs_for_deletion_1(algop, names, &existing->non_kept_packs);
--	mark_packs_for_deletion_1(algop, names, &existing->cruft_packs);
-+	existing_packs_mark_for_deletion_1(algop, names,
-+					   &existing->non_kept_packs);
-+	existing_packs_mark_for_deletion_1(algop, names,
-+					   &existing->cruft_packs);
- }
- 
- static void remove_redundant_pack(struct repository *repo,
-@@ -225,13 +227,13 @@ static void remove_redundant_packs_1(struct repository *repo,
- {
- 	struct string_list_item *item;
+@@ -229,7 +215,7 @@ static void remove_redundant_packs_1(struct repository *repo,
  	for_each_string_list_item(item, packs) {
--		if (!pack_is_marked_for_deletion(item))
-+		if (!existing_pack_is_marked_for_deletion(item))
+ 		if (!existing_pack_is_marked_for_deletion(item))
  			continue;
- 		remove_redundant_pack(repo, packdir, item->string);
+-		remove_redundant_pack(repo, packdir, item->string);
++		repack_remove_redundant_pack(repo, packdir, item->string);
  	}
  }
  
--static void remove_redundant_existing_packs(struct existing_packs *existing)
-+static void existing_packs_remove_redundant(struct existing_packs *existing)
- {
- 	remove_redundant_packs_1(existing->repo, &existing->non_kept_packs);
- 	remove_redundant_packs_1(existing->repo, &existing->cruft_packs);
-@@ -250,7 +252,7 @@ static void existing_packs_release(struct existing_packs *existing)
-  * .keep file or not.  Packs without a .keep file are not to be kept
-  * if we are going to pack everything into one file.
-  */
--static void collect_pack_filenames(struct existing_packs *existing,
-+static void existing_packs_collect(struct existing_packs *existing,
- 				   const struct string_list *extra_keep)
- {
- 	struct packfile_store *packs = existing->repo->objects->packfiles;
-@@ -721,7 +723,7 @@ static int midx_has_unknown_packs(char **midx_pack_names,
+@@ -652,7 +638,7 @@ static void geometry_remove_redundant_packs(struct pack_geometry *geometry,
+ 		    (string_list_has_string(&existing->kept_packs, buf.buf)))
+ 			continue;
  
- 			item = string_list_lookup(&existing->non_kept_packs,
- 						  pack_name);
--			if (item && !pack_is_marked_for_deletion(item))
-+			if (item && !existing_pack_is_marked_for_deletion(item))
- 				continue;
- 		}
- 
-@@ -851,7 +853,7 @@ static void midx_included_packs(struct string_list *include,
- 		}
- 	} else {
- 		for_each_string_list_item(item, &existing->non_kept_packs) {
--			if (pack_is_marked_for_deletion(item))
-+			if (existing_pack_is_marked_for_deletion(item))
- 				continue;
- 
- 			strbuf_reset(&buf);
-@@ -888,10 +890,10 @@ static void midx_included_packs(struct string_list *include,
- 			 * --geometric case, but doing so is unnecessary
- 			 *  since no packs are marked as pending
- 			 *  deletion (since we only call
--			 *  `mark_packs_for_deletion()` when doing an
--			 *  all-into-one repack).
-+			 *  `existing_packs_mark_for_deletion()` when
-+			 *  doing an all-into-one repack).
- 			 */
--			if (pack_is_marked_for_deletion(item))
-+			if (existing_pack_is_marked_for_deletion(item))
- 				continue;
- 
- 			strbuf_reset(&buf);
-@@ -1128,7 +1130,7 @@ static void combine_small_cruft_packs(FILE *in, size_t combine_cruft_below_size,
- 		if (p->pack_size < combine_cruft_below_size) {
- 			fprintf(in, "-%s\n", pack_basename(p));
- 		} else {
--			retain_cruft_pack(existing, p);
-+			existing_packs_retain_cruft(existing, p);
- 			fprintf(in, "%s\n", pack_basename(p));
- 		}
+-		remove_redundant_pack(existing->repo, packdir, buf.buf);
++		repack_remove_redundant_pack(existing->repo, packdir, buf.buf);
  	}
-@@ -1382,7 +1384,7 @@ int cmd_repack(int argc,
- 	packtmp = mkpathdup("%s/%s", packdir, packtmp_name);
  
- 	existing.repo = repo;
--	collect_pack_filenames(&existing, &keep_pack_list);
-+	existing_packs_collect(&existing, &keep_pack_list);
+ 	strbuf_release(&buf);
+diff --git a/repack.c b/repack.c
+index 91b6e1cc09..3aaa351b5b 100644
+--- a/repack.c
++++ b/repack.c
+@@ -1,5 +1,9 @@
+ #include "git-compat-util.h"
++#include "midx.h"
++#include "odb.h"
++#include "packfile.h"
+ #include "repack.h"
++#include "repository.h"
+ #include "run-command.h"
  
- 	if (geometry.split_factor) {
- 		if (pack_everything)
-@@ -1431,7 +1433,7 @@ int cmd_repack(int argc,
- 	if (pack_everything & ALL_INTO_ONE) {
- 		repack_promisor_objects(repo, &po_args, &names);
+ void prepare_pack_objects(struct child_process *cmd,
+@@ -44,3 +48,17 @@ void pack_objects_args_release(struct pack_objects_args *args)
+ 	free(args->threads);
+ 	list_objects_filter_release(&args->filter_options);
+ }
++
++void repack_remove_redundant_pack(struct repository *repo, const char *dir_name,
++				  const char *base_name)
++{
++	struct strbuf buf = STRBUF_INIT;
++	struct odb_source *source = repo->objects->sources;
++	struct multi_pack_index *m = get_multi_pack_index(source);
++	strbuf_addf(&buf, "%s.pack", base_name);
++	if (m && source->local && midx_contains_pack(m, buf.buf))
++		clear_midx_file(repo);
++	strbuf_insertf(&buf, 0, "%s/", dir_name);
++	unlink_pack_path(buf.buf, 1);
++	strbuf_release(&buf);
++}
+diff --git a/repack.h b/repack.h
+index 3f7ec20735..a62bfa2ff9 100644
+--- a/repack.h
++++ b/repack.h
+@@ -28,4 +28,7 @@ void prepare_pack_objects(struct child_process *cmd,
+ 			  const char *out);
+ void pack_objects_args_release(struct pack_objects_args *args);
  
--		if (has_existing_non_kept_packs(&existing) &&
-+		if (existing_packs_has_non_kept(&existing) &&
- 		    delete_redundant &&
- 		    !(pack_everything & PACK_CRUFT)) {
- 			for_each_string_list_item(item, &names) {
-@@ -1647,7 +1649,7 @@ int cmd_repack(int argc,
- 	/* End of pack replacement. */
- 
- 	if (delete_redundant && pack_everything & ALL_INTO_ONE)
--		mark_packs_for_deletion(&existing, &names);
-+		existing_packs_mark_for_deletion(&existing, &names);
- 
- 	if (write_midx) {
- 		struct string_list include = STRING_LIST_INIT_DUP;
-@@ -1671,7 +1673,7 @@ int cmd_repack(int argc,
- 
- 	if (delete_redundant) {
- 		int opts = 0;
--		remove_redundant_existing_packs(&existing);
-+		existing_packs_remove_redundant(&existing);
- 
- 		if (geometry.split_factor)
- 			geometry_remove_redundant_packs(&geometry, &names,
++void repack_remove_redundant_pack(struct repository *repo, const char *dir_name,
++				  const char *base_name);
++
+ #endif /* REPACK_H */
 -- 
 2.51.0.540.ga7423965ad8
 
