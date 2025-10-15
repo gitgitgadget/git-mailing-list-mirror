@@ -1,162 +1,181 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02A441C72
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 05:05:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553B0302151
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 05:59:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760504711; cv=none; b=XkhanFyUKlnzb5DZEKNJIwDtA4M7YLy0UN0yFj7ZRjwTTSWqib9Q7Tfq1mZT83LlodFnLoNDfvYfnMHCscSbWqO6vs1IstuSltSOr0FXInJHr4eGwYzhUVf+qlQGbQEBXnEDj7AONP+EBNG5bfqd/XNavxjvaZraWBnhHQMaP+c=
+	t=1760507966; cv=none; b=ROJBo4kX4qzulC6E9W20MCw+F452nb8HMt7axvkj8Bl70wrH2AH6MG9Wpv4z1xm1DsCjZKfFF8y/XwsKE4tsX8UItXcvne7Pn8qFC/Ka/btHt6jZh2g91MbnD2wJagF1AXIBv8iWcz7W1s/WgtEGc91aBzb7K5BTnkA6SqFvmUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760504711; c=relaxed/simple;
-	bh=K+8L7To15g6uf7QnFPmvIz30yre9yoDmEj3EDuREX6w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b3j5LMvsZqoIYMxW/63o+sN6LlvZ0a6bp3HLphqrE0WulaBaHhV3jLeafsL4f/A5qG/+vUEN6t1QQWJfDDc9tkIsnPCeTlYCYMBJXLQoFuC8kpNp3B/5O9Qsg37GdfWLmelwslztWldULT/Kc2TCL6sFslJdGiB2c+UN330tg50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MhTJSnqA; arc=none smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760507966; c=relaxed/simple;
+	bh=RPqZQ96/3v98xZOM7nug9af6GSkbpu41j9FYpfrh1oY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D5Eqlv6IcG1rAeCMgIhF/bX5stqq+lWWSBZEFRpaZ317W1qlmdyRZB3gn0OBJEfE6rUjz0SYWKMwPlOyJffKy7JBPV8lOrpRtlZxthXjM2N5mTeqZ0SWxsdFXtT5TFiM6ZJjKUHjegBazoqfyQs2kb79Ron9yOMF0ALxtqhsnLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HvK80EK8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XiT9BRUB; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MhTJSnqA"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-782a77b5ec7so5494046b3a.1
-        for <git@vger.kernel.org>; Tue, 14 Oct 2025 22:05:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760504709; x=1761109509; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DZ45WaG+2bM1SqoGq0T1oxci7/BWTScEXoxVWTyU4v4=;
-        b=MhTJSnqADZB6/3EO78QQfkpLyew5FYlI8Ll5Kuiw0MYJHDDBFCQmiTUP9IjldzYHlH
-         otIxU0enjeVs1TopKAkxjNDdKExZ0HTghHH0GG/TWCqwss1RTSM17c27z9etaDX3qwMx
-         4mfT4ku8/LI2tM20sR+14ZKNLnmRIKX0VUhhJPPnDzAuPvbnIPpZ9Q5/d4syUshomN7z
-         P6uY3iKbB3KDI9kz5HjtcCY3Ud54m6fzHGdnsVr4UB9UFzKRSjoY+zb5k4T6+6Mq/Quj
-         Z0id+Oy5R3Fngr3esuVgnv8ikyDQ2jf2/ouUKJw5n0KswTJ0om32pAGONIy5A+2Ancam
-         4mgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760504709; x=1761109509;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DZ45WaG+2bM1SqoGq0T1oxci7/BWTScEXoxVWTyU4v4=;
-        b=muS2HJqoWPUUnugM/7jiCo/B/5lXgdCZGPybf83Osy+y4/2IZQmfPaehnvJV3jbqtK
-         jdp4dSNC1YgjMzyuHRUlUsuHA1+ulGCaJlkLnKwYI9W68HYsMoVIXEX/jacumeXxd1yS
-         xoZBrroCaJuRnh9YsiICDRrSZylB10FRDJSCTlIqkOVgnjKVG9c2NoEB6bR7RzpaXkSV
-         OuY/lPy/4FLuvH/6c3kJZWmY6aG6TvFgF11i5R0ARKdcGGxnMJ73KSLfTuT1/PJrRaBa
-         mCU52JvPexpDFLvzKbgWhuY9LzmYFaaljCeiAkWF1xL0TZBlkaxDiTRi6joiC38sUJax
-         HYKg==
-X-Gm-Message-State: AOJu0YxVAT4jtWIv60HURbLgsKt0q4uwnzwa+m8AP3h0L4PdLps5D0eN
-	JCIVbileeHBMwjfGFXP4r3TIlSPnXANc/7blYz/iqrTOLjlvnCPVpiwi
-X-Gm-Gg: ASbGnctk+9Odpe4yfk6iEHPQyi4C2lIfy5u28D1qpIgSDqSOwGm980vE8kZM2Cj9z20
-	xl5mhspfS+X2/8djf5tzd2/QVrfM4w3FhtpUifLYCqk+EToFQwJZHwJgh4opVUKkU+bSXQRj69W
-	ScZZ4o7ICb0rRIVTng1esVOmMOqq9bpOCb2n0yctlu4EaN33VLH51+myOyk7eMSvOyj0vitX0FP
-	Q3aTExMm7YH6JqPMenemaRSXScZcfOZ107C12pZIjQpuyV2f6UGNZNFUH1eGNxfTwW2d9F7zzUA
-	JrX1SkW6BZsaoWuPAMbeXNUYOH5UzwsIuUct+AdXL8xwzfdOuYu1Hc/OrnXp44I9i2uzZd7c344
-	ue5decPnJYbWN/15tqy73ogQQxUMUEfIlr8NnpxxJaOSetzSyH5F73CEAWeAV7TiTzbHrNSUlDd
-	uXQykFDQLtAbYJo9OBAQE6h0aeytwzCKRgq8Q+sRSu7CeKgGB0I1pJKcF/ChFTtYDjrpqCE7xKP
-	iK+smakq/mk9sxc3MrJ8Z3UKEXu0h6xzw==
-X-Google-Smtp-Source: AGHT+IGdVgpKmrnU29mvz6vQsvpyNxxfiCi/DvRY30eh2Dn8G5b/3LNk4nOUiaKH6FUQgjhkC4L7JA==
-X-Received: by 2002:a05:6a00:1491:b0:780:ed4f:e191 with SMTP id d2e1a72fcca58-79387c18f99mr26333862b3a.23.1760504708958;
-        Tue, 14 Oct 2025 22:05:08 -0700 (PDT)
-Received: from ?IPV6:2401:4900:4bc5:7e6f:8524:7259:99ff:16ed? ([2401:4900:4bc5:7e6f:8524:7259:99ff:16ed])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7992b63a03dsm16958567b3a.19.2025.10.14.22.05.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Oct 2025 22:05:08 -0700 (PDT)
-Message-ID: <92f9bdec-28ba-45ba-a111-24963d0a300a@gmail.com>
-Date: Wed, 15 Oct 2025 10:35:02 +0530
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HvK80EK8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XiT9BRUB"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 449E314000FE;
+	Wed, 15 Oct 2025 01:59:23 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Wed, 15 Oct 2025 01:59:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1760507963; x=1760594363; bh=XdxK2v5nkN
+	6f+Gaaz2s3eWc//Jpzh3V4k+FPnqHGB28=; b=HvK80EK8Nm7sVunGfcwKdtv06A
+	Hg6ndE2vSERTJIY74jtLoYMD9wfZhYIaCnmyzZhuPO68MerbkHXKjPF8jOo0lM6A
+	BE/073UDlcxGHgspruKwGlIEfqsaOzeyHk3BR/YyKSzvtczsTI60Xf6UUbzlJ+s4
+	3kNV4atRIsNVnpmQ4jAyfIX+tgRPgjepj8BjNZxWDOtpMpgsZkGwE/dqp7d6xa7A
+	DN0F82ZoqNocEnPd3biQCE/KjXjnN/LoVBSX9poKNboNkz2odvzA9lMHtdU8w7d/
+	h8sgf+phCTPU3FLtGLbKBjVW8S7AruGpz9w/yCkYmfFjDnbPKBqXNYKMlBQA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760507963; x=1760594363; bh=XdxK2v5nkN6f+Gaaz2s3eWc//Jpzh3V4k+F
+	PnqHGB28=; b=XiT9BRUBIcSAx9Xhvni9vA3AtbcoN/9kFA7ILNOy0apqAN02gtg
+	rOJFOX5DtPwHmtISdf05aLkYdq3SGc+mdXVQgQfCJ8qsdMg2l6VFDcDg6eUhqXzw
+	CosdOwTUFc65G1Hkvn0hijjqC20hXyFVG2SappbhT1A3nXTElu2m7v6wZdzWGvFq
+	5j3r0AXiP4thMoxqelkwa/IF9vPQjQ9QT1AhQBFqAHuYGFsy+ZxomNtiJZVgpbxg
+	QFheoomchRq5T5qS9uVpgIeOs5jbyA1KJkjHScGZZLmmoDmr3grgf7jFz98Wd1AA
+	EiZzilVEJET2Qu9SUiksdNeQipOlGuKhiJg==
+X-ME-Sender: <xms:OjjvaBeRHd-Wd6MXtbBn-SMZZaev9YJq_2KsRFfsmdM-lYpmZfQXEw>
+    <xme:OjjvaGpo9_TYOcTw-b44INZ6qf3wp3FyoFccz2HO7wYhbCWTmE70lg-72zdrLSJzD
+    xjiFKthMurdnF4zUy714L65yp9wZkucuMdI_RpZX-HAqfOVivj0Yw>
+X-ME-Received: <xmr:OjjvaH65XPfJAUpCrjs_GIex5_dCvBaI43RwblQx1RajqNSFXSE8ZXxNdIhytB9_CuIxk9NMASCO4UPbiTDMgr7ocxN724XlwoW5AYPbAcK2>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvddvieefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggv
+    lhhinhesghhmgidruggv
+X-ME-Proxy: <xmx:OjjvaEqyFM7jyUCDQA7_kFi-yFfeEUS_RyBcyOFBBrmNzd8YQnoRyQ>
+    <xmx:OjjvaBjhl0lYTILZMbPJkwZ2fRju-c5Tz617TchsMJgkEV5TxeSNaA>
+    <xmx:OjjvaGLolyavWApruapxzs6eIeI6RvMj7XabL4Pv7iUWpW5M173wGQ>
+    <xmx:OjjvaJAHoY0jGb_hdhv60zNJi15jb8uIeTUCJYE-h1oNSPVYp7snXg>
+    <xmx:OzjvaJM7VwR-9qieekTDupMeswb8t3VGy_oxoTH39FootsqmmNcwnsz_>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 15 Oct 2025 01:59:22 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 62b2750f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 15 Oct 2025 05:59:20 +0000 (UTC)
+Date: Wed, 15 Oct 2025 07:59:17 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] refs/files: deprecate writing symrefs as symbolic links
+Message-ID: <aO84NamCzFXH1eUl@pks.im>
+References: <20251014-pks-ref-files-deprecate-symbolic-links-v1-1-4bcd6a4ef6f5@pks.im>
+ <xmqqplapxur0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] replay: make atomic ref updates the default
-Content-Language: en-GB
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
- phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk, newren@gmail.com,
- ps@pks.im, karthik.188@gmail.com, code@khaugsbakk.name, rybak.a.v@gmail.com,
- jltobler@gmail.com, toon@iotcl.com, johncai86@gmail.com,
- johannes.schindelin@gmx.de
-References: <20251013182530.33041-1-siddharthasthana31@gmail.com>
- <xmqqtt01w5jh.fsf@gitster.g>
-From: Siddharth Asthana <siddharthasthana31@gmail.com>
-In-Reply-To: <xmqqtt01w5jh.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqplapxur0.fsf@gitster.g>
 
+On Tue, Oct 14, 2025 at 10:23:31AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > +* Support for `core.preferSymlinkRefs=true` has been deprecated and will be
+> > +  removed in Git 3.0. If set, symbolic refs like "HEAD" would be written as
+> > +  symbolic links instead of as a plain file using the symref format.
+> 
+> The second sentence reads as if we are talking about a newly
+> introduced feature, but I cannot quite rephrase it to avoid that
+> impression myself.
 
-On 15/10/25 02:43, Junio C Hamano wrote:
-> When merged to 'seen', this breaks t0450; from the way the test
-> breaks, I suspect that it has the same breakage if the topic gets
-> tested standalone.
->
->      $ make
->      $ cd t
->      $ sh t0450-txt-doc-vs-help.sh -i -v
->      ...
->      --- adoc        2025-10-14 21:02:48.680184914 +0000
->      +++ help        2025-10-14 21:02:48.688184867 +0000
->      @@ -1,2 +1 @@
->      -(EXPERIMENTAL!) git replay ([--contained] --onto <newbase> | --advance <branch>)
->      -           [--update-refs[=<mode>]] <revision-range>...
->      +(EXPERIMENTAL!) git replay ([--contained] --onto <newbase> | --advance <branch>) [--update-refs[=<mode>]] <revision-range>...
->      not ok ...
->
-> In short, "git replay -h" and the initial part of "git replay --help"
-> must match.
+How about:
 
+  Support for `core.preferSymlinkRefs=true` has been deprecated and will be
+  removed in Git 3.0. Writing symbolic refs as symbolic links will be phased
+  out in favor of using plain files using the textual representation of
+  symbolic refs.
 
-Thanks for catching this! I actually noticed the CI was failing on 
-documentation
-checks while testing on GitLab before sending v3 to the list. I 
-initially thought
-it was an AsciiDoc line continuation issue and suggested adding a `+` at 
-the end
-of the line, but Christian pointed out that the real issue was likely 
-the mismatch
-between the synopsis and the help output from the command itself.
+> > +Note that for now, only the writing side for such symbolic links is deprecated.
+> > +Reading such symbolic links is still supported for now.
+> 
+> Double "for now".  Let's start the above with "Note that only the ...".
 
-I split the SYNOPSIS across two lines in the documentation for readability:
+Yup.
 
-     (EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | 
---advance <branch>)
-             [--update-refs[=<mode>]] <revision-range>...
+> > diff --git a/Documentation/config/core.adoc b/Documentation/config/core.adoc
+> > index 08739bb9d42..e9272bbc0bd 100644
+> > --- a/Documentation/config/core.adoc
+> > +++ b/Documentation/config/core.adoc
+> > @@ -290,6 +290,9 @@ core.preferSymlinkRefs::
+> >  	and other symbolic reference files, use symbolic links.
+> >  	This is sometimes needed to work with old scripts that
+> >  	expect HEAD to be a symbolic link.
+> > ++
+> > +This configuration is deprecated and will be removed in Git 3.0. Writing
+> > +symbolic links for symrefs will not be supported anymore.
+> 
+> Or spinning it a bit positively:
+> 
+> 	Symbolic refs will always be written as textual symrefs.
 
-But didn't update the usage string in builtin/replay.c to match. Your 
-patch adding
-"\n" and the proper indentation is exactly what's needed:
+Okay.
 
-     "(EXPERIMENTAL!) git replay ([--contained] --onto <newbase> | 
---advance <branch>)\n"
-     "\t\t[--update-refs[=<mode>]] <revision-range>..."
+> > -#ifdef NO_SYMLINK_HEAD
+> > +#if defined(NO_SYMLINK_HEAD) || defined(WITH_BREAKING_CHANGES)
+> >  #define create_ref_symlink(a, b) (-1)
+> 
+> Perhaps we want to say NOT_CONSTANT(-1) here?
 
-I will squash this into the next version. I should have run t0450 
-locally after
-Christian's hint about the synopsis check - I was focused on t3650 and the
-functional tests but missed this formatting requirement.
+We do have `NOT_CONSTANT()` at the callsite, as introduced by Johannes.
+I don't really see a reason to change that now.
 
-Thanks,
-Siddharth
+> >  #else
+> >  static int create_ref_symlink(struct ref_lock *lock, const char *target)
+> >  {
+> > +	static int warn_once = 1;
+> > +	char *ref_path;
+> >  	int ret = -1;
+> >  
+> > -	char *ref_path = get_locked_file_path(&lock->lk);
+> > +	if (warn_once)
+> > +		warning(_("'core.preferSymlinkRefs=true' is nominated for removal.\n"
+> > +			  "hint: The use of symbolic links for symbolic refs is deprecated\n"
+> > +			  "hint: and will be removed in Git 3.0. The configuration that\n"
+> > +			  "hint: tells Git to use them is thus going away. You can unset\n"
+> > +			  "hint: it with:\n"
+> > +			  "hint:\n"
+> > +			  "hint:\tgit config unset core.preferSymlinkRefs\n"
+> > +			  "hint:\n"
+> > +			  "hint: Git will then use the symref format instead."));
+> 
+> I've always called them "textual symref" when I needed to
+> differenciate them from symbolic links.  I haven't seen "symref
+> format", though.  Do we have an official terminology?
 
+I don't think we do. I'll say "textual symref format" here.
 
->
-> Minimally you'd need to squash in something like the following
-> patch.  Alternatively, you could match the documentation page (which
-> is shown by "git replay --help") to match what "git replay -h" gives.
->
->
->   builtin/replay.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git i/builtin/replay.c w/builtin/replay.c
-> index 3c618bf100..d0f0492790 100644
-> --- i/builtin/replay.c
-> +++ w/builtin/replay.c
-> @@ -330,7 +330,7 @@ int cmd_replay(int argc,
->   
->   	const char *const replay_usage[] = {
->   		N_("(EXPERIMENTAL!) git replay "
-> -		   "([--contained] --onto <newbase> | --advance <branch>) "
-> +		   "([--contained] --onto <newbase> | --advance <branch>)\n"
->   		   "[--update-refs[=<mode>]] <revision-range>..."),
->   		NULL
->   	};
+> > +	warn_once = 0;
+> > +
+> > +	ref_path = get_locked_file_path(&lock->lk);
+> 
+> Was there a reason why we want to first warn and then attempt to
+> lock?  We are afraid that we may die before we have a chance to
+> warn()?
+
+No particular reason, no. Happy to move it towards the end so that error
+messages are given preference.
+
+Thanks!
+
+Patrick
