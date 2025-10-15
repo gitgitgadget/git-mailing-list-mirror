@@ -1,73 +1,73 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-yw1-f195.google.com (mail-yw1-f195.google.com [209.85.128.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E968A306D52
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:27:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35613081AD
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:27:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760567251; cv=none; b=aVQQz1/JJIRr/iHClk1QGI6iQglhAxTqmYxXV1RCo2EJJMZbFiwwnp7ZO4QqeRN9NBJ2YvA9atg0/79oMNZeOblz1i4EXZxXsTKOxpV2++wp0V2MhYFvZgyDtXjIv4lDJ4cpjiUKKJgsg+zDjgF0Eii6WFUzLxoSRoOCYxYWSKY=
+	t=1760567255; cv=none; b=iPTIX6oBOUI6IJdksjNU/ac1gG25IqMDtzLwDmTkOPLGON+WfIPCYiAjWa9pil7E/ZlJ8E504+WObFBDa3ZnfxDfpOhPF+iIGJ3GLSdBV5nzERg6WGJTcWTR2syJ8TGlftB/9yzC01NceFzrnWQ+5OiocSkmZBhk9VGMwObSXl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760567251; c=relaxed/simple;
-	bh=fLrlJueHXw6lT+6BQZoaO3Vzd92qwHf9kh7ZA0Qz4Ag=;
+	s=arc-20240116; t=1760567255; c=relaxed/simple;
+	bh=9jriiT2oVPFc8S70ynov+XhVfZBmRKdx69VrCW0pmpU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z0T7DOLy2A+6Nvky8V2LUpM4t3lDxRKuJPIRSXpu3fkyai0YK28aMNjza0lveCF6sctIvMEuAnzTnnDblvuztHKDHTzeRQEIvEqEfIlc9dVRpHxAccZAsXm3y2F04RRC/e1/wgwcQunxy0nbG8SncEQSSsl3m1FvnM/XtEDisM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=nyPxtAFh; arc=none smtp.client-ip=209.85.128.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=Gz/8H2ZcaXzcbVxNiazq5L6j0NLWVlsY4h0PxZuLzzajkeC+fqyfySeJAjl7AEg3HMynRSYx9caweh7l4WAHSwNDp9CCF6JppJBB8gflw60jlpVJ3Iwd+NOmjoG0ExkrppEGuWdE0buKjagRY4YtwJ3McReJMOaaEAK/5j5WSHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=EzVgvJl6; arc=none smtp.client-ip=209.85.128.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="nyPxtAFh"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-780fe73e339so511667b3.1
-        for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:27:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="EzVgvJl6"
+Received: by mail-yw1-f195.google.com with SMTP id 00721157ae682-780fe73e339so511927b3.1
+        for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:27:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1760567249; x=1761172049; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1760567251; x=1761172051; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XsN9L7zj0vwycCJJ/h1RnhVhfzkjmzsQfwj+xyP3QVQ=;
-        b=nyPxtAFhK6nZm2+FM0mMmioUe7GJzBgeXe+SHtJ5Ik4SYJO4AsAcv8czo561dm+WA9
-         4ibY1HlfpoECvymzaUyFx6aV9GCQKS5tI6MjnFEV8f764pTjLn5G0QaMgQQfaARcjH1M
-         nUGEqtPXvSgzPEdUFKfe9VKfUFFDtEnRFc9KRSfKaLxHnVwY/pc5DLI7be5ddB+2wxFj
-         2cb36rNAgWs6JNKTMdJlKq1OfPYOF9xHa+xGpkPq2OdYhI1tRteCQhHd9P1V7/SJFZCv
-         yaIhG/IoRfKbEzb4X+uk9rxSxKFBNBxfJ4+iWc9HB2IZGtXTrtqpHoMw2lUTSV/f7WHH
-         gogg==
+        bh=M2tF6q9E/9VOTR8c55yrMHBQUl9X9WmYz/wOqF2j1UU=;
+        b=EzVgvJl6ptiy5RkhlRotqWizrYcmysYvJN+V1jk/8slQOFCIColQ8ZmblxQusDOrcb
+         G+9A3fUwdwVuyBTD3anO8SacLwQFsjRsZKXqDuLm35lXn2On4M3Pt2CVyCpv9p4+j1Go
+         1w0MDr0Ax0RxxnBvpVdqauBqr30SPOxHEsgD2lmGIrmtDvsYyr0KpH/sOUcDtSXxeOxA
+         DY8BDW/yiKbEkKr+zf/hEWGvOVrqIKyzDIAXfRKIZqWKKWavkElrOKKquBy3/ar7jXiy
+         JZvw9ud9DHxb42htawsWOoE2qm8Y5/KTph2Yt/C1xerad5xPH5RmERBNu4AkXkcuJvTO
+         B2qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760567249; x=1761172049;
+        d=1e100.net; s=20230601; t=1760567251; x=1761172051;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XsN9L7zj0vwycCJJ/h1RnhVhfzkjmzsQfwj+xyP3QVQ=;
-        b=XP+Bjbz2Aw/xavQlT+nMfIUB7CkZgJWZeETDilZx/sPju+pXoEO3YPQICiNvbazWXk
-         i9uTKuNwR6TiDADelvO2uyJZdwF1nkI63NI3QZOnQEVfHNV96xjYbHkRL+L/oCBW7VBe
-         vPJYbllYa9xv5hYnV0IHaJt0tMCc44ZbQEkTd1HPnVLGOAzSnjR/mx3LVvz+VOUSvQIZ
-         NxFIu+TXQUz1k8iNrE7wfzxOq/l+ghFuP+ENJVX+8iah8UrA8wyL9679vIylFWDakRLj
-         U1xohI/qUVvwMqRNO+s91fRxOdgT/VALaR6kbOxD0YwxVZayLy2r4a11fBJjX+D/sZNJ
-         3rLA==
-X-Gm-Message-State: AOJu0Ywc4aozG/BflyDlqdND8QY45uwukSndNw9dtolD4D1ROnZZs3+i
-	ZR56c7pPatpAGaaIApAqdHufC0eTEhkpwa910FGFZRrMAjsAmukeZqr51qW774E1qQq2C3tPPQ3
-	MX3WNljMf5Q==
-X-Gm-Gg: ASbGncs4em9jlsWPSZMkMd1XgpxeJoBuSV8J7S6iM+cWtIkxQVuIwULhBjI5FyJ3uvA
-	NygHsD27RZZq7xF5L6QkXsEALtKli+w/X4J5RKCCuoQ5kWG/ozJQibNuvohOMOUa0JkwNOw3tTP
-	i4lSEqS1o78fJTdR6B8YXI70L+4WWSoUqiqzOkkv12jyOyoFHQWK3U3HabpaA026EAI9d8Dmx4Q
-	B+OrV1JrDgW2s9UXUJbUeQYr+OU4Zl1aoMXwN/mgk2Sf1RuV1MwFHkw1mI2M+2YTUotdlM+JkWe
-	GJvDS6+oRNgvoXnyh9GV1beBuI3Qx7M5QcEU0xSZmVUsQ84AZOSv+Lc+kMSrTy8tVn5pjZb1kAS
-	TXl04IjBaNBN15M3zBLsvimkbv3ynZZHb5C2hHBfqYHXAtpE4QjETeNqYQYL/bxjtSf6kaE3YBW
-	F1peKYVytg3kyAB9jHccxSYReTu0hjM+kifnYYQ1oB3aEVCdBIgWNGyq1kfqbMk9uzgjCT4A5f8
-	j9kHi8=
-X-Google-Smtp-Source: AGHT+IHinsC/amT4M/XnGQd/n5RNYaXi+9h1GPhfre3KHlQdC0KjRAyKI4uQ0qKhWRtNPRjrc0ih0A==
-X-Received: by 2002:a05:690c:8689:20b0:780:f7eb:fbe with SMTP id 00721157ae682-78269f906c5mr14370927b3.19.1760567248714;
-        Wed, 15 Oct 2025 15:27:28 -0700 (PDT)
+        bh=M2tF6q9E/9VOTR8c55yrMHBQUl9X9WmYz/wOqF2j1UU=;
+        b=KIp//xvpqMHv9gswKTfTjwk97kG8e6V4syzJjcqOotEAZeNZzlg3OJYRZ0DnCFZ4kC
+         eauyvko654doPF3xr19vfEGamCONV1y35wLrBOcj7u2JOtZy/J33izOz3WQq8+XDlm+i
+         Bsvt8x2frPIHmwjAlghrdoAfjqbNTxHRyunM5fpZc5OQeK2oreX1KnKidm+gZxdbKuUy
+         h6HqNn47Lldoj8oC6xF8pv3RLQTLeRBZUO47qTDjnY3/x/2KNznEPTAwDeMwPb7rRNVQ
+         DJxmx17wiYWJ4SZzWzmiw/q884CuvgSxC0JqS+lStnQAQUlC6dCh14EPIQALciyfavpq
+         cFZQ==
+X-Gm-Message-State: AOJu0Yyh3zzlZVTp4PoOzXXqvnZdPAvbGf/ZhnR+mFjgVeup8GNLSxIy
+	wWxLkBmLldJdQJTQddZUZkxLRtnv4cBhLSOhqeKtjRK9/0YIuH6gv6K5BlyNtOm1l95aWLkfRZw
+	yKNB6s3ADHlUY
+X-Gm-Gg: ASbGncu0uUAypqSVxKkcynAVcD16S1A+BS5Qyhk8VgqouXSJ2jDSDCIbzqMifpgAZjt
+	S/aIiVgJZigZYIVu14qm/pY+n+ZthIYBxH+xMN/xv1bgPvoyBaemR2IwauYGIVMo502yBNXOUqJ
+	fhNVDh7xrP+MhZeyck12pTA7v9s41gX1pOrzvW/r6vOcqak0foQwgnL0HbIA4pPZRm8a+6N22r1
+	P/1kfbh0f3mx8OatbU2Lq2sj4HL3/K933wFaXu2YZpNcTbe0LkqQXnPLhM/hb+2ArLPa5A/BY+v
+	g4kDQ9ujjCzPPOroJERq57CxXPD9PVVyoEJ0Uv4it0WXGCgrt2JtwJsCuslUKRK3KEMAw3jjyWo
+	pk9KCrZzudVa/tD/Dvorwt8juYBr/nBoIWACI4Z891i7EZY6CxoGMpqIAIIpfD+k6VHN4s4mo1a
+	DsORBWDfPtwk5u9B40K0aTOd8FlUTeCrDBVTxfcuKEhEaraPZawhBsIB/qrCqv9mNRRVPGowiHf
+	keyuOs=
+X-Google-Smtp-Source: AGHT+IGjKRrjsP+DMiJ/4vmHB2Funs8N076qGHoafzdOa+2t8U9F6V4cAlmU/31dTevRvj+pcyyxHQ==
+X-Received: by 2002:a05:690c:67c6:b0:738:a712:6972 with SMTP id 00721157ae682-78269f40477mr17166247b3.12.1760567251527;
+        Wed, 15 Oct 2025 15:27:31 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78292c0cde8sm2604707b3.34.2025.10.15.15.27.28
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-7828d3bfa7dsm2739487b3.20.2025.10.15.15.27.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 15:27:28 -0700 (PDT)
-Date: Wed, 15 Oct 2025 18:27:27 -0400
+        Wed, 15 Oct 2025 15:27:31 -0700 (PDT)
+Date: Wed, 15 Oct 2025 18:27:30 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 04/49] builtin/repack.c: avoid "the_repository" when
- removing packs
-Message-ID: <75f23ba211bcdd236fc5040c0732eb880867ec4b.1760567210.git.me@ttaylorr.com>
+Subject: [PATCH v2 05/49] builtin/repack.c: avoid "the_repository" when
+ repacking promisor objects
+Message-ID: <0914ca113ff179bbf824c026fe1c0463a5acb7f1.1760567210.git.me@ttaylorr.com>
 References: <cover.1759097191.git.me@ttaylorr.com>
  <cover.1760567210.git.me@ttaylorr.com>
 Precedence: bulk
@@ -80,72 +80,46 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1760567210.git.me@ttaylorr.com>
 
-The 'remove_redundant_pack()' function uses "the_repository" to obtain,
-and optionally remove, the repository's MIDX. Instead of relying on
-"the_repository", pass around a "struct repository *" parameter through
-its callers, and use that instead.
+Pass a "struct repository" pointer to the 'repack_promisor_objects()'
+function to avoid using "the_repository".
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ builtin/repack.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/repack.c b/builtin/repack.c
-index 113f5fc67f..93802531e1 100644
+index 93802531e1..4f08b57ddb 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -221,33 +221,35 @@ static void mark_packs_for_deletion(struct existing_packs *existing,
- 	mark_packs_for_deletion_1(names, &existing->cruft_packs);
+@@ -407,7 +407,8 @@ static int has_pack_ext(const struct generated_pack_data *data,
+ 	BUG("unknown pack extension: '%s'", ext);
  }
  
--static void remove_redundant_pack(const char *dir_name, const char *base_name)
-+static void remove_redundant_pack(struct repository *repo,
-+				  const char *dir_name, const char *base_name)
+-static void repack_promisor_objects(const struct pack_objects_args *args,
++static void repack_promisor_objects(struct repository *repo,
++				    const struct pack_objects_args *args,
+ 				    struct string_list *names)
  {
- 	struct strbuf buf = STRBUF_INIT;
--	struct odb_source *source = the_repository->objects->sources;
-+	struct odb_source *source = repo->objects->sources;
- 	struct multi_pack_index *m = get_multi_pack_index(source);
- 	strbuf_addf(&buf, "%s.pack", base_name);
- 	if (m && source->local && midx_contains_pack(m, buf.buf))
--		clear_midx_file(the_repository);
-+		clear_midx_file(repo);
- 	strbuf_insertf(&buf, 0, "%s/", dir_name);
- 	unlink_pack_path(buf.buf, 1);
- 	strbuf_release(&buf);
- }
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+@@ -424,7 +425,7 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
+ 	 * {type -> existing pack order} ordering when computing deltas instead
+ 	 * of a {type -> size} ordering, which may produce better deltas.
+ 	 */
+-	for_each_packed_object(the_repository, write_oid, &cmd,
++	for_each_packed_object(repo, write_oid, &cmd,
+ 			       FOR_EACH_OBJECT_PROMISOR_ONLY);
  
--static void remove_redundant_packs_1(struct string_list *packs)
-+static void remove_redundant_packs_1(struct repository *repo,
-+				     struct string_list *packs)
- {
- 	struct string_list_item *item;
- 	for_each_string_list_item(item, packs) {
- 		if (!pack_is_marked_for_deletion(item))
- 			continue;
--		remove_redundant_pack(packdir, item->string);
-+		remove_redundant_pack(repo, packdir, item->string);
- 	}
- }
+ 	if (cmd.in == -1) {
+@@ -1458,7 +1459,7 @@ int cmd_repack(int argc,
+ 		strvec_push(&cmd.args, "--delta-islands");
  
- static void remove_redundant_existing_packs(struct existing_packs *existing)
- {
--	remove_redundant_packs_1(&existing->non_kept_packs);
--	remove_redundant_packs_1(&existing->cruft_packs);
-+	remove_redundant_packs_1(existing->repo, &existing->non_kept_packs);
-+	remove_redundant_packs_1(existing->repo, &existing->cruft_packs);
- }
+ 	if (pack_everything & ALL_INTO_ONE) {
+-		repack_promisor_objects(&po_args, &names);
++		repack_promisor_objects(repo, &po_args, &names);
  
- static void existing_packs_release(struct existing_packs *existing)
-@@ -685,7 +687,7 @@ static void geometry_remove_redundant_packs(struct pack_geometry *geometry,
- 		    (string_list_has_string(&existing->kept_packs, buf.buf)))
- 			continue;
- 
--		remove_redundant_pack(packdir, buf.buf);
-+		remove_redundant_pack(existing->repo, packdir, buf.buf);
- 	}
- 
- 	strbuf_release(&buf);
+ 		if (has_existing_non_kept_packs(&existing) &&
+ 		    delete_redundant &&
 -- 
 2.51.0.540.ga7423965ad8
 
