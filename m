@@ -1,84 +1,84 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4139E305042
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 06:04:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49241305E19
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 06:04:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760508268; cv=none; b=GlpqDpJO7acFIMwY6MAiVFNxbGl4fDn60oezL9oLRlpSPpd4GV/zbcj4Haq/XD6e/Ap9k63s03mIpT+nXBMLZ6PEJlpbINaF7vDimPrwS70Fkodv0q4OvklGTnobAFru/OF1O343hzSrZluwe6N20n4nJw/OeE8G3QAMji+/vSI=
+	t=1760508271; cv=none; b=aHZQD2xbm4Ts7KxH5jVUu4hxYESp2zSKZ1TR8zoBv+MJv/Hay+zrMifbs6c8w7C0vxtYrSBjv9oFpiitvcC8ocbAwHTkDhXyIrs80zbTrMWek1E+/FphW13WPoCczZ5EGzMlBKUZI6WdF687p5yO1nTSF0kBrBjT2uMrIh8tN4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760508268; c=relaxed/simple;
-	bh=OH5rXrsbS2FC9+HieniSebonGAHzzbD96v3cQi4+xgU=;
+	s=arc-20240116; t=1760508271; c=relaxed/simple;
+	bh=YAfNq4W28KuFphNf63YjBLXnlJTJIotPM17iBLAAIY0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BqL5uMLzAEeHmJo5hbJ6C7sJFqkr3YqGxJtKm3/bMMBWUhV6w2I2IdGHlFY+AUfYuCmHvUW1YlmJkDfzZMWh99GbpYdgYEEheBYV4FgG3K5pSet1idIwsaYRLHvfnlIHXH6YzfW8h5zYu4bwjB74TlQ2l2012RAWxs1xR0nLTds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LHHZ9v93; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iIbpogq8; arc=none smtp.client-ip=202.12.124.153
+	 In-Reply-To:To:Cc; b=IAT3ee6VBANRPg2An4zeskxQGd4y8tk7yNEcx6W6ujKSW1TwN98wjsddyInBW9orNQHk8kriddTrjalrLb5ImoCuHxz4ZgJtVykdxXrWTrpUYEJvKiCsB+KOB92v/sMvrEpyT1oFaPcuCRZpy/7JoTvW5/0l8q1K8b3WWrNRsxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jKnfoA+w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NmXEChX2; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LHHZ9v93";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iIbpogq8"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 29B2E7A0182;
-	Wed, 15 Oct 2025 02:04:25 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jKnfoA+w";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NmXEChX2"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 36C551D000EC;
+	Wed, 15 Oct 2025 02:04:28 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 15 Oct 2025 02:04:25 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 15 Oct 2025 02:04:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1760508265;
-	 x=1760594665; bh=OpQpWXIBQ0Q0U+XXK3T5QJZRX/dnR2tyPosR6949cBM=; b=
-	LHHZ9v93/qpxOfeMn5/vwDo2wa+yAIeuVkFQCmE8TynkYGorOTFpzlohW3OUXBRt
-	14d6gQ7CVScbPDw1My5pKNC1ECcx4qgL4G5Jxcx0/C7dMiEE96sz1V17J4YlH1ZM
-	tsL7xy94kHA59HJt0sr/ZNrauOEgOURSgsvWkvbBnaXzdGN/EUQN7cSdFim892ok
-	9t9sXaQIHo2CI292HthBgHGjYoGJvmdFD3HDIX1VtjfnKunv8IwGFgkXNFvZUdej
-	pJcyEVbGiVCXqOuv3hz6dmK+gbup6sddqSmpxnakXtrIHjC4R5U+2Z3xvBZPCiMm
-	nErUTeWk2FzhFYlL67tKKA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1760508268;
+	 x=1760594668; bh=OEa7oh+cfBpFcItWBG8ZuDA/B8C+fKHBPjT3F6K/WA4=; b=
+	jKnfoA+w2PaWXAM843KVNlxYX/XzwGmP3zcJAF1/XgCaVCMfdyzPiihwnbpkBg7g
+	urU8UXJq7SBtelOwJsF0Bp10VbyA2U05UiOaebnHS5G+7qdBrQSz9qbh+MTqcyyK
+	5E0RuRmhWTuqw0i+kb5y3kQs9rsi6Kz/0dS39McRZzfpBjLF4kR0i1zep7ikdrYg
+	DZNCMS7RdXXU2kzYBAyanpPtwn/J/oqd8VX85WBqf+YYqEc90eW/RebZ4+IaFtkh
+	mjuecp6u0algsem/Va2be+9r9HE7Nn5ydo93KNpz6P/kE8OOLUq5pJdP7s8h8UqC
+	TvN2CLzDJccKDNv91EHQKg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760508265; x=
-	1760594665; bh=OpQpWXIBQ0Q0U+XXK3T5QJZRX/dnR2tyPosR6949cBM=; b=i
-	Ibpogq8jFEB+nYY+IFHsMpqLJbHHaXJ82cyYdlEiYKj+hCqODmG7nOWbFnF+vSCt
-	8+fV8ombkKIcrCD+KZrEGIxjt4r46/3BUNUQan4unm3UN5UlFS8F/Va1sJ2dm2Da
-	Uu1wzgUhQr3sJ+Lfi59Dqo194VqudGSjupdCrxvkJq8xDXEN/X3jpOKvutReTCBi
-	88vtWGTAuh922LHPg/CJZqCI+bp4VKzoIODVZgpxKbkPOd6+jvtccNuZpAC9ne2Z
-	0HqAx4i5HVCqxE0P0fvGKjonfUrY72yAf/jnjNXUy95l7yygWk6TJDFwzz7oTTcM
-	NRblVVk555kriL7TfyGhQ==
-X-ME-Sender: <xms:aDnvaATBQsdTvyBtu8PEI-JOIzuqQyyiG_1VhQUou8W_jEaBOBcfLQ>
-    <xme:aDnvaM3B7sbuT3ccf0B70sLPO6cuUg8h2FI4jo0k-9CoMjT7V20kQoIctUU21i9dP
-    qXGUBM6HcNfwwYnBljrdLIS6lfZrEdRID91pem5_4mm8dIaQRQuJQ>
-X-ME-Received: <xmr:aDnvaEBwTzgnsNEX2_BeXoyB6nPYmCGLCOL_7WRcvx7zSka1n_YpfQjkn4VoitOdELoCAsOeWexut47p4xWtguNMR4unvczCADgisRCGyoaB>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760508268; x=
+	1760594668; bh=OEa7oh+cfBpFcItWBG8ZuDA/B8C+fKHBPjT3F6K/WA4=; b=N
+	mXEChX2EWZChc5ZIlclEeYQcfH5Te0MOTgrQnkv1XHsteyC+UloMYOOuKincd0yn
+	GC/8aHxTVoQ6W5MRzt2if1Mg8+qv0mR7BEzUPrBLtQKNNJZrb/jnExbbRVEFk41O
+	J9qYkz2Rg8x2RScgfPrIYtiij/fKkgsmHJZInnfbAg/5sqrmOhIMnMd8MlBZlHtv
+	Ztj45pWQIcofTGjoEvll7sOhY4mRRzufsvoeD8yidPry9K5mB7kjRp0iuqIqhjtZ
+	36n9hW5C5v84XEdzLz/O31RjeAFpBABN67hsx3N6W5jRIQtg/kSc/4z+h9bqliGh
+	gJNs/66WuiFAdhu7IPETw==
+X-ME-Sender: <xms:aznvaLW9PV9seku6yiDTIUGVay9-yF9u8V66n3NP65mNSQdXArEiRA>
+    <xme:aznvaCpf_2z_ntH62mPsoT0DioQuPlpvqKhwMS4mVoip2fT2U3FKl4XsY8lCFRHo4
+    M8j0V584-8tKBcGXJLe6GwbxkBXF0nA_HyvCkCJPHnRw6lkGYCnGQ>
+X-ME-Received: <xmr:aznvaNn-f5IW2K2_qpBO5JkvBgSzOehhRK-JvPN5UohEj872Dz8Q5mIkBYkDWnTa5U7u9Hzjxrc0xA3T1-6eMTnKs27R99SeKGgS7Rtn4KTR>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvddvieehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvghrihgtsh
-    hunhhshhhinhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghr
-    uhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepkhgrrhhthhhikhdrud
-    ekkeesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsrdhtohhrvghksehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
-    hmgidruggvpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:aDnvaAhplcgkfXyJaSEpgt1kummtToP23FkPt7AhT-UmcqKGZAT9FA>
-    <xmx:aDnvaON2mY-N8JT3b8fquUW7-S_5RGCdatIFojnYlREvqfDSvoqTlQ>
-    <xmx:aDnvaI-OI1n55CoZY-AjPll3vHIH8U1KasJEmWx9FsnHuIKFwnrDGQ>
-    <xmx:aDnvaHd9z9YZtuurWa8CwZaiRn1_8GsxjevQP-jSKKGpb043_aechw>
-    <xmx:aTnvaK-Xo4s_nKPzp3VEs9kAUuylSP_-scyY-7DlDYRRx7a3pFtoSWQ2>
+    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtth
+    hopegthhhrihhsrdhtohhrvghksehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhht
+    hhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrh
+    hushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopegviigvkhhivghlnhgv
+    fihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghrihgtshhunhhshhhinhgvse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:aznvaC2Wa_LL8gvLB3d2dGoIGUHBznajw2Jal00t5cZszv31-Ediew>
+    <xmx:aznvaKTtdYBOojGFmpot0-YUdRcJ3dAeKRn6LB3trf-0u83CYBL0wg>
+    <xmx:aznvaLyEn9GaiXlclQogNhEfP8pNZNxiZ9-EprFFk8-pw7nuyQ21Lw>
+    <xmx:aznvaKC8P3pSBPVBBwYImC8vzat6Xd4mgQMLPVrqeFcn4wbLktPoTw>
+    <xmx:bDnvaBpwf_TXWDxDm_rllvcxUGQD55oraFYWqO1m9-eqTAUDo-SWZ5xD>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Oct 2025 02:04:23 -0400 (EDT)
+ 15 Oct 2025 02:04:26 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 42781f6b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 15 Oct 2025 06:04:22 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id f0fb4eb3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 15 Oct 2025 06:04:26 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 15 Oct 2025 08:04:07 +0200
-Subject: [PATCH v3 3/6] rust/varint: add safety comments
+Date: Wed, 15 Oct 2025 08:04:08 +0200
+Subject: [PATCH v3 4/6] ci: check for common Rust mistakes via Clippy
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251015-b4-pks-ci-rust-v3-3-13810af33bd5@pks.im>
+Message-Id: <20251015-b4-pks-ci-rust-v3-4-13810af33bd5@pks.im>
 References: <20251015-b4-pks-ci-rust-v3-0-13810af33bd5@pks.im>
 In-Reply-To: <20251015-b4-pks-ci-rust-v3-0-13810af33bd5@pks.im>
 To: git@vger.kernel.org
@@ -99,58 +99,43 @@ Cc: Ezekiel Newren <ezekielnewren@gmail.com>,
  Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.14.3
 
-The `decode_varint()` and `encode_varint()` functions in our Rust crate
-are reimplementations of the respective C functions. As such, we are
-naturally forced to use the same interface in both Rust and C, which
-makes use of raw pointers. The consequence is that the code needs to be
-marked as unsafe in Rust.
+Introduce a CI check that uses Clippy to perform checks for common
+mistakes and suggested code improvements. Clippy is the official static
+analyser of the Rust project and thus the de-facto standard.
 
-It is common practice in Rust to provide safety documentation for every
-block that is marked as unsafe. This common practice is also enforced by
-Clippy, Rust's static analyser. We don't have Clippy wired up yet, and
-we could of course just disable this check. But we're about to wire it
-up, and it is reasonable to always enforce documentation for unsafe
-blocks.
-
-Add such safety comments to already squelch those warnings now. While at
-it, also document the functions' behaviour.
-
-Helped-by: "brian m. carlson" <sandals@crustytoothpaste.net>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- src/varint.rs | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ ci/install-dependencies.sh | 2 +-
+ ci/run-rust-checks.sh      | 5 +++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/src/varint.rs b/src/varint.rs
-index 6e610bdd8e..06492dfc5e 100644
---- a/src/varint.rs
-+++ b/src/varint.rs
-@@ -1,3 +1,10 @@
-+/// Decode the variable-length integer stored in `bufp` and return the decoded value.
-+///
-+/// Returns 0 in case the decoded integer would overflow u64::MAX.
-+///
-+/// # Safety
-+///
-+/// The buffer must be NUL-terminated to ensure safety.
- #[no_mangle]
- pub unsafe extern "C" fn decode_varint(bufp: *mut *const u8) -> u64 {
-     let mut buf = *bufp;
-@@ -22,6 +29,14 @@ pub unsafe extern "C" fn decode_varint(bufp: *mut *const u8) -> u64 {
-     val
- }
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index a24b07edff..dcd22ddd95 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -129,7 +129,7 @@ StaticAnalysis)
+ RustAnalysis)
+ 	sudo apt-get -q -y install rustup
+ 	rustup default stable
+-	rustup component add rustfmt
++	rustup component add clippy rustfmt
+ 	;;
+ sparse)
+ 	sudo apt-get -q -y install libssl-dev libcurl4-openssl-dev \
+diff --git a/ci/run-rust-checks.sh b/ci/run-rust-checks.sh
+index 082eb52f11..fb5ea8991b 100755
+--- a/ci/run-rust-checks.sh
++++ b/ci/run-rust-checks.sh
+@@ -9,4 +9,9 @@ then
+ 	RET=1
+ fi
  
-+/// Encode `value` into `buf` as a variable-length integer unless `buf` is null.
-+///
-+/// Returns the number of bytes written, or, if `buf` is null, the number of bytes that would be
-+/// written to encode the integer.
-+///
-+/// # Safety
-+///
-+/// `buf` must either be null or point to at least 16 bytes of memory.
- #[no_mangle]
- pub unsafe extern "C" fn encode_varint(value: u64, buf: *mut u8) -> u8 {
-     let mut varint: [u8; 16] = [0; 16];
++if ! group "Check for common Rust mistakes" cargo clippy --all-targets --all-features -- -Dwarnings
++then
++	RET=1
++fi
++
+ exit $RET
 
 -- 
 2.51.0.869.ge66316f041.dirty
