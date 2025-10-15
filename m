@@ -1,171 +1,155 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7233043CE
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 21:56:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E7730507B
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:02:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760565371; cv=none; b=DklBi07OdoJYhstN63TnH4wumkYMjWm5I/+7s/34G2hHRmwDYTLnncT3OmLFxagJHuSFNueeZf+vwVV3GTg3PHO3/fGBEeb6GWn2gWuTobvltYnzGi8p28sX/wuo3MYgcd3RMikVzpYwjjHTAuB3Z7TycPyF+eeNVRDNGoFefyo=
+	t=1760565781; cv=none; b=PtaruXL+/HAQ1voUVE5I7At0IJ/eivDMVKe8lBSEgchbrHrfLSGhIJUXYpCykcdMqrURe/QTj6gFyAQFwmLKTdPeDIQywcy57r9QrnLaVOcl+6mhbBjNzyQxKkC1TbPJR7j/yhNR+JvxSTf7gISIdMkchLuM0eZca9MAdatXd00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760565371; c=relaxed/simple;
-	bh=mirZ7JGHBv5b9g3gd4Nk0B6fNEmfxY/6TmhvTYgG1bQ=;
+	s=arc-20240116; t=1760565781; c=relaxed/simple;
+	bh=UCxe2vpY3CG1HizJl50djaEExQNCwTfUEuq2Q5AleY0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DglmUF39kESlB9Iq52vzVEMCTIbcWQeXNf+wLJwYke2pa9ypfh7dvuGYzKLucJVmZMcBLmJfbxVb9PmOw9/eDv3eYkmb/NUfaFpoGxletPI6fC1Jk532zCVElS+lD7H1YpzA/d6Tv1FGFCXJX3ACwvpGtaVscAJDLB3PZdnhJV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TsmHqGjQ; arc=none smtp.client-ip=209.85.215.178
+	 To:Cc:Content-Type; b=GS0To4ljxEyKBr80/+4oK5CQL5/v2pqSAumaMPpJNLGGOQ3sqSa2QKzWmt3XMAhzCV4vgEE4kHvbZI8c2zQeRd+tm6ZvUkAI7GbrvhKkpSQQpAHFOXfrcaOYPi08OnVB31FR3FJ4UKGzC73Km4us6XdGvJ0TsiosHZCLhZnknww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PDHUivmH; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TsmHqGjQ"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-b60971c17acso6357a12.3
-        for <git@vger.kernel.org>; Wed, 15 Oct 2025 14:56:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PDHUivmH"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-27c369f8986so698985ad.3
+        for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:02:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760565369; x=1761170169; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760565779; x=1761170579; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WmpO2iBYzXWQsO9RHQys7nZG/95e6xKYktIw6wDZVrU=;
-        b=TsmHqGjQvIdG+b4vyI0kL7dL/8X0pzg1+j8hLwBZWtA0wGDA3f3TcvpHz9ckm51oIi
-         n086iwQrvrK2DzDzVwcnN31icyE7CTNuhUWP1TQXz/6Kr6E4iI6llWSZZJuFAhVdxxgp
-         YQFPIoqawFPmbCo+GwEEpvE+Co12q8j/RJf14O6j1Tm7ZtYZl1C/vSIdsFoI1REtYs/F
-         YgryN4fO1My7G4RsEbM0k1lp9sQCwmo/Vx3r9G7RAJOuPK9fr0SUTbsQQ+EyhgPcu8Ts
-         9Ypgn1SljwL9/fbVigJPRq/DI8JqOv5JKgqY9tBf+uegSkj/F3pfX6nSlpRjLyGg2TRU
-         SKxw==
+        bh=GYfqg6v22A8cDRSahKDcezI2Ppu4isHralnhJtU8tTU=;
+        b=PDHUivmHej/Wh4r6Xnia1Nckn55fgocKlroLl/Qgo01g0OxsVAXamSPGgd94fHX5f6
+         y8f0boCC6sUqHEZmxKL4kXN/QcWPAwRh25ZslkGbOV7EygGSg5aRGXRhxvHeaijmpuZ6
+         Nwj9B76H9FnJrS3bgc/U2AhAUC0wbajR8oeW7E6hEPZuxvPcPNcXNCEpmB0OxnJwYp+7
+         6r5A5RqeAMOGoRBWELI7W34UjWJMpt0XBsxUjSEnjd7yXhgAwabqhXUj8AH3raYKs5U8
+         moztcR5wibMxVAF3UvFusep0B++QpvJbP4jpX6VF97ZWKkt3SDOGqm6MNcgGTCgZdNwR
+         3A2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760565369; x=1761170169;
+        d=1e100.net; s=20230601; t=1760565779; x=1761170579;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WmpO2iBYzXWQsO9RHQys7nZG/95e6xKYktIw6wDZVrU=;
-        b=q3qajNmphEaP1gIqSoogrvUCzsJ9RViL5rwYFmcPEtUuAFalJR5amKEiCYcaEAoH2M
-         YqSeClSHpjzTXwQszFk4I3UuOqdq2RJJ0g5UjZdwbxxvXLw8d26tQlgcvQ+QZP97bwF1
-         x7NBJeg+pFuxppe7IBo1GpfwT8grLCnVOdn2hev1kFLJHINQs8OZdySo4gk7I9C7ET3k
-         MZqc3Ar7FNIGf+EcRcvaexZ8wYTAE7cZn+aH69X5G26WfHedhs4tFm6MZ4EuOLgeA9Rb
-         4CCwXatlcIFMa/vTv8qr73hRvDLfgPb+JRl86NOR580x/AimAjdPv94imIhzOiNg+bT5
-         4+7A==
-X-Gm-Message-State: AOJu0YxaTptbE3sWa1uWoFOX8d83UR3PjhZ3HDJhK+E+oivlGoPCOiIb
-	PFwoO6DQTmYjVgydqfLbp6flwKFj5fU+fKcZWEvcies6rUc3Kk0xDj/xbPTCMTrgQ5l5j3mfQGM
-	NTXIr0ACCpeuXg772L312ioRvfTb4tMw=
-X-Gm-Gg: ASbGncvwyOOg8qxzgY5DXfgjjdL+aNSui3ojekvhdl8s+DyHvbDIRwaa62hSZXYxWtV
-	JRn39zuCP3lL3M/yk8tDa31yVS1TRxOl7VhyK6/tcoLIb/jCUnEbaga5ERUhOS7vORJTbkFU6gI
-	7uQyiaJSVYHbVa/M19/1Nd64nZBJYcH0EYflMWmdpr8voRhIa84EU3VRXu+j2qQhXnilknjcJtl
-	uNoUmveED7Rc//kKwEeG/dS2pf5R9V7QlsIjy4huDRsqjIHcFAHuENS1J7icFX0L5XsWmxtoeE=
-X-Google-Smtp-Source: AGHT+IHJijl0PKSGqDIox/2BAekV76NhhdQyoQ2Z7mNcryvxf/52rpbaolTA3Dgsy5UCsyCgwo2Ey8/LL7TfzvkHoFI=
-X-Received: by 2002:a17:903:2345:b0:24c:da3b:7376 with SMTP id
- d9443c01a7336-2902726438amr426383005ad.26.1760565368993; Wed, 15 Oct 2025
- 14:56:08 -0700 (PDT)
+        bh=GYfqg6v22A8cDRSahKDcezI2Ppu4isHralnhJtU8tTU=;
+        b=BOZ8ywPkcdeG5X4on6KJTkegSDPI3Mb2pmpBHidu6eCTn4tbBv8jqDu5hDxdEnCMc1
+         cr/blGZit2Yytfu3lY8GHU5FUegJVc+7zwUTyXsrByx3mXFZlXcfa8WTeVE4NOG8hrJO
+         lS1jN2YfBa5jXg1rd/oMSD6Z+yaizvjn3J0xtSZ2LAtOuD2ehk+XEdD72U291/OtlMLC
+         cbwxQds3nrq8h0Uex/1G/IqRLSKxgIQiPznIX7TVDUUo+2YGW6ohLFsv8iHRwuAPB+sm
+         Sg+DiPqSH7JGIdsYS/LL77ahm41ISbSm6q0UmjRW79dBKqw3xngC2DG/E3GD0aKOXrZh
+         wosw==
+X-Gm-Message-State: AOJu0Yzuex7pZ0wo0LpM1w8CC8XDy/j8PNBBFDjHDT5gE4ELa0+BTrN5
+	qegT1C3ELfGlYRCCICx0RVIVbUXQBkWWR00jD/dBQFuG47/bi3aDtaUiz366OBCRxOT4j2PtJfu
+	8mpQzSYlcoVlnm9CQfcSMyTpmztxnZg4=
+X-Gm-Gg: ASbGncuREjStD30aP0eomnbEJQBto8GYMpyMoHXftmC1KxvPuPwiyDw1lLHbwjYY0Fk
+	WEg9jEW4z2N4XkbVROKmDuTddkI5aH26w8d4maA8OHxaF2pxB/7CdJrfjRbE7V9y8ci8rHZd6jM
+	9a/KcKuueHOG99x1Ie9xQCLPlHgNK9W7+GrRRqgJd89EXQofP6kVR+51wVspC9Llkj8kDOLLXOv
+	K9DJBHLs78fHuIvuhsq+jty8e1+Hh0Imo4q10pvaKynA4W19SZI76eiX9TQ9Cti
+X-Google-Smtp-Source: AGHT+IGi3irdCiPKF7prIlvuFAiR+Ynod0/2rkgPm6sbDrXZY+xZuTCK5TbxfrkkM5z3KzNZqakrQ9/KtWsaO5fWsfc=
+X-Received: by 2002:a17:903:246:b0:24c:9309:5883 with SMTP id
+ d9443c01a7336-290273ecb35mr394624285ad.28.1760565778760; Wed, 15 Oct 2025
+ 15:02:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1760490943.git.belkid98@gmail.com> <aea3b80a8883c4dac4e05defdee3eb82b83fe8c9.1760490943.git.belkid98@gmail.com>
- <CAP8UFD1U07T8_nX+sSL6ZHhCQsQuy5PwfQfbHC5piC5W5T=7Cw@mail.gmail.com>
-In-Reply-To: <CAP8UFD1U07T8_nX+sSL6ZHhCQsQuy5PwfQfbHC5piC5W5T=7Cw@mail.gmail.com>
+References: <cover.1760490943.git.belkid98@gmail.com> <d1c20c911637870c3cacfedf763ce508a641710f.1760490943.git.belkid98@gmail.com>
+ <CAP8UFD3zu6DJRRBcSMOQsPQDQcgzSOsqsrMWJH51=VeBkWs+SQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD3zu6DJRRBcSMOQsPQDQcgzSOsqsrMWJH51=VeBkWs+SQ@mail.gmail.com>
 From: Bello Olamide <belkid98@gmail.com>
-Date: Wed, 15 Oct 2025 22:56:09 +0100
-X-Gm-Features: AS18NWA6fYMH5dhZ3ehFxqifnXseoG-uUo_nBVAGrm5HAg9qkYRNkOhmZ0VH8MU
-Message-ID: <CAD=f0L_Jb8Fx9k8fU70qJKMw4oQh23f5H-BbQg-WrnSfsCTfAQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] [Outreachy] gpg-interface: replace strbuf_split with string_list_split
+Date: Wed, 15 Oct 2025 23:02:59 +0100
+X-Gm-Features: AS18NWAysswbATV8aZ4Ms8TkYy4MNpTlaNHW6DGDC2MP7cz4O20uj9KQtI5ToA8
+Message-ID: <CAD=f0L90FjPs1R_s70gvbOMqG=H45wVj9n6g9vGTq_Xvt90E3g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] [Outreachy] gpg-interface: use string_list_split
+ instead of strbuf_split
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, gitster@pobox.com, usmanakinyemi202@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, 15 Oct 2025 at 16:01, Christian Couder
+On Wed, 15 Oct 2025 at 16:28, Christian Couder
 <christian.couder@gmail.com> wrote:
 >
 > On Wed, Oct 15, 2025 at 4:19=E2=80=AFAM Olamide Caleb Bello <belkid98@gma=
 il.com> wrote:
 > >
-> > get_ssh_finger_print() accepts a signing key and then uses pipe_command
+> > get_default_ssh_signing_key() gets the signing key via the pipe_command=
+ and
 >
-> "pipe_command" is a function too so it's better to use "()" when
-> talking about it like in "get_ssh_finger_print()".
+> s/the pipe_command/pipe_command()/
 >
-> In the commit message subject, if it doesn't make it too long, I think
-> it might be better to also use "()" when talking about functions.
+> > stores the output in key_stdout.
 >
-> > to execute the ssh-keygen command, gets its output and sets it in
-> > fingerprint_stdout.
+> It's not very clear from the sentence if the signing key is the output
+> or not. Maybe something like:
 >
-> Anyway I am not sure we need so many details about what
-> get_ssh_finger_print() does before the split.
->
-> Maybe saying something like the following is enough:
->
-> "In get_ssh_finger_print(), the output of the `ssh-keygen` command is
-> put into `fingerprint_stdout`."
->
-> > The string in fingerprint_stdout is then split into 3 strbufs using
-> > strbuf_split_max(), however they are not modified after the split there=
-by
-> > not making use of the strbuf API as the fingerprint token is merely
-> > returned, hence they do not need to be strbufs.
->
-> It might be interesting to say that the fingerprint token is returned
-> as a `char *` not a strbuf.
->
-> > Use string_list_split instead for simplicity.
->
-> Here also using "()" could make it clearer that "string_list_split" is
-> a function.
->
-> > Note that strbuf_split_max uses 3 to specify the number of tokens to
->
-> Here also using "()" could help a bit.
->
-> > extract from the string, while string_list_split uses 2 because it spec=
-ifies
->
-> Here also using "()" could help a bit.
->
-> > the number of times the split will be done on the string, so 2 gives 3 =
-tokens
-> > as it is in the initial instance.
->
-> Maybe: s/initial/original/
+> "In get_default_ssh_signing_key(), the default ssh signing key is
+> retrieved in `key_stdout`, which is then split using
+> strbuf_split_max() into two tokens."
 
-Thank you very much for your review, I make the adjustments.
+Thank you. This is much better. I struggled a bit to get the right wording.
+>
+> > The output string is then split using strbuf_split_max into two tokens =
+at a
+> > new line and the first token is returned.
+>
+> Here also it might be interesting to know that the first token is
+> returned as a `char *`, not a strbuf.
+>
+> > This makes the function lack the
+> > use of strbuf API as no edits was performed on the split tokens.
+>
+> s/was performed/are performed/
+>
+> > Replace strbuf_split_max with string_list_split for simplicity.
+>
+> Here also, using "()" could help a bit as it would make it clear that
+> "strbuf_split_max" and "string_list_split" are functions.
 >
 > > Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
 >
-> [...]
->
-> > @@ -845,13 +846,12 @@ static char *get_ssh_key_fingerprint(const char *=
-signing_key)
-> >                 die_errno(_("failed to get the ssh fingerprint for key =
-'%s'"),
-> >                           signing_key);
+> > @@ -884,19 +884,15 @@ static char *get_default_ssh_signing_key(void)
+> >                            &key_stderr, 0);
 > >
-> > -       fingerprint =3D strbuf_split_max(&fingerprint_stdout, ' ', 3);
-> > -       if (!fingerprint[1])
-> > +       if (string_list_split(&split, fingerprint_stdout.buf, " ", 2) <=
-=3D 1)
+> >         if (!ret) {
+> > -               keys =3D strbuf_split_max(&key_stdout, '\n', 2);
+> > -               if (keys[0] && is_literal_ssh_key(keys[0]->buf, &litera=
+l_key)) {
+> > -                       /*
+> > -                        * We only use `is_literal_ssh_key` here to che=
+ck validity
+> > -                        * The prefix will be stripped when the key is =
+used.
+> > -                        */
 >
-> According to its doc, string_list_split() returns the the number of
-> substrings appended to the list. And you said in the commit message
-> that it should give 3 tokens, so I think the above line should be:
+> Why is this comment removed? It's not clear to me that it's not valid any=
+more.
 >
-> if (string_list_split(&split, fingerprint_stdout.buf, " ", 2) < 3)
+> > -                       default_key =3D strbuf_detach(keys[0], NULL);
+> > +               if (string_list_split(&keys, key_stdout.buf, "\n", 1) >=
+ 0 &&
 >
-> or even:
+> In the commit message you should explain, like you did for the
+> previous commit, why "1" is passed to string_list_split() while "2"
+> was passed to strbuf_split_max().
 >
-> if (string_list_split(&split, fingerprint_stdout.buf, " ", 2) !=3D 3)
->
+> Also I think that, instead of "> 0", the tests should be ">=3D2" or "=3D=
+=3D
+> 2". Or, if an output that contains no new line is valid, then that
+> should be explained in the commit message.
 
-Okay, thank you very much Christian.
-My thinking here is that after the split, it is expected that the
-fingerprint token
-will be at index 1 in the list so string_list_split() must append at
-least 2 tokens.
-so if it appends 1 token or none, I assume the fingerprint was not set
-in the list.
-
-I agree that < 3or !=3D 3 is a better approach.
-Thank you.
-> >                 die_errno(_("failed to get the ssh fingerprint for key =
-'%s'"),
-> >                           signing_key);
+Thank you very much.
+I will make corrections
 >
-> Except for the above points, your patch look good to me. Thanks.
+> > +                       is_literal_ssh_key(keys.items[0].string, &liter=
+al_key)) {
+> > +                               default_key =3D xstrdup(keys.items[0].s=
+tring);
+>
+> Thanks.
