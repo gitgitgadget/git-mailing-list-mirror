@@ -1,68 +1,69 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A8932BF2E
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 13:13:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6065B32BF58
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 13:13:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760534016; cv=none; b=hIsr4BJJziJUrESqIkrfsdv8DIJy/c61beBlpiZXeRBshBe430s9YLskG+fRWg7/WYK7pbZ3se48tU5SsWQS3wR+/33kz51mmu+bucCGbPS9x1pQgUmxusu1vi/Bh6dCW8w9t3kEkFRBUOGUF6E6iLa7IRhr2xeRRoO6zlDfOYs=
+	t=1760534017; cv=none; b=OH3TOtdTcBS6x5akht8Img9HcFrfevUo/ZFedgioubHFJgEryFNSeiSy/50+0U4OFAIkOIuTUliVZ+1xr8mMgqM0ekIRQgbsnMZwEj7Kr5T+EGEPAJqLXe9jvR8j4ooOEdeRPmZt4XFbLT7j+mOKvKPbR8fcN6BzeakAgHvo3bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760534016; c=relaxed/simple;
-	bh=IDom+2btO8JC5M04u1OS2I46eEB+st+A/LLuS8QjBNU=;
+	s=arc-20240116; t=1760534017; c=relaxed/simple;
+	bh=wAQzSoQhc/A8pW+/Xbjjh1AlNpHo3+cvJMsbk2FSF+c=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=YFwRjWvuWUYoIwj/uArKruaxViSkmBm3qgc+WB6fKsfH4m0kgT7lVAtD98fA+ndgC6tdHgtChXjPr4xbxf8Ssh79Q+aOxp4kWB22GWfOqo3golnmH6W2rDQCWAeNm8TWV2RqmLo5bJmux0FC6o7NRArmI/EN4MnlZVVIm6vsyTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V0LR3gkw; arc=none smtp.client-ip=209.85.214.182
+	 MIME-Version:To:Cc; b=VptNrhge02A4GagbcyUc/pc6BMwkbD7U4KNm0FijAB+lXEOuxk2trnZMFJS0smfkXppMID7ZH3+Y7wfjKaGE8FmufyOTQyi4HhuGFGx+co4icCYraffa60LLawkFoAfGbMJ9n/+CMxb7BaIrajEw7Kv2tJxWQ9DJohQbCvZYhqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JmJg0Tdb; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V0LR3gkw"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-273a0aeed57so13279315ad.1
-        for <git@vger.kernel.org>; Wed, 15 Oct 2025 06:13:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JmJg0Tdb"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-7841da939deso5912872b3a.2
+        for <git@vger.kernel.org>; Wed, 15 Oct 2025 06:13:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760534014; x=1761138814; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760534015; x=1761138815; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+fDTyLDYA8tAHBsife2rtz6O1ws5Wb3b0R2U/ZSHFkY=;
-        b=V0LR3gkwNohZMf5CKm6QENU2lu9ssZ8LWXw5FMmaJwTn/P1XsXDcKfN7C7b7O4jvmf
-         ltQsBnTJUzzj3vpnAbqCVZ2UgjLmDBdyhIn+TS7s3kIeWjk+MMOvgv0xfG1RMIS9aPms
-         ppuj087OGxIQWQ9bbDPKA4Zco64gMcm6HdMJlpcfByV0bg8K+32GgDsVuBASEwoeFSK8
-         tJJMcKUlJUBk9EFfBjw9MUAl6HQzeP+V4PRMKZS//3zTHORroHN7rLJ1VUS/qmL6zXU8
-         9lAP4pXoFrLYc27/lD5Oa/Xct0AkRqmh/dCciDnOf8F1pMFIIHCxordDnjKdQiNq/oWi
-         0uYQ==
+        bh=DxEKoU+WML4xsThBqLEbxk/DjGYcFZxkTyDmAEfAADc=;
+        b=JmJg0TdbYUBZfJ+5mOyY5qTb3i3djvqiJY5IgCis1e7zrQ1AOO6rglEZc7nYej9gtn
+         jUHU/T2ikPN7um7fLRKuYRehZTmGQF6I2nbPI/VtIbS5D3UTgTOzhAqwnmkYXhmqzBOE
+         xBbj5VeWVdt/Skc9MKXcNM0ODwD/Urmtd1tmxtyB7ysbzLOjUb/U8Eu7DeMBFpNd6khP
+         xoYrLhnynWGHWU+1aercsqd/QK916gJmFGppN0jkAiDyNemftDHFXkJ63zeltVZjWin5
+         nMTyCAYwCIneYSD7Xb3SIAqABgonpoOp46XBYJd6vql8CsluwIExXq++4eBojriXOeXN
+         ConQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760534014; x=1761138814;
+        d=1e100.net; s=20230601; t=1760534015; x=1761138815;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+fDTyLDYA8tAHBsife2rtz6O1ws5Wb3b0R2U/ZSHFkY=;
-        b=r3mJuJcrVSXgsSUchEgF0tjwZImXd2wng3ZNO9+yf/s7tiba+xEbwbseae9K2UE5BK
-         mrvdZOLZOGsxnqdBuv82hZRlJhnx+7mm87Tbe2a9Vb73RlW6yKtF8voyaXf8GV8cse8I
-         r2LG/HaW0O/rKm/NmZe9wcyH5obFZiFXG05yUF0ejccBIZ5WDk9yG7hTqLX62MgvlmBF
-         WothX46YNSnD+scPRXR7pohsE8ehocVJeBlwZjKsAE4mzebfGfWtkqaDPhyGRF/kxqTm
-         CKZxl8Uaahy2aLHEcEjFhsz9negWN0BM+nrnN9tPovWzSr6iTGxXB2n2wYfK2xCaKMNt
-         lqFA==
-X-Gm-Message-State: AOJu0YzbpIWLf3gYLNNGfszNplNQ8b7svel+3brZ5Mzm1kphr9WHl8h1
-	vBbZh4UbS6evNrMD44dKhT3tLXorjuBvNX8cM1i++U7yVik4niPYloCJ1ttJHmoW
-X-Gm-Gg: ASbGnctSjqIfBl402OebwXDIJDU9/KxSpfRgpiADxU7NV/vx3V49h3kxPvav2eC1kK1
-	mSkH00iz3d9c/LBmaj1r4e0cE2tOE10WqBTKUGrfSDgXu8xoAvSYVn35v5uPt5FjKRA+VGtvvzh
-	z5jf2gZiG5HiqIG8K6LcSP2FHiFmB5XOwgNIaldxk9s7kQaNZLDYY4BSPf/w6udP7SJrOLXE2XW
-	YuL8sPXlH7ezWPHlP0Iyz+2Msy1/GHhBpRqBc1fiGsv0iA+IYsHMMtaM4cS/tlfWiFuUaljUwuq
-	5729puEvFWKsAT0zyFLaGuYpXFcDxfZpOt0YxcnC/q+WkikqUYm0k7YlvjV5T2zZKdJGzb5xBIC
-	/Hvd7QcqKVtaKBg6eGHUrBBsoRWnRA8CyVUjghniDorNH/O+MsrQ=
-X-Google-Smtp-Source: AGHT+IGf/FHiMt1BuCPTMnVASPQV5iJfQIeUI4uYd8ejUwO1rp1couIlSk0rRE07OAQa7Zw4z9p7Ug==
-X-Received: by 2002:a17:902:f710:b0:271:9b0e:54ca with SMTP id d9443c01a7336-29091af4271mr477995ad.13.1760534013240;
-        Wed, 15 Oct 2025 06:13:33 -0700 (PDT)
+        bh=DxEKoU+WML4xsThBqLEbxk/DjGYcFZxkTyDmAEfAADc=;
+        b=FWRf60ykGan8kM6dATFPeBELr2ifoj0UMoBPjGpE2V4MRw34Lt+xZm6uUN9XdgHcUq
+         1HKH5CCPwUQgaoFZ1mJEDb0RBsSPNze+nuQCub/en74zHGFMo4uMbtrlvilo9GH7C/CG
+         JHe2AFwuRKB3rRTc45pjW/oSddQ01Vplb27DtW7Uw00pPZmu8r8u+Azo7w1+gz6k5iZV
+         xhY2zBTSFatF87VOLwkrhfxnmdGRm14nW8g1zxqzkq6jMBmjwtuZ1zdgLsGtZw2gpz0a
+         wR7F8DKjoNFESRKRFixhTIDPvbq+hFwW+ZYKQLpIGp5DIlPEXfDoUnVdW0iJkq7lHcfv
+         mEnw==
+X-Gm-Message-State: AOJu0YwGJSdsdMx0A8E2Q59fo4BfQk9iZO3ICldvH/zXHALYbV5AmjpJ
+	VgASew4yPbf+1TJPqeiEmvw1JOXD/gWa0jrjMGpKUAoObYOBubUV+C/z/uMagTdg
+X-Gm-Gg: ASbGncseeaDZta0zkLuxDp+/Bg0sVxZ5kQpsUOptMYHBRpc7D90KIxMmQ7FmZWIcS9k
+	tIGP+go58CRPER2AHVQFgmNkZhT6KTcTKkov9l6JJnD1uVdVWPWUoYJREzi/F/SA4Y5UeKAH8bR
+	li+0q49MQCDt0grjItmkGp15UIBk/dur/E7g9Wm92dy95G6mcPFvlk09oobF1GnRVzBHbJuwLv/
+	5LGoV1/Y3LOrok+pkUcIVphIFIOY4pNUlgtxWPrxJP7R2Id6dx4RjYPuIyUKws8H+fjCyqLhp9y
+	nDoSi+IwPc+M0Asr814l8oP1o8dPU64aenBI/BBfHf0YXaOpScqdUsq/A8uayikicWZYGnweHzi
+	lIJ6BTNHMc0Fy4A1Fd+0T7uKMJhAvYqbvga3VxrmnHBw4FaYKzRoY9DV8eBC0uQ==
+X-Google-Smtp-Source: AGHT+IGsPw71KT6QUiKCRK5wLNBoYMkc9ns5rLzVXR4VysjNILmL+IEeQss/UnxWesag/g+QzM+lmg==
+X-Received: by 2002:a05:6a00:1402:b0:781:17fb:d3ca with SMTP id d2e1a72fcca58-793870524dcmr37948196b3a.15.1760534014871;
+        Wed, 15 Oct 2025 06:13:34 -0700 (PDT)
 Received: from [127.0.0.1] ([68.220.60.2])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29034de5721sm196671025ad.21.2025.10.15.06.13.31
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7992bc12a8asm18690019b3a.34.2025.10.15.06.13.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 06:13:32 -0700 (PDT)
-Message-Id: <pull.1976.v3.git.1760534011.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1976.v2.git.1759951536.gitgitgadget@gmail.com>
+        Wed, 15 Oct 2025 06:13:33 -0700 (PDT)
+Message-Id: <96b2673e04ea151a2464fd960fac0db8c58ab8fd.1760534011.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1976.v3.git.1760534011.gitgitgadget@gmail.com>
 References: <pull.1976.v2.git.1759951536.gitgitgadget@gmail.com>
+	<pull.1976.v3.git.1760534011.gitgitgadget@gmail.com>
 From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 15 Oct 2025 13:13:27 +0000
-Subject: [PATCH v3 0/4] doc: git-pull: clarify DESCRIPTION section
+Date: Wed, 15 Oct 2025 13:13:28 +0000
+Subject: [PATCH v3 1/4] doc: git-pull: move <repository> and <refspec> params
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,79 +77,108 @@ To: git@vger.kernel.org
 Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
     Chris Torek <chris.torek@gmail.com>,
     Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Julia Evans <julia@jvns.ca>,
     Julia Evans <julia@jvns.ca>
 
-I got feedback from 15 Git users on the current git pull man page, using
-this tool: https://text-feedback.wizardzines.com/git-pull.
+From: Julia Evans <julia@jvns.ca>
 
-My goals here are to be clear about the relationship between git pull and
-fetch/merge/rebase etc, make sure users know the current default for git
-pull (--ff-only) since some folks still remember the old default, and to
-help users quickly figure out what command they need to run to
-merge/rebase/squash/etc.
+From user feedback:
 
-I've taken a pretty aggressive approach because I think it's possible to
-have a pretty short and focused DESCRIPTION section here while keeping the
-most important info. Open to hearing that I've removed too much.
+- it's confusing that we use both <branch> and <refspec> to refer to the
+  second argument
+- one user is not clear about what `refs/heads/*:refs/remotes/origin/*`
+  is meant to be an example of ("is it like a path?")
 
-This references the UPSTREAM BRANCHES section from
-https://lore.kernel.org/git/0ec629d4037bf5d1ccc248ca1bbd87ccc08119a3.1757703309.git.gitgitgadget@gmail.com/
-, so if that isn't merged I'll need to revisit the approach here.
+The DESCRIPTION section is also doing a lot right now: it's trying to
+describe both how the <repository> and <refspec> arguments work (which
+is pretty complex, as seen in the DEFAULT BEHAVIOUR section)
+as well as how `git pull` calls `git fetch` and merge/rebase/etc
+depending on the arguments.
 
-changes in v2:
+Handle this by moving the description of the <repository> and <refspec>
+arguments to the OPTIONS section, so that we can focus on the
+merge/rebase/etc behaviour in the DESCRIPTION section, and refer folks
+to the later sections for details.
 
- * Add "(excluding merge options)" to clarify which options are passed to
-   git fetch (from Chris's review)
- * Say that git pull will by default merge the upstream branch. (from
-   Chris's review)
- * Add some links to the UPSTREAM BRANCHES section, and to the <refspec>
-   section in git fetch, to make it easier to navigate in the HTML version
-   of the docs at least. The situation where we repeat the <repository> part
-   in git fetch is weird but I don't have a better idea for how to handle it
-   right now. The UPSTREAM BRANCHES links are currently failing the
-   documentation tests, but should pass once the patch series that adds that
-   is merged. (from Ben's review)
+Use the term "upstream" instead of 'the "remote" and "merge"
+configuration for the current branch' since users are more likely to
+know what an "upstream" is.
 
-changes in v3:
-
-Change "fails if the local branch has diverged" to say "remote branch has
-diverged", from Junio's review.
-
-I did not come up with a better idea for a word to use than "integrate" so
-left that alone.
-
-Julia Evans (4):
-  doc: git-pull: move <repository> and <refspec> params
-  doc: git-pull: clarify options for integrating remote branch
-  doc: git-pull: delete the example
-  doc: git-pull: clarify how to exit a conflicted merge
-
- Documentation/git-pull.adoc         | 93 +++++++++++++----------------
+Signed-off-by: Julia Evans <julia@jvns.ca>
+---
+ Documentation/git-pull.adoc         | 32 +++++++++++++++++++----------
  Documentation/pull-fetch-param.adoc |  1 +
- 2 files changed, 41 insertions(+), 53 deletions(-)
+ 2 files changed, 22 insertions(+), 11 deletions(-)
 
-
-base-commit: ca2559c1d630eb4f04cdee2328aaf1c768907a9e
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1976%2Fjvns%2Fclarify-pull-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1976/jvns/clarify-pull-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1976
-
-Range-diff vs v2:
-
- 1:  4cc87ec354 = 1:  96b2673e04 doc: git-pull: move <repository> and <refspec> params
- 2:  122774d4cc ! 2:  0ff00b4ff6 doc: git-pull: clarify options for integrating remote branch
-     @@ Documentation/git-pull.adoc: SYNOPSIS
-      +There are 4 main options for integrating the remote branch:
-      +
-      +1. `git pull --ff-only` will only do "fast-forward" updates: it
-     -+   fails if the remote branch has diverged. This is the default.
-     ++   fails if your local branch has diverged from the remote branch.
-     ++   This is the default.
-      +2. `git pull --rebase` runs `git rebase`
-      +3. `git pull --no-rebase` runs `git merge`.
-      +4. `git pull --squash` runs `git merge --squash`
- 3:  323e81f2fd = 3:  2439c3d847 doc: git-pull: delete the example
- 4:  999dfba156 = 4:  2236dac4e4 doc: git-pull: clarify how to exit a conflicted merge
-
+diff --git a/Documentation/git-pull.adoc b/Documentation/git-pull.adoc
+index 48e924a10a..a3d248dd1d 100644
+--- a/Documentation/git-pull.adoc
++++ b/Documentation/git-pull.adoc
+@@ -27,17 +27,6 @@ and then depending on configuration options or command line flags,
+ will call either `git rebase` or `git merge` to reconcile diverging
+ branches.
+ 
+-<repository> should be the name of a remote repository as
+-passed to linkgit:git-fetch[1].  <refspec> can name an
+-arbitrary remote ref (for example, the name of a tag) or even
+-a collection of refs with corresponding remote-tracking branches
+-(e.g., refs/heads/{asterisk}:refs/remotes/origin/{asterisk}),
+-but usually it is the name of a branch in the remote repository.
+-
+-Default values for <repository> and <branch> are read from the
+-"remote" and "merge" configuration for the current branch
+-as set by linkgit:git-branch[1] `--track`.
+-
+ Assume the following history exists and the current branch is
+ "`master`":
+ 
+@@ -77,6 +66,26 @@ pulling or stash them away with linkgit:git-stash[1].
+ OPTIONS
+ -------
+ 
++<repository>::
++	The "remote" repository to pull from.  This can be either
++	a URL (see the section <<URLS,GIT URLS>> below) or the name
++	of a remote (see the section <<REMOTES,REMOTES>> below).
+++
++Defaults to the configured upstream for the current branch, or `origin`.
++See <<UPSTREAM-BRANCHES,UPSTREAM BRANCHES>> below for more on how to
++configure upstreams.
++
++<refspec>::
++	Which branch or other reference(s) to fetch and integrate into the
++	current branch, for example `main` in `git pull origin main`.
++	Defaults to the configured upstream for the current branch.
+++
++This can be a branch, tag, or other collection of reference(s).
++See <<fetch-refspec,<refspec>>> below under "Options related to fetching"
++for the full syntax, and <<DEFAULT-BEHAVIOUR,DEFAULT BEHAVIOUR>> below
++for how `git pull` uses this argument to determine which remote branch
++to integrate.
++
+ -q::
+ --quiet::
+ 	This is passed to both underlying git-fetch to squelch reporting of
+@@ -145,6 +154,7 @@ include::urls-remotes.adoc[]
+ 
+ include::merge-strategies.adoc[]
+ 
++[[DEFAULT-BEHAVIOUR]]
+ DEFAULT BEHAVIOUR
+ -----------------
+ 
+diff --git a/Documentation/pull-fetch-param.adoc b/Documentation/pull-fetch-param.adoc
+index d79d2f6065..bb2cf6a462 100644
+--- a/Documentation/pull-fetch-param.adoc
++++ b/Documentation/pull-fetch-param.adoc
+@@ -11,6 +11,7 @@ ifndef::git-pull[]
+ 	(See linkgit:git-config[1]).
+ endif::git-pull[]
+ 
++[[fetch-refspec]]
+ <refspec>::
+ 	Specifies which refs to fetch and which local refs to update.
+ 	When no <refspec>s appear on the command line, the refs to fetch
 -- 
 gitgitgadget
+
