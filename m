@@ -1,63 +1,63 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9260F2D374A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302032DAFBB
 	for <git@vger.kernel.org>; Wed, 15 Oct 2025 21:12:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760562743; cv=none; b=PyG+8FYXuKNfaF5QrcmiAl0RDz0PW9mQG/a31AlmeoJISQ/WfHpfRkU2uEAwXOjVraY5hzJjp7p+zpFIanIPTA8pq3lQ/PhkjvYabFSSg6b9ZBcVgOtUAgB/LUfDXBec6yCr7LmC+AMyC4a1EgYCKUogQQNVk0uiil2DIuE1FcY=
+	t=1760562743; cv=none; b=YNCYUUMR+gaz5GG5zGrP3mVnG0bNrao1kb+cWJ5bu8TE2wN4a/OLj5dPb8d+gYYAUcPRT8SOsDtlMLNORxU2z1obWLWs6VglbZmYX/Xs3ukPZQV2pg7MdqBIPjpbLWi+bqeIdMpuyhK0j3szFxkvUsX9u2NWUeeVnh3eZ8o04Ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1760562743; c=relaxed/simple;
-	bh=rhL7z2JuUNObAPJolsKbTI6C1GU/Lgrn+nn1ssbaLoc=;
+	bh=/1SnD3WYBHp1TwPoq1VIuriILgy4qstGvpGLP8cKBOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdtrG2f4wBscaFuYpb5mkz2PO7VxFyJye3nUCIDgiJkBTw4DcQCjNx53z63pIajl6myV7xhJ6kg0gEuTvN4LwezumwsZnI30wqQfzfOhA6Qtwsrb5KymETmeGNBqlwkGglSvr2slZZlbbLQ1o+kjrahZXZjRSMUew49kgiYNi8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FCoDRnyW; arc=none smtp.client-ip=209.85.160.53
+	 MIME-Version; b=Evm+Ja+AbZ6z8olZEEVrW5bhE+iGRWHtnSVcBPWJa6sxy6IVKue0p2/cKyC1uz/Dnm4B7mFasBae8WLTrOzeHAiqaRe5766RXQf49zzkUw3M44GC0CQyZknx8/iy7RN3zEz6hGAPRoDc6b1HEWL4hJNrwBMx3uqvj5eeHD+JUHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cG7NLqA0; arc=none smtp.client-ip=209.85.161.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FCoDRnyW"
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-36c9859b036so6496fac.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cG7NLqA0"
+Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-64fdca63b41so3380404eaf.2
         for <git@vger.kernel.org>; Wed, 15 Oct 2025 14:12:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760562740; x=1761167540; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760562741; x=1761167541; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xISjwdtj2GzvnStBEQ4LDObogRyfw+Z5+EIiFS62pTU=;
-        b=FCoDRnyWRzDVNNF5w8/knhC8H1Qdyk/pR1EjNeCkh3N/+kDEJzJL5Jygn+8s4RVPfl
-         JLNWIVxMXIqnakWW4ZBpMsyqBSeGNZ8Y+ewFei91uXdBlqxQQI0OgHH3zc53/X5BZw07
-         GxHnEEBHBJUkHJeOmXxt0IGjW2Bkj9xXXf9pUyfP6WGIGu+L6cg9XBl4sKomsZZc4i5Z
-         wzYsRcPROMShzbr4UjKDc2vw/fcJX3mbw9ErNwmNeteYbU/r4JUtzs0vuiArXZtZNKWU
-         CDaGGu8z0oukBA9hBs2tkqGKUVBp/ah7aLd6YvlpkUM+9l+ou7w7deTw5sN/fIUUJVek
-         Au8A==
+        bh=hY2YdpRXIoSdDtOeSL1Fzj0grP/ivSC2SYohVHa3Vss=;
+        b=cG7NLqA0GqgUaQCRUPtkPyziwrHVs7kC1e+s7ChzWzcbbJl91QH8bMOIyxB8FmeYbc
+         Nx5CB13UPLvkgRKMG/Iq72K2fiIYNEcGhm2FjxO2YCXmR+9CQPSd6mv+sdCX4sCeMxo5
+         2zoBfgx7k+7p+EsMf+0mJKT4DN4pqWRVYO+xifWU01hHd1saBcvrY4Z7Wtou5TgRqiH8
+         1C+DmKUejvUJkruFEL1eRh42SQQTKfjEMFD7e+lKQiZwsac+dr4bOUbeqYWmzL7qOc2X
+         x/HW2aFY1wKC45+sjGZxInJ1xeP2cOmDewDLy0Bs0+kcYN3joCSkZia/LX1JWIdpSF65
+         lJ4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760562740; x=1761167540;
+        d=1e100.net; s=20230601; t=1760562741; x=1761167541;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xISjwdtj2GzvnStBEQ4LDObogRyfw+Z5+EIiFS62pTU=;
-        b=UtYKm7et1O5EJ3mr8rESz9EH+D4HZIH1yvKF38VNa6J0j7PdZf1oOhJoTNr2F4amBc
-         UoEJ6Fk2yFOaBvnnZDFnOxGpXD+mFb9YNdnSfRTrp7RhxUzfDcfB8eqWA4KXMuLqpJa/
-         Rf6GNBrlyGRiQoSWLPOxkw9yF071SzIN4Pk7lgYlI0mL706RNfFRUhOj9QLh5n+A+2m+
-         BcyW2/fFXzqwxZy+kAtz8S5KZGXI0SFJFcFbxMZsLbg4HSLawDg7MpFKg0nmZxZlffFp
-         W8Y2TUgF+Wb/91mxQ9aAceybEJZs0/xfJde8dx7LxcDLajkdpAXN2PdsDD2R8Ej3QnjN
-         uSVw==
-X-Gm-Message-State: AOJu0YzfWc44Ut2atwM3zpyRltKI8a0PaSlk5qPZ/S9aTBkPxMzItVk/
-	F7zRzFvbxrxs9pufeWm84wn4ikbcy7VaWAQM9MBHdft8FeA7EZ5B30kY002wbA==
-X-Gm-Gg: ASbGncuc5vrsdLy0TaKkZMThbB3U3kpxahJ1wtbBSOp1Guo55ohua1lO9+MMa33Nc20
-	gofF45+X1btwAX5IVTGTw/froWuNzAvLsAZACyCzZjEVGNYf93vvG+FWc0tTG31Uu/b3DqHk5CR
-	W5ivas1GSm6pIEZxh477zGpNgavd8yqpobjqOuAEUK3Vu/dTgHIdGGafl+BDSXxhHoZFW4AkjP3
-	k6KTxFkwzM8IX3CAfXleGriraiJp6YogQNZvvz8xOP1SmNml6ytd2ybNGdj2mtksC5fUnvlyx5d
-	P70s/As7H0MH5jogPpYOEZDEQOoS0y6TTQF0rX2rELbAZuL3rhZqSNgNG6CZsvLFxDOSZrcBUc4
-	JFfsdDuwox56eHMItnonDkIhfxeOfEUmzpQ/MYFCdvxpRcawHN/FFpiuGK7106q/2AF5qPfBCok
-	1wfRGu0fTQtBcTpBOvsQ8=
-X-Google-Smtp-Source: AGHT+IEXZzsUx+9+PGpWlPIYVe4PfjdoT1pYPfNW4y6E6fvb2324/yvkRnXJINplbMlGfugUu76InQ==
-X-Received: by 2002:a05:6870:c0cb:b0:332:8989:4ee4 with SMTP id 586e51a60fabf-3c968bcd026mr873749fac.20.1760562740166;
+        bh=hY2YdpRXIoSdDtOeSL1Fzj0grP/ivSC2SYohVHa3Vss=;
+        b=G7LqamjFlLn4I//vxwe0mVhPWY+0Pxnm4pjAFScrTP3FJiv46rmlxnTK69DeC7Z4j1
+         GEVN8vUy0p/7hs1MB+8LI5Wduk03sAydj52NP+Ho09QfgQpzoDbDqvwG+Omjz1a76f5P
+         NxEvb7qRvASad/MhQ1/dKC6+rIOt7tVvu/Z5GRlcUVSv13cUcX6rKCe+OU/0cO4Wi4AX
+         QLpe1swR7MJuZrariS0MEtYG5p4r+5ns7UhG11/TsB0XbPhurXcBniDF+5gGQlwNRo1f
+         A6sncd1WoiClZprKZRsaHD6kljpw47/CyJxz9jsRYWPQXjyQ9BWH7W5sH/i54Qp7X04T
+         ugrA==
+X-Gm-Message-State: AOJu0YwDLzNybf9akDVcgjKk/QKOVKgbdMh+kShlktqcvXxIAqiPjTSS
+	EgSSIdcy8xj7iNTx5MkMe9qxsb1i9shKYw2CF/EJVExPUq7bEIJOlDzymAhehg==
+X-Gm-Gg: ASbGnct1AI5BYDZ+X+6xl/dYN8uqwN1D02NNhP1JFeZqa19FyMWJOMg+fX/6YK92tpR
+	I9WmPDAdUXdYYtjpdyME6lwJ13v3FCULpUY9asMlSbKh6AhzgBAp8MIRqttA58fF6VFr2zgWGea
+	/cKEMzmnfP00DxujV9OA4Ay7fIaezQrqK4KvqUGlPisnD+d63q593f+HCYyo/Qserf99DPxu5fz
+	eD1WwATg/m4K2etFOfMn/ac03UZaB7c5+Rwb+6yJxeQyyYnkLYjjJbTCIQhWGkQRn0wX9M8eSo+
+	Vfq0fccrvJ7I+okfbBzBGiDA7Gj7WlY8tmOQoiKeyB3ix85lzUhKHHSrCtfCQIBJqrVvuPx3vHv
+	xEQczTUUQBb9UC7YKViIhg30mq1D3hJ/+he+wkZ/D89JQmGVIq+47sYk8MYIAN0f/QrFL6dlU7E
+	nfat/i5zCuryAsRm17BsQ=
+X-Google-Smtp-Source: AGHT+IEODVmJy9k+EtqYo7u5m1M8AJwY9ooewCg9D90bd6rbcOGWZejb2nOaSsd1g+LYvg/a3IjsLA==
+X-Received: by 2002:a05:6870:348b:b0:3ae:f15:5de1 with SMTP id 586e51a60fabf-3c0fa754b53mr14703210fac.41.1760562740835;
         Wed, 15 Oct 2025 14:12:20 -0700 (PDT)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3c8c8eecb2bsm5806932fac.20.2025.10.15.14.12.19
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3c8c8eecb2bsm5806932fac.20.2025.10.15.14.12.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 14:12:19 -0700 (PDT)
+        Wed, 15 Oct 2025 14:12:20 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -65,9 +65,9 @@ Cc: ps@pks.im,
 	sunshine@sunshineco.com,
 	gitster@pobox.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v5 1/6] builtin/repo: rename repo_info() to cmd_repo_info()
-Date: Wed, 15 Oct 2025 16:12:08 -0500
-Message-ID: <20251015211213.361797-2-jltobler@gmail.com>
+Subject: [PATCH v5 2/6] ref-filter: allow NULL filter pattern
+Date: Wed, 15 Oct 2025 16:12:09 -0500
+Message-ID: <20251015211213.361797-3-jltobler@gmail.com>
 X-Mailer: git-send-email 2.51.0.193.g4975ec3473b
 In-Reply-To: <20251015211213.361797-1-jltobler@gmail.com>
 References: <20250927145049.723341-1-jltobler@gmail.com>
@@ -80,38 +80,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Subcommand functions are often prefixed with `cmd_` to denote that they
-are an entrypoint. Rename repo_info() to cmd_repo_info() accordingly.
+When setting up `struct ref_filter` for filter_refs(), the
+`name_patterns` field must point to an array of pattern strings even if
+no patterns are required. To improve this interface, treat a NULL
+`name_patterns` field the same as when it points to an empty array.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- builtin/repo.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ ref-filter.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/repo.c b/builtin/repo.c
-index bbb0966f2d..eeeab8fbd2 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -136,8 +136,8 @@ static int parse_format_cb(const struct option *opt,
- 	return 0;
- }
- 
--static int repo_info(int argc, const char **argv, const char *prefix,
--		     struct repository *repo)
-+static int cmd_repo_info(int argc, const char **argv, const char *prefix,
-+			 struct repository *repo)
+diff --git a/ref-filter.c b/ref-filter.c
+index 520d2539c9..2cb5a166d6 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2664,7 +2664,7 @@ static int match_name_as_path(const char **pattern, const char *refname,
+ /* Return 1 if the refname matches one of the patterns, otherwise 0. */
+ static int filter_pattern_match(struct ref_filter *filter, const char *refname)
  {
- 	enum output_format format = FORMAT_KEYVALUE;
- 	struct option options[] = {
-@@ -161,7 +161,7 @@ int cmd_repo(int argc, const char **argv, const char *prefix,
- {
- 	parse_opt_subcommand_fn *fn = NULL;
- 	struct option options[] = {
--		OPT_SUBCOMMAND("info", &fn, repo_info),
-+		OPT_SUBCOMMAND("info", &fn, cmd_repo_info),
- 		OPT_END()
- 	};
+-	if (!*filter->name_patterns)
++	if (!filter->name_patterns || !*filter->name_patterns)
+ 		return 1; /* No pattern always matches */
+ 	if (filter->match_as_path)
+ 		return match_name_as_path(filter->name_patterns, refname,
+@@ -2751,7 +2751,7 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
+ 		return for_each_fullref_with_seek(filter, cb, cb_data, 0);
+ 	}
  
+-	if (!filter->name_patterns[0]) {
++	if (!filter->name_patterns || !filter->name_patterns[0]) {
+ 		/* no patterns; we have to look at everything */
+ 		return for_each_fullref_with_seek(filter, cb, cb_data, 0);
+ 	}
 -- 
 2.51.0.193.g4975ec3473b
 
