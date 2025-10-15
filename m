@@ -1,73 +1,72 @@
-Received: from mail-yw1-f196.google.com (mail-yw1-f196.google.com [209.85.128.196])
+Received: from mail-yw1-f193.google.com (mail-yw1-f193.google.com [209.85.128.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522EB30FF31
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:29:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A5F30BB83
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:29:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760567358; cv=none; b=adGU7DRvkgIo3J+mzGpodKcbLxKJARz7GsiRQIzOjznffi3ztkc/E3NO0VCtjKcPuVXCAiCL0cGRyFZjEuKXJsbA4jyaHbqecRM2APs3VwpCkp0tKXyAohH7PJ8kOR/G8QH9uYy33BoFm2gA4kyVjb3C5lXEkLAMxRLLfoTZiMQ=
+	t=1760567360; cv=none; b=nTsAAk+4jqxwAoVhNb2SQQFS8tNgsNsZz7MGXeCuB2onUL356Ly4c1DF5bIcsYSNcWNf3/ukE0hpxqPM1U1vPgpmXuJGq2rj8O+4Ni7sbxdpZ64us4zn0n97TqzZhPTO1d+o9ZxkJwL6hrBbxPYsmdXtqg/p2ausHT8eCDmKLi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760567358; c=relaxed/simple;
-	bh=VwsM2gsjrX3dBJ7w5GBk2fqyueFs0X0XGlB/ht9dPf4=;
+	s=arc-20240116; t=1760567360; c=relaxed/simple;
+	bh=OV+sN1CkBYTsMZx9kNjxfuc9c6HDhYvIA7ncOwxfm8I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y6wfI887cWYNCZ4Z8Aeie7cNFLvFpTAUaFcgr+ajxb5AVsL8khu2KgYPogM0Ok50N6y9VbR2N74dQVtKyoVkY1iZZ1HZGnTWRAQYQ+xCpekfMSzs/HOpweAGwCQWwCaPeKrWr91u65FqBINEuuPTAstE0m7zQx+d9Qmj9ZWheTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=j2jsEWEa; arc=none smtp.client-ip=209.85.128.196
+	 Content-Type:Content-Disposition:In-Reply-To; b=TPSoca6vrgjtFQJ7wLS5KA1jOKxkJWfQqRG5KtS/V3IgUDhxMhvEU+p0Nuw+XrUsly8laujjRqbkb1/GFPQlQJsFUPB0PO225qKIJdIdrsrUkAPuENj9XRxoyMdXA9/K+1jzG/QVPeCP2MRZ93MiEqbbCg09YJNO6/g4STcwMNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=oKfBqgKI; arc=none smtp.client-ip=209.85.128.193
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="j2jsEWEa"
-Received: by mail-yw1-f196.google.com with SMTP id 00721157ae682-71d5fb5e34cso933017b3.0
-        for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:29:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="oKfBqgKI"
+Received: by mail-yw1-f193.google.com with SMTP id 00721157ae682-781da6c1a37so931547b3.0
+        for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:29:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1760567355; x=1761172155; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1760567358; x=1761172158; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=awkHzBdkXIjhepAq00ac7DZOuikz4etOT06LA9Nkq/c=;
-        b=j2jsEWEa2rFoo8rqv+n+k1QhuaimFNllB44C+BaWgpnxw6fzefn1xcGKB+jWcim5sM
-         boMQJmHC9Kz+BXs/x5EzaNvTsixHNDgh/NJfV09S+0jmd4p1GtDk+6a15CTufjJA+UEy
-         EzS8k8Czfxs3OxoBDMMyWY7+DYA3hcQgKnH7gMk/Rkcd2AB/tF0ijRJRG4M5950L8P8L
-         gg0r1mhutiiuuo3ipg/nx4Xrs7vnXvsM2eNO+X686EsMTpy10Bv/4waxVCfa09oHYuzZ
-         VVC1Elskthvvj0QvnvyhMmYd3SnlFMVQA6+QdFgVpOhOvtjmD7cS1hOosMAly36Z+UIf
-         YVhQ==
+        bh=oiwylKNPFdgtdm2edLcfDFOPWhFZDJWf3w5UANh/d8Q=;
+        b=oKfBqgKIWzXuBsCj/kcXKdY9elmaSHV21G6b04Il5oh2bliN7yHQsG/nlxUh1h25hN
+         wD6/juLC27yiWbmpAEXOBJQZgBmYIbvkndFsx6pFaes/BTmjho4AcfJLTYINB+Oh6XZQ
+         mqq7GGbCebymEudwnHFV1wnpdOGvcShaqiXEFSTqXPk5O0SECLKWEBfwxlPR1j+nfBB/
+         jgtWF4fydkzzko8+8R5jUVz7tOO1WC9P6RqNUt3PBK+2oayGTanfzRN0ZF/QdPokkTtR
+         GTqbKXDXui1+1Z+eSuc1A+uAbeazbfgvlvxk/2RU+9cFqMS6ymG91yhHh6kwlkHau9FD
+         2/qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760567355; x=1761172155;
+        d=1e100.net; s=20230601; t=1760567358; x=1761172158;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=awkHzBdkXIjhepAq00ac7DZOuikz4etOT06LA9Nkq/c=;
-        b=etEe399P3xQbAiwWPv7pBX+ysexFhC2j6jFlbpJEYEVD8ke/ZvF5PvSnRc/4LoSq7w
-         ftmxUnlYHjiEU3Y6Dv4iqwhBeed5Ym7qwKmfM+kqb9hwMUi1kVC/JBM7cyaFOS4BsnzU
-         834cLgqjDwsWkRry1TJFvaNvtbfErGwjxoE+0I835giydkXaFW09VWlBR5kBHEb34uuI
-         XaVN0SSj4F1aDon6F2zRgFEAPLrR/bg6+tVPdU2RgGvjxQiTy9AaFZz4KxbY2Qv7uVcV
-         +tYx7ocmSbD20dl4RK5R3ltpmk3ILUeCv9qDBoWYCNLNz6No4O14GXNWvivzSGGKyAlu
-         Aa8Q==
-X-Gm-Message-State: AOJu0Yx+RjYS8SYCb+hQTeXqL/vDHMzmFirdJaOpFwM/wr7+hSCBwAFy
-	ZKpdSA86V+g9bcWHz8JnC2KUlDwfTNo6+OqxwH1j16dFVjrwNnsewVRjtKFpxon+xXiKAatPZJe
-	IXj738vN/b8t+
-X-Gm-Gg: ASbGncsKFFqSKe0rnl+DVdA13zAILjfn+pQTWX44ePNid2r6/al+4s2fFpNsJMS5jXh
-	LQzAD8A46lM0Ys8K4DF3nQsdBs7vsh0rY9g3j/sry/5+4kzgudo4DS3ILZd12mkoALr1f5tdLa8
-	wwUeFrwD0dOKOnxo0djZMbZuquYcVuk57p6XB7O3eYIEzQ0iPQQufu2qNBkAI56t/t/f82qIklg
-	vMk7Zt7HHbKGXjiNe2ymj2TxJ5PtIoR+FBitUn19407xAf89amm68xY6no3OkBWAzWws+ccgY1Z
-	nIlAzAwwZ9SjxTnuwk2GeSHbSfmbLu2WacDKrr8QFQKQem1CAXJMu2jZ1TLfNawqpjUiAT7ooQN
-	QAumb3ZbnEDuF3TYO01swGYaglgyO3p0bs+S1UgzqY/sjjZQI6jRV9QpfJE4Uzf3TjxzlcoTT1l
-	aEx92Hw1974gO0rVOA/NO3erbHDOSxM/08lpOidyq+NfZI0PD4aHgGyuH++xz9DNViJl85sUk4g
-	/24nHgwon9FNd77RQ==
-X-Google-Smtp-Source: AGHT+IFIODttSW4KAu+pffMK6eC5ROJDloHoGwY9zyd9RTwsERiWbcFIZ4b66/ULgFiVQQcLj4Zk7w==
-X-Received: by 2002:a0d:d304:0:b0:780:c50d:c61 with SMTP id 00721157ae682-7826a01d617mr14380367b3.18.1760567355030;
-        Wed, 15 Oct 2025 15:29:15 -0700 (PDT)
+        bh=oiwylKNPFdgtdm2edLcfDFOPWhFZDJWf3w5UANh/d8Q=;
+        b=XnmfGyKyG/OUxlTpQaBQ77mAeK7LlYyHmNWzqfT7sJyFIH+pWyi/LvuWMPTwzRT0gc
+         TUClv6Di2Ee+uraG7iRrDFK8c8jYB6k3w/5U7ZpviOAgPypaFjfgAl+7+XinKFnynY4a
+         /wWQaBCsPhG3943fglIJ/cRb8cnmWpvxWwc9jSYXyZNzOq6/ztb4pd7jvNpuJAc7LrCH
+         ERp3sW7vMVFe5deXbVYjkzTD/HYbLSl1mZJ8wMZoY2W3p+7Sc9KsJvks07v0G0Rn0cJt
+         Nh1EXNn1SEt6n4SARR8W6G+N3nwSqnpgLM9IuV+Zy5paBek+fdZPMTZVVbEF8ZSdj+Y9
+         33rw==
+X-Gm-Message-State: AOJu0YwaGRN2CA67+GjLSeqm/2+KTNxZBcRbFqdMAJzf0s1gYkM8Ij63
+	wsQRjmDYne+6hT4LGSyRgyrTsgtSUFRR0LEjk6sngkQoQjAnFfGylqr+6tZzA6RSsrEFlTTeO2I
+	e2O0dkHDEapy2
+X-Gm-Gg: ASbGncvSU4mc1JiWZZ8MK8oqy1zHTqQl4PB1iEtfx+jZ/L6hS4rWoz6VZQSlxuhXrES
+	Pv3azGzNuIDak8hO1PkMiaFeInh5rEonrcLHcx2GeUfEviybWhXHJnUWVaWiCMYguQ4wOtfJSfn
+	01idwut5PdREBOQde9NEqjuPQ/SWmxORmgQb9rVpgcbgCv3nPNSjUh6bWjXbdJHO7TTo4CFccxX
+	xVAVW7dbAWEJlHWUttejjcgrIlqKDM0QQqGYWMDCClw2FZLAvC/Eh2SsTLw5Q+Td4VDGyLQBOvP
+	dn9wTvWIOTBhddHYcJSUnDaFKORoEveyqU7nE6zOaNwDxxd2GT0QP1Rx1TiGOUJZA/PmqdWqcAA
+	07KD7iVm/Vb0tu9/yEBRd0yiXzHaPc/29qLyb4jtXpAFFF1UOLD50HqA0JM9hpf61uYeydS8169
+	PgGNvuWQyI1JF4C71V/MU+T1axf/gxVN6//wiGWb227Ni738HQhqcmc8AcNXalgWfy4f8K+OWTy
+	H4zi7Y=
+X-Google-Smtp-Source: AGHT+IEDPDMJC1cuXHfWkt5amN87qu/xa5IdHQXVu2J3CaUIwoeaRb0vEglkm9c+hSJwpwIWzYKPtw==
+X-Received: by 2002:a05:690c:c96:b0:781:4717:bf66 with SMTP id 00721157ae682-7814717ea84mr90878287b3.24.1760567357771;
+        Wed, 15 Oct 2025 15:29:17 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-63cf52f27b9sm4261662d50.0.2025.10.15.15.29.14
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-782935fdacasm2577107b3.57.2025.10.15.15.29.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 15:29:14 -0700 (PDT)
-Date: Wed, 15 Oct 2025 18:29:13 -0400
+        Wed, 15 Oct 2025 15:29:17 -0700 (PDT)
+Date: Wed, 15 Oct 2025 18:29:16 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 39/49] repack: 'write_midx_included_packs' API from the
- builtin
-Message-ID: <794122266d64ec8fbd21532b0ab080cdf8fc6fa7.1760567210.git.me@ttaylorr.com>
+Subject: [PATCH v2 40/49] builtin/repack.c: introduce `struct write_pack_opts`
+Message-ID: <0cb6e78856c8e365668e21f7cd8ad6de5f5b3922.1760567210.git.me@ttaylorr.com>
 References: <cover.1759097191.git.me@ttaylorr.com>
  <cover.1760567210.git.me@ttaylorr.com>
 Precedence: bulk
@@ -80,670 +79,124 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1760567210.git.me@ttaylorr.com>
 
-Now that we have sufficiently cleaned up the write_midx_included_packs()
-function, we can move it (along with the struct repack_write_midx_opts)
-out of the builtin, and into the repack.h header.
+There are various functions within the 'repack' builtin which are
+responsible for writing different kinds of packs. They include:
 
-Since this function (and the static ones that it depends on) are
-MIDX-specific details of the repacking process, move them to the
-repack-midx.c compilation unit instead of the general repack.c one.
+ - `static int write_filtered_pack(...)`
+ - `static int write_cruft_pack(...)`
+
+as well as the function `finish_pack_objects_cmd()`, which is
+responsible for finalizing a new pack write, and recording the checksum
+of its contents in the 'names' list.
+
+Both of these `write_` functions have a few things in common. They both
+take a pointer to the 'pack_objects_args' struct, as well as a pair of
+character pointers for `destination` and `pack_prefix`.
+
+Instead of repeating those arguments for each function, let's extract an
+options struct called "write_pack_opts" which has these three parameters
+as member fields. While we're at it, add fields for "packdir," and
+"packtmp", both of which are static variables within the builtin, and
+need to be read from within these two functions.
+
+This will shorten the list of parameters that callers have to provide to
+`write_filtered_pack()`, avoid ambiguity when passing multiple variables
+of the same type, and provide a unified interface for the two functions
+mentioned earlier.
+
+(Note that "pack_prefix" can be derived on the fly as a function of
+"packdir" and "packtmp", making it unnecessary to store "pack_prefix"
+explicitly. This commit ignores that potential cleanup in the name of
+doing as few things as possible, but a later commit will make that
+change.)
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c | 305 -----------------------------------------------
- repack-midx.c    | 295 +++++++++++++++++++++++++++++++++++++++++++++
- repack.h         |  12 ++
- 3 files changed, 307 insertions(+), 305 deletions(-)
+ builtin/repack.c | 28 +++++++++++++++-------------
+ repack.h         |  8 ++++++++
+ 2 files changed, 23 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/repack.c b/builtin/repack.c
-index fad10be42a..2f49a18283 100644
+index 2f49a18283..45ce469898 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -107,311 +107,6 @@ static int repack_config(const char *var, const char *value,
- 	return git_default_config(var, value, ctx, cb);
+@@ -138,9 +138,7 @@ static int finish_pack_objects_cmd(const struct git_hash_algo *algop,
+ 	return finish_command(cmd);
  }
  
--struct repack_write_midx_opts {
--	struct existing_packs *existing;
--	struct pack_geometry *geometry;
--	struct string_list *names;
--	const char *refs_snapshot;
--	const char *packdir;
--	int show_progress;
--	int write_bitmaps;
--	int midx_must_contain_cruft;
--};
--
--static int midx_has_unknown_packs(struct string_list *include,
--				  struct pack_geometry *geometry,
--				  struct existing_packs *existing)
--{
--	struct string_list_item *item;
--
--	string_list_sort(include);
--
--	for_each_string_list_item(item, &existing->midx_packs) {
--		const char *pack_name = item->string;
--
--		/*
--		 * Determine whether or not each MIDX'd pack from the existing
--		 * MIDX (if any) is represented in the new MIDX. For each pack
--		 * in the MIDX, it must either be:
--		 *
--		 *  - In the "include" list of packs to be included in the new
--		 *    MIDX. Note this function is called before the include
--		 *    list is populated with any cruft pack(s).
--		 *
--		 *  - Below the geometric split line (if using pack geometry),
--		 *    indicating that the pack won't be included in the new
--		 *    MIDX, but its contents were rolled up as part of the
--		 *    geometric repack.
--		 *
--		 *  - In the existing non-kept packs list (if not using pack
--		 *    geometry), and marked as non-deleted.
--		 */
--		if (string_list_has_string(include, pack_name)) {
--			continue;
--		} else if (geometry) {
--			struct strbuf buf = STRBUF_INIT;
--			uint32_t j;
--
--			for (j = 0; j < geometry->split; j++) {
--				strbuf_reset(&buf);
--				strbuf_addstr(&buf, pack_basename(geometry->pack[j]));
--				strbuf_strip_suffix(&buf, ".pack");
--				strbuf_addstr(&buf, ".idx");
--
--				if (!strcmp(pack_name, buf.buf)) {
--					strbuf_release(&buf);
--					break;
--				}
--			}
--
--			strbuf_release(&buf);
--
--			if (j < geometry->split)
--				continue;
--		} else {
--			struct string_list_item *item;
--
--			item = string_list_lookup(&existing->non_kept_packs,
--						  pack_name);
--			if (item && !existing_pack_is_marked_for_deletion(item))
--				continue;
--		}
--
--		/*
--		 * If we got to this point, the MIDX includes some pack that we
--		 * don't know about.
--		 */
--		return 1;
--	}
--
--	return 0;
--}
--
--static void midx_included_packs(struct string_list *include,
--				struct repack_write_midx_opts *opts)
--{
--	struct existing_packs *existing = opts->existing;
--	struct pack_geometry *geometry = opts->geometry;
--	struct string_list *names = opts->names;
--	struct string_list_item *item;
--	struct strbuf buf = STRBUF_INIT;
--
--	for_each_string_list_item(item, &existing->kept_packs) {
--		strbuf_reset(&buf);
--		strbuf_addf(&buf, "%s.idx", item->string);
--		string_list_insert(include, buf.buf);
--	}
--
--	for_each_string_list_item(item, names) {
--		strbuf_reset(&buf);
--		strbuf_addf(&buf, "pack-%s.idx", item->string);
--		string_list_insert(include, buf.buf);
--	}
--
--	if (geometry->split_factor) {
--		uint32_t i;
--
--		for (i = geometry->split; i < geometry->pack_nr; i++) {
--			struct packed_git *p = geometry->pack[i];
--
--			/*
--			 * The multi-pack index never refers to packfiles part
--			 * of an alternate object database, so we skip these.
--			 * While git-multi-pack-index(1) would silently ignore
--			 * them anyway, this allows us to skip executing the
--			 * command completely when we have only non-local
--			 * packfiles.
--			 */
--			if (!p->pack_local)
--				continue;
--
--			strbuf_reset(&buf);
--			strbuf_addstr(&buf, pack_basename(p));
--			strbuf_strip_suffix(&buf, ".pack");
--			strbuf_addstr(&buf, ".idx");
--
--			string_list_insert(include, buf.buf);
--		}
--	} else {
--		for_each_string_list_item(item, &existing->non_kept_packs) {
--			if (existing_pack_is_marked_for_deletion(item))
--				continue;
--
--			strbuf_reset(&buf);
--			strbuf_addf(&buf, "%s.idx", item->string);
--			string_list_insert(include, buf.buf);
--		}
--	}
--
--	if (opts->midx_must_contain_cruft ||
--	    midx_has_unknown_packs(include, geometry, existing)) {
--		/*
--		 * If there are one or more unknown pack(s) present (see
--		 * midx_has_unknown_packs() for what makes a pack
--		 * "unknown") in the MIDX before the repack, keep them
--		 * as they may be required to form a reachability
--		 * closure if the MIDX is bitmapped.
--		 *
--		 * For example, a cruft pack can be required to form a
--		 * reachability closure if the MIDX is bitmapped and one
--		 * or more of the bitmap's selected commits reaches a
--		 * once-cruft object that was later made reachable.
--		 */
--		for_each_string_list_item(item, &existing->cruft_packs) {
--			/*
--			 * When doing a --geometric repack, there is no
--			 * need to check for deleted packs, since we're
--			 * by definition not doing an ALL_INTO_ONE
--			 * repack (hence no packs will be deleted).
--			 * Otherwise we must check for and exclude any
--			 * packs which are enqueued for deletion.
--			 *
--			 * So we could omit the conditional below in the
--			 * --geometric case, but doing so is unnecessary
--			 *  since no packs are marked as pending
--			 *  deletion (since we only call
--			 *  `existing_packs_mark_for_deletion()` when
--			 *  doing an all-into-one repack).
--			 */
--			if (existing_pack_is_marked_for_deletion(item))
--				continue;
--
--			strbuf_reset(&buf);
--			strbuf_addf(&buf, "%s.idx", item->string);
--			string_list_insert(include, buf.buf);
--		}
--	} else {
--		/*
--		 * Modern versions of Git (with the appropriate
--		 * configuration setting) will write new copies of
--		 * once-cruft objects when doing a --geometric repack.
--		 *
--		 * If the MIDX has no cruft pack, new packs written
--		 * during a --geometric repack will not rely on the
--		 * cruft pack to form a reachability closure, so we can
--		 * avoid including them in the MIDX in that case.
--		 */
--		;
--	}
--
--	strbuf_release(&buf);
--}
--
--static void remove_redundant_bitmaps(struct string_list *include,
--				     const char *packdir)
--{
--	struct strbuf path = STRBUF_INIT;
--	struct string_list_item *item;
--	size_t packdir_len;
--
--	strbuf_addstr(&path, packdir);
--	strbuf_addch(&path, '/');
--	packdir_len = path.len;
--
--	/*
--	 * Remove any pack bitmaps corresponding to packs which are now
--	 * included in the MIDX.
--	 */
--	for_each_string_list_item(item, include) {
--		strbuf_addstr(&path, item->string);
--		strbuf_strip_suffix(&path, ".idx");
--		strbuf_addstr(&path, ".bitmap");
--
--		if (unlink(path.buf) && errno != ENOENT)
--			warning_errno(_("could not remove stale bitmap: %s"),
--				      path.buf);
--
--		strbuf_setlen(&path, packdir_len);
--	}
--	strbuf_release(&path);
--}
--
--static int write_midx_included_packs(struct repack_write_midx_opts *opts)
--{
--	struct child_process cmd = CHILD_PROCESS_INIT;
--	struct string_list include = STRING_LIST_INIT_DUP;
--	struct string_list_item *item;
--	struct packed_git *preferred = pack_geometry_preferred_pack(opts->geometry);
--	FILE *in;
--	int ret = 0;
--
--	midx_included_packs(&include, opts);
--	if (!include.nr)
--		goto done;
--
--	cmd.in = -1;
--	cmd.git_cmd = 1;
--
--	strvec_push(&cmd.args, "multi-pack-index");
--	strvec_pushl(&cmd.args, "write", "--stdin-packs", NULL);
--
--	if (opts->show_progress)
--		strvec_push(&cmd.args, "--progress");
--	else
--		strvec_push(&cmd.args, "--no-progress");
--
--	if (opts->write_bitmaps)
--		strvec_push(&cmd.args, "--bitmap");
--
--	if (preferred)
--		strvec_pushf(&cmd.args, "--preferred-pack=%s",
--			     pack_basename(preferred));
--	else if (opts->names->nr) {
--		/* The largest pack was repacked, meaning that either
--		 * one or two packs exist depending on whether the
--		 * repository has a cruft pack or not.
--		 *
--		 * Select the non-cruft one as preferred to encourage
--		 * pack-reuse among packs containing reachable objects
--		 * over unreachable ones.
--		 *
--		 * (Note we could write multiple packs here if
--		 * `--max-pack-size` was given, but any one of them
--		 * will suffice, so pick the first one.)
--		 */
--		for_each_string_list_item(item, opts->names) {
--			struct generated_pack *pack = item->util;
--			if (generated_pack_has_ext(pack, ".mtimes"))
--				continue;
--
--			strvec_pushf(&cmd.args, "--preferred-pack=pack-%s.pack",
--				     item->string);
--			break;
--		}
--	} else {
--		/*
--		 * No packs were kept, and no packs were written. The
--		 * only thing remaining are .keep packs (unless
--		 * --pack-kept-objects was given).
--		 *
--		 * Set the `--preferred-pack` arbitrarily here.
--		 */
--		;
--	}
--
--	if (opts->refs_snapshot)
--		strvec_pushf(&cmd.args, "--refs-snapshot=%s",
--			     opts->refs_snapshot);
--
--	ret = start_command(&cmd);
--	if (ret)
--		goto done;
--
--	in = xfdopen(cmd.in, "w");
--	for_each_string_list_item(item, &include)
--		fprintf(in, "%s\n", item->string);
--	fclose(in);
--
--	ret = finish_command(&cmd);
--done:
--	if (!ret && opts->write_bitmaps)
--		remove_redundant_bitmaps(&include, opts->packdir);
--
--	string_list_clear(&include, 0);
--
--	return ret;
--}
--
- static int finish_pack_objects_cmd(const struct git_hash_algo *algop,
- 				   struct child_process *cmd,
- 				   struct string_list *names,
-diff --git a/repack-midx.c b/repack-midx.c
-index 354df729a5..6f6202c5bc 100644
---- a/repack-midx.c
-+++ b/repack-midx.c
-@@ -6,6 +6,7 @@
- #include "oidset.h"
- #include "pack-bitmap.h"
- #include "refs.h"
-+#include "run-command.h"
- #include "tempfile.h"
+-static int write_filtered_pack(const struct pack_objects_args *args,
+-			       const char *destination,
+-			       const char *pack_prefix,
++static int write_filtered_pack(const struct write_pack_opts *opts,
+ 			       struct existing_packs *existing,
+ 			       struct string_list *names)
+ {
+@@ -150,9 +148,9 @@ static int write_filtered_pack(const struct pack_objects_args *args,
+ 	int ret;
+ 	const char *caret;
+ 	const char *scratch;
+-	int local = skip_prefix(destination, packdir, &scratch);
++	int local = skip_prefix(opts->destination, opts->packdir, &scratch);
  
- struct midx_snapshot_ref_data {
-@@ -75,3 +76,297 @@ void midx_snapshot_refs(struct repository *repo, struct tempfile *f)
+-	prepare_pack_objects(&cmd, args, destination);
++	prepare_pack_objects(&cmd, opts->po_args, opts->destination);
  
- 	oidset_clear(&data.seen);
- }
+ 	strvec_push(&cmd.args, "--stdin-packs");
+ 
+@@ -175,7 +173,7 @@ static int write_filtered_pack(const struct pack_objects_args *args,
+ 	 */
+ 	in = xfdopen(cmd.in, "w");
+ 	for_each_string_list_item(item, names)
+-		fprintf(in, "^%s-%s.pack\n", pack_prefix, item->string);
++		fprintf(in, "^%s-%s.pack\n", opts->pack_prefix, item->string);
+ 	for_each_string_list_item(item, &existing->non_kept_packs)
+ 		fprintf(in, "%s.pack\n", item->string);
+ 	for_each_string_list_item(item, &existing->cruft_packs)
+@@ -665,14 +663,18 @@ int cmd_repack(int argc,
+ 	}
+ 
+ 	if (po_args.filter_options.choice) {
+-		if (!filter_to)
+-			filter_to = packtmp;
++		struct write_pack_opts opts = {
++			.po_args = &po_args,
++			.destination = filter_to,
++			.pack_prefix = find_pack_prefix(packdir, packtmp),
++			.packdir = packdir,
++			.packtmp = packtmp,
++		};
+ 
+-		ret = write_filtered_pack(&po_args,
+-					  filter_to,
+-					  find_pack_prefix(packdir, packtmp),
+-					  &existing,
+-					  &names);
++		if (!opts.destination)
++			opts.destination = packtmp;
 +
-+static int midx_has_unknown_packs(struct string_list *include,
-+				  struct pack_geometry *geometry,
-+				  struct existing_packs *existing)
-+{
-+	struct string_list_item *item;
-+
-+	string_list_sort(include);
-+
-+	for_each_string_list_item(item, &existing->midx_packs) {
-+		const char *pack_name = item->string;
-+
-+		/*
-+		 * Determine whether or not each MIDX'd pack from the existing
-+		 * MIDX (if any) is represented in the new MIDX. For each pack
-+		 * in the MIDX, it must either be:
-+		 *
-+		 *  - In the "include" list of packs to be included in the new
-+		 *    MIDX. Note this function is called before the include
-+		 *    list is populated with any cruft pack(s).
-+		 *
-+		 *  - Below the geometric split line (if using pack geometry),
-+		 *    indicating that the pack won't be included in the new
-+		 *    MIDX, but its contents were rolled up as part of the
-+		 *    geometric repack.
-+		 *
-+		 *  - In the existing non-kept packs list (if not using pack
-+		 *    geometry), and marked as non-deleted.
-+		 */
-+		if (string_list_has_string(include, pack_name)) {
-+			continue;
-+		} else if (geometry) {
-+			struct strbuf buf = STRBUF_INIT;
-+			uint32_t j;
-+
-+			for (j = 0; j < geometry->split; j++) {
-+				strbuf_reset(&buf);
-+				strbuf_addstr(&buf, pack_basename(geometry->pack[j]));
-+				strbuf_strip_suffix(&buf, ".pack");
-+				strbuf_addstr(&buf, ".idx");
-+
-+				if (!strcmp(pack_name, buf.buf)) {
-+					strbuf_release(&buf);
-+					break;
-+				}
-+			}
-+
-+			strbuf_release(&buf);
-+
-+			if (j < geometry->split)
-+				continue;
-+		} else {
-+			struct string_list_item *item;
-+
-+			item = string_list_lookup(&existing->non_kept_packs,
-+						  pack_name);
-+			if (item && !existing_pack_is_marked_for_deletion(item))
-+				continue;
-+		}
-+
-+		/*
-+		 * If we got to this point, the MIDX includes some pack that we
-+		 * don't know about.
-+		 */
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
-+static void midx_included_packs(struct string_list *include,
-+				struct repack_write_midx_opts *opts)
-+{
-+	struct existing_packs *existing = opts->existing;
-+	struct pack_geometry *geometry = opts->geometry;
-+	struct string_list *names = opts->names;
-+	struct string_list_item *item;
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	for_each_string_list_item(item, &existing->kept_packs) {
-+		strbuf_reset(&buf);
-+		strbuf_addf(&buf, "%s.idx", item->string);
-+		string_list_insert(include, buf.buf);
-+	}
-+
-+	for_each_string_list_item(item, names) {
-+		strbuf_reset(&buf);
-+		strbuf_addf(&buf, "pack-%s.idx", item->string);
-+		string_list_insert(include, buf.buf);
-+	}
-+
-+	if (geometry->split_factor) {
-+		uint32_t i;
-+
-+		for (i = geometry->split; i < geometry->pack_nr; i++) {
-+			struct packed_git *p = geometry->pack[i];
-+
-+			/*
-+			 * The multi-pack index never refers to packfiles part
-+			 * of an alternate object database, so we skip these.
-+			 * While git-multi-pack-index(1) would silently ignore
-+			 * them anyway, this allows us to skip executing the
-+			 * command completely when we have only non-local
-+			 * packfiles.
-+			 */
-+			if (!p->pack_local)
-+				continue;
-+
-+			strbuf_reset(&buf);
-+			strbuf_addstr(&buf, pack_basename(p));
-+			strbuf_strip_suffix(&buf, ".pack");
-+			strbuf_addstr(&buf, ".idx");
-+
-+			string_list_insert(include, buf.buf);
-+		}
-+	} else {
-+		for_each_string_list_item(item, &existing->non_kept_packs) {
-+			if (existing_pack_is_marked_for_deletion(item))
-+				continue;
-+
-+			strbuf_reset(&buf);
-+			strbuf_addf(&buf, "%s.idx", item->string);
-+			string_list_insert(include, buf.buf);
-+		}
-+	}
-+
-+	if (opts->midx_must_contain_cruft ||
-+	    midx_has_unknown_packs(include, geometry, existing)) {
-+		/*
-+		 * If there are one or more unknown pack(s) present (see
-+		 * midx_has_unknown_packs() for what makes a pack
-+		 * "unknown") in the MIDX before the repack, keep them
-+		 * as they may be required to form a reachability
-+		 * closure if the MIDX is bitmapped.
-+		 *
-+		 * For example, a cruft pack can be required to form a
-+		 * reachability closure if the MIDX is bitmapped and one
-+		 * or more of the bitmap's selected commits reaches a
-+		 * once-cruft object that was later made reachable.
-+		 */
-+		for_each_string_list_item(item, &existing->cruft_packs) {
-+			/*
-+			 * When doing a --geometric repack, there is no
-+			 * need to check for deleted packs, since we're
-+			 * by definition not doing an ALL_INTO_ONE
-+			 * repack (hence no packs will be deleted).
-+			 * Otherwise we must check for and exclude any
-+			 * packs which are enqueued for deletion.
-+			 *
-+			 * So we could omit the conditional below in the
-+			 * --geometric case, but doing so is unnecessary
-+			 *  since no packs are marked as pending
-+			 *  deletion (since we only call
-+			 *  `existing_packs_mark_for_deletion()` when
-+			 *  doing an all-into-one repack).
-+			 */
-+			if (existing_pack_is_marked_for_deletion(item))
-+				continue;
-+
-+			strbuf_reset(&buf);
-+			strbuf_addf(&buf, "%s.idx", item->string);
-+			string_list_insert(include, buf.buf);
-+		}
-+	} else {
-+		/*
-+		 * Modern versions of Git (with the appropriate
-+		 * configuration setting) will write new copies of
-+		 * once-cruft objects when doing a --geometric repack.
-+		 *
-+		 * If the MIDX has no cruft pack, new packs written
-+		 * during a --geometric repack will not rely on the
-+		 * cruft pack to form a reachability closure, so we can
-+		 * avoid including them in the MIDX in that case.
-+		 */
-+		;
-+	}
-+
-+	strbuf_release(&buf);
-+}
-+
-+static void remove_redundant_bitmaps(struct string_list *include,
-+				     const char *packdir)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+	struct string_list_item *item;
-+	size_t packdir_len;
-+
-+	strbuf_addstr(&path, packdir);
-+	strbuf_addch(&path, '/');
-+	packdir_len = path.len;
-+
-+	/*
-+	 * Remove any pack bitmaps corresponding to packs which are now
-+	 * included in the MIDX.
-+	 */
-+	for_each_string_list_item(item, include) {
-+		strbuf_addstr(&path, item->string);
-+		strbuf_strip_suffix(&path, ".idx");
-+		strbuf_addstr(&path, ".bitmap");
-+
-+		if (unlink(path.buf) && errno != ENOENT)
-+			warning_errno(_("could not remove stale bitmap: %s"),
-+				      path.buf);
-+
-+		strbuf_setlen(&path, packdir_len);
-+	}
-+	strbuf_release(&path);
-+}
-+
-+int write_midx_included_packs(struct repack_write_midx_opts *opts)
-+{
-+	struct child_process cmd = CHILD_PROCESS_INIT;
-+	struct string_list include = STRING_LIST_INIT_DUP;
-+	struct string_list_item *item;
-+	struct packed_git *preferred = pack_geometry_preferred_pack(opts->geometry);
-+	FILE *in;
-+	int ret = 0;
-+
-+	midx_included_packs(&include, opts);
-+	if (!include.nr)
-+		goto done;
-+
-+	cmd.in = -1;
-+	cmd.git_cmd = 1;
-+
-+	strvec_push(&cmd.args, "multi-pack-index");
-+	strvec_pushl(&cmd.args, "write", "--stdin-packs", NULL);
-+
-+	if (opts->show_progress)
-+		strvec_push(&cmd.args, "--progress");
-+	else
-+		strvec_push(&cmd.args, "--no-progress");
-+
-+	if (opts->write_bitmaps)
-+		strvec_push(&cmd.args, "--bitmap");
-+
-+	if (preferred)
-+		strvec_pushf(&cmd.args, "--preferred-pack=%s",
-+			     pack_basename(preferred));
-+	else if (opts->names->nr) {
-+		/* The largest pack was repacked, meaning that either
-+		 * one or two packs exist depending on whether the
-+		 * repository has a cruft pack or not.
-+		 *
-+		 * Select the non-cruft one as preferred to encourage
-+		 * pack-reuse among packs containing reachable objects
-+		 * over unreachable ones.
-+		 *
-+		 * (Note we could write multiple packs here if
-+		 * `--max-pack-size` was given, but any one of them
-+		 * will suffice, so pick the first one.)
-+		 */
-+		for_each_string_list_item(item, opts->names) {
-+			struct generated_pack *pack = item->util;
-+			if (generated_pack_has_ext(pack, ".mtimes"))
-+				continue;
-+
-+			strvec_pushf(&cmd.args, "--preferred-pack=pack-%s.pack",
-+				     item->string);
-+			break;
-+		}
-+	} else {
-+		/*
-+		 * No packs were kept, and no packs were written. The
-+		 * only thing remaining are .keep packs (unless
-+		 * --pack-kept-objects was given).
-+		 *
-+		 * Set the `--preferred-pack` arbitrarily here.
-+		 */
-+		;
-+	}
-+
-+	if (opts->refs_snapshot)
-+		strvec_pushf(&cmd.args, "--refs-snapshot=%s",
-+			     opts->refs_snapshot);
-+
-+	ret = start_command(&cmd);
-+	if (ret)
-+		goto done;
-+
-+	in = xfdopen(cmd.in, "w");
-+	for_each_string_list_item(item, &include)
-+		fprintf(in, "%s\n", item->string);
-+	fclose(in);
-+
-+	ret = finish_command(&cmd);
-+done:
-+	if (!ret && opts->write_bitmaps)
-+		remove_redundant_bitmaps(&include, opts->packdir);
-+
-+	string_list_clear(&include, 0);
-+
-+	return ret;
-+}
++		ret = write_filtered_pack(&opts, &existing, &names);
+ 		if (ret)
+ 			goto cleanup;
+ 	}
 diff --git a/repack.h b/repack.h
-index 6aa5b4e0f0..25a31ac0a0 100644
+index 25a31ac0a0..6ef503f623 100644
 --- a/repack.h
 +++ b/repack.h
-@@ -101,6 +101,18 @@ void pack_geometry_release(struct pack_geometry *geometry);
+@@ -32,6 +32,14 @@ void pack_objects_args_release(struct pack_objects_args *args);
+ void repack_remove_redundant_pack(struct repository *repo, const char *dir_name,
+ 				  const char *base_name);
  
- struct tempfile;
- 
-+struct repack_write_midx_opts {
-+	struct existing_packs *existing;
-+	struct pack_geometry *geometry;
-+	struct string_list *names;
-+	const char *refs_snapshot;
++struct write_pack_opts {
++	struct pack_objects_args *po_args;
++	const char *destination;
++	const char *pack_prefix;
 +	const char *packdir;
-+	int show_progress;
-+	int write_bitmaps;
-+	int midx_must_contain_cruft;
++	const char *packtmp;
 +};
 +
- void midx_snapshot_refs(struct repository *repo, struct tempfile *f);
-+int write_midx_included_packs(struct repack_write_midx_opts *opts);
+ struct repository;
+ struct packed_git;
  
- #endif /* REPACK_H */
 -- 
 2.51.0.540.ga7423965ad8
 
