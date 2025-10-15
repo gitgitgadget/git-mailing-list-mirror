@@ -1,197 +1,144 @@
-Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D2D2C15A0
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:18:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5192B2C15A0
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:19:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760566735; cv=none; b=PH4e/s7H+TX4zy23n7L3S1aKjbPFWYGplrxn95+JjCw+vEGDkvWLXIOOP+7LCQYF2vbzlZK+MGOusibFL3g1tY2u+fESdl9FgqYrbN9su4gXXhu/BYWAhtsMYahXd3r6zvlNkEqfcxIfj4yGjAsE8dr1TofaP48MAJ7rQi0dCNM=
+	t=1760566791; cv=none; b=NxsSNfbmV3ljStdpIb9H02rbrDTL95VGY3KRjx+h16rTSiU1nDtuVMb6Kloq+W9Ny0BK4FyQocFUWuNsqUNorHqlrJESbkCAaYVUQZVHujiDHs6oT+jHX36+U+xMbstYvjdS/bLmPdGqHUU9WbM25OSHfSkobRi39wHxFXfc+S4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760566735; c=relaxed/simple;
-	bh=xQzJJj0C1B+Hc97QwYfTPOCRSuqglSXsBXHPTCp+inc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Vfdy9Nix3n9vtNJ97OQkWQROAaybSnvdWuNbhw/9eXiz97z8sxoYCJVxhpaDc7dpQRblosDa6Tz8oRPUXjzszB0oNkKGTf584xpeRU27WVefthgkuMzYZyy4kGZJjgrnnk+hgoh34BlNNYT6GvWhqmyDf46eO+W5WUHJRgzF2co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kbkitRGF; arc=none smtp.client-ip=209.85.161.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760566791; c=relaxed/simple;
+	bh=dAnkcy/7RLFKeQucj2e6fp+ISpznukJYmEF/iCrLRE0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=efvw37foGQDWqnuGQMDu/tWBn/bJ0SmF0bSfTaMcrUxw16zSeIFpo8P2LqggGH2/VNM/+RC4lS6ICTiXBQpHv0dih1+gPTtxSSqeEBrB13iOOhnoL6cpGMAoyKPp0gQ4wgna+Hz3f6KnN8sfXhiWsxGlvjk0U/tFDOs8etEJFcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=P+NEnr7j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Alf/p3OR; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kbkitRGF"
-Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-65036e4b307so12742eaf.1
-        for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:18:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760566732; x=1761171532; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ouRw6mp3mA8diBWQmXm8i7pbrsynYRuzYXKaZjHSl04=;
-        b=kbkitRGFWa98/XcsYmF7bB8ObTyVZGEqlMQu/soFK56UxoDCi9oXl2GbKxmF2qZBuA
-         M4qgqeMAWlkHilW6bmYJEH/FlNmBgBz4LmHAfIS7tRtu82SxSRx3zmdXlavGdUqu6LmZ
-         DTv3dUWYgbMaP4gSNpCr2TO/nUp2JcQ0faFWOHLuQ+4D7PHdrWt8uYlxOrWzjmo+H7fi
-         IpuzRfMSYnB2UqSUFuENdLjgmuvIwm0WNDcY3MUzphqiH2Bibp2e3cEAMLmw+/7M+iPw
-         7HyB7q3n/vYLckIEAH9UqwGLND8ES0O7lck7dDMonPPeMWAMt/mOho3mR8ZDXFjzEiqc
-         ffYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760566732; x=1761171532;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ouRw6mp3mA8diBWQmXm8i7pbrsynYRuzYXKaZjHSl04=;
-        b=BifdEWyjsXItNkHW6hQ9p1kRvFcw0F9I+FlN1GSY/YBxCSB6ak3g/7AVKzTLEDCo+l
-         U1AOYfIPREceJ5iuKbD9J+wiC3AREHqGqm/GXh+3Nz48ygLkHKVikdyVGZ7jSP6UsC7o
-         cyRC6h4PLvHKPZ76sRLSJeF+gUA6Y3LAqGANBm5Bnxws4xbt9oB5CIpajLzsRpB3bWii
-         Pn1Z3aqahg2t1xbDNbyM6vRZ3LYuh8xuMgAuFHFVy6TOSmpca0mh2cuj0lTJjiUxgYUq
-         maXWP8ZyssvK/q1FZ3Jm0UyXHmKPZ0upAvVwnBMDbRU5mTbk8mRixGJnO7/zb53HFZE9
-         Up7Q==
-X-Gm-Message-State: AOJu0Ywu+lTnughUYCImaEmbd7rMvFuKmsbaNI//THru1YrXmwb3Feiu
-	k10KAlMmZDE6GQZtM9TuVhxgDZC2ylu/T7LtzTThdts77seHeUpD7kvt
-X-Gm-Gg: ASbGncufKvPpFogpVByn7S6qZ5qsoZsKoWzErlvA2yQbilp55cd8w8N20XwVoHqtPh+
-	kHXlmiy/WMeTM781ze9KzYZIoAmvmMB8i7irKpe+XIT8IuqClOQSyYjQGZtkt9COR59NIWWrXuZ
-	p6jMH3Rzw1OkyrdnFnf1HWN51tPhY7ZEe3d2gMId6zrOSnMMK1NRZ075vFS7yPOWZg6DXUgk18P
-	KeDcLtIdhuGK6qeRrFUWFDGRAwO9YD5COpuq6Q+MUnfrlek/ZQT6xuJaOg7OYdP+aPG7zbfFwWY
-	wdJfi16+smvgCoaPKDkkPHwkYdoYFCmGRdwIYOokey2JFfI/R2W4zRqiT5gSWe/gRHp2ie4PPKx
-	FogHqLPkug9BAQigzSandiqB7Vr/eSMELcBmA3O5yJbdCk74xGUsFF4jI3mqhlP5dFfaCIw==
-X-Google-Smtp-Source: AGHT+IGpWWDanWks7+v4DX+Ws1cRNOHg/ZJNXe8dzecB+sUP+tI4v22KbdG95C44OxsQ8jMW4Ww4AQ==
-X-Received: by 2002:a4a:a7cd:0:b0:650:104d:6742 with SMTP id 006d021491bc7-650104d6a6cmr7835860eaf.2.1760566731831;
-        Wed, 15 Oct 2025 15:18:51 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-6502d6237fcsm2742610eaf.6.2025.10.15.15.18.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 15:18:51 -0700 (PDT)
-Date: Wed, 15 Oct 2025 17:18:51 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH 3/4] refs: rename 'pack_refs_opts' to 'refs_optimize_opts'
-Message-ID: <j4kd7andvwa77uf7yaxvfkrb5bpxyda4awhnyce5fypr3qijsp@sw4bzfd43byg>
-References: <20251015-refs-code-cleanup-v1-0-550fdd8a3b41@gmail.com>
- <20251015-refs-code-cleanup-v1-3-550fdd8a3b41@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="P+NEnr7j";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Alf/p3OR"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7C560EC021C;
+	Wed, 15 Oct 2025 18:19:48 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 15 Oct 2025 18:19:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1760566788; x=1760653188; bh=bVQlcOiuUh
+	qE9tjOQ4mclUkqndsFK3KSzxVnleoLY60=; b=P+NEnr7jL0nt5+Fo/OrZmkLJZn
+	oD6Wf3vvV0Z54u2pTQOXmf2x7ObxXaDTu57UG3sqJZo9LQRq46gckTVI+/ydtutS
+	RXEc7mupAq0w9Av1jMCpzTB4nR9HWzAzP67/CONqlrxddSeqXROyMtoYbE7Bd7Cs
+	7BC6bm51QFuO7bNoSGaIbD/FRBn01NZ6bUHFuSbLttyKIM9rDtxb5GYwr5z4a4zW
+	vUbU/o3NAmH7YyHi1CWLFCHDEwDD+YctK6JG5MC6b1pv33asMx+R19raVcZUJCbu
+	y6EQdxEsbOR9P0gZC4E8QTByQVmqUqAI0CP7vRrQLpV+wgwt1IwCtVeA80NA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760566788; x=1760653188; bh=bVQlcOiuUhqE9tjOQ4mclUkqndsFK3KSzxV
+	nleoLY60=; b=Alf/p3ORVwDmghEyVwvaDyOw880S6VMNH2HjrxZn4tKUrMJ6/eI
+	ua/ij1/Gy6O93lmAgLX3f83vUPvT4sRWY09lXtLTht2nWDaaECd5MZZtCxDxLT/P
+	LtmLojqi/yFLqaRX3iOLo0o/GM4ATNFh7dw1Ntmc7xf1CeLB4+KaoOsShUdkVIRe
+	sr8A4AdRUk97+XRFujAThynu39caPMc4M7q75mpxPr/5sT/D2HKyNzlGmgX/Vkpu
+	/svLKL2/khBAsdTh1iC3/KAk764FEgU2Xekqe2LOEv7Pc4D9iNvJnbBEw64mQ2m2
+	INREDE6n/l8ubLOYPx3GRXSdPbkG5WulxGg==
+X-ME-Sender: <xms:BB7waIhAuNk1gf3a2UTejP7DrCUaSM8FnhlKuBcph4TYTs3H9P9N1w>
+    <xme:BB7waH6Q-sWrppKPs092Eyp89rsRAQiptX7FM2ZgBWOhWYg1CRRDc_zlmiZxM4gtq
+    854VRNSkAvuzniFKxeyHpdM6eyTSy2CPOntV4Oj3yGAKITNX8NA>
+X-ME-Received: <xmr:BB7waIZMu4Q8Klcv_mu1WjZ_-rmWLSIvkRleNaYljkEdheyfDYiXYmxbcNKHV4fEekDQB_ra5D_6qEP7BUwF-ZiLru4Y-B7aoF2y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdegheelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrrhhtihhnvhhonhiisehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepmhgrrhhtihhnvhhonhiisehgohhoghhlvgdrtghomhdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:BB7waE4jqQ9PWfSK9pXVzDnkMjGxkcqSBdSMOIXWhl11pu7AtG5FhQ>
+    <xmx:BB7waDDZuQXc0RZ622kpzpPf9ChMVl0IzEhyv2H9NnkN8G8hAdm_rg>
+    <xmx:BB7waCfzfkWGWJDTnX_WXS7MVwGRQVQut3eYp97RkwRxJVMSi0j-CA>
+    <xmx:BB7waKLZr_W5D9eqNebM0Ak50UMwfaVGI6bGWvgA1N8cKyl-16veEw>
+    <xmx:BB7waPJhBq2xoPLaa8ORYBkQPClVf5_BHpekxmo4DBZgDozmMolQRywT>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 15 Oct 2025 18:19:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Martin von Zweigbergk via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Martin von Zweigbergk <martinvonz@gmail.com>,
+  Martin von Zweigbergk <martinvonz@google.com>
+Subject: Re: [PATCH] BreakingChanges: say that `git diff X..Y` syntax will
+ be removed in 3.0
+In-Reply-To: <pull.1989.git.1760566054455.gitgitgadget@gmail.com> (Martin von
+	Zweigbergk via GitGitGadget's message of "Wed, 15 Oct 2025 22:07:34
+	+0000")
+References: <pull.1989.git.1760566054455.gitgitgadget@gmail.com>
+Date: Wed, 15 Oct 2025 15:19:46 -0700
+Message-ID: <xmqq4irzu7st.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251015-refs-code-cleanup-v1-3-550fdd8a3b41@gmail.com>
+Content-Type: text/plain
 
-On 25/10/15 11:25PM, Karthik Nayak wrote:
-> The previous commit removed all references to 'pack_refs()' within
-> the refs subsystem. Continue this cleanup by also renaming
-> 'pack_refs_opts' to 'refs_optimize_opts' and the respective flags
-> accordingly. Keeping the naming consistent will make the code easier to
-> maintain.
-> 
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+"Martin von Zweigbergk via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
+
+> From: Martin von Zweigbergk <martinvonz@google.com>
+>
+> The `git diff X..Y` syntax is quite misleading because it looks like
+> it shows the diff of the commits in the X..Y range but it actually
+> shows the diff from X to Y. IMO, if that syntax is supported, it
+> should show a diff from the merge base of X and Y to Y. I hope Git 3.0
+> is a good time to remove support for the current syntax and
+> semantics. Then we can perhaps add the syntax back later with less
+> surprising semantics.
+>
+> Signed-off-by: Martin von Zweigbergk <martinvonz@google.com>
 > ---
->  pack-refs.c             |  8 ++++----
->  refs.c                  |  2 +-
->  refs.h                  | 16 ++++++++--------
->  refs/debug.c            |  2 +-
->  refs/files-backend.c    | 10 +++++-----
->  refs/packed-backend.c   |  2 +-
->  refs/refs-internal.h    |  2 +-
->  refs/reftable-backend.c |  4 ++--
->  8 files changed, 23 insertions(+), 23 deletions(-)
-> 
-> diff --git a/pack-refs.c b/pack-refs.c
-> index 1a5e07d8b8..d0ffed93c1 100644
-> --- a/pack-refs.c
-> +++ b/pack-refs.c
-> @@ -14,10 +14,10 @@ int pack_refs_core(int argc,
->  {
->  	struct ref_exclusions excludes = REF_EXCLUSIONS_INIT;
->  	struct string_list included_refs = STRING_LIST_INIT_NODUP;
-> -	struct pack_refs_opts pack_refs_opts = {
-> +	struct refs_optimize_opts pack_refs_opts = {
+>     BreakingChanges: say that git diff X..Y syntax will be removed in 3.0
 
-We could rename the variable name here to, but probably not a big deal
-either way.
+I like it in prinicple and I do wish that we didn't do the lazy
+thing when we did the command line parser for "git diff" (we had
+revision range parser, so we just reused it instead of doing our own
+for "git diff").  But real life may bite us back.
 
->  		.exclusions = &excludes,
->  		.includes = &included_refs,
-> -		.flags = PACK_REFS_PRUNE,
-> +		.flags = REFS_OPTIMIZE_PRUNE,
->  	};
->  	struct string_list option_excluded_refs = STRING_LIST_INIT_NODUP;
->  	struct string_list_item *item;
-> @@ -26,8 +26,8 @@ int pack_refs_core(int argc,
->  
->  	struct option opts[] = {
->  		OPT_BOOL(0, "all",   &pack_all, N_("pack everything")),
-> -		OPT_BIT(0, "prune", &pack_refs_opts.flags, N_("prune loose refs (default)"), PACK_REFS_PRUNE),
-> -		OPT_BIT(0, "auto", &pack_refs_opts.flags, N_("auto-pack refs as needed"), PACK_REFS_AUTO),
-> +		OPT_BIT(0, "prune", &pack_refs_opts.flags, N_("prune loose refs (default)"), REFS_OPTIMIZE_PRUNE),
-> +		OPT_BIT(0, "auto", &pack_refs_opts.flags, N_("auto-pack refs as needed"), REFS_OPTIMIZE_AUTO),
->  		OPT_STRING_LIST(0, "include", pack_refs_opts.includes, N_("pattern"),
->  			N_("references to include")),
->  		OPT_STRING_LIST(0, "exclude", &option_excluded_refs, N_("pattern"),
-> diff --git a/refs.c b/refs.c
-> index b9a4a60646..0d0831f29b 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2313,7 +2313,7 @@ void base_ref_store_init(struct ref_store *refs, struct repository *repo,
->  	refs->gitdir = xstrdup(path);
->  }
->  
-> -int refs_optimize(struct ref_store *refs, struct pack_refs_opts *opts)
-> +int refs_optimize(struct ref_store *refs, struct refs_optimize_opts *opts)
->  {
->  	return refs->be->optimize(refs, opts);
->  }
-> diff --git a/refs.h b/refs.h
-> index 04e917fec0..d2630af97f 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -500,15 +500,15 @@ void refs_warn_dangling_symrefs(struct ref_store *refs, FILE *fp,
->  
->  /*
->   * Flags for controlling behaviour of refs_optimize()
-> - * PACK_REFS_PRUNE: Prune loose refs after packing
-> - * PACK_REFS_AUTO: Pack refs on a best effort basis. The heuristics and end
-> - *                 result are decided by the ref backend. Backends may ignore
-> - *                 this flag and fall back to a normal repack.
-> + * REFS_OPTIMIZE_PRUNE: Prune loose refs after packing
-> + * REFS_OPTIMIZE_AUTO: Pack refs on a best effort basis. The heuristics and end
-> + *                     result are decided by the ref backend. Backends may ignore
-> + *                     this flag and fall back to a normal repack.
->   */
-> -#define PACK_REFS_PRUNE (1 << 0)
-> -#define PACK_REFS_AUTO  (1 << 1)
-> +#define REFS_OPTIMIZE_PRUNE (1 << 0)
-> +#define REFS_OPTIMIZE_AUTO  (1 << 1)
->  
-> -struct pack_refs_opts {
-> +struct refs_optimize_opts {
->  	unsigned int flags;
->  	struct ref_exclusions *exclusions;
->  	struct string_list *includes;
-> @@ -518,7 +518,7 @@ struct pack_refs_opts {
->   * Optimize the ref store. The exact behavior is up to the backend.
->   * For the files backend, this is equivalent to packing refs.
->   */
-> -int refs_optimize(struct ref_store *refs, struct pack_refs_opts *opts);
-> +int refs_optimize(struct ref_store *refs, struct refs_optimize_opts *opts);
+In any case, a declaration that does not come with code changes that
+are protected by WITH_BREAKING_CHANGES CPP macro is a patch that is
+not quite ready to be applied.
 
-I noticed when poking around the code that the optimize callback was
-still using the `pack_refs_opts`. Nice to see this clean up. :)
 
->  /*
->   * Setup reflog before using. Fill in err and return -1 on failure.
-[snip]
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> index 20cf9fab18..0aa0ff6701 100644
-> --- a/refs/packed-backend.c
-> +++ b/refs/packed-backend.c
-> @@ -1774,7 +1774,7 @@ static int packed_transaction_finish(struct ref_store *ref_store,
->  }
->  
->  static int packed_optimize(struct ref_store *ref_store UNUSED,
-> -			   struct pack_refs_opts *pack_opts UNUSED)
-> +			   struct refs_optimize_opts *pack_opts UNUSED)
 
-Also not a big deal, but we could rename `pack_opts` here to just
-`opts`. It's not even used anyways.
-
-All the other trivial renames in this patch look good.
-
--Justin
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1989%2Fmartinvonz%2Fmz%2Fwtmnpolouvvz-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1989/martinvonz/mz/wtmnpolouvvz-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1989
+>
+>  Documentation/BreakingChanges.adoc | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
+> index 90b53abcea..93fb968840 100644
+> --- a/Documentation/BreakingChanges.adoc
+> +++ b/Documentation/BreakingChanges.adoc
+> @@ -114,6 +114,10 @@ applications and forges.
+>  +
+>  There is no plan to deprecate the "sha1" object format at this point in time.
+>  +
+> +Support for "git diff X..Y" syntax will be removed. Use "git diff X Y" instead.
+> +This will open up the syntax for a more consistent interpretation of
+> +"git diff $(git merge-base X Y) Y".
+> ++
+>  Cf. <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.com>,
+>  <20170223155046.e7nxivfwqqoprsqj@LykOS.localdomain>,
+>  <CA+EOSBncr=4a4d8n9xS4FNehyebpmX8JiUwCsXD47EQDE+DiUQ@mail.gmail.com>.
+>
+> base-commit: 143f58ef7535f8f8a80d810768a18bdf3807de26
