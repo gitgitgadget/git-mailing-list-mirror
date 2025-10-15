@@ -1,73 +1,73 @@
-Received: from mail-yw1-f195.google.com (mail-yw1-f195.google.com [209.85.128.195])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5045C3081C5
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:28:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3430B30F7F9
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 22:28:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760567320; cv=none; b=iSaMNXKk8G3h25CAOVRfFEI+QG18UtSbdXfY/Rgy6pNFUXHhD7MFos1flyKi4hKrChEzsaQxqqVxYIEQEjR/J25b8LCEAFuZXEUxxRobhHDStv/lC/9k6J+b+63qBcegcWEZORQ1AldtxcDkCnH+ykXO9R24ccEQoERs6rM/PRc=
+	t=1760567323; cv=none; b=XTCkyEtajUZrKKbSvkdHZz4l7MVmfxYu7ErN4mV5Z5htYuvv2LI+yYuvtUQOLFHae/PLYa9tZ3iAUfckTH/f6pucoK1zdW2K+yoHsVa6dKPNjn3f8o7faQrkNSuSjS83Nw+4YMp8dV6piO8c+dOg15PZLu9mqqCHkSe61UN3VdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760567320; c=relaxed/simple;
-	bh=RN3Rt7SSTBwT0lIEMnfJ6Hl7zGKjEAUVtZr05U+pBSk=;
+	s=arc-20240116; t=1760567323; c=relaxed/simple;
+	bh=dqNHhkjh1PdOFB/xTLwwJ9U4LYA9aC7sWM+St1UAfL4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IPwpq/w7+z+FtMeoY9AHLnBmFwjFh+Ibwo8tShgkn3lgd3u8tBTsIvrR5EGewSQtsR7bZrCrKNDAxpBnJ2jZ1yw0yVKyqxnzvwbsCRPjaN5a7+OTQ+r85s3Sao852t4+EOzd1n/awyRAi5AU0YofNk81mHT6WDoNM08ZWobPulU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=FJyAcza0; arc=none smtp.client-ip=209.85.128.195
+	 Content-Type:Content-Disposition:In-Reply-To; b=YR6K9mPocDCa+mtjymH7yYR+V7J6+hrN763cCE1j1VtQEEfKUDfC5irzzHZ+yhfb7QTcz5ZAVcvh/AkT3LxUFXJxBfodZhnSw0Ru803HtSrL3sGfUwXrb07MisYQv0okIXH0A88Ypy2BZwQR1k//dQaFfUlbbe3j7QSI9NjHxYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Nu+/qqii; arc=none smtp.client-ip=209.85.128.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="FJyAcza0"
-Received: by mail-yw1-f195.google.com with SMTP id 00721157ae682-780fe73e339so519637b3.1
-        for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:28:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Nu+/qqii"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-7815092cd22so846487b3.2
+        for <git@vger.kernel.org>; Wed, 15 Oct 2025 15:28:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1760567317; x=1761172117; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1760567320; x=1761172120; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=KjkBOwfEx4mVXQDQdNSK2HOYll+j2T16lsw/wGj+AK0=;
-        b=FJyAcza0+8fqbdvqVS/XQCuG3+1OcpZEvRpsa2e+ZGtDeE54gxQSKWqf0EY2jLRKMn
-         woYP3THwtryep8c/xKeaTYW8YO96Olb4DIHyuZc+JKisNgWa2GbQXv/OhGgC5OVKn0Kk
-         PZiZzwv/wYkoo79Cqy75Juzb4QU9wDn+TCp1MVPUScBOYZvnIwhK/CZjIH2Ah8Q3Irls
-         bIgukfjG9cHdcJUkFqe+HWcJO2ynaI0LVwbNyBoeFOklwXPQLbajjt3E3xVXJ1SwkwV2
-         LIjO+71YoJBQFT+f1h4Mil0b44o6Vt5MMBQNsxNfTlfajY7Z0lwaChpIxyq7aFStC5Hn
-         xC6A==
+        bh=ycIv1tLhKqw87oI0f7ZMAjpnHzuFWiW+ZAj2VCA1nGQ=;
+        b=Nu+/qqiigChDv25Coa4DEGftP7GGNq7Iwct6NtEpBZ6DhM3SiB+LXV1g3MIMbkBdVI
+         A5AIVu2yJFIIvVHvVxb67087mNc7fgpM1WxmeoPz28FiQ8ix1QQkhkZUaSrfoZpBrT0R
+         pOgHhthXj4+6zmCuNMUr3tchKGXokQtZFwCNo5K7VnfeMnucSLpQ91ArmejB7TPixFOF
+         VSCpPr0Lu5O9ZLnoe/0NdLoKNp/YhIYhE8JYSiuxZ4tP1VVTPQ4qXOvn9jGi0b/Y7hBo
+         iRHnpEcPHWaL9JmtabhmHT2RiVG5rKakAu5O9yvI5W9ZtpbYzCx8UEhEEY8pLHk12LR3
+         c2CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760567317; x=1761172117;
+        d=1e100.net; s=20230601; t=1760567320; x=1761172120;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KjkBOwfEx4mVXQDQdNSK2HOYll+j2T16lsw/wGj+AK0=;
-        b=HI+pfaUP4dYfqbphWKi5swoGi2dGRJ5PRaiGBAy6Z/W90/h8oaDyjYH+ICCgj9sziB
-         XjNHAeB6KUOgApxDtVQN6SlIJhszUG3S1iKtmeJkAya+nE4ig8wsLCg7oMXt+enYDeIw
-         EyWyZm7DVwDE1Bt/6hpI7dsevK+xa0uJVAR7hjr363zaWjT6CwMhIXGcwr0MEy9Q905l
-         t5vw754L5IoOKk9iWOwoiUHCc+LozihgeUV5mF03zSehnX6ZMLZnlO546apXUWMqzWsD
-         0Q4Zbjm9rGn9jr2C/ccvIT13vUXu4bOaQDZiAGt5R7Lc6jqq5O0kNm1F4hEU1BviRAWf
-         wQrw==
-X-Gm-Message-State: AOJu0YwGHbYQfh79x5cc/nau00j3O3PUh9Ne5FKZMJxkcuDJoXU5Yx6T
-	+MKMNn1q+exa4bV49KnSaPnmpj96JlV/WX9wyy4jmt7T+r64LlWghChjYmeg8NwWdYe3aWXmHae
-	VNmYZjt8tuxRf
-X-Gm-Gg: ASbGncsy6CfexmmLqhqvaCISAgHhlVC5iJWgferf4gEAU4coQpPXX3/x0dPIgccCZFD
-	oUs3jKMqRJz9oYD4jsZthnuwbYvwDLSSfhOOdK5dlpbK66GuY+siiuXuX3dl9/XO/NQf1/VfJdp
-	VumfzUzi7n95fRVFC9QSJaJhR8/RV2cWZnkEqHXkK2xlXNbKVj7WXUn4d10FOor4CMAbU83KkSr
-	Uxi+eEJf5W2btsHAMroHy32tFUOC+U6H232NC3ubNpVsnYd9m8RazF7j+ibpolbDiMAAUWe4YRG
-	UJvlOaRb3ElNxlLzaf60LeXSvdrIavIOQ8FLtoN0Z4BYNsdQks+9ekQQza17/kcaX1ULiAFImq1
-	5SxrMXW/BNofnFFyOavH1HvQLz+pDoTS3KkUyWPmwv3mGEBkvU8cGjz7p4YgGNV0806BQ3DCsVh
-	jjZE9o8VBsWTSzE3fwaxwB4G5fd86rQw4N7PsLEZ5qgQ+cwCEsOu/7OpPNgiUZMnQBwx44HVN89
-	wqv4drnTw/1uZ6tQA==
-X-Google-Smtp-Source: AGHT+IFGBRegE2ckH7ETUq96Gvy4VfQyOSOjOIrogWJfxzgm6vnQXkgF1RpC68758bk+MdqPBoSMqg==
-X-Received: by 2002:a05:690c:3392:b0:736:9b6b:b60 with SMTP id 00721157ae682-782a90b3336mr8270477b3.1.1760567317109;
-        Wed, 15 Oct 2025 15:28:37 -0700 (PDT)
+        bh=ycIv1tLhKqw87oI0f7ZMAjpnHzuFWiW+ZAj2VCA1nGQ=;
+        b=wOlS8M1AgA70ACXV0gYjagP53Tp6BPFd+SsgZbqFFlEB55lchWFygiaVhgQdvx5tHI
+         WkI6h4x+AK3YiAzAcgSYdjppdI0pggOrX2amrS0Xx6LlcQVMmAj0j4zIsDju9xIh2D4V
+         60VkFJiOAAQ05yIFjcKPJXg2sL5ujUYSrAMQtfjvibrFIWp8EFZ1HtlUciQe7tBN33hG
+         G7wuKx+xk7T0Hl34vL8XwWwqESNjKKqHVxHygBbcmBCcJCQexLsD531E45Fxb61nHZM3
+         csCBg5SYrw7Vw3207Ca+WGhwAGCdkeJ75eaOLE+S0/iah4dvslOh1RECiXKSxb/g+p1o
+         BXuA==
+X-Gm-Message-State: AOJu0YwbDSY1wY3v8nqNb9pFeupOhWZV4vsGHqSDbb+sFNj13L/WzS0H
+	zUoB28cWFNIDMvhW1nCMZKRk3MUwa6eyKn6nyakaVdSsKkz0LY+uZDZtu3+bgirIO5VkqP4ughE
+	NOa/2LfE/xg==
+X-Gm-Gg: ASbGncvbzkqym7xMzdStcUBxkCwJFet8cwbMrab8UpF5ubBs6yXZVmBlNDWz8sM4AJn
+	sGJ7BWHICPH0t46snZPQ45E4sm6xF69/e0AsHAZMhK+mBqkmkbw+ckfoYQP3XcvJhRH4elsVmX1
+	EvxHa7aHy4R59n1Ye4xKxzv2b+opB3yv8lfZHRHWQVj+KzzZFAH/t/eY6G089syN4CBSAUSgIHY
+	RcY0aOM4fojiWPsWxIr5yhxjRa1ZUvSNUttH3YKA1C6YcXpNeYr3Pnz0c5TdjzyARp2L0KBqfXb
+	nzIMFWHb8ByfwZIYQDkUZ3C8qG+6FPIjjMkhEByj0Iwn4iZfQKlhcW0nyoySO5UqOr4TOEAwbUd
+	pWo2uyK8a1AVssKY0S02P2ZETvKtaGdZaaHyStAL4dn3MfeuyylypY4C/D/ruBP4pIjVWM/vouv
+	iFAjQZw0GbZ+xK9bNoEbt8Hqaed33jwVK5FZjbuU0lqALGWFnNAnQQz6UHl+Q5XGxC7NHtemnJx
+	TnjVXeG2Sf8lU+ABw==
+X-Google-Smtp-Source: AGHT+IHNXPMN4WVSfODOv6W6Kcq8OztI0vpWRi14yjU7k831hDcLO0W4NC4JuHaon+VNb5Q5Bjd4Iw==
+X-Received: by 2002:a05:690c:998c:b0:731:76db:a5e0 with SMTP id 00721157ae682-780e15346dfmr354902807b3.25.1760567320006;
+        Wed, 15 Oct 2025 15:28:40 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-782931f5d47sm2583987b3.43.2025.10.15.15.28.36
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-7828d2c2adesm2762697b3.14.2025.10.15.15.28.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 15:28:36 -0700 (PDT)
-Date: Wed, 15 Oct 2025 18:28:35 -0400
+        Wed, 15 Oct 2025 15:28:39 -0700 (PDT)
+Date: Wed, 15 Oct 2025 18:28:38 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 26/49] builtin/repack.c: remove
- "repack_promisor_objects()" from the builtin
-Message-ID: <1050b856a5414a79cca49d3beb569c85734c7f89.1760567210.git.me@ttaylorr.com>
+Subject: [PATCH v2 27/49] builtin/repack.c: rename various pack_geometry
+ functions
+Message-ID: <0b2fa0cf625caa3a31857295dfb237ca0c5192b7.1760567210.git.me@ttaylorr.com>
 References: <cover.1759097191.git.me@ttaylorr.com>
  <cover.1760567210.git.me@ttaylorr.com>
 Precedence: bulk
@@ -80,276 +80,185 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1760567210.git.me@ttaylorr.com>
 
-Now that we have properly factored the portion of the builtin which is
-responsible for repacking promisor objects, we can move that function
-(and associated dependencies) out of the builtin entirely.
-
-Similar to previous extractions, this function is declared in repack.h,
-but implemented in a separate repack-promisor.c file. This is done to
-separate promisor-specific repacking functionality from generic repack
-utilities (like "existing_packs", and "generated_pack" APIs).
+Rename functions which work with 'struct pack_geometry' to begin with
+"pack_geometry_". While we're at it, change `free_pack_geometry()` to
+instead be named `pack_geometry_release()` to match our conventions, and
+make clear that that function frees the contents of the struct, not the
+memory allocated to hold the struct itself.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Makefile          |   1 +
- builtin/repack.c  |  95 ------------------------------------------
- meson.build       |   1 +
- repack-promisor.c | 102 ++++++++++++++++++++++++++++++++++++++++++++++
- repack.h          |   4 ++
- 5 files changed, 108 insertions(+), 95 deletions(-)
- create mode 100644 repack-promisor.c
+ builtin/repack.c | 52 ++++++++++++++++++++++++------------------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 58fc05030b..01597af359 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1250,6 +1250,7 @@ LIB_OBJS += refs/ref-cache.o
- LIB_OBJS += refspec.o
- LIB_OBJS += remote.o
- LIB_OBJS += repack.o
-+LIB_OBJS += repack-promisor.o
- LIB_OBJS += replace-object.o
- LIB_OBJS += repo-settings.o
- LIB_OBJS += repository.o
 diff --git a/builtin/repack.c b/builtin/repack.c
-index 2c67111b33..24b5e5049b 100644
+index 24b5e5049b..42f05d2ebf 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -107,101 +107,6 @@ static int repack_config(const char *var, const char *value,
- 	return git_default_config(var, value, ctx, cb);
+@@ -115,17 +115,17 @@ struct pack_geometry {
+ 	int split_factor;
+ };
+ 
+-static uint32_t geometry_pack_weight(struct packed_git *p)
++static uint32_t pack_geometry_weight(struct packed_git *p)
+ {
+ 	if (open_pack_index(p))
+ 		die(_("cannot open index for %s"), p->pack_name);
+ 	return p->num_objects;
  }
  
--struct write_oid_context {
--	struct child_process *cmd;
--	const struct git_hash_algo *algop;
--};
--
--/*
-- * Write oid to the given struct child_process's stdin, starting it first if
-- * necessary.
-- */
--static int write_oid(const struct object_id *oid,
--		     struct packed_git *pack UNUSED,
--		     uint32_t pos UNUSED, void *data)
--{
--	struct write_oid_context *ctx = data;
--	struct child_process *cmd = ctx->cmd;
--
--	if (cmd->in == -1) {
--		if (start_command(cmd))
--			die(_("could not start pack-objects to repack promisor objects"));
--	}
--
--	if (write_in_full(cmd->in, oid_to_hex(oid), ctx->algop->hexsz) < 0 ||
--	    write_in_full(cmd->in, "\n", 1) < 0)
--		die(_("failed to feed promisor objects to pack-objects"));
--	return 0;
--}
--
--static void repack_promisor_objects(struct repository *repo,
--				    const struct pack_objects_args *args,
--				    struct string_list *names,
--				    const char *packtmp)
--{
--	struct write_oid_context ctx;
--	struct child_process cmd = CHILD_PROCESS_INIT;
--	FILE *out;
--	struct strbuf line = STRBUF_INIT;
--
--	prepare_pack_objects(&cmd, args, packtmp);
--	cmd.in = -1;
--
--	/*
--	 * NEEDSWORK: Giving pack-objects only the OIDs without any ordering
--	 * hints may result in suboptimal deltas in the resulting pack. See if
--	 * the OIDs can be sent with fake paths such that pack-objects can use a
--	 * {type -> existing pack order} ordering when computing deltas instead
--	 * of a {type -> size} ordering, which may produce better deltas.
--	 */
--	ctx.cmd = &cmd;
--	ctx.algop = repo->hash_algo;
--	for_each_packed_object(repo, write_oid, &ctx,
--			       FOR_EACH_OBJECT_PROMISOR_ONLY);
--
--	if (cmd.in == -1) {
--		/* No packed objects; cmd was never started */
--		child_process_clear(&cmd);
--		return;
--	}
--
--	close(cmd.in);
--
--	out = xfdopen(cmd.out, "r");
--	while (strbuf_getline_lf(&line, out) != EOF) {
--		struct string_list_item *item;
--		char *promisor_name;
--
--		if (line.len != repo->hash_algo->hexsz)
--			die(_("repack: Expecting full hex object ID lines only from pack-objects."));
--		item = string_list_append(names, line.buf);
--
--		/*
--		 * pack-objects creates the .pack and .idx files, but not the
--		 * .promisor file. Create the .promisor file, which is empty.
--		 *
--		 * NEEDSWORK: fetch-pack sometimes generates non-empty
--		 * .promisor files containing the ref names and associated
--		 * hashes at the point of generation of the corresponding
--		 * packfile, but this would not preserve their contents. Maybe
--		 * concatenate the contents of all .promisor files instead of
--		 * just creating a new empty file.
--		 */
--		promisor_name = mkpathdup("%s-%s.promisor", packtmp,
--					  line.buf);
--		write_promisor_file(promisor_name, NULL, 0);
--
--		item->util = generated_pack_populate(item->string, packtmp);
--
--		free(promisor_name);
--	}
--
--	fclose(out);
--	if (finish_command(&cmd))
--		die(_("could not finish pack-objects to repack promisor objects"));
--	strbuf_release(&line);
--}
--
- struct pack_geometry {
- 	struct packed_git **pack;
- 	uint32_t pack_nr, pack_alloc;
-diff --git a/meson.build b/meson.build
-index 4a985ce77e..b37e3d192d 100644
---- a/meson.build
-+++ b/meson.build
-@@ -463,6 +463,7 @@ libgit_sources = [
-   'reftable/writer.c',
-   'remote.c',
-   'repack.c',
-+  'repack-promisor.c',
-   'replace-object.c',
-   'repo-settings.c',
-   'repository.c',
-diff --git a/repack-promisor.c b/repack-promisor.c
-new file mode 100644
-index 0000000000..ee6e0669f6
---- /dev/null
-+++ b/repack-promisor.c
-@@ -0,0 +1,102 @@
-+#include "git-compat-util.h"
-+#include "repack.h"
-+#include "hex.h"
-+#include "pack.h"
-+#include "packfile.h"
-+#include "path.h"
-+#include "repository.h"
-+#include "run-command.h"
-+
-+struct write_oid_context {
-+	struct child_process *cmd;
-+	const struct git_hash_algo *algop;
-+};
-+
-+/*
-+ * Write oid to the given struct child_process's stdin, starting it first if
-+ * necessary.
-+ */
-+static int write_oid(const struct object_id *oid,
-+		     struct packed_git *pack UNUSED,
-+		     uint32_t pos UNUSED, void *data)
-+{
-+	struct write_oid_context *ctx = data;
-+	struct child_process *cmd = ctx->cmd;
-+
-+	if (cmd->in == -1) {
-+		if (start_command(cmd))
-+			die(_("could not start pack-objects to repack promisor objects"));
-+	}
-+
-+	if (write_in_full(cmd->in, oid_to_hex(oid), ctx->algop->hexsz) < 0 ||
-+	    write_in_full(cmd->in, "\n", 1) < 0)
-+		die(_("failed to feed promisor objects to pack-objects"));
-+	return 0;
-+}
-+
-+void repack_promisor_objects(struct repository *repo,
-+			     const struct pack_objects_args *args,
-+			     struct string_list *names, const char *packtmp)
-+{
-+	struct write_oid_context ctx;
-+	struct child_process cmd = CHILD_PROCESS_INIT;
-+	FILE *out;
-+	struct strbuf line = STRBUF_INIT;
-+
-+	prepare_pack_objects(&cmd, args, packtmp);
-+	cmd.in = -1;
-+
-+	/*
-+	 * NEEDSWORK: Giving pack-objects only the OIDs without any ordering
-+	 * hints may result in suboptimal deltas in the resulting pack. See if
-+	 * the OIDs can be sent with fake paths such that pack-objects can use a
-+	 * {type -> existing pack order} ordering when computing deltas instead
-+	 * of a {type -> size} ordering, which may produce better deltas.
-+	 */
-+	ctx.cmd = &cmd;
-+	ctx.algop = repo->hash_algo;
-+	for_each_packed_object(repo, write_oid, &ctx,
-+			       FOR_EACH_OBJECT_PROMISOR_ONLY);
-+
-+	if (cmd.in == -1) {
-+		/* No packed objects; cmd was never started */
-+		child_process_clear(&cmd);
-+		return;
-+	}
-+
-+	close(cmd.in);
-+
-+	out = xfdopen(cmd.out, "r");
-+	while (strbuf_getline_lf(&line, out) != EOF) {
-+		struct string_list_item *item;
-+		char *promisor_name;
-+
-+		if (line.len != repo->hash_algo->hexsz)
-+			die(_("repack: Expecting full hex object ID lines only from pack-objects."));
-+		item = string_list_append(names, line.buf);
-+
-+		/*
-+		 * pack-objects creates the .pack and .idx files, but not the
-+		 * .promisor file. Create the .promisor file, which is empty.
-+		 *
-+		 * NEEDSWORK: fetch-pack sometimes generates non-empty
-+		 * .promisor files containing the ref names and associated
-+		 * hashes at the point of generation of the corresponding
-+		 * packfile, but this would not preserve their contents. Maybe
-+		 * concatenate the contents of all .promisor files instead of
-+		 * just creating a new empty file.
-+		 */
-+		promisor_name = mkpathdup("%s-%s.promisor", packtmp,
-+					  line.buf);
-+		write_promisor_file(promisor_name, NULL, 0);
-+
-+		item->util = generated_pack_populate(item->string, packtmp);
-+
-+		free(promisor_name);
-+	}
-+
-+	fclose(out);
-+	if (finish_command(&cmd))
-+		die(_("could not finish pack-objects to repack promisor objects"));
-+	strbuf_release(&line);
-+}
-diff --git a/repack.h b/repack.h
-index f37eb49524..19dc4fd738 100644
---- a/repack.h
-+++ b/repack.h
-@@ -74,4 +74,8 @@ int generated_pack_has_ext(const struct generated_pack *pack, const char *ext);
- void generated_pack_install(struct generated_pack *pack, const char *name,
- 			    const char *packdir, const char *packtmp);
+-static int geometry_cmp(const void *va, const void *vb)
++static int pack_geometry_cmp(const void *va, const void *vb)
+ {
+-	uint32_t aw = geometry_pack_weight(*(struct packed_git **)va),
+-		 bw = geometry_pack_weight(*(struct packed_git **)vb);
++	uint32_t aw = pack_geometry_weight(*(struct packed_git **)va),
++		 bw = pack_geometry_weight(*(struct packed_git **)vb);
  
-+void repack_promisor_objects(struct repository *repo,
-+			     const struct pack_objects_args *args,
-+			     struct string_list *names, const char *packtmp);
-+
- #endif /* REPACK_H */
+ 	if (aw < bw)
+ 		return -1;
+@@ -134,7 +134,7 @@ static int geometry_cmp(const void *va, const void *vb)
+ 	return 0;
+ }
+ 
+-static void init_pack_geometry(struct pack_geometry *geometry,
++static void pack_geometry_init(struct pack_geometry *geometry,
+ 			       struct existing_packs *existing,
+ 			       const struct pack_objects_args *args)
+ {
+@@ -184,11 +184,11 @@ static void init_pack_geometry(struct pack_geometry *geometry,
+ 		geometry->pack_nr++;
+ 	}
+ 
+-	QSORT(geometry->pack, geometry->pack_nr, geometry_cmp);
++	QSORT(geometry->pack, geometry->pack_nr, pack_geometry_cmp);
+ 	strbuf_release(&buf);
+ }
+ 
+-static void split_pack_geometry(struct pack_geometry *geometry)
++static void pack_geometry_split(struct pack_geometry *geometry)
+ {
+ 	uint32_t i;
+ 	uint32_t split;
+@@ -208,13 +208,13 @@ static void split_pack_geometry(struct pack_geometry *geometry)
+ 		struct packed_git *prev = geometry->pack[i - 1];
+ 
+ 		if (unsigned_mult_overflows(geometry->split_factor,
+-					    geometry_pack_weight(prev)))
++					    pack_geometry_weight(prev)))
+ 			die(_("pack %s too large to consider in geometric "
+ 			      "progression"),
+ 			    prev->pack_name);
+ 
+-		if (geometry_pack_weight(ours) <
+-		    geometry->split_factor * geometry_pack_weight(prev))
++		if (pack_geometry_weight(ours) <
++		    geometry->split_factor * pack_geometry_weight(prev))
+ 			break;
+ 	}
+ 
+@@ -242,9 +242,9 @@ static void split_pack_geometry(struct pack_geometry *geometry)
+ 	for (i = 0; i < split; i++) {
+ 		struct packed_git *p = geometry->pack[i];
+ 
+-		if (unsigned_add_overflows(total_size, geometry_pack_weight(p)))
++		if (unsigned_add_overflows(total_size, pack_geometry_weight(p)))
+ 			die(_("pack %s too large to roll up"), p->pack_name);
+-		total_size += geometry_pack_weight(p);
++		total_size += pack_geometry_weight(p);
+ 	}
+ 	for (i = split; i < geometry->pack_nr; i++) {
+ 		struct packed_git *ours = geometry->pack[i];
+@@ -253,15 +253,15 @@ static void split_pack_geometry(struct pack_geometry *geometry)
+ 					    total_size))
+ 			die(_("pack %s too large to roll up"), ours->pack_name);
+ 
+-		if (geometry_pack_weight(ours) <
++		if (pack_geometry_weight(ours) <
+ 		    geometry->split_factor * total_size) {
+ 			if (unsigned_add_overflows(total_size,
+-						   geometry_pack_weight(ours)))
++						   pack_geometry_weight(ours)))
+ 				die(_("pack %s too large to roll up"),
+ 				    ours->pack_name);
+ 
+ 			split++;
+-			total_size += geometry_pack_weight(ours);
++			total_size += pack_geometry_weight(ours);
+ 		} else
+ 			break;
+ 	}
+@@ -269,7 +269,7 @@ static void split_pack_geometry(struct pack_geometry *geometry)
+ 	geometry->split = split;
+ }
+ 
+-static struct packed_git *get_preferred_pack(struct pack_geometry *geometry)
++static struct packed_git *pack_geometry_preferred_pack(struct pack_geometry *geometry)
+ {
+ 	uint32_t i;
+ 
+@@ -304,9 +304,9 @@ static struct packed_git *get_preferred_pack(struct pack_geometry *geometry)
+ 	return NULL;
+ }
+ 
+-static void geometry_remove_redundant_packs(struct pack_geometry *geometry,
+-					    struct string_list *names,
+-					    struct existing_packs *existing)
++static void pack_geometry_remove_redundant(struct pack_geometry *geometry,
++					   struct string_list *names,
++					   struct existing_packs *existing)
+ {
+ 	const struct git_hash_algo *algop = existing->repo->hash_algo;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -332,7 +332,7 @@ static void geometry_remove_redundant_packs(struct pack_geometry *geometry,
+ 	strbuf_release(&buf);
+ }
+ 
+-static void free_pack_geometry(struct pack_geometry *geometry)
++static void pack_geometry_release(struct pack_geometry *geometry)
+ {
+ 	if (!geometry)
+ 		return;
+@@ -599,7 +599,7 @@ static int write_midx_included_packs(struct string_list *include,
+ {
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+ 	struct string_list_item *item;
+-	struct packed_git *preferred = get_preferred_pack(geometry);
++	struct packed_git *preferred = pack_geometry_preferred_pack(geometry);
+ 	FILE *in;
+ 	int ret;
+ 
+@@ -1063,8 +1063,8 @@ int cmd_repack(int argc,
+ 	if (geometry.split_factor) {
+ 		if (pack_everything)
+ 			die(_("options '%s' and '%s' cannot be used together"), "--geometric", "-A/-a");
+-		init_pack_geometry(&geometry, &existing, &po_args);
+-		split_pack_geometry(&geometry);
++		pack_geometry_init(&geometry, &existing, &po_args);
++		pack_geometry_split(&geometry);
+ 	}
+ 
+ 	prepare_pack_objects(&cmd, &po_args, packtmp);
+@@ -1324,8 +1324,8 @@ int cmd_repack(int argc,
+ 		existing_packs_remove_redundant(&existing, packdir);
+ 
+ 		if (geometry.split_factor)
+-			geometry_remove_redundant_packs(&geometry, &names,
+-							&existing);
++			pack_geometry_remove_redundant(&geometry, &names,
++						       &existing);
+ 		if (show_progress)
+ 			opts |= PRUNE_PACKED_VERBOSE;
+ 		prune_packed_objects(opts);
+@@ -1352,7 +1352,7 @@ int cmd_repack(int argc,
+ 	string_list_clear(&keep_pack_list, 0);
+ 	string_list_clear(&names, 1);
+ 	existing_packs_release(&existing);
+-	free_pack_geometry(&geometry);
++	pack_geometry_release(&geometry);
+ 	for (size_t i = 0; i < midx_pack_names_nr; i++)
+ 		free(midx_pack_names[i]);
+ 	free(midx_pack_names);
 -- 
 2.51.0.540.ga7423965ad8
 
