@@ -1,116 +1,151 @@
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B911B2FF66A
-	for <git@vger.kernel.org>; Wed, 15 Oct 2025 21:18:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD193218EA8
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 21:18:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760563098; cv=none; b=Xa5SFtq4aI3C0txlqBUXqZOO+9uSA17IJCzsqFaYfWpMwSPtPeTX44mmyle+sDrnNVDaMG3K9mtg6yp+rxmEG8GGNy/ZvQWZFjabIGqNnx6z8sHvwjGEOGhkiq5gqOLrnJnJQcZNEQMiZ6i2e03bVVAjAWIoxYVT5b3cB8/TtSU=
+	t=1760563106; cv=none; b=YRIqrRM8iL673QtHX9+uajClIEl+9ug7x7P2hDKEjjzGQ6gINg5rWqBni1pBWiXXE7hJ7E7TpBxY622Dqm6KP2q3I51plUv+H+/C25aihrBTNuI1IKR9zS5Mu/XrPfpRZ8lO9anaOBdyNwBo13IRhI5f3N9oQ77SLPhOnuf5irs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760563098; c=relaxed/simple;
-	bh=7Q08HWp3P+Whc+FpTt/rki1VYSJ0Y2wkeye25jI8ABw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X2HJ3y1cu3BPAgJzM4XkoIJTY9x7O6CkqeDICVUnDqo/TzS/pdRtT3ca/woDiJc6kdXrymlIHS96KKOL0U6sNIy5IM6Qio52utmOF62nNhfajbh9FNCmHcFhFPzBBtQJzRsOuit1Ki35gpGUQGh+0xlEinMBHeOh7A5VraIBwK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=c2VV3AjD; arc=none smtp.client-ip=74.125.224.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1760563106; c=relaxed/simple;
+	bh=vkGAYCmNomCst1z3duhCnI2C6y9Pg+e1qRgbxrSbyhA=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=CJEDzYJ7DsVQvg+cpumOD/ubFRqNG57Xf9zEpbBvm4UCSYa5A+hR7YZ1kWw22JUW2nh10CG0hO0yqFiFMBSQqFNVZNuWZlT3zrYr/OGCaumGJ6SfpSuVY0Xnumi+j2r5EI63vNJ7naE9vkGyNgRXSdQ4Nbn25GQ3xeONZ97OwIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LOn4DVBF; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="c2VV3AjD"
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-63497c2a27dso93157d50.1
-        for <git@vger.kernel.org>; Wed, 15 Oct 2025 14:18:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LOn4DVBF"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-339e71ccf48so102864a91.3
+        for <git@vger.kernel.org>; Wed, 15 Oct 2025 14:18:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1760563095; x=1761167895; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7h3pIYLqzgmQzS03sJJRJ/rKSPJkBZYe7Qqa/2M6cvc=;
-        b=c2VV3AjDBveT+RZlL13UHL4vtm7lFt76uZ8fruX6t/fsyj23Wio2D86D51S7AIML/a
-         cln3TWyUEtUJp62LurcNVU0maWGyqnPxTcrP81zr9PbALFE+kZHrtSFMF8/Mb+LmfOt3
-         r2wyXVIDdvvGPR74nfiDot7iRrCTK5jaEVD6Loepd2yc+J8iZJ6hOoPFWR2c+P0cFTxk
-         mfuGZGHJAwkp1E97xepV5/Qq2OurRavA/FvJ3AGLppz4dxYuerHnwkb1u0cjbdyE0efs
-         njRbw2hTG7zaaVmbAtvMyEEzYTzQeB+sFtuiU7Bw893ky8gvUj8SYRWGfXpvq5qSPvEK
-         wk0Q==
+        d=gmail.com; s=20230601; t=1760563104; x=1761167904; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=2pCbDlHPwNBW7Zt1vfem0dRLnBw+eA9+h+CEJbTkR74=;
+        b=LOn4DVBF4cvSl/EzZ4uY6ykdo9adPngPGP0kH3XCJEDfFZwXzuXgi/PvhNtW34FM8Q
+         MDUotfxV2tfM0f+KDHJwoE7rpGt2xJpcdYyNWHvQldscr9jCmiWDNzq8WAWVznL3FTKY
+         XnNPK+WGaWHfkBVp6jiV+XwxPi6JwtgJEkannaqveRHy9iRHLnOCP7D9MR7sLhGMtcKj
+         NfIIcnFiZafzZIGeyerV2CIUUFMLSvSvA91OsYSNt2fEnEozq+LnG17vd8hFGjCrP8HL
+         5YQFE4A6p0H1YW0RoC+oKQSq45j30yb5LnUb9dQxZCMdj2GLNPvwPeaENz31iu5Qb9tF
+         JHFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760563095; x=1761167895;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7h3pIYLqzgmQzS03sJJRJ/rKSPJkBZYe7Qqa/2M6cvc=;
-        b=wCQGnDcAQ8CTGChBM14MvPFv80PKkl+0tY3u5HwdFcgDJ1NrMmdAKsVZgSfxZqddCZ
-         KqurmRAkahjs4EOVU6Eh3YTqbyO8wbbE9PKEx2VntZnl75CP0XnEcKIFqCuF6w7gm4Wj
-         ZavSVZB3c9D6C5QLXP3HJK6lQqPJ4Y9owo7n8jhmXUBRcpcvTGWREfImxztigJ0cdZhn
-         yLGp25i/TTh0drtE2JuMxIb2gVS2hXV4qEMFHPYlZQ5EcG1a9K2CXIKC8p7JMgdmb9J1
-         NgGqYEq3pY34Zw/zSxvuGbag45a+ZOTcW2Rhw0K1d4P++tu096D/DQNKINkmti0GE7Iu
-         9hRg==
-X-Gm-Message-State: AOJu0YxNcylX8xmqqKpljxh1SdQ/XYpXAC3LXBGQbfD1L3S8Y1CYNJBa
-	9TQm7lZOFmn5UbxUMYdKjc4hFp7diimpRCzsTFgj38X/vrktikeoIVBsgI6q2pJx0CE=
-X-Gm-Gg: ASbGncvOtxS7DvUqa813WLXJPCfA4X2dMSKWgoc1GuMd1NHmU0z3PRc3H8EEP9a2T8R
-	AP2HHMxoA7wtK9/oCJhvzoVvPul56g5s4cy2qKCfq1fSIKUJ6d+rJWrAQjwJ6q+k9Pmi65chDyT
-	6dfQgpxpam8drBTVhBukZuSrwcqEmsd6xYiVKpJ5O/R86qlObJSMszE4f/94nFp/wx1AGrcGNUo
-	6+72/J2apODAmP1CpAE2YUPOctjkdhlGopWKf203qxFOPsIITps68a2PUKnbjNqRON45Usx/Nip
-	LORXB9IfNod/3DEmfOAdmnh1XME90GubNsam6mtTLM0Ahf1LIYLw7XHgLd++saeTeS42LlRtG16
-	+WW3Rf4DGNwKy3YdqG+z/hzMcvB5IX8KIY8FRrTvaM1vsRwHih9UBlcrublPycjxTPllORZgt9M
-	rnLCTZgZvwfCRy3rJhCvMQZJLJ/5CHQysFHwmviimdHAzTWqXezqiq+OlMW0VG94hjOfafJHwvN
-	Ymwgb8=
-X-Google-Smtp-Source: AGHT+IF40Kkag6Foe/UGFCVjkACLqYjLVl+KWTDAum8/Exk3ZfoEGGfoQrV1A9uvnWx41siK7t0bfg==
-X-Received: by 2002:a05:690c:c8f:b0:772:3578:2ec5 with SMTP id 00721157ae682-780e1370bbbmr450023297b3.0.1760563095296;
-        Wed, 15 Oct 2025 14:18:15 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-63cda556e5fsm5853049d50.8.2025.10.15.14.18.14
+        d=1e100.net; s=20230601; t=1760563104; x=1761167904;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2pCbDlHPwNBW7Zt1vfem0dRLnBw+eA9+h+CEJbTkR74=;
+        b=BOX1YvTPi5rVRiotUukRgyNayK8RAuXOoEE/HHEBhLgDwsvXWuYyv84Q9iU08wkMYB
+         MEqFUyxsIpeWjq1e+UYBqNI7M92A9PtZsTuMv9cc1F9GU71q5t0kitMmF5FmLNkKP1eM
+         SdN50aJZrmKkUrifId+QVnEoVkJO3pK/PTDPDoDnClOsB59g5/v4LrGZ8LaJe4vxp/dS
+         L29rwdEMirIMCHbsbRwHQyRtZ2/vFPGCaCZqX3t01pHim40OQq4DqNw6cUI+VO10/FGh
+         ZzbDo1Fxxf35PXDKltvJlvLGNpCa3+Ylcc1vhA7CXed3Pg3w1YgVj3ZAJvlKZ59wQSZf
+         PpHg==
+X-Gm-Message-State: AOJu0YywnQhHICTGFKH2DS5xZupzc3m/XhV+1xmUu+xLgmvpf/weZP0U
+	/Ic3GlQKBABjTbB89wmZ1ZOY+wxyigkM8QcrcnHtlHNhsMGCduS8dTxmDliboA==
+X-Gm-Gg: ASbGnctyYhMOTQgowtku++Zd42EYglJn7b7JufHxjTbQazB5TomnWXf/+8O8jeJoDsV
+	FVFUXVcrpKr8jeT5gF9eEapy9xWADDq6+8d3reGmSwoWHM8LPhTXdXb5hKLNHfw+H37Y+PGNHa1
+	GimGaLIZbi667Prc0kZEwz3M0+0B2PQn505GxvoBke6wJdVEE2OmUCjeWWGWPFnRTf5s5gzSvo8
+	y1qTnhBsY9n5X8gydXCTP+A1dTn2Bj2Sk7VFnlgq2B4FAXZsNfhwkTJ5TKOwmlGR9A6bnk4Zkqo
+	bndswejOQqjpI4n7pHHt4TtbKfN2bK4R9dpaqZwmOg3zcfg5tvxfKkAcW+u/gAFYIZKsYIT+e2W
+	uifuiTDUuX8VWceQAMgWcPdyitRJb7JWRPjT9qsOuU+3w4EVEB1dB
+X-Google-Smtp-Source: AGHT+IFIYwH4tdMjsZdAK0l2l2Uaa0cmJx3eXvoZ8YpoNsATl1DaWv4Rq6ppxX91DCCt0UbTgkSs6A==
+X-Received: by 2002:a17:90b:3d85:b0:33b:6650:57c3 with SMTP id 98e67ed59e1d1-33b66505c71mr25550811a91.21.1760563103060;
+        Wed, 15 Oct 2025 14:18:23 -0700 (PDT)
+Received: from [127.0.0.1] ([13.83.161.23])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33b9786e602sm3654402a91.11.2025.10.15.14.18.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 14:18:14 -0700 (PDT)
-Date: Wed, 15 Oct 2025 17:18:13 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 40/49] builtin/repack.c: introduce `struct
- write_pack_opts`
-Message-ID: <aPAPlb1VvhKfcEJb@nand.local>
-References: <cover.1759097191.git.me@ttaylorr.com>
- <109109618687efeb932bee7dd5882557ab0576f4.1759097191.git.me@ttaylorr.com>
- <20251015102833.GB2250228@coredump.intra.peff.net>
+        Wed, 15 Oct 2025 14:18:22 -0700 (PDT)
+Message-Id: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
+From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 15 Oct 2025 21:18:12 +0000
+Subject: [PATCH 0/9] Xdiff cleanup part2
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251015102833.GB2250228@coredump.intra.peff.net>
+To: git@vger.kernel.org
+Cc: Ezekiel Newren <ezekielnewren@gmail.com>
 
-On Wed, Oct 15, 2025 at 06:28:33AM -0400, Jeff King wrote:
-> On Sun, Sep 28, 2025 at 06:09:51PM -0400, Taylor Blau wrote:
->
-> > Instead of repeating those arguments for each function, let's extract an
-> > options struct called "write_pack_opts" which has these three parameters
-> > as member fields. While we're at it, add fields for "packdir," and
-> > "packtmp", both of which are static variables within the builtin, and
-> > need to be read from within these two functions.
->
-> Makes sense, although...
->
-> > +		struct write_pack_opts opts = {
-> > +			.po_args = &po_args,
-> > +			.destination = filter_to,
-> > +			.pack_prefix = find_pack_prefix(packdir, packtmp),
-> > +			.packdir = packdir,
-> > +			.packtmp = packtmp,
-> > +		};
->
-> ...since we are now passing packdir and packtmp anyway, and pack_prefix
-> is derived from those, should the called function just do that
-> derivation itself? Or do we expect that some callers may eventually use
-> a different prefix?
->
-> Probably not a huge deal either way, but maybe an easy way to tighten up
-> the interface a bit.
+Maintainer note: This patch series builds on top of en/xdiff-cleanup and
+am/xdiff-hash-tweak (both of which are now in master).
 
-We do this a little further down in "repack: move `find_pack_prefix()`
-out of the builtin", which I tried to separate since I wanted to go
-incrementally here. But I should mention that that patch is upcoming to
-avoid readers wondering why we're not making the change sooner.
+The primary goal of this patch series is to convert every field's type in
+xrecord_t and xdfile_t to be unambiguous, in preparation to make it more
+Rust FFI friendly. Additionally the ha field in xrecord_t is split into
+line_hash and minimal_perfect hash.
 
-Thanks,
-Taylor
+The order of some of the fields has changed as called out by the commit
+messages.
+
+Before:
+
+typedef struct s_xrecord {
+	char const *ptr;
+	long size;
+	unsigned long ha;
+} xrecord_t;
+
+typedef struct s_xdfile {
+	xrecord_t *recs;
+	long nrec;
+	long dstart, dend;
+	bool *changed;
+	long *rindex;
+	long nreff;
+} xdfile_t;
+
+
+After part 2
+
+typedef struct s_xrecord {
+	uint8_t const *ptr;
+	size_t size;
+	uint64_t line_hash;
+	size_t minimal_perfect_hash;
+} xrecord_t;
+
+typedef struct s_xdfile {
+	xrecord_t *recs;
+	size_t nrec;
+	bool *changed;
+	size_t *reference_index;
+	size_t nreff;
+	ssize_t dstart, dend;
+} xdfile_t;
+
+
+Ezekiel Newren (9):
+  xdiff: use ssize_t for dstart/dend, make them last in xdfile_t
+  xdiff: make xrecord_t.ptr a uint8_t instead of char
+  xdiff: use size_t for xrecord_t.size
+  xdiff: use unambiguous types in xdl_hash_record()
+  xdiff: split xrecord_t.ha into line_hash and minimal_perfect_hash
+  xdiff: make xdfile_t.nrec a size_t instead of long
+  xdiff: make xdfile_t.nreff a size_t instead of long
+  xdiff: change rindex from long to size_t in xdfile_t
+  xdiff: rename rindex -> reference_index
+
+ xdiff-interface.c  |  2 +-
+ xdiff/xdiffi.c     | 29 +++++++++++------------
+ xdiff/xemit.c      | 28 +++++++++++-----------
+ xdiff/xhistogram.c |  4 ++--
+ xdiff/xmerge.c     | 30 ++++++++++++------------
+ xdiff/xpatience.c  | 14 +++++------
+ xdiff/xprepare.c   | 58 +++++++++++++++++++++++-----------------------
+ xdiff/xtypes.h     | 15 ++++++------
+ xdiff/xutils.c     | 32 ++++++++++++-------------
+ xdiff/xutils.h     |  6 ++---
+ 10 files changed, 109 insertions(+), 109 deletions(-)
+
+
+base-commit: 143f58ef7535f8f8a80d810768a18bdf3807de26
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2070%2Fezekielnewren%2Fxdiff_cleanup_part2-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2070/ezekielnewren/xdiff_cleanup_part2-v1
+Pull-Request: https://github.com/git/git/pull/2070
+-- 
+gitgitgadget
