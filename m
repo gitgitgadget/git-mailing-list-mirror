@@ -1,82 +1,88 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0171C302750;
-	Wed, 15 Oct 2025 18:50:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637F9303A10
+	for <git@vger.kernel.org>; Wed, 15 Oct 2025 19:59:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760554252; cv=none; b=tp/oZMcch78W50cjZDB4dT9K64w09XIV/EAqKjzlNPRrGHHxWk9Pm1elc9YkrkU8HIwX+qSv8W8nNRho1ME/DbTnQF3IYGSjsSTAjVOHfs19HzP0QRk0nmAUW/FsOx5uZl7ZJxXXb6qI2cXo7NExreCjVL4HJ1jDx3DGzDv50dQ=
+	t=1760558345; cv=none; b=Vs6IY7u0E7CRglPlyTTaDZZu95XEE/YOYnBcYT8w6T/JUf3dubseAmm/jc34SC/V3ReGIwDoFEf7oEZPHDwjc5S8QuFMsFLMU+2SriT4jSkTlylHWSPbpDExn7e2YQ/V2cWjUraksE66aJQBIdMDEZJ/GHa1YezfcTFgNt3t5x4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760554252; c=relaxed/simple;
-	bh=68YsTsGp1it4PoQXysa5N0fLMIclyhq2x/rAu9dC2U4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=KCU7QI//Ovj1WSe1KTxJYdi9dxWV5dMBp8Olizlhe4xWATTfghUapvInx4NSjUhQN8l03gwXpINilJeX+DIuExkiLCpRuOC3+8FfnLXrC+SWdZZJaUD2NOgBZPY/wIMIJQb7GKeeSpVSsKxOO1dTZzaGyBxi/D8CFKXkmpevBJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fw8fDHuu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H9Gyf4y+; arc=none smtp.client-ip=103.168.172.150
+	s=arc-20240116; t=1760558345; c=relaxed/simple;
+	bh=MYzTX2baL4tOePG7siX6wf5bqmP1xlAXfE0fPuvfL3A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mjmg3sOkIs2lXihiNw4UeZnih1nG6q/FfNDNspbzzA1O0eIYMRoJ3J4F9Gk7u6k0Z4ejCWrxafkjMiNDSAAbm+dwyrhZlMmDK6z7EpQQgsuYD67uRB7uvvlWvSDxJ5e8bZ0GWZXQmtCegCv/AzItB2GgSfUjx38eiFza50eMZHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=W+sByJP6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qfiXwvAH; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fw8fDHuu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H9Gyf4y+"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 33FFAEC0230;
-	Wed, 15 Oct 2025 14:50:48 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 15 Oct 2025 14:50:48 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="W+sByJP6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qfiXwvAH"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 83DC9EC0246;
+	Wed, 15 Oct 2025 15:59:00 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 15 Oct 2025 15:59:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:message-id:mime-version:reply-to
-	:subject:subject:to:to; s=fm1; t=1760554248; x=1760640648; bh=Fr
-	iZuyY0yThvGqLdjcv88IPbga4kqQw7nhJ2H+Aace4=; b=fw8fDHuuoSbeC/Qa/j
-	VlLOmLmmeehXXZR0TWahYEFJJrM6WrLjbf6LBNIkj1pi2ax4ZOtcpGV7MyB4YtwG
-	DQBiNdtEsdOoCWLUq3sOaj/l3SFDPeM8CFFKbAJW98KYUWFzhCHzwM5xjIOpbDgF
-	YokDyPsEgyuyYsF+J+77G37VAh7bsRZlW4k3enIz7Y4OCLvT0iNGio1Sp2nLKXjo
-	cQ/Z7kMv6vFZfCizGjVD8spBtB+wR3KoBDs/6bkS50mTe2vUqqpVHNONGe+AGnwN
-	wyYWrRsn85XCvX6ogVwq/fDPWbdev1MRqXEQumoh2hbOdmPNQzRVErrYXQvbb5Kw
-	sauw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1760558340; x=1760644740; bh=8DCaZVy+W3
+	24A9tKJW59pFa5WaSTm+gBziC2TRki+iU=; b=W+sByJP6wm4g8/3+DziEIkJeyo
+	EpdNLWEZvu3am+8tt0CAMkEit8idthBn0NpmOyndMc4RPgr4zOl6Aa9zVNWB5dhS
+	m3RRrgHoPP+2x0CfBDzRy8+MhAM31kqmtSWZSOOp4ehdk7/PexlQVmyexfpL9fBh
+	6y5nSCH+wRD3/zq9Ort40QyMmvgTBAb2JGJbo/8LcprQ7XA/2MmvRZvSiS6ZxFEk
+	ghRzHxldVH2WqdqbYEE3RnKHkjXK2sk6VTizhIYpF+TVnPR2sz6A/8sr3vYtO7/w
+	9HAXHiclNglbMC4sA/73m3c+Z7gPeQU+Lm03V9weX4Off0xt9fkBroKa9yYg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1760554248; x=1760640648; bh=FriZuyY0yThvGqLdjcv88IPbga4k
-	qQw7nhJ2H+Aace4=; b=H9Gyf4y+9REj64UYEGHlH38CTCHzXY/HEbEd5e+Z5Jv3
-	QeRk44AQxnVR3wGZsKYsWulneSqjf4DkblKfipcRAGmmp92m9k5lAaOLdn5goMZr
-	1PTFGaooP+z6cPOnLA8ORXiE5I82lRm/ONGZKcMXPOxOcZsIQDOA/qLuWlRlGHb7
-	YjixVHh8o022kZuEaG0uU9vt1T1A8mGvl+3b6tB6sSXq8Ofymo/HKbVL8KvkdrIJ
-	NJ+N+Lfgzxtrk97FOMfRVmvG7hsPdQKoVXMFO1Gw8ERSg4kmi7KtG2YjpPXzJt2C
-	rofRFTBxM4gIVCPCZURtwvBv4Swxw4sghuH6ByBtGQ==
-X-ME-Sender: <xms:B-3vaOE4wgAXWT1TT3aEwmbiZoctXmnbWorTj5GZLne3DCJuAIeAUg>
-    <xme:B-3vaA2I2eTb3NMNl5w_qajeN5BRbXCQ6TM2jJT3WGrRfxhjeOvEZeYK1i_SxwNhs
-    QIVMgS3i5qknvd2W7cQYJa5xQu7DVSrWgubFxl9Yiune_cF5In6rQ>
-X-ME-Received: <xmr:B-3vaINY7MfLq_h8IYS7uyzBn-7OiRljP0MJGbX3ODbMMN14Rf9A0qXrxhMrI3ZtqW4D2J8pj7-3q-Dc3_EimOcioAKkUnnNQUoX>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdegudejucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760558340; x=1760644740; bh=8DCaZVy+W324A9tKJW59pFa5WaSTm+gBziC
+	2TRki+iU=; b=qfiXwvAHhG7SzBPZlqIOtOC0El77vL3iDGrnY4aaCD5iaisoo2Y
+	ZtuLO1Oi0ADSAS+DTOOj1wDMAGDzKT4JchbKuG+pv/NxLpIJD1wlTCHA8vHq1fAc
+	u4nLdpGpnuNfsVMLsKGXo/Lad3mt2XF0g4+2P9HoZTPHS++O0IKVg4ewGxDVZHTQ
+	DTfWROazTES86pMxzhim06jLJMh6jSfQSKORNQztKp88mMV4+ERBB3wuPK5+hSVx
+	7ClnLmG8ruzYwGvO//0ZosOkWCDyKk17uYnT67b7vnzwIhnQl0iuyQ8QdIgFrA4O
+	0DjAAwUh2UwVwH0Fef1t5vaTKfVRpZFihcw==
+X-ME-Sender: <xms:BP3vaBub1nXKtzT5iAtQGzzPsGA-i2MY4VPoTT6fdw1fKO-5CLgxLw>
+    <xme:BP3vaMtQbGG63Pp0rdlyy8vOrqHzWPXbKCKiR3IMUYjrlOZMMYIHKPaL91HN85xee
+    9Cgps5zpl9KT6eNaNAGr01RWb6OXsY5KFs6Vruai0VtERT3JeTDMA>
+X-ME-Received: <xmr:BP3vaHCkHDxoJ6VcBgafDTCqEnf7RfQhbrP7d8-W7NYVjcPa31JpnYt916g-0j6aKzTHTcfRQAMjcmtG4TZLq0WP6hkGFgmHepAB>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdegfeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefufffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpedtgeegtdevhfeivedvheegfffffeffgeeluefghfeftefghfejvdffgefffeeg
-    heenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhgohhoghhlvghsohhurhgtvgdrtg
-    homhdpohhrrdgtiidpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
-    gspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlh
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtqdhprggtkhgrghgv
-    rhhssehgohhoghhlvghgrhhouhhpshdrtghomhdprhgtphhtthhopehlfihnsehlfihnrd
-    hnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:B-3vaH67563sFMTTYsBMBofOFyFoKUFjeY8SaGr0c4Nnn9SK1o0KEA>
-    <xmx:B-3vaK1Qf7DZADrbn5AC3M_qkRF359ILR1xiC9WD2gYd03R2cKuDOg>
-    <xmx:B-3vaAwJnuVgmweyZ3oBovELvaDANFXR_NKctG5P0VMdNSau7FDZow>
-    <xmx:B-3vaMv8PchKcfb6fy_MSWaAWxpTvzSF6_IsZhVgfwY0PhWxXZ64yg>
-    <xmx:CO3vaF7MMxaQF8XTlBJipa1ZjM55BOtnxqBop8j7NjOtDFwY2TGtStGi>
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
+    gtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehp
+    shesphhkshdrihhmpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:BP3vaOMR3pncwgSnHHFMc7q7FqrMeXJ9Zjex1xzRBQO0P9eN_IVzVw>
+    <xmx:BP3vaAxkmKZ49nzUnnqx6Db2Ob-Jwth-28AB5KLiqZmZYYLAgKMivA>
+    <xmx:BP3vaOXAIs4CbFe-mkYvGdl5qbQ3PT7PyjsFACeBSVNmrkl978nuZw>
+    <xmx:BP3vaCM7ENvOrAzLjnq6HrgSLQvaG_55_g6pNPa3ZroccbuF4Nymjg>
+    <xmx:BP3vaGilDO8Q0mh_o__iF2_NXzDfF7v4jJ57z9Xv3XQYgbiH3V_y3A6R>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Oct 2025 14:50:47 -0400 (EDT)
+ 15 Oct 2025 15:58:59 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
-    git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git v2.51.1
-Date: Wed, 15 Oct 2025 11:50:46 -0700
-Message-ID: <xmqqa51suhh5.fsf@gitster.g>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  "D. Ben Knoble"
+ <ben.knoble@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  Julia Evans
+ <julia@jvns.ca>
+Subject: Re: [PATCH v3] doc: add a explanation of Git's data model
+In-Reply-To: <pull.1981.v3.git.1760476346040.gitgitgadget@gmail.com> (Julia
+	Evans via GitGitGadget's message of "Tue, 14 Oct 2025 21:12:26 +0000")
+References: <pull.1981.v2.git.1759931621272.gitgitgadget@gmail.com>
+	<pull.1981.v3.git.1760476346040.gitgitgadget@gmail.com>
+Date: Wed, 15 Oct 2025 12:58:58 -0700
+Message-ID: <xmqqv7kgszr1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,267 +90,278 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-The latest maintenance release Git v2.51.1 is now available at
-the usual places.
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-The tarballs are found at:
+> +[[commit]]
+> +commits::
+> +    A commit contains these required fields
+> +    (though there are other optional fields):
+> ++
+> +1. All the *files* in the commit, stored as the *<<tree,tree>>* ID of
+> +   the commit's base directory.
 
-    https://www.kernel.org/pub/software/scm/git/
+"all the files' exact contents at the time of the commit" is what we
+mean here, and once readers know what a tree is, the above sentence
+would be understood as such, but "All the files" felt somewhat
+fuzzy.  I wonder if presenting objects in bottom-up fashion makes it
+easier to see?  Learn that a blob records exact content of a file,
+then learn that a tree records the set of paths with exact contents
+stored at these paths, and after that, learn that a commit records a
+tree, hence a snapshot of the whole set of contents.  I dunno...
 
-The following public repositories all have a copy of the 'v2.51.1'
-tag and the 'maint' branch that the tag points at:
+> +2. Its *parent commit ID(s)*. The first commit in a repository has 0 parents,
+> +  regular commits have 1 parent, merge commits have 2 or more parents
+> +3. An *author* and the time the commit was authored
+> +4. A *committer* and the time the commit was committed.
+> +   If you cherry-pick (linkgit:git-cherry-pick[1]) someone else's commit,
+> +   then they will be the author and you'll be the committer.
 
-  url = https://git.kernel.org/pub/scm/git/git
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://github.com/gitster/git
+It felt a bit odd to single-out cherry-pick here.
 
-----------------------------------------------------------------
+I think the important thing to become aware of for the readers at
+this point is that the author and committer can be different people,
+and it does not matter how one commits somebody else's patch at the
+mechanical level.
 
-Git 2.51.1 Release Notes
-========================
+Perhaps replace "If you cherry-pick..." with something like "note: a
+change authored by a person at some point in time can be committed
+by another person at a different time, and these fields are to
+record both persons' contributions separately", perhaps, if we
+really want to say more.
 
-There shouldn't be anything exciting to see here.  This is primarily
-to flush the "do you still use it?" improvements that has landed on
-the master front, together with a handful of low-hanging, low-impact
-fixes that should be safe.
+> +Git does not store the diff for a commit: when you ask Git for a
+> +diff it calculates it on the fly.
 
+I think this is an attempt to demystify "are we really storing
+snapshot for each commit?" thing, but then "when you ask Git to show
+the commit, it calculates the diff from its parent on the fly" might
+achieve that better, perhaps?
 
-Fixes since Git 2.51.0
-----------------------
+> +[[tree]]
+> +trees::
+> +    A tree is how Git represents a directory. It lists, for each item in
+> +    the tree:
+> ++
+> +[[file-mode]]
+> +1. The *file mode*, for example `100644`. The format is inspired by Unix
+> +   permissions, but Git's modes are much more limited. Git only supports these file modes:
+> ++
+> +  - `100644`: regular file (with type `blob`)
+> +  - `100755`: executable file (with type `blob`)
+> +  - `120000`: symbolic link (with type `blob`)
+> +  - `040000`: directory (with type `tree`)
+> +  - `160000`: gitlink, for use with submodules (with type `commit`)
 
- * The "do you still use it?" message given by a command that is
-   deeply deprecated and allow us to suggest alternatives has been
-   updated.
+It is not really "supporting" file modes.  Rather, Git only records
+5 kinds of entities associated with each path in a tree object, and
+uses numbers taht remotely resemble POSIX file modes to represent
+these 5 kinds.
 
- * The compatObjectFormat extension is used to hide an incomplete
-   feature that is not yet usable for any purpose other than
-   developing the feature further.  Document it as such to discourage
-   its use by mere mortals.
+Perhaps "supports" -> "uses"?
 
- * Manual page for "gitk" is updated with the current maintainer's
-   name.
+> +2. The *type*: either <<blob,`blob`>> (a file), `tree` (a directory),
+> +  or <<commit,`commit`>> (a Git submodule, which is a
+> +  commit from a different Git repository)
+> +3. The <<object-id,*object ID*>>
+> +4. The *filename*
 
- * Update the instructions for using GGG in the MyFirstContribution
-   document to say that a GitHub PR could be made against `git/git`
-   instead of `gitgitgadget/git`.
+Here it may be worth noting that this "filename" is a single
+pathname component (roughly, what you would see in non-recursive
+"ls").  In other words, it may be a directory name.
 
- * Clang-format update to let our control macros be formatted the way we
-   had them traditionally, e.g., "for_each_string_list_item()" without
-   space before the parentheses.
+I wonder if we need to say "<blob> (a file, or a symbolic link)"?
 
- * A few places where a size_t value was cast to curl_off_t without
-   checking has been updated to use the existing helper function.
+> +[[blob]]
+> +blobs::
+> +    A blob is how Git represents a file. A blob object contains the
+> +    file's contents.
 
- * The start_delayed_progress() function in the progress eye-candy API
-   did not clear its internal state, making an initial delay value
-   larger than 1 second ineffective, which has been corrected.
+"represents a file" hints as if the thing may know its name, but
+that is not the case (its name is given only by surrounding tree).
 
- * Makefile tried to run multiple "cargo build" which would not work
-   very well; serialize their execution to work around this problem.
+"A blob is how Git represents uninterpreted series of bytes, and
+most commonly used to store file's contents." or something, perhaps?
 
- * Adjust to the way newer versions of cURL selectively enable tracing
-   options, so that our tests can continue to work.
+> +When you make a new commit, Git only needs to store new versions of
+> +files which were changed in that commit. This means that commits
+> +can use relatively little disk space even in a very large repository.
 
- * During interactive rebase, using 'drop' on a merge commit led to
-   an error, which has been corrected.
+That invites the "aren't we storing a delta after all, then?"
+confusion.
 
- * "git refs migrate" to migrate the reflog entries from a refs
-   backend to another had a handful of bugs squashed.
+"Git only needs to newly store new versions of files and
+directories.  Files and directories that were not modified by the
+commit are shared with its parent commit".
 
- * "git push" had a code path that led to BUG() but it should have
-   been a die(), as it is a response to a usual but invalid end-user
-   action to attempt pushing an object that does not exist.
+> +NOTE: All of the examples in this section were generated with
+> +`git cat-file -p <object-id>`, which shows the contents of a Git object.
 
- * Various bugs about rename handling in "ort" merge strategy have
-   been fixed.
+Was this necessary to say this?  Blobs, Commits, and Tags are
+textual, so "-p" does very minimum thing, but Trees are binary
+garbage, so "-p" output is heavily massaged version of the contents.
 
- * "git diff --no-index" run inside a subdirectory under control of a
-   Git repository operated at the top of the working tree and stripped
-   the prefix from the output, and oddballs like "-" (stdin) did not
-   work correctly because of it.  Correct the set-up by undoing what
-   the set-up sequence did to cwd and prefix.
+> +[[branch]]
+> +branches: `refs/heads/<name>`::
+> +    A branch is a name for a commit ID.
 
- * Various options to "git diff" that make comparison ignore certain
-   aspects of the differences (like "space changes are ignored",
-   "differences in lines that match these regular expressions are
-   ignored") did not work well with "--name-only" and friends.
+Well a commit ID is an alternative way to refer to a commit object
+*name*, so it is a bit strange to say "a name for a commit ID".
 
- * Under a race against another process that is repacking the
-   repository, especially a partially cloned one, "git fetch" may
-   mistakenly think some objects we do have are missing, which has
-   been corrected.
+Perhaps "A branch ref stores a commit ID." is better?
 
- * "git repack --path-walk" lost objects in some corner cases, which
-   has been corrected.
-   cf. <CABPp-BHFxxGrqKc0m==TjQNjDGdO=H5Rf6EFsf2nfE1=TuraOQ@mail.gmail.com>
+> +[[tag]]
+> +tags: `refs/tags/<name>`::
+> +    A tag is a name for a commit ID, tag object ID, or other object ID.
 
- * Fixes multiple crashes around midx write-out codepaths.
+Likewise.  "A tag ref stores any kind of object ID, but commonly
+they are commit objects or tag objects"
 
- * A broken or malicious "git fetch" can say that it has the same
-   object for many many times, and the upload-pack serving it can
-   exhaust memory storing them redundantly, which has been corrected.
+> +    Tags that reference a tag object ID are called "annotated tags",
+> +    because the tag object contains a tag message.
+> +    Tags that reference a commit, blob, or tree ID are
+> +    called "lightweight tags".
+> ++
+> +Even though branches and tags are both "a name for a commit ID", Git
+> +treats them very differently.
+> +Branches are expected to change over time: when you make a commit, Git
+> +will update your <<HEAD,current branch>> to reference the new changes.
 
- * A corner case bug in "git log -L..." has been corrected.
+This sentence talks about branch moving because it advances with
+more commits.  Did we want to say "HEAD" here before we explain what
+it is?  "HEAD" can move for another reason (i.e. branch switching)
+and using "HEAD" in the context of talking about growing history
+might invite confusion.  I dunno.
 
- * Some among "git add -p" and friends ignored color.diff and/or
-   color.ui configuration variables, which is an old regression, which
-   has been corrected.
+> +Tags are usually not changed after they're created.
 
- * "git rebase -i" failed to clean-up the commit log message when the
-   command commits the final one in a chain of "fixup" commands, which
-   has been corrected.
+> +[[HEAD]]
+> +HEAD: `HEAD`::
+> +    `HEAD` is where Git stores your current <<branch,branch>>.
 
- * Deal more gracefully with directory / file conflicts when the files
-   backend is used for ref storage, by failing only the ones that are
-   involved in the conflict while allowing others.
+Hmm...
 
-Also contains various documentation updates, code cleanups and minor fixups.
+> +    `HEAD` can either be:
+> +    1. A symbolic reference to your current branch, for example `ref:
+> +       refs/heads/main` if your current branch is `main`.
+> +    2. A direct reference to a commit ID. This is called "detached HEAD
+> +	   state", see the DETACHED HEAD section of linkgit:git-checkout[1] for more.
 
-----------------------------------------------------------------
+These two are very reasonable.  But "your current <<branch>>" refers
+only to #1.
 
-Changes since v2.51.0 are as follows:
+    `HEAD` refers to the commit your current work is based on, and
+    it is the commit that will become the first parent of the commit
+    once your current work is concluded.  It can either be ...
 
-Aditya Garg (1):
-      docs: update sendmail docs to use more secure SMTP server for Gmail
+perhaps.
 
-Daniele Sassoli (2):
-      count-objects: document count-objects pack
-      doc: clarify which remotes can be used with GitGitGadget
+> +[[remote-tracking-branch]]
+> +remote tracking branches: `refs/remotes/<remote>/<branch>`::
 
-David Aguilar (1):
-      Makefile: build libgit-rs and libgit-sys serially
+Please always write "remote-tracking" with a hyphen (see glossary).
 
-Denton Liu (3):
-      t5516: remove surrounding empty lines in test bodies
-      remote.c: remove BUG in show_push_unqualified_ref_name_error()
-      remote.c: convert if-else ladder to switch
+> +    A remote-tracking branch is a name for a commit ID.
 
-Derrick Stolee (8):
-      path-walk: fix setup of pending objects
-      path-walk: create initializer for path lists
-      midx-write: only load initialized packs
-      midx-write: put failing response value back
-      midx-write: use cleanup when incremental midx fails
-      midx-write: use uint32_t for preferred_pack_idx
-      midx-write: reenable signed comparison errors
-      midx-write: simplify error cases
+Either "A remote-tracking branch stores a commit object name" or "A
+remote-tracking branch points at a commit object", followed by "in
+order to keep track of the last-nown state of ..." in a single
+sentence.
 
-Elijah Newren (8):
-      merge-ort: update comments to modern testfile location
-      merge-ort: drop unnecessary temporary in check_for_directory_rename()
-      t6423: document two bugs with rename-to-self testcases
-      t6423: fix missed staging of file in testcases 12i,12j,12k
-      merge-ort: clarify the interning of strings in opt->priv->path
-      merge-ort: fix incorrect file handling
-      merge-ort: fix directory rename on top of source of other rename/delete
-      Documentation/git-merge-tree.adoc: clarify the --merge-base option
+> +[[index]]
+> +THE INDEX
+> +---------
+> +
+> +The index, also known as the "staging area", contains a list of every
+> +file in the repository and its contents. When you commit, the files in
+> +the index are used as the files in the next commit.
 
-Jean-Noël Avila (2):
-      doc: fix asciidoc format compatibility in pretty-formats.adoc
-      doc: change the markup of paragraphs following a nested list item
+It is hard to define what "every file in the repository" really is.
+Files that you removed last week do not count.  Files added in your
+wip branch elsewhere are obviously not yet in the index when you are
+working on your primary branch.
 
-Jeff King (7):
-      fetch-pack: re-scan when double-checking graph objects
-      curl: add support for curl_global_trace() components
-      stash: pass --no-color to diff plumbing child processes
-      add-interactive: respect color.diff for diff coloring
-      add-interactive: manually fall back color config to color.ui
-      contrib/diff-highlight: mention interactive.diffFilter
-      doc: fix indentation of refStorage item in git-config(1)
+> +You can add files to the index or update the version in the index with
+> +linkgit:git-add[1]. Adding a file to the index or updating its version
+> +is called "staging" the file for commit.
 
-Johannes Schindelin (3):
-      http: offer to cast `size_t` to `curl_off_t` safely
-      imap-send: be more careful when casting to `curl_off_t`
-      http-push: avoid new compile error
+It may be worth to clarify by saying "staging the contents of the
+file" (you can edit the file further after you "git add") that you
+are taking a snapshot at the time you ran "git add", instead of
+giving a general instruction to "keey an eye on this file" to Git
+(if it were, then the next "git commit" would behave more like "git
+add -u && git commit").
 
-Johannes Sixt (4):
-      rebase -i: permit 'drop' of a merge commit
-      doc/gitk: update reference to the external project
-      doc/format-patch: adjust Thunderbird MUA hint to new add-on
-      progress: pay attention to (customized) delay time
+> +[[reflogs]]
+> +REFLOGS
+> +-------
+> +
+> +Git stores a history called a "reflog" for every branch, remote-tracking
+> +branch, and HEAD. This means that if you make a mistake and "lose" a
+> +commit, you can generally recover the commit ID by running
+> +`git reflog <reference>`.
+> +
+> +Each reflog entry has:
+> +
+> +1. Before/after *commit IDs*
+> +2. *User* who made the change, for example `Maya <maya@example.com>`
+> +3. *Timestamp* when the change was made
+> +4. *Log message*, for example `pull: Fast-forward`
+> +
+> +Reflogs only log changes made in your local repository.
+> +They are not shared with remotes.
 
-Junio C Hamano (4):
-      diff: --no-index should ignore the worktree
-      config: document includeIf conditions consistently
-      Prepare for 2.51.1
-      Git 2.51.1
+Technically it is correct that before/after are recorded, but there
+is no way for the end-user to interact with them.  "git reflog"
+walking these entries will only give you a single commit object.
+The username is also recorded, but I do not think of a way to view
+the information, let alone using it for querying.
 
-Justin Tobler (1):
-      clang-format: exclude control macros from SpaceBeforeParens
+Especially when the reftable backend is in use, you cannot even read
+the raw representation like you can do with files backend (where
+something like "cat .git/logs/HEAD" would let you peek into the
+details).  I am not sure if we want to go into this detail.
 
-Karthik Nayak (4):
-      refs/files: catch conflicts on case-insensitive file-systems
-      refs/files: use correct error type when lock exists
-      refs/files: handle F/D conflicts in case-insensitive FS
-      refs/files: handle D/F conflicts during locking
+Perhaps drop everything after "Each reflog entry has:"?
 
-Knut Harald Ryager (1):
-      docs: remove stray bracket from git-clone synopsis
-
-Kristoffer Haugsbakk (17):
-      doc: git-log: fix description list
-      doc: interpret-trailers: close all pairs of single quotes
-      doc: config: replace backtick with apostrophe for possessive
-      doc: add missing backtick for inline-verbatim
-      doc: remove extra backtick for inline-verbatim
-      doc: fast-import: replace literal block with paragraph
-      Makefile: don’t add whatchanged after it has been removed
-      git: add `deprecated` category to --list-cmds
-      git: move seen-alias bookkeeping into handle_alias(...)
-      git: allow alias-shadowing deprecated builtins
-      t0014: test shadowing of aliases for a sample of builtins
-      you-still-use-that??: help the user help themselves
-      whatchanged: hint about git-log(1) and aliasing
-      whatchanged: remove not-even-shorter clause
-      BreakingChanges: remove claim about whatchanged reports
-      doc: patch-id: fix accidental literal blocks
-      RelNotes: minor fixups before 2.51.1
-
-Kyle E. Mitchell (1):
-      doc: fix formatting of function-wrap shell alias
-
-Lidong Yan (1):
-      diff: ensure consistent diff behavior with ignore options
-
-M Hickford (1):
-      docs/gitcredentials: describe URL prefix matching
-
-Mikhail Malinouski (1):
-      docs: fix typo in worktree.adoc 'extension'
-
-Patrick Steinhardt (13):
-      Documentation/git-reflog: convert to use synopsis type
-      builtin/reflog: improve grouping of subcommands
-      refs: export `ref_transaction_update_reflog()`
-      builtin/reflog: implement subcommand to write new entries
-      ident: fix type of string length parameter
-      refs: fix identity for migrated reflogs
-      refs/files: detect race when generating reflog entry for HEAD
-      refs: stop unsetting REF_HAVE_OLD for log-only updates
-      refs: fix invalid old object IDs when migrating reflogs
-      t5530: modernize tests
-      upload-pack: don't ACK non-commits repeatedly in protocol v2
-      odb: drop deprecated wrapper functions
-      ci: fix broken jobs on Ubuntu 25.10 caused by switch to sudo-rs(1)
-
-Phillip Wood (2):
-      rebase -i: respect commit.cleanup when picking fixups
-      sequencer: remove VERBATIM_MSG flag
-
-Ramsay Jones (1):
-      t6137-*.sh: fix test failure on cygwin
-
-René Scharfe (1):
-      object-name: declare pointer type of extend_abbrev_len()'s 2nd parameter
-
-SZEDER Gábor (2):
-      line-log: fix assertion error
-      line-log: show all line ranges touched by the same diff range
-
-brian m. carlson (1):
-      docs: note that extensions.compatobjectformat is incomplete
-
+> +For example, here's how the reflog for `HEAD` in a repository with 2
+> +commits is stored:
+> +
+> +----
+> +0000000000000000000000000000000000000000 4ccb6d7b8869a86aae2e84c56523f8705b50c647 Maya <maya@example.com> 1759173408 -0400      commit (initial): Initial commit
+> +4ccb6d7b8869a86aae2e84c56523f8705b50c647 750b4ead9c87ceb3ddb7a390e6c7074521797fb3 Maya <maya@example.com> 1759173425 -0400      commit: Add README
+> +----
+> +
+> +GIT
+> +---
+> +Part of the linkgit:git[1] suite
+> diff --git a/Documentation/glossary-content.adoc b/Documentation/glossary-content.adoc
+> index e423e4765b..20ba121314 100644
+> --- a/Documentation/glossary-content.adoc
+> +++ b/Documentation/glossary-content.adoc
+> @@ -297,8 +297,8 @@ This commit is referred to as a "merge commit", or sometimes just a
+>  	identified by its <<def_object_name,object name>>. The objects usually
+>  	live in `$GIT_DIR/objects/`.
+>  
+> -[[def_object_identifier]]object identifier (oid)::
+> -	Synonym for <<def_object_name,object name>>.
+> +[[def_object_identifier]]object identifier, object ID, oid::
+> +	Synonyms for <<def_object_name,object name>>.
+>  
+>  [[def_object_name]]object name::
+>  	The unique identifier of an <<def_object,object>>.  The
+> diff --git a/Documentation/meson.build b/Documentation/meson.build
+> index e34965c5b0..ace0573e82 100644
+> --- a/Documentation/meson.build
+> +++ b/Documentation/meson.build
+> @@ -192,6 +192,7 @@ manpages = {
+>    'gitcore-tutorial.adoc' : 7,
+>    'gitcredentials.adoc' : 7,
+>    'gitcvs-migration.adoc' : 7,
+> +  'gitdatamodel.adoc' : 7,
+>    'gitdiffcore.adoc' : 7,
+>    'giteveryday.adoc' : 7,
+>    'gitfaq.adoc' : 7,
+>
+> base-commit: bb69721404348ea2db0a081c41ab6ebfe75bdec8
