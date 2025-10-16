@@ -1,148 +1,118 @@
-Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA4E1DE2D7
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 01:05:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FB24A00
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 01:28:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760576706; cv=none; b=C97WyHz5TDp2k0wfomzIR7Rt70M7qOjB3qd5Dp257IqVw1nGTtSkrAdEi3Od8XX97MbFeZP/AlvlKf7KBJ5ySupImweZDCzSM8vpGa1gS7JlScx6SJwxPSHvmB7/r+UI10xpV2ze9GTBSo3n3DsuLTOwlCoysnsDIR+zpB8q4CA=
+	t=1760578120; cv=none; b=ZB4giepY1ApUeo72dP1ouh1M4kuq9V+Hq6hcRs44gZpXM9Dz6BDwGdRKBxGtDW/jFoI9znKFNQBeJfTBF/TtjV1UQVL3l0shi1QXuvCnW+ZsKy1/J0ZGQUYqIQvg+3nudHJtUCjB2pKtqerpZgPHGOwpKMKia3Vk/c5i8ycOGh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760576706; c=relaxed/simple;
-	bh=mDYjpUBeaQJBuGjpBpUiohzVoQ/pXxDWlm0oUgUcJFE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gKdgixhsBuJ3ccAwutgh4N0nit1zRf0orJKptNU4O13w5r7r8k19v9bGXkNt1jPe5QG/sIIFQfGE9IoWh0SuEDcbQtLHXAX/9wWP8+Xa4EaO62R/LN9f+6XvFkK+Vxn/ZsmGyjZ257j1xZNMTLngLdxAvzFONP88nAg77kJ+Zvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J3nz56bZ; arc=none smtp.client-ip=74.125.224.48
+	s=arc-20240116; t=1760578120; c=relaxed/simple;
+	bh=++zWOK/ndcywcgMDD5iMruJUWCT5nbRjr5OBBQf/IIk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=T8rbip47zg0ZF7DoMl+MTbkWvrv+77JnAA7gVnBvbyqctpZLtPnrX9TTeIalIueKaOuVrb++DszB/LEzePtiRMkHTZplcIoZk/tuotxWGyRLVXVpRY16w3aLuz1mW9fES2bDydXU9LBEcydBhIUMY6IqXgKJNVLI2DG7iOPU9BA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jMtaX6uL; arc=none smtp.client-ip=209.85.167.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J3nz56bZ"
-Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-635401a8f5aso168951d50.1
-        for <git@vger.kernel.org>; Wed, 15 Oct 2025 18:05:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jMtaX6uL"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-44181f9e5b4so135123b6e.0
+        for <git@vger.kernel.org>; Wed, 15 Oct 2025 18:28:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760576703; x=1761181503; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KdB+Vjs+k5FtiN6KjPGHVeB1wW/XzKTKw2dPtPbzxfE=;
-        b=J3nz56bZjFfpnkS/usbv0Si6f7mGrnsFZDvvoO8s+87zacmCYRxPCtA/IOREKmciwP
-         kiCHAAfd1T3KD/MfzcMDbnxjFbi4+iWfP8iXtz1hO70fKSEnM2cu111HFL7iYnw0dk+F
-         4IeLlZApJPghQgCG2IwsPNebXjHYW0+95I3ycCQH8fY3/ilT9qYV8fm4EsfX8rc/bwyg
-         54Ue3umdSMC+t0FEbaMvxAVgCrKpWnMOpppaS9fQPxqgl7LGXCq0ISaYb6YMIga1mbk9
-         f1KLHT+u+BVd3so08qki9nAq8Kgb12/E/ZsIPuDxopLboNnXhHCMC+ghCA6BOwQHlW9T
-         cxig==
+        d=gmail.com; s=20230601; t=1760578118; x=1761182918; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=V7PYv4RZ1qgxbP85bG6eB7jhsDoICNtYgoGAT9V/ZZM=;
+        b=jMtaX6uLXwVxzpt9FkCK3JQC2XMQTicUJzXiTcVx2MaYGRcSUBemThPm2lRDomEFUe
+         r8OKmRgittumn5RQY1QyRW4mcXNCK7a5wKuJffo0bZzNHaRnKH1abqYbmcKLdrQ7kdOa
+         Big6ZWneotr67Jke8xyxlVjGTblbIbwsC7l39mT6f7DBJZm2TZW2PymV6LsK9CYE4VVb
+         r8WcOHH8MdHBgK72/5m5kaxAhdZhAhSHO77SWiYl/O42s4zDjgiQI+NTLp+40eNxK6PN
+         /zdKAsAoGRSINZV2wFycWFQvqdVjcfxrOc3xV8uD9IU6RKEJD4MLx+CipmI0iYIMpvSF
+         WX7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760576703; x=1761181503;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KdB+Vjs+k5FtiN6KjPGHVeB1wW/XzKTKw2dPtPbzxfE=;
-        b=f2y+6Tk9tcnxwiIGiOrmzqXx7ObRQcrDTGQpNpnDVM/iV8JCd0WNVCrBiYI3Mo6qPT
-         kfLUou9GLlErp1dSqhPMmap8qHXBlF7Yq+44rvYjWxEPTAp4MIZboBKiV7y894mRu06g
-         vSdtZzltiawlUN6OzhEAxLjblMCI/Xw2ZsEiWdjTBuTG76Hkw//z4Vn0Rfl8MHqD8A+s
-         jC1buOSrXo3FC5IY3A6aep6T+AZt+MgmliqPzhFDFRhtBq0sYoEdbD4tEhUAHiLwbG1N
-         v3G/BaAJMgDLBFrXKzlpDWiOvg5rOLtBVHOYDWgch85BoNQRbXVDDDna6cX4MIiG0MGq
-         VSXg==
-X-Gm-Message-State: AOJu0YydzPkPg8Of/Bafe2JFtpQC2xEWC6KWwyFYRukCIjVbpRhEjS+g
-	gqo7s5P3fU3uOpBcHdADN005y+lr+sTt7CEhkge+YRbwIo2X0PK94gyC
-X-Gm-Gg: ASbGncttktSUntLHZ25TJguMY6Zyj5tb+JeJNFWN+i7YqYAE7Ez/ioYCjObY1hfdcUt
-	3VfLlkZ5cLPzGP8iN1+HCd5pZMW5AmYu3OigQlpX4hWvTOzNq78cz9X8VLZkwnZdDAQStytnkbu
-	rRUuEBK+sLc4art1Yor7KQ2lxTO4qf0B/lfIRhLBuWvP8phu1ENvW441MmDbd35/jc3bs1VVT7p
-	QZJ9nvmV2IYkGH/53pRUfVBlcvsqUrlONUsYrcQcElm4JmDh2X2rCjan/o0VhgVZXTiTGm6PjgV
-	IRFGOxerCbqD0da4yXTycuFzyCvT9mWH3BLVybshkq+iqWXk/TiOGlaObxHaPGp96Dg9quMGmn8
-	SD+PTbfKrZlwUBaT3TXtjyfxhoje2qMokj5nE9pAuKeWQNrhAaWdWEFaouOV6y7IAfhXIFQ==
-X-Google-Smtp-Source: AGHT+IEtRBwXLByavEYVyFhp4bnD1esKezOK+hTl7nCJ2MlufFZ2P7TABIu6pecYMas48Puy0qnBlA==
-X-Received: by 2002:a05:690e:4142:b0:63c:f4eb:1b0d with SMTP id 956f58d0204a3-63cf4eb1b25mr15228425d50.22.1760576702829;
-        Wed, 15 Oct 2025 18:05:02 -0700 (PDT)
-Received: from ubuntu ([105.117.3.242])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7828cdd2764sm3692407b3.6.2025.10.15.18.05.01
+        d=1e100.net; s=20230601; t=1760578118; x=1761182918;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=V7PYv4RZ1qgxbP85bG6eB7jhsDoICNtYgoGAT9V/ZZM=;
+        b=Oyc4m69LSV0hneYv/R0b9FS2zA5vwMXlMnMJ1Fhc/DCkmG5wEWOLd6CLYxkxWHVvLU
+         aoSjOaYmlvBOCZK6H2bgPTvCS7UvZUkytjwr4zFZT0XexVwU2JmtfnCAmEa8N5wTiQzz
+         iTvrPJxy3VZ7M2LKc61RoFHzIaPf8ipRaxAYwbkXM3oVIe18fJqtkuXdrZrlc+04Dq58
+         C4FQ2u6HbH9qbbmrabe6JYR4GHYwlrdGeeHUXoOvqRr1LcLEFTn92fdfUwHAIagfvxUG
+         JZnkNp3I7OtE6PFRQ43Y2/cHopSMy17qZU8xePNW6LYP4OHOOfKT8YgNNhPTs9kC5/jR
+         3o5A==
+X-Gm-Message-State: AOJu0Ywj6krk90ODi13KSelx38mTNQtPnIjua77tTqXDvs2XgN94YFnp
+	m/TQAsYxlEbDppzqy/hsLW1kNk7BKZ+lBqdRwW7aEuIIdFsweYR7C6O4
+X-Gm-Gg: ASbGncs/SHrx0p+Kod9xz2HGzk7GhdEKVkrukDCr7aWa2f4aWCMrAGa7KsOuFpsbmD7
+	+EIKQKSovO1qURyxZ8KzO598+oyCjcdPyomxHfobuxV3XzLLQVcvjbyYm+juH72I7FQHimeN9oS
+	WJp4SYtFEx9LqToJ6ghSLa9KNCt2CtcUoOVStdqOAQYNi4KNxK+quLu27OljAFYagNSo4P1VnO9
+	Ri1Jo7FriBo9FrZcxmzUCoe1EB7LKyUzCtOwacVxsk5UQTjIkh735VGQJRz4EpFS2jRBw9ooASy
+	j4NjwjpdOSDtzt8fb+NpKWAgezz5sTIpCvXiqrUj4acrozVD7zgdknmazUWSZJ89ZWRii2Env7q
+	GN0Li9TvDaVZ1Im4yPVj2TcxuseJgyBn3SLsIFcj9tVdiief4tUYR50IhQEcrvQD5D+cepmdk7j
+	nU/rwm
+X-Google-Smtp-Source: AGHT+IGpV11BlbfMBw4KMkRASs6kZPRoj8lQZqYKPW7Z5o4sfsb2Dym15MzNbU++KyIfHPKkgO1A1A==
+X-Received: by 2002:a05:6808:1903:b0:43f:5fc5:e04a with SMTP id 5614622812f47-4417b3b2af1mr11802026b6e.31.1760578117816;
+        Wed, 15 Oct 2025 18:28:37 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-4419893b4dcsm4383558b6e.16.2025.10.15.18.28.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 18:05:02 -0700 (PDT)
-From: Olamide Caleb Bello <belkid98@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	gitster@pobox.com,
-	usmanakinyemi202@gmail.com,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [Outreachy PATCH v2 2/2] gpg-interface: use string_list_split() instead of strbuf_split_max()
-Date: Thu, 16 Oct 2025 01:03:54 +0000
-Message-ID: <024a44a242394f5a067f17ec97a99c61232898fe.1760571220.git.belkid98@gmail.com>
-X-Mailer: git-send-email 2.51.0.463.g79cf913ea9
-In-Reply-To: <cover.1760571220.git.belkid98@gmail.com>
-References: <cover.1760571220.git.belkid98@gmail.com>
+        Wed, 15 Oct 2025 18:28:37 -0700 (PDT)
+Date: Wed, 15 Oct 2025 20:28:36 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Martin von Zweigbergk via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@gmail.com>, 
+	Martin von Zweigbergk <martinvonz@google.com>
+Subject: Re: [PATCH] BreakingChanges: say that `git diff X..Y` syntax will be
+ removed in 3.0
+Message-ID: <i5lgq7cunzqn2k3puuudzb53efqz6cxev64l6ukwy2kf24dab3@ndymfd2ocit3>
+References: <pull.1989.git.1760566054455.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1989.git.1760566054455.gitgitgadget@gmail.com>
 
-In get_default_ssh_signing_key(), the default ssh signing key is
-retrieved in `key_stdout`, which is then split using
-strbuf_split_max() into two tokens
+On 25/10/15 10:07PM, Martin von Zweigbergk via GitGitGadget wrote:
+> From: Martin von Zweigbergk <martinvonz@google.com>
+> 
+> The `git diff X..Y` syntax is quite misleading because it looks like
+> it shows the diff of the commits in the X..Y range but it actually
+> shows the diff from X to Y. 
 
-The string in `key_stdout` is then split using strbuf_split_max() into
-two tokens at a new line and the first token is returned as a `char *`
-and not a strbuf.
-This makes the function lack the use of strbuf API as no edits are
-performed on the split tokens.
+Personally, I would like to see both the double-dot and triple-dot
+notations removed from the diff commands because they are often confused
+with the revision range notations. In my opinion, the double-dot
+notation doesn't even have much value as it can be replaced with:
 
-Replace strbuf_split_max() with string_list_split() for simplicity.
+  A..B => A B
+  A..  => A @
+   ..B => @ B
 
-Note that strbuf_split_max() uses `2` to indicate the number of tokens
-to extract from the string, while string_list_split() uses `1` to specify
-the number of times the split will be done on the string, so 1 gives 2
-tokens as it is in the original instance.
+These alternatives are just as concise. 
 
-Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
----
-Changes in v2
- - Reword the commit message for clarity
- - Replace the comment removed in v1
- - Change the test to ensure the number of tokens added to the list by
-   string_list_split() equals 2
- - Add () to function names
+> IMO, if that syntax is supported, it
+> should show a diff from the merge base of X and Y to Y. I hope Git 3.0
+> is a good time to remove support for the current syntax and
+> semantics. Then we can perhaps add the syntax back later with less
+> surprising semantics.
 
- gpg-interface.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+With the existing triple-dot notation, `git diff A...B` is equivalent to
+`git diff $(git merge-base A B) B`. I think this is what you are
+suggesting about that the double-dot notation should do. As mentioned
+earlier, I think both these notations are too easily confused with
+revision range notations so I think we should avoid using the dot syntax
+for such a shortcut altogether.
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 989dca7d14..ab7b8b46e5 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -862,7 +862,7 @@ static char *get_default_ssh_signing_key(void)
- 	struct child_process ssh_default_key = CHILD_PROCESS_INIT;
- 	int ret = -1;
- 	struct strbuf key_stdout = STRBUF_INIT, key_stderr = STRBUF_INIT;
--	struct strbuf **keys;
-+	struct string_list keys = STRING_LIST_INIT_DUP;
- 	char *key_command = NULL;
- 	const char **argv;
- 	int n;
-@@ -884,19 +884,19 @@ static char *get_default_ssh_signing_key(void)
- 			   &key_stderr, 0);
- 
- 	if (!ret) {
--		keys = strbuf_split_max(&key_stdout, '\n', 2);
--		if (keys[0] && is_literal_ssh_key(keys[0]->buf, &literal_key)) {
-+		if (string_list_split(&keys, key_stdout.buf, "\n", 1) == 2 &&
-+			is_literal_ssh_key(keys.items[0].string, &literal_key)) {
- 			/*
- 			 * We only use `is_literal_ssh_key` here to check validity
- 			 * The prefix will be stripped when the key is used.
- 			 */
--			default_key = strbuf_detach(keys[0], NULL);
-+			default_key = xstrdup(keys.items[0].string);
- 		} else {
- 			warning(_("gpg.ssh.defaultKeyCommand succeeded but returned no keys: %s %s"),
- 				key_stderr.buf, key_stdout.buf);
- 		}
- 
--		strbuf_list_free(keys);
-+		string_list_clear(&keys, 0);
- 	} else {
- 		warning(_("gpg.ssh.defaultKeyCommand failed: %s %s"),
- 			key_stderr.buf, key_stdout.buf);
--- 
-2.51.0.463.g79cf913ea9
+The triple-dot notation is a somewhat convienient shortcut though. If we
+wanted to remove it, we would maybe want to replace it some other
+functionally equivalent shortcut.
 
+All this being said, I've sure there are folks in the wild using these
+notations in scripts and changing would cause disruption. Maybe the Git
+3.0 release would indeed be a good time to remove them though.
+
+-Justin
