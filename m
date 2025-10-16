@@ -1,247 +1,153 @@
-Received: from mail.lohmann.sh (mail.lohmann.sh [23.88.42.106])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3502B2192FA
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 05:33:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.88.42.106
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75C62E62A4
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 07:26:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760592841; cv=none; b=PkLG5MFfdSa+rRTdyr6xa/N1Fh0tTextGTSMFceltvnYKQBZ5bZxChDEhrt2M9HoK/aYGnQl87a9fzQNGLY1+jHuMCg0VHRMf+8qomgnB80rG4v7SiEG2f4aMKnR/d97MDXlJPjI5aVV4N8fHmb9q1VkvX99cxozkcHigbR/zZ8=
+	t=1760599612; cv=none; b=FEM8Sux12ox4s3+Ps6E9EBkocgtJhIAm5oBrFNBxA8vli6wTiNzLRvpaTuoV4gazLX4EnMTGbn7Ib5N/qSIVbljI3fnFsRaj7tbuF9LOFQpepvc1PhgnhWtEw5kKV4XVzM549hPjyDtP43ksDW+HLRf9yeWLe3Marn74lLV1beo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760592841; c=relaxed/simple;
-	bh=FZ/0MqwlC2PxFeZ29+dyW3PSVquqQUVcgf3HqT8XSwg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y0gMabofIPIHEa2JtllkinOLXjqx7rBZ8n4tQT7l3hh225OjmnnOIdibLj8gnhMF+5YYtAHbrelXPrwd9AtQHCQz34ggEhlHGWbwkNVdnoYv2/UALkPGWdnPMAEU2KpIlc1ZOHwtbq3rGzHvxfpnstewNluEE2C1IHyaVM8bhfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lohmann.sh; spf=pass smtp.mailfrom=lohmann.sh; dkim=pass (2048-bit key) header.d=lohmann.sh header.i=@lohmann.sh header.b=S/8bQ+8y; arc=none smtp.client-ip=23.88.42.106
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lohmann.sh
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lohmann.sh
+	s=arc-20240116; t=1760599612; c=relaxed/simple;
+	bh=ce5E8WwFAaQol7XNcvzB+dKVDypDqxh2jPb3/nS4Gv8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=gnKT10aOu7VHA0SoAsKIrjToeIZFt1uSzjXJWSys+GypeNaAgJLkd1TVf2MYlF4/tL5KLKyDrujug41Vkef7EIUEndX/y4bERXvMApBsqs/EL7gYyYYrWZRQP+FAzIEYOvtRboySbsdZngq6ezvpXXbLKEh/w/ioIJAD8BIMmFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cOuEd3yX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F9Ad3O1b; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lohmann.sh header.i=@lohmann.sh header.b="S/8bQ+8y"
-From: Michael Lohmann <git@lohmann.sh>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lohmann.sh; s=mail3;
-	t=1760592826;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=XL8YMeSEsq7ylLsAo+N1mfKwnyv8TETHlWpEoYnXiCc=;
-	b=S/8bQ+8yqNNTXrYfnvZrs2gBG6JZ5C3/ZqSqJO8C5PtzAMU3uc1fuR1CO0fzNswfOA6XmY
-	yl3r+kbK7aNa1OiBBOzwA4npHpnOSr71DccMTd+z070UzkqPShJCQq3XzoyQGM8XcS9Fl+
-	fFncv5XjnHkWDQ9YkdCiN5faEZj3J1hZiVoOm2swa03+3W9lECPgXmz6l7qUjudWfKhOVL
-	F7DZlfYbNAQDUAZqyUkSBUkjk/HpBxpDMCPIXyJtcqaFdVhQXjTVHFvZYz8caKnb5ZijN6
-	nXy2OifdHQNXn0n7SXasZj5d8D6ykiEBf6/sp0S0bIeXJpff44suiuGvIJsHkg==
-To: git@lohmann.sh
-Cc: git@vger.kernel.org
-Subject: [PATCH v3 5/5] setup: allow not marking self owned repos as safe in `ensure_safe_repository()`
-Date: Thu, 16 Oct 2025 07:33:22 +0200
-Message-ID: <20251016053322.44495-6-git@lohmann.sh>
-In-Reply-To: <20251016053322.44495-1-git@lohmann.sh>
-References: <20251013094152.23597-1-git@lohmann.sh>
- <20251016053322.44495-1-git@lohmann.sh>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cOuEd3yX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F9Ad3O1b"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id C0CDDEC01AC;
+	Thu, 16 Oct 2025 03:26:47 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Thu, 16 Oct 2025 03:26:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1760599607; x=1760686007; bh=EFhEAAC6xV
+	WMkA8/r6DNW2BDSWfyET94NzWHeity1nQ=; b=cOuEd3yXbj8DovuWfAeCUoe9+I
+	PO0b0kblSqMnFRw/51BfeXAGcASl4NNj6ytz1JF4XJXE/KeIfQfdK05xsnBS9pXn
+	HWl4a0ZsLSl+nAd3O84Bj9WWqRZ9pz5/bhc5ZWIbwQlyjZxWevnL/LRyL3T7L9Qs
+	2u1tSPGRvhYDTCE4gdEEM/hYV2mwrGAZsH83ZlzFpb52wYFbxeOdKMfQsJc6wJwZ
+	ksgx0t9vk2mC7Pei5U7LalRb5PV5BfA/vXbUoqM3CzQsIKTASlI/+h1rZvIFAljp
+	tKiHVguY0AoJJ5xgSAtTh4RqapBvZQzHC78D/7VKj92Sd97wwRpxXY4sxhRg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1760599607; x=1760686007; bh=EFhEAAC6xVWMkA8/r6DNW2BDSWfy
+	ET94NzWHeity1nQ=; b=F9Ad3O1bZdmhlxjlav0SG095n/oLhPhCbHp3GQ2oFBrR
+	RMSOoykaz69Ka5nGhl4C8DDF26jXUIZbkfHcQXM4xmdIH5zN2wDxU48r6pEllEoo
+	fsb2LTQKA+dzgh87CBYDt6aVz9isd4lNwsZzrhfu1Px0vIiPRvgXn5b/5XaWopl6
+	0PxuDLAdcYjQ86aH0B5gKNATp1ThVAB08dn8S8gqpSptHTzcKqApe46JpTsN08ci
+	SA8C9rdmTsB4GpoLOr2x/HNHJvtyFjo0CUCX8Wvwb7hJLaNiWWLodh2tQht5KikL
+	/LMHT78KV/lYSAk6kUsb1AsC+2EBqohupepyXGcUIg==
+X-ME-Sender: <xms:N57waOhBLKvqyJPl3250TmwiF8EL1Jcs6o8i2ITVrfgy2CHMv_0ZSQ>
+    <xme:N57waGd3wEgs-a-c8u7MAWI68rK3Fd9mJhnNbFPBj7NkX8H9W1yx59kyywDkwoChB
+    k3nAiosKA6bNFQ_NtR82Vz54BH5GrBqv86YoiJKi3BqDICxnEL1vg>
+X-ME-Received: <xmr:N57waDdpq35RAQT34BlgnIj_A15bQqgy2K7faoZhZpz4dWrfq1qRCjTmFaNXiQz53j2VvVU_lIxX1L2SVki7S6SZ9dXQlshXy1D5pfnGu-mJzw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdehieelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffufffkgggtgffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evueegkedtteeigeejueehuedugfevleefveehueehgfetffffvefhuefhueekveenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorh
+    hrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:N57waA-6AYl3RNf4VrGdYfhqrbmFHWBsR5Yp-Fm2TORSU53LlBjDYQ>
+    <xmx:N57waPktG9WA2ged_miz91KRTi4nE6ORqizU8JE77d6nKzWNxjVg9g>
+    <xmx:N57waC_K_YEjgP0Oa7DzASEYdFyWYaJ-jXIdaAMhWIrwEZ86tKIGUA>
+    <xmx:N57waNlZ3O-1086HUBMRP6U1L0mhqNpjMypn0t7O744xPac5wG6pGQ>
+    <xmx:N57waH4xQ-orDZNGMXPpKpxLFIWsZDn52RVHLABL_wKeYgLHeHwnKgzz>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 16 Oct 2025 03:26:46 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 84588196 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 16 Oct 2025 07:26:45 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/8] builtin/maintenance: introduce "geometric" strategy
+Date: Thu, 16 Oct 2025 09:26:31 +0200
+Message-Id: <20251016-pks-maintenance-geometric-strategy-v1-0-18943d474203@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACee8GgC/x3NwQrCMAyA4VcZORtoBoHiq4iHWmMNsmwkRZSxd
+ 7d4/C7/v0OIqwScpx1c3hq62gCdJqjPYk1Q78Mwp5kpEeP2ClyKWhcrVgWbrIt014rRvXRpX+S
+ cKmfOdEsEI7S5PPTzn1yux/ED+akH4HQAAAA=
+X-Change-ID: 20251015-pks-maintenance-geometric-strategy-580c58581b01
+To: git@vger.kernel.org
+Cc: Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>
+X-Mailer: b4 0.14.3
 
-Git considers all repositories as safe, if they are either
- - explicitly set in "safe.directory" config, or
- - the user owns the repo
+Hi,
 
-Since a user could unzip a folder they downloaded from the internet and
-unknown to them, it is a repository with malicious hooks/config, an
-attacker could easily get code execution. Even a command line prompt
-would automatically trigger this if executing `git status` after
-entering the malicious directory.
+by default, git-maintenance(1) uses git-gc(1) to perform repository
+housekeeping. This tool has a couple of shortcomings, most importantly
+that it regularly does all-into-one repacks. This doesn't really work
+all that well in the context of monorepos, where you really want to
+avoid repacking all objects regularly.
 
-Allow not to automatically treat all repos owned by the user as safe.
-This can either be done by "--assume-unsafe", the environment variable
-"GIT_ASSUME_UNSAFE" or by setting the configuration "safe.assumeUnsafe"
-in a safe context (so not the repo config, as it should not be able to
-allow list itself).
+An alternative maintenance strategy is the "incremental" strategy, but
+this strategy has two downsides:
 
-Signed-off-by: Michael Lohmann <git@lohmann.sh>
+  - Strategies in general only apply to scheduled maintenance. So if you
+    run git-maintenance(1), you still end up with git-gc(1).
+
+  - The strategy is designed to not ever delete any data, but a full
+    replacment for git-gc(1) needs to also prune reflogs, rereree caches
+    and vanished worktrees.
+
+This patch series aims to fix both of these issues.
+
+First, the series introduces a new "geometric" maintenance task, which
+makes use of geometric repacking as exposed by git-repack(1) in the
+general case. In the case where a geometric repack ends up merging all
+packfiles into one we instead do an all-into-one repack with cruft packs
+so that we can still phase out objects over time.
+
+Second, the series extends maintenance strategies to also cover normal
+maintenance. If the user has configured the "geometric" strategy, we'll
+thus use it for both manual and scheduled maintenance. For backwards
+compatibility, the "incremental" strategy is changed so that it uses
+git-gc(1) for manual maintenance and the other tasks for scheduled
+maintenance.
+
+The series is built on top of b660e2dcb9 (Sync with 'maint', 2025-10-14)
+with tb/incremental-midx-part-3.1 at c886af90f8 (SQUASH??? play well
+with other topics by preemptively including "repository.h", 2025-09-29)
+merged into it.
+
+Thanks!
+
+Patrick
+
 ---
- Documentation/config/safe.adoc    |  9 +++++++
- Documentation/git.adoc            | 14 +++++++++-
- environment.h                     |  1 +
- git.c                             |  6 ++++-
- setup.c                           |  9 +++++++
- t/t0036-allow-unsafe-directory.sh | 43 +++++++++++++++++++++++++++++++
- 6 files changed, 80 insertions(+), 2 deletions(-)
+Patrick Steinhardt (8):
+      builtin/gc: remove global `repack` variable
+      builtin/gc: make `too_many_loose_objects()` reusable without GC config
+      builtin/maintenance: introduce "geometric-repack" task
+      builtin/maintenance: don't silently ignore invalid strategy
+      builtin/maintenance: run maintenance tasks depending on type
+      builtin/maintenance: extend "maintenance.strategy" to manual maintenance
+      builtin/maintenance: make "gc" strategy accessible
+      builtin/maintenance: introduce "geometric" strategy
 
-diff --git a/Documentation/config/safe.adoc b/Documentation/config/safe.adoc
-index 2d45c98b12..d93881d6c0 100644
---- a/Documentation/config/safe.adoc
-+++ b/Documentation/config/safe.adoc
-@@ -60,3 +60,12 @@ which id the original user has.
- If that is not what you would prefer and want git to only trust
- repositories that are owned by root instead, then you can remove
- the `SUDO_UID` variable from root's environment before invoking git.
-+
-+safe.assumeUnsafe::
-+	Boolean to indicate that the ownership of a repository should not
-+	be taken into account when checking if the repository is safe. It
-+	will prevent against accidental arbitrary code execution.
-++
-+To temporarily allow git execution in case of an assumed unsafe repository,
-+run the command with `--allow-unsafe`. To permanently trust this path, add
-+it to the `safe.directory` config.
-diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index 7df51c38f9..e24dafc2a9 100644
---- a/Documentation/git.adoc
-+++ b/Documentation/git.adoc
-@@ -14,7 +14,7 @@ SYNOPSIS
-     [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]
-     [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]
-     [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]
--    [--allow-unsafe]
-+    [--allow-unsafe] [--assume-unsafe]
-     <command> [<args>]
- 
- DESCRIPTION
-@@ -238,6 +238,13 @@ If you just want to run git as if it was started in `<path>` then use
- 	execution by hooks or configuration settings. Equivalent to setting
- 	the environment variable `GIT_ALLOW_UNSAFE=1`.
- 
-+--assume-unsafe::
-+	Prevent arbitrary code execution by hooks or configuration if not
-+	executed in a "safe.directory". With setting this, filesystem ownership
-+	of the repository in question no longer satisfies to mark it as safe.
-+	Equivalent to setting `GIT_ASSUME_UNSAFE=1`. This is overridden if
-+	`--allow-unsafe` is passed as well.
-+
- GIT COMMANDS
- ------------
- 
-@@ -506,6 +513,11 @@ Git so take care if using a foreign front-end.
- 	owns the repository before potentially executing arbitrary code
- 	from hooks or config.
- 
-+`GIT_ASSUME_UNSAFE`::
-+	This Boolean environment variable can be set to true enforce
-+	explicit "safe.directory" configuration for the repository. This
-+	can be overridden by setting `GIT_ALLOW_UNSAFE`.
-+
- `GIT_INDEX_FILE`::
- 	This environment variable specifies an alternate
- 	index file. If not specified, the default of `$GIT_DIR/index`
-diff --git a/environment.h b/environment.h
-index ee9e1b9514..89036a9460 100644
---- a/environment.h
-+++ b/environment.h
-@@ -43,6 +43,7 @@
- #define GIT_TEXT_DOMAIN_DIR_ENVIRONMENT "GIT_TEXTDOMAINDIR"
- #define GIT_ATTR_SOURCE_ENVIRONMENT "GIT_ATTR_SOURCE"
- #define GIT_ALLOW_UNSAFE "GIT_ALLOW_UNSAFE"
-+#define GIT_ASSUME_UNSAFE "GIT_ASSUME_UNSAFE"
- 
- /*
-  * Environment variable used to propagate the --no-advice global option to the
-diff --git a/git.c b/git.c
-index a7581a6805..40ef89558d 100644
---- a/git.c
-+++ b/git.c
-@@ -42,7 +42,7 @@ const char git_usage_string[] =
- 	   "           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n"
- 	   "           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n"
- 	   "           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n"
--	   "           [--allow-unsafe]\n"
-+	   "           [--allow-unsafe] [--assume-unsafe]\n"
- 	   "           <command> [<args>]");
- 
- const char git_more_info_string[] =
-@@ -359,6 +359,10 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			setenv(GIT_ALLOW_UNSAFE, "1", 1);
- 			if (envchanged)
- 				*envchanged = 1;
-+		} else if (!strcmp(cmd, "--assume-unsafe")) {
-+			setenv(GIT_ASSUME_UNSAFE, "1", 1);
-+			if (envchanged)
-+				*envchanged = 1;
- 		} else {
- 			fprintf(stderr, _("unknown option: %s\n"), cmd);
- 			usage(git_usage_string);
-diff --git a/setup.c b/setup.c
-index 515d1eedc0..0c056438a6 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1238,6 +1238,12 @@ static int safe_directory_cb(const char *key, const char *value,
- {
- 	struct safe_directory_data *data = d;
- 
-+	if (!strcmp(key, "safe.assumeunsafe")) {
-+		if (git_config_bool(key, value))
-+			setenv(GIT_ASSUME_UNSAFE, value, 0);
-+		return 0;
-+	}
-+
- 	if (strcmp(key, "safe.directory"))
- 		return 0;
- 
-@@ -1330,6 +1336,9 @@ static int ensure_safe_repository(const char *gitfile,
- 	if (data.is_safe)
- 		return 1;
- 
-+	if (git_env_bool("GIT_ASSUME_UNSAFE", 0))
-+		return 0;
-+
- 	if (!git_env_bool("GIT_TEST_ASSUME_DIFFERENT_OWNER", 0) &&
- 	    (!gitfile || is_path_owned_by_current_user(gitfile, report)) &&
- 	    (!worktree || is_path_owned_by_current_user(worktree, report)) &&
-diff --git a/t/t0036-allow-unsafe-directory.sh b/t/t0036-allow-unsafe-directory.sh
-index 4b98e815ff..98087322a2 100755
---- a/t/t0036-allow-unsafe-directory.sh
-+++ b/t/t0036-allow-unsafe-directory.sh
-@@ -25,4 +25,47 @@ test_expect_success 'GIT_ALLOW_UNSAFE bool allows unsafe directory' '
- 	    git status
- '
- 
-+test_expect_success '--assume-unsafe prevents execution if not in safe.directory' '
-+	sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
-+	git status &&
-+	test_must_fail git --assume-unsafe status 2>err &&
-+	grep "dubious ownership" err
-+'
-+
-+test_expect_success 'GIT_ASSUME_UNSAFE prevents execution if not in safe.directory' '
-+	test_must_fail env GIT_ASSUME_UNSAFE=1 \
-+			   git status 2>err &&
-+	grep "dubious ownership" err
-+'
-+
-+test_expect_success 'safe.assumeUnsafe on the command line' '
-+	test_must_fail git -c safe.assumeUnsafe="true" status 2>err &&
-+	grep "dubious ownership" err
-+'
-+
-+test_expect_success 'safe.assumeUnsafe in the environment' '
-+	test_must_fail env GIT_CONFIG_COUNT=1 \
-+	    GIT_CONFIG_KEY_0="safe.assumeUnsafe" \
-+	    GIT_CONFIG_VALUE_0="true" \
-+	    git status 2>err &&
-+	grep "dubious ownership" err
-+'
-+
-+test_expect_success 'safe.assumeUnsafe in GIT_CONFIG_PARAMETERS' '
-+	test_must_fail env GIT_CONFIG_PARAMETERS="${SQ}safe.assumeUnsafe${SQ}=${SQ}true${SQ}" \
-+	    git status 2>err &&
-+	grep "dubious ownership" err
-+'
-+
-+test_expect_success 'ignoring safe.assumeUnsafe in repo config' '
-+	git config safe.assumeUnsafe "false" &&
-+	git config --global safe.assumeUnsafe "true" &&
-+	test_must_fail git status 2>err &&
-+	grep "dubious ownership" err
-+'
-+
-+test_expect_success 'allow-unsafe must override assume-unsafe' '
-+	env GIT_ASSUME_UNSAFE=1 git --allow-unsafe status
-+'
-+
- test_done
--- 
-2.51.1.476.g147428281d
+ Documentation/config/maintenance.adoc |  44 +++++-
+ builtin/gc.c                          | 271 +++++++++++++++++++++++++++-------
+ t/t7900-maintenance.sh                | 212 ++++++++++++++++++++++++++
+ 3 files changed, 469 insertions(+), 58 deletions(-)
+
+
+---
+base-commit: 0bb2c786c2349dd6700727153c13d81cbfb41710
+change-id: 20251015-pks-maintenance-geometric-strategy-580c58581b01
 
