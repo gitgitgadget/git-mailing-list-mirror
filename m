@@ -1,56 +1,56 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B453A2F9DA7
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 07:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16772E7F3F
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 07:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760599613; cv=none; b=UBa3i05+cc5Pih8/VdoNvsv1yWLJE22XBk5mcfvHXjzEmdg+Sy5lNK6fOvEnVrmk7TEu/ZVWy8GzHNIf1pxr+nw7HIIzEvF9ZLemsO7UFFLWyQHcgDKt+YeyvcVKDF1JOLf8DHRhA1LX+XPvxCO+f8hy7t+BsVstHBlMYEi2Sx0=
+	t=1760599614; cv=none; b=OfWBjlZlicRCMpS+orMoIsy/DkcckkNmzf8jFnlq/p6ALnyaeTCZMbx2djOAIHcfB9L/0nv7k391A1t/zCYz3vOuBd8uKkdIXPT+HEC4dR6/yKF49GyR3zfnMgDNn1bBP2sQFEejQJrHHZQjWs51t3M2nn81ZDVpl3QHYAHAdF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760599613; c=relaxed/simple;
-	bh=0iGHx8prFZuXxp3HQkfP/Nm+f+djYlgUjDAnsiE2bZI=;
+	s=arc-20240116; t=1760599614; c=relaxed/simple;
+	bh=28i+A/Wtl/ljLrjdNqU4OfML3a/xfdkZ+ahIBvo3X1Y=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YbzTugjrjjrCIe9zLBLi8nULNjx/3vp5OtYGs2AEZvNPMojO2+OkwNAoAdLFFHv0UzFaW4uiu4eAJAHQY9lKDwzYokhY1Fb1U96U/CdUK5ie9DlbHW0BO06T7p88e3kMegQnFdsXNLpsQui8JWiITcgXPlSMZOwDnj10QJp/z4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AqdG4BXh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gu5v0Njw; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=Lxm2KBRUOVOknugkpXQ0XP62k/fGwC3RSsMarclETYxNWSMXfnF252lGqKZ6YM/1vpRSbRpBhAVpY8SRv6exKbtx8aiStzdf8wXvVUBkcKId6/8N9/7eVDPTxRrhjhTDsyzZZfcA4usX0PRT6R89p1I29Rof2W2i5A0IJQErHII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GW5Mi0uO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uvv3Y/yQ; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AqdG4BXh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gu5v0Njw"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id E71AFEC010A;
-	Thu, 16 Oct 2025 03:26:49 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GW5Mi0uO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uvv3Y/yQ"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 06EF5EC00D9;
+	Thu, 16 Oct 2025 03:26:52 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 16 Oct 2025 03:26:49 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 16 Oct 2025 03:26:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1760599609;
-	 x=1760686009; bh=T2M5KlikHPQTbHjxyMdp1OCy4eOoUPO3sfJ5/yOOp1o=; b=
-	AqdG4BXhnLqH2dqKOkCGNIUDD2cSpg2x/d+N6mGSxtotrqI/+/k/ORkPcZRmGXF+
-	IULu0GFlAp+yuTBdNaOKidf4YV1mulN+xpvGZ/9e5fOPCwPZPqcT+BAacs0t4HX+
-	HxqhVrR+Vu4pGBWoLe9kQqzDCb0VwSJwls7HO3BSQ4xFHD0/6h+jA2fLH7ArUw6k
-	YCkBUf0SOfBWkVh2V1ty/StAQVOelmN0lXoV7u61szWawX5weHoQZTpnLqDA90rx
-	mK5H7VMGqnHrvWzOE/tP+K1KO0AWLuEfOUzDmGtFQVsiTMssDoZc+1k5fozUM/5N
-	P/0D2JvEavyyr2UXn4bWQg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1760599612;
+	 x=1760686012; bh=cgFbBzRFQlGEIhnLZti2x4hP0AeNUZl90aApwGi9Oj8=; b=
+	GW5Mi0uOPQ9X1xA8vEmdFGUmwi5R7Ob/m6d9s97npR4Qp+Nq5xLG98oXzyVInGQL
+	goOrFbosqaJR7BHBrwFBEPxt3sGV5buAR94i/cqOSquDCelzseNjfiGZblDrhas7
+	V3nQcoDMGqKETwe+5GDfJ4RJZ10ZnV825o8tZv6w11YC3htBXQyuacaQOTrTyAFI
+	yc5tpXzlDYim63TeCSw9PemmGUaopDydn0cvOWT7+A5TBKrwE/57508I5V38GRef
+	Rn5ZZ/1DeRQ72eokJJmFhET3F+GgyoV7T2685qVgkNjwUOiV+5zb5FNkjKInk+B3
+	gMd5rikit/xpIyvJmllWTw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760599609; x=
-	1760686009; bh=T2M5KlikHPQTbHjxyMdp1OCy4eOoUPO3sfJ5/yOOp1o=; b=g
-	u5v0NjwJCOfsntxd7LKbWZtZbW4idJylbHWSz93Kuo1lEjsK+aPQiLgGloBPU2OY
-	bkB7iQPiVdBlAjeeTevzMljt77bfOCHbmKKmbTkpN/v9B1w7XcSY36In874RbmeE
-	eb3GUxDLXYNavNZG6MQ/AA55/EQHm05pcJ5UFNGgYduhIBnOmmI5TtzWro0g98i2
-	wDeRplY8e7VExvLrsgKo9JsUuvdJWv8iH7QvQUDPUSV+w/WpTVTUJMYUHe5yjx9p
-	O82cLTKCg8VxnXJ9GOEo7zpXwF+z9l/pyiJ5ZmpgD2pUKXGw7dipvtTb3T8GMwpE
-	Pqg/mrh7pBwZ62B0H6G+Q==
-X-ME-Sender: <xms:OZ7waHJ-oS7A8AL5SI7heA0z3F_pGtEicvIjhwMBfKEZD6R-331qrw>
-    <xme:OZ7waCk6RxGVDdJaqktdD4gg2bZAs_mhQl0Cx5nICbT8WQWx6PhpuUR_ZfW2hNxll
-    ht64Q7qmDF2sOWGS5jBpMwEBRwKosHzws3zHp1fYUQJzjpFuqRINA>
-X-ME-Received: <xmr:OZ7waNGh3rnEuhWN3vIO_v9SU7sdPoV2q11MsrS8Gal_4i-VXvWEhh8fp1pKXhwUZP_fM6KcdlmSndaa4E7Px7hcWeVd7zM_iIJGjj4YUt60GQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdehieekucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760599612; x=
+	1760686012; bh=cgFbBzRFQlGEIhnLZti2x4hP0AeNUZl90aApwGi9Oj8=; b=u
+	vv3Y/yQURuznwQWmhxJjH706Y8NqidpCvtvPuQAGSNHEJRVXv0K1qhIdtXTR8Kok
+	Yg9Cjl0HPixpc2njsjqXBRcNwJ/uZ5PfmvCS4XfNe87pfyFD0PGELXrgfV5PlEda
+	3QxlhNbnJaoeDvAPndp1TiIyr4lbeaAO90otToml2FR/SCt2yGK6hCcjPary9EKa
+	SFyjekDNcv8pKVXqR+ljFHru7X89gWfa24XZBbjgzJaluvxNxsZ4uk4ZSEJuK+Wb
+	BZzDFYon7NNyFSK+PBTlpP5C7eTjBw/pOiLjgXqumqQs+xddguyFm16Qm1MoWOg1
+	LmJCBEcud44YVtfLyezgw==
+X-ME-Sender: <xms:O57waEWpIVW6YAJAYvVLdRCmYh26b564PRKLrXhWQ4EbTr46GEIh2w>
+    <xme:O57waAAI1xB_NY6koisDhEmKnvWe2kuzLd2ZcGm1hRbYis8KLUus5X4iBJd4BPkkB
+    QmsWkFrfuEgJc5SIExZv0pEmHp6SM4GUJIXDtBK-FLFNsEf08_U>
+X-ME-Received: <xmr:O57waFxwPPEbpLP4m0w3WxGP6j3mMKjCCp67eM_NH8ikwA61UdPTXXXe34OcvvocpkT5nL-snDgPH9zqqkUW1ikbmuVHqiV7NDC-PpD_T8ZIpw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdehieelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
@@ -58,22 +58,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdehieekucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtth
-    grhihlohhrrhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:OZ7waKEvo3x4xV9n6JACgHjbRxKKppBsM_8NH6t92FaoG-opvW0NBQ>
-    <xmx:OZ7waCNpE59nzwzcPBRhWPITT-EiqkvEQCsmhKcblsKaHqaCTibiwA>
-    <xmx:OZ7waBG3jnzzwM1jDaDgu54I83AiK_MqHFMoIHhuXtSzYB3MmwXEkQ>
-    <xmx:OZ7waBNCvDA4QKqoiX_OnpiMrbDo9QO9xNhc6I1-8ql5YfDZRFY65A>
-    <xmx:OZ7waKBDosQkYpf5KJGKfvWAFUt1U8qmk2vQ1fCL87QpGpsWWlwgTXA0>
+    thhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:O57waNACSUnigOMkoYtbko41FPzrkBS76V6MG3RQDmotAjbQQIRBHA>
+    <xmx:O57waCaOvi5Y82UTSC8tk3rsn1S5y4si_2YE5iSgVfg_pTZ7iqQo0A>
+    <xmx:O57waFgrciTB-lcbglAO3b53gH0NFiEB0LXWKU8sFrAwicxG-tRrlQ>
+    <xmx:O57waE6OgMpA2oUuw_3lAMHHMlPpdgTdCzU2sI40AFiSPAS1-fEphA>
+    <xmx:PJ7waEf4A_oG6D7LV372tfuEljLZxXqb9zP46jyitjao2r3w9hTKNSJf>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Oct 2025 03:26:48 -0400 (EDT)
+ 16 Oct 2025 03:26:51 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 024b7a19 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 16 Oct 2025 07:26:48 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 9a5f50f4 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 16 Oct 2025 07:26:50 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 16 Oct 2025 09:26:32 +0200
-Subject: [PATCH 1/8] builtin/gc: remove global `repack` variable
+Date: Thu, 16 Oct 2025 09:26:33 +0200
+Subject: [PATCH 2/8] builtin/gc: make `too_many_loose_objects()` reusable
+ without GC config
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,238 +83,71 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251016-pks-maintenance-geometric-strategy-v1-1-18943d474203@pks.im>
+Message-Id: <20251016-pks-maintenance-geometric-strategy-v1-2-18943d474203@pks.im>
 References: <20251016-pks-maintenance-geometric-strategy-v1-0-18943d474203@pks.im>
 In-Reply-To: <20251016-pks-maintenance-geometric-strategy-v1-0-18943d474203@pks.im>
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>
 X-Mailer: b4 0.14.3
 
-The global `repack` variable is used to store all command line arguments
-that we eventually want to pass to git-repack(1). It is being appended
-to from multiple different functions, which makes it hard to follow the
-logic. Besides being hard to follow, it also makes it unnecessarily hard
-to reuse this infrastructure in new code.
+To decide whether or not a repository needs to be repacked we estimate
+the number of loose objects. If the number exceeds a certain threshold
+we perform the repack, otherwise we don't.
 
-Refactor the code so that we store this variable on the stack and pass
-a pointer to it around as needed. This is done so that we can reuse
-`add_repack_all_options()` in a subsequent commit.
+This is done via `too_many_loose_objects()`, which takes as parameter
+the `struct gc_config`. This configuration is only used to determine the
+threshold. In a subsequent commit we'll add another caller of this
+function that wants to pass a different limit than the one stored in
+that structure.
 
-The refactoring itself is straight-forward. One function that deserves
-attention though is `need_to_gc()`: this function determines whether or
-not we need to execute garbage collection for `git gc --auto`, but also
-for `git maintenance run --auto`. But besides figuring out whether we
-have to perform GC, the function also sets up the `repack` arguments.
-
-For `git gc --auto` it's trivial to adapt, as we already have the
-on-stack variable at our fingertips. But for the maintenance condition
-it's less obvious what to do.
-
-As it turns out, we can just use another temporary variable there that
-we then immediately discard. If we need to perform GC we execute a child
-git-gc(1) process to repack objects for us, and that process will have
-to recompute the arguments anyway.
+Refactor the function accordingly so that we only take the limit as
+parameter instead of the whole structure.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/gc.c | 74 ++++++++++++++++++++++++++++++++++++------------------------
- 1 file changed, 45 insertions(+), 29 deletions(-)
+ builtin/gc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/gc.c b/builtin/gc.c
-index e19e13d9788..e9772eb3a30 100644
+index e9772eb3a30..026d3a1d714 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -55,7 +55,6 @@ static const char * const builtin_gc_usage[] = {
- };
- 
- static timestamp_t gc_log_expire_time;
--static struct strvec repack = STRVEC_INIT;
- static struct tempfile *pidfile;
- static struct lock_file log_lock;
- static struct string_list pack_garbage = STRING_LIST_INIT_DUP;
-@@ -618,48 +617,50 @@ static uint64_t estimate_repack_memory(struct gc_config *cfg,
- 	return os_cache + heap;
+@@ -447,7 +447,7 @@ static int rerere_gc_condition(struct gc_config *cfg UNUSED)
+ 	return should_gc;
  }
  
--static int keep_one_pack(struct string_list_item *item, void *data UNUSED)
-+static int keep_one_pack(struct string_list_item *item, void *data)
- {
--	strvec_pushf(&repack, "--keep-pack=%s", basename(item->string));
-+	struct strvec *args = data;
-+	strvec_pushf(args, "--keep-pack=%s", basename(item->string));
- 	return 0;
- }
- 
- static void add_repack_all_option(struct gc_config *cfg,
--				  struct string_list *keep_pack)
-+				  struct string_list *keep_pack,
-+				  struct strvec *args)
- {
- 	if (cfg->prune_expire && !strcmp(cfg->prune_expire, "now")
- 		&& !(cfg->cruft_packs && cfg->repack_expire_to))
--		strvec_push(&repack, "-a");
-+		strvec_push(args, "-a");
- 	else if (cfg->cruft_packs) {
--		strvec_push(&repack, "--cruft");
-+		strvec_push(args, "--cruft");
- 		if (cfg->prune_expire)
--			strvec_pushf(&repack, "--cruft-expiration=%s", cfg->prune_expire);
-+			strvec_pushf(args, "--cruft-expiration=%s", cfg->prune_expire);
- 		if (cfg->max_cruft_size)
--			strvec_pushf(&repack, "--max-cruft-size=%lu",
-+			strvec_pushf(args, "--max-cruft-size=%lu",
- 				     cfg->max_cruft_size);
- 		if (cfg->repack_expire_to)
--			strvec_pushf(&repack, "--expire-to=%s", cfg->repack_expire_to);
-+			strvec_pushf(args, "--expire-to=%s", cfg->repack_expire_to);
- 	} else {
--		strvec_push(&repack, "-A");
-+		strvec_push(args, "-A");
- 		if (cfg->prune_expire)
--			strvec_pushf(&repack, "--unpack-unreachable=%s", cfg->prune_expire);
-+			strvec_pushf(args, "--unpack-unreachable=%s", cfg->prune_expire);
- 	}
- 
- 	if (keep_pack)
--		for_each_string_list(keep_pack, keep_one_pack, NULL);
-+		for_each_string_list(keep_pack, keep_one_pack, args);
- 
- 	if (cfg->repack_filter && *cfg->repack_filter)
--		strvec_pushf(&repack, "--filter=%s", cfg->repack_filter);
-+		strvec_pushf(args, "--filter=%s", cfg->repack_filter);
- 	if (cfg->repack_filter_to && *cfg->repack_filter_to)
--		strvec_pushf(&repack, "--filter-to=%s", cfg->repack_filter_to);
-+		strvec_pushf(args, "--filter-to=%s", cfg->repack_filter_to);
- }
- 
--static void add_repack_incremental_option(void)
-+static void add_repack_incremental_option(struct strvec *args)
- {
--	strvec_push(&repack, "--no-write-bitmap-index");
-+	strvec_push(args, "--no-write-bitmap-index");
- }
- 
--static int need_to_gc(struct gc_config *cfg)
-+static int need_to_gc(struct gc_config *cfg, struct strvec *repack_args)
+-static int too_many_loose_objects(struct gc_config *cfg)
++static int too_many_loose_objects(int limit)
  {
  	/*
- 	 * Setting gc.auto to 0 or negative can disable the
-@@ -700,10 +701,10 @@ static int need_to_gc(struct gc_config *cfg)
- 				string_list_clear(&keep_pack, 0);
- 		}
- 
--		add_repack_all_option(cfg, &keep_pack);
-+		add_repack_all_option(cfg, &keep_pack, repack_args);
- 		string_list_clear(&keep_pack, 0);
- 	} else if (too_many_loose_objects(cfg))
--		add_repack_incremental_option();
-+		add_repack_incremental_option(repack_args);
- 	else
+ 	 * Quickly check if a "gc" is needed, by estimating how
+@@ -469,7 +469,7 @@ static int too_many_loose_objects(struct gc_config *cfg)
+ 	if (!dir)
  		return 0;
  
-@@ -852,6 +853,7 @@ int cmd_gc(int argc,
- 	int keep_largest_pack = -1;
- 	int skip_foreground_tasks = 0;
- 	timestamp_t dummy;
-+	struct strvec repack_args = STRVEC_INIT;
- 	struct maintenance_run_opts opts = MAINTENANCE_RUN_OPTS_INIT;
- 	struct gc_config cfg = GC_CONFIG_INIT;
- 	const char *prune_expire_sentinel = "sentinel";
-@@ -891,7 +893,7 @@ int cmd_gc(int argc,
- 	show_usage_with_options_if_asked(argc, argv,
- 					 builtin_gc_usage, builtin_gc_options);
+-	auto_threshold = DIV_ROUND_UP(cfg->gc_auto_threshold, 256);
++	auto_threshold = DIV_ROUND_UP(limit, 256);
+ 	while ((ent = readdir(dir)) != NULL) {
+ 		if (strspn(ent->d_name, "0123456789abcdef") != hexsz_loose ||
+ 		    ent->d_name[hexsz_loose] != '\0')
+@@ -703,7 +703,7 @@ static int need_to_gc(struct gc_config *cfg, struct strvec *repack_args)
  
--	strvec_pushl(&repack, "repack", "-d", "-l", NULL);
-+	strvec_pushl(&repack_args, "repack", "-d", "-l", NULL);
- 
- 	gc_config(&cfg);
- 
-@@ -914,14 +916,14 @@ int cmd_gc(int argc,
- 		die(_("failed to parse prune expiry value %s"), cfg.prune_expire);
- 
- 	if (aggressive) {
--		strvec_push(&repack, "-f");
-+		strvec_push(&repack_args, "-f");
- 		if (cfg.aggressive_depth > 0)
--			strvec_pushf(&repack, "--depth=%d", cfg.aggressive_depth);
-+			strvec_pushf(&repack_args, "--depth=%d", cfg.aggressive_depth);
- 		if (cfg.aggressive_window > 0)
--			strvec_pushf(&repack, "--window=%d", cfg.aggressive_window);
-+			strvec_pushf(&repack_args, "--window=%d", cfg.aggressive_window);
- 	}
- 	if (opts.quiet)
--		strvec_push(&repack, "-q");
-+		strvec_push(&repack_args, "-q");
- 
- 	if (opts.auto_flag) {
- 		if (cfg.detach_auto && opts.detach < 0)
-@@ -930,7 +932,7 @@ int cmd_gc(int argc,
- 		/*
- 		 * Auto-gc should be least intrusive as possible.
- 		 */
--		if (!need_to_gc(&cfg)) {
-+		if (!need_to_gc(&cfg, &repack_args)) {
- 			ret = 0;
- 			goto out;
- 		}
-@@ -952,7 +954,7 @@ int cmd_gc(int argc,
- 			find_base_packs(&keep_pack, cfg.big_pack_threshold);
- 		}
- 
--		add_repack_all_option(&cfg, &keep_pack);
-+		add_repack_all_option(&cfg, &keep_pack, &repack_args);
+ 		add_repack_all_option(cfg, &keep_pack, repack_args);
  		string_list_clear(&keep_pack, 0);
- 	}
+-	} else if (too_many_loose_objects(cfg))
++	} else if (too_many_loose_objects(cfg->gc_auto_threshold))
+ 		add_repack_incremental_option(repack_args);
+ 	else
+ 		return 0;
+@@ -1057,7 +1057,7 @@ int cmd_gc(int argc,
+ 					     !opts.quiet && !daemonized ? COMMIT_GRAPH_WRITE_PROGRESS : 0,
+ 					     NULL);
  
-@@ -1014,9 +1016,9 @@ int cmd_gc(int argc,
+-	if (opts.auto_flag && too_many_loose_objects(&cfg))
++	if (opts.auto_flag && too_many_loose_objects(cfg.gc_auto_threshold))
+ 		warning(_("There are too many unreachable loose objects; "
+ 			"run 'git prune' to remove them."));
  
- 		repack_cmd.git_cmd = 1;
- 		repack_cmd.close_object_store = 1;
--		strvec_pushv(&repack_cmd.args, repack.v);
-+		strvec_pushv(&repack_cmd.args, repack_args.v);
- 		if (run_command(&repack_cmd))
--			die(FAILED_RUN, repack.v[0]);
-+			die(FAILED_RUN, repack_args.v[0]);
- 
- 		if (cfg.prune_expire) {
- 			struct child_process prune_cmd = CHILD_PROCESS_INIT;
-@@ -1067,6 +1069,7 @@ int cmd_gc(int argc,
- 
- out:
- 	maintenance_run_opts_release(&opts);
-+	strvec_clear(&repack_args);
- 	gc_config_release(&cfg);
- 	return 0;
- }
-@@ -1269,6 +1272,19 @@ static int maintenance_task_gc_background(struct maintenance_run_opts *opts,
- 	return run_command(&child);
- }
- 
-+static int gc_condition(struct gc_config *cfg)
-+{
-+	/*
-+	 * Note that it's fine to drop the repack arguments here, as we execute
-+	 * git-gc(1) as a separate child process anyway. So it knows to compute
-+	 * these arguments again.
-+	 */
-+	struct strvec repack_args = STRVEC_INIT;
-+	int ret = need_to_gc(cfg, &repack_args);
-+	strvec_clear(&repack_args);
-+	return ret;
-+}
-+
- static int prune_packed(struct maintenance_run_opts *opts)
- {
- 	struct child_process child = CHILD_PROCESS_INIT;
-@@ -1596,7 +1612,7 @@ static const struct maintenance_task tasks[] = {
- 		.name = "gc",
- 		.foreground = maintenance_task_gc_foreground,
- 		.background = maintenance_task_gc_background,
--		.auto_condition = need_to_gc,
-+		.auto_condition = gc_condition,
- 	},
- 	[TASK_COMMIT_GRAPH] = {
- 		.name = "commit-graph",
 
 -- 
 2.51.0.869.ge66316f041.dirty
