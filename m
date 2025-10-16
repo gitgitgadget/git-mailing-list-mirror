@@ -1,38 +1,39 @@
 Received: from avasout-ptp-002.plus.net (avasout-ptp-002.plus.net [84.93.230.235])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5252DF139
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 20:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9722D9EF2
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 20:06:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.235
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760645202; cv=none; b=HLK8EK3qmAaiVJLwLKKf5eZbIxYYY3kzfOQcN4rPW0z4bfGfMvcrVzLRitfg+h97z7N3dw+aYIcSxgKm2jt9Mraw8JzW2MF52YnP4H5qSjrOV0knkxRIAxEOEYqzsK2kvPqsiFqCIJP6G5DfS2uQc90F5sOPgrFS3i6vzG9vAiE=
+	t=1760645207; cv=none; b=R2Df2q5wWunEsI4Ch2TZxT3HiWgPwjr6s9UormGO3hMZ95wOhEPTp3HkJRH/1at2W8GVg4TCvHRUZF2sowMTLH0lSFkNC6nzqsuO+VqNsuV+/CU4eViFflrkGlvC5ORGUNWEvXl/LUjnZYJcrRH5NUFJdiCUFHeTxUdVLINSsiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760645202; c=relaxed/simple;
-	bh=22YUdpQlLh/AJ3CGydnShjo1zXQ/t3igahHOsYj6pAA=;
+	s=arc-20240116; t=1760645207; c=relaxed/simple;
+	bh=UUFschPxvQLSoCeTfJfml5AKf5DeToZBbIFy+CewxVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=POugRNeMc6M53EX0e61KkmLpygpFoYAZsmKDCTov7RDI87l9s5XQkJDILi+rWwCTUYa/xMc06FPTaByQmu58T6nx1GRXN4mtkFUbhq6O5Qf+iPtXvnqrfVbReqeSwqJUxHScK/gG9zzJCJ9gRCBE//o69DIF+vUcwpyKv/GRMQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=m46knVeU; arc=none smtp.client-ip=84.93.230.235
+	 MIME-Version; b=nzOQJtWqGzFbvrRI+lCh5sKgN9yr2/H6lWOi7vDxNv/LQ9sbGtgWQTceVbHMJbbkFp2WG9N8h56fsgJIuES7hs5SYaR1/xqYhLSJScChdIC4dgBfjtVNueNWPPofUlqQ7QlUhYHN6NK1bvIJcOqrTxaAibqDzo8Q7hWQjhXNdzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=K+BaOtpJ; arc=none smtp.client-ip=84.93.230.235
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="m46knVeU"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="K+BaOtpJ"
 Received: from inspiron-LM22 ([80.189.83.109])
 	by smtp with ESMTPA
-	id 9UBovzPFx9u4D9UCJvvPbJ; Thu, 16 Oct 2025 21:03:39 +0100
+	id 9UBovzPFx9u4D9UCOvvPcS; Thu, 16 Oct 2025 21:03:45 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1760645019; bh=d67ZN9WC1jm9d7b7CukkiMl9nTLGwP+sH3x93Vx4xdE=;
+	t=1760645025; bh=FD195vG2229K+IOE/fvpFyaxZF8xKExiDZU2vnw1578=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m46knVeU+jZF9DMZGpw3cmCT8pFdQi+irX4uWjgio6Os0bRqj9+u1gZ60Cppv8aM2
-	 iv+q6ZQux03vjB1wP8bsTDTmIJ18UjzuCcFHFnly4h67AW4Lks0E1s+O2/VC2QvJtF
-	 BPBi+mMmFquygPB0xRe0teR+yHC5HV+tiYP49n1fYTZRnz7P9vxygDVV53OgkRAyT4
-	 pTCcQQHCVV9t4oKPSBYn0J44hsjRInkOD5YdbKZoMffd7yFqVlvbND/qWAkOTh/5Vt
-	 mBTMgER3rP8ZN7A2B5NAlJIag5FOyXjFgRROPhwFEAF7YElBj5NRmRG5Y5KqIoZLUX
-	 sgXUR+kf/SadA==
+	b=K+BaOtpJM2/NKLVCS2Jlk/5BaDd08Swk7cBp9HRpI8W+YlZkoznxgEMuwEYsuJDdw
+	 6cJpMClPVj27QAwKWgnoGAvXX6yh9V03Z5oaVqZ4bd5ZBX6Qhy4//GqBurFpdKQ1/J
+	 /i4zU5xYx4SSrFbA9+6HLl0LdRWBSarDYMtHwHSk3MrGkGFOcxSPm5JFOaGU6zFT//
+	 MUavjD4rJXdnSkWCqTFK2YKhkqz5MSh4nj4NB4XJwT1jcxiPFivL6ZCR1+lTcbrmvp
+	 D0NdKPen7DYp4HqNv7R+yW954/WNiLeYQQ3WFaHuwJ0mVKo7gnopaANdfMgjit5hsz
+	 Ad4gX1EVbIJUA==
 X-Clacks-Overhead: "GNU Terry Pratchett"
 X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=UKJ+Hzfy c=1 sm=1 tr=0 ts=68f14f9b
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17 a=EBOSESyhAAAA:8
- a=bdAdcbO9dCHdLQEpdRsA:9 a=yJM6EZoI5SlJf8ks9Ge_:22
+X-CNFS-Analysis: v=2.4 cv=UKJ+Hzfy c=1 sm=1 tr=0 ts=68f14fa1
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17 a=QyRJ8Xq4AAAA:8
+ a=VwQbUJbxAAAA:8 a=EBOSESyhAAAA:8 a=gf2t_CT67q65dDXztV0A:9
+ a=bU4N5Dn6QmUNwQ-LvVBy:22 a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH: ramsayjones@:2500
 From: Ramsay Jones <ramsay@ramsayjones.plus.com>
 To: GIT Mailing-list <git@vger.kernel.org>
@@ -41,9 +42,9 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 	Derrick Stolee <stolee@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v3 3/4] doc: commit-graph.adoc: fix up some formatting
-Date: Thu, 16 Oct 2025 21:03:00 +0100
-Message-ID: <20251016200301.1595204-4-ramsay@ramsayjones.plus.com>
+Subject: [PATCH v3 4/4] doc: add large-object-promisors.adoc to the docs build
+Date: Thu, 16 Oct 2025 21:03:01 +0100
+Message-ID: <20251016200301.1595204-5-ramsay@ramsayjones.plus.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251016200301.1595204-1-ramsay@ramsayjones.plus.com>
 References: <1a72434f-7935-4d0c-868f-03bd24601d4d@ramsayjones.plus.com>
@@ -55,140 +56,308 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfO9F9d3Q3TsXtQa1UaFwzsogbg/WurLG7WRHOKX0cwvCXWOlKh+apMQhIG7uiYBy7PHw8Zq8DHx/CztnYQwJJPdLiMLNAWV1RT/x52GgkUlTP+GaarZb
- Zud7/7hUxGSY87BuG9uPo3HVKWklk3PJgHeVjUP7DSWt+vrE72p5kyAGyCJ32Rgkey7QVB00hJnFtURDQKzG7unl0qeL7fT3cKg=
+X-CMAE-Envelope: MS4xfOnBy2GpXOOsFOnFSHsEYPzu4NoxeM6YJWeJ59c7tk4Ja3QwqkWMdgpM9PgV74GUFbfFxOst2ewYiHWtgnKKNSAThXNI6rvQFQGmtV1Y7+LrOLjMQecj
+ nuMw4aguCT78CrleQBVp+9N2+q9Tcz07OS7FS5qdClf3qAK+oOXmYZveYg/pLa0dnJbFQW4Gv1P8FTlKAWORuGragaCMMQ4zhiY=
 
-The formatting markup syntax used in this document (markdown?) is not
-interpreted correctly by asciidoc or asciidoctor. The main problem is
-the use of a '## ' prefix markup for some sub-headings, along with the
-use of '```' code markup and some missing literal blocks.
+Commit 5040f9f164 ("doc: add technical design doc for large object
+promisors", 2025-02-18) added the large object promisors document
+as a technical document (with a '.txt' extension). The merge commit
+2c6fd30198 ("Merge branch 'cc/lop-remote'", 2025-03-05) seems to
+have renamed the file with an '.adoc' extension.
 
-In order to improve the (html) document formatting:
+Despite the '.adoc' extension, this document was not being formatted
+by asciidoc(tor) as part of the docs build. In order to do so, add
+the document to the make and meson build files.
 
-  - replace the '## ' prefix sub-title syntax with the '~~' underlining
-    syntax for the relevant sub-headings.
-  - replace the '```' code markup, which causes asciidoc(tor) to simply
-    remove the marked up text, with a literal block '----' markup.
-  - the second ascii diagram, in the 'Merging commit-graph files'
-    section, is not rendered correctly by asciidoctor (asciidoc is fine)
-    so enclose it in a '....' block.
+Having added the document to the build, asciidoc and asciidoctor find
+(slightly different) problems with the syntax of the input document.
+
+The first set of warnings (only issued by asciidoc) relate to some
+'section title out of sequence: expected level 3, got level 4'. This
+document uses 'setext' style of section headers, using a series of
+underline characters, where the character used denotes the level of
+the title. From document title to level 5 (see [1]), these characters
+are =, -, ~, ^, +. This does not seem to fit the error message, which
+implies that those characters denote levels 0 -> 4. Replacing the headings
+underlined with '+' by the '^' character eliminates these warnings.
+
+The second set of warnings (only issued by asciidoctor) relate to some
+headings which seem to use both arabic and roman numerals as part of
+a single 'list' sequence. This elicited either 'unterminated listing
+block' or (for example) 'list item index: expected I, got II' warnings.
+In order not to mix arabic and roman numerals, remove the numeral from
+the '0) Non goals' heading.  Similarly, the remaining roman numeral
+entries had the ')' removed and turned into regular headings with I, II,
+III ... at the beginning.
+
+[1] https://asciidoctor.org/docs/asciidoc-recommended-practices/
 
 Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- Documentation/technical/commit-graph.adoc | 29 +++++++++++++++--------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+ Documentation/Makefile                        |  1 +
+ .../technical/large-object-promisors.adoc     | 64 +++++++++----------
+ Documentation/technical/meson.build           |  1 +
+ 3 files changed, 34 insertions(+), 32 deletions(-)
 
-diff --git a/Documentation/technical/commit-graph.adoc b/Documentation/technical/commit-graph.adoc
-index 2c26e95e51..a259d1567b 100644
---- a/Documentation/technical/commit-graph.adoc
-+++ b/Documentation/technical/commit-graph.adoc
-@@ -39,6 +39,7 @@ A consumer may load the following info for a commit from the graph:
- Values 1-4 satisfy the requirements of parse_commit_gently().
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index a3fbd29744..a3ba25e659 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -122,6 +122,7 @@ TECH_DOCS += technical/bundle-uri
+ TECH_DOCS += technical/commit-graph
+ TECH_DOCS += technical/directory-rename-detection
+ TECH_DOCS += technical/hash-function-transition
++TECH_DOCS += technical/large-object-promisors
+ TECH_DOCS += technical/long-running-process-protocol
+ TECH_DOCS += technical/multi-pack-index
+ TECH_DOCS += technical/packfile-uri
+diff --git a/Documentation/technical/large-object-promisors.adoc b/Documentation/technical/large-object-promisors.adoc
+index dea8dafa66..2aa815e023 100644
+--- a/Documentation/technical/large-object-promisors.adoc
++++ b/Documentation/technical/large-object-promisors.adoc
+@@ -34,8 +34,8 @@ a new object representation for large blobs as discussed in:
  
- There are two definitions of generation number:
-+
- 1. Corrected committer dates (generation number v2)
- 2. Topological levels (generation number v1)
+ https://lore.kernel.org/git/xmqqbkdometi.fsf@gitster.g/
  
-@@ -158,7 +159,8 @@ number of commits in the full history. By creating a "chain" of commit-graphs,
- we enable fast writes of new commit data without rewriting the entire commit
- history -- at least, most of the time.
+-0) Non goals
+-------------
++Non goals
++---------
  
--## File Layout
-+File Layout
-+~~~~~~~~~~~
+ - We will not discuss those client side improvements here, as they
+   would require changes in different parts of Git than this effort.
+@@ -90,8 +90,8 @@ later in this document:
+     even more to host content with larger blobs or more large blobs
+     than currently.
  
- A commit-graph chain uses multiple files, and we use a fixed naming convention
- to organize these files. Each commit-graph file has a name
-@@ -170,11 +172,11 @@ hashes for the files in order from "lowest" to "highest".
+-I) Issues with the current situation
+-------------------------------------
++I Issues with the current situation
++-----------------------------------
  
- For example, if the `commit-graph-chain` file contains the lines
+ - Some statistics made on GitLab repos have shown that more than 75%
+   of the disk space is used by blobs that are larger than 1MB and
+@@ -138,8 +138,8 @@ I) Issues with the current situation
+   complaining that these tools require significant effort to set up,
+   learn and use correctly.
  
--```
-+----
- 	{hash0}
- 	{hash1}
- 	{hash2}
--```
-+----
+-II) Main features of the "Large Object Promisors" solution
+-----------------------------------------------------------
++II Main features of the "Large Object Promisors" solution
++---------------------------------------------------------
  
- then the commit-graph chain looks like the following diagram:
+ The main features below should give a rough overview of how the
+ solution may work. Details about needed elements can be found in
+@@ -166,7 +166,7 @@ format. They should be used along with main remotes that contain the
+ other objects.
  
-@@ -213,7 +215,8 @@ specifying the hashes of all files in the lower layers. In the above example,
- `graph-{hash1}.graph` contains `{hash0}` while `graph-{hash2}.graph` contains
- `{hash0}` and `{hash1}`.
+ Note 1
+-++++++
++^^^^^^
  
--## Merging commit-graph files
-+Merging commit-graph files
-+~~~~~~~~~~~~~~~~~~~~~~~~~~
+ To clarify, a LOP is a normal promisor remote, except that:
  
- If we only added a new commit-graph file on every write, we would run into a
- linear search problem through many commit-graph files.  Instead, we use a merge
-@@ -225,6 +228,7 @@ is determined by the merge strategy that the files should collapse to
- the commits in `graph-{hash1}` should be combined into a new `graph-{hash3}`
- file.
+@@ -178,7 +178,7 @@ To clarify, a LOP is a normal promisor remote, except that:
+   itself.
  
-+....
- 			    +---------------------+
- 			    |                     |
- 			    |    (new commits)    |
-@@ -250,6 +254,7 @@ file.
-  |                       |
-  |                       |
-  +-----------------------+
-+....
+ Note 2
+-++++++
++^^^^^^
  
- During this process, the commits to write are combined, sorted and we write the
- contents to a temporary file, all while holding a `commit-graph-chain.lock`
-@@ -257,14 +262,15 @@ lock-file.  When the file is flushed, we rename it to `graph-{hash3}`
- according to the computed `{hash3}`. Finally, we write the new chain data to
- `commit-graph-chain.lock`:
+ Git already makes it possible for a main remote to also be a promisor
+ remote storing both regular objects and large blobs for a client that
+@@ -186,13 +186,13 @@ clones from it with a filter on blob size. But here we explicitly want
+ to avoid that.
  
--```
-+----
- 	{hash3}
- 	{hash0}
--```
-+----
+ Rationale
+-+++++++++
++^^^^^^^^^
  
- We then close the lock-file.
+ LOPs aim to be good at handling large blobs while main remotes are
+ already good at handling other objects.
  
--## Merge Strategy
-+Merge Strategy
-+~~~~~~~~~~~~~~
+ Implementation
+-++++++++++++++
++^^^^^^^^^^^^^^
  
- When writing a set of commits that do not exist in the commit-graph stack of
- height N, we default to creating a new file at level N + 1. We then decide to
-@@ -289,7 +295,8 @@ The merge strategy values (2 for the size multiple, 64,000 for the maximum
- number of commits) could be extracted into config settings for full
- flexibility.
+ Git already has support for multiple promisor remotes, see
+ link:partial-clone.html#using-many-promisor-remotes[the partial clone documentation].
+@@ -213,19 +213,19 @@ remote helper (see linkgit:gitremote-helpers[7]) which makes the
+ underlying object storage appear like a remote to Git.
  
--## Handling Mixed Generation Number Chains
-+Handling Mixed Generation Number Chains
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Note
+-++++
++^^^^
  
- With the introduction of generation number v2 and generation data chunk, the
- following scenario is possible:
-@@ -318,7 +325,8 @@ have corrected commit dates when written by compatible versions of Git. Thus,
- rewriting split commit-graph as a single file (`--split=replace`) creates a
- single layer with corrected commit dates.
+ A LOP can be a promisor remote accessed using a remote helper by
+ both some clients and the main remote.
  
--## Deleting graph-{hash} files
-+Deleting graph-\{hash\} files
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Rationale
+-+++++++++
++^^^^^^^^^
  
- After a new tip file is written, some `graph-{hash}` files may no longer
- be part of a chain. It is important to remove these files from disk, eventually.
-@@ -333,7 +341,8 @@ files whose modified times are older than a given expiry window. This window
- defaults to zero, but can be changed using command-line arguments or a config
- setting.
+ This looks like the simplest way to create LOPs that can cheaply
+ handle many large blobs.
  
--## Chains across multiple object directories
-+Chains across multiple object directories
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Implementation
+-++++++++++++++
++^^^^^^^^^^^^^^
  
- In a repo with alternates, we look for the `commit-graph-chain` file starting
- in the local object directory and then in each alternate. The first file that
+ Remote helpers are quite easy to write as shell scripts, but it might
+ be more efficient and maintainable to write them using other languages
+@@ -247,7 +247,7 @@ The underlying object storage that a LOP uses could also serve as
+ storage for large files handled by Git LFS.
+ 
+ Rationale
+-+++++++++
++^^^^^^^^^
+ 
+ This would simplify the server side if it wants to both use a LOP and
+ act as a Git LFS server.
+@@ -259,7 +259,7 @@ On the server side, a main remote should have a way to offload to a
+ LOP all its blobs with a size over a configurable threshold.
+ 
+ Rationale
+-+++++++++
++^^^^^^^^^
+ 
+ This makes it easy to set things up and to clean things up. For
+ example, an admin could use this to manually convert a repo not using
+@@ -268,7 +268,7 @@ some users would sometimes push large blobs, a cron job could use this
+ to regularly make sure the large blobs are moved to the LOP.
+ 
+ Implementation
+-++++++++++++++
++^^^^^^^^^^^^^^
+ 
+ Using something based on `git repack --filter=...` to separate the
+ blobs we want to offload from the other Git objects could be a good
+@@ -284,13 +284,13 @@ should have ways to prevent oversize blobs to be fetched, and also
+ perhaps pushed, into it.
+ 
+ Rationale
+-+++++++++
++^^^^^^^^^
+ 
+ A main remote containing many oversize blobs would defeat the purpose
+ of LOPs.
+ 
+ Implementation
+-++++++++++++++
++^^^^^^^^^^^^^^
+ 
+ The way to offload to a LOP discussed in 4) above can be used to
+ regularly offload oversize blobs. About preventing oversize blobs from
+@@ -326,18 +326,18 @@ large blobs directly from the LOP and the server would not need to
+ fetch those blobs from the LOP to be able to serve the client.
+ 
+ Note
+-++++
++^^^^
+ 
+ For fetches instead of clones, a protocol negotiation might not always
+ happen, see the "What about fetches?" FAQ entry below for details.
+ 
+ Rationale
+-+++++++++
++^^^^^^^^^
+ 
+ Security, configurability and efficiency of setting things up.
+ 
+ Implementation
+-++++++++++++++
++^^^^^^^^^^^^^^
+ 
+ A "promisor-remote" protocol v2 capability looks like a good way to
+ implement this. The way the client and server use this capability
+@@ -356,7 +356,7 @@ the client should be able to offload some large blobs it has fetched,
+ but might not need anymore, to the LOP.
+ 
+ Note
+-++++
++^^^^
+ 
+ It might depend on the context if it should be OK or not for clients
+ to offload large blobs they have created, instead of fetched, directly
+@@ -367,13 +367,13 @@ This should be discussed and refined when we get closer to
+ implementing this feature.
+ 
+ Rationale
+-+++++++++
++^^^^^^^^^
+ 
+ On the client, the easiest way to deal with unneeded large blobs is to
+ offload them.
+ 
+ Implementation
+-++++++++++++++
++^^^^^^^^^^^^^^
+ 
+ This is very similar to what 4) above is about, except on the client
+ side instead of the server side. So a good solution to 4) could likely
+@@ -385,8 +385,8 @@ when cloning (see 6) above). Also if the large blobs were fetched from
+ a LOP, it is likely, and can easily be confirmed, that the LOP still
+ has them, so that they can just be removed from the client.
+ 
+-III) Benefits of using LOPs
+----------------------------
++III Benefits of using LOPs
++--------------------------
+ 
+ Many benefits are related to the issues discussed in "I) Issues with
+ the current situation" above:
+@@ -406,8 +406,8 @@ the current situation" above:
+ 
+ - Reduced storage needs on the client side.
+ 
+-IV) FAQ
+--------
++IV FAQ
++------
+ 
+ What about using multiple LOPs on the server and client side?
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@@ -533,7 +533,7 @@ some objects it already knows about but doesn't have because they are
+ on a promisor remote.
+ 
+ Regular fetch
+-+++++++++++++
++^^^^^^^^^^^^^
+ 
+ In a regular fetch, the client will contact the main remote and a
+ protocol negotiation will happen between them. It's a good thing that
+@@ -551,7 +551,7 @@ new fetch will happen in the same way as the previous clone or fetch,
+ using, or not using, the same LOP(s) as last time.
+ 
+ "Backfill" or "lazy" fetch
+-++++++++++++++++++++++++++
++^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+ When there is a backfill fetch, the client doesn't necessarily contact
+ the main remote first. It will try to fetch from its promisor remotes
+@@ -576,8 +576,8 @@ from the client when it fetches from them. The client could get the
+ token when performing a protocol negotiation with the main remote (see
+ section II.6 above).
+ 
+-V) Future improvements
+-----------------------
++V Future improvements
++---------------------
+ 
+ It is expected that at the beginning using LOPs will be mostly worth
+ it either in a corporate context where the Git version that clients
+diff --git a/Documentation/technical/meson.build b/Documentation/technical/meson.build
+index a13aafcfbb..34b5ebe5c3 100644
+--- a/Documentation/technical/meson.build
++++ b/Documentation/technical/meson.build
+@@ -13,6 +13,7 @@ articles = [
+   'commit-graph.adoc',
+   'directory-rename-detection.adoc',
+   'hash-function-transition.adoc',
++  'large-object-promisors.adoc',
+   'long-running-process-protocol.adoc',
+   'multi-pack-index.adoc',
+   'packfile-uri.adoc',
 -- 
 2.51.0
 
