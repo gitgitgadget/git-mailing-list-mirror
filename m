@@ -1,249 +1,108 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CE82FFF9B
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 07:27:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3576A27732
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 07:38:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760599632; cv=none; b=DRw7FWQY9/tclaha5dqbYKEzGEHD7NxORew1vdBIezAjncPht62jfMY1PpRsi8Ou8Sy/GBaeil5UgtlZQ+Eijs8d7BH28Zb/4MI9i1+UCZSTPevgnzMicmNba6/zFcHgVS6L7Sdo3o+SxK6XlpcBfM4vNlvzIZJ+IpZhruQkgg8=
+	t=1760600318; cv=none; b=Bb1+Xydm80hn2mYPhRnJZ1zwv5NsJ9fF4PjEbPfWQHc7Frs5zkJ2wf38GHjH4tnoZedJbAEKC6AebRbjd2Jg3/A+YOzShIO8JiuCIjMHpaBz2ukJ20zaERKZ0axanmV46O2eYHrB7FBHhtdWttm2NWJOufVc2fnaBrcwir9kQVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760599632; c=relaxed/simple;
-	bh=UVrFbchjtuzidecFZxTbvUs4iTwVpaxfMk6oucdmk+w=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=a7YSa4F4M1vyJe08Pi6riQMDsOh7ve6MjKlrXcx8HBKlvW4hlLEtzjdieyWq0+VCPkUWexxLmEZwZsPdhiamDz5gnmqKANqtp1KedLJgnl0OWiOgqkjGOyCtBhkbXy/lTkLchJ0tk71G2TPj9MjL92nNAFqIgvZsbfEzCwRUlRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rO5llCMH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wkq8XKlu; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1760600318; c=relaxed/simple;
+	bh=S8OePrTbQD1j2vyliXB7p+x5y9tqRHaDsY9P6mq4tL8=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=gLBb6+ZwpEXUXbveqyvxvXzF4DbhcmWTs3guo8KdD2gWoJ+hQAY1p5ltOqt4Lctw5nCSHuWeeJZDh/+9FgHIOdrD/hVGTFBgcwOg3jbEQZUNvzwLRBGboSK4BBxmkgTjYeAbdoxgeNoh+GBV9dqv6MSOOONQtjAZx6dcYV9dmWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GpEHiU4Q; arc=none smtp.client-ip=209.85.166.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rO5llCMH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wkq8XKlu"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 545961400097;
-	Thu, 16 Oct 2025 03:27:09 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 16 Oct 2025 03:27:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1760599629;
-	 x=1760686029; bh=7Rg9SvE0PWWGfmgJS9cYhNC0lwNiTgb3YPE+VNXtP+g=; b=
-	rO5llCMHy+7nIxssKS3AAFw6dysIJ19LSN2SwSoSfElrCzHZb5o5VS6/K6JqCMsZ
-	feWpMM0Tn0O6DxbwlhfkuSs7IOEFH0JChCrzyMZLqfIBeW+6F8mP+2ib5ukwAQxI
-	KxgAEwvC8Wc0brpqCduRweiRz7u+VUI1Duuuc+/OZ+WxZVdECp7qlH6TLSlhiOtp
-	E4OkNT082UcKhIjkeiridH3uRgCyE3WyxspCwm5qY8RTrabaWs3UHd3t/zQZoL5W
-	lobin0o29dpaEkxBUEwReXGYqGbmacbbatI70ENOZpyLAdZ6mvoZ3oQpRGE/tMsY
-	iCfi76wujyh0F3CQAq5ePQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760599629; x=
-	1760686029; bh=7Rg9SvE0PWWGfmgJS9cYhNC0lwNiTgb3YPE+VNXtP+g=; b=w
-	kq8XKlunKEKtewXgQiygagkDM6w5iQUrmzLkY0je5Q7uuUrKK3UNhHVaz3YrK0iw
-	oVNyABarkHbJynKIcA5kPzK+yjzxXbnHs3UVS8mq77vnzbIFYq7vPP/ZhdAKJdcE
-	s8bQFRb0VoRjnXAa2szTaD77V8D6W5nL3SyNP9OsHw/MaNq+mranYHB+v5GzHnqn
-	NInMEqnf+VNQzdjYdCmSmq78dNyURl4ELSB3OwiVdh6TeVlL0eCeaJXwAyWOoiVu
-	TbcIMMEiyzZZyWQlHohzFmn0yLJjciKcXNCjGcXi/YgIpmUua4ACcVa1OORk7Hhg
-	b1MrPnOqvSYQiZMc585Rw==
-X-ME-Sender: <xms:TZ7waAckRRUAxgSe8cTFn94CSe2BXO7OcTKyiP7llVABgGuVHTCOEQ>
-    <xme:TZ7waJqYFCfKnlPxIPXKkPdcBT5bs6l63OEBe_i-wkcu55TGLUx_EMtPXg47cHGLR
-    7BdeP3vXoXm83DYWV6KbSKFfII_qZkMBEcm-8AFi9jC8HE-X2au>
-X-ME-Received: <xmr:TZ7waO5dVZOu48SaO8pqC9GXGNJykfjQ7RdBGBGJzu8FmwXP115EDp0Fc8Uq6g5VpzqsGKFiNY419Ha3RINwbG5iu7brWy_KDXN68HpPeaxuQQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdehieelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlh
-    horhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:TZ7waPpV71GSU0c9tYvIa4RH6EysNkhmSbNEBgqVZ4gqNTUmt2yVKw>
-    <xmx:TZ7waAiz_2LHjCilI2196yUApISmUIFrL2bfOzHmxM_vibc2O1apNg>
-    <xmx:TZ7waJLrqedZOQyyP8mtynN9bzMEynej6ari7PkZM7zcjfTaSN9kEQ>
-    <xmx:TZ7waACDaYGyXtykgg9VV36nqeQJLRamAK3aDJoszAS3hGwpFrykTA>
-    <xmx:TZ7waMEUgNPiN42NrKv8C6SiYwiP7yiTC4PeL_ROkAfdkcHIsGDh5b7G>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Oct 2025 03:27:08 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4bfa94ee (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 16 Oct 2025 07:27:07 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 16 Oct 2025 09:26:39 +0200
-Subject: [PATCH 8/8] builtin/maintenance: introduce "geometric" strategy
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GpEHiU4Q"
+Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-938bf212b72so17492239f.1
+        for <git@vger.kernel.org>; Thu, 16 Oct 2025 00:38:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760600316; x=1761205116; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=vmQeechAZxXIdEOqVAe+ppw7VSy0/qX4HYjquTCi2qA=;
+        b=GpEHiU4QpBulPcMDmOtJssiO1XADDFNivGjzNjigv7mdbmu32JmKZi7x5qM3swca7C
+         XUeoe20f/BNiQcqdr1TXCZqorSg4N+mm+i1vQUMH9Nu9QOCLaJsEpshEBvUraKKjU2Ri
+         siRLtghqw+Y9wOtpGsOxKaBO0vx/qyAY1EUucyxnQxe/6V1jqCv5Dpi/muyj+qnCOeId
+         W/+TnXvnHomAQji2cxpBLCzofPzIRUHgLKelCyINqTFQTGGgN3UGajDuMFvb3nN14pzd
+         0J0NL2T/D03KFL+cD9lGqwnj80RSBHJx19UIPtX4rZEzOrKfyjbRXuooJWkhEJmn5/70
+         3DzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760600316; x=1761205116;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vmQeechAZxXIdEOqVAe+ppw7VSy0/qX4HYjquTCi2qA=;
+        b=GxCZ8Aagtce/S7TfepSGxNN/Cn5N24wX5nb3GP3g1uy4dFyXXhAnxxZnbefPR3ETM7
+         FZyXZvv43uqgIf9wBJkKY+6AHZQAmtLUoYVQKgwHA3z2kExWGLkKeffDLEFriaUQbd/K
+         RR8lTRUJ8U6kCcVV9UKYTLBtZJ3GXkCeTE5s2XxYFkfotu3xxUukp2L7+5q74AODxLMX
+         bya88m4jc+mE7s96DExrsmWJx95P1uQ8t+La3X/EUUmpyGgUF6MJqlx3VTIjzqmasUDw
+         3k0fzdBGYZwUO3tSupwSS322PYmOb8PfTLlu8xOrOfSeffWNeY1oTj0YFgYAV2EvqLEB
+         7Xiw==
+X-Gm-Message-State: AOJu0YxQtR6U0MW2mgw8P76ot0WNPbQoERcIQTZMKsdx8GtESm4dfEhy
+	iicaMDSVBPbEaFSi4+ZnTBMDtl2K6mf09UcPtzUU85+eFspnYN/mTMVaSxSV5w==
+X-Gm-Gg: ASbGncscO1fMWGHq0/pEKNHpj8cq6SK+fzCKFR8KOH19qrffaUI8ho4byCiouyZxSWW
+	Fs/ohRsw8RBRTAKX2MDxlk+0wMpWBx6iC8HWAvl/7Nqpr3R7TfBqewzGIX0aOXFin6jKx9A4WsK
+	GkX+BjzBb65Ks5PjlOFbu5sONnv6xN5ilmZL9K0i2kHi2/z3dgyFxo+R6wMcCyhEm1d20sChR7t
+	fTbd3yN2WnOB/8Mtxq0PE/Xhe5c8o+EK0GaulrwVOU/LmoYUibY24/OfkgBao1ixXjWculdhThg
+	No2gB6FKtsZfXYwqlDG/+xxIwM4SrYvC5uyqaIf74a0Xh8KHkqc65VpZs65gMAF9lmn1Oc5yTqt
+	iKZvUlC3oNoO33sx/fi1HzMoIOG+CMvsHaYcTdrChMJFHXhpSrA2tuMk/4/z/NaGJDDs1feN5LG
+	7dSTDLznflnKcAGQ==
+X-Google-Smtp-Source: AGHT+IGp0Mm0Zrf9KUVTaXGXn+cQjrCfcZllV/0Z9mF3vdfPe2T1DxtooXYoPyOq5v9TCCwOGO+IfQ==
+X-Received: by 2002:a05:6e02:190e:b0:426:e20b:f5d4 with SMTP id e9e14a558f8ab-42f8737049fmr360281015ab.10.1760600315741;
+        Thu, 16 Oct 2025 00:38:35 -0700 (PDT)
+Received: from [127.0.0.1] ([64.236.134.209])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-430b50b6945sm7986415ab.7.2025.10.16.00.38.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Oct 2025 00:38:34 -0700 (PDT)
+Message-Id: <pull.1988.git.1760600313093.gitgitgadget@gmail.com>
+From: "Queen Ediri Jessa via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 16 Oct 2025 07:38:33 +0000
+Subject: [PATCH] docs: fix minor grammar issue in MyFirstContribution.adoc
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251016-pks-maintenance-geometric-strategy-v1-8-18943d474203@pks.im>
-References: <20251016-pks-maintenance-geometric-strategy-v1-0-18943d474203@pks.im>
-In-Reply-To: <20251016-pks-maintenance-geometric-strategy-v1-0-18943d474203@pks.im>
 To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>
-X-Mailer: b4 0.14.3
+Cc: Queen Ediri Jessa <qjessa662@gmail.com>,
+    QueenJcloud <qjessa662@gmail.com>
 
-We have two different repacking strategies in Git:
+From: QueenJcloud <qjessa662@gmail.com>
 
-  - The "gc" strategy uses git-gc(1).
+This commit corrects a small grammatical error in the MyFirstContribution
+document to improve clarity and readability for new contributors.
 
-  - The "incremental" strategy uses multi-pack indices and `git
-    multi-pack-index repack` to merge together smaller packfiles as
-    determined by a specific batch size.
-
-The former strategy is our old and trusted default, whereas the latter
-has historically been used for our scheduled maintenance. But both
-strategies have their shortcomings:
-
-  - The "gc" strategy performs regular all-into-one repacks. Furthermore
-    it is rather inflexible, as it is not easily possible for a user to
-    enable or disable specific subtasks.
-
-  - The "incremental" strategy is not a full replacement for the "gc"
-    strategy as it doesn't know to prune stale data.
-
-So today, we don't have a strategy that is well-suited for large repos
-while being a full replacement for the "gc" strategy.
-
-Introduce a new "geometric" strategy that aims to fill this gap. This
-strategy invokes all the usual cleanup tasks that git-gc(1) does like
-pruning reflogs and rerere caches as well as stale worktrees. But where
-it differs from both the "gc" and "incremental" strategy is that it uses
-our geometric repacking infrastructure exposed by git-repack(1) to
-repack packfiles. The advantage of geometric repacking is that we only
-need to perform an all-into-one repack when the object count in a repo
-has grown significantly.
-
-One downside of this strategy is that pruning of unreferenced objects is
-not going to happen regularly anymore. Every geometric repack knows to
-soak up all loose objects regardless of their reachability, and merging
-two or more packs doesn't consider reachability, either. Consequently,
-the number of unreachable objects will grow over time.
-
-This is remedied by doing an all-into-one repack instead of a geometric
-repack whenever we determine that the geometric repack would end up
-merging all packfiles anyway. This all-into-one repack then performs our
-usual reachability checks and writes unreachable objects into a cruft
-pack. As cruft packs won't ever be merged during geometric repacks we
-can thus phase out these objects over time.
-
-Of course, this still means that we retain unreachable objects for far
-longer than with the "gc" strategy. But the maintenance strategy is
-intended especially for large repositories, where the basic assumption
-is that the set of unreachable objects will be significantly dwarfed by
-the number of reachable objects.
-
-If this assumption is ever proven to be too disadvantageous we could for
-example introduce a time-based strategy: if the largest packfile has not
-been touched for longer than $T, we perform an all-into-one repack. But
-for now, such a mechanism is deferred into the future as it is not clear
-yet whether it is needed in the first place.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: QueenJcloud <qjessa662@gmail.com>
 ---
- Documentation/config/maintenance.adoc |  9 +++++++++
- builtin/gc.c                          | 19 +++++++++++++++++++
- t/t7900-maintenance.sh                | 20 +++++++++++++++++++-
- 3 files changed, 47 insertions(+), 1 deletion(-)
+    doc: fix minor grammar issue in MyFirstContribution.adoc
 
-diff --git a/Documentation/config/maintenance.adoc b/Documentation/config/maintenance.adoc
-index 648b6db47c6..5ab88c2b328 100644
---- a/Documentation/config/maintenance.adoc
-+++ b/Documentation/config/maintenance.adoc
-@@ -32,6 +32,15 @@ The possible strategies are:
-   strategy for scheduled maintenance.
- * `gc`: This strategy runs the `gc` task. This is the default strategy for
-   manual maintenance.
-+* `geometric`: This strategy performs geometric repacking of packfiles and
-+  keeps auxiliary data structures up-to-date. The strategy expires data in the
-+  reflog and removes worktrees that cannot be located anymore. When the
-+  geometric repacking strategy would decide to do an all-into-one repack, then
-+  the strategy generates a cruft pack for all unreachable objects. Objects that
-+  are already part of a cruft pack will be expired.
-++
-+This repacking strategy is a full replacement for the `gc` strategy and is
-+recommended for large repositories.
- * `incremental`: This setting optimizes for performing small maintenance
-   activities that do not delete any data. This does not schedule the `gc`
-   task, but runs the `prefetch` and `commit-graph` tasks hourly, the
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 3673f3db630..bf603de8a2f 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1871,12 +1871,31 @@ static const struct maintenance_strategy incremental_strategy = {
- 	},
- };
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1988%2FQueenJcloud%2Fdoc-typo-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1988/QueenJcloud/doc-typo-fix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1988
+
+ Documentation/MyFirstContribution.adoc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
+index 02ba8ba5f6..91c6296ffe 100644
+--- a/Documentation/MyFirstContribution.adoc
++++ b/Documentation/MyFirstContribution.adoc
+@@ -26,7 +26,7 @@ useful additional context:
+ [[getting-help]]
+ === Getting Help
  
-+static const struct maintenance_strategy geometric_strategy = {
-+	.tasks = {
-+		[TASK_COMMIT_GRAPH].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
-+		[TASK_COMMIT_GRAPH].schedule = SCHEDULE_HOURLY,
-+		[TASK_GEOMETRIC_REPACK].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
-+		[TASK_GEOMETRIC_REPACK].schedule = SCHEDULE_DAILY,
-+		[TASK_PACK_REFS].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
-+		[TASK_PACK_REFS].schedule = SCHEDULE_DAILY,
-+		[TASK_RERERE_GC].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
-+		[TASK_RERERE_GC].schedule = SCHEDULE_WEEKLY,
-+		[TASK_REFLOG_EXPIRE].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
-+		[TASK_REFLOG_EXPIRE].schedule = SCHEDULE_WEEKLY,
-+		[TASK_WORKTREE_PRUNE].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
-+		[TASK_WORKTREE_PRUNE].schedule = SCHEDULE_WEEKLY,
-+	},
-+};
-+
- static struct maintenance_strategy parse_maintenance_strategy(const char *name)
- {
- 	if (!strcasecmp(name, "incremental"))
- 		return incremental_strategy;
- 	if (!strcasecmp(name, "gc"))
- 		return gc_strategy;
-+	if (!strcasecmp(name, "geometric"))
-+		return geometric_strategy;
- 	die(_("unknown maintenance strategy: '%s'"), name);
- }
+-If you get stuck, you can seek help in the following places.
++If you get stuck, you can ask for help on the mailing list or Git community channels listed below.
  
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 1acd701830e..bb61b4d7f44 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -897,11 +897,29 @@ test_expect_success 'maintenance.strategy is respected' '
- 		git gc --quiet --no-detach --skip-foreground-tasks
- 		EOF
- 
--		test_strategy gc --schedule=weekly <<-\EOF
-+		test_strategy gc --schedule=weekly <<-\EOF &&
- 		git pack-refs --all --prune
- 		git reflog expire --all
- 		git gc --quiet --no-detach --skip-foreground-tasks
- 		EOF
-+
-+		test_strategy geometric <<-\EOF &&
-+		git pack-refs --all --prune
-+		git reflog expire --all
-+		git repack -d -l --geometric=2 --quiet --write-midx
-+		git commit-graph write --split --reachable --no-progress
-+		git worktree prune --expire 3.months.ago
-+		git rerere gc
-+		EOF
-+
-+		test_strategy geometric --schedule=weekly <<-\EOF
-+		git pack-refs --all --prune
-+		git reflog expire --all
-+		git repack -d -l --geometric=2 --quiet --write-midx
-+		git commit-graph write --split --reachable --no-progress
-+		git worktree prune --expire 3.months.ago
-+		git rerere gc
-+		EOF
- 	)
- '
+ ==== git@vger.kernel.org
  
 
+base-commit: b660e2dcb98ed4eafe2781b7ba31b70d2fcbad80
 -- 
-2.51.0.869.ge66316f041.dirty
-
+gitgitgadget
