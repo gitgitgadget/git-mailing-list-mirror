@@ -1,60 +1,60 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F5C4409
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 20:33:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85ADF298CBE
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 20:42:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760646791; cv=none; b=lpEzK13To4st//JEzI87rTOWh/bxQCor10gNHdsY5mmtk3WgSfrZLOFfOzZgD7lqfdiN5ZOyA9MlPL/DOwKeG+jeLTT6ZBpQ+d5Ttmt/5r41nZsBGpBe2ZwJUJ/2KwJuUHRMcLv5GWz695QH00/tVPBWWcgwAYVU4Kxpc3eliVU=
+	t=1760647339; cv=none; b=KaxpLQ2GOTyXE3IWf4LqKNxmAd8SSUC2/UA34U56Y2rof5xbXEbMtu5hNYUqkLaOD3q/G0hQ+yUDLbdogTRzDS1eO9AzQ2AeyUXESSm6fzfSb6DDLULhSqCaEYRXjO4nR8UPt+I094T30m/pvNAqYL91ZKGkOfS0IW7KgIVoF9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760646791; c=relaxed/simple;
-	bh=JzIGAKR1fwLMurf2DDCsvzaCN+230lfxtxlIxhafu88=;
+	s=arc-20240116; t=1760647339; c=relaxed/simple;
+	bh=O0AC+PNwZkGxHvGLzwt0KXs2Jm1na3/9Y7/w5FBUHI0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=myhKQQFoOs9/N5NAjl6dWjZ2zzzooKFOdid3qhr8FJ07T/kohIFUDbesIS6W5D9HWHe2Hl0QY7K/9Y+c/cRQDrSQ2nD/hIKS2hFt8AUC74XKJ+7vRKir2ARcqt19XAUaLrxsOfg5BzCLnYVEYGZgS4Mvs7ADUkTvXeQNZMIpZh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E+TDVZXN; arc=none smtp.client-ip=209.85.208.51
+	 To:Cc:Content-Type; b=UCtk8yZePhrgcc5/XX7oi/qywbPlU02uCoqFMtKoZxu4Tr2jiMes2533KoDcIEEsvKJRMpVQ5aHj/7aLLpekrW6yb8Y99yhaEo8sFSGRWCqaBH3n/LHJEG6T4ZmTwBcx3UcAxOtLJ7bDa1IQpZ1bzBw6+11UuG4I1j97cucYAoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XiskuR2p; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E+TDVZXN"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6394938e0ecso2059861a12.1
-        for <git@vger.kernel.org>; Thu, 16 Oct 2025 13:33:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XiskuR2p"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-63c0c9a408aso1981312a12.3
+        for <git@vger.kernel.org>; Thu, 16 Oct 2025 13:42:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760646788; x=1761251588; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760647336; x=1761252136; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=B4sqYxTmeGz+znzPSI8MkVBduQ0nGNdtL035sB3pfM4=;
-        b=E+TDVZXNP2Gd5FK/3qPO6y+XtUigbvJFvq8iAfe4ic48opAUyaAaL3eBNchlsQcaxe
-         rgxgAaLAup/YTRiWF2udtqde2GOCzI8SnG4p+UQBOkgGpP5/2XmrQ70c5VtysueuMj/e
-         HddMWYOl2Ll1hukWGBt+vP9w1wvc9YXwOzpWsZQ53476puWLj6wpyjknszybhsr7Ju+y
-         GFB/9Ptbl45I4ywvLpmlNXE64MaDZurp9WbISISe0kc9c8pQNzdDaAD88jVC0eRu/N8j
-         U1cyvNnY6wdQu3XfiQguSDjz6ZY9VKLDzP7vbWLh4vOKxGd1NnHnjh20vZ5bhaJTWm0n
-         /0YQ==
+        bh=M4wNaFiCgC1vy94easMRDyD1x/7Q6DIk/aR3ZjnPPuE=;
+        b=XiskuR2p8tQAg+0D/Pvxy1cfS1qvGQiVOf9a5pMsxJHj8ZR5k/1ogtTT9o68MPkUV3
+         vKH89XNt5tUyMRQ9cF2xDbBf21D6VwFY3hp+ZXTfVYBP8AH4uSsc1vx+38v0uHGHOLGl
+         S7CSaAdV5SC5aUDk1JcHgGOVs5pg79gZ1pYwe/pdpToCiSbKxo54rcWIPLx3mRK2PZAY
+         6ZUMc5A4u29/owr+k4OXyHdUkJKKvDet3QA+mUkT7He04wZLHQY0ud10q8jpTKENSl9W
+         ZW6n5Wp2mina8gs5ly9FXOc4tbDhkiCFRAtxSIE4XRK6g2VthfGUmfyi4u7559jHquUD
+         X+Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760646788; x=1761251588;
+        d=1e100.net; s=20230601; t=1760647336; x=1761252136;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=B4sqYxTmeGz+znzPSI8MkVBduQ0nGNdtL035sB3pfM4=;
-        b=nQ3xw21TbJp4z91Falz3ywN+SABfeaRMG7VnNVExOU9CRuBVSD5wGhYJfzDf/CjWFY
-         oGb1Tf+b+HXa/zzzY1gn8wZ8RJVNWkJi+FtYevFRpwTQ3COPsRK8IIqYoIVifW9i19qB
-         fYwpPI8D9rc/scr1aKSqyDqrAXZXzaqQZzOmpUZJ2edlVqkJUT6o1POGJT1hwRJrPicH
-         L9cRi1PO2Y/wPtyuqAUqu0ypBWwdT3ztiL3RH4alOTRSX7Hv1BgB/egr8ML+d3QV7EwR
-         PYYE3LgVhqO8MZG4G1boAff+/btnm7wo07hSeLqEQEAGSyE7f99AcWupO9Ups6oCwe0A
-         OHPA==
-X-Forwarded-Encrypted: i=1; AJvYcCV6qY2Jshtsgh+D0M6uZXCpvHzXnWRX2aoJ++vDHLu6tWo7Kt0sxJuIRzwF6GGCNAaMpyE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxAaclv+IVP6RMLfN16/evqpDXEiaevG2JQMhT6jVpziTwvWaTe
-	xyVs3LWar/uMCwtpIrI+Bhr2P5GRmod9XbIKiAKdB1i3kcsYJGkEYDUCRKZH5G4tDkBj8ZanSd5
-	VuuEaawfajbvlUSWyDqJ9Q+dQ3v8NIK0pxQ==
-X-Gm-Gg: ASbGncv8XaKuhoniPIeAkdT261VKANgmXzqzpQksg+hD/Fy4ROI73pVXJYgpxSFuD5u
-	pW+Nx/NIAvtqEwH5HJtUy19lqxPNJASGIK8xueNyu9U+8b68rHMXMazQOuttmwB8ufDUJFHIoJU
-	GZOhswXTWITp/YuRgOYRtgG/8t3KLDHVLdxDF4/QfJlDoWgpDNNuyvw3rhr7hO0dLWo9iMcG4On
-	HQJmGOfHmDnkynMgxhvEI4jHALelEwOD5h2RnfrZ/07qZL5+Z5x00y3G+DUFSDphlQ4dHencSZC
-	v3kWi1nivDynL4uJt0LLMdJGBaGs
-X-Google-Smtp-Source: AGHT+IEFYbd/omVouwAOOabXUe6ycz8JOUdCYk3a2/ZMIUcL8YNkm5tm8f1SShqwVp6YeIo46BcGLW5INsx4u+iVgss=
-X-Received: by 2002:a05:6402:1445:b0:63c:2750:ef4c with SMTP id
- 4fb4d7f45d1cf-63c2750f073mr116436a12.19.1760646787814; Thu, 16 Oct 2025
- 13:33:07 -0700 (PDT)
+        bh=M4wNaFiCgC1vy94easMRDyD1x/7Q6DIk/aR3ZjnPPuE=;
+        b=GD6RsRdftNvHuIgRttYpsFKd9rdBNsEr49DTTMne/kQEXh9Pn1I3VBFjFlYRVWB6Xs
+         rDUvHqCuHyHkHCbRJGHYX0vzy3gjrYlmfduCZAcT394xZHI2rvJmaZGfLFaFnXjafXte
+         gjP1aGk252qAxQ/Cq/SUx4CMmG0SkktVxxRHtPny12Oeq1dlQ5eICjcW45b2pT+8k7ji
+         eQiMTAQtIZz7dO1SkO25nM4iETzOHBbu+4cfhCMr3cmzX4+jsV9zS/mrjHPpKFoZf0gT
+         vTK+ytKMcbcdsdqnUsWzwtwj4zAV1WCcuizjEAuGEm6i3cgT10YOjBLowPSRNrGmO/Xr
+         VBzg==
+X-Forwarded-Encrypted: i=1; AJvYcCWi7NX4KhVbAXJ+br8n4l6zqgTbQvLPNlzp/BfSq0dcFjRGDscN1s1AH0QXhFoKCVnTTms=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxh9aU1Nuu+/njoga4An1VaM2W4jVYpaf0KKJTQzivOWJe9oxWt
+	hWy0Z6l8gikzyv5Vx6RGHVZ+3ySC/BHKicLfNW9nq1ILvzCrwtr29WzXMJJmlGrZZO0RoyPiyIL
+	kcKdVbIQivZ28snRMiPD7TMV2/G+ggh0U5g==
+X-Gm-Gg: ASbGncsRbqWny6UMMs53RLtgygKXIzrwWOeM4Y6+hxOmWsmW/iMLH+9W/Jt4O9OGKf9
+	BHAZnEIH86no9Lu2imrZsc9kb7kssaXeUhEOMtOoel5FvgY18jfdFQGqBwD31L9Ej8dZGmqDsxJ
+	Nrvq2Z7MUeOyStyvfK5T4EC0YXWPNUmXyAhOYVA8Px0NHCZe0VZP5opzyqBC1cImygAhxmpJyYO
+	OxEsqsFYrbjiPz+Omj/OQVqzKlKl3H35sQZ6pB8k01QrNVZX4tELAVTOx8C8wEQjrraX1TcL79q
+	NHoLCmepktZgVLcIWQ==
+X-Google-Smtp-Source: AGHT+IHfVUooiNyUr2927jyG2hb6oVA0Az8ocqLSvLvE76hPIAQDg21OfUCDlocmyl52Esg4zRWELdY8aFINLkK89DQ=
+X-Received: by 2002:a05:6402:3585:b0:63b:f05d:b985 with SMTP id
+ 4fb4d7f45d1cf-63c1f6edb50mr1027594a12.35.1760647335788; Thu, 16 Oct 2025
+ 13:42:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,63 +62,83 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.1989.git.1760566054455.gitgitgadget@gmail.com>
- <xmqq4irzu7st.fsf@gitster.g> <CAESOdVAHt8nUQRE64RXwS4FiO1=Qy8EPamDwaPqUrHvx7bKCEQ@mail.gmail.com>
-In-Reply-To: <CAESOdVAHt8nUQRE64RXwS4FiO1=Qy8EPamDwaPqUrHvx7bKCEQ@mail.gmail.com>
+ <aPAgBPLH4QYa0ceP@fruit.crustytoothpaste.net> <xmqqh5vz7ygc.fsf@gitster.g>
+In-Reply-To: <xmqqh5vz7ygc.fsf@gitster.g>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 16 Oct 2025 16:32:56 -0400
-X-Gm-Features: AS18NWDKSjh6UTguHmqCMo6KViI-CRlJvfD0AVa4iRGl7wUtSOmVhl5r7qWP3jY
-Message-ID: <CALnO6CBaTUzFFB+h5aXN2GuNwm2oyk5ZNEy8u9=80zwQjdfsOQ@mail.gmail.com>
+Date: Thu, 16 Oct 2025 16:42:03 -0400
+X-Gm-Features: AS18NWBDEdwqOf7znFrIsgggtsZh6be5YHRTX8VeQGhO6uttWgAnccErjRB8MxQ
+Message-ID: <CALnO6CDH8i0++gTXZCXScLpXnvKTXN5=fYxLJ4W+mgfcSaZt_Q@mail.gmail.com>
 Subject: Re: [PATCH] BreakingChanges: say that `git diff X..Y` syntax will be
  removed in 3.0
-To: Martin von Zweigbergk <martinvonz@google.com>
-Cc: Junio C Hamano <gitster@pobox.com>, 
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, 
 	Martin von Zweigbergk via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Martin von Zweigbergk <martinvonz@gmail.com>
+	Martin von Zweigbergk <martinvonz@gmail.com>, Martin von Zweigbergk <martinvonz@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 15, 2025 at 7:07=E2=80=AFPM Martin von Zweigbergk
-<martinvonz@google.com> wrote:
+On Thu, Oct 16, 2025 at 9:47=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> On Wed, 15 Oct 2025 at 15:19, Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > "Martin von Zweigbergk via GitGitGadget" <gitgitgadget@gmail.com>
-> > writes:
-> >
-> > > From: Martin von Zweigbergk <martinvonz@google.com>
-> > >
-> > > The `git diff X..Y` syntax is quite misleading because it looks like
-> > > it shows the diff of the commits in the X..Y range but it actually
-> > > shows the diff from X to Y. IMO, if that syntax is supported, it
-> > > should show a diff from the merge base of X and Y to Y. I hope Git 3.=
-0
-> > > is a good time to remove support for the current syntax and
-> > > semantics. Then we can perhaps add the syntax back later with less
-> > > surprising semantics.
-> > >
-> > > Signed-off-by: Martin von Zweigbergk <martinvonz@google.com>
-> > > ---
-> > >     BreakingChanges: say that git diff X..Y syntax will be removed in=
- 3.0
-> >
-> > I like it in prinicple and I do wish that we didn't do the lazy
-> > thing when we did the command line parser for "git diff" (we had
-> > revision range parser, so we just reused it instead of doing our own
-> > for "git diff").  But real life may bite us back.
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 >
-> Ah, so that's where it came from. Thanks for explaining. Speaking of
-> revision range parsers, teaching Git something like Mercurial's or
-> jj's "revsets" languages is one reason I would like to get rid of the
-> `git diff X..Y` syntax here. I haven't done a comprehensive analysis
-> but this is the only place I've noticed where we would need a breaking
-> change if we ever wanted to teach Git revsets. (I'm not volunteering
-> my time to work on such a project. I just think it would be nice if
-> someone did :) )
+> >> +Support for "git diff X..Y" syntax will be removed. Use "git diff X Y=
+" instead.
+> >> +This will open up the syntax for a more consistent interpretation of
+> >> +"git diff $(git merge-base X Y) Y".
+> >
+> > I feel like this is going to break a whole lot of existing scripts and
+> > probably more than a few forges as well.  It seems especially bad that
+> > we would add it back in the future with a completely different meaning,
+> > since we'll have some people that use 10-year LTS distros that go from,
+> > say, Git 2.51 to Git 3.xx, where the latter reintroduces the syntax wit=
+h
+> > different semantics.
+> >
+> > We've never really changed the meaning of things like revisions or
+> > revision-adjacent code in the past and I think those kinds of things
+> > we're pretty much stuck with forever.  With that in mind, I don't think
+> > this is a good idea.
+>
+> I do not think X..Y (or X...Y), if accepted by commands, would never
+> change their meanings in the middle of the commands' lives.
+> Teaching "git diff" to complain and barf on X..Y is a possibility,
+> but to do the same for X...Y, we would need to come up with an
+> alternative syntax first.
 
-Buried in my todo list is a goal to teach Git about JJ's "::" syntax
-:) Fortunately, I don't think that requires this particular change
-(which I'm otherwise in favor of).
+Isn't the alternative syntax
 
+    git diff --merge-base X Y
+
+? That's what the manual says, at any rate.
+
+> The same for "git checkout master..."  that detaches HEAD at the
+> fork point of the current topic (so that I can "git am" in a new
+> iteration of patches on top).  As the syntax "git diff master..."
+> is symmetric with it, if one were to change, both should change to
+> the same.
+
+As a gut reaction, this is a bit apples-to-oranges: for me, the issue
+with the diff notations is that "git diff X...Y" shows changes "only
+on the Y side" (where as with rev-list/log/etc. it does "both sides");
+contrast with "X..Y" in both scenarios.
+
+Meanwhile, checkout is only ever really expecting a single point to
+checkout. Still, perhaps a different notation that means "merge-base"
+is warranted for that case, making the following equivalent with my
+hypothetical syntax:
+
+    git log X...Y
+    git log X Y X^{merge-Y}
+    git log X Y X^{M-Y} # hyphen optional here? "merge/M" vs "mergebase/MB"=
+?
+
+Inspiration from X^{/search}, of course, since any non-<type> and
+non-"/" prefix is effectively unused. Anyway, then you'd write
+
+    git checkout master^{M}
+
+or some such (where the "empty" bit becomes a synonym for HEAD as usual).
 
 --=20
 D. Ben Knoble
