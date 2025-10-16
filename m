@@ -1,135 +1,168 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230541917CD
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 19:33:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF03714F112
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 19:38:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760643242; cv=none; b=cLTzShn/XX/NEFJYPPvz18ZHrSAg2JERZf3EWxhFGKmNKVrio7Z0iWge7OQMDMLF6SuCUGLc7CAn+XWHApE1s74gO2BtHTv1JYiZ7APu6JhK2QEki79F94m1RyVuCuWZR4bgGwKG5Z8k8CETeqkhbSv22SLWic+vI9rVsv9D8hI=
+	t=1760643505; cv=none; b=u9xyV1IL4j8ncich0iRoPIDJoOCBWTHKs8ndiD9H2DBXMg+M5yIa61GJs6j5DQePXHLKU7HISft0gla3/LnvU4ka3A/+NIkq0ovlAk0qW2b54fg43+pRJcJJjHR6ox1sIIcQ3k/07rZFQfxDc63wUsa/nZ8doluzMbyMe7a5GdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760643242; c=relaxed/simple;
-	bh=nJKgiXS1w+WGGSAYgRTetorVm1FvULid5ZHIlx0sJR8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Z1/trHwkcCn2ZKs0wEUbRA77dBTQhZpd4um/iVk8xRL89+B+AyWl/H+e1OYc+8aV+OvXZ1seanJ6d7oeVw6B5rvmkC8X6ii2POAxYBeZTOw8M3a3xE/ht04HKS3wEH3NQkQ0I5JmQFvkO0zRc3orBZRxZHh2PKaK+8uCSwrmQwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XqXrWtZ9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hs0eXsiX; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1760643505; c=relaxed/simple;
+	bh=is6ijBTxkn7wh6J3bQQXtNx6GjZuhwAfyn/852nThco=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ndEKhvm3LvDY0ac9vmtD9Ird2+i8i41LZDBSsdaD8oVZ4Koy2Qw7wFt9XFTK6cpNNj3T8awlt9uAemqjiCzdELGZmtzDNTuLflOo5DFvuXE+iFNnOHiPnBSMdhrI+nIaPj4MhTbl412cV1oYqOxyiVwZriHBLP81FkKgdKA8PF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z/iSsW6R; arc=none smtp.client-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XqXrWtZ9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hs0eXsiX"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 53551EC01DB;
-	Thu, 16 Oct 2025 15:33:59 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 16 Oct 2025 15:33:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760643239; x=1760729639; bh=JngnQMmpiQ
-	f/7yEuET+FeU4f0oTdQLlhj9zjdBtabRk=; b=XqXrWtZ97t0tuH3nydOyoA9629
-	Hb3EDp9Twfx2uaE60Qk3RdMhTcem5kg6/f7/1WW7YnoNcgcAYxRhResGeu0987oz
-	+gidKRb+SkB7o3UNYaYjReo4cxKX1aGoxV0YLjb+2+Jl8EDsfyLL60M1P+SGyGUb
-	1X9iq9HqolLm3sKTGBXg2tAlMUQ8P1mTRybuhVO1YyiaoER4rlK0O0rSWvv4I5/X
-	QRVaXFzm+WB1BjTRHc1rmvOzSbR5rebbM44U6skBT/EeyfXLyMA7M+2MCGqK7SvO
-	E+54iHpKKlUZYdd4qS0cDT+jRFZYpzen0+ipr8Omct8KpRT3b5KgTC7BlsVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760643239; x=1760729639; bh=JngnQMmpiQf/7yEuET+FeU4f0oTdQLlhj9z
-	jdBtabRk=; b=Hs0eXsiXGHd2IXYlNdU6WE+qw6Fc+iM36B9CLdh4c+jjX+fgUf5
-	znsGeThrLllR6Qi28IopFrLCgfvtYr+wAWfwRzDgGh6SEfSDPYncaUrMg0/FlY0x
-	V/TUnpKMZikzfacGD9GTMY6Iog8z/iHbM5HzxPh5eFnME/OIZNWJn/HfjQBeq/Lb
-	YwsC0qC/G/aFHbThvuHctW9Z2vPuYRFJgqx5VOPcsme3JZjX+hqN1sBoz1v0aEgM
-	nJvmgduKbMfNkln55zYcDUfsSxYYtkh2URxb8KFH+v2h7YivfWZWz/Ly1KiG0U1+
-	i9uYHpZCew4ueLCXu7OR9O4MJOsomJODOsg==
-X-ME-Sender: <xms:pkjxaBmW0Vk1Wcwc-xxG6caOzuM5WGIg3wgIkscmuSEObxicDsAMkQ>
-    <xme:pkjxaERW9UmRtcIX9YCnS6BXW7CK0AJW3TNQCcxKLbQvyhyAhI20Ers831cB_uvl1
-    WRymHGJE89TkGMB455awj52cxNhdXgY8q4mBmJ8pkbQEVD6XcmZRw>
-X-ME-Received: <xmr:pkjxaFDbJJxiUS490FkeXpuyzBD5Vy-pUROY5RDpd2CPKLQO3NJSmlwlPjxPMWg5rl-CMlrdY5GQlFvR9BRpmXhk1f4-pP6TUalM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdejudegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeekleffhfefvdeiueegjeehfeeigf
-    fhheekvdejvdetjedvvdehtdeuvdeuudduvdenucffohhmrghinhepshgvthhuphdrtgif
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepghhitheslhhohhhmrghnnhdrshhhpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:pkjxaLTERQ8-QqczAKXH9kjglfZny3luCChfrFRbzDNIM8acSs3R0Q>
-    <xmx:pkjxaDr0vweBInRfMK4JMVu0m4B0syiIdaIwV2dM5U9vZ9zxjO3H6w>
-    <xmx:pkjxaNyZMD7upJT20CJpQhPHvqwf2rQRELncbhopci17SRcpyZzyXw>
-    <xmx:pkjxaII0kDGVTqQALpMR1gxkTo1N9d9yhXXPvLsAwz_cTB10oe2_bw>
-    <xmx:p0jxaN91SDTS-G41CuxEuIlSMAfSH5ihEXfHUfLe8w0fGLKCsoJUWKp3>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Oct 2025 15:33:58 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Michael Lohmann <git@lohmann.sh>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 5/5] setup: allow not marking self owned repos as
- safe in `ensure_safe_repository()`
-In-Reply-To: <20251016053322.44495-6-git@lohmann.sh> (Michael Lohmann's
-	message of "Thu, 16 Oct 2025 07:33:22 +0200")
-References: <20251013094152.23597-1-git@lohmann.sh>
-	<20251016053322.44495-1-git@lohmann.sh>
-	<20251016053322.44495-6-git@lohmann.sh>
-Date: Thu, 16 Oct 2025 12:33:57 -0700
-Message-ID: <xmqqo6q63al6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z/iSsW6R"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-7960d69f14bso10060066d6.2
+        for <git@vger.kernel.org>; Thu, 16 Oct 2025 12:38:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760643502; x=1761248302; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=u3bme5e0o6PtCWjBnxWcOPCayDoRf7toQL6xQ2j/2iY=;
+        b=Z/iSsW6RGnxSjlNGwhsTUuivEpHy2iu6rSgK1UtOFmcEZAE9vt5seFn3mnHmF1cqwn
+         2EoOElUyjgZShbvv87oaALVrdgDxmuUX25PCalT/zNWx5H3tPosWkNCtPNgs4mvk/s3H
+         OtHoA1WbGiuz4Csdlbmf3KGh9FvxkSyT+gOmHDgV1srnGbzAcGkIzjR/HZANs5trEaGw
+         TKIwVSmNBceDs6gVG6ZIvmQkssdD1qEZsIjokCI0se+28bFbb4M4umo+W1cMWKlstv3V
+         NMw3KHRH9cv5y+OeQwG5zLFJtFmjVR8SI2eZ+vsb/nkQSgsM7TdfxYu2ASP+kWXahVk1
+         4MDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760643502; x=1761248302;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=u3bme5e0o6PtCWjBnxWcOPCayDoRf7toQL6xQ2j/2iY=;
+        b=NDqxxxQcN2nS79mzpsHbicLHPPH/+4unTa1mnsjG+096+TtA2+umv74+xXbUfFg4fz
+         EypJfWPdLEqdvMhFits0Agzgzh1Ltt39XKKaxQx34lgDmQYU5ImOkrPfbqvQE/R/vgGK
+         jEj/cfYjMD3AHpYXReC1seaHwXp3C+OGovztkiJo3EgMZRxlGpGIJaLN/kH5zsJ24iWd
+         UxgCBE5MGfhYg1SH/5K865rqHbkIuvSQ/VPBrKFjhoB0k0yjydN4zVc1yxNZwNcNDW+A
+         WbBJZXsuO7HxaLqnEfxFunwiE6mAmLmLRMOkdQNLJUJseCHHUO+/7dhwOUhjuhydbXVJ
+         OE7w==
+X-Gm-Message-State: AOJu0YwTP5kOzfzP5Q2ktEtoHnHtP/yjB8yPBWid+Um2YM8GGuH85HjR
+	47Ew0nP/8xUxnwFkbcZSbJk9mf81tfwihMscD3ITiwhn/qlZryeDqB6E+un2fSFA6EqSqtNcr0w
+	RzCpUqvgeTuX+/m5vvReAUw4O/SEWWrA=
+X-Gm-Gg: ASbGncvgyqoOJPjK4dUv9ayk3FaVhp3q5+Db3qftY4JNuRl/3+L4txLjdDga9/NVhns
+	0Gh5QBmcdRg0yFTS/M0OFsld7s9G5i0Odf9C6rNMv12b9h8Sob5tgfdsmtzyBj7FG/NMpTp/ACP
+	VaQw1rOUVWmx2A81Oeoh4J1wLzWeYPfGka8khZYWLRarWD/te2/xIJnev4QyjNCypqcENQpepjG
+	E20JhTUZUeCc1PFDH8nW5nCJSmYTcq1CnBBcF6SzyNq7B3V0D6swh6QbxLu7aFjQnA8ZUwJo5Vn
+	l1z1cP9jmgRzNBpGeMI0gQ==
+X-Google-Smtp-Source: AGHT+IHh1FYiq7iuqBymzA9CmlPq9UZa82YpBkGEg8b3/ZVEAn2a5cnhHbCtC6EA8j7K0OzPjt6213dBpZtuX7n+Gvg=
+X-Received: by 2002:a05:6214:33c4:b0:87c:224c:64e8 with SMTP id
+ 6a1803df08f44-87c224c712cmr11235016d6.45.1760643502484; Thu, 16 Oct 2025
+ 12:38:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20251016184420.78268-1-okhuomonajayi54@gmail.com> <xmqq4iry4r3e.fsf@gitster.g>
+In-Reply-To: <xmqq4iry4r3e.fsf@gitster.g>
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Date: Thu, 16 Oct 2025 20:38:11 +0100
+X-Gm-Features: AS18NWBIfkwVPZ7gcwf0Ka2Iz8pbLHjw_Z1SczE72uLmFjD3QrxE0hM56nHmHg0
+Message-ID: <CAFpMFfBe7+pMUL8aaDkGkPUaE9RhCW25OJhJy69EcukgSFn9+A@mail.gmail.com>
+Subject: Re: [PATCH] gpg-interface: trim only CR characters that precede LF
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Michael Lohmann <git@lohmann.sh> writes:
+Hi Junio,
+Haha, I smiled at your =E2=80=9Cteh=E2=80=9D comment =E2=80=94 I myself oft=
+en make teh same typo
+Thanks a lot for catching the typo and for the detailed feedback on
+style and indentation.
+I=E2=80=99ll fix the tab/space mix, shorten the long line, and use your
+suggested comment wording in the next revision
 
-> +safe.assumeUnsafe::
-> +--assume-unsafe::
-> +`GIT_ASSUME_UNSAFE`::
-
-I haven't thought things through thoroughly yet, but this probably
-is a good thing to have.  I cannot say the same to [4/5], though.
-
-> @@ -1330,6 +1336,9 @@ static int ensure_safe_repository(const char *gitfile,
->  	if (data.is_safe)
->  		return 1;
->  
-> +	if (git_env_bool("GIT_ASSUME_UNSAFE", 0))
-> +		return 0;
-> +
->  	if (!git_env_bool("GIT_TEST_ASSUME_DIFFERENT_OWNER", 0) &&
->  	    (!gitfile || is_path_owned_by_current_user(gitfile, report)) &&
->  	    (!worktree || is_path_owned_by_current_user(worktree, report)) &&
-
-I think you didn't have to do anything in [3/5] for this, though.
-
-It is sufficient to pretend as if GIT_TEST_ASSUME_DIFFERENT_OWNER is
-set when GIT_ASSUME_UNSAFE (and its config/option equivalents) is
-set, no?  IOW, wouldn't it be equivalent to your series, if you
-dropped [3/5] and replace this hunk with the following?
-
- setup.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git i/setup.c w/setup.c
-index 7086741e6c..e3c81a6fae 100644
---- i/setup.c
-+++ w/setup.c
-@@ -1307,7 +1307,8 @@ static int ensure_valid_ownership(const char *gitfile,
- {
- 	struct safe_directory_data data = { 0 };
- 
--	if (!git_env_bool("GIT_TEST_ASSUME_DIFFERENT_OWNER", 0) &&
-+	if (!git_env_bool("GIT_ASSUME_UNSAFE", 0) &&
-+	    !git_env_bool("GIT_TEST_ASSUME_DIFFERENT_OWNER", 0) &&
- 	    (!gitfile || is_path_owned_by_current_user(gitfile, report)) &&
- 	    (!worktree || is_path_owned_by_current_user(worktree, report)) &&
- 	    (!gitdir || is_path_owned_by_current_user(gitdir, report)))
-
+On Thu, Oct 16, 2025 at 7:52=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Okhuomon Ajayi <okhuomonajayi54@gmail.com> writes:
+>
+> >  /*
+> > - * Strip CR from the line endings, in case we are on Windows.
+> > - * NEEDSWORK: make it trim only CRs before LFs and rename
+> > + * Trim CR characters only when they appear before LF (\r\n) line endi=
+ngs.
+> > + * This avoids removing legitimate lone CRs from teh content.
+>
+> "teh" -> "the".  I know, I myself often make teh same typo.
+>
+> >   */
+> > -static void remove_cr_after(struct strbuf *buffer, size_t offset)
+> > +static void trim_cr_before_lf(struct strbuf *buffer, size_t offset)
+>
+> In other words, this normalizes crlf to lf line ending.
+>
+> >  {
+> >       size_t i, j;
+> >
+> >       for (i =3D j =3D offset; i < buffer->len; i++) {
+> > -             if (buffer->buf[i] !=3D '\r') {
+> > +          /* skip CR only if it comes right before LF */
+> > +             if (buffer->buf[i] =3D=3D '\r' && i + 1 < buffer->len && =
+buffer->buf[i+1] =3D=3D '\n')
+>
+> Are two different mixture of tabs and spaces used in the above two
+> lines?  I think they wanted to begin at the same column.
+>
+> Also, the second line is overly long that it does not even fit on my
+> 92-column wide terminal (yes, 80 is the limit, but this will let a
+> line in the patches quoted a few times to still fit, as long as the
+> patch honors the 80-column limit).
+>
+> > +                 continue;
+>
+> >                       if (i !=3D j)
+> >                               buffer->buf[j] =3D buffer->buf[i];
+> >                       j++;
+> > -             }
+> > +
+>
+> Do we need a blank line here?  I dunno.
+>
+> >       }
+> >       strbuf_setlen(buffer, j);
+> >  }
+> > @@ -1023,8 +1026,10 @@ static int sign_buffer_gpg(struct strbuf *buffer=
+, struct strbuf *signature,
+> >       }
+> >       strbuf_release(&gpg_status);
+> >
+> > -     /* Strip CR from the line endings, in case we are on Windows. */
+> > -     remove_cr_after(signature, bottom);
+> > +     /* Trim carriage returns (CR) only when they appear before line f=
+eeds (LF),.
+> > +     *  mainly for handling Windows-style line endings
+> > +     */
+>
+>         /* Convert CRLF to LF, in case we are on Windows */
+>
+> > +     trim_cr_before_lf(signature, bottom);
+> >
+> >       return 0;
+> >  }
+> > @@ -1110,8 +1115,10 @@ static int sign_buffer_ssh(struct strbuf *buffer=
+, struct strbuf *signature,
+> >                       ssh_signature_filename.buf);
+> >               goto out;
+> >       }
+> > -     /* Strip CR from the line endings, in case we are on Windows. */
+> > -     remove_cr_after(signature, bottom);
+> > +     /* Trim carriage returns (CR) only when they appear before line f=
+eeds (LF),
+> > +     *  mainly for handling Windows-style line endings.
+> > +     */
+> > +     trim_cr_before_lf(signature, bottom);
+>
+> Ditto.
+>
+> >
+> >  out:
+> >       if (key_file)
