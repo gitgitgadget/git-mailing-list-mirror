@@ -1,77 +1,79 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75C62E62A4
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 07:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B453A2F9DA7
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 07:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760599612; cv=none; b=FEM8Sux12ox4s3+Ps6E9EBkocgtJhIAm5oBrFNBxA8vli6wTiNzLRvpaTuoV4gazLX4EnMTGbn7Ib5N/qSIVbljI3fnFsRaj7tbuF9LOFQpepvc1PhgnhWtEw5kKV4XVzM549hPjyDtP43ksDW+HLRf9yeWLe3Marn74lLV1beo=
+	t=1760599613; cv=none; b=UBa3i05+cc5Pih8/VdoNvsv1yWLJE22XBk5mcfvHXjzEmdg+Sy5lNK6fOvEnVrmk7TEu/ZVWy8GzHNIf1pxr+nw7HIIzEvF9ZLemsO7UFFLWyQHcgDKt+YeyvcVKDF1JOLf8DHRhA1LX+XPvxCO+f8hy7t+BsVstHBlMYEi2Sx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760599612; c=relaxed/simple;
-	bh=ce5E8WwFAaQol7XNcvzB+dKVDypDqxh2jPb3/nS4Gv8=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=gnKT10aOu7VHA0SoAsKIrjToeIZFt1uSzjXJWSys+GypeNaAgJLkd1TVf2MYlF4/tL5KLKyDrujug41Vkef7EIUEndX/y4bERXvMApBsqs/EL7gYyYYrWZRQP+FAzIEYOvtRboySbsdZngq6ezvpXXbLKEh/w/ioIJAD8BIMmFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cOuEd3yX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F9Ad3O1b; arc=none smtp.client-ip=103.168.172.150
+	s=arc-20240116; t=1760599613; c=relaxed/simple;
+	bh=0iGHx8prFZuXxp3HQkfP/Nm+f+djYlgUjDAnsiE2bZI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=YbzTugjrjjrCIe9zLBLi8nULNjx/3vp5OtYGs2AEZvNPMojO2+OkwNAoAdLFFHv0UzFaW4uiu4eAJAHQY9lKDwzYokhY1Fb1U96U/CdUK5ie9DlbHW0BO06T7p88e3kMegQnFdsXNLpsQui8JWiITcgXPlSMZOwDnj10QJp/z4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AqdG4BXh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gu5v0Njw; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cOuEd3yX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F9Ad3O1b"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id C0CDDEC01AC;
-	Thu, 16 Oct 2025 03:26:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AqdG4BXh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gu5v0Njw"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id E71AFEC010A;
+	Thu, 16 Oct 2025 03:26:49 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Thu, 16 Oct 2025 03:26:47 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 16 Oct 2025 03:26:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1760599607; x=1760686007; bh=EFhEAAC6xV
-	WMkA8/r6DNW2BDSWfyET94NzWHeity1nQ=; b=cOuEd3yXbj8DovuWfAeCUoe9+I
-	PO0b0kblSqMnFRw/51BfeXAGcASl4NNj6ytz1JF4XJXE/KeIfQfdK05xsnBS9pXn
-	HWl4a0ZsLSl+nAd3O84Bj9WWqRZ9pz5/bhc5ZWIbwQlyjZxWevnL/LRyL3T7L9Qs
-	2u1tSPGRvhYDTCE4gdEEM/hYV2mwrGAZsH83ZlzFpb52wYFbxeOdKMfQsJc6wJwZ
-	ksgx0t9vk2mC7Pei5U7LalRb5PV5BfA/vXbUoqM3CzQsIKTASlI/+h1rZvIFAljp
-	tKiHVguY0AoJJ5xgSAtTh4RqapBvZQzHC78D/7VKj92Sd97wwRpxXY4sxhRg==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1760599609;
+	 x=1760686009; bh=T2M5KlikHPQTbHjxyMdp1OCy4eOoUPO3sfJ5/yOOp1o=; b=
+	AqdG4BXhnLqH2dqKOkCGNIUDD2cSpg2x/d+N6mGSxtotrqI/+/k/ORkPcZRmGXF+
+	IULu0GFlAp+yuTBdNaOKidf4YV1mulN+xpvGZ/9e5fOPCwPZPqcT+BAacs0t4HX+
+	HxqhVrR+Vu4pGBWoLe9kQqzDCb0VwSJwls7HO3BSQ4xFHD0/6h+jA2fLH7ArUw6k
+	YCkBUf0SOfBWkVh2V1ty/StAQVOelmN0lXoV7u61szWawX5weHoQZTpnLqDA90rx
+	mK5H7VMGqnHrvWzOE/tP+K1KO0AWLuEfOUzDmGtFQVsiTMssDoZc+1k5fozUM/5N
+	P/0D2JvEavyyr2UXn4bWQg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1760599607; x=1760686007; bh=EFhEAAC6xVWMkA8/r6DNW2BDSWfy
-	ET94NzWHeity1nQ=; b=F9Ad3O1bZdmhlxjlav0SG095n/oLhPhCbHp3GQ2oFBrR
-	RMSOoykaz69Ka5nGhl4C8DDF26jXUIZbkfHcQXM4xmdIH5zN2wDxU48r6pEllEoo
-	fsb2LTQKA+dzgh87CBYDt6aVz9isd4lNwsZzrhfu1Px0vIiPRvgXn5b/5XaWopl6
-	0PxuDLAdcYjQ86aH0B5gKNATp1ThVAB08dn8S8gqpSptHTzcKqApe46JpTsN08ci
-	SA8C9rdmTsB4GpoLOr2x/HNHJvtyFjo0CUCX8Wvwb7hJLaNiWWLodh2tQht5KikL
-	/LMHT78KV/lYSAk6kUsb1AsC+2EBqohupepyXGcUIg==
-X-ME-Sender: <xms:N57waOhBLKvqyJPl3250TmwiF8EL1Jcs6o8i2ITVrfgy2CHMv_0ZSQ>
-    <xme:N57waGd3wEgs-a-c8u7MAWI68rK3Fd9mJhnNbFPBj7NkX8H9W1yx59kyywDkwoChB
-    k3nAiosKA6bNFQ_NtR82Vz54BH5GrBqv86YoiJKi3BqDICxnEL1vg>
-X-ME-Received: <xmr:N57waDdpq35RAQT34BlgnIj_A15bQqgy2K7faoZhZpz4dWrfq1qRCjTmFaNXiQz53j2VvVU_lIxX1L2SVki7S6SZ9dXQlshXy1D5pfnGu-mJzw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdehieelucetufdoteggodetrf
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760599609; x=
+	1760686009; bh=T2M5KlikHPQTbHjxyMdp1OCy4eOoUPO3sfJ5/yOOp1o=; b=g
+	u5v0NjwJCOfsntxd7LKbWZtZbW4idJylbHWSz93Kuo1lEjsK+aPQiLgGloBPU2OY
+	bkB7iQPiVdBlAjeeTevzMljt77bfOCHbmKKmbTkpN/v9B1w7XcSY36In874RbmeE
+	eb3GUxDLXYNavNZG6MQ/AA55/EQHm05pcJ5UFNGgYduhIBnOmmI5TtzWro0g98i2
+	wDeRplY8e7VExvLrsgKo9JsUuvdJWv8iH7QvQUDPUSV+w/WpTVTUJMYUHe5yjx9p
+	O82cLTKCg8VxnXJ9GOEo7zpXwF+z9l/pyiJ5ZmpgD2pUKXGw7dipvtTb3T8GMwpE
+	Pqg/mrh7pBwZ62B0H6G+Q==
+X-ME-Sender: <xms:OZ7waHJ-oS7A8AL5SI7heA0z3F_pGtEicvIjhwMBfKEZD6R-331qrw>
+    <xme:OZ7waCk6RxGVDdJaqktdD4gg2bZAs_mhQl0Cx5nICbT8WQWx6PhpuUR_ZfW2hNxll
+    ht64Q7qmDF2sOWGS5jBpMwEBRwKosHzws3zHp1fYUQJzjpFuqRINA>
+X-ME-Received: <xmr:OZ7waNGh3rnEuhWN3vIO_v9SU7sdPoV2q11MsrS8Gal_4i-VXvWEhh8fp1pKXhwUZP_fM6KcdlmSndaa4E7Px7hcWeVd7zM_iIJGjj4YUt60GQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdehieekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffufffkgggtgffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evueegkedtteeigeejueehuedugfevleefveehueehgfetffffvefhuefhueekveenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorh
-    hrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:N57waA-6AYl3RNf4VrGdYfhqrbmFHWBsR5Yp-Fm2TORSU53LlBjDYQ>
-    <xmx:N57waPktG9WA2ged_miz91KRTi4nE6ORqizU8JE77d6nKzWNxjVg9g>
-    <xmx:N57waC_K_YEjgP0Oa7DzASEYdFyWYaJ-jXIdaAMhWIrwEZ86tKIGUA>
-    <xmx:N57waNlZ3O-1086HUBMRP6U1L0mhqNpjMypn0t7O744xPac5wG6pGQ>
-    <xmx:N57waH4xQ-orDZNGMXPpKpxLFIWsZDn52RVHLABL_wKeYgLHeHwnKgzz>
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtth
+    grhihlohhrrhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:OZ7waKEvo3x4xV9n6JACgHjbRxKKppBsM_8NH6t92FaoG-opvW0NBQ>
+    <xmx:OZ7waCNpE59nzwzcPBRhWPITT-EiqkvEQCsmhKcblsKaHqaCTibiwA>
+    <xmx:OZ7waBG3jnzzwM1jDaDgu54I83AiK_MqHFMoIHhuXtSzYB3MmwXEkQ>
+    <xmx:OZ7waBNCvDA4QKqoiX_OnpiMrbDo9QO9xNhc6I1-8ql5YfDZRFY65A>
+    <xmx:OZ7waKBDosQkYpf5KJGKfvWAFUt1U8qmk2vQ1fCL87QpGpsWWlwgTXA0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Oct 2025 03:26:46 -0400 (EDT)
+ 16 Oct 2025 03:26:48 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 84588196 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 16 Oct 2025 07:26:45 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 024b7a19 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 16 Oct 2025 07:26:48 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/8] builtin/maintenance: introduce "geometric" strategy
-Date: Thu, 16 Oct 2025 09:26:31 +0200
-Message-Id: <20251016-pks-maintenance-geometric-strategy-v1-0-18943d474203@pks.im>
+Date: Thu, 16 Oct 2025 09:26:32 +0200
+Subject: [PATCH 1/8] builtin/gc: remove global `repack` variable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,74 +82,239 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIACee8GgC/x3NwQrCMAyA4VcZORtoBoHiq4iHWmMNsmwkRZSxd
- 7d4/C7/v0OIqwScpx1c3hq62gCdJqjPYk1Q78Mwp5kpEeP2ClyKWhcrVgWbrIt014rRvXRpX+S
- cKmfOdEsEI7S5PPTzn1yux/ED+akH4HQAAAA=
-X-Change-ID: 20251015-pks-maintenance-geometric-strategy-580c58581b01
+Message-Id: <20251016-pks-maintenance-geometric-strategy-v1-1-18943d474203@pks.im>
+References: <20251016-pks-maintenance-geometric-strategy-v1-0-18943d474203@pks.im>
+In-Reply-To: <20251016-pks-maintenance-geometric-strategy-v1-0-18943d474203@pks.im>
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>
 X-Mailer: b4 0.14.3
 
-Hi,
+The global `repack` variable is used to store all command line arguments
+that we eventually want to pass to git-repack(1). It is being appended
+to from multiple different functions, which makes it hard to follow the
+logic. Besides being hard to follow, it also makes it unnecessarily hard
+to reuse this infrastructure in new code.
 
-by default, git-maintenance(1) uses git-gc(1) to perform repository
-housekeeping. This tool has a couple of shortcomings, most importantly
-that it regularly does all-into-one repacks. This doesn't really work
-all that well in the context of monorepos, where you really want to
-avoid repacking all objects regularly.
+Refactor the code so that we store this variable on the stack and pass
+a pointer to it around as needed. This is done so that we can reuse
+`add_repack_all_options()` in a subsequent commit.
 
-An alternative maintenance strategy is the "incremental" strategy, but
-this strategy has two downsides:
+The refactoring itself is straight-forward. One function that deserves
+attention though is `need_to_gc()`: this function determines whether or
+not we need to execute garbage collection for `git gc --auto`, but also
+for `git maintenance run --auto`. But besides figuring out whether we
+have to perform GC, the function also sets up the `repack` arguments.
 
-  - Strategies in general only apply to scheduled maintenance. So if you
-    run git-maintenance(1), you still end up with git-gc(1).
+For `git gc --auto` it's trivial to adapt, as we already have the
+on-stack variable at our fingertips. But for the maintenance condition
+it's less obvious what to do.
 
-  - The strategy is designed to not ever delete any data, but a full
-    replacment for git-gc(1) needs to also prune reflogs, rereree caches
-    and vanished worktrees.
+As it turns out, we can just use another temporary variable there that
+we then immediately discard. If we need to perform GC we execute a child
+git-gc(1) process to repack objects for us, and that process will have
+to recompute the arguments anyway.
 
-This patch series aims to fix both of these issues.
-
-First, the series introduces a new "geometric" maintenance task, which
-makes use of geometric repacking as exposed by git-repack(1) in the
-general case. In the case where a geometric repack ends up merging all
-packfiles into one we instead do an all-into-one repack with cruft packs
-so that we can still phase out objects over time.
-
-Second, the series extends maintenance strategies to also cover normal
-maintenance. If the user has configured the "geometric" strategy, we'll
-thus use it for both manual and scheduled maintenance. For backwards
-compatibility, the "incremental" strategy is changed so that it uses
-git-gc(1) for manual maintenance and the other tasks for scheduled
-maintenance.
-
-The series is built on top of b660e2dcb9 (Sync with 'maint', 2025-10-14)
-with tb/incremental-midx-part-3.1 at c886af90f8 (SQUASH??? play well
-with other topics by preemptively including "repository.h", 2025-09-29)
-merged into it.
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (8):
-      builtin/gc: remove global `repack` variable
-      builtin/gc: make `too_many_loose_objects()` reusable without GC config
-      builtin/maintenance: introduce "geometric-repack" task
-      builtin/maintenance: don't silently ignore invalid strategy
-      builtin/maintenance: run maintenance tasks depending on type
-      builtin/maintenance: extend "maintenance.strategy" to manual maintenance
-      builtin/maintenance: make "gc" strategy accessible
-      builtin/maintenance: introduce "geometric" strategy
+ builtin/gc.c | 74 ++++++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 45 insertions(+), 29 deletions(-)
 
- Documentation/config/maintenance.adoc |  44 +++++-
- builtin/gc.c                          | 271 +++++++++++++++++++++++++++-------
- t/t7900-maintenance.sh                | 212 ++++++++++++++++++++++++++
- 3 files changed, 469 insertions(+), 58 deletions(-)
+diff --git a/builtin/gc.c b/builtin/gc.c
+index e19e13d9788..e9772eb3a30 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -55,7 +55,6 @@ static const char * const builtin_gc_usage[] = {
+ };
+ 
+ static timestamp_t gc_log_expire_time;
+-static struct strvec repack = STRVEC_INIT;
+ static struct tempfile *pidfile;
+ static struct lock_file log_lock;
+ static struct string_list pack_garbage = STRING_LIST_INIT_DUP;
+@@ -618,48 +617,50 @@ static uint64_t estimate_repack_memory(struct gc_config *cfg,
+ 	return os_cache + heap;
+ }
+ 
+-static int keep_one_pack(struct string_list_item *item, void *data UNUSED)
++static int keep_one_pack(struct string_list_item *item, void *data)
+ {
+-	strvec_pushf(&repack, "--keep-pack=%s", basename(item->string));
++	struct strvec *args = data;
++	strvec_pushf(args, "--keep-pack=%s", basename(item->string));
+ 	return 0;
+ }
+ 
+ static void add_repack_all_option(struct gc_config *cfg,
+-				  struct string_list *keep_pack)
++				  struct string_list *keep_pack,
++				  struct strvec *args)
+ {
+ 	if (cfg->prune_expire && !strcmp(cfg->prune_expire, "now")
+ 		&& !(cfg->cruft_packs && cfg->repack_expire_to))
+-		strvec_push(&repack, "-a");
++		strvec_push(args, "-a");
+ 	else if (cfg->cruft_packs) {
+-		strvec_push(&repack, "--cruft");
++		strvec_push(args, "--cruft");
+ 		if (cfg->prune_expire)
+-			strvec_pushf(&repack, "--cruft-expiration=%s", cfg->prune_expire);
++			strvec_pushf(args, "--cruft-expiration=%s", cfg->prune_expire);
+ 		if (cfg->max_cruft_size)
+-			strvec_pushf(&repack, "--max-cruft-size=%lu",
++			strvec_pushf(args, "--max-cruft-size=%lu",
+ 				     cfg->max_cruft_size);
+ 		if (cfg->repack_expire_to)
+-			strvec_pushf(&repack, "--expire-to=%s", cfg->repack_expire_to);
++			strvec_pushf(args, "--expire-to=%s", cfg->repack_expire_to);
+ 	} else {
+-		strvec_push(&repack, "-A");
++		strvec_push(args, "-A");
+ 		if (cfg->prune_expire)
+-			strvec_pushf(&repack, "--unpack-unreachable=%s", cfg->prune_expire);
++			strvec_pushf(args, "--unpack-unreachable=%s", cfg->prune_expire);
+ 	}
+ 
+ 	if (keep_pack)
+-		for_each_string_list(keep_pack, keep_one_pack, NULL);
++		for_each_string_list(keep_pack, keep_one_pack, args);
+ 
+ 	if (cfg->repack_filter && *cfg->repack_filter)
+-		strvec_pushf(&repack, "--filter=%s", cfg->repack_filter);
++		strvec_pushf(args, "--filter=%s", cfg->repack_filter);
+ 	if (cfg->repack_filter_to && *cfg->repack_filter_to)
+-		strvec_pushf(&repack, "--filter-to=%s", cfg->repack_filter_to);
++		strvec_pushf(args, "--filter-to=%s", cfg->repack_filter_to);
+ }
+ 
+-static void add_repack_incremental_option(void)
++static void add_repack_incremental_option(struct strvec *args)
+ {
+-	strvec_push(&repack, "--no-write-bitmap-index");
++	strvec_push(args, "--no-write-bitmap-index");
+ }
+ 
+-static int need_to_gc(struct gc_config *cfg)
++static int need_to_gc(struct gc_config *cfg, struct strvec *repack_args)
+ {
+ 	/*
+ 	 * Setting gc.auto to 0 or negative can disable the
+@@ -700,10 +701,10 @@ static int need_to_gc(struct gc_config *cfg)
+ 				string_list_clear(&keep_pack, 0);
+ 		}
+ 
+-		add_repack_all_option(cfg, &keep_pack);
++		add_repack_all_option(cfg, &keep_pack, repack_args);
+ 		string_list_clear(&keep_pack, 0);
+ 	} else if (too_many_loose_objects(cfg))
+-		add_repack_incremental_option();
++		add_repack_incremental_option(repack_args);
+ 	else
+ 		return 0;
+ 
+@@ -852,6 +853,7 @@ int cmd_gc(int argc,
+ 	int keep_largest_pack = -1;
+ 	int skip_foreground_tasks = 0;
+ 	timestamp_t dummy;
++	struct strvec repack_args = STRVEC_INIT;
+ 	struct maintenance_run_opts opts = MAINTENANCE_RUN_OPTS_INIT;
+ 	struct gc_config cfg = GC_CONFIG_INIT;
+ 	const char *prune_expire_sentinel = "sentinel";
+@@ -891,7 +893,7 @@ int cmd_gc(int argc,
+ 	show_usage_with_options_if_asked(argc, argv,
+ 					 builtin_gc_usage, builtin_gc_options);
+ 
+-	strvec_pushl(&repack, "repack", "-d", "-l", NULL);
++	strvec_pushl(&repack_args, "repack", "-d", "-l", NULL);
+ 
+ 	gc_config(&cfg);
+ 
+@@ -914,14 +916,14 @@ int cmd_gc(int argc,
+ 		die(_("failed to parse prune expiry value %s"), cfg.prune_expire);
+ 
+ 	if (aggressive) {
+-		strvec_push(&repack, "-f");
++		strvec_push(&repack_args, "-f");
+ 		if (cfg.aggressive_depth > 0)
+-			strvec_pushf(&repack, "--depth=%d", cfg.aggressive_depth);
++			strvec_pushf(&repack_args, "--depth=%d", cfg.aggressive_depth);
+ 		if (cfg.aggressive_window > 0)
+-			strvec_pushf(&repack, "--window=%d", cfg.aggressive_window);
++			strvec_pushf(&repack_args, "--window=%d", cfg.aggressive_window);
+ 	}
+ 	if (opts.quiet)
+-		strvec_push(&repack, "-q");
++		strvec_push(&repack_args, "-q");
+ 
+ 	if (opts.auto_flag) {
+ 		if (cfg.detach_auto && opts.detach < 0)
+@@ -930,7 +932,7 @@ int cmd_gc(int argc,
+ 		/*
+ 		 * Auto-gc should be least intrusive as possible.
+ 		 */
+-		if (!need_to_gc(&cfg)) {
++		if (!need_to_gc(&cfg, &repack_args)) {
+ 			ret = 0;
+ 			goto out;
+ 		}
+@@ -952,7 +954,7 @@ int cmd_gc(int argc,
+ 			find_base_packs(&keep_pack, cfg.big_pack_threshold);
+ 		}
+ 
+-		add_repack_all_option(&cfg, &keep_pack);
++		add_repack_all_option(&cfg, &keep_pack, &repack_args);
+ 		string_list_clear(&keep_pack, 0);
+ 	}
+ 
+@@ -1014,9 +1016,9 @@ int cmd_gc(int argc,
+ 
+ 		repack_cmd.git_cmd = 1;
+ 		repack_cmd.close_object_store = 1;
+-		strvec_pushv(&repack_cmd.args, repack.v);
++		strvec_pushv(&repack_cmd.args, repack_args.v);
+ 		if (run_command(&repack_cmd))
+-			die(FAILED_RUN, repack.v[0]);
++			die(FAILED_RUN, repack_args.v[0]);
+ 
+ 		if (cfg.prune_expire) {
+ 			struct child_process prune_cmd = CHILD_PROCESS_INIT;
+@@ -1067,6 +1069,7 @@ int cmd_gc(int argc,
+ 
+ out:
+ 	maintenance_run_opts_release(&opts);
++	strvec_clear(&repack_args);
+ 	gc_config_release(&cfg);
+ 	return 0;
+ }
+@@ -1269,6 +1272,19 @@ static int maintenance_task_gc_background(struct maintenance_run_opts *opts,
+ 	return run_command(&child);
+ }
+ 
++static int gc_condition(struct gc_config *cfg)
++{
++	/*
++	 * Note that it's fine to drop the repack arguments here, as we execute
++	 * git-gc(1) as a separate child process anyway. So it knows to compute
++	 * these arguments again.
++	 */
++	struct strvec repack_args = STRVEC_INIT;
++	int ret = need_to_gc(cfg, &repack_args);
++	strvec_clear(&repack_args);
++	return ret;
++}
++
+ static int prune_packed(struct maintenance_run_opts *opts)
+ {
+ 	struct child_process child = CHILD_PROCESS_INIT;
+@@ -1596,7 +1612,7 @@ static const struct maintenance_task tasks[] = {
+ 		.name = "gc",
+ 		.foreground = maintenance_task_gc_foreground,
+ 		.background = maintenance_task_gc_background,
+-		.auto_condition = need_to_gc,
++		.auto_condition = gc_condition,
+ 	},
+ 	[TASK_COMMIT_GRAPH] = {
+ 		.name = "commit-graph",
 
-
----
-base-commit: 0bb2c786c2349dd6700727153c13d81cbfb41710
-change-id: 20251015-pks-maintenance-geometric-strategy-580c58581b01
+-- 
+2.51.0.869.ge66316f041.dirty
 
