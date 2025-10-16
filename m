@@ -1,98 +1,148 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FEB1EDA2B
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 17:47:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ACCE149C6F
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 18:44:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760636855; cv=none; b=S/Rkmje2p6nhaQ5SSofaO7hG37rtvSpOgOgtu89O3vuO6lRL6E9DjbMZeMtg4IBsKEfEIuDPi86PyuU1d2ov+1MD8BHbwGaq7vhmekN5WidtWZ5ppYGzbxYZJag4dO75XfOtE2b74ywJOAyuZfUExi2BVNCd98hET9QF12pt42o=
+	t=1760640284; cv=none; b=WNWQJ6ZMvF3sqaHwr9FJVnw0jO9OruRd23YxEcUO8N8YfszkOD9tGkxSGoSU77bVHyx9sAWcNoXO9CKvKk2mX68KcO5P2zbPZsGgBksBYOvG9wZiR6dHwbMp6OKunuTzCdv9opHuvlk5TbNT6rVIvRoN5bAcZEYGXojYAroIlfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760636855; c=relaxed/simple;
-	bh=ITo4cVeQ6jo+dYTS4QmJgmGZdbnVAAJQL2QpcUemasU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rkuGbjvLxpY0pelyAX0XX6Jv6pjJGZFLok9ZfAlNqAslad2Frrpy1YAaHczbfE8S9KweoTISti95Da7bqvYuWhgwIgJ73DRxZDPnKO6cP4rc0LavV2QkdgwCUvtdLbF8s1fLG6hXkybeEs6R857Kmi3Tznf/mQHRMhscEhlz2No=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BWjae8Dx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YERmYMIO; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1760640284; c=relaxed/simple;
+	bh=W8EgyTzQCR74+k/q70hPmziHaXbhYiifnpKq2zJZ2WI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Yzi79WBcuRpCKLPR1YT9iKyLK9A9Ia2NgIKbBF2Oq22m0TTu6/i6Vm0/pc6TBHBNLpoxp1AONWIlYEUo/Kzc4DU885e0QlZEJsprylU393+ZgYp6MoImgzkrYsxQyGK7mDwGQcV2wW69dOAnm/x8L/YGWKqFaCnYprUzCTnOgp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OkzSk4OK; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BWjae8Dx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YERmYMIO"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0678A7A009F;
-	Thu, 16 Oct 2025 13:47:33 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 16 Oct 2025 13:47:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760636852; x=1760723252; bh=8vGbmpZ0xG
-	9rjAE5ucLxeheIBXpSAL20et9zAj+F4k8=; b=BWjae8DxLdbJayw39hpgEi4zWy
-	/5iSsy5iQb0oTp8jec2BUoBJtf+FPR7PHZ5OugA50hV9XwdnazmWFabn6EuAB4Ue
-	sy5GHeVSKQUtN+0+U+dpxD3vgZ0mcrp1UtRihVu+NWOqzfbK3KHpwKEw9Wt2J/VO
-	Y3dlkhEY96As8KaaN461dGwG/CGUSpefy3JDadC6yJKnj0SNGMDvM9OFO709neHm
-	cHMOmfWx23i6vTbqtTOMH9qf3wGl14W5GSy1WTiH8B6qJChrUBtezW/drf5hWHrS
-	JZ+JQUigVUBdDpQY4usMUkwhZ9h5WDuJxx0PqLVqXbgDyZ4ey04EnyMsVWmA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760636852; x=1760723252; bh=8vGbmpZ0xG9rjAE5ucLxeheIBXpSAL20et9
-	zAj+F4k8=; b=YERmYMIOQkUd1Z4wqBPlLmJw+syHMqkjtikusW1082V4oGg7K8F
-	6C9biAmW+qQeKFyc4guLMi/BjVe4IxUiuX3eAbgBu5egLlXwiA0GCUwI239uf8B4
-	yBhx25QhNp768n1CQD/r1xiZHWLtQTTTRof1rlZlDfwoRK1XqWUM+fHvpVY8XChD
-	4KD81eSS+ZWAzEldgHGvSyS4JaIAXfrnUe9KZiRY4YJAj72BXHIqANrZasPQw2JS
-	yAJao03fliBnRdD7s6Vurb3nLk/3BpcLtUtwiWRDX7FAI8mZLBB1Wp1MIuHktbOr
-	x2TRm7UlywvW+vOQfdGCvlhO9XUD++x4pMQ==
-X-ME-Sender: <xms:tC_xaAtucnT02sEAP8P9xmOZsaiJEGhSos1TTpmiaxLICy_d3iK0SA>
-    <xme:tC_xaEd96cKqnveDqLW37MiDGMxpDbneDrhFCdWHligMo9q-ljPElfo-ZljwmBdoQ
-    zUlqZS42k-tvIw6JkUUGqP8IIF7gxXE1aJnfdDPtPSQ6tSu34nhSw>
-X-ME-Received: <xmr:tC_xaAwvVkFis2jZtvsaOsBQtHfxF3xdddFvltTZdIyBodSrwbQ75QMiYhgnbb3NDOzQmm2_G_LrX-vMS4VwI0rWCKsQzIxb6gDl>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdeileefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:tC_xaCHeJuAjGz8vogQIneu-BLGmWpTSgI21HfIaZvZlmfQ8QKcbMg>
-    <xmx:tC_xaMxvy23LXoVrm7HW3e2J8OfDYprmoGK9jPFZy2q4HgW4-vGJ3g>
-    <xmx:tC_xaLsvtszlRtRE7ehos6G368Fq8Ho7SEjkGdxO3H1NlLHkTAe3mQ>
-    <xmx:tC_xaB1ow4rhFaao8o5x8sydfmu15HPEstlcCV1MUnkjHWo49BbEGg>
-    <xmx:tC_xaOJPsoo8BaNwtfohIXEoEMbT2aa8BLAig3ap0xgWTYdwK884VJRi>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Oct 2025 13:47:32 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/4] Upgrade a couple GitHub Actions
-In-Reply-To: <pull.1990.git.1760629692.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Thu, 16 Oct 2025 15:48:08
-	+0000")
-References: <pull.1990.git.1760629692.gitgitgadget@gmail.com>
-Date: Thu, 16 Oct 2025 10:47:30 -0700
-Message-ID: <xmqqa51q4u31.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OkzSk4OK"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-639e1e8c8c8so2083240a12.1
+        for <git@vger.kernel.org>; Thu, 16 Oct 2025 11:44:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760640280; x=1761245080; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9iskZGJIveoLnfQFCboap0T5biqRDW9+HKDFPzylwe4=;
+        b=OkzSk4OK+/bM2QA9q+59LzOiecVYYCdFguna2XYykQU71sk4eMp1fKbqT+PvFCG+/d
+         KwjlR2Gvc9KHE1I6IR2Oz1/hkYMFEke7Kz6NUe1Fko7aynLGGuJsJHb5Ee8IQ0NH6KEl
+         TNFIxMCAwSycZjiyxN7Hd6SAUv479tw1Zkw1l5JJgute2DPyddFvdn4zTA3B86PlTHax
+         KazgzYDLOkDw+qDagY9EhKFs8it+0iwuGZFLTNn2nTtDmtGnaG9iYeYKj4AjU59T9ckk
+         R5nWhYMpE3O92BuiwgwhLAtX0GyRtBL/eErhlllcrbYkaIU5YWYzG1a/YcLnmWFryxlz
+         77Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760640280; x=1761245080;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9iskZGJIveoLnfQFCboap0T5biqRDW9+HKDFPzylwe4=;
+        b=pxIhhfMAfrsPHVj7RvrVYJ1vnY/9c/oqPxrxqe+V3VhGQmoQgQ0e0McCExSuf+wFSt
+         Ba7oyvxqUBHNiaGzHjvgF6uaV9N42lSqKxEeysHoknllVdE+bRWpDh/UA4jyISJP8me8
+         Da3DJhkbUD3pbuZHy7Yna6uZumRj2/N/GOwItN0l8gHoyRyKZFjMGUMBKzcdiqnE1cGC
+         3ZBMZhH4AVOow6Z89CKg/bSSVuf+BLu0V/AgZdxk3XU6pWw+i8W5/TXApIueSlvYpPie
+         jJZ6wp2iTJ20yQFdPTszwjzWoLh8h6+cIS1BXix8gFjkJ/yE6z5KtAHA2Z+YfAyY4Vok
+         TXWg==
+X-Gm-Message-State: AOJu0YzXiBK1GcpFiqzMUIZ9neezgJPdnwCA0BTQAFJcJ+gK8q09r9yY
+	YzDqSDvZrmezQdccD8w8NGo4DI5klFmloGWF3M4E+fHEqXdyyHRiCymrrLFau0Y3/NUR2w==
+X-Gm-Gg: ASbGncs6trtLl5cU1JzLKzXpwO4hdWI8afECOjtFxcLr4VJOP671zBhTgqVjHtYL04G
+	5gFAa7Gq+FiAGftbVpNBWvGkxjx4ccK+er8uZpN0shT4WfiYK18TvD9XHiTc0/VnPns+z7V1AQT
+	FdWyK6deF/sFG1iX808AvyI4m5ehyQtneOb1RNizIbYsGEhVZ80ZnUMDH6c3WheLGUNHvm2KZI3
+	bq17sm8ylyml1nKOUr1JRCnZS07X2WPpnEyezRjEUIPocqVMJCfYCzSYCMLqum0Knk2dKfQereP
+	aF9w00N47F0jwkWLxT1ZKi7yAuWjN4c0wss9bswRlJSAGLeaZpo8iNPjpAd/vRL0888JlAPp0+0
+	j211ZfoySQZovUwbjxXBTcLcqs2MB4QgEXspo4kwmKpkw+rWdVPO0eZgXKp9FAC4UF60hEYZ1SZ
+	3++RGPB5GQU1/hRvU+MTqtGvYKGhld9EpCHWpgzGuE5M29b2uWq+hkAUOG
+X-Google-Smtp-Source: AGHT+IH52i7VLwIQ9f7d0uA3Gj1RSZyi83SFJ3KmmPRBJ5oMtO4XFZEWR/54SyOXve/EM22NIxekBg==
+X-Received: by 2002:a17:907:968b:b0:b45:913d:f523 with SMTP id a640c23a62f3a-b647314a003mr110361066b.18.1760640280368;
+        Thu, 16 Oct 2025 11:44:40 -0700 (PDT)
+Received: from localhost.localdomain ([105.113.98.189])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b5ccd1af86bsm579227166b.61.2025.10.16.11.44.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Oct 2025 11:44:39 -0700 (PDT)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+To: git@vger.kernel.org
+Cc: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Subject: [PATCH] gpg-interface: trim only CR characters that precede LF
+Date: Thu, 16 Oct 2025 19:44:20 +0100
+Message-ID: <20251016184420.78268-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+The current implementation of remove_cr_after() drops every carriage
+return (CR) it finds, even when the CR is not part of a CRLF sequence.
+This can damage data that legitimately contains standalone CR bytes,
+such as binary payloads or text formatted for older systems.
 
-> The Dependabot setup of Git for Windows suggested a couple of version
-> upgrades; I extracted those that apply to Git itself.
+Update remove_cr_after() to remove a CR only when it is immediately
+followed by an LF. This keeps Windows-style CRLF normalization intact
+while preserving lone CR characters that are part of the data itself.
 
-Very much appreciated.  Queued.
+Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+---
+ gpg-interface.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-Thanks.
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 2f4f0e32cb..c961607444 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -965,19 +965,22 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *sig
+ }
+ 
+ /*
+- * Strip CR from the line endings, in case we are on Windows.
+- * NEEDSWORK: make it trim only CRs before LFs and rename
++ * Trim CR characters only when they appear before LF (\r\n) line endings.
++ * This avoids removing legitimate lone CRs from teh content.
+  */
+-static void remove_cr_after(struct strbuf *buffer, size_t offset)
++static void trim_cr_before_lf(struct strbuf *buffer, size_t offset)
+ {
+ 	size_t i, j;
+ 
+ 	for (i = j = offset; i < buffer->len; i++) {
+-		if (buffer->buf[i] != '\r') {
++	     /* skip CR only if it comes right before LF */
++		if (buffer->buf[i] == '\r' && i + 1 < buffer->len && buffer->buf[i+1] == '\n')
++		    continue;
++ 
+ 			if (i != j)
+ 				buffer->buf[j] = buffer->buf[i];
+ 			j++;
+-		}
++		
+ 	}
+ 	strbuf_setlen(buffer, j);
+ }
+@@ -1023,8 +1026,10 @@ static int sign_buffer_gpg(struct strbuf *buffer, struct strbuf *signature,
+ 	}
+ 	strbuf_release(&gpg_status);
+ 
+-	/* Strip CR from the line endings, in case we are on Windows. */
+-	remove_cr_after(signature, bottom);
++	/* Trim carriage returns (CR) only when they appear before line feeds (LF),.
++	*  mainly for handling Windows-style line endings
++ 	*/
++	trim_cr_before_lf(signature, bottom);
+ 
+ 	return 0;
+ }
+@@ -1110,8 +1115,10 @@ static int sign_buffer_ssh(struct strbuf *buffer, struct strbuf *signature,
+ 			ssh_signature_filename.buf);
+ 		goto out;
+ 	}
+-	/* Strip CR from the line endings, in case we are on Windows. */
+-	remove_cr_after(signature, bottom);
++	/* Trim carriage returns (CR) only when they appear before line feeds (LF),
++	*  mainly for handling Windows-style line endings.
++	*/
++	trim_cr_before_lf(signature, bottom);
+ 
+ out:
+ 	if (key_file)
+-- 
+2.43.0
+
