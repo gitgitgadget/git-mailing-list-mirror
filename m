@@ -1,124 +1,151 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83C43346A9
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 17:12:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7183346A0
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 17:27:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760634756; cv=none; b=I/0y+p+YeKgoXuu/yfj2W8ImFvnRshhOp3eBXTi5pmK3U1nBEE3KVUVRZtYvu6YrQaJ4EimHPvDGL5XaEnFYQAPZwzWjHaan2eQC/zDPloZZspqPaHS7wreWXAXpo54z3pemLI5zbPfbSAhpvdyZtToswWgdYLTZOg4Y875ykpg=
+	t=1760635641; cv=none; b=POYxqblPQGcCOK+GjOMbeHr8x0aCeEH7+m4iJhWs9FWoMbMsmbfL7u3YbSlD+bdVh7iulGNSLX+x5RSrYKI6sgJZdeVqLRkWxPGEGSHKmhT5HgrBU8tC/Ybo2JwADEMqcD1+317IYyjesG0t/xPFqWQJMfVhK9m71IFg+8KYLoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760634756; c=relaxed/simple;
-	bh=7Or2tAUQojrT9pWkOXFpqi2ZlfZPrUzMn0P+DA6VPgc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aORNldtayi57/R9SMdTcCXVhs53peGhatnI0PM68HXVESXc4abkXVaNY6/yZZb4+NPbrVOi+ERQLGkgwxXdpBgGcRbaezP5DwHrIUCV+mY5wyYtLFU/3az9FbyGlcr0VqKCQ1jd5fcMHWYQ4u7awz0yd1a/iPwSw01tuCdeZ22I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bR7rJMYT; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1760635641; c=relaxed/simple;
+	bh=2JaM/9N4mzdntGIWctMgAnrGcTTh2ry4e4dPJeh7Phg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Sh5nm1J1lVXtGJ8O1VIVrWVTBRQ1EBhhrDxT8adVUTHC8RnbwD6rvPj06+HbGudwazgfDtvoHEq1/AOLrF5rWkbFa1J2DD/ewdsEIUy2+TOlH3e08EOewhwEVc4pNhi9nOuGu7vjqcEKPO+YHR+7JDt9zgo62Tfm33VXn9VorxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GFcnZUDE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=drU5DPDi; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bR7rJMYT"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-633c627d04eso525a12.0
-        for <git@vger.kernel.org>; Thu, 16 Oct 2025 10:12:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1760634753; x=1761239553; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HCWALsnfUWo5qZoqElxjrwHUuUseM8WW+KpmPNWTpNw=;
-        b=bR7rJMYTDFuijOnhdJKB41VnpjxZ0mL72hf49E8yFdf+oZJwpqOibug6U7yjc6EBtM
-         rXkm4QhMkJjJLxFqhYec10X/x5pB04s0DfCBsvoYqIg7schsFBNUAEoGxcRmc7/ir8Ma
-         NHVrCZkSKNlj9pQSGJI5wJE2++bmh4UntoOWCOW5HkORn+No3yynM8Pq2M9+C5CB1cCp
-         mQMfD25vIuRwMr9mE6/YzsUYnqolRIEW3tS6j2Uf3r2cOQANWqpLhvEzlHuIlUoriqXu
-         4MgGq+q7fq1d3BN7ox9qgbggaLDOy9QcMDSBjSxxkG6zFfMh0iB9/P+OdNgbc+mL0yOF
-         tgYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760634753; x=1761239553;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HCWALsnfUWo5qZoqElxjrwHUuUseM8WW+KpmPNWTpNw=;
-        b=vrL6wfNnB3iFfa1lOV17cS4CfqBCv70u9HUX8jet2VoBmOs9LMZQ4Idir2Ydgpzyok
-         g3CmDzGnO/Fwr08v9wF8RKGMCi9I39UTkWSvnnqZIdLOcm8GrM7CNaQWhxYgEDex6OhO
-         Y3kOxZei06X3ePSk6GV43yRsBi3RVPRJI7USaQb0Ailh2tVXiB0D0erjQS5avVv+nw/d
-         DJqMtn7/A5gcSWVT0ote2tOmbJE/ESIvubF8jRujT9/H+O8oeGh0FRy7xV7b32CADTpz
-         MMeGgDRtFd3TnXYKX382oBUx0TROomEGkONZG/TXJX1hpqKRm1xKJ0cflcE/z/MHi9hU
-         YkqQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXXKlhFBDNLSfdwrjb0iH1XngK62xGEpRV6JOdWsOpQjrutS9pwjt1VEiuIWcI5CJz0v1o=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw5OWh8f4IExi8koRpr3f/jXRX3Z+NbI5rgsl6ayGw4+r7PVjJY
-	sE35VyKTn79L9GYOO9bB6IvWvrjewtF+q3bmMK+3ws3VVO+AipHX7FWmme6iQYLYCpYXvOcyAJ/
-	pzv4toudW5JvvR/AiFL0ITGBx2maNkvPx94qpKGAY
-X-Gm-Gg: ASbGncv1OxvdbwVXBYoIGLRGozvuLmiU+tQQfn3a1rKMH6Ln97XXFTdBpIRzKOPzcFm
-	Gq9VcLkHyTLweVRlgitn6X4HoOoKwzJTPczeWd9VrJlU1hftwgvPSeUTtAU7VHjE6wy1pyEQ/G/
-	+s7VVcSN/APx4fF4iIZj0dvKZvZziasg58mYiU3UqvznMX6tMxjCP4iUZx90lavLXR+cTQjLv8l
-	1hojMy8dXNAso8FziROBUs9UluCsfORsNOx5Opkg/CoCDh6WKZ9XFoiHii3t4MO6p/dcP/OaM/o
-	XsF7hmul54uxPs0=
-X-Google-Smtp-Source: AGHT+IGmkV7ExlcUNyVUiGSRgZNUSfnCntRTel8hyPdHaH+4NkJO+b3i8zgvxHMHIiP9dP/KuTO8VIHwMIEvlH3jW5o=
-X-Received: by 2002:aa7:d859:0:b0:63c:1167:3a96 with SMTP id
- 4fb4d7f45d1cf-63c11673c77mr78694a12.5.1760634752937; Thu, 16 Oct 2025
- 10:12:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GFcnZUDE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="drU5DPDi"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6D42B1D000D0;
+	Thu, 16 Oct 2025 13:27:18 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 16 Oct 2025 13:27:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1760635638; x=1760722038; bh=hNHYS2ViL9
+	LG2WtmTzPeIHkjjpJozx7rK+02rXHagPw=; b=GFcnZUDEBosO4uYoOyfsXKQJWr
+	kBhMxm4g0hp75W6eJKNFHcGvxm5JDEcNIA9EL47y5gDUdecPLX2HwA7wNcr1K5fs
+	rlF/E4/Bd4QJGwC8Dxfni+US5J4GzK7dgoowu2ocwkmJjMef+rPOHTZSj982Q6fp
+	OtDOG9wl2B2A9glf6MYYM5IlwJ668RGXkeg9I7mMDdBdm81yekX45SKV+wf/mhsN
+	mOxNAAAIDXRVc7VV4SRGt+XfiWV2x+KOF+/mTTT0vz4WKnnQY1UOoeSb21La6HPh
+	o2wMdlL90fvsIFTLX1/PFIzYePIlPt3S3LmlAFFjnU3irF9qe6OAtpPeoI1g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760635638; x=1760722038; bh=hNHYS2ViL9LG2WtmTzPeIHkjjpJozx7rK+0
+	2rXHagPw=; b=drU5DPDiWpYAV9rBQq8swvwLyMZ01yTj6UhaZrgZqQ2GnB298zn
+	0XRGeoo4nZocdIqhXu7S/4FFkALL11RzeJsT4BPM2FlmEY+rGVaPUrs8gb/oeEuV
+	A0yg8XViRPeD27i/q3e+KalUjeZuvhE1fETcVLOFL0qQfodHSFTS/sAvOTu795DB
+	If7KgU19BFwlu4L2JxG2/4LM8ApOQFpFYuKgydvmlIaNy+WS6AJXjs9tKfKcLsl+
+	sDL9t7ulnPDfcN10bqPMkf1bJTA1m+JFh5VhkRwGUJvudu4LLtrlBzlMTz5O3zTf
+	i7Z2n8tSy6kg0FJPlQF9BpkDrgJjn9wMF3Q==
+X-ME-Sender: <xms:9irxaAGA9VTviy5BvUks1sbBu_vIRz5T4D1ovl-AyWOyDQ3HlEq4yQ>
+    <xme:9irxaANNobfCspopyZk3LQ18DT7wfZt1Uonp-o6WG0APyFmGRjwYlFI4r3NqMhULL
+    opJY0vkOFZC9VWrfldFdrNlDtynERr2jsyrV4V8E0FB6EMSRCxP6Q>
+X-ME-Received: <xmr:9irxaCcPtVam6IhrulkwnLKrl1SqPJg7Asn-8fetT0bq0Oil7cXHN1KqD6bpAinrWHjYQmrD-SiMs8AKkEOgrIfG9KEfOvO72v77>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdeikeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghlkhhi
+    ugelkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:9irxaNunSeZbrzsNnlLzMJE0hVvmo4AK_UGnq6J8_kofvCpIGs7iHg>
+    <xmx:9irxaDn3JBdUTn0zKoc7mlTzOMxbUdqyiBTkEqQwFV2EdIEheIj8Bg>
+    <xmx:9irxaPzSYmvk-A3bsqBkCvm0UlUZq9PqihipYcmPqnU8rmvErNnSOQ>
+    <xmx:9irxaFOFK-EmJMxCzZd8HBZ8-vLzNJViaYe1TULtVkkxe23iiPVPwA>
+    <xmx:9irxaM9JW1gC-UHMGYl3dDvOSOgyjUidNcfmBeFHWh2BIXrIgKiMQJGo>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 16 Oct 2025 13:27:17 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Olamide Caleb Bello <belkid98@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,
+  usmanakinyemi202@gmail.com
+Subject: Re: [Outreachy PATCH v2 1/2] gpg-interface: replace
+ strbuf_split_max() with string_list_split()
+In-Reply-To: <818ca6b104cf25ebe4c60145d046029f057f4db1.1760571220.git.belkid98@gmail.com>
+	(Olamide Caleb Bello's message of "Thu, 16 Oct 2025 01:03:53 +0000")
+References: <cover.1760571220.git.belkid98@gmail.com>
+	<818ca6b104cf25ebe4c60145d046029f057f4db1.1760571220.git.belkid98@gmail.com>
+Date: Thu, 16 Oct 2025 10:27:16 -0700
+Message-ID: <xmqqms5q4v0r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1989.git.1760566054455.gitgitgadget@gmail.com>
- <aPAgBPLH4QYa0ceP@fruit.crustytoothpaste.net> <xmqqh5vz7ygc.fsf@gitster.g>
- <CAESOdVAEN=YeMqozR4438L-U7mZ3nhRnMB5PV_sUPmwuWSkbhQ@mail.gmail.com> <d47e137b-c34d-49c9-bf45-226cbcdba416@app.fastmail.com>
-In-Reply-To: <d47e137b-c34d-49c9-bf45-226cbcdba416@app.fastmail.com>
-From: Martin von Zweigbergk <martinvonz@google.com>
-Date: Thu, 16 Oct 2025 10:12:21 -0700
-X-Gm-Features: AS18NWBC53GD5QtAmMwpKQZaP4VOUd4KCHVQaBfpvxGgu4UAI9zhPCyX0Sb1n4c
-Message-ID: <CAESOdVCQR=z95MK1oHZO4_iBXS8Z9uz4Fs0gDDX+BfaG9_3=ag@mail.gmail.com>
-Subject: Re: [PATCH] BreakingChanges: say that `git diff X..Y` syntax will be
- removed in 3.0
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Josh Soref <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Martin von Zweigbergk <martinvonz@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, 16 Oct 2025 at 10:02, Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
->
-> On Thu, Oct 16, 2025, at 18:38, Martin von Zweigbergk wrote:
-> > On Thu, 16 Oct 2025 at 06:44, Junio C Hamano <gitster@pobox.com> wrote:
-> >>[snip]
-> >>
-> >> The same for "git checkout master..."  that detaches HEAD at the
-> >> fork point of the current topic (so that I can "git am" in a new
-> >> iteration of patches on top).
-> >
-> > I couldn't get this to work:
-> >
-> > $ git checkout main... --
-> > fatal: invalid reference: main...
->
-> `git checkout X...` works for me.  Apparently it is this part of the
-> doc: =E2=80=9CAs a special case, you may use <rev-a>...<rev-b> [...]=E2=
-=80=9D
+Olamide Caleb Bello <belkid98@gmail.com> writes:
 
-Oh, I think I know what the problem is. The reason I tried it was that
-I was curious how it would behave when there are multiple merge bases,
-so I had set up a repo like that. Then I got this:
+> @@ -821,7 +822,7 @@ static char *get_ssh_key_fingerprint(const char *signing_key)
+>  	struct child_process ssh_keygen = CHILD_PROCESS_INIT;
+>  	int ret = -1;
+>  	struct strbuf fingerprint_stdout = STRBUF_INIT;
+> -	struct strbuf **fingerprint;
+> +	struct string_list split = STRING_LIST_INIT_DUP;
+>  	char *fingerprint_ret;
+>  	const char *literal_key = NULL;
+>  
+> @@ -845,13 +846,12 @@ static char *get_ssh_key_fingerprint(const char *signing_key)
+>  		die_errno(_("failed to get the ssh fingerprint for key '%s'"),
+>  			  signing_key);
+>  
+> -	fingerprint = strbuf_split_max(&fingerprint_stdout, ' ', 3);
+> -	if (!fingerprint[1])
+> +	if (string_list_split(&split, fingerprint_stdout.buf, " ", 2) != 3)
 
-```
-$ git checkout main...
-error: pathspec 'main...' did not match any file(s) known to git
-$ git checkout main... --
-fatal: invalid reference: main...
-```
+The original splits the thing into upto 3 pieces, but only complains
+if the second piece is NULL (i.e. we said "up to 3", but there was
+not even one place to split, and the request to split_max gave the
+one thing as one piece).  IOW, the original code will happily accept
+if the finterprint_stdout is split only into two, not three.
 
-I didn't expect those messages to mean "the common ancestor is
-ambiguous" so I didn't think to try with an unambiguous common
-ancestor.
+The updated code asks to split at at most two places (yes, it is a
+confusing API, but if you split at two places, you will end up with
+three pieces), and insists that the split results in three pieces. 
 
->
-> >
-> > But don't worry about it. I think your point about there being other
-> > commands that support the triple-dot syntax is still valid.
-> >
-> >>  As the syntax "git diff master..."
-> >> is symmetric with it, if one were to change, both should change to
-> >> the same.
-> >[snip]
+So the rewrite tightens the error condition.
+
+Was the original code too loose in detecting an error, and does this
+patch tightens the condition "while at it"?  Or was the original
+code correct to expect that there are legitimate cases where the
+payload in finterprint_stdout only contains two pieces, and it was
+the right thing to do to accept when fingerprint[1] is not NULL but
+fingerprint[2] is NULL?
+
+This is a genuine question.  I haven't studied the code path to
+reach this point in the code flow, I don't know what the data in
+fingerprint_stdout is supposed to look like, so I do not know the
+answer to the question (in other words, it cannot be an oblique way
+to point out that the updated code is wrong or anything like that).
+
+>  		die_errno(_("failed to get the ssh fingerprint for key '%s'"),
+>  			  signing_key);
+>  
+> -	fingerprint_ret = strbuf_detach(fingerprint[1], NULL);
+> -	strbuf_list_free(fingerprint);
+> +	fingerprint_ret = xstrdup(split.items[1].string);
+> +	string_list_clear(&split, 0);
+>  	strbuf_release(&fingerprint_stdout);
+
+Since this code releases fingerprint_stdout before leaving, and
+returns a fresh copy of a split piece, it may make more sense to use
+string_list_split_in_place(), which does not have to allocate extra
+strings while it does its work, unlike string_list_split().
+
+>  	return fingerprint_ret;
+>  }
