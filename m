@@ -1,138 +1,140 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17D73BB5A
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 21:29:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38AA21ADB9
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 21:32:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760650183; cv=none; b=YfNkfg7vlwoulK4e6lNyDK1J+F8o85c6kkG32XGEZpVb18LoOG49NapUFuqEGRKGLg52Ep6RfUqhfGJx7ALb09fEahbLLS/yU3BDU46XBghxS4vSY5mhwNlNzkAwUzhWzHvfmq6uJ5XcVVcOeZSYtUDkGOwISKYrQvr36cpv0ow=
+	t=1760650367; cv=none; b=heBzSHAi2FlyIA3NSvbNw4C0kUr0uLQvlbTwLjO5x1LDNyD7Ly1RhurTcBOzYU2fXDGg0hm2i6t92ljUXGrkwF8KK6kupAVFjauOQ8GB5QZ3iFH1mltedgPSMORjR0dxgFqaKkPYbKGvFFsVSyGJfur+RzrFsA9DGKME0ngQWlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760650183; c=relaxed/simple;
-	bh=eLavCjtDLZIFCpKdoxEjhKdiOsJIQIm68QFzWydC8bo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nZqT3KfuPrQuPxJ7QhR0imap1WBA7YUqOgyK0b/6aPpr6dK4Q+qeaUgLg2DkOhKiKCflELUkpaTpatmxVDuT4CwwDg5exOdePj2qg74IQGU9hWt7xmTsvxuk1L+BIhXQ6zNWxi7hSK5vzewVNEtVqOiu84AFb55Xc8z93Cwx43M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UJSp4TkU; arc=none smtp.client-ip=209.85.215.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760650367; c=relaxed/simple;
+	bh=xIuvNUU801esMlSgGnzsgsjV+QQKeRtuHQpSvskDy0M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aT0uKHGfHz+E0jqx55u3baw+r8VertbAPRaUKbYO1RSaRdMnUZOXJdEyeDvXTpN2/4z510HUrv5lF/f1R9q1aigVU/W7n/k1XXkbAsZ2cXe4kk0KXvRbSnuVA8QVFxBW6RSu1a2b8h7hCbs4FAoEa0yi+cyopN/7by65rk2QENM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=VOlxKKX/; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UJSp4TkU"
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-b550eff972eso825528a12.3
-        for <git@vger.kernel.org>; Thu, 16 Oct 2025 14:29:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760650181; x=1761254981; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IQSu8lEdnTTkX7nki+ZpQXw18bdSsEj5Ff1F0iWgJJ8=;
-        b=UJSp4TkUXS8oi30aPMURpGyrFOSC7XkZgmUZRZaR8aBfq/v0+mkFSqmVISOmYBB+bp
-         x+owJnfmfsMNAb9NDInGD8tUw/U1sna81wWRgtQDRZRXlGsQEfN9eZxZ+ToDhePyX9nm
-         iqISTIqUPW3u74OjXxC0IGM6+G5SZD5HxxjSN+L/E2iKb7KlXER/H5ZFeXblWMy1YWpw
-         xult7PdKSIg9Sw61hDKAhQafEs61n7es5CwORF8gNCKueaxaDaJZXTeafc2DedbshxdY
-         aFWjlcLQrUbMYgsXYeaCDpmy/ckKVje4fJmZblfJtqNfSCGB5mmxUvc5IyVIKRxHleEN
-         oYDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760650181; x=1761254981;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=IQSu8lEdnTTkX7nki+ZpQXw18bdSsEj5Ff1F0iWgJJ8=;
-        b=m1tW3p0a0haHmFIMcGe108yAR45oXtwcplM+oefjuK3P6gkjpJmX0x4bbrGFgvLGP/
-         7adelaGt1Wkiso2aL9lpBjOcF5pSH+1vXSkUC6z/PGXIc08fJc4kqXemvp14bN9eoNvt
-         4oaSy3KWuuxjyrLNeEHoicJ5nNiw6uhpErNg40q5FJwiVdqIGwjQSNmGXxKYTkmrjbCl
-         TCSSvwziI0DuuP8GXkrDcmz7cl7CrLq1V83vomnH+jEkBfzTlxLZAGUB/A+a+Gk3q6xT
-         2yEhRVFptzfXdkVysbaYPFS37B6Dqp4K0Vv+pnBxSI7wwVOZl1DTPE/7RI3luzpzY95Y
-         RjTw==
-X-Gm-Message-State: AOJu0YyF8y7Wqi0gKtPDhrHoJ4Jrsn4Tfo4Y4hKmyb4O65GU1s3jYfuk
-	J638oxFnFdhuTVZDAp/8ueiFIzDLyJt31rMF1HMA8dfSNZLCaEuW4kv8QHsEJlSn
-X-Gm-Gg: ASbGnct0q/tOVmoiYtR7Gon9K16AnjTL9/1jRkCwEQ1AM0Q4UleHCgy0qzgcS4NHtai
-	ibX+xZyy53r9ir+re0qhbHY6ooCpdF74hVVnWWWbJEof7uh6SEEYWEv3IitY78+B0wdk6pp0yhm
-	8fy/W25Kc+q803P+BERKTvJjKpgtNeDbcwDiPiycIu6Pf6RRRqe3uUvxqu8VcEZ9TDD2/PUZOme
-	uMxDLkFaRBxEo6T0VHRDLHT5o/h1snHXJGO5SWQipKIcsuDiddT/Ny5iEWUA8m7euWE36ul3TXN
-	lLRBBuIdxwQ27XepNbW7jVFZd6ttoXTuoJrrIvmUiEuPi6mgwC4OAVDcJ9EXokQ7ux1hPVMxjIp
-	GqYH8HcZ5FHOo+0ldaQIQJFtbvC4glcjpyBt+C5mq50tg67563NzSDJwgpA==
-X-Google-Smtp-Source: AGHT+IF+hJ050X+8T54M4E5YPWGvN9aak4YKVAHK63IxVgj5nNjgRCY2HdzfgulOls5yE7QsN8uNwA==
-X-Received: by 2002:a17:902:e552:b0:290:ac36:2ed8 with SMTP id d9443c01a7336-290c9ce63d6mr14820025ad.24.1760650181044;
-        Thu, 16 Oct 2025 14:29:41 -0700 (PDT)
-Received: from fedora ([2601:646:8081:3770::43bc])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b6a22b7b2e2sm3802040a12.25.2025.10.16.14.29.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Oct 2025 14:29:40 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Git <git@vger.kernel.org>
-Subject: Re: Signed-off-by & the law
-In-Reply-To: <CALnO6CC4hBBMyqEfLEn7EO28LVo7i4eDqAMLcFzSJZudVnB0oQ@mail.gmail.com>
-References: <CALnO6CDNRw3UcU9UM7rpkAoQsSmfdkxMKVihmoUmUOCv_fpbJw@mail.gmail.com>
-	<871pn2ftx6.fsf@gmail.com>
-	<CALnO6CC4hBBMyqEfLEn7EO28LVo7i4eDqAMLcFzSJZudVnB0oQ@mail.gmail.com>
-Date: Thu, 16 Oct 2025 14:29:39 -0700
-Message-ID: <87tszylem4.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="VOlxKKX/"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1760650363;
+	bh=xIuvNUU801esMlSgGnzsgsjV+QQKeRtuHQpSvskDy0M=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=VOlxKKX/jDj0SLRuTEp7yVMZgvFscblzXgOS+NFA3jieyuJnPwv34SczjnUIMxECA
+	 PcurXrFf9JHImqH8Ma1KxLKfnDLQ9grjMgc0j3dV7qteN/S8FnxB6WgSSg+u7a1s7T
+	 /jG/SJ4/rrrZoFNstcGzt4NAApCofr6tJZ2HjiVMVNjTEiyU7VaiDld7SSuh8nUqE0
+	 r47YX5wZpg0oBvtysWM6umztg+6KyKJXhkFjE4tSKlFdszao+l1TDaQhIk9FHlpTvm
+	 a62TllWwKFnrGNAcgyJZvT+zYx3NCsDkT0iDWAwUrTjwpLP2ULdgC78K2OrlsiigKI
+	 Pw9psX2sRcU7FLXAnxJfONRVJrdcU8tKOtwEUCoCy8P0zqTJYONcM/qUgTaSHT0PmY
+	 TXfAOEBgftDKhMCdn4Xlg5h79yFjCuXGILoGFwltF6Nl9wNOIx8ckdaDNzcHyXyWfJ
+	 yRhGCpTSRs90mjoUe2X3Hrtt1Pyo6mZ2G0/xrigsGfNjb1d/F80
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:5c18:db3b:8800:f1b6])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 23D0B200BA;
+	Thu, 16 Oct 2025 21:32:43 +0000 (UTC)
+Date: Thu, 16 Oct 2025 21:32:41 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Ben Knoble <ben.knoble@gmail.com>,
+	Luca Milanesio <luca.milanesio@gmail.com>, git@vger.kernel.org
+Subject: Re: When should we release Git 3.0?
+Message-ID: <aPFkeZrowzxtg6uN@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Luca Milanesio <luca.milanesio@gmail.com>, git@vger.kernel.org
+References: <aN5-n_ArhQqaQZgt@pks.im>
+ <D59D0576-63C9-4144-B49E-54D43A80E0B0@gmail.com>
+ <aOTrBAXhKF4iYzQB@pks.im>
+ <aObgEGjcou06nP68@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="k9BgRK7609lzr2mr"
+Content-Disposition: inline
+In-Reply-To: <aObgEGjcou06nP68@nand.local>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--k9BgRK7609lzr2mr
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+On 2025-10-08 at 22:05:04, Taylor Blau wrote:
+> I am not sure what our proposal would be other than max(proposed_dates),
+> clamped to some reasonable range that we are comfortable with so as not
+> to delay the transition to use SHA-256 by default too far into the
+> future.
+>=20
+> I think a more interesting question is:
+>=20
+>  - What do we do for implementations that do not have a roadmap, or
+>    whose roadmap is too far into the future?
+>=20
+>  - What do we do for implementations that have a roadmap, have a date
+>    that is palatable to the project, but end up slipping and are unable
+>    to meet that date?
+>=20
+> I generally agree that we have to draw a line in the sand *somewhere*,
+> but I don't think we should be so inflexible as to say "if you don't
+> have SHA-256 done by X date, you are out of luck". Of course, if the
+> amended timeline is too far beyond the initial deadline that's one case.
+> But if someone is a release cycle or so behind, I think it's reasonable
+> that the project should be flexible enough to accommodate that.
 
-> On Thu, Oct 16, 2025 at 4:55=E2=80=AFPM Collin Funk <collin.funk1@gmail.c=
-om> wrote:
->>
->> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
->>
->> > Any contributors/users with an interest in law feel like taking a stab
->> > at answering "Is Git's signed-off-by legally useful" ?
->> > https://law.stackexchange.com/q/111158/26698
->> >
->> > Having a solid reference answer is usually a good thing, if one exists.
->>
->> Not sure if it has ever been a topic in court, but it would allow you to
->> argue that committers signed off to the DCO acknowledging that they have
->> the ability to contribute the work under an open source license [1]. In
->> other words, the they have confirmed the work is not owned by their
->> employers, as is often the case with Software Developers in the US [2].
->
-> As Junio points out, this is dependent on the project attaching a DCO
-> meaning to the sign-off.
+I agree that it would be appropriate to be somewhat flexible.  My
+personal view is that we should inform stakeholders relatively soon
+(preferably within the next month) and expect them to promptly and
+diligently undertake the necessary work to get started (maybe within
+another month) and provide a rough roadmap.
 
-Yes, I should have mentioned that, thanks. The DCO meaning is what I see
-99% of the time, so my writing assumed it.
+If that happens, I expect most stakeholders will be done in about a year
+to a year and a half, tops.  Assuming a reasonable release cycle, I
+think it should be fine to give people some grace to do a release with
+those changes as long as they can communicate a reasonable timeline to
+us and show that they're making a reasonably diligent effort.
 
->> That is why I prefer copyright assignments. I have done many various GNU
->> projects that I commit to. I feel, at least in GNU's case, that they
->> force you to consider whether an employer may own your work [3]. If so,
->> the FSF will request your employer sign your copyright assignment.
->>
->> Obviously, the assignment process is time consuming and a barrier to
->> entry for new contributors. For that reason some GNU projects, such as
->> glibc and binutils, allow you to send patches with "Signed-off-by" to
->> the DCO if you do not have a copyright assignment nowadays [4].
->
-> Less germane to the original question: I'm less familiar with
-> copyright assignment, but it seems relatively heavyweight here. It
-> seems ironic to me that GNU would want me to give up my own rights
-> when contributing to their project ;)
+I also think there will be some stakeholders, probably including some
+forges, that will not promptly undertake the work.  In my view, the
+answer then is that we won't consider their readiness as affecting our
+timeline.
 
-I think this section from an article written by the FSF addresses your
-concern [1]:
+There are also some implementations that I know already have SHA-256
+support.  I believe libgit2 and Forgejo both have at least some
+functionality there, so we may want to just give them a heads up that
+they may want to polish any support they have before Git 3.0.
 
-    Some developers worry that assigning copyright will strip them of
-    all their rights to the code they've created. To address this, the
-    FSF includes a "license grantback" to the developer in the agreement
-    contract. For the developer, a license grantback means they can
-    continue to modify and share their code, and technically, they could
-    even distribute their software under a different license. In other
-    words, by assigning copyright to the FSF, the developer does not
-    give up any of these sorts of rights.
+If we want to set a hard cap, then I'd say two years.  I know that's
+what we said in 2024, but we didn't communicate it well at the time.
+What I have been communicating elsewhere is that Git 3.0 is tentatively
+planned for a year from now, so that may be a good initial phrasing to
+set expectations, with the clarifications we've specified.  I think a
+year from now would be good if all the relevant stakeholders are
+finished before then (which is possible, but unlikely).
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-All of my assignments have a grantback clause. So you could use
-changes/improvements you make to a program elsewhere under a different
-license.
+--k9BgRK7609lzr2mr
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Collin
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
 
-[1] https://www.fsf.org/bulletin/2022/fall/copyright-assignment-with-the-fsf
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaPFkeQAKCRB8DEliiIei
+gSmSAP9syv8LQtfT0/ecwOeIu3j4Wr2Mzhby6NCS8q+7jWTldwEAowsZnd+Xr5ow
+u/GHV7bNkRy/Y3YhX9FNManwXYl3JAs=
+=At74
+-----END PGP SIGNATURE-----
+
+--k9BgRK7609lzr2mr--
