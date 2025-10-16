@@ -1,118 +1,99 @@
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.lohmann.sh (mail.lohmann.sh [23.88.42.106])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FB24A00
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 01:28:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2AC2192FA
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 05:33:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.88.42.106
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760578120; cv=none; b=ZB4giepY1ApUeo72dP1ouh1M4kuq9V+Hq6hcRs44gZpXM9Dz6BDwGdRKBxGtDW/jFoI9znKFNQBeJfTBF/TtjV1UQVL3l0shi1QXuvCnW+ZsKy1/J0ZGQUYqIQvg+3nudHJtUCjB2pKtqerpZgPHGOwpKMKia3Vk/c5i8ycOGh4=
+	t=1760592836; cv=none; b=SZN2m5uA7YF19/O4yypBZKQ5bpDNpc1leBzwcezIOed+Y1BNnpeGzF6opkyf3vYlM3hMY5PQPk4mwXemBegXb6QKF/RECXJAZ+B8IBfnXY5n3GdSfqSnmv2MQnYRoEHWLhSVwnwIQfZJSrPwlz/9ym9TqHRtHpn47cIkPlaH/1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760578120; c=relaxed/simple;
-	bh=++zWOK/ndcywcgMDD5iMruJUWCT5nbRjr5OBBQf/IIk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T8rbip47zg0ZF7DoMl+MTbkWvrv+77JnAA7gVnBvbyqctpZLtPnrX9TTeIalIueKaOuVrb++DszB/LEzePtiRMkHTZplcIoZk/tuotxWGyRLVXVpRY16w3aLuz1mW9fES2bDydXU9LBEcydBhIUMY6IqXgKJNVLI2DG7iOPU9BA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jMtaX6uL; arc=none smtp.client-ip=209.85.167.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760592836; c=relaxed/simple;
+	bh=rw2vD1nJGTD0KHUwu9HPBfh+NMTyrANCqcBTvgcmHXE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dRdOFCHGjTBKG+qH4MM6OBaAhrG7B6L3p3YK7RMEwEI2uDSsmetbE8MbslZb1BhwqQu03JU816yzenTYKeKGuee3RAvM1k9mrM6/fxcwoe3qVRSiMimKY+GHEb/9ETaoZi3F+VocQLdBZrqnB47/SmoB9L+O8E8fvjmWbi9ft/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lohmann.sh; spf=pass smtp.mailfrom=lohmann.sh; dkim=pass (2048-bit key) header.d=lohmann.sh header.i=@lohmann.sh header.b=mv9UUk0z; arc=none smtp.client-ip=23.88.42.106
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lohmann.sh
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lohmann.sh
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jMtaX6uL"
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-44181f9e5b4so135123b6e.0
-        for <git@vger.kernel.org>; Wed, 15 Oct 2025 18:28:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760578118; x=1761182918; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=V7PYv4RZ1qgxbP85bG6eB7jhsDoICNtYgoGAT9V/ZZM=;
-        b=jMtaX6uLXwVxzpt9FkCK3JQC2XMQTicUJzXiTcVx2MaYGRcSUBemThPm2lRDomEFUe
-         r8OKmRgittumn5RQY1QyRW4mcXNCK7a5wKuJffo0bZzNHaRnKH1abqYbmcKLdrQ7kdOa
-         Big6ZWneotr67Jke8xyxlVjGTblbIbwsC7l39mT6f7DBJZm2TZW2PymV6LsK9CYE4VVb
-         r8WcOHH8MdHBgK72/5m5kaxAhdZhAhSHO77SWiYl/O42s4zDjgiQI+NTLp+40eNxK6PN
-         /zdKAsAoGRSINZV2wFycWFQvqdVjcfxrOc3xV8uD9IU6RKEJD4MLx+CipmI0iYIMpvSF
-         WX7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760578118; x=1761182918;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=V7PYv4RZ1qgxbP85bG6eB7jhsDoICNtYgoGAT9V/ZZM=;
-        b=Oyc4m69LSV0hneYv/R0b9FS2zA5vwMXlMnMJ1Fhc/DCkmG5wEWOLd6CLYxkxWHVvLU
-         aoSjOaYmlvBOCZK6H2bgPTvCS7UvZUkytjwr4zFZT0XexVwU2JmtfnCAmEa8N5wTiQzz
-         iTvrPJxy3VZ7M2LKc61RoFHzIaPf8ipRaxAYwbkXM3oVIe18fJqtkuXdrZrlc+04Dq58
-         C4FQ2u6HbH9qbbmrabe6JYR4GHYwlrdGeeHUXoOvqRr1LcLEFTn92fdfUwHAIagfvxUG
-         JZnkNp3I7OtE6PFRQ43Y2/cHopSMy17qZU8xePNW6LYP4OHOOfKT8YgNNhPTs9kC5/jR
-         3o5A==
-X-Gm-Message-State: AOJu0Ywj6krk90ODi13KSelx38mTNQtPnIjua77tTqXDvs2XgN94YFnp
-	m/TQAsYxlEbDppzqy/hsLW1kNk7BKZ+lBqdRwW7aEuIIdFsweYR7C6O4
-X-Gm-Gg: ASbGncs/SHrx0p+Kod9xz2HGzk7GhdEKVkrukDCr7aWa2f4aWCMrAGa7KsOuFpsbmD7
-	+EIKQKSovO1qURyxZ8KzO598+oyCjcdPyomxHfobuxV3XzLLQVcvjbyYm+juH72I7FQHimeN9oS
-	WJp4SYtFEx9LqToJ6ghSLa9KNCt2CtcUoOVStdqOAQYNi4KNxK+quLu27OljAFYagNSo4P1VnO9
-	Ri1Jo7FriBo9FrZcxmzUCoe1EB7LKyUzCtOwacVxsk5UQTjIkh735VGQJRz4EpFS2jRBw9ooASy
-	j4NjwjpdOSDtzt8fb+NpKWAgezz5sTIpCvXiqrUj4acrozVD7zgdknmazUWSZJ89ZWRii2Env7q
-	GN0Li9TvDaVZ1Im4yPVj2TcxuseJgyBn3SLsIFcj9tVdiief4tUYR50IhQEcrvQD5D+cepmdk7j
-	nU/rwm
-X-Google-Smtp-Source: AGHT+IGpV11BlbfMBw4KMkRASs6kZPRoj8lQZqYKPW7Z5o4sfsb2Dym15MzNbU++KyIfHPKkgO1A1A==
-X-Received: by 2002:a05:6808:1903:b0:43f:5fc5:e04a with SMTP id 5614622812f47-4417b3b2af1mr11802026b6e.31.1760578117816;
-        Wed, 15 Oct 2025 18:28:37 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-4419893b4dcsm4383558b6e.16.2025.10.15.18.28.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 18:28:37 -0700 (PDT)
-Date: Wed, 15 Oct 2025 20:28:36 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Martin von Zweigbergk via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@gmail.com>, 
-	Martin von Zweigbergk <martinvonz@google.com>
-Subject: Re: [PATCH] BreakingChanges: say that `git diff X..Y` syntax will be
- removed in 3.0
-Message-ID: <i5lgq7cunzqn2k3puuudzb53efqz6cxev64l6ukwy2kf24dab3@ndymfd2ocit3>
-References: <pull.1989.git.1760566054455.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=lohmann.sh header.i=@lohmann.sh header.b="mv9UUk0z"
+From: Michael Lohmann <git@lohmann.sh>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lohmann.sh; s=mail3;
+	t=1760592825;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NOuSKZrt9fsatvyp9v4xP/OWNeHSUsoptcb+IMlxRpI=;
+	b=mv9UUk0zbL/mfJqRJJvc8hFvERTg12MApRXol9pF8AHZPSpEgURB0HqOkphizFm5TDAs8m
+	apLMQ7LFdcB9m1IHZpECQm+clMGDmXdTHGpLP2snmxJNSiwE+yX8XvC9T+XVYCS/oin658
+	bh9xN695yz4BsVwl9ggTfnrXZuLmmiM3D25WbhkZAA9k9EEz2j9zifM7h40VcQhk4CsI8s
+	k7F+AT1VlBQLuYFsrc5q/QUBkqG842bKNGynMC2XbLH8VaLDMdLkwNxDOqqaU5JYBUhlNf
+	R5I0hrC0mBNJsCkHLHBT4yRDEIlclvvjA12W58lVR+2f10Ktq/aC4OYP2GkRSw==
+To: git@lohmann.sh
+Cc: git@vger.kernel.org
+Subject: [PATCH v3 3/5] setup: refactor `ensure_safe_repository()` testing priorities
+Date: Thu, 16 Oct 2025 07:33:20 +0200
+Message-ID: <20251016053322.44495-4-git@lohmann.sh>
+In-Reply-To: <20251016053322.44495-1-git@lohmann.sh>
+References: <20251013094152.23597-1-git@lohmann.sh>
+ <20251016053322.44495-1-git@lohmann.sh>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.1989.git.1760566054455.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On 25/10/15 10:07PM, Martin von Zweigbergk via GitGitGadget wrote:
-> From: Martin von Zweigbergk <martinvonz@google.com>
-> 
-> The `git diff X..Y` syntax is quite misleading because it looks like
-> it shows the diff of the commits in the X..Y range but it actually
-> shows the diff from X to Y. 
+With the current code, this change does not make any difference because
+there is no explicit rule that lets you reject a directory that the
+ownership-based rule may accept.  In a later step in this series,
+however, we will introduce a mechanism to allow such an explicit rule,
+at which point the order of checks, i.e. seeing the explicit rule reject
+a directory and failing the operation before consulting the
+ownership-based rule, will start to matter.  As a preliminary change,
+reorder the existing checks.
 
-Personally, I would like to see both the double-dot and triple-dot
-notations removed from the diff commands because they are often confused
-with the revision range notations. In my opinion, the double-dot
-notation doesn't even have much value as it can be replaced with:
+Signed-off-by: Michael Lohmann <git@lohmann.sh>
+---
+ setup.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-  A..B => A B
-  A..  => A @
-   ..B => @ B
+diff --git a/setup.c b/setup.c
+index c6e1204c05..5ec68be379 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1307,12 +1307,6 @@ static int ensure_safe_repository(const char *gitfile,
+ {
+ 	struct safe_directory_data data = { 0 };
+ 
+-	if (!git_env_bool("GIT_TEST_ASSUME_DIFFERENT_OWNER", 0) &&
+-	    (!gitfile || is_path_owned_by_current_user(gitfile, report)) &&
+-	    (!worktree || is_path_owned_by_current_user(worktree, report)) &&
+-	    (!gitdir || is_path_owned_by_current_user(gitdir, report)))
+-		return 1;
+-
+ 	/*
+ 	 * normalize the data.path for comparison with normalized paths
+ 	 * that come from the configuration file.  The path is unsafe
+@@ -1330,7 +1324,16 @@ static int ensure_safe_repository(const char *gitfile,
+ 	git_protected_config(safe_directory_cb, &data);
+ 
+ 	free(data.path);
+-	return data.is_safe;
++	if (data.is_safe)
++		return 1;
++
++	if (!git_env_bool("GIT_TEST_ASSUME_DIFFERENT_OWNER", 0) &&
++	    (!gitfile || is_path_owned_by_current_user(gitfile, report)) &&
++	    (!worktree || is_path_owned_by_current_user(worktree, report)) &&
++	    (!gitdir || is_path_owned_by_current_user(gitdir, report)))
++		return 1;
++
++	return 0;
+ }
+ 
+ void die_upon_unsafe_repo(const char *gitfile, const char *worktree,
+-- 
+2.51.1.476.g147428281d
 
-These alternatives are just as concise. 
-
-> IMO, if that syntax is supported, it
-> should show a diff from the merge base of X and Y to Y. I hope Git 3.0
-> is a good time to remove support for the current syntax and
-> semantics. Then we can perhaps add the syntax back later with less
-> surprising semantics.
-
-With the existing triple-dot notation, `git diff A...B` is equivalent to
-`git diff $(git merge-base A B) B`. I think this is what you are
-suggesting about that the double-dot notation should do. As mentioned
-earlier, I think both these notations are too easily confused with
-revision range notations so I think we should avoid using the dot syntax
-for such a shortcut altogether.
-
-The triple-dot notation is a somewhat convienient shortcut though. If we
-wanted to remove it, we would maybe want to replace it some other
-functionally equivalent shortcut.
-
-All this being said, I've sure there are folks in the wild using these
-notations in scripts and changing would cause disruption. Maybe the Git
-3.0 release would indeed be a good time to remove them though.
-
--Justin
