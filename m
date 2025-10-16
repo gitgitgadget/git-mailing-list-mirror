@@ -1,587 +1,141 @@
-Received: from out-182.mta1.migadu.com (out-182.mta1.migadu.com [95.215.58.182])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971902E7647
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 08:39:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB5A214812
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 10:32:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760603992; cv=none; b=h47IHp8oZyfktTCyx/ze7qTn2LTJbhILSmLlLVlXskG3T3zbAVsgK8Hz8Jrocth1D6TAUCtoYnLpwmGScs0DZyngkwEMFs7jWNBuS40LbSoYDJQAVbpN4yUCrfjeq6GFvjVxyjAXyopA5gpxCWgiwj0fIlhqR5pTwqOB1ZKxK38=
+	t=1760610727; cv=none; b=jzxYUjE5hzuQyyAzT3vjEYSI6akgTKRSZLYoidWIgsBT38LgAfdE8Dvz6lZZxkgbSVTktgM3rjo8AZZDvFMDvwXQtFmL4LnIt9yekLLXvo1rGLmGg7c9XnTNLP4DbewDZZocTpQ/WMLdO2NYW7lgbe4ck4i3JwqGHkN1D6qA5Os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760603992; c=relaxed/simple;
-	bh=YaTKBTBSa75pKL6A/1efKM/yEHN5sKuj5pUzWw0V8gY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=JQku9NiCy7mOORoKxhB33FZvHIC+66hVCvyIW69PNGUnAkJi7h4zVRfHNU43r9H5AEmD33BF/6m8IX4HP4z2h92fxaKGYDwaqudiRhB79lew30YhBjy3r4fq2IR+tM9FWpt70zqRTPtOWdVug1hZlvQrKyMi/+Q5D0zrK2oPhoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=r8zjreXW; arc=none smtp.client-ip=95.215.58.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1760610727; c=relaxed/simple;
+	bh=PfGhdNZO2gayD6+gDXADdkAnOO009DVQ870UQuPOEhI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Fp0CY7Ko+p/GRbrvZXSiFo/4jfCv4G+P26/3CsPpqHnmMuIgVheoLYk3H/7bYrinhHFm+CJs9UrnOcr8kimAHGJI7imtCff5G3vgpO90bAxAIX5EYPD2LPpdiH0CXf04lTRQgGEBZmltjqveHGhWb2Dhn9K0qY+7WbCvJ9WcJFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=dPVY1KYR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SKMZ9U3v; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="r8zjreXW"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1760603984;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=ZmD4liVrAfzbH/hI2neCfOMTvp3oQK8KiBtSQxhzeds=;
-	b=r8zjreXWptJiHkp5dejUHD+NdatGMtu0CuM7Rmx0OoVD1t0P3z2/SXz5hudW/7z2DXIqe5
-	W40hiisTo3XivEHJUimUgUV6sHME89htfCZgSKb45WbmeTfdpK88svFSmP85a7JXPGDyqb
-	eZ4Do60xvyhFHnYosyV2EbEieKY2lXs=
-From: Toon Claes <toon@iotcl.com>
-Date: Thu, 16 Oct 2025 10:39:25 +0200
-Subject: [PATCH] last-modified: implement faster algorithm
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="dPVY1KYR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SKMZ9U3v"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D2660140006C;
+	Thu, 16 Oct 2025 06:32:03 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Thu, 16 Oct 2025 06:32:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm2; t=1760610723; x=1760697123; bh=yFWGBQ5AMOAh2/B5aOMbE
+	210qVzD3pfq9F3Jv2LnXYs=; b=dPVY1KYRvwl9r6dx7BbEz1nBVn9EKrIt9pyNw
+	YDNxV+pVENHm+utPrIZIS/MLkxWhiElNq+TmcIfWEE5ROpUND1mX+OSSbNrdRfcs
+	l8BuYmBB5hYv+Ce/TYU7KPa31yYlzFhdZfhiQywSRr8EzHN7d0yINqnfyZKM5UB9
+	4whCE1BVLvrgvTMHa1vFfrbJKylJYOfxE/CYaoafhp309JaMORiCxeiMDxvsyeBB
+	OCE+AG3u97IrWoW4pOTeNd+FBUH/z2wBkD7k2UnQyodh59MIlMDQoeSj7DqJ+3f3
+	7jknpThtqGclKvNhMDXtIjRWddnGox4+7sDnw/nRaL0XpW7KQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760610723; x=1760697123; bh=yFWGBQ5AMOAh2/B5aOMbE210qVzD3pfq9F3
+	Jv2LnXYs=; b=SKMZ9U3vv6JuGhAsFl94U2RSIRpoHrsiV1k25QdbokP32jx+vIF
+	1RAWICoerLPx3kGUBAc4bYyzDpDavF4qAW+BvYzuWxck5joXfuPUVLeoZ509hJOP
+	17I69/U8yXgR9JX5p/SsIAB47nv/Wrq3fzrrGuHk+Xd1HwZYeN+9qX9jXW+4oqvb
+	weKEhpIeLv9GwwHu5PsXd0fLWW58Z0t96yAXDtRcqueBUTsuA1RPxfoRxbCk+l7R
+	zjjkb3BLfG7pow6+xAQP/PaADYMxzHLdnGsPYu4PfZpV4b0CLiHwcxWQCto+yoQI
+	0hCXsRGEx4ScMGfdFVhQWmib3g633/BcwDw==
+X-ME-Sender: <xms:o8nwaF3XXKyeh-q4d1-Q2ajEFKHdYelCRMHE0pfKZQrEmAurrp400JQ>
+    <xme:o8nwaCHgVNV5dksxi3O1lZLA1lMlUXsLX2oSpnro8Gnujb4Z_W0_MuRsz7XDw0wqX
+    e7ytRWXRLg1Q05FgTD5VoLdDqAs-kswxiydzD94TWD87J5UMub79A>
+X-ME-Received: <xmr:o8nwaDgKNocPkNBqIjuXVhSoc7JHX6HjA27r_NQGC_k7O55qUTnEYdz8cyOe6ex7TbS_aPKagwcpwpREBJyHHCLw_wSIpSpW0Qe8xps>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdeitdeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffoggfgsedtkeertdertd
+    dtnecuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghi
+    lhdrtghomhenucggtffrrghtthgvrhhnpedvheelvdejheejjeehveettdejkefhhfffve
+    ettdffgfekuddvvdetfeejhfdutdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsth
+    hmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtoh
+    guvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:o8nwaN_yqkJhyqmFxrh6ZfPKHies-Jhou94CmJpj7DdWxsE_87tzyw>
+    <xmx:o8nwaKpAWCpCldwmnG3vI9e9pZ7wKHU0vgXYSyFqOYXGTseF8EKN_w>
+    <xmx:o8nwaM8v_PfuJfwBY62U5kwKcRPmpFZJaG9sWb_xXnoOw8_ymuODZw>
+    <xmx:o8nwaOUHvZlF8nitoNmrUpPHz-lvferw3kkQIUg4ICoh3dozqMD7Ew>
+    <xmx:o8nwaBPYCYXojvZVJr2OFlxfpoeYG_J3h7iyLSgA-u7Pfg27yxLtaKhy>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 16 Oct 2025 06:32:02 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH] RelNotes: sync with Git 2.51.1 fixups
+Date: Thu, 16 Oct 2025 12:31:43 +0200
+Message-ID: <7620da43552a693c0a145cee0637e61d678c8d35.1760610541.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.51.0.352.g356bc2d8d49
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20251016-b4-toon-last-modified-faster-v1-1-85dca8a29e5c@iotcl.com>
-X-B4-Tracking: v=1; b=H4sIADyv8GgC/x3MQQqAIBAAwK/EnltQyci+Eh0s11ooDY0Ior8nH
- ecyD2RKTBn66oFEF2eOoUDWFcyrDQshu2JQQmkphMGpwTPGgJvNJ+7RsWdy6IsoYTN3RrfWaNV
- KKMWRyPP998P4vh9S+fRybgAAAA==
-X-Change-ID: 20251009-b4-toon-last-modified-faster-4c8956a95261
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, 
- Justin Tobler <jltobler@gmail.com>, Taylor Blau <me@ttaylorr.com>, 
- Toon Claes <toon@iotcl.com>
-X-Migadu-Flow: FLOW_OUT
 
-The current implementation of git-last-modified(1) works by doing a
-revision walk, and inspecting the diff at each level of that walk to
-annotate entries remaining in the hashmap of paths. In other words, if
-the diff at some level touches a path which has not yet been associated
-with a commit, then that commit becomes associated with the path.
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-While a perfectly reasonable implementation, it can perform poorly in
-either one of two scenarios:
+Carry over the fixups from 8c3d7c5f (RelNotes: minor fixups before
+2.51.1, 2025-10-15).
 
-  1. There are many entries of interest, in which case there is simply
-     a lot of work to do.
-
-  2. Or, there are (even a few) entries which have not been updated in a
-     long time, and so we must walk through a lot of history in order to
-     find a commit that touches that path.
-
-This patch rewrites the last-modified implementation that addresses the
-second point. The idea behind the algorithm is to propagate a set of
-'active' paths (a path is 'active' if it does not yet belong to a
-commit) up to parents and do a truncated revision walk.
-
-The walk is truncated because it does not produce a revision for every
-change in the original pathspec, but rather only for active paths.
-
-More specifically, consider a priority queue of commits sorted by
-generation number. First, enqueue the set of boundary commits with all
-paths in the original spec marked as interesting.
-
-Then, while the queue is not empty, do the following:
-
-  1. Pop an element, say, 'c', off of the queue, making sure that 'c'
-     isn't reachable by anything in the '--not' set.
-
-  2. For each parent 'p' (with index 'parent_i') of 'c', do the
-     following:
-
-     a. Compute the diff between 'c' and 'p'.
-     b. Pass any active paths that are TREESAME from 'c' to 'p'.
-     c. If 'p' has any active paths, push it onto the queue.
-
-  3. Any path that remains active on 'c' is associated to that commit.
-
-This ends up being equivalent to doing something like 'git log -1 --
-$path' for each path simultaneously. But, it allows us to go much faster
-than the original implementation by limiting the number of diffs we
-compute, since we can avoid parts of history that would have been
-considered by the revision walk in the original implementation, but are
-known to be uninteresting to us because we have already marked all paths
-in that area to be inactive.
-
-To avoid computing many first-parent diffs, add another trick on top of
-this and check if all paths active in 'c' are DEFINITELY NOT in c's
-Bloom filter. Since the commit-graph only stores first-parent diffs in
-the Bloom filters, we can only apply this trick to first-parent diffs.
-
-Comparing the performance of this new algorithm shows about a 2.6x
-improvement on git.git:
-
-    Benchmark 1: master
-      Time (mean ± σ):      3.077 s ±  0.055 s    [User: 3.017 s, System: 0.051 s]
-      Range (min … max):    2.947 s …  3.127 s    10 runs
-
-    Benchmark 2: HEAD
-      Time (mean ± σ):      1.181 s ±  0.010 s    [User: 1.139 s, System: 0.038 s]
-      Range (min … max):    1.169 s …  1.194 s    10 runs
-
-    Summary
-      HEAD ran
-        2.60 ± 0.05 times faster than master
-
-But when comparing a more extreme example of
-`git last-modified -- COPYING t`, the difference is a lot bigger:
-
-    Benchmark 1: master
-      Time (mean ± σ):      4.372 s ±  0.057 s    [User: 4.286 s, System: 0.062 s]
-      Range (min … max):    4.308 s …  4.509 s    10 runs
-
-    Benchmark 2: HEAD
-      Time (mean ± σ):     826.3 ms ±  22.3 ms    [User: 784.1 ms, System: 39.2 ms]
-      Range (min … max):   810.6 ms … 881.2 ms    10 runs
-
-    Summary
-      HEAD ran
-        5.29 ± 0.16 times faster than master
-
-As an added benefit, this implementation gives more correct results. For
-example implementation in 'master' gives:
-
-    $ git log --max-count=1 --format=%H -- pkt-line.h
-    15df15fe07ef66b51302bb77e393f3c5502629de
-
-    $ git last-modified -- pkt-line.h
-    15df15fe07ef66b51302bb77e393f3c5502629de	pkt-line.h
-
-    $ git last-modified | grep pkt-line.h
-    5b49c1af03e600c286f63d9d9c9fb01403230b9f	pkt-line.h
-
-With the changes in this patch the results of git-last-modified(1)
-always match those of `git log --max-count=1`.
-
-One thing to note though, the results might be outputted in a different
-order than before. This is not considerd to be an issue because nowhere
-is documented the order is guaranteed.
-
-Based-on-patches-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: Toon Claes <toon@iotcl.com>
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
-The subcommand git-last-modified(1) was based on the patches shared by
-Taylor and the folks at GitHub[1]. That version used an alternative
-implementation to make it "go faster". When I was working on upstreaming
-those patches, I dropped the patches[2] for this implementation, because
-I didn't see significant improvements.
+ Documentation/RelNotes/2.52.0.adoc | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-This series revives those changes. I did more thorough deep dive through
-the code and the algorithm and got the code working a lot faster. The
-benchmark results can be found in the commit message.
+diff --git a/Documentation/RelNotes/2.52.0.adoc b/Documentation/RelNotes/2.52.0.adoc
+index 67b0ac7c459..8c4ed4eef48 100644
+--- a/Documentation/RelNotes/2.52.0.adoc
++++ b/Documentation/RelNotes/2.52.0.adoc
+@@ -100,7 +100,7 @@ Performance, Internal Implementation, Development Support etc.
+ 
+  * CodingGuidelines now spells out how bitfields are to be written.
+ 
+- * Adjust to the way newer versions of cURL selectivel enables tracing
++ * Adjust to the way newer versions of cURL selectively enable tracing
+    options, so that our tests can continue to work.
+    (merge 1b5a6bfff3 jk/curl-global-trace-components later to maint).
+ 
+@@ -212,13 +212,13 @@ including security updates, are included in this release.
+    name.
+    (merge bcb20dda83 js/doc-gitk-history later to maint).
+ 
+- * Update the instruction to use of GGG in the MyFirstContribution
++ * Update the instructions for using GGG in the MyFirstContribution
+    document to say that a GitHub PR could be made against `git/git`
+    instead of `gitgitgadget/git`.
+    (merge 37001cdbc4 ds/doc-ggg-pr-fork-clarify later to maint).
+ 
+  * Makefile tried to run multiple "cargo build" which would not work
+-   very well; serialize their execution to work it around.
++   very well; serialize their execution to work around this problem.
+    (merge 0eeacde50e da/cargo-serialize later to maint).
+ 
+  * "git repack --path-walk" lost objects in some corner cases, which
+@@ -294,12 +294,12 @@ including security updates, are included in this release.
+    updated.
+    (merge 54a60e5b38 kh/you-still-use-whatchanged-fix later to maint).
+ 
+- * Clang-format update to let our control macros formatted the way we
++ * Clang-format update to let our control macros be formatted the way we
+    had them traditionally, e.g., "for_each_string_list_item()" without
+    space before the parentheses.
+    (merge 3721541d35 jt/clang-format-foreach-wo-space-before-parenthesis later to maint).
+ 
+- * A few places where an size_t value was cast to curl_off_t without
++ * A few places where a size_t value was cast to curl_off_t without
+    checking has been updated to use the existing helper function.
+    (merge ecc5749578 js/curl-off-t-fixes later to maint).
+ 
 
-Some changes compared to GitHub's version include:
-
- * Use of `struct bitmap` from "ewah/ewok.h", instead of self-defined
-   `struct commit_active_paths`.
-
- * Removed shortcut code that handled the case when commit and parent
-   are fully treesame, and instead always checked 'active_c' whether the
-   next parent is worth looking at.
-
- * Modified comments and commit message to make the algorithm more
-   clear (at least to me).
-
- * Mentioned the use of PARENT1 and PARENT2 in object.h.
-
- * Removed the use of any global variables.
-
- * Less conditions are checked in mark_path() because the hashmap of
-   'paths' is considered the single-source of truth.
-
- * pass_to_parent() doesn't pass on when the path isn't in the 'paths'
-   hashmap no more.
-
-[1]: https://lore.kernel.org/git/Z+XJ+1L3PnC9Dyba@nand.local/
-[2]: https://lore.kernel.org/git/20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com/
----
- builtin/last-modified.c  | 252 ++++++++++++++++++++++++++++++++++++++++++++---
- object.h                 |   1 +
- t/t8020-last-modified.sh |   2 +-
- 3 files changed, 240 insertions(+), 15 deletions(-)
-
-diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-index ae8b36a2c3..40e520ba18 100644
---- a/builtin/last-modified.c
-+++ b/builtin/last-modified.c
-@@ -2,26 +2,32 @@
- #include "bloom.h"
- #include "builtin.h"
- #include "commit-graph.h"
-+#include "commit-slab.h"
- #include "commit.h"
- #include "config.h"
--#include "environment.h"
- #include "diff.h"
- #include "diffcore.h"
- #include "environment.h"
-+#include "ewah/ewok.h"
- #include "hashmap.h"
- #include "hex.h"
--#include "log-tree.h"
- #include "object-name.h"
- #include "object.h"
- #include "parse-options.h"
-+#include "prio-queue.h"
- #include "quote.h"
- #include "repository.h"
- #include "revision.h"
- 
-+/* Remember to update object flag allocation in object.h */
-+#define PARENT1 (1u<<16) /* used instead of SEEN */
-+#define PARENT2 (1u<<17) /* used instead of BOTTOM, BOUNDARY */
-+
- struct last_modified_entry {
- 	struct hashmap_entry hashent;
- 	struct object_id oid;
- 	struct bloom_key key;
-+	size_t diff_idx;
- 	const char path[FLEX_ARRAY];
- };
- 
-@@ -37,13 +43,35 @@ static int last_modified_entry_hashcmp(const void *unused UNUSED,
- 	return strcmp(ent1->path, path ? path : ent2->path);
- }
- 
-+/*
-+ * Hold a bitmap for each commit we're working with. Each bit represents a path
-+ * in `lm->all_paths`. Active bit means the path still needs to be dealt with.
-+ */
-+define_commit_slab(commit_bitmaps, struct bitmap *);
-+
- struct last_modified {
- 	struct hashmap paths;
- 	struct rev_info rev;
- 	bool recursive;
- 	bool show_trees;
-+
-+	const char **all_paths;
-+	size_t all_paths_nr;
-+	struct commit_bitmaps commit_bitmaps;
-+
-+	/* 'scratch' bitmap to avoid allocating every proccess_parent() */
-+	struct bitmap *scratch;
- };
- 
-+static struct bitmap *get_bitmap(struct last_modified *lm, struct commit *c)
-+{
-+	struct bitmap **bitmap = commit_bitmaps_at(&lm->commit_bitmaps, c);
-+	if (!*bitmap)
-+		*bitmap = bitmap_word_alloc(lm->all_paths_nr / BITS_IN_EWORD);
-+
-+	return *bitmap;
-+}
-+
- static void last_modified_release(struct last_modified *lm)
- {
- 	struct hashmap_iter iter;
-@@ -54,6 +82,8 @@ static void last_modified_release(struct last_modified *lm)
- 
- 	hashmap_clear_and_free(&lm->paths, struct last_modified_entry, hashent);
- 	release_revisions(&lm->rev);
-+
-+	free(lm->all_paths);
- }
- 
- struct last_modified_callback_data {
-@@ -196,7 +226,36 @@ static void last_modified_diff(struct diff_queue_struct *q,
- 	}
- }
- 
--static bool maybe_changed_path(struct last_modified *lm, struct commit *origin)
-+static size_t path_idx(struct last_modified *lm, char *path)
-+{
-+	struct last_modified_entry *ent;
-+	ent = hashmap_get_entry_from_hash(&lm->paths, strhash(path), path,
-+					  struct last_modified_entry, hashent);
-+
-+	return ent ? ent->diff_idx : -1;
-+}
-+
-+static void pass_to_parent(struct last_modified *lm,
-+			   struct bitmap *c,
-+			   struct bitmap *p,
-+			   size_t pos)
-+{
-+	struct last_modified_entry *ent;
-+	struct hashmap_iter iter;
-+
-+	bitmap_unset(c, pos);
-+
-+	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
-+		if (ent->diff_idx == pos) {
-+			bitmap_set(p, pos);
-+			break;
-+		}
-+	}
-+}
-+
-+static bool maybe_changed_path(struct last_modified *lm,
-+			       struct commit *origin,
-+			       struct bitmap *active)
- {
- 	struct bloom_filter *filter;
- 	struct last_modified_entry *ent;
-@@ -213,6 +272,9 @@ static bool maybe_changed_path(struct last_modified *lm, struct commit *origin)
- 		return true;
- 
- 	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
-+		if (active && !bitmap_get(active, ent->diff_idx))
-+			continue;
-+
- 		if (bloom_filter_contains(filter, &ent->key,
- 					  lm->rev.bloom_filter_settings))
- 			return true;
-@@ -220,42 +282,197 @@ static bool maybe_changed_path(struct last_modified *lm, struct commit *origin)
- 	return false;
- }
- 
-+static void process_parent(struct last_modified *lm,
-+			   struct prio_queue *queue,
-+			   struct commit *c, struct bitmap *active_c,
-+			   struct commit *parent, int parent_i)
-+{
-+	size_t i;
-+	struct bitmap *active_p;
-+
-+	repo_parse_commit(lm->rev.repo, parent);
-+	active_p = get_bitmap(lm, parent);
-+
-+	/*
-+	 * The first time entering this function for this commit (i.e. first parent)
-+	 * see if Bloom filters will tell us it's worth to do the diff.
-+	 */
-+	if (parent_i || maybe_changed_path(lm, c, active_c)) {
-+		diff_tree_oid(&parent->object.oid,
-+			      &c->object.oid, "", &lm->rev.diffopt);
-+		diffcore_std(&lm->rev.diffopt);
-+	}
-+
-+	/*
-+	 * Otherwise, test each path for TREESAME-ness against the parent. If
-+	 * a path is TREESAME, pass it on to this parent.
-+	 *
-+	 * First, collect all paths that are *not* TREESAME in 'scratch'.
-+	 * Then, pass paths that *are* TREESAME and active to the parent.
-+	 */
-+	for (i = 0; i < diff_queued_diff.nr; i++) {
-+		struct diff_filepair *fp = diff_queued_diff.queue[i];
-+		size_t k = path_idx(lm, fp->two->path);
-+		if (0 <= k && bitmap_get(active_c, k))
-+			bitmap_set(lm->scratch, k);
-+		diff_free_filepair(fp);
-+	}
-+	for (i = 0; i < lm->all_paths_nr; i++) {
-+		if (bitmap_get(active_c, i) && !bitmap_get(lm->scratch, i))
-+			pass_to_parent(lm, active_c, active_p, i);
-+	}
-+
-+	/*
-+	 * If parent has any active paths, put it on the queue (if not already).
-+	 */
-+	if (!bitmap_is_empty(active_p) && !(parent->object.flags & PARENT1)) {
-+		parent->object.flags |= PARENT1;
-+		prio_queue_put(queue, parent);
-+	}
-+
-+	memset(lm->scratch->words, 0x0, lm->scratch->word_alloc);
-+	diff_queued_diff.nr = 0;
-+	diff_queue_clear(&diff_queued_diff);
-+}
-+
- static int last_modified_run(struct last_modified *lm)
- {
-+	int max_count, queue_popped = 0;
-+	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
-+	struct prio_queue not_queue = { compare_commits_by_gen_then_commit_date };
-+	struct commit_list *list;
- 	struct last_modified_callback_data data = { .lm = lm };
- 
- 	lm->rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
- 	lm->rev.diffopt.format_callback = last_modified_diff;
- 	lm->rev.diffopt.format_callback_data = &data;
-+	lm->rev.no_walk = 1;
- 
- 	prepare_revision_walk(&lm->rev);
- 
--	while (hashmap_get_size(&lm->paths)) {
--		data.commit = get_revision(&lm->rev);
--		if (!data.commit)
--			BUG("paths remaining beyond boundary in last-modified");
-+	max_count = lm->rev.max_count;
-+
-+	init_commit_bitmaps(&lm->commit_bitmaps);
-+	lm->scratch = bitmap_word_alloc(lm->all_paths_nr);
-+
-+	/*
-+	 * lm->rev.commits holds the set of boundary commits for our walk.
-+	 *
-+	 * Loop through each such commit, and place it in the appropriate queue.
-+	 */
-+	for (list = lm->rev.commits; list; list = list->next) {
-+		struct commit *c = list->item;
-+
-+		if (c->object.flags & BOTTOM) {
-+			prio_queue_put(&not_queue, c);
-+			c->object.flags |= PARENT2;
-+		} else if (!(c->object.flags & PARENT1)) {
-+			/*
-+			 * If the commit is a starting point (and hasn't been
-+			 * seen yet), then initialize the set of interesting
-+			 * paths, too.
-+			 */
-+			struct bitmap *active;
-+
-+			prio_queue_put(&queue, c);
-+			c->object.flags |= PARENT1;
- 
--		if (data.commit->object.flags & BOUNDARY) {
-+			active = get_bitmap(lm, c);
-+			for (size_t i = 0; i < lm->all_paths_nr; i++)
-+				bitmap_set(active, i);
-+		}
-+	}
-+
-+	while (queue.nr) {
-+		int parent_i;
-+		struct commit_list *p;
-+		struct commit *c = prio_queue_get(&queue);
-+		struct bitmap *active_c = get_bitmap(lm, c);
-+
-+		if ((0 <= max_count && max_count < ++queue_popped) ||
-+		    (c->object.flags & PARENT2)) {
-+			/*
-+			 * Either a boundary commit, or we have already seen too
-+			 * many others. Either way, stop here.
-+			 */
-+			c->object.flags |= PARENT2 | BOUNDARY;
-+			data.commit = c;
- 			diff_tree_oid(lm->rev.repo->hash_algo->empty_tree,
--				      &data.commit->object.oid, "",
--				      &lm->rev.diffopt);
-+				      &c->object.oid,
-+				      "", &lm->rev.diffopt);
- 			diff_flush(&lm->rev.diffopt);
-+			goto cleanup;
-+		}
- 
--			break;
-+		/*
-+		 * Otherwise, make sure that 'c' isn't reachable from anything
-+		 * in the '--not' queue.
-+		 */
-+		repo_parse_commit(lm->rev.repo, c);
-+
-+		while (not_queue.nr) {
-+			struct commit_list *np;
-+			struct commit *n = prio_queue_get(&not_queue);
-+
-+			repo_parse_commit(lm->rev.repo, n);
-+
-+			for (np = n->parents; np; np = np->next) {
-+				if (!(np->item->object.flags & PARENT2)) {
-+					prio_queue_put(&not_queue, np->item);
-+					np->item->object.flags |= PARENT2;
-+				}
-+			}
-+
-+			if (commit_graph_generation(n) < commit_graph_generation(c))
-+				break;
- 		}
- 
--		if (!maybe_changed_path(lm, data.commit))
--			continue;
-+		/*
-+		 * Look at each parent and pass on each path that's TREESAME
-+		 * with that parent. Stop early when no active paths remain.
-+		 */
-+		for (p = c->parents, parent_i = 0; p; p = p->next, parent_i++) {
-+			process_parent(lm, &queue,
-+				       c, active_c,
-+				       p->item, parent_i);
-+
-+			if (bitmap_is_empty(active_c))
-+				break;
-+		}
- 
--		log_tree_commit(&lm->rev, data.commit);
-+		/*
-+		 * Paths that remain active, or not TREESAME with any parent,
-+		 * were changed by 'c'.
-+		 */
-+		if (!bitmap_is_empty(active_c))  {
-+			data.commit = c;
-+			for (size_t i = 0; i < lm->all_paths_nr; i++) {
-+				if (bitmap_get(active_c, i))
-+					mark_path(lm->all_paths[i], NULL, &data);
-+			}
-+		}
-+
-+cleanup:
-+		bitmap_free(active_c);
- 	}
- 
-+	if (hashmap_get_size(&lm->paths))
-+		BUG("paths remaining beyond boundary in last-modified");
-+
-+	clear_prio_queue(&not_queue);
-+	clear_prio_queue(&queue);
-+	clear_commit_bitmaps(&lm->commit_bitmaps);
-+	bitmap_free(lm->scratch);
-+
- 	return 0;
- }
- 
- static int last_modified_init(struct last_modified *lm, struct repository *r,
- 			      const char *prefix, int argc, const char **argv)
- {
-+	struct hashmap_iter iter;
-+	struct last_modified_entry *ent;
-+
- 	hashmap_init(&lm->paths, last_modified_entry_hashcmp, NULL, 0);
- 
- 	repo_init_revisions(r, &lm->rev, prefix);
-@@ -280,6 +497,13 @@ static int last_modified_init(struct last_modified *lm, struct repository *r,
- 	if (populate_paths_from_revs(lm) < 0)
- 		return error(_("unable to setup last-modified"));
- 
-+	lm->all_paths = xcalloc(hashmap_get_size(&lm->paths), sizeof(const char *));
-+	lm->all_paths_nr = 0;
-+	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
-+		ent->diff_idx = lm->all_paths_nr++;
-+		lm->all_paths[ent->diff_idx] = ent->path;
-+	}
-+
- 	return 0;
- }
- 
-diff --git a/object.h b/object.h
-index 8c3c1c46e1..fa504a09c0 100644
---- a/object.h
-+++ b/object.h
-@@ -75,6 +75,7 @@ void object_array_init(struct object_array *array);
-  * http-push.c:                          11-----14
-  * commit-graph.c:                                15
-  * commit-reach.c:                                  16-----19
-+ * builtin/last-modified.c:                         1617
-  * sha1-name.c:                                              20
-  * list-objects-filter.c:                                      21
-  * bloom.c:                                                    2122
-diff --git a/t/t8020-last-modified.sh b/t/t8020-last-modified.sh
-index 61f00bc15c..a4c1114ee2 100755
---- a/t/t8020-last-modified.sh
-+++ b/t/t8020-last-modified.sh
-@@ -57,9 +57,9 @@ test_expect_success 'last-modified recursive' '
- 
- test_expect_success 'last-modified recursive with show-trees' '
- 	check_last_modified -r -t <<-\EOF
--	3 a
- 	3 a/b
- 	3 a/b/file
-+	3 a
- 	2 a/file
- 	1 file
- 	EOF
-
----
 base-commit: 143f58ef7535f8f8a80d810768a18bdf3807de26
-change-id: 20251009-b4-toon-last-modified-faster-4c8956a95261
-
-Best regards,
---  
-Toon Claes <toon@iotcl.com>
+-- 
+2.51.0
 
