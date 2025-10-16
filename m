@@ -1,39 +1,38 @@
 Received: from avasout-ptp-002.plus.net (avasout-ptp-002.plus.net [84.93.230.235])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE03D2DD608
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 20:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5252DF139
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 20:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.235
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760645198; cv=none; b=UKnqj6A9BS659xRn4ktGAvs6T5NFrJIHCPeg8OAwEDwi5/xEEUYFC5vzzlhO7+NOf5CkxRKbxEDbZ4FJwLGcfhaXGQEWSucRRe3SktzXWYJL5+bS25/Uu3d4Xk24nHWgbgnsDFBTViymJavOZiPNPjrp0NJBoPH7Pbfvo6/LZFI=
+	t=1760645202; cv=none; b=HLK8EK3qmAaiVJLwLKKf5eZbIxYYY3kzfOQcN4rPW0z4bfGfMvcrVzLRitfg+h97z7N3dw+aYIcSxgKm2jt9Mraw8JzW2MF52YnP4H5qSjrOV0knkxRIAxEOEYqzsK2kvPqsiFqCIJP6G5DfS2uQc90F5sOPgrFS3i6vzG9vAiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760645198; c=relaxed/simple;
-	bh=N6yNuQohTiiTcWaqVW3Iqz1Voe3ZGiI7LW449KiR6nU=;
+	s=arc-20240116; t=1760645202; c=relaxed/simple;
+	bh=22YUdpQlLh/AJ3CGydnShjo1zXQ/t3igahHOsYj6pAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LHYe3pbyCVA24WXsZNSSyuzQX2pGoHefwqdi660JWzqJUuFf+wDaFNr71j8+WVHfGRlyUtWFyicwi8dZfuHCm8VDjMccgc8Sxy70Db45MAxN9N9hmsGswY5KAgHGMEYMGV1xBBxFNj7AtmT05t8DZXrdEXLx7ngOmbAhkUPWga0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=ZXvRQ/NG; arc=none smtp.client-ip=84.93.230.235
+	 MIME-Version; b=POugRNeMc6M53EX0e61KkmLpygpFoYAZsmKDCTov7RDI87l9s5XQkJDILi+rWwCTUYa/xMc06FPTaByQmu58T6nx1GRXN4mtkFUbhq6O5Qf+iPtXvnqrfVbReqeSwqJUxHScK/gG9zzJCJ9gRCBE//o69DIF+vUcwpyKv/GRMQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=m46knVeU; arc=none smtp.client-ip=84.93.230.235
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="ZXvRQ/NG"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="m46knVeU"
 Received: from inspiron-LM22 ([80.189.83.109])
 	by smtp with ESMTPA
-	id 9UBovzPFx9u4D9UCBvvPZq; Thu, 16 Oct 2025 21:03:31 +0100
+	id 9UBovzPFx9u4D9UCJvvPbJ; Thu, 16 Oct 2025 21:03:39 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1760645011; bh=qxsXoas63Wx58mCAN6+x2tUdXkbgr66CXDHQSWulyTg=;
+	t=1760645019; bh=d67ZN9WC1jm9d7b7CukkiMl9nTLGwP+sH3x93Vx4xdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZXvRQ/NGoQqnnKfe7tL0ePu4B1SCzYoyHg5aRLkZOsQOxdzXYbMT7tjXmG5j99YzM
-	 LLKgrrSs1kmkiJS06YzqqtAP4RQzQVufI9G9k8PQ47pINGT0fGxnTxa3rcE7P4MCbJ
-	 VktEJfDVmotLx/mrJfbkeXQ1zFyvNaidUNnSUMEy3YXM3TZiBdtPFvXvIRTVy6l+Kv
-	 mDGu6vFmywc49sVUYxPiXhTFE5DgHeNXdtSxs17QkTTsVTCTIJfr+F1WxIrmMkzxjy
-	 5Dk2Vgk/P8r8duWzym2a7YAzVmhvUaMKtDDxDr0Ezh/qm7Ur0wbX+uhaj83v9jvYuc
-	 N76qoO/P1/tiQ==
+	b=m46knVeU+jZF9DMZGpw3cmCT8pFdQi+irX4uWjgio6Os0bRqj9+u1gZ60Cppv8aM2
+	 iv+q6ZQux03vjB1wP8bsTDTmIJ18UjzuCcFHFnly4h67AW4Lks0E1s+O2/VC2QvJtF
+	 BPBi+mMmFquygPB0xRe0teR+yHC5HV+tiYP49n1fYTZRnz7P9vxygDVV53OgkRAyT4
+	 pTCcQQHCVV9t4oKPSBYn0J44hsjRInkOD5YdbKZoMffd7yFqVlvbND/qWAkOTh/5Vt
+	 mBTMgER3rP8ZN7A2B5NAlJIag5FOyXjFgRROPhwFEAF7YElBj5NRmRG5Y5KqIoZLUX
+	 sgXUR+kf/SadA==
 X-Clacks-Overhead: "GNU Terry Pratchett"
 X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=UKJ+Hzfy c=1 sm=1 tr=0 ts=68f14f93
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17 a=VwQbUJbxAAAA:8
- a=pGLkceISAAAA:8 a=NEAV23lmAAAA:8 a=1XWaLZrsAAAA:8 a=EBOSESyhAAAA:8
- a=RFXedqbJGepY2AArjB4A:9 a=mZhGPu6oBKMHfi1b:21 a=yJM6EZoI5SlJf8ks9Ge_:22
+X-CNFS-Analysis: v=2.4 cv=UKJ+Hzfy c=1 sm=1 tr=0 ts=68f14f9b
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17 a=EBOSESyhAAAA:8
+ a=bdAdcbO9dCHdLQEpdRsA:9 a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH: ramsayjones@:2500
 From: Ramsay Jones <ramsay@ramsayjones.plus.com>
 To: GIT Mailing-list <git@vger.kernel.org>
@@ -42,9 +41,9 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 	Derrick Stolee <stolee@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v3 2/4] doc: sparse-checkout.adoc: fix asciidoc warnings
-Date: Thu, 16 Oct 2025 21:02:59 +0100
-Message-ID: <20251016200301.1595204-3-ramsay@ramsayjones.plus.com>
+Subject: [PATCH v3 3/4] doc: commit-graph.adoc: fix up some formatting
+Date: Thu, 16 Oct 2025 21:03:00 +0100
+Message-ID: <20251016200301.1595204-4-ramsay@ramsayjones.plus.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251016200301.1595204-1-ramsay@ramsayjones.plus.com>
 References: <1a72434f-7935-4d0c-868f-03bd24601d4d@ramsayjones.plus.com>
@@ -56,1129 +55,140 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfFzc+aDkXyXeIyF7kCqik9GlwvOXDdkdRQiaRKNKev835cSctJr3wO1YLS4uQACBLwF/b01/WQqwu8gGTmkjlAoBN3oRgUZilsczXb7aIv9ApHZGLOmw
- 3c2vYTWye/J5E0oNFszXuDgl3tLX4znj0J7hr8ohexjr8kLtBd2yD7pYTKlu7p8zE9GmtVQrl3nFTZqr7h2UJFD+DpC6KKFx/hU=
+X-CMAE-Envelope: MS4xfO9F9d3Q3TsXtQa1UaFwzsogbg/WurLG7WRHOKX0cwvCXWOlKh+apMQhIG7uiYBy7PHw8Zq8DHx/CztnYQwJJPdLiMLNAWV1RT/x52GgkUlTP+GaarZb
+ Zud7/7hUxGSY87BuG9uPo3HVKWklk3PJgHeVjUP7DSWt+vrE72p5kyAGyCJ32Rgkey7QVB00hJnFtURDQKzG7unl0qeL7fT3cKg=
 
-Both asciidoc and asciidoctor issue warnings about 'list item index:
-expected n got n-1' for n=1->7 on lines 928, 931, 951, 974, 980, 1033
-and 1049. In asciidoc, numbered lists must start at one, whereas this
-file has a list starting at zero. Also, asciidoc and asciidoctor warn
-about 'section title out of sequence: expected level 1, got level 2'
-on line 17. (asciidoc only complains about the first instance of this,
-while asciidoctor complains about them all, on lines 95, 258, 303, 316,
-545, 612, 752, 824, 895, 923 and 1053). These warnings stem from the
-section titles not being correctly nested within a document/chapter
-title.
+The formatting markup syntax used in this document (markdown?) is not
+interpreted correctly by asciidoc or asciidoctor. The main problem is
+the use of a '## ' prefix markup for some sub-headings, along with the
+use of '```' code markup and some missing literal blocks.
 
-In order to address the first set of warnings, simply renumber the list
-from one to seven, rather than zero to six. Fortunately, this does not
-require altering additional text, since the enumeration of 'Known Bugs'
-is not referred to anywhere else in the document.
+In order to improve the (html) document formatting:
 
-In order to address the second set of warnings, change the section title
-syntax from '=== title ===' to '== title ==', effectively reducing the
-nesting level of the title by one. Also, some apparent (sub-)titles are
-not marked up with sub-title syntax, so add some '=== ' prefix(s) to the
-relevant headings.
-
-In addition to the warnings, address some other formatting issues:
-
-  - the use of heavily nested unordered lists is not reflected in the
-    output (making the file totally unreadable) because each level of
-    nesting requires a different syntax. (i.e. replace '*' with '**'
-    for the second level, '*' with '***' for the third level, etc.)
-  - make use of literal blocks and manual indentation to get asciidoc
-    and asciidoctor to display even remotely similar output.
-  - make use of labelled lists, in some places, to get a similar looking
-    output to the input, for both asciidoc and asciidoctor.
-  - replace the trailing space in: `git grep ${SEARCH_TERM} OLDREV `
-    otherwise the entire line in which that appears is removed from
-    the output.
+  - replace the '## ' prefix sub-title syntax with the '~~' underlining
+    syntax for the relevant sub-headings.
+  - replace the '```' code markup, which causes asciidoc(tor) to simply
+    remove the marked up text, with a literal block '----' markup.
+  - the second ascii diagram, in the 'Merging commit-graph files'
+    section, is not rendered correctly by asciidoctor (asciidoc is fine)
+    so enclose it in a '....' block.
 
 Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- Documentation/technical/sparse-checkout.adoc | 704 ++++++++++---------
- 1 file changed, 376 insertions(+), 328 deletions(-)
+ Documentation/technical/commit-graph.adoc | 29 +++++++++++++++--------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/technical/sparse-checkout.adoc b/Documentation/technical/sparse-checkout.adoc
-index 0f750ef3e3..3fa8e53655 100644
---- a/Documentation/technical/sparse-checkout.adoc
-+++ b/Documentation/technical/sparse-checkout.adoc
-@@ -14,37 +14,41 @@ Table of contents:
-   * Reference Emails
+diff --git a/Documentation/technical/commit-graph.adoc b/Documentation/technical/commit-graph.adoc
+index 2c26e95e51..a259d1567b 100644
+--- a/Documentation/technical/commit-graph.adoc
++++ b/Documentation/technical/commit-graph.adoc
+@@ -39,6 +39,7 @@ A consumer may load the following info for a commit from the graph:
+ Values 1-4 satisfy the requirements of parse_commit_gently().
  
- 
--=== Terminology ===
-+== Terminology ==
- 
--cone mode: one of two modes for specifying the desired subset of files
-+*`cone mode`*::
-+	one of two modes for specifying the desired subset of files
- 	in a sparse-checkout.  In cone-mode, the user specifies
- 	directories (getting both everything under that directory as
- 	well as everything in leading directories), while in non-cone
- 	mode, the user specifies gitignore-style patterns.  Controlled
- 	by the --[no-]cone option to sparse-checkout init|set.
- 
--SKIP_WORKTREE: When tracked files do not match the sparse specification and
-+*`SKIP_WORKTREE`*::
-+	When tracked files do not match the sparse specification and
- 	are removed from the working tree, the file in the index is marked
- 	with a SKIP_WORKTREE bit.  Note that if a tracked file has the
- 	SKIP_WORKTREE bit set but the file is later written by the user to
- 	the working tree anyway, the SKIP_WORKTREE bit will be cleared at
- 	the beginning of any subsequent Git operation.
--
--	Most sparse checkout users are unaware of this implementation
--	detail, and the term should generally be avoided in user-facing
--	descriptions and command flags.  Unfortunately, prior to the
--	`sparse-checkout` subcommand this low-level detail was exposed,
--	and as of time of writing, is still exposed in various places.
--
--sparse-checkout: a subcommand in git used to reduce the files present in
-++
-+Most sparse checkout users are unaware of this implementation
-+detail, and the term should generally be avoided in user-facing
-+descriptions and command flags.  Unfortunately, prior to the
-+`sparse-checkout` subcommand this low-level detail was exposed,
-+and as of time of writing, is still exposed in various places.
+ There are two definitions of generation number:
 +
-+*`sparse-checkout`*::
-+	a subcommand in git used to reduce the files present in
- 	the working tree to a subset of all tracked files.  Also, the
- 	name of the file in the $GIT_DIR/info directory used to track
- 	the sparsity patterns corresponding to the user's desired
- 	subset.
+ 1. Corrected committer dates (generation number v2)
+ 2. Topological levels (generation number v1)
+ 
+@@ -158,7 +159,8 @@ number of commits in the full history. By creating a "chain" of commit-graphs,
+ we enable fast writes of new commit data without rewriting the entire commit
+ history -- at least, most of the time.
+ 
+-## File Layout
++File Layout
++~~~~~~~~~~~
+ 
+ A commit-graph chain uses multiple files, and we use a fixed naming convention
+ to organize these files. Each commit-graph file has a name
+@@ -170,11 +172,11 @@ hashes for the files in order from "lowest" to "highest".
+ 
+ For example, if the `commit-graph-chain` file contains the lines
+ 
+-```
++----
+ 	{hash0}
+ 	{hash1}
+ 	{hash2}
+-```
++----
+ 
+ then the commit-graph chain looks like the following diagram:
+ 
+@@ -213,7 +215,8 @@ specifying the hashes of all files in the lower layers. In the above example,
+ `graph-{hash1}.graph` contains `{hash0}` while `graph-{hash2}.graph` contains
+ `{hash0}` and `{hash1}`.
+ 
+-## Merging commit-graph files
++Merging commit-graph files
++~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ If we only added a new commit-graph file on every write, we would run into a
+ linear search problem through many commit-graph files.  Instead, we use a merge
+@@ -225,6 +228,7 @@ is determined by the merge strategy that the files should collapse to
+ the commits in `graph-{hash1}` should be combined into a new `graph-{hash3}`
+ file.
  
--sparse cone: see cone mode
-+*`sparse cone`*:: see cone mode
- 
--sparse directory: An entry in the index corresponding to a directory, which
-+*`sparse directory`*::
-+	An entry in the index corresponding to a directory, which
- 	appears in the index instead of all the files under that directory
- 	that would normally appear.  See also sparse-index.  Something that
- 	can cause confusion is that the "sparse directory" does NOT match
-@@ -52,7 +56,8 @@ sparse directory: An entry in the index corresponding to a directory, which
- 	working tree.  May be renamed in the future (e.g. to "skipped
- 	directory").
- 
--sparse index: A special mode for sparse-checkout that also makes the
-+*`sparse index`*::
-+	A special mode for sparse-checkout that also makes the
- 	index sparse by recording a directory entry in lieu of all the
- 	files underneath that directory (thus making that a "skipped
- 	directory" which unfortunately has also been called a "sparse
-@@ -60,7 +65,8 @@ sparse index: A special mode for sparse-checkout that also makes the
- 	directories.  Controlled by the --[no-]sparse-index option to
- 	init|set|reapply.
- 
--sparsity patterns: patterns from $GIT_DIR/info/sparse-checkout used to
-+*`sparsity patterns`*::
-+	patterns from $GIT_DIR/info/sparse-checkout used to
- 	define the set of files of interest.  A warning: It is easy to
- 	over-use this term (or the shortened "patterns" term), for two
- 	reasons: (1) users in cone mode specify directories rather than
-@@ -70,7 +76,8 @@ sparsity patterns: patterns from $GIT_DIR/info/sparse-checkout used to
- 	transiently differ in the working tree or index from the sparsity
- 	patterns (see "Sparse specification vs. sparsity patterns").
- 
--sparse specification: The set of paths in the user's area of focus.  This
-+*`sparse specification`*::
-+	The set of paths in the user's area of focus.  This
- 	is typically just the tracked files that match the sparsity
- 	patterns, but the sparse specification can temporarily differ and
- 	include additional files.  (See also "Sparse specification
-@@ -87,12 +94,13 @@ sparse specification: The set of paths in the user's area of focus.  This
- 	* If working with the index and the working copy, the sparse
- 	  specification is the union of the paths from above.
- 
--vivifying: When a command restores a tracked file to the working tree (and
-+*`vivifying`*::
-+	When a command restores a tracked file to the working tree (and
- 	hopefully also clears the SKIP_WORKTREE bit in the index for that
- 	file), this is referred to as "vivifying" the file.
- 
- 
--=== Purpose of sparse-checkouts ===
-+== Purpose of sparse-checkouts ==
- 
- sparse-checkouts exist to allow users to work with a subset of their
- files.
-@@ -120,14 +128,12 @@ those usecases, sparse-checkouts can modify different subcommands in over a
- half dozen different ways.  Let's start by considering the high level
- usecases:
- 
--  A) Users are _only_ interested in the sparse portion of the repo
--
--  A*) Users are _only_ interested in the sparse portion of the repo
--      that they have downloaded so far
--
--  B) Users want a sparse working tree, but are working in a larger whole
--
--  C) sparse-checkout is a behind-the-scenes implementation detail allowing
-+[horizontal]
-+A):: Users are _only_ interested in the sparse portion of the repo
-+A*):: Users are _only_ interested in the sparse portion of the repo
-+     that they have downloaded so far
-+B):: Users want a sparse working tree, but are working in a larger whole
-+C):: sparse-checkout is a behind-the-scenes implementation detail allowing
-      Git to work with a specially crafted in-house virtual file system;
-      users are actually working with a "full" working tree that is
-      lazily populated, and sparse-checkout helps with the lazy population
-@@ -136,7 +142,7 @@ usecases:
- It may be worth explaining each of these in a bit more detail:
- 
- 
--  (Behavior A) Users are _only_ interested in the sparse portion of the repo
-+=== (Behavior A) Users are _only_ interested in the sparse portion of the repo
- 
- These folks might know there are other things in the repository, but
- don't care.  They are uninterested in other parts of the repository, and
-@@ -163,8 +169,7 @@ side-effects of various other commands (such as the printed diffstat
- after a merge or pull) can lead to worries about local repository size
- growing unnecessarily[10].
- 
--  (Behavior A*) Users are _only_ interested in the sparse portion of the repo
--      that they have downloaded so far (a variant on the first usecase)
-+=== (Behavior A*) Users are _only_ interested in the sparse portion of the repo that they have downloaded so far (a variant on the first usecase)
- 
- This variant is driven by folks who using partial clones together with
- sparse checkouts and do disconnected development (so far sounding like a
-@@ -173,15 +178,14 @@ reason for yet another variant is that downloading even just the blobs
- through history within their sparse specification may be too much, so they
- only download some.  They would still like operations to succeed without
- network connectivity, though, so things like `git log -S${SEARCH_TERM} -p`
--or `git grep ${SEARCH_TERM} OLDREV ` would need to be prepared to provide
-+or `git grep ${SEARCH_TERM} OLDREV` would need to be prepared to provide
- partial results that depend on what happens to have been downloaded.
- 
- This variant could be viewed as Behavior A with the sparse specification
- for history querying operations modified from "sparsity patterns" to
- "sparsity patterns limited to the blobs we have already downloaded".
- 
--  (Behavior B) Users want a sparse working tree, but are working in a
--      larger whole
-+=== (Behavior B) Users want a sparse working tree, but are working in a larger whole
- 
- Stolee described this usecase this way[11]:
- 
-@@ -229,8 +233,7 @@ those expensive checks when interacting with the working copy, and may
- prefer getting "unrelated" results from their history queries over having
- slow commands.
- 
--  (Behavior C) sparse-checkout is an implementational detail supporting a
--	       special VFS.
-+=== (Behavior C) sparse-checkout is an implementational detail supporting a special VFS.
- 
- This usecase goes slightly against the traditional definition of
- sparse-checkout in that it actually tries to present a full or dense
-@@ -255,13 +258,13 @@ will perceive the checkout as dense, and commands should thus behave as if
- all files are present.
- 
- 
--=== Usecases of primary concern ===
-+== Usecases of primary concern ==
- 
- Most of the rest of this document will focus on Behavior A and Behavior
- B.  Some notes about the other two cases and why we are not focusing on
- them:
- 
--  (Behavior A*)
-+=== (Behavior A*)
- 
- Supporting this usecase is estimated to be difficult and a lot of work.
- There are no plans to implement it currently, but it may be a potential
-@@ -275,7 +278,7 @@ valid for this usecase, with the only exception being that it redefines the
- sparse specification to restrict it to already-downloaded blobs.  The hard
- part is in making commands capable of respecting that modified definition.
- 
--  (Behavior C)
-+=== (Behavior C)
- 
- This usecase violates some of the early sparse-checkout documented
- assumptions (since files marked as SKIP_WORKTREE will be displayed to users
-@@ -300,20 +303,20 @@ Behavior C do not assume they are part of the Behavior B camp and propose
- patches that break things for the real Behavior B folks.
- 
- 
--=== Oversimplified mental models ===
-+== Oversimplified mental models ==
- 
- An oversimplification of the differences in the above behaviors is:
- 
--  Behavior A: Restrict worktree and history operations to sparse specification
--  Behavior B: Restrict worktree operations to sparse specification; have any
--	      history operations work across all files
--  Behavior C: Do not restrict either worktree or history operations to the
--	      sparse specification...with the exception of branch checkouts or
--	      switches which avoid writing files that will match the index so
--	      they can later lazily be populated instead.
-+(Behavior A):: Restrict worktree and history operations to sparse specification
-+(Behavior B):: Restrict worktree operations to sparse specification; have any
-+	     history operations work across all files
-+(Behavior C):: Do not restrict either worktree or history operations to the
-+	     sparse specification...with the exception of branch checkouts or
-+	     switches which avoid writing files that will match the index so
-+	     they can later lazily be populated instead.
- 
- 
--=== Desired behavior ===
-+== Desired behavior ==
- 
- As noted previously, despite the simple idea of just working with a subset
- of files, there are a range of different behavioral changes that need to be
-@@ -326,37 +329,38 @@ understanding these differences can be beneficial.
- 
- * Commands behaving the same regardless of high-level use-case
- 
--  * commands that only look at files within the sparsity specification
-+  ** commands that only look at files within the sparsity specification
- 
--      * diff (without --cached or REVISION arguments)
--      * grep (without --cached or REVISION arguments)
--      * diff-files
-+      *** diff (without --cached or REVISION arguments)
-+      *** grep (without --cached or REVISION arguments)
-+      *** diff-files
- 
--  * commands that restore files to the working tree that match sparsity
-+  ** commands that restore files to the working tree that match sparsity
-     patterns, and remove unmodified files that don't match those
-     patterns:
- 
--      * switch
--      * checkout (the switch-like half)
--      * read-tree
--      * reset --hard
-+      *** switch
-+      *** checkout (the switch-like half)
-+      *** read-tree
-+      *** reset --hard
- 
--  * commands that write conflicted files to the working tree, but otherwise
-+  ** commands that write conflicted files to the working tree, but otherwise
-     will omit writing files to the working tree that do not match the
-     sparsity patterns:
- 
--      * merge
--      * rebase
--      * cherry-pick
--      * revert
-+      *** merge
-+      *** rebase
-+      *** cherry-pick
-+      *** revert
- 
--      * `am` and `apply --cached` should probably be in this section but
-+      *** `am` and `apply --cached` should probably be in this section but
- 	are buggy (see the "Known bugs" section below)
- 
-     The behavior for these commands somewhat depends upon the merge
-     strategy being used:
--      * `ort` behaves as described above
--      * `octopus` and `resolve` will always vivify any file changed in the merge
-+
-+      *** `ort` behaves as described above
-+      *** `octopus` and `resolve` will always vivify any file changed in the merge
- 	relative to the first parent, which is rather suboptimal.
- 
-     It is also important to note that these commands WILL update the index
-@@ -372,21 +376,21 @@ understanding these differences can be beneficial.
-     specification and the sparsity patterns (much like the commands in the
-     previous section).
- 
--  * commands that always ignore sparsity since commits must be full-tree
-+  ** commands that always ignore sparsity since commits must be full-tree
- 
--      * archive
--      * bundle
--      * commit
--      * format-patch
--      * fast-export
--      * fast-import
--      * commit-tree
-+      *** archive
-+      *** bundle
-+      *** commit
-+      *** format-patch
-+      *** fast-export
-+      *** fast-import
-+      *** commit-tree
- 
--  * commands that write any modified file to the working tree (conflicted
-+  ** commands that write any modified file to the working tree (conflicted
-     or not, and whether those paths match sparsity patterns or not):
- 
--      * stash
--      * apply (without `--index` or `--cached`)
-+      *** stash
-+      *** apply (without `--index` or `--cached`)
- 
- * Commands that may slightly differ for behavior A vs. behavior B:
- 
-@@ -394,19 +398,20 @@ understanding these differences can be beneficial.
-   behaviors, but may differ in verbosity and types of warning and error
-   messages.
- 
--  * commands that make modifications to which files are tracked:
--      * add
--      * rm
--      * mv
--      * update-index
-+  ** commands that make modifications to which files are tracked:
-+
-+      *** add
-+      *** rm
-+      *** mv
-+      *** update-index
- 
-     The fact that files can move between the 'tracked' and 'untracked'
-     categories means some commands will have to treat untracked files
-     differently.  But if we have to treat untracked files differently,
-     then additional commands may also need changes:
- 
--      * status
--      * clean
-+      *** status
-+      *** clean
- 
-     In particular, `status` may need to report any untracked files outside
-     the sparsity specification as an erroneous condition (especially to
-@@ -420,9 +425,10 @@ understanding these differences can be beneficial.
-     may need to ignore the sparse specification by its nature.  Also, its
-     current --[no-]ignore-skip-worktree-entries default is totally bogus.
- 
--  * commands for manually tweaking paths in both the index and the working tree
--      * `restore`
--      * the restore-like half of `checkout`
-+  ** commands for manually tweaking paths in both the index and the working tree
-+
-+      *** `restore`
-+      *** the restore-like half of `checkout`
- 
-     These commands should be similar to add/rm/mv in that they should
-     only operate on the sparse specification by default, and require a
-@@ -433,18 +439,19 @@ understanding these differences can be beneficial.
- 
- * Commands that significantly differ for behavior A vs. behavior B:
- 
--  * commands that query history
--      * diff (with --cached or REVISION arguments)
--      * grep (with --cached or REVISION arguments)
--      * show (when given commit arguments)
--      * blame (only matters when one or more -C flags are passed)
--	* and annotate
--      * log
--      * whatchanged (may not exist anymore)
--      * ls-files
--      * diff-index
--      * diff-tree
--      * ls-tree
-+  ** commands that query history
-+
-+      *** diff (with --cached or REVISION arguments)
-+      *** grep (with --cached or REVISION arguments)
-+      *** show (when given commit arguments)
-+      *** blame (only matters when one or more -C flags are passed)
-+	**** and annotate
-+      *** log
-+      *** whatchanged (may not exist anymore)
-+      *** ls-files
-+      *** diff-index
-+      *** diff-tree
-+      *** ls-tree
- 
-     Note: for log and whatchanged, revision walking logic is unaffected
-     but displaying of patches is affected by scoping the command to the
-@@ -458,91 +465,91 @@ understanding these differences can be beneficial.
- 
- * Commands I don't know how to classify
- 
--  * range-diff
-+  ** range-diff
- 
-     Is this like `log` or `format-patch`?
- 
--  * cherry
-+  ** cherry
- 
-     See range-diff
- 
- * Commands unaffected by sparse-checkouts
- 
--  * shortlog
--  * show-branch
--  * rev-list
--  * bisect
--
--  * branch
--  * describe
--  * fetch
--  * gc
--  * init
--  * maintenance
--  * notes
--  * pull (merge & rebase have the necessary changes)
--  * push
--  * submodule
--  * tag
--
--  * config
--  * filter-branch (works in separate checkout without sparse-checkout setup)
--  * pack-refs
--  * prune
--  * remote
--  * repack
--  * replace
--
--  * bugreport
--  * count-objects
--  * fsck
--  * gitweb
--  * help
--  * instaweb
--  * merge-tree (doesn't touch worktree or index, and merges always compute full-tree)
--  * rerere
--  * verify-commit
--  * verify-tag
--
--  * commit-graph
--  * hash-object
--  * index-pack
--  * mktag
--  * mktree
--  * multi-pack-index
--  * pack-objects
--  * prune-packed
--  * symbolic-ref
--  * unpack-objects
--  * update-ref
--  * write-tree (operates on index, possibly optimized to use sparse dir entries)
--
--  * for-each-ref
--  * get-tar-commit-id
--  * ls-remote
--  * merge-base (merges are computed full tree, so merge base should be too)
--  * name-rev
--  * pack-redundant
--  * rev-parse
--  * show-index
--  * show-ref
--  * unpack-file
--  * var
--  * verify-pack
--
--  * <Everything under 'Interacting with Others' in 'git help --all'>
--  * <Everything under 'Low-level...Syncing' in 'git help --all'>
--  * <Everything under 'Low-level...Internal Helpers' in 'git help --all'>
--  * <Everything under 'External commands' in 'git help --all'>
-+  ** shortlog
-+  ** show-branch
-+  ** rev-list
-+  ** bisect
-+
-+  ** branch
-+  ** describe
-+  ** fetch
-+  ** gc
-+  ** init
-+  ** maintenance
-+  ** notes
-+  ** pull (merge & rebase have the necessary changes)
-+  ** push
-+  ** submodule
-+  ** tag
-+
-+  ** config
-+  ** filter-branch (works in separate checkout without sparse-checkout setup)
-+  ** pack-refs
-+  ** prune
-+  ** remote
-+  ** repack
-+  ** replace
-+
-+  ** bugreport
-+  ** count-objects
-+  ** fsck
-+  ** gitweb
-+  ** help
-+  ** instaweb
-+  ** merge-tree (doesn't touch worktree or index, and merges always compute full-tree)
-+  ** rerere
-+  ** verify-commit
-+  ** verify-tag
-+
-+  ** commit-graph
-+  ** hash-object
-+  ** index-pack
-+  ** mktag
-+  ** mktree
-+  ** multi-pack-index
-+  ** pack-objects
-+  ** prune-packed
-+  ** symbolic-ref
-+  ** unpack-objects
-+  ** update-ref
-+  ** write-tree (operates on index, possibly optimized to use sparse dir entries)
-+
-+  ** for-each-ref
-+  ** get-tar-commit-id
-+  ** ls-remote
-+  ** merge-base (merges are computed full tree, so merge base should be too)
-+  ** name-rev
-+  ** pack-redundant
-+  ** rev-parse
-+  ** show-index
-+  ** show-ref
-+  ** unpack-file
-+  ** var
-+  ** verify-pack
-+
-+  ** <Everything under 'Interacting with Others' in 'git help --all'>
-+  ** <Everything under 'Low-level...Syncing' in 'git help --all'>
-+  ** <Everything under 'Low-level...Internal Helpers' in 'git help --all'>
-+  ** <Everything under 'External commands' in 'git help --all'>
- 
- * Commands that might be affected, but who cares?
- 
--  * merge-file
--  * merge-index
--  * gitk?
-+  ** merge-file
-+  ** merge-index
-+  ** gitk?
- 
- 
--=== Behavior classes ===
-+== Behavior classes ==
- 
- From the above there are a few classes of behavior:
- 
-@@ -573,18 +580,19 @@ From the above there are a few classes of behavior:
- 
-     Commands in this class generally behave like the "restrict" class,
-     except that:
--      (1) they will ignore the sparse specification and write files with
--	  conflicts to the working tree (thus temporarily expanding the
--	  sparse specification to include such files.)
--      (2) they are grouped with commands which move to a new commit, since
--	  they often create a commit and then move to it, even though we
--	  know there are many exceptions to moving to the new commit.  (For
--	  example, the user may rebase a commit that becomes empty, or have
--	  a cherry-pick which conflicts, or a user could run `merge
--	  --no-commit`, and we also view `apply --index` kind of like `am
--	  --no-commit`.)  As such, these commands can make changes to index
--	  files outside the sparse specification, though they'll mark such
--	  files with SKIP_WORKTREE.
-+
-+	(1) they will ignore the sparse specification and write files with
-+	    conflicts to the working tree (thus temporarily expanding the
-+	    sparse specification to include such files.)
-+	(2) they are grouped with commands which move to a new commit, since
-+	    they often create a commit and then move to it, even though we
-+	    know there are many exceptions to moving to the new commit.  (For
-+	    example, the user may rebase a commit that becomes empty, or have
-+	    a cherry-pick which conflicts, or a user could run `merge
-+	    --no-commit`, and we also view `apply --index` kind of like `am
-+	    --no-commit`.)  As such, these commands can make changes to index
-+	    files outside the sparse specification, though they'll mark such
-+	    files with SKIP_WORKTREE.
- 
-   * "restrict also specially applied to untracked files"
- 
-@@ -609,37 +617,39 @@ From the above there are a few classes of behavior:
-     specification.
- 
- 
--=== Subcommand-dependent defaults ===
-+== Subcommand-dependent defaults ==
- 
- Note that we have different defaults depending on the command for the
- desired behavior :
- 
-   * Commands defaulting to "restrict":
--    * diff-files
--    * diff (without --cached or REVISION arguments)
--    * grep (without --cached or REVISION arguments)
--    * switch
--    * checkout (the switch-like half)
--    * reset (<commit>)
--
--    * restore
--    * checkout (the restore-like half)
--    * checkout-index
--    * reset (with pathspec)
-+
-+    ** diff-files
-+    ** diff (without --cached or REVISION arguments)
-+    ** grep (without --cached or REVISION arguments)
-+    ** switch
-+    ** checkout (the switch-like half)
-+    ** reset (<commit>)
-+
-+    ** restore
-+    ** checkout (the restore-like half)
-+    ** checkout-index
-+    ** reset (with pathspec)
- 
-     This behavior makes sense; these interact with the working tree.
- 
-   * Commands defaulting to "restrict modulo conflicts":
--    * merge
--    * rebase
--    * cherry-pick
--    * revert
- 
--    * am
--    * apply --index (which is kind of like an `am --no-commit`)
-+    ** merge
-+    ** rebase
-+    ** cherry-pick
-+    ** revert
-+
-+    ** am
-+    ** apply --index (which is kind of like an `am --no-commit`)
- 
--    * read-tree (especially with -m or -u; is kind of like a --no-commit merge)
--    * reset (<tree-ish>, due to similarity to read-tree)
-+    ** read-tree (especially with -m or -u; is kind of like a --no-commit merge)
-+    ** reset (<tree-ish>, due to similarity to read-tree)
- 
-     These also interact with the working tree, but require slightly
-     different behavior either so that (a) conflicts can be resolved or (b)
-@@ -648,16 +658,17 @@ desired behavior :
-     (See also the "Known bugs" section below regarding `am` and `apply`)
- 
-   * Commands defaulting to "no restrict":
--    * archive
--    * bundle
--    * commit
--    * format-patch
--    * fast-export
--    * fast-import
--    * commit-tree
- 
--    * stash
--    * apply (without `--index`)
-+    ** archive
-+    ** bundle
-+    ** commit
-+    ** format-patch
-+    ** fast-export
-+    ** fast-import
-+    ** commit-tree
-+
-+    ** stash
-+    ** apply (without `--index`)
- 
-     These have completely different defaults and perhaps deserve the most
-     detailed explanation:
-@@ -679,53 +690,59 @@ desired behavior :
-     sparse specification then we'll lose changes from the user.
- 
-   * Commands defaulting to "restrict also specially applied to untracked files":
--    * add
--    * rm
--    * mv
--    * update-index
--    * status
--    * clean (?)
--
--    Our original implementation for the first three of these commands was
--    "no restrict", but it had some severe usability issues:
--      * `git add <somefile>` if honored and outside the sparse
--	specification, can result in the file randomly disappearing later
--	when some subsequent command is run (since various commands
--	automatically clean up unmodified files outside the sparse
--	specification).
--      * `git rm '*.jpg'` could very negatively surprise users if it deletes
--	files outside the range of the user's interest.
--      * `git mv` has similar surprises when moving into or out of the cone,
--	so best to restrict by default
--
--    So, we switched `add` and `rm` to default to "restrict", which made
--    usability problems much less severe and less frequent, but we still got
--    complaints because commands like:
--	git add <file-outside-sparse-specification>
--	git rm <file-outside-sparse-specification>
--    would silently do nothing.  We should instead print an error in those
--    cases to get usability right.
--
--    update-index needs to be updated to match, and status and maybe clean
--    also need to be updated to specially handle untracked paths.
--
--    There may be a difference in here between behavior A and behavior B in
--    terms of verboseness of errors or additional warnings.
-+
-+    ** add
-+    ** rm
-+    ** mv
-+    ** update-index
-+    ** status
-+    ** clean (?)
-+
 +....
-+        Our original implementation for the first three of these commands was
-+        "no restrict", but it had some severe usability issues:
-+
-+          * `git add <somefile>` if honored and outside the sparse
-+	    specification, can result in the file randomly disappearing later
-+	    when some subsequent command is run (since various commands
-+	    automatically clean up unmodified files outside the sparse
-+	    specification).
-+          * `git rm '*.jpg'` could very negatively surprise users if it deletes
-+	    files outside the range of the user's interest.
-+          * `git mv` has similar surprises when moving into or out of the cone,
-+	    so best to restrict by default
-+
-+        So, we switched `add` and `rm` to default to "restrict", which made
-+        usability problems much less severe and less frequent, but we still got
-+        complaints because commands like:
-+
-+	    git add <file-outside-sparse-specification>
-+	    git rm <file-outside-sparse-specification>
-+
-+        would silently do nothing.  We should instead print an error in those
-+        cases to get usability right.
-+
-+        update-index needs to be updated to match, and status and maybe clean
-+        also need to be updated to specially handle untracked paths.
-+
-+        There may be a difference in here between behavior A and behavior B in
-+        terms of verboseness of errors or additional warnings.
+ 			    +---------------------+
+ 			    |                     |
+ 			    |    (new commits)    |
+@@ -250,6 +254,7 @@ file.
+  |                       |
+  |                       |
+  +-----------------------+
 +....
  
-   * Commands falling under "restrict or no restrict dependent upon behavior
-     A vs. behavior B"
+ During this process, the commits to write are combined, sorted and we write the
+ contents to a temporary file, all while holding a `commit-graph-chain.lock`
+@@ -257,14 +262,15 @@ lock-file.  When the file is flushed, we rename it to `graph-{hash3}`
+ according to the computed `{hash3}`. Finally, we write the new chain data to
+ `commit-graph-chain.lock`:
  
--    * diff (with --cached or REVISION arguments)
--    * grep (with --cached or REVISION arguments)
--    * show (when given commit arguments)
--    * blame (only matters when one or more -C flags passed)
--      * and annotate
--    * log
--      * and variants: shortlog, gitk, show-branch, whatchanged, rev-list
--    * ls-files
--    * diff-index
--    * diff-tree
--    * ls-tree
-+    ** diff (with --cached or REVISION arguments)
-+    ** grep (with --cached or REVISION arguments)
-+    ** show (when given commit arguments)
-+    ** blame (only matters when one or more -C flags passed)
-+      *** and annotate
-+    ** log
-+      *** and variants: shortlog, gitk, show-branch, whatchanged, rev-list
-+    ** ls-files
-+    ** diff-index
-+    ** diff-tree
-+    ** ls-tree
+-```
++----
+ 	{hash3}
+ 	{hash0}
+-```
++----
  
-     For now, we default to behavior B for these, which want a default of
-     "no restrict".
-@@ -749,7 +766,7 @@ desired behavior :
-     implemented.
+ We then close the lock-file.
  
+-## Merge Strategy
++Merge Strategy
++~~~~~~~~~~~~~~
  
--=== Sparse specification vs. sparsity patterns ===
-+== Sparse specification vs. sparsity patterns ==
+ When writing a set of commits that do not exist in the commit-graph stack of
+ height N, we default to creating a new file at level N + 1. We then decide to
+@@ -289,7 +295,8 @@ The merge strategy values (2 for the size multiple, 64,000 for the maximum
+ number of commits) could be extracted into config settings for full
+ flexibility.
  
- In a well-behaved situation, the sparse specification is given directly
- by the $GIT_DIR/info/sparse-checkout file.  However, it can transiently
-@@ -821,45 +838,48 @@ under behavior B index operations are lumped with history and tend to
- operate full-tree.
+-## Handling Mixed Generation Number Chains
++Handling Mixed Generation Number Chains
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
+ With the introduction of generation number v2 and generation data chunk, the
+ following scenario is possible:
+@@ -318,7 +325,8 @@ have corrected commit dates when written by compatible versions of Git. Thus,
+ rewriting split commit-graph as a single file (`--split=replace`) creates a
+ single layer with corrected commit dates.
  
--=== Implementation Questions ===
--
--  * Do the options --scope={sparse,all} sound good to others?  Are there better
--    options?
--    * Names in use, or appearing in patches, or previously suggested:
--      * --sparse/--dense
--      * --ignore-skip-worktree-bits
--      * --ignore-skip-worktree-entries
--      * --ignore-sparsity
--      * --[no-]restrict-to-sparse-paths
--      * --full-tree/--sparse-tree
--      * --[no-]restrict
--      * --scope={sparse,all}
--      * --focus/--unfocus
--      * --limit/--unlimited
--    * Rationale making me lean slightly towards --scope={sparse,all}:
--      * We want a name that works for many commands, so we need a name that
-+== Implementation Questions ==
-+
-+  * Do the options --scope={sparse,all} sound good to others?  Are there better options?
-+
-+    ** Names in use, or appearing in patches, or previously suggested:
-+
-+      *** --sparse/--dense
-+      *** --ignore-skip-worktree-bits
-+      *** --ignore-skip-worktree-entries
-+      *** --ignore-sparsity
-+      *** --[no-]restrict-to-sparse-paths
-+      *** --full-tree/--sparse-tree
-+      *** --[no-]restrict
-+      *** --scope={sparse,all}
-+      *** --focus/--unfocus
-+      *** --limit/--unlimited
-+
-+    ** Rationale making me lean slightly towards --scope={sparse,all}:
-+
-+      *** We want a name that works for many commands, so we need a name that
- 	does not conflict
--      * We know that we have more than two possible usecases, so it is best
-+      *** We know that we have more than two possible usecases, so it is best
- 	to avoid a flag that appears to be binary.
--      * --scope={sparse,all} isn't overly long and seems relatively
-+      *** --scope={sparse,all} isn't overly long and seems relatively
- 	explanatory
--      * `--sparse`, as used in add/rm/mv, is totally backwards for
-+      *** `--sparse`, as used in add/rm/mv, is totally backwards for
- 	grep/log/etc.  Changing the meaning of `--sparse` for these
- 	commands would fix the backwardness, but possibly break existing
- 	scripts.  Using a new name pairing would allow us to treat
- 	`--sparse` in these commands as a deprecated alias.
--      * There is a different `--sparse`/`--dense` pair for commands using
-+      *** There is a different `--sparse`/`--dense` pair for commands using
- 	revision machinery, so using that naming might cause confusion
--      * There is also a `--sparse` in both pack-objects and show-branch, which
-+      *** There is also a `--sparse` in both pack-objects and show-branch, which
- 	don't conflict but do suggest that `--sparse` is overloaded
--      * The name --ignore-skip-worktree-bits is a double negative, is
-+      *** The name --ignore-skip-worktree-bits is a double negative, is
- 	quite a mouthful, refers to an implementation detail that many
- 	users may not be familiar with, and we'd need a negation for it
- 	which would probably be even more ridiculously long.  (But we
- 	can make --ignore-skip-worktree-bits a deprecated alias for
- 	--no-restrict.)
+-## Deleting graph-{hash} files
++Deleting graph-\{hash\} files
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
--  * If a config option is added (sparse.scope?) what should the values and
-+  ** If a config option is added (sparse.scope?) what should the values and
-     description be?  "sparse" (behavior A), "worktree-sparse-history-dense"
-     (behavior B), "dense" (behavior C)?  There's a risk of confusion,
-     because even for Behaviors A and B we want some commands to be
-@@ -868,19 +888,20 @@ operate full-tree.
-     the primary difference we are focusing is just the history-querying
-     commands (log/diff/grep).  Previous config suggestion here: [13]
+ After a new tip file is written, some `graph-{hash}` files may no longer
+ be part of a chain. It is important to remove these files from disk, eventually.
+@@ -333,7 +341,8 @@ files whose modified times are older than a given expiry window. This window
+ defaults to zero, but can be changed using command-line arguments or a config
+ setting.
  
--  * Is `--no-expand` a good alias for ls-files's `--sparse` option?
-+  ** Is `--no-expand` a good alias for ls-files's `--sparse` option?
-     (`--sparse` does not map to either `--scope=sparse` or `--scope=all`,
-     because in non-cone mode it does nothing and in cone-mode it shows the
-     sparse directory entries which are technically outside the sparse
-     specification)
+-## Chains across multiple object directories
++Chains across multiple object directories
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
--  * Under Behavior A:
--    * Does ls-files' `--no-expand` override the default `--scope=all`, or
-+  ** Under Behavior A:
-+
-+    *** Does ls-files' `--no-expand` override the default `--scope=all`, or
-       does it need an extra flag?
--    * Does ls-files' `-t` option imply `--scope=all`?
--    * Does update-index's `--[no-]skip-worktree` option imply `--scope=all`?
-+    *** Does ls-files' `-t` option imply `--scope=all`?
-+    *** Does update-index's `--[no-]skip-worktree` option imply `--scope=all`?
- 
--  * sparse-checkout: once behavior A is fully implemented, should we take
-+  ** sparse-checkout: once behavior A is fully implemented, should we take
-     an interim measure to ease people into switching the default?  Namely,
-     if folks are not already in a sparse checkout, then require
-     `sparse-checkout init/set` to take a
-@@ -892,7 +913,7 @@ operate full-tree.
-     is seamless for them.
- 
- 
--=== Implementation Goals/Plans ===
-+== Implementation Goals/Plans ==
- 
-  * Get buy-in on this document in general.
- 
-@@ -910,25 +931,26 @@ operate full-tree.
-    request that they not trigger this bug." flag
- 
-  * Flags & Config
--   * Make `--sparse` in add/rm/mv a deprecated alias for `--scope=all`
--   * Make `--ignore-skip-worktree-bits` in checkout-index/checkout/restore
-+
-+   ** Make `--sparse` in add/rm/mv a deprecated alias for `--scope=all`
-+   ** Make `--ignore-skip-worktree-bits` in checkout-index/checkout/restore
-      a deprecated aliases for `--scope=all`
--   * Create config option (sparse.scope?), tie it to the "Cliff notes"
-+   ** Create config option (sparse.scope?), tie it to the "Cliff notes"
-      overview
- 
--   * Add --scope=sparse (and --scope=all) flag to each of the history querying
-+   ** Add --scope=sparse (and --scope=all) flag to each of the history querying
-      commands.  IMPORTANT: make sure diff machinery changes don't mess with
-      format-patch, fast-export, etc.
- 
--=== Known bugs ===
-+== Known bugs ==
- 
- This list used to be a lot longer (see e.g. [1,2,3,4,5,6,7,8,9]), but we've
- been working on it.
- 
--0. Behavior A is not well supported in Git.  (Behavior B didn't used to
-+1. Behavior A is not well supported in Git.  (Behavior B didn't used to
-    be either, but was the easier of the two to implement.)
- 
--1. am and apply:
-+2. am and apply:
- 
-    apply, without `--index` or `--cached`, relies on files being present
-    in the working copy, and also writes to them unconditionally.  As
-@@ -948,7 +970,7 @@ been working on it.
-    files and then complain that those vivified files would be
-    overwritten by merge.
- 
--2. reset --hard:
-+3. reset --hard:
- 
-    reset --hard provides confusing error message (works correctly, but
-    misleads the user into believing it didn't):
-@@ -971,13 +993,13 @@ been working on it.
-     `git reset --hard` DID remove addme from the index and the working tree, contrary
-     to the error message, but in line with how reset --hard should behave.
- 
--3. read-tree
-+4. read-tree
- 
-    `read-tree` doesn't apply the 'SKIP_WORKTREE' bit to *any* of the
-    entries it reads into the index, resulting in all your files suddenly
-    appearing to be "deleted".
- 
--4. Checkout, restore:
-+5. Checkout, restore:
- 
-    These command do not handle path & revision arguments appropriately:
- 
-@@ -1030,7 +1052,7 @@ been working on it.
-     S tracked
-     H tracked-but-maybe-skipped
- 
--5. checkout and restore --staged, continued:
-+6. checkout and restore --staged, continued:
- 
-    These commands do not correctly scope operations to the sparse
-    specification, and make it worse by not setting important SKIP_WORKTREE
-@@ -1046,56 +1068,82 @@ been working on it.
-    the sparse specification, but then it will be important to set the
-    SKIP_WORKTREE bits appropriately.
- 
--6. Performance issues; see:
--    https://lore.kernel.org/git/CABPp-BEkJQoKZsQGCYioyga_uoDQ6iBeW+FKr8JhyuuTMK1RDw@mail.gmail.com/
-+7. Performance issues; see:
-+
-+   https://lore.kernel.org/git/CABPp-BEkJQoKZsQGCYioyga_uoDQ6iBeW+FKr8JhyuuTMK1RDw@mail.gmail.com/
- 
- 
--=== Reference Emails ===
-+== Reference Emails ==
- 
- Emails that detail various bugs we've had in sparse-checkout:
- 
--[1] (Original descriptions of behavior A & behavior B)
--    https://lore.kernel.org/git/CABPp-BGJ_Nvi5TmgriD9Bh6eNXE2EDq2f8e8QKXAeYG3BxZafA@mail.gmail.com/
--[2] (Fix stash applications in sparse checkouts; bugs from behavioral differences)
--    https://lore.kernel.org/git/ccfedc7140dbf63ba26a15f93bd3885180b26517.1606861519.git.gitgitgadget@gmail.com/
--[3] (Present-despite-skipped entries)
--    https://lore.kernel.org/git/11d46a399d26c913787b704d2b7169cafc28d639.1642175983.git.gitgitgadget@gmail.com/
--[4] (Clone --no-checkout interaction)
--    https://lore.kernel.org/git/pull.801.v2.git.git.1591324899170.gitgitgadget@gmail.com/ (clone --no-checkout)
--[5] (The need for update_sparsity() and avoiding `read-tree -mu HEAD`)
--    https://lore.kernel.org/git/3a1f084641eb47515b5a41ed4409a36128913309.1585270142.git.gitgitgadget@gmail.com/
--[6] (SKIP_WORKTREE is advisory, not mandatory)
--    https://lore.kernel.org/git/844306c3e86ef67591cc086decb2b760e7d710a3.1585270142.git.gitgitgadget@gmail.com/
--[7] (`worktree add` should copy sparsity settings from current worktree)
--    https://lore.kernel.org/git/c51cb3714e7b1d2f8c9370fe87eca9984ff4859f.1644269584.git.gitgitgadget@gmail.com/
--[8] (Avoid negative surprises in add, rm, and mv)
--    https://lore.kernel.org/git/cover.1617914011.git.matheus.bernardino@usp.br/
--    https://lore.kernel.org/git/pull.1018.v4.git.1632497954.gitgitgadget@gmail.com/
--[9] (Move from out-of-cone to in-cone)
--    https://lore.kernel.org/git/20220630023737.473690-6-shaoxuan.yuan02@gmail.com/
--    https://lore.kernel.org/git/20220630023737.473690-4-shaoxuan.yuan02@gmail.com/
--[10] (Unnecessarily downloading objects outside sparse specification)
--     https://lore.kernel.org/git/CAOLTT8QfwOi9yx_qZZgyGa8iL8kHWutEED7ok_jxwTcYT_hf9Q@mail.gmail.com/
--
--[11] (Stolee's comments on high-level usecases)
--     https://lore.kernel.org/git/1a1e33f6-3514-9afc-0a28-5a6b85bd8014@gmail.com/
-+[1] (Original descriptions of behavior A & behavior B):
-+
-+https://lore.kernel.org/git/CABPp-BGJ_Nvi5TmgriD9Bh6eNXE2EDq2f8e8QKXAeYG3BxZafA@mail.gmail.com/
-+
-+[2] (Fix stash applications in sparse checkouts; bugs from behavioral differences):
-+
-+https://lore.kernel.org/git/ccfedc7140dbf63ba26a15f93bd3885180b26517.1606861519.git.gitgitgadget@gmail.com/
-+
-+[3] (Present-despite-skipped entries):
-+
-+https://lore.kernel.org/git/11d46a399d26c913787b704d2b7169cafc28d639.1642175983.git.gitgitgadget@gmail.com/
-+
-+[4] (Clone --no-checkout interaction):
-+
-+https://lore.kernel.org/git/pull.801.v2.git.git.1591324899170.gitgitgadget@gmail.com/ (clone --no-checkout)
-+
-+[5] (The need for update_sparsity() and avoiding `read-tree -mu HEAD`):
-+
-+https://lore.kernel.org/git/3a1f084641eb47515b5a41ed4409a36128913309.1585270142.git.gitgitgadget@gmail.com/
-+
-+[6] (SKIP_WORKTREE is advisory, not mandatory):
-+
-+https://lore.kernel.org/git/844306c3e86ef67591cc086decb2b760e7d710a3.1585270142.git.gitgitgadget@gmail.com/
-+
-+[7] (`worktree add` should copy sparsity settings from current worktree):
-+
-+https://lore.kernel.org/git/c51cb3714e7b1d2f8c9370fe87eca9984ff4859f.1644269584.git.gitgitgadget@gmail.com/
-+
-+[8] (Avoid negative surprises in add, rm, and mv):
-+
-+  * https://lore.kernel.org/git/cover.1617914011.git.matheus.bernardino@usp.br/
-+  * https://lore.kernel.org/git/pull.1018.v4.git.1632497954.gitgitgadget@gmail.com/
-+
-+[9] (Move from out-of-cone to in-cone):
-+
-+  * https://lore.kernel.org/git/20220630023737.473690-6-shaoxuan.yuan02@gmail.com/
-+  * https://lore.kernel.org/git/20220630023737.473690-4-shaoxuan.yuan02@gmail.com/
-+
-+[10] (Unnecessarily downloading objects outside sparse specification):
-+
-+https://lore.kernel.org/git/CAOLTT8QfwOi9yx_qZZgyGa8iL8kHWutEED7ok_jxwTcYT_hf9Q@mail.gmail.com/
-+
-+[11] (Stolee's comments on high-level usecases):
-+
-+https://lore.kernel.org/git/1a1e33f6-3514-9afc-0a28-5a6b85bd8014@gmail.com/
- 
- [12] Others commenting on eventually switching default to behavior A:
-+
-   * https://lore.kernel.org/git/xmqqh719pcoo.fsf@gitster.g/
-   * https://lore.kernel.org/git/xmqqzgeqw0sy.fsf@gitster.g/
-   * https://lore.kernel.org/git/a86af661-cf58-a4e5-0214-a67d3a794d7e@github.com/
- 
--[13] Previous config name suggestion and description
--  * https://lore.kernel.org/git/CABPp-BE6zW0nJSStcVU=_DoDBnPgLqOR8pkTXK3dW11=T01OhA@mail.gmail.com/
-+[13] Previous config name suggestion and description:
-+
-+   https://lore.kernel.org/git/CABPp-BE6zW0nJSStcVU=_DoDBnPgLqOR8pkTXK3dW11=T01OhA@mail.gmail.com/
- 
- [14] Tangential issue: switch to cone mode as default sparse specification mechanism:
--  https://lore.kernel.org/git/a1b68fd6126eb341ef3637bb93fedad4309b36d0.1650594746.git.gitgitgadget@gmail.com/
-+
-+https://lore.kernel.org/git/a1b68fd6126eb341ef3637bb93fedad4309b36d0.1650594746.git.gitgitgadget@gmail.com/
- 
- [15] Lengthy email on grep behavior, covering what should be searched:
--  * https://lore.kernel.org/git/CABPp-BGVO3QdbfE84uF_3QDF0-y2iHHh6G5FAFzNRfeRitkuHw@mail.gmail.com/
-+
-+https://lore.kernel.org/git/CABPp-BGVO3QdbfE84uF_3QDF0-y2iHHh6G5FAFzNRfeRitkuHw@mail.gmail.com/
- 
- [16] Email explaining sparsity patterns vs. SKIP_WORKTREE and history operations,
-      search for the parenthetical comment starting "We do not check".
--    https://lore.kernel.org/git/CABPp-BFsCPPNOZ92JQRJeGyNd0e-TCW-LcLyr0i_+VSQJP+GCg@mail.gmail.com/
-+
-+https://lore.kernel.org/git/CABPp-BFsCPPNOZ92JQRJeGyNd0e-TCW-LcLyr0i_+VSQJP+GCg@mail.gmail.com/
- 
- [17] https://lore.kernel.org/git/20220207190320.2960362-1-jonathantanmy@google.com/
+ In a repo with alternates, we look for the `commit-graph-chain` file starting
+ in the local object directory and then in each alternate. The first file that
 -- 
 2.51.0
 
