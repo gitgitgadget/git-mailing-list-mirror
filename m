@@ -1,88 +1,84 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A415C1A2C11
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 10:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AF71FDE14
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 10:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760610743; cv=none; b=RsvhfkRDlPM2RLRDi14zQ0sLHry0ep7YKk5IoNZEBkQ26wjSozZxG24QpJP2DAk9ZndLVPmuMuXHyY/iVwNqLI36w2JWxoPVB1JifZ8TZBz4J+gyxubDvTacpiS+3YZd1wR8CbyGzL5Zxi73B5wJlEWSgnydASmK8ntALOCzne0=
+	t=1760611033; cv=none; b=IXu3nWbOAioYxjhKU5qYaOnTiwj9wpSHkOh73Z70EKKo43vPyLB9wJfV20viLF/G8YpY1bsOjg4lzAi8Fp22+CD3A2CxS2RoHGwlpsClaW9di6WohFHCan8/H8yIpXULm2/pgdxjTG5DfwaH6QJiaqcOwap7HavuSBdqGoOxEUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760610743; c=relaxed/simple;
-	bh=CSLNfXhsj3RU0ZNm9PgDJEwjuVg+vbvfEyss/pAKiCg=;
+	s=arc-20240116; t=1760611033; c=relaxed/simple;
+	bh=v8b5nyXFH98S4RrkLYsCvbCxlLlMvojvcdhf2A11NHE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a+GC3QQOA+hiqJYydgq7sCqGQ0h4VaKrb3c8hY0iCA6EaNrWJ50TXoCXU5nrxDNkNqNbUCrQpz9Qc3WmMZ0TGVAVCuSI2edBtbKCLO9Jw/Rz2H+x4FdnrwowXN70YWKojYDsqznXYpTzzseFjOq2zXzzdiuL7N+j4qwxDzNhjkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YhnJ48Fe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SDZqXKFv; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=k8ORCe9OldXpDAcjL/Yb74KOcT74rUxq3uf1P+iEZtWN02yxg4LUrvVeyF6q7aUa1jL56ToU33+GeFl7Pt7HgH1mklDTdju7AVfjw66DL+Bze7xhaO0gY0TDbiQLah26acbWulrL5wU5yl5IQ8ythEyhwfBekkwDVJ4A+5p5HkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GZugPLqX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uKY7+Miy; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YhnJ48Fe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SDZqXKFv"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A574D14000FC;
-	Thu, 16 Oct 2025 06:32:19 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 16 Oct 2025 06:32:19 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GZugPLqX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uKY7+Miy"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A9A3B1400188;
+	Thu, 16 Oct 2025 06:37:10 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Thu, 16 Oct 2025 06:37:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1760610739; x=1760697139; bh=yMmln7BLig
-	CpDXF5Pzo24ilhQtjLeYZu2i5zjrBIcno=; b=YhnJ48FeXDd+WBbXsBNv3z5x7I
-	VUdZH2cqtrepM5Kczdxr5czBmbY9KTbuGH+m2JBPs+abupN0VpqOQc6WnmOOymkf
-	KF2l2kMDOvw/9dg9aLNl+WcE5w8zn5jaa5mfF/w5k9BT8APjCxBhqzTbzcI+VvWd
-	eZTbWKDJ9SABveS+Ppb+wkYjZ3nO4ejTHA4mJA4hACuTPtF6VjjGEeDRo/Yttnlr
-	TaMVnhLOjUOsoI+iBOPn+h1sxWDqvsn1m4FyF2Xg9+uwuUNmdyPZvApmJfUxVWDh
-	26GEwA7XVdFCR0RywI1kdqCQl0MlOqHHMnJBa9CbOasEAxIOdAhY/pFUklMQ==
+	:subject:to:to; s=fm2; t=1760611030; x=1760697430; bh=A/RjKrPjB2
+	+k/mdk/F7VmlvZrSUTor4GhpmkVdUVDMo=; b=GZugPLqXCWW06Uj1xRIxXOeirD
+	0YYmDAqLS1t20Rk7Y06Etx6uorGoBowFLqJqdD2uS5oR1Rpd4husvqiZzw5beqpv
+	COnvcPn8txjw0M/66a9/BlZAjvPk0UIEA+rJ7y1p0R8uSVVplAeOtxs+tVQGDYUt
+	b4ArWeLQi3pXsxznqbcm3oxlpav+rgEoEbtIYnYIGyJCkB1a8d5sss+9PTyQIvp+
+	9s4tgOHRyIgb+GniiEh8vG34heKW48iw2f+NUCxXeMJJbfzvJTiWpG+DSMAtVQxu
+	aXlC172PWZ6M9ghYFYD50Z7oEHHoE+tDuXx6m+O12/RPlqk7+vg3ybiP85Uw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760610739; x=1760697139; bh=yMmln7BLigCpDXF5Pzo24ilhQtjLeYZu2i5
-	zjrBIcno=; b=SDZqXKFvxbZEMWbI7M68IwWoEQXy9BQzar5i7INzERPZwAfW3jH
-	7cv+O7ChvLx5UqAzumpmsUr9LYoarcw6IMV0uLKhPkpCyiK5vq7MCE9cZP+Uzi+m
-	hA9zvRRVH3OgKsbqvWHHUdkrwy6kxGjil8KswTYNVsMU1XJdr/Zi2ORXdc5JX2yJ
-	fB3W1zWbbPbgDVOWZuFwiDqXlRjr48gI7nuP/y7p2xpikDnbIjmrqaxd0BsLKGbx
-	JvrNv5yTjekkTTzdYk4/YCa4JuV6pfDhap6DfHfGchKY3p/OAPyz0gObt/fmWPO0
-	7RqnHGWugi9sVg7B4NZLsjn/1qeQPDKp7tQ==
-X-ME-Sender: <xms:s8nwaHjXZZAPRt-ialfFv2as6ERd5ZIsIgsyZ308W6IH3J0t_4oyEg>
-    <xme:s8nwaHvPA6WTdlujzhK2CRZ3stu1ne5D2N4nkFh1_ztpsGWaKrkneYKwUmrB62hQL
-    DKWvUW7JD7v05nQoPraVfZ6Rn9D7SjRt-2f79FD_E4mSczBK1S7xIo>
-X-ME-Received: <xmr:s8nwaA40L-f6KKHKKbdjR-MBDzMVCOsBhGzZopj94OhGO0SIP_CmIY3fbndMHozDVhXvo00Ur0DeDcUFyj3lRduIzn9osj7igErmzWuAyP6Y_g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdeitdeiucetufdoteggodetrf
+	1760611030; x=1760697430; bh=A/RjKrPjB2+k/mdk/F7VmlvZrSUTor4Ghpm
+	kVdUVDMo=; b=uKY7+MiymeQzIZdKrwzwdQbRcqtdQLGB3m7Jbj+QIhpMJAeGpZ/
+	Y0U+TbjXjHsKBAeTnazIimfpbf9MlzXVK9wskKFuDG0NgtLqyYGqsM4lfhqMWEyf
+	G8ShSQIry8en+ctW6AI7goOev+Cgzi4BabMFYfQhg3RITJzk86UAr/hKWoiYvvtV
+	qUaZD19pD1UAP1dqYqLhAi2c3Im3btG6/Yw3iVxAlsf8Cd75isvOSqpak0GLe4sg
+	PXlp0KYp79g4EqIPplrQQeBmzkuRKMn3Zexry+9GKLB70svRn51O9zRSXCYcn4Ui
+	kuLVMdJUUlfY160GxbPynl7xtFYJ6K4ODsg==
+X-ME-Sender: <xms:1srwaGhVQEJgh7kmq8XPwpTvj4vphcfwa_A7YRjyQAhkzrZLm7B11Q>
+    <xme:1srwaOfE0Z96Eb0mmJpclqZ7QDVhDoi6_lJoofNL-EMIAs0_SU6FGeKN-GSxZCEJi
+    wFClkWP07-RQCDFLUHXg8AIj3twGsbbNoHcGwd2a4QEykKIdJAZUw>
+X-ME-Received: <xmr:1srwaLdoqo6v6OQcLFPFC1UBjnDzIwzUw6xrvPg7pcrt5hlE4KMWvhjAe_N8yBITEOwLYtHIRIae9NKj3Pm4XmWaNIUSXnLHzlQL3aPgPp26vg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdeitdejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslh
-    gvrhesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehmvgesth
-    htrgihlhhorhhrrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:s8nwaLMts9xdkohaO4EdLcwDCPz_8XyYUF7amnyLJTbTfZaevF_fUA>
-    <xmx:s8nwaGsW07Q0IlOEqOAm8dsf_YCLAaNrJECU0FZODgx-2-aRNl_KuQ>
-    <xmx:s8nwaGbM2KdccQAxZAABtm6gfaXx6CarcAI1j_a6m8i623p6Tj4cQA>
-    <xmx:s8nwaAwiAy9sq6jwn326L56hI8Gjn22dGbeesvcHBudQxcvkI5lLcA>
-    <xmx:s8nwaE-mBuUtMSwUn7a6TVcrvp4yp6uA6JdlKtbQbnH-lf4MnlX5KXZc>
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgr
+    ihhlrdgtohhm
+X-ME-Proxy: <xmx:1srwaI-DIfwp7kWwqdepEmzKOTJt3myu_7bvRrDn3uU6NPEVCdB1BA>
+    <xmx:1srwaHn5rCrCrrD4mHwvOBeDQCUaYyv9I-9YhiLnvsAZqZp4S5D8KA>
+    <xmx:1srwaK9v5ofX4Xij_s0xysZRGt40K8LcqhiCtX-f3wNXkm-uilYpTQ>
+    <xmx:1srwaFnRmwo7sQaviTRbKqS-GfTfBN4suC45ykvN6kHYEpTWVz3vKg>
+    <xmx:1srwaJ5TZfrgm5LFHZn9D5iwZKFIHCQCvC7EELgE2CWQPQ7DtCajHZ-q>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Oct 2025 06:32:18 -0400 (EDT)
+ 16 Oct 2025 06:37:09 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cf1dcbf5 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 16 Oct 2025 10:32:15 +0000 (UTC)
-Date: Thu, 16 Oct 2025 12:31:43 +0200
+	by mail (OpenSMTPD) with ESMTPSA id bbb20b43 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 16 Oct 2025 10:37:08 +0000 (UTC)
+Date: Thu, 16 Oct 2025 12:37:02 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 00/49] repack: prepare for incremental MIDX-based
- repacking
-Message-ID: <aPDJj5e9GKLSeVfS@pks.im>
-References: <cover.1759097191.git.me@ttaylorr.com>
- <cover.1760567210.git.me@ttaylorr.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/4] refs: move to using the '.optimize' functions
+Message-ID: <aPDKzqT2YaG2NmEu@pks.im>
+References: <20251015-refs-code-cleanup-v1-0-550fdd8a3b41@gmail.com>
+ <20251015-refs-code-cleanup-v1-1-550fdd8a3b41@gmail.com>
+ <zah4lafziwkqty2qw6erkbq3wfilfneom5vm6vcfqk5b644iff@rcebhmsrgmmd>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,47 +87,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1760567210.git.me@ttaylorr.com>
+In-Reply-To: <zah4lafziwkqty2qw6erkbq3wfilfneom5vm6vcfqk5b644iff@rcebhmsrgmmd>
 
-On Wed, Oct 15, 2025 at 06:26:57PM -0400, Taylor Blau wrote:
-> Note to the maintainer:
+On Wed, Oct 15, 2025 at 05:05:46PM -0500, Justin Tobler wrote:
+> On 25/10/15 11:25PM, Karthik Nayak wrote:
+> > diff --git a/refs/debug.c b/refs/debug.c
+> > index 01499b9033..40cd1d9c15 100644
+> > --- a/refs/debug.c
+> > +++ b/refs/debug.c
+> > @@ -116,11 +116,11 @@ static int debug_transaction_abort(struct ref_store *refs,
+> >  	return res;
+> >  }
+> >  
+> > -static int debug_pack_refs(struct ref_store *ref_store, struct pack_refs_opts *opts)
+> > +static int debug_optimize(struct ref_store *ref_store, struct pack_refs_opts *opts)
+> >  {
+> >  	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
+> > -	int res = drefs->refs->be->pack_refs(drefs->refs, opts);
+> > -	trace_printf_key(&trace_refs, "pack_refs: %d\n", res);
+> > +	int res = drefs->refs->be->optimize(drefs->refs, opts);
+> > +	trace_printf_key(&trace_refs, "optimize: %d\n", res);
+> >  	return res;
+> >  }
+> >  
+> > @@ -430,7 +430,7 @@ struct ref_storage_be refs_be_debug = {
+> >  	.transaction_finish = debug_transaction_finish,
+> >  	.transaction_abort = debug_transaction_abort,
+> >  
+> > -	.pack_refs = debug_pack_refs,
+> > +	.optimize = debug_optimize,
 > 
->  * This series has been rebased on to 'master' (which is 4b71b29477
->    (The seventeenth batch, 2025-10-10) at the time of writing) to
->    avoid semantic conflicts now that ps/packfile-store has been
->    merged.
-> 
-> This is a relatively small reroll of my series to clean up the repack
-> builtin by introducing a repack.h API, which is the first of ~three
-> series that will implement incremental MIDX/bitmap-based repacking.
-> 
-> A range-diff is included below for convenience, but the changes since
-> v1 are generally limited to the following:
-> 
->  * Wording tweaks and a couple of minor typo fixes.
-> 
->  * Dropping explicit casts out of 'void *'.
-> 
->  * Clarification in commit "builtin/repack.c: introduce `struct
->    write_pack_opts`" that additional cleanup follows in the upcoming
->    patches.
-> 
->  * Marking parts of the new API as const where possible.
-> 
->  * Using 'bool' as the return type and simplifying the implementation
->    of `write_pack_opts_is_local()`.
-> 
->  * Avoid shadowing "struct write_pack_opts opts" in `cmd_repack()`.
-> 
-> Outside of that, the series is unchanged, and I am hopeful that this
-> round looks good to reviewers so that we can move on to the more
-> interesting parts of incremental MIDX/bitmap repacking ;-).
+> question: Was the debug backend not using either of these callbacks?
+> From the commit message, it sounds like all the backends were using the
+> optimize callback.
 
-I didn't quite feel like reviewing all of these patches again, so I only
-had a look at the range-diff. The changes in there all look good to me
-and address my feedback.
+Doesn't look like it. Overall I kind of doubt the value that this
+backend has. I have never had even a single use case for it, and I have
+been working with references extensively over the last two or three
+years by now.
 
-So I feel like all of this is in a reasonably good shape and a
-definitive improvement for our code base. Thanks!
+Maybe we should just drop it eventually?
 
 Patrick
