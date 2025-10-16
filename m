@@ -1,166 +1,201 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459D92E541F
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 10:58:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28B83176ED
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 12:03:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760612309; cv=none; b=HMPnbrBPEu2IvaabROpCKM3qbvnS9ipvKqd8EbwI/ldLmBrPKWhQnBiAIbNT524YUxjYwOvyLdFJk8Ls9tNZOANbpfJNuj3tOSMiNtlhYQJjyYRkY8hrRNz9ZN4mVVtvjk+EL7XZr5N3sbpolx1v0jhV+7ykeG43cKIS2rTKXx0=
+	t=1760616209; cv=none; b=BodUhexIETEAXXz/LNFxvi9434GjlFE+cJX8Nr3boIOGy/T5N0BInxVG6Qxc78cW9XIur9AYiPZhORX4ahW9ZRqKVISvKMUTgR7PxtmiRpV2v1M8l/Nj2DW94F69JEy8tnn+0yP7mpAn1dtRurzUf7lsf0pGbPAwg+yHSOTfIKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760612309; c=relaxed/simple;
-	bh=KgsLatHaJBSGdrKBbKiWkcw4H87Ys0F0FAypVuepU1M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O8jqSqaIBGj65e4zEZjkKJhPJ60GlP4MsbeZCcuTuOTUHtYa2MunG1ZhLNEp2ipD2kDDN2ANeial0bBAPn0903gGnBAAMuYjiJGqLtDXyytNeeoD/upcr6qP17QExz6tO6fuYELC09v1obvcGgzXf1mWj0R//txNgokGrCGYHgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JzFqsjYm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=luc5+Cr4; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1760616209; c=relaxed/simple;
+	bh=uWREBi/9PXxSNBkLZo0uLhze3Q7bn0ws/W292pXDC9U=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EJGCMznXimTm2EXHjfEvjCy+YSyBjFhX5gdGz10zyZlcFSwfr1O3P49cx7cVGkWDQJPRj3yxi/0C2HOynSvQlw5cV4640dImA9hZM3K6o1LipG6ONaAspAChCK6qzYPO2wx+J79N3LWet0/OoC6PS3zNXPSaAeBsYg2Hfy2QmbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VlQ9/MSi; arc=none smtp.client-ip=209.85.221.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JzFqsjYm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="luc5+Cr4"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5ECBC1400186;
-	Thu, 16 Oct 2025 06:58:26 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 16 Oct 2025 06:58:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1760612306; x=1760698706; bh=ulBXZgTQHG
-	c8mZ+fZi1UlLYyP7TPE24jcljThSfz9HM=; b=JzFqsjYmz0HaF/rs3EK4Pt+d8p
-	5qNgJSWAhlqNNc1OXoL8R0yX2S/iOitFBFGq8z4Nr+F6Z7GQWLXC3Ps0rveZ22bg
-	guet6tozQSWu8jmtL06Ce1GPuSPZQ5YgyURatKhb/hIdNdilRDC2MO+SVoysDQ4Y
-	9BIvwWLuO/f4x6no+aXPWLikT74xJ3g2xF6oHnOHFXCob2XQZcgcBBxeDs/l5DO5
-	PRy/rRFrrum1nD7riaKS0a7JQV0lh8FdLhS+0p9FWoPFRumePbOqdIGULrLXZI0a
-	W7ueD2g1Rm7GZbmwE0n8GhMyR/XmNTtHHPps/WMvzfvbPQj0IB6YUV+uuhYA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760612306; x=1760698706; bh=ulBXZgTQHGc8mZ+fZi1UlLYyP7TPE24jclj
-	ThSfz9HM=; b=luc5+Cr4/GkvHZl6oMB5Sng8EUHO7vXNOfX9guoEedHQQ6rF6Fa
-	q4rwpC/EGjx4yG/5jbePovFqZ4OStHjHBvQlf1s1sSSjSppZPqPflqfq5Yiw3QdR
-	gCAsXfUMotC13GRzZvd8EueVI1oqzroMR1EINntC4rGdq9JaMD7595KaJlkFxikm
-	7kCPBGLGWvP/vmyvwtulYgK1Z5W8OvLo04pqH73FFOdnXfgd86/4mDrCE88CRwQm
-	87LQ84bdUeC3EixcBZcHbHyTZwb5hhMxOZ1V5UpbYfv4e3q60Qoc0HlI2qymlEuV
-	u/DOTB8FNW6k+NIAvjGaABnIFiL3jgrWGdg==
-X-ME-Sender: <xms:0s_waHJ1f684FDW7hEJ9CCcZsTOiHY9_T8aN1v2KhgwkUkDWInkI4A>
-    <xme:0s_waO2uUlXwf8k-wkY2pUlx2VEqwAkIz5v9o6Zl2YHDMLFms2mhTW8y3icMHtD62
-    Xe_1-yN2qcHf3ACatBT-51vAEtYLStS8gY3bV_ls4dFvDcANXdgjw>
-X-ME-Received: <xmr:0s_waJjDnK6l-7r4gKUooQNAAL_3mfjrsprMwjkXc4L3I5ap1Gi6sp12jrhf_qAlkM6H5vIUnkXQj4LxbFzPknCn9Gz4H1oVHAwGj5mEuIFECQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdeiudduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtohhlvggvse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhhihhn
-    vgesshhunhhshhhinhgvtghordgtohhm
-X-ME-Proxy: <xmx:0s_waHVHhzTzsS-ZAiYZR4wzGJlgG-tcLFk8dsUFgOjqA8JXLJW0iw>
-    <xmx:0s_waAVaHqQLPSiCVThmi7pQRL1AhQhqOHp3tF0Wp-EFHitzv26Fgg>
-    <xmx:0s_waPjwmAerntcRvD-_fz2JViYrJOL4ES67UKRPjF_v2GI4fhf-zQ>
-    <xmx:0s_waDbgRedPqNWP718s29ZQoLPZp6wItol0a3TNZrudMy0BSfarPQ>
-    <xmx:0s_waAPsBs1YbRSW_6CedEfkPxe8BNhIDTVxq8uZTqGQzqkz90cgEu9g>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Oct 2025 06:58:24 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f914bc5d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 16 Oct 2025 10:58:23 +0000 (UTC)
-Date: Thu, 16 Oct 2025 12:58:16 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com, sunshine@sunshineco.com,
-	gitster@pobox.com, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v5 3/6] builtin/repo: introduce structure subcommand
-Message-ID: <aPDPyEVOTSU6NuOH@pks.im>
-References: <20250927145049.723341-1-jltobler@gmail.com>
- <20251015211213.361797-1-jltobler@gmail.com>
- <20251015211213.361797-4-jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VlQ9/MSi"
+Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-54c0a10990fso226049e0c.2
+        for <git@vger.kernel.org>; Thu, 16 Oct 2025 05:03:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760616206; x=1761221006; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=i9sZQAQyyDZQCxzxQshOBRNr4BpiY6T5htEnW5k7b88=;
+        b=VlQ9/MSibw7viS75fs/ZwV+NJgDB+dnLQ8A6Y6pKHfGQGBkYqHK1KDVSQ22R580SNK
+         B4JZMniIp+5+j2V8X+ZJC8rungoieYwltfpkoyfnVbjcMM64kqsBIx6ZlJBlkFeQ6b10
+         NPzQhftOtY4uj2SgT5oB8ueWJJWguMgnuagCHE0BeOFJdsA7KKWch0r1GBs7+DOK0smy
+         s/r9w0UAdt07sD84233nozb2IVo5OdNezYP3ctgSCjrcUBkSdpwYiA3dB6PN9UMQD7Ia
+         ZV8sXYoOsQOH4y5zKMiRgaGvVQbXrSng7bE6Cu1Hv8Az0SLz9TfCuFad8YjxKkpzxowN
+         slhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760616206; x=1761221006;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=i9sZQAQyyDZQCxzxQshOBRNr4BpiY6T5htEnW5k7b88=;
+        b=KdzD6l0p66ju2G9ksWmaCHGFa3Zo3NPV7/kSg45Nf6EIOUoIQlOW27O6iO7hzQS1z3
+         QgbHkMWOQNO4xYA/yZa6eztrpGaKeNq4QvI5CPp0zsVN+E6e6zHvcKY4M+eWUIHx5zQF
+         XufE8KPDsoM0g7wA5GkNLaDNCZ+zThhBYH5fppsg3AFomYpPmKOXdsSBgfdo8grQsbBQ
+         zvnFBpRT4VL93H9p5Z1xp8tbbFiEYYUv7YFYSShBVXcZditWwiNen7Qmy8+Fr+7/TOcm
+         k80Nk7jCtx0k2TKUCICig8BuluhrzykBTXdmeBxnHNDG+0r1ttRqIJeIZ9USyr2Ln0e/
+         65mQ==
+X-Gm-Message-State: AOJu0Yzp9U8jUxIj/8F17tH61ziWUTftjbczkp+BpETXwRye1me+6AdD
+	aPRwPUTA/T7ZGoq540xXeoO/818kOPSV3IkesmGkGNUBn3MlEbfMQYz0av2FYYZEAL1d3gb0v9o
+	8H2Ab9fhL1GpLjV3sKsEkvQ4MQ7rbA6I=
+X-Gm-Gg: ASbGncvtCRM4gOi8C1TFPM0gXKE0r5zKBa1oidCKHiH6rzGxxG+eBe35QOcCG9WMkSN
+	zjkJkimXibJ+uRUpxBVg5lMlHHft1AKqH6YyWNTOF+btbju5Bl9krp752/DZIDscMGbXHd+0g+s
+	X4kMKqbNLKn5liZ6WFN5PWbup9+QQt2gxhItt86OIbM+WHhHbbKzk6u1OTYZp+FDhr09ChYWx0m
+	s0aQLzOn5N4cplxwOEP06yjerQAsoc1xrlwV71tD9OaLUAGNWHqsxnvXjjMqqNN3MsUfhvGts7N
+	9/6aPke4uaApCjf5+bU=
+X-Google-Smtp-Source: AGHT+IEjEz+9CqCUMxslA6OvrDoDW48DUvjHmla/d/8viyOpgjb19m3/IwsLS+lC8si39kcIwWhorFWp1b5KnKzU9+0=
+X-Received: by 2002:a05:6122:2004:b0:544:4cd3:4bfb with SMTP id
+ 71dfb90a1353d-554b8c30246mr10802893e0c.15.1760616206428; Thu, 16 Oct 2025
+ 05:03:26 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 16 Oct 2025 07:03:25 -0500
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 16 Oct 2025 07:03:25 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <zah4lafziwkqty2qw6erkbq3wfilfneom5vm6vcfqk5b644iff@rcebhmsrgmmd>
+References: <20251015-refs-code-cleanup-v1-0-550fdd8a3b41@gmail.com>
+ <20251015-refs-code-cleanup-v1-1-550fdd8a3b41@gmail.com> <zah4lafziwkqty2qw6erkbq3wfilfneom5vm6vcfqk5b644iff@rcebhmsrgmmd>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251015211213.361797-4-jltobler@gmail.com>
+Date: Thu, 16 Oct 2025 07:03:25 -0500
+X-Gm-Features: AS18NWA8FZcCJZ9SSNBxkpsQXCz6jRNewrleDX6-64iOLQH_fvgh98l-QcRQpjc
+Message-ID: <CAOLa=ZQ-Ri7_SgPttqphRNNB7-AryNcSbcRsjWF_ua9jQxM92g@mail.gmail.com>
+Subject: Re: [PATCH 1/4] refs: move to using the '.optimize' functions
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Content-Type: multipart/mixed; boundary="0000000000009222c206414567d2"
 
-On Wed, Oct 15, 2025 at 04:12:10PM -0500, Justin Tobler wrote:
-> diff --git a/builtin/repo.c b/builtin/repo.c
-> index eeeab8fbd2..4575cf9467 100644
-> --- a/builtin/repo.c
-> +++ b/builtin/repo.c
-> @@ -156,12 +160,201 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
-[snip]
-> +static void structure_count_references(struct ref_stats *stats,
-> +				       struct ref_array *refs)
-> +{
-> +	for (int i = 0; i < refs->nr; i++) {
-> +		struct ref_array_item *ref = refs->items[i];
-> +
-> +		switch (ref->kind) {
-> +		case FILTER_REFS_BRANCHES:
-> +			stats->branches++;
-> +			break;
-> +		case FILTER_REFS_REMOTES:
-> +			stats->remotes++;
-> +			break;
-> +		case FILTER_REFS_TAGS:
-> +			stats->tags++;
-> +			break;
-> +		case FILTER_REFS_OTHERS:
-> +			stats->others++;
-> +			break;
-> +		default:
-> +			BUG("unexpected reference type");
-> +		}
-> +	}
-> +}
-> +
-> +static int cmd_repo_structure(int argc, const char **argv, const char *prefix,
-> +			      struct repository *repo UNUSED)
-> +{
-> +	struct ref_filter filter = REF_FILTER_INIT;
-> +	struct stats_table table = {
-> +		.rows = STRING_LIST_INIT_DUP,
-> +	};
-> +	struct ref_stats stats = { 0 };
-> +	struct ref_array refs = { 0 };
-> +	struct option options[] = { 0 };
-> +
-> +	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
-> +	if (argc)
-> +		usage(_("too many arguments"));
-> +
-> +	if (filter_refs(&refs, &filter, FILTER_REFS_REGULAR))
-> +		die(_("unable to filter refs"));
-> +
-> +	structure_count_references(&stats, &refs);
+--0000000000009222c206414567d2
+Content-Type: text/plain; charset="UTF-8"
 
-I only noticed this when taking a look at the last patch that introduces
-a progress meter, but I think we should change how we count references.
-The way you do it here means that we have to temporarily store all refs
-in an array, which is completely unnecessary and thus a waste of memory.
-Furthermore, the resulting progress meter will be somewhat useless
-because it only starts counting _after_ we have enumerated all
-references already. The second phase where we basically just classify
-the refs by type is going to be orders of magnitude faster and probably
-not noticeable even with millions of refs.
+Justin Tobler <jltobler@gmail.com> writes:
 
-Instead, I think we should use e.g. `refs_for_each_ref()` and count them
-in the callback function. This means we don't have to store them
-anymore, and also the progress meter becomes more useful.
+> On 25/10/15 11:25PM, Karthik Nayak wrote:
+>> The `struct ref_store` variable, exposes two ways to optimize a reftable
+>
+> s/variable,/variable/
+>
 
-The only downside is that we cannot set up the progress meter with an
-upper limit. But I think that is an acceptable tradeoff.
+Will fix.
 
-The other patches all look good to me, thanks!
+>> diff --git a/refs/debug.c b/refs/debug.c
+>> index 01499b9033..40cd1d9c15 100644
+>> --- a/refs/debug.c
+>> +++ b/refs/debug.c
+>> @@ -116,11 +116,11 @@ static int debug_transaction_abort(struct ref_store *refs,
+>>  	return res;
+>>  }
+>>
+>> -static int debug_pack_refs(struct ref_store *ref_store, struct pack_refs_opts *opts)
+>> +static int debug_optimize(struct ref_store *ref_store, struct pack_refs_opts *opts)
+>>  {
+>>  	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
+>> -	int res = drefs->refs->be->pack_refs(drefs->refs, opts);
+>> -	trace_printf_key(&trace_refs, "pack_refs: %d\n", res);
+>> +	int res = drefs->refs->be->optimize(drefs->refs, opts);
+>> +	trace_printf_key(&trace_refs, "optimize: %d\n", res);
+>>  	return res;
+>>  }
+>>
+>> @@ -430,7 +430,7 @@ struct ref_storage_be refs_be_debug = {
+>>  	.transaction_finish = debug_transaction_finish,
+>>  	.transaction_abort = debug_transaction_abort,
+>>
+>> -	.pack_refs = debug_pack_refs,
+>> +	.optimize = debug_optimize,
+>
+> question: Was the debug backend not using either of these callbacks?
+> From the commit message, it sounds like all the backends were using the
+> optimize callback.
+>
 
-Patrick
+Since there are no users of `refs_pack_refs()` which uses the
+'.pack_refs' field, there are no users of 'debug_pack_refs()'.
+
+But if tracing is enabled then the debug backend would wrap around the
+other backends and any calls to `refs_optimize()` would call
+`debug_optimize()`.
+
+>>  	.rename_ref = debug_rename_ref,
+>>  	.copy_ref = debug_copy_ref,
+>>
+>> diff --git a/refs/files-backend.c b/refs/files-backend.c
+>> index ed8a1729d6..92d90fc508 100644
+>> --- a/refs/files-backend.c
+>> +++ b/refs/files-backend.c
+>> @@ -1444,8 +1444,8 @@ static int should_pack_refs(struct files_ref_store *refs,
+>>  	return 0;
+>>  }
+>>
+>> -static int files_pack_refs(struct ref_store *ref_store,
+>> -			   struct pack_refs_opts *opts)
+>> +static int files_optimize(struct ref_store *ref_store,
+>> +			  struct pack_refs_opts *opts)
+>>  {
+>>  	struct files_ref_store *refs =
+>>  		files_downcast(ref_store, REF_STORE_WRITE | REF_STORE_ODB,
+>> @@ -1512,15 +1512,6 @@ static int files_pack_refs(struct ref_store *ref_store,
+>>  	return 0;
+>>  }
+>>
+>> -static int files_optimize(struct ref_store *ref_store, struct pack_refs_opts *opts)
+>> -{
+>> -	/*
+>> -	 * For the "files" backend, "optimizing" is the same as "packing".
+>> -	 * So, we just call the existing worker function for packing.
+>> -	 */
+>> -	return files_pack_refs(ref_store, opts);
+>> -}
+>> -
+>>  /*
+>>   * People using contrib's git-new-workdir have .git/logs/refs ->
+>>   * /some/other/path/.git/logs/refs, and that may live on another device.
+>> @@ -3969,7 +3960,6 @@ struct ref_storage_be refs_be_files = {
+>>  	.transaction_finish = files_transaction_finish,
+>>  	.transaction_abort = files_transaction_abort,
+>>
+>> -	.pack_refs = files_pack_refs,
+>>  	.optimize = files_optimize,
+>
+> Ok, we are removing the "pack_refs" callback and its implementations
+> from all the backends in favor of using the just using the more generic
+> "optimize" callback. Make sense.
+>
+> It does look like we still have `refs_pack_refs()` which references the
+> "optimize" callback. It looks like there are no users, but should we
+> also remove it as part of this patch?
+>
+> -Justin
+
+It's done in the next commit, let me just squash that in to make it
+easier.
+
+--0000000000009222c206414567d2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 784467e21d65a8be_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qdzN3d1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNzkzQy8wVmlkWncrdFlIUVB4TTkxcEUzNVpCOGV1bAozZWkzYmJKQ3pH
+MTFnd2xkT0tVVktyMVdoY0V0VHR5Wm1sNkhNYlZyL0ltenUvbTV2SHVLck1NTmdRMFZTWVE4CnNa
+VWxaNThJWSttZGtpU2Q5Y0FDejZickxiWVdhd1VDVXZYRDJ4VFJWamZIZzViS3VPVklEeE8xWThh
+dWt1NG0KbXUxcmZ6SHR4VlQrVmpqcGlMVTJVRExIdmw1OEQxZC9Oa1hQYkdwRWF5b1VyNXlSTE9h
+Yk1HYXljZjc0RnBDNwprTERkRmJTQS9nNVFvT2wvZU1yOHZzZEFkVlQxZWdjaUwzOTBsV1pjTmNN
+c2NiMi93MW00NG10WGxLcG02UGhkCmhQd3laZ29ObE9QbGRqOUxTaTB6Z2Y2VXZNWTc3Z0gvVElI
+ZVNVUFZHd2pJa3I4SGUyLzYzMTlDaWdNN3liVzUKeTRuanBJWjdaWmp1c29iZUF3TGgwelJmSVVJ
+T1hwUlRTOTJBUVgwQkMxWUowT1pndUJpREVROE91SDYxRmNqQwovS2hrWENFbkFhSzNZTVNCMFV1
+L0Y4ZjBYN3M3ZHY2bGZiQ0g0OFUzbVBiYTBGa0c1UlFGcDdLa2FVSnhpTGJHCmdDVTdzOFpkMkxq
+WUZNNjFhcUladFdKQjk0cVl6SjA1MlFTejQ3RT0KPUpSeFEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000009222c206414567d2--
