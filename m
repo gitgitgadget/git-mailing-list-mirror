@@ -1,39 +1,39 @@
 Received: from mail.lohmann.sh (mail.lohmann.sh [23.88.42.106])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A86522424C
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 05:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3502B2192FA
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 05:33:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.88.42.106
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760592838; cv=none; b=qDxm8EV5VzrRaVFa8e6n+WhenWyKEnYYqJM+u81QlaN4H1r28UdaLXfXUCdCkZVyoA2sfnxDPY2h6hoL0mRFOvDcqTE/W2Qz9WpfthQEs5JmOJ7nfrAemH6hp2l72DPKlTWNpIgjl1x/K083LgEKinFUp1BofOMqns25DPQmqv4=
+	t=1760592841; cv=none; b=PkLG5MFfdSa+rRTdyr6xa/N1Fh0tTextGTSMFceltvnYKQBZ5bZxChDEhrt2M9HoK/aYGnQl87a9fzQNGLY1+jHuMCg0VHRMf+8qomgnB80rG4v7SiEG2f4aMKnR/d97MDXlJPjI5aVV4N8fHmb9q1VkvX99cxozkcHigbR/zZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760592838; c=relaxed/simple;
-	bh=qfVdOjGtBz/A5E0t/qGBeQEp2jlbPADKudWCegAiPPU=;
+	s=arc-20240116; t=1760592841; c=relaxed/simple;
+	bh=FZ/0MqwlC2PxFeZ29+dyW3PSVquqQUVcgf3HqT8XSwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gceWNB6Elreak/vKr0j9KkZsGyyFFdP+a8V5MP/pOdFD4CnCYRylb2s+MNsZ+jCZo0SrmDsbJq2BSqbawlHA9xKp57DiD0/TVu+j07DyCsI8kDiBmclnuiBQnrtbJ2gJTjh7na7OQadOuYu9y5B5/6k3/eRUaaxU5DS+7ddl6ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lohmann.sh; spf=pass smtp.mailfrom=lohmann.sh; dkim=pass (2048-bit key) header.d=lohmann.sh header.i=@lohmann.sh header.b=Fx1R3KOL; arc=none smtp.client-ip=23.88.42.106
+	 MIME-Version; b=Y0gMabofIPIHEa2JtllkinOLXjqx7rBZ8n4tQT7l3hh225OjmnnOIdibLj8gnhMF+5YYtAHbrelXPrwd9AtQHCQz34ggEhlHGWbwkNVdnoYv2/UALkPGWdnPMAEU2KpIlc1ZOHwtbq3rGzHvxfpnstewNluEE2C1IHyaVM8bhfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lohmann.sh; spf=pass smtp.mailfrom=lohmann.sh; dkim=pass (2048-bit key) header.d=lohmann.sh header.i=@lohmann.sh header.b=S/8bQ+8y; arc=none smtp.client-ip=23.88.42.106
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lohmann.sh
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lohmann.sh
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lohmann.sh header.i=@lohmann.sh header.b="Fx1R3KOL"
+	dkim=pass (2048-bit key) header.d=lohmann.sh header.i=@lohmann.sh header.b="S/8bQ+8y"
 From: Michael Lohmann <git@lohmann.sh>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lohmann.sh; s=mail3;
-	t=1760592825;
+	t=1760592826;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Vun/1kJBE2brRCJbf6t0dAC4i9brFrEmmTdxP+LjIy8=;
-	b=Fx1R3KOLW/Gs7qVkm0Kr9nzXGo1+INzvxdXSNybyDJbtuM8Ur6glDDjYKrMFACft6JDPid
-	s9hpQ+CN0x6a0xi2Fvvr4bf1zSrtR/MXH1sju4TAEojtLmJrGnB6Jm7Azd9/Mhr3B6PEVR
-	+seCLNhJCwfHV6qBhxWsYQ5yztxCPnpMN8kMnSjWCFnh1bEl1E0BvtA5Sedvc2K+Pw1iKU
-	Ryx/U6o7FbyZ4XoE4h8+e++2rkBo5QTE0y+n4FutuMFMt8/xuwkaqTn54MI2KrukqKM7dm
-	/Hd3JPB2sPuXWpUhiSrXSHSJyNVZnOtVahT9lam7rWTm644KLAbcVQEg7YZ6ng==
+	bh=XL8YMeSEsq7ylLsAo+N1mfKwnyv8TETHlWpEoYnXiCc=;
+	b=S/8bQ+8yqNNTXrYfnvZrs2gBG6JZ5C3/ZqSqJO8C5PtzAMU3uc1fuR1CO0fzNswfOA6XmY
+	yl3r+kbK7aNa1OiBBOzwA4npHpnOSr71DccMTd+z070UzkqPShJCQq3XzoyQGM8XcS9Fl+
+	fFncv5XjnHkWDQ9YkdCiN5faEZj3J1hZiVoOm2swa03+3W9lECPgXmz6l7qUjudWfKhOVL
+	F7DZlfYbNAQDUAZqyUkSBUkjk/HpBxpDMCPIXyJtcqaFdVhQXjTVHFvZYz8caKnb5ZijN6
+	nXy2OifdHQNXn0n7SXasZj5d8D6ykiEBf6/sp0S0bIeXJpff44suiuGvIJsHkg==
 To: git@lohmann.sh
 Cc: git@vger.kernel.org
-Subject: [PATCH v3 4/5] setup: allow temporary bypass of `ensure_safe_repository()` checks
-Date: Thu, 16 Oct 2025 07:33:21 +0200
-Message-ID: <20251016053322.44495-5-git@lohmann.sh>
+Subject: [PATCH v3 5/5] setup: allow not marking self owned repos as safe in `ensure_safe_repository()`
+Date: Thu, 16 Oct 2025 07:33:22 +0200
+Message-ID: <20251016053322.44495-6-git@lohmann.sh>
 In-Reply-To: <20251016053322.44495-1-git@lohmann.sh>
 References: <20251013094152.23597-1-git@lohmann.sh>
  <20251016053322.44495-1-git@lohmann.sh>
@@ -45,184 +45,203 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-So far, the only option to allow executing git in what it considers to
-be an "unsafe context" is to set this repository as "safe.directory". If
-a user only wants to temporarily execute one command, they would need to
-set the path as safe, execute the command and then remove the path
-again. Forgetting to do the latter would make the user vulnerable if
-this repo was changed afterwards in a malicious way.
+Git considers all repositories as safe, if they are either
+ - explicitly set in "safe.directory" config, or
+ - the user owns the repo
 
-Allow temporarily bypassing `ensure_safe_repository()` checks with a new
-flag "--allow-unsafe" or environment variable "GIT_ALLOW_UNSAFE".
+Since a user could unzip a folder they downloaded from the internet and
+unknown to them, it is a repository with malicious hooks/config, an
+attacker could easily get code execution. Even a command line prompt
+would automatically trigger this if executing `git status` after
+entering the malicious directory.
+
+Allow not to automatically treat all repos owned by the user as safe.
+This can either be done by "--assume-unsafe", the environment variable
+"GIT_ASSUME_UNSAFE" or by setting the configuration "safe.assumeUnsafe"
+in a safe context (so not the repo config, as it should not be able to
+allow list itself).
 
 Signed-off-by: Michael Lohmann <git@lohmann.sh>
 ---
- Documentation/git.adoc            | 13 +++++++++++++
+ Documentation/config/safe.adoc    |  9 +++++++
+ Documentation/git.adoc            | 14 +++++++++-
  environment.h                     |  1 +
- git.c                             |  5 +++++
- setup.c                           | 13 +++++++++++--
- t/meson.build                     |  1 +
- t/t0036-allow-unsafe-directory.sh | 28 ++++++++++++++++++++++++++++
- 6 files changed, 59 insertions(+), 2 deletions(-)
- create mode 100755 t/t0036-allow-unsafe-directory.sh
+ git.c                             |  6 ++++-
+ setup.c                           |  9 +++++++
+ t/t0036-allow-unsafe-directory.sh | 43 +++++++++++++++++++++++++++++++
+ 6 files changed, 80 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/config/safe.adoc b/Documentation/config/safe.adoc
+index 2d45c98b12..d93881d6c0 100644
+--- a/Documentation/config/safe.adoc
++++ b/Documentation/config/safe.adoc
+@@ -60,3 +60,12 @@ which id the original user has.
+ If that is not what you would prefer and want git to only trust
+ repositories that are owned by root instead, then you can remove
+ the `SUDO_UID` variable from root's environment before invoking git.
++
++safe.assumeUnsafe::
++	Boolean to indicate that the ownership of a repository should not
++	be taken into account when checking if the repository is safe. It
++	will prevent against accidental arbitrary code execution.
+++
++To temporarily allow git execution in case of an assumed unsafe repository,
++run the command with `--allow-unsafe`. To permanently trust this path, add
++it to the `safe.directory` config.
 diff --git a/Documentation/git.adoc b/Documentation/git.adoc
-index ce099e78b8..7df51c38f9 100644
+index 7df51c38f9..e24dafc2a9 100644
 --- a/Documentation/git.adoc
 +++ b/Documentation/git.adoc
-@@ -14,6 +14,7 @@ SYNOPSIS
+@@ -14,7 +14,7 @@ SYNOPSIS
      [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]
      [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]
      [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]
-+    [--allow-unsafe]
+-    [--allow-unsafe]
++    [--allow-unsafe] [--assume-unsafe]
      <command> [<args>]
  
  DESCRIPTION
-@@ -231,6 +232,12 @@ If you just want to run git as if it was started in `<path>` then use
- 	linkgit:gitattributes[5]. This is equivalent to setting the
- 	`GIT_ATTR_SOURCE` environment variable.
+@@ -238,6 +238,13 @@ If you just want to run git as if it was started in `<path>` then use
+ 	execution by hooks or configuration settings. Equivalent to setting
+ 	the environment variable `GIT_ALLOW_UNSAFE=1`.
  
-+--allow-unsafe::
-+	Temporarily trust the repository regardless of "safe.directory"
-+	configuration or ownership, potentially resulting in arbitrary code
-+	execution by hooks or configuration settings. Equivalent to setting
-+	the environment variable `GIT_ALLOW_UNSAFE=1`.
++--assume-unsafe::
++	Prevent arbitrary code execution by hooks or configuration if not
++	executed in a "safe.directory". With setting this, filesystem ownership
++	of the repository in question no longer satisfies to mark it as safe.
++	Equivalent to setting `GIT_ASSUME_UNSAFE=1`. This is overridden if
++	`--allow-unsafe` is passed as well.
 +
  GIT COMMANDS
  ------------
  
-@@ -493,6 +500,12 @@ These environment variables apply to 'all' core Git commands. Nb: it
- is worth noting that they may be used/overridden by SCMS sitting above
- Git so take care if using a foreign front-end.
+@@ -506,6 +513,11 @@ Git so take care if using a foreign front-end.
+ 	owns the repository before potentially executing arbitrary code
+ 	from hooks or config.
  
-+`GIT_ALLOW_UNSAFE`::
-+	This Boolean environment variable can be set to true to skip the
-+	safety checks of "safe.directory" configuration and if the user
-+	owns the repository before potentially executing arbitrary code
-+	from hooks or config.
++`GIT_ASSUME_UNSAFE`::
++	This Boolean environment variable can be set to true enforce
++	explicit "safe.directory" configuration for the repository. This
++	can be overridden by setting `GIT_ALLOW_UNSAFE`.
 +
  `GIT_INDEX_FILE`::
  	This environment variable specifies an alternate
  	index file. If not specified, the default of `$GIT_DIR/index`
 diff --git a/environment.h b/environment.h
-index 51898c99cd..ee9e1b9514 100644
+index ee9e1b9514..89036a9460 100644
 --- a/environment.h
 +++ b/environment.h
-@@ -42,6 +42,7 @@
- #define GIT_OPTIONAL_LOCKS_ENVIRONMENT "GIT_OPTIONAL_LOCKS"
+@@ -43,6 +43,7 @@
  #define GIT_TEXT_DOMAIN_DIR_ENVIRONMENT "GIT_TEXTDOMAINDIR"
  #define GIT_ATTR_SOURCE_ENVIRONMENT "GIT_ATTR_SOURCE"
-+#define GIT_ALLOW_UNSAFE "GIT_ALLOW_UNSAFE"
+ #define GIT_ALLOW_UNSAFE "GIT_ALLOW_UNSAFE"
++#define GIT_ASSUME_UNSAFE "GIT_ASSUME_UNSAFE"
  
  /*
   * Environment variable used to propagate the --no-advice global option to the
 diff --git a/git.c b/git.c
-index c5fad56813..a7581a6805 100644
+index a7581a6805..40ef89558d 100644
 --- a/git.c
 +++ b/git.c
-@@ -42,6 +42,7 @@ const char git_usage_string[] =
+@@ -42,7 +42,7 @@ const char git_usage_string[] =
  	   "           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n"
  	   "           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n"
  	   "           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n"
-+	   "           [--allow-unsafe]\n"
+-	   "           [--allow-unsafe]\n"
++	   "           [--allow-unsafe] [--assume-unsafe]\n"
  	   "           <command> [<args>]");
  
  const char git_more_info_string[] =
-@@ -354,6 +355,10 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			setenv(GIT_ADVICE_ENVIRONMENT, "0", 1);
+@@ -359,6 +359,10 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 			setenv(GIT_ALLOW_UNSAFE, "1", 1);
  			if (envchanged)
  				*envchanged = 1;
-+		} else if (!strcmp(cmd, "--allow-unsafe")) {
-+			setenv(GIT_ALLOW_UNSAFE, "1", 1);
++		} else if (!strcmp(cmd, "--assume-unsafe")) {
++			setenv(GIT_ASSUME_UNSAFE, "1", 1);
 +			if (envchanged)
 +				*envchanged = 1;
  		} else {
  			fprintf(stderr, _("unknown option: %s\n"), cmd);
  			usage(git_usage_string);
 diff --git a/setup.c b/setup.c
-index 5ec68be379..515d1eedc0 100644
+index 515d1eedc0..0c056438a6 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -1307,6 +1307,9 @@ static int ensure_safe_repository(const char *gitfile,
+@@ -1238,6 +1238,12 @@ static int safe_directory_cb(const char *key, const char *value,
  {
- 	struct safe_directory_data data = { 0 };
+ 	struct safe_directory_data *data = d;
  
-+	if (git_env_bool("GIT_ALLOW_UNSAFE", 0))
-+		return 1;
++	if (!strcmp(key, "safe.assumeunsafe")) {
++		if (git_config_bool(key, value))
++			setenv(GIT_ASSUME_UNSAFE, value, 0);
++		return 0;
++	}
 +
- 	/*
- 	 * normalize the data.path for comparison with normalized paths
- 	 * that come from the configuration file.  The path is unsafe
-@@ -1353,7 +1356,10 @@ void die_upon_unsafe_repo(const char *gitfile, const char *worktree,
- 	      "%s"
- 	      "To add an exception for this directory, call:\n"
- 	      "\n"
--	      "\tgit config --global --add safe.directory %s"),
-+	      "\tgit config --global --add safe.directory %s\n"
-+	      "\n"
-+	      "To temporarily bypass safety-checks, run 'git --allow-unsafe <command>'\n"
-+	      "or set the environment variable 'GIT_ALLOW_UNSAFE=true'."),
- 	    path, report.buf, quoted.buf);
- }
+ 	if (strcmp(key, "safe.directory"))
+ 		return 0;
  
-@@ -1797,7 +1803,10 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 			      "%s"
- 			      "To add an exception for this directory, call:\n"
- 			      "\n"
--			      "\tgit config --global --add safe.directory %s"),
-+			      "\tgit config --global --add safe.directory %s\n"
-+			      "\n"
-+			      "To temporarily bypass safety-checks, run 'git --allow-unsafe <command>'\n"
-+			      "or set the environment variable 'GIT_ALLOW_UNSAFE=true'."),
- 			    dir.buf, report.buf, quoted.buf);
- 		}
- 		*nongit_ok = 1;
-diff --git a/t/meson.build b/t/meson.build
-index 401b24e50e..911cd45638 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -100,6 +100,7 @@ integration_tests = [
-   't0033-safe-directory.sh',
-   't0034-root-safe-directory.sh',
-   't0035-safe-bare-repository.sh',
-+  't0036-allow-unsafe-directory.sh',
-   't0040-parse-options.sh',
-   't0041-usage.sh',
-   't0050-filesystem.sh',
+@@ -1330,6 +1336,9 @@ static int ensure_safe_repository(const char *gitfile,
+ 	if (data.is_safe)
+ 		return 1;
+ 
++	if (git_env_bool("GIT_ASSUME_UNSAFE", 0))
++		return 0;
++
+ 	if (!git_env_bool("GIT_TEST_ASSUME_DIFFERENT_OWNER", 0) &&
+ 	    (!gitfile || is_path_owned_by_current_user(gitfile, report)) &&
+ 	    (!worktree || is_path_owned_by_current_user(worktree, report)) &&
 diff --git a/t/t0036-allow-unsafe-directory.sh b/t/t0036-allow-unsafe-directory.sh
-new file mode 100755
-index 0000000000..4b98e815ff
---- /dev/null
+index 4b98e815ff..98087322a2 100755
+--- a/t/t0036-allow-unsafe-directory.sh
 +++ b/t/t0036-allow-unsafe-directory.sh
-@@ -0,0 +1,28 @@
-+#!/bin/sh
+@@ -25,4 +25,47 @@ test_expect_success 'GIT_ALLOW_UNSAFE bool allows unsafe directory' '
+ 	    git status
+ '
+ 
++test_expect_success '--assume-unsafe prevents execution if not in safe.directory' '
++	sane_unset GIT_TEST_ASSUME_DIFFERENT_OWNER &&
++	git status &&
++	test_must_fail git --assume-unsafe status 2>err &&
++	grep "dubious ownership" err
++'
 +
-+test_description='verify safe.directory checks'
++test_expect_success 'GIT_ASSUME_UNSAFE prevents execution if not in safe.directory' '
++	test_must_fail env GIT_ASSUME_UNSAFE=1 \
++			   git status 2>err &&
++	grep "dubious ownership" err
++'
 +
-+. ./test-lib.sh
++test_expect_success 'safe.assumeUnsafe on the command line' '
++	test_must_fail git -c safe.assumeUnsafe="true" status 2>err &&
++	grep "dubious ownership" err
++'
 +
-+GIT_TEST_ASSUME_DIFFERENT_OWNER=1
-+export GIT_TEST_ASSUME_DIFFERENT_OWNER
++test_expect_success 'safe.assumeUnsafe in the environment' '
++	test_must_fail env GIT_CONFIG_COUNT=1 \
++	    GIT_CONFIG_KEY_0="safe.assumeUnsafe" \
++	    GIT_CONFIG_VALUE_0="true" \
++	    git status 2>err &&
++	grep "dubious ownership" err
++'
 +
-+expect_rejected_dir () {
++test_expect_success 'safe.assumeUnsafe in GIT_CONFIG_PARAMETERS' '
++	test_must_fail env GIT_CONFIG_PARAMETERS="${SQ}safe.assumeUnsafe${SQ}=${SQ}true${SQ}" \
++	    git status 2>err &&
++	grep "dubious ownership" err
++'
++
++test_expect_success 'ignoring safe.assumeUnsafe in repo config' '
++	git config safe.assumeUnsafe "false" &&
++	git config --global safe.assumeUnsafe "true" &&
 +	test_must_fail git status 2>err &&
 +	grep "dubious ownership" err
-+}
-+
-+test_expect_success 'safe.directory is not set' '
-+	expect_rejected_dir
 +'
 +
-+test_expect_success '--allow-unsafe allows execution in unsafe directory' '
-+	git --allow-unsafe status
++test_expect_success 'allow-unsafe must override assume-unsafe' '
++	env GIT_ASSUME_UNSAFE=1 git --allow-unsafe status
 +'
 +
-+test_expect_success 'GIT_ALLOW_UNSAFE bool allows unsafe directory' '
-+	env GIT_ALLOW_UNSAFE=true \
-+	    git status
-+'
-+
-+test_done
+ test_done
 -- 
 2.51.1.476.g147428281d
 
