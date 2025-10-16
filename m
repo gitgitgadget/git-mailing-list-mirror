@@ -1,70 +1,85 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF3D1DFD96
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 20:55:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889D52E173D
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 20:59:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760648137; cv=none; b=pEiHYJ8UGVL0SdD4mOXTyX0c/R6oDBsw3QLYfFosH5btUFMGHn5QFY+ds1F9i5Zk5BcULHstE6mz2gLihRQG7riZ6RoR/EdQTtU/cj2gTrU/tXQ69mr1EyVnmbO925Ww/da8SdlZUQqIe/ianb2/yjIqxEiZ0wsJ/JNrOC4iYA8=
+	t=1760648366; cv=none; b=irGjKu20uzZKCxK7aQMy4GSaDCmIMzDf0Kr+LcsL39cAryVNbdSjL/uXN/c9LjlKD3YMFaDHYhHyxV4IzPxKlcMVqmwt7vUmIgmF21J1f2HPTiKG/c3XJVICgBiMO9uijj10mzK8LJrr/VWFuGiozzm95B799s+rNVJl9NgUq7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760648137; c=relaxed/simple;
-	bh=gSfPojtbTUjwrIy+aZDArzxRszaK7qgD3SXlUiGtrb4=;
+	s=arc-20240116; t=1760648366; c=relaxed/simple;
+	bh=EitiRaOhSn+3nS5uUaSf3vApvyo4qM0DsRrbUouRTmo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fQSwGfbKCO1njbcPFIJrl5b4Q7Gto8yixh7XuHbsF/S2abf/byuwS4ltFOsGOkjMwG9iyjOAWoyJqZlob27xwSbcyKgWhWqD9fVwg3sA8LC5WF1T4eYU9qTb0rudIezXEiWr2NiiuExjsujSe/OzYENZQfidhmKco6/hWCfAPsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HqD4prjv; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version:Content-Type; b=DUj5Pp1vIpNjx1bYk0I436aJnY2DwmC3OA9kQeVwJVsLyIkJFFo+Q9PH/Do6SqJkocrnrcIOzI4tfS2ztFUv4FzCK9ri8xLcOYYfEcQ9owzeSHDSggoTvWYnibywRHmqFj93ZkL5kyufZKwtKu0XvX+f2H2hkbTpGeK2Qi9HFi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WzliZUMn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bNdj8cHP; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HqD4prjv"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-290cd62acc3so4319215ad.2
-        for <git@vger.kernel.org>; Thu, 16 Oct 2025 13:55:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760648135; x=1761252935; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gSfPojtbTUjwrIy+aZDArzxRszaK7qgD3SXlUiGtrb4=;
-        b=HqD4prjvhw6uZAUt0n7rFMRC4h2ZxtroZl04qPfHwgTlf7e6YOjvVr9vI5VrMO30AR
-         jEoBLj0qdgpfUdySKgHVjAjLosDuyPw32aKVyUIF2lAhDd18X0U/a8RYsO3e8+JsaB30
-         6wGZ3lgVvug+B0LDOb1AcYNkYErBENXBlH/NjTfokgnbgs3nS2J3qJ97+sFOebBu/j1Y
-         ybGtKjGpKCXKbKBt4NSFbo5XGqd/8LNzQXkp2c3zJqlYHsoR7bZti5OA6vUG8x0eD+W4
-         bhuEhl816BsfuoOtlq6f+2zWO4nqqdgCI7vc6Lm5mMccUwvK7kM8iEUSaTZD7XBhcX70
-         3Iyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760648135; x=1761252935;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gSfPojtbTUjwrIy+aZDArzxRszaK7qgD3SXlUiGtrb4=;
-        b=hsAOEwCzc5IYDoWBUJqxdBWlGnaqI4yHZspWovLKtJpDCw7AcmwoL54tZERZfJnRe4
-         C4Cz5lCyFusWGBQJtYMXzsGBHoqVl9IcceI+eqIeqr3V1LyIRdRZx2o1i/KLmXysvxN2
-         1KjJxh+v8/XRGy78YNiWVAFTyAYkzYLlSFP/fF9LHN7NL0rdWXiVfWxQLel9sZs8W1ZD
-         XaeRYbuo9LgOEKaPc+abXmCzcaR3EtmIrTrCxd2xe6x89YAPNYIMykOP6hAbBUMAK5vB
-         yN4wmk1Yi78jgutd0/D/jBUnW0+rNK5lf9mxRVqhkbi14G7aG+u5jzXgge4kNcjRDlgu
-         czsA==
-X-Gm-Message-State: AOJu0Yw/27WZ4qmQEsJJsrjgFwTliYmQpxJug3cZa7pqhiR/1wPH5fbG
-	dS4K7vEfLNUOY3EibP6jThFuJGo06ncRnzpyfBfYaNLokpd0wuymttMajuI/eZNQ
-X-Gm-Gg: ASbGnctIGmiwpp3U1P+6qgFRjjG8uHadEgOYu98tRKLcWSCC7PCgSDFbswLyUB3uWlu
-	V55roDHmjlX/w/YRn9hFG38q1E9FA8eAdj2nsPi19L1rPYsyWHUiudDxoFj8ezGrjW2TFV4fSxb
-	0pba8wDqsB6L7Pjz2glfIns3ew/ZP1t+0KOpO7bGNV53v5OkPDA2VHqtuZWVvWm35+11KVPxKjE
-	kSSfPdPRa2xPx90N/T4GNR9XQWG76NnaTARjhHY4jy0AAmvh9mxGwNHdJ7bF/CcHk8zn9gJ6LIV
-	s+K07VCreX+kEI+nsV/gTAJfTUhk8+bBuYtgQSzv0eVq1XXMyaRnmZe6IIjvc84BnXGIGTuwOZK
-	5bRvaUIbwfLiORIewOyrdwOrX02HcZQs5kGNyOFiIDzwTf48yGsKnhDqo1eQDGUHDxkVTRDCTyZ
-	fE9Wo=
-X-Google-Smtp-Source: AGHT+IFEeZVFDh9Jo5adzDin+5Pr72AK/OZS24pHeQyRPkhl7XH5a8uFVrdLYlh6TiTQqdAP4nhVBQ==
-X-Received: by 2002:a17:903:19f0:b0:28e:9a74:7b58 with SMTP id d9443c01a7336-290cb94784dmr15183645ad.31.1760648135059;
-        Thu, 16 Oct 2025 13:55:35 -0700 (PDT)
-Received: from fedora ([2601:646:8081:3770::43bc])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2909930fb79sm40297325ad.13.2025.10.16.13.55.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Oct 2025 13:55:34 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Git <git@vger.kernel.org>
-Subject: Re: Signed-off-by & the law
-In-Reply-To: <CALnO6CDNRw3UcU9UM7rpkAoQsSmfdkxMKVihmoUmUOCv_fpbJw@mail.gmail.com>
-References: <CALnO6CDNRw3UcU9UM7rpkAoQsSmfdkxMKVihmoUmUOCv_fpbJw@mail.gmail.com>
-Date: Thu, 16 Oct 2025 13:55:33 -0700
-Message-ID: <871pn2ftx6.fsf@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WzliZUMn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bNdj8cHP"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id B3760EC019D;
+	Thu, 16 Oct 2025 16:59:23 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Thu, 16 Oct 2025 16:59:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1760648363; x=1760734763; bh=EitiRaOhSn
+	+3nS5uUaSf3vApvyo4qM0DsRrbUouRTmo=; b=WzliZUMnshgEavuzE//h7cZc6A
+	jCrFSB/nNKRRG2tQ39MYwH+8lCYO+YkWWYBC2gZBZGqpBYvYWk9oY8HWwt3ZaYfH
+	4XCxAG8XNIU8VyRhN1piRThq2haa9tGop2tyOUgcxQrmGZC4As2mZuwQQnj48Eot
+	/EE5MifDbX/R0jxZZbdnVDEWU3YLeWueM87W9tBHiI05EaPVqKTw4H/yiiV8g3SF
+	N3zOeZr9XM89YowQaUSpE0UBv4q34sTzkqGjpi3+7VMEc4ZygXgJSRA3C6V/rqA3
+	tCWRbHoAQFkjzpX3N9b16KsuW4dyDTnbaCSe5IroXYOtpUvbg222rUzG6Kig==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760648363; x=1760734763; bh=EitiRaOhSn+3nS5uUaSf3vApvyo4qM0DsRr
+	bUouRTmo=; b=bNdj8cHPMNP9CQ/+lyDohgxTvRcUvL7CnfO2F8yUTj7LNHA6ZRF
+	rnU9VWm84+Oo8gXEsl8lS4E3qI7gCxFNvlequnQ8pnKZN6vr441cBfbCgTL7lUXe
+	S7GCtkSfluBiWDl2n7X8AVE1HJ37Y/PAFgZtKk6wx15zWj9rNH/OokgLJqsTXVG0
+	+jANE7aGZIQYWU4KzOmCYL0w40N+IVQUlH7tkqvSGGW7DUOvBtJyq/98CphLCdr8
+	YoNVOzobBxKNGN5AaVSnkQUUczg4noUpMBIp7U40Nk0NWPJ/OmjqSwN/chscdSO7
+	jMsmAyVkvwVnJlYA/M6UNJ/wKSlnyQHwJpw==
+X-ME-Sender: <xms:q1zxaE5Qlfz5kdWj6WAscka4U1e-_hqqpJkQPEh8V0B-tbU092iMww>
+    <xme:q1zxaMwrznj_uVYdReOzfzhW9XETPwech7yCiBw7NMq2qooQi-7ezoqv5anejdPXH
+    YMZZLfQ7xd1f7JuLzP1qf6TdVxjKRGqR8EXo11aDi56BlnnKLnw_w>
+X-ME-Received: <xmr:q1zxaLyARJYosu0i1buD69IVfqQjACjPNpf2H9Qyg4ICwfl4-MSCyfqaNOnGBovTTka0NRy44Xdx8iIzBssJL7o_iqufO7bW0ZFk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdejfeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:q1zxaEzixMEyWAfEJcTmSWVB5jarHT7NiOm0y-woapUUSvZzcSHE_Q>
+    <xmx:q1zxaFZfSh-cX2TkTx5qyHdmsddMDUVcgGn_bRDAFLQJwYnGn9PG-Q>
+    <xmx:q1zxaFU1lp8DcmnszXKp9KYkcK7ZCw1krGXLAT_trlpoFi2_L8qCoA>
+    <xmx:q1zxaDhbdB25JHLN679vp9AGj_9bBV2dv-WPZ3kHbyBejM4InX5r9Q>
+    <xmx:q1zxaJIuDNOFefsQ5jKLJFZXxbgeUITmX-pGsKkJxg6XSnKWAI3bFYRY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 16 Oct 2025 16:59:23 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Taylor Blau
+ <me@ttaylorr.com>
+Subject: Re: [PATCH 2/8] builtin/gc: make `too_many_loose_objects()`
+ reusable without GC config
+In-Reply-To: <20251016-pks-maintenance-geometric-strategy-v1-2-18943d474203@pks.im>
+	(Patrick Steinhardt's message of "Thu, 16 Oct 2025 09:26:33 +0200")
+References: <20251016-pks-maintenance-geometric-strategy-v1-0-18943d474203@pks.im>
+	<20251016-pks-maintenance-geometric-strategy-v1-2-18943d474203@pks.im>
+Date: Thu, 16 Oct 2025 13:59:21 -0700
+Message-ID: <xmqq347i36mu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -74,40 +89,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Any contributors/users with an interest in law feel like taking a stab
-> at answering "Is Git's signed-off-by legally useful" ?
-> https://law.stackexchange.com/q/111158/26698
+> To decide whether or not a repository needs to be repacked we estimate
+> the number of loose objects. If the number exceeds a certain threshold
+> we perform the repack, otherwise we don't.
 >
-> Having a solid reference answer is usually a good thing, if one exists.
+> This is done via `too_many_loose_objects()`, which takes as parameter
+> the `struct gc_config`. This configuration is only used to determine the
+> threshold. In a subsequent commit we'll add another caller of this
+> function that wants to pass a different limit than the one stored in
+> that structure.
+>
+> Refactor the function accordingly so that we only take the limit as
+> parameter instead of the whole structure.
 
-Not sure if it has ever been a topic in court, but it would allow you to
-argue that committers signed off to the DCO acknowledging that they have
-the ability to contribute the work under an open source license [1]. In
-other words, the they have confirmed the work is not owned by their
-employers, as is often the case with Software Developers in the US [2].
-
-What I worry about is whether people actually read it and fully consider
-whether they own the copyright to their work. My assumption is that a
-non-small percentage of people just add a "Signed-off-by" tag as a
-prerequisite to getting their patch approved.
-
-That is why I prefer copyright assignments. I have done many various GNU
-projects that I commit to. I feel, at least in GNU's case, that they
-force you to consider whether an employer may own your work [3]. If so,
-the FSF will request your employer sign your copyright assignment.
-
-Obviously, the assignment process is time consuming and a barrier to
-entry for new contributors. For that reason some GNU projects, such as
-glibc and binutils, allow you to send patches with "Signed-off-by" to
-the DCO if you do not have a copyright assignment nowadays [4].
-
-Obligitory statement that I am not a lawyer here.
-
-Collin
-
-[1] https://developercertificate.org/
-[2] https://en.wikipedia.org/wiki/Work_for_hire#
-[3] https://github.com/coreutils/gnulib/blob/master/doc/Copyright/request-assign.future
-[4] https://sourceware.org/glibc/wiki/Contribution%20checklist#Developer_Certificate_of_Origin
+Trivially correct and makes perfect sense.
