@@ -1,100 +1,144 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7DD1A9F83
-	for <git@vger.kernel.org>; Thu, 16 Oct 2025 19:58:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952341A9F83
+	for <git@vger.kernel.org>; Thu, 16 Oct 2025 20:03:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760644725; cv=none; b=aTB6INWqiwnXJzzMnYDlkNFCa9i3UY8ORqAxVx2FX6TvhzZ3kybQFZgXSOTgpsNX4FWLNqmiMPeQdEVE6ZMhW5DP4ko01WIE7oAMWAti4n8tbn4u2stc4RjFc/PGXwvMfG4+BL2tNMQhOqGvsoNcyt5QjMzvXOmozL/PBCLrtMQ=
+	t=1760645040; cv=none; b=GaMAQ9dg4ZLPloV3n8Vm0IP8vlF0VvYshtttIppXZvWjrwJSP+lYxNk7OroQ3wx14u7cZuRnLFlssQX9N3Na/Gqht0h7WvlehbiOLnEIaVcoBMmNoJIP/UXPhNBLpxt95k6tnF4hb6fvdQ0J2WsWIWhl6Ic4OswlD1sBoGfWsks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760644725; c=relaxed/simple;
-	bh=EywLOxSzuvcgoE84cnEAOm41gPbCVdTcFKrwNzdcX3o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HectjtFDXDKLq9sH+nPa2vxb87H6wsnF2rYGMX2qls4biIel/6+m+m8c9HJQxu2FbtAjmtFVLyP02Onr8MDvGjHQ7xWicy64itDADlbZtLbCC4Kjc/Gi2jYXU6tBzWdI3M4+yz1p/yvTMNjSrMYAbUbmifkEGfJB00+flQ4UneU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AkHRU1wf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T31XLHpm; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1760645040; c=relaxed/simple;
+	bh=gjHdjHCq3k2UJscGqmicj6nbbRaeCVuIPGpXjsfZqcU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nN95huz7PV7N86Fy1lQP+lNk/+3nrZ8nlADo9GQmgnPWZYCIZuAxe3FWw8A0/mywtfSAFjLAvkqlDQi81RfywT/P2c2yuMpkS5o7vM6bEBkPwpXSn2SY7MmZBp7AOuZK1vHVnJgfPFShVDyY/4yVTqKysZRpXq0/0OovOQTsl8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BhI9HA+N; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AkHRU1wf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T31XLHpm"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A172F1400116;
-	Thu, 16 Oct 2025 15:58:41 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 16 Oct 2025 15:58:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760644721; x=1760731121; bh=bQtsVH/Vb/
-	op3m+3ac2PQzc3uGkQ5kwflpcoLg9oHWA=; b=AkHRU1wfX9Hyj5hroIytjJYqSn
-	jwIAUJjg+uTxU/GbdZV7d3vDkOm6JNV7ly/ZDDXqbt8U0VVy6mKNQRtSxJJrSTC3
-	31MdTfaFKYuj1xdWEH/jF7q2XORmU7rS9Oxa0s9uhW9dJGCzrKBGfYJK5FmUwMEl
-	21M0v+X0tSVv+0itNg84mZ+yX7B9AQ8NLRFuZNsyNRuUMX1vNox//bPQD4RT5pdL
-	F/OnkYCRfTuaTMvx/EXT9t7Twakjjn+QNK90JQwWTMG+HDk875LOuK7ex0vqdHzY
-	RDVe/ymcFnW6PIQu0ZVFQ3Txf9JFprVi8dum25std76TaDrwalvrjOFkd+fQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760644721; x=1760731121; bh=bQtsVH/Vb/op3m+3ac2PQzc3uGkQ5kwflpc
-	oLg9oHWA=; b=T31XLHpm6gXdNGhLUFgs16sEQc2OjHaQrFkdFN71+QIEFduQ8Bp
-	0/7KgwNf/SnY8DgvqMZ/7aikuLASrozeJR8SNZqwsedx4QElTF6yU3+wQBb6d32q
-	BjLMMeRQTU2qUA1nFhQPNfrCEhMRYqKlrZLucrnv8dKkShfFqgR21xXsxPay7SmV
-	OYul3JKbihtsg43lpnh7WpPs7SYn9UlYCPPRAXUUh05HM0A598DZ1JNFlk0HJAyn
-	ssoQy4uBjz0oKspqDwiU0EvYo6/mNa1rd0tM7S40vBsbD2wyJK4UFDGZlney+l5s
-	DqHW2mhrJpjdYb818oQoaL4f3pflyKwNruQ==
-X-ME-Sender: <xms:cU7xaENJWF_j8rXtgGCexAur6oYbGiAsiSzOBg9kiYD4oLeQQkRUSA>
-    <xme:cU7xaCZb_z8amifojS1lzF10v7Oot35ctqcUAE1XecxY6EGrQBhLa21sA0WyoGD2i
-    49HnX4WkkRiEqsAIKtAWxLy7E7FLlRLrXgsfyV-kk4R-ACSiWRpxg>
-X-ME-Received: <xmr:cU7xaIr7I9tnLpidcwUR8lO9zOSrTpmM-4FvA9ztC27pUoy2gg2Fjb9en5ialIJfPppoRFNndImbWitH4EjDWZsTHn-TA-OZfmW7>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdejudelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehl
-    ohhhmhgrnhhnrdhshhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:cU7xaGaZUhoHO0ytkmLoTlET6ltvPUA7DyJ-aWynwq59V_gfVtltVQ>
-    <xmx:cU7xaARwZrPX87FfCZV-dJAVxDHn6XC8vIKKm82FOjbc8T4whQrHZg>
-    <xmx:cU7xaN7KgjFXftCtzKTpRSPhhr03ag-mr7k5EP8IXQycGQTLlKitKQ>
-    <xmx:cU7xaFzebo3hwa_jZaynx_UtNKGTUxznXNToExezbPDufCGecQ8whw>
-    <xmx:cU7xaLH0vVLbOKOgN-0vWuY_-kYgMVXIXMoGWyjvA14h2maWawfINmBJ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Oct 2025 15:58:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Michael Lohmann <git@lohmann.sh>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 5/5] setup: allow not marking self owned repos as
- safe in `ensure_safe_repository()`
-In-Reply-To: <20251016053322.44495-6-git@lohmann.sh> (Michael Lohmann's
-	message of "Thu, 16 Oct 2025 07:33:22 +0200")
-References: <20251013094152.23597-1-git@lohmann.sh>
-	<20251016053322.44495-1-git@lohmann.sh>
-	<20251016053322.44495-6-git@lohmann.sh>
-Date: Thu, 16 Oct 2025 12:58:39 -0700
-Message-ID: <xmqqjz0u39g0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BhI9HA+N"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-63c09141cabso1618670a12.0
+        for <git@vger.kernel.org>; Thu, 16 Oct 2025 13:03:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760645036; x=1761249836; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cJ27zUJ8iWpVm7Y9c4K03FqAqU4swYsP7uz7GX/BFSE=;
+        b=BhI9HA+Nk8eWA+wtOyDt5kM8WwbrYtNL3j0JJC8aJNG/3Hxf2A03gp7tlih+xE4DKt
+         SBfN1oNlvfH9NrO5efYoriCNZdafU3jtiA/6uIisnTLOUzlTNRm0UHEzvZ1GkVjfRs7P
+         usMcLmXhYpckwrLldfzNLFstL/U3ugF4wWs01kMfrUXL4/uyd/zE9bk8UTV1ylIMHvFo
+         orz3jA/c5K/wOEM1Pj0s87CGrbJvqDtYEQlKvIAFEcQ3Z6Zc+8vlbXEfXZ2tBS4+voOI
+         tHGR1ci24W9dYuN8kEJcYXOWNfOVvuGuABbq2PACglqJvtzDdMgCihROPPuKa54TT328
+         1g2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760645036; x=1761249836;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cJ27zUJ8iWpVm7Y9c4K03FqAqU4swYsP7uz7GX/BFSE=;
+        b=KGI2wuw/mRNuXcQrIrhvb6huF2n9z/m06+fZJduwvSYRP3d16lVw3RrjuS+uTEuTkf
+         JjLYAHyd/22dfUMWA+bcP9Ama9raf3QMjRJZ2bRJ3FKyoeq4SyGXyud3ahILGy0MB3lI
+         UY+BM+TJkPHn0Qmkxoz+U9kx6THaRSfftNXHpVa+vUBdDqI4zQ73TaPAh7O7e+93KE58
+         KQl/HizFqYcrXiNzgD7dP8iYdA44Z5AemmJpr3mi/Ay07oli7ODBQGulTzYrlMd9u0YC
+         CT6xxz8twyHkgl3vxKKnpMPIzO78v7owDuMwOWstydVAv81S47DWWkeu3m/TwW08TCQt
+         brlg==
+X-Gm-Message-State: AOJu0YxEA+r+sUhUsKOfi5dIKZgRkuRIKtQzTUGqNQ+RlJmg7mhL0K+F
+	+09rO0PJYzePSauWjzuYkGCkbibBnMNdBQZdwyTfPkFrfhjsvf7g3NOh3ff+yzMJeJeRJA==
+X-Gm-Gg: ASbGncsXhKUG1/rk42eSNhz3xtOB5OfM2/s0h8k9XAS/zk6ltTcwPEhnGkMISM83czs
+	ZEIZg69cJVfZyr3fUC2YfBdFMJg4+JFkTEpYSd1FF+fLiDgxz/ruK8jJSMU8Vp0Eu/xHwm5uEfN
+	0xaViYEaU18szjCd3179SV8u2+CDyq0I9vmheGjYayPOeceZUKQ3pZw7kEIifEaF4SWF5vDHy4R
+	nJumOFdzYC6G/FT4sY1J0waSfsVGNRtPc1ubmW3/4INLdgewV/SugIHFekYllZcf6Rb4Ovieq8/
+	f2WDTgwiD7Uy88081IFzpQA+ZgoBoCCKPSKQmM3YGTy8eIPWqIF0D0C9Q9R4MsewcW+Pqj/nMXy
+	/2JsXCwituskrwfsJ5mAVHJiyEOYZwqDFFIwE3MVNrJt7+rZjCk2KMsiXhbPi+za4Zm5jm7Iy65
+	R94ntqUJnpnNzzlyJvGwAa82BCFHPUzRPSN0WcZ9kQtbZvBAswFeYfbsfNeLQP6JhDFBM=
+X-Google-Smtp-Source: AGHT+IFUtR1TvYHLt9L72AHeysH9hwwukApJOfkK8sau5kiiywTK3lSDBYv2UOvgh7Z06VUW/l59YQ==
+X-Received: by 2002:a17:907:d1e:b0:b3e:8252:cd53 with SMTP id a640c23a62f3a-b64725705e5mr141587766b.27.1760645036296;
+        Thu, 16 Oct 2025 13:03:56 -0700 (PDT)
+Received: from localhost.localdomain ([105.113.98.189])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63c1d344aa2sm1101737a12.5.2025.10.16.13.03.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Oct 2025 13:03:55 -0700 (PDT)
+From: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+To: git@vger.kernel.org
+Cc: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+Subject: [PATCH] [PATCH v2] gpg-interface.c: trim CR only before LF
+Date: Thu, 16 Oct 2025 21:03:44 +0100
+Message-ID: <20251016200344.43239-1-okhuomonajayi54@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Michael Lohmann <git@lohmann.sh> writes:
+Problem:
+The function remove_cr_after() stripped CRs blindly. The comment suggested
+NEEDSWORK: trim only CRs before LF. This caused potential confusion.
 
-> Git considers all repositories as safe, if they are either
->  - explicitly set in "safe.directory" config, or
->  - the user owns the repo
+Solution:
+Rename remove_cr_after() to trim_cr_before_lf() and update the comment:
+"Trim CR characters only when they appear before LF (\r\n) line endings."
+This keeps lone CRs intact and documents intent clearly.
 
-If you are going to reroll this step, please add a few more cases to
-the list above.  There are other code paths in setup.c that does not
-call ensure_valid_ownership().  Treating an explicitly specified git
-directory as safe is one of them (there may or may not be others, I
-didn't check).
+Also improved formatting.
+
+Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
+---
+ gpg-interface.c | 34 ++++++++++++++++++++++++----------
+ 1 file changed, 24 insertions(+), 10 deletions(-)
+
+diff --git a/gpg-interface.c b/gpg-interface.c
+index c961607444..2d114e05e8 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -964,23 +964,37 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *sig
+ 	return use_format->sign_buffer(buffer, signature, signing_key);
+ }
+ 
+-/*
+- * Trim CR characters only when they appear before LF (\r\n) line endings.
+- * This avoids removing legitimate lone CRs from teh content.
+- */
++/* Convert CRLF to LF, in case we are on Windows */
+ static void trim_cr_before_lf(struct strbuf *buffer, size_t offset)
+ {
+ 	size_t i, j;
+ 
++	for (i = j = offset; i < buffer->len; i++) {
++		/* Skip CR only if it comes right before LF */
++		if (buffer->buf[i] == '\r' && i + 1 < buffer->len &&
++		    buffer->buf[i + 1] == '\n')
++			continue;
++
++		if (i != j)
++			buffer->buf[j] = buffer->buf[i];
++		j++;
++	}
++	strbuf_setlen(buffer, j);
++}
++
++static void trim_cr_before_lf(struct strbuf *buffer, size_t offset)
++{
++        size_t i, j;
++
+ 	for (i = j = offset; i < buffer->len; i++) {
+ 	     /* skip CR only if it comes right before LF */
+-		if (buffer->buf[i] == '\r' && i + 1 < buffer->len && buffer->buf[i+1] == '\n')
+-		    continue;
++	     if (buffer->buf[i] == '\r' && i + 1 < buffer->len &&
++		 buffer->buf[i+1] == '\n')
++		     continue;
+  
+-			if (i != j)
+-				buffer->buf[j] = buffer->buf[i];
+-			j++;
+-		
++             if (i != j)
++		     buffer->buf[j] = buffer->buf[i];
++	     j++;
+ 	}
+ 	strbuf_setlen(buffer, j);
+ }
+-- 
+2.43.0
+
