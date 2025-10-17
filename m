@@ -1,107 +1,135 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95D91DC9B1
-	for <git@vger.kernel.org>; Fri, 17 Oct 2025 07:51:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAEF32550A4
+	for <git@vger.kernel.org>; Fri, 17 Oct 2025 07:58:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760687517; cv=none; b=Glpz7Ntog80794YCyCSGvWAJNzJQcjvdJ82UFMwwngJ5D8ST8L6K8ZJyaMCR5JPTaF289Vn6YawVhDS3INKzOMiWSUrmW0y9K6aELcOaVsueJXD0GcfQaoCvE4fwzT7PQ3WM/Qc3MLLxoBlQDEQ5L+5o6SNZCho6qe8gLm9KMpI=
+	t=1760687914; cv=none; b=qQIrxxxJ0swqs9T+lF2VNRgvA1mCxG5HQPS0pH8g5QVQ1hgenmpDOL4q17egum1r6q2F9rwN5WMNs1LOXm6h5TyM7viqeGBT3DdgHWKr3zgBz2Wd/hocIapqwlt9aLkpLceE1Pv+/dQe3xCKz5J5STIwDjtRQPdGzlVGA25gTnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760687517; c=relaxed/simple;
-	bh=jrl0K1eUc6HdK8Wu6Z2k+ceY+OJToaxszVEL51D23uc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ocGDgEQQXE9w/vVL74n9TNfMk83UvLRg0GxDfqDpgFrmNxlFALCt8QdfwC1w5PW6feHCxr+7/Wsa28srzhFp+uCSuzjgpXIvdEsqs0YIL11S9s2IlJswOJLRiAcfYw0euSbfl4EPvD+RLrp/ht8qv6h49vkj+Tz8sbJiWu95bBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Lbv1uMdj; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1760687914; c=relaxed/simple;
+	bh=kpWz7JWSHYKeho/wkBwMT+PjkJCfM6j+kY8XHGMd+Mk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EFQlVmKZoMcdZQowhovtGBklgVIw3k3x9HyWfyH2QJFN6tZ4uDbvlM0+bWLJVI6glz2bbCi+E+tUabayxMJF7/qqf3Rb8fI4SfAifjUNEqNJgsLQQNSpBQ5+4mNSTBIw+zXxdRvgkTzoLRWAEaxeJ58bQv2k/7eEJiuJ0hDsucQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D8ebvXW9; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Lbv1uMdj"
-Received: (qmail 252095 invoked by uid 109); 17 Oct 2025 07:51:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=jrl0K1eUc6HdK8Wu6Z2k+ceY+OJToaxszVEL51D23uc=; b=Lbv1uMdjN9qc0TsFzY9ffVfYpfzEbVYWBxjirdp1HKp3nXcB02TZszIRkTya0gA6dgYNSemBj07s4OcMa954G3hsOauKanWANALuCWPfbILnS0yuNgg+w4wT8hVDsBETh+QWY7VF5kIgiRzVa7BWc5TxvnpyZkz3nRisS8aMEK640ZCIzcaqsOizPMk6X4svh/ibtyP7RawZZGGqjkWeVCDY6+vPGI8OMD2S5Wl26qmpGuqwVM7YskaSgVojE0MhRwRjc3u+DWgdNDS5Ak1R2Cnh3lvSJsfU9YQuAk3L8tS2Kj4x2N6j2tDHrxhmaCidaRy3dFmm19H7ctw3QiuXkg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 17 Oct 2025 07:51:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 393190 invoked by uid 111); 17 Oct 2025 07:51:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 17 Oct 2025 03:51:54 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 17 Oct 2025 03:51:53 -0400
-From: Jeff King <peff@peff.net>
-To: Jake Zimmerman <jake@zimmerman.io>
-Cc: Lidong Yan <yldhome2d2@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-Subject: Re: Regression in `git diff --quiet HEAD` when a new file is staged
-Message-ID: <20251017075153.GA4078773@coredump.intra.peff.net>
-References: <CACJRbWjwOQwJB13CwTfvhV3p+Hbn4KrNM9AtBanGtUS4V_1MbQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D8ebvXW9"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b472842981fso206079666b.1
+        for <git@vger.kernel.org>; Fri, 17 Oct 2025 00:58:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760687911; x=1761292711; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=stezGxt6zQbIQuuO1Hxd5ni/6bbya0k+a83G7+Ebu8Q=;
+        b=D8ebvXW9GiSeKckwgHns7+vyIZRkERAfDSMjZPfz8aOHdE6pM3tR1p/ICPpt+DwYs9
+         8eFUaNNZID2HKMgUnd0s/4tJcAneLxQAPG+IOnskWq5cNLURoapyZUDYCAdA/23ry8uc
+         0s9AJsasyqltVGQQGhuTi4QV9J/zF0+aMTBjoCEwb4csrgx3D2lYLiCKdGk9iajNKvMW
+         6ju0vtT0YNRS9dwHY4rNC5UBnx4/AFybOO8cpNgjzDZeVeMp+4ToP0k1ErwfPdeOeODG
+         umQX9XDA0jvJvzPsO0KpIkSff3qixJGktQT/3656eUOdaeDbCrNiFcpL9OuNbIylywhY
+         hl3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760687911; x=1761292711;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=stezGxt6zQbIQuuO1Hxd5ni/6bbya0k+a83G7+Ebu8Q=;
+        b=ImUD3buZaWevKZRfgktZx6/oa6ghHOjfP17R6upDFaDkC+yIVDZps/GHVjRRDqTtWO
+         nxh2BS2GQMuTOOYZE37tssPk2QRmj3lSiGBVm54bNdpfXsZ3k0bpDMLg9xCRwKmz3TqY
+         NMOpM1OWYG70nkDjIsqRi3x3GsfcTeWf52HseAIiJekmTJZAqhHtwzUojrwHvcJrHr+T
+         53Ev94xEoYrrg88o0scQlObBIOi1pmWhMa4AnqfEOt6rGhakxAFCtOHc2UXs9xR/skQT
+         2HnJp+BZ6HxyFxN3ZawYIAXPLt8K8enZysKzy+Zbp84y2H/ACLyMzkiNQkQwbUvGMbGg
+         J9fw==
+X-Gm-Message-State: AOJu0Yzpdtlde9fhNjI1ycH4r/ApoC6bOnudx8JfX0ZsQTJbb3zVY0VT
+	O9+Ck2dEgxGQcux6nHmuJN5ip/GHIeXg/lzwrDxU8xALVjSzZ1kJOppmvDPXxM6aDGgjXB4Rmuz
+	9qYi1SuJY8gqFwdRqybbcoqnrkawgIFk=
+X-Gm-Gg: ASbGncv5wLHCAcCkm9LEDzkOfs8AEVNJwAUeUaMY+2w9rL6STGk5VziraVyLpzHkOjG
+	WDfqTQvQb/hMI8DJPYoW4R0t6kCE4S257Q8KCJaNo2Xwp1kTjoy9whhFLKzmcYdEhDOGGc16L1G
+	HL+Lmg8sBMDp4sWKpX/smA0rwftk319+iKq9u2PLcIbuviJkVBMLFALXBz0uxpRejz6quhfYGA5
+	E0XntouNDfXf3EkDEbLWo2D9rvLKhCNOY17NKcO+E06XhcSBpvRoc49axTD7CfoVdTG1Bw=
+X-Google-Smtp-Source: AGHT+IFX+J5i/MIG3y9jh/wPfWkVOT7D3MQf7YECePd3pCDAVRt2UtqBifw+w8bfc6gQ+OmkKnMdSC4RVOcp9J2MFAs=
+X-Received: by 2002:a17:907:fd8a:b0:b40:33ec:51ea with SMTP id
+ a640c23a62f3a-b647195b5acmr256393166b.6.1760687910753; Fri, 17 Oct 2025
+ 00:58:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACJRbWjwOQwJB13CwTfvhV3p+Hbn4KrNM9AtBanGtUS4V_1MbQ@mail.gmail.com>
+References: <cover.1760571220.git.belkid98@gmail.com>
+In-Reply-To: <cover.1760571220.git.belkid98@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 17 Oct 2025 09:58:18 +0200
+X-Gm-Features: AS18NWBuiXlvcJyaShKG0e2glta3a52ofNszzl6DmXY1_Y_JKF0zN4E25VAY_1s
+Message-ID: <CAP8UFD0Lzmt5ayQ3iSXtmJohDawmCEiu1r8Gq2mKTMy-1gX_fw@mail.gmail.com>
+Subject: Re: [Outreachy PATCH v2 0/2] gpg-interface.c: use string_list_split()
+ instead of strbuf_split_max()
+To: Olamide Caleb Bello <belkid98@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, usmanakinyemi202@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 16, 2025 at 05:09:07PM -0700, Jake Zimmerman wrote:
+On Thu, Oct 16, 2025 at 3:04=E2=80=AFAM Olamide Caleb Bello <belkid98@gmail=
+.com> wrote:
+>
+> Commit 2efe707054 (wt-status: avoid strbuf_split*(), 2025-07-31) noticed
+> that the array of strbufs that calls to strbuf_split*() provides are mere=
+ly
+> used to store the strings gotten from the split and no edit are
+> done on these resulting strings making the strbuf_split*() unideal
+> for this usecase, with the string_list_split*() being a more suitable opt=
+ion.
+>
+> The patch series by Junio Hamano can be seen in the link below.
+>
+> https://public-inbox.org/git/20250731225433.4028872-1-gitster@pobox.com/
 
-> In git v2.51.1, `git diff --quiet HEAD` will actually print something
-> if the diff output includes a new, staged file.
-> [...]
-> I ran a git bisect and isolated this commit:
-> b55e6d36ebce69136559add8fffd1a65df231518
+This description is probably good enough as-is, but here are some
+comments that might help improve it if you want if you send a v3.
 
-Yikes, that is a pretty bad regression. I'm rather surprised that this
-wasn't covered in the test suite. t4035 does set this situation up, but
-it checks with git-diff-tree, not git-diff. I initially thought that was
-because diff defaults to "--patch" output and diff-tree does not, but
-even "diff-tree --patch" does not show the bug. Weird. Maybe it has to
-do with running diffcore bits?
+The way you explain things up to here, it might seem only one commit
+in that series is about avoiding strbuf_split*(). But in fact the
+commit you mention is the first one in that series which is named "do
+not overuse strbuf_split*()" and contains 11 patches.
 
-I see that the author of b55e6d36eb (diff: ensure consistent diff
-behavior with ignore options, 2025-08-08) posted this patch earlier
-today:
+So I think it would be a bit better if, instead of speaking about that
+commit first, this cover letter started with a link to that patch
+series and explained the purpose of the whole series. You may then
+mention one or more commits in the series as examples of commits where
+strbuf_split*() is replaced with string_list_split*() though if you
+want.
 
-  https://lore.kernel.org/git/pull.2071.git.git.1760671049113.gitgitgadget@gmail.com/
+> This series continues on this path by replacing instances of
+> strbuf_split_max() with string_list_split() where the string from the
+> split is merely returned as char * and no edits are done on them.
 
-which seems to fix it, but there's no mention there of this thread. And
-the included test is still using "-I", where there is clearly collateral
-damage even for people who are not using "-I" at all. So I'm not sure if
-it's coincidence, or meant to be a fix. ;)
+Yeah, some commits in the series do that, but not all.
 
-Looking at that patch, my biggest concern is: are we missing other spots
-that need to special-case the dry_run setting? Because it's a regression
-in a maint release, I'm tempted to say we should do the dumbest possible
-thing that covers all cases and just revert this hunk from the original
-patch, like:
+> Changes since v1
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>  - Added commit reference and link to patch series for previous work
+>  done on the subject
 
-diff --git a/diff.c b/diff.c
-index 87fa16b730..687206f353 100644
---- a/diff.c
-+++ b/diff.c
-@@ -6890,6 +6890,15 @@ void diff_flush(struct diff_options *options)
- 	if (output_format & DIFF_FORMAT_NO_OUTPUT &&
- 	    options->flags.exit_with_status &&
- 	    options->flags.diff_from_contents) {
-+		/*
-+		 * run diff_flush_patch for the exit status. setting
-+		 * options->file to /dev/null should be safe, because we
-+		 * aren't supposed to produce any output anyway.
-+		 */
-+		diff_free_file(options);
-+		options->file = xfopen("/dev/null", "w");
-+		options->close_file = 1;
-+		options->color_moved = 0;
- 		for (i = 0; i < q->nr; i++) {
- 			struct diff_filepair *p = q->queue[i];
- 			if (check_pair_status(p))
+In a cover letter we are interested in the changes in the patch series
+since the previous version, not the changes in the cover letter. This
+is because the cover letter itself is not merged (except perhaps its
+first few sentences that might be reused in the merge commit, but this
+is more advanced, so don't take this into account for now) when a
+patch series is merged. So a cover letter is more about giving context
+to reviewers and inviting them to review the patch series.
 
-That would catch the bug here, as well as any others lurking. And it
-converts any missing dry_run from correctness problems (we definitely
-will not produce extra output) into optimization problems (we might emit
-data we do not need, but we can fix those separately). At least for the
-normal code paths. I think without those extra fixes the problems that
-b55e6d36eb tried to fix for "-I" would still be observable, but at least
-its fixes could not regress the other code paths.
+So here it would be nice if there were things like:
 
--Peff
+  - a summary of the changes in the patch series since v1,
+  - a range diff between v1 and v2,
+  - a link to a CI platform where the v2 has been pushed and the CI
+tests have been performed.
+
+This would help make reviewer confident that the series is in a much
+better shape compared to v1 and reviewers' comments on v1 have been
+taken into account.
+
+Thanks.
