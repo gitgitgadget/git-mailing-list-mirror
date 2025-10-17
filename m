@@ -1,54 +1,54 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C613C354AEA
-	for <git@vger.kernel.org>; Fri, 17 Oct 2025 22:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82438354AE7
+	for <git@vger.kernel.org>; Fri, 17 Oct 2025 23:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760740336; cv=none; b=W+ODsN/LUYimGFy1hzpFWeCoOArHN015EA2L4nxR33fdFywXFviAh8JT/rMKSTG3UJWbuNK5nbwqktdc4OWlB9JmMatTiMzuYtDbseVhtuwyWJVyL0AE/JoJ2MIkYw9f9apnQ5T2dnMbDlPDio3rD3CWEk29J2QyHsSHHPGcwQc=
+	t=1760743527; cv=none; b=XP7INdjtlW00DzztbrEyJbnY0JZdAkZgXuBJrK2EDCYrii91SG8iqEUBh3p8hUU8Q6CniS9ipyRGhhtAkEoGPe7LYR50hxGHH93cBMiK+nzyc3KTpzd64B3gE5vEOK0rQ2sfw4jFwdwnovwwlRJr8jdmx8O3bgmewRaQMTftaGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760740336; c=relaxed/simple;
-	bh=0MMqB4nCV87fMHmBTfNmcwXbXszKghLOAAVYOE5fo3w=;
+	s=arc-20240116; t=1760743527; c=relaxed/simple;
+	bh=hTBxcU9Nd/1rOYqHY17Co8kjRgNeLjyH/jI3Nxlwc2A=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dTjlif0Cwwg8OaxrYmIFIuGGx+Zk2rM0ndC1MHj5k+6WX/ESJfg9jFn45gS9EYmG0cbBtFiVT/ul2bjOvvv9doPYc1/g7U5Fkaf+aUr0LuKKpDi11n3IDqdxAhegStLD3CJ4VbccTIg7csxs3e46cQO+qLywZcheUq+jg99hGdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hT5rpe6p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EoH8v/Bz; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=YRKkZXQZec7IhDxU50TK/R8Z2TK+X59+qqSAcYMdjqIPawJCeey6OQrTTNJnfOBtCml+b8Hia49sZ/vUqkhTXx+iCJNjxRLHBkaTIcSenBxrMFUwpwbW11glDfMEysSrvGwQBkpRS3EMrRQQKYO1H/kLCbaBf9lz4H2rWlAhpD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Rx6SL1g4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=itkYWCxk; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hT5rpe6p";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EoH8v/Bz"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id D2CD81D00117;
-	Fri, 17 Oct 2025 18:32:12 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 17 Oct 2025 18:32:12 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Rx6SL1g4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="itkYWCxk"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 76E5A1D00107;
+	Fri, 17 Oct 2025 19:25:24 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Fri, 17 Oct 2025 19:25:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760740332; x=1760826732; bh=S7S1qojOEn
-	/MIU8jDtlaCQqmFDDWu8AmKI/QBBKH2G4=; b=hT5rpe6p7AFXigWJC+d66XGN+B
-	K3W+J2MUwdHHUVYn8ckQeWCn66Zb+S9nBANLDxyr5jiwWjtwgktAsTGTE4omicwr
-	rDKCLw0HCwK1pWXa1ygBP2XVxob3SCKygBI6VbUrLd/0T4vZRZO56OzJNnvNG7qn
-	OuIlLmbWxaWJg/A9OWwO6NYCiVmk58qUPXQQiK67bZtMNgfRy2AF3VtBD3QaKRAm
-	zvhILNqD73eMHXTr1YNTe9Ud6TEpfNWldovys+Q4t+/ZCdIQgjhnt6bc2dv6UOVp
-	ycu3hsQYlj1u5AVFvCcwIxWB856z7FBrIMiGuet7IRP3mLK4ACtLQhq3zs9A==
+	:subject:to:to; s=fm1; t=1760743524; x=1760829924; bh=CeKasx/87+
+	LPdU1iyjhUpa7pzsx2MrW0NNOzYY7j848=; b=Rx6SL1g4xb0hjwvd5QO0E5rkI9
+	WuFWJh43+O7yv/F19vS7qqU59lst9+GH5T5WJqatC0tA+2yl/0JMROBte/HAZub0
+	yeQRrUM/bop7wSrwvpdP6EzFiGvgcnc8RvaIJT9Jn+RSZkk0qZ4+8uQUa5cYW/Vz
+	A/ihKKstlSjBrxv5W9WJ+eYHbHWjQKYD2CLNGs+mm8gjNYFw2CcLDI9LMHhZX2cp
+	BDXDzlxT0jqWA3ERnCZzpjol8dXW+NydDQ3tc0vGAYrnlW5fnBxPPNNIME+emx2w
+	33x6eZtxINd9Xxg2L1aIHS+VGz+3Nx1dlwvqZsFZx+NNG5tkli/S3Qvvws4w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760740332; x=1760826732; bh=S7S1qojOEn/MIU8jDtlaCQqmFDDWu8AmKI/
-	QBBKH2G4=; b=EoH8v/Bz6z6VO7JXjuhDpPvuoHnx2S4zbJ/FO7RszxDJUn2SiPm
-	KC1gRo5Kz7lbP8zBG2kz3kZ9XtGgYXPKrMBx/zTLBQyadQYI5iPfrMrUjgjbgqQw
-	KpNu/G2czO1/6JQIHq4p/52u8MfRF4gT5GDy3pbH/JceeYzazIoJbsyPvVyTReX4
-	LvNDVhEjqItn+1Fizz+Qzi75J8+gWqdZRspVfxWJw8kzfJ9a+ywnXWdqSczPDYaE
-	Ns5wRnF6Ob9UaNl8vBXmyTYO/PvMMoElyofLnLU//boXKpTi0AOUBwF0q4lbgUCC
-	JmxIbOfpSdBmcJfgPD0QacyP/4hV77QY5Hw==
-X-ME-Sender: <xms:7MPyaIROWEoRy817gZVNwzg0UE0msKq4Xbxfu7-oZXETfohGheVtbA>
-    <xme:7MPyaMzGAjvYLaD99No4XuMqarpmfJQ4AtJCXxRuAPymRr8QsP4svJndNhc9t5VhR
-    g0zu8bI4bbcE7CelGdE9NAHEc2bXgD3hO1LF6D7G2m_aDEBGtf7v3A>
-X-ME-Received: <xmr:7MPyaK36wzgOhSBKnuylgmCIEWW_9u_WkuEuGvtaOj2EpAGhA9Dxv-5LD_zNK3-3vvO4TxjUkDP748_qU62X5NeyxSsOx6ENnpA1>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddufedtfeejucetufdoteggodetrf
+	1760743524; x=1760829924; bh=CeKasx/87+LPdU1iyjhUpa7pzsx2MrW0NNO
+	zYY7j848=; b=itkYWCxkJolxGsfbq5vJQv6qs1s+1ETf4Z1RhxVfZAuZ9Bv6Awt
+	6nBDyHWctTHx9t3JH2N+Sn1R08eOb00bqRZnsyjL7QVIEMZESEY7r2MEVEn7qs5S
+	Rcm9Y/9uhDSa/zJzX31xSsEg+RBxo3iNyiK7qnFpNs/JhXqYDxv5vXuT554evZpP
+	uMn5TGvj9PeI0RAFwZWy+2nPIU5t9uX9NCvQCI3FddAjC6NHqZqQ9a9P0dTgi6dI
+	ihNnqApvQJcecZccmfJJlsubrwhYAoNY+85LfelbvDIshuw2dxhuMgubp0fJ+rrS
+	LrPxlY9jyW6UuRMRO3kfMbB8Y1jHItuDHWg==
+X-ME-Sender: <xms:ZNDyaGAs7NF3r7xJCmqiMgtrlj-ZqbLZS0vE4yfugYJD3Y78AoqMXQ>
+    <xme:ZNDyaHjlGx0wAAzqZWf5Uewn9KwKtCN61U40VuVotkDSrwTBhDJ_LJZOVez-C1GE_
+    xxptvZEel5pIJ7bnW5Dw8rnsSvsTOKmS5P7z6yAqWdmOtXuVISqdhg>
+X-ME-Received: <xmr:ZNDyaOmRlH0rzpbPl3yW1qswn3hG63BohGlhAZEaykPfI6uTilewmsGU7QiKNTAxT11RtpjGqKQBqOC77lNTtUrOPK9MhTXpCbRX>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddufedtgeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -60,25 +60,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddufedtfeejucetufdote
     hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
     pehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
     drtghomh
-X-ME-Proxy: <xmx:7MPyaK43RTXOMiHfpdGJBftTw8dlkQCcBPubJn1OPe_MJBLGShxHVw>
-    <xmx:7MPyaNU-KMQNR8GI9U_WrrVthaJKjmcUgvE4p8Q50isJwfSPpQYnsA>
-    <xmx:7MPyaJBsiJ50c4pWHzIa8zbRGmgmz2cKKaS5S4NgTDWtL14LPQ4WQw>
-    <xmx:7MPyaM6sSo6p0QnsOxYZMSoyoltg5iEs5gd9TaVWVoYYh2oAnyyO_w>
-    <xmx:7MPyaCVbXdESvK5CBi_cnIqclb7YjvjFax4tTrNWPZBlXVG-BZWApnbu>
+X-ME-Proxy: <xmx:ZNDyaDqERV0EA6ruYK9Wd-BVEGcDI_JFoBapkrb1UV1EvbXE50tL1g>
+    <xmx:ZNDyaHGeHgqWQ3tYV_fOiYtiufBjjz3fl5ncCiQvc0tBl881GgxgjA>
+    <xmx:ZNDyaPxJJS4USRqlLJE8O6PpS9hmBgzIrDb21cIW3mGIaA9erD50ZQ>
+    <xmx:ZNDyaMr7k2qE2A1ibKXT1Ob3xfliGz6T2k_iQffnhL5QFWobK2koFA>
+    <xmx:ZNDyaGHVYPPmfncXlFyZnwuFmgRae-AIpgw-wdDQEcpPuE6B77eQzj7J>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Oct 2025 18:32:12 -0400 (EDT)
+ 17 Oct 2025 19:25:23 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH 2/4] doc: git-reset: clarify intro
-In-Reply-To: <6b5459b7ab478de33d17f9518906396f8a01e0d6.1760731558.git.gitgitgadget@gmail.com>
-	(Julia Evans via GitGitGadget's message of "Fri, 17 Oct 2025 20:05:56
+Subject: Re: [PATCH 4/4] doc: git-reset: clarify `git reset <pathspec>`
+In-Reply-To: <0be166483f547de866744917e6cb19eed13a8088.1760731558.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Fri, 17 Oct 2025 20:05:58
 	+0000")
 References: <pull.1991.git.1760731558.gitgitgadget@gmail.com>
-	<6b5459b7ab478de33d17f9518906396f8a01e0d6.1760731558.git.gitgitgadget@gmail.com>
-Date: Fri, 17 Oct 2025 15:32:11 -0700
-Message-ID: <xmqqecr1xiqc.fsf@gitster.g>
+	<0be166483f547de866744917e6cb19eed13a8088.1760731558.git.gitgitgadget@gmail.com>
+Date: Fri, 17 Oct 2025 16:25:22 -0700
+Message-ID: <xmqqa51pxg9p.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,82 +90,51 @@ Content-Type: text/plain
 
 "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Julia Evans <julia@jvns.ca>
->
-> From user feedback, there were several points of confusion:
->
-> - What "tree-ish", "entries", "working tree", "HEAD", and "index" mean
->   ("I have no clue what the index is", "I've been using git for 20 years
->   and still don't know what a tree-ish is"). Avoid using these terms
->   where it makes sense.
-> - What "optionally modifying index and working tree to match" means
->   ("to match what?" "optionally based on what?")
->   Remove this from the intro, we can say it later when giving more
->   details.
-> - One user suggested that "The <tree-ish>/<commit> defaults to HEAD
->   in all forms." should be repeated later on, since it's easy to miss.
->   Instead say that HEAD is the default in each case later.
->
-> Another issue is that `git reset` consistently describes the action
-> it does as "Reset ...", commands should not use their name to describe
-> themselves, and that the word "mode" is used to mean several different
-> things on this page.
->
-> Address these by being more clear about two use cases for `git reset`
-> ("to undo operations" and "to update staged files"), and explaining what
-> the conditions are for each case instead of forcing the user to figure
-> out the pattern is in first form vs the other 3 forms.
->
-> Signed-off-by: Julia Evans <julia@jvns.ca>
-> ---
->  Documentation/git-reset.adoc | 13 ++++++++-----
->  1 file changed, 8 insertions(+), 5 deletions(-)
->
-> diff --git a/Documentation/git-reset.adoc b/Documentation/git-reset.adoc
-> index 9843682e81..876187dc83 100644
-> --- a/Documentation/git-reset.adoc
-> +++ b/Documentation/git-reset.adoc
-> @@ -3,7 +3,7 @@ git-reset(1)
->  
->  NAME
->  ----
-> -git-reset - Reset current HEAD to the specified state
-> +git-reset - Set HEAD to point at the specified commit
+> +`git reset` only modifies the index: use linkgit:git-restore[1] instead
+> +if you'd like to also update the file in your working directory.
 
-The command has dual-purpose, and it is a bit disturbing that the
-other one is not even mentioned in the original or in the updated
-text.  "The other three forms" is about resetting the index without
-moving HEAD at all.  Would this work better, I wonder?
+I cannot judge if it is clear enough with the above sentence that we
+are only talking about "the other forms", but if that is the case
+and it is clear we are not talking about the mode where the command
+repoints HEAD to another commit, the above is a good piece of advice.
 
-    Reset HEAD or index back to a known state
+If not, perhaps
 
-> +`git reset [<mode>] <commit>` changes which commit HEAD points to.
-> +This makes it possible to undo various Git operations, for example
-> +commit, merge, rebase, and pull.
+    When specified what paths to modify, `git reset` updates only
+    the index (without updating the HEAD or working tree files).  If
+    you want to update the files as well as the index entries, use
+    git-restore.
 
-Good.  These are prime examples of when resetting to a known state
-is useful.
+may be a way to clarify the distinction between two modes.
 
-> +However, when you specify files or directories or pass `--patch`,
-> +`git reset` will instead update the staged version of the specified
-> +files without updating HEAD.
+>  `git reset (--patch | -p) [<tree-ish>] [--] [<pathspec>...]`::
+> -	Interactively select hunks in the difference between the index
+> -	and _<tree-ish>_ (defaults to `HEAD`).  The chosen hunks are applied
+> -	in reverse to the index.
+> +	Interactively select changes from the difference between the index
+> +	and the specified commit or tree (which defaults to `HEAD`).
+> +	The chosen changes are unstaged.
+>  +
+>  This means that `git reset -p` is the opposite of `git add -p`, i.e.
+> -you can use it to selectively reset hunks. See the "Interactive Mode"
+> -section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
+> +you can use it to selectively unstage changes. See the "Interactive Mode"
+> +section of linkgit:git-add[1] to learn how to use the `--patch` option.
 
-I see no however here.
+I do not see a good reason why we avoid saying the noun "patch",
+especially when we see it in the option.  If we were allowed to say
+"patch" here, "changes from the difference between ..." can be
+rephrased to "parts of the patch that makes the index match the
+specified commit", which may be simpler.
 
-Other forms are not about flipping HEAD to any state we used to have
-before.  Instead, they are about populating index entries from the
-state taken from an arbitrary tree-ish.
+Also "unstaged" is only true when <tree-ish> is "HEAD".  If you are
+grabbing the contents recorded in a different commit and shoving
+them into the index, that is not "unstaging" at all.  Rather, if you
+are planning to make a commit out of the index after doing so, that
+is rather "staging" a change!  While the verb "to (un)stage" may
+have been a useful tool to explain the act of updating index entries
+to describe its effect relative to what is in HEAD, in this
+particular case, it is probably more confusing than illuninating to
+use it.
 
-You can view them as enhanced variants of "git reset --mixed HEAD"
-(read it as "unstage all changes").  They are enhanced in the sense
-that unlike "git reset --mixed HEAD", the treeish the index entries
-are taken from does not have to be HEAD, and also in the sense that
-unlike "git reset --mixed HEAD", you can limit the index entries to
-be affected to a subset of paths.  I am not sure it would make it
-easier to understand to explain them in terms of "reset --mixed HEAD"
-but I am reasonably sure that it would appear confusing until a
-reader realizes that the command has two very disinct mode, one that
-is primarily about HEAD, the other that is primarily about index.
 
->  `git reset [<mode>] [<commit>]`::
->  	This form resets the current branch head to _<commit>_ and
