@@ -1,53 +1,53 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A03EF224234
-	for <git@vger.kernel.org>; Fri, 17 Oct 2025 20:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA51271449
+	for <git@vger.kernel.org>; Fri, 17 Oct 2025 20:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760732284; cv=none; b=iZQadW6n+fELJCguV1NGuxZGolcGG8h6b6lGYevh9xPTdlv8iW60yse1YUjQ32sul8+l+uOVw2W3P+Y+km+V7M4x5W7vuTz9G0GRsG6peGyNNXB4tiypuOOkM27pVWNObFZ49dJXofoNb98MYvzDP5qVaVoxbQF8Qi1RPlyXelI=
+	t=1760732400; cv=none; b=jntz4qDQCrNnJ50OMB/kzqTXaJkCQVDJJVke+po6d9YrO9vsmjbqmz9iqGO1v9sJuiuOKfIHYy7XmP4P/BFwFsmOdO/j/nmWUw7ivkT61CZFN71ct/mTMOw0uwLB0jhOOuHXrqO9wKEcEbHcG7HNCVAdjnkgEepjKW77zsaLdnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760732284; c=relaxed/simple;
-	bh=jopgU6elcizjboWKJRMHtlDIM4jVfGPkmCmeHiBjGY8=;
+	s=arc-20240116; t=1760732400; c=relaxed/simple;
+	bh=88vpCrAb/58VaaZESsdSa+M112VHjGzyNt90fE3hfrs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eN1KNe5UAzoPkwOwKHcriiF5hn1o3THMByElwkakJkaZ/zQOcNAM40GciOwCcmVdsHpUczWxISO19BjRT1mqgPmjD7y6FyIUO920qkPrjzLTV+/+yc7F5Axo+3ES0HAvt4vIYAl3MBIsrgvPfa9TcWEa4h3v0Vil9aK8kw9fVFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Z0j1ZoO6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JtRX8MtP; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=WniB8yTcfWvm/l/3BN+hSQDCgH8VNLPhEqw6yp6NKJ+kWCq9ZZeoPC9BY+N2Mrvci88HqTaviHEt94hCUWDuOU9yoXRtdlGzok0i8PhHSLGT8R//nVrGEeB4agmVuWkAUhxTKf1MB1v0ygUqt3p5NS0e7r+dCr4whxE7pPRhHXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DAJf5Y/q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CJUtD7/z; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z0j1ZoO6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JtRX8MtP"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 733461D00107;
-	Fri, 17 Oct 2025 16:18:01 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DAJf5Y/q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CJUtD7/z"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id AD6A51D00107;
+	Fri, 17 Oct 2025 16:19:56 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 17 Oct 2025 16:18:01 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 17 Oct 2025 16:19:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760732281; x=1760818681; bh=BHXUEzuwwr
-	XrVJzVoKVKoqLyl8qCQyhcsV4RRdLHxE0=; b=Z0j1ZoO6MojX3Pba+yOX3sgElx
-	PtaffssWqdO7+2d5N+gW5/piX72uVbGo7QgVVaBAbdEJ5YJ/D/3kkNqhC92C1+mm
-	ApzLZIeRz3qHzX7amAbsPnTKItH28LJXBe7HIm9F9WYXNweD6QZsU3bZrAy0wJmn
-	DnSq5xci4eZgP6dAjpRLF/jxHcj328CxZxH3L5ef4RKig5lcgXlTX+VbhlJVL5Ps
-	wWS7Ymls6vkGtjYvB8HQXvqWYZ0GcEhzhEY/kdRZ2iSaACQyEz5AxaklLKyTGXxI
-	Bxq63MxGpglCY8plvQ/TdX5lCsph5P5eK3wva2FmkhUW8hofWKk4XXYpFZEg==
+	:subject:to:to; s=fm1; t=1760732396; x=1760818796; bh=dTgKUN7h0H
+	xL46dmq0dLIemRgUikmd/9uxAr9wdiIyA=; b=DAJf5Y/qR5VkevTUzA3vGfq9pN
+	roWGrNwiGM315F2PrPj1HpWTYwTg4q4ySO2sAGjyKptD2rGDitJJ1sNVVhISymoD
+	cXuN3erDEYAoOX2XojWzAvdzrB+wR6dDHxs7YNPVEQW+6ZafHS1PqXVEuUR8vr/f
+	q1kal/xC3blqQ4QTo0lvIm1za/6UpPE3iFFdhM/mAqgPBWuIZ3290jqprHl5nHOE
+	/tnFl7FGCFmLCViKHW79zHUyW5qLpTfRV1VRwIZQvhZThFvgTMX5z4BUNXtGEPmi
+	CIS34h1DnnCAyDNNxafyO+rGUpwq4Hp+Crgp7ZQ8MUjIqMLvpansmV2LXlCA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760732281; x=1760818681; bh=BHXUEzuwwrXrVJzVoKVKoqLyl8qCQyhcsV4
-	RRdLHxE0=; b=JtRX8MtPYkUWukmL8p1N5b9h2epSRQ4Ktd+zmcFFAhZ0Kqx0RQB
-	71IsEpEJ4fIJSZRiJFJJnT9Co8GwFZ5bbaITw7UkCrdlol7dtFOrIZGO5pvLoGCT
-	K9BAFqg/SBzbTrmAIH9KWKUfdp8wt6hz5ICxzZKD9XjApKXL5r3w9FqauLVGVu28
-	0veDj27pFOiTrt0hRYMv7tBWLqQRNB+ZM/XzWGBjIQMApm7rlVnoukQ8Qlw/Fs6w
-	3ft/Sf+eYJvyIGnOwsfW9QxXTyuUFEU1bOlwq2Osa1SVOkaJXD00FSbhL8/NaR5s
-	HSRp/qum3XN7DGRegM4AFCGVspXjRVSvTPw==
-X-ME-Sender: <xms:eKTyaO-FkjdBWbNzrK9QsHiZK9UY3EzBjk8zciJ1MDZcLfDr528z2g>
-    <xme:eKTyaJrfO5cQ2Pcw2vgJK0nZ1G8mg4h1boIhERaTn1K9EX4qBDQwwpE872gtuXAPh
-    Q2mZP_am7Jlvh4dAgaVtBs7An8SZd_XUxixDRcaOfj7kV7BECcCZw>
-X-ME-Received: <xmr:eKTyaDAHY-vpq7QOaiIvIgSDz63oxSKrVKmas0B1uigjNpknkvq6al7duhBFnfAzh7TvxPwIRV_5LgyFr5j5zpZBa2o4kVFPlJFM>
+	1760732396; x=1760818796; bh=dTgKUN7h0HxL46dmq0dLIemRgUikmd/9uxA
+	r9wdiIyA=; b=CJUtD7/zyd7PDfKwrTYAGwv7PiCidVLtwTYu2ePV+r+gA/Ow94t
+	2uPlcf+6AZ630Ef5vNN5KV3M0//jeLafAsxSYpeqGZdWrPI4d1ekkSqLt1TDz2sj
+	y0ygdXtSf8BH9HoDN1P/krdWf9SAsvmCOtg+iC5BZd6o7ojInTL0pQTc+t93Uw+W
+	KyTzDUYASb2h34myo0sPo9Um/W0OVhCiruoraHgtGaNFQ44wt8e2ZTozE+dJ452p
+	rh5Jrjh3fZ27JIGe6SpXhWNCqqT4g0al4+D64TD6tYOmkCbH6JkgKO4K0FljPmLQ
+	vI8b41/w/PAp2dyC3Wsg2krM2cUr2kn1R7Q==
+X-ME-Sender: <xms:7KTyaFGIvw4E3bP3KViRhcj6rMn2p6DURIxU6Ann3R333KMrdqIftw>
+    <xme:7KTyaFTv4dNjLqodDY6Sg31jquPqLa_XVOOh7T9ljC3K7av9cnnT3253BzG9s5jru
+    QAL32bCQgfD1AuCMHL7u93YVw2KLnUIPioNxqW3erToe8M4m9f_HUs>
+X-ME-Received: <xmr:7KTyaGLVsLtmkEPOBtXHly6oZ7aUXEU6vNLZFSlRSovGG2E1ZlOhTjlUaSvXG5ZfQDCB4lPWSpBvtLkZ9cAV7fyu1ogvBQo2fkvt>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddufedtudduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -62,26 +62,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddufedtudduucetufdote
     ehtddvtddvgeeffedttdehieesshhmrghilhdrnhhjuhdrvgguuhdrtghnpdhrtghpthht
     ohephihlughhohhmvgdvugdvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
     gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:eKTyaLwzrXBgHC08SibUgPrqUcDNR2iMKYxTIIrdd2srNSqBDHuz9g>
-    <xmx:eKTyaA3LzTpVjDzvbvZOtg_mXQXuPxUzqj-7IOxnaFBL3f35vf8jrA>
-    <xmx:eKTyaLyQuPL74usL3Caz8QeCBduRcYg0sTErFjqHDvztWysVqH8uMA>
-    <xmx:eKTyaHFco-c43rfeRo3y5zC_wICirhvVI7dq9G1o_zTEEFFQiruzww>
-    <xmx:eaTyaCaH6BT5szVUwqL3mVv96FuISk5zjF1Vs45LG-qWmqDVuzRuKTaP>
+X-ME-Proxy: <xmx:7KTyaAbrJnufh-JBALF3tdSnd3bKAopo3eA7-7ItbhJsvpMGi5EkNQ>
+    <xmx:7KTyaI9RhS9pQkSP3tOq3a2VC8T7xsameq--kScq-WnAgO7zWguHIw>
+    <xmx:7KTyaBaijcNLNMqvpPvSkRV71IgYfo39UTTIYLbxStAl8keCyDMgGQ>
+    <xmx:7KTyaMOb6krkFl3fDlpkK1OyHydB-70MvYOBc4HGcKHRbc9nX8hiPQ>
+    <xmx:7KTyaAix_UzVQ7cTWPIMDr-Fu-dKrfXkp_5IUm0odg4Ys7gVCJb79Umy>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Oct 2025 16:17:59 -0400 (EDT)
+ 17 Oct 2025 16:19:55 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
   git@vger.kernel.org,  Lidong Yan <502024330056@smail.nju.edu.cn>,  Lidong
  Yan <yldhome2d2@gmail.com>
 Subject: Re: [PATCH] diff: stop output garbled message in dry run mode
-In-Reply-To: <4ff55fc5-7880-b8bf-257f-3186552e9c36@gmx.de> (Johannes
-	Schindelin's message of "Fri, 17 Oct 2025 14:07:50 +0200 (CEST)")
+In-Reply-To: <xmqqjz0tz6eg.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	17 Oct 2025 12:15:35 -0700")
 References: <pull.2071.git.git.1760671049113.gitgitgadget@gmail.com>
 	<4ff55fc5-7880-b8bf-257f-3186552e9c36@gmx.de>
-Date: Fri, 17 Oct 2025 13:17:58 -0700
-Message-ID: <xmqqa51pz3ih.fsf@gitster.g>
+	<xmqqjz0tz6eg.fsf@gitster.g>
+Date: Fri, 17 Oct 2025 13:19:54 -0700
+Message-ID: <xmqq5xcdz3f9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,59 +92,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I do see a still-unguarded `fprintf(o->file, ...)` call in
-> `run_diff_cmd()`, but as far as I can see, this call is not in any code
-> path where `dry_run` is set.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>> Thank you for fixing this so quickly! From my point of view, this is ready
+>> to go. I will integrate this patch into Git for Windows v2.51.1 (which I
+>> am sadly forced to release on a Friday).
+>
+> You may not want to.  I think I'll have to do 2.51.2 either with
+> Peff's fix (or a rerolled version of this one if it comes quickly
+> enough) early next week anyway.
+>
+> Thanks.
 
-Among the callers of run_diff_cmd(), only the caller that wants to
-report "this path is unmerged" passes NULL diff_filespec pointers in
-parameters one and two, in which case run_diff_cmd() would give that
-message.  So if you have an unmerged filepair in queued_diff, this
-callchain
-
-	diff_flush()
-	  loop over diff_queued_diff
-          -> diff_flush_patch_quietly()
-	     fiddle with dry_run bit
-	     -> diff_flush_patch()
-		-> run_diff()
-		   -> run_diff_cmd() with one&two set to NULL
-
-may hit the fprintf into o->file.
-
-So you are right to worry about that fprintf().  If I make a
-whitespace-only change to one file, and then make another path
-unmerged, here is what I would see:
-
-    $ rungit v2.48.0 diff --raw
-    :100644 100644 b82c4963e7 0000000000 M  cache-tree.h
-    :000000 100644 0000000000 0000000000 U  t/lib-gpg.sh
-
-This is version before that dry-run thing.  It operated under the
-old rule to show "--raw" to report object differences, hence
-ignoring "-w".
-
-    $ rungit v2.48.0 diff --raw -w
-    :100644 100644 b82c4963e7 0000000000 M  cache-tree.h
-    :000000 100644 0000000000 0000000000 U  t/lib-gpg.sh
-
-With a version with the dry_run thing, here is what we see:
-
-    $ git diff --raw -w
-    * Unmerged path t/lib-gpg.sh
-    :000000 100644 0000000000 0000000000 U  t/lib-gpg.sh
-
-As dry_run thing intended, the entry on the whitespace-only path is
-gone from the output, but the fprintf(o->file) you noticed comes out,
-which is not what we want to see.  Of course, if we omit -w to avoid
-triggering the dry-run thing, we won't see it.
-
-    $ git diff --raw
-    :100644 100644 b82c4963e7 0000000000 M  cache-tree.h
-    :000000 100644 0000000000 0000000000 U  t/lib-gpg.sh
-
-As a regression-fix change, I'd feel safer with Peff's version.
-
-Thanks.
+Ah, sorry for replying before noticing and reading your announce on
+2.51.1 that was made hours ago.  It seems that you had a separate
+reason to make a release with the CVE fix material quickly, so
+please ignore the above.
