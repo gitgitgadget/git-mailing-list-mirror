@@ -1,189 +1,488 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410262D94A5
-	for <git@vger.kernel.org>; Fri, 17 Oct 2025 11:55:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D87332EA2
+	for <git@vger.kernel.org>; Fri, 17 Oct 2025 12:07:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760702119; cv=none; b=VKGdfYZsv3tMtkqgXH4v4BXVQkTQwWR0cuIGwqeMoiXJvXHgISduQaSh+BsnJv0lC5XYYAf8mzXgdrVx7/d0putIKfoJD51qeRRcPpfpnvhb2TpOfHFUwgQjrilJmfk2Q2PhNRSGgkVElW5xlT7NyT77WYaew/oUTpJgxlPDDQg=
+	t=1760702870; cv=none; b=GE8i3oVz9U0SneEn04liP6B0ALTM4ouI/sHh86fQVqs3aEHMw7u4VVftAZjITKpvwSclmZsT+ulHfoCnFBU8OPg41nIoIRe+spCjQANu/JRokxmUOHssATPVknwbDNou6VKYlsAxv4LeZy7W+YOu0azYYtGC7Gr9r2c/mKY7WsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760702119; c=relaxed/simple;
-	bh=sCDTpe3t4ONgW30+k052suQNVTCJY0nYvPeapPcBBcw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ivT9SfIHjgbx9HGM6vY4R6WrvtpkbMfkml4Fbx43NI3DRytI7wIFoUDIlf3tK43lgy14LJ+gv1v8fnS1KEjmUbq4T/TW1hARwop0H7j6vI1kbsvrObrkllvEVeXu9IP2NLYerLO/MEYvL5W+DncY+RX8GRyNC56dcpRRYAyPaZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZiaboJ4u; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760702870; c=relaxed/simple;
+	bh=nAQiEpsOTp96srD1ttaqy6feD3of162oNzAqrIGcsXM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DnW099k3KWf/NTDZXX9Golfo1tkR70orUCbDdKTEeMzVV20zZwkdox5kA9ZIGYcOC0dGJQQgXu5lXqB7K7iItDpsq/7g2xRTSGlmnLmVCy1ac0QpZhpTwcwDUlNb+Mqw8H7R+01NS50ML1RZj7h7rQoXZOfEqLh3dJEwsUfEC7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=F32m1UjV; arc=none smtp.client-ip=95.215.58.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZiaboJ4u"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-b3f5e0e2bf7so346977666b.3
-        for <git@vger.kernel.org>; Fri, 17 Oct 2025 04:55:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760702115; x=1761306915; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vbrawJqTwAxdnlSAJr4MEhWcMA7sI5+CoSLOlod2pLg=;
-        b=ZiaboJ4uyaQKd6i61+0mFVHTehAo6gU+3VKbkGL741jWtBpnE5/LiIFrh12kvoTr+X
-         ZZpihdBEXD5aL1j5fHhKGy1w8iG6G+PjR62s8v0r3Vd8pdd1gE1lGPk3d5TXC3T0d6j7
-         2KGcc3tkFalXh9Gaok4Q930XaJ2Od8EWOT8uj3P6FFAL0adYW8amAdEER3GIYRGHwWsk
-         jTRz9RJLq/tdpV0dFHKR7d9xqsaFLc3RwPlcuaJHLyZxaqLGTitZXwhMamhjOv8/MyZ6
-         bDikrQD41/97zlmWLqVMQhndljr/IptaPGm0VD4nvfBTxpj93b+4TQJPkaoD1aiw8Reh
-         65LQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760702115; x=1761306915;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vbrawJqTwAxdnlSAJr4MEhWcMA7sI5+CoSLOlod2pLg=;
-        b=sNC3gyr9r+nGSbk+8wpyjN/J9ji8F8HLOhMfzZnUGPezOQvgoMeNBSNwHzp6+Ig1Wm
-         y1+wHERCVsmoja0GnZZsVLfazk5J+di7aFIL8hVlBAhtD371zihaVW8ueTs1ibNewHT6
-         0LmaSXs5eFhit+z1ge/aSzwSVOBRXOs5xq707wtYC+av6H3cjJ2U1avfTNmzdsz5L6Wh
-         RqgGdtwLrkzhMzjWT0E3rwex+6xGExCWYwW2fMgh8s8LhDqMTrb2aWU6zm8rUNn5nSpE
-         7Q122SqdkRO9FH3BIL3ts5SL/5iEU6Ir2ORYY8MG8jJmhWiCzKzxoO+IKwYN2fmiGlGA
-         zsYg==
-X-Gm-Message-State: AOJu0YxONsU78n6u6GLiaSzoQM3jQgWq5l4yyhMNY8787NRXaD5uabVA
-	tDQveIuqqLUd48XBhq8lpVO3eT6XNlfZcD3YlaRrGXsEqpFfyWggkZvOaIu8QldZsTP9Bakdt6W
-	skS/MxW2D4yhE1NY7jjI3Bt/63EucPjE+5MK538I=
-X-Gm-Gg: ASbGnct1qmME5sLJ8XjJE8jfswsl4xvd/AkTIimZeG5wyN+9MQepOg2vVDNkTvcYc0Q
-	pb698rEVrcGxBn4hCzjxnpo7/UK32/PQQFGdvWkCdy1YWfeWbJDSeeo1Sg+XsaZe3paNncxBB1y
-	SiCrS2w0/uLyaDDRPdoBpSquLJKeNOZEBS75RJ7ek/bcOIPUaQOXnpWzkJH+6GKKUIHYObE+9rH
-	qM8DISkbkjoGK7xp2tHCw41Xy04KngV85rzmUnDSodQlmXW3EHTVjKJX8bwKr/NrbjoAQ8=
-X-Google-Smtp-Source: AGHT+IHLPhfoe4PigVOy6ga8QjFMZQbaUyhVHIL9k0xUigmE9eGQbvvBrAeQMY148Qfb5ds5ziWrcRsFQHuIEGMEAjo=
-X-Received: by 2002:a17:906:4792:b0:b4f:4940:6a23 with SMTP id
- a640c23a62f3a-b647314712bmr369861366b.24.1760702115278; Fri, 17 Oct 2025
- 04:55:15 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="F32m1UjV"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1760702862;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qVVOplVcIPohkDnIfQ2Ks12Y/jvY2Jxd7PA06hbAbtY=;
+	b=F32m1UjVEYorU38Ec2Jv+nSiLJpPNeAP1kB14vGABvCMthFN3fP3+AX05spD7rNxpgVMJJ
+	vyF6wp1UOGpozabvdvjpVflcre8slaQAWwHFWsLxFiEBB5SjgRJfYYFCIHBbIb5iE1wvmf
+	JpBnsyJdp9I6e2nWix9/y010zlTkRLc=
+From: Toon Claes <toon@iotcl.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, Justin
+ Tobler <jltobler@gmail.com>, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH] last-modified: implement faster algorithm
+In-Reply-To: <aPGB/FJtjDmyNLvG@nand.local>
+References: <20251016-b4-toon-last-modified-faster-v1-1-85dca8a29e5c@iotcl.com>
+ <aPGB/FJtjDmyNLvG@nand.local>
+Date: Fri, 17 Oct 2025 14:07:18 +0200
+Message-ID: <87jz0tu3yh.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251016200344.43239-1-okhuomonajayi54@gmail.com>
-In-Reply-To: <20251016200344.43239-1-okhuomonajayi54@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 17 Oct 2025 13:55:02 +0200
-X-Gm-Features: AS18NWBp_bze7_bm0K5GwywZ6mlStrZqDv5MblWwbQZKEdCRJM8XpvXLq699ALQ
-Message-ID: <CAP8UFD2sdvkv_ZqiLZU9k5zF+tM3UTQ8+mJjziRZGzOra6dMFA@mail.gmail.com>
-Subject: Re: [PATCH] [PATCH v2] gpg-interface.c: trim CR only before LF
-To: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
-On Thu, Oct 16, 2025 at 10:04=E2=80=AFPM Okhuomon Ajayi
-<okhuomonajayi54@gmail.com> wrote:
+Taylor Blau <me@ttaylorr.com> writes:
+
+> On Thu, Oct 16, 2025 at 10:39:25AM +0200, Toon Claes wrote:
+>> [...]
+>>
+>> To avoid computing many first-parent diffs, add another trick on top of
+>> this and check if all paths active in 'c' are DEFINITELY NOT in c's
+>> Bloom filter. Since the commit-graph only stores first-parent diffs in
+>> the Bloom filters, we can only apply this trick to first-parent diffs.
 >
-> Problem:
-> The function remove_cr_after() stripped CRs blindly. The comment suggeste=
-d
-> NEEDSWORK: trim only CRs before LF.
-
-We use the present tense to talk about the current situation. In
-"Documentation/SubmittingPatches" there is:
-
-"[[present-tense]]
-The problem statement that describes the status quo is written in the
-present tense.  Write "The code does X when it is given input Y",
-instead of "The code used to do Y when given input X".  You do not
-have to say "Currently"---the status quo in the problem statement is
-about the code _without_ your change, by project convention."
-
-Also you don't need to prefix this part with "Problem:". We should
-understand from the description of the status quo that the situation
-is not good and should be improved.
-
-> This caused potential confusion.
-
-It's not clear what caused potential confusion. Is it the "NEEDSWORK:
-..." comment, or the fact that remove_cr_after() stripped CRs blindly,
-or both?
-
-Also it's not clear what the confusion is about. Is there confusion
-because a reader can wonder if stripping CR blindly could be a bug?
-
-What about something like:
-
-"The remove_cr_after() function removes any CR it finds in a buffer
-after an offset, but a 'NEEDSWORK' code comment in front of it says
-that it should only remove a CR that is before an LF. This can make
-readers wonder if stripping CRs blindly could result in bugs."
-
-> Solution:
-> Rename remove_cr_after() to trim_cr_before_lf() and update the comment:
-
-Here also, from the description of what the patch does, we should
-understand that it will improve things, so no need to prefix it with
-"Solution:".
-
-The issue is that to know what should be done about the current
-situation, it would help to know if stripping CRs blindly could result
-in bugs or not. So there should be an analysis part before the part
-describing what the patch does. For example the analysis part could
-say something like:
-
-"As the remove_cr_after() function is only used to replace CR LF
-sequences (generated by software on Windows) with a single LF, the
-'NEEDSWORK' code comment seems to be correct. It seems safer to only
-remove a CR when it is before an LF even if the buffer is not likely
-to contain any other CR."
-
-(Then you could even further clarify the goal of the patch when
-starting to describe what the patch does with something like:
-
-"To implement this safe solution suggested by the NEEDSWORK comment,
-rename remove_cr_after() to trim_cr_before_lf() ..."
-
-It might not be necessary here, but I mention it so that you can see
-how to smoothly transition from the problem description.)
-
-By the way you mention renaming remove_cr_after() to
-trim_cr_before_lf() and updating the comment before it, but you don't
-mention actually changing the implementation of the function so that
-it only removes a CR when it's before a LF.
-
-> "Trim CR characters only when they appear before LF (\r\n) line endings."
-
-No need to duplicate the new code comment in the commit message. We
-can see it in the patch.
-
-> This keeps lone CRs intact and documents intent clearly.
-
-This sentence is fine.
-
-> Also improved formatting.
-
-It's not clear what formatting is improved. And this should use an
-imperative tone, like the above did with "Rename remove_cr_after() ...
-and update ..."
-
-> Signed-off-by: Okhuomon Ajayi <okhuomonajayi54@gmail.com>
-> ---
->  gpg-interface.c | 34 ++++++++++++++++++++++++----------
->  1 file changed, 24 insertions(+), 10 deletions(-)
+> OK, up to this point this is the same as the commit message that I wrote
+> with Stolee back in 2020.
 >
-> diff --git a/gpg-interface.c b/gpg-interface.c
-> index c961607444..2d114e05e8 100644
-> --- a/gpg-interface.c
-> +++ b/gpg-interface.c
-> @@ -964,23 +964,37 @@ int sign_buffer(struct strbuf *buffer, struct strbu=
-f *signature, const char *sig
->         return use_format->sign_buffer(buffer, signature, signing_key);
->  }
+>> Comparing the performance of this new algorithm shows about a 2.6x
+>> improvement on git.git:
+>>
+>>     Benchmark 1: master
+>>       Time (mean =C2=B1 =CF=83):      3.077 s =C2=B1  0.055 s    [User: =
+3.017 s, System: 0.051 s]
+>>       Range (min =E2=80=A6 max):    2.947 s =E2=80=A6  3.127 s    10 runs
+>>
+>>     Benchmark 2: HEAD
+>>       Time (mean =C2=B1 =CF=83):      1.181 s =C2=B1  0.010 s    [User: =
+1.139 s, System: 0.038 s]
+>>       Range (min =E2=80=A6 max):    1.169 s =E2=80=A6  1.194 s    10 runs
+>>
+>>     Summary
+>>       HEAD ran
+>>         2.60 =C2=B1 0.05 times faster than master
+>>
+>> But when comparing a more extreme example of
+>> `git last-modified -- COPYING t`, the difference is a lot bigger:
+>>
+>>     Benchmark 1: master
+>>       Time (mean =C2=B1 =CF=83):      4.372 s =C2=B1  0.057 s    [User: =
+4.286 s, System: 0.062 s]
+>>       Range (min =E2=80=A6 max):    4.308 s =E2=80=A6  4.509 s    10 runs
+>>
+>>     Benchmark 2: HEAD
+>>       Time (mean =C2=B1 =CF=83):     826.3 ms =C2=B1  22.3 ms    [User: =
+784.1 ms, System: 39.2 ms]
+>>       Range (min =E2=80=A6 max):   810.6 ms =E2=80=A6 881.2 ms    10 runs
+>>
+>>     Summary
+>>       HEAD ran
+>>         5.29 =C2=B1 0.16 times faster than master
 >
-> -/*
-> - * Trim CR characters only when they appear before LF (\r\n) line ending=
-s.
-> - * This avoids removing legitimate lone CRs from teh content.
-> - */
-> +/* Convert CRLF to LF, in case we are on Windows */
+> These benchmarks are different than the ones that I provided, which is
+> good, since we should be measuring modern Git, not dragging forward
+> stale benchmarks ;-).
+>
+> I imagine that you are just doing a straight last-modified run here in
+> both instances. In the original patch, I timed this both with and
+> without changed-path Bloom filters, which helped illustrate their impact
+> on the changes here.
+>
+> I'd suggest including those benchmarks as well, and potentially running
+> them on linux.git, or another comparably larger open-source repository.
+> git.git is large enough to show some interesting behavior, but I always
+> have found it useful to compare the results against a larger repository
+> as well.
 
-I don't see any "NEEDSWORKS" here. It looks like this is a patch that
-was made against the version 1 of the patch you sent earlier. Instead,
-all the versions of your patches should be made against a relatively
-recent version of the 'master' branch.
+Sure.
 
-This way if your patch is accepted, only your patch needs to be
-merged. Also that makes it easier for reviewers to see that the commit
-message (which starts by describing the current situation in 'master')
-is correct.
+>> As an added benefit, this implementation gives more correct results. For
+>> example implementation in 'master' gives:
+>>
+>>     $ git log --max-count=3D1 --format=3D%H -- pkt-line.h
+>>     15df15fe07ef66b51302bb77e393f3c5502629de
+>>
+>>     $ git last-modified -- pkt-line.h
+>>     15df15fe07ef66b51302bb77e393f3c5502629de	pkt-line.h
+>>
+>>     $ git last-modified | grep pkt-line.h
+>>     5b49c1af03e600c286f63d9d9c9fb01403230b9f	pkt-line.h
+>>
+>> With the changes in this patch the results of git-last-modified(1)
+>> always match those of `git log --max-count=3D1`.
+>>
+>> One thing to note though, the results might be outputted in a different
+>> order than before. This is not considerd to be an issue because nowhere
+>> is documented the order is guaranteed.
+>>
+>> Based-on-patches-by: Taylor Blau <me@ttaylorr.com>
+>
+> Stolee and I wrote these patches together many years ago, so he should
+> be credited here as well. Since this patch appears to be substantially
+> based on the original work, I think it is appropriate to include my
+> S-o-b once the patch is ready.
+
+I'm very grateful you (GitHub) have written and shared these patches, so
+I'm happy to give proper attribution.
+
+>> ---
+>> This series revives those changes. I did more thorough deep dive through
+>> the code and the algorithm and got the code working a lot faster. The
+>> benchmark results can be found in the commit message.
+>>
+>> Some changes compared to GitHub's version include:
+>>
+>>  * Use of `struct bitmap` from "ewah/ewok.h", instead of self-defined
+>>    `struct commit_active_paths`.
+>>
+>>  * Removed shortcut code that handled the case when commit and parent
+>>    are fully treesame, and instead always checked 'active_c' whether the
+>>    next parent is worth looking at.
+>>
+>>  * Modified comments and commit message to make the algorithm more
+>>    clear (at least to me).
+>>
+>>  * Mentioned the use of PARENT1 and PARENT2 in object.h.
+>>
+>>  * Removed the use of any global variables.
+>>
+>>  * Less conditions are checked in mark_path() because the hashmap of
+>>    'paths' is considered the single-source of truth.
+>>
+>>  * pass_to_parent() doesn't pass on when the path isn't in the 'paths'
+>>    hashmap no more.
+>
+> Thanks for clearly showing what the changes on top are. When I applied
+> this locally and ran it, it pretty quickly segfaulted for me:
+>
+>     expecting success of 8020.3 'last-modified non-recursive':
+>       check_last_modified <<-\EOF
+>       3 a
+>       1 file
+>       EOF
+>
+>     + check_last_modified
+>     + local indir=3D
+>     + test 0 !=3D 0
+>     + cat
+>     + git last-modified
+>     Segmentation fault
+>     error: last command exited with $?=3D139
+>     not ok 3 - last-modified non-recursive
+>     #
+>     #		check_last_modified <<-\EOF
+>     #		3 a
+>     #		1 file
+>     #		EOF
+>     #
+>     1..3
+>
+> Looking through the backtrace, it looks like someone is calling
+> mark_path() with a NULL oid, like so:
+>
+>     (gdb) bt
+>     #0  __memcmp_evex_movbe ()
+>         at ../sysdeps/x86_64/multiarch/memcmp-evex-movbe.S:132
+>     #1  0x00005555555f2c32 in oideq (oid1=3D0x0, oid2=3D0x555555a5eeb0)
+>         at ./hash.h:408
+>     #2  0x00005555555f3523 in mark_path (path=3D0x555555a5eee8 "a", oid=
+=3D0x0,
+>         data=3D0x7fffffffd650) at builtin/last-modified.c:179
+>
+> , which makes sense, since at the end of the main loop we call
+> mark_path() on all remaining active paths to indicate that they were
+> modified by whatever commit we just popped off the queue.
+>
+> Something like this on top (which matches the original patch that I sent
+> from GitHub's fork) fixes the tests:
+>
+> --- 8< ---
+> diff --git a/builtin/last-modified.c b/builtin/last-modified.c
+> index 40e520ba18..c8f66633a7 100644
+> --- a/builtin/last-modified.c
+> +++ b/builtin/last-modified.c
+> @@ -176,7 +176,7 @@ static void mark_path(const char *path, const struct =
+object_id *oid,
+>  	 * Is it arriving at a version of interest, or is it from a side branch
+>  	 * which did not contribute to the final state?
+>  	 */
+> -	if (!oideq(oid, &ent->oid))
+> +	if (oid && !oideq(oid, &ent->oid))
+>  		return;
+>
+>  	last_modified_emit(data->lm, path, data->commit);
+> --- >8 ---
+
+Sorry for this oopsie. Right before I sent this patch, I had a version
+that removed the oideq() condition. In the final diff I noticed and I
+decided to undo that, but didn't check my tests again. Thanks for the
+patch, because I know I had that at one point as well.
+
+But this makes me wonder, is there even any value in keeping `oid` on
+`struct last_modified_entry`? I'll have a deeper look into this.
+
+>> +/* Remember to update object flag allocation in object.h */
+>> +#define PARENT1 (1u<<16) /* used instead of SEEN */
+>> +#define PARENT2 (1u<<17) /* used instead of BOTTOM, BOUNDARY */
+>> +
+>>  struct last_modified_entry {
+>>  	struct hashmap_entry hashent;
+>>  	struct object_id oid;
+>>  	struct bloom_key key;
+>> +	size_t diff_idx;
+>>  	const char path[FLEX_ARRAY];
+>>  };
+>>
+>> @@ -37,13 +43,35 @@ static int last_modified_entry_hashcmp(const void *u=
+nused UNUSED,
+>>  	return strcmp(ent1->path, path ? path : ent2->path);
+>>  }
+>>
+>> +/*
+>> + * Hold a bitmap for each commit we're working with. Each bit represent=
+s a path
+>> + * in `lm->all_paths`. Active bit means the path still needs to be deal=
+t with.
+>> + */
+>> +define_commit_slab(commit_bitmaps, struct bitmap *);
+>> +
+>
+> Nice, I am glad to see that we are using a bitmap here rather than the
+> hacky 'char *' that we had originally written. I seem to remember that
+> there was a tiny slow-down when using bitmaps, but can't find the
+> discussion anymore. (It wasn't in the internal PR that I originally
+> opened, and I no longer can read messages that far back in history.)
+>
+> It might be worth benchmarking here to see if using a 'char *' is
+> faster. Of course, that's 8x worse in terms of memory usage, but not a
+> huge deal given both the magnitude and typical number of directory
+> elements (you'd need 1024^2 entries in a single tree to occupy even a
+> single MiB of heap).
+
+Okay, I can give it a try.
+
+> Regardless of how you handle the above, I think that the commit slab
+> name here is a little generic. I guess it's OK since this is only
+> visible within this compilation unit, but perhaps something like
+> "active_paths_bitmap" would be more descriptive.
+
+I struggled a lot naming this thing, so I'm open to suggestions.
+
+> Likewise, I wonder if we should have elemtype here be just 'struct
+> bitmap'. Unfortunately I don't think the EWAH code has a function like:
+>
+>     void bitmap_init(struct bitmap *);
+>
+> and only has ones that allocate for us. So we may consider adding one,
+> or creating a dummy bitmap and copying its contents, or otherwise.
+>
+>>  struct last_modified {
+>>  	struct hashmap paths;
+>>  	struct rev_info rev;
+>>  	bool recursive;
+>>  	bool show_trees;
+>> +
+>> +	const char **all_paths;
+>> +	size_t all_paths_nr;
+>
+> I wonder if all_paths should be a strvec here? I think that this code
+> was all written when the type was called argv_array (hilariously, that
+> change took place towards the end of July, 2020, and the --go-faster
+> code where this patch came from was written just a couple of weeks
+> earlier.)
+
+Ahha, that might be a good idea. This might allow us to get rid of the
+hashmap, which stops us from storing the paths twice. Not sure what the
+impact on the performance would be, because the hashmap now is valuable
+for path_idx() lookups.
+
+>> @@ -196,7 +226,36 @@ static void last_modified_diff(struct diff_queue_st=
+ruct *q,
+>>  	}
+>>  }
+>>
+>> -static bool maybe_changed_path(struct last_modified *lm, struct commit =
+*origin)
+>> +static size_t path_idx(struct last_modified *lm, char *path)
+>> +{
+>> +	struct last_modified_entry *ent;
+>> +	ent =3D hashmap_get_entry_from_hash(&lm->paths, strhash(path), path,
+>> +					  struct last_modified_entry, hashent);
+>> +
+>> +	return ent ? ent->diff_idx : -1;
+>> +}
+>> +
+>> +static void pass_to_parent(struct last_modified *lm,
+>> +			   struct bitmap *c,
+>> +			   struct bitmap *p,
+>> +			   size_t pos)
+>> +{
+>> +	struct last_modified_entry *ent;
+>> +	struct hashmap_iter iter;
+>> +
+>> +	bitmap_unset(c, pos);
+>> +
+>> +	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
+>> +		if (ent->diff_idx =3D=3D pos) {
+>> +			bitmap_set(p, pos);
+>> +			break;
+>> +		}
+>> +	}
+>> +}
+>
+> This one I'm not quite following. The original implementation does
+> something like:
+>
+>     c->active[i] =3D 0;
+>     c->nr--;
+>     p->active[i] =3D 1;
+>     p->nr++;
+>
+> , where 'i' is an index into the all_paths array. It looks like you are
+> effectively doing the first part of that with the bitmap_unset() call,
+> but I'm confused why you're iterating over paths here.
+>
+> The caller in process_parents() is iterating over all entries that are
+> treesame to the parent, bit by bit. So I think you can just bitmap_set()
+> in the parent directly here, but let me know if I am missing something.
+
+It is an attempt from my side to optimize things further. I was thinking
+a path could have been associated by another commit already. But now
+you've brought this up, I don't think this no more.
+
+A bit can only be set in two places:
+
+* Initially when a commit is added from lm->rev.commits. We can only
+  have one commit in there, because we count `num_interesting` in
+  populate_paths_from_revs() and abort if it's more than 1.
+
+* Here in pass_to_parent(). A commit only passes a bit to one parent.
+
+So I'll remove the extra guard in the next version.
+
+>> @@ -220,42 +282,197 @@ static bool maybe_changed_path(struct last_modifi=
+ed *lm, struct commit *origin)
+>>  	return false;
+>>  }
+>>
+>> +static void process_parent(struct last_modified *lm,
+>> +			   struct prio_queue *queue,
+>> +			   struct commit *c, struct bitmap *active_c,
+>> +			   struct commit *parent, int parent_i)
+>> +{
+>> +	size_t i;
+>> +	struct bitmap *active_p;
+>> +
+>> +	repo_parse_commit(lm->rev.repo, parent);
+>> +	active_p =3D get_bitmap(lm, parent);
+>> +
+>> +	/*
+>> +	 * The first time entering this function for this commit (i.e. first p=
+arent)
+>> +	 * see if Bloom filters will tell us it's worth to do the diff.
+>> +	 */
+>> +	if (parent_i || maybe_changed_path(lm, c, active_c)) {
+>> +		diff_tree_oid(&parent->object.oid,
+>> +			      &c->object.oid, "", &lm->rev.diffopt);
+>> +		diffcore_std(&lm->rev.diffopt);
+>> +	}
+>> +
+>> +	/*
+>> +	 * Otherwise, test each path for TREESAME-ness against the parent. If
+>
+> This "otherwise" is referencing a piece of the patch that doesn't appear
+> to be here directly, which is how we handle the special case of having
+> nothing in the diff queue, meaning we are treesame at the root.
+
+True, I shall drop the "otherwise" and rephrase further if needed.
+
+> In the GitHub version of this patch, we pass all active paths to the
+> parent, assign the PARENT1 flag if it doesn't already have it, and put
+> it in the queue as well.
+>
+> In your version, we'd skip past the next for-loop, and do the same
+> pass-to-parent dance below, along with inserting the parent into the
+> prio queue.
+
+This is the "shortcut" I'm mentioning in my cover letter. In my testing
+it seemed it didn't provide any performance gains to keep it. I consider
+less code better code, so I left it out.
+
+> So I think that this is all functionally equivalent, but I had to work
+> through a little bit of the details here, mostly since I haven't looked
+> at or thought about this code in many years ;-).
+>
+>>  static int last_modified_run(struct last_modified *lm)
+>>  {
+>> +	int max_count, queue_popped =3D 0;
+>> +	struct prio_queue queue =3D { compare_commits_by_gen_then_commit_date =
+};
+>> +	struct prio_queue not_queue =3D { compare_commits_by_gen_then_commit_d=
+ate };
+>> +	struct commit_list *list;
+>>  	struct last_modified_callback_data data =3D { .lm =3D lm };
+>>
+>>  	lm->rev.diffopt.output_format =3D DIFF_FORMAT_CALLBACK;
+>>  	lm->rev.diffopt.format_callback =3D last_modified_diff;
+>>  	lm->rev.diffopt.format_callback_data =3D &data;
+>> +	lm->rev.no_walk =3D 1;
+>
+> This one is new relative to the original patch. Why set no_walk here?
+
+This comes from
+https://github.com/ttaylorr/git/commit/e8ea49705873d28f64b815bd00d14bdf6d48=
+ca4d
+
+Well, it basically squashes various commits together. There are various
+commits doing different things here. I don't think it's valuable for
+anyone to see the full history of the iterations at GitHub, that's why I
+squashed it in.
+
+Would you consider it better to not set `no_walk`?
+
+>>  	prepare_revision_walk(&lm->rev);
+>>
+>> -	while (hashmap_get_size(&lm->paths)) {
+>> -		data.commit =3D get_revision(&lm->rev);
+>> -		if (!data.commit)
+>> -			BUG("paths remaining beyond boundary in last-modified");
+>> +	max_count =3D lm->rev.max_count;
+>> +
+>> +	init_commit_bitmaps(&lm->commit_bitmaps);
+>> +	lm->scratch =3D bitmap_word_alloc(lm->all_paths_nr);
+>> +
+>> +	/*
+>> +	 * lm->rev.commits holds the set of boundary commits for our walk.
+>> +	 *
+>> +	 * Loop through each such commit, and place it in the appropriate queu=
+e.
+>> +	 */
+>> +	for (list =3D lm->rev.commits; list; list =3D list->next) {
+>
+> Hmm. In the original patch, we look at rev.pending, not rev.commits. The
+> rest of the patch looks good to me and looks like a faithful
+> representation of the original patch from GitHub's fork. Thanks for
+> working on this and making the new last-modified builtin faster ;-).
+
+Euh, interesting. I'll look into it.
+
+Thanks for the support!
+
+--=20
+Cheers,
+Toon
