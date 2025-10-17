@@ -1,150 +1,99 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0101930FC3D
-	for <git@vger.kernel.org>; Fri, 17 Oct 2025 09:54:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1865B20C48A
+	for <git@vger.kernel.org>; Fri, 17 Oct 2025 09:54:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760694847; cv=none; b=RX0ElgtVEOvvWy2tcG7U9OI4CL25H+CIlBifxClHh4VhLHTzudZr5i2c40uNeQflsb6DSusy480RPMZGG1ZO6QZj7x6hLU7qq/40E+e0YMX3P1hxrFDNZxhpawaZtjnhGr93G6KkkFU3rE4+TKLxm03nMqnp049P1MH9wRl6huk=
+	t=1760694896; cv=none; b=l3j7Np42Ro2/NaoYColgeqLPw6JZXnLAl8kdyumYRI7kG+/WgcdIhsxagGtbi1+aZzlazMr3ZvSJWmZjhafKLkXeGcA18GA0eu+x9de599lDuUZaUXvllITfcyq8LY/vxLTk02D/9br7hO8toInzR6wcPohS5stH/EO2hU8RbFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760694847; c=relaxed/simple;
-	bh=2DljmKdizw+y31itoCKd8EHtpc631m65tX2gwTmjBcM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WElAfr9R/9rboyGPn3MS2jk5OH9oa9WQ00DYlvf3SPHA3mty89dlH1wy2FW3L1eFm4y77noLavLFe+SPFFEA/em3RaEdWIPlt5wdJDsRFRvDlcb5QAf9tHMZNuFYvGDXhIomLB2dTirD78t5ae6AqKMqekfwFnB7HktfC5HecuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mBnAfAnf; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760694896; c=relaxed/simple;
+	bh=nhST0kGygDL1gjwy0VR4siFxcR7Hqvpi8iISYBY4B68=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=j5Zzbvt7jeksaJTGpr4FFv7JnKpxoVQwfAUS+FYjp8Sj7HLYnwTYwrUUjK9qNm37hvUcRqEMg5Te3fLYAitjK2TIHrVpwaZMnLpbNL4mSW5Y1CoYLZ7o/LOqYkyo+ns0ugO+gKWe+yM5VslcsiHRel+DDMWv+PADMKiIkBwJmmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=PNG5Zirg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZJyybrCm; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mBnAfAnf"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-290ac2ef203so16420695ad.1
-        for <git@vger.kernel.org>; Fri, 17 Oct 2025 02:54:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760694845; x=1761299645; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cIXzQyF6uGfJo2MPgAuqQmSYVkKM4aYQ+CLouUWWVQU=;
-        b=mBnAfAnfmAYyUugJw3MFVgmlWt6EB3Sit7vXqkJhkQR17y3QEizoH9bUutC7t4WKvS
-         OYRkJi3burbbVEsn3y6AbgPw3As/kpVCfv6zjgBgXBrKe8U2ysbw0g32VuEDEq0FDkUI
-         gw+mtA8Gk15QGCgcSAW4uVGUWCgY6QP6dvlDBQ+WyLxqUGohxfup08S3xISm+ztdhux2
-         xbG7R0I9JkkPDjroCDh2Fu5bYMvOCknCySpseGUE7vq5FQnE1wPveYF56NWi+4zF8pGx
-         +jMegW08RTTSYrqMHzvNqLvvPmiIc5NTR7VBGAWXTUVdnPU01xkdBWwJ82GZ2JbH3MVL
-         7KOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760694845; x=1761299645;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cIXzQyF6uGfJo2MPgAuqQmSYVkKM4aYQ+CLouUWWVQU=;
-        b=twHrqgO8V2+6xG3QA95U1HQQnVGf8gdUAHVBsajWrLR/Y5hS5uCZToDVW9i5x7Wglo
-         lTGeC2IJUZHTKyQkgq1Lx0wFUm+SuK/pIsu+t7F9r2IziJR3HxVHl3vgu+uxTS++bPE9
-         GxfBG/MGWZ2LSzwUoGxdcry6fG//IZ+8KohN4Wlu47Fp16X+vEdOvzeCzP4bzbzTADeF
-         YksZD4PffLymDLSoXnTRH+NgksuJqcz0KSO8xxqwkCGns1jPb5ZAhyxWHVNX/TCyRBfr
-         pCIRzfcC7hBOwNUEZWOJfYm487M7jdngEf6wMJQvc/zB0AWTm7pADKsE/Ho3ZZSoLLrK
-         gtBA==
-X-Gm-Message-State: AOJu0Ywo2HZsvwf++7BNXp98Sub9LnA0E16gDMxWTxqCbGCRT3KrwVJe
-	3jskNEmPups7TYrb1kKW8zj/aFCZk5p4qJpKxlSsWhRc9vzh1+SJrCDj4CM9E1k6lFX2UBLgVHw
-	4pUo+8bFqpziIhVYmACpe5G9A569fFBeNGzATNH9IRg==
-X-Gm-Gg: ASbGnctmmFUFqbVx7TKRMqcz/6xT8knZE98dyJtddp7Ngg7Ky1/r2jAv8OAsl7Hi5mZ
-	fJ1hvPZg4kL3+0dXMOxkCbfALch5ly+w+tumyJpdDFHTawInV/2m3yX62jttcksrlg1zW6wjAD9
-	hsnPwu2H96Uf/+MvV7rVLXiT1Fjfg14IXoUa7oMe1GcY/lGKGa8GwU/Y8L+nihcFC2p6UL/JB4A
-	/RyUtb1XIbjRSJwthHaxsXkECBPgIT1yQELKz9ab0FnmFTIl72fT0GxNC8p1/QXb977LYx7dvr6
-X-Google-Smtp-Source: AGHT+IE12ToQSbhsmWHm3SfCTsNFisRkXjQ/iOfZw7CtLVCVXNSY/DvE+cMnhS8s5wO1kf6hgHnbhnkqa7PwYzRSj2M=
-X-Received: by 2002:a17:902:e746:b0:28d:195a:7d79 with SMTP id
- d9443c01a7336-290c9c897cemr38006085ad.5.1760694845153; Fri, 17 Oct 2025
- 02:54:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="PNG5Zirg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZJyybrCm"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 460E41D000AC;
+	Fri, 17 Oct 2025 05:54:53 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Fri, 17 Oct 2025 05:54:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1760694893;
+	 x=1760781293; bh=9bOmd9G0zkK+MWtbsJP3kqHgPqw/qH/SyleNLVFaaIQ=; b=
+	PNG5Zirg8MBZJE5OFB4Ypmb+rzs91yTD4daboz1vxQHWWXZTsj0ErS5SPtTCCXmL
+	v/uBwE8J92Bp4/mJA/v0kvnDnRjXBydOcyBI8MHvZvbCpNvfG0TPcUfxVoClnbjf
+	mPJ02VE51Hk32jtqWfCxGvf5AeVVShRYF0DaCFBy6AkRiuf7sN78dqXZYmgunctt
+	ueYgxrx7xoZW6AjQMcQKTZXXSZ9bFT5DHXmgF9/lteKE4XtyXb5ChxyO9RfBAjil
+	BD0ipzvnI3AXgQr9oG/y6Qw+MuNFT53wHKikDmJNLDJfCPPNTHEXtzHxotEx4goo
+	xSHXWjVS0icIKr2ZH/0xew==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1760694893; x=1760781293; bh=9
+	bOmd9G0zkK+MWtbsJP3kqHgPqw/qH/SyleNLVFaaIQ=; b=ZJyybrCmhKL9RS7fA
+	jvG2XQRriGJ2RHov0MOXOhvBhX/6GLYf+/1la7We2kyKfMeID4sgRwTxUNBbtHid
+	my/kgpuSuHSnyN+89wtnfsniqq+SRXmTe3dWWumkP888OxONjJUldT3XeFNywQn+
+	91ic+RzVvg1BX4mfcWe50YtSoLk6d2+vgdClsRhwjO6TdOl1KiagBZunBgx4xhuH
+	ktr6Jf02e9OeldwjRSxFY6CBb6wEDWAsHMtWxYwNwsVFSsvKnCFeTmoCwFENQp1U
+	1ad+Qrbkxx2grnbb6mapCGxrh5+zM4Lzky8COyrOWVcEsvKx5DSPny4kobZXGXNc
+	dRRYA==
+X-ME-Sender: <xms:bBLyaOGGSZtAwgYkd2kbIZ-PBtyK89sn45JqazWhaUApFVWjdP4R4rQ>
+    <xme:bBLyaKJnd36mjZ-1wCsDd83b_eqrvHrcHN-5mrTOTglHzrY0n21SgHC-XItn7luEW
+    1jlH40Y18lbl8yGJqj4SCg8NWeOTmmTUobE1SUaPzb8DcBMIhLHrMY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdekkeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvkfgjfhfutgfgsehtjeertd
+    ertddtnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
+    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
+    ftrfgrthhtvghrnhepvdeigedtgfetgefhffetteeludevheetfeekffehheefieehudek
+    veelveffhfejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
+    pdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphh
+    grhhhnqdhoshhssegrvhhmrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhg
+X-ME-Proxy: <xmx:bBLyaExo93mDFF30kJVbSgHN1Yw0s4qDm4sIPqdx37F3H6vLuB-qNQ>
+    <xmx:bBLyaGP59WvVhiMD2OTdltGog65AIxndM5p16F6UcTTpPwnQe64cbQ>
+    <xmx:bBLyaN6e1KDfNUfNHjJ6U80YxeUeyl4A4fpjC1hzi-9tnoNJh2Q7Ew>
+    <xmx:bBLyaPMDgxfY0y59l7MCa4tDNDCm9xCeS1ypflnsog-sH5FfFNK4fw>
+    <xmx:bRLyaPveWXXdxmuWfiyQe2WWF5Kt7Dxxj3D75aCuCVHbL68n_coXH6zi>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id C12C41EA0062; Fri, 17 Oct 2025 05:54:52 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1760571220.git.belkid98@gmail.com> <CAP8UFD0Lzmt5ayQ3iSXtmJohDawmCEiu1r8Gq2mKTMy-1gX_fw@mail.gmail.com>
-In-Reply-To: <CAP8UFD0Lzmt5ayQ3iSXtmJohDawmCEiu1r8Gq2mKTMy-1gX_fw@mail.gmail.com>
-From: Bello Olamide <belkid98@gmail.com>
-Date: Fri, 17 Oct 2025 10:54:05 +0100
-X-Gm-Features: AS18NWAUFAZMbqMJhOMSYSpVcsN3eq9RexJovSsQ1wkI2ADrzlKmleEsQpGx4C4
-Message-ID: <CAD=f0L9OFO5N=_3iiqMh33WK+AV-zQPhpdTLn2JusNf4AwnYrg@mail.gmail.com>
-Subject: Re: [Outreachy PATCH v2 0/2] gpg-interface.c: use string_list_split()
- instead of strbuf_split_max()
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, usmanakinyemi202@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-ThreadId: AAnEz76YUTMs
+Date: Fri, 17 Oct 2025 11:54:32 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Philipp Hahn" <phahn-oss@avm.de>, git@vger.kernel.org
+Message-Id: <68e5557c-3981-4378-bc76-2a986567a699@app.fastmail.com>
+In-Reply-To: <20251017094717.626300-1-phahn-oss@avm.de>
+References: <20251017094717.626300-1-phahn-oss@avm.de>
+Subject: Re: BUG: commit-graph + objects/alternate -> SIGSEGV
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Fri, 17 Oct 2025 at 08:58, Christian Couder
-<christian.couder@gmail.com> wrote:
+On Fri, Oct 17, 2025, at 11:47, Philipp Hahn wrote:
+>[snip]
+> What happened instead? (Actual behavior)
 >
-> On Thu, Oct 16, 2025 at 3:04=E2=80=AFAM Olamide Caleb Bello <belkid98@gma=
-il.com> wrote:
-> >
-> > Commit 2efe707054 (wt-status: avoid strbuf_split*(), 2025-07-31) notice=
-d
-> > that the array of strbufs that calls to strbuf_split*() provides are me=
-rely
-> > used to store the strings gotten from the split and no edit are
-> > done on these resulting strings making the strbuf_split*() unideal
-> > for this usecase, with the string_list_split*() being a more suitable o=
-ption.
-> >
-> > The patch series by Junio Hamano can be seen in the link below.
-> >
-> > https://public-inbox.org/git/20250731225433.4028872-1-gitster@pobox.com=
-/
->
-> This description is probably good enough as-is, but here are some
-> comments that might help improve it if you want if you send a v3.
->
-> The way you explain things up to here, it might seem only one commit
-> in that series is about avoiding strbuf_split*(). But in fact the
-> commit you mention is the first one in that series which is named "do
-> not overuse strbuf_split*()" and contains 11 patches.
->
-> So I think it would be a bit better if, instead of speaking about that
-> commit first, this cover letter started with a link to that patch
-> series and explained the purpose of the whole series. You may then
-> mention one or more commits in the series as examples of commits where
-> strbuf_split*() is replaced with string_list_split*() though if you
-> want.
+> 	`git fetch` crashes with a SIGSEGV respective complains about "missing
+> commit-graphs":
+> 	> Warnung: konnte nicht alle Commit-Graph-Dateien finden
 
-Yes, this approach would be better.
-Thank you
->
-> > This series continues on this path by replacing instances of
-> > strbuf_split_max() with string_list_split() where the string from the
-> > split is merely returned as char * and no edits are done on them.
->
-> Yeah, some commits in the series do that, but not all.
+The English translation for that on Git 2.43.0 is
 
-Yes I will reword this too.
-
->
-> > Changes since v1
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >  - Added commit reference and link to patch series for previous work
-> >  done on the subject
->
-> In a cover letter we are interested in the changes in the patch series
-> since the previous version, not the changes in the cover letter. This
-> is because the cover letter itself is not merged (except perhaps its
-> first few sentences that might be reused in the merge commit, but this
-> is more advanced, so don't take this into account for now) when a
-> patch series is merged. So a cover letter is more about giving context
-> to reviewers and inviting them to review the patch series.
->
-> So here it would be nice if there were things like:
->
->   - a summary of the changes in the patch series since v1,
->   - a range diff between v1 and v2,
->   - a link to a CI platform where the v2 has been pushed and the CI
-> tests have been performed.
->
-> This would help make reviewer confident that the series is in a much
-> better shape compared to v1 and reviewers' comments on v1 have been
-> taken into account.
->
-
-Thank you very much for the review and suggestions.
-I will reorganise and send a corrected v3.
-
-Bello.
+    unable to find all commit-graph files
