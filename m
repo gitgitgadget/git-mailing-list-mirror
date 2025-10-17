@@ -1,41 +1,41 @@
 Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA20E2F6911
-	for <git@vger.kernel.org>; Fri, 17 Oct 2025 14:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B25836CE10
+	for <git@vger.kernel.org>; Fri, 17 Oct 2025 14:17:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760710641; cv=pass; b=WCOA3FZygYGLprrw8gkBMrA3xP3z9WRKCPdjsRJ7ljXeBBSCu565CS6hfl+LzwGfgXDF9gGF6D3K03jff06EHEExHHaCiFViQJrqeQuZeQM2dExK0SoPMTC5JFqCxoRZU642m9gRAqtRzUY1dWsOCYeLAPUCMl27RGVWNIhjOBM=
+	t=1760710645; cv=pass; b=qcZmgJ58n0uFiykWJOSkGFuZZ4WO//mXE2LYFcZVBpS0bs8fkW1PrNh0mLXq/mk2o79Hb0eyVOyhwa9HiQ5L6Aguot8o/1kPe9zIFSm6fAPWBgspqXkdbErMEIvbOdioCghKXupxQQrpqV8cIJ97fg6wor6xepHwltHjwBYTGMw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760710641; c=relaxed/simple;
-	bh=XRCI8R7ubTU4gnlzwvKxgRDU8BxL0GHDMsWhlDpNLkk=;
+	s=arc-20240116; t=1760710645; c=relaxed/simple;
+	bh=4RP03z/Pp62KFBw/RjBUnTJt0rLLwHDvOl1GScgslTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DCiUt+6IBB1DZt4aX6kDKdPYVIYC0v0msUHhdraW6LORu88T7KggIZ7Wvo4baXuEntTQ24XR8ZXwgEPatjPLahaHQr+J42N9EBwEhHHYPpJv/FPUWE80U6EslRALfPv9O8L32n8k4FFSfOT2HF72wPOvuEe+dR1cU2T8GFYtuoc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=JlNjhHXH; arc=pass smtp.client-ip=136.143.188.112
+	 MIME-Version:Content-Type; b=outGTQ5p7fyqxG7DPHAt03v1nByGyvpy1lH83cUZLLUlSh9MOicCFB/iCVxYitrFegQyPmM6HEYsUwEoC1cqHImTjIl9J+b/4W74CyQizlaefmCHaKdh5m5NrBhZhljfjmj2kbvcuTrjbq7Mb+4yVpTqiP43vplk6qzXbg7PUII=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=koF4BKnE; arc=pass smtp.client-ip=136.143.188.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="JlNjhHXH"
-ARC-Seal: i=1; a=rsa-sha256; t=1760710628; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="koF4BKnE"
+ARC-Seal: i=1; a=rsa-sha256; t=1760710633; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=Qc/3RwTN0p85VpU0qrSU1sp21dqim+BUeh3D5M9dGe9fsSnms9bqsfcxVp0/boFZu+HQMAhFaJ1FVW9A9HWirOupWkKsnXl0uk/kjo7NSyUS+bwAPMAOEPd2cvZSeg/7a29cUsvi3ycfFIHOsi7J8Lo6UAMrpTXkOIdO6igQ8JU=
+	b=SvDXixBkwA6h1QMBSABtLFGOwgs5MzbL9vHWOrwKK0eGa86sOj20/4LuPhwNBHW3R/g9rlqdFdhBeo/Cq/SQ/sNmhymQ0Iwe8hEO4Duhz9ulTv/gf5skUBoaSpBB5Y3+0KBOw/ZkDi9OpvOlFgvu2CrekMVDjaDfR1av7fCELwc=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1760710628; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=RX0dsl1ovGyGO9Tn9qEKWzgZ4yJ3bjpHYSWKNmM8ntY=; 
-	b=M/UFPJTa1pSLsv72OlwDPjuIWIp67T/ULcc1AgQH8+zKM2B30jMRyoyWkJLLg5mO8H445SGXIj2fyNWOURTswjSbtti7zvJEifx/DrCAs4yeOJ4r+/za7XqXcTsSpWOlz6Nu367US2y+p5DuNVkKFpCe8WKtfJLqNSe1FMODf3w=
+	t=1760710633; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=0zaIIC/NFjdS4p7lA8pDSoZkHFqN4TVtF0vom9ZmYSk=; 
+	b=f4oQJcyO8JHZZ/CgwqSxcGb1I4SlKauUPPfiVKCzrm6eklMJE9K633M9Y1gx5WLqPr8eGj1NvPKvZAtImfW2UBaPmK5fnVJcfc4/2/XHevri/9y3QNdEZC3gcBPSE/12bMRDLnUmIYYbhmibk8yG9eUJtUfG8wNQkbcjWp6PxXg=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1760710628;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1760710633;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=RX0dsl1ovGyGO9Tn9qEKWzgZ4yJ3bjpHYSWKNmM8ntY=;
-	b=JlNjhHXHT5jlIbWQdeLWgRWlLVjB2z47Vd0UZueslAil0qmQCLEfIQG40HxNRl5e
-	anOCGX4puIRmKtepseyBBRfxrWoy/Xl3eBRHk8qEdYmPzRPvJmcLLbCNe94vztt04N0
-	sqdTkMSlKCVFHKKiuI3++Ld0S8AC3adBxWdzFfF0=
-Received: by mx.zohomail.com with SMTPS id 1760710625537755.6696679986443;
-	Fri, 17 Oct 2025 07:17:05 -0700 (PDT)
+	bh=0zaIIC/NFjdS4p7lA8pDSoZkHFqN4TVtF0vom9ZmYSk=;
+	b=koF4BKnERuRpHXB1EyPfMm4tn+oA3OZVWmA8ovUR72kR3rX5lurUzObNg2D7wWBr
+	pluqw6loUyBmDNmQfh7c9kINd4TxHLyh7Hj9dkcypDc3KDeUj+ycTW/n6D8JljD5407
+	t9IAiPuabZ1whLSCwxlfAJDmhZuh5VtQjaakiv0U=
+Received: by mx.zohomail.com with SMTPS id 1760710630968803.910641375988;
+	Fri, 17 Oct 2025 07:17:10 -0700 (PDT)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Emily Shaffer <emilyshaffer@google.com>,
@@ -47,9 +47,9 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v2 01/10] run-command: add stdin callback for parallelization
-Date: Fri, 17 Oct 2025 17:15:35 +0300
-Message-ID: <20251017141544.1538542-2-adrian.ratiu@collabora.com>
+Subject: [PATCH v2 02/10] hook: provide stdin via callback
+Date: Fri, 17 Oct 2025 17:15:36 +0300
+Message-ID: <20251017141544.1538542-3-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.49.1
 In-Reply-To: <20251017141544.1538542-1-adrian.ratiu@collabora.com>
 References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
@@ -66,350 +66,108 @@ X-ZohoMailClient: External
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-If a user of the run_processes_parallel() API wants to pipe a large
-amount of information to the stdin of each parallel command, that
-data could exceed the pipe buffer of the process's stdin and can be
-too big to store in-memory via strbuf & friends or to slurp to a file.
+This adds a callback mechanism for feeding stdin to hooks alongside
+the existing path_to_stdin (which slurps a file's content to stdin).
 
-Generally this is solved by repeatedly writing to child_process.in
-between calls to start_command() and finish_command(). For a specific
-pre-existing example of this, see transport.c:run_pre_push_hook().
-
-This adds a generic callback API to run_processes_parallel() to do
-exactly that in a unified manner, similar to the existing callback APIs,
-which can then be used by hooks.h to convert the remaining hooks to the
-new, simpler parallel interface.
+The advantage of this new callback is that it can feed stdin without
+going through the FS layer. This helps when feeding large amount of
+data and uses the run-command parallel stdin callback introduced in
+the preceding commit.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- run-command.c               | 82 +++++++++++++++++++++++++++++++++----
- run-command.h               | 22 ++++++++++
- t/helper/test-run-command.c | 52 ++++++++++++++++++++++-
- t/t0061-run-command.sh      | 31 ++++++++++++++
- 4 files changed, 178 insertions(+), 9 deletions(-)
+ hook.c | 15 +++++++++++++++
+ hook.h | 23 +++++++++++++++++++++++
+ 2 files changed, 38 insertions(+)
 
-diff --git a/run-command.c b/run-command.c
-index ed9575bd6a..5bc6db5bb1 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1652,6 +1652,44 @@ static int pp_start_one(struct parallel_processes *pp,
- 	return 0;
- }
+diff --git a/hook.c b/hook.c
+index b3de1048bf..7537cf0f9e 100644
+--- a/hook.c
++++ b/hook.c
+@@ -65,11 +65,22 @@ static int pick_next_hook(struct child_process *cp,
  
-+static void pp_buffer_stdin(struct parallel_processes *pp,
-+			    const struct run_process_parallel_opts *opts)
-+{
-+	/* Buffer stdin for each pipe. */
-+	for (ssize_t i = 0; i < opts->processes; i++) {
-+		struct child_process *proc = &pp->children[i].process;
-+		int ret;
+ 	cp->no_stdin = 1;
+ 	strvec_pushv(&cp->env, hook_cb->options->env.v);
 +
-+		if (pp->children[i].state != GIT_CP_WORKING || proc->in <= 0)
-+			continue;
++	if (hook_cb->options->path_to_stdin && hook_cb->options->feed_pipe)
++		BUG("options path_to_stdin and feed_pipe are mutually exclusive");
 +
-+		/*
-+		 * child input is provided via path_to_stdin when the feed_pipe cb is
-+		 * missing, so we just signal an EOF.
-+		 */
-+		if (!opts->feed_pipe) {
-+			close(proc->in);
-+			proc->in = 0;
-+			continue;
-+		}
+ 	/* reopen the file for stdin; run_command closes it. */
+ 	if (hook_cb->options->path_to_stdin) {
+ 		cp->no_stdin = 0;
+ 		cp->in = xopen(hook_cb->options->path_to_stdin, O_RDONLY);
+ 	}
 +
-+		/**
-+		 * Feed the pipe:
-+		 *   ret < 0 means error
-+		 *   ret == 0 means there is more data to be fed
-+		 *   ret > 0 means feeding finished
-+		 */
-+		ret = opts->feed_pipe(proc->in, opts->data, pp->children[i].data);
-+		if (ret < 0)
-+			die_errno("feed_pipe");
-+
-+		if (ret) {
-+			close(proc->in);
-+			proc->in = 0;
-+		}
++	if (hook_cb->options->feed_pipe) {
++		cp->no_stdin = 0;
++		/* start_command() will allocate a pipe / stdin fd for us */
++		cp->in = -1;
 +	}
-+}
 +
- static void pp_buffer_stderr(struct parallel_processes *pp,
- 			     const struct run_process_parallel_opts *opts,
- 			     int output_timeout)
-@@ -1722,6 +1760,7 @@ static int pp_collect_finished(struct parallel_processes *pp,
- 		pp->children[i].state = GIT_CP_FREE;
- 		if (pp->pfd)
- 			pp->pfd[i].fd = -1;
-+		pp->children[i].process.in = 0;
- 		child_process_init(&pp->children[i].process);
+ 	cp->stdout_to_stderr = 1;
+ 	cp->trace2_hook_name = hook_cb->hook_name;
+ 	cp->dir = hook_cb->options->dir;
+@@ -140,6 +151,7 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
  
- 		if (opts->ungroup) {
-@@ -1756,6 +1795,32 @@ static int pp_collect_finished(struct parallel_processes *pp,
- 	return result;
- }
+ 		.get_next_task = pick_next_hook,
+ 		.start_failure = notify_start_failure,
++		.feed_pipe = options->feed_pipe,
+ 		.task_finished = notify_hook_finished,
  
-+static void pp_handle_child_IO(struct parallel_processes *pp,
-+				const struct run_process_parallel_opts *opts,
-+				int output_timeout)
-+{
-+	/*
-+	 * First push input, if any (it might no-op), to child tasks to avoid them blocking
-+	 * after input. This also prevents deadlocks when ungrouping below, if a child blocks
-+	 * while the parent also waits for them to finish.
-+	 */
-+	pp_buffer_stdin(pp, opts);
-+
-+	if (opts->ungroup) {
-+		for (size_t i = 0; i < opts->processes; i++) {
-+			int child_ready_for_cleanup =
-+				pp->children[i].state == GIT_CP_WORKING &&
-+				pp->children[i].process.in == 0;
-+
-+			if (child_ready_for_cleanup)
-+				pp->children[i].state = GIT_CP_WAIT_CLEANUP;
-+		}
-+	} else {
-+		pp_buffer_stderr(pp, opts, output_timeout);
-+		pp_output(pp);
-+	}
-+}
-+
- void run_processes_parallel(const struct run_process_parallel_opts *opts)
- {
- 	int i, code;
-@@ -1775,6 +1840,13 @@ void run_processes_parallel(const struct run_process_parallel_opts *opts)
- 					   "max:%"PRIuMAX,
- 					   (uintmax_t)opts->processes);
+ 		.data = &cb_data,
+@@ -148,6 +160,9 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
+ 	if (!options)
+ 		BUG("a struct run_hooks_opt must be provided to run_hooks");
  
-+	/*
-+	 * Child tasks might receive input via stdin, terminating early (or not), so
-+	 * ignore the default SIGPIPE which gets handled by each feed_pipe_fn which
-+	 * actually writes the data to children stdin fds.
-+	 */
-+	sigchain_push(SIGPIPE, SIG_IGN);
++	if (options->path_to_stdin && options->feed_pipe)
++		BUG("choose only one method to populate hook stdin");
 +
- 	pp_init(&pp, opts, &pp_sig);
- 	while (1) {
- 		for (i = 0;
-@@ -1792,13 +1864,7 @@ void run_processes_parallel(const struct run_process_parallel_opts *opts)
- 		}
- 		if (!pp.nr_processes)
- 			break;
--		if (opts->ungroup) {
--			for (size_t i = 0; i < opts->processes; i++)
--				pp.children[i].state = GIT_CP_WAIT_CLEANUP;
--		} else {
--			pp_buffer_stderr(&pp, opts, output_timeout);
--			pp_output(&pp);
--		}
-+		pp_handle_child_IO(&pp, opts, output_timeout);
- 		code = pp_collect_finished(&pp, opts);
- 		if (code) {
- 			pp.shutdown = 1;
-@@ -1809,6 +1875,8 @@ void run_processes_parallel(const struct run_process_parallel_opts *opts)
+ 	if (options->invoked_hook)
+ 		*options->invoked_hook = 0;
  
- 	pp_cleanup(&pp, opts);
+diff --git a/hook.h b/hook.h
+index 11863fa734..ebe5dc450e 100644
+--- a/hook.h
++++ b/hook.h
+@@ -1,6 +1,7 @@
+ #ifndef HOOK_H
+ #define HOOK_H
+ #include "strvec.h"
++#include "run-command.h"
  
-+	sigchain_pop(SIGPIPE);
-+
- 	if (do_trace2)
- 		trace2_region_leave(tr2_category, tr2_label, NULL);
- }
-diff --git a/run-command.h b/run-command.h
-index 0df25e445f..e536ed7544 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -420,6 +420,22 @@ typedef int (*start_failure_fn)(struct strbuf *out,
- 				void *pp_cb,
- 				void *pp_task_cb);
+ struct repository;
  
-+/**
-+ * This callback is repeatedly called on every child process who requests
-+ * start_command() to create a pipe by setting child_process.in < 0.
-+ *
-+ * pp_cb is the callback cookie as passed into run_processes_parallel, and
-+ * pp_task_cb is the callback cookie as passed into get_next_task_fn.
-+ * The contents of 'send' will be read into the pipe and passed to the pipe.
-+ *
-+ * Returns < 0 for error
-+ * Returns == 0 when there is more data to be fed (will be called again)
-+ * Returns > 0 when finished (child closed fd or no more data to be fed)
-+ */
-+typedef int (*feed_pipe_fn)(int child_in,
-+				void *pp_cb,
-+				void *pp_task_cb);
-+
- /**
-  * This callback is called on every child process that finished processing.
-  *
-@@ -473,6 +489,12 @@ struct run_process_parallel_opts
+@@ -37,6 +38,28 @@ struct run_hooks_opt
+ 	 * Path to file which should be piped to stdin for each hook.
  	 */
- 	start_failure_fn start_failure;
- 
-+	/*
-+	 * feed_pipe: see feed_pipe_fn() above. This can be NULL to omit any
-+	 * special handling.
+ 	const char *path_to_stdin;
++
++	/**
++	 * Callback to ask for more content to pipe to each hook stdin.
++	 *
++	 * If a hook needs to consume large quantities of data (e.g. a
++	 * list of all refs received in a client push), feeding data via
++	 * in-memory strings or slurping to/from files via path_to_stdin
++	 * is inefficient, so this callback allows for piecemeal writes.
++	 *
++	 * Add initalization context to hook.feed_pipe_ctx.
++	 *
++	 * The caller owns hook.feed_pipe_ctx and has to release any
++	 * resources after hooks finish execution.
 +	 */
 +	feed_pipe_fn feed_pipe;
++	void *feed_pipe_ctx;
 +
- 	/**
- 	 * task_finished: See task_finished_fn() above. This can be
- 	 * NULL to omit any special handling.
-diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-index 3719f23cc2..dfdb03b3ab 100644
---- a/t/helper/test-run-command.c
-+++ b/t/helper/test-run-command.c
-@@ -23,19 +23,26 @@ static int number_callbacks;
- static int parallel_next(struct child_process *cp,
- 			 struct strbuf *err,
- 			 void *cb,
--			 void **task_cb UNUSED)
-+			 void **task_cb)
- {
- 	struct child_process *d = cb;
- 	if (number_callbacks >= 4)
- 		return 0;
++	/**
++	 * Use this to keep internal state for your feed_pipe_fn callback.
++	 * Only useful when using run_hooks_opt.feed_pipe, otherwise ignore it.
++	 */
++	void *feed_pipe_cb_data;
+ };
  
- 	strvec_pushv(&cp->args, d->args.v);
-+	cp->in = d->in;
-+	cp->no_stdin = d->no_stdin;
- 	if (err)
- 		strbuf_addstr(err, "preloaded output of a child\n");
- 	else
- 		fprintf(stderr, "preloaded output of a child\n");
- 
- 	number_callbacks++;
-+
-+	/* test_stdin callback will use this to count remaining lines */
-+	*task_cb = xmalloc(sizeof(int));
-+	*(int*)(*task_cb) = 2;
-+
- 	return 1;
- }
- 
-@@ -54,15 +61,48 @@ static int no_job(struct child_process *cp UNUSED,
- static int task_finished(int result UNUSED,
- 			 struct strbuf *err,
- 			 void *pp_cb UNUSED,
--			 void *pp_task_cb UNUSED)
-+			 void *pp_task_cb)
- {
- 	if (err)
- 		strbuf_addstr(err, "asking for a quick stop\n");
- 	else
- 		fprintf(stderr, "asking for a quick stop\n");
-+	if (pp_task_cb)
-+		FREE_AND_NULL(pp_task_cb);
- 	return 1;
- }
- 
-+static int task_finished_quiet(int result UNUSED,
-+			       struct strbuf *err UNUSED,
-+			       void *pp_cb UNUSED,
-+			       void *pp_task_cb)
-+{
-+	if (pp_task_cb)
-+		FREE_AND_NULL(pp_task_cb);
-+	return 0;
-+}
-+
-+static int test_stdin_pipe_feed(int hook_stdin_fd, void *cb UNUSED, void *task_cb)
-+{
-+	int *lines_remaining = task_cb;
-+
-+	if (*lines_remaining) {
-+		struct strbuf buf = STRBUF_INIT;
-+		strbuf_addf(&buf, "sample stdin %d\n", --(*lines_remaining));
-+		if (write_in_full(hook_stdin_fd, buf.buf, buf.len) < 0) {
-+			if (errno == EPIPE) {
-+				/* child closed stdin, nothing more to do */
-+				strbuf_release(&buf);
-+				return 1;
-+			}
-+			die_errno("write");
-+		}
-+		strbuf_release(&buf);
-+	}
-+
-+	return !(*lines_remaining);
-+}
-+
- struct testsuite {
- 	struct string_list tests, failed;
- 	int next;
-@@ -157,6 +197,7 @@ static int testsuite(int argc, const char **argv)
- 	struct run_process_parallel_opts opts = {
- 		.get_next_task = next_test,
- 		.start_failure = test_failed,
-+		.feed_pipe = test_stdin_pipe_feed,
- 		.task_finished = test_finished,
- 		.data = &suite,
- 	};
-@@ -460,12 +501,19 @@ int cmd__run_command(int argc, const char **argv)
- 
- 	if (!strcmp(argv[1], "run-command-parallel")) {
- 		opts.get_next_task = parallel_next;
-+		opts.task_finished = task_finished_quiet;
- 	} else if (!strcmp(argv[1], "run-command-abort")) {
- 		opts.get_next_task = parallel_next;
- 		opts.task_finished = task_finished;
- 	} else if (!strcmp(argv[1], "run-command-no-jobs")) {
- 		opts.get_next_task = no_job;
- 		opts.task_finished = task_finished;
-+	} else if (!strcmp(argv[1], "run-command-stdin")) {
-+		proc.in = -1;
-+		proc.no_stdin = 0;
-+		opts.get_next_task = parallel_next;
-+		opts.task_finished = task_finished_quiet;
-+		opts.feed_pipe = test_stdin_pipe_feed;
- 	} else {
- 		ret = 1;
- 		fprintf(stderr, "check usage\n");
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 76d4936a87..2f77fde0d9 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -164,6 +164,37 @@ test_expect_success 'run_command runs ungrouped in parallel with more tasks than
- 	test_line_count = 4 err
- '
- 
-+test_expect_success 'run_command listens to stdin' '
-+	cat >expect <<-\EOF &&
-+	preloaded output of a child
-+	listening for stdin:
-+	sample stdin 1
-+	sample stdin 0
-+	preloaded output of a child
-+	listening for stdin:
-+	sample stdin 1
-+	sample stdin 0
-+	preloaded output of a child
-+	listening for stdin:
-+	sample stdin 1
-+	sample stdin 0
-+	preloaded output of a child
-+	listening for stdin:
-+	sample stdin 1
-+	sample stdin 0
-+	EOF
-+
-+	write_script stdin-script <<-\EOF &&
-+	echo "listening for stdin:"
-+	while read line
-+	do
-+		echo "$line"
-+	done
-+	EOF
-+	test-tool run-command run-command-stdin 2 ./stdin-script 2>actual &&
-+	test_cmp expect actual
-+'
-+
- cat >expect <<-EOF
- preloaded output of a child
- asking for a quick stop
+ #define RUN_HOOKS_OPT_INIT { \
 -- 
 2.49.1
 
