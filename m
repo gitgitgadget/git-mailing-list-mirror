@@ -1,87 +1,168 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A353F330336
-	for <git@vger.kernel.org>; Fri, 17 Oct 2025 15:00:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F57A257437
+	for <git@vger.kernel.org>; Fri, 17 Oct 2025 15:50:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760713243; cv=none; b=HD0UaUi6GqvKxzCm1P5i8SDlfcsZ9gy2xME6OB5Pu7MLb9anXBYprd9A8QBi3OgVy+EteEItZMbZqg2xUqM1bvtryGvVF2M0/PIV5vFEkKN3Gfc9AFTZ58nTfL5xNA/AzySEs2g7lus/ebhw7o5CifcyFqldFW0UM7ggNOqYA/E=
+	t=1760716244; cv=none; b=W65knWfVy76w19dBQD2a/eiS6evG5b5QElJ9DCMwWVOiWBsy1DaWrsrBelLOOWyczet1OapGRDOYRwfwTKSnhlrL1+73PNE2sc82TxdJdB745rlAWV/94vA8Mnr9SEymZbB/7xpTIw/rAb4SYTGWJXs/bVrrU3qUp7DXaSsz6JA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760713243; c=relaxed/simple;
-	bh=47C6hdEPxIh0DFDcs2vnRJtvUVOJYTkZCR8bXXdrroA=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Ws7tssSS7d8FEkL5UTkQrdQZT35NX1st3f3cThEnLROXKaObZfpASHeBkJUGeZp/JRua6yekkz4vIdBk/8O7tBZJh3PLcerabamKW243+0oEwHrQlJXvnBghq8Fs3bEVkeZZcMZKuXpK5Q26nsql2oxSQHhC2TPsH8unikb7suI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nhGM1e6u; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760716244; c=relaxed/simple;
+	bh=MJADYfg8OhQHHlYaHtpVnd6nw+G4zhShmgf0ez741Z8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=XsAlAbdH8Jsqp9JXCJ+sVzKNW9/jTqFsKrlUJ7SoZNEbAlQD6G+gyu26GFUWexBqno/5DuZxqnB7FLFKpfkbl82hK7ajXwZavX85+UOM00iTakunlzWOhHUnAj8m215i0+TgcRh/Cf+xIkGnZ4MRzgT0g20V6qEpZLvB1QwlMWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=A2c8DIn4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eWEjixO1; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nhGM1e6u"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-b40f11a1027so370411566b.2
-        for <git@vger.kernel.org>; Fri, 17 Oct 2025 08:00:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760713239; x=1761318039; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=47C6hdEPxIh0DFDcs2vnRJtvUVOJYTkZCR8bXXdrroA=;
-        b=nhGM1e6u2KYHnFdxz6qU2xn/FoXPjTTBhTMW9HMsHFpFoplSmnwUYHV4b3bgFA/mT0
-         dbIuAVkHY9Eu2GaWUmBVF/3Ipg7PzPEfDm/RHtygsKWibSQxexEiokCVK8lmTnHCklV9
-         hkGSnUeJTaXIfdUbZaUYNJmWj2oWvb/n/BIGaqbariUHVUkOaQBgdtCjmk1QREj85MN+
-         P3FBTlnAO7VTwx7KxffOgdENKbMjvsKGw8YPdbkBrzjH3nkgf2y/w4lXyRx4m/kfCRyX
-         kW1n0RdznTNRdS+q1vqVEQtkifdkqeog+WYodlmhwYWzlaHjJW7Vv9cDg2Y7YH46dbvO
-         qgcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760713239; x=1761318039;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=47C6hdEPxIh0DFDcs2vnRJtvUVOJYTkZCR8bXXdrroA=;
-        b=WfvnMuUDmifM2AWzxVMk7JHrt83oMoBmYf2qr/UvsiUnZTcCVMS+n2IUr2twHM0GaO
-         tAIXQIGOn6CkYGtklDQCLtuJEIJyyGXivzfbG0T3A975GaokrjYVJroqKTJywB8J4PdP
-         MsDPD52nAUB3iSU67V5lxkCLek/Wf4sqAUJXsksvxrBFjpuVjZJMkHhVcaFXvoMpRIZK
-         AR+5wF3CkaHaaowPN+Z68ZC5n5CErAKUeosiihErmTeCTNkdsh1i/3Y3z7yZPfMthD9s
-         qyn5vczCXDad2dJOfZuadaHVXn9T+RtmDIippeGf81+8U0EVIJ8UBMCLldZb2FhbaZKM
-         yLqg==
-X-Gm-Message-State: AOJu0YxZkkgSh9m6ZaIxZbMqB2+/yrjSJ5NSvGYIGQHbdb8gwBPqRx1c
-	RnyR8ffpeKEjzxG8Nb/l1PIPJMX/jaEg9CXloZm8sVSQKMh/5UOAup0fNcKw0nHryP8NqwVAOd4
-	fZUAVn7LqYJeiYeC+1wpoHLmleG3GGQKQqNM9EFI=
-X-Gm-Gg: ASbGncsUkhMHlsEYhR0VCTFBrk/BWFH18IGHaFlIEmUASnei7crtr7L9oLaXyrSNrAE
-	BrXxkfuyka2mSFljodLDUqfBXcaxt5gGoDMbAX7DN3l7hMIW8hn/g5/bCvop+tbYqJVCjmn1KHb
-	FM2XNvSc3dqRUyieJy2Xs3reDk4kCJEtiyGEXegjor8PtF8bEblg6XJ9sPd4U6N7x76KfXldaEV
-	sj3ptxzDTdRIhVjzd2tZZJhtOQE7FDtvkY6Al9So3g3+J+0ZwNXdVkTYsXYrG7uCXiPnLdQ2EeA
-	eud/cNqD4Waj7fpa+tCyh8etTcKhR0JlTEAURPIu3DsSS7dF0GjtjG4YDw==
-X-Google-Smtp-Source: AGHT+IGtw3BtKQCqiPE4lyomf1VFirnG3kT/JBsLehG5CjSjOuo7RnhOFVouP2levxuOW/0cA6PH8+EQdlowQ+T8xec=
-X-Received: by 2002:a17:906:7312:b0:b42:f7df:a2ec with SMTP id
- a640c23a62f3a-b6472d5bc00mr447767966b.9.1760713239343; Fri, 17 Oct 2025
- 08:00:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="A2c8DIn4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eWEjixO1"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4BA46EC01F2;
+	Fri, 17 Oct 2025 11:50:41 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Fri, 17 Oct 2025 11:50:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1760716241;
+	 x=1760802641; bh=hb+SbkuWQsw6a7qxucO3z0CM0zNLv4w2gdkGonWrwqM=; b=
+	A2c8DIn4q24okUgDNOOLwwBcFVdg4qZsjZ6ZpDT0ZGm+mVhJOKN882V1XrTadS2Y
+	CqQe3Ww7xOfXjDMP7CjfuXA/25Q8EmVsBQyrTy9o+wNcqDqq1vj4hB4IqMUO7jZg
+	jkKeMLa70PPaV/2ue6lMi3LAJxtZuVBaXYxU3/vB0puLAHiBpHHfidtmhoF60Iec
+	baDtTQ22fjssgCRamFBz0PEeX+3gzboLjKe2fPAYVghpRlAKSDVImfgc7G8HvqeZ
+	Fa6IkCchILAk4X06DTkvqayRq/4WDuan+HRQdaeUQc1SAcYd38/n6bSLOGg/Z+Bb
+	Vpha00LBmkTQE48ONXTzKQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760716241; x=
+	1760802641; bh=hb+SbkuWQsw6a7qxucO3z0CM0zNLv4w2gdkGonWrwqM=; b=e
+	WEjixO1r586x1ay0EaiF1MWckxSuV6agvVoocsdxDE3lss+zYgUJJTRsFZoCRN2P
+	/I7x9YP9YEwqHULMa26jA65SpHmMG/22xDxMmMGvhi17BIC4tqG6L7dTHk5e0q0T
+	3yMsjNEajqbHUhYaCEXQkm2BMq1bTOKUdSmRj/VPJhbODbEC2WACJozgp6fyI7Er
+	qStHWHni1f2ZuRxVDSt69hgSw3qQSzvfjXpDkZz5WLyBUGHiOszkF18YUTnI0/d4
+	jRdzrmFrAjILCyhgtWXBo4nj649RL+ogngVmPFiwYNP22MnwV+F38T81rqdY1taV
+	Qe/AF3gZCRuZ8zW8ESnvw==
+X-ME-Sender: <xms:0GXyaHFucCu4VyxCi452ZuJ8K_0ekCinwXNTqL0UMUT5HClzx-Tupo8>
+    <xme:0GXyaLNycWvs2unZQU1MKXPXpu1oquYmBvumahEhIjD88MKY9W9gysKzXx49g3Pdr
+    EVooJCxa_pbZNIQ_sFi2f4I_17WE85n3iRq6uihNoDUwZghgAhbCw>
+X-ME-Received: <xmr:0GXyaBc7cUYRZXwR2niEyZpzwqcg-uJ4XSGKqBrxxutkwlfGmXLOsm5jvTiswCNNLM4JJ1WtfhVId0pyh9hSkgtHR7wJNdxNmQ4GAA0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdelheekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfgggtgfesthekre
+    dtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
+    mhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhephffggeelhfejkefgteelteejhfetie
+    ehgeeftdduudffgeejhfektedugefghfeknecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepsg
+    gvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhulhhirgesjhhv
+    nhhsrdgtrg
+X-ME-Proxy: <xmx:0WXyaAv9IaoDTc3R4vpzlT4kMj4i8hayGq6fOhGJAsh1-oC0MM1PEA>
+    <xmx:0WXyaKlcCv-CYc1JTUVk0mDWNKl0o4XgBJCH0OdO1ZEUq_e_9ZsZVg>
+    <xmx:0WXyaKyjceTZKvH-8wVeZ4QUAtA0Pb6L9LdKpWeDLO5nrxXqEKZJyg>
+    <xmx:0WXyaEOAOL6R2huXwuyAw_LCCoRpYuZh8_RQi24XXti0bCHvjUE3Cw>
+    <xmx:0WXyaP_6z0rcjIn5a1_T8CSzTp34Y7aOkSoiNXv_wWnUkHZYb3rOb4dA>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 17 Oct 2025 11:50:38 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: kristofferhaugsbakk@fastmail.com,
+	git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	ben.knoble@gmail.com,
+	julia@jvns.ca
+Subject: [PATCH v2] doc: git-checkout: fix placeholder markup
+Date: Fri, 17 Oct 2025 17:50:12 +0200
+Message-ID: <v2-cb38c701537.1760716150.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.51.1.498.g8f0801f1c10
+In-Reply-To: <54bc6875cc5.1760652634.git.code@khaugsbakk.name>
+References: <54bc6875cc5.1760652634.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: El_Hoy <eloyesp@gmail.com>
-Date: Fri, 17 Oct 2025 12:00:27 -0300
-X-Gm-Features: AS18NWDmiovjCxUFduyVZYYiOmKGJtv3sSC0NxYETDbYqTc2swMrgYMNGDrhkK8
-Message-ID: <CAPapNH0C3+bU-RUO6oFHUKLjKuNdm-aXgsFTHFobYVrJXWzr=g@mail.gmail.com>
-Subject: Making git grep ignore binary the default
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-I've found that there is a flag (`git grep -I`) to ignore binary
-files, it works great, but I've found no way to make it the default.
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-It would be great to have a config for this. This way a possible
-implementation implies:
+The placeholder markup is underscore (_), not backtick (`) as well.
 
-- Adding a config `grep.ignoreBinary` that defaults to false, keeping
-the current default.
+The inline-verbatim markup (backticks) handle interior formatting. This
+means in this case that it applies HTML `<code>` to the underscores and
+`<em>` to the placeholder.
 
-- Adding a flag `git grep --include-binary` to revert the default. But
-maybe the `-a, --text` flag already does that.
+That is the effect, anyway; we can see from the rest of 042d6f34 (doc:
+git-checkout: clarify `-b` and `-B`, 2025-09-10) that this was probably
+an unintended mix-up.
 
-Also, maybe the next git version (3.0) can default to ignore-binary as
-a better default.
+Acked-by: Julia Evans <julia@jvns.ca>
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
-Finally, if this makes sense, I can do my best to implement the change
-in the code.
+Notes (series):
+    v2:
+    Add Ack.  I also considered removing “probably” from “mix-up” but
+    left it alone as a point-in-time note.  The msg + ack makes it clear.
+    
+    v1:
+    Since this has landed in `master` now.
 
-Regards.
-- Eloy
+ Documentation/git-checkout.adoc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
+index 431185ca0ba..6f281b298ef 100644
+--- a/Documentation/git-checkout.adoc
++++ b/Documentation/git-checkout.adoc
+@@ -61,7 +61,7 @@ uncommitted changes.
+ `git checkout -B <branch> [<start-point>]`::
+ 
+ 	The same as `-b`, except that if the branch already exists it
+-	resets `_<branch>_` to the start point instead of failing.
++	resets _<branch>_ to the start point instead of failing.
+ 
+ `git checkout --detach [<branch>]`::
+ `git checkout [--detach] <commit>`::
+@@ -155,7 +155,7 @@ of it").
+ 
+ `-B <new-branch>`::
+ 	The same as `-b`, except that if the branch already exists it
+-	resets `_<branch>_` to the start point instead of failing.
++	resets _<branch>_ to the start point instead of failing.
+ 
+ `-t`::
+ `--track[=(direct|inherit)]`::
+
+Range-diff against v1:
+1:  54bc6875cc5 ! 1:  cb38c701537 doc: git-checkout: fix placeholder markup
+    @@ Commit message
+         git-checkout: clarify `-b` and `-B`, 2025-09-10) that this was probably
+         an unintended mix-up.
+     
+    +    Acked-by: Julia Evans <julia@jvns.ca>
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+     
+      ## Notes (series) ##
+    +    v2:
+    +    Add Ack.  I also considered removing “probably” from “mix-up” but
+    +    left it alone as a point-in-time note.  The msg + ack makes it clear.
+    +
+    +    v1:
+         Since this has landed in `master` now.
+     
+      ## Documentation/git-checkout.adoc ##
+
+base-commit: 83a9405e59e9cdfb587b19c50f0c040f346dd4ea
+-- 
+2.51.1.498.g8f0801f1c10
+
