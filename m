@@ -1,41 +1,41 @@
 Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EA033507A
-	for <git@vger.kernel.org>; Fri, 17 Oct 2025 14:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C879A2F6937
+	for <git@vger.kernel.org>; Fri, 17 Oct 2025 14:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760710663; cv=pass; b=TV8rYqrjtbM9wrEuDD+qVxsRTpITlFHDaD8CwHk8/c3xyYO0L6K7QGptLznJYJEdmOZs3O5Q2DUlgviiGeVQWSwNnGozyh6saXVcFB4f1Y6iGyE8qmeFQhucMgJqRiSD/iSdB/sUC5+UPpSf3vFp/FuNGir5jYP/37wSVrrDEtg=
+	t=1760710665; cv=pass; b=q+37HT+XMSMENv5+uelOcDCh9PlxuHG3YEbz+njY3osvjqrSUYUMGKZmEkL2s0FjEatE3WuvXIIINcqOJpOHh1RA4S7VbFViTRwSRytL97E6pwoyCkev3l3qVIQbslwUL3J2XWseVf5zy7oYG2sUr7Dt8BbhkBtKUo6Cmx9s2zU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760710663; c=relaxed/simple;
-	bh=OB1xbnmJV7z1sQ+0dmX4iOyxjYhcTxnpV8w/5lR2NS4=;
+	s=arc-20240116; t=1760710665; c=relaxed/simple;
+	bh=Ln7VHHGc39AddsEox9dUOx1T+a+URibyutLTA8qgaIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FMOd7njiSGBHt7XaUiisoXQ6VS67zaOd8r/csOOP95jrUt7hAmxz6r6oVTDZb8xcVPcS6I7N3lgSXfFBl2qc6bVwxLOxaBaM7vZ1cjmNMFl83CT47ye/vobGB/1MdlhCs957nW8Y2A0bbXeBKZTI3n6KT7yveneH5TrBvfU1geI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=c5L0hp15; arc=pass smtp.client-ip=136.143.188.112
+	 MIME-Version:Content-Type; b=L3wUciOwkCBXLD1SdpYd9wdOPLg+QvxTgY0bk53b0uIErT9B6VtTbawlXa5U3fYdecFxTUDGhk9wJpT3PWRp+CK9Avq7yyCpZX3PnybqbB2eDVIEuL7bwAfZ8J/sq/WrfdxhzBnjRBOQMuAR7VjxRelydkZdNexKW4qDTGTw8+0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Sm0ogFAS; arc=pass smtp.client-ip=136.143.188.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="c5L0hp15"
-ARC-Seal: i=1; a=rsa-sha256; t=1760710651; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Sm0ogFAS"
+ARC-Seal: i=1; a=rsa-sha256; t=1760710655; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=Gvqx5snZP0gUNvUisHVSlC2I7/yLX/Gd1DNgfGYIABXZzyibQ8lgB/F+93IoTyc6k01g/oJpNcWFjJgdiePIkgJqYJ3tVjNLpm91YyYKP0kwaqux/8BCNrHRVe99rpil1EvFHl2+au+JXN4zHtdmkmDhjdfOCcYLUR+NhckvVgY=
+	b=VuNr7ANHIIgWTu8c12jotZMKGJSuMN8MeaO2S7SfmTYrsYNFs15wsvH7YBVmktPZQhttHGfMbAEU6uK/ynCusEPNUIAYcMFNdtkJkVHHX03fHAVQrWD+6rJcXgB8r8yoe7QxuktKqayL512uDmfGmh4L5Ren4EGTnTGZ++zGRBw=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1760710651; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=sotVp5U0IEhXBStqyXs8Chtq//skg4G32dYKRvhOeyo=; 
-	b=HG+bHJkAy96hCYhQZK/2my2TpcUXBinqqCiyCupz9EI76eFj83PheTZC8gLO46zKxmgSU3u1Yze18Dxx4A4wHNUI0JQBpz15fVdEs90xAVWGcjuzM23EafpjHWD793FXt7aIMyzOjM3zh0bi7EG4kRxvla8C2oM0mYKKV+yfU/0=
+	t=1760710655; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=Av9IR4qIxu2f6DQnCFp/RGVsM6crvD9deV01Dn/nx3c=; 
+	b=SLqo1Sb7xMTkXKI1ZT7IMgFHQ5fUWknTOD920xksy4L1nCQ60WZeIaCWWPLc1t845YI8Pge/78+iNc5LTUQY/Cro9mrA123L43xKm1pGy+8z3OE749hWx1y5aAL5wUhbVG0oYiCgnBbmAk1gQwmv/MiBgEpXrkGRm2YOHAjqD0A=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1760710651;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1760710655;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=sotVp5U0IEhXBStqyXs8Chtq//skg4G32dYKRvhOeyo=;
-	b=c5L0hp153PSBcSn60T/V770ns4MWi7yUrY/8McVxtBhcxTr+hZw/p/+cqoOaoeSi
-	nBD0Mu4T8djI/eRaIA420bSLb4851ku7i2ukk2pIFxvmYCeV2j7MOTc91ey4FfE6H+r
-	IwiZDt249CJHKFMMhMmfenFw1j4G/WQskapP/KNQ=
-Received: by mx.zohomail.com with SMTPS id 176071064960123.86943232838405;
-	Fri, 17 Oct 2025 07:17:29 -0700 (PDT)
+	bh=Av9IR4qIxu2f6DQnCFp/RGVsM6crvD9deV01Dn/nx3c=;
+	b=Sm0ogFAS2Gmt2le6emh4ZgA440aFbdKC4bjOJvIG8Cr8Gb3CQemwdLQB4PZku/Ks
+	XfRUmsLL3A20ok8tT3VSj/NYher+Tzt57hVIlxEnviSvKeCTGZRudruMGQ7vArjh7/j
+	00ZYlYkd9F+gIefxpSW7zDUGhQh8w74AN4gmXvFk=
+Received: by mx.zohomail.com with SMTPS id 1760710652674308.4191006270895;
+	Fri, 17 Oct 2025 07:17:32 -0700 (PDT)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Emily Shaffer <emilyshaffer@google.com>,
@@ -45,10 +45,11 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Josh Steadmon <steadmon@google.com>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
-Subject: [PATCH v2 08/10] hooks: allow callers to capture output
-Date: Fri, 17 Oct 2025 17:15:42 +0300
-Message-ID: <20251017141544.1538542-9-adrian.ratiu@collabora.com>
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH v2 09/10] receive-pack: convert update hooks to new API
+Date: Fri, 17 Oct 2025 17:15:43 +0300
+Message-ID: <20251017141544.1538542-10-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.49.1
 In-Reply-To: <20251017141544.1538542-1-adrian.ratiu@collabora.com>
 References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
@@ -65,47 +66,113 @@ X-ZohoMailClient: External
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Some server-side hooks will require capturing output to send over
-sideband instead of printing directly to stderr. Expose that capability.
+Use the new hook sideband API introduced in the previous commit.
+
+The hook API avoids creating a custom struct child_process and other
+internal hook plumbing (e.g. calling find_hook()) and prepares for
+the specification of hooks via configs or running parallel hooks.
+
+Execution is still sequential through the current hook.[ch] via the
+run_proces_parallel_opts.processes=1 arg.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- hook.c | 1 +
- hook.h | 8 ++++++++
- 2 files changed, 9 insertions(+)
+ builtin/receive-pack.c | 60 +++++++++++++++---------------------------
+ 1 file changed, 21 insertions(+), 39 deletions(-)
 
-diff --git a/hook.c b/hook.c
-index a325c7cb8c..fb452b5369 100644
---- a/hook.c
-+++ b/hook.c
-@@ -152,6 +152,7 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
- 		.get_next_task = pick_next_hook,
- 		.start_failure = notify_start_failure,
- 		.feed_pipe = options->feed_pipe,
-+		.consume_sideband = options->consume_sideband,
- 		.task_finished = notify_hook_finished,
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index c9288a9c7e..93b6f28662 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -939,31 +939,26 @@ static int run_receive_hook(struct command *commands,
+ 	return status;
+ }
  
- 		.data = &cb_data,
-diff --git a/hook.h b/hook.h
-index 82b3d1dd27..a84e97db34 100644
---- a/hook.h
-+++ b/hook.h
-@@ -65,6 +65,14 @@ struct run_hooks_opt
- 	 * Only useful when using run_hooks_opt.feed_pipe, otherwise ignore it.
- 	 */
- 	void *feed_pipe_cb_data;
+-static int run_update_hook(struct command *cmd)
++static void hook_output_to_sideband(struct strbuf *output, void *cb_data UNUSED)
+ {
+-	struct child_process proc = CHILD_PROCESS_INIT;
+-	int code;
+-	const char *hook_path = find_hook(the_repository, "update");
+-
+-	if (!hook_path)
+-		return 0;
++	if (output && output->len)
++		send_sideband(1, 2, output->buf, output->len, use_sideband);
++}
+ 
+-	strvec_push(&proc.args, hook_path);
+-	strvec_push(&proc.args, cmd->ref_name);
+-	strvec_push(&proc.args, oid_to_hex(&cmd->old_oid));
+-	strvec_push(&proc.args, oid_to_hex(&cmd->new_oid));
++static int run_update_hook(struct command *cmd)
++{
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+ 
+-	proc.no_stdin = 1;
+-	proc.stdout_to_stderr = 1;
+-	proc.err = use_sideband ? -1 : 0;
+-	proc.trace2_hook_name = "update";
++	strvec_pushl(&opt.args,
++		     cmd->ref_name,
++		     oid_to_hex(&cmd->old_oid),
++		     oid_to_hex(&cmd->new_oid),
++		     NULL);
+ 
+-	code = start_command(&proc);
+-	if (code)
+-		return code;
+ 	if (use_sideband)
+-		copy_to_sideband(proc.err, -1, NULL);
+-	return finish_command(&proc);
++		opt.consume_sideband = hook_output_to_sideband;
 +
-+	/*
-+	 * Populate this to capture output and prevent it from being printed to
-+	 * stderr. This will be passed directly through to
-+	 * run_command:run_parallel_processes(). See t/helper/test-run-command.c
-+	 * for an example.
-+	 */
-+	consume_sideband_fn consume_sideband;
- };
++	return run_hooks_opt(the_repository, "update", &opt);
+ }
  
- #define RUN_HOOKS_OPT_INIT { \
+ static struct command *find_command_by_refname(struct command *list,
+@@ -1640,33 +1635,20 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ static void run_update_post_hook(struct command *commands)
+ {
+ 	struct command *cmd;
+-	struct child_process proc = CHILD_PROCESS_INIT;
+-	const char *hook;
+-
+-	hook = find_hook(the_repository, "post-update");
+-	if (!hook)
+-		return;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+ 
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
+ 		if (cmd->error_string || cmd->did_not_exist)
+ 			continue;
+-		if (!proc.args.nr)
+-			strvec_push(&proc.args, hook);
+-		strvec_push(&proc.args, cmd->ref_name);
++		strvec_push(&opt.args, cmd->ref_name);
+ 	}
+-	if (!proc.args.nr)
++	if (!opt.args.nr)
+ 		return;
+ 
+-	proc.no_stdin = 1;
+-	proc.stdout_to_stderr = 1;
+-	proc.err = use_sideband ? -1 : 0;
+-	proc.trace2_hook_name = "post-update";
++	if (use_sideband)
++		opt.consume_sideband = hook_output_to_sideband;
+ 
+-	if (!start_command(&proc)) {
+-		if (use_sideband)
+-			copy_to_sideband(proc.err, -1, NULL);
+-		finish_command(&proc);
+-	}
++	run_hooks_opt(the_repository, "post-update", &opt);
+ }
+ 
+ static void check_aliased_update_internal(struct command *cmd,
 -- 
 2.49.1
 
