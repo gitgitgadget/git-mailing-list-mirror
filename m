@@ -1,48 +1,41 @@
 Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDEC9332EA2
-	for <git@vger.kernel.org>; Fri, 17 Oct 2025 12:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3F3229B1F
+	for <git@vger.kernel.org>; Fri, 17 Oct 2025 13:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760702877; cv=none; b=pTGvVrHIY+BdVOt0Nms0QZPMTxdria+LWsbiuhOS+kO+25nw1P/DGVnH06U9Q/7aYyg5QqLxmWHB+CLprZNQAD7giiq+1sq+RmQ3e1h3kdWvut0mom2qO9kgEyFIzmMMcfg5YwJFXm2Qx1McV1b2jWwuDNxa1vyhl0ZrGOptkfs=
+	t=1760708778; cv=none; b=NynYrvZph0M/P8yQ2Y0ubgzdELKU91YR+dSlBIOGVkOvPAK45Jm17NxN7QM+VDDtcUWh/mvsh/roSbzna7827qbw/7zcif4eD1ynJsXN0nL6kUQCg6KHQeKciVzqWAdSpi2y5S2ZTjJ4bSA8mvQempvlRf3zmC1OTEd2pXPUAdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760702877; c=relaxed/simple;
-	bh=J8z7E7IVQAvdFIIP/MgKslRFFCgAPO9HS7g46UuxeXU=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=eDCFz4ZAosIDn3pR04Ys+CY3eXvggodj/9hnXqqdUUZEWbhbVovB60rjQSpSKdZDT1MSiMcjnMVjBuZp8HwtNLW6eQmeRviuvk7nGQtXkgLkWfQHDgUcftVoGLbg/SWN++wuEITzyQu84h6NrTwaR4yUJRD3qfdHrxdhmk9GFnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=VVBa3lpB; arc=none smtp.client-ip=212.227.15.19
+	s=arc-20240116; t=1760708778; c=relaxed/simple;
+	bh=pHOa/v+/raErHZ50Msa9u2zI7+zlc1JGLhYkqiNSt3o=;
+	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=DrSQ3owt6BvpaOgZT/k8Om3nharjav+/TABmmqdTCAQHvdC6dH44x46XHgOGOzJDn16fWigqQ7dFSyQ+XFAWxlGK+raMDxjuHEq5yx1TZUa4atjaMrwrN7nUWI0AJGP1mejzhntdgBRd5X1kk5WCwK+t9X0YhPZyZYMTftnXiy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=taxJAQMQ; arc=none smtp.client-ip=212.227.15.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="VVBa3lpB"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="taxJAQMQ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1760702872; x=1761307672;
+	s=s31663417; t=1760708770; x=1761313570;
 	i=johannes.schindelin@gmx.de;
-	bh=biJkLkMUIDqkScLP0CEHHUWJvRrA4woz/PDCI7gtikM=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=VVBa3lpB5qL3rllrSp8qsQGiRIwLaugzmNggNK+6GhsN0o+hVGZ3iXgM0CbV2iYJ
-	 yfEp81qFNvkpKsEYlwx5tlXeZmRB2ldRMEcb/ktSTBBLIjYm2cf4lic/s0ogeOAlW
-	 IY4YuQeptUlOAzWj7Lo2tr4lg2qLoVIxnxXU6bZTMln9Pr030wtkYp+xvQ5LDocfj
-	 xSeqnqS0NtIHJ5baKMHetR/LD7uS+C0sNqh64aEoC34P0/YVlzz1yaq5Knm5KuhFc
-	 sO8aLHpKBPTlCVLadmCCHdEPIYOoXhv9yakt4t2Udo+PWK9J4qb6wioS2du+sE7xG
-	 ILYQaAPDojx+hNLMBA==
+	bh=fAyoTIhLUgVz31T9fr2XsF82bZ2/elfEvel2T6aTtpQ=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
+	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
+	 message-id:mime-version:reply-to:subject:to;
+	b=taxJAQMQLjZoT3sFYtBRWjMHBw2m0ifk0LWTge1pobUZRxEZu1FRm6xHs3sbzgd8
+	 SbbqwIcRbKCUO29+6RsrvgBUQlC4cvGX4L9lwb57Rq73BWOmZ9vtWrlZl/0ZI1dgN
+	 HwefGnJL9pqnoyXhN1klXKbbF504B+6hDhvn6EINg1mmyF7iMDyf3fjCpTDDmBeGV
+	 RvVGX6X5kotIQU6r6i6M0QhEbXNGizuT4QYv9uVivJyyUP1L/3jMF8mbYD6WaQPf+
+	 FcuxwaWqrh/Ri9NXm3ryY+8tvY/kpDL18uRDVKpzIqnjwJRwwoERjOXvbhYFn7qqT
+	 QaFWWze2UVNgZvrDiA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [172.23.242.68] ([89.1.214.131]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MiJZE-1uWo7q0umM-00aKP7; Fri, 17
- Oct 2025 14:07:52 +0200
-Date: Fri, 17 Oct 2025 14:07:50 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>
-cc: git@vger.kernel.org, Lidong Yan <502024330056@smail.nju.edu.cn>, 
-    Lidong Yan <yldhome2d2@gmail.com>
-Subject: Re: [PATCH] diff: stop output garbled message in dry run mode
-In-Reply-To: <pull.2071.git.git.1760671049113.gitgitgadget@gmail.com>
-Message-ID: <4ff55fc5-7880-b8bf-257f-3186552e9c36@gmx.de>
-References: <pull.2071.git.git.1760671049113.gitgitgadget@gmail.com>
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mjj8D-1uTqa91Ssl-00ouhE; Fri, 17
+ Oct 2025 15:46:10 +0200
+Date: Fri, 17 Oct 2025 15:46:08 +0200 (CEST)
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+To: git@vger.kernel.org, git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git for Windows 2.51.1 (security release)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -50,189 +43,135 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Wrf6oEU2Bhep/WhNbcliJvsY8OhDA00pNztgP9XAKLr+3ayRHDB
- 4DrT7W7iGaUB4AYT2bOpbJNV6D57dcxGUWY2mBXUvuEDTKdTERqOu3M7BaLDhIB22lQxpWh
- Tj4zG0GOVa66w4jd/RFaYkesvtKlz5PmjZ83GBkbpKCOp4gT8k/JABvUV8FAJvA6br7ikMo
- ASE5mY9nkYN7FHVYYV4VQ==
+Message-ID: <1MUGe1-1uj37B1cBf-00VKRU@mail.gmx.net>
+X-Provags-ID: V03:K1:05BXtDXZSQ9eX1yXBSrsF+zsIpL4LsCf6BkBKjn+xoqLtrfk9TL
+ NZTVMQf212Wx6vXlBq94P7b7aHn7HdkTVSsdlwwdhxTtumnHg6BGGXFWV0zTXDUVR5h976R
+ j9udFqJyNlp04isKXRCorAMOPPVZ9I6BVhkmCDQjRBswPl5FTho3uj/Gy0Y6OYNZmShNxs3
+ G0o5O80xW3fs0+B9EeWGw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:A8+GRDIq+H8=;9nPEWNYapfdTfKX/3/jGSfhwTNv
- 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
-Content-Transfer-Encoding: quoted-printable
+UI-OutboundReport: notjunk:1;M01:P0:cjQakVyXEt0=;L56LgyjEPDybKxrDdhVKHOSrn22
+ 3CxAGNoIC5BQBw7GEezsfFO2jyJ4s/IsaB3ABil5aL29uASJygrHhGVZhPUnD7MntVfXxeprk
+ QFO2RT+lIJMbKPpDNbDknhbQIQ9IjOheikR+yOz0ETGiCSPlsjQkFRC0HvecrACZvErjmPlQS
+ nUQa+2pYPM6Qx7Jf/Nccw8KqmuAQ9NL9PYJTMtBXMc1BhZDwRjbM9ZZCD8M3YqcdcjiHKKNkv
+ t0k/K5dvdYFLcfL2RGiyYakC7oRIq4yiW9kC4x4Nda3wYZvM7Cy4rbX2JBv/YLtf6r3jdupeA
+ oWHvln4fE+quyRRqHV4OC34H+eO9/vGwZykIB8dRHcbOm2rGgNs9efhdO+oVTOlltcAB5HprN
+ yseOoqeHmHpusfKUVsohLPEG5522qE8UW4i4tQrb0ngFc7O9uw/6k7g9bPGUYcXxCuDZ1+YFW
+ 8cYIdSYZxAYHDUHuk+m0y3/O8UZUPdFc3HdmWmsJp6mLLXurscMYwsClA/lcE45okmKlug3St
+ +AeN3u1uLYlb60ihkJl/pi1hrHQic8lmQUdg+dtLZzmlqauwRL8H1xppjV/hwMGNSw6CsGllC
+ 0JBw6XtglDKem5FfCsghoQxDBvrUTfygfc9VDB2qaI0WB+j3g/hh1SW9BA31u52o1OCiabUXo
+ HxZRXDrNdXuwfzFQDppX9HVsQ7Pw5XYDG8wJNOZPTJzHporY7Cispl+susCpAsGuc91xdkKiY
+ 2ThaUTb0GWFja4HgCvBFmPO5rD6kboMGyZ5o1zPaaPxL/gx3rkSkftWEFAuDcCR3s6raXzCSU
+ DZg3XrvuJsCg1ZaZEZTZGfLXo9imNaYwQQEY+zGGkeiTPQt7s/oabRUcfdG0gbP55Xl0w4zZl
+ Dvlyz9omI+LmXvvHjdjCC//xyuPUaOBFtA7oYa/sQq5BOfDA+AWuLm6FiGgy95CbMHLnSrwLv
+ 7dZyr7s2A9Zvumg3OoQn0VwHBmCGpw8EXvKuGUvKModWTYJqKrHXDMJA3+uZs2pncyccK9qyY
+ 7PZqmSXBF7XzpQFGTHHYcYBiWT8yxvMZj2cZeJrvK/M1DIiQksinweESWoOdPGgN5MONwTrCO
+ KnRkmSJcAytO8L3rN+0Sz2adJOZhj3piJjtLJdAoB7Wdm1ZskMdhn8xW5EzW8IRfygGmT6vYg
+ b4UtDBIzcHqtMaFNFPTfjhpS7FxKOsu6nbrRAWI7xMmAds4FKnD0g0dydL+GG0lyZp1btkK9D
+ AS4kLHdkBl7/cbit+fohA1dSdQMP/17bAEATrUeHgOQRyyOBFsN6w55gmbqBU4GNI/3G3IQ3Z
+ cLIGFMCLDBwPNafSv1k9GW+//zopoXHWhUo/pMYKctEeFYW2kIKMFdkFdlyWxeYV2KjJplj2Q
+ v23YBTiYt6k4syQ/MoXiSfURL3uETdJbsFpW8QiBy/zR/t+nqZ1XIT++cYwBIZD+ZcZHMiEHi
+ k+6LqPwPO/oMMT/nWdpxX50Lgk4FPKCzDeopP1dA0zPCJxLYjR96i+gI3sJpeFrdd+dKagRtn
+ cvs93FdNx29AOjSLLzbyiPjQWGmLaex6SdiSgG5FKYLI81PtyGOt1p+ZPeWfiCbynorwGv57b
+ 5sLVv4J3BaU6KL/Yo2pY2dDAx5CfQn8AW5+kkIvI2KUN+xdooFq1IxRyXD27FFi/GROCoIPFi
+ aWM3XQYY+zdxNRkDWrCPmjh5P54DrFccvQ9u9qJv9ciLg+QWIeiKBUYHnOj0u6D4RXYUZkCrq
+ giHDX16BpQWXM3hJfsaT7GXR+5aIz/lMwPUUfIlywf2pLJmG/FtttGCkW5UZqUAoVrnOQqj3N
+ KFX6HjfDTG1TI+cPvC33YyuM6fUGF8Q4/wLPBwZJysaOVscImVDZApJok4m9hot9hKdLrHx47
+ ng3jeNg/jjvHpzjcexzw3AfdHuzYLoPv9qmdnbQgOgXimT8onBkQU9ZOXAbXssZEzQTedcwLh
+ dKwf/oBimVvpfs3l0kwRs7JJ4srNX6p2mMoqC9q680dvFbs5EjAvUf4Agq5EGqJJUvloa/Xmi
+ bM1M1oovHZJJMdw2dWBHL9ppzn3doF0bWznGUKVFBt9LDGj5IM87p+HCgNUWC+43KChLs1Nc0
+ YChY08Akwwkyx+i3KNERzg1vFtydpatBE+s0VhPP1246Vjd3hLOJumvb1ASaKLlTliJvcVfBa
+ X8lNxSAhIfewO12mm6lMn8zPaFPHrh47Vno6J8BMXNmjy8n/l9XlDBxvxJJutCn+SMk/pe2vV
+ NkbuLPdraHe0VxbXLiXLpXHz1mAsRAuxy0Ka7mbVYuQ7O/ciUr4SjmK5jPoxpyOyOXPtINeli
+ KEI8O/7BUWVROI4YWgRca9wRogcE34b5khkPHPBzbPW7RPOFNEjgrU0PNBNanqx/Nduod2vbB
+ HZfDHvl35o54KSErDaOYY0+wY5L0xziLrhKop13jrlry95N3ZoHFWnYqQzSXxm9QSx7u3F7ux
+ FySOw6r4OboPNeUL5V4ILFXOWHgN6VUH8jY18fpM/dmaMfh2+gW4n/kkAjL+G6MZpIXQcy2bD
+ evaVXqJlARwIyxMQhXHZgaamHiXlE1jp5szuUPBJ6kE09cuZGOJSpLvHsXvC49X2Wzbxg7Vyt
+ xC0mv+jxkeQWv0rncElU56fnzbzeqW1U1LdJEEcpWbEFUZ3w+HgrYmmvUo9yM1NGDlf1oTlg5
+ lf5LhDjbSc2R/sVwS7DuKGdwsRThy06UsX4WZjYmzgwGUPSLOMWY3yPPNktkQGKWYHsOyJS0U
+ bFLaGMjo+qzUvQSjoPMw4fbZBVlAVYp6tL4/Gpiw5nmH26X7K5OTvXZM3tByx/j9WDT6F3eTk
+ 0y5hJibdOeDcFKkd2g+rkQaUqUAy+DeLoLASqKMJxaVSU8QyWKQ1UDcLWtHJQM6/RNq0mi8Sn
+ +n2UJNFsMSKeBphSh3atJRBAhyWodVu9KAjj9/GzNKHhr6jUeULaoImqq6gzQ6LcIXfDKS1Bv
+ IDm46hg+zgbgeZchclYw62M+/YC/rNKpyZhqERxCc5RL8H4C/5xyXdEkzjZJqXyWzplQ8BRCh
+ +fETf7RcC/pyiOnoQPHn5wGcfF0ij94bTw4+/3ivhzSHvPFG7D3SVIlM/uxT65KMTcmNqRmhF
+ APINbP5o7DEgFd+vxi37MD9Zh2y1if2uE/2zgGLp7FinpWMBxbbFL7VAxfejjkwH3EV4f9m7h
+ +xulLXvlQ3PxoS6yEax6jUQwBy9M8v5j4f2GxFHIYDNUyMvv53yvUZmL1tclL/8BIDCbPmg2b
+ bPteWwL31XoqIfjeBDZZ775hClCNsdkgkieEKAhIKbnw7ssYkUrZinA7J2+Y3LR7staw2m92H
+ 9AuvjoOoHACmnZjB0F8p75bwETRXJiNFtRtY0fFcm7Mgsdi6Vh/u+4IX0a+Z0elaoyAZaY/5G
+ w7+badWFKa3o5vKKR2pn2LpIYrCm5yGLT8/69boeE/4zz6II4LdhWTYtNIHuaQ0KlzA1v3RuL
+ eb7UJiMVDeyXCc6BU5WKLFWA4pgwt0IVdAHRisSHxHrJp2U9y9RQwyLMzE46B1GfjdFwbN3mT
+ wVkHZYFZsam1w99mGEGJJb87d6Qqn9fjkDV5a5XS0JnRbDbQk4lMvrqlqk4T7NbuzFQC3JG78
+ 8fCrV37BlrQMRwH0y9P6OXqRpExG773OwhIjymlrM6Y3vVZMk+iuHQTuntDhwIXTuaWFA40b3
+ qBiJ+cZetU3ch7yanbWxh54dxDsOnqQXTvlXxjmtygNYyhST3G2EqYCxcv5OJ5oeDQKik1bj0
+ mfLHDxvzxAGSzDRfkbwr2CVzylupKoU0nL7+0Tw9jyZ7k6mi/VLxfj0pnVgSbkbzXC5Nw8f46
+ SrC9rFWsNL1SgwuEQJjnIEEeKINCN6DCQXZ709RzoS+DSye2H8VWOYv3hOniOG5sNJUkZ1ZZi
+ 2vmdOCAn6U2Bj2egHyj0dk1O0Sh46QSwAy4daKnJDDSs/9gprw0qcdJvE7ZrQd7XVsobzkvQU
+ uq3w1ialw8AZIx4grxsiVKiYBsT4H3SMqejTuC5fbQ/XxdTgwvHPMeleQOdBMv5epWt2IZY76
+ TSGxafT40LOWlwefVY/Ezs3tkkpMRv+YNqaUrihV1VBc6U1LQldkc5C9HnJYSZ36aIf82HnUJ
+ qMkvxVUfM+nlvjGka6m5wI4DUNpa+EW947amytx/B1S2jPh/I2PGPqo+yhiqqSSQZnbZOcFXD
+ VBSvQuetaHxVhyh974ng5s6/MGD7S/0BvFjww1+J5F+RuyJ5bNreZqnRh+S7l85DrXSNG2gLZ
+ eigb7YdrNrMO98j/Eot5vIhedU38ngjTnGJ8SrI5PxXkxq4T+sI59Nlt5IDMvfNuJNnJbpzgv
+ o8Y50EIXnWqmYy5RlD7mQGv6Tn1sipK0KtvDVR+h/Qo6TCkqNk62QQJIbTm6G+ODBjq5HD5J/
+ U3f2j5VJr8fxzPQI16XhcCVkkxQFvA9cN5leFn2hHcQgXjmYcP5ITlUoZQKPnhMEBxtYoACUn
+ uaWoBncBiEEJ6qfSOSjTL6xlJo0jJmhpSap4zRcE1j5K/gFBTDncyvKT8QDLCQwoiZjPRQlrU
+ ugAsyp5fg9z3/5fjieKuSBOF0GHan/DKrkg2JrXgIEJBNFH69B/v3Ke6a2HD52R+56j9BtItp
+ wBVkVtYsqAqAI9XUsO/x/Co+PoUGDCT3XrgEDR5tLK8plux1LPf2LAbABUaKBwhOpDn7UBi9/
+ d7lcNfBOUdHOCnueqy1Ks+1lp98eaANRxzz0T00rqZF/P12JclNTEyaaZfjzXCCLiCPdK9uFk
+ bT+ymVzvL+9LAaYzNhzj/ka8rM4XzNoX79HPacO2e225xpR1bx/5cnuBYuMA4ZZ+AbkM3Ot2h
+ ub0jPME13aSu7+zZnlyFgtxtJhq8AtyAx3fagXKxBKo268fXhokz2I6AoUf0mxbJi6GXZHEvX
+ ZX6frN4RR4lfzOdMN9RgvpB096G8SdPnYRV6F3B/HJMnYlmH5TVteLZhzlmvOlSXIJA8gqYME
+ A8r/VzJG7U9vmWbSk6g+q5Ciy5FHvmBzL9L2znOt3iS0YivCEDF5CWyFATzhcrkCy1JovaZbt
+ eB8ug==
 
-Hi,
+Dear Git users,
 
-On Fri, 17 Oct 2025, Lidong Yan via GitGitGadget wrote:
+Apologies for a Friday release, but this is important: Git for Windows v2.51.1
+addresses CVE-2025-26625, rated High severity (8.6/10). Please avoid cloning or
+pulling repositories before upgrading to this release! You can download it
+here:
 
-> From: Lidong Yan <yldhome2d2@gmail.com>
->=20
-> In dry run mode, diff_flush_patch() should not produce any output.
-> However, in commit b55e6d36eb (diff: ensure consistent diff behavior
-> with ignore options, 2025-08-08), only the output during the
-> comparison of two file contents was suppressed. For file deletions
-> or mode changes, diff_flush_patch() still produces output. In
-> run_extern_diff(), set quiet to true if in dry run mode. In
-> emit_diff_symbol_from_struct(), directly return if in dry run mode.
->=20
-> Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
->
-> [...]
->
-> diff --git a/diff.c b/diff.c
-> index 87fa16b730..4baf9b535e 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -1351,6 +1351,9 @@ static void emit_diff_symbol_from_struct(struct di=
-ff_options *o,
->  	int len =3D eds->len;
->  	unsigned flags =3D eds->flags;
-> =20
-> +	if (o->dry_run)
-> +		return;
-> +
+    https://gitforwindows.org/
 
-Very good. This is a minimal change that covers all of the `emit_*()`
-calls (except for `checkdiff_consume()`, but if the `--check` code path
-is entered under `o->dry_run`, it is debatable whether or not it should
-output something, therefore we could claim that this is "by design").
+Changes since Git for Windows v2.51.0(2) (September 29th 2025)
 
-I do see a still-unguarded `fprintf(o->file, ...)` call in
-`run_diff_cmd()`, but as far as I can see, this call is not in any code
-path where `dry_run` is set. Granted, this is quite tedious to reason
-about and requires considerable cognitive load to analyze, but judging
-from past attempts to land patches that simplify logic e.g. in
-https://lore.kernel.org/git/pull.1888.git.1743079429.gitgitgadget@gmail.co=
-m/
-I have concluded that core reviewers on this mailing list delight too much
-in such analyses to be interested in making Git's code easier to reason
-about.
+This is a security release! Git LFS (which is enabled by default in Git
+for Windows) fixes CVE-2025-26625 (Severity rated High, 8.6 / 10) in
+v3.7.1. Please only clone or pull from repositories you trust until you
+upgraded.
 
->  	switch (s) {
->  	case DIFF_SYMBOL_NO_LF_EOF:
->  		context =3D diff_get_color_opt(o, DIFF_CONTEXT);
-> @@ -4420,7 +4423,7 @@ static void run_external_diff(const struct externa=
-l_diff *pgm,
->  {
->  	struct child_process cmd =3D CHILD_PROCESS_INIT;
->  	struct diff_queue_struct *q =3D &diff_queued_diff;
-> -	int quiet =3D !(o->output_format & DIFF_FORMAT_PATCH);
-> +	int quiet =3D !(o->output_format & DIFF_FORMAT_PATCH) || o->dry_run;
->  	int rc;
-> =20
->  	/*
-> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-> index 55a06eadb3..25fa452656 100755
-> --- a/t/t4013-diff-various.sh
-> +++ b/t/t4013-diff-various.sh
-> @@ -661,6 +661,27 @@ test_expect_success 'diff -I<regex>: ignore matchin=
-g file' '
->  	test_grep ! "file1" actual
->  '
-> =20
-> +test_expect_success 'diff -I<regex>: ignore all content changes' '
-> +	test_when_finished "git rm -f file1 file2" &&
-> +	: >file1 &&
-> +	git add file1 &&
-> +	: >file2 &&
-> +	git add file2 &&
-> +
-> +	rm -f file1 file2 &&
-> +	mkdir file2 &&
-> +	test_diff_no_content_changes () {
-> +		git diff $1 --ignore-blank-lines -I".*" >actual &&
-> +		test_line_count =3D 2 actual &&
-> +		test_grep "file1" actual &&
-> +		test_grep "file2" actual &&
-> +		test_grep ! "diff --git" actual
-> +	} &&
+Due to persistent maintenance challenges and the community's limited
+engagement and usage, git svn support in Git for Windows will be
+dropped from the next major Git for Windows release.
 
-Nice! While this function obviously is not strictly scoped to this test
-case (it will still be defined when the next test case is executed), it is
-wonderful to see the structure that helps readers along.
+Note that git flow is no longer shipped with Git for Windows, after a
+version had been distributed that had been languishing for years. Even
+the original, years-stale Git Flow project has been archived.
 
-> +	test_diff_no_content_changes "--raw" &&
-> +	test_diff_no_content_changes "--name-only" &&
-> +	test_diff_no_content_changes "--name-status"
-> +'
-> +
->  # check_prefix <patch> <src> <dst>
->  # check only lines with paths to avoid dependency on exact oid/contents
->  check_prefix () {
->=20
-> base-commit: 143f58ef7535f8f8a80d810768a18bdf3807de26
+New Features
 
-Thank you for fixing this so quickly! From my point of view, this is ready
-to go. I will integrate this patch into Git for Windows v2.51.1 (which I
-am sadly forced to release on a Friday).
+  * Comes with Git v2.51.1.
+  * Comes with Git LFS v3.7.1, addressing CVE-2025-26625.
+  * Comes with OpenSSL v3.5.4.
+  * Comes with the MSYS2 runtime (Git for Windows flavor) based on
+    Cygwin v3.6.5.
+  * Comes with OpenSSH v10.2.P1.
+  * Drops git flow.
+
+Bug Fixes
+
+  * A potential memory corruption in the optional wincred credential
+    helper was fixed.
+
+Git-2.51.1-64-bit.exe | b6a0e8094a2564e8f5407f18c1b47f057fe3dd10748c11e5f86478d8cbbf6acd
+Git-2.51.1-arm64.exe | 58fc351b55a00db7fb9067d1959ba821a2cad0a46a4d35caf6726bdb36950cd4
+PortableGit-2.51.1-64-bit.7z.exe | 2a1108dd87bd9d7fc168f76f0f2d7b77a44ca49f42c7a3a081b9fcbbbb75473b
+PortableGit-2.51.1-arm64.7z.exe | 0703b02416ff2dd7940a705fc078d04ebc7093889ecc798be4029ee9c5341e70
+MinGit-2.51.1-64-bit.zip | ce0360b2bfcb60472064de698c8a5b73e63067320701fcd51d30a6e33d7967fa
+MinGit-2.51.1-arm64.zip | 88a6452370fe1caf758eb3d5a327c6888c0b56b74c906fffcaa5c742d21bac35
+MinGit-2.51.1-32-bit.zip | a79f881c11a65fd679fae8d8878070531b9c10cfb6fc900d8b4156a5dc3bb791
+MinGit-2.51.1-busybox-64-bit.zip | ba3fadd0d47622345201b35a5a8ff2f7de8de7e0e0b7b2341a2a280425c9887b
+MinGit-2.51.1-busybox-32-bit.zip | 5267259f9ef56e07b9183b3fe7584b63f8ccbf2646ebce1909482bf67eafade2
+Git-2.51.1-64-bit.tar.bz2 | 19194719544f8b64aae43b8858b121958920be4725f3141e5d09b3c6582f093b
+Git-2.51.1-arm64.tar.bz2 | 6950a1c7c006e0fc8aa329a888d177f99f92e38d16107cf10442e97617f5a71b
 
 Ciao,
 Johannes
