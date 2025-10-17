@@ -1,396 +1,346 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f194.google.com (mail-yw1-f194.google.com [209.85.128.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FF2336EF3
-	for <git@vger.kernel.org>; Fri, 17 Oct 2025 14:17:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760710669; cv=pass; b=MZFwS89mnYc5z/uB0NP8wbb7JK0E70XlKshgyBUEYd+Io3564yNFhIoq3Z4kiH+/jmOTW1EX+LujI66RxN+1VFDJk+JScidR8H/uYTqhJvenlsKOy9Ma87iKyFuXYuBD2rd4O6yKU5lcBnDewgC6xBOI7WGqyU7eh1gfblNNH5k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760710669; c=relaxed/simple;
-	bh=7dSQc9PccvGkSSxAztoWNaWIXhzWaa9X5MWtLyP0ln8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a1dBdPZz6s8RMErmEXsGESuhpHjUu2286myQdg/b+xsxgaiAmhotLTWh3yigudkF8vZjkqyDxcjsCluoQ8jX25d0m5i3uhXGrJky7PKxlV2GvrreQQ6OunYhBzwk14AbC+pxaj4jfzSFWch4uK52qxljbYu170uN5vYTNrLZX5Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=jWAfV1mD; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2653370F6
+	for <git@vger.kernel.org>; Fri, 17 Oct 2025 14:54:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.194
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1760712898; cv=none; b=VL+5ZBEjJXzjFJpyxxcIUUAgAxsjh8J/fP3qUW/ugzntqpWoePnDtPyNiVFNQpt2espih7RmwtpPzKuQV4NH6mK3V34JVTH4lLq3l+ZHysWfoIJztRnLA8PSJfR6NJjYFB49evMhp2MnHFXgoIlBMKeu9kqEfqaSbVzP84AYDNc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1760712898; c=relaxed/simple;
+	bh=JNkb7rNq0dueqUJxHN8eukgSTTpVV4G7XE8PysXmyl0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XODyxgFghumS86Moj+vrQN6qyKuC0FMh1yG27BEh6YQk7dRcqPt4OQJLw5ftwzIW2BH+XUcD9IVmZOOMrGYZqZS50Lve8BN5vWrUqlGox325mfRgY8XR6SnJVkvFjL5yCCSU6PrUA6EuHMhRvm8FgBz3lGGI9Y74lFm9MmXVgUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=fnsCTNnX; arc=none smtp.client-ip=209.85.128.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="jWAfV1mD"
-ARC-Seal: i=1; a=rsa-sha256; t=1760710657; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=PgSSAG6LyMBgLlYsrewhR4o5PDB3JLdcx8inxLpuK29Zp41m5aHpLPYl/Nu49fRsw8dcdyNPQJEAtZ/aGiQaJ5uxHghd+pSriht44ZBxgNKgVXbBjTabcs4pHt+t+r1lAgFZ9NDIFs7xRANlv8QNlfZRGZC+1pzxokSWLZt62Zs=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1760710657; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=V28/SFT2QHQA2pwalVlwnrEY1QAjUF8bO0q8x+gc9ak=; 
-	b=dpOvNpzbZEzFJV+drLH2DD/vlWFAVCdGmliEvo8xxwxkP5a8hfBZBaysh3j0xNpfM6qgAqlXIdWTcT+F3+9obE5kGvoCXNXTX9aZ0kk0wyCmGQvRPDoFwItm3j94OQstPRmUkGCCr5MQZ/uk6M4qLE2T3WAIHmwCHkgYXQIxd64=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1760710657;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=V28/SFT2QHQA2pwalVlwnrEY1QAjUF8bO0q8x+gc9ak=;
-	b=jWAfV1mD4w7jYxJgqq2wDWURcIeUOTh+qV4u5JfU3kLiKqW/fcWAjVvDAF3JdZ5c
-	6fVAAKayp5nL6G1ziRJSS100nXdsheVVHO/86KHqZ2ylPpxzSXfLwih3gWyKjK6lBcr
-	UCE2o4oL+dYNun6yBv6Yt1Bd5rqhN1tSxytmemEQ=
-Received: by mx.zohomail.com with SMTPS id 1760710655747870.4661837246832;
-	Fri, 17 Oct 2025 07:17:35 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: git@vger.kernel.org
-Cc: Emily Shaffer <emilyshaffer@google.com>,
-	Rodrigo Damazio Bovendorp <rdamazio@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Josh Steadmon <steadmon@google.com>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v2 10/10] receive-pack: convert receive hooks to hook API
-Date: Fri, 17 Oct 2025 17:15:44 +0300
-Message-ID: <20251017141544.1538542-11-adrian.ratiu@collabora.com>
-X-Mailer: git-send-email 2.49.1
-In-Reply-To: <20251017141544.1538542-1-adrian.ratiu@collabora.com>
-References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
- <20251017141544.1538542-1-adrian.ratiu@collabora.com>
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="fnsCTNnX"
+Received: by mail-yw1-f194.google.com with SMTP id 00721157ae682-7832691f86cso22069807b3.1
+        for <git@vger.kernel.org>; Fri, 17 Oct 2025 07:54:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1760712895; x=1761317695; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=mnxeiqnTmgWBfCYXnk7IEhTIxw3khUDsPtup8iK/KGc=;
+        b=fnsCTNnX9ntjByedhYpWHpnmTanlQLgAEAwMovxIB07M5fq0bCFCWYGx8DOExQjFGY
+         5pPSHYMRnD4hNVWq7a0Pg1io9uT3rMpu6WvaLKj/hLmyfjkfmt4Jn1ukYH9p2fNvJMqp
+         mGqOq0Hg5IstV4ZMbZOPDDPeVIzLgApTifeoRRMPydsBYakh0heVHD/ENzYa2b1odZZ9
+         HPoxFdM4RlF2N4UvWWvw/b+wDGOSwBNmE4srUVm293AC60B3fWOg6qH0MdUhEwMaZe7G
+         HjUd8COPdXwd7L2t8Wf7FTTP83K0dfLEqu+/We0EEvPx4q5R+VNhdZVe8gv/8bVWNiOf
+         g8dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760712895; x=1761317695;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mnxeiqnTmgWBfCYXnk7IEhTIxw3khUDsPtup8iK/KGc=;
+        b=kCS9Cz1eAvZX8d+2zh2Nlg0IQJpoXyJEcY9rAjMA1NsApqRUmjiVaorx+Mlji6LXLR
+         qOQZnFjfTxUVZWeEoZQyTSc4JWB/AEBjfGf28xGJTcuaqQmHqPVjJR3bjvUFfnrfA94d
+         6uRQCUlYFWyuGe2miWN5IBKSesJ7VtqFQ0i6nNRGt2jMi/rAquq/gpjJedaL1XBWcfJf
+         LzBCPOmnmqKthhfNtogowqZCsN/Wb/fZdOaHNF9thKdcDVTt4BjZ/Co5fSgzdn8vFddG
+         XXT7i7fbRI8QFk7hOetoFiuQIuP9APX0URdn2rXU+1hiktULzftXmqswkicCQklJg9Kp
+         ID5g==
+X-Forwarded-Encrypted: i=1; AJvYcCXoCAkceO3sJJDmSo7MdyQHHCnkhtuSnnwXsFZ6R+l08i8Y+Tdf3M1ggWqga8OQbB2jetg=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw/eD0RqacpLcCa1bw9zdpGAD+zmyzMBhy5RZYjRa6ni5A7Fs/I
+	Kdpid5t4T7P0Hehy94Fovxr541xuiyYwbyl130XuByQLJN6t941aWEIO4A7O/qfwvHg=
+X-Gm-Gg: ASbGnctNoUdV41iLNF9cBKw2BvgDi93xIq+TyX536BKaTBEniRvAJiTw6wz7vEHaKl5
+	A1usHROASqkz3GBcrAl9e3b3o6YLDshNL+K7BLmd1xCaBEyQPiOQ55yQbaJI1YOvx8AhnZRcC+n
+	NqhdAk6OfEgfh+WBzU17TbYpUzniAwrhe+BEeO0saNlOdcT/5Zl8vsdGx/hWBag2qo4jCIKzSKn
+	HKgmK+/fSUb9t/2pye+9hlUk4IyWtr2ws0RU2HwMQdLd4C/UDo8yvIhcslMk/VIGjFJHzyRrARC
+	Z2Hyhsr7jJr6YUxjiNAeiS8lSb/O8SuAoDV+f8Idjr7c1nka0Qx+lQdJlhTHI4WjMacoRwhQqfE
+	7mn1Zj+wUi+1A1k7NARfYt1RjOoKV2mT6C7zsE35KLZkqw69RuQXInB7YWdejULddTOyLUa98se
+	yaxoOEoqzx1QqtXzCEYDWZjNs9v+jRGg38Vucw32551yqdQ4rgx4V/Wk2JUf8we2eor8GfavqEL
+	tc4FrtCCmEXF1heog==
+X-Google-Smtp-Source: AGHT+IFM8BorSRKmrnKyD4vMPBZ2/6HrE8khYfeB0CcMXflc49np1LMJ4bUP8Uk+cqSBAubSxx2QAw==
+X-Received: by 2002:a05:690c:6207:b0:783:fa30:b779 with SMTP id 00721157ae682-783fa30cc1amr8394607b3.67.1760712895250;
+        Fri, 17 Oct 2025 07:54:55 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-7828cdd054esm16574367b3.4.2025.10.17.07.54.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Oct 2025 07:54:54 -0700 (PDT)
+Date: Fri, 17 Oct 2025 10:54:53 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH] last-modified: implement faster algorithm
+Message-ID: <aPJYvYs8W6LrV+0Q@nand.local>
+References: <20251016-b4-toon-last-modified-faster-v1-1-85dca8a29e5c@iotcl.com>
+ <aPGB/FJtjDmyNLvG@nand.local>
+ <20251017063039.GA3074253@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251017063039.GA3074253@coredump.intra.peff.net>
 
-From: Emily Shaffer <emilyshaffer@google.com>
+On Fri, Oct 17, 2025 at 02:30:39AM -0400, Jeff King wrote:
+> On Thu, Oct 16, 2025 at 07:38:36PM -0400, Taylor Blau wrote:
+>
+> > Looking through the backtrace, it looks like someone is calling
+> > mark_path() with a NULL oid, like so:
+> >
+> >     (gdb) bt
+> >     #0  __memcmp_evex_movbe ()
+> >         at ../sysdeps/x86_64/multiarch/memcmp-evex-movbe.S:132
+> >     #1  0x00005555555f2c32 in oideq (oid1=0x0, oid2=0x555555a5eeb0)
+> >         at ./hash.h:408
+> >     #2  0x00005555555f3523 in mark_path (path=0x555555a5eee8 "a", oid=0x0,
+> >         data=0x7fffffffd650) at builtin/last-modified.c:179
+> >
+> > , which makes sense, since at the end of the main loop we call
+> > mark_path() on all remaining active paths to indicate that they were
+> > modified by whatever commit we just popped off the queue.
+>
+> Hmm, sounds like the mark_path() discussion from:
+>
+>   https://lore.kernel.org/git/aHmPHcNQYlhGo8JB@nand.local/
+>
+> coming home to roost. I'm sure you already knew that, but there's maybe
+> an interesting process observation here: in pulling a battle-tested
+> implementation apart into patches to be applied in chunks, we ended up
+> missing a critical part of that original implementation and getting a
+> bug.
 
-This converts the last remaining hooks to the new hook API, for
-the same benefits as the previous conversions (no need to toggle
-signals, manage custom struct child_process, call find_hook(),
-prepares for specifyinig hooks via configs, etc.).
+Hmm. Is that what happened in this case, though?
 
-I noticed a performance degradation when processing large amounts
-of hook input with just 1 line per callback, due to run-command's
-ppoll loop, therefore I batched 500 lines per callback, to ensure
-similar pipe throughput as before and to avoid hook child waiting
-on stdin.
+In GitHub's version of this code, mark_path() didn't have the NULL-ness
+check on 'oid' until we added the "--go-faster" mode, which is where
+this patch is derived from. Looking at the original changes from
+GitHub's side:
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
----
- builtin/receive-pack.c | 239 +++++++++++++++++++++--------------------
- 1 file changed, 120 insertions(+), 119 deletions(-)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 93b6f28662..18b5f22d44 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -749,7 +749,7 @@ static int check_cert_push_options(const struct string_list *push_options)
- 	return retval;
- }
- 
--static void prepare_push_cert_sha1(struct child_process *proc)
-+static void prepare_push_cert_sha1(struct run_hooks_opt *opt)
+--- 8< ---
+diff --git a/blame-tree.c b/blame-tree.c
+--- a/blame-tree.c
++++ b/blame-tree.c
+@@ -119,28 +142,38 @@
+ static void mark_path(const char *path, const struct object_id *oid,
+ 		      struct blame_tree_callback_data *data)
  {
- 	static int already_done;
- 
-@@ -775,147 +775,132 @@ static void prepare_push_cert_sha1(struct child_process *proc)
- 		nonce_status = check_nonce(sigcheck.payload);
- 	}
- 	if (!is_null_oid(&push_cert_oid)) {
--		strvec_pushf(&proc->env, "GIT_PUSH_CERT=%s",
-+		strvec_pushf(&opt->env, "GIT_PUSH_CERT=%s",
- 			     oid_to_hex(&push_cert_oid));
--		strvec_pushf(&proc->env, "GIT_PUSH_CERT_SIGNER=%s",
-+		strvec_pushf(&opt->env, "GIT_PUSH_CERT_SIGNER=%s",
- 			     sigcheck.signer ? sigcheck.signer : "");
--		strvec_pushf(&proc->env, "GIT_PUSH_CERT_KEY=%s",
-+		strvec_pushf(&opt->env, "GIT_PUSH_CERT_KEY=%s",
- 			     sigcheck.key ? sigcheck.key : "");
--		strvec_pushf(&proc->env, "GIT_PUSH_CERT_STATUS=%c",
-+		strvec_pushf(&opt->env, "GIT_PUSH_CERT_STATUS=%c",
- 			     sigcheck.result);
- 		if (push_cert_nonce) {
--			strvec_pushf(&proc->env,
-+			strvec_pushf(&opt->env,
- 				     "GIT_PUSH_CERT_NONCE=%s",
- 				     push_cert_nonce);
--			strvec_pushf(&proc->env,
-+			strvec_pushf(&opt->env,
- 				     "GIT_PUSH_CERT_NONCE_STATUS=%s",
- 				     nonce_status);
- 			if (nonce_status == NONCE_SLOP)
--				strvec_pushf(&proc->env,
-+				strvec_pushf(&opt->env,
- 					     "GIT_PUSH_CERT_NONCE_SLOP=%ld",
- 					     nonce_stamp_slop);
- 		}
- 	}
- }
- 
-+struct receive_hook_feed_context {
-+	struct command *cmd;
-+	int skip_broken;
-+};
+ 	struct blame_tree_entry *ent;
++	struct commit_active_paths *active;
+
+ 	/* Is it even a path that we are interested in? */
+ 	ent = hashmap_get_entry_from_hash(data->paths, strhash(path), path,
+ 					  struct blame_tree_entry, hashent);
+ 	if (!ent)
+ 		return;
+
+ 	/* Have we already blamed a commit? */
+ 	if (ent->commit)
+ 		return;
 +
- struct receive_hook_feed_state {
- 	struct command *cmd;
- 	struct ref_push_report *report;
- 	int skip_broken;
- 	struct strbuf buf;
--	const struct string_list *push_options;
- };
- 
--typedef int (*feed_fn)(void *, const char **, size_t *);
--static int run_and_feed_hook(const char *hook_name, feed_fn feed,
--			     struct receive_hook_feed_state *feed_state)
-+static int feed_receive_hook(int hook_stdin_fd, struct receive_hook_feed_state *state, int lines_batch_size)
- {
--	struct child_process proc = CHILD_PROCESS_INIT;
--	struct async muxer;
--	int code;
--	const char *hook_path = find_hook(the_repository, hook_name);
-+	struct command *cmd = state->cmd;
- 
--	if (!hook_path)
--		return 0;
-+	strbuf_reset(&state->buf);
- 
--	strvec_push(&proc.args, hook_path);
--	proc.in = -1;
--	proc.stdout_to_stderr = 1;
--	proc.trace2_hook_name = hook_name;
--
--	if (feed_state->push_options) {
--		size_t i;
--		for (i = 0; i < feed_state->push_options->nr; i++)
--			strvec_pushf(&proc.env,
--				     "GIT_PUSH_OPTION_%"PRIuMAX"=%s",
--				     (uintmax_t)i,
--				     feed_state->push_options->items[i].string);
--		strvec_pushf(&proc.env, "GIT_PUSH_OPTION_COUNT=%"PRIuMAX"",
--			     (uintmax_t)feed_state->push_options->nr);
--	} else
--		strvec_pushf(&proc.env, "GIT_PUSH_OPTION_COUNT");
-+	/* batch lines to avoid going through run-command's ppoll for each line */
-+	for (int i = 0; i < lines_batch_size; i++) {
-+		while (cmd &&
-+		       state->skip_broken && (cmd->error_string || cmd->did_not_exist))
-+			cmd = cmd->next;
- 
--	if (tmp_objdir)
--		strvec_pushv(&proc.env, tmp_objdir_env(tmp_objdir));
-+		if (!cmd)
-+			break;  /* no more commands left */
- 
--	if (use_sideband) {
--		memset(&muxer, 0, sizeof(muxer));
--		muxer.proc = copy_to_sideband;
--		muxer.in = -1;
--		code = start_async(&muxer);
--		if (code)
--			return code;
--		proc.err = muxer.in;
--	}
-+		if (!state->report)
-+			state->report = cmd->report;
- 
--	prepare_push_cert_sha1(&proc);
-+		if (state->report) {
-+			struct object_id *old_oid;
-+			struct object_id *new_oid;
-+			const char *ref_name;
- 
--	code = start_command(&proc);
--	if (code) {
--		if (use_sideband)
--			finish_async(&muxer);
--		return code;
--	}
-+			old_oid = state->report->old_oid ? state->report->old_oid : &cmd->old_oid;
-+			new_oid = state->report->new_oid ? state->report->new_oid : &cmd->new_oid;
-+			ref_name = state->report->ref_name ? state->report->ref_name : cmd->ref_name;
- 
--	sigchain_push(SIGPIPE, SIG_IGN);
-+			strbuf_addf(&state->buf, "%s %s %s\n",
-+				    oid_to_hex(old_oid), oid_to_hex(new_oid),
-+				    ref_name);
- 
--	while (1) {
--		const char *buf;
--		size_t n;
--		if (feed(feed_state, &buf, &n))
--			break;
--		if (write_in_full(proc.in, buf, n) < 0)
--			break;
-+			state->report = state->report->next;
-+			if (!state->report)
-+				cmd = cmd->next;
-+		} else {
-+			strbuf_addf(&state->buf, "%s %s %s\n",
-+				    oid_to_hex(&cmd->old_oid), oid_to_hex(&cmd->new_oid),
-+				    cmd->ref_name);
-+			cmd = cmd->next;
-+		}
- 	}
--	close(proc.in);
--	if (use_sideband)
--		finish_async(&muxer);
- 
--	sigchain_pop(SIGPIPE);
-+	state->cmd = cmd;
- 
--	return finish_command(&proc);
-+	if (state->buf.len > 0) {
-+		int ret = write_in_full(hook_stdin_fd, state->buf.buf, state->buf.len);
-+		if (ret < 0) {
-+			if (errno == EPIPE)
-+				return 1; /* child closed pipe */
-+			return ret;
-+		}
++	/* Are we inactive on the current commit? */
++	if (data->go_faster) {
++		active = active_paths_at(&active_paths, data->commit);
++		if (active && active->active &&
++		    !active->active[ent->diff_idx])
++			return;
 +	}
 +
-+	return state->cmd ? 0 : 1;  /* 0 = more to come, 1 = EOF */
- }
- 
--static int feed_receive_hook(void *state_, const char **bufp, size_t *sizep)
-+static int feed_receive_hook_cb(int hook_stdin_fd, void *pp_cb, void *pp_task_cb UNUSED)
- {
--	struct receive_hook_feed_state *state = state_;
--	struct command *cmd = state->cmd;
-+	struct hook_cb_data *hook_cb = pp_cb;
-+	struct receive_hook_feed_state *feed_state = hook_cb->options->feed_pipe_cb_data;
- 
--	while (cmd &&
--	       state->skip_broken && (cmd->error_string || cmd->did_not_exist))
--		cmd = cmd->next;
--	if (!cmd)
--		return -1; /* EOF */
--	if (!bufp)
--		return 0; /* OK, can feed something. */
--	strbuf_reset(&state->buf);
--	if (!state->report)
--		state->report = cmd->report;
--	if (state->report) {
--		struct object_id *old_oid;
--		struct object_id *new_oid;
--		const char *ref_name;
--
--		old_oid = state->report->old_oid ? state->report->old_oid : &cmd->old_oid;
--		new_oid = state->report->new_oid ? state->report->new_oid : &cmd->new_oid;
--		ref_name = state->report->ref_name ? state->report->ref_name : cmd->ref_name;
--		strbuf_addf(&state->buf, "%s %s %s\n",
--			    oid_to_hex(old_oid), oid_to_hex(new_oid),
--			    ref_name);
--		state->report = state->report->next;
--		if (!state->report)
--			state->cmd = cmd->next;
--	} else {
--		strbuf_addf(&state->buf, "%s %s %s\n",
--			    oid_to_hex(&cmd->old_oid), oid_to_hex(&cmd->new_oid),
--			    cmd->ref_name);
--		state->cmd = cmd->next;
--	}
--	if (bufp) {
--		*bufp = state->buf.buf;
--		*sizep = state->buf.len;
-+	/* first-time setup */
-+	if (!hook_cb->options->feed_pipe_cb_data) {
-+		struct receive_hook_feed_context *ctx = hook_cb->options->feed_pipe_ctx;
-+		if (!ctx)
-+			BUG("run_hooks_opt.feed_pipe_ctx required for receive hook");
-+
-+		hook_cb->options->feed_pipe_cb_data = xmalloc(sizeof(struct receive_hook_feed_state));
-+		feed_state = hook_cb->options->feed_pipe_cb_data;
-+		strbuf_init(&feed_state->buf, 0);
-+		feed_state->cmd = ctx->cmd;
-+		feed_state->skip_broken = ctx->skip_broken;
-+		feed_state->report = NULL;
- 	}
--	return 0;
-+
-+	/* batch 500 lines at once to avoid going through the run-command ppoll loop too often */
-+	if (feed_receive_hook(hook_stdin_fd, feed_state, 500) == 0)
-+		return 0; /* still have more data to feed */
-+
-+	strbuf_release(&feed_state->buf);
-+
-+	if (hook_cb->options->feed_pipe_cb_data)
-+		FREE_AND_NULL(hook_cb->options->feed_pipe_cb_data);
-+
-+	return 1; /* done feeding, run-command can close pipe */
-+}
-+
-+static void hook_output_to_sideband(struct strbuf *output, void *cb_data UNUSED)
-+{
-+	if (output && output->len)
-+		send_sideband(1, 2, output->buf, output->len, use_sideband);
- }
- 
- static int run_receive_hook(struct command *commands,
-@@ -923,26 +908,42 @@ static int run_receive_hook(struct command *commands,
- 			    int skip_broken,
- 			    const struct string_list *push_options)
- {
--	struct receive_hook_feed_state state;
--	int status;
-+	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
-+	struct receive_hook_feed_context ctx;
-+	struct command *iter = commands;
- 
--	strbuf_init(&state.buf, 0);
--	state.cmd = commands;
--	state.skip_broken = skip_broken;
--	state.report = NULL;
--	if (feed_receive_hook(&state, NULL, NULL))
-+	/* if there are no valid commands, don't invoke the hook at all. */
-+	while (iter && skip_broken && (iter->error_string || iter->did_not_exist))
-+		iter = iter->next;
-+	if (!iter)
- 		return 0;
--	state.cmd = commands;
--	state.push_options = push_options;
--	status = run_and_feed_hook(hook_name, feed_receive_hook, &state);
--	strbuf_release(&state.buf);
--	return status;
--}
- 
--static void hook_output_to_sideband(struct strbuf *output, void *cb_data UNUSED)
--{
--	if (output && output->len)
--		send_sideband(1, 2, output->buf, output->len, use_sideband);
-+	if (push_options) {
-+		int i;
-+		for (i = 0; i < push_options->nr; i++)
-+			strvec_pushf(&opt.env, "GIT_PUSH_OPTION_%d=%s", i,
-+				     push_options->items[i].string);
-+		strvec_pushf(&opt.env, "GIT_PUSH_OPTION_COUNT=%"PRIuMAX"",
-+					     (uintmax_t)push_options->nr);
-+	} else
-+		strvec_push(&opt.env, "GIT_PUSH_OPTION_COUNT");
-+
-+	if (tmp_objdir)
-+		strvec_pushv(&opt.env, tmp_objdir_env(tmp_objdir));
-+
-+	prepare_push_cert_sha1(&opt);
-+
-+	/* set up sideband printer */
-+	if (use_sideband)
-+		opt.consume_sideband = hook_output_to_sideband;
-+
-+	/* set up stdin callback */
-+	ctx.cmd = commands;
-+	ctx.skip_broken = skip_broken;
-+	opt.feed_pipe = feed_receive_hook_cb;
-+	opt.feed_pipe_ctx = &ctx;
-+
-+	return run_hooks_opt(the_repository, hook_name, &opt);
- }
- 
- static int run_update_hook(struct command *cmd)
--- 
-2.49.1
+ 	/*
+ 	 * Is it arriving at a version of interest, or is it from a side branch
+ 	 * which did not contribute to the final state?
+ 	 */
+-	if (oidcmp(oid, &ent->oid))
++	if (oid && oidcmp(oid, &ent->oid))
+ 		return;
 
+ 	ent->commit = data->commit;
+ 	data->num_interesting--;
+ 	if (data->callback)
+ 		data->callback(path, data->commit, data->callback_data);
+ 	hashmap_remove(data->paths, &ent->hashent, path);
+ }
+--- >8 ---
+
+, where the above was generated with:
+
+    $ git log -1 --oneline 0603f6d9c3c040c914c1412fab972252c4a765c4 \
+        -L:mark_path:blame-tree.c
+
+(in this case, 0603f6d9c3 is the hash of the commit that originally
+introduced these changes on the GitHub side).
+
+So I don't think that it's the case that we somehow missed this portion
+of the changes when pulling the series apart, but rather that the check
+was added later on, and not correctly pulled into the version that was
+submitted here.
+
+I was wondering if perhaps I had made an error when pulling these
+patches out of GitHub's fork, but even in my b0ae8b3cc0 (blame-tree:
+introduce '--go-faster' mode, 2025-03-27) from my fork, you can see the
+same diff in mark_path() as above.
+
+> It's not like we didn't know that was a risk, of course, and the payoff
+> was getting a fresh look at the patches (to improve them and maybe even
+> fix latent bugs). So it's probably something to just live with. But I
+> wonder if/how we could mitigate that risk. When I reorganize patches in
+> a tricky way locally, I often eyeball the diff of the end states
+> (whatever mess I had originally, versus the result of the "clean"
+> version), and that might have shown the omission here.
+>
+> I'm not sure if that would have helped here or not. The "end state" of
+> the battle-tested version is really GitHub's internal fork. But maybe
+> your original patches extracted from that (tb/blame-tree in your fork, I
+> think) applied on top of the same base point (e.g., the current tip of
+> master) might be an interesting comparison? Or maybe not. The earlier
+> rounds have may have had other adjustments which introduce a bunch of
+> noise.
+
+I share your feeling here in genreal, but I think in this particular
+case the patches were pulled out correctly (at least with respect to the
+changes here in mark_path()), and that check was simply dropped or not
+properly carried over when the patch we're discussing here was written.
+
+> > Nice, I am glad to see that we are using a bitmap here rather than the
+> > hacky 'char *' that we had originally written. I seem to remember that
+> > there was a tiny slow-down when using bitmaps, but can't find the
+> > discussion anymore. (It wasn't in the internal PR that I originally
+> > opened, and I no longer can read messages that far back in history.)
+> >
+> > It might be worth benchmarking here to see if using a 'char *' is
+> > faster. Of course, that's 8x worse in terms of memory usage, but not a
+> > huge deal given both the magnitude and typical number of directory
+> > elements (you'd need 1024^2 entries in a single tree to occupy even a
+> > single MiB of heap).
+>
+> I doubt the memory usage matters too much. We throw away each bitmap
+> after we finish processing its associated commit, so our max memory is
+> really the size of the bitmap/char array times the size of the queue (so
+> effectively the width of the history graph). So yeah, I too would be
+> curious if the performance is actually better with chars.
+>
+> I also wonder how often we pass an unchanged bitmap to our parents
+> (e.g., for the common case that a commit has a single parent, and does
+> not touch any of the active paths, the active set will be the same for
+> both). There's probably an easy-ish optimization to avoid allocating a
+> new bitmap, and to just transfer ownership via pointer.
+
+Funny enough, while we don't have this optimization in the original
+version of this code, we did handle being TREESAME at the root tree as a
+special case in the original blame-tree.c code. Toon dropped that change
+here which I commented on earlier, but that would be a good opportunity
+to optimize this case.
+
+I don't think we ever bothered to measure how often we were able to just
+pass all active path(s) up to the parent, probably because the original
+code didn't actually use the optimization you're talking about here, and
+instead did:
+
+    if (!diff_queued_diff.nr) {
+        for (i = 0; i < bt->all_paths_nr; i++) {
+            if (active_c->active[i])
+                pass_to_parent(active_c, active_p, i);
+        }
+
+        if (!(parent->object.flags & PARENT1)) {
+            parent->object.flags |= PARENT1;
+            prio_queue_put(queue, parent);
+
+            ret = 1;
+            goto cleanup;
+        }
+    }
+
+, so that case was just handled specially, but not optimized. But I
+don't know that you can just pass the bitmap up directly, since the
+parent may already have some bits set if we reached it along some
+different path.
+
+I thought that we had to AND NOT out the bits in lm->scratch here, but
+those are only set for non-TREESAME paths, so lm->scratch is going to be
+all zeros in that case.
+
+I think you could reasonably do something like the following on top of
+Toon's patch, though:
+
+--- 8< ---
+diff --git a/builtin/last-modified.c b/builtin/last-modified.c
+index 40e520ba18..1a9ab3b2b0 100644
+--- a/builtin/last-modified.c
++++ b/builtin/last-modified.c
+@@ -303,6 +303,18 @@ static void process_parent(struct last_modified *lm,
+ 		diffcore_std(&lm->rev.diffopt);
+ 	}
+
++	if (!diff_queued_diff.nr) {
++		bitmap_or(active_p, active_c);
++		for (i = 0; i < active_c->word_alloc; i++)
++			active_c->words[i] = 0;
++
++		if (!(parent->object.flags & PARENT1)) {
++			parent->object.flags |= PARENT1;
++			prio_queue_put(queue, parent);
++		}
++		goto cleanup;
++	}
++
+ 	/*
+ 	 * Otherwise, test each path for TREESAME-ness against the parent. If
+ 	 * a path is TREESAME, pass it on to this parent.
+@@ -330,6 +342,7 @@ static void process_parent(struct last_modified *lm,
+ 		prio_queue_put(queue, parent);
+ 	}
+
++cleanup:
+ 	memset(lm->scratch->words, 0x0, lm->scratch->word_alloc);
+ 	diff_queued_diff.nr = 0;
+ 	diff_queue_clear(&diff_queued_diff);
+--- >8 ---
+
+> > Likewise, I wonder if we should have elemtype here be just 'struct
+> > bitmap'. Unfortunately I don't think the EWAH code has a function like:
+> >
+> >     void bitmap_init(struct bitmap *);
+> >
+> > and only has ones that allocate for us. So we may consider adding one,
+> > or creating a dummy bitmap and copying its contents, or otherwise.
+>
+> I thought that, too, though it does change the max memory use a bit.
+> Right now we are storing one pointer per commit (the "struct bitmap *")
+> and that is true whether we have processed the commit or not (it is
+> populated while the commit is in the queue, and then NULL after). If we
+> stored the struct directly, that's twice as many bytes (the eword_t
+> pointer, plus a size_t), and it's per commit.
+
+Mmm, good point. I wrote this thinking that the commit_slab was going to
+end up a little gross under this patch, with the slab itself having type
+'struct bitmap ***', but I agree with everything you wrote here.
+
+> PS I tried building tb/blame-tree from your repo because I was poking at
+>    how some of it worked (having forgotten everything I ever knew about
+>    it by this point). It does work, but needs this:
+>
+> diff --git a/blame-tree.c b/blame-tree.c
+> index 6addac7b0b..2448f2caf4 100644
+> --- a/blame-tree.c
+> +++ b/blame-tree.c
+> @@ -800,7 +800,6 @@ static int process_parent(struct blame_tree *bt,
+>  		int k = diff2idx(bt, fp->two->path);
+>  		if (0 <= k && active_c->active[k])
+>  			scratch[k] = 1;
+> -		diff_free_filepair(fp);
+>  	}
+>  	for (i = 0; i < bt->all_paths_nr; i++) {
+>  		if (active_c->active[i] && !scratch[i])
+>
+>   on top, since otherwise we try to double-free the filepairs. I'd guess
+>   it is a victim of rebasing across a5aecb2cdc (diff: improve lifecycle
+>   management of diff queues, 2024-09-30), which swapped out
+>   DIFF_QUEUE_CLEAR(), which left freeing the responsibility of the
+>   caller, for diff_queue_clear() which handles that itself.
+
+Ah, good catch. When I pulled those patches out a while ago, I think I
+wrote something like, "this should more or less work, but doesn't, and
+I'll leave it as an exercise to the reader to figure out why ;-)."
+
+Thanks,
+Taylor
