@@ -1,164 +1,99 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2BC231A23
-	for <git@vger.kernel.org>; Fri, 17 Oct 2025 03:17:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335D01D5CE8
+	for <git@vger.kernel.org>; Fri, 17 Oct 2025 04:18:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760671053; cv=none; b=n2CfCpbmJc0fnpCH2PRXLdZ+SQMVTuONQQgvrDRZjH/17fI/rgmR+eqYw1VZAgSk5WFvaoBm6wXw9MY5Ns12rt/49xGzbrkgVcFXDYY2yv+KVcbOTlP7ZRy/C6LbXRv/fa6bRK9dkfPOYGY62Sqn2MBy8NhzwrGfwPliuKPMfeM=
+	t=1760674738; cv=none; b=GOKF2dMOyUHL1SjgkAQ9oOMP7jYPc+qvduMYVBTkYDE+pp+7Gz/yD0OLJctpnqD8G29GBMPkuJTlPBus9mZgDc1P4W63zWvApFdscL9NWscKFRkxEBwjfO+ZjL4f3olhl9/NFR4QV8lLPmmzRYqpMpdLlTro0ti5WeP2+H2d29A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760671053; c=relaxed/simple;
-	bh=/lQH8Dk0DePpOztUSkERPDAN17csW9rIa1OiHW9ziJ0=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=fARupB7AyrI3lApELW5SNOXSZ4vigHKaehmiEg0yl6GRo3ORiW6F2tzP/YCfojNc2nj2gEoo6rq4463/HXz+dO/DfoyngYkcGJti22RTOQB2xlPXbVyxBCMdWf1W4mePNyJTM1Y9WhfATBStISylVdmF9FFlTdaSTdcWer7Boiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kn00KQ+P; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760674738; c=relaxed/simple;
+	bh=ZrnIy5Ly6Kk7aJCCa/+Ji9qf9q/iEK3D8uYA4OXZT+M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JJRl/aLlO7BYcD+xubdtDkMMiJXpkhIjKsq/G5DwTsOPQ/JRCGe2+BOzYMNh1mqx7c2cToEow22CT1OB3zTPH/5B2KwAjjHUon2zjUJPbqQyrJMJDVmUceQw+oIodYxJZQrIASjdCYXuG9NYo5myqTjVeVwiE0AV90vNCaTb6jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=msJ0VMP8; arc=none smtp.client-ip=18.9.28.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kn00KQ+P"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-339d53f4960so1473370a91.3
-        for <git@vger.kernel.org>; Thu, 16 Oct 2025 20:17:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760671050; x=1761275850; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=dBargCkOfeYpQ6FJ6O5HiPgyOAJqHAVBfmVpWaT6z6Y=;
-        b=kn00KQ+PTgd9u0Db0WYvdXIYksv0SPtYvBk8qingvcEaP1VCGFSmCP+gD62LPbCeY4
-         YDgs6viBRZ4D8orABQk/QMi+s0kxPTCGyJKujDXNihAiQnM25vFTmbU/z65i5zo3YD17
-         hU4J6Ns3WOVKcll8VTTjK7VAhocyNZmyUyRFLfq/b2+rwU3drgvB59HDgv6UV/UFJLia
-         3HE44cvZRAo9MkvnP9d1wIfMDDrZ154Qxvz5Nae+W34e1ei9og9hYRV8k2K9siK8n1PN
-         W1Z7ValH+fwfDF73hMWRL5zQ32HokxktsfqI5dcpI+q+qOjmIu8dTr5OyTA7rQyAed8x
-         Gq9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760671050; x=1761275850;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dBargCkOfeYpQ6FJ6O5HiPgyOAJqHAVBfmVpWaT6z6Y=;
-        b=vBv1KkPLe1ymbmwiiqqDF1/8s165oFsWvaKP1eeoZ5e9sKALcPX/raPZ0yjzaorKsE
-         uf3Vkz0S2sLlhZ8QJKXUY++lYHgfYTpaHr2qDJqVJFj/3HRbbdBcN0koUqqPhvCoPEqO
-         JHl6RoqpDu/aP3yrqrIC8ZFqYdBoXNUqIY4WC92mjZrKbXsmBWxy5QAV/GjtDfU81LCR
-         IfnvEbBuEp11dQ2t/P5Mm9xG5EdB4F6M9rZleN4h4cOSViRPLTLlHuooc0CT3Ski01d9
-         sb88Ni6izELinUI49a4PtPoSTUDJT+YoJhXgA4XXL4/2JRwyLcFO+Q0qEsogV78lXf88
-         wZlw==
-X-Gm-Message-State: AOJu0YyhpPoJSo+1jkU9K4XJPxHUb0a8N67T5AkOsc6xfXlsvczKPSPA
-	6Fafc83+9A22GGtXS+qO2947qRsuAMAZ3uilDB7agNSyIE7D1RHDsWEs2fV42g==
-X-Gm-Gg: ASbGnctx670/2uSJK1dDP4Y960hKZKDt/Nd5vMzukuVe0Ua+hKccbUZG2F9rthuA3Z6
-	p6fa0CVHM/v4sSGKYcj2TnNmFjGjowrn+/sL03jDwC8oGNOpelw54HU/xk5IY+DvdN4l2eHNzar
-	cuEeTh2aeILEoVw7IVuEl686gDy0ciX/uVkl0JluetQ/4WqfDjDMnaI/EiYZsugqdrUY/sM0k8U
-	xOTnICF/1I2lB8O6+jpthBGGpgoGlWC7dINq7z9Z41HNsIp6Pn+NWFEhlnySMrzD3DvBKYOkKCA
-	3jJARY3jyHjAHEHUM9GO4osTV3z1hrJF9YxpjunWLKfkdTTBHyZ6a45c6Nc7YMYglBTr5bJC7sy
-	Se5sJWE6Eb4BZTNtLfxcf6Rp30kjHQzdJH5XX/RjHAQKY6IEwiRYZTlOD3MsGUFefLrkuNv/lKu
-	sitw8b
-X-Google-Smtp-Source: AGHT+IGHn52sYTWEMk/Fr5+Wzu+WOYxm/uglhs0Jfhqq//Ib6lZ6qF8vaOW+NQFgQh8SxQO65MShbw==
-X-Received: by 2002:a17:90a:ec8b:b0:32b:6145:fa63 with SMTP id 98e67ed59e1d1-33bcf860229mr2814111a91.4.1760671050354;
-        Thu, 16 Oct 2025 20:17:30 -0700 (PDT)
-Received: from [127.0.0.1] ([172.182.195.231])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33bd7b3173asm1064429a91.12.2025.10.16.20.17.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Oct 2025 20:17:29 -0700 (PDT)
-Message-Id: <pull.2071.git.git.1760671049113.gitgitgadget@gmail.com>
-From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 17 Oct 2025 03:17:29 +0000
-Subject: [PATCH] diff: stop output garbled message in dry run mode
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="msJ0VMP8"
+Received: from trampoline.thunk.org (pool-173-48-113-184.bstnma.fios.verizon.net [173.48.113.184])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 59H4IoFK000957
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 17 Oct 2025 00:18:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+	t=1760674732; bh=pKB7kNnAh+10OvQxYJk/XezYlbOjQFvPxI1q69ytAgk=;
+	h=Date:From:Subject:Message-ID:MIME-Version:Content-Type;
+	b=msJ0VMP8n/kLIuGXkv/BQU7mpmcmQOntYBCNbNCZSX4sfg8X6rrK+xMRl/B/0zS+t
+	 avwK67k7l8HdahAo93RfMhMPuhWvtKtnQMFvRK6Ax/ChOgqu+ghZdQstmrctbfqVQj
+	 e/8WVLFgF+H5w6/ig/Ug9tc5NQlJ5g5v0oGXABEBWkDaB1SuBEZ+yOx3bOgbSZZ8ix
+	 8CzFTjHNSbdBZgfEcw1c5OMcq9xg3FmeY6ypdnaKGnZYZASRNmk+lr4bJyDjD2zoKg
+	 q1/z7FRirL8PLQPC0YtVA7bWnf+O2lv2Cu5u4L/RQaLTTzyVItNIyJU9nysDao/DhG
+	 offHNi+UD8ymQ==
+Received: by trampoline.thunk.org (Postfix, from userid 15806)
+	id 9FC472E00D9; Fri, 17 Oct 2025 00:18:50 -0400 (EDT)
+Date: Fri, 17 Oct 2025 00:18:50 -0400
+From: "Theodore Ts'o" <tytso@mit.edu>
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Git <git@vger.kernel.org>
+Subject: Re: Signed-off-by & the law
+Message-ID: <20251017041850.GD786497@mit.edu>
+References: <CALnO6CDNRw3UcU9UM7rpkAoQsSmfdkxMKVihmoUmUOCv_fpbJw@mail.gmail.com>
+ <871pn2ftx6.fsf@gmail.com>
+ <CALnO6CC4hBBMyqEfLEn7EO28LVo7i4eDqAMLcFzSJZudVnB0oQ@mail.gmail.com>
+ <87tszylem4.fsf@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Lidong Yan <502024330056@smail.nju.edu.cn>,
-    Lidong Yan <yldhome2d2@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87tszylem4.fsf@gmail.com>
 
-From: Lidong Yan <yldhome2d2@gmail.com>
+On Thu, Oct 16, 2025 at 02:29:39PM -0700, Collin Funk wrote:
+> I think this section from an article written by the FSF addresses your
+> concern [1]:
+> 
+>     Some developers worry that assigning copyright will strip them of
+>     all their rights to the code they've created. To address this, the
+>     FSF includes a "license grantback" to the developer in the agreement
+>     contract. For the developer, a license grantback means they can
+>     continue to modify and share their code, and technically, they could
+>     even distribute their software under a different license. In other
+>     words, by assigning copyright to the FSF, the developer does not
+>     give up any of these sorts of rights.
 
-In dry run mode, diff_flush_patch() should not produce any output.
-However, in commit b55e6d36eb (diff: ensure consistent diff behavior
-with ignore options, 2025-08-08), only the output during the
-comparison of two file contents was suppressed. For file deletions
-or mode changes, diff_flush_patch() still produces output. In
-run_extern_diff(), set quiet to true if in dry run mode. In
-emit_diff_symbol_from_struct(), directly return if in dry run mode.
+That's not the only concern.  The reason why I have chosen to never to
+sign an FSF Copyright Assignment is the following:
 
-Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
----
-    diff: stop output garbled message in dry run mode
-    
-    In dry run mode, diff_flush_patch() should not produce any output.
-    However, in commit b55e6d36eb (diff: ensure consistent diff behavior
-    with ignore options, 2025-08-08), only the output during the comparison
-    of two file contents was suppressed. For file deletions or mode changes,
-    diff_flush_patch() still produces output. In run_extern_diff(), set
-    quiet to true if in dry run mode. In emit_diff_symbol_from_struct(),
-    directly return if in dry run mode.
+  "I hereby indemnify and hold harmless the Foundation, its officers,
+  employees, and agents against any and all claims, actions or damages
+  (including attorney's reasonable fees)...."
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2071%2Fbrandb97%2Ffix-diff-dry-run-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2071/brandb97/fix-diff-dry-run-v1
-Pull-Request: https://github.com/git/git/pull/2071
+If you ever see the word "indemnify" in a legal document that someone
+asks you to sign, I strongly suggest that you first talk to a lawyer
+to understand what this might mean.  Speaking for myself, if I were to
+give the FSF my intellectual output, under NO circumstances would I be
+willing to risk my assets, my house, etc. on an indemnification
+guarantee.
 
- diff.c                  |  5 ++++-
- t/t4013-diff-various.sh | 21 +++++++++++++++++++++
- 2 files changed, 25 insertions(+), 1 deletion(-)
+In any case, as I mentioned in my comment to Ben's Law Stack Exchange
+answer, before the DCO was drafted for the Linux Kernel's
+SubmittingPatches process documentation, it was vetted by lawyers at
+the Linux Foundation and various LF Member Companies.  Those lawyers
+certainly viewed the DCO as being legally useful.
 
-diff --git a/diff.c b/diff.c
-index 87fa16b730..4baf9b535e 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1351,6 +1351,9 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
- 	int len = eds->len;
- 	unsigned flags = eds->flags;
- 
-+	if (o->dry_run)
-+		return;
-+
- 	switch (s) {
- 	case DIFF_SYMBOL_NO_LF_EOF:
- 		context = diff_get_color_opt(o, DIFF_CONTEXT);
-@@ -4420,7 +4423,7 @@ static void run_external_diff(const struct external_diff *pgm,
- {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
- 	struct diff_queue_struct *q = &diff_queued_diff;
--	int quiet = !(o->output_format & DIFF_FORMAT_PATCH);
-+	int quiet = !(o->output_format & DIFF_FORMAT_PATCH) || o->dry_run;
- 	int rc;
- 
- 	/*
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 55a06eadb3..25fa452656 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -661,6 +661,27 @@ test_expect_success 'diff -I<regex>: ignore matching file' '
- 	test_grep ! "file1" actual
- '
- 
-+test_expect_success 'diff -I<regex>: ignore all content changes' '
-+	test_when_finished "git rm -f file1 file2" &&
-+	: >file1 &&
-+	git add file1 &&
-+	: >file2 &&
-+	git add file2 &&
-+
-+	rm -f file1 file2 &&
-+	mkdir file2 &&
-+	test_diff_no_content_changes () {
-+		git diff $1 --ignore-blank-lines -I".*" >actual &&
-+		test_line_count = 2 actual &&
-+		test_grep "file1" actual &&
-+		test_grep "file2" actual &&
-+		test_grep ! "diff --git" actual
-+	} &&
-+	test_diff_no_content_changes "--raw" &&
-+	test_diff_no_content_changes "--name-only" &&
-+	test_diff_no_content_changes "--name-status"
-+'
-+
- # check_prefix <patch> <src> <dst>
- # check only lines with paths to avoid dependency on exact oid/contents
- check_prefix () {
+	  	     	    	  	  - Ted
 
-base-commit: 143f58ef7535f8f8a80d810768a18bdf3807de26
--- 
-gitgitgadget
+P.S.  The FSF has gotten more flexible over time; when I first got
+involved with FOSS, the FSF required copyright assignments, and so I
+didn't contribute to FSF projects.  Perhaps because enough people,
+including large companies, have said "no way, Jose", the FSF will now
+accept copyright disclimers, or even unlimited perpetual copyright
+licenses.  More recently, they've even said that limited number of
+code contributions with a DCO might be acceptable[1].
+
+[1] https://www.fsf.org/blogs/licensing/FSF-copyright-handling
