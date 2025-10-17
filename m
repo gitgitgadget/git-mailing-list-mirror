@@ -1,121 +1,154 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE9F29D279
-	for <git@vger.kernel.org>; Fri, 17 Oct 2025 08:44:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D8321D3D9
+	for <git@vger.kernel.org>; Fri, 17 Oct 2025 09:15:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760690698; cv=none; b=dINwof5ThOiAj5/NekwC5e5NooJLBsQ0BO+3aNfBhTutPbZ21RJPXzJ8oHxpCtfUDTmUMp/wINNgFyvF0EUbNClk1SibOut6jib1nK2OlHbs1fxA3FH1OH6UqTP173mNfKI5+VdLvrwjkaEjwTFCw+BzHVM/Nz7a3s0uqjYa2gU=
+	t=1760692555; cv=none; b=epJNS0T7+tuKYDHoj+EgFb+HDNfyVLWSPeLC8+YocouWxfdHam8DEAWyqlXat6SGcj+tcKAvyQTE/7dzbze8CseS9puU7AVYdfGL+ZzhdCrr3nJAD+8YQNyUhpzAAubvjyfRT7sF34FiluE+SEFQBt7Qgpp1fJRzhQoNiQBL3nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760690698; c=relaxed/simple;
-	bh=yvvCH0gz4R5teIQAm2+ECBRjlgV+0VYyu6GXkH78iJE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AGYJHHGylcehSt4Ghld7jTVrShGDarstrM9NH1NvBMfyYcFb1z+CYuot+mC22aT8hoGKsP3fhkxDDn+VuspvvBbuEPnSurtlSQX+wS7SXSQH5dFcOmuh63kKuEsmVCTR/iRbEGXAVfJD3eNIcsMKORk+ynOJ/M+XMNHVzauyBPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=AltgaiFI; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1760692555; c=relaxed/simple;
+	bh=Os5CThaSk1ycuCaA9FgY9f6ut27zmQiwD52CioojwBE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=L4EsnG/VTC8+ohwE6Yqe8p4q3B6gf8JKwpHWdbWcRfbbxe8x/lh7L2i2/W/LdRhrwzlB20NubsJh9P7kT4YRGIeDg0Ci+sWT/GL0UbRa1YOJqUVyWfoK8EIPrKs7/eLF+X7b3lwbsKO9DxM4wjUAGPe2hU0vq2UuR1OQr/NkURs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K7vpj94+; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="AltgaiFI"
-Received: (qmail 252280 invoked by uid 109); 17 Oct 2025 08:44:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=yvvCH0gz4R5teIQAm2+ECBRjlgV+0VYyu6GXkH78iJE=; b=AltgaiFINf0F7NaeYOr9zE3wWXDK0cU8C1SiIuEUPwxipMfVyYytUhfR/iQmxjJPa23MDVqW73qKf8O3QPGkCVjf9p6oSH/5exelD8FGgn3BfuV0KAPfZWYL9rD/L3GRgvFt7X2VUoWbmDsk5Qi8RIPTuLf2nI0ALGM5HAADEKGpI0wzUB6JEaFp5UTGjVftfM3ScA/wEdxaNRqObpkWSs4rphlJEX3CazZHnR1Wbj2aNSPktY4E2uKnEsoqHnciYNUAkvgfosYJz57d1jg8uYGDgbrzyXfbCfduF+6QhWKb16mZhtBZqcRc+opNggIVAl9vXfPV2zhPmkdI3Ky1Ew==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 17 Oct 2025 08:44:55 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 393797 invoked by uid 111); 17 Oct 2025 08:44:55 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 17 Oct 2025 04:44:55 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 17 Oct 2025 04:44:55 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Langbart <Langbart@protonmail.com>
-Subject: [PATCH resend] status: make coloring of "-z --short" consistent
-Message-ID: <20251017084455.GA4096702@coredump.intra.peff.net>
-References: <XCDlwEkTlgoZIyIf_8BfOGl1C3C63Ioxeib4BRNJ9Jm_CtYWKT3qu-pDaeXVtS1Ifq6E4pT9G0yDbIS_nSwN-uiBuBNAlMyrOv0R1RyM7oc=@protonmail.com>
- <20251007082920.GA3349249@coredump.intra.peff.net>
- <20251007203406.GA4028057@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K7vpj94+"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-63c1413dbeeso2189780a12.0
+        for <git@vger.kernel.org>; Fri, 17 Oct 2025 02:15:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760692551; x=1761297351; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uTIQmvF7JZyZmqmA1nJKQmBQhUBRZ+hrC+nfWBAeYus=;
+        b=K7vpj94+GOMsLlZ54DZ0JNnu5SSvwH96yJzM7kF4N1/XMcDBEln7g+sGkd1jMJjC69
+         2iG8SDpBAv3IOPO6wKjYig4iCy3K/UgVNUGwiL+zmYpOu8LN7kSE47Eu4qMG806ynjEM
+         aa812aj3qNeuwRaKCXG+qacaRVV4wO6tC4RKjvSzsEvdsADJqne3xE+8gUCtCPLeMU7p
+         TQsTsYpQBZirucPnmZFr7+29eJjVI6SkYBCPv0ZkRkH8diKd+2ybuKsAS5dlvJqEASmX
+         l+iRiizYRlrf71Kzu6/gI3jtQC+bqpJlzyjirBGzggy5tCkJBA8RMBlI0C0mbn9Lrd4G
+         bY9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760692551; x=1761297351;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uTIQmvF7JZyZmqmA1nJKQmBQhUBRZ+hrC+nfWBAeYus=;
+        b=TXMtf5TKNBcK3vDjU8MDOjJx1NpFdJOVC3NodXfRLXhh7mPk86WcOTfjJwOpMrRjb5
+         66QJQ05ZzCAIgow6l9Ge19dJc1dZX7Pu9u08B4xndxv77FKo67D/aJkiKtU+/FcekAyv
+         B9eo4GkF6FE5P9dQ9nXgr8gUFyCPC6hofKFoeagb4XGxjHMbducU90fmV+Pj1OZhu+h9
+         TPfJ6QUoyd5K0hqMQmuTsFJcVW73ci1iSRdPiNyKTg3yxn2QrLHycIauDtT2m0lzWGD2
+         FU/O9528fk3VrqJBuXZHEkbri3IKJB419TP+vgAXjL+caKqBs8ME0r9nbWSr6GUhZneC
+         1hLg==
+X-Forwarded-Encrypted: i=1; AJvYcCXUNfHJpcEbMCh22lLEctyjWKaKc2QaG0mkpQZd3rZWmvfXQ03eIv4zH/lLpmOGtQCAGdw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YykR22HSE2zleTrOZp7hgP/JsZo0Wrdoc49Wnw3jOfFf/vO5va0
+	e9Yv2KKaJkBLWT4V5boM0iUCByaLgyEtE3Tw3PZ2jdJLU+XYr5tKhy9Qdts7WrrQjy/dU+RE7ae
+	13QdN731mXrrnBRpinlJkvG2EOxw4Wzw=
+X-Gm-Gg: ASbGncslHeivPsUJZy1lk2yX3cJcQzd19Gga6Oil07ywWn8zFe6Co8m/9RKFlBENYju
+	N2m8iTEzusEL2Dqf09LlTTLr5GiA5wpcQfsIfgoLA8buXm839KBXH3TTx8RC007CWvkoH2E/6AK
+	NqvJfPVAA/JVmQt9cjT5QIZaGS/kmyA+eutQlieGOcW5YxKxJcE9aVyXecn5j399oMg1GYDjrNz
+	uS+TLsdnKADOJIb25rdO/w6vB5xzA+9233M2tGMy2ZIOGL1+hqa4+TOylb/
+X-Google-Smtp-Source: AGHT+IHuhTJasTd+oqEOCOuzuF+CXWRRlh+XOdy4nnNkZzn9CoNlqSjbm2fVgE0mF5OOEalqb9UYmFdM9PLa7ToMXig=
+X-Received: by 2002:a17:907:db03:b0:b5c:5df7:be60 with SMTP id
+ a640c23a62f3a-b647560b117mr296642266b.52.1760692550571; Fri, 17 Oct 2025
+ 02:15:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251007203406.GA4028057@coredump.intra.peff.net>
+References: <cover.1760571220.git.belkid98@gmail.com> <818ca6b104cf25ebe4c60145d046029f057f4db1.1760571220.git.belkid98@gmail.com>
+ <xmqqms5q4v0r.fsf@gitster.g>
+In-Reply-To: <xmqqms5q4v0r.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 17 Oct 2025 11:15:37 +0200
+X-Gm-Features: AS18NWDgL-MNVtZAcIzHXXukDEbuVzqZG0fqJDNygW_HEVBTVUMWaOtTZH1p1hk
+Message-ID: <CAP8UFD1FMwrBxbZ6Ck8JwBPBOAhB039US6pHSTusb6qzW=crpg@mail.gmail.com>
+Subject: Re: [Outreachy PATCH v2 1/2] gpg-interface: replace
+ strbuf_split_max() with string_list_split()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Olamide Caleb Bello <belkid98@gmail.com>, git@vger.kernel.org, usmanakinyemi202@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When running "git status -z --short", the marker on modified index
-entries (e.g., "M") is colorized, but the "??" marker for untracked
-entries is not. Let's fix the "??" entries to show color here.
+On Thu, Oct 16, 2025 at 7:27=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Olamide Caleb Bello <belkid98@gmail.com> writes:
+>
+> > @@ -821,7 +822,7 @@ static char *get_ssh_key_fingerprint(const char *si=
+gning_key)
+> >       struct child_process ssh_keygen =3D CHILD_PROCESS_INIT;
+> >       int ret =3D -1;
+> >       struct strbuf fingerprint_stdout =3D STRBUF_INIT;
+> > -     struct strbuf **fingerprint;
+> > +     struct string_list split =3D STRING_LIST_INIT_DUP;
+> >       char *fingerprint_ret;
+> >       const char *literal_key =3D NULL;
+> >
+> > @@ -845,13 +846,12 @@ static char *get_ssh_key_fingerprint(const char *=
+signing_key)
+> >               die_errno(_("failed to get the ssh fingerprint for key '%=
+s'"),
+> >                         signing_key);
+> >
+> > -     fingerprint =3D strbuf_split_max(&fingerprint_stdout, ' ', 3);
+> > -     if (!fingerprint[1])
+> > +     if (string_list_split(&split, fingerprint_stdout.buf, " ", 2) !=
+=3D 3)
+>
+> The original splits the thing into upto 3 pieces, but only complains
+> if the second piece is NULL (i.e. we said "up to 3", but there was
+> not even one place to split, and the request to split_max gave the
+> one thing as one piece).  IOW, the original code will happily accept
+> if the finterprint_stdout is split only into two, not three.
+>
+> The updated code asks to split at at most two places (yes, it is a
+> confusing API, but if you split at two places, you will end up with
+> three pieces), and insists that the split results in three pieces.
+>
+> So the rewrite tightens the error condition.
+>
+> Was the original code too loose in detecting an error, and does this
+> patch tightens the condition "while at it"?  Or was the original
+> code correct to expect that there are legitimate cases where the
+> payload in finterprint_stdout only contains two pieces, and it was
+> the right thing to do to accept when fingerprint[1] is not NULL but
+> fingerprint[2] is NULL?
+>
+> This is a genuine question.  I haven't studied the code path to
+> reach this point in the code flow, I don't know what the data in
+> fingerprint_stdout is supposed to look like, so I do not know the
+> answer to the question (in other words, it cannot be an oblique way
+> to point out that the updated code is wrong or anything like that).
 
-At first glance you might think that neither should be colorized, as
-usually one would use "-z" to get machine-readable output. But this is a
-tricky and unusual case. We have two output formats, "--short" and
-"--porcelain" which are substantially similar, but differ in that
-"--short" is for humans who want something short and "--porcelain" is
-for machines. And "-z" by itself, without any other output option, does
-default to "--porcelain", so "git status -z" will not colorize anything.
+Yeah, I think the problem is that the commit message should explain
+how this whole issue is dealt with. Currently it talks about passing
+"2" to string_list_split() instead of passing "3" to
+strbuf_split_max(), but it says nothing about dealing with the return
+value from string_list_split().
 
-But if you explicitly ask for "-z" and "--short" together, then that is
-asking for the human-readable output, but separated by NULs. This is
-unlikely to be useful directly, but could for example be used if the
-output will be shown to a human outside of the terminal. At any rate,
-the current behavior is clearly wrong (since we colorize some things but
-not others), and I think colorizing everything is the least-surprising
-thing we can do here.
+It seems to me that fingerprint_stdout should contain something like:
 
-Reported-by: Langbart <Langbart@protonmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
-Re-sending unmodified, as the original from 10 days ago did not generate
-any discussion, and doesn't seem to have been picked up for 'seen'.
+4096 SHA256:PelI2esT2xZlv20wJJyYOkQsli5RMK79oJ2VxqYb2PA
+christian.couder@gmail.com (RSA)
 
- t/t7508-status.sh | 11 +++++++++++
- wt-status.c       |  4 ++--
- 2 files changed, 13 insertions(+), 2 deletions(-)
+and it looks like the 'key_size fingerprint_hash:fingerprint comment
+(key_type)' format is the standard `ssh-keygen -l` output.
 
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index cdc1d6fcc7..abad229e9d 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -717,6 +717,17 @@ test_expect_success TTY 'status -s with color.status' '
- 
- '
- 
-+test_expect_success TTY 'status -s keeps colors with -z' '
-+	test_when_finished "rm -f output.*" &&
-+	test_terminal git status -s -z >output.raw &&
-+	# convert back to newlines to avoid portability issues with
-+	# test_decode_color and test_cmp, and to let us use the same expected
-+	# output as earlier tests
-+	tr "\0" "\n" <output.raw >output.nl &&
-+	test_decode_color <output.nl >output &&
-+	test_cmp expect output
-+'
-+
- cat >expect <<\EOF
- ## <YELLOW>main<RESET>...<CYAN>upstream<RESET> [ahead <YELLOW>1<RESET>, behind <CYAN>2<RESET>]
-  <RED>M<RESET> dir1/modified
-diff --git a/wt-status.c b/wt-status.c
-index 8ffe6d3988..e12adb26b9 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -2042,13 +2042,13 @@ static void wt_shortstatus_status(struct string_list_item *it,
- static void wt_shortstatus_other(struct string_list_item *it,
- 				 struct wt_status *s, const char *sign)
- {
-+	color_fprintf(s->fp, color(WT_STATUS_UNTRACKED, s), "%s", sign);
- 	if (s->null_termination) {
--		fprintf(s->fp, "%s %s%c", sign, it->string, 0);
-+		fprintf(s->fp, " %s%c", it->string, 0);
- 	} else {
- 		struct strbuf onebuf = STRBUF_INIT;
- 		const char *one;
- 		one = quote_path(it->string, s->prefix, &onebuf, QUOTE_PATH_QUOTE_SP);
--		color_fprintf(s->fp, color(WT_STATUS_UNTRACKED, s), "%s", sign);
- 		fprintf(s->fp, " %s\n", one);
- 		strbuf_release(&onebuf);
- 	}
--- 
-2.51.1.685.g6bf3278fbc
+So I think it's safe to say that we should expect
+`string_list_split(..., 2)` to return 3. That should work even if
+there is no comment in the key file.
 
+But on the other hand, I think it's also acceptable to say that we
+just want to keep the same behavior as the original code and check its
+return value with `> 1` since we only need the second element
+resulting from the split.
+
+> >               die_errno(_("failed to get the ssh fingerprint for key '%=
+s'"),
+> >                         signing_key);
+> >
