@@ -1,107 +1,150 @@
-Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD5A2DA774
-	for <git@vger.kernel.org>; Fri, 17 Oct 2025 09:53:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0101930FC3D
+	for <git@vger.kernel.org>; Fri, 17 Oct 2025 09:54:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760694789; cv=none; b=GaG2LMODOEx40pEF46jQi+LqaSPT1l+0fLEWPGV3Tx6dWIZOCmKp8G7sbDbDnj3ubZozjUIVUJwo+OyW5gCmd4kW+Kb+aZhe7V1nB8/54c9hn7LiRtl6F6ONmyHDCUmSykK+GYqOeI/qfDbPBBejfnipwJYFVpFjcuksMpdyFZI=
+	t=1760694847; cv=none; b=RX0ElgtVEOvvWy2tcG7U9OI4CL25H+CIlBifxClHh4VhLHTzudZr5i2c40uNeQflsb6DSusy480RPMZGG1ZO6QZj7x6hLU7qq/40E+e0YMX3P1hxrFDNZxhpawaZtjnhGr93G6KkkFU3rE4+TKLxm03nMqnp049P1MH9wRl6huk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760694789; c=relaxed/simple;
-	bh=0/MUiHXdyl65AHa9aeJunZ+c5QWyy+rnyxQgJvtZOaY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MUKNIVYq+YT8HGOr8ZXTT1KEiOxxjyfxH9usPjCqGLLW6z2Dqg62L7iF+DvA7snyiUkwLuriBqHGl6Ic+YrQVMSFEL5/bi4+vwV4xneAcQiwW9Y77IF/SId+OfINBcmpcx3SOSLWA8pYBVBEVCZtUTNxZ7rra/ugs8YmLzMnpik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hacktheplanet.fi; spf=pass smtp.mailfrom=hacktheplanet.fi; dkim=pass (2048-bit key) header.d=hacktheplanet.fi header.i=@hacktheplanet.fi header.b=bI4c0P1H; dkim=pass (2048-bit key) header.d=hacktheplanet.fi header.i=@hacktheplanet.fi header.b=wmLatOO9; arc=none smtp.client-ip=91.218.175.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hacktheplanet.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hacktheplanet.fi
+	s=arc-20240116; t=1760694847; c=relaxed/simple;
+	bh=2DljmKdizw+y31itoCKd8EHtpc631m65tX2gwTmjBcM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WElAfr9R/9rboyGPn3MS2jk5OH9oa9WQ00DYlvf3SPHA3mty89dlH1wy2FW3L1eFm4y77noLavLFe+SPFFEA/em3RaEdWIPlt5wdJDsRFRvDlcb5QAf9tHMZNuFYvGDXhIomLB2dTirD78t5ae6AqKMqekfwFnB7HktfC5HecuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mBnAfAnf; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hacktheplanet.fi header.i=@hacktheplanet.fi header.b="bI4c0P1H";
-	dkim=pass (2048-bit key) header.d=hacktheplanet.fi header.i=@hacktheplanet.fi header.b="wmLatOO9"
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=gibson; bh=0/MUiHXdyl65A
-	Ha9aeJunZ+c5QWyy+rnyxQgJvtZOaY=; h=in-reply-to:references:subject:cc:
-	to:from:date; d=hacktheplanet.fi; b=bI4c0P1HVRDMiWPuKtjIf08XcAnIIM86vZ
-	R3m4x0UmjYdE6OJx+aO/7Lv4hairolHH34E+/x3j6r7heITH82FdeBX2Y2pNzFxjRd4OeT
-	WF+fwUxYMNPR1b4/0H5NDCepOxc891G+VQNwCcKDNhj0L6bo2FSDxcw7dkpueJEW5JhhuG
-	bSKEhlSS/nD/wiWehi5sYnSJT/ap+CEzuuleEp5MW4zTe96eE+a5Or96Bz0yYOey09y5ss
-	C7W+SLLeCrDmaYwVMfbG+qqKWT97YzOo5Se4e6cS7I2mCV7V7FB+WaFUMjx19pW0F5pfy+
-	g4XIrbLJb8Gf8JOZxmV1gp2CecPg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hacktheplanet.fi;
-	s=key1; t=1760694780;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bjbHILuI9MrGURY0quuKwuTxC/mRJDAWUrMdyCsvb/s=;
-	b=wmLatOO9u5nrmBgoQbwCbuKSf3m0uSFtbFcvz/tvoaCfFmyd3XOCwUSuZTQ5EEsHbdUI8+
-	shR40DFcHG+TwD/RQTrvWRzL+ZTN4AsN+JZ3TIyq3GHkh1i9CiiWLV2jgBTmXEX6PiXpIb
-	03Gu9alVMGYOGDpLsou8j9YAi+1WDKAal37n1ADtOZpm72Dt7jM6EA12zeUgtKuFTyukAI
-	t5WPBvqlHih6SUfhpO1k4s0FzvhvTIJxCZ0bqq2YMV3dic8HMoGCQEEM9XYHrT9ddsegOn
-	X+kbqExpC2Q5SYlx2QsRLl74JkPPqHJOSbfKQIM1GEJ3MwkGLKWLWtu8/RaPPw==
-Date: Fri, 17 Oct 2025 18:52:49 +0900
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Lauri Tirkkonen <lauri@hacktheplanet.fi>
-To: Jeff King <peff@peff.net>
-Cc: Collin Funk <collin.funk1@gmail.com>, Xi Ruoyao <xry111@xry111.site>,
-	git@vger.kernel.org
-Subject: Re: t7528-signed-commit-ssh.sh fails due to ssh-agent fails to start
- with ENAMETOOLONG
-Message-ID: <aPIR8fB4w5Jkeiq2@mail.hacktheplanet.fi>
-References: <4e2952e512afc780b621d2c153b3e6e4eb7ed89a.camel@xry111.site>
- <87o6q6nux7.fsf@gmail.com>
- <20251017070912.GA4068463@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mBnAfAnf"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-290ac2ef203so16420695ad.1
+        for <git@vger.kernel.org>; Fri, 17 Oct 2025 02:54:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760694845; x=1761299645; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cIXzQyF6uGfJo2MPgAuqQmSYVkKM4aYQ+CLouUWWVQU=;
+        b=mBnAfAnfmAYyUugJw3MFVgmlWt6EB3Sit7vXqkJhkQR17y3QEizoH9bUutC7t4WKvS
+         OYRkJi3burbbVEsn3y6AbgPw3As/kpVCfv6zjgBgXBrKe8U2ysbw0g32VuEDEq0FDkUI
+         gw+mtA8Gk15QGCgcSAW4uVGUWCgY6QP6dvlDBQ+WyLxqUGohxfup08S3xISm+ztdhux2
+         xbG7R0I9JkkPDjroCDh2Fu5bYMvOCknCySpseGUE7vq5FQnE1wPveYF56NWi+4zF8pGx
+         +jMegW08RTTSYrqMHzvNqLvvPmiIc5NTR7VBGAWXTUVdnPU01xkdBWwJ82GZ2JbH3MVL
+         7KOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760694845; x=1761299645;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cIXzQyF6uGfJo2MPgAuqQmSYVkKM4aYQ+CLouUWWVQU=;
+        b=twHrqgO8V2+6xG3QA95U1HQQnVGf8gdUAHVBsajWrLR/Y5hS5uCZToDVW9i5x7Wglo
+         lTGeC2IJUZHTKyQkgq1Lx0wFUm+SuK/pIsu+t7F9r2IziJR3HxVHl3vgu+uxTS++bPE9
+         GxfBG/MGWZ2LSzwUoGxdcry6fG//IZ+8KohN4Wlu47Fp16X+vEdOvzeCzP4bzbzTADeF
+         YksZD4PffLymDLSoXnTRH+NgksuJqcz0KSO8xxqwkCGns1jPb5ZAhyxWHVNX/TCyRBfr
+         pCIRzfcC7hBOwNUEZWOJfYm487M7jdngEf6wMJQvc/zB0AWTm7pADKsE/Ho3ZZSoLLrK
+         gtBA==
+X-Gm-Message-State: AOJu0Ywo2HZsvwf++7BNXp98Sub9LnA0E16gDMxWTxqCbGCRT3KrwVJe
+	3jskNEmPups7TYrb1kKW8zj/aFCZk5p4qJpKxlSsWhRc9vzh1+SJrCDj4CM9E1k6lFX2UBLgVHw
+	4pUo+8bFqpziIhVYmACpe5G9A569fFBeNGzATNH9IRg==
+X-Gm-Gg: ASbGnctmmFUFqbVx7TKRMqcz/6xT8knZE98dyJtddp7Ngg7Ky1/r2jAv8OAsl7Hi5mZ
+	fJ1hvPZg4kL3+0dXMOxkCbfALch5ly+w+tumyJpdDFHTawInV/2m3yX62jttcksrlg1zW6wjAD9
+	hsnPwu2H96Uf/+MvV7rVLXiT1Fjfg14IXoUa7oMe1GcY/lGKGa8GwU/Y8L+nihcFC2p6UL/JB4A
+	/RyUtb1XIbjRSJwthHaxsXkECBPgIT1yQELKz9ab0FnmFTIl72fT0GxNC8p1/QXb977LYx7dvr6
+X-Google-Smtp-Source: AGHT+IE12ToQSbhsmWHm3SfCTsNFisRkXjQ/iOfZw7CtLVCVXNSY/DvE+cMnhS8s5wO1kf6hgHnbhnkqa7PwYzRSj2M=
+X-Received: by 2002:a17:902:e746:b0:28d:195a:7d79 with SMTP id
+ d9443c01a7336-290c9c897cemr38006085ad.5.1760694845153; Fri, 17 Oct 2025
+ 02:54:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251017070912.GA4068463@coredump.intra.peff.net>
-X-Migadu-Flow: FLOW_OUT
+References: <cover.1760571220.git.belkid98@gmail.com> <CAP8UFD0Lzmt5ayQ3iSXtmJohDawmCEiu1r8Gq2mKTMy-1gX_fw@mail.gmail.com>
+In-Reply-To: <CAP8UFD0Lzmt5ayQ3iSXtmJohDawmCEiu1r8Gq2mKTMy-1gX_fw@mail.gmail.com>
+From: Bello Olamide <belkid98@gmail.com>
+Date: Fri, 17 Oct 2025 10:54:05 +0100
+X-Gm-Features: AS18NWAUFAZMbqMJhOMSYSpVcsN3eq9RexJovSsQ1wkI2ADrzlKmleEsQpGx4C4
+Message-ID: <CAD=f0L9OFO5N=_3iiqMh33WK+AV-zQPhpdTLn2JusNf4AwnYrg@mail.gmail.com>
+Subject: Re: [Outreachy PATCH v2 0/2] gpg-interface.c: use string_list_split()
+ instead of strbuf_split_max()
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, usmanakinyemi202@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Jeff,
+On Fri, 17 Oct 2025 at 08:58, Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Thu, Oct 16, 2025 at 3:04=E2=80=AFAM Olamide Caleb Bello <belkid98@gma=
+il.com> wrote:
+> >
+> > Commit 2efe707054 (wt-status: avoid strbuf_split*(), 2025-07-31) notice=
+d
+> > that the array of strbufs that calls to strbuf_split*() provides are me=
+rely
+> > used to store the strings gotten from the split and no edit are
+> > done on these resulting strings making the strbuf_split*() unideal
+> > for this usecase, with the string_list_split*() being a more suitable o=
+ption.
+> >
+> > The patch series by Junio Hamano can be seen in the link below.
+> >
+> > https://public-inbox.org/git/20250731225433.4028872-1-gitster@pobox.com=
+/
+>
+> This description is probably good enough as-is, but here are some
+> comments that might help improve it if you want if you send a v3.
+>
+> The way you explain things up to here, it might seem only one commit
+> in that series is about avoiding strbuf_split*(). But in fact the
+> commit you mention is the first one in that series which is named "do
+> not overuse strbuf_split*()" and contains 11 patches.
+>
+> So I think it would be a bit better if, instead of speaking about that
+> commit first, this cover letter started with a link to that patch
+> series and explained the purpose of the whole series. You may then
+> mention one or more commits in the series as examples of commits where
+> strbuf_split*() is replaced with string_list_split*() though if you
+> want.
 
-On Fri, Oct 17 2025 03:09:12 -0400, Jeff King wrote:
-> But looking at this test, there's something even more funky going on.
-> Our $HOME will always have a space in it, because no matter where you
-> set the root, we will create "trash directory.t7582..." to work in. But
-> AFAICT, ssh-agent does not quote the path in its output. So for example:
-> 
->   d='/tmp/has spaces'
->   mkdir "$d"
->   HOME=$d ssh-agent
-> 
-> will produce:
-> 
->   SSH_AUTH_SOCK=/tmp/has spaces/.ssh/agent/s.IcPuGe26YY.agent.6PtD3uhM4O; export SSH_AUTH_SOCK;
-> 
-> which is nonsense to eval. And indeed, the "working" version of this
-> test (without a really long root path) produces:
-> 
->   ./t7528-signed-commit-ssh.sh: 1: eval: directory.t7528-signed-commit-ssh/.ssh/agent/s.IcPuGe26YY.agent.sOzoazWiDc: not found
-> 
-> I expected that would cause ssh-add to fail, since our SSH_AUTH_SOCK
-> would point to truncated garbage, and we can't talk to the agent. But it
-> doesn't even do that. The extra space turns that line from a variable
-> assignment into a one-shot variable attached to a command that fails to
-> run. And so we're left with the original SSH_AUTH_SOCK from the
-> environment, the one in my real $HOME outside of the trash directory.
-> Yikes!
-> 
-> If I unset SSH_AUTH_SOCK in my environment, then the test consistently
-> fails. But I'm somewhat amazed that nobody has complained about this
-> before. Surely somebody somewhere (especially CI!) is running t7528
-> without SSH_AUTH_SOCK set in the environment. Which makes wonder if I'm
-> missing something.
+Yes, this approach would be better.
+Thank you
+>
+> > This series continues on this path by replacing instances of
+> > strbuf_split_max() with string_list_split() where the string from the
+> > split is merely returned as char * and no edits are done on them.
+>
+> Yeah, some commits in the series do that, but not all.
 
-I believe the issue surfaced only now because prior to OpenSSH 10.1,
-ssh-agent would put its socket in /tmp by default, not under $HOME. See
-https://www.openssh.com/txt/release-10.1
+Yes I will reword this too.
 
-We saw this failure in CI on Alpine Linux and worked around by adding -T
-to the ssh-agent invocation in this test, but I suppose that won't work
-for earlier releases of OpenSSH.
-https://gitlab.alpinelinux.org/alpine/aports/-/commit/81a159c8a371c871c1cd0f212881a757160632fb
+>
+> > Changes since v1
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >  - Added commit reference and link to patch series for previous work
+> >  done on the subject
+>
+> In a cover letter we are interested in the changes in the patch series
+> since the previous version, not the changes in the cover letter. This
+> is because the cover letter itself is not merged (except perhaps its
+> first few sentences that might be reused in the merge commit, but this
+> is more advanced, so don't take this into account for now) when a
+> patch series is merged. So a cover letter is more about giving context
+> to reviewers and inviting them to review the patch series.
+>
+> So here it would be nice if there were things like:
+>
+>   - a summary of the changes in the patch series since v1,
+>   - a range diff between v1 and v2,
+>   - a link to a CI platform where the v2 has been pushed and the CI
+> tests have been performed.
+>
+> This would help make reviewer confident that the series is in a much
+> better shape compared to v1 and reviewers' comments on v1 have been
+> taken into account.
+>
 
--- 
-Lauri Tirkkonen | lotheac @ IRCnet
+Thank you very much for the review and suggestions.
+I will reorganise and send a corrected v3.
+
+Bello.
