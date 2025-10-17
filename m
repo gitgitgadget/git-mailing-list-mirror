@@ -1,88 +1,63 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F57A257437
-	for <git@vger.kernel.org>; Fri, 17 Oct 2025 15:50:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A6E330B2E
+	for <git@vger.kernel.org>; Fri, 17 Oct 2025 15:57:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760716244; cv=none; b=W65knWfVy76w19dBQD2a/eiS6evG5b5QElJ9DCMwWVOiWBsy1DaWrsrBelLOOWyczet1OapGRDOYRwfwTKSnhlrL1+73PNE2sc82TxdJdB745rlAWV/94vA8Mnr9SEymZbB/7xpTIw/rAb4SYTGWJXs/bVrrU3qUp7DXaSsz6JA=
+	t=1760716679; cv=none; b=K4r6gQ+/MXvd+ntH3LjWIF2w75fG4IzOGyiSQVkl19foXfMGw1JQ4dtcUglObmUHoTK9nRnq1pYCudAVaz/NgDcDJ1wmsi7kiYDdfRfnDsmGLqZsumvirTjV6KvSoO3VmWyv59dhyHWOkp0BHHEPQFWlzNSLeilyWJITFAXESEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760716244; c=relaxed/simple;
-	bh=MJADYfg8OhQHHlYaHtpVnd6nw+G4zhShmgf0ez741Z8=;
+	s=arc-20240116; t=1760716679; c=relaxed/simple;
+	bh=IXEuGzP5fm1u0EUhrcBcufzuvO/6j6TxW+m0cP8KPkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XsAlAbdH8Jsqp9JXCJ+sVzKNW9/jTqFsKrlUJ7SoZNEbAlQD6G+gyu26GFUWexBqno/5DuZxqnB7FLFKpfkbl82hK7ajXwZavX85+UOM00iTakunlzWOhHUnAj8m215i0+TgcRh/Cf+xIkGnZ4MRzgT0g20V6qEpZLvB1QwlMWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=A2c8DIn4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eWEjixO1; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="A2c8DIn4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eWEjixO1"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4BA46EC01F2;
-	Fri, 17 Oct 2025 11:50:41 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 17 Oct 2025 11:50:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1760716241;
-	 x=1760802641; bh=hb+SbkuWQsw6a7qxucO3z0CM0zNLv4w2gdkGonWrwqM=; b=
-	A2c8DIn4q24okUgDNOOLwwBcFVdg4qZsjZ6ZpDT0ZGm+mVhJOKN882V1XrTadS2Y
-	CqQe3Ww7xOfXjDMP7CjfuXA/25Q8EmVsBQyrTy9o+wNcqDqq1vj4hB4IqMUO7jZg
-	jkKeMLa70PPaV/2ue6lMi3LAJxtZuVBaXYxU3/vB0puLAHiBpHHfidtmhoF60Iec
-	baDtTQ22fjssgCRamFBz0PEeX+3gzboLjKe2fPAYVghpRlAKSDVImfgc7G8HvqeZ
-	Fa6IkCchILAk4X06DTkvqayRq/4WDuan+HRQdaeUQc1SAcYd38/n6bSLOGg/Z+Bb
-	Vpha00LBmkTQE48ONXTzKQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760716241; x=
-	1760802641; bh=hb+SbkuWQsw6a7qxucO3z0CM0zNLv4w2gdkGonWrwqM=; b=e
-	WEjixO1r586x1ay0EaiF1MWckxSuV6agvVoocsdxDE3lss+zYgUJJTRsFZoCRN2P
-	/I7x9YP9YEwqHULMa26jA65SpHmMG/22xDxMmMGvhi17BIC4tqG6L7dTHk5e0q0T
-	3yMsjNEajqbHUhYaCEXQkm2BMq1bTOKUdSmRj/VPJhbODbEC2WACJozgp6fyI7Er
-	qStHWHni1f2ZuRxVDSt69hgSw3qQSzvfjXpDkZz5WLyBUGHiOszkF18YUTnI0/d4
-	jRdzrmFrAjILCyhgtWXBo4nj649RL+ogngVmPFiwYNP22MnwV+F38T81rqdY1taV
-	Qe/AF3gZCRuZ8zW8ESnvw==
-X-ME-Sender: <xms:0GXyaHFucCu4VyxCi452ZuJ8K_0ekCinwXNTqL0UMUT5HClzx-Tupo8>
-    <xme:0GXyaLNycWvs2unZQU1MKXPXpu1oquYmBvumahEhIjD88MKY9W9gysKzXx49g3Pdr
-    EVooJCxa_pbZNIQ_sFi2f4I_17WE85n3iRq6uihNoDUwZghgAhbCw>
-X-ME-Received: <xmr:0GXyaBc7cUYRZXwR2niEyZpzwqcg-uJ4XSGKqBrxxutkwlfGmXLOsm5jvTiswCNNLM4JJ1WtfhVId0pyh9hSkgtHR7wJNdxNmQ4GAA0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdelheekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfgggtgfesthekre
-    dtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
-    mhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhephffggeelhfejkefgteelteejhfetie
-    ehgeeftdduudffgeejhfektedugefghfeknecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
-    grshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhu
-    thdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepsg
-    gvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhulhhirgesjhhv
-    nhhsrdgtrg
-X-ME-Proxy: <xmx:0WXyaAv9IaoDTc3R4vpzlT4kMj4i8hayGq6fOhGJAsh1-oC0MM1PEA>
-    <xmx:0WXyaKlcCv-CYc1JTUVk0mDWNKl0o4XgBJCH0OdO1ZEUq_e_9ZsZVg>
-    <xmx:0WXyaKyjceTZKvH-8wVeZ4QUAtA0Pb6L9LdKpWeDLO5nrxXqEKZJyg>
-    <xmx:0WXyaEOAOL6R2huXwuyAw_LCCoRpYuZh8_RQi24XXti0bCHvjUE3Cw>
-    <xmx:0WXyaP_6z0rcjIn5a1_T8CSzTp34Y7aOkSoiNXv_wWnUkHZYb3rOb4dA>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Oct 2025 11:50:38 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: kristofferhaugsbakk@fastmail.com,
-	git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	ben.knoble@gmail.com,
-	julia@jvns.ca
-Subject: [PATCH v2] doc: git-checkout: fix placeholder markup
-Date: Fri, 17 Oct 2025 17:50:12 +0200
-Message-ID: <v2-cb38c701537.1760716150.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.51.1.498.g8f0801f1c10
-In-Reply-To: <54bc6875cc5.1760652634.git.code@khaugsbakk.name>
-References: <54bc6875cc5.1760652634.git.code@khaugsbakk.name>
+	 MIME-Version:Content-Type; b=JSYQKlgb6jtMAbpvtnPlg0syJUS+bVdOiTxclMJbXg7+veiVSsa4qrfq+mUoMwKpJ1Gttu2z0NR9kilD3wNyJpLveM5CWN2bXwSsHKjVP+hMLp6qQZI7bIYHmNrwsnAIGxkMG1WVcPQlI1tnGKNtITsc4SdHimrKlh3hk7LDKjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=samestep.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=samestep.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-8901a7d171bso240359785a.1
+        for <git@vger.kernel.org>; Fri, 17 Oct 2025 08:57:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760716676; x=1761321476;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+oIuryjzIxOba0uWCbPCdYeHHw+DBl6nS24d6e9h4tk=;
+        b=A4usGzNfZ5PmCAtTNKGBa3rCC7WpEEkmuWPVfvP2aa69HCQ/z2Bf2ZO9QT6/sCyVoZ
+         cLBcgOR0a2MJ+JYF/JekdB7AJpqpCmm8+eIeGg6BHf21vSztS00H8wVC90rnTyPfgRtw
+         i3QZSFy9/o7Fn2bTGm8NTVfUzpV1/KzuXTPGX47OGiubpkxtCgrdujLdv/5OQ1wY5yU3
+         /XKOCBnMh53zMlRjbHKVM8gq7x/pO8nqJgnD3Ar4YtbMXLkxxOaaVF3wzrzn2aJoSUtQ
+         w1v9ARCHekV9mCfTK+jLP7GOVz6xhhwEVMDnN/vT/O6jZX0cIh9vk03XGuakjlFgFTkz
+         P+og==
+X-Forwarded-Encrypted: i=1; AJvYcCWCWe6DZnvAg/M5vu5u+8FZY5M+t6OYzaBUBpZ/Sru2dQ1KRRckdJ5gnNoMKL5f0LbiaSw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4SyM74pArTPpQSY4AevWWHu24Rz1dsHIH0TBwVCVXN1bEUyie
+	Pm0ZFShsIwfFwdEGqhx9Qb3f+jrj74UHto2DhIpaQwVAv8MbSnEW6E6t
+X-Gm-Gg: ASbGncuagZ72Mac6Ho3kDpyl+aTFBzUdDuqg//9xSLLRapHhCxJpksxBGriGiZxmUWL
+	SN7qNHYJKb41IZQoWq2rO56zd7/dO6AKP2rcTEfSdtBWTQreGhtU3ijZurNJWi8BiUvNmCEqFxV
+	lcM2ygGpLIldsByu25hF9obH91IXpIG6KpBoJRTnE0grVjs8E/wJZ3ISlLVN0oPyy0huW4T2JBu
+	FIG02rtgokXtSEHbRSJ33JxmapJZ4NSZvakY2SzZBtWleHFGb8nlTuG26r+PXVXyWpx6/cpw7Ks
+	vciMoaj8eMsLY5cVkVzQTcE2flmJb0UtYpdfbSCesf/BmnvFm+SEe7JRFVHn+xlCX4oPPVvRpOj
+	P2haBVfd8unYbBDRRs/nQGLMALryu3tODk202bluwg+wWivndaFoz0pp0ilWmhxGb7GPrtib6
+X-Google-Smtp-Source: AGHT+IG7ITnuf3qPgz1x0yaVuKAv7VjH7BBarWfmwBIgoeRncmDptTOmYyAnWvK4R20fVxdVsGVVRw==
+X-Received: by 2002:a05:620a:288a:b0:858:82fd:cd14 with SMTP id af79cd13be357-89070aeb4b8mr566667985a.84.1760716676298;
+        Fri, 17 Oct 2025 08:57:56 -0700 (PDT)
+Received: from nixos.lan ([2607:fb92:1786:ce96:9d2b:ba86:8638:36c7])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-88f37e4b953sm451363385a.29.2025.10.17.08.57.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Oct 2025 08:57:56 -0700 (PDT)
+From: Sam Estep <sam@samestep.com>
+To: jonathantanmy@google.com
+Cc: nikolas@applied.co,
+	diamond@applied.co,
+	git@vger.kernel.org,
+	jack@applied.co,
+	jl@applied.co,
+	newren@gmail.com
+Subject: Re: bug report - BUG: builtin/pack-objects.c:4310: should_include_obj should only be called on existing objects
+Date: Fri, 17 Oct 2025 11:57:54 -0400
+Message-ID: <20251017155754.1425091-1-sam@samestep.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <CA+ODqj34b2DsvjxGgVb=jSaTUNYRh_nNtaCzCx8QiJ8QFsRecA@mail.gmail.com>
+References: <CA+ODqj34b2DsvjxGgVb=jSaTUNYRh_nNtaCzCx8QiJ8QFsRecA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,77 +67,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+I hit this same bug today: https://github.com/samestep/npc/issues/6
 
-The placeholder markup is underscore (_), not backtick (`) as well.
+I'm using Git v2.51.0. As Nik mentioned, the issue is flaky, but I have
+been able to reproduce it several times today on both x86_64-linux and
+aarch64-darwin via these steps:
 
-The inline-verbatim markup (backticks) handle interior formatting. This
-means in this case that it applies HTML `<code>` to the underscores and
-`<em>` to the placeholder.
+$ git clone --mirror --filter=tree:0 https://github.com/NixOS/nixpkgs.git
+Cloning into bare repository 'nixpkgs.git'...
+remote: Enumerating objects: 1403208, done.
+remote: Counting objects: 100% (1204/1204), done.
+remote: Compressing objects: 100% (1164/1164), done.
+remote: Total 1403208 (delta 70), reused 273 (delta 40), pack-reused 1402004 (from 2)
+Receiving objects: 100% (1403208/1403208), 550.95 MiB | 19.74 MiB/s, done.
+Resolving deltas: 100% (71770/71770), done.
+Enumerating objects: 1, done.
+Counting objects: 100% (1/1), done.
+Writing objects: 100% (1/1), done.
+Total 1 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+$ cd nixpkgs.git
+$ git fetch --no-show-forced-updates
+From https://github.com/NixOS/nixpkgs
+ - [deleted]                 (none)                 -> gh-readonly-queue/master/pr-452910-91484645881d96272b133ad577cbb314c3af446f
+ - [deleted]                 (none)                 -> gh-readonly-queue/master/pr-452916-93e25250a9459a0d62e9156f06d9ab66fa081ebd
+ - [deleted]                 (none)                 -> gh-readonly-queue/master/pr-452934-9347aa5ba848ac348dd123e5c6b28a5e69ebebee
+ - [deleted]                 (none)                 -> refs/pull/435349/merge
+ - [deleted]                 (none)                 -> refs/pull/452910/merge
+ - [deleted]                 (none)                 -> refs/pull/452916/merge
+ - [deleted]                 (none)                 -> refs/pull/452934/merge
+remote: Enumerating objects: 228, done.
+remote: Counting objects: 100% (228/228), done.
+remote: Compressing objects: 100% (223/223), done.
+remote: Total 228 (delta 5), reused 152 (delta 5), pack-reused 0 (from 0)
+Receiving objects: 100% (228/228), 123.31 KiB | 17.62 MiB/s, done.
+Resolving deltas: 100% (5/5), done.
+BUG: builtin/pack-objects.c:4835: should_include_obj should only be called on existing objects
+error: pack-objects died of signal 6
+fatal: could not finish pack-objects to repack local links
+fatal: index-pack failed
 
-That is the effect, anyway; we can see from the rest of 042d6f34 (doc:
-git-checkout: clarify `-b` and `-B`, 2025-09-10) that this was probably
-an unintended mix-up.
+If the error doesn't occur immediately, it should eventually occur if
+you keep re-running that last command:
 
-Acked-by: Julia Evans <julia@jvns.ca>
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+$ git fetch --no-show-forced-updates
 
-Notes (series):
-    v2:
-    Add Ack.  I also considered removing “probably” from “mix-up” but
-    left it alone as a point-in-time note.  The msg + ack makes it clear.
-    
-    v1:
-    Since this has landed in `master` now.
+In case it's relevant, my Git version is built from Nixpkgs commit
+82c2e0d6dde50b17ae366d2aa36f224dc19af469, and I have this in my global
+Git config:
 
- Documentation/git-checkout.adoc | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+[fetch]
+	all = true
+	prune = true
 
-diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
-index 431185ca0ba..6f281b298ef 100644
---- a/Documentation/git-checkout.adoc
-+++ b/Documentation/git-checkout.adoc
-@@ -61,7 +61,7 @@ uncommitted changes.
- `git checkout -B <branch> [<start-point>]`::
- 
- 	The same as `-b`, except that if the branch already exists it
--	resets `_<branch>_` to the start point instead of failing.
-+	resets _<branch>_ to the start point instead of failing.
- 
- `git checkout --detach [<branch>]`::
- `git checkout [--detach] <commit>`::
-@@ -155,7 +155,7 @@ of it").
- 
- `-B <new-branch>`::
- 	The same as `-b`, except that if the branch already exists it
--	resets `_<branch>_` to the start point instead of failing.
-+	resets _<branch>_ to the start point instead of failing.
- 
- `-t`::
- `--track[=(direct|inherit)]`::
+On Mon, Apr 28, 2025 at 12:23 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+> In any case, the fix is probably to change it so that
+> should_include_obj() returns 0 if the object is absent.
 
-Range-diff against v1:
-1:  54bc6875cc5 ! 1:  cb38c701537 doc: git-checkout: fix placeholder markup
-    @@ Commit message
-         git-checkout: clarify `-b` and `-B`, 2025-09-10) that this was probably
-         an unintended mix-up.
-     
-    +    Acked-by: Julia Evans <julia@jvns.ca>
-         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-     
-     
-      ## Notes (series) ##
-    +    v2:
-    +    Add Ack.  I also considered removing “probably” from “mix-up” but
-    +    left it alone as a point-in-time note.  The msg + ack makes it clear.
-    +
-    +    v1:
-         Since this has landed in `master` now.
-     
-      ## Documentation/git-checkout.adoc ##
-
-base-commit: 83a9405e59e9cdfb587b19c50f0c040f346dd4ea
--- 
-2.51.1.498.g8f0801f1c10
-
+Does this still seem like the right approach?
