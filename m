@@ -1,98 +1,132 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-107166.simplelogin.co (mail-107166.simplelogin.co [79.135.107.166])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452BB8F7D
-	for <git@vger.kernel.org>; Fri, 17 Oct 2025 02:06:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760666811; cv=none; b=F68w0bNshK/9/o+lh9PJ4APct/gwVTsv4XHFdpINU9f4GKfSX1hZUK6YPdzNuHpXGuRjWwy/4WtEWv0/1lbpSFJUWdidg/WNTNSCSlhiM9JEKXSMjn+7Yoj3zBQ5J3OxRPxGuNidkHJF1bFhePv5reVQzrM8IOZ+/R0F7AowCbA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760666811; c=relaxed/simple;
-	bh=55UiBX5EPrBb5BGatI6dvM8Jvm9f8AWXjvpxERI+aHQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pacPNPVAL27/zI1HQi2NlMhIKbrKTb5kNcZCkEZsu8366ue3OCkHvQgVV8r1pFx6/n8u8ks03nAqROBZsnTs3U2L1P6v48wsGMY9KES3QE2pXLbtKuIFM4wYtuJc26jKgBCHRGj19iQ9CAE/VXGvCzCBW7wnmzpLPQKJFB4Ap04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=apimiyuB; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05639405F7
+	for <git@vger.kernel.org>; Fri, 17 Oct 2025 02:29:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=79.135.107.166
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1760668166; cv=pass; b=KHM6y/+aTOoEVO0w4IwIMcZgRgn6gE0YPaANmUnN/2xBZGivFcjEM9ncM6pnBCm64RzXw1GhpaHu6wiIgt1saL8H7oUiIl5WBIVO5KsrIGqmqTqVDAOvaOPUD99tP9S3brhe6i65yE/7cQ2RgbpfJd13RHgzXynwxAJqmf+ivj8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1760668166; c=relaxed/simple;
+	bh=RKLg9oQYKYRA2tBiJ9QWFJ+S+FGmpqR4YomrWOG8SGM=;
+	h=Date:Subject:MIME-Version:Content-Type:From:To:Message-ID; b=Ac3Rx2lifwVEyAqE8JZi0J+jzZ19+SGzjiQ8P4t+F9j2ZuF53oywp9PchrK1943YS/UfLyiYXYVMUO/ruIEKivEI1TLjQn1a2qPYXQYRwptKLjc8Il3eNi1Rn+CDP1gW1ZuhbZ0wrWtHkzCWcPCK14mv8bCp4V2eKy0ApmIpEXw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=passmail.net; spf=pass smtp.mailfrom=passmail.net; dkim=pass (1024-bit key) header.d=passmail.net header.i=@passmail.net header.b=RDejdmC4; arc=pass smtp.client-ip=79.135.107.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=passmail.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=passmail.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="apimiyuB"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-33ba2f134f1so1378520a91.2
-        for <git@vger.kernel.org>; Thu, 16 Oct 2025 19:06:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760666806; x=1761271606; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xxGENdWKvfli7tBb6Ewo1B/scyWSw7Ukp555CHlfBio=;
-        b=apimiyuBT3jQENXOJfCuD007zfnNTu9ky3Q1qoSPYqFxYnBeTcBTDyt0ep27ckqtGN
-         ciAUaZGBKN9GghmlFzJ6n2nBxRwsaGCtVnPKzzEPDVMw5/ONygAWN5iqP67WVAri95ia
-         zDsiNUKmmxpt8xaF7xpSiennOUQeVmA2UUA5n0p3Vu9cpym2M84YpDipn1xRPZ3a2iHg
-         Ag8YwqiGeFvMMCYdAodDoiOdV/OraZhfFeLRvkQ2KAEqGdgZyfcmzWjzw5JzCWZCnPL1
-         sgQKTpPVASavTDZ4Jzl5cj2UHwKuQZeVFKEHyYrXe6xA1rhsrPN29yu4/9y/PO/TLDA7
-         PwWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760666806; x=1761271606;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xxGENdWKvfli7tBb6Ewo1B/scyWSw7Ukp555CHlfBio=;
-        b=dGZ/9e3D6nXHIzQS3KeZJ8IXk/Zttb3fiZ0BWhj0vzMwlwj2aoHdo4rAJvUvpUJKOd
-         9hKYFx1NKO6VEDP4flFJuj+a1o8REvGfOrHjAF+E1r6Pdzy6ArIPUHREOh//vHxL3t8R
-         EX3B60HgPm0f1sh56L3BGFv9NKBpPztDuFmOdeIQpKARPI5Uvn55FxijX1XRbyUrbokZ
-         xgWbGR6GpusQ1vl4Fo5hppASzbNXUjy4HSjqL3hg5GRQkmEsrWnzKD+kyAvcpkSSjSKN
-         NlpaimuNDEgH1aFdbAyAdILw/45lSElFcPfyHzLo0JpJhJI/GyCRbrXrgPY4oOD0XIzF
-         CjhQ==
-X-Gm-Message-State: AOJu0YxgvJbzsVldrYsMk9CY9PlEZ98qGm5C56dwVVIZRzaDV+//4jdF
-	3e5Hp2AWserK1Kpb1qu070oc+vG/7LF7yEXD5vdx2f+U3mLWFiNNteNUKD5dxfeh
-X-Gm-Gg: ASbGncu1IqElg7zwhJ0ibuaOeVp272dGqtXnegGzGcix5Dy1Bx+ixnA5F/QrIjnIk1T
-	tH/1UshYPFSvznwIu07GW9vZKb0LA4UyseSgplr4E6WKw9bdYZJiHT4I98DIkV2h4fh+jPTWghr
-	GZBAt/lloXACPY7J1OEgPq0buekzVsW+RorY+YyOs8fvX/PQd+AJ+u7bd4Ebj2xjwJNzT1Yw5k5
-	/4720QJat5QBGGRgftJKm3EwvhiXlQiEO/Iq05PrKEMco+rnUv9XPOVJQD1ChPvq5DgLOAlq//T
-	Jvd0x5AcACfdUXU8Vg0E2iMF01e8yR2GezMoA+d+nfLTkYit2WAWDpZ9vLvJFycIQjeXxg4XDlV
-	cpyc52p3uIDu3Iuo7Jifcx71U+li8mo3/+3IWziG0rtmH5rV+AQE5NJKrQg==
-X-Google-Smtp-Source: AGHT+IFtIN/hL6/aOzHFVDFS6K2bodbKBEgLZvJRrztER7/uBGBhgPt3N9nTCIQrmB20M8KeTbAPhg==
-X-Received: by 2002:a17:90b:52d0:b0:332:1edf:a694 with SMTP id 98e67ed59e1d1-33bcf8fbbd3mr1829981a91.31.1760666806501;
-        Thu, 16 Oct 2025 19:06:46 -0700 (PDT)
-Received: from fedora ([2601:646:8081:3770::43bc])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33bb6298651sm3547255a91.0.2025.10.16.19.06.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Oct 2025 19:06:45 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: Xi Ruoyao <xry111@xry111.site>
-Cc: git@vger.kernel.org
-Subject: Re: t7528-signed-commit-ssh.sh fails due to ssh-agent fails to
- start with ENAMETOOLONG
-In-Reply-To: <4e2952e512afc780b621d2c153b3e6e4eb7ed89a.camel@xry111.site>
-References: <4e2952e512afc780b621d2c153b3e6e4eb7ed89a.camel@xry111.site>
-Date: Thu, 16 Oct 2025 19:06:44 -0700
-Message-ID: <87o6q6nux7.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=passmail.net header.i=@passmail.net header.b="RDejdmC4"
+ARC-Seal: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626; t=1760667586;
+	cv=none; b=EFK2I4lL8pk9yKJQR/3hgEcvu42WJwKMdD+2uItcQzmTzK/sDyxUwbxEKlMU19AuqYX0rN67HpJ91M6nixDh8aI2W+MMXcEdThP2NYr8ue9OiJ6uj1ermrEbr1e3y4RU0KPW7N4Ih2T6B06lOaNQ8PAGVGfuPEeiOngE7xysjdqPF2rkjAqdjnnnIRqSkaunnJY7zmI8fnRkH2EdC5gkrn+yd2VS072GaYCnT956aGW67qCX+2nN7MybnN+dbc1hzUxy86TIHzc/hJUr1WS/YQ4mrjf/+VaB6EWxlIAsZ/CJ57+OzKedrMYD0VXIa8gQfCeP376Z8xrpTw/iJ+MbRw==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626;
+	t=1760667586; c=relaxed/simple;
+	bh=RKLg9oQYKYRA2tBiJ9QWFJ+S+FGmpqR4YomrWOG8SGM=;
+	h=Date:Subject:From:To; b=kZGvAtAaK8CTX05TvNSvh5EqU8iI2GRUiFPPCklWSz2sYNH1Gyxl4k+MbES/vzGw2qbCJ6HroNGim9GaEt4f6ECf/yuDoqbDxiMprO3Ri2d3q44X1nw9YGc7KIspuNuAZn+adHIWu5X7FnNOoFzj4aj80VWHTebQ2F0wZhGajK9y7s2xxH9i+E1uHrB0IuX/ctqFCmz1BrfWpxwFjTrF6JCV80aDP49TiASzgeTcswH28ifWgTNMH6eCNlWwzG+JVF8ryZARxro0me6pTwF8lD/0we0lPWcnqh7ZtRIONkrIAEU0a3gjGQf2ZivTesERVhRdmvkM/IrDEPkbjOBriA==
+ARC-Authentication-Results: i=1; mail.protonmail.ch
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=passmail.net;
+	s=dkim; t=1760667586;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=RKLg9oQYKYRA2tBiJ9QWFJ+S+FGmpqR4YomrWOG8SGM=;
+	b=RDejdmC4trtOgb1ryF5oeWIfj7KAJrHAO/SJSJKbEJIT1SO7YGS5t8qqlWQrrOk3zFWF82
+	P5IAj2dU1HHeiQsQFJ0R+cmg15b4Ky3dzl2A14MaZ6nrKxy5U16fvYGSQLZ6kWF4dS/BAu
+	CyoOw/kjCupPcOvrtMvWyYjLLWif9nk=
+Date: Fri, 17 Oct 2025 02:19:38 +0000
+Subject: [BUG] protocol.file.allow=always not honored when --local
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: fence.borrowing375@passmail.net
+To: git@vger.kernel.org
+Message-ID: <176066758616.6.12811000416591629223.957743298@passmail.net>
+X-SimpleLogin-Type: Reply
+X-SimpleLogin-EmailLog-ID: 957743298
+X-SimpleLogin-Want-Signing: yes
 
-Hi Xi,
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-Xi Ruoyao <xry111@xry111.site> writes:
+What did you do before the bug happened? (Steps to reproduce your
+issue)
 
-> When I test git-2.51.1 I hit a test failure in t7528-signed-commit-
-> ssh.sh.  Running it with -v reveals:
->
-> unix_listener_tmp: path "/home/xry111/sources/12.5/git-2.51.1/t/trash directory.t7528-signed-commit-ssh/.ssh/agent/s.fTyCxA5V6V.agent.dX2yNWQUX5" too long for Unix domain socket
-> main: Couldn't prepare agent socket
->
-> So this seems an issue in the test harness.  Is it possible to fix it?
+Created an empty directory, then initialized git:
+`mkdir ~/test && cd ~/test && git init`
 
-Unix sockets have an unfortunate historical limit of ~100 characters on
-most systems. All the derivatives of 4.4BSD have a limit of 104
-characters. Linux has a limit of 108 characters [1]. AIX is nice and
-supports 1024 characters, but I assume you are not using that.
+Ensured file:// transport protocol is default/unset value (file:// is
+disabled by default):
+`git config --list | grep protocol`
+# no output
 
-I guess this test can check for that error. I'll have a look.
+Enabled file:// transport for local repository:
+`git config --local protocol.file.allow always`
 
-Collin
+Then, attempted to add a git submodule:
+`git submodule add /path/to/module/.git`
 
-[1] https://github.com/torvalds/linux/blob/98ac9cc4b4452ed7e714eddc8c90ac4ae5da1a09/include/uapi/linux/un.h#L7
+
+What did you expect to happen? (Expected behavior)
+
+Successful clone:
+```
+Cloning into '/home/username/test/module'...
+done.
+```
+
+
+What happened instead? (Actual behavior)
+
+Failed clone:
+```
+Cloning into '/home/username/test/module'...
+fatal: transport 'file' not allowed
+fatal: clone of '/path/to/module/.git' into submodule path
+'/home/head/data/infra/src/test/git' failed
+```
+
+
+What's different between what you expected and what actually happened?
+
+The default behavior of disabling the file:// protocol should have been
+overridden by the config, but was not. In contrast, it gets enabled as
+expected when setting the config user-wide:
+`git config --global protocol.file.allow always`
+
+I do not want to enable file:// by default due to security
+implications. I only want to enable it for specific repositories but
+cannot do so as this setting is not honored when --local.
+
+
+Anything else you want to add:
+
+A similar error message shows when attempting to update an existing
+submodule with only the --local config set.
+
+This bug is also present in git version 2.39.5.
+
+
+[System Info]
+git version:
+git version 2.51.1.472.g4253630c6f
+cpu: x86_64
+built from commit: 4253630c6f07a4bdcc9aa62a50e26a4d466219d1
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+rust: disabled
+libcurl: 7.88.1
+OpenSSL: OpenSSL 3.0.17 1 Jul 2025
+zlib: 1.2.13
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-format: files
+default-hash: sha1
+compiler info: gnuc: 12.2
+libc info: glibc: 2.36
+$SHELL (typically, interactive shell): /bin/bash
+
+
