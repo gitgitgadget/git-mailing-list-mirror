@@ -1,135 +1,118 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAEF32550A4
-	for <git@vger.kernel.org>; Fri, 17 Oct 2025 07:58:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760687914; cv=none; b=qQIrxxxJ0swqs9T+lF2VNRgvA1mCxG5HQPS0pH8g5QVQ1hgenmpDOL4q17egum1r6q2F9rwN5WMNs1LOXm6h5TyM7viqeGBT3DdgHWKr3zgBz2Wd/hocIapqwlt9aLkpLceE1Pv+/dQe3xCKz5J5STIwDjtRQPdGzlVGA25gTnc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760687914; c=relaxed/simple;
-	bh=kpWz7JWSHYKeho/wkBwMT+PjkJCfM6j+kY8XHGMd+Mk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EFQlVmKZoMcdZQowhovtGBklgVIw3k3x9HyWfyH2QJFN6tZ4uDbvlM0+bWLJVI6glz2bbCi+E+tUabayxMJF7/qqf3Rb8fI4SfAifjUNEqNJgsLQQNSpBQ5+4mNSTBIw+zXxdRvgkTzoLRWAEaxeJ58bQv2k/7eEJiuJ0hDsucQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D8ebvXW9; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB131D554
+	for <git@vger.kernel.org>; Fri, 17 Oct 2025 08:28:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1760689690; cv=pass; b=SRZaaq7B81LwCMtDeZLBLqxRAMvsKA5ZMATqg39xuffciTYUoG1d6tDSGc/4WBKOzQ0jyQl5Lc3/1yrQm2tITyXL6ZDcgyb20Nhr86juHfkTSMI9QSyFds231Zgaz4i4IespGuIPOuZaSNysTidmn4jwOXwG93NIT8uSH2bT+2c=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1760689690; c=relaxed/simple;
+	bh=XxQd5asea5ubp1NbrrcT9x9eIbP1FJqu2Gs2iyzdJGY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rUSOGaKdBarAovRG2ydNgJANnyuB5cQabZvVtFaauNbU/slIm34REzzqpJJVqK6Mowy1VAVqkNqNEijQHH8cFbE+8jpB/gZtfOLVkc0Xa88p7uYc8m7i7S9l0CUorDiL7G9YHm6wf/YJipbA7i7+3HeAc27BJnzkmij0FL9lejU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=CpqyNKQ4; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D8ebvXW9"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b472842981fso206079666b.1
-        for <git@vger.kernel.org>; Fri, 17 Oct 2025 00:58:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760687911; x=1761292711; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=stezGxt6zQbIQuuO1Hxd5ni/6bbya0k+a83G7+Ebu8Q=;
-        b=D8ebvXW9GiSeKckwgHns7+vyIZRkERAfDSMjZPfz8aOHdE6pM3tR1p/ICPpt+DwYs9
-         8eFUaNNZID2HKMgUnd0s/4tJcAneLxQAPG+IOnskWq5cNLURoapyZUDYCAdA/23ry8uc
-         0s9AJsasyqltVGQQGhuTi4QV9J/zF0+aMTBjoCEwb4csrgx3D2lYLiCKdGk9iajNKvMW
-         6ju0vtT0YNRS9dwHY4rNC5UBnx4/AFybOO8cpNgjzDZeVeMp+4ToP0k1ErwfPdeOeODG
-         umQX9XDA0jvJvzPsO0KpIkSff3qixJGktQT/3656eUOdaeDbCrNiFcpL9OuNbIylywhY
-         hl3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760687911; x=1761292711;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=stezGxt6zQbIQuuO1Hxd5ni/6bbya0k+a83G7+Ebu8Q=;
-        b=ImUD3buZaWevKZRfgktZx6/oa6ghHOjfP17R6upDFaDkC+yIVDZps/GHVjRRDqTtWO
-         nxh2BS2GQMuTOOYZE37tssPk2QRmj3lSiGBVm54bNdpfXsZ3k0bpDMLg9xCRwKmz3TqY
-         NMOpM1OWYG70nkDjIsqRi3x3GsfcTeWf52HseAIiJekmTJZAqhHtwzUojrwHvcJrHr+T
-         53Ev94xEoYrrg88o0scQlObBIOi1pmWhMa4AnqfEOt6rGhakxAFCtOHc2UXs9xR/skQT
-         2HnJp+BZ6HxyFxN3ZawYIAXPLt8K8enZysKzy+Zbp84y2H/ACLyMzkiNQkQwbUvGMbGg
-         J9fw==
-X-Gm-Message-State: AOJu0Yzpdtlde9fhNjI1ycH4r/ApoC6bOnudx8JfX0ZsQTJbb3zVY0VT
-	O9+Ck2dEgxGQcux6nHmuJN5ip/GHIeXg/lzwrDxU8xALVjSzZ1kJOppmvDPXxM6aDGgjXB4Rmuz
-	9qYi1SuJY8gqFwdRqybbcoqnrkawgIFk=
-X-Gm-Gg: ASbGncv5wLHCAcCkm9LEDzkOfs8AEVNJwAUeUaMY+2w9rL6STGk5VziraVyLpzHkOjG
-	WDfqTQvQb/hMI8DJPYoW4R0t6kCE4S257Q8KCJaNo2Xwp1kTjoy9whhFLKzmcYdEhDOGGc16L1G
-	HL+Lmg8sBMDp4sWKpX/smA0rwftk319+iKq9u2PLcIbuviJkVBMLFALXBz0uxpRejz6quhfYGA5
-	E0XntouNDfXf3EkDEbLWo2D9rvLKhCNOY17NKcO+E06XhcSBpvRoc49axTD7CfoVdTG1Bw=
-X-Google-Smtp-Source: AGHT+IFX+J5i/MIG3y9jh/wPfWkVOT7D3MQf7YECePd3pCDAVRt2UtqBifw+w8bfc6gQ+OmkKnMdSC4RVOcp9J2MFAs=
-X-Received: by 2002:a17:907:fd8a:b0:b40:33ec:51ea with SMTP id
- a640c23a62f3a-b647195b5acmr256393166b.6.1760687910753; Fri, 17 Oct 2025
- 00:58:30 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="CpqyNKQ4"
+ARC-Seal: i=1; a=rsa-sha256; t=1760689675; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=l7cGIdtuBHDhqH2X7fptuKMyBlylWHFlCspnPvF9zmlUxbCMi87zNvd9DnCtjz8PVT006XV//WktKfNiQhl3DG8tTIncOgHuPBqp6I9Dql5ws1Mz7PE1ntBD3/1JGQnF8fU6OYnVmz1NTubjV6NzXKHBY/YZjGZH5OAFpiybuMI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1760689675; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=GmuJaivxU1GhHs/RbHz8JxKl2ciNUyixoNSV+oZebT8=; 
+	b=QDlcICDAz4aOhZT8VQCv9ynJWuAVih/H4cauuxuLXA3ExTsDZNYAdaKhDkcv3Rcg8uvRen3g5FE1G2pAEB5OPdpLP8XrqD6APcJXleUw9ytILMibtcivxbLnis6zfykAR0uX5oB+aQ5lDHbEUonCmIqdxfesRNMxW0o02dq85Do=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1760689675;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=GmuJaivxU1GhHs/RbHz8JxKl2ciNUyixoNSV+oZebT8=;
+	b=CpqyNKQ4071ryauOtwyjiS2Ej5W9rTCMi4inZ9bo18Nyh3OSrOZMZ+BRCO+hGucc
+	7sfDta0SsUiOjgI0eJBlchaRPV6X1xZxRIM8Fj3r/CTlnNCUOR17RB+ig0CKj2MItG0
+	f6l3T0+7O9+DOHF9obh6DNfkcpm9YOdF7TloOIdo=
+Received: by mx.zohomail.com with SMTPS id 176068966890966.01486940204302;
+	Fri, 17 Oct 2025 01:27:48 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Emily Shaffer <nasamuffin@google.com>
+Cc: git@vger.kernel.org, Rodrigo Damazio Bovendorp <rdamazio@google.com>,
+ Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Josh
+ Steadmon <steadmon@google.com>, =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?=
+ Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 08/10] receive-pack: convert 'update' hook to hook.h
+In-Reply-To: <CAJoAoZ=HRKjjU-N6y+kHo6vpOY6jN4Q7nDdDRpT=cv0k0PtxGg@mail.gmail.com>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20250925125352.1728840-9-adrian.ratiu@collabora.com>
+ <CAJoAoZ=HRKjjU-N6y+kHo6vpOY6jN4Q7nDdDRpT=cv0k0PtxGg@mail.gmail.com>
+Date: Fri, 17 Oct 2025 11:27:37 +0300
+Message-ID: <87bjm6szk6.fsf@gentoo.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1760571220.git.belkid98@gmail.com>
-In-Reply-To: <cover.1760571220.git.belkid98@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 17 Oct 2025 09:58:18 +0200
-X-Gm-Features: AS18NWBuiXlvcJyaShKG0e2glta3a52ofNszzl6DmXY1_Y_JKF0zN4E25VAY_1s
-Message-ID: <CAP8UFD0Lzmt5ayQ3iSXtmJohDawmCEiu1r8Gq2mKTMy-1gX_fw@mail.gmail.com>
-Subject: Re: [Outreachy PATCH v2 0/2] gpg-interface.c: use string_list_split()
- instead of strbuf_split_max()
-To: Olamide Caleb Bello <belkid98@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, usmanakinyemi202@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
+X-ZohoMailClient: External
 
-On Thu, Oct 16, 2025 at 3:04=E2=80=AFAM Olamide Caleb Bello <belkid98@gmail=
-.com> wrote:
->
-> Commit 2efe707054 (wt-status: avoid strbuf_split*(), 2025-07-31) noticed
-> that the array of strbufs that calls to strbuf_split*() provides are mere=
-ly
-> used to store the strings gotten from the split and no edit are
-> done on these resulting strings making the strbuf_split*() unideal
-> for this usecase, with the string_list_split*() being a more suitable opt=
-ion.
->
-> The patch series by Junio Hamano can be seen in the link below.
->
-> https://public-inbox.org/git/20250731225433.4028872-1-gitster@pobox.com/
+Hi Emily and sorry for the delayed response
 
-This description is probably good enough as-is, but here are some
-comments that might help improve it if you want if you send a v3.
+On Fri, 10 Oct 2025, Emily Shaffer <nasamuffin@google.com> wrote:
+> On Thu, Sep 25, 2025 at 5:54=E2=80=AFAM Adrian Ratiu=20
+> <adrian.ratiu@collabora.com> wrote:=20
+>>=20
+>> From: Emily Shaffer <emilyshaffer@google.com>=20
+>>=20
+>> This makes use of the new sideband API in hook.h added in the=20
+>> preceding commit.=20
+>>=20
+>> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>=20
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>=
+ ---=20
+>>  builtin/receive-pack.c | 60=20
+>>  +++++++++++++++++++++++++++++------------- 1 file changed, 41=20
+>>  insertions(+), 19 deletions(-)=20
+>>=20
+>> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c=20
+>> index 1113137a6f..d5192ce132 100644 ---=20
+>> a/builtin/receive-pack.c +++ b/builtin/receive-pack.c @@=20
+>> -939,31 +939,53 @@ static int run_receive_hook(struct command=20
+>> *commands,=20
+>>         return status;=20
+>>  }=20
+>>=20
+>> -static int run_update_hook(struct command *cmd) +static void=20
+>> hook_output_to_sideband(struct strbuf *output, void *cb_data=20
+>> UNUSED)=20
+>>  {=20
+>> -       struct child_process proc =3D CHILD_PROCESS_INIT; -=20
+>> int code; -       const char *hook_path =3D=20
+>> find_hook(the_repository, "update"); +       int=20
+>> keepalive_active =3D 0;=20
+>>=20
+>> -       if (!hook_path) -               return 0; +       if=20
+>> (keepalive_in_sec <=3D 0) +               use_keepalive =3D=20
+>> KEEPALIVE_NEVER; +       if (use_keepalive =3D=3D KEEPALIVE_ALWAYS)=20
+>> +               keepalive_active =3D 1;=20
+>=20
+> This hook wasn't using the keepalive at all before, right?=20
+> What's the reason to use it now? I am worried it might be going=20
+> to a sideband consumer who wasn't expecting it because it's not=20
+> documented in githooks.=20
 
-The way you explain things up to here, it might seem only one commit
-in that series is about avoiding strbuf_split*(). But in fact the
-commit you mention is the first one in that series which is named "do
-not overuse strbuf_split*()" and contains 11 patches.
+Indeed, I just picked this up from the branch I'm basing my work=20
+on [1] and haven't thought this through enough in v1. There was no=20
+keepalive before the hook conversion and really there should not=20
+be any need for it AFAICT (it's a short lived hook).
 
-So I think it would be a bit better if, instead of speaking about that
-commit first, this cover letter started with a link to that patch
-series and explained the purpose of the whole series. You may then
-mention one or more commits in the series as examples of commits where
-strbuf_split*() is replaced with string_list_split*() though if you
-want.
+You raise an excellent point about the behavior change, so I'm=20
+inclined to remove it in v2. I will obviously test to confirm=20
+before posting v2.
 
-> This series continues on this path by replacing instances of
-> strbuf_split_max() with string_list_split() where the string from the
-> split is merely returned as char * and no edits are done on them.
-
-Yeah, some commits in the series do that, but not all.
-
-> Changes since v1
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->  - Added commit reference and link to patch series for previous work
->  done on the subject
-
-In a cover letter we are interested in the changes in the patch series
-since the previous version, not the changes in the cover letter. This
-is because the cover letter itself is not merged (except perhaps its
-first few sentences that might be reused in the merge commit, but this
-is more advanced, so don't take this into account for now) when a
-patch series is merged. So a cover letter is more about giving context
-to reviewers and inviting them to review the patch series.
-
-So here it would be nice if there were things like:
-
-  - a summary of the changes in the patch series since v1,
-  - a range diff between v1 and v2,
-  - a link to a CI platform where the v2 has been pushed and the CI
-tests have been performed.
-
-This would help make reviewer confident that the series is in a much
-better shape compared to v1 and reviewers' comments on v1 have been
-taken into account.
-
-Thanks.
+[1]=20
+https://github.com/steadmon/git/commit/6d80376bea4e476b1af1d8649fe054cdfd92=
+95dd
