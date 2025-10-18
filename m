@@ -1,122 +1,128 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E341D9A54
-	for <git@vger.kernel.org>; Sat, 18 Oct 2025 16:17:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B08286D4B
+	for <git@vger.kernel.org>; Sat, 18 Oct 2025 19:24:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760804263; cv=none; b=l3KRsmmv6rh8xuYbQc0eCxA+sLe5upfYVThkKHdJMMyo/6ShYU9RvwMhjEfl+qhLqQiZVhTGiugTT6blPxn7hY8ldeQh+aMSXFc52Ii7ysBzqPuHyeP9QWemA3rDv82X1WwqZtGnbYa1vb9DCoJs3nzfTvqOsyoKnUieK/WvFFg=
+	t=1760815500; cv=none; b=KrWhXE2LX/LmEwq6DLzVh+OyAmdOlL66OfVtPlhkunnc9AaTS/B073DtslbllpOZX/+KQVNsNqCj+Q7faego9k+mscowM9VVWZrBc9yI+nQ/Kj23eikCZFInXGFqExGgcF+1XTso/j4JTwz8c0RH94C2btM6cDWG3omT9x7BbkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760804263; c=relaxed/simple;
-	bh=vzA9u0qBwrbjDK5qPXTUXy9vhBkmcRsYaYshXkas1VY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TfhtnwpzbFETk6hhWqzCpNFFpOu3Eph01HzXkOjVwRfummM3FyfK5Jr6ybHJ7Sl0PuEjYa5wGCtETRtFZrEMwJjkx+SYmZHO0jKQyYOLIcbPqLLElEk4cMa85mwXY9FyYCQ2PbsO//8ZXbJg4/hflyTxnP149l5nOOkUfHFiZss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V1dEb56n; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aFz14vGq; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1760815500; c=relaxed/simple;
+	bh=I5EJAeChnESpN/99mZ8WWoHrwmxlq53ijT6+XfqKNwk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iw55Lb7N+j8rwMexsRhDpCHQz06twHVUzgptcfRKc/lnTxIYQcYSac3f8kSjIXEDBQQlQp5oFWH6StQMasxvGNWG97BGSzrmh0yjTYN9sEjaoor4Oa48o+rjBqct62GNhA87vwPGbQl5ca+lSZA+yRI2BzDDy0CXWZhf3/FA9eQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QIiZtaB8; arc=none smtp.client-ip=74.125.224.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V1dEb56n";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aFz14vGq"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5D55D7A0092;
-	Sat, 18 Oct 2025 12:17:40 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Sat, 18 Oct 2025 12:17:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1760804260;
-	 x=1760890660; bh=cMpcTf07pQ6EWDmHr8aH1Dcbm7Zi5yozL9Zr0LN0zPk=; b=
-	V1dEb56nO+TwPFZpIo6VG8PbhkgOZeLIsvkMmrwVoCwpr6LIAuCnG1G2g3c3jIZ9
-	PRxfTV0V7SA9y0XMS3FsbGltrWTATRVqHqWCXIjZvB9ylq4WTztUv56maIPew5WQ
-	KJ/+l9ULxu5zu93qisiXHN7Wb28g4CqNRx5dMxoBvVdU1UgsDtj5qYqKu/2uMNJH
-	/1G8xa+3IG0HhAsqfZY413T4ImVUY71Fvl+ngM2pkR71PW4GmDNXL/Y+/xk/legf
-	yRrt6ZDt36NAlAYJcTX7xY3LCsdje4iIiAQjyZo/XmttNCd+JyIs3BA1l4VasO06
-	Hqgtq2Itvl6+YVeSGn3QXw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760804260; x=
-	1760890660; bh=cMpcTf07pQ6EWDmHr8aH1Dcbm7Zi5yozL9Zr0LN0zPk=; b=a
-	Fz14vGqIJ1fbY3qqkklNnPdQXNdLB8AR8YrF0dX5tFvdqONtw7qkSBnaFB8KCVHQ
-	9T682P0a3agpqVdQo/2jTuPjKgg+55uS3a+qOPBigKiBufx+5ZbumwHeGbvok9zL
-	/NWjzW4hPZqTzx68afJBGqV5CujIYbIBmc3Z81wN5epEZzJjDetKq3+FBesY9hVE
-	090/QGWpIH1n+gWvOGKhOu4WwF01lBcCHTDYrpaVQDE+mfRr9VoMcQ3VfBmIkuqx
-	x2t0UMocmybKsM6qPpM4R/Km6xx+r1xwX0b0PPoXM/2KRjiE1a1cb4wtAO3VOV0m
-	nnb/7OGB1aHNVP1dl8ZOA==
-X-ME-Sender: <xms:o73zaEvtQD0PzoZht8bBDW69Aqj0HpfdXwg8CfN0ZJCo8Gxul-zyiw>
-    <xme:o73zaIVRJ1CsOIAut5HneODjzMEAUP6xmtMU3BJNL2Fi8TKeoa00InsNHHaOVgxGF
-    YO3xT5NJCCvsuTwBtC6By2vPwtJKLpwynQS1wFnFOANl26QiQ4X_KA>
-X-ME-Received: <xmr:o73zaIHGqZO99JBM4PNxpuEukRqqpiFt8XgPFdrhLHKzVeyQsf_4vcFvouy4TpPhUgpxeqkfe9TQMj4mmHMFtnqxYIi-fVgU68EF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddufedvheduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhulhhirg
-    esjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:o73zaC2VLsoZrFilZxFoARzXK5jyrzXEgooQrUluXHCf8IqjfLdU7Q>
-    <xmx:o73zaCOvbbDzLgwyIi3Th6BPrHbPgiDiclYlE23odWLHq_5oqJi3LA>
-    <xmx:o73zaJ5dTXyCtejDBXs2ruPIbhl5w5W6yyEDq097TIxPJq1YrTe9bg>
-    <xmx:o73zaE0Y7hZ2UMaT9kVvTHvqlGGJitTKlbl9CSpCLLRDWkOUvJJLbg>
-    <xmx:pL3zaKFRHY5l02QPcvUTEXU382Mw-8SXGncN7LrzIsqrW6gj0yo5-KT9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 18 Oct 2025 12:17:39 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
-Subject: Re: [PATCH 4/4] doc: git-reset: clarify `git reset <pathspec>`
-In-Reply-To: <9EB375A8-CDD0-4717-B1DF-32DC3078A50A@gmail.com> (Ben Knoble's
-	message of "Sat, 18 Oct 2025 10:06:21 -0400")
-References: <xmqqa51pxg9p.fsf@gitster.g>
-	<9EB375A8-CDD0-4717-B1DF-32DC3078A50A@gmail.com>
-Date: Sat, 18 Oct 2025 09:17:38 -0700
-Message-ID: <xmqqy0p8uqu5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QIiZtaB8"
+Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-63e1a326253so1947474d50.2
+        for <git@vger.kernel.org>; Sat, 18 Oct 2025 12:24:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760815498; x=1761420298; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2eY0Nfy4O+7bhrLoJ7+cKw0cd8T+ypqJ+K+UULUdnEA=;
+        b=QIiZtaB8N6xVxh0wLCx3D2DdvQYen61pthT7psWsFBX7Y0kB1AdcXH1Tco2qobvKe1
+         dINjkoZWaIybeWrdIiqiw4A8COZj5x1TYbJlH2pciSGLVClaoo64W+9drD8KaBlQwQNz
+         E1rJkLrQFnAXRGFvrf2f5lvmwXe9pW9zeiw8CuZtuTihpX99qkEFqMw/DlxBA9j/QWYw
+         U307MJYiOa04sgmS+6WvDr+7T9FupXQYRGHD2XoYZT/1Yo8cI+IHMiv/MbIasJQwqK1S
+         KEubPmdbisYdKkrkKSaQZOnuLcV2LAbPllBT55rpTUxjuLefKWULo3U/E+nO1VSXxTCd
+         VD8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760815498; x=1761420298;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2eY0Nfy4O+7bhrLoJ7+cKw0cd8T+ypqJ+K+UULUdnEA=;
+        b=qQwahmoaEZn27B8rqmx18fcxKkygZ7UhjIP2/r1Jyy5yCMQEsrSua75qqYgdO8Fyia
+         aCEJsru5HXWOpanryV+N1pJUW6tdSgGvftYnDl4gXheQP6jHw3ObLpIhChZFdN6Rhnun
+         RynGpCKwHlhT30SfmhXaZ+CrMk9EfY+XBWuSaVv9rlAjZdxdNGkbnkMV4XKS3i8dIbsI
+         UtoRkf4qnOn65ZP5UkzJIIEIf/PXKMqGPDuoRddCfS3TIn98VNhxmLFIkcyelLMsudCC
+         79qkOrYO6DOflsvqJ2EJ5hhyQw+Ax3dOVvryUzDpvSpn21kjQnCQvG+qQ0CmVZnh3I/K
+         DF7A==
+X-Forwarded-Encrypted: i=1; AJvYcCWDmCnQ5/9oRtRCT2MusI9djIVXRRO2f9KsbtSCAuq0PQRPx46+YaL4qSWQp2b853P7ZRU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YySzziq5aLAbGi0sCvWRjJHPdHsaeR186sxTziWHrLT0haXDnnV
+	FxL+kPoERFD2uFepdl+Il03a3q0KOdLucg0uT5H1vrhfLe6VKe1n0hzsRAP2ui7q2H5reo69RLl
+	LkshGJUAxyvFqbdY0ClF1z6FGqA9swsU=
+X-Gm-Gg: ASbGncvGsxsKUvUHC9W2NB5LAW8nO3LM9A2v5GwZTEQDNQNHOfknixm7qzib21XeIrN
+	vaFXAt3AVULqP9ziSQFfyjRMuzi1iGYJ4JfV+LAQG2IXTdQBtaTTtUtGBuKn4ZMWKn+yQjhHR0M
+	8R342NDyY6lomi9DD2xM8gGzxtnhRZW3NXAsdKQBjwYegd9tA9akrMic6H+z8OrHPBejKP4PO8R
+	iGy9p8SkQoESfIAACPGUIHc++wMRch8alUvlWbiKs/bC9Ga6LqPcuyhxttwze/6PsN26GI3wSw=
+X-Google-Smtp-Source: AGHT+IFY/VcIxNn/UntYgZCAF1cPIqr1imYgYLr/5lD8JYNek0Qd8FCPBffQI+TbCeXhv06XEmksT7yb39e2EwntJww=
+X-Received: by 2002:a05:690e:4e:b0:63c:f5a7:3d0 with SMTP id
+ 956f58d0204a3-63e161e09e2mr5136294d50.60.1760815497868; Sat, 18 Oct 2025
+ 12:24:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1988.git.1760600313093.gitgitgadget@gmail.com> <xmqqikge4uvd.fsf@gitster.g>
+In-Reply-To: <xmqqikge4uvd.fsf@gitster.g>
+From: Queen Jessa <qjessa662@gmail.com>
+Date: Sat, 18 Oct 2025 20:24:46 +0100
+X-Gm-Features: AS18NWDyX7kuaRD_0a_ujkdYAGMUDnXLMN1K09CthTPpUFqsdLZRfzW0szgIVlY
+Message-ID: <CA+JX8Fqa39pmqbFi2WezpTnFG1mgg1SpGaTU4qw7PuKukhOT4g@mail.gmail.com>
+Subject: Re: [PATCH] docs: fix minor grammar issue in MyFirstContribution.adoc
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Queen Ediri Jessa via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ben Knoble <ben.knoble@gmail.com> writes:
+Thanks for the feedback.
 
->> Le 17 oct. 2025 à 19:25, Junio C Hamano <gitster@pobox.com> a écrit :
->> 
->> ﻿"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> 
->>> `git reset (--patch | -p) [<tree-ish>] [--] [<pathspec>...]`::
->>> -    Interactively select hunks in the difference between the index
->>> -    and _<tree-ish>_ (defaults to `HEAD`).  The chosen hunks are applied
->>> -    in reverse to the index.
->>> +    Interactively select changes from the difference between the index
->>> +    and the specified commit or tree (which defaults to `HEAD`).
->>> +    The chosen changes are unstaged.
->>> +
->>> This means that `git reset -p` is the opposite of `git add -p`, i.e.
->>> -you can use it to selectively reset hunks. See the "Interactive Mode"
->>> -section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
->>> +you can use it to selectively unstage changes. See the "Interactive Mode"
->>> +section of linkgit:git-add[1] to learn how to use the `--patch` option.
->> 
->> I do not see a good reason why we avoid saying the noun "patch",
->> especially when we see it in the option.  If we were allowed to say
->> "patch" here, "changes from the difference between ..." can be
->> rephrased to "parts of the patch that makes the index match the
->> specified commit", which may be simpler.
+I have fixed the overly long lines and resubmitted the patch.
+Please let me know if there=E2=80=99s anything else I should adjust.
+
+Thanks,
+Queen Ediri Jessa
+
+
+On Thu, Oct 16, 2025 at 6:30=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> I think the issue was the word « hunk », not « patch ».
-
-I know.  That is exactly where my question comes from.
+> "Queen Ediri Jessa via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > From: QueenJcloud <qjessa662@gmail.com>
+> >
+> > This commit corrects a small grammatical error in the MyFirstContributi=
+on
+> > document to improve clarity and readability for new contributors.
+> >
+> > Signed-off-by: QueenJcloud <qjessa662@gmail.com>
+> > ---
+> >     doc: fix minor grammar issue in MyFirstContribution.adoc
+> >
+> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1988%=
+2FQueenJcloud%2Fdoc-typo-fix-v1
+> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1988/Que=
+enJcloud/doc-typo-fix-v1
+> > Pull-Request: https://github.com/gitgitgadget/git/pull/1988
+> >
+> >  Documentation/MyFirstContribution.adoc | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyF=
+irstContribution.adoc
+> > index 02ba8ba5f6..91c6296ffe 100644
+> > --- a/Documentation/MyFirstContribution.adoc
+> > +++ b/Documentation/MyFirstContribution.adoc
+> > @@ -26,7 +26,7 @@ useful additional context:
+> >  [[getting-help]]
+> >  =3D=3D=3D Getting Help
+> >
+> > -If you get stuck, you can seek help in the following places.
+> > +If you get stuck, you can ask for help on the mailing list or Git comm=
+unity channels listed below.
+>
+> Please avoid overly long lines.
+>
+>
+> >  =3D=3D=3D=3D git@vger.kernel.org
+> >
+> >
+> > base-commit: b660e2dcb98ed4eafe2781b7ba31b70d2fcbad80
