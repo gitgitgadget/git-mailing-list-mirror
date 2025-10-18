@@ -1,207 +1,153 @@
-Received: from mail-pg1-f193.google.com (mail-pg1-f193.google.com [209.85.215.193])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E41D13AD26
-	for <git@vger.kernel.org>; Sat, 18 Oct 2025 01:11:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F7A19DF9A
+	for <git@vger.kernel.org>; Sat, 18 Oct 2025 04:53:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760749910; cv=none; b=WsYmrTa/1DijyH5zKPBXYOZ6sdNztioh2JBO2aJck3eJ76jS6gFOABT4Qe41ZCijormpQ7bNEmXEk9SL7vXy69h8s3n+f3E9UpPDeaitMJHlryg/nfbGqCA5j0uegIa0vyzB8mZQgS04WFfU/hcCJtlHi88V/MnGSNcr5obmj3E=
+	t=1760763232; cv=none; b=LGLaOj65W+H9pPCUtWV1MeYZ3oj0ZGmwnPHBCyHjEzVMTZfAzSnNYKp2F844d03vBSmYjHiMnqnCh5n05F24cKrSiEI8zeTCrP3fntWSKszWoPFuJOuCzEFIsx5CAtUy0FxqhpjxK9mgm/c8q2T/DYbjRr3ol++Dhy8PNJC+u/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760749910; c=relaxed/simple;
-	bh=7EXCYmCym9gwtgfucI7HGsXaNkfGaTzfT/iUDQvKOUk=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=X9do/8Lh9+ZwYjQYjc6S6k0GJKM8Z3z/UTz2ZLFed4r8wp04B8F8FsRcyPv2PIfuwD/Bvy9RdVxMUwNHdWpSAhu9eLg+Hs4pmwJaSeJJqxuIx2uQbEKLAukQ5enLFKr7EwgPKiMuSD4EIv1sN0C1h8PWQkvPiSBmw3V6VWzUDig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WX2Yh6TU; arc=none smtp.client-ip=209.85.215.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760763232; c=relaxed/simple;
+	bh=N+NbJZC/iODbhXvGDfSNEwSGr2roFoATaQFZ0BDsdG4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UNDR3Ueimum6gTFLlzVagk6I4BLM9lDPxTrieJnQZiYSqzcEr3crUVMmPeBl3RzHJNkFXko3iilegRzfc0l8L66oJAJT5DUPb15zhV3P2C55o7RWsjTBhXRnCwrnKdIaEhmb2jn+j2TqG1VE83EbQ6iQSAQMxfikhyyqlwlbgUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XO3EeTwR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jed4pUz6; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WX2Yh6TU"
-Received: by mail-pg1-f193.google.com with SMTP id 41be03b00d2f7-b4755f37c3eso2079693a12.3
-        for <git@vger.kernel.org>; Fri, 17 Oct 2025 18:11:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760749908; x=1761354708; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EpKzFd7XeeEOOZHUWH+FTC8W58VbvY/B4xkkSw2236k=;
-        b=WX2Yh6TU7uJCTkpkiEXo/ETpkUyfp7qT1arFvQXK6oQv303uGsKlTu9HTHfuhO9UOF
-         jBWbIZGQY2ki7oto5ocYlonTQUEDg691opAOy0bxC5k7HCPEl9ouwanMTNDAT4bnEwXX
-         Fypd3q0w3WyiidDxgiVpHU1EQe5iLit5i8TBJcwNNaDnN2niOkEqj/Ks+mVmoX2/q5XL
-         OVBhJPI3VxJT9NY64pLt3+6daUZ14SUrK6Y51IXThmIjEYqj0gCdAj8b+M+CoYEOb5Mw
-         yiApPDU+8bXvkWThwKwUk+b32KCAoob0SJg6hjnRRTfuEqVrhqaSB9j7biiKoZqbKY9D
-         d6qQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760749908; x=1761354708;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EpKzFd7XeeEOOZHUWH+FTC8W58VbvY/B4xkkSw2236k=;
-        b=Gqb5w93Dd/Ui7uwtYyBJ5Eg60bQ7sKXibLqea0BCTsLy0opYN+ubYXlNOueXZ7dHNG
-         KjYc9j2oyWkEjadDg/CGmATQuBiYZniaMRHn3CZUruvHVYqLX61eIU+fK4XOjpGLeuX+
-         Z83H0uIW0ySZ+8+fVqHncZcjy/ey0Dxl8ZoMZizFOSyuOpgLwSkySmW5NG9NUTbjrkki
-         r0VpxAWF/Ns9D+ffFcEix/UlgUanHGFZwyuY6CJ7QkNOMOA9K9T9xKuIg0zf0iv5c2Ag
-         4frTNAHPE0/AZRbJI0bSgEE0gZZnZKKEGl6rsH+0tQQwjZUxJ0JuBmS3cnuwHYk/hKfc
-         I6xw==
-X-Forwarded-Encrypted: i=1; AJvYcCW4h0Lr5zPSoYML6fCUmmAw6K38Ivkg6EBs0Mn5EQLhdEYA1Oapinm+NEnWuzrlPKRIFH0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyyAQT9zutZ6T/8F/qETLkKueJ7JfBt/c7oFEVF9KaMBEPG+K80
-	u0hXPRhfaytoIRjnytW2Cj2/4aUgl0q4TbFPTwPCY/Q3d0jOdFEnfq6sfCa7yNf/HrloTA==
-X-Gm-Gg: ASbGncsxwYnZeCbjq20MxTqqHem80o5ChU/rvt0L1feYDNiL9GqQTunzxIkjy4xY636
-	H0qV5eKxeP4DXHKVZ3B/87gYxcrC2dPKMrsSVw64FiWzva4rRVrXUl7DK/xYnv1qhIdv2sGqiSk
-	1GQTYk2yak4X+9qjpNZjNmHkHzINcnClBI4YODDTzgqrJxUOOSumibrF/xKrkAwPE33fXu+VNXl
-	7ejB4jdhor3w/CwVfSrNVv0R66CZDsvpV4k1B1XXOkmSqFk4uI3kQE8bFEcbAEIeyrqndahqYE8
-	h7jr35Ub0sGGb0ThuWUJ95ZOLwzLFvtrXJQCWO0+qeSTm1G81wi1JJrciNic5gRxKErCLoiq4hS
-	Ci01NrV2nQ5F/oeEoRu57DEheuECoMvMzJu786NBcwdCHVre9reIAnmOcxJm/qFmSGcrRSkWArC
-	oQZCAzpbQdr9Je6r1Fe7/YxGCr9bVzzENoJMj5cYYXLr27vys=
-X-Google-Smtp-Source: AGHT+IHcYe3wFFbRd9fXkCtfrxnKInRG2eiUOyGzQ/0bF3CQKraAYl6HvPIRa+aZbVYhnoZ+xxMAeg==
-X-Received: by 2002:a17:903:2f86:b0:272:a900:c42b with SMTP id d9443c01a7336-290caf85185mr75049235ad.31.1760749908300;
-        Fri, 17 Oct 2025 18:11:48 -0700 (PDT)
-Received: from smtpclient.apple (n058152119060.netvigator.com. [58.152.119.60])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-292471feb99sm8348625ad.87.2025.10.17.18.11.47
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Oct 2025 18:11:48 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XO3EeTwR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jed4pUz6"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6970A140002E;
+	Sat, 18 Oct 2025 00:53:49 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Sat, 18 Oct 2025 00:53:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1760763229; x=1760849629; bh=IowDcerLjF
+	/0mky9NOr10jd03FexHqbhCeT0C1OHb+I=; b=XO3EeTwRBm/23B61/6bHneRoWz
+	M+KLHkiBak+J+UmjS1t6w2Gu1elruzLTy77bm2MwoQ32cI/h5uFBp3CcFUn681NZ
+	Tc7loOEErAWrBuYQr4OvG3ooh4ceTw2y72EEaPFKP8rHYtbiDx+6XKYkCTJoyfWY
+	n+RmMDJuQNEi6brDAZP5KaXMcI2BekpraQ1Qz8FkDM3HD3NVpkorGqs+m8QB3c5d
+	A9leoP76S0x5td/7dE7KMdWq37Me5r+MeavILOO30TMihUfs1sIIIhSBxDcOv6Wr
+	r2FvPU712dxxRfPg5ffXeM2f9nYGdD73zmS6Ycd2TL09NUJUBbGl0q567iZQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760763229; x=1760849629; bh=IowDcerLjF/0mky9NOr10jd03FexHqbhCeT
+	0C1OHb+I=; b=jed4pUz6B4+ccccN8qx7e10wt2Vlnd5AnqA/xwaeZlST9/ER9+b
+	UfRnSq3A/NVKga1fhKEyDsFBdAdhVH1SROGQLfaap5sOtjy+pwrm4Q4v8AgGtxUK
+	PDpU/jDF/x3PbH3Wv9taiHGGL7SKyU5C86b71XqMQ8dz3UByiUjRegM9BSm7Um4C
+	7MmPczOGoxc1zwfhUYhN8OD5dseLFUFcUyITCEG9KbNtcbSSuw6bpJQ320coBDMi
+	qSfOJuYgzCmZtKZOFDxx49Sp5cyYNCVMSnAecliKOrxnPGqn3wl+W9ts2CaNKKl+
+	wMIL2YhKs1j374JADGm0eJx9E9K3jamfYhQ==
+X-ME-Sender: <xms:XR3zaNliLekKt8XAijDD3euPI5mGMX19MXOZHdy984xljvCZpaeD8g>
+    <xme:XR3zaP3MXMA8YXdzBYq6LPD85Z4EsEOWjEfIuhXalmWLdf2pcb-e3Ri5QQXsU6Z4i
+    mMWWiXCtOxDy_rjjOwBv5SVjCC8W888nBdQ-hwOSvTcQx6qFsicLw>
+X-ME-Received: <xmr:XR3zaIqj1BTZUGMMq8s8Xp1QoQKgVR9FFv2gxshwkBVS_H4lS_M0NehZmWttrLfcuHBgAhKR_v85ZgNmaSCo_FLcSh1F7fm3r8hJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddufeduudegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:XR3zaMerzzFRGh6cTpAilKUQ11gdJRJrY7u-J6TIgnJFyhxZhEWSnA>
+    <xmx:XR3zaHojdmTkohJPUrKGMr6M7aO6lrKhvtkiLDL83_v45Nd1E89Hfw>
+    <xmx:XR3zaNEEO7m8xZ1u_aoMbd5pvPpDbPYGGggUambGGkHyzvylUH5cdA>
+    <xmx:XR3zaHvmCxvrzDPDw8eCOngAhSqx7BABUWtaDdpgLOFRJ3SmRsJrdQ>
+    <xmx:XR3zaELaiVyCrwxQLFVRcn8tc6lHaLSHnSrnh_CqxdSG5wmubt5tNDkN>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 18 Oct 2025 00:53:48 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH 3/4] doc: git-reset: clarify `git reset [mode]`
+In-Reply-To: <597ea0f5ce24967974358e18603265b14322ba54.1760731558.git.gitgitgadget@gmail.com>
+	(Julia Evans via GitGitGadget's message of "Fri, 17 Oct 2025 20:05:57
+	+0000")
+References: <pull.1991.git.1760731558.gitgitgadget@gmail.com>
+	<597ea0f5ce24967974358e18603265b14322ba54.1760731558.git.gitgitgadget@gmail.com>
+Date: Fri, 17 Oct 2025 21:53:47 -0700
+Message-ID: <xmqqy0p8x12c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: [PATCH] diff: stop output garbled message in dry run mode
-From: Lidong Yan <yldhome2d2@gmail.com>
-In-Reply-To: <xmqqh5vx1p0q.fsf@gitster.g>
-Date: Sat, 18 Oct 2025 09:11:34 +0800
-Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <6C994C9C-0034-46D0-8112-FF88773B5CF5@gmail.com>
-References: <pull.2071.git.git.1760671049113.gitgitgadget@gmail.com>
- <xmqqh5vx1p0q.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.700.81)
+MIME-Version: 1.0
+Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
->=20
-> "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
->=20
->> From: Lidong Yan <yldhome2d2@gmail.com>
->>=20
->> In dry run mode, diff_flush_patch() should not produce any output.
->> However, in commit b55e6d36eb (diff: ensure consistent diff behavior
->> with ignore options, 2025-08-08), only the output during the
->> comparison of two file contents was suppressed. For file deletions
->> or mode changes, diff_flush_patch() still produces output. In
->> run_extern_diff(), set quiet to true if in dry run mode. In
->> emit_diff_symbol_from_struct(), directly return if in dry run mode.
->=20
-> The above makes it sound as if the dry-run mode was an inherent part
-> of the diff machinery that existed even before b55e6d36 came, and
-> b55e6d36 somehow broke it.  But that is not what you are telling us,
-> I think.
->=20
-> You may know what the "dry-run" mode is, but others don't.  You
-> should tell the backstory a bit better to help them.  I am guessing
-> that this patch is to fix a breakage introduced when the dry-run
-> mode is added in b55e6d36 (diff: ensure consistent diff behavior
-> with ignore options, 2025-08-08)?   If so, I would expect an
-> explanation like ...
->=20
->    Earlier, b55e6d36 (diff: ensure consistent diff behavior with
->    ignore options, 2025-08-08) introduced "dry-run" mode to the
->    diff machinery so that content based diff filtering (like
->    ignoring space changes or those that match -I<regex>) can first
->    try to produce a patch without emitting any output to see if
->    under the given diff filtering condition we would get any output
->    lines, and a new helper function diff_flush_patch_quietly() was
->    introduced to use the mode to see an individual filepair needs
->    to be shown.
->=20
->    However, the solution was not complete.  IN SUCH AND SUCH CASES,
->    THIS BAD THING HAPPENED BECAUSE WE OVERLOOKED THIS AND THAT
->    CONDITION, AND AS A RESULT, DRY-RUN MODE WAS NOT QUIET.
->=20
->    To fix this, DO THIS AND THAT.  THIS WOULD AFFECT ONLY SUCH AND
->    SUCH CASES WITHOUT AFFECTING OTHER CODE PATHS LIKE DOING X AND Y.
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Thanks for explaining how to describe a problem in commit message. Will =
-rewrite
-soon.
+> +`--soft`::
+> +	Leaves your working directory unchanged. The index is left unchanged,
 
->=20
-> ... is given to help readers understand what we wanted to do in the
-> earlier commit, what we failed to do there and why, and what we can
-> do at this point to clean up the mess without making further
-> damange.
->=20
->> Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
->> ---
->>    diff: stop output garbled message in dry run mode
->>=20
->>    In dry run mode, diff_flush_patch() should not produce any output.
->>    However, in commit b55e6d36eb (diff: ensure consistent diff =
-behavior
->>    with ignore options, 2025-08-08), only the output during the =
-comparison
->>    of two file contents was suppressed. For file deletions or mode =
-changes,
->>    diff_flush_patch() still produces output. In run_extern_diff(), =
-set
->>    quiet to true if in dry run mode. In =
-emit_diff_symbol_from_struct(),
->>    directly return if in dry run mode.
->=20
-> The "below three-dash" space is a place to explain what does not
-> have to be a part of the resulting commit but would help those who
-> are reading the mailing list and reviewing.  Repeating the same
-> thing as the proposed log message does not help readers.
+Why not "leave your working tree files and the index unchanged"?
 
-I am using Github pull request for convenience. I think the bot repeat =
-my
-commit messages twice.
+> +	so everything in your current commit will be staged.
 
->=20
->> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
->> index 55a06eadb3..25fa452656 100755
->> --- a/t/t4013-diff-various.sh
->> +++ b/t/t4013-diff-various.sh
->> @@ -661,6 +661,27 @@ test_expect_success 'diff -I<regex>: ignore =
-matching file' '
->> test_grep ! "file1" actual
->> '
->>=20
->> +test_expect_success 'diff -I<regex>: ignore all content changes' '
->> + test_when_finished "git rm -f file1 file2" &&
->> + : >file1 &&
->> + git add file1 &&
->> + : >file2 &&
->> + git add file2 &&
->> +
->> + rm -f file1 file2 &&
->> + mkdir file2 &&
->> + test_diff_no_content_changes () {
->> + git diff $1 --ignore-blank-lines -I".*" >actual &&
->> + test_line_count =3D 2 actual &&
->> + test_grep "file1" actual &&
->> + test_grep "file2" actual &&
->> + test_grep ! "diff --git" actual
->> + } &&
->> + test_diff_no_content_changes "--raw" &&
->> + test_diff_no_content_changes "--name-only" &&
->> + test_diff_no_content_changes "--name-status"
->> +'
->=20
-> Test that exercises "git diff -I<regex>" is in line with what the
-> original b55e6d36eb wanted to address, but given that we saw a
-> recent regression report like [*], I would have liked to see "git
-> diff --quiet" in the test as well.
+Hmph, if a reader still has the "stage the changes" mental model,
+then this would be true only when you are resetting to HEAD~1 (this
+is one of the reasons why I am hesitant to overuse the verb
+"stage").  If you are going to HEAD~5, such a reader would say that
+the changes made by the past 5 commits are staged, not just the
+commit you are on before resetting.
 
-I will read Peff=E2=80=99s test and see if I should also add some =
-similar tests
+> +	For example, if you have no staged changes, you can use
+> +	`git reset --soft HEAD~5; git commit`
+> +	to combine the last 5 commits into 1 commit.
 
-> * =
-https://lore.kernel.org/git/CACJRbWjwOQwJB13CwTfvhV3p+Hbn4KrNM9AtBanGtUS4V=
-_1MbQ@mail.gmail.com/
->=20
+Another thing that may be worth mentioning is that you can do this
+even with local changes in the working tree, because you do not give
+"-a" to the final "git commit".
 
-Thanks,
-Lidong=
+>  `--hard`::
+> -	Resets the index and working tree. Any changes to tracked files in the
+> -	working tree since _<commit>_ are discarded.  Any untracked files or
+> -	directories in the way of writing any tracked files are simply deleted.
+> +	Overwrites all files and directories with the version from _<commit>_,
+> +	and may overwrite untracked files.
+> +	Updates the index to match the new HEAD, so nothing will be staged.
+
+One thing that may be worth saying is that the paths in the working
+tree that are tracked in the index that are not in <commit> will
+disappear.
+
+>  `--merge`::
+> +	Mainly exists for backwards compatibility: `git merge --abort` is the
+> +	usual way to abort a merge. See linkgit:git-merge[1] for the differences.
+
+There are operations that are not "git merge" that can leave the
+index in an unmerged state, and you do not want to use "git merge
+--abort" to get out of such a state, I would imagine.  So I have a
+feeling that we are better off without these two lines.
+
+>  	Resets the index and updates the files in the working tree that are
+>  	different between _<commit>_ and `HEAD`, but keeps those which are
+>  	different between the index and working tree (i.e. which have changes
+>  	which have not been added).
+>  	If a file that is different between _<commit>_ and the index has
+>  	unstaged changes, reset is aborted.
+> -+
+> -In other words, `--merge` does something like a `git read-tree -u -m <commit>`,
+> -but carries forward unmerged index entries.
+
+I do not mind losing this.  Unlike the time back when these two
+lines were written, nobody knows (and more importantly, nobody has
+to know) what "read-tree -u -m" does, these days.
+
+>  `--keep`::
+>  	Resets index entries and updates files in the working tree that are
+
+Thanks.
