@@ -1,64 +1,64 @@
-Received: from mail-pg1-f194.google.com (mail-pg1-f194.google.com [209.85.215.194])
+Received: from mail-pg1-f193.google.com (mail-pg1-f193.google.com [209.85.215.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9C0170A11
-	for <git@vger.kernel.org>; Sat, 18 Oct 2025 01:05:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E41D13AD26
+	for <git@vger.kernel.org>; Sat, 18 Oct 2025 01:11:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760749526; cv=none; b=gcXGhy6cyRTfHU7/DS77zlG/hm6/gsE1e1Zj02iQaWtWHQnBM78Bp7AnqLUs5xAyYVayM/0cTSKPFEK8ZmEMRc0/O5d7gQr2O2EKLAZs1vtIc59Nr1c68fAm/kh8Lpjbio3lKPEgALu7FE2aMGghctCfvZDYUKN9yDGJkB5084w=
+	t=1760749910; cv=none; b=WsYmrTa/1DijyH5zKPBXYOZ6sdNztioh2JBO2aJck3eJ76jS6gFOABT4Qe41ZCijormpQ7bNEmXEk9SL7vXy69h8s3n+f3E9UpPDeaitMJHlryg/nfbGqCA5j0uegIa0vyzB8mZQgS04WFfU/hcCJtlHi88V/MnGSNcr5obmj3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760749526; c=relaxed/simple;
-	bh=oJG8Tx12Izk72Alk9ltBgeT1ybCAwwFbsuLSqqmBv1c=;
+	s=arc-20240116; t=1760749910; c=relaxed/simple;
+	bh=7EXCYmCym9gwtgfucI7HGsXaNkfGaTzfT/iUDQvKOUk=;
 	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=s3WciZlPJBb/v8pPiWWGwTon13hg0RFRuVRClsxX8cNHEGbfNbs3tSb77orl5FpxHJUEudtu3sLnb5uvtUat5YuhU3nWZ5Kirl6iylMDtZNNw1/wMu7UMPTZEQpp996GCYBBKbs01csn2Y0uJeEr235AZsn6VmMwXirKkINIKSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mX6egmca; arc=none smtp.client-ip=209.85.215.194
+	 Message-Id:References:To; b=X9do/8Lh9+ZwYjQYjc6S6k0GJKM8Z3z/UTz2ZLFed4r8wp04B8F8FsRcyPv2PIfuwD/Bvy9RdVxMUwNHdWpSAhu9eLg+Hs4pmwJaSeJJqxuIx2uQbEKLAukQ5enLFKr7EwgPKiMuSD4EIv1sN0C1h8PWQkvPiSBmw3V6VWzUDig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WX2Yh6TU; arc=none smtp.client-ip=209.85.215.193
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mX6egmca"
-Received: by mail-pg1-f194.google.com with SMTP id 41be03b00d2f7-b63148d25c3so1563279a12.1
-        for <git@vger.kernel.org>; Fri, 17 Oct 2025 18:05:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WX2Yh6TU"
+Received: by mail-pg1-f193.google.com with SMTP id 41be03b00d2f7-b4755f37c3eso2079693a12.3
+        for <git@vger.kernel.org>; Fri, 17 Oct 2025 18:11:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760749524; x=1761354324; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760749908; x=1761354708; darn=vger.kernel.org;
         h=to:references:message-id:content-transfer-encoding:cc:date
          :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZaaSS0NWmkFNBRNOX2Mr0zGJl5Rv6r16FLAnQtXmXUg=;
-        b=mX6egmcam5DelhorpG9fan10VdrlbG/NjJg1XD9tRIF7NHySS1hFblhxhOayEqhr5S
-         9BNDLwIbqxaP9llP/MtZ09Jba7hr+Xb89n0cZQxsUsP2tWpQ7PH8ZDtZPnWHZlTc82Lr
-         4yBb/TQUm67Ylmyt7GiKKxrczeDyoksURnni71GE6QpyME+gmpgvXUtWXXwYgoytaJfI
-         UfDEj0DagjmJY0hIG6qntccA81vRmPQ0cOYsLpOzwAJ9aDPAO8QqG7hV6ITnfbLbZJ7M
-         /gMUksYTQRu3Q/smZaK2N5eNsiJFmAwAXNx7qcDm8oNpuLeQqTracornTgiuNPAlA8iM
-         z7xg==
+        bh=EpKzFd7XeeEOOZHUWH+FTC8W58VbvY/B4xkkSw2236k=;
+        b=WX2Yh6TU7uJCTkpkiEXo/ETpkUyfp7qT1arFvQXK6oQv303uGsKlTu9HTHfuhO9UOF
+         jBWbIZGQY2ki7oto5ocYlonTQUEDg691opAOy0bxC5k7HCPEl9ouwanMTNDAT4bnEwXX
+         Fypd3q0w3WyiidDxgiVpHU1EQe5iLit5i8TBJcwNNaDnN2niOkEqj/Ks+mVmoX2/q5XL
+         OVBhJPI3VxJT9NY64pLt3+6daUZ14SUrK6Y51IXThmIjEYqj0gCdAj8b+M+CoYEOb5Mw
+         yiApPDU+8bXvkWThwKwUk+b32KCAoob0SJg6hjnRRTfuEqVrhqaSB9j7biiKoZqbKY9D
+         d6qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760749524; x=1761354324;
+        d=1e100.net; s=20230601; t=1760749908; x=1761354708;
         h=to:references:message-id:content-transfer-encoding:cc:date
          :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ZaaSS0NWmkFNBRNOX2Mr0zGJl5Rv6r16FLAnQtXmXUg=;
-        b=e0sWkpxcPQ7DXIRCAhqSponoeZitEkPG21L2vi54wSFxO59h0jVoQl2+h7gelmnU6i
-         gl9RlkgabRoTXNo9dYOY1JFShxHgX4jetOaZF2wyIw+xxMCuJ3EJ2YfBycA6UrwiLjGS
-         fGaQvzvbJ+MS8pQgvdrHo3sjdEk0cGQSHXDznjVQbw9uAX4HIcBHnL0jgpqQMY6rlHwH
-         rFwkL8+PVDM/RhHSNXdbuuNZhHr4q2JUi6Nofodhcc0mw9P63WgNCGq8exCY/Q12GSjA
-         xF4uPoqBFtr55CE4IEFBXCtAFcTntdmesst/aPg2B/nfSeXhVpWMEP3LC2zjYpoR/XHz
-         G8QQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXeN1YB7M09Op6o0PDMHk/xsxESD57BIJxG1M/kCaxxFMjNhDnufrlGObFcQ5sISud7aVQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxELrt2wXZ+1ZN0zbwefWq/10fcKx/EwRXs8YB9wefiiteLQx/q
-	WvJFJ8ojkAvg4nMwbkGDrJcdyLdu5lnCYyYPgqNd1AejvSgPiDKzM40Pk4KZlNa6upRg9g==
-X-Gm-Gg: ASbGncvGYi1c5hW7K5JA/PlQ9HXaDe4vSqc3MB0rov6i8tMcmM9DSoRwBDQuDKo0Huk
-	k5of4BDXDk1ygSolnyur1u5WU1lb4PCT55UI98iIzqos6wnxoxKANgNh3xSU8agJaGf34HX1hX6
-	gWalf/EMwxn9H+gwlpTgNLjp6bu1xqKcQBMWNqgHYfVEtvoJWWo69b2qIXX1tq54svzOzSyapW2
-	SqnSExibI6NaA66WTgpeNq9WqvvioRvxyJZIGT28u0mT6U4IuTLHoOrEZzOkVoWucyz5FPEPK0j
-	LSXa/qvMWf+jkKhz5NHWpEWhXDNfYKoksdo+7/vQ4QSVjY3xpfsWYLL1kXRr6zUeDweY4fm3mHO
-	m8ErlmvtkNCa4hSfOiG5UPsarSCFTT4y+fIoP1acqFmOo9toN/v5wZYVhZ3Ez1ALwrhu+0YiS5S
-	m0/g/OxoP1Z9YVKaMYvqBJTWS1YpfiGz8ATpPW
-X-Google-Smtp-Source: AGHT+IHMUJ+7t8wzhFKEs8IPhDHL9CgWZTYs8SRX2ZboPsEjhwAFN0NEsaBVTBTm71N+/sJCl+uA+Q==
-X-Received: by 2002:a17:903:19c8:b0:265:f460:ab26 with SMTP id d9443c01a7336-290918cbbf1mr134556775ad.3.1760749524274;
-        Fri, 17 Oct 2025 18:05:24 -0700 (PDT)
+        bh=EpKzFd7XeeEOOZHUWH+FTC8W58VbvY/B4xkkSw2236k=;
+        b=Gqb5w93Dd/Ui7uwtYyBJ5Eg60bQ7sKXibLqea0BCTsLy0opYN+ubYXlNOueXZ7dHNG
+         KjYc9j2oyWkEjadDg/CGmATQuBiYZniaMRHn3CZUruvHVYqLX61eIU+fK4XOjpGLeuX+
+         Z83H0uIW0ySZ+8+fVqHncZcjy/ey0Dxl8ZoMZizFOSyuOpgLwSkySmW5NG9NUTbjrkki
+         r0VpxAWF/Ns9D+ffFcEix/UlgUanHGFZwyuY6CJ7QkNOMOA9K9T9xKuIg0zf0iv5c2Ag
+         4frTNAHPE0/AZRbJI0bSgEE0gZZnZKKEGl6rsH+0tQQwjZUxJ0JuBmS3cnuwHYk/hKfc
+         I6xw==
+X-Forwarded-Encrypted: i=1; AJvYcCW4h0Lr5zPSoYML6fCUmmAw6K38Ivkg6EBs0Mn5EQLhdEYA1Oapinm+NEnWuzrlPKRIFH0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyyAQT9zutZ6T/8F/qETLkKueJ7JfBt/c7oFEVF9KaMBEPG+K80
+	u0hXPRhfaytoIRjnytW2Cj2/4aUgl0q4TbFPTwPCY/Q3d0jOdFEnfq6sfCa7yNf/HrloTA==
+X-Gm-Gg: ASbGncsxwYnZeCbjq20MxTqqHem80o5ChU/rvt0L1feYDNiL9GqQTunzxIkjy4xY636
+	H0qV5eKxeP4DXHKVZ3B/87gYxcrC2dPKMrsSVw64FiWzva4rRVrXUl7DK/xYnv1qhIdv2sGqiSk
+	1GQTYk2yak4X+9qjpNZjNmHkHzINcnClBI4YODDTzgqrJxUOOSumibrF/xKrkAwPE33fXu+VNXl
+	7ejB4jdhor3w/CwVfSrNVv0R66CZDsvpV4k1B1XXOkmSqFk4uI3kQE8bFEcbAEIeyrqndahqYE8
+	h7jr35Ub0sGGb0ThuWUJ95ZOLwzLFvtrXJQCWO0+qeSTm1G81wi1JJrciNic5gRxKErCLoiq4hS
+	Ci01NrV2nQ5F/oeEoRu57DEheuECoMvMzJu786NBcwdCHVre9reIAnmOcxJm/qFmSGcrRSkWArC
+	oQZCAzpbQdr9Je6r1Fe7/YxGCr9bVzzENoJMj5cYYXLr27vys=
+X-Google-Smtp-Source: AGHT+IHcYe3wFFbRd9fXkCtfrxnKInRG2eiUOyGzQ/0bF3CQKraAYl6HvPIRa+aZbVYhnoZ+xxMAeg==
+X-Received: by 2002:a17:903:2f86:b0:272:a900:c42b with SMTP id d9443c01a7336-290caf85185mr75049235ad.31.1760749908300;
+        Fri, 17 Oct 2025 18:11:48 -0700 (PDT)
 Received: from smtpclient.apple (n058152119060.netvigator.com. [58.152.119.60])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-292471d55d8sm8232585ad.61.2025.10.17.18.05.22
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-292471feb99sm8348625ad.87.2025.10.17.18.11.47
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Oct 2025 18:05:24 -0700 (PDT)
+        Fri, 17 Oct 2025 18:11:48 -0700 (PDT)
 Content-Type: text/plain;
 	charset=utf-8
 Precedence: bulk
@@ -67,78 +67,141 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: Regression in `git diff --quiet HEAD` when a new file is staged
+Subject: Re: [PATCH] diff: stop output garbled message in dry run mode
 From: Lidong Yan <yldhome2d2@gmail.com>
-In-Reply-To: <xmqq7bwt1kyf.fsf@gitster.g>
-Date: Sat, 18 Oct 2025 09:04:40 +0800
-Cc: Jeff King <peff@peff.net>,
- Jake Zimmerman <jake@zimmerman.io>,
+In-Reply-To: <xmqqh5vx1p0q.fsf@gitster.g>
+Date: Sat, 18 Oct 2025 09:11:34 +0800
+Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <918E56B8-7009-4E8E-A98E-AC5B9CE4DD7C@gmail.com>
-References: <CACJRbWjwOQwJB13CwTfvhV3p+Hbn4KrNM9AtBanGtUS4V_1MbQ@mail.gmail.com>
- <20251017075153.GA4078773@coredump.intra.peff.net>
- <xmqq7bwt1kyf.fsf@gitster.g>
+Message-Id: <6C994C9C-0034-46D0-8112-FF88773B5CF5@gmail.com>
+References: <pull.2071.git.git.1760671049113.gitgitgadget@gmail.com>
+ <xmqqh5vx1p0q.fsf@gitster.g>
 To: Junio C Hamano <gitster@pobox.com>
 X-Mailer: Apple Mail (2.3826.700.81)
 
 Junio C Hamano <gitster@pobox.com> writes:
 >=20
-> Jeff King <peff@peff.net> writes:
+> "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >=20
->> Looking at that patch, my biggest concern is: are we missing other =
-spots
->> that need to special-case the dry_run setting? Because it's a =
-regression
->> in a maint release, I'm tempted to say we should do the dumbest =
-possible
->> thing that covers all cases and just revert this hunk from the =
-original
->> patch, like:
+>> From: Lidong Yan <yldhome2d2@gmail.com>
 >>=20
->> diff --git a/diff.c b/diff.c
->> index 87fa16b730..687206f353 100644
->> --- a/diff.c
->> +++ b/diff.c
->> @@ -6890,6 +6890,15 @@ void diff_flush(struct diff_options *options)
->> if (output_format & DIFF_FORMAT_NO_OUTPUT &&
->>   options->flags.exit_with_status &&
->>   options->flags.diff_from_contents) {
->> + /*
->> + * run diff_flush_patch for the exit status. setting
->> + * options->file to /dev/null should be safe, because we
->> + * aren't supposed to produce any output anyway.
->> + */
->> + diff_free_file(options);
->> + options->file =3D xfopen("/dev/null", "w");
->> + options->close_file =3D 1;
->> + options->color_moved =3D 0;
->> for (i =3D 0; i < q->nr; i++) {
->> struct diff_filepair *p =3D q->queue[i];
->> if (check_pair_status(p))
+>> In dry run mode, diff_flush_patch() should not produce any output.
+>> However, in commit b55e6d36eb (diff: ensure consistent diff behavior
+>> with ignore options, 2025-08-08), only the output during the
+>> comparison of two file contents was suppressed. For file deletions
+>> or mode changes, diff_flush_patch() still produces output. In
+>> run_extern_diff(), set quiet to true if in dry run mode. In
+>> emit_diff_symbol_from_struct(), directly return if in dry run mode.
+>=20
+> The above makes it sound as if the dry-run mode was an inherent part
+> of the diff machinery that existed even before b55e6d36 came, and
+> b55e6d36 somehow broke it.  But that is not what you are telling us,
+> I think.
+>=20
+> You may know what the "dry-run" mode is, but others don't.  You
+> should tell the backstory a bit better to help them.  I am guessing
+> that this patch is to fix a breakage introduced when the dry-run
+> mode is added in b55e6d36 (diff: ensure consistent diff behavior
+> with ignore options, 2025-08-08)?   If so, I would expect an
+> explanation like ...
+>=20
+>    Earlier, b55e6d36 (diff: ensure consistent diff behavior with
+>    ignore options, 2025-08-08) introduced "dry-run" mode to the
+>    diff machinery so that content based diff filtering (like
+>    ignoring space changes or those that match -I<regex>) can first
+>    try to produce a patch without emitting any output to see if
+>    under the given diff filtering condition we would get any output
+>    lines, and a new helper function diff_flush_patch_quietly() was
+>    introduced to use the mode to see an individual filepair needs
+>    to be shown.
+>=20
+>    However, the solution was not complete.  IN SUCH AND SUCH CASES,
+>    THIS BAD THING HAPPENED BECAUSE WE OVERLOOKED THIS AND THAT
+>    CONDITION, AND AS A RESULT, DRY-RUN MODE WAS NOT QUIET.
+>=20
+>    To fix this, DO THIS AND THAT.  THIS WOULD AFFECT ONLY SUCH AND
+>    SUCH CASES WITHOUT AFFECTING OTHER CODE PATHS LIKE DOING X AND Y.
+
+Thanks for explaining how to describe a problem in commit message. Will =
+rewrite
+soon.
+
+>=20
+> ... is given to help readers understand what we wanted to do in the
+> earlier commit, what we failed to do there and why, and what we can
+> do at this point to clean up the mess without making further
+> damange.
+>=20
+>> Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
+>> ---
+>>    diff: stop output garbled message in dry run mode
 >>=20
->> That would catch the bug here, as well as any others lurking. And it
->> converts any missing dry_run from correctness problems (we definitely
->> will not produce extra output) into optimization problems (we might =
-emit
->> data we do not need, but we can fix those separately). At least for =
-the
->> normal code paths. I think without those extra fixes the problems =
-that
->> b55e6d36eb tried to fix for "-I" would still be observable, but at =
-least
->> its fixes could not regress the other code paths.
+>>    In dry run mode, diff_flush_patch() should not produce any output.
+>>    However, in commit b55e6d36eb (diff: ensure consistent diff =
+behavior
+>>    with ignore options, 2025-08-08), only the output during the =
+comparison
+>>    of two file contents was suppressed. For file deletions or mode =
+changes,
+>>    diff_flush_patch() still produces output. In run_extern_diff(), =
+set
+>>    quiet to true if in dry run mode. In =
+emit_diff_symbol_from_struct(),
+>>    directly return if in dry run mode.
 >=20
-> Ahh.  I like this "stupid but cannot be incorrect" version even
-> better than the original one that introduced the "dry run" mode.
+> The "below three-dash" space is a place to explain what does not
+> have to be a part of the resulting commit but would help those who
+> are reading the mailing list and reviewing.  Repeating the same
+> thing as the proposed log message does not help readers.
+
+I am using Github pull request for convenience. I think the bot repeat =
+my
+commit messages twice.
+
 >=20
-> But once we go in that direction, do we still need the dry-run
-> machinery with diff_flush_patch_quietly() helper function?
+>> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+>> index 55a06eadb3..25fa452656 100755
+>> --- a/t/t4013-diff-various.sh
+>> +++ b/t/t4013-diff-various.sh
+>> @@ -661,6 +661,27 @@ test_expect_success 'diff -I<regex>: ignore =
+matching file' '
+>> test_grep ! "file1" actual
+>> '
+>>=20
+>> +test_expect_success 'diff -I<regex>: ignore all content changes' '
+>> + test_when_finished "git rm -f file1 file2" &&
+>> + : >file1 &&
+>> + git add file1 &&
+>> + : >file2 &&
+>> + git add file2 &&
+>> +
+>> + rm -f file1 file2 &&
+>> + mkdir file2 &&
+>> + test_diff_no_content_changes () {
+>> + git diff $1 --ignore-blank-lines -I".*" >actual &&
+>> + test_line_count =3D 2 actual &&
+>> + test_grep "file1" actual &&
+>> + test_grep "file2" actual &&
+>> + test_grep ! "diff --git" actual
+>> + } &&
+>> + test_diff_no_content_changes "--raw" &&
+>> + test_diff_no_content_changes "--name-only" &&
+>> + test_diff_no_content_changes "--name-status"
+>> +'
+>=20
+> Test that exercises "git diff -I<regex>" is in line with what the
+> original b55e6d36eb wanted to address, but given that we saw a
+> recent regression report like [*], I would have liked to see "git
+> diff --quiet" in the test as well.
 
-I believe we can move Peff=E2=80=99s code from diff_flush() to =
-diff_flush_patch_quiet().
-However, I'm unsure whether we should remove the dry-run logic. In =
-dry-run
-mode, we would halt as early as possible in xdl_diff by using =
-quick_consume().
+I will read Peff=E2=80=99s test and see if I should also add some =
+similar tests
 
+> * =
+https://lore.kernel.org/git/CACJRbWjwOQwJB13CwTfvhV3p+Hbn4KrNM9AtBanGtUS4V=
+_1MbQ@mail.gmail.com/
+>=20
+
+Thanks,
+Lidong=
