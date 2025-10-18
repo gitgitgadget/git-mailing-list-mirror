@@ -1,110 +1,117 @@
-Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E362D4317D
-	for <git@vger.kernel.org>; Sat, 18 Oct 2025 14:06:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72A21DE8BF
+	for <git@vger.kernel.org>; Sat, 18 Oct 2025 14:27:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760796396; cv=none; b=G95BRn6TDRP4hTB/63WnvhkAZff3BF3EDXP+ig61bFAidGXQ5OWBDNZ4ll46nzYWjZwfytTb6v+HrWIAZKJbx7PYpvEu++fuYSRo1CYTOK1Kx5n/6roDTUruyeOrC/7rAm5KBKkW7cpzMPvDgVT7ig/PGFtcZFR7fiABl5H4jEk=
+	t=1760797649; cv=none; b=E/wV3acKZqZLohZGZ87oQuac4Bg8q6lkuRlAei/oMy8G3WlmcaQeT7pLuU4JHatZe/7R9AOlR/cB4fVNmC2EGrrE3dg4rWxkTe76qAn+OUapN7LhbHNkot34jzUOZgpmE9kZEqOwsqgg8Y6/tpuGGHr1OpYbsZJcLdG3BB8iQnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760796396; c=relaxed/simple;
-	bh=d33uEcm+SAUXvi8/n/fKL/UHu0cVQpNulNowv+u9Ui8=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=AzsuusH66nCSvANcdgOlYb6t/jTN2mp4khrvDb3bJ9Tq6+F5hdxMOZRvEpp7YBJOOaVNsfEMsCHokOU6MsTbUMKGNQLjq/B87HLfn0Bmt9jg/yUgw0Y4XsnuhvKgJt73APXvVlKtj6uVm+8FHgF3PGMstA2UW+dishRYsWHNFOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T2W7Tw7x; arc=none smtp.client-ip=74.125.224.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T2W7Tw7x"
-Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-635355713d9so3104753d50.3
-        for <git@vger.kernel.org>; Sat, 18 Oct 2025 07:06:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760796393; x=1761401193; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hz1LpLKmk8234tKQuMogZYR03LeUWxPv197RLVJ2pIA=;
-        b=T2W7Tw7xKKj+Fs5bxo9NItHQsyc43m6Ks+4zmxHqwihp3rvBhh24OfWWvKhNDc1lM2
-         vrumUGdBOnvPev1UqbXlxLMcR2ISsH5CN+rdpTb8+AfHCgu2BcG/lD06nofzbRDJwfDS
-         MuH/Uiojh7bF08zogx39uX4DX/sxf9Dfk9f91FoSmziC84pg8CG06++ZDzSoHllOtTXG
-         w8O50L5mwDa7ovC+mBPUgd8OUzP1AL43Uz2j/WUBeIWgvEbm5S6oxwm6ref/sCFUtcMZ
-         DKtINQqfXkpcfxtmHWcm4qUB9i4Mul3O3IhHas3zV4eGNqmVziG4V6AK8pj3BF53d2TB
-         yP8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760796393; x=1761401193;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hz1LpLKmk8234tKQuMogZYR03LeUWxPv197RLVJ2pIA=;
-        b=LQhXB38pukCLtdz2n17V37KNFQGb8xXIYFZy0/ej2ScO0zmGrqxTo4g2h5S/MqcwAP
-         lSccoVxyDoOBPdr/zHY/zAR57eBpDVcb8QRQfMjEkZHom1A7rpsz8jTMxoKOBjB3feYA
-         3HwdgaxSIINvmJKEdE/H7bjUPyXj8zJHpE4dc8Kb0J/vzRbdR30LONp3qNQPOUlZNGdI
-         /k0wYV0NDhVFQ/ElodyMJGfnL/Y6kHgWRIsdC6GWZBRtuEzMEKpUAJ7tPQRBjwYsJff/
-         0umQOaufHtRqRDX6yqz8wO7oU9e4SesxMVBGxEhWGvEycYtf9MYetDwu8y7RHSURngu+
-         sC1g==
-X-Forwarded-Encrypted: i=1; AJvYcCUlP33moBADX1F9srFhlGUpRIVflJdVANY1UaIQ8/S20Qw/qhpRyERFPW11yIUaYMpYMt0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwaxQmAmkRSAjCY+cYoE19dyr4iJM2UND5kI1yLYkPmf+wZBzGB
-	JJ8KbFPR10C3sdpuy1YvuqYriHe/bJy2Ww3TSFZX0NKKhBqVKVeK2C25T8he8NMF
-X-Gm-Gg: ASbGncvEoB0bf454xFl43+7Omm1pZ322p+Py7fV5+sDIC63UKVsJVEz8el/vG2Nh2Bh
-	uffumcHe8VFxmLO8mTM6q0DbjVttiFwLA6cFg07DVQ5dajo0nV1T4xgx0jbQzX+dSmGC1D2bmLU
-	ZZbZAdqzmkRchqjhITu+GjjWe78vkiNhGKE9PuwmU77dhZeMZ2jFHsd/hY733Y3RZL5qbvl7Gi5
-	53ejA5mfYb3/F2ctcW+ieaYznP52yodz2N04Uc9T7O/A1Ct5AG8TCJd2IZF8kj4/bz8c17coAHQ
-	XSYqlAI6zXBYRCyvxS9k3fQBxMR3DzTqkULLAxaQX/cwU6q4Y5WsH6/2tTNopg/05tbh3JvwZit
-	iqCzwEfTvKQYrjFU8ETVGrrO9ufuWuvJvBhasZYuuSEAHq2cpameg+VcP7ajQYL35zhOIPulOw4
-	FZEmQfmqTAFzg0j68nT5gWVjiemAM=
-X-Google-Smtp-Source: AGHT+IHETS+wlhZSI1N5609W5Y+pEdSfAb6jXQcnlfeF4eeiJ0waSQBIGFwNdweL+pTl7t562ELLpg==
-X-Received: by 2002:a05:690e:14c8:b0:63e:21cb:10ea with SMTP id 956f58d0204a3-63e21cb12efmr4041068d50.55.1760796393468;
-        Sat, 18 Oct 2025 07:06:33 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:34d8:dae9:227:f577])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7846a6d5883sm6892637b3.64.2025.10.18.07.06.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Oct 2025 07:06:32 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	s=arc-20240116; t=1760797649; c=relaxed/simple;
+	bh=V7ndHMhq2kigUGjuRgv2w8AlaIBhv1W/pyQpCRQFqK0=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=l/uedvydo7FQNp3N+kX9/mvTnG8Eg+y3Jwc2qAmBvAK+g+O0/iRrJtTWDEhKOfrDdna576wp87ReRb6t7fJEfITJG+I8z26w4ve65X/cRks1apaXtSkYmhTQzyKbB9+tlKb2drLYtjRIQXF8nqHwRgnMgOyvkL1eg8Lj7QSZcdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 59IEGvRk3595906
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 18 Oct 2025 14:16:57 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        "'Thomas Braun'" <thomas.braun@virtuell-zuhause.de>
+Cc: "'Junio C Hamano'" <gitster@pobox.com>, "'El_Hoy'" <eloyesp@gmail.com>,
+        <git@vger.kernel.org>
+References: <CAPapNH0C3+bU-RUO6oFHUKLjKuNdm-aXgsFTHFobYVrJXWzr=g@mail.gmail.com> <xmqqsefhxlmd.fsf@gitster.g> <0de410fa-22ef-4495-a6a9-dcd33a329201@virtuell-zuhause.de> <aPLkuPgirAVHkERr@fruit.crustytoothpaste.net>
+In-Reply-To: <aPLkuPgirAVHkERr@fruit.crustytoothpaste.net>
+Subject: RE: Making git grep ignore binary the default
+Date: Sat, 18 Oct 2025 10:16:52 -0400
+Organization: Nexbridge Inc.
+Message-ID: <00af01dc4039$dd45e090$97d1a1b0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH 4/4] doc: git-reset: clarify `git reset <pathspec>`
-Date: Sat, 18 Oct 2025 10:06:21 -0400
-Message-Id: <9EB375A8-CDD0-4717-B1DF-32DC3078A50A@gmail.com>
-References: <xmqqa51pxg9p.fsf@gitster.g>
-Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Julia Evans <julia@jvns.ca>
-In-Reply-To: <xmqqa51pxg9p.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQLsKBeokHN9dXt0saN3RrfzSNhZtgNg7o9EAXJiehYCgFG6PrJthhfA
+X-Antivirus: Norton (VPS 251018-2, 10/18/2025), Outbound message
+X-Antivirus-Status: Clean
 
+On October 17, 2025 8:52 PM, brian m. carlson wrote:
+>On 2025-10-17 at 23:29:22, Thomas Braun wrote:
+>> Am 17.10.2025 um 23:29 schrieb Junio C Hamano:
+>> > Simply because we have never needed to do something similar to "-a"
+>> > and "-I" that we added in early 2006 for the past nearly 20 years.
+>> > Also because GNU does not have any such thing to force "-a" or "-I"
+>> > as default.  The biggest reason is that it would be surprising if
+>> > such a change does not break existing scripts that have been =
+written
+>> > by people over the years.
+>>
+>> And if we only would have the config option "grep.ignoreBinary"
+>> defaulting to false with no default change whatsoever? I always want
+>> to ignore binaries when grepping and find it a bit tedious that I =
+have
+>> to spell it out all over again. And yes I do have an alias as well =
+but
+>> usually don't remember to use it.
+>
+>As Junio said, this could break existing scripts.  If I write a command =
+which uses `git
+>grep` and expects to find all matching files, it would not work on your =
+system with
+>`grep.ignoreBinary` set to true.
+>
+>For instance, if I am working on a project for a company and must =
+exclude source
+>code with a certain vendor's copyright (because we don't have =
+permission to
+>distribute their code), then it would be very bad if I accidentally =
+distributed that
+>company's binary files due to `git grep -l PATTERN | xargs rm -f` not =
+matching them
+>since it would violate the license.
+>
+>This is just an example, but there are lots of cases where people do =
+really want to
+>search every file.
+>
+>> I'm also curious what people are looking for in binary files with git =
+grep.
+>
+>It's common to mark PDFs or PostScript files as binary because they =
+often contain
+>embedded binary fonts, but they are actually mostly text and can be =
+usefully
+>searched with grep.  For instance, I once created some awards for a =
+non-profit
+>based on combining standalone text-based PostScript code along with =
+output from
+>groff, so those independent pieces could end up being source that you =
+might store
+>in Git and search, even if many configurations would use `*.ps -text` =
+in a system
+>gitattributes file.
+>
+>Sometimes you also have images or such for a website, which contain XMP
+>metadata (a form of XML-serialized RDF).  Finding those images which =
+have certain
+>author metadata or a certain license URL embedded in them could be =
+valuable.
 
-> Le 17 oct. 2025 =C3=A0 19:25, Junio C Hamano <gitster@pobox.com> a =C3=A9c=
-rit :
->=20
-> =EF=BB=BF"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
->=20
->> `git reset (--patch | -p) [<tree-ish>] [--] [<pathspec>...]`::
->> -    Interactively select hunks in the difference between the index
->> -    and _<tree-ish>_ (defaults to `HEAD`).  The chosen hunks are applied=
+I agree that this will break scripts. There are quasi-binary files in =
+some SQL
+spaces that really benefit from git grep working. Please do not make =
+this the
+default.
 
->> -    in reverse to the index.
->> +    Interactively select changes from the difference between the index
->> +    and the specified commit or tree (which defaults to `HEAD`).
->> +    The chosen changes are unstaged.
->> +
->> This means that `git reset -p` is the opposite of `git add -p`, i.e.
->> -you can use it to selectively reset hunks. See the "Interactive Mode"
->> -section of linkgit:git-add[1] to learn how to operate the `--patch` mode=
-.
->> +you can use it to selectively unstage changes. See the "Interactive Mode=
-"
->> +section of linkgit:git-add[1] to learn how to use the `--patch` option.
->=20
-> I do not see a good reason why we avoid saying the noun "patch",
-> especially when we see it in the option.  If we were allowed to say
-> "patch" here, "changes from the difference between ..." can be
-> rephrased to "parts of the patch that makes the index match the
-> specified commit", which may be simpler.
-
-I think the issue was the word =C2=AB hunk =C2=BB, not =C2=AB patch =C2=BB.=
