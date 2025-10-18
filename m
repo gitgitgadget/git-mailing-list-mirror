@@ -1,83 +1,86 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5E8229B36
-	for <git@vger.kernel.org>; Sat, 18 Oct 2025 16:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E341D9A54
+	for <git@vger.kernel.org>; Sat, 18 Oct 2025 16:17:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760803293; cv=none; b=WGSThukBa8Dw4WWIWC866+6Oa6xG06ctfzLWCzPWf2VwMtvfZ4kgmeLMcOOFY0DsnaJ4bkxLZg0h2ZCGKZ5oIz3dmXj+erli8zuMYHEJdB9H32GaZu7y02pDznmXz7NnQ1dVX+y97ki8Re8hCHVkxyhv7v1D3JGQAcv7kuYc59w=
+	t=1760804263; cv=none; b=l3KRsmmv6rh8xuYbQc0eCxA+sLe5upfYVThkKHdJMMyo/6ShYU9RvwMhjEfl+qhLqQiZVhTGiugTT6blPxn7hY8ldeQh+aMSXFc52Ii7ysBzqPuHyeP9QWemA3rDv82X1WwqZtGnbYa1vb9DCoJs3nzfTvqOsyoKnUieK/WvFFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760803293; c=relaxed/simple;
-	bh=EQ5waK1BYPHpwtes6UQtiLzhbrFz+il0LypyzXV5ONg=;
+	s=arc-20240116; t=1760804263; c=relaxed/simple;
+	bh=vzA9u0qBwrbjDK5qPXTUXy9vhBkmcRsYaYshXkas1VY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Vgz+X9FR7ZxGGUk7vzMDoGqjBLrnUwUFNEBpt8A1X6k3NtEqDHzZtU3m2krClZINbwrnDcjCu/4KE9F3UswdgMkY8miMRCAr/rQlGATB8jSyDN3uHgUMTy/HzCEFuhD+8pG9tdWJ0aroDAjNP7/Qnur7GJOQ0cQIzQpFkKc7Lpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NydYFFVL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oVnfjW/S; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=TfhtnwpzbFETk6hhWqzCpNFFpOu3Eph01HzXkOjVwRfummM3FyfK5Jr6ybHJ7Sl0PuEjYa5wGCtETRtFZrEMwJjkx+SYmZHO0jKQyYOLIcbPqLLElEk4cMa85mwXY9FyYCQ2PbsO//8ZXbJg4/hflyTxnP149l5nOOkUfHFiZss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V1dEb56n; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aFz14vGq; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NydYFFVL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oVnfjW/S"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 259127A017B;
-	Sat, 18 Oct 2025 12:01:30 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V1dEb56n";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aFz14vGq"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5D55D7A0092;
+	Sat, 18 Oct 2025 12:17:40 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Sat, 18 Oct 2025 12:01:30 -0400
+  by phl-compute-10.internal (MEProxy); Sat, 18 Oct 2025 12:17:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1760803290; x=1760889690; bh=aFa+rZQozW
-	HIrjtX1iZNQwlufq4U7a59M9UAvPuxZig=; b=NydYFFVLMhG26W9XNnRicDfel8
-	UX2aBsb8KQW6pM++ugVdLQNkMsqKGx3r+wTwkRD7cxurzzeRjdveEsrbVkDIYlCE
-	b8hiRxdg24+nqkwevn4030VXGndHMwXTR7E8HxS/BF9WD0RdEp8n3lRLocm2p/S1
-	V9s7uE1kdGebeoqriOJnoY6V/cmWVmPFHmUq1Tc5/MmeS54YrICugepIgbyfFnwZ
-	3Y/sEMK7k4iT4L3xoJx2fKWvURpeWqL6h0bsn2FRqdINLlnuTZjZU311XOWIKmVn
-	B4b7r3VGpXyoI4sCbmn8l+0z9p4yyB8SILjn+Pzk5Cb/n8Gu+eE9GRyS5amQ==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1760804260;
+	 x=1760890660; bh=cMpcTf07pQ6EWDmHr8aH1Dcbm7Zi5yozL9Zr0LN0zPk=; b=
+	V1dEb56nO+TwPFZpIo6VG8PbhkgOZeLIsvkMmrwVoCwpr6LIAuCnG1G2g3c3jIZ9
+	PRxfTV0V7SA9y0XMS3FsbGltrWTATRVqHqWCXIjZvB9ylq4WTztUv56maIPew5WQ
+	KJ/+l9ULxu5zu93qisiXHN7Wb28g4CqNRx5dMxoBvVdU1UgsDtj5qYqKu/2uMNJH
+	/1G8xa+3IG0HhAsqfZY413T4ImVUY71Fvl+ngM2pkR71PW4GmDNXL/Y+/xk/legf
+	yRrt6ZDt36NAlAYJcTX7xY3LCsdje4iIiAQjyZo/XmttNCd+JyIs3BA1l4VasO06
+	Hqgtq2Itvl6+YVeSGn3QXw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1760803290; x=1760889690; bh=aFa+rZQozWHIrjtX1iZNQwlufq4U7a59M9U
-	AvPuxZig=; b=oVnfjW/SVt10CrEelL6a8sMwelOafgs+aiVj7CCi6Y6lwTeGnWw
-	ciQuQbY41f1rvmxoIbdZ/3PU1NHshZxRctCua7Y+BUR84PMHx7kBZAtzh5NnNit0
-	JZL5ePvqcCC9m1i8DYMblcWitE8ZI5TKLLw0p6dkDEOEMEugVprZW8TRCLlX0tLl
-	wPr7I7qjTCisNOiBr8WzkALOjpMXEr4QUZV6Qc7E056eLqQVMThGegq6mmohMFpJ
-	InvAsydPZO2FxLgJQe8nAvHTLPiQfNGJVITI+9D7MKXdW9T1J/HHwXLB0/sVOuyf
-	Oz2xPm7RVKE/P25qWG4H8QFrHmLmX7a/Hzg==
-X-ME-Sender: <xms:2bnzaJE-e_ZDSCk85ya_PeXbOFJC9xta3BwSiwWDO39KopimzTkYDA>
-    <xme:2bnzaFWqinv7lPACdEZfsNBDqU1KTsGIa2d0KPhevH16EGrvuP-gjMRANSjX75QBC
-    8tyKyUk7doI2TKJL4R5IvpcdzHumaIPwjeW3TYn9i-NAoJ82kQu>
-X-ME-Received: <xmr:2bnzaALyWFlkLbVOWjkti86qIIPYv-dLc_FoPHeP3OnbtWCjSRtR45jyM2cQf09lpdfowPxQB5AcAmTp_mcBcw92uJs1YS_CeAZM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddufedvgeekucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760804260; x=
+	1760890660; bh=cMpcTf07pQ6EWDmHr8aH1Dcbm7Zi5yozL9Zr0LN0zPk=; b=a
+	Fz14vGqIJ1fbY3qqkklNnPdQXNdLB8AR8YrF0dX5tFvdqONtw7qkSBnaFB8KCVHQ
+	9T682P0a3agpqVdQo/2jTuPjKgg+55uS3a+qOPBigKiBufx+5ZbumwHeGbvok9zL
+	/NWjzW4hPZqTzx68afJBGqV5CujIYbIBmc3Z81wN5epEZzJjDetKq3+FBesY9hVE
+	090/QGWpIH1n+gWvOGKhOu4WwF01lBcCHTDYrpaVQDE+mfRr9VoMcQ3VfBmIkuqx
+	x2t0UMocmybKsM6qPpM4R/Km6xx+r1xwX0b0PPoXM/2KRjiE1a1cb4wtAO3VOV0m
+	nnb/7OGB1aHNVP1dl8ZOA==
+X-ME-Sender: <xms:o73zaEvtQD0PzoZht8bBDW69Aqj0HpfdXwg8CfN0ZJCo8Gxul-zyiw>
+    <xme:o73zaIVRJ1CsOIAut5HneODjzMEAUP6xmtMU3BJNL2Fi8TKeoa00InsNHHaOVgxGF
+    YO3xT5NJCCvsuTwBtC6By2vPwtJKLpwynQS1wFnFOANl26QiQ4X_KA>
+X-ME-Received: <xmr:o73zaIHGqZO99JBM4PNxpuEukRqqpiFt8XgPFdrhLHKzVeyQsf_4vcFvouy4TpPhUgpxeqkfe9TQMj4mmHMFtnqxYIi-fVgU68EF>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddufedvheduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigf
-    efkeevteevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdho
-    rhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    gvlhhohigvshhpsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:2bnzaN_kRKPkYKdQc-i7dyjAUPDp8T9BMeh-LBeo3wkUmnDfKKQmWg>
-    <xmx:2bnzaLICy3bv9CRhyAIxYHrFitixdnIvBIT8rrnQ19ds-zo9SZDKzQ>
-    <xmx:2bnzaKlfih-5Cm8YIa6OlyG59u9wyqByLMxHOHDqIVxBI5NOw_2XuQ>
-    <xmx:2bnzaHOkkwX2BycAMqbnIBy0HkB_-9gPzJqWW3TClANCDkIFcGGMFQ>
-    <xmx:2bnzaAG-n4PcjygPvNxWNkaiSVcjS28-64oiQ_6z3whBnhoIjgMQ2Zks>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhulhhirg
+    esjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:o73zaC2VLsoZrFilZxFoARzXK5jyrzXEgooQrUluXHCf8IqjfLdU7Q>
+    <xmx:o73zaCOvbbDzLgwyIi3Th6BPrHbPgiDiclYlE23odWLHq_5oqJi3LA>
+    <xmx:o73zaJ5dTXyCtejDBXs2ruPIbhl5w5W6yyEDq097TIxPJq1YrTe9bg>
+    <xmx:o73zaE0Y7hZ2UMaT9kVvTHvqlGGJitTKlbl9CSpCLLRDWkOUvJJLbg>
+    <xmx:pL3zaKFRHY5l02QPcvUTEXU382Mw-8SXGncN7LrzIsqrW6gj0yo5-KT9>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 18 Oct 2025 12:01:29 -0400 (EDT)
+ 18 Oct 2025 12:17:39 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: El_Hoy <eloyesp@gmail.com>,  git@vger.kernel.org
-Subject: Re: Making git grep ignore binary the default
-In-Reply-To: <20251018102209.GH1060824@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 18 Oct 2025 06:22:09 -0400")
-References: <CAPapNH0C3+bU-RUO6oFHUKLjKuNdm-aXgsFTHFobYVrJXWzr=g@mail.gmail.com>
-	<xmqqsefhxlmd.fsf@gitster.g>
-	<20251018102209.GH1060824@coredump.intra.peff.net>
-Date: Sat, 18 Oct 2025 09:01:28 -0700
-Message-ID: <xmqq347gw65j.fsf@gitster.g>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH 4/4] doc: git-reset: clarify `git reset <pathspec>`
+In-Reply-To: <9EB375A8-CDD0-4717-B1DF-32DC3078A50A@gmail.com> (Ben Knoble's
+	message of "Sat, 18 Oct 2025 10:06:21 -0400")
+References: <xmqqa51pxg9p.fsf@gitster.g>
+	<9EB375A8-CDD0-4717-B1DF-32DC3078A50A@gmail.com>
+Date: Sat, 18 Oct 2025 09:17:38 -0700
+Message-ID: <xmqqy0p8uqu5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,26 +88,35 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
+Ben Knoble <ben.knoble@gmail.com> writes:
 
-> I think we've discussed this before, and digging in the archive found
-> this thread from 2012:
+>> Le 17 oct. 2025 à 19:25, Junio C Hamano <gitster@pobox.com> a écrit :
+>> 
+>> ﻿"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> 
+>>> `git reset (--patch | -p) [<tree-ish>] [--] [<pathspec>...]`::
+>>> -    Interactively select hunks in the difference between the index
+>>> -    and _<tree-ish>_ (defaults to `HEAD`).  The chosen hunks are applied
+>>> -    in reverse to the index.
+>>> +    Interactively select changes from the difference between the index
+>>> +    and the specified commit or tree (which defaults to `HEAD`).
+>>> +    The chosen changes are unstaged.
+>>> +
+>>> This means that `git reset -p` is the opposite of `git add -p`, i.e.
+>>> -you can use it to selectively reset hunks. See the "Interactive Mode"
+>>> -section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
+>>> +you can use it to selectively unstage changes. See the "Interactive Mode"
+>>> +section of linkgit:git-add[1] to learn how to use the `--patch` option.
+>> 
+>> I do not see a good reason why we avoid saying the noun "patch",
+>> especially when we see it in the option.  If we were allowed to say
+>> "patch" here, "changes from the difference between ..." can be
+>> rephrased to "parts of the patch that makes the index match the
+>> specified commit", which may be simpler.
 >
->   https://lore.kernel.org/git/4f1d2a8b.a2d8320a.50ec.576d@mx.google.com/
->
-> I think some of those ideas came to fruition. You can do:
->
->   git grep ':(attr:!binary)'
->
-> now (which obviously is harder than "-I", but the point is that it
-> extends to any attribute if you want). But I still think it would be
-> nice if there was a way to make it the default (without using an alias).
+> I think the issue was the word « hunk », not « patch ».
 
-Yeah, after I re-read the thread, I specially liked the "filetype"
-idea that you floated in
-
-  https://lore.kernel.org/git/20120125214625.GA4666@sigill.intra.peff.net/
-
-;-).
+I know.  That is exactly where my question comes from.
