@@ -1,70 +1,70 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5062028312E
-	for <git@vger.kernel.org>; Sat, 18 Oct 2025 20:07:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6E9146D45
+	for <git@vger.kernel.org>; Sat, 18 Oct 2025 20:07:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760818045; cv=none; b=XQ0Fd1uLLJ6QDQPrOTUAPJCu2Ye9m49RQsB61aTNoi86PwJuUfSfLp8sG5DUsfDOs6isxMb+OYWGZRX86qCTGaLoAMDwe4jVEz8tLIpGE9NjwepPqFczHuJGxhSub+sTjW1O7ok7BtkIqLBpbaxaLjvrqVUFKrq9ADRqGMW81VM=
+	t=1760818047; cv=none; b=DEXaxlYn09MAZeijPW7ch77g8WjE2biRBKTkz+tqxtKTa/n4aEWUb+wQqmG3xqN5oSPImflN9uTOw8Zv0BbePha+NPD9HyHqB7fEpg14KH6WgVuz8+32RYehgpZOYkWI+Uc9Nlo1fQa90+2ip0C7M/1YrIrHVntES1eS/3rl7jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760818045; c=relaxed/simple;
-	bh=E+6Z8q1IRDFxcVq3cSV84TESHewzcb8CkvTa+gfPlcM=;
+	s=arc-20240116; t=1760818047; c=relaxed/simple;
+	bh=eyrA+df9ahAxCYweR1s4GfmDYf0w1KmNF7naJK3siPs=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=QMnRbalQMjRHMLMiP8YpZbkQcdAbEN0jQWjXxankqL29lWh/RPS6OrwqxUgUpS5UrjGi3NsHFI3w4UiGFIzgZ8SpRKYafBXXciJxHr6q6KEuN8wQx8S8UDjGvlSeTnqHKsbtul2xYpL4M4Q7rJQqSYhWOk8NayPfHBAv0ae3lLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K6xkP+jk; arc=none smtp.client-ip=209.85.214.177
+	 MIME-Version:To:Cc; b=bvA0vH8I9Knt9klVGkbxm6Qir7Nx7lYFyXdGzXsW+oupCCMJwFiPtPKYqnj8NYG7DjN+XEtjybCM8eoiFwM9XW2DOAWoe1apHJU9W7B6Vzed2Y8It/Zxkp6vCvfdxSN4hexSLydNfzN7O50ySQQB4d9zDpGZ5jK6EIXmwuppPaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ewXJt7Ll; arc=none smtp.client-ip=209.85.210.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K6xkP+jk"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-27c369f898fso43532005ad.3
-        for <git@vger.kernel.org>; Sat, 18 Oct 2025 13:07:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ewXJt7Ll"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-78af743c232so2615948b3a.1
+        for <git@vger.kernel.org>; Sat, 18 Oct 2025 13:07:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760818043; x=1761422843; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760818044; x=1761422844; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9O2aZWzmQCtYCJLlG9l6Ex0Xf13OrdTnNoMgdr9b48U=;
-        b=K6xkP+jklsZe4FS4oS5hp7xWpSaB3AGWFbZNThcRELTzPypNxyMdtfanOoo8sEHAVJ
-         O9l1xIoJog11mhr5YAL/Wvq4c6biNfQjD6e4TNDeiWtJ9qnPVpoA59I/SSvbQDn9TaPY
-         w5HGrYdBsTcloAB0654gKKhq7XEmR2F6wPKTfDUoMgz4xkBXd8I8aaK3KYPWMw6OZYlJ
-         MYVg1OvTknRIJ7EGfPq30ATnUnecDQVpXuiER57QAEA80Pfoqy7pF1vgBBfMWIjAhm5J
-         BO1yUZB+XYD4YkVvFeiVwpU10l9iC1VgEGrFBRVNGUEuTyMBWTDjqwUwQk/52cjTuxZi
-         p9zg==
+        bh=AsQFNfg+upSmNiEurQZoZiYasTODTx43yZtS1ofCJYc=;
+        b=ewXJt7LlLXVBVUkka4rjGkxEyfyBzk/msD71C7gA7/dMjy6eWDzW/TQ7NEaACq3rQc
+         /rV5j+dkZ6bO+U27AroRqi9vtcJ6ABxv+ekWkjXcat7IPByhobdcchaVEwY5BqEfN9BW
+         EKw/PWP3RKhlfWEmCTO6gP3M0c06eEM5X0HzVWLnRGJ3BznqNR/vbcrbGlsb0QoiKb8B
+         Djh4nEs7OY51X3HJVxTAzUaoS30Sn90sjTQnohxhJzDjRuDynDNXf12iBjP2XcUGI1kO
+         5mA7pEgeesY9aA5irs1oBRyx3wTEx3zcbFAwZg8eytibqPH0BndhpOjGG+k0nxbkoxXX
+         7rsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760818043; x=1761422843;
+        d=1e100.net; s=20230601; t=1760818044; x=1761422844;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9O2aZWzmQCtYCJLlG9l6Ex0Xf13OrdTnNoMgdr9b48U=;
-        b=UGkzg+uqcur8AO6S+GVLNX5w/FiiDDwRigBlBRsgM1XK3Lpf0EWpwVic4VNSmEXKp8
-         Eb1JzuMae1/OUNOvXmHsEJUOIzMtDK6QgzJUpFVcROLjbKCuaJiSSi2ZhZfOkFZerbTz
-         pTc5puQDGweY6wzOJoU3WT8U51u1/HdN4+0q3+T9lELFSk/jepyEyCBBn9ddGVqArnat
-         pAWyiQXDeFaUmak6ZcPQzErU+rs3YytujYX0/bneg9/2ZmlLguEXLv0/T9wwVDCfQx3J
-         f834Tyhd1NQ09QrD7VRKSX3d7VqP876GbUa7WLt9vvctLu5bMLNzCAGx0ZB+iPAyfzop
-         hQ4Q==
-X-Gm-Message-State: AOJu0Yx42A2Pb98MwqAz0/Ktb5jYj4/SvT49dHvnCdm58rA04+Tm3q9n
-	7MG5HJQ1BOAjqjVPKGcE909zKpPypUa4Sxib/q6PTEDgqyIz84fpUc+ueNDSoTxb
-X-Gm-Gg: ASbGncspB2i2nZ5oYI3jQGLU3STcpjMJ/vPFtnrCw0sQfEA7sfMH5w/9taMF00VLPDp
-	lMnEyBzX069y13V9K1PD3SdYfeo6dHlSEB892xZ4yq9lAFcUaKy4mNPgO9gtAP0Q/ONEAFEoOLC
-	opq5zKRjTKrUC/f8mhjQ7yviQfLYnVOkM4hY4WSSy3cLN4v6yJ8gyiy1vcg4TXnRafp59YlbRuW
-	DUCIC0xckXybi9NNpgYiSa4/E+z6gDdOO9HkboAS8i+qWUSUPeLVDTKs7TXz0pL9c1yVRgCEH7o
-	/+Gs4vPU2w0IPZD061TIPX40jg69pRscgRbwZvaiT+HIP5Jcl+KMHWEC4UBwdtlcA6DtYkM7Zjo
-	g0bg7ZM8jIyRQcpFQC/OdaUPUKWuh1J0JQ39VAZZmcfCu3yQ5U/qlMWdNvzhwTz+x7BHee/FPm5
-	5CHpo=
-X-Google-Smtp-Source: AGHT+IEWjpIK3AmT0z2yqiHhcnwyiko7kApa5ZUl2Kwt0wKWzsai9AcQZ5evxLBlvRzt7BsfzivvLg==
-X-Received: by 2002:a17:903:228f:b0:290:91b0:def5 with SMTP id d9443c01a7336-290cb65b1b3mr104213305ad.53.1760818043160;
-        Sat, 18 Oct 2025 13:07:23 -0700 (PDT)
+        bh=AsQFNfg+upSmNiEurQZoZiYasTODTx43yZtS1ofCJYc=;
+        b=Y99zeffqd/nfSYJEayqmPKNWzYRpjltNsoX8R4lpiy9mksqRTI8Bjh7mg/Era+BArP
+         UMUvj8lsf0J54UCVxxD9UN8VL20DAv0TobKHqVZ9VnE0TgQe2OWqWSvxyGW5ui4KL5oR
+         Vk1eefyNJdxP8MozBbhl7BRS2L/6VmgqXZXvolSG8EtEgqaO7jUQ6aRlgeYr+gUOpEuI
+         kgam6rayP4u3fFr5h/D3KsfgTlJj6Ljawslhcj7mMfZxWV5vl0FKglMrEmNWlgqJyXWL
+         ctvtaDZNx9BeidBUBP/hGnsRCCPWVgWZovjdS+aNqmLNtNbBIfmdRW2WUfK0ZIBNj4bA
+         w4CA==
+X-Gm-Message-State: AOJu0YyD6hjBMrnYrRHC63rNv/ocGKG/J1sPHOL91CmX7ozmBmJ6lGJc
+	PM9p4vcVPJ/YwWAfm8vyKNv034V9NUTIO4jB7ZrS706QHGdenKbUgXSRGZk7vQ02
+X-Gm-Gg: ASbGncsizYb7dhSqAc5GmXa4EUOeNpVyeRlgXVc0RCJD6RkZUv52jzITcx4UaCNrAMu
+	77baWcrbph8uyR/cMwCMiuj4GQTffrwjCLIn0JCqgmaCQT4Q+WnImML26RETnTwFPCyHUT98V64
+	6qFbeZcr8hE8lmx3V0gcl/zMCHKJCBtRFgHOyClLbZhOJUkqOOJHF14E8F4fmAlR/I7oa0THWaL
+	KheH1ycBZDJO2c56f4JSPF/i3C53jcxa0KjiwlFMw/3pMBnxMlHBOSzFtDXkhkRSbPQrlq6PUTC
+	zjvjKTclSgMk6QeGXVExj0bx0ctFc1WGwQtkA+UsdNwCFUfnxwmSqGT2SFgJj7NMRLePPnUMcEJ
+	epiKd8xmO/V9jf9v5TEF1yibP6Ui+BFIbf54iJ8FgXIwRoog3zVwV1FSeEPFUSjQSXSiMEsFnFw
+	Zqu7mHGLkOTAqtGn/KlcJ44ckK
+X-Google-Smtp-Source: AGHT+IHGQhjk+3Opz7wBNoOY/ZYYHY1dyyYH7f40mvz1y2lilFef8vAo+n5D0I5aOLMLzKcY/eSwhA==
+X-Received: by 2002:a17:90b:2692:b0:335:228c:6f1f with SMTP id 98e67ed59e1d1-33bcf874769mr11988464a91.12.1760818044245;
+        Sat, 18 Oct 2025 13:07:24 -0700 (PDT)
 Received: from [127.0.0.1] ([172.184.211.85])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29246ebcfd0sm33676755ad.8.2025.10.18.13.07.22
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b6a779d704dsm3213422a12.24.2025.10.18.13.07.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Oct 2025 13:07:22 -0700 (PDT)
-Message-Id: <d1b02617e643a32cecc81131cb411b180d6339a4.1760818039.git.gitgitgadget@gmail.com>
+        Sat, 18 Oct 2025 13:07:23 -0700 (PDT)
+Message-Id: <8f3d5f7ec12d788eec99b962fed1c8d62e17c148.1760818039.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1987.git.1760818039.gitgitgadget@gmail.com>
 References: <pull.1987.git.1760818039.gitgitgadget@gmail.com>
 From: "Claus Schneider(Eficode) via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 18 Oct 2025 20:07:16 +0000
-Subject: [PATCH 2/5] read-cache: let read-cache respect submodule ignore=all
- and --force
+Date: Sat, 18 Oct 2025 20:07:17 +0000
+Subject: [PATCH 3/5] tests: add new t2206-add-submodule-ignored.sh to test
+ ignore=all scenario
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,100 +83,171 @@ Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason <avarab@gmail.com>,
 
 From: "Claus Schneider(Eficode)" <claus.schneider@eficode.com>
 
-Given the submdule configuration is ignore=all then only update the
-submdule if the --force option is given and the submodule is explicit
-given in the pathspec.
+The tests verify that the submodule behavior is intact and updating the
+config with ignore=all also behaves as intended with configuration in
+.gitmodules and configuration given on the command line.
 
-A message is printed (like ignored files) guiding the user to use the
---force flag if the user has explicitely want to update the submodule
-reference.
-
-The reason for the change is support submodule branch tracking or
-similar and git status state nothing and git add should not add either.
-The workflow is more logic and similar to regular ignored files even
-the submodule is already tracked.
-
-The change opens up a lot of possibilities for submodules to be used
-more freely and a like the repo tool. A submodule can be added for many
-more reason and loosely coupled dependencies to the super repo which often
-gives the friction of handle the explicit commits and updates without
-the need for tracking the submodule sha1 by sha1.
+Testfile is added to meson.build for execution.
 
 Signed-off-by: Claus Schneider(Eficode) <claus.schneider@eficode.com>
 ---
- read-cache.c | 46 +++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 45 insertions(+), 1 deletion(-)
+ t/meson.build                    |   1 +
+ t/t2206-add-submodule-ignored.sh | 134 +++++++++++++++++++++++++++++++
+ 2 files changed, 135 insertions(+)
+ create mode 100755 t/t2206-add-submodule-ignored.sh
 
-diff --git a/read-cache.c b/read-cache.c
-index 56a3ef424c..3e87d03518 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -48,6 +48,8 @@
- #include "csum-file.h"
- #include "promisor-remote.h"
- #include "hook.h"
-+#include "submodule.h"
-+#include "submodule-config.h"
- 
- /* Mask for the name length in ce_flags in the on-disk index */
- 
-@@ -3927,13 +3929,55 @@ static void update_callback(struct diff_queue_struct *q,
- 		default:
- 			die(_("unexpected diff status %c"), p->status);
- 		case DIFF_STATUS_MODIFIED:
--		case DIFF_STATUS_TYPE_CHANGED:
-+		case DIFF_STATUS_TYPE_CHANGED: {
-+			struct stat st;
-+			if (!lstat(path, &st) && S_ISDIR(st.st_mode)) { // only consider submodule if it is a directory
-+				const struct submodule *sub = submodule_from_path(data->repo, null_oid(the_hash_algo), path);
-+				if (sub && sub->name && sub->ignore && !strcmp(sub->ignore, "all")) {
-+					int pathspec_matches = 0;
-+					char *norm_pathspec = NULL;
-+					int ps_i;
-+					trace_printf("ignore=all %s\n", path);
-+					trace_printf("pathspec %s\n",
-+							(data->pathspec && data->pathspec->nr) ? "has pathspec" : "no pathspec");
-+					/* Safely scan all pathspec items (q->nr may exceed pathspec->nr). */
-+					if (data->pathspec) {
-+						for (ps_i = 0; ps_i < data->pathspec->nr; ps_i++) {
-+							const char *m = data->pathspec->items[ps_i].match;
-+							if (!m)
-+								continue;
-+							norm_pathspec = xstrdup(m);
-+							strip_dir_trailing_slashes(norm_pathspec);
-+							if (!strcmp(path, norm_pathspec)) {
-+								pathspec_matches = 1;
-+								FREE_AND_NULL(norm_pathspec);
-+								break;
-+							}
-+							FREE_AND_NULL(norm_pathspec);
-+						}
-+					}
-+					if (pathspec_matches) {
-+						if (data->ignored_too && data->ignored_too > 0) {
-+							trace_printf("Forcing add of submodule ignored=all due to --force: %s\n", path);
-+						} else {
-+							printf(_("Skipping submodule due to ignore=all: %s"), path);
-+							printf(_("Use -f if you really want to add them.") );
-+							continue;
-+						}
-+					} else {
-+						/* No explicit pathspec match -> skip silently (or with trace). */
-+						trace_printf("pathspec does not match %s\n", path);
-+						continue;
-+					}
-+				}
-+			}
- 			if (add_file_to_index(data->index, path, data->flags)) {
- 				if (!(data->flags & ADD_CACHE_IGNORE_ERRORS))
- 					die(_("updating files failed"));
- 				data->add_errors++;
- 			}
- 			break;
-+		}
- 		case DIFF_STATUS_DELETED:
- 			if (data->flags & ADD_CACHE_IGNORE_REMOVAL)
- 				break;
+diff --git a/t/meson.build b/t/meson.build
+index bbeba1a8d5..1a6fb7edb2 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -281,6 +281,7 @@ integration_tests = [
+   't2203-add-intent.sh',
+   't2204-add-ignored.sh',
+   't2205-add-worktree-config.sh',
++  't2206-add-submodule-ignored.sh',
+   't2300-cd-to-toplevel.sh',
+   't2400-worktree-add.sh',
+   't2401-worktree-prune.sh',
+diff --git a/t/t2206-add-submodule-ignored.sh b/t/t2206-add-submodule-ignored.sh
+new file mode 100755
+index 0000000000..77f7b0ebbc
+--- /dev/null
++++ b/t/t2206-add-submodule-ignored.sh
+@@ -0,0 +1,134 @@
++#!/bin/sh
++# shellcheck disable=SC2016
++
++# shellcheck disable=SC2034
++test_description='git add respects submodule ignore=all and explicit pathspec'
++
++# This test covers the behavior of "git add", "git status" and "git log" when
++# dealing with submodules that have the ignore=all setting in
++# .gitmodules. It ensures that changes in such submodules are
++# ignored by default, but can be staged with "git add --force".
++
++# shellcheck disable=SC1091
++. ./test-lib.sh
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++base_path=$(pwd -P)
++
++#1
++test_expect_success 'setup: create origin repos'  '
++	cd "${base_path}" &&
++	git config --global protocol.file.allow always &&
++	git init sub &&
++		pwd &&
++		cd sub &&
++		test_commit sub_file1 &&
++		git tag v1.0 &&
++		test_commit sub_file2 &&
++		git tag v2.0 &&
++		test_commit sub_file3 &&
++		git tag v3.0 &&
++	cd "${base_path}" &&
++	git init main &&
++		cd main &&
++		test_commit first &&
++	cd "${base_path}"
++'
++#2
++# add submodule with default config (ignore=none) and
++# check log that is contains a path entry for the submodule 'sub'
++# change the commit in the submodule and check that 'git status' shows it as modified
++test_expect_success 'main: add submodule with default config'  '
++	cd "${base_path}" &&
++	cd main &&
++	git submodule add ../sub &&
++	git commit -m "add submodule" &&
++	git log --oneline --name-only | grep "^sub$" &&
++	git -C sub reset --hard v2.0 &&
++	git status --porcelain | grep "^ M sub$" &&
++	echo
++'
++#3
++# change the submodule config to ignore=all and check that status and log do not show changes
++test_expect_success 'main: submodule config ignore=all'  '
++	cd "${base_path}" &&
++	cd main &&
++	git config -f .gitmodules submodule.sub.ignore all &&
++	GIT_TRACE=1 git add . &&
++	git commit -m "update submodule config sub.ignore all" &&
++	! git status --porcelain | grep "^.*$" &&
++	! git log --oneline --name-only | grep "^sub$" &&
++	echo
++'
++#4
++# change the commit in the submodule and check that 'git status' does not show it as modified
++# but 'git status --ignore-submodules=none' does show it as modified
++test_expect_success 'sub: change to different sha1 and check status in main'  '
++	cd "${base_path}" &&
++	cd main &&
++	git -C sub reset --hard v1.0 &&
++	! git status --porcelain | grep "^ M sub$" &&
++	git status --ignore-submodules=none --porcelain | grep "^ M sub$" &&
++	echo
++'
++
++#5
++# check that normal 'git add' does not stage the change in the submodule
++test_expect_success 'main: check normal add and status'  '
++	cd "${base_path}" &&
++	cd main &&
++	GIT_TRACE=1 git add . &&
++	! git status --porcelain | grep "^ M sub$" &&
++	echo
++'
++
++#6
++# check that 'git add --force .' does not stage the change in the submodule
++# and that 'git status' does not show it as modified
++test_expect_success 'main: check --force add . and status'  '
++	cd "${base_path}" &&
++	cd main &&
++	GIT_TRACE=1 git add --force . &&
++	! git status --porcelain | grep "^M  sub$" &&
++	echo
++'
++
++#7
++# check that 'git add .' does not stage the change in the submodule
++# and that 'git status' does not show it as modified
++test_expect_success 'main: check _add sub_ and status'  '
++	cd "${base_path}" &&
++	cd main &&
++	GIT_TRACE=1 git add sub | grep "Skipping submodule due to ignore=all: sub" &&
++	! git status --porcelain | grep "^M  sub$" &&
++	echo
++'
++
++#8
++# check that 'git add --force sub' does stage the change in the submodule
++# check that 'git add --force ./sub/' does stage the change in the submodule
++# and that 'git status --porcelain' does show it as modified
++# commit it..
++# check that 'git log --ignore-submodules=none' shows the submodule change
++# in the log
++test_expect_success 'main: check force add sub and ./sub/ and status'  '
++	cd "${base_path}" &&
++	cd main &&
++	echo "Adding with --force should work: git add --force sub" &&
++	GIT_TRACE=1 git add --force sub &&
++	git status --porcelain | grep "^M  sub$" &&
++	git restore --staged sub &&
++	! git status --porcelain | grep "^M  sub$" &&
++	echo "Adding with --force should work: git add --force ./sub/" &&
++	GIT_TRACE=1 git add --force ./sub/ &&
++	git status --porcelain | grep "^M  sub$" &&
++	git commit -m "update submodule pointer" &&
++	! git status --porcelain | grep "^ M sub$" &&
++	git log --ignore-submodules=none --name-only --oneline | grep "^sub$" &&
++	echo
++'
++
++test_done
++exit 0
 -- 
 gitgitgadget
 
