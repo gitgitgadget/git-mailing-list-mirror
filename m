@@ -1,70 +1,70 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99C7295DBD
-	for <git@vger.kernel.org>; Sat, 18 Oct 2025 20:07:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA7827F016
+	for <git@vger.kernel.org>; Sat, 18 Oct 2025 20:07:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760818048; cv=none; b=XSZR597qxvKwiZwgx68jktLGkv3A/S9qCr/fDXRb5PVcddegV9ZrdAo26rdmyYEhUoBy1xfojVlUksn2qjSBn4cQAFIvfeitlOEUAc9E8NXAAGdiv0q/RLaynjt8WiV8UwlWA558c/4hWySjuyOf1Qe5DMkNDQh9+GnyHZJYZBQ=
+	t=1760818049; cv=none; b=c7JVzuj/p1OxM408XJEz22tE+BvdEwxcRFnka9h7O8lC58G9ThZD23qeUkOJYI8q+8VD4egmTseE5BgyveqSfzcYj+H713tGDj2gVMgq42dpFmHds2g3zJm/XLtEsBRM52TBr0qZEq6kD1uopKII3+S9biKeGBuc9V/M6rilmfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760818048; c=relaxed/simple;
-	bh=x7DL8wZ2H2y3CT4UixCIA02HGuAmtVuVKlfHEfMR65U=;
+	s=arc-20240116; t=1760818049; c=relaxed/simple;
+	bh=mIJztLhVe4ZCCxWlJ82w8Nl7T5pVWIPezAoZnGMvqK0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=oh/ujvFHqUSdggwozHdg61vlL3cETPyKOIrFWrMRTl/2pXPXeYOiPZYbknwsvYP0GwML3Y/EA3IVY9bcH0YNNtX8M2KUigOL4BFfMxOENKrdMI13LLx6Ol4kVROQ/CFsVy2MNb1jW6eW7O8EL+88m/pS1GxTmGoCzwR5wCXBLmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jmo5Dml4; arc=none smtp.client-ip=209.85.210.181
+	 MIME-Version:To:Cc; b=SVBpjx671p03S2ETTyObViclQtZaBIU1FoSqvP0qPfp6XdcTE/YxDmTidSgcg/rE0CBSeKIboKrB3LdjJwwgObLCiMpcOzI6UBHY4eBQ0GzwyYQFwFkNkCHn04BusyOgGkFGLEtsPF4lEFbjnO7N8ffjIt70sgGr63BVxjRApWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DAumKOC2; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jmo5Dml4"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-781997d195aso2360779b3a.3
-        for <git@vger.kernel.org>; Sat, 18 Oct 2025 13:07:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DAumKOC2"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-782a77b5ec7so2845263b3a.1
+        for <git@vger.kernel.org>; Sat, 18 Oct 2025 13:07:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760818045; x=1761422845; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760818046; x=1761422846; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lZfhe2hkJZ4fjedR/NgC4K5OxCXYVRt0oCFzUSwCtz0=;
-        b=Jmo5Dml4n3Gf+gF5GvCe5C55BnScGmshp7NoNQdBxWYllFhtwI64gf8GihG3IJAlcN
-         bX1MHpjWB0B5vk6cTa/FIt5gj5UIYbax2iAEoMNDrZMKWDVXt2OGbIZhmchQjSyoxqfc
-         6ap+vaSpQAEd/E9iuxH1tqexUzqaa9DFQy4Cfluh7tPM+BZZSYJNcoJYku/RZbD8F4R0
-         JBqBqn5YBnyjdF5Q/l92jK3Q7fGk7NQ3vgIPNdut0AoQo/nsrXpXY8EcIhuQYMJ8T5a7
-         QNAw/sqHISNBYNIz5V/MXuIaHFEmOBsgsSCKa7u+cMEo95dNvbl8KPpZDJIO38SlIfjn
-         UOVQ==
+        bh=PYisAHC+fBOMIEaxCA80yFB9nDd4wns0ZqM9ROHM4MM=;
+        b=DAumKOC2pvGUHGpB2/obUtUQX8Uq/nxtPu+AVQV8sGYtT3kdEL8W7lUZo9skz+JVqH
+         tp5UW1knjDcxzhdpfHk5Y/wUF/r5yh5yCyrScNOpFB5qASQlJmv7ALc+H4kz4KjaeydH
+         Y5T1j7iZOTtrqTt0OZcubsQiFVbXaIiZSTLJirs+z4NJxKia/2dc0ir1ootNd32xZsSK
+         qu5POqEXCquhmkDLxdsKT3MXnhNm06Muf0K+eTvzxgtpEQyHWQxGre+ipY77JE3jnjFK
+         InHPMnfHZ/pg5q4CU1FnDkmaEDEwFRy00T5gqRfO+KFw5MVNqQhUrJpYyLf+ze3NuFTm
+         PRcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760818045; x=1761422845;
+        d=1e100.net; s=20230601; t=1760818046; x=1761422846;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lZfhe2hkJZ4fjedR/NgC4K5OxCXYVRt0oCFzUSwCtz0=;
-        b=Msmzp5Hy4ounJLoGdeXr/AtWFvo87Bycm8N/H6/pHzxnpCIxkY0Nz8cGdZnR1LcPyp
-         LIlHKOl7w5c9u+lMWb6W5WCddDjHKt47ITOR8SEj7qdduGQVtxzQwxQj62Jm5CYIIXJN
-         LHBHKIxebwYNvO+AxwPqd+T4eOgjfRgzTkugT681n3SbnMfr1YtGlAC/eJeGKGUhSvus
-         dMkAXpoG/wjOEMNYwALYF1eHQz0u+R0+0AgFXyGy03B7FTsPsv1+ckgj4HZ++SNfrwXb
-         3MpiD5IFJiygLt+Gee+kI/87kDdLIMOh+0lE1WdfzphdyQpqQuLGcLBWq+LGKwhBJjwX
-         b70Q==
-X-Gm-Message-State: AOJu0YzWJRsHo0aM0fHeBKZnWyzpAypqRFcujse6m6eqwUTtA1MN4DsP
-	2v4lFrhUeiyV0jVDFcQVGoe7jELjYJM9gT67mVCbnUcXlPUt+KgYCel80N03wYwR
-X-Gm-Gg: ASbGncveXjrpO8/57/OYJZ9sqrHsotCNFaJq+rBTqO67nu61q753y5Ru3lHLDJgxu69
-	5UNnFKLamBNZvijFshwTSeb5FmFUFSqikqT+eWOJ5TIgE6E3c1V+yRFCB7M24tWXB7XApppisuE
-	jR9JJ6WigXbW1jQCm+9TRMPzrIqdQQmMWYC5keXetmqcsQQWHHqiPeIUyntY32ImLoLh72qrKVp
-	xZsyLjaoXwR/KCcwuwWxrS+Gc+MzpEAJVUVNidM+RWInTqoj4vRwNoorwUy54y0UDRJYqXc3uhH
-	JQuDkkEADJ3nCwREKI8ZH5S5o3iDncATUbGL8ZdDb88e+8HIiBsKipkUM2jnpThcDEbWkWcdolg
-	+Z6U/Hp9uRnoD25aa54jy/rxnj1ZWgU3bzjlH5p8ZHjkh16xraqODZMp0MbRzd1A8cZmaQvRxHw
-	fJngA=
-X-Google-Smtp-Source: AGHT+IE/FSfLhg/lUCK80i3OzFCK9Q4QxUTYAu4K4UA7aG05vVeQR+H8v5XHLBCMN1pCpV4va+qrLg==
-X-Received: by 2002:a05:6a00:4099:b0:7a2:23cd:418c with SMTP id d2e1a72fcca58-7a223cd42b2mr7490246b3a.3.1760818045395;
-        Sat, 18 Oct 2025 13:07:25 -0700 (PDT)
+        bh=PYisAHC+fBOMIEaxCA80yFB9nDd4wns0ZqM9ROHM4MM=;
+        b=APnaG7GOQMoj8l5yZWjqYbu2yD6M0RUHX74yqFE2a66gbbhZMCw/wjeCCVK+48FaHv
+         1TfP8dCDNTbLsFlJUDWUMX80hsN75w3UffqNMowQGNK1IwcI4OW5Bt9QDrdGk1PKcu8u
+         +0ctRz5zSoaWM4yN5XSx5/TARpvqeWMsltq5qoG3cnJWzU8fPcsKqMjZkLmjZrPLtZTD
+         jqLV6Ykf+6LExfTtlpzijVW9hpnZmDuyg5ALT1M85Y7fwfiWm+bQ8/pCOCLok85/p0rn
+         W97WQACOga1PgbeKMMDyimgysI9wrfoxq4ilXPwX6a+27taPMqzIg2LrMrj//dMn0+8q
+         gBZQ==
+X-Gm-Message-State: AOJu0YzfuvoJ4C20670DPVXDdGJOQJiLixbdLZ4qR9AjhA+qjyymZo7o
+	lYpYM7tGtGTUbWZ7bDYlQ5ZeCaw5VzgxybhVCsrCLKEmmOWosKVA6NrgRP3I7dfV
+X-Gm-Gg: ASbGncvIv1Q/t83s0u9OUNPOnFayaogZD3vxWf3gy+nxdQOAOTc6ZuWnNKy7j34cVBs
+	/CYfSiHVDGEOWUTLaNcn7kMEWV6qCDkeUq73v1hUenh7NgTbx5lBB6P8PDI7N75QVU4wZZ8mWnD
+	J8UfRArekylBYb2pUifHmjv0tDASHRU+MKmJt2u8e9j/yi3CaAo4O62ia8TveaS3FqhRVYAoSy9
+	s7DurNyafmYdFm7LiWRjFKfmpEe4RhJLn4lvjUTKBBRqeCVWeckR1nCxl/3xy68+g3iGsIdOC0L
+	gxPK6dpNx3ytOCQNFIs1bBgL1kEr1Xw1tES76jJQgaV7LapyqCUlEClo7h0Ki55pxTJjkmwJXap
+	e081DZruSDwHxHr5Y6gRX5o7ZfUowyAYJzWJuL3cGM779Dqm/OBDGVeP0TFFdznIUFRnV6QaGaa
+	OaHckGVKc7X6kg2Q==
+X-Google-Smtp-Source: AGHT+IHFUjJtJUSsg4So5sQnMooRDyzU5t2WQeKOJ5p1aD07VuLjY8xq9fHF+1driSyzvcIz3qDLIw==
+X-Received: by 2002:a05:6a00:1491:b0:7a1:3b33:f7f9 with SMTP id d2e1a72fcca58-7a220aafeb1mr8373757b3a.26.1760818046481;
+        Sat, 18 Oct 2025 13:07:26 -0700 (PDT)
 Received: from [127.0.0.1] ([172.184.211.85])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a230122380sm3494893b3a.77.2025.10.18.13.07.24
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a22ff34b8bsm3520490b3a.22.2025.10.18.13.07.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Oct 2025 13:07:24 -0700 (PDT)
-Message-Id: <58563a7b9039ff75bc449fc781a95a286c11c2b4.1760818039.git.gitgitgadget@gmail.com>
+        Sat, 18 Oct 2025 13:07:26 -0700 (PDT)
+Message-Id: <416695f439032e027a322c752df3e4215b8d233b.1760818039.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1987.git.1760818039.gitgitgadget@gmail.com>
 References: <pull.1987.git.1760818039.gitgitgadget@gmail.com>
 From: "Claus Schneider(Eficode) via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 18 Oct 2025 20:07:18 +0000
-Subject: [PATCH 4/5] tests: fix existing tests when add an ignore=all
- submodule
+Date: Sat, 18 Oct 2025 20:07:19 +0000
+Subject: [PATCH 5/5] Documentation: update add --force and submodule
+ ignore=all config
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,64 +83,47 @@ Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason <avarab@gmail.com>,
 
 From: "Claus Schneider(Eficode)" <claus.schneider@eficode.com>
 
-There are tests that rely on "git add <submodule>" also adds it. A --force
-is needed with this enhancement hence they are added accordingly in these
-tests.
-
-Updated tests:
-- t1013-read-tree-submodule.sh ( fixed in: t/lib-submodule-update.sh )
-- t7406-submodule-update.sh
-- t7508-status.sh
+- The add --force doc: append additionel info about the submodule
+functionality.
+- The submodule config ignore=all now need --force in order to update
+  the index.
 
 Signed-off-by: Claus Schneider(Eficode) <claus.schneider@eficode.com>
 ---
- t/lib-submodule-update.sh | 6 +++---
- t/t7508-status.sh         | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ Documentation/git-add.adoc    | 4 +++-
+ Documentation/gitmodules.adoc | 5 ++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index 36f767cb74..f591de6120 100644
---- a/t/lib-submodule-update.sh
-+++ b/t/lib-submodule-update.sh
-@@ -95,14 +95,14 @@ create_lib_submodule_repo () {
- 			git commit -m "modified file2 and added file3" &&
- 			git push origin modifications
- 		) &&
--		git add sub1 &&
-+		git add --force sub1 &&
- 		git commit -m "Modify sub1" &&
+diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
+index b7a735824d..2234b1e846 100644
+--- a/Documentation/git-add.adoc
++++ b/Documentation/git-add.adoc
+@@ -77,7 +77,9 @@ in linkgit:gitglossary[7].
  
- 		git checkout -b add_nested_sub modify_sub1 &&
- 		git -C sub1 checkout -b "add_nested_sub" &&
- 		git -C sub1 submodule add --branch no_submodule ../submodule_update_sub2 sub2 &&
- 		git -C sub1 commit -a -m "add a nested submodule" &&
--		git add sub1 &&
-+		git add --force sub1 &&
- 		git commit -a -m "update submodule, that updates a nested submodule" &&
- 		git checkout -b modify_sub1_recursively &&
- 		git -C sub1 checkout -b modify_sub1_recursively &&
-@@ -112,7 +112,7 @@ create_lib_submodule_repo () {
- 		git -C sub1/sub2 commit -m "make a change in nested sub" &&
- 		git -C sub1 add sub2 &&
- 		git -C sub1 commit -m "update nested sub" &&
--		git add sub1 &&
-+		git add --force sub1 &&
- 		git commit -m "update sub1, that updates nested sub" &&
- 		git -C sub1 push origin modify_sub1_recursively &&
- 		git -C sub1/sub2 push origin modify_sub1_recursively &&
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index cdc1d6fcc7..7617be14e8 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -1565,7 +1565,7 @@ test_expect_success 'git commit will commit a staged but ignored submodule' '
+ `-f`::
+ `--force`::
+-	Allow adding otherwise ignored files.
++	Allow adding otherwise ignored files. The option is also used
++	when updating submodules and `submodule.<name>.ignore=all`
++	is set. The `path` to the submodule must be explicitly specified.
  
- test_expect_success 'git commit --dry-run will show a staged but ignored submodule' '
- 	git reset HEAD^ &&
--	git add sm &&
-+	git add --force sm &&
- 	cat >expect << EOF &&
- On branch main
- Your branch and '\''upstream'\'' have diverged,
+ `--sparse`::
+ 	Allow updating index entries outside of the sparse-checkout cone.
+diff --git a/Documentation/gitmodules.adoc b/Documentation/gitmodules.adoc
+index d9bec8b187..3aa71170ee 100644
+--- a/Documentation/gitmodules.adoc
++++ b/Documentation/gitmodules.adoc
+@@ -70,7 +70,10 @@ submodule.<name>.ignore::
+ --
+ 	all;; The submodule will never be considered modified (but will
+ 	    nonetheless show up in the output of status and commit when it has
+-	    been staged).
++	    been staged). Add `(new commits)` can be overruled using the
++	    `git add --force <submodule.path>` similar to ignored files. The setting has effect
++	    for `status`, `update-index`, `diff` and `log`(due to underlaying
++	    `diff`)
+ 
+ 	dirty;; All changes to the submodule's work tree will be ignored, only
+ 	    committed differences between the `HEAD` of the submodule and its
 -- 
 gitgitgadget
-
