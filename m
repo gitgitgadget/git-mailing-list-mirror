@@ -1,174 +1,202 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E84021FF4A
-	for <git@vger.kernel.org>; Sun, 19 Oct 2025 15:34:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BFC2877D7
+	for <git@vger.kernel.org>; Sun, 19 Oct 2025 15:52:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760888066; cv=none; b=N+Yn25b4ODAxLSq44YPZcgLnhPdhy+6iSmBUcbGAnqiM6bg67DRJE2U9MtXLIT/N5gsk+vmVhzH37BauLZLnECqUcgybNTxKGKOSmdA3C11K62DKpDxFLSlgyF9ujV5vvKvGJpd+cXWJ/kgFyR5JKXwDVr5M/86nnGGOzlax7F4=
+	t=1760889172; cv=none; b=NLMcAOYg5/sFePEFI2517Sy1xXira7mJYr6I8TJmdqSQQLYB8ihJcbbVUip6Mf9zpXiro/VthjKbIkucnhiM4uGmMiiDJgNiEPgEsDhm5TJ6MRgQsUaaOdaALVJM/EZlhA+xK/J7F788UchqzaBMgm9ZynzYBh0AAPm2DGxV8lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760888066; c=relaxed/simple;
-	bh=Xu5XcqBJAjcMAbBJzvcAIlK8HIOxfys1muADOFtFGIc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XVV0eHABwtAhfl4NcG7kFfm+4zZQhwkyRYhJunQ2xcr1D6Aoxor30YbNh0EziZDIoG1rHFLmdtPbY9Dd+Oo9jlzSOqGLcvLkkLnogTiIyiI2aK+D9a9i2icS+Y7rMZtSqNvK9m3qDA08g4INmtSbor0NoDoZHWtmsQIFVu5ElRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ILghzAan; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760889172; c=relaxed/simple;
+	bh=DK+2xWB9919nwKStU2m0fPs+HBxZsZC3R5oVzgtJ2Gg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IsadkhZfVv0tTXS2Pxt659rJ2t+ROgR3d8TNp37uxjVOtOLZbctdNMVuQ2pVnuM2fNMQKtgS5vo4QRYsP36I89q+PFq/pnZKWGIWqO9mH0eY9/RWbTGfuU/qIwNvaohUN3nPQ4VK9g1rGmaxV1KU7Pl9bc1Ivdu2sxW/Mt4y6mM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KSuwdzRC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qXIRn/CW; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ILghzAan"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-46b303f755aso36326965e9.1
-        for <git@vger.kernel.org>; Sun, 19 Oct 2025 08:34:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760888063; x=1761492863; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=1EYygmpqjbNALqSyJPNI9pKXYGI4nLw2E27b5voepaE=;
-        b=ILghzAanbAjSw0EzhnNULEKtopNzu9MT3Fai0KuwKy1Grnu+vGMduHn1WAc2+rOvFm
-         97XYYHlxFLSdmO0ZzXBN9Vj8Di1SLqn511rfwG0M1QMos60XamP5cymkJCR5AO2hAc0I
-         4N9rvtHLrXSg7TBZJ3lZhE3JGsW7N+GrUKcI1Ox9I1tzOAGx7X65B3YxDxLtosPad5ci
-         Y67SBRGl6gNu6T9zUEmIXm5QQtdXhB96wA6N2fEqFhebv+/0YsaYXQHePDOdTCUMQnDk
-         0aAGOyHzAegvT7bnZLpu8IN9TYBCWLNiEliJYNF7jr4eLmzIw2bNDzOhHC76G7BR7Vcl
-         CT0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760888063; x=1761492863;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1EYygmpqjbNALqSyJPNI9pKXYGI4nLw2E27b5voepaE=;
-        b=CRAGDlfcFnEfTDFuozPVRm2GnSOsWyf/naikrcLkd0Pmx6JtRvY3/yW2UoGLteI4V/
-         /tVpWEr+DnLXTRz+sPaF4nN/Du1B48H+7T4D6qs7N5qnMI5c3sKEmKW6tOW/DnusrFOw
-         Ess/s2kQ31vvxBRmrQpvTC27yZGhxtE3BxWXHnpAC+km0+E9/aNBuZ1n+/92X0fzWwfR
-         UiiyGuwpTdFlivZc8+5weqAwyhoWx1fNME9+xMupruYpUSZk2Y/0ZOmaIM4JGrqvW/Jf
-         Xn/UoWZhNblUyPDAkSUEywo+M4ezcH5ad4EPQ0yGIbbg+5pDHIppLRSMPtMv8gcpTjVJ
-         OVlg==
-X-Forwarded-Encrypted: i=1; AJvYcCV8h3AKdv7QOOe3z5PdhgNKQFqJEM8tNrrHTu1V/gz3tipH5gb75BwcbrcXca9mJQ8JNjw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YynHT0kI7QkrtyaaW6GimWAwNx/F4oFNSB3RWU7xWZ0Jb3tVxiQ
-	vExHc/7aup0IgZ/RQP6n9sadEE65C4HyRx0kiEF6Q85wz/qIq6ob4CHL
-X-Gm-Gg: ASbGncuUz70YDhrSHS8XSjpbrafwID7OA4zFML2ZcTM6Z2VQsdrMOjYqn28dW30aaMc
-	BBoGyzYOj91butjvC0EPe8VAZchsZbMugue7VjY9m4JhSROMp8b5g2vH3s/ZX3QI8zOvK/u8uug
-	6TiPMq+zU0/KXahnyAS+X9JPA5Po27cW+FzRO+3/Row3NJIVQ/VExkQbnZXBcLPVWTympRAEO2V
-	9WrV94WdfZZ9JqSZwtuUoMJ1FSZzwLLpd0f/xyfcFg+ukGqFx+YaY6XUsc9dzu2wOSTdA/udXfX
-	mVcoUpHx0AtmK5TU1eCit69DfZ+ySqZUQ+A7UIMNcT8MxD36IAnAq10LwL4uzirVEKeskiFurCP
-	maYsJOpyLP8i1PzCmFEv+tPJeVp/K9I6ICsQ4VVhbBtWMUoTUO8sEMrIilkTcXPnEgrY7UxgIl0
-	C2wuQB7ugkjHcRI6LOkTO1jODIoT2EmSxsHHKHKPfjNDZl62Rb9dNlCxQbhQcukek=
-X-Google-Smtp-Source: AGHT+IE6ckwEvWLhYZ6P52q7FmPc6Kc+Tgx7z3brbVyURbM33xp6OY4tx/DZnT1hLoKva0uZlr4P2g==
-X-Received: by 2002:a05:600c:8105:b0:45b:6b57:5308 with SMTP id 5b1f17b1804b1-47117872704mr73056145e9.7.1760888062561;
-        Sun, 19 Oct 2025 08:34:22 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47152959b55sm104812955e9.6.2025.10.19.08.34.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 19 Oct 2025 08:34:22 -0700 (PDT)
-Message-ID: <2688a523-e324-41bb-858f-b32040e1e909@gmail.com>
-Date: Sun, 19 Oct 2025 16:34:19 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KSuwdzRC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qXIRn/CW"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4834D7A004D;
+	Sun, 19 Oct 2025 11:52:49 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Sun, 19 Oct 2025 11:52:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1760889169; x=1760975569; bh=ezpdi5rBLb
+	OrrzJ/G2Ohj73YNqCsY1l5SdfG/l82PEw=; b=KSuwdzRC+wHMP7tciPcMZhhaOy
+	rfXlWxBpoDsGhix1ftUEV8XyoKihwgoMAIlfu2x9Y+42KLvlv8/93OLfTAuLqmt2
+	xhv7Mgv/vzZ+epp87hlpoDICEZ4aZQVD19ag4Kjo9d74CBS9Xc4tjL93oddSjRYI
+	UoLc+t6ZuatnVtGFSk32aw4tPVAkq1VZNEBT5nXbOAYMzatvFTMNVWhlcFfBh+3F
+	mk7+7mhLHJE0OdY0hUWr3d2bq+zW0GafothjaUXp/zr0BtHxtj1LmpsB9f10YWr3
+	LKG25R0/fohifaAv7xiPUsq5GheQl7sZAP7PyEKyxnIL5K86L2Fs0rT1xk0w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760889169; x=1760975569; bh=ezpdi5rBLbOrrzJ/G2Ohj73YNqCsY1l5Sdf
+	G/l82PEw=; b=qXIRn/CWEN91lrnhIjJRCt8zsgkPHMuWeoX/VV4HsDRVKknnu17
+	IoarJqqLfj65rXAkom2Cr8ZtgPoR/vyCF3odxo2hV6QJYeN1monoUiCmH4RV6Oyp
+	croniobRpwdRltTRFxzC50HxytpjCSRFrRTHzCsi9znKBJ5/ztS8GCSV5JaEcv+t
+	9Kcwr+2dPlCw2c/saX9J6El02fUWDy4hFv/Lz2pKSwO3LfxOyd+RQ/s8lHlZXMzc
+	QEqfbDQy7cfY6bb31BaUqAkr78FpJfZbIY87Fv7f7WGUALR9GaUmbmFLYkC8620i
+	TcYS5+jITMw2ZZsDCkDnMR1Nb6F29EnvUfg==
+X-ME-Sender: <xms:UAn1aCFuH3A2dMDqGrSoTyOR2b9xbI_ZxR5HSUWciDAFdz_IU_S5Bg>
+    <xme:UAn1aKNw7Dkeyu48phqZ8z61jggrdYt5AMPqToghGW3AvgrPN9RqU6uxM2MELoQbs
+    KObAq7HSbSFcoW9_rOUV90qzVMJ9dk9fKdYyXrqnjdqw9ARasHX_A>
+X-ME-Received: <xmr:UAn1aEf6NOqfHaX18GL-BgbvWsmfloDbii25zd0cYSIN9GVLaaIu_HBR1oaBps73_ZUgv7sIivxF751QZ3r3D0Rxb31c8UoNwAyN>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddufeehfeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghlkhhi
+    ugelkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:UAn1aHuEfyL32WYr5CWNCVh8X5lYXvjI6JVaGTY--SlPTUIRPOsNbQ>
+    <xmx:UAn1aFmny0GhuS3j8hhNgWZysDRazweg2k1oVSebgX3YQHnMKsyewQ>
+    <xmx:UAn1aJyQGHS9Uc2n-FETJqS6WyW9lIuNMmL_m47qNtveKLU5_YWR0g>
+    <xmx:UAn1aHMCa27RN9E0Ppa3K-AarVzKsSXx9eH1TrhMGsRNj_HiDfrpRw>
+    <xmx:UQn1aG8uJ78Mbvt5rWEIQRYOxZkJSAXkwc0fMtNaxngwKDZX7cYDcL6c>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 19 Oct 2025 11:52:48 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Olamide Caleb Bello <belkid98@gmail.com>
+Cc: git@vger.kernel.org,  usmanakinyemi202@gmail.com,
+  christian.couder@gmail.com
+Subject: Re: [Outreachy PATCH v3 1/2] gpg-interface: replace strbuf_split*()
+ with string_list_split*()
+In-Reply-To: <7da4fded535984faea52d5f88793d3c8e47c0091.1760869186.git.belkid98@gmail.com>
+	(Olamide Caleb Bello's message of "Sun, 19 Oct 2025 12:07:42 +0000")
+References: <cover.1760869186.git.belkid98@gmail.com>
+	<7da4fded535984faea52d5f88793d3c8e47c0091.1760869186.git.belkid98@gmail.com>
+Date: Sun, 19 Oct 2025 08:52:47 -0700
+Message-ID: <xmqqqzuy3n3k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/5] git-add : Respect submodule ignore=all and only add
- changes with --force
-To: Claus Schneider via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Brandon Williams <bmwill@google.com>,
- Claus Schneider <claus.schneider@eficode.com>,
- Emily Shaffer <emilyshaffer@google.com>
-References: <pull.1987.git.1760818039.gitgitgadget@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <pull.1987.git.1760818039.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Claus
+Olamide Caleb Bello <belkid98@gmail.com> writes:
 
-[I've adjusted the CC list slightly]
+> In get_ssh_finger_print(), the output of the `ssh-keygen` command is
+> put into `fingerprint_stdout
 
-On 18/10/2025 21:07, Claus Schneider via GitGitGadget wrote:
-> The feature of configuring a submodule to "ignore=all" is nicely respected
-> in commands "status" and "diff". However the "add" command does not respect
-> the configuration the same way.
+Something lost at the end?  I'd assume
 
-I was curious why, when "git add" uses the same machinery as "git diff" 
-to figure out which paths need updating, it behaves differently. It 
-turns out that add_files_to_cache() contains
+	... into `fingerpritn_stdout` strbuf.
 
-	rev.diffopt.flags.override_submodule_config = 1;
+and tweak the copy I received locally before applying.
 
-which makes "git add" ignore "submodule.<name>.ignore". Tracing the 
-history of this line, it originates from 5556808690e (add, reset: ensure 
-submodules can be added or reset, 2017-07-25) which made a deliberate 
-choice for both "git add" and "git reset" not to behave like "git diff". 
-If we're going to change the behavior then it would be helpful to 
-explain how this patch series ameliorates the concerns that lead to that 
-commit and why it is sensible to change the behavior of "git add" but 
-not "git reset". It also suggests that a much simpler way of 
-implementing the change would be to delete that line.
+> The string in fingerprint_stdout is then split into 3 strbufs using
 
-I'm not convinced that the approach of using "--force" is a good idea as 
-it conflates ignoring changes to tracked paths (which is what 
-submodule.<name>.ignore" does) with ignoring untracked paths (which is 
-what ".gitignore" does). If we're happy to break existing uses that rely 
-on the current behavior then having a new option to override 
-submodule.<name>.ignore strikes me as a better way forward. I don't have 
-much experience of using submodules so I can't comment on whether 
-changing the behavior is a good idea or not.
+"into up to 3 strbufs", I think.  If we do not say so here, ...
 
-Thanks
+> strbuf_split_max(), however they are not modified after the split thereby
+> not making use of the strbuf API as the fingerprint token is merely
+> returned as a char * and not a strbuf, hence they do not need to be
+> strbufs.
+>
+> Use string_list_split_in_place() instead for simplicity.
+>
+> Note that strbuf_split_max() uses 3 to specify the number of tokens to
+> extract from the string, while string_list_split_in_place() uses 2
+> because it specifies the number of times the split will be done on
+> the string, so 2 gives 3 tokens as it is in the original instance.
+>
+> string_list_split_in_place() returns the number of substrings added to
+> the `split.items` so for a successful split of the string in
+> fingerprint_stdout, at least two items should be added to split.items
 
-Phillip
+... this "at least two items" would become contradictory.
 
+> so we can always be certain that the substring at index 1 is the ssh
+> fingerprint even if the key owner's identity part is missing from the
+> string in fingerprint_stdout.
+>
+> Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
+> Reported-by: Junio Hamano <gitster@pobox.com>
+> Helped-by: Christian Couder <christian.couder@gmail.com>
+> Helped-by: Junio Hamano <gitster@pobox.com>
+> ---
+>  gpg-interface.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/gpg-interface.c b/gpg-interface.c
+> index 2f4f0e32cb..cb182f4c11 100644
+> --- a/gpg-interface.c
+> +++ b/gpg-interface.c
+> @@ -14,6 +14,7 @@
+>  #include "sigchain.h"
+>  #include "tempfile.h"
+>  #include "alias.h"
+> +#include "string-list.h"
+>  
+>  static int git_gpg_config(const char *, const char *,
+>  			  const struct config_context *, void *);
+> @@ -821,7 +822,7 @@ static char *get_ssh_key_fingerprint(const char *signing_key)
+>  	struct child_process ssh_keygen = CHILD_PROCESS_INIT;
+>  	int ret = -1;
+>  	struct strbuf fingerprint_stdout = STRBUF_INIT;
+> -	struct strbuf **fingerprint;
+> +	struct string_list split = STRING_LIST_INIT_NODUP;
+>  	char *fingerprint_ret;
+>  	const char *literal_key = NULL;
+>  
+> @@ -845,13 +846,12 @@ static char *get_ssh_key_fingerprint(const char *signing_key)
+>  		die_errno(_("failed to get the ssh fingerprint for key '%s'"),
+>  			  signing_key);
+>  
+> -	fingerprint = strbuf_split_max(&fingerprint_stdout, ' ', 3);
+> -	if (!fingerprint[1])
+> +	if (string_list_split_in_place(&split, fingerprint_stdout.buf, " ", 2) <= 1)
 
-  The behavior is problematic for the logic
-> between status/diff and add. Secondly it makes it problematic to track
-> branches in the submodule configuration as developers unintentionally keeps
-> add submodule updates and get conflicts for no intentional reason. Both adds
-> unnecessary friction to the usage of submodules.
-> 
-> The patches implement the same logical behavior for ignore=all submodules as
-> regular ignored files. The status now does not show any diff - nor will the
-> add command update the reference submodule reference. If you add the
-> submodule path which is ignore=all then you are presented with a message
-> that you need to use the --force option. The branch=, ignore=all (and
-> update=none) now works great with update --remote, but developers does not
-> have to consider changes in the updates of the submodule sha1. The
-> implementation removes a friction of working with submodules and can be used
-> like the repo tool with branches configured. The submodule status report
-> could be used for build/release documentation for reproduction of a setup.
-> 
-> A few tests used the adding of submodules without --force, hence they have
-> been updated to use the --force option.
-> 
-> Claus Schneider(Eficode) (5):
->    read-cache: update add_files_to_cache to take param
->      ignored_too(--force)
->    read-cache: let read-cache respect submodule ignore=all and --force
->    tests: add new t2206-add-submodule-ignored.sh to test ignore=all
->      scenario
->    tests: fix existing tests when add an ignore=all submodule
->    Documentation: update add --force and submodule ignore=all config
-> 
->   Documentation/git-add.adoc       |   4 +-
->   Documentation/gitmodules.adoc    |   5 +-
->   builtin/add.c                    |   2 +-
->   builtin/checkout.c               |   2 +-
->   builtin/commit.c                 |   2 +-
->   read-cache-ll.h                  |   2 +-
->   read-cache.c                     |  54 ++++++++++++-
->   t/lib-submodule-update.sh        |   6 +-
->   t/meson.build                    |   1 +
->   t/t2206-add-submodule-ignored.sh | 134 +++++++++++++++++++++++++++++++
->   t/t7508-status.sh                |   2 +-
->   11 files changed, 202 insertions(+), 12 deletions(-)
->   create mode 100755 t/t2206-add-submodule-ignored.sh
-> 
-> 
-> base-commit: c44beea485f0f2feaf460e2ac87fdd5608d63cf0
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1987%2FPraqma%2Frespect-submodule-ignore-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1987/Praqma/respect-submodule-ignore-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1987
+This may be just me, but when we expect at least 2, I would find it
+more natural if we said "if (count < 2) then error", rather "if
+(count <= 1) then error".  I'll let it pass, as there is nothing
+mathematically incorrect here ;-).
 
+>  		die_errno(_("failed to get the ssh fingerprint for key '%s'"),
+>  			  signing_key);
+>  
+> -	fingerprint_ret = strbuf_detach(fingerprint[1], NULL);
+> -	strbuf_list_free(fingerprint);
+> +	fingerprint_ret = xstrdup(split.items[1].string);
+> +	string_list_clear(&split, 0);
+
+OK.  This is a straight-forward rewrite that is fairly faithful to
+the original.
+
+But I wonder why the original was written in such a convoluted way
+to just extract the first part of a string that is space delimited
+tokens.  It is obviously not your fault that the original is written
+that way, bit I would have expected it to be done more like this:
+
+    char *begin = fingerprint_stdout.buf;
+    char *delim = strchr(begin, ' ');
+    if (!delim)
+	die_errno("Barf!");
+    fingerprint_ret = xmemdupz(begin, end - begin);
+
+Am I missing something?
+
+That may or may not be outside the scope of this topic, which is to
+reduce the calls to a misdesigned strbuf_split*() API functions.
+
+Thanks.
+
+>  	strbuf_release(&fingerprint_stdout);
+>  	return fingerprint_ret;
+>  }
