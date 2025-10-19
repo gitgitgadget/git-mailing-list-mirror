@@ -1,141 +1,109 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-pf1-f195.google.com (mail-pf1-f195.google.com [209.85.210.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5EBF50F
-	for <git@vger.kernel.org>; Sun, 19 Oct 2025 12:57:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC312E0B47
+	for <git@vger.kernel.org>; Sun, 19 Oct 2025 14:31:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760878671; cv=none; b=bGR+m6M2i6rqqfagtLlxX9E0Amj4v1b11cY0nRymZpidPKTkfCppC4iohvh55699ZDfcsmEMgwlzG7qQkeSibrrXL+fyV3bMy2C8frpiwDRx/Lvby0/u5uL3z4+/YWkgaX7Fx+Wkkh1l0u4fpxj3/1t2PLHj88KAA9RQ6UE3zWI=
+	t=1760884303; cv=none; b=ZOdgN0eJL08DMrgGQNEAYX8DX4QncH9mf/5aWHqUW0SwWhhDHyk7JzpZcot8viNxg0rcknUQAW8Cg9oUmyQEU64222nGcAxFi/4SvY4v04mSe0mzxUmCbS1SLfBerkE+mwRnXhY1HWMC8dHG3iAk3HazxDPS4NwQ2QSCQEcui3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760878671; c=relaxed/simple;
-	bh=GvGjFEmy6sxEkVTsfY7WjF0XFDAJwS22L8AP8cMUpHk=;
-	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=OOLLU5PAi+/yZsRVT1gfa+1ul8TcbF3NOQFmfLfd47328694CjSuU6xcrWJffnLaiM3/n/EEoNmrUTGDAQMtJ65sAtGNvu748YBWcHE+6UbFw1Nnivz0rtLX4G5ODJXW/nDGwLP7Xv1YpeAiKdd9oArv0W0eiXOdU56CshFrJJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h8vh1oy2; arc=none smtp.client-ip=209.85.210.179
+	s=arc-20240116; t=1760884303; c=relaxed/simple;
+	bh=YZ0fLJU3RH3CXbQU0Ch1NDi4LzCA7XCIytIRfODlRUo=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=XvABIUGm4My/EAa37Mi37WFO9o0zBfiVtkJ57w/YIk82Xg7/mY8bJwNq2rgXlOyaM28V4Y53NcUW3S8mNqMMrRxnNK2kX99D74FxltxbHDgPUXEVMgbbuWWzbF84yhmQlSVK+GOuvxLrJQ866vIl0qCB6a2alU9U4krscCQNHNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z1wJpLYL; arc=none smtp.client-ip=209.85.210.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h8vh1oy2"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-77f5d497692so4384137b3a.1
-        for <git@vger.kernel.org>; Sun, 19 Oct 2025 05:57:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z1wJpLYL"
+Received: by mail-pf1-f195.google.com with SMTP id d2e1a72fcca58-781010ff051so2648799b3a.0
+        for <git@vger.kernel.org>; Sun, 19 Oct 2025 07:31:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760878668; x=1761483468; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=q1OV+YiLHkAoQ2KQ/gikWgG+KYIsIr3cRdAf3ktwW0o=;
-        b=h8vh1oy2jJ+KHG2uK4EZCssuXewUpi2lG8CWk6mlEzsjZTjv5YWJOte283A8mZyW1j
-         hBpNCRsRSCqvz8F49WCVJbq9yTuEfr4PofLRlJhXP728e2OS3VtABepe6hQIqKBXo2q0
-         LH5ZImtZLAWPCdNu4Qpz1y2GGwy5tEBObbgEb0AguL5pWbizcjWmDvZBsCjax36245GA
-         dv0LeCM+xu4JYuCup8Lq7cJY6rPyolnJEbbO2nvWcYlBdtIz2O7m6WDG1QQpQgKZl0a9
-         PMKvnfIdKhSS8BzbtxcXXIbc6UnWWFtVAPXM5puUhuhFY2gWpsNJZvjiClKRJ85NSI8l
-         NgkA==
+        d=gmail.com; s=20230601; t=1760884301; x=1761489101; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eDl12rlfUNFwc2tMYh3rZzIheoNO4r9Ga0t8I4M0Eyw=;
+        b=Z1wJpLYLnbd+a6DrwUNgG3ow7L+INiwGTpUB9+z6pT+6nniAFcUmlRbFGMQ+XPYSvH
+         WIEi5b3H+O28dgfRg8+sBmF4wehLPGJoKJka0qyXmexU/BgWmRSSMrr8pJZu/i0FutV6
+         e6pUODzkEl1rmTXfiWDUKVYkZIt6EXWSK4sYIf3cQmj49Z3Kd6TgWGXDqQE5DXYTxRz8
+         vpFPRgiafoF1PQ5qz0zBGLvX4WILKRIZmyMZSSMNwVsmLJpAb39ytIHT9dE7/M491Bk0
+         dIf+MLrkY+Les1c7WZVN7t69L8vEQT3LcLIEZmzWDsAj6iUuOfJj9aYs+nXtZ7+s88FP
+         3uEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760878668; x=1761483468;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=q1OV+YiLHkAoQ2KQ/gikWgG+KYIsIr3cRdAf3ktwW0o=;
-        b=rKubZj2Jj8lmIAmbYhzxq27WvRVvB/VBR6gnqjxTHLttujkS2XSe8BzsUrJdkeomUL
-         69mNE4b4cOToDWjYx/mXEloWT6YrYSFn/kT92lQGDF6n3lufn83CU4uGb0LeEVgFXZAS
-         Wr7VeeLBcWjXXrBecu/hIPJ/j8uWpmHjmfrL3bALrSkGkQ7zOJr+1absDGq3I17kruAj
-         LKmtUpsxuqk7kSKZ2wlqEAqB47kByJcRZXs5da1de4KVYzzy97kGM89oOv/xvTAH+bPf
-         IXTNdYHLFfsNIyCyDmIK9E+wi7/4PUS7I/fTD06cipekQP3vUKpDqeCEe5uwBck+txsQ
-         jIqw==
-X-Gm-Message-State: AOJu0YwaW9yig0KVEGGfHLRO4zouRV8z/zVDwrFBMA21Wkf+zb2pQJ1d
-	gzMJKcw31BT8pyEcIqpDSnOzbslaO06qp7TrVM0u9/HncGA77LgDMovjW7EuJg==
-X-Gm-Gg: ASbGnct7k/YWGtJ0Aw7gaMu6yrKdrLi5IJnaGqjTp331rRLjsK7vr70ayay+mHN8nda
-	vektoLMnNeeoPdNWUq57aZf9NMCzUi1MFfopr1yqg/L+O3vom3mO9U8QiGzlw370YtaJyps8l/a
-	dqN8vrCWlWBMiwevAYx8NtlBxwHIwsfGaxrgqjZsh+oh2R2SBWD/UAdScrvh5WMaiu+lkBzGM2m
-	jkX3+4/TY+X6JqkEE5PWk2/XpgaB75BWPbuB2xhNguO9KtGC8Tzwk4WX9TI+DqN7PI/A9QUZadu
-	AnDH0dCRC56bQqCh1RHz/9QoqXPEdzMqXLs1rulwZbNr+2LgUtHWqDJSdaCZ0JtxA6aYmV4Bw00
-	R8L7oRfkn/P3B18naOjP0kqRV3Jn5n6Tw6sd14if8MPwkbnTk+uU9t5gpDMoYWZk6H3lJ7q6i4h
-	MqvAihz5QU2jBCBwQ=
-X-Google-Smtp-Source: AGHT+IFzaFmnZkHHzpU4gCIssdCOUailpyMg/r/Q9OZe2T99qKZXGSfWqsUhmZlbXBJUvADM6qbgIA==
-X-Received: by 2002:a05:6a00:3d06:b0:781:19e1:c4c8 with SMTP id d2e1a72fcca58-7a220a69eb6mr10782712b3a.9.1760878668171;
-        Sun, 19 Oct 2025 05:57:48 -0700 (PDT)
-Received: from [127.0.0.1] ([172.182.195.132])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a2300f254esm5456794b3a.45.2025.10.19.05.57.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Oct 2025 05:57:47 -0700 (PDT)
-Message-Id: <pull.2073.git.git.1760878666840.gitgitgadget@gmail.com>
-From: "KIYOTA Fumiya via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 19 Oct 2025 12:57:46 +0000
-Subject: [PATCH] completion: complete some 'git log' options
+        d=1e100.net; s=20230601; t=1760884301; x=1761489101;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eDl12rlfUNFwc2tMYh3rZzIheoNO4r9Ga0t8I4M0Eyw=;
+        b=KPX40TghlNBMdlFMPmt/vsWz/OfoRd/5PLdTIqXwPkHOBBYXyxlzWxjDWsN9uowC9N
+         35x/Kcvrie/U9ZaYWVvBaGaT4PeBTzSoNik9ql4qqkdoYUlk8cp0heZnVaQLrJrQS0kZ
+         1Yuq8IzFtcvdxHSh/6R3LGcqXEvP6dHn+RYuzs2IBXOJeLvs6s0cwl4a9Sa6sdEHFHbW
+         1tPaOUO150xNf88EFGYAm93sZrUOEE61mGySY7Vr6mzfOpdF693B7nfFDTCAu6cGWEOG
+         1hEtRjpuEJOai+vfMDemVNjk8lJFbJ7iN3qCvtpYFySy9mBCN1ZKSJwGvDIorIHam56v
+         +Ccw==
+X-Forwarded-Encrypted: i=1; AJvYcCUkMsIDtCg4ijvVt6JvAyHCSepacgFWgL7WYQtix/Y/QUBNirxyX5rnEYs0lidIgye/W00=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwdcuaYpAWjUnugltZA156kAq2Sl8RHVz7CDeqPilAXsrS5sgAY
+	sQzDRXe57Pyd0eXQneAL/bKfqDdqLtjAirh/SNtSBwU1VE57Y9weOJGH/99tx3/alABYzA==
+X-Gm-Gg: ASbGncssLen2zald2eluf8otSCT5PnrlEI8jEl9bgFGFNbIuT0WFFUNlcQ89KyFZKVT
+	OJGBSeAxFBM/Tio2T1mMJdXMOAiHnxkTmSRWgJ5wnhnamSOqw4s3RiYM7J0xR+57YQzGu1ypM35
+	Ly5voNs4/f7t+48DSSLd5aP3TIBEDfeZzhkEPSe+HkwHd+FUsxJTxX+63+6WXLmxYewZ/oXSqNs
+	RvhPFDGbGwyRE+obzlzci6v8VIOJe4fw8mlvsjzKX8vw8e9U7j9jD8eX/WjiGkuHjZqDeVpRWhQ
+	u8Becoj3o3kQjvW5ymapqO3L3CeIC0+tEb6JppyjYJrEqGoRyweYJYqAYVUWMxJI8E3YX+iArVq
+	CsRn2nslU/pibmbMCI4GEkU+SCTuWXpiiyPl7EEIyHrdFFM4CgOc1EQHJWsoO7OORaLK5xGR9Wc
+	Y6UN2ijauHOW0vx5uX66qsv40/IobHlFY2u+/4Oq1wo07rAV0=
+X-Google-Smtp-Source: AGHT+IG+kd5fjIHISw9cywg3WrxOMCW64JmuXF0MkKgULu79N15JnGcwCpZf0+xKS//GgN25MdvXMA==
+X-Received: by 2002:a05:6a00:189a:b0:781:15b0:beb4 with SMTP id d2e1a72fcca58-7a220b10752mr10286503b3a.21.1760884300840;
+        Sun, 19 Oct 2025 07:31:40 -0700 (PDT)
+Received: from smtpclient.apple (n058152119060.netvigator.com. [58.152.119.60])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a23010f7c7sm5609805b3a.54.2025.10.19.07.31.39
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 19 Oct 2025 07:31:40 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: Revi Ewer <revi.ewer@example.com>,
-    Ill Takalook <ill.takalook@example.net>,
-    KIYOTA Fumiya <kiyota-f@asahi.com>,
-    KIYOTA Fumiya <aimluck.kiyota@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: [PATCH] diff: stop output garbled message in dry run mode
+From: Lidong Yan <yldhome2d2@gmail.com>
+In-Reply-To: <xmqqa51ow6xu.fsf@gitster.g>
+Date: Sun, 19 Oct 2025 22:31:27 +0800
+Cc: Jeff King <peff@peff.net>,
+ Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <DEF57576-E0E5-4F09-B7E7-CE1B8753F088@gmail.com>
+References: <pull.2071.git.git.1760671049113.gitgitgadget@gmail.com>
+ <xmqqh5vx1p0q.fsf@gitster.g> <6C994C9C-0034-46D0-8112-FF88773B5CF5@gmail.com>
+ <20251018094722.GC1060824@coredump.intra.peff.net>
+ <xmqqa51ow6xu.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.700.81)
 
-From: KIYOTA Fumiya <aimluck.kiyota@gmail.com>
+Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> Yup, that matches my expectation more closely, which is
+>=20
+> * We'll do the "send to /dev/null as we used to do before the
+>   dry-run thing" on the 'maint' front, which will be merged up to
+>   'master' and above.
+>=20
+> * We'll queue "here are fixes to the recently introduced dry-run
+>   code" (without the /dev/null thing mixed in), and cook that in
+>   the usual 'seen' down to 'next' down to 'master' route.
+>=20
+> In a distant future, we may consider removing the /dev/null thing
+> once the dry-run code path proves to be stable and robust.
+>=20
+> Thanks.
 
-1. '--exclude=' option to 'git log' and 'git shortlog' are missing. Add the
-option to __git_log_shortlog_options.
+I am not sure what should I do. Should I make a new patch which
+only contains =E2=80=9Cfixes to the recently introduced dry-run code=E2=80=
+=9D without
+Peff=E2=80=99s code in it? Or Junio would do that for me?
 
-2. The `--committer` option in `git log` requires a pattern, such as
-`--committer=ba`, but in `git shortlog`, specifying a pattern results in
-an error: “error: option `committer' takes no value.” Therefore, I’ll
-handle them as separate options for completion rather than a shared one.
-
-Signed-off-by: KIYOTA Fumiya <aimluck.kiyota@gmail.com>
----
-    completion: complete some 'git log' options
-    
-     1. '--exclude=' option to 'git log' and 'git shortlog' are missing. Add
-        the option to __git_log_shortlog_options.
-    
-     2. The --committer option in git log requires a pattern, such as
-        --committer=ba, but in git shortlog, specifying a pattern results in
-        an error: “error: option `committer' takes no value.” Therefore,
-        I’ll handle them as separate options for completion rather than a
-        shared one.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2073%2FFKbelm%2FlogCompletion-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2073/FKbelm/logCompletion-v1
-Pull-Request: https://github.com/git/git/pull/2073
-
- contrib/completion/git-completion.bash | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e3d88b0672..73abea31b4 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2218,7 +2218,7 @@ __git_log_gitk_options="
- "
- # Options that go well for log and shortlog (not gitk)
- __git_log_shortlog_options="
--	--author= --committer= --grep=
-+	--author= --grep= --exclude=
- 	--all-match --invert-grep
- "
- # Options accepted by log and show
-@@ -2296,6 +2296,7 @@ __git_complete_log_opts ()
- 			$__git_log_shortlog_options
- 			$__git_log_gitk_options
- 			$__git_log_show_options
-+			--committer=
- 			--root --topo-order --date-order --reverse
- 			--follow --full-diff
- 			--abbrev-commit --no-abbrev-commit --abbrev=
-@@ -3229,7 +3230,7 @@ _git_shortlog ()
- 		__gitcomp "
- 			$__git_log_common_options
- 			$__git_log_shortlog_options
--			--numbered --summary --email
-+			--committer --numbered --summary --email
- 			"
- 		return
- 		;;
-
-base-commit: 4253630c6f07a4bdcc9aa62a50e26a4d466219d1
--- 
-gitgitgadget
+Thanks,
+Lidong=
