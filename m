@@ -1,141 +1,111 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.aegee.org (mail.aegee.org [144.76.142.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4D62153FB
-	for <git@vger.kernel.org>; Sun, 19 Oct 2025 17:43:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511137DA66
+	for <git@vger.kernel.org>; Sun, 19 Oct 2025 18:50:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.76.142.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760895824; cv=none; b=b9gF5fDh4bkakS6uvkrYmHBVqZ9ofXGbzZJ5MHOS4Eh8kskr96cZ1YgNOQiyz8srr6aHm8D6U1uoMEoX+gF+tYArnlgsxWtbth0yuInKhYQr0/4HF5klkjLzumwc1ToVL42r1V2FR/2NetvmyZlMIzCqpcNVzvsZRo1dnT+XqhA=
+	t=1760899816; cv=none; b=AwYpv3DexP6OQsgcT8PWUUE5uB7BVaP/wSzf7xGSTlQtIIXsDmKPPOPA8hOlsaa+O8tnwt1sjPa8EGtuaPuBSD43OM5RG3CIf3UbxCZHH7+YBGxhZejOsH2Vve+e7Zy2N10KL+luzHopuhbKoineo33pI3paIjw6PdEYc81SG9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760895824; c=relaxed/simple;
-	bh=MXDhrXtfhG/loxFVzmC2nz1mDZdy/yhRHfKR+0Jv5PQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pHeBuu0OFxbwIFhx6Xb4ctoxqhY2s2mmBNjryikaKU+78r7bV75o+B36u322X0PxA7C+VrpRAZ0xXD47416NHOate/ThJgJrfF6IybZxJ6BxdGqXXc/X4EFh0jeIHE+NqJe4dZ8WKzBHzIk5PrIi3T9DTZXHF+ErY4mnKSkRVUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=geiIkBks; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760899816; c=relaxed/simple;
+	bh=DoZ5Gu2Xf5mzvRS6fTi1ShDI8swyLDgOeFmLw523x9A=;
+	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=o5aIILIv3m36dYEY3O8F3SDCLsyo1gjVZIlkAZ9UilzKuLTRT/x5aezVOpiSaUMvLSlXUBQi99S9GLigZ8/HOo+27o60ZONu+Ut445ZbwpragpEMMXXQDZgM5JAkCZ1hbmhywCOdgDO8j1mIUreHcTwaJmrFxhC2ebep2hTuQoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aegee.org; spf=pass smtp.mailfrom=aegee.org; dkim=pass (4096-bit key) header.d=aegee.org header.i=dkim+MSA-tls@aegee.org header.b=gk8CmSNO; arc=none smtp.client-ip=144.76.142.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aegee.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aegee.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="geiIkBks"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4710653ac03so1731575e9.2
-        for <git@vger.kernel.org>; Sun, 19 Oct 2025 10:43:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760895821; x=1761500621; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ez8hg2IJz+5CGpYwCmCCsoXSMmEsbiH8AXU7nfXHgd0=;
-        b=geiIkBksXbbvCf3JOSvuImQqXPdk1wIbGIVYf2xjl7XS1LNtnahDt6T7gstdkmJ0N+
-         VO1iIV0Z1kuKpgxLUZ125BY8phcBH1O3AYEXOse45yiQOInUAJYQTGGswX5jwm0Kw2g3
-         uOQ2m9UbWgQgMi2gsF8MOfHt/zSV6GrPVBSYvCZzNPKyhHe0NMxOaqmPzAeMpDHH0yiS
-         Y+JckCv1mHZYJBOpreNOqVyGr4aw1EB551MxJyaGtAbrsZHXSjVG/IW2S6eHbGfYVFVv
-         ZcQ3qxwOUdPLJtbpobVLviZjFZU6uzITbVD1ReAphM6eKUB32eR9+0SdZSVjXxnf5zAi
-         ZkrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760895821; x=1761500621;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ez8hg2IJz+5CGpYwCmCCsoXSMmEsbiH8AXU7nfXHgd0=;
-        b=desCllv7Glp7GDnvrItb//TeACSigPd1iEiyWZduc6ioNo/xbThKLDYmBGBMdHlI87
-         ZCXyrYQbQjsSN5qinz6eZz5qMCUr4lYNJFxKb56+4U29HLuu1PjHKKaQjmQ9cdMWoGFp
-         7ZINbow8/QKyNejOCpVZTYhISd4XEcRB0mrKY0Z/zXKeX7vAcvnU7rrxws3Y9b/AFTAl
-         yTGXv4X0D4fSgN0kKtC4OrgVLFnO+aV7sxY9JEBAfR9zWQdROAZ+qKVi8IGKwK4cITWB
-         UyHIH9qlNjurqZe7rGHFZVaU68ddNk+b0BAzJ+2dA3lboMUsg+/i1kMbySkkB1QGMXHm
-         Zmmg==
-X-Forwarded-Encrypted: i=1; AJvYcCXLy7MsSv1kTzg/Mt+EghnOAZdWsLNFEJ8Tvd30lZWJKkP2S09hHzr1LU7qfSstTCE4Nng=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyM2TgVuQoLL2i48J4m5fYwdbYZdHtqur8/eujv7XtbK1RTineH
-	90J9LBhHzvJZ1lj1RstMyQbSUhSIN1HUig0eTu9qLhXefJOlEYWWomHl
-X-Gm-Gg: ASbGncvBG06opvHHexpinJ7gtdcAhxz4OK+MZATas3hUueNvsMBPNOM67nqEo5MKGba
-	sbZsSiujlO5r0HU0716nSGXdqd1lowIcW3cxOjMUxIfyjV8ubpueEIsl4AM7UHfbWrpGuf4tYIM
-	gp6xcCtiDyApsmHEwpS5S3oQeNQiEym5JD8FyPuI9uM/0o2MJhr5bNiK1qigrI5RJBcCEEpzJPV
-	DmhREJQaLR63oc30549xCWNnNxXX8jJjNZhgW8QSHYPNr8qheY9DveXE2CpneijBBYIORweBv6r
-	/dVWN/k5akAQUbNOlifMJKvMgATxKK4vIPu/lwEAEbNNGAslX2GPdqumD1AI180GjdwmESd0kwP
-	3xaiK+eRCPjp/+HUdpDdFSiBaZ+kvIB/nM2NJmbhdov1amEG/sfY7PFAX3XVHsnweXNLd2bziNr
-	bVQ5KYIVMtmBwg2gw=
-X-Google-Smtp-Source: AGHT+IGU8lkTfv6QoRb3TShDinDi8NVsceDSI6TKwS/0CZ1GhoMtld+/qBie8VEc+gBA/PUxOikWbg==
-X-Received: by 2002:a05:600c:3b04:b0:46e:2562:ed71 with SMTP id 5b1f17b1804b1-471178787c0mr41199685e9.1.1760895820899;
-        Sun, 19 Oct 2025 10:43:40 -0700 (PDT)
-Received: from desktop ([178.255.149.178])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-471144b5d48sm192841875e9.9.2025.10.19.10.43.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Oct 2025 10:43:40 -0700 (PDT)
-Date: Sun, 19 Oct 2025 18:43:38 +0100
-From: Matthew Hughes <matthewhughes934@gmail.com>
-To: Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [QUESTION] how to find options set by scalar?
-Message-ID: <wn3jjekjibcxbuiieji5umijvx5gaesg7wpwnivc5ng66sqpa7@cybj6wtz2eq5>
-References: <vppjutjcdglp44qvsk4qozphycyg663yrq5775zztim2oe7ty5@uttjrshb52bd>
- <aMkVqNbdgxqBJ9K4@pks.im>
- <evxbvwwyo4p4iboc4k6r2cd2cvlnm2upgxumqopdijwmvhxhxs@7xvg42heibp3>
- <xmqqikhf7bdf.fsf@gitster.g>
- <08deb8a8-6c34-4f11-a36b-93d151a56f9b@gmail.com>
- <aNDqnMTJIoHi7Ifc@pks.im>
- <ffa61066-7004-48dd-9096-85b305373bc7@gmail.com>
+	dkim=pass (4096-bit key) header.d=aegee.org header.i=dkim+MSA-tls@aegee.org header.b="gk8CmSNO"
+Authentication-Results: mail.aegee.org/59JIkBhs758968; auth=pass (PLAIN) smtp.auth=didopalauzov@aegee.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aegee.org; s=k4096;
+	t=1760899572; i=dkim+MSA-tls@aegee.org;
+	bh=DoZ5Gu2Xf5mzvRS6fTi1ShDI8swyLDgOeFmLw523x9A=;
+	h=Subject:From:To:Date;
+	b=gk8CmSNOnTFZAADXSsZxculrSWMKxznOnw3tPIq5AFeFXIY4tyaAUq8lfFG0gdcVP
+	 hrrNArU2a/5IXYubCcOgypjWt6kVMFZNCpS7MynXDozWdAWRk0u0U6z8YaVg3VYLAx
+	 5/ypSArUjQbdUvZ2+KbmhqmYuIhX+32SgRRyp3sHv//X2KHitbho3WnbfeANfCyGts
+	 r/XQrkpHtHacgLIWsVUZedbEUPKl8lVvyRAaSRmDna1N/RnmiO2vd6FxUUPwk/4L/q
+	 CpeTqnFQwD8ojd7545MBvNMp76Ilf0srb8uD+wfiIrX7BanIpNZKtmSf6A6dpYnvnm
+	 OfXeLyhxNsVV8drKS924JUTXRyi+nc64bv4En6/Ubzunk+KjV1G3paXkZbcvP+ANpj
+	 EyRGAnFjnV5G0JKjDwVxo/wxGSKbWEs+fM/Sw1FZfQNnUcMKhaEIshtv6qyISFk4AF
+	 hMCf9qn6sPoC9DfaFZkRHcDgkyltRJvoV7Hf/YbvYzbqmu27uGkAbCDsraWejLYlmB
+	 ePYL32fcTxSPTLRtg5r+yiOz7ZJKISYcx3mU58gEnEcrfk64ag7bgY6QoQDETsES/h
+	 MYdSB8rplXxnwBRmSXsTNuBWoaIO+dCg6u4ADvyaZjC1U/id0pQ8QGWDVdDjILIGO9
+	 e1bvQNPRCIVGfCbJ1pDRjd8k=
+Authentication-Results: mail.aegee.org/59JIkBhs758968; dkim=none
+Received: from [192.168.0.242] (95-43-114-153.ip.btc-net.bg [95.43.114.153])
+	(authenticated bits=0)
+	by mail.aegee.org (8.18.1/8.18.1) with ESMTPSA id 59JIkBhs758968
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
+	for <git@vger.kernel.org>; Sun, 19 Oct 2025 18:46:11 GMT
+Message-ID: <a6ce209d120ca6acf0f5dd04521cb96ac1337a54.camel@aegee.org>
+Subject: No config option for `git diff --stat` to always show the full file
+ path and name (without .../ abbreviations)
+From: =?UTF-8?Q?=D0=94=D0=B8=D0=BB=D1=8F=D0=BD_?=
+ =?UTF-8?Q?=D0=9F=D0=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2?=
+	 <dilyan.palauzov@aegee.org>
+To: git <git@vger.kernel.org>
+Date: Sun, 19 Oct 2025 21:46:10 +0300
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.59.1 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ffa61066-7004-48dd-9096-85b305373bc7@gmail.com>
 
-On Mon, Sep 22, 2025 at 09:36:00AM -0400, Derrick Stolee wrote:
-> Makes sense. I'll pick up your patch into my series as I prepare it.
+Hello,
 
-I'm not sure if you had a chance to start working on this (I didn't see any
-other activity around this on the mailing list, but shout-out if I missed
-something!). But I got curious and started looking into some of the options and
-had some questions (I haven't do much archaeology on the original Scalar
-repo[1], so if I should just go dig around there for more answers let me know).
+After `git diff --stat` determines the available width, it uses correctly a=
+ll available space for the file paths and names:
 
-Firstly, there are a couple of options specific to things outside this repo:
+```
+$ git show --stat --oneline=20
+0fb93104ba (HEAD -> java223/main) SourceGenerator: avoid delayed actions af=
+ter the bundle is deactivated
+ .../main/java/org/openhab/automation/java223/internal/Java223ScriptEngineF=
+actory.java    |  1 +
+ .../java/org/openhab/automation/java223/internal/codegeneration/SourceGene=
+rator.java     | 16 +++++++++++-----
+ 2 files changed, 12 insertions(+), 5 deletions(-)
+```
+https://git-scm.com/docs/git-diff#Documentation/git-diff.txt---statwidthnam=
+e-widthcount describes that after --stat can be entered up to three numbers=
+, two of which can be set by a config option.  The same options apply also =
+for show --stat : https://git-scm.com/docs/git-show#Documentation/git-show.=
+txt---statwidthname-widthcount .
 
-* core.FSCache: specific for git-for-windows[2]
-* credential.validate: specific to Git-Credential-Manager-for-Windows[3]
+I set in /etc/gitconfig:
+[diff]
+        statGraphWidth =3D 200
+        statNameWidth =3D 200
 
-Could these possibly be removed from here (I understand scalar started as an
-external project, so these are perhaps a relic of that)?
+which is effectively the same as calling:
+```
+$ git show --stat-graph-width=3D200 --stat-graph-width=3D200 --oneline
+0fb93104ba (HEAD -> java223/main) SourceGenerator: avoid delayed actions af=
+ter the bundle is deactivated
+ .../main/java/org/openhab/automation/java223/internal/Java223ScriptEngineF=
+actory.java    |  1 +
+ .../java/org/openhab/automation/java223/internal/codegeneration/SourceGene=
+rator.java     | 16 +++++++++++-----
+ 2 files changed, 12 insertions(+), 5 deletions(-)
+```
+There is no difference.  diff.statGraphWidth / diff.statNameWidth / --stat-=
+graph-width=3D / --stat-graph-width=3D200 set some number of columns within=
+ the available space.  But I want to change the size of the available space=
+ to defaut to 200 (or to infinity).
 
-Secondly, I was curious around some of the CRLF options, in particular, setting:
+The reason is that I can then copy the file path (e.g. with the mouse) from=
+ the git --stat output and open it immediately with less or emacs.
 
-* am.keepCR=true
-* core.autoCRLF=false
-* core.safeCRLF=false
+* Please either alter the option `diff.statGraphWidth` to enlarge the avail=
+able space (broader than the terminal width), or add an option to `git conf=
+ig` to set the available space for `--stat`.  This option should eventually=
+ allow always to print the full path and filenames.
 
-Is there a non-trival cost to doing conversions over a large enough number of
-files?
-
-GC bits: I there is some GC automation disabled:
-
-* gc.auto=0
-* gui.GCWwarning=false
-* receive.autoGC=false
-
-What's the reason for this? Is garbage collection expected to be unreasonably
-slow in a large repo? Is it worth the GC still being run at least occasionally
-in a large repo?
-
-Index bits: scalar will set index.threads=true, index.version=4: I assume these
-are expected to just speed up most read operations on in the index in general?
-It also disable index.skipHash: the docs tells me this speeds up commands
-that manipulate the index, but I was wondering if having this trailing hash can
-make future _reads_ more efficient?
-
-And more generally, I'm not sure I understand the reasons for the following
-settings in the context of a large repo:
-
-* pack.useBitmaps=false
-* fetch.writeCommitGraph=false
-* status.aheadBehind=false
-* merge.stat=false
-* commitGraph.generationVersion=false 
-* fetch.showForcedUpdates=false
-
-Link: https://github.com/microsoft/scalar [1]
-Link: https://github.com/git-for-windows [2]
-Link: https://github.com/microsoft/Git-Credential-Manager-for-Windows [3]
-
-Thanks,
-Matt
+Greetings
+  =D0=94=D0=B8=D0=BB=D1=8F=D0=BD
+---
+git 2.51.0
