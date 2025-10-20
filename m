@@ -1,92 +1,157 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E02613DDAE
-	for <git@vger.kernel.org>; Mon, 20 Oct 2025 17:40:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBDA277CAF
+	for <git@vger.kernel.org>; Mon, 20 Oct 2025 18:01:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760982013; cv=none; b=HJBRRBBfP47nmoTEJ0qM6IqtIPgrRmzgsg1c8sYDShh9Cx4eZmBeC800DYt+hNUniubnY2mkqpnoNoUWNzRuutyayudPNLg+qBh8OiBZ5RFbV4xcpkA+GDNW3ndEmeyoGcEYbUyDOWWu3f5y8OIz6cFNx4brZF/1V+G2HYFspIs=
+	t=1760983298; cv=none; b=qoKIf6eJANzWf2XzGdcIh3RhzrOPU6TsOOf4t8ppWWDIrhKBcZi6bWYYEKrl0GNtv0JJ252e47+MG23dv7iVHwHzfhHw+A5Cotdo0SHRJTpz2oB3do53/NFHd1j8sDXTZvJoEwCWf2uL26Y0Df3G/bBaRAIvJ2VK8w9bDhM0xOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760982013; c=relaxed/simple;
-	bh=xz+Fe86mOJsKmpgMrDstInlGTViNLZWSGn5G7nxiquo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lE25g+9rVRcIFPL7F1ZvYlFYIQ0P80VVqL8T91MLxWlZRHSa702Gdyi/uqLbVOpwPAybQWCa26Sin9ggCcYHkUwSxqYOBG4EYRb6YuDg0Z8TgkPFRDItwTlhfzyoQW5HkimjIB14+mCRp/7bog9ADlbSWe+LqTAigLM8dRpIaPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-87c25d43d9bso2197846d6.1
-        for <git@vger.kernel.org>; Mon, 20 Oct 2025 10:40:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760982010; x=1761586810;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9wx3zJXA0H2Tdn4cDGGsbifvU2nY8GMBRYi4QjrV6Kw=;
-        b=pdTKUDTbbrOWkC2op4UK1MsajxmZEk5Ks+JFbHiXaBC3QcqbaCQdzwVsqQ13nKPPDc
-         RdLxijc0p4bmvHkAXibMtym6tNCLQG42SgCi91vgcJyFhV3H+PB0i7Pdutau5xsBfdVM
-         IukCaDuVm635EapRC7AaxnK4iW5wjQWGsNykXg7mpVS2sYv1IpxEymxiA/NVvR257ugj
-         6OEsDhA4l1+dOLPFybmTaK/bffegGts0buMCfuSRuOpQ3gXpiWy+tWXO9g384mcZsPzD
-         AcKY1FTeWwR9Y1wzydMQGPcJeTHOeGGXRNUOdgk5biC2xbFKynZoL5HSMISr9Kdh49Am
-         +m1g==
-X-Forwarded-Encrypted: i=1; AJvYcCXgGdp2jwpwWddAfuH+uwIwGGGDb3Yy666rwvOvJyQHlF2nB3Rr1QOrLUbrvo70bO8ih6o=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyMb6TsKI3WqD/4W5sFHH3OxI4dR066oa3QFtZvnhjRLgvN08hZ
-	U2IOrqe1BdwE+JSiL6Stt6X6O3miazctfa/c7VDOUTxLT9tO5olSrrcV8IsU0teIkSNE2PFQGbe
-	MaGaUnK2oL1ETYiMtTKqq8jVF0pM3v9g=
-X-Gm-Gg: ASbGncudriIH0Ij3P4lfgZPrDecEvf7laLgnYugaJT+zwMm3vXtPjiwShpPW51CnXiv
-	lL3owKT0+11YUZrg2Lsyc3/O6o9A7fv+qVbUqE1mjttEyGKkOwkcneMRdISQc/xOv+AAY9+LP/v
-	tAELOUEGe/sY3vnjMzLDsge2MX/XEdQG8VfmFWNri2j/zRrR9XCJDMocflp0fxQlGJ8k3HAIG0l
-	L2KOV+RR3cLmJYpOxSAxKhUIT0RK/2iOGOd34Vq4lYZLl36myOZWkfrMpc8vJeFISwkavkXNls+
-	v82jYHPtWc8JKDMTYKiTnumD1N6k
-X-Google-Smtp-Source: AGHT+IGsceu2bl8ujnoAoeP8uSjSIBA5Py+k4hKJakFc8jteCIFLeYjBquxDvSelH0FX8QMTpgtXxSUmKD9Thgihs0Q=
-X-Received: by 2002:a05:6214:d04:b0:87d:ad10:215b with SMTP id
- 6a1803df08f44-87de70b4540mr3888306d6.1.1760982010150; Mon, 20 Oct 2025
- 10:40:10 -0700 (PDT)
+	s=arc-20240116; t=1760983298; c=relaxed/simple;
+	bh=xkfhFwk37wOjcVnOd8x78lwfENWWc5fg71v7iKkAeb4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Tqw+U8aLz1O07NwMtlupbN1gcPt/Dqawh3KBBkqTZLM6SV1G7PF7SHFWcVDWSr8MpVKxuxkojaOxqqgG3omzqKb1MX4hrZxfbBoHC5AxVlGRn1CxyuHXA7XTLLA8c7EhyC/DU5/UqwXNtIXDpcaJ2k8hudlerHRctiZ9/o0+4CI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g6Iw5ayb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JozClKa/; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g6Iw5ayb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JozClKa/"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id C90DB1D00135;
+	Mon, 20 Oct 2025 14:01:34 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 20 Oct 2025 14:01:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1760983294;
+	 x=1761069694; bh=/bM6Gq+poebVfvC92FRdXSGwjhp9rY6K634mi4VuutU=; b=
+	g6Iw5aybs4qfrLD/s4hhrbwq82DT/td1zXcRmf6CR/l/QcSsvV/NjRuiEQi3voK2
+	xXU4d2YnrooHpVFC6KWXzQKlIKpx5TLEeDc9+wCKMJ4aBjRXG9MU6YAqTTXkAd9M
+	ywIYr/qVYCC/Yi/zz7JC7XgN+pgQsG5ln4ebU2o/6b7wvjyZnU7Ka/IiZdMUMbR6
+	+2xgqymGjE0LKDd3olX2b6iIJuTjXXZukgFqxZV2yB1JvEc5MJIY1NoaStaJx+Rt
+	EJ8we3ZrHCjv2bUDSaKV4EDOgoAuaVXCYnQEgbGqbDkUvz5yEryOO1F+CoAk04yO
+	UsS2IdLvrne7IaRcCGzW8A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760983294; x=
+	1761069694; bh=/bM6Gq+poebVfvC92FRdXSGwjhp9rY6K634mi4VuutU=; b=J
+	ozClKa/eMmnJ+t5w4EOoP+3vCqcTZOnaU8UW7aVCQXCnrp+FgwWz1JNPbz4r883m
+	WrwgrW0cJbZsUyZLLQewmw2EsMrdej/rN4CQAlrDy4O6IbzMpXJf/HrMcxfz5bCK
+	FBeGo0HICoAG5oE4vivIBMFXi0kNrauReZ2Q+2ERRWmGDfUPlaNsJf4NVsUkfMJ/
+	A9AtC6zQGsdkPNXIwYbGnfj22xDbzEhT0CT77UXK9k5p0OwA9DICuxyuHliHDU8C
+	DQwX6iqRoDrTknbrW5mWWoQ6l/mfbfMYDZDLX0v58RULNAf/hsavtBZbduAnZEkT
+	hzx1OOIw/VlFwzDMt/95Q==
+X-ME-Sender: <xms:_nj2aJauDRrn0uJjDz6ih9yby21luT-6RYbIN9gaB6rIvDxM7jq_mA>
+    <xme:_nj2aCoexGf9CwTOfzT6LcD4sabsPbUt8EMJcHNNYbfVl2Iah0aTGePn9r4HZIaQ2
+    HHZexC0mUv3Cfqnd2fdOv7quLZcS0Upg1IEnUcr87VlWqGsqRoulw>
+X-ME-Received: <xmr:_nj2aONvlodj1kYwYMn5CIIxhGXTgQr6wcGyy27lGEVgxMFv4HqKtXyRryzwydlt_lPdS00cKEZHLl4F0Rx7lRLUq68QzzAV1iYo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddufeekgeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
+    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    phhssehpkhhsrdhimhdprhgtphhtthhopehjuhhlihgrsehjvhhnshdrtggrpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:_nj2aNoDh3FGECIhsTJeiv0Fnd_hycfhYHFP56Ysxi-YdrCK7jf_LA>
+    <xmx:_nj2aDdUn4S-6ctAPJ6UmVA8nv5iQipTc1_9Bt6rWm1vq7rdgk5rXw>
+    <xmx:_nj2aDSlgURSVMIQ_ZHxb5eh9qA5-fQB2OArVX9TM3sTi8SbnLVjAQ>
+    <xmx:_nj2aMZqan1HTSvzP-Ur-rQv5W-zdEqZF0lW6VhQNY0SFiHNPkl1tg>
+    <xmx:_nj2aHdip6dDOknGg0bTKRai2-mvinQDqrq8f9MqatYvibONi8adBq8Z>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 20 Oct 2025 14:01:33 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: "Josh Soref" <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "D. Ben
+ Knoble" <ben.knoble@gmail.com>,  "Patrick Steinhardt" <ps@pks.im>,  "Julia
+ Evans" <julia@jvns.ca>
+Subject: Re: [PATCH v3] doc: add a explanation of Git's data model
+In-Reply-To: <c1c456b5-aca7-4b24-a4a2-558405214f24@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Mon, 20 Oct 2025 18:37:30 +0200")
+References: <pull.1981.v2.git.1759931621272.gitgitgadget@gmail.com>
+	<pull.1981.v3.git.1760476346040.gitgitgadget@gmail.com>
+	<c1c456b5-aca7-4b24-a4a2-558405214f24@app.fastmail.com>
+Date: Mon, 20 Oct 2025 11:01:32 -0700
+Message-ID: <xmqqy0p5zc3n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <6a83c7d1-7cd4-432e-a0ab-7b18ce3af08d@kdbg.org> <A563E028-19E7-48A0-B538-82ACE821DB67@gmail.com>
-In-Reply-To: <A563E028-19E7-48A0-B538-82ACE821DB67@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 20 Oct 2025 13:39:59 -0400
-X-Gm-Features: AS18NWBaZH_T9yOBhBmn-lDVWhvGoEyrWGa9kZmcWQVvzeggGdc2aUAWoH0eOEs
-Message-ID: <CAPig+cTP1ARNMQmxZh9_YO0pDOsFZ1Z2HTa+Bo=58O-voL9hXA@mail.gmail.com>
-Subject: Re: [PATCH] t7500: fix tests with absolute path following
- ":(optional)" on Windows
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: Johannes Sixt <j6t@kdbg.org>, "D. Ben Knoble" <ben.knoble+github@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, Noah Pendleton <noah.pendleton@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood123@gmail.com>, Thranur Andul <thranur@gmail.com>, 
-	Michael Grosser <grosser.michael@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Oct 20, 2025 at 9:44=E2=80=AFAM Ben Knoble <ben.knoble@gmail.com> w=
-rote:
-> > Le 20 oct. 2025 =C3=A0 05:40, Johannes Sixt <j6t@kdbg.org> a =C3=A9crit=
- :
-> > =EF=BB=BFOn Windows, the MSYS layer translates absolute path names gene=
-rated by
-> > a shell script from the POSIX style /c/dir/file to the Windows style
-> > C:/dir/file form that is understood by git.exe. This happens only when
-> > the absolute path stands on its own as a program argument or a value of
-> > an environment variable.
-> > [...]
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+
+>     xmlto: <git repo>/Documentation/tmp-doc-diff/worktree/Documentation/gitdatamodel.xml does not validate (status 3)
+>     xmlto: Fix document syntax or use --skip-validation option
+>     <git repo>/Documentation/tmp-doc-diff/worktree/Documentation/gitdatamodel.xml:71: element link: validity error : IDREF attribute linkend references an unknown ID "tree"
+>     <git repo>/Documentation/tmp-doc-diff/worktree/Documentation/gitdatamodel.xml:96: element link: validity error : IDREF attribute linkend references an unknown ID "tree"
+>     <git repo>/Documentation/tmp-doc-diff/worktree/Documentation/gitdatamodel.xml:397: element link: validity error : IDREF attribute linkend references an unknown ID "tree"
+>     Document <git repo>/Documentation/tmp-doc-diff/worktree/Documentation/gitdatamodel.xml does not validate
+>     make[1]: *** [Makefile:380: gitdatamodel.7] Error 13
+>     make[1]: *** Waiting for unfinished jobs....
+>     make[1]: Leaving directory '<git repo>/Documentation/tmp-doc-diff/worktree/Documentation'
+>     make: *** [Makefile:3676: install-man] Error 2
+>     make: Leaving directory '<git repo>/Documentation/tmp-doc-diff/worktree'
 >
-> Going forward I will probably stick with using pwd, given the difference =
-in platform behavior.
+> The syntax looks correct.  So I don’t know what is wrong.  `make html`
+> works *and* makes the link.
 >
-> Is there a doc or test lint for that? If not, might be useful.
+> At first look it might be to do with the anchor on a definition list but
+> I tried removing the anchors and expected to get an error for `blob`
+> next.  But that didn’t happen.
+>
+> In short I don’t see what is special about `tree`.
 
-The use of $PWD versus $(pwd) is documented in t/README:
+This seems to work it around without breaking .html generation too
+badly for AsciiDoc and without breaking .7/.html generation for
+Asciidoctor.  Generation of .7 were broken with AsciiDoc so we
+cannot complain even if the result is suboptimal, but the generated
+manpage with this patch using AsciiDoc did not look too bad, either.
 
-    When a test checks for an absolute path that a git command
-    generated, construct the expected value using $(pwd) rather than
-    $PWD, $TEST_DIRECTORY, or $TRASH_DIRECTORY. It makes a difference
-    on Windows, where the shell (MSYS bash) mangles absolute path
-    names.  For details, see the commit message of 4114156ae9.
+I do not know AsciiDoc internals (and I am not particularly
+interested to learn it now), but I am guessing that the bug is that
+when it sees [[tree]], it tries to find an element to put id="tree",
+but before it finds any approprifate one, it sees [[filemode]] and
+uses the element it finds to hold id="filemode", losing sight of the
+need to add id="tree" somewhere.
 
-(Though, it might have been nicer if it described the behavior in more
-detail rather than referring the reader elsewhere.)
+
+
+ Documentation/gitdatamodel.adoc | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/gitdatamodel.adoc b/Documentation/gitdatamodel.adoc
+index f49574dfae..7232fe3861 100644
+--- a/Documentation/gitdatamodel.adoc
++++ b/Documentation/gitdatamodel.adoc
+@@ -83,8 +83,10 @@ trees::
+     A tree is how Git represents a directory. It lists, for each item in
+     the tree:
+ +
++1. The *file mode*, for example `100644`.
+++
+ [[file-mode]]
+-1. The *file mode*, for example `100644`. The format is inspired by Unix
++The format is inspired by Unix
+    permissions, but Git's modes are much more limited. Git only supports these file modes:
+ +
+   - `100644`: regular file (with type `blob`)
+-- 
+2.51.1-556-g06b2a500e9
+
