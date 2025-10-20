@@ -1,247 +1,215 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1923D2D979F
-	for <git@vger.kernel.org>; Mon, 20 Oct 2025 22:35:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA73334C00
+	for <git@vger.kernel.org>; Mon, 20 Oct 2025 22:56:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760999710; cv=none; b=h2IQy6do52PHcWgNS3Q6vptUkzi6ceEphpe5FUJ0d2IDIgcAbZPAZPNEXhgPtwIOaz+7TbliFAthhbO9BnURBU/axD5Vffj8JnL7O9CV+JN3XbNAC9SGmJGg26l6YjAIUznh/VAoSaUVLy7V9Dv0N2lQBMS2w2RgaEKyGkxF02g=
+	t=1761001002; cv=none; b=MOzAmOK4wYW9cKWLQY38hD5k36dQzNg64jptdH1vUiqOZ4mi2LNEAu+xYo/NV8u5KEUSfZiTAhzb3ROUOAUaDzPaZx1gaf+TTqgAgXzZPfRUXrUoamux1wAmMHIMPvs4Q0yobbA4WcmTKTgf1Y6GXZZpe+06k6wS6x2xUdHJQO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760999710; c=relaxed/simple;
-	bh=HTlnRNECngXFaDEJ9bqTcmal/6xAfwk8Fl6qQI7x+R8=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=CN3GPEvz/mJJGMPjwOFLsPWTvttQVBn0NUqlVaERD191PRi1ZbhVgvpFZzo7VpHuS0V/izeD9DIXkPJiVWTDugHOiL9QUY/KU7Z05y/zoes6pvMazGL+MgWWcM41Xr5wGSrtjKii6qGj7szbv8M7f+xDyzfkufvBVJ4hFyg+uuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KQfSDpw1; arc=none smtp.client-ip=209.85.219.43
+	s=arc-20240116; t=1761001002; c=relaxed/simple;
+	bh=awCK1aZiur+ectvS/IgpFJ67Yhmql4QCCYWi8b09vFU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VT04hoMh4LkU1rK8CFNZHH7a41Ul3rQlFylnhHcysRsRhO+iy1MSsyPcYMczQ5hnP9FZ1+ZdJzxEMuX3ycy4OCFMNjkwZjW1DsNwsg4uPyn+KGoG4a/EKK2YGfdKttt4siRy/bsqMdLYIdzPJsERBgzFDjRV4YS+rKawsw6hsA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TNQ+6BSV; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KQfSDpw1"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-87c21c5d3eeso69919476d6.2
-        for <git@vger.kernel.org>; Mon, 20 Oct 2025 15:35:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TNQ+6BSV"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-474975af41dso1019215e9.2
+        for <git@vger.kernel.org>; Mon, 20 Oct 2025 15:56:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760999704; x=1761604504; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=7IGkPy5Pqshma4hCM5A0WkucYYkS6LWSfiUYX3gsWcY=;
-        b=KQfSDpw1Vv0BblJUnTT4a/aUeQy/OFKZsNMe3RnVWIX3pVZEiKzL10sGKyQzWmCYJy
-         nA9Ei5z7jXmjGytoHXBIg7Fgp2+w9hLn+jsHdM+xy2Vba5Eqa0hgy/8fVRqNZa97RRIz
-         FoEpWZn+rQpS+ON4/d+glrm0eywUGrBUMdxPxUSOVvUtd1NHtBExSxuqnbLNj7oOVFGn
-         uu0ZOzt6WLtBKLmhUalOPe+6ys0I7StTdYHYgyDvQg3KpEW7zNmeIWoVSIZAjEajhliN
-         0VvzMaeJgrUMvxlj91YQ8dSsxS5IRKC91o3IGUfPbR3iNDj5ioQ2yvTrVSP1Jb35b6UF
-         82AA==
+        d=gmail.com; s=20230601; t=1761000999; x=1761605799; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=l8SGYBVeyzojizCDs25TooLy/kitMeKvblaMH29utvo=;
+        b=TNQ+6BSVNDkpnXA36YUaBSt7TeW2Pamo2LOZTnIxIAYvucvsRt3DasxRx4Jbs3UVv8
+         7dymowshhCd9nuyg73RykKfKknrzuEDAJ8Iyd3XnM7icQNORu9rXpDYIt5L4N9LfOtcz
+         DpQMGYc1nVmsu5Up6F4ellQOkxFbwl31eQOrwwo4afUhu0i3jTmCtX+X0oXA+NuWWFK0
+         uLragoKyS/istQe1Gf4FeWDYHdMCBG7bpSHhl8o46qwvzNhtz6GZ/32J728F6rjYAod5
+         6I9Q/AvZLxjltj3Ue00pFgGQ9MhYIXe8jUwsoX+hUQokno6jrIs5eqg3izN3dqs+paKa
+         l2XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760999704; x=1761604504;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1761000999; x=1761605799;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7IGkPy5Pqshma4hCM5A0WkucYYkS6LWSfiUYX3gsWcY=;
-        b=SSMALMb/BRG5UuW27+kUrEpUG8JeEM6UCglGzOL08sqtHBylzVgdcjkoDrA7ocinNM
-         00/BaUQOJUREr5vKRgaYgWovhSxNrIy3jS9vXpmM6jeZkk8ulfmIwTgsm+V9kVVHBBWq
-         XUTVVPk0mncueB/rV1BjqYIW+15qwy8RNNo0Qtgr3V8Lw/RvBrkRUtSWVut4ZmI4RJmt
-         zVJQ9B+csXRsANpiF4po8u5EbcdWkMnxUUDn9EKzxfPnod6HpNQnb9CmlqZ+VqXnbYwg
-         dWKbN3AB57Py423LKnqAuy1/LloO1NMy0j9/SKHt4WCssqHUoparUNajtNAj8C5AnjT5
-         IKmA==
-X-Gm-Message-State: AOJu0YzCvqEtsWa3xsbScqkffgJGErgkT0RLgkcwCe5wvF5bmstbmvxL
-	3bcbJsEVCqqIy8fVwMPIRfjkOYpcmm3TlmETLcpFXR5zeFK5uo0r9b2L9SRyD926
-X-Gm-Gg: ASbGncsFaTE7mvXHBxbtl4Y/LJq/qZSgUuzxsS3BK2r6U0ULZbYeNxlWSyOx5Eh/hT7
-	h9urJDb6VgnTVbrrhx9ERjaykqS7DIDnxglPS0bHqq5nxEy9SQad5inkkKCHrayDxwU43Ju3Yty
-	nFk8+2nklxrAO5qAf6FbULFAS70aIlNvv2qN8PQm8b8usHs+1DjkkuLHN0vlcqGBMhfHMWpd3Vt
-	grwmTvtiGu1F0OzA9dxwZA0nuwlNx0FBeJ/D5StUlSPpwe2kwJ8XoZzwWbWuLTt+E5UCVJk+SOQ
-	kUZItnGOEJ8LavxRdto9pHU1mPbk6GDEGFqYZLHhkA8LRoRLMPF7XdCpzg81kUK+DAsJOLQgOdI
-	Z5OJGxYGcSSNeSKDnbiCIY+4+hYv0wl3c1VcLsx+GO/H1QdMQfAIVNo1QIWpfQ0Cwl6+qSpxw6b
-	248a8xLn51ExqQfR4=
-X-Google-Smtp-Source: AGHT+IG/4dbb0eYoucVgYaChsIqUaZ9TypTpffaKWap7qiGhUtQYMy8HV66aIKIxdZBvvQhjUpzv2w==
-X-Received: by 2002:a05:6214:e66:b0:7ec:6871:d0a3 with SMTP id 6a1803df08f44-87c2070f4b8mr163946766d6.11.1760999704383;
-        Mon, 20 Oct 2025 15:35:04 -0700 (PDT)
-Received: from [127.0.0.1] ([172.177.209.215])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-87cf5237273sm59029776d6.26.2025.10.20.15.35.02
+        bh=l8SGYBVeyzojizCDs25TooLy/kitMeKvblaMH29utvo=;
+        b=mWRSoF1ChkkfKdNRWdySx2ovVvK1/7Id530pVTD8TgSmxGAVCVrIllcEe9CuofW60Y
+         xvsUTqJ4/aFope5nArqLvpAdhtCQqlbTtUdFMQZ7BcdqWkqoTE47mVyXWz8weDp9uZkN
+         /sYKiZ1Urg5+JWr92c4Y5e9hOoc2VHV9Qww0KgfKmi72ppSLPFl8Cz/xtQ0Mo1dl+Pwe
+         2gMSf2zql8/c7rJ10gxlVZ1Y5LjQbOxxm8dkEV88cziluVn8sX6MWuEaglFMFz+SH2tm
+         IyZtYjfaOG3NSENldSS82rnRgIKJNlU40+6goeWOmtYUzzCusZvjDEsc/pMgq3JDjEBj
+         GgPQ==
+X-Gm-Message-State: AOJu0YyMK0BwxRlhQ9IYgmjitp/Yxrd1N/qWrYrf4Yb7HWWsuV80Sw8V
+	X22IJEw6e4iIdWesz5JtQCETuU6g55k2XkZ5ZlOVaLiHMYy9uPvDo7DX
+X-Gm-Gg: ASbGnctFMnLvWueoEbmFc9Kh9dfP91rdMk1NVqDqucpWdJ9XeJaH/AN5xh42MTGAjj8
+	pAJ3E1KymdL0F7sAQkH0As13gQJW/y5aa8/txxXwHLQE6WbAdGRRcQvdn6tCPOU0GWz0Tl2FyXc
+	j6+4HZviVmTWu1KLYoMF6b2bbZZvsOj2QOHYxIwieghVQ6jAS7T6G0ohv0aQb4mjewfSIyudYpw
+	L84ZccVAsny5/DErNwCeQqofOzlIRzJRRMFQz0/YmEheTG4hfRaXI1NCwdWRf7z61rQqn1LzjnI
+	ylOIBBqPO7dlUJmLKoMdX6r8Hjxfbi5RKDqQS8yriuGyzuZqQNiZAoAMzIc7h/OcyKb5atoBGBz
+	doJWA2gsd/aNpS6j2RJNS09r8TfR3GNoh9q9h4ruZGUAtIu+ytUcHP4bMeGQJuQyBNQ==
+X-Google-Smtp-Source: AGHT+IE3U8Py/TnKlgAb+yuZkB8zVegwoUpX0ypEmMzXcr+AfBvtelTcNxBETphTw9i2b+93zY5CeA==
+X-Received: by 2002:a05:600c:a214:b0:471:ff3:a7fe with SMTP id 5b1f17b1804b1-471179123b8mr73554135e9.19.1761000998879;
+        Mon, 20 Oct 2025 15:56:38 -0700 (PDT)
+Received: from ubuntu ([105.117.8.39])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427f00ce3aesm17675856f8f.48.2025.10.20.15.56.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Oct 2025 15:35:03 -0700 (PDT)
-Message-Id: <pull.1993.git.1760999702581.gitgitgadget@gmail.com>
-From: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 20 Oct 2025 22:35:02 +0000
-Subject: [PATCH] macOS: queue for munmap operations
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 20 Oct 2025 15:56:37 -0700 (PDT)
+From: Olamide Caleb Bello <belkid98@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	usmanakinyemi202@gmail.com,
+	christian.couder@gmail.com,
+	kristofferhaugsbakk@fastmail.com,
+	Olamide Caleb Bello <belkid98@gmail.com>
+Subject: [Outreachy PATCH v4 0/2] do not use strbuf_split*()
+Date: Mon, 20 Oct 2025 22:55:19 +0000
+Message-ID: <cover.1760997183.git.belkid98@gmail.com>
+X-Mailer: git-send-email 2.51.0.463.g79cf913ea9
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Koji Nakamaru <koji.nakamaru@gree.net>,
-    Koji Nakamaru <koji.nakamaru@gree.net>
+Content-Transfer-Encoding: 8bit
 
-From: Koji Nakamaru <koji.nakamaru@gree.net>
+The patch series by Junio Hamano with link below,
+https://public-inbox.org/git/20250731225433.4028872-1-gitster@poddbox.com/,
+notices that the array of strbufs that calls to strbuf_split*() provides
+are merely used to store the strings gotten from the split and no edit are
+done on these resulting strings making the strbuf_split*() unideal
+for this usecase, with the string_list_split*() being a more suitable
+option in those cases.
 
-Executing many mmap/munmap calls alternately can cause a huge load on
-macOS. In order to reduce it, we should temporarily store munmap
-operations in a queue and process them all at once when the queue is
-filled. When the program terminates, we can discard any remaining munmap
-operations as corresponding mmaped regions are automatically reclaimed.
+Commit 2efe707054 (wt-status: avoid strbuf_split*(), 2025-07-31) for example,
+in the series, notes that abbrev_oid_in_line() takes one line of rebase
+todo list and splits tokens out of this line using strbuf_split_max().
+However, no simultanous edits that take advantage of the strbuf API take
+place but the tokens are merely used as pieces of strings.
 
-Add a queue for munmap operations to perform them all at once.
+This series continues on this cleanup, by replacing instances of
+strbuf_split_max() with strchr() to get the required token around the
+delimiter where the token from the split is merely returned as char *
+and not strbufs and no edits are done on them.
+This makes the code cleaner, faster and more efficient.
 
-Here are some example timings. On the Linux kernel repository that
-requires about 1700 mmap/munmap calls:
+Tests have also been performed on the commits on Github CI. The link is shown below
 
-  time git ls-tree -r -l --full-tree 211ddde > /dev/null
+https://github.com/git/git/pull/2076
 
-  Before:
-        real    0m2.083s
-        user    0m0.201s
-        sys     0m1.873s
+Changes in v4:
+==============
+ - Use strchr() to extract the required token over string_list_split_in_place
+   used in v3.
+ - Modify commit messages to indicate the switch to strchr() from
+   string_list_split_in_place() used in v2 and reason for prefering strchr()
 
-  After:
-        real    0m0.243s
-        user    0m0.179s
-        sys     0m0.052s
+Olamide Caleb Bello (2):
+  gpg-interface: do not use misdesigned strbuf_split*()
+  gpg-interface: do not use misdesigned strbuf_split*() [Part 2]
 
-On a private repository that requires about 943000 mmap/munmap calls:
+ gpg-interface.c | 31 ++++++++++++++++++-------------
+ 1 file changed, 18 insertions(+), 13 deletions(-)
 
-  time git ls-tree -r -l --full-tree xxxxxxx > /dev/null
+Range diff versus v3
+====================
+1:  7da4fded53 < -:  ---------- gpg-interface: replace strbuf_split*() with string_list_split*()
+-:  ---------- > 1:  2879d9be36 gpg-interface: do not use misdesigned strbuf_split*()
+2:  9a6eb6ff8b ! 2:  a830de15ec gpg-interface: use string_list_split*() instead of strbuf_split*()
+    @@ Metadata
+     Author: Olamide Caleb Bello <belkid98@gmail.com>
 
-  Before:
-        real    27m15.138s
-        user    0m5.084s
-        sys     27m9.636s
+      ## Commit message ##
+    -    gpg-interface: use string_list_split*() instead of strbuf_split*()
+    +    gpg-interface: do not use misdesigned strbuf_split*() [Part 2]
 
-  After:
-        real    0m24.209s
-        user    0m3.055s
-        sys     0m21.123s
+         In get_default_ssh_signing_key(), the default ssh signing key is
+    -    retrieved in `key_stdout`, which is then split using
+    -    strbuf_split_max() into two tokens
+    -
+    -    The string in `key_stdout` is then split using strbuf_split_max() into
+    -    two tokens at a new line and the first token is returned as a `char *`
+    -    and not a strbuf.
+    +    retrieved in `key_stdout` buf, which is then split using
+    +    strbuf_split_max() into up to two strbufs at a new line and the first
+    +    strbuf is returned as a `char *`and not a strbuf.
+         This makes the function lack the use of strbuf API as no edits are
+         performed on the split tokens.
 
-Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
----
-    macOS: queue for munmap operations
+    -    Replace strbuf_split_max() with string_list_split_in_place() for
+    -    simplicity
+    -
+    -    Note that strbuf_split_max() uses `2` to indicate the number of tokens
+    -    to extract from the string, while string_list_split_in_place() uses `1`
+    -    to specify the number of times the split will be done on the string,
+    -    so 1 gives 2 tokens as it is in the original instance.
+    -
+    -    string_list_split_in_place() returns the number of substrings added to the
+    -    list keys.items, so we check that at least one substring is added to the
+    -    list since we just want to return the first substring.
+    +    Simplify the process of retrieving and returning the desired line by
+    +    using strchr() to isolate the line and xmemdupz() to return a copy of the
+    +    line.
+    +    This removes the roundabout way of splitting the string into strbufs, just
+    +    to return the line.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1993%2FKojiNakamaru%2Ffeature%2Fosx-queued-munmap-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1993/KojiNakamaru/feature/osx-queued-munmap-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1993
+    -    Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
+    -    Reported-by: Junio Hamano <gister@pobox.com>
+    +    Reported-by: Junio Hamano <gitster@pobox.com>
+         Helped-by: Christian Couder <christian.couder@gmail.com>
+    +    Helped-by: Junio Hamano <gitster@pobox.com>
+    +    Helped-by: Krisoffer Haughsbakk
+    +    Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
 
- Makefile                            |  1 +
- compat/osxmmap.c                    | 49 +++++++++++++++++++++++++++++
- compat/posix.h                      |  7 +++++
- contrib/buildsystems/CMakeLists.txt |  4 +++
- meson.build                         |  2 ++
- 5 files changed, 63 insertions(+)
- create mode 100644 compat/osxmmap.c
+      ## gpg-interface.c ##
+     @@ gpg-interface.c: static char *get_default_ssh_signing_key(void)
+    @@ gpg-interface.c: static char *get_default_ssh_signing_key(void)
+      	int ret = -1;
+      	struct strbuf key_stdout = STRBUF_INIT, key_stderr = STRBUF_INIT;
+     -	struct strbuf **keys;
+    -+	struct string_list keys = STRING_LIST_INIT_NODUP;
+      	char *key_command = NULL;
+      	const char **argv;
+      	int n;
+    + 	char *default_key = NULL;
+    + 	const char *literal_key = NULL;
+    ++	char *begin, *new_line, *first_line;
+    +
+    + 	if (!ssh_default_key_command)
+    + 		die(_("either user.signingkey or gpg.ssh.defaultKeyCommand needs to be configured"));
+     @@ gpg-interface.c: static char *get_default_ssh_signing_key(void)
+      			   &key_stderr, 0);
 
-diff --git a/Makefile b/Makefile
-index f79c905bdc..058bc83753 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1654,6 +1654,7 @@ ifeq ($(uname_S),Darwin)
- 		COMPAT_CFLAGS += -DAPPLE_COMMON_CRYPTO
-         endif
- 	PTHREAD_LIBS =
-+	COMPAT_OBJS += compat/osxmmap.o
- endif
- 
- ifdef NO_LIBGEN_H
-diff --git a/compat/osxmmap.c b/compat/osxmmap.c
-new file mode 100644
-index 0000000000..5f9cf633ca
---- /dev/null
-+++ b/compat/osxmmap.c
-@@ -0,0 +1,49 @@
-+#include <pthread.h>
-+#include "../git-compat-util.h"
-+/* We need original mmap/munmap here. */
-+#undef mmap
-+#undef munmap
-+
-+/*
-+ * OSX doesn't have any specific setting like Linux's vm.max_map_count,
-+ * so COUNT_MAX can be any large number. We here set it to the default
-+ * value of Linux's vm.max_map_count.
-+ */
-+#define COUNT_MAX (65530)
-+
-+struct munmap_queue {
-+	void *start;
-+	size_t length;
-+};
-+
-+void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t offset)
-+{
-+	/*
-+	 * We can simply discard munmap operations in the queue by
-+	 * restricting mmap arguments.
-+	 */
-+	if (start != NULL || flags != MAP_PRIVATE || prot != PROT_READ)
-+		die("invalid usage of mmap");
-+	return mmap(start, length, prot, flags, fd, offset);
-+}
-+
-+int git_munmap(void *start, size_t length)
-+{
-+	static pthread_mutex_t mutex;
-+	static struct munmap_queue *queue;
-+	static int count;
-+	int i;
-+
-+	pthread_mutex_lock(&mutex);
-+	if (!queue)
-+		queue = xmalloc(COUNT_MAX * sizeof(struct munmap_queue));
-+	queue[count].start = start;
-+	queue[count].length = length;
-+	if (++count == COUNT_MAX) {
-+		for (i = 0; i < COUNT_MAX; i++)
-+			munmap(queue[i].start, queue[i].length);
-+		count = 0;
-+	}
-+	pthread_mutex_unlock(&mutex);
-+	return 0;
-+}
-diff --git a/compat/posix.h b/compat/posix.h
-index 067a00f33b..3fa1218289 100644
---- a/compat/posix.h
-+++ b/compat/posix.h
-@@ -278,6 +278,13 @@ int git_munmap(void *start, size_t length);
- 
- #include <sys/mman.h>
- 
-+#if defined(__APPLE__)
-+#define mmap git_mmap
-+#define munmap git_munmap
-+void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
-+int git_munmap(void *start, size_t length);
-+#endif
-+
- #endif /* NO_MMAP || USE_WIN32_MMAP */
- 
- #ifndef MAP_FAILED
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index edb0fc04ad..5c08f2fe5c 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -271,6 +271,10 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
- 		compat/strdup.c)
- 	set(NO_UNIX_SOCKETS 1)
- 
-+elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-+	list(APPEND compat_SOURCES
-+		compat/osxmmap.c)
-+
- elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
- 	add_compile_definitions(PROCFS_EXECUTABLE_PATH="/proc/self/exe" HAVE_DEV_TTY )
- 	list(APPEND compat_SOURCES unix-socket.c unix-stream-server.c compat/linux/procinfo.c)
-diff --git a/meson.build b/meson.build
-index cee9424475..b9b6e731b1 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1275,6 +1275,8 @@ elif host_machine.system() == 'windows'
-   else
-     libgit_sources += 'compat/mingw.c'
-   endif
-+elif host_machine.system() == 'darwin'
-+  libgit_sources += 'compat/osxmmap.c'
- endif
- 
- if host_machine.system() == 'linux'
+      	if (!ret) {
+     -		keys = strbuf_split_max(&key_stdout, '\n', 2);
+     -		if (keys[0] && is_literal_ssh_key(keys[0]->buf, &literal_key)) {
+    -+		if (string_list_split_in_place(&keys, key_stdout.buf, "\n", 1) > 0 &&
+    -+			is_literal_ssh_key(keys.items[0].string, &literal_key)) {
+    ++		begin = key_stdout.buf;
+    ++		new_line = strchr(begin, '\n');
+    ++		first_line = xmemdupz(begin, new_line - begin);
+    ++		if (is_literal_ssh_key(first_line, &literal_key)) {
+      			/*
+      			 * We only use `is_literal_ssh_key` here to check validity
+      			 * The prefix will be stripped when the key is used.
+      			 */
+     -			default_key = strbuf_detach(keys[0], NULL);
+    -+			default_key = xstrdup(keys.items[0].string);
+    ++			default_key = first_line;
+      		} else {
+    ++			free(first_line);
+      			warning(_("gpg.ssh.defaultKeyCommand succeeded but returned no keys: %s %s"),
+      				key_stderr.buf, key_stdout.buf);
+      		}
 
-base-commit: 4253630c6f07a4bdcc9aa62a50e26a4d466219d1
+     -		strbuf_list_free(keys);
+    -+		string_list_clear(&keys, 0);
+      	} else {
+      		warning(_("gpg.ssh.defaultKeyCommand failed: %s %s"),
+      			key_stderr.buf, key_stdout.buf);
+
+
 -- 
-gitgitgadget
+2.51.0.463.g79cf913ea9
+
