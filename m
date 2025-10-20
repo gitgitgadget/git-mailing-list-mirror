@@ -1,67 +1,66 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3BD313297
-	for <git@vger.kernel.org>; Mon, 20 Oct 2025 14:24:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908E62EC0A0
+	for <git@vger.kernel.org>; Mon, 20 Oct 2025 14:26:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760970248; cv=none; b=O1vdgHFch3mdQOL13u7PGcftAcNt/1b2taUMpeoHX9mcjizXpQTPT/+Lz/8z/uaEvjFFdrx9DwDrOc4dkjg4hrGI/t8ObPo56WChj6qkTMyQsVHDpXQvhVbPa/CdByw7oYReW9qBGZrxXyuk6WDP0sXyM7iQT5SYzCS4BtcQvhc=
+	t=1760970363; cv=none; b=rwHkm14VjCFAKy6LTe4JSJn4MBmwO4JII4ZLHr8awSdJ/M6rO3Y6B07zXI3GZkA7yhW9+wbLkgEP0ZIaCMA67yK/8KVgUmhaX3q3SD4VM11B8KHiVIEKVB2cSQT24dIYx1d0t5W9vX0qArVG2p1y1cSGV61jSIJuTpEkwdXmlfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760970248; c=relaxed/simple;
-	bh=RcT/IG9s8RbkS1izs8cj69eUWVtV2mwFQIVGUtbD35E=;
+	s=arc-20240116; t=1760970363; c=relaxed/simple;
+	bh=7NjcB3kFl9XByxXBzaAdoCJbYFnh44ZHhH+gTLbxaVY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MltbAgOOp4bkfx4vcmzibIMQI9qq+Y1Jajoy4YllFZMmOexlCxCp70k654twAhT9w7yfKtJGbGvQqnKlTFc+nsgo8m9e7TlpDVLxlzI3FAi3uDegAZfHF/n4LKtERygyeY+8ZPurb16upXRsw05kbPkRXRHFvlmcR0gh18pBSpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ip252tSm; arc=none smtp.client-ip=209.85.222.172
+	 In-Reply-To:Content-Type; b=JHae+KHfjlTnAcnn2I+0OH93lPrDVjzJoQxnVR7niFRSrrIgMRCC0CZqrwF2/9qGRtqxAzkc9psiKjCJWc/NhxoLGhQ+YkMUD42YWD1H8PWoSDMq09jQL6Fk2EUEOXBswrWvArxOiTBou1OgOlrIOOUJ5gPI1Q6DJjuKqJBmR2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A4gltBXY; arc=none smtp.client-ip=209.85.219.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ip252tSm"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-892d1443e48so412800385a.0
-        for <git@vger.kernel.org>; Mon, 20 Oct 2025 07:24:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A4gltBXY"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-87d8fa51993so37224746d6.1
+        for <git@vger.kernel.org>; Mon, 20 Oct 2025 07:26:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760970245; x=1761575045; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760970360; x=1761575160; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=35KsAGiMzNLXsikMG/cT7hjbhqwx6HQPlFeeqPyOjRw=;
-        b=ip252tSmtN6jBT+N7tQ5yW9LxDe5nXvHQPXz9Qkeqj5LJoh23Q6R3GAD0nrW2rKlM4
-         S0I7uHvHDRFCGzM2xi4YnvMJZ7VgZ44cIAqtvIMZqEZ41kmuyZ+T5iF/VbhGD8sUGZGv
-         eLKmYpMMTya/gJXiymuVTdQ+akJvFjHJ0i8idYB7TpJbd+yCN4xPHgUJTsg8CNahcDll
-         hUvso3NUpiuSIV+SZq4FtaC6KpjneZ3VSqytdHBCdw1H7/17bLW+X6Hm+TPX57be3Y6n
-         Oh6niGfVRnMmaO/06mZar5hQ4FRGcmDBmap6W+1qP1ENXNESJwye/8l8SjaYcKTEpjCr
-         KhIw==
+        bh=AEm4IfjHz09cMC82ZuIiv36596fReEwa+IuMwZJ+shE=;
+        b=A4gltBXY5nKSqaCzg+FtLDi3K2UJoUCO+M6571/lBvOv526ICf/Mdr1SCNz9VuRvO4
+         35ugI0jQSjv7eP2IPGUAa5Hjy8Vdm9V3cMWm9WkiVunYIerh90DyAY1ZstBLpHCItzaL
+         WVwgmaknPGMR/yv+e4oStgSNYCvPWyOb19+DHpaB8Kb/6HiFVG/HQz2Eqd43H86q8yQI
+         d2zoCGzP/516jI2WYL60RsJOyYuu5m1I1TX2nl1UznKxDoqDdvPyPhrCMSN0VB6qLwXZ
+         HFIdSUbQXYOwbQ60Q846E7UlDnrFHVpVju1udvN6GcabPjL/0rJaFy0ru33oHimDMfcg
+         DR/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760970245; x=1761575045;
+        d=1e100.net; s=20230601; t=1760970360; x=1761575160;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=35KsAGiMzNLXsikMG/cT7hjbhqwx6HQPlFeeqPyOjRw=;
-        b=oSlgbGpvrBG/5FCDBn2pX0hd5j1o8yDovkw75XxW0TyOcjEu+0O92T1DzfNAY9kXlU
-         H0ic4oQJOx4pODtrRiQ2CAR36hYOpcoWCE/PdtHc0jlWouJl8mhLodw3IK7Kz/SYVyzj
-         EZzhBkw45YQ8Mmoibm5S1Bdzm6ZlwY9hUBMTXkk0ZGaIvMeIwSmzZT82Z2333FNMr2bP
-         GpkJ7UA0bq9NXDFLXSXmdV8rJPZ1YoWQKvqdfDHuQ5SlnULCt14I0xRxZY6Jv4BPqcsr
-         Z0RBPlWwj9xbCZ6nQGkMwB/fvStUC1Fzydn1D/OgOmevv3OiqDwAj39X0wPbdR8DLhXN
-         H5TQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWubxIenjl2hWOyPBR/FEwrSpwlG2dvJ0oC/yJTLBjcJodIJM0E8PnD0tkDrIG2zSK/LCw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxsCLwq6FmY3XcseTImoewDz1PcJtrlOTo32ZtfUCZ2JKEqT5o0
-	FUINOv0yCUzSHxW74Kx4CihYxYdnOfJrjs4RKyn6W8F8TkRhmDgH0/htSSaT0FQL
-X-Gm-Gg: ASbGncuNjBZnP2ObVUzebsSsJ8gvW310cJ3ouH0QTsdgMcuvNjYnMOY4u2FEooUiu0o
-	uSwH+yRgxyMRNR9yoOXdlHLKNu7hUOcTF4bMfynWeA6fFE/cE4xA5ZE888TFa2+4UJmSBJtyi69
-	CLqy0Pj9g3WueM+Xst9aAsCOmtCHKlUeKwSvuRpIsucz0KJY3RX+CtzLbR4hg/lwFtx/AqwLc2M
-	UV9pbv/TML4Xvquf1owk/HyRHDn+KYCkFhuCSozFb4k36awsysuYvkw3GXY15FksKqWVmEIK6vj
-	74uMk/F+2O2DIb0dlbCNfc5gOTfRbqZfEu1grvgUuoWFbtndRsm0wu6qeFFcplpKmlu4eNCD0GQ
-	oPPSMwpM6RFZWFgxiWnE4f0V5Gq3PB7wDzrf5DK9QjekydimkZ56KVDc7rtRwJLVmYMUnb4Evd9
-	MkNqe31xqb3IfpUJJh0trrltlitFVDOHnhyOhl4F/8x6SGPa1IDZMpdBUKHgIiRY1tOFisBLFL4
-	o9MFvkf4MBctNZsfEijHd4=
-X-Google-Smtp-Source: AGHT+IEDrTsp7QfrXud8KBBpifz+66oIUsMAAgnUaRTpiRBP0vYIl9nSkQBejD0RkmvkICrXeXsKDg==
-X-Received: by 2002:ac8:7fc7:0:b0:4e8:8725:c7f1 with SMTP id d75a77b69052e-4e89d218d9cmr216339001cf.18.1760970245512;
-        Mon, 20 Oct 2025 07:24:05 -0700 (PDT)
+        bh=AEm4IfjHz09cMC82ZuIiv36596fReEwa+IuMwZJ+shE=;
+        b=hz0/W32tTTLIYSq9kc5rVqHyUsRHS8sG3tCyv/a8d7doPWw1Ig2QOxeRH5Cs/mC65h
+         lOVmYVG65nMhHCTKUjeKY6Na/OvAor6VIjNURZkA05wC4XAl4uGudPKaLO+O/bpXohGo
+         7oRIixZRBONp2rsDoRGVFyPnOO1t82TPce+sakEU7DybFLTN5vU0PIiSqQdEfnk8MZtr
+         hBTNy5H6ZImzrPqA0xFx0yQAV1t/YQ6WW8xgYdHRTrj/tHWpU9NX3T5epoJt3Hh3W2O8
+         +xJfXKp67iG8zXeZIx0V1r60kbl3icn1ft/tYImkheFKEG5hKhzmioUddHPIfqMAy/cP
+         l5fA==
+X-Gm-Message-State: AOJu0YwQM4UiN0t9+KbZNnZpxuVFcddcKEztRScgtXQpSiYxhHG+y4L9
+	53EX9rzUApUNqxzwkbGI4UUOuM8AbjbvifuLqDacnJBsGk6iaaO9WG54
+X-Gm-Gg: ASbGncsVECxW2iXRNjJjS8m3D8xqBl26bkrdybYQ+h1ixXL4BAFSQlFrsVYttlF41aX
+	QH4Swe/Y7Sy4RnBxt+1NxOOugXzt++wlS29pSIznyduLzxQW2fxFlrnLWZ1l0xkI30PjOkTyaa8
+	vp3ojGk32T7lfP+igqc8R3oilIy7IMxhSxYQpEPNN3HxEm+nLxfWCqhgJMlR8WnzKaZcr91HkP/
+	qQpHep5Fj0GaT1yL3XLfFo82keb3SQY73ua80vXez+wgnzbjck0tt7ubKkFjxxMhx6tPiufwfIw
+	S3Ni2v8s855x+xonZyQ/Sgbmy2ZRL2QMeFvCc5A6tdChP/CYxHJyNedHqvCxXBlVJdxs6qbQIkq
+	3bhi4mmgQLdFo88i7qdYnkB4IOnCCydKBkTjUC3SMrGSwzpDNTjHQ3qVO9S2A34BQmbZyihcMLV
+	5RmJg7y2rwN4JMAEZd7rFMRK8OQJY9BJV9tRJg62N1d5eJistVmdrjrFxJYdzr/OrGHd0PdLuLq
+	GmEI+Vg0T5S1GsYSZRoVx6qJAoOrSkW0A==
+X-Google-Smtp-Source: AGHT+IHVZFOvCSHRwcq4Rd4rtjMvnrw/mr9evlrCFcGiwQWeBYXkyMCBRWV9jPZi34BRmiNYf5ZrXQ==
+X-Received: by 2002:ac8:7f02:0:b0:4e8:b739:6b5d with SMTP id d75a77b69052e-4e8b739747bmr82402751cf.46.1760970360441;
+        Mon, 20 Oct 2025 07:26:00 -0700 (PDT)
 Received: from ?IPV6:2605:a601:a6b1:2f00:3d56:be00:69bd:1efd? ([2605:a601:a6b1:2f00:3d56:be00:69bd:1efd])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4e8ab0ee857sm55161121cf.31.2025.10.20.07.24.04
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-891cd09870csm570138085a.16.2025.10.20.07.25.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Oct 2025 07:24:05 -0700 (PDT)
-Message-ID: <a34cc559-5823-4e68-8f3f-07c182f7299b@gmail.com>
-Date: Mon, 20 Oct 2025 10:24:04 -0400
+        Mon, 20 Oct 2025 07:25:59 -0700 (PDT)
+Message-ID: <528686b1-e0e6-4c4b-8339-ef894652f774@gmail.com>
+Date: Mon, 20 Oct 2025 10:25:59 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,64 +68,43 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH 8/8] sparse-index: improve advice message instructions
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: gitster@pobox.com, newren@gmail.com, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v3 0/7] sparse-checkout: add 'clean' command
+To: Elijah Newren <newren@gmail.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, Patrick Steinhardt <ps@pks.im>
 References: <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
  <pull.1941.v3.git.1757673011.gitgitgadget@gmail.com>
+ <CABPp-BEEHsFwE-bDjcUoDtAYm9pvVN0tGUaoh0KPEJu23LywOQ@mail.gmail.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <pull.1941.v3.git.1757673011.gitgitgadget@gmail.com>
+In-Reply-To: <CABPp-BEEHsFwE-bDjcUoDtAYm9pvVN0tGUaoh0KPEJu23LywOQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
- From 0ee829fea73d495dd32deda4553ea00f9299c701 Mon Sep 17 00:00:00 2001
-From: Derrick Stolee <stolee@gmail.com>
-Date: Mon, 20 Oct 2025 10:19:22 -0400
-Subject: [PATCH 8/8] sparse-index: improve advice message instructions
+On 10/7/25 7:07 PM, Elijah Newren wrote:
+> On Fri, Sep 12, 2025 at 3:30 AM Derrick Stolee via GitGitGadget
 
-When an on-disk sparse index is expanded to a full one, this could be due to
-some worktree state that requires looking at file entries hidden within
-sparse tree entries. These can be avoided if the worktree is cleaned up and
-some other issues related to the index state. Expand the advice message to
-include all of these cases, since 'git sparse-checkout clean' is not
-currently capable of handling all cases.
+>> Updates in V3
+>> =============
+>>
+>> Huge thanks to Elijah for such a detailed review. Apologies for the delay in
+>> responding.
+> 
+> Likewise...it's nearly been a month since you sent this.  :-(
 
-In the future, we may improve the behavior of 'git sparse-checkout clean' to
-handle all of the cases.
+It's my turn to be late in responding. :(
 
-Helped-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
----
+> In summary, I think this series is close to ready to merge, but I
+> think a couple wording improvements to an error message and advice
+> message that I called out in separate emails on this series makes
+> sense to fix up first.
 
-Here is an add-on patch to add to this series to hopefully satisfy
-Elijah's feedback. Sorry it took so long to be able to get back to
-this!
+I sent a patch 8 to the v3 thread [1] that includes an update to
+the error message. This could be squashed, but I sent an extra patch
+to avoid a reroll of 'next'.
 
+[1] https://lore.kernel.org/git/a34cc559-5823-4e68-8f3f-07c182f7299b@gmail.com/
+
+Thanks,
 -Stolee
-
-
-  sparse-index.c | 5 +++--
-  1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/sparse-index.c b/sparse-index.c
-index 5d14795063b..76f90da5f5f 100644
---- a/sparse-index.c
-+++ b/sparse-index.c
-@@ -32,8 +32,9 @@ int give_advice_on_expansion = 1;
-  	"Your working directory likely has contents that are outside of\n"     \
-  	"your sparse-checkout patterns. Use 'git sparse-checkout list' to\n"   \
-  	"see your sparse-checkout definition and compare it to your working\n" \
--	"directory contents. Running 'git sparse-checkout clean' may assist\n" \
--	"in this cleanup."
-+	"directory contents. Cleaning up any merge conflicts or staged\n"      \
-+	"changes before running 'git sparse-checkout clean' or 'git\n"         \
-+	"sparse-checkout reapply' may assist in this cleanup."
-
-  struct modify_index_context {
-  	struct index_state *write;
--- 
-2.47.0.vfs.0.3
-
 
