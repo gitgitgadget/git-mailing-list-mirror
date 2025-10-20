@@ -1,120 +1,121 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3CBE31AF1F
-	for <git@vger.kernel.org>; Mon, 20 Oct 2025 13:44:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A32324B10
+	for <git@vger.kernel.org>; Mon, 20 Oct 2025 14:16:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760967851; cv=none; b=sb4UzbegI5z8LbY/pCfuFQcOr0sBlP+0LsQD3Xj8e6CMCzEeZaMB2p5ilKIxRvjTf/MOqueXZ9VlNKB+eneSrajmdUrqQQfN9opocnsT8HI3Gn2bevdAltUHttJCEhEItzMWFmIVWn8h0ClEZScQKgKOFvDGG87AGOwUG30nx20=
+	t=1760969807; cv=none; b=rKDv/55o+bo8BJDk+5GRhrFpVbgfZSMewQm6oTSv4ZFJN1uXQyCzGCYGAXOVqXhT9WGFUkRXt0508pIlCs+IZNwa2gqqqpyupyMBRLgq1RodlcSPbociDLjRUlR3TsMu6QIvbUGtUMimYRNmYNq0nPGEXDJ9zdsSn69oXZKtEI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760967851; c=relaxed/simple;
-	bh=ga1XY20p+fT5SiBmbt+VjePyJ6x0wxevHzhcCGRBCLg=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=N7iUTHNis5DAjJblQiQcdfS3XO6jO4tTNQrduvuqrummKktONm9h0t0xCNIEFHWGa8N65Q78Os/Ziww+HaAHXh7QMg6K3FA7VQF0cNCmG7EmcM4jPGLZaWw30N3vCsrbsqfFr+QyOxuMVB3GYfeYbhjX4+xY8zSkNnUcFJTVs90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J7VbKT8b; arc=none smtp.client-ip=209.85.128.171
+	s=arc-20240116; t=1760969807; c=relaxed/simple;
+	bh=wrIcBGzglUPFrT+/B575uyjJo7c3yQ3jLIROwpsZvkU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rt0w6UUH+Iv2lAkBh4yJLBzG3sSLzNl/UAz1PSR1qc8wpAL95AN4wtyebYe79UzwkVQkH6unBRii+7hcEvy5UIiJWkWu5xakvEGkEIxX+F3+JJAjyYFLX74OltdNg38e0QhKEaIMoZ+7rN2qydiF+Mr1CrlXwgUQ+BqJL3JZ4ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f0fHecgj; arc=none smtp.client-ip=209.85.219.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J7VbKT8b"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-784826b75a4so21211817b3.0
-        for <git@vger.kernel.org>; Mon, 20 Oct 2025 06:44:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f0fHecgj"
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-795be3a3644so37146236d6.0
+        for <git@vger.kernel.org>; Mon, 20 Oct 2025 07:16:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760967846; x=1761572646; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ga1XY20p+fT5SiBmbt+VjePyJ6x0wxevHzhcCGRBCLg=;
-        b=J7VbKT8bYYyHeo3bEyJngVAuFfYof/rSFuOn6O0ALpsU8mmUUeYt8w2QyPI0I6J1kK
-         b+73AxaY1uNpdoWzaPd2nVWVI6uOA4NGXjgkCmZrY95YNlkqGNGMCw6Ia/hzO9HdC8hC
-         x8dGE/BJ/8Xtk5ECHagQJMvFLj2oVpRlMyB/1D5ZBtWetd3HEwZ9sxUWrfDlajphcE9a
-         0ww6ETGQTgs+OOx5v4/vesUamB4gIv6cEQvWq/ZCChvvgOpNo8aSzzzEhYlIpq6Bn+N9
-         iJhg5KCgVd/feWiG5+y6G8a8f13SY9uYu2GFuv4C2vgWD2TOqrIdfhcoItmX/jQ++/ll
-         aFMA==
+        d=gmail.com; s=20230601; t=1760969804; x=1761574604; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=snCZiOuH6DG54r/c79nfSVBO5d2DTgsRvWmHaMn2e8U=;
+        b=f0fHecgj1Do7+aw4WEE4VJ91ylwX2NRCTvDkpdH/WGxuZYmyYX3nlfI4xZ9KZACTLg
+         EpHnJY5rmnNmJfZzIa9Z93F70/8gOFzSGNa4Y5/aNt8y+F1rM/b6vxg0DmNWOfgdh3Vo
+         MFCtvZWFSBlT8AQ8rr0E2d8Bmy8Fun2K5nIoy3DJXBdwY/x/9EVVfyLs96t0sjnaSgn3
+         g7iiCqBEjmo4uOKreOSZa16rp5gHpOn5REvn4YEhs3JyYXG69Ijgp+6H5aTHzyBQeIHJ
+         X+xiiytOkwyKim7KZd+1ABBXKmS0fA8U4sLT7gclHhSDJGfVNuC5aO7HDt/mFqV/FadT
+         ttmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760967846; x=1761572646;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ga1XY20p+fT5SiBmbt+VjePyJ6x0wxevHzhcCGRBCLg=;
-        b=W79KbNSg4OxiaYr5E87mDJudsFRs2uC6ita7O77hWecYk/PbBRKbxCGcSkEtXY5jPN
-         qhq9j5/A3ezBEc2drPlvdI+DMW6DxPp3hS+M5SjQcKWB8YOoqbRYzjvMBt9q4DDGeCMf
-         N9wGe7QPik3dk9zVWSC6+ipRB2v1yVD/oNa1qRB3PLp6n1+p0gW9U/HusWrgPLAHXShT
-         DPYb6FCfdk5DsmNLg96zThKAkrOwK7N/j7+PBEDrA8oCT2d1yOTK53DDcD9en8QXjLgv
-         6eLpgrLBR264xVt5fMkz0kKxaULlgEHMlJD3eqMuz0WqLtlamMzmCIUhcyDIiX1+Shga
-         uL8Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXmxTAHtFH/AWGm2mCfmnK0Urg1hEFKrxSYFMEjOruS3u2l5tBZnZIQK131GM2xzIrwAYQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyeZ7x84ZZlVAbXdaXFgdb/HTqcZp54rNlyADVuJWT4sH/AF//P
-	XoykqJcXNhKQvv6l4AsbWueIEof23s9hHNaO0VkvmO6v/6jUVJ5RKfXC
-X-Gm-Gg: ASbGncuhK54Fm/B8rFXxAv/0MQK+NpLXMOHpLHgOxdePx8kVRFgtWnw0jQC5YPqxB/B
-	pIxEXRptB/Dm/ZfbynmtzXW8WuHxtMFLM4g96AGaTc6LOcjv6U9wd3tusjLD1kMBMj9Iqd6f8vT
-	aOqdSHr5mDUytKfhewjKFGfdvxaIMpOPMn4/0vfJMQ9yjFDxbZc/YRKdyF5yDgrl/jAd9E+9FgT
-	PoVie7uaB8GWtn0kuWjbLTyX/p9E1gCQ+P4Dr9KUnbkDL97EjK3Bebp2Hghu0Xn0nYb4p6cOLAe
-	zrvY7AwitRZfjupf2F97ax4CehvJzP2ULI5WBqDcmWKu8KqhYOx67QcCLUPRGC2gaz6Cckwfhrl
-	lPjNG63YSqaEDWc63B47WDhZDkxHpU7vD6P5eoUtiCeqZfC3j2h0l2FGd6iRaSNk8ln8KofD7tP
-	HNLXdPJXjNOr40PNrA56RFbxgIUezbAWn6LBtFtygzqf3Y3WIQ8Q==
-X-Google-Smtp-Source: AGHT+IF7L/aAcXkXIWbszch/JSKTX1HLyseyQz/kqDw+xIhU42AzEVC5JDK/SQvHDb460MWxJyBkhg==
-X-Received: by 2002:a05:690c:6010:b0:720:bb3:ec14 with SMTP id 00721157ae682-7836d226ffemr127345437b3.25.1760967846215;
-        Mon, 20 Oct 2025 06:44:06 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:b8e0:19d9:4bc8:fca2])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7846a6c70easm21373917b3.59.2025.10.20.06.44.05
+        d=1e100.net; s=20230601; t=1760969804; x=1761574604;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=snCZiOuH6DG54r/c79nfSVBO5d2DTgsRvWmHaMn2e8U=;
+        b=UsAgeFsJPfVfycngWhz7cDqcboJcZN0sKb4NdJyLHUOhOeYNGvfWf/wpKl/q99HMZT
+         7l6aFN2+dx5r+ySm9OFyTcfMetUQ7dBMbzLx22bTKz7MTJexg8/xf+X1FvsOlXzStznP
+         HBZaMBqgK2/vgQRgbRNsmeX1C+JvMpwPnlfEOl9LbVigizXwAox3NFlWUGvw7VjNR0Ss
+         SRn2iikm6HCgv+VXcjMUSgaqIfWP5oveISoScQvjjcdHlLhkMPk79rY+9to0oCTkNTij
+         vDIQ0R+XP198AdRjDhATSIKVmoySDN6Ph9uJmPZ+M768T2l/0tU9L70CNI1ZCf4ypbxo
+         ysXg==
+X-Gm-Message-State: AOJu0YxQPgOTYI6f3TK9Q7BFdLsJAQHc+RYoV3lvsZ5x14O+8JCF5JGv
+	uHEdIkXaXLc3H00RUh7h7LLrmSrFfC2kMAInE8yiAiXJvoVaLvmKngzaCA/aAHmb
+X-Gm-Gg: ASbGnctg2EuDNI5Z2OVTUnEWlX0i51kROQMq1mJ13mN5bmpvgxgYpMA3+TNXnXE3/3s
+	Ex9tDzhOhIdvC8geyOdjGiSYZpZRDStytWa1uFRYb0yeT1q0wTunU3DGCyrDaUIRrQrsiXHs2+M
+	MpRD8VvH2j0/zYWzlhlw3vjsPi6XlQMTn6E8UPxrQUsXqKCv/Norhdg/Yc6SBZNhpnuKbjEiRXi
+	3M6G2N1ilC0eVIeSo5QQecr77BOCbbV+iIOS0wBOdOZGzmszX342X7o2qcUvw8RTiz9Ih1SVBDG
+	rKBvTFaGrV7KqgopATUa2Lu6W0Ocf2HAOuMm7UjD+U1LmR7GLvYLIuj4mh6UwSWbgL5borbxSQ1
+	LYOYKi4iyQkhaNH3NYTOiqmPJOFTZk5QAu+7XhxJfA0x/GC4QCZDh568JLrWOw99HDJjp9VgEeL
+	lOPXilBne9BL51fzt0J77tgJmsU5pkb3cwHyWh282/HjXdS5CJp0NbUaO0Uc7p12gos1IxtELZ0
+	A/oC+yFIj5VDztx5vU3OAMEm6hAXhA2qg==
+X-Google-Smtp-Source: AGHT+IG6Zdu5AdVzM3bdD4o/rQMmwBHmdXZoWkGwnHwmS2SVPyPZxC91zwuunut1j2jqiRyHm40enA==
+X-Received: by 2002:a05:622a:130d:b0:4b7:b010:9398 with SMTP id d75a77b69052e-4e89d3dfbb4mr164058241cf.66.1760969804215;
+        Mon, 20 Oct 2025 07:16:44 -0700 (PDT)
+Received: from ?IPV6:2605:a601:a6b1:2f00:3d56:be00:69bd:1efd? ([2605:a601:a6b1:2f00:3d56:be00:69bd:1efd])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4e8af0126a9sm50588031cf.12.2025.10.20.07.16.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Oct 2025 06:44:05 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        Mon, 20 Oct 2025 07:16:43 -0700 (PDT)
+Message-ID: <0f517519-74bb-4f46-b7df-5e25a780a536@gmail.com>
+Date: Mon, 20 Oct 2025 10:16:42 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] t7500: fix tests with absolute path following ":(optional)" on Windows
-Date: Mon, 20 Oct 2025 09:43:55 -0400
-Message-Id: <A563E028-19E7-48A0-B538-82ACE821DB67@gmail.com>
-References: <6a83c7d1-7cd4-432e-a0ab-7b18ce3af08d@kdbg.org>
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
- Junio C Hamano <gitster@pobox.com>,
- Noah Pendleton <noah.pendleton@gmail.com>, Patrick Steinhardt <ps@pks.im>,
- Phillip Wood <phillip.wood123@gmail.com>,
- Thranur Andul <thranur@gmail.com>,
- Michael Grosser <grosser.michael@gmail.com>,
- Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-In-Reply-To: <6a83c7d1-7cd4-432e-a0ab-7b18ce3af08d@kdbg.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/7] sparse-checkout: add basics of 'clean' command
+To: Elijah Newren <newren@gmail.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, Patrick Steinhardt <ps@pks.im>
+References: <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
+ <pull.1941.v3.git.1757673011.gitgitgadget@gmail.com>
+ <a1564f74cfa19eee528a1a0c54b87ac52d1e8975.1757673011.git.gitgitgadget@gmail.com>
+ <CABPp-BGJ66e=znwOxvU0fLiw=KXwMg8FZxa283Jr5PXut_ECWg@mail.gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <CABPp-BGJ66e=znwOxvU0fLiw=KXwMg8FZxa283Jr5PXut_ECWg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+On 10/7/25 6:49 PM, Elijah Newren wrote:
+> On Fri, Sep 12, 2025 at 3:30 AM Derrick Stolee via GitGitGadget
 
-> Le 20 oct. 2025 =C3=A0 05:40, Johannes Sixt <j6t@kdbg.org> a =C3=A9crit :
->=20
-> =EF=BB=BFOn Windows, the MSYS layer translates absolute path names generat=
-ed by
-> a shell script from the POSIX style /c/dir/file to the Windows style
-> C:/dir/file form that is understood by git.exe. This happens only when
-> the absolute path stands on its own as a program argument or a value of
-> an environment variable.
->=20
-> The earlier commits 749d6d166d (config: values of pathname type can be
-> prefixed with :(optional), 2025-09-28) and ccfcaf399f (parseopt: values
-> of pathname type can be prefixed with :(optional), 2025-09-28) added
-> test cases where ":(optional)" is inserted before an absolute path.
-> $PWD is used to construct the absolute paths, which gives the POSIX
-> form, and the result is ":(optional)/c/dir/template". Such command line
-> arguments are no longer recognized as absolute paths and do not undergo
-> translation.
->=20
-> Existing test cases that expect that the specified file does not exist
-> are not incorrect (after all, git.exe will not find /c/dir/template).
-> Yet, they are conceptually incorrect. That the use of $PWD is erroneous
-> is revealed by a test case that expects that the optional file exists.
-> Since no such test case is present, add one. Use "$(pwd)" to generate
-> the absolute paths, so that the command line arguments become
-> ":(optional)C:/dir/template".
+>> +Some special cases, such as merge conflicts or modified files outside of
+>> +the sparse-checkout definition could lead to keeping files that would
+>> +otherwise be removed. Resolve conflicts, stage modifications, and use
+>> +`git sparse-checkout reapply` in conjunction with `git sparse-checkout
+>> +clean` to resolve these cases.
+>> ++
+>> +This command can be used to be sure the sparse index works efficiently,
+>> +though it does not require enabling the sparse index feature via the
+>> +`index.sparse=true` configuration.
+> 
+> This expanded explanation for users is nice too.  I particularly like
+> that you called out three things users need to use in conjunction with
+> this command -- resolving conflicts, staging modifications, and using
+> `git sparse-checkout reapply`...
 
-Thanks! I probably assumed there was no meaningful difference between the va=
-lue of PWD and what pwd computes, so (prematurely) optimized for a lookup ov=
-er executing a command.
+These cases are about 'git sparse-checkout clean' itself...
+> [...]
+>> +       if (convert_to_sparse(repo->index, SPARSE_INDEX_MEMORY_ONLY) ||
+>> +           repo->index->sparse_index == INDEX_EXPANDED)
+>> +               die(_("failed to convert index to a sparse index; resolve merge conflicts and try again"));
+> 
+> ...yet the error message you give to users only lists one of those
+> three things even though the other two may be the problem.  Could we
+> fix up the error message?
 
-Going forward I will probably stick with using pwd, given the difference in p=
-latform behavior.
+But this is specifically about the convert_to_sparse() action, which
+is very limited in what could cause it to fail.
 
-Is there a doc or test lint for that? If not, might be useful.=
+I _will_ update the advice later (added in Patch 6) to include the
+more detailed set of actions.
+
+Thanks,
+-Stolee
+
