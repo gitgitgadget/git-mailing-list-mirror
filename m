@@ -1,95 +1,142 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625E532F748
-	for <git@vger.kernel.org>; Mon, 20 Oct 2025 19:02:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19EAF25A65B
+	for <git@vger.kernel.org>; Mon, 20 Oct 2025 19:04:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760986938; cv=none; b=C6/M+dGh+cBvfOCDE4TIlzJDKkGwxFTZRiNJHgPwaK3+lz0D5Qs8rVI3WNEJKmMKi8sEfD+i9tLZj4Ke9kYzXDrnxKtvVjjQ6lqeqpQ6fGEBLev7AsL6l15/7V+iHCFxTEieCHadIBGVQuv1eQMYfjgx6eyhZxexgbuwQpjeB1E=
+	t=1760987054; cv=none; b=aM8wnMIy4a5Qfer4aiNWKO1VGDrMUWqAn2qT+ffmvs3fQdFUjCuVxGYbjCwP9Fd2JttmnQa1YN8xNuWqXemRREPplIDYGs77Gza3aQ1ryGLGq7THLNvLj2xGYVx9YNZFX3raTBUv0vhADvw8rG+LFXYDewceS53EYPabUMkbZ14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760986938; c=relaxed/simple;
-	bh=AHs8fG4Wu6N7EJ9cejqAsW7By8t2EufaeXNiGV22bJ8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=H7+7Z8rpckxFg4ZfQnhC8mQQzA217Wl6XirJlIMf7pvc/LGTpBWi7RLiwFEROJVDJGOm1v8lXC1PGgXrlK68k9a/IN/CfMxh5L2LPkuB8XR/466nczJiFiwL9jofEwTBgmfdNGG/GeJky8AVfJ4ymeL7plnLpakGPfcU7XRjCxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hCiVW53b; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760987054; c=relaxed/simple;
+	bh=xq9IiejE8PkG4BGxX4LbHYN8Ao/NvgVf3xgGLaHqLWY=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=FkigM7UsJIa80AP/l5Tc9D/QqaRXhT/HODv9YIeKTnJr1YR1RyAqOg4dlVdQm7ybOm/acNOZiSJD9Nhm4rN/lnAPNW/HlU74Dhql45I1deJYnye/J4kwtmVYf89TpPyCZZV4/OecweLkaYqPn/d/3m2VTBAoqiV97E3M0oCZEgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=KlVxrTba; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lrhsVlwa; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hCiVW53b"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-27d3540a43fso50438375ad.3
-        for <git@vger.kernel.org>; Mon, 20 Oct 2025 12:02:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760986936; x=1761591736; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=UB2bjIXx34K/8dZRF1KLs143vBmXI3/PbgH83EApoIQ=;
-        b=hCiVW53b0kSNId+xiofBogesWFryY0c2p+Q8b6+YMGyFRnwvlT3LrW3Yd3LQEFhle5
-         YcuTJFFU5otIVGnaqpk2gE6yE8f2EkQdQq6ODJ/lUI3m3n58at2s4gYSGwlWCjkJ/Tjf
-         oD7CpnCkXXMri6H0fR31uPrNwdCrEJpaPCpd4gjXzncN6h7wwR81j7M3iHvix/2B4hLd
-         DAlzf5ISyQ+ShwkYemLlDgbn8zjh7KHal0eKzc7Q1DC2Rlf5n6KxxkQTexDDLse5iglM
-         ZiDxAiXpiJMZiunDgqZ3kUV/z7Y6g6x+5Apcz6aJrtyrS6Vpf6XZx+9at1x1+uHj2WUK
-         yXAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760986936; x=1761591736;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UB2bjIXx34K/8dZRF1KLs143vBmXI3/PbgH83EApoIQ=;
-        b=W5ohXocGqOipRtr+/KzLd40cO8xJl2bv8748fwbn/cqW9PkcFknAeDdbw0oWU/s09U
-         Th8GojcweISSI6DGNZEkEa+02nvMhBOyEHfAC3APK69ZBOChui7YTxc3m01BZhy86tqA
-         fLb7O2QA1kf7vdv+WdkzGR9kO7EmYZx0jDTtbSkF8Y69zo4DW5K1r+e4P4Kk+zulxulG
-         lDvj6erLdJU7VDvvreBmk8GC56QJlJrToWkzb1oXjz2qZQXLFdeFo6ecuUjx8jMVh9Ht
-         yPkO3/qCEUqk1X0xuOAqq5C7t+FIESNW0n1GYnetCCeD1z05EI7AOK6f5P4MIEojqX3/
-         LBrQ==
-X-Gm-Message-State: AOJu0YwKWqsN/L3E6v+N5nNV0/nVH855uw+G/nutqK09YgyOb+IsA//7
-	3dIU8YIeJ31gCTpkWsj6rAU7BaVqSBXlvrSQb8cVdCaH/8Ow9hQFlN2q/uM2ndcQ8JWNEPSfmV+
-	0RPwSprFmqURNmFHp3JvKI/8cC1akc0Y=
-X-Gm-Gg: ASbGncsTy5wFCj8O6iYQWjB21soKeIoeJoK4SuScpahhhoIpxUGt78hjPVYiYGq8c30
-	j7seQSDa2kOmauOGdy4quaL1NVc4BqbnZ9RHhvKdZugI8yogT85OUIgILiAnXSg3wjV4s4cFL7R
-	Ezo9JkhBSZApoD39nBEmCDQCEfiZDsI3sEA6igPdJjZygF4wqX/wbORQe8/z218UIBOVq4opmVH
-	6bbmN7ceOzV3kamtfFVg+euNLHMrKpSO7VkBTCX8QtZawc3RhF/lvNXyGXVZQ==
-X-Google-Smtp-Source: AGHT+IHskFNDzmbWlQimxm41VCNVYyCIFVMg2aGaHpfy23pCfnR8TWBuraRDujvSkbfL/2NN7MtXbCYQujEBq2GJjXY=
-X-Received: by 2002:a17:903:98c:b0:27c:a35a:1321 with SMTP id
- d9443c01a7336-290cb661ad5mr142178025ad.51.1760986936342; Mon, 20 Oct 2025
- 12:02:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="KlVxrTba";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lrhsVlwa"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id CDBE61D00120;
+	Mon, 20 Oct 2025 15:04:10 -0400 (EDT)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-04.internal (MEProxy); Mon, 20 Oct 2025 15:04:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1760987050;
+	 x=1761073450; bh=7F2iN2hBqmpyoIenTD15f0tuo2zvQI9Q5SUy2Pk0xQY=; b=
+	KlVxrTba0kBdETHGVOk9bLoMf/UZiJLRcWgQpvkNXnzkdJP+tHdrNI+DrovI0Sfj
+	JCZuTO3zoZjIi5LLbjvjzbtL0IVrhOVWSK9eZgJGNoY1zRxFQ2t01glukYJWu0FA
+	IOE9X4tgGQvG2nvbQMUkohaG+DtKRrfY0mOHoyzTSRnSp1huXH6aSPJV+aRvQrBz
+	oMVQ2c2cT2K4oTrqCm9TgDNkaWEftqMlNU2/stjmIARSA2Uc7eGWt5mEI9/VPOQX
+	ig4bJS5MQ1sWQVcOVLvMo8Ef/B8OBH88dKOuTBC0OCnVnxMIScIF3EWedbF1cRrt
+	lg7FuKkUui7Q8hrnyBUIUA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760987050; x=
+	1761073450; bh=7F2iN2hBqmpyoIenTD15f0tuo2zvQI9Q5SUy2Pk0xQY=; b=l
+	rhsVlwaLh9PGjYwekP4i1R7W4dniBG6J6/NUvzK5G663qvFn8Yi6IIda6dPXHsbL
+	CQYitU9TReGQKluRpqYTyj8jz4ll+1SW0xXxKuT5YTAebpSwL6HLwLwsciwwRg8c
+	X+Hx5Gg1I4FrP2S9cA0LpRa1cRHNFO/qjuNIh4r5hUPv+unTllz3yDp1JFolMAdn
+	ehL59+smYRIwnsEvywlsb1hlBwr/73fq4JqUJFEOmWGfgltLXp/w/W4zuGfqmXza
+	kLO5gAcxebdiTUchibwkefEB29QS5nPeIBSkcmeaLbfM/txuYAA/P08YwX0Z3e9V
+	AxLdScH4m57u9zIEntBjQ==
+X-ME-Sender: <xms:qof2aFj4xyu76mBHW2iTxKsF-TXXXReT7XFMLMsA2H310ud39YWRuQ>
+    <xme:qof2aE2h8mknVjkktVoY8TstsIXew6AfP-PXUluK1E4T-P4MdmrnWVcw0VvsKkhCm
+    Evvp1S8ZeBpJm_OJJB7TKbqxKqdk4JlnY508Mw64WmJms_1TGlthCLJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddufeekieduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthejre
+    dtredttdenucfhrhhomhepfdfluhhlihgrucfgvhgrnhhsfdcuoehjuhhlihgrsehjvhhn
+    shdrtggrqeenucggtffrrghtthgvrhhnpefgveekudeviedvveeuhefhvdetgefgffdufe
+    eguddtkeegtdeltdevhfdtuddttdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehjuhhlihgrsehjvhhnshdrtggrpdhnsggprhgtphhtthhope
+    efpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthes
+    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:qof2aO_4Rq6WQoJkgELv8ddePQUieKDIxp02WFxjRj8xQuvgCT7Zow>
+    <xmx:qof2aGc7_Z635hSzNv9aKJkrzNbPNJJThM8cNs4XmulRfRsVSnZewg>
+    <xmx:qof2aHFQhrQ0jCiPAYzBeYX1KwlqeFGXY2ouabQ4M39Iga3jrr_fsQ>
+    <xmx:qof2aEdHM7pIadtRFI8KUEtvpTZJz2xUJXeagEOaRI4XcD2W_Wgi4A>
+    <xmx:qof2aBapDIInSwWBAO1i19Krdxv8Z6XFdLDVawHJwhwsQhDO89mOGDpQ>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 5BF25780076; Mon, 20 Oct 2025 15:04:10 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1760869186.git.belkid98@gmail.com> <9a6eb6ff8b92a94de990303cc78026029a669cf8.1760869186.git.belkid98@gmail.com>
- <xmqqikga3mqj.fsf@gitster.g> <CAD=f0L9Bu2xcOt98n_iB6Td2+pdniOP-wU_KyigJdt+3Oy3wxw@mail.gmail.com>
- <xmqq1pmx38lu.fsf@gitster.g>
-In-Reply-To: <xmqq1pmx38lu.fsf@gitster.g>
-From: Bello Olamide <belkid98@gmail.com>
-Date: Mon, 20 Oct 2025 20:02:17 +0100
-X-Gm-Features: AS18NWBtzvfFwrlR2iCRo4v-_YEDP6hMrGjsJ_1DCqHRNBX74WvWL8fc_TkuPZQ
-Message-ID: <CAD=f0L_9Rx=DjiZdbmTATNPd5h2CtC3io+z7_0TFMAtA8b7OVA@mail.gmail.com>
-Subject: Re: [Outreachy PATCH v3 2/2] gpg-interface: use string_list_split*()
- instead of strbuf_split*()
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, usmanakinyemi202@gmail.com, 
-	christian.couder@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: AbxYa7LnRpoB
+Date: Mon, 20 Oct 2025 15:03:39 -0400
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+Message-Id: <8099e7ef-2673-407e-8cca-e6b566b99549@app.fastmail.com>
+In-Reply-To: <xmqqikgdxj93.fsf@gitster.g>
+References: <pull.1991.git.1760731558.gitgitgadget@gmail.com>
+ <c7e1c090475f76d94363018681c34f3955abe87e.1760731558.git.gitgitgadget@gmail.com>
+ <xmqqikgdxj93.fsf@gitster.g>
+Subject: Re: [PATCH 1/4] doc: git-reset: reorder the forms
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Mon, 20 Oct 2025 at 16:18, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Bello Olamide <belkid98@gmail.com> writes:
->
-> > I am just asking to know if something like this
-> > should be done within the respective functions or I will need
-> > to write functions for each and just call here.
->
-> Unlike [1/2] that asked for the second string, this one just wants
-> to discard everything after the first LF, so I am not sure if you
-> need any new helper or hand-rolled loop.  Wouldn't strchr() and
-> xmemdupz() that were used in my response to [1/2] sufficient for the
-> purpose of this step, too?
->
 
-Yes it will,
-Thank you very much Junio.
-I will send the new patch
 
-Bello
+On Fri, Oct 17, 2025, at 6:20 PM, Junio C Hamano wrote:
+> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> diff --git a/Documentation/git-reset.adoc b/Documentation/git-reset.adoc
+>> index 3b9ba9aee9..9843682e81 100644
+>> --- a/Documentation/git-reset.adoc
+>> +++ b/Documentation/git-reset.adoc
+>> @@ -8,43 +8,17 @@ git-reset - Reset current HEAD to the specified state
+>>  SYNOPSIS
+>>  --------
+>>  [synopsis]
+>> +git reset [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
+>>  git reset [-q] [<tree-ish>] [--] <pathspec>...
+>>  git reset [-q] [--pathspec-from-file=<file> [--pathspec-file-nul]] [<tree-ish>]
+>>  git reset (--patch | -p) [<tree-ish>] [--] [<pathspec>...]
+>> -git reset [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
+>>  
+>>  DESCRIPTION
+>>  -----------
+>> -In the first three forms, copy entries from _<tree-ish>_ to the index.
+>> -In the last form, set the current branch head (`HEAD`) to _<commit>_,
+>> +In the first form, set the current branch head (`HEAD`) to _<commit>_,
+>>  optionally modifying index and working tree to match.
+>>  The _<tree-ish>_/_<commit>_ defaults to `HEAD` in all forms.
+>
+> In the original, the "defaults to HEAD in all forms" did make sense,
+> but as the new text does not mention there are three other forms
+> like the original did, that sentence was made harder to fathom.
+
+That's true. I didn't pay very careful attention to the text here
+because I completely rewrote it in a later patch anyway.
+I'll make it say something that makes more sense.
+
+> I can accept that you do not want to get ahead of yourself to
+> explain "copy from <treeish>" before you are ready to talk more
+> about these other forms, but we'd at least need to acknowledge that
+> what we want to refer to when we say "all forms" here.  Perhaps
+>
+>     Among the four forms, the first form sets the current branch
+>     head to ....  In all forms, the tree-ish/commit defaults to
+>     HEAD.
+>
+> is easier to read?
+>
+>> +In the last three forms, copy entries from _<tree-ish>_ to the index.
+>
+> Or "The other three forms copy entries ..."?
+>
+> Other than that, looks good to me.
