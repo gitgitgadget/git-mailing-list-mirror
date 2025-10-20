@@ -1,106 +1,111 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6DB2E6CAB
-	for <git@vger.kernel.org>; Mon, 20 Oct 2025 20:28:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635442E0408
+	for <git@vger.kernel.org>; Mon, 20 Oct 2025 20:30:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760992088; cv=none; b=Fz0s6LOicsjjeMYyWDgav8eahpiXzAoOaafqINSUagjQD96gG5aicwC86IFQ7QPnOS58XTNZdF7/SZhQIH35Kj3XRC5WclirsfkQRVKBfU1F0L+rCmohI42heRzMJuTHPLuGoi2lnm44ZaOfeu6vxqpda306O1ZbFVik9/LpstM=
+	t=1760992223; cv=none; b=kGF/r8hU4KYLyu9bEOEhRDZ9ZOKZ+VWdLnaQ7+QQ3NZjEBpIBYlqVctvUTaBKrXv79CKZX/PayzF2GMmDmGXLGwiHzFglOcGcfExNjfpQM4Z5TIAEm9ttGVMl5q7PdLESR5SraVZEa2i/7D4ZfrmYs9eCMzi2N+sQE1fAkQTRSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760992088; c=relaxed/simple;
-	bh=uWXqwdPunSMRAxfRJO9U7d9P4vKHhC5G5k1DACEh5p8=;
+	s=arc-20240116; t=1760992223; c=relaxed/simple;
+	bh=J0nLJ+i4wVLFuug47pZH/zamx/uTPqxOYqK6mBB5+mg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bXFAd+VGhlv3aFGwGLRdmdqQ2hylTnTeOi+0g+a9nf7orpZXGwpnJqZSc0g/AHA23ZRQEBYI026tril22T8DsD+nvDKk759gy4BMNGIDuLiRGdenWDBhrPpafNq1OqqBBoO2SKwyDHS0uCiS1UgknWjIdfn977z18GxW4pbkz/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PTzyc58N; arc=none smtp.client-ip=209.85.208.46
+	 To:Cc:Content-Type; b=tlVTstsEzk/w7U2bMu5B0QWRCM+oLxOyIkCBNXrUxkHDGArH87CjQYpYxvBhXlcdDRzKZzxjS1Z0aKIpXgENVuLIibNFsknRXD4nBPsrSBBLn3AEEP3AdX7kH5v73OazF9BNh6XfkWuASeClyA/JeXHbUJKhjNSqIvQesjFYdzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZsUSpsPj; arc=none smtp.client-ip=209.85.208.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PTzyc58N"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-63c2d72581fso5717565a12.0
-        for <git@vger.kernel.org>; Mon, 20 Oct 2025 13:28:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZsUSpsPj"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-63d6ee383bdso601076a12.2
+        for <git@vger.kernel.org>; Mon, 20 Oct 2025 13:30:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760992083; x=1761596883; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760992219; x=1761597019; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uWXqwdPunSMRAxfRJO9U7d9P4vKHhC5G5k1DACEh5p8=;
-        b=PTzyc58NK2oq/HEHZh6LhiC7uW4ZnLdDPZx9wNFEKIaTvdxGHtcFBDyuyDcQisF9eu
-         46H1NH3axVq4jjz9NBb6JSqeKMXh/gobQQDU8i2YcJZt7fCi8hCTNil2JUp0Y6Jo8049
-         99VPqKZ6pdTozvrsGnmsAI6AsFVSn5eO43pcldPwi9am0LrAj8qCHruXbsU0ib73gL+G
-         XJquNqSOdOMWyRjY+PE5iupPHLc7W3ks8j/M8I6lrqwerDkh9BV6BwcdRHFnJDnpChRV
-         p6epgKtZ4tDC9CiFR1oxuNgZFPCuG+VBCCkgll81UHN5RhX5KzQYQJcxnFYamfFfgGsQ
-         pikw==
+        bh=6DGk6WTfEPvKaohJC3yP1AbuyozS1/dXxkwqXtpTjTg=;
+        b=ZsUSpsPjOR87mrN4OGCKIRYG4OTWXYwj9fag+OZm0CXUPW+SDdglfzKAe4K55eHoOH
+         PlJeYJQWY34qQ413AuZePjojyn3hEL2ANybNtF3AdFMKGc0tX+6Xk5z3gExAzQlf2s+g
+         Z24GNkpDoHL4PsDQplMrQQNtr2flWoj8TEEwz8vkCOXrJNrGxkKHR8RRnrz5yq41oiON
+         LTRS+o+/ebIK2ZaLRC/Jx+UOa1UQZKpkr/moJJSRH6Yl1AcdZ2zClmZvgXwV2rCwxCXf
+         EuAUHufwCdJiKIqqEqOt0ytrCR3ZhK+7We/as2/AQjZd7tljTo38MJ4KJjfJX3QHJoP2
+         QSeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760992083; x=1761596883;
+        d=1e100.net; s=20230601; t=1760992219; x=1761597019;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=uWXqwdPunSMRAxfRJO9U7d9P4vKHhC5G5k1DACEh5p8=;
-        b=K31Quii6CGsCClz22v0MiJ+8fPHv4TZjn4fMq9AZ0ceUJNkpKcsOoCLwz67lZYssXF
-         kRkr/t5uRyulZADJJLvAPPynLnFFiTUNMsmDeBPHjUuCHsWV1B3QtCNn3BLqG70aFMG3
-         AqkwW1xixvKu8s1heeXx0D5wH6KPJPb1qBU9So0p2E2KOQdMm08I4P0i/YgU9lNRuWks
-         wJndkcbnGBHF8SxgiHScKFA177Q2LR0hvjtnyRdIgeFBE43W2TzmmuA7I0Bqlb3ZaZis
-         0zpdrf/Srv5DrA2N+BV4T9nXVCtRssHLvTf8ri2hUbcDHSoaV88WDqR/yw+JbxjqWXrX
-         JXrA==
-X-Forwarded-Encrypted: i=1; AJvYcCWMJP9leNCPzcixqZCgEqGzWZnOIGa/0+M0p/JAyWfJ1N09iC4u9AneBI3Zgr2da+NhAjs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyS9gnNTzADWVBb/Z5No/7xKe7yrLg87XiiTs9GVA7ZLQgHdX03
-	27tg81B+AiDtMXJtWqjC2SAp57Qp0DdfXPcHiyqif247oSi/cVFCYZ4WDbbAab2XBPaowFHL5F6
-	1+eRjQszb82GTv3jfMXUl54vRcuH4uUw=
-X-Gm-Gg: ASbGncvVplTvO0jiGOPZjyOtA8E2fb2janHEAK+odoO55bwo+Gvmro0s/GO7Ts8VUI/
-	GenNJV0KLbWTN1tRB/BJvppMa8WKE8lpypZFLLFKJafy2WCLXBDFDIyclWnY5IgeJp7bGL6J7Nu
-	l6Ank9SX27JAGxQXIyJ5wQPk+fjnZ6E1i1FmxbP+Cu6DT5pmEUHNUXjlGfPufi2CmuZK7iA0NQ+
-	vcsZFf56uULaCWW0W39GOWJelprdIjGbPNzCw1DWA4NC6fXSW5CcB7MHXbr8RMcYw4jDubI1Fi2
-	mDPIqkmLHMXzoFM4iYU=
-X-Google-Smtp-Source: AGHT+IFBDPBBi3N80Q6p+5wH5H9oUdX1PlVMqrLGplf6rIWzd0dmQojrRiRvvuuiQv8tuhiVdJRPM18OBekKqTQay5Q=
-X-Received: by 2002:a05:6402:440d:b0:639:ffb5:3604 with SMTP id
- 4fb4d7f45d1cf-63c1f6edf8amr13198623a12.37.1760992082443; Mon, 20 Oct 2025
- 13:28:02 -0700 (PDT)
+        bh=6DGk6WTfEPvKaohJC3yP1AbuyozS1/dXxkwqXtpTjTg=;
+        b=YZDPrBAClc5Tq5NWzCNRXYllkSB8plfHa7DrplGXwiFXAcOmg394eGJIF/uZrGPf1p
+         XLOKOp1DjIopFP/aL8sURkwyLsk5dpS5+YH9w1cOukkpWItURTQ//NZ6ekG76bB7tcBW
+         RnhomMuHio+exRf7lvxXL8FwOPLXY1M/wEC20Nw7e86hZ++WH5rtf9L5EK8aSgZcQpjp
+         C200XnEHB57qjm40MIWfmzyEw6WdreLuR8WfxpXd/e6dV4hGz1t0h4UzITl4gnHtI+Of
+         ACCR/qQsRXTQhavwZ6OOjhWKW7ySjU+OE07Tzmk3dkgJEa78apndBhDlz77FZrS1A5nE
+         O7bQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWDlxseb9F8E0p79GmxJaE47MODmxOcIRf4AlXYfbjrg5zXWhcIWVoeY9NkC+WcYZ/XvvY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyK/zPoV/YgYIBXe6LT2DydhUeDw2oH7pOoM+w2djBOv8c17osc
+	BemlIkOCWnG2j6vY6kMjG2UbYUsqUS4/ghjqk0oxr+CAJSzFZwda5iDvdJfNIdV57/T4AxgMNez
+	moab/1xpdl7EO3Peq8dq9owBMBKjCk1Koh53w
+X-Gm-Gg: ASbGncs2WqUYrO2+MjYi297Zo0hEeokggAQSbYItHMp808OBtx8yUvdeTZbXz9u1jyR
+	C3xuK0O+up4atGkW1R0wmNZXCudl/Z677hX+7MRyxfdDbZHRwN7FGF+TuXuIi7VUyATbQZJUXSr
+	ZZNvGAX5YWL85EIj7P6HQRGDE18pTOEGTVVhK0bB+fR6WOy2Pe7G+FdAC2xplp6wdfIBVCd2gWn
+	+3S04j8PVG6F0wCZ4sV+HQ/ZcqLj2FaZYyZtM7iZksrDfgMsVlzoAFgioxGycAedboAePaPnj2v
+	9kLDi7GVdkHcbBibE7uCIq1cuo2I0w==
+X-Google-Smtp-Source: AGHT+IFT5UeC1OEnCqeQFLMD8oXqOXklffgwkFP7v2hLFAgvubDsdFEk1TGKkCVbHqfrvrxVwSH5ilJ8udmzi2EmUvE=
+X-Received: by 2002:a05:6402:2113:b0:63b:f91e:60a2 with SMTP id
+ 4fb4d7f45d1cf-63c1f6c1fc8mr13743522a12.25.1760992218653; Mon, 20 Oct 2025
+ 13:30:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <6a83c7d1-7cd4-432e-a0ab-7b18ce3af08d@kdbg.org>
- <A563E028-19E7-48A0-B538-82ACE821DB67@gmail.com> <5d780103-285b-4e6c-9b26-2a87609837cf@kdbg.org>
- <CALnO6CBwn-NP-ZdoaeOD37_VM8N4D-KKopm3nnf4a9b+9OiizA@mail.gmail.com>
-In-Reply-To: <CALnO6CBwn-NP-ZdoaeOD37_VM8N4D-KKopm3nnf4a9b+9OiizA@mail.gmail.com>
+References: <pull.1991.git.1760731558.gitgitgadget@gmail.com>
+ <6b5459b7ab478de33d17f9518906396f8a01e0d6.1760731558.git.gitgitgadget@gmail.com>
+ <xmqqecr1xiqc.fsf@gitster.g> <4871df7e-4ab4-45ea-83bd-9a49e4d60561@app.fastmail.com>
+ <xmqqjz0pz6l4.fsf@gitster.g>
+In-Reply-To: <xmqqjz0pz6l4.fsf@gitster.g>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 20 Oct 2025 16:27:51 -0400
-X-Gm-Features: AS18NWBMooNGNr5i4Ud-3LLK5O9BfMSKgB5clc0R5PivvYkVwn9FCFu96hUrtGA
-Message-ID: <CALnO6CCfDy19J-DTT4Vjp9EYf6M8sk5DpMjsm-Mp4_kNO9=kdg@mail.gmail.com>
-Subject: Re: [PATCH] t7500: fix tests with absolute path following
- ":(optional)" on Windows
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Noah Pendleton <noah.pendleton@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood123@gmail.com>, Thranur Andul <thranur@gmail.com>, 
-	Michael Grosser <grosser.michael@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+Date: Mon, 20 Oct 2025 16:30:07 -0400
+X-Gm-Features: AS18NWB_2niIbTPC8wKTh_2wv4_FaEg3_on8t9D8xeu3rKWf0rpx_6WVvbyT5LY
+Message-ID: <CALnO6CDyCvSSRBTAzS354M5QKhqcOHOHokT1KwEqY7+58A-yfQ@mail.gmail.com>
+Subject: Re: [PATCH 2/4] doc: git-reset: clarify intro
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Julia Evans <julia@jvns.ca>, Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 20, 2025 at 4:27=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com=
-> wrote:
+On Mon, Oct 20, 2025 at 4:02=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> On Mon, Oct 20, 2025 at 1:32=E2=80=AFPM Johannes Sixt <j6t@kdbg.org> wrot=
-e:
+> "Julia Evans" <julia@jvns.ca> writes:
+> > I agree that "git reset has two very distinct modes' is important.
+> > Here's an idea for how to communicate that.
+> > It doesn't fully capture all of the nuances of `git reset`'s command
+> > line syntax, but maybe that's not the job of the intro sentence anyway.
 > >
-> > Am 20.10.25 um 15:43 schrieb Ben Knoble:
-> > > Going forward I will probably stick with using pwd, given the
-> > > difference in platform behavior.
-> > $(pwd) is usually safe, but not always. If we have to look at every
-> > instance anyway, we can use $PWD for efficiency if it does not matter,
-> > and $(pwd) only when it is necessary.
+> > I don't love the use of "things" in "two things" but it would be weird =
+to
+> > say "modes" because we already use "mode" to mean something else,
+> > and I haven't thought of something better yet.
 > >
-> > > Is there a doc or test lint for that? If not, might be useful.
-> >
-> > If this were documented somewhere, would you have found it and obeyed
-> > the recommendations?
+> > `git reset` does two things:
 >
-> Likely yes, but I'll admit to being the exception rather than the rule
-> (I like to read). A lint is more valuable in that it can at least be
-> run rather than searched for.
+> I do not mind "things", as long as it is not mislead readers into
+> thinking that it may do two things at the same time.  "modes" avoids
+> that problem, as "you use it one way, and it does one thing, and you
+> use it another way, and it does a very different thing" is the
+> natural implication of that word.
+>
+> "The command can be used in two ways"?  "can be used for two
+> different purposes?"  I dunno.
 
-Ach, and yet=E2=80=A6 I clearly didn't ;) hence the lint
+Some options:
+
+    `git reset` does one of two different things
+
+    `git reset` can be used to accomplish either of the following:
 
 --=20
 D. Ben Knoble
