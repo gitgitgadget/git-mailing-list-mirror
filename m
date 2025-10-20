@@ -1,66 +1,67 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577CC2641FB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B722D8DAA
 	for <git@vger.kernel.org>; Mon, 20 Oct 2025 08:18:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760948322; cv=none; b=f6GZQAdiXcjMRGu1H1Op2KA6VhjKTmjgfjtKNtIqdL6irZuSBXdjMkysLj81HcRdFMVTaLZftcb7y2iuD+RXE032Aejqv90GdaSHmsfglbKo8xxRLkbHxXBKTO6Iown2i/MnH+t+PqhlcQ5e21ON4xTgpIdlZxjWjkLzYhL6PGs=
+	t=1760948323; cv=none; b=m/hM3/GGX6hueuRiPlYzbdTymNPu1iFM1t5qmWluYMuVBgQ7MDqeqvnT9t2JlDu9ztYA77BCjjvXKlM6iTmwPfESAJr4pX+RFVh4kca6TPJHOl9ZcFk6hkog5Ztuumbcvq1A04n8aCYoBcg+wjtPEOffSGuRiNl8RyacZQ9MYM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760948322; c=relaxed/simple;
-	bh=l13bmvGlkSAeXsmmsT7WjlqclyuXNahNp9oLtdUADuY=;
+	s=arc-20240116; t=1760948323; c=relaxed/simple;
+	bh=Bm+yNbm8UDFh6wlBZu59C1wGh8qpdoz2FysO7L9SL/w=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gdHBPzDur/fM0Eoqa7jCvsHfSBBhqH5EdOoPWhD+8DKkenQnFy90uYET3272zp/wayWx35IWcDR1fPHJzfuR9EGc4tQ4+kgmbSrq7t7v6fYQb9OqMRvDdlUn6ld0jiG8ZrGC8aqOBmjuEjgCyw4OY28Bd146VPRQPha3FnrZI74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RcuoSoAC; arc=none smtp.client-ip=209.85.218.42
+	 In-Reply-To:To:Cc; b=cq9rO6qoAENHjs3OPKsQYsYrffx6MCEi02ttqSHIERst5rOzdU4jR9u8pKQ/kb14yRmmxPh2FELj8rVvuJtt6XPYPoQlmKTMe9jHHhqduyYgS1ZlcKRG9vbGkHZWDhUgJ9QvVdp2T+v/LcWg4HWX2anPaDvouP4mTIOb1enhpew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CSh/mmM3; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RcuoSoAC"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b5b823b4f3dso793060266b.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CSh/mmM3"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b3d196b7eeeso710662366b.0
         for <git@vger.kernel.org>; Mon, 20 Oct 2025 01:18:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760948318; x=1761553118; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1760948319; x=1761553119; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=LDdBtanwqtABHgg+3DvHjy8cpYLbMkG18gV0uSMYBaA=;
-        b=RcuoSoAC16VOqrBOfB9SIgf1nj4EsS5z2Iv14UkUitnL7zEHhY4Z9q7D614D0IbG2R
-         wdinek7sNlJJNmkYfKQj4BjeXsOwoy8xtEpIqziIASXF25355+5/LSnN1I3yzTkRVbMX
-         nrAZm2V+4gOTL/Z/6jfHC+ZqK2Vhd+2GrPDKehChZbCqkC+4FYCg1k1PiHxSDePvPOmB
-         Pj8ycodokW92OEfV2yLrYZ9RBVIc3o8+TJvFPPlM+rALQJUPNwzgwEnuJ+bva6cVEtGF
-         +FVTDqSkutUgywo8AhKQe08L4F7tmm7IrE6dYV5m84bH3LbTpIQnuPHGtfyIHz+xdddU
-         a8vQ==
+        bh=MDvzjMN6jp2oItRTIgB1ixdA6PMcBOm1XTA9xkMb4lU=;
+        b=CSh/mmM3a3c79r2hYdK5+mi3X+39cBV7sLEFU6HD8b7dwD/nOr2l1Pz53MlfZYqMO6
+         ugb+COuunUUfjxB2FtiKWQR0loD13qSHvqInD9D31z6uG8bpT++OFNxQmQuphjJ8/Wk+
+         Z9fv4lZiRzrvLBd4/ijBP+6bXqMR6Ux4Dcu0kbPko784ARDXnHT77tZ1kBED/qeSnzu9
+         JfusaE21KM2bv6TSi07mt1h94WFtuKchzhgux88eAzdL2u6EbGh5NWmiSmpUdJE0wb3K
+         6Wuk6GB5yJXX1pG8j3oby1KdrzOmch3oxgNRFnk4Cnr3FhCY1QKdmpywcME/G6aqWIzD
+         pMKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760948318; x=1761553118;
+        d=1e100.net; s=20230601; t=1760948319; x=1761553119;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LDdBtanwqtABHgg+3DvHjy8cpYLbMkG18gV0uSMYBaA=;
-        b=Kfc8cvPpJy2ON4juO9LL2No+2SENj8tWgQ30AG2qedcu2eRwcCvlJc5QRlfKgL9N6B
-         ddzjBM328fwoAlraKPPwFGgNidi8yuLiFZO36seuAuvZj/U5BYxluaHSudA3/iWCarB2
-         zmeboG7q90khQ3RAIJ8eZHjBJpPIRjRkX+7+ghnzfQBJQYh+yXDNWMWW83xb3loCSQnr
-         2JZ/Sm3SiysfUmY3gOzuBS1rfIfezlUEKR32SSs8f6QypbfEHOW22rnI5zDZ+41iR2SW
-         i38kQTNkLhAmDNhxm9CbwB6XkTqtNgkgu8/uBMaSPPKyYKPk8QtG2BzOcce9CEWpHa97
-         QjuQ==
-X-Gm-Message-State: AOJu0Ywuex0y4YFZTWn79bArqq70s9FdgNnyfuTw+WaEJbinxlqpar3f
-	jExqkWZPXvV7DGbZFmumf5kryxKMnO8cItRUQ8E1sDiqEbWlD8N+a8xfYkPI+73I
-X-Gm-Gg: ASbGncthlsiWCBzy6jzl7x1XZ5f+H4bMBxMwEbxyG1GoGi4jzyKER7OkkLjvUM1M8tv
-	EmjD4z8vXGresqWCQ9ZQvNTM+Xa27DbGGB3ijaqClTTH9sliuxf4LbzTUZtWbw6KbVOn0QAzcUB
-	d5SkgWiI9VkreiIZgayUX9LXk74SWd3a14vvXVpaG+tE3nF6vz///YM1d4kHXNzhpjq/zgWr4zV
-	TCcxLZh4S3F8oVVakOcjpgeLlnZAFLevzrOUL5se4S0RtWtZ3RZgRNWZDCXycAz/p4cS9lfnCs/
-	rzZ2yBqxTeRYYQLr6yZsUryW/kI+h2Mk5fHMmHUFPaa/vHUKskUQWkAQn6WjkBtadL73Ol/JD2l
-	vJa0LaVIjC5xgDiw16E6hjyM2Tpiwpx/hcUPoU9LDzCxNx7ZxPmv8cFT9yRi+MpVgzmYWg30AcX
-	SJyS7mgXX4nZLuXDweHmc=
-X-Google-Smtp-Source: AGHT+IHJxSB3k6Y0PaXJgqqMhB3uomgoqxLGLPkWljKLGCN0f5F3NE0lkxyZC3uVoe4A+8J2xb956g==
-X-Received: by 2002:a17:907:d1e:b0:b3b:679d:7f4a with SMTP id a640c23a62f3a-b6472d5bb1dmr1270882766b.5.1760948318219;
+        bh=MDvzjMN6jp2oItRTIgB1ixdA6PMcBOm1XTA9xkMb4lU=;
+        b=w+THk3aHqZ2HvjXDzZaBTXWhJf8aN99UKAVxDUCwBdSTf2DEbbXrbXpVUbC4Lnh053
+         Dcb69cdf0wHbhEtUdIQA6fQe0NhtIQo6RwEqBRnvkwTs9VoTSjMA2B9ZnsewN7s07Hjs
+         TvpfUp/7o2tBAEFFSNzmPVJX1FS1hxY5HcgaWkGXFj/7paWUM6J+JJTuG+BJcb+f3KdM
+         ZZo0TknWyrYsrXka5uKKhJCx/k8Xh9cseOqewioCecz3/pH5g3Bblpf3oBm1fie1AXoJ
+         nsvwFSrW4BJqp7tfVj3/rCghf5GQiiLtJ92g0mk3qX+ulGTYExvso0eKH8AxK8/FVTNt
+         3Wiw==
+X-Gm-Message-State: AOJu0Yww2BHihsK/Ug0stlwVIYwxwNKUBiorE6TAJQGUa+bAiQ4fVq7H
+	8Zbb6jCFIYxpVfgkbff5J+pcO/TeW+W4wE8kbWH1lb29oH/i5R8rCJl2bV40fnLY
+X-Gm-Gg: ASbGnctAQeY6akxBvzeBu/nVB+4ZYnfC0VkJMocAxSyoUwdLTHDD6mkKycXtzSRaTgK
+	6kngW3V0H4cKUDqoda7OTFj/yvrdrkKrfhA30tMaFUYAZI7wexQNwAcl8G7ivZer8CL/fP400lj
+	HVoR0ikr2bYKvmoJvI/myw4DqbSwSYx+4654Hxe54In0M1O9qIiMAbwcBoXdbZtdWenuazEg7ia
+	844laTfS1XcR4OrSeioPxSG7kpGLgKDZRdKQHoxy2PXv2Vx9B/bRscR4q24cPlbzUT9CP2JxV0z
+	uozi7gmQYJ/g5xZCxZApolseX25/VL9qtrx627+V8iQzBKZ/vWVUodicdflH/mv9iXc7VGZAYc5
+	a+b3Rt21GJXGSkQe4flkumWPEVEOGrWH3RjdlIG+7KwmJHtnj4kXka3AMPTHGGZp777dAAFlddU
+	1/tYQcaxZ5
+X-Google-Smtp-Source: AGHT+IH7IBmC3jwD5R6L6XkZrSI7vf4n3E3EitdbHIj1cebLIi1d1MUcHmeSDM2YUiYA1AXcKZ1jaA==
+X-Received: by 2002:a17:907:1c85:b0:b3e:5f20:888d with SMTP id a640c23a62f3a-b647304516amr1634359166b.27.1760948318957;
         Mon, 20 Oct 2025 01:18:38 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:2455:8268:bc00:5fd9:4a3c:9f89:6c65])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b65ebc42bc5sm716186066b.76.2025.10.20.01.18.37
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b65ebc42bc5sm716186066b.76.2025.10.20.01.18.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Oct 2025 01:18:37 -0700 (PDT)
+        Mon, 20 Oct 2025 01:18:38 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Mon, 20 Oct 2025 10:18:29 +0200
-Subject: [PATCH v2 1/3] refs: move to using the '.optimize' functions
+Date: Mon, 20 Oct 2025 10:18:30 +0200
+Subject: [PATCH v2 2/3] refs: rename 'pack_refs_opts' to
+ 'refs_optimize_opts'
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,241 +70,257 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251020-refs-code-cleanup-v2-1-f5349ed0f6a5@gmail.com>
+Message-Id: <20251020-refs-code-cleanup-v2-2-f5349ed0f6a5@gmail.com>
 References: <20251020-refs-code-cleanup-v2-0-f5349ed0f6a5@gmail.com>
 In-Reply-To: <20251020-refs-code-cleanup-v2-0-f5349ed0f6a5@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, jltobler@gmail.com
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7667; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=l13bmvGlkSAeXsmmsT7WjlqclyuXNahNp9oLtdUADuY=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGj18FrgiB9OK7kRJPOx0/3tnlgkp6VMnwBRr
- qkZArEaLDspXIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJo9fBaAAoJED7VnySO
- Rox/CEAL/RDGyJf5hsr/XQ9NQ//myujClq9+wZzizw47NOSV3sXTfQWYw/GDUKMvDAeYkICiAOh
- 2SJgrZ4iJOx8jTzLew1gsMsrNDyBVDdlMykE2e+Miv72h5KWG5BVzWazt4xgoihIEU481yNHXM9
- LBat7ewFtVO/i7Kjp47fKIz/jugzCcBfL4iXgOJCW6u/kLUsxXEsIiG9ZrL5kFaIdXBMc3J7jgu
- Iz6j4Z/ofL87PGxuWyOVfJMrHvPJb065MzZWVm2xsNQolt85PfemY4AUzy05idhW/h+ebjDMz+U
- 6kInF7j4JjT+UmYqXyqDGWx8ACfCVBrHxFP0sKO/wwiDb86PCHqHZiTVIYh7SKg40doPZs1C1WU
- WuXK0P5pPHEawhcgNN4jGoX7eqxI2nrgxEAKgkw6Qr79Unrsmu1s+nhyoE8E7idYCWqJ4qhdwoa
- 1zEGggnPLJjYAAuRJ1dRLkkEUiV/RKcw7sdjUk9nNaQZvcLQ84krgxdgtsJlh+RWikyyw8Kfzd5
- ik=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9207; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=Bm+yNbm8UDFh6wlBZu59C1wGh8qpdoz2FysO7L9SL/w=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGj18FsBzdToIs/Y/+bCKuuxJefV2di2S7GGQ
+ EK3LN1qGis+RYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJo9fBbAAoJED7VnySO
+ Rox/n+IMAIWPHozWlutiI1Ve4d+gV5/FBcF+eoCqp2+pkF7JPN08wicdjRErvKVXIKnu61qbmJj
+ 6Fc1m7xBXqMV88BCuPE2n6GXtQIlDc7fntj3GBrf91dJrPdSDMSiJdX7iKve9WLgCMBXHJAD9sc
+ gfShR0pWoTAMspGo6mdpgU/6gxL7vxoRXZ/OyylUXIMg1guigqNV/PYpoxMLPxC94EvPR3QScqX
+ Dax2qoCthaN9pQ6cdBlUvtPAiaIiTjTkxCeKzcvGQrwbWdTAq0bNIPhxf7Q3xyJvhm5hK5N1V0h
+ NeIEErtcRBj9M8rOWS7A4LYkDMWx84kCut2HcXRkV0XMvW11VNmZ1IdG7U1LIGn1oE4YqHc1c5d
+ md1AHi3ySBMXxi5NRmOvK4NiT/2w2IWOkRQ/xYLiCTAuxWgIz7BsMYAhZCg3i5bheAuU10sk2Z9
+ n7lErw6MjjTqwE6ywHSBnzRByFay5hseLtHSC6uyTFep+nvb7TUT3xpSz0Wbptg2Fm5IS7JES16
+ h4=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The `struct ref_store` variable exposes two ways to optimize a reftable
-backend:
-
-  1. pack_refs
-  2. optimize
-
-The former was specific to the 'files' + 'packed' refs backend. The
-latter is more generic and covers all backends. While the naming is
-different, both of these functions perform the same functionality.
-
-Consolidate this code to only maintain the 'optimize' functions. Do this
-by modifying the backends so that they exclusively implement the
-`optimize` callback, only. All users of the refs subsystem already use
-the 'optimize' function so there is no changes needed on the callee
-side. Finally, cleanup all references to the 'pack_refs' field of the
-structure and code around it.
+The previous commit removed all references to 'pack_refs()' within
+the refs subsystem. Continue this cleanup by also renaming
+'pack_refs_opts' to 'refs_optimize_opts' and the respective flags
+accordingly. Keeping the naming consistent will make the code easier to
+maintain.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- refs.c                  |  6 ------
- refs.h                  |  6 ------
- refs/debug.c            |  8 ++++----
- refs/files-backend.c    | 14 ++------------
- refs/packed-backend.c   |  6 +++---
- refs/refs-internal.h    |  3 ---
- refs/reftable-backend.c | 13 +++----------
- 7 files changed, 12 insertions(+), 44 deletions(-)
+ pack-refs.c             | 20 ++++++++++----------
+ refs.c                  |  2 +-
+ refs.h                  | 18 +++++++++---------
+ refs/debug.c            |  2 +-
+ refs/files-backend.c    | 10 +++++-----
+ refs/packed-backend.c   |  2 +-
+ refs/refs-internal.h    |  2 +-
+ refs/reftable-backend.c |  4 ++--
+ 8 files changed, 30 insertions(+), 30 deletions(-)
 
+diff --git a/pack-refs.c b/pack-refs.c
+index 1a5e07d8b8..eb6b2ba2c2 100644
+--- a/pack-refs.c
++++ b/pack-refs.c
+@@ -14,10 +14,10 @@ int pack_refs_core(int argc,
+ {
+ 	struct ref_exclusions excludes = REF_EXCLUSIONS_INIT;
+ 	struct string_list included_refs = STRING_LIST_INIT_NODUP;
+-	struct pack_refs_opts pack_refs_opts = {
++	struct refs_optimize_opts optimize_opts = {
+ 		.exclusions = &excludes,
+ 		.includes = &included_refs,
+-		.flags = PACK_REFS_PRUNE,
++		.flags = REFS_OPTIMIZE_PRUNE,
+ 	};
+ 	struct string_list option_excluded_refs = STRING_LIST_INIT_NODUP;
+ 	struct string_list_item *item;
+@@ -26,9 +26,9 @@ int pack_refs_core(int argc,
+ 
+ 	struct option opts[] = {
+ 		OPT_BOOL(0, "all",   &pack_all, N_("pack everything")),
+-		OPT_BIT(0, "prune", &pack_refs_opts.flags, N_("prune loose refs (default)"), PACK_REFS_PRUNE),
+-		OPT_BIT(0, "auto", &pack_refs_opts.flags, N_("auto-pack refs as needed"), PACK_REFS_AUTO),
+-		OPT_STRING_LIST(0, "include", pack_refs_opts.includes, N_("pattern"),
++		OPT_BIT(0, "prune", &optimize_opts.flags, N_("prune loose refs (default)"), REFS_OPTIMIZE_PRUNE),
++		OPT_BIT(0, "auto", &optimize_opts.flags, N_("auto-pack refs as needed"), REFS_OPTIMIZE_AUTO),
++		OPT_STRING_LIST(0, "include", optimize_opts.includes, N_("pattern"),
+ 			N_("references to include")),
+ 		OPT_STRING_LIST(0, "exclude", &option_excluded_refs, N_("pattern"),
+ 			N_("references to exclude")),
+@@ -39,15 +39,15 @@ int pack_refs_core(int argc,
+ 		usage_with_options(usage_opts, opts);
+ 
+ 	for_each_string_list_item(item, &option_excluded_refs)
+-		add_ref_exclusion(pack_refs_opts.exclusions, item->string);
++		add_ref_exclusion(optimize_opts.exclusions, item->string);
+ 
+ 	if (pack_all)
+-		string_list_append(pack_refs_opts.includes, "*");
++		string_list_append(optimize_opts.includes, "*");
+ 
+-	if (!pack_refs_opts.includes->nr)
+-		string_list_append(pack_refs_opts.includes, "refs/tags/*");
++	if (!optimize_opts.includes->nr)
++		string_list_append(optimize_opts.includes, "refs/tags/*");
+ 
+-	ret = refs_optimize(get_main_ref_store(repo), &pack_refs_opts);
++	ret = refs_optimize(get_main_ref_store(repo), &optimize_opts);
+ 
+ 	clear_ref_exclusions(&excludes);
+ 	string_list_clear(&included_refs, 0);
 diff --git a/refs.c b/refs.c
-index a41a94ae55..b9a4a60646 100644
+index b9a4a60646..0d0831f29b 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2313,12 +2313,6 @@ void base_ref_store_init(struct ref_store *refs, struct repository *repo,
+@@ -2313,7 +2313,7 @@ void base_ref_store_init(struct ref_store *refs, struct repository *repo,
  	refs->gitdir = xstrdup(path);
  }
  
--/* backend functions */
--int refs_pack_refs(struct ref_store *refs, struct pack_refs_opts *opts)
--{
--	return refs->be->pack_refs(refs, opts);
--}
--
- int refs_optimize(struct ref_store *refs, struct pack_refs_opts *opts)
+-int refs_optimize(struct ref_store *refs, struct pack_refs_opts *opts)
++int refs_optimize(struct ref_store *refs, struct refs_optimize_opts *opts)
  {
  	return refs->be->optimize(refs, opts);
+ }
 diff --git a/refs.h b/refs.h
-index 23437d1220..6edb633eb6 100644
+index 6edb633eb6..d2630af97f 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -514,12 +514,6 @@ struct pack_refs_opts {
- 	struct string_list *includes;
- };
+@@ -499,16 +499,16 @@ void refs_warn_dangling_symrefs(struct ref_store *refs, FILE *fp,
+ 				const struct string_list *refnames);
  
--/*
-- * Write a packed-refs file for the current repository.
-- * flags: Combination of the above PACK_REFS_* flags.
-- */
--int refs_pack_refs(struct ref_store *refs, struct pack_refs_opts *opts);
--
  /*
+- * Flags for controlling behaviour of pack_refs()
+- * PACK_REFS_PRUNE: Prune loose refs after packing
+- * PACK_REFS_AUTO: Pack refs on a best effort basis. The heuristics and end
+- *                 result are decided by the ref backend. Backends may ignore
+- *                 this flag and fall back to a normal repack.
++ * Flags for controlling behaviour of refs_optimize()
++ * REFS_OPTIMIZE_PRUNE: Prune loose refs after packing
++ * REFS_OPTIMIZE_AUTO: Pack refs on a best effort basis. The heuristics and end
++ *                     result are decided by the ref backend. Backends may ignore
++ *                     this flag and fall back to a normal repack.
+  */
+-#define PACK_REFS_PRUNE (1 << 0)
+-#define PACK_REFS_AUTO  (1 << 1)
++#define REFS_OPTIMIZE_PRUNE (1 << 0)
++#define REFS_OPTIMIZE_AUTO  (1 << 1)
+ 
+-struct pack_refs_opts {
++struct refs_optimize_opts {
+ 	unsigned int flags;
+ 	struct ref_exclusions *exclusions;
+ 	struct string_list *includes;
+@@ -518,7 +518,7 @@ struct pack_refs_opts {
   * Optimize the ref store. The exact behavior is up to the backend.
   * For the files backend, this is equivalent to packing refs.
+  */
+-int refs_optimize(struct ref_store *refs, struct pack_refs_opts *opts);
++int refs_optimize(struct ref_store *refs, struct refs_optimize_opts *opts);
+ 
+ /*
+  * Setup reflog before using. Fill in err and return -1 on failure.
 diff --git a/refs/debug.c b/refs/debug.c
-index 01499b9033..40cd1d9c15 100644
+index 40cd1d9c15..2defd2d465 100644
 --- a/refs/debug.c
 +++ b/refs/debug.c
-@@ -116,11 +116,11 @@ static int debug_transaction_abort(struct ref_store *refs,
+@@ -116,7 +116,7 @@ static int debug_transaction_abort(struct ref_store *refs,
  	return res;
  }
  
--static int debug_pack_refs(struct ref_store *ref_store, struct pack_refs_opts *opts)
-+static int debug_optimize(struct ref_store *ref_store, struct pack_refs_opts *opts)
+-static int debug_optimize(struct ref_store *ref_store, struct pack_refs_opts *opts)
++static int debug_optimize(struct ref_store *ref_store, struct refs_optimize_opts *opts)
  {
  	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
--	int res = drefs->refs->be->pack_refs(drefs->refs, opts);
--	trace_printf_key(&trace_refs, "pack_refs: %d\n", res);
-+	int res = drefs->refs->be->optimize(drefs->refs, opts);
-+	trace_printf_key(&trace_refs, "optimize: %d\n", res);
- 	return res;
- }
- 
-@@ -430,7 +430,7 @@ struct ref_storage_be refs_be_debug = {
- 	.transaction_finish = debug_transaction_finish,
- 	.transaction_abort = debug_transaction_abort,
- 
--	.pack_refs = debug_pack_refs,
-+	.optimize = debug_optimize,
- 	.rename_ref = debug_rename_ref,
- 	.copy_ref = debug_copy_ref,
- 
+ 	int res = drefs->refs->be->optimize(drefs->refs, opts);
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index ed8a1729d6..92d90fc508 100644
+index 92d90fc508..2f60395cd2 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1444,8 +1444,8 @@ static int should_pack_refs(struct files_ref_store *refs,
- 	return 0;
+@@ -1355,7 +1355,7 @@ static void prune_refs(struct files_ref_store *refs, struct ref_to_prune **refs_
+  */
+ static int should_pack_ref(struct files_ref_store *refs,
+ 			   const struct reference *ref,
+-			   struct pack_refs_opts *opts)
++			   struct refs_optimize_opts *opts)
+ {
+ 	struct string_list_item *item;
+ 
+@@ -1383,7 +1383,7 @@ static int should_pack_ref(struct files_ref_store *refs,
  }
  
--static int files_pack_refs(struct ref_store *ref_store,
--			   struct pack_refs_opts *opts)
-+static int files_optimize(struct ref_store *ref_store,
-+			  struct pack_refs_opts *opts)
+ static int should_pack_refs(struct files_ref_store *refs,
+-			    struct pack_refs_opts *opts)
++			    struct refs_optimize_opts *opts)
+ {
+ 	struct ref_iterator *iter;
+ 	size_t packed_size;
+@@ -1391,7 +1391,7 @@ static int should_pack_refs(struct files_ref_store *refs,
+ 	size_t limit;
+ 	int ret;
+ 
+-	if (!(opts->flags & PACK_REFS_AUTO))
++	if (!(opts->flags & REFS_OPTIMIZE_AUTO))
+ 		return 1;
+ 
+ 	ret = packed_refs_size(refs->packed_ref_store, &packed_size);
+@@ -1445,7 +1445,7 @@ static int should_pack_refs(struct files_ref_store *refs,
+ }
+ 
+ static int files_optimize(struct ref_store *ref_store,
+-			  struct pack_refs_opts *opts)
++			  struct refs_optimize_opts *opts)
  {
  	struct files_ref_store *refs =
  		files_downcast(ref_store, REF_STORE_WRITE | REF_STORE_ODB,
-@@ -1512,15 +1512,6 @@ static int files_pack_refs(struct ref_store *ref_store,
- 	return 0;
- }
+@@ -1488,7 +1488,7 @@ static int files_optimize(struct ref_store *ref_store,
+ 			    iter->ref.name, err.buf);
  
--static int files_optimize(struct ref_store *ref_store, struct pack_refs_opts *opts)
--{
--	/*
--	 * For the "files" backend, "optimizing" is the same as "packing".
--	 * So, we just call the existing worker function for packing.
--	 */
--	return files_pack_refs(ref_store, opts);
--}
--
- /*
-  * People using contrib's git-new-workdir have .git/logs/refs ->
-  * /some/other/path/.git/logs/refs, and that may live on another device.
-@@ -3969,7 +3960,6 @@ struct ref_storage_be refs_be_files = {
- 	.transaction_finish = files_transaction_finish,
- 	.transaction_abort = files_transaction_abort,
- 
--	.pack_refs = files_pack_refs,
- 	.optimize = files_optimize,
- 	.rename_ref = files_rename_ref,
- 	.copy_ref = files_copy_ref,
+ 		/* Schedule the loose reference for pruning if requested. */
+-		if ((opts->flags & PACK_REFS_PRUNE)) {
++		if ((opts->flags & REFS_OPTIMIZE_PRUNE)) {
+ 			struct ref_to_prune *n;
+ 			FLEX_ALLOC_STR(n, name, iter->ref.name);
+ 			oidcpy(&n->oid, iter->ref.oid);
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 1ab0c50393..20cf9fab18 100644
+index 20cf9fab18..10062fd8b6 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -1773,8 +1773,8 @@ static int packed_transaction_finish(struct ref_store *ref_store,
- 	return ret;
+@@ -1774,7 +1774,7 @@ static int packed_transaction_finish(struct ref_store *ref_store,
  }
  
--static int packed_pack_refs(struct ref_store *ref_store UNUSED,
--			    struct pack_refs_opts *pack_opts UNUSED)
-+static int packed_optimize(struct ref_store *ref_store UNUSED,
-+			   struct pack_refs_opts *pack_opts UNUSED)
+ static int packed_optimize(struct ref_store *ref_store UNUSED,
+-			   struct pack_refs_opts *pack_opts UNUSED)
++			   struct refs_optimize_opts *opts UNUSED)
  {
  	/*
  	 * Packed refs are already packed. It might be that loose refs
-@@ -2129,7 +2129,7 @@ struct ref_storage_be refs_be_packed = {
- 	.transaction_finish = packed_transaction_finish,
- 	.transaction_abort = packed_transaction_abort,
- 
--	.pack_refs = packed_pack_refs,
-+	.optimize = packed_optimize,
- 	.rename_ref = NULL,
- 	.copy_ref = NULL,
- 
 diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 4671517dad..fc5149df5b 100644
+index fc5149df5b..dee42f231d 100644
 --- a/refs/refs-internal.h
 +++ b/refs/refs-internal.h
-@@ -422,8 +422,6 @@ typedef int ref_transaction_commit_fn(struct ref_store *refs,
- 				      struct ref_transaction *transaction,
+@@ -423,7 +423,7 @@ typedef int ref_transaction_commit_fn(struct ref_store *refs,
  				      struct strbuf *err);
  
--typedef int pack_refs_fn(struct ref_store *ref_store,
--			 struct pack_refs_opts *opts);
  typedef int optimize_fn(struct ref_store *ref_store,
- 			struct pack_refs_opts *opts);
+-			struct pack_refs_opts *opts);
++			struct refs_optimize_opts *opts);
  typedef int rename_ref_fn(struct ref_store *ref_store,
-@@ -550,7 +548,6 @@ struct ref_storage_be {
- 	ref_transaction_finish_fn *transaction_finish;
- 	ref_transaction_abort_fn *transaction_abort;
- 
--	pack_refs_fn *pack_refs;
- 	optimize_fn *optimize;
- 	rename_ref_fn *rename_ref;
- 	copy_ref_fn *copy_ref;
+ 			  const char *oldref, const char *newref,
+ 			  const char *logmsg);
 diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 6bbfd5618d..43cc66a48e 100644
+index 43cc66a48e..c23c45f3bf 100644
 --- a/refs/reftable-backend.c
 +++ b/refs/reftable-backend.c
-@@ -1700,11 +1700,11 @@ static int reftable_be_transaction_finish(struct ref_store *ref_store UNUSED,
- 	return ret;
+@@ -1701,7 +1701,7 @@ static int reftable_be_transaction_finish(struct ref_store *ref_store UNUSED,
  }
  
--static int reftable_be_pack_refs(struct ref_store *ref_store,
--				 struct pack_refs_opts *opts)
-+static int reftable_be_optimize(struct ref_store *ref_store,
-+				struct pack_refs_opts *opts)
+ static int reftable_be_optimize(struct ref_store *ref_store,
+-				struct pack_refs_opts *opts)
++				struct refs_optimize_opts *opts)
  {
  	struct reftable_ref_store *refs =
--		reftable_be_downcast(ref_store, REF_STORE_WRITE | REF_STORE_ODB, "pack_refs");
-+		reftable_be_downcast(ref_store, REF_STORE_WRITE | REF_STORE_ODB, "optimize_refs");
- 	struct reftable_stack *stack;
- 	int ret;
+ 		reftable_be_downcast(ref_store, REF_STORE_WRITE | REF_STORE_ODB, "optimize_refs");
+@@ -1715,7 +1715,7 @@ static int reftable_be_optimize(struct ref_store *ref_store,
+ 	if (!stack)
+ 		stack = refs->main_backend.stack;
  
-@@ -1733,12 +1733,6 @@ static int reftable_be_pack_refs(struct ref_store *ref_store,
- 	return ret;
- }
- 
--static int reftable_be_optimize(struct ref_store *ref_store,
--				struct pack_refs_opts *opts)
--{
--	return reftable_be_pack_refs(ref_store, opts);
--}
--
- struct write_create_symref_arg {
- 	struct reftable_ref_store *refs;
- 	struct reftable_stack *stack;
-@@ -2761,7 +2755,6 @@ struct ref_storage_be refs_be_reftable = {
- 	.transaction_finish = reftable_be_transaction_finish,
- 	.transaction_abort = reftable_be_transaction_abort,
- 
--	.pack_refs = reftable_be_pack_refs,
- 	.optimize = reftable_be_optimize,
- 	.rename_ref = reftable_be_rename_ref,
- 	.copy_ref = reftable_be_copy_ref,
+-	if (opts->flags & PACK_REFS_AUTO)
++	if (opts->flags & REFS_OPTIMIZE_AUTO)
+ 		ret = reftable_stack_auto_compact(stack);
+ 	else
+ 		ret = reftable_stack_compact_all(stack, NULL);
 
 -- 
 2.51.0
