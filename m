@@ -1,108 +1,118 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B358C81720
-	for <git@vger.kernel.org>; Tue, 21 Oct 2025 05:10:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E81339A8
+	for <git@vger.kernel.org>; Tue, 21 Oct 2025 05:16:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761023456; cv=none; b=C2S8RwjVf+YVgFLl+Pw4WUBMGjTqpl5k03j3dtxBhK840hGy7jUVyZN3pC7d0yYNqDVeDkfV6SmYqWSzfGGaknNIVVXkyKvY8M47/QKotOLXlwaeFXPjzJEWS89rHEzbzIQSYZmQXXudLqo/vk/NawdcBeJCvmz54cz39Xt7r0o=
+	t=1761023806; cv=none; b=tGHrEAvJQz3t44qh4SJ7NWp9gtXUYriroYk/sGRyQK/EjYCU4yWnvxxVUehxv6Ctwbo0dZi7TPF/Jc8vl7UOkpZJAXd1ecMb6GfE6u57WYanrEcfhxruaYMylg1uCZdUEaqkB5jIeU11wHWSCQvrLk1DlITq9/x6Lh+2vkgC+Fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761023456; c=relaxed/simple;
-	bh=eHjsI2RCOaHzk7zXol71q7K6tBpOK/T/w8/P8/Ypsv0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oCGEgvAAFeaBKGJ0o42sGdlyJYyrEBzWuu/dQ1IPXqapA/zNZQguCN/04WYJjbZZc/1UaCdJ4d4ctZBQJeHPY4Cd3n09m+3yxsk+mDddrpUzwUKIXeldZ+TQKZlXGkKIIR1QresrdEAaFflXwBlh9S9CWyr8MBWFtHInaaCGmaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OhGAQ1a3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e10ULkfL; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1761023806; c=relaxed/simple;
+	bh=M1Zapct3JRxTAdatkOvpecbrXk++CSz4ddPptaYeLQM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bylRL8lTcrdAxMx63IDaXXrGXXkfleJuPyek01zN52EA2s/4Vy+ggiCelRzOil6QUngwsmY7zmc+v3JIxe4IESQP+5yVORlSXvuxLooRaxFhDp8QcHvHujtF6BG2cmRkTxD6Px5Y4s3nlATK1bUdjtW3M6RUkE0i0Hu1n9oIouM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dE0bYNm4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VoZeIVmM; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OhGAQ1a3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e10ULkfL"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id A011A1D001BC;
-	Tue, 21 Oct 2025 01:10:52 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 21 Oct 2025 01:10:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dE0bYNm4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VoZeIVmM"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3FB9B1400192;
+	Tue, 21 Oct 2025 01:16:42 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Tue, 21 Oct 2025 01:16:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1761023452; x=1761109852; bh=eHjsI2RCOa
-	Hzk7zXol71q7K6tBpOK/T/w8/P8/Ypsv0=; b=OhGAQ1a3r5DxbYazA3fkxqNQ0a
-	2JnrQEjXL0e/1XTW2/itS44KF7uVKppRIrNpb73b1inzuiS0VW2nQD+vqd1wF8Vb
-	i/dFGrQ5PnjackAXoaUFRe4ZLqxD/qLbVoIdKBEryNq+ehqwR0P2SjMYmDNTIKJi
-	IqrGTnqQaF2jCHGAm+1Wq0prtEvcY0z2mpsnvc+Nf4/VjfRcrrBQJIhimYrKeO1N
-	lZPnTsDR2FsQ7l93sdwm86Fo1h1QRRjD0jeVOD7dg79cZekVcTTjaLlVlDNwLuX/
-	HnnoefmqFK8RiA6+2IdmRVNBOWxq+tlWXvuwXf8AVMjpwytU4Z/6BEOaw/xQ==
+	:subject:to:to; s=fm2; t=1761023802; x=1761110202; bh=PQmWt+jrIS
+	gAKneclS/+8XxXAoIuncqS7sFMZBN8zlk=; b=dE0bYNm4C2ZZyDK4X9mH9HfgzW
+	+svQlIZICvaomdrsyKhjt531+W0DnY6GkFsvPDtUegHMIU9rTjw+nUp43wxy65w6
+	srrhBrL2oQlDFRhqWY//0Zy8NwhpPF71QLEuWnXC8CsNHscPeDNsGqvF15ZfkgJB
+	C20RxuiabKayoJ/7i8N6Mfv6jU2m8CymkUO0j+4ST57gYjmkmV24gCt/Icuo8xDe
+	mQQTOxk3VJHMzMY3kV+04h85RKxtU2/FyiHRMqdWweWETVpX+p+4j1YBMOm3+05q
+	owtbywJPry6ZZi8++WwSTWVC47vlXae23UlwFXAJvxrLYXb+ghRHDB9LRt8A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761023452; x=1761109852; bh=eHjsI2RCOaHzk7zXol71q7K6tBpOK/T/w8/
-	P8/Ypsv0=; b=e10ULkfLahQF2gqCrHrrY/Z/TKbGYenCL37tXAwLTeRQ7jJNRGs
-	8NIzeLG9Qqh82OTajPeFfitvyDK95gt2iLId6JTpQbT0pN3xUhF5KWBN27lIveYA
-	LBUFcSSsG1VEamXwEq0iDy+HS+Ud8dBCS69VTHN60Om4L8XlfnC7+7H8M7BzINQT
-	fQP/ZxqpR8qlZlbxtLCNSPRX2KlHiuHgCK7XKWjj/osTOub9vFfXO+GYOZeI8utM
-	Oyz3yFZU13fgk25bcPYlrxF/FzSZs+Fi5rIJC2myZUU9yNNAnaXFuB55CdDnBlMo
-	awBJvc2BLfKKHJ7fgZOQ8bJbTNpkCxgO+Eg==
-X-ME-Sender: <xms:3BX3aFp0VOtNCV6h7rfACwLI0lZR0eyd8NS3_eD0NWEaoLa-Uj17Fg>
-    <xme:3BX3aOompcUJXH6lnYdag777Y_X_Qw7ANrTceOELK1CKSioLw98iSZkT6KRagjbbF
-    siTwQQmxW55-rbQNy4891WnuTlH5vEfBpp7EWXP0RF_Qu5fcuLW>
-X-ME-Received: <xmr:3BX3aHPb6cHTzfEXqoGPeTl6qns6mYJ3WjW4uhtACxNsns2XnemoiUL3C9mRoT7LGE_5Wg0KzCuklh5iLHO4lnjLA837FAIvfFqP>
+	1761023802; x=1761110202; bh=PQmWt+jrISgAKneclS/+8XxXAoIuncqS7sF
+	MZBN8zlk=; b=VoZeIVmMmHEjSctEp/ALAHm8rbNhOfNBjuNquscO1IaRLzPSjWA
+	9dVtUwNKhsr3UYgNcfujQBe9927EyU3AcRJj5M92mibZSWIFNQMZ8dXmd0Jm16bp
+	kAAHJpvP5s8zfqREPfBpw7/+Fsgv9aHcNOotSj8xoA8Yob1+wPRAnNuKa1rbD2V7
+	2irx+4Qbe6FHprwkrOuxu9QV0Mmul1ICsuqFM4xy0EWaQTEpk4mvIdtNoN2nsuYB
+	cmi9ooPkWRil1ixnVNMNYqyePRgC9ckKQzJFS+R6a0WkcczhqORafVsrcGbYMuK+
+	wUoG8lLrCHGOWmFdcluvw3D1ZG4gEHENZTQ==
+X-ME-Sender: <xms:Ohf3aDrFORlgeJp--P5M82ZEXu9-vc9y5vZAp91PMpZmVLMYOKp9ag>
+    <xme:Ohf3aFENFXSDYIF66mZGH5eamoJs4b-56MuBOUN2xYEzqkJ7wvzhmENw7_b4V1JHv
+    0sYlkLWJ9KrS1PIdFXV36fDuzULk2ZXJoVF1Qt-RQvpmAElRsY7yg>
+X-ME-Received: <xmr:Ohf3aNl5FxBnGd4MNtb2LLcZ6rzlZu4WXTS1yCyphvNmTepQ3vbPXf8ehgaMBbU-gQ7CkSZN8PWWOrHNklVbouycA3i9M2AI2A9eR2Nv2Yj54w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddufeelkeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:3BX3aPzP34wrb1m12FnUaA_YVqZznjOQ9sdcsd4XtyKwOakam9u-vA>
-    <xmx:3BX3aAssuQGsipfoEm-ctNlwHIdY3Rxrm9FOMCEqfr4bXFNWuicb9w>
-    <xmx:3BX3aI7wI4w19hw3sgBdy8iv897g3yHat1gflh8arXnRTt_OURGfNg>
-    <xmx:3BX3aPQTQGT0k-VDcEPnqNamz77cKFmwQRAGrmrzV0gAX4tyw6l0CQ>
-    <xmx:3BX3aGuv0-ftU7ovQbz172rmEhe2dYNHwEo8Fr-Fem71ob5BoyYUYUgq>
-Feedback-ID: if26b431b:Fastmail
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epjeevudeggfffffeigeethffgieekveeffeehvedvgeeiteegueejleeihfeitdeunecu
+    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeef
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:Ohf3aAlbTlzzlmrxC4oBZKb4UMXsmBKx81vgP7uOkA3AA2PkvSx0Tg>
+    <xmx:Ohf3aGtU1NfW_3mC5jRHfVHmE-FRhmC7INFP0yG6_IrEai9LrEItZQ>
+    <xmx:Ohf3aLmUdVDqqyxj2iNWxlAjXD-1v9qf8bcnBHyD37myGEPrv2PpjQ>
+    <xmx:Ohf3aJuSDdwQxA3gZF_PiI85Phx02YDN_CpRgn5dpHG-qGoAIc5ySA>
+    <xmx:Ohf3aKiSESxqiReSSJ97Ttl1DBFisokPDGR3O9OsGlAaNlrmQyvuxd-O>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Oct 2025 01:10:51 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH 5/9] xdiff: split xrecord_t.ha into line_hash and
- minimal_perfect_hash
-In-Reply-To: <CAH=ZcbAjX=V_VvJsRzvQEA+CMM7dWQx6E5=d4FL5CD3s+ozjBg@mail.gmail.com>
-	(Ezekiel Newren's message of "Mon, 20 Oct 2025 17:29:25 -0600")
-References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
-	<a3e706ecdae51434fd5ee112c13f8cf374faf6ed.1760563101.git.gitgitgadget@gmail.com>
-	<CAH=ZcbAjX=V_VvJsRzvQEA+CMM7dWQx6E5=d4FL5CD3s+ozjBg@mail.gmail.com>
-Date: Mon, 20 Oct 2025 22:10:50 -0700
-Message-ID: <xmqqv7k8yh45.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 21 Oct 2025 01:16:41 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 4466b594 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 21 Oct 2025 05:16:39 +0000 (UTC)
+Date: Tue, 21 Oct 2025 07:16:36 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com
+Subject: Re: [PATCH v2 0/3] refs: cleanup code around optimizations
+Message-ID: <aPcXNOz7HdxfUzcC@pks.im>
+References: <20251020-refs-code-cleanup-v2-0-f5349ed0f6a5@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251020-refs-code-cleanup-v2-0-f5349ed0f6a5@gmail.com>
 
-Ezekiel Newren <ezekielnewren@gmail.com> writes:
+On Mon, Oct 20, 2025 at 10:18:28AM +0200, Karthik Nayak wrote:
+> This is extracted from a recent series I sent [1], which I've since
+> dropped to follow up with a different approach. I think these patches
+> hold value individually.
+> 
+> They mostly cleanup code around 'git refs optimize' which was added
+> recently in db0babf9b2 (Merge branch 'ms/refs-optimize', 2025-10-02).
+> The code in the refs subsystem contains both 'pack-refs' and 'optimize'
+> functions, which are one and the same.
+> 
+> This series unifies this to only retain the 'optimize' functions and
+> naming, since it backend generic.
+> 
+> This is based on top of master 143f58ef75 (Sync with Git 2.51.1,
+> 2025-10-15) with 'ps/ref-peeled-tags' merged in.
+> 
+> [1]: 20251010-562-add-option-to-check-if-reference-backend-needs-repacking-v1-0-c7962be584fa@gmail.com
+> 
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+> Changes in v2:
+> - Squash the second commit into the first.
+> - Change some variable names to also no longer refer to pack_refs.
+> - Fix commit messages.
+> - Link to v1: https://lore.kernel.org/r/20251015-refs-code-cleanup-v1-0-550fdd8a3b41@gmail.com
 
-> I'm a bit surprised that nobody has commented on this patch. I thought
-> that someone would have criticized the length of the name
-> "minimal_perfect_hash" or asked me why I was splitting one field into
-> two.
+This version looks good to me. Thanks for all these cleanups!
 
-Sometimes there aren't enough round tuits to go around, and when
-people have been too busy to review it, we see no comment, either
-positive ones or negative ones.
-
-> I don't see any reason why this patch series shouldn't move forward.
-
-A patch series needs a positive reason to move forward;
-unfortunately we cannot tell much from lack of negative comments.
-
+Patrick
