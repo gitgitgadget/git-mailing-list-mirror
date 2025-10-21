@@ -1,98 +1,119 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A443491CA
-	for <git@vger.kernel.org>; Tue, 21 Oct 2025 16:25:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761063944; cv=pass; b=orutDq1V6HIzXK1rzd8qvKMO7Svk5NEunDh+gS3hQkRFZbWlUeta44mseatSJqceloEie80Df+GIoV4VsoPvunswL3z5CJMSXBNaGwkuSjTz0rVJuQoC69y1cNN6hYBKvWzsGcux4n5C3HLd0MJKmiiA0z9HMqrm66CgOs2hmy8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761063944; c=relaxed/simple;
-	bh=ssGHUz4oPslZ3hLFHYVomFXQhBU3AfEhQVl9auMtVzQ=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079AC3491DA
+	for <git@vger.kernel.org>; Tue, 21 Oct 2025 16:26:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761064009; cv=none; b=nI8q+q+1p///7xKpBSny35FbOF/CKmD6FerGDCcIQbEPYxZOeVmg9+ZwqhN9dWgZudcjE/Z75tiv7E1lt8UnNrHebuetB3wUAfxf+ZgG73l1kaOuv3XOxeA6iZjLcWxLP2vuKiGW2XGlwrVGFyXuQAKYFgClq0DNRgP7u94gJgo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761064009; c=relaxed/simple;
+	bh=EZgisqY5b8CO/6uinDMGi4cTZ56fv+Rbj8fhytYkhTc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OU3teq2rqYvqSBvPeG4jZYSz8OYCdhz8NohIAUJHA7Juf6G///4NAASWgVGd9DD7032DHW35FWVp9PrtZCYVUwx9kPXhjHBMrh1wr4seTb2o6fMDqeU1mZIU9jWW+gPNgN+qHHbhoIQnSCoeivlXmNFS986Q5ntYmUMIYsIEO+4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=lSvM4D/E; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	 MIME-Version:Content-Type; b=lzjt+xlSATepW/vFkB1fvqWbFzjyw51NglxDZHzFEJnhwZwYJ6+VjUdSg5EQWy5rcxZNqNsK89Uw42g54VPBy5E9eZt+W3aTr2+TjPvz2H+FQqdsHFeyQzNbymGAlwz6DKOkvTpB9l+RySfnryeNxOhe+JZfWoyOVNHwDv8vLTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=A3Wp53TW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=u4Qx7ZuQ; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="lSvM4D/E"
-ARC-Seal: i=1; a=rsa-sha256; t=1761063931; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=T1xo59GBScFW+Sqld5imCxAYNP2XSbXxkye564aW+W11zVIaqh1zVwTtRxLHXR+F0sVVfHne44XifXZmhoKRR3aUCta0rXiInylTmIbarDtquBFifNGQO1zUOVouhTMcAfFJZM35SPfORxunJPSvMD6Xeq077E3NVfEwiu9DE2E=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1761063931; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=B/CmKXC+klaGV6LhF1iAOTcF5SQ6caPTb3syWN14dGI=; 
-	b=Bnlcflc105mxMIlkJQpai5RFUMoKbvAmyxfOYWnak31/pA+oVIFjYDz0I53EB4Ryly6AMSeE40giVst8xLS0SFgl4bJmHiGcEGi9n67rNGmOQ+7eAJ2Oe8ZdXihUXlclUfvZvanbdv6b87vdf/nuxbMuyiV0jG9hFwCMBQ84XfM=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761063931;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=B/CmKXC+klaGV6LhF1iAOTcF5SQ6caPTb3syWN14dGI=;
-	b=lSvM4D/EBeEWslSq57rXbfWOdNkaAKgNtF8rIjz5WL2AngHyxisGG/kKpZfYhzES
-	4N2RrkJI0BbyDH1BRwxpYfKDPfJYzAP+Iyf0feDoX0q9SsXF/AAyS72je6huDTa+g15
-	3HbSqTxHu354kzPpfHxjIMA6Hp2OKJhqeIFJCivQ=
-Received: by mx.zohomail.com with SMTPS id 1761063926654509.8134050205874;
-	Tue, 21 Oct 2025 09:25:26 -0700 (PDT)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
- Damazio Bovendorp <rdamazio@google.com>, Junio C Hamano
- <gitster@pobox.com>, Josh Steadmon <steadmon@google.com>, Ben Knoble
- <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
- =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2 07/10] run-command: allow capturing of collated output
-In-Reply-To: <aPc5JTxw5uVHEyjH@pks.im>
-References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
- <20251017141544.1538542-1-adrian.ratiu@collabora.com>
- <20251017141544.1538542-8-adrian.ratiu@collabora.com>
- <aPc5JTxw5uVHEyjH@pks.im>
-Date: Tue, 21 Oct 2025 19:25:20 +0300
-Message-ID: <87plagp6hb.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="A3Wp53TW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="u4Qx7ZuQ"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0F0877A0010;
+	Tue, 21 Oct 2025 12:26:47 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Tue, 21 Oct 2025 12:26:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1761064006; x=1761150406; bh=8AtY0QVXLw
+	B7Rbjj9bEl2MUm4lAHlksslSAT49KN4MM=; b=A3Wp53TWcDfgXdQ8VYi2DMFwcl
+	AOA6As218sCuxDfA3QkWf0Bi6AO8t/kxW5CP1mjcRMCs6Y/lRFJAOmCW5CvCeujt
+	Ecb2SJFxtgVIKiowlXRhTdaP3uCAKxbDZojBetPv0dpTfY4I+BdwVPu6dqHi4Aw7
+	BtD2byy5bmR1corEOlekudUpedWQ1nmteSV5mFzyuxjOWCDWIUtaAH/li9aWNst/
+	A3Yd8eyuQmTcebknrMitiXsNMvvoNNLfULWai7VIYJaS3kSii7DCO1isZDvWymIl
+	pZ2JJCBq7HLXjJkYlqnmWdGL0janXxlt+oUJGu9+M8fyYxFfF0/L75sKMChQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1761064006; x=1761150406; bh=8AtY0QVXLwB7Rbjj9bEl2MUm4lAHlksslSA
+	T49KN4MM=; b=u4Qx7ZuQuW4c6PBsuTg4dYReIGvRup0v8baiYi5fbbUKLXCc21Z
+	vItGdT8mWPqZ401kaBXscUtTr4QNHdUoOJvDBBtCPhnkTSX+bcIYcLW4KImjTSMk
+	yiUoj/Pg+y6TW7ZcD1BEq10GLCN7IpNYgE8ZYT39vRc1QRH71lQ7QHYBYZIWAPaS
+	33OQbBKGE1lx2yw49mJ6CJvVYij/dEEpjGC871T6MsZiqoVITEwA+dNCf7W2Vi8J
+	P0ZrTi6bYFzKwPLBhHFoCZe+8DEeDeiIlRgreGxUaQHNwrFlYZSwXss2ddY9/Ntx
+	/Qlzm34SbG6a2fJOyE06QP79W7GprGAq3XA==
+X-ME-Sender: <xms:RrT3aHRX_8xXTskTMRC0aIvvKjV2ihVUZB79p5SU3xB6u4xwC92Uyw>
+    <xme:RrT3aMe1q99FMZSp4x5nrQv4HQmyXJ1Q5QOA-flODMgy34PZzSH6bYozMZT9CQ6_v
+    VPwgOjsbyTejoYxyaoVYqsKvQ0PZHx2qLd6D0s0htlL719t-Vwe>
+X-ME-Received: <xmr:RrT3aGqKpO-mnKKfw2Ec-6Ws60gvvALPnV7SVfc0IXzKyuW-0CRcn0KMbVjz424fGujAF62zzCC316goRzBxPmUtNiI2gEvQemca>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeduudejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepsggvlhhkihguleeksehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehushhmrg
+    hnrghkihhnhigvmhhivddtvdesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishht
+    ohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:RrT3aN-aD0eigGCYpThn1Bjz2ynGCcSqyx71RR2sFK9erePdBIYczw>
+    <xmx:RrT3aCca09SlNO0V0ocAzfdpyg1T8LdtOXbPYrBpUyqUeydBGat7Og>
+    <xmx:RrT3aHJLhcSiaWe-Ap94bkpqkEo-Lk1R0PpnojLuIjDTSO03rp1U8A>
+    <xmx:RrT3aCgCquVeuXvjwZRNVfCGvGN3ALoE802BbBl9FYvTotn3T2dGFQ>
+    <xmx:RrT3aA1VLUZvx36Pahzz1wvca-CincujJ0uMQEmGgvMiFv1z_LP1XOmb>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 21 Oct 2025 12:26:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Olamide Caleb Bello <belkid98@gmail.com>,  git@vger.kernel.org,
+  usmanakinyemi202@gmail.com,  kristofferhaugsbakk@fastmail.com
+Subject: Re: [Outreachy PATCH v4 1/2] gpg-interface: do not use misdesigned
+ strbuf_split*()
+In-Reply-To: <CAP8UFD1J_B9W62bv=0yccQNGahkv2vco3arQOs0oe0DccdTeYg@mail.gmail.com>
+	(Christian Couder's message of "Tue, 21 Oct 2025 08:46:22 +0200")
+References: <cover.1760997183.git.belkid98@gmail.com>
+	<2879d9be3659a9c1ea554fff7814507caae24b65.1760997183.git.belkid98@gmail.com>
+	<CAP8UFD1J_B9W62bv=0yccQNGahkv2vco3arQOs0oe0DccdTeYg@mail.gmail.com>
+Date: Tue, 21 Oct 2025 09:26:45 -0700
+Message-ID: <xmqqms5kw796.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed
-X-ZohoMailClient: External
+Content-Type: text/plain
 
-On Tue, 21 Oct 2025, Patrick Steinhardt <ps@pks.im> wrote:
-> On Fri, Oct 17, 2025 at 05:15:41PM +0300, Adrian Ratiu wrote: 
->> diff --git a/run-command.h b/run-command.h index 
->> e536ed7544..2c2484478b 100644 --- a/run-command.h +++ 
->> b/run-command.h @@ -436,6 +436,20 @@ typedef int 
->> (*feed_pipe_fn)(int child_in, 
->>  				void *pp_cb, void *pp_task_cb);  
->> +/** + * If this callback is provided, instead of collating 
->> process output to stderr, + * they will be collated into a new 
->> pipe. consume_sideband_fn will be called + * repeatedly. When 
->> output is available on that pipe, it will be contained in + * 
->> 'output'. But it will be called with an empty 'output' too, to 
->> allow for + * keepalives or similar operations if necessary.  + 
->> * + * pp_cb is the callback cookie as passed into 
->> run_processes_parallel.  + * + * Since this callback is 
->> provided with the collated output, no task cookie is + * 
->> provided.  + */ +typedef void (*consume_sideband_fn)(struct 
->> strbuf *output, void *pp_cb); 
-> 
-> I think the interface overall makes sense, but isn't the wording 
-> we use here very specific for hooks? 
-> 
-> Taking a step back, what this thing seems to do is to take the 
-> hook's output and customize how exactly we handle this. That 
-> isn't really specific to any kind of "sideband", even though our 
-> use case in the hook code does use this for sidebands. 
-> 
-> So maybe we should call this `consume_output_fn` and adapt the 
-> rest of the code accordingly? Because that's what we ultimately 
-> do here, IIUC. 
+Christian Couder <christian.couder@gmail.com> writes:
 
-Yes, that is a good idea. run-command is supposed to be a lower 
-level, more generic layer than the hooks, so it should not be 
-concerned with concepts such as "sideband". 
+>> Reported-by: Junio Hamano <gitster@pobox.com>
+>> Helped-by: Christian Couder <christian.couder@gmail.com>
+>> Helped-by: Junio Hamano <gitster@pobox.com>
+>
+> Nit: Junio reviews all the patches and adds his own "Signed-off-by:"
+> to the patch that are accepted, so there is no need to also mention
+> him in an "Helped-by:" trailer like this.
 
-Will do in v3. Thanks!
+Just this point.
+
+Somebody is later expected to sign-off on the patch has little to do
+with who is on Helped-by: lines.  The provenance of whatever help by
+others the author incorporated into the patch is covered by the
+author's sign-off.  The sign-off I would give to this patch later is
+only to certify that I received a signed-off patch and commited
+verbatim, or with my own changes that can be shared under the same
+DCO.
+
+Not that I think the amount of help I gave is substantial enough to
+deserve a "Helped-by" credit, though.
+
+For everything else in your review, I would very much appreciate you
+for helping the author of the patch.  Thanks.
