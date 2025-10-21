@@ -1,54 +1,54 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F317730DED3
-	for <git@vger.kernel.org>; Tue, 21 Oct 2025 08:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E62313E00
+	for <git@vger.kernel.org>; Tue, 21 Oct 2025 08:34:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761035635; cv=none; b=rl7PZd19yy1Rd4NvmemuGd5ldvXjEm0mDImSGBOBbIlZ1lLlrPFriRZ1Kgkh3H0tKdJmnhVbC4WiKiK/dhIEQeaFUnRZW/2W3iAUjOG4mJHUyV+rHeoqCIdo9p75fXHP9aiE7LX/apkckX6NrLFaAARX0AB2qw5/1U/J9iCKzEI=
+	t=1761035646; cv=none; b=LZkpjLBDpimIR/UaI3s87gVgLYI7Kwp5iUTQMLLpTJY5IW+dj1gWdnVuXcmvhWHaSc4WP93/I0zha847MNbBRs4cCYq5Hv2QxtnU8sB2/T1qDT0ClHQDzhmBZ3ioAH3NLmJB4TbUbg85XPUFVBxZHeHPOimwE78p2k9YWcWvPeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761035635; c=relaxed/simple;
-	bh=tPeooIRLlLo6DCTx5FPyrIPGqK3gBZpqhXfflNBrar8=;
+	s=arc-20240116; t=1761035646; c=relaxed/simple;
+	bh=C2ToKxE65+OlwYnGp38ufPfS9eaZlhhJ522CZkf2VRs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UVKNFy9ImtTgMsF0Q19uRNqjT+CFVpj5SQIzaz7G7HxMDUERvJmvn+0EEafH1HtmH0moFAo6tsQU0whN4IYBu414CVgYaMxeU0zeiO8L9BaDYsk8W2MHAl+IH/esLsMkyzE6y8c4rof6MHSxF0dTEMe36vUewVDcBURcPSZOZOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eMmVuqhh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MZ5pLmrr; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=VaAjs6nC0HvpsPU1fl0eP7JCMvELhBMoaSdJx9YCmx/q0fnsbwInjrs5nF+F5k69XDNM8ly/XDPtqs7fClfzPvxt+FZemAaBfWnzx2fXpRZNqN9ZNJAaIv4P30uIiKuc/OYgjgIdfZzwvfmkZRDyD+7/uPjbp8blU6hkdyX/ev0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OPI5mxY2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tWsevCLg; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eMmVuqhh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MZ5pLmrr"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 041491400112;
-	Tue, 21 Oct 2025 04:33:52 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OPI5mxY2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tWsevCLg"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0D4CF14000B9;
+	Tue, 21 Oct 2025 04:34:04 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 21 Oct 2025 04:33:52 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 21 Oct 2025 04:34:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761035632; x=1761122032; bh=tPeooIRLlL
-	o6DCTx5FPyrIPGqK3gBZpqhXfflNBrar8=; b=eMmVuqhhdhvhK4dvgIAbJohs+u
-	b0A8VxiSHgltcaHJ2niKK1Z3Ztp/+c2xx9xzxsS/41EopagcmMcEpK201f7FMV9k
-	mr5BRoZipqRJPKJmZ92Re7029NS60H0sNNacV24hSbdhUfzxPofkVorDKPAFZoIi
-	0hMLLdBE0bgQb++Iv1HN0zUhkxhFngo6wwujnLvoc428GycURtQ1Vp8bdXvW08No
-	PEN+griZ+AnvKMSQX/sdgfJVIVEsJyo5JnWTTs39vwL3pjjSmKb1WV5AHv/eWrNs
-	aF2WBq+rXVcU+KeHd9uIN1+BYGu/LmNg5eANLekgi1K3zQ8GDAus4DFkpcew==
+	:subject:to:to; s=fm2; t=1761035644; x=1761122044; bh=aOg2R5bFzi
+	MhE0o+MHs/0gb3sxXwV32BmYglktV/d14=; b=OPI5mxY2XRfmI9VIdX5MJtcmiF
+	r4YTXDrTwyVapxmGciAqBnKmJ72plJx672D6cSPov9hGve2SJj8ad8Gs+RidnMvd
+	UX9EUSe9cbqpIeyTz4BibHrDeE7K0n72C9lVPDHEs1Vy/+9lqNnYGXzOw9P1Zi3U
+	AEB8mfPKl6JeIyiDbo3Xj3wEn/m8WBQ03MSf4X+Ny0K8bpNjjMZ6SXxhJJZfU7RN
+	y9ezjfOkIRTP+g7YbfW+OJ3t6TVUXxF8UIGhx+3jlSOE+esobU74ny+gYWSKVCCf
+	Dyg8xuHMx9eAjB6JkAEO7HTXdAuu6R03on5W3c2Lim4D5i7mmINyTS7pWqjQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761035632; x=1761122032; bh=tPeooIRLlLo6DCTx5FPyrIPGqK3gBZpqhXf
-	flNBrar8=; b=MZ5pLmrrGx1gaTCRo5M8RuxAAnop/+g+kKick9t/tKc/ZIqJJ9m
-	o7JRRxXi1fbzIwl/EYDbkrPVTYZKiMDmKd1IyM76/eGV4xOGZFfVEknbMqqAo/vj
-	9/oG4MS2rbkFAoEAvvlx7oO+EwsI8CJIlP8GTY2J99uO4h53SW0Xm5mmnBKXxLTS
-	5ZppMd7cBIMwGz87vJg2l9lxOINKm/vbjg0xkOHdKJqbI6BOVT1Rp3b4K6CHU1ce
-	eQx7nEPtr5AFM7sCZKVDhLEWxbhaUWK68avkhGRToJJQPz4THsfbmIuimxVUiHLe
-	HXXjDruzgxkFN4Bz3iGMZIUjGZlWUKhgIgQ==
-X-ME-Sender: <xms:b0X3aH6Gb8rkABhOLPH_70A6J4AeM7xcKcB6rwuceei5y95VVRYFkg>
-    <xme:b0X3aEVvS1Y1sIWQ1D9Zw0BTitW0twNjoNkOrxgeEYziQBSzDXdYCsEVhQxiHSnIx
-    H59ayaNilD-ioHXH-qhIDfgnkPTRalTQc4Mz4PORjlSpdbynB2RZg>
-X-ME-Received: <xmr:b0X3aL1mMCIdfgd-fljmW2HonYEAl8VdldBjzJoE0vukrV1qEl6YZ1dlmRO-S7ZzcXcQM8qQ2NAXeDR__feWA7Pzz9loaPJU4x9s8eJWv0aAWQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedtvdefucetufdoteggodetrf
+	1761035644; x=1761122044; bh=aOg2R5bFziMhE0o+MHs/0gb3sxXwV32BmYg
+	lktV/d14=; b=tWsevCLgP3rupem5g+8h0dRmRCY/X81HOyjNw5+ukMySqCzoWYq
+	arT+/bj6yXafSqRWg7cHOn6lu9nrxDwqEX3m6ytbhLo582+VCnv+7W3MileKu1yw
+	zPTrCioNZBHNWpBqvOxidtFk2lOqii0jlEYmJPogOjVNlJ5GYZ62ysVFjUyFC9rr
+	cCNgb9xlgdcWoRhzcLe5ATMu/iYxlPst5OWVirhBlAPYripflaQaL70v16wI9bvy
+	ORWWkCmxUf80G9JuNr3/5Kab34mTNz2oJOkxprJ2eSUz4Jqd9U5T78QsJNY5rVwv
+	XThWYK7zRMpmQdhf1UPijDrIS4uaBBxE/GQ==
+X-ME-Sender: <xms:e0X3aN4NU54Z4ISHgQwiHQlRQ2x7E4m8C0WpVvzpEL3RcGUzuHTsHg>
+    <xme:e0X3aCVTTAYXk3iIo_GVswOKZS5qXSBeMslNmGMBkvkRjlhKEN9t40eW0Y7b7dl7n
+    B5wINr92JiAr_hims7lKNhl4E_jn3mZKsmYVBmzFdGfrYkToF7yFSE>
+X-ME-Received: <xmr:e0X3aB2tzDEjXpn-EqtQnc95i1k0_UxKFRbjmwJbDlazyuMkB18IWbgQQ4J8F-TjBSAq6gotoB6Bn4-pXVF6AG-p5VFRqxl0dpm1FeAizkPxFw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedtvdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
@@ -59,25 +59,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedtvdefucetufdote
     ohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgih
     htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhgihhtghgrughg
     vghtsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:b0X3aB0Q8I9I4JSfM538mraWlCMX-zldereEQiba958RwCVhr9OgQQ>
-    <xmx:b0X3aO9lzmIX8pnf_hywiYgy7SiVlUJC_7iYQ05kb4h5on14PfHiuQ>
-    <xmx:b0X3aO2hW8YPpZxtp1WU5sDczHa_3RDRbQJnoo2uTn2207mzar3WZA>
-    <xmx:b0X3aL_pzQKTGGqLBpB2mXAMN7Z3C3Uo2895yTctUOGr3ioJplJDbg>
-    <xmx:b0X3aNzz-ewlVzfYnkprRFeewigmHa5EkpS18AjT0vRmhbxw_AxHTfcl>
+X-ME-Proxy: <xmx:e0X3aP1GNL2D7iVMjxI8TVNAeyJ0xtuIF2Pnnynad8oTsfdMuGD3yA>
+    <xmx:e0X3aE8Dp8h8n4sdjd9EQ2FhuV5th3ootvImIz82c_2U6DVxfMPqnA>
+    <xmx:e0X3aM3jehUxmqyYIh6GvYytEqBXoL0Aj0inHEdjE0zSKdunFYaisQ>
+    <xmx:e0X3aB82zMJr0DDscWJsV4x9fSwlzPhvktp5fO3UKbRv-xWim9ndTA>
+    <xmx:fEX3aLwVXvpKcExjctOb21_0tXLiXOOseinbrjGtJjLm64nIKT8I7Xtp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Oct 2025 04:33:51 -0400 (EDT)
+ 21 Oct 2025 04:34:03 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a427be4e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 21 Oct 2025 08:33:50 +0000 (UTC)
-Date: Tue, 21 Oct 2025 10:33:48 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 51c9a70e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 21 Oct 2025 08:34:03 +0000 (UTC)
+Date: Tue, 21 Oct 2025 10:34:00 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH 4/9] xdiff: use unambiguous types in xdl_hash_record()
-Message-ID: <aPdFbPN-60MVo3cv@pks.im>
+Subject: Re: [PATCH 8/9] xdiff: change rindex from long to size_t in xdfile_t
+Message-ID: <aPdFeHZKEsRw1cTX@pks.im>
 References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
- <7fcd83c99076404960302b64a4f0c8fa1c13feba.1760563101.git.gitgitgadget@gmail.com>
+ <6dca5e6222e1d02092d4ba8296b757b123b85afa.1760563101.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,12 +86,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7fcd83c99076404960302b64a4f0c8fa1c13feba.1760563101.git.gitgitgadget@gmail.com>
+In-Reply-To: <6dca5e6222e1d02092d4ba8296b757b123b85afa.1760563101.git.gitgitgadget@gmail.com>
 
-On Wed, Oct 15, 2025 at 09:18:16PM +0000, Ezekiel Newren via GitGitGadget wrote:
+On Wed, Oct 15, 2025 at 09:18:20PM +0000, Ezekiel Newren via GitGitGadget wrote:
 > From: Ezekiel Newren <ezekielnewren@gmail.com>
+> 
+> rindex describes a index offset which means it's an index into memory
+> which should use size_t. dstart and dend will be deleted in a future
+> patch series. Move them to the end to help avoid refactor conflicts.
 
-This should have a commit message explaining what exactly you're doing
-here.
+In a patch like this I would appreciate some explanation why we can
+change the type without adapting any of its users. So basically explain
+why this refactoring is safe to do and won't cause any issues.
 
 Patrick
