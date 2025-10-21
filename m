@@ -1,89 +1,100 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D715A2882B8
-	for <git@vger.kernel.org>; Tue, 21 Oct 2025 21:23:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74191339A4
+	for <git@vger.kernel.org>; Tue, 21 Oct 2025 21:32:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761081834; cv=none; b=NV/wzFjDz1XEO8v1DJCa0VPrxTsgqoYeBfHQmuOHOz0nz6hzXEdYO1CeWCo+1xgbw85+pF03Sjsg5vP2ODsXfTNLcwfGynEkjVl8MowTYHjUKqsi301cAbiIumCdSzvLFQC8uRRb/Q14/DMYmynmcEwMKuOcds2uQEJl24yy/ms=
+	t=1761082376; cv=none; b=UnTcNzFzVGHKnsWlAcTaaLJuvksu15SMmKg6yzu+Vq0Dq7k/kIo7zY+g9iafr23EXtd8XP40UYcfBK40qx4vojDH/DY7vb8/2IYTe1vN4JJFzf0zT0zzqsBw/sInhUt58kb5SOK0zHKSlGJr+RIV7kIoq/F007M9vh0I5aQTYrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761081834; c=relaxed/simple;
-	bh=3TcJoVhCMP1MIAe45eF85rAREHAWDOKdD+NtYL6IqhM=;
+	s=arc-20240116; t=1761082376; c=relaxed/simple;
+	bh=iFNhUarQbhqsqHLRFa4diQ3oMRdqCd41sko/Aj0jbH0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qyH+C1y2OBpRnErpbQm5Yo8+07AGzJ38VdJSlIki8lwHvRHiDILvywOZf5pJ1h+AIKBX5b7niKOoxJbrPsfDpC21XQhbhQdt6mgswot5o1/hTBALGeXYdpLqTGoGSjlZMGxFhbbs6aotlA2Z6Gao+lfVtEIzf4C1sblOsg/lKtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RbnVBxgD; arc=none smtp.client-ip=209.85.208.43
+	 To:Cc:Content-Type; b=uda3MykXpK6wzfcTUTr9YQTDtcifK9RdmCGbrNzEkuPCyGcM5x1YMwkThmnug1l0vIGdRp/Uv9IbHkNezOEDoyw7E8rhZ2GwOwM4f0E1Yf1op6TQuQ7525/pKujR+RAX4ymjXOaE1r3wyADRvRcBHG5LctsTnOd22KWkSYd82sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KpEowIvR; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RbnVBxgD"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-63c3d7e2217so8374179a12.3
-        for <git@vger.kernel.org>; Tue, 21 Oct 2025 14:23:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KpEowIvR"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-63e12a55270so1141460a12.1
+        for <git@vger.kernel.org>; Tue, 21 Oct 2025 14:32:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761081831; x=1761686631; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1761082373; x=1761687173; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3TcJoVhCMP1MIAe45eF85rAREHAWDOKdD+NtYL6IqhM=;
-        b=RbnVBxgD4V6N2lr/OUyZIZ4LBb7UeXK/ClRqYq22rw82J8ycecWUiaJjv+CuObEo3G
-         GrS3BrFcV5aQQartsqCBPw1RIP/QR4VL3H2OwR6VOIosesAqvhBmpenG4TqZDVNhOdvm
-         7D7cIUn5u3Ge+751bA8MjHDU6brHQjZyD4WYvBTCpFs+3+ibyLS9YcTajEKxQ2OAZLjl
-         l2APZ6uosNlT4EB0E86ewxdeuDCXoLAsib8aHVTxh1fU3E0l22IdIKgkRWdGgl85DxwJ
-         YSeuSY6HoruwQa0RWhk3paDHj1vwVnBtn6ocvO5qc1MstRcDvTBOF3bvfHy7zJcR4HGt
-         oZnQ==
+        bh=iFNhUarQbhqsqHLRFa4diQ3oMRdqCd41sko/Aj0jbH0=;
+        b=KpEowIvRlBUPmjV85WEYuP/Wr3fF4hxcJr/IZavu2TTGKS2bdEpFCsnXDO2gRnql/r
+         tVBUn2UZDwn78pr7Rr7WOSgBnWo0GUtfPpI++OLquSjEEI5UgA45tB9+gmdHbzEOWOM1
+         lO9mxLDxwOLbSo5v5zlsO2O4MGIy6zmVprF4jLTyTYBEN54jBQs25v5di/vULJJXwQjt
+         FEN6A37RMpUSj5AfrNpFe5kZ18CmEsc1TbJj0HQGTGx24aJmGc4l2ZnO0IizBfaJ67SS
+         Od2MOBHlSaJYTrJim6MgLfFoMcsywZKpGo9QlU+mTQCQMjWbZBbUm9TR3QYH7qLUllfR
+         ppew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761081831; x=1761686631;
+        d=1e100.net; s=20230601; t=1761082373; x=1761687173;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3TcJoVhCMP1MIAe45eF85rAREHAWDOKdD+NtYL6IqhM=;
-        b=W7PrMgVanLiG5WKjSyYxkzJ5jaWsKA3/BSwFaT37KAQrvUjA1sF7fboKHwvKyQrHOn
-         /1bpjEE3MPFt0J3W3Whys3kcBTQoPrCzxlsu30YnZIGSjnnrWqIQ5DlLhTDihfRohXgt
-         DunBLnt/kklyfFOUGk039M1q9ORQ5eL2DmyFwx9aBxmS0EVO+oo8CAJpaXFGLtGod/o4
-         DBlKfucI4eVqz1M1QYaiQuQH61fqpz7SMto8Gs2RRWJa9iyTRXFxC60gqTN1EPZORasB
-         z5y0hpWHP7uCQZTEo/dirsK7CHuhfNFYUS0/5ZFBtMN++Aw4wneS3veQRZuFDnp0HHeB
-         i9Kg==
-X-Gm-Message-State: AOJu0Yy3ZT8jFMTi1uTcre1KID9sqeoYpvKzw8TwK8txOq9ZRGSDjPBy
-	M74QXcR85VNW+hXo0W44xeTKtbU/1ikZIrZlKYbkpm9hdDBVSgsrEp5A2FC3mSQjwTIXRqubEf/
-	oJKPZSsPO+C0nr+zzvXxzntTu5ahOExk=
-X-Gm-Gg: ASbGncu7xpaKpmMfCAvfB2TL0qzj/2NTPNwlCj/RziFRglZHtmwOrIsV0wBsOZJ5CsU
-	RcW9MtynyJYAEt/r1NFQq3s2zPTfeWAErSB+vog3qQZQMaYfWSwr/ia7J2K2uKuKpmC3Rs3DBu9
-	T0cs0Ic6h5aJcRcPPsUVeTmg6wY29+oRfZg0JkuqxJUaE0TYcGeIG9rL50OGtP+HIv0p6kP4ab1
-	SEoBy/B2pQm1peotlluRG3sdSaUARvoBJkHzVZCAkwr1ujd0P4B25njAE/ibZYLdfb0q7kjuf+N
-	kC/Ud3PasxBBCalwKV8=
-X-Google-Smtp-Source: AGHT+IFKMTVMsrKNLtYTNBGOYnk8q6xW09/fNxkEFtyX5ijBnMDn7/vcy1h+UePhDRPLwnmPu+YDSmg/d+9VF3ZjwIk=
-X-Received: by 2002:a05:6402:280a:b0:63b:ee26:546d with SMTP id
- 4fb4d7f45d1cf-63c1f634768mr17555351a12.12.1761081830821; Tue, 21 Oct 2025
- 14:23:50 -0700 (PDT)
+        bh=iFNhUarQbhqsqHLRFa4diQ3oMRdqCd41sko/Aj0jbH0=;
+        b=F072fparIkl2uMM9VxdKhOyinBwdSnek1ri5v2KsrTMAujzrraL82BKPgsRLh/ix8s
+         2OMu+D+iP+nnt8buTAenHrQO3ir46VOeW8N/wLSDd9MrtZtoqJ4dv8/TZfdgFWttv27t
+         5yvBP8JG9T3zJRqofRRBVmEGIwwExsh98JwPie6p1lg5/EWRmwVRRYGS6F9BebdTm911
+         cDXY1LHLPPra4z+S439fi7w2+4FzQkuixR8s3xMPqxpSOdBk8VkWiP94ZyaIl+hSOfUa
+         VZUfw1q89C4kCConWCPwclO6HBx1i9jpSqiLAWIgtGzo8nSu/zA0wtMQiwveiErB+iCz
+         pXBw==
+X-Gm-Message-State: AOJu0YxZDD4UmxOqVMhEGToUhe2uJGQ3rQ03W/OlDZLPJN9SkiIuTcOE
+	SHJAidSR5+eIdTSJ3Bk8YmWKynrDYRQVjmq/dHy8Sp2xrwbtjFCLxkvLSENtRv3/a3/Ob8Fh2P9
+	5+eaxP+AxIVNutclU+NbwDXTpDw/5fG1kHuv6
+X-Gm-Gg: ASbGncsZZmwcvuRxmUtqFCkebRuN/9T7aSh9Wt/7l1Rsy6jr9nH99WYhYrMt/HtXSit
+	5j65KlGTbYXE9Oorub6CIQq9kt2F8KHGSeq/GNP/s35RKZN+DchBb1OZEi58zpmCdzz1R7MQWjE
+	gZnF7EKsJG+v5K7BuhSdCxRWqC1YdEZ8KpNfIzatD3Wsjd76VnXUqCh6bcvVNDF0db8/MKZVLww
+	T2ZSHUDRtxNSqVLwkElWcGZK6bCoPsrzhBNIJfYIxchqt3YiAWf3KcYy6EjwrTpRQYidqqNBQ1J
+	s3SN762vfJMWD5uKmLs=
+X-Google-Smtp-Source: AGHT+IEfQo02o2RaI+3VGtujK6ZrTMdKPZfapIcMaVK32GjxxjpBtFokLFyIG/KoMg4gaZiIdHx/RDNFZyih8v1YxHY=
+X-Received: by 2002:a05:6402:234a:b0:63b:ed9c:dd16 with SMTP id
+ 4fb4d7f45d1cf-63c1f631b11mr19693648a12.3.1761082372989; Tue, 21 Oct 2025
+ 14:32:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <94497aac-c61a-4b17-9e4c-8ca9b966829c.ref@bellsouth.net> <94497aac-c61a-4b17-9e4c-8ca9b966829c@bellsouth.net>
-In-Reply-To: <94497aac-c61a-4b17-9e4c-8ca9b966829c@bellsouth.net>
+References: <012601dc42ce$a1adcb50$e50961f0$@nexbridge.com>
+In-Reply-To: <012601dc42ce$a1adcb50$e50961f0$@nexbridge.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 21 Oct 2025 17:23:38 -0400
-X-Gm-Features: AS18NWCQ82DMC_7FdMJbZ9WpkJm7V0-5jPjzc_qJj2TXcdOYdM5dYzViiJqYisE
-Message-ID: <CALnO6CAKBB=MRUBSv-_pqWuUgi6d1+o_X=iq-fLzfSkCYMaiPw@mail.gmail.com>
-Subject: Re: Migrating Repository without Network
-To: Dennis Putnam <dap1@bellsouth.net>
+Date: Tue, 21 Oct 2025 17:32:42 -0400
+X-Gm-Features: AS18NWD7f-o6Z9Hog8Hx3-2mDUV6s_lgPgC3rywEjarUQEfJiwTbyeEvb5n0zvU
+Message-ID: <CALnO6CD8JU2qMCnC=qQmNOV6Wy1ZnveT3tRxUz1E0LVMj5oU9w@mail.gmail.com>
+Subject: Re: [BUG] Strange git notes completion behaviour
+To: rsbecker@nexbridge.com
 Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 21, 2025 at 10:52=E2=80=AFAM Dennis Putnam <dap1@bellsouth.net>=
- wrote:
+On Tue, Oct 21, 2025 at 5:07=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
 >
-> I have a server with a git repository whose NIC is no longer working. I
-> need to migrate that repository to a new server using a flash drive. I
-> can only find instructions for migrating when both servers have network
-> access. Can someone tell me how to do a migration without using a
-> network? TIA.
+> Hi All,
+>
+> I tried the following in git 2.51.0 on NonStop (big endian x86):
+>
+> git notes add -m "Test Note" HEAD
+> git notes show HEAD
+>
+> The git notes show reports a completion code of 037777777764 (-12). This
+> gets
+> hidden by bash, which truncates negative results so it shows as 0, not -1=
+2.
+> This
+> only seems to happen in git notes show, not any other commands or
+> sub-commands. I checked in gdb and this is in fact happening. Anywhere I =
+can
+> look to try to find where this is failing?
+>
+> --Randall
 
-Have a look at git-bundle(1), which was designed for something similar
-to this use case I believe. Or, rsync the repo to the flash drive and
-then off?
+Exit code or shell (tab) completion? I'm a bit confused, so maybe
+someone else is, too.
 
 --=20
 D. Ben Knoble
