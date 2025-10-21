@@ -1,55 +1,55 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDC623B615
-	for <git@vger.kernel.org>; Tue, 21 Oct 2025 14:16:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DA82236FA
+	for <git@vger.kernel.org>; Tue, 21 Oct 2025 14:16:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761056165; cv=none; b=k/skwyfBsb7bJyPxgxzqiw/sv9KnVX7Vj2kR3WOoCLUl5AIcImojDavBj0IY5QdR5h8En0lZv0DhwBCAIp84mLlWQjRg+3e3bJkCRZ2OOSZ1rCrn2IYmwTfIz0ZEKs0e3ZohCgfprKnPfIcWgqx+XUcgkHjLT2Tk949P8DH++Ng=
+	t=1761056170; cv=none; b=Efb+xDbicL0wYXE6aSeElAGmKcozIob7HuScoCHTRnjtxI6OXm+oFWnf2MPABpVsZ0G3e0X8568vvzCfYkA1nza/Q9qPeJVVUITaR+6MOlc3iz+M/TYhYDMdZplamrrwO1u6nT7xG7wzb9BLOZupi9EFVdqCiap7bIy84s7S/NA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761056165; c=relaxed/simple;
-	bh=tFQSXNyq+e2lBKUN5NkynGnBKS6WhBmClsOMCltW5s4=;
+	s=arc-20240116; t=1761056170; c=relaxed/simple;
+	bh=5eKgUEOwZVgvqoh3CWHxDtJUug1wvV1H546nRnSPMz0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KwySqfE8O3il8wfm3PkRKxQ7twU5G1XcgwmV1k+VZFIS+xHX4arODkXKjnp4gA3GOo6DDzX9/X6RB7OY3X4K17I+sjZzbgVo3IpIfM7ykPlWO0cYIR+PYjF42IZvID18BFdUeQdRcVv7qnvOnbs73CpHmLM6mabwh4RXJbc7CeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VadBVnsS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VPSbc6ay; arc=none smtp.client-ip=103.168.172.148
+	 In-Reply-To:To:Cc; b=XohEekFkcj8sLsVM44KKwWYldlovtyqc6OiPAynkg41346w89xfNBj0lj2dMIpmanAwgAwEZJafmQMcalPZT7jENbKDruxWnV7Gm2tkQWI8Jx2Pq2SXbU5f5qku2muvUIS0E5A0eNF/sdpeMnITMBX0olobCChfU08LyJ92E4dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fx7vVtT7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kNP4QuzY; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VadBVnsS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VPSbc6ay"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 05FD2EC0108;
-	Tue, 21 Oct 2025 10:16:03 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fx7vVtT7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kNP4QuzY"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BBDDF14001AB;
+	Tue, 21 Oct 2025 10:16:05 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Tue, 21 Oct 2025 10:16:03 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 21 Oct 2025 10:16:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1761056163;
-	 x=1761142563; bh=VHte5ZvTc+fPYkGnQzsmARvPHyQAFMmZ/5AuXHmKPQ0=; b=
-	VadBVnsSjffX/6yN/BcpNFrQD+A8z39/2PcQFVKCMw9M2qshv8wsSmUg9g9j/SGI
-	Xetyi7BsxNg9qoyzEPdi7t7XShF7hQNGSeQ1wxvxhzwi25ThRM7lXaTKW7q+by5W
-	775SN+UJd+aosbIAqQqVWih/An8i492dftsqnRlvM+VBCvCM69y20rwE/S6T7uLZ
-	89WocsSNSc4GlsmvYyAS8FFVP9993qVO1JZfvHohnUcsxbg8u4uDNXp6fs3eOdVd
-	4q//sQAqVJ2GgfbskFibd5kFVpdU5vh1qrU03qGpygEbuwgseEBXIz+UKVAzB0TA
-	FD9FqIxxSbhmwgiWv0AC0Q==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1761056165;
+	 x=1761142565; bh=2taiNvTZTOQjYMMUGlRCTQY9DzHiPg6yOLfiKnyHrCg=; b=
+	fx7vVtT7rOQQLN4lKScM7y7lwGBDF05dgpw5zTpaljDhL/GnV2LBJfjCBtbXuuv/
+	QL1KzZHQwlT4uQ+g6mmU0+bFNUO7dRqNPsgI6sCXAbCFyjiMVRGQn/oZjpT08XbE
+	L/0xNu11WqkFYDb8X3jqWCcVK9NYs7aoDc7DemvRoIlBFI46QXjWSJMyzNaPuK1G
+	SkbKAAG/AlQs08cUmOPuWfQgw9U8Dq/nLVMVMQLPlQCLrcLoiVjsox9/5YfdcMuJ
+	bWzDSgbwRobXrzCi2rpHN4uMbwUv9zIeaEzgjMgdV1G9XL7SeARN9pE4MjbTcRS2
+	Tu+HmCZvWDteqODAxX1BNQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1761056163; x=
-	1761142563; bh=VHte5ZvTc+fPYkGnQzsmARvPHyQAFMmZ/5AuXHmKPQ0=; b=V
-	PSbc6ayuazRTmZKpdxZq9yORUbVW7Dynhnm/NX+IqRr6Ue2PAIhTJvMd/rdNT4T/
-	AOYA0Q8QtlbbpXVaQeSechoa+ajU6TiRbApc7JoUg5rkPbcAhJO+ki5BOvn9ITGS
-	goJQQkzBqshOOi5TCpclneRz+zBITKl8G7GuJwU4H49K5a8+K0cChCPSa+aMfWmW
-	8VdSG/t1LCmbMlrfbkw+p4KXmfiNHQMLURAw1Fws4k3uFvcbAKTWg0YStLpd/9H/
-	9BQjiwa94yDIjEX+kKbBdVWdd0nYnqIfge03WMAFDecfokjhdJrQlxRPSThUbiOP
-	9+Qv67I499WXcBpLHY04Q==
-X-ME-Sender: <xms:opX3aIH-v-7T_7MzsBj5_oIVygOcSay5r78xRrtDDRDpUxSgbZfrtQ>
-    <xme:opX3aD4jB9bACcJwQMxG-fDjmrH1oddMrnGw4gTagWZkrWKIU6626l9fYlLbjXIpo
-    M0O7Z11m76J9fpQT5Bz8Y38lAoj0OKpKbBOOTub8kJ3eo8I1kp7>
-X-ME-Received: <xmr:opX3aFyK-VIr9RnHE0Ix6VnSrP5g1WwcWJEwu3th-pvDyCSS_Zxl78gExvNQfYg-WcUfoMpfNWXkLlXg-qIKWfO04nvN-pIVe4VwRi38mvOxIA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1761056165; x=
+	1761142565; bh=2taiNvTZTOQjYMMUGlRCTQY9DzHiPg6yOLfiKnyHrCg=; b=k
+	NP4QuzY83ImkV/Mr02tTR2PEw+p1+Z2TK+OdKIlKezCvKvJFyNDu/FMWAEQl3JXw
+	0Sli1vbBn5tPtbJJEFxYYzGYpfL4MAnutU8ISPDFWGotF4bdmKYdFxUfwP3sCjYR
+	TYWjuGfrYE7h9ASaguN2ob8n6sq9UITaI/WTCAtyHPp2zyLWwaEuYO4Iqbt94aKS
+	wbd8vOWnb/fgQS/skx9z5NjVd2PNXILJe2o8NJ7ziidNE61tdEv189ZSrqGUFV9Z
+	VMCvWR0HTYRlmn4fbqgs7jI34M7M8F8wlJxK5Fau5EQWuo/+X3swg7Gk7mFh+WsZ
+	wlKmq7Yw4N3mkNQqP/1SQ==
+X-ME-Sender: <xms:pZX3aJ_4CUxEvu8BLrUFjk_ApsGAZ1jFf5i8tTv8cGd_rXq6d2pkjg>
+    <xme:pZX3aASW5Zy2WjW4LYGbOP_I0GwpD5FsextZNd5IN2bjROxlhGFSnxUIADvkXrPgH
+    ae-ukRjYJXCVXbFuBlCvC2dsoPRajv_5N0DvIX7JQVDI9MUFlnNYA>
+X-ME-Received: <xmr:pZX3aKpMVl20_TDzRl493mkosyR6MCVwmBE04vVrc8SrhDTjM7pRhLuWrQQeT85tBW5XNbZScdiAsosO3lwkQjTXDHWHhEj7OePfRBkhCKTlsQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedtledvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,28 +58,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedtledvucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehmrghrthhinhhvohhniiesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrd
-    hknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhh
-    rghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhih
-    hkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgv
-    vgdrfhhrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhorhhgrghn
-    ohhvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtoh
-    hm
-X-ME-Proxy: <xmx:opX3aKNG6-jFKduvK_DKd02ftvMJrKhEiz4QkVzTNcuiZdp4TRJ3pA>
-    <xmx:opX3aDm1Z4c0UF249fAQTGg_aTriWonO9pfprJZsuWYmJfPTJe45Zg>
-    <xmx:opX3aHQVJ2Tg-ZzPOrIJF0zo5YpkeFfldpF8JwPjnm1W722UOOQiNA>
-    <xmx:opX3aKVW4enzciP-R6f-sE6a30ad4ZQBaIBJBk8HybIjrlWMt2PgGg>
-    <xmx:opX3aPx4MKA_L-fQXu_anZNm4O4UtsSFkwBmBolayjnzKfb4w6tK-YwE>
+    thhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghk
+    khesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepmhgrrhhtihhnvhhonhiisehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopegsvg
+    hnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehsohhrghgrnhhovhes
+    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hg
+X-ME-Proxy: <xmx:pZX3aNkV5GzVmZiKKw_iS_QaRR8VsFdB1gh3mJq0NYGHWIbJx1A9eA>
+    <xmx:pZX3aDdzShwYipaFAf3onw68wfzJrYCtQogmg-SUw-nBrcHdCNNaKQ>
+    <xmx:pZX3aJoujOm0lmlGC5i9q9KZOfv2SlTXEvsLQITpbjZtdGByijZ1wg>
+    <xmx:pZX3aNMvja3a16RLnp7mlXfYYY1qW3WEr2n-Y6ofdtDrKim28WuJxw>
+    <xmx:pZX3aPUAzv5DvlurzC7IsWvyM_rZQSdoq2TI0jOgqqIu-mI5QRYrNqdr>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Oct 2025 10:16:01 -0400 (EDT)
+ 21 Oct 2025 10:16:04 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 75284256 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 21 Oct 2025 14:16:01 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id d6556731 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 21 Oct 2025 14:16:04 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 21 Oct 2025 16:15:50 +0200
-Subject: [PATCH v5 02/12] replay: extract logic to pick commits
+Date: Tue, 21 Oct 2025 16:15:51 +0200
+Subject: [PATCH v5 03/12] replay: stop using `the_repository`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,7 +88,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251021-b4-pks-history-builtin-v5-2-78d23f578fe6@pks.im>
+Message-Id: <20251021-b4-pks-history-builtin-v5-3-78d23f578fe6@pks.im>
 References: <20251021-b4-pks-history-builtin-v5-0-78d23f578fe6@pks.im>
 In-Reply-To: <20251021-b4-pks-history-builtin-v5-0-78d23f578fe6@pks.im>
 To: git@vger.kernel.org
@@ -100,346 +100,32 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  Elijah Newren <newren@gmail.com>, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.3
 
-We're about to add a new git-history(1) command that will reuse some of
-the same infrastructure as git-replay(1). To prepare for this, extract
-the logic to pick a commit into a new "replay.c" file so that it can be
-shared between both commands.
+In `create_commit()` we're using `the_repository` even though we already
+have a repository passed to use as an argument. Fix this.
 
-Rename the function to have a "replay_" prefix to clearly indicate its
-subsystem.
+Note that we still cannot get rid of `USE_THE_REPOSITORY_VARIABLE`. This
+is because we use `DEFAULT_ABBREV and `get_commit_output_encoding()`,
+both of which are stored as global variables that can be modified via
+the Git configuration.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Makefile         |   1 +
- builtin/replay.c | 110 ++--------------------------------------------------
- meson.build      |   1 +
- replay.c         | 115 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- replay.h         |  18 +++++++++
- 5 files changed, 138 insertions(+), 107 deletions(-)
+ replay.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Makefile b/Makefile
-index 1919d35bf3f..01c171b4f03 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1261,6 +1261,7 @@ LIB_OBJS += reftable/tree.o
- LIB_OBJS += reftable/writer.o
- LIB_OBJS += remote.o
- LIB_OBJS += replace-object.o
-+LIB_OBJS += replay.o
- LIB_OBJS += repo-settings.o
- LIB_OBJS += repository.o
- LIB_OBJS += rerere.o
-diff --git a/builtin/replay.c b/builtin/replay.c
-index d0f04927908..aeb7cc88fe5 100644
---- a/builtin/replay.c
-+++ b/builtin/replay.c
-@@ -2,7 +2,6 @@
-  * "git replay" builtin command
-  */
- 
--#define USE_THE_REPOSITORY_VARIABLE
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "git-compat-util.h"
-@@ -16,18 +15,12 @@
- #include "object-name.h"
- #include "parse-options.h"
- #include "refs.h"
-+#include "replay.h"
- #include "revision.h"
- #include "strmap.h"
- #include <oidset.h>
- #include <tree.h>
- 
--static const char *short_commit_name(struct repository *repo,
--				     struct commit *commit)
--{
--	return repo_find_unique_abbrev(repo, &commit->object.oid,
--				       DEFAULT_ABBREV);
--}
--
- static struct commit *peel_committish(struct repository *repo, const char *name)
- {
- 	struct object *obj;
-@@ -40,59 +33,6 @@ static struct commit *peel_committish(struct repository *repo, const char *name)
- 						  OBJ_COMMIT);
- }
- 
--static char *get_author(const char *message)
--{
--	size_t len;
--	const char *a;
--
--	a = find_commit_header(message, "author", &len);
--	if (a)
--		return xmemdupz(a, len);
--
--	return NULL;
--}
--
--static struct commit *create_commit(struct repository *repo,
--				    struct tree *tree,
--				    struct commit *based_on,
--				    struct commit *parent)
--{
--	struct object_id ret;
--	struct object *obj = NULL;
--	struct commit_list *parents = NULL;
--	char *author;
--	char *sign_commit = NULL; /* FIXME: cli users might want to sign again */
--	struct commit_extra_header *extra = NULL;
--	struct strbuf msg = STRBUF_INIT;
--	const char *out_enc = get_commit_output_encoding();
--	const char *message = repo_logmsg_reencode(repo, based_on,
--						   NULL, out_enc);
--	const char *orig_message = NULL;
--	const char *exclude_gpgsig[] = { "gpgsig", NULL };
--
--	commit_list_insert(parent, &parents);
--	extra = read_commit_extra_headers(based_on, exclude_gpgsig);
--	find_commit_subject(message, &orig_message);
--	strbuf_addstr(&msg, orig_message);
--	author = get_author(message);
--	reset_ident_date();
--	if (commit_tree_extended(msg.buf, msg.len, &tree->object.oid, parents,
--				 &ret, author, NULL, sign_commit, extra)) {
--		error(_("failed to write commit object"));
--		goto out;
--	}
--
--	obj = parse_object(repo, &ret);
--
--out:
--	repo_unuse_commit_buffer(the_repository, based_on, message);
--	free_commit_extra_headers(extra);
--	free_commit_list(parents);
--	strbuf_release(&msg);
--	free(author);
--	return (struct commit *)obj;
--}
--
- struct ref_info {
- 	struct commit *onto;
- 	struct strset positive_refs;
-@@ -241,50 +181,6 @@ static void determine_replay_mode(struct repository *repo,
- 	strset_clear(&rinfo.positive_refs);
- }
- 
--static struct commit *mapped_commit(kh_oid_map_t *replayed_commits,
--				    struct commit *commit,
--				    struct commit *fallback)
--{
--	khint_t pos = kh_get_oid_map(replayed_commits, commit->object.oid);
--	if (pos == kh_end(replayed_commits))
--		return fallback;
--	return kh_value(replayed_commits, pos);
--}
--
--static struct commit *pick_regular_commit(struct repository *repo,
--					  struct commit *pickme,
--					  kh_oid_map_t *replayed_commits,
--					  struct commit *onto,
--					  struct merge_options *merge_opt,
--					  struct merge_result *result)
--{
--	struct commit *base, *replayed_base;
--	struct tree *pickme_tree, *base_tree;
--
--	base = pickme->parents->item;
--	replayed_base = mapped_commit(replayed_commits, base, onto);
--
--	result->tree = repo_get_commit_tree(repo, replayed_base);
--	pickme_tree = repo_get_commit_tree(repo, pickme);
--	base_tree = repo_get_commit_tree(repo, base);
--
--	merge_opt->branch1 = short_commit_name(repo, replayed_base);
--	merge_opt->branch2 = short_commit_name(repo, pickme);
--	merge_opt->ancestor = xstrfmt("parent of %s", merge_opt->branch2);
--
--	merge_incore_nonrecursive(merge_opt,
--				  base_tree,
--				  result->tree,
--				  pickme_tree,
--				  result);
--
--	free((char*)merge_opt->ancestor);
--	merge_opt->ancestor = NULL;
--	if (!result->clean)
--		return NULL;
--	return create_commit(repo, result->tree, pickme, replayed_base);
--}
--
- static int handle_ref_update(const char *mode,
- 			     struct ref_transaction *transaction,
- 			     const char *refname,
-@@ -472,8 +368,8 @@ int cmd_replay(int argc,
- 		if (commit->parents->next)
- 			die(_("replaying merge commits is not supported yet!"));
- 
--		last_commit = pick_regular_commit(repo, commit, replayed_commits,
--						  onto, &merge_opt, &result);
-+		last_commit = replay_pick_regular_commit(repo, commit, replayed_commits,
-+							 onto, &merge_opt, &result);
- 		if (!last_commit)
- 			break;
- 
-diff --git a/meson.build b/meson.build
-index cee94244759..ae8d4fef059 100644
---- a/meson.build
-+++ b/meson.build
-@@ -464,6 +464,7 @@ libgit_sources = [
-   'reftable/writer.c',
-   'remote.c',
-   'replace-object.c',
-+  'replay.c',
-   'repo-settings.c',
-   'repository.c',
-   'rerere.c',
 diff --git a/replay.c b/replay.c
-new file mode 100644
-index 00000000000..e22ce399406
---- /dev/null
+index e22ce399406..13d75d80543 100644
+--- a/replay.c
 +++ b/replay.c
-@@ -0,0 +1,115 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
-+#include "git-compat-util.h"
-+#include "commit.h"
-+#include "environment.h"
-+#include "gettext.h"
-+#include "ident.h"
-+#include "object.h"
-+#include "object-name.h"
-+#include "replay.h"
-+#include "tree.h"
-+
-+static const char *short_commit_name(struct repository *repo,
-+				     struct commit *commit)
-+{
-+	return repo_find_unique_abbrev(repo, &commit->object.oid,
-+				       DEFAULT_ABBREV);
-+}
-+
-+static char *get_author(const char *message)
-+{
-+	size_t len;
-+	const char *a;
-+
-+	a = find_commit_header(message, "author", &len);
-+	if (a)
-+		return xmemdupz(a, len);
-+
-+	return NULL;
-+}
-+
-+static struct commit *create_commit(struct repository *repo,
-+				    struct tree *tree,
-+				    struct commit *based_on,
-+				    struct commit *parent)
-+{
-+	struct object_id ret;
-+	struct object *obj = NULL;
-+	struct commit_list *parents = NULL;
-+	char *author;
-+	char *sign_commit = NULL; /* FIXME: cli users might want to sign again */
-+	struct commit_extra_header *extra = NULL;
-+	struct strbuf msg = STRBUF_INIT;
-+	const char *out_enc = get_commit_output_encoding();
-+	const char *message = repo_logmsg_reencode(repo, based_on,
-+						   NULL, out_enc);
-+	const char *orig_message = NULL;
-+	const char *exclude_gpgsig[] = { "gpgsig", NULL };
-+
-+	commit_list_insert(parent, &parents);
-+	extra = read_commit_extra_headers(based_on, exclude_gpgsig);
-+	find_commit_subject(message, &orig_message);
-+	strbuf_addstr(&msg, orig_message);
-+	author = get_author(message);
-+	reset_ident_date();
-+	if (commit_tree_extended(msg.buf, msg.len, &tree->object.oid, parents,
-+				 &ret, author, NULL, sign_commit, extra)) {
-+		error(_("failed to write commit object"));
-+		goto out;
-+	}
-+
-+	obj = parse_object(repo, &ret);
-+
-+out:
-+	repo_unuse_commit_buffer(the_repository, based_on, message);
-+	free_commit_extra_headers(extra);
-+	free_commit_list(parents);
-+	strbuf_release(&msg);
-+	free(author);
-+	return (struct commit *)obj;
-+}
-+
-+static struct commit *mapped_commit(kh_oid_map_t *replayed_commits,
-+				    struct commit *commit,
-+				    struct commit *fallback)
-+{
-+	khint_t pos = kh_get_oid_map(replayed_commits, commit->object.oid);
-+	if (pos == kh_end(replayed_commits))
-+		return fallback;
-+	return kh_value(replayed_commits, pos);
-+}
-+
-+struct commit *replay_pick_regular_commit(struct repository *repo,
-+					  struct commit *pickme,
-+					  kh_oid_map_t *replayed_commits,
-+					  struct commit *onto,
-+					  struct merge_options *merge_opt,
-+					  struct merge_result *result)
-+{
-+	struct commit *base, *replayed_base;
-+	struct tree *pickme_tree, *base_tree;
-+
-+	base = pickme->parents->item;
-+	replayed_base = mapped_commit(replayed_commits, base, onto);
-+
-+	result->tree = repo_get_commit_tree(repo, replayed_base);
-+	pickme_tree = repo_get_commit_tree(repo, pickme);
-+	base_tree = repo_get_commit_tree(repo, base);
-+
-+	merge_opt->branch1 = short_commit_name(repo, replayed_base);
-+	merge_opt->branch2 = short_commit_name(repo, pickme);
-+	merge_opt->ancestor = xstrfmt("parent of %s", merge_opt->branch2);
-+
-+	merge_incore_nonrecursive(merge_opt,
-+				  base_tree,
-+				  result->tree,
-+				  pickme_tree,
-+				  result);
-+
-+	free((char*)merge_opt->ancestor);
-+	merge_opt->ancestor = NULL;
-+	if (!result->clean)
-+		return NULL;
-+	return create_commit(repo, result->tree, pickme, replayed_base);
-+}
-diff --git a/replay.h b/replay.h
-new file mode 100644
-index 00000000000..a461b5c2341
---- /dev/null
-+++ b/replay.h
-@@ -0,0 +1,18 @@
-+#ifndef REPLAY_H
-+#define REPLAY_H
-+
-+#include "khash.h"
-+#include "merge-ort.h"
-+#include "repository.h"
-+
-+struct commit;
-+struct tree;
-+
-+struct commit *replay_pick_regular_commit(struct repository *repo,
-+					  struct commit *pickme,
-+					  kh_oid_map_t *replayed_commits,
-+					  struct commit *onto,
-+					  struct merge_options *merge_opt,
-+					  struct merge_result *result);
-+
-+#endif
+@@ -62,7 +62,7 @@ static struct commit *create_commit(struct repository *repo,
+ 	obj = parse_object(repo, &ret);
+ 
+ out:
+-	repo_unuse_commit_buffer(the_repository, based_on, message);
++	repo_unuse_commit_buffer(repo, based_on, message);
+ 	free_commit_extra_headers(extra);
+ 	free_commit_list(parents);
+ 	strbuf_release(&msg);
 
 -- 
 2.51.1.851.g4ebd6896fd.dirty
