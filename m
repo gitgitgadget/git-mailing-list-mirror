@@ -1,88 +1,43 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from out-177.mta0.migadu.com (out-177.mta0.migadu.com [91.218.175.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58843126DA
-	for <git@vger.kernel.org>; Tue, 21 Oct 2025 08:33:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59FDC32A3DA
+	for <git@vger.kernel.org>; Tue, 21 Oct 2025 09:04:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761035641; cv=none; b=KxvwTCNfevQXeBeY6KEnKOH11Ul5Z0LKM6HvRdCCj2GopcoPyRSO6lcm5xheKxusnc0yrqsBXV5ZWf3rLaYsIvmVUXPFz2EBwcRYsF/NI+20rOPyMjvG5kvrvBo5d9rWth669mng9pNPFuXICXq/oIiAFy0/U/6lz8zSObThX7o=
+	t=1761037474; cv=none; b=FcIYMDsJkpUkt/g6L/kmFjKY60NQ73uU/MkaFt63XNnfT3RakXpyDVbCndNRIrZeGtmIZ2n2ocKjKdakFPshBtfDb+F0cfQLjYdC2MdnRnjjPyl71G42qgpdrbTfYiusIIKnofCCeCEd44DIZs7X456MChUI9cYn33ZnVPZHsiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761035641; c=relaxed/simple;
-	bh=5JxcGOA4sNA16KfzrsqWOPe2sLWgj1nXSPOpDaELkZU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Dqv5kgbtOfijp4QME30p4RL0g5ai7tOMmV9djvNebRDRP2Rye3cyQhwzHd6l/tOHsP9SUcqX/eNrVmz50VFGQmg6VmgzZQkAxbC2g9pn3A0itig6R9yM0vilsCEBCN1nIYCwmoXiTEAoWotjb9rvX90pd6eC4ZNAZrsfh3RfExQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TeLjBWux; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JNQpVIP5; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1761037474; c=relaxed/simple;
+	bh=LLF+4igUXvjiC03xvnhJowHn/ffIV2BqTPalr2PYeMo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SqcMERhCRrDCirqpDIvwtOHSu4f6/g9GW54eBkr5GFgtxW2ScjXPLFYMyZkYbaNTnbqWXV3zUs06fpK6HgN85BUqhcc0QW78VIBwWvP+J1YC8NoR0KuOiyTgME9m147jf4N91dMOcK+/+KuOsGBRHqMy5wsg9eTmYL/ny13IwRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=zAlQVk4o; arc=none smtp.client-ip=91.218.175.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TeLjBWux";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JNQpVIP5"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 104BF140011C;
-	Tue, 21 Oct 2025 04:33:59 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 21 Oct 2025 04:33:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1761035639;
-	 x=1761122039; bh=hkMl+e6kunyOS7Q0YmyCizOrDuetqKDF8BtbUYPW9c0=; b=
-	TeLjBWuxV2IA2M8G/pgtJs/cgp06L2J3OthFXKlWnzgoX+jR33gHu8UNi55vFi1G
-	W4VGtn9GyPdNN4ypyAVEJRNRy048xJX/lWN4m61FlTb0/oQ6toTGhP0OCzWycjqk
-	oy7wPIWcJGzD3+J6LEDcH1a+srGTvx1jxDYQIeyu2Vea8zNjleeAf5lclke9DWEj
-	klptGSftUSijpE0+W2nt+GH8+EzXKOOsAcHiqzKesO+Q7uF6XH6+vB6oebMYZIBc
-	uxEf0DVpEXm/rr1WaMV8q01HPTCUrW08jkVVoWw7Ou8VHjK5N40jYbgGc0+L1kZ5
-	Z4909kjr4nkypLXGBZ1vPg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1761035639; x=
-	1761122039; bh=hkMl+e6kunyOS7Q0YmyCizOrDuetqKDF8BtbUYPW9c0=; b=J
-	NQpVIP54QPn9dk7yOAWxOGmUTIwT08E7+e28jAIbDOUbrBEkpjbu19dul7yzyjSd
-	JTafUacdbkP0NC0KzFp0M+QIRyLpR8nvbr3F9RrRVhgoG2scL83vCoSyelersyz3
-	wbQWW3WNFBhw7MAC9tfdRVj6UaUO6g8RtE3TKd78dJ/eOrPExHAO2UTpj8Lm82LX
-	dtCzxI6Fx0d8888h5AyZf2sDNlbtpHjMGZhy4Dkmj5yTKFzEw1th5S5/RXAlznRO
-	rnCNIRBDCZ3CmytTLV+ROhu7GMdzrH38QCLbbK9O4P3zpfjdW7njXFV/cTikWgOt
-	D+5Z3nY2eEKodhlfKG5fg==
-X-ME-Sender: <xms:dkX3aFvWv_O27itmpxVBzDpPfkhprkKAmtBuMmlKqKJ2_ySV2FdbLw>
-    <xme:dkX3aF7--Vq_ANbr2R_0LRQ1JBj5I0x6B81W-b0IkdqY-tpta8JkgVfpcOp_yE8Br
-    vWn_7FdL2dyjKJ8fMlVBY5FwdB8NjT5AheBSyOOWCTOOUFkr6xNIA>
-X-ME-Received: <xmr:dkX3aGLKH44myJlrBrE6j4FUsXA_gH7xedvWXDUyCvrm8k3pQh1T-VKYNXdaASa54STE4mU99C0rZzSh6xOHR8P0pCFmtWbCVzKCuUJpiSEnzw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedtvdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvgiivghkih
-    gvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggu
-    ghgvthesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:dkX3aF67f4o0GXRbmCkmtKGdHKiNw05UF4zzlFIA-e-kW204VCwWtQ>
-    <xmx:dkX3aJy2wmNHPCkuuAVs7LW_QnrUegG2eBhJv4aUC3CsMwhisGfssA>
-    <xmx:dkX3aJZpWRRCQxZogiEj-3i-K5Idt4Ab4nOHJx71kqgXnJtmVtft4w>
-    <xmx:dkX3aLTCCdc3xdRqJXGaFFRNiR4RkrAkNxdqXQkky59gT-9bpxpOPg>
-    <xmx:d0X3aIUMCgMBhgV5-BtT75BkuEYQZAzZF40tMTyEFZVjZnfMIKoDlbvF>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Oct 2025 04:33:58 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2ac33eff (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 21 Oct 2025 08:33:57 +0000 (UTC)
-Date: Tue, 21 Oct 2025 10:33:55 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 5/9] xdiff: split xrecord_t.ha into line_hash and
- minimal_perfect_hash
-Message-ID: <aPdFczDXrlu6CJLZ@pks.im>
-References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
- <a3e706ecdae51434fd5ee112c13f8cf374faf6ed.1760563101.git.gitgitgadget@gmail.com>
- <CAH=ZcbAjX=V_VvJsRzvQEA+CMM7dWQx6E5=d4FL5CD3s+ozjBg@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="zAlQVk4o"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1761037460;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=IUPsl5SmmYMn60QdWYGQc9nUveYVF+8igGsF7QXkJvI=;
+	b=zAlQVk4ohwA3+NU27I8qoqJY6oU4mKzLUJlVu8x++c2Mgo9mywcLYrSsUaX3M6dCZzrFLR
+	BorcaZTr5cUB2muQbgcykYgo0gUrF48WAdYmFRvvbpVPoqnJvN0x7K3GXcrR30yp3iJXl4
+	ezy+260wu6V3Oxpgse6jqnjtdojVsg8=
+From: Toon Claes <toon@iotcl.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, Justin
+ Tobler <jltobler@gmail.com>, Derrick Stolee <stolee@gmail.com>, Jeff King
+ <peff@peff.net>
+Subject: Re: [PATCH] last-modified: implement faster algorithm
+In-Reply-To: <87jz0tu3yh.fsf@iotcl.com>
+References: <20251016-b4-toon-last-modified-faster-v1-1-85dca8a29e5c@iotcl.com>
+ <aPGB/FJtjDmyNLvG@nand.local> <87jz0tu3yh.fsf@iotcl.com>
+Date: Tue, 21 Oct 2025 11:04:05 +0200
+Message-ID: <87cy6gtym2.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,41 +45,146 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAH=ZcbAjX=V_VvJsRzvQEA+CMM7dWQx6E5=d4FL5CD3s+ozjBg@mail.gmail.com>
+Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, Oct 20, 2025 at 05:29:25PM -0600, Ezekiel Newren wrote:
-> On Wed, Oct 15, 2025 at 3:18 PM Ezekiel Newren via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> >
-> > From: Ezekiel Newren <ezekielnewren@gmail.com>
-> >
-> > The ha field is serving two different purposes, which makes the code
-> > harder to read. At first glance it looks like many places assume
-> > there could never be hash collisions between lines of the two input
-> > files. In reality, line_hash is used together with xdl_recmatch() to
-> > ensure correct comparisons of lines, even when collisions occur.
-> >
-> > To make this clearer, the old ha field has been split:
-> >   * line_hash: The straightforward hash of a line, requiring no
-> >     additional context.
-> >   * minimal_perfect_hash: Not a new concept, but now a separate
-> >     field. It comes from the classifier's general-purpose hash table,
-> >     which assigns each line a unique and minimal hash across the two
-> >     files.
-> >
-> > Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
-> 
-> I'm a bit surprised that nobody has commented on this patch. I thought
-> that someone would have criticized the length of the name
-> "minimal_perfect_hash" or asked me why I was splitting one field into
-> two.
+> Taylor Blau <me@ttaylorr.com> writes:
 
-I actually appreciate the longer name. I'm not a fan of abbreviations
-that are hard to understand myself. Sure, they are easier to type, but
-in many cases they end up making the code way harder to understand if
-you are not deeply familiar with it. There's of course exceptions to
-this, but I don't really think that your patch falls into them.
+>> Nice, I am glad to see that we are using a bitmap here rather than the
+>> hacky 'char *' that we had originally written. I seem to remember that
+>> there was a tiny slow-down when using bitmaps, but can't find the
+>> discussion anymore. (It wasn't in the internal PR that I originally
+>> opened, and I no longer can read messages that far back in history.)
+>>
+>> It might be worth benchmarking here to see if using a 'char *' is
+>> faster. Of course, that's 8x worse in terms of memory usage, but not a
+>> huge deal given both the magnitude and typical number of directory
+>> elements (you'd need 1024^2 entries in a single tree to occupy even a
+>> single MiB of heap).
 
-Patrick
+Using ewah bitmaps is slightly faster, although the difference is almost
+neglible.
+
+    Benchmark 1: bitmap-ewah
+      Time (mean =C2=B1 =CF=83):     793.1 ms =C2=B1   6.2 ms    [User: 755=
+.1 ms, System: 35.2 ms]
+      Range (min =E2=80=A6 max):   784.7 ms =E2=80=A6 804.8 ms    10 runs
+
+    Benchmark 2: bitmap-chars
+      Time (mean =C2=B1 =CF=83):     808.9 ms =C2=B1  11.2 ms    [User: 770=
+.8 ms, System: 35.4 ms]
+      Range (min =E2=80=A6 max):   800.2 ms =E2=80=A6 830.5 ms    10 runs
+
+    Summary
+      bitmap-ewah ran
+        1.02 =C2=B1 0.02 times faster than bitmap-chars
+
+And ewah bitmap being more memory efficient, it makes more sense to keep
+using those.
+
+>> Likewise, I wonder if we should have elemtype here be just 'struct
+>> bitmap'. Unfortunately I don't think the EWAH code has a function like:
+>>
+>>     void bitmap_init(struct bitmap *);
+>>
+>> and only has ones that allocate for us. So we may consider adding one,
+>> or creating a dummy bitmap and copying its contents, or otherwise.
+
+I've done some testing, and to do so I've made bitmap_grow() public.
+
+    Benchmark 1: bitmap-as-pointers
+      Time (mean =C2=B1 =CF=83):     783.7 ms =C2=B1   8.9 ms    [User: 744=
+.1 ms, System: 37.5 ms]
+      Range (min =E2=80=A6 max):   774.4 ms =E2=80=A6 803.4 ms    10 runs
+
+    Benchmark 2: bitmap-as-values
+      Time (mean =C2=B1 =CF=83):     856.7 ms =C2=B1  10.5 ms    [User: 816=
+.0 ms, System: 38.1 ms]
+      Range (min =E2=80=A6 max):   845.7 ms =E2=80=A6 872.5 ms    10 runs
+
+    Summary
+      bitmap-as-pointers ran
+        1.09 =C2=B1 0.02 times faster than bitmap-as-values
+
+It seems using ewah bitmaps as pointers is faster than using bitmaps as
+values. I must admit I'm surprised as well, but in case you want to
+double check, here's the patch:
+
+------------------------ >8 ------------------------
+
+diff --git a/builtin/last-modified.c b/builtin/last-modified.c
+index c1316e1019..f607c47506 100644
+--- a/builtin/last-modified.c
++++ b/builtin/last-modified.c
+@@ -47,7 +47,7 @@ static int last_modified_entry_hashcmp(const void *unused=
+ UNUSED,
+  * Hold a bitmap for each commit we're working with. Each bit represents a=
+ path
+  * in `lm->all_paths`. Active bit means the path still needs to be dealt w=
+ith.
+  */
+-define_commit_slab(commit_bitmaps, struct bitmap *);
++define_commit_slab(commit_bitmaps, struct bitmap);
+
+ struct last_modified {
+        struct hashmap paths;
+@@ -65,11 +65,12 @@ struct last_modified {
+
+ static struct bitmap *get_bitmap(struct last_modified *lm, struct commit *=
+c)
+ {
+-       struct bitmap **bitmap =3D commit_bitmaps_at(&lm->commit_bitmaps, c=
+);
+-       if (!*bitmap)
+-               *bitmap =3D bitmap_word_alloc(lm->all_paths_nr / BITS_IN_EW=
+ORD);
++       struct bitmap *bm =3D commit_bitmaps_at(&lm->commit_bitmaps, c);
++       if (!bm->word_alloc) {
++               bitmap_grow(bm, lm->all_paths_nr);
++       }
+
+-       return *bitmap;
++       return bm;
+ }
+
+ static void last_modified_release(struct last_modified *lm)
+@@ -442,7 +443,8 @@ static int last_modified_run(struct last_modified *lm)
+                }
+
+ cleanup:
+-               bitmap_free(active_c);
++               free(active_c->words);
++               active_c->word_alloc =3D 0;
+        }
+
+        if (hashmap_get_size(&lm->paths))
+diff --git a/ewah/bitmap.c b/ewah/bitmap.c
+index 55928dada8..2500e3a0d7 100644
+--- a/ewah/bitmap.c
++++ b/ewah/bitmap.c
+@@ -42,7 +42,7 @@ struct bitmap *bitmap_dup(const struct bitmap *src)
+        return dst;
+ }
+
+-static void bitmap_grow(struct bitmap *self, size_t word_alloc)
++void bitmap_grow(struct bitmap *self, size_t word_alloc)
+ {
+        size_t old_size =3D self->word_alloc;
+        ALLOC_GROW(self->words, word_alloc, self->word_alloc);
+diff --git a/ewah/ewok.h b/ewah/ewok.h
+index c29d354236..3316807572 100644
+--- a/ewah/ewok.h
++++ b/ewah/ewok.h
+@@ -188,6 +188,7 @@ struct bitmap *bitmap_word_alloc(size_t word_alloc);
+ struct bitmap *bitmap_dup(const struct bitmap *src);
+ void bitmap_set(struct bitmap *self, size_t pos);
+ void bitmap_unset(struct bitmap *self, size_t pos);
++void bitmap_grow(struct bitmap *self, size_t word_alloc);
+ int bitmap_get(struct bitmap *self, size_t pos);
+ void bitmap_free(struct bitmap *self);
+ int bitmap_equals(struct bitmap *self, struct bitmap *other);
+
+
+--=20
+Cheers,
+Toon
