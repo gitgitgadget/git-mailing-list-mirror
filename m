@@ -1,107 +1,134 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9681E1F2BA4
-	for <git@vger.kernel.org>; Tue, 21 Oct 2025 21:37:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47921350A0F
+	for <git@vger.kernel.org>; Tue, 21 Oct 2025 21:37:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761082622; cv=none; b=Ojc6KhbE1vgyk1NTIdiEBKjpLpkV7+xoD5QBAxHxkvLZxhoJgRZINWq5bcVLOQgHSCwi3PSHAEtZf50usgev0u3fZ04byMVx/BnPGOs43A8Nf+b/A9c5hQ90tsZPVM2rk485yGTubzeOwwFe4q6vtj0ubjtxyJSy9MfqeAGrH3M=
+	t=1761082642; cv=none; b=UeZ9hJ110z8d2/l2o6+gG5VGydWH4zZUqA8DiSHD6kUieclakPNxG5SS6gf1zE76oTAqblIGgP3TJTf9iPHq46ZwtQO4apSJ3zS2dCJFVAwu02+W1Up9OotGz7TqtT9IWY//bH+WgSQwFS95mTQRRaMm2I1Bg66j2xR0x8Rr418=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761082622; c=relaxed/simple;
-	bh=QDGJzBGiZrdw33bN733HxR8jn0E//V+WsFU+Ypv/5vw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QgYrdB8sp+8GOK0T53xh0tNOadGvbA5Znrk4uByV8njKkgUAwK6krUUUCYVNoY/JUbBtmHRa1WrKAKbqEnH8E5oe2sAfOZ9a+PLr3ZA242lCcV5yMx+MP9VZLm4Y+ubuAUv5+msoIaZWxom5m3a+VeJ3+/Q+828zAlnHCXViGVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NLkLXNpf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sziTtpRZ; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1761082642; c=relaxed/simple;
+	bh=2A6/cFfNwAIQRnx0JmkXBz9AYRiU3GJoQdZqXeWZfB4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sXJEQ9qQP+8YRmXuknqeoIyhWYKDhKuSBcsYVSurmmnU7IrECSqjtzvWL31g4armgGYOJtAD216jXFBhcd5floijVKugj5mndz5d1n+vb9vKkF72lq7eDJF2qGLgzNY3cotAj5ot8mywbSCnxWaWpLhpdu7wxzxSWsyzX2PdOtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jRXH4XGx; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NLkLXNpf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sziTtpRZ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AE4337A0098;
-	Tue, 21 Oct 2025 17:36:59 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 21 Oct 2025 17:36:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1761082619;
-	 x=1761169019; bh=owiUXZMjliyVWejH8sly6q5MAz/FZxdu+oAOQrZNIkM=; b=
-	NLkLXNpf5FNNsbRPB6A/oNwhwpVpsudoMRtJ+60B0cIiII6hR9Ts4JRLShQryknY
-	XUjzH/7nPa27QDMQwyNvK/ZlX9Dp18kEb8NPWsekWb61ygT+I3CkKJM0XQi9HXJj
-	BrmFUPJkxESViyXhjLDdu9SQouGzJpo0PUb4DuYRZxzVFWj0vDypA/zEYgrP9vMt
-	/8MaX9/Lo4z12BI+W/g0wRw9UEh+YbU7s/awqxDU0A4CmNvw/2wF5i5gMxWHyucY
-	ZD+EcAABjSh1xAxo/S0mibua1mgEX9fQ5rjUN/dKFUGHJmA2yFDTeHwyR3goti6K
-	v1vKDSrnuNXHYXYyaNmCMg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1761082619; x=
-	1761169019; bh=owiUXZMjliyVWejH8sly6q5MAz/FZxdu+oAOQrZNIkM=; b=s
-	ziTtpRZUHF7wG3fccVlmR6sPRZRJ1bwzvQSxqEVdpbATkr9lqhGRoMRehUrvGkH0
-	Ov6BZjZDeUg48W3xrwjsSnkt3xOkS9JFJYsqzAOsSDu2lgoqxJUwHWhA/YsHGUPJ
-	iOL2B5PIjuBj+yPvXL7gCKUooKmp1e1omzekrLRSawOgYIW5es10cLMIgsPf1CDw
-	dGQ0Tz8bAxoQ6feKBgaspbh2MVY8Lv+53LzC+zVthxA6DXpdMhs5027gm0oQ9yyT
-	kSExUrUBwqTLWmH61O8CnhhQBqPngE12lqCJjbOcA7pK9eEfGKij3KFEqyBKvOAo
-	JQCGC+buQdf5Met69H3ag==
-X-ME-Sender: <xms:-_z3aBHnB_JpEVtuFQRpucoiS4FADxUVv2bbZdxfrPKPeOfKNQJtSw>
-    <xme:-_z3aNVo0UsAXuyAebqZ2ISeBhCcPRgfTeu1ertvQ3gPpDoTXA8V7UIVJ1vTq5LDC
-    h8sH1s83G-f4VgXZFjWblk92zub8QdotnPyU2mDDCYqTqY7IyS1BnM>
-X-ME-Received: <xmr:-_z3aIIOnzTitgnWgZY4FcWAvXsA3Il5noetsD21VaEVCUthOo1QZoo6g0jo2EHkIVq77cEVducI4GAZmM4nxNXiX21hdTOU2Ife>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedujeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhhjuhhsthhosehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-_z3aF8HukNkV5SjOaR-Skg0ISRcNP2wMB8febwdIQ_LoYUwGuqnxw>
-    <xmx:-_z3aDKzqdOLgjAlz0sgqKeVLZ0x3vsYKTQH9c_kxulv0c0EZnqNGg>
-    <xmx:-_z3aCmG7nJ9AS0IfCaYLbxBrexLCvXARvnl7m4iWtUrC3byF2klbQ>
-    <xmx:-_z3aPMIz_9WslNCl9ahDV4bVv_7LDPRa8xytvWplRN4D83gfvdN4w>
-    <xmx:-_z3aCK8EUFIlCVGP_om-pFBFafwocGqe1TxV9wRWxv4YZKtYcR0fsur>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Oct 2025 17:36:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>,  =?utf-8?Q?Rub=C3=A9n?= Justo
- <rjusto@gmail.com>
-Subject: Re: [PATCH] add-patch: fully document option P
-In-Reply-To: <0188c766-d788-476d-a4d4-f95a6f59b31b@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Tue, 21 Oct 2025 20:02:53 +0200")
-References: <0188c766-d788-476d-a4d4-f95a6f59b31b@web.de>
-Date: Tue, 21 Oct 2025 14:36:58 -0700
-Message-ID: <xmqq5xc8szr9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jRXH4XGx"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-b50206773adso76442566b.0
+        for <git@vger.kernel.org>; Tue, 21 Oct 2025 14:37:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761082638; x=1761687438; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JXmT8J1KmdDyIjPj51YC629a5uclRHoUaL9DqQsvhWM=;
+        b=jRXH4XGxA+MaMiRHAFbhOWcfmZpwngFzFZfE3GX3zcbIbnFM7abi6QaSqIyRPcPCcr
+         PQRTj6UiMG3JNx5tgAm8D4dTVQOm5L2GGDgSLldqtEgHdr24poraScKb9RHhE4gNGe7/
+         p/kcde0rydoNXHS5GmD1EE+Lg1+rO+iZ5BJ/ykCfvHE1EH6r56yKHWFztNTt3T5MAxU+
+         eszmXyasoEVV1mNMVVwhfPz1D4C2qpDgGuViV3i6lkp6YDJ0wRXtlKiDOiw0LGfZ0X78
+         N5KPfh2HWsvQqCSNiHEjDWpKKWNlBLShhJR1NTa+t7eao8MW+5xg7Q7gjf3NUrf2D6kp
+         50Gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761082638; x=1761687438;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JXmT8J1KmdDyIjPj51YC629a5uclRHoUaL9DqQsvhWM=;
+        b=kd2Ej1b6gIuIoa6FU6klDXGebhqfhmFg3f8PHU2N0BRsPUCCockclGkXCg/LZh9r98
+         EixDpk+EKMR/yGzl3PD4XNGF7514hqZa/KNBHDeslChRLilQnReMhZmVUiBM5nDhNXMH
+         1KxP5I858lYnsnEi+xuKyNJkam+pqPmKYxHTi67Iw4AFWSkjLMO0L0BnYeiuBoTovP62
+         /eIlogW/z//JbCtURxC3XXhJVv9EzhCsUwLK+8tKrwwkp67Ht3Q0yezErcafHae9IDuA
+         fHOkttCC48hSlXpLa9qVBDkL9sdafqsYT5KBPnOP3Rg5cuymEWdoe2iUooleJjMkkRGx
+         NTnw==
+X-Forwarded-Encrypted: i=1; AJvYcCUM2+eetRPG83n7H2aYqQU3WcKkALvl9xd2lnc+ZRtFxQfP9FnxTMADwfw0sv9zOnEr0n4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyL4RhgKB2YUiikJ9M3ctTonIvoyZKiwBdG+pgtqcRAbSFo7iEK
+	+XL+K5V7h854kmZsA1bGAjspeGLcfPBsCO5B+NI2C4cVj6DG9tE0IWFTeZHxC/4RRO1wMnYdEgP
+	mtYq3rSnGo0R+e9RZISiaEfrHfkuY0SrP2jLD
+X-Gm-Gg: ASbGnctfPGc7JwcuFvSIHHu7YDHgIERRI2YQxUSnrODZyIMGw13ifxZ39gUTPvald7M
+	enNfvAI4rwYqW9sufDaFjwzrIBnavRFsV/BdXwz/WtKDlgqYMk3/f32xneq8nm+cDCSfCrR03vL
+	DsH3oGkTHtwwY9wZ/ACdplJzx7nJhNKWsYwJ9z5PqewHZdb8jhBq6IWmC3Ad+1J0fnPeJDMNFnT
+	rnxP2PK/ipAbPojPmkwCI5aAoMfp2McG2ZR5FJZXvpd4Bm1cPwDKvfEsP3YpmrVfFuzOUO3lOZs
+	SniHnwFqyVxlvhBPMpE=
+X-Google-Smtp-Source: AGHT+IErCOaVd4GPfVu2Ipd7ELdOaCJravTakpgYHUKQOuZhDXNCNS/BXDNOn9Ssjg3MY7F+W+bWi1NDwKbX3dPudoU=
+X-Received: by 2002:a17:907:9608:b0:b3d:a295:5445 with SMTP id
+ a640c23a62f3a-b6d2c00621cmr166774466b.13.1761082638345; Tue, 21 Oct 2025
+ 14:37:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <xmqqldl4und1.fsf@gitster.g> <ecf21e8d-acff-47fb-b972-59cd7b8f3146@app.fastmail.com>
+ <CALnO6CAjhgsGS-zoL_EQO0CXyg1gVH70TSqnbThNmJYarU71EQ@mail.gmail.com>
+In-Reply-To: <CALnO6CAjhgsGS-zoL_EQO0CXyg1gVH70TSqnbThNmJYarU71EQ@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Tue, 21 Oct 2025 17:37:07 -0400
+X-Gm-Features: AS18NWCVzitnJCFOlQp7JyP_rVK3K__7ROmzRLRyl5ixZyrjOiO5Me1uHh2dF-I
+Message-ID: <CALnO6CBJ7FQqa1JS5LoSqDa2KBHGZ=7KyUjQqNZWqHuq+nZOOA@mail.gmail.com>
+Subject: Re: [rfc] flip rerere.enabled default to be "on" at Git 3.0 boundary?
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-René Scharfe <l.s.r@web.de> writes:
-
-> Show option P in the prompt and explain it properly on a dedicated line
-> in online help and documentation.
+On Tue, Oct 21, 2025 at 5:36=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com=
+> wrote:
 >
-> Signed-off-by: René Scharfe <l.s.r@web.de>
-> ---
->  Documentation/git-add.adoc |  1 +
->  add-patch.c                |  5 +++--
->  t/t3701-add-interactive.sh | 44 +++++++++++++++++++-------------------
->  3 files changed, 26 insertions(+), 24 deletions(-)
+> On Tue, Oct 21, 2025 at 2:56=E2=80=AFPM Kristoffer Haugsbakk
+> <kristofferhaugsbakk@fastmail.com> wrote:
+> >
+> > On Tue, Oct 21, 2025, at 20:21, Junio C Hamano wrote:
+> > > A good default matters, and people who find out how useful a rerere
+> > > database is would say "gee, that sounds great but why they do not
+> > > enable it by default?  It is too buggy and they wanted to reduce the
+> > > number of support requests?"  Yes, the reason it is not enabled by
+> > > default initially was exactly that, i.e. those opt into the feature
+> > > was used as guinea pigs to polish the feature.  But we forgot to set
+> > > the graduation criteria and never said "ok it is mature enough, so
+> > > let's turn it on for everybody".
+> > >
+> > > Perhaps Git 3.0 boundary is a good occasion to do so?
+> >
+> > This sounds nice.
+> >
+> > Sometimes I make bad resolutions and my cache gets in the way.  But I
+> > know it=E2=80=99s a directory or file somewhere that I can delete manua=
+lly.  So
+> > that=E2=80=99s nice.  And if I didn=E2=80=99t know I think I could have=
+ found it on
+> > StackOverflow.
+> >
+> > I don=E2=80=99t think the =E2=80=9Creused resolution=E2=80=9D is super =
+clear for things like
+> > rebase and merge.  I will get output like
+> >
+> >       CONFLICT
+> >       CONFLICT
+> >       CONFLICT
+> >       Reused recorded resolution for ...
+> >       Reused recorded resolution for ...
+> >       Reused recorded resolution for ...
+> >       YOUR STUFF IS CONFLICTED
+> >       DO THIS AND THAT
+> >
+> >       this is from memory :p
+> >
+> > And the =E2=80=9Creused=E2=80=9D messages are kind of =E2=80=9Crandomly=
+=E2=80=9D placed in the stderr
+> > stream of consciousness.  Could they be colored maybe?
+>
+> Seconding this: it's too easy to miss the rerere messages, which can
+> make other moments more confusing. (IIRC, git-status still says we
+> need to "approve" the resolution, but for folks not used to rerere it
+> might be obvious how to check the resolution? Idk, can't recall
+> offhand.)
 
-Nice.  I do not recall why we decided to hide "P" behind "p" like
-this, but I think making it clear like this patch does does make
-sense.
+Premature send=E2=80=94the above said, I don't think it's anything against
+graduating rerere to default. Just that there will be some more edges
+to polish, which is a good thing.
+
+--=20
+D. Ben Knoble
