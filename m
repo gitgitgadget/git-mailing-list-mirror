@@ -1,87 +1,89 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E45634B673
-	for <git@vger.kernel.org>; Tue, 21 Oct 2025 17:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C94355805
+	for <git@vger.kernel.org>; Tue, 21 Oct 2025 17:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761067141; cv=none; b=FDLnwl1ymt2k+VcpCkEKQwoEIZh6rKGdOmw3zGYGtTNXSmMfSqewsf7cU3NT/ly7XJaIsrWSG+sMEqMJwqaJgXVcyqjTfQDqoV1tVpfBzTdMxjjcYqJOABaoUq70PqHudMB1+YXB2mHQIlt9JQ9nRnFBmG/ukWiLGX866RxAFfI=
+	t=1761069137; cv=none; b=gaSHUTK2vPsGcuaa9+hKaSNBcbL1lnMhbv8gBFb6jqvQp4ybBYrVLCjS7k/U4KY4PXaa0eIHx2BAf5n85ERM8K1Pl6/ikHGui70hNKkVVbR6wcgAiRqCUbGda90s2R9Qx7HC/EPJr+IrkrCXS2HrhAgsIzA/UFUZY3ljN8oKa+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761067141; c=relaxed/simple;
-	bh=0cXMfUto2G3J1hqK91Vmx/bo3k84OJmlFGXyEnvlTUk=;
+	s=arc-20240116; t=1761069137; c=relaxed/simple;
+	bh=fG+gCwa+NS+CsoCMJpfqrn9XB/oZcLsIKS7DwzEV+Yc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=l8gsST5t/NIrgRFd/huZUg62/R56J51VSaXLmcs5EeoohesByfG+LSjVtfs2SmXjmqWYDfdFMSSOK0P21sabsCxJQ0W5enwcVycE90wToEEnlpzjv3IDk9dFeS4lVLFkiSsiVwJY7Qpg0ulQ2thxuLsEkhz6Gr2c3qJC4cUG5B0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=O4U69xyk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R5Qa4Zj1; arc=none smtp.client-ip=202.12.124.152
+	 MIME-Version:Content-Type; b=mzlzpelO4feVfFPf3sOZozWCo+z1tRg+ExZFrogE2I2O8fiEvrWop5xeASW7gixCXJ8Pbc5SB0oUupMdk4BwmqlLotZtYSoRPhzNHFXawFn9lzH5hq3/aEOKQlwPPL3KnEeHjgMVZ7ItB6EQ7lrh/03yzT8S22L+QztgGlHGvWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YF1gUy1W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sfq5hqc+; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="O4U69xyk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R5Qa4Zj1"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 934BB7A0102;
-	Tue, 21 Oct 2025 13:18:58 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 21 Oct 2025 13:18:58 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YF1gUy1W";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sfq5hqc+"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 852CD7A00DB;
+	Tue, 21 Oct 2025 13:52:13 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 21 Oct 2025 13:52:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1761067138; x=1761153538; bh=f+mTKeBxyI
-	OZzr3ogKDcc3WsG7eRUdhSfwD6TzWi2Vg=; b=O4U69xykt66Os6TKbgJhRTHAdu
-	Tw0bE6oOI3dxm4x34dhVL1UifHNcDaJ1jjJ0ebWF/sfyWz6jte6Ftg5fluQtAPa+
-	TFq3XthoIBDhQwYc2uivwIQ3hCUV1bn25Ei8gwi0MZTDuftYkeydVQ/553Q9aYMb
-	IFBneSnUbZbH9p3MVgB/UPdA1u6da/FK4T3aaxE7awVE/SYGQLC6WsXG84a0U6Wq
-	l2FnA0XWYNVbYFNiDgYFjzgQ3BojlIhw2RVxq1b+lB1CCqOxGZMqV5OSCZc6aeB3
-	vABrcOkyvK8Ne1ehI6zuqE5BkKWc16+0iFEmlNyxoXGJb0qz1FGh0JkTOobw==
+	:subject:to:to; s=fm1; t=1761069133; x=1761155533; bh=bz71JPaDSq
+	P4ZUR4b65ANgbgxxKrGIHXhmuGOlzcgIQ=; b=YF1gUy1WyjzK7VKUrp6qbPdXq7
+	Rdf9tSTmDrUEhpwagkpXAxo768QeVBSajENBqItcO0f0rzguy3WQu6T+3Nxbs22W
+	8HU1Oyj0+Grv+7nrjWioImuohxyLyrr3VLe7T661epw2PuGr13UtT+mKhOlF62Bj
+	BR5B6bToTlxxpp0M2C24nBNkvDIeavdLqcjSvwOMy5bQXLwIoXd98feCgQSO9P+n
+	B4Zea3k8+lh//RDuBUi7U/unUs+btndiarpChvn+znmVwUBqTdyBnZgIKP7W60RR
+	QTBuNjj9ixuTHS1usLaMzlaTqbIrlMuYF3+mKhs6y7VTnecq2okkgBuJoZmg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761067138; x=1761153538; bh=f+mTKeBxyIOZzr3ogKDcc3WsG7eRUdhSfwD
-	6TzWi2Vg=; b=R5Qa4Zj10Fl6nMXwbSwLB8w1NKhByNNlLTG0SJHVHIbjOqM1UeU
-	YIPlxJBRpTyo2ib7yiPV3fnFXctATDTeeRJJFlMzJH4i8bxWN3dhP3PTRRfJTgkH
-	0WCv3FLejc1yZnbGV33n80ArPfou8/HR+dmpzS75SmBoQJnM6n+lCLL4ndeimKhb
-	kdwedbtwOBn2L6J7ivJoFx5LW7qzU9h3YLITWQpEJWI7gC2d2f15dA2l7jENUrAn
-	m9Ovvbmn8koOiUTYg3C+ZXeWgPCjEM9Ar7AOAiLhlQ0Q8mO+g6nLAwgobHiTrqaK
-	QIUTBYKBrClWYoLsqfEY1OAf6bvPkYTolig==
-X-ME-Sender: <xms:gsD3aGEhs1dwDbhbjnaWlAz8TJSofHe8D8uGXaws3xWgje_fStLAIg>
-    <xme:gsD3aONC20U-ifAdgLJxm3b5sjNnRBa3n0TxBaYN0yXRkLLVfo7ylmlCWPVNq8C2u
-    _bv5AEvo2OtmR9acDbq5XBdoT7L3woMfLX_nHmUQ9_8Xmm659gt>
-X-ME-Received: <xmr:gsD3aIf_yeIHNjnqDoppsXzdUA05Cj9Qe67W1CmWykZpHya7b22_wrF86L0U1L934_g8uxMd0swKo9w3LxE3Ip84t4WNqXOY8eKC>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeduvdekucetufdoteggodetrf
+	1761069133; x=1761155533; bh=bz71JPaDSqP4ZUR4b65ANgbgxxKrGIHXhmu
+	GOlzcgIQ=; b=sfq5hqc+q9S/2adCfUOZSdU/jXQfNmY1HnkRfVzferudGkgVTGl
+	3LBcPayO2qwtwkYiuVzI9m2CaU3nkOnjbwN7dPGxDiQnvxN/I+33S5wzfv8ZK1ON
+	nbNq+QgXITRCpXuilhvPXMCg2UUsmP3j3TuP/IBvLfQXSNd1kxmmElrlilkzPObj
+	hMUpARtNGDDMgvuhcG9RasLROl9opZRVkOO0xL1JNIYp74rmBDkktE3kMVkobp7N
+	YAXjtsG65lldRhh5Cv+t7y+PWSXsCN248RelVg5JAj7FQx9qQ7M7xLEUHJ4WM9YN
+	MYpqTuxRoYB1ojaT8q30WrHiCg6WeYi2ZQg==
+X-ME-Sender: <xms:TMj3aLg31CHmOiwj7XsSmn4dMvaGeC2qQbQUP57vUvECyesovloSog>
+    <xme:TMj3aHEEdI2ye2G8tEXTEArDwCiZHhztv2p5SfmmoXtjscazpshBxWUlBirC3lP3E
+    NjoC1NIp1BT8xnYcLx6nZmieFPMf6hrxJgems8YdbXWCXS2ArButw>
+X-ME-Received: <xmr:TMj3aBQoHCB7q74vpDi_DQYSAMeCF_e0gipwhSo4QCWsF7rAxqCfrAkfujETN745YKslklcNLdtiN0milqj81MSf4zYUWhVAyJa8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedufeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphh
-    hilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhg
-    ihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:gsD3aLtAqjM09qlsCeUNIKPWcBHP5wSJtuzAiQyQXHcJSWoxvjW91w>
-    <xmx:gsD3aJlOHwGKRlHSzhH2H5Hen4sYj8alnt3TSSF7uvCMqtjrxAwYMQ>
-    <xmx:gsD3aNxG-sHtbhcmQNpf1SbKr2v3vffW04ptKvbjEzMpTbv6VCixWg>
-    <xmx:gsD3aLMbQ-RY6eB31P83i7g2Y0PSpmNLlk6SI4FuZjlS1fVeQD4XKQ>
-    <xmx:gsD3aK-6PwYm2R1LiO7towsXuvccaq3Wk7hNR86iJGTBJGAtUwQHSE2s>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegouf
+    hushhpvggtthffohhmrghinhculdegledmnecujfgurhephffvvefujghffffkfgggtges
+    thdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsth
+    gvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepvdevieeftdeifedvgeej
+    vdfhleetvdejgeegteeggeetvdfhgeekheetfffgfeejnecuffhomhgrihhnpehkvghrnh
+    gvlhdrohhrghdpfihorhguphhrvghsshdrtghomhdplhgrshhtqdhmohguihhfihgvugdr
+    tgifnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhk
+    rddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthho
+    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehsthholhgvvg
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:TMj3aEwmWLfK4DtYsi3vQ8dmCbE88iAOEXsucfJ7wjDsPSbbpllAaA>
+    <xmx:TMj3aNckP6Hzx7ejf7jdGWvmWij_VpE1QAsOkB2bmxV9dTRDYXoSPA>
+    <xmx:TMj3aHPX56umk9Wc-ZKg78aaN3Rgl0S6R0Ha7Efyi2pbKSR5WSfKAw>
+    <xmx:TMj3aIteD1jy0HzKC7MeYtQC6W7o5y612tpz7QK7C9ywK32qLlldbg>
+    <xmx:Tcj3aJCJ7oet99UnW1uhNnzbdUtjvLILJl3NwkPTMGrgyO2IJzCqsoGC>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Oct 2025 13:18:57 -0400 (EDT)
+ 21 Oct 2025 13:52:12 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH 1/9] xdiff: use ssize_t for dstart/dend, make them last
- in xdfile_t
-In-Reply-To: <9eafee4d-ea94-4382-ada0-58000d229d2e@gmail.com> (Phillip Wood's
-	message of "Tue, 21 Oct 2025 12:32:55 +0100")
-References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
-	<1fa9a7d7d1c309f2f651da351ba7bc0b36272d91.1760563101.git.gitgitgadget@gmail.com>
-	<9eafee4d-ea94-4382-ada0-58000d229d2e@gmail.com>
-Date: Tue, 21 Oct 2025 10:18:56 -0700
-Message-ID: <xmqqecqww4u7.fsf@gitster.g>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Justin
+ Tobler <jltobler@gmail.com>,  Taylor Blau <me@ttaylorr.com>,  "D. Ben
+ Knoble" <ben.knoble@gmail.com>,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2] last-modified: implement faster algorithm
+In-Reply-To: <20251021-b4-toon-last-modified-faster-v2-1-f6dcbc26fc5c@iotcl.com>
+	(Toon Claes's message of "Tue, 21 Oct 2025 14:56:19 +0200")
+References: <20251016-b4-toon-last-modified-faster-v1-1-85dca8a29e5c@iotcl.com>
+	<20251021-b4-toon-last-modified-faster-v2-1-f6dcbc26fc5c@iotcl.com>
+Date: Tue, 21 Oct 2025 10:52:11 -0700
+Message-ID: <xmqqy0p4uoqc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,29 +93,154 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Toon Claes <toon@iotcl.com> writes:
 
-> On 15/10/2025 22:18, Ezekiel Newren via GitGitGadget wrote:
->> From: Ezekiel Newren <ezekielnewren@gmail.com>
->> 
->> ssize_t is appropriate for dstart and dend because they both describe
->> positive or negative offsets relative to a pointer.
->
-> Isn't ptrdiff_t the appropriate type for an offset to a pointer? ssize_t 
-> is not guaranteed to be the same width as size_t (this has caused 
-> problems in the past[1]) and is only defined by POSIX, not the C standard.
->
-> Thanks
->
-> Phillip
->
-> [1] https://lore.kernel.org/git/loom.20150207T174514-727@post.gmane.org/
+> +static size_t path_idx(struct last_modified *lm, char *path)
+> +{
+> +	struct last_modified_entry *ent;
+> +	ent = hashmap_get_entry_from_hash(&lm->paths, strhash(path), path,
+> +					  struct last_modified_entry, hashent);
+> +
+> +	return ent ? ent->diff_idx : -1;
+> +}
 
-Thanks for bringing up a very good point.
+size_t is unsigned and cannot reutrn -1 sanely, unless the caller
+knows that ((size_t)-1) signals an error.  The compiler warns, and
+we compile with -Werror, so we end up getting
 
-We often consider that a function that yields what we would normally
-put in a size_t variable, when we _know_ that the return value would
-not be so big to exceed half the range of size_t, can instead return
-ssize_t and use the negative half of the range to signal error
-conditions, but as the cited incident shows that it is an easy
-mistake to make.
+    builtin/last-modified.c: In function 'path_idx':
+    builtin/last-modified.c:235:38: error: operand of '?:' changes signedness from 'int' to 'size_t' {aka 'long unsigned int'} due to unsignedness of other operand [-Werror=sign-compare]
+      235 |         return ent ? ent->diff_idx : -1;
+          |                                      ^~
+
+> +static void pass_to_parent(struct last_modified *lm,
+> +			   struct bitmap *c,
+> +			   struct bitmap *p,
+> +			   size_t pos)
+> +{
+> +	bitmap_unset(c, pos);
+> +	bitmap_set(p, pos);
+> +}
+
+Mark lm as UNUSED, or we'd get 
+
+    builtin/last-modified.c: In function 'pass_to_parent':
+    builtin/last-modified.c:238:50: error: unused parameter 'lm' [-Werror=unused-parameter]
+      238 | static void pass_to_parent(struct last_modified *lm,
+          |                            ~~~~~~~~~~~~~~~~~~~~~~^~
+
+> @@ -220,42 +273,195 @@ static bool maybe_changed_path(struct last_modified *lm, struct commit *origin)
+>  	return false;
+>  }
+>  
+> +static void process_parent(struct last_modified *lm,
+> +			   struct prio_queue *queue,
+> +			   struct commit *c, struct bitmap *active_c,
+> +			   struct commit *parent, int parent_i)
+> +{
+> +	size_t i;
+> +...
+> +	for (i = 0; i < diff_queued_diff.nr; i++) {
+
+Our -Wsign-compare forces the compiler to give a stupid warning
+here, that i is unsigned and diff_queued_diff.nr is signed.  
+
+    builtin/last-modified.c: In function 'process_parent':
+    builtin/last-modified.c:304:23: error: comparison of integer expressions of different signedness: 'size_t' {aka 'long unsigned int'} and 'int' [-Werror=sign-compare]
+      304 |         for (i = 0; i < diff_queued_diff.nr; i++) {
+          |                       ^
+
+Yes, it is comparing unsigned with signed but so what?
+
+As people may now know, my preference is to wean ourselves off of
+this dogmatic trust in -Wsign-compare but those who disagree and want
+to remove #define DISABLE_SIGN_COMPARE_WARNINGS should help our poor
+compiler here by telling it that this comparison is perfectly fine.
+
+We know diff_queued_diff.nr is an int, and i is size_t, but we also
+know diff_queued_diff.nr won't be negative (or we have much bigger
+problems) and cannot be larger than what size_t can represent.
+
+> +		struct diff_filepair *fp = diff_queued_diff.queue[i];
+> +		size_t k = path_idx(lm, fp->two->path);
+> +		if (0 <= k && bitmap_get(active_c, k))
+> +			bitmap_set(lm->scratch, k);
+> +	}
+
+Earlier path_idx() wanted to signal an error by returning negative,
+but the type is size_t that is unsigned so it cannot do so.  We
+instead get
+
+    builtin/last-modified.c:307:23: error: comparison of unsigned expression in '>= 0' is always true [-Werror=type-limits]
+      307 |                 if (0 <= k && bitmap_get(active_c, k))
+          |                       ^~
+
+and in this case we actually deserve it (in the sense that this is
+not the fault of dogmatic trust in -Wsign-compare; this is caused by
+using size_t to count things).
+
+And the solution for this is *not* "size_t" -> "ssize_t", because
+ssize_t is not "store half the range of size_t with negative values
+reserved for something else like errors".  Its width can be much
+narrower (this came up in a separate thread very recently [*]).
+Instead we'd need something ugly like
+
+	if (k != (size_t)-1 && bitmap_get(active_c, k))
+
+A quick band-aid patch to make it compile is attached at the end,
+but it does not try to address the root causes, which are abuse of
+size_t as count_t and religious use of "-Wsign-compare" [*].
+
+
+[Reference]
+
+* https://lore.kernel.org/git/9eafee4d-ea94-4382-ada0-58000d229d2e@gmail.com/
+* https://staticthinking.wordpress.com/2023/07/25/wsign-compare-is-garbage/
+
+
+ builtin/last-modified.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
+
+diff --git c/builtin/last-modified.c w/builtin/last-modified.c
+index e9050485a9..6135bcc584 100644
+--- c/builtin/last-modified.c
++++ w/builtin/last-modified.c
+@@ -232,10 +232,10 @@ static size_t path_idx(struct last_modified *lm, char *path)
+ 	ent = hashmap_get_entry_from_hash(&lm->paths, strhash(path), path,
+ 					  struct last_modified_entry, hashent);
+ 
+-	return ent ? ent->diff_idx : -1;
++	return ent ? ent->diff_idx : (size_t)-1;
+ }
+ 
+-static void pass_to_parent(struct last_modified *lm,
++static void pass_to_parent(struct last_modified *lm UNUSED,
+ 			   struct bitmap *c,
+ 			   struct bitmap *p,
+ 			   size_t pos)
+@@ -278,7 +278,6 @@ static void process_parent(struct last_modified *lm,
+ 			   struct commit *c, struct bitmap *active_c,
+ 			   struct commit *parent, int parent_i)
+ {
+-	size_t i;
+ 	struct bitmap *active_p;
+ 
+ 	repo_parse_commit(lm->rev.repo, parent);
+@@ -301,13 +300,13 @@ static void process_parent(struct last_modified *lm,
+ 	 * First, collect all paths that are *not* TREESAME in 'scratch'.
+ 	 * Then, pass paths that *are* TREESAME and active to the parent.
+ 	 */
+-	for (i = 0; i < diff_queued_diff.nr; i++) {
++	for (int i = 0; i < diff_queued_diff.nr; i++) {
+ 		struct diff_filepair *fp = diff_queued_diff.queue[i];
+ 		size_t k = path_idx(lm, fp->two->path);
+-		if (0 <= k && bitmap_get(active_c, k))
++		if (k != (size_t)-1 && bitmap_get(active_c, k))
+ 			bitmap_set(lm->scratch, k);
+ 	}
+-	for (i = 0; i < lm->all_paths_nr; i++) {
++	for (size_t i = 0; i < lm->all_paths_nr; i++) {
+ 		if (bitmap_get(active_c, i) && !bitmap_get(lm->scratch, i))
+ 			pass_to_parent(lm, active_c, active_p, i);
+ 	}
+
