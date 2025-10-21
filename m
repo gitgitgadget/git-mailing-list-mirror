@@ -1,295 +1,100 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545C1355033
-	for <git@vger.kernel.org>; Tue, 21 Oct 2025 13:13:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761052440; cv=none; b=HbfP0iy110AqN4hXyflMjT7sUAjO6cY5Skb7H6n0LlvwfyQTV3HHDMrjNnL33g4JJap7PIlU8YFcwbK0yUHLIvGk/o3A9+xXVm3bwcns2tVv7ENPrRaedyINp6FzV1lFR5lXFkYcS1i84epRbseaJrROZhnMBGl0m7mUQCCGnfc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761052440; c=relaxed/simple;
-	bh=eZsGO0YRORtt+rNaF1/402zK4tUJfNObqbC0b6JLT/g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DFh3R8CLBtQAFDmn5GgaSNFK7PqcqsmWxpVnjwEezE5PD82LnnolSMn9JSuJkVil5QwtpAmzsYjxajW2OpqfQBNRJqK6U4rL10OZ/LsmmJnD+u8ITMSSeEeiMHHZzn4sWMT9tHdqQ1JQ78xn374QfPbn8Zraz/cNzl/cOxbhmbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ko+w91mc; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E3D334C1F
+	for <git@vger.kernel.org>; Tue, 21 Oct 2025 13:14:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761052445; cv=pass; b=ND54dQ63QEpcio7Pt9XHwUFHODFlDoQ0cyHgD44lu7WiySrjN5sGmeiqO1gGApWAfuM3XTrl5Wm4va3lx5LMHmpiqWLJLIDNOGMXJ6/SNlCzV4EWIY64WBe7PjllnA6ilTcFyBTM/OOVaapQRj4qO2TlcNSC9ZekKe1+vH1I9cA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761052445; c=relaxed/simple;
+	bh=hhIfXGET8Sj8qQA0xbMNl+XtYun09ctmJv5owZtjQQU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pLA27jXwkyzHjVlHZ2Kz3bfTl3zsNccCKWR9NoCYFuzn2MHeJ3m0+v4YcgwXezg4ypRBLk/evDC2VEUTM0gobV9+cbmPRmck1+28cyxFt0BKCldfvMn/HkfvKYRZhmv4VZQ5Kwev/Gu/JnhkI6gY1620/Fd9uEDWITKjSdzDsiI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=e+1ONcfX; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ko+w91mc"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-471076f819bso44012075e9.3
-        for <git@vger.kernel.org>; Tue, 21 Oct 2025 06:13:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761052437; x=1761657237; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=fmlNxDV/6irIIJGy2pg3ml1HedL7VQCK5uMv/J36YdU=;
-        b=ko+w91mc0capXFR043RaL+p1QRZTZ6vCqU30/0EhCm3dMrp9LL5JonGA01w9rZtqUg
-         CVhI6J30tStc65bVyFb8MjyKRBC3YvgTM3XYvRqJMn5lLCK/Rnsiw2QqMX5iWnfuAvOF
-         U1nPDJjswl3gdnlX8/WVahxeZ0ISq1EJ2r9CGu1V74co4Ogt09tGxBWaC+iNwmffpZfD
-         GJzo+Qp6czrmFTMK+kkHSdyCMQb35ydKj0/fKPbA9P3aF5c4rW764eCb8xQu19PEqjJu
-         tXYdjzw+zZUV7xVg8tbcV9m7e2jumlxA0w6cz851uCdUyKCKlOiZCYgZy9PC2WVjQpwB
-         kKHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761052437; x=1761657237;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fmlNxDV/6irIIJGy2pg3ml1HedL7VQCK5uMv/J36YdU=;
-        b=XlBUCY06RGrppl9fqToAZiEgF0gHl5D9WN/zAC8qYnhvYqxqRdxJgzdJwqpd1eJJrY
-         uigzGkPSztd2+Qv+36fUAI3ShLVmpB+dTpE7m++dY8UmHQ5LwKV7uUXpOJdnjD84vQf4
-         3VcYjwvpbF8IcN10EF6ijeZ2ANhbcBvoebvq0fh10c3zfNpOUvjfEaTlJSyInrJXfGmO
-         pMLgl/+NC1PoV3775zCS5OT2NfvZzKoWiwQN+TNoZzJIh2FhPs5Uy+K0lAfxoZZ7acwr
-         ZmgH9RizS1eFgPqn8h7W28F+iWmhMLq5IhUXsRK9qhpJPfw9GKlPwqagj7kbRmNnH5i8
-         qqXA==
-X-Forwarded-Encrypted: i=1; AJvYcCXo9dVmP2Kn6AyKcZw+MLipCRMIVjx06Aypz+amXpn6zbJtC+KdEMeVsLQuJ7IxPrhwxrg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzzBDuJVliPW64OEOva9+ViSqdwe+Th6mf27IAp6z+4MtTR8uf6
-	C247ccfePE+okMvSd8a8cmW2iA7TH5U/kXxU4u+qLkSTvlSxGByQUCxOYUu0P73GJxs=
-X-Gm-Gg: ASbGncuZLN5Z4CMl7xVFnaq9qhq6HQbvP80bHXOLe9TOT1ZSMdVOY+m4CPkTG68pTDm
-	Bu+WBOAeNUtc00XimeRmXQd2MNUIntXkfMYA/bw18fDlUaenLEnib2KtLO7ELvPVxWyQKvPutaT
-	rLWEuBJSQOSnux3GDCO7QrsFlJNLF27IiIE7v64IHvzHeZGFG6nAP+LkZCI9ctr6Y3MsPwRNQ1q
-	/VkPebC8yyk8TVjDyMUFzIRlW21yf3UxJfdvQuKj8f7S76n9aOduhb4Gto9gS++TJoUYKw+LvyX
-	5/2G3O2nV+ShI+mjTSDpkfZJcHR6JWeGDG4CEyDuXywUXrGDFw9CDlqmxOWPmOzR3Mr1wrRCBN3
-	muHXS/ln1ZjLMBGNgs0ieBx9uz70iw5FVauVwvQx95trO6TY0ZhTU2lzsrLTz1j0OENsnKl4B3g
-	cx1ir1SnOqnqv4hW4j0fzdvHoZLHy0WX1wKD0sUE3mMa2tOOdkVwjWCMXXkr4+I3o=
-X-Google-Smtp-Source: AGHT+IH9xCmgIWhl9vlXoq1uFEF0HI5X2XM+IkfWvUMQpPZBZNGVo2n1BqkfDclTpYrgiaCS0dvkFA==
-X-Received: by 2002:a05:6000:2406:b0:427:9d7:870f with SMTP id ffacd0b85a97d-42709d78818mr10153255f8f.5.1761052436230;
-        Tue, 21 Oct 2025 06:13:56 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427ea5a0e9csm20510525f8f.5.2025.10.21.06.13.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Oct 2025 06:13:55 -0700 (PDT)
-Message-ID: <786d6c19-0a13-4e55-8f4b-39b57dd6ea28@gmail.com>
-Date: Tue, 21 Oct 2025 14:13:52 +0100
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="e+1ONcfX"
+ARC-Seal: i=1; a=rsa-sha256; t=1761052428; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=GWuR6TDp+vwQcevrs4rNgDktY2NM9lhCdsUZxEGbsIis+VAu7G0PnnUzc8ts2UjsTdfuhexwYj7NzTs+oWQXXHDYYPYW5xx46ZTz/PeVQNXmlrYaDpttJXB53snpzdUc4Z8gjksGvHteVgFzEwOjYmlXe3WA2qZ6tSxdW6xTgdA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1761052428; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=+BZD4X/iBh9fU2NupF9dgp3o+zyKdpC5MpZQTOH0EaE=; 
+	b=OyvTIm++mZbjr7tDv5m6RsrL/cEmp0hd3OqV7IoiUvt2bTAcYU2zZRA9Gqkfh+2Q6UY7RKo/jD08q34aaQONVNF9VchYbK7k5K3eTQG68h6bVYPgT0w1bVnxkiQTE+axMyq3I9H0bxmMEA9xR4lkVAe7xuJ9Fl7MhfMMUIdysbk=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761052428;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=+BZD4X/iBh9fU2NupF9dgp3o+zyKdpC5MpZQTOH0EaE=;
+	b=e+1ONcfX7/+bs8TcqB2VfE/EBtlKMpHdjSgOYsR1YhC9GLVtTLBtz0+pp2tWBtBe
+	q+7PMfgCILs94DCQyKTpo5kZXc1XSb9gBjVnangV/zB3P9RFpO50teLv0NsXPKdNCuc
+	xOhTOfqXMfH0oHLi5K34yN3P8pfw+EGB6WLqddCQ=
+Received: by mx.zohomail.com with SMTPS id 1761052424059100.23385021145907;
+	Tue, 21 Oct 2025 06:13:44 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio
+ C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>, Jonathan
+ Nieder <jrnieder@gmail.com>, Josh Steadmon <steadmon@google.com>, Ben
+ Knoble <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 5/5] submodule: error out if gitdir name is too long
+In-Reply-To: <aPc-79_XLyTjA_w0@pks.im>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20251006112518.3764240-1-adrian.ratiu@collabora.com>
+ <20251006112518.3764240-6-adrian.ratiu@collabora.com>
+ <aPc-79_XLyTjA_w0@pks.im>
+Date: Tue, 21 Oct 2025 16:13:36 +0300
+Message-ID: <871pmwqtxb.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/9] xdiff: make xrecord_t.ptr a uint8_t instead of char
-To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Ezekiel Newren <ezekielnewren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
- <7b9e8961d42e0f367ba0782e7d932607aa7e0b0a.1760563101.git.gitgitgadget@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <7b9e8961d42e0f367ba0782e7d932607aa7e0b0a.1760563101.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; format=flowed
+X-ZohoMailClient: External
 
-On 15/10/2025 22:18, Ezekiel Newren via GitGitGadget wrote:
-> From: Ezekiel Newren <ezekielnewren@gmail.com>
+On Tue, 21 Oct 2025, Patrick Steinhardt <ps@pks.im> wrote:
+> On Mon, Oct 06, 2025 at 02:25:18PM +0300, Adrian Ratiu wrote: 
+>> diff --git a/compat/posix.h b/compat/posix.h index 
+>> 067a00f33b..aa050fd58c 100644 --- a/compat/posix.h +++ 
+>> b/compat/posix.h @@ -250,6 +250,14 @@ char *gitdirname(char *); 
+>>  #define NAME_MAX 255 #endif  
+>> +#ifdef NO_PATHCONF +#ifndef _PC_NAME_MAX +#define _PC_NAME_MAX 
+>> 1 /* dummy value, only used for git_pathconf */ 
 > 
-> Rust uses u8 to refer to bytes in memory. Since xrecord_t.ptr is also
-> referring to bytes in memory, rather than unicode code points, use
-> uint8_t instead of char.
+> Are there platforms that have pathconf(3) but not _PC_NAME_MAX? 
 
-It C "char" never refers to a unicode code point so I don't follow the 
-reasoning here. Isn't the reason you want to change from "char" to 
-"uint8_t" to match rust? Given "char" and "uint8_t" are the same width 
-why can't we use "char" in the C struct and "u8" in the rust struct as 
-the two structs would still have the same layout?
+AFAIK no, because they're both part of POSIX and in all known 
+implementations they are both defined.
 
-I agree with Patrick's comments on this patch - it would be nice to know 
-how you decided where to add casts. Given that rust is going to be 
-optional for at least a year we should take care to leave the C code in 
-good shape with a minimum number of casts.
-
-Thanks
-
-Phillip
-
-> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
-> ---
->   xdiff/xdiffi.c    |  8 ++++----
->   xdiff/xemit.c     |  6 +++---
->   xdiff/xmerge.c    | 14 +++++++-------
->   xdiff/xpatience.c |  2 +-
->   xdiff/xprepare.c  |  8 ++++----
->   xdiff/xtypes.h    |  2 +-
->   xdiff/xutils.c    |  4 ++--
->   7 files changed, 22 insertions(+), 22 deletions(-)
 > 
-> diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-> index 6f3998ee54..411a8aa69f 100644
-> --- a/xdiff/xdiffi.c
-> +++ b/xdiff/xdiffi.c
-> @@ -407,7 +407,7 @@ static int get_indent(xrecord_t *rec)
->   	int ret = 0;
->   
->   	for (i = 0; i < rec->size; i++) {
-> -		char c = rec->ptr[i];
-> +		uint8_t c = rec->ptr[i];
->   
->   		if (!XDL_ISSPACE(c))
->   			return ret;
-> @@ -993,11 +993,11 @@ static void xdl_mark_ignorable_lines(xdchange_t *xscr, xdfenv_t *xe, long flags)
->   
->   		rec = &xe->xdf1.recs[xch->i1];
->   		for (i = 0; i < xch->chg1 && ignore; i++)
-> -			ignore = xdl_blankline(rec[i].ptr, rec[i].size, flags);
-> +			ignore = xdl_blankline((const char *)rec[i].ptr, rec[i].size, flags);
->   
->   		rec = &xe->xdf2.recs[xch->i2];
->   		for (i = 0; i < xch->chg2 && ignore; i++)
-> -			ignore = xdl_blankline(rec[i].ptr, rec[i].size, flags);
-> +			ignore = xdl_blankline((const char *)rec[i].ptr, rec[i].size, flags);
->   
->   		xch->ignore = ignore;
->   	}
-> @@ -1008,7 +1008,7 @@ static int record_matches_regex(xrecord_t *rec, xpparam_t const *xpp) {
->   	size_t i;
->   
->   	for (i = 0; i < xpp->ignore_regex_nr; i++)
-> -		if (!regexec_buf(xpp->ignore_regex[i], rec->ptr, rec->size, 1,
-> +		if (!regexec_buf(xpp->ignore_regex[i], (const char *)rec->ptr, rec->size, 1,
->   				 &regmatch, 0))
->   			return 1;
->   
-> diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-> index b2f1f30cd3..ead930088a 100644
-> --- a/xdiff/xemit.c
-> +++ b/xdiff/xemit.c
-> @@ -27,7 +27,7 @@ static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *
->   {
->   	xrecord_t *rec = &xdf->recs[ri];
->   
-> -	if (xdl_emit_diffrec(rec->ptr, rec->size, pre, strlen(pre), ecb) < 0)
-> +	if (xdl_emit_diffrec((char const *)rec->ptr, rec->size, pre, strlen(pre), ecb) < 0)
->   		return -1;
->   
->   	return 0;
-> @@ -113,8 +113,8 @@ static long match_func_rec(xdfile_t *xdf, xdemitconf_t const *xecfg, long ri,
->   	xrecord_t *rec = &xdf->recs[ri];
->   
->   	if (!xecfg->find_func)
-> -		return def_ff(rec->ptr, rec->size, buf, sz);
-> -	return xecfg->find_func(rec->ptr, rec->size, buf, sz, xecfg->find_func_priv);
-> +		return def_ff((const char *)rec->ptr, rec->size, buf, sz);
-> +	return xecfg->find_func((const char *)rec->ptr, rec->size, buf, sz, xecfg->find_func_priv);
->   }
->   
->   static int is_func_rec(xdfile_t *xdf, xdemitconf_t const *xecfg, long ri)
-> diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-> index fd600cbb5d..75cb3e76a2 100644
-> --- a/xdiff/xmerge.c
-> +++ b/xdiff/xmerge.c
-> @@ -101,8 +101,8 @@ static int xdl_merge_cmp_lines(xdfenv_t *xe1, int i1, xdfenv_t *xe2, int i2,
->   	xrecord_t *rec2 = xe2->xdf2.recs + i2;
->   
->   	for (i = 0; i < line_count; i++) {
-> -		int result = xdl_recmatch(rec1[i].ptr, rec1[i].size,
-> -			rec2[i].ptr, rec2[i].size, flags);
-> +		int result = xdl_recmatch((const char *)rec1[i].ptr, rec1[i].size,
-> +			(const char *)rec2[i].ptr, rec2[i].size, flags);
->   		if (!result)
->   			return -1;
->   	}
-> @@ -324,8 +324,8 @@ static int xdl_fill_merge_buffer(xdfenv_t *xe1, const char *name1,
->   
->   static int recmatch(xrecord_t *rec1, xrecord_t *rec2, unsigned long flags)
->   {
-> -	return xdl_recmatch(rec1->ptr, rec1->size,
-> -			    rec2->ptr, rec2->size, flags);
-> +	return xdl_recmatch((const char *)rec1->ptr, rec1->size,
-> +			    (const char *)rec2->ptr, rec2->size, flags);
->   }
->   
->   /*
-> @@ -382,10 +382,10 @@ static int xdl_refine_conflicts(xdfenv_t *xe1, xdfenv_t *xe2, xdmerge_t *m,
->   		 * we have a very simple mmfile structure.
->   		 */
->   		t1.ptr = (char *)xe1->xdf2.recs[m->i1].ptr;
-> -		t1.size = xe1->xdf2.recs[m->i1 + m->chg1 - 1].ptr
-> +		t1.size = (char *)xe1->xdf2.recs[m->i1 + m->chg1 - 1].ptr
->   			+ xe1->xdf2.recs[m->i1 + m->chg1 - 1].size - t1.ptr;
->   		t2.ptr = (char *)xe2->xdf2.recs[m->i2].ptr;
-> -		t2.size = xe2->xdf2.recs[m->i2 + m->chg2 - 1].ptr
-> +		t2.size = (char *)xe2->xdf2.recs[m->i2 + m->chg2 - 1].ptr
->   			+ xe2->xdf2.recs[m->i2 + m->chg2 - 1].size - t2.ptr;
->   		if (xdl_do_diff(&t1, &t2, xpp, &xe) < 0)
->   			return -1;
-> @@ -440,7 +440,7 @@ static int line_contains_alnum(const char *ptr, long size)
->   static int lines_contain_alnum(xdfenv_t *xe, int i, int chg)
->   {
->   	for (; chg; chg--, i++)
-> -		if (line_contains_alnum(xe->xdf2.recs[i].ptr,
-> +		if (line_contains_alnum((const char *)xe->xdf2.recs[i].ptr,
->   				xe->xdf2.recs[i].size))
->   			return 1;
->   	return 0;
-> diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
-> index 669b653580..bb61354f22 100644
-> --- a/xdiff/xpatience.c
-> +++ b/xdiff/xpatience.c
-> @@ -121,7 +121,7 @@ static void insert_record(xpparam_t const *xpp, int line, struct hashmap *map,
->   		return;
->   	map->entries[index].line1 = line;
->   	map->entries[index].hash = record->ha;
-> -	map->entries[index].anchor = is_anchor(xpp, map->env->xdf1.recs[line - 1].ptr);
-> +	map->entries[index].anchor = is_anchor(xpp, (const char *)map->env->xdf1.recs[line - 1].ptr);
->   	if (!map->first)
->   		map->first = map->entries + index;
->   	if (map->last) {
-> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-> index 192334f1b7..4cb18b2b88 100644
-> --- a/xdiff/xprepare.c
-> +++ b/xdiff/xprepare.c
-> @@ -99,8 +99,8 @@ static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t
->   	hi = (long) XDL_HASHLONG(rec->ha, cf->hbits);
->   	for (rcrec = cf->rchash[hi]; rcrec; rcrec = rcrec->next)
->   		if (rcrec->rec.ha == rec->ha &&
-> -				xdl_recmatch(rcrec->rec.ptr, rcrec->rec.size,
-> -					rec->ptr, rec->size, cf->flags))
-> +				xdl_recmatch((const char *)rcrec->rec.ptr, rcrec->rec.size,
-> +					(const char *)rec->ptr, rec->size, cf->flags))
->   			break;
->   
->   	if (!rcrec) {
-> @@ -156,8 +156,8 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
->   			if (XDL_ALLOC_GROW(xdf->recs, xdf->nrec + 1, narec))
->   				goto abort;
->   			crec = &xdf->recs[xdf->nrec++];
-> -			crec->ptr = prev;
-> -			crec->size = (long) (cur - prev);
-> +			crec->ptr = (uint8_t const *)prev;
-> +			crec->size =(long) ( cur - prev);
->   			crec->ha = hav;
->   			if (xdl_classify_record(pass, cf, crec) < 0)
->   				goto abort;
-> diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
-> index 3514bb1684..57983627f5 100644
-> --- a/xdiff/xtypes.h
-> +++ b/xdiff/xtypes.h
-> @@ -39,7 +39,7 @@ typedef struct s_chastore {
->   } chastore_t;
->   
->   typedef struct s_xrecord {
-> -	char const *ptr;
-> +	uint8_t const *ptr;
->   	long size;
->   	unsigned long ha;
->   } xrecord_t;
-> diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-> index 447e66c719..7be063bfb6 100644
-> --- a/xdiff/xutils.c
-> +++ b/xdiff/xutils.c
-> @@ -465,10 +465,10 @@ int xdl_fall_back_diff(xdfenv_t *diff_env, xpparam_t const *xpp,
->   	xdfenv_t env;
->   
->   	subfile1.ptr = (char *)diff_env->xdf1.recs[line1 - 1].ptr;
-> -	subfile1.size = diff_env->xdf1.recs[line1 + count1 - 2].ptr +
-> +	subfile1.size = (char *)diff_env->xdf1.recs[line1 + count1 - 2].ptr +
->   		diff_env->xdf1.recs[line1 + count1 - 2].size - subfile1.ptr;
->   	subfile2.ptr = (char *)diff_env->xdf2.recs[line2 - 1].ptr;
-> -	subfile2.size = diff_env->xdf2.recs[line2 + count2 - 2].ptr +
-> +	subfile2.size = (char *)diff_env->xdf2.recs[line2 + count2 - 2].ptr +
->   		diff_env->xdf2.recs[line2 + count2 - 2].size - subfile2.ptr;
->   	if (xdl_do_diff(&subfile1, &subfile2, xpp, &env) < 0)
->   		return -1;
+>> +#endif +#define pathconf(a,b) git_pathconf(a,b) +long 
+>> git_pathconf(const char *path, int name); +#endif + 
+>>  typedef uintmax_t timestamp_t; #define PRItime PRIuMAX #define 
+>>  parse_timestamp strtoumax 
+> 
+> Let's adapt this to our coding guidelines to make this easier to 
+> parse: 
+> 
+>  - Nested C preprocessor directives are indented after the hash 
+>  by one 
+>    space per nesting level. 
+> 
+> 	#if FOO # include <foo.h> # if BAR #  include <bar.h> # 
+> endif #endif 
 
+Thanks, however I'm inclining towards dropping this commit in v4 
+as Junio and Peff suggested, since it doesn't add anything other 
+than the nice error message, so we can let each OS fail with its 
+own message like they did before this patch. 
+
+We could bring it back when/if we decide to implement sharding /
+trimming, i.e. to address the TODO in the patch, that way it's more
+useful.
