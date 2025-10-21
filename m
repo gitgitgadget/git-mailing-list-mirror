@@ -1,127 +1,139 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1051B2F7464
-	for <git@vger.kernel.org>; Tue, 21 Oct 2025 11:32:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2961274FFE
+	for <git@vger.kernel.org>; Tue, 21 Oct 2025 11:43:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761046381; cv=none; b=iT9e2z31hc2znNAkDsrkw9ND93Cmnftg+l+BKzParWfZSPwnNqXUwhjLdJF4+dqwKk720ZaPSfWWXRnLi0iPNc3ToXzMQROaHZF2D7n9uM4R/V65TbhsPept4hqh7MAyny52iFWB3l6vfdpsXO2JytgmUCX+/R0rR+0YagpT4NU=
+	t=1761047024; cv=none; b=jQdDTNFcj6uRjxtaYgFTaocB+lYS441WPJw0UDV4WJxGzHWrCdz7R8toD2LSBd8/zcCKy+Do9qRmV0bFPlcl6s+VXXuKvJSJ+xMT2xXRB1yV5ga9XrssLfwSfkIlNePb73T7zp2YYpDO6wd0Fmn67PISx9UVIW551i0zGo0JABo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761046381; c=relaxed/simple;
-	bh=Eqagv63yiGg0J9lRQkQc9cKhcMFuiaYi7zGGdp+dYiI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MbytVQufHgKyYhaHwHnuvJqMylQFsgLQPZG+rpHT842lk9vfG1QSFahnbtQH/ZUnGyXMey3Uh76WB/GHly98ZuhtwJEeAloCC3kOvBbRCg9xaKzwUxQXS0dsqzputZwiF1NG9ULErMfLjCqrW4bJ1AF1ThAD2Z2WIKtgRu7ZrWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a8eIMRYU; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761047024; c=relaxed/simple;
+	bh=77UcJa8bQkmohszxAVVU604yU3sBKVDc8FFoQAZzWHA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WN2lL3osw/PCLKCJn9pwsCyoU/R4UXsoLs7ks2v+huX3U5u/F9f9k0NmQHMF8kRbkZQ5TKYklbvoUAoouE3i5jsfOl6/T4LPBxn5fgpU+Zth/vLrNxmvFl5l338lRvArZa3PB0csuLr2GTxpKXhAPr20Fbqqoiw7p9sTm8oJ7sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=boJTUEt7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=scB9mcLs; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a8eIMRYU"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-47106fc51faso64884645e9.0
-        for <git@vger.kernel.org>; Tue, 21 Oct 2025 04:32:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761046378; x=1761651178; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=GIWtB4GyltQyXuTUJy4zdwY4snyawjFTXwI1Q0tebDs=;
-        b=a8eIMRYUiowez85iaXFxxoHGjU60QDztYfJ2saXtNCNcpp1hf6duAPInPGg/q3Kdrc
-         Jv8fhvpeJrdfYWPO7ZwW8ZV8qpww0Jz51DOpTZ3fTR1z1ZhxVlYhAqcWn3iyjBRgVZUJ
-         ocOTmgDOi9AOEOppYl1Z9KrIE5S3HMjekYDA8QRizx23GcFhyfcDvQV2VUiDimbNl5wF
-         Xg8/CL6AcCmzvPHj0xMcsGIqtADOnhHGHngwqNDhULYibZvn2IxQtrhLBRqTHkbFUmXm
-         x1Pxe9mMyvD9Dl/ezcguj8KI1piJrH9gzXpPzlTc9Rk4Gue2RQIHJBnlnNSW+N2+oJod
-         jJmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761046378; x=1761651178;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GIWtB4GyltQyXuTUJy4zdwY4snyawjFTXwI1Q0tebDs=;
-        b=DiD5NCbtXrgl8WSHqAUASeYGPvH19vOiFvIWvc+RiRzVecTrpYW7n6UM0RFKy8bsIH
-         cI69EnYrl51d4d+y/qkLbSd35zLjXGce42fxas5ArU5v1ZzXxfI07+Pegpf4ceSF5VAD
-         m/HP3wpMWGoPuUal9lSRFH0L8zlwRJPJx8dyFuA3KA2+bj+UCXho5QD5AOr56KNmF8Il
-         HyMUi/F6selePwNXgHY3v3XmKIruNywqLv7LY0PajVkG7URZfxuqflNrcEIQV5rg3DZ/
-         cN18uKzptvaNm2Iz2kVZhSH6VEQv+PZPAD7wFPD/JoS4i1x6NUQOaIQ6Xz9vuPQ1p8su
-         iePA==
-X-Forwarded-Encrypted: i=1; AJvYcCXRctJxZzH6xS5Kh6GFRr8bkb9Z+lHV+W8/GTG+nZb3B3hB8KXx4CeApJT2CNAePCkHey0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxpDdZPy0jr8tRoDCbvYfKjTB9AYWEpNGAX5CRQ7BX0w9PTOyOB
-	ktVvXLjYefQ+KcXVGNoKsn8WycKkQJTxZoqvbme6yJSMiMwW2fHIRzER
-X-Gm-Gg: ASbGncvtlWtYtGfOlt6mBU7aw8cpSBmCF99TXB9NIkv6Mou5jMhUa8y/KfJ+PfPZFHj
-	YDsCSDKu4iGiluGFNl64YgvnOTyoqthwyZCQSo67amVpGbep4dadQhwLol/KFcVkf9yomApmyES
-	ggEkuktO1L+PXeXoGW0ZYNL00fguLvTSiWXLsjAvY7oyhUp6Qs0YxjmlY+sQYQGwaq5WbWsWtdA
-	ko1wt5ZsxLgzppsEW7hQ085PEjslfTG/dZ4Onm8HSALRsb4M/eVZ/N7x09x+jNZZA2JkIs5R/z1
-	RUZxvpCWGCDQ/Jy2wTe74O9UUDar5k9CnNXz1Ypv/OY7wArjnEH2MedyYTP+yxSk0T0wvNN5O3F
-	/qRPcXdyRZTqWwsXiX+uEmc5UASvc+Fdl33GZNR8OD6k812oVWB0tcJ/aJk8YX2ENXUqtED6R+q
-	PGi+vai6IDqz3AxHRK+1SqEVG51bYapV4rmhMSOHudOHoHI3wqHbjg
-X-Google-Smtp-Source: AGHT+IHl5AbvBkKVSIW/a+eUypAeHemssBhpdFw8+/Ne3dw+RMtHYgtpGt/qRPVd3mdvk0aoV/e2ZA==
-X-Received: by 2002:a05:6000:178e:b0:3ec:2529:b4e5 with SMTP id ffacd0b85a97d-42704d966c5mr12863953f8f.38.1761046378100;
-        Tue, 21 Oct 2025 04:32:58 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427f00ce3e2sm19958827f8f.47.2025.10.21.04.32.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Oct 2025 04:32:57 -0700 (PDT)
-Message-ID: <9eafee4d-ea94-4382-ada0-58000d229d2e@gmail.com>
-Date: Tue, 21 Oct 2025 12:32:55 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="boJTUEt7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="scB9mcLs"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id AFEB1EC00FB;
+	Tue, 21 Oct 2025 07:43:40 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-08.internal (MEProxy); Tue, 21 Oct 2025 07:43:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1761047020; x=1761133420; bh=qHk78F68JJ
+	jnwB2vFsSRwTHUwRKP8g2+HBXkcJmkRQg=; b=boJTUEt78V+RIEnH0iYWn1Kmif
+	J38DpVmhrJUe6bnBPr+zAhcxSr/BfRcalT+nx81FSs0Trj9Chz/FgFsDi/A8SvPc
+	RFblwlQs00DhhE6dJsb/997OOQM5MO5yRjrM/nR+1ChQ3vQxRUevBCe03qnrvkww
+	XjFARUqCZwCOgPLHYeMp/Q/7IpC3zmwxjUST0r3WggYNspX13OPVFTMtDJRcgw/t
+	fAu/xQd0kRo4U80CdW8FlVy+W84ysBREC+R6TlfiHcaxChzXN7eh9H09fANP/xpH
+	hqLwzWjDkBZE86Od5ntIZXxgStq4R+PYMocx1qaPdJRByOtv8pWpfU1fAEyg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1761047020; x=1761133420; bh=qHk78F68JJjnwB2vFsSRwTHUwRKP8g2+HBX
+	kcJmkRQg=; b=scB9mcLsST6b0CemLpv/Npv32WVDq9bQoiESiMubWLL5g0qWLY3
+	0zfLOrVKZSHuUg6Dbo3BndiWF1aKxFGprZ5PCfqp/VX6WSBPxxTkYUSBURioSXZV
+	KjNl7zvGugrF7y96czpqtQxN3CrAYLa+66evFeT1zBebVMeWpgPwnGlw72WSCDzR
+	dRrBbVreBd2VR6U1a7e+1E+cNjmfjEnRzxvaL6pjSQJolAavfaDYNSSVfn2C5Np2
+	dw1TqW5coo2UJ8Fy/MUYDAbywbNvKtMrd0p0yXLvR19ympRkkYA/nviJDSmOHqVn
+	mj0hFeEs5GtuKmOr70YHKyISfAHt1HcmY1A==
+X-ME-Sender: <xms:7HH3aG5aecTV1LJxyOxPYqCX50opbfnQyF5whrOoB3nxM8vvgdRmsA>
+    <xme:7HH3aCc1BqPRIG8U7ScDnX5cN86Z-sts3j8Pj5Xjtu8cBSm840tr0Po1F9bfoBZu5
+    kIQu2pR3OUgiSp4x4wMVLs4mlQAQ2Bq6jMq4B-PfCE_LezsTX84JQ>
+X-ME-Received: <xmr:7HH3aJGAd1Z5JdmMy2BrLdb1b_xD-JJHf44sKfSyP1wU7g4dP-o4eH78xozPZylLa68dI3I145Op0N0zP9M1WieneeGiMoZH0DYEfZUVfjvzJQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedtieduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepmhgrrhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsohhrghgrnhho
+    vhesghhmrghilhdrtghomhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrh
+X-ME-Proxy: <xmx:7HH3aDS5nH-YfeFB7J-TejSKDbHy2CB-jCQLTIltYj0zTE1phNl8jA>
+    <xmx:7HH3aPbCj3krwg4fgnVN1xOVCF8gxdwXB3U_pZg9igGrARuOMkdvgw>
+    <xmx:7HH3aO28yAurz3dyGf4TwhBTUuh5FUFaQG5I8NKW53wurd6bzqLj4w>
+    <xmx:7HH3aCpbuNfkMeEB7tDIfAPWA6cyQfXAMlveAJi8kU_3aWr9yttSqQ>
+    <xmx:7HH3aA2BVzZeVRsuydkE9McMjTjtpGfyuqYlzwNbW6cHm8BD4nCQVFRg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 21 Oct 2025 07:43:38 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 4ee215fb (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 21 Oct 2025 11:43:37 +0000 (UTC)
+Date: Tue, 21 Oct 2025 13:43:34 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sergey Organov <sorganov@gmail.com>,
+	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+	Martin von Zweigbergk <martinvonz@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v4 01/12] wt-status: provide function to expose status
+ for trees
+Message-ID: <aPdx5heE7blfnX3e@pks.im>
+References: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im>
+ <20251001-b4-pks-history-builtin-v4-1-8e61ddb86317@pks.im>
+ <CAOLa=ZTUDOYb1KVUEZY4KFyoaP-PdXjBvUto0vxOtYanEjoOFA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/9] xdiff: use ssize_t for dstart/dend, make them last in
- xdfile_t
-To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Ezekiel Newren <ezekielnewren@gmail.com>
-References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
- <1fa9a7d7d1c309f2f651da351ba7bc0b36272d91.1760563101.git.gitgitgadget@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <1fa9a7d7d1c309f2f651da351ba7bc0b36272d91.1760563101.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZTUDOYb1KVUEZY4KFyoaP-PdXjBvUto0vxOtYanEjoOFA@mail.gmail.com>
 
-On 15/10/2025 22:18, Ezekiel Newren via GitGitGadget wrote:
-> From: Ezekiel Newren <ezekielnewren@gmail.com>
+On Tue, Oct 14, 2025 at 04:49:14AM -0400, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/wt-status.c b/wt-status.c
+> > index 8ffe6d3988..b66edbfca6 100644
+> > --- a/wt-status.c
+> > +++ b/wt-status.c
+> > @@ -612,6 +612,30 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
+> >  	}
+> >  }
+> >
+> > +void wt_status_collect_changes_trees(struct wt_status *s,
+> > +				     const struct object_id *old_treeish,
+> > +				     const struct object_id *new_treeish)
+> > +{
 > 
-> ssize_t is appropriate for dstart and dend because they both describe
-> positive or negative offsets relative to a pointer.
+> So, my understanding here is that we want to diff two trees
+> `old_treeish` and `new_treeish` and then finally store the status change
+> in `wt_status`
 
-Isn't ptrdiff_t the appropriate type for an offset to a pointer? ssize_t 
-is not guaranteed to be the same width as size_t (this has caused 
-problems in the past[1]) and is only defined by POSIX, not the C standard.
+Exactly.
 
-Thanks
-
-Phillip
-
-[1] https://lore.kernel.org/git/loom.20150207T174514-727@post.gmane.org/
-
-> A future patch will move these fields to a different struct. Moving
-> them to the end of xdfile_t now, means the field order of xdfile_t will
-> be disturbed less.
+> > +	struct diff_options opts = { 0 };
+> > +
+> > +	repo_diff_setup(s->repo, &opts);
+> > +	opts.output_format = DIFF_FORMAT_CALLBACK;
+> > +	opts.format_callback = wt_status_collect_updated_cb;
+> > +	opts.format_callback_data = s;
+> > +	opts.detect_rename = s->detect_rename >= 0 ? s->detect_rename : opts.detect_rename;
+> > +	opts.rename_limit = s->rename_limit >= 0 ? s->rename_limit : opts.rename_limit;
+> > +	opts.rename_score = s->rename_score >= 0 ? s->rename_score : opts.rename_score;
 > 
-> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
-> ---
->   xdiff/xtypes.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
-> index f145abba3e..3514bb1684 100644
-> --- a/xdiff/xtypes.h
-> +++ b/xdiff/xtypes.h
-> @@ -47,10 +47,10 @@ typedef struct s_xrecord {
->   typedef struct s_xdfile {
->   	xrecord_t *recs;
->   	long nrec;
-> -	long dstart, dend;
->   	bool *changed;
->   	long *rindex;
->   	long nreff;
-> +	ssize_t dstart, dend;
->   } xdfile_t;
->   
->   typedef struct s_xdfenv {
+> Curious, why do we need a '>= 0' check here?
 
+I'm mostly just mirroring the same behaviour that we already have in
+`wt_status_collect_chanegs_worktree()`.
+
+Patrick
