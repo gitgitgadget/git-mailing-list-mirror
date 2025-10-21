@@ -1,80 +1,81 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7638280309
-	for <git@vger.kernel.org>; Tue, 21 Oct 2025 07:40:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A7C280CFB
+	for <git@vger.kernel.org>; Tue, 21 Oct 2025 07:41:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761032461; cv=none; b=qd8wQiXKtoKy8VivKtRRlzRhEleV8HHq9fqYIRIUGdDiMxoZWo2a0G1JKKcJEb6uzj70O+4ko2Ug8JLklRm5P7X9/yAkCThlb8uPN3ORo/wsu/Ff6P3DD1TOvZBVKrYctDPK5KSikwsJvq0J9GPUqXhf4qvPdyVTpiBnD15FdjM=
+	t=1761032468; cv=none; b=b9nODWRVrvlkFr+3bizASlmSZTLozIgKuYyIyLUTl/LPGe/50JL6cIUsvZhClNK3UoJxWZZP8k6ehpZ4M+OoNGvMt0EDtUdikHLnR9ogsmpvSyL0lYN1vkF+XqaZR9pmiUQlhckwc0KIQSR5eqKZhBCBowCuGnX5poelNb4F4OQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761032461; c=relaxed/simple;
-	bh=wJtpqiaUvonEGI6HMXn6sP613IeX81LibA0ktfaw3Ws=;
+	s=arc-20240116; t=1761032468; c=relaxed/simple;
+	bh=tKRhtw5nPR1spt+ltg+D5/oyPwv3dY6q02SCDsHukbM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B77OSn6gQQoqF09HnQ3AAj0rJlyCXxQJDUze5T8wsEPdBM3hf3i0cdYvFoIfueLW3pZBYwNCmMwwwgLq2e7ifq1ZXJ5hvrzL4zkXhO0UB1IjZAymGE8EH18g6LUc6m6kyVBc/GZwt1gr9UHHG46QqCMFioEIpU8GJ/w1PhDdwBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lXsMbKiR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pGvpqCmW; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=MqE0Ncw3Cc/Z4HkkuUi2qYTwnAqszw2kzbuHwoTeFYKn/8EdZaA1Z33n8F6cldg6+qPPZwV8A8P9reMa75dofxLMwIKuUZlIWNPP38ZODcEFzCrQ29PfpEFqwItu8oNy2BujqqcgYZSlMNJ/c7s9NlJ45DeW+I82s15ORCAmye8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VlTNZfNt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WeLjkWJp; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lXsMbKiR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pGvpqCmW"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 05805EC01DB;
-	Tue, 21 Oct 2025 03:40:57 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VlTNZfNt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WeLjkWJp"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F08AD14000EE;
+	Tue, 21 Oct 2025 03:41:01 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 21 Oct 2025 03:40:57 -0400
+  by phl-compute-07.internal (MEProxy); Tue, 21 Oct 2025 03:41:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761032457; x=1761118857; bh=yAizgMziVE
-	yROzHsQKYnaM0zZ1vVj3k5y65kGN+Sd8E=; b=lXsMbKiR4ATf0rAEXnHE3y+AZb
-	3ZBS9PWyGedqj2N3PAjAO3VQ4YcP/tjRo2jt48KC7PVRQMqc9hrlFrZ0gf7sgRPK
-	DYNA++7+yi0UHmkPID2OdF7KVUYsqMfDiDRLsGLgTIzLDUZxRopshhh9+p2/SzO6
-	xvD8AoR+sJnB9Y/Hp6VpmUzJ+0k9Bop9DqrvCZdVGgMDK0x1vEMq2EUKnRuoBO1l
-	KzUyK/9nOOLoSJgMfvJmrp8/drWOayGUnBY3PVUio9QCMVAmX85hB/oGJEnK6ch5
-	82d5/QFtlj35+VgwhHVFhJ1qYfgAgBShH4G7AyhDPZzOk9zQ+ypyttMvXahg==
+	:subject:to:to; s=fm2; t=1761032461; x=1761118861; bh=mozN2rHp2Q
+	3MKcJhxeWlVTyVzDVeu2P1INIpSGrbuAE=; b=VlTNZfNtWOm1TOUknN1BYheHYl
+	cq469EwojssAjCtNAJVZStF44yNHjTNFxcV2D4vQll0cTaln0inpAUKkiQRTDy9o
+	gTxozQbe9wZcCZLlOb2ieY+BXVNF91KlAK/IApXx2x9g8W6ZRnfnLhwm6yZPhk6D
+	D1+uahbqlPy9yaZeQ/7KXEBeGTvNnwLhpjt1dQT8RwxsCRIkfPdojx/H3XS/C0XP
+	F83P1p2c6po/44F5qlAFdG5C9VRo2ktkT3Re6g6NqCubQRbY/NtB6tz3z4z0Rloj
+	DKaUzZzhjIyOU4cDdFK3o0HgdTjnfp+OIO16qGfhZIKQQosU8GcFL5zzMDjg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761032457; x=1761118857; bh=yAizgMziVEyROzHsQKYnaM0zZ1vVj3k5y65
-	kGN+Sd8E=; b=pGvpqCmWgAgMq/uIpt3bT1QGqj+2QP0e7qIB429J8saVbIUevgF
-	xmnr+fkhvMeX4z+W7EzEIHDOj0L8A2b66wJtVKYOYRT0JvR+EIqqr78QB58VGu9t
-	JUnABh792Tbc0bqyPyH49+n0LW/P1CgXov8z1DSFPoi2ByEa8Ws4q+7rXVu1fOua
-	JTLdDk5rrt63uksI1kF4/2CmhiWvKMdZzhfmyPkpcAT873jW6EAVu0/pNOcgzd41
-	KQQV0EYuLTwOzqA0JxwMnVUoHzK3q8Uo7HHT+uJgHwmxkE58dW7fpg+dfGJ/flf9
-	j7Scht++G0sMy9yGoYbqfGIXy0Ss4emo1jw==
-X-ME-Sender: <xms:CDn3aFxJa6ABxNsy7LH8AQpqMzJgglRl8N4tIY3cteA5bg3Ov4xcrQ>
-    <xme:CDn3aEXfz6iLGuY9VPhYHQLgbAsIZfz53n6_8eQgl7uUqpy-jSVuGDKsbKgh7s5rv
-    Ng9-WSBD-dDSQw_vhmprmgAT0Ez50ZlECt-jKEgiYNY5l2lOvP3DA>
-X-ME-Received: <xmr:CDn3aFjMQuBOsmodQQjZMaYOB_VHrdI5F0YCVDNozD4-KATaB6uqkO9PnGRJ5RBdJcuf2qskmK8KaEXZgbH9PI9dR6l1aaccfeN1tgYtP9x3UQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedtuddvucetufdoteggodetrf
+	1761032461; x=1761118861; bh=mozN2rHp2Q3MKcJhxeWlVTyVzDVeu2P1INI
+	pSGrbuAE=; b=WeLjkWJpaBJpgGfYivVTbjARb2UdA6OqkR4gFILJy2Xogzh/SJs
+	gdsGoY7JJEo63bNVdrxiZetpb//eRhTgZQ/5fYrvs4Xr9ZSpBp+PFNUzVziQ8hjv
+	AXlkWTWqwpXlPvsE6mzr3bBfjzBdOR2BYSQDV/CIqPKOodepQ0GWhNr0lBprmnkS
+	wrxSQ3/58sHkIl1h19DhbmA5+sNgzoXO8sy1GtUmOQpgRYQjluauS+g7hdIqnepN
+	v0f1ZgK3D/d530VW7BHKPsm1loXea7tyrur/0R0O8QniPw6RXTyPa/+yc+qCWfnG
+	0/GYIGIhua1k37Ef/mouyPjcCyCRwvHcEnA==
+X-ME-Sender: <xms:DTn3aKn92lEIgrp4x_blI-gNEBQR2cI_dfMe_EBwuSdyOJbWo4prfw>
+    <xme:DTn3aEa3ozKh0gPq2IpEUvfd16Q-apk-ui_80wtDrhDo2IqyFGfH4yRD011s6pvD_
+    uwv8QRfhySPT3VX2AWHiqCYlvV1PIQIAZmwPQhEX-guH-zExqs2qQ>
+X-ME-Received: <xmr:DTn3aMTBA9ZOGA1fJdxem1aiX9nVmJ5VYCOz5ApGIyLP3FuCLRw3cNwuI0IWNf-ivAJoWBqrekzYkexmrYh-iqMklbNb2SQ5Ug9LKxSWgYXY-w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedtudefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    ephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdugfehtefgveelhfeuueevuedvnecu
-    ffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeek
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorhgr
-    rdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
-    shhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopegvmhhilhihshhhrg
-    hffhgvrhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtoheprhgurghmrgiiihhosehgohhoghhlvgdrtghomh
-X-ME-Proxy: <xmx:CDn3aEAvEaYffg0VA8gfsLrtdZAhh9V0Qjjq51wZYf0m8_HmJTHifQ>
-    <xmx:CDn3aLssA11OR83AcIt7LRTSWCBXj8U4LYRcKJT1KsBYA6pnOc4mnw>
-    <xmx:CDn3aIcLprujtRZ6T5m13gBGUx00LEHKKBTnLljKLS7F_JzKNiEMOA>
-    <xmx:CDn3aA-DRUmwF5DR-bth9e99bALSRQevMjnWWPdogYe1F8D_0kl3hw>
-    <xmx:CDn3aG_Aw9W3VcSPCtcQ5T0Zt0ph-aSEW5YBCgFqCbIPPydfl4OHzV9A>
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlih
+    hprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomhdprhgtphhtthhopehruggrmhgriihiohesghhoohhglhgvrdgtoh
+    hmpdhrtghpthhtohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgt
+    phhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpthhtoheprggurh
+    hirghnrdhrrghtihhusegtohhllhgrsghorhgrrdgtohhmpdhrtghpthhtoheprghvrghr
+    rggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrih
+    hlrdgtohhm
+X-ME-Proxy: <xmx:DTn3aOtN7CWMC9IOSHfpYJNAr0rl5BICyCE4kJHw_s8GISAUmw8lPQ>
+    <xmx:DTn3aOF-wpNRsvB_udjBJybVHV6_gUHh7AvAINbbUk9-pi48CABhwg>
+    <xmx:DTn3aPzh2844-x2K3DKHKddPYPTCxNVjq7Q199lTXG9fuYce7re7eA>
+    <xmx:DTn3aI2c_kW3w4HdBYc9oNlwWbPrtepMatVoPZYANM2yGz4L1nXlXg>
+    <xmx:DTn3aB5sU4TmF56mxcOI6EQrYzHLSP3okWegO1a0zbGQXWJVjM_jzoCv>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Oct 2025 03:40:55 -0400 (EDT)
+ 21 Oct 2025 03:41:00 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f512140a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 21 Oct 2025 07:40:53 +0000 (UTC)
-Date: Tue, 21 Oct 2025 09:40:44 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 168bbba4 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 21 Oct 2025 07:40:59 +0000 (UTC)
+Date: Tue, 21 Oct 2025 09:40:56 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Adrian Ratiu <adrian.ratiu@collabora.com>
 Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
@@ -82,11 +83,14 @@ Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Josh Steadmon <steadmon@google.com>,
 	Ben Knoble <ben.knoble@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 00/10] Convert remaining hooks to hook.h
-Message-ID: <aPc4_Pyd37epd0j4@pks.im>
+	Phillip Wood <phillip.wood123@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2 01/10] run-command: add stdin callback for
+ parallelization
+Message-ID: <aPc5CDkkG5Odnd_g@pks.im>
 References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
  <20251017141544.1538542-1-adrian.ratiu@collabora.com>
+ <20251017141544.1538542-2-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -95,58 +99,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251017141544.1538542-1-adrian.ratiu@collabora.com>
+In-Reply-To: <20251017141544.1538542-2-adrian.ratiu@collabora.com>
 
-On Fri, Oct 17, 2025 at 05:15:34PM +0300, Adrian Ratiu wrote:
-> Hello everyone,
-> 
-> This is v2 of the series which converts the remaining hooks to the new API.
-> 
-> I addressed all the feedback received in v1, with two small exceptions
-> (the ones starting with "Opted not to" in the below Changes list).
-> 
-> I had a minor conflict with an upstream change [1] which was trivial to fix.
-> 
-> I added 1 new commit and squashed together two commits (the simplified update
-> hooks), so in total it's still 10 patches.
-> 
-> The plan is to follow this up with another series which enables config-based
-> hooks and parallel hook execution, where possible.
-> 
-> As always this is based on the latest master branch, I've pushed it to GitHub
-> and ran the CI pipeline [3]. The Win+Meson "missing libgitcore.a" and doc
-> "invalid escape sequence" failures seem to be unrelated, since I get them
-> without these patches.
-> 
-> 1: https://github.com/git/git/commit/22e7bc801cd9c5e5b5c4489b631be28e506fec42
-> 2: https://github.com/10ne1/git/tree/dev/aratiu/hooks-conversion-v2
-> 3: https://github.com/10ne1/git/actions/runs/18593709082
-> 
-> Changes between v1 -> v2:
-> * Added a new commit with a mechanism to override ungroup options (Junio)
-> * Addded a BUG if hook path_to_stdin and feed_pipe are both provided (Junio)
-> * The feed_pipe cb can be set independently from path_to_stdin (Junio)
-> * Simplified the post-rewrite callback (Patrick, Phillip and Junio)
-> * Document that hook caller owns the feed_pipe_ctx (Junio)
-> * Removed unnecessary "child" -> "notes_cp" renames (Phillip)
-> * Reuse strbuf inside pre-push cb to avoid multiple alloc (Phillip)
-> * Simplified pre-push hook cb logic (Phillip)
-> * Rewrote reference-transaction cb logic to mirror pre-push (Patrick)
-> * Simplified the update hook cb by removing the keepalive logic (Emily)
-> * Squashed the simplified update and post-update conversions
-> * Iterator types, if conditions and other small fixes (Patrick)
-> * Fixed a conflict in refs.c with an upstream for loop sign compare check
-> * Opted not to use -1 to signify no fd value instead of 0, because I'd have to
->   significantly rework the run-command.h .in/.out/.err API (Patrick)
-> * Opted not to move sigchain_push(SIGPIPE, SIG_IGN); into pp_buffer_stdin())
->   because it will called too many times inside the process loop (Patrick)
-> * Added Helped-by: Emily Shaffer tag to the reference-transaction coversion
-> * Comments, typos, stray lines, commit rewordings (Ben, Patrick, Emily, Junio)
+On Fri, Oct 17, 2025 at 05:15:35PM +0300, Adrian Ratiu wrote:
+> diff --git a/run-command.c b/run-command.c
+> index ed9575bd6a..5bc6db5bb1 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -1652,6 +1652,44 @@ static int pp_start_one(struct parallel_processes *pp,
+>  	return 0;
+>  }
+>  
+> +static void pp_buffer_stdin(struct parallel_processes *pp,
+> +			    const struct run_process_parallel_opts *opts)
+> +{
+> +	/* Buffer stdin for each pipe. */
+> +	for (ssize_t i = 0; i < opts->processes; i++) {
 
-By the way, it would have helped to have a range-diff here so that it's
-easy to see what exactly changed between the two different versions.
-Could you maybe include that in subsequent iterations?
+This should use `size_t` to match the type of `opts->processes`.
 
-Thanks!
+> diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
+> index 3719f23cc2..dfdb03b3ab 100644
+> --- a/t/helper/test-run-command.c
+> +++ b/t/helper/test-run-command.c
+> @@ -54,15 +61,48 @@ static int no_job(struct child_process *cp UNUSED,
+>  static int task_finished(int result UNUSED,
+>  			 struct strbuf *err,
+>  			 void *pp_cb UNUSED,
+> -			 void *pp_task_cb UNUSED)
+> +			 void *pp_task_cb)
+>  {
+>  	if (err)
+>  		strbuf_addstr(err, "asking for a quick stop\n");
+>  	else
+>  		fprintf(stderr, "asking for a quick stop\n");
+> +	if (pp_task_cb)
+> +		FREE_AND_NULL(pp_task_cb);
+
+Tiny nit: the conditional here is not needed.
+
+>  	return 1;
+>  }
+>  
+> +static int task_finished_quiet(int result UNUSED,
+> +			       struct strbuf *err UNUSED,
+> +			       void *pp_cb UNUSED,
+> +			       void *pp_task_cb)
+> +{
+> +	if (pp_task_cb)
+> +		FREE_AND_NULL(pp_task_cb);
+
+Same over here.
 
 Patrick
