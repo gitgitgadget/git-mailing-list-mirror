@@ -1,80 +1,80 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D77732ED24
-	for <git@vger.kernel.org>; Tue, 21 Oct 2025 11:43:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5400F32E73E
+	for <git@vger.kernel.org>; Tue, 21 Oct 2025 11:44:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761047033; cv=none; b=GSV6SoqGv0Y/n10RfsPxN1n5DUieGBkOB9WqaUSVAd4Xkgph7GH4ETamHrC3itfc3h2IeL3Ei6b8HsGcaPOZOGee8w5JXiBdLYFFzFAuJ8TEhtaAI2CoHPy/T22whrPoKPV+RY6uicsnOBPsZ9ywLARhb00XmAj470q2IjGvZP8=
+	t=1761047048; cv=none; b=g/7fffES0oYY3xaTAFzjO7HCLlFNvJKB1modhjeyD7T8Zz4zyM0Nus3CDVJQReF+d6wGFiimDBcqYs5/PqeWtQQpzQDyRSYCEeNCBIK0IEWK1gzJ9VfMpL5VZW/ZDmNu0xpp+QkcA5O+RZ800EVHulzoXhL5M21onEAmQXPg68M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761047033; c=relaxed/simple;
-	bh=tWIua7HSLJuqBNe5wR03CVYwue2F+aRTYktXvAxPbQ4=;
+	s=arc-20240116; t=1761047048; c=relaxed/simple;
+	bh=ts4XaDx7fNx+WRq5DA8QXTWUwRnjhitSsqTdGNUU+vY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CrKRB4eda+PgPXEzWxN2CjDzTx2gNzOUnk8xQ3dGSeIE2PhhR2A/uLXDz5k4b4wDfVj8nHEG/HDKtD7REVKmaKXYCYzxDVHaCuflfPt1sZNBaGH7Q370RTY97t7ksG0fTWvZe3TvlmfFGe9/N+oHCQMIUiVCoNS7p39OLrLJTCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CW8LKZct; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CiGel47B; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=JJMqyT6ZPUXYJz5YoSfeuTHYykA+s5dIuReBClPliUlKzQzRJ2UzlHwjCOu+PPrAL+Vhv/57XO8KrJHY8Wpkfq0YGc7fRvGOJ72Zs3xEHlp+orHY2GvVKrNkbdzG8tnZ00QGCK+26nKEKYLPLlUwTjvtPnMo4WVcciA++dVo0Hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P9Xj6BKM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PIj71ARn; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CW8LKZct";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CiGel47B"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2E11314000B7;
-	Tue, 21 Oct 2025 07:43:50 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P9Xj6BKM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PIj71ARn"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 54FF7EC00C8;
+	Tue, 21 Oct 2025 07:44:05 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 21 Oct 2025 07:43:50 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 21 Oct 2025 07:44:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761047030; x=1761133430; bh=QTfwTkjHef
-	n9Ao5DPhFQxMNG+Bpo4Nv2X2OSqgiIQes=; b=CW8LKZctkFFMg1AWnv5lx6VZcs
-	Cyj7Skdb/mw8o4FFp1718YxVN+G6e1+5VdaaPROB+zQxzIWMn8SVr9Ifq71nKT7a
-	qRs+ZeiTR1v4SxLA/xC4h2spKk2oeKiCRmWqX8HqKYkNV6CssmCVhB142n8Jdi0q
-	zs1wfPu5hcVbiDIvUNv7/+cHIeo1McsPzXEne9k/SqoZgxhXrNpiMTXkWPhtz8T3
-	STCOQVv+SlYe3ETtN+iAlWVdKVrpd0mtsBjiL0GKOjkA5PrPoQDNzUMOCLejpe9u
-	CknndEWJ6A8+OBTEGzvQx4oKUPPY2TLBwXWCDqa260TlOH3L+7REoSOZMFcg==
+	:subject:to:to; s=fm2; t=1761047045; x=1761133445; bh=MkR4fY1gk6
+	g1KtwqbYJBbqx5U87NAxMRbD+ZDLI3JRY=; b=P9Xj6BKM0bazCMm/VqolzWbSVs
+	a5K3ZmmCDYyAfjT3bplrfMhdYkYXwGWn+eACWEN+8cT4gZi2QJUO++eEhjdhWxIh
+	MaBwRfOMb5rU4XOmztvlMuohooaRN4r9AothVzd7biEzHHZNsez4XxPYLedKWt9H
+	K3tZCsse2ZiHdfzM2oIoB1sYTrF1Mp2Rq+dShVKdoQ4J6lspRggi7+iJmUBNK8M7
+	6IzKWCyL3O8CAe4Lx3VvSq/WbO9+oaSlCoWvqnbs1UiSajJovDwtN7rUOfy8LMrG
+	C3JsuaZO5Yhj6XacCq3727YDu6O6wZ86Vzc0Q5yBae3I1kgZSXzpk4C10E0w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761047030; x=1761133430; bh=QTfwTkjHefn9Ao5DPhFQxMNG+Bpo4Nv2X2O
-	SqgiIQes=; b=CiGel47BwPgiO+AthRT+chk1ZiKR1pzziF3hYiiR4mhHc42WhM0
-	SZE7RYMx/T0gdjWU7ZovgOOt8MacUyZOGUXeoMLCf95QHTEhnMKipHyWs0VWL2kJ
-	KXLw5KotI6DlXlQlzeIHg/KEiEnNAtLK7U9WfPAL0wOO3egdyns3wnXaCkauQEsj
-	zJnED8Ey9lkSrdf2DJELYDNPHww609/XWV0YAYxd5Y/1oGrnxo0m8l4cdoBaKP8N
-	b0O9MB+PkYbO47xAEylYAtLNIejVX1pPcd9rz2DOgTw/dsMw5jS7N27HsrpQtMCD
-	XvSl5WLjMsZLNu0NZ5uz88S8VN5pckxqqCQ==
-X-ME-Sender: <xms:9XH3aOmL6yFCEJuMy1ceRCJzag_V5l8IL1Oi1Pxcqf4NPMQqyks_4w>
-    <xme:9XH3aIbIfUytLSNhYPZDIbNBFNnTLFotfrDDEJjMsc288ztBr9PaZRSUJb_aNhqU1
-    xrNGPA0UMVql7bXdsczYRlVmcONWXq45T4P1_4mAf_m6y66P3eV5Q>
-X-ME-Received: <xmr:9XH3aASaXCp13nU4GGZDZmO9Lu-MQYgzgGRrCk9m1HxOctFmOp9v7t6W-M5jTkNA28t_7v5VcR7rHg7wG3UXX8LnbWhQcqPhd-lolWoPS7Ekhw>
+	1761047045; x=1761133445; bh=MkR4fY1gk6g1KtwqbYJBbqx5U87NAxMRbD+
+	ZDLI3JRY=; b=PIj71ARnyPb0DvlEJB1lq7w0OoQM2QgEGGNswtBU49YvaT6ATL5
+	kKwoar+DIAlwArVoT9leD7mt+//6PR2UVYUGw5MIBS3xryku9z8BsmWgPlT9Hm0R
+	Q3LrGXd4mrNbChgZdYVK1Tdr3fE0dDi75tIU5uUZzAAhq4Reip8Is52XSoJBjIQZ
+	YN9JqU6kJmBR8kc9xiEalI3wcnX4qOC/pIqYTeyO3B84RGeKvUUmwvIdW8tWYb9l
+	237zNvNjaQJlbw7odVej1sT2NsV7XdiQX7lpBgJ52gyrmbUyc9lrfgWwoL6DrCT1
+	yrRUMI8EdPTmW+YFnjblA4vIJgiJvEc9GZQ==
+X-ME-Sender: <xms:BXL3aC7z-hXebMpISA8MGBdAwTJnSZGK3uekqS5fINA3zhCaBsPc3g>
+    <xme:BXL3aOe-cBeespt7LADoFMiuMtdK8KWzPpcBNbDJsiZi2sUM6_j15C0XGRVLvjG-G
+    cdZZXF90NyOWjyy1a-eQ7CoNGfDx4Tt7mBi28IEz8Ym06gPc3HeOg>
+X-ME-Received: <xmr:BXL3aFGnlhxmSgRwFE8gqF1UcTCzjqVzw0cdyQxM2nfb6cZcCEk86l-s4e0SR1nkYwcVLBb3VYpKPYZ4pSUqCBX0xvhXn47NayfYPXMsbMMKzw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedtieduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghrthhhihhkrd
-    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdr
-    fhhrpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsh
-    horhhgrghnohhvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgrrhhtihhnvhhonhii
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:9XH3aCvhCb3hLZXs2BwH-tlkkNPgrat_yLarrWREoIe8cBWV9wpqxw>
-    <xmx:9nH3aCGxpbxal1RehnGrvDp8HYpNLdiiWxHwlQLRr5jz6uczmI5KnQ>
-    <xmx:9nH3aDzHvSkCkJtGKLowBli9NSiKfzk0MD5ufp_rgVMTi_cGMFRVHQ>
-    <xmx:9nH3aM24JMPMWv-FtimMzaXCeqM6hxoEdsPYt-wrMJOS-HD7FJ2HrA>
-    <xmx:9nH3aIS_bPg1hlB0Q9DaFc8bB1a5XsWVe_moVooC_85mADquHNSJ1T3M>
+    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehjnhdrrg
+    hvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsh
+    horhhgrghnohhvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkh
+    hksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhm
+    rghilhdrtghomhdprhgtphhtthhopehmrghrthhinhhvohhniiesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:BXL3aPS4sBCb2VxAmKyimmqMGNSaTT2ss7qzclXhwby-XGvlcQFthQ>
+    <xmx:BXL3aLYn2ntbaIKnL_UDGLO_J4mInMFsN45yEDQYWmA81qzIFcyfng>
+    <xmx:BXL3aK0i-jyPXFEBVR3W37ZD7f-mH-gNxGoEnRh4XstTg-dCiQeXHQ>
+    <xmx:BXL3aOotK3j2Mx3ETFBKmP-yOwGd3OYOBTpVIrlaQOXufoATY58Rvw>
+    <xmx:BXL3aM0gbCAbwfiT0zS6gnViwFudLYfcBMSmzk-MLJcP02MCUq1QwUjN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Oct 2025 07:43:48 -0400 (EDT)
+ 21 Oct 2025 07:44:03 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ff0da868 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 21 Oct 2025 11:43:47 +0000 (UTC)
-Date: Tue, 21 Oct 2025 13:43:44 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 5599b3db (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 21 Oct 2025 11:44:02 +0000 (UTC)
+Date: Tue, 21 Oct 2025 13:44:00 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
@@ -84,11 +84,12 @@ Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
 	Martin von Zweigbergk <martinvonz@gmail.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v4 06/12] builtin/history: implement "reword" subcommand
-Message-ID: <aPdx8Pv-9UQDpe7I@pks.im>
+Subject: Re: [PATCH v4 08/12] add-patch: split out `struct
+ interactive_options`
+Message-ID: <aPdyAOhVjSMB9Csb@pks.im>
 References: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im>
- <20251001-b4-pks-history-builtin-v4-6-8e61ddb86317@pks.im>
- <CAOLa=ZSU8yr9Gn0EZ7x705qPyVM-qiMjgMCNCb8p8SMGTToxqQ@mail.gmail.com>
+ <20251001-b4-pks-history-builtin-v4-8-8e61ddb86317@pks.im>
+ <CAOLa=ZRh8LDu=-PAxiAV9QxFtjuQtC8sOojZm-4=CgN6t4vJFg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -97,138 +98,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZSU8yr9Gn0EZ7x705qPyVM-qiMjgMCNCb8p8SMGTToxqQ@mail.gmail.com>
+In-Reply-To: <CAOLa=ZRh8LDu=-PAxiAV9QxFtjuQtC8sOojZm-4=CgN6t4vJFg@mail.gmail.com>
 
-On Tue, Oct 14, 2025 at 07:04:06AM -0400, Karthik Nayak wrote:
+On Tue, Oct 14, 2025 at 08:35:39AM -0400, Karthik Nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/builtin/history.c b/builtin/history.c
-> > index f6fe32610b..7b2a0023e8 100644
-> > --- a/builtin/history.c
-> > +++ b/builtin/history.c
-> > @@ -1,22 +1,389 @@
-> > +#define USE_THE_REPOSITORY_VARIABLE
+> > diff --git a/add-patch.h b/add-patch.h
+> > index 4394c74107..a4a05d9d14 100644
+> > --- a/add-patch.h
+> > +++ b/add-patch.h
+> > @@ -1,15 +1,45 @@
+> >  #ifndef ADD_PATCH_H
+> >  #define ADD_PATCH_H
+> >
+> > +#include "color.h"
 > > +
-> >  #include "builtin.h"
-> > +#include "commit-reach.h"
-> > +#include "commit.h"
-> > +#include "config.h"
-> > +#include "editor.h"
-> > +#include "environment.h"
-> >  #include "gettext.h"
-> > +#include "hex.h"
-> > +#include "oidmap.h"
-> 
-> Nit: This can be dropped, perhaps needed in a future patch?
-
-Yeah, it's indeed needed in a subsequent patch. Let me move the import
-around.
-
-> >  #include "parse-options.h"
-> > +#include "refs.h"
-> > +#include "replay.h"
-> > +#include "reset.h"
-> > +#include "revision.h"
-> > +#include "sequencer.h"
-> > +#include "strvec.h"
-> > +#include "tree.h"
-> > +#include "wt-status.h"
+> >  struct pathspec;
+> >  struct repository;
+> >
+> > -struct add_p_opt {
+> > +struct interactive_options {
+> >  	int context;
+> >  	int interhunkcontext;
+> >  };
+> >
+> > -#define ADD_P_OPT_INIT { .context = -1, .interhunkcontext = -1 }
+> > +#define INTERACTIVE_OPTIONS_INIT { \
+> > +	.context = -1, \
+> > +	.interhunkcontext = -1, \
+> > +}
 > > +
-> > +static int collect_commits(struct repository *repo,
-> > +			   struct commit *old_commit,
-> > +			   struct commit *new_commit,
-> > +			   struct strvec *out)
-> > +{
-> > +	struct setup_revision_opt revision_opts = {
-> > +		.assume_dashdash = 1,
-> > +	};
-> > +	struct strvec revisions = STRVEC_INIT;
-> > +	struct commit_list *from_list = NULL;
-> > +	struct commit *child;
-> > +	struct rev_info rev = { 0 };
-> > +	int ret;
+> > +struct interactive_config {
+> > +	enum git_colorbool use_color_interactive;
+> > +	enum git_colorbool use_color_diff;
+> > +	char header_color[COLOR_MAXLEN];
+> > +	char help_color[COLOR_MAXLEN];
+> > +	char prompt_color[COLOR_MAXLEN];
+> > +	char error_color[COLOR_MAXLEN];
+> > +	char reset_color_interactive[COLOR_MAXLEN];
 > > +
-> > +	/*
-> > +	 * Check that the old commit actually is an ancestor of HEAD. If not
-> > +	 * the whole request becomes nonsensical.
-> > +	*/
+> > +	char fraginfo_color[COLOR_MAXLEN];
+> > +	char context_color[COLOR_MAXLEN];
+> > +	char file_old_color[COLOR_MAXLEN];
+> > +	char file_new_color[COLOR_MAXLEN];
+> > +	char reset_color_diff[COLOR_MAXLEN];
+> > +
+> > +	int use_single_key;
+> > +	char *interactive_diff_filter, *interactive_diff_algorithm;
+> > +	int context, interhunkcontext;
+> > +};
+> > +
+> > +void interactive_config_init(struct interactive_config *cfg,
+> > +			     struct repository *r,
+> > +			     struct interactive_options *opts);
+> > +void interactive_config_clear(struct interactive_config *cfg);
+> >
 > 
-> Missing space here
-
-Good eyes.
-
-> > +	if (old_commit) {
-> > +		commit_list_insert(old_commit, &from_list);
-> > +		if (!repo_is_descendant_of(repo, new_commit, from_list)) {
-> > +			ret = error(_("commit must be reachable from current HEAD commit"));
-> > +			goto out;
-> > +		}
-> > +	}
+> It feels a little odd that the `interactive_*` code lies in the
+> 'add-patch.h' and not in the 'add-interactive.h'.
 > 
-> Makes sense. There is an inherent assumption using the 'git history'
-> command that you want to modify the history of the current reference.
+> Should we also consider moving this or renaming the structs?
 > 
-> One question, wouldn't it make sense to parse and check that the commit
-> to be reworded should be checked to be a descendant of HEAD earlier on
-> in `cmd_history_reword()`?
-> 
-> This would ensure this function `collect_commits()` doesn't worry about
-> how it is meant to be used, and simply worries about collecting commits.
+> Nit: might be nice to make add the 'add_' prefix to them while we're
+> here.
 
-The reason why I opted to move this into `collect_commits()` is so that
-we don't have to reimplement that check for every single subcommand, as
-they also have the same restriction.
-
-[snip]
-> > +static int fill_commit_message(struct repository *repo,
-> > +			       const struct object_id *old_tree,
-> > +			       const struct object_id *new_tree,
-> > +			       const char *default_message,
-> > +			       const char *provided_message,
-> > +			       const char *action,
-> > +			       struct strbuf *out)
-> > +{
-> > +	if (!provided_message) {
-> > +		const char *path = git_path_commit_editmsg();
-> > +		const char *hint =
-> > +			_("Please enter the commit message for the %s changes. Lines starting\n"
-> > +     "with '%s' will be kept; you may remove them yourself if you want to.\n");
-> 
-> Shouldn't this be s/kept/removed? Also this line needs to be aligned.
-
-Huh, yes, indeed.
-
-[snip]
-> > +	if (repo_parse_commit(repo, original_commit)) {
-> > +		ret = error(_("unable to parse commit %s"),
-> > +			    oid_to_hex(&original_commit->object.oid));
-> > +		goto out;
-> > +	}
-> 
-> Isn't this already done as part of
-> `lookup_commit_reference_by_name_gently()` which is called by
-> `lookup_commit_reference_by_name()` ?
-
-Yes, you're right.
-
-[snip]
-> > +	ret = commit_tree(final_message.buf, final_message.len,
-> > +			  &repo_get_commit_tree(repo, original_commit)->object.oid,
-> 
-> Can't we use original_commit_tree_oid here?
-
-Yup, indeed.
-
-> >  		const char **argv,
-> >  		const char *prefix,
-> > -		struct repository *repo UNUSED)
-> > +		struct repository *repo)
-> >  {
-> >  	const char * const usage[] = {
-> >  		N_("git history [<options>]"),
-> > +		N_("git history reword [<options>] <commit>"),
-> 
-> This string is used twice, perhaps we move it to a macro?
-
-Yeah, why not.
+The proper name for this struct would be `add_patch_interactive_config`,
+but I decided against that name for now as it feels like a mouthful. I
+think these two patches improve the status quo regardless of that, so
+I'd prefer to just keep those as-is if you don't mind?
 
 Patrick
