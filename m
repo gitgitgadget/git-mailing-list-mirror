@@ -1,157 +1,89 @@
 Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2CAD26E71F
-	for <git@vger.kernel.org>; Tue, 21 Oct 2025 21:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D715A2882B8
+	for <git@vger.kernel.org>; Tue, 21 Oct 2025 21:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761081576; cv=none; b=qgJNW9NU6KykQ2n2eZQS15arAK3jVNbWhjkfHhS9LflBe/b7q8L8huCJouQNU8weoL2Oi4NCf+o/MThK0SG5LT0QFc76l5uHrjL86UFhQQjW/y1NS7rycPYBAh4eYnctmM1OgsBuzwy2GbYwtiE0kqzYsOW39Y6NUu/hdIsyC34=
+	t=1761081834; cv=none; b=NV/wzFjDz1XEO8v1DJCa0VPrxTsgqoYeBfHQmuOHOz0nz6hzXEdYO1CeWCo+1xgbw85+pF03Sjsg5vP2ODsXfTNLcwfGynEkjVl8MowTYHjUKqsi301cAbiIumCdSzvLFQC8uRRb/Q14/DMYmynmcEwMKuOcds2uQEJl24yy/ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761081576; c=relaxed/simple;
-	bh=uELALr/F0ghJ8bZTGzZ+7uL1DCaxw+Y9DnmTJ/gsDaw=;
+	s=arc-20240116; t=1761081834; c=relaxed/simple;
+	bh=3TcJoVhCMP1MIAe45eF85rAREHAWDOKdD+NtYL6IqhM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=t9SVWsqy0ZgH1Vq+vA8vZVN4kxOEFXOMMPXnucCXRdHka9DOyQItiTDP5bKOOWgrRSTnA+OWuruaNDbMxXOhzqwdq9kwJY9WpGGJUA+1MjXVcOfZSoFjk/TiRslXmyGJrT6caA+2HQ8fPUdnSkW6HN5NmPYlW0UyrbRI8C0/+CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bayi1ztj; arc=none smtp.client-ip=209.85.208.43
+	 To:Cc:Content-Type; b=qyH+C1y2OBpRnErpbQm5Yo8+07AGzJ38VdJSlIki8lwHvRHiDILvywOZf5pJ1h+AIKBX5b7niKOoxJbrPsfDpC21XQhbhQdt6mgswot5o1/hTBALGeXYdpLqTGoGSjlZMGxFhbbs6aotlA2Z6Gao+lfVtEIzf4C1sblOsg/lKtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RbnVBxgD; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bayi1ztj"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-63c1413dbeeso9646101a12.0
-        for <git@vger.kernel.org>; Tue, 21 Oct 2025 14:19:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RbnVBxgD"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-63c3d7e2217so8374179a12.3
+        for <git@vger.kernel.org>; Tue, 21 Oct 2025 14:23:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761081571; x=1761686371; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1761081831; x=1761686631; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yqBdC4Q2LQ0/CopILBQxvh6skNCSciA8v9OEg4UV3a4=;
-        b=Bayi1ztjskZGSZI5CqZfdLhxugZQuClTK75L8D45myQTGx6yBIIMzTe3uu3W1N5Lr6
-         bCTqY3Z8r2Y1PP+4nEYcqFSkGRalKvChf36JlkA+JHvdIqFLMNtw1K0ZMV26vjMZj579
-         0vpwKwrMIHtGlqqJCqSOCslo5ijvl2DPuM8MenKViN/tZeBeA5DTmadE9x8yQ7k4/6+B
-         nVjRvToJH2SD75/qQy+TYhvpXi6JBuePulw8hr/e2F04lvrsgw/h4d35pIXrUsOObOIv
-         +4K5vspULxPXOr1I0U8IW4F7PMcqYSOlEIpwoIR4S0rMyZU5QrjDBBVfO3vZ5YhvcZTF
-         Hn9A==
+        bh=3TcJoVhCMP1MIAe45eF85rAREHAWDOKdD+NtYL6IqhM=;
+        b=RbnVBxgD4V6N2lr/OUyZIZ4LBb7UeXK/ClRqYq22rw82J8ycecWUiaJjv+CuObEo3G
+         GrS3BrFcV5aQQartsqCBPw1RIP/QR4VL3H2OwR6VOIosesAqvhBmpenG4TqZDVNhOdvm
+         7D7cIUn5u3Ge+751bA8MjHDU6brHQjZyD4WYvBTCpFs+3+ibyLS9YcTajEKxQ2OAZLjl
+         l2APZ6uosNlT4EB0E86ewxdeuDCXoLAsib8aHVTxh1fU3E0l22IdIKgkRWdGgl85DxwJ
+         YSeuSY6HoruwQa0RWhk3paDHj1vwVnBtn6ocvO5qc1MstRcDvTBOF3bvfHy7zJcR4HGt
+         oZnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761081571; x=1761686371;
+        d=1e100.net; s=20230601; t=1761081831; x=1761686631;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yqBdC4Q2LQ0/CopILBQxvh6skNCSciA8v9OEg4UV3a4=;
-        b=d3iyTrmFROEaER92XBGLVHIlWZgiFslIzvqYYEazwt2id33H+gWPhsQdACKh+gAeVL
-         6tDJbDZriDzUCojFDaufoj7zdsBUnVjPUeRHYzyifGUnv/66a/SNTTxpUxxArWUTc85i
-         LafYlRxiN3IotXfGdEv/SoZ6lTM76oUc1NY719BIOmf88iUkxHNYNRac+v2hfvT822Tf
-         deEUeMGyD5unF72txB0fBDD3T0/ap9uBo40LdhlcpBbTF7N0jeuep0kRFf7Y0P1JS/FQ
-         dasVdVJqkkRcPFYZ+X2eUBp7lBCiamMPxR7gAYul2G0pq575/hOKcZf8FvDIi6FBONd/
-         y18A==
-X-Forwarded-Encrypted: i=1; AJvYcCWVDe6NrlFQbtFVHjUXV2bU78J8f5ElnoqlKP7bzez5eHGrUuOn0aVQDMFpU+GaZ9AN4J8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzPl+O5EuY256PfYM18jdzVtSUXC3I3yPUCwqk5wtqrjAlV3Lsc
-	aDdnJiPsfdVJzrQo+G78vucbAJ1P/xOAEPRopERon2+DcvKkKKfUbqsKMKJWds757v5vlKC8W8r
-	y3tsR4rcKXHG1BhYaME77F1PtzfzrSpI5ZjG74tE=
-X-Gm-Gg: ASbGncs/NUu0dNeT3+QeVk1WAsjf/q23RwwOhxmGJeRDsrj1Ck7PgSx52jM06BKVs6z
-	KKLYNmFoI8uS39uZw+sPPsnDWiVADYlBMtIs1eHpcu15dlQpB7hcFKkzTi6IMrOoLplJYfNye32
-	FwWldVzxy65KzNxneBxkD9QVMxjBfoHMAqcfuBHs3paqJFgRWdwKEmvsUrJN3EWYymU9qQWLDjS
-	thC855hwdzUJX3gPfP4Lpf7yqxSpTbHEcpyLKvQPoJYVRIkbaiWp0N7br6dbcrnuMcHAeux9Tj5
-	Wg2puVcvVmBL6x3CtD8=
-X-Google-Smtp-Source: AGHT+IHvcs9hVU/7TOMAOUZGK8nIZ161o3WciCww87yStlOyfqhsmViu9cBehB7rnIf4a19d14s/SeWTioJEv34xNaA=
-X-Received: by 2002:a05:6402:358e:b0:634:bdb3:e63f with SMTP id
- 4fb4d7f45d1cf-63c1f6b1f03mr18778441a12.20.1761081570660; Tue, 21 Oct 2025
- 14:19:30 -0700 (PDT)
+        bh=3TcJoVhCMP1MIAe45eF85rAREHAWDOKdD+NtYL6IqhM=;
+        b=W7PrMgVanLiG5WKjSyYxkzJ5jaWsKA3/BSwFaT37KAQrvUjA1sF7fboKHwvKyQrHOn
+         /1bpjEE3MPFt0J3W3Whys3kcBTQoPrCzxlsu30YnZIGSjnnrWqIQ5DlLhTDihfRohXgt
+         DunBLnt/kklyfFOUGk039M1q9ORQ5eL2DmyFwx9aBxmS0EVO+oo8CAJpaXFGLtGod/o4
+         DBlKfucI4eVqz1M1QYaiQuQH61fqpz7SMto8Gs2RRWJa9iyTRXFxC60gqTN1EPZORasB
+         z5y0hpWHP7uCQZTEo/dirsK7CHuhfNFYUS0/5ZFBtMN++Aw4wneS3veQRZuFDnp0HHeB
+         i9Kg==
+X-Gm-Message-State: AOJu0Yy3ZT8jFMTi1uTcre1KID9sqeoYpvKzw8TwK8txOq9ZRGSDjPBy
+	M74QXcR85VNW+hXo0W44xeTKtbU/1ikZIrZlKYbkpm9hdDBVSgsrEp5A2FC3mSQjwTIXRqubEf/
+	oJKPZSsPO+C0nr+zzvXxzntTu5ahOExk=
+X-Gm-Gg: ASbGncu7xpaKpmMfCAvfB2TL0qzj/2NTPNwlCj/RziFRglZHtmwOrIsV0wBsOZJ5CsU
+	RcW9MtynyJYAEt/r1NFQq3s2zPTfeWAErSB+vog3qQZQMaYfWSwr/ia7J2K2uKuKpmC3Rs3DBu9
+	T0cs0Ic6h5aJcRcPPsUVeTmg6wY29+oRfZg0JkuqxJUaE0TYcGeIG9rL50OGtP+HIv0p6kP4ab1
+	SEoBy/B2pQm1peotlluRG3sdSaUARvoBJkHzVZCAkwr1ujd0P4B25njAE/ibZYLdfb0q7kjuf+N
+	kC/Ud3PasxBBCalwKV8=
+X-Google-Smtp-Source: AGHT+IFKMTVMsrKNLtYTNBGOYnk8q6xW09/fNxkEFtyX5ijBnMDn7/vcy1h+UePhDRPLwnmPu+YDSmg/d+9VF3ZjwIk=
+X-Received: by 2002:a05:6402:280a:b0:63b:ee26:546d with SMTP id
+ 4fb4d7f45d1cf-63c1f634768mr17555351a12.12.1761081830821; Tue, 21 Oct 2025
+ 14:23:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im>
- <20251001-b4-pks-history-builtin-v4-12-8e61ddb86317@pks.im>
- <CAOLa=ZTnsHxK2+rRsAErY_zc1Rg5WNrmcDBiPgDk38zb9TNfkQ@mail.gmail.com> <aPdyBpuLfuYOLe7q@pks.im>
-In-Reply-To: <aPdyBpuLfuYOLe7q@pks.im>
+References: <94497aac-c61a-4b17-9e4c-8ca9b966829c.ref@bellsouth.net> <94497aac-c61a-4b17-9e4c-8ca9b966829c@bellsouth.net>
+In-Reply-To: <94497aac-c61a-4b17-9e4c-8ca9b966829c@bellsouth.net>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 21 Oct 2025 17:19:19 -0400
-X-Gm-Features: AS18NWDC90m1yDfRkWG7ZtUIVrHgppRri4DD3aRfH_A-ip8o_Dx6pzrBSf-upM8
-Message-ID: <CALnO6CAj2Jynun7Ns5222FFevqEF3O7ACVEU-GzT6DqUSxQNjw@mail.gmail.com>
-Subject: Re: [PATCH v4 12/12] builtin/history: implement "split" subcommand
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Sergey Organov <sorganov@gmail.com>, 
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
-	Martin von Zweigbergk <martinvonz@gmail.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Elijah Newren <newren@gmail.com>
+Date: Tue, 21 Oct 2025 17:23:38 -0400
+X-Gm-Features: AS18NWCQ82DMC_7FdMJbZ9WpkJm7V0-5jPjzc_qJj2TXcdOYdM5dYzViiJqYisE
+Message-ID: <CALnO6CAKBB=MRUBSv-_pqWuUgi6d1+o_X=iq-fLzfSkCYMaiPw@mail.gmail.com>
+Subject: Re: Migrating Repository without Network
+To: Dennis Putnam <dap1@bellsouth.net>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 21, 2025 at 7:44=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+On Tue, Oct 21, 2025 at 10:52=E2=80=AFAM Dennis Putnam <dap1@bellsouth.net>=
+ wrote:
 >
-> On Tue, Oct 14, 2025 at 09:38:51AM -0400, Karthik Nayak wrote:
-> > Patrick Steinhardt <ps@pks.im> writes:
-> > > diff --git a/Documentation/git-history.adoc b/Documentation/git-histo=
-ry.adoc
-> > > index b55babe206..83d675afea 100644
-> > > --- a/Documentation/git-history.adoc
-> > > +++ b/Documentation/git-history.adoc
-> > > @@ -40,6 +41,26 @@ rewrite history in different ways:
-> > >     provided, then this command will spawn an editor with the current
-> > >     message of that commit.
-> > >
-> > > +`split [--message=3D<message>] <commit> [--] [<pathspec>...]`::
-> > > +   Interactively split up <commit> into two commits by choosing
-> > > +   hunks introduced by it that will be moved into the new split-out
-> > > +   commit. These hunks will then be written into a new commit that
-> > > +   becomes the parent of the previous commit. The original commit
-> > > +   stays intact, except that its parent will be the newly split-out
-> > > +   commit.
-> > >
-> >
-> > So in essence we do this:
-> >
-> >   Before split:
-> >   P1 =E2=94=80=E2=94=80 C0 =E2=94=80=E2=94=80 C1 =E2=94=80=E2=94=80 ...=
- =E2=94=80=E2=94=80 CN
-> >         =E2=94=94=E2=94=80(target)         =E2=94=94=E2=94=80(HEAD)
-> >
-> >   After split:
-> >   P1 =E2=94=80=E2=94=80 S0 =E2=94=80=E2=94=80 C0' =E2=94=80=E2=94=80 C1=
- =E2=94=80=E2=94=80 ...... =E2=94=80=E2=94=80 CN
-> >         =E2=94=82     =E2=94=94=E2=94=80(modified original)  =E2=94=94=
-=E2=94=80(HEAD)
-> >         =E2=94=94=E2=94=80(split-out hunks)
-> >
-> > I do wonder if S0 should contain the existing message and the new
-> > message should go to C0'. So perhaps more like
-> >
-> >   After split:
-> >   P1 =E2=94=80=E2=94=80 C0' =E2=94=80=E2=94=80 S0 =E2=94=80=E2=94=80 C1=
- =E2=94=80=E2=94=80 ..... =E2=94=80=E2=94=80 CN
-> >         =E2=94=82      =E2=94=94=E2=94=80(split-out hunks)  =E2=94=94=
-=E2=94=80(HEAD)
-> >         =E2=94=94=E2=94=80(modified original)
-> >
-> > Mostly because when you say split, I would assume we keep the original
-> > as is and add on top of it. I don't really have a strong argument thoug=
-h
-> > :)
->
-> Yeah, this has already caused some discussion beforehand. I guess you
-> can argue either way, and the suggestion from others was to simply allow
-> the user to edit both commit messages.
->
-> I don't at all mind going into that direction, but I wonder how to call
-> the "--message" switch in that case. We could of course just call these
-> "--first-message" and "--second-message", but that feels somewhat
-> awkward.
->
-> Also, I already have it in my mind that it would be cool to extend this
-> command so that you can split into arbitrary many commits. That is,
-> after you have split out the first commit we simply go back into
-> interactive mode to create a second commit tree. Rinse and repeat until
-> we have no chunks left anymore. But if we had such a mode though, then
-> numbered parameters don't make much sense anymore.
->
-> An alternative could be to just accept multiple "-m" arguments, and we
-> then apply the messages to the respective commits? Dunno.
+> I have a server with a git repository whose NIC is no longer working. I
+> need to migrate that repository to a new server using a flash drive. I
+> can only find instructions for migrating when both servers have network
+> access. Can someone tell me how to do a migration without using a
+> network? TIA.
 
-Or *gasp* not support "-m" at all, and require the user to put
-_something_ in an editor? =F0=9F=A4=94
+Have a look at git-bundle(1), which was designed for something similar
+to this use case I believe. Or, rsync the repo to the flash drive and
+then off?
 
 --=20
 D. Ben Knoble
