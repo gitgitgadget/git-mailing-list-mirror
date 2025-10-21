@@ -1,450 +1,295 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A0E3321DB
-	for <git@vger.kernel.org>; Tue, 21 Oct 2025 13:00:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545C1355033
+	for <git@vger.kernel.org>; Tue, 21 Oct 2025 13:13:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761051645; cv=none; b=DfTOLD70g2+0e6VVo/9+hJRW9txQBDzDHsDKMxZkubzwtpR7OxwyptsVRiWXJQ8R3jtlhmmTK91oXtaaS8+HkA8Hid0b9jOH7LbHr52Imfe5DIo6303EtjV5T+Q1ZxwyuIxr3LsgSimXFyxEyjWYT8KqRAtCCSW/rB+A3KFQ9NI=
+	t=1761052440; cv=none; b=HbfP0iy110AqN4hXyflMjT7sUAjO6cY5Skb7H6n0LlvwfyQTV3HHDMrjNnL33g4JJap7PIlU8YFcwbK0yUHLIvGk/o3A9+xXVm3bwcns2tVv7ENPrRaedyINp6FzV1lFR5lXFkYcS1i84epRbseaJrROZhnMBGl0m7mUQCCGnfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761051645; c=relaxed/simple;
-	bh=QQ6XYoTXuYxplhpoW6mAu6NXi2D+56CofdCfrXYWxr4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ohy9Rv0gL1ozlL4ckWgGx8Omy8XKjyPmRpVDjZax1hJ9ySmtobiTbXwjZSM8vPrtEBJTOfgJW67mN0mzwdm7tBaYy7iTqdtcWuGwaCgxEuUtkBJH9kyt+EeOI3FA4Igz77RxYXP4v943r9jaOtf1OzxGFxO57E0fjnKpiJVoWj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VPrsvzY3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rhb6QGgM; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1761052440; c=relaxed/simple;
+	bh=eZsGO0YRORtt+rNaF1/402zK4tUJfNObqbC0b6JLT/g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DFh3R8CLBtQAFDmn5GgaSNFK7PqcqsmWxpVnjwEezE5PD82LnnolSMn9JSuJkVil5QwtpAmzsYjxajW2OpqfQBNRJqK6U4rL10OZ/LsmmJnD+u8ITMSSeEeiMHHZzn4sWMT9tHdqQ1JQ78xn374QfPbn8Zraz/cNzl/cOxbhmbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ko+w91mc; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VPrsvzY3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rhb6QGgM"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AD4A31400126;
-	Tue, 21 Oct 2025 09:00:41 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 21 Oct 2025 09:00:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761051641; x=1761138041; bh=3pqcG2JQ6o
-	KS91bUNaGXS8ubLZ2UefcZQmK5feA6wZI=; b=VPrsvzY3Lwu9dMy9SepIfh2aAC
-	NbEbRwTM9mc/08MpKUS6QB8o/udugFU3D3bu46tUO3zM5+ptcz9gdUuiaEKu8K6K
-	t5vUsNMnLMDq98oyN+Nr6fJIr/IuLkEZKBSw1BI4ihmmV7+fM3/R64FEqA3yoG8P
-	jPfJZ7k3sH3xUPWlxCTdKu09KyReYc5ndVHMskkY/1Vmc99bUwYb0FnUdQx4Z2FT
-	4lIe2/sfoE49urmfreW1XM5y7kqruk5l8ks9IWk6XxwMBH8aPMy3xNl01cQApvQf
-	uvu9C0EC99zg+ExmUstscPNCroZ0RFmNUxIDkF0DiyujBj3LqoAA9HiSBHQg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761051641; x=1761138041; bh=3pqcG2JQ6oKS91bUNaGXS8ubLZ2UefcZQmK
-	5feA6wZI=; b=rhb6QGgMT5gJHjP00QVvNFtfFNhAd6cNHkeA7I9OdjCvTf7grrY
-	FfKNui+wdkTCg6Ci623nYY+IkVWdHAj3GPtkZ7MXrBYEJ7agzW973fDFMqORzncn
-	yJ8hIs+yzlHLFqrJePaqu2SGwBWQ1AlHONFeevcmtT6axZEldCNqpuT7K4lH774R
-	uw8494oD7Q6s5SDsyCCezq4TPxSGjJTbw362Ht7HVBkW5M0CGoKBQH6sIr2+hvpd
-	W8o8KtrukXA8xtfMzV9hN2Vn2omxmDH/OrJ68nwY3WsNNIi/SvGL6aeucGVNPWEA
-	pANzdKecyg1AqvuKOfxKOodUqXVRFlRxwgA==
-X-ME-Sender: <xms:-YP3aCXksIHTUSvFZXLD0nE7Siu-Sj4RccSeKQvBeVM7vsglZNB_rw>
-    <xme:-YP3aGBZOD-gKDijuKqe5R-i7UNBxYMnydCE7B2wbDOK9n7lF6jnwcLgfT7xPgyrd
-    7dPtL1X40GsFQiC-ed6EDi58kLIyiJ-FpdxPhhj59K8Z-l28vYb1w>
-X-ME-Received: <xmr:-YP3aDxWSGTxFKBdr9KCCgsPNYr0tmeBZpau69pN5wbcPyizCL8T9drMqDicTUC6mofEQY-3m5pONWwYfrxI-rpccCoDg9I3wpgo2MlK0RPGrw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedtjeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epieefvdefgfekteeufeeivdffhffhuddtvdeviedvhfdugeeftefhgfffgeefleeunecu
-    ffhomhgrihhnpehinhgtrhgvmhgvnhhtrghlqdhrvghprggtkhdrrghuthhopdhgvghomh
-    gvthhrihgtqdhrvghprggtkhdrrghuthhopdhrvghflhhoghdqvgigphhirhgvrdgruhht
-    ohenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvse
-    htthgrhihlohhrrhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtgho
-    mh
-X-ME-Proxy: <xmx:-YP3aDAjYSBq2uY-W7atYQ_yvRpjeJBPDwxRolkTS8DP4esgzfij5Q>
-    <xmx:-YP3aAaXmon46OUWz8vnml9d6n02IPl1I3eaqDowV7JwXiUImFgXNA>
-    <xmx:-YP3aLgym_Jhf3IHzTVm5maig0l0tqJxkU-xInWhu5au9DcKCno5xQ>
-    <xmx:-YP3aC7yGHt3cNaGakC5All2Y1oP1Y95obykL8LGXxelAcZElQaTYA>
-    <xmx:-YP3aKcb0oitxrgvfBkX0ijwii3KmgXQAdC-fkcsf2jVX5thVRUMJVa9>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Oct 2025 09:00:40 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b8b44c94 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 21 Oct 2025 13:00:38 +0000 (UTC)
-Date: Tue, 21 Oct 2025 15:00:31 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 3/8] builtin/maintenance: introduce "geometric-repack"
- task
-Message-ID: <aPeD75W4FjtTZDYr@pks.im>
-References: <20251016-pks-maintenance-geometric-strategy-v1-0-18943d474203@pks.im>
- <20251016-pks-maintenance-geometric-strategy-v1-3-18943d474203@pks.im>
- <aPLC9FIDR8Y3ayn+@nand.local>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ko+w91mc"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-471076f819bso44012075e9.3
+        for <git@vger.kernel.org>; Tue, 21 Oct 2025 06:13:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761052437; x=1761657237; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=fmlNxDV/6irIIJGy2pg3ml1HedL7VQCK5uMv/J36YdU=;
+        b=ko+w91mc0capXFR043RaL+p1QRZTZ6vCqU30/0EhCm3dMrp9LL5JonGA01w9rZtqUg
+         CVhI6J30tStc65bVyFb8MjyKRBC3YvgTM3XYvRqJMn5lLCK/Rnsiw2QqMX5iWnfuAvOF
+         U1nPDJjswl3gdnlX8/WVahxeZ0ISq1EJ2r9CGu1V74co4Ogt09tGxBWaC+iNwmffpZfD
+         GJzo+Qp6czrmFTMK+kkHSdyCMQb35ydKj0/fKPbA9P3aF5c4rW764eCb8xQu19PEqjJu
+         tXYdjzw+zZUV7xVg8tbcV9m7e2jumlxA0w6cz851uCdUyKCKlOiZCYgZy9PC2WVjQpwB
+         kKHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761052437; x=1761657237;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fmlNxDV/6irIIJGy2pg3ml1HedL7VQCK5uMv/J36YdU=;
+        b=XlBUCY06RGrppl9fqToAZiEgF0gHl5D9WN/zAC8qYnhvYqxqRdxJgzdJwqpd1eJJrY
+         uigzGkPSztd2+Qv+36fUAI3ShLVmpB+dTpE7m++dY8UmHQ5LwKV7uUXpOJdnjD84vQf4
+         3VcYjwvpbF8IcN10EF6ijeZ2ANhbcBvoebvq0fh10c3zfNpOUvjfEaTlJSyInrJXfGmO
+         pMLgl/+NC1PoV3775zCS5OT2NfvZzKoWiwQN+TNoZzJIh2FhPs5Uy+K0lAfxoZZ7acwr
+         ZmgH9RizS1eFgPqn8h7W28F+iWmhMLq5IhUXsRK9qhpJPfw9GKlPwqagj7kbRmNnH5i8
+         qqXA==
+X-Forwarded-Encrypted: i=1; AJvYcCXo9dVmP2Kn6AyKcZw+MLipCRMIVjx06Aypz+amXpn6zbJtC+KdEMeVsLQuJ7IxPrhwxrg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzzBDuJVliPW64OEOva9+ViSqdwe+Th6mf27IAp6z+4MtTR8uf6
+	C247ccfePE+okMvSd8a8cmW2iA7TH5U/kXxU4u+qLkSTvlSxGByQUCxOYUu0P73GJxs=
+X-Gm-Gg: ASbGncuZLN5Z4CMl7xVFnaq9qhq6HQbvP80bHXOLe9TOT1ZSMdVOY+m4CPkTG68pTDm
+	Bu+WBOAeNUtc00XimeRmXQd2MNUIntXkfMYA/bw18fDlUaenLEnib2KtLO7ELvPVxWyQKvPutaT
+	rLWEuBJSQOSnux3GDCO7QrsFlJNLF27IiIE7v64IHvzHeZGFG6nAP+LkZCI9ctr6Y3MsPwRNQ1q
+	/VkPebC8yyk8TVjDyMUFzIRlW21yf3UxJfdvQuKj8f7S76n9aOduhb4Gto9gS++TJoUYKw+LvyX
+	5/2G3O2nV+ShI+mjTSDpkfZJcHR6JWeGDG4CEyDuXywUXrGDFw9CDlqmxOWPmOzR3Mr1wrRCBN3
+	muHXS/ln1ZjLMBGNgs0ieBx9uz70iw5FVauVwvQx95trO6TY0ZhTU2lzsrLTz1j0OENsnKl4B3g
+	cx1ir1SnOqnqv4hW4j0fzdvHoZLHy0WX1wKD0sUE3mMa2tOOdkVwjWCMXXkr4+I3o=
+X-Google-Smtp-Source: AGHT+IH9xCmgIWhl9vlXoq1uFEF0HI5X2XM+IkfWvUMQpPZBZNGVo2n1BqkfDclTpYrgiaCS0dvkFA==
+X-Received: by 2002:a05:6000:2406:b0:427:9d7:870f with SMTP id ffacd0b85a97d-42709d78818mr10153255f8f.5.1761052436230;
+        Tue, 21 Oct 2025 06:13:56 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-427ea5a0e9csm20510525f8f.5.2025.10.21.06.13.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Oct 2025 06:13:55 -0700 (PDT)
+Message-ID: <786d6c19-0a13-4e55-8f4b-39b57dd6ea28@gmail.com>
+Date: Tue, 21 Oct 2025 14:13:52 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aPLC9FIDR8Y3ayn+@nand.local>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 2/9] xdiff: make xrecord_t.ptr a uint8_t instead of char
+To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Ezekiel Newren <ezekielnewren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
+ <7b9e8961d42e0f367ba0782e7d932607aa7e0b0a.1760563101.git.gitgitgadget@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <7b9e8961d42e0f367ba0782e7d932607aa7e0b0a.1760563101.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Oct 17, 2025 at 06:28:04PM -0400, Taylor Blau wrote:
-> On Thu, Oct 16, 2025 at 09:26:34AM +0200, Patrick Steinhardt wrote:
-> > Introduce a new "geometric-repack" task. This task uses our geometric
-> > repack infrastructure as provided by git-repack(1) itself, which is ab
-> > strategy that especially hosting providers tend to use to amortize the
-> > costs of repacking objects.
-> >
-> > There is one issue though with geometric repacks, namely that they
-> > unconditionally pack all loose objects, regardless of whether or not
-> > they are reachable. This is done because it means that we can completely
-> > skip the reachability step, which significantly speeds up the operation.
-> > But it has the big downside that we are unable to expire objects over
-> > time.
-> >
-> > To address this issue we thus use a split strategy in this new task:
-> > whenever a geometric repack would merge together all packs, we instead
-> > do an all-into-one repack. By default, these all-into-one repacks have
-> > cruft packs enabled, so unreachable objects would now be written into
-> > their own pack. Consequently, they won't be soaked up during geometric
-> > repacking anymore and can be expired with the next full repack, assuming
-> > that their expiry date has surpassed.
+On 15/10/2025 22:18, Ezekiel Newren via GitGitGadget wrote:
+> From: Ezekiel Newren <ezekielnewren@gmail.com>
 > 
-> Well put. Geometric repacking today is really only what objects appear
-> in the packfiles, not whether those objects are reachable or not. That's
-> partially by design: geometric repack operations are meant to be as
-> lightweight and quick as possible, so performing a potentially expensive
-> reachability traversal defeats the purpose.
+> Rust uses u8 to refer to bytes in memory. Since xrecord_t.ptr is also
+> referring to bytes in memory, rather than unicode code points, use
+> uint8_t instead of char.
+
+It C "char" never refers to a unicode code point so I don't follow the 
+reasoning here. Isn't the reason you want to change from "char" to 
+"uint8_t" to match rust? Given "char" and "uint8_t" are the same width 
+why can't we use "char" in the C struct and "u8" in the rust struct as 
+the two structs would still have the same layout?
+
+I agree with Patrick's comments on this patch - it would be nice to know 
+how you decided where to add casts. Given that rust is going to be 
+optional for at least a year we should take care to leave the C code in 
+good shape with a minimum number of casts.
+
+Thanks
+
+Phillip
+
+> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+> ---
+>   xdiff/xdiffi.c    |  8 ++++----
+>   xdiff/xemit.c     |  6 +++---
+>   xdiff/xmerge.c    | 14 +++++++-------
+>   xdiff/xpatience.c |  2 +-
+>   xdiff/xprepare.c  |  8 ++++----
+>   xdiff/xtypes.h    |  2 +-
+>   xdiff/xutils.c    |  4 ++--
+>   7 files changed, 22 insertions(+), 22 deletions(-)
 > 
-> This mirrors what GitHub does today with their own repository
-> maintenance implementation. There is some number of geometric repack
-> operations interspersed between full repacks which collapse the
-> geometric progression and move unreachable objects out into cruft packs.
+> diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+> index 6f3998ee54..411a8aa69f 100644
+> --- a/xdiff/xdiffi.c
+> +++ b/xdiff/xdiffi.c
+> @@ -407,7 +407,7 @@ static int get_indent(xrecord_t *rec)
+>   	int ret = 0;
+>   
+>   	for (i = 0; i < rec->size; i++) {
+> -		char c = rec->ptr[i];
+> +		uint8_t c = rec->ptr[i];
+>   
+>   		if (!XDL_ISSPACE(c))
+>   			return ret;
+> @@ -993,11 +993,11 @@ static void xdl_mark_ignorable_lines(xdchange_t *xscr, xdfenv_t *xe, long flags)
+>   
+>   		rec = &xe->xdf1.recs[xch->i1];
+>   		for (i = 0; i < xch->chg1 && ignore; i++)
+> -			ignore = xdl_blankline(rec[i].ptr, rec[i].size, flags);
+> +			ignore = xdl_blankline((const char *)rec[i].ptr, rec[i].size, flags);
+>   
+>   		rec = &xe->xdf2.recs[xch->i2];
+>   		for (i = 0; i < xch->chg2 && ignore; i++)
+> -			ignore = xdl_blankline(rec[i].ptr, rec[i].size, flags);
+> +			ignore = xdl_blankline((const char *)rec[i].ptr, rec[i].size, flags);
+>   
+>   		xch->ignore = ignore;
+>   	}
+> @@ -1008,7 +1008,7 @@ static int record_matches_regex(xrecord_t *rec, xpparam_t const *xpp) {
+>   	size_t i;
+>   
+>   	for (i = 0; i < xpp->ignore_regex_nr; i++)
+> -		if (!regexec_buf(xpp->ignore_regex[i], rec->ptr, rec->size, 1,
+> +		if (!regexec_buf(xpp->ignore_regex[i], (const char *)rec->ptr, rec->size, 1,
+>   				 &regmatch, 0))
+>   			return 1;
+>   
+> diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+> index b2f1f30cd3..ead930088a 100644
+> --- a/xdiff/xemit.c
+> +++ b/xdiff/xemit.c
+> @@ -27,7 +27,7 @@ static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *
+>   {
+>   	xrecord_t *rec = &xdf->recs[ri];
+>   
+> -	if (xdl_emit_diffrec(rec->ptr, rec->size, pre, strlen(pre), ecb) < 0)
+> +	if (xdl_emit_diffrec((char const *)rec->ptr, rec->size, pre, strlen(pre), ecb) < 0)
+>   		return -1;
+>   
+>   	return 0;
+> @@ -113,8 +113,8 @@ static long match_func_rec(xdfile_t *xdf, xdemitconf_t const *xecfg, long ri,
+>   	xrecord_t *rec = &xdf->recs[ri];
+>   
+>   	if (!xecfg->find_func)
+> -		return def_ff(rec->ptr, rec->size, buf, sz);
+> -	return xecfg->find_func(rec->ptr, rec->size, buf, sz, xecfg->find_func_priv);
+> +		return def_ff((const char *)rec->ptr, rec->size, buf, sz);
+> +	return xecfg->find_func((const char *)rec->ptr, rec->size, buf, sz, xecfg->find_func_priv);
+>   }
+>   
+>   static int is_func_rec(xdfile_t *xdf, xdemitconf_t const *xecfg, long ri)
+> diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
+> index fd600cbb5d..75cb3e76a2 100644
+> --- a/xdiff/xmerge.c
+> +++ b/xdiff/xmerge.c
+> @@ -101,8 +101,8 @@ static int xdl_merge_cmp_lines(xdfenv_t *xe1, int i1, xdfenv_t *xe2, int i2,
+>   	xrecord_t *rec2 = xe2->xdf2.recs + i2;
+>   
+>   	for (i = 0; i < line_count; i++) {
+> -		int result = xdl_recmatch(rec1[i].ptr, rec1[i].size,
+> -			rec2[i].ptr, rec2[i].size, flags);
+> +		int result = xdl_recmatch((const char *)rec1[i].ptr, rec1[i].size,
+> +			(const char *)rec2[i].ptr, rec2[i].size, flags);
+>   		if (!result)
+>   			return -1;
+>   	}
+> @@ -324,8 +324,8 @@ static int xdl_fill_merge_buffer(xdfenv_t *xe1, const char *name1,
+>   
+>   static int recmatch(xrecord_t *rec1, xrecord_t *rec2, unsigned long flags)
+>   {
+> -	return xdl_recmatch(rec1->ptr, rec1->size,
+> -			    rec2->ptr, rec2->size, flags);
+> +	return xdl_recmatch((const char *)rec1->ptr, rec1->size,
+> +			    (const char *)rec2->ptr, rec2->size, flags);
+>   }
+>   
+>   /*
+> @@ -382,10 +382,10 @@ static int xdl_refine_conflicts(xdfenv_t *xe1, xdfenv_t *xe2, xdmerge_t *m,
+>   		 * we have a very simple mmfile structure.
+>   		 */
+>   		t1.ptr = (char *)xe1->xdf2.recs[m->i1].ptr;
+> -		t1.size = xe1->xdf2.recs[m->i1 + m->chg1 - 1].ptr
+> +		t1.size = (char *)xe1->xdf2.recs[m->i1 + m->chg1 - 1].ptr
+>   			+ xe1->xdf2.recs[m->i1 + m->chg1 - 1].size - t1.ptr;
+>   		t2.ptr = (char *)xe2->xdf2.recs[m->i2].ptr;
+> -		t2.size = xe2->xdf2.recs[m->i2 + m->chg2 - 1].ptr
+> +		t2.size = (char *)xe2->xdf2.recs[m->i2 + m->chg2 - 1].ptr
+>   			+ xe2->xdf2.recs[m->i2 + m->chg2 - 1].size - t2.ptr;
+>   		if (xdl_do_diff(&t1, &t2, xpp, &xe) < 0)
+>   			return -1;
+> @@ -440,7 +440,7 @@ static int line_contains_alnum(const char *ptr, long size)
+>   static int lines_contain_alnum(xdfenv_t *xe, int i, int chg)
+>   {
+>   	for (; chg; chg--, i++)
+> -		if (line_contains_alnum(xe->xdf2.recs[i].ptr,
+> +		if (line_contains_alnum((const char *)xe->xdf2.recs[i].ptr,
+>   				xe->xdf2.recs[i].size))
+>   			return 1;
+>   	return 0;
+> diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
+> index 669b653580..bb61354f22 100644
+> --- a/xdiff/xpatience.c
+> +++ b/xdiff/xpatience.c
+> @@ -121,7 +121,7 @@ static void insert_record(xpparam_t const *xpp, int line, struct hashmap *map,
+>   		return;
+>   	map->entries[index].line1 = line;
+>   	map->entries[index].hash = record->ha;
+> -	map->entries[index].anchor = is_anchor(xpp, map->env->xdf1.recs[line - 1].ptr);
+> +	map->entries[index].anchor = is_anchor(xpp, (const char *)map->env->xdf1.recs[line - 1].ptr);
+>   	if (!map->first)
+>   		map->first = map->entries + index;
+>   	if (map->last) {
+> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
+> index 192334f1b7..4cb18b2b88 100644
+> --- a/xdiff/xprepare.c
+> +++ b/xdiff/xprepare.c
+> @@ -99,8 +99,8 @@ static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t
+>   	hi = (long) XDL_HASHLONG(rec->ha, cf->hbits);
+>   	for (rcrec = cf->rchash[hi]; rcrec; rcrec = rcrec->next)
+>   		if (rcrec->rec.ha == rec->ha &&
+> -				xdl_recmatch(rcrec->rec.ptr, rcrec->rec.size,
+> -					rec->ptr, rec->size, cf->flags))
+> +				xdl_recmatch((const char *)rcrec->rec.ptr, rcrec->rec.size,
+> +					(const char *)rec->ptr, rec->size, cf->flags))
+>   			break;
+>   
+>   	if (!rcrec) {
+> @@ -156,8 +156,8 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
+>   			if (XDL_ALLOC_GROW(xdf->recs, xdf->nrec + 1, narec))
+>   				goto abort;
+>   			crec = &xdf->recs[xdf->nrec++];
+> -			crec->ptr = prev;
+> -			crec->size = (long) (cur - prev);
+> +			crec->ptr = (uint8_t const *)prev;
+> +			crec->size =(long) ( cur - prev);
+>   			crec->ha = hav;
+>   			if (xdl_classify_record(pass, cf, crec) < 0)
+>   				goto abort;
+> diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
+> index 3514bb1684..57983627f5 100644
+> --- a/xdiff/xtypes.h
+> +++ b/xdiff/xtypes.h
+> @@ -39,7 +39,7 @@ typedef struct s_chastore {
+>   } chastore_t;
+>   
+>   typedef struct s_xrecord {
+> -	char const *ptr;
+> +	uint8_t const *ptr;
+>   	long size;
+>   	unsigned long ha;
+>   } xrecord_t;
+> diff --git a/xdiff/xutils.c b/xdiff/xutils.c
+> index 447e66c719..7be063bfb6 100644
+> --- a/xdiff/xutils.c
+> +++ b/xdiff/xutils.c
+> @@ -465,10 +465,10 @@ int xdl_fall_back_diff(xdfenv_t *diff_env, xpparam_t const *xpp,
+>   	xdfenv_t env;
+>   
+>   	subfile1.ptr = (char *)diff_env->xdf1.recs[line1 - 1].ptr;
+> -	subfile1.size = diff_env->xdf1.recs[line1 + count1 - 2].ptr +
+> +	subfile1.size = (char *)diff_env->xdf1.recs[line1 + count1 - 2].ptr +
+>   		diff_env->xdf1.recs[line1 + count1 - 2].size - subfile1.ptr;
+>   	subfile2.ptr = (char *)diff_env->xdf2.recs[line2 - 1].ptr;
+> -	subfile2.size = diff_env->xdf2.recs[line2 + count2 - 2].ptr +
+> +	subfile2.size = (char *)diff_env->xdf2.recs[line2 + count2 - 2].ptr +
+>   		diff_env->xdf2.recs[line2 + count2 - 2].size - subfile2.ptr;
+>   	if (xdl_do_diff(&subfile1, &subfile2, xpp, &env) < 0)
+>   		return -1;
 
-Yeah, we also do the same at GitLab.
-
-> So I think that what you did here makes a ton of sense to me. Ultimately
-> I think there is a middle ground for geometric repacking (well outside
-> of the scope for this series ;-), don't worry) that could make it do a
-> little bit of both.
-> 
-> If 'git pack-objects --stdin-packs' (what ultimately implements the
-> portion of geometric repacking that combines packs together) knew the
-> current state of a repository's references, it could mark the objects in
-> the packs to be combined as either reachable or unreachable. Then in a
-> specialized mode, you could exclude any objects which are unreachable
-> from the resulting pack, and take a separate pass to write out a cruft
-> pack containing those objects before ultimately deleting the combined
-> packs.
-> 
-> I think that is all possible to do, and I think there is a way we could
-> do it relatively quickly without harming the performance of geometric
-> repacking. When traversing and marking objects, we can stop as soon as
-> we see an object that is not contained in the packs that that we're
-> combining.
-> 
-> So I don't think we have to do a whole-repository walk, which would
-> indeed defeat the purpose of geometric repacking. The above procedure
-> would cause us to write out small cruft packs, but we could use the
-> --combine-cruft-below-size option of 'git repack' to prevent too many
-> small cruft packs from accumulating together.
-> 
-> Anyway, nothing of that has anything to do with what you wrote here ;-).
-> It was mostly an excuse for me to write down some of these thoughts that
-> I've had in my head and alluded to briefly a couple of weeks ago at Git
-> Merge. Expect some actual patches in this direction from me in the not
-> too distant future :-).
-
-Looking forward to them :)
-
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  Documentation/config/maintenance.adoc |  11 +++
-> >  builtin/gc.c                          | 102 +++++++++++++++++++++++++
-> >  t/t7900-maintenance.sh                | 137 ++++++++++++++++++++++++++++++++++
-> >  3 files changed, 250 insertions(+)
-> >
-> > diff --git a/Documentation/config/maintenance.adoc b/Documentation/config/maintenance.adoc
-> > index 2f719342183..26dc5de423f 100644
-> > --- a/Documentation/config/maintenance.adoc
-> > +++ b/Documentation/config/maintenance.adoc
-> > @@ -75,6 +75,17 @@ maintenance.incremental-repack.auto::
-> >  	number of pack-files not in the multi-pack-index is at least the value
-> >  	of `maintenance.incremental-repack.auto`. The default value is 10.
-> >
-> > +maintenance.geometric-repack.auto::
-> > +	This integer config option controls how often the `geometric-repack`
-> > +	task should be run as part of `git maintenance run --auto`. If zero,
-> > +	then the `geometric-repack` task will not run with the `--auto`
-> > +	option. A negative value will force the task to run every time.
-> > +	Otherwise, a positive value implies the command should run either when
-> > +	there are packfiles that need to be merged together to retain the
-> > +	geometric progression, or when there are at least this many loose
-> > +	objects that would be written into a new packfile. The default value is
-> > +	100.
-> > +
-> 
-> OK. To make sure I understand: this limit is the minimum number of loose
-> objects would cause the geometric-repack task to run, unless there are
-> pack(s) which would be combined as a result of running a geometric
-> repack, in which case we run it regardless.
-> 
-> Is that right?
-
-Yeah, exactly. I was initially thinking to only frame this in the
-context of "how many packs would be merged"? But the problem with that
-is that we wouldn't ever generate _new_ packs if the repository only
-ever grows loose objects, and consequently we also wouldn't ever merge
-any of them.
-
-> >  maintenance.reflog-expire.auto::
-> >  	This integer config option controls how often the `reflog-expire` task
-> >  	should be run as part of `git maintenance run --auto`. If zero, then
-> > diff --git a/builtin/gc.c b/builtin/gc.c
-> > index 026d3a1d714..2c9ecd464d2 100644
-> > --- a/builtin/gc.c
-> > +++ b/builtin/gc.c
-> > @@ -34,6 +34,7 @@
-> >  #include "pack-objects.h"
-> >  #include "path.h"
-> >  #include "reflog.h"
-> > +#include "repack.h"
-> 
-> Hey, neat ;-).
-
-Yup, your refactorings helped a bunch :)
-
-> > @@ -1566,6 +1568,101 @@ static int maintenance_task_incremental_repack(struct maintenance_run_opts *opts
-> >  	return 0;
-> >  }
-> >
-> > +static int maintenance_task_geometric_repack(struct maintenance_run_opts *opts,
-> > +					     struct gc_config *cfg)
-> > +{
-> > +	struct pack_geometry geometry = {
-> > +		.split_factor = 2,
-> 
-> I wonder if this should be configurable somewhere. It might not be a bad
-> idea to introduce a 'repack.geometricSplitFactor' configuration
-> variable, defaulting to two, and use that here. It would also be nice to
-> be able to run 'git repack --geometric -d' and have it fallback to that
-> split factor, since using "2" is so common that it's frustrating when I
-> forget to type it out explicitly ;-).
-
-I was also pondering over this. I think the way to do so would be to
-introduce "maintenance.geometric-repack.splitFactor", as that follows
-all the other maintenance configuration we have there, as well.
-
-I decided to not do it yet as I wanted to keep the scope of this patch
-series contained. But honestly, it's an easy-enough change to make, so
-let me introduce another patch to do this.
-
-> > +	};
-> > +	struct pack_objects_args po_args = {
-> > +		.local = 1,
-> > +	};
-> > +	struct existing_packs existing_packs = EXISTING_PACKS_INIT;
-> > +	struct string_list kept_packs = STRING_LIST_INIT_DUP;
-> > +	struct child_process child = CHILD_PROCESS_INIT;
-> > +	int ret;
-> > +
-> > +	existing_packs.repo = the_repository;
-> > +	existing_packs_collect(&existing_packs, &kept_packs);
-> > +	pack_geometry_init(&geometry, &existing_packs, &po_args);
-> > +	pack_geometry_split(&geometry);
-> > +
-> > +	child.git_cmd = 1;
-> > +
-> > +	strvec_pushl(&child.args, "repack", "-d", "-l", NULL);
-> > +	if (geometry.split < geometry.pack_nr)
-> > +		strvec_push(&child.args, "--geometric=2");
-> > +	else
-> > +		add_repack_all_option(cfg, NULL, &child.args);
-> 
-> Makes sense; if we're not merging any packs, we do an all-into-one
-> repack, otherwise we do a geometric one. Looks like the function
-> geometric_repack_auto_condition() below controls whether or not we even
-> take this path, which makes sense relative to the documentation you
-> wrote above.
-
-It does, but only in case we do `git maintenance run --auto`. If you run
-`git maintenance run` without the flag we unconditionally execute this
-code here. But that's fine: if the repository is already well-optimized
-we don't end up doing anything.
-
-> > +static int geometric_repack_auto_condition(struct gc_config *cfg UNUSED)
-> > +{
-> > +	struct pack_geometry geometry = {
-> > +		.split_factor = 2,
-> > +	};
-> > +	struct pack_objects_args po_args = {
-> > +		.local = 1,
-> > +	};
-> > +	struct existing_packs existing_packs = EXISTING_PACKS_INIT;
-> > +	struct string_list kept_packs = STRING_LIST_INIT_DUP;
-> > +	int auto_value = 100;
-> > +	int ret;
-> > +
-> > +	repo_config_get_int(the_repository, "maintenance.geometric-repack.auto",
-> > +			    &auto_value);
-> > +	if (!auto_value)
-> > +		return 0;
-> > +	if (auto_value < 0)
-> > +		return 1;
-> > +
-> > +	existing_packs.repo = the_repository;
-> > +	existing_packs_collect(&existing_packs, &kept_packs);
-> > +	pack_geometry_init(&geometry, &existing_packs, &po_args);
-> > +	pack_geometry_split(&geometry);
-> > +
-> > +	/*
-> > +	 * When we'd merge at least two packs with one another we always
-> > +	 * perform the repack.
-> > +	 */
-> > +	if (geometry.split) {
-> > +		ret = 1;
-> > +		goto out;
-> > +	}
-> 
-> Hmm. I wish that we could somehow pass this information to the function
-> above so that we don't have to re-discover the fact that there are packs
-> to combine. I'm not familiar enough with the maintenance code to know
-> how difficult that would be to do, but it looks like at least the
-> gc_config pointer is shared between the auto condition and the task
-> itself.
-> 
-> That's kind of gross to tack on there, but I could see a compelling
-> argument for passing around an extra void pointer between the two that
-> would allow us to propagate this kind of data between the auto condition
-> and the task itself. It's not super expensive to do so I don't think not
-> doing it is a show-stopper at least from a performance perspective, but
-> it does seem like a good opportunity to DRY things up a bit.
-
-The problem is that the auto-condition is not evaluated when running
-without the "--auto" flag. We of course can conditionally compute the
-split in case we figure that the auto-condition didn't run, but it does
-get somewhat dirty.
-
-So I'd propose to defer such a change into the future in case we notice
-that this indeed is a problem. Is that fine with you?
-
-> > diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> > index ddd273d8dc2..83a373fe94b 100755
-> > --- a/t/t7900-maintenance.sh
-> > +++ b/t/t7900-maintenance.sh
-> > @@ -465,6 +465,143 @@ test_expect_success 'maintenance.incremental-repack.auto (when config is unset)'
-> >  	)
-> >  '
-> >
-> > +run_and_verify_geometric_pack () {
-> > +	EXPECTED_PACKS="$1" &&
-> > +
-> > +	# Verify that we perform a geometric repack.
-> > +	rm -f "trace2.txt" &&
-> > +	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
-> > +		git maintenance run --task=geometric-repack 2>/dev/null &&
-> > +	test_subcommand git repack -d -l --geometric=2 --quiet --write-midx <trace2.txt &&
-> 
-> Makes sense. I do think the test_subcommand thing is a little fragile
-> here, but verifying that the resulting pack structure forms a geometric
-> progression feels like overkill for this test, so I think what you wrote
-> here makes sense.
-
-Oh, yeah, it's fragile and somewhat gross indeed. Couldn't really find a
-nicer way to do it though :/
-
-> As an aside, would you mind wrapping these lines instead of putting the
-> command-line invocation all together on a single line?
-
-Sure, can do.
-
-> > +
-> > +	# Verify that the number of packfiles matches our expectation.
-> > +	ls -l .git/objects/pack/*.pack >packfiles &&
-> > +	test_line_count = "$EXPECTED_PACKS" packfiles &&
-> > +
-> > +	# And verify that there are no loose objects anymore.
-> > +	cat >expect <<-\EOF &&
-> > +	info
-> > +	pack
-> > +	EOF
-> > +	ls .git/objects >actual &&
-> 
-> I wonder if there is an easier way to check for loose objects here that
-> doesn't require you to know that the "info" and "pack" directories
-> exist. Perhaps something like:
-> 
-> test_stdout_line_count = 0 find .git/objects/?? -type f
-> 
-> , or even
-> 
->     find .git/objects/?? -type f >loose.objs &&
->     test_must_be_empty loose.objs
-
-This doesn't work though in case there is not even a single sharding
-directory:
-
-    find: '.git/objects/??': No such file or directory
-
-I didn't really have any other idea for now to do this.
-
-> > +test_expect_success 'geometric repacking task' '
-> > +	test_when_finished "rm -rf repo" &&
-> > +	git init repo &&
-> > +	(
-> > +		cd repo &&
-> > +		git config set maintenance.auto false &&
-> > +		test_commit initial &&
-> > +
-> > +		# The initial repack causes an all-into-one repack.
-> > +		GIT_TRACE2_EVENT="$(pwd)/initial-repack.txt" \
-> > +			git maintenance run --task=geometric-repack 2>/dev/null &&
-> > +		test_subcommand git repack -d -l --cruft --cruft-expiration=2.weeks.ago --quiet --write-midx <initial-repack.txt &&
-> > +
-> > +		# Repacking should now cause a no-op geometric repack because
-> > +		# no packfiles need to be combined.
-> > +		ls -l .git/objects/pack >before &&
-> > +		run_and_verify_geometric_pack 1 &&
-> > +		ls -l .git/objects/pack >after &&
-> > +		test_cmp before after &&
-> > +
-> > +		# This incremental change creates a new packfile that only
-> > +		# soaks up loose objects. The packfiles are not getting merged
-> > +		# at this point.
-> > +		test_commit loose &&
-> > +		run_and_verify_geometric_pack 2 &&
-> 
-> I wonder if you want to harden this test a little bit to ensure that the
-> there is only one new pack being created here, and we're not seeing
-> e.g., the removal of the existing pack and creation of two new packs.
-> 
-> I dunno, that may be overkill for this test, and I certainly don't feel
-> strongly about it.
-
-Yeah, I had the same thought when writing this, but it quickly got ugly.
-I then decided to not do this and instead only verify that the structure
-loosely looks like we expect, and that the expected command actually
-ran.
-
-In the end we can rely on t7703 to verify the internals of how exactly
-the geometric repack works, whereas here we only verify that the
-strategy works as expected.
-
-> > +
-> > +		# Both packfiles have 3 objects, so the next run would cause us
-> > +		# to merge both packfiles together. This should be turned into
-> 
-> Perhaps s/both/all/ ? What you wrote is not wrong, of course, but I
-> think "all" more clearly communicates that we are only doing an
-> all-into-one because the geometric repack would have combined everything
-> together anyway.
-
-Sure, happy to reword.
-
-Thanks for your review!
-
-Patrick
