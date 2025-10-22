@@ -1,267 +1,115 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0DF28D83D
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 18:51:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7275827B32C
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 18:55:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761159089; cv=none; b=KR3/pYaACBGn0Zvh6xvMBOoU9P0b+iemeE51TWSwmLIfu6RrO3PBl5JH37nEvjEBPAcm/Uv1Zb0s5tz3ROavBoeSruQdR1FLV9+7UBTnW0tqYbvmr6FTtnJBAdPA0ulwGikOYv/P6iK1eDKfbRb5a+pmSp7vSvH48k6QYqvP8iU=
+	t=1761159304; cv=none; b=EXuNShyTXPccTHzrF/3h7+khXZ0Qgk5X7QcYZVgmjxbiTCj17jBSdbvcliWTMDGIgYelnCTncZRt6Wu/u/rmtzC1jputH8Sn3xEfOIbbKBo74RVr+I5zy8Q+gWU2EjmuvTnsnaXBRFx4cdb+gdSvvBY8cRFvtRqhbEjF2aOtzg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761159089; c=relaxed/simple;
-	bh=d58kQdNOFNNwdvYK+/fjg4AyuMFyYoXBApcZiylukmQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WZ7iZfaVFTzFHO8AaE7O3OfH7uJJkYWInbG+BTzVQBrpUdbMdCvP2DHbCKgGPnAUXyfiOFni+cmlEahPQKMRK5neEjodZNv+FgZ4kLayvYDiQ6lO77ZE7/O3UQKEh+XR5fNzLkUDBUMqztP2wkiHGP7GDOM2ADaWobqPSy7gEI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VyzSNDQX; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761159304; c=relaxed/simple;
+	bh=N+GdwSZOYMsxcGofbjyipcPEzqg8Ad27iKvw7F7w75I=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=kvTXuU7xI52kqwbSqMHMkKjfLEhAzjjNDRFQs0PVzQniDph5IFzEBcBbACs20QB5e5Lk8e+1RG6aZ6HrAIIhzxrq2gXuDkdo1IiwwRbzV/dKum5z6iFtKNkEa+oXTXwASeRJNNZbSRZnsDyiNBCIVZRDKNLyENJ7ugAzz7rXKU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bCRAo+bP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KHdFxafZ; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VyzSNDQX"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-26a0a694ea8so51591855ad.3
-        for <git@vger.kernel.org>; Wed, 22 Oct 2025 11:51:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761159086; x=1761763886; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Fy8BrARgvURwxMbPAuIOa2MDri70FzkAMH369kdiPy8=;
-        b=VyzSNDQXNUSznQ6E/yXnAFLV7hHc+sJBdce5uE1vU67FoxNkdAm6gkyYS5J8/OXStz
-         6F93gmAn+Rl0grGIn8h/noH62QqaNcy7SArxB/0SgqJ1FXYXICOVWaH0tQr6lhE/VEQj
-         5QfG+P0/1OurfNuc25bFkYCuq42Zux9K/50s5t6QDgKFXU+vqHcAF66CcXlbp2RZ8tIQ
-         QcLXMomYoS0VhXTgcJFA/+j88JXi0FI6AFl3IGgD4O3VtYUe4ObBn7M5cS+eBkWvpgrQ
-         8yHVWrm56vU942LolSLCzzFXOD9ErI60hPWgF5VHInzn+QNzNaScxppiGXuVqCG/QCzh
-         xMSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761159086; x=1761763886;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Fy8BrARgvURwxMbPAuIOa2MDri70FzkAMH369kdiPy8=;
-        b=BZnwFFDxs1rcm0WxBnxQngCAha02JLKLrZMgt3SLZ4h8rgENxH78xN43tToj6dGCoN
-         ZA78R9CguSVyLCsArkYokK0vt8GJwlXKLnLLke6ubUzJWtsoNDwzUN+WQTaeOFlXIg5O
-         fCc9JxWy3ibxs61DYXz2qTRvSx3l8XlHruaPK0ET9RB79v0YbtAXNJfPN1341ArtWyr2
-         37iPHHHerh75da5G2ueGDMqktdKXRu/4IGGzSjT4fNc+Z55RGVJP/3nA85qAUfgBHb6U
-         MioJs+uxWRplCG9mQ1Z6r3PJInowKlF4ke5MG8i41Q2S5f4ksroy31tnPUwqGHrNwhzH
-         ctxQ==
-X-Gm-Message-State: AOJu0Ywc4km47jfIOSL8YmjkvcU9U1wJPh0FVkweZxkcnqWXnGmII2N7
-	5XIS6/Y8kCei8AwvW9hkJBhjt/wfrFHoE22NZCs+wCsacwQIqEUfGawFjkF/doMPmW8=
-X-Gm-Gg: ASbGncujqo0maOAxltvsGeD5T0AcIxClDBftX3j6atQIL/RbF86Tnvq8Tx/DiVRhEXW
-	RkIL5+TBttZS2VvNvG9WcX9vSI5gsb98pqaAAanPc8mgP5HZKlQQv/xW3t+cKlm06KGF5DUnd7B
-	hOA5/T9KcN+nqy+E7Tti7+UdyV1p0yvx/Xd3Y3CDRpFRU4ge1+rfPl620fghNM6rcu6SCqfAht0
-	BiWMSaA5Q4bk/dmaZqEtGRIs2JHrEUBu2GgaSiSifj9jjzEvjTC9YpQGtaW6jvO4F47XSRplNLo
-	1F6DPGHHqqoo1vBhBpMFxbW0K7426Ynf/V55AkMMDGJ1G7e9qHZ3rzkiYcefp8tC514cqy3myZ+
-	p0fPgYba5uaVBbn1QwVdkUbzzGpVaoI9hkbnvamo/2HYf7uuNYZ3YaoWGajpwxDMp36mVGoStx2
-	TyHfnFruD0/r1AU+kz5R47Vr7rBjve63DO09tVkO0ChOE42Oc3uLejcn9evdkE/c7NyQMkha9sT
-	ifJQzQDX4zMwJ7cNgbzK97wDobItJnPyQ==
-X-Google-Smtp-Source: AGHT+IHWhow+iZYAFWo6lmMYuF6Th24Te8ZxUILkH0V1xgyr2KZNWj1vfcpmaHDJXdv8+/BPIGdYBQ==
-X-Received: by 2002:a17:902:f611:b0:267:44e6:11b3 with SMTP id d9443c01a7336-290cb27af27mr234030335ad.45.1761159086317;
-        Wed, 22 Oct 2025 11:51:26 -0700 (PDT)
-Received: from localhost.localdomain ([2409:40e3:176:32cf:8d9c:2c8b:22d4:a7e2])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2930623208bsm25691755ad.31.2025.10.22.11.51.20
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 22 Oct 2025 11:51:25 -0700 (PDT)
-From: Siddharth Asthana <siddharthasthana31@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	phillip.wood123@gmail.com,
-	phillip.wood@dunelm.org.uk,
-	newren@gmail.com,
-	gitster@pobox.com,
-	ps@pks.im,
-	karthik.188@gmail.com,
-	code@khaugsbakk.name,
-	rybak.a.v@gmail.com,
-	jltobler@gmail.com,
-	toon@iotcl.com,
-	johncai86@gmail.com,
-	johannes.schindelin@gmx.de,
-	Siddharth Asthana <siddharthasthana31@gmail.com>
-Subject: [PATCH v4 3/3] replay: add replay.refAction config option
-Date: Thu, 23 Oct 2025 00:20:45 +0530
-Message-ID: <20251022185045.29256-4-siddharthasthana31@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251022185045.29256-1-siddharthasthana31@gmail.com>
-References: <20251013183311.33329-1-siddharthasthana31@gmail.com>
- <20251022185045.29256-1-siddharthasthana31@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bCRAo+bP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KHdFxafZ"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8AE60EC0201;
+	Wed, 22 Oct 2025 14:55:01 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Wed, 22 Oct 2025 14:55:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1761159301;
+	 x=1761245701; bh=lcedHc0fquAtPaxCbY5lCgCGb1ws3rYJqRt8T0tp/E8=; b=
+	bCRAo+bPbrrgSwUCIfGN1RF4cFCNBXxcGudPe7awLsgmeNvU7EmDfPGib/OS59Jx
+	NzmqU5NrKh4qjoPs0GwcVAPJUosCUCfywAFA2KPeIMrkD/JRRi9REUCQBTAgxKtW
+	Kjvyx1MVfhEgTPzr7vldU3WxlOVaBzo8yZoKV/3Diq4bJa8xxIBEwv3RAhx/7K/g
+	X/c3itxOtq/QHJHFk1a2vFbL75vTIoOL+V4JBmy0NhKrPJuChLy73ELiHM4ZZyop
+	yzgc9RSCLp6Zap02iRUgnQ5mdF4JYWE534OHQPqrPUecDMDUL5wLAI6TijT4m52Z
+	cLmeH1RMljjvSkicP51HWw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1761159301; x=
+	1761245701; bh=lcedHc0fquAtPaxCbY5lCgCGb1ws3rYJqRt8T0tp/E8=; b=K
+	HdFxafZ8xDWsH9GP2nsTVI9G1BsDdbLIXLltHS18N8BLzz7aSGFKlXSDZFwAu2+P
+	380eZlpgEAVZa0bgIFWpUcRs6zNZPaRyvVuJ/FcoNrgmN/Eb9GDmMNU2QFhNciDi
+	hgXbOdtNBYLWuVZvzN9DAy6h/Wr4g2GT2BWVd1PzUxIxAtPfuctk3gYrHYGCT/9i
+	kbUcbB2HTDc+U62TFK29SIf0E6KRACGxrn6KRwP4RwIBcg/w8d3eupKq7wgknbEA
+	gG0UC4H/WsqK6bDmHHgnaZr6S2ImieEUlTBYZr8ps7PS1gtzSGDtfZozM8zxMCo7
+	JCf6QA6FZrJarnh/0SHvg==
+X-ME-Sender: <xms:hSj5aO-4iWyf2pJbCEd9N2wM0QXzFs4dY8j_QOtfTD928HMvcq4xZw>
+    <xme:hSj5aFleS8x6qbEivUnWQ36t5Kj5VDso2nKOOE7rHdecPEfQggU0PVMnKQpbuSkBf
+    IuKuxGc9d16YrW-a2zH18BCNA-niY-xD7vApzik7o8khUOKZtVhN_g>
+X-ME-Received: <xmr:hSj5aMW0-X1n6ImteBRPeyV5NWbztmMQ7oRdw1yMkTQysajYNByiqWh5EDENt3XbiUPjJJhIF61SDhZRniJJXQrKGxjqphIhNjzF>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeegfeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkefotddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpeekgfdtuedvjeffgfehueefueeghfdtjefhgfekhffhteeiffetheelhedt
+    gfehtdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
+    dprhgtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehkrhhishhtohhf
+    fhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomh
+X-ME-Proxy: <xmx:hSj5aCEg-PyuPvhWDPVzGM98ih-YFZmSrEHkL9CkU652syVZNDblWw>
+    <xmx:hSj5aAcRBRTnCyRhS5RFORvGhVlkQg_O3DdhcbNEa-JUdgDDnMstLg>
+    <xmx:hSj5aLLj5NsSf_qiZoIR1SRU38CUxobYv1fB48bY6vFYO0PYvat-9g>
+    <xmx:hSj5aNEmWN8CXhq1Q6Wn2igyIg6yKWaglW6D4s7p9qReGmMcYetdCA>
+    <xmx:hSj5aO3nwVn7pabh5fRAnFwOcWh5SGS-0DiQXgilJRvkQ3HBwvSreh9h>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 22 Oct 2025 14:55:00 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: Johannes Sixt <j6t@kdbg.org>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  git@vger.kernel.org
+Subject: Re: [rfc] flip rerere.enabled default to be "on" at Git 3.0 boundary?
+In-Reply-To: <80220653-7302-4E4D-99E9-1A8CB5B4F23D@gmail.com> (Ben Knoble's
+	message of "Wed, 22 Oct 2025 13:45:01 -0400")
+References: <bec27479-c53f-472c-87c7-374321108ad5@kdbg.org>
+	<80220653-7302-4E4D-99E9-1A8CB5B4F23D@gmail.com>
+Date: Wed, 22 Oct 2025 11:54:59 -0700
+Message-ID: <xmqqsefaydfg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Add a configuration option to control the default behavior of git replay
-for updating references. This allows users who prefer the traditional
-pipeline output to set it once in their config instead of passing
---ref-action=print with every command.
+Ben Knoble <ben.knoble@gmail.com> writes:
 
-The config option uses string values that mirror the behavior modes:
-  * replay.refAction = update (default): atomic ref updates
-  * replay.refAction = print: output commands for pipeline
+>> I think I'm saying that I am mildly opposed to enable rerere by default
+>> as long as it has this sharp edge.
+>
+> Fair points. Could I ask an enterprising reader to summarize the sharp edges of rerere that need polished? It could make an effective todo list to aim for prior to 3.0. Here’s what I recall seeing:
+> - messaging is not clear
+> - usage for dealing with incorrect caches needs improvement (should be useable without expert intervention)
+>     - as a first step, perhaps having rerere and status display more information about possible steps to take (review results, keep or discard) would help?
 
-The command-line --ref-action option always overrides the config setting,
-allowing users to temporarily change behavior for a single invocation.
+- delete/modify conflicts are not recorded and replayed due to
+  safety concerns [*], but in practice, most of the time it seems
+  that the user wishes to re-resolve such a conflict to 'delete' the
+  path.
 
-Implementation details:
+[Footnote]
 
-In cmd_replay(), after parsing command-line options, we check if
---ref-action was provided. If not, we read the configuration using
-repo_config_get_string_tmp(). If the config variable is set, we validate
-the value and use it to set the ref_action_str:
-
-  Config value      Internal mode    Behavior
-  ──────────────────────────────────────────────────────────────
-  "update"          "update"         Atomic ref updates (default)
-  "print"           "print"          Pipeline output
-  (not set)         "update"         Atomic ref updates (default)
-  (invalid)         error            Die with helpful message
-
-If an invalid value is provided, we die() immediately with an error
-message explaining the valid options. This catches configuration errors
-early and provides clear guidance to users.
-
-The command-line --ref-action option, when provided, overrides the
-config value. This precedence allows users to set their preferred default
-while still having per-invocation control:
-
-  git config replay.refAction print         # Set default
-  git replay --ref-action=update --onto main topic  # Override once
-
-The config and command-line option use the same value names ('update'
-and 'print') for consistency and clarity. This makes it immediately
-obvious how the config maps to the command-line option, addressing
-feedback about the relationship between configuration and command-line
-options being clear to users.
-
-Examples:
-
-$ git config --global replay.refAction print
-$ git replay --onto main topic1..topic2 | git update-ref --stdin
-
-$ git replay --ref-action=update --onto main topic1..topic2
-
-$ git config replay.refAction update
-$ git replay --onto main topic1..topic2  # Updates refs directly
-
-The implementation follows Git's standard configuration precedence:
-command-line options override config values, which matches user
-expectations across all Git commands.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Elijah Newren <newren@gmail.com>
-Helped-by: Christian Couder <christian.couder@gmail.com>
-Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
----
- Documentation/config/replay.adoc | 11 +++++++++
- builtin/replay.c                 | 16 +++++++++++-
- t/t3650-replay-basics.sh         | 42 ++++++++++++++++++++++++++++++++
- 3 files changed, 68 insertions(+), 1 deletion(-)
- create mode 100644 Documentation/config/replay.adoc
-
-diff --git a/Documentation/config/replay.adoc b/Documentation/config/replay.adoc
-new file mode 100644
-index 0000000000..7d549d2f0e
---- /dev/null
-+++ b/Documentation/config/replay.adoc
-@@ -0,0 +1,11 @@
-+replay.refAction::
-+	Specifies the default mode for handling reference updates in
-+	`git replay`. The value can be:
-++
-+--
-+	* `update`: Update refs directly using an atomic transaction (default behavior).
-+	* `print`: Output update-ref commands for pipeline use.
-+--
-++
-+This setting can be overridden with the `--ref-action` command-line option.
-+When not configured, `git replay` defaults to `update` mode.
-diff --git a/builtin/replay.c b/builtin/replay.c
-index 1246add636..bb0420dc99 100644
---- a/builtin/replay.c
-+++ b/builtin/replay.c
-@@ -8,6 +8,7 @@
- #include "git-compat-util.h"
- 
- #include "builtin.h"
-+#include "config.h"
- #include "environment.h"
- #include "hex.h"
- #include "lockfile.h"
-@@ -367,7 +368,20 @@ int cmd_replay(int argc,
- 	die_for_incompatible_opt2(!!advance_name_opt, "--advance",
- 				  contained, "--contained");
- 
--	/* Default to update mode if not specified */
-+	/* Set default mode from config if not specified on command line */
-+	if (!ref_action_str) {
-+		const char *config_value = NULL;
-+		if (!repo_config_get_string_tmp(repo, "replay.refAction", &config_value)) {
-+			if (!strcmp(config_value, "update"))
-+				ref_action_str = "update";
-+			else if (!strcmp(config_value, "print"))
-+				ref_action_str = "print";
-+			else
-+				die(_("invalid value for replay.refAction: '%s'"), config_value);
-+		}
-+	}
-+
-+	/* Default to update mode if still not set */
- 	if (!ref_action_str)
- 		ref_action_str = "update";
- 
-diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-index 54c86b87d8..307beb667e 100755
---- a/t/t3650-replay-basics.sh
-+++ b/t/t3650-replay-basics.sh
-@@ -217,4 +217,46 @@ test_expect_success 'merge.directoryRenames=false' '
- 		--onto rename-onto rename-onto..rename-from
- '
- 
-+test_expect_success 'replay.refAction config option' '
-+	# Store original state
-+	START=$(git rev-parse topic2) &&
-+	test_when_finished "git branch -f topic2 $START && git config --unset replay.refAction" &&
-+
-+	# Set config to print
-+	git config replay.refAction print &&
-+	git replay --onto main topic1..topic2 >output &&
-+	test_line_count = 1 output &&
-+	grep "^update refs/heads/topic2 " output &&
-+
-+	# Reset and test update mode
-+	git branch -f topic2 $START &&
-+	git config replay.refAction update &&
-+	git replay --onto main topic1..topic2 >output &&
-+	test_must_be_empty output &&
-+
-+	# Verify ref was updated
-+	git log --format=%s topic2 >actual &&
-+	test_write_lines E D M L B A >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'command-line --ref-action overrides config' '
-+	# Store original state
-+	START=$(git rev-parse topic2) &&
-+	test_when_finished "git branch -f topic2 $START && git config --unset replay.refAction" &&
-+
-+	# Set config to update but use --ref-action=print
-+	git config replay.refAction update &&
-+	git replay --ref-action=print --onto main topic1..topic2 >output &&
-+	test_line_count = 1 output &&
-+	grep "^update refs/heads/topic2 " output
-+'
-+
-+test_expect_success 'invalid replay.refAction value' '
-+	test_when_finished "git config --unset replay.refAction" &&
-+	git config replay.refAction invalid &&
-+	test_must_fail git replay --onto main topic1..topic2 2>error &&
-+	grep "invalid value for replay.refAction" error
-+'
-+
- test_done
--- 
-2.51.0
-
+ * The modification that is safe to discard when resolving the
+   conflict to remove the path today may not apply if the
+   modification to the path that is deleted is different and may
+   require a different resolution other than discarding it.
