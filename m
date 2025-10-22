@@ -1,56 +1,56 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C162F0696
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 06:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43902F1FFC
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 06:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761115293; cv=none; b=S4bPwJ82Op9LHgGQ1noHXkD4aOoc2eejfpVMPSicE8nki//Z3bqx5j7Frf8iRRRJ4E4Fu9PsGDdJ2SFVdO3saOSQvcxZ0SMbMEBdIp3UJXlUNNoyHmShDi+peRbCXdm4ao9jaBZbLykxFeXw/2tn+9IAtu9ZhbWQmnRpTo9vlyo=
+	t=1761115296; cv=none; b=NexWRKbylfe4aH4/sBeUNiaST3zS6fGBwvG2nh79dUSsGLnX7gAHQcBVF1R5G4Mh/bxMPEvVOmOWsbUGUAVgqTnmKpqAJv9Mkcaqo9Hd60uUZj2mSnQITU36QO1/gZDnqZUleXBsX12MPnogSVijts8Gxi5lwMYEBPAE2aYQSIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761115293; c=relaxed/simple;
-	bh=Eg1zJEIyKJyFYBvrIE3tPW8fvRAH0yELrHzbw453xiA=;
+	s=arc-20240116; t=1761115296; c=relaxed/simple;
+	bh=jbj7jpsxxyI3ZJVJ7Rz+22FnYranHB17aocrQQmpfBI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=k+qeYY0A78fip4+lJYGLxwEB+AIOYjGpU7qvgiiXay3qbL7RU+YsekbdGSGPvS5WxzbEq0XjCCwMEDdlCBOvlJQwYuA2rpXcsa7nQcd8LYm30ihqxZ9c5jnkxNEZ+rdqPxpEPK9ShbO4YzNnbmbTw1M8LJgeiE/K6tu++mEtj0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SA9R1wRD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oCEkHq20; arc=none smtp.client-ip=202.12.124.152
+	 In-Reply-To:To:Cc; b=ZCqw7KTsqSvGq7tfFESl8RqTrWOXM7lhdFzpq+XDX0UGwDkjcTiY5gSa25o6OXauJTB6/c/A1Ya7h9gZTJ7ztO7wEg1o3RUyxxtbKYuZzvUfa7j6BxAw+SJE7l9vLyrgxyH5gCHNnzmSGuHpJER6Nd90mnX2xXaISDEGKNRnfas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qJRHGSZB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nlYPJU93; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SA9R1wRD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oCEkHq20"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id DEE917A0083;
-	Wed, 22 Oct 2025 02:41:30 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qJRHGSZB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nlYPJU93"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C61967A0096;
+	Wed, 22 Oct 2025 02:41:33 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 22 Oct 2025 02:41:31 -0400
+  by phl-compute-09.internal (MEProxy); Wed, 22 Oct 2025 02:41:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1761115290;
-	 x=1761201690; bh=8mtdVCGs99E5fz+dgg+jJjGgGj8bku7fdiHF7c1wRZI=; b=
-	SA9R1wRDdsf8JQuJTl8Eacy9lrIOcsduTehytqWpx3yWtACJthL+HL5egMipRYlh
-	KU8jpldNwabvuleESMT+bEVBHds0OvSzPpHoV/nfiMDjENRUgZ/ZBCEEMB30HuOR
-	D7qxKrEHItlkQlY2mCf8aIGRCi+Sx7TQUOyQf3DdLnIVxAUF/LJcBxmC917hnHv3
-	dkh/Dot4+vU5/utK6wvcFeCOZdcuUlkORrGr1li0VoVNrd1KjBEy/vaZ5kJ1A8AQ
-	rm0oLcsnw/kru3hoG5iUDXt+0FqU0yGl8Jd5N8ucI1HYxBNRHtsz3CtIAellGlYb
-	l7I0ym3OydZLJ+KMGKNeMQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1761115293;
+	 x=1761201693; bh=13xq5buPbG9VcuxLkgEsovGjlnCUBsbrY4W34vFbxZU=; b=
+	qJRHGSZBPT+gLfg+dBWyxbHqHw69Gz65kd9Iq3Z26HY/3LdhgFLPwm2iyap9viLh
+	lGrqGXMrQUypf9IALuvFksQsjwGzl9aaIZ+28Vw/Vd5tNeC4PWR4QIFLLduoJIJl
+	cSkFx6XQRnAU+lKSPJFIKOiTw8FaJz84CseymcRRPpdlX92L8ep/b0Gcv5KKAGPN
+	cXB/YyuNFOInXhIAb1Glctq07g071mL0LSS6f9urGSvbpKjUxghno4ig9ai14gWM
+	UdZkGX0HlKWV1LEajd2SA6Y/Yog26YQlG0cwRfkDF0icf3xgj8sIsGgMUv2pE8J4
+	wIAIzbLxVu6cfWPb5ikZow==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1761115290; x=
-	1761201690; bh=8mtdVCGs99E5fz+dgg+jJjGgGj8bku7fdiHF7c1wRZI=; b=o
-	CEkHq20tWt/PuGmRDkQUMT83GrHpw3n+tZTQLfUEUDz/lfmxaBs1W6V1iwIZQeGl
-	h7+PreqYC7oiblw6KSQ7vvsjF+iHlpCSvZ+EDT32Umd6G6SPahLjyrzp1KsFejqE
-	/1wN1lUFni1/eBiFFghy4F9nUAPxQzelMpRVw/L2iK/HWDejGW67bp79YQHq2r6Z
-	rhznY/M1KcC/iOXRCHGgVUhqDVNKPa1QstD/iDNCh/yK0KIviDRTlxdOU76mA7/m
-	sz9s1NLVEf63sT643P6iFPRDdXoI6+Xdl7p0YgcnRHRsbcQimRw15s3DY0cr4B0o
-	wWCRCWrjQbn+ZqN+JEvSQ==
-X-ME-Sender: <xms:mnz4aGootY6su4hsiG57EDiai3eyGT3aYUzaD2DDzs5cvJXtF061Ew>
-    <xme:mnz4aIWymqpsG5qo9OtcZq7o8m_gGgOOq3U6AkVY9GcHSJousuEl5qdgVQh-ZtHD3
-    XHudZrxyPUszEsPS-4iIKifjouRdIV4n-E7Osyg9Y7ivGswoe17Py4>
-X-ME-Received: <xmr:mnz4aFDboNHJXR1-AqwCvOXYgel2QQC-_TSDqNNpm-07HTOL3NzwoUDDzL5yxHfPCXsKOmOHuovM7RGfA0nl7_wos5JTxS3SeWONyggLHPc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedvkeelucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1761115293; x=
+	1761201693; bh=13xq5buPbG9VcuxLkgEsovGjlnCUBsbrY4W34vFbxZU=; b=n
+	lYPJU93Dvq84Dyp8yqvcn1+pMQAY87pH0DWu/GGc10VuPTfHuBS6dMRHFjV0BrXx
+	vtxloOTx3B5zObIxNXqpskPkVtxDfo13qR/WiAJb+8Ufa4SBkdgqgTDtdTRvIo0A
+	snmHh59zzG1dDzBuGaPXYwJoyqCbq6Du+1UgRdgWae+BXFRmn5XSsDcXHasrB32F
+	RQXDUrUarCUJ7tCRpePSrHkxv673IbIVBvBVWmeuOCmH5lWcpu4L9gifjpWUuU8c
+	mfvKng6RskSyXwJOKh1lFHmg89NykIl9Jy4QdT7ehyQa2JaOSZ+sa9NEkauzrrY3
+	gzE5y+yat4ricre+AjvPA==
+X-ME-Sender: <xms:nXz4aJMJQyL5blAsDSLJQvYhv2OsUhCLjliLRIFb7mndJwrGiC6nyA>
+    <xme:nXz4aPpmGhaab7rswkhbqtuc-lfQl_A2l3wJM3Bc66MCA7CWAbF71C9hJZp6aEw0-
+    CWwGX5AkfdAL-pjHhlqfgG8siQadyyavGLNx_gp2ydTqG8OGSYl>
+X-ME-Received: <xmr:nXz4aCHP_STwWGXgQxdG0y8vbiKlt58IRU5Bxy-Lpj1o8zuaRAs6Re0U52FzWFdRiFjDcjiy82CGKFlICzs4pLu2iTGghCmVx2PuLzdcihY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedvkeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
@@ -58,26 +58,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedvkeelucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhi
-    hlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtth
-    hopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhf
-    fhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
-X-ME-Proxy: <xmx:mnz4aM2wNDiKO0529XGODMGIUrNsMmC_l5vLG_K7btUFPHA7IKk3cw>
-    <xmx:mnz4aH1EuW6Hk2k6tpARNF_2tlJnmuXkrTzH77kWnuOUtru8pH3z2g>
-    <xmx:mnz4aBCW1rBJ2FNp0nOanhI0TH9m5FcZSUWcnRXKfGaShMMzAkDzkg>
-    <xmx:mnz4aG67-FoQeyrQSrtndaQBWeVERgItHURZy-Tqkerg8ST9Jp_QCw>
-    <xmx:mnz4aPmoJ0bdlNvTVCeHQ0SKlhAKb6PMrei8KnjUnYHXCvdU0LZUpA4I>
+    thhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepkhgr
+    rhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdp
+    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:nXz4aMpGgjxh3E9VQ_yIkL7slj4rpZWD5kcNX4hlq1Z7x4QHsGjizQ>
+    <xmx:nXz4aDZvv6PM6O8oP75UiSoQqYM4vLCctxbzzS_OBaM3jVJqcGQ20Q>
+    <xmx:nXz4aNX8ZJ-XqkhF0Yr463FN4PfPPbmfBS80jwzOCyaHyuIcMd_lQQ>
+    <xmx:nXz4aE97i3HTDOLFBPmHIlWKH6tcB7h2cNf5wBadL2i8QjmNuBP4jw>
+    <xmx:nXz4aJI7In4ZQjIvbh-FDm7ewlWky2egY049vnGB_QZFKJ2etRh2qXeE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Oct 2025 02:41:29 -0400 (EDT)
+ 22 Oct 2025 02:41:32 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7b198661 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 22 Oct 2025 06:41:29 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id d1c8fad4 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 22 Oct 2025 06:41:31 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 22 Oct 2025 08:41:08 +0200
-Subject: [PATCH v3 08/14] builtin/show-ref: convert to use
- `reference_get_peeled_oid()`
+Date: Wed, 22 Oct 2025 08:41:09 +0200
+Subject: [PATCH v3 09/14] refs: drop `current_ref_iter` hack
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251022-b4-pks-ref-filter-skip-parsing-objects-v3-8-eb9f71985ef0@pks.im>
+Message-Id: <20251022-b4-pks-ref-filter-skip-parsing-objects-v3-9-eb9f71985ef0@pks.im>
 References: <20251022-b4-pks-ref-filter-skip-parsing-objects-v3-0-eb9f71985ef0@pks.im>
 In-Reply-To: <20251022-b4-pks-ref-filter-skip-parsing-objects-v3-0-eb9f71985ef0@pks.im>
 To: git@vger.kernel.org
@@ -95,111 +94,97 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
  Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.3
 
-The git-show-ref(1) command has multiple different modes:
+In preceding commits we have refactored all callers of
+`peel_iterated_oid()` to instead use `reference_get_peeled_oid()`. This
+allows us to thus get rid of the former function.
 
-  - It knows to show all references matching a pattern.
-
-  - It knows to list all references that are an exact match to whatever
-    the user has provided.
-
-  - It knows to check for reference existence.
-
-The first two commands use mostly the same infrastructure to print the
-references via `show_one()`. But while the former mode uses a proper
-iterator and thus has a `struct reference` available in its context, the
-latter calls `refs_read_ref()` and thus doesn't. Consequently, we cannot
-easily use `reference_get_peeled_oid()` to print the peeled value.
-
-Adapt the code so that we manually construct a `struct reference` when
-verifying refs. We wouldn't ever have the peeled value available anyway
-as we're not using an iterator here, so we can simply plug in the values
-we _do_ have.
-
-With this change we now have a `struct reference` available at both
-callsites of `show_one()` and can thus pass it, which allows us to use
-`reference_get_peeled_oid()` instead of `peel_iterated_oid()`.
+Getting rid of that function is nice, but even nicer is that this also
+allows us to get rid of the `current_ref_iter` hack. This global
+variable tracked the currently-active ref iterator so that we can use it
+to peel an object ID. Now that the peeled object ID is propagated via
+`struct reference` though we don't have to depend on this hack anymore,
+which makes for a more robust and easier-to-understand infrastructure.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/show-ref.c | 32 +++++++++++++++++++-------------
- 1 file changed, 19 insertions(+), 13 deletions(-)
+ refs.c               | 10 ----------
+ refs/iterator.c      |  5 -----
+ refs/refs-internal.h | 13 -------------
+ 3 files changed, 28 deletions(-)
 
-diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-index 4803b5e5986..4d4984e4e0c 100644
---- a/builtin/show-ref.c
-+++ b/builtin/show-ref.c
-@@ -31,31 +31,31 @@ struct show_one_options {
+diff --git a/refs.c b/refs.c
+index 1b1551f9814..9d8f0a9ca4a 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2324,16 +2324,6 @@ int refs_optimize(struct ref_store *refs, struct pack_refs_opts *opts)
+ 	return refs->be->optimize(refs, opts);
+ }
+ 
+-int peel_iterated_oid(struct repository *r, const struct object_id *base, struct object_id *peeled)
+-{
+-	if (current_ref_iter &&
+-	    (current_ref_iter->ref.oid == base ||
+-	     oideq(current_ref_iter->ref.oid, base)))
+-		return ref_iterator_peel(current_ref_iter, peeled);
+-
+-	return peel_object(r, base, peeled) ? -1 : 0;
+-}
+-
+ int reference_get_peeled_oid(struct repository *repo,
+ 			     const struct reference *ref,
+ 			     struct object_id *peeled_oid)
+diff --git a/refs/iterator.c b/refs/iterator.c
+index fe5980e1b6c..072c6aacdb0 100644
+--- a/refs/iterator.c
++++ b/refs/iterator.c
+@@ -458,15 +458,11 @@ struct ref_iterator *prefix_ref_iterator_begin(struct ref_iterator *iter0,
+ 	return ref_iterator;
+ }
+ 
+-struct ref_iterator *current_ref_iter = NULL;
+-
+ int do_for_each_ref_iterator(struct ref_iterator *iter,
+ 			     each_ref_fn fn, void *cb_data)
+ {
+ 	int retval = 0, ok;
+-	struct ref_iterator *old_ref_iter = current_ref_iter;
+ 
+-	current_ref_iter = iter;
+ 	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
+ 		retval = fn(&iter->ref, cb_data);
+ 		if (retval)
+@@ -474,7 +470,6 @@ int do_for_each_ref_iterator(struct ref_iterator *iter,
+ 	}
+ 
+ out:
+-	current_ref_iter = old_ref_iter;
+ 	if (ok == ITER_ERROR)
+ 		retval = -1;
+ 	ref_iterator_free(iter);
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index ed749d16572..f4f845bbeaf 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -376,19 +376,6 @@ struct ref_iterator_vtable {
+ 	ref_iterator_release_fn *release;
  };
  
- static void show_one(const struct show_one_options *opts,
--		     const char *refname, const struct object_id *oid)
-+		     const struct reference *ref)
- {
- 	const char *hex;
- 	struct object_id peeled;
+-/*
+- * current_ref_iter is a performance hack: when iterating over
+- * references using the for_each_ref*() functions, current_ref_iter is
+- * set to the reference iterator before calling the callback function.
+- * If the callback function calls peel_ref(), then peel_ref() first
+- * checks whether the reference to be peeled is the one referred to by
+- * the iterator (it usually is) and if so, asks the iterator for the
+- * peeled version of the reference if it is available. This avoids a
+- * refname lookup in a common case. current_ref_iter is set to NULL
+- * when the iteration is over.
+- */
+-extern struct ref_iterator *current_ref_iter;
+-
+ struct ref_store;
  
--	if (!odb_has_object(the_repository->objects, oid,
-+	if (!odb_has_object(the_repository->objects, ref->oid,
- 			    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
--		die("git show-ref: bad ref %s (%s)", refname,
--		    oid_to_hex(oid));
-+		die("git show-ref: bad ref %s (%s)", ref->name,
-+		    oid_to_hex(ref->oid));
- 
- 	if (opts->quiet)
- 		return;
- 
--	hex = repo_find_unique_abbrev(the_repository, oid, opts->abbrev);
-+	hex = repo_find_unique_abbrev(the_repository, ref->oid, opts->abbrev);
- 	if (opts->hash_only)
- 		printf("%s\n", hex);
- 	else
--		printf("%s %s\n", hex, refname);
-+		printf("%s %s\n", hex, ref->name);
- 
- 	if (!opts->deref_tags)
- 		return;
- 
--	if (!peel_iterated_oid(the_repository, oid, &peeled)) {
-+	if (!reference_get_peeled_oid(the_repository, ref, &peeled)) {
- 		hex = repo_find_unique_abbrev(the_repository, &peeled, opts->abbrev);
--		printf("%s %s^{}\n", hex, refname);
-+		printf("%s %s^{}\n", hex, ref->name);
- 	}
- }
- 
-@@ -93,7 +93,7 @@ static int show_ref(const struct reference *ref, void *cbdata)
- match:
- 	data->found_match++;
- 
--	show_one(data->show_one_opts, ref->name, ref->oid);
-+	show_one(data->show_one_opts, ref);
- 
- 	return 0;
- }
-@@ -175,12 +175,18 @@ static int cmd_show_ref__verify(const struct show_one_options *show_one_opts,
- 
- 		if ((starts_with(*refs, "refs/") || refname_is_safe(*refs)) &&
- 		    !refs_read_ref(get_main_ref_store(the_repository), *refs, &oid)) {
--			show_one(show_one_opts, *refs, &oid);
--		}
--		else if (!show_one_opts->quiet)
-+			struct reference ref = {
-+				.name = *refs,
-+				.oid = &oid,
-+			};
-+
-+			show_one(show_one_opts, &ref);
-+		} else if (!show_one_opts->quiet) {
- 			die("'%s' - not a valid ref", *refs);
--		else
-+		} else {
- 			return 1;
-+		}
-+
- 		refs++;
- 	}
- 
+ /* refs backends */
 
 -- 
 2.51.1.851.g4ebd6896fd.dirty
