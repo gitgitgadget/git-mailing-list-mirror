@@ -1,49 +1,49 @@
 Received: from sender3-pp-f112.zoho.com (sender3-pp-f112.zoho.com [136.143.184.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77172EBDF2
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 05:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573B02EC099
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 05:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.184.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761111637; cv=pass; b=ctfZuELMKASBTJ82+mkiWdEPBU1Mz6bALcNOuLqWRdOVh2nXQzNpixzJC9ijfJApvPS87qTUAcnFOsK5V8zI5FTCFkV3Sa7U2TPOx8VBEBvXV1VgtbQDwnLSAWDhg6dHg2lfLbAWgyy1mBINTSwGe1C/8v8o8ADRJRoMywX8vgQ=
+	t=1761111649; cv=pass; b=V3mjGcgNkEDN5dqmXqgpclfEqgUu0LWVQiZhUMy7UD+tlje88Xs36TwRsmXF5HQNXJiL2J+UhTO1vdZemIeNLqbDQ7Lk6+6Xl8ljvvW1aczRMHDya+JXyoXwOqGQ9C2XZm/Hw+uf6VFcBZpzY7rG3VbsdTTERc0Vy1kKbsCQLgw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761111637; c=relaxed/simple;
-	bh=OeHch5da8KEgBlAtFdnC+P+9mmsOQaK4Wqo5dsyrFrY=;
+	s=arc-20240116; t=1761111649; c=relaxed/simple;
+	bh=tYtAm9azdNoDx+KxrT7UK7hnpontnkONlfx+lGzNdvc=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WLDQXSy6RhF7LfulC+HhqnxoFNdxRhctot4bc5sgWP8jfbu1yBrOWvp1220+jGGYlU+xyoTDkumiDvt0l7zF7jvT4BRZVxLg7jwlzL6vSwnY297s2ULyU5aownfk1I28oUUEosG9B00puniLcyg1jR0nkrDf63a8YSMU+Ghd978=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=EmiDnn5/; arc=pass smtp.client-ip=136.143.184.112
+	 MIME-Version; b=AZYd0E/y5/HLgkyqN5owXXTLwGufArMGwqunz5oK8Xyt5Z5VGytcBuU3CmQJ+FcqPz1KTAvI69rrSkcYCzDa8OrX3NjaCXt6V2tC32gFqr2sEmrDRrTVbV90dYDS1zQsnHC+NI/OUQo9x3WceSrX76/GoPJgjkZaXzypddBb1O4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=PFwdjSeS; arc=pass smtp.client-ip=136.143.184.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="EmiDnn5/"
-ARC-Seal: i=1; a=rsa-sha256; t=1761111603; cv=none; 
+	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="PFwdjSeS"
+ARC-Seal: i=1; a=rsa-sha256; t=1761111605; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=IzdEOkTAkkkQ+wEYYMyQ9hnLP/jPVUzbsd8DcKuJEbwzP9Y5LAN7e3VbMmIxmied6YlCouSWuDsAgi/KZ4AlyI3PfFyGrRNXhW4NTaUV9LIOtLjLknoaHhjKIYuoc97hKbE1zAtxgt466OMSp7oZmeMEYPaWUGse9daoRPi3Kag=
+	b=EuvlfW4yoMZ6syMGUD1bhCjW/Lf/4ak/sG32DJVmSYVHTPX3ryGIT7iJkpZpjlF09Q8u6ZcvXs//azaGQVJFkTXY70s2m7k2p5u3vSx5Qbh6BxWIiSqefeCX23EfbfBXGagO3crsN5Bq9Iket0R1ihdJhijzIENIRQ+/id7mR20=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1761111603; h=Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
-	bh=nTfMKgEm4zC72C2XM6Cx1asixJPH46HtUuUJ2v7Op0g=; 
-	b=JjPNHaLVYF1EN426whZvf71QMqgDqLmc//v+VJP9VWl0fGTskkIhadJoiKtWprzvt2IEsDBQcBxt449syBSNOBy5sP1b1Ixi5E9PNR5oiH25oayIs2BjyqbJs5WUFj+RDjw5jaDh9/cpdEETIX0J3aoPk5k1jfQrnq9xs78+Is8=
+	t=1761111605; h=Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
+	bh=JuRHfollfCAC8Mrvb064WFwn5V/ahajrvpbgC6Tv6PA=; 
+	b=WwIE2i0+IWS5L1itlEIxxMgHvTV4T0BnK6AEiL/EaM+Ly3jWr8jN44z5UD1Qb2my6kh5MfcMO7ZYiaAzgbahKnNP0npWeTGQ5Fvt/zuemN+aZjJWhjXBlDCX9nM1/hFsb3bBJOQnGWrZhMHXHvHTH6Gi4Gj5SvcXgEdEMloj4t8=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=linux.beauty;
 	spf=pass  smtp.mailfrom=me@linux.beauty;
 	dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761111603;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761111605;
 	s=zmail; d=linux.beauty; i=me@linux.beauty;
 	h=From:From:To:To:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
-	bh=nTfMKgEm4zC72C2XM6Cx1asixJPH46HtUuUJ2v7Op0g=;
-	b=EmiDnn5/75DAFl4pMr7TU7Xb6vM7movrFTMdOGnu1vgRgN7zXznlK2jVN0arWTvh
-	GVxpYXg7XoqrnHInClYidwbrjsLn114KYfO4ochnECnkENUVnFQog01WxU79PJKOtEy
-	v+qhfmcPiKzEL5tdN2slicwxd1a2140/tN+KQ1JY=
-Received: by mx.zohomail.com with SMTPS id 1761111600954150.27738079242772;
-	Tue, 21 Oct 2025 22:40:00 -0700 (PDT)
+	bh=JuRHfollfCAC8Mrvb064WFwn5V/ahajrvpbgC6Tv6PA=;
+	b=PFwdjSeSVXkxygzMVUOfOjlI4sl+YJ/P/fDW0eLMRA7ntWj0P8/PRPL8GAVrXsVD
+	FveDer7ZoBoi3zEkAn5W4sNHFq/D8Ksa7zKIU+SK93qi9EmngNbj7wrFF9bLy7BeUun
+	l1bgrs/sOiGjyF1mdTj/FIgHGCyMAjtIslafmIQk=
+Received: by mx.zohomail.com with SMTPS id 1761111602906160.80367597274687;
+	Tue, 21 Oct 2025 22:40:02 -0700 (PDT)
 From: Li Chen <me@linux.beauty>
 To: "phillipwood" <phillip.wood@dunelm.org.uk>,
 	"git" <git@vger.kernel.org>,
 	"Junio C Hamano" <gitster@pobox.com>,
 	"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v5 02/29] trailer: restore interpret_trailers helper
-Date: Wed, 22 Oct 2025 13:39:22 +0800
-Message-ID: <20251022053951.602605-3-me@linux.beauty>
+Subject: [PATCH v5 03/29] trailer: drop --trailer prefix handling in amend helper
+Date: Wed, 22 Oct 2025 13:39:23 +0800
+Message-ID: <20251022053951.602605-4-me@linux.beauty>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251022053951.602605-1-me@linux.beauty>
 References: <20251022053951.602605-1-me@linux.beauty>
@@ -56,94 +56,61 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-The change factors the duplicated
-read/process/write logic into a single
-interpret_trailers() helper(which was removed
-in previous commit) while preserving the
-original error handling and output paths for
-both in-place edits and stdout output.
-
-cmd_interpret_trailers() now reuses the helper
-for each filename and for the stdin path,
-keeping the option parsing and safety checks intact.
+Make callers pass plain trailer text instead of recreating
+the option prefix before invoking interpret-trailers.
 
 Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
 ---
- builtin/interpret-trailers.c | 50 +++++++++++++++++++-----------------
- 1 file changed, 27 insertions(+), 23 deletions(-)
+ builtin/commit.c | 2 +-
+ builtin/tag.c    | 3 +--
+ trailer.c        | 5 +----
+ 3 files changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index be0fa83f79..2c8b6fc3b9 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -104,6 +104,30 @@ static void read_input_file(struct strbuf *sb, const char *file)
- 	strbuf_complete_line(sb);
- }
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 0243f17d53..67070d6a54 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1719,7 +1719,7 @@ int cmd_commit(int argc,
+ 		OPT_STRING(0, "fixup", &fixup_message, N_("[(amend|reword):]commit"), N_("use autosquash formatted message to fixup or amend/reword specified commit")),
+ 		OPT_STRING(0, "squash", &squash_message, N_("commit"), N_("use autosquash formatted message to squash specified commit")),
+ 		OPT_BOOL(0, "reset-author", &renew_authorship, N_("the commit is authored by me now (used with -C/-c/--amend)")),
+-		OPT_PASSTHRU_ARGV(0, "trailer", &trailer_args, N_("trailer"), N_("add custom trailer(s)"), PARSE_OPT_NONEG),
++		OPT_CALLBACK_F(0, "trailer", &trailer_args, N_("trailer"), N_("add custom trailer(s)"), PARSE_OPT_NONEG, parse_opt_strvec),
+ 		OPT_BOOL('s', "signoff", &signoff, N_("add a Signed-off-by trailer")),
+ 		OPT_FILENAME('t', "template", &template_file, N_("use specified template file")),
+ 		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")),
+diff --git a/builtin/tag.c b/builtin/tag.c
+index f0665af3ac..65c4a0b36b 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -499,8 +499,7 @@ int cmd_tag(int argc,
+ 		OPT_CALLBACK_F('m', "message", &msg, N_("message"),
+ 			       N_("tag message"), PARSE_OPT_NONEG, parse_msg_arg),
+ 		OPT_FILENAME('F', "file", &msgfile, N_("read message from file")),
+-		OPT_PASSTHRU_ARGV(0, "trailer", &trailer_args, N_("trailer"),
+-				  N_("add custom trailer(s)"), PARSE_OPT_NONEG),
++		OPT_CALLBACK_F(0, "trailer", &trailer_args, N_("trailer"), N_("add custom trailer(s)"), PARSE_OPT_NONEG, parse_opt_strvec),
+ 		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of tag message")),
+ 		OPT_BOOL('s', "sign", &opt.sign, N_("annotated and GPG-signed tag")),
+ 		OPT_CLEANUP(&cleanup_arg),
+diff --git a/trailer.c b/trailer.c
+index 2fe49df23a..b7b0029e05 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -1235,12 +1235,9 @@ static int amend_strbuf_with_trailers(struct strbuf *buf,
+ 	opts.no_divider = 1;
  
-+static void interpret_trailers(const struct process_trailer_options *opts,
-+			       struct list_head *new_trailer_head,
-+			       const char *file)
-+{
-+	struct strbuf in_buf = STRBUF_INIT;
-+	struct strbuf out_buf = STRBUF_INIT;
-+
-+	read_input_file(&in_buf, file);
-+	if (trailer_process(opts, in_buf.buf, new_trailer_head, &out_buf) < 0) {
-+		if (file)
-+			die(_("failed to process trailers for %s"), file);
-+		else
-+			die(_("failed to process trailers"));
-+	}
-+
-+	if (opts->in_place)
-+		write_file_buf(file, out_buf.buf, out_buf.len);
-+	else
-+		fwrite(out_buf.buf, 1, out_buf.len, stdout);
-+
-+	strbuf_release(&in_buf);
-+	strbuf_release(&out_buf);
-+}
-+
- int cmd_interpret_trailers(int argc,
- 			   const char **argv,
- 			   const char *prefix,
-@@ -149,33 +173,13 @@ int cmd_interpret_trailers(int argc,
+ 	for (i = 0; i < trailer_args->nr; i++) {
+-		const char *arg = trailer_args->v[i];
+-		const char *text;
++		const char *text = trailer_args->v[i];
+ 		struct new_trailer_item *item;
  
- 	if (argc) {
- 		int i;
--		for (i = 0; i < argc; i++) {
--			struct strbuf in_buf = STRBUF_INIT;
--			struct strbuf out_buf = STRBUF_INIT;
--
--			read_input_file(&in_buf, argv[i]);
--			if (trailer_process(&opts, in_buf.buf, &trailers, &out_buf) < 0)
--				die(_("failed to process trailers for %s"), argv[i]);
--			if (opts.in_place)
--				write_file_buf(argv[i], out_buf.buf, out_buf.len);
--			else
--				fwrite(out_buf.buf, 1, out_buf.len, stdout);
--			strbuf_release(&in_buf);
--			strbuf_release(&out_buf);
--		}
-+		for (i = 0; i < argc; i++)
-+			interpret_trailers(&opts, &trailers, argv[i]);
- 	} else {
--		struct strbuf in_buf = STRBUF_INIT;
--		struct strbuf out_buf = STRBUF_INIT;
--
- 		if (opts.in_place)
- 			die(_("no input file given for in-place editing"));
- 
--		read_input_file(&in_buf, NULL);
--		if (trailer_process(&opts, in_buf.buf, &trailers, &out_buf) < 0)
--			die(_("failed to process trailers"));
--		fwrite(out_buf.buf, 1, out_buf.len, stdout);
--		strbuf_release(&in_buf);
--		strbuf_release(&out_buf);
-+		interpret_trailers(&opts, &trailers, NULL);
- 	}
- 
- 	new_trailers_clear(&trailers);
+-		if (!skip_prefix(arg, "--trailer=", &text))
+-			text = arg;
+ 		if (!*text)
+ 			continue;
+ 		item = xcalloc(1, sizeof(*item));
 -- 
 2.51.0
 
