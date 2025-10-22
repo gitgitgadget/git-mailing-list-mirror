@@ -1,49 +1,49 @@
 Received: from sender3-pp-f112.zoho.com (sender3-pp-f112.zoho.com [136.143.184.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7A62F0671
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 05:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FF22EC568
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 05:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.184.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761111773; cv=pass; b=mbwlXdl1AhAf8teSzB3JyA7aXShr95QghutAxVH7UqryC8NKEiQPLzk/QW8/jx7Z2aVzDFhBpgdUKxi+8Kljt3m1BNsma5d/6m/FYSeiUzAblRDuKR7U1uJ0uZsstIqMizl3mh+/doxOq1IiiE7ho7spx9TeKJPkqC0JvYQfL04=
+	t=1761111783; cv=pass; b=Dv5l+2C3y4xXI0bx/AidyYwO5sUHZ4/Wn3lIqLqNVpekQbq3deER9wjm7O0vSeIIkHMEVifzlyp122I7NkYlT9Bw6vXszLEACuiGKG3o3PowaqWPq+gAVApDbSyLg7pj6O97DtrtS8Ux1+9Sl9/Yy0RSwzgZb2zbwEwATDP74dQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761111773; c=relaxed/simple;
-	bh=PDUr8tRenQNO0gAwbfUqo6FeMvBYsG8AyPyzVfsrjMs=;
+	s=arc-20240116; t=1761111783; c=relaxed/simple;
+	bh=AiEys76qAjfvHbKweLz01/pdLjatLtiDuiwY/XSehfM=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FE/uxhY+ArFUTaImd4hwKftUHDaMf1ARTpbOu+16HEwwXGNR/7a23YdpqYeid7HQMChnIUQ+eYeLrhW3ye5Rp8w0hZG8iADVCvdDweoezLVMCMjh2WE56xkf782TTkQme4mYpV9RPgGWLYqPpXlHwpuAtkrEFdq7iEbxB0DWIZw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=PZIcEC6a; arc=pass smtp.client-ip=136.143.184.112
+	 MIME-Version; b=eTJen+hEG6QBB1mbeXh6nKSuDFPKtVUfNBftDJIhZkUIDQ+cxsSj6PnIJHKqx07B4MHy6nRSKnGezYNKLVVkODWWmEep76jPdGFuyyrepsNPr0XdAHK481dZd+x+uGQX12MQTSFjP+F65lnGxHFaTPasCpkcmsJzRNpnxC7G9RU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=OQtJT+Lz; arc=pass smtp.client-ip=136.143.184.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="PZIcEC6a"
-ARC-Seal: i=1; a=rsa-sha256; t=1761111629; cv=none; 
+	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="OQtJT+Lz"
+ARC-Seal: i=1; a=rsa-sha256; t=1761111630; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=kTn3x9/RcZoVoH4GMZR0tgBKQ8a0TzPxigc9+pDQNVQqfNZ5SMln8T1X6P+llarG7lgXrQ84HosHPvJsj53ZhDIpopUvRk8vDBy0DE3kmsBr8584zC4XRN1MrNaiPqL1uZwhVuRKqQy9HHhpjTV4V6W1rCuCTLMrWZeWWwxS0iM=
+	b=HQ8baq0GUFd4LI9fksqOPu/mXYjKMjmXMr8JJGMXt87m2teWGEWz8J7bfTJ+pfh+KtYrbSKvkAjAHJti0Y0xkWzolZUB0NQDTt0jsX78gUnnWydu4kIXb0iM7Aw1Eg4YKTq2JpYFRxUOnqDMRNkAzYpQYSxoHGD6EvGmHplLoWg=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1761111629; h=Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
-	bh=5Ug4EaJ/jejRBCvhMgusbw5S1Ci9FnLXk6VH5M4luwk=; 
-	b=MYrLRu3sijb7iUkw54jPqC+D5pBd3nClrQyiVBNEQtSlqRoP9t/fYbd5Numsnf6+00n4xWlnDIicY/PGYqN4KUSN801R8fpfKNovNLTEdtH0OEPCYWa1s5OWgAM8Fla/Gf8splaULBdf4R9N6bc3P7kY2pzN8OEXfajMbTdYiSc=
+	t=1761111630; h=Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
+	bh=xoLvhdlg7qOcu3L0DcQ7Df8Jx8xs8lqmqSGHlo8t9oQ=; 
+	b=fvN/MuA0NWvQsVg1MMgN8MGNaMJmedhqVDmbO25Ccj3O/PtiDSQI8k+UB8ryyKJmlRycqPGzP9/Y09udF353zpbBJ2Snx1X08TwVZaBAl9FdxQYi/C2EnhMe5iUUwOqT8bC5lJosBXafP32y7NCakCQB1alneT6n/vZNhJSKmwc=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=linux.beauty;
 	spf=pass  smtp.mailfrom=me@linux.beauty;
 	dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761111629;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761111630;
 	s=zmail; d=linux.beauty; i=me@linux.beauty;
 	h=From:From:To:To:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
-	bh=5Ug4EaJ/jejRBCvhMgusbw5S1Ci9FnLXk6VH5M4luwk=;
-	b=PZIcEC6aIIv4hMIKTyG+Gko9cX6V0bxUe829hvRRWbLeu7P3c50xUS31rff5BJnm
-	2bx2EpHekiGTZxhbWVxzeH+N42LvenMaGTXIJM+4qFlZr8pGsVxJYXqqooXDpkNCtER
-	TnR68MMt1WlCrp/+ixt6ZTrfGIVDSqxLJx6kIc7k=
-Received: by mx.zohomail.com with SMTPS id 1761111625845868.8140469898073;
-	Tue, 21 Oct 2025 22:40:25 -0700 (PDT)
+	bh=xoLvhdlg7qOcu3L0DcQ7Df8Jx8xs8lqmqSGHlo8t9oQ=;
+	b=OQtJT+LzjyVm0Vvr/q3GrvZFhTgHk+umHFAZaqShygh0WSw/oDFcxnMB/1KDLLX4
+	mvcgLP56XbLSpnfT8axwxEnNLJsw9bInbNws1yFIkSYlky8Tmhj+l1D8rBqgIoM1qpo
+	WJ92PAGYIoEykBkpAGVVRcsi5EyPG+mHi7odvda8=
+Received: by mx.zohomail.com with SMTPS id 1761111628125731.0146033402801;
+	Tue, 21 Oct 2025 22:40:28 -0700 (PDT)
 From: Li Chen <me@linux.beauty>
 To: "phillipwood" <phillip.wood@dunelm.org.uk>,
 	"git" <git@vger.kernel.org>,
 	"Junio C Hamano" <gitster@pobox.com>,
 	"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v5 15/29] rebase: validate trailers with configured separators
-Date: Wed, 22 Oct 2025 13:39:35 +0800
-Message-ID: <20251022053951.602605-16-me@linux.beauty>
+Subject: [PATCH v5 16/29] sequencer: add trailers to message before writing file
+Date: Wed, 22 Oct 2025 13:39:36 +0800
+Message-ID: <20251022053951.602605-17-me@linux.beauty>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251022053951.602605-1-me@linux.beauty>
 References: <20251022053951.602605-1-me@linux.beauty>
@@ -56,102 +56,83 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Moved validate_trailer_args_after_config() into
-trailer.c so trailer argument validation reuses
-find_separator() and respects configured separators.
+Added trailer processing to the in-memory commit message
+within do_pick_commit, ensuring fixup/squash commands
+remain untouched before the message is written.
 
 Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
 ---
- builtin/rebase.c | 18 ------------------
- trailer.c        | 25 +++++++++++++++++++++++++
- trailer.h        |  2 ++
- 3 files changed, 27 insertions(+), 18 deletions(-)
+ sequencer.c | 19 ++++++++-----------
+ trailer.c   |  4 ++--
+ trailer.h   |  3 +++
+ 3 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 872945a897..a88abe08b4 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1124,24 +1124,6 @@ static int check_exec_cmd(const char *cmd)
- 	return 0;
- }
+diff --git a/sequencer.c b/sequencer.c
+index 5103ae786c..552e629e4f 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2444,6 +2444,14 @@ static int do_pick_commit(struct repository *r,
+ 	if (opts->signoff && !is_fixup(command))
+ 		append_signoff(&ctx->message, 0, 0);
  
--static void validate_trailer_args_after_config(const struct strvec *cli_args)
--{
--	for (size_t i = 0; i < cli_args->nr; i++) {
--		const char *txt = cli_args->v[i]; // Key[:=]Val
--		const char *sep;
--
--		if (!*txt)
--			die(_("empty --trailer argument"));
--
--		sep = strpbrk(txt, ":=");
--
--		/* there must be key bfore seperator */
--		if (sep && sep == txt)
--			die(_("invalid trailer '%s': missing key before separator"),
--			    txt);
--	}
--}
--
- int cmd_rebase(int argc,
- 	       const char **argv,
- 	       const char *prefix,
-diff --git a/trailer.c b/trailer.c
-index 1f317f4d37..85e42859ca 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -7,6 +7,7 @@
- #include "string-list.h"
- #include "run-command.h"
- #include "commit.h"
-+#include "strvec.h"
- #include "trailer.h"
- #include "list.h"
- #include "wrapper.h"
-@@ -773,6 +774,30 @@ void parse_trailers_from_command_line_args(struct list_head *arg_head,
- 	free(cl_separators);
- }
- 
-+void validate_trailer_args_after_config(const struct strvec *cli_args)
-+{
-+	char *cl_separators;
-+
-+	trailer_config_init();
-+
-+	cl_separators = xstrfmt("=%s", separators);
-+
-+	for (size_t i = 0; i < cli_args->nr; i++) {
-+		const char *txt = cli_args->v[i];
-+		ssize_t separator_pos;
-+
-+		if (!*txt)
-+			die(_("empty --trailer argument"));
-+
-+		separator_pos = find_separator(txt, cl_separators);
-+		if (separator_pos == 0)
-+			die(_("invalid trailer '%s': missing key before separator"),
-+		    txt);
++	if (opts->trailer_args.nr && !is_fixup(command)) {
++		if (amend_strbuf_with_trailers(&ctx->message,
++					       &opts->trailer_args)) {
++			res = error(_("unable to add trailers to commit message"));
++			goto leave;
++		}
 +	}
 +
-+	free(cl_separators);
-+}
-+
- static const char *next_line(const char *str)
+ 	if (is_rebase_i(opts) && write_author_script(msg.message) < 0)
+ 		res = -1;
+ 	else if (!opts->strategy ||
+@@ -2519,17 +2527,6 @@ static int do_pick_commit(struct repository *r,
+ 			oid_to_hex(&commit->object.oid), msg.subject);
+ 	} /* else allow == 0 and there's nothing special to do */
+ 
+-	if (!res && opts->trailer_args.nr && !drop_commit) {
+-		const char *trailer_file =
+-			msg_file ? msg_file : git_path_merge_msg(r);
+-
+-		if (amend_file_with_trailers(trailer_file,
+-						&opts->trailer_args)) {
+-			res = error(_("unable to add trailers to commit message"));
+-			goto leave;
+-		}
+-	}
+-
+ 	if (!opts->no_commit && !drop_commit) {
+ 		if (author || command == TODO_REVERT || (flags & AMEND_MSG))
+ 			res = do_commit(r, msg_file, author, reflog_action,
+diff --git a/trailer.c b/trailer.c
+index 85e42859ca..3e96d1624a 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -1250,8 +1250,8 @@ void trailer_iterator_release(struct trailer_iterator *iter)
+ 	strbuf_release(&iter->key);
+ }
+ 
+-static int amend_strbuf_with_trailers(struct strbuf *buf,
+-									  const struct strvec *trailer_args)
++int amend_strbuf_with_trailers(struct strbuf *buf,
++			       const struct strvec *trailer_args)
  {
- 	const char *nl = strchrnul(str, '\n');
+ 	struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
+ 	LIST_HEAD(new_trailer_head);
 diff --git a/trailer.h b/trailer.h
-index b4f28bfd65..4654ff9c96 100644
+index 4654ff9c96..479bc137cd 100644
 --- a/trailer.h
 +++ b/trailer.h
-@@ -68,6 +68,8 @@ void parse_trailers_from_config(struct list_head *config_head);
- void parse_trailers_from_command_line_args(struct list_head *arg_head,
- 					   struct list_head *new_trailer_head);
+@@ -197,6 +197,9 @@ int trailer_iterator_advance(struct trailer_iterator *iter);
+  */
+ void trailer_iterator_release(struct trailer_iterator *iter);
  
-+void validate_trailer_args_after_config(const struct strvec *cli_args);
++int amend_strbuf_with_trailers(struct strbuf *buf,
++			       const struct strvec *trailer_args);
 +
- void process_trailers_lists(struct list_head *head,
- 			    struct list_head *arg_head);
- 
+ /*
+  * Augment a file to add trailers to it (similar to 'git interpret-trailers').
+  * Returns 0 on success or a non-zero error code on failure.
 -- 
 2.51.0
 
