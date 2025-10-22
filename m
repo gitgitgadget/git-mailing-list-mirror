@@ -1,118 +1,121 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E482D948F
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 17:44:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEAB52D97A4
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 17:45:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761155054; cv=none; b=iWel510Hw//rmJ6f0Le9LNht0Yr3XyBLsM4FtenHH/kW8dfZJ35spyK1zQvn/EsvDMbLWcxr9GmqNhJhd87Go1IiHia60lW7kOqY4Lw+IDhsIYoMKHyCKwyhQTX5Cf77eDQ0w+FsyLkULtYchBnnojR9qp9cDjOpYie83Go/YNE=
+	t=1761155115; cv=none; b=D4UJfXQ5CTbFkQa0qCWLaxiGPGaiKA1uuQgoqgDGtdz9YXA9UMKBrpr3FZSkGarwXulNh5ajBmWLMkc2VWiPacp4jjn1xYt8HufwDnKlFdtte/tuKXqRQ3IVnqugwYssrEG8S0u3sBw0pP4LH05TJZo5S48t26s5U/S1OJ1yMNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761155054; c=relaxed/simple;
-	bh=kuc1GAKLjeYTIaA7Ng4/PH/eTLEZ3L71psO/HuNnpgI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZjJA/tncpckhdTwn/Mc/UdAOt4Kh8dN34QNS9fR0xtAOE1U8/t8EH8hlswunP8BI1o0YpDiimmyfvf7DFnPzOswt11FtxGlXCtwFKUbR1EeJ2RKAhYNPBGlIAXGRO/ggibst20HTHfipfPaR1VllrLb7PUfsU0tPqjejE0tHmlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Xojm42d0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wMc+WG+1; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1761155115; c=relaxed/simple;
+	bh=NrC7dA5Xoh7WruUTn4LSAZ/eyGyOkf6APWIDF4JqcHk=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=KQRwb5iyq78Ou+f4SaCXq8jqOWvJ+7gjClC7/e1CHNKSub9or6bTfzGU586IftS9K8fCdvSyNp9nHCa7lTCPVnOWmDQ5TUiVjAtZRh4DoIQTo2qOKd845xS3mTOOz2IgMANzBmomqi1sJk6w4+NR7mBPwKjMxoV8k5tU0kUPS1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ws+pVBFq; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xojm42d0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wMc+WG+1"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EFF26140018D;
-	Wed, 22 Oct 2025 13:44:10 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 22 Oct 2025 13:44:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1761155050; x=1761241450; bh=BxH7CjRRKP
-	hfHgkILPKUZZ/tQmhLwSrle8I4/9iZvk8=; b=Xojm42d0GJCkm6/rkEeLaryf2/
-	hWYaLEXe5Jc54IKMQqKUlD8AhttfjB+gTkU4GV5DsfTcjZNfVPCCEsqGXzHFcQPy
-	nITaPvLpOC5EXlmDldBz4z/aW/4sG4ceP3pMMlzKiOycgM2pagO4hXiBl6mOi+zg
-	uoE7N6FYHyzN8v4SmUNP7uZRunKvj8phWWTZttom9bC4bufnKhlPbEyiobkUFuIb
-	X/uibpBWadBa4+LujKkFnrmA/rP/lIEuT2iJFo2a0pSorVoHoxFJGaZX6kdKRhlw
-	4ErtX68KXDQCYLQlXovLU4J5qfzmzhtPM3LHoBt3b+U5RVM9W6OifKrMtz0g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761155050; x=1761241450; bh=BxH7CjRRKPhfHgkILPKUZZ/tQmhLwSrle8I
-	4/9iZvk8=; b=wMc+WG+182chbmYQRbUfoxEvRGdigBBrrMhUwbTWClq0Y7OU0/t
-	HEfgqG1sQ59ClbaOjXBXwENaW9++ueYii8C6JGhzX4LNn23EAGu9U+U+7tbYpRoQ
-	XGNWL96skVubVVRVFZ07YiKvzNyK0MBhPpEVt3kcEidttShvY20PcHW6EYdI2rzu
-	zFp2rLMJlC5FNjnDkGe12JLQDqNJ0awqddEMkbpvnyHtCXGzG9XKlW335fTUjdqd
-	iJ5WjwzvhqdvxT5Gzpan/gie/aKK6NzScXAf3OCSPp8uXBFIw4rHfniQ6gzTJ+12
-	JKmX3D6oKEjpHgupPn3kHecGwNREo9pHh4Q==
-X-ME-Sender: <xms:6hf5aAAcRD9UGdaviH-qCn-sozMfMmUniOPs82BVDt7CnxTmEgyTMw>
-    <xme:6hf5aGMtmehZ5b768XXnxSwK19jhw961px6hi-yH4dqj2k4mfNngSV9jyl4zHjuUd
-    nFrUVqFSnHnP1b6wi5ZNS70M0uq25Jo4kHYMcLU2cnokOwPZKZWGBQ>
-X-ME-Received: <xmr:6hf5aNafBqJBJCSpL7hFFM7-My8fggFCLlOy7CYH8JqTIUZC-ySY20xeTUwymA_2BMBCmoJOQlY0EJ9esmZEAKWpDcqiMmSZGDED>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeegvdduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepsggvlhhkihguleeksehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehushhmrg
-    hnrghkihhnhigvmhhivddtvdesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishht
-    ohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:6hf5aNvBocGN6AxjiKkeZZFHi-K_rWz6PRnTr_aLaA1I6Itxfw_wdw>
-    <xmx:6hf5aHMbZMyypWOsMNXE9IogRtG54STrK-r4cU4WFDvhA2IsQzjoWQ>
-    <xmx:6hf5aM4gfY5KRb5G8Eb_3m6wHof59RgLSHaYkgsB1g_O1Ow22KYfKw>
-    <xmx:6hf5aFSCsAYxFrUx62__2osZXi_RXClzNIcUTVsrKtaX5Jv-DF3Xew>
-    <xmx:6hf5aFltxBPPAS8YmRIJ8c13uLjT3vdVidFkAGz08isvwzq9yxMYP2Xe>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Oct 2025 13:44:10 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Olamide Caleb Bello <belkid98@gmail.com>,  git@vger.kernel.org,
-  usmanakinyemi202@gmail.com,  kristofferhaugsbakk@fastmail.com
-Subject: Re: [Outreachy PATCH v5 2/2] gpg-interface: do not use misdesigned
- strbuf_split*()
-In-Reply-To: <CAP8UFD3OTMi6uxv+z4rTqJ4wVpmezSG2Yj8tZMpgptWaWU343w@mail.gmail.com>
-	(Christian Couder's message of "Wed, 22 Oct 2025 16:03:50 +0200")
-References: <cover.1761135129.git.belkid98@gmail.com>
-	<5df667227b8b8951bad6c3cba54230ea8f6d3830.1761135129.git.belkid98@gmail.com>
-	<CAP8UFD3OTMi6uxv+z4rTqJ4wVpmezSG2Yj8tZMpgptWaWU343w@mail.gmail.com>
-Date: Wed, 22 Oct 2025 10:44:09 -0700
-Message-ID: <xmqq4irqzv9y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ws+pVBFq"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-783fa3aa582so69978377b3.3
+        for <git@vger.kernel.org>; Wed, 22 Oct 2025 10:45:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761155113; x=1761759913; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UhGD3Qk3v/DE9eNePF49s4IbBrokAvKvhDcwWN09Hcc=;
+        b=Ws+pVBFq2ap31SrGLa6CEeaMoBPFDdkkp5lQhYdsDY6GU9Ha1m6NorkDnP2W04zUPf
+         meTSHc3OgwvIZwBVe545InEXo4esbVKWgXZc0GEOhey7yr/itTImGXmbPVJSvzk71mye
+         rmhdnpgOCUANdYGnM3CSlj30q8ZHYUI40AuLZWPTOCfcbGBYK9wQLXHbWG9uTRDWCAi3
+         Z/sSZDpY2+3u8a/FNxf6CVpriVa7cnoI1MX7ynKPYM7FjCCluorztAHhQOix5ILibmkG
+         yNUOwSfCwTBPPAbLcaE/cE97V//m98Ne+fgqrGxtVXoPPsQZFn9Jl/ise4nq6MxBckVB
+         MG9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761155113; x=1761759913;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UhGD3Qk3v/DE9eNePF49s4IbBrokAvKvhDcwWN09Hcc=;
+        b=PoyGzVEBhccYIxQnobK6RVn1Rg+s0gOHvnsFreM/Xxy7nFboVcBfp1ljV8bpdg7476
+         sjDFH1MbMWRpI5yJWOxkuJn+4sAYUin/dj6wl29diEKMnEymNyVUI6XZl5kOMbolwjNd
+         In+6orr0pYCdANDXXtQ1AWbbhfp+r2zfYsKH0W0IJ+D0QhSGvFYlRS1Hlo57fnMYpI6J
+         hErMjOHpdA6GuIljepe6ly7N9jxpvUZpICznb5sjDN8V2FvwTZ2s1FsUjWJvqh/H3r5z
+         7zQn+h6Vy/rdlc9hQ0NDRrV92aswjr/PRR2XRJgh9kM+48+8kvus0wuHe5WudB+FZtCO
+         W6yg==
+X-Forwarded-Encrypted: i=1; AJvYcCXArT98ynIMhFcw/goTVAY5eZUQfHkEaQWNNuouvWVE1hJbNj8JwkRMycrJpeP+155uCwM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyk+T/pWZYaID5clByu4VsUpdKjSSRvCJ66tuOmfdRY5njcN/dp
+	AAUsDYd34AXHEPRya86RMFwPuiJWqwr4idrXMcGHOOr0WnP0CDTxQF8a
+X-Gm-Gg: ASbGncu5s9WB2BZAMHfv+gcm3f7PgLk5ot7dOlvPtSJrXnst17FcS2R4WZpOG0snrog
+	UkjwxdElw5E87r+BySVUdDpWIm+nLLCijEBYpjKcuh0uvVKS856p+fY//eOE5tRFwFNX9rHLHG3
+	97mR18Bp8toGmR9fTZ3KlkdJ+SIipMPpH7WtlRq6AFOKQj25CJLectHybATNP1GIrICNudt2jIv
+	CcXXhWUJ7JVP6oiW9WZAuacmDyMbGH0ErrMPUhj+mI/x3/S1e8pCdwXdPRCQ4ipd1Z8sTlFF5t5
+	F1XT1Gj4mwYsgTYONCm5as+JSUzzr4w/GCdjIaaYuRI5omFx9DuW96iSfyjnFAhfkiGLuXFqcjB
+	Yuo557tBoYyvtHW6YaC9zp5FkaN2meYbWvQ7+om0pRB8FLlGc2dafjUbCAzHoUbRcILnNx6CuA4
+	cONVGphFA+zlEaA4Nlqmz2MaCY2m3FwJJb4w==
+X-Google-Smtp-Source: AGHT+IEE6UvGhnXEcDGDfLYu0pqXOV7ulWNvnaA4Numim2bVvixhlltqCFg65Ja44H7Hu1RM5hHhPQ==
+X-Received: by 2002:a05:690e:168a:b0:63c:f5a7:3df with SMTP id 956f58d0204a3-63e16201f42mr14828040d50.59.1761155112590;
+        Wed, 22 Oct 2025 10:45:12 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:c453:ab75:b1b9:2303])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-784641f3a7asm38411067b3.13.2025.10.22.10.45.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Oct 2025 10:45:12 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [rfc] flip rerere.enabled default to be "on" at Git 3.0 boundary?
+Date: Wed, 22 Oct 2025 13:45:01 -0400
+Message-Id: <80220653-7302-4E4D-99E9-1A8CB5B4F23D@gmail.com>
+References: <bec27479-c53f-472c-87c7-374321108ad5@kdbg.org>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+In-Reply-To: <bec27479-c53f-472c-87c7-374321108ad5@kdbg.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-Mailer: iPhone Mail (21F90)
 
-Christian Couder <christian.couder@gmail.com> writes:
 
->> @@ -887,19 +887,22 @@ static char *get_default_ssh_signing_key(void)
->>                            &key_stderr, 0);
->>
->>         if (!ret) {
->> -               keys = strbuf_split_max(&key_stdout, '\n', 2);
->> -               if (keys[0] && is_literal_ssh_key(keys[0]->buf, &literal_key)) {
->> +               begin = key_stdout.buf;
->> +               new_line = strchr(begin, '\n');
->> +               end = new_line ? new_line : strchr(begin, '\0');
->> +               first_line = xmemdupz(begin, end - begin);
->
-> That works but I wonder if something like the following is not a bit better:
->
->                if (new_line)
->                        first_line = xmemdupz(begin, new_line - begin);
->                else
->                        first_line = xstrdup(begin);
+> Le 22 oct. 2025 =C3=A0 01:55, Johannes Sixt <j6t@kdbg.org> a =C3=A9crit :
+>=20
+> =EF=BB=BFAm 21.10.25 um 20:55 schrieb Kristoffer Haugsbakk:
+>>> On Tue, Oct 21, 2025, at 20:21, Junio C Hamano wrote:
+>>> A good default matters, and people who find out how useful a rerere
+>>> database is would say "gee, that sounds great but why they do not
+>>> enable it by default?  It is too buggy and they wanted to reduce the
+>>> number of support requests?"  Yes, the reason it is not enabled by
+>>> default initially was exactly that, i.e. those opt into the feature
+>>> was used as guinea pigs to polish the feature.  But we forgot to set
+>>> the graduation criteria and never said "ok it is mature enough, so
+>>> let's turn it on for everybody".
+>>>=20
+>>> Perhaps Git 3.0 boundary is a good occasion to do so?
+>>=20
+>> This sounds nice.
+>=20
+> While I agree that the rerere cache is a very valuable tool to have, it
+> has the very sharp edge that a cached wrong resolution is extremely
+> difficult to get rid of.
+>=20
+> Merge conflicts and how to resolve them correctly is a skill that needs
+> to be trained. Giving a novice who is still tipping their toes into the
+> waters of merge resolution the advice to "just enable rerere" exposes
+> them to a behavior whose results (the reuse of incorrect merge
+> resolutions that they thought they had already corrected) are
+> inexplicable without the help of an expert.
+>=20
+> I think I'm saying that I am mildly opposed to enable rerere by default
+> as long as it has this sharp edge.
 
-Yeah, that is certainly much easier to understand without even
-reading and thinking.
-
-Thanks.
+Fair points. Could I ask an enterprising reader to summarize the sharp edges=
+ of rerere that need polished? It could make an effective todo list to aim f=
+or prior to 3.0. Here=E2=80=99s what I recall seeing:
+- messaging is not clear
+- usage for dealing with incorrect caches needs improvement (should be useab=
+le without expert intervention)
+    - as a first step, perhaps having rerere and status display more informa=
+tion about possible steps to take (review results, keep or discard) would he=
+lp?=
