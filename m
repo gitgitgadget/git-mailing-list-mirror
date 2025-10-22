@@ -1,128 +1,130 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23BB2D0C7E
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 03:48:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761104916; cv=none; b=OYGgkt0SRZ4O7evyhOCBmVpqGUgYrsBwI0ce7YWN+c8esG3Jik0M62C9Y+0BDomHLMk41/PQ228g7sZ+zkBWMt1PsC6cI/RL1MarWwrJC39llH5MtqLYEjJSdkau4XYBMyOpxF4pG6bHHGUSkRA814FjjVH3+7zMByRIOk4bzrc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761104916; c=relaxed/simple;
-	bh=1Epzb+ToiKvTxJcelwXQ0kUEfGMKYZVaglT7Td+NbwQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Wtjv8/HNkssdf0UA34AyqKBLjEckWwz+cd1X/OYpWubP1bwwwfv772kEocHmqsazBH15+MHrN4AYnsRgdy3WX80sx6lipykQ42oibKEqQpGhSCKJZ99S8P4cFY2VZ5sh38twFaW8FwAOqWhRpuqnsPWty/4reCywFSZNK6tLoiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J2pHkCkf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rQyML71R; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561B02D5A0C
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 03:55:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761105351; cv=pass; b=NnIvEnMTKg1ncpMW4QyjK/lxru8Lr/oTwxt7RA+CHF94w6cqD1qrYeXw6nO1hqz8hxAyHBNkRz6Vzm9gBAy03WVu2vpWyBSVKny+DqiFntkpNw9YD1S1GgSEwA6JRm8RD8MbyKm6E2SYdUwgXqjWVcc3u3fyB1V0tsuS9ZZ7mcU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761105351; c=relaxed/simple;
+	bh=Mapj/cf2WkY5UUMdNVk6iKHL01/L63g+TnNaLD2tpug=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=ltF3UNkla6U5CyFE6Ru7jDd+UdOyvu4TyRrsUrEbr9rMGV1hbIWr1Kg2AIisbDnr7WBi+d105QP3c4eijZxrzPSW3GrwTLzHx7Z3L/Dq7ehUM+d1tC7EG6X5KJocT5cjGFbuweRelhUiD1B1QCIjS8Zwc9GN7krItf6/y/6Dshw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=T2N35Yky; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J2pHkCkf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rQyML71R"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id B9EACEC011C;
-	Tue, 21 Oct 2025 23:48:33 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Tue, 21 Oct 2025 23:48:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1761104913; x=1761191313; bh=PCIQdWo67B
-	Ve/WZZrm2lupXjl8OWobp/0QstLAvDMQA=; b=J2pHkCkfE5Fhc6Sj3vfiNloi5Q
-	ZGe7ITqv4kT2uxZPZmqK0f1e8K3w3vbHIGzr/hP10WdjfAdWKtgaaqdohIhj/yjL
-	BeVd3MnFL3hwa2HUAKTUuXnUrAgKGjzd2EDlKW8FPB8ElY8nVbpqYUdAs8iAZXkN
-	vPM8P6M5hbHJ9NHeH6keTrt5/rFYri+KvMnkIdNPAbUQbtM+8oG+qmsjBWkiYa5Q
-	6ZydL6IQYYuLfxgOhV85YJGD83zDVM0LXyklki9n0oYcAw6Zk/YqhZrhPGhY/pjU
-	eo1m6XSgVEg8vZyFxlu1/hNwVPMAxoFYDpVE2ACq3RPXWmG9zFsf52BuOY0w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761104913; x=1761191313; bh=PCIQdWo67BVe/WZZrm2lupXjl8OWobp/0Qs
-	tLAvDMQA=; b=rQyML71RSh2Lco8/0tj2uQv52Y4w8ZaESk66LayQRyo6/ZXIgfj
-	5GnkPYa0XZ0VPMsAmIA1A/oidD4lkxMnssndyvTV066uBzk3/N8cIA/EbN+1Xa0e
-	pPSgRgCHQrHggVXVpA5rKubyvTcgHmmKRhpitrPk0oX4yfbWN6vQVohJoVoDIfqV
-	NAx+pDXUeijLC/ssXqsxYR+XM3WRiECBMrjOGWmWcknHGokeD6/N5W6CIUnDMLOy
-	IL9fMVmcx+KRoH+PdPhXNjw9n/PyiT8wheKQq/b6uu+yzNlcKvbkpEwjcmNCEOCu
-	voGw1t/+b5Ue6jLKQJhDZlD1aAeBqmELupQ==
-X-ME-Sender: <xms:EFT4aJOU2PuDpKfKg70mMiZ16z4oGI0I5WBFgbmlxMWsUSLqiH4IMw>
-    <xme:EFT4aI4SxNUQEu9G85LXb6lDYXWdzL1qx2-Ie57QCr5sRdIMMwvITu3vOwygPwV3C
-    7rPUK-XNGNk68gk5FO9v_uVftGMj6Y0Yfc4BUGGXKVmv2SuzJSEVJ0>
-X-ME-Received: <xmr:EFT4aD6Y-OBkVQ848k--e2E6_mpLshTI6Vo2SW4cld1vz5yKr_CGrvT8yu2tOWEeK2ORXRxZgdinO4l8OS9peeakElSz4-m7DmCv>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedvheegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
-    hopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
-    homhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthho
-    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehsthholhgvvg
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:EFT4aOEUB2i8JAAAsEx_f3-qMfMNxOXK0sT_1AbqIkvDiqKH_sxIYw>
-    <xmx:EFT4aLUH6uUt8NIJomkWSgsYUlrGAUUmHWAWtmKp0ARVvs-aXsWqSw>
-    <xmx:EFT4aKU2MbuXa9CyhPUu8EYVsBVcDe7VTg53lYI6XS5npnqkPlr6zA>
-    <xmx:EFT4aJJi3JMwXd_ckS_l2MzwayopVjKlJeMKvdiyfbVY-cGiatGuZw>
-    <xmx:EVT4aHwiEcRq-Nm6G1XPLXfLfVvOuEB5Litk2uG03kSowQNsXJxByOp4>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Oct 2025 23:48:32 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org,  Karthik Nayak
- <karthik.188@gmail.com>,  Justin Tobler <jltobler@gmail.com>,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2] last-modified: implement faster algorithm
-In-Reply-To: <aPgkwnq87UeusC6v@nand.local> (Taylor Blau's message of "Tue, 21
-	Oct 2025 20:26:42 -0400")
-References: <20251016-b4-toon-last-modified-faster-v1-1-85dca8a29e5c@iotcl.com>
-	<20251021-b4-toon-last-modified-faster-v2-1-f6dcbc26fc5c@iotcl.com>
-	<xmqqy0p4uoqc.fsf@gitster.g> <aPgkwnq87UeusC6v@nand.local>
-Date: Tue, 21 Oct 2025 20:48:31 -0700
-Message-ID: <xmqqecqv1trk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="T2N35Yky"
+ARC-Seal: i=1; a=rsa-sha256; t=1761105338; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=Ea4qVBXyPho46niz1hCBG5AyOqbd5Fa68Vcj2YVODTgPwG40YF8ekmWkqD9X3j2nWsoBmDQzO3vFMOxMtaQIwtXoxAtVqfrZk4yLGfbAfEDgcD8QmCgmftqCq+QIGbmnl6r4X6JyR9nCnJYesPj54gqgnl0QMtEaCnbAXYjyOds=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1761105338; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=gbx3wk3FzJhEuUrXqXbOdR6KFd7jPODf3RzTOrDOjtY=; 
+	b=e/pZXGbj47qyCJWdi3l7DvBPB7uC9eWCxwZ+zWbq3v5GrVlCL/YpAlSQeDkp0n5VDvt4hDG5BIFU017EBCaVCSwu3CVhUL5S0gen3MAX/YKpg1mzBMotXytI9kJofXRArbJLQHsO9BzkDsWcFzgI2sbwmEyJ3VAoljQ5cM8wel0=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=linux.beauty;
+	spf=pass  smtp.mailfrom=me@linux.beauty;
+	dmarc=pass header.from=<me@linux.beauty>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761105338;
+	s=zmail; d=linux.beauty; i=me@linux.beauty;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=gbx3wk3FzJhEuUrXqXbOdR6KFd7jPODf3RzTOrDOjtY=;
+	b=T2N35Ykyz1ChKeMVGXteqg3iGl9PVhZudgn0V1iIiM8NNTYSZ62HDoxllhjw1bJU
+	GcTiIBqiKyOgOlEMMOgQbeLvbqZ0NmRe2JUhDV5F8hRSd6mj69xuvbTPYEpBc+h2d8L
+	ddpGwojN0aTl+NdnrMX676cpHIlxIEMIUHTxvjeQ=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 1761105335898682.3760518910244; Tue, 21 Oct 2025 20:55:35 -0700 (PDT)
+Date: Wed, 22 Oct 2025 11:55:35 +0800
+From: Li Chen <me@linux.beauty>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: "Phillip Wood" <phillip.wood@dunelm.org.uk>, "git" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+Message-ID: <19a0a0ed648.8a2243b33661009.8946324448572979174@linux.beauty>
+In-Reply-To: <cbe93380-e145-4ebd-a213-928b8c3ba085@app.fastmail.com>
+References: <20251014122452.1851103-1-me@linux.beauty>
+ <20251014122452.1851103-10-me@linux.beauty> <cbe93380-e145-4ebd-a213-928b8c3ba085@app.fastmail.com>
+Subject: Re: [PATCH v4 09/29] rebase: support --trailer
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 
-Taylor Blau <me@ttaylorr.com> writes:
+Hi Kristoffer
 
-> On Tue, Oct 21, 2025 at 10:52:11AM -0700, Junio C Hamano wrote:
->> > +		struct diff_filepair *fp = diff_queued_diff.queue[i];
->> > +		size_t k = path_idx(lm, fp->two->path);
->> > +		if (0 <= k && bitmap_get(active_c, k))
->> > +			bitmap_set(lm->scratch, k);
->> > +	}
->>
->> Earlier path_idx() wanted to signal an error by returning negative,
->> but the type is size_t that is unsigned so it cannot do so.  We
->> instead get
->>
->>     builtin/last-modified.c:307:23: error: comparison of unsigned expression in '>= 0' is always true [-Werror=type-limits]
->>       307 |                 if (0 <= k && bitmap_get(active_c, k))
->>           |                       ^~
->> ...
-> Yeah, this is a true positive. I was curious if GitHub's version of the
-> code also returned "-1" from a function whose return type is unsigned,
-> and in fact our version of this function (called diff2idx()) returns an
-> 'int'.
 
-Yes, I think the tool is doing the right thing here, unlike "hey you
-are comparing int with size_t" we saw earlier, and is giving us a
-useful diagnosis.
+ ---- On Wed, 15 Oct 2025 04:43:33 +0800  Kristoffer Haugsbakk <kristofferh=
+augsbakk@fastmail.com> wrote ---=20
+ > On Tue, Oct 14, 2025, at 14:24, Li Chen wrote:
+ > > From: Li Chen <chenl311@chinatelecom.cn>
+ > >
+ > > Implement a new `--trailer <text>` option for `git rebase`
+ > > (support merge backend only now), which appends arbitrary
+ > > trailer lines to each rebased commit message.
+ > >
+ > > Reject it if the user passes an option that requires the
+ > > apply backend (git am) since it lacks message=E2=80=91filter/trailer
+ > > hook. otherwise we can just use the merge backend.
+ > >
+ > > Automatically set REBASE_FORCE when any trailer is supplied.
+ > >
+ > > And reject invalid input before user edit the interactive file.
+ >=20
+ > s/edit/edits/
+ >=20
+ > >
+ > > Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
+ > > ---
+ > >  Documentation/git-rebase.adoc |  7 +++
+ > >  builtin/rebase.c              | 89 +++++++++++++++++++++++++++++++++
+ > >  sequencer.c                   | 13 +++++
+ > >  sequencer.h                   |  4 +-
+ > >  t/meson.build                 |  1 +
+ > >  t/t3440-rebase-trailer.sh     | 94 ++++++++++++++++++++++++++++++++++=
++
+ > >  6 files changed, 207 insertions(+), 1 deletion(-)
+ > >  create mode 100755 t/t3440-rebase-trailer.sh
+ > >
+ > > diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.=
+adoc
+ > > index 005caf6164..b2003b70d7 100644
+ > > --- a/Documentation/git-rebase.adoc
+ > > +++ b/Documentation/git-rebase.adoc
+ > > @@ -488,6 +488,13 @@ See also INCOMPATIBLE OPTIONS below.
+ > >      that if `--interactive` is given then only commits marked to be
+ > >      picked, edited or reworded will have the trailer added.
+ > >  +
+ > > +--trailer <trailer>::
+ > > +       Append the given trailer line(s) to every rebased commit
+ > > +       message, processed via linkgit:git-interpret-trailers[1].
+ > > +       When this option is present *rebase automatically implies*
+ > > +       `--force-rebase` so that fast=E2=80=91forwarded commits are al=
+so
+ > > +       rewritten.
+ > > +
+ >=20
+ > You=E2=80=99ve cut off the second paragraph of `--signoff`.  This should=
+ be
+ > added after `See also` below.
+=20
+Thanks for catching this.
 
-> Practically speaking that's probably OK, since we are unlikely to have
-> so many active paths anyway (or if we did, we'd likely have other
-> problems to deal with ;-)), but it is gross nonetheless.
+ > Probably also with an `=3D`:
+ >=20
+ >     --trailer=3D<trailer>::
+ >=20
 
-The case path_idx() returns -1 is an error case, not "there are too
-many paths we are following" case.  I do not see what relevance the
-number of active paths has here.
+It would be added in v6; but both =3D and should work.
+
+Regards,
+
+Li=E2=80=8B
 
