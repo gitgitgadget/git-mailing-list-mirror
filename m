@@ -1,59 +1,59 @@
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8E1274B2E
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 21:07:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7FD30215E
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 21:13:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761167276; cv=none; b=jxouqJ+PpAPSh744l91VEr/55tQxnisbP71i7056SmlNzh3AoD9YNmCfLLriv7+IUN5PM16NXi/gdb4HruA3fA25GtrrpSfJZZWHksPt/NqPU5o/t5wL+fvDMJ1PrE704/yMhsnCREtzoROkN8GD1JQboXlwoWW+ST3FtMMJ3w4=
+	t=1761167585; cv=none; b=CLAnMYuQ/8Dpza2b+ZHGxGW69sUdEikliwXgsrj8Nh79vTZMC6ZrlXPtyajkZpJKepnyeSsyoXOu38HnZBtOjakRnGtxo7Tnajltfro+VGXShJ1NzdrMgCFwM9xO64kKB4KbTr27iYuYAXugCGjbrHftGwCATy7Kg518fK6T5FM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761167276; c=relaxed/simple;
-	bh=to6L6lhPB2yIldNnSfRzXB6zL9NYJDZXGExFJ5Zr68w=;
+	s=arc-20240116; t=1761167585; c=relaxed/simple;
+	bh=TKqHuTdc4vV21ADJAW2qEpmyegeWot10gqNrIuoaWFg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AUf+s9pIg82IJbuOLd+rzFNfibA9MkDVTugutHgJpEEoloXhBxFGepGV7irAvqy+RK8iVi4Y4NkmsSvLXX504b5MKDkUi/3TsDHnzrsxUAk1b9d948STW9cOriyuc53iBUh1DyqGwv7fGZW0kBn+Rny4/vCXwjjJ1/FQ6sC0cdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ddvbdmkt; arc=none smtp.client-ip=209.85.166.177
+	 To:Cc:Content-Type; b=cE3p82LZuc6Rb185VqX28rjohU/z1DUrCyAJwjqjiSs/yisLy+mPdNramuqmBnppjT5Ja5xiiMDATIbOzHd/ES+mnml2SIRpew3DGztM0fy/9MpFl5hgmnRmwROUxjYv6BDYR454GWUHxS9rxycFD4fUJgjFQKLZrh7gUugbXfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SI+MxNiL; arc=none smtp.client-ip=209.85.166.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ddvbdmkt"
-Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-430e182727dso608125ab.1
-        for <git@vger.kernel.org>; Wed, 22 Oct 2025 14:07:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SI+MxNiL"
+Received: by mail-il1-f181.google.com with SMTP id e9e14a558f8ab-430c6eef4b9so670065ab.0
+        for <git@vger.kernel.org>; Wed, 22 Oct 2025 14:13:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761167274; x=1761772074; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1761167583; x=1761772383; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=to6L6lhPB2yIldNnSfRzXB6zL9NYJDZXGExFJ5Zr68w=;
-        b=Ddvbdmkt3LEbqCxhCjJxsHznJths7FStAhnpwUYfoHRbTcgPX44fqzOpcY7IcL4Yh8
-         884844ymlNBa4ZHmLCdPSA3/3bVbAdFbodVrC5uTg1/K5N0s511itySdFH3LJNPP634q
-         b7vpmqnAK5naKKlMoYRLrhL59NxRq7PzA9+6fhaqYYbtc0kc86KpKfdN5T7hY6k9a9Nr
-         1OTVcCwvzQzJEwrxg74VFTGhi/mQptEQqaJw4wrIYgGxEig/C8r9QmjcjrlYejFQMU0y
-         C5RZl1RCXQrD9qXASQl4p9x93fgaLgWh79eADzYETu10uljjz4eL8lasXuvIL+M/5Lpd
-         U34Q==
+        bh=z4UVYUYQMZcP12r2q4ceaabpv+9D0pM9i4JapTZen7Q=;
+        b=SI+MxNiLfIIiiJPaNvFiS6kxI6kW9VcZOWYw/YJxzT95gXOeWAgJ5veLvi97mENd42
+         +40QZk+2YveOvjK9zJegde7NjPMMIJRVOFzr2xRA9jlUaWFyAnVFK1pdmR/a5sm16XEc
+         7KnIgjaN1xnXtYWE0sARTYLDEvwLXBcFMVEqeG0u83j4f6x5PorBvze33DJZPjVGcz8i
+         mrnqiXuEAfOZ87SFV45AumdGpjH2JEvEmxf2WfLV4zIEjGqR8LnvzhoB7beT6uKcn278
+         3JA5UPdxG6SoYunlEvbL1/hDMV9n3c4Dne9WGsyPf89eCim/bh8b4wOe4uX7RMQ/UIqH
+         siEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761167274; x=1761772074;
+        d=1e100.net; s=20230601; t=1761167583; x=1761772383;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=to6L6lhPB2yIldNnSfRzXB6zL9NYJDZXGExFJ5Zr68w=;
-        b=Tpx8HNf7FF7aXmo+JMJoEMsbwRpH46CxOuFurOzwtLkjZ5OKBRPrBtU/Bpe4IeOZqH
-         onTxP8AnDNNYrAtObgtlCdiPE/QIipPbaEx4iTa/rGkU4+RpfBlY5zsnG7cnvmXIg2/p
-         9Su7T9gFDazWdVg2GrOh/tYQh6BVYy1KcuIblRW49I8qkAZDHNKZBGvZqttZ831kpL1m
-         A/pEYNDPbbHLv9KDfQs+KEzVMEwU63SxQjgKLJU0UNkgKC1gkUt9f+jLNRayTuL7ibMb
-         +6h7/XeKr7+X1k0wdbLiTQgnBPJTqf4PM2wmPdox8LdDgdPuTVDk5gQHK/vlpaVnGZ3X
-         q4fQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWUUKhDzMSX4I0loq0r51yjp6fX8XhGHTQXMnOJV8D4jRQ6ix/dyOtn0yYhBauKGDjUxcM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzMqjv4leH+FBiiOwGQheMEIcXOWCu76j1RtEtWvWDVFDlo1Z5i
-	NXlp1pwToawWTpd9UyY39g7bjH9/RXuINfV3kf1n/CXhNusJ6N7oL+1l1UdNTQNNXrXxtHO6iST
-	h3ACZ4UsllS6SK1vhVoxoxOPcucKgyOc=
-X-Gm-Gg: ASbGncseinUqTaZn6CIqxFGM6KSVIupTNzYDXFskgq4Micf9D6n5ct8RVUyXd3PbSOP
-	Vy8NUHmincwH4ExcSoEzd7Mfo/Ko2k3vjwCQNuWH95fLB1oYcwV6yenucvbimaXp8U0CYS70uhX
-	hvHcEiJ1HDg2Bl5++fO+odRJuLYl2SrmZw4/V8OoTOu9qRQZKdHxAd1OX5yVJ8z+T1XSqI2vuQe
-	u/quHXkTHdVphpXzFo0xAjgODeRKb8MWBy8tOnxt9fYhbqFxGhr5qXvMrrbQESspAouRZ8l
-X-Google-Smtp-Source: AGHT+IE2ClwP+lwG+nms20yYSbooNFv9+G0lJPiaPzO987CefPW2CZbowuxjVvfhoqcZXJ/YB6v6T1AACMbPW+O9gUQ=
-X-Received: by 2002:a05:6e02:3303:b0:431:d8ce:fa1d with SMTP id
- e9e14a558f8ab-431d8cefcc9mr35250545ab.4.1761167273895; Wed, 22 Oct 2025
- 14:07:53 -0700 (PDT)
+        bh=z4UVYUYQMZcP12r2q4ceaabpv+9D0pM9i4JapTZen7Q=;
+        b=Br1fqNb0xaEgdViIByuaQKahqcyxA/UK5yO29g1yEJkaKXcNpfJEbnQT+liea6o6y4
+         WWJHhSUdXCndKdwcCXbQliJjeA6GDMce0AZmYlSYg8nDRpM/nTAtyzGHcROoI6BltfwK
+         Y3A9V44N6iAka0/fi68gM7oocYmR3xetMN9RRVtt9wZ5+h07ZYwp1gQHEw3YPaSjJpYc
+         NQmgPZkHl/ql+2H6upfBCRwpHPRfmoLwuPSxrHZVSFxQHDk1XRiGnY4TAdgr3YTtp22l
+         0x8klLb9euPpsFVWuF2hUGZgCQ9pNv5M/O+cCrXxH/j8hvYxCv/I1lCeB1yuRJ49muPa
+         GP4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUkZfkk7NkFKTYGa78uDlWWIPIkQZJYQ0xiw0vnogf0Ay3IzDkMedx+G4rKU7wUmJojzhs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzP651zm8XNhNCgDlilyAEP4nNVPhPVSM+fSHG+uVSYN5f5eu+S
+	3PbcbOKdPed+K/Bdhms1ikqBV3vbsXL6WVPmMo1H/drCK4woujH2kBjqchQmbIpknl7Q7vDR8mG
+	68Py415XvBvOR/BELBYACjVKc9c/m1vs=
+X-Gm-Gg: ASbGncudNjx2Adu964KkfyF40MjMr4bGU71fNsHmljQBMGnAkcgEqnoqrnMOl1ArnQq
+	9eNiKSQKTzhfMhv3rXe3YEWnYm7iv48TRfABJ9+Jo+0Occq0ZwrLiaRqiKVOL4eIj5WtGJTlbQ/
+	Hxve9m9xvTcd89cJzMyRPF/UNjpBEp0navSyYXkW/uo8+E1tgKeqp+nGvKy33QgNjzLpvUSw+uk
+	5oCT1CIOaKeF28fv9V19c3AXqKaVCwLJpx4oN4v+kp22hkJT1EXh/XZZX4iISF8f/0ppTgI
+X-Google-Smtp-Source: AGHT+IGGN5qhiMl/eb6LQDyCAz4fb0Do8d2jQyubtDF57Hk0rQsBaGYAeV2eaK7n/3+WReTB/FSuE3ubbb2JLqnjmUI=
+X-Received: by 2002:a92:c26c:0:b0:431:d864:3658 with SMTP id
+ e9e14a558f8ab-431d864382dmr27405635ab.20.1761167583250; Wed, 22 Oct 2025
+ 14:13:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,61 +61,67 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
- <1fa9a7d7d1c309f2f651da351ba7bc0b36272d91.1760563101.git.gitgitgadget@gmail.com>
- <9eafee4d-ea94-4382-ada0-58000d229d2e@gmail.com> <xmqqecqww4u7.fsf@gitster.g>
-In-Reply-To: <xmqqecqww4u7.fsf@gitster.g>
+ <7b9e8961d42e0f367ba0782e7d932607aa7e0b0a.1760563101.git.gitgitgadget@gmail.com>
+ <aPdFZp8GokGoshol@pks.im>
+In-Reply-To: <aPdFZp8GokGoshol@pks.im>
 From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Wed, 22 Oct 2025 15:07:40 -0600
-X-Gm-Features: AS18NWDD2Ma1gZC0ziWgMh8J8uX4eTLlvChH0GAQ-nthQXSoKJg7lw_U4k-iJwo
-Message-ID: <CAH=ZcbBmdWCBh9zH1Y1JxcnNS-E9AU6Q4rRXPhMOtDBmkxLd8g@mail.gmail.com>
-Subject: Re: [PATCH 1/9] xdiff: use ssize_t for dstart/dend, make them last in xdfile_t
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, 
-	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Date: Wed, 22 Oct 2025 15:12:50 -0600
+X-Gm-Features: AS18NWABFzzSwJOJ-PPe0ATQWyZUOHpKKi1NS4gdwKBuw5tXM2muKI4-rMNhTIQ
+Message-ID: <CAH=ZcbDOY2yDQbBJeoKHesZzZCBvscqf7SoqbX4j3oHCBY5p8g@mail.gmail.com>
+Subject: Re: [PATCH 2/9] xdiff: make xrecord_t.ptr a uint8_t instead of char
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 21, 2025 at 11:18=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+On Tue, Oct 21, 2025 at 2:33=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> On Wed, Oct 15, 2025 at 09:18:14PM +0000, Ezekiel Newren via GitGitGadget=
  wrote:
->
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
-> > On 15/10/2025 22:18, Ezekiel Newren via GitGitGadget wrote:
-> >> From: Ezekiel Newren <ezekielnewren@gmail.com>
-> >>
-> >> ssize_t is appropriate for dstart and dend because they both describe
-> >> positive or negative offsets relative to a pointer.
+> > diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+> > index 6f3998ee54..411a8aa69f 100644
+> > --- a/xdiff/xdiffi.c
+> > +++ b/xdiff/xdiffi.c
+> > @@ -993,11 +993,11 @@ static void xdl_mark_ignorable_lines(xdchange_t *=
+xscr, xdfenv_t *xe, long flags)
 > >
-> > Isn't ptrdiff_t the appropriate type for an offset to a pointer? ssize_=
-t
-> > is not guaranteed to be the same width as size_t (this has caused
-> > problems in the past[1]) and is only defined by POSIX, not the C standa=
-rd.
+> >               rec =3D &xe->xdf1.recs[xch->i1];
+> >               for (i =3D 0; i < xch->chg1 && ignore; i++)
+> > -                     ignore =3D xdl_blankline(rec[i].ptr, rec[i].size,=
+ flags);
+> > +                     ignore =3D xdl_blankline((const char *)rec[i].ptr=
+, rec[i].size, flags);
 > >
-> > Thanks
+> >               rec =3D &xe->xdf2.recs[xch->i2];
+> >               for (i =3D 0; i < xch->chg2 && ignore; i++)
+> > -                     ignore =3D xdl_blankline(rec[i].ptr, rec[i].size,=
+ flags);
+> > +                     ignore =3D xdl_blankline((const char *)rec[i].ptr=
+, rec[i].size, flags);
 > >
-> > Phillip
-> >
-> > [1] https://lore.kernel.org/git/loom.20150207T174514-727@post.gmane.org=
-/
+> >               xch->ignore =3D ignore;
+> >       }
 >
-> Thanks for bringing up a very good point.
->
-> We often consider that a function that yields what we would normally
-> put in a size_t variable, when we _know_ that the return value would
-> not be so big to exceed half the range of size_t, can instead return
-> ssize_t and use the negative half of the range to signal error
-> conditions, but as the cited incident shows that it is an easy
-> mistake to make.
+> Okay. Seemingly, we convert the structure itself, but we don't convert
+> any of the functions to accept an `uint8_t`. I guess you drew the line
+> here so that we don't have to also touch up dozens of function
+> signatures?
 
-In my compat/rust_types.h file (which was dropped) I defined isize
-using ptrdiff_t rather than ssize_t. Maybe that file should be revived
-so that we don't have confusion in code reviews when structs are being
-expressly converted for the purpose of Rust FFI? I'd really like to
-bring that file back so that everyone has a clear reference for how C
-types map to Rust, but no one seemed to like it except me. Maybe it
-should be an adoc file rather than a header?
+That is correct. I wanted to avoid _boiling the ocean_ just to change
+the type of ptr.
 
-[1] compat/rust_types.h
-https://lore.kernel.org/git/2a7d5b05c18d4a96f1905b7043d47c62d367cd2a.175727=
-4320.git.gitgitgadget@gmail.com/
+> And how did you end up verifying that you added all casts? Does the
+> compiler flag those as warnings?
+
+I used CLion to search for all uses of that field and then added casts
+where the types differ. Another way to do that is to run `make
+DEVELOPER=3D1` and address all of the `uint8_t differs in signedness
+from char` errors that are spat out.
+
+> In any case, it might be nice to explain both of these details in the
+> commit message.
+
+I will update it.
+
+Thanks.
