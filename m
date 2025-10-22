@@ -1,79 +1,93 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A543F1D5AD4
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 02:16:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E33D2C3250
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 03:32:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761099390; cv=none; b=RnbxHzO3e6gp7OSt20MNfnt0S6C+EE7JmmzahxkrX9JoW2GxZsv2k+SZsMT18aeK/DI/IVZcuS5o+X9U0hZG/5xcMeh7+TkitGVzeo9yYo9dR+ZqIysS9aeEg4UWP6vGcp46Y8mnguhwaz/2lKmbbQlBPGu+7XCzf6JdMV6v31A=
+	t=1761103974; cv=none; b=uRdjGRftZNRnV7amlVjmr+KMLPsNG00ZjSUx7/CIFOoYHtJTqLpTVHLTFK1fYxUkHm5zQUYb1KivX4Cxa4XUEV0tFS6HNRtf3+5Qz3/xH1kNi+Ni1DXsoOxkp3vLdu/ot23JVB0nuRXsVnFhGWWtVh8EanWAPtFd5KYF4KXB2xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761099390; c=relaxed/simple;
-	bh=jOZnQYm6f19M7GHyRbwVjZgZZoLa+GGRTxHC4QRXbPY=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=e46hvS/waSUXf4+rL5pvHsKr/8Ybr9Jggw12PM23iGKCiJGoJC7NYcGFIia/kVvyOV36okSGN21Um5qbdztGnsTNyoiiHe3NyALyAoThFmp22a7iug5FpxzzjhxwbzgchEg1fw8zhCLV6CfVc25e7jdLGKcIhJqlGd5H+cTjhFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BmqjpMSW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yb8bgNWb; arc=none smtp.client-ip=103.168.172.152
+	s=arc-20240116; t=1761103974; c=relaxed/simple;
+	bh=yd5zqx0hKGO8+HwbUlYVCEPkx+zkTBAoRRYAMpRoo2Q=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pUQZ9YTkcqpgXA/qhzugHem80tORwl7qeKfsF5VOseJdoYKYqc/yg243nRdrbyLT/lwO/r3gfPdotZUoI4Xb2tmPDcqVoki7xSBBNlSfrE/b/1Vq5de/SSLP6pxEORLQkk/DUIoLB1XbISEsfRDgtAAl8D7N1T8hKMke3qXOdRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YUBqQVDP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ChAyhhL1; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BmqjpMSW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yb8bgNWb"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B2C661400176;
-	Tue, 21 Oct 2025 22:16:25 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YUBqQVDP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ChAyhhL1"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4611CEC00BE;
+	Tue, 21 Oct 2025 23:32:51 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 21 Oct 2025 22:16:25 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 21 Oct 2025 23:32:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1761099385; x=1761185785; bh=pXIWoQCE2dkoPSQpE+8Dwg2jc3o332Tg
-	2zh9IhTY9uM=; b=BmqjpMSWfg9aAPwr/TeQZxRSysZlqpAATaXpTcW03tQgQdsN
-	8Q6bvT1VyfKzkJhSydLN7FbqiN3fmfm/P8aKfFzSfiUcy4hbAWbmQ4r80OlsJyIz
-	d5RDli9vDFBlRhLaTE7Fevupg8pmDPwfauPdun70cvuWaYQAZkkeLyc3GHbm9bqw
-	OwCHTezGEOzsLDVwtjoBG/QJAwSU21vj6eW0G6X7H3hmApHXKhgKvT3FP1w8k9N3
-	lOlzE2r4cPCaRnnSR3Lbnr9UKrQE0st3yvWNweKZTGeSu3CljyJYi/NwliImnd9/
-	Cvg6J4U1x67yvOcRVQHtukHD1BwIU5pm8GG4wQ==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1761103971; x=1761190371; bh=959ZNMBVdi
+	KpTMo9yU/Q4r+zKe2+5fqN0qlUPFqVCME=; b=YUBqQVDPzNFk46AEwXZ3dhyM7s
+	/DSG9Nt7zA86lcMFb0ofrzBUAn48boNAA5OdyM9G9La9z8OQqDmJAHT45h95SbAT
+	bInEU3Vyzhebzi0iahstuxna0TvNUc/XJdB+Nzc6c1Zg4q0SZUDsS+kaoVF+AExJ
+	v9BZpQtmAdWKoiwsjzQxchnOpw+YmiB0P7xXRB02dxqL1I58p7/xAg/a0ZieI/DD
+	c16UNDutG5tjb6dA+V4fWo8HPGDyLeCubeNz23Uvx9k4nprbs6MRB6NS30iXcQyy
+	bE+ZGfV52JS0r2ysKmSxUt32gxOPofpafwmU7Cx+tEuFfenDQk1TY1mvJCjw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1761099385; x=
-	1761185785; bh=pXIWoQCE2dkoPSQpE+8Dwg2jc3o332Tg2zh9IhTY9uM=; b=Y
-	b8bgNWb4xc2q2eF9bhcEPV44C+5pKwRkLOfH5SBSNcfLwMYQXywL4DGdGlwVd7s9
-	kaBPNhq07B1xxFN7c13xu53X8Q4Bqw2PQ4QeUvaPaGyYV2OC/ZYD0zNru/w/D4YF
-	YBnKjb5D5ZqE9ohKKKk8YF9+SR+aCyIBQW32j558raVrbe+/rOmvgEeov1RKRigQ
-	tRO2WgXpkdLaHCYFHn+MCXXarVHQDAs99YMAmm0LAuyFHPk24/i6OphJ2ekhM53N
-	HGMI3ghkG1imT7YRRRhcMbHhZcV3bPvbynea3OC38PVPrBq0MEXAAQN82m7N1zvJ
-	zrvJUUYf+8Cqpxt78S/iQ==
-X-ME-Sender: <xms:eT74aOibgVuIkKTIRWhwQK0ZRQB0lzP-60mzO_DKjTqxkovu7faquw>
-    <xme:eT74aGfJ8wM0XsUDJJZyVAcGNJFDdVBp7BcICxfwOEm2Frm1Gdjoww0CEA_S7Y2Yo
-    pnh0F4IZBQDSURLBqqjgvC7lzc9UDlD0PSNSKcK4gOVfdC2n3V9wBg>
-X-ME-Received: <xmr:eT74aDdTMedTW4J7Uld5jPPf-Qi80luG_TDpjEeTnGmId8iKqVqHbf2z37cDJS6z095t4AbBSAeU7nRLoK3VSFGSNX-xmPsuZLpC>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedvfeeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1761103971; x=1761190371; bh=959ZNMBVdiKpTMo9yU/Q4r+zKe2+5fqN0ql
+	UPFqVCME=; b=ChAyhhL1PGkVwKyd/PaJ5dkmUov5trvKBnlzp5yBczj9ZQmCGs4
+	RLUFSJBXyQPMOURxqsGZaowf0Fv0YtnEZDZbCbkfovGEG3s6e7tdwIQiUwmmfDN5
+	WMjsrF/t/uces2RTmATDeNBCRDC1NfbSLZ52Nm1jTTTXYqFeE1Q3S7cjtsWyfkq1
+	rhNqeFmUXPspV8VnviJhn7PCO5YjBTrZD59cPAbTer72z3c066Jdu85a9uLXSO7Y
+	YawOqURucBcyC0Y4UnUUmjWW1MiMlbrGpR0tXXfNRldBwvlXDLsqEWOPr/yATyM/
+	DIb5FYAssGrDnFuP8uhRvHJTQz6mty52YFA==
+X-ME-Sender: <xms:Y1D4aP_Kn0VtbXWqzWrpoZ2fFDVozfpz9dB7sDoM21i6adOoZltV9g>
+    <xme:Y1D4aHbBJO43yg_VkKYUHV_a1de0Y5XYO6Cy4RLSYMNb1vIL36MZqYB15KQ6fjM8H
+    4Pq9Ak1wulFLvJ1I2LDILlYqLT7-dmshG_5t9syLyDGwA1JwfJDreY>
+X-ME-Received: <xmr:Y1D4aJdks0g_dJpdxbTPpGD-MUeSTCcFGB4zUcOPyS7qtaUkGINhUEBydFCdTWfFIYjNwAE5aKkZJtC0Izg-tglk1musfuqDirce>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedvheduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
-    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
-    gidrtghomheqnecuggftrfgrthhtvghrnhepvdetueevtdeikeeftedvkefggeekjeekge
-    ffgefgieeftdfhjeelfeeuieekgeegnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdp
-    ohhrrdgtiidpghhoohhglhgvshhouhhrtggvrdgtohhmpdhgihhthhhusgdrtghomhdpgh
-    hithhlrggsrdgtohhmpdhsvggvnhdrlhgtnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlfihnsehlfihnrdhnvghtpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:eT74aA9cQhIT7AnsxVd0RZbRZFyDsO8DOMLE410opzmUawE2pS7s3g>
-    <xmx:eT74aPknLK_2F4g5YlYGhHJOCEOdv2_rN0yg323DKXg_1FLFCZTL_Q>
-    <xmx:eT74aC881BMOXNogFEK0n7C_HF_Rx9diMVgnK46a1fdAIQL0XHx5vQ>
-    <xmx:eT74aNnjlspUiggz343PYHv6ry1BbxCxQhpZcYwdtVXKZmwJoP6z3Q>
-    <xmx:eT74aPQNBZNUd54V04qQeuMbe-I-5D05oUpvPKkwGLuqrmmXU5uZ-kQr>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepshhorhhgrghnohhvsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepmhgrrhhtihhnvhhonh
+    iisehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgs
+    rghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrih
+    hlrdgtohhm
+X-ME-Proxy: <xmx:Y1D4aElWEyot0JACDvy8oFrXUgFOjaxdQ_EMshiAuMRym1biR9KF-A>
+    <xmx:Y1D4aJ3KD_ykpUER8_4r_lu1AzkpcIH_s6oXNn1H4WEbEBMBrpPnBA>
+    <xmx:Y1D4aNe7PgUciaQD5Wv9wzQ2BK6EX6CU_uuaIMi3qM7SME8DMrlRZQ>
+    <xmx:Y1D4aDY1H_eE6hdDs1C-jKdUzLR3bwSZJKhsfMrWBkf5DwGVa9s_fw>
+    <xmx:Y1D4aNvmKxjD5BkfE3cOcwjxRuI1r3mzpussVrrKd7poEsOv4oyj5-Br>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Oct 2025 22:16:25 -0400 (EDT)
+ 21 Oct 2025 23:32:50 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Oct 2025, #07; Tue, 21)
-X-master-at: 133d151831d32bdcc02422599a3f26cef44f929b
-X-next-at: 4ebd6896fd8600877adbfde68a5d313d77bc0f18
-Date: Tue, 21 Oct 2025 19:16:23 -0700
-Message-ID: <xmqqplaf1y14.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  "D. Ben Knoble"
+ <ben.knoble@gmail.com>,  Sergey Organov <sorganov@gmail.com>,
+  =?utf-8?Q?Jean-No=C3=ABl?=
+ AVILA <jn.avila@free.fr>,  Martin von Zweigbergk <martinvonz@gmail.com>,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Elijah Newren
+ <newren@gmail.com>
+Subject: Re: [PATCH v4 05/12] builtin: add new "history" command
+In-Reply-To: <CAOLa=ZQSc0jHv9gK5T06GA_mprknucwCj5H_M2djZ-UWfRMbJQ@mail.gmail.com>
+	(Karthik Nayak's message of "Tue, 14 Oct 2025 05:07:03 -0400")
+References: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im>
+	<20251001-b4-pks-history-builtin-v4-5-8e61ddb86317@pks.im>
+	<CAOLa=ZQSc0jHv9gK5T06GA_mprknucwCj5H_M2djZ-UWfRMbJQ@mail.gmail.com>
+Date: Tue, 21 Oct 2025 20:32:49 -0700
+Message-ID: <xmqqldl31uhq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -83,655 +97,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[Graduated to 'master']
-
-* dk/stash-apply-index (2025-10-06) 1 commit
-  (merged to 'next' on 2025-10-13 at 2187046f6c)
- + doc: explain the impact of stash.index on --autostash options
-
- Doc update.
- source: <d4a277b6b0695d86636562f4c07efae17f9249f9.1759755379.git.ben.knoble+github@gmail.com>
-
-
-* js/mingw-includes-cleanup (2025-10-09) 2 commits
-  (merged to 'next' on 2025-10-13 at b7144c1feb)
- + mingw: order `#include`s alphabetically
- + mingw: avoid relative `#include`s
-
- Code clean-up.
- source: <pull.1985.git.1759995961.gitgitgadget@gmail.com>
-
-
-* js/unreachable-workaround-for-no-symlink-head (2025-10-09) 1 commit
-  (merged to 'next' on 2025-10-13 at 0e970d5e4e)
- + refs: forbid clang to complain about unreachable code
-
- Code clean-up.
- source: <pull.1984.git.1759995982220.gitgitgadget@gmail.com>
-
-
-* kh/doc-continued-paragraph-fix (2025-10-08) 1 commit
-  (merged to 'next' on 2025-10-13 at e66316f041)
- + doc: fix accidental literal blocks
-
- Doc mark-up fixes.
- source: <7a955ecb1b5.1759923933.git.code@khaugsbakk.name>
-
-
-* tb/cat-file-objectmode-update (2025-10-13) 1 commit
-  (merged to 'next' on 2025-10-13 at 4fd0f1b5b5)
- + builtin/cat-file.c: simplify calling `report_object_status()`
-
- Code clean-up.
- source: <9236fa6e654a59337266430a2a8807da21210cd4.1760392502.git.me@ttaylorr.com>
-
---------------------------------------------------
-[New Topics]
-
-* js/t7500-pwd-windows-fix (2025-10-20) 1 commit
-  (merged to 'next' on 2025-10-20 at d3996041e8)
- + t7500: fix tests with absolute path following ":(optional)" on Windows
-
- Test fix.
-
- Will merge to 'master'.
- source: <6a83c7d1-7cd4-432e-a0ab-7b18ce3af08d@kdbg.org>
-
-
-* kf/log-shortlog-completion-fix (2025-10-20) 1 commit
- - completion: complete some 'git log' options
-
- "git shortlog" knows "--committer" and "--author" options, which
- the command line completion (in contrib/) did not handle well,
- which has been corrected.
-
- Will merge to 'next'?
- source: <pull.2073.v2.git.git.1760981577441.gitgitgadget@gmail.com>
-
-
-* kn/refs-optim-cleanup (2025-10-20) 4 commits
- . t/pack-refs-tests: move the 'test_done' to callees
- . refs: rename 'pack_refs_opts' to 'refs_optimize_opts'
- . refs: move to using the '.optimize' functions
- . Merge branch 'ps/ref-peeled-tags' into kn/refs-optim-cleanup
- (this branch uses ps/ref-peeled-tags.)
-
- Code clean-up.
-
- Comments?
- source: <20251020-refs-code-cleanup-v2-0-f5349ed0f6a5@gmail.com>
-
-
-* lo/repo-info-all (2025-10-20) 2 commits
- - repo: add --all to git-repo-info
- - repo: factor out field printing to dedicated function
-
- "git repo info" learned "--all" option.
-
- Comments?
- cf. <aPcduvnjD0yphja2@pks.im>
- source: <20251020181943.6314-1-lucasseikioshiro@gmail.com>
-
-
-* ly/diff-name-only-with-diff-from-content (2025-10-19) 1 commit
-  (merged to 'next' on 2025-10-20 at 8a271653ce)
- + diff: stop output garbled message in dry run mode
-
- Regression fixes for a topic that has already been merged.
-
- Will merge to 'master'.
- source: <20251019163024.18939-1-yldhome2d2@gmail.com>
-
-
-* jt/repo-structure (2025-10-21) 7 commits
- - builtin/repo: add progress meter for structure stats
- - builtin/repo: add keyvalue and nul format for structure stats
- - builtin/repo: add object counts in structure output
- - builtin/repo: introduce structure subcommand
- - ref-filter: export ref_kind_from_refname()
- - ref-filter: allow NULL filter pattern
- - builtin/repo: rename repo_info() to cmd_repo_info()
-
- "git repo structure", a new command.
-
- Comments?
- source: <20251021182601.2687284-1-jltobler@gmail.com>
-
-
-* ps/maintenance-geometric (2025-10-21) 10 commits
- - builtin/maintenance: introduce "geometric" strategy
- - builtin/maintenance: make "gc" strategy accessible
- - builtin/maintenance: extend "maintenance.strategy" to manual maintenance
- - builtin/maintenance: run maintenance tasks depending on type
- - builtin/maintenance: don't silently ignore invalid strategy
- - builtin/maintenance: make the geometric factor configurable
- - builtin/maintenance: introduce "geometric-repack" task
- - builtin/gc: make `too_many_loose_objects()` reusable without GC config
- - builtin/gc: remove global `repack` variable
- - Merge branch 'tb/incremental-midx-part-3.1' into ps/maintenance-geometric
- (this branch uses tb/incremental-midx-part-3.1.)
-
- "git maintenance" command learns the "geometric" strategy where it
- avoids doing maintenance tasks that rebuilds everything from
- scratch.
-
- Comments?
- source: <20251021-pks-maintenance-geometric-strategy-v2-0-f0d727832b80@pks.im>
-
-
-* rs/add-patch-document-p-for-pager (2025-10-21) 1 commit
- - add-patch: fully document option P
-
- Show 'P'ipe command in "git add -p".
-
- Will merge to 'next'.
- source: <0188c766-d788-476d-a4d4-f95a6f59b31b@web.de>
-
-
-* tb/unicode-width-table-17 (2025-10-21) 1 commit
- - unicode: update the width tables to Unicode 17
-
- Unicode width table update.
-
- Will merge to 'next'.
- source: <20251021094849.93284-1-tboegi@web.de>
-
---------------------------------------------------
-[Cooking]
-
-* so/t2401-use-test-path-helpers (2025-10-15) 1 commit
-  (merged to 'next' on 2025-10-16 at b6fe4d2222)
- + t2401: update path checks using test_path helpers
-
- Test modernization.
-
- Will merge to 'master'.
- source: <20251015140329.13691-2-solobarine@gmail.com>
-
-
-* en/xdiff-cleanup-2 (2025-10-15) 9 commits
- - xdiff: rename rindex -> reference_index
- - xdiff: change rindex from long to size_t in xdfile_t
- - xdiff: make xdfile_t.nreff a size_t instead of long
- - xdiff: make xdfile_t.nrec a size_t instead of long
- - xdiff: split xrecord_t.ha into line_hash and minimal_perfect_hash
- - xdiff: use unambiguous types in xdl_hash_record()
- - xdiff: use size_t for xrecord_t.size
- - xdiff: make xrecord_t.ptr a uint8_t instead of char
- - xdiff: use ssize_t for dstart/dend, make them last in xdfile_t
-
- Code clean-up.
-
- Comments?
- source: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
-
-
-* js/ci-github-actions-update (2025-10-16) 4 commits
-  (merged to 'next' on 2025-10-17 at 6fa7439b70)
- + build(deps): bump actions/github-script from 7 to 8
- + build(deps): bump actions/setup-python from 5 to 6
- + build(deps): bump actions/checkout from 4 to 5
- + build(deps): bump actions/download-artifact from 4 to 5
-
- CI update.
-
- Will merge to 'master'.
- source: <pull.1990.git.1760629692.gitgitgadget@gmail.com>
-
-
-* ar/run-command-hook (2025-10-17) 10 commits
- - receive-pack: convert receive hooks to hook API
- - receive-pack: convert update hooks to new API
- - hooks: allow callers to capture output
- - run-command: allow capturing of collated output
- - reference-transaction: use hook API instead of run-command
- - hook: allow overriding the ungroup option
- - transport: convert pre-push to hook API
- - hook: convert 'post-rewrite' hook in sequencer.c to hook API
- - hook: provide stdin via callback
- - run-command: add stdin callback for parallelization
-
- Use hook API to replace ad-hoc invocation of hook scripts with the
- run_command() API.
-
- Comments?
- source: <20251017141544.1538542-1-adrian.ratiu@collabora.com>
-
-
-* je/doc-reset (2025-10-17) 4 commits
- - doc: git-reset: clarify `git reset <pathspec>`
- - doc: git-reset: clarify `git reset [mode]`
- - doc: git-reset: clarify intro
- - doc: git-reset: reorder the forms
-
- Documentation updates.
-
- Comments?
- source: <pull.1991.git.1760731558.gitgitgadget@gmail.com>
-
-
-* jk/diff-from-contents-fix (2025-10-17) 2 commits
-  (merged to 'next' on 2025-10-20 at 19442a804e)
- + diff: restore redirection to /dev/null for diff_from_contents
- + Merge branch 'ly/diff-name-only-with-diff-from-content' into jk/diff-from-contents-fix
-
- Recently we attempted to improve "git diff -w" and friends to
- handle cases where patch output would be suppressed, but it
- introduced a bug that emits unnecessary output, which has been
- corrected.
-
- Will merge to 'master' and then to 'maint'.
- source: <20251017083641.GB4073661@coredump.intra.peff.net>
-
-
-* jk/status-z-short-fix (2025-10-17) 1 commit
-  (merged to 'next' on 2025-10-20 at 0d649c97b7)
- + status: make coloring of "-z --short" consistent
-
- The "--short" option of "git status" that meant output for humans
- and "-z" option to show NUL delimited output format did not mix
- well, and colored some but not all things.  The command has been
- updated to color all elements consistently in such a case.
-
- Will merge to 'master'.
- source: <20251017084455.GA4096702@coredump.intra.peff.net>
-
-
-* tu/credential-makefile-updates (2025-10-20) 1 commit
- - contrib/credential: harmonize Makefiles
-
- Build procedure for a few credential helpers (in contrib/) have
- been updated.
-
- Will merge to 'next'.
- source: <0a61b0b3-365b-c198-6afd-f26fcd5a9c20@mailbox.tu-dresden.de>
-
-
-* ps/symlink-symref-deprecation (2025-10-14) 1 commit
- - refs/files: deprecate writing symrefs as symbolic links
-
- "Symlink symref" has been added to the list of things that will
- disappear at Git 3.0 boundary.
-
- Comments?
- source: <20251014-pks-ref-files-deprecate-symbolic-links-v1-1-4bcd6a4ef6f5@pks.im>
-
-
-* kh/doc-patch-id-1 (2025-10-13) 2 commits
- - doc: patch-id: convert to the modern synopsis style
- - Merge branch 'kh/doc-patch-id-markup-fix' into kh/doc-patch-id-1
-
- Will merge to 'next'?
- source: <v2-38645ea253c.1760369708.git.code@khaugsbakk.name>
-
-
-* tz/test-prepare-gnupghome (2024-07-03) 2 commits
- - t/lib-gpg: call prepare_gnupghome() in GPG2 prereq
- - t/lib-gpg: add prepare_gnupghome() to create GNUPGHOME dir
-
- Tests did not set up GNUPGHOME correctly, which is fixed but some
- bugs are exposed in t1016, which needs to be addressed before this
- topic can move forward.
-
- On hold.
- cf. <ZoV8b2RvYxLOotSJ@teonanacatl.net>
- source: <20240703153738.916469-1-tmz@pobox.com>
-
-
-* jc/t1016-setup-fix (2025-10-10) 1 commit
- - t1016: make sure to use specified GPG
-
- GPG signing test set-up has been broken for a year, which has been
- corrected.
-
- Comments?
- source: <xmqqsefq7947.fsf@gitster.g>
-
-
-* cc/fast-import-strip-signed-tags (2025-10-13) 5 commits
- - fast-import: add '--signed-tags=<mode>' option
- - fast-export: handle all kinds of tag signatures
- - t9350: properly count annotated tags
- - lib-gpg: allow tests with GPGSM or GPGSSH prereq first
- - doc: git-tag: stop focusing on GPG signed tags
-
- "git fast-import" is taught to handle signed tags, just like it
- recently learned to handle signed commits, in different ways.
-
- Will merge to 'next'.
- source: <20251013084857.1646783-1-christian.couder@gmail.com>
-
-
-* ps/ci-rust (2025-10-14) 8 commits
- - rust: support for Windows
- - ci: verify minimum supported Rust version
- - ci: check for common Rust mistakes via Clippy
- - rust/varint: add safety comments
- - ci: check formatting of our Rust code
- - ci: deduplicate calls to `apt-get update`
- - Merge branch 'ps/gitlab-ci-windows-improvements' into ps/ci-rust
- - Merge branch 'ps/rust-balloon' into ps/ci-rust
-
- CI improvements to handle the recent Rust integration better.
-
- Will merge to 'next'.
- source: <20251015-b4-pks-ci-rust-v3-0-13810af33bd5@pks.im>
-
-
-* ps/ref-peeled-tags (2025-10-08) 14 commits
- . ref-filter: parse objects on demand
- . ref-filter: detect broken tags when dereferencing them
- . refs: don't store peeled object IDs for invalid tags
- . object: add flag to `peel_object()` to verify object type
- . refs: drop infrastructure to peel via iterators
- . refs: drop `current_ref_iter` hack
- . builtin/show-ref: convert to use `reference_get_peeled_oid()`
- . ref-filter: propagate peeled object ID
- . upload-pack: convert to use `reference_get_peeled_oid()`
- . refs: expose peeled object ID via the iterator
- . refs: refactor reference status flags
- . refs: fully reset `struct ref_iterator::ref` on iteration
- . refs: introduce `.ref` field for the base iterator
- . refs: introduce wrapper struct for `each_ref_fn`
- (this branch is used by kn/refs-optim-cleanup.)
-
- Some ref backend storage can hold not just the object name of an
- annotated tag, but the object name of the object the tag points at.
- The code to handle this information has been streamlined.
-
- Tentatively kicked out of 'seen'.
- Needs larger merge-fix to adjust other topics to "struct reference".
- source: <20251008-b4-pks-ref-filter-skip-parsing-objects-v2-0-76e30d5c9542@pks.im>
-
-
-* ps/remove-packfile-store-get-packs (2025-10-09) 7 commits
- - packfile: rename `packfile_store_get_all_packs()`
- - packfile: introduce macro to iterate through packs
- - packfile: drop `packfile_store_get_packs()`
- - builtin/grep: simplify how we preload packs
- - builtin/gc: convert to use `packfile_store_get_all_packs()`
- - object-name: convert to use `packfile_store_get_all_packs()`
- - Merge branch 'tb/incremental-midx-part-3.1' into ps/remove-packfile-store-get-packs
- (this branch uses tb/incremental-midx-part-3.1.)
-
- Two slightly different ways to get at "all the packfiles" in API
- has been cleaned up.
-
- Will merge to 'next' after tb/incremental-midx-part-3.1 settles.
- source: <20251009-pks-packfiles-convert-get-all-v2-0-0d73b87ce711@pks.im>
-
-
-* je/doc-data-model (2025-10-20) 2 commits
- - SQUASH??? work around AsciiDoc xml that does not validate
- - doc: add a explanation of Git's data model
-
- Add a new manual that describes the data model.
-
- Comments?
- source: <pull.1981.v3.git.1760476346040.gitgitgadget@gmail.com>
-
-
-* tb/incremental-midx-part-3.1 (2025-10-15) 50 commits
- - builtin/repack.c: clean up unused `#include`s
- - repack: move `write_cruft_pack()` out of the builtin
- - repack: move `write_filtered_pack()` out of the builtin
- - repack: move `pack_kept_objects` to `struct pack_objects_args`
- - repack: move `finish_pack_objects_cmd()` out of the builtin
- - builtin/repack.c: pass `write_pack_opts` to `finish_pack_objects_cmd()`
- - repack: extract `write_pack_opts_is_local()`
- - repack: move `find_pack_prefix()` out of the builtin
- - builtin/repack.c: use `write_pack_opts` within `write_cruft_pack()`
- - builtin/repack.c: introduce `struct write_pack_opts`
- - repack: 'write_midx_included_packs' API from the builtin
- - builtin/repack.c: inline packs within `write_midx_included_packs()`
- - builtin/repack.c: pass `repack_write_midx_opts` to `midx_included_packs`
- - builtin/repack.c: inline `remove_redundant_bitmaps()`
- - builtin/repack.c: reorder `remove_redundant_bitmaps()`
- - repack: keep track of MIDX pack names using existing_packs
- - builtin/repack.c: use a string_list for 'midx_pack_names'
- - builtin/repack.c: extract opts struct for 'write_midx_included_packs()'
- - builtin/repack.c: remove ref snapshotting from builtin
- - repack: remove pack_geometry API from the builtin
- - builtin/repack.c: pass 'packdir' to `pack_geometry_remove_redundant()`
- - builtin/repack.c: pass 'pack_kept_objects' to `pack_geometry_init()`
- - builtin/repack.c: rename various pack_geometry functions
- - builtin/repack.c: remove "repack_promisor_objects()" from the builtin
- - builtin/repack.c: pass "packtmp" to `repack_promisor_objects()`
- - repack: remove 'generated_pack' API from the builtin
- - builtin/repack.c: provide pack locations to `generated_pack_install()`
- - builtin/repack.c: pass "packtmp" to `generated_pack_populate()`
- - builtin/repack.c: factor out "generated_pack_install"
- - builtin/repack.c: rename "struct generated_pack_data"
- - repack: remove 'existing_packs' API from the builtin
- - builtin/repack.c: avoid unnecessary numeric casts in existing_packs
- - builtin/repack.c: pass "packdir" when removing packs
- - repack: remove 'remove_redundant_pack' from the builtin
- - builtin/repack.c: rename many 'struct existing_packs' functions
- - repack: remove 'prepare_pack_objects' from the builtin
- - repack: move 'delta_base_offset' to 'struct pack_objects_args'
- - builtin/repack.c: pass both pack_objects args to repack_config
- - repack: introduce new compilation unit
- - builtin/repack.c: avoid using `hash_to_hex()` in pack geometry
- - builtin/repack.c: avoid "the_hash_algo" in `finish_pack_objects_cmd()`
- - builtin/repack: avoid "the_hash_algo" in `repack_promisor_objects()`
- - builtin/repack.c: avoid "the_hash_algo" in `write_oid()`
- - builtin/repack.c: avoid "the_hash_algo" when deleting packs
- - builtin/repack.c: avoid "the_repository" when repacking promisor objects
- - builtin/repack.c: avoid "the_repository" when removing packs
- - builtin/repack.c: avoid "the_repository" when taking a ref snapshot
- - builtin/repack.c: avoid "the_repository" in existing packs API
- - builtin/repack.c: avoid "the_repository" in `cmd_repack()`
- - Merge branch 'ps/packfile-store' into tb/incremental-midx-part-3.1
- (this branch is used by ps/maintenance-geometric and ps/remove-packfile-store-get-packs.)
-
- Clean-up "git repack" machinery to prepare for incremental update
- of midx files.
-
- Will merge to 'next'.
- source: <cover.1760567210.git.me@ttaylorr.com>
-
-
-* cc/doc-submitting-patches-with-ai (2025-10-01) 1 commit
- - SubmittingPatches: add section about AI
-
- AI guidelines.
-
- Will merge to 'next'?
- cf. <xmqqv7ki1xf1.fsf@gitster.g>
- source: <20251001140310.527097-1-christian.couder@gmail.com>
-
-
-* ps/history (2025-10-21) 13 commits
- - builtin/history: implement "split" subcommand
- - cache-tree: allow writing in-memory index as tree
- - add-patch: add support for in-memory index patching
- - add-patch: remove dependency on "add-interactive" subsystem
- - add-patch: split out `struct interactive_options`
- - add-patch: split out header from "add-interactive.h"
- - builtin/history: implement "reword" subcommand
- - builtin: add new "history" command
- - replay: parse commits before dereferencing them
- - replay: stop using `the_repository`
- - replay: extract logic to pick commits
- - wt-status: provide function to expose status for trees
- - Merge branch 'sa/replay-atomic-ref-updates' into ps/history
- (this branch uses sa/replay-atomic-ref-updates.)
-
- "git history" history rewriting UI.
- source: <20251021-b4-pks-history-builtin-v5-0-78d23f578fe6@pks.im>
-
-
-* ms/doc-worktree-side-by-side (2025-10-10) 2 commits
- - doc: git-worktree: Add side by side branch checkout example
- - doc: git-worktree: Link to examples
-
- Document "git worktree add" and use of out-of-tree worktrees with
- examples.
-
- Under discussion.
- cf. <CAPig+cSNesf0UwS4=Bxe-Qn+G9y3YYPyOK+7y3q8QJk+o7jaVg@mail.gmail.com>
- source: <a203b35538847f3c9358a5ae26fb4ebea5734cfc.1759420102.git.msuchanek@suse.de>
-
-
-* rj/doc-technical-fixes (2025-10-16) 4 commits
- - doc: add large-object-promisors.adoc to the docs build
- - doc: commit-graph.adoc: fix up some formatting
- - doc: sparse-checkout.adoc: fix asciidoc warnings
- - doc: remembering-renames.adoc: fix asciidoc warnings
-
- Documentation mark-up fixes.
-
- Will merge to 'next'?
- source: <20251016200301.1595204-1-ramsay@ramsayjones.plus.com>
-
-
-* sa/replay-atomic-ref-updates (2025-10-14) 4 commits
- - SQAUASH??? t0450 band-aid
- - replay: add replay.defaultAction config option
- - replay: make atomic ref updates the default behavior
- - replay: use die_for_incompatible_opt2() for option validation
- (this branch is used by ps/history.)
-
- "git replay" (experimental) learned to perform ref updates itself
- in a transaction by default, instead of emitting where each refs
- should point at and leaving the actual update to another command.
-
- Expecting a reroll.
- source: <20251013183311.33329-1-siddharthasthana31@gmail.com>
-
-
-* je/doc-pull (2025-10-15) 4 commits
-  (merged to 'next' on 2025-10-16 at 71e7a0cac0)
- + doc: git-pull: clarify how to exit a conflicted merge
- + doc: git-pull: delete the example
- + doc: git-pull: clarify options for integrating remote branch
- + doc: git-pull: move <repository> and <refspec> params
-
- Documentation updates.
-
- Will merge to 'master'.
- source: <pull.1976.v3.git.1760534011.gitgitgadget@gmail.com>
-
-
-* bc/sha1-256-interop-01 (2025-10-09) 9 commits
-  (merged to 'next' on 2025-10-14 at c571bab975)
- + t1010: use BROKEN_OBJECTS prerequisite
- + t: allow specifying compatibility hash
- + fsck: consider gpgsig headers expected in tags
- + rev-parse: allow printing compatibility hash
- + docs: add documentation for loose objects
- + docs: improve ambiguous areas of pack format documentation
- + docs: reflect actual double signature for tags
- + docs: update offset order for pack index v3
- + docs: update pack index v3 format
-
- The beginning of SHA1-SHA256 interoperability work.
-
- Will merge to 'master'.
- source: <20251009215626.3089287-1-sandals@crustytoothpaste.net>
-
-
-* ar/submodule-gitdir-tweak (2025-10-06) 5 commits
- - submodule: error out if gitdir name is too long
- - submodule: encode gitdir paths to avoid conflicts
- - strbuf: bring back is_rfc3986_unreserved
- - submodule: add gitdir path config override
- - submodule--helper: use submodule_name_to_gitdir in add_submodule
-
- Avoid local submodule repository directory paths overlapping with
- each other by encoding submodule names before using them as path
- components.
-
- Expecting v4.
- cf. <20251006112518.3764240-1-adrian.ratiu@collabora.com>
- source: <20251006112518.3764240-1-adrian.ratiu@collabora.com>
-
-
-* ds/sparse-checkout-clean (2025-10-20) 8 commits
-  (merged to 'next' on 2025-10-20 at afc50f3401)
- + sparse-index: improve advice message instructions
-  (merged to 'next' on 2025-09-25 at 00b296f153)
- + t: expand tests around sparse merges and clean
- + sparse-index: point users to new 'clean' action
- + sparse-checkout: add --verbose option to 'clean'
- + dir: add generic "walk all files" helper
- + sparse-checkout: match some 'clean' behavior
- + sparse-checkout: add basics of 'clean' command
- + sparse-checkout: remove use of the_repository
-
- "git sparse-checkout" subcommand learned a new "clean" action to
- prune otherwise unused working-tree files that are outside the
- areas of interest.
-
- Will merge to 'master'.
- source: <pull.1941.v3.git.1757673011.gitgitgadget@gmail.com>
-
---------------------------------------------------
-[Discarded]
-
-These have been kept outside 'seen' for some time, and were removed
-for now, until they get resubmit in a shape that plays well with
-other topics in 'seen'.
-
-* lc/rebase-trailer (2025-08-03) 2 commits
- . rebase: support --trailer
- . trailer: append trailers in-process and drop the fork to `interpret-trailers`
-
- Has been expecting a reroll for way too long.
- cf. <198826af571.62b85cb31711042.2415806544948206668@linux.beauty>
- cf. <xmqqiki7qasu.fsf@gitster.g>
- cf. <1995bf77c93.3eeb42b4972717.3783775021840050008@linux.beauty>
- source: <20250803150059.402017-1-me@linux.beauty>
-
-
-* ac/deglobal-sparse-variables (2025-07-18) 3 commits
- . environment: remove the global variable 'sparse_expect_files_outside_of_patterns'
- . environment: move access to "core.sparsecheckoutcone" into repo_settings
- . environment: move access to "core.sparsecheckout" into repo_settings
-
- Two global variables related to sparse checkout have been moved to
- the repository settings structure.
-
- Has been expecting a reroll for way too long.
- cf. <CAE7as+bnG6KgA8X_n36pqP15bmyM6re+xEb1MOXKvZSUdJ8Arg@mail.gmail.com>
- Ejected out of 'seen' for now.
- source: <cover.1752882401.git.ayu.chandekar@gmail.com>
+Karthik Nayak <karthik.188@gmail.com> writes:
+
+>> +	const char * const usage[] = {
+>> +		N_("git history [<options>]"),
+>> +		NULL,
+>> +	};
+>
+> Nit: We have pointer alignment set to 'Right' in our styling guide and
+> also mentioned in our 'Documentation/CodingGuidelines'
+>
+>    When declaring pointers, the star sides with the variable
+>    name, i.e. "char *string", not "char* string" or
+>    "char * string".  This makes it easier to understand code
+>    like "char *string, c;".
+
+But there is nothing specified for an asterisk that cannot side with
+variable name, like the one we see above.  I _think_ the "space on
+both sides" is the prevalent style, but I do not know (although I
+suspect you do---as the person with most changes in it) what (y)our
+clang format configuration wants to do.  Can you make sure the tool
+suggests the style that matches the prevailing style?
+
+Thanks.
