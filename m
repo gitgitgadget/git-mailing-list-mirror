@@ -1,96 +1,210 @@
-Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AC67262A
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 00:28:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C726F156C6A
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 01:21:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761092900; cv=none; b=tob6kyV+SYUdLVFZXPA+hUYR53BBF4aXLklAN4z66RzhH3pJ+clqB0fqR31dJ+Q5BkeRFHt3xQ4wFQTj3urN1eeoA+8QRFIUcJICnR0Zd4OD3BmPAWaShurjCwwIHJRck0OH+jZsmr212RHqWuOVMaFv8vVlg0mkmlOTnhJz0Ak=
+	t=1761096106; cv=none; b=hpVFnlirUGpz46x2nm3Ep9Kqau09VlFRfxxcCcSrQY6Xm+MOkRwdPwvsB5ZmQGRGztRvXthFrnBERb4b/TXzkmvLc9ESyrBmZgD3S79dgetB4uqwJwyk5efESi9E5JtCNaob/WcYpTk8vD+61MJk0bJqgm90NufTyvWMODh6s48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761092900; c=relaxed/simple;
-	bh=rCisxRvOc+imPapOb/MYjzTUHWYiORDDf0ekPkb0QGM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ei3TnJfGzyx5vfSyieuVSr3Gn5gUFvGCqHoedPT3sLpm2w1aBtsjLvUKlztuqfqfmrRo3yzIEh9AOqZpEXQzUtl0VgoXN5RCR+2kQdzWJIevcE0ekHT4/APgZURSGb+t4UL5ptUt7h/1muVM1IgXxPbi+23w/b5ytrHOONxZi5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ImWcgRwr; arc=none smtp.client-ip=209.85.166.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1761096106; c=relaxed/simple;
+	bh=AWJkrHo2srivaMspCwiqlY7/BK1/tIDiJgA97pq1+Ok=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hJapUGqlHcwMsvEZ6fMfPSj3Eu2j300d4qixBGQI5moFb2y4aeas1JjxDS3zf3x2O0rolATYoCDGB6YsHbjKZCVwjoHePQDLLwCYzR8a86tgyoWgCd+2RJi7lT6BEOYOOJMM8kWnQYb98NralKe87+irVo6sY78bsNd5YXi0CuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b=CBcD5YSK; arc=none smtp.client-ip=209.85.215.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ImWcgRwr"
-Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-940e06b4184so244479039f.1
-        for <git@vger.kernel.org>; Tue, 21 Oct 2025 17:28:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b="CBcD5YSK"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-b5507d3ccd8so5161514a12.0
+        for <git@vger.kernel.org>; Tue, 21 Oct 2025 18:21:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1761092898; x=1761697698; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gVLcamMpYuBXWMngQVofvLBHXjMSbVL/U/6ljVcRGy8=;
-        b=ImWcgRwrFgjgbqHya2y2KPu4EWqCR1yTeAjs5Go3lNpAEr4axnGJpPbBwhG0d3a9Sc
-         fDp3aohVyWwZ8A3MAe98+OXEB66Y1i2fGVc1GmgyueQIrsuKlbw1zajM2JuQUFHLtCKq
-         7nQv9Yd7JE0GZnxuzOsyyfNMNpfcBisjWceBlmB1ceP/gUcNFvKkBmluFeCp+fxXuwGW
-         FNrflxqmZY87iAZpXeuk0LtUSJZomgzS/dC8noKmYO5f7zn+KNtLi0qy9P8ygXVSYBdx
-         0a+MpWRyQSHJj/bGRUqBaVRj/ZKtkI0Hzo9Oqa5w4EKG4AyXVm+Gt4xn8C35rPep3D74
-         Vmbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761092898; x=1761697698;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gree-net.20230601.gappssmtp.com; s=20230601; t=1761096104; x=1761700904; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gVLcamMpYuBXWMngQVofvLBHXjMSbVL/U/6ljVcRGy8=;
-        b=vil1KnN9804DsI46leUWBOwL9wZ2UygnOHB4ddWxMuCdUWGQD8WpHFaYxPoe9K7RTS
-         EYvNM04yekMJcWQBDeXQhjfTw4PTUZXJ8/UpHBqzQpFZD8gxLm3qbovbw/ex3AoTtHXk
-         lzLTiodZbhvuDJfxaSZkViSWtB4+A1Cs35TmqVIt13FXZ7lmI4X1NrxrdIbtTN/Hma0l
-         zCT4K+Nw9QHvaxuKh32Ggqpph/fcPVt1jmVjUD1DmSz6n/CGgR3Eb5dqgrR4OhQMyaUL
-         wZoM64DQC81Bn4XbKiEocf6zLRpB7j/kbVkEVg7MgtUJ8c7zm13j6uNSYmGfi6D4pLRh
-         4d3A==
-X-Forwarded-Encrypted: i=1; AJvYcCW6SXFKb4mE9XSB4tc2eaLzxnealkr6Xo1OifXOLU/I/j5c0zGk16vuqVuLUtBxjyyjZhQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwglPfJ0DTbWEwnOKJQN38rQ9LekdsMBWNXJ21XeYeIEsZxtFv2
-	XOUe8QMWERomfY7VTx6OsZSEzzTJEq4KSuYCi7AoQj+Aogh2p6USsw/UagO5Swo8O8/sG99MkQ4
-	JWb/ELBf8lA==
-X-Gm-Gg: ASbGncvw+Zqcw9oW8bSEm1K/8NzxgCwqWSXhaNUzPULSXa3blvFeXJPgKvsGsrAu/Bz
-	WhJE21yID+0zoIuV2zmHfHJSZLmFuplc7hVxtUQ2RtGRQgB0WcvmqHc5Gie3zVVmzzJUwnbxlDV
-	zCYWopbQKqkVKWNqab8hjJsaEuSCxYehDJTyWS9RZnb6EXQQQmG431O63oO2/X9v2MU5XzDlvVP
-	Kh6mjqfcBI/TKtfTrEZMKiremiyQL+loSSa9kd1fhT26UeHwEsHjbhw6SbLhXahIo9VFrqXGYEX
-	+6DGJSvoFugcCBbi3CCgxWERfF3oMQaZKEgkrPiebe/73k2S/OvEjaMMnzsXPROExXHXXwOBaNb
-	8blu81Xl8ZUJGvut/3R6QW3dCktlkEPV18AHZxNZnHl/GtXXwVYcIfTnCGrSsNgYj7mz19dOAte
-	SOkQkx/49oEJEYfhscSVqChCy4S/h8W+Enux9TI+bC0adC8CrwQiZuQFzaF5dBGMcbNc6vFaNDe
-	Q2tSUKhzkmYD9DYSw==
-X-Google-Smtp-Source: AGHT+IFDWv7kqoWsqjkuS1TS7oYnbi8P0ryK+cDWk8akb/IAFtpbAlRLYyVt/BuX+SCGJefiTmjeTA==
-X-Received: by 2002:a05:6e02:2591:b0:430:9fde:33bd with SMTP id e9e14a558f8ab-430c5234cefmr275792995ab.1.1761092897769;
-        Tue, 21 Oct 2025 17:28:17 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id e9e14a558f8ab-430d06f9fe3sm47694495ab.2.2025.10.21.17.28.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Oct 2025 17:28:17 -0700 (PDT)
-Date: Tue, 21 Oct 2025 20:28:16 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2] last-modified: implement faster algorithm
-Message-ID: <aPglIBiTYpH4I3UN@nand.local>
-References: <20251016-b4-toon-last-modified-faster-v1-1-85dca8a29e5c@iotcl.com>
- <20251021-b4-toon-last-modified-faster-v2-1-f6dcbc26fc5c@iotcl.com>
- <xmqqy0p4uoqc.fsf@gitster.g>
- <aPgkwnq87UeusC6v@nand.local>
+        bh=krgpOqfhb7WGrCWrjXvaRLBe02mJxiv6EKYRlpB7GHs=;
+        b=CBcD5YSKNlAWVSgiW0FLgAdATEP6UHTJiSwiuiE5gd24nZZ1u32pYUXr2fmK4+CLnZ
+         61kcVFwoZbipH1YYqCwn5VlDT7SLld2/it2C0wbOlKOSF8yVTmh7Ywg6RANKPW6/eJYd
+         6W6WLoVv002eASNwqn+arg/tL+Ds6fg3ScN9c1WABfbuzusthIO6mttnBwaxLjDB2zR9
+         6cT381IUem5E5xMNaFPzOQ32d8oqhgqgPIsAWfjJPEpMmABotVYG+WWzphHGdy+GDbxc
+         lV5Uvbn9NSoceA1c0uap6bTs9+gVtJkuoSpeBrIESYB1Ij01M42YGYrzOYHB0sy+QAF6
+         4ocQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761096104; x=1761700904;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=krgpOqfhb7WGrCWrjXvaRLBe02mJxiv6EKYRlpB7GHs=;
+        b=ts941qtb2uQLWKKkq5zt+GqPGmT+iWrCiJftdmA0dC/vkFj6euHN7AlSj8woZpzqI2
+         zXW7bLbbg5oTvbNnM4qY1vpKH6ygc+GA7pRKUg2AH4eP4ANEZdOHZAxZYRjsU6CdgkPH
+         d0CN330XSieTr2bGAxKoAXlrc5/X3YgBSTXGDY6j0sq/nr6C5hXggzonA1mWjedwS32Y
+         YVWvq/Vy5y/q3yPKjgFlwhGNpkm+sWwzeyfEMT16HjdJjQqRzhvV4rtGLhYa2+25ddnN
+         v0le2UUBOGSoSzIyIu9ckEUKUMd9PvLMV4pEZ6OYhFjjar7k8iSFtOhjmjN27/f+P1Q0
+         kqbA==
+X-Forwarded-Encrypted: i=1; AJvYcCWew5Yf479aLYn5uTLBF8O+vWqd/mtAOESvKheeUSh+2TShcD4h9F5oyuSTmxDcDZ4r2ls=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzoeLJB0BfOetWbFqZBsBZG9kZFVI1D9VHY2qHM+L13QYWnncL2
+	llcVJTSrIzX5PrLLXWnWbwadJLj7BNSowJFzvHyqDGyB5dy7SWYpcSF597Z1ry0t6xciFrn1Wn1
+	7cuTjVz8EXglw6Fvmvictqvbil57fSlzDlXWB8pDzl435Tmpy3eWCTLBPbgXNCzDNw17Un6QALI
+	JjXvt8VNybbfgwzOrvUaD385JkMmL1ZM2qETUD7p5XjYBQXbZWKTQsVXulq8YyT+ukOdLo6E2oh
+	1QV93/lzPzsjGgJ5GeA5VQkT03SExI2UB59fU1ibXYfEFLA1od/nzsGIz5930LzNssYGG+t09Ah
+	yK1owdnRXb5cmyw=
+X-Gm-Gg: ASbGncuyowt8CJXYBn7T6ehWxaKhxe9OmO9nEOGwmdpDEiksZzvsbLj7Uio1KLKYflJ
+	3Pd4xpDGboOzLVoAe/TRRV8/8UZr33HdkFRWkwPy9jmAm5HCAW57KzGaIzDP7+U4v1+yZGYgx0M
+	i9tR/DNL6olm/HU1szBhFil+cZkqdHoSn8cwByDfSWfPwXJaoR5uNrgCRrz91Pz8YLwX2Gegpx1
+	sQcUQAnVd2piqEBLTeGfF3TpPgZGqXQEZM68VpKUEINl8lve/qFwChWGflQpgNShHo6REj+w2LZ
+	njOKAWw=
+X-Google-Smtp-Source: AGHT+IHcZb5Ccvw83JagVmEXp1ce2J7nwdoNkFEfJGsi6fJqi5r2f/eVXgq4GK/cXgaz5mo1OtRnLG852T3vfiMiPQg=
+X-Received: by 2002:a17:902:ced0:b0:256:9c51:d752 with SMTP id
+ d9443c01a7336-290cb65f0e5mr267952125ad.56.1761096103924; Tue, 21 Oct 2025
+ 18:21:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aPgkwnq87UeusC6v@nand.local>
+References: <pull.1993.git.1760999702581.gitgitgadget@gmail.com> <20251021080625.GD259661@coredump.intra.peff.net>
+In-Reply-To: <20251021080625.GD259661@coredump.intra.peff.net>
+From: Koji Nakamaru <koji.nakamaru@gree.net>
+Date: Wed, 22 Oct 2025 10:21:32 +0900
+X-Gm-Features: AS18NWATFqWhi--iBwv-UfQzcWQQWp2HSnVd9zPnbIpp3KyqltQeuYRodYMHy8Y
+Message-ID: <CAOTNsDxoSFTBwaO0Eqr+r0NQOwdA2Fge3CN7JQtnAWEt2PnDew@mail.gmail.com>
+Subject: Re: [PATCH] macOS: queue for munmap operations
+To: Jeff King <peff@peff.net>
+Cc: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 21, 2025 at 08:26:42PM -0400, Taylor Blau wrote:
-> -static size_t path_idx(struct last_modified *lm, char *path)
-> +static void last_modified_mark_non_treesame(struct last_modified *lm,
-> +					    struct bitmap *active_c,
-> +					    char *path)
+Thank you for pointing out many unusual mmap calls and other details. As
+discussed below, the root cause was simply my ~/.gitconfig. This patch
+may be useful in some rare/edge cases but a somewhat unusual hack, so
+I'm withdrawing it.
 
-Err... this should be const, but otherwise I stand by what I wrote ;-).
+On Tue, Oct 21, 2025 at 5:07=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+>
+> On Mon, Oct 20, 2025 at 10:35:02PM +0000, Koji Nakamaru via GitGitGadget =
+wrote:
+>
+> > From: Koji Nakamaru <koji.nakamaru@gree.net>
+> >
+> > Executing many mmap/munmap calls alternately can cause a huge load on
+> > macOS. In order to reduce it, we should temporarily store munmap
+> > operations in a queue and process them all at once when the queue is
+> > filled. When the program terminates, we can discard any remaining munma=
+p
+> > operations as corresponding mmaped regions are automatically reclaimed.
+> >
+> > Add a queue for munmap operations to perform them all at once.
+> >
+> > Here are some example timings. On the Linux kernel repository that
+> > requires about 1700 mmap/munmap calls:
+> >
+> >   time git ls-tree -r -l --full-tree 211ddde > /dev/null
+>
+> Why is it doing so many mmap calls? Do you have a ton of loose objects?
+> We have to mmap loose objects individually (because they're all in
+> separate files), but each pack only gets a single map (well, there's a
+> window parameter, but it's 1GB on 64-bit systems, so you should get a
+> handful of maps at most).
+>
+> If you run "git gc", how does the resulting ls-tree perform? I have only
+> 27 mmap() calls on my system.
+>
+> I know that running "git gc" is relatively expensive, but it is also
+> bringing other optimizations (like the fact that we don't have to open()
+> and map each of those files in the first place!).
+>
+> > On a private repository that requires about 943000 mmap/munmap calls:
+> >
+> >   time git ls-tree -r -l --full-tree xxxxxxx > /dev/null
+>
+> Ditto here. I'd be curious how well packed the repo is, and how it does
+> after a repack. If it has a very large packfile, you might also try:
+>
+>   git config core.packedGitWindowSize 4G
+>
+> or similar (though for just an ls-tree, we should only be looking at
+> tree objects, which in general I'd expect to be in a confined area of
+> the packfile; so the 1GB window is probably plenty).
 
-Thanks,
-Taylor
+Following your suggestion, I investigated the number of mmap calls in
+other environments and found much smaller counts. I tracked how
+xmmap_gently() was called in packfile.c and found
+settings->packed_git_window_size was different between environments. My
+~/.gitconfig defined "packedGitLimit =3D 128m" and this caused many calls.
+
+> > +int git_munmap(void *start, size_t length)
+> > +{
+> > +     static pthread_mutex_t mutex;
+> > +     static struct munmap_queue *queue;
+> > +     static int count;
+> > +     int i;
+> > +
+> > +     pthread_mutex_lock(&mutex);
+> > +     if (!queue)
+> > +             queue =3D xmalloc(COUNT_MAX * sizeof(struct munmap_queue)=
+);
+> > +     queue[count].start =3D start;
+> > +     queue[count].length =3D length;
+> > +     if (++count =3D=3D COUNT_MAX) {
+> > +             for (i =3D 0; i < COUNT_MAX; i++)
+> > +                     munmap(queue[i].start, queue[i].length);
+> > +             count =3D 0;
+> > +     }
+> > +     pthread_mutex_unlock(&mutex);
+> > +     return 0;
+> > +}
+>
+> Does batching those unmaps actually make them faster? Or is it just that
+> the commands you showed did not fill the queue, so we essentially just
+> leaked all of those maps until the program exited?
+>
+> If the latter, then I'd wonder:
+>
+>   1. Does this increase memory pressure, since the OS has no idea we're
+>      not actually interested in those maps anymore? Some of them can be
+>      quite large, if the command is looking at blobs.
+>
+>   2. How does it perform on a command that actually fills the queue? I
+>      guess something like "git log --raw" might do it (though if my
+>      guesses above are right, you'd need on the order of 64,000 loose
+>      trees).
+
+In my extreme cases, this batching makes them faster. Queue flushing has
+occurred several times for the private repository case and not occurred
+for the Linux kernel case. Though I haven't investigated in detail,
+memory pressure doesn't seem to be critical (and it could also be
+possible to adopt smarter thresholds).
+
+I tested git log --raw for the Linux kernel repository. For reference,
+the results are shown below:
+
+  without "packedGitLimit =3D 128m":
+
+        mmap    9
+
+        # without batching
+        real    1m3.970s
+        user    1m2.232s
+        sys     0m1.725s
+
+        # with batching
+        real    1m5.991s
+        user    0m58.637s
+        sys     0m4.315s
+
+  with "packedGitLimit =3D 128m":
+
+        mmap    3072538
+
+        # without batching
+        (It took too long so I stopped the execution)
+        real    518m6.928s
+        user    0m41.126s
+        sys     517m24.072s
+
+        # with batching
+        real    2m26.276s
+        user    1m8.495s
+        sys     1m3.230s
