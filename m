@@ -1,125 +1,97 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072C729A312
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 13:27:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EF0347FF1
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 13:34:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761139634; cv=none; b=m2u2inUhY6RdSvQmfncjiKpSuuv1ursDwPDpnsLuiQBtJ7CDAd0xC+C+p8aulv2MHqF/mi2XU+dRjnWR8b95eBYVAiEpXMJmAGQvX36qLEgeVTfXTXuFKb6H3N3G/NPbfgNExlMWQ6lbzxCZw3B2vqacoQJsjedd4boREycKKNk=
+	t=1761140053; cv=none; b=QSu0YV47Rz0TyxcRkQc0mw1ewm+cPkLng9yT6PfDO1ZT3eyL/dGXcLhPcuHExucDfGkzoXElQAiWbHzzcYNxLG3zrTil0DDP5hQN7FwtG2HetfRljinOX1NC4W8YVycrhgteA3UsYQBX+UDzWg0LIeJeSKw0hCWn2hpN+0ziPLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761139634; c=relaxed/simple;
-	bh=9v3EO7v4w5bW91Sadz2MgKnI4TO8JkRDVzQ+PELKBzg=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=mbWw89TzUlq4QETL7B83TdxtUwSxbd2R3gugUBYX/MY7xAmGSetv3C6FZDRam8j5M+L/NMlegURgoAz5L34JyzIKoYrkWryUWD+13A7AoNaVfOwhsPoFA5HcRC+LKdpjxnzpgg1xfDxkj2jWrUrVu9zsRuKNAk7Bl7qPdpuru8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MDZhor/f; arc=none smtp.client-ip=209.85.128.44
+	s=arc-20240116; t=1761140053; c=relaxed/simple;
+	bh=eaNtcFZ3QLaYDwvLNqujc32U12MWWN51zmQCynVxhBY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JbHi09+Q8r3sA0HfWuJA+UAtYIZhkRTc4gtmLV/sLoI8blIY85jLFOllbQawtg/QEG4EyK+067ILflmuTt7YVOk1jHylz8rlCTNCMh9Y82pj9qVnQ0hTe7+zcJH32E7cFpqd0m8CzE3j/5Z7Z/OriYD/WQ3EvM4qzORmnnYFOdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L9Q06bT/; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MDZhor/f"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-471193a9d9eso63280045e9.2
-        for <git@vger.kernel.org>; Wed, 22 Oct 2025 06:27:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L9Q06bT/"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b3c2c748bc8so848906466b.2
+        for <git@vger.kernel.org>; Wed, 22 Oct 2025 06:34:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761139631; x=1761744431; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RYfTlUFBo/usjdk3F5Gd+aY8/HvMwtlk8nC1WIS/b4E=;
-        b=MDZhor/fLhHcnP16jPhBqtlHf/UXqqfwvRhC7eon4Ecr5XdTxO12Mpf56crhtNXVYW
-         NriczOpMOuNXZE7INtttHJTcPx/FAAsfBnKpUk2UYBuFuj4ILVJZP0Hg3J6qbOP7wSBY
-         Vufg//zRYKZdhW0kpA4nexKhlsFRuLSaXKay0KKMX1riL8VjeBAVlui2eQsFJYXiq4+P
-         ocsKlWg2xWtMXjW+GdkYIqWp6MOhOqjvQ+Qq/mrnktfkDuXy3WmS2AD3Q2rBXQq0Tyk1
-         MAdmFasNCA4CiX6qZD2d4pTD3+CVLQKOvlM49ukAj5ZOaY6CPSswdb3t+Y2HXpskjgZc
-         FvxA==
+        d=gmail.com; s=20230601; t=1761140050; x=1761744850; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eaNtcFZ3QLaYDwvLNqujc32U12MWWN51zmQCynVxhBY=;
+        b=L9Q06bT/IidMuEpfPmFGEeR8cmWu4RmIDNLtxrPU6B3UscIz6MKtuA0djIgCjOBGJc
+         dkJAF7/TzacnRfxvoY0B1NTcWGD1wSO2XawRy+55tctB7eDW9JX4tyRgjNWN+S3TK9VP
+         jbDfAVcLqSYg8CMZrbUsoCar0eQiiqJRGUgMJq+3utsPpahDtLrIb3NvSrTRht/UBflF
+         YJnMQFigtGc5NQZQtazLlnOB7FPU4yhmbc96hjO8tzZFrqv4D25kPR1fu/sOEqgJ/hFc
+         j6xvdZnCxQWvTLa2/VFWhUsOPDl1j/KaVaTRUjd581D3S9oWE2pUNcD9cUv/4unHhhz2
+         /opQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761139631; x=1761744431;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RYfTlUFBo/usjdk3F5Gd+aY8/HvMwtlk8nC1WIS/b4E=;
-        b=vJ82gDhxtntdLJ0VtNrNU9X2S6R5Lskgm9RdXnH49VpqOWL6PZcKLYYz4ZiMACo6ok
-         rzNRodiHg6t4vF+urOiAH2qN6uquREgkZKNQJo+DzaSdUc3hA/XenImBX0GbjqlHVwAK
-         All02MP5kVI4QuhwScmNfDveNb0MJt3Mav+JOVLpbvb2y7NQ7oCk1R81u9Ya7iEYiUH5
-         /r8kyEMcARLzwSVzcFDDyDqxOoBAI9JDk8SIMzRo5xNwb1DQkTIQHfXq0UCbuASrrNeT
-         6HnBq6FBJRZPF0O8+8WRsJKfDQ6OXIZwuqR8hkLe8jkcvqCvc6me9Bc4dnYiG90xrZI6
-         YX5A==
-X-Forwarded-Encrypted: i=1; AJvYcCWBb9Ydc4+lieaCl43kKL0/HERaoMAAuZAw5YVa+90fdHR5XQXF7ILngrzSZsD7Dmu67o0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz8RWZF7qw/5ljYGQYecTxTMci1JalDtl2oSxrhWHfLC5LlsHos
-	ztb+BSD2MdENkJKEXha54x/rebzxG/Y7zvFSJ2IAcsVZvDWlTCHWTv4o
-X-Gm-Gg: ASbGncu+mbiGfQKLnkxBFbAybkbxYFuHPkzWNSlc/3N3C2XBaC9VVWZ4nMhKjS9bqgN
-	s/j6bUbrubrHbSIq+gsLOVHyXOzGd4lPgcIVPfczpT6LG+c7FVvmwR2ICm+20YgVurqxktSTJdd
-	5pG2YOsuskGpcmYwgNQnD8AdLj1ylD0QwE9kFVGwo7VLkwZK5qz78vO22BZZw6CRGl+aLw0lYBK
-	jMof/kNBJxAOzFuue5lm9WpDMNA2UOO3dj5+KoU73edITaW6/Veix3ppU4Bf6uEzFRZiuHK4zWe
-	lw+bCH6rf/TTrKYm2WIKq4llX7LRn13Ku3ZtEJ+xy7PjA1L6FEYJMGE4Cr7chaMu7MFOFjBWBNh
-	bZM/gMb5WOiz0bIGdT+pco9O0RlmY0t5oX/BqwjNnQFgtL76gmIW3TIaZciDwCuUcUthxciARl/
-	Nu3a6xzpTOL1N1iLGbbTwpv0cHnvh9V2ra2DozhmBqMi1kcCK0VsLeuTXNzVxU7VQ3Fnz2MNF2v
-	w==
-X-Google-Smtp-Source: AGHT+IEWPpEVNNTloerT6R1kBTt4TTEvytt3m3pOsnn5/i1HPytdtxrGbaZPU+HCic2Mh7gSMafZlg==
-X-Received: by 2002:a05:600c:190b:b0:471:a24:497c with SMTP id 5b1f17b1804b1-47117919b54mr158961695e9.33.1761139631033;
-        Wed, 22 Oct 2025 06:27:11 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-475c42d828asm45138725e9.17.2025.10.22.06.27.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Oct 2025 06:27:10 -0700 (PDT)
-Message-ID: <d863c518-3246-4752-83f3-469592b1de69@gmail.com>
-Date: Wed, 22 Oct 2025 14:27:09 +0100
+        d=1e100.net; s=20230601; t=1761140050; x=1761744850;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eaNtcFZ3QLaYDwvLNqujc32U12MWWN51zmQCynVxhBY=;
+        b=g4rgS5dLJjxZL/wM09j062dCZWnlLyPLiKky03LcCC0D0a3/h7VF9s6H0ba/Oq/tUn
+         WBoa4LKmgTmDn62f259N3VMDvlj6URHHmPNzF2tx7qXuYvcq1FRMdahllNTm6caxKmk2
+         wdxuWN1FHQ8MqprHx/FktI6atCcMHzwLN7HNTBCT5XXA7BR+nLeeRisldhwL1444WHDM
+         mBJSYTncGoOmVlrbxV1a+hQexqv3SAvs83XhiLWrq8gHhAG6+yh/uAwrbElQ5CsgLFdo
+         vq8bsXL0QeSZ8SE6U6yDWsLl2GL3k/lZP9O1kdkztSlBiZydLPFXLmFEyEboVRhabNCt
+         XATw==
+X-Gm-Message-State: AOJu0YykKpci+ZdXKH+VgZikCaYd8wGEHE3bc69kLumH9fHkKzeWHq4j
+	wLQnQXPu/KU5SDu3VSXR6QXGokx1IYzrljCj6Op+ffO7q9jSDEVbAYP04QYG2J/dTpmUPXOfgTD
+	L9HFG0tavCvmusuEnlm7hrsQWhfiAMKJYguUR
+X-Gm-Gg: ASbGnctRVmu438uoNybgUcTH4TKR6Olo4kXBs0rc1kAeWhkDwTABZ0QOkQfdKwK3qvm
+	CcJVcQ3Az8CmvWR6xwb9QkAXigSBON0IbU/Bp+qwhEvalwmA2ncpWkBbJ+xg4L33mXtcN1J6qu5
+	bD1BTEGf8KngRfcxQRH0aaY1R5fOpFMXz4FxOJoF9hkSmSNttmSV9CtfxzIuI2a1NpQTMAtnlPz
+	6iyHWcGX0e+Ms5logy0nYFdnf9ZHGWVaC8v3GnzFj9kt7xf9uAdSkPewq8rXTbHnpZR/yw=
+X-Google-Smtp-Source: AGHT+IG+vlXNT6jZsakCUrq2uoAoTq/oRCeRhTjwKjWiG1bX/JBcF6xvCGzwIjPfckMsRnpMCwLzNhCv0iVymN2AKw4=
+X-Received: by 2002:a17:906:c107:b0:b3e:babd:f257 with SMTP id
+ a640c23a62f3a-b647403a530mr2435358166b.10.1761140049759; Wed, 22 Oct 2025
+ 06:34:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/9] xdiff: make xrecord_t.ptr a uint8_t instead of char
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>,
- Patrick Steinhardt <ps@pks.im>
-References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
- <7b9e8961d42e0f367ba0782e7d932607aa7e0b0a.1760563101.git.gitgitgadget@gmail.com>
- <786d6c19-0a13-4e55-8f4b-39b57dd6ea28@gmail.com> <xmqqplagunnm.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqplagunnm.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <qfk3kkkQIl1s1WTDnWwPOPKxTGHX9wBAj6zycrehEuyR8Zc43JjAe58dOFZFUTvaxCvUJ6MfEC_v9wfYpT95l70ZJUP_iusET00lBy1Ipio=@proton.me>
+In-Reply-To: <qfk3kkkQIl1s1WTDnWwPOPKxTGHX9wBAj6zycrehEuyR8Zc43JjAe58dOFZFUTvaxCvUJ6MfEC_v9wfYpT95l70ZJUP_iusET00lBy1Ipio=@proton.me>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 22 Oct 2025 15:33:57 +0200
+X-Gm-Features: AS18NWCNj3bkxtaYmWknOlcNqu7NnP5bbU5QGpoO1SSITfmeikzesKn_egDT1hk
+Message-ID: <CAP8UFD2u=wyDyuD8BDugJGXV8NEPmwFB5NaUsGH6JQ5Qr1f68w@mail.gmail.com>
+Subject: Re: [Outreachy] - Introduction from Songiso Cooper Lyambai
+To: keita <rudykeita@proton.me>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 21/10/2025 19:15, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> It C "char" never refers to a unicode code point so I don't follow the
->> reasoning here. Isn't the reason you want to change from "char" to
->> "uint8_t" to match rust? Given "char" and "uint8_t" are the same width
->> why can't we use "char" in the C struct and "u8" in the rust struct as
->> the two structs would still have the same layout?
-> 
-> And forcing u8 makes sure both sides of the ffi agrees on the
-> signedness (C "char"'s signedness is implementation defined),
-> which is a good thing.
+Hi Songiso,
 
-That's true and ignoring the signedness would be hacky but I'm not sure 
-it matters in practice. Both C and rust would use the same bit patterns 
-for "abc" and b"abc\0" and in general C plays fast and loose with the 
-signedness of variables all over the place. The trade off for respecting 
-the signedness is that we either have casts all over the place or 
-massive churn converting the rest of the code to use uint8_t. This 
-problem isn't limited to xdiff, it will be true wherever we share 
-bytestrings such as the contents of objects between C and rust as we 
-tend to use char rather than uint8_t in our code.
+On Wed, Oct 22, 2025 at 3:19=E2=80=AFPM keita <rudykeita@proton.me> wrote:
+>
+> Hello Git Mentors(Christian Couder, Usman Akinyemi),
+>
+> My name is Songiso and I am reaching out as an applicant for
+> the current Outreachy internship round.
+> I am eager to contribute to the core project. My primary coding experienc=
+e is in C and Python. I am also
+> familiar with Shell, and I am comfortable setting up the Git source
+> code and building/testing it locally.
 
-Thanks
+Thanks for your interest in contributing to Git.
 
-Phillip
+Please read through the following documentation if you haven't already:
 
-> I 100% agree that being honest about the motivation to sell this
-> change would be a good thing to do here.  I do not think "in this
-> series, I want to match the types used at the interface to be of
-> Rust's" is a position to be ashamed of ;-)
-> 
->> I agree with Patrick's comments on this patch - it would be nice to know
->> how you decided where to add casts. Given that rust is going to be
->> optional for at least a year we should take care to leave the C code in
->> good shape with a minimum number of casts.
-> 
-> Thanks.
+[1]: https://git.github.io/Mentoring-Program-Guide/
+[2]: https://git.github.io/General-Microproject-Information/
+[3]: https://git-scm.com/docs/MyFirstContribution
+[4]: https://git.github.io/Hacking-Git/
 
+Best,
+Christian.
