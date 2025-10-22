@@ -1,141 +1,221 @@
-Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9F82765ED
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 12:12:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED14C1F2BA4
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 12:40:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761135156; cv=none; b=taBAuFYcBa241co4JV1+268b02bo/RfH6vNTf2dOYSG0srK0lCMLRBMMaO58bo45kVGz8q6wv8vBlXgaEwMJWkyhUI56qqzkjhIpcVoCmfNGFJLc2efzDqoa+OX8rTPDF+fSBeEkX8WoUas6e/nSsq11AErRX2NXzMK/CDWHSsM=
+	t=1761136832; cv=none; b=NXRKMT1TnQk7Xt91d96lL+eIZDmyxr6gRe44ytHrO+6gMNTQj2LmE4cMxcT+ShLBFwWljRJFev1HqdE5iUcaXmMkbNEGaf/TB8Ivvwd4zmclE8Sd9ZSFFv4zNGtRXrqNJNO/7sxHhQTv1Q+iJcquiZeK4mzwmeqsV5Vjj2Jt/Ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761135156; c=relaxed/simple;
-	bh=xqcdBff1Cl3L4uO/rz0hrYKnig/pAyYwRI6O7W6PxVM=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NBS/CxXD8txZSJx1fTRWI177ixBpKw4+M7krr+9rVbzCO5erRaHC4ucKdmj116/0q0+z6QsaDrZaIc3o2jBchVpkvnnybfMW2yaxgsZO7eEttdeY36bCuQZGPMJEMYgT5c6vXnBZMxLKV5rsqrnW3BYekyglkFNmFLZZFfu19HM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EDwBUwbt; arc=none smtp.client-ip=209.85.221.171
+	s=arc-20240116; t=1761136832; c=relaxed/simple;
+	bh=+w4fxepe6MhKTHhhQLA0I8BzPW0tsGIz1vJSTw20RA0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=g2aGrjANGZqVADO7owvQa8wbqOTdG/B93Ogzj+GENOT1tAxb9jM9dwfVPVBQ1dIXIOH/XQ5T0x/BCTUT/Q07MPNmaq72lzo5F/22O4QK2b4dKYmhlpN6RZbFRzoGMndYPCVNUjEoYAt70icLCC5LMM70N+5YMVMav6fvvwENTpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h/p+khMc; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EDwBUwbt"
-Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-554e726e5cfso2260013e0c.3
-        for <git@vger.kernel.org>; Wed, 22 Oct 2025 05:12:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h/p+khMc"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-47117f92e32so45781965e9.1
+        for <git@vger.kernel.org>; Wed, 22 Oct 2025 05:40:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761135153; x=1761739953; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vlmZnb0+z6kc2CZrvy/8fW3oB5UmenIPCmDqRTUtgpg=;
-        b=EDwBUwbtMlwIyy3OnWfHDy/mcpm5jshBINqzzZQ+xgThmsMGZIQgDxr9uMzXqt34xB
-         6hQZ5rL8gxmr7I0Fn0zyql3DbZKeMh0i8emCNznMbrgZBhQ/B+zkXjGqWYrQ5C/Fa6vK
-         uUUTgNHjNZuI9dyvFZAC3EK2pR6spUd0yCCeVxz8c533eb5oSHy7jKo5FLB2N4VVIbWj
-         j0IOEPM5F7+4lUGEbTz9Vug5sGciJr2sWLE6sMuueYhPUBb6yzOXt+QSRVzrZFrWxdjC
-         aJP4UniACGlEr4wHJUQ+C9xnyF9NN2vt1LehsYpukFNdEH1mYVr/TGZbUlcZ+Vjeg9+v
-         Y7zQ==
+        d=gmail.com; s=20230601; t=1761136828; x=1761741628; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lBP+uxI7bNvwVxR5THCqftPAm746+tgQwOyv4Z+Oqzw=;
+        b=h/p+khMcr5OBdRCUoHwjXT41Fm+kUDhue/jJn1ULnhuhlvb45pB8hkm4JmDuWngMI6
+         ND04fQllmL7JlQpR2XEA0nm6PnEg8By4VzxEUr340xSIAjblMULr+8wsAp+iwxSjHLKS
+         oZxdGiYqKkrgYpANXApj/j16pqp5RNQOZENkA/kW7F3poWCoBSKvKipTT5RPeqako24h
+         5ZyZibxRxj1pY6nOp+CdfLgBsemAVdjbegE3p8XusfKDDqaoGtdy0Oj9GCrrlDp55KNJ
+         v2eHpoTLG8pHLkchDzBOn9gCwksXDjRIrxAmc8ZFjqEKA5HKZVCAT6QY2M0MBsZXhpig
+         xClg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761135153; x=1761739953;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vlmZnb0+z6kc2CZrvy/8fW3oB5UmenIPCmDqRTUtgpg=;
-        b=oXttK12AvcChKpOPGFBQlVqIGz3ItBxJqhre2Ll70kLMmz6xiMDWGrdgFT7QOCaKRa
-         1QEVvx1xqLLxxCK3IVWsqtOV43dReKI8eSkJhTzK/VP+EJsSdyopXNaAjLvL+CLV3wxx
-         /oVKdbuubq7tcBpwNiYVv7HTNia4Wt8ad2Urz0os76q5utJkW4yRBd29TAimGri4XY+w
-         8tTiFPpM64FhMIrXDj1mSn0Js7dbn66ixR9UecKehWZW26M5dl9+pNVjrqgnBb4U70yT
-         ka7rKA/W1TQ9rCih4tLKllYn/MtnPU7d1PbJBwXLUNyDY8uVwQ0Wdv/fbCWi511fWkjI
-         SuRQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUhhy6LMv+rnWLXz1JDEXl+sSXghrjSmwvT2JEViRpf01deVkqgKBzNYvoeo2lKTdxpxkw=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2pmfFpx3bK0CT+zdMAJ/UHe7k56aKMyG87iQIuVzmrRzWt4ec
-	1O5b8PytKATsGKx+Xw9wszjOnbck+h7e4i22HawTUg9MwaOdfZvIcRkcyU+Tz1jVN5lCBgEY0TR
-	9oc8XFGMu/G1lOUf6zyxx+SiWg/0MuAI=
-X-Gm-Gg: ASbGncsx8y48oQpYnGyS9uOAckmZH3kGrqzm5ovpI6/g6PWZZHT+sAP3qOSpk7UGtAR
-	Iwj7Fo7YtGxNnRYThmXjTXs4qP1nJsYVsxTeStVRJG5vTTavtbflqzMD/jOblhoK6O9NfNtCE1v
-	5z2cRe2DijDAsdvAhi1NIUiqjtY6NWNlEcqJ8lSSImbbtji0lZN9Lm7NknCuFObtMJSaIxF7wiR
-	dfw3T9tsTUeD1oidjPdIPElB6XfXu2EpxdyqEMcV2drL6QiIJO8ha9+dmPIwQ==
-X-Google-Smtp-Source: AGHT+IHeJgWbNjAEz77zk0AVWBpUb29Qxx/2Absdq6FSt2AbKRKhnKLl0ScNiTyef/iXjScwrasNg92ZJspM/xndbUQ=
-X-Received: by 2002:a05:6122:8c14:b0:54a:2600:bf86 with SMTP id
- 71dfb90a1353d-5564ede13bfmr5213325e0c.7.1761135153460; Wed, 22 Oct 2025
- 05:12:33 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 22 Oct 2025 05:12:32 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 22 Oct 2025 05:12:32 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqldl31uhq.fsf@gitster.g>
-References: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im>
- <20251001-b4-pks-history-builtin-v4-5-8e61ddb86317@pks.im>
- <CAOLa=ZQSc0jHv9gK5T06GA_mprknucwCj5H_M2djZ-UWfRMbJQ@mail.gmail.com> <xmqqldl31uhq.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1761136828; x=1761741628;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lBP+uxI7bNvwVxR5THCqftPAm746+tgQwOyv4Z+Oqzw=;
+        b=OAHBqd5sCsosHmAGSO4qQUyq/8NWG+xcj6iIHWfmTornleyUc2FFN1dpMPk/Ep4eRI
+         AaxHmxPwVAY48A9hzf2pgp6SwQB3a8fh/CyG4OOr+PNIgZGd0O9SFxklpLydlu9B+btp
+         4AJBKByyq0+B4wwW6WgmFomFiURn/3huCv7I3/w9LakjMAu+9kjpy3ItHYktb756DqGD
+         3KmzVOq3+01PsdOCQ59WQyr03my0SeyoGAFAjRu9eYhyo5n9d2jxJiGdnwZTSoyA5Kqy
+         V+5E0kEDPwEAEwovHSW2WjfMu84uSWeP8nKa1nHkUJFb9ZEv5GUBR6rq4uGSBPrYyd3/
+         b8FQ==
+X-Gm-Message-State: AOJu0Yz4UsYVC5xunop/5uumbwCdPjxvA1NeDwuIp4/xl+LTmkaDtHlq
+	G+Js70yZqn0jFuuvOwdn5XQYzYMa8rxowHj5hr/2etW4AsUlCdI9ceZw
+X-Gm-Gg: ASbGnctf5wySVMUY0k4BD++iZt1X65hrsQ58Lrqpb0j64Xtj7QnDaa6MLdC80pXvDJm
+	JL4T2Phhyq8xcVU+lDkWn2ZvHQCI1NuLM8E9M55ZkYgugodqDg3cDQxKMIbLNPw11eqdLWzJtd+
+	WZaoWJ2wmbWACL/CZEkJs/SMkoWlPeFcZPtSZH0odYi1Q1+3cwG51Bi+Y4aKQBRfegyNojycIBk
+	4d/w76HSoWYaTy5Lod5thsB+d7dw+8mSPotWOFZksGYV/xjOHBTtnc+4oJiaVH9lGypXMbA9weT
+	YRxeTop3YCN+Xc/uDwvKpAqkORX+2oDS7OR3dAsd/FqkA1BvwAHLvBBxnzpwKVFeVQWz5lT5b5Y
+	sfLTXTDenb9EJUxaTsfdgBHI8QHzzr4I/vOKgr/Wb7YMsr2R0mtZWl5mjTf3HKnLBEp4JDvrRKs
+	xhVh/2lmawKy5mjg==
+X-Google-Smtp-Source: AGHT+IHxavHsbvpqa3mwuXJU7nD/B/mfa3Eii5jxaZ17BBNDnjMD4glIiXCBUxtx7kekK3L19kOz6Q==
+X-Received: by 2002:a05:600c:3e17:b0:46f:c576:189a with SMTP id 5b1f17b1804b1-4711791c3c3mr162789485e9.29.1761136827775;
+        Wed, 22 Oct 2025 05:40:27 -0700 (PDT)
+Received: from ubuntu ([105.117.1.74])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-475c4342373sm48893115e9.12.2025.10.22.05.40.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Oct 2025 05:40:27 -0700 (PDT)
+From: Olamide Caleb Bello <belkid98@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	usmanakinyemi202@gmail.com,
+	christian.couder@gmail.com,
+	kristofferhaugsbakk@fastmail.com,
+	Olamide Caleb Bello <belkid98@gmail.com>
+Subject: [Outreachy PATCH v5 0/2] do not use misdesigned strbuf_split*()
+Date: Wed, 22 Oct 2025 12:40:18 +0000
+Message-ID: <cover.1761135129.git.belkid98@gmail.com>
+X-Mailer: git-send-email 2.51.0.463.g79cf913ea9
+In-Reply-To: <cover.1760997183.git.belkid98@gmail.com>
+References: <cover.1760997183.git.belkid98@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 22 Oct 2025 05:12:32 -0700
-X-Gm-Features: AS18NWD_MoO1vfGk-uXbRxWb0kfe-A8h_XgD-_TfvXGIP_8eulcqo7EpXisqEg4
-Message-ID: <CAOLa=ZTHxw8uCbo=oHq=LF=qX=sufnWKJTC6F2YLsrZ8EyxsYw@mail.gmail.com>
-Subject: Re: [PATCH v4 05/12] builtin: add new "history" command
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>, 
-	Sergey Organov <sorganov@gmail.com>, =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
-	Martin von Zweigbergk <martinvonz@gmail.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Elijah Newren <newren@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000395f3e0641be3be2"
+Content-Transfer-Encoding: 8bit
 
---000000000000395f3e0641be3be2
-Content-Type: text/plain; charset="UTF-8"
+The patch series by Junio Hamano with link below,
+https://public-inbox.org/git/20250731225433.4028872-1-gitster@poddbox.com/,
+notices that the array of strbufs that calls to strbuf_split*() provides
+are merely used to store the strings gotten from the split and no edit are
+done on these resulting strings making the strbuf_split*() unideal
+for this usecase.
 
-Junio C Hamano <gitster@pobox.com> writes:
+Commit d6fd08bd (sub-process: do not use strbuf_split*(), 2025-07-31) for
+example, in the series, observes that the subprocess_read_status() reads
+one packet line and tries to find "status=<foo>" by splitting the line
+into two strbufs which is an overkill to extract <foo>.
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->>> +	const char * const usage[] = {
->>> +		N_("git history [<options>]"),
->>> +		NULL,
->>> +	};
->>
->> Nit: We have pointer alignment set to 'Right' in our styling guide and
->> also mentioned in our 'Documentation/CodingGuidelines'
->>
->>    When declaring pointers, the star sides with the variable
->>    name, i.e. "char *string", not "char* string" or
->>    "char * string".  This makes it easier to understand code
->>    like "char *string, c;".
->
-> But there is nothing specified for an asterisk that cannot side with
-> variable name, like the one we see above.  I _think_ the "space on
-> both sides" is the prevalent style, but I do not know (although I
-> suspect you do---as the person with most changes in it) what (y)our
-> clang format configuration wants to do.  Can you make sure the tool
-> suggests the style that matches the prevailing style?
->
-> Thanks.
+This series continues on this cleanup, by replacing instances of
+strbuf_split_max() with strchr() to get the required token around the
+delimiter where the token from the split is merely returned as char *
+and not strbufs and no edits are done on them.
+This makes the code cleaner, faster and more efficient.
 
-I looked into this, and unfortunately it [1] doesn't support such
-granularity.
+Tests have also been performed on the commits on Github CI. The link is shown below
 
-So for something like `const char * const usage`, it only cares about
-the alignment of the pointer with respect to the tokens surrounding it.
+https://github.com/git/git/pull/2080
 
-With our current setting of `PointerAlignment: Right`, this means it
-would expect to have `const char *const usage` which is not the
-prevalent style.
+Changes in v5:
+==============
+ - Modify commit messages to provide proper context for commit reference
+ - Correct reviewer's name and email address
+ - correct code logic by assigning `fingerprint_stdout.buf` to `begin` in
+   first call to strchr in patch 1
+ - Modify logic in call to strchr() when no '\n' is found by passing '\0'
+   to get the end of first line.
+ - use die() in place of die_errno() in failed calls to strchr(), retaining
+   die_errno() before the string is split
 
-[1]: https://clang.llvm.org/docs/ClangFormatStyleOptions.html#pointeralignment
 
---000000000000395f3e0641be3be2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 89b4ce9163705f1d_0.1
+Olamide Caleb Bello (2):
+  gpg-interface: do not use misdesigned strbuf_split*()
+  gpg-interface: do not use misdesigned strbuf_split*()
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1qNHlpNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL21sQy8wVDdBeXYyb0tpamh1RkkwMDRPRytEekduTApwWXhWd2hWckQ5
-enlZdy8xaktMZHVrUW1Panllc2JTdWFrQlFiQTVBZ2dZRlZCcmN0QjlmV3BVdFJxMkpOYWk0Clh5
-UC9sQ2FtNHc2N1lYZS9ZaVJoMjF4Wk55QlpvTEhDYzVSbktZSEZBQWVuZitONlphNVhQU3pDQ09O
-SjgyTGsKbGZBdFdSUjZjdVBSYzNOUXRsaUxVdzdwVVQvYngvMk84Y2RSTStnS3U5eUJkejlyZUh5
-UFlRZ0dMWWdqVVVIRQpnbXR4L0t3czNTU25LaFFtNUN1TU1zSDdsSXY5NXZocjJkVWtoWURzb3NY
-aGY4NmRibUtqTVpWa0JZN1RaQmtTCjdHbFM3bTUrV1JVek0xZXVOYzE0eUxUcXJxeVhVVDV4TkEx
-Rm1Tc0lrZTl1WHN6bWtMZFdHL1M3a0R4RjR0a2sKZjQrWGlQZkQ0YkloRHZseFQwa0tabnB5TnpX
-NFg4YU1uUDZPNEFUc3BOd21rTGdPWU1SUUdUa3ROeUFteUdOSApyangrSXc3TkVzQzdnbmVaaHhv
-SWdvVjJQbmtIbUE2UXJuWGxGQXY1TEV5U25uTlJxMG9LaHhCeXgwOC9mZlIwCm8rSGxSbnI5NVBK
-NkxsTEtVbElyMDVHRUZucEpmUEpmbXRQd0NpMD0KPUhVUVQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000395f3e0641be3be2--
+ gpg-interface.c | 32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
+
+Range diff versus v4
+====================
+
+1:  2879d9be36 ! 1:  df8fbbd3a5 gpg-interface: do not use misdesigned strbuf_split*()
+    @@ Commit message
+     
+         In get_ssh_finger_print(), the output of the `ssh-keygen` command is
+         put into `fingerprint_stdout` strbuf.
+    -
+    -    The string in fingerprint_stdout is then split into up to 3 strbufs using
+    -    strbuf_split_max(), however they are not modified after the split thereby
+    -    not making use of the strbuf API as the fingerprint token is merely
+    -    returned as a char * and not a strbuf, hence they do not need to be
+    +    The string in `fingerprint_stdout` is then split into up to 3 strbufs
+    +    using strbuf_split_max(). However they are not modified after the split
+    +    thereby not making use of the strbuf API as the fingerprint token is
+    +    merely returned as a char * and not a strbuf. Hence they do not need to be
+         strbufs.
+     
+         Simplify the process of retrieving and returning the desired token by
+         using strchr() to isolate the token and xmemdupz() to return a copy of the
+    -    token.
+    -    This removes the roundabout way of splitting the string into strbufs, just
+    -    to return the token.
+    +    token. This removes the roundabout way of splitting the string into
+    +    strbufs just to return the token.
+     
+         Reported-by: Junio Hamano <gitster@pobox.com>
+         Helped-by: Christian Couder <christian.couder@gmail.com>
+    -    Helped-by: Junio Hamano <gitster@pobox.com>
+    -    Helped-by: Krisoffer Haughsbakk
+    +    Helped-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+         Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
+     
+      ## gpg-interface.c ##
+    @@ gpg-interface.c: static char *get_ssh_key_fingerprint(const char *signing_key)
+     -	if (!fingerprint[1])
+     -		die_errno(_("failed to get the ssh fingerprint for key '%s'"),
+     +	begin = fingerprint_stdout.buf;
+    -+	delim = strchr(fingerprint_stdout.buf, ' ');
+    ++	delim = strchr(begin, ' ');
+     +	if (!delim)
+    -+		die_errno(_("failed to get the ssh fingerprint for key %s"),
+    ++		die(_("failed to get the ssh fingerprint for key %s"),
+      			  signing_key);
+     -
+     -	fingerprint_ret = strbuf_detach(fingerprint[1], NULL);
+    @@ gpg-interface.c: static char *get_ssh_key_fingerprint(const char *signing_key)
+     +	begin = delim + 1;
+     +	delim = strchr(begin, ' ');
+     +	if (!delim)
+    -+	    die_errno(_("failed to get the ssh fingerprint for key %s"),
+    ++	    die(_("failed to get the ssh fingerprint for key %s"),
+     +			  signing_key);
+     +	fingerprint_ret = xmemdupz(begin, delim - begin);
+      	strbuf_release(&fingerprint_stdout);
+2:  a830de15ec ! 2:  5df667227b gpg-interface: do not use misdesigned strbuf_split*() [Part 2]
+    @@ Metadata
+     Author: Olamide Caleb Bello <belkid98@gmail.com>
+     
+      ## Commit message ##
+    -    gpg-interface: do not use misdesigned strbuf_split*() [Part 2]
+    +    gpg-interface: do not use misdesigned strbuf_split*()
+     
+         In get_default_ssh_signing_key(), the default ssh signing key is
+         retrieved in `key_stdout` buf, which is then split using
+    @@ Commit message
+     
+         Reported-by: Junio Hamano <gitster@pobox.com>
+         Helped-by: Christian Couder <christian.couder@gmail.com>
+    -    Helped-by: Junio Hamano <gitster@pobox.com>
+    -    Helped-by: Krisoffer Haughsbakk
+    +    Helped-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+         Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
+     
+      ## gpg-interface.c ##
+    @@ gpg-interface.c: static char *get_default_ssh_signing_key(void)
+      	int n;
+      	char *default_key = NULL;
+      	const char *literal_key = NULL;
+    -+	char *begin, *new_line, *first_line;
+    ++	char *begin, *new_line, *first_line, *end;
+      
+      	if (!ssh_default_key_command)
+      		die(_("either user.signingkey or gpg.ssh.defaultKeyCommand needs to be configured"));
+    @@ gpg-interface.c: static char *get_default_ssh_signing_key(void)
+     -		if (keys[0] && is_literal_ssh_key(keys[0]->buf, &literal_key)) {
+     +		begin = key_stdout.buf;
+     +		new_line = strchr(begin, '\n');
+    -+		first_line = xmemdupz(begin, new_line - begin);
+    ++		end = new_line ? new_line : strchr(begin, '\0');
+    ++		first_line = xmemdupz(begin, end - begin);
+     +		if (is_literal_ssh_key(first_line, &literal_key)) {
+      			/*
+      			 * We only use `is_literal_ssh_key` here to check validity
+
+-- 
+2.51.0.463.g79cf913ea9
+
