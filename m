@@ -1,130 +1,119 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f196.google.com (mail-pf1-f196.google.com [209.85.210.196])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561B02D5A0C
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 03:55:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761105351; cv=pass; b=NnIvEnMTKg1ncpMW4QyjK/lxru8Lr/oTwxt7RA+CHF94w6cqD1qrYeXw6nO1hqz8hxAyHBNkRz6Vzm9gBAy03WVu2vpWyBSVKny+DqiFntkpNw9YD1S1GgSEwA6JRm8RD8MbyKm6E2SYdUwgXqjWVcc3u3fyB1V0tsuS9ZZ7mcU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761105351; c=relaxed/simple;
-	bh=Mapj/cf2WkY5UUMdNVk6iKHL01/L63g+TnNaLD2tpug=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=ltF3UNkla6U5CyFE6Ru7jDd+UdOyvu4TyRrsUrEbr9rMGV1hbIWr1Kg2AIisbDnr7WBi+d105QP3c4eijZxrzPSW3GrwTLzHx7Z3L/Dq7ehUM+d1tC7EG6X5KJocT5cjGFbuweRelhUiD1B1QCIjS8Zwc9GN7krItf6/y/6Dshw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=T2N35Yky; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.beauty
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CEEC2110E
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 04:47:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.196
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761108428; cv=none; b=Cwg5byJGE+/wDGxz1Qf2rYXe/sv3O/6/IDkBnElIziDgloFTYHYNRBJILa9B0vYXrFKyfF6Kfkeus11GIRxoCxc8NfKX+wvv6k/Q6jDuOo89CZiKhcw0R3h5TbPB8QxwJAm9WZL2Dd6fV6u5kB+GFp4o8DX6xaTzfBTxcbvVGL0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761108428; c=relaxed/simple;
+	bh=XqzyLOe1c1dwhy3P/CyAj2F/elQUgZUucchS/1+LuPk=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=HFLhCearMRRM/UE7k9XWuGGTVravV0Bhzc+EFjElFHl/EdjbByuRkRTsr/5p1ffiQV44uBm9xX64ArpjTpCEN5c/GHS3ZzUIkL7zWQkUhmvyPjnCsK/nQJEi+B5sJ6TJwm9t62Ausx2GSaBDBGTpVGDM0WkdYBGUfuvuc0W1b7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YikfJGLh; arc=none smtp.client-ip=209.85.210.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="T2N35Yky"
-ARC-Seal: i=1; a=rsa-sha256; t=1761105338; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=Ea4qVBXyPho46niz1hCBG5AyOqbd5Fa68Vcj2YVODTgPwG40YF8ekmWkqD9X3j2nWsoBmDQzO3vFMOxMtaQIwtXoxAtVqfrZk4yLGfbAfEDgcD8QmCgmftqCq+QIGbmnl6r4X6JyR9nCnJYesPj54gqgnl0QMtEaCnbAXYjyOds=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1761105338; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=gbx3wk3FzJhEuUrXqXbOdR6KFd7jPODf3RzTOrDOjtY=; 
-	b=e/pZXGbj47qyCJWdi3l7DvBPB7uC9eWCxwZ+zWbq3v5GrVlCL/YpAlSQeDkp0n5VDvt4hDG5BIFU017EBCaVCSwu3CVhUL5S0gen3MAX/YKpg1mzBMotXytI9kJofXRArbJLQHsO9BzkDsWcFzgI2sbwmEyJ3VAoljQ5cM8wel0=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=linux.beauty;
-	spf=pass  smtp.mailfrom=me@linux.beauty;
-	dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761105338;
-	s=zmail; d=linux.beauty; i=me@linux.beauty;
-	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=gbx3wk3FzJhEuUrXqXbOdR6KFd7jPODf3RzTOrDOjtY=;
-	b=T2N35Ykyz1ChKeMVGXteqg3iGl9PVhZudgn0V1iIiM8NNTYSZ62HDoxllhjw1bJU
-	GcTiIBqiKyOgOlEMMOgQbeLvbqZ0NmRe2JUhDV5F8hRSd6mj69xuvbTPYEpBc+h2d8L
-	ddpGwojN0aTl+NdnrMX676cpHIlxIEMIUHTxvjeQ=
-Received: from mail.zoho.com by mx.zohomail.com
-	with SMTP id 1761105335898682.3760518910244; Tue, 21 Oct 2025 20:55:35 -0700 (PDT)
-Date: Wed, 22 Oct 2025 11:55:35 +0800
-From: Li Chen <me@linux.beauty>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: "Phillip Wood" <phillip.wood@dunelm.org.uk>, "git" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-Message-ID: <19a0a0ed648.8a2243b33661009.8946324448572979174@linux.beauty>
-In-Reply-To: <cbe93380-e145-4ebd-a213-928b8c3ba085@app.fastmail.com>
-References: <20251014122452.1851103-1-me@linux.beauty>
- <20251014122452.1851103-10-me@linux.beauty> <cbe93380-e145-4ebd-a213-928b8c3ba085@app.fastmail.com>
-Subject: Re: [PATCH v4 09/29] rebase: support --trailer
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YikfJGLh"
+Received: by mail-pf1-f196.google.com with SMTP id d2e1a72fcca58-781997d195aso4895465b3a.3
+        for <git@vger.kernel.org>; Tue, 21 Oct 2025 21:47:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761108426; x=1761713226; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XqzyLOe1c1dwhy3P/CyAj2F/elQUgZUucchS/1+LuPk=;
+        b=YikfJGLhjT5nVgDpTsHN/MZdjuSY/9/HugjM0CWBqd+9l8QngH+BrlRukkMzbcQByP
+         lnFrxHll8PmPt5TAXRSWfUCMQuCGDRdOXzam/nT+kM8UxtX77Fe/mdjMGklK1T8L8PjY
+         TCygYF9S19Q3vThelF5TGUoqXhGOqglbfqVZHGEaCgxWYboegX2wEWBeFVNQmE3+GlRT
+         DkGi2ILembNtI2UdEdO/eoaisUVMHagPYwAQrx1PEMwGv++cYmpMGScq/O2+s2lwXpjQ
+         o+um1oiIAh1omRf2foyg9nZHqcyOkpS4fnT26pu7evyvT7g8l7JO6N3t33WtAzyU+qm7
+         yhnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761108426; x=1761713226;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XqzyLOe1c1dwhy3P/CyAj2F/elQUgZUucchS/1+LuPk=;
+        b=N4tog5WCc4clmeu1hjnXR3GrN755aifk5cXBG7Pj4mXoCJzKQFg/FOB6w22/rpaPUp
+         IIfDg+VLZFaVsH9YK6p6oUu+8oz3ZpwwCv7YAnssu+E7M6ahz8CgTP/Qw6l5/PSw59Ax
+         mSVj7t0bG2NnzpqzR4KG/AoI5VL0ucDQFNZcZJVcvkN6Oc8lWFrbNIlCNhEqQm1es10/
+         HZuV60TfU6Da7/KbKBcnB4AiKxf3zMcsYhMvSce5v/c+dVKzqaqeGloXlb0q/m+JJ+58
+         +2GKmoDIdZ2GBqdBrKFoBQDU11zefFOSngGflTqqf5LhkfTNI6d/sOABVn19HlnfUCRS
+         5emg==
+X-Forwarded-Encrypted: i=1; AJvYcCUU2S+nmLno1TL5/3MEvRiID4p5HX+nyfbxaBIImb6YJ91eyCE+HgK1TIlZO0wgPuqEqyQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx57JHeRSj322vF4PI7h9ekAaL3vVCZSIPHTEykbc9ZIXAxZM5+
+	qPHvaMlAoHwCr5XYOTbCcmHJ4cPiTJjv07wROcew66NXXD05JXIG54DG
+X-Gm-Gg: ASbGncvWE1OTTszQxnTSuTJRaM6ZdMAytvY46kb0rkZfhxeihOH0BbhadWh+bL8mUv1
+	VAWsqhbRsIyZ0fQ2XBPcxDokeRWJi5hIjlNKGgsZqSP0q0x+mmXs8gjWRL7fit5HFMuGLFOW1F3
+	TLVt+iFEL51Ejd34ImLPoTAoMp+AuAURf27PPqNQDYWXjHtF1gpWyxnWqoG7LelV96JU1TEcTor
+	FPP/9plgtkU9EdYf5HVJhKGj85Rlsx88EpQhsnBsjKO94HI73qwpP61TzWaL05PTDOsxh/fjcLk
+	yc7Ur3ksPEspaHdkWz4VOGSS9ydeSOt89Bn9kBxG7sgvBWOhrOPZTIBOAz3dl8JDkqZVbk2X12Q
+	oschX7IrXjkL0wmLzmH3GvLgF7r5S5N44W0i5KzcKO9BTdJ+wnAEJqQqehXEFuwDdqwRA6CKLK/
+	ubWeiZnYxPcGGNTQvUu0mSr0Xsd3yaBkzP/CB+hGrNUG5ov9A=
+X-Google-Smtp-Source: AGHT+IGiH2DQudeiAtkFtlaFAfTzyg56HNjiqEf0sRRIckyTwUwAezb6XwpgpcrLep9bM68ruw1E5g==
+X-Received: by 2002:a05:6a00:1884:b0:781:156b:425b with SMTP id d2e1a72fcca58-7a220ae0ff9mr23163890b3a.27.1761108426268;
+        Tue, 21 Oct 2025 21:47:06 -0700 (PDT)
+Received: from smtpclient.apple (n058152119060.netvigator.com. [58.152.119.60])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a22ff349dasm13113914b3a.28.2025.10.21.21.47.04
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 Oct 2025 21:47:06 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: Regression in `git diff --quiet HEAD` when a new file is staged
+From: Lidong Yan <yldhome2d2@gmail.com>
+In-Reply-To: <xmqqy0p4wcac.fsf@gitster.g>
+Date: Wed, 22 Oct 2025 12:46:55 +0800
+Cc: Jeff King <peff@peff.net>,
+ Jake Zimmerman <jake@zimmerman.io>,
+ git@vger.kernel.org
 Content-Transfer-Encoding: quoted-printable
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
+Message-Id: <E76C71D8-103E-4C37-B05C-86DC180BD519@gmail.com>
+References: <CACJRbWjwOQwJB13CwTfvhV3p+Hbn4KrNM9AtBanGtUS4V_1MbQ@mail.gmail.com>
+ <20251017075153.GA4078773@coredump.intra.peff.net>
+ <xmqq7bwt1kyf.fsf@gitster.g>
+ <20251018094037.GA1060824@coredump.intra.peff.net>
+ <xmqqh5vww7xa.fsf@gitster.g>
+ <20251021073640.GB259661@coredump.intra.peff.net>
+ <xmqqy0p4wcac.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.700.81)
 
-Hi Kristoffer
+Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> /* return 1 if any change is found; otherwise, return 0 */
+> static int diff_flush_patch_quietly(struct diff_filepair *p, struct =
+diff_options *o)
+> {
+> @@ -6179,6 +6181,15 @@ static int diff_flush_patch_quietly(struct =
+diff_filepair *p, struct diff_options
+> int saved_found_changes =3D o->found_changes;
+> int ret;
+>=20
+> + /*
+> + * run diff_flush_patch for the exit status. setting
+> + * options->file to /dev/null should be safe, because we
+> + * aren't supposed to produce any output anyway.
+> + */
+> + diff_free_file(o);
+> + o->file =3D xfopen("/dev/null", "w");
+> + o->close_file =3D 1;
+> + o->color_moved =3D 0;
+> o->dry_run =3D 1;
+> o->found_changes =3D 0;
+> diff_flush_patch(p, o);
+>=20
 
+This would make everything going to "/dev/null" after the =
+flush_quietly() call.
+I think we need to restore o->file.
 
- ---- On Wed, 15 Oct 2025 04:43:33 +0800  Kristoffer Haugsbakk <kristofferh=
-augsbakk@fastmail.com> wrote ---=20
- > On Tue, Oct 14, 2025, at 14:24, Li Chen wrote:
- > > From: Li Chen <chenl311@chinatelecom.cn>
- > >
- > > Implement a new `--trailer <text>` option for `git rebase`
- > > (support merge backend only now), which appends arbitrary
- > > trailer lines to each rebased commit message.
- > >
- > > Reject it if the user passes an option that requires the
- > > apply backend (git am) since it lacks message=E2=80=91filter/trailer
- > > hook. otherwise we can just use the merge backend.
- > >
- > > Automatically set REBASE_FORCE when any trailer is supplied.
- > >
- > > And reject invalid input before user edit the interactive file.
- >=20
- > s/edit/edits/
- >=20
- > >
- > > Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
- > > ---
- > >  Documentation/git-rebase.adoc |  7 +++
- > >  builtin/rebase.c              | 89 +++++++++++++++++++++++++++++++++
- > >  sequencer.c                   | 13 +++++
- > >  sequencer.h                   |  4 +-
- > >  t/meson.build                 |  1 +
- > >  t/t3440-rebase-trailer.sh     | 94 ++++++++++++++++++++++++++++++++++=
-+
- > >  6 files changed, 207 insertions(+), 1 deletion(-)
- > >  create mode 100755 t/t3440-rebase-trailer.sh
- > >
- > > diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.=
-adoc
- > > index 005caf6164..b2003b70d7 100644
- > > --- a/Documentation/git-rebase.adoc
- > > +++ b/Documentation/git-rebase.adoc
- > > @@ -488,6 +488,13 @@ See also INCOMPATIBLE OPTIONS below.
- > >      that if `--interactive` is given then only commits marked to be
- > >      picked, edited or reworded will have the trailer added.
- > >  +
- > > +--trailer <trailer>::
- > > +       Append the given trailer line(s) to every rebased commit
- > > +       message, processed via linkgit:git-interpret-trailers[1].
- > > +       When this option is present *rebase automatically implies*
- > > +       `--force-rebase` so that fast=E2=80=91forwarded commits are al=
-so
- > > +       rewritten.
- > > +
- >=20
- > You=E2=80=99ve cut off the second paragraph of `--signoff`.  This should=
- be
- > added after `See also` below.
-=20
-Thanks for catching this.
-
- > Probably also with an `=3D`:
- >=20
- >     --trailer=3D<trailer>::
- >=20
-
-It would be added in v6; but both =3D and should work.
-
-Regards,
-
-Li=E2=80=8B
-
+Thanks
+Lidong=
