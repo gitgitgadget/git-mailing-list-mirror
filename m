@@ -1,49 +1,49 @@
 Received: from sender3-pp-f112.zoho.com (sender3-pp-f112.zoho.com [136.143.184.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AB92EC09C
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 05:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CE72EC09C
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 05:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.184.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761111847; cv=pass; b=Wo9doQsLS4/wxuoCIKL3sgn6bO8qSbQJNWCnAjQBQlbBqSBPJh18jsqp8iPzF40PReN7SIPBU2AchLgCm2i/jWXrQ0g+8q0b+O7baM1wIfPeNf2uzzWKqjrKA0nUUO0e+nS8jQzIwUxcuuJ3Hm2d64j5HUvgK+nM5EOk8R9ESSQ=
+	t=1761111857; cv=pass; b=r/Qmy5bxHiPDE3oqKJmygvvVaeZ2QlnJArwIX7MfDWK5tM4wDf5Ue8rGvH3Cfx58yheLteWWdchSPAD5WYnbs3IAVpa13v7/WiIlU/14n2/rZhBNERQ9yPWBdAswR1rTGeYSD/O2ZpHsDSxmdx8UmG6yQbk40n8tJTNnF7LMdn8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761111847; c=relaxed/simple;
-	bh=qKmaZVshbjnMEpKq4DXteA4zsFGuGdG0GuUxlKG51qA=;
+	s=arc-20240116; t=1761111857; c=relaxed/simple;
+	bh=CYze2r/wRrWbT0rNUt5yZo58g4BhvK9fiZUiU1qRMQ8=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=itx4Kbn8yf3otujsA83AvDE9VEcOqWBdm10/77GNo2qIy1tsBYtEMK84osSe3svEkaZCjVmKVIduzWnYnYjoV2gww27RNgY/7rYpbBZuG9XhO1ZXDlXa4/NveVDsJ8/fefnrFx291vwWWBCxmdzX74QCDicRrJhPlpQoM3wltQQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=XI2eApom; arc=pass smtp.client-ip=136.143.184.112
+	 MIME-Version; b=rKaPPCibOF1U7K1wq9LJ+4PAIhCQi9dSwHVLOZo9Iq0l5ytWAHVbjiLqeoOUQlboL3V1HeTNP2gWJHkfDd31o3VcqsA2hMmFLbh6NYjN1HjPWh/wGOFm2+SdZAKOR+HgI2F+tth3jhTX3B1bqYoD5hPmGB6rl9BnygiTrz/EQN4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=fhS/2g3h; arc=pass smtp.client-ip=136.143.184.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="XI2eApom"
-ARC-Seal: i=1; a=rsa-sha256; t=1761111643; cv=none; 
+	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="fhS/2g3h"
+ARC-Seal: i=1; a=rsa-sha256; t=1761111645; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=XTrSPqAjxF3WkUGRL+403rJdYo358Kjg0avTpr75tQLX4s0S0VZaVf1w1HbXb2daxRO4WBq40ie0XADR8W7ybgEEtxtdVd/JdPd8LboZqj/lminZHX4b8u3BNk3Mgr5RURTLdDx47DIdyd9sXyTSaRKrvHsyKQen6tSN8PqHd1U=
+	b=AKbPrDsDERiuuV/zPy2cnwEu9pSwiofPsZleCOWyNhYktcvwZzJepLw0pqmGRs/WHiTgtiQgOyy+frljm6VQUIUTZTrIciJGOEhmTZ2IgH2GuYvhAZ51y8XZ1Ys5MD5wbG4/Ki4ewEXy8Qe46yInIo0PdeDX8YF3y4HmnNcZVtk=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1761111643; h=Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
-	bh=5yKhtNWeREnS3mfG2vNVdz6oCmdGjnG0IVZz5fJzcqg=; 
-	b=cOvoOOTyNJ2v2ge0Qa5MpkA7gtxCY7+/p1tAi0w7OQYU0oeKrgSJK0oVCiIhPkxZXtUEerwPpGZ7+pK9cxxLFm9GY3cILXfngtqKAud0rsZHmwv/9d3IKIM5/5EERxlQTkk2nTuSPyRhNOIS1RbGoRlbGRrTPT6fpHqdRT7phrc=
+	t=1761111645; h=Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
+	bh=17Q+RC5DR+l0ZZw0HJrtgw8423B2ucDx/hf8T75f1b8=; 
+	b=iA8T8QS3hhamrL937GKUPoHUPH1VAyByAs9+6COKdrZNvY1Wf4rz1zp4b42gUIsx0YZoGQzWYa+hlmyd4UkRmD8mPRBITSUTVKaSXKc9SIFb/30Tw6LawBQetB+4W2DUxI1dWytgAppKr0Ln+NB07XWUe3JlPy/orBlUE3liB6A=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=linux.beauty;
 	spf=pass  smtp.mailfrom=me@linux.beauty;
 	dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761111643;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761111645;
 	s=zmail; d=linux.beauty; i=me@linux.beauty;
 	h=From:From:To:To:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
-	bh=5yKhtNWeREnS3mfG2vNVdz6oCmdGjnG0IVZz5fJzcqg=;
-	b=XI2eApomNsOfJxcsNgi2oEZZz+tfERqR0JaZAbzWoAjoqAeCD7HEPYLPuvjue50o
-	CYijUM060AI3zu+i7QKTxBS1d/EsassLWSmw2meoHZaBzbrOaReChNxzl8WDDE4SDlX
-	d/lnBRvM2+IAe+07YEp6UJUM/uhqmf4hFlxROmGM=
-Received: by mx.zohomail.com with SMTPS id 1761111640727661.0583979833602;
-	Tue, 21 Oct 2025 22:40:40 -0700 (PDT)
+	bh=17Q+RC5DR+l0ZZw0HJrtgw8423B2ucDx/hf8T75f1b8=;
+	b=fhS/2g3hyJz3q2spwF0JDjAHupdUKQ+9WGpiQ23TgkSY0Cy0tGJLvLV++h1cf9Mw
+	2xpjmuV205hckwnnxZWxZrYGDk4MnJg2FHvG77edyBylBtY7pZQ2di3VGGv3zJe6ulP
+	fyQ57LsOmGuAVOUtFhdotEr0iiI0LvZaASRoT1i4=
+Received: by mx.zohomail.com with SMTPS id 1761111643156765.8949894429744;
+	Tue, 21 Oct 2025 22:40:43 -0700 (PDT)
 From: Li Chen <me@linux.beauty>
 To: "phillipwood" <phillip.wood@dunelm.org.uk>,
 	"git" <git@vger.kernel.org>,
 	"Junio C Hamano" <gitster@pobox.com>,
 	"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v5 22/29] rebase: persist --trailer options across restarts
-Date: Wed, 22 Oct 2025 13:39:42 +0800
-Message-ID: <20251022053951.602605-23-me@linux.beauty>
+Subject: [PATCH v5 23/29] t3440: remove redundant --keep-empty
+Date: Wed, 22 Oct 2025 13:39:43 +0800
+Message-ID: <20251022053951.602605-24-me@linux.beauty>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251022053951.602605-1-me@linux.beauty>
 References: <20251022053951.602605-1-me@linux.beauty>
@@ -56,61 +56,29 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-t3440 showed rebase -m loses trailers after conflicts.
-Each --continue spawns a fresh replay_opts without trailer_args.
-Serialize them into rebase-merge/trailer so new runs reload them.
-This keeps the user requested trailers intact when resuming.
+From: Li Chen <chenl311@chinatelecom.cn>
+
+--keep-empty is the default these days so
+we can drop that.
 
 Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
 ---
- sequencer.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ t/t3440-rebase-trailer.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 552e629e4f..c02364cfce 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -209,6 +209,7 @@ static GIT_PATH_FUNC(rebase_path_reschedule_failed_exec, "rebase-merge/reschedul
- static GIT_PATH_FUNC(rebase_path_no_reschedule_failed_exec, "rebase-merge/no-reschedule-failed-exec")
- static GIT_PATH_FUNC(rebase_path_drop_redundant_commits, "rebase-merge/drop_redundant_commits")
- static GIT_PATH_FUNC(rebase_path_keep_redundant_commits, "rebase-merge/keep_redundant_commits")
-+static GIT_PATH_FUNC(rebase_path_trailer, "rebase-merge/trailer")
- 
- /*
-  * A 'struct replay_ctx' represents the private state of the sequencer.
-@@ -3244,6 +3245,17 @@ static int read_populate_opts(struct replay_opts *opts)
- 
- 		read_strategy_opts(opts, &buf);
- 		strbuf_reset(&buf);
-+		if (strbuf_read_file(&buf, rebase_path_trailer(), 0) >= 0) {
-+			char *p = buf.buf, *nl;
-+
-+			while ((nl = strchr(p, '\n'))) {
-+				*nl = '\0';
-+				if (*p)
-+					strvec_push(&opts->trailer_args, p);
-+				p = nl + 1;
-+			}
-+			strbuf_reset(&buf);
-+		}
- 
- 		if (read_oneliner(&ctx->current_fixups,
- 				  rebase_path_current_fixups(),
-@@ -3338,6 +3350,14 @@ int write_basic_state(struct replay_opts *opts, const char *head_name,
- 		write_file(rebase_path_reschedule_failed_exec(), "%s", "");
- 	else
- 		write_file(rebase_path_no_reschedule_failed_exec(), "%s", "");
-+	if (opts->trailer_args.nr) {
-+		struct strbuf buf = STRBUF_INIT;
-+
-+		for (size_t i = 0; i < opts->trailer_args.nr; i++)
-+			strbuf_addf(&buf, "%s\n", opts->trailer_args.v[i]);
-+		write_file(rebase_path_trailer(), "%s", buf.buf);
-+		strbuf_release(&buf);
-+	}
- 
- 	return 0;
- }
+diff --git a/t/t3440-rebase-trailer.sh b/t/t3440-rebase-trailer.sh
+index fbc6f209f1..4687be3a21 100755
+--- a/t/t3440-rebase-trailer.sh
++++ b/t/t3440-rebase-trailer.sh
+@@ -87,7 +87,7 @@ test_expect_success 'rebase --root --trailer updates every commit' '
+ 	create_expect initial-signed "Initial empty commit" &&
+ 	create_expect first-signed "first" &&
+ 	git checkout first &&
+-	git rebase --root --keep-empty \
++	git rebase --root \
+ 		--trailer "Reviewed-by: Dev <dev@example.com>" &&
+ 	test_commit_message HEAD   first-signed &&
+ 	test_commit_message HEAD^  initial-signed
 -- 
 2.51.0
 
