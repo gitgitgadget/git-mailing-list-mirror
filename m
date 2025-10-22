@@ -1,156 +1,131 @@
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
+Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8546A3161B2
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 10:57:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4FEF33CEBC
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 11:59:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761130643; cv=none; b=B0GlEN6OUd6tB5MIvlS6uknZvRLrSDbMkQXgIZp4ABKwaLKMau5SzoDy7EG2IV6rTOmwXfds+/cSoqf7XxG0RSjaCnKSLhgHcxX9m8LYnE5YGxXePAnkz9VTKp3ICGkRoR74H4jh4ozacWKDLZFpIP4yMfvsqLhKzQ7WsSjmJl0=
+	t=1761134347; cv=none; b=qPTdfG0cFwD1QO1Kr2CzcCMctBmY3+kWmdb7KiHsW+O/CeySZKITS8eQWVPhLkrigD4JhuRzfBBtOjOP5MAf4G4IQtc5fcDFgtB7NDMPHAisgUVB8xIfsAYEdsBQCLoStvCFJACqVm0w7OIahBJ/kUXaJLwVXflsgdqLvTTKQWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761130643; c=relaxed/simple;
-	bh=a4nb7vVAdLaBPByS1vEN73Y2TsZdwj2hcNI/JGX6kx4=;
+	s=arc-20240116; t=1761134347; c=relaxed/simple;
+	bh=DI+2bav8RXabMm8PAQrqqlTwZc18lhhldFFI2mDsdrc=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hXlecThvledL8CRK2cjwVTzIgM4qP7LhPR8Jo/bjXFzH5h6zzkHjKUC1jSHp83jRZj/DRrWwvwKwh/dnCSalccNnbk0aP4or9JKiHC90uw7Js819zHySL9I1negsTIwdQIMxVP8+Hb3ddcWdwPy5zxENhDztQTynhUBafJVdNxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mlP6Va71; arc=none smtp.client-ip=209.85.222.41
+	 To:Cc:Content-Type; b=e96Rdw7tvyeYP47ZJAB8vIKlDvYbhgsSQq2Kyi2GJU/sm95Q/iWJO9DkM5X8Mizr5vu6VII+P+kFofETLlmkaB34CX0QIWgAcYZlgC6p3b9AYH8xIOX7yAkGSBEnOZ6Sagt4t2Qq1RaXAUDqGi6pGmSKukW0a5ibd9pwvohx+aE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JqacV6IT; arc=none smtp.client-ip=209.85.217.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mlP6Va71"
-Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-932ea034862so1308585241.1
-        for <git@vger.kernel.org>; Wed, 22 Oct 2025 03:57:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JqacV6IT"
+Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-5d967b67003so4641856137.2
+        for <git@vger.kernel.org>; Wed, 22 Oct 2025 04:59:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761130640; x=1761735440; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1761134343; x=1761739143; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=3UYCifXmeVcx6nOuPqkJ9K1Pk4GH6mq1u6YNyywh8+s=;
-        b=mlP6Va71/TC2pyIjVCKyVLn27Zb2kKL7TO/+ZEoUyqF4TppohXYeffacvoxGU+CG99
-         jcHk6pYiJzRmN6+bl+jACnxJ/xKFtTSnG4f0QRPp5y2dRBLjUw5z7fkF/ljob7LanWbF
-         HO/RIqRzDfnWlX6fWG2yL5MT2u7RGda/t/uLMPS3riy+50etpy3nR3RLZ2wqQzKTqzu8
-         svOWFJYRMuCgn/frK1dMhnMw3aKBvCw6NjJ1ZUL6zdNV/pqMqKgR+f3vqKgCWKGK2Zdt
-         VM+ANEtjB44xvCgarxbxQ24t8/96KfqDS51okBC0M+NJZMjjvA7c/LptahLORAptAMdQ
-         0XRg==
+        bh=DI+2bav8RXabMm8PAQrqqlTwZc18lhhldFFI2mDsdrc=;
+        b=JqacV6ITSJMl3VdvRjprDewcyrtfi8SLzFm0I6cygekSL1AK1tmGoAqhUmhX9uJ27i
+         k8S0yT0qpMADXBAFqa/AQCHDGeW2DAmUo472UjNOE4tt7usjNj2dusgG4aY0TmUgrnr1
+         R3qQ7jPGYb638AaS1NhgAWRCwHhYa6lPN9b9sZLk23r70yAEhqC02c964C57WWT+71Th
+         j6n/PdZHNo7Jknp7ZMILGxMiCbp2afce6N5cYDlZOx3PDycGxuJhvDT0MktpGpVsQP0g
+         BdiaF7I4Zuv6C/WnL+wf/+tayT2unP6a5fW2gGDNIVXe8Aaf1NSvUeX/GGKc+aOdHLUj
+         3+dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761130640; x=1761735440;
+        d=1e100.net; s=20230601; t=1761134343; x=1761739143;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3UYCifXmeVcx6nOuPqkJ9K1Pk4GH6mq1u6YNyywh8+s=;
-        b=k70YzZ980SpRa/FHWCWTczPEusL7tQs7SrroSZR6j9Tk1x6945kJvFWsnG/UWLOT3t
-         Y8UZXO182OzW1FeHr2Du7nQKbF0OP/mfBBNdk2VkoLscfPAD2B1QF1BRxoCOd+nmP/Ej
-         LdnGQyLUeWzvogfmyFQB3hZo39/NEX0FoeQgjO0rhaEvadm6XSxMqxwu5Tp3TJPjUMJP
-         N0OCy5SHzcJ2HMpKE+gm+BIATXcDtKlVjqKpO7YE2rszI0W3FabR5bBqhKo45nkiQk4J
-         qTfvZiewnJFO5EJVX6vPEj6R0MEpV4NRqOr45wQ36SrmVLK8+4T4z5o+i+dzQURJMcrG
-         1LiQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUQ3BPp2wHFcaPfMDTrurA/iZq0QqazbbDGl+Sti9pwfGRUk0e2rGONZHNtjzmhEtPULGo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxiTo2DM72j5Vr/9BSpmFtP1YhZFSJuAsAes7SPWNSaAIb1ypld
-	t21cKwMZir2WBg/6ISRe2MoOUvLFZupbP1KaBLitRYNu180QUsROfLwZspUnHIMA9+BSFeMam8E
-	uCDP8RpI3XKe9uE7xtxa788zvuwGudVk=
-X-Gm-Gg: ASbGncu9V6yR74NYAW3KaWIW+veyeVlFq/V4zYJeOqMvCLEqsHJ5+MvDEWTsZA2b5PA
-	FP2k36wpEFCpBspZZQt3Oa2EgMtSssfUHKsz1ZN8sVOEXc3ASQUNhmy+9f9Gi1dwYN4vkSLItvO
-	AlwckypT+3LhZWdsvZBMksoMuU1ND4MxZRA4L7IrV1aA+NLA2yItblibmrGPgyi+Dr8hSNx2TUu
-	eFrwEzOsI1TMZ15NdIlBsfR7RRBvG6S4JGhBuqHj/3XYMoSl+h6S1tjQoLUuOW1Hc38IRlzAUly
-	ljXXy7s=
-X-Google-Smtp-Source: AGHT+IHc35RkGTxokC3orzmsf81FdTO2oOwb8LYw2WoOepFt9l1JyDLrmhOOe9jBVMspXT25oDC5uvhY1yHME6YqJis=
-X-Received: by 2002:a05:6102:947:b0:59d:ad3:e1e4 with SMTP id
- ada2fe7eead31-5d7dd554d6amr6150874137.5.1761130640198; Wed, 22 Oct 2025
- 03:57:20 -0700 (PDT)
+        bh=DI+2bav8RXabMm8PAQrqqlTwZc18lhhldFFI2mDsdrc=;
+        b=jd+ZUM6UWLEBOmYkAuLEJvrGFgB6wUKK1vb4RNhSVQLXAo6t/taUW79CEHHvYakuID
+         F3Im3mRt1kv5tM9gnqJfFfrbLKsQ7aMiIiss+cqFjbsRKq+XGC8YrSDX9zvhHcVDEvwK
+         f33OpPocU9jeH5zEyESK7SBadLGdDFIrcIWskzjc88foDMMdU3bYNDdFNhmz42sH0gZd
+         ddOeSm2WCjE6MaHv5dUkTR2Vf8+BbcDLgiByMmTvML72aaX0UVyMVaSmZv91HACKLpjW
+         i85E+mhiHO1IWyD+UYnr7ILeLmLW3+KHcmLLM3zoD3h1C0H/kCqfx6qU4+ViHhqnQBk3
+         O6eA==
+X-Gm-Message-State: AOJu0Yw2YdiV7NHAD5oOnYaZYoPmkCL3a0Lf8AGZljNYfCntiC3Uah4g
+	/u7ENhBdxR9lwie9J8BWO6bHlnsc59Ze7S2TyounYz1yfWtQuE0YYiEbiL2E0wj64GBRn0Zc6R2
+	mgz1SwOUoYLEc2cQa8RS26Mzv4C/4bck=
+X-Gm-Gg: ASbGncsTloNwstBNFT4771NiNK5EBHQLySAYgtGqlRNxPbNq08wUfFh/0jJZGv/g7Ez
+	bW9UVykb2of4aX2PxB+p+cPWqT7Cf7eq1L+pzxpB3gj+k3MmbZiF2NOO0oYOoGt4O12xvmc9/86
+	GOPIa8/yeSZSpud2J/9SL4O04f2sHOLLTy/0eEXsKLmMq4G880nGU2Duvs0qTZTmKw2zAvdbMvv
+	c9yaxZOUPbvtJVqkGOj4N7clX9R896S+XjueMNPoOC1drPcskptEXXXH/y92w==
+X-Google-Smtp-Source: AGHT+IEpNvt9fWNJBNqrSeaaRMCzBbSEinhF4S6MZ0M5O5C7BWejVMRqWscw1odYBe6BI33YBpjoQPazat332P9zKJ0=
+X-Received: by 2002:a05:6102:418d:b0:5ca:a978:8a with SMTP id
+ ada2fe7eead31-5d7dd6d63dcmr7030848137.33.1761134343526; Wed, 22 Oct 2025
+ 04:59:03 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 22 Oct 2025 03:57:18 -0700
+ HTTPREST; Wed, 22 Oct 2025 04:59:02 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 22 Oct 2025 03:57:18 -0700
+ HTTPREST; Wed, 22 Oct 2025 04:59:02 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20251022-b4-pks-ref-filter-skip-parsing-objects-v3-0-eb9f71985ef0@pks.im>
-References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
- <20251022-b4-pks-ref-filter-skip-parsing-objects-v3-0-eb9f71985ef0@pks.im>
+In-Reply-To: <aPcXNOz7HdxfUzcC@pks.im>
+References: <20251020-refs-code-cleanup-v2-0-f5349ed0f6a5@gmail.com> <aPcXNOz7HdxfUzcC@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 22 Oct 2025 03:57:18 -0700
-X-Gm-Features: AS18NWDmFmpWbVylYfbASLLvoKySV89XB4a4LSuwvmcmsFM5PToNySIt2Et4qBM
-Message-ID: <CAOLa=ZTo0pbPDxrHoTgcOoyAiuN+AYgrACti6kga25+trQnXtw@mail.gmail.com>
-Subject: Re: [PATCH v3 00/14] refs: improvements and fixes for peeling tags
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Taylor Blau <me@ttaylorr.com>, 
-	Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000367d530641bd2ea7"
+Date: Wed, 22 Oct 2025 04:59:02 -0700
+X-Gm-Features: AS18NWA2wPtNcr3Z_COmerIL9RkUY7ETHCDGAfOfmSEsXyZaSbgnbrF4VnzT_JE
+Message-ID: <CAOLa=ZRmp3PDg7q+SEirO-UXZdvE_nRvSYCMYRdqa72OcTaauA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] refs: cleanup code around optimizations
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, jltobler@gmail.com
+Content-Type: multipart/mixed; boundary="000000000000f2ac6b0641be0a41"
 
---000000000000367d530641bd2ea7
+--000000000000f2ac6b0641be0a41
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Hi,
+> On Mon, Oct 20, 2025 at 10:18:28AM +0200, Karthik Nayak wrote:
+>> This is extracted from a recent series I sent [1], which I've since
+>> dropped to follow up with a different approach. I think these patches
+>> hold value individually.
+>>
+>> They mostly cleanup code around 'git refs optimize' which was added
+>> recently in db0babf9b2 (Merge branch 'ms/refs-optimize', 2025-10-02).
+>> The code in the refs subsystem contains both 'pack-refs' and 'optimize'
+>> functions, which are one and the same.
+>>
+>> This series unifies this to only retain the 'optimize' functions and
+>> naming, since it backend generic.
+>>
+>> This is based on top of master 143f58ef75 (Sync with Git 2.51.1,
+>> 2025-10-15) with 'ps/ref-peeled-tags' merged in.
+>>
+>> [1]: 20251010-562-add-option-to-check-if-reference-backend-needs-repacking-v1-0-c7962be584fa@gmail.com
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> Changes in v2:
+>> - Squash the second commit into the first.
+>> - Change some variable names to also no longer refer to pack_refs.
+>> - Fix commit messages.
+>> - Link to v1: https://lore.kernel.org/r/20251015-refs-code-cleanup-v1-0-550fdd8a3b41@gmail.com
 >
-> originally, all I wanted to do was the last patch: a small performance
-> optimization that stops parsing objects in git-for-each-ref(1) unless we
-> really need to parse them. But that fix cause one specific test to fail,
-> and only with the reftable backend. So this led me down the rabbit hole
-> of tag peeling, ending up with this patch series.
+> This version looks good to me. Thanks for all these cleanups!
 >
-> The series is structured like follows:
->
->   - Patches 1 to 8 refactor our codebase so that we don't have the
->     `peel_iterated_object()` hack anymore. I just found it hard to
->     follow and thought it shouldn't be too hard to get rid of it.
->
->   - Patches 9 and 10 remove infrastructure that we don't need anymore
->     after the first couple of patches.
->
->   - Patches 11 to 13 fix a couple of issues with peeled tags that I
->     found. The underlying issue is that tags store both the tagged
->     object and their type, but this information may not match. We never
->     verify the actual object type though when allocating the tagged
->     object, so this only blows up much later.
->
->   - Patch 14 was my original motivation, a small performance
->     optimization.
->
-> I'm not particularly fond of the patches 11 to 13. It feels more like
-> playing whack-a-mole, and I very much assume that there still are edge
-> cases where we should properly verify the tagged object type. But
-> changing it in `parse_tag_buffer()` itself causes a bunch of tests to
-> fail where we intentionally create such corrupted tags. So I didn't
-> really dare to touch that part, to be honest.
->
-> If anybody has suggestions for an alternative approach I'd be very open
-> to it.
->
-> Changes in v3:
->   - I've rebuilt the topic on 133d151831 (The twenty-first batch, 2025-10-20) with
->         - tb/incremental-midx-part-3.1 at 935ab44a0a (builtin/repack.c:
->           clean up unused `#include`s, 2025-10-15)
->         - jt/16a93c03c7 at (builtin/repo: add progress meter for
->           structure stats, 2025-10-21)
->     merged into it. This is done to fix a couple of merge conflicts with
->     "seen". Both of the topics are only in "seen" right now, but they
->     are close to be merged.
->   - Link to v2: https://lore.kernel.org/r/20251008-b4-pks-ref-filter-skip-parsing-objects-v2-0-76e30d5c9542@pks.im
->
+> Patrick
 
-I had already reviewed version 1, the changes from v2 and v3 look good
-to me! :)
+Thanks for the review!
 
-Karthik
-
---000000000000367d530641bd2ea7
+--000000000000f2ac6b0641be0a41
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: f11cd1d324a9a509_0.1
+X-Attachment-Id: aadccc0438075b37_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1qNHVJZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNElsREFDTEdEUHNpcUVsdDdNSWZYMXVkRWJxSkJnMQo4WmR6dkdoQTlE
-VmxwRzNOdXZremViZ0VjWTk2dlYrU2ZqYlVwais4Q0JYTnA5bFJsY3pjVHZCSHkvbHQ2OWhQClVY
-RGRhLy9OcHVCZzEvalUvUlkzcE8vd1pSQ1Yvck9ONWh1TWtuQVZabENKN2NLYlBMSXhKdjJ6OFpq
-WUxFY3kKMDZtblp6cGMya0ZsUno0RW9VVkhYamJ2UnZkMHRRNzl6MVZzajhuTzY2U3BYQzlIZVIz
-VFVMQzEvVGY3VzFEdwpGb0hMalpWSU4yN0JyNjcwc3NmRmp4MWlNV0FpTVlmdUVxR0szcVk4c0o5
-UmtKMEVxSVVsSEw2YlAxQzdGRDFTCldvU2tQL242RG1VTFZHb1JMQzg5TklhaGk5WlBBSjF0VTh1
-U0VMUnN4S2kyMGlIS3JPWjNRdHFFVFNUdExtcVQKd3BMZGxwd3JGcisxajV0QjZjMnZ0Tm1XcFFU
-LzdqY3lEcDRESWNmWGZ6aE5MWXZlVi9jOVAzUjJJOGxWVjRhQQp5MjZsbWNGd3JNRTIrSkcwUmlF
-Sm1wR0RSRFZhSFdDYTFCOVl1c3pYSHV1RW9oU1hKeGE5TG9NckREcVFIcEpLCmthYjB4aGF3ZnNa
-Ty9KZjVOY2pBZTUyaHFCYTZ0akloODA4cDZaQT0KPVNrdGUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1qNHh3UVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNjhDREFDUEJzaTM5V2ZoSW1oUFF5dldNbEk3aFZ2SwpabnFlNU0rOE5U
+eE04QVltQmNObnlNNk00bDZNTXUwS3JSWXhFdUtQR3lXc2pxMGNBdDQ1emUrQzF6OVVMYURwCkEr
+L1VOblA4REdHdE5aNHYvRDV4Y1dyR3ZSK0N2S3g0c3cxYW43M3oxYXRQUWpDblIyT3hKT2ZhUmhN
+SW8yMFkKMzZoQ3ZNL3ZVMlY0ekZ6UnQyOTJ5MEU4NklaYUhsbmcwbTcwZFMwakwyaUFlLzBVREVQ
+WTZDR29vQkNnMUZEZgpKcS9OUnhlT1VYczhVUmZmRWJJdEdUZ1NvOUF3ZHhKSVdNY3VKRlpqS0Iy
+STloUTY3QjFUUkJDSkk5Z0tBbXpMCmlGTE9tRThhd2ltZktrMms3MkFlWEJOSFNTYzB0WGhGQVJE
+VGR5S0xOemwvWnR1YTZaUnM4cGtSQXlmUzVPUjgKYnNxQ1piUFhKbVNTemdsODNLSzZQaVBOTXhQ
+ek5XdjFlQTA1ZlJqaWY4OElNcFRhWG02aUdEZW5aM2VqeUJuRAoyeWkvUFRuNlhMdE0vd1dPY2li
+WlAxQWNQeTFRYWNMcitsQU9qTGcrUVVMYnpCZVg0UGpjVER1ZWdtTUFUY1hJClpqNCs4bHZlOHI3
+eUdtRmlUbnk2YmxoTGY5cTlRelNBYkk1RjlqRT0KPTBNYUsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000367d530641bd2ea7--
+--000000000000f2ac6b0641be0a41--
