@@ -1,49 +1,49 @@
 Received: from sender3-pp-f112.zoho.com (sender3-pp-f112.zoho.com [136.143.184.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C02E2EFD86
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 05:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8BA02EDD6F
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 05:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.184.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761111743; cv=pass; b=qOON+QiG97Mk9Vj0hM7asFXEbGF/87Y5oQ42zh7LU/+9CJ9xTvAHhEeI/iv4uqC4Yp+jdWmeTjlijvZEbPkSV6z0cH8aSmufa3XVCYsuDXiU8LvQW+NgfpjUTfjec0KwRvA0tRDx/DSi9ffI3L1plrfpjEbjAU7tlzicNTn0bk8=
+	t=1761111753; cv=pass; b=J97VCvTQbE1HH1Xx+H8uloMwcbYJcgda7180C7fI3SuPSfErGIqfwA/vKqV4pTqYDEaGWxklkdbF3bmenRmoYEbFljK+kOly1svlujq9GKFkK1kyXOa/TTTfZfBC/wGueLt6nMzjfn21gArSyFGPDr3J7iC0ujhJQ5zSaax9XaQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761111743; c=relaxed/simple;
-	bh=o7yefHT5hSWSwJZ+g14nEuUpwZiy2ZaMAnsU/kMj514=;
+	s=arc-20240116; t=1761111753; c=relaxed/simple;
+	bh=lMENA3dUqP/npa6UCsXQXNc4M7PFhwEVPqFz6qywyvg=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xs12CPozqLrjjJU3gobUheMMxtBbExvgO85QtFGxlYsWptIaueuB+GLM1SAJ7z03VgdpYH4iGVl4oCAzJC7QVKXS4KCQm0Q1T27lLTmfNto/lvtZkRP6HFnp3RqBnLa7Ah3rFb1ijR8Nl7wk5PEF4hFGr4roj6kRyebtFoYCj0A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=jQjtO85Y; arc=pass smtp.client-ip=136.143.184.112
+	 MIME-Version; b=ldeT9mLqZAQ+82ML29PPjkbQ/VDCHx1A19eQFyKri+0xPYUyO7W9gJ0bTFJWVk5qAgR5fFJBdCiyxr8GSpq9SrfRKPg5gVpQa0Ws0iRbP5FZKrfVhNSHpaCoDq/A7ZVT6NAFn6ZplISZlBIMth2KF8TUXFkYbHR3qcWeVwuUWsI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=TICUexpt; arc=pass smtp.client-ip=136.143.184.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="jQjtO85Y"
-ARC-Seal: i=1; a=rsa-sha256; t=1761111623; cv=none; 
+	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="TICUexpt"
+ARC-Seal: i=1; a=rsa-sha256; t=1761111625; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=Yz+MEFpKhae/Ndy15XUyGOPb4CpmKMF+2TSW4wOmKAnk6fxIkvBVhDIybrPJt9xsmEzpVclaYRwYD+birm3t3mU8aMsDlgz5kVRc789rZC7h++JxZmRnxf13uGLYYbKAj7VidCemAbaCPP41+pqKZNjq0FN9+9LeQiH72/wIvQ4=
+	b=ZAPN8A6K4DUa/RQ+QD8ZemWKKlOyCQIGWMxagOdRgroS0cdhpntOtvKvdN1PplegoD8enuFEpptZxjcjXhhs6SBMvQns5cl89XLbR9R+RBkrqVmBjGvdRHKkieKzSRqwzUAGTq9UHg1rfGWpPVS2ID6HlRUmE3JDEfceLn46qek=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1761111623; h=Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
-	bh=frJ9+v73jijGjOqTVZBvsj9vsUyD6PjRTnQZf26ro4s=; 
-	b=K4hbcj7hr9Vu2TPzrAE4vZfaBSHzO1+pPcqEb2Z2XdohjOAB4KhMy0OoNzadUjS3iz5J3OXcUx13QGs9W6UWpF4nuqVdiA7yVMHBBhYt50P8hVsuZvyLa2BQE2YnAdDOCjfRVDLCldkLZ11/HVI2ky3/krrF96j+wZeW74Vxba8=
+	t=1761111625; h=Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
+	bh=P5+oYwF9vc0Qh5r/H9lKdCZw4VbIhwxz1a7hbNfQFho=; 
+	b=fufg7vO5KUa69Desg6vQtzeAgt4pp9Q2SRdr0w/p8aBLO/vqSjUVr+B6qmHVS7rm0j4eyP9uN2ZmsWbeuMDpyp4ixX1tsGIJMmN527t9YzrkkfZkj81k1fGktDjdKo8ncVnznuckSOPKfxInb0BS5dTMIb926UrJ+zXUeRipF3k=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=linux.beauty;
 	spf=pass  smtp.mailfrom=me@linux.beauty;
 	dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761111623;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761111625;
 	s=zmail; d=linux.beauty; i=me@linux.beauty;
 	h=From:From:To:To:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
-	bh=frJ9+v73jijGjOqTVZBvsj9vsUyD6PjRTnQZf26ro4s=;
-	b=jQjtO85Y2lvCRSWU+fm7KIaVOP2E+2pVgbxeo8BibpGlNgf52IvFzZoNh39Zt/oy
-	7+4pFIh3+vSg2yr7nGreqoxUoofUWWMSS548jALJjeAq/Cbgkd5TF+eSHBSzXbJ5DSe
-	ze4SG5gCx41jqV3bMogzFfvylNt296ZlTFXV50OU=
-Received: by mx.zohomail.com with SMTPS id 1761111620223830.2143450278191;
-	Tue, 21 Oct 2025 22:40:20 -0700 (PDT)
+	bh=P5+oYwF9vc0Qh5r/H9lKdCZw4VbIhwxz1a7hbNfQFho=;
+	b=TICUexptOo3NGQWSAUStnRpC3KlHzoWM5Mh7IfGIq4NjDx9cmHflogTDGMRTI8Il
+	b2FgcBNGibSZFg3zIyO12NO4RflZDdGIhCtMMqc1yfNrzuajbLxw1wyZioupTwvDgvG
+	uW2qdITQ9kQwuFGslzrshc8MaQu9Pnh84n1Bmzcw=
+Received: by mx.zohomail.com with SMTPS id 1761111622074649.3800565398782;
+	Tue, 21 Oct 2025 22:40:22 -0700 (PDT)
 From: Li Chen <me@linux.beauty>
 To: "phillipwood" <phillip.wood@dunelm.org.uk>,
 	"git" <git@vger.kernel.org>,
 	"Junio C Hamano" <gitster@pobox.com>,
 	"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v5 12/29] rebase: drop redundant strbuf_release call
-Date: Wed, 22 Oct 2025 13:39:32 +0800
-Message-ID: <20251022053951.602605-13-me@linux.beauty>
+Subject: [PATCH v5 13/29] rebase: skip stripping of --trailer option prefix
+Date: Wed, 22 Oct 2025 13:39:33 +0800
+Message-ID: <20251022053951.602605-14-me@linux.beauty>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251022053951.602605-1-me@linux.beauty>
 References: <20251022053951.602605-1-me@linux.beauty>
@@ -56,27 +56,34 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Removed the redundant strbuf_release() call in
-read_basic_state() so the buffer is released once
-even if strbuf_read_file() fails.
+Removed redundant --trailer= prefix stripping in
+validate_trailer_args_after_config() since OPT_STRVEC
+already stores only the argument text.
 
 Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
 ---
- builtin/rebase.c | 1 -
- 1 file changed, 1 deletion(-)
+ builtin/rebase.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 89ecb84a31..a950005dfc 100644
+index a950005dfc..3ac1eda61b 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -524,7 +524,6 @@ static int read_basic_state(struct rebase_options *opts)
+@@ -1128,13 +1128,9 @@ static int validate_trailer_args_after_config(const struct strvec *cli_args,
+ 					      struct strbuf *err)
+ {
+ 	for (size_t i = 0; i < cli_args->nr; i++) {
+-		const char *raw = cli_args->v[i];
+-		const char *txt; // Key[:=]Val
++		const char *txt = cli_args->v[i]; // Key[:=]Val
+ 		const char *sep;
  
- 			p = nl + 1;
- 		}
--		strbuf_release(&buf);
- 	}
- 	strbuf_release(&buf);
- 
+-		if (!skip_prefix(raw, "--trailer=", &txt))
+-			txt = raw;
+-
+ 		if (!*txt) {
+ 			strbuf_addstr(err, _("empty --trailer argument"));
+ 			return -1;
 -- 
 2.51.0
 
