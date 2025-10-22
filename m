@@ -1,145 +1,170 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazolkn19013078.outbound.protection.outlook.com [52.103.7.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF202F3C26
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 19:54:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761162844; cv=none; b=Jaif4sxix6Fx2l5PAz4sd/ovh578v99UFju0aE/ajZ/JETT4Txf+VX0buy4Y67DlcMYrV2GkXILl3pHgjnQCdCNtYqgSONwjKJDDXZJsmcINs6cPOBsUej725RZyhYSJ4JBpXeVCOGhGrJEQPeoTtoGi7pieDLiGJ/oRJquiSYo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761162844; c=relaxed/simple;
-	bh=5bKlR60e6gzTnVoiBm6qm6Ld0hlq6010pZGDAdhqGOI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ib89qiepnl1fuOdj+8AlT8U2tsmtOD78zmvTpj3xSW2MznKT0qzB1fUr2r+npStMHpwXt3GSzYmRLWHLAVMCoTTS3FLwvrNInEQ86USFvYkuxQ0aoeILDtXmxGUuvlXGnZxw1OcPUNOx1Ak+uRZFFdXcaErrjdW0eBiax1t22dA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dAVr3lPg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BsI1ApeI; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767611F584C
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 20:15:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.7.78
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761164146; cv=fail; b=kaYXfLvpKku5wj3zpiy6xaW9COl10t1xZyFeG55AywsxAgXBejMNTx/fDqXOVqXAL+8PsBOUbEUByhf26mYwx2u9COxwdOnoGmwm1rqGmMELRuH/t2eYllZDc7qAuN/0wBmKAzNIw6PM3Rl/iPTkiGVLysX/efnChJ2zPCrvU58=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761164146; c=relaxed/simple;
+	bh=4Dj5WdyR8yoxiqMBZiRJG8gLXaeHeNN2ethYU8QgVcI=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=Ti1IXrx9KW3RVTtm90L6s8d8XpXlW33cA+IKxz9UvHeu9dFPnnpniUQPfAK+oTFTW9JcwbW3QskY3gqIBj91bmvdl7/4XI7sAv961xIgziFp5DIV+SBxhyFRbFQTNx+QGGSHaYukN0TrNnahYuuND3uc2IetYCAqltct8KXjxgY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=EpKOlPbl; arc=fail smtp.client-ip=52.103.7.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dAVr3lPg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BsI1ApeI"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EA80614001CD;
-	Wed, 22 Oct 2025 15:54:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Wed, 22 Oct 2025 15:54:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1761162840; x=1761249240; bh=m+S9v07Z67
-	kkd9AT0A0FSsuoN3iJpCuTDiNezlejIRU=; b=dAVr3lPgAyNGHyg0Kg1e+9CDHp
-	v2yW27/eqBNV31CRwWc6Q/luP0HRALh4/XemohJHcW9cwH3miSmkEaBRDmD01mjX
-	6RYG4/rb4YXTqJIeTG94/fbLCk2A4hL0tC2SV143f003hJK7xyOLNqmyTpKuKFF+
-	K3nS1IL2aef9T7OLVPkkfI6t31ZDfMH3N67eF/ROtJbsRwQ1vWBG7TUyyWSphL6a
-	aH/iIdP0I9Ehdll/A0p2qNCRdb4TjUjKSp1UM0ITmZVOA0JqelNgnX4+rj+5JiF+
-	xYEGvQqiIeGLNS0fpxGB91QSfkP8srvGFG9KwAi7SF0776VkJ3M5k/LOS/mw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761162840; x=1761249240; bh=m+S9v07Z67kkd9AT0A0FSsuoN3iJpCuTDiN
-	ezlejIRU=; b=BsI1ApeIvAzgnqLcK1j4bQPMLy5w1XqnSfLDGuASsJ9/a3WQjmo
-	99u4h6I+8Fr6lNTg2gZmxkCKUoxxt/MEYx+DBwjauRRupZFkfGGmM+Zi1Csx+Bt/
-	Lf94KkIfAQUkZ2tzs0ANlpUzx5+tWi+EKMl8k/hYM7455gxEbZZF8T6nni1jg/aP
-	iAkJnPehECZb/Lfbf2GEtXdgLNdE+dXILzq2k4TnLukmSwxIpx2fTbeFAGd5PGRC
-	5NMIuF7Z0ZmDlnznRSNlVBjsEWTLP/z08Vv0jAE1h8OLkCafXu1vAga1DU6Wdr8L
-	5kAmdnuxV6gy/3ZUfHuISEHfOEqXQ8aHtFA==
-X-ME-Sender: <xms:WDb5aEFa--3rQVNnBB3yPejdP8Fhzp3a6_0DmkJQcY8r3mz_EBu67A>
-    <xme:WDb5aPnX1bezy8vG8nC46W_bTMtGb6H5Dol50w_-YbteqAS5V3KBWWALw9p5Tj1wl
-    khNYOu1omLS_0CZjQCDdYwC2Mpnvgj8hIFhm599mWdh_soGnUzAQg>
-X-ME-Received: <xmr:WDb5aAaH5liABbofWNmdRpxQS1FrXqJekXkdJJsK7xRZto74BZzGccjlE-TAO4FNgifajVIKXXCCxDYPiAkdDt7xzmmfVxIh901t>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeeggeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeihlhguhhho
-    mhgvvdguvdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvth
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidrug
-    gvpdhrtghpthhtohepjhgrkhgvseiiihhmmhgvrhhmrghnrdhiohdprhgtphhtthhopehp
-    vghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:WDb5aMFPrjNrB_ERRrXCM373uFx-lWZ-MlnQKF1R3xlzfURyNhxrGQ>
-    <xmx:WDb5aJIvgMjgB6RIUxQq1q2jCV0zfUwxonifI1nBwTecQGZlCvrD7g>
-    <xmx:WDb5aPPMNlKogU4jWGJ5C28k2s-jKXlOFEz1KkjCE_Zefav08poqFQ>
-    <xmx:WDb5aBnxVVsFFPAeYG6TWZbxfZwozBbxBMgMMdcUdDOml80e9nScmg>
-    <xmx:WDb5aCKdqA4uOwMWNCoz6CzsEoHEwkIWF3QFi94N8DESXT1PWoGNQsyf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Oct 2025 15:54:00 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Lidong Yan <yldhome2d2@gmail.com>
-Cc: gitgitgadget@gmail.com,  git@vger.kernel.org,
-  Johannes.Schindelin@gmx.de,  jake@zimmerman.io,  peff@peff.net
-Subject: Re: [PATCH v4] diff: stop output garbled message in dry run mode
-In-Reply-To: <20251019163024.18939-1-yldhome2d2@gmail.com> (Lidong Yan's
-	message of "Mon, 20 Oct 2025 00:30:24 +0800")
-References: <20251018094823.31173-1-yldhome2d2@gmail.com>
-	<20251019163024.18939-1-yldhome2d2@gmail.com>
-Date: Wed, 22 Oct 2025 12:53:58 -0700
-Message-ID: <xmqqms5iyap5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="EpKOlPbl"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=KI7Elc9hM1ewRqam0C2DaJchEs7qvH0eqXE/BQasaQwoZYgmHGNKfEN40fmu9odwgQbPrxrEELJ5SHMbuQtvLA1GbJZIx38Q1leZnJ/CjzFDh6Ga9mLCNdJd206Dh9ZeVyYD8BZMKk3CGdQIJEBqZQ0xRCIGHIin4tR905AURtJpBMGgwYyLl47zhcluGbTijeK99wY93NypsoH+XLXG/xCbmg2k1GwCC7dVPNljWFnI9uezKvfFHQjhancxHjL/7CMHZ+z9DAslf83QPzAxaP/0krgIU8JFsXXksO7JeI5XW5TqScMNHDf83EeBnTWH/Se6s6fRhU6CYkHLjd3vaw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4Dj5WdyR8yoxiqMBZiRJG8gLXaeHeNN2ethYU8QgVcI=;
+ b=ccZVrsMwNSzMp++ngC8MXAt9pEr8MZOnYKieX222WPtOHrCbbyMxeBh+2m86TAX1MTBY0MXXgyr8JC06Dyk4HmEsgmphMiNujvtGhXlwljLaDRN6SQPvr1jKWoJwZ9W+IxnPENGFjYpGNFmpx6Em0Sf6jyH5+F4g8TDiQYed1ssOXi5CoM+EaqdN8CXAfiYTJhayxIvdjh3UUABQQsSN4QUuTdp4zOlZIj8sXrhHuvF9QEd4uG9sUXluMCpP3W6X3FFFSj3r0nN1arfrUHNCuXuG4PWSU4ZsixiKimBegaJ8jO94JPO9pUzHSVrm6B7vJ/QOMBsyVlAj63ZsAivgUg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4Dj5WdyR8yoxiqMBZiRJG8gLXaeHeNN2ethYU8QgVcI=;
+ b=EpKOlPblDvPKbFyzkkoCpLvFi/gLAnhD7NyaEBu3Rgr/8vi43/UAIZS3pq6lkc6F4SsopMgeVhdJpX+qQ1xFuc1a31EZrJJnKsZQ7Xj4HDWtqX0QHM1/GQsmgE9z24tbW+S7IQmeDrgIXG7tKConrZ66cIBnbiI8dQLJo0pZnXe8InGK2lUhMoRKbVcUmE4+Kq/ZV8CUcMC8UsBn/zvpegvT8Y6X7vH8T9vQi9wkDsxepV/tjJpI161c+uqy63XVHWkc6nS0+7z3q0GJBOl8zXu9L457xHH8otuVvDoiFbmDqnXQD9pda1wfAdoPdCGUOUt1xx0Ftj6jWPHA1GaDNA==
+Received: from DM4P220MB0817.NAMP220.PROD.OUTLOOK.COM (2603:10b6:8:6d::19) by
+ SA1P220MB1852.NAMP220.PROD.OUTLOOK.COM (2603:10b6:806:3d6::8) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9253.12; Wed, 22 Oct 2025 20:15:42 +0000
+Received: from DM4P220MB0817.NAMP220.PROD.OUTLOOK.COM
+ ([fe80::adb3:2829:6496:3772]) by DM4P220MB0817.NAMP220.PROD.OUTLOOK.COM
+ ([fe80::adb3:2829:6496:3772%5]) with mapi id 15.20.9253.011; Wed, 22 Oct 2025
+ 20:15:42 +0000
+From: Ruoyu Zhong <zhongruoyu@outlook.com>
+To: Ben Knoble <ben.knoble@gmail.com>
+CC: Ruoyu Zhong via GitGitGadget <gitgitgadget@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] bisect: fix handling of `help` and invalid subcommands
+Thread-Topic: [PATCH] bisect: fix handling of `help` and invalid subcommands
+Thread-Index: AQHcQy7vryFHw7fRgEG6u4xzwTl/0rTOcvgAgAAn54A=
+Date: Wed, 22 Oct 2025 20:15:42 +0000
+Message-ID: <DE6BAECC-9A60-490C-AEB4-0958177A1588@outlook.com>
+References: <pull.2078.git.git.1761122173126.gitgitgadget@gmail.com>
+ <3DA38465-7636-4EEF-B074-53E4628F5355@gmail.com>
+In-Reply-To: <3DA38465-7636-4EEF-B074-53E4628F5355@gmail.com>
+Accept-Language: en-GB, zh-CN, en-US, en-SG
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DM4P220MB0817:EE_|SA1P220MB1852:EE_
+x-ms-office365-filtering-correlation-id: beab5f14-a16b-48a0-59f2-08de11a7c6d0
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|461199028|31061999003|8062599012|8060799015|8022599003|19110799012|15080799012|3412199025|440099028|26104999006|102099032;
+x-microsoft-antispam-message-info:
+ =?utf-8?B?ZmcxeFBWdm9JL3BqZmkwUUVpSGNsZkZBaXl1RzhOZHc1SzF2d2ZBb1B4dUJD?=
+ =?utf-8?B?dWdhc1QrL0s5V2RZUEdUU3kyZHI1V3ZreG9TMHFlc2t6WWE1QTFnWXR6T2FJ?=
+ =?utf-8?B?QWExYUcxRnFYWTNsUkRRNDh6eXY4cHRuZ0Y5T3V6S2RwWWtGMk55QXRvVXdH?=
+ =?utf-8?B?VDZTQTA0MXlIaGQvMncvNFVzK0hicm4yTXM4MURGbTdTU3FVQWh2cHU2Tk1k?=
+ =?utf-8?B?eWRlQk5zU25PVDVYMG5zMmg4YTJBM0xMcW9ISm1CVGFVMWZHbXRKRS9SczNR?=
+ =?utf-8?B?QmFTWjJFOU5FZU5pTHRCdldTM0ErNEtjMlZLQlhxREY1MUl2NGZ2d0MycWRa?=
+ =?utf-8?B?Q3d4Tjdkc0pzaVREU3AvbTA2b1c5Yk56eVA2UnpUbXI3WmVCbi9PaHpFTWhu?=
+ =?utf-8?B?cjBocWlRRzAwS1N0KytlalIrZk5NaW1XL0wvWE1abnNRcVNRQXdCdm5zZmpE?=
+ =?utf-8?B?Y1ZYTEl3UkpIdXNqQXplQmF5OGNmMnRzTGRxbDEzR0x3REQzSmhIeWZWNlkr?=
+ =?utf-8?B?UUtyakZoblNaNjV5enJCWFFiMXRiMzR0cXFnVG4vVFMxcTJtbC9IYkZoWmR2?=
+ =?utf-8?B?TzNYOFdQdnhoZ29YRE9OSDFKeUtPeW9WWnJndWExY3I1aGpnSnFkajVBNlJ5?=
+ =?utf-8?B?UGczelNBK002YUNvTkdpWEtWZ0xzL2pVM0hWb1ZKT2plcmNJSFpDbkVqQ1FS?=
+ =?utf-8?B?WTdPOWg3aFdVQ0Z2bGcvdUUrZ2sxREhQZ0J1d0x4eUhGMDI4MFBjSXVhMXVp?=
+ =?utf-8?B?dm94RjBoUlA4Z2pDeFhhend4aWR0bnRkdFJGeEpoSHZzZ0lKSExUWVJwZEZ0?=
+ =?utf-8?B?anNaKzdPb091RnZOcDFnTHhYT0QxTnE5ZVduMzN5cldjdWcwbUNNVFVEbjFh?=
+ =?utf-8?B?ejUvejZQSU83MDcvR1hYSnpsRUtKZUNPeWJhYitkdDRmb2R6dE45UVpvbXMx?=
+ =?utf-8?B?azFZTkIvUXRtOUZ5NlhmVm82Yzlsd3pPcms0Vm1obVdtR0pmQis0S3B4RVla?=
+ =?utf-8?B?QndxSDRLbEM2ano1amNmWW4wUXRKWGliRTE1eWN4dFVsOFcyVERWREpHZ1FP?=
+ =?utf-8?B?KzlKNStXeEZWcG9tUVR2ODRsbE4yem13Mk5FeTZEd3N4WjlFNUxNWER3THJt?=
+ =?utf-8?B?VWVWM243bC9JeGwxTWh0dW9tNHFmVzhoR01JazVpdWRuWld5NEpaMHFzWHRn?=
+ =?utf-8?B?Nk9yamM4d3ZpUEdONEYvSEFBcGpZRElKSWRDQTV1QU5ERks0L0RLS3JvY0Rz?=
+ =?utf-8?B?TzdmcnUvZzJ1cVhHTUhUZzdYenpCcEtBOVdFZi9hdVJybGlrRFY3S1V1UTNo?=
+ =?utf-8?B?U3M3UGUyc0prZ3doYUd1QzlycmlQbFFHa2lBTmFHUnFNRGp4NG92dkNibWdx?=
+ =?utf-8?B?SUhxR3YrOFZvTjhtdU55dmx4ZHZrcE5YZFN3d2ZxR3NUTEdHQ2xLZ0dXa1dn?=
+ =?utf-8?B?ME9SSThKcXlnOUFnRjlGa0ZqakxtdDc4SXhQa0tRWFREcStvTzRKRDJ4bEJk?=
+ =?utf-8?B?WHBueHJSbnNBbDVPTS8zTGgyS3AyUGlZckVrQjh4M0hrcEVaN2NYbUxlTTVt?=
+ =?utf-8?Q?4qN2uUm/gp0nKvVYmgcUDXpn0=3D?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?bWxuSHRPU0d0dGxsNXBYYkIwYkFCWllkVGdtcGVKT05lb2loeFMra28zRjRM?=
+ =?utf-8?B?UTVVdUJBNWRMZVRIMW40aE1mNUc3cjVaZTNKSDBUUllmSXZITXlzT1poVEQ4?=
+ =?utf-8?B?dXAvZXBCekp6eWVaLzE1RWd3cERyazFDb0tQZWtEV2c1c0s2V2g4Z3FBbjNN?=
+ =?utf-8?B?citWM1JmN1JkQnJwQTE1Ty9TOHVlZkVoeU5KWTRhblVSd1V4bVRnNmxSbmhG?=
+ =?utf-8?B?alpyU2Rxd0FFT2dhd1llcUUveTVtVXhwRlpmS3RuendmOHlRVnlBYTZHeTJM?=
+ =?utf-8?B?NkluNUhJRnZ2cFhGNkhHMkNzb2tqWTFSRnYwdGw2eGVYVmtNUGRHSmF3dHVW?=
+ =?utf-8?B?THlZUWtjcUJ6RG9LMTZYeVFKVXg3Mzl4b3JSSnpVeTVKcVYxR3NJbDdrbVB1?=
+ =?utf-8?B?a1I3WGdMYzlBQXVhVzJBc1hnSFcrM1R0QnhmdUo1NzM1blF6NXdhcTZsWUhT?=
+ =?utf-8?B?N3BoZFhvMVh4K28veTk2V29xRmp2QzVQc3hLcGtNMjc0bGI3bDdCSkd4ZDRj?=
+ =?utf-8?B?bkwzVkNNVjBiQnMveE0wSTFhR0p6d3FBTHZJWFIxWkh0RGJEUHBjZ01tQVc5?=
+ =?utf-8?B?bnVPeEM4U0s4Vmd5dFJJOFByN0Y2MDJlOGlodm5HdHpiSFZOZHZTbTFweHB2?=
+ =?utf-8?B?RXh0cHVjakJxcitwZUQzK09kV3QyZ01wRzRZNmpLKzB5V1dBcWdYZUhXZmF1?=
+ =?utf-8?B?K0dKdHJYUWk4WHpVQzBST0dJRG1ReFIxTEgwUnMxdGF4aXNMa3doOU1jWGNn?=
+ =?utf-8?B?d3RLbUxiaC9CMFpGRkZzcFRyd3FxNzFtMERBdlZhQnIza3Z2Y09TQXdQaWRv?=
+ =?utf-8?B?TWNxcFpLeGhzdDNYdlRZTytiSEhLb1BkS1dUSEtZODBHYnZ4QXRxREZzcjl4?=
+ =?utf-8?B?bmJTQ3dPbjJqKzRqbzMwTUpmMk5OdmVkMWlCakphcHFocmg3N01HTm9NNGpp?=
+ =?utf-8?B?aXB3MGpIcnh4QnI0L1VrZXV2ckNENHlUNlJLdmlIUUR5NnhwRlBYRHAwcFFt?=
+ =?utf-8?B?c0FQQWd6dXNKN0lidjJhTzBjL0xueHBPR0VVaXIvbkxvVEdrVE9aZXhQbi9T?=
+ =?utf-8?B?NElyNDN0NWQyczBuYkhXM3BPeU5neG1PaTZGMVByTkFybFoxZUxRNGNGc1VW?=
+ =?utf-8?B?eUkwVUJ6WFFYTkk2eVk1cGtib2hmT1ZEamJGekFSaFIvOEtrNFU3KzBLY0ZL?=
+ =?utf-8?B?cFZORlhLN2VVTjE5UlcxczFKME55VFg4RDdONmJOQkpYY0gwTVdsUWNFeSsz?=
+ =?utf-8?B?Y1BZTENTeGgyVmJVVnFFYzhrd1VwVzd6cHhNOG9RYXNoZWlFWnhQakNxYXIv?=
+ =?utf-8?B?TjFHNnhxZTE5a1oxQ212bXRXbjdxR2JUWnhzRTR2NEMvOFlpUWdjSFBLTTcw?=
+ =?utf-8?B?OC8rZmxLbFVVdFNYYnd1dWVxMDE4S0MxUUk3Um5LUnZSa1orek1rQWw1aklw?=
+ =?utf-8?B?Q1krODJFQU1YaTFiaTMyZTd4RlM2akpUU3RrRkJ1Z3k3TUM3V3U1RDJpOEJ6?=
+ =?utf-8?B?RlRTdjJrT1p1VDl4UkxWSDNWcHlySGlGTjNzSE5JVEFDSkQ1ak9oL2s4ZDJ1?=
+ =?utf-8?B?WVRJanNULzN5Zk9NSCtJTDh6VnRiRkdJU0tYdWIwY1hMSkl6b1BwY3QwR3lD?=
+ =?utf-8?B?ZnVWaWxhdkJDS3phQmxQV2pIUVFsWVZmZGtaeWc1NzB6V1RLaE9RWXhBYmND?=
+ =?utf-8?B?Wmc2R3VnL2Rpa2FqK1UyeGtvaEtuSXFWREhxSkpObnRIVzFhTDNBUklsOXR5?=
+ =?utf-8?Q?Oc1wpw5416xBbOOe99TuYp4MfSc1hBfXL1FNP41?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <A6DE497223E9AA4BA4B70B345DC5C4A5@NAMP220.PROD.OUTLOOK.COM>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM4P220MB0817.NAMP220.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: beab5f14-a16b-48a0-59f2-08de11a7c6d0
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Oct 2025 20:15:42.5345
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1P220MB1852
 
-Lidong Yan <yldhome2d2@gmail.com> writes:
-
-> +test_expect_success 'diff -I<regex>: ignore all content changes' '
-> +	test_when_finished "git rm -f file1 file2 file3" &&
-> +	: >file1 &&
-> +	git add file1 &&
-> +	: >file2 &&
-> +	git add file2 &&
-> +	: >file3 &&
-> +	git add file3 &&
-> +
-> +	rm -f file1 file2 &&
-> +	mkdir file2 &&
-> +	echo "A" >file3 &&
-> +	A_hash=$(git hash-object -w file3) &&
-> +	echo "B" >file3 &&
-> +	B_hash=$(git hash-object -w file3) &&
-> +	cat <<-EOF | git update-index --index-info &&
-> +	100644 $A_hash 1	file3
-> +	100644 $B_hash 2	file3
-> +	EOF
-> +
-> +	test_diff_no_content_changes () {
-> +		git diff $1 --ignore-blank-lines -I".*" >actual &&
-> +		test_line_count = 3 actual &&
-> +		test_grep "file1" actual &&
-> +		test_grep "file2" actual &&
-> +		test_grep "file3" actual &&
-
-I am puzzled by this part of the new test.
-
-> +		test_grep ! "diff --git" actual
-
-The "test_grep !" is to make sure we do not leak the "patch" output
-run in diff_flush_patch_quietly(), which is understandable, but in
-the new world order that even raw, name-only, and name-status honor
-"diff-from-contents" since b55e6d36 (diff: ensure consistent diff
-behavior with ignore options, 2025-08-08), shouldn't we expect empty
-"actual" that does not say file1/file2/file3 in it?
-
-> +	} &&
-> +	test_diff_no_content_changes "--raw" &&
-> +	test_diff_no_content_changes "--name-only" &&
-> +	test_diff_no_content_changes "--name-status" &&
-> +
-> +	: >actual &&
-> +	test_must_fail git diff --quiet -I".*" >actual &&
-> +	test_must_be_empty actual
-> +'
-> +
->  # check_prefix <patch> <src> <dst>
->  # check only lines with paths to avoid dependency on exact oid/contents
->  check_prefix () {
+SGkgQmVuLA0KDQoNClRoYW5rcyBmb3IgdGhlIHJldmlldyENCg0KPiBPbiBPY3QgMjMsIDIwMjUs
+IGF0IDE6NTLigK9BTSwgQmVuIEtub2JsZSA8YmVuLmtub2JsZUBnbWFpbC5jb20+IHdyb3RlOg0K
+PiANCj4gR29vZCBjYXRjaCENCj4gDQo+IEZXSVcsIGluIHRoaXMgcHJvamVjdCB3ZSBkZXNjcmli
+ZSB0aGUgYnVnZ3kgYmVoYXZpb3IgaW4gdGhlIHByZXNlbnQgdGVuc2UgKMKrIGlzIGJyb2tlbiDC
+uywgwqsgUnVubmluZyBnaXQgYmlzZWN0IHNob3dzIMK7LCBldGMuKQ0KDQpUaGFua3MhIFdpbGwg
+a2VlcCB0aGlzIGluIG1pbmQuDQoNCj4+IGRpZmYgLS1naXQgYS9idWlsdGluL2Jpc2VjdC5jIGIv
+YnVpbHRpbi9iaXNlY3QuYw0KPj4gaW5kZXggOGI4ZDg3MGNkMS4uOTkzY2FmNTQ1ZCAxMDA2NDQN
+Cj4+IC0tLSBhL2J1aWx0aW4vYmlzZWN0LmMNCj4+ICsrKyBiL2J1aWx0aW4vYmlzZWN0LmMNCj4+
+IEBAIC0xNDUzLDkgKzE0NTMsMTMgQEAgaW50IGNtZF9iaXNlY3QoaW50IGFyZ2MsDQo+PiAgICAg
+ICBpZiAoIWFyZ2MpDQo+PiAgICAgICAgICAgdXNhZ2VfbXNnX29wdChfKCJuZWVkIGEgY29tbWFu
+ZCIpLCBnaXRfYmlzZWN0X3VzYWdlLCBvcHRpb25zKTsNCj4+IA0KPj4gKyAgICAgICAgaWYgKCFz
+dHJjbXAoYXJndlswXSwgImhlbHAiKSkNCj4+ICsgICAgICAgICAgICB1c2FnZV93aXRoX29wdGlv
+bnMoZ2l0X2Jpc2VjdF91c2FnZSwgb3B0aW9ucyk7DQo+PiArDQo+IA0KPiBGcm9tIGFuIGV4dHJl
+bWVseSBxdWljayBsb29rIGF0IHRoZSBjb2RlLCB0aGlzIG1pZ2h0IGJlIGJldHRlciBoYW5kbGVk
+IHdpdGggYSBuZXcgT1BUX1NVQkNPTU1BTkQsIHRob3VnaCB0aGF0IG1pZ2h0IG1lYW4gbWFraW5n
+IHRoZSBvcHRpb25zIGFycmF5IHN0YXRpY2FsbHkgc2NvcGVkIHRvIHRoaXMgZmlsZSByYXRoZXIg
+dGhhbiB0aGUgZnVuY3Rpb24uDQoNCkkgaW50ZW5kZWQgdG8ga2VlcCBpdCBzaW1wbGUgc28gSSBk
+aWQgbm90IG1ha2UgaXQgYW4gT1BUX1NVQkNPTU1BTkQgYXQgdGhlIGZpcnN0DQpwbGFjZS4gR2l2
+ZW4gdGhhdCBKdW5pbyBpcyBva2F5IHdpdGggaXQsIEknbSBnb2luZyB0byBrZWVwIGl0IGFzIGlz
+IGZvciBub3cuDQpTdGlsbCBoYXBweSB0byB0dXJuIHRoaXMgaW50byBhbiBPUFRfU1VCQ09NTUFO
+RCBpZiB5b3Ugd291bGQgbGlrZS4NCg0KPiBJdCB3b3VsZCBhbHNvIGJlIG5pY2UgdG8gdXBkYXRl
+IHRoZSB1c2FnZSB0byBtYXRjaCB0aGUgbWFudWFsIHdoaWxlIHdl4oCZcmUgaGVyZSwgd2hpY2gg
+cHJlc3VtYWJseSBpbiB0dXJuIGFmZmVjdHMgdGhlIHRlc3QgYmV0d2VlbiBjb21tYW5kIHVzYWdl
+IGFuZCBtYW51YWxzLg0KDQoNClRoYW5rcyBmb3IgcG9pbnRpbmcgdGhhdCBvdXQhIFllcywgSSB0
+aGluayBzbyB0b28uIFdpbGwgZG8gaW4gYSBzZXBhcmF0ZSBwYXRjaCwNCmlmIHlvdSBhZ3JlZSwg
+aW4gb3JkZXIgbm90IHRvIGRpZ3Jlc3MgdG9vIG11Y2guDQoNCg0KUmVnYXJkcywNClJ1b3l1DQoN
+Cg==
