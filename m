@@ -1,53 +1,53 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89EAD2D77ED
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 17:39:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794F435965
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 17:42:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761154758; cv=none; b=BB+Ba9pTDNa4BV9JUTKBiHPc9fN2w0vS68UOrVO90xh5W6DnXrtei5MDhkJAkpPIsQ4RVxgTGnv1kteK4fCPgc3/D8AmMcVnbdohhtCON46v0ILwrflUgez0HYxZPpbIvx9IfH+ZH4rlDk/N4PcS8kCEOn/22oRWNPDNBp6RhbY=
+	t=1761154938; cv=none; b=T+OhchdVhsrCDDO++Z967y0pzPGbsLNXAqiGPMhVho+eM3L1EObneWlLrBtmQKa//B8d+PaBacvUvei317sWVMvoCwHIbkaX/3zuYqkEcCZ3JzUtZQ/CYxyfzh47jy34QRRANfZbtGvwThuKOJdBjSTQ9kLojV9oQQryc1p6qH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761154758; c=relaxed/simple;
-	bh=SWML5sOpAODOSA46jWtS8xfbrr9yFdblQeqbgFaXsBg=;
+	s=arc-20240116; t=1761154938; c=relaxed/simple;
+	bh=x3HQ2wc/Jrpsn+JfSRivgvOxWRICHDdcjlwjkvNzWvo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=S0TVSCQBMpTkQ8JGz1cjm19lmMAucEnhDIbyeVCIVGGn85WiZERzcFT2aEXD8fPBlwj0eTqgAf+iusTLAyawQbuPK85bMDCgLbjkpdl8Q2mfhIbZwgwrjS+iJl7EEdk/WAg7zqbYBcIIBvc6pbS7UXO0fPveKj9rS8suHo2FU0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IWic1McA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IciRB83m; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=dMrhkPdc9mCWlYummnrbJ1tVlNFiRuPWRXvrgPpBjdYJQw5xxgPeDJ+780dIoBOI6YWvXodgJDUHP5lxTRmx9uQHKHwkBD/swXY1YlNzK9dKEh6c1DA1XrdzjOuFA3HBsJZhNpTHb/hJ1t80l2Tbiz82h8zqPbkRaMV0MOOt7QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=P9iamrAl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=frObUAlN; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IWic1McA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IciRB83m"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 80C9714000CB;
-	Wed, 22 Oct 2025 13:39:14 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="P9iamrAl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="frObUAlN"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7597614000D4;
+	Wed, 22 Oct 2025 13:42:15 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 22 Oct 2025 13:39:14 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 22 Oct 2025 13:42:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1761154754; x=1761241154; bh=P4eDJWAbqX
-	RqAR2Z/qwE4ranT2cIsurEAm/0D9t8DGE=; b=IWic1McAPZ28eK6541UFLL+IUj
-	Sav3+xrPdapdV4ffwC9UDMULHR0zT30Q6IyZJC0z3xwhAn1WJtaUupFE530SEUEL
-	SpId0LnebguLKzDgFOrj6CrBqVYmjIvTBZriO2sxOcj8PTaHfG6dvfnygeyO+ywq
-	scttgiJCEwMMSEzN+u9AtOGk42CUMGCWASnqylOnbSqtdm6XpXJwMShvQGWvmggV
-	bIwDdG/XL4+swHYxacdtIqqiojtYfIPf/Hs8Fvpym3qcujbLb0knvKQ46naE8SI9
-	WTV1+99FOWkXKNhUaR2D656bdzXsL+8uKkVEM/kVDXVYE5jFnXxKJScTJUYw==
+	:subject:to:to; s=fm1; t=1761154935; x=1761241335; bh=rN2fQggdE8
+	JsZ71Wezrr0WFEsavjqD7GQr8e5cmBqXQ=; b=P9iamrAlvUn+uJQZPWITUn7V+U
+	4x2n7w8CseLvZOab/WRLB05vhB8WIu9wMvrvh6zq+RzWGJ9nYAqr2mcA/SBja8ZJ
+	LeV3iQFtTF6kRSmbUlEeh7Zy6OOgufdSOqLAkSHyh8XZjAnyxK7vyzVqCeJy7mZ9
+	JL1Ck/XRDbj0Qn6SXmH8isNHaXYW2pKGxoM5Tr4mk926gdhS0ULC1eHKLXVz5iPD
+	lYmk0G63GO0q6t6KOzf6V6RFvO+1gMqL2+x9EIw+DaqsKxwZy8wXX4rmXBNzripy
+	g3hS0Ii9fd5bLn52wWQ8CaanvBTYXSAi8UT8jQAqIiMMY+9+AwrqsMusK1xg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761154754; x=1761241154; bh=P4eDJWAbqXRqAR2Z/qwE4ranT2cIsurEAm/
-	0D9t8DGE=; b=IciRB83mLkkb4S6RLPZBzjsO/3TXSvuw40+RBEd7hMWQaIBtCv6
-	ptHSIZb2tq+kKit1Y2iuMp1gMWSdEzWXviWkLtnJyBTTKOPG0QhoNElYnMi5ojsF
-	51Pa41+xJuO8lPRNZ14Uepqf9HEEYGcB7Mxq679wknAxVmWxk4M0Lon9qgdLoq92
-	4siBzZTWHD+Ow8dtR07JQmhUbRXyV4Sc/OFvAXkw24z2WjIjhFSBNOWtaeCpYRAO
-	NU6efz+Dk4P0ciOVjTznewWiaIqOC3zw3FxJxrVYFKj7fecC+uaGeKAw1HS5YmhY
-	s9EKPg4SjJ0HwlrBTzHtmy75/N039A4vDNA==
-X-ME-Sender: <xms:whb5aC7G21t04Fizz_ympNLw2izBt0uW6q5zW4EefTFgvzeerEq1fw>
-    <xme:whb5aCycNUL0DZowE1TNvWFhz9pjYewCR9MSdEmPP_QN8Gg_xRtjA_-ZvIWnFne0i
-    XHZqHl2d-2hf9-9IPMghKBvs9PIVfXM2-zYWIbseh1VhKyRtvhDFw>
-X-ME-Received: <xmr:whb5aJyZxR6tpL2RShjm6szm7FFYzbSNM2Ihf3pkmGkVNFP0TCn3JzheXLbbKLkQKiJmYmfDJro2Xk-euMaq1SRUCme9oFAwg7vM>
+	1761154935; x=1761241335; bh=rN2fQggdE8JsZ71Wezrr0WFEsavjqD7GQr8
+	e5cmBqXQ=; b=frObUAlNZN0H2wiWVioQEY0rCKHklQs+HYQR11afufCQ8CU7Ce5
+	a/kOOYqNCuK124ZE/KsXWqZNgj53t7fe0QJW6b72jw/RehdWrb48JVsjz946jZb0
+	uEljHSQh4R9nhOpevDkt9FE8nPYywa1iLh4/dT1aq5d01AAy0vqGU0QQZnX5N2mc
+	DBl2kbBR3UHUHAZtjko+ze29/hno41tyHVq5hit9/gHVDGfurRC7Lrc61z7NKYSF
+	zPuUW4FTCfwCOglw/wTVp37J5/tngZoqP4r0xgxW6COBGbDHk2vyNIP3K5eVpbUo
+	W13euIjPump79ZLy8gTFyR+L8c1OJjFGe+A==
+X-ME-Sender: <xms:dxf5aOXaKJ0A0O4z0WGvvVUv6tx60LYikaK7W1XbVK6ngZOqUW8pCw>
+    <xme:dxf5aJrsk47qHjg3QLjCtMIvBixylGySddhPYKISBXs1s-Yf0c9oJQnrSrfY5aD2F
+    KIe3YTv_MO_-gOGyvPfpSuRnxy9AECbPMvZYPRIkCT_dNF6TlRUkg>
+X-ME-Received: <xmr:dxf5aInXEtmpphAFzVDIaUF9OvaL1yYVgnvpeHvorxqX0lUNcwzKb5LD2ncbsg7yisW6WvGw6o_GttTC_0dwm8B99LYnu0Pf4P9O>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeegvddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -55,35 +55,35 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeegvddtucetufdote
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    hjrghkvgesiihimhhmvghrmhgrnhdrihhopdhrtghpthhtohephihlughhohhmvgdvugdv
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:whb5aKy5lQvrG8piJQHEHNgLG8tu7aDjga69gg2qgH5KFJbTH1yYmg>
-    <xmx:whb5aDZTNvtUfsjwyVJAn8uWewDTGePdCzj-vCv6LL7aU20hVNLYfQ>
-    <xmx:whb5aLVLqFJ6WYSorRE47oh5TzMeaOsUB0swx5RoGORoBApezyEB4Q>
-    <xmx:whb5aBgiwnzRuioiVJ75gF5iHZwJYJbl28gekSTJpT0yKJbGVW79cQ>
-    <xmx:whb5aEzRBHmtjBr7V4IfD0Z7DyOX9WGgQGzazdh8yNzUELgai01IZtia>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorh
+    hrrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehnvgifrhgv
+    nhesghhmrghilhdrtghomhdprhgtphhtthhopegvmhhilhihhigrnhhgrdhgihhtsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:dxf5aB35309-RaLi9h9J8zLWbT8_oG30_zGBOQfQKbZaeFe3edLXfg>
+    <xmx:dxf5aNStJzGsbUFNzHh15mD5IkXz6l843C8dCr_4b3jMAo-f-7kyCQ>
+    <xmx:dxf5aCx5OYwKST3oKhk_LXEJGe2Nou366WiAaU-o64WSUZcL5HhOvA>
+    <xmx:dxf5aFBwqbb2u9_dgpg7BvbWrgkiZ0BvottvJOLUEGduTs3HrPgeDw>
+    <xmx:dxf5aGnV6yNvDK372v2tqZA6YbKTz4FnwXoiVm-PSeWDh8Gdq2nn17kg>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Oct 2025 13:39:13 -0400 (EDT)
+ 22 Oct 2025 13:42:14 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Jake Zimmerman <jake@zimmerman.io>,  Lidong Yan <yldhome2d2@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: Regression in `git diff --quiet HEAD` when a new file is staged
-In-Reply-To: <xmqqy0p4wcac.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	21 Oct 2025 07:38:03 -0700")
-References: <CACJRbWjwOQwJB13CwTfvhV3p+Hbn4KrNM9AtBanGtUS4V_1MbQ@mail.gmail.com>
-	<20251017075153.GA4078773@coredump.intra.peff.net>
-	<xmqq7bwt1kyf.fsf@gitster.g>
-	<20251018094037.GA1060824@coredump.intra.peff.net>
-	<xmqqh5vww7xa.fsf@gitster.g>
-	<20251021073640.GB259661@coredump.intra.peff.net>
-	<xmqqy0p4wcac.fsf@gitster.g>
-Date: Wed, 22 Oct 2025 10:39:12 -0700
-Message-ID: <xmqqcy6ezvi7.fsf@gitster.g>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Emily Yang via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  me@ttaylorr.com,  ps@pks.im,  newren@gmail.com,
+  Emily Yang <emilyyang.git@gmail.com>
+Subject: Re: [PATCH v2] commit-graph: add new config for changed-paths &
+ recommend it in scalar
+In-Reply-To: <dfb978ab-993f-49c3-ba55-d12d47dc659f@gmail.com> (Derrick
+	Stolee's message of "Wed, 22 Oct 2025 10:53:47 -0400")
+References: <pull.1983.git.1760043710502.gitgitgadget@gmail.com>
+	<pull.1983.v2.git.1760734739642.gitgitgadget@gmail.com>
+	<dfb978ab-993f-49c3-ba55-d12d47dc659f@gmail.com>
+Date: Wed, 22 Oct 2025 10:42:13 -0700
+Message-ID: <xmqq8qh2zvd6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,66 +93,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
->> So really, the regression fix should probably cover both of them (which
->> it would if we move the /dev/null redirection into the flush_quietly()
->> variant).
+> On 10/17/2025 4:58 PM, Emily Yang via GitGitGadget wrote:
+>> From: Emily Yang <emilyyang.git@gmail.com>
+>
+>>     What's included in v2:
+>>     
+>>     I received feedback about the confusion around the config explanation,
+>>     so in v2 I added more clarification in the doc and commit message,
+>>     hopefully it helps!
+>>     
+>>     Thanks, Emily
+>
+> Thanks for these updates. I'm happy with the new version.
 
-So, here is what I ended up with.  Instead of redirect many times in
-the loop, dealing with the two callers would be simpler and less
-error prone.  If we ever have the third caller, that is where we
-should consider refactoring this even more into a separate
-abstraction.
-
-This goes on top of your patch and intend to go to 'maint'.
-
------ >8 -----
-Subject: [PATCH] diff: make sure the other caller of diff_flush_patch_quietly() is silent
-
-Earlier, we added is a protection for the loop that computes "git
-diff --quiet -w" to ensure calls to the diff_flush_patch_quietly()
-helper stays quiet.  Do the same for another loop that deals with
-options like "--name-status" to make calls to the same helper.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diff.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
-
-diff --git a/diff.c b/diff.c
-index 9b8d658b9e..ceb57d1ef8 100644
---- a/diff.c
-+++ b/diff.c
-@@ -6814,6 +6814,16 @@ void diff_flush(struct diff_options *options)
- 			     DIFF_FORMAT_NAME |
- 			     DIFF_FORMAT_NAME_STATUS |
- 			     DIFF_FORMAT_CHECKDIFF)) {
-+		/*
-+		 * make sure diff_Flush_patch_quietly() to be silent.
-+		 */
-+		FILE *saved_file = options->file;
-+		int saved_color_moved = options->color_moved;
-+
-+		if (options->flags.diff_from_contents) {
-+			options->file = xfopen("/dev/null", "w");
-+			options->color_moved = 0;
-+		}
- 		for (i = 0; i < q->nr; i++) {
- 			struct diff_filepair *p = q->queue[i];
- 
-@@ -6826,6 +6836,11 @@ void diff_flush(struct diff_options *options)
- 
- 			flush_one_pair(p, options);
- 		}
-+		if (options->flags.diff_from_contents) {
-+			fclose(options->file);
-+			options->file = saved_file;
-+			options->color_moved = saved_color_moved;
-+		}
- 		separator++;
- 	}
- 
--- 
-2.51.1-633-gaa2b1236d0
-
+Thanks, both.  Will queue and mark it for 'next'.
